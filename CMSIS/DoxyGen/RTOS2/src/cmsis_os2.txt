@@ -125,6 +125,12 @@ The following sections provide further details:
 /**
 \page cre_rtx_proj Create an RTX5 Project
 
+\if FuSaRTS
+FuSa RTX5 installation and project setup are explained in \ref fusa_rtx_installation.
+
+\endif
+
+\ifnot FuSaRTS
 The steps to create a microcontroller application using RTX5 are:
 - Create a new project and select a microcontroller device.
 - In the Manage Run-Time Environment window, select <b>CMSIS\::CORE</b> and <b>CMSIS\::RTOS2 (API)\::Keil RTX5</b>. You can
@@ -148,6 +154,8 @@ The steps to create a microcontroller application using RTX5 are:
 
 - \ref config_rtx5 "Configure" RTX5 to the application's needs using the \b %RTX_Config.h file.
 
+\endif
+
 \if ARMCA \section cre_rtx_cortexa Additional requirements for RTX on Cortex-A
 
 Cortex-A based microcontrollers are less unified with respect to the interrupt and timer implementations used compared to 
@@ -164,7 +172,8 @@ The default implementations provided along with CMSIS are
 
 For devices not implementing GIC, PTIM nor GTIM please refer to the according device family pack and select the
 proper implementations.
-\endif 
+
+\endif
 
 \section cre_UsingIRQs Using Interrupts on Cortex-M
 
@@ -175,9 +184,9 @@ Handler | Priority | Interrupt/Exception
 :-------|:---------|:----------------------------
 SysTick | lowest   | Kernel system timer interrupt to generate periodic timer ticks
 PendSV  | lowest   | PendSV (request for system-level service) when calling certain RTX functions from \b Handler mode
-SCV     | lowest+1 | Supervisor Call used to enter the RTOS kernel from \b Thread mode
+SVC     | lowest+1 | Supervisor Call used to enter the RTOS kernel from \b Thread mode
 
-Other device interrupts can be used without limitation. For Arm Cortex-M3/M4/M7\if ARMv8M /M23/M33/M35P \endif  processors, interrupts are never disabled by RTX Kernel.
+Other device interrupts can be used without limitation. For Arm Cortex-M3/M4/M7 \if ARMv8M /M23/M33/M35P \endif  processors, interrupts are never disabled by RTX Kernel.
 
 <b>Usage of interrupt priority grouping</b>
 - The interrupt priority grouping should be configured using the CMSIS-Core function NVIC_SetPriorityGrouping before calling the function 
@@ -211,8 +220,7 @@ to provide event information which helps you to understand and analyze the opera
 - Enable the related settings under \ref evtrecConfig.
 - Build the application code and download it to the debug hardware.
   
-Once the target application generates event information, it can be viewed in the µVision debugger using the \b Event
- \b Recorder.
+Once the target application generates event information, it can be viewed in the µVision debugger using the \b Event \b Recorder.
 */
 
 
@@ -1137,7 +1145,7 @@ Core Registers             | The processor status is read using the following co
 System Control Block (SBC) | To control and setup the processor exceptions including PendSV and SVC
 Interrupt Control          | The CMSIS-Core functions __disable_irq and __enable_irq to control the interrupt system via the CPSR core register.
 
-The interface files to the processor hardware are: 
+The RTX implements interfaces to the processor hardware in following files: 
  - <b>%irq_cm0.s</b> defines exception handlers for Cortex-M0/M0+
 \if ARMv8M
  - <b>%irq_armv8mbl_common.s</b> defines exception handlers for Cortex-M23
@@ -1154,27 +1162,28 @@ The interface files to the processor hardware are:
 \ifnot ARMv8M \subsection tpCortexM3_M4_M7_M33_M35P Cortex-M3/M4/M7 target processor
 \endif 
 
-Hardware Requirement       | Description
+RTX assumes a fully function-able processor and uses the following hardware features:
+
+Hardware Item       | Requirement Description
 :--------------------------|:------------------------------------------------------
-SysTick timer              | The SysTick timer generates the kernel tick interrupts and the interface is implemented in %os_systick.c using the \ref CMSIS_RTOS_TickAPI
-Exception Handler          | RTX implements exception handlers for SVC, PendSV, and SysTick interrupt
-Core Registers             | The processor status is read using the following core registers: CONTROL, IPSR, PRIMASK, BASEPRI
-System Control Block (SBC) | To control and setup the processor exceptions including PendSV and SVC
-NVIC Interface             | The CMSIS-Core function NVIC_GetPriorityGrouping to setup interrupt priorities.
-LDREX, STREX instruction   | Atomic execution avoids the requirement to disable interrupts and is implemented via exclusive access instructions.
+SysTick timer              | The \b SysTick timer shall be available in the processor. 
+System Exceptions          | The RTX requires \b SVC, \b PendSV, and \b SysTick exceptions and implements corresponding exception handlers.
+Core Registers             | The RTX uses \b CONTROL, \b IPSR , \b PRIMASK and \b BASEPRI core registers for reading processor status. 
+System Control Block (SCB) | The RTX uses \b SCB registers to control and setup the processor system exceptions including PendSV and SVC.
+NVIC Interface             | CMSIS-Core function \b NVIC_GetPriorityGrouping is used by the RTX to setup interrupt priorities.
+LDREX, STREX instructions  | Exclusive access instructions \b LDREX and \b STREX are used to implement atomic execution without disabling interrupts.
 
 The interface files to the processor hardware are: 
  - <b>%irq_cm3.s</b> defines exception handlers for Cortex-M3 and Cortex-M4/M7 without floating point unit.
  - <b>%irq_cm4f.s</b> defines exception handlers for Cortex-M4/M7 with floating point unit.
 \if ARMv8M 
  - <b>%irq_armv8mml_common.s</b> defines exception handlers for Cortex-M33/M35P
-\endif 
+\endif
  - <b>%rtx_core_cm.h</b> defines processor specific helper functions and the interfaces to Core Registers and Core Peripherals.
  - <b>%os_tick.h</b> is the \ref CMSIS_RTOS_TickAPI that defines the interface functions to the SysTick timer.
 
 \note
  - The CMSIS-Core variable \c SystemCoreClock is used by RTX to configure the SysTick timer.
-
 
 \if ARMCA \subsection tpCortexA5_A7_A9 Cortex-A5/A7/A9 target processor
 
@@ -1367,6 +1376,7 @@ processor variants in every configuration  \if ARMv8M , including Arm Cortex-M23
       <td>CMSIS-RTOS RTX Library for ARMCC Compiler, Armv8-M Mainline, non-secure.</td>
     </tr>
 \endif	
+\ifnot FuSaRTS
     <tr>
       <td>Library/GCC/libRTX_CM0.a</td>
       <td>CMSIS-RTOS libRTX Library for GCC Compiler, Cortex-M0 and M1, little-endian.</td>
@@ -1379,6 +1389,7 @@ processor variants in every configuration  \if ARMv8M , including Arm Cortex-M23
       <td>Library/GCC/libRTX_CM4F.a</td>
       <td>CMSIS-RTOS libRTX Library for GCC Compiler, Cortex-M4 and M7 with FPU, little-endian.</td>
     </tr>
+\endif	
 \if ARMv8M	
     <tr>
       <td>Library/GCC/libRTX_V8MB.a</td>
@@ -1404,11 +1415,14 @@ processor variants in every configuration  \if ARMv8M , including Arm Cortex-M23
       <td>Library/GCC/libRTX_V8MMN.a</td>
       <td>CMSIS-RTOS libRTX Library for GCC Compiler, Armv8-M Mainline, non-secure.</td>
     </tr>
-\endif	
+\endif
 </table>
+*/
 
- 
-\page pToolchains Supported Toolchains
+
+
+/**
+\ifnot FuSaRTS \page pToolchains Supported Toolchains
 
 Keil RTX5 is developed and tested using the common toolchains and development environments.
 
@@ -1422,6 +1436,7 @@ The current release is tested with the following versions:
  <li>Arm Compiler 6.9</li>
  <li>RTOS-aware debugging with uVision 5.24</li>
 </ul>
+
 
 \section technicalData_Toolchain_IAR IAR Embedded Workbench
 
@@ -1440,7 +1455,9 @@ Active development is currently tested with:
  <li>GNU Tools for Arm Embedded 6.3.1 20170620</li>
 </ul>
 
+\endif
 */
+
 
 /* ========================================================================================================================== */
 /** 
