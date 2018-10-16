@@ -1118,8 +1118,9 @@ The following section contains technical information about RTX v5.
  - \subpage pStackRequirements lists the memory requirements for the main stack when running the RTX v5 kernel. 
  - \subpage pControlBlockSizes provides memory size information for \ref StaticObjectMemory "object-specific control block memory allocation".
  - \subpage pDirectory_Files is an overview of the supplied files that belong to RTX v5
+\ifnot FuSaRTS
  - \subpage pToolchains details about the compiler support which includes ArmCC (MDK, DS-5), IAR EW-ARM, and GCC.
- 
+\endif
 
 
 \page pHardwareRequirements Hardware Requirements
