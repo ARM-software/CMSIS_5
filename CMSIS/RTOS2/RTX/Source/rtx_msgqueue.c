@@ -177,7 +177,7 @@ static void osRtxMessageQueuePostProcess (os_message_t *msg) {
     msg->id = osRtxIdInvalid;
     (void)osRtxMemoryPoolFree(&mq->mp_info, msg);
     // Check if Thread is waiting to send a Message
-    if ((mq->thread_list != NULL) && (mq->thread_list->state == osRtxThreadWaitingMessagePut)) {
+    if (mq->thread_list != NULL) {
       // Try to allocate memory
       //lint -e{9079} "conversion from pointer to void to pointer to other type" [MISRA Note 5]
       msg0 = osRtxMemoryPoolAlloc(&mq->mp_info);
@@ -494,7 +494,7 @@ static osStatus_t svcRtxMessageQueueGet (osMessageQueueId_t mq_id, void *msg_ptr
     msg->id = osRtxIdInvalid;
     (void)osRtxMemoryPoolFree(&mq->mp_info, msg);
     // Check if Thread is waiting to send a Message
-    if ((mq->thread_list != NULL) && (mq->thread_list->state == osRtxThreadWaitingMessagePut)) {
+    if (mq->thread_list != NULL) {
       // Try to allocate memory
       //lint -e{9079} "conversion from pointer to void to pointer to other type" [MISRA Note 5]
       msg = osRtxMemoryPoolAlloc(&mq->mp_info);

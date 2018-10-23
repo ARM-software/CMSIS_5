@@ -52,6 +52,9 @@ __attribute__((section(".bss.os")));
 #endif
 
 // ISR FIFO Queue
+#if (OS_ISR_FIFO_QUEUE < 4)
+#error "Invalid ISR FIFO Queue size!"
+#endif
 static void *os_isr_queue[OS_ISR_FIFO_QUEUE] \
 __attribute__((section(".bss.os")));
 
@@ -672,14 +675,14 @@ __WEAK void software_init_hook (void) {
 // ========
 
 // RTOS Kernel Pre-Initialization Hook
+#if (defined(OS_EVR_INIT) && (OS_EVR_INIT != 0))
 void osRtxKernelPreInit (void);
 void osRtxKernelPreInit (void) {
-#if (defined(OS_EVR_INIT) && (OS_EVR_INIT != 0))
   if (osKernelGetState() == osKernelInactive) {
     evr_initialize();
   }
-#endif
 }
+#endif
 
 
 // C/C++ Standard Library Multithreading Interface
