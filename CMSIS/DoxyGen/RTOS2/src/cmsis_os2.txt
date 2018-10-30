@@ -903,7 +903,7 @@ annotations. The usage requires the source variant of RTX5; refer to \ref cre_rt
 \subsection evtrecConfigGlobIni Global Configuration
 Initialize Event Recorder during the \ref osKernelInitialize and optionally start event recording.
 
-\image html config_wizard_evtrecGlobIni.png "RTX_Config.h: Initialization and filter setup configuration"
+\image html config_wizard_evtrecGlobIni.png "RTX_Config.h: Global Configuration"
 
 <br/>
 
@@ -952,17 +952,17 @@ The generation of events must be enabled as explained under \ref evtrecConfigEvt
 
 Name              | \#define                   | Description
 ------------------|----------------------------|----------------------------------------------------------------
-Memory Management | \c OS_EVR_MEMORY_FILTER    | Filter enable for Memory Management events.
-Kernel            | \c OS_EVR_KERNEL_FILTER    | Filter enable for Kernel events.
-Thread            | \c OS_EVR_THREAD_FILTER    | Filter enable for Thread events.
-Generic Wait      | \c OS_EVR_WAIT_FILTER      | Filter enable for Generic Wait events.
-Thread Flags      | \c OS_EVR_THFLAGS_FILTER   | Filter enable for Thread Flags events.
-Event Flags       | \c OS_EVR_EVFLAGS_FILTER   | Filter enable for Event Flags events.
-Timer             | \c OS_EVR_TIMER_FILTER     | Filter enable for Timer events.
-Mutex             | \c OS_EVR_MUTEX_FILTER     | Filter enable for Mutex events.
-Semaphore         | \c OS_EVR_SEMAPHORE_FILTER | Filter enable for Semaphore events.
-Memory Pool       | \c OS_EVR_MEMPOOL_FILTER   | Filter enable for Memory Pool events.
-Message Queue     | \c OS_EVR_MSGQUEUE_FILTER  | Filter enable for Message Queue events.
+Memory Management | \c OS_EVR_MEMORY_LEVEL     | Recording level for Memory Management events.
+Kernel            | \c OS_EVR_KERNEL_LEVEL     | Recording level for Kernel events.
+Thread            | \c OS_EVR_THREAD_LEVEL     | Recording level for Thread events.
+Generic Wait      | \c OS_EVR_WAIT_LEVEL       | Recording level for Generic Wait events.
+Thread Flags      | \c OS_EVR_THFLAGS_LEVEL    | Recording level for Thread Flags events.
+Event Flags       | \c OS_EVR_EVFLAGS_LEVEL    | Recording level for Event Flags events.
+Timer             | \c OS_EVR_TIMER_LEVEL      | Recording level for Timer events.
+Mutex             | \c OS_EVR_MUTEX_LEVEL      | Recording level for Mutex events.
+Semaphore         | \c OS_EVR_SEMAPHORE_LEVEL  | Recording level for Semaphore events.
+Memory Pool       | \c OS_EVR_MEMPOOL_LEVEL    | Recording level for Memory Pool events.
+Message Queue     | \c OS_EVR_MSGQUEUE_LEVEL   | Recording level for Message Queue events.
  
 
 \subsection evtrecConfigEvtGen RTOS Event Generation

@@ -353,7 +353,7 @@
 #endif
  
 //     <h>Global Event Filter Setup
-//     <i> Initial event filter settings applied to all components.
+//     <i> Initial recording level applied to all components.
 //       <o.0>Error events
 //       <o.1>API function call events
 //       <o.2>Operation events
@@ -364,128 +364,128 @@
 #endif
  
 //     <h>RTOS Event Filter Setup
-//     <i> Event filter settings for RTX components.
+//     <i> Recording levels for RTX components.
 //     <i> Only applicable if events for the respective component are generated.
  
-//       <e.7>Memory Management
-//       <i> Filter enable settings for Memory Management events.
+//       <h>Memory Management
+//       <i> Recording level for Memory Management events.
 //         <o.0>Error events
 //         <o.1>API function call events
 //         <o.2>Operation events
 //         <o.3>Detailed operation events
-//       </e>
-#ifndef OS_EVR_MEMORY_FILTER
-#define OS_EVR_MEMORY_FILTER        0x81U
+//       </h>
+#ifndef OS_EVR_MEMORY_LEVEL 
+#define OS_EVR_MEMORY_LEVEL         0x01U
 #endif
  
-//       <e.7>Kernel
-//       <i> Filter enable settings for Kernel events.
+//       <h>Kernel
+//       <i> Recording level for Kernel events.
 //         <o.0>Error events
 //         <o.1>API function call events
 //         <o.2>Operation events
 //         <o.3>Detailed operation events
-//       </e>
-#ifndef OS_EVR_KERNEL_FILTER
-#define OS_EVR_KERNEL_FILTER        0x81U
+//       </h>
+#ifndef OS_EVR_KERNEL_LEVEL 
+#define OS_EVR_KERNEL_LEVEL         0x01U
 #endif
  
-//       <e.7>Thread
-//       <i> Filter enable settings for Thread events.
+//       <h>Thread
+//       <i> Recording level for Thread events.
 //         <o.0>Error events
 //         <o.1>API function call events
 //         <o.2>Operation events
 //         <o.3>Detailed operation events
-//       </e>
-#ifndef OS_EVR_THREAD_FILTER
-#define OS_EVR_THREAD_FILTER        0x85U
+//       </h>
+#ifndef OS_EVR_THREAD_LEVEL 
+#define OS_EVR_THREAD_LEVEL         0x05U
 #endif
  
-//       <e.7>Generic Wait
-//       <i> Filter enable settings for Generic Wait events.
+//       <h>Generic Wait
+//       <i> Recording level for Generic Wait events.
 //         <o.0>Error events
 //         <o.1>API function call events
 //         <o.2>Operation events
 //         <o.3>Detailed operation events
-//       </e>
-#ifndef OS_EVR_WAIT_FILTER
-#define OS_EVR_WAIT_FILTER          0x81U
+//       </h>
+#ifndef OS_EVR_WAIT_LEVEL 
+#define OS_EVR_WAIT_LEVEL           0x01U
 #endif
  
-//       <e.7>Thread Flags
-//       <i> Filter enable settings for Thread Flags events.
+//       <h>Thread Flags
+//       <i> Recording level for Thread Flags events.
 //         <o.0>Error events
 //         <o.1>API function call events
 //         <o.2>Operation events
 //         <o.3>Detailed operation events
-//       </e>
-#ifndef OS_EVR_THFLAGS_FILTER
-#define OS_EVR_THFLAGS_FILTER       0x81U
+//       </h>
+#ifndef OS_EVR_THFLAGS_LEVEL 
+#define OS_EVR_THFLAGS_LEVEL        0x01U
 #endif
  
-//       <e.7>Event Flags
-//       <i> Filter enable settings for Event Flags events.
+//       <h>Event Flags
+//       <i> Recording level for Event Flags events.
 //         <o.0>Error events
 //         <o.1>API function call events
 //         <o.2>Operation events
 //         <o.3>Detailed operation events
-//       </e>
-#ifndef OS_EVR_EVFLAGS_FILTER
-#define OS_EVR_EVFLAGS_FILTER       0x81U
+//       </h>
+#ifndef OS_EVR_EVFLAGS_LEVEL 
+#define OS_EVR_EVFLAGS_LEVEL        0x01U
 #endif
  
-//       <e.7>Timer
-//       <i> Filter enable settings for Timer events.
+//       <h>Timer
+//       <i> Recording level for Timer events.
 //         <o.0>Error events
 //         <o.1>API function call events
 //         <o.2>Operation events
 //         <o.3>Detailed operation events
-//       </e>
-#ifndef OS_EVR_TIMER_FILTER
-#define OS_EVR_TIMER_FILTER         0x81U
+//       </h>
+#ifndef OS_EVR_TIMER_LEVEL 
+#define OS_EVR_TIMER_LEVEL          0x01U
 #endif
  
-//       <e.7>Mutex
-//       <i> Filter enable settings for Mutex events.
+//       <h>Mutex
+//       <i> Recording level for Mutex events.
 //         <o.0>Error events
 //         <o.1>API function call events
 //         <o.2>Operation events
 //         <o.3>Detailed operation events
-//       </e>
-#ifndef OS_EVR_MUTEX_FILTER
-#define OS_EVR_MUTEX_FILTER         0x81U
+//       </h>
+#ifndef OS_EVR_MUTEX_LEVEL 
+#define OS_EVR_MUTEX_LEVEL          0x01U
 #endif
  
-//       <e.7>Semaphore
-//       <i> Filter enable settings for Semaphore events.
+//       <h>Semaphore
+//       <i> Recording level for Semaphore events.
 //         <o.0>Error events
 //         <o.1>API function call events
 //         <o.2>Operation events
 //         <o.3>Detailed operation events
-//       </e>
-#ifndef OS_EVR_SEMAPHORE_FILTER
-#define OS_EVR_SEMAPHORE_FILTER     0x81U
+//       </h>
+#ifndef OS_EVR_SEMAPHORE_LEVEL 
+#define OS_EVR_SEMAPHORE_LEVEL      0x01U
 #endif
  
-//       <e.7>Memory Pool
-//       <i> Filter enable settings for Memory Pool events.
+//       <h>Memory Pool
+//       <i> Recording level for Memory Pool events.
 //         <o.0>Error events
 //         <o.1>API function call events
 //         <o.2>Operation events
 //         <o.3>Detailed operation events
-//       </e>
-#ifndef OS_EVR_MEMPOOL_FILTER
-#define OS_EVR_MEMPOOL_FILTER       0x81U
+//       </h>
+#ifndef OS_EVR_MEMPOOL_LEVEL 
+#define OS_EVR_MEMPOOL_LEVEL        0x01U
 #endif
  
-//       <e.7>Message Queue
-//       <i> Filter enable settings for Message Queue events.
+//       <h>Message Queue
+//       <i> Recording level for Message Queue events.
 //         <o.0>Error events
 //         <o.1>API function call events
 //         <o.2>Operation events
 //         <o.3>Detailed operation events
-//       </e>
-#ifndef OS_EVR_MSGQUEUE_FILTER
-#define OS_EVR_MSGQUEUE_FILTER      0x81U
+//       </h>
+#ifndef OS_EVR_MSGQUEUE_LEVEL 
+#define OS_EVR_MSGQUEUE_LEVEL       0x01U
 #endif
  
 //     </h>

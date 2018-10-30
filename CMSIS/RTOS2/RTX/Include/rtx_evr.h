@@ -34,14 +34,8 @@
 #ifndef   OS_EVR_THFLAGS
 #define   OS_EVR_THFLAGS        OS_EVR_THREAD
 #endif
-#ifndef   OS_EVR_THFLAGS_FILTER
-#define   OS_EVR_THFLAGS_FILTER OS_EVR_THREAD_FILTER
-#endif
 #ifndef   OS_EVR_WAIT
 #define   OS_EVR_WAIT           OS_EVR_THREAD
-#endif
-#ifndef   OS_EVR_WAIT_FILTER
-#define   OS_EVR_WAIT_FILTER    OS_EVR_THREAD_FILTER
 #endif
 
 #include "RTE_Components.h"
