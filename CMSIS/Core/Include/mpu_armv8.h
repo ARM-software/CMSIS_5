@@ -2,7 +2,7 @@
  * @file     mpu_armv8.h
  * @brief    CMSIS MPU API for Armv8-M MPU
  * @version  V5.0.4
- * @date     10. January 2018
+ * @date     01. November 2018
  ******************************************************************************/
 /*
  * Copyright (c) 2017-2018 Arm Limited. All rights reserved.
@@ -114,9 +114,9 @@ typedef struct {
 */
 __STATIC_INLINE void ARM_MPU_Enable(uint32_t MPU_Control)
 {
-  __DSB();
-  __ISB();
   MPU->CTRL = MPU_Control | MPU_CTRL_ENABLE_Msk;
+  __ISB();
+  __DSB();
 #ifdef SCB_SHCSR_MEMFAULTENA_Msk
   SCB->SHCSR |= SCB_SHCSR_MEMFAULTENA_Msk;
 #endif
@@ -126,8 +126,7 @@ __STATIC_INLINE void ARM_MPU_Enable(uint32_t MPU_Control)
 */
 __STATIC_INLINE void ARM_MPU_Disable(void)
 {
-  __DSB();
-  __ISB();
+  __DMB();
 #ifdef SCB_SHCSR_MEMFAULTENA_Msk
   SCB->SHCSR &= ~SCB_SHCSR_MEMFAULTENA_Msk;
 #endif
