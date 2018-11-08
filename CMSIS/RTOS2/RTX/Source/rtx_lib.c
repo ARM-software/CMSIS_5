@@ -413,8 +413,6 @@ __STATIC_INLINE void evr_initialize (void) {
 
   (void)EventRecorderInitialize(OS_EVR_LEVEL, (uint32_t)OS_EVR_START);
 
-  (void)EventRecorderDisable(EventRecordAll,        EvtRtxMemoryNo,       EvtRtxMessageQueueNo);
-
   (void)EventRecorderEnable(OS_EVR_MEMORY_LEVEL,    EvtRtxMemoryNo,       EvtRtxMemoryNo);
   (void)EventRecorderEnable(OS_EVR_KERNEL_LEVEL,    EvtRtxKernelNo,       EvtRtxKernelNo);
   (void)EventRecorderEnable(OS_EVR_THREAD_LEVEL,    EvtRtxThreadNo,       EvtRtxThreadNo);
