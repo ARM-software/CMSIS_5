@@ -157,10 +157,10 @@ by parameter \a ef_id. All threads waiting for the flag set will be notified to 
 The function returns the event flags after setting or an error code (highest bit is set, refer to \ref flags_error_codes).
 
 Possible \ref flags_error_codes return values:
-    - \em osFlagsErrorUnknown: Unspecified error.
-    - \em osFlagsErrorResource: Event flags object specified by parameter \a ef_id is not ready to be used.
-    - \em osFlagsErrorParameter: Parameter \a ef_id does not identify a valid event flags object or \em flags has highest bit set. 
-	
+    - \em osFlagsErrorUnknown: unspecified error.
+    - \em osFlagsErrorParameter: parameter \a ef_id does not identify a valid event flags object or \em flags has highest bit set. 
+    - \em osFlagsErrorResource: the event flags object is in an invalid state.
+
 \note This function may be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 
 <b>Code Example</b>
@@ -199,9 +199,9 @@ specified by parameter \a ef_id. The function returns the event flags before cle
 refer to \ref flags_error_codes).
 
 Possible \ref flags_error_codes return values:
-    - \em osFlagsErrorUnknown: Unspecified error.
-    - \em osFlagsErrorResource: Event flags object specified by parameter \a ef_id is not ready to be used.
-    - \em osFlagsErrorParameter: Parameter \a ef_id does not identify a valid event flags object or \em flags has highest bit set. 
+    - \em osFlagsErrorUnknown: unspecified error.
+    - \em osFlagsErrorParameter: parameter \a ef_id does not identify a valid event flags object or \em flags has highest bit set. 
+    - \em osFlagsErrorResource: the event flags object is in an invalid state.
 
 \note This function may be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 */
@@ -244,10 +244,10 @@ that is calling this function is put into the \ref ThreadStates "BLOCKED" state.
 The function returns the event flags before clearing or an error code (highest bit is set, refer to \ref flags_error_codes).
 
 Possible \ref flags_error_codes return values:
-    - \em osFlagsErrorUnknown: Unspecified error.
-    - \em osFlagsErrorTimeout: The awaited flags has not been set during given timeout.
-    - \em osFlagsErrorResource: Event flags object specified by parameter \a ef_id is not ready to be used.
-    - \em osFlagsErrorParameter: Parameter \a ef_id does not identify a valid event flags object or \em flags has highest bit set. 
+    - \em osFlagsErrorUnknown: unspecified error.
+    - \em osFlagsErrorTimeout: awaited flags have not been set in the given time.
+    - \em osFlagsErrorResource: awaited flags have not been set when no \a timeout was specified.
+    - \em osFlagsErrorParameter: parameter \a ef_id does not identify a valid event flags object or \em flags has highest bit set. 
 
 \note May be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines" if the parameter \a timeout is set to
 \token{0}.
@@ -291,8 +291,8 @@ function \ref osEventFlagsNew.
 Possible \ref osStatus_t return values:
  - \em osOK: the specified event flags object has been deleted.
  - \em osErrorISR: \b osEventFlagsDelete cannot be called from interrupt service routines.
- - \em osErrorParameter: the value of the parameter \a ef_id is incorrect.
- - \em osErrorResource: parameter \em ef_id is \token{NULL} or wrong.
+ - \em osErrorParameter: parameter \a ef_id is \token{NULL} or invalid.
+ - \em osErrorResource: the event flags object is in an invalid state.
 
 \note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 */

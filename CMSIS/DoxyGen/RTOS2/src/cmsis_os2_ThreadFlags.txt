@@ -68,9 +68,9 @@ flags set, or an error code if highest bit is set (refer to \ref flags_error_cod
 be used also within interrupt service routines. Threads waiting for a flag to be set will resume from \ref ThreadStates "BLOCKED" state.
 
 Possible \ref flags_error_codes return values:
-    - \em osFlagsErrorUnknown: Unspecified error.
-    - \em osFlagsErrorResource: Thread specified by parameter \em thread_id is not active to receive flags.
-    - \em osFlagsErrorParameter: Parameter \em thread_id is not a valid thread or \em flags has highest bit set.
+    - \em osFlagsErrorUnknown: unspecified error.
+    - \em osFlagsErrorParameter: parameter \em thread_id is not a valid thread or \em flags has highest bit set.
+    - \em osFlagsErrorResource: the thread is in invalid state.
 
 \note This function may be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 
@@ -97,10 +97,9 @@ The function \b osThreadFlagsClear clears the specified flags for the currently 
 flags before clearing, or an error code if highest bit is set (refer to \ref flags_error_codes).
 
 Possible \ref flags_error_codes return values:
-    - \em osFlagsErrorUnknown: Unspecified error, i.e. not called from a running threads context.
-    - \em osFlagsErrorResource: Running thread is not active to receive flags.
-    - \em osFlagsErrorParameter: Parameter \em flags has highest bit set. 
-	
+    - \em osFlagsErrorUnknown: unspecified error, i.e. not called from a running threads context.
+    - \em osFlagsErrorParameter: parameter \em flags has highest bit set. 
+
 \note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 */
 
@@ -109,7 +108,7 @@ Possible \ref flags_error_codes return values:
 \details
 The function \b osThreadFlagsGet returns the flags currently set for the currently running thread. 
 If called without a active and currently running thread \b osThreadFlagsGet return zero.
-	
+
 \note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 */
 
@@ -135,11 +134,11 @@ exact time delay depends on the actual time elapsed since the last timer tick.
 The function returns the flags before clearing, or an error code if highest bit is set (refer to \ref flags_error_codes).
 
 Possible \ref flags_error_codes return values:
-    - \em osFlagsErrorUnknown: Unspecified error, i.e. not called from a running threads context.
-    - \em osFlagsErrorTimeout: The awaited flags has not been set during given timeout.
-    - \em osFlagsErrorResource: Running thread is not active to receive flags.
+    - \em osFlagsErrorUnknown: unspecified error, i.e. not called from a running threads context.
+    - \em osFlagsErrorTimeout: awaited flags have not been set in the given time.
+    - \em osFlagsErrorResource: awaited flags have not been set when no \a timeout was specified.
     - \em osFlagsErrorParameter: Parameter \em flags has highest bit set.
-	
+
 \note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 
 <b>Code Example</b>

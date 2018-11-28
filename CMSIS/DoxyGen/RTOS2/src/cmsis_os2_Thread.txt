@@ -380,7 +380,7 @@ priority specified by the parameter \a priority.
 Possible \ref osStatus_t return values:
     - \em osOK: the priority of the specified thread has been changed successfully.
     - \em osErrorParameter: \a thread_id is \token{NULL} or invalid or \a priority is incorrect.
-    - \em osErrorResource: thread specified by parameter \em thread_id is in an invalid thread state.
+    - \em osErrorResource: the thread is in an invalid state.
     - \em osErrorISR: the function \b osThreadSetPriority cannot be called from interrupt service routines.
 
 \note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
@@ -480,7 +480,7 @@ Thus it is not recommended to suspend an already blocked thread.
 Possible \ref osStatus_t return values:
     - \em osOK: the thread has been suspended successfully.
     - \em osErrorParameter: \a thread_id is \token{NULL} or invalid.
-    - \em osErrorResource: thread specified by parameter \em thread_id is in an invalid thread state.
+    - \em osErrorResource: the thread is in an invalid state.
     - \em osErrorISR: the function \b osThreadSuspend cannot be called from interrupt service routines.
 
 \note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
@@ -510,7 +510,7 @@ Functions that will put a thread into \ref ThreadStates "BLOCKED" state are:
 Possible \ref osStatus_t return values:
     - \em osOK: the thread has been resumed successfully.
     - \em osErrorParameter: \a thread_id is \token{NULL} or invalid.
-    - \em osErrorResource: thread specified by parameter \em thread_id is in an invalid thread state.
+    - \em osErrorResource: the thread is in an invalid state.
     - \em osErrorISR: the function \b osThreadResume cannot be called from interrupt service routines.
 
 \note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
@@ -530,7 +530,7 @@ the system. The behavior of \ref osThreadDetach on an already detached thread is
 Possible \ref osStatus_t return values:
     - \em osOK: the attribute of the specified thread has been changed to detached successfully.
     - \em osErrorParameter: \a thread_id is \token{NULL} or invalid.
-    - \em osErrorResource: thread specified by parameter \em thread_id is in an invalid thread state.
+    - \em osErrorResource: the thread is in an invalid state.
     - \em osErrorISR: the function \b osThreadDetach cannot be called from interrupt service routines.
 
 \note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
@@ -548,8 +548,7 @@ Possible \ref osStatus_t return values:
     - \em osOK: if the thread has already been terminated and joined or once the thread has been terminated and the join
       operations succeeds.
     - \em osErrorParameter: \a thread_id is \token{NULL} or invalid.
-    - \em osErrorResource: parameter \em thread_id is \token{NULL} or refers to a thread that is not an active thread or the
-      thread is not joinable.
+    - \em osErrorResource: the thread is in an invalid state (ex: not joinable).
     - \em osErrorISR: the function \b osThreadJoin cannot be called from interrupt service routines.
 
 \note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
@@ -585,8 +584,7 @@ such thread exists, the function will not terminate the running thread, but retu
 Possible \ref osStatus_t return values:
     - \em osOK: the specified thread has been removed from the active thread list successfully.
     - \em osErrorParameter: \a thread_id is \token{NULL} or invalid.
-    - \em osErrorResource: thread specified by parameter \em thread_id is in an invalid thread state or no
-      other \ref ThreadStates "READY" thread exists.
+    - \em osErrorResource: the thread is in an invalid state or no other \ref ThreadStates "READY" thread exists.
     - \em osErrorISR: the function \b osThreadTerminate cannot be called from interrupt service routines.
 
 \note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".

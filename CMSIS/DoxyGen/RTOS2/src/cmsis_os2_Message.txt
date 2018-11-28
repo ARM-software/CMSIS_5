@@ -88,7 +88,7 @@ Possible \ref osStatus_t return values:
  - \em osOK: the message has been put into the queue.
  - \em osErrorTimeout: the message could not be put into the queue in the given time (wait-timed semantics).
  - \em osErrorResource: not enough space in the queue (try semantics).
- - \em osErrorParameter: the parameter \a mq_id is incorrect, non-zero timeout specified in an ISR.
+ - \em osErrorParameter: parameter \em mq_id is \token{NULL} or invalid, non-zero timeout specified in an ISR.
 
 \note May be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines" if the parameter \a timeout is set to
 \token{0}.
@@ -176,7 +176,7 @@ Possible \ref osStatus_t return values:
  - \em osOK: the message has been retrieved from the queue.
  - \em osErrorTimeout: the message could not be retrieved from the queue in the given time (timed-wait semantics).
  - \em osErrorResource: nothing to get from the queue (try semantics).
- - \em osErrorParameter: the parameter \a mq_id is incorrect, non-zero timeout specified in an ISR.
+ - \em osErrorParameter: parameter \em mq_id is \token{NULL} or invalid, non-zero timeout specified in an ISR.
 
 \note May be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines" if the parameter \a timeout is set to
 \token{0}.
@@ -235,7 +235,7 @@ The function \b osMessageQueueReset resets the message queue specified by the pa
 Possible \ref osStatus_t return values:
  - \em osOK: the message queue has been rest.
  - \em osErrorParameter: parameter \em mq_id is \token{NULL} or invalid.
- - \em osErrorResource: the message queue specified by parameter \a mq_id is in an invalid message queue state.
+ - \em osErrorResource: the message queue is in an invalid state.
  - \em osErrorISR: \b osMessageQueueReset cannot be called from interrupt service routines.
 
 \note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
@@ -252,7 +252,7 @@ message queue may be created again using the function \ref osMessageQueueNew.
 Possible \ref osStatus_t return values:
  - \em osOK: the message queue object has been deleted.
  - \em osErrorParameter: parameter \em mq_id is \token{NULL} or invalid.
- - \em osErrorResource: the message queue specified by parameter \a mq_id is in an invalid message queue state.
+ - \em osErrorResource: the message queue is in an invalid state.
  - \em osErrorISR: \b osMessageQueueDelete cannot be called from interrupt service routines.
 
 \note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
