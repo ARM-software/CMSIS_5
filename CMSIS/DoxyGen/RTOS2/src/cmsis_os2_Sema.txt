@@ -210,10 +210,10 @@ that is calling this function is put into the \ref ThreadStates "BLOCKED" state.
  - all other values specify a time in kernel ticks for a timeout (i.e. timed-wait semantics).
 
 Possible \ref osStatus_t return values:
- - \em osOK: the token has been obtained.
+ - \em osOK: the token has been obtained and the token count decremented.
  - \em osErrorTimeout: the token could not be obtained in the given time.
  - \em osErrorResource: the token could not be obtained when no \a timeout was specified.
- - \em osErrorParameter: the parameter \a semaphore_id is incorrect.
+ - \em osErrorParameter: the parameter \a semaphore_id is \token{NULL} or invalid.
 
 \note May be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines" if the parameter \a timeout is set to
 \token{0}.
@@ -232,9 +232,9 @@ can only be released up to the maximum count specified at creation time, see \re
 currently wait for a token of this semaphore object will be put into the \ref ThreadStates "READY" state.
 
 Possible \ref osStatus_t return values:
- - \em osOK: the token has been correctly released and the count increased.
- - \em osErrorResource: the maximum token count has been reached.
- - \em osErrorParameter: the parameter \a semaphore_id is incorrect.
+ - \em osOK: the token has been released and the count incremented.
+ - \em osErrorResource: the token could not be released (maximum token count has been reached).
+ - \em osErrorParameter: the parameter \a semaphore_id is \token{NULL} or invalid.
 
 \note This function may be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 
@@ -264,7 +264,7 @@ semaphore may be created again using the function \ref osSemaphoreNew.
 Possible \ref osStatus_t return values:
  - \em osOK: the semaphore object has been deleted.
  - \em osErrorParameter: the parameter \a semaphore_id is \token{NULL} or invalid.
- - \em osErrorResource: the semaphore specified by parameter \em semaphore_id is in an invalid semaphore state.
+ - \em osErrorResource: the semaphore is in an invalid state.
  - \em osErrorISR: \b osSemaphoreDelete cannot be called from interrupt service routines.
 
 \note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
