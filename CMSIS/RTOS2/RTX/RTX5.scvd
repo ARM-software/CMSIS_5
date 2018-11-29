@@ -791,25 +791,25 @@
         </calc>
 
         <!-- Read Thread Control Block -->
-        <readlist cond="(mem_list_com[i].len &amp; 1) &amp;&amp; (mem_list_com[i].id == 1)" name="TCB" type="osRtxThread_t" offset="addr" count="1" />
+        <readlist cond="(mem_list_com[i].len &amp; 1) &amp;&amp; (mem_list_com[i].id == 0xF1)" name="TCB" type="osRtxThread_t" offset="addr" count="1" />
 
         <!-- Read Timer Control Block -->
-        <readlist cond="(mem_list_com[i].len &amp; 1) &amp;&amp; (mem_list_com[i].id == 2)" name="CCB" type="osRtxTimer_t" offset="addr" count="1" />
+        <readlist cond="(mem_list_com[i].len &amp; 1) &amp;&amp; (mem_list_com[i].id == 0xF2)" name="CCB" type="osRtxTimer_t" offset="addr" count="1" />
 
         <!-- Read EventFlags Control Block -->
-        <readlist cond="(mem_list_com[i].len &amp; 1) &amp;&amp; (mem_list_com[i].id == 3)" name="ECB" type="osRtxEventFlags_t" offset="addr" count="1" />
+        <readlist cond="(mem_list_com[i].len &amp; 1) &amp;&amp; (mem_list_com[i].id == 0xF3)" name="ECB" type="osRtxEventFlags_t" offset="addr" count="1" />
 
         <!-- Read Mutex Control Block -->
-        <readlist cond="(mem_list_com[i].len &amp; 1) &amp;&amp; (mem_list_com[i].id == 4)" name="MCB" type="osRtxMutex_t" offset="addr" count="1" />
+        <readlist cond="(mem_list_com[i].len &amp; 1) &amp;&amp; (mem_list_com[i].id == 0xF5)" name="MCB" type="osRtxMutex_t" offset="addr" count="1" />
 
         <!-- Read Semaphore Control Block -->
-        <readlist cond="(mem_list_com[i].len &amp; 1) &amp;&amp; (mem_list_com[i].id == 5)" name="SCB" type="osRtxSemaphore_t" offset="addr" count="1" />
+        <readlist cond="(mem_list_com[i].len &amp; 1) &amp;&amp; (mem_list_com[i].id == 0xF6)" name="SCB" type="osRtxSemaphore_t" offset="addr" count="1" />
 
         <!-- Read MemoryPool Control Block -->
-        <readlist cond="(mem_list_com[i].len &amp; 1) &amp;&amp; (mem_list_com[i].id == 6)" name="PCB" type="osRtxMemoryPool_t" offset="addr" count="1" />
+        <readlist cond="(mem_list_com[i].len &amp; 1) &amp;&amp; (mem_list_com[i].id == 0xF7)" name="PCB" type="osRtxMemoryPool_t" offset="addr" count="1" />
 
         <!-- Read MessageQueue Control Block -->
-        <readlist cond="(mem_list_com[i].len &amp; 1) &amp;&amp; (mem_list_com[i].id == 8)" name="QCB" type="osRtxMessageQueue_t" offset="addr" count="1" />
+        <readlist cond="(mem_list_com[i].len &amp; 1) &amp;&amp; (mem_list_com[i].id == 0xFA)" name="QCB" type="osRtxMessageQueue_t" offset="addr" count="1" />
       </list>
 
       <!-- Read thread wait list -->
@@ -818,7 +818,7 @@
       <!-- Validate and process Thread control blocks -->
       <list name="i" start="0" limit="TCB._count">
         <calc>
-          TCB[i].cb_valid = (TCB[i].id == 1) &amp;&amp; (TCB[i].state != 0) &amp;&amp; (TCB[i].sp != 0);
+          TCB[i].cb_valid = (TCB[i].id == 0xF1) &amp;&amp; (TCB[i].state != 0) &amp;&amp; (TCB[i].sp != 0);
           TCB[i].sp_valid = 1;
         </calc>
 
@@ -917,7 +917,7 @@
       <!-- Validate and process Timer control blocks -->
       <list name="i" start="0" limit="CCB._count">
         <calc>
-          CCB[i].cb_valid = (CCB[i].id == 2) &amp;&amp; (CCB[i].state != 0);
+          CCB[i].cb_valid = (CCB[i].id == 0xF2) &amp;&amp; (CCB[i].state != 0);
           CCB[i].ex_tick  = CCB[i].tick;
         </calc>
 
@@ -953,7 +953,7 @@
 
       <list name="i" start="0" limit="ECB._count">
         <calc>
-          ECB[i].cb_valid = (ECB[i].id == 3);
+          ECB[i].cb_valid = (ECB[i].id == 0xF3);
           ECB[i].wl_idx = k;
           ECB[i].wl_cnt = 0;
         </calc>
@@ -989,7 +989,7 @@
 
       <list cond="MCB._count" name="i" start="0" limit="MCB._count">
         <calc>
-          MCB[i].cb_valid = (MCB[i].id == 4);
+          MCB[i].cb_valid = (MCB[i].id == 0xF5);
           MCB[i].wl_idx = k;
           MCB[i].wl_cnt = 0;
         </calc>
@@ -1026,7 +1026,7 @@
 
       <list cond="SCB._count" name="i" start="0" limit="SCB._count">
         <calc>
-          SCB[i].cb_valid = (SCB[i].id == 5);
+          SCB[i].cb_valid = (SCB[i].id == 0xF6);
           SCB[i].wl_idx = k;
           SCB[i].wl_cnt = 0;
         </calc>
@@ -1062,7 +1062,7 @@
 
       <list cond="PCB._count" name="i" start="0" limit="PCB._count">
         <calc>
-          PCB[i].cb_valid = (PCB[i].id == 6);
+          PCB[i].cb_valid = (PCB[i].id == 0xF7);
           PCB[i].wl_idx = k;
           PCB[i].wl_cnt = 0;
         </calc>
@@ -1099,7 +1099,7 @@
 
       <list cond="QCB._count" name="i" start="0" limit="QCB._count">
         <calc>
-          QCB[i].cb_valid = (QCB[i].id == 8);
+          QCB[i].cb_valid = (QCB[i].id == 0xFA);
           QCB[i].wl_idx = k;
           QCB[i].wl_cnt = 0;
         </calc>
