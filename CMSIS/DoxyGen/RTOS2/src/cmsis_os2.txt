@@ -241,16 +241,19 @@ Your application's \c main() should implement at least the following in the give
 -# Update the system core clock using the respective
    <a href=../../Core/html/group__system__init__gr.html>CMSIS-Core (Cortex-M)</a>  \if ARMCA or <a href=../../Core_A/html/group__system__init__gr.html>CMSIS-Core (Cortex-A)</a> \endif function.
 -# Initialize the CMSIS-RTOS kernel using \ref osKernelInitialize.
--# Optionally, create a new thread \c app_main, which is used as a main thread using \ref osThreadNew. Alternatively, threads
-   can be created in \c main() directly.
--# Start the RTOS scheduler using \ref osKernelStart which also configure system tick timer and RTOS specific interrupts.
-   This function does not return in case of successful execution. Any application code after \b osKernelStart will therefore not be executed.
+-# Optionally, create one thread (for example \c app_main), which is used as a main thread using \ref osThreadNew. This
+   thread should take care of creating and starting objects, once it is run by the scheduler. Alternatively, threads can be
+   created in \c main() directly.
+-# Start the RTOS scheduler using \ref osKernelStart which also configures the system tick timer and initializes RTOS
+   specific interrupts. This function does not return in case of successful execution. Therefore, any application code after
+   \b osKernelStart will not be executed.
 
-\note Interrupts are initialized in \ref osKernelStart. Modifying basic In case priorities and
-groupings in the NVIC are altered by the application after the above sequence it might be necessary to call
-\ref osKernelInitialize again. Incorrect ossibly catched by \ref osRtxErrorNotify or causing a hard fault.
+\note
+- Modifying priorities and groupings in the NVIC by the application after the above sequence is not recommended.
+- Before executing \ref osKernelStart, only the functions \ref osKernelGetInfo, \ref osKernelGetState, and object creation
+  functions (osXxxNew) may be called.
 
-\note The tick timer is configured during \ref osKernelStart. 
+
 \section Scheduler 
 
 RTX5 implements a low-latency preemptive scheduler. Major parts of RTX5 are executed in handler mode such as
