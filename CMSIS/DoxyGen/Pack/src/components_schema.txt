@@ -235,7 +235,6 @@ Grouping element containing a choice of at least one bundle or component. No mor
 <p>&nbsp;</p>		
 <hr>
 
-
 \section element_bundle /package/components/bundle
 
 A bundle describes a named collection of inter-operable components of the identical \em Cvendor, \em Cclass and \em Cversion.

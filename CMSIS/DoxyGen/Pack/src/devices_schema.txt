@@ -4141,7 +4141,17 @@ Defines a device variant. The element is optional. Can exist multiple times.
   </tr>
   <tr>
     <td>Dvariant</td>
-    <td>Name of the device variant. Only alphabetical characters, decimal digits, '-' and '_' are allowed</td>
+    <td><b>May get replaced by 'Dname' in the future</b>. Name of the device on the variant level. This effectively 
+        overwrites the device name specified on the device level. 
+        Once a device section contains a variant section, only the variant elements describe a 'selectable' device
+        which can be selected in the tools. The Dname of the device level effectively becomes a group name like the
+        Dfamily and DsubFamily attributes. Only alphabetical characters, decimal digits, '-' and '_' are allowed</td>
+    <td>RestrictedStringDname</td>
+    <td>required</td>
+  </tr>
+  <tr>
+    <td>Dname</td>
+    <td><b>future</b>. Name of the device on the variant level. Only alphabetical characters, decimal digits, '-' and '_' are allowed</td>
     <td>RestrictedStringDname</td>
     <td>required</td>
   </tr>
