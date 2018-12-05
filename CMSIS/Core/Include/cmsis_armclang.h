@@ -781,9 +781,11 @@ __STATIC_FORCEINLINE void __TZ_set_MSPLIM_NS(uint32_t MainStackPtrLimit)
  * Otherwise, use general registers, specified by constraint "r" */
 #if defined (__thumb__) && !defined (__thumb2__)
 #define __CMSIS_GCC_OUT_REG(r) "=l" (r)
+#define __CMSIS_GCC_RW_REG(r) "+l" (r)
 #define __CMSIS_GCC_USE_REG(r) "l" (r)
 #else
 #define __CMSIS_GCC_OUT_REG(r) "=r" (r)
+#define __CMSIS_GCC_RW_REG(r) "+r" (r)
 #define __CMSIS_GCC_USE_REG(r) "r" (r)
 #endif
 
