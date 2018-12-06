@@ -231,12 +231,13 @@ arm_status arm_conv_partial_q31(
     /* Working pointer of inputA */
     if ((int32_t)firstIndex - (int32_t)srcBLen + 1 > 0)
     {
-      px = pIn1 + firstIndex - srcBLen + 1;
+      pSrc1 = pIn1 + firstIndex - srcBLen + 1;
     }
     else
     {
-      px = pIn1;
+      pSrc1 = pIn1;
     }
+    px = pSrc1;
 
     /* Working pointer of inputB */
     pSrc2 = pIn2 + (srcBLen - 1U);
@@ -265,8 +266,8 @@ arm_status arm_conv_partial_q31(
         acc2 = 0;
 
         /* read x[0], x[1] samples */
-        x0 = *(px++);
-        x1 = *(px++);
+        x0 = *px++;
+        x1 = *px++;
 
         /* Apply loop unrolling and compute 3 MACs simultaneously. */
         k = srcBLen / 3;
@@ -331,10 +332,10 @@ arm_status arm_conv_partial_q31(
         while (k > 0U)
         {
           /* Read y[srcBLen - 5] sample */
-          c0 = *(py--);
+          c0 = *py--;
 
           /* Read x[7] sample */
-          x2 = *(px++);
+          x2 = *px++;
 
           /* Perform the multiply-accumulates */
           /* acc0 +=  x[4] * y[srcBLen - 5] */
@@ -361,14 +362,7 @@ arm_status arm_conv_partial_q31(
         count += 3U;
 
         /* Update the inputA and inputB pointers for next MAC calculation */
-        if ((int32_t)firstIndex - (int32_t)srcBLen + 1 > 0)
-        {
-          px = pIn1 + firstIndex - srcBLen + 1 + count;
-        }
-        else
-        {
-          px = pIn1 + count;
-        }
+        px = pSrc1 + count;
         py = pSrc2;
 
         /* Decrement the loop counter */
@@ -421,14 +415,7 @@ arm_status arm_conv_partial_q31(
         count++;
 
         /* Update the inputA and inputB pointers for next MAC calculation */
-        if ((int32_t)firstIndex - (int32_t)srcBLen + 1 > 0)
-        {
-          px = pIn1 + firstIndex - srcBLen + 1 + count;
-        }
-        else
-        {
-          px = pIn1 + count;
-        }
+        px = pSrc1 + count;
         py = pSrc2;
 
         /* Decrement the loop counter */
@@ -465,14 +452,7 @@ arm_status arm_conv_partial_q31(
         count++;
 
         /* Update the inputA and inputB pointers for next MAC calculation */
-        if ((int32_t)firstIndex - (int32_t)srcBLen + 1 > 0)
-        {
-          px = pIn1 + firstIndex - srcBLen + 1 + count;
-        }
-        else
-        {
-          px = pIn1 + count;
-        }
+        px = pSrc1 + count;
         py = pSrc2;
 
         /* Decrement the loop counter */

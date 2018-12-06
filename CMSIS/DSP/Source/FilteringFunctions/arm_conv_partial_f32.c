@@ -263,12 +263,13 @@ arm_status arm_conv_partial_f32(
     /* Working pointer of inputA */
     if ((int32_t)firstIndex - (int32_t)srcBLen + 1 > 0)
     {
-      px = pIn1 + firstIndex - srcBLen + 1;
+      pSrc1 = pIn1 + firstIndex - srcBLen + 1;
     }
     else
     {
-      px = pIn1;
+      pSrc1 = pIn1;
     }
+    px = pSrc1;
 
     /* Working pointer of inputB */
     pSrc2 = pIn2 + (srcBLen - 1U);
@@ -298,9 +299,9 @@ arm_status arm_conv_partial_f32(
         acc3 = 0.0f;
 
         /* read x[0], x[1], x[2] samples */
-        x0 = *(px++);
-        x1 = *(px++);
-        x2 = *(px++);
+        x0 = *px++;
+        x1 = *px++;
+        x2 = *px++;
 
         /* Apply loop unrolling and compute 4 MACs simultaneously. */
         k = srcBLen >> 2U;
@@ -310,10 +311,10 @@ arm_status arm_conv_partial_f32(
         do
         {
           /* Read y[srcBLen - 1] sample */
-          c0 = *(py--);
+          c0 = *py--;
 
           /* Read x[3] sample */
-          x3 = *(px++);
+          x3 = *px++;
 
           /* Perform the multiply-accumulate */
           /* acc0 +=  x[0] * y[srcBLen - 1] */
@@ -329,10 +330,10 @@ arm_status arm_conv_partial_f32(
           acc3 += x3 * c0;
 
           /* Read y[srcBLen - 2] sample */
-          c0 = *(py--);
+          c0 = *py--;
 
           /* Read x[4] sample */
-          x0 = *(px++);
+          x0 = *px++;
 
           /* Perform the multiply-accumulate */
           /* acc0 +=  x[1] * y[srcBLen - 2] */
@@ -345,10 +346,10 @@ arm_status arm_conv_partial_f32(
           acc3 += x0 * c0;
 
           /* Read y[srcBLen - 3] sample */
-          c0 = *(py--);
+          c0 = *py--;
 
           /* Read x[5] sample */
-          x1 = *(px++);
+          x1 = *px++;
 
           /* Perform the multiply-accumulates */
           /* acc0 +=  x[2] * y[srcBLen - 3] */
@@ -361,10 +362,10 @@ arm_status arm_conv_partial_f32(
           acc3 += x1 * c0;
 
           /* Read y[srcBLen - 4] sample */
-          c0 = *(py--);
+          c0 = *py--;
 
           /* Read x[6] sample */
-          x2 = *(px++);
+          x2 = *px++;
 
           /* Perform the multiply-accumulates */
           /* acc0 +=  x[3] * y[srcBLen - 4] */
@@ -386,10 +387,10 @@ arm_status arm_conv_partial_f32(
         while (k > 0U)
         {
           /* Read y[srcBLen - 5] sample */
-          c0 = *(py--);
+          c0 = *py--;
 
           /* Read x[7] sample */
-          x3 = *(px++);
+          x3 = *px++;
 
           /* Perform the multiply-accumulates */
           /* acc0 +=  x[4] * y[srcBLen - 5] */
@@ -420,14 +421,7 @@ arm_status arm_conv_partial_f32(
         count += 4U;
 
         /* Update the inputA and inputB pointers for next MAC calculation */
-        if ((int32_t)firstIndex - (int32_t)srcBLen + 1 > 0)
-        {
-          px = pIn1 + firstIndex - srcBLen + 1 + count;
-        }
-        else
-        {
-          px = pIn1 + count;
-        }
+        px = pSrc1 + count;
         py = pSrc2;
 
         /* Decrement the loop counter */
@@ -480,14 +474,7 @@ arm_status arm_conv_partial_f32(
         count++;
 
         /* Update the inputA and inputB pointers for next MAC calculation */
-        if ((int32_t)firstIndex - (int32_t)srcBLen + 1 > 0)
-        {
-          px = pIn1 + firstIndex - srcBLen + 1 + count;
-        }
-        else
-        {
-          px = pIn1 + count;
-        }
+        px = pSrc1 + count;
         py = pSrc2;
 
         /* Decrement the loop counter */
@@ -524,14 +511,7 @@ arm_status arm_conv_partial_f32(
         count++;
 
         /* Update the inputA and inputB pointers for next MAC calculation */
-        if ((int32_t)firstIndex - (int32_t)srcBLen + 1 > 0)
-        {
-          px = pIn1 + firstIndex - srcBLen + 1 + count;
-        }
-        else
-        {
-          px = pIn1 + count;
-        }
+        px = pSrc1 + count;
         py = pSrc2;
 
         /* Decrement the loop counter */
