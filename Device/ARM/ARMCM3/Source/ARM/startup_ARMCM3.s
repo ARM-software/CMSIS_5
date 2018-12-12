@@ -2,8 +2,8 @@
 ; * @file     startup_ARMCM3.s
 ; * @brief    CMSIS Core Device Startup File for
 ; *           ARMCM3 Device
-; * @version  V5.3.1
-; * @date     09. July 2018
+; * @version  V5.4.0
+; * @date     12. December 2018
 ; ******************************************************************************/
 ;/*
 ; * Copyright (c) 2009-2018 Arm Limited. All rights reserved.
@@ -152,6 +152,10 @@ $Handler_Name   PROC
 
 
 ; User setup Stack & Heap
+
+                IF       :LNOT::DEF:__MICROLIB
+                IMPORT   __use_two_region_memory
+                ENDIF
 
                 EXPORT   __stack_limit
                 EXPORT   __initial_sp

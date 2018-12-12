@@ -8,9 +8,11 @@
   <url>http://www.keil.com/pack/</url>
 
   <releases>
-    <release version="5.5.0-dev0">
+    <release version="5.5.0-dev1">
       Active development ...
-      Added Cortex-M35P device support.
+      CMSIS-Core(M):
+        - Reworked Stack/Heap configuration for ARM startup files.
+        - Added Cortex-M35P device support.
       CMSIS-RTOS2:
         - RTX 5.5.0 (see revision history for details)
     </release>

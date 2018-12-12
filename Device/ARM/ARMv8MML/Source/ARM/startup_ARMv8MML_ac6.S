@@ -2,8 +2,8 @@
  * @file     startup_ARMv8MML.S
  * @brief    CMSIS Core Device Startup File for
  *           ARMv8MML Device
- * @version  V5.3.1
- * @date     09. July 2018
+ * @version  V5.4.0
+ * @date     12. December 2018
  ******************************************************************************/
 /*
  * Copyright (c) 2009-2018 Arm Limited. All rights reserved.
@@ -173,6 +173,10 @@ Default_Handler:
 
 
 /* User setup Stack & Heap */
+
+                .ifndef  __MICROLIB
+                .global  __use_two_region_memory
+                .endif
 
                 .global  __stack_limit
                 .global  __initial_sp
