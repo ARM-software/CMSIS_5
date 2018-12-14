@@ -8,13 +8,17 @@
   <url>http://www.keil.com/pack/</url>
 
   <releases>
-    <release version="5.5.0-dev1">
+    <release version="5.5.0-dev2">
       Active development ...
       CMSIS-Core(M):
         - Reworked Stack/Heap configuration for ARM startup files.
         - Added Cortex-M35P device support.
       CMSIS-RTOS2:
         - RTX 5.5.0 (see revision history for details)
+      DSP_Lib:
+        - updated arm_math.h
+        - reduced ARM_MATH_CMx macros
+        - added GitHub pull requests
     </release>
     <release version="5.4.0" date="2018-08-01">
       Aligned pack structure with repository.
