@@ -7,6 +7,31 @@
     <th>Description</th>
   </tr>
   <tr>
+    <td>V1.5.3</td>
+    <td>
+      Note: binaries NOT rebuild!
+
+      Merged PullRequests
+       - #439, #430, #369, #265, #166
+      Modified arm_math.h
+       - reworked macros ARM_MATH_CMx
+       - removed macros __FPU_USED, __DSP_PRESENT
+       - used different include files
+      Modified source files (because of new arm_math.h)
+       - FilteringFunctions\arm_biquad_cascade_df2T_f32.c
+       - FilteringFunctions\arm_biquad_cascade_df2T_f64.c
+       - FilteringFunctions\arm_biquad_cascade_stereo_df2T_f32.c
+       - FilteringFunctions\arm_conv_partial_q15.c
+       - FilteringFunctions\arm_correlate_q15.c
+       - FilteringFunctions\arm_fir_f32.c
+       - MatrixFunctions\arm_mat_scale_q31.c
+       - StatisticsFunctions\arm_rms_q31.ck
+       - TransformFunctions\arm_bitreversal2.S
+       - TransformFunctions\arm_cfft_radix4_q31.c
+      Reworked DSP_Lib_TestSuite
+    </td>
+  </tr>
+  <tr>
     <td>V1.5.2</td>
     <td>
       Modified arm_math.h

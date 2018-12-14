@@ -21,7 +21,7 @@ void ref_rms_q31(
   q31_t * pResult)
 {
 	uint32_t i;
-	q63_t sumsq=0;
+    uint64_t sumsq = 0;             /* accumulator (can get never negative. changed type from q63 to uint64 */
 	q63_t tmp1;
 	q31_t tmp2;
   

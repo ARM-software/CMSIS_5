@@ -1,6 +1,8 @@
+#!/usr/bin/python3
+
 import sys
 
-toolchain_list = ["ARM", "GCC"]
+toolchain_list = ["ARM", "GCC", "ARMCLANG"]
 core_list      = ["cortexM0l", "cortexM3l", "cortexM4l", "cortexM4lf", "cortexM7l", "cortexM7lfsp", "cortexM7lfdp", 
                   "ARMv8MBLl", "ARMv8MMLl", "ARMv8MMLlfsp", "ARMv8MMLlfdp", "ARMv8MMLld", "ARMv8MMLldfsp", "ARMv8MMLldfdp" ]
 test_list      = ["MPS2", "FVP", "Simulator"]
@@ -9,15 +11,15 @@ error          = 1
 
 def parseLog(toolchain, core, test):
     if toolchain not in toolchain_list:
-        print "Error: Unkown toolchain '{0}'".format(toolchain)
+        print ("Error: Unkown toolchain '{0}'".format(toolchain))
         return error
 
     if core not in core_list:
-        print "Error: Unkown core '{0}'".format(core)
+        print ("Error: Unkown core '{0}'".format(core))
         return error
 
     if test not in test_list:
-        print "Error: Unkown test '{0}'".format(test)
+        print ("Error: Unkown test '{0}'".format(test))
         return error
 
     inFileName  = ".\DspLibTest_{2}\{0}\Logs\DspLibTest_{2}_{1}.log".format(toolchain, core, test)
@@ -110,7 +112,7 @@ def print_usage(sys_argv):
     argument_desc += "\n  test:      {0}".format(" ".join(test_list))
     argument_desc += "\n\ne.g.: parseLog ARM cortexM3l FVP"
 
-    print usage_str + argument_desc
+    print (usage_str + argument_desc)
 
 def exit_on_error(sys_argv):
     print_usage(sys_argv)

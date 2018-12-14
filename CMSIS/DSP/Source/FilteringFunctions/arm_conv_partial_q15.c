@@ -3,13 +3,13 @@
  * Title:        arm_conv_partial_q15.c
  * Description:  Partial convolution of Q15 sequences
  *
- * $Date:        27. January 2017
- * $Revision:    V.1.5.1
+ * $Date:        10. December 2018
+ * $Revision:    V.1.5.2
  *
  * Target Processor: Cortex-M cores
  * -------------------------------------------------------------------- */
 /*
- * Copyright (C) 2010-2017 ARM Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2010-2018 ARM Limited or its affiliates. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -66,7 +66,7 @@ arm_status arm_conv_partial_q15(
 {
 
 
-#if (defined(ARM_MATH_CM7) || defined(ARM_MATH_CM4) || defined(ARM_MATH_CM3)) && !defined(UNALIGNED_SUPPORT_DISABLE)
+#if !defined(ARM_MATH_CM0_Family) && !defined(UNALIGNED_SUPPORT_DISABLE)
 
   /* Run the below code for Cortex-M4 and Cortex-M3 */
 
@@ -766,7 +766,7 @@ arm_status arm_conv_partial_q15(
   }
   return (status);
 
-#endif /* #if (defined(ARM_MATH_CM7) || defined(ARM_MATH_CM4) || defined(ARM_MATH_CM3)) && !defined(UNALIGNED_SUPPORT_DISABLE) */
+#endif /* #if !defined(ARM_MATH_CM0_Family) && !defined(UNALIGNED_SUPPORT_DISABLE) */
 
 }
 

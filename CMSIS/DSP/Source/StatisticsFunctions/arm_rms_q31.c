@@ -3,13 +3,13 @@
  * Title:        arm_rms_q31.c
  * Description:  Root Mean Square of the elements of a Q31 vector
  *
- * $Date:        27. January 2017
- * $Revision:    V.1.5.1
+ * $Date:        10. December 2018
+ * $Revision:    V.1.5.2
  *
  * Target Processor: Cortex-M cores
  * -------------------------------------------------------------------- */
 /*
- * Copyright (C) 2010-2017 ARM Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2010-2018 ARM Limited or its affiliates. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -63,7 +63,7 @@ void arm_rms_q31(
   uint32_t blockSize,
   q31_t * pResult)
 {
-  q63_t sum = 0;                                 /* accumulator */
+  uint64_t sum = 0;                              /* accumulator (can get never negative. changed type from q63 to uint64 */
   q31_t in;                                      /* Temporary variable to store the input */
   uint32_t blkCnt;                               /* loop counter */
 

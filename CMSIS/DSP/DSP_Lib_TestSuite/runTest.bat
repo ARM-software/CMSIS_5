@@ -3,7 +3,7 @@
 set UVEXE=C:\Keil_v5\UV4\UV4.EXE
 
 if .%1==. goto help
-for %%a in (ARM GCC) do if %1==%%a goto checkParam2
+for %%a in (ARM GCC ARMCLANG) do if %1==%%a goto checkParam2
 echo   parameter %1 not supported.
 goto help
 
@@ -36,12 +36,19 @@ goto help
 
 :CheckLibraries
 if %1==ARM                goto CheckLibrariesARM
+if %1==ARMCLANG           goto CheckLibrariesARMCLANG
 if %1==GCC                goto CheckLibrariesGCC
+goto end
 
 :CheckLibrariesARM
 if not exist ".\RefLibs\%1\Lib\arm_%2_ref.lib"   (echo ".\RefLibs\%1\Lib\arm_%2_ref.lib" not found.  & goto end)
 if not exist "..\Lib\%1\arm_%2_math.lib"         (echo "..\Lib\%1\arm_%2_ref.lib" not found.         & goto end)
 goto CopyLibrariesARM
+
+:CheckLibrariesARMCLANG
+if not exist ".\RefLibs\%1\Lib\arm_%2_ref.lib"   (echo ".\RefLibs\%1\Lib\arm_%2_ref.lib" not found.  & goto end)
+if not exist "..\Lib\%1\arm_%2_math.lib"         (echo "..\Lib\%1\arm_%2_ref.lib" not found.         & goto end)
+goto CopyLibrariesARMCLANG
 
 :CheckLibrariesGCC
 if not exist ".\RefLibs\%1\Lib\libarm_%2_ref.a"  (echo ".\RefLibs\%1\Lib\libarm_%2_ref.a" not found.  & goto end)
@@ -49,6 +56,11 @@ if not exist "..\Lib\%1\libarm_%2_math.a"        (echo "..\Lib\%1\libarm_%2_math
 goto CopyLibrariesGCC
 
 :CopyLibrariesARM
+copy /B ".\RefLibs\%1\Lib\arm_%2_ref.lib"    .\DspLibTest_%3\%1\Lib\arm_ref.lib  /B /Y
+copy /B "..\Lib\%1\arm_%2_math.lib"          .\DspLibTest_%3\%1\Lib\arm_math.lib /B /Y
+goto buildProject
+
+:CopyLibrariesARMCLANG
 copy /B ".\RefLibs\%1\Lib\arm_%2_ref.lib"    .\DspLibTest_%3\%1\Lib\arm_ref.lib  /B /Y
 copy /B "..\Lib\%1\arm_%2_math.lib"          .\DspLibTest_%3\%1\Lib\arm_math.lib /B /Y
 goto buildProject

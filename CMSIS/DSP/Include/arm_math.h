@@ -1,8 +1,8 @@
 /******************************************************************************
  * @file     arm_math.h
  * @brief    Public header file for CMSIS DSP LibraryU
- * @version  V1.5.3
- * @date     10. January 2018
+ * @version  V1.5.4
+ * @date     10. December 2018
  ******************************************************************************/
 /*
  * Copyright (c) 2010-2018 Arm Limited or its affiliates. All rights reserved.
@@ -73,10 +73,6 @@
    * The library functions are declared in the public file <code>arm_math.h</code> which is placed in the <code>Include</code> folder.
    * Simply include this file and link the appropriate library in the application and begin calling the library functions. The Library supports single
    * public header file <code> arm_math.h</code> for Cortex-M cores with little endian and big endian. Same header file will be used for floating point unit(FPU) variants.
-   * Define the appropriate preprocessor macro ARM_MATH_CM7 or ARM_MATH_CM4 or ARM_MATH_CM3 or
-   * ARM_MATH_CM0 or ARM_MATH_CM0PLUS depending on the target processor in the application.
-   * For Armv8-M cores define preprocessor macro ARM_MATH_ARMV8MBL or ARM_MATH_ARMV8MML.
-   * Set preprocessor macro __DSP_PRESENT if Armv8-M Mainline core supports DSP instructions.
    * 
    *
    * Examples
@@ -119,25 +115,6 @@
    * - ARM_MATH_ROUNDING:
    *
    * Define macro ARM_MATH_ROUNDING for rounding on support functions
-   *
-   * - ARM_MATH_CMx:
-   *
-   * Define macro ARM_MATH_CM4 for building the library on Cortex-M4 target, ARM_MATH_CM3 for building library on Cortex-M3 target
-   * and ARM_MATH_CM0 for building library on Cortex-M0 target, ARM_MATH_CM0PLUS for building library on Cortex-M0+ target, and
-   * ARM_MATH_CM7 for building the library on cortex-M7.
-   *
-   * - ARM_MATH_ARMV8MxL:
-   *
-   * Define macro ARM_MATH_ARMV8MBL for building the library on Armv8-M Baseline target, ARM_MATH_ARMV8MML for building library
-   * on Armv8-M Mainline target.
-   *
-   * - __FPU_PRESENT:
-   *
-   * Initialize macro __FPU_PRESENT = 1 when building on FPU supported Targets. Enable this macro for floating point libraries.
-   *
-   * - __DSP_PRESENT:
-   *
-   * Initialize macro __DSP_PRESENT = 1 when Armv8-M Mainline core supports DSP instructions.
    *
    * <hr>
    * CMSIS-DSP in ARM::CMSIS Pack
@@ -295,10 +272,10 @@
 #elif defined ( __ARMCC_VERSION ) && ( __ARMCC_VERSION >= 6010050 )
 
 #elif defined ( __GNUC__ )
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wsign-conversion"
-#pragma GCC diagnostic ignored "-Wconversion"
-#pragma GCC diagnostic ignored "-Wunused-parameter"
+  #pragma GCC diagnostic push
+  #pragma GCC diagnostic ignored "-Wsign-conversion"
+  #pragma GCC diagnostic ignored "-Wconversion"
+  #pragma GCC diagnostic ignored "-Wunused-parameter"
 
 #elif defined ( __ICCARM__ )
 
@@ -313,37 +290,33 @@
 #endif
 
 
-#define __CMSIS_GENERIC         /* disable NVIC and Systick functions */
-
-#if defined(ARM_MATH_CM7)
-  #include "core_cm7.h"
-  #define ARM_MATH_DSP
-#elif defined (ARM_MATH_CM4)
-  #include "core_cm4.h"
-  #define ARM_MATH_DSP
-#elif defined (ARM_MATH_CM3)
-  #include "core_cm3.h"
-#elif defined (ARM_MATH_CM0)
-  #include "core_cm0.h"
-  #define ARM_MATH_CM0_FAMILY
-#elif defined (ARM_MATH_CM0PLUS)
-  #include "core_cm0plus.h"
-  #define ARM_MATH_CM0_FAMILY
-#elif defined (ARM_MATH_ARMV8MBL)
-  #include "core_armv8mbl.h"
-  #define ARM_MATH_CM0_FAMILY
-#elif defined (ARM_MATH_ARMV8MML)
-  #include "core_armv8mml.h"
-  #if (defined (__DSP_PRESENT) && (__DSP_PRESENT == 1))
-    #define ARM_MATH_DSP
-  #endif
-#else
-  #error "Define according the used Cortex core ARM_MATH_CM7, ARM_MATH_CM4, ARM_MATH_CM3, ARM_MATH_CM0PLUS, ARM_MATH_CM0, ARM_MATH_ARMV8MBL, ARM_MATH_ARMV8MML"
-#endif
-
-#undef  __CMSIS_GENERIC         /* enable NVIC and Systick functions */
+#include "cmsis_compiler.h"
 #include "string.h"
 #include "math.h"
+
+/* evaluate ARM architecture */
+#if   defined (__ARM_ARCH_6M__)
+  #define ARM_MATH_CM0_FAMILY            1
+#elif defined (__ARM_ARCH_7M__)
+//#define ARM_MATH_CM0_FAMILY            0
+#elif defined (__ARM_ARCH_7EM__)
+//#define ARM_MATH_CM0_FAMILY            0
+#elif defined (__ARM_ARCH_8M_BASE__)
+  #define ARM_MATH_CM0_FAMILY            1
+#elif defined (__ARM_ARCH_8M_MAIN__)
+//#define ARM_MATH_CM0_FAMILY            0
+#else
+  #error "Unknown Arm Architecture!"
+#endif
+
+/* evaluate ARM DSP feature */
+#if (defined (__ARM_FEATURE_DSP) && (__ARM_FEATURE_DSP == 1))
+  #define ARM_MATH_DSP                   1
+#endif
+
+
+
+
 #ifdef   __cplusplus
 extern "C"
 {
@@ -383,14 +356,10 @@ extern "C"
    * @brief Macro for Unaligned Support
    */
 #ifndef UNALIGNED_SUPPORT_DISABLE
-    #define ALIGN4
+  #define ALIGN4
 #else
-  #if defined  (__GNUC__)
-    #define ALIGN4 __attribute__((aligned(4)))
-  #else
-    #define ALIGN4 __align(4)
-  #endif
-#endif   /* #ifndef UNALIGNED_SUPPORT_DISABLE */
+  #define ALIGN4          __ALIGNED(4)
+#endif
 
   /**
    * @brief Error status returned by some functions in the library.
@@ -484,33 +453,29 @@ extern "C"
 #define _SIMD32_OFFSET(addr)  (*(__SIMD32_TYPE *)  (addr))
 #define __SIMD64(addr)        (*(int64_t **) & (addr))
 
-#if !defined (ARM_MATH_DSP)
+#ifndef ARM_MATH_DSP
   /**
    * @brief definition to pack two 16 bit values.
    */
-#define __PKHBT(ARG1, ARG2, ARG3) ( (((int32_t)(ARG1) <<    0) & (int32_t)0x0000FFFF) | \
-                                    (((int32_t)(ARG2) << ARG3) & (int32_t)0xFFFF0000)  )
-#define __PKHTB(ARG1, ARG2, ARG3) ( (((int32_t)(ARG1) <<    0) & (int32_t)0xFFFF0000) | \
-                                    (((int32_t)(ARG2) >> ARG3) & (int32_t)0x0000FFFF)  )
-
-#endif /* !defined (ARM_MATH_DSP) */
+  #define __PKHBT(ARG1, ARG2, ARG3) ( (((int32_t)(ARG1) <<    0) & (int32_t)0x0000FFFF) | \
+                                      (((int32_t)(ARG2) << ARG3) & (int32_t)0xFFFF0000)  )
+  #define __PKHTB(ARG1, ARG2, ARG3) ( (((int32_t)(ARG1) <<    0) & (int32_t)0xFFFF0000) | \
+                                      (((int32_t)(ARG2) >> ARG3) & (int32_t)0x0000FFFF)  )
+#endif
 
    /**
    * @brief definition to pack four 8 bit values.
    */
 #ifndef ARM_MATH_BIG_ENDIAN
-
-#define __PACKq7(v0,v1,v2,v3) ( (((int32_t)(v0) <<  0) & (int32_t)0x000000FF) | \
-                                (((int32_t)(v1) <<  8) & (int32_t)0x0000FF00) | \
-                                (((int32_t)(v2) << 16) & (int32_t)0x00FF0000) | \
-                                (((int32_t)(v3) << 24) & (int32_t)0xFF000000)  )
+  #define __PACKq7(v0,v1,v2,v3) ( (((int32_t)(v0) <<  0) & (int32_t)0x000000FF) | \
+                                  (((int32_t)(v1) <<  8) & (int32_t)0x0000FF00) | \
+                                  (((int32_t)(v2) << 16) & (int32_t)0x00FF0000) | \
+                                  (((int32_t)(v3) << 24) & (int32_t)0xFF000000)  )
 #else
-
-#define __PACKq7(v0,v1,v2,v3) ( (((int32_t)(v3) <<  0) & (int32_t)0x000000FF) | \
-                                (((int32_t)(v2) <<  8) & (int32_t)0x0000FF00) | \
-                                (((int32_t)(v1) << 16) & (int32_t)0x00FF0000) | \
-                                (((int32_t)(v0) << 24) & (int32_t)0xFF000000)  )
-
+  #define __PACKq7(v0,v1,v2,v3) ( (((int32_t)(v3) <<  0) & (int32_t)0x000000FF) | \
+                                  (((int32_t)(v2) <<  8) & (int32_t)0x0000FF00) | \
+                                  (((int32_t)(v1) << 16) & (int32_t)0x00FF0000) | \
+                                  (((int32_t)(v0) << 24) & (int32_t)0xFF000000)  )
 #endif
 
 
@@ -5746,15 +5711,34 @@ void arm_rfft_fast_f32(
   {
     if (in >= 0.0f)
     {
-
-#if   (__FPU_USED == 1) && defined ( __CC_ARM   )
+#if defined ( __CC_ARM )
+  #if defined __TARGET_FPU_VFP
       *pOut = __sqrtf(in);
-#elif (__FPU_USED == 1) && (defined(__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050))
+  #else
+      *pOut = sqrtf(in);
+  #endif
+
+#elif defined (__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050)
+  #if defined __ARM_PCS_VFP
       *pOut = __builtin_sqrtf(in);
-#elif (__FPU_USED == 1) && defined(__GNUC__)
+  #else
+      *pOut = sqrtf(in);
+  #endif
+
+#elif defined ( __GNUC__ )
+  #if defined (__VFP_FP__) && !defined(__SOFTFP__)
       *pOut = __builtin_sqrtf(in);
-#elif (__FPU_USED == 1) && defined ( __ICCARM__ ) && (__VER__ >= 6040000)
+  #else
+      *pOut = sqrtf(in);
+  #endif
+
+#elif defined ( __ICCARM__ )
+  #if defined __ARMVFP__
       __ASM("VSQRT.F32 %0,%1" : "=t"(*pOut) : "t"(in));
+  #else
+      *pOut = sqrtf(in);
+  #endif
+
 #else
       *pOut = sqrtf(in);
 #endif
@@ -7066,7 +7050,7 @@ void arm_rfft_fast_f32(
 
 #if   defined ( __CC_ARM )
   /* Enter low optimization region - place directly above function definition */
-  #if defined( ARM_MATH_CM4 ) || defined( ARM_MATH_CM7)
+  #if defined( __ARM_ARCH_7EM__ )
     #define LOW_OPTIMIZATION_ENTER \
        _Pragma ("push")         \
        _Pragma ("O1")
@@ -7075,7 +7059,7 @@ void arm_rfft_fast_f32(
   #endif
 
   /* Exit low optimization region - place directly after end of function definition */
-  #if defined ( ARM_MATH_CM4 ) || defined ( ARM_MATH_CM7 )
+  #if defined ( __ARM_ARCH_7EM__ )
     #define LOW_OPTIMIZATION_EXIT \
        _Pragma ("pop")
   #else
@@ -7103,7 +7087,7 @@ void arm_rfft_fast_f32(
 
 #elif defined ( __ICCARM__ )
   /* Enter low optimization region - place directly above function definition */
-  #if defined ( ARM_MATH_CM4 ) || defined ( ARM_MATH_CM7 )
+  #if defined ( __ARM_ARCH_7EM__ )
     #define LOW_OPTIMIZATION_ENTER \
        _Pragma ("optimize=low")
   #else
@@ -7114,7 +7098,7 @@ void arm_rfft_fast_f32(
   #define LOW_OPTIMIZATION_EXIT
 
   /* Enter low optimization region - place directly above function definition */
-  #if defined ( ARM_MATH_CM4 ) || defined ( ARM_MATH_CM7 )
+  #if defined ( __ARM_ARCH_7EM__ )
     #define IAR_ONLY_LOW_OPTIMIZATION_ENTER \
        _Pragma ("optimize=low")
   #else
