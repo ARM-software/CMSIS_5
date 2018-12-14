@@ -215,7 +215,6 @@
                 <debug>1</debug>
                 <option>
                     <name>CCDefines</name>
-                    <state>ARM_MATH_CM0</state>
                     <state>ARM_MATH_MATRIX_CHECK</state>
                     <state>ARM_MATH_ROUNDING</state>
                 </option>
@@ -518,8 +517,7 @@
                 </option>
                 <option>
                     <name>ADefines</name>
-                    <state>ARM_MATH_CM0
-</state>
+                    <state>ARM_MATH_CM0_FAMILY</state>
                 </option>
                 <option>
                     <name>AList</name>
@@ -1238,7 +1236,6 @@
                 <debug>1</debug>
                 <option>
                     <name>CCDefines</name>
-                    <state>ARM_MATH_CM0</state>
                     <state>ARM_MATH_MATRIX_CHECK</state>
                     <state>ARM_MATH_ROUNDING</state>
                     <state>ARM_MATH_BIG_ENDIAN</state>
@@ -1542,8 +1539,7 @@
                 </option>
                 <option>
                     <name>ADefines</name>
-                    <state>ARM_MATH_CM0
-</state>
+                    <state>ARM_MATH_CM0_FAMILY</state>
                 </option>
                 <option>
                     <name>AList</name>
@@ -2262,7 +2258,6 @@
                 <debug>1</debug>
                 <option>
                     <name>CCDefines</name>
-                    <state>ARM_MATH_CM3</state>
                     <state>ARM_MATH_MATRIX_CHECK</state>
                     <state>ARM_MATH_ROUNDING</state>
                 </option>
@@ -2565,8 +2560,7 @@
                 </option>
                 <option>
                     <name>ADefines</name>
-                    <state>ARM_MATH_CM3
-</state>
+                    <state></state>
                 </option>
                 <option>
                     <name>AList</name>
@@ -3285,7 +3279,6 @@
                 <debug>1</debug>
                 <option>
                     <name>CCDefines</name>
-                    <state>ARM_MATH_CM3</state>
                     <state>ARM_MATH_MATRIX_CHECK</state>
                     <state>ARM_MATH_ROUNDING</state>
                     <state>ARM_MATH_BIG_ENDIAN</state>
@@ -3589,8 +3582,7 @@
                 </option>
                 <option>
                     <name>ADefines</name>
-                    <state>ARM_MATH_CM3
-</state>
+                    <state></state>
                 </option>
                 <option>
                     <name>AList</name>
@@ -4309,7 +4301,6 @@
                 <debug>1</debug>
                 <option>
                     <name>CCDefines</name>
-                    <state>ARM_MATH_CM4</state>
                     <state>ARM_MATH_MATRIX_CHECK</state>
                     <state>ARM_MATH_ROUNDING</state>
                 </option>
@@ -4612,8 +4603,7 @@
                 </option>
                 <option>
                     <name>ADefines</name>
-                    <state>ARM_MATH_CM4
-</state>
+                    <state></state>
                 </option>
                 <option>
                     <name>AList</name>
@@ -5332,7 +5322,6 @@
                 <debug>1</debug>
                 <option>
                     <name>CCDefines</name>
-                    <state>ARM_MATH_CM4</state>
                     <state>ARM_MATH_MATRIX_CHECK</state>
                     <state>ARM_MATH_ROUNDING</state>
                     <state>ARM_MATH_BIG_ENDIAN</state>
@@ -5636,8 +5625,7 @@
                 </option>
                 <option>
                     <name>ADefines</name>
-                    <state>ARM_MATH_CM4
-</state>
+                    <state></state>
                 </option>
                 <option>
                     <name>AList</name>
@@ -6356,10 +6344,8 @@
                 <debug>1</debug>
                 <option>
                     <name>CCDefines</name>
-                    <state>ARM_MATH_CM4</state>
                     <state>ARM_MATH_MATRIX_CHECK</state>
                     <state>ARM_MATH_ROUNDING</state>
-                    <state>__FPU_PRESENT=1U</state>
                 </option>
                 <option>
                     <name>CCPreprocFile</name>
@@ -6660,8 +6646,7 @@
                 </option>
                 <option>
                     <name>ADefines</name>
-                    <state>ARM_MATH_CM4
-</state>
+                    <state></state>
                 </option>
                 <option>
                     <name>AList</name>
@@ -7380,10 +7365,8 @@
                 <debug>1</debug>
                 <option>
                     <name>CCDefines</name>
-                    <state>ARM_MATH_CM4</state>
                     <state>ARM_MATH_MATRIX_CHECK</state>
                     <state>ARM_MATH_ROUNDING</state>
-                    <state>__FPU_PRESENT=1U</state>
                     <state>ARM_MATH_BIG_ENDIAN</state>
                 </option>
                 <option>
@@ -7685,8 +7668,7 @@
                 </option>
                 <option>
                     <name>ADefines</name>
-                    <state>ARM_MATH_CM4
-</state>
+                    <state></state>
                 </option>
                 <option>
                     <name>AList</name>
@@ -8405,7 +8387,6 @@
                 <debug>1</debug>
                 <option>
                     <name>CCDefines</name>
-                    <state>ARM_MATH_CM7</state>
                     <state>ARM_MATH_MATRIX_CHECK</state>
                     <state>ARM_MATH_ROUNDING</state>
                 </option>
@@ -8708,8 +8689,7 @@
                 </option>
                 <option>
                     <name>ADefines</name>
-                    <state>ARM_MATH_CM7
-</state>
+                    <state></state>
                 </option>
                 <option>
                     <name>AList</name>
@@ -9428,7 +9408,6 @@
                 <debug>1</debug>
                 <option>
                     <name>CCDefines</name>
-                    <state>ARM_MATH_CM7</state>
                     <state>ARM_MATH_MATRIX_CHECK</state>
                     <state>ARM_MATH_ROUNDING</state>
                     <state>ARM_MATH_BIG_ENDIAN</state>
@@ -9732,8 +9711,7 @@
                 </option>
                 <option>
                     <name>ADefines</name>
-                    <state>ARM_MATH_CM7
-</state>
+                    <state></state>
                 </option>
                 <option>
                     <name>AList</name>
@@ -10452,10 +10430,8 @@
                 <debug>1</debug>
                 <option>
                     <name>CCDefines</name>
-                    <state>ARM_MATH_CM7</state>
                     <state>ARM_MATH_MATRIX_CHECK</state>
                     <state>ARM_MATH_ROUNDING</state>
-                    <state>__FPU_PRESENT=1U</state>
                 </option>
                 <option>
                     <name>CCPreprocFile</name>
@@ -10756,8 +10732,7 @@
                 </option>
                 <option>
                     <name>ADefines</name>
-                    <state>ARM_MATH_CM7
-</state>
+                    <state></state>
                 </option>
                 <option>
                     <name>AList</name>
@@ -11476,10 +11451,8 @@
                 <debug>1</debug>
                 <option>
                     <name>CCDefines</name>
-                    <state>ARM_MATH_CM7</state>
                     <state>ARM_MATH_MATRIX_CHECK</state>
                     <state>ARM_MATH_ROUNDING</state>
-                    <state>__FPU_PRESENT=1U</state>
                     <state>ARM_MATH_BIG_ENDIAN</state>
                 </option>
                 <option>
@@ -11781,8 +11754,7 @@
                 </option>
                 <option>
                     <name>ADefines</name>
-                    <state>ARM_MATH_CM7
-</state>
+                    <state></state>
                 </option>
                 <option>
                     <name>AList</name>
@@ -12501,10 +12473,8 @@
                 <debug>1</debug>
                 <option>
                     <name>CCDefines</name>
-                    <state>ARM_MATH_CM7</state>
                     <state>ARM_MATH_MATRIX_CHECK</state>
                     <state>ARM_MATH_ROUNDING</state>
-                    <state>__FPU_PRESENT=1U</state>
                 </option>
                 <option>
                     <name>CCPreprocFile</name>
@@ -12805,8 +12775,7 @@
                 </option>
                 <option>
                     <name>ADefines</name>
-                    <state>ARM_MATH_CM7
-</state>
+                    <state></state>
                 </option>
                 <option>
                     <name>AList</name>
@@ -13525,10 +13494,8 @@
                 <debug>1</debug>
                 <option>
                     <name>CCDefines</name>
-                    <state>ARM_MATH_CM7</state>
                     <state>ARM_MATH_MATRIX_CHECK</state>
                     <state>ARM_MATH_ROUNDING</state>
-                    <state>__FPU_PRESENT=1U</state>
                     <state>ARM_MATH_BIG_ENDIAN</state>
                 </option>
                 <option>
@@ -13830,8 +13797,7 @@
                 </option>
                 <option>
                     <name>ADefines</name>
-                    <state>ARM_MATH_CM7
-</state>
+                    <state></state>
                 </option>
                 <option>
                     <name>AList</name>
@@ -14550,10 +14516,8 @@
                 <debug>1</debug>
                 <option>
                     <name>CCDefines</name>
-                    <state>ARM_MATH_ARMV8MBL</state>
                     <state>ARM_MATH_MATRIX_CHECK</state>
                     <state>ARM_MATH_ROUNDING</state>
-                    <state>__DSP_PRESENT=1U</state>
                 </option>
                 <option>
                     <name>CCPreprocFile</name>
@@ -14854,7 +14818,7 @@
                 </option>
                 <option>
                     <name>ADefines</name>
-                    <state>ARM_MATH_ARMV8MBL</state>
+                    <state>ARM_MATH_CM0_FAMILY</state>
                 </option>
                 <option>
                     <name>AList</name>
@@ -15573,10 +15537,8 @@
                 <debug>1</debug>
                 <option>
                     <name>CCDefines</name>
-                    <state>ARM_MATH_ARMV8MML</state>
                     <state>ARM_MATH_MATRIX_CHECK</state>
                     <state>ARM_MATH_ROUNDING</state>
-                    <state>__DSP_PRESENT=1U</state>
                 </option>
                 <option>
                     <name>CCPreprocFile</name>
@@ -15877,7 +15839,7 @@
                 </option>
                 <option>
                     <name>ADefines</name>
-                    <state>ARM_MATH_ARMV8MML</state>
+                    <state></state>
                 </option>
                 <option>
                     <name>AList</name>
@@ -16596,12 +16558,8 @@
                 <debug>1</debug>
                 <option>
                     <name>CCDefines</name>
-                    <state>ARM_MATH_ARMV8MML</state>
                     <state>ARM_MATH_MATRIX_CHECK</state>
                     <state>ARM_MATH_ROUNDING</state>
-                    <state>__DSP_PRESENT=1U</state>
-                    <state>__FPU_PRESENT=1U</state>
-                    <state>__FPU_PRESENT=1U</state>
                 </option>
                 <option>
                     <name>CCPreprocFile</name>
@@ -16902,7 +16860,7 @@
                 </option>
                 <option>
                     <name>ADefines</name>
-                    <state>ARM_MATH_ARMV8MML</state>
+                    <state></state>
                 </option>
                 <option>
                     <name>AList</name>
@@ -17621,12 +17579,8 @@
                 <debug>1</debug>
                 <option>
                     <name>CCDefines</name>
-                    <state>ARM_MATH_ARMV8MML</state>
                     <state>ARM_MATH_MATRIX_CHECK</state>
                     <state>ARM_MATH_ROUNDING</state>
-                    <state>__DSP_PRESENT=1U</state>
-                    <state>__FPU_PRESENT=1U</state>
-                    <state>__FPU_PRESENT=1U</state>
                 </option>
                 <option>
                     <name>CCPreprocFile</name>
@@ -17927,7 +17881,7 @@
                 </option>
                 <option>
                     <name>ADefines</name>
-                    <state>ARM_MATH_ARMV8MML</state>
+                    <state></state>
                 </option>
                 <option>
                     <name>AList</name>
@@ -18646,11 +18600,8 @@
                 <debug>1</debug>
                 <option>
                     <name>CCDefines</name>
-                    <state>ARM_MATH_ARMV8MML</state>
                     <state>ARM_MATH_MATRIX_CHECK</state>
                     <state>ARM_MATH_ROUNDING</state>
-                    <state>__DSP_PRESENT=1U</state>
-                    <state>__DSP_PRESENT=1U</state>
                 </option>
                 <option>
                     <name>CCPreprocFile</name>
@@ -18951,7 +18902,7 @@
                 </option>
                 <option>
                     <name>ADefines</name>
-                    <state>ARM_MATH_ARMV8MML</state>
+                    <state></state>
                 </option>
                 <option>
                     <name>AList</name>
@@ -19670,13 +19621,8 @@
                 <debug>1</debug>
                 <option>
                     <name>CCDefines</name>
-                    <state>ARM_MATH_ARMV8MML</state>
                     <state>ARM_MATH_MATRIX_CHECK</state>
                     <state>ARM_MATH_ROUNDING</state>
-                    <state>__DSP_PRESENT=1U</state>
-                    <state>__FPU_PRESENT=1U</state>
-                    <state>__DSP_PRESENT=1U</state>
-                    <state>__FPU_PRESENT=1U</state>
                 </option>
                 <option>
                     <name>CCPreprocFile</name>
@@ -19977,7 +19923,7 @@
                 </option>
                 <option>
                     <name>ADefines</name>
-                    <state>ARM_MATH_ARMV8MML</state>
+                    <state></state>
                 </option>
                 <option>
                     <name>AList</name>
@@ -20696,11 +20642,8 @@
                 <debug>1</debug>
                 <option>
                     <name>CCDefines</name>
-                    <state>ARM_MATH_ARMV8MML</state>
                     <state>ARM_MATH_MATRIX_CHECK</state>
                     <state>ARM_MATH_ROUNDING</state>
-                    <state>__DSP_PRESENT=1U</state>
-                    <state>__FPU_PRESENT=1U</state>
                 </option>
                 <option>
                     <name>CCPreprocFile</name>
@@ -21001,7 +20944,7 @@
                 </option>
                 <option>
                     <name>ADefines</name>
-                    <state>ARM_MATH_ARMV8MML</state>
+                    <state></state>
                 </option>
                 <option>
                     <name>AList</name>
