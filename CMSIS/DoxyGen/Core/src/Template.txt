@@ -756,6 +756,16 @@ to verify a minimum version or ensure that the right processor core is used.
 \endcode
 
 
+\b core_cm1.h
+\code
+#define __CM1_CMSIS_VERSION_MAIN  (__CM_CMSIS_VERSION_MAIN)              /*!< \deprecated [31:16] CMSIS HAL main version */
+#define __CM1_CMSIS_VERSION_SUB   (__CM_CMSIS_VERSION_SUB)               /*!< \deprecated [15:0]  CMSIS HAL sub version */
+#define __CM1_CMSIS_VERSION       ((__CM1_CMSIS_VERSION_MAIN << 16U) | \
+                                    __CM1_CMSIS_VERSION_SUB           )  /*!< \deprecated CMSIS HAL version number */
+
+#define __CORTEX_M                (1U)                                   /*!< Cortex-M Core */
+\endcode
+
 \b core_cm3.h
 \code
 #define __CM3_CMSIS_VERSION_MAIN  (5U)                                 /* [31:16] CMSIS HAL main version */
