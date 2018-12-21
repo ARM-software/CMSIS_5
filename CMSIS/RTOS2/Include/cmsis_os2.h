@@ -208,25 +208,32 @@ typedef enum {
  
  
 /// \details Thread ID identifies the thread.
-typedef void *osThreadId_t;
+struct osRtxThread_s;
+typedef struct osRtxThread_s *osThreadId_t;
  
 /// \details Timer ID identifies the timer.
-typedef void *osTimerId_t;
+struct osRtxTimer_s;
+typedef struct osRtxTimer_s *osTimerId_t;
  
 /// \details Event Flags ID identifies the event flags.
-typedef void *osEventFlagsId_t;
+struct osRtxEventFlags_s;
+typedef struct osRtxEventFlags_s *osEventFlagsId_t;
  
 /// \details Mutex ID identifies the mutex.
-typedef void *osMutexId_t;
+struct osRtxMutex_s;
+typedef struct osRtxMutex_s *osMutexId_t;
  
 /// \details Semaphore ID identifies the semaphore.
-typedef void *osSemaphoreId_t;
+struct osRtxSemaphore_s;
+typedef struct osRtxSemaphore_s *osSemaphoreId_t;
  
 /// \details Memory Pool ID identifies the memory pool.
-typedef void *osMemoryPoolId_t;
+struct osRtxMemoryPool_s;
+typedef struct osRtxMemoryPool_s *osMemoryPoolId_t;
  
 /// \details Message Queue ID identifies the message queue.
-typedef void *osMessageQueueId_t;
+struct osRtxMessageQueue_s;
+typedef struct osRtxMessageQueue_s *osMessageQueueId_t;
  
  
 #ifndef TZ_MODULEID_T

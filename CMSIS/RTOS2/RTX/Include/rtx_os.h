@@ -163,7 +163,7 @@ typedef struct osRtxTimer_s {
 //  ==== Event Flags definitions ====
  
 /// Event Flags Control Block
-typedef struct {
+typedef struct osRtxEventFlags_s {
   uint8_t                          id;  ///< Object Identifier
   uint8_t              reserved_state;  ///< Object State (not used)
   uint8_t                       flags;  ///< Object Flags
@@ -195,7 +195,7 @@ typedef struct osRtxMutex_s {
 //  ==== Semaphore definitions ====
  
 /// Semaphore Control Block
-typedef struct {
+typedef struct osRtxSemaphore_s {
   uint8_t                          id;  ///< Object Identifier
   uint8_t              reserved_state;  ///< Object State (not used)
   uint8_t                       flags;  ///< Object Flags
@@ -220,7 +220,7 @@ typedef struct {
 } osRtxMpInfo_t;
  
 /// Memory Pool Control Block
-typedef struct {
+typedef struct osRtxMemoryPool_s {
   uint8_t                          id;  ///< Object Identifier
   uint8_t              reserved_state;  ///< Object State (not used)
   uint8_t                       flags;  ///< Object Flags
@@ -244,7 +244,7 @@ typedef struct osRtxMessage_s {
 } osRtxMessage_t;
  
 /// Message Queue Control Block
-typedef struct {
+typedef struct osRtxMessageQueue_s {
   uint8_t                          id;  ///< Object Identifier
   uint8_t              reserved_state;  ///< Object State (not used)
   uint8_t                       flags;  ///< Object Flags
@@ -262,7 +262,7 @@ typedef struct {
 //  ==== Generic Object definitions ====
  
 /// Generic Object Control Block
-typedef struct {
+typedef struct osRtxObject_s {
   uint8_t                          id;  ///< Object Identifier
   uint8_t                       state;  ///< Object State
   uint8_t                       flags;  ///< Object Flags
