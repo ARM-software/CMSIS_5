@@ -269,7 +269,7 @@ static inline  t __##f (t1 a1, t2 a2, t3 a3, t4 a4) {                          \
 
 #elif defined (__ICCARM__)      /* IAR Compiler */
 
-#define __NO_RETURN __noreturn
+#define __NO_RETURN __attribute__((__noreturn__))
 
 #define RET_osEvent        "=r"(ret.status), "=r"(ret.value), "=r"(ret.def)
 #define RET_osCallback     "=r"(ret.fp), "=r"(ret.arg)

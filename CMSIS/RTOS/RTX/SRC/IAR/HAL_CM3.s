@@ -136,6 +136,11 @@ _free_box:
         PUBLIC  SVC_Handler
 SVC_Handler:
 
+	#ifdef  IFX_XMC4XXX
+        PUBLIC  SVC_Handler_Veneer
+SVC_Handler_Veneer
+#endif
+
         MRS     R0,PSP                  /* Read PSP */
         LDR     R1,[R0,#24]             /* Read Saved PC from Stack */
         LDRB    R1,[R1,#-2]             /* Load SVC Number */
@@ -169,7 +174,12 @@ SVC_Next:
 
 SVC_Exit:
         MVN     LR,#~0xFFFFFFFD         /* set EXC_RETURN value */
+#ifdef  IFX_XMC4XXX
+        PUSH    {LR}
+        POP     {PC}
+#else
         BX      LR
+#endif
 
         /*------------------- User SVC ------------------------------*/
 
@@ -199,6 +209,11 @@ SVC_Done:
         PUBLIC  PendSV_Handler
 PendSV_Handler:
 
+#ifdef  IFX_XMC4XXX
+        PUBLIC  PendSV_Handler_Veneer
+PendSV_Handler_Veneer
+#endif
+
         BL      rt_pop_req
 
 Sys_Switch:
@@ -223,7 +238,12 @@ Sys_Switch:
 
 Sys_Exit:
         MVN     LR,#~0xFFFFFFFD         /* set EXC_RETURN value */
+#ifdef  IFX_XMC4XXX
+        PUSH    {LR}
+        POP     {PC}
+#else
         BX      LR                      /* Return to Thread Mode */
+#endif
 
 
 /*-------------------------- SysTick_Handler --------------------------------*/
@@ -232,6 +252,11 @@ Sys_Exit:
 
         PUBLIC  SysTick_Handler
 SysTick_Handler:
+
+#ifdef  IFX_XMC4XXX
+        PUBLIC  SysTick_Handler_Veneer
+SysTick_Handler_Veneer
+#endif
 
         BL      rt_systick
         B       Sys_Switch

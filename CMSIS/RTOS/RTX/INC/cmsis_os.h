@@ -74,7 +74,7 @@
 #elif defined(__GNUC__)
 #define __NO_RETURN __attribute__((noreturn))
 #elif defined(__ICCARM__)
-#define __NO_RETURN __noreturn
+#define __NO_RETURN __attribute__((__noreturn__))
 #else
 #define __NO_RETURN
 #endif

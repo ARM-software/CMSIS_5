@@ -137,6 +137,11 @@ _free_box:
         PUBLIC  SVC_Handler
 SVC_Handler:
 
+#ifdef  IFX_XMC4XXX
+        PUBLIC  SVC_Handler_Veneer
+SVC_Handler_Veneer
+#endif
+
         MRS     R0,PSP                  /* Read PSP */
         LDR     R1,[R0,#24]             /* Read Saved PC from Stack */
         LDRB    R1,[R1,#-2]             /* Load SVC Number */
@@ -154,7 +159,12 @@ SVC_Handler:
         LDM     R3,{R1,R2}              /* os_tsk.run, os_tsk.next */
         CMP     R1,R2
         IT      EQ
+#ifdef  IFX_XMC4XXX
+        PUSHEQ  {LR}
+        POPEQ   {PC}
+#else
         BXEQ    LR                      /* RETI, no task switch */
+#endif
 
         CBNZ    R1,SVC_ContextSave      /* Runtask not deleted? */
 
@@ -194,7 +204,12 @@ SVC_ContextRestore:
         MSR     PSP,R12                 /* Write PSP */
 
 SVC_Exit:
+#ifdef  IFX_XMC4XXX
+        PUSH    {LR}
+        POP     {PC}
+#else
         BX      LR
+#endif
 
         /*------------------- User SVC ------------------------------*/
 
@@ -224,6 +239,11 @@ SVC_Done:
         PUBLIC  PendSV_Handler
 PendSV_Handler:
 
+#ifdef  IFX_XMC4XXX
+        PUBLIC  PendSV_Handler_Veneer
+PendSV_Handler_Veneer
+#endif
+
         PUSH    {R4,LR}                 /* Save EXC_RETURN */
         BL      rt_pop_req
 
@@ -234,7 +254,12 @@ Sys_Switch:
         LDM     R3,{R1,R2}              /* os_tsk.run, os_tsk.next */
         CMP     R1,R2
         IT      EQ
+#ifdef  IFX_XMC4XXX
+        PUSHEQ  {LR}
+        POPEQ   {PC}
+#else
         BXEQ    LR                      /* RETI, no task switch */
+#endif
 
         MRS     R12,PSP                 /* Read PSP */
         TST     LR,#0x10                /* is it extended frame? */
@@ -263,7 +288,12 @@ Sys_Switch:
         MSR     PSP,R12                 /* Write PSP */
 
 Sys_Exit:
+#ifdef  IFX_XMC4XXX
+        PUSH    {LR}
+        POP     {PC}
+#else
         BX      LR                      /* Return to Thread Mode */
+#endif
 
 
 /*-------------------------- SysTick_Handler --------------------------------*/
@@ -272,6 +302,11 @@ Sys_Exit:
 
         PUBLIC  SysTick_Handler
 SysTick_Handler:
+
+#ifdef  IFX_XMC4XXX
+        PUBLIC  SysTick_Handler_Veneer
+SysTick_Handler_Veneer
+#endif
 
         PUSH    {R4,LR}                 /* Save EXC_RETURN */
         BL      rt_systick
