@@ -18,6 +18,30 @@
                 <project>RTX_CM</project>
                 <configuration>CM4F</configuration>
             </member>
+            <member>
+                <project>RTX_CM</project>
+                <configuration>V8MB</configuration>
+            </member>
+            <member>
+                <project>RTX_CM</project>
+                <configuration>V8MBN</configuration>
+            </member>
+            <member>
+                <project>RTX_CM</project>
+                <configuration>V8MM</configuration>
+            </member>
+            <member>
+                <project>RTX_CM</project>
+                <configuration>V8MMF</configuration>
+            </member>
+            <member>
+                <project>RTX_CM</project>
+                <configuration>V8MMFN</configuration>
+            </member>
+            <member>
+                <project>RTX_CM</project>
+                <configuration>V8MMN</configuration>
+            </member>
         </batchDefinition>
     </batchBuild>
 </workspace>
