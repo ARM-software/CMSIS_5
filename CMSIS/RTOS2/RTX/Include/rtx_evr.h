@@ -38,8 +38,6 @@
 #define   OS_EVR_WAIT           OS_EVR_THREAD
 #endif
 
-#include "RTE_Components.h"
-
 #ifdef    RTE_Compiler_EventRecorder
 
 //lint -emacro((835,845),EventID) [MISRA Note 13]
