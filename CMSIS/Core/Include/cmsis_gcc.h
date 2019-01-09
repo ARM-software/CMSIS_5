@@ -906,7 +906,7 @@ __STATIC_FORCEINLINE void __set_FPSCR(uint32_t fpscr)
   \brief   Wait For Interrupt
   \details Wait For Interrupt is a hint instruction that suspends execution until one of a number of events occurs.
  */
-#define __WFI()                             __ASM volatile ("wfi")
+#define __WFI()                             __ASM volatile ("wfi":::"memory")
 
 
 /**
@@ -914,7 +914,7 @@ __STATIC_FORCEINLINE void __set_FPSCR(uint32_t fpscr)
   \details Wait For Event is a hint instruction that permits the processor to enter
            a low-power state until one of a number of events occurs.
  */
-#define __WFE()                             __ASM volatile ("wfe")
+#define __WFE()                             __ASM volatile ("wfe":::"memory")
 
 
 /**
