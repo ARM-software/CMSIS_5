@@ -234,12 +234,12 @@ __STATIC_FORCEINLINE int32_t __SMMLA (int32_t op1, int32_t op2, int32_t op3)
 /**
   \brief   Wait For Interrupt
  */
-#define __WFI()                             __ASM volatile ("wfi")
+#define __WFI()                             __ASM volatile ("wfi":::"memory")
 
 /**
   \brief   Wait For Event
  */
-#define __WFE()                             __ASM volatile ("wfe")
+#define __WFE()                             __ASM volatile ("wfe":::"memory")
 
 /**
   \brief   Send Event
