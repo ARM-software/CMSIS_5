@@ -114,12 +114,12 @@
 /**
   \brief   Wait For Interrupt
  */
-#define __WFI()                             __ASM volatile ("wfi")
+#define __WFI()                             __ASM volatile ("wfi":::"memory")
 
 /**
   \brief   Wait For Event
  */
-#define __WFE()                             __ASM volatile ("wfe")
+#define __WFE()                             __ASM volatile ("wfe":::"memory")
 
 /**
   \brief   Send Event
