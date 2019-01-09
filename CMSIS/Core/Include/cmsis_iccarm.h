@@ -596,7 +596,7 @@ __packed struct  __iar_u32 { uint32_t v; };
     __IAR_FT uint32_t __RRX(uint32_t value)
     {
       uint32_t result;
-      __ASM("RRX      %0, %1" : "=r"(result) : "r" (value) : "cc");
+      __ASM volatile("RRX      %0, %1" : "=r"(result) : "r" (value));
       return(result);
     }
 
