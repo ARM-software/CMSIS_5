@@ -1,8 +1,8 @@
 /**************************************************************************//**
  * @file     cmsis_iccarm.h
  * @brief    CMSIS compiler ICCARM (IAR Compiler for Arm) header file
- * @version  V5.1.0
- * @date     08. May 2019
+ * @version  V5.1.1
+ * @date     30. July 2019
  ******************************************************************************/
 
 //------------------------------------------------------------------------------
@@ -835,37 +835,37 @@ __packed struct  __iar_u32 { uint32_t v; };
   __IAR_FT uint8_t __LDRBT(volatile uint8_t *addr)
   {
     uint32_t res;
-    __ASM("LDRBT %0, [%1]" : "=r" (res) : "r" (addr) : "memory");
+    __ASM volatile ("LDRBT %0, [%1]" : "=r" (res) : "r" (addr) : "memory");
     return ((uint8_t)res);
   }
 
   __IAR_FT uint16_t __LDRHT(volatile uint16_t *addr)
   {
     uint32_t res;
-    __ASM("LDRHT %0, [%1]" : "=r" (res) : "r" (addr) : "memory");
+    __ASM volatile ("LDRHT %0, [%1]" : "=r" (res) : "r" (addr) : "memory");
     return ((uint16_t)res);
   }
 
   __IAR_FT uint32_t __LDRT(volatile uint32_t *addr)
   {
     uint32_t res;
-    __ASM("LDRT %0, [%1]" : "=r" (res) : "r" (addr) : "memory");
+    __ASM volatile ("LDRT %0, [%1]" : "=r" (res) : "r" (addr) : "memory");
     return res;
   }
 
   __IAR_FT void __STRBT(uint8_t value, volatile uint8_t *addr)
   {
-    __ASM("STRBT %1, [%0]" : : "r" (addr), "r" ((uint32_t)value) : "memory");
+    __ASM volatile ("STRBT %1, [%0]" : : "r" (addr), "r" ((uint32_t)value) : "memory");
   }
 
   __IAR_FT void __STRHT(uint16_t value, volatile uint16_t *addr)
   {
-    __ASM("STRHT %1, [%0]" : : "r" (addr), "r" ((uint32_t)value) : "memory");
+    __ASM volatile ("STRHT %1, [%0]" : : "r" (addr), "r" ((uint32_t)value) : "memory");
   }
 
   __IAR_FT void __STRT(uint32_t value, volatile uint32_t *addr)
   {
-    __ASM("STRT %1, [%0]" : : "r" (addr), "r" (value) : "memory");
+    __ASM volatile ("STRT %1, [%0]" : : "r" (addr), "r" (value) : "memory");
   }
 
 #endif /* (__CORTEX_M >= 0x03) */
