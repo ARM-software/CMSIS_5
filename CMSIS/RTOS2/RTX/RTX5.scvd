@@ -171,7 +171,6 @@
       <member name="thread_addr"   type="uint32_t"       offset="60" info="Thread entry address"/>
       <member name="tz_memory"     type="uint32_t"       offset="64" info="TrustZone Memory Identifier"/>
 
-      <var name="obj_name"   type="uint8_t"  info="Object name string" size="66" />
       <var name="cb_valid"   type="uint32_t" info="Control block validation status (valid=1, invalid=0)"/>
       <var name="sp_valid"   type="uint32_t" info="Stack pointer validation status (valid=1, invalid=0)"/>
       <var name="out_type"   type="uint8_t"  info="Output display type ID"/>
@@ -209,7 +208,6 @@
       <member name="finfo_fp"    type="uint32_t"      offset="24" info="Timer function pointer (type is void *)"/>
       <member name="finfo_arg"   type="uint32_t"      offset="28" info="Timer function argument (type is void *)"/>
 
-      <var name="obj_name" type="uint8_t"  info="Object name string" size="66" />
       <var name="cb_valid" type="uint32_t" info="Control Block validation status (valid=1, invalid=0)"/>
       <var name="ex_tick"  type="uint32_t" info="Calculated absolute tick time"/>
     </typedef>
@@ -224,7 +222,6 @@
       <member name="thread_list" type="*osRtxThread_t" offset="8"  info="Waiting threads list"/>
       <member name="event_flags" type="int32_t"        offset="12" info="Event flags"/>
 
-      <var name="obj_name" type="uint8_t"  info="Object name string" size="66" />
       <var name="cb_valid" type="uint32_t" info="Control Block validation status (valid=1, invalid=0)"/>
       <var name="wl_idx"   type="uint32_t" info="EventFlags waiting list (EWL) index" />
       <var name="wl_cnt"   type="uint32_t" info="Number of threads waiting for event flags" />
@@ -247,7 +244,6 @@
       <member name="owner_next"   type="*osRtxMutex_t"  offset="20" info="Pointer to next owned mutex"/>
       <member name="lock"         type="uint8_t"        offset="24" info="Lock counter"/>
 
-      <var name="obj_name" type="uint8_t"  info="Object name string" size="66" />
       <var name="cb_valid" type="uint32_t" info="Control Block validation status (valid=1, invalid=0)"/>
       <var name="wl_idx"   type="uint32_t" info="Mutex waiting list (MWL) index" />
       <var name="wl_cnt"   type="uint32_t" info="Number of threads waiting for current mutex" />
@@ -264,7 +260,6 @@
       <member name="tokens"      type="uint16_t"       offset="12" info="Current number of tokens"/>
       <member name="max_tokens"  type="uint16_t"       offset="14" info="Maximum number of tokens"/>
 
-      <var name="obj_name" type="uint8_t"  info="Object name string" size="66" />
       <var name="cb_valid" type="uint32_t" info="Control Block validation status (valid=1, invalid=0)"/>
       <var name="wl_idx"   type="uint32_t" info="Semaphore waiting list (SWL) index" />
       <var name="wl_cnt"   type="uint32_t" info="Number of threads waiting for current semaphore" />
@@ -297,7 +292,6 @@
       <member name="block_lim"   type="uint32_t"       offset="12+16" info="Block memory limit address (type is void *)"/>
       <member name="block_free"  type="uint32_t"       offset="12+20" info="First free block address (type is void *)"/>
 
-      <var name="obj_name" type="uint8_t"  info="Object name string" size="66" />
       <var name="cb_valid" type="uint32_t" info="Control Block validation status (valid=1, invalid=0)"/>
       <var name="wl_idx"   type="uint32_t" info="Memory Pool waiting list (PWL) index" />
       <var name="wl_cnt"   type="uint32_t" info="Number of threads waiting for memory pool" />
@@ -337,7 +331,6 @@
       <member name="msg_first"   type="*osRtxMessage_t" offset="44" info="Pointer to first message"/>
       <member name="msg_last"    type="*osRtxMessage_t" offset="48" info="Pointer to last message"/>
 
-      <var name="obj_name" type="uint8_t"  info="Object name string" size="66" />
       <var name="cb_valid" type="uint32_t" info="Control Block validation status (valid=1, invalid=0)"/>
       <var name="wl_idx"   type="uint32_t" info="Waiting list index (QWL)" />
       <var name="wl_cnt"   type="uint32_t" info="Number of threads waiting" />
@@ -894,24 +887,6 @@
             TCB[i].ex_delay += TDL[j].delay;
           </calc>
         </list>
-
-        <!-- Read name string -->
-        <calc cond="(TCB[i].name != 0)">
-          TCB[i].obj_name[0] = ',';
-          TCB[i].obj_name[1] = ' ';
-        </calc>
-        <list cond="TCB[i].name" name="n" start="0" limit="64">
-          <read name="ch0" type="uint8_t" offset="TCB[i].name + n"/>
-
-          <calc>
-            TCB[i].obj_name[2+n] = ch0;
-          </calc>
-
-          <calc cond="ch0 == 0">
-            n = 64;
-          </calc>
-        </list>
-
       </list>
 
       <!-- Validate and process Timer control blocks -->
@@ -927,23 +902,6 @@
         <list name="j" start="0" limit="TEL._count">
           <calc>
             CCB[i].ex_tick += TEL[j].tick;
-          </calc>
-        </list>
-
-        <!-- Read name string -->
-        <calc cond="CCB[i].name">
-          CCB[i].obj_name[0] = ',';
-          CCB[i].obj_name[1] = ' ';
-        </calc>
-        <list cond="CCB[i].name" name="n" start="0" limit="64">
-          <read name="ch1" type="uint8_t" offset="CCB[i].name + n"/>
-
-          <calc>
-            CCB[i].obj_name[2+n] = ch1;
-          </calc>
-
-          <calc cond="ch1 == 0">
-            n = 64;
           </calc>
         </list>
       </list>
@@ -965,23 +923,6 @@
           ECB[i].wl_cnt = (EWL._count - k);
           k = EWL._count;
         </calc>
-
-        <!-- Read name string -->
-        <calc cond="ECB[i].name">
-          ECB[i].obj_name[0] = ',';
-          ECB[i].obj_name[1] = ' ';
-        </calc>
-        <list cond="ECB[i].name" name="n" start="0" limit="64">
-          <read name="ch2" type="uint8_t" offset="ECB[i].name + n"/>
-
-          <calc>
-            ECB[i].obj_name[2+n] = ch2;
-          </calc>
-
-          <calc cond="ch2 == 0">
-            n = 64;
-          </calc>
-        </list>
       </list>
 
       <!-- Validate and process Mutex control blocks -->
@@ -1001,23 +942,6 @@
           MCB[i].wl_cnt = (MWL._count - k);
           k = MWL._count;
         </calc>
-
-        <!-- Read name string -->
-        <calc cond="MCB[i].name">
-          MCB[i].obj_name[0] = ',';
-          MCB[i].obj_name[1] = ' ';
-        </calc>
-        <list cond="MCB[i].name" name="n" start="0" limit="64">
-          <read name="ch3" type="uint8_t" offset="MCB[i].name + n"/>
-
-          <calc>
-            MCB[i].obj_name[2+n] = ch3;
-          </calc>
-
-          <calc cond="ch3 == 0">
-            n = 64;
-          </calc>
-        </list>
       </list>
 
 
@@ -1038,23 +962,6 @@
           SCB[i].wl_cnt = (SWL._count - k);
           k = SWL._count;
         </calc>
-
-        <!-- Read name string -->
-        <calc cond="SCB[i].name">
-          SCB[i].obj_name[0] = ',';
-          SCB[i].obj_name[1] = ' ';
-        </calc>
-        <list cond="SCB[i].name" name="n" start="0" limit="64">
-          <read name="ch4" type="uint8_t" offset="SCB[i].name + n"/>
-
-          <calc>
-            SCB[i].obj_name[2+n] = ch4;
-          </calc>
-
-          <calc cond="ch4 == 0">
-            n = 64;
-          </calc>
-        </list>
       </list>
 
       <!-- Validate and process MemoryPool control blocks -->
@@ -1074,23 +981,6 @@
           PCB[i].wl_cnt = (PWL._count - k);
           k = PWL._count;
         </calc>
-
-        <!-- Read name string -->
-        <calc cond="PCB[i].name">
-          PCB[i].obj_name[0] = ',';
-          PCB[i].obj_name[1] = ' ';
-        </calc>
-        <list cond="PCB[i].name" name="n" start="0" limit="64">
-          <read name="ch5" type="uint8_t" offset="PCB[i].name + n"/>
-
-          <calc>
-            PCB[i].obj_name[2+n] = ch5;
-          </calc>
-
-          <calc cond="ch5 == 0">
-            n = 64;
-          </calc>
-        </list>
       </list>
 
 
@@ -1111,23 +1001,6 @@
           QCB[i].wl_cnt = (QWL._count - k);
           k = QWL._count;
         </calc>
-
-        <!-- Read name string -->
-        <calc cond="QCB[i].name">
-          QCB[i].obj_name[0] = ',';
-          QCB[i].obj_name[1] = ' ';
-        </calc>
-        <list cond="QCB[i].name" name="n" start="0" limit="64">
-          <read name="ch6" type="uint8_t" offset="QCB[i].name + n"/>
-
-          <calc>
-            QCB[i].obj_name[2+n] = ch6;
-          </calc>
-
-          <calc cond="ch6 == 0">
-            n = 64;
-          </calc>
-        </list>
 
         <!-- Create a list of enqueued messages -->
         <readlist name="QML" type="osRtxMessage_t" offset="QCB[i].msg_first" next="next" cond="QCB[i].msg_first"/>
@@ -1266,15 +1139,15 @@
         <item cond="TCB_En" property="Threads" value="">
           <list name="i" start="0" limit="TCB._count">
             <item>
-              <print cond="TCB[i].out_type == 1" property="id: %x[TCB[i]._addr], %S[TCB[i].thread_addr]" value="%E[TCB[i].state &amp; 0x07], %E[TCB[i].priority], Stack Used: %d[TCB[i].stack_curp]%%"                               alert="TCB[i].stack_over != 0"/>
-              <print cond="TCB[i].out_type == 2" property="id: %x[TCB[i]._addr], %S[TCB[i].thread_addr]" value="%E[TCB[i].state &amp; 0x07], %E[TCB[i].priority], Stack Used: %d[TCB[i].stack_curp]%%, Max: %d[TCB[i].stack_maxp]%%" alert="TCB[i].stack_over != 0"/>
-              <print cond="TCB[i].out_type == 3" property="id: %x[TCB[i]._addr]%t[TCB[i].obj_name]"      value="%E[TCB[i].state &amp; 0x07], %E[TCB[i].priority], Stack Used: %d[TCB[i].stack_curp]%%"                               alert="TCB[i].stack_over != 0"/>
-              <print cond="TCB[i].out_type == 4" property="id: %x[TCB[i]._addr]%t[TCB[i].obj_name]"      value="%E[TCB[i].state &amp; 0x07], %E[TCB[i].priority], Stack Used: %d[TCB[i].stack_curp]%%, Max: %d[TCB[i].stack_maxp]%%" alert="TCB[i].stack_over != 0"/>
+              <print cond="TCB[i].out_type == 1" property="id: %x[TCB[i]._addr] &quot;%S[TCB[i].thread_addr]&quot;" value="%E[TCB[i].state &amp; 0x07], %E[TCB[i].priority], Stack Used: %d[TCB[i].stack_curp]%%"                               alert="TCB[i].stack_over != 0"/>
+              <print cond="TCB[i].out_type == 2" property="id: %x[TCB[i]._addr] &quot;%S[TCB[i].thread_addr]&quot;" value="%E[TCB[i].state &amp; 0x07], %E[TCB[i].priority], Stack Used: %d[TCB[i].stack_curp]%%, Max: %d[TCB[i].stack_maxp]%%" alert="TCB[i].stack_over != 0"/>
+              <print cond="TCB[i].out_type == 3" property="id: %x[TCB[i]._addr] %N[TCB[i].name]"                    value="%E[TCB[i].state &amp; 0x07], %E[TCB[i].priority], Stack Used: %d[TCB[i].stack_curp]%%"                               alert="TCB[i].stack_over != 0"/>
+              <print cond="TCB[i].out_type == 4" property="id: %x[TCB[i]._addr] %N[TCB[i].name]"                    value="%E[TCB[i].state &amp; 0x07], %E[TCB[i].priority], Stack Used: %d[TCB[i].stack_curp]%%, Max: %d[TCB[i].stack_maxp]%%" alert="TCB[i].stack_over != 0"/>
 
-              <print cond="TCB[i].out_type == 5" property="id: %x[TCB[i]._addr], %S[TCB[i].thread_addr]" value="%E[TCB[i].state &amp; 0x07], %E[TCB[i].priority], Stack Used: unknown"                               alert="TCB[i].stack_over != 0"/>
-              <print cond="TCB[i].out_type == 6" property="id: %x[TCB[i]._addr], %S[TCB[i].thread_addr]" value="%E[TCB[i].state &amp; 0x07], %E[TCB[i].priority], Stack Used: unknown, Max: %d[TCB[i].stack_maxp]%%" alert="TCB[i].stack_over != 0"/>
-              <print cond="TCB[i].out_type == 7" property="id: %x[TCB[i]._addr]%t[TCB[i].obj_name]"      value="%E[TCB[i].state &amp; 0x07], %E[TCB[i].priority], Stack Used: unknown"                               alert="TCB[i].stack_over != 0"/>
-              <print cond="TCB[i].out_type == 8" property="id: %x[TCB[i]._addr]%t[TCB[i].obj_name]"      value="%E[TCB[i].state &amp; 0x07], %E[TCB[i].priority], Stack Used: unknown, Max: %d[TCB[i].stack_maxp]%%" alert="TCB[i].stack_over != 0"/>
+              <print cond="TCB[i].out_type == 5" property="id: %x[TCB[i]._addr] &quot;%S[TCB[i].thread_addr]&quot;" value="%E[TCB[i].state &amp; 0x07], %E[TCB[i].priority], Stack Used: unknown"                               alert="TCB[i].stack_over != 0"/>
+              <print cond="TCB[i].out_type == 6" property="id: %x[TCB[i]._addr] &quot;%S[TCB[i].thread_addr]&quot;" value="%E[TCB[i].state &amp; 0x07], %E[TCB[i].priority], Stack Used: unknown, Max: %d[TCB[i].stack_maxp]%%" alert="TCB[i].stack_over != 0"/>
+              <print cond="TCB[i].out_type == 7" property="id: %x[TCB[i]._addr] %N[TCB[i].name]"                    value="%E[TCB[i].state &amp; 0x07], %E[TCB[i].priority], Stack Used: unknown"                               alert="TCB[i].stack_over != 0"/>
+              <print cond="TCB[i].out_type == 8" property="id: %x[TCB[i]._addr] %N[TCB[i].name]"                    value="%E[TCB[i].state &amp; 0x07], %E[TCB[i].priority], Stack Used: unknown, Max: %d[TCB[i].stack_maxp]%%" alert="TCB[i].stack_over != 0"/>
 
               <item property="State"        value="%E[TCB[i].state &amp; 0x07]"/>
               <item property="Priority"     value="%E[TCB[i].priority]"/>
@@ -1288,27 +1161,27 @@
 
                 <list cond="TCB[i].state == 0x43" name="n" start="0" limit="ECB._count">
                   <!-- Wait Event Flags -->
-                  <item cond="TCB[i].thread_prev == ECB[n]._addr" property="id: %x[ECB[n]._addr]%t[ECB[n].obj_name]" value=""/>
+                  <item cond="TCB[i].thread_prev == ECB[n]._addr" property="id: %x[ECB[n]._addr] %N[ECB[n].name]" value=""/>
                 </list>
 
                 <list cond="TCB[i].state == 0x53" name="n" start="0" limit="MCB._count">
                   <!-- Wait Mutex -->
-                  <item cond="TCB[i].thread_prev == MCB[n]._addr" property="id: %x[MCB[n]._addr]%t[MCB[n].obj_name]" value=""/>
+                  <item cond="TCB[i].thread_prev == MCB[n]._addr" property="id: %x[MCB[n]._addr] %N[MCB[n].name]" value=""/>
                 </list>
 
                 <list cond="TCB[i].state == 0x63" name="n" start="0" limit="SCB._count">
                   <!-- Wait Semaphore -->
-                  <item cond="TCB[i].thread_prev == SCB[n]._addr" property="id: %x[SCB[n]._addr]%t[SCB[n].obj_name]" value=""/>
+                  <item cond="TCB[i].thread_prev == SCB[n]._addr" property="id: %x[SCB[n]._addr] %N[SCB[n].name]" value=""/>
                 </list>
 
                 <list cond="TCB[i].state == 0x73" name="n" start="0" limit="PCB._count">
                   <!-- Wait Memory Pool -->
-                  <item cond="TCB[i].thread_prev == PCB[n]._addr" property="id: %x[PCB[n]._addr]%t[PCB[n].obj_name]" value=""/>
+                  <item cond="TCB[i].thread_prev == PCB[n]._addr" property="id: %x[PCB[n]._addr] %N[PCB[n].name]" value=""/>
                 </list>
 
                 <list cond="(TCB[i].state == 0x83) || (TCB[i].state == 0x84)" name="n" start="0" limit="QCB._count">
                   <!-- Wait Message Queue -->
-                  <item cond="TCB[i].thread_prev == QCB[n]._addr" property="id: %x[QCB[n]._addr]%t[QCB[n].obj_name]" value=""/>
+                  <item cond="TCB[i].thread_prev == QCB[n]._addr" property="id: %x[QCB[n]._addr] %N[QCB[n].name]" value=""/>
                 </list>
               </item>
 
@@ -1344,7 +1217,7 @@
         <!-- Timers -->
         <item cond="CCB_En" property="Timers" value="">
           <list name="i" start="0" limit="CCB._count">
-            <item cond="CCB[i].cb_valid" property="id: %x[CCB[i]._addr]%t[CCB[i].obj_name]" value="%E[CCB[i].state], Tick: %d[CCB[i].ex_tick]">
+            <item cond="CCB[i].cb_valid" property="id: %x[CCB[i]._addr] %N[CCB[i].name]" value="%E[CCB[i].state], Tick: %d[CCB[i].ex_tick]">
               <item property="State"    value="%E[CCB[i].state]" />
               <item property="Type"     value="%E[CCB[i].type]" />
               <item property="Tick"     value="%d[CCB[i].ex_tick]" />
@@ -1357,7 +1230,7 @@
         <!-- Semaphores -->
         <item cond="SCB_En" property="Semaphores" value="">
           <list name="i" start="0" limit="SCB._count">
-            <item cond="SCB[i].cb_valid" property="id: %x[SCB[i]._addr]%t[SCB[i].obj_name]" value="Tokens: %d[SCB[i].tokens], Max: %d[SCB[i].max_tokens]">
+            <item cond="SCB[i].cb_valid" property="id: %x[SCB[i]._addr] %N[SCB[i].name]" value="Tokens: %d[SCB[i].tokens], Max: %d[SCB[i].max_tokens]">
             <item property="Tokens"     value="%d[SCB[i].tokens]" />
             <item property="Max Tokens" value="%d[SCB[i].max_tokens]" />
 
@@ -1366,8 +1239,8 @@
 
                 <list name="j" start="SCB[i].wl_idx" limit="SCB[i].wl_idx + SCB[i].wl_cnt">
                   <list name="k" start="0" limit="TCB._count">
-                    <item property="id: %x[TCB[k]._addr]%t[TCB[k].obj_name]" value="Timeout: %d[TCB[k].ex_delay]" cond="(SWL[j].stack_mem == TCB[k].stack_mem) &amp;&amp; (TCB[k].ex_delay != -1)"/>
-                    <item property="id: %x[TCB[k]._addr]%t[TCB[k].obj_name]" value="Timeout: osWaitForever"       cond="(SWL[j].stack_mem == TCB[k].stack_mem) &amp;&amp; (TCB[k].ex_delay == -1)"/>
+                    <item property="id: %x[TCB[k]._addr] %N[TCB[k].name]" value="Timeout: %d[TCB[k].ex_delay]" cond="(SWL[j].stack_mem == TCB[k].stack_mem) &amp;&amp; (TCB[k].ex_delay != -1)"/>
+                    <item property="id: %x[TCB[k]._addr] %N[TCB[k].name]" value="Timeout: osWaitForever"       cond="(SWL[j].stack_mem == TCB[k].stack_mem) &amp;&amp; (TCB[k].ex_delay == -1)"/>
                   </list>
                 </list>
 
@@ -1379,7 +1252,7 @@
         <!-- Mutexes -->
         <item cond="MCB_En" property="Mutexes" value="">
           <list name="i" start="0" limit="MCB._count">
-            <item cond="MCB[i].cb_valid" property="id: %x[MCB[i]._addr]%t[MCB[i].obj_name]" value="Lock counter: %d[MCB[i].lock]">
+            <item cond="MCB[i].cb_valid" property="id: %x[MCB[i]._addr] %N[MCB[i].name]" value="Lock counter: %d[MCB[i].lock]">
               <item property="Lock counter" value="%x[MCB[i].lock]"/>
               <item property="Attributes" value="%x[MCB[i].attr]">
                 <item property="osMutexRecursive"   value="%t[(MCB[i].attr &amp; 0x01) ?  &quot;True&quot; : &quot;False&quot;]" />
@@ -1388,7 +1261,7 @@
               </item>
 
               <list cond="MCB[i].owner_thread" name="n" start="0" limit="TCB._count">
-                <item cond="MCB[i].owner_thread == TCB[n]._addr" property="Owner thread" value="id: %x[TCB[n]._addr]%t[TCB[n].obj_name]"/>
+                <item cond="MCB[i].owner_thread == TCB[n]._addr" property="Owner thread" value="id: %x[TCB[n]._addr] %N[TCB[n].name]"/>
               </list>
 
               <!-- Waiting thread list -->
@@ -1396,8 +1269,8 @@
 
                 <list name="j" start="MCB[i].wl_idx" limit="MCB[i].wl_idx + MCB[i].wl_cnt">
                   <list name="k" start="0" limit="TCB._count">
-                    <item property="id: %x[TCB[k]._addr]%t[TCB[k].obj_name]" value="Timeout: %d[TCB[k].ex_delay]" cond="(MWL[j].stack_mem == TCB[k].stack_mem) &amp;&amp; (TCB[k].ex_delay != -1)"/>
-                    <item property="id: %x[TCB[k]._addr]%t[TCB[k].obj_name]" value="Timeout: osWaitForever"       cond="(MWL[j].stack_mem == TCB[k].stack_mem) &amp;&amp; (TCB[k].ex_delay == -1)"/>
+                    <item property="id: %x[TCB[k]._addr] %N[TCB[k].name]" value="Timeout: %d[TCB[k].ex_delay]" cond="(MWL[j].stack_mem == TCB[k].stack_mem) &amp;&amp; (TCB[k].ex_delay != -1)"/>
+                    <item property="id: %x[TCB[k]._addr] %N[TCB[k].name]" value="Timeout: osWaitForever"       cond="(MWL[j].stack_mem == TCB[k].stack_mem) &amp;&amp; (TCB[k].ex_delay == -1)"/>
                   </list>
                 </list>
 
@@ -1409,15 +1282,15 @@
         <!-- Event Flags -->
         <item cond="ECB_En" property="Event Flags" value="">
           <list name="i" start="0" limit="ECB._count">
-            <item cond="ECB[i].cb_valid" property="id: %x[ECB[i]._addr]%t[ECB[i].obj_name]" value="Flags: %x[ECB[i].event_flags]">
+            <item cond="ECB[i].cb_valid" property="id: %x[ECB[i]._addr] %N[ECB[i].name]" value="Flags: %x[ECB[i].event_flags]">
 
               <!-- Waiting thread list -->
               <item cond="ECB[i].wl_cnt" property="Threads waiting (%d[ECB[i].wl_cnt])" value="">
 
                 <list name="j" start="ECB[i].wl_idx" limit="ECB[i].wl_idx + ECB[i].wl_cnt">
                   <list name="k" start="0" limit="TCB._count">
-                    <item property="id: %x[TCB[k]._addr]%t[TCB[k].obj_name]" value="Timeout: %d[TCB[k].ex_delay]" cond="(EWL[j].stack_mem == TCB[k].stack_mem) &amp;&amp; (TCB[k].ex_delay != -1)"/>
-                    <item property="id: %x[TCB[k]._addr]%t[TCB[k].obj_name]" value="Timeout: osWaitForever"       cond="(EWL[j].stack_mem == TCB[k].stack_mem) &amp;&amp; (TCB[k].ex_delay == -1)"/>
+                    <item property="id: %x[TCB[k]._addr] %N[TCB[k].name]" value="Timeout: %d[TCB[k].ex_delay]" cond="(EWL[j].stack_mem == TCB[k].stack_mem) &amp;&amp; (TCB[k].ex_delay != -1)"/>
+                    <item property="id: %x[TCB[k]._addr] %N[TCB[k].name]" value="Timeout: osWaitForever"       cond="(EWL[j].stack_mem == TCB[k].stack_mem) &amp;&amp; (TCB[k].ex_delay == -1)"/>
                   </list>
                 </list>
 
@@ -1429,7 +1302,7 @@
         <!-- Memory Pool -->
         <item cond="PCB_En" property="Memory Pools" value="">
           <list name="i" start="0" limit="PCB._count">
-            <item cond="PCB[i].cb_valid" property="id: %x[PCB[i]._addr]%t[PCB[i].obj_name]" value="Used: %d[PCB[i].used_blocks], Max: %d[PCB[i].max_blocks]">
+            <item cond="PCB[i].cb_valid" property="id: %x[PCB[i]._addr] %N[PCB[i].name]" value="Used: %d[PCB[i].used_blocks], Max: %d[PCB[i].max_blocks]">
 
               <item property="Used blocks" value="%d[PCB[i].used_blocks]"/>
               <item property="Max blocks"  value="%d[PCB[i].max_blocks]"/>
@@ -1442,8 +1315,8 @@
 
                 <list name="j" start="PCB[i].wl_idx" limit="PCB[i].wl_idx + PCB[i].wl_cnt">
                   <list name="k" start="0" limit="TCB._count">
-                    <item property="id: %x[TCB[k]._addr]%t[TCB[k].obj_name]" value="Timeout: %d[TCB[k].ex_delay]" cond="(PWL[j].stack_mem == TCB[k].stack_mem) &amp;&amp; (TCB[k].ex_delay != -1)"/>
-                    <item property="id: %x[TCB[k]._addr]%t[TCB[k].obj_name]" value="Timeout: osWaitForever"       cond="(PWL[j].stack_mem == TCB[k].stack_mem) &amp;&amp; (TCB[k].ex_delay == -1)"/>
+                    <item property="id: %x[TCB[k]._addr] %N[TCB[k].name]" value="Timeout: %d[TCB[k].ex_delay]" cond="(PWL[j].stack_mem == TCB[k].stack_mem) &amp;&amp; (TCB[k].ex_delay != -1)"/>
+                    <item property="id: %x[TCB[k]._addr] %N[TCB[k].name]" value="Timeout: osWaitForever"       cond="(PWL[j].stack_mem == TCB[k].stack_mem) &amp;&amp; (TCB[k].ex_delay == -1)"/>
                   </list>
                 </list>
 
@@ -1455,7 +1328,7 @@
         <!-- Message Queue -->
         <item cond="QCB_En" property="Message Queues" value="">
           <list name="i" start="0" limit="QCB._count">
-            <item cond="QCB[i].cb_valid" property="id: %x[QCB[i]._addr]%t[QCB[i].obj_name]" value="Messages: %d[QCB[i].msg_count], Max: %d[QCB[i].max_blocks]">
+            <item cond="QCB[i].cb_valid" property="id: %x[QCB[i]._addr] %N[QCB[i].name]" value="Messages: %d[QCB[i].msg_count], Max: %d[QCB[i].max_blocks]">
 
               <item property="Messages"     value="%d[QCB[i].ml_cnt]"/>
               <item property="Max Messages" value="%d[QCB[i].max_blocks]"/>
@@ -1466,8 +1339,8 @@
 
                 <list name="j" start="QCB[i].wl_idx" limit="QCB[i].wl_idx + QCB[i].wl_cnt">
                   <list name="k" start="0" limit="TCB._count">
-                    <item property="id: %x[TCB[k]._addr]%t[TCB[k].obj_name]" value="Timeout: %d[TCB[k].ex_delay]" cond="(QWL[j].stack_mem == TCB[k].stack_mem) &amp;&amp; (TCB[k].ex_delay != -1)"/>
-                    <item property="id: %x[TCB[k]._addr]%t[TCB[k].obj_name]" value="Timeout: osWaitForever"       cond="(QWL[j].stack_mem == TCB[k].stack_mem) &amp;&amp; (TCB[k].ex_delay == -1)"/>
+                    <item property="id: %x[TCB[k]._addr] %N[TCB[k].name]" value="Timeout: %d[TCB[k].ex_delay]" cond="(QWL[j].stack_mem == TCB[k].stack_mem) &amp;&amp; (TCB[k].ex_delay != -1)"/>
+                    <item property="id: %x[TCB[k]._addr] %N[TCB[k].name]" value="Timeout: osWaitForever"       cond="(QWL[j].stack_mem == TCB[k].stack_mem) &amp;&amp; (TCB[k].ex_delay == -1)"/>
                   </list>
                 </list>
 
