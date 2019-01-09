@@ -171,7 +171,7 @@ __STATIC_FORCEINLINE  uint32_t __REV(uint32_t value)
 #else
   uint32_t result;
 
-  __ASM volatile ("rev %0, %1" : "=r" (result) : "r" (value) );
+  __ASM ("rev %0, %1" : "=r" (result) : "r" (value) );
   return result;
 #endif
 }
@@ -186,7 +186,7 @@ __STATIC_FORCEINLINE  uint32_t __REV(uint32_t value)
 __attribute__((section(".rev16_text"))) __STATIC_INLINE uint32_t __REV16(uint32_t value)
 {
   uint32_t result;
-  __ASM volatile("rev16 %0, %1" : "=r" (result) : "r" (value));
+  __ASM ("rev16 %0, %1" : "=r" (result) : "r" (value));
   return result;
 }
 #endif
@@ -204,7 +204,7 @@ __STATIC_FORCEINLINE  int16_t __REVSH(int16_t value)
 #else
   int16_t result;
 
-  __ASM volatile ("revsh %0, %1" : "=r" (result) : "r" (value) );
+  __ASM ("revsh %0, %1" : "=r" (result) : "r" (value) );
   return result;
 #endif
 }
@@ -246,7 +246,7 @@ __STATIC_FORCEINLINE  uint32_t __RBIT(uint32_t value)
 #if ((defined (__ARM_ARCH_7M__      ) && (__ARM_ARCH_7M__      == 1)) || \
      (defined (__ARM_ARCH_7EM__     ) && (__ARM_ARCH_7EM__     == 1)) || \
      (defined (__ARM_ARCH_8M_MAIN__ ) && (__ARM_ARCH_8M_MAIN__ == 1))    )
-   __ASM volatile ("rbit %0, %1" : "=r" (result) : "r" (value) );
+   __ASM ("rbit %0, %1" : "=r" (result) : "r" (value) );
 #else
   int32_t s = (4U /*sizeof(v)*/ * 8U) - 1U; /* extra shift needed at end */
 
