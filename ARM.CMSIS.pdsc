@@ -3684,13 +3684,6 @@ and 8-bit Java bytecodes in Jazelle state.
       <compatibleDevice deviceIndex="0" Dvendor="ARM:82" Dname="ARMCM35P_DSP_FP"/>
       <compatibleDevice deviceIndex="0" Dvendor="ARM:82" Dname="ARMCM35P_DSP_FP_TZ"/>
     </board>
-
-    <board name="Fixed Virtual Platform" vendor="ARM">
-      <description>Fixed Virtual Platform</description>
-      <mountedDevice    deviceIndex="0" Dvendor="ARM:82" Dname="ARMCA5"/>
-      <compatibleDevice deviceIndex="0" Dvendor="ARM:82" Dname="ARMCA7"/>
-      <compatibleDevice deviceIndex="0" Dvendor="ARM:82" Dname="ARMCA9"/>
-    </board>
   </boards>
 
   <examples>
@@ -3953,7 +3946,7 @@ and 8-bit Java bytecodes in Jazelle state.
 
     <example name="CMSIS-RTOS2 RTX5 Memory Pool" doc="Abstract.txt" folder="CMSIS/RTOS2/RTX/Examples/MemPool">
       <description>CMSIS-RTOS2 Memory Pool Example</description>
-      <board name="Fixed Virtual Platform" vendor="ARM"/>
+      <board name="uVision Simulator" vendor="Keil"/>
       <project>
         <environment name="uv" load="MemPool.uvprojx"/>
       </project>
