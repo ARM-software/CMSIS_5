@@ -363,6 +363,10 @@ Semaphore     | `.bss.os.semaphore.cb`
 Memory Pool   | `.bss.os.mempool.cb`
 Message Queue | `.bss.os.msgqueue.cb`
 
+It must be assured that these sections are placed into contiguous memory. This can fail,
+i.e. sections end up being split over multiple memory segments, when assigning compilation
+units to memory segments, manually.
+
 The following code example shows how to create an OS object using static memory.
 
 <b> Code Example:</b> 
