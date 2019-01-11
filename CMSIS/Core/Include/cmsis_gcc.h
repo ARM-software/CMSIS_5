@@ -1233,11 +1233,11 @@ __STATIC_FORCEINLINE void __CLREX(void)
   \param [in]  ARG2  Bit position to saturate to (1..32)
   \return             Saturated value
  */
-#define __SSAT(ARG1,ARG2) \
+#define __SSAT(ARG1, ARG2) \
 __extension__ \
 ({                          \
   int32_t __RES, __ARG1 = (ARG1); \
-  __ASM ("ssat %0, %1, %2" : "=r" (__RES) :  "I" (ARG2), "r" (__ARG1) ); \
+  __ASM volatile ("ssat %0, %1, %2" : "=r" (__RES) :  "I" (ARG2), "r" (__ARG1) : "cc" ); \
   __RES; \
  })
 
@@ -1249,11 +1249,11 @@ __extension__ \
   \param [in]  ARG2  Bit position to saturate to (0..31)
   \return             Saturated value
  */
-#define __USAT(ARG1,ARG2) \
+#define __USAT(ARG1, ARG2) \
  __extension__ \
 ({                          \
   uint32_t __RES, __ARG1 = (ARG1); \
-  __ASM ("usat %0, %1, %2" : "=r" (__RES) :  "I" (ARG2), "r" (__ARG1) ); \
+  __ASM volatile ("usat %0, %1, %2" : "=r" (__RES) :  "I" (ARG2), "r" (__ARG1) : "cc" ); \
   __RES; \
  })
 
@@ -1924,17 +1924,17 @@ __STATIC_FORCEINLINE uint32_t __USADA8(uint32_t op1, uint32_t op2, uint32_t op3)
   return(result);
 }
 
-#define __SSAT16(ARG1,ARG2) \
+#define __SSAT16(ARG1, ARG2) \
 ({                          \
   int32_t __RES, __ARG1 = (ARG1); \
-  __ASM ("ssat16 %0, %1, %2" : "=r" (__RES) :  "I" (ARG2), "r" (__ARG1) ); \
+  __ASM volatile ("ssat16 %0, %1, %2" : "=r" (__RES) :  "I" (ARG2), "r" (__ARG1) : "cc" ); \
   __RES; \
  })
 
-#define __USAT16(ARG1,ARG2) \
+#define __USAT16(ARG1, ARG2) \
 ({                          \
   uint32_t __RES, __ARG1 = (ARG1); \
-  __ASM ("usat16 %0, %1, %2" : "=r" (__RES) :  "I" (ARG2), "r" (__ARG1) ); \
+  __ASM volatile ("usat16 %0, %1, %2" : "=r" (__RES) :  "I" (ARG2), "r" (__ARG1) : "cc" ); \
   __RES; \
  })
 
