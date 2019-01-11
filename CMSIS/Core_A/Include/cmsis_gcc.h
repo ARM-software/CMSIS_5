@@ -302,14 +302,12 @@ __STATIC_FORCEINLINE  uint32_t __REV(uint32_t value)
   \param [in]    value  Value to reverse
   \return               Reversed value
  */
-#ifndef __NO_EMBEDDED_ASM
-__attribute__((section(".rev16_text"))) __STATIC_INLINE uint32_t __REV16(uint32_t value)
+__STATIC_FORCEINLINE uint32_t __REV16(uint32_t value)
 {
   uint32_t result;
   __ASM volatile("rev16 %0, %1" : "=r" (result) : "r" (value));
   return result;
 }
-#endif
 
 /**
   \brief   Reverse byte order (16 bit)
