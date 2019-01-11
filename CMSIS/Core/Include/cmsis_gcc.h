@@ -1170,7 +1170,7 @@ __STATIC_FORCEINLINE void __CLREX(void)
 __extension__ \
 ({                          \
   int32_t __RES, __ARG1 = (ARG1); \
-  __ASM ("ssat %0, %1, %2" : "=r" (__RES) :  "I" (ARG2), "r" (__ARG1) ); \
+  __ASM volatile ("ssat %0, %1, %2" : "=r" (__RES) :  "I" (ARG2), "r" (__ARG1) ); \
   __RES; \
  })
 
@@ -1186,7 +1186,7 @@ __extension__ \
  __extension__ \
 ({                          \
   uint32_t __RES, __ARG1 = (ARG1); \
-  __ASM ("usat %0, %1, %2" : "=r" (__RES) :  "I" (ARG2), "r" (__ARG1) ); \
+  __ASM volatile ("usat %0, %1, %2" : "=r" (__RES) :  "I" (ARG2), "r" (__ARG1) ); \
   __RES; \
  })
 
@@ -1860,14 +1860,14 @@ __STATIC_FORCEINLINE uint32_t __USADA8(uint32_t op1, uint32_t op2, uint32_t op3)
 #define __SSAT16(ARG1,ARG2) \
 ({                          \
   int32_t __RES, __ARG1 = (ARG1); \
-  __ASM ("ssat16 %0, %1, %2" : "=r" (__RES) :  "I" (ARG2), "r" (__ARG1) ); \
+  __ASM volatile ("ssat16 %0, %1, %2" : "=r" (__RES) :  "I" (ARG2), "r" (__ARG1) ); \
   __RES; \
  })
 
 #define __USAT16(ARG1,ARG2) \
 ({                          \
   uint32_t __RES, __ARG1 = (ARG1); \
-  __ASM ("usat16 %0, %1, %2" : "=r" (__RES) :  "I" (ARG2), "r" (__ARG1) ); \
+  __ASM volatile ("usat16 %0, %1, %2" : "=r" (__RES) :  "I" (ARG2), "r" (__ARG1) ); \
   __RES; \
  })
 

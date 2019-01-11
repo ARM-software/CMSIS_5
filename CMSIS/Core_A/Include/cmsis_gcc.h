@@ -415,7 +415,7 @@ __STATIC_FORCEINLINE  void __CLREX(void)
 __extension__ \
 ({                          \
   int32_t __RES, __ARG1 = (ARG1); \
-  __ASM ("ssat %0, %1, %2" : "=r" (__RES) :  "I" (ARG2), "r" (__ARG1) ); \
+  __ASM volatile ("ssat %0, %1, %2" : "=r" (__RES) :  "I" (ARG2), "r" (__ARG1) ); \
   __RES; \
  })
 
@@ -431,7 +431,7 @@ __extension__ \
 __extension__ \
 ({                          \
   uint32_t __RES, __ARG1 = (ARG1); \
-  __ASM ("usat %0, %1, %2" : "=r" (__RES) :  "I" (ARG2), "r" (__ARG1) ); \
+  __ASM volatile ("usat %0, %1, %2" : "=r" (__RES) :  "I" (ARG2), "r" (__ARG1) ); \
   __RES; \
  })
 
