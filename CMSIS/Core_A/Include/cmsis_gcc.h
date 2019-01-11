@@ -529,11 +529,11 @@ __STATIC_FORCEINLINE  void __CLREX(void)
   \param [in]    sat  Bit position to saturate to (1..32)
   \return             Saturated value
  */
-#define __SSAT(ARG1,ARG2) \
+#define __SSAT(ARG1, ARG2) \
 __extension__ \
 ({                          \
   int32_t __RES, __ARG1 = (ARG1); \
-  __ASM ("ssat %0, %1, %2" : "=r" (__RES) :  "I" (ARG2), "r" (__ARG1) ); \
+  __ASM volatile ("ssat %0, %1, %2" : "=r" (__RES) :  "I" (ARG2), "r" (__ARG1) : "cc" ); \
   __RES; \
  })
 
@@ -545,11 +545,11 @@ __extension__ \
   \param [in]    sat  Bit position to saturate to (0..31)
   \return             Saturated value
  */
-#define __USAT(ARG1,ARG2) \
+#define __USAT(ARG1, ARG2) \
 __extension__ \
 ({                          \
   uint32_t __RES, __ARG1 = (ARG1); \
-  __ASM ("usat %0, %1, %2" : "=r" (__RES) :  "I" (ARG2), "r" (__ARG1) ); \
+  __ASM volatile ("usat %0, %1, %2" : "=r" (__RES) :  "I" (ARG2), "r" (__ARG1) : "cc" ); \
   __RES; \
  })
 
