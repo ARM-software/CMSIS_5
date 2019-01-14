@@ -239,6 +239,7 @@ void __CLREX(void);
 /** \brief  Signed Saturate [not for Cortex-M0, Cortex-M0+, or SC000]
 
     This function saturates a signed value [not for Cortex-M0, Cortex-M0+, or SC000].
+    The Q bit is set if saturation occurs.
 
     \param [in]  value  Value to be saturated
     \param [in]    sat  Bit position to saturate to [1..32]
@@ -251,6 +252,7 @@ int32_t __SSAT(int32_t value, uint32_t sat);
 /** \brief  Unsigned Saturate [not for Cortex-M0, Cortex-M0+, or SC000]
 
     This function saturates an unsigned value [not for Cortex-M0, Cortex-M0+, or SC000].
+    The Q bit is set if saturation occurs.
 
     \param [in]  value  Value to be saturated
     \param [in]    sat  Bit position to saturate to [0..31]
