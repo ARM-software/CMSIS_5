@@ -2,7 +2,7 @@
 /**
 \mainpage
 
-This is a preview of \b CMSIS-Zone which is scheduled for release in Q4'2018.  The final release of CMSIS-Zone will provide:
+This is a preview of \b CMSIS-Zone which is scheduled for release in Q1'2019.  The final release of CMSIS-Zone will provide:
   - \ref zoneFormat (XML based) which stores consistent system setup information.
   - CMSIS-Zone configuration utility for system partitioning. The \ref GenDataModel "data" captured can be exported to various project and configuration files using file templates.
   
@@ -48,9 +48,9 @@ In this case one has to handle MPU settings per security context and SAU configu
 
 \subsection UseCase_MultiCore Multi-Core Partitioning
 
-Beside traditional single cores asymetric and hybrid multi-core devices contribute to increasing development complexity
+Beside traditional single cores asymmetric and hybrid multi-core devices contribute to increasing development complexity
 for embedded systems. Having multiple cores running different parts of an application concurrently needs a well defined
-resource assignment to prevent undesired misbehaviour.
+resource assignment to prevent undesired misbehavior.
 
 \image html multicore.png  "Multi-Core Partitioning"
 
@@ -67,7 +67,7 @@ resource assignment to prevent undesired misbehaviour.
       <th>Description</th>
     </tr>
     <tr>
-      <td>0.0.1 (Preview)</td>
+      <td>0.0.2 (Preview 2)</td>
       <td>Initial specification draft</td>
     </tr>
 </table>
