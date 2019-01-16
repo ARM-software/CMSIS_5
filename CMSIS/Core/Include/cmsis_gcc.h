@@ -113,6 +113,9 @@
 #ifndef   __RESTRICT
   #define __RESTRICT                             __restrict
 #endif
+#ifndef   __COMPILER_BARRIER
+  #define __COMPILER_BARRIER()                   __ASM volatile("":::"memory")
+#endif
 
 /* #########################  Startup and Lowlevel Init  ######################## */
 

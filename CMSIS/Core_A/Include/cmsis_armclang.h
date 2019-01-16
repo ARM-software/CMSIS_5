@@ -102,6 +102,9 @@
 #ifndef   __PACKED
   #define __PACKED                               __attribute__((packed))
 #endif
+#ifndef   __COMPILER_BARRIER
+  #define __COMPILER_BARRIER()                   __ASM volatile("":::"memory")
+#endif
 
 /* ##########################  Core Instruction Access  ######################### */
 /**
