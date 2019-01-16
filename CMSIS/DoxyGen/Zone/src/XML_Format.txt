@@ -79,6 +79,7 @@ Top-level .azone XML elements
 
 \code
 <azone>
+  <rzone>                // Refers related .rzone file
   <configure>            // CMSIS-Zone utility UI behavior
   
   <blocks>               // memory split information
@@ -202,7 +203,7 @@ The \ref xml_creator specifies how a derived .rzone file was created.
     <td>zone</td>
     <td>Name of the zone that is represented in this derived .rzone file.</td>
     <td>xs:string</td>
-    <td>optional</td>
+    <td>required</td>
   </tr>
 </table>
 */
@@ -236,28 +237,10 @@ The \ref xml_device specifies the device of the system that integrates the proce
     <td>required</td>
   </tr>
   <tr>
-    <td>Dfamily</td>
-    <td>Name of the device family.</td>
-    <td>xs:string</td>
-    <td>optional</td>
-  </tr>
-  <tr>
-    <td>DsubFamily</td>
-    <td>Name of the device sub family.</td>
-    <td>xs:string</td>
-    <td>optional</td>
-  </tr>
-  <tr>
     <td>Dname</td>
     <td>Specifies the name of the device. Only alphabetical characters, decimal digits, '-' and '_' are allowed.</td>
     <td>RestrictedString</td>
     <td>required</td>
-  </tr>
-  <tr>
-    <td>Dvariant</td>
-    <td>Name of the device variant. Only alphabetical characters, decimal digits, '-' and '_' are allowed</td>
-    <td>RestrictedStringDname</td>
-    <td>optional</td>
   </tr>
   <tr>
     <td>info</td>
@@ -315,7 +298,7 @@ The \ref xml_package refers to the Software Pack that provides the Device Family
     <td>url</td>
     <td>The URL the pack can be obtained from.</td>
     <td>xs:string</td>
-    <td>required</td>
+    <td>optional</td>
   </tr>
   <tr>
     <td>vendor</td>
@@ -882,6 +865,12 @@ The \ref xml_azone_pg element is the root element of the .azone file which store
     <th>Occurrence</th>
   </tr>
   <tr>
+    <td>\subpage xml_arzone "rzone"</td>
+    <td>Reference to rzone file</td>
+    <td>RZoneType</td>
+    <td>optional</td>
+  </tr>
+  <tr>
     <td>\subpage xml_configure "configure"</td>
     <td>Control the operation of the CMSIS-Zone utility</td>
     <td>ConfigureType</td>
@@ -898,6 +887,42 @@ The \ref xml_azone_pg element is the root element of the .azone file which store
     <td>Zone assignments of processor, memory, and peripheral resources</td>
     <td>ZonesType</td>
     <td>0..1 </td>
+  </tr>
+</table>
+*/
+
+/**************************************************************************************************/
+/**
+\page xml_arzone /azone/rzone element
+
+The \ref xml_arzone specifies the filename of the related *.rzone file.  If this element is omitted the *.azone and *.rzone file have the same base name.
+
+<b>Example</b>
+\code
+<rzone name="MySystem.rzone">
+\endcode
+&nbsp;
+
+<table class="cmtable" summary="Element: rzone">
+  <tr>
+    <th>Parent Element</th>
+    <th colspan="3">Element Chain</th>
+  </tr>
+  <tr>
+    <td>\ref xml_azone_pg "azone"</td>
+    <td colspan=3>\ref xml_azone_pg</td>
+  </tr>
+  <tr>
+    <th>Attributes</th>
+    <th>Description</th>
+    <th>Type</th>
+    <th>Use</th>
+  </tr>
+  <tr>
+    <td>name</td>
+    <td>Name of the related *.rzone file</td>
+    <td>xs:string</td>
+    <td>required</td>
   </tr>
 </table>
 */
@@ -936,7 +961,7 @@ The \ref xml_configure allows to control the operation of the CMSIS-Zone utility
   <tr>
     <td>mode</td>
     <td>Operating mode ("Project" or "MPU")</td>
-    <td>VersionType</td>
+    <td>xs:string</td>
     <td>optional</td>
   </tr>
   <tr>
@@ -1005,7 +1030,7 @@ The \ref xml_smemory contains a list of all physical memory region available in 
 \code
   <blocks>
     <region name="ROM1">
-      <block name="ROM1Boot" size="0x1000" access="x" info="boot code">
+      <block name="ROM1Boot" size="0x1000" offset="0"                access="x"  info="boot code">
       <block name="ROM1App"  size="0x8000" offset="0x2000" fixed="1" access="rx" info="application code">
     </region>
   </blocks>
