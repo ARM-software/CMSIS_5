@@ -74,11 +74,17 @@ void arm_nn_activations_direct_q15(q15_t * data, uint16_t size, uint16_t int_wid
         q15_t     out;
         q15_t     in = *pIn++;
         q15_t     frac = (uint32_t) in & bit_mask;
-        q15_t     value = lookup_table[__USAT(in >> shift_size, 8)];
-        q15_t     value2 = lookup_table[__USAT(1 + (in >> shift_size), 8)];
-
-        /* doing the interpolation here for better accuracy */
-        out = ((q31_t) (full_frac - frac) * value + (q31_t) value2 * frac) >> shift_size;
+        q15_t     value = lookup_table[(uint8_t)(in >> shift_size)];
+        if ((in >> shift_size) != 0x7f)
+        {
+            q15_t     value2 = lookup_table[(uint8_t)(1 + ((uint8_t)(in >> shift_size)))];
+            /* doing the interpolation here for better accuracy */
+            out = ((q31_t) (full_frac - frac) * value + (q31_t) value2 * frac) >> shift_size;
+        } else
+        {
+            /* the largest positive value does not have a right side for linear interpolation */
+            out = value;
+        }
 
         *pOut++ = out;
         i--;
