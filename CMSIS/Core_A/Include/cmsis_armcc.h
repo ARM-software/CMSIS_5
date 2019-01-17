@@ -111,29 +111,17 @@
 /**
   \brief   Instruction Synchronization Barrier
  */
-#define __ISB() do {\
-                   __schedule_barrier();\
-                   __isb(0xF);\
-                   __schedule_barrier();\
-                } while (0U)
+#define __ISB()                           __isb(0xF)
 
 /**
   \brief   Data Synchronization Barrier
  */
-#define __DSB() do {\
-                   __schedule_barrier();\
-                   __dsb(0xF);\
-                   __schedule_barrier();\
-                } while (0U)
+#define __DSB()                           __dsb(0xF)
 
 /**
   \brief   Data Memory Barrier
  */
-#define __DMB() do {\
-                   __schedule_barrier();\
-                   __dmb(0xF);\
-                   __schedule_barrier();\
-                } while (0U)
+#define __DMB()                           __dmb(0xF)
 
 /**
   \brief   Reverse byte order (32 bit)
