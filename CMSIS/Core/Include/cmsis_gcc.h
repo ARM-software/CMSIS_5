@@ -1,8 +1,8 @@
 /**************************************************************************//**
  * @file     cmsis_gcc.h
  * @brief    CMSIS compiler GCC header file
- * @version  V5.2.0
- * @date     08. May 2019
+ * @version  V5.2.1
+ * @date     30. July 2019
  ******************************************************************************/
 /*
  * Copyright (c) 2009-2019 Arm Limited. All rights reserved.
@@ -450,7 +450,7 @@ __STATIC_FORCEINLINE uint32_t __get_PRIMASK(void)
 {
   uint32_t result;
 
-  __ASM volatile ("MRS %0, primask" : "=r" (result) :: "memory");
+  __ASM volatile ("MRS %0, primask" : "=r" (result) );
   return(result);
 }
 
@@ -465,7 +465,7 @@ __STATIC_FORCEINLINE uint32_t __TZ_get_PRIMASK_NS(void)
 {
   uint32_t result;
 
-  __ASM volatile ("MRS %0, primask_ns" : "=r" (result) :: "memory");
+  __ASM volatile ("MRS %0, primask_ns" : "=r" (result) );
   return(result);
 }
 #endif
