@@ -50,12 +50,12 @@ static void buffer_scale_back_q15_to_q7(q15_t * buffer, q7_t * target, uint16_t 
 }
 
 static void compare_and_replace_if_larger_q7(q7_t * base,   // base data
-                                             q7_t * target, // compare target
+                                             const q7_t * target,   // compare target
                                              const uint16_t length  // data length
     )
 {
     q7_t     *pIn = base;
-    q7_t     *pCom = target;
+    const q7_t     *pCom = target;
     union arm_nnword in;
     union arm_nnword com;
     uint16_t  cnt = length >> 2;
@@ -78,6 +78,18 @@ static void compare_and_replace_if_larger_q7(q7_t * base,   // base data
         *__SIMD32(pIn)++ = in.word;
 
         cnt--;
+    }
+
+    cnt = length & 0x3;
+    while (cnt > 0u)
+    {
+      if (*pCom > *pIn)
+      {
+        *pIn = *pCom;
+      }
+      pIn++;
+      pCom++;
+      cnt--;
     }
 }
 
