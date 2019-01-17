@@ -134,7 +134,7 @@
  */
 __STATIC_FORCEINLINE  void __ISB(void)
 {
-  __ASM volatile ("isb 0xF":::"memory");
+  __ASM volatile ("isb 0xF");
 }
 
 
