@@ -1371,7 +1371,7 @@ __STATIC_FORCEINLINE uint8_t __LDAB(volatile uint8_t *ptr)
 {
     uint32_t result;
 
-   __ASM volatile ("ldab %0, %1" : "=r" (result) : "Q" (*ptr) );
+   __ASM volatile ("ldab %0, %1" : "=r" (result) : "Q" (*ptr) : "memory" );
    return ((uint8_t) result);
 }
 
@@ -1386,7 +1386,7 @@ __STATIC_FORCEINLINE uint16_t __LDAH(volatile uint16_t *ptr)
 {
     uint32_t result;
 
-   __ASM volatile ("ldah %0, %1" : "=r" (result) : "Q" (*ptr) );
+   __ASM volatile ("ldah %0, %1" : "=r" (result) : "Q" (*ptr) : "memory" );
    return ((uint16_t) result);
 }
 
@@ -1401,7 +1401,7 @@ __STATIC_FORCEINLINE uint32_t __LDA(volatile uint32_t *ptr)
 {
     uint32_t result;
 
-   __ASM volatile ("lda %0, %1" : "=r" (result) : "Q" (*ptr) );
+   __ASM volatile ("lda %0, %1" : "=r" (result) : "Q" (*ptr) : "memory" );
    return(result);
 }
 
@@ -1414,7 +1414,7 @@ __STATIC_FORCEINLINE uint32_t __LDA(volatile uint32_t *ptr)
  */
 __STATIC_FORCEINLINE void __STLB(uint8_t value, volatile uint8_t *ptr)
 {
-   __ASM volatile ("stlb %1, %0" : "=Q" (*ptr) : "r" ((uint32_t)value) );
+   __ASM volatile ("stlb %1, %0" : "=Q" (*ptr) : "r" ((uint32_t)value) : "memory" );
 }
 
 
@@ -1426,7 +1426,7 @@ __STATIC_FORCEINLINE void __STLB(uint8_t value, volatile uint8_t *ptr)
  */
 __STATIC_FORCEINLINE void __STLH(uint16_t value, volatile uint16_t *ptr)
 {
-   __ASM volatile ("stlh %1, %0" : "=Q" (*ptr) : "r" ((uint32_t)value) );
+   __ASM volatile ("stlh %1, %0" : "=Q" (*ptr) : "r" ((uint32_t)value) : "memory" );
 }
 
 
@@ -1438,7 +1438,7 @@ __STATIC_FORCEINLINE void __STLH(uint16_t value, volatile uint16_t *ptr)
  */
 __STATIC_FORCEINLINE void __STL(uint32_t value, volatile uint32_t *ptr)
 {
-   __ASM volatile ("stl %1, %0" : "=Q" (*ptr) : "r" ((uint32_t)value) );
+   __ASM volatile ("stl %1, %0" : "=Q" (*ptr) : "r" ((uint32_t)value) : "memory" );
 }
 
 
@@ -1452,7 +1452,7 @@ __STATIC_FORCEINLINE uint8_t __LDAEXB(volatile uint8_t *ptr)
 {
     uint32_t result;
 
-   __ASM volatile ("ldaexb %0, %1" : "=r" (result) : "Q" (*ptr) );
+   __ASM volatile ("ldaexb %0, %1" : "=r" (result) : "Q" (*ptr) : "memory" );
    return ((uint8_t) result);
 }
 
@@ -1467,7 +1467,7 @@ __STATIC_FORCEINLINE uint16_t __LDAEXH(volatile uint16_t *ptr)
 {
     uint32_t result;
 
-   __ASM volatile ("ldaexh %0, %1" : "=r" (result) : "Q" (*ptr) );
+   __ASM volatile ("ldaexh %0, %1" : "=r" (result) : "Q" (*ptr) : "memory" );
    return ((uint16_t) result);
 }
 
@@ -1482,7 +1482,7 @@ __STATIC_FORCEINLINE uint32_t __LDAEX(volatile uint32_t *ptr)
 {
     uint32_t result;
 
-   __ASM volatile ("ldaex %0, %1" : "=r" (result) : "Q" (*ptr) );
+   __ASM volatile ("ldaex %0, %1" : "=r" (result) : "Q" (*ptr) : "memory" );
    return(result);
 }
 
@@ -1499,7 +1499,7 @@ __STATIC_FORCEINLINE uint32_t __STLEXB(uint8_t value, volatile uint8_t *ptr)
 {
    uint32_t result;
 
-   __ASM volatile ("stlexb %0, %2, %1" : "=&r" (result), "=Q" (*ptr) : "r" ((uint32_t)value) );
+   __ASM volatile ("stlexb %0, %2, %1" : "=&r" (result), "=Q" (*ptr) : "r" ((uint32_t)value) : "memory" );
    return(result);
 }
 
@@ -1516,7 +1516,7 @@ __STATIC_FORCEINLINE uint32_t __STLEXH(uint16_t value, volatile uint16_t *ptr)
 {
    uint32_t result;
 
-   __ASM volatile ("stlexh %0, %2, %1" : "=&r" (result), "=Q" (*ptr) : "r" ((uint32_t)value) );
+   __ASM volatile ("stlexh %0, %2, %1" : "=&r" (result), "=Q" (*ptr) : "r" ((uint32_t)value) : "memory" );
    return(result);
 }
 
@@ -1533,7 +1533,7 @@ __STATIC_FORCEINLINE uint32_t __STLEX(uint32_t value, volatile uint32_t *ptr)
 {
    uint32_t result;
 
-   __ASM volatile ("stlex %0, %2, %1" : "=&r" (result), "=Q" (*ptr) : "r" ((uint32_t)value) );
+   __ASM volatile ("stlex %0, %2, %1" : "=&r" (result), "=Q" (*ptr) : "r" ((uint32_t)value) : "memory" );
    return(result);
 }
 
