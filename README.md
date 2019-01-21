@@ -30,18 +30,20 @@ For further details see also the [Slides of the Embedded World CMSIS Partner Mee
 
 ## Directory Structure
 
-| Directory       | Content                                        |                
-| --------------- | ---------------------------------------------- |
-| CMSIS/Core      | CMSIS-Core related files (for release)         |
-| CMSIS/DAP       | CMSIS-DAP related files and examples           |
-| CMSIS/Driver    | CMSIS-Driver API headers and template files    |
-| CMSIS/DSP       | CMSIS-DSP related files                        |
-| CMSIS/NN        | CMSIS-NN related files                         |
-| CMSIS/RTOS      | RTOS v1 related files (for Cortex-M)           |
-| CMSIS/RTOS2     | RTOS v2 related files (for Cortex-M & Armv8-M) |
-| CMSIS/Pack      | CMSIS-Pack examples and tutorials              |
-| CMSIS/DoxyGen   | Source of the documentation                    |
-| CMSIS/Utilities | Utility programs                               |
+| Directory            | Content                                                   |                
+| -------------------- | --------------------------------------------------------- |
+| CMSIS/Core           | CMSIS-Core(M) related files (for release)                 |
+| CMSIS/Core_A         | CMSIS-Core(A) related files (for release)                 |
+| CMSIS/CoreValidation | Validation for Core(M) and Core(A) (NOT part of release)  |
+| CMSIS/DAP            | CMSIS-DAP related files and examples                      |
+| CMSIS/Driver         | CMSIS-Driver API headers and template files               |
+| CMSIS/DSP            | CMSIS-DSP related files                                   |
+| CMSIS/NN             | CMSIS-NN related files                                    |
+| CMSIS/RTOS           | RTOS v1 related files (for Cortex-M)                      |
+| CMSIS/RTOS2          | RTOS v2 related files (for Cortex-M & Armv8-M)            |
+| CMSIS/Pack           | CMSIS-Pack examples and tutorials                         |
+| CMSIS/DoxyGen        | Source of the documentation                               |
+| CMSIS/Utilities      | Utility programs                                          |
 
 ## Generate CMSIS Pack for Release
 
