@@ -602,7 +602,7 @@ The \ref xml_smap contains additional information for alias regions or processor
     <td>name</td>
     <td>Alternative name of this memory region (in case of alias) which must be unique in this *.rzone file.</td>
     <td>xs:string</td>
-    <td>optional</td>
+    <td>required</td>
   </tr>
   <tr>
     <td>start</td>
@@ -807,13 +807,13 @@ The \ref xml_speripheral is used to define an address mapping for one peripheral
     <td>\ref xml_smap "map"</td>
     <td>optional map information that can be processor specific or a alias memory address</td>
     <td>complexType</td>
-    <td>0..1</td>
+    <td>0..*</td>
   </tr>
   <tr>
     <td>interrupts????</td>
     <td>RK suggest to add this later</td>
     <td>complexType</td>
-    <td>0..1</td>
+    <td>0..*</td>
   </tr>
 </table>
 
