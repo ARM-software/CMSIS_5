@@ -119,6 +119,8 @@ __Vectors_End:
                 .globl   Reset_Handler
                 .fnstart
 Reset_Handler:
+                bl       SystemInit
+
 /* Firstly it copies data from read only memory to RAM.
  * There are two schemes to copy. One can copy more than one sections.
  * Another can copy only one section. The former scheme needs more
@@ -237,7 +239,6 @@ Reset_Handler:
                 blt      .L_loop3
 #endif /* __STARTUP_CLEAR_BSS_MULTIPLE || __STARTUP_CLEAR_BSS */
 
-                bl       SystemInit
                 bl       _start
 
                 .fnend

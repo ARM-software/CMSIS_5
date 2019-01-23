@@ -148,6 +148,10 @@ void Reset_Handler(void) {
   uint32_t *pSrc, *pDest;
   uint32_t *pTable __attribute__((unused));
 
+  __set_MSPLIM((uint32_t)&__StackLimit);
+
+  SystemInit();                             /* CMSIS System Initialization */
+
 /* Firstly it copies data from read only memory to RAM.
  * There are two schemes to copy. One can copy more than one sections.
  * Another can copy only one section. The former scheme needs more
@@ -235,9 +239,6 @@ void Reset_Handler(void) {
   }
 #endif /* __STARTUP_CLEAR_BSS_MULTIPLE || __STARTUP_CLEAR_BSS */
 
-  __set_MSPLIM((uint32_t)&__StackLimit);
-
-  SystemInit();                             /* CMSIS System Initialization */
   _start();                                 /* Enter PreeMain (C library entry point) */
 }
 
