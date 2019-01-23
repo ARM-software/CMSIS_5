@@ -2066,6 +2066,11 @@ Contact cmsis@arm.com to ask for an extension. These values can be used in the e
     <td>http://www.triadsemi.com</td>
   </tr>
   <tr>
+    <td class="XML-Token">Unisoc:152</td>
+    <td>Unisoc Communications, Inc.</td>
+    <td>http://www.unisoc.com</td>
+  </tr>
+  <tr>
     <td class="XML-Token">Vorago:137</td>
     <td>Vorago Technologies</td>
     <td>http://www.voragotech.com</td>
