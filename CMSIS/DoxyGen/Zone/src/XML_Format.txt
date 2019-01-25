@@ -96,6 +96,24 @@ Top-level .azone XML elements
 </azone>
 \endcode
 
+\anchor security
+Security Setting
+================
+The attribute \em security defines the security setting for a memory or peripheral region.
+Only one setting is allow:
+ - \<empty\>  non-secure: no security restrictions (default)
+ - 'c'  secure on non-secure callable  
+ - 's'  secure
+ 
+\anchor access
+Access Setting
+==============
+The attribute \em access defines the access permission for a memory or peripheral region.
+Multiple settings are allow:
+ - 'r'  read  
+ - 'w'  write
+ - 'x'  execute
+ - 'p'  peripheral</td>
 */
 
 /**************************************************************************************************/
@@ -535,7 +553,13 @@ The \ref xml_rregion lists a physical memory region and alternative mappings to 
   </tr>
   <tr>
     <td>access</td>
-    <td>Access permissions for this memory region.</td>
+    <td>\ref access "Access" permissions for this memory region.</td>
+    <td>xs:string</td>
+    <td>optional</td>
+  </tr>
+  <tr>
+    <td>security</td>
+    <td>\ref security "Security" attributes for this memory region</td>
     <td>xs:string</td>
     <td>optional</td>
   </tr>
@@ -618,7 +642,13 @@ The \ref xml_smap contains additional information for alias regions or processor
   </tr>
   <tr>
     <td>access</td>
-    <td>Access permissions for this alternative mapping.</td>
+    <td>\ref access "Access" permissions for this memory alternative mapping.</td>
+    <td>xs:string</td>
+    <td>optional</td>
+  </tr>
+  <tr>
+    <td>security</td>
+    <td>\ref security "Security" attributes for this alternative mapping.</td>
     <td>xs:string</td>
     <td>optional</td>
   </tr>
@@ -787,7 +817,13 @@ The \ref xml_speripheral is used to define an address mapping for one peripheral
   </tr>
   <tr>
     <td>access</td>
-    <td>Access permissions for this peripheral.</td>
+    <td>\ref access "Access" permissions for this peripheral.</td>
+    <td>xs:string</td>
+    <td>optional</td>
+  </tr>
+  <tr>
+    <td>security</td>
+    <td>\ref security "Security" attributes for this peripheral.</td>
     <td>xs:string</td>
     <td>optional</td>
   </tr>
@@ -1293,6 +1329,18 @@ The \ref xml_assign defines the resource assignments of that zone.
   <tr>
     <td>peripheral</td>
     <td>Name of a peripheral.</td>
+    <td>xs:string</td>
+    <td>optional</td>
+  </tr>
+  <tr>
+    <td>access</td>
+    <td>\ref access "Access" permissions for this assignment.</td>
+    <td>xs:string</td>
+    <td>optional</td>
+  </tr>
+  <tr>
+    <td>security</td>
+    <td>\ref security "Security" attributes for this assignment.</td>
     <td>xs:string</td>
     <td>optional</td>
   </tr>
