@@ -114,6 +114,15 @@ Multiple settings are allow:
  - 'w'  write
  - 'x'  execute
  - 'p'  peripheral</td>
+
+\anchor privilege
+Privilege Type
+==============
+The attribute \em privilege defines the privilege level that is required for memory/peripheral access or code execution in a MPU zone.
+Only one of the settings is allow:
+  - \<empty\> privilege level not specified
+  - 'u' unprivileged level
+  - 'p' privileged level
 */
 
 /**************************************************************************************************/
@@ -559,8 +568,14 @@ The \ref xml_rregion lists a physical memory region and alternative mappings to 
   </tr>
   <tr>
     <td>security</td>
-    <td>\ref security "Security" attributes for this memory region</td>
+    <td>\ref security "Security" attributes for this memory region.</td>
     <td>\ref security "SecurityType"</td>
+    <td>optional</td>
+  </tr>
+  <tr>
+    <td>privilege</td>
+    <td>\ref privilege "Privilege level" for this memory region.</td>
+    <td>\ref privilege "PrivilegeType</td>
     <td>optional</td>
   </tr>
   <tr>
@@ -650,6 +665,12 @@ The \ref xml_smap contains additional information for alias regions or processor
     <td>security</td>
     <td>\ref security "Security" attributes for this alternative mapping.</td>
     <td>\ref security "SecurityType"</td>
+    <td>optional</td>
+  </tr>
+  <tr>
+    <td>privilege</td>
+    <td>\ref privilege "Privilege level" for this alternative mapping.</td>
+    <td>\ref privilege "PrivilegeType</td>
     <td>optional</td>
   </tr>
   <tr>
@@ -825,6 +846,12 @@ The \ref xml_speripheral is used to define an address mapping for one peripheral
     <td>security</td>
     <td>\ref security "Security" attributes for this peripheral.</td>
     <td>\ref security "SecurityType"</td>
+    <td>optional</td>
+  </tr>
+  <tr>
+    <td>privilege</td>
+    <td>\ref privilege "Privilege level" for this peripheral.</td>
+    <td>\ref privilege "PrivilegeType</td>
     <td>optional</td>
   </tr>
   <tr>
@@ -1181,11 +1208,16 @@ The \ref xml_block defines a logical memory block in that region.
   </tr>
    <tr>
     <td>security</td>
-    <td>\ref security "Security" attributes for this memory block</td>
+    <td>\ref security "Security" attributes for this memory block.</td>
     <td>\ref security "SecurityType"</td>
     <td>optional</td>
   </tr>
- 
+  <tr>
+    <td>privilege</td>
+    <td>\ref privilege "Privilege level" for this memory block.</td>
+    <td>\ref privilege "PrivilegeType</td>
+    <td>optional</td>
+  </tr>
   <tr>
     <td>startup</td>
     <td>"1" specifies that this region is used for the startup code of the application. Default value is "0".</td>
@@ -1218,7 +1250,7 @@ The \ref xml_zones contains all zone definitions.
 \code
 <zones>
   <zone name="Network">
-    <assign region="RAM1" block="Network"        access="rwu"/>
+    <assign region="RAM1" block="Network"        access="rw"/>
     <assign group="UART" peripheral="USART0"     access="rw" />
     :
   </zone>
@@ -1279,6 +1311,12 @@ The \ref xml_zone defines the name of a zone.
     <td>info</td>
     <td>Brief description of the zone.</td>
     <td>xs:string</td>
+    <td>optional</td>
+  </tr>
+  <tr>
+    <td>privilege</td>
+    <td>\ref privilege "Privilege level" for code execution in this zone.</td>
+    <td>\ref privilege "PrivilegeType</td>
     <td>optional</td>
   </tr>
   <tr>
@@ -1349,6 +1387,12 @@ The \ref xml_assign defines the resource assignments of that zone.
     <td>security</td>
     <td>\ref security "Security" attributes for this assignment.</td>
     <td>\ref security "SecurityType"</td>
+    <td>optional</td>
+  </tr>
+  <tr>
+    <td>privilege</td>
+    <td>\ref privilege "Privilege level" for this assignment.</td>
+    <td>\ref privilege "PrivilegeType</td>
     <td>optional</td>
   </tr>
 </table>
