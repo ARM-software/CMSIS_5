@@ -575,7 +575,7 @@ The \ref xml_rregion lists a physical memory region and alternative mappings to 
   <tr>
     <td>privilege</td>
     <td>\ref privilege "Privilege level" for this memory region.</td>
-    <td>\ref privilege "PrivilegeType</td>
+    <td>\ref privilege "PrivilegeType"</td>
     <td>optional</td>
   </tr>
   <tr>
@@ -670,7 +670,7 @@ The \ref xml_smap contains additional information for alias regions or processor
   <tr>
     <td>privilege</td>
     <td>\ref privilege "Privilege level" for this alternative mapping.</td>
-    <td>\ref privilege "PrivilegeType</td>
+    <td>\ref privilege "PrivilegeType"</td>
     <td>optional</td>
   </tr>
   <tr>
@@ -851,7 +851,7 @@ The \ref xml_speripheral is used to define an address mapping for one peripheral
   <tr>
     <td>privilege</td>
     <td>\ref privilege "Privilege level" for this peripheral.</td>
-    <td>\ref privilege "PrivilegeType</td>
+    <td>\ref privilege "PrivilegeType"</td>
     <td>optional</td>
   </tr>
   <tr>
@@ -1215,7 +1215,7 @@ The \ref xml_block defines a logical memory block in that region.
   <tr>
     <td>privilege</td>
     <td>\ref privilege "Privilege level" for this memory block.</td>
-    <td>\ref privilege "PrivilegeType</td>
+    <td>\ref privilege "PrivilegeType"</td>
     <td>optional</td>
   </tr>
   <tr>
@@ -1316,7 +1316,7 @@ The \ref xml_zone defines the name of a zone.
   <tr>
     <td>privilege</td>
     <td>\ref privilege "Privilege level" for code execution in this zone.</td>
-    <td>\ref privilege "PrivilegeType</td>
+    <td>\ref privilege "PrivilegeType"</td>
     <td>optional</td>
   </tr>
   <tr>
@@ -1392,7 +1392,7 @@ The \ref xml_assign defines the resource assignments of that zone.
   <tr>
     <td>privilege</td>
     <td>\ref privilege "Privilege level" for this assignment.</td>
-    <td>\ref privilege "PrivilegeType</td>
+    <td>\ref privilege "PrivilegeType"</td>
     <td>optional</td>
   </tr>
 </table>
