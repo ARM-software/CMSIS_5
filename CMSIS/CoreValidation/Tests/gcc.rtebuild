@@ -13,43 +13,46 @@ targets:
     source:
       - ../../../Device/ARM/${device}/Source/GCC/startup_${device}.c
   armcm0:
-    cpu    : cortex-m0
-    fpu    : none
-    float  : soft
+    cpu      : cortex-m0
+    fpu      : none
+    float    : soft
   armcm0plus:
-    cpu    : cortex-m0plus
-    fpu    : none
-    float  : soft
+    cpu      : cortex-m0plus
+    fpu      : none
+    float    : soft
   armcm3:
-    cpu    : cortex-m3
-    fpu    : none
-    float  : soft
+    cpu      : cortex-m3
+    fpu      : none
+    float    : soft
   armcm4:
-    cpu    : cortex-m4
-    fpu    : none
-    float  : soft
+    cpu      : cortex-m4
+    fpu      : none
+    float    : soft
   armcm4fp:
-    cpu    : cortex-m4
-    fpu    : fpv4-sp-d16
-    float  : hard
-    cflags : [ "-mfpu=${fpu}"]
+    cpu      : cortex-m4
+    fpu      : fpv4-sp-d16
+    float    : hard
+    cflags   : [ "-mfpu=${fpu}"]
     asmflags : [ "-mfpu=${fpu}"]
+    linkflags: [ "-mfpu=${fpu}"]
   armcm7:
-    cpu    : cortex-m7
-    fpu    : none
-    float  : soft
+    cpu      : cortex-m7
+    fpu      : none
+    float    : soft
   armcm7sp:
-    cpu    : Cortex-M7
-    fpu    : fpv5-sp-d16
-    float  : hard
-    cflags : [ "-mfpu=${fpu}"]
+    cpu      : Cortex-M7
+    fpu      : fpv5-sp-d16
+    float    : hard
+    cflags   : [ "-mfpu=${fpu}"]
     asmflags : [ "-mfpu=${fpu}"]
+    linkflags: [ "-mfpu=${fpu}"]
   armcm7dp:
-    cpu    : Cortex-M7
-    fpu    : fpv5-d16
-    float  : hard
-    cflags : [ "-mfpu=${fpu}"]
+    cpu      : Cortex-M7
+    fpu      : fpv5-d16
+    float    : hard
+    cflags   : [ "-mfpu=${fpu}"]
     asmflags : [ "-mfpu=${fpu}"]
+    linkflags: [ "-mfpu=${fpu}"]
   armca:
     csettings  : [ -marm ]
     cflags     : [ -xc, -std=gnu99, -c, "-mcpu=${cpu}", "-mfpu=${fpu}", "-mfloat-abi=${float}", "${csettings}", "${cwarnings}" ]
