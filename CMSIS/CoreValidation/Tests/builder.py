@@ -41,12 +41,12 @@ FVP_MODELS = {
   Device.CM33NS   : { 'cmd': "FVP_MPS2_Cortex-M33",     'args': { 'timeout': 60, 'limit': "1000000000", 'config': "config/ARMCM33_DSP_FP_TZ_config.txt", 'target': "cpu0" } },
   Device.CM23S    : { 'cmd': "FVP_MPS2_Cortex-M23",     'args': { 'timeout': 60, 'limit': "1000000000", 'config': "config/ARMCM23_TZ_config.txt",        'target': "cpu0" } },
   Device.CM33S    : { 'cmd': "FVP_MPS2_Cortex-M33",     'args': { 'timeout': 60, 'limit': "1000000000", 'config': "config/ARMCM33_DSP_FP_TZ_config.txt", 'target': "cpu0" } },
-  Device.CA5      : { 'cmd': "fvp_ve_cortex-a5x1.exe",  'args': { 'timeout': 60, 'limit': "1000000000", 'config': "config/ARMCA5_config.txt" } },
-  Device.CA7      : { 'cmd': "fvp_ve_cortex-a7x1.exe",  'args': { 'timeout': 60, 'limit': "1000000000", 'config': "config/ARMCA7_config.txt" } },
-  Device.CA9      : { 'cmd': "fvp_ve_cortex-a9x1.exe",  'args': { 'timeout': 60, 'limit': "1000000000", 'config': "config/ARMCA9_config.txt" } },
-  Device.CA5NEON  : { 'cmd': "fvp_ve_cortex-a5x1.exe",  'args': { 'timeout': 60, 'limit': "1000000000", 'config': "config/ARMCA5neon_config.txt" } },
-  Device.CA7NEON  : { 'cmd': "fvp_ve_cortex-a7x1.exe",  'args': { 'timeout': 60, 'limit': "1000000000", 'config': "config/ARMCA7neon_config.txt" } },
-  Device.CA9NEON  : { 'cmd': "fvp_ve_cortex-a9x1.exe",  'args': { 'timeout': 60, 'limit': "1000000000", 'config': "config/ARMCA9neon_config.txt" } }
+  Device.CA5      : { 'cmd': "FVP_VE_Cortex-A5x1",      'args': { 'timeout': 60, 'limit': "1000000000", 'config': "config/ARMCA5_config.txt" } },
+  Device.CA7      : { 'cmd': "FVP_VE_Cortex-A7x1",      'args': { 'timeout': 60, 'limit': "1000000000", 'config': "config/ARMCA7_config.txt" } },
+  Device.CA9      : { 'cmd': "FVP_VE_Cortex-A9x1",      'args': { 'timeout': 60, 'limit': "1000000000", 'config': "config/ARMCA9_config.txt" } },
+  Device.CA5NEON  : { 'cmd': "FVP_VE_Cortex-A5x1",      'args': { 'timeout': 60, 'limit': "1000000000", 'config': "config/ARMCA5neon_config.txt" } },
+  Device.CA7NEON  : { 'cmd': "FVP_VE_Cortex-A7x1",      'args': { 'timeout': 60, 'limit': "1000000000", 'config': "config/ARMCA7neon_config.txt" } },
+  Device.CA9NEON  : { 'cmd': "FVP_VE_Cortex-A9x1",      'args': { 'timeout': 60, 'limit': "1000000000", 'config': "config/ARMCA9neon_config.txt" } }
 }
 
 def projects(step, config):
