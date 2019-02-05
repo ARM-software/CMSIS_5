@@ -40,7 +40,7 @@ targets:
     cflags      : [ "--cpu=${cpu}", "--apcs=/${float}", --arm, --c99, "-%{optimize}", -g, -c ]
     asmflags    : [ "--cpu=${cpu}", "--apcs=/${float}", --arm, --c99, "-%{optimize}", -g, -c ]
     linkflags   : [ "--cpu=${cpu}", "--entry=Vectors" ]
-    linkscript : "./config/core_a/rtebuild.sct"
+    linkscript : "./config/core_a/rtebuild_armcc.sct"
     source:
       - ../../../Device/ARM/${device}/Source/AC5/startup_${device}.c
   armca5:
