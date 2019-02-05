@@ -1,0 +1,77 @@
+import:
+ - tests.rtebuild
+targets:
+  arm:
+    csettings   : [ -fno-rtti, -funsigned-char, -fshort-enums, -fshort-wchar, -mlittle-endian, -gdwarf-3, "-%{optimize}", -ffunction-sections ]
+    cwarnings   : [ -Weverything, -Wno-undef, -Wno-packed, -Wno-reserved-id-macro, -Wno-unused-macros, -Wno-documentation-unknown-command, -Wno-documentation, -Wno-license-management, -Wno-parentheses-equality ]
+  armcm:
+    cflags      : [ -xc, -std=gnu99, --target=arm-arm-none-eabi, "-mcpu=${cpu}", "-mfpu=${fpu}", "-mfloat-abi=${float}", -c, "${csettings}", "${cwarnings}" ]
+    asmflags    : [ "--cpu ${cpu}", --li, -g ]
+    info        : [ --info summarysizes, --map, --load_addr_map_info, --xref, --callgraph, --symbols, --info sizes, --info totals, --info unused, --info veneers, "--list ${builddir}/${targetName}.map" ]
+    linkflags   : [ "--cpu ${cpu}", --strict, --no_remove, --entry Reset_Handler, --diag_suppress=L6314, --diag_suppress=L6092w, "${info}" ]
+    linkscript  : "config/core_m/rtebuild.sct"
+    source:
+      - ../../../Device/ARM/${device}/Source/ARM/startup_${device}.s
+  armcm0:
+    cpu    : cortex-m0
+    fpu    : none
+    float  : soft
+  armcm0plus:
+    cpu    : cortex-m0plus
+    fpu    : none
+    float  : soft
+  armcm3:
+    cpu    : cortex-m3
+    fpu    : none
+    float  : soft
+  armcm4:
+    cpu    : cortex-m4
+    fpu    : none
+    float  : soft
+  armcm4fp:
+    cpu    : cortex-m4
+    fpu    : fpv4-sp-d16
+    float  : hard
+  armcm7:
+    cpu    : cortex-m7
+    fpu    : none
+    float  : soft
+  armcm7sp:
+    cpu    : Cortex-M7
+    fpu    : fpv5-sp-d16
+    float  : hard
+  armcm7dp:
+    cpu    : Cortex-M7
+    fpu    : fpv5-d16
+    float  : hard
+  armca:
+    cflags     : [ -xc, -std=c99, -c, --target=arm-arm-none-eabi, "-mcpu=${cpu}", "-mfpu=${fpu}", "-mfloat-abi=${float}", -marm, "${csettings}", "${cwarnings}" ]
+    asmflags   : [ -c, --target=arm-arm-none-eabi, "-mcpu=${cpu}", "-mfpu=${fpu}", "-mfloat-abi=${float}", -marm, "${csettings}", "${cwarnings}" ]
+    linkflags  : [ -v, --target=arm-arm-none-eabi, "-Wl,--entry=Vectors" ]
+    linkscript : "./config/core_a/rtebuild.sct"
+    source:
+      - ../../../Device/ARM/${device}/Source/AC6/startup_${device}.c
+  armca5:
+    cpu    : cortex-a5
+    fpu    : vfpv3-d16-fp16
+    float  : hard
+  armca5neon:
+    cpu    : cortex-a5
+    fpu    : neon-fp16
+    float  : hard
+  armca7:
+    cpu    : cortex-a7
+    fpu    : vfpv4-d16
+    float  : hard
+  armca7neon:
+    cpu    : cortex-a7
+    fpu    : neon-vfpv4
+    float  : hard
+  armca9:
+    cpu    : cortex-a9
+    fpu    : vfpv3-d16-fp16
+    float  : hard
+  armca9neon:
+    cpu    : cortex-a9
+    fpu    : neon-fp16
+    float  : hard

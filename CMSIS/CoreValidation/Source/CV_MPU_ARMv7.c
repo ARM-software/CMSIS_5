@@ -12,6 +12,7 @@
  *      Test implementation
  *----------------------------------------------------------------------------*/
 
+#if defined(__MPU_PRESENT) && __MPU_PRESENT
 static void ClearMpu(void) {
   for(uint32_t i = 0U; i < 8U; ++i) {
     MPU->RNR = i;
@@ -19,6 +20,7 @@ static void ClearMpu(void) {
     MPU->RASR = 0U;
   }
 }
+#endif
 
 /*-----------------------------------------------------------------------------
  *      Test cases
@@ -32,6 +34,7 @@ static void ClearMpu(void) {
 */
 void TC_MPU_SetClear(void)
 {
+#if defined(__MPU_PRESENT) && __MPU_PRESENT
   static const ARM_MPU_Region_t table[] = {
     { .RBAR = 0U, .RASR = 0U },
     { .RBAR = ARM_MPU_RBAR(2U, 0x30000000U), .RASR = ARM_MPU_RASR(1U, ARM_MPU_AP_FULL, 0U, 0U, 0U, 0U, 0U, ARM_MPU_REGION_SIZE_128MB) },
@@ -63,6 +66,7 @@ void TC_MPU_SetClear(void)
   ASSERT_TRUE((MPU->RASR & MPU_RASR_ENABLE_Msk) == 0U);
   
   #undef ASSERT_MPU_REGION
+#endif
 }
   
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
@@ -73,6 +77,7 @@ void TC_MPU_SetClear(void)
 */
 void TC_MPU_Load(void)
 {
+#if defined(__MPU_PRESENT) && __MPU_PRESENT
   static const ARM_MPU_Region_t table[] = {
     { .RBAR = ARM_MPU_RBAR(0U, 0x10000000U), .RASR = ARM_MPU_RASR(1U, ARM_MPU_AP_FULL, 0U, 0U, 0U, 0U, 0U, ARM_MPU_REGION_SIZE_32MB)  },
     { .RBAR = ARM_MPU_RBAR(1U, 0x20000000U), .RASR = ARM_MPU_RASR(1U, ARM_MPU_AP_FULL, 0U, 0U, 0U, 0U, 0U, ARM_MPU_REGION_SIZE_64MB)  },
@@ -111,5 +116,6 @@ void TC_MPU_Load(void)
   ASSERT_MPU_REGION(7U, table);
 
   #undef ASSERT_MPU_REGION
+#endif
 }
 
