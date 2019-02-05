@@ -11,7 +11,7 @@ preproc:
  - doxygen: CMSIS/DoxyGen/Pack/Pack.dxy
  - doxygen: CMSIS/DoxyGen/RTOS/rtos.dxy
  - doxygen: CMSIS/DoxyGen/RTOS2/rtos.dxy
- - doxygen: CMSIS/DoxyGen/SVD/SVD.dxy
+ - doxygen: CMSIS/DoxyGen/SVD/svd.dxy
  - doxygen: CMSIS/DoxyGen/Zone/zone.dxy
 glob:
  - LICENSE.txt

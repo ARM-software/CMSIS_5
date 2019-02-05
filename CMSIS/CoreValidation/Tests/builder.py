@@ -50,7 +50,7 @@ FVP_MODELS = {
 }
 
 def projects(step, config):
-  rtebuild = str(config['compiler'])+".rtebuild"
+  rtebuild = str(config['compiler']).lower()+".rtebuild"
   return [ rtebuild ]
 
 def images(step, config):
