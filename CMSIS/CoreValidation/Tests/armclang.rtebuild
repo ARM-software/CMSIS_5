@@ -48,7 +48,7 @@ targets:
     cflags     : [ -xc, -std=c99, -c, --target=arm-arm-none-eabi, "-mcpu=${cpu}", "-mfpu=${fpu}", "-mfloat-abi=${float}", -marm, "${csettings}", "${cwarnings}" ]
     asmflags   : [ -c, --target=arm-arm-none-eabi, "-mcpu=${cpu}", "-mfpu=${fpu}", "-mfloat-abi=${float}", -marm, "${csettings}", "${cwarnings}" ]
     linkflags  : [ -v, --target=arm-arm-none-eabi, "-Wl,--entry=Vectors" ]
-    linkscript : "./config/core_a/rtebuild.sct"
+    linkscript : "./config/core_a/rtebuild_armclang.sct"
     source:
       - ../../../Device/ARM/${device}/Source/AC6/startup_${device}.c
   armca5:
