@@ -53,11 +53,11 @@ targets:
       - ./config/core_a
       - ../../Core_A/Include
     source:
-      - ../../../Device/ARM/${device}/Source/system_${device}.c
-      - ../../../Device/ARM/${device}/Source/mmu_${device}.c
+      - ./config/core_a/mmu.c
       - ../Source/CV_CoreAFunc.c
       - ../Source/CV_L1Cache.c
       - ../../Core_A/Source/irq_ctrl_gic.c
+      - ../../../Device/ARM/${device}/Source/system_${device}.c
   armca5:
     extends: armca
     device : ARMCA5
