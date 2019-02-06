@@ -1,3 +1,5 @@
+options:
+  optimize : [ O1, O2, Oz, Ofast, Os ]
 import:
  - tests.rtebuild
 targets:
@@ -5,7 +7,8 @@ targets:
     csettings   : [ -fno-rtti, -funsigned-char, -fshort-enums, -fshort-wchar, -mlittle-endian, -gdwarf-3, "-%{optimize}", -ffunction-sections ]
     cwarnings   : [ -Weverything, -Wno-undef, -Wno-packed, -Wno-reserved-id-macro, -Wno-unused-macros, -Wno-documentation-unknown-command, -Wno-documentation, -Wno-license-management, -Wno-parentheses-equality ]
   armcm:
-    cflags      : [ -xc, -std=gnu99, --target=arm-arm-none-eabi, "-mcpu=${cpu}", "-mfpu=${fpu}", "-mfloat-abi=${float}", -c, "${csettings}", "${cwarnings}" ]
+    features    : ""
+    cflags      : [ -xc, -std=gnu99, --target=arm-arm-none-eabi, "-mcpu=${cpu}${features}", "-mfpu=${fpu}", "-mfloat-abi=${float}", -c, "${csettings}", "${cwarnings}" ]
     asmflags    : [ "--cpu ${cpu}", --li, -g ]
     info        : [ --info summarysizes, --map, --load_addr_map_info, --xref, --callgraph, --symbols, --info sizes, --info totals, --info unused, --info veneers, "--list ${builddir}/${targetName}.map" ]
     linkflags   : [ "--cpu ${cpu}", --strict, --no_remove, --entry Reset_Handler, --diag_suppress=L6314, --diag_suppress=L6092w, "${info}" ]
@@ -37,13 +40,42 @@ targets:
     fpu    : none
     float  : soft
   armcm7sp:
-    cpu    : Cortex-M7
+    cpu    : cortex-m7
     fpu    : fpv5-sp-d16
     float  : hard
   armcm7dp:
-    cpu    : Cortex-M7
+    cpu    : cortex-m7
     fpu    : fpv5-d16
     float  : hard
+  armcm23:
+    cpu    : cortex-m23
+    fpu    : none
+    float  : soft
+  armcm23s:
+    cpu    : cortex-m23
+    fpu    : none
+    float  : soft
+    cflags : [ -mcmse ]
+  armcm23ns:
+    cpu    : cortex-m23
+    fpu    : none
+    float  : soft
+    linkscript: "config/core_m/rtebuild_ns.sct"
+  armcm33:
+    cpu    : cortex-m33
+    features: "+nodsp"
+    fpu    : none
+    float  : soft
+  armcm33s:
+    cpu    : cortex-m33
+    fpu    : fpv5-sp-d16
+    float  : hard
+    cflags : [ -mcmse ]
+  armcm33ns:
+    cpu    : cortex-m33
+    fpu    : fpv5-sp-d16
+    float  : hard
+    linkscript: "config/core_m/rtebuild_ns.sct"
   armca:
     cflags     : [ -xc, -std=c99, -c, --target=arm-arm-none-eabi, "-mcpu=${cpu}", "-mfpu=${fpu}", "-mfloat-abi=${float}", -marm, "${csettings}", "${cwarnings}" ]
     asmflags   : [ -c, --target=arm-arm-none-eabi, "-mcpu=${cpu}", "-mfpu=${fpu}", "-mfloat-abi=${float}", -marm, "${csettings}", "${cwarnings}" ]

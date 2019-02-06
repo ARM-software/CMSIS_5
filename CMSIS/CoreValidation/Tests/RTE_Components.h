@@ -17,6 +17,16 @@
 #define CMSIS_device_header "ARMCM7_SP.h"
 #elif defined(ARMCM7_DP)
 #define CMSIS_device_header "ARMCM7_DP.h"
+#elif defined(ARMCM23)
+#define CMSIS_device_header "ARMCM23.h"
+#elif defined(ARMCM23_TZ)
+#define CMSIS_device_header "ARMCM23_TZ.h"
+#elif defined(ARMCM33)
+#define CMSIS_device_header "ARMCM33.h"
+#elif defined(ARMCM33_DSP_FP)
+#define CMSIS_device_header "ARMCM33_DSP_FP.h"
+#elif defined(ARMCM33_DSP_FP_TZ)
+#define CMSIS_device_header "ARMCM33_DSP_FP_TZ.h"
 #elif defined(ARMCA5)
 #define CMSIS_device_header "ARMCA5.h"
 #elif defined(ARMCA7)
