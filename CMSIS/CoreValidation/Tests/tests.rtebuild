@@ -1,5 +1,3 @@
-options:
-  optimize : [ O1, O2, Oz, Ofast, Os ]
 import:
  - ${home}/.rtebuild/toolchain.rtebuild
 targets:
@@ -14,39 +12,70 @@ targets:
       - ../../../Device/ARM/${device}/Source/system_${device}.c
       - ../Source/CV_CoreFunc.c
       - ../Source/CV_CoreSimd.c
-      - ../Source/CV_MPU_ARMv7.c
-  armcm0:
+  armcm_v7:
     extends: armcm
+    source:
+      - ../Source/CV_MPU_ARMv7.c
+  armcm_v8:
+    extends: armcm
+    source:
+      - ../Source/CV_MPU_ARMv8.c
+  armcm0:
+    extends: armcm_v7
     device : ARMCM0
     dsuffix: ""
   armcm0plus:
-    extends: armcm
+    extends: armcm_v7
     device : ARMCM0plus
     dsuffix: ""
   armcm3:
-    extends: armcm
+    extends: armcm_v7
     device : ARMCM3
     dsuffix: ""
   armcm4:
-    extends: armcm
+    extends: armcm_v7
     device : ARMCM4
     dsuffix: ""
   armcm4fp:
-    extends: armcm
+    extends: armcm_v7
     device : ARMCM4
     dsuffix: _FP
   armcm7:
-    extends: armcm
+    extends: armcm_v7
     device : ARMCM7
     dsuffix: ""
   armcm7sp:
-    extends: armcm
+    extends: armcm_v7
     device : ARMCM7
     dsuffix: _SP
   armcm7dp:
-    extends: armcm
+    extends: armcm_v7
     device : ARMCM7
     dsuffix: _DP
+  armcm23:
+    extends: armcm_v8
+    device : ARMCM23
+    dsuffix: ""
+  armcm23s:
+    extends: armcm_v8
+    device : ARMCM23
+    dsuffix: "_TZ"
+  armcm23ns:
+    extends: armcm_v8
+    device : ARMCM23
+    dsuffix: "_TZ"
+  armcm33:
+    extends: armcm_v8
+    device : ARMCM33
+    dsuffix: ""
+  armcm33s:
+    extends: armcm_v8
+    device : ARMCM33
+    dsuffix: "_DSP_FP_TZ"
+  armcm33ns:
+    extends: armcm_v8
+    device : ARMCM33
+    dsuffix: "_DSP_FP_TZ"
   armca:
     extends    : arm
     include:

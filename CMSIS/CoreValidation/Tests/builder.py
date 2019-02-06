@@ -9,6 +9,44 @@ from buildutils.builder import Device, Compiler, Axis, Step, BuildStep, RunModel
 
 OPTIMIZATION = [ 'O1', 'O2', 'Ofast', 'Os', 'Oz' ]
 
+CC_OPT = {
+  Compiler.AC5: {
+    'O1': 'O0', 
+    'O2': 'O1', 
+    'Ofast': 'Otime', 
+    'Os': 'O2', 
+    'Oz': 'O3'
+  },
+  Compiler.AC6: {
+    'O1': 'O1', 
+    'O2': 'O2', 
+    'Ofast': 'Ofast', 
+    'Os': 'Os', 
+    'Oz': 'Oz'
+  },
+  Compiler.AC6LTM: {
+    'O1': 'O1', 
+    'O2': 'O2', 
+    'Ofast': 'Ofast', 
+    'Os': 'Os', 
+    'Oz': 'Oz'
+  },
+  Compiler.AC6STBL: {
+    'O1': 'O1', 
+    'O2': 'O2', 
+    'Ofast': 'Ofast', 
+    'Os': 'Os', 
+    'Oz': 'Oz'
+  },
+  Compiler.GCC: {
+    'O1': 'O1', 
+    'O2': 'O2', 
+    'Ofast': 'Ofast', 
+    'Os': 'Os', 
+    'Oz': 'O3'
+  },
+}
+
 CORTEX_M = [
   Device.CM0,
   Device.CM0PLUS,
@@ -24,6 +62,11 @@ CORTEX_M = [
   Device.CM33NS,
   Device.CM23S,
   Device.CM33S,
+]
+
+BOOTLOADER = [
+  Device.CM23NS,
+  Device.CM33NS
 ]
 
 FVP_MODELS = {
@@ -50,12 +93,16 @@ FVP_MODELS = {
 }
 
 def projects(step, config):
-  rtebuild = str(config['compiler']).lower()+".rtebuild"
-  return [ rtebuild ]
+  result = [ str(config['compiler']).lower()+".rtebuild" ]
+  if config['device'] in BOOTLOADER:
+    result += [ "bootloader/"+str(config['compiler']).lower()+".rtebuild" ]
+  return result
 
 def images(step, config):
-  binary = "build/arm{dev}/arm{dev}.elf".format(dev=config['device'].value[1].lower())
-  return [ binary ]
+  result = [ "build/arm{dev}/arm{dev}.elf".format(dev=config['device'].value[1].lower()) ]
+  if config['device'] in BOOTLOADER:
+    result += [ "bootloader/build/arm{dev}/arm{dev}.elf".format(dev=config['device'].value[1].lower()) ]
+  return result
 
 def storeResult(step, config, cmd):
   result = "result_{cc}_{dev}_{opt}_{now}.junit".format(dev=config['device'], cc=config['compiler'], opt=config['optimize'],now=datetime.now().strftime("%Y%m%d%H%M%S"))
@@ -65,7 +112,7 @@ def storeResult(step, config, cmd):
     cmd.forceResult(1)
 
 def add_options(step, config, cmd):
-  cmd._options['optimize']  = config['optimize']
+  cmd._options['optimize']  = CC_OPT[config['compiler']][config['optimize']]
 
 def create():
   deviceAxis = Axis("device", abbrev="d", values=Device, desc="Device(s) to be considered.")
@@ -84,7 +131,7 @@ def create():
 
   debugStep = RunModelStep("debug", abbrev="d", desc="Debug the selected configurations.")
   debugStep.images = images
-  debugStep.args = lambda step, config: { 'cadi' : True }
+  debugStep.args = lambda step, config: { 'cadi' : True, 'timeout': None }
   debugStep.model = lambda step, config: FVP_MODELS[config['device']]
   
   filterAC5 = Filter().addAxis(compilerAxis, Compiler.AC5).addAxis(deviceAxis, "CM[23]3*")
