@@ -1,14 +1,14 @@
 /**************************************************************************//**
- * @file     mmu_ARMCA9.c
- * @brief    MMU Configuration for ARM Cortex-A9 Device Series
+ * @file     mmu.c
+ * @brief    MMU Configuration for Arm Cortex-A Device Series
  * @version  V1.00
- * @date     22 Feb 2017
+ * @date     10. January 2018
  *
  * @note
  *
  ******************************************************************************/
 /*
- * Copyright (c) 2009-2017 ARM Limited. All rights reserved.
+ * Copyright (c) 2009-2018 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -25,7 +25,7 @@
  * limitations under the License.
  */
 
-/* Memory map description from: DUI0447G_v2m_p1_trm.pdf 4.2.2 ARM Cortex-A Series memory map
+/* Memory map description from: DUI0447G_v2m_p1_trm.pdf 4.2.2 Arm Cortex-A Series memory map
 
                                                      Memory Type
 0xffffffff |--------------------------|             ------------
@@ -102,7 +102,82 @@
 #include "RTE_Components.h"
 #include CMSIS_device_header
 
-#include "mem.h"
+#if   __CORTEX_A == 5
+#define VE_MP_FLASH_BASE0                  VE_A5_MP_FLASH_BASE0
+#define VE_MP_FLASH_BASE1                  VE_A5_MP_FLASH_BASE1
+#define VE_MP_PERIPH_BASE                  VE_A5_MP_PERIPH_BASE
+#define VE_MP_SRAM_BASE                    VE_A5_MP_SRAM_BASE
+#define VE_MP_DRAM_BASE                    VE_A5_MP_DRAM_BASE
+#define VE_MP_VRAM_BASE                    VE_A5_MP_VRAM_BASE
+#define VE_MP_ETHERNET_BASE                VE_A5_MP_ETHERNET_BASE
+#define VE_MP_USB_BASE                     VE_A5_MP_USB_BASE
+#define VE_MP_DAP_BASE                     VE_A5_MP_DAP_BASE
+#define VE_MP_SYSTEM_REG_BASE              VE_A5_MP_SYSTEM_REG_BASE
+#define VE_MP_SERIAL_BASE                  VE_A5_MP_SERIAL_BASE
+#define VE_MP_AACI_BASE                    VE_A5_MP_AACI_BASE
+#define VE_MP_MMCI_BASE                    VE_A5_MP_MMCI_BASE
+#define VE_MP_KMI0_BASE                    VE_A5_MP_KMI0_BASE
+#define VE_MP_UART_BASE                    VE_A5_MP_UART_BASE
+#define VE_MP_WDT_BASE                     VE_A5_MP_WDT_BASE
+#define VE_MP_TIMER_BASE                   VE_A5_MP_TIMER_BASE
+#define VE_MP_DVI_BASE                     VE_A5_MP_DVI_BASE
+#define VE_MP_RTC_BASE                     VE_A5_MP_RTC_BASE
+#define VE_MP_UART4_BASE                   VE_A5_MP_UART4_BASE
+#define VE_MP_CLCD_BASE                    VE_A5_MP_CLCD_BASE
+#define VE_MP_GIC_DISTRIBUTOR_BASE         VE_A5_MP_GIC_DISTRIBUTOR_BASE
+#define VE_MP_GIC_INTERFACE_BASE           VE_A5_MP_GIC_INTERFACE_BASE
+#define VE_MP_PRIVATE_TIMER                VE_A5_MP_PRIVATE_TIMER
+#elif __CORTEX_A == 7
+#define VE_MP_FLASH_BASE0                  VE_A7_MP_FLASH_BASE0
+#define VE_MP_FLASH_BASE1                  VE_A7_MP_FLASH_BASE1
+#define VE_MP_PERIPH_BASE                  VE_A7_MP_PERIPH_BASE
+#define VE_MP_SRAM_BASE                    VE_A7_MP_SRAM_BASE
+#define VE_MP_DRAM_BASE                    VE_A7_MP_DRAM_BASE
+#define VE_MP_VRAM_BASE                    VE_A7_MP_VRAM_BASE
+#define VE_MP_ETHERNET_BASE                VE_A7_MP_ETHERNET_BASE
+#define VE_MP_USB_BASE                     VE_A7_MP_USB_BASE
+#define VE_MP_DAP_BASE                     VE_A7_MP_DAP_BASE
+#define VE_MP_SYSTEM_REG_BASE              VE_A7_MP_SYSTEM_REG_BASE
+#define VE_MP_SERIAL_BASE                  VE_A7_MP_SERIAL_BASE
+#define VE_MP_AACI_BASE                    VE_A7_MP_AACI_BASE
+#define VE_MP_MMCI_BASE                    VE_A7_MP_MMCI_BASE
+#define VE_MP_KMI0_BASE                    VE_A7_MP_KMI0_BASE
+#define VE_MP_UART_BASE                    VE_A7_MP_UART_BASE
+#define VE_MP_WDT_BASE                     VE_A7_MP_WDT_BASE
+#define VE_MP_TIMER_BASE                   VE_A7_MP_TIMER_BASE
+#define VE_MP_DVI_BASE                     VE_A7_MP_DVI_BASE
+#define VE_MP_RTC_BASE                     VE_A7_MP_RTC_BASE
+#define VE_MP_UART4_BASE                   VE_A7_MP_UART4_BASE
+#define VE_MP_CLCD_BASE                    VE_A7_MP_CLCD_BASE
+#define VE_MP_GIC_DISTRIBUTOR_BASE         VE_A7_MP_GIC_DISTRIBUTOR_BASE
+#define VE_MP_GIC_INTERFACE_BASE           VE_A7_MP_GIC_INTERFACE_BASE
+#define VE_MP_PRIVATE_TIMER                VE_A7_MP_PRIVATE_TIMER
+#elif __CORTEX_A == 9
+#define VE_MP_FLASH_BASE0                  VE_A9_MP_FLASH_BASE0
+#define VE_MP_FLASH_BASE1                  VE_A9_MP_FLASH_BASE1
+#define VE_MP_PERIPH_BASE                  VE_A9_MP_PERIPH_BASE
+#define VE_MP_SRAM_BASE                    VE_A9_MP_SRAM_BASE
+#define VE_MP_DRAM_BASE                    VE_A9_MP_DRAM_BASE
+#define VE_MP_VRAM_BASE                    VE_A9_MP_VRAM_BASE
+#define VE_MP_ETHERNET_BASE                VE_A9_MP_ETHERNET_BASE
+#define VE_MP_USB_BASE                     VE_A9_MP_USB_BASE
+#define VE_MP_DAP_BASE                     VE_A9_MP_DAP_BASE
+#define VE_MP_SYSTEM_REG_BASE              VE_A9_MP_SYSTEM_REG_BASE
+#define VE_MP_SERIAL_BASE                  VE_A9_MP_SERIAL_BASE
+#define VE_MP_AACI_BASE                    VE_A9_MP_AACI_BASE
+#define VE_MP_MMCI_BASE                    VE_A9_MP_MMCI_BASE
+#define VE_MP_KMI0_BASE                    VE_A9_MP_KMI0_BASE
+#define VE_MP_UART_BASE                    VE_A9_MP_UART_BASE
+#define VE_MP_WDT_BASE                     VE_A9_MP_WDT_BASE
+#define VE_MP_TIMER_BASE                   VE_A9_MP_TIMER_BASE
+#define VE_MP_DVI_BASE                     VE_A9_MP_DVI_BASE
+#define VE_MP_RTC_BASE                     VE_A9_MP_RTC_BASE
+#define VE_MP_UART4_BASE                   VE_A9_MP_UART4_BASE
+#define VE_MP_CLCD_BASE                    VE_A9_MP_CLCD_BASE
+#define VE_MP_GIC_DISTRIBUTOR_BASE         VE_A9_MP_GIC_DISTRIBUTOR_BASE
+#define VE_MP_GIC_INTERFACE_BASE           VE_A9_MP_GIC_INTERFACE_BASE
+#define VE_MP_PRIVATE_TIMER                VE_A9_MP_PRIVATE_TIMER
+#endif
 
 // L2 table pointers
 //----------------------------------------
@@ -168,38 +243,42 @@ void MMU_CreateTranslationTable(void)
      *
      */
 
-    MMU_TTSection (&Image$$TTB$$ZI$$Base, __ROM_BASE, __ROM_SIZE/0x100000, Sect_Normal_Cod);
-    MMU_TTSection (&Image$$TTB$$ZI$$Base, __RAM_BASE, __RAM_SIZE/0x100000, Sect_Normal_RW);
-    MMU_TTSection (&Image$$TTB$$ZI$$Base, __TTB_BASE, 1, Sect_Normal);
+    //Define Image
+    MMU_TTSection (&Image$$TTB$$ZI$$Base, (uint32_t)&Image$$VECTORS$$Base, 1, Sect_Normal_Cod);
+    MMU_TTSection (&Image$$TTB$$ZI$$Base, (uint32_t)&Image$$RW_DATA$$Base, 1, Sect_Normal_RW);
+    MMU_TTSection (&Image$$TTB$$ZI$$Base, (uint32_t)&Image$$ZI_DATA$$Base, 1, Sect_Normal_RW);
+
+    //all DRAM executable, rw, cacheable - applications may choose to divide memory into ro executable
+    MMU_TTSection (&Image$$TTB$$ZI$$Base, (uint32_t)&Image$$TTB$$ZI$$Base, 2043, Sect_Normal);
 
     //--------------------- PERIPHERALS -------------------
-    MMU_TTSection (&Image$$TTB$$ZI$$Base, VE_A9_MP_FLASH_BASE0    , 64, Sect_Device_RO);
-    MMU_TTSection (&Image$$TTB$$ZI$$Base, VE_A9_MP_FLASH_BASE1    , 64, Sect_Device_RO);
-    MMU_TTSection (&Image$$TTB$$ZI$$Base, VE_A9_MP_SRAM_BASE      , 64, Sect_Device_RW);
-    MMU_TTSection (&Image$$TTB$$ZI$$Base, VE_A9_MP_VRAM_BASE      , 32, Sect_Device_RW);
-    MMU_TTSection (&Image$$TTB$$ZI$$Base, VE_A9_MP_ETHERNET_BASE  , 16, Sect_Device_RW);
-    MMU_TTSection (&Image$$TTB$$ZI$$Base, VE_A9_MP_USB_BASE       , 16, Sect_Device_RW);
+    MMU_TTSection (&Image$$TTB$$ZI$$Base, VE_MP_FLASH_BASE0    , 64, Sect_Device_RO);
+    MMU_TTSection (&Image$$TTB$$ZI$$Base, VE_MP_FLASH_BASE1    , 64, Sect_Device_RO);
+    MMU_TTSection (&Image$$TTB$$ZI$$Base, VE_MP_SRAM_BASE      , 64, Sect_Device_RW);
+    MMU_TTSection (&Image$$TTB$$ZI$$Base, VE_MP_VRAM_BASE      , 32, Sect_Device_RW);
+    MMU_TTSection (&Image$$TTB$$ZI$$Base, VE_MP_ETHERNET_BASE  , 16, Sect_Device_RW);
+    MMU_TTSection (&Image$$TTB$$ZI$$Base, VE_MP_USB_BASE       , 16, Sect_Device_RW);
 
     // Create (16 * 64k)=1MB faulting entries to cover peripheral range 0x1C000000-0x1C00FFFF
     MMU_TTPage64k(&Image$$TTB$$ZI$$Base, PERIPHERAL_A_FAULT      , 16, Page_L1_64k, (uint32_t *)PERIPHERAL_A_TABLE_L2_BASE_64k, DESCRIPTOR_FAULT);
     // Define peripheral range 0x1C000000-0x1C00FFFF
-    MMU_TTPage64k(&Image$$TTB$$ZI$$Base, VE_A9_MP_DAP_BASE       ,  1, Page_L1_64k, (uint32_t *)PERIPHERAL_A_TABLE_L2_BASE_64k, Page_64k_Device_RW);
-    MMU_TTPage64k(&Image$$TTB$$ZI$$Base, VE_A9_MP_SYSTEM_REG_BASE,  1, Page_L1_64k, (uint32_t *)PERIPHERAL_A_TABLE_L2_BASE_64k, Page_64k_Device_RW);
-    MMU_TTPage64k(&Image$$TTB$$ZI$$Base, VE_A9_MP_SERIAL_BASE    ,  1, Page_L1_64k, (uint32_t *)PERIPHERAL_A_TABLE_L2_BASE_64k, Page_64k_Device_RW);
-    MMU_TTPage64k(&Image$$TTB$$ZI$$Base, VE_A9_MP_AACI_BASE      ,  1, Page_L1_64k, (uint32_t *)PERIPHERAL_A_TABLE_L2_BASE_64k, Page_64k_Device_RW);
-    MMU_TTPage64k(&Image$$TTB$$ZI$$Base, VE_A9_MP_MMCI_BASE      ,  1, Page_L1_64k, (uint32_t *)PERIPHERAL_A_TABLE_L2_BASE_64k, Page_64k_Device_RW);
-    MMU_TTPage64k(&Image$$TTB$$ZI$$Base, VE_A9_MP_KMI0_BASE      ,  2, Page_L1_64k, (uint32_t *)PERIPHERAL_A_TABLE_L2_BASE_64k, Page_64k_Device_RW);
-    MMU_TTPage64k(&Image$$TTB$$ZI$$Base, VE_A9_MP_UART_BASE      ,  4, Page_L1_64k, (uint32_t *)PERIPHERAL_A_TABLE_L2_BASE_64k, Page_64k_Device_RW);
-    MMU_TTPage64k(&Image$$TTB$$ZI$$Base, VE_A9_MP_WDT_BASE       ,  1, Page_L1_64k, (uint32_t *)PERIPHERAL_A_TABLE_L2_BASE_64k, Page_64k_Device_RW);
+    MMU_TTPage64k(&Image$$TTB$$ZI$$Base, VE_MP_DAP_BASE       ,  1, Page_L1_64k, (uint32_t *)PERIPHERAL_A_TABLE_L2_BASE_64k, Page_64k_Device_RW);
+    MMU_TTPage64k(&Image$$TTB$$ZI$$Base, VE_MP_SYSTEM_REG_BASE,  1, Page_L1_64k, (uint32_t *)PERIPHERAL_A_TABLE_L2_BASE_64k, Page_64k_Device_RW);
+    MMU_TTPage64k(&Image$$TTB$$ZI$$Base, VE_MP_SERIAL_BASE    ,  1, Page_L1_64k, (uint32_t *)PERIPHERAL_A_TABLE_L2_BASE_64k, Page_64k_Device_RW);
+    MMU_TTPage64k(&Image$$TTB$$ZI$$Base, VE_MP_AACI_BASE      ,  1, Page_L1_64k, (uint32_t *)PERIPHERAL_A_TABLE_L2_BASE_64k, Page_64k_Device_RW);
+    MMU_TTPage64k(&Image$$TTB$$ZI$$Base, VE_MP_MMCI_BASE      ,  1, Page_L1_64k, (uint32_t *)PERIPHERAL_A_TABLE_L2_BASE_64k, Page_64k_Device_RW);
+    MMU_TTPage64k(&Image$$TTB$$ZI$$Base, VE_MP_KMI0_BASE      ,  2, Page_L1_64k, (uint32_t *)PERIPHERAL_A_TABLE_L2_BASE_64k, Page_64k_Device_RW);
+    MMU_TTPage64k(&Image$$TTB$$ZI$$Base, VE_MP_UART_BASE      ,  4, Page_L1_64k, (uint32_t *)PERIPHERAL_A_TABLE_L2_BASE_64k, Page_64k_Device_RW);
+    MMU_TTPage64k(&Image$$TTB$$ZI$$Base, VE_MP_WDT_BASE       ,  1, Page_L1_64k, (uint32_t *)PERIPHERAL_A_TABLE_L2_BASE_64k, Page_64k_Device_RW);
 
     // Create (16 * 64k)=1MB faulting entries to cover peripheral range 0x1C100000-0x1C10FFFF
     MMU_TTPage64k(&Image$$TTB$$ZI$$Base, PERIPHERAL_B_FAULT      , 16, Page_L1_64k, (uint32_t *)PERIPHERAL_B_TABLE_L2_BASE_64k, DESCRIPTOR_FAULT);
     // Define peripheral range 0x1C100000-0x1C10FFFF
-    MMU_TTPage64k(&Image$$TTB$$ZI$$Base, VE_A9_MP_TIMER_BASE     ,  2, Page_L1_64k, (uint32_t *)PERIPHERAL_B_TABLE_L2_BASE_64k, Page_64k_Device_RW);
-    MMU_TTPage64k(&Image$$TTB$$ZI$$Base, VE_A9_MP_DVI_BASE       ,  1, Page_L1_64k, (uint32_t *)PERIPHERAL_B_TABLE_L2_BASE_64k, Page_64k_Device_RW);
-    MMU_TTPage64k(&Image$$TTB$$ZI$$Base, VE_A9_MP_RTC_BASE       ,  1, Page_L1_64k, (uint32_t *)PERIPHERAL_B_TABLE_L2_BASE_64k, Page_64k_Device_RW);
-    MMU_TTPage64k(&Image$$TTB$$ZI$$Base, VE_A9_MP_UART4_BASE     ,  1, Page_L1_64k, (uint32_t *)PERIPHERAL_B_TABLE_L2_BASE_64k, Page_64k_Device_RW);
-    MMU_TTPage64k(&Image$$TTB$$ZI$$Base, VE_A9_MP_CLCD_BASE      ,  1, Page_L1_64k, (uint32_t *)PERIPHERAL_B_TABLE_L2_BASE_64k, Page_64k_Device_RW);
+    MMU_TTPage64k(&Image$$TTB$$ZI$$Base, VE_MP_TIMER_BASE     ,  2, Page_L1_64k, (uint32_t *)PERIPHERAL_B_TABLE_L2_BASE_64k, Page_64k_Device_RW);
+    MMU_TTPage64k(&Image$$TTB$$ZI$$Base, VE_MP_DVI_BASE       ,  1, Page_L1_64k, (uint32_t *)PERIPHERAL_B_TABLE_L2_BASE_64k, Page_64k_Device_RW);
+    MMU_TTPage64k(&Image$$TTB$$ZI$$Base, VE_MP_RTC_BASE       ,  1, Page_L1_64k, (uint32_t *)PERIPHERAL_B_TABLE_L2_BASE_64k, Page_64k_Device_RW);
+    MMU_TTPage64k(&Image$$TTB$$ZI$$Base, VE_MP_UART4_BASE     ,  1, Page_L1_64k, (uint32_t *)PERIPHERAL_B_TABLE_L2_BASE_64k, Page_64k_Device_RW);
+    MMU_TTPage64k(&Image$$TTB$$ZI$$Base, VE_MP_CLCD_BASE      ,  1, Page_L1_64k, (uint32_t *)PERIPHERAL_B_TABLE_L2_BASE_64k, Page_64k_Device_RW);
 
     // Create (256 * 4k)=1MB faulting entries to cover private address space. Needs to be marked as Device memory
     MMU_TTPage4k (&Image$$TTB$$ZI$$Base, __get_CBAR()            ,256,  Page_L1_4k, (uint32_t *)PRIVATE_TABLE_L2_BASE_4k, DESCRIPTOR_FAULT);
