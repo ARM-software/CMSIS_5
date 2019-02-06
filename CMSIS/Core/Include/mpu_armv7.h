@@ -134,7 +134,7 @@
 
 /**
 * MPU Memory Access Attribute for device memory.
-*  - TEX: 000b (if non-shareable) or 010b (if shareable)
+*  - TEX: 000b (if shareable) or 010b (if non-shareable)
 *  - Shareable or non-shareable
 *  - Non-cacheable
 *  - Bufferable (if shareable) or non-bufferable (if non-shareable)
