@@ -46,11 +46,11 @@ targets:
     source:
       - ../../../Device/ARM/${device}/Source/AC5/startup_${device}.c
   armca5:
-    cpu    : Cortex-A5.no_neon
+    cpu    : Cortex-A5.vfp
     fpu    : vfpv3-d16-fp16
     float  : hardfp
   armca5neon:
-    cpu    : Cortex-A5
+    cpu    : Cortex-A5.neon
     fpu    : neon-fp16
     float  : hardfp
   armca7:
