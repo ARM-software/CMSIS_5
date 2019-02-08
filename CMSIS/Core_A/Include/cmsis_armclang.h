@@ -391,8 +391,8 @@ __STATIC_FORCEINLINE uint32_t __get_SP_usr()
     "MRS     %0, cpsr   \n"
     "CPS     #0x1F      \n" // no effect in USR mode
     "MOV     %1, sp     \n"
-    "MSR     cpsr_c, %2 \n" // no effect in USR mode
-    "ISB" :  "=r"(cpsr), "=r"(result) : "r"(cpsr) : "memory"
+    "MSR     cpsr_c, %0 \n" // no effect in USR mode
+    "ISB" :  "=r"(cpsr), "=r"(result) : : "memory"
    );
   return result;
 }
@@ -407,8 +407,8 @@ __STATIC_FORCEINLINE void __set_SP_usr(uint32_t topOfProcStack)
     "MRS     %0, cpsr   \n"
     "CPS     #0x1F      \n" // no effect in USR mode
     "MOV     sp, %1     \n"
-    "MSR     cpsr_c, %2 \n" // no effect in USR mode
-    "ISB" : "=r"(cpsr) : "r" (topOfProcStack), "r"(cpsr) : "memory"
+    "MSR     cpsr_c, %0 \n" // no effect in USR mode
+    "ISB" : "=r"(cpsr) : "r" (topOfProcStack) : "memory"
    );
 }
 
