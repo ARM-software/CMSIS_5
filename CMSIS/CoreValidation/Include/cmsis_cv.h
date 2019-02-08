@@ -24,6 +24,7 @@ extern void (*TST_IRQHandler)(void);
 
 // Test main function
 extern void cmsis_cv (void);
+extern void cmsis_cv_abort (const char *fn, uint32_t ln, char *desc);
 
 // Test cases
 extern void TC_CoreInstr_NOP (void);
