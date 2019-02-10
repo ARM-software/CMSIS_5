@@ -1019,7 +1019,7 @@ extern "C"
    */
   void arm_fir_q7(
   const arm_fir_instance_q7 * S,
-  q7_t * pSrc,
+  const q7_t * pSrc,
   q7_t * pDst,
   uint32_t blockSize);
 
@@ -1049,7 +1049,7 @@ extern "C"
    */
   void arm_fir_q15(
   const arm_fir_instance_q15 * S,
-  q15_t * pSrc,
+  const q15_t * pSrc,
   q15_t * pDst,
   uint32_t blockSize);
 
@@ -1063,7 +1063,7 @@ extern "C"
    */
   void arm_fir_fast_q15(
   const arm_fir_instance_q15 * S,
-  q15_t * pSrc,
+  const q15_t * pSrc,
   q15_t * pDst,
   uint32_t blockSize);
 
@@ -1095,7 +1095,7 @@ extern "C"
    */
   void arm_fir_q31(
   const arm_fir_instance_q31 * S,
-  q31_t * pSrc,
+  const q31_t * pSrc,
   q31_t * pDst,
   uint32_t blockSize);
 
@@ -1109,7 +1109,7 @@ extern "C"
    */
   void arm_fir_fast_q31(
   const arm_fir_instance_q31 * S,
-  q31_t * pSrc,
+  const q31_t * pSrc,
   q31_t * pDst,
   uint32_t blockSize);
 
@@ -1202,7 +1202,7 @@ extern "C"
    */
   void arm_biquad_cascade_df1_q15(
   const arm_biquad_casd_df1_inst_q15 * S,
-  q15_t * pSrc,
+  const q15_t * pSrc,
   q15_t * pDst,
   uint32_t blockSize);
 
@@ -1232,7 +1232,7 @@ extern "C"
    */
   void arm_biquad_cascade_df1_fast_q15(
   const arm_biquad_casd_df1_inst_q15 * S,
-  q15_t * pSrc,
+  const q15_t * pSrc,
   q15_t * pDst,
   uint32_t blockSize);
 
@@ -1246,7 +1246,7 @@ extern "C"
    */
   void arm_biquad_cascade_df1_q31(
   const arm_biquad_casd_df1_inst_q31 * S,
-  q31_t * pSrc,
+  const q31_t * pSrc,
   q31_t * pDst,
   uint32_t blockSize);
 
@@ -1260,7 +1260,7 @@ extern "C"
    */
   void arm_biquad_cascade_df1_fast_q31(
   const arm_biquad_casd_df1_inst_q31 * S,
-  q31_t * pSrc,
+  const q31_t * pSrc,
   q31_t * pDst,
   uint32_t blockSize);
 
@@ -1840,8 +1840,8 @@ extern "C"
    * @param[in]  blockSize  number of samples in each vector
    */
   void arm_mult_q7(
-  q7_t * pSrcA,
-  q7_t * pSrcB,
+  const q7_t * pSrcA,
+  const q7_t * pSrcB,
   q7_t * pDst,
   uint32_t blockSize);
 
@@ -1854,8 +1854,8 @@ extern "C"
    * @param[in]  blockSize  number of samples in each vector
    */
   void arm_mult_q15(
-  q15_t * pSrcA,
-  q15_t * pSrcB,
+  const q15_t * pSrcA,
+  const q15_t * pSrcB,
   q15_t * pDst,
   uint32_t blockSize);
 
@@ -1868,8 +1868,8 @@ extern "C"
    * @param[in]  blockSize  number of samples in each vector
    */
   void arm_mult_q31(
-  q31_t * pSrcA,
-  q31_t * pSrcB,
+  const q31_t * pSrcA,
+  const q31_t * pSrcB,
   q31_t * pDst,
   uint32_t blockSize);
 
@@ -1912,7 +1912,7 @@ extern "C"
 /* Deprecated */
   void arm_cfft_radix2_q15(
   const arm_cfft_radix2_instance_q15 * S,
-  q15_t * pSrc);
+  const q15_t * pSrc);
 
 
   /**
@@ -1939,7 +1939,7 @@ extern "C"
 /* Deprecated */
   void arm_cfft_radix4_q15(
   const arm_cfft_radix4_instance_q15 * S,
-  q15_t * pSrc);
+  const q15_t * pSrc);
 
   /**
    * @brief Instance structure for the Radix-2 Q31 CFFT/CIFFT function.
@@ -1965,7 +1965,7 @@ extern "C"
 /* Deprecated */
   void arm_cfft_radix2_q31(
   const arm_cfft_radix2_instance_q31 * S,
-  q31_t * pSrc);
+  const q31_t * pSrc);
 
   /**
    * @brief Instance structure for the Q31 CFFT/CIFFT function.
@@ -1984,7 +1984,7 @@ extern "C"
 /* Deprecated */
   void arm_cfft_radix4_q31(
   const arm_cfft_radix4_instance_q31 * S,
-  q31_t * pSrc);
+  const q31_t * pSrc);
 
 /* Deprecated */
   arm_status arm_cfft_radix4_init_q31(
@@ -2120,7 +2120,7 @@ void arm_cfft_q31(
 
   void arm_rfft_q15(
   const arm_rfft_instance_q15 * S,
-  q15_t * pSrc,
+  const q15_t * pSrc,
   q15_t * pDst);
 
   /**
@@ -2145,7 +2145,7 @@ void arm_cfft_q31(
 
   void arm_rfft_q31(
   const arm_rfft_instance_q31 * S,
-  q31_t * pSrc,
+  const q31_t * pSrc,
   q31_t * pDst);
 
   /**
@@ -2371,8 +2371,8 @@ void arm_rfft_fast_f32(
    * @param[in]  blockSize  number of samples in each vector
    */
   void arm_add_q7(
-  q7_t * pSrcA,
-  q7_t * pSrcB,
+  const q7_t * pSrcA,
+  const q7_t * pSrcB,
   q7_t * pDst,
   uint32_t blockSize);
 
@@ -2385,8 +2385,8 @@ void arm_rfft_fast_f32(
    * @param[in]  blockSize  number of samples in each vector
    */
   void arm_add_q15(
-  q15_t * pSrcA,
-  q15_t * pSrcB,
+  const q15_t * pSrcA,
+  const q15_t * pSrcB,
   q15_t * pDst,
   uint32_t blockSize);
 
@@ -2399,8 +2399,8 @@ void arm_rfft_fast_f32(
    * @param[in]  blockSize  number of samples in each vector
    */
   void arm_add_q31(
-  q31_t * pSrcA,
-  q31_t * pSrcB,
+  const q31_t * pSrcA,
+  const q31_t * pSrcB,
   q31_t * pDst,
   uint32_t blockSize);
 
@@ -2427,8 +2427,8 @@ void arm_rfft_fast_f32(
    * @param[in]  blockSize  number of samples in each vector
    */
   void arm_sub_q7(
-  q7_t * pSrcA,
-  q7_t * pSrcB,
+  const q7_t * pSrcA,
+  const q7_t * pSrcB,
   q7_t * pDst,
   uint32_t blockSize);
 
@@ -2441,8 +2441,8 @@ void arm_rfft_fast_f32(
    * @param[in]  blockSize  number of samples in each vector
    */
   void arm_sub_q15(
-  q15_t * pSrcA,
-  q15_t * pSrcB,
+  const q15_t * pSrcA,
+  const q15_t * pSrcB,
   q15_t * pDst,
   uint32_t blockSize);
 
@@ -2455,8 +2455,8 @@ void arm_rfft_fast_f32(
    * @param[in]  blockSize  number of samples in each vector
    */
   void arm_sub_q31(
-  q31_t * pSrcA,
-  q31_t * pSrcB,
+  const q31_t * pSrcA,
+  const q31_t * pSrcB,
   q31_t * pDst,
   uint32_t blockSize);
 
@@ -2484,7 +2484,7 @@ void arm_rfft_fast_f32(
    * @param[in]  blockSize   number of samples in the vector
    */
   void arm_scale_q7(
-  q7_t * pSrc,
+  const q7_t * pSrc,
   q7_t scaleFract,
   int8_t shift,
   q7_t * pDst,
@@ -2500,7 +2500,7 @@ void arm_rfft_fast_f32(
    * @param[in]  blockSize   number of samples in the vector
    */
   void arm_scale_q15(
-  q15_t * pSrc,
+  const q15_t * pSrc,
   q15_t scaleFract,
   int8_t shift,
   q15_t * pDst,
@@ -2516,7 +2516,7 @@ void arm_rfft_fast_f32(
    * @param[in]  blockSize   number of samples in the vector
    */
   void arm_scale_q31(
-  q31_t * pSrc,
+  const q31_t * pSrc,
   q31_t scaleFract,
   int8_t shift,
   q31_t * pDst,
@@ -2530,7 +2530,7 @@ void arm_rfft_fast_f32(
    * @param[in]  blockSize  number of samples in each vector
    */
   void arm_abs_q7(
-  q7_t * pSrc,
+  const q7_t * pSrc,
   q7_t * pDst,
   uint32_t blockSize);
 
@@ -2554,7 +2554,7 @@ void arm_rfft_fast_f32(
    * @param[in]  blockSize  number of samples in each vector
    */
   void arm_abs_q15(
-  q15_t * pSrc,
+  const q15_t * pSrc,
   q15_t * pDst,
   uint32_t blockSize);
 
@@ -2566,7 +2566,7 @@ void arm_rfft_fast_f32(
    * @param[in]  blockSize  number of samples in each vector
    */
   void arm_abs_q31(
-  q31_t * pSrc,
+  const q31_t * pSrc,
   q31_t * pDst,
   uint32_t blockSize);
 
@@ -2593,8 +2593,8 @@ void arm_rfft_fast_f32(
    * @param[out] result     output result returned here
    */
   void arm_dot_prod_q7(
-  q7_t * pSrcA,
-  q7_t * pSrcB,
+  const q7_t * pSrcA,
+  const q7_t * pSrcB,
   uint32_t blockSize,
   q31_t * result);
 
@@ -2607,8 +2607,8 @@ void arm_rfft_fast_f32(
    * @param[out] result     output result returned here
    */
   void arm_dot_prod_q15(
-  q15_t * pSrcA,
-  q15_t * pSrcB,
+  const q15_t * pSrcA,
+  const q15_t * pSrcB,
   uint32_t blockSize,
   q63_t * result);
 
@@ -2621,8 +2621,8 @@ void arm_rfft_fast_f32(
    * @param[out] result     output result returned here
    */
   void arm_dot_prod_q31(
-  q31_t * pSrcA,
-  q31_t * pSrcB,
+  const q31_t * pSrcA,
+  const q31_t * pSrcB,
   uint32_t blockSize,
   q63_t * result);
 
@@ -2635,7 +2635,7 @@ void arm_rfft_fast_f32(
    * @param[in]  blockSize  number of samples in the vector
    */
   void arm_shift_q7(
-  q7_t * pSrc,
+  const q7_t * pSrc,
   int8_t shiftBits,
   q7_t * pDst,
   uint32_t blockSize);
@@ -2649,7 +2649,7 @@ void arm_rfft_fast_f32(
    * @param[in]  blockSize  number of samples in the vector
    */
   void arm_shift_q15(
-  q15_t * pSrc,
+  const q15_t * pSrc,
   int8_t shiftBits,
   q15_t * pDst,
   uint32_t blockSize);
@@ -2663,7 +2663,7 @@ void arm_rfft_fast_f32(
    * @param[in]  blockSize  number of samples in the vector
    */
   void arm_shift_q31(
-  q31_t * pSrc,
+  const q31_t * pSrc,
   int8_t shiftBits,
   q31_t * pDst,
   uint32_t blockSize);
@@ -2691,7 +2691,7 @@ void arm_rfft_fast_f32(
    * @param[in]  blockSize  number of samples in the vector
    */
   void arm_offset_q7(
-  q7_t * pSrc,
+  const q7_t * pSrc,
   q7_t offset,
   q7_t * pDst,
   uint32_t blockSize);
@@ -2705,7 +2705,7 @@ void arm_rfft_fast_f32(
    * @param[in]  blockSize  number of samples in the vector
    */
   void arm_offset_q15(
-  q15_t * pSrc,
+  const q15_t * pSrc,
   q15_t offset,
   q15_t * pDst,
   uint32_t blockSize);
@@ -2719,7 +2719,7 @@ void arm_rfft_fast_f32(
    * @param[in]  blockSize  number of samples in the vector
    */
   void arm_offset_q31(
-  q31_t * pSrc,
+  const q31_t * pSrc,
   q31_t offset,
   q31_t * pDst,
   uint32_t blockSize);
@@ -2744,7 +2744,7 @@ void arm_rfft_fast_f32(
    * @param[in]  blockSize  number of samples in the vector
    */
   void arm_negate_q7(
-  q7_t * pSrc,
+  const q7_t * pSrc,
   q7_t * pDst,
   uint32_t blockSize);
 
@@ -2756,7 +2756,7 @@ void arm_rfft_fast_f32(
    * @param[in]  blockSize  number of samples in the vector
    */
   void arm_negate_q15(
-  q15_t * pSrc,
+  const q15_t * pSrc,
   q15_t * pDst,
   uint32_t blockSize);
 
@@ -2768,7 +2768,7 @@ void arm_rfft_fast_f32(
    * @param[in]  blockSize  number of samples in the vector
    */
   void arm_negate_q31(
-  q31_t * pSrc,
+  const q31_t * pSrc,
   q31_t * pDst,
   uint32_t blockSize);
 
@@ -2792,7 +2792,7 @@ void arm_rfft_fast_f32(
    * @param[in]  blockSize  number of samples to process
    */
   void arm_copy_q7(
-  q7_t * pSrc,
+  const q7_t * pSrc,
   q7_t * pDst,
   uint32_t blockSize);
 
@@ -2804,7 +2804,7 @@ void arm_rfft_fast_f32(
    * @param[in]  blockSize  number of samples to process
    */
   void arm_copy_q15(
-  q15_t * pSrc,
+  const q15_t * pSrc,
   q15_t * pDst,
   uint32_t blockSize);
 
@@ -2816,7 +2816,7 @@ void arm_rfft_fast_f32(
    * @param[in]  blockSize  number of samples to process
    */
   void arm_copy_q31(
-  q31_t * pSrc,
+  const q31_t * pSrc,
   q31_t * pDst,
   uint32_t blockSize);
 
@@ -2896,9 +2896,9 @@ void arm_rfft_fast_f32(
    * @param[in]  pScratch2  points to scratch buffer of size min(srcALen, srcBLen).
    */
   void arm_conv_opt_q15(
-  q15_t * pSrcA,
+  const q15_t * pSrcA,
   uint32_t srcALen,
-  q15_t * pSrcB,
+  const q15_t * pSrcB,
   uint32_t srcBLen,
   q15_t * pDst,
   q15_t * pScratch1,
@@ -2914,9 +2914,9 @@ void arm_rfft_fast_f32(
  * @param[out] pDst     points to the location where the output result is written.  Length srcALen+srcBLen-1.
  */
   void arm_conv_q15(
-  q15_t * pSrcA,
+  const q15_t * pSrcA,
   uint32_t srcALen,
-  q15_t * pSrcB,
+  const q15_t * pSrcB,
   uint32_t srcBLen,
   q15_t * pDst);
 
@@ -2930,9 +2930,9 @@ void arm_rfft_fast_f32(
    * @param[out] pDst     points to the block of output data  Length srcALen+srcBLen-1.
    */
   void arm_conv_fast_q15(
-          q15_t * pSrcA,
+          const q15_t * pSrcA,
           uint32_t srcALen,
-          q15_t * pSrcB,
+          const q15_t * pSrcB,
           uint32_t srcBLen,
           q15_t * pDst);
 
@@ -2948,9 +2948,9 @@ void arm_rfft_fast_f32(
    * @param[in]  pScratch2  points to scratch buffer of size min(srcALen, srcBLen).
    */
   void arm_conv_fast_opt_q15(
-  q15_t * pSrcA,
+  const q15_t * pSrcA,
   uint32_t srcALen,
-  q15_t * pSrcB,
+  const q15_t * pSrcB,
   uint32_t srcBLen,
   q15_t * pDst,
   q15_t * pScratch1,
@@ -2966,9 +2966,9 @@ void arm_rfft_fast_f32(
    * @param[out] pDst     points to the block of output data  Length srcALen+srcBLen-1.
    */
   void arm_conv_q31(
-  q31_t * pSrcA,
+  const q31_t * pSrcA,
   uint32_t srcALen,
-  q31_t * pSrcB,
+  const q31_t * pSrcB,
   uint32_t srcBLen,
   q31_t * pDst);
 
@@ -2982,9 +2982,9 @@ void arm_rfft_fast_f32(
    * @param[out] pDst     points to the block of output data  Length srcALen+srcBLen-1.
    */
   void arm_conv_fast_q31(
-  q31_t * pSrcA,
+  const q31_t * pSrcA,
   uint32_t srcALen,
-  q31_t * pSrcB,
+  const q31_t * pSrcB,
   uint32_t srcBLen,
   q31_t * pDst);
 
@@ -3000,9 +3000,9 @@ void arm_rfft_fast_f32(
    * @param[in]  pScratch2  points to scratch buffer (of type q15_t) of size min(srcALen, srcBLen).
    */
   void arm_conv_opt_q7(
-  q7_t * pSrcA,
+  const q7_t * pSrcA,
   uint32_t srcALen,
-  q7_t * pSrcB,
+  const q7_t * pSrcB,
   uint32_t srcBLen,
   q7_t * pDst,
   q15_t * pScratch1,
@@ -3018,9 +3018,9 @@ void arm_rfft_fast_f32(
    * @param[out] pDst     points to the block of output data  Length srcALen+srcBLen-1.
    */
   void arm_conv_q7(
-  q7_t * pSrcA,
+  const q7_t * pSrcA,
   uint32_t srcALen,
-  q7_t * pSrcB,
+  const q7_t * pSrcB,
   uint32_t srcBLen,
   q7_t * pDst);
 
@@ -3060,9 +3060,9 @@ void arm_rfft_fast_f32(
    * @return  Returns either ARM_MATH_SUCCESS if the function completed correctly or ARM_MATH_ARGUMENT_ERROR if the requested subset is not in the range [0 srcALen+srcBLen-2].
    */
   arm_status arm_conv_partial_opt_q15(
-  q15_t * pSrcA,
+  const q15_t * pSrcA,
   uint32_t srcALen,
-  q15_t * pSrcB,
+  const q15_t * pSrcB,
   uint32_t srcBLen,
   q15_t * pDst,
   uint32_t firstIndex,
@@ -3083,9 +3083,9 @@ void arm_rfft_fast_f32(
    * @return  Returns either ARM_MATH_SUCCESS if the function completed correctly or ARM_MATH_ARGUMENT_ERROR if the requested subset is not in the range [0 srcALen+srcBLen-2].
    */
   arm_status arm_conv_partial_q15(
-  q15_t * pSrcA,
+  const q15_t * pSrcA,
   uint32_t srcALen,
-  q15_t * pSrcB,
+  const q15_t * pSrcB,
   uint32_t srcBLen,
   q15_t * pDst,
   uint32_t firstIndex,
@@ -3104,9 +3104,9 @@ void arm_rfft_fast_f32(
    * @return  Returns either ARM_MATH_SUCCESS if the function completed correctly or ARM_MATH_ARGUMENT_ERROR if the requested subset is not in the range [0 srcALen+srcBLen-2].
    */
   arm_status arm_conv_partial_fast_q15(
-  q15_t * pSrcA,
+  const q15_t * pSrcA,
   uint32_t srcALen,
-  q15_t * pSrcB,
+  const q15_t * pSrcB,
   uint32_t srcBLen,
   q15_t * pDst,
   uint32_t firstIndex,
@@ -3127,9 +3127,9 @@ void arm_rfft_fast_f32(
    * @return  Returns either ARM_MATH_SUCCESS if the function completed correctly or ARM_MATH_ARGUMENT_ERROR if the requested subset is not in the range [0 srcALen+srcBLen-2].
    */
   arm_status arm_conv_partial_fast_opt_q15(
-  q15_t * pSrcA,
+  const q15_t * pSrcA,
   uint32_t srcALen,
-  q15_t * pSrcB,
+  const q15_t * pSrcB,
   uint32_t srcBLen,
   q15_t * pDst,
   uint32_t firstIndex,
@@ -3150,9 +3150,9 @@ void arm_rfft_fast_f32(
    * @return  Returns either ARM_MATH_SUCCESS if the function completed correctly or ARM_MATH_ARGUMENT_ERROR if the requested subset is not in the range [0 srcALen+srcBLen-2].
    */
   arm_status arm_conv_partial_q31(
-  q31_t * pSrcA,
+  const q31_t * pSrcA,
   uint32_t srcALen,
-  q31_t * pSrcB,
+  const q31_t * pSrcB,
   uint32_t srcBLen,
   q31_t * pDst,
   uint32_t firstIndex,
@@ -3171,9 +3171,9 @@ void arm_rfft_fast_f32(
    * @return  Returns either ARM_MATH_SUCCESS if the function completed correctly or ARM_MATH_ARGUMENT_ERROR if the requested subset is not in the range [0 srcALen+srcBLen-2].
    */
   arm_status arm_conv_partial_fast_q31(
-  q31_t * pSrcA,
+  const q31_t * pSrcA,
   uint32_t srcALen,
-  q31_t * pSrcB,
+  const q31_t * pSrcB,
   uint32_t srcBLen,
   q31_t * pDst,
   uint32_t firstIndex,
@@ -3194,9 +3194,9 @@ void arm_rfft_fast_f32(
    * @return  Returns either ARM_MATH_SUCCESS if the function completed correctly or ARM_MATH_ARGUMENT_ERROR if the requested subset is not in the range [0 srcALen+srcBLen-2].
    */
   arm_status arm_conv_partial_opt_q7(
-  q7_t * pSrcA,
+  const q7_t * pSrcA,
   uint32_t srcALen,
-  q7_t * pSrcB,
+  const q7_t * pSrcB,
   uint32_t srcBLen,
   q7_t * pDst,
   uint32_t firstIndex,
@@ -3217,9 +3217,9 @@ void arm_rfft_fast_f32(
    * @return  Returns either ARM_MATH_SUCCESS if the function completed correctly or ARM_MATH_ARGUMENT_ERROR if the requested subset is not in the range [0 srcALen+srcBLen-2].
    */
   arm_status arm_conv_partial_q7(
-  q7_t * pSrcA,
+  const q7_t * pSrcA,
   uint32_t srcALen,
-  q7_t * pSrcB,
+  const q7_t * pSrcB,
   uint32_t srcBLen,
   q7_t * pDst,
   uint32_t firstIndex,
@@ -3303,7 +3303,7 @@ void arm_rfft_fast_f32(
    */
   void arm_fir_decimate_q15(
   const arm_fir_decimate_instance_q15 * S,
-  q15_t * pSrc,
+  const q15_t * pSrc,
   q15_t * pDst,
   uint32_t blockSize);
 
@@ -3317,7 +3317,7 @@ void arm_rfft_fast_f32(
    */
   void arm_fir_decimate_fast_q15(
   const arm_fir_decimate_instance_q15 * S,
-  q15_t * pSrc,
+  const q15_t * pSrc,
   q15_t * pDst,
   uint32_t blockSize);
 
@@ -3351,7 +3351,7 @@ void arm_rfft_fast_f32(
    */
   void arm_fir_decimate_q31(
   const arm_fir_decimate_instance_q31 * S,
-  q31_t * pSrc,
+  const q31_t * pSrc,
   q31_t * pDst,
   uint32_t blockSize);
 
@@ -3364,7 +3364,7 @@ void arm_rfft_fast_f32(
    */
   void arm_fir_decimate_fast_q31(
   arm_fir_decimate_instance_q31 * S,
-  q31_t * pSrc,
+  const q31_t * pSrc,
   q31_t * pDst,
   uint32_t blockSize);
 
@@ -3432,7 +3432,7 @@ void arm_rfft_fast_f32(
    */
   void arm_fir_interpolate_q15(
   const arm_fir_interpolate_instance_q15 * S,
-  q15_t * pSrc,
+  const q15_t * pSrc,
   q15_t * pDst,
   uint32_t blockSize);
 
@@ -3466,7 +3466,7 @@ void arm_rfft_fast_f32(
    */
   void arm_fir_interpolate_q31(
   const arm_fir_interpolate_instance_q31 * S,
-  q31_t * pSrc,
+  const q31_t * pSrc,
   q31_t * pDst,
   uint32_t blockSize);
 
@@ -3545,7 +3545,7 @@ void arm_rfft_fast_f32(
    */
   void arm_biquad_cas_df1_32x64_q31(
   const arm_biquad_cas_df1_32x64_ins_q31 * S,
-  q31_t * pSrc,
+  const q31_t * pSrc,
   q31_t * pDst,
   uint32_t blockSize);
 
@@ -3734,7 +3734,7 @@ void arm_rfft_fast_f32(
    */
   void arm_fir_lattice_q15(
   const arm_fir_lattice_instance_q15 * S,
-  q15_t * pSrc,
+  const q15_t * pSrc,
   q15_t * pDst,
   uint32_t blockSize);
 
@@ -3762,7 +3762,7 @@ void arm_rfft_fast_f32(
    */
   void arm_fir_lattice_q31(
   const arm_fir_lattice_instance_q31 * S,
-  q31_t * pSrc,
+  const q31_t * pSrc,
   q31_t * pDst,
   uint32_t blockSize);
 
@@ -3870,7 +3870,7 @@ void arm_rfft_fast_f32(
    */
   void arm_iir_lattice_q31(
   const arm_iir_lattice_instance_q31 * S,
-  q31_t * pSrc,
+  const q31_t * pSrc,
   q31_t * pDst,
   uint32_t blockSize);
 
@@ -3902,7 +3902,7 @@ void arm_rfft_fast_f32(
    */
   void arm_iir_lattice_q15(
   const arm_iir_lattice_instance_q15 * S,
-  q15_t * pSrc,
+  const q15_t * pSrc,
   q15_t * pDst,
   uint32_t blockSize);
 
@@ -4017,7 +4017,7 @@ void arm_rfft_fast_f32(
    */
   void arm_lms_q15(
   const arm_lms_instance_q15 * S,
-  q15_t * pSrc,
+  const q15_t * pSrc,
   q15_t * pRef,
   q15_t * pOut,
   q15_t * pErr,
@@ -4048,7 +4048,7 @@ void arm_rfft_fast_f32(
    */
   void arm_lms_q31(
   const arm_lms_instance_q31 * S,
-  q31_t * pSrc,
+  const q31_t * pSrc,
   q31_t * pRef,
   q31_t * pOut,
   q31_t * pErr,
@@ -4152,7 +4152,7 @@ void arm_rfft_fast_f32(
    */
   void arm_lms_norm_q31(
   arm_lms_norm_instance_q31 * S,
-  q31_t * pSrc,
+  const q31_t * pSrc,
   q31_t * pRef,
   q31_t * pOut,
   q31_t * pErr,
@@ -4206,7 +4206,7 @@ void arm_rfft_fast_f32(
    */
   void arm_lms_norm_q15(
   arm_lms_norm_instance_q15 * S,
-  q15_t * pSrc,
+  const q15_t * pSrc,
   q15_t * pRef,
   q15_t * pOut,
   q15_t * pErr,
@@ -4259,9 +4259,9 @@ void arm_rfft_fast_f32(
    * @param[in]  pScratch  points to scratch buffer of size max(srcALen, srcBLen) + 2*min(srcALen, srcBLen) - 2.
    */
   void arm_correlate_opt_q15(
-  q15_t * pSrcA,
+  const q15_t * pSrcA,
   uint32_t srcALen,
-  q15_t * pSrcB,
+  const q15_t * pSrcB,
   uint32_t srcBLen,
   q15_t * pDst,
   q15_t * pScratch);
@@ -4277,9 +4277,9 @@ void arm_rfft_fast_f32(
    */
 
   void arm_correlate_q15(
-  q15_t * pSrcA,
+  const q15_t * pSrcA,
   uint32_t srcALen,
-  q15_t * pSrcB,
+  const q15_t * pSrcB,
   uint32_t srcBLen,
   q15_t * pDst);
 
@@ -4294,9 +4294,9 @@ void arm_rfft_fast_f32(
    */
 
   void arm_correlate_fast_q15(
-  q15_t * pSrcA,
+  const q15_t * pSrcA,
   uint32_t srcALen,
-  q15_t * pSrcB,
+  const q15_t * pSrcB,
   uint32_t srcBLen,
   q15_t * pDst);
 
@@ -4311,9 +4311,9 @@ void arm_rfft_fast_f32(
    * @param[in]  pScratch  points to scratch buffer of size max(srcALen, srcBLen) + 2*min(srcALen, srcBLen) - 2.
    */
   void arm_correlate_fast_opt_q15(
-  q15_t * pSrcA,
+  const q15_t * pSrcA,
   uint32_t srcALen,
-  q15_t * pSrcB,
+  const q15_t * pSrcB,
   uint32_t srcBLen,
   q15_t * pDst,
   q15_t * pScratch);
@@ -4328,9 +4328,9 @@ void arm_rfft_fast_f32(
    * @param[out] pDst     points to the block of output data  Length 2 * max(srcALen, srcBLen) - 1.
    */
   void arm_correlate_q31(
-  q31_t * pSrcA,
+  const q31_t * pSrcA,
   uint32_t srcALen,
-  q31_t * pSrcB,
+  const q31_t * pSrcB,
   uint32_t srcBLen,
   q31_t * pDst);
 
@@ -4344,9 +4344,9 @@ void arm_rfft_fast_f32(
    * @param[out] pDst     points to the block of output data  Length 2 * max(srcALen, srcBLen) - 1.
    */
   void arm_correlate_fast_q31(
-  q31_t * pSrcA,
+  const q31_t * pSrcA,
   uint32_t srcALen,
-  q31_t * pSrcB,
+  const q31_t * pSrcB,
   uint32_t srcBLen,
   q31_t * pDst);
 
@@ -4362,9 +4362,9 @@ void arm_rfft_fast_f32(
    * @param[in]  pScratch2  points to scratch buffer (of type q15_t) of size min(srcALen, srcBLen).
    */
   void arm_correlate_opt_q7(
-  q7_t * pSrcA,
+  const q7_t * pSrcA,
   uint32_t srcALen,
-  q7_t * pSrcB,
+  const q7_t * pSrcB,
   uint32_t srcBLen,
   q7_t * pDst,
   q15_t * pScratch1,
@@ -4380,9 +4380,9 @@ void arm_rfft_fast_f32(
    * @param[out] pDst     points to the block of output data  Length 2 * max(srcALen, srcBLen) - 1.
    */
   void arm_correlate_q7(
-  q7_t * pSrcA,
+  const q7_t * pSrcA,
   uint32_t srcALen,
-  q7_t * pSrcB,
+  const q7_t * pSrcB,
   uint32_t srcBLen,
   q7_t * pDst);
 
@@ -4486,7 +4486,7 @@ void arm_rfft_fast_f32(
    */
   void arm_fir_sparse_q31(
   arm_fir_sparse_instance_q31 * S,
-  q31_t * pSrc,
+  const q31_t * pSrc,
   q31_t * pDst,
   q31_t * pScratchIn,
   uint32_t blockSize);
@@ -4523,7 +4523,7 @@ void arm_rfft_fast_f32(
    */
   void arm_fir_sparse_q15(
   arm_fir_sparse_instance_q15 * S,
-  q15_t * pSrc,
+  const q15_t * pSrc,
   q15_t * pDst,
   q15_t * pScratchIn,
   q31_t * pScratchOut,
@@ -4561,7 +4561,7 @@ void arm_rfft_fast_f32(
    */
   void arm_fir_sparse_q7(
   arm_fir_sparse_instance_q7 * S,
-  q7_t * pSrc,
+  const q7_t * pSrc,
   q7_t * pDst,
   q7_t * pScratchIn,
   q31_t * pScratchOut,
@@ -4630,7 +4630,7 @@ void arm_rfft_fast_f32(
    * @param[in]  numSamples  number of complex samples in each vector
    */
   void arm_cmplx_conj_q31(
-  q31_t * pSrc,
+  const q31_t * pSrc,
   q31_t * pDst,
   uint32_t numSamples);
 
@@ -4642,7 +4642,7 @@ void arm_rfft_fast_f32(
    * @param[in]  numSamples  number of complex samples in each vector
    */
   void arm_cmplx_conj_q15(
-  q15_t * pSrc,
+  const q15_t * pSrc,
   q15_t * pDst,
   uint32_t numSamples);
 
@@ -4666,7 +4666,7 @@ void arm_rfft_fast_f32(
    * @param[in]  numSamples  number of complex samples in the input vector
    */
   void arm_cmplx_mag_squared_q31(
-  q31_t * pSrc,
+  const q31_t * pSrc,
   q31_t * pDst,
   uint32_t numSamples);
 
@@ -4678,7 +4678,7 @@ void arm_rfft_fast_f32(
    * @param[in]  numSamples  number of complex samples in the input vector
    */
   void arm_cmplx_mag_squared_q15(
-  q15_t * pSrc,
+  const q15_t * pSrc,
   q15_t * pDst,
   uint32_t numSamples);
 
@@ -5006,7 +5006,7 @@ void arm_rfft_fast_f32(
    * @param[in]  blockSize  number of samples to process
    */
   void arm_q7_to_q31(
-  q7_t * pSrc,
+  const q7_t * pSrc,
   q31_t * pDst,
   uint32_t blockSize);
 
@@ -5103,7 +5103,7 @@ void arm_rfft_fast_f32(
    * @param[in]  blockSize  number of samples to process
    */
   void arm_q7_to_q15(
-  q7_t * pSrc,
+  const q7_t * pSrc,
   q15_t * pDst,
   uint32_t blockSize);
 
@@ -5227,7 +5227,7 @@ void arm_rfft_fast_f32(
    * @param[in]  blockSize  is the number of samples to process
    */
   void arm_q7_to_float(
-  q7_t * pSrc,
+  const q7_t * pSrc,
   float32_t * pDst,
   uint32_t blockSize);
 
@@ -5341,7 +5341,7 @@ void arm_rfft_fast_f32(
    * @param[in]  blockSize  is the number of samples to process
    */
   void arm_q31_to_float(
-  q31_t * pSrc,
+  const q31_t * pSrc,
   float32_t * pDst,
   uint32_t blockSize);
 
@@ -6091,7 +6091,7 @@ void arm_rfft_fast_f32(
    * @param[out] pResult    is output value.
    */
   void arm_power_q31(
-  q31_t * pSrc,
+  const q31_t * pSrc,
   uint32_t blockSize,
   q63_t * pResult);
 
@@ -6115,7 +6115,7 @@ void arm_rfft_fast_f32(
    * @param[out] pResult    is output value.
    */
   void arm_power_q15(
-  q15_t * pSrc,
+  const q15_t * pSrc,
   uint32_t blockSize,
   q63_t * pResult);
 
@@ -6127,7 +6127,7 @@ void arm_rfft_fast_f32(
    * @param[out] pResult    is output value.
    */
   void arm_power_q7(
-  q7_t * pSrc,
+  const q7_t * pSrc,
   uint32_t blockSize,
   q31_t * pResult);
 
@@ -6139,7 +6139,7 @@ void arm_rfft_fast_f32(
    * @param[out] pResult    is output value.
    */
   void arm_mean_q7(
-  q7_t * pSrc,
+  const q7_t * pSrc,
   uint32_t blockSize,
   q7_t * pResult);
 
@@ -6151,7 +6151,7 @@ void arm_rfft_fast_f32(
    * @param[out] pResult    is output value.
    */
   void arm_mean_q15(
-  q15_t * pSrc,
+  const q15_t * pSrc,
   uint32_t blockSize,
   q15_t * pResult);
 
@@ -6163,7 +6163,7 @@ void arm_rfft_fast_f32(
    * @param[out] pResult    is output value.
    */
   void arm_mean_q31(
-  q31_t * pSrc,
+  const q31_t * pSrc,
   uint32_t blockSize,
   q31_t * pResult);
 
@@ -6199,7 +6199,7 @@ void arm_rfft_fast_f32(
    * @param[out] pResult    is output value.
    */
   void arm_var_q31(
-  q31_t * pSrc,
+  const q31_t * pSrc,
   uint32_t blockSize,
   q31_t * pResult);
 
@@ -6211,7 +6211,7 @@ void arm_rfft_fast_f32(
    * @param[out] pResult    is output value.
    */
   void arm_var_q15(
-  q15_t * pSrc,
+  const q15_t * pSrc,
   uint32_t blockSize,
   q15_t * pResult);
 
@@ -6235,7 +6235,7 @@ void arm_rfft_fast_f32(
    * @param[out] pResult    is output value.
    */
   void arm_rms_q31(
-  q31_t * pSrc,
+  const q31_t * pSrc,
   uint32_t blockSize,
   q31_t * pResult);
 
@@ -6247,7 +6247,7 @@ void arm_rfft_fast_f32(
    * @param[out] pResult    is output value.
    */
   void arm_rms_q15(
-  q15_t * pSrc,
+  const q15_t * pSrc,
   uint32_t blockSize,
   q15_t * pResult);
 
@@ -6271,7 +6271,7 @@ void arm_rfft_fast_f32(
    * @param[out] pResult    is output value.
    */
   void arm_std_q31(
-  q31_t * pSrc,
+  const q31_t * pSrc,
   uint32_t blockSize,
   q31_t * pResult);
 
@@ -6283,7 +6283,7 @@ void arm_rfft_fast_f32(
    * @param[out] pResult    is output value.
    */
   void arm_std_q15(
-  q15_t * pSrc,
+  const q15_t * pSrc,
   uint32_t blockSize,
   q15_t * pResult);
 
@@ -6307,7 +6307,7 @@ void arm_rfft_fast_f32(
    * @param[in]  numSamples  number of complex samples in the input vector
    */
   void arm_cmplx_mag_q31(
-  q31_t * pSrc,
+  const q31_t * pSrc,
   q31_t * pDst,
   uint32_t numSamples);
 
@@ -6319,7 +6319,7 @@ void arm_rfft_fast_f32(
    * @param[in]  numSamples  number of complex samples in the input vector
    */
   void arm_cmplx_mag_q15(
-  q15_t * pSrc,
+  const q15_t * pSrc,
   q15_t * pDst,
   uint32_t numSamples);
 
@@ -6333,8 +6333,8 @@ void arm_rfft_fast_f32(
    * @param[out] imagResult  imaginary part of the result returned here
    */
   void arm_cmplx_dot_prod_q15(
-  q15_t * pSrcA,
-  q15_t * pSrcB,
+  const q15_t * pSrcA,
+  const q15_t * pSrcB,
   uint32_t numSamples,
   q31_t * realResult,
   q31_t * imagResult);
@@ -6349,8 +6349,8 @@ void arm_rfft_fast_f32(
    * @param[out] imagResult  imaginary part of the result returned here
    */
   void arm_cmplx_dot_prod_q31(
-  q31_t * pSrcA,
-  q31_t * pSrcB,
+  const q31_t * pSrcA,
+  const q31_t * pSrcB,
   uint32_t numSamples,
   q63_t * realResult,
   q63_t * imagResult);
@@ -6380,8 +6380,8 @@ void arm_rfft_fast_f32(
    * @param[in]  numSamples  number of samples in each vector
    */
   void arm_cmplx_mult_real_q15(
-  q15_t * pSrcCmplx,
-  q15_t * pSrcReal,
+  const q15_t * pSrcCmplx,
+  const q15_t * pSrcReal,
   q15_t * pCmplxDst,
   uint32_t numSamples);
 
@@ -6394,8 +6394,8 @@ void arm_rfft_fast_f32(
    * @param[in]  numSamples  number of samples in each vector
    */
   void arm_cmplx_mult_real_q31(
-  q31_t * pSrcCmplx,
-  q31_t * pSrcReal,
+  const q31_t * pSrcCmplx,
+  const q31_t * pSrcReal,
   q31_t * pCmplxDst,
   uint32_t numSamples);
 
@@ -6422,7 +6422,7 @@ void arm_rfft_fast_f32(
    * @param[in]  index      is the array index of the minimum value in the input buffer.
    */
   void arm_min_q7(
-  q7_t * pSrc,
+  const q7_t * pSrc,
   uint32_t blockSize,
   q7_t * result,
   uint32_t * index);
@@ -6436,7 +6436,7 @@ void arm_rfft_fast_f32(
    * @param[in]  pIndex     is the array index of the minimum value in the input buffer.
    */
   void arm_min_q15(
-  q15_t * pSrc,
+  const q15_t * pSrc,
   uint32_t blockSize,
   q15_t * pResult,
   uint32_t * pIndex);
@@ -6450,7 +6450,7 @@ void arm_rfft_fast_f32(
    * @param[out] pIndex     is the array index of the minimum value in the input buffer.
    */
   void arm_min_q31(
-  q31_t * pSrc,
+  const q31_t * pSrc,
   uint32_t blockSize,
   q31_t * pResult,
   uint32_t * pIndex);
@@ -6478,7 +6478,7 @@ void arm_rfft_fast_f32(
  * @param[out] pIndex     index of maximum value returned here
  */
   void arm_max_q7(
-  q7_t * pSrc,
+  const q7_t * pSrc,
   uint32_t blockSize,
   q7_t * pResult,
   uint32_t * pIndex);
@@ -6492,7 +6492,7 @@ void arm_rfft_fast_f32(
  * @param[out] pIndex     index of maximum value returned here
  */
   void arm_max_q15(
-  q15_t * pSrc,
+  const q15_t * pSrc,
   uint32_t blockSize,
   q15_t * pResult,
   uint32_t * pIndex);
@@ -6506,7 +6506,7 @@ void arm_rfft_fast_f32(
  * @param[out] pIndex     index of maximum value returned here
  */
   void arm_max_q31(
-  q31_t * pSrc,
+  const q31_t * pSrc,
   uint32_t blockSize,
   q31_t * pResult,
   uint32_t * pIndex);
@@ -6534,8 +6534,8 @@ void arm_rfft_fast_f32(
    * @param[in]  numSamples  number of complex samples in each vector
    */
   void arm_cmplx_mult_cmplx_q15(
-  q15_t * pSrcA,
-  q15_t * pSrcB,
+  const q15_t * pSrcA,
+  const q15_t * pSrcB,
   q15_t * pDst,
   uint32_t numSamples);
 
@@ -6548,8 +6548,8 @@ void arm_rfft_fast_f32(
    * @param[in]  numSamples  number of complex samples in each vector
    */
   void arm_cmplx_mult_cmplx_q31(
-  q31_t * pSrcA,
-  q31_t * pSrcB,
+  const q31_t * pSrcA,
+  const q31_t * pSrcB,
   q31_t * pDst,
   uint32_t numSamples);
 
@@ -6611,7 +6611,7 @@ void arm_rfft_fast_f32(
    * @param[in]  blockSize  is the number of samples to process
    */
   void arm_q31_to_q15(
-  q31_t * pSrc,
+  const q31_t * pSrc,
   q15_t * pDst,
   uint32_t blockSize);
 
@@ -6623,7 +6623,7 @@ void arm_rfft_fast_f32(
    * @param[in]  blockSize  is the number of samples to process
    */
   void arm_q31_to_q7(
-  q31_t * pSrc,
+  const q31_t * pSrc,
   q7_t * pDst,
   uint32_t blockSize);
 
@@ -6635,7 +6635,7 @@ void arm_rfft_fast_f32(
    * @param[in]  blockSize  is the number of samples to process
    */
   void arm_q15_to_float(
-  q15_t * pSrc,
+  const q15_t * pSrc,
   float32_t * pDst,
   uint32_t blockSize);
 
@@ -6647,7 +6647,7 @@ void arm_rfft_fast_f32(
    * @param[in]  blockSize  is the number of samples to process
    */
   void arm_q15_to_q31(
-  q15_t * pSrc,
+  const q15_t * pSrc,
   q31_t * pDst,
   uint32_t blockSize);
 
@@ -6659,7 +6659,7 @@ void arm_rfft_fast_f32(
    * @param[in]  blockSize  is the number of samples to process
    */
   void arm_q15_to_q7(
-  q15_t * pSrc,
+  const q15_t * pSrc,
   q7_t * pDst,
   uint32_t blockSize);
 
