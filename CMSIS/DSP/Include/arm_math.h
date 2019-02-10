@@ -1896,8 +1896,8 @@ extern "C"
     uint16_t fftLen;                 /**< length of the FFT. */
     uint8_t ifftFlag;                /**< flag that selects forward (ifftFlag=0) or inverse (ifftFlag=1) transform. */
     uint8_t bitReverseFlag;          /**< flag that enables (bitReverseFlag=1) or disables (bitReverseFlag=0) bit reversal of output. */
-    q15_t *pTwiddle;                 /**< points to the Sin twiddle factor table. */
-    uint16_t *pBitRevTable;          /**< points to the bit reversal table. */
+    const q15_t *pTwiddle;           /**< points to the Sin twiddle factor table. */
+    const uint16_t *pBitRevTable;    /**< points to the bit reversal table. */
     uint16_t twidCoefModifier;       /**< twiddle coefficient modifier that supports different size FFTs with the same twiddle factor table. */
     uint16_t bitRevFactor;           /**< bit reversal modifier that supports different size FFTs with the same bit reversal table. */
   } arm_cfft_radix2_instance_q15;
@@ -1923,8 +1923,8 @@ extern "C"
     uint16_t fftLen;                 /**< length of the FFT. */
     uint8_t ifftFlag;                /**< flag that selects forward (ifftFlag=0) or inverse (ifftFlag=1) transform. */
     uint8_t bitReverseFlag;          /**< flag that enables (bitReverseFlag=1) or disables (bitReverseFlag=0) bit reversal of output. */
-    q15_t *pTwiddle;                 /**< points to the twiddle factor table. */
-    uint16_t *pBitRevTable;          /**< points to the bit reversal table. */
+    const q15_t *pTwiddle;           /**< points to the twiddle factor table. */
+    const uint16_t *pBitRevTable;    /**< points to the bit reversal table. */
     uint16_t twidCoefModifier;       /**< twiddle coefficient modifier that supports different size FFTs with the same twiddle factor table. */
     uint16_t bitRevFactor;           /**< bit reversal modifier that supports different size FFTs with the same bit reversal table. */
   } arm_cfft_radix4_instance_q15;
@@ -1949,8 +1949,8 @@ extern "C"
     uint16_t fftLen;                 /**< length of the FFT. */
     uint8_t ifftFlag;                /**< flag that selects forward (ifftFlag=0) or inverse (ifftFlag=1) transform. */
     uint8_t bitReverseFlag;          /**< flag that enables (bitReverseFlag=1) or disables (bitReverseFlag=0) bit reversal of output. */
-    q31_t *pTwiddle;                 /**< points to the Twiddle factor table. */
-    uint16_t *pBitRevTable;          /**< points to the bit reversal table. */
+    const q31_t *pTwiddle;           /**< points to the Twiddle factor table. */
+    const uint16_t *pBitRevTable;    /**< points to the bit reversal table. */
     uint16_t twidCoefModifier;       /**< twiddle coefficient modifier that supports different size FFTs with the same twiddle factor table. */
     uint16_t bitRevFactor;           /**< bit reversal modifier that supports different size FFTs with the same bit reversal table. */
   } arm_cfft_radix2_instance_q31;
@@ -1975,8 +1975,8 @@ extern "C"
     uint16_t fftLen;                 /**< length of the FFT. */
     uint8_t ifftFlag;                /**< flag that selects forward (ifftFlag=0) or inverse (ifftFlag=1) transform. */
     uint8_t bitReverseFlag;          /**< flag that enables (bitReverseFlag=1) or disables (bitReverseFlag=0) bit reversal of output. */
-    q31_t *pTwiddle;                 /**< points to the twiddle factor table. */
-    uint16_t *pBitRevTable;          /**< points to the bit reversal table. */
+    const q31_t *pTwiddle;           /**< points to the twiddle factor table. */
+    const uint16_t *pBitRevTable;    /**< points to the bit reversal table. */
     uint16_t twidCoefModifier;       /**< twiddle coefficient modifier that supports different size FFTs with the same twiddle factor table. */
     uint16_t bitRevFactor;           /**< bit reversal modifier that supports different size FFTs with the same bit reversal table. */
   } arm_cfft_radix4_instance_q31;
@@ -2001,8 +2001,8 @@ extern "C"
     uint16_t fftLen;                   /**< length of the FFT. */
     uint8_t ifftFlag;                  /**< flag that selects forward (ifftFlag=0) or inverse (ifftFlag=1) transform. */
     uint8_t bitReverseFlag;            /**< flag that enables (bitReverseFlag=1) or disables (bitReverseFlag=0) bit reversal of output. */
-    float32_t *pTwiddle;               /**< points to the Twiddle factor table. */
-    uint16_t *pBitRevTable;            /**< points to the bit reversal table. */
+    const float32_t *pTwiddle;         /**< points to the Twiddle factor table. */
+    const uint16_t *pBitRevTable;      /**< points to the bit reversal table. */
     uint16_t twidCoefModifier;         /**< twiddle coefficient modifier that supports different size FFTs with the same twiddle factor table. */
     uint16_t bitRevFactor;             /**< bit reversal modifier that supports different size FFTs with the same bit reversal table. */
     float32_t onebyfftLen;             /**< value of 1/fftLen. */
@@ -2028,8 +2028,8 @@ extern "C"
     uint16_t fftLen;                   /**< length of the FFT. */
     uint8_t ifftFlag;                  /**< flag that selects forward (ifftFlag=0) or inverse (ifftFlag=1) transform. */
     uint8_t bitReverseFlag;            /**< flag that enables (bitReverseFlag=1) or disables (bitReverseFlag=0) bit reversal of output. */
-    float32_t *pTwiddle;               /**< points to the Twiddle factor table. */
-    uint16_t *pBitRevTable;            /**< points to the bit reversal table. */
+    const float32_t *pTwiddle;         /**< points to the Twiddle factor table. */
+    const uint16_t *pBitRevTable;      /**< points to the bit reversal table. */
     uint16_t twidCoefModifier;         /**< twiddle coefficient modifier that supports different size FFTs with the same twiddle factor table. */
     uint16_t bitRevFactor;             /**< bit reversal modifier that supports different size FFTs with the same bit reversal table. */
     float32_t onebyfftLen;             /**< value of 1/fftLen. */
@@ -2107,8 +2107,8 @@ void arm_cfft_q31(
     uint8_t ifftFlagR;                        /**< flag that selects forward (ifftFlagR=0) or inverse (ifftFlagR=1) transform. */
     uint8_t bitReverseFlagR;                  /**< flag that enables (bitReverseFlagR=1) or disables (bitReverseFlagR=0) bit reversal of output. */
     uint32_t twidCoefRModifier;               /**< twiddle coefficient modifier that supports different size FFTs with the same twiddle factor table. */
-    q15_t *pTwiddleAReal;                     /**< points to the real twiddle factor table. */
-    q15_t *pTwiddleBReal;                     /**< points to the imag twiddle factor table. */
+    const q15_t *pTwiddleAReal;               /**< points to the real twiddle factor table. */
+    const q15_t *pTwiddleBReal;               /**< points to the imag twiddle factor table. */
     const arm_cfft_instance_q15 *pCfft;       /**< points to the complex FFT instance. */
   } arm_rfft_instance_q15;
 
@@ -2132,8 +2132,8 @@ void arm_cfft_q31(
     uint8_t ifftFlagR;                          /**< flag that selects forward (ifftFlagR=0) or inverse (ifftFlagR=1) transform. */
     uint8_t bitReverseFlagR;                    /**< flag that enables (bitReverseFlagR=1) or disables (bitReverseFlagR=0) bit reversal of output. */
     uint32_t twidCoefRModifier;                 /**< twiddle coefficient modifier that supports different size FFTs with the same twiddle factor table. */
-    q31_t *pTwiddleAReal;                       /**< points to the real twiddle factor table. */
-    q31_t *pTwiddleBReal;                       /**< points to the imag twiddle factor table. */
+    const q31_t *pTwiddleAReal;                 /**< points to the real twiddle factor table. */
+    const q31_t *pTwiddleBReal;                 /**< points to the imag twiddle factor table. */
     const arm_cfft_instance_q31 *pCfft;         /**< points to the complex FFT instance. */
   } arm_rfft_instance_q31;
 
@@ -2157,9 +2157,9 @@ void arm_cfft_q31(
     uint16_t fftLenBy2;                         /**< length of the complex FFT. */
     uint8_t ifftFlagR;                          /**< flag that selects forward (ifftFlagR=0) or inverse (ifftFlagR=1) transform. */
     uint8_t bitReverseFlagR;                    /**< flag that enables (bitReverseFlagR=1) or disables (bitReverseFlagR=0) bit reversal of output. */
-    uint32_t twidCoefRModifier;                     /**< twiddle coefficient modifier that supports different size FFTs with the same twiddle factor table. */
-    float32_t *pTwiddleAReal;                   /**< points to the real twiddle factor table. */
-    float32_t *pTwiddleBReal;                   /**< points to the imag twiddle factor table. */
+    uint32_t twidCoefRModifier;                 /**< twiddle coefficient modifier that supports different size FFTs with the same twiddle factor table. */
+    const float32_t *pTwiddleAReal;             /**< points to the real twiddle factor table. */
+    const float32_t *pTwiddleBReal;             /**< points to the imag twiddle factor table. */
     arm_cfft_radix4_instance_f32 *pCfft;        /**< points to the complex FFT instance. */
   } arm_rfft_instance_f32;
 
@@ -2219,8 +2219,8 @@ void arm_rfft_fast_f32(
     uint16_t N;                          /**< length of the DCT4. */
     uint16_t Nby2;                       /**< half of the length of the DCT4. */
     float32_t normalize;                 /**< normalizing factor. */
-    float32_t *pTwiddle;                 /**< points to the twiddle factor table. */
-    float32_t *pCosFactor;               /**< points to the cosFactor table. */
+    const float32_t *pTwiddle;           /**< points to the twiddle factor table. */
+    const float32_t *pCosFactor;         /**< points to the cosFactor table. */
     arm_rfft_instance_f32 *pRfft;        /**< points to the real FFT instance. */
     arm_cfft_radix4_instance_f32 *pCfft; /**< points to the complex FFT instance. */
   } arm_dct4_instance_f32;
@@ -2265,8 +2265,8 @@ void arm_rfft_fast_f32(
     uint16_t N;                          /**< length of the DCT4. */
     uint16_t Nby2;                       /**< half of the length of the DCT4. */
     q31_t normalize;                     /**< normalizing factor. */
-    q31_t *pTwiddle;                     /**< points to the twiddle factor table. */
-    q31_t *pCosFactor;                   /**< points to the cosFactor table. */
+    const q31_t *pTwiddle;               /**< points to the twiddle factor table. */
+    const q31_t *pCosFactor;             /**< points to the cosFactor table. */
     arm_rfft_instance_q31 *pRfft;        /**< points to the real FFT instance. */
     arm_cfft_radix4_instance_q31 *pCfft; /**< points to the complex FFT instance. */
   } arm_dct4_instance_q31;
@@ -2311,8 +2311,8 @@ void arm_rfft_fast_f32(
     uint16_t N;                          /**< length of the DCT4. */
     uint16_t Nby2;                       /**< half of the length of the DCT4. */
     q15_t normalize;                     /**< normalizing factor. */
-    q15_t *pTwiddle;                     /**< points to the twiddle factor table. */
-    q15_t *pCosFactor;                   /**< points to the cosFactor table. */
+    const q15_t *pTwiddle;               /**< points to the twiddle factor table. */
+    const q15_t *pCosFactor;             /**< points to the cosFactor table. */
     arm_rfft_instance_q15 *pRfft;        /**< points to the real FFT instance. */
     arm_cfft_radix4_instance_q15 *pCfft; /**< points to the complex FFT instance. */
   } arm_dct4_instance_q15;
