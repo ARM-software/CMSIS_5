@@ -283,7 +283,7 @@ void MMU_CreateTranslationTable(void)
     // Create (256 * 4k)=1MB faulting entries to cover private address space. Needs to be marked as Device memory
     MMU_TTPage4k (&Image$$TTB$$ZI$$Base, __get_CBAR()            ,256,  Page_L1_4k, (uint32_t *)PRIVATE_TABLE_L2_BASE_4k, DESCRIPTOR_FAULT);
     // Define private address space entry.
-    MMU_TTPage4k (&Image$$TTB$$ZI$$Base, __get_CBAR()            ,  2,  Page_L1_4k, (uint32_t *)PRIVATE_TABLE_L2_BASE_4k, Page_4k_Device_RW);
+    MMU_TTPage4k (&Image$$TTB$$ZI$$Base, __get_CBAR()            ,  3,  Page_L1_4k, (uint32_t *)PRIVATE_TABLE_L2_BASE_4k, Page_4k_Device_RW);
     // Define L2CC entry.  Uncomment if PL310 is present
     //    MMU_TTPage4k (&Image$$TTB$$ZI$$Base, VE_A9_MP_PL310_BASE     ,  1,  Page_L1_4k, (uint32_t *)PRIVATE_TABLE_L2_BASE_4k, Page_4k_Device_RW);
 
