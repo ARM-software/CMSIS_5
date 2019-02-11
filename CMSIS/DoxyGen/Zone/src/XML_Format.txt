@@ -53,9 +53,7 @@ Structure of .rzone XML file
   
   <resources>            // physical resources off-chip 
     <memory>             // memory section  
-      <region>           // memory resource with (type="RAM" | "ROM")
-        <map/>           // optional map information (processor specific)
-      </region>
+      <region>           // memory resource
     </memory>
     
     <peripherals>        // peripheral resources off-chip
@@ -83,9 +81,7 @@ Top-level .azone XML elements
   <configure>            // CMSIS-Zone utility UI behavior
   
   <blocks>               // memory split information
-    <region>             // reference to the .rzone region
-      <block>            // new logical memory block
-    </region>
+    <region>             // memory resource information 
   </blocks>
   
   <zones>                // zone assignments
@@ -549,10 +545,16 @@ The \ref xml_rregion lists a physical memory region and alternative mappings to 
     <td>required</td>
   </tr>
   <tr>
-    <td>start</td>
-    <td>The physical start address of the memory region in the address map.</td>
+    <td>logical</td>
+    <td>The logical start address of the memory region in the address map.</td>
     <td>xs:string</td>
     <td>required</td>
+  </tr>
+  <tr>
+    <td>physcial</td>
+    <td>The physical start address of the memory region in the address map.  If no physical is specified the logical is used as physical start address.</td>
+    <td>xs:string</td>
+    <td>optional</td>
   </tr>
   <tr>
     <td>size</td>
@@ -603,84 +605,7 @@ The \ref xml_rregion lists a physical memory region and alternative mappings to 
     <td>xs:string</td>
     <td>optional</td>
   </tr>  
-  <tr>
-    <th>Child Elements</th>
-    <th>Description</th>
-    <th>Type</th>
-    <th>Occurrence</th>
-  </tr>
-  <tr>
-    <td>\ref xml_smap "map"</td>
-    <td>optional map information that can be processor specific or a alias memory address</td>
-    <td>complexType</td>
-    <td>0..1</td>
-  </tr>
 </table>
-
-
-\section xml_smap /rzone/resources/memory/region/map element
-
-The \ref xml_smap contains additional information for alias regions or processors that have access to this memory region.
-
-<table class="cmtable" summary="Element: map">
-  <tr>
-    <th>Parent Element</th>
-    <th colspan="3">Element Chain</th>
-  </tr>
-  <tr>
-    <td>\ref xml_rregion "region"</td>
-    <td colspan=3>\ref xml_rregion</td>
-  </tr>
-  <tr>
-    <th>Attributes</th>
-    <th>Description</th>
-    <th>Type</th>
-    <th>Use</th>
-  </tr>
-  <tr>
-    <td>name</td>
-    <td>Alternative name of this memory region (in case of alias) which must be unique in this *.rzone file.</td>
-    <td>xs:string</td>
-    <td>required</td>
-  </tr>
-  <tr>
-    <td>start</td>
-    <td>The alias start address of the memory region in the address map.</td>
-    <td>xs:string</td>
-    <td>optional</td>
-  </tr>
-  <tr>
-    <td>Pname</td>
-    <td>The processor that has access to this memory region. If omitted all processors of the system have access to that region.</td>
-    <td>xs:string</td>
-    <td>optional</td>
-  </tr>
-  <tr>
-    <td>access</td>
-    <td>\ref access "Access" permissions for this memory alternative mapping.</td>
-    <td>\ref access "AccessType"</td>
-    <td>optional</td>
-  </tr>
-  <tr>
-    <td>security</td>
-    <td>\ref security "Security" attributes for this alternative mapping.</td>
-    <td>\ref security "SecurityType"</td>
-    <td>optional</td>
-  </tr>
-  <tr>
-    <td>privilege</td>
-    <td>\ref privilege "Privilege level" for this alternative mapping.</td>
-    <td>\ref privilege "PrivilegeType"</td>
-    <td>optional</td>
-  </tr>
-  <tr>
-    <td>info</td>
-    <td>Brief description of the memory region.</td>
-    <td>xs:string</td>
-    <td>optional</td>
-  </tr>  
-</table>
-
 
 
 */
@@ -812,10 +737,16 @@ The \ref xml_speripheral is used to define an address mapping for one peripheral
     <td>required</td>
   </tr>
   <tr>
-    <td>start</td>
-    <td>The physical start address of the peripheral in the address map.</td>
+    <td>logical</td>
+    <td>The logical start address of the peripheral in the address map.</td>
     <td>xs:string</td>
     <td>required</td>
+  </tr>
+  <tr>
+    <td>physcial</td>
+    <td>The physical start address of the peripheral in the address map.  If no physical is specified the logical is used as physical start address.</td>
+    <td>xs:string</td>
+    <td>optional</td>
   </tr>
   <tr>
     <td>size</td>
@@ -865,12 +796,6 @@ The \ref xml_speripheral is used to define an address mapping for one peripheral
     <th>Description</th>
     <th>Type</th>
     <th>Occurrence</th>
-  </tr>
-  <tr>
-    <td>\ref xml_smap "map"</td>
-    <td>optional map information that can be processor specific or a alias memory address</td>
-    <td>complexType</td>
-    <td>0..*</td>
   </tr>
   <tr>
     <td>interrupts????</td>
@@ -1092,10 +1017,8 @@ The \ref xml_smemory contains a list of all physical memory region available in 
 <b>Example</b>
 \code
   <blocks>
-    <region name="ROM1">
-      <block name="ROM1Boot" size="0x1000" offset="0"                access="x"  info="boot code">
-      <block name="ROM1App"  size="0x8000" offset="0x2000" fixed="1" access="rx" info="application code">
-    </region>
+    <region parent="ROM1" name="ROM1Boot" size="0x1000" offset="0"                access="x"  info="boot code"/>
+    <region parent="ROM1" name="ROM1App"  size="0x8000" offset="0x2000" fixed="1" access="rx" info="application code"/>
   </blocks>
 \endcode
 &nbsp;
@@ -1117,7 +1040,7 @@ The \ref xml_smemory contains a list of all physical memory region available in 
   </tr>
   <tr>
     <td>\ref xml_aregion "region"</td>
-    <td>Refers a memory region in the related *.rzone file.</td>
+    <td>Defines a new memory sub-region that is related to a parent region in the *.rzone file.</td>
     <td>complexType</td>
     <td>0..1</td>
   </tr>
@@ -1125,7 +1048,7 @@ The \ref xml_smemory contains a list of all physical memory region available in 
 
 \section xml_aregion /azone/blocks/region element
 
-The \ref xml_aregion refers to a region or a region map in the related .rzone file.
+The \ref xml_aregion defines a new memory sub-region that is related to a parent region in the *.rzone file.
 
 <table class="cmtable" summary="Element: region">
   <tr>
@@ -1144,47 +1067,13 @@ The \ref xml_aregion refers to a region or a region map in the related .rzone fi
   </tr>
   <tr>
     <td>name</td>
-    <td>The name of a region or a region map in the related *.rzone file.</td>
+    <td>The name of a new sub-region.</td>
     <td>xs:string</td>
     <td>required</td>
   </tr>
   <tr>
-    <th>Child Elements</th>
-    <th>Description</th>
-    <th>Type</th>
-    <th>Occurrence</th>
-  </tr>
-  <tr>
-    <td>\ref xml_block "block"</td>
-    <td>List of logical memory blocks that are user defined.</td>
-    <td>complexType</td>
-    <td>0..n</td>
-  </tr>
-</table>
-
-
-\section xml_block /azone/blocks/region/block element
-
-The \ref xml_block defines a logical memory block in that region.
-
-<table class="cmtable" summary="Element: block">
-  <tr>
-    <th>Parent Element</th>
-    <th colspan="3">Element Chain</th>
-  </tr>
-  <tr>
-    <td>\ref xml_aregion "region"</td>
-    <td colspan=3>\ref xml_aregion</td>
-  </tr>
-  <tr>
-    <th>Attributes</th>
-    <th>Description</th>
-    <th>Type</th>
-    <th>Use</th>
-  </tr>
-  <tr>
     <td>name</td>
-    <td>The name for this memory block that is used as referenced. Must be unique.</td>
+    <td>The name of the parent region in the related *.rzone file.</td>
     <td>xs:string</td>
     <td>required</td>
   </tr>
@@ -1237,6 +1126,8 @@ The \ref xml_block defines a logical memory block in that region.
     <td>optional</td>
   </tr>  
 </table>
+
+
 
 */
 
@@ -1356,12 +1247,6 @@ The \ref xml_assign defines the resource assignments of that zone.
   <tr>
     <td>region</td>
     <td>Name of a memory region.</td>
-    <td>xs:string</td>
-    <td>optional</td>
-  </tr>
-  <tr>
-    <td>block</td>
-    <td>Name of a memory block.</td>
     <td>xs:string</td>
     <td>optional</td>
   </tr>
