@@ -69,16 +69,16 @@ void arm_lms_q15(
 {
   q15_t *pState = S->pState;                     /* State pointer */
   uint32_t numTaps = S->numTaps;                 /* Number of filter coefficients in the filter */
-  const q15_t *pCoeffs = S->pCoeffs;                   /* Coefficient pointer */
+  const q15_t *pCoeffs = S->pCoeffs;             /* Coefficient pointer */
   q15_t *pStateCurnt;                            /* Points to the current sample of the state */
   q15_t mu = S->mu;                              /* Adaptive factor */
-  const q15_t *px;                                     /* Temporary pointer for state */
+  q15_t *px;                                     /* Temporary pointer for state */
   q15_t *pb;                                     /* Temporary pointer for coefficient buffer */
   uint32_t tapCnt, blkCnt;                       /* Loop counters */
   q63_t acc;                                     /* Accumulator */
   q15_t e = 0;                                   /* error of data sample */
   q15_t alpha;                                   /* Intermediate constant for taps update */
-  q31_t coef;                                    /* Teporary variable for coefficient */
+  q31_t coef;                                    /* Temporary variable for coefficient */
   q31_t acc_l, acc_h;
   int32_t lShift = (15 - (int32_t) S->postShift);       /*  Post shift  */
   int32_t uShift = (32 - lShift);
@@ -105,7 +105,7 @@ void arm_lms_q15(
     px = pState;
 
     /* Initialize coefficient pointer */
-    pb = pCoeffs;
+    pb = (q15_t*) pCoeffs;
 
     /* Set the accumulator to zero */
     acc = 0;
@@ -176,7 +176,7 @@ void arm_lms_q15(
     px = pState++;
 
     /* Initialize coefficient pointer */
-    pb = pCoeffs;
+    pb = (q15_t*) pCoeffs;
 
     /* Loop unrolling.  Process 4 taps at a time. */
     tapCnt = numTaps >> 2U;

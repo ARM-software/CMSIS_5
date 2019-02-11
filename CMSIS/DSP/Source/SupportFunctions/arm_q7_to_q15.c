@@ -63,7 +63,7 @@ void arm_q7_to_q15(
   q15_t * pDst,
   uint32_t blockSize)
 {
-  q7_t *pIn = pSrc;                              /* Src pointer */
+  const q7_t *pIn = pSrc;                        /* Src pointer */
   uint32_t blkCnt;                               /* loop counter */
 
 #if defined (ARM_MATH_DSP)

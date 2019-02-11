@@ -2120,7 +2120,7 @@ void arm_cfft_q31(
 
   void arm_rfft_q15(
   const arm_rfft_instance_q15 * S,
-  const q15_t * pSrc,
+  q15_t * pSrc,
   q15_t * pDst);
 
   /**
@@ -2145,7 +2145,7 @@ void arm_cfft_q31(
 
   void arm_rfft_q31(
   const arm_rfft_instance_q31 * S,
-  const q31_t * pSrc,
+  q31_t * pSrc,
   q31_t * pDst);
 
   /**
@@ -2172,7 +2172,7 @@ void arm_cfft_q31(
 
   void arm_rfft_f32(
   const arm_rfft_instance_f32 * S,
-  const float32_t * pSrc,
+  float32_t * pSrc,
   float32_t * pDst);
 
   /**

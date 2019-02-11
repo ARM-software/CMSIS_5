@@ -189,7 +189,7 @@ void arm_lms_norm_q31(
     px = pState;
 
     /* Initialize coeff pointer */
-    pb = (pCoeffs);
+    pb = (q31_t*) (pCoeffs);
 
     /* Loop unrolling.  Process 4 taps at a time. */
     tapCnt = numTaps >> 2;

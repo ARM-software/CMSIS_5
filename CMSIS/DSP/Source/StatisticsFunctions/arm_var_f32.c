@@ -69,7 +69,7 @@ void arm_var_f32(
 {
     float32_t fMean, fValue;
     uint32_t blkCnt;            /* loop counter */
-    float32_t * pInput = pSrc;
+    const float32_t *pInput = pSrc;
     float32_t sum = 0.0f;
     float32_t fSum = 0.0f;
     #if defined(ARM_MATH_DSP)

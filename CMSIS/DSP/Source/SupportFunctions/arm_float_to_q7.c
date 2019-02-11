@@ -65,7 +65,7 @@ void arm_float_to_q7(
   q7_t * pDst,
   uint32_t blockSize)
 {
-  float32_t *pIn = pSrc;                         /* Src pointer */
+  const float32_t *pIn = pSrc;                   /* Src pointer */
   uint32_t blkCnt;                               /* loop counter */
 
 #ifdef ARM_MATH_ROUNDING

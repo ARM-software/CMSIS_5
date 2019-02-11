@@ -32,20 +32,20 @@
 void arm_radix4_butterfly_inverse_q31(
 q31_t * pSrc,
 uint32_t fftLen,
-q31_t * pCoef,
+const q31_t * pCoef,
 uint32_t twidCoefModifier);
 
 void arm_radix4_butterfly_q31(
 q31_t * pSrc,
 uint32_t fftLen,
-q31_t * pCoef,
+const q31_t * pCoef,
 uint32_t twidCoefModifier);
 
 void arm_bitreversal_q31(
 q31_t * pSrc,
 uint32_t fftLen,
 uint16_t bitRevFactor,
-uint16_t * pBitRevTab);
+const uint16_t * pBitRevTab);
 
 /**
  * @ingroup groupTransforms
@@ -148,7 +148,7 @@ void arm_cfft_radix4_q31(
 void arm_radix4_butterfly_q31(
   q31_t * pSrc,
   uint32_t fftLen,
-  q31_t * pCoef,
+  const q31_t * pCoef,
   uint32_t twidCoefModifier)
 {
   uint32_t n1, n2, ia1, ia2, ia3, i0, i1, i2, i3, j, k;
@@ -553,7 +553,7 @@ void arm_radix4_butterfly_q31(
 void arm_radix4_butterfly_inverse_q31(
   q31_t * pSrc,
   uint32_t fftLen,
-  q31_t * pCoef,
+  const q31_t * pCoef,
   uint32_t twidCoefModifier)
 {
   uint32_t n1, n2, ia1, ia2, ia3, i0, i1, i2, i3, j, k;

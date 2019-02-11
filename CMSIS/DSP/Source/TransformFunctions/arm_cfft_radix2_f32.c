@@ -45,7 +45,7 @@ extern void arm_bitreversal_f32(
     float32_t * pSrc,
     uint16_t fftSize,
     uint16_t bitRevFactor,
-    uint16_t * pBitRevTab);
+    const uint16_t * pBitRevTab);
 
 /**
 * @ingroup groupTransforms
