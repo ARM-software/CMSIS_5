@@ -96,7 +96,7 @@ arm_status arm_conv_partial_f32(
   /* Run the below code for Cortex-M4 and Cortex-M3 */
 
   const float32_t *pIn1 = pSrcA;                 /* inputA pointer */
-  const const float32_t *pIn2 = pSrcB;                 /* inputB pointer */
+  const float32_t *pIn2 = pSrcB;                 /* inputB pointer */
   float32_t *pOut = pDst;                        /* output pointer */
   const float32_t *px;                           /* Intermediate inputA pointer */
   const float32_t *py;                           /* Intermediate inputB pointer */
