@@ -75,7 +75,7 @@ void arm_fir_decimate_fast_q15(
   const q15_t *pCoeffs = S->pCoeffs;             /* Coefficient pointer */
   q15_t *pStateCurnt;                            /* Points to the current sample of the state */
   q15_t *px;                                     /* Temporary pointer for state buffer */
-  const const q15_t *pb;                               /* Temporary pointer coefficient buffer */
+  const q15_t *pb;                               /* Temporary pointer coefficient buffer */
   q31_t x0, x1, c0, c1;                          /* Temporary variables to hold state and coefficient values */
   q31_t sum0;                                    /* Accumulators */
   q31_t acc0, acc1;
