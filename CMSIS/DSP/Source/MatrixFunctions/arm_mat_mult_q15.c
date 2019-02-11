@@ -359,12 +359,12 @@ arm_status arm_mat_mult_q15(
 
   /* Run the below code for Cortex-M0 */
 
-  const q15_t *pIn1 = pSrcA->pData;                    /* input data matrix pointer A */
-  const q15_t *pIn2 = pSrcB->pData;                    /* input data matrix pointer B */
+  const q15_t *pIn1 = pSrcA->pData;              /* input data matrix pointer A */
+  const q15_t *pIn2 = pSrcB->pData;              /* input data matrix pointer B */
   q15_t *pInA = pSrcA->pData;                    /* input data matrix pointer A of Q15 type */
   q15_t *pInB = pSrcB->pData;                    /* input data matrix pointer B of Q15 type */
   q15_t *pOut = pDst->pData;                     /* output data matrix pointer */
-  const q15_t *px;                                     /* Temporary output data matrix pointer */
+  q15_t *px;                                     /* Temporary output data matrix pointer */
   uint16_t numColsB = pSrcB->numCols;            /* number of columns of input matrix B */
   uint16_t numColsA = pSrcA->numCols;            /* number of columns of input matrix A */
   uint16_t numRowsA = pSrcA->numRows;            /* number of rows of input matrix A    */

@@ -476,7 +476,7 @@ void arm_fir_interpolate_f32(
   float32_t *pState = S->pState;                 /* State pointer */
   const float32_t *pCoeffs = S->pCoeffs;               /* Coefficient pointer */
   float32_t *pStateCurnt;                        /* Points to the current sample of the state */
-  float32_t *ptr1, *ptr2;                        /* Temporary pointers for state and coefficient buffers */
+  const float32_t *ptr1, *ptr2;                  /* Temporary pointers for state and coefficient buffers */
 
 
   float32_t sum;                                 /* Accumulator */

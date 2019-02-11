@@ -267,7 +267,7 @@ void arm_lms_q31(
     px = pState;
 
     /* Initialize pCoeffs pointer */
-    pb = pCoeffs;
+    pb = (q31_t *) pCoeffs;
 
     /* Set the accumulator to zero */
     acc = 0;
@@ -309,7 +309,7 @@ void arm_lms_q31(
     px = pState++;
 
     /* Initialize pCoeffs pointer */
-    pb = pCoeffs;
+    pb = (q31_t *) pCoeffs;
 
     /* Loop over numTaps number of values */
     tapCnt = numTaps;

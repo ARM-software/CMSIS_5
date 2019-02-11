@@ -431,7 +431,7 @@ void arm_fir_interpolate_q15(
       ptr1 = pState;
 
       /* Initialize coefficient pointer */
-      ptr2 = pCoeffs + (i - 1U);
+      ptr2 = (q15_t*) pCoeffs + (i - 1U);
 
       /* Loop over the polyPhase length */
       tapCnt = (uint32_t) phaseLen;

@@ -359,7 +359,7 @@ void arm_lms_norm_f32(
     px = pState;
 
     /* Initialize pCoeffs pointer */
-    pb = pCoeffs;
+    pb = (float32_t*) pCoeffs;
 
     /* Read the sample from input buffer */
     in = *pSrc++;
@@ -399,7 +399,7 @@ void arm_lms_norm_f32(
     px = pState;
 
     /* Initialize pCcoeffs pointer */
-    pb = pCoeffs;
+    pb = (float32_t*) pCoeffs;
 
     /* Loop over numTaps number of values */
     tapCnt = numTaps;

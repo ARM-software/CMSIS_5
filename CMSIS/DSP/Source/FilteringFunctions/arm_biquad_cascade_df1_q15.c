@@ -301,16 +301,16 @@ void arm_biquad_cascade_df1_q15(
 
   /* Run the below code for Cortex-M0 */
 
-  q15_t *pIn = pSrc;                             /*  Source pointer                               */
-  q15_t *pOut = pDst;                            /*  Destination pointer                          */
-  q15_t b0, b1, b2, a1, a2;                      /*  Filter coefficients           */
-  q15_t Xn1, Xn2, Yn1, Yn2;                      /*  Filter state variables        */
-  q15_t Xn;                                      /*  temporary input               */
-  q63_t acc;                                     /*  Accumulator                                  */
-  int32_t shift = (15 - (int32_t) S->postShift); /*  Post shift                                   */
-  q15_t *pState = S->pState;                     /*  State pointer                                */
-  const q15_t *pCoeffs = S->pCoeffs;                   /*  Coefficient pointer                          */
-  uint32_t sample, stage = (uint32_t) S->numStages;     /*  Stage loop counter                           */
+  const q15_t *pIn = pSrc;                           /*  Source pointer          */
+  q15_t *pOut = pDst;                                /*  Destination pointer     */
+  q15_t b0, b1, b2, a1, a2;                          /*  Filter coefficients     */
+  q15_t Xn1, Xn2, Yn1, Yn2;                          /*  Filter state variables  */
+  q15_t Xn;                                          /*  temporary input         */
+  q63_t acc;                                         /*  Accumulator             */
+  int32_t shift = (15 - (int32_t) S->postShift);     /*  Post shift              */
+  q15_t *pState = S->pState;                         /*  State pointer           */
+  const q15_t *pCoeffs = S->pCoeffs;                 /*  Coefficient pointer     */
+  uint32_t sample, stage = (uint32_t) S->numStages;  /*  Stage loop counter      */
 
   do
   {

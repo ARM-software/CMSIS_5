@@ -262,9 +262,9 @@ void arm_fir_lattice_q31(
   uint32_t blockSize)
 {
   q31_t *pState;                                 /* State pointer */
-  const q31_t *pCoeffs = S->pCoeffs;                   /* Coefficient pointer */
-  const q31_t *px;                                     /* temporary state pointer */
-  q31_t *pk;                                     /* temporary coefficient pointer */
+  const q31_t *pCoeffs = S->pCoeffs;             /* Coefficient pointer */
+  q31_t *px;                               /* temporary state pointer */
+  const q31_t *pk;                               /* temporary coefficient pointer */
   q31_t fcurr, fnext, gcurr, gnext;              /* temporary variables */
   uint32_t numStages = S->numStages;             /* Length of the filter */
   uint32_t blkCnt, stageCnt;                     /* temporary variables for counts */

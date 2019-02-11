@@ -428,7 +428,7 @@ void arm_fir_interpolate_q31(
       ptr1 = pState;
 
       /* Initialize coefficient pointer */
-      ptr2 = pCoeffs + (i - 1U);
+      ptr2 = (q31_t*) pCoeffs + (i - 1U);
 
       tapCnt = phaseLen;
 
