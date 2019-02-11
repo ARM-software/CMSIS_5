@@ -66,14 +66,14 @@
 
 void arm_lms_norm_q15(
   arm_lms_norm_instance_q15 * S,
-  q15_t * pSrc,
+  const q15_t * pSrc,
   q15_t * pRef,
   q15_t * pOut,
   q15_t * pErr,
   uint32_t blockSize)
 {
   q15_t *pState = S->pState;                     /* State pointer */
-  q15_t *pCoeffs = S->pCoeffs;                   /* Coefficient pointer */
+  const q15_t *pCoeffs = S->pCoeffs;                   /* Coefficient pointer */
   q15_t *pStateCurnt;                            /* Points to the current sample of the state */
   q15_t *px, *pb;                                /* Temporary pointers for state and coefficient buffers */
   q15_t mu = S->mu;                              /* Adaptive factor */
@@ -116,7 +116,7 @@ void arm_lms_norm_q15(
     px = pState;
 
     /* Initialize coeff pointer */
-    pb = (pCoeffs);
+    pb = (q15_t*) (pCoeffs);
 
     /* Read the sample from input buffer */
     in = *pSrc++;
@@ -202,7 +202,7 @@ void arm_lms_norm_q15(
     px = pState;
 
     /* Initialize coeff pointer */
-    pb = (pCoeffs);
+    pb = (q15_t*) (pCoeffs);
 
     /* Loop unrolling.  Process 4 taps at a time. */
     tapCnt = numTaps >> 2;

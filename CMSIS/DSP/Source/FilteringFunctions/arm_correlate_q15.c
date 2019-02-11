@@ -65,9 +65,9 @@
  */
 
 void arm_correlate_q15(
-  q15_t * pSrcA,
+  const q15_t * pSrcA,
   uint32_t srcALen,
-  q15_t * pSrcB,
+  const q15_t * pSrcB,
   uint32_t srcBLen,
   q15_t * pDst)
 {
@@ -76,13 +76,13 @@ void arm_correlate_q15(
 
   /* Run the below code for Cortex-M4 and Cortex-M3 */
 
-  q15_t *pIn1;                                   /* inputA pointer               */
-  q15_t *pIn2;                                   /* inputB pointer               */
+  const q15_t *pIn1;                                   /* inputA pointer               */
+  const q15_t *pIn2;                                   /* inputB pointer               */
   q15_t *pOut = pDst;                            /* output pointer               */
   q63_t sum, acc0, acc1, acc2, acc3;             /* Accumulators                  */
-  q15_t *px;                                     /* Intermediate inputA pointer  */
-  q15_t *py;                                     /* Intermediate inputB pointer  */
-  q15_t *pSrc1;                                  /* Intermediate pointers        */
+  const q15_t *px;                                     /* Intermediate inputA pointer  */
+  const q15_t *py;                                     /* Intermediate inputB pointer  */
+  const q15_t *pSrc1;                                  /* Intermediate pointers        */
   q31_t x0, x1, x2, x3, c0;                      /* temporary variables for holding input and coefficient values */
   uint32_t j, k = 0U, count, blkCnt, outBlockSize, blockSize1, blockSize2, blockSize3;  /* loop counter                 */
   int32_t inc = 1;                               /* Destination address modifier */
@@ -619,8 +619,8 @@ void arm_correlate_q15(
 
 /* Run the below code for Cortex-M0 */
 
-  q15_t *pIn1 = pSrcA;                           /* inputA pointer               */
-  q15_t *pIn2 = pSrcB + (srcBLen - 1U);          /* inputB pointer               */
+  const q15_t *pIn1 = pSrcA;                           /* inputA pointer               */
+  const q15_t *pIn2 = pSrcB + (srcBLen - 1U);          /* inputB pointer               */
   q63_t sum;                                     /* Accumulators                  */
   uint32_t i = 0U, j;                            /* loop counters */
   uint32_t inv = 0U;                             /* Reverse order flag */

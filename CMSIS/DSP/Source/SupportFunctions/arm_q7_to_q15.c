@@ -59,7 +59,7 @@
 
 
 void arm_q7_to_q15(
-  q7_t * pSrc,
+  const q7_t * pSrc,
   q15_t * pDst,
   uint32_t blockSize)
 {

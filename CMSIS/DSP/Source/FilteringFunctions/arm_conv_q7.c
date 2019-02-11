@@ -62,9 +62,9 @@
  */
 
 void arm_conv_q7(
-  q7_t * pSrcA,
+  const q7_t * pSrcA,
   uint32_t srcALen,
-  q7_t * pSrcB,
+  const q7_t * pSrcB,
   uint32_t srcBLen,
   q7_t * pDst)
 {
@@ -74,12 +74,12 @@ void arm_conv_q7(
 
   /* Run the below code for Cortex-M4 and Cortex-M3 */
 
-  q7_t *pIn1;                                    /* inputA pointer */
-  q7_t *pIn2;                                    /* inputB pointer */
+  const q7_t *pIn1;                                    /* inputA pointer */
+  const q7_t *pIn2;                                    /* inputB pointer */
   q7_t *pOut = pDst;                             /* output pointer */
-  q7_t *px;                                      /* Intermediate inputA pointer */
-  q7_t *py;                                      /* Intermediate inputB pointer */
-  q7_t *pSrc1, *pSrc2;                           /* Intermediate pointers */
+  const q7_t *px;                                      /* Intermediate inputA pointer */
+  const q7_t *py;                                      /* Intermediate inputB pointer */
+  const q7_t *pSrc1, *pSrc2;                           /* Intermediate pointers */
   q7_t x0, x1, x2, x3, c0, c1;                   /* Temporary variables to hold state and coefficient values */
   q31_t sum, acc0, acc1, acc2, acc3;             /* Accumulator */
   q31_t input1, input2;                          /* Temporary input variables */
@@ -643,8 +643,8 @@ void arm_conv_q7(
 
   /* Run the below code for Cortex-M0 */
 
-  q7_t *pIn1 = pSrcA;                            /* input pointer */
-  q7_t *pIn2 = pSrcB;                            /* coefficient pointer */
+  const q7_t *pIn1 = pSrcA;                            /* input pointer */
+  const q7_t *pIn2 = pSrcB;                            /* coefficient pointer */
   q31_t sum;                                     /* Accumulator */
   uint32_t i, j;                                 /* loop counter */
 

@@ -102,9 +102,9 @@
  */
 
 void arm_correlate_f32(
-  float32_t * pSrcA,
+  const float32_t * pSrcA,
   uint32_t srcALen,
-  float32_t * pSrcB,
+  const float32_t * pSrcB,
   uint32_t srcBLen,
   float32_t * pDst)
 {
@@ -114,12 +114,12 @@ void arm_correlate_f32(
 
   /* Run the below code for Cortex-M4 and Cortex-M3 */
 
-  float32_t *pIn1;                               /* inputA pointer */
-  float32_t *pIn2;                               /* inputB pointer */
+  const float32_t *pIn1;                               /* inputA pointer */
+  const float32_t *pIn2;                               /* inputB pointer */
   float32_t *pOut = pDst;                        /* output pointer */
-  float32_t *px;                                 /* Intermediate inputA pointer */
-  float32_t *py;                                 /* Intermediate inputB pointer */
-  float32_t *pSrc1;                              /* Intermediate pointers */
+  const float32_t *px;                                 /* Intermediate inputA pointer */
+  const float32_t *py;                                 /* Intermediate inputB pointer */
+  const float32_t *pSrc1;                              /* Intermediate pointers */
   float32_t sum, acc0, acc1, acc2, acc3;         /* Accumulators */
   float32_t x0, x1, x2, x3, c0;                  /* temporary variables for holding input and coefficient values */
   uint32_t j, k = 0U, count, blkCnt, outBlockSize, blockSize1, blockSize2, blockSize3;  /* loop counters */
@@ -639,8 +639,8 @@ void arm_correlate_f32(
 
   /* Run the below code for Cortex-M0 */
 
-  float32_t *pIn1 = pSrcA;                       /* inputA pointer */
-  float32_t *pIn2 = pSrcB + (srcBLen - 1U);      /* inputB pointer */
+  const float32_t *pIn1 = pSrcA;                       /* inputA pointer */
+  const float32_t *pIn2 = pSrcB + (srcBLen - 1U);      /* inputB pointer */
   float32_t sum;                                 /* Accumulator */
   uint32_t i = 0U, j;                            /* loop counters */
   uint32_t inv = 0U;                             /* Reverse order flag */

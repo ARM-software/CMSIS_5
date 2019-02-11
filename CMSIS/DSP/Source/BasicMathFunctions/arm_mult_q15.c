@@ -53,8 +53,8 @@
  */
 
 void arm_mult_q15(
-  q15_t * pSrcA,
-  q15_t * pSrcB,
+  const q15_t * pSrcA,
+  const q15_t * pSrcB,
   q15_t * pDst,
   uint32_t blockSize)
 {

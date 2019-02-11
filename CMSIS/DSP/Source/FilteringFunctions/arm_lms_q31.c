@@ -64,7 +64,7 @@
 
 void arm_lms_q31(
   const arm_lms_instance_q31 * S,
-  q31_t * pSrc,
+  const q31_t * pSrc,
   q31_t * pRef,
   q31_t * pOut,
   q31_t * pErr,
@@ -72,7 +72,7 @@ void arm_lms_q31(
 {
   q31_t *pState = S->pState;                     /* State pointer */
   uint32_t numTaps = S->numTaps;                 /* Number of filter coefficients in the filter */
-  q31_t *pCoeffs = S->pCoeffs;                   /* Coefficient pointer */
+  const q31_t *pCoeffs = S->pCoeffs;             /* Coefficient pointer */
   q31_t *pStateCurnt;                            /* Points to the current sample of the state */
   q31_t mu = S->mu;                              /* Adaptive factor */
   q31_t *px;                                     /* Temporary pointer for state */

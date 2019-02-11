@@ -52,8 +52,8 @@
  */
 
 void arm_sub_q31(
-  q31_t * pSrcA,
-  q31_t * pSrcB,
+  const q31_t * pSrcA,
+  const q31_t * pSrcB,
   q31_t * pDst,
   uint32_t blockSize)
 {

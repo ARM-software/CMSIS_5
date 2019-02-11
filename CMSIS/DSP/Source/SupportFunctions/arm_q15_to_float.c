@@ -63,7 +63,7 @@
 
 
 void arm_q15_to_float(
-  q15_t * pSrc,
+  const q15_t * pSrc,
   float32_t * pDst,
   uint32_t blockSize)
 {

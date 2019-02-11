@@ -52,7 +52,7 @@
  */
 
 void arm_offset_q7(
-  q7_t * pSrc,
+  const q7_t * pSrc,
   q7_t offset,
   q7_t * pDst,
   uint32_t blockSize)

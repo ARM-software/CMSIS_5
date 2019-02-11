@@ -59,16 +59,16 @@
 
 void arm_fir_decimate_q31(
   const arm_fir_decimate_instance_q31 * S,
-  q31_t * pSrc,
+  const q31_t * pSrc,
   q31_t * pDst,
   uint32_t blockSize)
 {
   q31_t *pState = S->pState;                     /* State pointer */
-  q31_t *pCoeffs = S->pCoeffs;                   /* Coefficient pointer */
+  const q31_t *pCoeffs = S->pCoeffs;                   /* Coefficient pointer */
   q31_t *pStateCurnt;                            /* Points to the current sample of the state */
   q31_t x0, c0;                                  /* Temporary variables to hold state and coefficient values */
-  q31_t *px;                                     /* Temporary pointers for state buffer */
-  q31_t *pb;                                     /* Temporary pointers for coefficient buffer */
+  const q31_t *px;                                     /* Temporary pointers for state buffer */
+  const q31_t *pb;                                     /* Temporary pointers for coefficient buffer */
   q63_t sum0;                                    /* Accumulator */
   uint32_t numTaps = S->numTaps;                 /* Number of taps */
   uint32_t i, tapCnt, blkCnt, outBlockSize = blockSize / S->M;  /* Loop counters */

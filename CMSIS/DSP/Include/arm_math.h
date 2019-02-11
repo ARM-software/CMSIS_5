@@ -976,7 +976,7 @@ extern "C"
   {
     uint16_t numTaps;        /**< number of filter coefficients in the filter. */
     q7_t *pState;            /**< points to the state variable array. The array is of length numTaps+blockSize-1. */
-    q7_t *pCoeffs;           /**< points to the coefficient array. The array is of length numTaps.*/
+    const q7_t *pCoeffs;           /**< points to the coefficient array. The array is of length numTaps.*/
   } arm_fir_instance_q7;
 
   /**
@@ -986,7 +986,7 @@ extern "C"
   {
     uint16_t numTaps;         /**< number of filter coefficients in the filter. */
     q15_t *pState;            /**< points to the state variable array. The array is of length numTaps+blockSize-1. */
-    q15_t *pCoeffs;           /**< points to the coefficient array. The array is of length numTaps.*/
+    const q15_t *pCoeffs;           /**< points to the coefficient array. The array is of length numTaps.*/
   } arm_fir_instance_q15;
 
   /**
@@ -996,7 +996,7 @@ extern "C"
   {
     uint16_t numTaps;         /**< number of filter coefficients in the filter. */
     q31_t *pState;            /**< points to the state variable array. The array is of length numTaps+blockSize-1. */
-    q31_t *pCoeffs;           /**< points to the coefficient array. The array is of length numTaps. */
+    const q31_t *pCoeffs;           /**< points to the coefficient array. The array is of length numTaps. */
   } arm_fir_instance_q31;
 
   /**
@@ -1006,7 +1006,7 @@ extern "C"
   {
     uint16_t numTaps;     /**< number of filter coefficients in the filter. */
     float32_t *pState;    /**< points to the state variable array. The array is of length numTaps+blockSize-1. */
-    float32_t *pCoeffs;   /**< points to the coefficient array. The array is of length numTaps. */
+    const float32_t *pCoeffs;   /**< points to the coefficient array. The array is of length numTaps. */
   } arm_fir_instance_f32;
 
 
@@ -1035,7 +1035,7 @@ extern "C"
   void arm_fir_init_q7(
   arm_fir_instance_q7 * S,
   uint16_t numTaps,
-  q7_t * pCoeffs,
+  const q7_t * pCoeffs,
   q7_t * pState,
   uint32_t blockSize);
 
@@ -1081,7 +1081,7 @@ extern "C"
   arm_status arm_fir_init_q15(
   arm_fir_instance_q15 * S,
   uint16_t numTaps,
-  q15_t * pCoeffs,
+  const q15_t * pCoeffs,
   q15_t * pState,
   uint32_t blockSize);
 
@@ -1125,7 +1125,7 @@ extern "C"
   void arm_fir_init_q31(
   arm_fir_instance_q31 * S,
   uint16_t numTaps,
-  q31_t * pCoeffs,
+  const q31_t * pCoeffs,
   q31_t * pState,
   uint32_t blockSize);
 
@@ -1155,7 +1155,7 @@ extern "C"
   void arm_fir_init_f32(
   arm_fir_instance_f32 * S,
   uint16_t numTaps,
-  float32_t * pCoeffs,
+  const float32_t * pCoeffs,
   float32_t * pState,
   uint32_t blockSize);
 
@@ -1167,7 +1167,7 @@ extern "C"
   {
     int8_t numStages;        /**< number of 2nd order stages in the filter.  Overall order is 2*numStages. */
     q15_t *pState;           /**< Points to the array of state coefficients.  The array is of length 4*numStages. */
-    q15_t *pCoeffs;          /**< Points to the array of coefficients.  The array is of length 5*numStages. */
+    const q15_t *pCoeffs;          /**< Points to the array of coefficients.  The array is of length 5*numStages. */
     int8_t postShift;        /**< Additional shift, in bits, applied to each output sample. */
   } arm_biquad_casd_df1_inst_q15;
 
@@ -1178,7 +1178,7 @@ extern "C"
   {
     uint32_t numStages;      /**< number of 2nd order stages in the filter.  Overall order is 2*numStages. */
     q31_t *pState;           /**< Points to the array of state coefficients.  The array is of length 4*numStages. */
-    q31_t *pCoeffs;          /**< Points to the array of coefficients.  The array is of length 5*numStages. */
+    const q31_t *pCoeffs;          /**< Points to the array of coefficients.  The array is of length 5*numStages. */
     uint8_t postShift;       /**< Additional shift, in bits, applied to each output sample. */
   } arm_biquad_casd_df1_inst_q31;
 
@@ -1189,7 +1189,7 @@ extern "C"
   {
     uint32_t numStages;      /**< number of 2nd order stages in the filter.  Overall order is 2*numStages. */
     float32_t *pState;       /**< Points to the array of state coefficients.  The array is of length 4*numStages. */
-    float32_t *pCoeffs;      /**< Points to the array of coefficients.  The array is of length 5*numStages. */
+    const float32_t *pCoeffs;      /**< Points to the array of coefficients.  The array is of length 5*numStages. */
   } arm_biquad_casd_df1_inst_f32;
 
 
@@ -1218,7 +1218,7 @@ extern "C"
   void arm_biquad_cascade_df1_init_q15(
   arm_biquad_casd_df1_inst_q15 * S,
   uint8_t numStages,
-  q15_t * pCoeffs,
+  const q15_t * pCoeffs,
   q15_t * pState,
   int8_t postShift);
 
@@ -1276,7 +1276,7 @@ extern "C"
   void arm_biquad_cascade_df1_init_q31(
   arm_biquad_casd_df1_inst_q31 * S,
   uint8_t numStages,
-  q31_t * pCoeffs,
+  const q31_t * pCoeffs,
   q31_t * pState,
   int8_t postShift);
 
@@ -1305,7 +1305,7 @@ extern "C"
   void arm_biquad_cascade_df1_init_f32(
   arm_biquad_casd_df1_inst_f32 * S,
   uint8_t numStages,
-  float32_t * pCoeffs,
+  const float32_t * pCoeffs,
   float32_t * pState);
 
 
@@ -1912,7 +1912,7 @@ extern "C"
 /* Deprecated */
   void arm_cfft_radix2_q15(
   const arm_cfft_radix2_instance_q15 * S,
-  const q15_t * pSrc);
+  q15_t * pSrc);
 
 
   /**
@@ -1939,7 +1939,7 @@ extern "C"
 /* Deprecated */
   void arm_cfft_radix4_q15(
   const arm_cfft_radix4_instance_q15 * S,
-  const q15_t * pSrc);
+  q15_t * pSrc);
 
   /**
    * @brief Instance structure for the Radix-2 Q31 CFFT/CIFFT function.
@@ -1965,7 +1965,7 @@ extern "C"
 /* Deprecated */
   void arm_cfft_radix2_q31(
   const arm_cfft_radix2_instance_q31 * S,
-  const q31_t * pSrc);
+  q31_t * pSrc);
 
   /**
    * @brief Instance structure for the Q31 CFFT/CIFFT function.
@@ -1984,7 +1984,7 @@ extern "C"
 /* Deprecated */
   void arm_cfft_radix4_q31(
   const arm_cfft_radix4_instance_q31 * S,
-  const q31_t * pSrc);
+  q31_t * pSrc);
 
 /* Deprecated */
   arm_status arm_cfft_radix4_init_q31(
@@ -2018,7 +2018,7 @@ extern "C"
 /* Deprecated */
   void arm_cfft_radix2_f32(
   const arm_cfft_radix2_instance_f32 * S,
-  const float32_t * pSrc);
+  float32_t * pSrc);
 
   /**
    * @brief Instance structure for the floating-point CFFT/CIFFT function.
@@ -2045,7 +2045,7 @@ extern "C"
 /* Deprecated */
   void arm_cfft_radix4_f32(
   const arm_cfft_radix4_instance_f32 * S,
-  const float32_t * pSrc);
+  float32_t * pSrc);
 
   /**
    * @brief Instance structure for the fixed-point CFFT/CIFFT function.
@@ -3233,7 +3233,7 @@ void arm_rfft_fast_f32(
   {
     uint8_t M;                  /**< decimation factor. */
     uint16_t numTaps;           /**< number of coefficients in the filter. */
-    q15_t *pCoeffs;             /**< points to the coefficient array. The array is of length numTaps.*/
+    const q15_t *pCoeffs;             /**< points to the coefficient array. The array is of length numTaps.*/
     q15_t *pState;              /**< points to the state variable array. The array is of length numTaps+blockSize-1. */
   } arm_fir_decimate_instance_q15;
 
@@ -3244,7 +3244,7 @@ void arm_rfft_fast_f32(
   {
     uint8_t M;                  /**< decimation factor. */
     uint16_t numTaps;           /**< number of coefficients in the filter. */
-    q31_t *pCoeffs;             /**< points to the coefficient array. The array is of length numTaps.*/
+    const q31_t *pCoeffs;             /**< points to the coefficient array. The array is of length numTaps.*/
     q31_t *pState;              /**< points to the state variable array. The array is of length numTaps+blockSize-1. */
   } arm_fir_decimate_instance_q31;
 
@@ -3255,7 +3255,7 @@ void arm_rfft_fast_f32(
   {
     uint8_t M;                  /**< decimation factor. */
     uint16_t numTaps;           /**< number of coefficients in the filter. */
-    float32_t *pCoeffs;         /**< points to the coefficient array. The array is of length numTaps.*/
+    const float32_t *pCoeffs;         /**< points to the coefficient array. The array is of length numTaps.*/
     float32_t *pState;          /**< points to the state variable array. The array is of length numTaps+blockSize-1. */
   } arm_fir_decimate_instance_f32;
 
@@ -3289,7 +3289,7 @@ void arm_rfft_fast_f32(
   arm_fir_decimate_instance_f32 * S,
   uint16_t numTaps,
   uint8_t M,
-  float32_t * pCoeffs,
+  const float32_t * pCoeffs,
   float32_t * pState,
   uint32_t blockSize);
 
@@ -3337,7 +3337,7 @@ void arm_rfft_fast_f32(
   arm_fir_decimate_instance_q15 * S,
   uint16_t numTaps,
   uint8_t M,
-  q15_t * pCoeffs,
+  const q15_t * pCoeffs,
   q15_t * pState,
   uint32_t blockSize);
 
@@ -3384,7 +3384,7 @@ void arm_rfft_fast_f32(
   arm_fir_decimate_instance_q31 * S,
   uint16_t numTaps,
   uint8_t M,
-  q31_t * pCoeffs,
+  const q31_t * pCoeffs,
   q31_t * pState,
   uint32_t blockSize);
 
@@ -3396,7 +3396,7 @@ void arm_rfft_fast_f32(
   {
     uint8_t L;                      /**< upsample factor. */
     uint16_t phaseLength;           /**< length of each polyphase filter component. */
-    q15_t *pCoeffs;                 /**< points to the coefficient array. The array is of length L*phaseLength. */
+    const q15_t *pCoeffs;                 /**< points to the coefficient array. The array is of length L*phaseLength. */
     q15_t *pState;                  /**< points to the state variable array. The array is of length blockSize+phaseLength-1. */
   } arm_fir_interpolate_instance_q15;
 
@@ -3407,7 +3407,7 @@ void arm_rfft_fast_f32(
   {
     uint8_t L;                      /**< upsample factor. */
     uint16_t phaseLength;           /**< length of each polyphase filter component. */
-    q31_t *pCoeffs;                 /**< points to the coefficient array. The array is of length L*phaseLength. */
+    const q31_t *pCoeffs;                 /**< points to the coefficient array. The array is of length L*phaseLength. */
     q31_t *pState;                  /**< points to the state variable array. The array is of length blockSize+phaseLength-1. */
   } arm_fir_interpolate_instance_q31;
 
@@ -3418,7 +3418,7 @@ void arm_rfft_fast_f32(
   {
     uint8_t L;                     /**< upsample factor. */
     uint16_t phaseLength;          /**< length of each polyphase filter component. */
-    float32_t *pCoeffs;            /**< points to the coefficient array. The array is of length L*phaseLength. */
+    const float32_t *pCoeffs;      /**< points to the coefficient array. The array is of length L*phaseLength. */
     float32_t *pState;             /**< points to the state variable array. The array is of length phaseLength+numTaps-1. */
   } arm_fir_interpolate_instance_f32;
 
@@ -3452,7 +3452,7 @@ void arm_rfft_fast_f32(
   arm_fir_interpolate_instance_q15 * S,
   uint8_t L,
   uint16_t numTaps,
-  q15_t * pCoeffs,
+  const q15_t * pCoeffs,
   q15_t * pState,
   uint32_t blockSize);
 
@@ -3486,7 +3486,7 @@ void arm_rfft_fast_f32(
   arm_fir_interpolate_instance_q31 * S,
   uint8_t L,
   uint16_t numTaps,
-  q31_t * pCoeffs,
+  const q31_t * pCoeffs,
   q31_t * pState,
   uint32_t blockSize);
 
@@ -3520,7 +3520,7 @@ void arm_rfft_fast_f32(
   arm_fir_interpolate_instance_f32 * S,
   uint8_t L,
   uint16_t numTaps,
-  float32_t * pCoeffs,
+  const float32_t * pCoeffs,
   float32_t * pState,
   uint32_t blockSize);
 
@@ -3532,7 +3532,7 @@ void arm_rfft_fast_f32(
   {
     uint8_t numStages;       /**< number of 2nd order stages in the filter.  Overall order is 2*numStages. */
     q63_t *pState;           /**< points to the array of state coefficients.  The array is of length 4*numStages. */
-    q31_t *pCoeffs;          /**< points to the array of coefficients.  The array is of length 5*numStages. */
+    const q31_t *pCoeffs;          /**< points to the array of coefficients.  The array is of length 5*numStages. */
     uint8_t postShift;       /**< additional shift, in bits, applied to each output sample. */
   } arm_biquad_cas_df1_32x64_ins_q31;
 
@@ -3560,7 +3560,7 @@ void arm_rfft_fast_f32(
   void arm_biquad_cas_df1_32x64_init_q31(
   arm_biquad_cas_df1_32x64_ins_q31 * S,
   uint8_t numStages,
-  q31_t * pCoeffs,
+  const q31_t * pCoeffs,
   q63_t * pState,
   uint8_t postShift);
 
@@ -3572,7 +3572,7 @@ void arm_rfft_fast_f32(
   {
     uint8_t numStages;         /**< number of 2nd order stages in the filter.  Overall order is 2*numStages. */
     float32_t *pState;         /**< points to the array of state coefficients.  The array is of length 2*numStages. */
-    float32_t *pCoeffs;        /**< points to the array of coefficients.  The array is of length 5*numStages. */
+    const float32_t *pCoeffs;  /**< points to the array of coefficients.  The array is of length 5*numStages. */
   } arm_biquad_cascade_df2T_instance_f32;
 
   /**
@@ -3582,7 +3582,7 @@ void arm_rfft_fast_f32(
   {
     uint8_t numStages;         /**< number of 2nd order stages in the filter.  Overall order is 2*numStages. */
     float32_t *pState;         /**< points to the array of state coefficients.  The array is of length 4*numStages. */
-    float32_t *pCoeffs;        /**< points to the array of coefficients.  The array is of length 5*numStages. */
+    const float32_t *pCoeffs;  /**< points to the array of coefficients.  The array is of length 5*numStages. */
   } arm_biquad_cascade_stereo_df2T_instance_f32;
 
   /**
@@ -3648,7 +3648,7 @@ void arm_rfft_fast_f32(
   void arm_biquad_cascade_df2T_init_f32(
   arm_biquad_cascade_df2T_instance_f32 * S,
   uint8_t numStages,
-  float32_t * pCoeffs,
+  const float32_t * pCoeffs,
   float32_t * pState);
 
 
@@ -3662,7 +3662,7 @@ void arm_rfft_fast_f32(
   void arm_biquad_cascade_stereo_df2T_init_f32(
   arm_biquad_cascade_stereo_df2T_instance_f32 * S,
   uint8_t numStages,
-  float32_t * pCoeffs,
+  const float32_t * pCoeffs,
   float32_t * pState);
 
 
@@ -3687,7 +3687,7 @@ void arm_rfft_fast_f32(
   {
     uint16_t numStages;                  /**< number of filter stages. */
     q15_t *pState;                       /**< points to the state variable array. The array is of length numStages. */
-    q15_t *pCoeffs;                      /**< points to the coefficient array. The array is of length numStages. */
+    const q15_t *pCoeffs;                      /**< points to the coefficient array. The array is of length numStages. */
   } arm_fir_lattice_instance_q15;
 
   /**
@@ -3697,7 +3697,7 @@ void arm_rfft_fast_f32(
   {
     uint16_t numStages;                  /**< number of filter stages. */
     q31_t *pState;                       /**< points to the state variable array. The array is of length numStages. */
-    q31_t *pCoeffs;                      /**< points to the coefficient array. The array is of length numStages. */
+    const q31_t *pCoeffs;                      /**< points to the coefficient array. The array is of length numStages. */
   } arm_fir_lattice_instance_q31;
 
   /**
@@ -3707,7 +3707,7 @@ void arm_rfft_fast_f32(
   {
     uint16_t numStages;                  /**< number of filter stages. */
     float32_t *pState;                   /**< points to the state variable array. The array is of length numStages. */
-    float32_t *pCoeffs;                  /**< points to the coefficient array. The array is of length numStages. */
+    const float32_t *pCoeffs;            /**< points to the coefficient array. The array is of length numStages. */
   } arm_fir_lattice_instance_f32;
 
 
@@ -3721,7 +3721,7 @@ void arm_rfft_fast_f32(
   void arm_fir_lattice_init_q15(
   arm_fir_lattice_instance_q15 * S,
   uint16_t numStages,
-  q15_t * pCoeffs,
+  const q15_t * pCoeffs,
   q15_t * pState);
 
 
@@ -3749,7 +3749,7 @@ void arm_rfft_fast_f32(
   void arm_fir_lattice_init_q31(
   arm_fir_lattice_instance_q31 * S,
   uint16_t numStages,
-  q31_t * pCoeffs,
+  const q31_t * pCoeffs,
   q31_t * pState);
 
 
@@ -3777,7 +3777,7 @@ void arm_rfft_fast_f32(
   void arm_fir_lattice_init_f32(
   arm_fir_lattice_instance_f32 * S,
   uint16_t numStages,
-  float32_t * pCoeffs,
+  const float32_t * pCoeffs,
   float32_t * pState);
 
 
@@ -3932,7 +3932,7 @@ void arm_rfft_fast_f32(
   {
     uint16_t numTaps;    /**< number of coefficients in the filter. */
     float32_t *pState;   /**< points to the state variable array. The array is of length numTaps+blockSize-1. */
-    float32_t *pCoeffs;  /**< points to the coefficient array. The array is of length numTaps. */
+    const float32_t *pCoeffs;  /**< points to the coefficient array. The array is of length numTaps. */
     float32_t mu;        /**< step size that controls filter coefficient updates. */
   } arm_lms_instance_f32;
 
@@ -3967,7 +3967,7 @@ void arm_rfft_fast_f32(
   void arm_lms_init_f32(
   arm_lms_instance_f32 * S,
   uint16_t numTaps,
-  float32_t * pCoeffs,
+  const float32_t * pCoeffs,
   float32_t * pState,
   float32_t mu,
   uint32_t blockSize);
@@ -3980,7 +3980,7 @@ void arm_rfft_fast_f32(
   {
     uint16_t numTaps;    /**< number of coefficients in the filter. */
     q15_t *pState;       /**< points to the state variable array. The array is of length numTaps+blockSize-1. */
-    q15_t *pCoeffs;      /**< points to the coefficient array. The array is of length numTaps. */
+    const q15_t *pCoeffs;      /**< points to the coefficient array. The array is of length numTaps. */
     q15_t mu;            /**< step size that controls filter coefficient updates. */
     uint32_t postShift;  /**< bit shift applied to coefficients. */
   } arm_lms_instance_q15;
@@ -3999,7 +3999,7 @@ void arm_rfft_fast_f32(
   void arm_lms_init_q15(
   arm_lms_instance_q15 * S,
   uint16_t numTaps,
-  q15_t * pCoeffs,
+  const q15_t * pCoeffs,
   q15_t * pState,
   q15_t mu,
   uint32_t blockSize,
@@ -4031,7 +4031,7 @@ void arm_rfft_fast_f32(
   {
     uint16_t numTaps;    /**< number of coefficients in the filter. */
     q31_t *pState;       /**< points to the state variable array. The array is of length numTaps+blockSize-1. */
-    q31_t *pCoeffs;      /**< points to the coefficient array. The array is of length numTaps. */
+    const q31_t *pCoeffs;      /**< points to the coefficient array. The array is of length numTaps. */
     q31_t mu;            /**< step size that controls filter coefficient updates. */
     uint32_t postShift;  /**< bit shift applied to coefficients. */
   } arm_lms_instance_q31;
@@ -4068,7 +4068,7 @@ void arm_rfft_fast_f32(
   void arm_lms_init_q31(
   arm_lms_instance_q31 * S,
   uint16_t numTaps,
-  q31_t * pCoeffs,
+  const q31_t * pCoeffs,
   q31_t * pState,
   q31_t mu,
   uint32_t blockSize,
@@ -4082,7 +4082,7 @@ void arm_rfft_fast_f32(
   {
     uint16_t numTaps;     /**< number of coefficients in the filter. */
     float32_t *pState;    /**< points to the state variable array. The array is of length numTaps+blockSize-1. */
-    float32_t *pCoeffs;   /**< points to the coefficient array. The array is of length numTaps. */
+    const float32_t *pCoeffs;   /**< points to the coefficient array. The array is of length numTaps. */
     float32_t mu;         /**< step size that control filter coefficient updates. */
     float32_t energy;     /**< saves previous frame energy. */
     float32_t x0;         /**< saves previous input sample. */
@@ -4119,7 +4119,7 @@ void arm_rfft_fast_f32(
   void arm_lms_norm_init_f32(
   arm_lms_norm_instance_f32 * S,
   uint16_t numTaps,
-  float32_t * pCoeffs,
+  const float32_t * pCoeffs,
   float32_t * pState,
   float32_t mu,
   uint32_t blockSize);
@@ -4132,7 +4132,7 @@ void arm_rfft_fast_f32(
   {
     uint16_t numTaps;     /**< number of coefficients in the filter. */
     q31_t *pState;        /**< points to the state variable array. The array is of length numTaps+blockSize-1. */
-    q31_t *pCoeffs;       /**< points to the coefficient array. The array is of length numTaps. */
+    const q31_t *pCoeffs;       /**< points to the coefficient array. The array is of length numTaps. */
     q31_t mu;             /**< step size that controls filter coefficient updates. */
     uint8_t postShift;    /**< bit shift applied to coefficients. */
     q31_t *recipTable;    /**< points to the reciprocal initial value table. */
@@ -4172,7 +4172,7 @@ void arm_rfft_fast_f32(
   void arm_lms_norm_init_q31(
   arm_lms_norm_instance_q31 * S,
   uint16_t numTaps,
-  q31_t * pCoeffs,
+  const q31_t * pCoeffs,
   q31_t * pState,
   q31_t mu,
   uint32_t blockSize,
@@ -4186,7 +4186,7 @@ void arm_rfft_fast_f32(
   {
     uint16_t numTaps;     /**< Number of coefficients in the filter. */
     q15_t *pState;        /**< points to the state variable array. The array is of length numTaps+blockSize-1. */
-    q15_t *pCoeffs;       /**< points to the coefficient array. The array is of length numTaps. */
+    const q15_t *pCoeffs;       /**< points to the coefficient array. The array is of length numTaps. */
     q15_t mu;             /**< step size that controls filter coefficient updates. */
     uint8_t postShift;    /**< bit shift applied to coefficients. */
     q15_t *recipTable;    /**< Points to the reciprocal initial value table. */
@@ -4226,7 +4226,7 @@ void arm_rfft_fast_f32(
   void arm_lms_norm_init_q15(
   arm_lms_norm_instance_q15 * S,
   uint16_t numTaps,
-  q15_t * pCoeffs,
+  const q15_t * pCoeffs,
   q15_t * pState,
   q15_t mu,
   uint32_t blockSize,
@@ -4395,7 +4395,7 @@ void arm_rfft_fast_f32(
     uint16_t numTaps;             /**< number of coefficients in the filter. */
     uint16_t stateIndex;          /**< state buffer index.  Points to the oldest sample in the state buffer. */
     float32_t *pState;            /**< points to the state buffer array. The array is of length maxDelay+blockSize-1. */
-    float32_t *pCoeffs;           /**< points to the coefficient array. The array is of length numTaps.*/
+    const float32_t *pCoeffs;           /**< points to the coefficient array. The array is of length numTaps.*/
     uint16_t maxDelay;            /**< maximum offset specified by the pTapDelay array. */
     int32_t *pTapDelay;           /**< points to the array of delay values.  The array is of length numTaps. */
   } arm_fir_sparse_instance_f32;
@@ -4408,7 +4408,7 @@ void arm_rfft_fast_f32(
     uint16_t numTaps;             /**< number of coefficients in the filter. */
     uint16_t stateIndex;          /**< state buffer index.  Points to the oldest sample in the state buffer. */
     q31_t *pState;                /**< points to the state buffer array. The array is of length maxDelay+blockSize-1. */
-    q31_t *pCoeffs;               /**< points to the coefficient array. The array is of length numTaps.*/
+    const q31_t *pCoeffs;               /**< points to the coefficient array. The array is of length numTaps.*/
     uint16_t maxDelay;            /**< maximum offset specified by the pTapDelay array. */
     int32_t *pTapDelay;           /**< points to the array of delay values.  The array is of length numTaps. */
   } arm_fir_sparse_instance_q31;
@@ -4421,7 +4421,7 @@ void arm_rfft_fast_f32(
     uint16_t numTaps;             /**< number of coefficients in the filter. */
     uint16_t stateIndex;          /**< state buffer index.  Points to the oldest sample in the state buffer. */
     q15_t *pState;                /**< points to the state buffer array. The array is of length maxDelay+blockSize-1. */
-    q15_t *pCoeffs;               /**< points to the coefficient array. The array is of length numTaps.*/
+    const q15_t *pCoeffs;               /**< points to the coefficient array. The array is of length numTaps.*/
     uint16_t maxDelay;            /**< maximum offset specified by the pTapDelay array. */
     int32_t *pTapDelay;           /**< points to the array of delay values.  The array is of length numTaps. */
   } arm_fir_sparse_instance_q15;
@@ -4434,7 +4434,7 @@ void arm_rfft_fast_f32(
     uint16_t numTaps;             /**< number of coefficients in the filter. */
     uint16_t stateIndex;          /**< state buffer index.  Points to the oldest sample in the state buffer. */
     q7_t *pState;                 /**< points to the state buffer array. The array is of length maxDelay+blockSize-1. */
-    q7_t *pCoeffs;                /**< points to the coefficient array. The array is of length numTaps.*/
+    const q7_t *pCoeffs;                /**< points to the coefficient array. The array is of length numTaps.*/
     uint16_t maxDelay;            /**< maximum offset specified by the pTapDelay array. */
     int32_t *pTapDelay;           /**< points to the array of delay values.  The array is of length numTaps. */
   } arm_fir_sparse_instance_q7;
@@ -4469,7 +4469,7 @@ void arm_rfft_fast_f32(
   void arm_fir_sparse_init_f32(
   arm_fir_sparse_instance_f32 * S,
   uint16_t numTaps,
-  float32_t * pCoeffs,
+  const float32_t * pCoeffs,
   float32_t * pState,
   int32_t * pTapDelay,
   uint16_t maxDelay,
@@ -4505,7 +4505,7 @@ void arm_rfft_fast_f32(
   void arm_fir_sparse_init_q31(
   arm_fir_sparse_instance_q31 * S,
   uint16_t numTaps,
-  q31_t * pCoeffs,
+  const q31_t * pCoeffs,
   q31_t * pState,
   int32_t * pTapDelay,
   uint16_t maxDelay,
@@ -4543,7 +4543,7 @@ void arm_rfft_fast_f32(
   void arm_fir_sparse_init_q15(
   arm_fir_sparse_instance_q15 * S,
   uint16_t numTaps,
-  q15_t * pCoeffs,
+  const q15_t * pCoeffs,
   q15_t * pState,
   int32_t * pTapDelay,
   uint16_t maxDelay,
@@ -4581,7 +4581,7 @@ void arm_rfft_fast_f32(
   void arm_fir_sparse_init_q7(
   arm_fir_sparse_instance_q7 * S,
   uint16_t numTaps,
-  q7_t * pCoeffs,
+  const q7_t * pCoeffs,
   q7_t * pState,
   int32_t * pTapDelay,
   uint16_t maxDelay,

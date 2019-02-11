@@ -2,7 +2,7 @@
 
 void ref_biquad_cascade_df2T_f32(
 	const arm_biquad_cascade_df2T_instance_f32 * S,
-	float32_t * pSrc,
+	const float32_t * pSrc,
 	float32_t * pDst,
 	uint32_t blockSize)
 {
@@ -72,7 +72,7 @@ void ref_biquad_cascade_df2T_f32(
 
 void ref_biquad_cascade_stereo_df2T_f32(
 	const arm_biquad_cascade_stereo_df2T_instance_f32 * S,
-	float32_t * pSrc,
+	const float32_t * pSrc,
 	float32_t * pDst,
 	uint32_t blockSize)
 {
@@ -220,7 +220,7 @@ void ref_biquad_cascade_df2T_f64(
 
 void ref_biquad_cascade_df1_f32(
   const arm_biquad_casd_df1_inst_f32 * S,
-  float32_t * pSrc,
+  const float32_t * pSrc,
   float32_t * pDst,
   uint32_t blockSize)
 {
@@ -309,7 +309,7 @@ void ref_biquad_cas_df1_32x64_q31(
   q31_t *pIn = pSrc;                             /*  input pointer initialization  			*/
   q31_t *pOut = pDst;                            /*  output pointer initialization 			*/
   q63_t *pState = S->pState;                     /*  state pointer initialization  			*/
-  q31_t *pCoeffs = S->pCoeffs;                   /*  coeff pointer initialization  			*/
+  const q31_t *pCoeffs = S->pCoeffs;                   /*  coeff pointer initialization  			*/
   q63_t acc;                                     /*  accumulator                   			*/
   q31_t Xn1, Xn2;                                /*  Input Filter state variables  			*/
   q63_t Yn1, Yn2;                                /*  Output Filter state variables 			*/
@@ -401,7 +401,7 @@ void ref_biquad_cascade_df1_q31(
   q31_t *pIn = pSrc;                             /*  input pointer initialization  */
   q31_t *pOut = pDst;                            /*  output pointer initialization */
   q31_t *pState = S->pState;                     /*  pState pointer initialization */
-  q31_t *pCoeffs = S->pCoeffs;                   /*  coeff pointer initialization  */
+  const q31_t *pCoeffs = S->pCoeffs;                   /*  coeff pointer initialization  */
   q31_t Xn1, Xn2, Yn1, Yn2;                      /*  Filter state variables        */
   q31_t b0, b1, b2, a1, a2;                      /*  Filter coefficients           */
   q31_t Xn;                                      /*  temporary input               */
@@ -496,7 +496,7 @@ void ref_biquad_cascade_df1_fast_q31(
   q31_t *pIn = pSrc;                             /*  input pointer initialization  */
   q31_t *pOut = pDst;                            /*  output pointer initialization */
   q31_t *pState = S->pState;                     /*  pState pointer initialization */
-  q31_t *pCoeffs = S->pCoeffs;                   /*  coeff pointer initialization  */
+  const q31_t *pCoeffs = S->pCoeffs;                   /*  coeff pointer initialization  */
   q31_t Xn;                                      /*  temporary input               */
   int32_t shift = (int32_t) S->postShift + 1;    /*  Shift to be applied to the output */
   uint32_t sample, stage = S->numStages;         /*  loop counters                     */
@@ -576,7 +576,7 @@ void ref_biquad_cascade_df1_fast_q15(
 	q31_t acc;                                     			/*  Accumulator                              */
 	int32_t shift = (15 - (int32_t) S->postShift); 			/*  Post shift                               */
 	q15_t *pState = S->pState;                     			/*  State pointer                            */
-	q15_t *pCoeffs = S->pCoeffs;                   			/*  Coefficient pointer                      */
+	const q15_t *pCoeffs = S->pCoeffs;                   			/*  Coefficient pointer                      */
   uint32_t sample, stage = (uint32_t) S->numStages;   /*  Stage loop counter                          */
 
   do
@@ -651,7 +651,7 @@ void ref_biquad_cascade_df1_q15(
 	q63_t acc;                                     			/*  Accumulator                              */
 	int32_t shift = (15 - (int32_t) S->postShift); 			/*  Post shift                               */
 	q15_t *pState = S->pState;                     			/*  State pointer                            */
-	q15_t *pCoeffs = S->pCoeffs;                   			/*  Coefficient pointer                      */
+	const q15_t *pCoeffs = S->pCoeffs;                   			/*  Coefficient pointer                      */
   uint32_t sample, stage = (uint32_t) S->numStages;   /*  Stage loop counter                          */
 
   do

@@ -65,7 +65,7 @@ arm_status arm_fir_interpolate_init_f32(
   arm_fir_interpolate_instance_f32 * S,
   uint8_t L,
   uint16_t numTaps,
-  float32_t * pCoeffs,
+  const float32_t * pCoeffs,
   float32_t * pState,
   uint32_t blockSize)
 {

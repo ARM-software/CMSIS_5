@@ -48,7 +48,7 @@
  */
 
 void arm_max_q31(
-  q31_t * pSrc,
+  const q31_t * pSrc,
   uint32_t blockSize,
   q31_t * pResult,
   uint32_t * pIndex)

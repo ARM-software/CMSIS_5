@@ -64,9 +64,9 @@
  */
 
 void arm_correlate_q31(
-  q31_t * pSrcA,
+  const q31_t * pSrcA,
   uint32_t srcALen,
-  q31_t * pSrcB,
+  const q31_t * pSrcB,
   uint32_t srcBLen,
   q31_t * pDst)
 {
@@ -75,12 +75,12 @@ void arm_correlate_q31(
 
   /* Run the below code for Cortex-M4 and Cortex-M3 */
 
-  q31_t *pIn1;                                   /* inputA pointer               */
-  q31_t *pIn2;                                   /* inputB pointer               */
+  const q31_t *pIn1;                                   /* inputA pointer               */
+  const q31_t *pIn2;                                   /* inputB pointer               */
   q31_t *pOut = pDst;                            /* output pointer               */
-  q31_t *px;                                     /* Intermediate inputA pointer  */
-  q31_t *py;                                     /* Intermediate inputB pointer  */
-  q31_t *pSrc1;                                  /* Intermediate pointers        */
+  const q31_t *px;                                     /* Intermediate inputA pointer  */
+  const q31_t *py;                                     /* Intermediate inputB pointer  */
+  const q31_t *pSrc1;                                  /* Intermediate pointers        */
   q63_t sum, acc0, acc1, acc2;                   /* Accumulators                  */
   q31_t x0, x1, x2, c0;                          /* temporary variables for holding input and coefficient values */
   uint32_t j, k = 0U, count, blkCnt, outBlockSize, blockSize1, blockSize2, blockSize3;  /* loop counter                 */
@@ -565,8 +565,8 @@ void arm_correlate_q31(
 
   /* Run the below code for Cortex-M0 */
 
-  q31_t *pIn1 = pSrcA;                           /* inputA pointer               */
-  q31_t *pIn2 = pSrcB + (srcBLen - 1U);          /* inputB pointer               */
+  const q31_t *pIn1 = pSrcA;                           /* inputA pointer               */
+  const q31_t *pIn2 = pSrcB + (srcBLen - 1U);          /* inputB pointer               */
   q63_t sum;                                     /* Accumulators                  */
   uint32_t i = 0U, j;                            /* loop counters */
   uint32_t inv = 0U;                             /* Reverse order flag */

@@ -64,7 +64,7 @@ arm_status arm_fir_decimate_init_q31(
   arm_fir_decimate_instance_q31 * S,
   uint16_t numTaps,
   uint8_t M,
-  q31_t * pCoeffs,
+  const q31_t * pCoeffs,
   q31_t * pState,
   uint32_t blockSize)
 {

@@ -56,7 +56,7 @@
 
 void arm_fir_q7(
   const arm_fir_instance_q7 * S,
-  q7_t * pSrc,
+  const q7_t * pSrc,
   q7_t * pDst,
   uint32_t blockSize)
 {
@@ -66,12 +66,12 @@ void arm_fir_q7(
   /* Run the below code for Cortex-M4 and Cortex-M3 */
 
   q7_t *pState = S->pState;                      /* State pointer */
-  q7_t *pCoeffs = S->pCoeffs;                    /* Coefficient pointer */
+  const q7_t *pCoeffs = S->pCoeffs;                    /* Coefficient pointer */
   q7_t *pStateCurnt;                             /* Points to the current sample of the state */
   q7_t x0, x1, x2, x3;                           /* Temporary variables to hold state */
   q7_t c0;                                       /* Temporary variable to hold coefficient value */
-  q7_t *px;                                      /* Temporary pointer for state */
-  q7_t *pb;                                      /* Temporary pointer for coefficient buffer */
+  const q7_t *px;                                      /* Temporary pointer for state */
+  const q7_t *pb;                                      /* Temporary pointer for coefficient buffer */
   q31_t acc0, acc1, acc2, acc3;                  /* Accumulators */
   uint32_t numTaps = S->numTaps;                 /* Number of filter coefficients in the filter */
   uint32_t i, tapCnt, blkCnt;                    /* Loop counters */
@@ -309,8 +309,8 @@ void arm_fir_q7(
   uint32_t numTaps = S->numTaps;                 /* Number of taps in the filter */
   uint32_t i, blkCnt;                            /* Loop counters */
   q7_t *pState = S->pState;                      /* State pointer */
-  q7_t *pCoeffs = S->pCoeffs;                    /* Coefficient pointer */
-  q7_t *px, *pb;                                 /* Temporary pointers to state and coeff */
+  const q7_t *pCoeffs = S->pCoeffs;                    /* Coefficient pointer */
+  const q7_t *px, *pb;                                 /* Temporary pointers to state and coeff */
   q31_t acc = 0;                                 /* Accumlator */
   q7_t *pStateCurnt;                             /* Points to the current sample of the state */
 

@@ -52,7 +52,7 @@
  */
 
 void arm_offset_q15(
-  q15_t * pSrc,
+  const q15_t * pSrc,
   q15_t offset,
   q15_t * pDst,
   uint32_t blockSize)

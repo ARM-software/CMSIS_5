@@ -121,7 +121,7 @@
 
 void arm_iir_lattice_f32(
   const arm_iir_lattice_instance_f32 * S,
-  float32_t * pSrc,
+  const float32_t * pSrc,
   float32_t * pDst,
   uint32_t blockSize)
 {
@@ -335,14 +335,14 @@ void arm_iir_lattice_f32(
 
 void arm_iir_lattice_f32(
   const arm_iir_lattice_instance_f32 * S,
-  float32_t * pSrc,
+  const float32_t * pSrc,
   float32_t * pDst,
   uint32_t blockSize)
 {
   float32_t fcurr, fnext = 0, gcurr, gnext;      /* Temporary variables for lattice stages */
   float32_t acc;                                 /* Accumlator */
   uint32_t blkCnt, tapCnt;                       /* temporary variables for counts */
-  float32_t *px1, *px2, *pk, *pv;                /* temporary pointers for state and coef */
+  const float32_t *px1, *px2, *pk, *pv;                /* temporary pointers for state and coef */
   uint32_t numStages = S->numStages;             /* number of stages */
   float32_t *pState;                             /* State pointer */
   float32_t *pStateCurnt;                        /* State current pointer */

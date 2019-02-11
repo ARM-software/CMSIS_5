@@ -174,14 +174,14 @@
 
 void arm_biquad_cas_df1_32x64_q31(
   const arm_biquad_cas_df1_32x64_ins_q31 * S,
-  q31_t * pSrc,
+  const q31_t * pSrc,
   q31_t * pDst,
   uint32_t blockSize)
 {
-  q31_t *pIn = pSrc;                             /*  input pointer initialization  */
+  const q31_t *pIn = pSrc;                       /*  input pointer initialization  */
   q31_t *pOut = pDst;                            /*  output pointer initialization */
   q63_t *pState = S->pState;                     /*  state pointer initialization  */
-  q31_t *pCoeffs = S->pCoeffs;                   /*  coeff pointer initialization  */
+  const q31_t *pCoeffs = S->pCoeffs;             /*  coeff pointer initialization  */
   q63_t acc;                                     /*  accumulator                   */
   q31_t Xn1, Xn2;                                /*  Input Filter state variables        */
   q63_t Yn1, Yn2;                                /*  Output Filter state variables        */

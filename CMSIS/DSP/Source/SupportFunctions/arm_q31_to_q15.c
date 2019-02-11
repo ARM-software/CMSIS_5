@@ -56,7 +56,7 @@
 
 
 void arm_q31_to_q15(
-  q31_t * pSrc,
+  const q31_t * pSrc,
   q15_t * pDst,
   uint32_t blockSize)
 {

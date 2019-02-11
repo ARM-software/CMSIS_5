@@ -52,7 +52,7 @@
  */
 
 void arm_abs_q31(
-  q31_t * pSrc,
+  const q31_t * pSrc,
   q31_t * pDst,
   uint32_t blockSize)
 {

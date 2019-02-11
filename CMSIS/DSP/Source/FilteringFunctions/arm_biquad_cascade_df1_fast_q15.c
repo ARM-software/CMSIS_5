@@ -61,11 +61,11 @@
 
 void arm_biquad_cascade_df1_fast_q15(
   const arm_biquad_casd_df1_inst_q15 * S,
-  q15_t * pSrc,
+  const q15_t * pSrc,
   q15_t * pDst,
   uint32_t blockSize)
 {
-  q15_t *pIn = pSrc;                             /*  Source pointer                               */
+  const q15_t *pIn = pSrc;                       /*  Source pointer                               */
   q15_t *pOut = pDst;                            /*  Destination pointer                          */
   q31_t in;                                      /*  Temporary variable to hold input value       */
   q31_t out;                                     /*  Temporary variable to hold output value      */
@@ -75,7 +75,7 @@ void arm_biquad_cascade_df1_fast_q15(
   q31_t acc;                                     /*  Accumulator                                  */
   int32_t shift = (int32_t) (15 - S->postShift); /*  Post shift                                   */
   q15_t *pState = S->pState;                     /*  State pointer                                */
-  q15_t *pCoeffs = S->pCoeffs;                   /*  Coefficient pointer                          */
+  const q15_t *pCoeffs = S->pCoeffs;                   /*  Coefficient pointer                          */
   uint32_t sample, stage = S->numStages;         /*  Stage loop counter                           */
 
 
