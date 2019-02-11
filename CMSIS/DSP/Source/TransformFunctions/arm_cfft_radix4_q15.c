@@ -46,7 +46,7 @@ void arm_bitreversal_q15(
   q15_t * pSrc,
   uint32_t fftLen,
   uint16_t bitRevFactor,
-  const int16_t * pBitRevTab);
+  const uint16_t * pBitRevTab);
 
 /**
  * @ingroup groupTransforms
