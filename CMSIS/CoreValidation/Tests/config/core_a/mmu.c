@@ -235,54 +235,55 @@ void MMU_CreateTranslationTable(void)
      *  Define MMU flat-map regions and attributes
      *
      */
-
+    static uint32_t *const ttb = (uint32_t*)__TTB_BASE;
+     
     //Create 4GB of normal entries
-    MMU_TTSection (__TTB_BASE, 0, 4096, Sect_Normal);
+    MMU_TTSection (ttb, 0, 4096, Sect_Normal);
 
     //Define Image
-    MMU_TTSection (__TTB_BASE, __ROM_BASE, __ROM_SIZE/0x00100000, Sect_Normal_Cod);
-    MMU_TTSection (__TTB_BASE, __RAM_BASE, __RAM_SIZE/0x00100000, Sect_Normal_RW);
+    MMU_TTSection (ttb, __ROM_BASE, __ROM_SIZE/0x00100000, Sect_Normal_Cod);
+    MMU_TTSection (ttb, __RAM_BASE, __RAM_SIZE/0x00100000, Sect_Normal_RW);
 
     //--------------------- PERIPHERALS -------------------
-    MMU_TTSection (__TTB_BASE, VE_MP_FLASH_BASE0    , 64, Sect_Device_RO);
-    MMU_TTSection (__TTB_BASE, VE_MP_FLASH_BASE1    , 64, Sect_Device_RO);
-    MMU_TTSection (__TTB_BASE, VE_MP_SRAM_BASE      , 64, Sect_Device_RW);
-    MMU_TTSection (__TTB_BASE, VE_MP_VRAM_BASE      , 32, Sect_Device_RW);
-    MMU_TTSection (__TTB_BASE, VE_MP_ETHERNET_BASE  , 16, Sect_Device_RW);
-    MMU_TTSection (__TTB_BASE, VE_MP_USB_BASE       , 16, Sect_Device_RW);
+    MMU_TTSection (ttb, VE_MP_FLASH_BASE0    , 64, Sect_Device_RO);
+    MMU_TTSection (ttb, VE_MP_FLASH_BASE1    , 64, Sect_Device_RO);
+    MMU_TTSection (ttb, VE_MP_SRAM_BASE      , 64, Sect_Device_RW);
+    MMU_TTSection (ttb, VE_MP_VRAM_BASE      , 32, Sect_Device_RW);
+    MMU_TTSection (ttb, VE_MP_ETHERNET_BASE  , 16, Sect_Device_RW);
+    MMU_TTSection (ttb, VE_MP_USB_BASE       , 16, Sect_Device_RW);
 
     // Create (16 * 64k)=1MB faulting entries to cover peripheral range 0x1C000000-0x1C00FFFF
-    MMU_TTPage64k(__TTB_BASE, PERIPHERAL_A_FAULT      , 16, Page_L1_64k, (uint32_t *)PERIPHERAL_A_TABLE_L2_BASE_64k, DESCRIPTOR_FAULT);
+    MMU_TTPage64k(ttb, PERIPHERAL_A_FAULT      , 16, Page_L1_64k, (uint32_t *)PERIPHERAL_A_TABLE_L2_BASE_64k, DESCRIPTOR_FAULT);
     // Define peripheral range 0x1C000000-0x1C00FFFF
-    MMU_TTPage64k(__TTB_BASE, VE_MP_DAP_BASE       ,  1, Page_L1_64k, (uint32_t *)PERIPHERAL_A_TABLE_L2_BASE_64k, Page_64k_Device_RW);
-    MMU_TTPage64k(__TTB_BASE, VE_MP_SYSTEM_REG_BASE,  1, Page_L1_64k, (uint32_t *)PERIPHERAL_A_TABLE_L2_BASE_64k, Page_64k_Device_RW);
-    MMU_TTPage64k(__TTB_BASE, VE_MP_SERIAL_BASE    ,  1, Page_L1_64k, (uint32_t *)PERIPHERAL_A_TABLE_L2_BASE_64k, Page_64k_Device_RW);
-    MMU_TTPage64k(__TTB_BASE, VE_MP_AACI_BASE      ,  1, Page_L1_64k, (uint32_t *)PERIPHERAL_A_TABLE_L2_BASE_64k, Page_64k_Device_RW);
-    MMU_TTPage64k(__TTB_BASE, VE_MP_MMCI_BASE      ,  1, Page_L1_64k, (uint32_t *)PERIPHERAL_A_TABLE_L2_BASE_64k, Page_64k_Device_RW);
-    MMU_TTPage64k(__TTB_BASE, VE_MP_KMI0_BASE      ,  2, Page_L1_64k, (uint32_t *)PERIPHERAL_A_TABLE_L2_BASE_64k, Page_64k_Device_RW);
-    MMU_TTPage64k(__TTB_BASE, VE_MP_UART_BASE      ,  4, Page_L1_64k, (uint32_t *)PERIPHERAL_A_TABLE_L2_BASE_64k, Page_64k_Device_RW);
-    MMU_TTPage64k(__TTB_BASE, VE_MP_WDT_BASE       ,  1, Page_L1_64k, (uint32_t *)PERIPHERAL_A_TABLE_L2_BASE_64k, Page_64k_Device_RW);
+    MMU_TTPage64k(ttb, VE_MP_DAP_BASE       ,  1, Page_L1_64k, (uint32_t *)PERIPHERAL_A_TABLE_L2_BASE_64k, Page_64k_Device_RW);
+    MMU_TTPage64k(ttb, VE_MP_SYSTEM_REG_BASE,  1, Page_L1_64k, (uint32_t *)PERIPHERAL_A_TABLE_L2_BASE_64k, Page_64k_Device_RW);
+    MMU_TTPage64k(ttb, VE_MP_SERIAL_BASE    ,  1, Page_L1_64k, (uint32_t *)PERIPHERAL_A_TABLE_L2_BASE_64k, Page_64k_Device_RW);
+    MMU_TTPage64k(ttb, VE_MP_AACI_BASE      ,  1, Page_L1_64k, (uint32_t *)PERIPHERAL_A_TABLE_L2_BASE_64k, Page_64k_Device_RW);
+    MMU_TTPage64k(ttb, VE_MP_MMCI_BASE      ,  1, Page_L1_64k, (uint32_t *)PERIPHERAL_A_TABLE_L2_BASE_64k, Page_64k_Device_RW);
+    MMU_TTPage64k(ttb, VE_MP_KMI0_BASE      ,  2, Page_L1_64k, (uint32_t *)PERIPHERAL_A_TABLE_L2_BASE_64k, Page_64k_Device_RW);
+    MMU_TTPage64k(ttb, VE_MP_UART_BASE      ,  4, Page_L1_64k, (uint32_t *)PERIPHERAL_A_TABLE_L2_BASE_64k, Page_64k_Device_RW);
+    MMU_TTPage64k(ttb, VE_MP_WDT_BASE       ,  1, Page_L1_64k, (uint32_t *)PERIPHERAL_A_TABLE_L2_BASE_64k, Page_64k_Device_RW);
 
     // Create (16 * 64k)=1MB faulting entries to cover peripheral range 0x1C100000-0x1C10FFFF
-    MMU_TTPage64k(__TTB_BASE, PERIPHERAL_B_FAULT      , 16, Page_L1_64k, (uint32_t *)PERIPHERAL_B_TABLE_L2_BASE_64k, DESCRIPTOR_FAULT);
+    MMU_TTPage64k(ttb, PERIPHERAL_B_FAULT      , 16, Page_L1_64k, (uint32_t *)PERIPHERAL_B_TABLE_L2_BASE_64k, DESCRIPTOR_FAULT);
     // Define peripheral range 0x1C100000-0x1C10FFFF
-    MMU_TTPage64k(__TTB_BASE, VE_MP_TIMER_BASE     ,  2, Page_L1_64k, (uint32_t *)PERIPHERAL_B_TABLE_L2_BASE_64k, Page_64k_Device_RW);
-    MMU_TTPage64k(__TTB_BASE, VE_MP_DVI_BASE       ,  1, Page_L1_64k, (uint32_t *)PERIPHERAL_B_TABLE_L2_BASE_64k, Page_64k_Device_RW);
-    MMU_TTPage64k(__TTB_BASE, VE_MP_RTC_BASE       ,  1, Page_L1_64k, (uint32_t *)PERIPHERAL_B_TABLE_L2_BASE_64k, Page_64k_Device_RW);
-    MMU_TTPage64k(__TTB_BASE, VE_MP_UART4_BASE     ,  1, Page_L1_64k, (uint32_t *)PERIPHERAL_B_TABLE_L2_BASE_64k, Page_64k_Device_RW);
-    MMU_TTPage64k(__TTB_BASE, VE_MP_CLCD_BASE      ,  1, Page_L1_64k, (uint32_t *)PERIPHERAL_B_TABLE_L2_BASE_64k, Page_64k_Device_RW);
+    MMU_TTPage64k(ttb, VE_MP_TIMER_BASE     ,  2, Page_L1_64k, (uint32_t *)PERIPHERAL_B_TABLE_L2_BASE_64k, Page_64k_Device_RW);
+    MMU_TTPage64k(ttb, VE_MP_DVI_BASE       ,  1, Page_L1_64k, (uint32_t *)PERIPHERAL_B_TABLE_L2_BASE_64k, Page_64k_Device_RW);
+    MMU_TTPage64k(ttb, VE_MP_RTC_BASE       ,  1, Page_L1_64k, (uint32_t *)PERIPHERAL_B_TABLE_L2_BASE_64k, Page_64k_Device_RW);
+    MMU_TTPage64k(ttb, VE_MP_UART4_BASE     ,  1, Page_L1_64k, (uint32_t *)PERIPHERAL_B_TABLE_L2_BASE_64k, Page_64k_Device_RW);
+    MMU_TTPage64k(ttb, VE_MP_CLCD_BASE      ,  1, Page_L1_64k, (uint32_t *)PERIPHERAL_B_TABLE_L2_BASE_64k, Page_64k_Device_RW);
 
     // Create (256 * 4k)=1MB faulting entries to cover private address space. Needs to be marked as Device memory
-    MMU_TTPage4k (__TTB_BASE, __get_CBAR()            ,256,  Page_L1_4k, (uint32_t *)PRIVATE_TABLE_L2_BASE_4k, DESCRIPTOR_FAULT);
+    MMU_TTPage4k (ttb, __get_CBAR()            ,256,  Page_L1_4k, (uint32_t *)PRIVATE_TABLE_L2_BASE_4k, DESCRIPTOR_FAULT);
     // Define private address space entry.
-    MMU_TTPage4k (__TTB_BASE, __get_CBAR()            ,  3,  Page_L1_4k, (uint32_t *)PRIVATE_TABLE_L2_BASE_4k, Page_4k_Device_RW);
+    MMU_TTPage4k (ttb, __get_CBAR()            ,  3,  Page_L1_4k, (uint32_t *)PRIVATE_TABLE_L2_BASE_4k, Page_4k_Device_RW);
     // Define L2CC entry.  Uncomment if PL310 is present
-    //    MMU_TTPage4k (__TTB_BASE, VE_A9_MP_PL310_BASE     ,  1,  Page_L1_4k, (uint32_t *)PRIVATE_TABLE_L2_BASE_4k, Page_4k_Device_RW);
+    //    MMU_TTPage4k (ttb, VE_A9_MP_PL310_BASE     ,  1,  Page_L1_4k, (uint32_t *)PRIVATE_TABLE_L2_BASE_4k, Page_4k_Device_RW);
 
     // Create (256 * 4k)=1MB faulting entries to synchronization space (Useful if some non-cacheable DMA agent is present in the SoC)
-    MMU_TTPage4k (__TTB_BASE, F_SYNC_BASE , 256, Page_L1_4k, (uint32_t *)SYNC_FLAGS_TABLE_L2_BASE_4k, DESCRIPTOR_FAULT);
+    MMU_TTPage4k (ttb, F_SYNC_BASE , 256, Page_L1_4k, (uint32_t *)SYNC_FLAGS_TABLE_L2_BASE_4k, DESCRIPTOR_FAULT);
     // Define synchronization space entry.
-    MMU_TTPage4k (__TTB_BASE, FLAG_SYNC   ,   1, Page_L1_4k, (uint32_t *)SYNC_FLAGS_TABLE_L2_BASE_4k, Page_4k_Device_RW);
+    MMU_TTPage4k (ttb, FLAG_SYNC   ,   1, Page_L1_4k, (uint32_t *)SYNC_FLAGS_TABLE_L2_BASE_4k, Page_4k_Device_RW);
 
     /* Set location of level 1 page table
     ; 31:14 - Translation table base addr (31:14-TTBCR.N, TTBCR.N is 0 out of reset)
