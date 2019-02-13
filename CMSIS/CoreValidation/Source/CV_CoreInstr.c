@@ -383,11 +383,11 @@ void TC_CoreInstr_RRX (void) {
      (defined (__ARM_ARCH_8M_MAIN__ ) && (__ARM_ARCH_8M_MAIN__ == 1))    )
 
   volatile uint32_t  value  = 0U;
-           uint32_t  result = 0U;
-           xPSR_Type xPSR;
+  volatile uint32_t  result = 0U;
+  volatile xPSR_Type xPSR;
 
-  xPSR.w = __get_xPSR();
   value = 0x80000002;
+  xPSR.w = __get_xPSR();
   result = __RRX(value);
   ASSERT_TRUE(result == (0x40000001 | (uint32_t)(xPSR.b.C << 31)));
 #endif
