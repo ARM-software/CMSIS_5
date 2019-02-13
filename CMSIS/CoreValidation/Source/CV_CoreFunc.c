@@ -319,8 +319,8 @@ void TC_CoreFunc_IPSR (void) {
 #define ADDS(Rd, Rm, Rn) ((Rd) = (Rm) + (Rn))
 //lint -restore
 #else
-#define SUBS(Rd, Rm, Rn) __ASM("SUBS %0, %1, %2" : "=r"(Rd) : "r"(Rm), "r"(Rn) : "cc")
-#define ADDS(Rd, Rm, Rn) __ASM("ADDS %0, %1, %2" : "=r"(Rd) : "r"(Rm), "r"(Rn) : "cc")
+#define SUBS(Rd, Rm, Rn) __ASM volatile("SUBS %0, %1, %2" : "=r"(Rd) : "r"(Rm), "r"(Rn) : "cc")
+#define ADDS(Rd, Rm, Rn) __ASM volatile("ADDS %0, %1, %2" : "=r"(Rd) : "r"(Rm), "r"(Rn) : "cc")
 #endif
 
 /**
