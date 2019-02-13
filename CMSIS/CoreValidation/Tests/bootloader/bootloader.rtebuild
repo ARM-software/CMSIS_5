@@ -6,7 +6,7 @@ targets:
   armcm:
     extends     : arm
     include:
-      - ../config/core_m
+      - ./config/core_m
       - ../../../Core/Include
     source:
       - ../../../../Device/ARM/${device}/Source/system_${device}.c
