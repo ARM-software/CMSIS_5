@@ -856,11 +856,12 @@
         </calc>
 
         <!-- Check also control values to determine maximum stack usage -->
-        <calc cond="(TCB[i].sp != 0) &amp;&amp; (TCB[i].stack_over == 0) &amp;&amp; (TCB[i].stack_size &lt; 65536)">
-          TCB[i].stack_val  = __CalcMemUsed (TCB[i].stack_mem, TCB[i].stack_size, 0xCCCCCCCC, 0xE25A2EA5);
+        <calc cond="(stack_wmark != 0) &amp;&amp; (TCB[i].sp != 0) &amp;&amp; (TCB[i].stack_over == 0) &amp;&amp; (TCB[i].stack_size &lt; 65536)">
+          TCB[i].stack_val  = __CalcMemUsed (TCB[i].stack_mem, sp - TCB[i].stack_mem, 0xCCCCCCCC, 0xE25A2EA5);
           TCB[i].stack_over =  TCB[i].stack_val >> 31;
-          TCB[i].stack_maxb =  TCB[i].stack_val &amp; 0xFFFFF;
-          TCB[i].stack_maxp = (TCB[i].stack_val >> 20) &amp; 0x1FF;
+          TCB[i].stack_maxb = (TCB[i].stack_mem + TCB[i].stack_size) - sp;
+          TCB[i].stack_maxb += TCB[i].stack_val &amp; 0xFFFFF;
+          TCB[i].stack_maxp = (TCB[i].stack_maxb * 100)/ TCB[i].stack_size;
         </calc>
 
         <!-- Set max usage in case of stack overflow -->
