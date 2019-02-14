@@ -418,7 +418,7 @@
       <member name="flags"                 type="uint32_t" offset="0" info="OS configuration flags"/>
       <member name="tick_freq"             type="uint32_t" offset="4" info="Kernel tick frequency"/>
 
-      <member name="robin_timeout"         type="uint32_t" offset="8"  info="Round Robim timeout tick"/>
+      <member name="robin_timeout"         type="uint32_t" offset="8"  info="Round Robin timeout tick"/>
       <member name="isr_queue_data"        type="uint32_t" offset="12" info="ISR post processing queue (type is void **)"/>
       <member name="isr_queue_max"         type="uint16_t" offset="16" info="Maximum data"/>
       <member name="isr_queue_padding"     type="uint16_t" offset="18" info="Padding bytes"/>
@@ -655,8 +655,8 @@
       </calc>
 
       <!-- Read main OS information and configuration structures -->
-      <readlist name="os_Info"   type="osRtxInfo_t"   symbol="osRtxInfo"   count="1" init="1"/>
-      <readlist name="os_Config" type="osRtxConfig_t" symbol="osRtxConfig" count="1" init="1"/>
+      <read name="os_Info"   type="osRtxInfo_t"   symbol="osRtxInfo"/>
+      <read name="os_Config" type="osRtxConfig_t" symbol="osRtxConfig" const="1"/>
 
       <calc cond="((os_Info.version / 10000000) == 5) &amp;&amp; (os_Info.kernel_state &gt; 0) &amp;&amp; (os_Info.kernel_state &lt; 5)">
         RTX_En = 1;
@@ -679,7 +679,7 @@
       <read name="ISR_FIFO" cond="RTX_En" type="uint32_t" offset="os_Config.isr_queue_data" size="os_Config.isr_queue_max"/>
 
       <!-- Read control block sections info structure -->
-      <readlist name="cb_Sections" cond="__Symbol_exists (&quot;os_cb_sections&quot;)" type="rtx_sections_t" symbol="os_cb_sections" count="1" init="1"/>
+      <read name="cb_Sections" cond="__Symbol_exists (&quot;os_cb_sections&quot;)" type="rtx_sections_t" symbol="os_cb_sections" const="1"/>/>
 
       <!-- Determine section sizes -->
       <calc cond="RTX_En &amp;&amp; __Symbol_exists (&quot;os_cb_sections&quot;)">
