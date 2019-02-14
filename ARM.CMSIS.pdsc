@@ -8,8 +8,12 @@
   <url>http://www.keil.com/pack/</url>
 
   <releases>
-    <release version="5.5.0-dev2">
+    <release version="5.5.0-dev3">
       Active development ...
+      CMSIS-Driver:
+        - Added WiFi Driver API 1.0.0-beta
+    </release>
+    <release version="5.5.0-dev2">
       CMSIS-Core(M):
         - Reworked Stack/Heap configuration for ARM startup files.
         - Added Cortex-M35P device support.
@@ -811,6 +815,12 @@ and 8-bit Java bytecodes in Jazelle state.
       <files>
         <file category="doc" name="CMSIS/Documentation/Driver/html/group__usbh__interface__gr.html" />
         <file category="header" name="CMSIS/Driver/Include/Driver_USBH.h" />
+      </files>
+    </api>
+    <api Cclass="CMSIS Driver" Cgroup="WiFi" Capiversion="1.0.0-beta" exclusive="0">
+      <description>WiFi driver</description>
+      <files>
+        <file category="header" name="Include/Driver_WiFi.h"/>
       </files>
     </api>
   </apis>
