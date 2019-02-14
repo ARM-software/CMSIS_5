@@ -50,7 +50,7 @@
  */
 
 void arm_cmplx_mag_squared_q15(
-  q15_t * pSrc,
+  const q15_t * pSrc,
   q15_t * pDst,
   uint32_t numSamples)
 {

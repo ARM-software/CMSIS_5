@@ -57,7 +57,7 @@
  */
 
 void arm_shift_q7(
-  q7_t * pSrc,
+  const q7_t * pSrc,
   int8_t shiftBits,
   q7_t * pDst,
   uint32_t blockSize)

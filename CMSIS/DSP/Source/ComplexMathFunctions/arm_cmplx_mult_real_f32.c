@@ -71,8 +71,8 @@
  */
 
 void arm_cmplx_mult_real_f32(
-  float32_t * pSrcCmplx,
-  float32_t * pSrcReal,
+  const float32_t * pSrcCmplx,
+  const float32_t * pSrcReal,
   float32_t * pCmplxDst,
   uint32_t numSamples)
 {

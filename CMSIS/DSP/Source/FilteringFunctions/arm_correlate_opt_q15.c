@@ -69,17 +69,17 @@
 
 
 void arm_correlate_opt_q15(
-  q15_t * pSrcA,
+  const q15_t * pSrcA,
   uint32_t srcALen,
-  q15_t * pSrcB,
+  const q15_t * pSrcB,
   uint32_t srcBLen,
   q15_t * pDst,
   q15_t * pScratch)
 {
-  q15_t *pIn1;                                   /* inputA pointer               */
-  q15_t *pIn2;                                   /* inputB pointer               */
+  const q15_t *pIn1;                                   /* inputA pointer               */
+  const q15_t *pIn2;                                   /* inputB pointer               */
   q63_t acc0, acc1, acc2, acc3;                  /* Accumulators                  */
-  q15_t *py;                                     /* Intermediate inputB pointer  */
+  const q15_t *py;                                     /* Intermediate inputB pointer  */
   q31_t x1, x2, x3;                              /* temporary variables for holding input1 and input2 values */
   uint32_t j, blkCnt, outBlockSize;              /* loop counter                 */
   int32_t inc = 1;                               /* output pointer increment     */
@@ -251,10 +251,10 @@ void arm_correlate_opt_q15(
 
   while (blkCnt > 0)
   {
-    /* Initialze temporary scratch pointer as scratch1 */
+    /* Initialize temporary scratch pointer as scratch1 */
     pScr = pScratch;
 
-    /* Clear Accumlators */
+    /* Clear Accumulators */
     acc0 = 0;
     acc1 = 0;
     acc2 = 0;
@@ -410,7 +410,7 @@ void arm_correlate_opt_q15(
     while (tapCnt > 0U)
     {
 
-      /* accumlate the results */
+      /* accumulate the results */
       acc0 += (*pScr++ * *pIn2);
       acc1 += (*pScr++ * *pIn2);
       acc2 += (*pScr++ * *pIn2);
@@ -448,10 +448,10 @@ void arm_correlate_opt_q15(
   /* Calculate correlation for remaining samples of Bigger length sequence */
   while (blkCnt > 0)
   {
-    /* Initialze temporary scratch pointer as scratch1 */
+    /* Initialize temporary scratch pointer as scratch1 */
     pScr = pScratch;
 
-    /* Clear Accumlators */
+    /* Clear Accumulators */
     acc0 = 0;
 
     tapCnt = (srcBLen) >> 1U;
@@ -472,7 +472,7 @@ void arm_correlate_opt_q15(
     while (tapCnt > 0U)
     {
 
-      /* accumlate the results */
+      /* accumulate the results */
       acc0 += (*pScr++ * *pIn2++);
 
       /* Decrement the loop counter */

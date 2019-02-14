@@ -58,7 +58,7 @@
 void arm_fir_init_q7(
   arm_fir_instance_q7 * S,
   uint16_t numTaps,
-  q7_t * pCoeffs,
+  const q7_t * pCoeffs,
   q7_t * pState,
   uint32_t blockSize)
 {

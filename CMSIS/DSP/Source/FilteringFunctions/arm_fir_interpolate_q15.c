@@ -61,14 +61,14 @@
 
 void arm_fir_interpolate_q15(
   const arm_fir_interpolate_instance_q15 * S,
-  q15_t * pSrc,
+  const q15_t * pSrc,
   q15_t * pDst,
   uint32_t blockSize)
 {
   q15_t *pState = S->pState;                     /* State pointer                                            */
-  q15_t *pCoeffs = S->pCoeffs;                   /* Coefficient pointer                                      */
+  const q15_t *pCoeffs = S->pCoeffs;                   /* Coefficient pointer                                      */
   q15_t *pStateCurnt;                            /* Points to the current sample of the state                */
-  q15_t *ptr1, *ptr2;                            /* Temporary pointers for state and coefficient buffers     */
+  const q15_t *ptr1, *ptr2;                            /* Temporary pointers for state and coefficient buffers     */
   q63_t sum0;                                    /* Accumulators                                             */
   q15_t x0, c0;                                  /* Temporary variables to hold state and coefficient values */
   uint32_t i, blkCnt, j, tapCnt;                 /* Loop counters                                            */
@@ -392,12 +392,12 @@ void arm_fir_interpolate_q15(
 
 void arm_fir_interpolate_q15(
   const arm_fir_interpolate_instance_q15 * S,
-  q15_t * pSrc,
+  const q15_t * pSrc,
   q15_t * pDst,
   uint32_t blockSize)
 {
   q15_t *pState = S->pState;                     /* State pointer                                            */
-  q15_t *pCoeffs = S->pCoeffs;                   /* Coefficient pointer                                      */
+  const q15_t *pCoeffs = S->pCoeffs;                   /* Coefficient pointer                                      */
   q15_t *pStateCurnt;                            /* Points to the current sample of the state                */
   q15_t *ptr1, *ptr2;                            /* Temporary pointers for state and coefficient buffers     */
   q63_t sum;                                     /* Accumulator */
@@ -431,7 +431,7 @@ void arm_fir_interpolate_q15(
       ptr1 = pState;
 
       /* Initialize coefficient pointer */
-      ptr2 = pCoeffs + (i - 1U);
+      ptr2 = (q15_t*) pCoeffs + (i - 1U);
 
       /* Loop over the polyPhase length */
       tapCnt = (uint32_t) phaseLen;

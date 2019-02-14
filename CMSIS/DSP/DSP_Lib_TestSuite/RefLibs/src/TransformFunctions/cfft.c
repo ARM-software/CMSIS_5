@@ -219,7 +219,7 @@ void ref_cfft_q15(
 
 void ref_cfft_radix2_f32(
 	const arm_cfft_radix2_instance_f32 * S,
-	float32_t * pSrc)
+	const float32_t * pSrc)
 {
 	switch(S->fftLen)
 	{
@@ -409,7 +409,7 @@ void ref_cfft_radix2_q15(
 
 void ref_cfft_radix4_f32(
 	const arm_cfft_radix4_instance_f32 * S,
-	float32_t * pSrc)
+	const float32_t * pSrc)
 {		
 	switch(S->fftLen)
 	{

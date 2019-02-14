@@ -2,7 +2,7 @@
 
 void ref_fir_interpolate_f32(
   const arm_fir_interpolate_instance_f32 * S,
-  float32_t * pSrc,
+  const float32_t * pSrc,
   float32_t * pDst,
   uint32_t blockSize)
 {
@@ -98,7 +98,7 @@ void ref_fir_interpolate_q31(
   uint32_t blockSize)
 {
   q31_t *pState = S->pState;                     /* State pointer */
-  q31_t *pCoeffs = S->pCoeffs;                   /* Coefficient pointer */
+  const q31_t *pCoeffs = S->pCoeffs;                   /* Coefficient pointer */
   q31_t *pStateCurnt;                            /* Points to the current sample of the state */
   q31_t *ptr1, *ptr2;                            /* Temporary pointers for state and coefficient buffers */
 
@@ -199,7 +199,7 @@ void ref_fir_interpolate_q15(
   uint32_t blockSize)
 {
   q15_t *pState = S->pState;                     /* State pointer                                            */
-  q15_t *pCoeffs = S->pCoeffs;                   /* Coefficient pointer                                      */
+  const q15_t *pCoeffs = S->pCoeffs;                   /* Coefficient pointer                                      */
   q15_t *pStateCurnt;                            /* Points to the current sample of the state                */
   q15_t *ptr1, *ptr2;                            /* Temporary pointers for state and coefficient buffers     */
   q63_t sum;                                     /* Accumulator */

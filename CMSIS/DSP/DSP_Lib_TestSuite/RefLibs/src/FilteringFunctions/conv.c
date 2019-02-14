@@ -1,9 +1,9 @@
 #include "ref.h"
 
 void ref_conv_f32(
-  float32_t * pSrcA,
+  const float32_t * pSrcA,
   uint32_t 		srcALen,
-  float32_t * pSrcB,
+  const float32_t * pSrcB,
   uint32_t 		srcBLen,
   float32_t * pDst)
 {
@@ -32,9 +32,9 @@ void ref_conv_f32(
 }
 
 arm_status ref_conv_partial_f32(
-  float32_t * pSrcA,
+  const float32_t * pSrcA,
   uint32_t srcALen,
-  float32_t * pSrcB,
+  const float32_t * pSrcB,
   uint32_t srcBLen,
   float32_t * pDst,
   uint32_t firstIndex,

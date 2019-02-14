@@ -168,14 +168,14 @@
 
 void arm_lms_f32(
   const arm_lms_instance_f32 * S,
-  float32_t * pSrc,
+  const float32_t * pSrc,
   float32_t * pRef,
   float32_t * pOut,
   float32_t * pErr,
   uint32_t blockSize)
 {
   float32_t *pState = S->pState;                 /* State pointer */
-  float32_t *pCoeffs = S->pCoeffs;               /* Coefficient pointer */
+  const float32_t *pCoeffs = S->pCoeffs;         /* Coefficient pointer */
   float32_t *pStateCurnt;                        /* Points to the current sample of the state */
   float32_t *px, *pb;                            /* Temporary pointers for state and coefficient buffers */
   float32_t mu = S->mu;                          /* Adaptive factor */
@@ -207,7 +207,7 @@ void arm_lms_f32(
     px = pState;
 
     /* Initialize coeff pointer */
-    pb = (pCoeffs);
+    pb = (float32_t*) (pCoeffs);
 
     /* Set the accumulator to zero */
     sum = 0.0f;
@@ -254,7 +254,7 @@ void arm_lms_f32(
     px = pState;
 
     /* Initialize coeff pointer */
-    pb = (pCoeffs);
+    pb = (float32_t*) (pCoeffs);
 
     /* Loop unrolling.  Process 4 taps at a time. */
     tapCnt = numTaps >> 2;
@@ -347,7 +347,7 @@ void arm_lms_f32(
     px = pState;
 
     /* Initialize pCoeffs pointer */
-    pb = pCoeffs;
+    pb = (float32_t*) pCoeffs;
 
     /* Set the accumulator to zero */
     sum = 0.0f;
@@ -379,7 +379,7 @@ void arm_lms_f32(
     px = pState;
 
     /* Initialize pCoeffs pointer */
-    pb = pCoeffs;
+    pb = (float32_t *) pCoeffs;
 
     /* Loop over numTaps number of values */
     tapCnt = numTaps;

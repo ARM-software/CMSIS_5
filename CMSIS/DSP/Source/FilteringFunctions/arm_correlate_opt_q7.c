@@ -69,9 +69,9 @@
 
 
 void arm_correlate_opt_q7(
-  q7_t * pSrcA,
+  const q7_t * pSrcA,
   uint32_t srcALen,
-  q7_t * pSrcB,
+  const q7_t * pSrcB,
   uint32_t srcBLen,
   q7_t * pDst,
   q15_t * pScratch1,
@@ -80,8 +80,8 @@ void arm_correlate_opt_q7(
   q7_t *pOut = pDst;                             /* output pointer                */
   q15_t *pScr1 = pScratch1;                      /* Temporary pointer for scratch */
   q15_t *pScr2 = pScratch2;                      /* Temporary pointer for scratch */
-  q7_t *pIn1;                                    /* inputA pointer                */
-  q7_t *pIn2;                                    /* inputB pointer                */
+  const q7_t *pIn1;                              /* inputA pointer                */
+  const q7_t *pIn2;                              /* inputB pointer                */
   q15_t *py;                                     /* Intermediate inputB pointer   */
   q31_t acc0, acc1, acc2, acc3;                  /* Accumulators                  */
   uint32_t j, k = 0U, blkCnt;                    /* loop counter                  */
@@ -277,10 +277,10 @@ void arm_correlate_opt_q7(
 
   while (blkCnt > 0)
   {
-    /* Initialze temporary scratch pointer as scratch1 */
+    /* Initialize temporary scratch pointer as scratch1 */
     pScr1 = pScratch1;
 
-    /* Clear Accumlators */
+    /* Clear Accumulators */
     acc0 = 0;
     acc1 = 0;
     acc2 = 0;
@@ -300,7 +300,7 @@ void arm_correlate_opt_q7(
       /* Read four samples from smaller buffer */
       y1 = _SIMD32_OFFSET(pScr2);
 
-      /* multiply and accumlate */
+      /* multiply and accumulate */
       acc0 = __SMLAD(x1, y1, acc0);
       acc2 = __SMLAD(x2, y1, acc2);
 
@@ -311,7 +311,7 @@ void arm_correlate_opt_q7(
       x3 = __PKHBT(x1, x2, 0);
 #endif
 
-      /* multiply and accumlate */
+      /* multiply and accumulate */
       acc1 = __SMLADX(x3, y1, acc1);
 
       /* Read next two samples from scratch1 buffer */
@@ -364,7 +364,7 @@ void arm_correlate_opt_q7(
     while (tapCnt > 0U)
     {
 
-      /* accumlate the results */
+      /* accumulate the results */
       acc0 += (*pScr1++ * *pScr2);
       acc1 += (*pScr1++ * *pScr2);
       acc2 += (*pScr1++ * *pScr2);
@@ -401,10 +401,10 @@ void arm_correlate_opt_q7(
   /* Calculate correlation for remaining samples of Bigger length sequence */
   while (blkCnt > 0)
   {
-    /* Initialze temporary scratch pointer as scratch1 */
+    /* Initialize temporary scratch pointer as scratch1 */
     pScr1 = pScratch1;
 
-    /* Clear Accumlators */
+    /* Clear Accumulators */
     acc0 = 0;
 
     tapCnt = (srcBLen) >> 1U;
@@ -424,7 +424,7 @@ void arm_correlate_opt_q7(
     while (tapCnt > 0U)
     {
 
-      /* accumlate the results */
+      /* accumulate the results */
       acc0 += (*pScr1++ * *pScr2++);
 
       /* Decrement the loop counter */

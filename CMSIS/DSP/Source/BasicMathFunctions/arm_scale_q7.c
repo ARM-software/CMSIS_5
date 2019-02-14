@@ -53,7 +53,7 @@
  */
 
 void arm_scale_q7(
-  q7_t * pSrc,
+  const q7_t * pSrc,
   q7_t scaleFract,
   int8_t shift,
   q7_t * pDst,

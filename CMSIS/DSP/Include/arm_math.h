@@ -976,7 +976,7 @@ extern "C"
   {
     uint16_t numTaps;        /**< number of filter coefficients in the filter. */
     q7_t *pState;            /**< points to the state variable array. The array is of length numTaps+blockSize-1. */
-    q7_t *pCoeffs;           /**< points to the coefficient array. The array is of length numTaps.*/
+    const q7_t *pCoeffs;           /**< points to the coefficient array. The array is of length numTaps.*/
   } arm_fir_instance_q7;
 
   /**
@@ -986,7 +986,7 @@ extern "C"
   {
     uint16_t numTaps;         /**< number of filter coefficients in the filter. */
     q15_t *pState;            /**< points to the state variable array. The array is of length numTaps+blockSize-1. */
-    q15_t *pCoeffs;           /**< points to the coefficient array. The array is of length numTaps.*/
+    const q15_t *pCoeffs;           /**< points to the coefficient array. The array is of length numTaps.*/
   } arm_fir_instance_q15;
 
   /**
@@ -996,7 +996,7 @@ extern "C"
   {
     uint16_t numTaps;         /**< number of filter coefficients in the filter. */
     q31_t *pState;            /**< points to the state variable array. The array is of length numTaps+blockSize-1. */
-    q31_t *pCoeffs;           /**< points to the coefficient array. The array is of length numTaps. */
+    const q31_t *pCoeffs;           /**< points to the coefficient array. The array is of length numTaps. */
   } arm_fir_instance_q31;
 
   /**
@@ -1006,7 +1006,7 @@ extern "C"
   {
     uint16_t numTaps;     /**< number of filter coefficients in the filter. */
     float32_t *pState;    /**< points to the state variable array. The array is of length numTaps+blockSize-1. */
-    float32_t *pCoeffs;   /**< points to the coefficient array. The array is of length numTaps. */
+    const float32_t *pCoeffs;   /**< points to the coefficient array. The array is of length numTaps. */
   } arm_fir_instance_f32;
 
 
@@ -1019,7 +1019,7 @@ extern "C"
    */
   void arm_fir_q7(
   const arm_fir_instance_q7 * S,
-  q7_t * pSrc,
+  const q7_t * pSrc,
   q7_t * pDst,
   uint32_t blockSize);
 
@@ -1035,7 +1035,7 @@ extern "C"
   void arm_fir_init_q7(
   arm_fir_instance_q7 * S,
   uint16_t numTaps,
-  q7_t * pCoeffs,
+  const q7_t * pCoeffs,
   q7_t * pState,
   uint32_t blockSize);
 
@@ -1049,7 +1049,7 @@ extern "C"
    */
   void arm_fir_q15(
   const arm_fir_instance_q15 * S,
-  q15_t * pSrc,
+  const q15_t * pSrc,
   q15_t * pDst,
   uint32_t blockSize);
 
@@ -1063,7 +1063,7 @@ extern "C"
    */
   void arm_fir_fast_q15(
   const arm_fir_instance_q15 * S,
-  q15_t * pSrc,
+  const q15_t * pSrc,
   q15_t * pDst,
   uint32_t blockSize);
 
@@ -1081,7 +1081,7 @@ extern "C"
   arm_status arm_fir_init_q15(
   arm_fir_instance_q15 * S,
   uint16_t numTaps,
-  q15_t * pCoeffs,
+  const q15_t * pCoeffs,
   q15_t * pState,
   uint32_t blockSize);
 
@@ -1095,7 +1095,7 @@ extern "C"
    */
   void arm_fir_q31(
   const arm_fir_instance_q31 * S,
-  q31_t * pSrc,
+  const q31_t * pSrc,
   q31_t * pDst,
   uint32_t blockSize);
 
@@ -1109,7 +1109,7 @@ extern "C"
    */
   void arm_fir_fast_q31(
   const arm_fir_instance_q31 * S,
-  q31_t * pSrc,
+  const q31_t * pSrc,
   q31_t * pDst,
   uint32_t blockSize);
 
@@ -1125,7 +1125,7 @@ extern "C"
   void arm_fir_init_q31(
   arm_fir_instance_q31 * S,
   uint16_t numTaps,
-  q31_t * pCoeffs,
+  const q31_t * pCoeffs,
   q31_t * pState,
   uint32_t blockSize);
 
@@ -1139,7 +1139,7 @@ extern "C"
    */
   void arm_fir_f32(
   const arm_fir_instance_f32 * S,
-  float32_t * pSrc,
+  const float32_t * pSrc,
   float32_t * pDst,
   uint32_t blockSize);
 
@@ -1155,7 +1155,7 @@ extern "C"
   void arm_fir_init_f32(
   arm_fir_instance_f32 * S,
   uint16_t numTaps,
-  float32_t * pCoeffs,
+  const float32_t * pCoeffs,
   float32_t * pState,
   uint32_t blockSize);
 
@@ -1167,7 +1167,7 @@ extern "C"
   {
     int8_t numStages;        /**< number of 2nd order stages in the filter.  Overall order is 2*numStages. */
     q15_t *pState;           /**< Points to the array of state coefficients.  The array is of length 4*numStages. */
-    q15_t *pCoeffs;          /**< Points to the array of coefficients.  The array is of length 5*numStages. */
+    const q15_t *pCoeffs;          /**< Points to the array of coefficients.  The array is of length 5*numStages. */
     int8_t postShift;        /**< Additional shift, in bits, applied to each output sample. */
   } arm_biquad_casd_df1_inst_q15;
 
@@ -1178,7 +1178,7 @@ extern "C"
   {
     uint32_t numStages;      /**< number of 2nd order stages in the filter.  Overall order is 2*numStages. */
     q31_t *pState;           /**< Points to the array of state coefficients.  The array is of length 4*numStages. */
-    q31_t *pCoeffs;          /**< Points to the array of coefficients.  The array is of length 5*numStages. */
+    const q31_t *pCoeffs;          /**< Points to the array of coefficients.  The array is of length 5*numStages. */
     uint8_t postShift;       /**< Additional shift, in bits, applied to each output sample. */
   } arm_biquad_casd_df1_inst_q31;
 
@@ -1189,7 +1189,7 @@ extern "C"
   {
     uint32_t numStages;      /**< number of 2nd order stages in the filter.  Overall order is 2*numStages. */
     float32_t *pState;       /**< Points to the array of state coefficients.  The array is of length 4*numStages. */
-    float32_t *pCoeffs;      /**< Points to the array of coefficients.  The array is of length 5*numStages. */
+    const float32_t *pCoeffs;      /**< Points to the array of coefficients.  The array is of length 5*numStages. */
   } arm_biquad_casd_df1_inst_f32;
 
 
@@ -1202,7 +1202,7 @@ extern "C"
    */
   void arm_biquad_cascade_df1_q15(
   const arm_biquad_casd_df1_inst_q15 * S,
-  q15_t * pSrc,
+  const q15_t * pSrc,
   q15_t * pDst,
   uint32_t blockSize);
 
@@ -1218,7 +1218,7 @@ extern "C"
   void arm_biquad_cascade_df1_init_q15(
   arm_biquad_casd_df1_inst_q15 * S,
   uint8_t numStages,
-  q15_t * pCoeffs,
+  const q15_t * pCoeffs,
   q15_t * pState,
   int8_t postShift);
 
@@ -1232,7 +1232,7 @@ extern "C"
    */
   void arm_biquad_cascade_df1_fast_q15(
   const arm_biquad_casd_df1_inst_q15 * S,
-  q15_t * pSrc,
+  const q15_t * pSrc,
   q15_t * pDst,
   uint32_t blockSize);
 
@@ -1246,7 +1246,7 @@ extern "C"
    */
   void arm_biquad_cascade_df1_q31(
   const arm_biquad_casd_df1_inst_q31 * S,
-  q31_t * pSrc,
+  const q31_t * pSrc,
   q31_t * pDst,
   uint32_t blockSize);
 
@@ -1260,7 +1260,7 @@ extern "C"
    */
   void arm_biquad_cascade_df1_fast_q31(
   const arm_biquad_casd_df1_inst_q31 * S,
-  q31_t * pSrc,
+  const q31_t * pSrc,
   q31_t * pDst,
   uint32_t blockSize);
 
@@ -1276,7 +1276,7 @@ extern "C"
   void arm_biquad_cascade_df1_init_q31(
   arm_biquad_casd_df1_inst_q31 * S,
   uint8_t numStages,
-  q31_t * pCoeffs,
+  const q31_t * pCoeffs,
   q31_t * pState,
   int8_t postShift);
 
@@ -1290,7 +1290,7 @@ extern "C"
    */
   void arm_biquad_cascade_df1_f32(
   const arm_biquad_casd_df1_inst_f32 * S,
-  float32_t * pSrc,
+  const float32_t * pSrc,
   float32_t * pDst,
   uint32_t blockSize);
 
@@ -1305,7 +1305,7 @@ extern "C"
   void arm_biquad_cascade_df1_init_f32(
   arm_biquad_casd_df1_inst_f32 * S,
   uint8_t numStages,
-  float32_t * pCoeffs,
+  const float32_t * pCoeffs,
   float32_t * pState);
 
 
@@ -1840,8 +1840,8 @@ extern "C"
    * @param[in]  blockSize  number of samples in each vector
    */
   void arm_mult_q7(
-  q7_t * pSrcA,
-  q7_t * pSrcB,
+  const q7_t * pSrcA,
+  const q7_t * pSrcB,
   q7_t * pDst,
   uint32_t blockSize);
 
@@ -1854,8 +1854,8 @@ extern "C"
    * @param[in]  blockSize  number of samples in each vector
    */
   void arm_mult_q15(
-  q15_t * pSrcA,
-  q15_t * pSrcB,
+  const q15_t * pSrcA,
+  const q15_t * pSrcB,
   q15_t * pDst,
   uint32_t blockSize);
 
@@ -1868,8 +1868,8 @@ extern "C"
    * @param[in]  blockSize  number of samples in each vector
    */
   void arm_mult_q31(
-  q31_t * pSrcA,
-  q31_t * pSrcB,
+  const q31_t * pSrcA,
+  const q31_t * pSrcB,
   q31_t * pDst,
   uint32_t blockSize);
 
@@ -1882,8 +1882,8 @@ extern "C"
    * @param[in]  blockSize  number of samples in each vector
    */
   void arm_mult_f32(
-  float32_t * pSrcA,
-  float32_t * pSrcB,
+  const float32_t * pSrcA,
+  const float32_t * pSrcB,
   float32_t * pDst,
   uint32_t blockSize);
 
@@ -1896,8 +1896,8 @@ extern "C"
     uint16_t fftLen;                 /**< length of the FFT. */
     uint8_t ifftFlag;                /**< flag that selects forward (ifftFlag=0) or inverse (ifftFlag=1) transform. */
     uint8_t bitReverseFlag;          /**< flag that enables (bitReverseFlag=1) or disables (bitReverseFlag=0) bit reversal of output. */
-    q15_t *pTwiddle;                 /**< points to the Sin twiddle factor table. */
-    uint16_t *pBitRevTable;          /**< points to the bit reversal table. */
+    const q15_t *pTwiddle;           /**< points to the Sin twiddle factor table. */
+    const uint16_t *pBitRevTable;    /**< points to the bit reversal table. */
     uint16_t twidCoefModifier;       /**< twiddle coefficient modifier that supports different size FFTs with the same twiddle factor table. */
     uint16_t bitRevFactor;           /**< bit reversal modifier that supports different size FFTs with the same bit reversal table. */
   } arm_cfft_radix2_instance_q15;
@@ -1923,8 +1923,8 @@ extern "C"
     uint16_t fftLen;                 /**< length of the FFT. */
     uint8_t ifftFlag;                /**< flag that selects forward (ifftFlag=0) or inverse (ifftFlag=1) transform. */
     uint8_t bitReverseFlag;          /**< flag that enables (bitReverseFlag=1) or disables (bitReverseFlag=0) bit reversal of output. */
-    q15_t *pTwiddle;                 /**< points to the twiddle factor table. */
-    uint16_t *pBitRevTable;          /**< points to the bit reversal table. */
+    const q15_t *pTwiddle;           /**< points to the twiddle factor table. */
+    const uint16_t *pBitRevTable;    /**< points to the bit reversal table. */
     uint16_t twidCoefModifier;       /**< twiddle coefficient modifier that supports different size FFTs with the same twiddle factor table. */
     uint16_t bitRevFactor;           /**< bit reversal modifier that supports different size FFTs with the same bit reversal table. */
   } arm_cfft_radix4_instance_q15;
@@ -1949,8 +1949,8 @@ extern "C"
     uint16_t fftLen;                 /**< length of the FFT. */
     uint8_t ifftFlag;                /**< flag that selects forward (ifftFlag=0) or inverse (ifftFlag=1) transform. */
     uint8_t bitReverseFlag;          /**< flag that enables (bitReverseFlag=1) or disables (bitReverseFlag=0) bit reversal of output. */
-    q31_t *pTwiddle;                 /**< points to the Twiddle factor table. */
-    uint16_t *pBitRevTable;          /**< points to the bit reversal table. */
+    const q31_t *pTwiddle;           /**< points to the Twiddle factor table. */
+    const uint16_t *pBitRevTable;    /**< points to the bit reversal table. */
     uint16_t twidCoefModifier;       /**< twiddle coefficient modifier that supports different size FFTs with the same twiddle factor table. */
     uint16_t bitRevFactor;           /**< bit reversal modifier that supports different size FFTs with the same bit reversal table. */
   } arm_cfft_radix2_instance_q31;
@@ -1975,8 +1975,8 @@ extern "C"
     uint16_t fftLen;                 /**< length of the FFT. */
     uint8_t ifftFlag;                /**< flag that selects forward (ifftFlag=0) or inverse (ifftFlag=1) transform. */
     uint8_t bitReverseFlag;          /**< flag that enables (bitReverseFlag=1) or disables (bitReverseFlag=0) bit reversal of output. */
-    q31_t *pTwiddle;                 /**< points to the twiddle factor table. */
-    uint16_t *pBitRevTable;          /**< points to the bit reversal table. */
+    const q31_t *pTwiddle;           /**< points to the twiddle factor table. */
+    const uint16_t *pBitRevTable;    /**< points to the bit reversal table. */
     uint16_t twidCoefModifier;       /**< twiddle coefficient modifier that supports different size FFTs with the same twiddle factor table. */
     uint16_t bitRevFactor;           /**< bit reversal modifier that supports different size FFTs with the same bit reversal table. */
   } arm_cfft_radix4_instance_q31;
@@ -2001,8 +2001,8 @@ extern "C"
     uint16_t fftLen;                   /**< length of the FFT. */
     uint8_t ifftFlag;                  /**< flag that selects forward (ifftFlag=0) or inverse (ifftFlag=1) transform. */
     uint8_t bitReverseFlag;            /**< flag that enables (bitReverseFlag=1) or disables (bitReverseFlag=0) bit reversal of output. */
-    float32_t *pTwiddle;               /**< points to the Twiddle factor table. */
-    uint16_t *pBitRevTable;            /**< points to the bit reversal table. */
+    const float32_t *pTwiddle;         /**< points to the Twiddle factor table. */
+    const uint16_t *pBitRevTable;      /**< points to the bit reversal table. */
     uint16_t twidCoefModifier;         /**< twiddle coefficient modifier that supports different size FFTs with the same twiddle factor table. */
     uint16_t bitRevFactor;             /**< bit reversal modifier that supports different size FFTs with the same bit reversal table. */
     float32_t onebyfftLen;             /**< value of 1/fftLen. */
@@ -2028,8 +2028,8 @@ extern "C"
     uint16_t fftLen;                   /**< length of the FFT. */
     uint8_t ifftFlag;                  /**< flag that selects forward (ifftFlag=0) or inverse (ifftFlag=1) transform. */
     uint8_t bitReverseFlag;            /**< flag that enables (bitReverseFlag=1) or disables (bitReverseFlag=0) bit reversal of output. */
-    float32_t *pTwiddle;               /**< points to the Twiddle factor table. */
-    uint16_t *pBitRevTable;            /**< points to the bit reversal table. */
+    const float32_t *pTwiddle;         /**< points to the Twiddle factor table. */
+    const uint16_t *pBitRevTable;      /**< points to the bit reversal table. */
     uint16_t twidCoefModifier;         /**< twiddle coefficient modifier that supports different size FFTs with the same twiddle factor table. */
     uint16_t bitRevFactor;             /**< bit reversal modifier that supports different size FFTs with the same bit reversal table. */
     float32_t onebyfftLen;             /**< value of 1/fftLen. */
@@ -2107,8 +2107,8 @@ void arm_cfft_q31(
     uint8_t ifftFlagR;                        /**< flag that selects forward (ifftFlagR=0) or inverse (ifftFlagR=1) transform. */
     uint8_t bitReverseFlagR;                  /**< flag that enables (bitReverseFlagR=1) or disables (bitReverseFlagR=0) bit reversal of output. */
     uint32_t twidCoefRModifier;               /**< twiddle coefficient modifier that supports different size FFTs with the same twiddle factor table. */
-    q15_t *pTwiddleAReal;                     /**< points to the real twiddle factor table. */
-    q15_t *pTwiddleBReal;                     /**< points to the imag twiddle factor table. */
+    const q15_t *pTwiddleAReal;               /**< points to the real twiddle factor table. */
+    const q15_t *pTwiddleBReal;               /**< points to the imag twiddle factor table. */
     const arm_cfft_instance_q15 *pCfft;       /**< points to the complex FFT instance. */
   } arm_rfft_instance_q15;
 
@@ -2132,8 +2132,8 @@ void arm_cfft_q31(
     uint8_t ifftFlagR;                          /**< flag that selects forward (ifftFlagR=0) or inverse (ifftFlagR=1) transform. */
     uint8_t bitReverseFlagR;                    /**< flag that enables (bitReverseFlagR=1) or disables (bitReverseFlagR=0) bit reversal of output. */
     uint32_t twidCoefRModifier;                 /**< twiddle coefficient modifier that supports different size FFTs with the same twiddle factor table. */
-    q31_t *pTwiddleAReal;                       /**< points to the real twiddle factor table. */
-    q31_t *pTwiddleBReal;                       /**< points to the imag twiddle factor table. */
+    const q31_t *pTwiddleAReal;                 /**< points to the real twiddle factor table. */
+    const q31_t *pTwiddleBReal;                 /**< points to the imag twiddle factor table. */
     const arm_cfft_instance_q31 *pCfft;         /**< points to the complex FFT instance. */
   } arm_rfft_instance_q31;
 
@@ -2157,9 +2157,9 @@ void arm_cfft_q31(
     uint16_t fftLenBy2;                         /**< length of the complex FFT. */
     uint8_t ifftFlagR;                          /**< flag that selects forward (ifftFlagR=0) or inverse (ifftFlagR=1) transform. */
     uint8_t bitReverseFlagR;                    /**< flag that enables (bitReverseFlagR=1) or disables (bitReverseFlagR=0) bit reversal of output. */
-    uint32_t twidCoefRModifier;                     /**< twiddle coefficient modifier that supports different size FFTs with the same twiddle factor table. */
-    float32_t *pTwiddleAReal;                   /**< points to the real twiddle factor table. */
-    float32_t *pTwiddleBReal;                   /**< points to the imag twiddle factor table. */
+    uint32_t twidCoefRModifier;                 /**< twiddle coefficient modifier that supports different size FFTs with the same twiddle factor table. */
+    const float32_t *pTwiddleAReal;             /**< points to the real twiddle factor table. */
+    const float32_t *pTwiddleBReal;             /**< points to the imag twiddle factor table. */
     arm_cfft_radix4_instance_f32 *pCfft;        /**< points to the complex FFT instance. */
   } arm_rfft_instance_f32;
 
@@ -2219,8 +2219,8 @@ void arm_rfft_fast_f32(
     uint16_t N;                          /**< length of the DCT4. */
     uint16_t Nby2;                       /**< half of the length of the DCT4. */
     float32_t normalize;                 /**< normalizing factor. */
-    float32_t *pTwiddle;                 /**< points to the twiddle factor table. */
-    float32_t *pCosFactor;               /**< points to the cosFactor table. */
+    const float32_t *pTwiddle;           /**< points to the twiddle factor table. */
+    const float32_t *pCosFactor;         /**< points to the cosFactor table. */
     arm_rfft_instance_f32 *pRfft;        /**< points to the real FFT instance. */
     arm_cfft_radix4_instance_f32 *pCfft; /**< points to the complex FFT instance. */
   } arm_dct4_instance_f32;
@@ -2265,8 +2265,8 @@ void arm_rfft_fast_f32(
     uint16_t N;                          /**< length of the DCT4. */
     uint16_t Nby2;                       /**< half of the length of the DCT4. */
     q31_t normalize;                     /**< normalizing factor. */
-    q31_t *pTwiddle;                     /**< points to the twiddle factor table. */
-    q31_t *pCosFactor;                   /**< points to the cosFactor table. */
+    const q31_t *pTwiddle;               /**< points to the twiddle factor table. */
+    const q31_t *pCosFactor;             /**< points to the cosFactor table. */
     arm_rfft_instance_q31 *pRfft;        /**< points to the real FFT instance. */
     arm_cfft_radix4_instance_q31 *pCfft; /**< points to the complex FFT instance. */
   } arm_dct4_instance_q31;
@@ -2311,8 +2311,8 @@ void arm_rfft_fast_f32(
     uint16_t N;                          /**< length of the DCT4. */
     uint16_t Nby2;                       /**< half of the length of the DCT4. */
     q15_t normalize;                     /**< normalizing factor. */
-    q15_t *pTwiddle;                     /**< points to the twiddle factor table. */
-    q15_t *pCosFactor;                   /**< points to the cosFactor table. */
+    const q15_t *pTwiddle;               /**< points to the twiddle factor table. */
+    const q15_t *pCosFactor;             /**< points to the cosFactor table. */
     arm_rfft_instance_q15 *pRfft;        /**< points to the real FFT instance. */
     arm_cfft_radix4_instance_q15 *pCfft; /**< points to the complex FFT instance. */
   } arm_dct4_instance_q15;
@@ -2357,8 +2357,8 @@ void arm_rfft_fast_f32(
    * @param[in]  blockSize  number of samples in each vector
    */
   void arm_add_f32(
-  float32_t * pSrcA,
-  float32_t * pSrcB,
+  const float32_t * pSrcA,
+  const float32_t * pSrcB,
   float32_t * pDst,
   uint32_t blockSize);
 
@@ -2371,8 +2371,8 @@ void arm_rfft_fast_f32(
    * @param[in]  blockSize  number of samples in each vector
    */
   void arm_add_q7(
-  q7_t * pSrcA,
-  q7_t * pSrcB,
+  const q7_t * pSrcA,
+  const q7_t * pSrcB,
   q7_t * pDst,
   uint32_t blockSize);
 
@@ -2385,8 +2385,8 @@ void arm_rfft_fast_f32(
    * @param[in]  blockSize  number of samples in each vector
    */
   void arm_add_q15(
-  q15_t * pSrcA,
-  q15_t * pSrcB,
+  const q15_t * pSrcA,
+  const q15_t * pSrcB,
   q15_t * pDst,
   uint32_t blockSize);
 
@@ -2399,8 +2399,8 @@ void arm_rfft_fast_f32(
    * @param[in]  blockSize  number of samples in each vector
    */
   void arm_add_q31(
-  q31_t * pSrcA,
-  q31_t * pSrcB,
+  const q31_t * pSrcA,
+  const q31_t * pSrcB,
   q31_t * pDst,
   uint32_t blockSize);
 
@@ -2413,8 +2413,8 @@ void arm_rfft_fast_f32(
    * @param[in]  blockSize  number of samples in each vector
    */
   void arm_sub_f32(
-  float32_t * pSrcA,
-  float32_t * pSrcB,
+  const float32_t * pSrcA,
+  const float32_t * pSrcB,
   float32_t * pDst,
   uint32_t blockSize);
 
@@ -2427,8 +2427,8 @@ void arm_rfft_fast_f32(
    * @param[in]  blockSize  number of samples in each vector
    */
   void arm_sub_q7(
-  q7_t * pSrcA,
-  q7_t * pSrcB,
+  const q7_t * pSrcA,
+  const q7_t * pSrcB,
   q7_t * pDst,
   uint32_t blockSize);
 
@@ -2441,8 +2441,8 @@ void arm_rfft_fast_f32(
    * @param[in]  blockSize  number of samples in each vector
    */
   void arm_sub_q15(
-  q15_t * pSrcA,
-  q15_t * pSrcB,
+  const q15_t * pSrcA,
+  const q15_t * pSrcB,
   q15_t * pDst,
   uint32_t blockSize);
 
@@ -2455,8 +2455,8 @@ void arm_rfft_fast_f32(
    * @param[in]  blockSize  number of samples in each vector
    */
   void arm_sub_q31(
-  q31_t * pSrcA,
-  q31_t * pSrcB,
+  const q31_t * pSrcA,
+  const q31_t * pSrcB,
   q31_t * pDst,
   uint32_t blockSize);
 
@@ -2469,7 +2469,7 @@ void arm_rfft_fast_f32(
    * @param[in]  blockSize  number of samples in the vector
    */
   void arm_scale_f32(
-  float32_t * pSrc,
+  const float32_t * pSrc,
   float32_t scale,
   float32_t * pDst,
   uint32_t blockSize);
@@ -2484,7 +2484,7 @@ void arm_rfft_fast_f32(
    * @param[in]  blockSize   number of samples in the vector
    */
   void arm_scale_q7(
-  q7_t * pSrc,
+  const q7_t * pSrc,
   q7_t scaleFract,
   int8_t shift,
   q7_t * pDst,
@@ -2500,7 +2500,7 @@ void arm_rfft_fast_f32(
    * @param[in]  blockSize   number of samples in the vector
    */
   void arm_scale_q15(
-  q15_t * pSrc,
+  const q15_t * pSrc,
   q15_t scaleFract,
   int8_t shift,
   q15_t * pDst,
@@ -2516,7 +2516,7 @@ void arm_rfft_fast_f32(
    * @param[in]  blockSize   number of samples in the vector
    */
   void arm_scale_q31(
-  q31_t * pSrc,
+  const q31_t * pSrc,
   q31_t scaleFract,
   int8_t shift,
   q31_t * pDst,
@@ -2530,7 +2530,7 @@ void arm_rfft_fast_f32(
    * @param[in]  blockSize  number of samples in each vector
    */
   void arm_abs_q7(
-  q7_t * pSrc,
+  const q7_t * pSrc,
   q7_t * pDst,
   uint32_t blockSize);
 
@@ -2542,7 +2542,7 @@ void arm_rfft_fast_f32(
    * @param[in]  blockSize  number of samples in each vector
    */
   void arm_abs_f32(
-  float32_t * pSrc,
+  const float32_t * pSrc,
   float32_t * pDst,
   uint32_t blockSize);
 
@@ -2554,7 +2554,7 @@ void arm_rfft_fast_f32(
    * @param[in]  blockSize  number of samples in each vector
    */
   void arm_abs_q15(
-  q15_t * pSrc,
+  const q15_t * pSrc,
   q15_t * pDst,
   uint32_t blockSize);
 
@@ -2566,7 +2566,7 @@ void arm_rfft_fast_f32(
    * @param[in]  blockSize  number of samples in each vector
    */
   void arm_abs_q31(
-  q31_t * pSrc,
+  const q31_t * pSrc,
   q31_t * pDst,
   uint32_t blockSize);
 
@@ -2579,8 +2579,8 @@ void arm_rfft_fast_f32(
    * @param[out] result     output result returned here
    */
   void arm_dot_prod_f32(
-  float32_t * pSrcA,
-  float32_t * pSrcB,
+  const float32_t * pSrcA,
+  const float32_t * pSrcB,
   uint32_t blockSize,
   float32_t * result);
 
@@ -2593,8 +2593,8 @@ void arm_rfft_fast_f32(
    * @param[out] result     output result returned here
    */
   void arm_dot_prod_q7(
-  q7_t * pSrcA,
-  q7_t * pSrcB,
+  const q7_t * pSrcA,
+  const q7_t * pSrcB,
   uint32_t blockSize,
   q31_t * result);
 
@@ -2607,8 +2607,8 @@ void arm_rfft_fast_f32(
    * @param[out] result     output result returned here
    */
   void arm_dot_prod_q15(
-  q15_t * pSrcA,
-  q15_t * pSrcB,
+  const q15_t * pSrcA,
+  const q15_t * pSrcB,
   uint32_t blockSize,
   q63_t * result);
 
@@ -2621,8 +2621,8 @@ void arm_rfft_fast_f32(
    * @param[out] result     output result returned here
    */
   void arm_dot_prod_q31(
-  q31_t * pSrcA,
-  q31_t * pSrcB,
+  const q31_t * pSrcA,
+  const q31_t * pSrcB,
   uint32_t blockSize,
   q63_t * result);
 
@@ -2635,7 +2635,7 @@ void arm_rfft_fast_f32(
    * @param[in]  blockSize  number of samples in the vector
    */
   void arm_shift_q7(
-  q7_t * pSrc,
+  const q7_t * pSrc,
   int8_t shiftBits,
   q7_t * pDst,
   uint32_t blockSize);
@@ -2649,7 +2649,7 @@ void arm_rfft_fast_f32(
    * @param[in]  blockSize  number of samples in the vector
    */
   void arm_shift_q15(
-  q15_t * pSrc,
+  const q15_t * pSrc,
   int8_t shiftBits,
   q15_t * pDst,
   uint32_t blockSize);
@@ -2663,7 +2663,7 @@ void arm_rfft_fast_f32(
    * @param[in]  blockSize  number of samples in the vector
    */
   void arm_shift_q31(
-  q31_t * pSrc,
+  const q31_t * pSrc,
   int8_t shiftBits,
   q31_t * pDst,
   uint32_t blockSize);
@@ -2677,7 +2677,7 @@ void arm_rfft_fast_f32(
    * @param[in]  blockSize  number of samples in the vector
    */
   void arm_offset_f32(
-  float32_t * pSrc,
+  const float32_t * pSrc,
   float32_t offset,
   float32_t * pDst,
   uint32_t blockSize);
@@ -2691,7 +2691,7 @@ void arm_rfft_fast_f32(
    * @param[in]  blockSize  number of samples in the vector
    */
   void arm_offset_q7(
-  q7_t * pSrc,
+  const q7_t * pSrc,
   q7_t offset,
   q7_t * pDst,
   uint32_t blockSize);
@@ -2705,7 +2705,7 @@ void arm_rfft_fast_f32(
    * @param[in]  blockSize  number of samples in the vector
    */
   void arm_offset_q15(
-  q15_t * pSrc,
+  const q15_t * pSrc,
   q15_t offset,
   q15_t * pDst,
   uint32_t blockSize);
@@ -2719,7 +2719,7 @@ void arm_rfft_fast_f32(
    * @param[in]  blockSize  number of samples in the vector
    */
   void arm_offset_q31(
-  q31_t * pSrc,
+  const q31_t * pSrc,
   q31_t offset,
   q31_t * pDst,
   uint32_t blockSize);
@@ -2732,7 +2732,7 @@ void arm_rfft_fast_f32(
    * @param[in]  blockSize  number of samples in the vector
    */
   void arm_negate_f32(
-  float32_t * pSrc,
+  const float32_t * pSrc,
   float32_t * pDst,
   uint32_t blockSize);
 
@@ -2744,7 +2744,7 @@ void arm_rfft_fast_f32(
    * @param[in]  blockSize  number of samples in the vector
    */
   void arm_negate_q7(
-  q7_t * pSrc,
+  const q7_t * pSrc,
   q7_t * pDst,
   uint32_t blockSize);
 
@@ -2756,7 +2756,7 @@ void arm_rfft_fast_f32(
    * @param[in]  blockSize  number of samples in the vector
    */
   void arm_negate_q15(
-  q15_t * pSrc,
+  const q15_t * pSrc,
   q15_t * pDst,
   uint32_t blockSize);
 
@@ -2768,7 +2768,7 @@ void arm_rfft_fast_f32(
    * @param[in]  blockSize  number of samples in the vector
    */
   void arm_negate_q31(
-  q31_t * pSrc,
+  const q31_t * pSrc,
   q31_t * pDst,
   uint32_t blockSize);
 
@@ -2780,7 +2780,7 @@ void arm_rfft_fast_f32(
    * @param[in]  blockSize  number of samples to process
    */
   void arm_copy_f32(
-  float32_t * pSrc,
+  const float32_t * pSrc,
   float32_t * pDst,
   uint32_t blockSize);
 
@@ -2792,7 +2792,7 @@ void arm_rfft_fast_f32(
    * @param[in]  blockSize  number of samples to process
    */
   void arm_copy_q7(
-  q7_t * pSrc,
+  const q7_t * pSrc,
   q7_t * pDst,
   uint32_t blockSize);
 
@@ -2804,7 +2804,7 @@ void arm_rfft_fast_f32(
    * @param[in]  blockSize  number of samples to process
    */
   void arm_copy_q15(
-  q15_t * pSrc,
+  const q15_t * pSrc,
   q15_t * pDst,
   uint32_t blockSize);
 
@@ -2816,7 +2816,7 @@ void arm_rfft_fast_f32(
    * @param[in]  blockSize  number of samples to process
    */
   void arm_copy_q31(
-  q31_t * pSrc,
+  const q31_t * pSrc,
   q31_t * pDst,
   uint32_t blockSize);
 
@@ -2878,9 +2878,9 @@ void arm_rfft_fast_f32(
  * @param[out] pDst     points to the location where the output result is written.  Length srcALen+srcBLen-1.
  */
   void arm_conv_f32(
-  float32_t * pSrcA,
+  const float32_t * pSrcA,
   uint32_t srcALen,
-  float32_t * pSrcB,
+  const float32_t * pSrcB,
   uint32_t srcBLen,
   float32_t * pDst);
 
@@ -2896,9 +2896,9 @@ void arm_rfft_fast_f32(
    * @param[in]  pScratch2  points to scratch buffer of size min(srcALen, srcBLen).
    */
   void arm_conv_opt_q15(
-  q15_t * pSrcA,
+  const q15_t * pSrcA,
   uint32_t srcALen,
-  q15_t * pSrcB,
+  const q15_t * pSrcB,
   uint32_t srcBLen,
   q15_t * pDst,
   q15_t * pScratch1,
@@ -2914,9 +2914,9 @@ void arm_rfft_fast_f32(
  * @param[out] pDst     points to the location where the output result is written.  Length srcALen+srcBLen-1.
  */
   void arm_conv_q15(
-  q15_t * pSrcA,
+  const q15_t * pSrcA,
   uint32_t srcALen,
-  q15_t * pSrcB,
+  const q15_t * pSrcB,
   uint32_t srcBLen,
   q15_t * pDst);
 
@@ -2930,9 +2930,9 @@ void arm_rfft_fast_f32(
    * @param[out] pDst     points to the block of output data  Length srcALen+srcBLen-1.
    */
   void arm_conv_fast_q15(
-          q15_t * pSrcA,
+          const q15_t * pSrcA,
           uint32_t srcALen,
-          q15_t * pSrcB,
+          const q15_t * pSrcB,
           uint32_t srcBLen,
           q15_t * pDst);
 
@@ -2948,9 +2948,9 @@ void arm_rfft_fast_f32(
    * @param[in]  pScratch2  points to scratch buffer of size min(srcALen, srcBLen).
    */
   void arm_conv_fast_opt_q15(
-  q15_t * pSrcA,
+  const q15_t * pSrcA,
   uint32_t srcALen,
-  q15_t * pSrcB,
+  const q15_t * pSrcB,
   uint32_t srcBLen,
   q15_t * pDst,
   q15_t * pScratch1,
@@ -2966,9 +2966,9 @@ void arm_rfft_fast_f32(
    * @param[out] pDst     points to the block of output data  Length srcALen+srcBLen-1.
    */
   void arm_conv_q31(
-  q31_t * pSrcA,
+  const q31_t * pSrcA,
   uint32_t srcALen,
-  q31_t * pSrcB,
+  const q31_t * pSrcB,
   uint32_t srcBLen,
   q31_t * pDst);
 
@@ -2982,9 +2982,9 @@ void arm_rfft_fast_f32(
    * @param[out] pDst     points to the block of output data  Length srcALen+srcBLen-1.
    */
   void arm_conv_fast_q31(
-  q31_t * pSrcA,
+  const q31_t * pSrcA,
   uint32_t srcALen,
-  q31_t * pSrcB,
+  const q31_t * pSrcB,
   uint32_t srcBLen,
   q31_t * pDst);
 
@@ -3000,9 +3000,9 @@ void arm_rfft_fast_f32(
    * @param[in]  pScratch2  points to scratch buffer (of type q15_t) of size min(srcALen, srcBLen).
    */
   void arm_conv_opt_q7(
-  q7_t * pSrcA,
+  const q7_t * pSrcA,
   uint32_t srcALen,
-  q7_t * pSrcB,
+  const q7_t * pSrcB,
   uint32_t srcBLen,
   q7_t * pDst,
   q15_t * pScratch1,
@@ -3018,9 +3018,9 @@ void arm_rfft_fast_f32(
    * @param[out] pDst     points to the block of output data  Length srcALen+srcBLen-1.
    */
   void arm_conv_q7(
-  q7_t * pSrcA,
+  const q7_t * pSrcA,
   uint32_t srcALen,
-  q7_t * pSrcB,
+  const q7_t * pSrcB,
   uint32_t srcBLen,
   q7_t * pDst);
 
@@ -3037,9 +3037,9 @@ void arm_rfft_fast_f32(
    * @return  Returns either ARM_MATH_SUCCESS if the function completed correctly or ARM_MATH_ARGUMENT_ERROR if the requested subset is not in the range [0 srcALen+srcBLen-2].
    */
   arm_status arm_conv_partial_f32(
-  float32_t * pSrcA,
+  const float32_t * pSrcA,
   uint32_t srcALen,
-  float32_t * pSrcB,
+  const float32_t * pSrcB,
   uint32_t srcBLen,
   float32_t * pDst,
   uint32_t firstIndex,
@@ -3060,9 +3060,9 @@ void arm_rfft_fast_f32(
    * @return  Returns either ARM_MATH_SUCCESS if the function completed correctly or ARM_MATH_ARGUMENT_ERROR if the requested subset is not in the range [0 srcALen+srcBLen-2].
    */
   arm_status arm_conv_partial_opt_q15(
-  q15_t * pSrcA,
+  const q15_t * pSrcA,
   uint32_t srcALen,
-  q15_t * pSrcB,
+  const q15_t * pSrcB,
   uint32_t srcBLen,
   q15_t * pDst,
   uint32_t firstIndex,
@@ -3083,9 +3083,9 @@ void arm_rfft_fast_f32(
    * @return  Returns either ARM_MATH_SUCCESS if the function completed correctly or ARM_MATH_ARGUMENT_ERROR if the requested subset is not in the range [0 srcALen+srcBLen-2].
    */
   arm_status arm_conv_partial_q15(
-  q15_t * pSrcA,
+  const q15_t * pSrcA,
   uint32_t srcALen,
-  q15_t * pSrcB,
+  const q15_t * pSrcB,
   uint32_t srcBLen,
   q15_t * pDst,
   uint32_t firstIndex,
@@ -3104,9 +3104,9 @@ void arm_rfft_fast_f32(
    * @return  Returns either ARM_MATH_SUCCESS if the function completed correctly or ARM_MATH_ARGUMENT_ERROR if the requested subset is not in the range [0 srcALen+srcBLen-2].
    */
   arm_status arm_conv_partial_fast_q15(
-  q15_t * pSrcA,
+  const q15_t * pSrcA,
   uint32_t srcALen,
-  q15_t * pSrcB,
+  const q15_t * pSrcB,
   uint32_t srcBLen,
   q15_t * pDst,
   uint32_t firstIndex,
@@ -3127,9 +3127,9 @@ void arm_rfft_fast_f32(
    * @return  Returns either ARM_MATH_SUCCESS if the function completed correctly or ARM_MATH_ARGUMENT_ERROR if the requested subset is not in the range [0 srcALen+srcBLen-2].
    */
   arm_status arm_conv_partial_fast_opt_q15(
-  q15_t * pSrcA,
+  const q15_t * pSrcA,
   uint32_t srcALen,
-  q15_t * pSrcB,
+  const q15_t * pSrcB,
   uint32_t srcBLen,
   q15_t * pDst,
   uint32_t firstIndex,
@@ -3150,9 +3150,9 @@ void arm_rfft_fast_f32(
    * @return  Returns either ARM_MATH_SUCCESS if the function completed correctly or ARM_MATH_ARGUMENT_ERROR if the requested subset is not in the range [0 srcALen+srcBLen-2].
    */
   arm_status arm_conv_partial_q31(
-  q31_t * pSrcA,
+  const q31_t * pSrcA,
   uint32_t srcALen,
-  q31_t * pSrcB,
+  const q31_t * pSrcB,
   uint32_t srcBLen,
   q31_t * pDst,
   uint32_t firstIndex,
@@ -3171,9 +3171,9 @@ void arm_rfft_fast_f32(
    * @return  Returns either ARM_MATH_SUCCESS if the function completed correctly or ARM_MATH_ARGUMENT_ERROR if the requested subset is not in the range [0 srcALen+srcBLen-2].
    */
   arm_status arm_conv_partial_fast_q31(
-  q31_t * pSrcA,
+  const q31_t * pSrcA,
   uint32_t srcALen,
-  q31_t * pSrcB,
+  const q31_t * pSrcB,
   uint32_t srcBLen,
   q31_t * pDst,
   uint32_t firstIndex,
@@ -3194,9 +3194,9 @@ void arm_rfft_fast_f32(
    * @return  Returns either ARM_MATH_SUCCESS if the function completed correctly or ARM_MATH_ARGUMENT_ERROR if the requested subset is not in the range [0 srcALen+srcBLen-2].
    */
   arm_status arm_conv_partial_opt_q7(
-  q7_t * pSrcA,
+  const q7_t * pSrcA,
   uint32_t srcALen,
-  q7_t * pSrcB,
+  const q7_t * pSrcB,
   uint32_t srcBLen,
   q7_t * pDst,
   uint32_t firstIndex,
@@ -3217,9 +3217,9 @@ void arm_rfft_fast_f32(
    * @return  Returns either ARM_MATH_SUCCESS if the function completed correctly or ARM_MATH_ARGUMENT_ERROR if the requested subset is not in the range [0 srcALen+srcBLen-2].
    */
   arm_status arm_conv_partial_q7(
-  q7_t * pSrcA,
+  const q7_t * pSrcA,
   uint32_t srcALen,
-  q7_t * pSrcB,
+  const q7_t * pSrcB,
   uint32_t srcBLen,
   q7_t * pDst,
   uint32_t firstIndex,
@@ -3233,7 +3233,7 @@ void arm_rfft_fast_f32(
   {
     uint8_t M;                  /**< decimation factor. */
     uint16_t numTaps;           /**< number of coefficients in the filter. */
-    q15_t *pCoeffs;             /**< points to the coefficient array. The array is of length numTaps.*/
+    const q15_t *pCoeffs;             /**< points to the coefficient array. The array is of length numTaps.*/
     q15_t *pState;              /**< points to the state variable array. The array is of length numTaps+blockSize-1. */
   } arm_fir_decimate_instance_q15;
 
@@ -3244,7 +3244,7 @@ void arm_rfft_fast_f32(
   {
     uint8_t M;                  /**< decimation factor. */
     uint16_t numTaps;           /**< number of coefficients in the filter. */
-    q31_t *pCoeffs;             /**< points to the coefficient array. The array is of length numTaps.*/
+    const q31_t *pCoeffs;             /**< points to the coefficient array. The array is of length numTaps.*/
     q31_t *pState;              /**< points to the state variable array. The array is of length numTaps+blockSize-1. */
   } arm_fir_decimate_instance_q31;
 
@@ -3255,7 +3255,7 @@ void arm_rfft_fast_f32(
   {
     uint8_t M;                  /**< decimation factor. */
     uint16_t numTaps;           /**< number of coefficients in the filter. */
-    float32_t *pCoeffs;         /**< points to the coefficient array. The array is of length numTaps.*/
+    const float32_t *pCoeffs;         /**< points to the coefficient array. The array is of length numTaps.*/
     float32_t *pState;          /**< points to the state variable array. The array is of length numTaps+blockSize-1. */
   } arm_fir_decimate_instance_f32;
 
@@ -3269,7 +3269,7 @@ void arm_rfft_fast_f32(
    */
   void arm_fir_decimate_f32(
   const arm_fir_decimate_instance_f32 * S,
-  float32_t * pSrc,
+  const float32_t * pSrc,
   float32_t * pDst,
   uint32_t blockSize);
 
@@ -3289,7 +3289,7 @@ void arm_rfft_fast_f32(
   arm_fir_decimate_instance_f32 * S,
   uint16_t numTaps,
   uint8_t M,
-  float32_t * pCoeffs,
+  const float32_t * pCoeffs,
   float32_t * pState,
   uint32_t blockSize);
 
@@ -3303,7 +3303,7 @@ void arm_rfft_fast_f32(
    */
   void arm_fir_decimate_q15(
   const arm_fir_decimate_instance_q15 * S,
-  q15_t * pSrc,
+  const q15_t * pSrc,
   q15_t * pDst,
   uint32_t blockSize);
 
@@ -3317,7 +3317,7 @@ void arm_rfft_fast_f32(
    */
   void arm_fir_decimate_fast_q15(
   const arm_fir_decimate_instance_q15 * S,
-  q15_t * pSrc,
+  const q15_t * pSrc,
   q15_t * pDst,
   uint32_t blockSize);
 
@@ -3337,7 +3337,7 @@ void arm_rfft_fast_f32(
   arm_fir_decimate_instance_q15 * S,
   uint16_t numTaps,
   uint8_t M,
-  q15_t * pCoeffs,
+  const q15_t * pCoeffs,
   q15_t * pState,
   uint32_t blockSize);
 
@@ -3351,7 +3351,7 @@ void arm_rfft_fast_f32(
    */
   void arm_fir_decimate_q31(
   const arm_fir_decimate_instance_q31 * S,
-  q31_t * pSrc,
+  const q31_t * pSrc,
   q31_t * pDst,
   uint32_t blockSize);
 
@@ -3364,7 +3364,7 @@ void arm_rfft_fast_f32(
    */
   void arm_fir_decimate_fast_q31(
   arm_fir_decimate_instance_q31 * S,
-  q31_t * pSrc,
+  const q31_t * pSrc,
   q31_t * pDst,
   uint32_t blockSize);
 
@@ -3384,7 +3384,7 @@ void arm_rfft_fast_f32(
   arm_fir_decimate_instance_q31 * S,
   uint16_t numTaps,
   uint8_t M,
-  q31_t * pCoeffs,
+  const q31_t * pCoeffs,
   q31_t * pState,
   uint32_t blockSize);
 
@@ -3396,7 +3396,7 @@ void arm_rfft_fast_f32(
   {
     uint8_t L;                      /**< upsample factor. */
     uint16_t phaseLength;           /**< length of each polyphase filter component. */
-    q15_t *pCoeffs;                 /**< points to the coefficient array. The array is of length L*phaseLength. */
+    const q15_t *pCoeffs;                 /**< points to the coefficient array. The array is of length L*phaseLength. */
     q15_t *pState;                  /**< points to the state variable array. The array is of length blockSize+phaseLength-1. */
   } arm_fir_interpolate_instance_q15;
 
@@ -3407,7 +3407,7 @@ void arm_rfft_fast_f32(
   {
     uint8_t L;                      /**< upsample factor. */
     uint16_t phaseLength;           /**< length of each polyphase filter component. */
-    q31_t *pCoeffs;                 /**< points to the coefficient array. The array is of length L*phaseLength. */
+    const q31_t *pCoeffs;                 /**< points to the coefficient array. The array is of length L*phaseLength. */
     q31_t *pState;                  /**< points to the state variable array. The array is of length blockSize+phaseLength-1. */
   } arm_fir_interpolate_instance_q31;
 
@@ -3418,7 +3418,7 @@ void arm_rfft_fast_f32(
   {
     uint8_t L;                     /**< upsample factor. */
     uint16_t phaseLength;          /**< length of each polyphase filter component. */
-    float32_t *pCoeffs;            /**< points to the coefficient array. The array is of length L*phaseLength. */
+    const float32_t *pCoeffs;      /**< points to the coefficient array. The array is of length L*phaseLength. */
     float32_t *pState;             /**< points to the state variable array. The array is of length phaseLength+numTaps-1. */
   } arm_fir_interpolate_instance_f32;
 
@@ -3432,7 +3432,7 @@ void arm_rfft_fast_f32(
    */
   void arm_fir_interpolate_q15(
   const arm_fir_interpolate_instance_q15 * S,
-  q15_t * pSrc,
+  const q15_t * pSrc,
   q15_t * pDst,
   uint32_t blockSize);
 
@@ -3452,7 +3452,7 @@ void arm_rfft_fast_f32(
   arm_fir_interpolate_instance_q15 * S,
   uint8_t L,
   uint16_t numTaps,
-  q15_t * pCoeffs,
+  const q15_t * pCoeffs,
   q15_t * pState,
   uint32_t blockSize);
 
@@ -3466,7 +3466,7 @@ void arm_rfft_fast_f32(
    */
   void arm_fir_interpolate_q31(
   const arm_fir_interpolate_instance_q31 * S,
-  q31_t * pSrc,
+  const q31_t * pSrc,
   q31_t * pDst,
   uint32_t blockSize);
 
@@ -3486,7 +3486,7 @@ void arm_rfft_fast_f32(
   arm_fir_interpolate_instance_q31 * S,
   uint8_t L,
   uint16_t numTaps,
-  q31_t * pCoeffs,
+  const q31_t * pCoeffs,
   q31_t * pState,
   uint32_t blockSize);
 
@@ -3500,7 +3500,7 @@ void arm_rfft_fast_f32(
    */
   void arm_fir_interpolate_f32(
   const arm_fir_interpolate_instance_f32 * S,
-  float32_t * pSrc,
+  const float32_t * pSrc,
   float32_t * pDst,
   uint32_t blockSize);
 
@@ -3520,7 +3520,7 @@ void arm_rfft_fast_f32(
   arm_fir_interpolate_instance_f32 * S,
   uint8_t L,
   uint16_t numTaps,
-  float32_t * pCoeffs,
+  const float32_t * pCoeffs,
   float32_t * pState,
   uint32_t blockSize);
 
@@ -3532,7 +3532,7 @@ void arm_rfft_fast_f32(
   {
     uint8_t numStages;       /**< number of 2nd order stages in the filter.  Overall order is 2*numStages. */
     q63_t *pState;           /**< points to the array of state coefficients.  The array is of length 4*numStages. */
-    q31_t *pCoeffs;          /**< points to the array of coefficients.  The array is of length 5*numStages. */
+    const q31_t *pCoeffs;          /**< points to the array of coefficients.  The array is of length 5*numStages. */
     uint8_t postShift;       /**< additional shift, in bits, applied to each output sample. */
   } arm_biquad_cas_df1_32x64_ins_q31;
 
@@ -3545,7 +3545,7 @@ void arm_rfft_fast_f32(
    */
   void arm_biquad_cas_df1_32x64_q31(
   const arm_biquad_cas_df1_32x64_ins_q31 * S,
-  q31_t * pSrc,
+  const q31_t * pSrc,
   q31_t * pDst,
   uint32_t blockSize);
 
@@ -3560,7 +3560,7 @@ void arm_rfft_fast_f32(
   void arm_biquad_cas_df1_32x64_init_q31(
   arm_biquad_cas_df1_32x64_ins_q31 * S,
   uint8_t numStages,
-  q31_t * pCoeffs,
+  const q31_t * pCoeffs,
   q63_t * pState,
   uint8_t postShift);
 
@@ -3572,7 +3572,7 @@ void arm_rfft_fast_f32(
   {
     uint8_t numStages;         /**< number of 2nd order stages in the filter.  Overall order is 2*numStages. */
     float32_t *pState;         /**< points to the array of state coefficients.  The array is of length 2*numStages. */
-    float32_t *pCoeffs;        /**< points to the array of coefficients.  The array is of length 5*numStages. */
+    const float32_t *pCoeffs;  /**< points to the array of coefficients.  The array is of length 5*numStages. */
   } arm_biquad_cascade_df2T_instance_f32;
 
   /**
@@ -3582,7 +3582,7 @@ void arm_rfft_fast_f32(
   {
     uint8_t numStages;         /**< number of 2nd order stages in the filter.  Overall order is 2*numStages. */
     float32_t *pState;         /**< points to the array of state coefficients.  The array is of length 4*numStages. */
-    float32_t *pCoeffs;        /**< points to the array of coefficients.  The array is of length 5*numStages. */
+    const float32_t *pCoeffs;  /**< points to the array of coefficients.  The array is of length 5*numStages. */
   } arm_biquad_cascade_stereo_df2T_instance_f32;
 
   /**
@@ -3605,7 +3605,7 @@ void arm_rfft_fast_f32(
    */
   void arm_biquad_cascade_df2T_f32(
   const arm_biquad_cascade_df2T_instance_f32 * S,
-  float32_t * pSrc,
+  const float32_t * pSrc,
   float32_t * pDst,
   uint32_t blockSize);
 
@@ -3619,7 +3619,7 @@ void arm_rfft_fast_f32(
    */
   void arm_biquad_cascade_stereo_df2T_f32(
   const arm_biquad_cascade_stereo_df2T_instance_f32 * S,
-  float32_t * pSrc,
+  const float32_t * pSrc,
   float32_t * pDst,
   uint32_t blockSize);
 
@@ -3648,7 +3648,7 @@ void arm_rfft_fast_f32(
   void arm_biquad_cascade_df2T_init_f32(
   arm_biquad_cascade_df2T_instance_f32 * S,
   uint8_t numStages,
-  float32_t * pCoeffs,
+  const float32_t * pCoeffs,
   float32_t * pState);
 
 
@@ -3662,7 +3662,7 @@ void arm_rfft_fast_f32(
   void arm_biquad_cascade_stereo_df2T_init_f32(
   arm_biquad_cascade_stereo_df2T_instance_f32 * S,
   uint8_t numStages,
-  float32_t * pCoeffs,
+  const float32_t * pCoeffs,
   float32_t * pState);
 
 
@@ -3687,7 +3687,7 @@ void arm_rfft_fast_f32(
   {
     uint16_t numStages;                  /**< number of filter stages. */
     q15_t *pState;                       /**< points to the state variable array. The array is of length numStages. */
-    q15_t *pCoeffs;                      /**< points to the coefficient array. The array is of length numStages. */
+    const q15_t *pCoeffs;                      /**< points to the coefficient array. The array is of length numStages. */
   } arm_fir_lattice_instance_q15;
 
   /**
@@ -3697,7 +3697,7 @@ void arm_rfft_fast_f32(
   {
     uint16_t numStages;                  /**< number of filter stages. */
     q31_t *pState;                       /**< points to the state variable array. The array is of length numStages. */
-    q31_t *pCoeffs;                      /**< points to the coefficient array. The array is of length numStages. */
+    const q31_t *pCoeffs;                      /**< points to the coefficient array. The array is of length numStages. */
   } arm_fir_lattice_instance_q31;
 
   /**
@@ -3707,7 +3707,7 @@ void arm_rfft_fast_f32(
   {
     uint16_t numStages;                  /**< number of filter stages. */
     float32_t *pState;                   /**< points to the state variable array. The array is of length numStages. */
-    float32_t *pCoeffs;                  /**< points to the coefficient array. The array is of length numStages. */
+    const float32_t *pCoeffs;            /**< points to the coefficient array. The array is of length numStages. */
   } arm_fir_lattice_instance_f32;
 
 
@@ -3721,7 +3721,7 @@ void arm_rfft_fast_f32(
   void arm_fir_lattice_init_q15(
   arm_fir_lattice_instance_q15 * S,
   uint16_t numStages,
-  q15_t * pCoeffs,
+  const q15_t * pCoeffs,
   q15_t * pState);
 
 
@@ -3734,7 +3734,7 @@ void arm_rfft_fast_f32(
    */
   void arm_fir_lattice_q15(
   const arm_fir_lattice_instance_q15 * S,
-  q15_t * pSrc,
+  const q15_t * pSrc,
   q15_t * pDst,
   uint32_t blockSize);
 
@@ -3749,7 +3749,7 @@ void arm_rfft_fast_f32(
   void arm_fir_lattice_init_q31(
   arm_fir_lattice_instance_q31 * S,
   uint16_t numStages,
-  q31_t * pCoeffs,
+  const q31_t * pCoeffs,
   q31_t * pState);
 
 
@@ -3762,7 +3762,7 @@ void arm_rfft_fast_f32(
    */
   void arm_fir_lattice_q31(
   const arm_fir_lattice_instance_q31 * S,
-  q31_t * pSrc,
+  const q31_t * pSrc,
   q31_t * pDst,
   uint32_t blockSize);
 
@@ -3777,7 +3777,7 @@ void arm_rfft_fast_f32(
   void arm_fir_lattice_init_f32(
   arm_fir_lattice_instance_f32 * S,
   uint16_t numStages,
-  float32_t * pCoeffs,
+  const float32_t * pCoeffs,
   float32_t * pState);
 
 
@@ -3790,7 +3790,7 @@ void arm_rfft_fast_f32(
    */
   void arm_fir_lattice_f32(
   const arm_fir_lattice_instance_f32 * S,
-  float32_t * pSrc,
+  const float32_t * pSrc,
   float32_t * pDst,
   uint32_t blockSize);
 
@@ -3838,7 +3838,7 @@ void arm_rfft_fast_f32(
    */
   void arm_iir_lattice_f32(
   const arm_iir_lattice_instance_f32 * S,
-  float32_t * pSrc,
+  const float32_t * pSrc,
   float32_t * pDst,
   uint32_t blockSize);
 
@@ -3870,7 +3870,7 @@ void arm_rfft_fast_f32(
    */
   void arm_iir_lattice_q31(
   const arm_iir_lattice_instance_q31 * S,
-  q31_t * pSrc,
+  const q31_t * pSrc,
   q31_t * pDst,
   uint32_t blockSize);
 
@@ -3902,7 +3902,7 @@ void arm_rfft_fast_f32(
    */
   void arm_iir_lattice_q15(
   const arm_iir_lattice_instance_q15 * S,
-  q15_t * pSrc,
+  const q15_t * pSrc,
   q15_t * pDst,
   uint32_t blockSize);
 
@@ -3932,7 +3932,7 @@ void arm_rfft_fast_f32(
   {
     uint16_t numTaps;    /**< number of coefficients in the filter. */
     float32_t *pState;   /**< points to the state variable array. The array is of length numTaps+blockSize-1. */
-    float32_t *pCoeffs;  /**< points to the coefficient array. The array is of length numTaps. */
+    const float32_t *pCoeffs;  /**< points to the coefficient array. The array is of length numTaps. */
     float32_t mu;        /**< step size that controls filter coefficient updates. */
   } arm_lms_instance_f32;
 
@@ -3948,7 +3948,7 @@ void arm_rfft_fast_f32(
    */
   void arm_lms_f32(
   const arm_lms_instance_f32 * S,
-  float32_t * pSrc,
+  const float32_t * pSrc,
   float32_t * pRef,
   float32_t * pOut,
   float32_t * pErr,
@@ -3967,7 +3967,7 @@ void arm_rfft_fast_f32(
   void arm_lms_init_f32(
   arm_lms_instance_f32 * S,
   uint16_t numTaps,
-  float32_t * pCoeffs,
+  const float32_t * pCoeffs,
   float32_t * pState,
   float32_t mu,
   uint32_t blockSize);
@@ -3980,7 +3980,7 @@ void arm_rfft_fast_f32(
   {
     uint16_t numTaps;    /**< number of coefficients in the filter. */
     q15_t *pState;       /**< points to the state variable array. The array is of length numTaps+blockSize-1. */
-    q15_t *pCoeffs;      /**< points to the coefficient array. The array is of length numTaps. */
+    const q15_t *pCoeffs;      /**< points to the coefficient array. The array is of length numTaps. */
     q15_t mu;            /**< step size that controls filter coefficient updates. */
     uint32_t postShift;  /**< bit shift applied to coefficients. */
   } arm_lms_instance_q15;
@@ -3999,7 +3999,7 @@ void arm_rfft_fast_f32(
   void arm_lms_init_q15(
   arm_lms_instance_q15 * S,
   uint16_t numTaps,
-  q15_t * pCoeffs,
+  const q15_t * pCoeffs,
   q15_t * pState,
   q15_t mu,
   uint32_t blockSize,
@@ -4017,7 +4017,7 @@ void arm_rfft_fast_f32(
    */
   void arm_lms_q15(
   const arm_lms_instance_q15 * S,
-  q15_t * pSrc,
+  const q15_t * pSrc,
   q15_t * pRef,
   q15_t * pOut,
   q15_t * pErr,
@@ -4031,7 +4031,7 @@ void arm_rfft_fast_f32(
   {
     uint16_t numTaps;    /**< number of coefficients in the filter. */
     q31_t *pState;       /**< points to the state variable array. The array is of length numTaps+blockSize-1. */
-    q31_t *pCoeffs;      /**< points to the coefficient array. The array is of length numTaps. */
+    const q31_t *pCoeffs;      /**< points to the coefficient array. The array is of length numTaps. */
     q31_t mu;            /**< step size that controls filter coefficient updates. */
     uint32_t postShift;  /**< bit shift applied to coefficients. */
   } arm_lms_instance_q31;
@@ -4048,7 +4048,7 @@ void arm_rfft_fast_f32(
    */
   void arm_lms_q31(
   const arm_lms_instance_q31 * S,
-  q31_t * pSrc,
+  const q31_t * pSrc,
   q31_t * pRef,
   q31_t * pOut,
   q31_t * pErr,
@@ -4068,7 +4068,7 @@ void arm_rfft_fast_f32(
   void arm_lms_init_q31(
   arm_lms_instance_q31 * S,
   uint16_t numTaps,
-  q31_t * pCoeffs,
+  const q31_t * pCoeffs,
   q31_t * pState,
   q31_t mu,
   uint32_t blockSize,
@@ -4082,7 +4082,7 @@ void arm_rfft_fast_f32(
   {
     uint16_t numTaps;     /**< number of coefficients in the filter. */
     float32_t *pState;    /**< points to the state variable array. The array is of length numTaps+blockSize-1. */
-    float32_t *pCoeffs;   /**< points to the coefficient array. The array is of length numTaps. */
+    const float32_t *pCoeffs;   /**< points to the coefficient array. The array is of length numTaps. */
     float32_t mu;         /**< step size that control filter coefficient updates. */
     float32_t energy;     /**< saves previous frame energy. */
     float32_t x0;         /**< saves previous input sample. */
@@ -4100,7 +4100,7 @@ void arm_rfft_fast_f32(
    */
   void arm_lms_norm_f32(
   arm_lms_norm_instance_f32 * S,
-  float32_t * pSrc,
+  const float32_t * pSrc,
   float32_t * pRef,
   float32_t * pOut,
   float32_t * pErr,
@@ -4119,7 +4119,7 @@ void arm_rfft_fast_f32(
   void arm_lms_norm_init_f32(
   arm_lms_norm_instance_f32 * S,
   uint16_t numTaps,
-  float32_t * pCoeffs,
+  const float32_t * pCoeffs,
   float32_t * pState,
   float32_t mu,
   uint32_t blockSize);
@@ -4132,7 +4132,7 @@ void arm_rfft_fast_f32(
   {
     uint16_t numTaps;     /**< number of coefficients in the filter. */
     q31_t *pState;        /**< points to the state variable array. The array is of length numTaps+blockSize-1. */
-    q31_t *pCoeffs;       /**< points to the coefficient array. The array is of length numTaps. */
+    const q31_t *pCoeffs;       /**< points to the coefficient array. The array is of length numTaps. */
     q31_t mu;             /**< step size that controls filter coefficient updates. */
     uint8_t postShift;    /**< bit shift applied to coefficients. */
     q31_t *recipTable;    /**< points to the reciprocal initial value table. */
@@ -4152,7 +4152,7 @@ void arm_rfft_fast_f32(
    */
   void arm_lms_norm_q31(
   arm_lms_norm_instance_q31 * S,
-  q31_t * pSrc,
+  const q31_t * pSrc,
   q31_t * pRef,
   q31_t * pOut,
   q31_t * pErr,
@@ -4172,7 +4172,7 @@ void arm_rfft_fast_f32(
   void arm_lms_norm_init_q31(
   arm_lms_norm_instance_q31 * S,
   uint16_t numTaps,
-  q31_t * pCoeffs,
+  const q31_t * pCoeffs,
   q31_t * pState,
   q31_t mu,
   uint32_t blockSize,
@@ -4186,7 +4186,7 @@ void arm_rfft_fast_f32(
   {
     uint16_t numTaps;     /**< Number of coefficients in the filter. */
     q15_t *pState;        /**< points to the state variable array. The array is of length numTaps+blockSize-1. */
-    q15_t *pCoeffs;       /**< points to the coefficient array. The array is of length numTaps. */
+    const q15_t *pCoeffs;       /**< points to the coefficient array. The array is of length numTaps. */
     q15_t mu;             /**< step size that controls filter coefficient updates. */
     uint8_t postShift;    /**< bit shift applied to coefficients. */
     q15_t *recipTable;    /**< Points to the reciprocal initial value table. */
@@ -4206,7 +4206,7 @@ void arm_rfft_fast_f32(
    */
   void arm_lms_norm_q15(
   arm_lms_norm_instance_q15 * S,
-  q15_t * pSrc,
+  const q15_t * pSrc,
   q15_t * pRef,
   q15_t * pOut,
   q15_t * pErr,
@@ -4226,7 +4226,7 @@ void arm_rfft_fast_f32(
   void arm_lms_norm_init_q15(
   arm_lms_norm_instance_q15 * S,
   uint16_t numTaps,
-  q15_t * pCoeffs,
+  const q15_t * pCoeffs,
   q15_t * pState,
   q15_t mu,
   uint32_t blockSize,
@@ -4242,9 +4242,9 @@ void arm_rfft_fast_f32(
    * @param[out] pDst     points to the block of output data  Length 2 * max(srcALen, srcBLen) - 1.
    */
   void arm_correlate_f32(
-  float32_t * pSrcA,
+  const float32_t * pSrcA,
   uint32_t srcALen,
-  float32_t * pSrcB,
+  const float32_t * pSrcB,
   uint32_t srcBLen,
   float32_t * pDst);
 
@@ -4259,9 +4259,9 @@ void arm_rfft_fast_f32(
    * @param[in]  pScratch  points to scratch buffer of size max(srcALen, srcBLen) + 2*min(srcALen, srcBLen) - 2.
    */
   void arm_correlate_opt_q15(
-  q15_t * pSrcA,
+  const q15_t * pSrcA,
   uint32_t srcALen,
-  q15_t * pSrcB,
+  const q15_t * pSrcB,
   uint32_t srcBLen,
   q15_t * pDst,
   q15_t * pScratch);
@@ -4277,9 +4277,9 @@ void arm_rfft_fast_f32(
    */
 
   void arm_correlate_q15(
-  q15_t * pSrcA,
+  const q15_t * pSrcA,
   uint32_t srcALen,
-  q15_t * pSrcB,
+  const q15_t * pSrcB,
   uint32_t srcBLen,
   q15_t * pDst);
 
@@ -4294,9 +4294,9 @@ void arm_rfft_fast_f32(
    */
 
   void arm_correlate_fast_q15(
-  q15_t * pSrcA,
+  const q15_t * pSrcA,
   uint32_t srcALen,
-  q15_t * pSrcB,
+  const q15_t * pSrcB,
   uint32_t srcBLen,
   q15_t * pDst);
 
@@ -4311,9 +4311,9 @@ void arm_rfft_fast_f32(
    * @param[in]  pScratch  points to scratch buffer of size max(srcALen, srcBLen) + 2*min(srcALen, srcBLen) - 2.
    */
   void arm_correlate_fast_opt_q15(
-  q15_t * pSrcA,
+  const q15_t * pSrcA,
   uint32_t srcALen,
-  q15_t * pSrcB,
+  const q15_t * pSrcB,
   uint32_t srcBLen,
   q15_t * pDst,
   q15_t * pScratch);
@@ -4328,9 +4328,9 @@ void arm_rfft_fast_f32(
    * @param[out] pDst     points to the block of output data  Length 2 * max(srcALen, srcBLen) - 1.
    */
   void arm_correlate_q31(
-  q31_t * pSrcA,
+  const q31_t * pSrcA,
   uint32_t srcALen,
-  q31_t * pSrcB,
+  const q31_t * pSrcB,
   uint32_t srcBLen,
   q31_t * pDst);
 
@@ -4344,9 +4344,9 @@ void arm_rfft_fast_f32(
    * @param[out] pDst     points to the block of output data  Length 2 * max(srcALen, srcBLen) - 1.
    */
   void arm_correlate_fast_q31(
-  q31_t * pSrcA,
+  const q31_t * pSrcA,
   uint32_t srcALen,
-  q31_t * pSrcB,
+  const q31_t * pSrcB,
   uint32_t srcBLen,
   q31_t * pDst);
 
@@ -4362,9 +4362,9 @@ void arm_rfft_fast_f32(
    * @param[in]  pScratch2  points to scratch buffer (of type q15_t) of size min(srcALen, srcBLen).
    */
   void arm_correlate_opt_q7(
-  q7_t * pSrcA,
+  const q7_t * pSrcA,
   uint32_t srcALen,
-  q7_t * pSrcB,
+  const q7_t * pSrcB,
   uint32_t srcBLen,
   q7_t * pDst,
   q15_t * pScratch1,
@@ -4380,9 +4380,9 @@ void arm_rfft_fast_f32(
    * @param[out] pDst     points to the block of output data  Length 2 * max(srcALen, srcBLen) - 1.
    */
   void arm_correlate_q7(
-  q7_t * pSrcA,
+  const q7_t * pSrcA,
   uint32_t srcALen,
-  q7_t * pSrcB,
+  const q7_t * pSrcB,
   uint32_t srcBLen,
   q7_t * pDst);
 
@@ -4395,7 +4395,7 @@ void arm_rfft_fast_f32(
     uint16_t numTaps;             /**< number of coefficients in the filter. */
     uint16_t stateIndex;          /**< state buffer index.  Points to the oldest sample in the state buffer. */
     float32_t *pState;            /**< points to the state buffer array. The array is of length maxDelay+blockSize-1. */
-    float32_t *pCoeffs;           /**< points to the coefficient array. The array is of length numTaps.*/
+    const float32_t *pCoeffs;           /**< points to the coefficient array. The array is of length numTaps.*/
     uint16_t maxDelay;            /**< maximum offset specified by the pTapDelay array. */
     int32_t *pTapDelay;           /**< points to the array of delay values.  The array is of length numTaps. */
   } arm_fir_sparse_instance_f32;
@@ -4408,7 +4408,7 @@ void arm_rfft_fast_f32(
     uint16_t numTaps;             /**< number of coefficients in the filter. */
     uint16_t stateIndex;          /**< state buffer index.  Points to the oldest sample in the state buffer. */
     q31_t *pState;                /**< points to the state buffer array. The array is of length maxDelay+blockSize-1. */
-    q31_t *pCoeffs;               /**< points to the coefficient array. The array is of length numTaps.*/
+    const q31_t *pCoeffs;               /**< points to the coefficient array. The array is of length numTaps.*/
     uint16_t maxDelay;            /**< maximum offset specified by the pTapDelay array. */
     int32_t *pTapDelay;           /**< points to the array of delay values.  The array is of length numTaps. */
   } arm_fir_sparse_instance_q31;
@@ -4421,7 +4421,7 @@ void arm_rfft_fast_f32(
     uint16_t numTaps;             /**< number of coefficients in the filter. */
     uint16_t stateIndex;          /**< state buffer index.  Points to the oldest sample in the state buffer. */
     q15_t *pState;                /**< points to the state buffer array. The array is of length maxDelay+blockSize-1. */
-    q15_t *pCoeffs;               /**< points to the coefficient array. The array is of length numTaps.*/
+    const q15_t *pCoeffs;               /**< points to the coefficient array. The array is of length numTaps.*/
     uint16_t maxDelay;            /**< maximum offset specified by the pTapDelay array. */
     int32_t *pTapDelay;           /**< points to the array of delay values.  The array is of length numTaps. */
   } arm_fir_sparse_instance_q15;
@@ -4434,7 +4434,7 @@ void arm_rfft_fast_f32(
     uint16_t numTaps;             /**< number of coefficients in the filter. */
     uint16_t stateIndex;          /**< state buffer index.  Points to the oldest sample in the state buffer. */
     q7_t *pState;                 /**< points to the state buffer array. The array is of length maxDelay+blockSize-1. */
-    q7_t *pCoeffs;                /**< points to the coefficient array. The array is of length numTaps.*/
+    const q7_t *pCoeffs;                /**< points to the coefficient array. The array is of length numTaps.*/
     uint16_t maxDelay;            /**< maximum offset specified by the pTapDelay array. */
     int32_t *pTapDelay;           /**< points to the array of delay values.  The array is of length numTaps. */
   } arm_fir_sparse_instance_q7;
@@ -4450,7 +4450,7 @@ void arm_rfft_fast_f32(
    */
   void arm_fir_sparse_f32(
   arm_fir_sparse_instance_f32 * S,
-  float32_t * pSrc,
+  const float32_t * pSrc,
   float32_t * pDst,
   float32_t * pScratchIn,
   uint32_t blockSize);
@@ -4469,7 +4469,7 @@ void arm_rfft_fast_f32(
   void arm_fir_sparse_init_f32(
   arm_fir_sparse_instance_f32 * S,
   uint16_t numTaps,
-  float32_t * pCoeffs,
+  const float32_t * pCoeffs,
   float32_t * pState,
   int32_t * pTapDelay,
   uint16_t maxDelay,
@@ -4486,7 +4486,7 @@ void arm_rfft_fast_f32(
    */
   void arm_fir_sparse_q31(
   arm_fir_sparse_instance_q31 * S,
-  q31_t * pSrc,
+  const q31_t * pSrc,
   q31_t * pDst,
   q31_t * pScratchIn,
   uint32_t blockSize);
@@ -4505,7 +4505,7 @@ void arm_rfft_fast_f32(
   void arm_fir_sparse_init_q31(
   arm_fir_sparse_instance_q31 * S,
   uint16_t numTaps,
-  q31_t * pCoeffs,
+  const q31_t * pCoeffs,
   q31_t * pState,
   int32_t * pTapDelay,
   uint16_t maxDelay,
@@ -4523,7 +4523,7 @@ void arm_rfft_fast_f32(
    */
   void arm_fir_sparse_q15(
   arm_fir_sparse_instance_q15 * S,
-  q15_t * pSrc,
+  const q15_t * pSrc,
   q15_t * pDst,
   q15_t * pScratchIn,
   q31_t * pScratchOut,
@@ -4543,7 +4543,7 @@ void arm_rfft_fast_f32(
   void arm_fir_sparse_init_q15(
   arm_fir_sparse_instance_q15 * S,
   uint16_t numTaps,
-  q15_t * pCoeffs,
+  const q15_t * pCoeffs,
   q15_t * pState,
   int32_t * pTapDelay,
   uint16_t maxDelay,
@@ -4561,7 +4561,7 @@ void arm_rfft_fast_f32(
    */
   void arm_fir_sparse_q7(
   arm_fir_sparse_instance_q7 * S,
-  q7_t * pSrc,
+  const q7_t * pSrc,
   q7_t * pDst,
   q7_t * pScratchIn,
   q31_t * pScratchOut,
@@ -4581,7 +4581,7 @@ void arm_rfft_fast_f32(
   void arm_fir_sparse_init_q7(
   arm_fir_sparse_instance_q7 * S,
   uint16_t numTaps,
-  q7_t * pCoeffs,
+  const q7_t * pCoeffs,
   q7_t * pState,
   int32_t * pTapDelay,
   uint16_t maxDelay,
@@ -4619,7 +4619,7 @@ void arm_rfft_fast_f32(
    * @param[in]  numSamples  number of complex samples in each vector
    */
   void arm_cmplx_conj_f32(
-  float32_t * pSrc,
+  const float32_t * pSrc,
   float32_t * pDst,
   uint32_t numSamples);
 
@@ -4630,7 +4630,7 @@ void arm_rfft_fast_f32(
    * @param[in]  numSamples  number of complex samples in each vector
    */
   void arm_cmplx_conj_q31(
-  q31_t * pSrc,
+  const q31_t * pSrc,
   q31_t * pDst,
   uint32_t numSamples);
 
@@ -4642,7 +4642,7 @@ void arm_rfft_fast_f32(
    * @param[in]  numSamples  number of complex samples in each vector
    */
   void arm_cmplx_conj_q15(
-  q15_t * pSrc,
+  const q15_t * pSrc,
   q15_t * pDst,
   uint32_t numSamples);
 
@@ -4654,7 +4654,7 @@ void arm_rfft_fast_f32(
    * @param[in]  numSamples  number of complex samples in the input vector
    */
   void arm_cmplx_mag_squared_f32(
-  float32_t * pSrc,
+  const float32_t * pSrc,
   float32_t * pDst,
   uint32_t numSamples);
 
@@ -4666,7 +4666,7 @@ void arm_rfft_fast_f32(
    * @param[in]  numSamples  number of complex samples in the input vector
    */
   void arm_cmplx_mag_squared_q31(
-  q31_t * pSrc,
+  const q31_t * pSrc,
   q31_t * pDst,
   uint32_t numSamples);
 
@@ -4678,7 +4678,7 @@ void arm_rfft_fast_f32(
    * @param[in]  numSamples  number of complex samples in the input vector
    */
   void arm_cmplx_mag_squared_q15(
-  q15_t * pSrc,
+  const q15_t * pSrc,
   q15_t * pDst,
   uint32_t numSamples);
 
@@ -5006,7 +5006,7 @@ void arm_rfft_fast_f32(
    * @param[in]  blockSize  number of samples to process
    */
   void arm_q7_to_q31(
-  q7_t * pSrc,
+  const q7_t * pSrc,
   q31_t * pDst,
   uint32_t blockSize);
 
@@ -5103,7 +5103,7 @@ void arm_rfft_fast_f32(
    * @param[in]  blockSize  number of samples to process
    */
   void arm_q7_to_q15(
-  q7_t * pSrc,
+  const q7_t * pSrc,
   q15_t * pDst,
   uint32_t blockSize);
 
@@ -5227,7 +5227,7 @@ void arm_rfft_fast_f32(
    * @param[in]  blockSize  is the number of samples to process
    */
   void arm_q7_to_float(
-  q7_t * pSrc,
+  const q7_t * pSrc,
   float32_t * pDst,
   uint32_t blockSize);
 
@@ -5341,7 +5341,7 @@ void arm_rfft_fast_f32(
    * @param[in]  blockSize  is the number of samples to process
    */
   void arm_q31_to_float(
-  q31_t * pSrc,
+  const q31_t * pSrc,
   float32_t * pDst,
   uint32_t blockSize);
 
@@ -6091,7 +6091,7 @@ void arm_rfft_fast_f32(
    * @param[out] pResult    is output value.
    */
   void arm_power_q31(
-  q31_t * pSrc,
+  const q31_t * pSrc,
   uint32_t blockSize,
   q63_t * pResult);
 
@@ -6103,7 +6103,7 @@ void arm_rfft_fast_f32(
    * @param[out] pResult    is output value.
    */
   void arm_power_f32(
-  float32_t * pSrc,
+  const float32_t * pSrc,
   uint32_t blockSize,
   float32_t * pResult);
 
@@ -6115,7 +6115,7 @@ void arm_rfft_fast_f32(
    * @param[out] pResult    is output value.
    */
   void arm_power_q15(
-  q15_t * pSrc,
+  const q15_t * pSrc,
   uint32_t blockSize,
   q63_t * pResult);
 
@@ -6127,7 +6127,7 @@ void arm_rfft_fast_f32(
    * @param[out] pResult    is output value.
    */
   void arm_power_q7(
-  q7_t * pSrc,
+  const q7_t * pSrc,
   uint32_t blockSize,
   q31_t * pResult);
 
@@ -6139,7 +6139,7 @@ void arm_rfft_fast_f32(
    * @param[out] pResult    is output value.
    */
   void arm_mean_q7(
-  q7_t * pSrc,
+  const q7_t * pSrc,
   uint32_t blockSize,
   q7_t * pResult);
 
@@ -6151,7 +6151,7 @@ void arm_rfft_fast_f32(
    * @param[out] pResult    is output value.
    */
   void arm_mean_q15(
-  q15_t * pSrc,
+  const q15_t * pSrc,
   uint32_t blockSize,
   q15_t * pResult);
 
@@ -6163,7 +6163,7 @@ void arm_rfft_fast_f32(
    * @param[out] pResult    is output value.
    */
   void arm_mean_q31(
-  q31_t * pSrc,
+  const q31_t * pSrc,
   uint32_t blockSize,
   q31_t * pResult);
 
@@ -6175,7 +6175,7 @@ void arm_rfft_fast_f32(
    * @param[out] pResult    is output value.
    */
   void arm_mean_f32(
-  float32_t * pSrc,
+  const float32_t * pSrc,
   uint32_t blockSize,
   float32_t * pResult);
 
@@ -6187,7 +6187,7 @@ void arm_rfft_fast_f32(
    * @param[out] pResult    is output value.
    */
   void arm_var_f32(
-  float32_t * pSrc,
+  const float32_t * pSrc,
   uint32_t blockSize,
   float32_t * pResult);
 
@@ -6199,7 +6199,7 @@ void arm_rfft_fast_f32(
    * @param[out] pResult    is output value.
    */
   void arm_var_q31(
-  q31_t * pSrc,
+  const q31_t * pSrc,
   uint32_t blockSize,
   q31_t * pResult);
 
@@ -6211,7 +6211,7 @@ void arm_rfft_fast_f32(
    * @param[out] pResult    is output value.
    */
   void arm_var_q15(
-  q15_t * pSrc,
+  const q15_t * pSrc,
   uint32_t blockSize,
   q15_t * pResult);
 
@@ -6223,7 +6223,7 @@ void arm_rfft_fast_f32(
    * @param[out] pResult    is output value.
    */
   void arm_rms_f32(
-  float32_t * pSrc,
+  const float32_t * pSrc,
   uint32_t blockSize,
   float32_t * pResult);
 
@@ -6235,7 +6235,7 @@ void arm_rfft_fast_f32(
    * @param[out] pResult    is output value.
    */
   void arm_rms_q31(
-  q31_t * pSrc,
+  const q31_t * pSrc,
   uint32_t blockSize,
   q31_t * pResult);
 
@@ -6247,7 +6247,7 @@ void arm_rfft_fast_f32(
    * @param[out] pResult    is output value.
    */
   void arm_rms_q15(
-  q15_t * pSrc,
+  const q15_t * pSrc,
   uint32_t blockSize,
   q15_t * pResult);
 
@@ -6259,7 +6259,7 @@ void arm_rfft_fast_f32(
    * @param[out] pResult    is output value.
    */
   void arm_std_f32(
-  float32_t * pSrc,
+  const float32_t * pSrc,
   uint32_t blockSize,
   float32_t * pResult);
 
@@ -6271,7 +6271,7 @@ void arm_rfft_fast_f32(
    * @param[out] pResult    is output value.
    */
   void arm_std_q31(
-  q31_t * pSrc,
+  const q31_t * pSrc,
   uint32_t blockSize,
   q31_t * pResult);
 
@@ -6283,7 +6283,7 @@ void arm_rfft_fast_f32(
    * @param[out] pResult    is output value.
    */
   void arm_std_q15(
-  q15_t * pSrc,
+  const q15_t * pSrc,
   uint32_t blockSize,
   q15_t * pResult);
 
@@ -6295,7 +6295,7 @@ void arm_rfft_fast_f32(
    * @param[in]  numSamples  number of complex samples in the input vector
    */
   void arm_cmplx_mag_f32(
-  float32_t * pSrc,
+  const float32_t * pSrc,
   float32_t * pDst,
   uint32_t numSamples);
 
@@ -6307,7 +6307,7 @@ void arm_rfft_fast_f32(
    * @param[in]  numSamples  number of complex samples in the input vector
    */
   void arm_cmplx_mag_q31(
-  q31_t * pSrc,
+  const q31_t * pSrc,
   q31_t * pDst,
   uint32_t numSamples);
 
@@ -6319,7 +6319,7 @@ void arm_rfft_fast_f32(
    * @param[in]  numSamples  number of complex samples in the input vector
    */
   void arm_cmplx_mag_q15(
-  q15_t * pSrc,
+  const q15_t * pSrc,
   q15_t * pDst,
   uint32_t numSamples);
 
@@ -6333,8 +6333,8 @@ void arm_rfft_fast_f32(
    * @param[out] imagResult  imaginary part of the result returned here
    */
   void arm_cmplx_dot_prod_q15(
-  q15_t * pSrcA,
-  q15_t * pSrcB,
+  const q15_t * pSrcA,
+  const q15_t * pSrcB,
   uint32_t numSamples,
   q31_t * realResult,
   q31_t * imagResult);
@@ -6349,8 +6349,8 @@ void arm_rfft_fast_f32(
    * @param[out] imagResult  imaginary part of the result returned here
    */
   void arm_cmplx_dot_prod_q31(
-  q31_t * pSrcA,
-  q31_t * pSrcB,
+  const q31_t * pSrcA,
+  const q31_t * pSrcB,
   uint32_t numSamples,
   q63_t * realResult,
   q63_t * imagResult);
@@ -6365,8 +6365,8 @@ void arm_rfft_fast_f32(
    * @param[out] imagResult  imaginary part of the result returned here
    */
   void arm_cmplx_dot_prod_f32(
-  float32_t * pSrcA,
-  float32_t * pSrcB,
+  const float32_t * pSrcA,
+  const float32_t * pSrcB,
   uint32_t numSamples,
   float32_t * realResult,
   float32_t * imagResult);
@@ -6380,8 +6380,8 @@ void arm_rfft_fast_f32(
    * @param[in]  numSamples  number of samples in each vector
    */
   void arm_cmplx_mult_real_q15(
-  q15_t * pSrcCmplx,
-  q15_t * pSrcReal,
+  const q15_t * pSrcCmplx,
+  const q15_t * pSrcReal,
   q15_t * pCmplxDst,
   uint32_t numSamples);
 
@@ -6394,8 +6394,8 @@ void arm_rfft_fast_f32(
    * @param[in]  numSamples  number of samples in each vector
    */
   void arm_cmplx_mult_real_q31(
-  q31_t * pSrcCmplx,
-  q31_t * pSrcReal,
+  const q31_t * pSrcCmplx,
+  const q31_t * pSrcReal,
   q31_t * pCmplxDst,
   uint32_t numSamples);
 
@@ -6408,8 +6408,8 @@ void arm_rfft_fast_f32(
    * @param[in]  numSamples  number of samples in each vector
    */
   void arm_cmplx_mult_real_f32(
-  float32_t * pSrcCmplx,
-  float32_t * pSrcReal,
+  const float32_t * pSrcCmplx,
+  const float32_t * pSrcReal,
   float32_t * pCmplxDst,
   uint32_t numSamples);
 
@@ -6422,7 +6422,7 @@ void arm_rfft_fast_f32(
    * @param[in]  index      is the array index of the minimum value in the input buffer.
    */
   void arm_min_q7(
-  q7_t * pSrc,
+  const q7_t * pSrc,
   uint32_t blockSize,
   q7_t * result,
   uint32_t * index);
@@ -6436,7 +6436,7 @@ void arm_rfft_fast_f32(
    * @param[in]  pIndex     is the array index of the minimum value in the input buffer.
    */
   void arm_min_q15(
-  q15_t * pSrc,
+  const q15_t * pSrc,
   uint32_t blockSize,
   q15_t * pResult,
   uint32_t * pIndex);
@@ -6450,7 +6450,7 @@ void arm_rfft_fast_f32(
    * @param[out] pIndex     is the array index of the minimum value in the input buffer.
    */
   void arm_min_q31(
-  q31_t * pSrc,
+  const q31_t * pSrc,
   uint32_t blockSize,
   q31_t * pResult,
   uint32_t * pIndex);
@@ -6464,7 +6464,7 @@ void arm_rfft_fast_f32(
    * @param[out] pIndex     is the array index of the minimum value in the input buffer.
    */
   void arm_min_f32(
-  float32_t * pSrc,
+  const float32_t * pSrc,
   uint32_t blockSize,
   float32_t * pResult,
   uint32_t * pIndex);
@@ -6478,7 +6478,7 @@ void arm_rfft_fast_f32(
  * @param[out] pIndex     index of maximum value returned here
  */
   void arm_max_q7(
-  q7_t * pSrc,
+  const q7_t * pSrc,
   uint32_t blockSize,
   q7_t * pResult,
   uint32_t * pIndex);
@@ -6492,7 +6492,7 @@ void arm_rfft_fast_f32(
  * @param[out] pIndex     index of maximum value returned here
  */
   void arm_max_q15(
-  q15_t * pSrc,
+  const q15_t * pSrc,
   uint32_t blockSize,
   q15_t * pResult,
   uint32_t * pIndex);
@@ -6506,7 +6506,7 @@ void arm_rfft_fast_f32(
  * @param[out] pIndex     index of maximum value returned here
  */
   void arm_max_q31(
-  q31_t * pSrc,
+  const q31_t * pSrc,
   uint32_t blockSize,
   q31_t * pResult,
   uint32_t * pIndex);
@@ -6520,7 +6520,7 @@ void arm_rfft_fast_f32(
  * @param[out] pIndex     index of maximum value returned here
  */
   void arm_max_f32(
-  float32_t * pSrc,
+  const float32_t * pSrc,
   uint32_t blockSize,
   float32_t * pResult,
   uint32_t * pIndex);
@@ -6534,8 +6534,8 @@ void arm_rfft_fast_f32(
    * @param[in]  numSamples  number of complex samples in each vector
    */
   void arm_cmplx_mult_cmplx_q15(
-  q15_t * pSrcA,
-  q15_t * pSrcB,
+  const q15_t * pSrcA,
+  const q15_t * pSrcB,
   q15_t * pDst,
   uint32_t numSamples);
 
@@ -6548,8 +6548,8 @@ void arm_rfft_fast_f32(
    * @param[in]  numSamples  number of complex samples in each vector
    */
   void arm_cmplx_mult_cmplx_q31(
-  q31_t * pSrcA,
-  q31_t * pSrcB,
+  const q31_t * pSrcA,
+  const q31_t * pSrcB,
   q31_t * pDst,
   uint32_t numSamples);
 
@@ -6562,8 +6562,8 @@ void arm_rfft_fast_f32(
    * @param[in]  numSamples  number of complex samples in each vector
    */
   void arm_cmplx_mult_cmplx_f32(
-  float32_t * pSrcA,
-  float32_t * pSrcB,
+  const float32_t * pSrcA,
+  const float32_t * pSrcB,
   float32_t * pDst,
   uint32_t numSamples);
 
@@ -6575,7 +6575,7 @@ void arm_rfft_fast_f32(
    * @param[in]  blockSize  length of the input vector
    */
   void arm_float_to_q31(
-  float32_t * pSrc,
+  const float32_t * pSrc,
   q31_t * pDst,
   uint32_t blockSize);
 
@@ -6587,7 +6587,7 @@ void arm_rfft_fast_f32(
    * @param[in]  blockSize  length of the input vector
    */
   void arm_float_to_q15(
-  float32_t * pSrc,
+  const float32_t * pSrc,
   q15_t * pDst,
   uint32_t blockSize);
 
@@ -6599,7 +6599,7 @@ void arm_rfft_fast_f32(
    * @param[in]  blockSize  length of the input vector
    */
   void arm_float_to_q7(
-  float32_t * pSrc,
+  const float32_t * pSrc,
   q7_t * pDst,
   uint32_t blockSize);
 
@@ -6611,7 +6611,7 @@ void arm_rfft_fast_f32(
    * @param[in]  blockSize  is the number of samples to process
    */
   void arm_q31_to_q15(
-  q31_t * pSrc,
+  const q31_t * pSrc,
   q15_t * pDst,
   uint32_t blockSize);
 
@@ -6623,7 +6623,7 @@ void arm_rfft_fast_f32(
    * @param[in]  blockSize  is the number of samples to process
    */
   void arm_q31_to_q7(
-  q31_t * pSrc,
+  const q31_t * pSrc,
   q7_t * pDst,
   uint32_t blockSize);
 
@@ -6635,7 +6635,7 @@ void arm_rfft_fast_f32(
    * @param[in]  blockSize  is the number of samples to process
    */
   void arm_q15_to_float(
-  q15_t * pSrc,
+  const q15_t * pSrc,
   float32_t * pDst,
   uint32_t blockSize);
 
@@ -6647,7 +6647,7 @@ void arm_rfft_fast_f32(
    * @param[in]  blockSize  is the number of samples to process
    */
   void arm_q15_to_q31(
-  q15_t * pSrc,
+  const q15_t * pSrc,
   q31_t * pDst,
   uint32_t blockSize);
 
@@ -6659,7 +6659,7 @@ void arm_rfft_fast_f32(
    * @param[in]  blockSize  is the number of samples to process
    */
   void arm_q15_to_q7(
-  q15_t * pSrc,
+  const q15_t * pSrc,
   q7_t * pDst,
   uint32_t blockSize);
 

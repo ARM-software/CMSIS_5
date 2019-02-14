@@ -60,7 +60,7 @@
 void arm_lms_norm_init_q15(
   arm_lms_norm_instance_q15 * S,
   uint16_t numTaps,
-  q15_t * pCoeffs,
+  const q15_t * pCoeffs,
   q15_t * pState,
   q15_t mu,
   uint32_t blockSize,

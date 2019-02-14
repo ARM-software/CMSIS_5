@@ -54,8 +54,8 @@ void arm_dct4_q15(
   q15_t * pInlineBuffer)
 {
   uint32_t i;                                    /* Loop counter */
-  q15_t *weights = S->pTwiddle;                  /* Pointer to the Weights table */
-  q15_t *cosFact = S->pCosFactor;                /* Pointer to the cos factors table */
+  const q15_t *weights = S->pTwiddle;                  /* Pointer to the Weights table */
+  const q15_t *cosFact = S->pCosFactor;                /* Pointer to the cos factors table */
   q15_t *pS1, *pS2, *pbuff;                      /* Temporary pointers for input buffer and pState buffer */
   q15_t in;                                      /* Temporary variable */
 

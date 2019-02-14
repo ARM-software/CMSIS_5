@@ -164,14 +164,14 @@
 
 void arm_biquad_cascade_df1_f32(
   const arm_biquad_casd_df1_inst_f32 * S,
-  float32_t * pSrc,
+  const float32_t * pSrc,
   float32_t * pDst,
   uint32_t blockSize)
 {
-  float32_t *pIn = pSrc;                         /*  source pointer            */
+  const float32_t *pIn = pSrc;                   /*  source pointer            */
   float32_t *pOut = pDst;                        /*  destination pointer       */
   float32_t *pState = S->pState;                 /*  pState pointer            */
-  float32_t *pCoeffs = S->pCoeffs;               /*  coefficient pointer       */
+  const float32_t *pCoeffs = S->pCoeffs;         /*  coefficient pointer       */
   float32_t acc;                                 /*  Simulates the accumulator */
   float32_t b0, b1, b2, a1, a2;                  /*  Filter coefficients       */
   float32_t Xn1, Xn2, Yn1, Yn2;                  /*  Filter pState variables   */

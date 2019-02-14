@@ -56,9 +56,9 @@
  */
 
 arm_status arm_conv_partial_q15(
-  q15_t * pSrcA,
+  const q15_t * pSrcA,
   uint32_t srcALen,
-  q15_t * pSrcB,
+  const q15_t * pSrcB,
   uint32_t srcBLen,
   q15_t * pDst,
   uint32_t firstIndex,
@@ -70,13 +70,13 @@ arm_status arm_conv_partial_q15(
 
   /* Run the below code for Cortex-M4 and Cortex-M3 */
 
-  q15_t *pIn1;                                   /* inputA pointer               */
-  q15_t *pIn2;                                   /* inputB pointer               */
+  const q15_t *pIn1;                                   /* inputA pointer               */
+  const q15_t *pIn2;                                   /* inputB pointer               */
   q15_t *pOut = pDst;                            /* output pointer               */
   q63_t sum, acc0, acc1, acc2, acc3;             /* Accumulator                  */
-  q15_t *px;                                     /* Intermediate inputA pointer  */
-  q15_t *py;                                     /* Intermediate inputB pointer  */
-  q15_t *pSrc1, *pSrc2;                          /* Intermediate pointers        */
+  const q15_t *px;                                     /* Intermediate inputA pointer  */
+  const q15_t *py;                                     /* Intermediate inputB pointer  */
+  const q15_t *pSrc1, *pSrc2;                          /* Intermediate pointers        */
   q31_t x0, x1, x2, x3, c0;                      /* Temporary input variables */
   uint32_t j, k, count, check, blkCnt;
   int32_t blockSize1, blockSize2, blockSize3;    /* loop counter                 */
@@ -727,8 +727,8 @@ arm_status arm_conv_partial_q15(
 
   /* Run the below code for Cortex-M0 */
 
-  q15_t *pIn1 = pSrcA;                           /* inputA pointer */
-  q15_t *pIn2 = pSrcB;                           /* inputB pointer */
+  const q15_t *pIn1 = pSrcA;                           /* inputA pointer */
+  const q15_t *pIn2 = pSrcB;                           /* inputB pointer */
   q63_t sum;                                     /* Accumulator */
   uint32_t i, j;                                 /* loop counters */
   arm_status status;                             /* status of Partial convolution */

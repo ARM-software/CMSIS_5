@@ -287,7 +287,7 @@ arm_status arm_mat_cmplx_mult_q15(
           c = *pInB;
           d = *(pInB + 1U);
 
-          /* Multiply and Accumlates */
+          /* Multiply and accumulates */
           sumReal += (q31_t) a *c;
           sumImag += (q31_t) a *d;
           sumReal -= (q31_t) b *d;
@@ -303,7 +303,7 @@ arm_status arm_mat_cmplx_mult_q15(
           /* update pointer */
           pInA += 4U;
 
-          /* Multiply and Accumlates */
+          /* Multiply and accumulates */
           sumReal += (q31_t) a *c;
           sumImag += (q31_t) a *d;
           sumReal -= (q31_t) b *d;
@@ -315,7 +315,7 @@ arm_status arm_mat_cmplx_mult_q15(
           pSourceA = *__SIMD32(pInA)++;
           pSourceB = *__SIMD32(pInB)++;
 
-          /* Multiply and Accumlates */
+          /* Multiply and accumulates */
 #ifdef ARM_MATH_BIG_ENDIAN
           prod1 = -__SMUSD(pSourceA, pSourceB);
 #else
@@ -329,7 +329,7 @@ arm_status arm_mat_cmplx_mult_q15(
           pSourceA = *__SIMD32(pInA)++;
           pSourceB = *__SIMD32(pInB)++;
 
-          /* Multiply and Accumlates */
+          /* Multiply and accumulates */
 #ifdef ARM_MATH_BIG_ENDIAN
           prod1 = -__SMUSD(pSourceA, pSourceB);
 #else
@@ -358,7 +358,7 @@ arm_status arm_mat_cmplx_mult_q15(
           c = *pInB++;
           d = *pInB++;
 
-          /* Multiply and Accumlates */
+          /* Multiply and accumulates */
           sumReal += (q31_t) a *c;
           sumImag += (q31_t) a *d;
           sumReal -= (q31_t) b *d;
@@ -369,7 +369,7 @@ arm_status arm_mat_cmplx_mult_q15(
           pSourceA = *__SIMD32(pInA)++;
           pSourceB = *__SIMD32(pInB)++;
 
-          /* Multiply and Accumlates */
+          /* Multiply and accumulates */
 #ifdef ARM_MATH_BIG_ENDIAN
           prod1 = -__SMUSD(pSourceA, pSourceB);
 #else
