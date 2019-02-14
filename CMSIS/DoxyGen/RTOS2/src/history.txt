@@ -101,8 +101,10 @@
     <tr>
       <td>V5.5.0</td>
       <td>
-       - Updated generated events (reorganized components).
+       - Updated and enhanced generated events (reorganized components).
        - Updated configuration (Event Recorder).
+       - Updated Component Viewer (improved performance).
+       - Minor code optimizations.
       </td>
     </tr>
     <tr>
