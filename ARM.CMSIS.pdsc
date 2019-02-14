@@ -820,7 +820,7 @@ and 8-bit Java bytecodes in Jazelle state.
     <api Cclass="CMSIS Driver" Cgroup="WiFi" Capiversion="1.0.0-beta" exclusive="0">
       <description>WiFi driver</description>
       <files>
-        <file category="header" name="Include/Driver_WiFi.h"/>
+        <file category="header" name="CMSIS/Driver/Include/Driver_WiFi.h"/>
       </files>
     </api>
   </apis>
