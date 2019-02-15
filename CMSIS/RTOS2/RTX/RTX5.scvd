@@ -1370,11 +1370,11 @@
       <component name="Memory Events"       brief="RTX Memory"    no="0xF0" prefix="EvrRtx" info="RTX5 RTOS Memory Management Events" />
       <component name="Kernel Events"       brief="RTX Kernel"    no="0xF1" prefix="EvrRtx" info="RTX5 RTOS Kernel Events" />
       <component name="Thread Events"       brief="RTX Thread"    no="0xF2" prefix="EvrRtx" info="RTX5 RTOS Thread Events" >
-        <state name="Inactive"    plot="off"                       />
-        <state name="Ready"       plot="box"                       />
-        <state name="Running"     plot="box"  bold="1" unique="1"  />
-        <state name="Blocked"     plot="line"                      />
-        <state name="Not-running" plot="line" bold="1" dormant="1" />
+        <state name="Inactive"    plot="off"                               />
+        <state name="Ready"       plot="box"                               />
+        <state name="Running"     plot="box"  bold="1" unique="1" ssel="1" />
+        <state name="Blocked"     plot="line"                              />
+        <state name="Not-running" plot="line" bold="1" dormant="1"         />
       </component>
       <component name="Generic Wait Events" brief="RTX Wait"      no="0xF3" prefix="EvrRtx" info="RTX5 RTOS Generic Wait Events" />
       <component name="ThreadFlags Events"  brief="RTX ThFlags"   no="0xF4" prefix="EvrRtx" info="RTX5 RTOS ThreadFlags Events" />
