@@ -3,7 +3,7 @@
 	
 void ref_rfft_f32(
 	arm_rfft_instance_f32 * S,
-  const float32_t * pSrc,
+  float32_t * pSrc,
   float32_t * pDst)
 {
 	uint32_t i;

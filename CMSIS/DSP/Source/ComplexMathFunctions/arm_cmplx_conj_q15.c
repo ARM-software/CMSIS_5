@@ -51,7 +51,7 @@
  */
 
 void arm_cmplx_conj_q15(
-  const q15_t * pSrc,
+  q15_t * pSrc,
   q15_t * pDst,
   uint32_t numSamples)
 {

@@ -1,9 +1,9 @@
 #include "ref.h"
 
 void ref_correlate_f32(
-  const float32_t * pSrcA,
+  float32_t * pSrcA,
   uint32_t srcALen,
-  const float32_t * pSrcB,
+  float32_t * pSrcB,
   uint32_t srcBLen,
   float32_t * pDst)
 {
@@ -91,9 +91,9 @@ void ref_correlate_q31(
   uint32_t srcBLen,
   q31_t * pDst)
 {
-  const q31_t *pIn1 = pSrcA;                     /* inputA pointer               */
-  const q31_t *pIn2 = pSrcB + (srcBLen - 1U);    /* inputB pointer               */
-  q63_t sum;                                     /* Accumulators                 */
+  q31_t *pIn1 = pSrcA;                           /* inputA pointer               */
+  q31_t *pIn2 = pSrcB + (srcBLen - 1U);          /* inputB pointer               */
+  q63_t sum;                                     /* Accumulators                  */
   uint32_t i = 0U, j;                            /* loop counters */
   uint32_t inv = 0U;                             /* Reverse order flag */
   uint32_t tot = 0U;                             /* Length */
@@ -162,8 +162,8 @@ void ref_correlate_fast_q31(
   uint32_t srcBLen,
   q31_t * pDst)
 {
-  const q31_t *pIn1 = pSrcA;                           /* inputA pointer               */
-  const q31_t *pIn2 = pSrcB + (srcBLen - 1U);          /* inputB pointer               */
+  q31_t *pIn1 = pSrcA;                           /* inputA pointer               */
+  q31_t *pIn2 = pSrcB + (srcBLen - 1U);          /* inputB pointer               */
   q63_t sum;                                     /* Accumulators                  */
   uint32_t i = 0U, j;                            /* loop counters */
   uint32_t inv = 0U;                             /* Reverse order flag */
@@ -234,8 +234,8 @@ void ref_correlate_q15(
   uint32_t srcBLen,
   q15_t * pDst)
 {
-  const q15_t *pIn1 = pSrcA;                           /* inputA pointer               */
-  const q15_t *pIn2 = pSrcB + (srcBLen - 1U);          /* inputB pointer               */
+  q15_t *pIn1 = pSrcA;                           /* inputA pointer               */
+  q15_t *pIn2 = pSrcB + (srcBLen - 1U);          /* inputB pointer               */
   q63_t sum;                                     /* Accumulators                  */
   uint32_t i = 0U, j;                            /* loop counters */
   uint32_t inv = 0U;                             /* Reverse order flag */
@@ -305,8 +305,8 @@ void ref_correlate_fast_q15(
   uint32_t srcBLen,
   q15_t * pDst)
 {
-  const q15_t *pIn1 = pSrcA;                           /* inputA pointer               */
-  const q15_t *pIn2 = pSrcB + (srcBLen - 1U);          /* inputB pointer               */
+  q15_t *pIn1 = pSrcA;                           /* inputA pointer               */
+  q15_t *pIn2 = pSrcB + (srcBLen - 1U);          /* inputB pointer               */
   q63_t sum;                                     /* Accumulators                  */
   uint32_t i = 0U, j;                            /* loop counters */
   uint32_t inv = 0U;                             /* Reverse order flag */
@@ -377,8 +377,8 @@ void ref_correlate_fast_opt_q15(
   q15_t * pDst,
   q15_t * pScratch)
 {
-  const q15_t *pIn1 = pSrcA;                           /* inputA pointer               */
-  const q15_t *pIn2 = pSrcB + (srcBLen - 1U);          /* inputB pointer               */
+  q15_t *pIn1 = pSrcA;                           /* inputA pointer               */
+  q15_t *pIn2 = pSrcB + (srcBLen - 1U);          /* inputB pointer               */
   q31_t sum;                                     /* Accumulators                  */
   uint32_t i = 0U, j;                            /* loop counters */
   uint32_t inv = 0U;                             /* Reverse order flag */
@@ -448,8 +448,8 @@ void ref_correlate_q7(
   uint32_t srcBLen,
   q7_t * pDst)
 {
-  const q7_t *pIn1 = pSrcA;                            /* inputA pointer */
-  const q7_t *pIn2 = pSrcB + (srcBLen - 1U);           /* inputB pointer */
+  q7_t *pIn1 = pSrcA;                            /* inputA pointer */
+  q7_t *pIn2 = pSrcB + (srcBLen - 1U);           /* inputB pointer */
   q31_t sum;                                     /* Accumulator */
   uint32_t i = 0U, j;                            /* loop counters */
   uint32_t inv = 0U;                             /* Reverse order flag */

@@ -65,9 +65,9 @@
  */
 
 void arm_conv_q15(
-  const q15_t * pSrcA,
+  q15_t * pSrcA,
   uint32_t srcALen,
-  const q15_t * pSrcB,
+  q15_t * pSrcB,
   uint32_t srcBLen,
   q15_t * pDst)
 {
@@ -76,13 +76,13 @@ void arm_conv_q15(
 
   /* Run the below code for Cortex-M4 and Cortex-M3 */
 
-  const q15_t *pIn1;                                   /* inputA pointer */
-  const q15_t *pIn2;                                   /* inputB pointer */
+  q15_t *pIn1;                                   /* inputA pointer */
+  q15_t *pIn2;                                   /* inputB pointer */
   q15_t *pOut = pDst;                            /* output pointer */
   q63_t sum, acc0, acc1, acc2, acc3;             /* Accumulator */
-  const q15_t *px;                                     /* Intermediate inputA pointer  */
-  const q15_t *py;                                     /* Intermediate inputB pointer  */
-  const q15_t *pSrc1, *pSrc2;                          /* Intermediate pointers */
+  q15_t *px;                                     /* Intermediate inputA pointer  */
+  q15_t *py;                                     /* Intermediate inputB pointer  */
+  q15_t *pSrc1, *pSrc2;                          /* Intermediate pointers */
   q31_t x0, x1, x2, x3, c0;                      /* Temporary variables to hold state and coefficient values */
   uint32_t blockSize1, blockSize2, blockSize3, j, k, count, blkCnt;     /* loop counter */
 
@@ -687,8 +687,8 @@ void arm_conv_q15(
 
 /* Run the below code for Cortex-M0 */
 
-  const q15_t *pIn1 = pSrcA;                           /* input pointer */
-  const q15_t *pIn2 = pSrcB;                           /* coefficient pointer */
+  q15_t *pIn1 = pSrcA;                           /* input pointer */
+  q15_t *pIn2 = pSrcB;                           /* coefficient pointer */
   q63_t sum;                                     /* Accumulator */
   uint32_t i, j;                                 /* loop counter */
 

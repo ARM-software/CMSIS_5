@@ -59,7 +59,7 @@
 void arm_lms_norm_init_q31(
   arm_lms_norm_instance_q31 * S,
   uint16_t numTaps,
-  const q31_t * pCoeffs,
+  q31_t * pCoeffs,
   q31_t * pState,
   q31_t mu,
   uint32_t blockSize,

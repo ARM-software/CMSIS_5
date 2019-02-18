@@ -59,7 +59,7 @@
  */
 
 void arm_power_q15(
-  const q15_t * pSrc,
+  q15_t * pSrc,
   uint32_t blockSize,
   q63_t * pResult)
 {

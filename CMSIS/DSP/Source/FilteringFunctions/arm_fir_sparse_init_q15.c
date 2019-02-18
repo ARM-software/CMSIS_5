@@ -61,7 +61,7 @@
 void arm_fir_sparse_init_q15(
   arm_fir_sparse_instance_q15 * S,
   uint16_t numTaps,
-  const q15_t * pCoeffs,
+  q15_t * pCoeffs,
   q15_t * pState,
   int32_t * pTapDelay,
   uint16_t maxDelay,

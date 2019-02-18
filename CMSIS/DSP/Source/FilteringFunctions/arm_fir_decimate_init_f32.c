@@ -64,7 +64,7 @@ arm_status arm_fir_decimate_init_f32(
   arm_fir_decimate_instance_f32 * S,
   uint16_t numTaps,
   uint8_t M,
-  const float32_t * pCoeffs,
+  float32_t * pCoeffs,
   float32_t * pState,
   uint32_t blockSize)
 {

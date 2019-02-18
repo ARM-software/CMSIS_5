@@ -61,8 +61,8 @@
 
 
 void arm_dot_prod_f32(
-  const float32_t * pSrcA,
-  const float32_t * pSrcB,
+  float32_t * pSrcA,
+  float32_t * pSrcB,
   uint32_t blockSize,
   float32_t * result)
 {

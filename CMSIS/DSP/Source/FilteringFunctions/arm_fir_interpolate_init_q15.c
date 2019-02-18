@@ -65,7 +65,7 @@ arm_status arm_fir_interpolate_init_q15(
   arm_fir_interpolate_instance_q15 * S,
   uint8_t L,
   uint16_t numTaps,
-  const q15_t * pCoeffs,
+  q15_t * pCoeffs,
   q15_t * pState,
   uint32_t blockSize)
 {

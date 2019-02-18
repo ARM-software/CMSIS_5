@@ -61,14 +61,14 @@
 
 void arm_fir_interpolate_q31(
   const arm_fir_interpolate_instance_q31 * S,
-  const q31_t * pSrc,
+  q31_t * pSrc,
   q31_t * pDst,
   uint32_t blockSize)
 {
   q31_t *pState = S->pState;                     /* State pointer */
-  const q31_t *pCoeffs = S->pCoeffs;                   /* Coefficient pointer */
+  q31_t *pCoeffs = S->pCoeffs;                   /* Coefficient pointer */
   q31_t *pStateCurnt;                            /* Points to the current sample of the state */
-  const q31_t *ptr1, *ptr2;                            /* Temporary pointers for state and coefficient buffers */
+  q31_t *ptr1, *ptr2;                            /* Temporary pointers for state and coefficient buffers */
   q63_t sum0;                                    /* Accumulators */
   q31_t x0, c0;                                  /* Temporary variables to hold state and coefficient values */
   uint32_t i, blkCnt, j;                         /* Loop counters */
@@ -386,12 +386,12 @@ void arm_fir_interpolate_q31(
 
 void arm_fir_interpolate_q31(
   const arm_fir_interpolate_instance_q31 * S,
-  const q31_t * pSrc,
+  q31_t * pSrc,
   q31_t * pDst,
   uint32_t blockSize)
 {
   q31_t *pState = S->pState;                     /* State pointer */
-  const q31_t *pCoeffs = S->pCoeffs;                   /* Coefficient pointer */
+  q31_t *pCoeffs = S->pCoeffs;                   /* Coefficient pointer */
   q31_t *pStateCurnt;                            /* Points to the current sample of the state */
   q31_t *ptr1, *ptr2;                            /* Temporary pointers for state and coefficient buffers */
 
@@ -428,7 +428,7 @@ void arm_fir_interpolate_q31(
       ptr1 = pState;
 
       /* Initialize coefficient pointer */
-      ptr2 = (q31_t*) pCoeffs + (i - 1U);
+      ptr2 = pCoeffs + (i - 1U);
 
       tapCnt = phaseLen;
 

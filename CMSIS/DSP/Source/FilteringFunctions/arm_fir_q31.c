@@ -59,12 +59,12 @@
 
 void arm_fir_q31(
   const arm_fir_instance_q31 * S,
-  const q31_t * pSrc,
+  q31_t * pSrc,
   q31_t * pDst,
   uint32_t blockSize)
 {
   q31_t *pState = S->pState;                     /* State pointer */
-  const q31_t *pCoeffs = S->pCoeffs;                   /* Coefficient pointer */
+  q31_t *pCoeffs = S->pCoeffs;                   /* Coefficient pointer */
   q31_t *pStateCurnt;                            /* Points to the current sample of the state */
 
 
@@ -74,8 +74,8 @@ void arm_fir_q31(
 
   q31_t x0, x1, x2;                              /* Temporary variables to hold state */
   q31_t c0;                                      /* Temporary variable to hold coefficient value */
-  const q31_t *px;                                     /* Temporary pointer for state */
-  const q31_t *pb;                                     /* Temporary pointer for coefficient buffer */
+  q31_t *px;                                     /* Temporary pointer for state */
+  q31_t *pb;                                     /* Temporary pointer for coefficient buffer */
   q63_t acc0, acc1, acc2;                        /* Accumulators */
   uint32_t numTaps = S->numTaps;                 /* Number of filter coefficients in the filter */
   uint32_t i, tapCnt, blkCnt, tapCntN3;          /* Loop counters */
@@ -276,8 +276,8 @@ void arm_fir_q31(
 
 /* Run the below code for Cortex-M0 */
 
-  const q31_t *px;                                     /* Temporary pointer for state */
-  const q31_t *pb;                                     /* Temporary pointer for coefficient buffer */
+  q31_t *px;                                     /* Temporary pointer for state */
+  q31_t *pb;                                     /* Temporary pointer for coefficient buffer */
   q63_t acc;                                     /* Accumulator */
   uint32_t numTaps = S->numTaps;                 /* Length of the filter */
   uint32_t i, tapCnt, blkCnt;                    /* Loop counters */

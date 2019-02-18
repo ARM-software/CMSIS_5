@@ -55,8 +55,8 @@
  */
 
 void arm_dot_prod_q15(
-  const q15_t * pSrcA,
-  const q15_t * pSrcB,
+  q15_t * pSrcA,
+  q15_t * pSrcB,
   uint32_t blockSize,
   q63_t * result)
 {

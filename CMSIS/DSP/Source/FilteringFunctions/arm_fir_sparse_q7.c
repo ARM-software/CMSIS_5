@@ -61,7 +61,7 @@
 
 void arm_fir_sparse_q7(
   arm_fir_sparse_instance_q7 * S,
-  const q7_t * pSrc,
+  q7_t * pSrc,
   q7_t * pDst,
   q7_t * pScratchIn,
   q31_t * pScratchOut,
@@ -69,7 +69,7 @@ void arm_fir_sparse_q7(
 {
 
   q7_t *pState = S->pState;                      /* State pointer */
-  const q7_t *pCoeffs = S->pCoeffs;              /* Coefficient pointer */
+  q7_t *pCoeffs = S->pCoeffs;                    /* Coefficient pointer */
   q7_t *px;                                      /* Scratch buffer pointer */
   q7_t *py = pState;                             /* Temporary pointers for state buffer */
   q7_t *pb = pScratchIn;                         /* Temporary pointers for scratch buffer */

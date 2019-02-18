@@ -52,7 +52,7 @@
  */
 
 void arm_shift_q15(
-  const q15_t * pSrc,
+  q15_t * pSrc,
   int8_t shiftBits,
   q15_t * pDst,
   uint32_t blockSize)

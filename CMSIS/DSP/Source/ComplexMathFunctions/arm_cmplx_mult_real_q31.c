@@ -53,8 +53,8 @@
  */
 
 void arm_cmplx_mult_real_q31(
-  const q31_t * pSrcCmplx,
-  const q31_t * pSrcReal,
+  q31_t * pSrcCmplx,
+  q31_t * pSrcReal,
   q31_t * pCmplxDst,
   uint32_t numSamples)
 {

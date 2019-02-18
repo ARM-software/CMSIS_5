@@ -111,16 +111,16 @@
 
 void arm_fir_sparse_f32(
   arm_fir_sparse_instance_f32 * S,
-  const float32_t * pSrc,
+  float32_t * pSrc,
   float32_t * pDst,
   float32_t * pScratchIn,
   uint32_t blockSize)
 {
 
   float32_t *pState = S->pState;                 /* State pointer */
-  const float32_t *pCoeffs = S->pCoeffs;               /* Coefficient pointer */
-  const float32_t *px;                                 /* Scratch buffer pointer */
-  const float32_t *py = pState;                        /* Temporary pointers for state buffer */
+  float32_t *pCoeffs = S->pCoeffs;               /* Coefficient pointer */
+  float32_t *px;                                 /* Scratch buffer pointer */
+  float32_t *py = pState;                        /* Temporary pointers for state buffer */
   float32_t *pb = pScratchIn;                    /* Temporary pointers for scratch buffer */
   float32_t *pOut;                               /* Destination pointer */
   int32_t *pTapDelay = S->pTapDelay;             /* Pointer to the array containing offset of the non-zero tap values. */

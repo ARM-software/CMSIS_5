@@ -49,7 +49,7 @@
  */
 
 void arm_min_q7(
-  const q7_t * pSrc,
+  q7_t * pSrc,
   uint32_t blockSize,
   q7_t * pResult,
   uint32_t * pIndex)

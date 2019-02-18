@@ -49,7 +49,7 @@
 void arm_fir_lattice_init_q31(
   arm_fir_lattice_instance_q31 * S,
   uint16_t numStages,
-  const q31_t * pCoeffs,
+  q31_t * pCoeffs,
   q31_t * pState)
 {
   /* Assign filter taps */

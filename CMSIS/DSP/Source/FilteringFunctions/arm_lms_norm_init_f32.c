@@ -60,7 +60,7 @@
 void arm_lms_norm_init_f32(
   arm_lms_norm_instance_f32 * S,
   uint16_t numTaps,
-  const float32_t * pCoeffs,
+  float32_t * pCoeffs,
   float32_t * pState,
   float32_t mu,
   uint32_t blockSize)

@@ -32,18 +32,18 @@ extern void arm_bitreversal_f32(
 float32_t * pSrc,
 uint16_t fftSize,
 uint16_t bitRevFactor,
-const uint16_t * pBitRevTab);
+uint16_t * pBitRevTab);
 
 void arm_radix4_butterfly_f32(
 float32_t * pSrc,
 uint16_t fftLen,
-const float32_t * pCoef,
+float32_t * pCoef,
 uint16_t twidCoefModifier);
 
 void arm_radix4_butterfly_inverse_f32(
 float32_t * pSrc,
 uint16_t fftLen,
-const float32_t * pCoef,
+float32_t * pCoef,
 uint16_t twidCoefModifier,
 float32_t onebyfftLen);
 
@@ -110,7 +110,7 @@ void arm_cfft_radix4_f32(
 void arm_radix4_butterfly_f32(
 float32_t * pSrc,
 uint16_t fftLen,
-const float32_t * pCoef,
+float32_t * pCoef,
 uint16_t twidCoefModifier)
 {
 
@@ -614,7 +614,7 @@ uint16_t twidCoefModifier)
 void arm_radix4_butterfly_inverse_f32(
 float32_t * pSrc,
 uint16_t fftLen,
-const float32_t * pCoef,
+float32_t * pCoef,
 uint16_t twidCoefModifier,
 float32_t onebyfftLen)
 {

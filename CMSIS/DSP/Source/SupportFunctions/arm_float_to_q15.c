@@ -62,11 +62,11 @@
 
 
 void arm_float_to_q15(
-  const float32_t * pSrc,
+  float32_t * pSrc,
   q15_t * pDst,
   uint32_t blockSize)
 {
-  const float32_t *pIn = pSrc;                   /* Src pointer */
+  float32_t *pIn = pSrc;                         /* Src pointer */
   uint32_t blkCnt;                               /* loop counter */
 
 #ifdef ARM_MATH_ROUNDING
