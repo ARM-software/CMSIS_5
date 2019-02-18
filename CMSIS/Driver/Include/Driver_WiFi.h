@@ -604,7 +604,7 @@ typedef struct {
                    - \ref ARM_DRIVER_ERROR_PARAMETER   : Parameter error (NULL ip pointer or ip_len different than 4 or 16)
 */
 
-typedef void (*ARM_WIFI_SignalEvent_t) (uint32_t event, void *arg); ///< Pointer to \ref ARM_WIFI_SignalEvent_t: Signal WiFi Event
+typedef void (*ARM_WIFI_SignalEvent_t) (uint32_t event, void *arg); ///< Signal WiFi Event
 
 
 /**
