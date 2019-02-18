@@ -66,8 +66,8 @@ arm_status arm_mat_cmplx_mult_q31(
   const arm_matrix_instance_q31 * pSrcB,
   arm_matrix_instance_q31 * pDst)
 {
-  const q31_t *pIn1 = pSrcA->pData;                    /* input data matrix pointer A */
-  const q31_t *pIn2 = pSrcB->pData;                    /* input data matrix pointer B */
+  q31_t *pIn1 = pSrcA->pData;                    /* input data matrix pointer A */
+  q31_t *pIn2 = pSrcB->pData;                    /* input data matrix pointer B */
   q31_t *pInA = pSrcA->pData;                    /* input data matrix pointer A  */
   q31_t *pOut = pDst->pData;                     /* output data matrix pointer */
   q31_t *px;                                     /* Temporary output data matrix pointer */
@@ -144,7 +144,7 @@ arm_status arm_mat_cmplx_mult_q31(
           /* Reading imaginary part of complex matrix B */
           d0 = *(pIn2 + 1U);
 
-          /* Multiply and accumulates */
+          /* Multiply and Accumlates */
           sumReal1 += (q63_t) a0 *c0;
           sumImag1 += (q63_t) b0 *c0;
 
@@ -152,7 +152,7 @@ arm_status arm_mat_cmplx_mult_q31(
           pIn1 += 2U;
           pIn2 += 2 * numColsB;
 
-          /* Multiply and accumulates */
+          /* Multiply and Accumlates */
           sumReal1 -= (q63_t) b0 *d0;
           sumImag1 += (q63_t) a0 *d0;
 
@@ -164,7 +164,7 @@ arm_status arm_mat_cmplx_mult_q31(
           b1 = *(pIn1 + 1U);
           d1 = *(pIn2 + 1U);
 
-          /* Multiply and accumulates */
+          /* Multiply and Accumlates */
           sumReal1 += (q63_t) a1 *c1;
           sumImag1 += (q63_t) b1 *c1;
 
@@ -172,7 +172,7 @@ arm_status arm_mat_cmplx_mult_q31(
           pIn1 += 2U;
           pIn2 += 2 * numColsB;
 
-          /* Multiply and accumulates */
+          /* Multiply and Accumlates */
           sumReal1 -= (q63_t) b1 *d1;
           sumImag1 += (q63_t) a1 *d1;
 
@@ -182,7 +182,7 @@ arm_status arm_mat_cmplx_mult_q31(
           b0 = *(pIn1 + 1U);
           d0 = *(pIn2 + 1U);
 
-          /* Multiply and accumulates */
+          /* Multiply and Accumlates */
           sumReal1 += (q63_t) a0 *c0;
           sumImag1 += (q63_t) b0 *c0;
 
@@ -190,7 +190,7 @@ arm_status arm_mat_cmplx_mult_q31(
           pIn1 += 2U;
           pIn2 += 2 * numColsB;
 
-          /* Multiply and accumulates */
+          /* Multiply and Accumlates */
           sumReal1 -= (q63_t) b0 *d0;
           sumImag1 += (q63_t) a0 *d0;
 
@@ -202,7 +202,7 @@ arm_status arm_mat_cmplx_mult_q31(
           b1 = *(pIn1 + 1U);
           d1 = *(pIn2 + 1U);
 
-          /* Multiply and accumulates */
+          /* Multiply and Accumlates */
           sumReal1 += (q63_t) a1 *c1;
           sumImag1 += (q63_t) b1 *c1;
 
@@ -210,7 +210,7 @@ arm_status arm_mat_cmplx_mult_q31(
           pIn1 += 2U;
           pIn2 += 2 * numColsB;
 
-          /* Multiply and accumulates */
+          /* Multiply and Accumlates */
           sumReal1 -= (q63_t) b1 *d1;
           sumImag1 += (q63_t) a1 *d1;
 
@@ -231,7 +231,7 @@ arm_status arm_mat_cmplx_mult_q31(
           b1 = *(pIn1 + 1U);
           d1 = *(pIn2 + 1U);
 
-          /* Multiply and accumulates */
+          /* Multiply and Accumlates */
           sumReal1 += (q63_t) a1 *c1;
           sumImag1 += (q63_t) b1 *c1;
 
@@ -239,7 +239,7 @@ arm_status arm_mat_cmplx_mult_q31(
           pIn1 += 2U;
           pIn2 += 2 * numColsB;
 
-          /* Multiply and accumulates */
+          /* Multiply and Accumlates */
           sumReal1 -= (q63_t) b1 *d1;
           sumImag1 += (q63_t) a1 *d1;
 

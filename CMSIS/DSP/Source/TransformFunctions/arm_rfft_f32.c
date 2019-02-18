@@ -35,13 +35,13 @@
 extern void arm_radix4_butterfly_f32(
     float32_t * pSrc,
     uint16_t fftLen,
-    const float32_t * pCoef,
+    float32_t * pCoef,
     uint16_t twidCoefModifier);
 
 extern void arm_radix4_butterfly_inverse_f32(
     float32_t * pSrc,
     uint16_t fftLen,
-    const float32_t * pCoef,
+    float32_t * pCoef,
     uint16_t twidCoefModifier,
     float32_t onebyfftLen);
 
@@ -49,21 +49,21 @@ extern void arm_bitreversal_f32(
     float32_t * pSrc,
     uint16_t fftSize,
     uint16_t bitRevFactor,
-    const uint16_t * pBitRevTab);
+    uint16_t * pBitRevTab);
 
 void arm_split_rfft_f32(
   float32_t * pSrc,
   uint32_t fftLen,
-  const float32_t * pATable,
-  const float32_t * pBTable,
+  float32_t * pATable,
+  float32_t * pBTable,
   float32_t * pDst,
   uint32_t modifier);
 
 void arm_split_rifft_f32(
   float32_t * pSrc,
   uint32_t fftLen,
-  const float32_t * pATable,
-  const float32_t * pBTable,
+  float32_t * pATable,
+  float32_t * pBTable,
   float32_t * pDst,
   uint32_t modifier);
 
@@ -157,14 +157,14 @@ void arm_rfft_f32(
 void arm_split_rfft_f32(
   float32_t * pSrc,
   uint32_t fftLen,
-  const float32_t * pATable,
-  const float32_t * pBTable,
+  float32_t * pATable,
+  float32_t * pBTable,
   float32_t * pDst,
   uint32_t modifier)
 {
   uint32_t i;                                    /* Loop Counter */
   float32_t outR, outI;                          /* Temporary variables for output */
-  const float32_t *pCoefA, *pCoefB;              /* Temporary pointers for twiddle factors */
+  float32_t *pCoefA, *pCoefB;                    /* Temporary pointers for twiddle factors */
   float32_t CoefA1, CoefA2, CoefB1;              /* Temporary variables for twiddle coefficients */
   float32_t *pDst1 = &pDst[2], *pDst2 = &pDst[(4U * fftLen) - 1U];      /* temp pointers for output buffer */
   float32_t *pSrc1 = &pSrc[2], *pSrc2 = &pSrc[(2U * fftLen) - 1U];      /* temp pointers for input buffer */
@@ -251,13 +251,13 @@ void arm_split_rfft_f32(
 void arm_split_rifft_f32(
   float32_t * pSrc,
   uint32_t fftLen,
-  const float32_t * pATable,
-  const float32_t * pBTable,
+  float32_t * pATable,
+  float32_t * pBTable,
   float32_t * pDst,
   uint32_t modifier)
 {
   float32_t outR, outI;                          /* Temporary variables for output */
-  const float32_t *pCoefA, *pCoefB;              /* Temporary pointers for twiddle factors */
+  float32_t *pCoefA, *pCoefB;                    /* Temporary pointers for twiddle factors */
   float32_t CoefA1, CoefA2, CoefB1;              /* Temporary variables for twiddle coefficients */
   float32_t *pSrc1 = &pSrc[0], *pSrc2 = &pSrc[(2U * fftLen) + 1U];
 

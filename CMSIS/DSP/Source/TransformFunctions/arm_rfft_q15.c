@@ -35,16 +35,16 @@
 void arm_split_rfft_q15(
     q15_t * pSrc,
     uint32_t fftLen,
-    const q15_t * pATable,
-    const q15_t * pBTable,
+    q15_t * pATable,
+    q15_t * pBTable,
     q15_t * pDst,
     uint32_t modifier);
 
 void arm_split_rifft_q15(
     q15_t * pSrc,
     uint32_t fftLen,
-    const q15_t * pATable,
-    const q15_t * pBTable,
+    q15_t * pATable,
+    q15_t * pBTable,
     q15_t * pDst,
     uint32_t modifier);
 
@@ -127,14 +127,14 @@ void arm_rfft_q15(
 void arm_split_rfft_q15(
     q15_t * pSrc,
     uint32_t fftLen,
-    const q15_t * pATable,
-    const q15_t * pBTable,
+    q15_t * pATable,
+    q15_t * pBTable,
     q15_t * pDst,
     uint32_t modifier)
 {
     uint32_t i;                                    /* Loop Counter */
     q31_t outR, outI;                              /* Temporary variables for output */
-    const q15_t *pCoefA, *pCoefB;                  /* Temporary pointers for twiddle factors */
+    q15_t *pCoefA, *pCoefB;                        /* Temporary pointers for twiddle factors */
     q15_t *pSrc1, *pSrc2;
 #if defined (ARM_MATH_DSP)
     q15_t *pD1, *pD2;
@@ -282,7 +282,7 @@ void arm_split_rfft_q15(
 /**
 * @brief  Core Real IFFT process
 * @param[in]   *pSrc 				points to the input buffer.
-* @param[in]   fftLen  		        length of FFT.
+* @param[in]   fftLen  		    length of FFT.
 * @param[in]   *pATable 			points to the twiddle Coef A buffer.
 * @param[in]   *pBTable 			points to the twiddle Coef B buffer.
 * @param[out]  *pDst 				points to the output buffer.
@@ -293,14 +293,14 @@ void arm_split_rfft_q15(
 void arm_split_rifft_q15(
     q15_t * pSrc,
     uint32_t fftLen,
-    const q15_t * pATable,
-    const q15_t * pBTable,
+    q15_t * pATable,
+    q15_t * pBTable,
     q15_t * pDst,
     uint32_t modifier)
 {
     uint32_t i;                                    /* Loop Counter */
     q31_t outR, outI;                              /* Temporary variables for output */
-    const q15_t *pCoefA, *pCoefB;                  /* Temporary pointers for twiddle factors */
+    q15_t *pCoefA, *pCoefB;                        /* Temporary pointers for twiddle factors */
     q15_t *pSrc1, *pSrc2;
     q15_t *pDst1 = &pDst[0];
 

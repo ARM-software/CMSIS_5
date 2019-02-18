@@ -2,7 +2,7 @@
 
 void ref_fir_sparse_f32(
   arm_fir_sparse_instance_f32 * S,
-  const float32_t * pSrc,
+  float32_t * pSrc,
   float32_t * pDst,
   float32_t * pScratchIn,
   uint32_t blockSize)
@@ -117,9 +117,9 @@ void ref_fir_sparse_q31(
   uint32_t blockSize)
 {
   q31_t *pState = S->pState;                     /* State pointer */
-  const q31_t *pCoeffs = S->pCoeffs;                   /* Coefficient pointer */
-  const q31_t *px;                                     /* Scratch buffer pointer */
-  const q31_t *py = pState;                            /* Temporary pointers for state buffer */
+  q31_t *pCoeffs = S->pCoeffs;                   /* Coefficient pointer */
+  q31_t *px;                                     /* Scratch buffer pointer */
+  q31_t *py = pState;                            /* Temporary pointers for state buffer */
   q31_t *pb = pScratchIn;                        /* Temporary pointers for scratch buffer */
   q31_t *pOut;                                   /* Destination pointer */
   q63_t out;                                     /* Temporary output variable */
@@ -247,10 +247,10 @@ void ref_fir_sparse_q15(
   q15_t *pState = S->pState;                     /* State pointer */
   q15_t *pIn = pSrc;                             /* Working pointer for input */
   q15_t *pOut = pDst;                            /* Working pointer for output */
-  const q15_t *pCoeffs = S->pCoeffs;                   /* Coefficient pointer */
-  const q15_t *px;                                     /* Temporary pointers for scratch buffer */
+  q15_t *pCoeffs = S->pCoeffs;                   /* Coefficient pointer */
+  q15_t *px;                                     /* Temporary pointers for scratch buffer */
   q15_t *pb = pScratchIn;                        /* Temporary pointers for scratch buffer */
-  const q15_t *py = pState;                            /* Temporary pointers for state buffer */
+  q15_t *py = pState;                            /* Temporary pointers for state buffer */
   int32_t *pTapDelay = S->pTapDelay;             /* Pointer to the array containing offset of the non-zero tap values. */
   uint32_t delaySize = S->maxDelay + blockSize;  /* state length */
   uint16_t numTaps = S->numTaps;                 /* Filter order */
@@ -366,9 +366,9 @@ void ref_fir_sparse_q7(
   uint32_t blockSize)
 {
   q7_t *pState = S->pState;                      /* State pointer */
-  const q7_t *pCoeffs = S->pCoeffs;                    /* Coefficient pointer */
-  const q7_t *px;                                      /* Scratch buffer pointer */
-  const q7_t *py = pState;                             /* Temporary pointers for state buffer */
+  q7_t *pCoeffs = S->pCoeffs;                    /* Coefficient pointer */
+  q7_t *px;                                      /* Scratch buffer pointer */
+  q7_t *py = pState;                             /* Temporary pointers for state buffer */
   q7_t *pb = pScratchIn;                         /* Temporary pointers for scratch buffer */
   q7_t *pOut = pDst;                             /* Destination pointer */
   int32_t *pTapDelay = S->pTapDelay;             /* Pointer to the array containing offset of the non-zero tap values. */

@@ -62,7 +62,7 @@
  */
 
 void arm_var_q31(
-  const q31_t * pSrc,
+  q31_t * pSrc,
   uint32_t blockSize,
   q31_t * pResult)
 {

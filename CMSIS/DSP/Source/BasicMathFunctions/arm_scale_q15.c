@@ -54,7 +54,7 @@
 
 
 void arm_scale_q15(
-  const q15_t * pSrc,
+  q15_t * pSrc,
   q15_t scaleFract,
   int8_t shift,
   q15_t * pDst,

@@ -49,7 +49,7 @@
 void arm_fir_lattice_init_f32(
   arm_fir_lattice_instance_f32 * S,
   uint16_t numStages,
-  const float32_t * pCoeffs,
+  float32_t * pCoeffs,
   float32_t * pState)
 {
   /* Assign filter taps */

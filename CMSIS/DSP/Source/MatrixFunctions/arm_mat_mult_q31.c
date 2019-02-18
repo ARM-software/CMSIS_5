@@ -68,8 +68,8 @@ arm_status arm_mat_mult_q31(
   const arm_matrix_instance_q31 * pSrcB,
   arm_matrix_instance_q31 * pDst)
 {
-  const q31_t *pIn1 = pSrcA->pData;                    /* input data matrix pointer A */
-  const q31_t *pIn2 = pSrcB->pData;                    /* input data matrix pointer B */
+  q31_t *pIn1 = pSrcA->pData;                    /* input data matrix pointer A */
+  q31_t *pIn2 = pSrcB->pData;                    /* input data matrix pointer B */
   q31_t *pInA = pSrcA->pData;                    /* input data matrix pointer A */
   q31_t *pOut = pDst->pData;                     /* output data matrix pointer */
   q31_t *px;                                     /* Temporary output data matrix pointer */

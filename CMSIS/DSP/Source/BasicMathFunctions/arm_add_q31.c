@@ -53,8 +53,8 @@
  */
 
 void arm_add_q31(
-  const q31_t * pSrcA,
-  const q31_t * pSrcB,
+  q31_t * pSrcA,
+  q31_t * pSrcB,
   q31_t * pDst,
   uint32_t blockSize)
 {

@@ -118,14 +118,14 @@
 
 void arm_fir_lattice_f32(
   const arm_fir_lattice_instance_f32 * S,
-  const float32_t * pSrc,
+  float32_t * pSrc,
   float32_t * pDst,
   uint32_t blockSize)
 {
   float32_t *pState;                             /* State pointer */
-  const float32_t *pCoeffs = S->pCoeffs;               /* Coefficient pointer */
+  float32_t *pCoeffs = S->pCoeffs;               /* Coefficient pointer */
   float32_t *px;                                 /* temporary state pointer */
-  const float32_t *pk;                                 /* temporary coefficient pointer */
+  float32_t *pk;                                 /* temporary coefficient pointer */
 
 
 #if defined (ARM_MATH_DSP)

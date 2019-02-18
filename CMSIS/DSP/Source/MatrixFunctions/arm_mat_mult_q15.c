@@ -297,7 +297,7 @@ arm_status arm_mat_mult_q15(
           pSourceA2 = *__SIMD32(pInA)++;
           pSourceB2 = *__SIMD32(pInB)++;
 
-          /* Multiply and accumulates */
+          /* Multiply and Accumlates */
           sum = __SMLALD(pSourceA1, pSourceB1, sum);
           sum = __SMLALD(pSourceA2, pSourceB2, sum);
 
@@ -306,18 +306,18 @@ arm_status arm_mat_mult_q15(
           inA1 = *pInA++;
           inB1 = *pInB++;
           inA2 = *pInA++;
-          /* Multiply and accumulates */
+          /* Multiply and Accumlates */
           sum += inA1 * inB1;
           inB2 = *pInB++;
 
           inA1 = *pInA++;
           inB1 = *pInB++;
-          /* Multiply and accumulates */
+          /* Multiply and Accumlates */
           sum += inA2 * inB2;
           inA2 = *pInA++;
           inB2 = *pInB++;
 
-          /* Multiply and accumulates */
+          /* Multiply and Accumlates */
           sum += inA1 * inB1;
           sum += inA2 * inB2;
 
@@ -359,8 +359,8 @@ arm_status arm_mat_mult_q15(
 
   /* Run the below code for Cortex-M0 */
 
-  const q15_t *pIn1 = pSrcA->pData;              /* input data matrix pointer A */
-  const q15_t *pIn2 = pSrcB->pData;              /* input data matrix pointer B */
+  q15_t *pIn1 = pSrcA->pData;                    /* input data matrix pointer A */
+  q15_t *pIn2 = pSrcB->pData;                    /* input data matrix pointer B */
   q15_t *pInA = pSrcA->pData;                    /* input data matrix pointer A of Q15 type */
   q15_t *pInB = pSrcB->pData;                    /* input data matrix pointer B of Q15 type */
   q15_t *pOut = pDst->pData;                     /* output data matrix pointer */

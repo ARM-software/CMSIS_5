@@ -60,7 +60,7 @@
 
 
 void arm_copy_f32(
-  const float32_t * pSrc,
+  float32_t * pSrc,
   float32_t * pDst,
   uint32_t blockSize)
 {

@@ -51,7 +51,7 @@
  */
 
 void arm_cmplx_conj_q31(
-  const q31_t * pSrc,
+  q31_t * pSrc,
   q31_t * pDst,
   uint32_t numSamples)
 {

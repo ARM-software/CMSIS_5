@@ -54,9 +54,9 @@
  */
 
 arm_status arm_conv_partial_q7(
-  const q7_t * pSrcA,
+  q7_t * pSrcA,
   uint32_t srcALen,
-  const q7_t * pSrcB,
+  q7_t * pSrcB,
   uint32_t srcBLen,
   q7_t * pDst,
   uint32_t firstIndex,
@@ -68,12 +68,12 @@ arm_status arm_conv_partial_q7(
 
   /* Run the below code for Cortex-M4 and Cortex-M3 */
 
-  const q7_t *pIn1;                                    /* inputA pointer */
-  const q7_t *pIn2;                                    /* inputB pointer */
+  q7_t *pIn1;                                    /* inputA pointer */
+  q7_t *pIn2;                                    /* inputB pointer */
   q7_t *pOut = pDst;                             /* output pointer */
-  const q7_t *px;                                      /* Intermediate inputA pointer */
-  const q7_t *py;                                      /* Intermediate inputB pointer */
-  const q7_t *pSrc1, *pSrc2;                           /* Intermediate pointers */
+  q7_t *px;                                      /* Intermediate inputA pointer */
+  q7_t *py;                                      /* Intermediate inputB pointer */
+  q7_t *pSrc1, *pSrc2;                           /* Intermediate pointers */
   q31_t sum, acc0, acc1, acc2, acc3;             /* Accumulator */
   q31_t input1, input2;
   q15_t in1, in2;
@@ -682,8 +682,8 @@ arm_status arm_conv_partial_q7(
 
   /* Run the below code for Cortex-M0 */
 
-  const q7_t *pIn1 = pSrcA;                            /* inputA pointer */
-  const q7_t *pIn2 = pSrcB;                            /* inputB pointer */
+  q7_t *pIn1 = pSrcA;                            /* inputA pointer */
+  q7_t *pIn2 = pSrcB;                            /* inputB pointer */
   q31_t sum;                                     /* Accumulator */
   uint32_t i, j;                                 /* loop counters */
   arm_status status;                             /* status of Partial convolution */

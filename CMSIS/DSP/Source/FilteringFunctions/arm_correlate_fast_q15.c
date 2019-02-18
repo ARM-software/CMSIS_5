@@ -63,21 +63,21 @@
  */
 
 void arm_correlate_fast_q15(
-  const q15_t * pSrcA,
+  q15_t * pSrcA,
   uint32_t srcALen,
-  const q15_t * pSrcB,
+  q15_t * pSrcB,
   uint32_t srcBLen,
   q15_t * pDst)
 {
 #ifndef UNALIGNED_SUPPORT_DISABLE
 
-  const q15_t *pIn1;                                   /* inputA pointer               */
-  const q15_t *pIn2;                                   /* inputB pointer               */
+  q15_t *pIn1;                                   /* inputA pointer               */
+  q15_t *pIn2;                                   /* inputB pointer               */
   q15_t *pOut = pDst;                            /* output pointer               */
   q31_t sum, acc0, acc1, acc2, acc3;             /* Accumulators                  */
-  const q15_t *px;                                     /* Intermediate inputA pointer  */
-  const q15_t *py;                                     /* Intermediate inputB pointer  */
-  const q15_t *pSrc1;                                  /* Intermediate pointers        */
+  q15_t *px;                                     /* Intermediate inputA pointer  */
+  q15_t *py;                                     /* Intermediate inputB pointer  */
+  q15_t *pSrc1;                                  /* Intermediate pointers        */
   q31_t x0, x1, x2, x3, c0;                      /* temporary variables for holding input and coefficient values */
   uint32_t j, k = 0U, count, blkCnt, outBlockSize, blockSize1, blockSize2, blockSize3;  /* loop counter                 */
   int32_t inc = 1;                               /* Destination address modifier */
@@ -616,13 +616,13 @@ void arm_correlate_fast_q15(
 
 #else
 
-  const q15_t *pIn1;                                   /* inputA pointer               */
-  const q15_t *pIn2;                                   /* inputB pointer               */
+  q15_t *pIn1;                                   /* inputA pointer               */
+  q15_t *pIn2;                                   /* inputB pointer               */
   q15_t *pOut = pDst;                            /* output pointer               */
   q31_t sum, acc0, acc1, acc2, acc3;             /* Accumulators                  */
-  const q15_t *px;                                     /* Intermediate inputA pointer  */
-  const q15_t *py;                                     /* Intermediate inputB pointer  */
-  const q15_t *pSrc1;                                  /* Intermediate pointers        */
+  q15_t *px;                                     /* Intermediate inputA pointer  */
+  q15_t *py;                                     /* Intermediate inputB pointer  */
+  q15_t *pSrc1;                                  /* Intermediate pointers        */
   q31_t x0, x1, x2, x3, c0;                      /* temporary variables for holding input and coefficient values */
   uint32_t j, k = 0U, count, blkCnt, outBlockSize, blockSize1, blockSize2, blockSize3;  /* loop counter                 */
   int32_t inc = 1;                               /* Destination address modifier */
