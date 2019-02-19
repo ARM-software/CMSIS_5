@@ -660,7 +660,7 @@ void TC_CoreSimd_MulAcc32 (void) {
   op1_s32 = 0x00000200;
   op2_s32 = 0x00000004;
   op3_s32 = 0x00000100;
-  res_s32 = __SMMLA((int64_t)op1_s32, (int64_t)op2_s32, op3_s32);
+  res_s32 = __SMMLA(op1_s32, op2_s32, op3_s32);
   ASSERT_TRUE(res_s32 == 0x00000100);
 
   op1_s32 = 0x40000000;
