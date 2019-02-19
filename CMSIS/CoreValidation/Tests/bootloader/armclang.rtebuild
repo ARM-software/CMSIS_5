@@ -25,3 +25,8 @@ targets:
     fpu    : fpv5-sp-d16
     float  : hard
     cflags : [ -mcmse ]
+  armcm35pns:
+    cpu    : cortex-m35p
+    fpu    : fpv5-sp-d16
+    float  : hard
+    cflags : [ -mcmse ]
