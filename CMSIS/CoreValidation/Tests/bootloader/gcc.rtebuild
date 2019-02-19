@@ -28,3 +28,11 @@ targets:
     cflags   : [ "-mfpu=${fpu}", -mcmse ]
     asmflags : [ "-mfpu=${fpu}" ]
     linkflags: [ "-mfpu=${fpu}" ]
+  armcm35pns:
+    arch     : armv8-m.main
+    cpu      : cortex-m33
+    fpu      : fpv5-sp-d16
+    float    : hard
+    cflags   : [ "-mfpu=${fpu}", -mcmse ]
+    asmflags : [ "-mfpu=${fpu}" ]
+    linkflags: [ "-mfpu=${fpu}" ]

@@ -102,6 +102,28 @@ targets:
     asmflags : [ "-mfpu=${fpu}" ]
     linkflags: [ "-mfpu=${fpu}" ]
     linkscript: "config/core_m/rtebuild_ns.ld"
+  armcm35p:
+    arch     : armv8-m.main
+    cpu      : cortex-m33
+    fpu      : none
+    float    : soft
+  armcm35ps:
+    arch     : armv8-m.main
+    cpu      : cortex-m33
+    fpu      : fpv5-sp-d16
+    float    : hard
+    cflags   : [ "-mfpu=${fpu}", -mcmse ]
+    asmflags : [ "-mfpu=${fpu}" ]
+    linkflags: [ "-mfpu=${fpu}" ]
+  armcm35pns:
+    arch     : armv8-m.main
+    cpu      : cortex-m33
+    fpu      : fpv5-sp-d16
+    float    : hard
+    cflags   : [ "-mfpu=${fpu}" ]
+    asmflags : [ "-mfpu=${fpu}" ]
+    linkflags: [ "-mfpu=${fpu}" ]
+    linkscript: "config/core_m/rtebuild_ns.ld"
   armca:
     csettings  : [ -marm ]
     cflags     : [ -xc, -std=gnu99, -c, "-mcpu=${cpu}", "-mfpu=${fpu}", "-mfloat-abi=${float}", "${csettings}", "${cwarnings}" ]
