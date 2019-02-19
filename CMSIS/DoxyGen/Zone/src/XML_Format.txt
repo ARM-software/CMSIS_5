@@ -4,7 +4,7 @@
 
 The <b>Zone Description Format</b> is a tool agnostic storage format and is split into:
 
- - <b>Resource File</b> that describes the resources available. 
+ - <b>Resource File</b> that describes the system resources available. 
  - <b>Assignment File</b> that describes the resource partitioning.
 
 The combination of both <b>Resource File</b> and <b>Assignment File</b> can be used to create a new derived <b>Resource File</b> that only
@@ -28,9 +28,10 @@ is described with schema files that are located in the ARM.CMSIS pack in the dir
 
  File type  | Schema file   | Description
 :-----------|:--------------|:-------------
-*.rzone     | rzone.xsd     | Stores the resources (processors, memory, peripherals) available.
+*.rzone     | rzone.xsd     | Stores the system resources (processors, memory, peripherals) available.
 *.azone     | azone.xsd     | Stores the system partitioning which includes assignments and memory splits for a related .rzone file.
 
+\anchor rzone
 Top-level .rzone XML elements
 =============================
  - \subpage xml_rzone_pg "<rzone>" is the root element of the *.rzone file.
@@ -69,6 +70,7 @@ Structure of .rzone XML file
 </rzone>
 \endcode
 
+\anchor azone
 Top-level .azone XML elements
 =============================
  - \subpage xml_azone_pg "<azone>" is the root element of the *.azone file.
