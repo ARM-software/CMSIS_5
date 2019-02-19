@@ -2182,7 +2182,7 @@ typedef struct
   {
     arm_cfft_instance_f32 Sint;      /**< Internal CFFT structure. */
     uint16_t fftLenRFFT;             /**< length of the real sequence */
-    float32_t * pTwiddleRFFT;        /**< Twiddle factors real stage  */
+    const float32_t * pTwiddleRFFT;  /**< Twiddle factors real stage  */
   } arm_rfft_fast_instance_f32 ;
 
 arm_status arm_rfft_fast_init_f32 (

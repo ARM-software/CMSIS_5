@@ -32,14 +32,14 @@ void stage_rfft_f32(
   arm_rfft_fast_instance_f32 * S,
   float32_t * p, float32_t * pOut)
 {
-   uint32_t  k;								   /* Loop Counter                     */
-   float32_t twR, twI;						   /* RFFT Twiddle coefficients        */
-   float32_t * pCoeff = S->pTwiddleRFFT;  /* Points to RFFT Twiddle factors   */
-   float32_t *pA = p;						   /* increasing pointer               */
-   float32_t *pB = p;						   /* decreasing pointer               */
+   uint32_t  k;								    /* Loop Counter                     */
+   float32_t twR, twI;						    /* RFFT Twiddle coefficients        */
+   const float32_t * pCoeff = S->pTwiddleRFFT;  /* Points to RFFT Twiddle factors   */
+   float32_t *pA = p;						    /* increasing pointer               */
+   float32_t *pB = p;						    /* decreasing pointer               */
    float32_t xAR, xAI, xBR, xBI;				/* temporary variables              */
-   float32_t t1a, t1b;				         /* temporary variables              */
-   float32_t p0, p1, p2, p3;				   /* temporary variables              */
+   float32_t t1a, t1b;				            /* temporary variables              */
+   float32_t p0, p1, p2, p3;				    /* temporary variables              */
 
 
    k = (S->Sint).fftLen - 1;
@@ -118,13 +118,13 @@ void merge_rfft_f32(
 arm_rfft_fast_instance_f32 * S,
 float32_t * p, float32_t * pOut)
 {
-   uint32_t  k;								/* Loop Counter                     */
-   float32_t twR, twI;						/* RFFT Twiddle coefficients        */
-   float32_t *pCoeff = S->pTwiddleRFFT;		/* Points to RFFT Twiddle factors   */
-   float32_t *pA = p;						/* increasing pointer               */
-   float32_t *pB = p;						/* decreasing pointer               */
-   float32_t xAR, xAI, xBR, xBI;			/* temporary variables              */
-   float32_t t1a, t1b, r, s, t, u;			/* temporary variables              */
+   uint32_t  k;								  /* Loop Counter                    */
+   float32_t twR, twI;						  /* RFFT Twiddle coefficients       */
+   const float32_t *pCoeff = S->pTwiddleRFFT; /* Points to RFFT Twiddle factors  */
+   float32_t *pA = p;						  /* increasing pointer              */
+   float32_t *pB = p;						  /* decreasing pointer              */
+   float32_t xAR, xAI, xBR, xBI;			  /* temporary variables             */
+   float32_t t1a, t1b, r, s, t, u;			  /* temporary variables             */
 
    k = (S->Sint).fftLen - 1;
 

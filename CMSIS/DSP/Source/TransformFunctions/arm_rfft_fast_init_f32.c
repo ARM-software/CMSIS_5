@@ -56,8 +56,8 @@ arm_status arm_rfft_32_fast_init_f32( arm_rfft_fast_instance_f32 * S ) {
 
   Sint->bitRevLength = ARMBITREVINDEXTABLE_16_TABLE_LENGTH;
   Sint->pBitRevTable = (uint16_t *)armBitRevIndexTable16;
-  Sint->pTwiddle     = (float32_t *) twiddleCoef_16;
-  S->pTwiddleRFFT    = (float32_t *) twiddleCoef_rfft_32;
+  Sint->pTwiddle     = (const float32_t *) twiddleCoef_16;
+  S->pTwiddleRFFT    = (const float32_t *) twiddleCoef_rfft_32;
 
   return ARM_MATH_SUCCESS;
 
@@ -80,8 +80,8 @@ arm_status arm_rfft_64_fast_init_f32( arm_rfft_fast_instance_f32 * S ) {
 
   Sint->bitRevLength = ARMBITREVINDEXTABLE_32_TABLE_LENGTH;
   Sint->pBitRevTable = (uint16_t *)armBitRevIndexTable32;
-  Sint->pTwiddle     = (float32_t *) twiddleCoef_32;
-  S->pTwiddleRFFT    = (float32_t *) twiddleCoef_rfft_64;
+  Sint->pTwiddle     = (const float32_t *) twiddleCoef_32;
+  S->pTwiddleRFFT    = (const float32_t *) twiddleCoef_rfft_64;
 
   return ARM_MATH_SUCCESS;
 
