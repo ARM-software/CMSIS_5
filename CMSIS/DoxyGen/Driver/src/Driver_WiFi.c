@@ -485,6 +485,18 @@ Example:
 */
 
 
+void ARM_WIFI_SignalEvent (uint32_t event, void *arg) {
+}
+/**
+  \fn            void ARM_WIFI_SignalEvent (uint32_t event, void *arg)
+\details
+ 
+Example:
+\code
+\endcode
+*/
+
+
 /**
 \defgroup WiFi_option WiFi SetOption/GetOption Function Option Codes
 \ingroup wifi_interface_gr
