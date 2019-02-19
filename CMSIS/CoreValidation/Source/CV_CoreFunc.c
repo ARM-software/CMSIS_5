@@ -308,11 +308,11 @@ void TC_CoreFunc_IPSR (void) {
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 
 #if defined(__CC_ARM)
-#define SUBS(Rd, Rm, Rn) __ASM("SUBS " # Rd ", " # Rm ", " # Rn)
-#define ADDS(Rd, Rm, Rn) __ASM("ADDS " # Rd ", " # Rm ", " # Rn)
+#define SUBS(Rd, Rm, Rn) __ASM volatile("SUBS " # Rd ", " # Rm ", " # Rn)
+#define ADDS(Rd, Rm, Rn) __ASM volatile("ADDS " # Rd ", " # Rm ", " # Rn)
 #elif defined( __GNUC__ )  && (!defined(__ARMCC_VERSION))  && (defined(__ARM_ARCH_6M__) || defined(__ARM_ARCH_8M_BASE__))
-#define SUBS(Rd, Rm, Rn) __ASM("SUB %0, %1, %2" : "=r"(Rd) : "r"(Rm), "r"(Rn) : "cc")
-#define ADDS(Rd, Rm, Rn) __ASM("ADD %0, %1, %2" : "=r"(Rd) : "r"(Rm), "r"(Rn) : "cc")
+#define SUBS(Rd, Rm, Rn) __ASM volatile("SUB %0, %1, %2" : "=r"(Rd) : "r"(Rm), "r"(Rn) : "cc")
+#define ADDS(Rd, Rm, Rn) __ASM volatile("ADD %0, %1, %2" : "=r"(Rd) : "r"(Rm), "r"(Rn) : "cc")
 #elif defined(_lint)
 //lint -save -e(9026) allow function-like macro
 #define SUBS(Rd, Rm, Rn) ((Rd) = (Rm) - (Rn))
@@ -331,13 +331,13 @@ void TC_CoreFunc_IPSR (void) {
 - Check negative, zero and overflow flags
 */
 void TC_CoreFunc_APSR (void) {
-  uint32_t result;
+  volatile uint32_t result;
   //lint -esym(838, Rm) unused values
   //lint -esym(438, Rm) unused values
 
   // Check negative flag
-  int32_t Rm = 5;
-  int32_t Rn = 7;
+  volatile int32_t Rm = 5;
+  volatile int32_t Rn = 7;
   SUBS(Rm, Rm, Rn);
   result  = __get_APSR();
   ASSERT_TRUE((result & APSR_N_Msk) == APSR_N_Msk);
