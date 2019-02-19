@@ -340,7 +340,7 @@ typedef struct {
   \fn            int32_t ARM_WIFI_EthReadFrame (uint8_t *frame, uint32_t len)
   \brief         Read data of received Ethernet frame (in bypass mode only).
   \param[in]     frame    Pointer to frame buffer for data to read into
-  \param[in]    len      Frame buffer length in bytes
+  \param[in]     len      Frame buffer length in bytes
   \return        number of data bytes read or error code
                    - value >= 0                        : Number of data bytes read
                    - \ref ARM_DRIVER_ERROR             : Operation failed
@@ -603,8 +603,15 @@ typedef struct {
                    - \ref ARM_DRIVER_ERROR_UNSUPPORTED : Operation not supported
                    - \ref ARM_DRIVER_ERROR_PARAMETER   : Parameter error (NULL ip pointer or ip_len different than 4 or 16)
 */
+/**
+  \fn            void ARM_WIFI_SignalEvent (uint32_t event, void *arg)
+  \brief         Signal WiFi Events.
+  \param[in]     event    \ref wifi_event notification mask
+  \param[in]     arg      Pointer to argument of signaled event
+  \return        none
+*/
 
-typedef void (*ARM_WIFI_SignalEvent_t) (uint32_t event, void *arg); ///< Signal WiFi Event
+typedef void (*ARM_WIFI_SignalEvent_t) (uint32_t event, void *arg); ///< Pointer to \ref ARM_WIFI_SignalEvent : Signal WiFi Event.
 
 
 /**
