@@ -23,7 +23,7 @@ void ref_std_f32(
 }
 
 void ref_std_q31(
-  q31_t * pSrc,
+  const q31_t * pSrc,
   uint32_t blockSize,
   q31_t * pResult)
 {
@@ -49,7 +49,7 @@ void ref_std_q31(
 }
 
 void ref_std_q15(
-  q15_t * pSrc,
+  const q15_t * pSrc,
   uint32_t blockSize,
   q15_t * pResult)
 {

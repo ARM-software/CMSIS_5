@@ -14,7 +14,7 @@ void ref_q63_to_float(
 }
 
 void ref_q31_to_float(
-  q31_t * pSrc,
+  const q31_t * pSrc,
   float32_t * pDst,
   uint32_t blockSize)
 {
@@ -27,7 +27,7 @@ void ref_q31_to_float(
 }
 	
 void ref_q15_to_float(
-  q15_t * pSrc,
+  const q15_t * pSrc,
   float32_t * pDst,
   uint32_t blockSize)
 {
@@ -40,7 +40,7 @@ void ref_q15_to_float(
 }
 	
 void ref_q7_to_float(
-  q7_t * pSrc,
+  const q7_t * pSrc,
   float32_t * pDst,
   uint32_t blockSize)
 {

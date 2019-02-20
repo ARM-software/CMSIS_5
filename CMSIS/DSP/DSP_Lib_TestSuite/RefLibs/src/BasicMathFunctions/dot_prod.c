@@ -17,8 +17,8 @@ void ref_dot_prod_f32(
 }
 
 void ref_dot_prod_q31(
-  q31_t * pSrcA,
-  q31_t * pSrcB,
+  const q31_t * pSrcA,
+  const q31_t * pSrcB,
   uint32_t blockSize,
   q63_t * result)
 {
@@ -33,8 +33,8 @@ void ref_dot_prod_q31(
 }
 
 void ref_dot_prod_q15(
-  q15_t * pSrcA,
-  q15_t * pSrcB,
+  const q15_t * pSrcA,
+  const q15_t * pSrcB,
   uint32_t blockSize,
   q63_t * result)
 {
@@ -49,8 +49,8 @@ void ref_dot_prod_q15(
 }
 
 void ref_dot_prod_q7(
-  q7_t * pSrcA,
-  q7_t * pSrcB,
+  const q7_t * pSrcA,
+  const q7_t * pSrcB,
   uint32_t blockSize,
   q31_t * result)
 {

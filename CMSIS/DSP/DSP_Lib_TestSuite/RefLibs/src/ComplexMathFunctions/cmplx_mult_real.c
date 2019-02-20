@@ -16,8 +16,8 @@ void ref_cmplx_mult_real_f32(
 }
 
 void ref_cmplx_mult_real_q31(
-  q31_t * pSrcCmplx,
-  q31_t * pSrcReal,
+  const q31_t * pSrcCmplx,
+  const q31_t * pSrcReal,
   q31_t * pCmplxDst,
   uint32_t numSamples)
 {
@@ -34,8 +34,8 @@ void ref_cmplx_mult_real_q31(
 }
 
 void ref_cmplx_mult_real_q15(
-  q15_t * pSrcCmplx,
-  q15_t * pSrcReal,
+  const q15_t * pSrcCmplx,
+  const q15_t * pSrcReal,
   q15_t * pCmplxDst,
   uint32_t numSamples)
 {

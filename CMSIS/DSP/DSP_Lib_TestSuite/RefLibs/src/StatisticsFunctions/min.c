@@ -22,7 +22,7 @@ void ref_min_f32(
 }
 
 void ref_min_q31(
-  q31_t * pSrc,
+  const q31_t * pSrc,
   uint32_t blockSize,
   q31_t * pResult,
   uint32_t * pIndex)
@@ -43,7 +43,7 @@ void ref_min_q31(
 }
 
 void ref_min_q15(
-  q15_t * pSrc,
+  const q15_t * pSrc,
   uint32_t blockSize,
   q15_t * pResult,
   uint32_t * pIndex)
@@ -64,7 +64,7 @@ void ref_min_q15(
 }
 
 void ref_min_q7(
-  q7_t * pSrc,
+  const q7_t * pSrc,
   uint32_t blockSize,
   q7_t * pResult,
   uint32_t * pIndex)

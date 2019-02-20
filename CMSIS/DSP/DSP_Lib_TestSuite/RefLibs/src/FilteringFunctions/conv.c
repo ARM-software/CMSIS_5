@@ -46,9 +46,9 @@ arm_status ref_conv_partial_f32(
 }
 
 void ref_conv_q31(
-  q31_t * pSrcA,
+  const q31_t * pSrcA,
   uint32_t srcALen,
-  q31_t * pSrcB,
+  const q31_t * pSrcB,
   uint32_t srcBLen,
   q31_t * pDst)
 {
@@ -78,9 +78,9 @@ void ref_conv_q31(
 }
 
 void ref_conv_fast_q31(
-  q31_t * pSrcA,
+  const q31_t * pSrcA,
   uint32_t srcALen,
-  q31_t * pSrcB,
+  const q31_t * pSrcB,
   uint32_t srcBLen,
   q31_t * pDst)
 {
@@ -111,9 +111,9 @@ void ref_conv_fast_q31(
 }
 
 arm_status ref_conv_partial_q31(
-  q31_t * pSrcA,
+  const q31_t * pSrcA,
   uint32_t srcALen,
-  q31_t * pSrcB,
+  const q31_t * pSrcB,
   uint32_t srcBLen,
   q31_t * pDst,
   uint32_t firstIndex,
@@ -125,9 +125,9 @@ arm_status ref_conv_partial_q31(
 }
 
 arm_status ref_conv_partial_fast_q31(
-  q31_t * pSrcA,
+  const q31_t * pSrcA,
   uint32_t srcALen,
-  q31_t * pSrcB,
+  const q31_t * pSrcB,
   uint32_t srcBLen,
   q31_t * pDst,
   uint32_t firstIndex,
@@ -139,9 +139,9 @@ arm_status ref_conv_partial_fast_q31(
 }
 
 void ref_conv_q15(
-  q15_t * pSrcA,
+  const q15_t * pSrcA,
   uint32_t srcALen,
-  q15_t * pSrcB,
+  const q15_t * pSrcB,
   uint32_t srcBLen,
   q15_t * pDst)
 {
@@ -171,9 +171,9 @@ void ref_conv_q15(
 }
 
 arm_status ref_conv_partial_fast_opt_q15(
-  q15_t * pSrcA,
+  const q15_t * pSrcA,
   uint32_t srcALen,
-  q15_t * pSrcB,
+  const q15_t * pSrcB,
   uint32_t srcBLen,
   q15_t * pDst,
   uint32_t firstIndex,
@@ -209,9 +209,9 @@ arm_status ref_conv_partial_fast_opt_q15(
 }
 
 void ref_conv_fast_q15(
-  q15_t * pSrcA,
+  const q15_t * pSrcA,
   uint32_t srcALen,
-  q15_t * pSrcB,
+  const q15_t * pSrcB,
   uint32_t srcBLen,
   q15_t * pDst)
 {
@@ -241,9 +241,9 @@ void ref_conv_fast_q15(
 }
 
 void ref_conv_fast_opt_q15(
-  q15_t * pSrcA,
+  const q15_t * pSrcA,
   uint32_t srcALen,
-  q15_t * pSrcB,
+  const q15_t * pSrcB,
   uint32_t srcBLen,
   q15_t * pDst,
   q15_t * pScratch1,
@@ -275,9 +275,9 @@ void ref_conv_fast_opt_q15(
 }
 
 arm_status ref_conv_partial_q15(
-  q15_t * pSrcA,
+  const q15_t * pSrcA,
   uint32_t srcALen,
-  q15_t * pSrcB,
+  const q15_t * pSrcB,
   uint32_t srcBLen,
   q15_t * pDst,
   uint32_t firstIndex,
@@ -289,9 +289,9 @@ arm_status ref_conv_partial_q15(
 }
 
 arm_status ref_conv_partial_fast_q15(
-  q15_t * pSrcA,
+  const q15_t * pSrcA,
   uint32_t srcALen,
-  q15_t * pSrcB,
+  const q15_t * pSrcB,
   uint32_t srcBLen,
   q15_t * pDst,
   uint32_t firstIndex,
@@ -304,9 +304,9 @@ arm_status ref_conv_partial_fast_q15(
 
 
 void ref_conv_q7(
-  q7_t * pSrcA,
+  const q7_t * pSrcA,
   uint32_t srcALen,
-  q7_t * pSrcB,
+  const q7_t * pSrcB,
   uint32_t srcBLen,
   q7_t * pDst)
 {
@@ -336,9 +336,9 @@ void ref_conv_q7(
 }
 
 arm_status ref_conv_partial_q7(
-  q7_t * pSrcA,
+  const q7_t * pSrcA,
   uint32_t srcALen,
-  q7_t * pSrcB,
+  const q7_t * pSrcB,
   uint32_t srcBLen,
   q7_t * pDst,
   uint32_t firstIndex,

@@ -7,7 +7,7 @@ void ref_fir_decimate_f32(
   uint32_t blockSize)
 {
   float32_t *pState = S->pState;                 /* State pointer */
-  float32_t *pCoeffs = S->pCoeffs;               /* Coefficient pointer */
+  const float32_t *pCoeffs = S->pCoeffs;               /* Coefficient pointer */
   float32_t *pStateCurnt;                        /* Points to the current sample of the state */
   float32_t sum0;                                /* Accumulator */
   float32_t x0, c0;                              /* Temporary variables to hold state and coefficient values */
@@ -78,7 +78,7 @@ void ref_fir_decimate_f32(
 
 void ref_fir_decimate_q31(
   const arm_fir_decimate_instance_q31 * S,
-  q31_t * pSrc,
+  const q31_t * pSrc,
   q31_t * pDst,
   uint32_t blockSize)
 {
@@ -155,7 +155,7 @@ void ref_fir_decimate_q31(
 
 void ref_fir_decimate_fast_q31(
   const arm_fir_decimate_instance_q31 * S,
-  q31_t * pSrc,
+  const q31_t * pSrc,
   q31_t * pDst,
   uint32_t blockSize)
 {
@@ -232,7 +232,7 @@ void ref_fir_decimate_fast_q31(
 
 void ref_fir_decimate_q15(
   const arm_fir_decimate_instance_q15 * S,
-  q15_t * pSrc,
+  const q15_t * pSrc,
   q15_t * pDst,
   uint32_t blockSize)
 {
@@ -309,7 +309,7 @@ void ref_fir_decimate_q15(
 
 void ref_fir_decimate_fast_q15(
   const arm_fir_decimate_instance_q15 * S,
-  q15_t * pSrc,
+  const q15_t * pSrc,
   q15_t * pDst,
   uint32_t blockSize)
 {

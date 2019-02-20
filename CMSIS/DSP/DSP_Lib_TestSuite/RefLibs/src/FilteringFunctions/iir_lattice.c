@@ -2,7 +2,7 @@
 
 void ref_iir_lattice_f32(
   const arm_iir_lattice_instance_f32 * S,
-  const float32_t * pSrc,
+  float32_t * pSrc,
   float32_t * pDst,
   uint32_t blockSize)
 {
@@ -95,7 +95,7 @@ void ref_iir_lattice_q31(
   q31_t fcurr, fnext = 0, gcurr = 0, gnext;      /* Temporary variables for lattice stages */
   q63_t acc;                                     /* Accumlator */
   uint32_t blkCnt, tapCnt;                       /* Temporary variables for counts */
-  const q31_t *px1, *px2, *pk, *pv;                    /* Temporary pointers for state and coef */
+  q31_t *px1, *px2, *pk, *pv;                    /* Temporary pointers for state and coef */
   uint32_t numStages = S->numStages;             /* number of stages */
   q31_t *pState;                                 /* State pointer */
   q31_t *pStateCurnt;                            /* State current pointer */
@@ -188,7 +188,7 @@ void ref_iir_lattice_q15(
   uint32_t stgCnt;                               /* Temporary variables for counts */
   q63_t acc;                                     /* Accumlator */
   uint32_t blkCnt, tapCnt;                       /* Temporary variables for counts */
-  const q15_t *px1, *px2, *pk, *pv;                    /* temporary pointers for state and coef */
+  q15_t *px1, *px2, *pk, *pv;                    /* temporary pointers for state and coef */
   uint32_t numStages = S->numStages;             /* number of stages */
   q15_t *pState;                                 /* State pointer */
   q15_t *pStateCurnt;                            /* State current pointer */

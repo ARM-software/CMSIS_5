@@ -1,7 +1,7 @@
 #include "ref.h"
 
 void ref_q31_to_q15(
-  q31_t * pSrc,
+  const q31_t * pSrc,
   q15_t * pDst,
   uint32_t blockSize)
 {
@@ -14,7 +14,7 @@ void ref_q31_to_q15(
 }
 
 void ref_q31_to_q7(
-  q31_t * pSrc,
+  const q31_t * pSrc,
   q7_t * pDst,
   uint32_t blockSize)
 {
@@ -27,7 +27,7 @@ void ref_q31_to_q7(
 }
 
 void ref_q15_to_q31(
-  q15_t * pSrc,
+  const q15_t * pSrc,
   q31_t * pDst,
   uint32_t blockSize)
 {
@@ -40,7 +40,7 @@ void ref_q15_to_q31(
 }
 
 void ref_q15_to_q7(
-  q15_t * pSrc,
+  const q15_t * pSrc,
   q7_t * pDst,
   uint32_t blockSize)
 {
@@ -53,7 +53,7 @@ void ref_q15_to_q7(
 }
 
 void ref_q7_to_q31(
-  q7_t * pSrc,
+  const q7_t * pSrc,
   q31_t * pDst,
   uint32_t blockSize)
 {
@@ -66,7 +66,7 @@ void ref_q7_to_q31(
 }
 
 void ref_q7_to_q15(
-  q7_t * pSrc,
+  const q7_t * pSrc,
   q15_t * pDst,
   uint32_t blockSize)
 {

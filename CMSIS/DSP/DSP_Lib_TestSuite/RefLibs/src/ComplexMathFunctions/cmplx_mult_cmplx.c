@@ -16,8 +16,8 @@ void ref_cmplx_mult_cmplx_f32(
 }
 
 void ref_cmplx_mult_cmplx_q31(
-  q31_t * pSrcA,
-  q31_t * pSrcB,
+  const q31_t * pSrcA,
+  const q31_t * pSrcB,
   q31_t * pDst,
   uint32_t numSamples)
 {
@@ -36,8 +36,8 @@ void ref_cmplx_mult_cmplx_q31(
 }
 
 void ref_cmplx_mult_cmplx_q15(
-  q15_t * pSrcA,
-  q15_t * pSrcB,
+  const q15_t * pSrcA,
+  const q15_t * pSrcB,
   q15_t * pDst,
   uint32_t numSamples)
 {

@@ -7,12 +7,12 @@ void ref_correlate_f32(
   uint32_t srcBLen,
   float32_t * pDst)
 {
-  float32_t *pIn1 = pSrcA;                       /* inputA pointer 			*/
-  float32_t *pIn2 = pSrcB + (srcBLen - 1U);      /* inputB pointer 			*/
-  float32_t sum;                                 /* Accumulator 				*/
-  uint32_t i = 0U, j;                            /* loop counters 			*/
-  uint32_t inv = 0U;                             /* Reverse order flag 	*/
-  uint32_t tot = 0U;                             /* Length 							*/
+  const float32_t *pIn1 = pSrcA;                   /* inputA pointer 		*/
+  const float32_t *pIn2 = pSrcB + (srcBLen - 1U);  /* inputB pointer 		*/
+  float32_t sum;                                   /* Accumulator 			*/
+  uint32_t i = 0U, j;                              /* loop counters 		*/
+  uint32_t inv = 0U;                               /* Reverse order flag 	*/
+  uint32_t tot = 0U;                               /* Length 				*/
 
   /* The algorithm implementation is based on the lengths of the inputs. 
    * srcB is always made to slide across srcA. 
@@ -85,9 +85,9 @@ void ref_correlate_f32(
 }
 
 void ref_correlate_q31(
-  q31_t * pSrcA,
+  const q31_t * pSrcA,
   uint32_t srcALen,
-  q31_t * pSrcB,
+  const q31_t * pSrcB,
   uint32_t srcBLen,
   q31_t * pDst)
 {
@@ -156,9 +156,9 @@ void ref_correlate_q31(
 }
 
 void ref_correlate_fast_q31(
-  q31_t * pSrcA,
+  const q31_t * pSrcA,
   uint32_t srcALen,
-  q31_t * pSrcB,
+  const q31_t * pSrcB,
   uint32_t srcBLen,
   q31_t * pDst)
 {
@@ -228,9 +228,9 @@ void ref_correlate_fast_q31(
 }
 
 void ref_correlate_q15(
-  q15_t * pSrcA,
+  const q15_t * pSrcA,
   uint32_t srcALen,
-  q15_t * pSrcB,
+  const q15_t * pSrcB,
   uint32_t srcBLen,
   q15_t * pDst)
 {
@@ -299,9 +299,9 @@ void ref_correlate_q15(
 }
 
 void ref_correlate_fast_q15(
-  q15_t * pSrcA,
+  const q15_t * pSrcA,
   uint32_t srcALen,
-  q15_t * pSrcB,
+  const q15_t * pSrcB,
   uint32_t srcBLen,
   q15_t * pDst)
 {
@@ -370,9 +370,9 @@ void ref_correlate_fast_q15(
 }
 
 void ref_correlate_fast_opt_q15(
-  q15_t * pSrcA,
+  const q15_t * pSrcA,
   uint32_t srcALen,
-  q15_t * pSrcB,
+  const q15_t * pSrcB,
   uint32_t srcBLen,
   q15_t * pDst,
   q15_t * pScratch)
@@ -442,9 +442,9 @@ void ref_correlate_fast_opt_q15(
 }
 
 void ref_correlate_q7(
-  q7_t * pSrcA,
+  const q7_t * pSrcA,
   uint32_t srcALen,
-  q7_t * pSrcB,
+  const q7_t * pSrcB,
   uint32_t srcBLen,
   q7_t * pDst)
 {

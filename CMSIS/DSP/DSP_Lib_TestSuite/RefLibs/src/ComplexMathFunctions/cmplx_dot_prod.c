@@ -24,8 +24,8 @@ void ref_cmplx_dot_prod_f32(
 }
 
 void ref_cmplx_dot_prod_q31(
-  q31_t * pSrcA,
-  q31_t * pSrcB,
+  const q31_t * pSrcA,
+  const q31_t * pSrcB,
   uint32_t numSamples,
   q63_t * realResult,
   q63_t * imagResult)
@@ -48,8 +48,8 @@ void ref_cmplx_dot_prod_q31(
 }
 
 void ref_cmplx_dot_prod_q15(
-  q15_t * pSrcA,
-  q15_t * pSrcB,
+  const q15_t * pSrcA,
+  const q15_t * pSrcB,
   uint32_t numSamples,
   q31_t * realResult,
   q31_t * imagResult)

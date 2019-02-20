@@ -14,7 +14,7 @@ void ref_abs_f32(
 }
 
 void ref_abs_q31(
-  q31_t * pSrc,
+  const q31_t * pSrc,
   q31_t * pDst,
   uint32_t blockSize)
 {
@@ -27,7 +27,7 @@ void ref_abs_q31(
 }
 
 void ref_abs_q15(
-  q15_t * pSrc,
+  const q15_t * pSrc,
   q15_t * pDst,
   uint32_t blockSize)
 {
@@ -40,7 +40,7 @@ void ref_abs_q15(
 }
 
 void ref_abs_q7(
-  q7_t * pSrc,
+  const q7_t * pSrc,
   q7_t * pDst,
   uint32_t blockSize)
 {

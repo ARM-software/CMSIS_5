@@ -14,7 +14,7 @@ void ref_cmplx_mag_f32(
 }
 
 void ref_cmplx_mag_q31(
-  q31_t * pSrc,
+  const q31_t * pSrc,
   q31_t * pDst,
   uint32_t numSamples)
 {
@@ -31,7 +31,7 @@ void ref_cmplx_mag_q31(
 }
 
 void ref_cmplx_mag_q15(
-  q15_t * pSrc,
+  const q15_t * pSrc,
   q15_t * pDst,
   uint32_t numSamples)
 {

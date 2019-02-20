@@ -3685,9 +3685,9 @@ void arm_rfft_fast_f32(
    */
   typedef struct
   {
-    uint16_t numStages;                  /**< number of filter stages. */
-    q15_t *pState;                       /**< points to the state variable array. The array is of length numStages. */
-    const q15_t *pCoeffs;                      /**< points to the coefficient array. The array is of length numStages. */
+    uint16_t numStages;            /**< number of filter stages. */
+    q15_t *pState;                 /**< points to the state variable array. The array is of length numStages. */
+    q15_t *pCoeffs;                /**< points to the coefficient array. The array is of length numStages. */
   } arm_fir_lattice_instance_q15;
 
   /**
@@ -3695,9 +3695,9 @@ void arm_rfft_fast_f32(
    */
   typedef struct
   {
-    uint16_t numStages;                  /**< number of filter stages. */
-    q31_t *pState;                       /**< points to the state variable array. The array is of length numStages. */
-    const q31_t *pCoeffs;                      /**< points to the coefficient array. The array is of length numStages. */
+    uint16_t numStages;            /**< number of filter stages. */
+    q31_t *pState;                 /**< points to the state variable array. The array is of length numStages. */
+    q31_t *pCoeffs;                /**< points to the coefficient array. The array is of length numStages. */
   } arm_fir_lattice_instance_q31;
 
   /**
@@ -3705,9 +3705,9 @@ void arm_rfft_fast_f32(
    */
   typedef struct
   {
-    uint16_t numStages;                  /**< number of filter stages. */
-    float32_t *pState;                   /**< points to the state variable array. The array is of length numStages. */
-    const float32_t *pCoeffs;            /**< points to the coefficient array. The array is of length numStages. */
+    uint16_t numStages;            /**< number of filter stages. */
+    float32_t *pState;             /**< points to the state variable array. The array is of length numStages. */
+    float32_t *pCoeffs;            /**< points to the coefficient array. The array is of length numStages. */
   } arm_fir_lattice_instance_f32;
 
 
@@ -5830,7 +5830,7 @@ void arm_rfft_fast_f32(
    * @brief floating-point Circular Read function.
    */
   CMSIS_INLINE __STATIC_INLINE void arm_circularRead_f32(
-  int32_t * circBuffer,
+  const int32_t * circBuffer,
   int32_t L,
   int32_t * readOffset,
   int32_t bufferInc,
@@ -5930,7 +5930,7 @@ void arm_rfft_fast_f32(
    * @brief Q15 Circular Read function.
    */
   CMSIS_INLINE __STATIC_INLINE void arm_circularRead_q15(
-  q15_t * circBuffer,
+  const q15_t * circBuffer,
   int32_t L,
   int32_t * readOffset,
   int32_t bufferInc,
@@ -6031,7 +6031,7 @@ void arm_rfft_fast_f32(
    * @brief Q7 Circular Read function.
    */
   CMSIS_INLINE __STATIC_INLINE void arm_circularRead_q7(
-  q7_t * circBuffer,
+  const q7_t * circBuffer,
   int32_t L,
   int32_t * readOffset,
   int32_t bufferInc,
