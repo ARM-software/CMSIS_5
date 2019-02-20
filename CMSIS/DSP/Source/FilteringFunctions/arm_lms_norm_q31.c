@@ -251,7 +251,7 @@ void arm_lms_norm_q31(
   S->x0 = x0;
 
   /* Processing is complete. Now copy the last numTaps - 1 samples to the
-     satrt of the state buffer. This prepares the state buffer for the
+     start of the state buffer. This prepares the state buffer for the
      next function call. */
 
   /* Points to the start of the pState buffer */

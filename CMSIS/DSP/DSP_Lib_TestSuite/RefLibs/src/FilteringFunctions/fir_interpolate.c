@@ -173,7 +173,7 @@ void ref_fir_interpolate_q31(
   }
 
   /* Processing is complete.         
-   ** Now copy the last phaseLen - 1 samples to the satrt of the state buffer.       
+   ** Now copy the last phaseLen - 1 samples to the start of the state buffer.
    ** This prepares the state buffer for the next function call. */
 
   /* Points to the start of the state buffer */
