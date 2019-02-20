@@ -3721,7 +3721,7 @@ void arm_rfft_fast_f32(
   void arm_fir_lattice_init_q15(
   arm_fir_lattice_instance_q15 * S,
   uint16_t numStages,
-  const q15_t * pCoeffs,
+  q15_t * pCoeffs,
   q15_t * pState);
 
 
@@ -3749,7 +3749,7 @@ void arm_rfft_fast_f32(
   void arm_fir_lattice_init_q31(
   arm_fir_lattice_instance_q31 * S,
   uint16_t numStages,
-  const q31_t * pCoeffs,
+  q31_t * pCoeffs,
   q31_t * pState);
 
 
@@ -3777,7 +3777,7 @@ void arm_rfft_fast_f32(
   void arm_fir_lattice_init_f32(
   arm_fir_lattice_instance_f32 * S,
   uint16_t numStages,
-  const float32_t * pCoeffs,
+  float32_t * pCoeffs,
   float32_t * pState);
 
 
