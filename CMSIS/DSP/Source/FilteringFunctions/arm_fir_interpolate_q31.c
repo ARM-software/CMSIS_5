@@ -391,9 +391,9 @@ void arm_fir_interpolate_q31(
   uint32_t blockSize)
 {
   q31_t *pState = S->pState;                     /* State pointer */
-  const q31_t *pCoeffs = S->pCoeffs;                   /* Coefficient pointer */
+  const q31_t *pCoeffs = S->pCoeffs;             /* Coefficient pointer */
   q31_t *pStateCurnt;                            /* Points to the current sample of the state */
-  q31_t *ptr1, *ptr2;                            /* Temporary pointers for state and coefficient buffers */
+  const q31_t *ptr1, *ptr2;                      /* Temporary pointers for state and coefficient buffers */
 
   /* Run the below code for Cortex-M0 */
 
@@ -428,7 +428,7 @@ void arm_fir_interpolate_q31(
       ptr1 = pState;
 
       /* Initialize coefficient pointer */
-      ptr2 = (q31_t*) pCoeffs + (i - 1U);
+      ptr2 = pCoeffs + (i - 1U);
 
       tapCnt = phaseLen;
 
