@@ -85,7 +85,7 @@ void arm_lms_norm_init_q15(
   S->mu = mu;
 
   /* Initialize reciprocal pointer table */
-  S->recipTable = (q15_t *) armRecipTableQ15;
+  S->recipTable = armRecipTableQ15;
 
   /* Initialise Energy to zero */
   S->energy = 0;

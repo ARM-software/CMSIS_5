@@ -197,7 +197,7 @@ void arm_cfft_radix8by2_f32( arm_cfft_instance_f32 * S, float32_t * p1)
     uint32_t    L  = S->fftLen;
     float32_t * pCol1, * pCol2, * pMid1, * pMid2;
     float32_t * p2 = p1 + L;
-    const float32_t * tw = (float32_t *) S->pTwiddle;
+    const float32_t * tw = S->pTwiddle;
     float32_t t1[4], t2[4], t3[4], t4[4], twR, twI;
     float32_t m0, m1, m2, m3;
     uint32_t l;
@@ -306,7 +306,7 @@ void arm_cfft_radix8by2_f32( arm_cfft_instance_f32 * S, float32_t * p1)
 
 void arm_cfft_radix8by4_f32( arm_cfft_instance_f32 * S, float32_t * p1)
 {
-    uint32_t    L  = S->fftLen >> 1;
+    uint32_t    L  = S->fftLen >> 1U;
     float32_t * pCol1, *pCol2, *pCol3, *pCol4, *pEnd1, *pEnd2, *pEnd3, *pEnd4;
     const float32_t *tw2, *tw3, *tw4;
     float32_t * p2 = p1 + L;
@@ -326,9 +326,9 @@ void arm_cfft_radix8by4_f32( arm_cfft_instance_f32 * S, float32_t * p1)
     pEnd3 = p4 - 1;
     pEnd4 = pEnd3 + L;
 
-    tw2 = tw3 = tw4 = (float32_t *) S->pTwiddle;
+    tw2 = tw3 = tw4 = S->pTwiddle;
 
-    L >>= 1;
+    L >>= 1U;
 
     // do four dot Fourier transform
 
@@ -367,7 +367,7 @@ void arm_cfft_radix8by4_f32( arm_cfft_instance_f32 * S, float32_t * p1)
     tw3 += twMod3;
     tw4 += twMod4;
 
-    for (l = (L - 2) >> 1; l > 0; l-- )
+    for (l = (L - 2) >> 1U; l > 0; l-- )
     {
         // TOP
         p1ap3_0 = p1[0] + p3[0];

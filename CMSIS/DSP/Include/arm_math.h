@@ -589,7 +589,7 @@ extern "C"
   CMSIS_INLINE __STATIC_INLINE uint32_t arm_recip_q15(
   q15_t in,
   q15_t * dst,
-  q15_t * pRecipTable)
+  const q15_t * pRecipTable)
   {
     q15_t out = 0;
     uint32_t tempVal = 0;
@@ -4189,7 +4189,7 @@ void arm_rfft_fast_f32(
     const q15_t *pCoeffs;       /**< points to the coefficient array. The array is of length numTaps. */
     q15_t mu;             /**< step size that controls filter coefficient updates. */
     uint8_t postShift;    /**< bit shift applied to coefficients. */
-    q15_t *recipTable;    /**< Points to the reciprocal initial value table. */
+    const q15_t *recipTable;    /**< Points to the reciprocal initial value table. */
     q15_t energy;         /**< saves previous frame energy. */
     q15_t x0;             /**< saves previous input sample. */
   } arm_lms_norm_instance_q15;

@@ -306,7 +306,7 @@ void arm_lms_norm_q15(
     px = pState;
 
     /* Initialize pCoeffs pointer */
-    pb = (q15_t *) pCoeffs;
+    pb = pCoeffs;
 
     /* Read the sample from input buffer */
     in = *pSrc++;

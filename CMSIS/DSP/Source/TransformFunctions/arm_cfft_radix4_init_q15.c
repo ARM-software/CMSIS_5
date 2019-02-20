@@ -73,7 +73,7 @@ arm_status arm_cfft_radix4_init_q15(
   /*  Initialise the FFT length */
   S->fftLen = fftLen;
   /*  Initialise the Twiddle coefficient pointer */
-  S->pTwiddle = (q15_t *) twiddleCoef_4096_q15;
+  S->pTwiddle = twiddleCoef_4096_q15;
   /*  Initialise the Flag for selection of CFFT or CIFFT */
   S->ifftFlag = ifftFlag;
   /*  Initialise the Flag for calculation Bit reversal or not */
@@ -90,7 +90,7 @@ arm_status arm_cfft_radix4_init_q15(
     /*  Initialise the bit reversal table modifier */
     S->bitRevFactor = 1U;
     /*  Initialise the bit reversal table pointer */
-    S->pBitRevTable = (uint16_t *) armBitRevTable;
+    S->pBitRevTable = armBitRevTable;
 
     break;
 
@@ -98,7 +98,7 @@ arm_status arm_cfft_radix4_init_q15(
     /*  Initializations of structure parameters for 1024 point FFT */
     S->twidCoefModifier = 4U;
     S->bitRevFactor = 4U;
-    S->pBitRevTable = (uint16_t *) & armBitRevTable[3];
+    S->pBitRevTable = & armBitRevTable[3];
 
     break;
 
@@ -106,7 +106,7 @@ arm_status arm_cfft_radix4_init_q15(
     /*  Initializations of structure parameters for 256 point FFT */
     S->twidCoefModifier = 16U;
     S->bitRevFactor = 16U;
-    S->pBitRevTable = (uint16_t *) & armBitRevTable[15];
+    S->pBitRevTable = & armBitRevTable[15];
 
     break;
 
@@ -114,7 +114,7 @@ arm_status arm_cfft_radix4_init_q15(
     /*  Initializations of structure parameters for 64 point FFT */
     S->twidCoefModifier = 64U;
     S->bitRevFactor = 64U;
-    S->pBitRevTable = (uint16_t *) & armBitRevTable[63];
+    S->pBitRevTable = & armBitRevTable[63];
 
     break;
 
@@ -122,7 +122,7 @@ arm_status arm_cfft_radix4_init_q15(
     /*  Initializations of structure parameters for 16 point FFT */
     S->twidCoefModifier = 256U;
     S->bitRevFactor = 256U;
-    S->pBitRevTable = (uint16_t *) & armBitRevTable[255];
+    S->pBitRevTable = & armBitRevTable[255];
 
     break;
 

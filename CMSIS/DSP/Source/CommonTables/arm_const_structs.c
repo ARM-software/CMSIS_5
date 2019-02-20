@@ -144,49 +144,49 @@ const arm_cfft_instance_q15 arm_cfft_sR_q15_len4096 = {
 const arm_rfft_fast_instance_f32 arm_rfft_fast_sR_f32_len32 = {
 	{ 16, twiddleCoef_32, armBitRevIndexTable32, ARMBITREVINDEXTABLE_16_TABLE_LENGTH },
 	32U,
-	(float32_t *)twiddleCoef_rfft_32
+	twiddleCoef_rfft_32
 };
 
 const arm_rfft_fast_instance_f32 arm_rfft_fast_sR_f32_len64 = {
 	 { 32, twiddleCoef_32, armBitRevIndexTable32, ARMBITREVINDEXTABLE_32_TABLE_LENGTH },
 	64U,
-	(float32_t *)twiddleCoef_rfft_64
+	twiddleCoef_rfft_64
 };
 
 const arm_rfft_fast_instance_f32 arm_rfft_fast_sR_f32_len128 = {
 	{ 64, twiddleCoef_64, armBitRevIndexTable64, ARMBITREVINDEXTABLE_64_TABLE_LENGTH },
 	128U,
-	(float32_t *)twiddleCoef_rfft_128
+	twiddleCoef_rfft_128
 };
 
 const arm_rfft_fast_instance_f32 arm_rfft_fast_sR_f32_len256 = {
 	{ 128, twiddleCoef_128, armBitRevIndexTable128, ARMBITREVINDEXTABLE_128_TABLE_LENGTH },
 	256U,
-	(float32_t *)twiddleCoef_rfft_256
+	twiddleCoef_rfft_256
 };
 
 const arm_rfft_fast_instance_f32 arm_rfft_fast_sR_f32_len512 = {
 	{ 256, twiddleCoef_256, armBitRevIndexTable256, ARMBITREVINDEXTABLE_256_TABLE_LENGTH },
 	512U,
-	(float32_t *)twiddleCoef_rfft_512
+	twiddleCoef_rfft_512
 };
 
 const arm_rfft_fast_instance_f32 arm_rfft_fast_sR_f32_len1024 = {
 	{ 512, twiddleCoef_512, armBitRevIndexTable512, ARMBITREVINDEXTABLE_512_TABLE_LENGTH },
 	1024U,
-	(float32_t *)twiddleCoef_rfft_1024
+	twiddleCoef_rfft_1024
 };
 
 const arm_rfft_fast_instance_f32 arm_rfft_fast_sR_f32_len2048 = {
 	{ 1024, twiddleCoef_1024, armBitRevIndexTable1024, ARMBITREVINDEXTABLE_1024_TABLE_LENGTH },
 	2048U,
-	(float32_t *)twiddleCoef_rfft_2048
+	twiddleCoef_rfft_2048
 };
 
 const arm_rfft_fast_instance_f32 arm_rfft_fast_sR_f32_len4096 = {
 	{ 2048, twiddleCoef_2048, armBitRevIndexTable2048, ARMBITREVINDEXTABLE_2048_TABLE_LENGTH },
 	4096U,
-	(float32_t *)twiddleCoef_rfft_4096
+	twiddleCoef_rfft_4096
 };
 
 /* Fixed-point structs */
@@ -199,8 +199,8 @@ const arm_rfft_instance_q31 arm_rfft_sR_q31_len32 = {
 	0,
 	1,
 	256U,
-	(q31_t*)realCoefAQ31,
-	(q31_t*)realCoefBQ31,
+	realCoefAQ31,
+	realCoefBQ31,
 	&arm_cfft_sR_q31_len16
 };
 
@@ -209,8 +209,8 @@ const arm_rfft_instance_q31 arm_rfft_sR_q31_len64 = {
 	0,
 	1,
 	128U,
-	(q31_t*)realCoefAQ31,
-	(q31_t*)realCoefBQ31,
+	realCoefAQ31,
+	realCoefBQ31,
 	&arm_cfft_sR_q31_len32
 };
 
@@ -219,8 +219,8 @@ const arm_rfft_instance_q31 arm_rfft_sR_q31_len128 = {
 	0,
 	1,
 	64U,
-	(q31_t*)realCoefAQ31,
-	(q31_t*)realCoefBQ31,
+	realCoefAQ31,
+	realCoefBQ31,
 	&arm_cfft_sR_q31_len64
 };
 
@@ -229,8 +229,8 @@ const arm_rfft_instance_q31 arm_rfft_sR_q31_len256 = {
 	0,
 	1,
 	32U,
-	(q31_t*)realCoefAQ31,
-	(q31_t*)realCoefBQ31,
+	realCoefAQ31,
+	realCoefBQ31,
 	&arm_cfft_sR_q31_len128
 };
 
@@ -239,8 +239,8 @@ const arm_rfft_instance_q31 arm_rfft_sR_q31_len512 = {
 	0,
 	1,
 	16U,
-	(q31_t*)realCoefAQ31,
-	(q31_t*)realCoefBQ31,
+	realCoefAQ31,
+	realCoefBQ31,
 	&arm_cfft_sR_q31_len256
 };
 
@@ -249,8 +249,8 @@ const arm_rfft_instance_q31 arm_rfft_sR_q31_len1024 = {
 	0,
 	1,
 	8U,
-	(q31_t*)realCoefAQ31,
-	(q31_t*)realCoefBQ31,
+	realCoefAQ31,
+	realCoefBQ31,
 	&arm_cfft_sR_q31_len512
 };
 
@@ -259,8 +259,8 @@ const arm_rfft_instance_q31 arm_rfft_sR_q31_len2048 = {
 	0,
 	1,
 	4U,
-	(q31_t*)realCoefAQ31,
-	(q31_t*)realCoefBQ31,
+	realCoefAQ31,
+	realCoefBQ31,
 	&arm_cfft_sR_q31_len1024
 };
 
@@ -269,8 +269,8 @@ const arm_rfft_instance_q31 arm_rfft_sR_q31_len4096 = {
 	0,
 	1,
 	2U,
-	(q31_t*)realCoefAQ31,
-	(q31_t*)realCoefBQ31,
+	realCoefAQ31,
+	realCoefBQ31,
 	&arm_cfft_sR_q31_len2048
 };
 
@@ -279,8 +279,8 @@ const arm_rfft_instance_q31 arm_rfft_sR_q31_len8192 = {
 	0,
 	1,
 	1U,
-	(q31_t*)realCoefAQ31,
-	(q31_t*)realCoefBQ31,
+	realCoefAQ31,
+	realCoefBQ31,
 	&arm_cfft_sR_q31_len4096
 };
 
@@ -293,8 +293,8 @@ const arm_rfft_instance_q15 arm_rfft_sR_q15_len32 = {
 	0,
 	1,
 	256U,
-	(q15_t*)realCoefAQ15,
-	(q15_t*)realCoefBQ15,
+	realCoefAQ15,
+	realCoefBQ15,
 	&arm_cfft_sR_q15_len16
 };
 
@@ -303,8 +303,8 @@ const arm_rfft_instance_q15 arm_rfft_sR_q15_len64 = {
 	0,
 	1,
 	128U,
-	(q15_t*)realCoefAQ15,
-	(q15_t*)realCoefBQ15,
+	realCoefAQ15,
+	realCoefBQ15,
 	&arm_cfft_sR_q15_len32
 };
 
@@ -313,8 +313,8 @@ const arm_rfft_instance_q15 arm_rfft_sR_q15_len128 = {
 	0,
 	1,
 	64U,
-	(q15_t*)realCoefAQ15,
-	(q15_t*)realCoefBQ15,
+	realCoefAQ15,
+	realCoefBQ15,
 	&arm_cfft_sR_q15_len64
 };
 
@@ -323,8 +323,8 @@ const arm_rfft_instance_q15 arm_rfft_sR_q15_len256 = {
 	0,
 	1,
 	32U,
-	(q15_t*)realCoefAQ15,
-	(q15_t*)realCoefBQ15,
+	realCoefAQ15,
+	realCoefBQ15,
 	&arm_cfft_sR_q15_len128
 };
 
@@ -333,8 +333,8 @@ const arm_rfft_instance_q15 arm_rfft_sR_q15_len512 = {
 	0,
 	1,
 	16U,
-	(q15_t*)realCoefAQ15,
-	(q15_t*)realCoefBQ15,
+	realCoefAQ15,
+	realCoefBQ15,
 	&arm_cfft_sR_q15_len256
 };
 
@@ -343,8 +343,8 @@ const arm_rfft_instance_q15 arm_rfft_sR_q15_len1024 = {
 	0,
 	1,
 	8U,
-	(q15_t*)realCoefAQ15,
-	(q15_t*)realCoefBQ15,
+	realCoefAQ15,
+	realCoefBQ15,
 	&arm_cfft_sR_q15_len512
 };
 
@@ -353,8 +353,8 @@ const arm_rfft_instance_q15 arm_rfft_sR_q15_len2048 = {
 	0,
 	1,
 	4U,
-	(q15_t*)realCoefAQ15,
-	(q15_t*)realCoefBQ15,
+	realCoefAQ15,
+	realCoefBQ15,
 	&arm_cfft_sR_q15_len1024
 };
 
@@ -363,8 +363,8 @@ const arm_rfft_instance_q15 arm_rfft_sR_q15_len4096 = {
 	0,
 	1,
 	2U,
-	(q15_t*)realCoefAQ15,
-	(q15_t*)realCoefBQ15,
+	realCoefAQ15,
+	realCoefBQ15,
 	&arm_cfft_sR_q15_len2048
 };
 
@@ -373,7 +373,7 @@ const arm_rfft_instance_q15 arm_rfft_sR_q15_len8192 = {
 	0,
 	1,
 	1U,
-	(q15_t*)realCoefAQ15,
-	(q15_t*)realCoefBQ15,
+	realCoefAQ15,
+	realCoefBQ15,
 	&arm_cfft_sR_q15_len4096
 };

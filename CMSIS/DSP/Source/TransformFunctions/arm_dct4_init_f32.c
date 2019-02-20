@@ -16452,16 +16452,12 @@ arm_status arm_dct4_init_f32(
   arm_status status = ARM_MATH_SUCCESS;
 
   /* Initializing the pointer array with the weight table base addresses of different lengths */
-  float32_t *twiddlePtr[4] =
-    { (float32_t *) Weights_128, (float32_t *) Weights_512,
-    (float32_t *) Weights_2048, (float32_t *) Weights_8192
-  };
+  const float32_t *twiddlePtr[4] =
+    { Weights_128, Weights_512, Weights_2048, Weights_8192 };
 
   /* Initializing the pointer array with the cos factor table base addresses of different lengths */
-  float32_t *pCosFactor[4] =
-    { (float32_t *) cos_factors_128, (float32_t *) cos_factors_512,
-    (float32_t *) cos_factors_2048, (float32_t *) cos_factors_8192
-  };
+  const float32_t *pCosFactor[4] =
+    { cos_factors_128, cos_factors_512, cos_factors_2048, cos_factors_8192 };
 
   /* Initialize the DCT4 length */
   S->N = N;

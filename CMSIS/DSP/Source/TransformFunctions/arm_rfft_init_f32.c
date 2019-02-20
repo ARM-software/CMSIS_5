@@ -4216,10 +4216,10 @@ arm_status arm_rfft_init_f32(
   S->fftLenBy2 = (uint16_t) fftLenReal / 2U;
 
   /*  Initialize the Twiddle coefficientA pointer */
-  S->pTwiddleAReal = (float32_t *) realCoefA;
+  S->pTwiddleAReal = realCoefA;
 
   /*  Initialize the Twiddle coefficientB pointer */
-  S->pTwiddleBReal = (float32_t *) realCoefB;
+  S->pTwiddleBReal = realCoefB;
 
   /*  Initialize the Flag for selection of RFFT or RIFFT */
   S->ifftFlagR = (uint8_t) ifftFlagR;
