@@ -63,11 +63,11 @@
 
 
 void arm_q15_to_float(
-  q15_t * pSrc,
+  const q15_t * pSrc,
   float32_t * pDst,
   uint32_t blockSize)
 {
-  q15_t *pIn = pSrc;                             /* Src pointer */
+  const q15_t *pIn = pSrc;                        /* Src pointer */
   uint32_t blkCnt;                               /* loop counter */
 
 

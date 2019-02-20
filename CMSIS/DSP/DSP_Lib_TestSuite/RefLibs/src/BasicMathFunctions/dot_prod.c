@@ -1,8 +1,8 @@
 #include "ref.h"
 
 void ref_dot_prod_f32(
-  float32_t * pSrcA,
-  float32_t * pSrcB,
+  const float32_t * pSrcA,
+  const float32_t * pSrcB,
   uint32_t blockSize,
   float32_t * result)
 {

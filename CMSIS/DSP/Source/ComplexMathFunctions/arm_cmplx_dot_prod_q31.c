@@ -57,8 +57,8 @@
  */
 
 void arm_cmplx_dot_prod_q31(
-  q31_t * pSrcA,
-  q31_t * pSrcB,
+  const q31_t * pSrcA,
+  const q31_t * pSrcB,
   uint32_t numSamples,
   q63_t * realResult,
   q63_t * imagResult)

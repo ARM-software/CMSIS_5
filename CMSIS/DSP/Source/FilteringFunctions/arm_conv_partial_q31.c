@@ -52,9 +52,9 @@
  */
 
 arm_status arm_conv_partial_q31(
-  q31_t * pSrcA,
+  const q31_t * pSrcA,
   uint32_t srcALen,
-  q31_t * pSrcB,
+  const q31_t * pSrcB,
   uint32_t srcBLen,
   q31_t * pDst,
   uint32_t firstIndex,
@@ -66,12 +66,12 @@ arm_status arm_conv_partial_q31(
 
   /* Run the below code for Cortex-M4 and Cortex-M3 */
 
-  q31_t *pIn1;                                   /* inputA pointer               */
-  q31_t *pIn2;                                   /* inputB pointer               */
+  const q31_t *pIn1;                                   /* inputA pointer               */
+  const q31_t *pIn2;                                   /* inputB pointer               */
   q31_t *pOut = pDst;                            /* output pointer               */
-  q31_t *px;                                     /* Intermediate inputA pointer  */
-  q31_t *py;                                     /* Intermediate inputB pointer  */
-  q31_t *pSrc1, *pSrc2;                          /* Intermediate pointers        */
+  const q31_t *px;                                     /* Intermediate inputA pointer  */
+  const q31_t *py;                                     /* Intermediate inputB pointer  */
+  const q31_t *pSrc1, *pSrc2;                          /* Intermediate pointers        */
   q63_t sum, acc0, acc1, acc2;                   /* Accumulator                  */
   q31_t x0, x1, x2, c0;
   uint32_t j, k, count, check, blkCnt;
@@ -548,8 +548,8 @@ arm_status arm_conv_partial_q31(
 
   /* Run the below code for Cortex-M0 */
 
-  q31_t *pIn1 = pSrcA;                           /* inputA pointer */
-  q31_t *pIn2 = pSrcB;                           /* inputB pointer */
+  const q31_t *pIn1 = pSrcA;                           /* inputA pointer */
+  const q31_t *pIn2 = pSrcB;                           /* inputB pointer */
   q63_t sum;                                     /* Accumulator */
   uint32_t i, j;                                 /* loop counters */
   arm_status status;                             /* status of Partial convolution */

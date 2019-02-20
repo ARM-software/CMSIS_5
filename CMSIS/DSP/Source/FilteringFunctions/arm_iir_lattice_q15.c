@@ -58,7 +58,7 @@
 
 void arm_iir_lattice_q15(
   const arm_iir_lattice_instance_q15 * S,
-  q15_t * pSrc,
+  const q15_t * pSrc,
   q15_t * pDst,
   uint32_t blockSize)
 {
@@ -73,7 +73,8 @@ void arm_iir_lattice_q15(
   uint32_t stgCnt;                               /* Temporary variables for counts */
   q63_t acc;                                     /* Accumlator */
   uint32_t blkCnt, tapCnt;                       /* Temporary variables for counts */
-  q15_t *px1, *px2, *pk, *pv;                    /* temporary pointers for state and coef */
+  const q15_t *px1, *pk, *pv;                    /* temporary pointers for state and coef */
+  q15_t *px2;
   uint32_t numStages = S->numStages;             /* number of stages */
   q15_t *pState;                                 /* State pointer */
   q15_t *pStateCurnt;                            /* State current pointer */

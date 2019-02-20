@@ -1,7 +1,7 @@
 #include "ref.h"
 
 void ref_min_f32(
-  float32_t * pSrc,
+  const float32_t * pSrc,
   uint32_t blockSize,
   float32_t * pResult,
   uint32_t * pIndex)

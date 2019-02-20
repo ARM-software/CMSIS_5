@@ -128,8 +128,8 @@ void arm_dct4_f32(
   float32_t * pInlineBuffer)
 {
   uint32_t i;                                    /* Loop counter */
-  float32_t *weights = S->pTwiddle;              /* Pointer to the Weights table */
-  float32_t *cosFact = S->pCosFactor;            /* Pointer to the cos factors table */
+  const float32_t *weights = S->pTwiddle;        /* Pointer to the Weights table */
+  const float32_t *cosFact = S->pCosFactor;      /* Pointer to the cos factors table */
   float32_t *pS1, *pS2, *pbuff;                  /* Temporary pointers for input buffer and pState buffer */
   float32_t in;                                  /* Temporary variable */
 

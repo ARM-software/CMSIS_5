@@ -71,7 +71,7 @@
  */
 
 void arm_cmplx_mag_squared_f32(
-  float32_t * pSrc,
+  const float32_t * pSrc,
   float32_t * pDst,
   uint32_t numSamples)
 {

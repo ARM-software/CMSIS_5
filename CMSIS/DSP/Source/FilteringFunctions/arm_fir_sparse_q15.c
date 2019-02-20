@@ -56,7 +56,7 @@
 
 void arm_fir_sparse_q15(
   arm_fir_sparse_instance_q15 * S,
-  q15_t * pSrc,
+  const q15_t * pSrc,
   q15_t * pDst,
   q15_t * pScratchIn,
   q31_t * pScratchOut,
@@ -64,9 +64,9 @@ void arm_fir_sparse_q15(
 {
 
   q15_t *pState = S->pState;                     /* State pointer */
-  q15_t *pIn = pSrc;                             /* Working pointer for input */
+  const q15_t *pIn = pSrc;                             /* Working pointer for input */
   q15_t *pOut = pDst;                            /* Working pointer for output */
-  q15_t *pCoeffs = S->pCoeffs;                   /* Coefficient pointer */
+  const q15_t *pCoeffs = S->pCoeffs;                   /* Coefficient pointer */
   q15_t *px;                                     /* Temporary pointers for scratch buffer */
   q15_t *pb = pScratchIn;                        /* Temporary pointers for scratch buffer */
   q15_t *py = pState;                            /* Temporary pointers for state buffer */

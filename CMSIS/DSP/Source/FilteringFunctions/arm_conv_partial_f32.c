@@ -81,9 +81,9 @@
  */
 
 arm_status arm_conv_partial_f32(
-  float32_t * pSrcA,
+  const float32_t * pSrcA,
   uint32_t srcALen,
-  float32_t * pSrcB,
+  const float32_t * pSrcB,
   uint32_t srcBLen,
   float32_t * pDst,
   uint32_t firstIndex,
@@ -95,12 +95,12 @@ arm_status arm_conv_partial_f32(
 
   /* Run the below code for Cortex-M4 and Cortex-M3 */
 
-  float32_t *pIn1 = pSrcA;                       /* inputA pointer */
-  float32_t *pIn2 = pSrcB;                       /* inputB pointer */
+  const float32_t *pIn1 = pSrcA;                 /* inputA pointer */
+  const float32_t *pIn2 = pSrcB;                 /* inputB pointer */
   float32_t *pOut = pDst;                        /* output pointer */
-  float32_t *px;                                 /* Intermediate inputA pointer */
-  float32_t *py;                                 /* Intermediate inputB pointer */
-  float32_t *pSrc1, *pSrc2;                      /* Intermediate pointers */
+  const float32_t *px;                           /* Intermediate inputA pointer */
+  const float32_t *py;                           /* Intermediate inputB pointer */
+  const float32_t *pSrc1, *pSrc2;                /* Intermediate pointers */
   float32_t sum, acc0, acc1, acc2, acc3;         /* Accumulator */
   float32_t x0, x1, x2, x3, c0;                  /* Temporary variables to hold state and coefficient values */
   uint32_t j, k, count = 0U, blkCnt, check;
@@ -611,8 +611,8 @@ arm_status arm_conv_partial_f32(
 
   /* Run the below code for Cortex-M0 */
 
-  float32_t *pIn1 = pSrcA;                       /* inputA pointer */
-  float32_t *pIn2 = pSrcB;                       /* inputB pointer */
+  const float32_t *pIn1 = pSrcA;                       /* inputA pointer */
+  const float32_t *pIn2 = pSrcB;                       /* inputB pointer */
   float32_t sum;                                 /* Accumulator */
   uint32_t i, j;                                 /* loop counters */
   arm_status status;                             /* status of Partial convolution */

@@ -66,14 +66,14 @@
 
 void arm_lms_norm_q15(
   arm_lms_norm_instance_q15 * S,
-  q15_t * pSrc,
+  const q15_t * pSrc,
   q15_t * pRef,
   q15_t * pOut,
   q15_t * pErr,
   uint32_t blockSize)
 {
   q15_t *pState = S->pState;                     /* State pointer */
-  q15_t *pCoeffs = S->pCoeffs;                   /* Coefficient pointer */
+  q15_t *pCoeffs = S->pCoeffs;             /* Coefficient pointer */
   q15_t *pStateCurnt;                            /* Points to the current sample of the state */
   q15_t *px, *pb;                                /* Temporary pointers for state and coefficient buffers */
   q15_t mu = S->mu;                              /* Adaptive factor */
@@ -87,7 +87,7 @@ void arm_lms_norm_q15(
   //uint32_t shift = (uint32_t) S->postShift + 1U; /* Shift to be applied to the output */
   q15_t errorXmu, oneByEnergy;                   /* Temporary variables to store error and mu product and reciprocal of energy */
   q15_t postShift;                               /* Post shift to be applied to weight after reciprocal calculation */
-  q31_t coef;                                    /* Teporary variable for coefficient */
+  q31_t coef;                                    /* Temporary variable for coefficient */
   q31_t acc_l, acc_h;
   int32_t lShift = (15 - (int32_t) S->postShift);       /*  Post shift  */
   int32_t uShift = (32 - lShift);

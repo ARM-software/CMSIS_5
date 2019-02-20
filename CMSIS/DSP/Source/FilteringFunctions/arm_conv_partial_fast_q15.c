@@ -53,9 +53,9 @@
 
 
 arm_status arm_conv_partial_fast_q15(
-  q15_t * pSrcA,
+  const q15_t * pSrcA,
   uint32_t srcALen,
-  q15_t * pSrcB,
+  const q15_t * pSrcB,
   uint32_t srcBLen,
   q15_t * pDst,
   uint32_t firstIndex,
@@ -63,13 +63,13 @@ arm_status arm_conv_partial_fast_q15(
 {
 #ifndef UNALIGNED_SUPPORT_DISABLE
 
-  q15_t *pIn1;                                   /* inputA pointer               */
-  q15_t *pIn2;                                   /* inputB pointer               */
+  const q15_t *pIn1;                                   /* inputA pointer               */
+  const q15_t *pIn2;                                   /* inputB pointer               */
   q15_t *pOut = pDst;                            /* output pointer               */
   q31_t sum, acc0, acc1, acc2, acc3;             /* Accumulator                  */
-  q15_t *px;                                     /* Intermediate inputA pointer  */
-  q15_t *py;                                     /* Intermediate inputB pointer  */
-  q15_t *pSrc1, *pSrc2;                          /* Intermediate pointers        */
+  const q15_t *px;                                     /* Intermediate inputA pointer  */
+  const q15_t *py;                                     /* Intermediate inputB pointer  */
+  const q15_t *pSrc1, *pSrc2;                          /* Intermediate pointers        */
   q31_t x0, x1, x2, x3, c0;
   uint32_t j, k, count, check, blkCnt;
   int32_t blockSize1, blockSize2, blockSize3;    /* loop counters                 */
@@ -710,13 +710,13 @@ arm_status arm_conv_partial_fast_q15(
 
 #else
 
-  q15_t *pIn1;                                   /* inputA pointer               */
-  q15_t *pIn2;                                   /* inputB pointer               */
+  const q15_t *pIn1;                                   /* inputA pointer               */
+  const q15_t *pIn2;                                   /* inputB pointer               */
   q15_t *pOut = pDst;                            /* output pointer               */
   q31_t sum, acc0, acc1, acc2, acc3;             /* Accumulator                  */
-  q15_t *px;                                     /* Intermediate inputA pointer  */
-  q15_t *py;                                     /* Intermediate inputB pointer  */
-  q15_t *pSrc1, *pSrc2;                          /* Intermediate pointers        */
+  const q15_t *px;                                     /* Intermediate inputA pointer  */
+  const q15_t *py;                                     /* Intermediate inputB pointer  */
+  const q15_t *pSrc1, *pSrc2;                          /* Intermediate pointers        */
   q31_t x0, x1, x2, x3, c0;
   uint32_t j, k, count, check, blkCnt;
   int32_t blockSize1, blockSize2, blockSize3;    /* loop counters                 */

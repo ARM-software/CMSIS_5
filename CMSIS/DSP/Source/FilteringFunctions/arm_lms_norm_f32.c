@@ -160,7 +160,7 @@
 
 void arm_lms_norm_f32(
   arm_lms_norm_instance_f32 * S,
-  float32_t * pSrc,
+  const float32_t * pSrc,
   float32_t * pRef,
   float32_t * pOut,
   float32_t * pErr,
@@ -261,7 +261,7 @@ void arm_lms_norm_f32(
     px = pState;
 
     /* Initialize coeff pointer */
-    pb = (pCoeffs);
+    pb = (float32_t*) (pCoeffs);
 
     /* Loop unrolling.  Process 4 taps at a time. */
     tapCnt = numTaps >> 2;
@@ -359,7 +359,7 @@ void arm_lms_norm_f32(
     px = pState;
 
     /* Initialize pCoeffs pointer */
-    pb = pCoeffs;
+    pb = (float32_t*) pCoeffs;
 
     /* Read the sample from input buffer */
     in = *pSrc++;
@@ -399,7 +399,7 @@ void arm_lms_norm_f32(
     px = pState;
 
     /* Initialize pCcoeffs pointer */
-    pb = pCoeffs;
+    pb = (float32_t*) pCoeffs;
 
     /* Loop over numTaps number of values */
     tapCnt = numTaps;

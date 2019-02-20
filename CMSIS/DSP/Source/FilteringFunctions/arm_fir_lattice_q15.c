@@ -49,14 +49,14 @@
 
 void arm_fir_lattice_q15(
   const arm_fir_lattice_instance_q15 * S,
-  q15_t * pSrc,
+  const q15_t * pSrc,
   q15_t * pDst,
   uint32_t blockSize)
 {
   q15_t *pState;                                 /* State pointer */
-  q15_t *pCoeffs = S->pCoeffs;                   /* Coefficient pointer */
+  const q15_t *pCoeffs = S->pCoeffs;                   /* Coefficient pointer */
   q15_t *px;                                     /* temporary state pointer */
-  q15_t *pk;                                     /* temporary coefficient pointer */
+  const q15_t *pk;                                     /* temporary coefficient pointer */
 
 
 #if defined (ARM_MATH_DSP)

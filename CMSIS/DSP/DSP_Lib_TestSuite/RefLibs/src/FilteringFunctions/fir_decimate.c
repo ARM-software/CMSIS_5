@@ -2,7 +2,7 @@
 
 void ref_fir_decimate_f32(
   const arm_fir_decimate_instance_f32 * S,
-  float32_t * pSrc,
+  const float32_t * pSrc,
   float32_t * pDst,
   uint32_t blockSize)
 {
@@ -83,7 +83,7 @@ void ref_fir_decimate_q31(
   uint32_t blockSize)
 {
   q31_t *pState = S->pState;                     /* State pointer */
-  q31_t *pCoeffs = S->pCoeffs;                   /* Coefficient pointer */
+  const q31_t *pCoeffs = S->pCoeffs;                   /* Coefficient pointer */
   q31_t *pStateCurnt;                            /* Points to the current sample of the state */
   q31_t x0, c0;                                  /* Temporary variables to hold state and coefficient values */
   q63_t sum0;                                    /* Accumulator */
@@ -160,7 +160,7 @@ void ref_fir_decimate_fast_q31(
   uint32_t blockSize)
 {
   q31_t *pState = S->pState;                     /* State pointer */
-  q31_t *pCoeffs = S->pCoeffs;                   /* Coefficient pointer */
+  const q31_t *pCoeffs = S->pCoeffs;                   /* Coefficient pointer */
   q31_t *pStateCurnt;                            /* Points to the current sample of the state */
   q31_t x0, c0;                                  /* Temporary variables to hold state and coefficient values */
   q31_t sum0;                                    /* Accumulator */
@@ -237,7 +237,7 @@ void ref_fir_decimate_q15(
   uint32_t blockSize)
 {
   q15_t *pState = S->pState;                     /* State pointer */
-  q15_t *pCoeffs = S->pCoeffs;                   /* Coefficient pointer */
+  const q15_t *pCoeffs = S->pCoeffs;                   /* Coefficient pointer */
   q15_t *pStateCurnt;                            /* Points to the current sample of the state */
   q31_t x0, c0;                                  /* Temporary variables to hold state and coefficient values */
   q63_t sum0;                                    /* Accumulator */
@@ -314,7 +314,7 @@ void ref_fir_decimate_fast_q15(
   uint32_t blockSize)
 {
   q15_t *pState = S->pState;                     /* State pointer */
-  q15_t *pCoeffs = S->pCoeffs;                   /* Coefficient pointer */
+  const q15_t *pCoeffs = S->pCoeffs;                   /* Coefficient pointer */
   q15_t *pStateCurnt;                            /* Points to the current sample of the state */
   q15_t x0, c0;                                  /* Temporary variables to hold state and coefficient values */
   q31_t sum0;                                    /* Accumulator */

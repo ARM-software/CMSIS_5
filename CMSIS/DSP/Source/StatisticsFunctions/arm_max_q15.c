@@ -48,7 +48,7 @@
  */
 
 void arm_max_q15(
-  q15_t * pSrc,
+  const q15_t * pSrc,
   uint32_t blockSize,
   q15_t * pResult,
   uint32_t * pIndex)

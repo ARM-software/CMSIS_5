@@ -61,7 +61,7 @@
  */
 
 void arm_abs_f32(
-  float32_t * pSrc,
+  const float32_t * pSrc,
   float32_t * pDst,
   uint32_t blockSize)
 {

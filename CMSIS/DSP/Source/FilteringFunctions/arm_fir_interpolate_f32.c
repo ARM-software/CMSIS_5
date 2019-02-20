@@ -135,14 +135,14 @@
 
 void arm_fir_interpolate_f32(
   const arm_fir_interpolate_instance_f32 * S,
-  float32_t * pSrc,
+  const float32_t * pSrc,
   float32_t * pDst,
   uint32_t blockSize)
 {
   float32_t *pState = S->pState;                 /* State pointer */
-  float32_t *pCoeffs = S->pCoeffs;               /* Coefficient pointer */
+  const float32_t *pCoeffs = S->pCoeffs;         /* Coefficient pointer */
   float32_t *pStateCurnt;                        /* Points to the current sample of the state */
-  float32_t *ptr1, *ptr2;                        /* Temporary pointers for state and coefficient buffers */
+  const float32_t *ptr1, *ptr2;                  /* Temporary pointers for state and coefficient buffers */
   float32_t sum0;                                /* Accumulators */
   float32_t x0, c0;                              /* Temporary variables to hold state and coefficient values */
   uint32_t i, blkCnt, j;                         /* Loop counters */
@@ -469,14 +469,14 @@ void arm_fir_interpolate_f32(
 
 void arm_fir_interpolate_f32(
   const arm_fir_interpolate_instance_f32 * S,
-  float32_t * pSrc,
+  const float32_t * pSrc,
   float32_t * pDst,
   uint32_t blockSize)
 {
   float32_t *pState = S->pState;                 /* State pointer */
-  float32_t *pCoeffs = S->pCoeffs;               /* Coefficient pointer */
+  const float32_t *pCoeffs = S->pCoeffs;               /* Coefficient pointer */
   float32_t *pStateCurnt;                        /* Points to the current sample of the state */
-  float32_t *ptr1, *ptr2;                        /* Temporary pointers for state and coefficient buffers */
+  const float32_t *ptr1, *ptr2;                  /* Temporary pointers for state and coefficient buffers */
 
 
   float32_t sum;                                 /* Accumulator */

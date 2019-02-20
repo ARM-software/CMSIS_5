@@ -62,7 +62,7 @@
 
 
 void arm_power_f32(
-  float32_t * pSrc,
+  const float32_t * pSrc,
   uint32_t blockSize,
   float32_t * pResult)
 {

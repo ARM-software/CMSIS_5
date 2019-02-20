@@ -52,8 +52,8 @@
  */
 
 void arm_add_q7(
-  q7_t * pSrcA,
-  q7_t * pSrcB,
+  const q7_t * pSrcA,
+  const q7_t * pSrcB,
   q7_t * pDst,
   uint32_t blockSize)
 {

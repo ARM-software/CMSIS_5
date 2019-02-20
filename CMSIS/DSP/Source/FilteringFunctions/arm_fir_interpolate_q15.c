@@ -61,7 +61,7 @@
 
 void arm_fir_interpolate_q15(
   const arm_fir_interpolate_instance_q15 * S,
-  q15_t * pSrc,
+  const q15_t * pSrc,
   q15_t * pDst,
   uint32_t blockSize)
 {
@@ -392,12 +392,12 @@ void arm_fir_interpolate_q15(
 
 void arm_fir_interpolate_q15(
   const arm_fir_interpolate_instance_q15 * S,
-  q15_t * pSrc,
+  const q15_t * pSrc,
   q15_t * pDst,
   uint32_t blockSize)
 {
   q15_t *pState = S->pState;                     /* State pointer                                            */
-  q15_t *pCoeffs = S->pCoeffs;                   /* Coefficient pointer                                      */
+  const q15_t *pCoeffs = S->pCoeffs;                   /* Coefficient pointer                                      */
   q15_t *pStateCurnt;                            /* Points to the current sample of the state                */
   const q15_t *ptr1, *ptr2;                            /* Temporary pointers for state and coefficient buffers     */
   q63_t sum;                                     /* Accumulator */

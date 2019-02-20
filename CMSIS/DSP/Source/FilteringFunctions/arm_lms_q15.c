@@ -61,7 +61,7 @@
 
 void arm_lms_q15(
   const arm_lms_instance_q15 * S,
-  q15_t * pSrc,
+  const q15_t * pSrc,
   q15_t * pRef,
   q15_t * pOut,
   q15_t * pErr,
@@ -78,7 +78,7 @@ void arm_lms_q15(
   q63_t acc;                                     /* Accumulator */
   q15_t e = 0;                                   /* error of data sample */
   q15_t alpha;                                   /* Intermediate constant for taps update */
-  q31_t coef;                                    /* Teporary variable for coefficient */
+  q31_t coef;                                    /* Temporary variable for coefficient */
   q31_t acc_l, acc_h;
   int32_t lShift = (15 - (int32_t) S->postShift);       /*  Post shift  */
   int32_t uShift = (32 - lShift);

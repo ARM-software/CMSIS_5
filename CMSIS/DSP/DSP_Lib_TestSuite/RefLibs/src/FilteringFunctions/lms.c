@@ -436,7 +436,7 @@ void ref_lms_q15(
   q63_t acc;                                     /* Accumulator */
   q15_t e = 0;                                   /* error of data sample */
   q15_t alpha;                                   /* Intermediate constant for taps update */
-  q31_t coef;                                    /* Teporary variable for coefficient */
+  q31_t coef;                                    /* Temporary variable for coefficient */
   q31_t acc_l, acc_h;
   int32_t lShift = 15 - (int32_t)S->postShift;   /*  Post shift  */
   int32_t uShift = 32 - lShift;
@@ -558,7 +558,7 @@ void ref_lms_norm_q15(
   q15_t errorXmu, oneByEnergy;                   /* Temporary variables to store error and mu product and reciprocal of energy */
   //q31_t errorXmu;                   				 /* Temporary variables to store error and mu product and reciprocal of energy */
   q15_t postShift;                               /* Post shift to be applied to weight after reciprocal calculation */
-  q31_t coef;                                    /* Teporary variable for coefficient */
+  q31_t coef;                                    /* Temporary variable for coefficient */
   q31_t acc_l, acc_h;
   int32_t lShift = 15 - (int32_t)S->postShift;  /*  Post shift  */
   int32_t uShift = 32 - lShift;

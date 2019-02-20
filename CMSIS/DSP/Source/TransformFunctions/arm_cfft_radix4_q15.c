@@ -33,20 +33,20 @@
 void arm_radix4_butterfly_q15(
   q15_t * pSrc16,
   uint32_t fftLen,
-  q15_t * pCoef16,
+  const q15_t * pCoef16,
   uint32_t twidCoefModifier);
 
 void arm_radix4_butterfly_inverse_q15(
   q15_t * pSrc16,
   uint32_t fftLen,
-  q15_t * pCoef16,
+  const q15_t * pCoef16,
   uint32_t twidCoefModifier);
 
 void arm_bitreversal_q15(
   q15_t * pSrc,
   uint32_t fftLen,
   uint16_t bitRevFactor,
-  uint16_t * pBitRevTab);
+  const uint16_t * pBitRevTab);
 
 /**
  * @ingroup groupTransforms
@@ -149,7 +149,7 @@ void arm_cfft_radix4_q15(
 void arm_radix4_butterfly_q15(
   q15_t * pSrc16,
   uint32_t fftLen,
-  q15_t * pCoef16,
+  const q15_t * pCoef16,
   uint32_t twidCoefModifier)
 {
 
@@ -1066,7 +1066,7 @@ void arm_radix4_butterfly_q15(
 void arm_radix4_butterfly_inverse_q15(
   q15_t * pSrc16,
   uint32_t fftLen,
-  q15_t * pCoef16,
+  const q15_t * pCoef16,
   uint32_t twidCoefModifier)
 {
 

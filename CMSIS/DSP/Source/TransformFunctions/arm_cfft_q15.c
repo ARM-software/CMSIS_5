@@ -42,7 +42,7 @@ extern void arm_radix4_butterfly_inverse_q15(
 
 extern void arm_bitreversal_16(
     uint16_t * pSrc,
-    const uint16_t bitRevLen,
+    uint16_t bitRevLen,
     const uint16_t * pBitRevTable);
 
 void arm_cfft_radix4by2_q15(
