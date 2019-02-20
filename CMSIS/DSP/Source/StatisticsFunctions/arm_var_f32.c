@@ -63,13 +63,13 @@
  */
 
 void arm_var_f32(
-                 const float32_t * pSrc,
+                 float32_t * pSrc,
                  uint32_t blockSize,
                  float32_t * pResult)
 {
     float32_t fMean, fValue;
     uint32_t blkCnt;            /* loop counter */
-    const float32_t *pInput = pSrc;
+    float32_t * pInput = pSrc;
     float32_t sum = 0.0f;
     float32_t fSum = 0.0f;
     #if defined(ARM_MATH_DSP)

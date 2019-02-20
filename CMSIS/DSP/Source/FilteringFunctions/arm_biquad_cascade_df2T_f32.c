@@ -141,15 +141,15 @@
 LOW_OPTIMIZATION_ENTER
 void arm_biquad_cascade_df2T_f32(
 const arm_biquad_cascade_df2T_instance_f32 * S,
-const float32_t * pSrc,
+float32_t * pSrc,
 float32_t * pDst,
 uint32_t blockSize)
 {
 
-   const float32_t *pIn = pSrc;                   /*  source pointer            */
+   float32_t *pIn = pSrc;                         /*  source pointer            */
    float32_t *pOut = pDst;                        /*  destination pointer       */
    float32_t *pState = S->pState;                 /*  State pointer             */
-   const float32_t *pCoeffs = S->pCoeffs;         /*  coefficient pointer       */
+   float32_t *pCoeffs = S->pCoeffs;               /*  coefficient pointer       */
    float32_t acc1;                                /*  accumulator               */
    float32_t b0, b1, b2, a1, a2;                  /*  Filter coefficients       */
    float32_t Xn1;                                 /*  temporary input           */

@@ -823,14 +823,14 @@ __STATIC_FORCEINLINE void __TZ_set_MSPLIM_NS(uint32_t MainStackPtrLimit)
            so that all instructions following the ISB are fetched from cache or memory,
            after the instruction has been completed.
  */
-#define __ISB()        __builtin_arm_isb(0xF);
+#define __ISB()        __builtin_arm_isb(0xF)
 
 /**
   \brief   Data Synchronization Barrier
   \details Acts as a special kind of Data Memory Barrier.
            It completes when all explicit memory accesses before this instruction complete.
  */
-#define __DSB()        __builtin_arm_dsb(0xF);
+#define __DSB()        __builtin_arm_dsb(0xF)
 
 
 /**
@@ -838,7 +838,7 @@ __STATIC_FORCEINLINE void __TZ_set_MSPLIM_NS(uint32_t MainStackPtrLimit)
   \details Ensures the apparent order of the explicit memory operations before
            and after the instruction, without ensuring their completion.
  */
-#define __DMB()        __builtin_arm_dmb(0xF);
+#define __DMB()        __builtin_arm_dmb(0xF)
 
 
 /**

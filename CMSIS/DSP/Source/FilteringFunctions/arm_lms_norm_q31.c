@@ -67,7 +67,7 @@
 
 void arm_lms_norm_q31(
   arm_lms_norm_instance_q31 * S,
-  const q31_t * pSrc,
+  q31_t * pSrc,
   q31_t * pRef,
   q31_t * pOut,
   q31_t * pErr,

@@ -60,17 +60,17 @@
 
 void arm_biquad_cascade_df1_q31(
   const arm_biquad_casd_df1_inst_q31 * S,
-  const q31_t * pSrc,
+  q31_t * pSrc,
   q31_t * pDst,
   uint32_t blockSize)
 {
   q63_t acc;                                     /*  accumulator                   */
   uint32_t uShift = ((uint32_t) S->postShift + 1U);
   uint32_t lShift = 32U - uShift;                /*  Shift to be applied to the output */
-  const q31_t *pIn = pSrc;                       /*  input pointer initialization  */
+  q31_t *pIn = pSrc;                             /*  input pointer initialization  */
   q31_t *pOut = pDst;                            /*  output pointer initialization */
   q31_t *pState = S->pState;                     /*  pState pointer initialization */
-  const q31_t *pCoeffs = S->pCoeffs;                   /*  coeff pointer initialization  */
+  q31_t *pCoeffs = S->pCoeffs;                   /*  coeff pointer initialization  */
   q31_t Xn1, Xn2, Yn1, Yn2;                      /*  Filter state variables        */
   q31_t b0, b1, b2, a1, a2;                      /*  Filter coefficients           */
   q31_t Xn;                                      /*  temporary input               */

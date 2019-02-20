@@ -2,7 +2,7 @@
 
 void ref_fir_interpolate_f32(
   const arm_fir_interpolate_instance_f32 * S,
-  const float32_t * pSrc,
+  float32_t * pSrc,
   float32_t * pDst,
   uint32_t blockSize)
 {

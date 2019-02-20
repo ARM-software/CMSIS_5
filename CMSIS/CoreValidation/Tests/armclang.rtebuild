@@ -5,7 +5,7 @@ import:
 targets:
   arm:
     csettings   : [ -fno-rtti, -funsigned-char, -fshort-enums, -fshort-wchar, -mlittle-endian, -gdwarf-3, "-%{optimize}", -ffunction-sections ]
-    cwarnings   : [ -Weverything, -Wno-undef, -Wno-packed, -Wno-reserved-id-macro, -Wno-unused-macros, -Wno-documentation-unknown-command, -Wno-documentation, -Wno-license-management, -Wno-parentheses-equality ]
+    cwarnings   : [ -Weverything, -Wno-covered-switch-default, -Wno-packed, -Wno-reserved-id-macro, -Wno-unused-macros, -Wno-documentation-unknown-command, -Wno-documentation, -Wno-license-management ]
   armcm:
     features    : ""
     cflags      : [ -xc, -std=gnu99, --target=arm-arm-none-eabi, "-mcpu=${mcpu}${features}", "-mfpu=${mfpu}", "-mfloat-abi=${float}", -c, "${csettings}", "${cwarnings}" ]

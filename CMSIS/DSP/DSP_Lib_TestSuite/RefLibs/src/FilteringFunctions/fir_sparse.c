@@ -2,7 +2,7 @@
 
 void ref_fir_sparse_f32(
   arm_fir_sparse_instance_f32 * S,
-  const float32_t * pSrc,
+  float32_t * pSrc,
   float32_t * pDst,
   float32_t * pScratchIn,
   uint32_t blockSize)
@@ -117,9 +117,9 @@ void ref_fir_sparse_q31(
   uint32_t blockSize)
 {
   q31_t *pState = S->pState;                     /* State pointer */
-  const q31_t *pCoeffs = S->pCoeffs;                   /* Coefficient pointer */
-  const q31_t *px;                                     /* Scratch buffer pointer */
-  const q31_t *py = pState;                            /* Temporary pointers for state buffer */
+  q31_t *pCoeffs = S->pCoeffs;                   /* Coefficient pointer */
+  q31_t *px;                                     /* Scratch buffer pointer */
+  q31_t *py = pState;                            /* Temporary pointers for state buffer */
   q31_t *pb = pScratchIn;                        /* Temporary pointers for scratch buffer */
   q31_t *pOut;                                   /* Destination pointer */
   q63_t out;                                     /* Temporary output variable */

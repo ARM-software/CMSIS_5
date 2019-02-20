@@ -37,7 +37,7 @@ extern void arm_radix8_butterfly_f32(
 
 extern void arm_bitreversal_32(
     uint32_t * pSrc,
-    uint16_t bitRevLen,
+    const uint16_t bitRevLen,
     const uint16_t * pBitRevTable);
 
 /**

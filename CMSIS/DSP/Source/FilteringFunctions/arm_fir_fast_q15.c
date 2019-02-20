@@ -59,16 +59,16 @@
 
 void arm_fir_fast_q15(
   const arm_fir_instance_q15 * S,
-  const q15_t * pSrc,
+  q15_t * pSrc,
   q15_t * pDst,
   uint32_t blockSize)
 {
   q15_t *pState = S->pState;                     /* State pointer */
-  const q15_t *pCoeffs = S->pCoeffs;                   /* Coefficient pointer */
+  q15_t *pCoeffs = S->pCoeffs;                   /* Coefficient pointer */
   q15_t *pStateCurnt;                            /* Points to the current sample of the state */
   q31_t acc0, acc1, acc2, acc3;                  /* Accumulators */
-  const q15_t *pb;                                     /* Temporary pointer for coefficient buffer */
-  const q15_t *px;                                     /* Temporary q31 pointer for SIMD state buffer accesses */
+  q15_t *pb;                                     /* Temporary pointer for coefficient buffer */
+  q15_t *px;                                     /* Temporary q31 pointer for SIMD state buffer accesses */
   q31_t x0, x1, x2, c0;                          /* Temporary variables to hold SIMD state and coefficient values */
   uint32_t numTaps = S->numTaps;                 /* Number of taps in the filter */
   uint32_t tapCnt, blkCnt;                       /* Loop counters */

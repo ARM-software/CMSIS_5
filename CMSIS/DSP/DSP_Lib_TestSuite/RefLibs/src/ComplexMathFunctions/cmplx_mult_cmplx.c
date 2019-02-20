@@ -1,8 +1,8 @@
 #include "ref.h"
 
 void ref_cmplx_mult_cmplx_f32(
-  const float32_t * pSrcA,
-  const float32_t * pSrcB,
+  float32_t * pSrcA,
+  float32_t * pSrcB,
   float32_t * pDst,
   uint32_t numSamples)
 {

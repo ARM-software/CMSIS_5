@@ -2,7 +2,7 @@
 
 void ref_fir_f32(
 	const arm_fir_instance_f32 * S,
-	const float32_t * pSrc,
+	float32_t * pSrc,
 	float32_t * pDst,
 	uint32_t blockSize)
 {
@@ -61,7 +61,7 @@ void ref_fir_q31(
   uint32_t blockSize)
 {
    q31_t *pState = S->pState;                 /* State pointer */
-   const q31_t *pCoeffs = S->pCoeffs;               /* Coefficient pointer */
+   q31_t *pCoeffs = S->pCoeffs;               /* Coefficient pointer */
    q31_t *pStateCurnt;                        /* Points to the current sample of the state */
    uint32_t numTaps = S->numTaps;             /* Number of filter coefficients in the filter */
    uint32_t i;                    						/* Loop counters */
@@ -115,7 +115,7 @@ void ref_fir_fast_q31(
   uint32_t blockSize)
 {
    q31_t *pState = S->pState;                 /* State pointer */
-   const q31_t *pCoeffs = S->pCoeffs;               /* Coefficient pointer */
+   q31_t *pCoeffs = S->pCoeffs;               /* Coefficient pointer */
    q31_t *pStateCurnt;                        /* Points to the current sample of the state */
    uint32_t numTaps = S->numTaps;             /* Number of filter coefficients in the filter */
    uint32_t i;                    						/* Loop counters */
@@ -169,7 +169,7 @@ void ref_fir_q15(
   uint32_t blockSize)
 {
    q15_t *pState = S->pState;                 /* State pointer */
-   const q15_t *pCoeffs = S->pCoeffs;               /* Coefficient pointer */
+   q15_t *pCoeffs = S->pCoeffs;               /* Coefficient pointer */
    q15_t *pStateCurnt;                        /* Points to the current sample of the state */
    uint32_t numTaps = S->numTaps;             /* Number of filter coefficients in the filter */
    uint32_t i;                    						/* Loop counters */
@@ -223,7 +223,7 @@ void ref_fir_fast_q15(
   uint32_t blockSize)
 {
    q15_t *pState = S->pState;                 /* State pointer */
-   const q15_t *pCoeffs = S->pCoeffs;               /* Coefficient pointer */
+   q15_t *pCoeffs = S->pCoeffs;               /* Coefficient pointer */
    q15_t *pStateCurnt;                        /* Points to the current sample of the state */
    uint32_t numTaps = S->numTaps;             /* Number of filter coefficients in the filter */
    uint32_t i;                    						/* Loop counters */
@@ -277,7 +277,7 @@ void ref_fir_q7(
   uint32_t blockSize)
 {
    q7_t *pState = S->pState;                 /* State pointer */
-   const q7_t *pCoeffs = S->pCoeffs;               /* Coefficient pointer */
+   q7_t *pCoeffs = S->pCoeffs;               /* Coefficient pointer */
    q7_t *pStateCurnt;                        /* Points to the current sample of the state */
    uint32_t numTaps = S->numTaps;            /* Number of filter coefficients in the filter */
    uint32_t i;                    					 /* Loop counters */

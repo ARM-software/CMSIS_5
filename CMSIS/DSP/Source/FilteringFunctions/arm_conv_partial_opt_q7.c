@@ -62,9 +62,9 @@
 #ifndef UNALIGNED_SUPPORT_DISABLE
 
 arm_status arm_conv_partial_opt_q7(
-  const q7_t * pSrcA,
+  q7_t * pSrcA,
   uint32_t srcALen,
-  const q7_t * pSrcB,
+  q7_t * pSrcB,
   uint32_t srcBLen,
   q7_t * pDst,
   uint32_t firstIndex,
@@ -73,11 +73,11 @@ arm_status arm_conv_partial_opt_q7(
   q15_t * pScratch2)
 {
 
-  q15_t *pScr2, *pScr1;                    /* Intermediate pointers for scratch pointers */
+  q15_t *pScr2, *pScr1;                          /* Intermediate pointers for scratch pointers */
   q15_t x4;                                      /* Temporary input variable */
-  const q7_t *pIn1, *pIn2;                       /* inputA and inputB pointer */
+  q7_t *pIn1, *pIn2;                             /* inputA and inputB pointer */
   uint32_t j, k, blkCnt, tapCnt;                 /* loop counter */
-  const q7_t *px;                                /* Temporary input1 pointer */
+  q7_t *px;                                      /* Temporary input1 pointer */
   q15_t *py;                                     /* Temporary input2 pointer */
   q31_t acc0, acc1, acc2, acc3;                  /* Accumulator */
   q31_t x1, x2, x3, y1;                          /* Temporary input variables */
@@ -160,7 +160,7 @@ arm_status arm_conv_partial_opt_q7(
       k--;
     }
 
-    /* Initialize temporary scratch pointer */
+    /* Initialze temporary scratch pointer */
     pScr1 = pScratch1;
 
     /* Fill (srcBLen - 1U) zeros in scratch buffer */
@@ -230,10 +230,10 @@ arm_status arm_conv_partial_opt_q7(
 
     while (blkCnt > 0)
     {
-      /* Initialize temporary scratch pointer as scratch1 */
+      /* Initialze temporary scratch pointer as scratch1 */
       pScr1 = pScratch1;
 
-      /* Clear Accumulators */
+      /* Clear Accumlators */
       acc0 = 0;
       acc1 = 0;
       acc2 = 0;
@@ -253,7 +253,7 @@ arm_status arm_conv_partial_opt_q7(
         /* Read four samples from smaller buffer */
         y1 = _SIMD32_OFFSET(pScr2);
 
-        /* multiply and accumulate */
+        /* multiply and accumlate */
         acc0 = __SMLAD(x1, y1, acc0);
         acc2 = __SMLAD(x2, y1, acc2);
 
@@ -264,7 +264,7 @@ arm_status arm_conv_partial_opt_q7(
         x3 = __PKHBT(x1, x2, 0);
 #endif
 
-        /* multiply and accumulate */
+        /* multiply and accumlate */
         acc1 = __SMLADX(x3, y1, acc1);
 
         /* Read next two samples from scratch1 buffer */
@@ -317,7 +317,7 @@ arm_status arm_conv_partial_opt_q7(
       while (tapCnt > 0U)
       {
 
-        /* accumulate the results */
+        /* accumlate the results */
         acc0 += (*pScr1++ * *pScr2);
         acc1 += (*pScr1++ * *pScr2);
         acc2 += (*pScr1++ * *pScr2);
@@ -351,10 +351,10 @@ arm_status arm_conv_partial_opt_q7(
     /* Calculate convolution for remaining samples of Bigger length sequence */
     while (blkCnt > 0)
     {
-      /* Initialize temporary scratch pointer as scratch1 */
+      /* Initialze temporary scratch pointer as scratch1 */
       pScr1 = pScratch1;
 
-      /* Clear Accumulators */
+      /* Clear Accumlators */
       acc0 = 0;
 
       tapCnt = (srcBLen) >> 1U;
@@ -380,7 +380,7 @@ arm_status arm_conv_partial_opt_q7(
       while (tapCnt > 0U)
       {
 
-        /* accumulate the results */
+        /* accumlate the results */
         acc0 += (*pScr1++ * *pScr2++);
 
         /* Decrement the loop counter */
@@ -412,9 +412,9 @@ arm_status arm_conv_partial_opt_q7(
 #else
 
 arm_status arm_conv_partial_opt_q7(
-  const q7_t * pSrcA,
+  q7_t * pSrcA,
   uint32_t srcALen,
-  const q7_t * pSrcB,
+  q7_t * pSrcB,
   uint32_t srcBLen,
   q7_t * pDst,
   uint32_t firstIndex,
@@ -425,10 +425,10 @@ arm_status arm_conv_partial_opt_q7(
 
   q15_t *pScr2, *pScr1;                          /* Intermediate pointers for scratch pointers */
   q15_t x4;                                      /* Temporary input variable */
-  const q7_t *pIn1, *pIn2;                             /* inputA and inputB pointer */
+  q7_t *pIn1, *pIn2;                             /* inputA and inputB pointer */
   uint32_t j, k, blkCnt, tapCnt;                 /* loop counter */
-  const q7_t *px;                                      /* Temporary input1 pointer */
-  const q15_t *py;                                     /* Temporary input2 pointer */
+  q7_t *px;                                      /* Temporary input1 pointer */
+  q15_t *py;                                     /* Temporary input2 pointer */
   q31_t acc0, acc1, acc2, acc3;                  /* Accumulator */
   arm_status status;
   q7_t *pOut = pDst;                             /* output pointer */
@@ -510,7 +510,7 @@ arm_status arm_conv_partial_opt_q7(
       k--;
     }
 
-    /* Initialize temporary scratch pointer */
+    /* Initialze temporary scratch pointer */
     pScr1 = pScratch1;
 
     /* Fill (srcBLen - 1U) zeros in scratch buffer */
@@ -604,10 +604,10 @@ arm_status arm_conv_partial_opt_q7(
 
     while (blkCnt > 0)
     {
-      /* Initialize temporary scratch pointer as scratch1 */
+      /* Initialze temporary scratch pointer as scratch1 */
       pScr1 = pScratch1;
 
-      /* Clear Accumulators */
+      /* Clear Accumlators */
       acc0 = 0;
       acc1 = 0;
       acc2 = 0;
@@ -630,7 +630,7 @@ arm_status arm_conv_partial_opt_q7(
         y10 = *pScr2;
         y11 = *(pScr2 + 1U);
 
-        /* multiply and accumulate */
+        /* multiply and accumlate */
         acc0 += (q31_t) x10 *y10;
         acc0 += (q31_t) x11 *y11;
         acc2 += (q31_t) x20 *y10;
@@ -644,7 +644,7 @@ arm_status arm_conv_partial_opt_q7(
         x10 = *pScr1;
         x11 = *(pScr1 + 1U);
 
-        /* multiply and accumulate */
+        /* multiply and accumlate */
         acc3 += (q31_t) x21 *y10;
         acc3 += (q31_t) x10 *y11;
 
@@ -652,7 +652,7 @@ arm_status arm_conv_partial_opt_q7(
         y10 = *(pScr2 + 2U);
         y11 = *(pScr2 + 3U);
 
-        /* multiply and accumulate */
+        /* multiply and accumlate */
         acc0 += (q31_t) x20 *y10;
         acc0 += (q31_t) x21 *y11;
         acc2 += (q31_t) x10 *y10;
@@ -664,7 +664,7 @@ arm_status arm_conv_partial_opt_q7(
         x20 = *(pScr1 + 2);
         x21 = *(pScr1 + 3);
 
-        /* multiply and accumulate */
+        /* multiply and accumlate */
         acc3 += (q31_t) x11 *y10;
         acc3 += (q31_t) x20 *y11;
 
@@ -689,7 +689,7 @@ arm_status arm_conv_partial_opt_q7(
       while (tapCnt > 0U)
       {
 
-        /* accumulate the results */
+        /* accumlate the results */
         acc0 += (*pScr1++ * *pScr2);
         acc1 += (*pScr1++ * *pScr2);
         acc2 += (*pScr1++ * *pScr2);
@@ -721,10 +721,10 @@ arm_status arm_conv_partial_opt_q7(
     /* Calculate convolution for remaining samples of Bigger length sequence */
     while (blkCnt > 0)
     {
-      /* Initialize temporary scratch pointer as scratch1 */
+      /* Initialze temporary scratch pointer as scratch1 */
       pScr1 = pScratch1;
 
-      /* Clear Accumulators */
+      /* Clear Accumlators */
       acc0 = 0;
 
       tapCnt = (srcBLen) >> 1U;
@@ -740,7 +740,7 @@ arm_status arm_conv_partial_opt_q7(
         y10 = *pScr2++;
         y11 = *pScr2++;
 
-        /* multiply and accumulate */
+        /* multiply and accumlate */
         acc0 += (q31_t) x10 *y10;
         acc0 += (q31_t) x11 *y11;
 
@@ -754,7 +754,7 @@ arm_status arm_conv_partial_opt_q7(
       while (tapCnt > 0U)
       {
 
-        /* accumulate the results */
+        /* accumlate the results */
         acc0 += (*pScr1++ * *pScr2++);
 
         /* Decrement the loop counter */

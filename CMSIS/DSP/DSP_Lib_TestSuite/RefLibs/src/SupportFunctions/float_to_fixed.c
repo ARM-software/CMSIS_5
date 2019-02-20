@@ -1,7 +1,7 @@
 #include "ref.h"
 
 void ref_float_to_q31(
-  const float32_t * pSrc,
+  float32_t * pSrc,
   q31_t * pDst,
   uint32_t blockSize)
 {
@@ -18,7 +18,7 @@ void ref_float_to_q31(
 }
 	
 void ref_float_to_q15(
-  const float32_t * pSrc,
+  float32_t * pSrc,
   q15_t * pDst,
   uint32_t blockSize)
 {
@@ -35,7 +35,7 @@ void ref_float_to_q15(
 }
 	
 void ref_float_to_q7(
-  const float32_t * pSrc,
+  float32_t * pSrc,
   q7_t * pDst,
   uint32_t blockSize)
 {

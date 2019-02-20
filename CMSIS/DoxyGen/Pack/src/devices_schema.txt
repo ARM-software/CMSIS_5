@@ -1841,6 +1841,11 @@ Contact cmsis@arm.com to ask for an extension. These values can be used in the e
     <td>http://www.analog.com</td>
   </tr>
   <tr>
+    <td class="XML-Token">APEXMIC:153</td>
+    <td>Apex Microeletronics Co., Ltd.</td>
+    <td>http://www.apexmic.com</td>
+  </tr>
+  <tr>
     <td class="XML-Token">ARM:82</td>
     <td>ARM Ltd.</td>
     <td>http://www.arm.com</td>

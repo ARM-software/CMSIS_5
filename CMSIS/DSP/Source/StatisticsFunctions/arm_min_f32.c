@@ -56,7 +56,7 @@
  */
 
 void arm_min_f32(
-  const float32_t * pSrc,
+  float32_t * pSrc,
   uint32_t blockSize,
   float32_t * pResult,
   uint32_t * pIndex)

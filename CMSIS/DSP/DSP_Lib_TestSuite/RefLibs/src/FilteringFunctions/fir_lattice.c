@@ -2,7 +2,7 @@
 
 void ref_fir_lattice_f32(
   const arm_fir_lattice_instance_f32 * S,
-  const float32_t * pSrc,
+  float32_t * pSrc,
   float32_t * pDst,
   uint32_t blockSize)
 {
@@ -83,9 +83,9 @@ void ref_fir_lattice_q31(
   uint32_t blockSize)
 {
   q31_t *pState;                                 /* State pointer */
-  q31_t *pCoeffs = S->pCoeffs;             /* Coefficient pointer */
-  q31_t *px;                               /* temporary state pointer */
-  q31_t *pk;                               /* temporary coefficient pointer */
+  q31_t *pCoeffs = S->pCoeffs;                   /* Coefficient pointer */
+  q31_t *px;                                     /* temporary state pointer */
+  q31_t *pk;                                     /* temporary coefficient pointer */
   q31_t fcurr, fnext, gcurr, gnext;              /* temporary variables */
   uint32_t numStages = S->numStages;             /* Length of the filter */
   uint32_t blkCnt, stageCnt;                     /* temporary variables for counts */

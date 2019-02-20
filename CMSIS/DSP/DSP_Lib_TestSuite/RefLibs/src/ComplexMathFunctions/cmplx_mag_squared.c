@@ -1,7 +1,7 @@
 #include "ref.h"
 
 void ref_cmplx_mag_squared_f32(
-  const float32_t * pSrc,
+  float32_t * pSrc,
   float32_t * pDst,
   uint32_t numSamples)
 {

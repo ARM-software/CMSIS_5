@@ -2,7 +2,7 @@
 
 void ref_biquad_cascade_df2T_f32(
 	const arm_biquad_cascade_df2T_instance_f32 * S,
-	const float32_t * pSrc,
+	float32_t * pSrc,
 	float32_t * pDst,
 	uint32_t blockSize)
 {
@@ -72,7 +72,7 @@ void ref_biquad_cascade_df2T_f32(
 
 void ref_biquad_cascade_stereo_df2T_f32(
 	const arm_biquad_cascade_stereo_df2T_instance_f32 * S,
-	const float32_t * pSrc,
+	float32_t * pSrc,
 	float32_t * pDst,
 	uint32_t blockSize)
 {
@@ -220,7 +220,7 @@ void ref_biquad_cascade_df2T_f64(
 
 void ref_biquad_cascade_df1_f32(
   const arm_biquad_casd_df1_inst_f32 * S,
-  const float32_t * pSrc,
+  float32_t * pSrc,
   float32_t * pDst,
   uint32_t blockSize)
 {

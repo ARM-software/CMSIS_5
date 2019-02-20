@@ -2,68 +2,401 @@
 /**
 \page GenDataModel Generator Data Model 
 
-The <b>Generator Data Model</b> defines the view on the <b>Zone Description</b> for code generators.
-By defining a common data model code generators can be developed independendly from actual CMSIS Zone Projects and vendor tools.
-
-The CMSIS-Zone data (structured according to the Generator Data Model) is combined with file templates using the FreeMarker
-template engine to generate arbitrary project files, see picture below..
+The <b>Generator Data Model</b> defines the resource and partition data structure for code generators.
+This data structure is connected to a FreeMarker template engine and file templates allow to generate
+various files that can be used to configure development tools or hardware components.
 
 \image html generator.png "FreeMarker Template Engine"
 
-\section GenDataModel_Structure Data Model Structure
 
-The class diagram below visualizes the overall structure of the <b>Generator Data Model</b>. The root element visible to
-the templates is FmZone.
+\section fp_toplevel FreeMarker top-level format
 
-\image html genmodel.png "Generator Data Model Class Diagram"
+\section fm_system /fm/system element
 
-According to <a href="http://freemarker.org/docs/index.html" target="_blank">FreeMarker Documentation</a>
-one can access the named attributes like
-<a href="http://freemarker.org/docs/dgui_template_exp.html#dgui_template_exp_var_hash" target="_blank">retrieving data from a hash</a>.
-The reference implementation documented in detail below make use of the default FreeMarker
-<a href="http://freemarker.org/docs/pgui_misc_beanwrapper.html" target="_blank">Bean wrapper</a>. This leads to all Java methods 
-named like \em get\<Attribute\> or \em is\<Attribute\> to be visible just as <i>\<Attribute\></i> to the template.
+The \ref fm_system provides the memory layout and the interrupt configuration of the complete system. 
+This information can be used for example, to create a linker script that defines the memory setup of the SoC system.
 
-Please take note about the multiplicities stated in the diagram:
-- 0..1 indicates an optional value which might be unavailable, consider using <a href="http://freemarker.org/docs/dgui_template_exp.html#dgui_template_exp_missing" target="_blank">missing value handler operators</a>.
-- 1 indicates a mandatory value which is guaranteed to be valid.
-- 0..* indicates a collection or hash of values which might be empty.
-- 1..* indicates a collection or hash of values which is guaranteed to contain at least one element.
-
-For detailed descriptions of the data model elements please refere to the
-<a href="../genmodel/index.html" target="_blank">JavaDoc</a> documentation for
-- <a href="../genmodel/com/arm/cmsis/zone/gen/data/FmZone.html" target="_blank">FmZone</a>
-- <a href="../genmodel/com/arm/cmsis/zone/gen/data/FmProcess.html" target="_blank">FmProcess</a>
-- <a href="../genmodel/com/arm/cmsis/zone/gen/data/FmDevice.html" target="_blank">FmDevice</a>
-- <a href="../genmodel/com/arm/cmsis/zone/gen/data/FmProcessor.html" target="_blank">FmProcesor</a>
-- <a href="../genmodel/com/arm/cmsis/zone/gen/data/FmBlock.html" target="_blank">FmBlock</a>
-
-\section GenDataModel_Examples Template Examples
-
-To get an impression of how template files might look like please refere to the simplyfied examples
-in this section. 
-
-\subsection GenDataModel_Examples_AssignedBlocks HTML table of all assigned memory blocks
-
-This examples demonstrates how to iterate over the collection of memory blocks assigned
-to the project zone currently evaluated. The result of the template below is a HTML table
-with three columns listing block name, start address and size, respectively.
-
-\code
-<table>
-  <th>
-    <td>Name</td>
-    <td>Start</td>
-    <td>Size</td>
-  </th>
-<#list blocks as block>
+<table class="cmtable" summary="Element: zone">
   <tr>
-    <td>${block.name}</td>
-    <td>${block.start}</td>
-    <td>${block.size}</td>
+    <th>Child Elements</th>
+    <th>Description</th>
+    <th>Type</th>
   </tr>
-</#list>
+  <tr>
+    <td>\subpage fm_memories ".memories"</td>
+    <td>A list of all memory regions available in the system resource file.</td>
+    <td>xs:string</td>
+  </tr>
+  <tr>
+    <td>\subpage fm_interrupts ".interrupts"</td>
+    <td>A lists all interrupt sources available.</td>
+    <td>xs:string</td>
+  </tr>
+  <tr>
+    <td>\subpage fm_irq_setup ".irq_setup"</td>
+    <td>Contains device specific configuration for the setup of the interrupts.</td>
+    <td>xs:string</td>
+  </tr>
 </table>
-\endcode
+  
+\section fm_zone /fm/zone element
 
+The \ref fm_zone provides the setup information of a zone (or system partition) along with related peripherals.
+This information can be used for example, to create the MPU setup that is required for various execution zones along with
+the related linker setup.
+
+<table class="cmtable" summary="Element: zone">
+  <tr>
+    <th>Child Elements</th>
+    <th>Description</th>
+    <th>Type</th>
+  </tr>
+  <tr>
+    <td>.name</td>
+    <td>The name of the zone (or system partition).</td>
+    <td>xs:string</td>
+  </tr>
+  <tr>
+    <td>\ref fm_memories ".memories"</td>
+    <td>A list of all memory regions that are accessible in the zone (or system partition).</td>
+    <td>xs:string</td>
+  </tr>
+  <tr>
+    <td>\subpage fm_peripherals ".peripherals"</td>
+    <td>A list of all peripherals that are accessible in the zone (or system partition).</td>
+    <td>xs:string</td>
+  </tr>
+  <tr>
+    <td>\subpage fm_mpu_setup ".mpu_setup"</td>
+    <td>Contains the configuration information for the Memory Protection Unit (MPU).</td>
+    <td>xs:string</td>
+  </tr>
+</table>
+
+*/
+
+
+/**************************************************************************************************/
+/**
+\page fm_memories /fm/../memories element
+
+The \ref fm_memories provides the memory information.
+
+<table class="cmtable" summary="Element: memories">
+  <tr>
+    <th>Parent Element</th>
+    <th colspan="2">Element Chain</th>
+  </tr>
+  <tr>
+    <td>\ref fm_system "system"</td>
+    <td colspan=3>\ref fm_system</td>
+  </tr>
+  <tr>
+    <td>\ref fm_zone "zone"</td>
+    <td colspan=3>\ref fm_zone</td>
+  </tr>
+  <tr>
+    <th>Child Elements</th>
+    <th>Description</th>
+    <th>Type</th>
+  </tr>
+  <tr>
+    <td>.memory[<i>n</i>]</td>
+    <td>Array with memory region information.</td>
+    <td>Array</td>
+  </tr>
+  <tr>
+    <td>.memory[<i>n</i>].name</td>
+    <td>The name of this memory region.</td>
+    <td>xs:string</td>
+  </tr>
+  <tr>
+    <td>.memory[<i>n</i>].type</td>
+    <td>The type of memory in this region ("RAM" or "ROM").</td>
+    <td>xs:string</td>
+  </tr>
+  <tr>
+    <td>.memory[<i>n</i>].start</td>
+    <td>The logical start address of the memory region in the address map.</td>
+    <td>xs:string</td>
+  </tr>
+  <tr>
+    <td>.memory[<i>n</i>].size</td>
+    <td>The size (in bytes) of the memory region.</td>
+    <td>xs:string</td>
+  </tr>
+  <tr>
+    <td>.memory[<i>n</i>].security</td>
+    <td>The \ref security "security" setting for this memory region.</td>
+    <td>xs:string</td>
+  </tr>
+  <tr>
+    <td>.memory[<i>n</i>].access</td>
+    <td>The \ref access "access" permissions for this memory region in the following separate fields.</td>
+    <td>xs:string</td>
+  </tr>
+  <tr>
+    <td>.memory[<i>n</i>].access.r</td>
+    <td>The \em read \ref access "access" permission.</td>
+    <td>xs:boolean</td>
+  </tr>
+  <tr>
+    <td>.memory[<i>n</i>].access.w</td>
+    <td>The \em write \ref access "access" permission.</td>
+    <td>xs:boolean</td>
+  </tr>
+  <tr>
+    <td>.memory[<i>n</i>].access.x</td>
+    <td>The \em execution \ref access "access" permission.</td>
+    <td>xs:boolean</td>
+  </tr>
+  <tr>
+    <td>.memory[<i>n</i>].access.p</td>
+    <td>The \em peripheral \ref access "access" information.</td>
+    <td>xs:boolean</td>
+  </tr>
+  <tr>
+    <td>.memory[<i>n</i>].info</td>
+    <td>Brief description of the memory region.</td>
+    <td>xs:string</td>
+  </tr>
+</table>
+*/
+
+/**************************************************************************************************/
+/**
+\page fm_interrupts /fm/system/interrupts element
+
+The \ref fm_interrupts lists all interrupt sources available.
+
+<table class="cmtable" summary="Element: memories">
+  <tr>
+    <th>Parent Element</th>
+    <th colspan="2">Element Chain</th>
+  </tr>
+  <tr>
+    <td>\ref fm_system "system"</td>
+    <td colspan=3>\ref fm_system</td>
+  </tr>
+  <tr>
+    <th>Child Elements</th>
+    <th>Description</th>
+    <th>Type</th>
+  </tr>
+  <tr>
+    <td>.interrupt[<i>n</i>]</td>
+    <td>Array with memory region information.</td>
+    <td>Array</td>
+  </tr>
+  <tr>
+    <td>.interrupt[<i>n</i>].name</td>
+    <td>The name of this interrupt.</td>
+    <td>xs:string</td>
+  </tr>
+  <tr>
+    <td>.interrupt[<i>n</i>].irqn</td>
+    <td>The interrupt number.</td>
+    <td>xs:string</td>
+  </tr>
+  <tr>
+    <td>.interrupt[<i>n</i>].security</td>
+    <td>The \ref security "security" setting for this interrupt.</td>
+    <td>xs:string</td>
+  </tr>
+  <tr>
+    <td>.interrupt[<i>n</i>].info</td>
+    <td>Brief description of the interrupt source.</td>
+    <td>xs:string</td>
+  </tr>
+</table>
+*/
+
+/**************************************************************************************************/
+/**
+\page fm_irq_setup /fm/system/irq_setup element
+
+The \ref fm_irq_setup contains device specific configuration for the setup of the interrupts.
+
+<table class="cmtable" summary="Element: irq_setup">
+  <tr>
+    <th>Parent Element</th>
+    <th colspan="2">Element Chain</th>
+  </tr>
+  <tr>
+    <td>\ref fm_system "system"</td>
+    <td colspan=3>\ref fm_system</td>
+  </tr>
+  <tr>
+    <th>Child Elements</th>
+    <th>Description</th>
+    <th>Type</th>
+  </tr>
+  <tr>
+    <td>.setup[<i>n</i>]</td>
+    <td>Array with interrupt setup information.</td>
+    <td>Array</td>
+  </tr>
+  <tr>
+    <td>.setup[<i>n</i>].irq</td>
+    <td>The name of the interrupt that this setup belongs too.</td>
+    <td>xs:string</td>
+  </tr>
+  <tr>
+    <td>.setup[<i>n</i>].name</td>
+    <td>The name of the register or array that holds the configuration information.</td>
+    <td>xs:string</td>
+  </tr>
+  <tr>
+    <td>.setup[<i>n</i>].index</td>
+    <td>The index value for the register array.</td>
+    <td>xs:string</td>
+  </tr>
+  <tr>
+    <td>.setup[<i>n</i>].value</td>
+    <td>The size (in bytes) of the memory region.</td>
+    <td>xs:string</td>
+  </tr>
+  <tr>
+    <td>.setup[<i>n</i>].security</td>
+    <td>The \ref security "security" information for this setup.</td>
+    <td>xs:string</td>
+  </tr>
+  <tr>
+    <td>.setup[<i>n</i>].privilege</td>
+    <td>The \ref privilege "privilege type" information for this setup.</td>
+    <td>xs:string</td>
+  </tr>
+</table>
+*/
+
+
+/**************************************************************************************************/
+/**
+\page fm_peripherals /fm/zone/peripherals element
+
+The \ref fm_peripherals lists all peripherals that are accessible in the zone (or system partition).
+
+<table class="cmtable" summary="Element: peripherals">
+  <tr>
+    <th>Parent Element</th>
+    <th colspan="2">Element Chain</th>
+  </tr>
+  <tr>
+    <td>\ref fm_zone "zone"</td>
+    <td colspan=2>\ref fm_zone</td>
+  </tr>
+  <tr>
+    <th>Child Elements</th>
+    <th>Description</th>
+    <th>Type</th>
+  </tr>
+  <tr>
+    <td>.peripheral[<i>n</i>]</td>
+    <td>Array with peripheral information.</td>
+    <td>Array</td>
+  </tr>
+  <tr>
+    <td>.peripheral[<i>n</i>].name</td>
+    <td>The name of the peripheral.</td>
+    <td>xs:string</td>
+  </tr>
+  <tr>
+    <td>.peripheral[<i>n</i>].group</td>
+    <td>The name of the peripheral group that this peripheral belongs too.</td>
+    <td>xs:string</td>
+  </tr>
+  <tr>
+    <td>.peripheral[<i>n</i>].start</td>
+    <td>The logical start address of the peripheral in the address map.</td>
+    <td>xs:string</td>
+  </tr>
+  <tr>
+    <td>.peripheral[<i>n</i>].size</td>
+    <td>The size (in bytes) of the peripheral.</td>
+    <td>xs:string</td>
+  </tr>
+  <tr>
+    <td>.peripheral[<i>n</i>].security</td>
+    <td>The \ref security "security" setting for this peripheral.</td>
+    <td>xs:string</td>
+  </tr>
+  <tr>
+    <td>.peripheral[<i>n</i>].access</td>
+    <td>The \ref access "access" permissions for this peripheral in the following separate fields.</td>
+    <td>xs:string</td>
+  </tr>
+  <tr>
+    <td>.peripheral[<i>n</i>].access.r</td>
+    <td>The \em read \ref access "access" permission.</td>
+    <td>xs:boolean</td>
+  </tr>
+  <tr>
+    <td>.peripheral[<i>n</i>].access.w</td>
+    <td>The \em write \ref access "access" permission.</td>
+    <td>xs:boolean</td>
+  </tr>
+  <tr>
+    <td>.peripheral[<i>n</i>].access.x</td>
+    <td>The \em execution \ref access "access" permission.</td>
+    <td>xs:boolean</td>
+  </tr>
+  <tr>
+    <td>.peripheral[<i>n</i>].access.p</td>
+    <td>The \em peripheral \ref access "access" information.</td>
+    <td>xs:boolean</td>
+  </tr>
+  <tr>
+    <td>.peripheral[<i>n</i>].info</td>
+    <td>Brief description of the peripheral region.</td>
+    <td>xs:string</td>
+  </tr>
+</table>
+*/
+
+/**************************************************************************************************/
+/**
+\page fm_mpu_setup /fm/zone/mpu_setup element
+
+The \ref fm_mpu_setup contains the configuration information for the Memory Protection Unit (MPU).
+
+<table class="cmtable" summary="Element: mpu_setup">
+  <tr>
+    <th>Parent Element</th>
+    <th colspan="2">Element Chain</th>
+  </tr>
+  <tr>
+    <td>\ref fm_system "zone"</td>
+    <td colspan=3>\ref fm_zone</td>
+  </tr>
+  <tr>
+    <th>Child Elements</th>
+    <th>Description</th>
+    <th>Type</th>
+  </tr>
+  <tr>
+    <td>.type</td>
+    <td>Implementation of the MPU ("v7M" or "v8M").</td>
+    <td>xs:string</td>
+  </tr>
+  <tr>
+    <td>.region[<i>n</i>]</td>
+    <td>Array with MPU region settings.</td>
+    <td>Array</td>
+  </tr>
+  <tr>
+    <td>.region[<i>n</i>].no</td>
+    <td>Number of the region.</td>
+    <td>xs:string</td>
+  </tr>
+  <tr>
+    <td>.region[<i>n</i>].BaseAddress</td>
+    <td>The base address of the region.</td>
+    <td>xs:string</td>
+  </tr>
+  <tr>
+    <td>.setup[<i>n</i>].RASR</td>
+    <td>The MPU region attribute and size register value.</td>
+    <td>xs:string</td>
+  </tr>
+</table>
 */
