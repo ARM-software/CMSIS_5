@@ -216,7 +216,7 @@ arm_status arm_conv_partial_opt_q7(
     py = pScratch2;
 
     /* Initialization of pIn2 pointer */
-    pIn2 = (q7_t *) py;
+    pIn2 = (const q7_t *) py;
 
     pScr2 = py;
 
@@ -590,7 +590,7 @@ arm_status arm_conv_partial_opt_q7(
     py = pScratch2;
 
     /* Initialization of pIn2 pointer */
-    pIn2 = (q7_t *) py;
+    pIn2 = py;
 
     pScr2 = py;
 

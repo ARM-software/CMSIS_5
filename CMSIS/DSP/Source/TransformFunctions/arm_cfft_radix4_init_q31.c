@@ -72,7 +72,7 @@ arm_status arm_cfft_radix4_init_q31(
   /*  Initialise the FFT length */
   S->fftLen = fftLen;
   /*  Initialise the Twiddle coefficient pointer */
-  S->pTwiddle = (q31_t *) twiddleCoef_4096_q31;
+  S->pTwiddle = twiddleCoef_4096_q31;
   /*  Initialise the Flag for selection of CFFT or CIFFT */
   S->ifftFlag = ifftFlag;
   /*  Initialise the Flag for calculation Bit reversal or not */

@@ -31,13 +31,13 @@
 extern void arm_radix4_butterfly_q15(
     q15_t * pSrc,
     uint32_t fftLen,
-    q15_t * pCoef,
+    const q15_t * pCoef,
     uint32_t twidCoefModifier);
 
 extern void arm_radix4_butterfly_inverse_q15(
     q15_t * pSrc,
     uint32_t fftLen,
-    q15_t * pCoef,
+    const q15_t * pCoef,
     uint32_t twidCoefModifier);
 
 extern void arm_bitreversal_16(
@@ -91,7 +91,7 @@ void arm_cfft_q15(
         case 256:
         case 1024:
         case 4096:
-            arm_radix4_butterfly_inverse_q15  ( p1, L, (q15_t*)S->pTwiddle, 1 );
+            arm_radix4_butterfly_inverse_q15  ( p1, L, S->pTwiddle, 1 );
             break;
 
         case 32:
@@ -111,7 +111,7 @@ void arm_cfft_q15(
         case 256:
         case 1024:
         case 4096:
-            arm_radix4_butterfly_q15  ( p1, L, (q15_t*)S->pTwiddle, 1 );
+            arm_radix4_butterfly_q15  ( p1, L, S->pTwiddle, 1 );
             break;
 
         case 32:
@@ -215,9 +215,9 @@ void arm_cfft_radix4by2_q15(
 #endif //    #if defined (ARM_MATH_DSP)
 
     // first col
-    arm_radix4_butterfly_q15( pSrc, n2, (q15_t*)pCoef, 2U);
+    arm_radix4_butterfly_q15( pSrc, n2, pCoef, 2U);
     // second col
-    arm_radix4_butterfly_q15( pSrc + fftLen, n2, (q15_t*)pCoef, 2U);
+    arm_radix4_butterfly_q15( pSrc + fftLen, n2, pCoef, 2U);
 
     for (i = 0; i < fftLen >> 1; i++)
     {
@@ -320,9 +320,9 @@ void arm_cfft_radix4by2_inverse_q15(
 #endif //    #if defined (ARM_MATH_DSP)
 
     // first col
-    arm_radix4_butterfly_inverse_q15( pSrc, n2, (q15_t*)pCoef, 2U);
+    arm_radix4_butterfly_inverse_q15( pSrc, n2, pCoef, 2U);
     // second col
-    arm_radix4_butterfly_inverse_q15( pSrc + fftLen, n2, (q15_t*)pCoef, 2U);
+    arm_radix4_butterfly_inverse_q15( pSrc + fftLen, n2, pCoef, 2U);
 
     for (i = 0; i < fftLen >> 1; i++)
     {

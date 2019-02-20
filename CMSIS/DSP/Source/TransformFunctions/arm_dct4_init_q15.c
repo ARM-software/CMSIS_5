@@ -4220,14 +4220,13 @@ arm_status arm_dct4_init_q15(
   arm_status status = ARM_MATH_SUCCESS;
 
   /* Initializing the pointer array with the weight table base addresses of different lengths */
-  q15_t *twiddlePtr[4] = { (q15_t *) WeightsQ15_128, (q15_t *) WeightsQ15_512,
-    (q15_t *) WeightsQ15_2048, (q15_t *) WeightsQ15_8192
+  const q15_t *twiddlePtr[4] = {
+      WeightsQ15_128, WeightsQ15_512, WeightsQ15_2048, WeightsQ15_8192
   };
 
   /* Initializing the pointer array with the cos factor table base addresses of different lengths */
-  q15_t *pCosFactor[4] =
-    { (q15_t *) cos_factorsQ15_128, (q15_t *) cos_factorsQ15_512,
-    (q15_t *) cos_factorsQ15_2048, (q15_t *) cos_factorsQ15_8192
+  const q15_t *pCosFactor[4] = {
+      cos_factorsQ15_128, cos_factorsQ15_512, cos_factorsQ15_2048, cos_factorsQ15_8192
   };
 
   /* Initialize the DCT4 length */

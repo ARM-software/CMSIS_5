@@ -31,13 +31,13 @@
 extern void arm_radix4_butterfly_q31(
     q31_t * pSrc,
     uint32_t fftLen,
-    q31_t * pCoef,
+    const q31_t * pCoef,
     uint32_t twidCoefModifier);
 
 extern void arm_radix4_butterfly_inverse_q31(
     q31_t * pSrc,
     uint32_t fftLen,
-    q31_t * pCoef,
+    const q31_t * pCoef,
     uint32_t twidCoefModifier);
 
 extern void arm_bitreversal_32(
@@ -91,7 +91,7 @@ void arm_cfft_q31(
         case 256:
         case 1024:
         case 4096:
-            arm_radix4_butterfly_inverse_q31  ( p1, L, (q31_t*)S->pTwiddle, 1 );
+            arm_radix4_butterfly_inverse_q31  ( p1, L, S->pTwiddle, 1 );
             break;
 
         case 32:
@@ -111,7 +111,7 @@ void arm_cfft_q31(
         case 256:
         case 1024:
         case 4096:
-            arm_radix4_butterfly_q31  ( p1, L, (q31_t*)S->pTwiddle, 1 );
+            arm_radix4_butterfly_q31  ( p1, L, S->pTwiddle, 1 );
             break;
 
         case 32:
@@ -124,7 +124,7 @@ void arm_cfft_q31(
     }
 
     if ( bitReverseFlag )
-        arm_bitreversal_32((uint32_t*)p1,S->bitRevLength,S->pBitRevTable);
+        arm_bitreversal_32( (uint32_t*)p1, S->bitRevLength, S->pBitRevTable );
 }
 
 /**
@@ -167,9 +167,9 @@ void arm_cfft_radix4by2_q31(
     }
 
     // first col
-    arm_radix4_butterfly_q31( pSrc, n2, (q31_t*)pCoef, 2U);
+    arm_radix4_butterfly_q31( pSrc, n2, pCoef, 2U);
     // second col
-    arm_radix4_butterfly_q31( pSrc + fftLen, n2, (q31_t*)pCoef, 2U);
+    arm_radix4_butterfly_q31( pSrc + fftLen, n2, pCoef, 2U);
 
     for (i = 0; i < fftLen >> 1; i++)
     {
@@ -227,9 +227,9 @@ void arm_cfft_radix4by2_inverse_q31(
     }
 
     // first col
-    arm_radix4_butterfly_inverse_q31( pSrc, n2, (q31_t*)pCoef, 2U);
+    arm_radix4_butterfly_inverse_q31( pSrc, n2, pCoef, 2U);
     // second col
-    arm_radix4_butterfly_inverse_q31( pSrc + fftLen, n2, (q31_t*)pCoef, 2U);
+    arm_radix4_butterfly_inverse_q31( pSrc + fftLen, n2, pCoef, 2U);
 
     for (i = 0; i < fftLen >> 1; i++)
     {

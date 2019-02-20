@@ -116,7 +116,7 @@ void arm_lms_norm_q15(
     px = pState;
 
     /* Initialize coeff pointer */
-    pb = (q15_t*) (pCoeffs);
+    pb = pCoeffs;
 
     /* Read the sample from input buffer */
     in = *pSrc++;
@@ -202,7 +202,7 @@ void arm_lms_norm_q15(
     px = pState;
 
     /* Initialize coeff pointer */
-    pb = (q15_t*) (pCoeffs);
+    pb = pCoeffs;
 
     /* Loop unrolling.  Process 4 taps at a time. */
     tapCnt = numTaps >> 2;
@@ -370,7 +370,7 @@ void arm_lms_norm_q15(
     px = pState;
 
     /* Initialize coeff pointer */
-    pb = (q15_t *) (pCoeffs);
+    pb = pCoeffs;
 
     /* Loop over numTaps number of values */
     tapCnt = numTaps;

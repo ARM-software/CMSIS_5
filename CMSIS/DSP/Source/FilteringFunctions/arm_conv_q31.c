@@ -101,10 +101,10 @@ void arm_conv_q31(
   else
   {
     /* Initialization of inputA pointer */
-    pIn1 = (q31_t *) pSrcB;
+    pIn1 = pSrcB;
 
     /* Initialization of inputB pointer */
-    pIn2 = (q31_t *) pSrcA;
+    pIn2 = pSrcA;
 
     /* srcBLen is always considered as shorter or equal to srcALen */
     j = srcBLen;

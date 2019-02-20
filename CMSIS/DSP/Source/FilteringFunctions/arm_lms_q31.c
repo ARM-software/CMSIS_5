@@ -171,7 +171,7 @@ void arm_lms_q31(
     px = pState++;
 
     /* Initialize coefficient pointer */
-    pb = (q31_t*) pCoeffs;
+    pb = pCoeffs;
 
     /* Loop unrolling.  Process 4 taps at a time. */
     tapCnt = numTaps >> 2;
@@ -309,7 +309,7 @@ void arm_lms_q31(
     px = pState++;
 
     /* Initialize pCoeffs pointer */
-    pb = (q31_t *) pCoeffs;
+    pb = pCoeffs;
 
     /* Loop over numTaps number of values */
     tapCnt = numTaps;
