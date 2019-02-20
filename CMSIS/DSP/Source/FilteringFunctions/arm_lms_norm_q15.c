@@ -73,7 +73,7 @@ void arm_lms_norm_q15(
   uint32_t blockSize)
 {
   q15_t *pState = S->pState;                     /* State pointer */
-  const q15_t *pCoeffs = S->pCoeffs;                   /* Coefficient pointer */
+  q15_t *pCoeffs = S->pCoeffs;             /* Coefficient pointer */
   q15_t *pStateCurnt;                            /* Points to the current sample of the state */
   q15_t *px, *pb;                                /* Temporary pointers for state and coefficient buffers */
   q15_t mu = S->mu;                              /* Adaptive factor */

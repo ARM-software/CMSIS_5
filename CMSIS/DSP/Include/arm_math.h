@@ -538,7 +538,7 @@ extern "C"
   CMSIS_INLINE __STATIC_INLINE uint32_t arm_recip_q31(
   q31_t in,
   q31_t * dst,
-  q31_t * pRecipTable)
+  const q31_t * pRecipTable)
   {
     q31_t out;
     uint32_t tempVal;
@@ -3932,7 +3932,7 @@ void arm_rfft_fast_f32(
   {
     uint16_t numTaps;    /**< number of coefficients in the filter. */
     float32_t *pState;   /**< points to the state variable array. The array is of length numTaps+blockSize-1. */
-    const float32_t *pCoeffs;  /**< points to the coefficient array. The array is of length numTaps. */
+    float32_t *pCoeffs;  /**< points to the coefficient array. The array is of length numTaps. */
     float32_t mu;        /**< step size that controls filter coefficient updates. */
   } arm_lms_instance_f32;
 
@@ -3967,7 +3967,7 @@ void arm_rfft_fast_f32(
   void arm_lms_init_f32(
   arm_lms_instance_f32 * S,
   uint16_t numTaps,
-  const float32_t * pCoeffs,
+  float32_t * pCoeffs,
   float32_t * pState,
   float32_t mu,
   uint32_t blockSize);
@@ -3980,7 +3980,7 @@ void arm_rfft_fast_f32(
   {
     uint16_t numTaps;    /**< number of coefficients in the filter. */
     q15_t *pState;       /**< points to the state variable array. The array is of length numTaps+blockSize-1. */
-    const q15_t *pCoeffs;      /**< points to the coefficient array. The array is of length numTaps. */
+    q15_t *pCoeffs;      /**< points to the coefficient array. The array is of length numTaps. */
     q15_t mu;            /**< step size that controls filter coefficient updates. */
     uint32_t postShift;  /**< bit shift applied to coefficients. */
   } arm_lms_instance_q15;
@@ -3999,7 +3999,7 @@ void arm_rfft_fast_f32(
   void arm_lms_init_q15(
   arm_lms_instance_q15 * S,
   uint16_t numTaps,
-  const q15_t * pCoeffs,
+  q15_t * pCoeffs,
   q15_t * pState,
   q15_t mu,
   uint32_t blockSize,
@@ -4031,7 +4031,7 @@ void arm_rfft_fast_f32(
   {
     uint16_t numTaps;    /**< number of coefficients in the filter. */
     q31_t *pState;       /**< points to the state variable array. The array is of length numTaps+blockSize-1. */
-    const q31_t *pCoeffs;      /**< points to the coefficient array. The array is of length numTaps. */
+    q31_t *pCoeffs;      /**< points to the coefficient array. The array is of length numTaps. */
     q31_t mu;            /**< step size that controls filter coefficient updates. */
     uint32_t postShift;  /**< bit shift applied to coefficients. */
   } arm_lms_instance_q31;
@@ -4068,7 +4068,7 @@ void arm_rfft_fast_f32(
   void arm_lms_init_q31(
   arm_lms_instance_q31 * S,
   uint16_t numTaps,
-  const q31_t * pCoeffs,
+  q31_t * pCoeffs,
   q31_t * pState,
   q31_t mu,
   uint32_t blockSize,
@@ -4082,7 +4082,7 @@ void arm_rfft_fast_f32(
   {
     uint16_t numTaps;     /**< number of coefficients in the filter. */
     float32_t *pState;    /**< points to the state variable array. The array is of length numTaps+blockSize-1. */
-    const float32_t *pCoeffs;   /**< points to the coefficient array. The array is of length numTaps. */
+    float32_t *pCoeffs;   /**< points to the coefficient array. The array is of length numTaps. */
     float32_t mu;         /**< step size that control filter coefficient updates. */
     float32_t energy;     /**< saves previous frame energy. */
     float32_t x0;         /**< saves previous input sample. */
@@ -4119,7 +4119,7 @@ void arm_rfft_fast_f32(
   void arm_lms_norm_init_f32(
   arm_lms_norm_instance_f32 * S,
   uint16_t numTaps,
-  const float32_t * pCoeffs,
+  float32_t * pCoeffs,
   float32_t * pState,
   float32_t mu,
   uint32_t blockSize);
@@ -4132,10 +4132,10 @@ void arm_rfft_fast_f32(
   {
     uint16_t numTaps;     /**< number of coefficients in the filter. */
     q31_t *pState;        /**< points to the state variable array. The array is of length numTaps+blockSize-1. */
-    const q31_t *pCoeffs;       /**< points to the coefficient array. The array is of length numTaps. */
+    q31_t *pCoeffs;       /**< points to the coefficient array. The array is of length numTaps. */
     q31_t mu;             /**< step size that controls filter coefficient updates. */
     uint8_t postShift;    /**< bit shift applied to coefficients. */
-    q31_t *recipTable;    /**< points to the reciprocal initial value table. */
+    const q31_t *recipTable;    /**< points to the reciprocal initial value table. */
     q31_t energy;         /**< saves previous frame energy. */
     q31_t x0;             /**< saves previous input sample. */
   } arm_lms_norm_instance_q31;
@@ -4172,7 +4172,7 @@ void arm_rfft_fast_f32(
   void arm_lms_norm_init_q31(
   arm_lms_norm_instance_q31 * S,
   uint16_t numTaps,
-  const q31_t * pCoeffs,
+  q31_t * pCoeffs,
   q31_t * pState,
   q31_t mu,
   uint32_t blockSize,
@@ -4186,7 +4186,7 @@ void arm_rfft_fast_f32(
   {
     uint16_t numTaps;     /**< Number of coefficients in the filter. */
     q15_t *pState;        /**< points to the state variable array. The array is of length numTaps+blockSize-1. */
-    const q15_t *pCoeffs;       /**< points to the coefficient array. The array is of length numTaps. */
+    q15_t *pCoeffs;       /**< points to the coefficient array. The array is of length numTaps. */
     q15_t mu;             /**< step size that controls filter coefficient updates. */
     uint8_t postShift;    /**< bit shift applied to coefficients. */
     const q15_t *recipTable;    /**< Points to the reciprocal initial value table. */
@@ -4226,7 +4226,7 @@ void arm_rfft_fast_f32(
   void arm_lms_norm_init_q15(
   arm_lms_norm_instance_q15 * S,
   uint16_t numTaps,
-  const q15_t * pCoeffs,
+  q15_t * pCoeffs,
   q15_t * pState,
   q15_t mu,
   uint32_t blockSize,

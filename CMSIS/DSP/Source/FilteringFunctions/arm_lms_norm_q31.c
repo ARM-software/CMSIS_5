@@ -74,7 +74,7 @@ void arm_lms_norm_q31(
   uint32_t blockSize)
 {
   q31_t *pState = S->pState;                     /* State pointer */
-  const q31_t *pCoeffs = S->pCoeffs;                   /* Coefficient pointer */
+  q31_t *pCoeffs = S->pCoeffs;                   /* Coefficient pointer */
   q31_t *pStateCurnt;                            /* Points to the current sample of the state */
   q31_t *px, *pb;                                /* Temporary pointers for state and coefficient buffers */
   q31_t mu = S->mu;                              /* Adaptive factor */
@@ -298,7 +298,7 @@ void arm_lms_norm_q31(
     px = pState;
 
     /* Initialize pCoeffs pointer */
-    pb = (q31_t *) pCoeffs;
+    pb = pCoeffs;
 
     /* Read the sample from input buffer */
     in = *pSrc++;

@@ -69,7 +69,7 @@ void arm_lms_q15(
 {
   q15_t *pState = S->pState;                     /* State pointer */
   uint32_t numTaps = S->numTaps;                 /* Number of filter coefficients in the filter */
-  const q15_t *pCoeffs = S->pCoeffs;             /* Coefficient pointer */
+  q15_t *pCoeffs = S->pCoeffs;                   /* Coefficient pointer */
   q15_t *pStateCurnt;                            /* Points to the current sample of the state */
   q15_t mu = S->mu;                              /* Adaptive factor */
   q15_t *px;                                     /* Temporary pointer for state */
@@ -105,7 +105,7 @@ void arm_lms_q15(
     px = pState;
 
     /* Initialize coefficient pointer */
-    pb = (q15_t*) pCoeffs;
+    pb = pCoeffs;
 
     /* Set the accumulator to zero */
     acc = 0;
@@ -176,7 +176,7 @@ void arm_lms_q15(
     px = pState++;
 
     /* Initialize coefficient pointer */
-    pb = (q15_t*) pCoeffs;
+    pb = pCoeffs;
 
     /* Loop unrolling.  Process 4 taps at a time. */
     tapCnt = numTaps >> 2U;
