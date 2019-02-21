@@ -29,7 +29,7 @@
 #include "arm_math.h"
 
 void stage_rfft_f32(
-  arm_rfft_fast_instance_f32 * S,
+  const arm_rfft_fast_instance_f32 * S,
   float32_t * p, float32_t * pOut)
 {
    uint32_t  k;								    /* Loop Counter                     */
@@ -115,7 +115,7 @@ void stage_rfft_f32(
 
 /* Prepares data for inverse cfft */
 void merge_rfft_f32(
-arm_rfft_fast_instance_f32 * S,
+const arm_rfft_fast_instance_f32 * S,
 float32_t * p, float32_t * pOut)
 {
    uint32_t  k;								  /* Loop Counter                    */
