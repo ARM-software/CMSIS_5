@@ -8,7 +8,6 @@ various files that can be used to configure development tools or hardware compon
 
 \image html generator.png "FreeMarker Template Engine"
 
-
 \section fp_toplevel FreeMarker top-level format
 
 \section fm_system /fm/system element
@@ -23,19 +22,19 @@ This information can be used for example, to create a linker script that defines
     <th>Type</th>
   </tr>
   <tr>
-    <td>\subpage fm_memories ".memories"</td>
-    <td>A list of all memory regions available in the system resource file.</td>
-    <td>xs:string</td>
+    <td>\subpage fm_memory ".memory"</td>
+    <td>A sequence of all memory regions available in the system resource file.</td>
+    <td>sequence</td>
   </tr>
   <tr>
-    <td>\subpage fm_interrupts ".interrupts"</td>
-    <td>A lists all interrupt sources available.</td>
-    <td>xs:string</td>
+    <td>\subpage fm_interrupt ".interrupt"</td>
+    <td>A sequence of all interrupt sources available.</td>
+    <td>sequence</td>
   </tr>
   <tr>
     <td>\subpage fm_irq_setup ".irq_setup"</td>
     <td>Contains device specific configuration for the setup of the interrupts.</td>
-    <td>xs:string</td>
+    <td>sequence</td>
   </tr>
 </table>
   
@@ -54,35 +53,72 @@ the related linker setup.
   <tr>
     <td>.name</td>
     <td>The name of the zone (or system partition).</td>
-    <td>xs:string</td>
+    <td>string</td>
   </tr>
   <tr>
-    <td>\ref fm_memories ".memories"</td>
-    <td>A list of all memory regions that are accessible in the zone (or system partition).</td>
-    <td>xs:string</td>
+    <td>\ref fm_memory ".memory"</td>
+    <td>A sequence of all memory regions that are accessible in the zone (or system partition).</td>
+    <td>sequence</td>
   </tr>
   <tr>
-    <td>\subpage fm_peripherals ".peripherals"</td>
-    <td>A list of all peripherals that are accessible in the zone (or system partition).</td>
-    <td>xs:string</td>
+    <td>\subpage fm_peripheral ".peripheral"</td>
+    <td>A sequence of all peripherals that are accessible in the zone (or system partition).</td>
+    <td>sequence</td>
   </tr>
   <tr>
     <td>\subpage fm_mpu_setup ".mpu_setup"</td>
-    <td>Contains the configuration information for the Memory Protection Unit (MPU).</td>
-    <td>xs:string</td>
+    <td>A sequence of configuration information for the Memory Protection Unit (MPU).</td>
+    <td>sequence</td>
   </tr>
 </table>
+
+\section fm_basics FreeMarker basics
+
+The varible types relevant for CMSIS-Zone are:
+
+\b scalar: variable that stores a single value of a scalar type
+scalar-types:
+- string
+- int
+- bool
+
+\b hash: variable that that stores one or more variables with a unique lookup name
+
+\b sequence: variable that stores subvariables without names but instead are selected via index (myVariable[index])
+
+A variable is accessed using the dollar character followed by a variable or expression in brackets:
+\code
+${...}
+\endcode
+Output the name of the zone:
+\code
+${zone.name}
+\endcode
+
+A sequence gets iterated:
+\code
+<#list zone.memory as mem>
+   Memory region name $mem.name
+</#list
+
+Printing a sorted list of all available memory entries by start address
+\code
+<#list zone.memory?sort_by("start") as mem>
+  ${mem.start} ${mem.name}
+</#list>
+\endcode
+
 
 */
 
 
 /**************************************************************************************************/
 /**
-\page fm_memories /fm/../memories element
+\page fm_memory /fm/../memory[n] sequence element
 
-The \ref fm_memories provides the memory information.
+The \ref fm_memory provides a sequence of memory information.
 
-<table class="cmtable" summary="Element: memories">
+<table class="cmtable" summary="Element: memory[n]">
   <tr>
     <th>Parent Element</th>
     <th colspan="2">Element Chain</th>
@@ -102,8 +138,8 @@ The \ref fm_memories provides the memory information.
   </tr>
   <tr>
     <td>.memory[<i>n</i>]</td>
-    <td>Array with memory region information.</td>
-    <td>Array</td>
+    <td>Sequence of memory region information.</td>
+    <td>sequence</td>
   </tr>
   <tr>
     <td>.memory[<i>n</i>].name</td>
@@ -113,27 +149,27 @@ The \ref fm_memories provides the memory information.
   <tr>
     <td>.memory[<i>n</i>].type</td>
     <td>The type of memory in this region ("RAM" or "ROM").</td>
-    <td>xs:string</td>
+    <td>MemoryTypeEnum/xs:string</td>
   </tr>
   <tr>
     <td>.memory[<i>n</i>].start</td>
     <td>The logical start address of the memory region in the address map.</td>
-    <td>xs:string</td>
+    <td>NonNegativeInteger</td>
   </tr>
   <tr>
     <td>.memory[<i>n</i>].size</td>
     <td>The size (in bytes) of the memory region.</td>
-    <td>xs:string</td>
+    <td>NonNegativeInteger</td>
   </tr>
   <tr>
     <td>.memory[<i>n</i>].security</td>
     <td>The \ref security "security" setting for this memory region.</td>
-    <td>xs:string</td>
+    <td>SecurityTypeEnum/xs:string</td>
   </tr>
   <tr>
     <td>.memory[<i>n</i>].access</td>
     <td>The \ref access "access" permissions for this memory region in the following separate fields.</td>
-    <td>xs:string</td>
+    <td>AccessType</td>
   </tr>
   <tr>
     <td>.memory[<i>n</i>].access.r</td>
@@ -165,11 +201,11 @@ The \ref fm_memories provides the memory information.
 
 /**************************************************************************************************/
 /**
-\page fm_interrupts /fm/system/interrupts element
+\page fm_interrupt /fm/system/interrupt[n] sequence element
 
-The \ref fm_interrupts lists all interrupt sources available.
+The \ref fm_interrupt lists all interrupt sources available in the system.
 
-<table class="cmtable" summary="Element: memories">
+<table class="cmtable" summary="Element: interrupt[n]">
   <tr>
     <th>Parent Element</th>
     <th colspan="2">Element Chain</th>
@@ -184,27 +220,22 @@ The \ref fm_interrupts lists all interrupt sources available.
     <th>Type</th>
   </tr>
   <tr>
-    <td>.interrupt[<i>n</i>]</td>
-    <td>Array with memory region information.</td>
-    <td>Array</td>
-  </tr>
-  <tr>
-    <td>.interrupt[<i>n</i>].name</td>
+    <td>.name</td>
     <td>The name of this interrupt.</td>
     <td>xs:string</td>
   </tr>
   <tr>
-    <td>.interrupt[<i>n</i>].irqn</td>
+    <td>.irqn</td>
     <td>The interrupt number.</td>
-    <td>xs:string</td>
+    <td>NonNegativeInteger</td>
   </tr>
   <tr>
-    <td>.interrupt[<i>n</i>].security</td>
+    <td>.security</td>
     <td>The \ref security "security" setting for this interrupt.</td>
-    <td>xs:string</td>
+    <td>SecurityTypeEnum/xs:string</td>
   </tr>
   <tr>
-    <td>.interrupt[<i>n</i>].info</td>
+    <td>.info</td>
     <td>Brief description of the interrupt source.</td>
     <td>xs:string</td>
   </tr>
@@ -213,11 +244,11 @@ The \ref fm_interrupts lists all interrupt sources available.
 
 /**************************************************************************************************/
 /**
-\page fm_irq_setup /fm/system/irq_setup element
+\page fm_irq_setup /fm/system/irq_setup[n] element
 
-The \ref fm_irq_setup contains device specific configuration for the setup of the interrupts.
+The \ref fm_irq_setup contains a sequence of device specific configuration for the setup of the interrupts.
 
-<table class="cmtable" summary="Element: irq_setup">
+<table class="cmtable" summary="Element: irq_setup[n]">
   <tr>
     <th>Parent Element</th>
     <th colspan="2">Element Chain</th>
@@ -232,39 +263,34 @@ The \ref fm_irq_setup contains device specific configuration for the setup of th
     <th>Type</th>
   </tr>
   <tr>
-    <td>.setup[<i>n</i>]</td>
-    <td>Array with interrupt setup information.</td>
-    <td>Array</td>
-  </tr>
-  <tr>
-    <td>.setup[<i>n</i>].irq</td>
+    <td>.irq</td>
     <td>The name of the interrupt that this setup belongs too.</td>
     <td>xs:string</td>
   </tr>
   <tr>
-    <td>.setup[<i>n</i>].name</td>
+    <td>.name</td>
     <td>The name of the register or array that holds the configuration information.</td>
     <td>xs:string</td>
   </tr>
   <tr>
-    <td>.setup[<i>n</i>].index</td>
+    <td>.index</td>
     <td>The index value for the register array.</td>
-    <td>xs:string</td>
+    <td>NonNegativeInteger</td>
   </tr>
   <tr>
-    <td>.setup[<i>n</i>].value</td>
+    <td>.value</td>
     <td>The size (in bytes) of the memory region.</td>
-    <td>xs:string</td>
+    <td>NonNegativeInteger</td>
   </tr>
   <tr>
-    <td>.setup[<i>n</i>].security</td>
+    <td>.security</td>
     <td>The \ref security "security" information for this setup.</td>
-    <td>xs:string</td>
+    <td>SecurityTypeEnum/xs:string</td>
   </tr>
   <tr>
-    <td>.setup[<i>n</i>].privilege</td>
+    <td>.privilege</td>
     <td>The \ref privilege "privilege type" information for this setup.</td>
-    <td>xs:string</td>
+    <td>PrivilegeTypeEnum/xs:string</td>
   </tr>
 </table>
 */
@@ -272,11 +298,11 @@ The \ref fm_irq_setup contains device specific configuration for the setup of th
 
 /**************************************************************************************************/
 /**
-\page fm_peripherals /fm/zone/peripherals element
+\page fm_peripheral /fm/zone/peripheral[n] element
 
-The \ref fm_peripherals lists all peripherals that are accessible in the zone (or system partition).
+The \ref fm_peripheral contains a sequence of all peripherals that are accessible in the zone (or system partition).
 
-<table class="cmtable" summary="Element: peripherals">
+<table class="cmtable" summary="Element: peripheral[n]">
   <tr>
     <th>Parent Element</th>
     <th colspan="2">Element Chain</th>
@@ -291,62 +317,57 @@ The \ref fm_peripherals lists all peripherals that are accessible in the zone (o
     <th>Type</th>
   </tr>
   <tr>
-    <td>.peripheral[<i>n</i>]</td>
-    <td>Array with peripheral information.</td>
-    <td>Array</td>
-  </tr>
-  <tr>
-    <td>.peripheral[<i>n</i>].name</td>
+    <td>.name</td>
     <td>The name of the peripheral.</td>
     <td>xs:string</td>
   </tr>
   <tr>
-    <td>.peripheral[<i>n</i>].group</td>
+    <td>.group</td>
     <td>The name of the peripheral group that this peripheral belongs too.</td>
     <td>xs:string</td>
   </tr>
   <tr>
-    <td>.peripheral[<i>n</i>].start</td>
+    <td>.start</td>
     <td>The logical start address of the peripheral in the address map.</td>
-    <td>xs:string</td>
+    <td>NonNegativeInteger</td>
   </tr>
   <tr>
     <td>.peripheral[<i>n</i>].size</td>
     <td>The size (in bytes) of the peripheral.</td>
-    <td>xs:string</td>
+    <td>NonNegativeInteger</td>
   </tr>
   <tr>
-    <td>.peripheral[<i>n</i>].security</td>
+    <td>.security</td>
     <td>The \ref security "security" setting for this peripheral.</td>
-    <td>xs:string</td>
+    <td>SecurityTypeEnum/xs:string</td>
   </tr>
   <tr>
-    <td>.peripheral[<i>n</i>].access</td>
+    <td>.access</td>
     <td>The \ref access "access" permissions for this peripheral in the following separate fields.</td>
-    <td>xs:string</td>
+    <td>N/A</td>
   </tr>
   <tr>
-    <td>.peripheral[<i>n</i>].access.r</td>
+    <td>.access.r</td>
     <td>The \em read \ref access "access" permission.</td>
     <td>xs:boolean</td>
   </tr>
   <tr>
-    <td>.peripheral[<i>n</i>].access.w</td>
+    <td>.access.w</td>
     <td>The \em write \ref access "access" permission.</td>
     <td>xs:boolean</td>
   </tr>
   <tr>
-    <td>.peripheral[<i>n</i>].access.x</td>
+    <td>.access.x</td>
     <td>The \em execution \ref access "access" permission.</td>
     <td>xs:boolean</td>
   </tr>
   <tr>
-    <td>.peripheral[<i>n</i>].access.p</td>
+    <td>.access.p</td>
     <td>The \em peripheral \ref access "access" information.</td>
     <td>xs:boolean</td>
   </tr>
   <tr>
-    <td>.peripheral[<i>n</i>].info</td>
+    <td>.info</td>
     <td>Brief description of the peripheral region.</td>
     <td>xs:string</td>
   </tr>
@@ -380,8 +401,8 @@ The \ref fm_mpu_setup contains the configuration information for the Memory Prot
   </tr>
   <tr>
     <td>.region[<i>n</i>]</td>
-    <td>Array with MPU region settings.</td>
-    <td>Array</td>
+    <td>Sequenc of MPU region settings.</td>
+    <td>sequence</td>
   </tr>
   <tr>
     <td>.region[<i>n</i>].no</td>
