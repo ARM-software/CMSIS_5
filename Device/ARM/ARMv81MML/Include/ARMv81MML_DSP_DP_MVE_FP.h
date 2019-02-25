@@ -89,7 +89,7 @@ typedef enum IRQn
 #endif
 
 
-/* --------  Configuration of the Cortex-M4 Processor and Core Peripherals  ------- */
+/* --------  Configuration of the ARMv81MML Architecture Processor and Core Peripherals  ------- */
 #define __ARMv81MML_REV           0x0001U   /* Core revision r0p1 */
 #define __SAUREGION_PRESENT       1U        /* SAU regions present */
 #define __MPU_PRESENT             1U        /* MPU present */
