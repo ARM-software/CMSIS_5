@@ -1,12 +1,12 @@
 /**************************************************************************//**
  * @file     ARMv81MML_DP.h
  * @brief    CMSIS Core Peripheral Access Layer Header File for
- *           Armv8-M Mainline Device Series (configured for Armv8-M Mainline with double precision FPU, with DSP extension, with TrustZone)
- * @version  V5.00
- * @date     20. June 2018
+ *           Armv8.1-M Mainline Device Series (configured for Armv8.1-M Mainline with double precision FPU, with DSP extension, with TrustZone)
+ * @version  V1.0.0
+ * @date     25. February 2019
  ******************************************************************************/
 /*
- * Copyright (c) 2009-2018 Arm Limited. All rights reserved.
+ * Copyright (c) 2009-2019 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -35,7 +35,7 @@ extern "C" {
 
 typedef enum IRQn
 {
-/* --------------------  Armv8-M Mainline Processor Exceptions Numbers  ----------- */
+/* --------------------  Armv8.1-M Mainline Processor Exceptions Numbers  --------- */
   NonMaskableInt_IRQn           = -14,      /*  2 Non Maskable Interrupt */
   HardFault_IRQn                = -13,      /*  3 HardFault Interrupt */
   MemoryManagement_IRQn         = -12,      /*  4 Memory Management Interrupt */
@@ -88,8 +88,7 @@ typedef enum IRQn
   #warning Not supported compiler type
 #endif
 
-
-/* --------  Configuration of the ARMv81MML Architecture Processor and Core Peripherals  ------- */
+/* ---  Configuration of the Armv8.1-M Mainline Processor and Core Peripherals  --- */
 #define __ARMv81MML_REV           0x0001U   /* Core revision r0p1 */
 #define __SAUREGION_PRESENT       1U        /* SAU regions present */
 #define __MPU_PRESENT             1U        /* MPU present */

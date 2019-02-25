@@ -2,11 +2,11 @@
  * @file     system_ARMv81MML.h
  * @brief    CMSIS Device System Header File for
  *           Armv8.1-M Mainline Device Series
- * @version  V5.00
- * @date     20. June 2018
+ * @version  V1.0.0
+ * @date     25. February 2019
  ******************************************************************************/
 /*
- * Copyright (c) 2009-2018 Arm Limited. All rights reserved.
+ * Copyright (c) 2009-2019 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
