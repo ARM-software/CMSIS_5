@@ -184,7 +184,68 @@ that are related to other components for the same Software Pack.
 \endcode
 
 
-<p>&nbsp;</p>		
+<p>&nbsp;</p>
+<hr>
+
+\section Pre_Include_Global_h
+The build environment shall generate a C/C++ header file with the name <b>Pre_Include_Global.h</b> from all selected components and add this file 
+to the command line as a pre-include file for the build of all modules in the project.
+Note: the file shall be generated into the RTE/\<target> subdirectory.
+
+\code
+<component Cclass="Other" Cgroup="Alpha" ...>
+  <Pre_Include_Global_h>
+    // enabling global pre include
+    #define GLOBAL_Component_Alpha 0x4
+  </Pre_Include_Global_h>
+</component>
+
+<component Cclass="Other" Cgroup="Beta" ...>
+  <Pre_Include_Global_h>
+    // enabling global pre include
+    #define GLOBAL_Component_Beta 0x8
+  </Pre_Include_Global_h>
+</component>
+\endcode
+
+results in .../RTE/target_1/Pre_Include_Global.h:
+\code
+    // enabling global pre include
+    #define GLOBAL_Component_Alpha 0x4
+    // enabling global pre include
+    #define GLOBAL_Component_Beta 0x8
+\endcode
+
+No need to explicitly include this file as it is automatically added as pre-include into the build for all modules.
+
+<p>&nbsp;</p>
+<hr>
+
+\section Pre_Include_Local_h
+The build environment shall generate a C/C++ header file with the name <b>Pre_Include_\<Cclass>_\<component>.h</b> 
+from the selected component and add this file to the command line as a pre-include file for the build of all modules of this component.
+The same is done for each component containing a "Pre_Include_Local_h" element.
+Note: files shall be generated into the RTE/\<target> subdirectory.
+
+\code
+<component Cclass="Other" Cgroup="Alpha" ...>
+  <Pre_Include_Local_h>
+    // enabling local pre include
+    #define Local_Component_Alpha 1
+  </Pre_Include_Local_h>
+</component>
+
+\endcode
+
+results in .../RTE/target_1/Pre_Include_Other_Alpha.h:
+\code
+    // enabling local pre include
+    #define Local_Component_Alpha 1
+\endcode
+
+No need to explicitly include this file as it is automatically added as pre-include into the build for all modules of component Other:Alpha.
+
+<p>&nbsp;</p>
 <hr>
 
 \section element_components /package/components
@@ -436,10 +497,23 @@ A component describes a collection of files (source, header, configuration, libr
   </tr>
   <tr>
     <td>RTE_Components_h</td>
-    <td>Source code that is copied into the file \ref RTE_Components_h when the component is included into a software project.</td>
+    <td>Source code that is copied into the file \ref RTE_Components_h when the component is selected by the run time environment configuration.</td>
     <td>xs:string </td>
     <td>0..1 </td>
   </tr>
+  <tr>
+    <td>Pre_Include_Global_h</td>
+    <td>Source code that is copied into the file \ref Pre_Include_Global_h when the component is selected by the run time environment configuration.</td>
+    <td>xs:string </td>
+    <td>0..1 </td>
+  </tr>
+  <tr>
+    <td>Pre_Include_Local_Component_h</td>
+    <td>Source code that is copied into the file \ref Pre_Include_Local_h \<Cclass>_\<Component_name>.h when the component is selected by the run time environment configuration.</td>
+    <td>xs:string </td>
+    <td>0..1 </td>
+  </tr>
+  
   <tr>
     <td>\ref element_files "files"</td>
     <td>Grouping element for all files that are part of this component.</td>
@@ -603,16 +677,24 @@ The file purpose is defined through the <b>category</b> attribute. The <b>name</
     <td>required</td>
   </tr>
   <tr>
+    <td>path</td>
+    <td>for <b>category="header"</b> the path attribute explicitly can be used to specify the include path to be added to the commandline of the build tools, 
+        specifying an imcomplete path. This way the include file requires the specification of the subdirectory (e.g. \#include "sub_dir/includeFile.h") which can act as 
+        acting as namespace for header files which otherwise have the same name.</td>
+    <td>xs:string</td>
+    <td>optional</td>    
+  </tr>
+  <tr>
     <td>category</td>
     <td>Defines the purpose of the file. Select the predefined value as listed in the table \ref FileCategoryEnum "File Categories".</td>
-    <td>FileCategoryEnum</td>
+    <td>\ref FileCategoryEnum</td>
     <td>required</td>
   </tr>
   <tr>
     <td>attr</td>
     <td>Defines the special use and handling of a file. Select a predefined value as defined in the table \ref FileAttributeEnum "File Attributes". 	
 	</td>
-    <td>FileAttributeEnum</td>
+    <td>\ref FileAttributeEnum</td>
     <td>optional</td>
   </tr>
   <tr>
@@ -672,8 +754,7 @@ The table lists the values available as a file attribute.
   <tr>
     <td class="XML-Token">config</td>
     <td>The file is a configuration file of the component. It is expected that only configuration options are modified.
-	The file is managed as part of the component, as a project-specific file typically copied into the component section of the project.
-</td>
+	The file is managed as part of the component, as a project-specific file typically copied into the component section of the project.s</td>
   </tr>
   <tr>
     <td class="XML-Token">template</td>
@@ -724,11 +805,12 @@ The table lists the predefined values for a file category.
   </tr>
   <tr>
     <td class="XML-Token">header</td>
-    <td>Header file used in the component. Sets an include file path.</td>
+    <td>Header file used in the component. Sets an include file path and adds the file name attribute to the list of files to be added
+    to a module using the <b>\#include</b> statement. Note: specify only those files as header files that form part of the API of the component, required to use the component</td>
   </tr>
   <tr>
     <td class="XML-Token">include</td>
-    <td>Sets an include file path.</td>
+    <td>Sets an include file path. Note: ensure that the name attribute specifies a directory and ends with a '/'.</td>
   </tr>
   <tr>
     <td class="XML-Token">library</td>
@@ -767,6 +849,14 @@ The table lists the predefined values for a file category.
     <td>Files of image type are marked for special processing into a File System Image embedded into the application.
         This category requires the <em>attr</em> being set to <em>template</em><!--- or <em>interface</em> --->.
 	</td>
+  </tr>
+  <tr>
+    <td class="XML-Token">preIncludeGlobal</td>
+    <td>The specified file is added as a pre-include file to the compiler command line for all modules of the whole <b>project</b> (globally).</td>
+  </tr>
+  <tr>
+    <td class="XML-Token">preIncludeLocal</td>
+    <td>The specified file is added as a pre-include file to the compiler command line for all modules of the <b>component</b> (locally).</td>
   </tr>
   <tr>
     <td class="XML-Token">other</td>

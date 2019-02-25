@@ -1767,8 +1767,14 @@ the attribute \elem{Pname}. If the information is relevant to all processors, no
   <tr>
     <td>Ddsp</td>
     <td>Specifies whether a device supports the DSP instructions set. Use predefined values as listed in the table \ref DdspEnum "Device DSP".</td>
-    <td>DdspEnum</td>
+    <td>\ref DdspEnum DdspEnum</td>
     <td>required</td>
+  </tr>
+  <tr>
+    <td>Dmve</td>
+    <td>Specifies whether a device supports the M-Profile Vector instruction set extension. Use predefined values as listed in the table \ref DmveEnum "Device MVE".</td>
+    <td>\ref DmveEnum DmveEnum</td>
+    <td>required for ARMv8.1-M based devices</td>
   </tr>
   <tr>
     <td>Dendian</td>
@@ -2408,6 +2414,35 @@ The values can be used in the elements:
 
 <p>&nbsp;</p>		
 
+\anchor DmveEnum <b>Table: Device implements M-Profile Vector Extension Instructions</b>
+
+The table shows predefined values that identify whether a CPU implements MVE instructions (MVE).
+The values can be used in the elements:
+- \ref element_accept  
+- \ref element_require 
+- \ref element_deny  
+- \ref element_processor
+
+<table class="cmtable" summary="Enumeration: DmveEnum">
+  <tr>
+    <th>Dmve=</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td class="XML-Token">NO_MVE</td>
+    <td>No MVE instructions supported</td>
+  </tr>
+  <tr>
+    <td class="XML-Token">MVE</td>
+    <td>Integer MVE instructions supported</td>
+  </tr>
+  <tr>
+    <td class="XML-Token">FP_MVE</td>
+    <td>Floating point and Integer MVE instructions supported</td>
+  </tr>
+</table>
+
+<p>&nbsp;</p>		
 
 \anchor DendianEnum <b>Table: Endianness</b>
 

@@ -461,7 +461,7 @@ Contributing to a software pack hosted on GitHub:
 - Open the URL specified by the \c \<repository> element in a browser.
 - Create a fork of the repository.
 - Clone the fork on your machine (you may want to checkout the \c tag specified in the \ref element_releases "\<release>" element).
-- Create a branch for you modifications.
+- Create a branch for your modifications.
 - Develop and test the modifications of your branch and push the branch to GitHub.
 - Create a pull request of your branch into the upstream repository.
 
