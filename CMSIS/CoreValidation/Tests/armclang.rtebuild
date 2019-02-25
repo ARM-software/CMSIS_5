@@ -104,6 +104,27 @@ targets:
     fpu     : FPv5-SP
     float   : hard
     linkscript: "config/core_m/rtebuild_ns.sct"
+  armcm35p:
+    mcpu    : cortex-m35p
+    cpu     : cortex-m35p.no_dsp
+    features: "+nodsp"
+    mfpu    : none
+    fpu     : SoftVFP
+    float   : soft  
+  armcm35ps:
+    mcpu    : cortex-m35p
+    cpu     : cortex-m35p
+    mfpu    : fpv5-sp-d16
+    fpu     : FPv5-SP
+    float   : hard
+    cflags  : [ -mcmse ]
+  armcm35pns:
+    mcpu    : cortex-m35p
+    cpu     : cortex-m35p
+    mfpu    : fpv5-sp-d16
+    fpu     : FPv5-SP
+    float   : hard
+    linkscript: "config/core_m/rtebuild_ns.sct"
   armca:
     cflags     : [ -xc, -std=c99, -c, --target=arm-arm-none-eabi, "-mcpu=${cpu}", "-mfpu=${fpu}", "-mfloat-abi=${float}", -marm, "${csettings}", "${cwarnings}" ]
     asmflags   : [ -c, --target=arm-arm-none-eabi, "-mcpu=${cpu}", "-mfpu=${fpu}", "-mfloat-abi=${float}", -marm, "${csettings}", "${cwarnings}" ]
