@@ -1,11 +1,11 @@
 /******************************************************************************
  * @file     mpu_armv8.h
- * @brief    CMSIS MPU API for Armv8-M MPU
- * @version  V5.0.4
- * @date     10. January 2018
+ * @brief    CMSIS MPU API for Armv8-M and Armv8.1-M MPU
+ * @version  V1.1.0
+ * @date     25. February 2019
  ******************************************************************************/
 /*
- * Copyright (c) 2017-2018 Arm Limited. All rights reserved.
+ * Copyright (c) 2017-2019 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -92,6 +92,8 @@
   ((ARM_MPU_AP_(RO, NP) << MPU_RBAR_AP_Pos) & MPU_RBAR_AP_Msk) | \
   ((XN << MPU_RBAR_XN_Pos) & MPU_RBAR_XN_Msk))
 
+#if !defined(MPU_RLAR_PXN_Pos) || !defined(MPU_RLAR_PXN_Msk)
+
 /** \brief Region Limit Address Register value
 * \param LIMIT The limit address bits [31:5] for this memory region. The value is one extended.
 * \param IDX The attribute index to be associated with this memory region.
@@ -100,6 +102,21 @@
   ((LIMIT & MPU_RLAR_LIMIT_Msk) | \
   ((IDX << MPU_RLAR_AttrIndx_Pos) & MPU_RLAR_AttrIndx_Msk) | \
   (MPU_RLAR_EN_Msk))
+
+#else
+  
+/** \brief Region Limit Address Register value
+* \param LIMIT The limit address bits [31:5] for this memory region. The value is one extended.
+* \param PXN Privileged execute never. Defines whether code can be executed from this privileged region.
+* \param IDX The attribute index to be associated with this memory region.
+*/
+#define ARM_MPU_RLAR(LIMIT, PXN, IDX) \
+  ((LIMIT & MPU_RLAR_LIMIT_Msk) | \
+  ((PXN << MPU_RLAR_PXN_Pos) & MPU_RLAR_PXN_Msk) | \
+  ((IDX << MPU_RLAR_AttrIndx_Pos) & MPU_RLAR_AttrIndx_Msk) | \
+  (MPU_RLAR_EN_Msk))
+  
+#endif
 
 /**
 * Struct for a single MPU Region
