@@ -17,14 +17,21 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 
-  $Date:        19. July 2018
-  $Revision:    1.5.0
+  $Date:        25. Februar 2019
+  $Revision:    1.6.0
 
   $Project: Schema File for Package Description File Format Specification
 
   Package file name convention <vendor>.<name>.<version>.pack
-  SchemaVersion=1.5.0
+  SchemaVersion=1.6.0
 
+  25. Februar 2019: 1.6.0
+  - add processor attribute Dmve, specifying ArmV8.1-M vector extensions support
+  - add 'ARMV81MML' to Dcore attribute enumeration
+  - add path attribute to file tag, explicitly specifying include path in case of category="Header"
+  - add file element attribute category="PreIncludeGlobal" and category="PreIncludeLocal"
+  - add component section 'Pre_Include_Global_h' and 'Pre_Include_Local_Component_h'
+  
   19. July 2018: 1.5.0
   - added flash info section required for flash programming via debug sequences
   - added debug access functions and global debug variables for flash programming via debug sequences
@@ -255,8 +262,10 @@
     <xs:attribute name="Dmpu" type="DmpuEnum" />
     <!-- Dtz specifies the processor TrustZone support -->
     <xs:attribute name="Dtz" type="DtzEnum" />
-    <!-- Tdsp specifies the processor support for DSP instructions -->
+    <!-- Ddsp specifies the processor support for DSP instructions -->
     <xs:attribute name="Ddsp" type="DdspEnum" />
+    <!-- Dmve specifies the processor Cortex-M vector extensions -->
+    <xs:attribute name="Dmve" type="DmveEnum" />
     <!-- Dendian specifies the endianess supported by the processor -->
     <xs:attribute name="Dendian" type="DendianEnum" />
     <!-- Dclock specifies the maximum core clock frequency -->
@@ -631,6 +640,8 @@
   <xs:group name="DevicePropertiesGroup">
     <!-- multi-core devices have unique Pname attribute. One entry per processor and level -->
     <xs:sequence>
+      <!-- date of deprecation of family, subFamily, device and variant depending on position in the hierachy -->
+      <xs:element name="deprecated"  type="xs:date"         minOccurs="0"/>
       <xs:element name="processor" type="ProcessorType" minOccurs="0" maxOccurs="unbounded" />
       <xs:element name="debugconfig" type="DebugConfigType" minOccurs="0" maxOccurs="1" />
       <xs:group ref="DefaultDevicePropertiesGroup" minOccurs="0" maxOccurs="unbounded" />
@@ -671,6 +682,7 @@
       <xs:enumeration value="Cortex-M7" />
       <xs:enumeration value="ARMV8MBL" />
       <xs:enumeration value="ARMV8MML" />
+      <xs:enumeration value="ARMV81MML"/>
       <xs:enumeration value="Cortex-R4" />
       <xs:enumeration value="Cortex-R5" />
       <xs:enumeration value="Cortex-R7" />
@@ -919,6 +931,19 @@
     </xs:restriction>
   </xs:simpleType>
 
+  <!-- Dmve extension enumeration type -->
+  <xs:simpleType name="DmveEnum">
+    <xs:restriction base="xs:token">
+      <xs:enumeration value="NO_MVE"/>
+      <xs:enumeration value="MVE"/>
+      <xs:enumeration value="FP_MVE"/>
+      <xs:enumeration value="0"/>
+      <xs:enumeration value="1"/>
+      <xs:enumeration value="2"/>
+      <xs:enumeration value="*"/>
+    </xs:restriction>
+  </xs:simpleType>
+
   <!-- repository types -->
   <xs:simpleType name="RepositoryTypeEnum">
     <xs:restriction base="xs:string">
@@ -944,7 +969,8 @@
       <xs:enumeration value="utility" />
       <xs:enumeration value="image" />
       <xs:enumeration value="other" />
-      <xs:enumeration value="preInclude"/> <!-- restricted to a single file in CPDSC file -->
+      <xs:enumeration value="preIncludeGlobal"/>
+      <xs:enumeration value="preIncludeLocal"/>
     </xs:restriction>
   </xs:simpleType>
 
@@ -1002,6 +1028,7 @@
     <xs:attribute name="Dmpu" type="DmpuEnum" />
     <xs:attribute name="Dtz" type="DtzEnum" />
     <xs:attribute name="Ddsp" type="DdspEnum" />
+    <xs:attribute name="Dmve" type="DmveEnum" />
     <xs:attribute name="Dsecure" type="DsecureEnum" />
     <xs:attribute name="Dendian" type="DendianEnum" />
     <xs:attribute name="Pname" type="RestrictedString" />
@@ -1024,10 +1051,14 @@
   <xs:complexType name="TaxonomyDescriptionType">
     <xs:simpleContent>
       <xs:extension base="xs:string">
-        <xs:attribute name="Cclass" type="CclassType" use="required" /> <!-- Class the description is associated with -->
-        <xs:attribute name="Cgroup" type="CgroupType" use="optional" /> <!-- Group the description is associated with -->
-        <xs:attribute name="doc" type="xs:string" use="optional" /> <!-- link to documentation for the :Class:[Group] -->
-        <xs:attribute name="generator" type="xs:string" use="optional" /> <!-- link a generator to a taxonomy -->
+        <!-- Class the description is associated with -->
+        <xs:attribute name="Cclass" type="CclassType" use="required" />
+         <!-- Group the description is associated with -->
+        <xs:attribute name="Cgroup" type="CgroupType" use="optional" /> 
+        <!-- link to documentation for the :Class:[Group] -->
+        <xs:attribute name="doc" type="xs:string" use="optional" /> 
+        <!-- link a generator to a taxonomy -->
+        <xs:attribute name="generator" type="xs:string" use="optional" /> 
         <!-- if true, the vendor gives permission for the doc file above being extracted from the pack and displayed on a web-page -->
         <!-- links to web pages are assumed public -->
         <xs:attribute name="public" type="xs:boolean" use="optional" default="false" />
@@ -1258,6 +1289,9 @@
     <xs:attribute name="select" type="xs:string" use="optional" />
     <!-- path + filename + extension -->
     <xs:attribute name="name" type="xs:string" use="required" />
+    <!-- for category="header" path explicitly specifies the include path added to the commandline.-->
+    <!-- Ignored for all other categories -->
+    <xs:attribute name="path" type="xs:string" use="optional" />
     <!-- copy file to project folder:  deprecated, use attr="config" instead  -->
     <xs:attribute name="copy" type="xs:string" use="optional" />
     <!-- simple file version: to be used by RTE copy file action to see whether the file needs updating in project -->
@@ -1481,6 +1515,9 @@
     <xs:attribute name="name" type="xs:string" use="required" />
     <!-- file item category: source, header, include path, etc.  -->
     <xs:attribute name="category" type="FileCategoryType" use="required" />
+    <!-- for category="header" path explicitly specifies the include path added to the commandline.-->
+    <!-- Ignored for all other categories -->
+    <xs:attribute name="path" type="xs:string" use="optional" />
     <!-- path(s) to find source files for a library, paths are delimited with semicolon (;) -->
     <xs:attribute name="src" type="xs:string" use="optional" />
   </xs:complexType>
@@ -1775,7 +1812,7 @@
         <xs:element name="url" type="xs:anyURI" minOccurs="1" />
         <!-- optional: source repository of this pack -->
         <xs:element name="repository" type="RepositoryType" minOccurs="0"/>
-        <!-- e.g. mailto:Support@<vendor>.com or www.<vendor>.com/supportRequest -->
+        <!-- optional: e.g. mailto:Support@<vendor>.com or www.<vendor>.com/supportRequest -->
         <xs:element name="supportContact" type="xs:string" minOccurs="0" />
         <!-- optional: click through license file name and relative path -->
         <xs:element name="license" type="xs:string" minOccurs="0" />
@@ -1853,6 +1890,10 @@
                           <xs:element name="description" type="xs:string" />
                           <!-- content to be added to generated RTE_Component.h file -->
                           <xs:element name="RTE_Components_h" type="xs:string" minOccurs="0" />
+                          <!-- content to be added to generated Pre_Include_Global.h file -->
+                          <xs:element name="Pre_Include_Global_h" type="xs:string" minOccurs="0" />
+                          <!-- content to be added to generated Pre_Include_Local_<ComponentID>.h file -->
+                          <xs:element name="Pre_Include_Local_Component_h" type="xs:string" minOccurs="0" />
                           <!-- list of files / content -->
                           <xs:element name="files">
                             <xs:complexType>
@@ -1900,6 +1941,10 @@
                     <xs:element name="description" type="xs:string" />
                     <!-- content to be added to generated RTE_Component.h file -->
                     <xs:element name="RTE_Components_h" type="xs:string" minOccurs="0" />
+                    <!-- content to be added to generated Pre_Include_Global.h file -->
+                    <xs:element name="Pre_Include_Global_h" type="xs:string" minOccurs="0" />
+                    <!-- content to be added to generated Pre_Include_Local_<ComponentID>.h file -->
+                    <xs:element name="Pre_Include_Local_Component_h" type="xs:string" minOccurs="0" />
                     <!-- list of files / content -->
                     <xs:element name="files">
                       <xs:complexType>
