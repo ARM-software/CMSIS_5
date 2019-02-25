@@ -1607,6 +1607,9 @@ typedef struct
 #define MPU_RLAR_LIMIT_Pos                  5U                                            /*!< MPU RLAR: LIMIT Position */
 #define MPU_RLAR_LIMIT_Msk                 (0x7FFFFFFUL << MPU_RLAR_LIMIT_Pos)            /*!< MPU RLAR: LIMIT Mask */
 
+#define MPU_RLAR_PXN_Pos                    4U                                            /*!< MPU RLAR: PXN Position */
+#define MPU_RLAR_PXN_Msk                   (0x1UL << MPU_RLAR_PXN_Pos)                    /*!< MPU RLAR: PXN Mask */
+
 #define MPU_RLAR_AttrIndx_Pos               1U                                            /*!< MPU RLAR: AttrIndx Position */
 #define MPU_RLAR_AttrIndx_Msk              (0x7UL << MPU_RLAR_AttrIndx_Pos)               /*!< MPU RLAR: AttrIndx Mask */
 
