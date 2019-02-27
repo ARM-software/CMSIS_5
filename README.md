@@ -26,7 +26,20 @@ A [pre-built documentation](http://www.keil.com/pack/doc/CMSIS_Dev/index.html) i
    - CPDSC project file format: allows project templates that are agnostic of an IDE
    - Minimize need for IDE specific settings: CMSIS-Pack supports IDE specific parameters. Analyze and minimize 
 
-For further details see also the [Slides of the Embedded World CMSIS Partner Meeting](https://github.com/ARM-software/CMSIS_5/blob/develop/CMSIS_EW2018.pdf).
+For further details see also the [Slides of the Embedded World CMSIS Partner Meeting](https://github.com/ARM-software/CMSIS_5/blob/develop/CMSIS_EW2019.pdf).
+
+## Other related GitHub repositories
+
+| Repository                  | Description                                               |                
+| --------------------------- | --------------------------------------------------------- |
+| [cmsis-pack-eclipse](https://github.com/ARM-software/cmsis-pack-eclipse)    |  CMSIS-Pack Management for Eclipse reference implementation Pack support  |
+| [CMSIS-FreeRTOS](https://github.com/arm-software/CMSIS-FreeRTOS)            | CMSIS-RTOS adoption of FreeRTOS                                                      |
+| [CMSIS-Driver](https://github.com/arm-software/CMSIS-Driver)                | Generic MCU driver implementations and templates for Ethernet MAC/PHY and Flash.  |
+| [CMSIS-Driver_Validation](https://github.com/ARM-software/CMSIS-Driver_Validation) | CMSIS-Driver Validation can be used to verify CMSIS-Driver in a user system |
+| [NXP_LPC](https://github.com/ARM-software/NXP_LPC)                          | CMSIS Driver Implementations for the NXP LPC Microcontroller Series       |
+| [mdk-packs](https://github.com/mdk-packs)                                   | IoT cloud connectors as trail implementations for MDK (help us to make the generic)|
+| [trustedfirmware.org](https://www.trustedfirmware.org/)                     | Arm Trusted Firmware provides a reference implementation of secure world software for Armv8-A and Armv8-M.|
+ 
 
 ## Directory Structure
 
@@ -54,7 +67,7 @@ To build a complete CMSIS pack for installation the following additional tools a
  - **doxygen.exe**    Version: 1.8.6 (Documentation Generator)
  - **mscgen.exe**     Version: 0.20  (Message Sequence Chart Converter)
  - **7z.exe (7-Zip)** Version: 16.02 (File Archiver)
-  
+ 
 Using these tools, you can generate on a Windows PC:
  - **CMSIS Software Pack** using the batch file **gen_pack.bat** (located in ./CMSIS/Utilities). This batch file also generates the documentation.
   
