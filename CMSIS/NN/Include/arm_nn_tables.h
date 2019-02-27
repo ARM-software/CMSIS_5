@@ -53,7 +53,4 @@ extern const q15_t tanhTable_q15[256];
 extern const q15_t sigmoidHTable_q15[192];
 extern const q15_t sigmoidLTable_q15[128];
 
-extern const q15_t sigmoidLTable_q15[128];
-extern const q15_t sigmoidHTable_q15[192];
-
 #endif                          /*  ARM_NN_TABLES_H */
