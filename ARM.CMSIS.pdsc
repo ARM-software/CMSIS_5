@@ -2927,7 +2927,7 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="linkerScript" name="Device/ARM/ARMv81MML/Source/ARM/ARMv81MML.sct"               version="1.0.0" attr="config" condition="ARMCC"/>
         <file category="sourceAsm"    name="Device/ARM/ARMv81MML/Source/GCC/startup_ARMv81MML.S"         version="1.0.0" attr="config" condition="GCC"/>
         <file category="linkerScript" name="Device/ARM/ARMv81MML/Source/GCC/gcc_arm.ld"                  version="1.0.0" attr="config" condition="GCC"/>
-        <file category="sourceAsm"    name="Device/ARM/ARMv81MML/Source/IAR/startup_ARMv81MML.S"         version="1.0.0" attr="config" condition="IAR"/>
+        <file category="sourceAsm"    name="Device/ARM/ARMv81MML/Source/IAR/startup_ARMv81MML.s"         version="1.0.0" attr="config" condition="IAR"/>
         <file category="sourceC"      name="Device/ARM/ARMv81MML/Source/system_ARMv81MML.c"              version="1.0.0" attr="config"/>
         <!-- SAU configuration -->
         <file category="header"       name="Device/ARM/ARMv81MML/Include/Template/partition_ARMv81MML.h" version="1.0.0" attr="config" condition="ARMv8-M TZ Device"/>
