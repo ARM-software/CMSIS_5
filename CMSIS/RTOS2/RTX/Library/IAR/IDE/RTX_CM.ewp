@@ -32,11 +32,11 @@
                 </option>
                 <option>
                     <name>Input description</name>
-                    <state>Automatic choice of formatter.</state>
+                    <state>Automatic choice of formatter, without multibyte support.</state>
                 </option>
                 <option>
                     <name>Output description</name>
-                    <state>Automatic choice of formatter.</state>
+                    <state>Automatic choice of formatter, without multibyte support.</state>
                 </option>
                 <option>
                     <name>GOutputBinary</name>
@@ -222,6 +222,7 @@
                     <name>CCDefines</name>
                     <state>NDEBUG</state>
                     <state>CMSIS_device_header="ARMCM0.h"</state>
+                    <state>EVR_RTX_DISABLE</state>
                 </option>
                 <option>
                     <name>CCPreprocFile</name>
@@ -1263,6 +1264,7 @@
                     <name>CCDefines</name>
                     <state>NDEBUG</state>
                     <state>CMSIS_device_header="ARMCM3.h"</state>
+                    <state>EVR_RTX_DISABLE</state>
                 </option>
                 <option>
                     <name>CCPreprocFile</name>
@@ -2304,6 +2306,7 @@
                     <name>CCDefines</name>
                     <state>NDEBUG</state>
                     <state>CMSIS_device_header="ARMCM4_FP.h"</state>
+                    <state>EVR_RTX_DISABLE</state>
                 </option>
                 <option>
                     <name>CCPreprocFile</name>
@@ -3345,6 +3348,7 @@
                     <name>CCDefines</name>
                     <state>NDEBUG</state>
                     <state>CMSIS_device_header="ARMv8MBL.h"</state>
+                    <state>EVR_RTX_DISABLE</state>
                 </option>
                 <option>
                     <name>CCPreprocFile</name>
@@ -4386,6 +4390,8 @@
                     <name>CCDefines</name>
                     <state>NDEBUG</state>
                     <state>CMSIS_device_header="ARMv8MBL.h"</state>
+                    <state>EVR_RTX_DISABLE</state>
+                    <state>DOMAIN_NS=1</state>
                 </option>
                 <option>
                     <name>CCPreprocFile</name>
@@ -5427,6 +5433,7 @@
                     <name>CCDefines</name>
                     <state>NDEBUG</state>
                     <state>CMSIS_device_header="ARMv8MML.h"</state>
+                    <state>EVR_RTX_DISABLE</state>
                 </option>
                 <option>
                     <name>CCPreprocFile</name>
@@ -6468,6 +6475,8 @@
                     <name>CCDefines</name>
                     <state>NDEBUG</state>
                     <state>CMSIS_device_header="ARMv8MML.h"</state>
+                    <state>EVR_RTX_DISABLE</state>
+                    <state>DOMAIN_NS=1</state>
                 </option>
                 <option>
                     <name>CCPreprocFile</name>
@@ -7509,6 +7518,7 @@
                     <name>CCDefines</name>
                     <state>NDEBUG</state>
                     <state>CMSIS_device_header="ARMv8MML_SP.h"</state>
+                    <state>EVR_RTX_DISABLE</state>
                 </option>
                 <option>
                     <name>CCPreprocFile</name>
@@ -8550,6 +8560,8 @@
                     <name>CCDefines</name>
                     <state>NDEBUG</state>
                     <state>CMSIS_device_header="ARMv8MML_SP.h"</state>
+                    <state>EVR_RTX_DISABLE</state>
+                    <state>DOMAIN_NS=1</state>
                 </option>
                 <option>
                     <name>CCPreprocFile</name>
