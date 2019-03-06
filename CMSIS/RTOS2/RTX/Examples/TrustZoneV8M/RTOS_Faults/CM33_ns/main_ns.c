@@ -114,7 +114,7 @@ void thread_stack_overflow (void) {
   volatile uint32_t foo [1024];
   uint32_t i;
   for (i=0; i<1024; i++)  {
-    foo[i] = i+i;;
+    foo[i] = i+i;
   }
 }  
 
