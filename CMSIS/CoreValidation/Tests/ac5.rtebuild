@@ -39,8 +39,8 @@ targets:
     fpu    : FPv5_D16
   armca:
     toolchain  : ARMCC5
-    cflags      : [ "--cpu=${cpu}", "--apcs=/${float}", --arm, --c99, "-%{optimize}", -g, -c ]
-    asmflags    : [ "--cpu=${cpu}", "--apcs=/${float}", --arm, --c99, "-%{optimize}", -g, -c ]
+    cflags      : [ "--cpu=${cpu}", "--apcs=/${float}", --li, --arm, --c99, "-%{optimize}", -g, -c ]
+    asmflags    : [ "--cpu=${cpu}", "--apcs=/${float}", --li, --arm, -g ]
     linkflags   : [ "--cpu=${cpu}", "--entry=Vectors" ]
     linkscript : "./config/core_a/rtebuild_armcc.sct"
     source:
