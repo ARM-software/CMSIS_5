@@ -765,6 +765,7 @@ INPUT                  = src/Overview.txt \
                          src/Ref_cm4_simd.txt \
                          src/Ref_FPU.txt \
                          src/Ref_MPU.txt \
+                         src/Ref_MPU8.txt \
                          src/Ref_Systick.txt \
                          src/Ref_Debug.txt \
                          src/Ref_Trustzone.txt \
