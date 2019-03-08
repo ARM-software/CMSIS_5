@@ -1513,7 +1513,7 @@ The PC-Lint configuration uses the following Options under <b>Tools - PC-Lint Se
  - MISRA  Rules Setup and Configuration: 
    - MISRQ_C_2012_Config.lnt; all rules enabled
    - includes definition file: au-misra3.lnt (12-Jun-2014)
- - Additional Lint Commands (for both single and mutiple files):
+ - Additional Lint Commands (for both single and multiple files):
 \code
    - emacro(835,osRtxConfigPrivilegedMode)
 \endcode
@@ -1571,9 +1571,9 @@ All locations in the source code are marked with:
 
 \section MISRA_2 [MISRA Note 2]: Object identifiers are void pointers
 
-CMSIS-RTOS is independant of an underlying RTOS implementation. The object idenifiers are therefore defined as void pointers to:
+CMSIS-RTOS is independent of an underlying RTOS implementation. The object identifiers are therefore defined as void pointers to:
   - allow application programs that are agnostic from an underlying RTOS implementation.
-  - avoid accidently accesses an RTOS control block from an application program.
+  - avoid accidentally accesses an RTOS control block from an application program.
 
 This design decisions imply the following MISRA deviations:
  - [MISRA 2012 Rule      11.3,  required]: A cast shall not be performed between a pointer to object type and a pointer to a different object type
@@ -1584,7 +1584,7 @@ All locations in the source code are marked with:
   //lint -e{9079} -e{9087} "cast from pointer to void to pointer to object type" [MISRA Note 2]
 \endcode 
 
-In the RTX5 implementation the requried pointer conversions are implemented in the header file rtx_lib.h with the following inline functions:
+In the RTX5 implementation the required pointer conversions are implemented in the header file rtx_lib.h with the following inline functions:
 
 \code
 osRtxThread_t       *osRtxThreadId (osThread_t thread_id);
@@ -1599,7 +1599,7 @@ osRtxMessageQueue_t *osRtxMessageQueueId(osMessageQueueId_t mq_id);
 \section MISRA_3 [MISRA Note 3]: Conversion to unified object control blocks
 
 RTX uses a unified object control block structure that contains common object members.
-The unified control blocks use a fixed layout at the beginning of the sturcture and starts always with an object identifier.
+The unified control blocks use a fixed layout at the beginning of the structure and starts always with an object identifier.
 This allows common object functions that receive a pointer to a unified object control block and reference only the
 pointer or the members in the fixed layout. Using common object functions and data (for example the ISR queue) reduces 
 code complexity and keeps the source code better structured.  Refer also to \ref MISRA_4
@@ -1614,7 +1614,7 @@ All locations in the source code are marked with:
 \endcode 
 
 
-In the RTX5 implementation the requried pointer conversions are implemented in the header file \em rtx_lib.h with the following inline function:
+In the RTX5 implementation the required pointer conversions are implemented in the header file \em rtx_lib.h with the following inline function:
 
 \code
 osRtxObject_t *osRtxObject (void *object);
@@ -1624,7 +1624,7 @@ osRtxObject_t *osRtxObject (void *object);
 \section MISRA_4 [MISRA Note 4]: Conversion from unified object control blocks
 
 RTX uses a unified object control block structure that contains common object members. Refer to \ref MISRA_3 for more information.
-To process specifc control block data, pointer conversions are required.
+To process specific control block data, pointer conversions are required.
 
 This design decisions imply the following MISRA deviations:
  - [MISRA 2012 Rule       1.3,  required]: There shall be no occurrence of undefined or critical unspecified behavior
@@ -1637,7 +1637,7 @@ All locations in the source code are marked with:
   //lint -e{740} -e{826} -e{9087} "cast from pointer to generic object to specific object" [MISRA Note 4]
 \endcode 
 
-In the RTX5 source code the requried pointer conversions are implemented in the header file \em rtx_lib.h with the following inline functions:
+In the RTX5 source code the required pointer conversions are implemented in the header file \em rtx_lib.h with the following inline functions:
 
 \code
 osRtxThread_t       *osRtxThreadObject (osRtxObject_t *object);
@@ -1652,7 +1652,7 @@ osRtxMessage_t      *osRtxMessageObject (osRtxObject_t *object);
 
 \section MISRA_5 [MISRA Note 5]: Conversion to object types
 
-The RTX5 kernel has common memory management functions that use void pointers. These memory allocation fuctions returns 
+The RTX5 kernel has common memory management functions that use void pointers. These memory allocation functions return 
 a void pointer which is correctly aligned for object types.
 
 This design decision implies the following MISRA deviations:
@@ -1699,8 +1699,8 @@ static osTimerId_t svcRtxTimerNew (osTimerFunc_t func, osTimerType_t type, void 
     :
     //lint -e{9079} "conversion from pointer to void to pointer to other type" [MISRA Note 6]
     timer = attr->cb_mem;
-	:
-\endcode	
+    :
+\endcode
 
 \section MISRA_7 [MISRA Note 7]: Check for proper pointer alignment
 
@@ -1726,7 +1726,7 @@ static osThreadId_t svcRtxThreadNew (osThreadFunc_t func, void *argument, const 
     //lint -e(923) -e(9078) "cast from pointer to unsigned int" [MISRA Note 7]
     if ((((uint32_t)stack_mem & 7U) != 0U) || (stack_size == 0U)) {
     :
-\endcode	
+\endcode
 
 \section MISRA_8 [MISRA Note 8]: Memory allocation management
 
@@ -1809,7 +1809,7 @@ CPU register R12 (or R7). For assembly inter-working the function parameters are
 The function return value after SVC call is mapped to the CPU register R0. Return value is casted from unsigned int 
 to the target value. 
 
-It has been verified that this method has has no side-effects and is well defined.
+It has been verified that this method has no side-effects and is well defined.
 
 This design decision implies the following MISRA deviations:
  - [MISRA 2012 Rule      10.3,  required]: Expression assigned to a narrower or different essential type
@@ -1843,7 +1843,7 @@ PC-lint does not process ASM input/output operand lists and therefore falsely id
 \section MISRA_12 [MISRA Note 12]: Usage of exclusive access instructions
 
 The RTX5 implementation uses the CPU instructions LDREX and STREX (when supported by the processor) to implement atomic operations.
-This atomic operations elimite the requirement for interrupt lock-outs. The atomic operations are implemented using 
+These atomic operations eliminate the requirement for interrupt lock-outs. The atomic operations are implemented using 
 inline assembly.
 
 PC-lint cannot process assembler instructions including the input/output operand lists and therefore falsely identifies issues:
@@ -1866,11 +1866,11 @@ The functions that implement atomic instructions are marked as library modules a
 
 The Event Recorder is a generic event logger and the related functions are called to record an event.
 The function parameters are 32-bit id, 32-bit values, pointer to void (data) and are recorded as 32-bit numbers.
-The parameters for the Event Recorder may require cast opertions to unsigned int which however has no side-effects 
+The parameters for the Event Recorder may require cast operations to unsigned int which however has no side-effects 
 and is well defined. 
 
 The return value indicates success or failure. There is no need to check the return value since no action is 
-taken when a Event Recorder function fail. The EventID macro (part of external Event Recorder) constructs the 
+taken when an Event Recorder function fail. The EventID macro (part of external Event Recorder) constructs the 
 ID based on input parameters which are shifted, masked with '&' and combined with '|'.
 Zero value input parameters are valid and cause zero used with '&' and '|'.
 
