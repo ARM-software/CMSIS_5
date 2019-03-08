@@ -10,8 +10,16 @@ The MPU is used to prevent from illegal memory accesses that are typically cause
 \code
 void main() 
 {
-  // Set Region 0
-  ARM_MPU_SetRegionEx(0UL, 0x08000000UL, MPU_RASR(0UL, ARM_MPU_AP_FULL, 0UL, 0UL, 1UL, 1UL, 0x00UL, ARM_MPU_REGION_SIZE_1MB));
+  // Set Region 0 using Attr 0
+  ARM_MPU_SetMemAttr(0UL, ARM_MPU_ATTR(       /* Normal memory */
+    ARM_MPU_ATTR_MEMORY_(0UL, 1UL, 1UL, 1UL), /* Outer Write-Back transient with read and write allocate */
+    ARM_MPU_ATTR_MEMORY_(0UL, 0UL, 1UL, 1UL)  /* Inner Write-Through transient with read and write allocate */
+  ));
+  
+  ARM_MPU_SetRegion(0UL,
+    ARM_MPU_RBAR(0x08000000UL, ARM_MPU_SH_NON, 0UL, 1UL, 1UL),  /* Non-shareable, read/write, non-privileged, execute-never */
+    ARM_MPU_RLAR(0x080FFFFFUL, 0UL)                             /* 1MB memory block using Attr 0 */
+  );
   
   ARM_MPU_Enable(0);
   
@@ -197,6 +205,24 @@ __STATIC_INLINE void ARM_MPU_LoadEx(MPU_Type* mpu, uint32_t rnr, ARM_MPU_Region_
 * \param rnr First region number to be configured.
 * \param table Pointer to the MPU configuration table.
 * \param cnt Amount of regions to be configured.
+*
+* <b>Example:</b>
+* \code
+* const ARM_MPU_Region_t mpuTable[1][4] = {
+*   {
+*     //                     BASE          SH              RO   NP   XN                         LIMIT         ATTR 
+*     { .RBAR = ARM_MPU_RBAR(0x08000000UL, ARM_MPU_SH_NON, 0UL, 1UL, 0UL), .RLAR = ARM_MPU_RLAR(0x080FFFFFUL, 0UL) },
+*     { .RBAR = ARM_MPU_RBAR(0x20000000UL, ARM_MPU_SH_NON, 0UL, 1UL, 1UL), .RLAR = ARM_MPU_RLAR(0x20007FFFUL, 0UL) },
+*     { .RBAR = ARM_MPU_RBAR(0x40020000UL, ARM_MPU_SH_NON, 0UL, 1UL, 1UL), .RLAR = ARM_MPU_RLAR(0x40021FFFUL, 1UL) },
+*     { .RBAR = ARM_MPU_RBAR(0x40022000UL, ARM_MPU_SH_NON, 0UL, 1UL, 1UL), .RLAR = ARM_MPU_RLAR(0x40022FFFUL, 1UL) }
+*   }
+* };
+*  
+* void UpdateMpu(uint32_t idx)
+* {
+*    ARM_MPU_Load(0, mpuTable[idx], 4);
+* }
+* \endcode
 */
 __STATIC_INLINE void ARM_MPU_Load(uint32_t rnr, ARM_MPU_Region_t const* table, uint32_t cnt);
 
