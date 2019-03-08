@@ -202,8 +202,7 @@ __STATIC_INLINE void ARM_MPU_Enable(uint32_t MPU_Control)
 */
 __STATIC_INLINE void ARM_MPU_Disable(void)
 {
-  __DSB();
-  __ISB();
+  __DMB();
 #ifdef SCB_SHCSR_MEMFAULTENA_Msk
   SCB->SHCSR &= ~SCB_SHCSR_MEMFAULTENA_Msk;
 #endif
