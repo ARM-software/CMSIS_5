@@ -2087,6 +2087,11 @@ Contact cmsis@arm.com to ask for an extension. These values can be used in the e
     <td>http://www.voragotech.com</td>
   </tr>
   <tr>
+    <td class="XML-Token">Weltrend:148</td>
+    <td>Weltrend</td>
+    <td>http://www.weltrend.com.tw</td>
+  </tr>
+  <tr>
     <td class="XML-Token">WIZnet:122</td>
     <td>WIZnet</td>
     <td>http://www.wiznet.co.kr</td>
