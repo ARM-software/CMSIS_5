@@ -18,3 +18,4 @@
 *.a filter=lfs diff=lfs merge=lfs -text
 *.lib filter=lfs diff=lfs merge=lfs -text
 *.exe filter=lfs diff=lfs merge=lfs -text
+CMSIS/Utilities/Linux-gcc-*/* filter=lfs diff=lfs merge=lfs -text
