@@ -75,6 +75,13 @@ Files relevant to CMSIS-Pack are present in the following \b ARM::CMSIS director
     <th>Description</th>
   </tr>
   <tr>
+    <td>1.7.0</td>
+    <td>Modifications compared to Version 1.6.0
+- added to \ref element_package "package" element the possibility to restrict the usage of the with attributes Dcore, Dname, Dvendor, and Tcompiler.
+- added \ref element_dominate "dominate" element to overwrites identical \ref element_devices "devices", \ref element_apis "APIs", or \ref element_components "components".
+- added new \ref pack_Cclass : "Audio", "Board Part", "Data Exchange", "Extension Board", "IoT Client", "IoT Utility", "Security", "Utility".
+    </td>
+  <tr>
     <td>1.6.0</td>
     <td>Modifications compared to Version 1.5.0
 - added Armv8.1-M MVE processor feature attribute 'Dmve'.

@@ -241,16 +241,24 @@
   </releases>
 
   <taxonomy>
+    <description Cclass="Audio">Software components for audio processing</description>
     <description Cclass="Board Support">Generic Interfaces for Evaluation and Development Boards</description>
+	<description Cclass="Board Part">Drivers that support an external component available on an evaluation board</description>
+    <description Cclass="Compiler">Compiler Software Extensions</description>
     <description Cclass="CMSIS" doc="CMSIS/Documentation/General/html/index.html">Cortex Microcontroller Software Interface Components</description>
-    <description Cclass="Device" doc="CMSIS/Documentation/Core/html/index.html">Startup, System Setup</description>
     <description Cclass="CMSIS Driver" doc="CMSIS/Documentation/Driver/html/index.html">Unified Device Drivers compliant to CMSIS-Driver Specifications</description>
+    <description Cclass="Device" doc="CMSIS/Documentation/Core/html/index.html">Startup, System Setup</description>
+    <description Cclass="Data Exchange">Data exchange or data formatter</description>
+	<description Cclass="Extension Board">Drivers that support an extension boards or shield</description>
     <description Cclass="File System">File Drive Support and File System</description>
+    <description Cclass="IoT Client">IoT cloud client connector</description>
+    <description Cclass="IoT Utility">IoT specific software utility</description>
     <description Cclass="Graphics">Graphical User Interface</description>
     <description Cclass="Network">Network Stack using Internet Protocols</description>
-    <description Cclass="USB">Universal Serial Bus Stack</description>
-    <description Cclass="Compiler">Compiler Software Extensions</description>
     <description Cclass="RTOS">Real-time Operating System</description>
+    <description Cclass="Security">Encryption for secure communication or storage</description>
+    <description Cclass="USB">Universal Serial Bus Stack</description>
+    <description Cclass="Utility">Generic software utility components</description>
   </taxonomy>
 
   <devices>
