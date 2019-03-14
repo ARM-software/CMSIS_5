@@ -172,7 +172,22 @@ It contains the statements that are specified with the element \b RTE_Components
 #endif /* RTE_COMPONENTS_H */
 \endcode
 
-The typical usage of the <b>RTE_Components.h</b> file is in header files to control for example the inclusion of files
+The <b>RTE_Components.h</b> file allows to create software that works with any supported device as it gives access to the
+\b CMSIS_device_header.  The \b CMSIS_device_header reflects the current selected device and gives you for example access  
+to the processor configuration.  Refer to <b>"Device Header File <device.h>"</b> in <a href="../../Core/html/device_h_pg.html"><b>CMSIS-Core(M)</b></a> 
+or <a href="../../Core_A/html/device_h_pg.html"><b>CMSIS-Core(A)</b></a> for more information.
+
+\code
+#include CMSIS_device_header            /* header file of the selected device in the project */
+
+#if (defined (__MPU_PRESENT)) && (__MPU_PRESENT == 1)
+  // device has MPU, start the related code
+#else
+  #error "Software Component requires a device with MPU"
+#endif
+\endcode
+
+Another typical usage of the <b>RTE_Components.h</b> file is in header files to control for example the inclusion of files
 that are related to other components for the same Software Pack.
 
 \code

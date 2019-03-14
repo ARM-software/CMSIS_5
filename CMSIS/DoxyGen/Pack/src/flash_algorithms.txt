@@ -317,13 +317,18 @@ int ProgramPage (unsigned long adr, unsigned long sz, unsigned char *buf);
 
 \details
 The function \b ProgramPage is used to write code into the Flash memory. It is invoked whenever an attempt is made to
-download a program to Flash.
+download a program to Flash. As Flash memory is typically organized in pages, the parameters to the function \b ProgramPage 
+should not cross alignment boundaries of these Flash Pages.  The page size is specified in the struct FlashDevice.
 
 The argument \a adr specifies the start address of the page that is to be programmed.
 
-The argument \a sz specifies the size of the page that is to be programmed.
+The argument \a sz specifies the data size in the data buffer.
 
-The argument \a buf points to the buffer containing the data to be programmed.
+The argument \a buf points to the data buffer containing the data to be programmed.
+
+\note
+The argument \a adr + \a sz should not cross any page boundary, however it is possible to have multiple calls to 
+\b ProgramPage for programming a flash page.
 
 <b>Code Example</b>
 \code
