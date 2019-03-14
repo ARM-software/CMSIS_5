@@ -247,13 +247,13 @@
   <taxonomy>
     <description Cclass="Audio">Software components for audio processing</description>
     <description Cclass="Board Support">Generic Interfaces for Evaluation and Development Boards</description>
-	<description Cclass="Board Part">Drivers that support an external component available on an evaluation board</description>
+    <description Cclass="Board Part">Drivers that support an external component available on an evaluation board</description>
     <description Cclass="Compiler">Compiler Software Extensions</description>
     <description Cclass="CMSIS" doc="CMSIS/Documentation/General/html/index.html">Cortex Microcontroller Software Interface Components</description>
     <description Cclass="CMSIS Driver" doc="CMSIS/Documentation/Driver/html/index.html">Unified Device Drivers compliant to CMSIS-Driver Specifications</description>
     <description Cclass="Device" doc="CMSIS/Documentation/Core/html/index.html">Startup, System Setup</description>
     <description Cclass="Data Exchange">Data exchange or data formatter</description>
-	<description Cclass="Extension Board">Drivers that support an extension boards or shield</description>
+    <description Cclass="Extension Board">Drivers that support an extension board or shield</description>
     <description Cclass="File System">File Drive Support and File System</description>
     <description Cclass="IoT Client">IoT cloud client connector</description>
     <description Cclass="IoT Utility">IoT specific software utility</description>
@@ -3780,7 +3780,7 @@ and 8-bit Java bytecodes in Jazelle state.
       </files>
     </component>
     <component Cclass="CMSIS Driver" Cgroup="Ethernet" Csub="Custom" Cversion="2.1.0" Capiversion="2.1.0">
-      <description>Access to #include Driver_ETH_PHY.h and Driver_ETH_MAC.h files and code template for custom implementation</description>
+      <description>Access to #include Driver_ETH_PHY/MAC.h files and code templates for custom implementation</description>
       <files>
         <file category="header" name="CMSIS/Driver/Include/Driver_ETH_MAC.h" />
         <file category="header" name="CMSIS/Driver/Include/Driver_ETH_PHY.h" />
