@@ -8,6 +8,21 @@
   <url>http://www.keil.com/pack/</url>
 
   <releases>
+    <release version="5.5.0-dev55">
+      Active development ...
+      DSP_Lib:
+        - new version V1.5.5
+        - reworked DSP library source files
+            added macro ARM_MATH_LOOPUNROLL
+            removed macro UNALIGNED_SUPPORT_DISABLE
+            relpaced arm_bitreversal2.S with C version
+            added const-correctness
+            replaced SIMD pointer construct with memcpy solution
+        - reworked DSP library documentation
+        - moved DSP libraries to folder ./DSP/Lib
+        - ARM DSP Libraries are built with ARMCLANG
+        - Added DSP Libraries Source variant
+    </release>
     <release version="5.5.0-dev5">
       Development Snapshot ...
       CMSIS-Driver:
@@ -3053,7 +3068,7 @@ and 8-bit Java bytecodes in Jazelle state.
     </component>
 
     <!-- CMSIS-DSP component -->
-    <component Cclass="CMSIS" Cgroup="DSP" Cversion="1.5.2" condition="CMSIS DSP">
+    <component Cclass="CMSIS" Cgroup="DSP" Cvariant="Library" Cversion="1.5.5" condition="CMSIS DSP">
       <description>CMSIS-DSP Library for Cortex-M, SC000, and SC300</description>
       <files>
         <!-- CPU independent -->
@@ -3062,101 +3077,122 @@ and 8-bit Java bytecodes in Jazelle state.
 
         <!-- CPU and Compiler dependent -->
         <!-- ARMCC -->
-        <file category="library" condition="CM0_LE_ARMCC"             name="CMSIS/Lib/ARM/arm_cortexM0l_math.lib"      src="CMSIS/DSP/Source/ARM"/>
-        <file category="library" condition="CM0_BE_ARMCC"             name="CMSIS/Lib/ARM/arm_cortexM0b_math.lib"      src="CMSIS/DSP/Source/ARM"/>
-        <file category="library" condition="CM1_LE_ARMCC"             name="CMSIS/Lib/ARM/arm_cortexM0l_math.lib"      src="CMSIS/DSP/Source/ARM"/>
-        <file category="library" condition="CM1_BE_ARMCC"             name="CMSIS/Lib/ARM/arm_cortexM0b_math.lib"      src="CMSIS/DSP/Source/ARM"/>
-        <file category="library" condition="CM3_LE_ARMCC"             name="CMSIS/Lib/ARM/arm_cortexM3l_math.lib"      src="CMSIS/DSP/Source/ARM"/>
-        <file category="library" condition="CM3_BE_ARMCC"             name="CMSIS/Lib/ARM/arm_cortexM3b_math.lib"      src="CMSIS/DSP/Source/ARM"/>
-        <file category="library" condition="CM4_LE_ARMCC"             name="CMSIS/Lib/ARM/arm_cortexM4l_math.lib"      src="CMSIS/DSP/Source/ARM"/>
-        <file category="library" condition="CM4_BE_ARMCC"             name="CMSIS/Lib/ARM/arm_cortexM4b_math.lib"      src="CMSIS/DSP/Source/ARM"/>
-        <file category="library" condition="CM4_FP_LE_ARMCC"          name="CMSIS/Lib/ARM/arm_cortexM4lf_math.lib"     src="CMSIS/DSP/Source/ARM"/>
-        <file category="library" condition="CM4_FP_BE_ARMCC"          name="CMSIS/Lib/ARM/arm_cortexM4bf_math.lib"     src="CMSIS/DSP/Source/ARM"/>
-        <file category="library" condition="CM7_LE_ARMCC"             name="CMSIS/Lib/ARM/arm_cortexM7l_math.lib"      src="CMSIS/DSP/Source/ARM"/>
-        <file category="library" condition="CM7_BE_ARMCC"             name="CMSIS/Lib/ARM/arm_cortexM7b_math.lib"      src="CMSIS/DSP/Source/ARM"/>
-        <file category="library" condition="CM7_SP_LE_ARMCC"          name="CMSIS/Lib/ARM/arm_cortexM7lfsp_math.lib"   src="CMSIS/DSP/Source/ARM"/>
-        <file category="library" condition="CM7_SP_BE_ARMCC"          name="CMSIS/Lib/ARM/arm_cortexM7bfsp_math.lib"   src="CMSIS/DSP/Source/ARM"/>
-        <file category="library" condition="CM7_DP_LE_ARMCC"          name="CMSIS/Lib/ARM/arm_cortexM7lfdp_math.lib"   src="CMSIS/DSP/Source/ARM"/>
-        <file category="library" condition="CM7_DP_BE_ARMCC"          name="CMSIS/Lib/ARM/arm_cortexM7bfdp_math.lib"   src="CMSIS/DSP/Source/ARM"/>
+        <file category="library" condition="CM0_LE_ARMCC"                   name="CMSIS/DSP/Lib/ARM/arm_cortexM0l_math.lib"      src="CMSIS/DSP/Source/ARM"/>
+        <file category="library" condition="CM0_BE_ARMCC"                   name="CMSIS/DSP/Lib/ARM/arm_cortexM0b_math.lib"      src="CMSIS/DSP/Source/ARM"/>
+        <file category="library" condition="CM1_LE_ARMCC"                   name="CMSIS/DSP/Lib/ARM/arm_cortexM0l_math.lib"      src="CMSIS/DSP/Source/ARM"/>
+        <file category="library" condition="CM1_BE_ARMCC"                   name="CMSIS/DSP/Lib/ARM/arm_cortexM0b_math.lib"      src="CMSIS/DSP/Source/ARM"/>
+        <file category="library" condition="CM3_LE_ARMCC"                   name="CMSIS/DSP/Lib/ARM/arm_cortexM3l_math.lib"      src="CMSIS/DSP/Source/ARM"/>
+        <file category="library" condition="CM3_BE_ARMCC"                   name="CMSIS/DSP/Lib/ARM/arm_cortexM3b_math.lib"      src="CMSIS/DSP/Source/ARM"/>
+        <file category="library" condition="CM4_LE_ARMCC"                   name="CMSIS/DSP/Lib/ARM/arm_cortexM4l_math.lib"      src="CMSIS/DSP/Source/ARM"/>
+        <file category="library" condition="CM4_BE_ARMCC"                   name="CMSIS/DSP/Lib/ARM/arm_cortexM4b_math.lib"      src="CMSIS/DSP/Source/ARM"/>
+        <file category="library" condition="CM4_FP_LE_ARMCC"                name="CMSIS/DSP/Lib/ARM/arm_cortexM4lf_math.lib"     src="CMSIS/DSP/Source/ARM"/>
+        <file category="library" condition="CM4_FP_BE_ARMCC"                name="CMSIS/DSP/Lib/ARM/arm_cortexM4bf_math.lib"     src="CMSIS/DSP/Source/ARM"/>
+        <file category="library" condition="CM7_LE_ARMCC"                   name="CMSIS/DSP/Lib/ARM/arm_cortexM7l_math.lib"      src="CMSIS/DSP/Source/ARM"/>
+        <file category="library" condition="CM7_BE_ARMCC"                   name="CMSIS/DSP/Lib/ARM/arm_cortexM7b_math.lib"      src="CMSIS/DSP/Source/ARM"/>
+        <file category="library" condition="CM7_SP_LE_ARMCC"                name="CMSIS/DSP/Lib/ARM/arm_cortexM7lfsp_math.lib"   src="CMSIS/DSP/Source/ARM"/>
+        <file category="library" condition="CM7_SP_BE_ARMCC"                name="CMSIS/DSP/Lib/ARM/arm_cortexM7bfsp_math.lib"   src="CMSIS/DSP/Source/ARM"/>
+        <file category="library" condition="CM7_DP_LE_ARMCC"                name="CMSIS/DSP/Lib/ARM/arm_cortexM7lfdp_math.lib"   src="CMSIS/DSP/Source/ARM"/>
+        <file category="library" condition="CM7_DP_BE_ARMCC"                name="CMSIS/DSP/Lib/ARM/arm_cortexM7bfdp_math.lib"   src="CMSIS/DSP/Source/ARM"/>
 
-        <file category="library" condition="CM23_LE_ARMCC"                  name="CMSIS/Lib/ARM/arm_ARMv8MBLl_math.lib"      src="CMSIS/DSP/Source/ARM"/>
-        <file category="library" condition="CM33_NODSP_NOFPU_LE_ARMCC"      name="CMSIS/Lib/ARM/arm_ARMv8MMLl_math.lib"      src="CMSIS/DSP/Source/ARM"/>
-        <file category="library" condition="CM33_DSP_NOFPU_LE_ARMCC"        name="CMSIS/Lib/ARM/arm_ARMv8MMLld_math.lib"     src="CMSIS/DSP/Source/ARM"/>
-        <file category="library" condition="CM33_NODSP_SP_LE_ARMCC"         name="CMSIS/Lib/ARM/arm_ARMv8MMLlfsp_math.lib"   src="CMSIS/DSP/Source/ARM"/>
-        <file category="library" condition="CM33_DSP_SP_LE_ARMCC"           name="CMSIS/Lib/ARM/arm_ARMv8MMLldfsp_math.lib"  src="CMSIS/DSP/Source/ARM"/>
-        <file category="library" condition="CM35P_NODSP_NOFPU_LE_ARMCC"     name="CMSIS/Lib/ARM/arm_ARMv8MMLl_math.lib"      src="CMSIS/DSP/Source/ARM"/>
-        <file category="library" condition="CM35P_DSP_NOFPU_LE_ARMCC"       name="CMSIS/Lib/ARM/arm_ARMv8MMLld_math.lib"     src="CMSIS/DSP/Source/ARM"/>
-        <file category="library" condition="CM35P_NODSP_SP_LE_ARMCC"        name="CMSIS/Lib/ARM/arm_ARMv8MMLlfsp_math.lib"   src="CMSIS/DSP/Source/ARM"/>
-        <file category="library" condition="CM35P_DSP_SP_LE_ARMCC"          name="CMSIS/Lib/ARM/arm_ARMv8MMLldfsp_math.lib"  src="CMSIS/DSP/Source/ARM"/>
-        <file category="library" condition="ARMv8MBL_LE_ARMCC"              name="CMSIS/Lib/ARM/arm_ARMv8MBLl_math.lib"      src="CMSIS/DSP/Source/ARM"/>
-        <file category="library" condition="ARMv8MML_NODSP_NOFPU_LE_ARMCC"  name="CMSIS/Lib/ARM/arm_ARMv8MMLl_math.lib"      src="CMSIS/DSP/Source/ARM"/>
-        <file category="library" condition="ARMv8MML_DSP_NOFPU_LE_ARMCC"    name="CMSIS/Lib/ARM/arm_ARMv8MMLld_math.lib"     src="CMSIS/DSP/Source/ARM"/>
-        <file category="library" condition="ARMv8MML_NODSP_SP_LE_ARMCC"     name="CMSIS/Lib/ARM/arm_ARMv8MMLlfsp_math.lib"   src="CMSIS/DSP/Source/ARM"/>
-        <file category="library" condition="ARMv8MML_DSP_SP_LE_ARMCC"       name="CMSIS/Lib/ARM/arm_ARMv8MMLldfsp_math.lib"  src="CMSIS/DSP/Source/ARM"/>
-        <!--file category="library" condition="ARMv8MML_DP_NOFPU_LE_ARMCC"     name="CMSIS/Lib/ARM/arm_ARMv8MMLlfdp_math.lib"   src="CMSIS/DSP/Source/ARM"/-->
-        <!--file category="library" condition="ARMv8MML_DSP_DP_LE_ARMCC"       name="CMSIS/Lib/ARM/arm_ARMv8MMLldfdp_math.lib"  src="CMSIS/DSP/Source/ARM"/-->
+        <file category="library" condition="CM23_LE_ARMCC"                  name="CMSIS/DSP/Lib/ARM/arm_ARMv8MBLl_math.lib"      src="CMSIS/DSP/Source/ARM"/>
+        <file category="library" condition="CM33_NODSP_NOFPU_LE_ARMCC"      name="CMSIS/DSP/Lib/ARM/arm_ARMv8MMLl_math.lib"      src="CMSIS/DSP/Source/ARM"/>
+        <file category="library" condition="CM33_DSP_NOFPU_LE_ARMCC"        name="CMSIS/DSP/Lib/ARM/arm_ARMv8MMLld_math.lib"     src="CMSIS/DSP/Source/ARM"/>
+        <file category="library" condition="CM33_NODSP_SP_LE_ARMCC"         name="CMSIS/DSP/Lib/ARM/arm_ARMv8MMLlfsp_math.lib"   src="CMSIS/DSP/Source/ARM"/>
+        <file category="library" condition="CM33_DSP_SP_LE_ARMCC"           name="CMSIS/DSP/Lib/ARM/arm_ARMv8MMLldfsp_math.lib"  src="CMSIS/DSP/Source/ARM"/>
+        <file category="library" condition="CM35P_NODSP_NOFPU_LE_ARMCC"     name="CMSIS/DSP/Lib/ARM/arm_ARMv8MMLl_math.lib"      src="CMSIS/DSP/Source/ARM"/>
+        <file category="library" condition="CM35P_DSP_NOFPU_LE_ARMCC"       name="CMSIS/DSP/Lib/ARM/arm_ARMv8MMLld_math.lib"     src="CMSIS/DSP/Source/ARM"/>
+        <file category="library" condition="CM35P_NODSP_SP_LE_ARMCC"        name="CMSIS/DSP/Lib/ARM/arm_ARMv8MMLlfsp_math.lib"   src="CMSIS/DSP/Source/ARM"/>
+        <file category="library" condition="CM35P_DSP_SP_LE_ARMCC"          name="CMSIS/DSP/Lib/ARM/arm_ARMv8MMLldfsp_math.lib"  src="CMSIS/DSP/Source/ARM"/>
+        <file category="library" condition="ARMv8MBL_LE_ARMCC"              name="CMSIS/DSP/Lib/ARM/arm_ARMv8MBLl_math.lib"      src="CMSIS/DSP/Source/ARM"/>
+        <file category="library" condition="ARMv8MML_NODSP_NOFPU_LE_ARMCC"  name="CMSIS/DSP/Lib/ARM/arm_ARMv8MMLl_math.lib"      src="CMSIS/DSP/Source/ARM"/>
+        <file category="library" condition="ARMv8MML_DSP_NOFPU_LE_ARMCC"    name="CMSIS/DSP/Lib/ARM/arm_ARMv8MMLld_math.lib"     src="CMSIS/DSP/Source/ARM"/>
+        <file category="library" condition="ARMv8MML_NODSP_SP_LE_ARMCC"     name="CMSIS/DSP/Lib/ARM/arm_ARMv8MMLlfsp_math.lib"   src="CMSIS/DSP/Source/ARM"/>
+        <file category="library" condition="ARMv8MML_DSP_SP_LE_ARMCC"       name="CMSIS/DSP/Lib/ARM/arm_ARMv8MMLldfsp_math.lib"  src="CMSIS/DSP/Source/ARM"/>
+        <!--file category="library" condition="ARMv8MML_DP_NOFPU_LE_ARMCC"     name="CMSIS/DSP/Lib/ARM/arm_ARMv8MMLlfdp_math.lib"   src="CMSIS/DSP/Source/ARM"/-->
+        <!--file category="library" condition="ARMv8MML_DSP_DP_LE_ARMCC"       name="CMSIS/DSP/Lib/ARM/arm_ARMv8MMLldfdp_math.lib"  src="CMSIS/DSP/Source/ARM"/-->
 
         <!-- GCC -->
-        <file category="library" condition="CM0_LE_GCC"               name="CMSIS/Lib/GCC/libarm_cortexM0l_math.a"     src="CMSIS/DSP/Source/GCC"/>
-        <file category="library" condition="CM1_LE_GCC"               name="CMSIS/Lib/GCC/libarm_cortexM0l_math.a"     src="CMSIS/DSP/Source/GCC"/>
-        <file category="library" condition="CM3_LE_GCC"               name="CMSIS/Lib/GCC/libarm_cortexM3l_math.a"     src="CMSIS/DSP/Source/GCC"/>
-        <file category="library" condition="CM4_LE_GCC"               name="CMSIS/Lib/GCC/libarm_cortexM4l_math.a"     src="CMSIS/DSP/Source/GCC"/>
-        <file category="library" condition="CM4_FP_LE_GCC"            name="CMSIS/Lib/GCC/libarm_cortexM4lf_math.a"    src="CMSIS/DSP/Source/GCC"/>
-        <file category="library" condition="CM7_LE_GCC"               name="CMSIS/Lib/GCC/libarm_cortexM7l_math.a"     src="CMSIS/DSP/Source/GCC"/>
-        <file category="library" condition="CM7_SP_LE_GCC"            name="CMSIS/Lib/GCC/libarm_cortexM7lfsp_math.a"  src="CMSIS/DSP/Source/GCC"/>
-        <file category="library" condition="CM7_DP_LE_GCC"            name="CMSIS/Lib/GCC/libarm_cortexM7lfdp_math.a"  src="CMSIS/DSP/Source/GCC"/>
+        <file category="library" condition="CM0_LE_GCC"                     name="CMSIS/DSP/Lib/GCC/libarm_cortexM0l_math.a"     src="CMSIS/DSP/Source/GCC"/>
+        <file category="library" condition="CM1_LE_GCC"                     name="CMSIS/DSP/Lib/GCC/libarm_cortexM0l_math.a"     src="CMSIS/DSP/Source/GCC"/>
+        <file category="library" condition="CM3_LE_GCC"                     name="CMSIS/DSP/Lib/GCC/libarm_cortexM3l_math.a"     src="CMSIS/DSP/Source/GCC"/>
+        <file category="library" condition="CM4_LE_GCC"                     name="CMSIS/DSP/Lib/GCC/libarm_cortexM4l_math.a"     src="CMSIS/DSP/Source/GCC"/>
+        <file category="library" condition="CM4_FP_LE_GCC"                  name="CMSIS/DSP/Lib/GCC/libarm_cortexM4lf_math.a"    src="CMSIS/DSP/Source/GCC"/>
+        <file category="library" condition="CM7_LE_GCC"                     name="CMSIS/DSP/Lib/GCC/libarm_cortexM7l_math.a"     src="CMSIS/DSP/Source/GCC"/>
+        <file category="library" condition="CM7_SP_LE_GCC"                  name="CMSIS/DSP/Lib/GCC/libarm_cortexM7lfsp_math.a"  src="CMSIS/DSP/Source/GCC"/>
+        <file category="library" condition="CM7_DP_LE_GCC"                  name="CMSIS/DSP/Lib/GCC/libarm_cortexM7lfdp_math.a"  src="CMSIS/DSP/Source/GCC"/>
 
-        <file category="library" condition="CM23_LE_GCC"                    name="CMSIS/Lib/GCC/libarm_ARMv8MBLl_math.a"     src="CMSIS/DSP/Source/GCC"/>
-        <file category="library" condition="CM33_NODSP_NOFPU_LE_GCC"        name="CMSIS/Lib/GCC/libarm_ARMv8MMLl_math.a"     src="CMSIS/DSP/Source/GCC"/>
-        <file category="library" condition="CM33_DSP_NOFPU_LE_GCC"          name="CMSIS/Lib/GCC/libarm_ARMv8MMLld_math.a"    src="CMSIS/DSP/Source/GCC"/>
-        <file category="library" condition="CM33_NODSP_SP_LE_GCC"           name="CMSIS/Lib/GCC/libarm_ARMv8MMLlfsp_math.a"  src="CMSIS/DSP/Source/GCC"/>
-        <file category="library" condition="CM33_DSP_SP_LE_GCC"             name="CMSIS/Lib/GCC/libarm_ARMv8MMLldfsp_math.a" src="CMSIS/DSP/Source/GCC"/>
-        <file category="library" condition="CM35P_NODSP_NOFPU_LE_GCC"       name="CMSIS/Lib/GCC/libarm_ARMv8MMLl_math.a"     src="CMSIS/DSP/Source/GCC"/>
-        <file category="library" condition="CM35P_DSP_NOFPU_LE_GCC"         name="CMSIS/Lib/GCC/libarm_ARMv8MMLld_math.a"    src="CMSIS/DSP/Source/GCC"/>
-        <file category="library" condition="CM35P_NODSP_SP_LE_GCC"          name="CMSIS/Lib/GCC/libarm_ARMv8MMLlfsp_math.a"  src="CMSIS/DSP/Source/GCC"/>
-        <file category="library" condition="CM35P_DSP_SP_LE_GCC"            name="CMSIS/Lib/GCC/libarm_ARMv8MMLldfsp_math.a" src="CMSIS/DSP/Source/GCC"/>
-        <file category="library" condition="ARMv8MBL_LE_GCC"                name="CMSIS/Lib/GCC/libarm_ARMv8MBLl_math.a"     src="CMSIS/DSP/Source/GCC"/>
-        <file category="library" condition="ARMv8MML_NODSP_NOFPU_LE_GCC"    name="CMSIS/Lib/GCC/libarm_ARMv8MMLl_math.a"     src="CMSIS/DSP/Source/GCC"/>
-        <file category="library" condition="ARMv8MML_DSP_NOFPU_LE_GCC"      name="CMSIS/Lib/GCC/libarm_ARMv8MMLld_math.a"    src="CMSIS/DSP/Source/GCC"/>
-        <file category="library" condition="ARMv8MML_NODSP_SP_LE_GCC"       name="CMSIS/Lib/GCC/libarm_ARMv8MMLlfsp_math.a"  src="CMSIS/DSP/Source/GCC"/>
-        <file category="library" condition="ARMv8MML_DSP_SP_LE_GCC"         name="CMSIS/Lib/GCC/libarm_ARMv8MMLldfsp_math.a" src="CMSIS/DSP/Source/GCC"/>
-        <!--file category="library" condition="ARMv8MML_DP_NOFPU_LE_GCC"       name="CMSIS/Lib/GCC/libarm_ARMv8MMLlfdp_math.a"  src="CMSIS/DSP/Source/GCC"/-->
-        <!--file category="library" condition="ARMv8MML_DSP_DP_LE_GCC"         name="CMSIS/Lib/GCC/libarm_ARMv8MMLldfdp_math.a" src="CMSIS/DSP/Source/GCC"/-->
+        <file category="library" condition="CM23_LE_GCC"                    name="CMSIS/DSP/Lib/GCC/libarm_ARMv8MBLl_math.a"     src="CMSIS/DSP/Source/GCC"/>
+        <file category="library" condition="CM33_NODSP_NOFPU_LE_GCC"        name="CMSIS/DSP/Lib/GCC/libarm_ARMv8MMLl_math.a"     src="CMSIS/DSP/Source/GCC"/>
+        <file category="library" condition="CM33_DSP_NOFPU_LE_GCC"          name="CMSIS/DSP/Lib/GCC/libarm_ARMv8MMLld_math.a"    src="CMSIS/DSP/Source/GCC"/>
+        <file category="library" condition="CM33_NODSP_SP_LE_GCC"           name="CMSIS/DSP/Lib/GCC/libarm_ARMv8MMLlfsp_math.a"  src="CMSIS/DSP/Source/GCC"/>
+        <file category="library" condition="CM33_DSP_SP_LE_GCC"             name="CMSIS/DSP/Lib/GCC/libarm_ARMv8MMLldfsp_math.a" src="CMSIS/DSP/Source/GCC"/>
+        <file category="library" condition="CM35P_NODSP_NOFPU_LE_GCC"       name="CMSIS/DSP/Lib/GCC/libarm_ARMv8MMLl_math.a"     src="CMSIS/DSP/Source/GCC"/>
+        <file category="library" condition="CM35P_DSP_NOFPU_LE_GCC"         name="CMSIS/DSP/Lib/GCC/libarm_ARMv8MMLld_math.a"    src="CMSIS/DSP/Source/GCC"/>
+        <file category="library" condition="CM35P_NODSP_SP_LE_GCC"          name="CMSIS/DSP/Lib/GCC/libarm_ARMv8MMLlfsp_math.a"  src="CMSIS/DSP/Source/GCC"/>
+        <file category="library" condition="CM35P_DSP_SP_LE_GCC"            name="CMSIS/DSP/Lib/GCC/libarm_ARMv8MMLldfsp_math.a" src="CMSIS/DSP/Source/GCC"/>
+        <file category="library" condition="ARMv8MBL_LE_GCC"                name="CMSIS/DSP/Lib/GCC/libarm_ARMv8MBLl_math.a"     src="CMSIS/DSP/Source/GCC"/>
+        <file category="library" condition="ARMv8MML_NODSP_NOFPU_LE_GCC"    name="CMSIS/DSP/Lib/GCC/libarm_ARMv8MMLl_math.a"     src="CMSIS/DSP/Source/GCC"/>
+        <file category="library" condition="ARMv8MML_DSP_NOFPU_LE_GCC"      name="CMSIS/DSP/Lib/GCC/libarm_ARMv8MMLld_math.a"    src="CMSIS/DSP/Source/GCC"/>
+        <file category="library" condition="ARMv8MML_NODSP_SP_LE_GCC"       name="CMSIS/DSP/Lib/GCC/libarm_ARMv8MMLlfsp_math.a"  src="CMSIS/DSP/Source/GCC"/>
+        <file category="library" condition="ARMv8MML_DSP_SP_LE_GCC"         name="CMSIS/DSP/Lib/GCC/libarm_ARMv8MMLldfsp_math.a" src="CMSIS/DSP/Source/GCC"/>
+        <!--file category="library" condition="ARMv8MML_DP_NOFPU_LE_GCC"       name="CMSIS/DSP/Lib/GCC/libarm_ARMv8MMLlfdp_math.a"  src="CMSIS/DSP/Source/GCC"/-->
+        <!--file category="library" condition="ARMv8MML_DSP_DP_LE_GCC"         name="CMSIS/DSP/Lib/GCC/libarm_ARMv8MMLldfdp_math.a" src="CMSIS/DSP/Source/GCC"/-->
 
 	<!-- IAR -->
-        <file category="library" condition="CM0_LE_IAR"               name="CMSIS/Lib/IAR/iar_cortexM0l_math.a"     src="CMSIS/DSP/Source/IAR"/>
-        <file category="library" condition="CM0_BE_IAR"               name="CMSIS/Lib/IAR/iar_cortexM0b_math.a"     src="CMSIS/DSP/Source/IAR"/>
-        <file category="library" condition="CM1_LE_IAR"               name="CMSIS/Lib/IAR/iar_cortexM0l_math.a"     src="CMSIS/DSP/Source/IAR"/>
-        <file category="library" condition="CM1_BE_IAR"               name="CMSIS/Lib/IAR/iar_cortexM0b_math.a"     src="CMSIS/DSP/Source/IAR"/>
-        <file category="library" condition="CM3_LE_IAR"               name="CMSIS/Lib/IAR/iar_cortexM3l_math.a"     src="CMSIS/DSP/Source/IAR"/>
-        <file category="library" condition="CM3_BE_IAR"               name="CMSIS/Lib/IAR/iar_cortexM3b_math.a"     src="CMSIS/DSP/Source/IAR"/>
-        <file category="library" condition="CM4_LE_IAR"               name="CMSIS/Lib/IAR/iar_cortexM4l_math.a"     src="CMSIS/DSP/Source/IAR"/>
-        <file category="library" condition="CM4_BE_IAR"               name="CMSIS/Lib/IAR/iar_cortexM4b_math.a"     src="CMSIS/DSP/Source/IAR"/>
-        <file category="library" condition="CM4_FP_LE_IAR"            name="CMSIS/Lib/IAR/iar_cortexM4lf_math.a"    src="CMSIS/DSP/Source/IAR"/>
-        <file category="library" condition="CM4_FP_BE_IAR"            name="CMSIS/Lib/IAR/iar_cortexM4bf_math.a"    src="CMSIS/DSP/Source/IAR"/>
-        <file category="library" condition="CM7_LE_IAR"               name="CMSIS/Lib/IAR/iar_cortexM7l_math.a"     src="CMSIS/DSP/Source/IAR"/>
-        <file category="library" condition="CM7_BE_IAR"               name="CMSIS/Lib/IAR/iar_cortexM7b_math.a"     src="CMSIS/DSP/Source/IAR"/>
-        <file category="library" condition="CM7_DP_LE_IAR"            name="CMSIS/Lib/IAR/iar_cortexM7lf_math.a"    src="CMSIS/DSP/Source/IAR"/>
-        <file category="library" condition="CM7_DP_BE_IAR"            name="CMSIS/Lib/IAR/iar_cortexM7bf_math.a"    src="CMSIS/DSP/Source/IAR"/>
-        <file category="library" condition="CM7_SP_LE_IAR"            name="CMSIS/Lib/IAR/iar_cortexM7ls_math.a"    src="CMSIS/DSP/Source/IAR"/>
-        <file category="library" condition="CM7_SP_BE_IAR"            name="CMSIS/Lib/IAR/iar_cortexM7bs_math.a"    src="CMSIS/DSP/Source/IAR"/>
+        <file category="library" condition="CM0_LE_IAR"                     name="CMSIS/DSP/Lib/IAR/iar_cortexM0l_math.a"     src="CMSIS/DSP/Source/IAR"/>
+        <file category="library" condition="CM0_BE_IAR"                     name="CMSIS/DSP/Lib/IAR/iar_cortexM0b_math.a"     src="CMSIS/DSP/Source/IAR"/>
+        <file category="library" condition="CM1_LE_IAR"                     name="CMSIS/DSP/Lib/IAR/iar_cortexM0l_math.a"     src="CMSIS/DSP/Source/IAR"/>
+        <file category="library" condition="CM1_BE_IAR"                     name="CMSIS/DSP/Lib/IAR/iar_cortexM0b_math.a"     src="CMSIS/DSP/Source/IAR"/>
+        <file category="library" condition="CM3_LE_IAR"                     name="CMSIS/DSP/Lib/IAR/iar_cortexM3l_math.a"     src="CMSIS/DSP/Source/IAR"/>
+        <file category="library" condition="CM3_BE_IAR"                     name="CMSIS/DSP/Lib/IAR/iar_cortexM3b_math.a"     src="CMSIS/DSP/Source/IAR"/>
+        <file category="library" condition="CM4_LE_IAR"                     name="CMSIS/DSP/Lib/IAR/iar_cortexM4l_math.a"     src="CMSIS/DSP/Source/IAR"/>
+        <file category="library" condition="CM4_BE_IAR"                     name="CMSIS/DSP/Lib/IAR/iar_cortexM4b_math.a"     src="CMSIS/DSP/Source/IAR"/>
+        <file category="library" condition="CM4_FP_LE_IAR"                  name="CMSIS/DSP/Lib/IAR/iar_cortexM4lf_math.a"    src="CMSIS/DSP/Source/IAR"/>
+        <file category="library" condition="CM4_FP_BE_IAR"                  name="CMSIS/DSP/Lib/IAR/iar_cortexM4bf_math.a"    src="CMSIS/DSP/Source/IAR"/>
+        <file category="library" condition="CM7_LE_IAR"                     name="CMSIS/DSP/Lib/IAR/iar_cortexM7l_math.a"     src="CMSIS/DSP/Source/IAR"/>
+        <file category="library" condition="CM7_BE_IAR"                     name="CMSIS/DSP/Lib/IAR/iar_cortexM7b_math.a"     src="CMSIS/DSP/Source/IAR"/>
+        <file category="library" condition="CM7_DP_LE_IAR"                  name="CMSIS/DSP/Lib/IAR/iar_cortexM7lf_math.a"    src="CMSIS/DSP/Source/IAR"/>
+        <file category="library" condition="CM7_DP_BE_IAR"                  name="CMSIS/DSP/Lib/IAR/iar_cortexM7bf_math.a"    src="CMSIS/DSP/Source/IAR"/>
+        <file category="library" condition="CM7_SP_LE_IAR"                  name="CMSIS/DSP/Lib/IAR/iar_cortexM7ls_math.a"    src="CMSIS/DSP/Source/IAR"/>
+        <file category="library" condition="CM7_SP_BE_IAR"                  name="CMSIS/DSP/Lib/IAR/iar_cortexM7bs_math.a"    src="CMSIS/DSP/Source/IAR"/>
 
-        <file category="library" condition="CM23_LE_IAR"              name="CMSIS/Lib/IAR/iar_ARMv8MBLl_math.a"     src="CMSIS/DSP/Source/IAR"/>
-        <file category="library" condition="CM33_NODSP_NOFPU_LE_IAR"        name="CMSIS/Lib/IAR/iar_ARMv8MMLl_math.a"     src="CMSIS/DSP/Source/IAR"/>
-        <file category="library" condition="CM33_DSP_NOFPU_LE_IAR"    name="CMSIS/Lib/IAR/iar_ARMv8MMLld_math.a"    src="CMSIS/DSP/Source/IAR"/>
-        <file category="library" condition="CM33_NODSP_SP_LE_IAR"           name="CMSIS/Lib/IAR/iar_ARMv8MMLlfsp_math.a"  src="CMSIS/DSP/Source/IAR"/>
-        <file category="library" condition="CM33_DSP_SP_LE_IAR"       name="CMSIS/Lib/IAR/iar_ARMv8MMLldfsp_math.a" src="CMSIS/DSP/Source/IAR"/>
-        <file category="library" condition="CM35P_NODSP_NOFPU_LE_IAR"       name="CMSIS/Lib/IAR/iar_ARMv8MMLl_math.a"     src="CMSIS/DSP/Source/IAR"/>
-        <file category="library" condition="CM35P_DSP_NOFPU_LE_IAR"         name="CMSIS/Lib/IAR/iar_ARMv8MMLld_math.a"    src="CMSIS/DSP/Source/IAR"/>
-        <file category="library" condition="CM35P_NODSP_SP_LE_IAR"          name="CMSIS/Lib/IAR/iar_ARMv8MMLlfsp_math.a"  src="CMSIS/DSP/Source/IAR"/>
-        <file category="library" condition="CM35P_DSP_SP_LE_IAR"            name="CMSIS/Lib/IAR/iar_ARMv8MMLldfsp_math.a" src="CMSIS/DSP/Source/IAR"/>
-        <file category="library" condition="ARMv8MBL_LE_IAR"          name="CMSIS/Lib/IAR/iar_ARMv8MBLl_math.a"     src="CMSIS/DSP/Source/IAR"/>
-        <file category="library" condition="ARMv8MML_NODSP_NOFPU_LE_IAR"    name="CMSIS/Lib/IAR/iar_ARMv8MMLl_math.a"     src="CMSIS/DSP/Source/IAR"/>
-        <file category="library" condition="ARMv8MML_DSP_NOFPU_LE_IAR" name="CMSIS/Lib/IAR/iar_ARMv8MMLld_math.a"    src="CMSIS/DSP/Source/IAR"/>
-        <file category="library" condition="ARMv8MML_NODSP_SP_LE_IAR"       name="CMSIS/Lib/IAR/iar_ARMv8MMLlfsp_math.a"  src="CMSIS/DSP/Source/IAR"/>
-        <file category="library" condition="ARMv8MML_DSP_SP_LE_IAR"   name="CMSIS/Lib/IAR/iar_ARMv8MMLldfsp_math.a" src="CMSIS/DSP/Source/IAR"/>
-     <!--file category="library" condition="ARMv8MML_DP_NOFPU_LE_IAR"       name="CMSIS/Lib/IAR/iar_ARMv8MMLlfdp_math.a"  src="CMSIS/DSP/Source/IAR"/-->
-        <!--file category="library" condition="ARMv8MML_DSP_DP_LE_IAR"   name="CMSIS/Lib/IAR/iar_ARMv8MMLldfdp_math.a" src="CMSIS/DSP/Source/IAR"/-->
+        <file category="library" condition="CM23_LE_IAR"                    name="CMSIS/DSP/Lib/IAR/iar_ARMv8MBLl_math.a"     src="CMSIS/DSP/Source/IAR"/>
+        <file category="library" condition="CM33_NODSP_NOFPU_LE_IAR"        name="CMSIS/DSP/Lib/IAR/iar_ARMv8MMLl_math.a"     src="CMSIS/DSP/Source/IAR"/>
+        <file category="library" condition="CM33_DSP_NOFPU_LE_IAR"          name="CMSIS/DSP/Lib/IAR/iar_ARMv8MMLld_math.a"    src="CMSIS/DSP/Source/IAR"/>
+        <file category="library" condition="CM33_NODSP_SP_LE_IAR"           name="CMSIS/DSP/Lib/IAR/iar_ARMv8MMLlfsp_math.a"  src="CMSIS/DSP/Source/IAR"/>
+        <file category="library" condition="CM33_DSP_SP_LE_IAR"             name="CMSIS/DSP/Lib/IAR/iar_ARMv8MMLldfsp_math.a" src="CMSIS/DSP/Source/IAR"/>
+        <file category="library" condition="CM35P_NODSP_NOFPU_LE_IAR"       name="CMSIS/DSP/Lib/IAR/iar_ARMv8MMLl_math.a"     src="CMSIS/DSP/Source/IAR"/>
+        <file category="library" condition="CM35P_DSP_NOFPU_LE_IAR"         name="CMSIS/DSP/Lib/IAR/iar_ARMv8MMLld_math.a"    src="CMSIS/DSP/Source/IAR"/>
+        <file category="library" condition="CM35P_NODSP_SP_LE_IAR"          name="CMSIS/DSP/Lib/IAR/iar_ARMv8MMLlfsp_math.a"  src="CMSIS/DSP/Source/IAR"/>
+        <file category="library" condition="CM35P_DSP_SP_LE_IAR"            name="CMSIS/DSP/Lib/IAR/iar_ARMv8MMLldfsp_math.a" src="CMSIS/DSP/Source/IAR"/>
+        <file category="library" condition="ARMv8MBL_LE_IAR"                name="CMSIS/DSP/Lib/IAR/iar_ARMv8MBLl_math.a"     src="CMSIS/DSP/Source/IAR"/>
+        <file category="library" condition="ARMv8MML_NODSP_NOFPU_LE_IAR"    name="CMSIS/DSP/Lib/IAR/iar_ARMv8MMLl_math.a"     src="CMSIS/DSP/Source/IAR"/>
+        <file category="library" condition="ARMv8MML_DSP_NOFPU_LE_IAR"      name="CMSIS/DSP/Lib/IAR/iar_ARMv8MMLld_math.a"    src="CMSIS/DSP/Source/IAR"/>
+        <file category="library" condition="ARMv8MML_NODSP_SP_LE_IAR"       name="CMSIS/DSP/Lib/IAR/iar_ARMv8MMLlfsp_math.a"  src="CMSIS/DSP/Source/IAR"/>
+        <file category="library" condition="ARMv8MML_DSP_SP_LE_IAR"         name="CMSIS/DSP/Lib/IAR/iar_ARMv8MMLldfsp_math.a" src="CMSIS/DSP/Source/IAR"/>
+        <!--file category="library" condition="ARMv8MML_DP_NOFPU_LE_IAR"       name="CMSIS/DSP/Lib/IAR/iar_ARMv8MMLlfdp_math.a"  src="CMSIS/DSP/Source/IAR"/-->
+        <!--file category="library" condition="ARMv8MML_DSP_DP_LE_IAR"         name="CMSIS/DSP/Lib/IAR/iar_ARMv8MMLldfdp_math.a" src="CMSIS/DSP/Source/IAR"/-->
+
+      </files>
+    </component>
+    <component Cclass="CMSIS" Cgroup="DSP" Cvariant="Source"  Cversion="1.5.5" condition="CMSIS DSP">
+      <description>CMSIS-DSP Library for Cortex-M, SC000, and SC300</description>
+      <files>
+        <!-- CPU independent -->
+        <file category="doc" name="CMSIS/Documentation/DSP/html/index.html"/>
+        <file category="header" name="CMSIS/DSP/Include/arm_math.h"/>
+
+        <!-- RTX sources (core) -->
+        <file category="source" name="CMSIS/DSP/Source/BasicMathFunctions/BasicMathFunctions.c"/>
+        <file category="source" name="CMSIS/DSP/Source/CommonTables/CommonTables.c"/>
+        <file category="source" name="CMSIS/DSP/Source/ComplexMathFunctions/ComplexMathFunctions.c"/>
+        <file category="source" name="CMSIS/DSP/Source/ControllerFunctions/ControllerFunctions.c"/>
+        <file category="source" name="CMSIS/DSP/Source/FastMathFunctions/FastMathFunctions.c"/>
+        <file category="source" name="CMSIS/DSP/Source/FilteringFunctions/FilteringFunctions.c"/>
+        <file category="source" name="CMSIS/DSP/Source/MatrixFunctions/MatrixFunctions.c"/>
+        <file category="source" name="CMSIS/DSP/Source/StatisticsFunctions/StatisticsFunctions.c"/>
+        <file category="source" name="CMSIS/DSP/Source/SupportFunctions/SupportFunctions.c"/>
+        <file category="source" name="CMSIS/DSP/Source/TransformFunctions/TransformFunctions.c"/>
 
       </files>
     </component>
