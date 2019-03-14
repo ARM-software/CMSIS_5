@@ -2,17 +2,17 @@
 
 void ref_fir_lattice_f32(
   const arm_fir_lattice_instance_f32 * S,
-  float32_t * pSrc,
-  float32_t * pDst,
-  uint32_t blockSize)
+        float32_t * pSrc,
+        float32_t * pDst,
+        uint32_t blockSize)
 {
-  float32_t *pState;                             /* State pointer */
-  float32_t *pCoeffs = S->pCoeffs;               /* Coefficient pointer */
-  float32_t *px;                                 /* temporary state pointer */
-  float32_t *pk;                                 /* temporary coefficient pointer */
-  float32_t fcurr, fnext, gcurr, gnext;          /* temporary variables */
-  uint32_t numStages = S->numStages;             /* Length of the filter */
-  uint32_t blkCnt, stageCnt;                     /* temporary variables for counts */
+        float32_t *pState;                             /* State pointer */
+  const float32_t *pCoeffs = S->pCoeffs;               /* Coefficient pointer */
+        float32_t *px;                                 /* temporary state pointer */
+  const float32_t *pk;                                 /* temporary coefficient pointer */
+        float32_t fcurr, fnext, gcurr, gnext;          /* temporary variables */
+        uint32_t numStages = S->numStages;             /* Length of the filter */
+        uint32_t blkCnt, stageCnt;                     /* temporary variables for counts */
 
   pState = &S->pState[0];
 
@@ -78,17 +78,17 @@ void ref_fir_lattice_f32(
 
 void ref_fir_lattice_q31(
   const arm_fir_lattice_instance_q31 * S,
-  q31_t * pSrc,
-  q31_t * pDst,
-  uint32_t blockSize)
+        q31_t * pSrc,
+        q31_t * pDst,
+        uint32_t blockSize)
 {
-  q31_t *pState;                                 /* State pointer */
-  q31_t *pCoeffs = S->pCoeffs;                   /* Coefficient pointer */
-  q31_t *px;                                     /* temporary state pointer */
-  q31_t *pk;                                     /* temporary coefficient pointer */
-  q31_t fcurr, fnext, gcurr, gnext;              /* temporary variables */
-  uint32_t numStages = S->numStages;             /* Length of the filter */
-  uint32_t blkCnt, stageCnt;                     /* temporary variables for counts */
+        q31_t *pState;                                 /* State pointer */
+  const q31_t *pCoeffs = S->pCoeffs;                   /* Coefficient pointer */
+        q31_t *px;                                     /* temporary state pointer */
+  const q31_t *pk;                                     /* temporary coefficient pointer */
+        q31_t fcurr, fnext, gcurr, gnext;              /* temporary variables */
+        uint32_t numStages = S->numStages;             /* Length of the filter */
+        uint32_t blkCnt, stageCnt;                     /* temporary variables for counts */
 
   pState = &S->pState[0];
 
@@ -155,17 +155,17 @@ void ref_fir_lattice_q31(
 
 void ref_fir_lattice_q15(
   const arm_fir_lattice_instance_q15 * S,
-  q15_t * pSrc,
-  q15_t * pDst,
-  uint32_t blockSize)
+        q15_t * pSrc,
+        q15_t * pDst,
+        uint32_t blockSize)
 {
-  q15_t *pState;                                 /* State pointer */
-  q15_t *pCoeffs = S->pCoeffs;                   /* Coefficient pointer */
-  q15_t *px;                                     /* temporary state pointer */
-  q15_t *pk;                                     /* temporary coefficient pointer */
-  q31_t fcurnt, fnext, gcurnt, gnext;            /* temporary variables */
-  uint32_t numStages = S->numStages;             /* Length of the filter */
-  uint32_t blkCnt, stageCnt;                     /* temporary variables for counts */
+        q15_t *pState;                                 /* State pointer */
+  const q15_t *pCoeffs = S->pCoeffs;                   /* Coefficient pointer */
+        q15_t *px;                                     /* temporary state pointer */
+  const q15_t *pk;                                     /* temporary coefficient pointer */
+        q31_t fcurnt, fnext, gcurnt, gnext;            /* temporary variables */
+        uint32_t numStages = S->numStages;             /* Length of the filter */
+        uint32_t blkCnt, stageCnt;                     /* temporary variables for counts */
 
   pState = &S->pState[0];
 

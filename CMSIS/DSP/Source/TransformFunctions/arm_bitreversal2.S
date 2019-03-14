@@ -5,8 +5,8 @@
 ; *               Called after doing an fft to reorder the output.
 ; *               The function is loop unrolled by 2. arm_bitreversal_16 as well.
 ; *
-; * $Date:        10. December 2018
-; * $Revision:    V.1.5.2
+; * $Date:        28. February 2019
+; * $Revision:    V.1.5.5
 ; *
 ; * Target Processor: Cortex-M cores
 ; * -------------------------------------------------------------------- */
@@ -68,13 +68,13 @@
 	CODESECT
 	THUMB
 
-;/*
-;* @brief  In-place bit reversal function.
-;* @param[in, out] *pSrc        points to the in-place buffer of unknown 32-bit data type.
-;* @param[in]      bitRevLen    bit reversal table length
-;* @param[in]      *pBitRevTab  points to bit reversal table.
-;* @return none.
-;*/
+;/**
+;  @brief         In-place bit reversal function.
+;  @param[in,out] pSrc        points to the in-place buffer of unknown 32-bit data type
+;  @param[in]     bitRevLen   bit reversal table length
+;  @param[in]     pBitRevTab  points to bit reversal table
+;  @return        none
+; */
 	EXPORT arm_bitreversal_32
 	EXPORT arm_bitreversal_16
 

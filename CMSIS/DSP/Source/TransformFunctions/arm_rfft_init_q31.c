@@ -3,13 +3,13 @@
  * Title:        arm_rfft_init_q31.c
  * Description:  RFFT & RIFFT Q31 initialisation function
  *
- * $Date:        27. January 2017
- * $Revision:    V.1.5.1
+ * $Date:        28. February 2019
+ * $Revision:    V.1.5.5
  *
  * Target Processor: Cortex-M cores
  * -------------------------------------------------------------------- */
 /*
- * Copyright (C) 2010-2017 ARM Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2010-2019 ARM Limited or its affiliates. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -31,27 +31,27 @@
 #include "arm_const_structs.h"
 
 /**
-* @ingroup RealFFT
-*/
+  @ingroup RealFFT
+ */
 
 /**
- * @addtogroup RealFFT_Table Real FFT Tables
-* @{
-*/
+  @addtogroup RealFFT_Table Real FFT Tables
+  @{
+ */
 
 /**
-* \par
-* Generation fixed-point realCoefAQ31 array in Q31 format:
-* \par
-* n = 4096
-* <pre>for (i = 0; i < n; i++)
-* {
-*    pATable[2 * i] = 0.5 * (1.0 - sin (2 * PI / (double) (2 * n) * (double) i));
-*    pATable[2 * i + 1] = 0.5 * (-1.0 * cos (2 * PI / (double) (2 * n) * (double) i));
-* }</pre>
-* \par
-* Convert to fixed point Q31 format
-*     round(pATable[i] * pow(2, 31))
+  @par
+  Generation fixed-point realCoefAQ31 array in Q31 format:
+  @par
+  n = 4096
+  <pre>for (i = 0; i < n; i++)
+  {
+     pATable[2 * i]     = 0.5 * ( 1.0 - sin (2 * PI / (double) (2 * n) * (double) i));
+     pATable[2 * i + 1] = 0.5 * (-1.0 * cos (2 * PI / (double) (2 * n) * (double) i));
+  }</pre>
+  @par
+  Convert to fixed point Q31 format
+      round(pATable[i] * pow(2, 31))
 */
 const q31_t realCoefAQ31[8192] = {
     (q31_t)0x40000000, (q31_t)0xc0000000, (q31_t)0x3ff36f02, (q31_t)0xc000013c,
@@ -2106,20 +2106,19 @@ const q31_t realCoefAQ31[8192] = {
 
 
 /**
-* \par
-* Generation of realCoefBQ31 array:
-* \par
-*  n = 4096
-* <pre>for (i = 0; i < n; i++)
-* {
-*    pBTable[2 * i] = 0.5 * (1.0 + sin (2 * PI / (double) (2 * n) * (double) i));
-*    pBTable[2 * i + 1] = 0.5 * (1.0 * cos (2 * PI / (double) (2 * n) * (double) i));
-* } </pre>
-* \par
-* Convert to fixed point Q31 format
-*     round(pBTable[i] * pow(2, 31))
-*
-*/
+  @par
+  Generation of realCoefBQ31 array:
+  @par
+   n = 4096
+  <pre>for (i = 0; i < n; i++)
+  {
+     pBTable[2 * i]     = 0.5 * (1.0 + sin (2 * PI / (double) (2 * n) * (double) i));
+     pBTable[2 * i + 1] = 0.5 * (1.0 * cos (2 * PI / (double) (2 * n) * (double) i));
+  } </pre>
+  @par
+  Convert to fixed point Q31 format
+      round(pBTable[i] * pow(2, 31))
+ */
 
 const q31_t realCoefBQ31[8192] = {
     (q31_t)0x40000000, (q31_t)0x40000000, (q31_t)0x400c90fe, (q31_t)0x3ffffec4,
@@ -4173,33 +4172,39 @@ const q31_t realCoefBQ31[8192] = {
 };
 
 /**
-* @} end of RealFFT_Table group
-*/
+  @} end of RealFFT_Table group
+ */
 
 /**
-* @addtogroup RealFFT
-* @{
-*/
+  @addtogroup RealFFT
+  @{
+ */
 
 /**
-* @brief  Initialization function for the Q31 RFFT/RIFFT.
-* @param[in, out] *S             points to an instance of the Q31 RFFT/RIFFT structure.
-* @param[in]      fftLenReal     length of the FFT.
-* @param[in]      ifftFlagR      flag that selects forward (ifftFlagR=0) or inverse (ifftFlagR=1) transform.
-* @param[in]      bitReverseFlag flag that enables (bitReverseFlag=1) or disables (bitReverseFlag=0) bit reversal of output.
-* @return         The function returns ARM_MATH_SUCCESS if initialization is successful or ARM_MATH_ARGUMENT_ERROR if <code>fftLenReal</code> is not a supported value.
-*
-* \par Description:
-* \par
-* The parameter <code>fftLenReal</code>	Specifies length of RFFT/RIFFT Process. Supported FFT Lengths are 32, 64, 128, 256, 512, 1024, 2048, 4096, 8192.
-* \par
-* The parameter <code>ifftFlagR</code> controls whether a forward or inverse transform is computed.
-* Set(=1) ifftFlagR to calculate RIFFT, otherwise RFFT is calculated.
-* \par
-* The parameter <code>bitReverseFlag</code> controls whether output is in normal order or bit reversed order.
-* Set(=1) bitReverseFlag for output to be in normal order otherwise output is in bit reversed order.
-* \par    7
-* This function also initializes Twiddle factor table.
+  @brief         Initialization function for the Q31 RFFT/RIFFT.
+  @param[in,out] S              points to an instance of the Q31 RFFT/RIFFT structure
+  @param[in]     fftLenReal     length of the FFT
+  @param[in]     ifftFlagR      flag that selects transform direction
+                   - value = 0: forward transform
+                   - value = 1: inverse transform
+  @param[in]     bitReverseFlag flag that enables / disables bit reversal of output
+                   - value = 0: disables bit reversal of output
+                   - value = 1: enables bit reversal of output
+  @return        execution status
+                   - \ref ARM_MATH_SUCCESS        : Operation successful
+                   - \ref ARM_MATH_ARGUMENT_ERROR : <code>fftLenReal</code> is not a supported length
+
+  @par           Details
+                   The parameter <code>fftLenReal</code> specifies length of RFFT/RIFFT Process.
+                   Supported FFT Lengths are 32, 64, 128, 256, 512, 1024, 2048, 4096, 8192.
+  @par
+                   The parameter <code>ifftFlagR</code> controls whether a forward or inverse transform is computed.
+                   Set(=1) ifftFlagR to calculate RIFFT, otherwise RFFT is calculated.
+  @par
+                   The parameter <code>bitReverseFlag</code> controls whether output is in normal order or bit reversed order.
+                   Set(=1) bitReverseFlag for output to be in normal order otherwise output is in bit reversed order.
+  @par
+                   This function also initializes Twiddle factor table.
 */
 
 arm_status arm_rfft_init_q31(
@@ -4276,5 +4281,5 @@ arm_status arm_rfft_init_q31(
 }
 
 /**
-* @} end of RealFFT group
-*/
+  @} end of RealFFT group
+ */

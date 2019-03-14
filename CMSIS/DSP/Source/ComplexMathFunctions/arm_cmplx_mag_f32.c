@@ -3,13 +3,13 @@
  * Title:        arm_cmplx_mag_f32.c
  * Description:  Floating-point complex magnitude
  *
- * $Date:        27. January 2017
- * $Revision:    V.1.5.1
+ * $Date:        28. February 2019
+ * $Revision:    V.1.5.5
  *
  * Target Processor: Cortex-M cores
  * -------------------------------------------------------------------- */
 /*
- * Copyright (C) 2010-2017 ARM Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2010-2019 ARM Limited or its affiliates. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -29,125 +29,111 @@
 #include "arm_math.h"
 
 /**
- * @ingroup groupCmplxMath
+  @ingroup groupCmplxMath
  */
 
 /**
- * @defgroup cmplx_mag Complex Magnitude
- *
- * Computes the magnitude of the elements of a complex data vector.
- *
- * The <code>pSrc</code> points to the source data and
- * <code>pDst</code> points to the where the result should be written.
- * <code>numSamples</code> specifies the number of complex samples
- * in the input array and the data is stored in an interleaved fashion
- * (real, imag, real, imag, ...).
- * The input array has a total of <code>2*numSamples</code> values;
- * the output array has a total of <code>numSamples</code> values.
- * The underlying algorithm is used:
- *
- * <pre>
- * for(n=0; n<numSamples; n++) {
- *     pDst[n] = sqrt(pSrc[(2*n)+0]^2 + pSrc[(2*n)+1]^2);
- * }
- * </pre>
- *
- * There are separate functions for floating-point, Q15, and Q31 data types.
+  @defgroup cmplx_mag Complex Magnitude
+
+  Computes the magnitude of the elements of a complex data vector.
+
+  The <code>pSrc</code> points to the source data and
+  <code>pDst</code> points to the where the result should be written.
+  <code>numSamples</code> specifies the number of complex samples
+  in the input array and the data is stored in an interleaved fashion
+  (real, imag, real, imag, ...).
+  The input array has a total of <code>2*numSamples</code> values;
+  the output array has a total of <code>numSamples</code> values.
+
+  The underlying algorithm is used:
+
+  <pre>
+  for (n = 0; n < numSamples; n++) {
+      pDst[n] = sqrt(pSrc[(2*n)+0]^2 + pSrc[(2*n)+1]^2);
+  }
+  </pre>
+
+  There are separate functions for floating-point, Q15, and Q31 data types.
  */
 
 /**
- * @addtogroup cmplx_mag
- * @{
- */
-/**
- * @brief Floating-point complex magnitude.
- * @param[in]       *pSrc points to complex input buffer
- * @param[out]      *pDst points to real output buffer
- * @param[in]       numSamples number of complex samples in the input vector
- * @return none.
- *
+  @addtogroup cmplx_mag
+  @{
  */
 
+/**
+  @brief         Floating-point complex magnitude.
+  @param[in]     pSrc        points to input vector
+  @param[out]    pDst        points to output vector
+  @param[in]     numSamples  number of samples in each vector
+  @return        none
+ */
 
 void arm_cmplx_mag_f32(
-  float32_t * pSrc,
-  float32_t * pDst,
-  uint32_t numSamples)
+  const float32_t * pSrc,
+        float32_t * pDst,
+        uint32_t numSamples)
 {
-  float32_t realIn, imagIn;                      /* Temporary variables to hold input values */
+        uint32_t blkCnt;                               /* Loop counter */
+        float32_t real, imag;                          /* Temporary input variables */
 
-#if defined (ARM_MATH_DSP)
+#if defined (ARM_MATH_LOOPUNROLL)
 
-  /* Run the below code for Cortex-M4 and Cortex-M3 */
-  uint32_t blkCnt;                               /* loop counter */
-
-  /*loop Unrolling */
+  /* Loop unrolling: Compute 4 outputs at a time */
   blkCnt = numSamples >> 2U;
 
-  /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.
-   ** a second loop below computes the remaining 1 to 3 samples. */
   while (blkCnt > 0U)
   {
-
     /* C[0] = sqrt(A[0] * A[0] + A[1] * A[1]) */
-    realIn = *pSrc++;
-    imagIn = *pSrc++;
-    /* store the result in the destination buffer. */
-    arm_sqrt_f32((realIn * realIn) + (imagIn * imagIn), pDst++);
 
-    realIn = *pSrc++;
-    imagIn = *pSrc++;
-    arm_sqrt_f32((realIn * realIn) + (imagIn * imagIn), pDst++);
+    real = *pSrc++;
+    imag = *pSrc++;
 
-    realIn = *pSrc++;
-    imagIn = *pSrc++;
-    arm_sqrt_f32((realIn * realIn) + (imagIn * imagIn), pDst++);
+    /* store result in destination buffer. */
+    arm_sqrt_f32((real * real) + (imag * imag), pDst++);
 
-    realIn = *pSrc++;
-    imagIn = *pSrc++;
-    arm_sqrt_f32((realIn * realIn) + (imagIn * imagIn), pDst++);
+    real = *pSrc++;
+    imag = *pSrc++;
+    arm_sqrt_f32((real * real) + (imag * imag), pDst++);
 
+    real = *pSrc++;
+    imag = *pSrc++;
+    arm_sqrt_f32((real * real) + (imag * imag), pDst++);
 
-    /* Decrement the loop counter */
+    real = *pSrc++;
+    imag = *pSrc++;
+    arm_sqrt_f32((real * real) + (imag * imag), pDst++);
+
+    /* Decrement loop counter */
     blkCnt--;
   }
 
-  /* If the numSamples is not a multiple of 4, compute any remaining output samples here.
-   ** No loop unrolling is used. */
+  /* Loop unrolling: Compute remaining outputs */
   blkCnt = numSamples % 0x4U;
-
-  while (blkCnt > 0U)
-  {
-    /* C[0] = sqrt(A[0] * A[0] + A[1] * A[1]) */
-    realIn = *pSrc++;
-    imagIn = *pSrc++;
-    /* store the result in the destination buffer. */
-    arm_sqrt_f32((realIn * realIn) + (imagIn * imagIn), pDst++);
-
-    /* Decrement the loop counter */
-    blkCnt--;
-  }
 
 #else
 
-  /* Run the below code for Cortex-M0 */
+  /* Initialize blkCnt with number of samples */
+  blkCnt = numSamples;
 
-  while (numSamples > 0U)
+#endif /* #if defined (ARM_MATH_LOOPUNROLL) */
+
+  while (blkCnt > 0U)
   {
-    /* out = sqrt((real * real) + (imag * imag)) */
-    realIn = *pSrc++;
-    imagIn = *pSrc++;
-    /* store the result in the destination buffer. */
-    arm_sqrt_f32((realIn * realIn) + (imagIn * imagIn), pDst++);
+    /* C[0] = sqrt(A[0] * A[0] + A[1] * A[1]) */
 
-    /* Decrement the loop counter */
-    numSamples--;
+    real = *pSrc++;
+    imag = *pSrc++;
+
+    /* store result in destination buffer. */
+    arm_sqrt_f32((real * real) + (imag * imag), pDst++);
+
+    /* Decrement loop counter */
+    blkCnt--;
   }
-
-#endif /* #if defined (ARM_MATH_DSP) */
 
 }
 
 /**
- * @} end of cmplx_mag group
+  @} end of cmplx_mag group
  */

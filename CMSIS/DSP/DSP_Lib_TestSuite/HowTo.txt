@@ -1,4 +1,4 @@
-HowTo DSP_Lib_TestSuite     16.12.2016
+HowTo DSP_Lib_TestSuite     18.02.2019
 =======================================
 
 This file describes the folder structure, content, prerequisites and instructions to validate the
@@ -34,17 +34,10 @@ Prerequisites
 
 Setup
 ------
- - Copy DSP_Lib_TestSuite to the CMSIS installation/pack folder.
-      ...
-      .\Keil_v5\ARM\PACK\ARM\CMSIS\DSP_Lib
-      .\Keil_v5\ARM\PACK\ARM\CMSIS\DSP_Lib_TestSuite                <- location of DSP_Lib_TestSuite
-      .\Keil_v5\ARM\PACK\ARM\CMSIS\Include
-      ...
-
- - remove 'read-only' tag from folder ./CMSIS/Lib
+ - remove 'read-only' tag from folder .\CMSIS\DSP\Lib
    (required for rebuild of the DSP_Lib libraries)
 
- - open a Windows command window in folder .\CMSIS\DSP_Lib_TestSuite.
+ - open a Windows command window in folder .\CMSIS\DSP\DSP_Lib_TestSuite.
 
 
 
@@ -54,23 +47,23 @@ How to run the tests
 a) build the DSP_Lib libraries:
  - batch file: buildDspLibs.bat 
    Note: only require if the DSP_Lib source code got updated or the desired configuration is missing
-   buildDspLibs.bat overwrites the prebuild libraries in .\CMSIS\Lib.
-   Log files of the build process are generated in folder .\CMSIS\DSP_Lib/[ARM|GCC]
- - run:  buildDspLibs.bat in a Windows command window in folder ./CMSIS/DSP_Lib_TestSuite
+   buildDspLibs.bat overwrites the prebuild libraries in .\CMSIS\DSP\Lib.
+   Log files of the build process are generated in folder .\CMSIS\DSP\DSP_Lib/[ARM|GCC]
+ - run:  buildDspLibs.bat in a Windows command window in folder .\CMSIS\DSP\DSP_Lib_TestSuite
          buildDspLibs ARM        -> builds the ARMCC libraries
          buildDspLibs GCC        -> builds the GCC libraries
 
 b) build the reference libraries:
  - batch file: buildRefLibs.bat
    
-   Log files of the build process are generated in folder .\CMSIS\DSP_Lib_TestSuite\RefLibs/[ARM|GCC]
- - run: buildRefLibs.bat in a Windows command window in folder .\CMSIS\DSP_Lib_TestSuite
+   Log files of the build process are generated in folder .\CMSIS\DSP\DSP_Lib_TestSuite\RefLibs/[ARM|GCC]
+ - run: buildRefLibs.bat in a Windows command window in folder .\CMSIS\DSP\DSP_Lib_TestSuite
         buildRefLibs ARM        -> builds the ARMCC reference libraries
         buildRefLibs GCC        -> builds the GCC reference libraries
 
 c) running an individual test using uVision (MDK-ARM):
  - batch file: runTest.bat
- - run:  runTest.bat in a Windows command window in folder .\CMSIS\DSP_Lib_TestSuite
+ - run:  runTest.bat in a Windows command window in folder .\CMSIS\DSP\DSP_Lib_TestSuite
          runTest                                -> prints usage information
     e.g. runTest ARM cortexM4lf Simulator       -> runs the test for toolchain ARM, Cortex-M4 littel endian with FPU, uVision Simulator.
 
@@ -78,7 +71,7 @@ c) running an individual test using uVision (MDK-ARM):
 
 d) parsing the test output log file
  - script: parseLog.py 
- - run:  parseLog.py python script in a Windows command window in folder .\CMSIS\DSP_Lib_TestSuite
+ - run:  parseLog.py python script in a Windows command window in folder .\CMSIS\DSP\DSP_Lib_TestSuite
    command line options should match the invocation of the runTest executed before.
    e.g: runTest ARM cortexM4lf Simulator  ->  python parseLog.py ARM cortexM4lf Simulator
    
@@ -118,15 +111,15 @@ Setup 'MPS2'
 
 How to select tests for "run all tests"
 ----------------------------------------
- - edit .\CMSIS\DSP_Lib_TestSuite\Common\src\all_tests.c
+ - edit .\CMSIS\DSP\DSP_Lib_TestSuite\Common\src\all_tests.c
    comment out all unwanted test groups.
    e.g.  //    JTEST_GROUP_CALL(complex_math_tests);
 
- - edit .\CMSIS\DSP_Lib_TestSuite\Common\src\<test group>/<test group>_group.c
+ - edit .\CMSIS\DSP\DSP_Lib_TestSuite\Common\src\<test group>/<test group>_group.c
    comment out all unwanted sub test groups.
    e.g. file .\DSP_Lib_TestSuite\Common\src\basic_math_tests\basic_math_test_group.c ->  //    JTEST_GROUP_CALL(abs_tests);
 
- - edit .\CMSIS\DSP_Lib_TestSuite\Common\src\<test group>/<test>_tests.c
+ - edit .\CMSIS\DSP\DSP_Lib_TestSuite\Common\src\<test group>/<test>_tests.c
    comment out all unwanted tests.
    e.g. file .\DSP_Lib_TestSuite\Common\src\basic_math_tests\abs_tests.c  ->  //    JTEST_TEST_CALL(arm_abs_f32_test);
 

@@ -16,7 +16,7 @@
         <TargetCommonOption>
           <Device>ARMCM0</Device>
           <Vendor>ARM</Vendor>
-          <PackID>ARM.CMSIS.5.5.0-dev57</PackID>
+          <PackID>ARM.CMSIS.5.5.0-dev52</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IROM(0x00000000,0x40000) IRAM(0x20000000,0x20000) CPUTYPE("Cortex-M0") CLOCK(12000000) ESEL ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -338,7 +338,7 @@
               <MiscControls></MiscControls>
               <Define></Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\Include;..\..\..\..\Device\ARM\ARMCM0\Include;..\..\RefLibs\inc;..\..\Common\JTest\inc;..\..\Common\JTest\inc\arr_desc;..\..\Common\inc;..\..\Common\inc\templates;..\..\Common\inc\basic_math_tests;..\..\Common\inc\complex_math_tests;..\..\Common\inc\statistics_tests;..\..\Common\inc\matrix_tests;..\..\Common\inc\support_tests;..\..\Common\inc\controller_tests;..\..\Common\inc\transform_tests;..\..\Common\inc\fast_math_tests;..\..\Common\inc\filtering_tests;..\..\Common\inc\intrinsics_tests</IncludePath>
+              <IncludePath>..\..\..\..\Core\Include;..\..\..\Include;..\..\..\..\..\Device\ARM\ARMCM0\Include;..\..\RefLibs\inc;..\..\Common\JTest\inc;..\..\Common\JTest\inc\arr_desc;..\..\Common\inc;..\..\Common\inc\templates;..\..\Common\inc\basic_math_tests;..\..\Common\inc\complex_math_tests;..\..\Common\inc\statistics_tests;..\..\Common\inc\matrix_tests;..\..\Common\inc\support_tests;..\..\Common\inc\controller_tests;..\..\Common\inc\transform_tests;..\..\Common\inc\fast_math_tests;..\..\Common\inc\filtering_tests;..\..\Common\inc\intrinsics_tests</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -861,7 +861,7 @@
         <TargetCommonOption>
           <Device>ARMCM0</Device>
           <Vendor>ARM</Vendor>
-          <PackID>ARM.CMSIS.5.5.0-dev57</PackID>
+          <PackID>ARM.CMSIS.5.5.0-dev52</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IROM(0x00000000,0x40000) IRAM(0x20000000,0x20000) CPUTYPE("Cortex-M0") CLOCK(12000000) ESEL ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -1183,7 +1183,7 @@
               <MiscControls></MiscControls>
               <Define>ARM_MATH_BIG_ENDIAN</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\Include;..\..\..\..\Device\ARM\ARMCM0\Include;..\..\RefLibs\inc;..\..\Common\JTest\inc;..\..\Common\JTest\inc\arr_desc;..\..\Common\inc;..\..\Common\inc\templates;..\..\Common\inc\basic_math_tests;..\..\Common\inc\complex_math_tests;..\..\Common\inc\statistics_tests;..\..\Common\inc\matrix_tests;..\..\Common\inc\support_tests;..\..\Common\inc\controller_tests;..\..\Common\inc\transform_tests;..\..\Common\inc\fast_math_tests;..\..\Common\inc\filtering_tests;..\..\Common\inc\intrinsics_tests</IncludePath>
+              <IncludePath>..\..\..\..\Core\Include;..\..\..\Include;..\..\..\..\..\Device\ARM\ARMCM0\Include;..\..\RefLibs\inc;..\..\Common\JTest\inc;..\..\Common\JTest\inc\arr_desc;..\..\Common\inc;..\..\Common\inc\templates;..\..\Common\inc\basic_math_tests;..\..\Common\inc\complex_math_tests;..\..\Common\inc\statistics_tests;..\..\Common\inc\matrix_tests;..\..\Common\inc\support_tests;..\..\Common\inc\controller_tests;..\..\Common\inc\transform_tests;..\..\Common\inc\fast_math_tests;..\..\Common\inc\filtering_tests;..\..\Common\inc\intrinsics_tests</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1706,7 +1706,7 @@
         <TargetCommonOption>
           <Device>ARMCM3</Device>
           <Vendor>ARM</Vendor>
-          <PackID>ARM.CMSIS.5.5.0-dev57</PackID>
+          <PackID>ARM.CMSIS.5.5.0-dev52</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IROM(0x00000000,0x40000) IRAM(0x20000000,0x20000) CPUTYPE("Cortex-M3") CLOCK(12000000) ESEL ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -2028,7 +2028,7 @@
               <MiscControls></MiscControls>
               <Define></Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\Include;..\..\..\..\Device\ARM\ARMCM3\Include;..\..\RefLibs\inc;..\..\Common\JTest\inc;..\..\Common\JTest\inc\arr_desc;..\..\Common\inc;..\..\Common\inc\templates;..\..\Common\inc\basic_math_tests;..\..\Common\inc\complex_math_tests;..\..\Common\inc\statistics_tests;..\..\Common\inc\matrix_tests;..\..\Common\inc\support_tests;..\..\Common\inc\controller_tests;..\..\Common\inc\transform_tests;..\..\Common\inc\fast_math_tests;..\..\Common\inc\filtering_tests;..\..\Common\inc\intrinsics_tests</IncludePath>
+              <IncludePath>..\..\..\..\Core\Include;..\..\..\Include;..\..\..\..\..\Device\ARM\ARMCM3\Include;..\..\RefLibs\inc;..\..\Common\JTest\inc;..\..\Common\JTest\inc\arr_desc;..\..\Common\inc;..\..\Common\inc\templates;..\..\Common\inc\basic_math_tests;..\..\Common\inc\complex_math_tests;..\..\Common\inc\statistics_tests;..\..\Common\inc\matrix_tests;..\..\Common\inc\support_tests;..\..\Common\inc\controller_tests;..\..\Common\inc\transform_tests;..\..\Common\inc\fast_math_tests;..\..\Common\inc\filtering_tests;..\..\Common\inc\intrinsics_tests</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2551,7 +2551,7 @@
         <TargetCommonOption>
           <Device>ARMCM3</Device>
           <Vendor>ARM</Vendor>
-          <PackID>ARM.CMSIS.5.5.0-dev57</PackID>
+          <PackID>ARM.CMSIS.5.5.0-dev52</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IROM(0x00000000,0x40000) IRAM(0x20000000,0x20000) CPUTYPE("Cortex-M3") CLOCK(12000000) ESEL ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -2873,7 +2873,7 @@
               <MiscControls></MiscControls>
               <Define>ARM_MATH_BIG_ENDIAN</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\Include;..\..\..\..\Device\ARM\ARMCM3\Include;..\..\RefLibs\inc;..\..\Common\JTest\inc;..\..\Common\JTest\inc\arr_desc;..\..\Common\inc;..\..\Common\inc\templates;..\..\Common\inc\basic_math_tests;..\..\Common\inc\complex_math_tests;..\..\Common\inc\statistics_tests;..\..\Common\inc\matrix_tests;..\..\Common\inc\support_tests;..\..\Common\inc\controller_tests;..\..\Common\inc\transform_tests;..\..\Common\inc\fast_math_tests;..\..\Common\inc\filtering_tests;..\..\Common\inc\intrinsics_tests</IncludePath>
+              <IncludePath>..\..\..\..\Core\Include;..\..\..\Include;..\..\..\..\..\Device\ARM\ARMCM3\Include;..\..\RefLibs\inc;..\..\Common\JTest\inc;..\..\Common\JTest\inc\arr_desc;..\..\Common\inc;..\..\Common\inc\templates;..\..\Common\inc\basic_math_tests;..\..\Common\inc\complex_math_tests;..\..\Common\inc\statistics_tests;..\..\Common\inc\matrix_tests;..\..\Common\inc\support_tests;..\..\Common\inc\controller_tests;..\..\Common\inc\transform_tests;..\..\Common\inc\fast_math_tests;..\..\Common\inc\filtering_tests;..\..\Common\inc\intrinsics_tests</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -3396,7 +3396,7 @@
         <TargetCommonOption>
           <Device>ARMCM4</Device>
           <Vendor>ARM</Vendor>
-          <PackID>ARM.CMSIS.5.5.0-dev57</PackID>
+          <PackID>ARM.CMSIS.5.5.0-dev52</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IROM(0x00000000,0x80000) IRAM(0x20000000,0x20000) CPUTYPE("Cortex-M4") CLOCK(12000000) ESEL ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -3718,7 +3718,7 @@
               <MiscControls></MiscControls>
               <Define></Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\Include;..\..\..\..\Device\ARM\ARMCM4\Include;..\..\RefLibs\inc;..\..\Common\JTest\inc;..\..\Common\JTest\inc\arr_desc;..\..\Common\inc;..\..\Common\inc\templates;..\..\Common\inc\basic_math_tests;..\..\Common\inc\complex_math_tests;..\..\Common\inc\statistics_tests;..\..\Common\inc\matrix_tests;..\..\Common\inc\support_tests;..\..\Common\inc\controller_tests;..\..\Common\inc\transform_tests;..\..\Common\inc\fast_math_tests;..\..\Common\inc\filtering_tests;..\..\Common\inc\intrinsics_tests</IncludePath>
+              <IncludePath>..\..\..\..\Core\Include;..\..\..\Include;..\..\..\..\..\Device\ARM\ARMCM4\Include;..\..\RefLibs\inc;..\..\Common\JTest\inc;..\..\Common\JTest\inc\arr_desc;..\..\Common\inc;..\..\Common\inc\templates;..\..\Common\inc\basic_math_tests;..\..\Common\inc\complex_math_tests;..\..\Common\inc\statistics_tests;..\..\Common\inc\matrix_tests;..\..\Common\inc\support_tests;..\..\Common\inc\controller_tests;..\..\Common\inc\transform_tests;..\..\Common\inc\fast_math_tests;..\..\Common\inc\filtering_tests;..\..\Common\inc\intrinsics_tests</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -4241,7 +4241,7 @@
         <TargetCommonOption>
           <Device>ARMCM4</Device>
           <Vendor>ARM</Vendor>
-          <PackID>ARM.CMSIS.5.5.0-dev57</PackID>
+          <PackID>ARM.CMSIS.5.5.0-dev52</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IROM(0x00000000,0x80000) IRAM(0x20000000,0x20000) CPUTYPE("Cortex-M4") CLOCK(12000000) ESEL ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -4563,7 +4563,7 @@
               <MiscControls></MiscControls>
               <Define>ARM_MATH_BIG_ENDIAN</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\Include;..\..\..\..\Device\ARM\ARMCM4\Include;..\..\RefLibs\inc;..\..\Common\JTest\inc;..\..\Common\JTest\inc\arr_desc;..\..\Common\inc;..\..\Common\inc\templates;..\..\Common\inc\basic_math_tests;..\..\Common\inc\complex_math_tests;..\..\Common\inc\statistics_tests;..\..\Common\inc\matrix_tests;..\..\Common\inc\support_tests;..\..\Common\inc\controller_tests;..\..\Common\inc\transform_tests;..\..\Common\inc\fast_math_tests;..\..\Common\inc\filtering_tests;..\..\Common\inc\intrinsics_tests</IncludePath>
+              <IncludePath>..\..\..\..\Core\Include;..\..\..\Include;..\..\..\..\..\Device\ARM\ARMCM4\Include;..\..\RefLibs\inc;..\..\Common\JTest\inc;..\..\Common\JTest\inc\arr_desc;..\..\Common\inc;..\..\Common\inc\templates;..\..\Common\inc\basic_math_tests;..\..\Common\inc\complex_math_tests;..\..\Common\inc\statistics_tests;..\..\Common\inc\matrix_tests;..\..\Common\inc\support_tests;..\..\Common\inc\controller_tests;..\..\Common\inc\transform_tests;..\..\Common\inc\fast_math_tests;..\..\Common\inc\filtering_tests;..\..\Common\inc\intrinsics_tests</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -5086,7 +5086,7 @@
         <TargetCommonOption>
           <Device>ARMCM4_FP</Device>
           <Vendor>ARM</Vendor>
-          <PackID>ARM.CMSIS.5.5.0-dev57</PackID>
+          <PackID>ARM.CMSIS.5.5.0-dev52</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IROM(0x00000000,0x80000) IRAM(0x20000000,0x20000) CPUTYPE("Cortex-M4") FPU2 CLOCK(12000000) ESEL ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -5408,7 +5408,7 @@
               <MiscControls></MiscControls>
               <Define></Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\Include;..\..\..\..\Device\ARM\ARMCM4\Include;..\..\RefLibs\inc;..\..\Common\JTest\inc;..\..\Common\JTest\inc\arr_desc;..\..\Common\inc;..\..\Common\inc\templates;..\..\Common\inc\basic_math_tests;..\..\Common\inc\complex_math_tests;..\..\Common\inc\statistics_tests;..\..\Common\inc\matrix_tests;..\..\Common\inc\support_tests;..\..\Common\inc\controller_tests;..\..\Common\inc\transform_tests;..\..\Common\inc\fast_math_tests;..\..\Common\inc\filtering_tests;..\..\Common\inc\intrinsics_tests</IncludePath>
+              <IncludePath>..\..\..\..\Core\Include;..\..\..\Include;..\..\..\..\..\Device\ARM\ARMCM4\Include;..\..\RefLibs\inc;..\..\Common\JTest\inc;..\..\Common\JTest\inc\arr_desc;..\..\Common\inc;..\..\Common\inc\templates;..\..\Common\inc\basic_math_tests;..\..\Common\inc\complex_math_tests;..\..\Common\inc\statistics_tests;..\..\Common\inc\matrix_tests;..\..\Common\inc\support_tests;..\..\Common\inc\controller_tests;..\..\Common\inc\transform_tests;..\..\Common\inc\fast_math_tests;..\..\Common\inc\filtering_tests;..\..\Common\inc\intrinsics_tests</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -5931,7 +5931,7 @@
         <TargetCommonOption>
           <Device>ARMCM4_FP</Device>
           <Vendor>ARM</Vendor>
-          <PackID>ARM.CMSIS.5.5.0-dev57</PackID>
+          <PackID>ARM.CMSIS.5.5.0-dev52</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IROM(0x00000000,0x80000) IRAM(0x20000000,0x20000) CPUTYPE("Cortex-M4") FPU2 CLOCK(12000000) ESEL ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -6253,7 +6253,7 @@
               <MiscControls></MiscControls>
               <Define>ARM_MATH_BIG_ENDIAN</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\Include;..\..\..\..\Device\ARM\ARMCM4\Include;..\..\RefLibs\inc;..\..\Common\JTest\inc;..\..\Common\JTest\inc\arr_desc;..\..\Common\inc;..\..\Common\inc\templates;..\..\Common\inc\basic_math_tests;..\..\Common\inc\complex_math_tests;..\..\Common\inc\statistics_tests;..\..\Common\inc\matrix_tests;..\..\Common\inc\support_tests;..\..\Common\inc\controller_tests;..\..\Common\inc\transform_tests;..\..\Common\inc\fast_math_tests;..\..\Common\inc\filtering_tests;..\..\Common\inc\intrinsics_tests</IncludePath>
+              <IncludePath>..\..\..\..\Core\Include;..\..\..\Include;..\..\..\..\..\Device\ARM\ARMCM4\Include;..\..\RefLibs\inc;..\..\Common\JTest\inc;..\..\Common\JTest\inc\arr_desc;..\..\Common\inc;..\..\Common\inc\templates;..\..\Common\inc\basic_math_tests;..\..\Common\inc\complex_math_tests;..\..\Common\inc\statistics_tests;..\..\Common\inc\matrix_tests;..\..\Common\inc\support_tests;..\..\Common\inc\controller_tests;..\..\Common\inc\transform_tests;..\..\Common\inc\fast_math_tests;..\..\Common\inc\filtering_tests;..\..\Common\inc\intrinsics_tests</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -6776,7 +6776,7 @@
         <TargetCommonOption>
           <Device>ARMCM7</Device>
           <Vendor>ARM</Vendor>
-          <PackID>ARM.CMSIS.5.5.0-dev57</PackID>
+          <PackID>ARM.CMSIS.5.5.0-dev52</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IROM(0x00000000,0x80000) IRAM(0x20000000,0x20000) CPUTYPE("Cortex-M7") CLOCK(12000000) ESEL ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -7098,7 +7098,7 @@
               <MiscControls></MiscControls>
               <Define></Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\Include;..\..\..\..\Device\ARM\ARMCM7\Include;..\..\RefLibs\inc;..\..\Common\JTest\inc;..\..\Common\JTest\inc\arr_desc;..\..\Common\inc;..\..\Common\inc\templates;..\..\Common\inc\basic_math_tests;..\..\Common\inc\complex_math_tests;..\..\Common\inc\statistics_tests;..\..\Common\inc\matrix_tests;..\..\Common\inc\support_tests;..\..\Common\inc\controller_tests;..\..\Common\inc\transform_tests;..\..\Common\inc\fast_math_tests;..\..\Common\inc\filtering_tests;..\..\Common\inc\intrinsics_tests</IncludePath>
+              <IncludePath>..\..\..\..\Core\Include;..\..\..\Include;..\..\..\..\..\Device\ARM\ARMCM7\Include;..\..\RefLibs\inc;..\..\Common\JTest\inc;..\..\Common\JTest\inc\arr_desc;..\..\Common\inc;..\..\Common\inc\templates;..\..\Common\inc\basic_math_tests;..\..\Common\inc\complex_math_tests;..\..\Common\inc\statistics_tests;..\..\Common\inc\matrix_tests;..\..\Common\inc\support_tests;..\..\Common\inc\controller_tests;..\..\Common\inc\transform_tests;..\..\Common\inc\fast_math_tests;..\..\Common\inc\filtering_tests;..\..\Common\inc\intrinsics_tests</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -7621,7 +7621,7 @@
         <TargetCommonOption>
           <Device>ARMCM7</Device>
           <Vendor>ARM</Vendor>
-          <PackID>ARM.CMSIS.5.5.0-dev57</PackID>
+          <PackID>ARM.CMSIS.5.5.0-dev52</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IROM(0x00000000,0x80000) IRAM(0x20000000,0x20000) CPUTYPE("Cortex-M7") CLOCK(12000000) ESEL ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -7943,7 +7943,7 @@
               <MiscControls></MiscControls>
               <Define>ARM_MATH_BIG_ENDIAN</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\Include;..\..\..\..\Device\ARM\ARMCM7\Include;..\..\RefLibs\inc;..\..\Common\JTest\inc;..\..\Common\JTest\inc\arr_desc;..\..\Common\inc;..\..\Common\inc\templates;..\..\Common\inc\basic_math_tests;..\..\Common\inc\complex_math_tests;..\..\Common\inc\statistics_tests;..\..\Common\inc\matrix_tests;..\..\Common\inc\support_tests;..\..\Common\inc\controller_tests;..\..\Common\inc\transform_tests;..\..\Common\inc\fast_math_tests;..\..\Common\inc\filtering_tests;..\..\Common\inc\intrinsics_tests</IncludePath>
+              <IncludePath>..\..\..\..\Core\Include;..\..\..\Include;..\..\..\..\..\Device\ARM\ARMCM7\Include;..\..\RefLibs\inc;..\..\Common\JTest\inc;..\..\Common\JTest\inc\arr_desc;..\..\Common\inc;..\..\Common\inc\templates;..\..\Common\inc\basic_math_tests;..\..\Common\inc\complex_math_tests;..\..\Common\inc\statistics_tests;..\..\Common\inc\matrix_tests;..\..\Common\inc\support_tests;..\..\Common\inc\controller_tests;..\..\Common\inc\transform_tests;..\..\Common\inc\fast_math_tests;..\..\Common\inc\filtering_tests;..\..\Common\inc\intrinsics_tests</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>

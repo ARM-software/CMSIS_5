@@ -8,7 +8,7 @@
   <Extensions>
     <cExt>*.c</cExt>
     <aExt>*.s*; *.src; *.a*</aExt>
-    <oExt>*.obj</oExt>
+    <oExt>*.obj; *.o</oExt>
     <lExt>*.lib</lExt>
     <tExt>*.txt; *.h; *.inc</tExt>
     <pExt>*.plm</pExt>
@@ -5442,6 +5442,30 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
+      <PathWithFileName>..\..\Source\TransformFunctions\arm_bitreversal.c</PathWithFileName>
+      <FilenameWithoutPath>arm_bitreversal.c</FilenameWithoutPath>
+      <RteFlg>0</RteFlg>
+      <bShared>0</bShared>
+    </File>
+    <File>
+      <GroupNumber>6</GroupNumber>
+      <FileNumber>187</FileNumber>
+      <FileType>1</FileType>
+      <tvExp>0</tvExp>
+      <tvExpOptDlg>0</tvExpOptDlg>
+      <bDave2>0</bDave2>
+      <PathWithFileName>..\..\Source\TransformFunctions\arm_bitreversal2.c</PathWithFileName>
+      <FilenameWithoutPath>arm_bitreversal2.c</FilenameWithoutPath>
+      <RteFlg>0</RteFlg>
+      <bShared>0</bShared>
+    </File>
+    <File>
+      <GroupNumber>6</GroupNumber>
+      <FileNumber>188</FileNumber>
+      <FileType>1</FileType>
+      <tvExp>0</tvExp>
+      <tvExpOptDlg>0</tvExpOptDlg>
+      <bDave2>0</bDave2>
       <PathWithFileName>..\..\Source\TransformFunctions\arm_cfft_radix4_f32.c</PathWithFileName>
       <FilenameWithoutPath>arm_cfft_radix4_f32.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
@@ -5449,7 +5473,7 @@
     </File>
     <File>
       <GroupNumber>6</GroupNumber>
-      <FileNumber>187</FileNumber>
+      <FileNumber>189</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -5461,7 +5485,7 @@
     </File>
     <File>
       <GroupNumber>6</GroupNumber>
-      <FileNumber>188</FileNumber>
+      <FileNumber>190</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -5473,7 +5497,7 @@
     </File>
     <File>
       <GroupNumber>6</GroupNumber>
-      <FileNumber>189</FileNumber>
+      <FileNumber>191</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -5485,7 +5509,7 @@
     </File>
     <File>
       <GroupNumber>6</GroupNumber>
-      <FileNumber>190</FileNumber>
+      <FileNumber>192</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -5497,7 +5521,7 @@
     </File>
     <File>
       <GroupNumber>6</GroupNumber>
-      <FileNumber>191</FileNumber>
+      <FileNumber>193</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -5509,7 +5533,7 @@
     </File>
     <File>
       <GroupNumber>6</GroupNumber>
-      <FileNumber>192</FileNumber>
+      <FileNumber>194</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -5521,7 +5545,7 @@
     </File>
     <File>
       <GroupNumber>6</GroupNumber>
-      <FileNumber>193</FileNumber>
+      <FileNumber>195</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -5533,7 +5557,7 @@
     </File>
     <File>
       <GroupNumber>6</GroupNumber>
-      <FileNumber>194</FileNumber>
+      <FileNumber>196</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -5545,7 +5569,7 @@
     </File>
     <File>
       <GroupNumber>6</GroupNumber>
-      <FileNumber>195</FileNumber>
+      <FileNumber>197</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -5557,7 +5581,7 @@
     </File>
     <File>
       <GroupNumber>6</GroupNumber>
-      <FileNumber>196</FileNumber>
+      <FileNumber>198</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -5569,7 +5593,7 @@
     </File>
     <File>
       <GroupNumber>6</GroupNumber>
-      <FileNumber>197</FileNumber>
+      <FileNumber>199</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -5581,7 +5605,7 @@
     </File>
     <File>
       <GroupNumber>6</GroupNumber>
-      <FileNumber>198</FileNumber>
+      <FileNumber>200</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -5593,7 +5617,7 @@
     </File>
     <File>
       <GroupNumber>6</GroupNumber>
-      <FileNumber>199</FileNumber>
+      <FileNumber>201</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -5605,7 +5629,7 @@
     </File>
     <File>
       <GroupNumber>6</GroupNumber>
-      <FileNumber>200</FileNumber>
+      <FileNumber>202</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -5617,7 +5641,7 @@
     </File>
     <File>
       <GroupNumber>6</GroupNumber>
-      <FileNumber>201</FileNumber>
+      <FileNumber>203</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -5629,7 +5653,7 @@
     </File>
     <File>
       <GroupNumber>6</GroupNumber>
-      <FileNumber>202</FileNumber>
+      <FileNumber>204</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -5641,7 +5665,7 @@
     </File>
     <File>
       <GroupNumber>6</GroupNumber>
-      <FileNumber>203</FileNumber>
+      <FileNumber>205</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -5653,19 +5677,7 @@
     </File>
     <File>
       <GroupNumber>6</GroupNumber>
-      <FileNumber>204</FileNumber>
-      <FileType>1</FileType>
-      <tvExp>0</tvExp>
-      <tvExpOptDlg>0</tvExpOptDlg>
-      <bDave2>0</bDave2>
-      <PathWithFileName>..\..\Source\TransformFunctions\arm_bitreversal.c</PathWithFileName>
-      <FilenameWithoutPath>arm_bitreversal.c</FilenameWithoutPath>
-      <RteFlg>0</RteFlg>
-      <bShared>0</bShared>
-    </File>
-    <File>
-      <GroupNumber>6</GroupNumber>
-      <FileNumber>205</FileNumber>
+      <FileNumber>206</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -5677,7 +5689,7 @@
     </File>
     <File>
       <GroupNumber>6</GroupNumber>
-      <FileNumber>206</FileNumber>
+      <FileNumber>207</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -5689,7 +5701,7 @@
     </File>
     <File>
       <GroupNumber>6</GroupNumber>
-      <FileNumber>207</FileNumber>
+      <FileNumber>208</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -5701,7 +5713,7 @@
     </File>
     <File>
       <GroupNumber>6</GroupNumber>
-      <FileNumber>208</FileNumber>
+      <FileNumber>209</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -5713,7 +5725,7 @@
     </File>
     <File>
       <GroupNumber>6</GroupNumber>
-      <FileNumber>209</FileNumber>
+      <FileNumber>210</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -5725,7 +5737,7 @@
     </File>
     <File>
       <GroupNumber>6</GroupNumber>
-      <FileNumber>210</FileNumber>
+      <FileNumber>211</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -5737,7 +5749,7 @@
     </File>
     <File>
       <GroupNumber>6</GroupNumber>
-      <FileNumber>211</FileNumber>
+      <FileNumber>212</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -5749,25 +5761,13 @@
     </File>
     <File>
       <GroupNumber>6</GroupNumber>
-      <FileNumber>212</FileNumber>
+      <FileNumber>213</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
       <PathWithFileName>..\..\Source\TransformFunctions\arm_cfft_radix8_f32.c</PathWithFileName>
       <FilenameWithoutPath>arm_cfft_radix8_f32.c</FilenameWithoutPath>
-      <RteFlg>0</RteFlg>
-      <bShared>0</bShared>
-    </File>
-    <File>
-      <GroupNumber>6</GroupNumber>
-      <FileNumber>213</FileNumber>
-      <FileType>1</FileType>
-      <tvExp>0</tvExp>
-      <tvExpOptDlg>0</tvExpOptDlg>
-      <bDave2>0</bDave2>
-      <PathWithFileName>..\..\Source\TransformFunctions\arm_bitreversal2.S</PathWithFileName>
-      <FilenameWithoutPath>arm_bitreversal2.S</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>

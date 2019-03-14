@@ -7,6 +7,27 @@
     <th>Description</th>
   </tr>
   <tr>
+    <td>V1.5.5</td>
+    <td>
+      Reworked DSP library source files
+       - added macro ARM_MATH_LOOPUNROLL
+       - removed macro UNALIGNED_SUPPORT_DISABLE
+       - added const-correctness
+       - replaced SIMD pointer construct with memcopy solution
+      Reworked DSP library documentation
+      Changed DSP folder structure
+       - moved DSP libraries to ./DSP/Lib
+      ARM DSP Libraries are built with ARMCLANG
+      Added DSP Libraries source variant
+    </td>
+    <td>V1.5.4</td>
+    <td>
+      Note: binaries NOT rebuild!
+
+      Updated IAR projects
+    </td>
+  </tr>
+  <tr>
     <td>V1.5.3</td>
     <td>
       Note: binaries NOT rebuild!
@@ -25,7 +46,7 @@
        - FilteringFunctions\arm_correlate_q15.c
        - FilteringFunctions\arm_fir_f32.c
        - MatrixFunctions\arm_mat_scale_q31.c
-       - StatisticsFunctions\arm_rms_q31.ck
+       - StatisticsFunctions\arm_rms_q31.c
        - TransformFunctions\arm_bitreversal2.S
        - TransformFunctions\arm_cfft_radix4_q31.c
       Reworked DSP_Lib_TestSuite

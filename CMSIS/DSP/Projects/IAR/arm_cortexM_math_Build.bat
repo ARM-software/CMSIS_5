@@ -8,6 +8,7 @@ set IAREXE=iarbuild.exe
 
 echo.
 echo Building DSP Libraries ARM
+
 echo   Building DSP Library for Cortex-M0 Little Endian
 %IAREXE% arm_cortexM_math.ewp -build cortexM0l
 
@@ -50,6 +51,7 @@ echo   Building DSP Library for ARMv8-M Mainline Little Endian with DSP instruct
 echo   Building DSP Library for ARMv8-M Mainline Little Endian with DSP instructions, double precision FPU
 %IAREXE% arm_cortexM_math.ewp -build ARMv8MMLldfdp
 
+
 REM big endian libraries
 
 echo   Building DSP Library for Cortex-M0 Big Endian
@@ -74,28 +76,28 @@ echo   Building DSP Library for Cortex-M7 Big Endian with double precision FPU
 %IAREXE% arm_cortexM_math.ewp -build cortexM7bfdp
 
 echo Copy libs to CMSIS\lib\IAR
-mkdir ..\..\..\lib\IAR
-copy ReleaseM0BE\Exe\*.a ..\..\..\lib\IAR\ /Y
-copy ReleaseM0LE\Exe\*.a ..\..\..\lib\IAR\ /Y
-copy ReleaseM3BE\Exe\*.a ..\..\..\lib\IAR\ /Y
-copy ReleaseM3LE\Exe\*.a ..\..\..\lib\IAR\ /Y
-copy ReleaseM4BE\Exe\*.a ..\..\..\lib\IAR\ /Y
-copy ReleaseM4BE_FPU\Exe\*.a ..\..\..\lib\IAR\ /Y
-copy ReleaseM4LE\Exe\*.a ..\..\..\lib\IAR\ /Y
-copy ReleaseM4LE_FPU\Exe\*.a ..\..\..\lib\IAR\ /Y
-copy ReleaseM7BE\Exe\*.a ..\..\..\lib\IAR\ /Y
-copy ReleaseM7BE_FPU_DP\Exe\*.a ..\..\..\lib\IAR\ /Y
-copy ReleaseM7BE_FPU_SP\Exe\*.a ..\..\..\lib\IAR\ /Y
-copy ReleaseM7LE\Exe\*.a ..\..\..\lib\IAR\ /Y
-copy ReleaseM7LE_FPU_DP\Exe\*.a ..\..\..\lib\IAR\ /Y
-copy ReleaseM7LE_FPU_SP\Exe\*.a ..\..\..\lib\IAR\ /Y
-copy ARMv8MBLl\Exe\*.a ..\..\..\lib\IAR\ /Y
-copy ARMv8MMLl\Exe\*.a ..\..\..\lib\IAR\ /Y
-copy ARMv8MMLld\Exe\*.a ..\..\..\lib\IAR\ /Y
-copy ARMv8MMLldfdp\Exe\*.a ..\..\..\lib\IAR\ /Y
-copy ARMv8MMLldfsp\Exe\*.a ..\..\..\lib\IAR\ /Y
-copy ARMv8MMLlfdp\Exe\*.a ..\..\..\lib\IAR\ /Y
-copy ARMv8MMLlfsp\Exe\*.a ..\..\..\lib\IAR\ /Y
+mkdir ..\..\lib\IAR
+copy ReleaseM0BE\Exe\*.a ..\..\lib\IAR\ /Y
+copy ReleaseM0LE\Exe\*.a ..\..\lib\IAR\ /Y
+copy ReleaseM3BE\Exe\*.a ..\..\lib\IAR\ /Y
+copy ReleaseM3LE\Exe\*.a ..\..\lib\IAR\ /Y
+copy ReleaseM4BE\Exe\*.a ..\..\lib\IAR\ /Y
+copy ReleaseM4BE_FPU\Exe\*.a ..\..\lib\IAR\ /Y
+copy ReleaseM4LE\Exe\*.a ..\..\lib\IAR\ /Y
+copy ReleaseM4LE_FPU\Exe\*.a ..\..\lib\IAR\ /Y
+copy ReleaseM7BE\Exe\*.a ..\..\lib\IAR\ /Y
+copy ReleaseM7BE_FPU_DP\Exe\*.a ..\..\lib\IAR\ /Y
+copy ReleaseM7BE_FPU_SP\Exe\*.a ..\..\lib\IAR\ /Y
+copy ReleaseM7LE\Exe\*.a ..\..\lib\IAR\ /Y
+copy ReleaseM7LE_FPU_DP\Exe\*.a ..\..\lib\IAR\ /Y
+copy ReleaseM7LE_FPU_SP\Exe\*.a ..\..\lib\IAR\ /Y
+copy ARMv8MBLl\Exe\*.a ..\..\lib\IAR\ /Y
+copy ARMv8MMLl\Exe\*.a ..\..\lib\IAR\ /Y
+copy ARMv8MMLld\Exe\*.a ..\..\lib\IAR\ /Y
+copy ARMv8MMLldfdp\Exe\*.a ..\..\lib\IAR\ /Y
+copy ARMv8MMLldfsp\Exe\*.a ..\..\lib\IAR\ /Y
+copy ARMv8MMLlfdp\Exe\*.a ..\..\lib\IAR\ /Y
+copy ARMv8MMLlfsp\Exe\*.a ..\..\lib\IAR\ /Y
 
 echo.
 echo   Deleting intermediate files

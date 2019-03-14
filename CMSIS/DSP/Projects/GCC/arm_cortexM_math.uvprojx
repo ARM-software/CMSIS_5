@@ -15,7 +15,7 @@
         <TargetCommonOption>
           <Device>ARMCM0</Device>
           <Vendor>ARM</Vendor>
-          <PackID>ARM.CMSIS.5.5.0-dev0</PackID>
+          <PackID>ARM.CMSIS.5.5.0-dev52</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IROM(0x00000000,0x40000) IRAM(0x20000000,0x20000) CPUTYPE("Cortex-M0") CLOCK(12000000) ESEL ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -81,7 +81,7 @@
           <AfterMake>
             <RunUserProg1>1</RunUserProg1>
             <RunUserProg2>0</RunUserProg2>
-            <UserProg1Name>cmd.exe /C copy "$L\lib@L.a" "..\..\..\Lib\GCC\"</UserProg1Name>
+            <UserProg1Name>cmd.exe /C copy "$L\lib@L.a" "..\..\Lib\GCC\"</UserProg1Name>
             <UserProg2Name></UserProg2Name>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
@@ -240,7 +240,7 @@
             <uThumb>1</uThumb>
             <VariousControls>
               <MiscControls>-fno-strict-aliasing -ffunction-sections -fdata-sections</MiscControls>
-              <Define>ARM_MATH_CM0_FAMILY, ARM_MATH_MATRIX_CHECK, ARM_MATH_ROUNDING, UNALIGNED_SUPPORT_DISABLE</Define>
+              <Define>ARM_MATH_CM0_FAMILY, ARM_MATH_MATRIX_CHECK, ARM_MATH_ROUNDING, ARM_MATH_LOOPUNROLL</Define>
               <Undefine></Undefine>
               <IncludePath>..\..\Include;..\..\..\Core\Include;..\..\..\Include</IncludePath>
             </VariousControls>
@@ -1226,6 +1226,16 @@
           <GroupName>TransformFunctions</GroupName>
           <Files>
             <File>
+              <FileName>arm_bitreversal.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Source\TransformFunctions\arm_bitreversal.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_bitreversal2.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Source\TransformFunctions\arm_bitreversal2.c</FilePath>
+            </File>
+            <File>
               <FileName>arm_cfft_radix4_f32.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Source\TransformFunctions\arm_cfft_radix4_f32.c</FilePath>
@@ -1316,11 +1326,6 @@
               <FilePath>..\..\Source\TransformFunctions\arm_rfft_q31.c</FilePath>
             </File>
             <File>
-              <FileName>arm_bitreversal.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\Source\TransformFunctions\arm_bitreversal.c</FilePath>
-            </File>
-            <File>
               <FileName>arm_cfft_radix2_f32.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Source\TransformFunctions\arm_cfft_radix2_f32.c</FilePath>
@@ -1359,11 +1364,6 @@
               <FileName>arm_cfft_radix8_f32.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Source\TransformFunctions\arm_cfft_radix8_f32.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_bitreversal2.S</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\Source\TransformFunctions\arm_bitreversal2.S</FilePath>
             </File>
             <File>
               <FileName>arm_rfft_fast_f32.c</FileName>
@@ -1693,7 +1693,7 @@
         <TargetCommonOption>
           <Device>ARMCM0</Device>
           <Vendor>ARM</Vendor>
-          <PackID>ARM.CMSIS.5.5.0-dev0</PackID>
+          <PackID>ARM.CMSIS.5.5.0-dev52</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IROM(0x00000000,0x40000) IRAM(0x20000000,0x20000) CPUTYPE("Cortex-M0") CLOCK(12000000) ESEL ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -1759,7 +1759,7 @@
           <AfterMake>
             <RunUserProg1>1</RunUserProg1>
             <RunUserProg2>0</RunUserProg2>
-            <UserProg1Name>cmd.exe /C copy "$L\lib@L.a" "..\..\..\Lib\GCC\"</UserProg1Name>
+            <UserProg1Name>cmd.exe /C copy "$L\lib@L.a" "..\..\Lib\GCC\"</UserProg1Name>
             <UserProg2Name></UserProg2Name>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
@@ -1918,7 +1918,7 @@
             <uThumb>1</uThumb>
             <VariousControls>
               <MiscControls>-fno-strict-aliasing -ffunction-sections -fdata-sections</MiscControls>
-              <Define>ARM_MATH_CM0_FAMILY, ARM_MATH_MATRIX_CHECK, ARM_MATH_ROUNDING, UNALIGNED_SUPPORT_DISABLE, ARM_MATH_BIG_ENDIAN</Define>
+              <Define>ARM_MATH_CM0_FAMILY, ARM_MATH_MATRIX_CHECK, ARM_MATH_ROUNDING, ARM_MATH_LOOPUNROLL, ARM_MATH_BIG_ENDIAN</Define>
               <Undefine></Undefine>
               <IncludePath>..\..\Include;..\..\..\Core\Include;..\..\..\Include</IncludePath>
             </VariousControls>
@@ -2904,6 +2904,16 @@
           <GroupName>TransformFunctions</GroupName>
           <Files>
             <File>
+              <FileName>arm_bitreversal.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Source\TransformFunctions\arm_bitreversal.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_bitreversal2.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Source\TransformFunctions\arm_bitreversal2.c</FilePath>
+            </File>
+            <File>
               <FileName>arm_cfft_radix4_f32.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Source\TransformFunctions\arm_cfft_radix4_f32.c</FilePath>
@@ -2994,11 +3004,6 @@
               <FilePath>..\..\Source\TransformFunctions\arm_rfft_q31.c</FilePath>
             </File>
             <File>
-              <FileName>arm_bitreversal.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\Source\TransformFunctions\arm_bitreversal.c</FilePath>
-            </File>
-            <File>
               <FileName>arm_cfft_radix2_f32.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Source\TransformFunctions\arm_cfft_radix2_f32.c</FilePath>
@@ -3037,11 +3042,6 @@
               <FileName>arm_cfft_radix8_f32.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Source\TransformFunctions\arm_cfft_radix8_f32.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_bitreversal2.S</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\Source\TransformFunctions\arm_bitreversal2.S</FilePath>
             </File>
             <File>
               <FileName>arm_rfft_fast_f32.c</FileName>
@@ -3371,7 +3371,7 @@
         <TargetCommonOption>
           <Device>ARMCM3</Device>
           <Vendor>ARM</Vendor>
-          <PackID>ARM.CMSIS.5.5.0-dev0</PackID>
+          <PackID>ARM.CMSIS.5.5.0-dev52</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IROM(0x00000000,0x40000) IRAM(0x20000000,0x20000) CPUTYPE("Cortex-M3") CLOCK(12000000) ESEL ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -3437,7 +3437,7 @@
           <AfterMake>
             <RunUserProg1>1</RunUserProg1>
             <RunUserProg2>0</RunUserProg2>
-            <UserProg1Name>cmd.exe /C copy "$L\lib@L.a" "..\..\..\Lib\GCC\"</UserProg1Name>
+            <UserProg1Name>cmd.exe /C copy "$L\lib@L.a" "..\..\Lib\GCC\"</UserProg1Name>
             <UserProg2Name></UserProg2Name>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
@@ -3596,7 +3596,7 @@
             <uThumb>1</uThumb>
             <VariousControls>
               <MiscControls>-fno-strict-aliasing -ffunction-sections -fdata-sections</MiscControls>
-              <Define>ARM_MATH_MATRIX_CHECK, ARM_MATH_ROUNDING, UNALIGNED_SUPPORT_DISABLE</Define>
+              <Define>ARM_MATH_MATRIX_CHECK, ARM_MATH_ROUNDING, ARM_MATH_LOOPUNROLL</Define>
               <Undefine></Undefine>
               <IncludePath>..\..\Include;..\..\..\Core\Include;..\..\..\Include</IncludePath>
             </VariousControls>
@@ -4582,6 +4582,16 @@
           <GroupName>TransformFunctions</GroupName>
           <Files>
             <File>
+              <FileName>arm_bitreversal.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Source\TransformFunctions\arm_bitreversal.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_bitreversal2.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Source\TransformFunctions\arm_bitreversal2.c</FilePath>
+            </File>
+            <File>
               <FileName>arm_cfft_radix4_f32.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Source\TransformFunctions\arm_cfft_radix4_f32.c</FilePath>
@@ -4672,11 +4682,6 @@
               <FilePath>..\..\Source\TransformFunctions\arm_rfft_q31.c</FilePath>
             </File>
             <File>
-              <FileName>arm_bitreversal.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\Source\TransformFunctions\arm_bitreversal.c</FilePath>
-            </File>
-            <File>
               <FileName>arm_cfft_radix2_f32.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Source\TransformFunctions\arm_cfft_radix2_f32.c</FilePath>
@@ -4715,11 +4720,6 @@
               <FileName>arm_cfft_radix8_f32.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Source\TransformFunctions\arm_cfft_radix8_f32.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_bitreversal2.S</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\Source\TransformFunctions\arm_bitreversal2.S</FilePath>
             </File>
             <File>
               <FileName>arm_rfft_fast_f32.c</FileName>
@@ -5049,7 +5049,7 @@
         <TargetCommonOption>
           <Device>ARMCM3</Device>
           <Vendor>ARM</Vendor>
-          <PackID>ARM.CMSIS.5.5.0-dev0</PackID>
+          <PackID>ARM.CMSIS.5.5.0-dev52</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IROM(0x00000000,0x40000) IRAM(0x20000000,0x20000) CPUTYPE("Cortex-M3") CLOCK(12000000) ESEL ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -5115,7 +5115,7 @@
           <AfterMake>
             <RunUserProg1>1</RunUserProg1>
             <RunUserProg2>0</RunUserProg2>
-            <UserProg1Name>cmd.exe /C copy "$L\lib@L.a" "..\..\..\Lib\GCC\"</UserProg1Name>
+            <UserProg1Name>cmd.exe /C copy "$L\lib@L.a" "..\..\Lib\GCC\"</UserProg1Name>
             <UserProg2Name></UserProg2Name>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
@@ -5274,7 +5274,7 @@
             <uThumb>1</uThumb>
             <VariousControls>
               <MiscControls>-fno-strict-aliasing -ffunction-sections -fdata-sections</MiscControls>
-              <Define>ARM_MATH_MATRIX_CHECK, ARM_MATH_ROUNDING, UNALIGNED_SUPPORT_DISABLE, ARM_MATH_BIG_ENDIAN</Define>
+              <Define>ARM_MATH_MATRIX_CHECK, ARM_MATH_ROUNDING, ARM_MATH_LOOPUNROLL, ARM_MATH_BIG_ENDIAN</Define>
               <Undefine></Undefine>
               <IncludePath>..\..\Include;..\..\..\Core\Include;..\..\..\Include</IncludePath>
             </VariousControls>
@@ -6260,6 +6260,16 @@
           <GroupName>TransformFunctions</GroupName>
           <Files>
             <File>
+              <FileName>arm_bitreversal.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Source\TransformFunctions\arm_bitreversal.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_bitreversal2.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Source\TransformFunctions\arm_bitreversal2.c</FilePath>
+            </File>
+            <File>
               <FileName>arm_cfft_radix4_f32.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Source\TransformFunctions\arm_cfft_radix4_f32.c</FilePath>
@@ -6350,11 +6360,6 @@
               <FilePath>..\..\Source\TransformFunctions\arm_rfft_q31.c</FilePath>
             </File>
             <File>
-              <FileName>arm_bitreversal.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\Source\TransformFunctions\arm_bitreversal.c</FilePath>
-            </File>
-            <File>
               <FileName>arm_cfft_radix2_f32.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Source\TransformFunctions\arm_cfft_radix2_f32.c</FilePath>
@@ -6393,11 +6398,6 @@
               <FileName>arm_cfft_radix8_f32.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Source\TransformFunctions\arm_cfft_radix8_f32.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_bitreversal2.S</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\Source\TransformFunctions\arm_bitreversal2.S</FilePath>
             </File>
             <File>
               <FileName>arm_rfft_fast_f32.c</FileName>
@@ -6727,7 +6727,7 @@
         <TargetCommonOption>
           <Device>ARMCM4</Device>
           <Vendor>ARM</Vendor>
-          <PackID>ARM.CMSIS.5.5.0-dev0</PackID>
+          <PackID>ARM.CMSIS.5.5.0-dev52</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IROM(0x00000000,0x80000) IRAM(0x20000000,0x20000) CPUTYPE("Cortex-M4") CLOCK(12000000) ESEL ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -6793,7 +6793,7 @@
           <AfterMake>
             <RunUserProg1>1</RunUserProg1>
             <RunUserProg2>0</RunUserProg2>
-            <UserProg1Name>cmd.exe /C copy "$L\lib@L.a" "..\..\..\Lib\GCC\"</UserProg1Name>
+            <UserProg1Name>cmd.exe /C copy "$L\lib@L.a" "..\..\Lib\GCC\"</UserProg1Name>
             <UserProg2Name></UserProg2Name>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
@@ -6952,7 +6952,7 @@
             <uThumb>1</uThumb>
             <VariousControls>
               <MiscControls>-fno-strict-aliasing -ffunction-sections -fdata-sections</MiscControls>
-              <Define>ARM_MATH_MATRIX_CHECK, ARM_MATH_ROUNDING, UNALIGNED_SUPPORT_DISABLE</Define>
+              <Define>ARM_MATH_MATRIX_CHECK, ARM_MATH_ROUNDING, ARM_MATH_LOOPUNROLL</Define>
               <Undefine></Undefine>
               <IncludePath>..\..\Include;..\..\..\Core\Include;..\..\..\Include</IncludePath>
             </VariousControls>
@@ -7938,6 +7938,16 @@
           <GroupName>TransformFunctions</GroupName>
           <Files>
             <File>
+              <FileName>arm_bitreversal.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Source\TransformFunctions\arm_bitreversal.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_bitreversal2.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Source\TransformFunctions\arm_bitreversal2.c</FilePath>
+            </File>
+            <File>
               <FileName>arm_cfft_radix4_f32.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Source\TransformFunctions\arm_cfft_radix4_f32.c</FilePath>
@@ -8028,11 +8038,6 @@
               <FilePath>..\..\Source\TransformFunctions\arm_rfft_q31.c</FilePath>
             </File>
             <File>
-              <FileName>arm_bitreversal.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\Source\TransformFunctions\arm_bitreversal.c</FilePath>
-            </File>
-            <File>
               <FileName>arm_cfft_radix2_f32.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Source\TransformFunctions\arm_cfft_radix2_f32.c</FilePath>
@@ -8071,11 +8076,6 @@
               <FileName>arm_cfft_radix8_f32.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Source\TransformFunctions\arm_cfft_radix8_f32.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_bitreversal2.S</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\Source\TransformFunctions\arm_bitreversal2.S</FilePath>
             </File>
             <File>
               <FileName>arm_rfft_fast_f32.c</FileName>
@@ -8405,7 +8405,7 @@
         <TargetCommonOption>
           <Device>ARMCM4</Device>
           <Vendor>ARM</Vendor>
-          <PackID>ARM.CMSIS.5.5.0-dev0</PackID>
+          <PackID>ARM.CMSIS.5.5.0-dev52</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IROM(0x00000000,0x80000) IRAM(0x20000000,0x20000) CPUTYPE("Cortex-M4") CLOCK(12000000) ESEL ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -8471,7 +8471,7 @@
           <AfterMake>
             <RunUserProg1>1</RunUserProg1>
             <RunUserProg2>0</RunUserProg2>
-            <UserProg1Name>cmd.exe /C copy "$L\lib@L.a" "..\..\..\Lib\GCC\"</UserProg1Name>
+            <UserProg1Name>cmd.exe /C copy "$L\lib@L.a" "..\..\Lib\GCC\"</UserProg1Name>
             <UserProg2Name></UserProg2Name>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
@@ -8630,7 +8630,7 @@
             <uThumb>1</uThumb>
             <VariousControls>
               <MiscControls>-fno-strict-aliasing -ffunction-sections -fdata-sections</MiscControls>
-              <Define>ARM_MATH_MATRIX_CHECK, ARM_MATH_ROUNDING, UNALIGNED_SUPPORT_DISABLE, ARM_MATH_BIG_ENDIAN</Define>
+              <Define>ARM_MATH_MATRIX_CHECK, ARM_MATH_ROUNDING, ARM_MATH_LOOPUNROLL, ARM_MATH_BIG_ENDIAN</Define>
               <Undefine></Undefine>
               <IncludePath>..\..\Include;..\..\..\Core\Include;..\..\..\Include</IncludePath>
             </VariousControls>
@@ -9616,6 +9616,16 @@
           <GroupName>TransformFunctions</GroupName>
           <Files>
             <File>
+              <FileName>arm_bitreversal.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Source\TransformFunctions\arm_bitreversal.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_bitreversal2.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Source\TransformFunctions\arm_bitreversal2.c</FilePath>
+            </File>
+            <File>
               <FileName>arm_cfft_radix4_f32.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Source\TransformFunctions\arm_cfft_radix4_f32.c</FilePath>
@@ -9706,11 +9716,6 @@
               <FilePath>..\..\Source\TransformFunctions\arm_rfft_q31.c</FilePath>
             </File>
             <File>
-              <FileName>arm_bitreversal.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\Source\TransformFunctions\arm_bitreversal.c</FilePath>
-            </File>
-            <File>
               <FileName>arm_cfft_radix2_f32.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Source\TransformFunctions\arm_cfft_radix2_f32.c</FilePath>
@@ -9749,11 +9754,6 @@
               <FileName>arm_cfft_radix8_f32.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Source\TransformFunctions\arm_cfft_radix8_f32.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_bitreversal2.S</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\Source\TransformFunctions\arm_bitreversal2.S</FilePath>
             </File>
             <File>
               <FileName>arm_rfft_fast_f32.c</FileName>
@@ -10083,7 +10083,7 @@
         <TargetCommonOption>
           <Device>ARMCM4_FP</Device>
           <Vendor>ARM</Vendor>
-          <PackID>ARM.CMSIS.5.5.0-dev0</PackID>
+          <PackID>ARM.CMSIS.5.5.0-dev52</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IROM(0x00000000,0x80000) IRAM(0x20000000,0x20000) CPUTYPE("Cortex-M4") FPU2 CLOCK(12000000) ESEL ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -10149,7 +10149,7 @@
           <AfterMake>
             <RunUserProg1>1</RunUserProg1>
             <RunUserProg2>0</RunUserProg2>
-            <UserProg1Name>cmd.exe /C copy "$L\lib@L.a" "..\..\..\Lib\GCC\"</UserProg1Name>
+            <UserProg1Name>cmd.exe /C copy "$L\lib@L.a" "..\..\Lib\GCC\"</UserProg1Name>
             <UserProg2Name>cmd.exe /C getSizeInfo "$L\lib@L.a" "@L_SizeInfo.txt"</UserProg2Name>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
@@ -10308,7 +10308,7 @@
             <uThumb>1</uThumb>
             <VariousControls>
               <MiscControls>-fno-strict-aliasing -ffunction-sections -fdata-sections -mfpu=fpv4-sp-d16 -mfloat-abi=hard -ffp-contract=off</MiscControls>
-              <Define>ARM_MATH_MATRIX_CHECK, ARM_MATH_ROUNDING, UNALIGNED_SUPPORT_DISABLE</Define>
+              <Define>ARM_MATH_MATRIX_CHECK, ARM_MATH_ROUNDING, ARM_MATH_LOOPUNROLL</Define>
               <Undefine></Undefine>
               <IncludePath>..\..\Include;..\..\..\Core\Include;..\..\..\Include</IncludePath>
             </VariousControls>
@@ -11294,6 +11294,16 @@
           <GroupName>TransformFunctions</GroupName>
           <Files>
             <File>
+              <FileName>arm_bitreversal.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Source\TransformFunctions\arm_bitreversal.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_bitreversal2.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Source\TransformFunctions\arm_bitreversal2.c</FilePath>
+            </File>
+            <File>
               <FileName>arm_cfft_radix4_f32.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Source\TransformFunctions\arm_cfft_radix4_f32.c</FilePath>
@@ -11384,11 +11394,6 @@
               <FilePath>..\..\Source\TransformFunctions\arm_rfft_q31.c</FilePath>
             </File>
             <File>
-              <FileName>arm_bitreversal.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\Source\TransformFunctions\arm_bitreversal.c</FilePath>
-            </File>
-            <File>
               <FileName>arm_cfft_radix2_f32.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Source\TransformFunctions\arm_cfft_radix2_f32.c</FilePath>
@@ -11427,11 +11432,6 @@
               <FileName>arm_cfft_radix8_f32.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Source\TransformFunctions\arm_cfft_radix8_f32.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_bitreversal2.S</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\Source\TransformFunctions\arm_bitreversal2.S</FilePath>
             </File>
             <File>
               <FileName>arm_rfft_fast_f32.c</FileName>
@@ -11761,7 +11761,7 @@
         <TargetCommonOption>
           <Device>ARMCM4_FP</Device>
           <Vendor>ARM</Vendor>
-          <PackID>ARM.CMSIS.5.5.0-dev0</PackID>
+          <PackID>ARM.CMSIS.5.5.0-dev52</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IROM(0x00000000,0x80000) IRAM(0x20000000,0x20000) CPUTYPE("Cortex-M4") FPU2 CLOCK(12000000) ESEL ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -11827,7 +11827,7 @@
           <AfterMake>
             <RunUserProg1>1</RunUserProg1>
             <RunUserProg2>0</RunUserProg2>
-            <UserProg1Name>cmd.exe /C copy "$L\lib@L.a" "..\..\..\Lib\GCC\"</UserProg1Name>
+            <UserProg1Name>cmd.exe /C copy "$L\lib@L.a" "..\..\Lib\GCC\"</UserProg1Name>
             <UserProg2Name></UserProg2Name>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
@@ -11986,7 +11986,7 @@
             <uThumb>1</uThumb>
             <VariousControls>
               <MiscControls>-fno-strict-aliasing -ffunction-sections -fdata-sections -mfpu=fpv4-sp-d16 -mfloat-abi=hard -ffp-contract=off</MiscControls>
-              <Define>ARM_MATH_MATRIX_CHECK, ARM_MATH_ROUNDING, UNALIGNED_SUPPORT_DISABLE, ARM_MATH_BIG_ENDIAN</Define>
+              <Define>ARM_MATH_MATRIX_CHECK, ARM_MATH_ROUNDING, ARM_MATH_LOOPUNROLL, ARM_MATH_BIG_ENDIAN</Define>
               <Undefine></Undefine>
               <IncludePath>..\..\Include;..\..\..\Core\Include;..\..\..\Include</IncludePath>
             </VariousControls>
@@ -12972,6 +12972,16 @@
           <GroupName>TransformFunctions</GroupName>
           <Files>
             <File>
+              <FileName>arm_bitreversal.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Source\TransformFunctions\arm_bitreversal.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_bitreversal2.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Source\TransformFunctions\arm_bitreversal2.c</FilePath>
+            </File>
+            <File>
               <FileName>arm_cfft_radix4_f32.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Source\TransformFunctions\arm_cfft_radix4_f32.c</FilePath>
@@ -13062,11 +13072,6 @@
               <FilePath>..\..\Source\TransformFunctions\arm_rfft_q31.c</FilePath>
             </File>
             <File>
-              <FileName>arm_bitreversal.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\Source\TransformFunctions\arm_bitreversal.c</FilePath>
-            </File>
-            <File>
               <FileName>arm_cfft_radix2_f32.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Source\TransformFunctions\arm_cfft_radix2_f32.c</FilePath>
@@ -13105,11 +13110,6 @@
               <FileName>arm_cfft_radix8_f32.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Source\TransformFunctions\arm_cfft_radix8_f32.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_bitreversal2.S</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\Source\TransformFunctions\arm_bitreversal2.S</FilePath>
             </File>
             <File>
               <FileName>arm_rfft_fast_f32.c</FileName>
@@ -13439,7 +13439,7 @@
         <TargetCommonOption>
           <Device>ARMCM7</Device>
           <Vendor>ARM</Vendor>
-          <PackID>ARM.CMSIS.5.5.0-dev0</PackID>
+          <PackID>ARM.CMSIS.5.5.0-dev52</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IROM(0x00000000,0x80000) IRAM(0x20000000,0x20000) CPUTYPE("Cortex-M7") CLOCK(12000000) ESEL ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -13505,7 +13505,7 @@
           <AfterMake>
             <RunUserProg1>1</RunUserProg1>
             <RunUserProg2>0</RunUserProg2>
-            <UserProg1Name>cmd.exe /C copy "$L\lib@L.a" "..\..\..\Lib\GCC\"</UserProg1Name>
+            <UserProg1Name>cmd.exe /C copy "$L\lib@L.a" "..\..\Lib\GCC\"</UserProg1Name>
             <UserProg2Name></UserProg2Name>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
@@ -13664,7 +13664,7 @@
             <uThumb>1</uThumb>
             <VariousControls>
               <MiscControls>-fno-strict-aliasing -ffunction-sections -fdata-sections</MiscControls>
-              <Define>ARM_MATH_MATRIX_CHECK, ARM_MATH_ROUNDING, UNALIGNED_SUPPORT_DISABLE</Define>
+              <Define>ARM_MATH_MATRIX_CHECK, ARM_MATH_ROUNDING, ARM_MATH_LOOPUNROLL</Define>
               <Undefine></Undefine>
               <IncludePath>..\..\Include;..\..\..\Core\Include;..\..\..\Include</IncludePath>
             </VariousControls>
@@ -14650,6 +14650,16 @@
           <GroupName>TransformFunctions</GroupName>
           <Files>
             <File>
+              <FileName>arm_bitreversal.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Source\TransformFunctions\arm_bitreversal.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_bitreversal2.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Source\TransformFunctions\arm_bitreversal2.c</FilePath>
+            </File>
+            <File>
               <FileName>arm_cfft_radix4_f32.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Source\TransformFunctions\arm_cfft_radix4_f32.c</FilePath>
@@ -14740,11 +14750,6 @@
               <FilePath>..\..\Source\TransformFunctions\arm_rfft_q31.c</FilePath>
             </File>
             <File>
-              <FileName>arm_bitreversal.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\Source\TransformFunctions\arm_bitreversal.c</FilePath>
-            </File>
-            <File>
               <FileName>arm_cfft_radix2_f32.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Source\TransformFunctions\arm_cfft_radix2_f32.c</FilePath>
@@ -14783,11 +14788,6 @@
               <FileName>arm_cfft_radix8_f32.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Source\TransformFunctions\arm_cfft_radix8_f32.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_bitreversal2.S</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\Source\TransformFunctions\arm_bitreversal2.S</FilePath>
             </File>
             <File>
               <FileName>arm_rfft_fast_f32.c</FileName>
@@ -15117,7 +15117,7 @@
         <TargetCommonOption>
           <Device>ARMCM7</Device>
           <Vendor>ARM</Vendor>
-          <PackID>ARM.CMSIS.5.5.0-dev0</PackID>
+          <PackID>ARM.CMSIS.5.5.0-dev52</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IROM(0x00000000,0x80000) IRAM(0x20000000,0x20000) CPUTYPE("Cortex-M7") CLOCK(12000000) ESEL ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -15183,7 +15183,7 @@
           <AfterMake>
             <RunUserProg1>1</RunUserProg1>
             <RunUserProg2>0</RunUserProg2>
-            <UserProg1Name>cmd.exe /C copy "$L\lib@L.a" "..\..\..\Lib\GCC\"</UserProg1Name>
+            <UserProg1Name>cmd.exe /C copy "$L\lib@L.a" "..\..\Lib\GCC\"</UserProg1Name>
             <UserProg2Name></UserProg2Name>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
@@ -15342,7 +15342,7 @@
             <uThumb>1</uThumb>
             <VariousControls>
               <MiscControls>-fno-strict-aliasing -ffunction-sections -fdata-sections</MiscControls>
-              <Define>ARM_MATH_MATRIX_CHECK, ARM_MATH_ROUNDING, UNALIGNED_SUPPORT_DISABLE, ARM_MATH_BIG_ENDIAN</Define>
+              <Define>ARM_MATH_MATRIX_CHECK, ARM_MATH_ROUNDING, ARM_MATH_LOOPUNROLL, ARM_MATH_BIG_ENDIAN</Define>
               <Undefine></Undefine>
               <IncludePath>..\..\Include;..\..\..\Core\Include;..\..\..\Include</IncludePath>
             </VariousControls>
@@ -16328,6 +16328,16 @@
           <GroupName>TransformFunctions</GroupName>
           <Files>
             <File>
+              <FileName>arm_bitreversal.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Source\TransformFunctions\arm_bitreversal.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_bitreversal2.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Source\TransformFunctions\arm_bitreversal2.c</FilePath>
+            </File>
+            <File>
               <FileName>arm_cfft_radix4_f32.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Source\TransformFunctions\arm_cfft_radix4_f32.c</FilePath>
@@ -16418,11 +16428,6 @@
               <FilePath>..\..\Source\TransformFunctions\arm_rfft_q31.c</FilePath>
             </File>
             <File>
-              <FileName>arm_bitreversal.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\Source\TransformFunctions\arm_bitreversal.c</FilePath>
-            </File>
-            <File>
               <FileName>arm_cfft_radix2_f32.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Source\TransformFunctions\arm_cfft_radix2_f32.c</FilePath>
@@ -16461,11 +16466,6 @@
               <FileName>arm_cfft_radix8_f32.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Source\TransformFunctions\arm_cfft_radix8_f32.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_bitreversal2.S</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\Source\TransformFunctions\arm_bitreversal2.S</FilePath>
             </File>
             <File>
               <FileName>arm_rfft_fast_f32.c</FileName>
@@ -16795,7 +16795,7 @@
         <TargetCommonOption>
           <Device>ARMCM7_SP</Device>
           <Vendor>ARM</Vendor>
-          <PackID>ARM.CMSIS.5.5.0-dev0</PackID>
+          <PackID>ARM.CMSIS.5.5.0-dev52</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IROM(0x00000000,0x80000) IRAM(0x20000000,0x20000) CPUTYPE("Cortex-M7") FPU3(SFPU) CLOCK(12000000) ESEL ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -16861,7 +16861,7 @@
           <AfterMake>
             <RunUserProg1>1</RunUserProg1>
             <RunUserProg2>0</RunUserProg2>
-            <UserProg1Name>cmd.exe /C copy "$L\lib@L.a" "..\..\..\Lib\GCC\"</UserProg1Name>
+            <UserProg1Name>cmd.exe /C copy "$L\lib@L.a" "..\..\Lib\GCC\"</UserProg1Name>
             <UserProg2Name></UserProg2Name>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
@@ -17020,7 +17020,7 @@
             <uThumb>1</uThumb>
             <VariousControls>
               <MiscControls>-fno-strict-aliasing -ffunction-sections -fdata-sections -mfpu=fpv5-sp-d16 -mfloat-abi=hard -ffp-contract=off</MiscControls>
-              <Define>ARM_MATH_MATRIX_CHECK, ARM_MATH_ROUNDING, UNALIGNED_SUPPORT_DISABLE</Define>
+              <Define>ARM_MATH_MATRIX_CHECK, ARM_MATH_ROUNDING, ARM_MATH_LOOPUNROLL</Define>
               <Undefine></Undefine>
               <IncludePath>..\..\Include;..\..\..\Core\Include;..\..\..\Include</IncludePath>
             </VariousControls>
@@ -18006,6 +18006,16 @@
           <GroupName>TransformFunctions</GroupName>
           <Files>
             <File>
+              <FileName>arm_bitreversal.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Source\TransformFunctions\arm_bitreversal.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_bitreversal2.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Source\TransformFunctions\arm_bitreversal2.c</FilePath>
+            </File>
+            <File>
               <FileName>arm_cfft_radix4_f32.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Source\TransformFunctions\arm_cfft_radix4_f32.c</FilePath>
@@ -18096,11 +18106,6 @@
               <FilePath>..\..\Source\TransformFunctions\arm_rfft_q31.c</FilePath>
             </File>
             <File>
-              <FileName>arm_bitreversal.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\Source\TransformFunctions\arm_bitreversal.c</FilePath>
-            </File>
-            <File>
               <FileName>arm_cfft_radix2_f32.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Source\TransformFunctions\arm_cfft_radix2_f32.c</FilePath>
@@ -18139,11 +18144,6 @@
               <FileName>arm_cfft_radix8_f32.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Source\TransformFunctions\arm_cfft_radix8_f32.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_bitreversal2.S</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\Source\TransformFunctions\arm_bitreversal2.S</FilePath>
             </File>
             <File>
               <FileName>arm_rfft_fast_f32.c</FileName>
@@ -18473,7 +18473,7 @@
         <TargetCommonOption>
           <Device>ARMCM7_SP</Device>
           <Vendor>ARM</Vendor>
-          <PackID>ARM.CMSIS.5.5.0-dev0</PackID>
+          <PackID>ARM.CMSIS.5.5.0-dev52</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IROM(0x00000000,0x80000) IRAM(0x20000000,0x20000) CPUTYPE("Cortex-M7") FPU3(SFPU) CLOCK(12000000) ESEL ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -18539,7 +18539,7 @@
           <AfterMake>
             <RunUserProg1>1</RunUserProg1>
             <RunUserProg2>0</RunUserProg2>
-            <UserProg1Name>cmd.exe /C copy "$L\lib@L.a" "..\..\..\Lib\GCC\"</UserProg1Name>
+            <UserProg1Name>cmd.exe /C copy "$L\lib@L.a" "..\..\Lib\GCC\"</UserProg1Name>
             <UserProg2Name></UserProg2Name>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
@@ -18698,7 +18698,7 @@
             <uThumb>1</uThumb>
             <VariousControls>
               <MiscControls>-fno-strict-aliasing -ffunction-sections -fdata-sections -mfpu=fpv5-sp-d16 -mfloat-abi=hard -ffp-contract=off</MiscControls>
-              <Define>ARM_MATH_MATRIX_CHECK, ARM_MATH_ROUNDING, UNALIGNED_SUPPORT_DISABLE, ARM_MATH_BIG_ENDIAN</Define>
+              <Define>ARM_MATH_MATRIX_CHECK, ARM_MATH_ROUNDING, ARM_MATH_LOOPUNROLL, ARM_MATH_BIG_ENDIAN</Define>
               <Undefine></Undefine>
               <IncludePath>..\..\Include;..\..\..\Core\Include;..\..\..\Include</IncludePath>
             </VariousControls>
@@ -19684,6 +19684,16 @@
           <GroupName>TransformFunctions</GroupName>
           <Files>
             <File>
+              <FileName>arm_bitreversal.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Source\TransformFunctions\arm_bitreversal.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_bitreversal2.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Source\TransformFunctions\arm_bitreversal2.c</FilePath>
+            </File>
+            <File>
               <FileName>arm_cfft_radix4_f32.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Source\TransformFunctions\arm_cfft_radix4_f32.c</FilePath>
@@ -19774,11 +19784,6 @@
               <FilePath>..\..\Source\TransformFunctions\arm_rfft_q31.c</FilePath>
             </File>
             <File>
-              <FileName>arm_bitreversal.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\Source\TransformFunctions\arm_bitreversal.c</FilePath>
-            </File>
-            <File>
               <FileName>arm_cfft_radix2_f32.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Source\TransformFunctions\arm_cfft_radix2_f32.c</FilePath>
@@ -19817,11 +19822,6 @@
               <FileName>arm_cfft_radix8_f32.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Source\TransformFunctions\arm_cfft_radix8_f32.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_bitreversal2.S</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\Source\TransformFunctions\arm_bitreversal2.S</FilePath>
             </File>
             <File>
               <FileName>arm_rfft_fast_f32.c</FileName>
@@ -20151,7 +20151,7 @@
         <TargetCommonOption>
           <Device>ARMCM7_DP</Device>
           <Vendor>ARM</Vendor>
-          <PackID>ARM.CMSIS.5.5.0-dev0</PackID>
+          <PackID>ARM.CMSIS.5.5.0-dev52</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IRAM(0x20000000,0x00020000) IROM(0x00000000,0x00040000) CPUTYPE("Cortex-M7") FPU3(DFPU) CLOCK(12000000) ESEL ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -20217,7 +20217,7 @@
           <AfterMake>
             <RunUserProg1>1</RunUserProg1>
             <RunUserProg2>0</RunUserProg2>
-            <UserProg1Name>cmd.exe /C copy "$L\lib@L.a" "..\..\..\Lib\GCC\"</UserProg1Name>
+            <UserProg1Name>cmd.exe /C copy "$L\lib@L.a" "..\..\Lib\GCC\"</UserProg1Name>
             <UserProg2Name></UserProg2Name>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
@@ -20376,7 +20376,7 @@
             <uThumb>1</uThumb>
             <VariousControls>
               <MiscControls>-fno-strict-aliasing -ffunction-sections -fdata-sections -mfpu=fpv5-d16 -mfloat-abi=hard -ffp-contract=off</MiscControls>
-              <Define>ARM_MATH_MATRIX_CHECK, ARM_MATH_ROUNDING, UNALIGNED_SUPPORT_DISABLE</Define>
+              <Define>ARM_MATH_MATRIX_CHECK, ARM_MATH_ROUNDING, ARM_MATH_LOOPUNROLL</Define>
               <Undefine></Undefine>
               <IncludePath>..\..\Include;..\..\..\Core\Include;..\..\..\Include</IncludePath>
             </VariousControls>
@@ -21362,6 +21362,16 @@
           <GroupName>TransformFunctions</GroupName>
           <Files>
             <File>
+              <FileName>arm_bitreversal.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Source\TransformFunctions\arm_bitreversal.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_bitreversal2.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Source\TransformFunctions\arm_bitreversal2.c</FilePath>
+            </File>
+            <File>
               <FileName>arm_cfft_radix4_f32.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Source\TransformFunctions\arm_cfft_radix4_f32.c</FilePath>
@@ -21452,11 +21462,6 @@
               <FilePath>..\..\Source\TransformFunctions\arm_rfft_q31.c</FilePath>
             </File>
             <File>
-              <FileName>arm_bitreversal.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\Source\TransformFunctions\arm_bitreversal.c</FilePath>
-            </File>
-            <File>
               <FileName>arm_cfft_radix2_f32.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Source\TransformFunctions\arm_cfft_radix2_f32.c</FilePath>
@@ -21495,11 +21500,6 @@
               <FileName>arm_cfft_radix8_f32.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Source\TransformFunctions\arm_cfft_radix8_f32.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_bitreversal2.S</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\Source\TransformFunctions\arm_bitreversal2.S</FilePath>
             </File>
             <File>
               <FileName>arm_rfft_fast_f32.c</FileName>
@@ -21829,7 +21829,7 @@
         <TargetCommonOption>
           <Device>ARMCM7_DP</Device>
           <Vendor>ARM</Vendor>
-          <PackID>ARM.CMSIS.5.5.0-dev0</PackID>
+          <PackID>ARM.CMSIS.5.5.0-dev52</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IROM(0x00000000,0x80000) IRAM(0x20000000,0x20000) CPUTYPE("Cortex-M7") FPU3(DFPU) CLOCK(12000000) ESEL ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -21895,7 +21895,7 @@
           <AfterMake>
             <RunUserProg1>1</RunUserProg1>
             <RunUserProg2>0</RunUserProg2>
-            <UserProg1Name>cmd.exe /C copy "$L\lib@L.a" "..\..\..\Lib\GCC\"</UserProg1Name>
+            <UserProg1Name>cmd.exe /C copy "$L\lib@L.a" "..\..\Lib\GCC\"</UserProg1Name>
             <UserProg2Name></UserProg2Name>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
@@ -22054,7 +22054,7 @@
             <uThumb>1</uThumb>
             <VariousControls>
               <MiscControls>-fno-strict-aliasing -ffunction-sections -fdata-sections -mfpu=fpv5-d16 -mfloat-abi=hard -ffp-contract=off</MiscControls>
-              <Define>ARM_MATH_MATRIX_CHECK, ARM_MATH_ROUNDING, UNALIGNED_SUPPORT_DISABLE, ARM_MATH_BIG_ENDIAN</Define>
+              <Define>ARM_MATH_MATRIX_CHECK, ARM_MATH_ROUNDING, ARM_MATH_LOOPUNROLL, ARM_MATH_BIG_ENDIAN</Define>
               <Undefine></Undefine>
               <IncludePath>..\..\Include;..\..\..\Core\Include;..\..\..\Include</IncludePath>
             </VariousControls>
@@ -23040,6 +23040,16 @@
           <GroupName>TransformFunctions</GroupName>
           <Files>
             <File>
+              <FileName>arm_bitreversal.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Source\TransformFunctions\arm_bitreversal.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_bitreversal2.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Source\TransformFunctions\arm_bitreversal2.c</FilePath>
+            </File>
+            <File>
               <FileName>arm_cfft_radix4_f32.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Source\TransformFunctions\arm_cfft_radix4_f32.c</FilePath>
@@ -23130,11 +23140,6 @@
               <FilePath>..\..\Source\TransformFunctions\arm_rfft_q31.c</FilePath>
             </File>
             <File>
-              <FileName>arm_bitreversal.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\Source\TransformFunctions\arm_bitreversal.c</FilePath>
-            </File>
-            <File>
               <FileName>arm_cfft_radix2_f32.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Source\TransformFunctions\arm_cfft_radix2_f32.c</FilePath>
@@ -23173,11 +23178,6 @@
               <FileName>arm_cfft_radix8_f32.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Source\TransformFunctions\arm_cfft_radix8_f32.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_bitreversal2.S</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\Source\TransformFunctions\arm_bitreversal2.S</FilePath>
             </File>
             <File>
               <FileName>arm_rfft_fast_f32.c</FileName>
@@ -23507,7 +23507,7 @@
         <TargetCommonOption>
           <Device>ARMv8MBL</Device>
           <Vendor>ARM</Vendor>
-          <PackID>ARM.CMSIS.5.5.0-dev0</PackID>
+          <PackID>ARM.CMSIS.5.5.0-dev52</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IRAM(0x20000000,0x00020000) IRAM2(0x20200000,0x00020000) IROM(0x00000000,0x00200000) IROM2(0x00200000,0x00200000) CPUTYPE("ARMV8MBL") TZ CLOCK(12000000) ESEL ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -23573,7 +23573,7 @@
           <AfterMake>
             <RunUserProg1>1</RunUserProg1>
             <RunUserProg2>0</RunUserProg2>
-            <UserProg1Name>cmd.exe /C copy "$L\lib@L.a" "..\..\..\Lib\GCC\"</UserProg1Name>
+            <UserProg1Name>cmd.exe /C copy "$L\lib@L.a" "..\..\Lib\GCC\"</UserProg1Name>
             <UserProg2Name></UserProg2Name>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
@@ -23732,7 +23732,7 @@
             <uThumb>1</uThumb>
             <VariousControls>
               <MiscControls>-fno-strict-aliasing -ffunction-sections -fdata-sections -march=armv8-m.base</MiscControls>
-              <Define>ARM_MATH_CM0_FAMILY, ARM_MATH_MATRIX_CHECK, ARM_MATH_ROUNDING, UNALIGNED_SUPPORT_DISABLE</Define>
+              <Define>ARM_MATH_CM0_FAMILY, ARM_MATH_MATRIX_CHECK, ARM_MATH_ROUNDING, ARM_MATH_LOOPUNROLL</Define>
               <Undefine></Undefine>
               <IncludePath>..\..\Include;..\..\..\Core\Include;..\..\..\Include</IncludePath>
             </VariousControls>
@@ -24718,6 +24718,16 @@
           <GroupName>TransformFunctions</GroupName>
           <Files>
             <File>
+              <FileName>arm_bitreversal.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Source\TransformFunctions\arm_bitreversal.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_bitreversal2.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Source\TransformFunctions\arm_bitreversal2.c</FilePath>
+            </File>
+            <File>
               <FileName>arm_cfft_radix4_f32.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Source\TransformFunctions\arm_cfft_radix4_f32.c</FilePath>
@@ -24808,11 +24818,6 @@
               <FilePath>..\..\Source\TransformFunctions\arm_rfft_q31.c</FilePath>
             </File>
             <File>
-              <FileName>arm_bitreversal.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\Source\TransformFunctions\arm_bitreversal.c</FilePath>
-            </File>
-            <File>
               <FileName>arm_cfft_radix2_f32.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Source\TransformFunctions\arm_cfft_radix2_f32.c</FilePath>
@@ -24851,11 +24856,6 @@
               <FileName>arm_cfft_radix8_f32.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Source\TransformFunctions\arm_cfft_radix8_f32.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_bitreversal2.S</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\Source\TransformFunctions\arm_bitreversal2.S</FilePath>
             </File>
             <File>
               <FileName>arm_rfft_fast_f32.c</FileName>
@@ -25185,7 +25185,7 @@
         <TargetCommonOption>
           <Device>ARMv8MML</Device>
           <Vendor>ARM</Vendor>
-          <PackID>ARM.CMSIS.5.5.0-dev0</PackID>
+          <PackID>ARM.CMSIS.5.5.0-dev52</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IRAM(0x20000000,0x00020000) IRAM2(0x20200000,0x00020000) IROM(0x00000000,0x00200000) IROM2(0x00200000,0x00200000) CPUTYPE("ARMV8MML") TZ CLOCK(12000000) ESEL ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -25251,7 +25251,7 @@
           <AfterMake>
             <RunUserProg1>1</RunUserProg1>
             <RunUserProg2>0</RunUserProg2>
-            <UserProg1Name>cmd.exe /C copy "$L\lib@L.a" "..\..\..\Lib\GCC\"</UserProg1Name>
+            <UserProg1Name>cmd.exe /C copy "$L\lib@L.a" "..\..\Lib\GCC\"</UserProg1Name>
             <UserProg2Name></UserProg2Name>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
@@ -25410,7 +25410,7 @@
             <uThumb>1</uThumb>
             <VariousControls>
               <MiscControls>-fno-strict-aliasing -ffunction-sections -fdata-sections -march=armv8-m.main</MiscControls>
-              <Define>ARM_MATH_MATRIX_CHECK, ARM_MATH_ROUNDING, UNALIGNED_SUPPORT_DISABLE</Define>
+              <Define>ARM_MATH_MATRIX_CHECK, ARM_MATH_ROUNDING, ARM_MATH_LOOPUNROLL</Define>
               <Undefine></Undefine>
               <IncludePath>..\..\Include;..\..\..\Core\Include;..\..\..\Include</IncludePath>
             </VariousControls>
@@ -26396,6 +26396,16 @@
           <GroupName>TransformFunctions</GroupName>
           <Files>
             <File>
+              <FileName>arm_bitreversal.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Source\TransformFunctions\arm_bitreversal.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_bitreversal2.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Source\TransformFunctions\arm_bitreversal2.c</FilePath>
+            </File>
+            <File>
               <FileName>arm_cfft_radix4_f32.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Source\TransformFunctions\arm_cfft_radix4_f32.c</FilePath>
@@ -26486,11 +26496,6 @@
               <FilePath>..\..\Source\TransformFunctions\arm_rfft_q31.c</FilePath>
             </File>
             <File>
-              <FileName>arm_bitreversal.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\Source\TransformFunctions\arm_bitreversal.c</FilePath>
-            </File>
-            <File>
               <FileName>arm_cfft_radix2_f32.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Source\TransformFunctions\arm_cfft_radix2_f32.c</FilePath>
@@ -26529,11 +26534,6 @@
               <FileName>arm_cfft_radix8_f32.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Source\TransformFunctions\arm_cfft_radix8_f32.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_bitreversal2.S</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\Source\TransformFunctions\arm_bitreversal2.S</FilePath>
             </File>
             <File>
               <FileName>arm_rfft_fast_f32.c</FileName>
@@ -26863,7 +26863,7 @@
         <TargetCommonOption>
           <Device>ARMv8MML_SP</Device>
           <Vendor>ARM</Vendor>
-          <PackID>ARM.CMSIS.5.5.0-dev0</PackID>
+          <PackID>ARM.CMSIS.5.5.0-dev52</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IRAM(0x20000000,0x00020000) IRAM2(0x20200000,0x00020000) IROM(0x00000000,0x00200000) IROM2(0x00200000,0x00200000) CPUTYPE("ARMV8MML") FPU3(SFPU) TZ CLOCK(12000000) ESEL ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -26929,7 +26929,7 @@
           <AfterMake>
             <RunUserProg1>1</RunUserProg1>
             <RunUserProg2>0</RunUserProg2>
-            <UserProg1Name>cmd.exe /C copy "$L\lib@L.a" "..\..\..\Lib\GCC\"</UserProg1Name>
+            <UserProg1Name>cmd.exe /C copy "$L\lib@L.a" "..\..\Lib\GCC\"</UserProg1Name>
             <UserProg2Name></UserProg2Name>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
@@ -27088,7 +27088,7 @@
             <uThumb>1</uThumb>
             <VariousControls>
               <MiscControls>-fno-strict-aliasing -ffunction-sections -fdata-sections -march=armv8-m.main -mfpu=fpv5-sp-d16 -mfloat-abi=hard -ffp-contract=off</MiscControls>
-              <Define>ARM_MATH_MATRIX_CHECK, ARM_MATH_ROUNDING, UNALIGNED_SUPPORT_DISABLE</Define>
+              <Define>ARM_MATH_MATRIX_CHECK, ARM_MATH_ROUNDING, ARM_MATH_LOOPUNROLL</Define>
               <Undefine></Undefine>
               <IncludePath>..\..\Include;..\..\..\Core\Include;..\..\..\Include</IncludePath>
             </VariousControls>
@@ -28074,6 +28074,16 @@
           <GroupName>TransformFunctions</GroupName>
           <Files>
             <File>
+              <FileName>arm_bitreversal.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Source\TransformFunctions\arm_bitreversal.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_bitreversal2.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Source\TransformFunctions\arm_bitreversal2.c</FilePath>
+            </File>
+            <File>
               <FileName>arm_cfft_radix4_f32.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Source\TransformFunctions\arm_cfft_radix4_f32.c</FilePath>
@@ -28164,11 +28174,6 @@
               <FilePath>..\..\Source\TransformFunctions\arm_rfft_q31.c</FilePath>
             </File>
             <File>
-              <FileName>arm_bitreversal.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\Source\TransformFunctions\arm_bitreversal.c</FilePath>
-            </File>
-            <File>
               <FileName>arm_cfft_radix2_f32.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Source\TransformFunctions\arm_cfft_radix2_f32.c</FilePath>
@@ -28207,11 +28212,6 @@
               <FileName>arm_cfft_radix8_f32.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Source\TransformFunctions\arm_cfft_radix8_f32.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_bitreversal2.S</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\Source\TransformFunctions\arm_bitreversal2.S</FilePath>
             </File>
             <File>
               <FileName>arm_rfft_fast_f32.c</FileName>
@@ -28541,7 +28541,7 @@
         <TargetCommonOption>
           <Device>ARMv8MML_DP</Device>
           <Vendor>ARM</Vendor>
-          <PackID>ARM.CMSIS.5.5.0-dev0</PackID>
+          <PackID>ARM.CMSIS.5.5.0-dev52</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IRAM(0x20000000,0x00020000) IRAM2(0x20200000,0x00020000) IROM(0x00000000,0x00200000) IROM2(0x00200000,0x00200000) CPUTYPE("ARMV8MML") FPU3(DFPU) TZ CLOCK(12000000) ESEL ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -28607,7 +28607,7 @@
           <AfterMake>
             <RunUserProg1>1</RunUserProg1>
             <RunUserProg2>0</RunUserProg2>
-            <UserProg1Name>cmd.exe /C copy "$L\lib@L.a" "..\..\..\Lib\GCC\"</UserProg1Name>
+            <UserProg1Name>cmd.exe /C copy "$L\lib@L.a" "..\..\Lib\GCC\"</UserProg1Name>
             <UserProg2Name></UserProg2Name>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
@@ -28766,7 +28766,7 @@
             <uThumb>1</uThumb>
             <VariousControls>
               <MiscControls>-fno-strict-aliasing -ffunction-sections -fdata-sections -march=armv8-m.main -mfpu=fpv5-d16 -mfloat-abi=hard -ffp-contract=off</MiscControls>
-              <Define>ARM_MATH_MATRIX_CHECK, ARM_MATH_ROUNDING, UNALIGNED_SUPPORT_DISABLE</Define>
+              <Define>ARM_MATH_MATRIX_CHECK, ARM_MATH_ROUNDING, ARM_MATH_LOOPUNROLL</Define>
               <Undefine></Undefine>
               <IncludePath>..\..\Include;..\..\..\Core\Include;..\..\..\Include</IncludePath>
             </VariousControls>
@@ -29752,6 +29752,16 @@
           <GroupName>TransformFunctions</GroupName>
           <Files>
             <File>
+              <FileName>arm_bitreversal.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Source\TransformFunctions\arm_bitreversal.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_bitreversal2.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Source\TransformFunctions\arm_bitreversal2.c</FilePath>
+            </File>
+            <File>
               <FileName>arm_cfft_radix4_f32.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Source\TransformFunctions\arm_cfft_radix4_f32.c</FilePath>
@@ -29842,11 +29852,6 @@
               <FilePath>..\..\Source\TransformFunctions\arm_rfft_q31.c</FilePath>
             </File>
             <File>
-              <FileName>arm_bitreversal.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\Source\TransformFunctions\arm_bitreversal.c</FilePath>
-            </File>
-            <File>
               <FileName>arm_cfft_radix2_f32.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Source\TransformFunctions\arm_cfft_radix2_f32.c</FilePath>
@@ -29885,11 +29890,6 @@
               <FileName>arm_cfft_radix8_f32.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Source\TransformFunctions\arm_cfft_radix8_f32.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_bitreversal2.S</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\Source\TransformFunctions\arm_bitreversal2.S</FilePath>
             </File>
             <File>
               <FileName>arm_rfft_fast_f32.c</FileName>
@@ -30219,7 +30219,7 @@
         <TargetCommonOption>
           <Device>ARMv8MML_DSP</Device>
           <Vendor>ARM</Vendor>
-          <PackID>ARM.CMSIS.5.5.0-dev0</PackID>
+          <PackID>ARM.CMSIS.5.5.0-dev52</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IRAM(0x20000000,0x00020000) IRAM2(0x20200000,0x00020000) IROM(0x00000000,0x00200000) IROM2(0x00200000,0x00200000) CPUTYPE("ARMV8MML") DSP TZ CLOCK(12000000) ESEL ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -30285,7 +30285,7 @@
           <AfterMake>
             <RunUserProg1>1</RunUserProg1>
             <RunUserProg2>0</RunUserProg2>
-            <UserProg1Name>cmd.exe /C copy "$L\lib@L.a" "..\..\..\Lib\GCC\"</UserProg1Name>
+            <UserProg1Name>cmd.exe /C copy "$L\lib@L.a" "..\..\Lib\GCC\"</UserProg1Name>
             <UserProg2Name></UserProg2Name>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
@@ -30444,7 +30444,7 @@
             <uThumb>1</uThumb>
             <VariousControls>
               <MiscControls>-fno-strict-aliasing -ffunction-sections -fdata-sections -march=armv8-m.main+dsp</MiscControls>
-              <Define>ARM_MATH_MATRIX_CHECK, ARM_MATH_ROUNDING, UNALIGNED_SUPPORT_DISABLE</Define>
+              <Define>ARM_MATH_MATRIX_CHECK, ARM_MATH_ROUNDING, ARM_MATH_LOOPUNROLL</Define>
               <Undefine></Undefine>
               <IncludePath>..\..\Include;..\..\..\Core\Include;..\..\..\Include</IncludePath>
             </VariousControls>
@@ -31430,6 +31430,16 @@
           <GroupName>TransformFunctions</GroupName>
           <Files>
             <File>
+              <FileName>arm_bitreversal.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Source\TransformFunctions\arm_bitreversal.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_bitreversal2.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Source\TransformFunctions\arm_bitreversal2.c</FilePath>
+            </File>
+            <File>
               <FileName>arm_cfft_radix4_f32.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Source\TransformFunctions\arm_cfft_radix4_f32.c</FilePath>
@@ -31520,11 +31530,6 @@
               <FilePath>..\..\Source\TransformFunctions\arm_rfft_q31.c</FilePath>
             </File>
             <File>
-              <FileName>arm_bitreversal.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\Source\TransformFunctions\arm_bitreversal.c</FilePath>
-            </File>
-            <File>
               <FileName>arm_cfft_radix2_f32.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Source\TransformFunctions\arm_cfft_radix2_f32.c</FilePath>
@@ -31563,11 +31568,6 @@
               <FileName>arm_cfft_radix8_f32.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Source\TransformFunctions\arm_cfft_radix8_f32.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_bitreversal2.S</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\Source\TransformFunctions\arm_bitreversal2.S</FilePath>
             </File>
             <File>
               <FileName>arm_rfft_fast_f32.c</FileName>
@@ -31897,7 +31897,7 @@
         <TargetCommonOption>
           <Device>ARMv8MML_DSP_SP</Device>
           <Vendor>ARM</Vendor>
-          <PackID>ARM.CMSIS.5.5.0-dev0</PackID>
+          <PackID>ARM.CMSIS.5.5.0-dev52</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IRAM(0x20000000,0x00020000) IRAM2(0x20200000,0x00020000) IROM(0x00000000,0x00200000) IROM2(0x00200000,0x00200000) CPUTYPE("ARMV8MML") FPU3(SFPU) DSP TZ CLOCK(12000000) ESEL ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -31963,7 +31963,7 @@
           <AfterMake>
             <RunUserProg1>1</RunUserProg1>
             <RunUserProg2>0</RunUserProg2>
-            <UserProg1Name>cmd.exe /C copy "$L\lib@L.a" "..\..\..\Lib\GCC\"</UserProg1Name>
+            <UserProg1Name>cmd.exe /C copy "$L\lib@L.a" "..\..\Lib\GCC\"</UserProg1Name>
             <UserProg2Name></UserProg2Name>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
@@ -32122,7 +32122,7 @@
             <uThumb>1</uThumb>
             <VariousControls>
               <MiscControls>-fno-strict-aliasing -ffunction-sections -fdata-sections -march=armv8-m.main+dsp -mfpu=fpv5-sp-d16 -mfloat-abi=hard -ffp-contract=off</MiscControls>
-              <Define>ARM_MATH_MATRIX_CHECK, ARM_MATH_ROUNDING, UNALIGNED_SUPPORT_DISABLE</Define>
+              <Define>ARM_MATH_MATRIX_CHECK, ARM_MATH_ROUNDING, ARM_MATH_LOOPUNROLL</Define>
               <Undefine></Undefine>
               <IncludePath>..\..\Include;..\..\..\Core\Include;..\..\..\Include</IncludePath>
             </VariousControls>
@@ -33108,6 +33108,16 @@
           <GroupName>TransformFunctions</GroupName>
           <Files>
             <File>
+              <FileName>arm_bitreversal.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Source\TransformFunctions\arm_bitreversal.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_bitreversal2.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Source\TransformFunctions\arm_bitreversal2.c</FilePath>
+            </File>
+            <File>
               <FileName>arm_cfft_radix4_f32.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Source\TransformFunctions\arm_cfft_radix4_f32.c</FilePath>
@@ -33198,11 +33208,6 @@
               <FilePath>..\..\Source\TransformFunctions\arm_rfft_q31.c</FilePath>
             </File>
             <File>
-              <FileName>arm_bitreversal.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\Source\TransformFunctions\arm_bitreversal.c</FilePath>
-            </File>
-            <File>
               <FileName>arm_cfft_radix2_f32.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Source\TransformFunctions\arm_cfft_radix2_f32.c</FilePath>
@@ -33241,11 +33246,6 @@
               <FileName>arm_cfft_radix8_f32.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Source\TransformFunctions\arm_cfft_radix8_f32.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_bitreversal2.S</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\Source\TransformFunctions\arm_bitreversal2.S</FilePath>
             </File>
             <File>
               <FileName>arm_rfft_fast_f32.c</FileName>
@@ -33575,7 +33575,7 @@
         <TargetCommonOption>
           <Device>ARMv8MML_DSP_DP</Device>
           <Vendor>ARM</Vendor>
-          <PackID>ARM.CMSIS.5.5.0-dev0</PackID>
+          <PackID>ARM.CMSIS.5.5.0-dev52</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IRAM(0x20000000,0x00020000) IRAM2(0x20200000,0x00020000) IROM(0x00000000,0x00200000) IROM2(0x00200000,0x00200000) CPUTYPE("ARMV8MML") FPU3(DFPU) DSP TZ CLOCK(12000000) ESEL ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -33641,7 +33641,7 @@
           <AfterMake>
             <RunUserProg1>1</RunUserProg1>
             <RunUserProg2>0</RunUserProg2>
-            <UserProg1Name>cmd.exe /C copy "$L\lib@L.a" "..\..\..\Lib\GCC\"</UserProg1Name>
+            <UserProg1Name>cmd.exe /C copy "$L\lib@L.a" "..\..\Lib\GCC\"</UserProg1Name>
             <UserProg2Name></UserProg2Name>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
@@ -33800,7 +33800,7 @@
             <uThumb>1</uThumb>
             <VariousControls>
               <MiscControls>-fno-strict-aliasing -ffunction-sections -fdata-sections -march=armv8-m.main+dsp -mfpu=fpv5-d16 -mfloat-abi=hard -ffp-contract=off</MiscControls>
-              <Define>ARM_MATH_MATRIX_CHECK, ARM_MATH_ROUNDING, UNALIGNED_SUPPORT_DISABLE</Define>
+              <Define>ARM_MATH_MATRIX_CHECK, ARM_MATH_ROUNDING, ARM_MATH_LOOPUNROLL</Define>
               <Undefine></Undefine>
               <IncludePath>..\..\Include;..\..\..\Core\Include;..\..\..\Include</IncludePath>
             </VariousControls>
@@ -34786,6 +34786,16 @@
           <GroupName>TransformFunctions</GroupName>
           <Files>
             <File>
+              <FileName>arm_bitreversal.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Source\TransformFunctions\arm_bitreversal.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_bitreversal2.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Source\TransformFunctions\arm_bitreversal2.c</FilePath>
+            </File>
+            <File>
               <FileName>arm_cfft_radix4_f32.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Source\TransformFunctions\arm_cfft_radix4_f32.c</FilePath>
@@ -34876,11 +34886,6 @@
               <FilePath>..\..\Source\TransformFunctions\arm_rfft_q31.c</FilePath>
             </File>
             <File>
-              <FileName>arm_bitreversal.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\Source\TransformFunctions\arm_bitreversal.c</FilePath>
-            </File>
-            <File>
               <FileName>arm_cfft_radix2_f32.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Source\TransformFunctions\arm_cfft_radix2_f32.c</FilePath>
@@ -34919,11 +34924,6 @@
               <FileName>arm_cfft_radix8_f32.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Source\TransformFunctions\arm_cfft_radix8_f32.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_bitreversal2.S</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\Source\TransformFunctions\arm_bitreversal2.S</FilePath>
             </File>
             <File>
               <FileName>arm_rfft_fast_f32.c</FileName>

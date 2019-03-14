@@ -3,13 +3,13 @@
  * Title:        arm_cfft_init_f32.c
  * Description:  Split Radix Decimation in Frequency CFFT Floating point processing function
  *
- * $Date:        27. January 2017
- * $Revision:    V.1.5.1
+ * $Date:        28. February 2019
+ * $Revision:    V.1.5.5
  *
  * Target Processor: Cortex-M cores
  * -------------------------------------------------------------------- */
 /*
- * Copyright (C) 2010-2017 ARM Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2010-2019 ARM Limited or its affiliates. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -30,20 +30,23 @@
 #include "arm_common_tables.h"
 
 /**
- * @ingroup groupTransforms
+  @ingroup groupTransforms
  */
 
 /**
- * @addtogroup RealFFT
- * @{
+  @addtogroup RealFFT
+  @{
  */
 
 
 /**
-* @brief  Initialization function for the 32pt floating-point real FFT.
-* @param[in,out] *S             points to an arm_rfft_fast_instance_f32 structure.
-* @return        The function returns ARM_MATH_SUCCESS if initialization is successful or ARM_MATH_ARGUMENT_ERROR if an error is detected.
-*/
+  @brief         Initialization function for the 32pt floating-point real FFT.
+  @param[in,out] S  points to an arm_rfft_fast_instance_f32 structure
+  @return        execution status
+                   - \ref ARM_MATH_SUCCESS        : Operation successful
+                   - \ref ARM_MATH_ARGUMENT_ERROR : an error is detected
+ */
+
 arm_status arm_rfft_32_fast_init_f32( arm_rfft_fast_instance_f32 * S ) {
 
   arm_cfft_instance_f32 * Sint;
@@ -60,14 +63,16 @@ arm_status arm_rfft_32_fast_init_f32( arm_rfft_fast_instance_f32 * S ) {
   S->pTwiddleRFFT    = (float32_t *) twiddleCoef_rfft_32;
 
   return ARM_MATH_SUCCESS;
-
 }
 
 /**
-* @brief  Initialization function for the 64pt floating-point real FFT.
-* @param[in,out] *S             points to an arm_rfft_fast_instance_f32 structure.
-* @return        The function returns ARM_MATH_SUCCESS if initialization is successful or ARM_MATH_ARGUMENT_ERROR if an error is detected.
-*/
+  @brief         Initialization function for the 64pt floating-point real FFT.
+  @param[in,out] S  points to an arm_rfft_fast_instance_f32 structure
+  @return        execution status
+                   - \ref ARM_MATH_SUCCESS        : Operation successful
+                   - \ref ARM_MATH_ARGUMENT_ERROR : an error is detected
+ */
+
 arm_status arm_rfft_64_fast_init_f32( arm_rfft_fast_instance_f32 * S ) {
 
   arm_cfft_instance_f32 * Sint;
@@ -84,14 +89,16 @@ arm_status arm_rfft_64_fast_init_f32( arm_rfft_fast_instance_f32 * S ) {
   S->pTwiddleRFFT    = (float32_t *) twiddleCoef_rfft_64;
 
   return ARM_MATH_SUCCESS;
-
 }
 
 /**
-* @brief  Initialization function for the 128pt floating-point real FFT.
-* @param[in,out] *S             points to an arm_rfft_fast_instance_f32 structure.
-* @return        The function returns ARM_MATH_SUCCESS if initialization is successful or ARM_MATH_ARGUMENT_ERROR if an error is detected.
-*/
+  @brief         Initialization function for the 128pt floating-point real FFT.
+  @param[in,out] S  points to an arm_rfft_fast_instance_f32 structure
+  @return        execution status
+                   - \ref ARM_MATH_SUCCESS        : Operation successful
+                   - \ref ARM_MATH_ARGUMENT_ERROR : an error is detected
+ */
+
 arm_status arm_rfft_128_fast_init_f32( arm_rfft_fast_instance_f32 * S ) {
 
   arm_cfft_instance_f32 * Sint;
@@ -108,14 +115,16 @@ arm_status arm_rfft_128_fast_init_f32( arm_rfft_fast_instance_f32 * S ) {
   S->pTwiddleRFFT    = (float32_t *) twiddleCoef_rfft_128;
 
   return ARM_MATH_SUCCESS;
-
 }
 
 /**
-* @brief  Initialization function for the 256pt floating-point real FFT.
-* @param[in,out] *S             points to an arm_rfft_fast_instance_f32 structure.
-* @return        The function returns ARM_MATH_SUCCESS if initialization is successful or ARM_MATH_ARGUMENT_ERROR if an error is detected.
+  @brief         Initialization function for the 256pt floating-point real FFT.
+  @param[in,out] S  points to an arm_rfft_fast_instance_f32 structure
+  @return        execution status
+                   - \ref ARM_MATH_SUCCESS        : Operation successful
+                   - \ref ARM_MATH_ARGUMENT_ERROR : an error is detected
 */
+
 arm_status arm_rfft_256_fast_init_f32( arm_rfft_fast_instance_f32 * S ) {
 
   arm_cfft_instance_f32 * Sint;
@@ -132,14 +141,16 @@ arm_status arm_rfft_256_fast_init_f32( arm_rfft_fast_instance_f32 * S ) {
   S->pTwiddleRFFT    = (float32_t *) twiddleCoef_rfft_256;
 
   return ARM_MATH_SUCCESS;
-
 }
 
 /**
-* @brief  Initialization function for the 512pt floating-point real FFT.
-* @param[in,out] *S             points to an arm_rfft_fast_instance_f32 structure.
-* @return        The function returns ARM_MATH_SUCCESS if initialization is successful or ARM_MATH_ARGUMENT_ERROR if an error is detected.
-*/
+  @brief         Initialization function for the 512pt floating-point real FFT.
+  @param[in,out] S  points to an arm_rfft_fast_instance_f32 structure
+  @return        execution status
+                   - \ref ARM_MATH_SUCCESS        : Operation successful
+                   - \ref ARM_MATH_ARGUMENT_ERROR : an error is detected
+ */
+
 arm_status arm_rfft_512_fast_init_f32( arm_rfft_fast_instance_f32 * S ) {
 
   arm_cfft_instance_f32 * Sint;
@@ -156,14 +167,16 @@ arm_status arm_rfft_512_fast_init_f32( arm_rfft_fast_instance_f32 * S ) {
   S->pTwiddleRFFT    = (float32_t *) twiddleCoef_rfft_512;
 
   return ARM_MATH_SUCCESS;
-
 }
 
 /**
-* @brief  Initialization function for the 1024pt floating-point real FFT.
-* @param[in,out] *S             points to an arm_rfft_fast_instance_f32 structure.
-* @return        The function returns ARM_MATH_SUCCESS if initialization is successful or ARM_MATH_ARGUMENT_ERROR if an error is detected.
-*/
+  @brief         Initialization function for the 1024pt floating-point real FFT.
+  @param[in,out] S  points to an arm_rfft_fast_instance_f32 structure
+  @return        execution status
+                   - \ref ARM_MATH_SUCCESS        : Operation successful
+                   - \ref ARM_MATH_ARGUMENT_ERROR : an error is detected
+ */
+
 arm_status arm_rfft_1024_fast_init_f32( arm_rfft_fast_instance_f32 * S ) {
 
   arm_cfft_instance_f32 * Sint;
@@ -180,14 +193,15 @@ arm_status arm_rfft_1024_fast_init_f32( arm_rfft_fast_instance_f32 * S ) {
   S->pTwiddleRFFT    = (float32_t *) twiddleCoef_rfft_1024;
 
   return ARM_MATH_SUCCESS;
-
 }
 
 /**
-* @brief  Initialization function for the 2048pt floating-point real FFT.
-* @param[in,out] *S             points to an arm_rfft_fast_instance_f32 structure.
-* @return        The function returns ARM_MATH_SUCCESS if initialization is successful or ARM_MATH_ARGUMENT_ERROR if an error is detected.
-*/
+  @brief         Initialization function for the 2048pt floating-point real FFT.
+  @param[in,out] S  points to an arm_rfft_fast_instance_f32 structure
+  @return        execution status
+                   - \ref ARM_MATH_SUCCESS        : Operation successful
+                   - \ref ARM_MATH_ARGUMENT_ERROR : an error is detected
+ */
 arm_status arm_rfft_2048_fast_init_f32( arm_rfft_fast_instance_f32 * S ) {
 
   arm_cfft_instance_f32 * Sint;
@@ -204,14 +218,16 @@ arm_status arm_rfft_2048_fast_init_f32( arm_rfft_fast_instance_f32 * S ) {
   S->pTwiddleRFFT    = (float32_t *) twiddleCoef_rfft_2048;
 
   return ARM_MATH_SUCCESS;
-
 }
 
 /**
-* @brief  Initialization function for the 4096pt floating-point real FFT.
-* @param[in,out] *S             points to an arm_rfft_fast_instance_f32 structure.
-* @return        The function returns ARM_MATH_SUCCESS if initialization is successful or ARM_MATH_ARGUMENT_ERROR if an error is detected.
-*/
+* @brief         Initialization function for the 4096pt floating-point real FFT.
+* @param[in,out] S  points to an arm_rfft_fast_instance_f32 structure
+  @return        execution status
+                   - \ref ARM_MATH_SUCCESS        : Operation successful
+                   - \ref ARM_MATH_ARGUMENT_ERROR : an error is detected
+ */
+
 arm_status arm_rfft_4096_fast_init_f32( arm_rfft_fast_instance_f32 * S ) {
 
   arm_cfft_instance_f32 * Sint;
@@ -228,21 +244,23 @@ arm_status arm_rfft_4096_fast_init_f32( arm_rfft_fast_instance_f32 * S ) {
   S->pTwiddleRFFT    = (float32_t *) twiddleCoef_rfft_4096;
 
   return ARM_MATH_SUCCESS;
-
 }
 
 /**
-* @brief  Initialization function for the floating-point real FFT.
-* @param[in,out] *S             points to an arm_rfft_fast_instance_f32 structure.
-* @param[in]     fftLen         length of the Real Sequence.
-* @return        The function returns ARM_MATH_SUCCESS if initialization is successful or ARM_MATH_ARGUMENT_ERROR if <code>fftLen</code> is not a supported value.
-*
-* \par Description:
-* \par
-* The parameter <code>fftLen</code>	Specifies length of RFFT/CIFFT process. Supported FFT Lengths are 32, 64, 128, 256, 512, 1024, 2048, 4096.
-* \par
-* This Function also initializes Twiddle factor table pointer and Bit reversal table pointer.
-*/
+  @brief         Initialization function for the floating-point real FFT.
+  @param[in,out] S       points to an arm_rfft_fast_instance_f32 structure
+  @param[in]     fftLen  length of the Real Sequence
+  @return        execution status
+                   - \ref ARM_MATH_SUCCESS        : Operation successful
+                   - \ref ARM_MATH_ARGUMENT_ERROR : <code>fftLen</code> is not a supported length
+
+  @par           Description
+                   The parameter <code>fftLen</code> specifies the length of RFFT/CIFFT process.
+                   Supported FFT Lengths are 32, 64, 128, 256, 512, 1024, 2048, 4096.
+  @par
+                   This Function also initializes Twiddle factor table pointer and Bit reversal table pointer.
+ */
+
 arm_status arm_rfft_fast_init_f32(
   arm_rfft_fast_instance_f32 * S,
   uint16_t fftLen)
@@ -276,6 +294,8 @@ arm_status arm_rfft_fast_init_f32(
   case 32U:
     fptr = arm_rfft_32_fast_init_f32;
     break;
+  default:
+    return ARM_MATH_ARGUMENT_ERROR;
   }
 
   if( ! fptr ) return ARM_MATH_ARGUMENT_ERROR;
@@ -284,5 +304,5 @@ arm_status arm_rfft_fast_init_f32(
 }
 
 /**
- * @} end of RealFFT group
+  @} end of RealFFT group
  */
