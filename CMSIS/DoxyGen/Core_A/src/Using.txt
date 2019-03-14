@@ -36,6 +36,8 @@ The \ref device_h_pg is the central include file that the application programmer
  - \ref PL1_timer_functions "Generic" and \ref PTM_timer_functions "Private" Timer functions to configure and start a periodic timer interrupt.
  - \ref L1_cache_functions "Level 1" and \ref L2_cache_functions "Level 2" Cache controller functions to enable, disable, clean and invalidate caches.
 
+CMSIS-Pack provides the <b>\#define CMSIS_header_file</b> in <a href="../../Pack/html/pdsc_components_pg.html#RTE_Components_h"><b>RTE_Components.h</b></a> which gives you access to this <b><i>device</i>.h</b> file.
+
 \image html "CMSIS_CORE_A_Files_user.png" "CMSIS-Core-A User Files"
 
 The CMSIS-Core-A user files are device specific. In addition, the \ref startup_c_pg is also compiler vendor specific. 
@@ -111,6 +113,14 @@ int main(void)
   }
 }
 \endcode
+
+CMSIS-Pack provides the <b>\#define CMSIS_header_file</b> in <a href="../../Pack/html/pdsc_components_pg.html#RTE_Components_h"><b>RTE_Components.h</b></a> which gives you access to the <b><i>device</i>.h</b> file 
+of a project. This allows you to generate generic software components that use the device selected in a project.
+
+\code
+#include "RTE_Components.h"     // include information about project configuration
+#include CMSIS_device_header    // include <device>.h file
+\endcode
     
 \page using_ARM_pg Using CMSIS with generic Arm Processors
 
@@ -146,5 +156,9 @@ The table below lists the folder and device names of the Arm processors.
     </td>
   </tr>
 </table>
+
+\note
+CMSIS-Pack provides the <b>\#define CMSIS_header_file</b> in <a href="../../Pack/html/pdsc_components_pg.html#RTE_Components_h"><b>RTE_Components.h</b></a> which gives you access to the <b><i>device</i>.h</b> file 
+of a project. This allows you to generate generic software components that adjust to the device settings.
 
 */

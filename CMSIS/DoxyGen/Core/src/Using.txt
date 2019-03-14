@@ -28,6 +28,7 @@ The \ref device_h_pg is the central include file that the application programmer
  - \ref SysTick_gr function to configure and start a periodic timer interrupt.
  - \ref ITM_Debug_gr are functions that allow printf-style I/O via the CoreSight Debug Unit and ITM communication.
 
+CMSIS-Pack provides the <b>\#define CMSIS_header_file</b> in <a href="../../Pack/html/pdsc_components_pg.html#RTE_Components_h"><b>RTE_Components.h</b></a> which gives you access to this <b><i>device</i>.h</b> file.
 
 \image html "CMSIS_CORE_Files_user.png" "CMSIS-Core (Cortex-M) User Files"
 
@@ -125,6 +126,14 @@ void main (void) {	                             // user application starts here
 }
 \endcode
 
+CMSIS-Pack provides the <b>\#define CMSIS_header_file</b> in <a href="../../Pack/html/pdsc_components_pg.html#RTE_Components_h"><b>RTE_Components.h</b></a> which gives you access to the <b><i>device</i>.h</b> file 
+of a project. This allows you to generate generic software components that use the device selected in a project.
+
+\code
+#include "RTE_Components.h"                      // include information about project configuration
+#include CMSIS_device_header                     // include <device>.h file
+\endcode
+
 \page using_VTOR_pg Using Interrupt Vector Remap
 
 Most Cortex-M processors provide VTOR register for remapping interrupt vectors. The following example shows
@@ -183,6 +192,7 @@ int main (void) {
   while(1);
 }
 \endcode
+
     
 \page using_ARM_pg Using CMSIS with generic Arm Processors
 
@@ -248,6 +258,11 @@ The table below lists the folder and device names of the Arm processors.
     </tr>
 \endif	
 </table>
+
+\note
+CMSIS-Pack provides the <b>\#define CMSIS_header_file</b> in <a href="../../Pack/html/pdsc_components_pg.html#RTE_Components_h"><b>RTE_Components.h</b></a> which gives you access to the <b><i>device</i>.h</b> file 
+of a project. This allows you to generate generic software components that adjust to the device settings.
+
 
 \section using_ARM_Lib_sec Create generic Libraries with CMSIS
 
