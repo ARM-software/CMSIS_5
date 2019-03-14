@@ -17,7 +17,7 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 
-  $Date:        25. Februar 2019
+  $Date:        14. March 2019
   $Revision:    1.6.0
 
   $Project: Schema File for Package Description File Format Specification
@@ -25,13 +25,16 @@
   Package file name convention <vendor>.<name>.<version>.pack
   SchemaVersion=1.6.0
 
-  25. Februar 2019: 1.6.0
-  - add processor attribute Dmve, specifying ArmV8.1-M vector extensions support
-  - add 'ARMV81MML' to Dcore attribute enumeration
-  - add path attribute to file tag, explicitly specifying include path in case of category="Header"
-  - add file element attribute category="PreIncludeGlobal" and category="PreIncludeLocal"
-  - add component section 'Pre_Include_Global_h' and 'Pre_Include_Local_Component_h'
-  
+  14. March 2019: 1.6.0
+  - added Armv8.1-M MVE processor feature attribute 'Dmve'
+  - added local and global pre-include section Pre_Include_Local_h, Pre_Include_Global_h.
+  - added file categories 'preIncludeLocal' and 'preIncludeGlobal' FileCategoryEnum.
+  - added file attribute 'path' for file category 'header' to add support for relative include paths. 
+  - added to package element the possibility to restrict the usage of the with attributes Dvendor, Dname, Dcore, and Tcompiler.
+  - added dominate element to overwrite identical APIs, or components.
+  - added attribute 'condition' to the api element so that an API can be excluded based on a condition.
+  - added new Software Component Cclasses : "Audio", "Board Part", "Data Exchange", "Extension Board", "IoT Client", "IoT Utility", "Security", "Utility".
+
   19. July 2018: 1.5.0
   - added flash info section required for flash programming via debug sequences
   - added debug access functions and global debug variables for flash programming via debug sequences
@@ -1090,6 +1093,7 @@
     <xs:attribute name="Cgroup" type="CgroupType" use="required" />
     <xs:attribute name="exclusive" type="xs:boolean" use="optional" default="1" />
     <xs:attribute name="Capiversion" type="ComponentVersionType" use="optional" />
+    <xs:attribute name="condition" type="xs:string" use="optional" />
   </xs:complexType>
 
   <xs:complexType name="ApisType">
@@ -1799,6 +1803,10 @@
     </xs:simpleContent>
   </xs:complexType>
 
+  <xs:complexType name="DominateType">
+    <xs:attribute name="info" type="xs:string" use="required"/>
+  </xs:complexType>
+  
   <!-- package description root point -->
   <xs:element name="package" nillable="true">
     <xs:complexType>
@@ -1811,6 +1819,8 @@
         <xs:element name="description" type="xs:string" minOccurs="1" />
         <!-- download location of this PDSC and corresponding package file -->
         <xs:element name="url" type="xs:anyURI" minOccurs="1" />
+        <!-- optional tag to override component versions from other packs -->
+        <xs:element name="dominate" type="DominateType" minOccurs="0"/>
         <!-- optional: source repository of this pack -->
         <xs:element name="repository" type="RepositoryType" minOccurs="0"/>
         <!-- optional: e.g. mailto:Support@<vendor>.com or www.<vendor>.com/supportRequest -->
@@ -1980,6 +1990,11 @@
         </xs:element>
       </xs:all>
       <xs:attribute name="schemaVersion" type="SchemaVersionType" use="required" />
+      <!-- optional package level filter attributes -->
+      <xs:attribute name="Dvendor"       type="DeviceVendorEnum"  use="optional" />
+      <xs:attribute name="Dname"         type="xs:string"         use="optional" />
+      <xs:attribute name="Dcore"         type="DcoreEnum"         use="optional" />
+      <xs:attribute name="Tcompiler"     type="CompilerEnumType"  use="optional" />
     </xs:complexType>
   </xs:element>
 </xs:schema>
