@@ -99,6 +99,15 @@
       <th>Description</th>
     </tr>
     <tr>
+      <td>V5.5.0</td>
+      <td>
+       - Updated and enhanced generated events (reorganized components).
+       - Updated configuration (Event Recorder).
+       - Updated Component Viewer (improved performance).
+       - Minor code optimizations.
+      </td>
+    </tr>
+    <tr>
       <td>V5.4.0</td>
       <td>
        - Based on CMSIS-RTOS API V2.1.3.

@@ -91,6 +91,13 @@ void cmsis_cv (void) {
   ts_cmsis_cv();
 }
 
+void cmsis_cv_abort (const char *fn, uint32_t ln, char *desc) {
+  (void)__set_result(fn, ln, FAILED, desc);
+  (void)ritf.Close_TC();
+  (void)ritf.Close();
+  closeDebug();
+}
+
 /**
 @}
 */ 

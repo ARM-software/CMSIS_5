@@ -1,4 +1,4 @@
-/**************************************************************************************************/
+
 /** 
 \mainpage Introduction
 
@@ -20,8 +20,8 @@ including <a class="el" href="http://www.arm.com/products/processors/technologie
 \anchor CM_Components
 The CMSIS components are:
  - <a href="../../Core/html/index.html"><b>CMSIS-Core (Cortex-M)</b></a>: API for the Cortex-M processor core and peripherals. 
-   It provides a standardized interface for Cortex-M0, Cortex-M0+, Cortex-M3, Cortex-M4, Cortex-M7, Cortex-M23, Cortex-M33, SC000, and SC300. 
-   Also included are SIMD intrinsic functions for Cortex-M4, Cortex-M7, and Cortex-M33 SIMD instructions.
+   It provides a standardized interface for Cortex-M0, Cortex-M0+, Cortex-M3, Cortex-M4, Cortex-M7, Cortex-M23, Cortex-M33, Cortex-M35P, SC000, and SC300. 
+   Also included are SIMD intrinsic functions for Cortex-M4, Cortex-M7, Cortex-M33 and Cortex-M35P SIMD instructions.
 
  - <a href="../../Core_A/html/index.html"><b>CMSIS-Core (Cortex-A)</b></a>: API and basic run-time system for the Cortex-A5/A7/A9 processor core and peripherals. 
    
@@ -29,7 +29,7 @@ The CMSIS components are:
     and connects microcontroller peripherals with middleware that implements for example communication stacks, file systems, or graphic user interfaces.
 
  - <a href="../../DSP/html/index.html"><b>CMSIS-DSP</b></a>: DSP Library Collection with over 60 Functions for various data types: fixed-point (fractional q7, q15, q31) and single precision floating-point (32-bit).
-   The library is available for all Cortex-M cores. Implementations that are optimized for the SIMD instruction set are available for Cortex-M4, Cortex-M7, and Cortex-M33.
+   The library is available for all Cortex-M cores. Implementations that are optimized for the SIMD instruction set are available for Cortex-M4, Cortex-M7, Cortex-M33 and Cortex-M35P.
  
  - <a href="../../NN/html/index.html"><b>CMSIS-NN</b></a>: CMSIS-NN is a collection of efficient neural network kernels developed to maximize the performance and minimize the memory footprint of neural networks on Cortex-M processor cores.
   
@@ -192,6 +192,37 @@ In addition, each CMSIS component has its own release history:
     <tr>
       <th>Version</th>
       <th>Description</th>
+    </tr>
+    <tr>
+      <td>5.5.0</td>
+      <td>
+        - CMSIS-Core (Cortex-M) 5.2.0
+          - Reworked Stack/Heap configuration for ARM startup files.
+          - Added Cortex-M35P device support.
+          - Added generic Armv8.1-M Mainline device support.
+        - CMSIS-Core (Cortex-A) 1.1.3 Minor fixes.
+        - CMSIS-DSP 1.5.5
+          - reworked DSP library source files
+            - added macro ARM_MATH_LOOPUNROLL
+            - removed macro UNALIGNED_SUPPORT_DISABLE
+            - replaced arm_bitreversal2.S with C version
+            - added const-correctness
+            - replaced SIMD pointer construct with memcpy solution
+          - reworked DSP library documentation
+          - moved DSP libraries to folder ./DSP/Lib
+          - ARM DSP Libraries are built with ARMCLANG
+          - Added DSP Libraries Source variant
+        - CMSIS-NN 1.1.0 (unchanged)
+        - CMSIS-Driver 2.7.0
+          - Added WiFi Interface API 1.0.0-beta
+          - Added custom driver selection to simplify implementation of new CMSIS-Driver
+        - CMSIS-RTOS 2.1.3
+          - RTX 5.5.0 (see revision history)
+        - CMSIS-Pack 1.6.0
+        - CMSIS-SVD 1.3.3 (unchanged)
+        - CMSIS-DAP 2.0.0 (unchanged)
+        - CMSIS-Zone 0.9.0 (Preview)
+      </td>
     </tr>
     <tr>
       <td>5.4.0</td>

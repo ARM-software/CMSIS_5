@@ -35,6 +35,10 @@ The <b>\#define __ARM_ARCH_7EM__</b> is set to 1 when generating code for the Ar
 #define __ARM_ARCH_7EM__
 
 /**
+\cond (ARMv8M)
+*/
+
+/**
 \def __ARM_ARCH_8M_BASE__
 \brief Set to 1 when generating code for Armv8-M Baseline
 \details
@@ -50,6 +54,9 @@ The <b>\#define __ARM_ARCH_8M_MAIN__</b> is set to 1 when generating code for th
 */
 #define __ARM_ARCH_8M_MAIN__
 
+/**
+\endcond
+*/
 
 
 /**************************************************************************************************/

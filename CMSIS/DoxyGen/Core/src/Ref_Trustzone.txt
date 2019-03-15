@@ -1,6 +1,10 @@
 /**
-\defgroup trustzone_functions TrustZone for Armv8-M
-\brief Functions that related to optional Armv8-M security extension
+\cond (ARMv8M)
+*/
+
+/**
+\defgroup trustzone_functions TrustZone for Armv8-M/v8.1-M
+\brief Functions that related to optional Armv8-M and Armv8.1-M security extension
   @{
 \details
 The Armv8-M architecture has optional Armv8-M security extension based on Arm TrustZone technology.
@@ -452,4 +456,8 @@ uint32_t TZ_StoreContext_S (TZ_MemoryId_t id);
 
 /** close trustzone_functions
 @}
+*/
+
+/**
+\endcond
 */

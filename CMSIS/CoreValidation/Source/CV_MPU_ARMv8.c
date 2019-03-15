@@ -12,6 +12,7 @@
  *      Test implementation
  *----------------------------------------------------------------------------*/
 
+#if defined(__MPU_PRESENT) && __MPU_PRESENT
 static void ClearMpu(void) {
   for(uint32_t i = 0U; i < 8U; ++i) {
     MPU->RNR = i;
@@ -19,6 +20,7 @@ static void ClearMpu(void) {
     MPU->RLAR = 0U;
   }
 }
+#endif
 
 /*-----------------------------------------------------------------------------
  *      Test cases
@@ -32,6 +34,7 @@ static void ClearMpu(void) {
 */
 void TC_MPU_SetClear(void)
 {
+#if defined(__MPU_PRESENT) && __MPU_PRESENT
   static const ARM_MPU_Region_t table[] = {
     { .RBAR = 0U, .RLAR = 0U },
     { .RBAR = ARM_MPU_RBAR(0x30000000U, 0U, 1U, 1U, 1U), .RLAR = ARM_MPU_RLAR(0x38000000U, 0U) }
@@ -56,6 +59,7 @@ void TC_MPU_SetClear(void)
   ASSERT_TRUE((MPU->RLAR & MPU_RLAR_EN_Msk) == 0U);
   
   #undef ASSERT_MPU_REGION
+#endif
 }
   
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
@@ -66,6 +70,7 @@ void TC_MPU_SetClear(void)
 */
 void TC_MPU_Load(void)
 {
+#if defined(__MPU_PRESENT) && __MPU_PRESENT
   static const ARM_MPU_Region_t table[] = {
     { .RBAR = ARM_MPU_RBAR(0x10000000U, 0U, 1U, 1U, 1U), .RLAR = ARM_MPU_RLAR(0x18000000U, 0U) },
     { .RBAR = ARM_MPU_RBAR(0x20000000U, 0U, 1U, 1U, 1U), .RLAR = ARM_MPU_RLAR(0x27000000U, 0U) },
@@ -104,4 +109,5 @@ void TC_MPU_Load(void)
   ASSERT_MPU_REGION(7U, table);
 
   #undef ASSERT_MPU_REGION
+#endif 
 }

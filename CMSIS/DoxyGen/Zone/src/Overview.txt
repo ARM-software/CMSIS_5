@@ -2,25 +2,40 @@
 /**
 \mainpage
 
-This is a preview of \b CMSIS-Zone which is scheduled for release in Q1'2018.  The final release of CMSIS-Zone will provide:
-  - \ref XML_Format (XML based) which stores consistent system setup information.
-  - CMSIS-Zone configuration utility for system partitioning. The \ref GenDataModel "data" captured can be exported to various project and configuration files using file templates.
-  
 \b CMSIS-Zone defines methods to describe system resources and to partition these resources into multiple projects and execution areas. 
-The system resources may include multiple processors, memory areas, and peripherals. The system resource and partitioning information is stored in \ref XML_Format (XML based). 
+The system resources may include multiple processors, memory areas, peripherals and related interrupts. 
+The system resources and partition assignments are stored in \ref zoneFormat (XML based). 
 
-\b CMSIS-Zone includes an interactive tool that manages files in the \ref XML_Format which allows to:
-  - create system resource information from existing CMSIS-SVD and CMSIS-Pack descriptions.
-  - partition system resources into various project zones.
-  - partition a project zone into multiple execution zones.
-  - generate various configuration files for tool set-up and hardware initialization.
+\b CMSIS-Zone includes a utility that manages these XML files. This utility:
+  - displays all available system resources including memory and peripherals
+  - allows to partition memory and assign resources to sub-systems.
+  - supports the setup of secure, non-secure, and MPU protected execution zones with assignment of memory, peripherals, and interrupts.
+  - provides a data model for generation of configuration files for tool and hardware setup.
+  
+The following diagram explains the development work flow when using the \b CMSIS-Zone management tool. 
 
-The following diagram explains the development flow when using the \b CMSIS-Zone management tool. 
+\image html Partitioning_Workflow.png  "CMSIS-Zone development workflow"
 
-\image html DevelopmentFlow.png  "CMSIS-Zone Development Flow"
+The CMSIS-Zone utility reads a \ref rzone ".rzone" file that defines the overall system resources of an SoC system.
+An interactive GUI supports the system partitioning. The assignments of the various partitions (also called zones)
+saved in the \ref azone ".azone" file.
+
+The combined information of resources and assignments can be exported to multiple \ref rzone ".rzone" files that represent a sub-system.
+By using file templates the CMSIS-Zone utility can create tool or hardware configuration files.
+
+It is possible to uses these steps multiple times which allows to split a complex SoC design with multiple processors into 
+smaller sub-systems. For example a multi-core device can be partitioned in steps:
+  - Step 1: split the multi-processor system into single processor sub-systems.
+  - Step 2: create the partitions for secure and non-secure execution.
+  - Step 3: configure MPU protected execution zones.
+
+The following SoC diagram exemplifies step 1 and step 2 of this workflow. 
+  
+\image html Partitioning_Hardware.png  "Hardware partitioning in multiple steps"
+  
 
 The following sections explain: 
-- \ref XML_Format (XML based) that stores system resource information and the configuration of project zones and execution zones.
+- \ref zoneFormat (XML based) that stores system resource information and the configuration of project zones and execution zones.
 - \ref GenDataModel which is used to create tool set-up files and hardware configuration files.
 
 
@@ -48,9 +63,9 @@ In this case one has to handle MPU settings per security context and SAU configu
 
 \subsection UseCase_MultiCore Multi-Core Partitioning
 
-Beside traditional single cores asymetric and hybrid multi-core devices contribute to increasing development complexity
+Beside traditional single cores asymmetric and hybrid multi-core devices contribute to increasing development complexity
 for embedded systems. Having multiple cores running different parts of an application concurrently needs a well defined
-resource assignment to prevent undesired misbehaviour.
+resource assignment to prevent undesired misbehavior.
 
 \image html multicore.png  "Multi-Core Partitioning"
 
@@ -67,7 +82,7 @@ resource assignment to prevent undesired misbehaviour.
       <th>Description</th>
     </tr>
     <tr>
-      <td>0.0.1 (Preview)</td>
+      <td>0.0.2 (Preview 2)</td>
       <td>Initial specification draft</td>
     </tr>
 </table>

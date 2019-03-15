@@ -38,7 +38,7 @@ PROJECT_NAME           = CMSIS-DSP
 # could be handy for archiving the generated documentation or if some version
 # control system is used.
 
-PROJECT_NUMBER         = "Version 1.5.2"
+PROJECT_NUMBER         = "Version 1.5.5"
 
 # Using the PROJECT_BRIEF tag one can provide an optional one line description
 # for a project that appears at the top of each page and should give viewer a
@@ -952,13 +952,13 @@ STRIP_CODE_COMMENTS    = YES
 # function all documented functions referencing it will be listed.
 # The default value is: NO.
 
-REFERENCED_BY_RELATION = YES
+REFERENCED_BY_RELATION = NO
 
 # If the REFERENCES_RELATION tag is set to YES then for each documented function
 # all documented entities called/used by that function will be listed.
 # The default value is: NO.
 
-REFERENCES_RELATION    = YES
+REFERENCES_RELATION    = NO
 
 # If the REFERENCES_LINK_SOURCE tag is set to YES and SOURCE_BROWSER tag is set
 # to YES, then the hyperlinks from functions in REFERENCES_RELATION and
@@ -1855,13 +1855,13 @@ XML_OUTPUT             = xml
 # validating XML parser to check the syntax of the XML files.
 # This tag requires that the tag GENERATE_XML is set to YES.
 
-XML_SCHEMA             = 
+#XML_SCHEMA             = 
 
 # The XML_DTD tag can be used to specify a XML DTD, which can be used by a
 # validating XML parser to check the syntax of the XML files.
 # This tag requires that the tag GENERATE_XML is set to YES.
 
-XML_DTD                = 
+#XML_DTD                = 
 
 # If the XML_PROGRAMLISTING tag is set to YES doxygen will dump the program
 # listings (including syntax highlighting and cross-referencing information) to

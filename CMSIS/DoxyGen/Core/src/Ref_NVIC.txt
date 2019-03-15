@@ -22,10 +22,14 @@ The table below lists the core exception vectors of the various Cortex-M process
       <th>M3</th>
       <th>M4</th>
       <th>M7</th>
+\if ARMSC
       <th>SC000</th>
       <th>SC300</th>
+\endif 
+\if ARMv8M
       <th>Armv8-M<br/>Baseline</th>
       <th>Armv8-M<br/>Mainline</th>
+\endif
       <th>Description</th>
     </tr>
     <tr>
@@ -98,6 +102,7 @@ The table below lists the core exception vectors of the various Cortex-M process
       <td><img src="check.png" alt="available"></td>
       <td>Usage Fault Interrupt</td>
     </tr>
+\if ARMv8M
     <tr>
       <td><b>SecureFault_IRQn</b></td>
       <td>-9</td>
@@ -112,6 +117,7 @@ The table below lists the core exception vectors of the various Cortex-M process
       <td><img src="check.png" alt="available"></td>
       <td>Secure Fault Interrupt</td>
     </tr>
+\endif
     <tr>
       <td><b>SVCall_IRQn</b></td>
       <td>-5</td>
@@ -179,11 +185,13 @@ program memory, however \ref using_VTOR_pg it can be relocated to RAM.  The symb
 <b>__Vectors</b> is the address of the vector table in the startup code and the
 register <b>SCB->VTOR</b> holds the start address of the vector table. 
 
+\if ARMv8M
 An Armv8-M implementation with TrustZone provides two vector tables: 
   - vector table for Secure handlers
   - vector table for Non-Secure handlers
 
 Refer to \ref Model_TrustZone for more information.
+\endif
 
 Processor Exceptions
 --------------------
@@ -390,7 +398,9 @@ typedef enum IRQn
   MemoryManagement_IRQn    = -12,      ///<  Exception 4: Memory Management Interrupt [not on Cortex-M0 variants]
   BusFault_IRQn            = -11,      ///<  Exception 5: Bus Fault Interrupt [not on Cortex-M0 variants]
   UsageFault_IRQn          = -10,      ///<  Exception 6: Usage Fault Interrupt [not on Cortex-M0 variants]
+\if ARMv8M  
   SecureFault_IRQn         = -9,       ///<  Exception 7: Secure Fault Interrupt [only on Armv8-M]
+\endif  
   SVCall_IRQn              = -5,       ///<  Exception 11: SV Call Interrupt
   DebugMonitor_IRQn        = -4,       ///<  Exception 12: Debug Monitor Interrupt [not on Cortex-M0 variants]
   PendSV_IRQn              = -2,       ///<  Exception 14: Pend SV Interrupt [not on Cortex-M0 variants]
@@ -778,7 +788,9 @@ void NVIC_SetVector(IRQn_Type IRQn, uint32_t vector);
 */
 void NVIC_SystemReset (void);
 
-
+/**
+\cond (ARMv8M)
+*/
 /**
   \brief   Get Interrupt Target State
   \details Reads the interrupt target field from the non-secure NVIC when in secure state.
@@ -824,6 +836,9 @@ uint32_t NVIC_SetTargetState(IRQn_Type IRQn);
  */
 uint32_t NVIC_ClearTargetState(IRQn_Type IRQn);
 
+/**
+\endcond
+*/
 
 /*@} end of NVIC_gr */
 

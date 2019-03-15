@@ -93,7 +93,7 @@ void TC_L1Cache_InvalidateDCacheAll(void) {
   
   /* setup */
   uint32_t orig = __get_SCTLR();
-  uint32_t value = 0x0815U;
+  volatile uint32_t value = 0x0815U;
 
   L1C_EnableCaches();
 

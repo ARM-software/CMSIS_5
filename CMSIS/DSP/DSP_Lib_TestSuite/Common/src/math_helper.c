@@ -64,7 +64,7 @@ float arm_snr_f32(float *pRef, float *pTest, uint32_t buffSize)
 
       if (temp == 0x7FC00000)
       {
-            return(0);
+        return(100000.0);
       }
 
       /* Checking for a NAN value in pTest array */
@@ -73,7 +73,7 @@ float arm_snr_f32(float *pRef, float *pTest, uint32_t buffSize)
 
       if (temp == 0x7FC00000)
       {
-            return(0);
+        return(100000.0);
       }
       EnergySignal += pRef[i] * pRef[i];
       EnergyError += (pRef[i] - pTest[i]) * (pRef[i] - pTest[i]);
@@ -85,11 +85,20 @@ float arm_snr_f32(float *pRef, float *pTest, uint32_t buffSize)
 
     if (temp == 0x7FC00000)
     {
-        return(0);
+        return(100000.0);
     }
 
 
   SNR = 10 * log10f (EnergySignal / EnergyError);
+
+    /* Checking for a NAN value in SNR */
+    test =   (int *)(&SNR);
+    temp =  *test;
+
+    if (temp == 0x7FC00000)
+    {
+        return(100000.0);
+    }
 
 	return (SNR);
 
@@ -113,7 +122,7 @@ double arm_snr_f64(double *pRef, double *pTest, uint32_t buffSize)
 
       if (temp == 0x7FC00000)
       {
-            return(0);
+        return(100000.0);
       }
 
       /* Checking for a NAN value in pTest array */
@@ -122,7 +131,7 @@ double arm_snr_f64(double *pRef, double *pTest, uint32_t buffSize)
 
       if (temp == 0x7FC00000)
       {
-            return(0);
+        return(100000.0);
       }
       EnergySignal += pRef[i] * pRef[i];
       EnergyError += (pRef[i] - pTest[i]) * (pRef[i] - pTest[i]);
@@ -134,11 +143,20 @@ double arm_snr_f64(double *pRef, double *pTest, uint32_t buffSize)
 
     if (temp == 0x7FC00000)
     {
-        return(0);
+        return(100000.0);
     }
 
 
   SNR = 10 * log10 (EnergySignal / EnergyError);
+
+    /* Checking for a NAN value in SNR */
+    test =   (int *)(&SNR);
+    temp =  *test;
+
+    if (temp == 0x7FC00000)
+    {
+        return(10000.0);
+    }
 
   return (SNR);
 

@@ -3,8 +3,8 @@
 #include "arm_math.h"
 
 
-#if defined(__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050)
-asm(" .global __ARM_use_no_argv\n");
+#if defined(__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050) && !defined (__MICROLIB)
+__asm(" .global __ARM_use_no_argv\n");
 #endif
 
 

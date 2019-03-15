@@ -23,7 +23,7 @@
  *    Initial Release
  *---------------------------------------------------------------------------*/
 
-#include "..\CM33_s\interface.h"        // Interface API
+#include "interface.h"        // Interface API
 
 extern volatile int val1, val2;
 volatile int val1, val2;

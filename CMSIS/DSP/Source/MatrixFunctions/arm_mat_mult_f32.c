@@ -3,13 +3,13 @@
  * Title:        arm_mat_mult_f32.c
  * Description:  Floating-point matrix multiplication
  *
- * $Date:        27. January 2017
- * $Revision:    V.1.5.1
+ * $Date:        28. February 2019
+ * $Revision:    V.1.5.5
  *
  * Target Processor: Cortex-M cores
  * -------------------------------------------------------------------- */
 /*
- * Copyright (C) 2010-2017 ARM Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2010-2019 ARM Limited or its affiliates. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -29,93 +29,85 @@
 #include "arm_math.h"
 
 /**
- * @ingroup groupMatrix
+  @ingroup groupMatrix
  */
 
 /**
- * @defgroup MatrixMult Matrix Multiplication
- *
- * Multiplies two matrices.
- *
- * \image html MatrixMultiplication.gif "Multiplication of two 3 x 3 matrices"
+  @defgroup MatrixMult Matrix Multiplication
 
- * Matrix multiplication is only defined if the number of columns of the
- * first matrix equals the number of rows of the second matrix.
- * Multiplying an <code>M x N</code> matrix with an <code>N x P</code> matrix results
- * in an <code>M x P</code> matrix.
- * When matrix size checking is enabled, the functions check: (1) that the inner dimensions of
- * <code>pSrcA</code> and <code>pSrcB</code> are equal; and (2) that the size of the output
- * matrix equals the outer dimensions of <code>pSrcA</code> and <code>pSrcB</code>.
- */
+  Multiplies two matrices.
 
+  \image html MatrixMultiplication.gif "Multiplication of two 3 x 3 matrices"
 
-/**
- * @addtogroup MatrixMult
- * @{
+  Matrix multiplication is only defined if the number of columns of the
+  first matrix equals the number of rows of the second matrix.
+  Multiplying an <code>M x N</code> matrix with an <code>N x P</code> matrix results
+  in an <code>M x P</code> matrix.
+  When matrix size checking is enabled, the functions check:
+   - that the inner dimensions of <code>pSrcA</code> and <code>pSrcB</code> are equal;
+   - that the size of the output matrix equals the outer dimensions of <code>pSrcA</code> and <code>pSrcB</code>.
  */
 
 /**
- * @brief Floating-point matrix multiplication.
- * @param[in]       *pSrcA points to the first input matrix structure
- * @param[in]       *pSrcB points to the second input matrix structure
- * @param[out]      *pDst points to output matrix structure
- * @return     		The function returns either
- * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.
+  @addtogroup MatrixMult
+  @{
+ */
+
+/**
+  @brief         Floating-point matrix multiplication.
+  @param[in]     pSrcA      points to the first input matrix structure
+  @param[in]     pSrcB      points to the second input matrix structure
+  @param[out]    pDst       points to output matrix structure
+  @return        execution status
+                   - \ref ARM_MATH_SUCCESS       : Operation successful
+                   - \ref ARM_MATH_SIZE_MISMATCH : Matrix size check failed
  */
 
 arm_status arm_mat_mult_f32(
   const arm_matrix_instance_f32 * pSrcA,
   const arm_matrix_instance_f32 * pSrcB,
-  arm_matrix_instance_f32 * pDst)
+        arm_matrix_instance_f32 * pDst)
 {
-  float32_t *pIn1 = pSrcA->pData;                /* input data matrix pointer A */
-  float32_t *pIn2 = pSrcB->pData;                /* input data matrix pointer B */
-  float32_t *pInA = pSrcA->pData;                /* input data matrix pointer A  */
-  float32_t *pOut = pDst->pData;                 /* output data matrix pointer */
+  float32_t *pIn1 = pSrcA->pData;                /* Input data matrix pointer A */
+  float32_t *pIn2 = pSrcB->pData;                /* Input data matrix pointer B */
+  float32_t *pInA = pSrcA->pData;                /* Input data matrix pointer A */
+  float32_t *pInB = pSrcB->pData;                /* Input data matrix pointer B */
+  float32_t *pOut = pDst->pData;                 /* Output data matrix pointer */
   float32_t *px;                                 /* Temporary output data matrix pointer */
   float32_t sum;                                 /* Accumulator */
-  uint16_t numRowsA = pSrcA->numRows;            /* number of rows of input matrix A */
-  uint16_t numColsB = pSrcB->numCols;            /* number of columns of input matrix B */
-  uint16_t numColsA = pSrcA->numCols;            /* number of columns of input matrix A */
-
-#if defined (ARM_MATH_DSP)
-
-  /* Run the below code for Cortex-M4 and Cortex-M3 */
-
-  float32_t in1, in2, in3, in4;
-  uint16_t col, i = 0U, j, row = numRowsA, colCnt;      /* loop counters */
-  arm_status status;                             /* status of matrix multiplication */
+  uint16_t numRowsA = pSrcA->numRows;            /* Number of rows of input matrix A */
+  uint16_t numColsB = pSrcB->numCols;            /* Number of columns of input matrix B */
+  uint16_t numColsA = pSrcA->numCols;            /* Number of columns of input matrix A */
+  uint32_t col, i = 0U, row = numRowsA, colCnt;  /* Loop counters */
+  arm_status status;                             /* Status of matrix multiplication */
 
 #ifdef ARM_MATH_MATRIX_CHECK
 
-
   /* Check for matrix mismatch condition */
   if ((pSrcA->numCols != pSrcB->numRows) ||
-     (pSrcA->numRows != pDst->numRows) || (pSrcB->numCols != pDst->numCols))
+      (pSrcA->numRows != pDst->numRows)  ||
+      (pSrcB->numCols != pDst->numCols)    )
   {
-
     /* Set status as ARM_MATH_SIZE_MISMATCH */
     status = ARM_MATH_SIZE_MISMATCH;
   }
   else
-#endif /*      #ifdef ARM_MATH_MATRIX_CHECK    */
+
+#endif /* #ifdef ARM_MATH_MATRIX_CHECK */
 
   {
     /* The following loop performs the dot-product of each row in pSrcA with each column in pSrcB */
     /* row loop */
     do
     {
-      /* Output pointer is set to starting address of the row being processed */
+      /* Output pointer is set to starting address of row being processed */
       px = pOut + i;
 
-      /* For every row wise process, the column loop counter is to be initiated */
+      /* For every row wise process, column loop counter is to be initiated */
       col = numColsB;
 
-      /* For every row wise process, the pIn2 pointer is set
-       ** to the starting address of the pSrcB data */
+      /* For every row wise process, pIn2 pointer is set to starting address of pSrcB data */
       pIn2 = pSrcB->pData;
-
-      j = 0U;
 
       /* column loop */
       do
@@ -123,144 +115,78 @@ arm_status arm_mat_mult_f32(
         /* Set the variable sum, that acts as accumulator, to zero */
         sum = 0.0f;
 
-        /* Initiate the pointer pIn1 to point to the starting address of the column being processed */
+        /* Initialize pointer pIn1 to point to starting address of column being processed */
         pIn1 = pInA;
 
-        /* Apply loop unrolling and compute 4 MACs simultaneously. */
+#if defined (ARM_MATH_LOOPUNROLL)
+
+        /* Loop unrolling: Compute 4 MACs at a time. */
         colCnt = numColsA >> 2U;
 
-        /* matrix multiplication        */
+        /* matrix multiplication */
         while (colCnt > 0U)
         {
-          /* c(m,n) = a(1,1)*b(1,1) + a(1,2) * b(2,1) + .... + a(m,p)*b(p,n) */
-          in3 = *pIn2;
-          pIn2 += numColsB;
-          in1 = pIn1[0];
-          in2 = pIn1[1];
-          sum += in1 * in3;
-          in4 = *pIn2;
-          pIn2 += numColsB;
-          sum += in2 * in4;
+          /* c(m,n) = a(1,1) * b(1,1) + a(1,2) * b(2,1) + .... + a(m,p) * b(p,n) */
 
-          in3 = *pIn2;
+          /* Perform the multiply-accumulates */
+          sum += *pIn1++ * *pIn2;
           pIn2 += numColsB;
-          in1 = pIn1[2];
-          in2 = pIn1[3];
-          sum += in1 * in3;
-          in4 = *pIn2;
-          pIn2 += numColsB;
-          sum += in2 * in4;
-          pIn1 += 4U;
 
-          /* Decrement the loop count */
+          sum += *pIn1++ * *pIn2;
+          pIn2 += numColsB;
+
+          sum += *pIn1++ * *pIn2;
+          pIn2 += numColsB;
+
+          sum += *pIn1++ * *pIn2;
+          pIn2 += numColsB;
+
+          /* Decrement loop counter */
           colCnt--;
         }
 
-        /* If the columns of pSrcA is not a multiple of 4, compute any remaining MACs here.
-         ** No loop unrolling is used. */
+        /* Loop unrolling: Compute remaining MACs */
         colCnt = numColsA % 0x4U;
-
-        while (colCnt > 0U)
-        {
-          /* c(m,n) = a(1,1)*b(1,1) + a(1,2) * b(2,1) + .... + a(m,p)*b(p,n) */
-          sum += *pIn1++ * (*pIn2);
-          pIn2 += numColsB;
-
-          /* Decrement the loop counter */
-          colCnt--;
-        }
-
-        /* Store the result in the destination buffer */
-        *px++ = sum;
-
-        /* Update the pointer pIn2 to point to the  starting address of the next column */
-        j++;
-        pIn2 = pSrcB->pData + j;
-
-        /* Decrement the column loop counter */
-        col--;
-
-      } while (col > 0U);
 
 #else
 
-  /* Run the below code for Cortex-M0 */
-
-  float32_t *pInB = pSrcB->pData;                /* input data matrix pointer B */
-  uint16_t col, i = 0U, row = numRowsA, colCnt;  /* loop counters */
-  arm_status status;                             /* status of matrix multiplication */
-
-#ifdef ARM_MATH_MATRIX_CHECK
-
-  /* Check for matrix mismatch condition */
-  if ((pSrcA->numCols != pSrcB->numRows) ||
-     (pSrcA->numRows != pDst->numRows) || (pSrcB->numCols != pDst->numCols))
-  {
-
-    /* Set status as ARM_MATH_SIZE_MISMATCH */
-    status = ARM_MATH_SIZE_MISMATCH;
-  }
-  else
-#endif /*      #ifdef ARM_MATH_MATRIX_CHECK    */
-
-  {
-    /* The following loop performs the dot-product of each row in pInA with each column in pInB */
-    /* row loop */
-    do
-    {
-      /* Output pointer is set to starting address of the row being processed */
-      px = pOut + i;
-
-      /* For every row wise process, the column loop counter is to be initiated */
-      col = numColsB;
-
-      /* For every row wise process, the pIn2 pointer is set
-       ** to the starting address of the pSrcB data */
-      pIn2 = pSrcB->pData;
-
-      /* column loop */
-      do
-      {
-        /* Set the variable sum, that acts as accumulator, to zero */
-        sum = 0.0f;
-
-        /* Initialize the pointer pIn1 to point to the starting address of the row being processed */
-        pIn1 = pInA;
-
-        /* Matrix A columns number of MAC operations are to be performed */
+        /* Initialize cntCnt with number of columns */
         colCnt = numColsA;
+
+#endif /* #if defined (ARM_MATH_LOOPUNROLL) */
 
         while (colCnt > 0U)
         {
-          /* c(m,n) = a(1,1)*b(1,1) + a(1,2) * b(2,1) + .... + a(m,p)*b(p,n) */
-          sum += *pIn1++ * (*pIn2);
+          /* c(m,n) = a(1,1) * b(1,1) + a(1,2) * b(2,1) + .... + a(m,p) * b(p,n) */
+
+          /* Perform the multiply-accumulates */
+          sum += *pIn1++ * *pIn2;
           pIn2 += numColsB;
 
-          /* Decrement the loop counter */
+          /* Decrement loop counter */
           colCnt--;
         }
 
-        /* Store the result in the destination buffer */
+        /* Store result in destination buffer */
         *px++ = sum;
 
-        /* Decrement the column loop counter */
+        /* Decrement column loop counter */
         col--;
 
-        /* Update the pointer pIn2 to point to the  starting address of the next column */
+        /* Update pointer pIn2 to point to starting address of next column */
         pIn2 = pInB + (numColsB - col);
 
       } while (col > 0U);
 
-#endif /* #if defined (ARM_MATH_DSP) */
-
-      /* Update the pointer pInA to point to the  starting address of the next row */
+      /* Update pointer pInA to point to starting address of next row */
       i = i + numColsB;
       pInA = pInA + numColsA;
 
-      /* Decrement the row loop counter */
+      /* Decrement row loop counter */
       row--;
 
     } while (row > 0U);
+
     /* Set status as ARM_MATH_SUCCESS */
     status = ARM_MATH_SUCCESS;
   }
@@ -270,5 +196,5 @@ arm_status arm_mat_mult_f32(
 }
 
 /**
- * @} end of MatrixMult group
+  @} end of MatrixMult group
  */

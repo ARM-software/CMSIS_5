@@ -3,13 +3,13 @@
  * Title:        arm_rfft_init_q15.c
  * Description:  RFFT & RIFFT Q15 initialisation function
  *
- * $Date:        27. January 2017
- * $Revision:    V.1.5.1
+ * $Date:        28. February 2019
+ * $Revision:    V.1.5.5
  *
  * Target Processor: Cortex-M cores
  * -------------------------------------------------------------------- */
 /*
- * Copyright (C) 2010-2017 ARM Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2010-2019 ARM Limited or its affiliates. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -31,29 +31,29 @@
 #include "arm_const_structs.h"
 
 /**
-* @ingroup RealFFT
-*/
+  @ingroup RealFFT
+ */
 
 /**
- * @addtogroup RealFFT_Table Real FFT Tables
-* @{
-*/
+  @addtogroup RealFFT_Table Real FFT Tables
+  @{
+ */
 
 /**
-* \par
-* Generation fixed-point realCoefAQ15 array in Q15 format:
-* \par
-* n = 4096
-* <pre>for (i = 0; i < n; i++)
-*  {
-*    pATable[2 * i] = 0.5 * (1.0 - sin (2 * PI / (double) (2 * n) * (double) i));
-*    pATable[2 * i + 1] = 0.5 * (-1.0 * cos (2 * PI / (double) (2 * n) * (double) i));
-*  } </pre>
-* \par
-* Convert to fixed point Q15 format
-*       round(pATable[i] * pow(2, 15))
-*/
-const q15_t ALIGN4 realCoefAQ15[8192] = {
+  @par
+  Generation fixed-point realCoefAQ15 array in Q15 format:
+  @par
+  n = 4096
+  <pre>for (i = 0; i < n; i++)
+  {
+     pATable[2 * i]     = 0.5 * ( 1.0 - sin (2 * PI / (double) (2 * n) * (double) i));
+     pATable[2 * i + 1] = 0.5 * (-1.0 * cos (2 * PI / (double) (2 * n) * (double) i));
+  }</pre>
+  @par
+  Convert to fixed point Q15 format
+        round(pATable[i] * pow(2, 15))
+ */
+const q15_t __ALIGNED(4) realCoefAQ15[8192] = {
     (q15_t)0x4000, (q15_t)0xc000, (q15_t)0x3ff3, (q15_t)0xc000, (q15_t)0x3fe7, (q15_t)0xc000, (q15_t)0x3fda, (q15_t)0xc000,
     (q15_t)0x3fce, (q15_t)0xc000, (q15_t)0x3fc1, (q15_t)0xc000, (q15_t)0x3fb5, (q15_t)0xc000, (q15_t)0x3fa8, (q15_t)0xc000,
     (q15_t)0x3f9b, (q15_t)0xc000, (q15_t)0x3f8f, (q15_t)0xc000, (q15_t)0x3f82, (q15_t)0xc000, (q15_t)0x3f76, (q15_t)0xc001,
@@ -1081,21 +1081,20 @@ const q15_t ALIGN4 realCoefAQ15[8192] = {
 };
 
 /**
-* \par
-* Generation of real_CoefB array:
-* \par
-* n = 4096
-* <pre>for (i = 0; i < n; i++)
-*  {
-*    pBTable[2 * i] = 0.5 * (1.0 + sin (2 * PI / (double) (2 * n) * (double) i));
-*    pBTable[2 * i + 1] = 0.5 * (1.0 * cos (2 * PI / (double) (2 * n) * (double) i));
-*  } </pre>
-* \par
-* Convert to fixed point Q15 format
-*       round(pBTable[i] * pow(2, 15))
-*
+  @par
+  Generation of real_CoefB array:
+  @par
+  n = 4096
+  <pre>for (i = 0; i < n; i++)
+  {
+     pBTable[2 * i]     = 0.5 * (1.0 + sin (2 * PI / (double) (2 * n) * (double) i));
+     pBTable[2 * i + 1] = 0.5 * (1.0 * cos (2 * PI / (double) (2 * n) * (double) i));
+  }</pre>
+  @par
+  Convert to fixed point Q15 format
+        round(pBTable[i] * pow(2, 15))
 */
-const q15_t ALIGN4 realCoefBQ15[8192] = {
+const q15_t __ALIGNED(4) realCoefBQ15[8192] = {
     (q15_t)0x4000, (q15_t)0x4000, (q15_t)0x400d, (q15_t)0x4000, (q15_t)0x4019, (q15_t)0x4000, (q15_t)0x4026, (q15_t)0x4000,
     (q15_t)0x4032, (q15_t)0x4000, (q15_t)0x403f, (q15_t)0x4000, (q15_t)0x404b, (q15_t)0x4000, (q15_t)0x4058, (q15_t)0x4000,
     (q15_t)0x4065, (q15_t)0x4000, (q15_t)0x4071, (q15_t)0x4000, (q15_t)0x407e, (q15_t)0x4000, (q15_t)0x408a, (q15_t)0x3fff,
@@ -2123,34 +2122,41 @@ const q15_t ALIGN4 realCoefBQ15[8192] = {
 };
 
 /**
-* @} end of RealFFT_Table group
-*/
+  @} end of RealFFT_Table group
+ */
 
 /**
-* @addtogroup RealFFT
-* @{
-*/
+  @addtogroup RealFFT
+  @{
+ */
 
 /**
-* @brief  Initialization function for the Q15 RFFT/RIFFT.
-* @param[in, out] *S             points to an instance of the Q15 RFFT/RIFFT structure.
-* @param[in]      fftLenReal     length of the FFT.
-* @param[in]      ifftFlagR      flag that selects forward (ifftFlagR=0) or inverse (ifftFlagR=1) transform.
-* @param[in]      bitReverseFlag flag that enables (bitReverseFlag=1) or disables (bitReverseFlag=0) bit reversal of output.
-* @return         The function returns ARM_MATH_SUCCESS if initialization is successful or ARM_MATH_ARGUMENT_ERROR if <code>fftLenReal</code> is not a supported value.
-*
-* \par Description:
-* \par
-* The parameter <code>fftLenReal</code>	Specifies length of RFFT/RIFFT Process. Supported FFT Lengths are 32, 64, 128, 256, 512, 1024, 2048, 4096, 8192.
-* \par
-* The parameter <code>ifftFlagR</code> controls whether a forward or inverse transform is computed.
-* Set(=1) ifftFlagR to calculate RIFFT, otherwise RFFT is calculated.
-* \par
-* The parameter <code>bitReverseFlag</code> controls whether output is in normal order or bit reversed order.
-* Set(=1) bitReverseFlag for output to be in normal order otherwise output is in bit reversed order.
-* \par
-* This function also initializes Twiddle factor table.
-*/
+  @brief         Initialization function for the Q15 RFFT/RIFFT.
+  @param[in,out] S              points to an instance of the Q15 RFFT/RIFFT structure
+  @param[in]     fftLenReal     length of the FFT
+  @param[in]     ifftFlagR      flag that selects transform direction
+                   - value = 0: forward transform
+                   - value = 1: inverse transform
+  @param[in]     bitReverseFlag flag that enables / disables bit reversal of output
+                   - value = 0: disables bit reversal of output
+                   - value = 1: enables bit reversal of output
+  @return        execution status
+                   - \ref ARM_MATH_SUCCESS        : Operation successful
+                   - \ref ARM_MATH_ARGUMENT_ERROR : <code>fftLenReal</code> is not a supported length
+
+  @par           Details
+                   The parameter <code>fftLenReal</code> specifies length of RFFT/RIFFT Process.
+                   Supported FFT Lengths are 32, 64, 128, 256, 512, 1024, 2048, 4096, 8192.
+  @par
+                   The parameter <code>ifftFlagR</code> controls whether a forward or inverse transform is computed.
+                   Set(=1) ifftFlagR to calculate RIFFT, otherwise RFFT is calculated.
+  @par
+                   The parameter <code>bitReverseFlag</code> controls whether output is in normal order or bit reversed order.
+                   Set(=1) bitReverseFlag for output to be in normal order otherwise output is in bit reversed order.
+  @par
+                   This function also initializes Twiddle factor table.
+ */
+
 arm_status arm_rfft_init_q15(
     arm_rfft_instance_q15 * S,
     uint32_t fftLenReal,
@@ -2225,5 +2231,5 @@ arm_status arm_rfft_init_q15(
 }
 
 /**
-* @} end of RealFFT group
-*/
+  @} end of RealFFT group
+ */

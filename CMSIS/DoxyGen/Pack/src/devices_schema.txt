@@ -1767,8 +1767,14 @@ the attribute \elem{Pname}. If the information is relevant to all processors, no
   <tr>
     <td>Ddsp</td>
     <td>Specifies whether a device supports the DSP instructions set. Use predefined values as listed in the table \ref DdspEnum "Device DSP".</td>
-    <td>DdspEnum</td>
+    <td>\ref DdspEnum DdspEnum</td>
     <td>required</td>
+  </tr>
+  <tr>
+    <td>Dmve</td>
+    <td>Specifies whether a device supports the M-Profile Vector instruction set extension. Use predefined values as listed in the table \ref DmveEnum "Device MVE".</td>
+    <td>\ref DmveEnum DmveEnum</td>
+    <td>required for ARMv8.1-M based devices</td>
   </tr>
   <tr>
     <td>Dendian</td>
@@ -1839,6 +1845,11 @@ Contact cmsis@arm.com to ask for an extension. These values can be used in the e
     <td class="XML-Token">Analog Devices:1</td>
     <td>Analog Devices</td>
     <td>http://www.analog.com</td>
+  </tr>
+  <tr>
+    <td class="XML-Token">APEXMIC:153</td>
+    <td>Apex Microeletronics Co., Ltd.</td>
+    <td>http://www.apexmic.com</td>
   </tr>
   <tr>
     <td class="XML-Token">ARM:82</td>
@@ -2066,9 +2077,19 @@ Contact cmsis@arm.com to ask for an extension. These values can be used in the e
     <td>http://www.triadsemi.com</td>
   </tr>
   <tr>
+    <td class="XML-Token">Unisoc:152</td>
+    <td>Unisoc Communications, Inc.</td>
+    <td>http://www.unisoc.com</td>
+  </tr>
+  <tr>
     <td class="XML-Token">Vorago:137</td>
     <td>Vorago Technologies</td>
     <td>http://www.voragotech.com</td>
+  </tr>
+  <tr>
+    <td class="XML-Token">Weltrend:148</td>
+    <td>Weltrend</td>
+    <td>http://www.weltrend.com.tw</td>
   </tr>
   <tr>
     <td class="XML-Token">WIZnet:122</td>
@@ -2163,6 +2184,10 @@ These values can be used in the elements:
   <tr>
     <td class="XML-Token">Cortex-M33</td>
     <td><a href="http://developer.arm.com/products/processors/cortex-m/cortex-m33" target="_blank">Arm Cortex-M33</a> processor based device</td>
+  </tr>
+  <tr>
+    <td class="XML-Token">Cortex-M35P</td>
+    <td><a href="http://developer.arm.com/products/processors/cortex-m/cortex-m35p" target="_blank">Arm Cortex-M35P</a> processor based device</td>
   </tr>
   <tr>
     <td class="XML-Token">SC000</td>
@@ -2394,6 +2419,35 @@ The values can be used in the elements:
 
 <p>&nbsp;</p>		
 
+\anchor DmveEnum <b>Table: Device implements M-Profile Vector Extension Instructions</b>
+
+The table shows predefined values that identify whether a CPU implements MVE instructions (MVE).
+The values can be used in the elements:
+- \ref element_accept  
+- \ref element_require 
+- \ref element_deny  
+- \ref element_processor
+
+<table class="cmtable" summary="Enumeration: DmveEnum">
+  <tr>
+    <th>Dmve=</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td class="XML-Token">NO_MVE</td>
+    <td>No MVE instructions supported</td>
+  </tr>
+  <tr>
+    <td class="XML-Token">MVE</td>
+    <td>Integer MVE instructions supported</td>
+  </tr>
+  <tr>
+    <td class="XML-Token">FP_MVE</td>
+    <td>Floating point and Integer MVE instructions supported</td>
+  </tr>
+</table>
+
+<p>&nbsp;</p>		
 
 \anchor DendianEnum <b>Table: Endianness</b>
 
@@ -4137,7 +4191,17 @@ Defines a device variant. The element is optional. Can exist multiple times.
   </tr>
   <tr>
     <td>Dvariant</td>
-    <td>Name of the device variant. Only alphabetical characters, decimal digits, '-' and '_' are allowed</td>
+    <td><b>May get replaced by 'Dname' in the future</b>. Name of the device on the variant level. This effectively 
+        overwrites the device name specified on the device level. 
+        Once a device section contains a variant section, only the variant elements describe a 'selectable' device
+        which can be selected in the tools. The Dname of the device level effectively becomes a group name like the
+        Dfamily and DsubFamily attributes. Only alphabetical characters, decimal digits, '-' and '_' are allowed</td>
+    <td>RestrictedStringDname</td>
+    <td>required</td>
+  </tr>
+  <tr>
+    <td>Dname</td>
+    <td><b>future</b>. Name of the device on the variant level. Only alphabetical characters, decimal digits, '-' and '_' are allowed</td>
     <td>RestrictedStringDname</td>
     <td>required</td>
   </tr>

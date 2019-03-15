@@ -35,9 +35,15 @@
 
 
 /*
- * Arm Compiler 6 (armclang)
+ * Arm Compiler 6.6 LTM (armclang)
  */
-#elif defined (__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050)
+#elif defined (__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050) && (__ARMCC_VERSION < 6100100)
+  #include "cmsis_armclang_ltm.h"
+
+  /*
+ * Arm Compiler above 6.10.1 (armclang)
+ */
+#elif defined (__ARMCC_VERSION) && (__ARMCC_VERSION >= 6100100)
   #include "cmsis_armclang.h"
 
 
@@ -115,8 +121,7 @@
     #define __ALIGNED(x)                           __attribute__((aligned(x)))
   #endif
   #ifndef   __RESTRICT
-    #warning No compiler specific solution for __RESTRICT. __RESTRICT is ignored.
-    #define __RESTRICT
+    #define __RESTRICT                             __restrict
   #endif
 
 

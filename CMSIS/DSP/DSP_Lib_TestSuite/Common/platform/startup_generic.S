@@ -1,56 +1,62 @@
 
 #if defined (__CC_ARM)
-  #if   (defined (ARM_MATH_CM0))
+  #if   (defined (ARMCM0))
     #include "ARMCC\startup_armv6-m.s"
-  #elif (defined (ARM_MATH_CM0P))
+  #elif (defined (ARMCM0P) || defined (ARMCM0P_MPU))
     #include "ARMCC\startup_armv6-m.s"
-  #elif (defined (ARM_MATH_CM3))
+  #elif (defined (ARMCM3))
     #include "ARMCC\startup_armv7-m.s"
-  #elif (defined (ARM_MATH_CM4))
+  #elif (defined (ARMCM4) || defined (ARMCM4_FP))
     #include "ARMCC\startup_armv7-m.s"
-  #elif (defined (ARM_MATH_CM7))
+  #elif (defined (ARMCM7) || defined (ARMCM7_SP) || defined (ARMCM7_DP))
     #include "ARMCC\startup_armv7-m.s"
-  #elif (defined (ARM_MATH_ARMV8MBL))
+  #elif (defined (ARMv8MBL))
     #include "ARMCC\startup_armv6-m.s"
-  #elif (defined (ARM_MATH_ARMV8MML))
+  #elif (defined (ARMv8MML)    || defined (ARMv8MML_DSP)    || \
+         defined (ARMv8MML_SP) || defined (ARMv8MML_DSP_SP) || \
+         defined (ARMv8MML_DP) || defined (ARMv8MML_DSP_DP)   )
     #include "ARMCC\startup_armv7-m.s"
   #else
     #error "No appropriate startup file found!"
   #endif
 
 #elif defined (__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050)
-  #if   (defined (ARM_MATH_CM0))
+  #if   (defined (ARMCM0))
     #include "ARMCLANG\startup_armv6-m.S"
-  #elif (defined (ARM_MATH_CM0P))
+  #elif (defined (ARMCM0P) || defined (ARMCM0P_MPU))
     #include "ARMCLANG\startup_armv6-m.S"
-  #elif (defined (ARM_MATH_CM3))
+  #elif (defined (ARMCM3))
     #include "ARMCLANG\startup_armv7-m.S"
-  #elif (defined (ARM_MATH_CM4))
+  #elif (defined (ARMCM4) || defined (ARMCM4_FP))
     #include "ARMCLANG\startup_armv7-m.S"
-  #elif (defined (ARM_MATH_CM7))
+  #elif (defined (ARMCM7) || defined (ARMCM7_SP) || defined (ARMCM7_DP))
     #include "ARMCLANG\startup_armv7-m.S"
-  #elif (defined (ARM_MATH_ARMV8MBL))
+  #elif (defined (ARMv8MBL))
     #include "ARMCLANG\startup_armv6-m.S"
-  #elif (defined (ARM_MATH_ARMV8MML))
+  #elif (defined (ARMv8MML)    || defined (ARMv8MML_DSP)    || \
+         defined (ARMv8MML_SP) || defined (ARMv8MML_DSP_SP) || \
+         defined (ARMv8MML_DP) || defined (ARMv8MML_DSP_DP)   )
     #include "ARMCLANG\startup_armv7-m.S"
   #else
     #error "No appropriate startup file found!"
   #endif
 
 #elif defined (__GNUC__)
-  #if   (defined (ARM_MATH_CM0))
+  #if   (defined (ARMCM0))
     #include "GCC\startup_armv6-m.S"
-  #elif (defined (ARM_MATH_CM0P))
+  #elif (defined (ARMCM0P) || defined (ARMCM0P_MPU))
     #include "GCC\startup_armv6-m.S"
-  #elif (defined (ARM_MATH_CM3))
+  #elif (defined (ARMCM3))
     #include "GCC\startup_armv7-m.S"
-  #elif (defined (ARM_MATH_CM4))
+  #elif (defined (ARMCM4) || defined (ARMCM4_FP))
     #include "GCC\startup_armv7-m.S"
-  #elif (defined (ARM_MATH_CM7))
+  #elif (defined (ARMCM7) || defined (ARMCM7_SP) || defined (ARMCM7_DP))
     #include "GCC\startup_armv7-m.S"
-  #elif (defined (ARM_MATH_ARMV8MBL))
+  #elif (defined (ARMv8MBL))
     #include "GCC\startup_armv6-m.S"
-  #elif (defined (ARM_MATH_ARMV8MML))
+  #elif (defined (ARMv8MML)    || defined (ARMv8MML_DSP)    || \
+         defined (ARMv8MML_SP) || defined (ARMv8MML_DSP_SP) || \
+         defined (ARMv8MML_DP) || defined (ARMv8MML_DSP_DP)   )
     #include "GCC\startup_armv7-m.S"
   #else
     #error "No appropriate startup file found!"

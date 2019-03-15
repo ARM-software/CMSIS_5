@@ -119,6 +119,12 @@ __Vectors_End:
                 .globl   Reset_Handler
                 .fnstart
 Reset_Handler:
+                ldr      r0, =__StackLimit
+                msr      msplim, r0
+
+/* CMSIS System Initialization */
+                bl       SystemInit
+
 /* Firstly it copies data from read only memory to RAM.
  * There are two schemes to copy. One can copy more than one sections.
  * Another can copy only one section. The former scheme needs more
@@ -237,10 +243,6 @@ Reset_Handler:
                 blt      .L_loop3
 #endif /* __STARTUP_CLEAR_BSS_MULTIPLE || __STARTUP_CLEAR_BSS */
 
-                ldr      r0, =__StackLimit
-                msr      msplim, r0
-
-                bl       SystemInit
                 bl       _start
 
                 .fnend

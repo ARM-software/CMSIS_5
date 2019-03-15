@@ -442,32 +442,32 @@ CONV_DEFINE_TEST(conv_partial_opt      , q7 , q7_t     , CONV_PARTIAL_TEST_TEMPL
 
 JTEST_DEFINE_GROUP(conv_tests)
 {
-    /*
-      To skip a test, comment it out.
-    */
-    JTEST_TEST_CALL(arm_conv_f32_tests);
-    JTEST_TEST_CALL(arm_conv_q31_tests);
-    JTEST_TEST_CALL(arm_conv_q15_tests);
-    JTEST_TEST_CALL(arm_conv_q7_tests);
+  /*
+    To skip a test, comment it out.
+  */
+  JTEST_TEST_CALL(arm_conv_f32_tests);
+  JTEST_TEST_CALL(arm_conv_q31_tests);
+  JTEST_TEST_CALL(arm_conv_q15_tests);
+  JTEST_TEST_CALL(arm_conv_q7_tests);
 
-    JTEST_TEST_CALL(arm_conv_opt_q15_tests);
-    JTEST_TEST_CALL(arm_conv_opt_q7_tests);
+  JTEST_TEST_CALL(arm_conv_opt_q15_tests);
+  JTEST_TEST_CALL(arm_conv_opt_q7_tests);
 
-    JTEST_TEST_CALL(arm_conv_fast_q31_tests);
-    JTEST_TEST_CALL(arm_conv_fast_q15_tests);
+  JTEST_TEST_CALL(arm_conv_fast_q31_tests);
+  JTEST_TEST_CALL(arm_conv_fast_q15_tests);
 
-    JTEST_TEST_CALL(arm_conv_fast_opt_q15_tests);
+  JTEST_TEST_CALL(arm_conv_fast_opt_q15_tests);
 
-    JTEST_TEST_CALL(arm_conv_partial_f32_tests);
-    JTEST_TEST_CALL(arm_conv_partial_q31_tests);
-    JTEST_TEST_CALL(arm_conv_partial_q15_tests);
-    JTEST_TEST_CALL(arm_conv_partial_q7_tests);
+  JTEST_TEST_CALL(arm_conv_partial_f32_tests);
+  JTEST_TEST_CALL(arm_conv_partial_q31_tests);
+  JTEST_TEST_CALL(arm_conv_partial_q15_tests);
+  JTEST_TEST_CALL(arm_conv_partial_q7_tests);
 
-    JTEST_TEST_CALL(arm_conv_partial_fast_q31_tests);
-    JTEST_TEST_CALL(arm_conv_partial_fast_q15_tests);
+  JTEST_TEST_CALL(arm_conv_partial_fast_q31_tests);
+  JTEST_TEST_CALL(arm_conv_partial_fast_q15_tests);
 
-    JTEST_TEST_CALL(arm_conv_partial_fast_opt_q15_tests);
+  JTEST_TEST_CALL(arm_conv_partial_fast_opt_q15_tests);
 
-    JTEST_TEST_CALL(arm_conv_partial_opt_q15_tests);
-    JTEST_TEST_CALL(arm_conv_partial_opt_q7_tests);
+  JTEST_TEST_CALL(arm_conv_partial_opt_q15_tests);
+  JTEST_TEST_CALL(arm_conv_partial_opt_q7_tests);
 }
