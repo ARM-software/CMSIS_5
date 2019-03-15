@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * $Date:        14. February 2019
+ * $Date:        13. March 2019
  * $Revision:    V1.0 (beta)
  *
  * Project:      WiFi (Wireless Fidelity Interface) Driver definitions
@@ -43,75 +43,73 @@ extern "C"
 
 
 /****** WiFi SetOption/GetOption Function Option Codes *****/
-#define ARM_WIFI_SSID                       1U          ///< Station     Get SSID of connected AP;            data = &ssid,     len<= 33, ssid     (char[32+1]), null-terminated string
-#define ARM_WIFI_BSSID                      2U          ///< Station     Get BSSID of connected AP;           data = &bssid,    len =  6, bssid    (uint8_t[6])
-#define ARM_WIFI_PASS                       3U          ///< Station     Get Password of connected AP;        data = &pass,     len<= 65, pass     (char[64+1]), null-terminated string
-#define ARM_WIFI_SECURITY                   4U          ///< Station     Get Security Type of connected AP;   data = &security, len =  4, security (uint32_t): ARM_WIFI_SECURITY_xxx
-#define ARM_WIFI_CHANNEL                    5U          ///< Station     Get Channel of connected AP;         data = &ch,       len =  4, ch       (uint32_t)
-#define ARM_WIFI_RSSI                       6U          ///< Station     Get RSSI of connected AP;            data = &rssi,     len =  4, rssi     (uint32_t)
-#define ARM_WIFI_TX_POWER                   7U          ///< Station Set/Get transmit power;                  data = &dBm,      len =  4, dBm      (uint32_t): 0 .. 20 [dBm]
-#define ARM_WIFI_MAC                        8U          ///< Station Set/Get MAC;                             data = &mac,      len =  6, mac      (uint8_t[6])
-#define ARM_WIFI_IP                         9U          ///< Station Set/Get IPv4 static/assigned address;    data = &ip,       len =  4, ip       (uint8_t[4])
-#define ARM_WIFI_IP_SUBNET_MASK             10U         ///< Station Set/Get IPv4 subnet mask;                data = &msk,      len =  4, msk      (uint8_t[4])
-#define ARM_WIFI_IP_GATEWAY                 11U         ///< Station Set/Get IPv4 gateway address;            data = &ip,       len =  4, ip       (uint8_t[4])
-#define ARM_WIFI_IP_DNS1                    12U         ///< Station Set/Get IPv4 primary   DNS address;      data = &ip,       len =  4, ip       (uint8_t[4])
-#define ARM_WIFI_IP_DNS2                    13U         ///< Station Set/Get IPv4 secondary DNS address;      data = &ip,       len =  4, ip       (uint8_t[4])
-#define ARM_WIFI_IP_DHCP                    14U         ///< Station Set/Get IPv4 DHCP client enable/disable; data = &en,       len =  4, en       (uint32_t): 0 = disable, non-zero = enable (default)
-#define ARM_WIFI_IP6_GLOBAL                 15U         ///< Station Set/Get IPv6 global address;             data = &ip6,      len = 16, ip6      (uint8_t[16])
-#define ARM_WIFI_IP6_LINK_LOCAL             16U         ///< Station Set/Get IPv6 link local address;         data = &ip6,      len = 16, ip6      (uint8_t[16])
-#define ARM_WIFI_IP6_SUBNET_PREFIX_LEN      17U         ///< Station Set/Get IPv6 subnet prefix length;       data = &len,      len =  4, len      (uint32_t): 1 .. 127
-#define ARM_WIFI_IP6_GATEWAY                18U         ///< Station Set/Get IPv6 gateway address;            data = &ip6,      len = 16, ip6      (uint8_t[16])
-#define ARM_WIFI_IP6_DNS1                   19U         ///< Station Set/Get IPv6 primary   DNS address;      data = &ip6,      len = 16, ip6      (uint8_t[16])
-#define ARM_WIFI_IP6_DNS2                   20U         ///< Station Set/Get IPv6 secondary DNS address;      data = &ip6,      len = 16, ip6      (uint8_t[16])
-#define ARM_WIFI_IP6_DHCP_MODE              21U         ///< Station Set/Get IPv6 DHCPv6 client mode;         data = &mode,     len =  4, mode     (uint32_t): ARM_WIFI_IP6_DHCP_xxx (default Off)
-#define ARM_WIFI_AP_SSID_HIDE               22U         ///< AP      Set/Get SSID hide option;                data = &en,       len =  4, en       (uint32_t): 0 = disable (default), non-zero = enable
-#define ARM_WIFI_AP_TX_POWER                23U         ///< AP      Set/Get transmit power;                  data = &dBm,      len =  4, dBm      (uint32_t): 0 .. 20 [dBm]
-#define ARM_WIFI_AP_MAC                     24U         ///< AP      Set/Get MAC;                             data = &mac,      len =  6, mac      (uint8_t[6])
-#define ARM_WIFI_AP_IP                      25U         ///< AP      Set/Get IPv4 static/assigned address;    data = &ip,       len =  4, ip       (uint8_t[4])
-#define ARM_WIFI_AP_IP_SUBNET_MASK          26U         ///< AP      Set/Get IPv4 subnet mask;                data = &msk,      len =  4, msk      (uint8_t[4])
-#define ARM_WIFI_AP_IP_GATEWAY              27U         ///< AP      Set/Get IPv4 gateway address;            data = &ip,       len =  4, ip       (uint8_t[4])
-#define ARM_WIFI_AP_IP_DNS1                 28U         ///< AP      Set/Get IPv4 primary   DNS address;      data = &ip,       len =  4, ip       (uint8_t[4])
-#define ARM_WIFI_AP_IP_DNS2                 29U         ///< AP      Set/Get IPv4 secondary DNS address;      data = &ip,       len =  4, ip       (uint8_t[4])
-#define ARM_WIFI_AP_IP_DHCP                 30U         ///< AP      Set/Get IPv4 DHCP server enable/disable; data = &en,       len =  4, en       (uint32_t): 0 = disable, non-zero = enable (default)
-#define ARM_WIFI_AP_IP_DHCP_POOL_BEGIN      31U         ///< AP      Set/Get IPv4 DHCP pool begin address;    data = &ip,       len =  4, ip       (uint8_t[4])
-#define ARM_WIFI_AP_IP_DHCP_POOL_END        32U         ///< AP      Set/Get IPv4 DHCP pool end address;      data = &ip,       len =  4, ip       (uint8_t[4])
-#define ARM_WIFI_AP_IP_DHCP_LEASE_TIME      33U         ///< AP      Set/Get IPv4 DHCP lease time;            data = &sec,      len =  4, sec      (uint32_t) [seconds]
-#define ARM_WIFI_AP_IP_DHCP_TABLE           34U         ///< AP          Get IPv4 DHCP table;                 data = &mac_ip4[],len = sizeof(mac_ip4[]), mac_ip4 (array of ARM_WIFI_MAC_IP4_t structures)
-#define ARM_WIFI_AP_IP6_GLOBAL              35U         ///< AP      Set/Get IPv6 global address;             data = &ip6,      len = 16, ip6      (uint8_t[16])
-#define ARM_WIFI_AP_IP6_LINK_LOCAL          36U         ///< AP      Set/Get IPv6 link local address;         data = &ip6,      len = 16, ip6      (uint8_t[16])
-#define ARM_WIFI_AP_IP6_SUBNET_PREFIX_LEN   37U         ///< AP      Set/Get IPv6 subnet prefix length;       data = &len,      len =  4, len      (uint32_t): 1 .. 127
-#define ARM_WIFI_AP_IP6_GATEWAY             38U         ///< AP      Set/Get IPv6 gateway address;            data = &ip6,      len = 16, ip6      (uint8_t[16])
-#define ARM_WIFI_AP_IP6_DNS1                39U         ///< AP      Set/Get IPv6 primary   DNS address;      data = &ip6,      len = 16, ip6      (uint8_t[16])
-#define ARM_WIFI_AP_IP6_DNS2                40U         ///< AP      Set/Get IPv6 secondary DNS address;      data = &ip6,      len = 16, ip6      (uint8_t[16])
+#define ARM_WIFI_BSSID                      1U          ///< Station/AP Set/Get BSSID of AP to connect or of AP;        data = &bssid,    len =  6, uint8_t[6]
+#define ARM_WIFI_TX_POWER                   2U          ///< Station/AP Set/Get transmit power;                         data = &power,    len =  4, uint32_t: 0 .. 20 [dBm]
+#define ARM_WIFI_LP_TIMER                   3U          ///< Station    Set/Get low-power deep-sleep time;              data = &time,     len =  4, uint32_t [seconds]: 0 = disable (default)
+#define ARM_WIFI_DTIM                       4U          ///< Station/AP Set/Get DTIM interval;                          data = &dtim,     len =  4, uint32_t [beacons]
+#define ARM_WIFI_BEACON                     5U          ///<         AP Set/Get beacon interval;                        data = &interval, len =  4, uint32_t [ms]
+#define ARM_WIFI_MAC                        6U          ///< Station/AP Set/Get MAC;                                    data = &mac,      len =  6, uint8_t[6]
+#define ARM_WIFI_IP                         7U          ///< Station/AP Set/Get IPv4 static/assigned address;           data = &ip,       len =  4, uint8_t[4]
+#define ARM_WIFI_IP_SUBNET_MASK             8U          ///< Station/AP Set/Get IPv4 subnet mask;                       data = &mask,     len =  4, uint8_t[4]
+#define ARM_WIFI_IP_GATEWAY                 9U          ///< Station/AP Set/Get IPv4 gateway address;                   data = &ip,       len =  4, uint8_t[4]
+#define ARM_WIFI_IP_DNS1                    10U         ///< Station/AP Set/Get IPv4 primary   DNS address;             data = &ip,       len =  4, uint8_t[4]
+#define ARM_WIFI_IP_DNS2                    11U         ///< Station/AP Set/Get IPv4 secondary DNS address;             data = &ip,       len =  4, uint8_t[4]
+#define ARM_WIFI_IP_DHCP                    12U         ///< Station/AP Set/Get IPv4 DHCP client/server enable/disable; data = &dhcp,     len =  4, uint32_t: 0 = disable, non-zero = enable (default)
+#define ARM_WIFI_IP_DHCP_POOL_BEGIN         13U         ///<         AP Set/Get IPv4 DHCP pool begin address;           data = &ip,       len =  4, uint8_t[4]
+#define ARM_WIFI_IP_DHCP_POOL_END           14U         ///<         AP Set/Get IPv4 DHCP pool end address;             data = &ip,       len =  4, uint8_t[4]
+#define ARM_WIFI_IP_DHCP_LEASE_TIME         15U         ///<         AP Set/Get IPv4 DHCP lease time;                   data = &time,     len =  4, uint32_t [seconds]
+#define ARM_WIFI_IP6_GLOBAL                 16U         ///< Station/AP Set/Get IPv6 global address;                    data = &ip6,      len = 16, uint8_t[16]
+#define ARM_WIFI_IP6_LINK_LOCAL             17U         ///< Station/AP Set/Get IPv6 link local address;                data = &ip6,      len = 16, uint8_t[16]
+#define ARM_WIFI_IP6_SUBNET_PREFIX_LEN      18U         ///< Station/AP Set/Get IPv6 subnet prefix length;              data = &len,      len =  4, uint32_t: 1 .. 127
+#define ARM_WIFI_IP6_GATEWAY                19U         ///< Station/AP Set/Get IPv6 gateway address;                   data = &ip6,      len = 16, uint8_t[16]
+#define ARM_WIFI_IP6_DNS1                   20U         ///< Station/AP Set/Get IPv6 primary   DNS address;             data = &ip6,      len = 16, uint8_t[16]
+#define ARM_WIFI_IP6_DNS2                   21U         ///< Station/AP Set/Get IPv6 secondary DNS address;             data = &ip6,      len = 16, uint8_t[16]
+#define ARM_WIFI_IP6_DHCP_MODE              22U         ///< Station/AP Set/Get IPv6 DHCPv6 client mode;                data = &mode,     len =  4, uint32_t: ARM_WIFI_IP6_DHCP_xxx (default Off)
+
+/****** WiFi Operating Mode *****/
+#define ARM_WIFI_MODE_NONE                  0U          ///< Inactive (default)
+#define ARM_WIFI_MODE_STATION               1U          ///< Station
+#define ARM_WIFI_MODE_AP                    2U          ///< Access Point
+#define ARM_WIFI_MODE_STATION_AP            3U          ///< Station and Access Point
+#define ARM_WIFI_MODE_AD_HOC                4U          ///< Ad-hoc
 
 /****** WiFi Security Type *****/
-#define ARM_WIFI_SECURITY_OPEN              0U          ///< Unsecured
-#define ARM_WIFI_SECURITY_WEP               1U          ///< Wired Equivalent Privacy (WEP)
-#define ARM_WIFI_SECURITY_WPA               2U          ///< WiFi Protected Access (WPA)
-#define ARM_WIFI_SECURITY_WPA2              3U          ///< WiFi Protected Access II (WPA2)
-#define ARM_WIFI_SECURITY_UNKNOWN           7U          ///< Unknown
+#define ARM_WIFI_SECURITY_OPEN              0U          ///< Open
+#define ARM_WIFI_SECURITY_WEP               1U          ///< Wired Equivalent Privacy (WEP) with Pre-Sheared Key (PSK)
+#define ARM_WIFI_SECURITY_WPA               2U          ///< WiFi Protected Access (WPA) with PSK
+#define ARM_WIFI_SECURITY_WPA2              3U          ///< WiFi Protected Access II (WPA2) with PSK
+#define ARM_WIFI_SECURITY_UNKNOWN           255U        ///< Unknown
+
+/****** WiFi Protected Setup (WPS) Method *****/
+#define ARM_WIFI_WPS_METHOD_NONE            0U          ///< Not used
+#define ARM_WIFI_WPS_METHOD_PBC             1U          ///< Push Button Configuration
+#define ARM_WIFI_WPS_METHOD_PIN             2U          ///< PIN
 
 /****** WiFi IPv6 Dynamic Host Configuration Protocol (DHCP) Mode *****/
-#define ARM_WIFI_IP6_DHCP_OFF               0U          ///< Static Host Configuration
+#define ARM_WIFI_IP6_DHCP_OFF               0U          ///< Static Host Configuration (default)
 #define ARM_WIFI_IP6_DHCP_STATELESS         1U          ///< Dynamic Host Configuration stateless DHCPv6
 #define ARM_WIFI_IP6_DHCP_STATEFULL         2U          ///< Dynamic Host Configuration statefull DHCPv6
 
 /****** WiFi Event *****/
 #define ARM_WIFI_EVENT_AP_CONNECT          (1UL << 0)   ///< Access Point: Station has connected;           arg = &mac, mac (uint8_t[6])
 #define ARM_WIFI_EVENT_AP_DISCONNECT       (1UL << 1)   ///< Access Point: Station has disconnected;        arg = &mac, mac (uint8_t[6])
-#define ARM_WIFI_EVENT_ETH_RX_FRAME        (1UL << 4)   ///< Ethernet Frame Received (in bypass mode only); arg = NULL
+#define ARM_WIFI_EVENT_ETH_RX_FRAME        (1UL << 4)   ///< Ethernet Frame Received (in bypass mode only); arg = interface (0 = Station, 1 = Access Point)
 
 
 /**
-\brief WiFi Media Access Control / Internet Protocol (MAC/IP4) Information
+\brief WiFi Configuration
 */
 typedef struct {
-  uint8_t mac[6];                                       ///< Media Access Control Information
-  uint8_t ip4[4];                                       ///< Internet Protocol v4 address
-} ARM_WIFI_MAC_IP4_t;
+  char    ssid[32+1];                                   ///< Service Set Identifier (SSID) null-terminated string
+  char    pass[64+1];                                   ///< Password null-terminated string
+  uint8_t security;                                     ///< Security type (ARM_WIFI_SECURITY_xxx)
+  uint8_t ch;                                           ///< WiFi Channel (0 = auto, otherwise = exact channel)
+  uint8_t wps_method;                                   ///< WiFi Protected Setup (WPS) method (ARM_WIFI_WPS_METHOD_xxx)
+  char    wps_pin[8+1];                                 ///< WiFi Protected Setup (WPS) PIN null-terminated string
+} ARM_WIFI_CONFIG_t;
 
 /**
-\brief WiFi Access Point (AP) Information
+\brief WiFi Scan Information
 */
 typedef struct {
   char    ssid[32+1];                                   ///< Service Set Identifier (SSID) null-terminated string
@@ -119,8 +117,18 @@ typedef struct {
   uint8_t security;                                     ///< Security type (ARM_WIFI_SECURITY_xxx)
   uint8_t ch;                                           ///< WiFi Channel
   uint8_t rssi;                                         ///< Received Signal Strength Indicator
-} ARM_WIFI_AP_INFO_t;
+} ARM_WIFI_SCAN_INFO_t;
 
+/**
+\brief WiFi Network Information
+*/
+typedef struct {
+  char    ssid[32+1];                                   ///< Service Set Identifier (SSID) null-terminated string
+  char    pass[64+1];                                   ///< Password null-terminated string
+  uint8_t security;                                     ///< Security type (ARM_WIFI_SECURITY_xxx)
+  uint8_t ch;                                           ///< WiFi Channel
+  uint8_t rssi;                                         ///< Received Signal Strength Indicator
+} ARM_WIFI_NET_INFO_t;
 
 /****** Socket Address Family definitions *****/
 #define ARM_SOCKET_AF_INET                  1           ///< IPv4
@@ -173,7 +181,7 @@ typedef struct {
 */
 /**
   \fn            int32_t ARM_WIFI_Initialize (ARM_WIFI_SignalEvent_t cb_event)
-  \brief         Initialize WiFi Interface.
+  \brief         Initialize WiFi Module.
   \param[in]     cb_event Pointer to \ref ARM_WIFI_SignalEvent_t
   \return        execution status
                    - \ref ARM_DRIVER_OK                : Operation successful
@@ -181,152 +189,140 @@ typedef struct {
 */
 /**
   \fn            int32_t ARM_WIFI_Uninitialize (void)
-  \brief         De-initialize WiFi Interface.
+  \brief         De-initialize WiFi Module.
   \return        execution status
                    - \ref ARM_DRIVER_OK                : Operation successful
                    - \ref ARM_DRIVER_ERROR             : Operation failed
 */
 /**
   \fn            int32_t ARM_WIFI_PowerControl (ARM_POWER_STATE state)
-  \brief         Control WiFi Interface Power.
-  \param[in]     state    Power state
+  \brief         Control WiFi Module Power.
+  \param[in]     state     Power state
                    - \ref ARM_POWER_OFF                : Power off: no operation possible
-                   - \ref ARM_POWER_LOW                : Low power mode: retain state, detect and signal wake-up events
+                   - \ref ARM_POWER_LOW                : Low-power mode: sleep or deep-sleep depending on ARM_WIFI_LP_xxx options set
                    - \ref ARM_POWER_FULL               : Power on: full operation at maximum performance
   \return        execution status
                    - \ref ARM_DRIVER_OK                : Operation successful
                    - \ref ARM_DRIVER_ERROR             : Operation failed
                    - \ref ARM_DRIVER_ERROR_UNSUPPORTED : Operation not supported
+                   - \ref ARM_DRIVER_ERROR_PARAMETER   : Parameter error (invalid state)
 */
 /**
-  \fn            int32_t ARM_WIFI_SetOption (uint32_t option, const void *data, uint32_t len)
-  \brief         Set WiFi Interface Options.
-  \param[in]     option   Option to set
-  \param[in]     data     Pointer to data relevant to selected option
-  \param[in]     len      Length of data (in bytes)
+  \fn            int32_t ARM_WIFI_GetModuleInfo (char *module_info, uint32_t max_len)
+  \brief         Get Module information.
+  \param[out]    module_info Pointer to character buffer were info string will be returned
+  \param[in]     max_len     Maximum length of string to return (including null terminator)
   \return        execution status
                    - \ref ARM_DRIVER_OK                : Operation successful
                    - \ref ARM_DRIVER_ERROR             : Operation failed
                    - \ref ARM_DRIVER_ERROR_UNSUPPORTED : Operation not supported
-                   - \ref ARM_DRIVER_ERROR_PARAMETER   : Parameter error (NULL data pointer or len less than option specifies)
+                   - \ref ARM_DRIVER_ERROR_PARAMETER   : Parameter error (NULL module_info pointer or max_len equals to 0)
 */
 /**
-  \fn            int32_t ARM_WIFI_GetOption (uint32_t option, void *data, uint32_t *len)
-  \brief         Get WiFi Interface Options.
-  \param[in]     option   Option to get
-  \param[out]    data     Pointer to memory where data for selected option will be returned
-  \param[in,out] len      Pointer to length of data (input/output)
+  \fn            int32_t ARM_WIFI_SetOption (uint32_t interface, uint32_t option, const void *data, uint32_t len)
+  \brief         Set WiFi Module Options.
+  \param[in]     interface Interface (0 = Station, 1 = Access Point)
+  \param[in]     option    Option to set
+  \param[in]     data      Pointer to data relevant to selected option
+  \param[in]     len       Length of data (in bytes)
+  \return        execution status
+                   - \ref ARM_DRIVER_OK                : Operation successful
+                   - \ref ARM_DRIVER_ERROR             : Operation failed
+                   - \ref ARM_DRIVER_ERROR_UNSUPPORTED : Operation not supported
+                   - \ref ARM_DRIVER_ERROR_PARAMETER   : Parameter error (invalid interface, NULL data pointer or len less than option specifies)
+*/
+/**
+  \fn            int32_t ARM_WIFI_GetOption (uint32_t interface, uint32_t option, void *data, uint32_t *len)
+  \brief         Get WiFi Module Options.
+  \param[in]     interface Interface (0 = Station, 1 = Access Point)
+  \param[in]     option    Option to get
+  \param[out]    data      Pointer to memory where data for selected option will be returned
+  \param[in,out] len       Pointer to length of data (input/output)
                    - input: maximum length of data that can be returned (in bytes)
                    - output: length of returned data (in bytes)
   \return        execution status
                    - \ref ARM_DRIVER_OK                : Operation successful
                    - \ref ARM_DRIVER_ERROR             : Operation failed
                    - \ref ARM_DRIVER_ERROR_UNSUPPORTED : Operation not supported
-                   - \ref ARM_DRIVER_ERROR_PARAMETER   : Parameter error (NULL data or len pointer, or *len less than option specifies)
+                   - \ref ARM_DRIVER_ERROR_PARAMETER   : Parameter error (invalid interface, NULL data or len pointer, or *len less than option specifies)
 */
 /**
-  \fn            int32_t ARM_WIFI_Scan (ARM_WIFI_AP_INFO_t ap_info[], uint32_t max_num)
-  \brief         Scan for Access Points in range.
-  \param[out]    ap_info  Pointer to array of ARM_WIFI_AP_INFO_t structures where Access Point Information will be returned
-  \param[in]     max_num  Maximum number of Access Point information structures to return
-  \return        number of ARM_WIFI_AP_INFO_t structures returned or error code
-                   - value >= 0                        : Number of ARM_WIFI_AP_INFO_t structures returned
+  \fn            int32_t ARM_WIFI_Scan (ARM_WIFI_SCAN_INFO_t scan_info[], uint32_t max_num)
+  \brief         Scan for available networks in range.
+  \param[out]    scan_info Pointer to array of ARM_WIFI_SCAN_INFO_t structures where available Scan Information will be returned
+  \param[in]     max_num   Maximum number of Network Information structures to return
+  \return        number of ARM_WIFI_SCAN_INFO_t structures returned or error code
+                   - value >= 0                        : Number of ARM_WIFI_SCAN_INFO_t structures returned
                    - \ref ARM_DRIVER_ERROR             : Operation failed
-                   - \ref ARM_DRIVER_ERROR_PARAMETER   : Parameter error (NULL ap_info pointer or max_num equal to 0)
+                   - \ref ARM_DRIVER_ERROR_PARAMETER   : Parameter error (NULL scan_info pointer or max_num equal to 0)
 */
 /**
-  \fn            int32_t ARM_WIFI_Connect (const char *ssid, const char *pass, uint8_t security, uint8_t ch)
-  \brief         Connect Station to Access Point (join the AP).
-  \param[in]     ssid     Pointer to Service Set Identifier (SSID) null-terminated string
-  \param[in]     pass     Pointer to password null-terminated string
-  \param[in]     security Security standard used
-                   - \ref ARM_WIFI_SECURITY_OPEN       : Unsecured
-                   - \ref ARM_WIFI_SECURITY_WEP        : Wired Equivalent Privacy (WEP)
-                   - \ref ARM_WIFI_SECURITY_WPA        : WiFi Protected Access (WPA)
-                   - \ref ARM_WIFI_SECURITY_WPA2       : WiFi Protected Access II (WPA2)
-  \param[in]     ch       Channel
-                   - value = 0: autodetect
-                   - value > 0: exact channel to connect on
+  \fn            int32_t ARM_WIFI_Configure (uint32_t interface, ARM_WIFI_CONFIG_t *config)
+  \brief         Configure Network Parameters.
+  \param[in]     interface Interface (0 = Station, 1 = Access Point)
+  \param[in]     config    Pointer to ARM_WIFI_CONFIG_t structure where Configuration parameters are located
   \return        execution status
                    - \ref ARM_DRIVER_OK                : Operation successful
                    - \ref ARM_DRIVER_ERROR             : Operation failed
-                   - \ref ARM_DRIVER_ERROR_TIMEOUT     : Timeout occurred
-                   - \ref ARM_DRIVER_ERROR_UNSUPPORTED : Operation not supported (security type or channel autodetect not supported)
-                   - \ref ARM_DRIVER_ERROR_PARAMETER   : Parameter error (NULL ssid pointer, or NULL pass pointer if security different then ARM_WIFI_SECURITY_OPEN or invalid security parameter)
+                   - \ref ARM_DRIVER_ERROR_UNSUPPORTED : Operation not supported (security type, WPS or channel autodetect not supported)
+                   - \ref ARM_DRIVER_ERROR_PARAMETER   : Parameter error (invalid interface, security type or NULL config_params pointer)
 */
 /**
-  \fn            int32_t ARM_WIFI_ConnectWPS (const char *pin)
-  \brief         Connect Station to Access Point via WiFi Protected Setup (WPS). Access Point information can be retrieved through 
-                 GetOption function with ARM_WIFI_INFO_AP option.
-  \param[in]     pin      Pointer to pin null-terminated string or push-button connection trigger
-                   - value != NULL: pointer to pin null-terminated string
-                   - value == NULL: push-button connection trigger
+  \fn            int32_t ARM_WIFI_Activate (uint32_t mode)
+  \brief         Activate selected mode of operation.
+  \param[in]     mode     Mode of operation
+                   - \ref ARM_WIFI_MODE_STATION        : Station only
+                   - \ref ARM_WIFI_MODE_AP             : Access Point only
+                   - \ref ARM_WIFI_MODE_STATION_AP     : Station and Access Point
+                   - \ref ARM_WIFI_MODE_AD_HOC         : Ad-hoc
   \return        execution status
                    - \ref ARM_DRIVER_OK                : Operation successful
                    - \ref ARM_DRIVER_ERROR             : Operation failed
                    - \ref ARM_DRIVER_ERROR_TIMEOUT     : Timeout occurred
                    - \ref ARM_DRIVER_ERROR_UNSUPPORTED : Operation not supported
+                   - \ref ARM_DRIVER_ERROR_PARAMETER   : Parameter error (invalid mode)
 */
 /**
-  \fn            int32_t ARM_WIFI_Disconnect (void)
-  \brief         Disconnect Station from currently connected Access Point.
+  \fn            int32_t ARM_WIFI_Deactivate (void)
+  \brief         Deactivate current mode of operation.
   \return        execution status
                    - \ref ARM_DRIVER_OK                : Operation successful
                    - \ref ARM_DRIVER_ERROR             : Operation failed
 */
 /**
-  \fn            int32_t ARM_WIFI_IsConnected (void)
-  \brief         Check Station connection status.
-  \return        connection status
-                   - value != 0: connected
-                   - value = 0: not connected
+  \fn            uint32_t ARM_WIFI_IsConnected (void)
+  \brief         Get station connection status.
+  \return        station connection status
+                   - value != 0: Station connected
+                   - value = 0: Station not connected
 */
 /**
-  \fn            int32_t ARM_WIFI_AP_Start (const char *ssid, const char *pass, uint8_t security, uint8_t ch)
-  \brief         Start Access Point.
-  \param[in]     ssid     Pointer to Service Set Identifier (SSID) null-terminated string
-  \param[in]     pass     Pointer to password null-terminated string
-  \param[in]     security Security standard used
-                   - \ref ARM_WIFI_SECURITY_OPEN       : Unsecured
-                   - \ref ARM_WIFI_SECURITY_WEP        : Wired Equivalent Privacy (WEP)
-                   - \ref ARM_WIFI_SECURITY_WPA        : WiFi Protected Access (WPA)
-                   - \ref ARM_WIFI_SECURITY_WPA2       : WiFi Protected Access II (WPA2)
-  \param[in]     ch       Channel
+  \fn            int32_t ARM_WIFI_GetNetInfo (ARM_WIFI_NET_INFO_t *net_info)
+  \brief         Get station Network Information.
+  \param[out]    net_info  Pointer to ARM_WIFI_NET_INFO_t structure where station Network Information will be returned
   \return        execution status
                    - \ref ARM_DRIVER_OK                : Operation successful
-                   - \ref ARM_DRIVER_ERROR             : Operation failed
-                   - \ref ARM_DRIVER_ERROR_UNSUPPORTED : Operation not supported (security type or channel autodetect not supported)
-                   - \ref ARM_DRIVER_ERROR_PARAMETER   : Parameter error (NULL ssid pointer, or NULL pass pointer if security different then ARM_WIFI_SECURITY_OPEN or invalid security parameter)
-*/
-/**
-  \fn            int32_t ARM_WIFI_AP_Stop (void)
-  \brief         Stop Access Point.
-  \return        execution status
-                   - \ref ARM_DRIVER_OK                : Operation successful
-                   - \ref ARM_DRIVER_ERROR             : Operation failed
+                   - \ref ARM_DRIVER_ERROR             : Operation failed (station not connected)
                    - \ref ARM_DRIVER_ERROR_UNSUPPORTED : Operation not supported
+                   - \ref ARM_DRIVER_ERROR_PARAMETER   : Parameter error (invalid interface or NULL net_info pointer)
 */
 /**
-  \fn            int32_t ARM_WIFI_AP_IsRunning (void)
-  \brief         Check Access Point running status.
-  \return        running status
-                   - value != 0: running
-                   - value = 0: not running
-*/
-/**
-  \fn            int32_t ARM_WIFI_BypassControl (uint32_t enable)
+  \fn            int32_t ARM_WIFI_BypassControl (uint32_t interface, uint32_t mode)
   \brief         Enable or disable bypass (pass-through) mode. Transmit and receive Ethernet frames (IP layer bypassed and WiFi/Ethernet translation).
-  \param[in]     enable
-                   - value != 0: enable
-                   - value = 0: disable
+  \param[in]     interface Interface (0 = Station, 1 = Access Point)
+  \param[in]     mode
+                   - value = 1: all packets bypass internal IP stack
+                   - value = 0: all packets processed by internal IP stack
   \return        execution status
                    - \ref ARM_DRIVER_OK                : Operation successful
                    - \ref ARM_DRIVER_ERROR             : Operation failed
                    - \ref ARM_DRIVER_ERROR_UNSUPPORTED : Operation not supported
+                   - \ref ARM_DRIVER_ERROR_PARAMETER   : Parameter error (invalid interface or mode)
 */
 /**
-  \fn            int32_t ARM_WIFI_EthSendFrame (const uint8_t *frame, uint32_t len)
+  \fn            int32_t ARM_WIFI_EthSendFrame (uint32_t interface, const uint8_t *frame, uint32_t len)
   \brief         Send Ethernet frame (in bypass mode only).
+  \param[in]     interface Interface (0 = Station, 1 = Access Point)
   \param[in]     frame    Pointer to frame buffer with data to send
   \param[in]     len      Frame buffer length in bytes
   \return        execution status
@@ -334,22 +330,24 @@ typedef struct {
                    - \ref ARM_DRIVER_ERROR             : Operation failed
                    - \ref ARM_DRIVER_ERROR_BUSY        : Driver is busy
                    - \ref ARM_DRIVER_ERROR_UNSUPPORTED : Operation not supported
-                   - \ref ARM_DRIVER_ERROR_PARAMETER   : Parameter error (NULL frame pointer)
+                   - \ref ARM_DRIVER_ERROR_PARAMETER   : Parameter error (invalid interface or NULL frame pointer)
 */
 /**
-  \fn            int32_t ARM_WIFI_EthReadFrame (uint8_t *frame, uint32_t len)
+  \fn            int32_t ARM_WIFI_EthReadFrame (uint32_t interface, uint8_t *frame, uint32_t len)
   \brief         Read data of received Ethernet frame (in bypass mode only).
+  \param[in]     interface Interface (0 = Station, 1 = Access Point)
   \param[in]     frame    Pointer to frame buffer for data to read into
   \param[in]     len      Frame buffer length in bytes
   \return        number of data bytes read or error code
                    - value >= 0                        : Number of data bytes read
                    - \ref ARM_DRIVER_ERROR             : Operation failed
                    - \ref ARM_DRIVER_ERROR_UNSUPPORTED : Operation not supported
-                   - \ref ARM_DRIVER_ERROR_PARAMETER   : Parameter error (NULL frame pointer)
+                   - \ref ARM_DRIVER_ERROR_PARAMETER   : Parameter error (invalid interface or NULL frame pointer)
 */
 /**
-  \fn            uint32_t ARM_WIFI_EthGetRxFrameSize (void)
+  \fn            uint32_t ARM_WIFI_EthGetRxFrameSize (uint32_t interface)
   \brief         Get size of received Ethernet frame (in bypass mode only).
+  \param[in]     interface Interface (0 = Station, 1 = Access Point)
   \return        number of bytes in received frame
 */
 /**
@@ -414,7 +412,7 @@ typedef struct {
 /**
   \fn            int32_t ARM_WIFI_SocketConnect (int32_t socket, const uint8_t *ip, uint32_t ip_len, uint16_t port)
   \brief         Connect a socket to a remote host.
-  \param[in]     socket   socket identification number
+  \param[in]     socket   Socket identification number
   \param[in]     ip       Pointer to remote IP address
   \param[in]     ip_len   Length of 'ip' address in bytes
   \param[in]     port     Remote port number
@@ -433,7 +431,7 @@ typedef struct {
 */
 /**
   \fn            int32_t ARM_WIFI_SocketRecv (int32_t socket, void *buf, uint32_t len)
-  \brief         Receive data from a connected socket.
+  \brief         Receive data on a connected socket.
   \param[in]     socket   Socket identification number
   \param[out]    buf      Pointer to buffer where data should be stored
   \param[in]     len      Length of buffer (in bytes)
@@ -449,7 +447,7 @@ typedef struct {
 */
 /**
   \fn            int32_t ARM_WIFI_SocketRecvFrom (int32_t socket, void *buf, uint32_t len, uint8_t *ip, uint32_t *ip_len, uint16_t *port)
-  \brief         Receive data from a socket.
+  \brief         Receive data on a socket.
   \param[in]     socket   Socket identification number
   \param[out]    buf      Pointer to buffer where data should be stored
   \param[in]     len      Length of buffer (in bytes)
@@ -470,7 +468,7 @@ typedef struct {
 */
 /**
   \fn            int32_t ARM_WIFI_SocketSend (int32_t socket, const void *buf, uint32_t len)
-  \brief         Send data to a connected socket.
+  \brief         Send data on a connected socket.
   \param[in]     socket   Socket identification number
   \param[in]     buf      Pointer to buffer containing data to send
   \param[in]     len      Length of data (in bytes)
@@ -486,7 +484,7 @@ typedef struct {
 */
 /**
   \fn            int32_t ARM_WIFI_SocketSendTo (int32_t socket, const void *buf, uint32_t len, const uint8_t *ip, uint32_t ip_len, uint16_t port)
-  \brief         Send data to a socket.
+  \brief         Send data on a socket.
   \param[in]     socket   Socket identification number
   \param[in]     buf      Pointer to buffer containing data to send
   \param[in]     len      Length of data (in bytes)
@@ -618,16 +616,20 @@ typedef void (*ARM_WIFI_SignalEvent_t) (uint32_t event, void *arg); ///< Pointer
 \brief WiFi Driver Capabilities.
 */
 typedef struct {
-  uint32_t wps                   : 1;   ///< Station: WiFi Protected Setup (WPS)
-  uint32_t ap                    : 1;   ///< Access Point
-  uint32_t ap_connect_event      : 1;   ///< Access Point: event generated on Station connect
-  uint32_t ap_disconnect_event   : 1;   ///< Access Point: event generated on Station disconnect
-  uint32_t bypass_mode           : 1;   ///< Bypass or pass-through mode (Eth interface)
-  uint32_t eth_rx_frame_event    : 1;   ///< Event generated on Ethernet frame reception in bypass mode
+  uint32_t mode_station          : 1;   ///< Mode: Station
+  uint32_t mode_ap               : 1;   ///< Mode: Access Point
+  uint32_t mode_station_ap       : 1;   ///< Mode: Station and Access Point
+  uint32_t mode_ad_hoc           : 1;   ///< Mode: Ad-hoc
+  uint32_t wps_station           : 1;   ///< WiFi Protected Setup (WPS) for Station
+  uint32_t wps_ap                : 1;   ///< WiFi Protected Setup (WPS) for Access Point
+  uint32_t event_ap_connect      : 1;   ///< Access Point: event generated on Station connect
+  uint32_t event_ap_disconnect   : 1;   ///< Access Point: event generated on Station disconnect
+  uint32_t bypass_mode           : 1;   ///< Bypass or pass-through mode (Ethernet interface)
+  uint32_t event_eth_rx_frame    : 1;   ///< Event generated on Ethernet frame reception in bypass mode
   uint32_t ip                    : 1;   ///< IP (UDP/TCP) (Socket interface)
   uint32_t ip6                   : 1;   ///< IPv6 (Socket interface)
   uint32_t ping                  : 1;   ///< Ping (ICMP)
-  uint32_t reserved              : 23;  ///< Reserved (must be zero)
+  uint32_t reserved              : 19;  ///< Reserved (must be zero)
 } ARM_WIFI_CAPABILITIES;
 
 /**
@@ -639,20 +641,19 @@ typedef struct {
   int32_t               (*Initialize)                  (ARM_WIFI_SignalEvent_t cb_event);
   int32_t               (*Uninitialize)                (void);
   int32_t               (*PowerControl)                (ARM_POWER_STATE state);
-  int32_t               (*SetOption)                   (uint32_t option, const void *data, uint32_t  len);
-  int32_t               (*GetOption)                   (uint32_t option,       void *data, uint32_t *len);
-  int32_t               (*Scan)                        (ARM_WIFI_AP_INFO_t ap_info[], uint32_t max_num);
-  int32_t               (*Connect)                     (const char *ssid, const char *pass, uint8_t security, uint8_t ch);
-  int32_t               (*ConnectWPS)                  (const char *pin);
-  int32_t               (*Disconnect)                  (void);
-  int32_t               (*IsConnected)                 (void);
-  int32_t               (*AP_Start)                    (const char *ssid, const char *pass, uint8_t security, uint8_t ch);
-  int32_t               (*AP_Stop)                     (void);
-  int32_t               (*AP_IsRunning)                (void);
-  int32_t               (*BypassControl)               (uint32_t enable);
-  int32_t               (*EthSendFrame)                (const uint8_t *frame, uint32_t len);
-  int32_t               (*EthReadFrame)                (      uint8_t *frame, uint32_t len);
-  uint32_t              (*EthGetRxFrameSize)           (void);
+  int32_t               (*GetModuleInfo)               (char *module_info, uint32_t max_len);
+  int32_t               (*SetOption)                   (uint32_t interface, uint32_t option, const void *data, uint32_t  len);
+  int32_t               (*GetOption)                   (uint32_t interface, uint32_t option,       void *data, uint32_t *len);
+  int32_t               (*Scan)                        (ARM_WIFI_SCAN_INFO_t scan_info[], uint32_t max_num);
+  int32_t               (*Configure)                   (uint32_t interface, ARM_WIFI_CONFIG_t *config);
+  int32_t               (*Activate)                    (uint32_t mode);
+  int32_t               (*Deactivate)                  (void);
+  uint32_t              (*IsConnected)                 (void);
+  int32_t               (*GetNetInfo)                  (ARM_WIFI_NET_INFO_t *net_info);
+  int32_t               (*BypassControl)               (uint32_t interface, uint32_t mode);
+  int32_t               (*EthSendFrame)                (uint32_t interface, const uint8_t *frame, uint32_t len);
+  int32_t               (*EthReadFrame)                (uint32_t interface,       uint8_t *frame, uint32_t len);
+  uint32_t              (*EthGetRxFrameSize)           (uint32_t interface);
   int32_t               (*SocketCreate)                (int32_t af, int32_t type, int32_t protocol);
   int32_t               (*SocketBind)                  (int32_t socket, const uint8_t *ip, uint32_t  ip_len, uint16_t  port);
   int32_t               (*SocketListen)                (int32_t socket, int32_t backlog);

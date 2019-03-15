@@ -17,7 +17,6 @@ glob:
  - LICENSE.txt
  - Device/**/*
  - CMSIS/Core/Include/**/*
- - CMSIS/Core/Include/**/*: CMSIS/Include/
  - CMSIS/Core/Template/**/*
  - CMSIS/Core_A/**/*
  - CMSIS/DAP/**/*
@@ -26,11 +25,7 @@ glob:
  - CMSIS/DSP/Source/**/*
  - CMSIS/DSP/Projects/**/*
  - CMSIS/DSP/Examples/**/*
- - CMSIS/DSP/Include/**/*: CMSIS/Include/
- - CMSIS/DSP/Source/**/*: CMSIS/DSP_Lib/Source/
- - CMSIS/DSP/Projects/**/*: CMSIS/DSP_Lib/Source/
- - CMSIS/DSP/Examples/**/*: CMSIS/DSP_Lib/Examples/
- - CMSIS/Lib/**/*
+ - CMSIS/DSP/Lib/**/*
  - CMSIS/NN/**/*
  - CMSIS/Pack/**/*
  - CMSIS/RTOS/**/*
