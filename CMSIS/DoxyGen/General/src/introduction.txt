@@ -214,7 +214,7 @@ In addition, each CMSIS component has its own release history:
           - Added DSP Libraries Source variant
         - CMSIS-NN 1.1.0 (unchanged)
         - CMSIS-Driver 2.7.0
-          - Added WiFi Driver API 1.0.0-beta
+          - Added WiFi Interface API 1.0.0-beta
           - Added components for project specific driver implementations
         - CMSIS-RTOS 2.1.3
           - RTX 5.5.0 (see revision history)

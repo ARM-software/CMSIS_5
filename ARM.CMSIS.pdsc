@@ -33,7 +33,7 @@
       CMSIS-RTOS2:
         - RTX 5.5.0 (see revision history for details)
       CMSIS-Driver: 2.7.0
-        - Added WiFi Driver API 1.0.0-beta
+        - Added WiFi Interface API 1.0.0-beta
         - Added components for project specific driver implementations
       CMSIS-Pack: 1.6.0 (see revision history for details)
       Utilities:
