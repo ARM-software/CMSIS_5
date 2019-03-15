@@ -20,9 +20,9 @@ The following header files define the Application Programming Interface (API) fo
 
 The CMSIS-Driver WiFi provides access to the following interfaces:
 
- - \ref wifi_control_gr "Control interface": setup and control the WiFi API functions.
+ - \ref wifi_control_gr "Control interface": setup and control the WiFi module.
  - \ref wifi_management_gr "Management interface": allows you to configure and manage the connection
-   to the WiFi access point (AP).
+   to the WiFi access point (AP) or configure and manage the access point (AP).
  - \ref wifi_socket_gr "Socket interface": provides the interface to an IP stack that is running
    on the WiFi module. This IP stack handles data communication.
  - \ref wifi_bypass_gr "Bypass interface": is an optional interface and enables the transmission of
@@ -30,7 +30,7 @@ The CMSIS-Driver WiFi provides access to the following interfaces:
 
 The WiFi interface usually requires CMSIS-RTOS features (i.e. mutex) and is often implemented
 with a peripheral device that is connected to the system using the SPI or UART interface. However,
-there are also some microcontroller devices with WiFi interface on the chip.  
+there are also some microcontroller devices with WiFi interface on the chip.
 
 The implementation of the WiFi CMSIS-Driver is therefore generally provided as a separate software pack.
 It is often implemented as wrapper to the SDK (Software Development Kit) of the WiFi chipset.
@@ -41,12 +41,11 @@ It is often implemented as wrapper to the SDK (Software Development Kit) of the 
 The driver functions are published in the access struct as explained in \ref DriverFunctions
   - \ref ARM_DRIVER_WIFI : access struct for WiFi driver functions
 
-  
+
 <b>Example Code</b>
 
 @{
 */
-
 
 /**
 \struct  ARM_DRIVER_WIFI
@@ -63,38 +62,13 @@ A middleware configuration setting allows connecting the middleware to a specifi
 The default is \token{0}, which connects a middleware to the first instance of a driver.
 *******************************************************************************************************************/
 
-/**
-\struct  ARM_WIFI_AP_INFO_t
-\details
-Provides information about the access points that were detected when searching for available WiFi networks. The structure
-contains the information needed to connect to the WiFi network. Of course, the access password is not included and must
-be provided separately.   
-
-<b>Used in:</b>
-  - \ref ARM_WIFI_Scan
-*******************************************************************************************************************/
-
-/**
-\struct  ARM_WIFI_MAC_IP4_t
-\details
-Provides information about the IP address and the associated MAC address created by the DHCP server on the WiFi module.
-You can use the \ref ARM_WIFI_GetOption function to read assigned IP addresses and associated MAC addresses from the DHCP server. 
-
-<b>Used in:</b>
-  - \ref ARM_WIFI_GetOption
-*******************************************************************************************************************/
-
-
-//
-//  Functions
-//
 
 /**
 \defgroup wifi_control_gr WiFi Control
 \ingroup wifi_interface_gr
-\brief Control functions for the WiFi API interface
+\brief Control functions for the WiFi module
 \details  
-The \ref wifi_control_gr functions setup and control the WiFi API interface.
+The \ref wifi_control_gr functions setup and control the WiFi module.
 @{
 */
 
@@ -130,7 +104,7 @@ Provides the typedef for the callback function \ref ARM_WIFI_SignalEvent.
 */
 
 ARM_DRIVER_VERSION ARM_WIFI_GetVersion (void) {
-  return { 0, 0 };	
+  return { 0, 0 };
 }
 /**
 \fn ARM_DRIVER_VERSION ARM_WIFI_GetVersion (void)
@@ -139,18 +113,18 @@ The function \b ARM_WIFI_GetVersion returns version information of the driver im
 
 API version is the version of the CMSIS-Driver specification used to implement this driver.
 Driver version is source code version of the actual driver implementation.
- 
+
 \b Example:
 \code
 extern ARM_DRIVER_WIFI Driver_WiFi0;
 static ARM_DRIVER_WIFI *wifi;
  
-void setup_wifi (void)  {
-  ARM_DRIVER_VERSION  version;
+void get_wifi_version (void)  {
+  ARM_DRIVER_VERSION version;
  
   wifi= &Driver_WiFi0;  
   version = wifi->GetVersion ();
-  if (version.api < 0x10A)   {      // requires at minimum API version 1.10 or higher
+  if (version.api < 0x100U) {        // requires at minimum API version 1.0 or higher
     // error handling
     return;
   }
@@ -168,17 +142,17 @@ The function \b ARM_WIFI_GetCapabilities retrieves information about capabilitie
 The data fields of the struct \ref ARM_WIFI_CAPABILITIES encode various capabilities, for example
 if a WiFi module supports the Access Point mode or the bypass mode, or is capable to signal events using
 the \ref ARM_WIFI_SignalEvent callback function.
- 
+
 \b Example:
 \code
 extern ARM_DRIVER_WIFI Driver_WiFi0;
 static ARM_DRIVER_WIFI *wifi;
   
-void read_capabilities (void)  {
-  ARM_WIFI_CAPABILITIES wifi_capabilities;
+void get_wifi_capabilities (void)  {
+  ARM_WIFI_CAPABILITIES capabilities;
  
   wifi = &Driver_WiFi0;  
-  wifi_capabilities = wifi->GetCapabilities ();
+  capabilities = wifi->GetCapabilities ();
   // interrogate capabilities
    :
 }
@@ -186,16 +160,17 @@ void read_capabilities (void)  {
 */
 
 int32_t ARM_WIFI_Initialize (ARM_WIFI_SignalEvent_t cb_event) {
-  return ARM_DRIVER_OK;	
+  return ARM_DRIVER_OK;
 }
 /**
 \fn int32_t ARM_WIFI_Initialize (ARM_WIFI_SignalEvent_t cb_event)
 \details
-The function \b ARM_WIFI_Initialize initializes the WiFi interface. 
+The function \b ARM_WIFI_Initialize initializes the WiFi module.
+
 It is called when the middleware component starts operation.
 
 The \ref ARM_WIFI_Initialize function performs the following operations:
-  - Initializes the resources and peripherals required for the WiFi interface.
+  - Initializes the resources and peripherals required for the WiFi module.
   - Registers the \ref ARM_WIFI_SignalEvent callback function.
 
 The parameter \em cb_event is a pointer to the \ref ARM_WIFI_SignalEvent callback function;
@@ -207,49 +182,75 @@ extern ARM_DRIVER_WIFI Driver_WiFi0;
 static ARM_DRIVER_WIFI *wifi;
 static ARM_ETH_MAC_ADDR own_mac_address;
  
-void initialize_wifi_interface (void) {
+void initialize_wifi (void) {
   wifi = &Driver_WiFi0;
  
-  // Initialize WiFi Interface
+  // Initialize and Power-on WiFi Module
   wifi->Initialize (NULL);
   wifi->PowerControl (ARM_POWER_FULL);
  
-  // populate own_mac_address with the address to use
-  wifi->SetOption(ARM_WIFI_MAC, &own_mac_address, 6);
+  // Populate own_mac_address with the address to use
+  wifi->SetOption(ARM_WIFI_MAC, &own_mac_address, 6U);
 }
 \endcode
 */
 
 int32_t ARM_WIFI_Uninitialize (void) {
-  return ARM_DRIVER_OK;	
+  return ARM_DRIVER_OK;
 }
 /**
 \fn int32_t ARM_WIFI_Uninitialize (void)
 \details
-The function \b ARM_WIFI_Uninitialize de-initializes the resources of the WiFi interface.
+The function \b ARM_WIFI_Uninitialize de-initializes the resources of the WiFi module.
 
 It is called when the middleware component stops operation and releases the software resources 
-used by the interface.
+used by the module.
 
 \b Example:
 \code
-void uninitialize_wifi_interface (void) {
+extern ARM_DRIVER_WIFI Driver_WiFi0;
+static ARM_DRIVER_WIFI *wifi;
+ 
+void uninitialize_wifi (void) {
+  wifi = &Driver_WiFi0;
+ 
+  // Power off and De-initialize WiFi Module
   wifi->PowerControl (ARM_POWER_OFF);
-  // De-initialize WiFi interface
   wifi->Uninitialize ();
 }
 \endcode
 */
 
 int32_t ARM_WIFI_PowerControl (ARM_POWER_STATE state) {
-  return ARM_DRIVER_OK;	
+  return ARM_DRIVER_OK;
 }
 /**
 \fn int32_t ARM_WIFI_PowerControl (ARM_POWER_STATE state)
 \details
-The function \b ARM_WIFI_PowerControl allows you to configure the power modes of the WiFi interface.  
+The function \b ARM_WIFI_PowerControl allows you to configure the power modes of the WiFi module.
 
 The parameter \em state specifies the \ref ARM_POWER_STATE.
+
+Low-power mode depends on additional options set by \ref ARM_WIFI_SetOption :
+ - Deep-sleep mode is entered when \ref ARM_WIFI_LP_TIMER option is set to a value different than 0
+ - Sleep mode is entered otherwise
+
+\b Deep-sleep mode (only for station):
+Module turns off the radio and also internal CPU thus reducing power consumption to minimum,
+only the timer is running that wakes-up the module after specified time.
+When timer expires the module reconnects to the access point.
+
+This mode is used when power consumption is a priority (battery powered devices) and when WiFi
+is used in short intervals that do not occur very often
+(example: sending a temperature from a sensor to a cloud every 10 seconds).
+
+\b Sleep mode (only for station):
+Module reduces power consumption by going into sleep and waking up periodically to listen for beacons.
+
+Delivery Traffic Indication Message (DTIM) interval can be configured with option \ref ARM_WIFI_DTIM
+(station and access point) and beacon interval with option \ref ARM_WIFI_BEACON (only for access point).
+
+Default module intervals are used when those options are not explicitly set.
 
 If power \em state specifies an unsupported mode, the function returns \ref ARM_DRIVER_ERROR_UNSUPPORTED as
 status information and the previous power state of the peripheral is unchanged. Multiple calls with the same
@@ -257,6 +258,39 @@ status information and the previous power state of the peripheral is unchanged. 
 
 \b Example:
  - see \ref ARM_WIFI_Initialize
+ - see \ref ARM_WIFI_Uninitialize
+*/
+
+int32_t ARM_WIFI_GetModuleInfo (char *module_info, uint32_t max_len) {
+  return ARM_DRIVER_OK;
+}
+/**
+\fn int32_t ARM_WIFI_GetModuleInfo (char *module_info, uint32_t max_len)
+\details
+The function \b ARM_WIFI_GetModuleInfo retrieves string containing information about the WiFi module.
+
+The information might include module name, firmware version, ...
+
+\note Module must be initialized and powered before module information can be retrieved.
+
+\b Example:
+\code
+extern ARM_DRIVER_WIFI Driver_WiFi0;
+static ARM_DRIVER_WIFI *wifi;
+ 
+void initialize_wifi (void) {
+  char info[32];
+ 
+  wifi = &Driver_WiFi0;
+ 
+  // Initialize and Power-on WiFi Module
+  wifi->Initialize (NULL);
+  wifi->PowerControl (ARM_POWER_FULL);
+ 
+  // Retrieve module information
+  wifi->GetModuleInfo(&info, sizeof(info));
+}
+\endcode
 */
 
 void ARM_WIFI_SignalEvent (uint32_t event, void *arg) {
@@ -269,15 +303,15 @@ It is called by the WiFi driver to notify the application about WiFi Events occu
 
 The parameter \em event indicates the event that occurred during driver operation.
 
-The parameter \em arg is a pointer to additional information about the event.
+The parameter \em arg provides additional information about the event.
 
 The following events can be generated:
 
 Parameter \em event                  | Description
 :------------------------------------|:------------------------------------------
-\ref ARM_WIFI_EVENT_AP_CONNECT       | Occurs when the station has connected in the Access Point mode.
-\ref ARM_WIFI_EVENT_AP_DISCONNECT    | Occurs when the station has disconnected in the Access Point mode.
-\ref ARM_WIFI_EVENT_ETH_RX_FRAME     | Occurs when the frame is received in \ref wifi_bypass_gr. 
+\ref ARM_WIFI_EVENT_AP_CONNECT       | Occurs in access point mode when a station has connected to the access point.
+\ref ARM_WIFI_EVENT_AP_DISCONNECT    | Occurs in access point mode when a station has disconnected from the access point.
+\ref ARM_WIFI_EVENT_ETH_RX_FRAME     | Occurs in \ref wifi_bypass_gr when an ethernet frame is received.
 */
 
 /**
@@ -285,12 +319,14 @@ Parameter \em event                  | Description
 */
 // end group wifi_control_gr
 
+
 /**
 \defgroup wifi_management_gr WiFi Management
 \ingroup wifi_interface_gr
-\brief Configure the connection to a WiFi access point (AP)
-\details The \ref wifi_management_gr functions allows to configure the connection to a WiFi access point (AP)
-also called hotspot.
+\brief Configure and manage the connection to a WiFi access point (AP) or configure and manage the access point (AP).
+\details The \ref wifi_management_gr functions are used to configure and manage the connection to a WiFi access point (AP)
+also called hotspot when in station mode. They are also used to configure and manage the access point (AP) itself
+when in access point mode.
 @{
 */
 
@@ -299,135 +335,106 @@ also called hotspot.
 \ingroup wifi_management_gr
 \brief  WiFi Option Codes for \ref ARM_WIFI_SetOption or \ref ARM_WIFI_GetOption function.
 \details 
-Many parameters of the WiFi driver are configured using the \ref ARM_WIFI_SetOption or \ref ARM_WIFI_GetOption function.
+Many parameters of the WiFi module are configured using the \ref ARM_WIFI_SetOption or \ref ARM_WIFI_GetOption function.
 @{
-\def ARM_WIFI_SSID
-\details Gets the SSID of the access point to which WiFi is currently connected.
-\sa WiFi_option
 \def ARM_WIFI_BSSID
-\details Gets the BSSID of the access point to which WiFi is currently connected.
-\sa WiFi_option
-\def ARM_WIFI_PASS
-\details Gets the password of the access point to which WiFi is currently connected.
-\sa WiFi_option
-\def ARM_WIFI_SECURITY
-\details Gets the security type of the access point to which WiFi is currently connected.
-\sa WiFi_option
-\def ARM_WIFI_CHANNEL
-\details Gets the WiFi channel of the access point to which WiFi is currently connected.
-\sa WiFi_option
-\def ARM_WIFI_RSSI
-\details Gets the received signal strength indication of the access point to which WiFi is currently connected.
+\details Specifies the BSSID of the access point to connect or the access point itself.
 \sa WiFi_option
 \def ARM_WIFI_TX_POWER
-\details Specifies the transmit power in the WiFi station mode.
+\details Specifies the transmit power in dBm.
+\sa WiFi_option
+\def ARM_WIFI_LP_TIMER
+\details Specifies the low-power deep-sleep time in seconds for station (disabled when 0 - default).
+\sa WiFi_option
+\def ARM_WIFI_DTIM
+\details Specifies the DTIM interval in number of beacons.
+\sa WiFi_option
+\def ARM_WIFI_BEACON
+\details Specifies the beacon interval in milliseconds for access point.
 \sa WiFi_option
 \def ARM_WIFI_MAC
-\details Specifies the MAC address in the WiFi station mode.
+\details Specifies the MAC address.
 \sa WiFi_option
 \def ARM_WIFI_IP
-\details Specifies the IP address in the WiFi station mode.
+\details Specifies the IP address.
 \sa WiFi_option
 \def ARM_WIFI_IP_SUBNET_MASK
-\details Specifies the subnet mask in the WiFi station mode.
+\details Specifies the subnet mask.
 \sa WiFi_option
 \def ARM_WIFI_IP_GATEWAY
-\details Specifies the gateway IP addresss in the WiFi station mode.
+\details Specifies the gateway IP address.
 \sa WiFi_option
 \def ARM_WIFI_IP_DNS1
-\details Specifies the IP address of the primary DNS server in the WiFi station mode.
+\details Specifies the IP address of the primary DNS server.
 \sa WiFi_option
 \def ARM_WIFI_IP_DNS2
-\details Specifies the IP address of the secondary DNS server in the WiFi station mode.
+\details Specifies the IP address of the secondary DNS server.
 \sa WiFi_option
 \def ARM_WIFI_IP_DHCP
-\details Enables or disables the DHCP client in the WiFi station mode.
+\details Enables or disables the DHCP client for station or DHCP server for access point.
+\sa WiFi_option
+\def ARM_WIFI_IP_DHCP_POOL_BEGIN
+\details Specifies the start IP address for DHCP server (access point).
+\sa WiFi_option
+\def ARM_WIFI_IP_DHCP_POOL_END
+\details Specifies the end IP address for DHCP server (access point).
+\sa WiFi_option
+\def ARM_WIFI_IP_DHCP_LEASE_TIME
+\details Specifies the lease time for DHCP server (access point).
 \sa WiFi_option
 \def ARM_WIFI_IP6_GLOBAL
-\details Specifies the global IPv6 address in the WiFi station mode.
+\details Specifies the global IPv6 address.
 \sa WiFi_option
 \def ARM_WIFI_IP6_LINK_LOCAL
-\details Specifies the link-local IPv6 address in the WiFi station mode.
+\details Specifies the link-local IPv6 address.
 \sa WiFi_option
 \def ARM_WIFI_IP6_SUBNET_PREFIX_LEN
-\details Specifies the address prefix length in the WiFi station mode.
+\details Specifies the address prefix length.
 \sa WiFi_option
 \def ARM_WIFI_IP6_GATEWAY
-\details Specifies the gateway IPv6 address in the WiFi station mode.
+\details Specifies the gateway IPv6 address.
 \sa WiFi_option
 \def ARM_WIFI_IP6_DNS1
-\details Specifies the IPv6 address of the primary DNS server in the WiFi station mode.
+\details Specifies the IPv6 address of the primary DNS server.
 \sa WiFi_option
 \def ARM_WIFI_IP6_DNS2
-\details Specifies the IPv6 address of the secondary DNS server in the WiFi station mode.
+\details Specifies the IPv6 address of the secondary DNS server.
 \sa WiFi_option
 \def ARM_WIFI_IP6_DHCP_MODE
-\details Specifies the operation mode of the DHCPv6 client in the WiFi station mode.
+\details Specifies the operation mode of the DHCPv6 client.
 \sa WiFi_option
-\def ARM_WIFI_AP_SSID_HIDE
-\details Enables or disables SSID visibility in the WiFi access point mode.
-\sa WiFi_option
-\def ARM_WIFI_AP_TX_POWER
-\details Specifies the transmit power in the WiFi access point mode.
-\sa WiFi_option
-\def ARM_WIFI_AP_MAC
-\details Specifies the MAC address in the WiFi access point mode.
-\sa WiFi_option
-\def ARM_WIFI_AP_IP
-\details Specifies the IP address in the WiFi access point mode.
-\sa WiFi_option
-\def ARM_WIFI_AP_IP_SUBNET_MASK
-\details Specifies the subnet mask in the WiFi access point mode.
-\sa WiFi_option
-\def ARM_WIFI_AP_IP_GATEWAY
-\details Specifies the gateway IP address in the WiFi access point mode.
-\sa WiFi_option
-\def ARM_WIFI_AP_IP_DNS1
-\details Specifies the IP address of the primary DNS server in the WiFi access point mode.
-\sa WiFi_option
-\def ARM_WIFI_AP_IP_DNS2
-\details Specifies the IP address of the secondary DNS server in the WiFi access point mode.
-\sa WiFi_option
-\def ARM_WIFI_AP_IP_DHCP
-\details Enables or disables the DHCP server in the WiFi access point mode.
-\sa WiFi_option
-\def ARM_WIFI_AP_IP_DHCP_POOL_BEGIN
-\details Specifies the start IP address for DHCP server in the WiFi access point mode.
-\sa WiFi_option
-\def ARM_WIFI_AP_IP_DHCP_POOL_END
-\details Specifies the end IP address for DHCP server in the WiFi access point mode.
-\sa WiFi_option
-\def ARM_WIFI_AP_IP_DHCP_LEASE_TIME
-\details Specifies the lease time for DHCP server in the WiFi access point mode.
-\sa WiFi_option
-\def ARM_WIFI_AP_IP_DHCP_TABLE
-\details Gets assigned IP/MAC addresses for a DHCP server in the WiFi access point mode.
-\sa WiFi_option
-\def ARM_WIFI_AP_IP6_GLOBAL
-\details Specifies the global IPv6 address in the WiFi access point mode.
-\sa WiFi_option
-\def ARM_WIFI_AP_IP6_LINK_LOCAL
-\details Specifies the link-local IPv6 address in the WiFi access point mode.
-\sa WiFi_option
-\def ARM_WIFI_AP_IP6_SUBNET_PREFIX_LEN
-\details Specifies the address prefix length in the WiFi access point mode.
-\sa WiFi_option
-\def ARM_WIFI_AP_IP6_GATEWAY
-\details Specifies the gateway IPv6 address in the WiFi access point mode.
-\sa WiFi_option
-\def ARM_WIFI_AP_IP6_DNS1
-\details Specifies the IPv6 address of the primary DNS server in the WiFi access point mode.
-\sa WiFi_option
-\def ARM_WIFI_AP_IP6_DNS2
-\details Specifies the IPv6 address of the secondary DNS server in the WiFi access point mode.
-\sa WiFi_option
+@}
+*/
+
+/**
+\defgroup wifi_oper_mode WiFi Operating Mode
+\ingroup wifi_management_gr
+\brief Specifies WiFi operation for \ref ARM_WIFI_Activate.
+\details
+The WiFi operation mode defines in which mode the WiFi module operates when activated.
+@{
+\def ARM_WIFI_MODE_NONE
+\details WiFi module is inactive (default).
+\sa wifi_oper_mode
+\def ARM_WIFI_MODE_STATION
+\details WiFi module operates in station mode.
+\sa wifi_oper_mode
+\def ARM_WIFI_MODE_AP
+\details WiFi module operates in access point mode.
+\sa wifi_oper_mode
+\def ARM_WIFI_MODE_STATION_AP
+\details WiFi module operates in station mode and access point mode simultaneously.
+\sa wifi_oper_mode
+\def ARM_WIFI_MODE_AD_HOC
+\details WiFi module operates in WiFi Ad-hoc mode.
+\sa wifi_oper_mode
 @}
 */
 
 /**
 \defgroup wifi_sec_type WiFi Security Type
 \ingroup wifi_management_gr
-\brief Specifies WiFi security type for \ref ARM_WIFI_Connect.
+\brief Specifies WiFi security type for \ref ARM_WIFI_Configure.
 \details
 The WiFi security type defines the standard used to protect the wireless network from unauthorized access.
 @{
@@ -444,336 +451,402 @@ The WiFi security type defines the standard used to protect the wireless network
 \details This security standard provides \b strong level of security.
 \sa wifi_sec_type
 \def ARM_WIFI_SECURITY_UNKNOWN
-\details This specifies the security standard, that is not supported.
+\details Unknown security standard (reported by \ref ARM_WIFI_Scan).
 \sa wifi_sec_type
 @}
 */
 
 /**
-\defgroup wifi_dhcp_mode WiFi DHCP Mode
+\defgroup wifi_wps_method WiFi Protected Setup (WPS) Method
+\ingroup wifi_management_gr
+\brief Specifies WiFi WPS method for \ref ARM_WIFI_Configure.
+\details
+The WiFi WPS method defines which WPS method is used.
+@{
+\def ARM_WIFI_WPS_METHOD_NONE
+\details WPS not used.
+\sa wifi_wps_method
+\def ARM_WIFI_WPS_METHOD_PBC
+\details WPS with Push Button Configuration.
+\sa wifi_wps_method
+\def ARM_WIFI_WPS_METHOD_PIN
+\details WPS with PIN.
+\sa wifi_wps_method
+@}
+*/
+
+/**
+\defgroup wifi_dhcp_v6_mode WiFi DHCPv6 Mode
 \ingroup wifi_management_gr
 \brief Specifies IPv6 Dynamic Host Configuration Protocol (DHCP) Mode.
 \details
+The WiFi DHCPv6 mode defines the DHCP mode in IPv6.
 @{
 \def ARM_WIFI_IP6_DHCP_OFF
 \details
 In the static host configuration mode, the IPv6 address, the default gateway address,
 and the addresses of DNS servers are statically configured from the preset values.
-\sa wifi_dhcp_mode
+\sa wifi_dhcp_v6_mode
 \def ARM_WIFI_IP6_DHCP_STATELESS
 \details
 In the stateless DHCP configuration mode, the client obtains only extended information
 from a DHCPv6 server, such as DNS server addresses. Stateless autoconfiguration of
 IPv6 allows the client device to self configure it's IPv6 addresses and routing based
 on the router advertisements.
-\sa wifi_dhcp_mode
+\sa wifi_dhcp_v6_mode
 \def ARM_WIFI_IP6_DHCP_STATEFULL
 \details
 In the stateful DHCP configuration mode, the client connects to a DHCPv6 server for
 a leased IPv6 address and DNS server addresses.
-\sa wifi_dhcp_mode
+\sa wifi_dhcp_v6_mode
 @}
 */
 
-int32_t ARM_WIFI_SetOption (uint32_t option, const void *data, uint32_t len) {
-  return ARM_DRIVER_OK;	
+/**
+\struct  ARM_WIFI_CONFIG_t
+\details
+Provides information needed to connect to the WiFi network for station or how to configure the access point (AP).
+
+<b>Used in:</b>
+  - \ref ARM_WIFI_Configure
+*******************************************************************************************************************/
+
+/**
+\struct  ARM_WIFI_SCAN_INFO_t
+\details
+Provides information about the wireless networks that were detected when searching for available WiFi networks. The structure
+contains the information needed to connect to the WiFi network. Of course, the access password is not included and must
+be provided separately.
+
+<b>Used in:</b>
+  - \ref ARM_WIFI_Scan
+*******************************************************************************************************************/
+
+/**
+\struct  ARM_WIFI_NET_INFO_t
+\details
+Provides information about the network that the station is connected to.
+
+<b>Used in:</b>
+  - \ref ARM_WIFI_GetNetInfo
+*******************************************************************************************************************/
+
+int32_t ARM_WIFI_SetOption (uint32_t interface, uint32_t option, const void *data, uint32_t len) {
+  return ARM_DRIVER_OK;
 }
 /**
-\fn int32_t ARM_WIFI_SetOption (uint32_t option, const void *data, uint32_t len)
+\fn int32_t ARM_WIFI_SetOption (uint32_t interface, uint32_t option, const void *data, uint32_t len)
 \details
-The function \b ARM_WIFI_SetOption sets different options for the WiFi interface.
+The function \b ARM_WIFI_SetOption sets the value of the specified option of the WiFi module.
 
-The argument \em option specifies the interface option that is to be set. 
+The argument \em interface specifies the interface (0 = Station, 1 = Access Point).
 
-The argument \em data points to a buffer containing the value of the option to be set.
+The argument \em option specifies the option that is to be set (see below).
 
-The argument \em len specifies the actual length of the buffer \em data and must match
-the length of the corresponding option as specified with argument \em option (see below).
+The argument \em data points to a buffer containing the value of the option to be set
+and must be aligned to the data type of the corresponding option.
+
+The argument \em len specifies the length of the buffer \em data and must be equal (or higher)
+to the length of the corresponding option.
  
-Option                                 | Description                         | Length
-:--------------------------------------|:------------------------------------|:----------
-\ref ARM_WIFI_SSID                     | SSID of connected AP                | < 33 bytes
-\ref ARM_WIFI_BSSID                    | BSSID of connected AP               | 6 bytes
-\ref ARM_WIFI_PASS                     | Password of connected AP            | < 65 bytes
-\ref ARM_WIFI_SECURITY                 | Security type of connected AP       | 4 bytes
-\ref ARM_WIFI_CHANNEL                  | Channel of connected AP             | 4 bytes
-\ref ARM_WIFI_RSSI                     | RSSI of connected AP                | 4 bytes
-\ref ARM_WIFI_TX_POWER                 | Transmit power                      | 4 bytes
-\ref ARM_WIFI_MAC                      | MAC address                         | 6 bytes
-\ref ARM_WIFI_IP                       | IPv4 address                        | 4 bytes
-\ref ARM_WIFI_IP_SUBNET_MASK           | IPv4 subnet mask                    | 4 bytes
-\ref ARM_WIFI_IP_GATEWAY               | IPv4 gateway address                | 4 bytes
-\ref ARM_WIFI_IP_DNS1                  | IPv4 primary DNS server address     | 4 bytes
-\ref ARM_WIFI_IP_DNS2                  | IPv4 secondary DNS server address   | 4 bytes
-\ref ARM_WIFI_IP_DHCP                  | IPv4 DHCP client enable/disable     | 4 bytes
-\ref ARM_WIFI_IP6_GLOBAL               | IPv6 global address                 | 16 bytes
-\ref ARM_WIFI_IP6_LINK_LOCAL           | IPv6 link-local address             | 16 bytes
-\ref ARM_WIFI_IP6_SUBNET_PREFIX_LEN    | IPv6 subnet prefix length           | 4 bytes
-\ref ARM_WIFI_IP6_GATEWAY              | IPv6 gateway address                | 16 bytes
-\ref ARM_WIFI_IP6_DNS1                 | IPv6 primary DNS server address     | 16 bytes
-\ref ARM_WIFI_IP6_DNS2                 | IPv6 secondary DNS server address   | 16 bytes
-\ref ARM_WIFI_IP6_DHCP_MODE            | IPv6 DHCP client mode               | 4 bytes
-\ref ARM_WIFI_AP_SSID_HIDE             | AP hide SSID                        | 4 bytes
-\ref ARM_WIFI_AP_TX_POWER              | AP transmit power                   | 4 bytes
-\ref ARM_WIFI_AP_MAC                   | AP MAC address                      | 6 bytes
-\ref ARM_WIFI_AP_IP                    | AP IPv4 address                     | 4 bytes
-\ref ARM_WIFI_AP_IP_SUBNET_MASK        | AP IPv4 subnet mask                 | 4 bytes
-\ref ARM_WIFI_AP_IP_GATEWAY            | AP IPv4 gateway address             | 4 bytes
-\ref ARM_WIFI_AP_IP_DNS1               | AP IPv4 primary DNS server address  | 4 bytes
-\ref ARM_WIFI_AP_IP_DNS2               | AP IPv4 secondary DNS server address| 4 bytes
-\ref ARM_WIFI_AP_IP_DHCP               | AP IPv4 DHCP server enable/disable  | 4 bytes
-\ref ARM_WIFI_AP_IP_DHCP_POOL_BEGIN    | AP IPv4 DHCP server begin address   | 4 bytes
-\ref ARM_WIFI_AP_IP_DHCP_POOL_END      | AP IPv4 DHCP server end address     | 4 bytes
-\ref ARM_WIFI_AP_IP_DHCP_LEASE_TIME    | AP IPv4 DHCP server lease time      | 4 bytes
-\ref ARM_WIFI_AP_IP_DHCP_TABLE         | AP IPv4 DHCP server get table       | sizeof(table)
-\ref ARM_WIFI_AP_IP6_GLOBAL            | AP IPv6 global address              | 16 bytes
-\ref ARM_WIFI_AP_IP6_LINK_LOCAL        | AP IPv6 link-local address          | 16 bytes
-\ref ARM_WIFI_AP_IP6_SUBNET_PREFIX_LEN | AP IPv6 subnet prefix length        | 4 bytes
-\ref ARM_WIFI_AP_IP6_GATEWAY           | AP IPv6 gateway address             | 16 bytes
-\ref ARM_WIFI_AP_IP6_DNS1              | AP IPv6 primary DNS server address  | 16 bytes
-\ref ARM_WIFI_AP_IP6_DNS2              | AP IPv6 secondary DNS server address| 16 bytes
-
-\b Example:
- - see \ref ARM_WIFI_BypassControl
-*/
-
-int32_t ARM_WIFI_GetOption (uint32_t option, void *data, uint32_t *len) {
-  return ARM_DRIVER_OK;	
-}
-/**
-\fn int32_t ARM_WIFI_GetOption (uint32_t option, void *data, uint32_t *len)
-\details
-The function \b ARM_WIFI_GetOption retrieves the current value of an \em option for
-the WiFi interface.
-
-The argument \em data points to a buffer that will be used to store the value of 
-the \em option.
-
-The argument \em len contains the length of the buffer at input and returns the length
-of the option information on the output (see \ref ARM_WIFI_SetOption).
+Option                                 | Description                            | Data          | Type/Length
+:--------------------------------------|:---------------------------------------|:--------------|:-----------
+\ref ARM_WIFI_BSSID                    | BSSID of AP to connect or AP           | bssid         | uint8_t[6]
+\ref ARM_WIFI_TX_POWER                 | Transmit power                         | power[dbm]    | uint32_t
+\ref ARM_WIFI_LP_TIMER                 | Low-power deep-sleep time              | time[seconds] | uint32_t
+\ref ARM_WIFI_DTIM                     | DTIM interval                          | dtim[beacons] | uint32_t
+\ref ARM_WIFI_BEACON                   | Beacon interval                        | interval[ms]  | uint32_t
+\ref ARM_WIFI_MAC                      | MAC address                            | mac           | uint8_t[6]
+\ref ARM_WIFI_IP                       | IPv4 address                           | ip            | uint8_t[4]
+\ref ARM_WIFI_IP_SUBNET_MASK           | IPv4 subnet mask                       | mask          | uint8_t[4]
+\ref ARM_WIFI_IP_GATEWAY               | IPv4 gateway address                   | ip            | uint8_t[4]
+\ref ARM_WIFI_IP_DNS1                  | IPv4 primary DNS server address        | ip            | uint8_t[4]
+\ref ARM_WIFI_IP_DNS2                  | IPv4 secondary DNS server address      | ip            | uint8_t[4]
+\ref ARM_WIFI_IP_DHCP                  | IPv4 DHCP client/server enable/disable | dhcp (0, 1)   | uint32_t
+\ref ARM_WIFI_IP_DHCP_POOL_BEGIN       | IPv4 DHCP server begin address         | ip            | uint8_t[4]
+\ref ARM_WIFI_IP_DHCP_POOL_END         | IPv4 DHCP server end address           | ip            | uint8_t[4]
+\ref ARM_WIFI_IP_DHCP_LEASE_TIME       | IPv4 DHCP server lease time            | time[seconds] | uint32_t
+\ref ARM_WIFI_IP6_GLOBAL               | IPv6 global address                    | ip6           | uint8_t[16]
+\ref ARM_WIFI_IP6_LINK_LOCAL           | IPv6 link-local address                | ip6           | uint8_t[16]
+\ref ARM_WIFI_IP6_SUBNET_PREFIX_LEN    | IPv6 subnet prefix length              | len (1..127)  | uint32_t
+\ref ARM_WIFI_IP6_GATEWAY              | IPv6 gateway address                   | ip6           | uint8_t[16]
+\ref ARM_WIFI_IP6_DNS1                 | IPv6 primary DNS server address        | ip6           | uint8_t[16]
+\ref ARM_WIFI_IP6_DNS2                 | IPv6 secondary DNS server address      | ip6           | uint8_t[16]
+\ref ARM_WIFI_IP6_DHCP_MODE            | IPv6 DHCP client mode                  | mode          | uint32_t
 
 \b Example:
 \code
-uint8_t ip[4];                // IP address
-uint8_t mask[4];              // Subnet mask
-uint8_t gateway[4];           // Default gateway address
+uint8_t ip[4];
  
+ip[0] = 192U;
+ip[1] = 168U;
+ip[2] = 0U;
+ip[3] = 1U;
+ 
+// Set IP static address
+wifi->SetOption (ARM_WIFI_IP, &ip, sizeof(ip));
+\endcode
+*/
+
+int32_t ARM_WIFI_GetOption (uint32_t interface, uint32_t option, void *data, uint32_t *len) {
+  return ARM_DRIVER_OK;
+}
+/**
+\fn int32_t ARM_WIFI_GetOption (uint32_t interface, uint32_t option, void *data, uint32_t *len)
+\details
+The function \b ARM_WIFI_GetOption retrieves the current value of the specified option of
+the WiFi module.
+
+The argument \em interface specifies the interface (0 = Station, 1 = Access Point).
+
+The argument \em option specifies the option that is to be retrieved (see \ref ARM_WIFI_SetOption).
+
+The argument \em data points to a buffer that will be used to store the value of 
+the \em option and must be aligned to the data type of the corresponding option.
+
+The argument \em len is a pointer to the length of the buffer at input and returns the length
+of the option information on the output.
+
+\b Example:
+\code
+uint8_t ip[4];          // IP address
+uint8_t mask[4];        // Subnet mask
+uint8_t gateway[4];     // Gateway address
+ 
+// Get IP address, Subnet mask and Gateway address
 wifi->GetOption (ARM_WIFI_IP, &ip, sizeof(ip));
-wifi->GetOption (ARM_WIFI_IP_SUBNET_MASK, &mask, sizeof(mask)); 
+wifi->GetOption (ARM_WIFI_IP_SUBNET_MASK, &mask, sizeof(mask));
 wifi->GetOption (ARM_WIFI_IP_GATEWAY, &gateway, sizeof(gateway));
 \endcode
 */
 
-int32_t ARM_WIFI_Scan (ARM_WIFI_AP_INFO_t ap_info[], uint32_t max_num) {
-  return ARM_DRIVER_OK;	
+int32_t ARM_WIFI_Scan (ARM_WIFI_SCAN_INFO_t scan_info[], uint32_t max_num) {
+  return ARM_DRIVER_OK;
 }
 /**
-\fn int32_t ARM_WIFI_Scan (ARM_WIFI_AP_INFO_t ap_info[], uint32_t max_num)
+\fn int32_t ARM_WIFI_Scan (ARM_WIFI_SCAN_INFO_t scan_info[], uint32_t max_num)
 \details
-The function \b ARM_WIFI_Scan searches for available WiFi access points. Using this function,
+The function \b ARM_WIFI_Scan searches for available WiFi networks. Using this function,
 you can determine which wireless networks are available for the connection. If the network is
 secured, you must also know the password for access so you can connect.
  
-The argument \em ap_info is a pointer to a buffer, where the available access points will
-be returned.
+The argument \em ap_info is a pointer to a buffer, where the available network information
+will be returned.
 
-The argument \em max_mum specifies maximum number of access points, that can be stored
-to the \em ap_info.
+The argument \em max_mum specifies maximum number of network information structures,
+that can be stored to the \em ap_info.
 
 \b Example:
 \code
-static ARM_WIFI_AP_INFO_t ap_info[8];
+ARM_WIFI_AP_INFO_t ap_info[8];
  
-num = wifi->Scan (ap_info, 8);
+num = wifi->Scan (ap_info, 8U);
  
-// Print available WiFi networks
+// Print SSIDs of available WiFi networks
 for (i = 0; i < num; i++) {
   printf ("%d. ssid=%s\n", i, ap_info[i].ssid);
-} 
+}
 \endcode
 */
 
-int32_t ARM_WIFI_Connect (const char *ssid, const char *pass, uint8_t security, uint8_t ch) {
-  return ARM_DRIVER_OK;	
+int32_t ARM_WIFI_Configure (uint32_t interface, ARM_WIFI_CONFIG_t *config) {
+  return ARM_DRIVER_OK;
 }
 /**
-\fn int32_t ARM_WIFI_Connect (const char *ssid, const char *pass, uint8_t security, uint8_t ch)
+\fn int32_t ARM_WIFI_Configure (uint32_t interface, ARM_WIFI_CONFIG_t *config)
 \details
-The function \b ARM_WIFI_Connect connects to the WiFi access point. The wireless access
-point must be available to you, otherwise the connection will fail. Use the function
-\ref ARM_WIFI_Scan to check, which wireless access points are available.
+The function \b ARM_WIFI_Confiure configures the specified interface.
 
-The argument \em ssid is a pointer to the \token{null}-terminated name of the network
-you want to connect to, usually called the \b SSID.
+The argument \em interface specifies the interface (0 = Station, 1 = Access Point).
 
-The argument \em pass is a pointer to the \token{null}-terminated password of the network
-you want to connect to.
+The argument \em config is a pointer to the configuration \ref ARM_WIFI_CONFIG_t
+which provides information needed to connect to a WiFi network in station mode
+or information used to configure the access point (AP) in access point mode.
 
-The argument \em security is a type of security, which will be used for the connection.
-The following security types are supported:
-Security                        | Description
-:-------------------------------|:----------------------------------------------
-\ref ARM_WIFI_SECURITY_OPEN     | Open access system, provides \b no security
-\ref ARM_WIFI_SECURITY_WEP      | Wired Equivalent Privacy, provides \b weak security
-\ref ARM_WIFI_SECURITY_WPA      | Wi-Fi Protected Access, provides \b medium security
-\ref ARM_WIFI_SECURITY_WPA2     | Wi-Fi Protected Access 2, provides \b strong security 
- 
-The argument \em ch specifies the radio channel that will be used for the connection.
+\em ssid specifies the name of the network to connect to or the network to create.
+
+\em pass specifies the password for accessing the wireless network.
+
+\em security specifies the security type which will be used for the connection.
+
+\em ch specifies the WiFi channel which will be used for the connection.
 Valid channels are from \token{1} to \token{13}. If the value for \em ch = \token{0},
-the system automatically selects the best channel for the WiFi connection. 
-
-\b Example:
-\code
-status = wifi->Connect ("GuestAccess", "guest", ARM_WIFI_SECURITY_WPA2, 0);
-if (status != ARM_DRIVER_OK)  {
-  // error handling
-}
-\endcode
-*/
-
-int32_t ARM_WIFI_ConnectWPS (const char *pin) {
-  return ARM_DRIVER_OK;	
-}
-/**
-\fn int32_t ARM_WIFI_ConnectWPS (const char *pin)
-\details
-The function \b ARM_WIFI_ConnectWPS connects to the WiFi access point using WiFi Protected
-Setup, that is with the push-button or PIN entry.
-
-With the \b push-button method, you must press the button, either real or virtual,
-both at the the access point and the station.
-
-In \b PIN method, you must enter the PIN code that you read from the label or screen on
-the wireless device, in the access point. 
-
-The argument \em pin is a pointer to the \token{null}-terminated pin code. If the 
-\em pin is \token{NULL}, the push-button method is used.
+the system automatically selects the channel.
+When in station mode the channel of the AP being connect to is used.
+when in access point mode the AP automatically selects the best channel
+for the WiFi connection.
 
 \note
-During the discovery mode you activate after pressing the WPS button at the access point,
-and usually takes 2 minutes or less, an unwanted wireless device may be connected to
-the access point.
+Optionally BSSID parameter can be also set using \ref ARM_WIFI_SetOption.
+It allows connection to specific BSSID when connecting to an access point or specifies
+the BSSID of the access point.
+
+\em wps_method specifies if WiFi Protected Setup (WPS) is used and which method.
+
+\em wps_pin specifies the PIN used with WPS (\ref ARM_WIFI_WPS_METHOD_PIN).
+
+With the \b push-button method, you typically press the button, either real or virtual,
+both at the access point and the station. No credentials are needed.
+
+With \b PIN method, you must provide the PIN code that you read from the label or screen
+on the wireless device, in the access point.
+
+WPS configuration for station is used when station is activated and connects to an access point.
+It enables to connect without specifying SSID, Password, Security Type or WiFi Channel.
+The actual network information can be retrieved once connected with \ref ARM_WIFI_GetNetInfo.
+
+WPS configuration for access point is used when access point is activated (\ref ARM_WIFI_Activate).
+Subsequent activate calls re-trigger the WPS procedure.
+
+\note
+WPS is typically activated by pressing the WPS button at the access point.
+During the discovery mode (usually 2 minutes or less) any wireless device may connect
+to the access point (PIN needs to match when PIN method is selected).
 
 \b Example:
 \code
-status = wifi->ConnectWPS (NULL);
-if (status != ARM_DRIVER_OK)  {
+ARM_WIFI_CONFIG_t wifi_config;
+ 
+wifi_config.ssid = "GuestAccess";
+wifi_config.pass = "guest";
+wifi_config.security = ARM_WIFI_SECURITY_WPA2;
+wifi_config.ch = 0U;
+wifi_config.wps_method = ARM_WIFI_WPS_METHOD_NONE;
+ 
+// Configure station
+status = wifi->Configure (0U, &wifi_config);
+if (status != ARM_DRIVER_OK) {
+  // error handling
+}
+ 
+// Connect to wireless network
+status = wifi->Activate (ARM_WIFI_MODE_STATION);
+if (status != ARM_DRIVER_OK) {
   // error handling
 }
 \endcode
 */
 
-int32_t ARM_WIFI_Disconnect (void) {
-  return ARM_DRIVER_OK;	
+int32_t ARM_WIFI_Activate (uint32_t mode) {
+  return ARM_DRIVER_OK;
 }
 /**
-\fn int32_t ARM_WIFI_Disconnect (void)
+\fn int32_t ARM_WIFI_Activate (uint32_t mode)
 \details
-The function \b ARM_WIFI_Disconnect terminates the connection to the WiFi access point,
-to which the WiFi station is connected.
+The function \b ARM_WIFI_Activate activates the specified mode of the WiFi module.
+
+The argument \em mode specifies which mode will be activated:
+ - Station mode: connect to a wireless network
+ - Access Point mode: activate access point
+ - Station and Access point mode: connect to a wireless network and activate access point 
+ - Ad-hoc mode: connect to or create a wireless network
+
+The WiFi Station or Access Point needs to be configured before activating.
+
+The function returns once the mode is activated:
+ - when station is connected to a wireless network  (Station mode)
+ - when access point is activated (Access Point mode)
+ - when station is connected and access point is activated (Station and Access point mode)
+ - when station is connected or access point is activated (Ad-hoc mode)
+
+When in station mode the wireless network trying to connect to must be available,
+otherwise the connection will fail after a timeout.
+
+Available wireless networks can be scaned by using the function \ref ARM_WIFI_Scan.
+
+\b Ad-hoc mode is very similar to standard infrastructure mode with a difference that there
+are no dedicated access points in the network but a device can temporarily offer access point
+functionality as Soft-AP (no routing capabilities) to other devices in its vicinity.
+
+When in Ad-hoc mode the module tries to connect to network with specified SSID.
+If there is no such network available the module becomes a Soft-AP with BSSID being
+randomly generated (BSSID can be retrieved by using \ref ARM_WIFI_GetOption).
 
 \b Example:
-\code
-if (wifi->IsConnected () != 0) {
-  status = wifi->Disconnect ();
-  if (status != ARM_DRIVER_OK)  {
-    // error handling
-  }
+ - see \ref ARM_WIFI_Initialize
+*/
+
+int32_t ARM_WIFI_Deactivate (void) {
+  return ARM_DRIVER_OK;
 }
-\endcode
+/**
+\fn int32_t ARM_WIFI_Deactivate (void)
+\details
+The function \b ARM_WIFI_Deactivate deactivates the current mode:
+ - terminates the connection to a wireless network
+ - deactivates the access point
+
+\b Example:
+ - see \ref ARM_WIFI_GetNetInfo
 */
 
 int32_t ARM_WIFI_IsConnected (void) {
-  return 0;	
+  return 0;
 }
 /**
 \fn int32_t ARM_WIFI_IsConnected (void)
 \details
-The function \b ARM_WIFI_IsConnected checks the connection to the WiFi access point,
+The function \b ARM_WIFI_IsConnected checks if the station is connected to a wireless network
 and returns the connection status.
 
 The function returns a \token{non-zero} value, if the station is connected. If the station
 is not connected, the function returns \token{0}.
 
 \b Example:
- - see \ref ARM_WIFI_Disconnect
+ - see \ref ARM_WIFI_GetNetInfo
 */
 
-int32_t ARM_WIFI_AP_Start (const char *ssid, const char *pass, uint8_t security, uint8_t ch) {
-  return ARM_DRIVER_OK;	
+int32_t ARM_WIFI_GetNetInfo (ARM_WIFI_NET_INFO_t *net_info) {
+  return ARM_DRIVER_OK;
 }
 /**
-\fn int32_t ARM_WIFI_AP_Start (const char *ssid, const char *pass, uint8_t security, uint8_t ch)
+\fn int32_t ARM_WIFI_GetNetInfo (ARM_WIFI_NET_INFO_t *net_info)
 \details
-The function \b ARM_WIFI_AP_Start configures the WiFi module to the access point mode.
-This allows you to connect other WiFi stations with our access point.
+The function \b ARM_WIFI_GetNetInfo retrieves wireless network information of a connected station.
 
-The argument \em ssid is a pointer to the \token{null}-terminated name of the network to
-be broadcast, usually called the \b SSID.
-
-The argument \em pass is a pointer to the \token{null}-terminated password for accessing
-the wireless network.
-
-The argument \em security is a type of security, which will be used for the connections.
-The following security types are supported:
-Security                        | Description
-:-------------------------------|:----------------------------------------------
-\ref ARM_WIFI_SECURITY_OPEN     | Open access system, provides \b no security
-\ref ARM_WIFI_SECURITY_WEP      | Wired Equivalent Privacy, provides \b weak security
-\ref ARM_WIFI_SECURITY_WPA      | Wi-Fi Protected Access, provides \b medium security
-\ref ARM_WIFI_SECURITY_WPA2     | Wi-Fi Protected Access 2, provides \b strong security 
- 
-The argument \em ch specifies the radio channel that will be used for the connections.
-Valid channels are from \token{1} to \token{13}.
+It can be used to retrieve network connection information fur subsequent connections
+after initially connecting using WPS.
 
 \b Example:
 \code
-status = wifi->AP_Start ("GuestAccess", "guest", ARM_WIFI_SECURITY_WPA2, 7);
-if (status != ARM_DRIVER_OK)  {
+ARM_WIFI_CONFIG_t wifi_config;
+ARM_WIFI_NET_INFO_t net_info;
+ 
+memset(&wifi_config, 0, sizeof(wifi_config);
+ 
+wifi_config.wps_method = ARM_WIFI_WPS_METHOD_PBC;
+ 
+// Configure station (WPS)
+status = wifi->Configure (0U, &wifi_config);
+if (status != ARM_DRIVER_OK) {
   // error handling
 }
-\endcode
-*/
-
-int32_t ARM_WIFI_AP_Stop (void) {
-  return ARM_DRIVER_OK;	
+ 
+// Connect to wireless network
+status = wifi->Activate (ARM_WIFI_MODE_STATION);
+if (status != ARM_DRIVER_OK) {
+  // error handling
 }
-/**
-\fn int32_t ARM_WIFI_AP_Stop (void)
-\details
-The function \b ARM_WIFI_AP_Stop terminates the WiFi access point mode, which means
-that the connection to the access point is no longer possible.
-
-\b Example:
-\code
-if (wifi->AP_IsRunning () != 0) {
-  status = wifi->AP_Stop ();
-  if (status != ARM_DRIVER_OK)  {
+ 
+// Retrieve network information
+if (wifi->IsConnected ()) {
+  status = wifi->GetNetInfo (&net_info);
+  if (status != ARM_DRIVER_OK) {
     // error handling
   }
+  printf("SSID=%s, Password=%s",net_info.ssid, net_info.pass);
 }
+ 
+// Disconnet from wireless network
+wifi->Deactivate ();
 \endcode
-*/
-
-int32_t ARM_WIFI_AP_IsRunning (void) {
-  return 0;	
-}
-/**
-\fn int32_t ARM_WIFI_AP_IsRunning (void)
-\details
-The function \b ARM_WIFI_AP_IsRunning checks whether the WiFi access point is running,
-and returns the access point status.
-
-The function returns \token{non-zero} value, if the access point is running.
-If the access point is not running, the function returns \token{0}.
-
-\b Example:
- - see \ref ARM_WIFI_AP_Stop
 */
 
 /**
 @}
 */
+// end group wifi_management_gr
+
 
 /**
 \defgroup wifi_bypass_gr WiFi Bypass Mode
@@ -786,17 +859,21 @@ usually means that the \ref wifi_socket_gr functions can not be used.
 @{
 */
 
-int32_t ARM_WIFI_BypassControl (uint32_t enable) {
-  return ARM_DRIVER_OK;	
+int32_t ARM_WIFI_BypassControl (uint32_t interface, uint32_t mode) {
+  return ARM_DRIVER_OK;
 }
 /**
-\fn int32_t ARM_WIFI_BypassControl (uint32_t enable)
+\fn int32_t ARM_WIFI_BypassControl (uint32_t interface, uint32_t mode)
 \details
-The function \b ARM_WIFI_BypassControl enables or disables the WiFi bypass mode. The WiFi
-Bypass mode can only be enabled, if there is a bypass mode supported in the WiFi driver.
+The function \b ARM_WIFI_BypassControl enables or disables the WiFi bypass mode.
+
+The WiFi Bypass mode can only be enabled, if there is a bypass mode supported in the WiFi driver.
 You can check this by checking the driver's capabilities.
 
-The argument \em enable specifies the desired state of the WiFi Bypass mode, which is
+\note
+Bypass mode is enabled by default if the module does not support the Socket interface.
+
+The argument \em mode specifies the desired state of the WiFi Bypass mode, which is
 enabled or disabled.
  
 \b Example:
@@ -805,44 +882,42 @@ extern ARM_DRIVER_WIFI Driver_WiFi0;
 static ARM_DRIVER_WIFI *wifi;
 static ARM_ETH_MAC_ADDR own_mac_address;
  
-static void wifi_notify (uint32_t event)  {
+static void wifi_notify (uint32_t event, ,void *arg) {
   switch (event)  {
      :
   }  
 }
  
 void initialize_wifi_bypass (void) {
-  ARM_WIFI_CAPABILITIES wifi_capabilities;
+  ARM_WIFI_CAPABILITIES capabilities;
  
   wifi = &Driver_WiFi0;
-  wifi_capabilities = wifi->GetCapabilities ();
+  capabilities = wifi->GetCapabilities ();
   if (capabilities.bypass_mode == 0) {
     // error handling 
   } 
  
-  // Initialize WiFi Interface
+  // Initialize and Power-on WiFi Interface
   wifi->Initialize ((capabilities.eth_rx_frame_event) ? wifi_notify : NULL);
   wifi->PowerControl (ARM_POWER_FULL);
  
   // populate own_mac_address with the address to use
-  wifi->SetOption(ARM_WIFI_MAC, &own_mac_address, 6);
+  wifi->SetOption(ARM_WIFI_MAC, &own_mac_address, 6U);
  
-  if (wifi_capabilities.bypass_mode != 0) {
-    wifi->BypassControl (1);       // Enable bypass mode
-  }
+  wifi->BypassControl (1U);     // Enable bypass mode
 }
 \endcode
 */
 
-int32_t ARM_WIFI_EthSendFrame (const uint8_t *frame, uint32_t len) {
-  return ARM_DRIVER_OK;	
+int32_t ARM_WIFI_EthSendFrame (uint32_t interface, const uint8_t *frame, uint32_t len) {
+  return ARM_DRIVER_OK;
 }
 /**
-\fn int32_t ARM_WIFI_EthSendFrame (const uint8_t *frame, uint32_t len)
+\fn int32_t ARM_WIFI_EthSendFrame (uint32_t interface, const uint8_t *frame, uint32_t len)
 \details
 The function \b ARM_WIFI_EthSendFrame writes an <b>Ethernet frame</b> to the WiFi transmit buffer.
 
-The WiFi bypass mode must be enabled by using the function \ref ARM_WIFI_BypassControl (1)
+The WiFi bypass mode must be enabled by using the function \ref ARM_WIFI_BypassControl
 before a call to this function.
 
 The frame data addressed by \em frame starts with MAC destination and ends with the last
@@ -860,11 +935,11 @@ if (status != ARM_DRIVER_OK)  {
 \endcode
 */
 
-int32_t ARM_WIFI_EthReadFrame (uint8_t *frame, uint32_t len) {
-  return ARM_DRIVER_OK;	
+int32_t ARM_WIFI_EthReadFrame (uint32_t interface, uint8_t *frame, uint32_t len) {
+  return ARM_DRIVER_OK;
 }
 /**
-\fn int32_t ARM_WIFI_EthReadFrame (uint8_t *frame, uint32_t len)
+\fn int32_t ARM_WIFI_EthReadFrame (uint32_t interface, uint8_t *frame, uint32_t len)
 \details
 The function \b ARM_WIFI_EthReadFrame reads an <b>Ethernet frame</b> from the WiFi interface
 in the bypass mode.
@@ -894,11 +969,11 @@ if (len < 0)  {
 \endcode
 */
 
-uint32_t ARM_WIFI_EthGetRxFrameSize (void) {
-  return 0;	
+uint32_t ARM_WIFI_EthGetRxFrameSize (uint32_t interface, ) {
+  return 0;
 }
 /**
-\fn uint32_t ARM_WIFI_EthGetRxFrameSize (void)
+\fn uint32_t ARM_WIFI_EthGetRxFrameSize (uint32_t interface, )
 \details
 The function \b ARM_WIFI_EthGetRxFrameSize returns the size of a received <b>Ethernet frame</b>
 in the bypass mode. This function is called before \ref ARM_WIFI_EthReadFrame and supplies
@@ -927,7 +1002,6 @@ on the WiFi module. This IP stack handles data communication with the network an
 with a communication endpoint called sockets.
 @{
 */
-
 
 /**
 \defgroup wifi_addr_family WiFi Socket Address Family definitions
@@ -1035,9 +1109,8 @@ code is less than \token{0}.
 @}
 */
 
-
 int32_t ARM_WIFI_SocketCreate (int32_t af, int32_t type, int32_t protocol) {
-  return 0;	
+  return 0;
 }
 /**
 \fn int32_t ARM_WIFI_SocketCreate (int32_t af, int32_t type, int32_t protocol)
@@ -1091,7 +1164,7 @@ because this port is reserved.
 */
 
 int32_t ARM_WIFI_SocketListen (int32_t socket, int32_t backlog) {
-  return 0;	
+  return 0;
 }
 /**
 \fn int32_t ARM_WIFI_SocketListen (int32_t socket, int32_t backlog)
@@ -1111,7 +1184,7 @@ extern ARM_DRIVER_WIFI Driver_WiFi0;
 static ARM_DRIVER_WIFI *wifi;
  
 void Echo_Server_Thread (void *arg) {
-  uint8_t ip[4] = { 0, 0, 0, 0 };
+  uint8_t ip[4] = { 0U, 0U, 0U, 0U };
   int32_t sock, sd, res;
   char dbuf[120];
  
@@ -1119,7 +1192,7 @@ void Echo_Server_Thread (void *arg) {
     wifi = &Driver_WiFi0;
     sock = wifi->SocketCreate (ARM_SOCKET_AF_INET, ARM_SOCKET_SOCK_STREAM, ARM_SOCKET_IPPROTO_TCP);
  
-    wifi->SocketBind (sock, (uint8_t *)ip, sizeof(ip), 7);
+    wifi->SocketBind (sock, (uint8_t *)ip, sizeof(ip), 7U);
     wifi->SocketListen (sock, 1);
     sd = wifi->SocketAccept (sock, NULL, NULL, NULL);
     wifi->SocketClose (sock);
@@ -1141,7 +1214,7 @@ void Echo_Server_Thread (void *arg) {
 */
 
 int32_t ARM_WIFI_SocketAccept (int32_t socket, uint8_t *ip, uint32_t *ip_len, uint16_t *port) {
-  return 0;	
+  return 0;
 }
 /**
 \fn int32_t ARM_WIFI_SocketAccept (int32_t socket, uint8_t *ip, uint32_t *ip_len, uint16_t *port)
@@ -1172,7 +1245,7 @@ If the \em port is \token{NULL}, the port number is not returned.
 */
 
 int32_t ARM_WIFI_SocketConnect (int32_t socket, const uint8_t *ip, uint32_t ip_len, uint16_t port) {
-  return 0;	
+  return 0;
 }
 /**
 \fn int32_t ARM_WIFI_SocketConnect (int32_t socket, const uint8_t *ip, uint32_t ip_len, uint16_t port)
@@ -1213,7 +1286,7 @@ static ARM_DRIVER_WIFI *wifi;
 static const char message[] = { "The quick brown fox jumps over the lazy dog." };
   
 void Echo_Client_Thread (void *arg) {
-  uint8_t ip[4] = { 192, 168, 0, 100 };
+  uint8_t ip[4] = { 192U, 168U, 0U, 100U };
   int32_t sock, res;
   char dbuf[120];
  
@@ -1221,7 +1294,7 @@ void Echo_Client_Thread (void *arg) {
     wifi = &Driver_WiFi0;
     sock = wifi->SocketCreate (ARM_SOCKET_AF_INET, ARM_SOCKET_SOCK_STREAM, ARM_SOCKET_IPPROTO_TCP);
  
-    res = wifi->SocketConnect (sock, (uint8_t *)ip, sizeof(ip), 7);
+    res = wifi->SocketConnect (sock, (uint8_t *)ip, sizeof(ip), 7U);
     if (res == 0) {
       wifi->SocketSend (sock, message, sizeof(message));
       res = wifi->SocketRecv (sock, dbuf, sizeof(dbuf));
@@ -1235,14 +1308,14 @@ void Echo_Client_Thread (void *arg) {
       }    
     }
     wifi->SocketClose (sock);
-    osDelay (1000);
+    osDelay (1000U);
   }
 }
 \endcode
 */
 
 int32_t ARM_WIFI_SocketRecv (int32_t socket, void *buf, uint32_t len) {
-  return 1;	
+  return 1;
 }
 /**
 \fn int32_t ARM_WIFI_SocketRecv (int32_t socket, void *buf, uint32_t len)
@@ -1270,7 +1343,7 @@ The argument \em len specifies the size of the application data buffer.
 */
 
 int32_t ARM_WIFI_SocketRecvFrom (int32_t socket, void *buf, uint32_t len, uint8_t *ip, uint32_t *ip_len, uint16_t *port) {
-  return 1;	
+  return 1;
 }
 /**
 \fn int32_t ARM_WIFI_SocketRecvFrom (int32_t socket, void *buf, uint32_t len, uint8_t *ip, uint32_t *ip_len, uint16_t *port)
@@ -1319,11 +1392,11 @@ void Echo_Server_Thread (void *arg) {
     wifi = &Driver_WiFi0;
     sock = wifi->SocketCreate (ARM_SOCKET_AF_INET, ARM_SOCKET_SOCK_DGRAM, ARM_SOCKET_IPPROTO_UDP);
  
-    ip[0] = 0;                  // Unspecified address
-    ip[1] = 0;
-    ip[2] = 0;
-    ip[3] = 0;
-    port  = 7;                  // Standard port for Echo service
+    ip[0] = 0U;                 // Unspecified address
+    ip[1] = 0U;
+    ip[2] = 0U;
+    ip[3] = 0U;
+    port  = 7U;                 // Standard port for Echo service
  
     wifi->SocketBind (sock, (uint8_t *)ip, sizeof(ip), port);
  
@@ -1344,7 +1417,7 @@ void Echo_Server_Thread (void *arg) {
 */
 
 int32_t ARM_WIFI_SocketSend (int32_t socket, const void *buf, uint32_t len) {
-  return 1;	
+  return 1;
 }
 /**
 \fn int32_t ARM_WIFI_SocketSend (int32_t socket, const void *buf, uint32_t len)
@@ -1371,7 +1444,7 @@ Return value, when positive, represents the number of bytes sent, which can be l
 */
 
 int32_t ARM_WIFI_SocketSendTo (int32_t socket, const void *buf, uint32_t len, const uint8_t *ip, uint32_t ip_len, uint16_t port) {
-  return 1;	
+  return 1;
 }
 /**
 \fn int32_t ARM_WIFI_SocketSendTo (int32_t socket, const void *buf, uint32_t len, const uint8_t *ip, uint32_t ip_len, uint16_t port)
@@ -1409,7 +1482,7 @@ Return value, when positive, represents the number of bytes sent, which can be l
 */
 
 int32_t ARM_WIFI_SocketGetSockName (int32_t socket, uint8_t *ip, uint32_t *ip_len, uint16_t *port) {
-  return 0;	
+  return 0;
 }
 /**
 \fn int32_t ARM_WIFI_SocketGetSockName (int32_t socket, uint8_t *ip, uint32_t *ip_len, uint16_t *port)
@@ -1443,7 +1516,7 @@ static void get_socket_local_info (void) {
 */
 
 int32_t ARM_WIFI_SocketGetPeerName (int32_t socket, uint8_t *ip, uint32_t *ip_len, uint16_t *port) {
-  return 0;	
+  return 0;
 }
 /**
 \fn int32_t ARM_WIFI_SocketGetPeerName (int32_t socket, uint8_t *ip, uint32_t *ip_len, uint16_t *port)
@@ -1478,7 +1551,7 @@ static void get_socket_peer_info (void) {
 */
 
 int32_t ARM_WIFI_SocketGetOpt (int32_t socket, int32_t opt_id, void *opt_val, uint32_t *opt_len) {
-  return 0;	
+  return 0;
 }
 /**
 \fn int32_t ARM_WIFI_SocketGetOpt (int32_t socket, int32_t opt_id, void *opt_val, uint32_t *opt_len)
@@ -1517,7 +1590,7 @@ if (type == ARM_SOCKET_SOCK_DGRAM) {
 */
 
 int32_t ARM_WIFI_SocketSetOpt (int32_t socket, int32_t opt_id, const void *opt_val, uint32_t opt_len) {
-  return 0;	
+  return 0;
 }
 /**
 \fn int32_t ARM_WIFI_SocketSetOpt (int32_t socket, int32_t opt_id, const void *opt_val, uint32_t opt_len)
@@ -1542,8 +1615,8 @@ The argument \em opt_len tells the exact length of the option.
  
 \b Example:
 \code
-uint32_t nonblocking = 0;     // Blocking mode
-uint32_t timeout = 10000;     // Timeout 10 seconds
+uint32_t nonblocking = 0U;    // Blocking mode
+uint32_t timeout = 10000U;    // Timeout 10 seconds
  
 wifi->SocketSetOpt (sock, ARM_SOCKET_IO_FIONBIO, &nonblocking, sizeof(nonblocking));
 wifi->SocketSetOpt (sock, ARM_SOCKET_SO_RCVTIMEO, &timeout, sizeof(timeout)); 
@@ -1552,7 +1625,7 @@ wifi->SocketSetOpt (sock, ARM_SOCKET_SO_SNDTIMEO, &timeout, sizeof(timeout));
 */
 
 int32_t ARM_WIFI_SocketClose (int32_t socket) {
-  return 0;	
+  return 0;
 }
 /**
 \fn int32_t ARM_WIFI_SocketClose (int32_t socket)
@@ -1572,7 +1645,7 @@ In non blocking mode, you must call the \b ARM_WIFI_SocketClose function again i
 */
 
 int32_t ARM_WIFI_SocketGetHostByName (const char *name, int32_t af, uint8_t *ip, uint32_t *ip_len) {
-  return 0;	
+  return 0;
 }
 /**
 \fn int32_t ARM_WIFI_SocketGetHostByName (const char *name, int32_t af, uint8_t *ip, uint32_t *ip_len)
@@ -1624,7 +1697,7 @@ void ping_arm_com (void) {
 */
 
 int32_t ARM_WIFI_Ping (const uint8_t *ip, uint32_t ip_len) {
-  return ARM_DRIVER_OK;	
+  return ARM_DRIVER_OK;
 }
 /**
 \fn int32_t ARM_WIFI_Ping (const uint8_t *ip, uint32_t ip_len)
@@ -1649,13 +1722,13 @@ extern ARM_DRIVER_WIFI Driver_WiFi0;
 static ARM_DRIVER_WIFI *wifi;
  
 void ping_host (void) {
-  uint8_t ip[4] = { 192, 168, 0, 100 };
+  uint8_t ip[4] = { 192U, 168U, 0U, 100U };
   int32_t res;
  
   wifi = &Driver_WiFi0;
   res = wifi->Ping ((uint8_t *)ip, sizeof(ip));
   if (res == ARM_DRIVER_OK) {
-    // Host responded  
+    // Host responded
   }
 }
 \endcode

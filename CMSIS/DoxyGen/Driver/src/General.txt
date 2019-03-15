@@ -62,9 +62,9 @@ The following files relevant to CMSIS-Driver are present in the <b>ARM::CMSIS</b
       <th>Description</th>
     </tr>
     <tr>
-      <td>2.6.1</td>
+      <td>2.7.0</td>
       <td>
-        - Added WiFi Driver API 1.0.0-beta\n
+        - Added WiFi Interface API 1.0.0-beta\n
         - Added components for project specific driver implementations\n
       </td>
     </tr>
@@ -373,6 +373,7 @@ The following header files are available in the directory <b>.\\CMSIS\\Driver\\I
 | %Driver_USB.h        | \ref usb_interface_gr
 | %Driver_USBD.h       | \ref usbd_interface_gr
 | %Driver_USBH.h       | \ref usbh_interface_gr
+| %Driver_WiFi.h       | \ref wifi_interface_gr
 
 
 \section DriverTemplates Driver Template Files
