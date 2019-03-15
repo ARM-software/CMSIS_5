@@ -8,10 +8,11 @@
   <url>http://www.keil.com/pack/</url>
 
   <releases>
-    <release version="5.5.0-rc0" release="2019-03-15">
+    <release version="5.5.0-rc1" release="2019-03-15">
       The following folders have been removed:
-        - CMSIS/Include/
-        - CMSIS/DSP_Lib/ (superseded by CMSIS/DSP/Lib/)
+        - CMSIS/Include/ (superseded by CMSIS/DSP/Include/ and CMSIS/Core/Include/)
+        - CMSIS/Lib/ (superseded by CMSIS/DSP/Lib/)
+        - CMSIS/DSP_Lib/ (superseded by CMSIS/DSP/)
 
       CMSIS-Core(M): 5.2.0 (see revision history for details)
         - Reworked Stack/Heap configuration for ARM startup files.
