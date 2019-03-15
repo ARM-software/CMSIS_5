@@ -8,14 +8,14 @@
   <url>http://www.keil.com/pack/</url>
 
   <releases>
-    <release version="5.5.0-dev55">
+    <release version="5.5.0-dev6">
       Active development ...
       DSP_Lib:
         - new version V1.5.5
         - reworked DSP library source files
             added macro ARM_MATH_LOOPUNROLL
             removed macro UNALIGNED_SUPPORT_DISABLE
-            relpaced arm_bitreversal2.S with C version
+            replaced arm_bitreversal2.S with C version
             added const-correctness
             replaced SIMD pointer construct with memcpy solution
         - reworked DSP library documentation
