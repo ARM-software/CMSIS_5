@@ -92,8 +92,6 @@ void main()
   ((ARM_MPU_AP_(RO, NP) << MPU_RBAR_AP_Pos) & MPU_RBAR_AP_Msk) | \
   ((XN << MPU_RBAR_XN_Pos) & MPU_RBAR_XN_Msk))
 
-#if !defined(MPU_RLAR_PXN_Pos) || !defined(MPU_RLAR_PXN_Msk)
-
 /** \brief Region Limit Address Register value
 * \param LIMIT The limit address bits [31:5] for this memory region. The value is one extended.
 * \param IDX The attribute index to be associated with this memory region.
@@ -120,7 +118,7 @@ __STATIC_INLINE void ARM_MPU_Disable(void);
 /** Enable the Non-secure MPU.
 * \param MPU_Control Default access permissions for unconfigured regions.
 */
-__STATIC_INLINE ARM_MPU_Enable_NS(uint32_t MPU_Control)
+__STATIC_INLINE ARM_MPU_Enable_NS(uint32_t MPU_Control);
 
 /** Disable the Non-secure MPU.
 */
@@ -167,17 +165,14 @@ __STATIC_INLINE void ARM_MPU_ClrRegion_NS(uint32_t rnr);
 * \param rbar Value for RBAR register.
 * \param rlar Value for RLAR register.
 */   
-__STATIC_INLINE void ARM_MPU_SetRegionEx(MPU_Type* mpu, uint32_t rnr, uint32_t rbar, uint32_t rlar)
+__STATIC_INLINE void ARM_MPU_SetRegionEx(MPU_Type* mpu, uint32_t rnr, uint32_t rbar, uint32_t rlar);
 
 /** Configure the given MPU region.
 * \param rnr Region number to be configured.
 * \param rbar Value for RBAR register.
 * \param rlar Value for RLAR register.
 */   
-__STATIC_INLINE void ARM_MPU_SetRegion(uint32_t rnr, uint32_t rbar, uint32_t rlar)
-{
-  ARM_MPU_SetRegionEx(MPU, rnr, rbar, rlar);
-}
+__STATIC_INLINE void ARM_MPU_SetRegion(uint32_t rnr, uint32_t rbar, uint32_t rlar);
 
 /** Configure the given Non-secure MPU region.
 * \param rnr Region number to be configured.
@@ -191,7 +186,7 @@ __STATIC_INLINE void ARM_MPU_SetRegion_NS(uint32_t rnr, uint32_t rbar, uint32_t 
 * \param src Source data is copied from.
 * \param len Amount of data words to be copied.
 */
-__STATIC_INLINE void orderedCpy(volatile uint32_t* dst, const uint32_t* __RESTRICT src, uint32_t len);
+__STATIC_INLINE void ARM_MPU_OrderedMemcpy(volatile uint32_t* dst, const uint32_t* __RESTRICT src, uint32_t len);
 
 /** Load the given number of MPU regions from a table to the given MPU.
 * \param mpu Pointer to the MPU registers to be used.
