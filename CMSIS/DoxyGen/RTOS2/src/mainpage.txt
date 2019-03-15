@@ -49,9 +49,15 @@ The following sections provide further details about CMSIS-RTOS2 and the RTX ref
  - \subpage rtos_revisionHistory documents changes made in each version for CMSIS-RTOS v2 and RTX v5.
  - \subpage genRTOS2IF provides an overview about the APIs available with CMSIS-RTOS v2.
  - \subpage functionOverview lists the CMSIS-RTOS2 API functions and the header file %cmsis_os2.h.
+\ifnot FuSaRTS
  - \subpage rtosValidation describes the validation suite that is publicly available.
  - \subpage os2Migration shows how to use CMSIS-RTOS2 in existing projects and lists function differences to CMSIS-RTOS v1.
+\endif
  - \subpage rtx5_impl provides general information about the operation and usage of RTX v5.
+\if FuSaRTS
+ - \subpage rtx_safety provides comprehensive instructions for highly reliable applications.
+\endif
+
 
 <hr>
 
