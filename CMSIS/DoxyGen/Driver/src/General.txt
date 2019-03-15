@@ -42,7 +42,7 @@ CMSIS-Driver in ARM::CMSIS Pack
 -------------------------------
 
 The following files relevant to CMSIS-Driver are present in the <b>ARM::CMSIS</b> Pack directories:
-| Directory                      | Content                                                                 |
+| Directory                      | Content                                                                |
 |--------------------------------|------------------------------------------------------------------------|
 |\b CMSIS/Documentation/Driver   | This documentation                                                     |
 |\b CMSIS/Driver/Include         | Driver header files (Driver_<i>interface</i>.h, Driver_Common.h)       |
@@ -63,14 +63,14 @@ The following files relevant to CMSIS-Driver are present in the <b>ARM::CMSIS</b
     </tr>
     <tr>
       <td>2.7.0</td>
-      <td>
-        - Added WiFi Interface API 1.0.0-beta\n
-        - Added components for project specific driver implementations\n
+      <td>Modifications compared to Version 2.6.0:
+        - Added WiFi Interface API 1.0.0-beta.
+        - Added custom driver selection to simplify implementation of new CMSIS-Driver.
       </td>
     </tr>
     <tr>
       <td>2.6.0</td>
-      <td>
+      <td>Modifications compared to Version 2.05:
 - Enhanced CAN-Driver API with explicit BUSOFF state.
 - Enhanced NAND-Driver API for ECC handling.
       </td>
