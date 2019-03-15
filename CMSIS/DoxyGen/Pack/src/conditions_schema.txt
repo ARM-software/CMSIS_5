@@ -183,33 +183,33 @@ A \ref element_condition "condition" becomes \token{true} when:
     <th>Use</th>
   </tr>
   <tr>
-    <td>Dfamily<b>*</b></td>
-    <td>Specifies the device family name (for example: STM32F2 Series).</td>
-    <td>xs:string</td>
-    <td>optional</td>
-  </tr>
-  <tr>
-    <td>DsubFamily<b>*</b></td>
-    <td>Specifies the device sub-family name (for example: STM32F205 Series).</td>
-    <td>xs:string</td>
-    <td>optional</td>
-  </tr>
-  <tr>
-    <td>Dvariant<b>*</b></td>
-    <td>Specifies the variant name of a device (for example: Step A).</td>
-    <td>xs:string</td>
-    <td>optional</td>
-  </tr>
-  <tr>
     <td>Dvendor</td>
     <td>Specifies the silicon vendor of the device. Use predefined values as listed in the table \ref DeviceVendorEnum "Device Vendor".</td>
     <td>DeviceVendorEnum</td>
     <td>optional</td>
   </tr>
   <tr>
+    <td>Dfamily<b>*</b></td>
+    <td><b>DEPRECATED**</b> Specifies the device family name (for example: STM32F2 Series).</td>
+    <td>xs:string</td>
+    <td>optional</td>
+  </tr>
+  <tr>
+    <td>DsubFamily<b>*</b></td>
+    <td><b>DEPRECATED**</b>Specifies the device sub-family name (for example: STM32F205 Series).</td>
+    <td>xs:string</td>
+    <td>optional</td>
+  </tr>
+  <tr>
     <td>Dname<b>*</b></td>
     <td>Specifies the name of the device. 
    </td>
+    <td>xs:string</td>
+    <td>optional</td>
+  </tr>
+  <tr>
+    <td>Dvariant<b>*</b></td>
+    <td><b>DEPRECATED**</b>Specifies the variant name of a device (for example: Step A).</td>
     <td>xs:string</td>
     <td>optional</td>
   </tr>
@@ -350,8 +350,10 @@ A \ref element_condition "condition" becomes \token{true} when:
        - '?'  matches any single character
        - [abc] matches any character in the set (a,b,c)
    
-  
-   
+<b>**)</b> These attributes must not be used in conditions because
+           - 'Dfamily' and 'DsubFamily' turn out to be volatile.
+           - conditions shall only filter for selectable devices. 'Dvariant'effectively is just an alias for 'Dname'. 
+             Once a \<variant> tag exists, the \<device> tag no longer represents a selectable device.
    
 <p>&nbsp;</p>
 

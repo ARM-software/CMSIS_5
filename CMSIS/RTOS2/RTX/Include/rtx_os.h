@@ -46,14 +46,14 @@ extern "C"
  
 /// Object Identifier definitions
 #define osRtxIdInvalid          0x00U
-#define osRtxIdThread           0x01U
-#define osRtxIdTimer            0x02U
-#define osRtxIdEventFlags       0x03U
-#define osRtxIdMutex            0x04U
-#define osRtxIdSemaphore        0x05U
-#define osRtxIdMemoryPool       0x06U
-#define osRtxIdMessage          0x07U
-#define osRtxIdMessageQueue     0x08U
+#define osRtxIdThread           0xF1U
+#define osRtxIdTimer            0xF2U
+#define osRtxIdEventFlags       0xF3U
+#define osRtxIdMutex            0xF5U
+#define osRtxIdSemaphore        0xF6U
+#define osRtxIdMemoryPool       0xF7U
+#define osRtxIdMessage          0xF9U
+#define osRtxIdMessageQueue     0xFAU
  
 /// Object Flags definitions
 #define osRtxFlagSystemObject   0x01U

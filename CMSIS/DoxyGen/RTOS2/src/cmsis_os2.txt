@@ -116,7 +116,9 @@ The following sections provide further details:
  - \subpage cre_rtx_proj explains how to setup an RTX v5 project in Keil MDK.
  - \subpage theory_of_operation provides general information about the operation of CMSIS-RTOS RTX v5.
  - \subpage config_rtx5 describes configuration parameters of CMSIS-RTOS RTX v5.
+\ifnot FuSaRTS
  - \subpage creating_RTX5_LIB explains how to build your own CMSIS-RTOS RTX v5 library.
+\endif
  - \subpage technicalData5 lists hardware, software, and resource requirements, supplied files, and supported tool chains.
  - \subpage misraCompliance5 describes the violations to the MISRA standard.
 */
@@ -145,7 +147,7 @@ The steps to create a microcontroller application using RTX5 are:
 
    \image html project_window.png
 
-- If using the Variant: \b Source as statet above, you have to assure to use at least C99 compiler mode (Project Options -> C/C++ -> C99 Mode).   
+- If using the Variant: \b Source as stated above, you have to assure to use at least C99 compiler mode (Project Options -> C/C++ -> C99 Mode).   
 - You can add template files to the project by right-clicking on <b>Source Group 1</b> and selecting
   <b>Add New Item to 'Source Group 1'</b>. In the new window, click on <b>User Code Template</b>. On the right-hand side
   you will see all available template files for CMSIS-RTOS RTX:
@@ -211,15 +213,18 @@ If you require some of the \ref rtx5_specific "RTX specific functions" in your a
 
 \section cre_rtx_proj_er Add Event Recorder Visibility
 
+\ifnot FuSaRTS
 RTX5 interfaces to the <a href="http://www.keil.com/pack/doc/compiler/EventRecorder/html/index.html" target="_blank"><b>Event Recorder</b></a> 
 to provide event information which helps you to understand and analyze the operation.
 
 - To use the Event Recorder together with RTX5, select the software component <b>Compiler:Event Recorder</b>.
 - Select the \b Source variant of the software component <b>CMSIS:RTOS2 (API):Keil RTX5</b>.
+
   \image html event_recorder_rte.png "Component selection for Event Recorder"
+  
 - Enable the related settings under \ref evtrecConfig.
 - Build the application code and download it to the debug hardware.
-  
+\endif
 Once the target application generates event information, it can be viewed in the µVision debugger using the \b Event \b Recorder.
 */
 
@@ -241,16 +246,19 @@ Your application's \c main() should implement at least the following in the give
 -# Update the system core clock using the respective
    <a href=../../Core/html/group__system__init__gr.html>CMSIS-Core (Cortex-M)</a>  \if ARMCA or <a href=../../Core_A/html/group__system__init__gr.html>CMSIS-Core (Cortex-A)</a> \endif function.
 -# Initialize the CMSIS-RTOS kernel using \ref osKernelInitialize.
--# Optionally, create a new thread \c app_main, which is used as a main thread using \ref osThreadNew. Alternatively, threads
-   can be created in \c main() directly.
--# Start the RTOS scheduler using \ref osKernelStart which also configure system tick timer and RTOS specific interrupts.
-   This function does not return in case of successful execution. Any application code after \b osKernelStart will therefore not be executed.
+-# Optionally, create one thread (for example \c app_main), which is used as a main thread using \ref osThreadNew. This
+   thread should take care of creating and starting objects, once it is run by the scheduler. Alternatively, threads can be
+   created in \c main() directly.
+-# Start the RTOS scheduler using \ref osKernelStart which also configures the system tick timer and initializes RTOS
+   specific interrupts. This function does not return in case of successful execution. Therefore, any application code after
+   \b osKernelStart will not be executed.
 
-\note Interrupts are initialized in \ref osKernelStart. Modifying basic In case priorities and
-groupings in the NVIC are altered by the application after the above sequence it might be necessary to call
-\ref osKernelInitialize again. Incorrect ossibly catched by \ref osRtxErrorNotify or causing a hard fault.
+\note
+- Modifying priorities and groupings in the NVIC by the application after the above sequence is not recommended.
+- Before executing \ref osKernelStart, only the functions \ref osKernelGetInfo, \ref osKernelGetState, and object creation
+  functions (osXxxNew) may be called.
 
-\note The tick timer is configured during \ref osKernelStart. 
+
 \section Scheduler 
 
 RTX5 implements a low-latency preemptive scheduler. Major parts of RTX5 are executed in handler mode such as
@@ -359,6 +367,10 @@ Mutex         | `.bss.os.mutex.cb`
 Semaphore     | `.bss.os.semaphore.cb`
 Memory Pool   | `.bss.os.mempool.cb`
 Message Queue | `.bss.os.msgqueue.cb`
+
+It must be assured that these sections are placed into contiguous memory. This can fail,
+i.e. sections end up being split over multiple memory segments, when assigning compilation
+units to memory segments, manually.
 
 The following code example shows how to create an OS object using static memory.
 
@@ -478,7 +490,7 @@ RTX uses the generic \ref CMSIS_RTOS_TickAPI to configure and control its period
 To use an alternative timer as the Kernel Tick Timer one simply needs to implement a custom version
 of the \ref CMSIS_RTOS_TickAPI.
 
-\note The OS Tick implementation provided must asure that the used timer interrupt uses the same (low) priority group 
+\note The OS Tick implementation provided must assure that the used timer interrupt uses the same (low) priority group 
 as the service interrupts, i.e. interrupts used by RTX must not preempt each other. Refer to the \ref Scheduler section
 for more details.
 
@@ -1090,6 +1102,7 @@ to the <b>RTX_Config.h</b> file:
 
 /* ========================================================================================================================== */
 /** 
+\ifnot FuSaRTS
 \page creating_RTX5_LIB Building the RTX5 Library
 
 The CMSIS Pack contains a µVision project for building the complete set of RTX5 libraries. This project can also be used as
@@ -1104,6 +1117,7 @@ a reference for building the RTX5 libraries using a tool-chain of your choice.
 -# Build the library of your choice using \b Project - \b Build \b Target (or press F7).
 
 \image html own_lib_projwin.png "Project with files for Armv8-M Mainline"
+\endif
 */
 
 
@@ -1118,9 +1132,7 @@ The following section contains technical information about RTX v5.
  - \subpage pStackRequirements lists the memory requirements for the main stack when running the RTX v5 kernel. 
  - \subpage pControlBlockSizes provides memory size information for \ref StaticObjectMemory "object-specific control block memory allocation".
  - \subpage pDirectory_Files is an overview of the supplied files that belong to RTX v5
-\ifnot FuSaRTS
- - \subpage pToolchains details about the compiler support which includes ArmCC (MDK, DS-5), IAR EW-ARM, and GCC.
-\endif
+ - \subpage pToolchains details about the compiler support \ifnot FuSaRTS which includes ArmCC (MDK, DS-5), IAR EW-ARM, and GCC. \endif
 
 
 \page pHardwareRequirements Hardware Requirements
@@ -1226,6 +1238,7 @@ might be allocated by the 'main' function of the embedded application. The follo
 
 The stack requirements depend on the compiler and the optimization level.  RTX v5 supports event annotations and this configuration impacts also the stack requirement.
 
+\ifnot FuSaRTS
 <b>Arm Compiler ARMCC V6.10</b>: Main Stack requirements for PendSV/SysTick/SVC
 
 Optimization         | RTX Kernel  | RTX Kernel + Event Recorder
@@ -1243,6 +1256,7 @@ Optimization         | RTX Kernel  | RTX Kernel + Event Recorder
 -O2                  | 112 bytes   | 256 bytes
 -O3                  | 112 bytes   | 248 bytes
 
+\endif
 
 \page pControlBlockSizes Control Block Sizes
 
@@ -1291,10 +1305,12 @@ The CMSIS-RTOS RTX v5 is delivered in source code and several examples are provi
       <td>Source</td>
       <td>Generic <b>OS tick</b> implementations for various processors based on \ref rtos_os_tick_api.</td>
     </tr>
+\ifnot FuSaRTS
     <tr>
       <td>Template</td>
       <td><a class="el" href="../../RTOS/html/index.html">CMSIS-RTOS API v1</a> template source and header file.</td>
     </tr>
+\endif	
     <tr>
       <td>RTX</td>
       <td>Directory with RTX specific files and folders. Also contains the component viewer description file.</td>
@@ -1303,14 +1319,17 @@ The CMSIS-RTOS RTX v5 is delivered in source code and several examples are provi
       <td>RTX/Config</td>
       <td>CMSIS-RTOS RTX configuration files %RTX_Config.h and %RTX_Config.c.</td>
     </tr>
+\ifnot FuSaRTS
     <tr>
       <td>RTX/Examples</td>
       <td>Example projects that can be directly used in development tools.</td>
     </tr>
+\endif	
     <tr>
       <td>RTX/Include</td>
       <td>RTX v5 specific include files.</td>
     </tr>
+\ifnot FuSaRTS
     <tr>
       <td>RTX/Include1</td>
       <td>CMSIS-RTOS v1 API header file.</td>
@@ -1319,6 +1338,7 @@ The CMSIS-RTOS RTX v5 is delivered in source code and several examples are provi
       <td>RTX/Library</td>
       <td>Pre-built libraries (see next table for details).</td>
     </tr>
+\endif	
     <tr>
       <td>RTX/Source</td>
       <td>Source code that can be used with ARMCC and GCC.</td>
@@ -1329,12 +1349,13 @@ The CMSIS-RTOS RTX v5 is delivered in source code and several examples are provi
     </tr>
 </table>
 
+\ifnot FuSaRTS 
 \section libFiles RTX v5 Library Files
 
 The CMSIS-RTOS RTX Library is available pre-compiled for ARMCC and GCC compilers and supports all Cortex-M
 processor variants in every configuration  \if ARMv8M , including Arm Cortex-M23, Cortex-M33 and Cortex-M35P\endif.
 
-<table class="cmtable" summary="CMSIS-RTOS RTX Library Files">
+\ifnot FuSaRTS <table class="cmtable" summary="CMSIS-RTOS RTX Library Files">
     <tr>
       <th>Library File</th>
       <th>Processor Configuration</th>
@@ -1351,7 +1372,7 @@ processor variants in every configuration  \if ARMv8M , including Arm Cortex-M23
       <td>Library/ARM/RTX_CM4F.lib</td>
       <td>CMSIS-RTOS RTX Library for ARMCC Compiler, Cortex-M4 and M7 with FPU, little-endian.</td>
     </tr>
-\if ARMv8M	
+\if ARMv8M
     <tr>
       <td>Library/ARM/RTX_V8MB.lib</td>
       <td>CMSIS-RTOS RTX Library for ARMCC Compiler, Armv8-M Baseline.</td>
@@ -1418,12 +1439,19 @@ processor variants in every configuration  \if ARMv8M , including Arm Cortex-M23
     </tr>
 \endif
 </table>
+\endif
+\endif
 */
 
 
-
 /**
-\ifnot FuSaRTS \page pToolchains Supported Toolchains
+\page pToolchains Supported Toolchains
+
+\if FuSaRTS
+FuSa RTX5 RTOS is validated using the compiler version referenced in <a href="../../Safety/html/index.html#safety_product_overview_toolchain"><b>Tested and Verified Toolchains</b></a> section for the Arm FuSa Run-time System.
+\endif
+
+\ifnot FuSaRTS
 
 Keil RTX5 is developed and tested using the common toolchains and development environments.
 
@@ -1464,7 +1492,13 @@ Active development is currently tested with:
 /** 
 \page CodingRules Coding Rules
 
+\ifnot FuSaRTS
 CMSIS components use <a href="../../General/html/index.html#CodingRules"><b>general coding rules</b></a> across the various components.
+\endif 
+
+\if FuSaRTS
+FuSa RTX RTOS uses <a href="../../Safety/html/index.html#CodingRules"><b>general coding rules</b></a>.
+\endif 
 
 The CMSIS-RTOS2 API is using the following <b>Namespace</b> prefixes:
   - <b>os</b> for all definitions and function names.
@@ -1506,13 +1540,13 @@ The PC-Lint configuration uses the following Options under <b>Tools - PC-Lint Se
  - MISRA  Rules Setup and Configuration: 
    - MISRQ_C_2012_Config.lnt; all rules enabled
    - includes definition file: au-misra3.lnt (12-Jun-2014)
- - Additional Lint Commands (for both single and mutiple files):
+ - Additional Lint Commands (for both single and multiple files):
 \code
    - emacro(835,osRtxConfigPrivilegedMode)
 \endcode
 
 The C source code is annotated with PC-Lint control comments to allows MISRA deviations.
-These deviations with the underlaying design decisions are described in the following.
+These deviations with the underlying design decisions are described in the following.
    
 Deviations
 ----------
@@ -1564,9 +1598,9 @@ All locations in the source code are marked with:
 
 \section MISRA_2 [MISRA Note 2]: Object identifiers are void pointers
 
-CMSIS-RTOS is independant of an underlying RTOS implementation. The object idenifiers are therefore defined as void pointers to:
+CMSIS-RTOS is independent of an underlying RTOS implementation. The object identifiers are therefore defined as void pointers to:
   - allow application programs that are agnostic from an underlying RTOS implementation.
-  - avoid accidently accesses an RTOS control block from an application program.
+  - avoid accidentally accesses an RTOS control block from an application program.
 
 This design decisions imply the following MISRA deviations:
  - [MISRA 2012 Rule      11.3,  required]: A cast shall not be performed between a pointer to object type and a pointer to a different object type
@@ -1577,7 +1611,7 @@ All locations in the source code are marked with:
   //lint -e{9079} -e{9087} "cast from pointer to void to pointer to object type" [MISRA Note 2]
 \endcode 
 
-In the RTX5 implementation the requried pointer conversions are implemented in the header file rtx_lib.h with the following inline functions:
+In the RTX5 implementation the required pointer conversions are implemented in the header file rtx_lib.h with the following inline functions:
 
 \code
 osRtxThread_t       *osRtxThreadId (osThread_t thread_id);
@@ -1592,7 +1626,7 @@ osRtxMessageQueue_t *osRtxMessageQueueId(osMessageQueueId_t mq_id);
 \section MISRA_3 [MISRA Note 3]: Conversion to unified object control blocks
 
 RTX uses a unified object control block structure that contains common object members.
-The unified control blocks use a fixed layout at the beginning of the sturcture and starts always with an object identifier.
+The unified control blocks use a fixed layout at the beginning of the structure and starts always with an object identifier.
 This allows common object functions that receive a pointer to a unified object control block and reference only the
 pointer or the members in the fixed layout. Using common object functions and data (for example the ISR queue) reduces 
 code complexity and keeps the source code better structured.  Refer also to \ref MISRA_4
@@ -1607,7 +1641,7 @@ All locations in the source code are marked with:
 \endcode 
 
 
-In the RTX5 implementation the requried pointer conversions are implemented in the header file \em rtx_lib.h with the following inline function:
+In the RTX5 implementation the required pointer conversions are implemented in the header file \em rtx_lib.h with the following inline function:
 
 \code
 osRtxObject_t *osRtxObject (void *object);
@@ -1617,7 +1651,7 @@ osRtxObject_t *osRtxObject (void *object);
 \section MISRA_4 [MISRA Note 4]: Conversion from unified object control blocks
 
 RTX uses a unified object control block structure that contains common object members. Refer to \ref MISRA_3 for more information.
-To process specifc control block data, pointer conversions are required.
+To process specific control block data, pointer conversions are required.
 
 This design decisions imply the following MISRA deviations:
  - [MISRA 2012 Rule       1.3,  required]: There shall be no occurrence of undefined or critical unspecified behavior
@@ -1630,7 +1664,7 @@ All locations in the source code are marked with:
   //lint -e{740} -e{826} -e{9087} "cast from pointer to generic object to specific object" [MISRA Note 4]
 \endcode 
 
-In the RTX5 source code the requried pointer conversions are implemented in the header file \em rtx_lib.h with the following inline functions:
+In the RTX5 source code the required pointer conversions are implemented in the header file \em rtx_lib.h with the following inline functions:
 
 \code
 osRtxThread_t       *osRtxThreadObject (osRtxObject_t *object);
@@ -1645,7 +1679,7 @@ osRtxMessage_t      *osRtxMessageObject (osRtxObject_t *object);
 
 \section MISRA_5 [MISRA Note 5]: Conversion to object types
 
-The RTX5 kernel has common memory management functions that use void pointers. These memory allocation fuctions returns 
+The RTX5 kernel has common memory management functions that use void pointers. These memory allocation functions return 
 a void pointer which is correctly aligned for object types.
 
 This design decision implies the following MISRA deviations:
@@ -1692,8 +1726,8 @@ static osTimerId_t svcRtxTimerNew (osTimerFunc_t func, osTimerType_t type, void 
     :
     //lint -e{9079} "conversion from pointer to void to pointer to other type" [MISRA Note 6]
     timer = attr->cb_mem;
-	:
-\endcode	
+    :
+\endcode
 
 \section MISRA_7 [MISRA Note 7]: Check for proper pointer alignment
 
@@ -1719,7 +1753,7 @@ static osThreadId_t svcRtxThreadNew (osThreadFunc_t func, void *argument, const 
     //lint -e(923) -e(9078) "cast from pointer to unsigned int" [MISRA Note 7]
     if ((((uint32_t)stack_mem & 7U) != 0U) || (stack_size == 0U)) {
     :
-\endcode	
+\endcode
 
 \section MISRA_8 [MISRA Note 8]: Memory allocation management
 
@@ -1802,7 +1836,7 @@ CPU register R12 (or R7). For assembly inter-working the function parameters are
 The function return value after SVC call is mapped to the CPU register R0. Return value is casted from unsigned int 
 to the target value. 
 
-It has been verified that this method has has no side-effects and is well defined.
+It has been verified that this method has no side-effects and is well defined.
 
 This design decision implies the following MISRA deviations:
  - [MISRA 2012 Rule      10.3,  required]: Expression assigned to a narrower or different essential type
@@ -1836,8 +1870,8 @@ PC-lint does not process ASM input/output operand lists and therefore falsely id
 \section MISRA_12 [MISRA Note 12]: Usage of exclusive access instructions
 
 The RTX5 implementation uses the CPU instructions LDREX and STREX (when supported by the processor) to implement atomic operations.
-This atomic operations elimite the requirement for interrupt lock-outs. The atomic operations are implemented using 
-inline assembly.
+
+These atomic operations eliminate the requirement for interrupt lock-outs. The atomic operations are implemented using inline assembly.
 
 PC-lint cannot process assembler instructions including the input/output operand lists and therefore falsely identifies issues:
  - Symbol not initialized
@@ -1859,11 +1893,11 @@ The functions that implement atomic instructions are marked as library modules a
 
 The Event Recorder is a generic event logger and the related functions are called to record an event.
 The function parameters are 32-bit id, 32-bit values, pointer to void (data) and are recorded as 32-bit numbers.
-The parameters for the Event Recorder may require cast opertions to unsigned int which however has no side-effects 
+The parameters for the Event Recorder may require cast operations to unsigned int which however has no side-effects 
 and is well defined. 
 
 The return value indicates success or failure. There is no need to check the return value since no action is 
-taken when a Event Recorder function fail. The EventID macro (part of external Event Recorder) constructs the 
+taken when an Event Recorder function fail. The EventID macro (part of external Event Recorder) constructs the 
 ID based on input parameters which are shifted, masked with '&' and combined with '|'.
 Zero value input parameters are valid and cause zero used with '&' and '|'.
 
@@ -1886,15 +1920,17 @@ The functions that call the Event Recorder are in the module \em rtx_evr.c and t
 /**
 \page functionOverview Function Overview
 
-CMSIS-RTOS2 provides multiple API interfaces:
-  - \subpage rtos_api2 is the new C function interface that supports dynamic object creation \if ARMv8M and Armv8-M (Arm Cortex-M23,
+CMSIS-RTOS2 provides following API interfaces:
+  - \subpage rtos_api2 is the C function interface that supports dynamic object creation \if ARMv8M and Armv8-M (Arm Cortex-M23,
     Cortex-M33 and Cortex-M35P) \endif.
+\ifnot FuSaRTS	
   - <a class="el" href="../../RTOS/html/functionOverview.html">CMSIS-RTOS C API v1</a> is a C function API that is backward
     compatible with CMSIS-RTOS v1.
   - \subpage rtos_apicpp is a C++ class function API (future extension).
 
 It is possible to intermix the different API variants in the same application and even in the same C/C++ source module.
 However, the functions of the <a class="el" href="../../RTOS/html/functionOverview.html">CMSIS-RTOS C API v1</a> may be deprecated in future versions of CMSIS-RTOS.
+\endif
 
 CMSIS-RTOS2 defines also a generic system timer interface that works across the supported Arm Cortex processors:
   - \subpage rtos_os_tick_api is the interface to a kernel system timer.
@@ -1951,7 +1987,7 @@ reference. Furthermore the concrete object type is verified, i.e. one cannot cal
 of one object type with a reference to another object type.
 
 All further parameter checks applied are either object and action specific or may even be implementation
-specific. Thus one should always check action function return values for `osErrorParameter` to asure the
+specific. Thus one should always check action function return values for `osErrorParameter` to assure the
 provided arguments were accepted.
 
 As a rule of thumb only non-blocking access function can be used from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines" (ISR).
@@ -2093,9 +2129,11 @@ The following CMSIS-RTOS C API v2 functions can be called from threads and \ref 
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
+\ifnot FuSaRTS
 \page rtos_apicpp CMSIS-RTOS C++ API
 
 A C++11/C++14 interface is planned for the future.
+\endif
 */
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/

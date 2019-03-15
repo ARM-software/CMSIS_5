@@ -4,7 +4,7 @@ set UVEXE=C:\Keil_v5\UV4\UV4.EXE
 set CURDIR=%CD%
 
 if .%1==. goto help
-for %%a in (ARM GCC) do if %1==%%a goto startBuild
+for %%a in (ARM ARMCLANG GCC) do if %1==%%a goto startBuild
 goto help
 
 :startBuild
@@ -12,10 +12,12 @@ echo.
 echo Building DSP Reference Libraries %1
 
 if %1==ARM                goto buildARM
+if %1==ARMCLANG           goto buildARMCLANG
 if %1==GCC                goto buildGCC
 goto err
 
 :buildARM
+:buildARMCLANG
 :buildGCC
 cd .\RefLibs\%1
 
@@ -109,7 +111,7 @@ goto end
 :help
 echo   Syntax: buildRefLibs toolchain
 echo.
-echo     toolchain:     ARM ^| GCC
+echo     toolchain:     ARM ^| ARMCLANG ^| GCC
 echo.
 echo   e.g.: buildRefLibs ARM
 

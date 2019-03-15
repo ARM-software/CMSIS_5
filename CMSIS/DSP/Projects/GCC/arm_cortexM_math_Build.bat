@@ -7,7 +7,7 @@ set UVEXE=C:\Keil_v5\UV4\UV4.EXE
 
 echo.
 echo Building DSP Libraries GCC
-echo.
+
 echo   Building DSP Library for Cortex-M0 Little Endian
 %UVEXE% -rb -j0 arm_cortexM_math.uvprojx -t "cortexM0l"     -o "DspLib_cortexM0l_build.log"
 
@@ -38,8 +38,8 @@ echo   Building DSP Library for ARMv8-M Mainline Little Endian
 echo   Building DSP Library for ARMv8-M Mainline Little Endian with single precision FPU
 %UVEXE% -rb -j0 arm_cortexM_math.uvprojx -t "ARMv8MMLlfsp"  -o "DspLib_ARMv8MMLlfsp_build.log"
 
-REM echo   Building DSP Library for ARMv8-M Mainline Little Endian with double precision FPU
-REM %UVEXE% -rb -j0 arm_cortexM_math.uvprojx -t "ARMv8MMLlfdp"  -o "DspLib_ARMv8MMLlfdp_build.log"
+echo   Building DSP Library for ARMv8-M Mainline Little Endian with double precision FPU
+%UVEXE% -rb -j0 arm_cortexM_math.uvprojx -t "ARMv8MMLlfdp"  -o "DspLib_ARMv8MMLlfdp_build.log"
 
 echo   Building DSP Library for ARMv8-M Mainline Little Endian with DSP instructions
 %UVEXE% -rb -j0 arm_cortexM_math.uvprojx -t "ARMv8MMLld"    -o "DspLib_ARMv8MMLld_build.log"
@@ -47,8 +47,9 @@ echo   Building DSP Library for ARMv8-M Mainline Little Endian with DSP instruct
 echo   Building DSP Library for ARMv8-M Mainline Little Endian with DSP instructions, single precision FPU
 %UVEXE% -rb -j0 arm_cortexM_math.uvprojx -t "ARMv8MMLldfsp" -o "DspLib_ARMv8MMLldfsp_build.log"
 
-REM echo   Building DSP Library for ARMv8-M Mainline Little Endian with DSP instructions, double precision FPU
-REM %UVEXE% -rb -j0 arm_cortexM_math.uvprojx -t "ARMv8MMLldfdp" -o "DspLib_ARMv8MMLldfdp_build.log"
+echo   Building DSP Library for ARMv8-M Mainline Little Endian with DSP instructions, double precision FPU
+%UVEXE% -rb -j0 arm_cortexM_math.uvprojx -t "ARMv8MMLldfdp" -o "DspLib_ARMv8MMLldfdp_build.log"
+
 
 REM big endian libraries
 

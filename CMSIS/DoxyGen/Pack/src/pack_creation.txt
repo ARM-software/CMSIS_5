@@ -76,21 +76,28 @@ If you add a software component in the PDSC file, you have to specify a componen
 and the component's version number (Cversion). For more information refer to \ref cp_Components.
 
 If applicable, try to map the \b Cclass of your software component to one of the following predefined or already well
-established classes:
-- Board Support: Generic interfaces for evaluation and development boards
-- CMSIS: <i>Cortex Microcontroller Software Interface Standard</i> components
-- CMSIS Driver: Unified device drivers compliant to the CMSIS-Driver specification
-- Compiler: Arm Compiler software extensions
-- Data Exchange: Software components for data exchange
-- Device: Startup and system setup components
-- File System*: File drive support and file system
-- Graphics*: Graphical libraries for user interfaces
-- Network*: Network stack using Internet protocols
-- RTOS*: Real-time operating systems
-- Safety: Components for testing application software against safety standards
-- Security*: Encryption for secure communication or storage
-- USB*: Universal Serial Bus stack
-- Wireless*: Communication stacks such as Bluetooth, WiFi, and ZigBee
+established classes listed below.  These \b Cclass names are pre-defined in the CMSIS pack using the \ref element_taxonomy "taxonomy" element.
+
+Cclass            | Description
+:-----------------|:------------------------------------------------------------------
+Audio             | Software components for audio processing
+Board Support     | Generic interfaces for evaluation and development boards
+Board Part *      | Drivers that support an external component available on an evaluation board
+CMSIS             | <i>Cortex Microcontroller Software Interface Standard</i> components
+CMSIS Driver      | Unified device drivers compliant to the CMSIS-Driver specification
+Compiler          | Arm Compiler software extensions
+Data Exchange     | Data exchange components or data formatter, for example JSON
+Device            | Startup and system setup components
+Extension Board * | Drivers that support an extension boards or shield
+File System*      | File drive support and file system
+Graphics*         | Graphical libraries for user interfaces
+IoT Client *      | IoT cloud client connectors
+IoT Utility *     | IoT specific utilities, i.e. a socket interface
+Network*          | Network stack using Internet protocols
+RTOS*             | Real-time operating systems
+Security*         | Encryption for secure communication or storage
+USB*              | Universal Serial Bus stack
+Utility           | Generic software utility components
 
 Classes with a * should always be used together with a \ref Component_Bundle "bundle" to avoid conflicts with other software
 components.

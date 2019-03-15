@@ -1,5 +1,5 @@
 /**
-\defgroup mpu_functions  MPU Functions for Armv7-M
+\defgroup mpu_functions  MPU Functions for Armv6-M/v7-M
 \brief Functions that relate to the Memory Protection Unit.
 \details
 The following functions support the optional Memory Protection Unit (MPU) that is available on the Cortex-M0+, M3, M4 and M7 processor.

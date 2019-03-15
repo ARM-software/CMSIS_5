@@ -38,7 +38,9 @@
 #define   OS_EVR_WAIT           OS_EVR_THREAD
 #endif
 
+#ifdef   _RTE_
 #include "RTE_Components.h"
+#endif
 
 #ifdef    RTE_Compiler_EventRecorder
 

@@ -69,8 +69,14 @@ struct FlashDevice const FlashDevice  =  {
 };
 \endcode
 
-\note The <b>Device Name</b> will usually be shown in tools to identify the Flash algorithm. Make sure that this is changed
-to the correct device name from the DFP.
+\note
+The <b>Device Name</b> is usually be shown in tools to identify the Flash algorithm. Make sure that this name reflects the device name.
+
+\note
+The <b>Programming Page Size</b> specifies the block size for programming using the function \ref ProgramPage.  For devices with small block sizes
+it might be better to specify a multiple of the physical block size as this reduces the communication overhead to the target.
+An optimal block size for fast programming is 1024 bytes, however the system itself does not restrict this size value.
+ 
 
 \section AddFPA Adding an Algorithm to a Pack
 The generated <b>*.FLM</b> file needs to be added to the \ref createPack_DFP, so that it is available to the tool user for programming
@@ -316,14 +322,21 @@ int ProgramPage (unsigned long adr, unsigned long sz, unsigned char *buf);
         - 1 on failure.
 
 \details
-The function \b ProgramPage is used to write code into the Flash memory. It is invoked whenever an attempt is made to
-download a program to Flash.
+The function \b ProgramPage is used to write code into the Flash memory. It is invoked  to
+download a program to Flash. As Flash memory is typically organized in blocks or pages, the parameters to the function \b ProgramPage 
+must not cross alignment boundaries of these flash pages.  The page size is specified in the struct FlashDevice with the value
+<b>Program Page Size</b>.
 
-The argument \a adr specifies the start address of the page that is to be programmed.
+The argument \a adr specifies the start address of the page that is to be programmed. It is aligned by the host programming system to a start address
+of a flash page.
 
-The argument \a sz specifies the size of the page that is to be programmed.
+The argument \a sz specifies the data size in the data buffer.  The host programming system ensures that page boundaries are not crossed.
 
-The argument \a buf points to the buffer containing the data to be programmed.
+The argument \a buf points to the data buffer containing the data to be programmed.
+
+\note
+The host programming system ensures that the argument \a adr + \a sz never crosses any page boundary.  The function \b ProgramPage does therefore not
+require any provisions for that.
 
 <b>Code Example</b>
 \code

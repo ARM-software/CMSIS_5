@@ -68,6 +68,11 @@ void SystemInit (void)
   //  Invalidate data cache
   L1C_InvalidateDCacheAll();
 
+#if ((__FPU_PRESENT == 1) && (__FPU_USED == 1))
+  // Enable FPU
+  __FPU_Enable();
+#endif
+
   // Create Translation Table
   MMU_CreateTranslationTable();
 
@@ -81,11 +86,6 @@ void SystemInit (void)
 #if (__L2C_PRESENT == 1) 
   // Enable GIC
   L2C_Enable();
-#endif
-
-#if ((__FPU_PRESENT == 1) && (__FPU_USED == 1))
-  // Enable FPU
-  __FPU_Enable();
 #endif
 
   // IRQ Initialize

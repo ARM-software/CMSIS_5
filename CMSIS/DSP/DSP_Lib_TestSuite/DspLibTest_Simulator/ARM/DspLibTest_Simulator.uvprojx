@@ -11,11 +11,12 @@
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
       <pCCUsed>5060020::V5.06 (build 20)::ARMCC</pCCUsed>
+      <uAC6>0</uAC6>
       <TargetOption>
         <TargetCommonOption>
           <Device>ARMCM0</Device>
           <Vendor>ARM</Vendor>
-          <PackID>ARM.CMSIS.5.0.1-dev6</PackID>
+          <PackID>ARM.CMSIS.5.5.0-dev52</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IROM(0x00000000,0x40000) IRAM(0x20000000,0x20000) CPUTYPE("Cortex-M0") CLOCK(12000000) ESEL ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -183,6 +184,7 @@
             <hadXRAM>0</hadXRAM>
             <uocXRam>0</uocXRam>
             <RvdsVP>0</RvdsVP>
+            <RvdsMve>0</RvdsMve>
             <hadIRAM2>0</hadIRAM2>
             <hadIROM2>0</hadIROM2>
             <StupSel>8</StupSel>
@@ -323,6 +325,7 @@
             <uThumb>0</uThumb>
             <uSurpInc>0</uSurpInc>
             <uC99>0</uC99>
+            <uGnu>0</uGnu>
             <useXO>0</useXO>
             <v6Lang>0</v6Lang>
             <v6LangP>0</v6LangP>
@@ -333,9 +336,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define>ARM_MATH_CM0</Define>
+              <Define></Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\Include;..\..\..\..\Device\ARM\ARMCM0\Include;..\..\RefLibs\inc;..\..\Common\JTest\inc;..\..\Common\JTest\inc\arr_desc;..\..\Common\inc;..\..\Common\inc\templates;..\..\Common\inc\basic_math_tests;..\..\Common\inc\complex_math_tests;..\..\Common\inc\statistics_tests;..\..\Common\inc\matrix_tests;..\..\Common\inc\support_tests;..\..\Common\inc\controller_tests;..\..\Common\inc\transform_tests;..\..\Common\inc\fast_math_tests;..\..\Common\inc\filtering_tests;..\..\Common\inc\intrinsics_tests</IncludePath>
+              <IncludePath>..\..\..\..\Core\Include;..\..\..\Include;..\..\..\..\..\Device\ARM\ARMCM0\Include;..\..\RefLibs\inc;..\..\Common\JTest\inc;..\..\Common\JTest\inc\arr_desc;..\..\Common\inc;..\..\Common\inc\templates;..\..\Common\inc\basic_math_tests;..\..\Common\inc\complex_math_tests;..\..\Common\inc\statistics_tests;..\..\Common\inc\matrix_tests;..\..\Common\inc\support_tests;..\..\Common\inc\controller_tests;..\..\Common\inc\transform_tests;..\..\Common\inc\fast_math_tests;..\..\Common\inc\filtering_tests;..\..\Common\inc\intrinsics_tests</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -350,8 +353,8 @@
             <useXO>0</useXO>
             <uClangAs>0</uClangAs>
             <VariousControls>
-              <MiscControls>--cpreproc --cpreproc_opts=-D,ARM_MATH_CM0</MiscControls>
-              <Define>ARM_MATH_CM0</Define>
+              <MiscControls>--cpreproc --cpreproc_opts=-D,ARMCM0</MiscControls>
+              <Define>ARMCM0</Define>
               <Undefine></Undefine>
               <IncludePath></IncludePath>
             </VariousControls>
@@ -366,7 +369,7 @@
             <TextAddressRange>0x00000000</TextAddressRange>
             <DataAddressRange>0x20000000</DataAddressRange>
             <pXoBase></pXoBase>
-            <ScatterFile></ScatterFile>
+            <ScatterFile>..\..\Common\platform\ARMCC\armcc5_arm.sct</ScatterFile>
             <IncludeLibs></IncludeLibs>
             <IncludeLibsPath></IncludeLibsPath>
             <Misc></Misc>
@@ -853,11 +856,12 @@
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
       <pCCUsed>5060020::V5.06 (build 20)::ARMCC</pCCUsed>
+      <uAC6>0</uAC6>
       <TargetOption>
         <TargetCommonOption>
           <Device>ARMCM0</Device>
           <Vendor>ARM</Vendor>
-          <PackID>ARM.CMSIS.5.0.1-dev6</PackID>
+          <PackID>ARM.CMSIS.5.5.0-dev52</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IROM(0x00000000,0x40000) IRAM(0x20000000,0x20000) CPUTYPE("Cortex-M0") CLOCK(12000000) ESEL ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -1025,6 +1029,7 @@
             <hadXRAM>0</hadXRAM>
             <uocXRam>0</uocXRam>
             <RvdsVP>0</RvdsVP>
+            <RvdsMve>0</RvdsMve>
             <hadIRAM2>0</hadIRAM2>
             <hadIROM2>0</hadIROM2>
             <StupSel>8</StupSel>
@@ -1165,6 +1170,7 @@
             <uThumb>0</uThumb>
             <uSurpInc>0</uSurpInc>
             <uC99>0</uC99>
+            <uGnu>0</uGnu>
             <useXO>0</useXO>
             <v6Lang>0</v6Lang>
             <v6LangP>0</v6LangP>
@@ -1175,9 +1181,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define>ARM_MATH_CM0, ARM_MATH_BIG_ENDIAN</Define>
+              <Define>ARM_MATH_BIG_ENDIAN</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\Include;..\..\..\..\Device\ARM\ARMCM0\Include;..\..\RefLibs\inc;..\..\Common\JTest\inc;..\..\Common\JTest\inc\arr_desc;..\..\Common\inc;..\..\Common\inc\templates;..\..\Common\inc\basic_math_tests;..\..\Common\inc\complex_math_tests;..\..\Common\inc\statistics_tests;..\..\Common\inc\matrix_tests;..\..\Common\inc\support_tests;..\..\Common\inc\controller_tests;..\..\Common\inc\transform_tests;..\..\Common\inc\fast_math_tests;..\..\Common\inc\filtering_tests;..\..\Common\inc\intrinsics_tests</IncludePath>
+              <IncludePath>..\..\..\..\Core\Include;..\..\..\Include;..\..\..\..\..\Device\ARM\ARMCM0\Include;..\..\RefLibs\inc;..\..\Common\JTest\inc;..\..\Common\JTest\inc\arr_desc;..\..\Common\inc;..\..\Common\inc\templates;..\..\Common\inc\basic_math_tests;..\..\Common\inc\complex_math_tests;..\..\Common\inc\statistics_tests;..\..\Common\inc\matrix_tests;..\..\Common\inc\support_tests;..\..\Common\inc\controller_tests;..\..\Common\inc\transform_tests;..\..\Common\inc\fast_math_tests;..\..\Common\inc\filtering_tests;..\..\Common\inc\intrinsics_tests</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1192,8 +1198,8 @@
             <useXO>0</useXO>
             <uClangAs>0</uClangAs>
             <VariousControls>
-              <MiscControls>--cpreproc --cpreproc_opts=-D,ARM_MATH_CM0</MiscControls>
-              <Define>ARM_MATH_CM0</Define>
+              <MiscControls>--cpreproc --cpreproc_opts=-D,ARMCM0</MiscControls>
+              <Define>ARMCM0</Define>
               <Undefine></Undefine>
               <IncludePath></IncludePath>
             </VariousControls>
@@ -1208,7 +1214,7 @@
             <TextAddressRange>0x00000000</TextAddressRange>
             <DataAddressRange>0x20000000</DataAddressRange>
             <pXoBase></pXoBase>
-            <ScatterFile></ScatterFile>
+            <ScatterFile>..\..\Common\platform\ARMCC\armcc5_arm.sct</ScatterFile>
             <IncludeLibs></IncludeLibs>
             <IncludeLibsPath></IncludeLibsPath>
             <Misc></Misc>
@@ -1695,11 +1701,12 @@
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
       <pCCUsed>5060020::V5.06 (build 20)::ARMCC</pCCUsed>
+      <uAC6>0</uAC6>
       <TargetOption>
         <TargetCommonOption>
           <Device>ARMCM3</Device>
           <Vendor>ARM</Vendor>
-          <PackID>ARM.CMSIS.5.0.1-dev6</PackID>
+          <PackID>ARM.CMSIS.5.5.0-dev52</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IROM(0x00000000,0x40000) IRAM(0x20000000,0x20000) CPUTYPE("Cortex-M3") CLOCK(12000000) ESEL ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -1867,6 +1874,7 @@
             <hadXRAM>0</hadXRAM>
             <uocXRam>0</uocXRam>
             <RvdsVP>0</RvdsVP>
+            <RvdsMve>0</RvdsMve>
             <hadIRAM2>0</hadIRAM2>
             <hadIROM2>0</hadIROM2>
             <StupSel>8</StupSel>
@@ -2007,6 +2015,7 @@
             <uThumb>0</uThumb>
             <uSurpInc>0</uSurpInc>
             <uC99>0</uC99>
+            <uGnu>0</uGnu>
             <useXO>0</useXO>
             <v6Lang>0</v6Lang>
             <v6LangP>0</v6LangP>
@@ -2017,9 +2026,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define>ARM_MATH_CM3</Define>
+              <Define></Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\Include;..\..\..\..\Device\ARM\ARMCM3\Include;..\..\RefLibs\inc;..\..\Common\JTest\inc;..\..\Common\JTest\inc\arr_desc;..\..\Common\inc;..\..\Common\inc\templates;..\..\Common\inc\basic_math_tests;..\..\Common\inc\complex_math_tests;..\..\Common\inc\statistics_tests;..\..\Common\inc\matrix_tests;..\..\Common\inc\support_tests;..\..\Common\inc\controller_tests;..\..\Common\inc\transform_tests;..\..\Common\inc\fast_math_tests;..\..\Common\inc\filtering_tests;..\..\Common\inc\intrinsics_tests</IncludePath>
+              <IncludePath>..\..\..\..\Core\Include;..\..\..\Include;..\..\..\..\..\Device\ARM\ARMCM3\Include;..\..\RefLibs\inc;..\..\Common\JTest\inc;..\..\Common\JTest\inc\arr_desc;..\..\Common\inc;..\..\Common\inc\templates;..\..\Common\inc\basic_math_tests;..\..\Common\inc\complex_math_tests;..\..\Common\inc\statistics_tests;..\..\Common\inc\matrix_tests;..\..\Common\inc\support_tests;..\..\Common\inc\controller_tests;..\..\Common\inc\transform_tests;..\..\Common\inc\fast_math_tests;..\..\Common\inc\filtering_tests;..\..\Common\inc\intrinsics_tests</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2034,8 +2043,8 @@
             <useXO>0</useXO>
             <uClangAs>0</uClangAs>
             <VariousControls>
-              <MiscControls>--cpreproc --cpreproc_opts=-D,ARM_MATH_CM3</MiscControls>
-              <Define>ARM_MATH_CM3</Define>
+              <MiscControls>--cpreproc --cpreproc_opts=-D,ARMCM3</MiscControls>
+              <Define>ARMCM3</Define>
               <Undefine></Undefine>
               <IncludePath></IncludePath>
             </VariousControls>
@@ -2050,7 +2059,7 @@
             <TextAddressRange>0x00000000</TextAddressRange>
             <DataAddressRange>0x20000000</DataAddressRange>
             <pXoBase></pXoBase>
-            <ScatterFile></ScatterFile>
+            <ScatterFile>..\..\Common\platform\ARMCC\armcc5_arm.sct</ScatterFile>
             <IncludeLibs></IncludeLibs>
             <IncludeLibsPath></IncludeLibsPath>
             <Misc></Misc>
@@ -2537,11 +2546,12 @@
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
       <pCCUsed>5060020::V5.06 (build 20)::ARMCC</pCCUsed>
+      <uAC6>0</uAC6>
       <TargetOption>
         <TargetCommonOption>
           <Device>ARMCM3</Device>
           <Vendor>ARM</Vendor>
-          <PackID>ARM.CMSIS.5.0.1-dev6</PackID>
+          <PackID>ARM.CMSIS.5.5.0-dev52</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IROM(0x00000000,0x40000) IRAM(0x20000000,0x20000) CPUTYPE("Cortex-M3") CLOCK(12000000) ESEL ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -2709,6 +2719,7 @@
             <hadXRAM>0</hadXRAM>
             <uocXRam>0</uocXRam>
             <RvdsVP>0</RvdsVP>
+            <RvdsMve>0</RvdsMve>
             <hadIRAM2>0</hadIRAM2>
             <hadIROM2>0</hadIROM2>
             <StupSel>8</StupSel>
@@ -2849,6 +2860,7 @@
             <uThumb>0</uThumb>
             <uSurpInc>0</uSurpInc>
             <uC99>0</uC99>
+            <uGnu>0</uGnu>
             <useXO>0</useXO>
             <v6Lang>0</v6Lang>
             <v6LangP>0</v6LangP>
@@ -2859,9 +2871,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define>ARM_MATH_CM3,ARM_MATH_BIG_ENDIAN</Define>
+              <Define>ARM_MATH_BIG_ENDIAN</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\Include;..\..\..\..\Device\ARM\ARMCM3\Include;..\..\RefLibs\inc;..\..\Common\JTest\inc;..\..\Common\JTest\inc\arr_desc;..\..\Common\inc;..\..\Common\inc\templates;..\..\Common\inc\basic_math_tests;..\..\Common\inc\complex_math_tests;..\..\Common\inc\statistics_tests;..\..\Common\inc\matrix_tests;..\..\Common\inc\support_tests;..\..\Common\inc\controller_tests;..\..\Common\inc\transform_tests;..\..\Common\inc\fast_math_tests;..\..\Common\inc\filtering_tests;..\..\Common\inc\intrinsics_tests</IncludePath>
+              <IncludePath>..\..\..\..\Core\Include;..\..\..\Include;..\..\..\..\..\Device\ARM\ARMCM3\Include;..\..\RefLibs\inc;..\..\Common\JTest\inc;..\..\Common\JTest\inc\arr_desc;..\..\Common\inc;..\..\Common\inc\templates;..\..\Common\inc\basic_math_tests;..\..\Common\inc\complex_math_tests;..\..\Common\inc\statistics_tests;..\..\Common\inc\matrix_tests;..\..\Common\inc\support_tests;..\..\Common\inc\controller_tests;..\..\Common\inc\transform_tests;..\..\Common\inc\fast_math_tests;..\..\Common\inc\filtering_tests;..\..\Common\inc\intrinsics_tests</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2876,8 +2888,8 @@
             <useXO>0</useXO>
             <uClangAs>0</uClangAs>
             <VariousControls>
-              <MiscControls>--cpreproc --cpreproc_opts=-D,ARM_MATH_CM3</MiscControls>
-              <Define>ARM_MATH_CM3</Define>
+              <MiscControls>--cpreproc --cpreproc_opts=-D,ARMCM3</MiscControls>
+              <Define>ARMCM3</Define>
               <Undefine></Undefine>
               <IncludePath></IncludePath>
             </VariousControls>
@@ -2892,7 +2904,7 @@
             <TextAddressRange>0x00000000</TextAddressRange>
             <DataAddressRange>0x20000000</DataAddressRange>
             <pXoBase></pXoBase>
-            <ScatterFile></ScatterFile>
+            <ScatterFile>..\..\Common\platform\ARMCC\armcc5_arm.sct</ScatterFile>
             <IncludeLibs></IncludeLibs>
             <IncludeLibsPath></IncludeLibsPath>
             <Misc></Misc>
@@ -3379,11 +3391,12 @@
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
       <pCCUsed>5060020::V5.06 (build 20)::ARMCC</pCCUsed>
+      <uAC6>0</uAC6>
       <TargetOption>
         <TargetCommonOption>
           <Device>ARMCM4</Device>
           <Vendor>ARM</Vendor>
-          <PackID>ARM.CMSIS.5.0.1-dev6</PackID>
+          <PackID>ARM.CMSIS.5.5.0-dev52</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IROM(0x00000000,0x80000) IRAM(0x20000000,0x20000) CPUTYPE("Cortex-M4") CLOCK(12000000) ESEL ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -3551,6 +3564,7 @@
             <hadXRAM>0</hadXRAM>
             <uocXRam>0</uocXRam>
             <RvdsVP>0</RvdsVP>
+            <RvdsMve>0</RvdsMve>
             <hadIRAM2>0</hadIRAM2>
             <hadIROM2>0</hadIROM2>
             <StupSel>8</StupSel>
@@ -3691,6 +3705,7 @@
             <uThumb>0</uThumb>
             <uSurpInc>0</uSurpInc>
             <uC99>0</uC99>
+            <uGnu>0</uGnu>
             <useXO>0</useXO>
             <v6Lang>0</v6Lang>
             <v6LangP>0</v6LangP>
@@ -3701,9 +3716,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define>ARM_MATH_CM4</Define>
+              <Define></Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\Include;..\..\..\..\Device\ARM\ARMCM4\Include;..\..\RefLibs\inc;..\..\Common\JTest\inc;..\..\Common\JTest\inc\arr_desc;..\..\Common\inc;..\..\Common\inc\templates;..\..\Common\inc\basic_math_tests;..\..\Common\inc\complex_math_tests;..\..\Common\inc\statistics_tests;..\..\Common\inc\matrix_tests;..\..\Common\inc\support_tests;..\..\Common\inc\controller_tests;..\..\Common\inc\transform_tests;..\..\Common\inc\fast_math_tests;..\..\Common\inc\filtering_tests;..\..\Common\inc\intrinsics_tests</IncludePath>
+              <IncludePath>..\..\..\..\Core\Include;..\..\..\Include;..\..\..\..\..\Device\ARM\ARMCM4\Include;..\..\RefLibs\inc;..\..\Common\JTest\inc;..\..\Common\JTest\inc\arr_desc;..\..\Common\inc;..\..\Common\inc\templates;..\..\Common\inc\basic_math_tests;..\..\Common\inc\complex_math_tests;..\..\Common\inc\statistics_tests;..\..\Common\inc\matrix_tests;..\..\Common\inc\support_tests;..\..\Common\inc\controller_tests;..\..\Common\inc\transform_tests;..\..\Common\inc\fast_math_tests;..\..\Common\inc\filtering_tests;..\..\Common\inc\intrinsics_tests</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -3718,8 +3733,8 @@
             <useXO>0</useXO>
             <uClangAs>0</uClangAs>
             <VariousControls>
-              <MiscControls>--cpreproc --cpreproc_opts=-D,ARM_MATH_CM4</MiscControls>
-              <Define>ARM_MATH_CM4</Define>
+              <MiscControls>--cpreproc --cpreproc_opts=-D,ARMCM4</MiscControls>
+              <Define>ARMCM4</Define>
               <Undefine></Undefine>
               <IncludePath></IncludePath>
             </VariousControls>
@@ -3734,7 +3749,7 @@
             <TextAddressRange>0x00000000</TextAddressRange>
             <DataAddressRange>0x20000000</DataAddressRange>
             <pXoBase></pXoBase>
-            <ScatterFile></ScatterFile>
+            <ScatterFile>..\..\Common\platform\ARMCC\armcc5_arm.sct</ScatterFile>
             <IncludeLibs></IncludeLibs>
             <IncludeLibsPath></IncludeLibsPath>
             <Misc></Misc>
@@ -4221,11 +4236,12 @@
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
       <pCCUsed>5060020::V5.06 (build 20)::ARMCC</pCCUsed>
+      <uAC6>0</uAC6>
       <TargetOption>
         <TargetCommonOption>
           <Device>ARMCM4</Device>
           <Vendor>ARM</Vendor>
-          <PackID>ARM.CMSIS.5.0.1-dev6</PackID>
+          <PackID>ARM.CMSIS.5.5.0-dev52</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IROM(0x00000000,0x80000) IRAM(0x20000000,0x20000) CPUTYPE("Cortex-M4") CLOCK(12000000) ESEL ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -4393,6 +4409,7 @@
             <hadXRAM>0</hadXRAM>
             <uocXRam>0</uocXRam>
             <RvdsVP>0</RvdsVP>
+            <RvdsMve>0</RvdsMve>
             <hadIRAM2>0</hadIRAM2>
             <hadIROM2>0</hadIROM2>
             <StupSel>8</StupSel>
@@ -4533,6 +4550,7 @@
             <uThumb>0</uThumb>
             <uSurpInc>0</uSurpInc>
             <uC99>0</uC99>
+            <uGnu>0</uGnu>
             <useXO>0</useXO>
             <v6Lang>0</v6Lang>
             <v6LangP>0</v6LangP>
@@ -4543,9 +4561,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define>ARM_MATH_CM4, ARM_MATH_BIG_ENDIAN</Define>
+              <Define>ARM_MATH_BIG_ENDIAN</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\Include;..\..\..\..\Device\ARM\ARMCM4\Include;..\..\RefLibs\inc;..\..\Common\JTest\inc;..\..\Common\JTest\inc\arr_desc;..\..\Common\inc;..\..\Common\inc\templates;..\..\Common\inc\basic_math_tests;..\..\Common\inc\complex_math_tests;..\..\Common\inc\statistics_tests;..\..\Common\inc\matrix_tests;..\..\Common\inc\support_tests;..\..\Common\inc\controller_tests;..\..\Common\inc\transform_tests;..\..\Common\inc\fast_math_tests;..\..\Common\inc\filtering_tests;..\..\Common\inc\intrinsics_tests</IncludePath>
+              <IncludePath>..\..\..\..\Core\Include;..\..\..\Include;..\..\..\..\..\Device\ARM\ARMCM4\Include;..\..\RefLibs\inc;..\..\Common\JTest\inc;..\..\Common\JTest\inc\arr_desc;..\..\Common\inc;..\..\Common\inc\templates;..\..\Common\inc\basic_math_tests;..\..\Common\inc\complex_math_tests;..\..\Common\inc\statistics_tests;..\..\Common\inc\matrix_tests;..\..\Common\inc\support_tests;..\..\Common\inc\controller_tests;..\..\Common\inc\transform_tests;..\..\Common\inc\fast_math_tests;..\..\Common\inc\filtering_tests;..\..\Common\inc\intrinsics_tests</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -4560,8 +4578,8 @@
             <useXO>0</useXO>
             <uClangAs>0</uClangAs>
             <VariousControls>
-              <MiscControls>--cpreproc --cpreproc_opts=-D,ARM_MATH_CM4</MiscControls>
-              <Define>ARM_MATH_CM4</Define>
+              <MiscControls>--cpreproc --cpreproc_opts=-D,ARMCM4</MiscControls>
+              <Define>ARMCM4</Define>
               <Undefine></Undefine>
               <IncludePath></IncludePath>
             </VariousControls>
@@ -4576,7 +4594,7 @@
             <TextAddressRange>0x00000000</TextAddressRange>
             <DataAddressRange>0x20000000</DataAddressRange>
             <pXoBase></pXoBase>
-            <ScatterFile></ScatterFile>
+            <ScatterFile>..\..\Common\platform\ARMCC\armcc5_arm.sct</ScatterFile>
             <IncludeLibs></IncludeLibs>
             <IncludeLibsPath></IncludeLibsPath>
             <Misc></Misc>
@@ -5062,12 +5080,13 @@
       <TargetName>cortexM4lf</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pCCUsed>5060422::V5.06 update 4 (build 422)::ARMCC</pCCUsed>
+      <pCCUsed>5060750::V5.06 update 6 (build 750)::ARMCC</pCCUsed>
+      <uAC6>0</uAC6>
       <TargetOption>
         <TargetCommonOption>
           <Device>ARMCM4_FP</Device>
           <Vendor>ARM</Vendor>
-          <PackID>ARM.CMSIS.5.0.1-dev6</PackID>
+          <PackID>ARM.CMSIS.5.5.0-dev52</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IROM(0x00000000,0x80000) IRAM(0x20000000,0x20000) CPUTYPE("Cortex-M4") FPU2 CLOCK(12000000) ESEL ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -5235,6 +5254,7 @@
             <hadXRAM>0</hadXRAM>
             <uocXRam>0</uocXRam>
             <RvdsVP>2</RvdsVP>
+            <RvdsMve>0</RvdsMve>
             <hadIRAM2>0</hadIRAM2>
             <hadIROM2>0</hadIROM2>
             <StupSel>8</StupSel>
@@ -5375,6 +5395,7 @@
             <uThumb>0</uThumb>
             <uSurpInc>0</uSurpInc>
             <uC99>0</uC99>
+            <uGnu>0</uGnu>
             <useXO>0</useXO>
             <v6Lang>0</v6Lang>
             <v6LangP>0</v6LangP>
@@ -5385,9 +5406,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define>ARM_MATH_CM4 __FPU_PRESENT=1U</Define>
+              <Define></Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\Include;..\..\..\..\Device\ARM\ARMCM4\Include;..\..\RefLibs\inc;..\..\Common\JTest\inc;..\..\Common\JTest\inc\arr_desc;..\..\Common\inc;..\..\Common\inc\templates;..\..\Common\inc\basic_math_tests;..\..\Common\inc\complex_math_tests;..\..\Common\inc\statistics_tests;..\..\Common\inc\matrix_tests;..\..\Common\inc\support_tests;..\..\Common\inc\controller_tests;..\..\Common\inc\transform_tests;..\..\Common\inc\fast_math_tests;..\..\Common\inc\filtering_tests;..\..\Common\inc\intrinsics_tests</IncludePath>
+              <IncludePath>..\..\..\..\Core\Include;..\..\..\Include;..\..\..\..\..\Device\ARM\ARMCM4\Include;..\..\RefLibs\inc;..\..\Common\JTest\inc;..\..\Common\JTest\inc\arr_desc;..\..\Common\inc;..\..\Common\inc\templates;..\..\Common\inc\basic_math_tests;..\..\Common\inc\complex_math_tests;..\..\Common\inc\statistics_tests;..\..\Common\inc\matrix_tests;..\..\Common\inc\support_tests;..\..\Common\inc\controller_tests;..\..\Common\inc\transform_tests;..\..\Common\inc\fast_math_tests;..\..\Common\inc\filtering_tests;..\..\Common\inc\intrinsics_tests</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -5402,8 +5423,8 @@
             <useXO>0</useXO>
             <uClangAs>0</uClangAs>
             <VariousControls>
-              <MiscControls>--cpreproc --cpreproc_opts=-D,ARM_MATH_CM4</MiscControls>
-              <Define>ARM_MATH_CM4</Define>
+              <MiscControls>--cpreproc --cpreproc_opts=-D,ARMCM4</MiscControls>
+              <Define>ARMCM4</Define>
               <Undefine></Undefine>
               <IncludePath></IncludePath>
             </VariousControls>
@@ -5418,7 +5439,7 @@
             <TextAddressRange>0x00000000</TextAddressRange>
             <DataAddressRange>0x20000000</DataAddressRange>
             <pXoBase></pXoBase>
-            <ScatterFile></ScatterFile>
+            <ScatterFile>..\..\Common\platform\ARMCC\armcc5_arm.sct</ScatterFile>
             <IncludeLibs></IncludeLibs>
             <IncludeLibsPath></IncludeLibsPath>
             <Misc></Misc>
@@ -5905,11 +5926,12 @@
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
       <pCCUsed>5060020::V5.06 (build 20)::ARMCC</pCCUsed>
+      <uAC6>0</uAC6>
       <TargetOption>
         <TargetCommonOption>
           <Device>ARMCM4_FP</Device>
           <Vendor>ARM</Vendor>
-          <PackID>ARM.CMSIS.5.0.1-dev6</PackID>
+          <PackID>ARM.CMSIS.5.5.0-dev52</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IROM(0x00000000,0x80000) IRAM(0x20000000,0x20000) CPUTYPE("Cortex-M4") FPU2 CLOCK(12000000) ESEL ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -6077,6 +6099,7 @@
             <hadXRAM>0</hadXRAM>
             <uocXRam>0</uocXRam>
             <RvdsVP>2</RvdsVP>
+            <RvdsMve>0</RvdsMve>
             <hadIRAM2>0</hadIRAM2>
             <hadIROM2>0</hadIROM2>
             <StupSel>8</StupSel>
@@ -6217,6 +6240,7 @@
             <uThumb>0</uThumb>
             <uSurpInc>0</uSurpInc>
             <uC99>0</uC99>
+            <uGnu>0</uGnu>
             <useXO>0</useXO>
             <v6Lang>0</v6Lang>
             <v6LangP>0</v6LangP>
@@ -6227,9 +6251,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define>ARM_MATH_CM4,ARM_MATH_BIG_ENDIAN, __FPU_PRESENT=1U</Define>
+              <Define>ARM_MATH_BIG_ENDIAN</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\Include;..\..\..\..\Device\ARM\ARMCM4\Include;..\..\RefLibs\inc;..\..\Common\JTest\inc;..\..\Common\JTest\inc\arr_desc;..\..\Common\inc;..\..\Common\inc\templates;..\..\Common\inc\basic_math_tests;..\..\Common\inc\complex_math_tests;..\..\Common\inc\statistics_tests;..\..\Common\inc\matrix_tests;..\..\Common\inc\support_tests;..\..\Common\inc\controller_tests;..\..\Common\inc\transform_tests;..\..\Common\inc\fast_math_tests;..\..\Common\inc\filtering_tests;..\..\Common\inc\intrinsics_tests</IncludePath>
+              <IncludePath>..\..\..\..\Core\Include;..\..\..\Include;..\..\..\..\..\Device\ARM\ARMCM4\Include;..\..\RefLibs\inc;..\..\Common\JTest\inc;..\..\Common\JTest\inc\arr_desc;..\..\Common\inc;..\..\Common\inc\templates;..\..\Common\inc\basic_math_tests;..\..\Common\inc\complex_math_tests;..\..\Common\inc\statistics_tests;..\..\Common\inc\matrix_tests;..\..\Common\inc\support_tests;..\..\Common\inc\controller_tests;..\..\Common\inc\transform_tests;..\..\Common\inc\fast_math_tests;..\..\Common\inc\filtering_tests;..\..\Common\inc\intrinsics_tests</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -6244,8 +6268,8 @@
             <useXO>0</useXO>
             <uClangAs>0</uClangAs>
             <VariousControls>
-              <MiscControls>--cpreproc --cpreproc_opts=-D,ARM_MATH_CM4</MiscControls>
-              <Define>ARM_MATH_CM4</Define>
+              <MiscControls>--cpreproc --cpreproc_opts=-D,ARMCM4</MiscControls>
+              <Define>ARMCM4</Define>
               <Undefine></Undefine>
               <IncludePath></IncludePath>
             </VariousControls>
@@ -6260,7 +6284,7 @@
             <TextAddressRange>0x00000000</TextAddressRange>
             <DataAddressRange>0x20000000</DataAddressRange>
             <pXoBase></pXoBase>
-            <ScatterFile></ScatterFile>
+            <ScatterFile>..\..\Common\platform\ARMCC\armcc5_arm.sct</ScatterFile>
             <IncludeLibs></IncludeLibs>
             <IncludeLibsPath></IncludeLibsPath>
             <Misc></Misc>
@@ -6747,11 +6771,12 @@
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
       <pCCUsed>5060020::V5.06 (build 20)::ARMCC</pCCUsed>
+      <uAC6>0</uAC6>
       <TargetOption>
         <TargetCommonOption>
           <Device>ARMCM7</Device>
           <Vendor>ARM</Vendor>
-          <PackID>ARM.CMSIS.5.0.1-dev6</PackID>
+          <PackID>ARM.CMSIS.5.5.0-dev52</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IROM(0x00000000,0x80000) IRAM(0x20000000,0x20000) CPUTYPE("Cortex-M7") CLOCK(12000000) ESEL ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -6919,6 +6944,7 @@
             <hadXRAM>0</hadXRAM>
             <uocXRam>0</uocXRam>
             <RvdsVP>0</RvdsVP>
+            <RvdsMve>0</RvdsMve>
             <hadIRAM2>0</hadIRAM2>
             <hadIROM2>0</hadIROM2>
             <StupSel>8</StupSel>
@@ -7059,6 +7085,7 @@
             <uThumb>0</uThumb>
             <uSurpInc>0</uSurpInc>
             <uC99>0</uC99>
+            <uGnu>0</uGnu>
             <useXO>0</useXO>
             <v6Lang>0</v6Lang>
             <v6LangP>0</v6LangP>
@@ -7069,9 +7096,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define>ARM_MATH_CM7</Define>
+              <Define></Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\Include;..\..\..\..\Device\ARM\ARMCM7\Include;..\..\RefLibs\inc;..\..\Common\JTest\inc;..\..\Common\JTest\inc\arr_desc;..\..\Common\inc;..\..\Common\inc\templates;..\..\Common\inc\basic_math_tests;..\..\Common\inc\complex_math_tests;..\..\Common\inc\statistics_tests;..\..\Common\inc\matrix_tests;..\..\Common\inc\support_tests;..\..\Common\inc\controller_tests;..\..\Common\inc\transform_tests;..\..\Common\inc\fast_math_tests;..\..\Common\inc\filtering_tests;..\..\Common\inc\intrinsics_tests</IncludePath>
+              <IncludePath>..\..\..\..\Core\Include;..\..\..\Include;..\..\..\..\..\Device\ARM\ARMCM7\Include;..\..\RefLibs\inc;..\..\Common\JTest\inc;..\..\Common\JTest\inc\arr_desc;..\..\Common\inc;..\..\Common\inc\templates;..\..\Common\inc\basic_math_tests;..\..\Common\inc\complex_math_tests;..\..\Common\inc\statistics_tests;..\..\Common\inc\matrix_tests;..\..\Common\inc\support_tests;..\..\Common\inc\controller_tests;..\..\Common\inc\transform_tests;..\..\Common\inc\fast_math_tests;..\..\Common\inc\filtering_tests;..\..\Common\inc\intrinsics_tests</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -7086,8 +7113,8 @@
             <useXO>0</useXO>
             <uClangAs>0</uClangAs>
             <VariousControls>
-              <MiscControls>--cpreproc --cpreproc_opts=-D,ARM_MATH_CM7</MiscControls>
-              <Define>ARM_MATH_CM7</Define>
+              <MiscControls>--cpreproc --cpreproc_opts=-D,ARMCM7</MiscControls>
+              <Define>ARMCM7</Define>
               <Undefine></Undefine>
               <IncludePath></IncludePath>
             </VariousControls>
@@ -7102,7 +7129,7 @@
             <TextAddressRange>0x00000000</TextAddressRange>
             <DataAddressRange>0x20000000</DataAddressRange>
             <pXoBase></pXoBase>
-            <ScatterFile></ScatterFile>
+            <ScatterFile>..\..\Common\platform\ARMCC\armcc5_arm.sct</ScatterFile>
             <IncludeLibs></IncludeLibs>
             <IncludeLibsPath></IncludeLibsPath>
             <Misc></Misc>
@@ -7589,11 +7616,12 @@
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
       <pCCUsed>5060020::V5.06 (build 20)::ARMCC</pCCUsed>
+      <uAC6>0</uAC6>
       <TargetOption>
         <TargetCommonOption>
           <Device>ARMCM7</Device>
           <Vendor>ARM</Vendor>
-          <PackID>ARM.CMSIS.5.0.1-dev6</PackID>
+          <PackID>ARM.CMSIS.5.5.0-dev52</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IROM(0x00000000,0x80000) IRAM(0x20000000,0x20000) CPUTYPE("Cortex-M7") CLOCK(12000000) ESEL ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -7761,6 +7789,7 @@
             <hadXRAM>0</hadXRAM>
             <uocXRam>0</uocXRam>
             <RvdsVP>0</RvdsVP>
+            <RvdsMve>0</RvdsMve>
             <hadIRAM2>0</hadIRAM2>
             <hadIROM2>0</hadIROM2>
             <StupSel>8</StupSel>
@@ -7901,6 +7930,7 @@
             <uThumb>0</uThumb>
             <uSurpInc>0</uSurpInc>
             <uC99>0</uC99>
+            <uGnu>0</uGnu>
             <useXO>0</useXO>
             <v6Lang>0</v6Lang>
             <v6LangP>0</v6LangP>
@@ -7911,9 +7941,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define>ARM_MATH_CM7, ARM_MATH_BIG_ENDIAN</Define>
+              <Define>ARM_MATH_BIG_ENDIAN</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\Include;..\..\..\..\Device\ARM\ARMCM7\Include;..\..\RefLibs\inc;..\..\Common\JTest\inc;..\..\Common\JTest\inc\arr_desc;..\..\Common\inc;..\..\Common\inc\templates;..\..\Common\inc\basic_math_tests;..\..\Common\inc\complex_math_tests;..\..\Common\inc\statistics_tests;..\..\Common\inc\matrix_tests;..\..\Common\inc\support_tests;..\..\Common\inc\controller_tests;..\..\Common\inc\transform_tests;..\..\Common\inc\fast_math_tests;..\..\Common\inc\filtering_tests;..\..\Common\inc\intrinsics_tests</IncludePath>
+              <IncludePath>..\..\..\..\Core\Include;..\..\..\Include;..\..\..\..\..\Device\ARM\ARMCM7\Include;..\..\RefLibs\inc;..\..\Common\JTest\inc;..\..\Common\JTest\inc\arr_desc;..\..\Common\inc;..\..\Common\inc\templates;..\..\Common\inc\basic_math_tests;..\..\Common\inc\complex_math_tests;..\..\Common\inc\statistics_tests;..\..\Common\inc\matrix_tests;..\..\Common\inc\support_tests;..\..\Common\inc\controller_tests;..\..\Common\inc\transform_tests;..\..\Common\inc\fast_math_tests;..\..\Common\inc\filtering_tests;..\..\Common\inc\intrinsics_tests</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -7928,8 +7958,8 @@
             <useXO>0</useXO>
             <uClangAs>0</uClangAs>
             <VariousControls>
-              <MiscControls>--cpreproc --cpreproc_opts=-D,ARM_MATH_CM7</MiscControls>
-              <Define>ARM_MATH_CM7</Define>
+              <MiscControls>--cpreproc --cpreproc_opts=-D,ARMCM7</MiscControls>
+              <Define>ARMCM7</Define>
               <Undefine></Undefine>
               <IncludePath></IncludePath>
             </VariousControls>
@@ -7944,7 +7974,7 @@
             <TextAddressRange>0x00000000</TextAddressRange>
             <DataAddressRange>0x20000000</DataAddressRange>
             <pXoBase></pXoBase>
-            <ScatterFile></ScatterFile>
+            <ScatterFile>..\..\Common\platform\ARMCC\armcc5_arm.sct</ScatterFile>
             <IncludeLibs></IncludeLibs>
             <IncludeLibsPath></IncludeLibsPath>
             <Misc></Misc>

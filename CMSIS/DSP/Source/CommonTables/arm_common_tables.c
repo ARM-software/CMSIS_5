@@ -3,13 +3,13 @@
  * Title:        arm_common_tables.c
  * Description:  common tables like fft twiddle factors, Bitreverse, reciprocal etc
  *
- * $Date:        27. January 2017
- * $Revision:    V.1.5.1
+ * $Date:        28. February 2019
+ * $Revision:    V.1.5.5
  *
  * Target Processor: Cortex-M cores
  * -------------------------------------------------------------------- */
 /*
- * Copyright (C) 2010-2017 ARM Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2010-2019 ARM Limited or its affiliates. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -30,165 +30,164 @@
 #include "arm_common_tables.h"
 
 /**
- * @ingroup ComplexFFT
+  @ingroup ComplexFFT
  */
 
 /**
- * @addtogroup CFFT_CIFFT Complex FFT Tables
- * @{
+  @addtogroup CFFT_CIFFT Complex FFT Tables
+  @{
  */
 
 /**
-* \par
-* Pseudo code for Generation of Bit reversal Table is
-* \par
-* <pre>for(l=1;l <= N/4;l++)
-* {
-*   for(i=0;i<logN2;i++)
-*   {
-*     a[i]=l&(1<<i);
-*   }
-*   for(j=0; j<logN2; j++)
-*   {
-*     if (a[j]!=0)
-*     y[l]+=(1<<((logN2-1)-j));
-*   }
-*   y[l] = y[l] >> 1;
-*  } </pre>
-* \par
-* where N = 4096	logN2 = 12
-* \par
-* N is the maximum FFT Size supported
+  @par
+  Pseudo code for Generation of Bit reversal Table is
+  @par
+  <pre>for (l = 1; l <= N/4; l++)
+  {
+    for (i = 0; i< logN2; i++)
+    {
+      a[i] = l & (1 << i);
+    }
+    for (j = 0; j < logN2; j++)
+    {
+      if (a[j] != 0)
+      y[l] += (1 << ((logN2 - 1) - j));
+    }
+    y[l] = y[l] >> 1;
+   } </pre>
+  @par
+  where N = 4096, logN2 = 12
+  @par
+  N is the maximum FFT Size supported
 */
 
-/*
-* @brief  Table for bit reversal process
+/**
+  @brief  Table for bit reversal process
 */
 const uint16_t armBitRevTable[1024] = {
-   0x400, 0x200, 0x600, 0x100, 0x500, 0x300, 0x700, 0x80, 0x480, 0x280,
-   0x680, 0x180, 0x580, 0x380, 0x780, 0x40, 0x440, 0x240, 0x640, 0x140,
-   0x540, 0x340, 0x740, 0xc0, 0x4c0, 0x2c0, 0x6c0, 0x1c0, 0x5c0, 0x3c0,
-   0x7c0, 0x20, 0x420, 0x220, 0x620, 0x120, 0x520, 0x320, 0x720, 0xa0,
-   0x4a0, 0x2a0, 0x6a0, 0x1a0, 0x5a0, 0x3a0, 0x7a0, 0x60, 0x460, 0x260,
-   0x660, 0x160, 0x560, 0x360, 0x760, 0xe0, 0x4e0, 0x2e0, 0x6e0, 0x1e0,
-   0x5e0, 0x3e0, 0x7e0, 0x10, 0x410, 0x210, 0x610, 0x110, 0x510, 0x310,
-   0x710, 0x90, 0x490, 0x290, 0x690, 0x190, 0x590, 0x390, 0x790, 0x50,
-   0x450, 0x250, 0x650, 0x150, 0x550, 0x350, 0x750, 0xd0, 0x4d0, 0x2d0,
-   0x6d0, 0x1d0, 0x5d0, 0x3d0, 0x7d0, 0x30, 0x430, 0x230, 0x630, 0x130,
-   0x530, 0x330, 0x730, 0xb0, 0x4b0, 0x2b0, 0x6b0, 0x1b0, 0x5b0, 0x3b0,
-   0x7b0, 0x70, 0x470, 0x270, 0x670, 0x170, 0x570, 0x370, 0x770, 0xf0,
-   0x4f0, 0x2f0, 0x6f0, 0x1f0, 0x5f0, 0x3f0, 0x7f0, 0x8, 0x408, 0x208,
-   0x608, 0x108, 0x508, 0x308, 0x708, 0x88, 0x488, 0x288, 0x688, 0x188,
-   0x588, 0x388, 0x788, 0x48, 0x448, 0x248, 0x648, 0x148, 0x548, 0x348,
-   0x748, 0xc8, 0x4c8, 0x2c8, 0x6c8, 0x1c8, 0x5c8, 0x3c8, 0x7c8, 0x28,
-   0x428, 0x228, 0x628, 0x128, 0x528, 0x328, 0x728, 0xa8, 0x4a8, 0x2a8,
-   0x6a8, 0x1a8, 0x5a8, 0x3a8, 0x7a8, 0x68, 0x468, 0x268, 0x668, 0x168,
-   0x568, 0x368, 0x768, 0xe8, 0x4e8, 0x2e8, 0x6e8, 0x1e8, 0x5e8, 0x3e8,
-   0x7e8, 0x18, 0x418, 0x218, 0x618, 0x118, 0x518, 0x318, 0x718, 0x98,
-   0x498, 0x298, 0x698, 0x198, 0x598, 0x398, 0x798, 0x58, 0x458, 0x258,
-   0x658, 0x158, 0x558, 0x358, 0x758, 0xd8, 0x4d8, 0x2d8, 0x6d8, 0x1d8,
-   0x5d8, 0x3d8, 0x7d8, 0x38, 0x438, 0x238, 0x638, 0x138, 0x538, 0x338,
-   0x738, 0xb8, 0x4b8, 0x2b8, 0x6b8, 0x1b8, 0x5b8, 0x3b8, 0x7b8, 0x78,
-   0x478, 0x278, 0x678, 0x178, 0x578, 0x378, 0x778, 0xf8, 0x4f8, 0x2f8,
-   0x6f8, 0x1f8, 0x5f8, 0x3f8, 0x7f8, 0x4, 0x404, 0x204, 0x604, 0x104,
-   0x504, 0x304, 0x704, 0x84, 0x484, 0x284, 0x684, 0x184, 0x584, 0x384,
-   0x784, 0x44, 0x444, 0x244, 0x644, 0x144, 0x544, 0x344, 0x744, 0xc4,
-   0x4c4, 0x2c4, 0x6c4, 0x1c4, 0x5c4, 0x3c4, 0x7c4, 0x24, 0x424, 0x224,
-   0x624, 0x124, 0x524, 0x324, 0x724, 0xa4, 0x4a4, 0x2a4, 0x6a4, 0x1a4,
-   0x5a4, 0x3a4, 0x7a4, 0x64, 0x464, 0x264, 0x664, 0x164, 0x564, 0x364,
-   0x764, 0xe4, 0x4e4, 0x2e4, 0x6e4, 0x1e4, 0x5e4, 0x3e4, 0x7e4, 0x14,
-   0x414, 0x214, 0x614, 0x114, 0x514, 0x314, 0x714, 0x94, 0x494, 0x294,
-   0x694, 0x194, 0x594, 0x394, 0x794, 0x54, 0x454, 0x254, 0x654, 0x154,
-   0x554, 0x354, 0x754, 0xd4, 0x4d4, 0x2d4, 0x6d4, 0x1d4, 0x5d4, 0x3d4,
-   0x7d4, 0x34, 0x434, 0x234, 0x634, 0x134, 0x534, 0x334, 0x734, 0xb4,
-   0x4b4, 0x2b4, 0x6b4, 0x1b4, 0x5b4, 0x3b4, 0x7b4, 0x74, 0x474, 0x274,
-   0x674, 0x174, 0x574, 0x374, 0x774, 0xf4, 0x4f4, 0x2f4, 0x6f4, 0x1f4,
-   0x5f4, 0x3f4, 0x7f4, 0xc, 0x40c, 0x20c, 0x60c, 0x10c, 0x50c, 0x30c,
-   0x70c, 0x8c, 0x48c, 0x28c, 0x68c, 0x18c, 0x58c, 0x38c, 0x78c, 0x4c,
-   0x44c, 0x24c, 0x64c, 0x14c, 0x54c, 0x34c, 0x74c, 0xcc, 0x4cc, 0x2cc,
-   0x6cc, 0x1cc, 0x5cc, 0x3cc, 0x7cc, 0x2c, 0x42c, 0x22c, 0x62c, 0x12c,
-   0x52c, 0x32c, 0x72c, 0xac, 0x4ac, 0x2ac, 0x6ac, 0x1ac, 0x5ac, 0x3ac,
-   0x7ac, 0x6c, 0x46c, 0x26c, 0x66c, 0x16c, 0x56c, 0x36c, 0x76c, 0xec,
-   0x4ec, 0x2ec, 0x6ec, 0x1ec, 0x5ec, 0x3ec, 0x7ec, 0x1c, 0x41c, 0x21c,
-   0x61c, 0x11c, 0x51c, 0x31c, 0x71c, 0x9c, 0x49c, 0x29c, 0x69c, 0x19c,
-   0x59c, 0x39c, 0x79c, 0x5c, 0x45c, 0x25c, 0x65c, 0x15c, 0x55c, 0x35c,
-   0x75c, 0xdc, 0x4dc, 0x2dc, 0x6dc, 0x1dc, 0x5dc, 0x3dc, 0x7dc, 0x3c,
-   0x43c, 0x23c, 0x63c, 0x13c, 0x53c, 0x33c, 0x73c, 0xbc, 0x4bc, 0x2bc,
-   0x6bc, 0x1bc, 0x5bc, 0x3bc, 0x7bc, 0x7c, 0x47c, 0x27c, 0x67c, 0x17c,
-   0x57c, 0x37c, 0x77c, 0xfc, 0x4fc, 0x2fc, 0x6fc, 0x1fc, 0x5fc, 0x3fc,
-   0x7fc, 0x2, 0x402, 0x202, 0x602, 0x102, 0x502, 0x302, 0x702, 0x82,
-   0x482, 0x282, 0x682, 0x182, 0x582, 0x382, 0x782, 0x42, 0x442, 0x242,
-   0x642, 0x142, 0x542, 0x342, 0x742, 0xc2, 0x4c2, 0x2c2, 0x6c2, 0x1c2,
-   0x5c2, 0x3c2, 0x7c2, 0x22, 0x422, 0x222, 0x622, 0x122, 0x522, 0x322,
-   0x722, 0xa2, 0x4a2, 0x2a2, 0x6a2, 0x1a2, 0x5a2, 0x3a2, 0x7a2, 0x62,
-   0x462, 0x262, 0x662, 0x162, 0x562, 0x362, 0x762, 0xe2, 0x4e2, 0x2e2,
-   0x6e2, 0x1e2, 0x5e2, 0x3e2, 0x7e2, 0x12, 0x412, 0x212, 0x612, 0x112,
-   0x512, 0x312, 0x712, 0x92, 0x492, 0x292, 0x692, 0x192, 0x592, 0x392,
-   0x792, 0x52, 0x452, 0x252, 0x652, 0x152, 0x552, 0x352, 0x752, 0xd2,
-   0x4d2, 0x2d2, 0x6d2, 0x1d2, 0x5d2, 0x3d2, 0x7d2, 0x32, 0x432, 0x232,
-   0x632, 0x132, 0x532, 0x332, 0x732, 0xb2, 0x4b2, 0x2b2, 0x6b2, 0x1b2,
-   0x5b2, 0x3b2, 0x7b2, 0x72, 0x472, 0x272, 0x672, 0x172, 0x572, 0x372,
-   0x772, 0xf2, 0x4f2, 0x2f2, 0x6f2, 0x1f2, 0x5f2, 0x3f2, 0x7f2, 0xa,
-   0x40a, 0x20a, 0x60a, 0x10a, 0x50a, 0x30a, 0x70a, 0x8a, 0x48a, 0x28a,
-   0x68a, 0x18a, 0x58a, 0x38a, 0x78a, 0x4a, 0x44a, 0x24a, 0x64a, 0x14a,
-   0x54a, 0x34a, 0x74a, 0xca, 0x4ca, 0x2ca, 0x6ca, 0x1ca, 0x5ca, 0x3ca,
-   0x7ca, 0x2a, 0x42a, 0x22a, 0x62a, 0x12a, 0x52a, 0x32a, 0x72a, 0xaa,
-   0x4aa, 0x2aa, 0x6aa, 0x1aa, 0x5aa, 0x3aa, 0x7aa, 0x6a, 0x46a, 0x26a,
-   0x66a, 0x16a, 0x56a, 0x36a, 0x76a, 0xea, 0x4ea, 0x2ea, 0x6ea, 0x1ea,
-   0x5ea, 0x3ea, 0x7ea, 0x1a, 0x41a, 0x21a, 0x61a, 0x11a, 0x51a, 0x31a,
-   0x71a, 0x9a, 0x49a, 0x29a, 0x69a, 0x19a, 0x59a, 0x39a, 0x79a, 0x5a,
-   0x45a, 0x25a, 0x65a, 0x15a, 0x55a, 0x35a, 0x75a, 0xda, 0x4da, 0x2da,
-   0x6da, 0x1da, 0x5da, 0x3da, 0x7da, 0x3a, 0x43a, 0x23a, 0x63a, 0x13a,
-   0x53a, 0x33a, 0x73a, 0xba, 0x4ba, 0x2ba, 0x6ba, 0x1ba, 0x5ba, 0x3ba,
-   0x7ba, 0x7a, 0x47a, 0x27a, 0x67a, 0x17a, 0x57a, 0x37a, 0x77a, 0xfa,
-   0x4fa, 0x2fa, 0x6fa, 0x1fa, 0x5fa, 0x3fa, 0x7fa, 0x6, 0x406, 0x206,
-   0x606, 0x106, 0x506, 0x306, 0x706, 0x86, 0x486, 0x286, 0x686, 0x186,
-   0x586, 0x386, 0x786, 0x46, 0x446, 0x246, 0x646, 0x146, 0x546, 0x346,
-   0x746, 0xc6, 0x4c6, 0x2c6, 0x6c6, 0x1c6, 0x5c6, 0x3c6, 0x7c6, 0x26,
-   0x426, 0x226, 0x626, 0x126, 0x526, 0x326, 0x726, 0xa6, 0x4a6, 0x2a6,
-   0x6a6, 0x1a6, 0x5a6, 0x3a6, 0x7a6, 0x66, 0x466, 0x266, 0x666, 0x166,
-   0x566, 0x366, 0x766, 0xe6, 0x4e6, 0x2e6, 0x6e6, 0x1e6, 0x5e6, 0x3e6,
-   0x7e6, 0x16, 0x416, 0x216, 0x616, 0x116, 0x516, 0x316, 0x716, 0x96,
-   0x496, 0x296, 0x696, 0x196, 0x596, 0x396, 0x796, 0x56, 0x456, 0x256,
-   0x656, 0x156, 0x556, 0x356, 0x756, 0xd6, 0x4d6, 0x2d6, 0x6d6, 0x1d6,
-   0x5d6, 0x3d6, 0x7d6, 0x36, 0x436, 0x236, 0x636, 0x136, 0x536, 0x336,
-   0x736, 0xb6, 0x4b6, 0x2b6, 0x6b6, 0x1b6, 0x5b6, 0x3b6, 0x7b6, 0x76,
-   0x476, 0x276, 0x676, 0x176, 0x576, 0x376, 0x776, 0xf6, 0x4f6, 0x2f6,
-   0x6f6, 0x1f6, 0x5f6, 0x3f6, 0x7f6, 0xe, 0x40e, 0x20e, 0x60e, 0x10e,
-   0x50e, 0x30e, 0x70e, 0x8e, 0x48e, 0x28e, 0x68e, 0x18e, 0x58e, 0x38e,
-   0x78e, 0x4e, 0x44e, 0x24e, 0x64e, 0x14e, 0x54e, 0x34e, 0x74e, 0xce,
-   0x4ce, 0x2ce, 0x6ce, 0x1ce, 0x5ce, 0x3ce, 0x7ce, 0x2e, 0x42e, 0x22e,
-   0x62e, 0x12e, 0x52e, 0x32e, 0x72e, 0xae, 0x4ae, 0x2ae, 0x6ae, 0x1ae,
-   0x5ae, 0x3ae, 0x7ae, 0x6e, 0x46e, 0x26e, 0x66e, 0x16e, 0x56e, 0x36e,
-   0x76e, 0xee, 0x4ee, 0x2ee, 0x6ee, 0x1ee, 0x5ee, 0x3ee, 0x7ee, 0x1e,
-   0x41e, 0x21e, 0x61e, 0x11e, 0x51e, 0x31e, 0x71e, 0x9e, 0x49e, 0x29e,
-   0x69e, 0x19e, 0x59e, 0x39e, 0x79e, 0x5e, 0x45e, 0x25e, 0x65e, 0x15e,
-   0x55e, 0x35e, 0x75e, 0xde, 0x4de, 0x2de, 0x6de, 0x1de, 0x5de, 0x3de,
-   0x7de, 0x3e, 0x43e, 0x23e, 0x63e, 0x13e, 0x53e, 0x33e, 0x73e, 0xbe,
-   0x4be, 0x2be, 0x6be, 0x1be, 0x5be, 0x3be, 0x7be, 0x7e, 0x47e, 0x27e,
-   0x67e, 0x17e, 0x57e, 0x37e, 0x77e, 0xfe, 0x4fe, 0x2fe, 0x6fe, 0x1fe,
-   0x5fe, 0x3fe, 0x7fe, 0x1
+   0x400, 0x200, 0x600, 0x100, 0x500, 0x300, 0x700, 0x080, 0x480, 0x280,
+   0x680, 0x180, 0x580, 0x380, 0x780, 0x040, 0x440, 0x240, 0x640, 0x140,
+   0x540, 0x340, 0x740, 0x0c0, 0x4c0, 0x2c0, 0x6c0, 0x1c0, 0x5c0, 0x3c0,
+   0x7c0, 0x020, 0x420, 0x220, 0x620, 0x120, 0x520, 0x320, 0x720, 0x0a0,
+   0x4a0, 0x2a0, 0x6a0, 0x1a0, 0x5a0, 0x3a0, 0x7a0, 0x060, 0x460, 0x260,
+   0x660, 0x160, 0x560, 0x360, 0x760, 0x0e0, 0x4e0, 0x2e0, 0x6e0, 0x1e0,
+   0x5e0, 0x3e0, 0x7e0, 0x010, 0x410, 0x210, 0x610, 0x110, 0x510, 0x310,
+   0x710, 0x090, 0x490, 0x290, 0x690, 0x190, 0x590, 0x390, 0x790, 0x050,
+   0x450, 0x250, 0x650, 0x150, 0x550, 0x350, 0x750, 0x0d0, 0x4d0, 0x2d0,
+   0x6d0, 0x1d0, 0x5d0, 0x3d0, 0x7d0, 0x030, 0x430, 0x230, 0x630, 0x130,
+   0x530, 0x330, 0x730, 0x0b0, 0x4b0, 0x2b0, 0x6b0, 0x1b0, 0x5b0, 0x3b0,
+   0x7b0, 0x070, 0x470, 0x270, 0x670, 0x170, 0x570, 0x370, 0x770, 0x0f0,
+   0x4f0, 0x2f0, 0x6f0, 0x1f0, 0x5f0, 0x3f0, 0x7f0, 0x008, 0x408, 0x208,
+   0x608, 0x108, 0x508, 0x308, 0x708, 0x088, 0x488, 0x288, 0x688, 0x188,
+   0x588, 0x388, 0x788, 0x048, 0x448, 0x248, 0x648, 0x148, 0x548, 0x348,
+   0x748, 0x0c8, 0x4c8, 0x2c8, 0x6c8, 0x1c8, 0x5c8, 0x3c8, 0x7c8, 0x028,
+   0x428, 0x228, 0x628, 0x128, 0x528, 0x328, 0x728, 0x0a8, 0x4a8, 0x2a8,
+   0x6a8, 0x1a8, 0x5a8, 0x3a8, 0x7a8, 0x068, 0x468, 0x268, 0x668, 0x168,
+   0x568, 0x368, 0x768, 0x0e8, 0x4e8, 0x2e8, 0x6e8, 0x1e8, 0x5e8, 0x3e8,
+   0x7e8, 0x018, 0x418, 0x218, 0x618, 0x118, 0x518, 0x318, 0x718, 0x098,
+   0x498, 0x298, 0x698, 0x198, 0x598, 0x398, 0x798, 0x058, 0x458, 0x258,
+   0x658, 0x158, 0x558, 0x358, 0x758, 0x0d8, 0x4d8, 0x2d8, 0x6d8, 0x1d8,
+   0x5d8, 0x3d8, 0x7d8, 0x038, 0x438, 0x238, 0x638, 0x138, 0x538, 0x338,
+   0x738, 0x0b8, 0x4b8, 0x2b8, 0x6b8, 0x1b8, 0x5b8, 0x3b8, 0x7b8, 0x078,
+   0x478, 0x278, 0x678, 0x178, 0x578, 0x378, 0x778, 0x0f8, 0x4f8, 0x2f8,
+   0x6f8, 0x1f8, 0x5f8, 0x3f8, 0x7f8, 0x004, 0x404, 0x204, 0x604, 0x104,
+   0x504, 0x304, 0x704, 0x084, 0x484, 0x284, 0x684, 0x184, 0x584, 0x384,
+   0x784, 0x044, 0x444, 0x244, 0x644, 0x144, 0x544, 0x344, 0x744, 0x0c4,
+   0x4c4, 0x2c4, 0x6c4, 0x1c4, 0x5c4, 0x3c4, 0x7c4, 0x024, 0x424, 0x224,
+   0x624, 0x124, 0x524, 0x324, 0x724, 0x0a4, 0x4a4, 0x2a4, 0x6a4, 0x1a4,
+   0x5a4, 0x3a4, 0x7a4, 0x064, 0x464, 0x264, 0x664, 0x164, 0x564, 0x364,
+   0x764, 0x0e4, 0x4e4, 0x2e4, 0x6e4, 0x1e4, 0x5e4, 0x3e4, 0x7e4, 0x014,
+   0x414, 0x214, 0x614, 0x114, 0x514, 0x314, 0x714, 0x094, 0x494, 0x294,
+   0x694, 0x194, 0x594, 0x394, 0x794, 0x054, 0x454, 0x254, 0x654, 0x154,
+   0x554, 0x354, 0x754, 0x0d4, 0x4d4, 0x2d4, 0x6d4, 0x1d4, 0x5d4, 0x3d4,
+   0x7d4, 0x034, 0x434, 0x234, 0x634, 0x134, 0x534, 0x334, 0x734, 0x0b4,
+   0x4b4, 0x2b4, 0x6b4, 0x1b4, 0x5b4, 0x3b4, 0x7b4, 0x074, 0x474, 0x274,
+   0x674, 0x174, 0x574, 0x374, 0x774, 0x0f4, 0x4f4, 0x2f4, 0x6f4, 0x1f4,
+   0x5f4, 0x3f4, 0x7f4, 0x00c, 0x40c, 0x20c, 0x60c, 0x10c, 0x50c, 0x30c,
+   0x70c, 0x08c, 0x48c, 0x28c, 0x68c, 0x18c, 0x58c, 0x38c, 0x78c, 0x04c,
+   0x44c, 0x24c, 0x64c, 0x14c, 0x54c, 0x34c, 0x74c, 0x0cc, 0x4cc, 0x2cc,
+   0x6cc, 0x1cc, 0x5cc, 0x3cc, 0x7cc, 0x02c, 0x42c, 0x22c, 0x62c, 0x12c,
+   0x52c, 0x32c, 0x72c, 0x0ac, 0x4ac, 0x2ac, 0x6ac, 0x1ac, 0x5ac, 0x3ac,
+   0x7ac, 0x06c, 0x46c, 0x26c, 0x66c, 0x16c, 0x56c, 0x36c, 0x76c, 0x0ec,
+   0x4ec, 0x2ec, 0x6ec, 0x1ec, 0x5ec, 0x3ec, 0x7ec, 0x01c, 0x41c, 0x21c,
+   0x61c, 0x11c, 0x51c, 0x31c, 0x71c, 0x09c, 0x49c, 0x29c, 0x69c, 0x19c,
+   0x59c, 0x39c, 0x79c, 0x05c, 0x45c, 0x25c, 0x65c, 0x15c, 0x55c, 0x35c,
+   0x75c, 0x0dc, 0x4dc, 0x2dc, 0x6dc, 0x1dc, 0x5dc, 0x3dc, 0x7dc, 0x03c,
+   0x43c, 0x23c, 0x63c, 0x13c, 0x53c, 0x33c, 0x73c, 0x0bc, 0x4bc, 0x2bc,
+   0x6bc, 0x1bc, 0x5bc, 0x3bc, 0x7bc, 0x07c, 0x47c, 0x27c, 0x67c, 0x17c,
+   0x57c, 0x37c, 0x77c, 0x0fc, 0x4fc, 0x2fc, 0x6fc, 0x1fc, 0x5fc, 0x3fc,
+   0x7fc, 0x002, 0x402, 0x202, 0x602, 0x102, 0x502, 0x302, 0x702, 0x082,
+   0x482, 0x282, 0x682, 0x182, 0x582, 0x382, 0x782, 0x042, 0x442, 0x242,
+   0x642, 0x142, 0x542, 0x342, 0x742, 0x0c2, 0x4c2, 0x2c2, 0x6c2, 0x1c2,
+   0x5c2, 0x3c2, 0x7c2, 0x022, 0x422, 0x222, 0x622, 0x122, 0x522, 0x322,
+   0x722, 0x0a2, 0x4a2, 0x2a2, 0x6a2, 0x1a2, 0x5a2, 0x3a2, 0x7a2, 0x062,
+   0x462, 0x262, 0x662, 0x162, 0x562, 0x362, 0x762, 0x0e2, 0x4e2, 0x2e2,
+   0x6e2, 0x1e2, 0x5e2, 0x3e2, 0x7e2, 0x012, 0x412, 0x212, 0x612, 0x112,
+   0x512, 0x312, 0x712, 0x092, 0x492, 0x292, 0x692, 0x192, 0x592, 0x392,
+   0x792, 0x052, 0x452, 0x252, 0x652, 0x152, 0x552, 0x352, 0x752, 0x0d2,
+   0x4d2, 0x2d2, 0x6d2, 0x1d2, 0x5d2, 0x3d2, 0x7d2, 0x032, 0x432, 0x232,
+   0x632, 0x132, 0x532, 0x332, 0x732, 0x0b2, 0x4b2, 0x2b2, 0x6b2, 0x1b2,
+   0x5b2, 0x3b2, 0x7b2, 0x072, 0x472, 0x272, 0x672, 0x172, 0x572, 0x372,
+   0x772, 0x0f2, 0x4f2, 0x2f2, 0x6f2, 0x1f2, 0x5f2, 0x3f2, 0x7f2, 0x00a,
+   0x40a, 0x20a, 0x60a, 0x10a, 0x50a, 0x30a, 0x70a, 0x08a, 0x48a, 0x28a,
+   0x68a, 0x18a, 0x58a, 0x38a, 0x78a, 0x04a, 0x44a, 0x24a, 0x64a, 0x14a,
+   0x54a, 0x34a, 0x74a, 0x0ca, 0x4ca, 0x2ca, 0x6ca, 0x1ca, 0x5ca, 0x3ca,
+   0x7ca, 0x02a, 0x42a, 0x22a, 0x62a, 0x12a, 0x52a, 0x32a, 0x72a, 0x0aa,
+   0x4aa, 0x2aa, 0x6aa, 0x1aa, 0x5aa, 0x3aa, 0x7aa, 0x06a, 0x46a, 0x26a,
+   0x66a, 0x16a, 0x56a, 0x36a, 0x76a, 0x0ea, 0x4ea, 0x2ea, 0x6ea, 0x1ea,
+   0x5ea, 0x3ea, 0x7ea, 0x01a, 0x41a, 0x21a, 0x61a, 0x11a, 0x51a, 0x31a,
+   0x71a, 0x09a, 0x49a, 0x29a, 0x69a, 0x19a, 0x59a, 0x39a, 0x79a, 0x5a,
+   0x45a, 0x25a, 0x65a, 0x15a, 0x55a, 0x35a, 0x75a, 0x0da, 0x4da, 0x2da,
+   0x6da, 0x1da, 0x5da, 0x3da, 0x7da, 0x03a, 0x43a, 0x23a, 0x63a, 0x13a,
+   0x53a, 0x33a, 0x73a, 0x0ba, 0x4ba, 0x2ba, 0x6ba, 0x1ba, 0x5ba, 0x3ba,
+   0x7ba, 0x07a, 0x47a, 0x27a, 0x67a, 0x17a, 0x57a, 0x37a, 0x77a, 0x0fa,
+   0x4fa, 0x2fa, 0x6fa, 0x1fa, 0x5fa, 0x3fa, 0x7fa, 0x006, 0x406, 0x206,
+   0x606, 0x106, 0x506, 0x306, 0x706, 0x086, 0x486, 0x286, 0x686, 0x186,
+   0x586, 0x386, 0x786, 0x046, 0x446, 0x246, 0x646, 0x146, 0x546, 0x346,
+   0x746, 0x0c6, 0x4c6, 0x2c6, 0x6c6, 0x1c6, 0x5c6, 0x3c6, 0x7c6, 0x026,
+   0x426, 0x226, 0x626, 0x126, 0x526, 0x326, 0x726, 0x0a6, 0x4a6, 0x2a6,
+   0x6a6, 0x1a6, 0x5a6, 0x3a6, 0x7a6, 0x066, 0x466, 0x266, 0x666, 0x166,
+   0x566, 0x366, 0x766, 0x0e6, 0x4e6, 0x2e6, 0x6e6, 0x1e6, 0x5e6, 0x3e6,
+   0x7e6, 0x016, 0x416, 0x216, 0x616, 0x116, 0x516, 0x316, 0x716, 0x096,
+   0x496, 0x296, 0x696, 0x196, 0x596, 0x396, 0x796, 0x056, 0x456, 0x256,
+   0x656, 0x156, 0x556, 0x356, 0x756, 0x0d6, 0x4d6, 0x2d6, 0x6d6, 0x1d6,
+   0x5d6, 0x3d6, 0x7d6, 0x036, 0x436, 0x236, 0x636, 0x136, 0x536, 0x336,
+   0x736, 0x0b6, 0x4b6, 0x2b6, 0x6b6, 0x1b6, 0x5b6, 0x3b6, 0x7b6, 0x076,
+   0x476, 0x276, 0x676, 0x176, 0x576, 0x376, 0x776, 0x0f6, 0x4f6, 0x2f6,
+   0x6f6, 0x1f6, 0x5f6, 0x3f6, 0x7f6, 0x00e, 0x40e, 0x20e, 0x60e, 0x10e,
+   0x50e, 0x30e, 0x70e, 0x08e, 0x48e, 0x28e, 0x68e, 0x18e, 0x58e, 0x38e,
+   0x78e, 0x04e, 0x44e, 0x24e, 0x64e, 0x14e, 0x54e, 0x34e, 0x74e, 0x0ce,
+   0x4ce, 0x2ce, 0x6ce, 0x1ce, 0x5ce, 0x3ce, 0x7ce, 0x02e, 0x42e, 0x22e,
+   0x62e, 0x12e, 0x52e, 0x32e, 0x72e, 0x0ae, 0x4ae, 0x2ae, 0x6ae, 0x1ae,
+   0x5ae, 0x3ae, 0x7ae, 0x06e, 0x46e, 0x26e, 0x66e, 0x16e, 0x56e, 0x36e,
+   0x76e, 0x0ee, 0x4ee, 0x2ee, 0x6ee, 0x1ee, 0x5ee, 0x3ee, 0x7ee, 0x01e,
+   0x41e, 0x21e, 0x61e, 0x11e, 0x51e, 0x31e, 0x71e, 0x09e, 0x49e, 0x29e,
+   0x69e, 0x19e, 0x59e, 0x39e, 0x79e, 0x05e, 0x45e, 0x25e, 0x65e, 0x15e,
+   0x55e, 0x35e, 0x75e, 0x0de, 0x4de, 0x2de, 0x6de, 0x1de, 0x5de, 0x3de,
+   0x7de, 0x03e, 0x43e, 0x23e, 0x63e, 0x13e, 0x53e, 0x33e, 0x73e, 0x0be,
+   0x4be, 0x2be, 0x6be, 0x1be, 0x5be, 0x3be, 0x7be, 0x07e, 0x47e, 0x27e,
+   0x67e, 0x17e, 0x57e, 0x37e, 0x77e, 0x0fe, 0x4fe, 0x2fe, 0x6fe, 0x1fe,
+   0x5fe, 0x3fe, 0x7fe, 0x001
 };
 
 
-/*
-* @brief  Floating-point Twiddle factors Table Generation
+/**
+  @brief  Floating-point Twiddle factors Table Generation
 */
 
 /**
-* \par
-* Example code for Floating-point Twiddle factors Generation:
-* \par
-* <pre>for(i = 0; i< N/; i++)
-* {
-*	twiddleCoef[2*i]= cos(i * 2*PI/(float)N);
-*	twiddleCoef[2*i+1]= sin(i * 2*PI/(float)N);
-* } </pre>
-* \par
-* where N = 16	and PI = 3.14159265358979
-* \par
-* Cos and Sin values are in interleaved fashion
-*
+  @par
+  Example code for Floating-point Twiddle factors Generation:
+  @par
+  <pre>for (i = 0; i < N/; i++)
+  {
+ 	twiddleCoef[2*i]   = cos(i * 2*PI/(float)N);
+ 	twiddleCoef[2*i+1] = sin(i * 2*PI/(float)N);
+  } </pre>
+  @par
+  where N = 16, PI = 3.14159265358979
+  @par
+  Cos and Sin values are in interleaved fashion
 */
 const float32_t twiddleCoef_16[32] = {
     1.000000000f,  0.000000000f,
@@ -210,19 +209,18 @@ const float32_t twiddleCoef_16[32] = {
 };
 
 /**
-* \par
-* Example code for Floating-point Twiddle factors Generation:
-* \par
-* <pre>for(i = 0; i< N/; i++)
-* {
-*	twiddleCoef[2*i]= cos(i * 2*PI/(float)N);
-*	twiddleCoef[2*i+1]= sin(i * 2*PI/(float)N);
-* } </pre>
-* \par
-* where N = 32	and PI = 3.14159265358979
-* \par
-* Cos and Sin values are in interleaved fashion
-*
+  @par
+  Example code for Floating-point Twiddle factors Generation:
+  @par
+  <pre>for (i = 0; i< N/; i++)
+  {
+ 	twiddleCoef[2*i]   = cos(i * 2*PI/(float)N);
+ 	twiddleCoef[2*i+1] = sin(i * 2*PI/(float)N);
+  } </pre>
+  @par
+  where N = 32, PI = 3.14159265358979
+  @par
+  Cos and Sin values are in interleaved fashion
 */
 const float32_t twiddleCoef_32[64] = {
     1.000000000f,  0.000000000f,
@@ -260,19 +258,18 @@ const float32_t twiddleCoef_32[64] = {
 };
 
 /**
-* \par
-* Example code for Floating-point Twiddle factors Generation:
-* \par
-* <pre>for(i = 0; i< N/; i++)
-* {
-*	twiddleCoef[2*i]= cos(i * 2*PI/(float)N);
-*	twiddleCoef[2*i+1]= sin(i * 2*PI/(float)N);
-* } </pre>
-* \par
-* where N = 64	and PI = 3.14159265358979
-* \par
-* Cos and Sin values are in interleaved fashion
-*
+  @par
+  Example code for Floating-point Twiddle factors Generation:
+  @par
+  <pre>for(i = 0; i < N/; i++)
+  {
+ 	twiddleCoef[2*i]   = cos(i * 2*PI/(float)N);
+ 	twiddleCoef[2*i+1] = sin(i * 2*PI/(float)N);
+  } </pre>
+  @par
+  where N = 64, PI = 3.14159265358979
+  @par
+  Cos and Sin values are in interleaved fashion
 */
 const float32_t twiddleCoef_64[128] = {
     1.000000000f,  0.000000000f,
@@ -342,21 +339,19 @@ const float32_t twiddleCoef_64[128] = {
 };
 
 /**
-* \par
-* Example code for Floating-point Twiddle factors Generation:
-* \par
-* <pre>for(i = 0; i< N/; i++)
-* {
-*	twiddleCoef[2*i]= cos(i * 2*PI/(float)N);
-*	twiddleCoef[2*i+1]= sin(i * 2*PI/(float)N);
-* } </pre>
-* \par
-* where N = 128	and PI = 3.14159265358979
-* \par
-* Cos and Sin values are in interleaved fashion
-*
+  @par
+  Example code for Floating-point Twiddle factors Generation:
+  @par
+  <pre>for (i = 0; i< N/; i++)
+  {
+ 	twiddleCoef[2*i]   = cos(i * 2*PI/(float)N);
+ 	twiddleCoef[2*i+1] = sin(i * 2*PI/(float)N);
+  } </pre>
+  @par
+  where N = 128, PI = 3.14159265358979
+  @par
+  Cos and Sin values are in interleaved fashion
 */
-
 const float32_t twiddleCoef_128[256] = {
     1.000000000f,  0.000000000f,
     0.998795456f,  0.049067674f,
@@ -489,19 +484,18 @@ const float32_t twiddleCoef_128[256] = {
 };
 
 /**
-* \par
-* Example code for Floating-point Twiddle factors Generation:
-* \par
-* <pre>for(i = 0; i< N/; i++)
-* {
-*	twiddleCoef[2*i]= cos(i * 2*PI/(float)N);
-*	twiddleCoef[2*i+1]= sin(i * 2*PI/(float)N);
-* } </pre>
-* \par
-* where N = 256	and PI = 3.14159265358979
-* \par
-* Cos and Sin values are in interleaved fashion
-*
+  @par
+  Example code for Floating-point Twiddle factors Generation:
+  @par
+  <pre>for(i = 0; i< N/; i++)
+  {
+ 	twiddleCoef[2*i]   = cos(i * 2*PI/(float)N);
+ 	twiddleCoef[2*i+1] = sin(i * 2*PI/(float)N);
+  } </pre>
+  @par
+  where N = 256, PI = 3.14159265358979
+  @par
+  Cos and Sin values are in interleaved fashion
 */
 const float32_t twiddleCoef_256[512] = {
     1.000000000f,  0.000000000f,
@@ -763,19 +757,18 @@ const float32_t twiddleCoef_256[512] = {
 };
 
 /**
-* \par
-* Example code for Floating-point Twiddle factors Generation:
-* \par
-* <pre>for(i = 0; i< N/; i++)
-* {
-*	twiddleCoef[2*i]= cos(i * 2*PI/(float)N);
-*	twiddleCoef[2*i+1]= sin(i * 2*PI/(float)N);
-* } </pre>
-* \par
-* where N = 512	and PI = 3.14159265358979
-* \par
-* Cos and Sin values are in interleaved fashion
-*
+  @par
+  Example code for Floating-point Twiddle factors Generation:
+  @par
+  <pre>for (i = 0; i< N/; i++)
+  {
+ 	twiddleCoef[2*i]   = cos(i * 2*PI/(float)N);
+ 	twiddleCoef[2*i+1] = sin(i * 2*PI/(float)N);
+  } </pre>
+  @par
+  where N = 512, PI = 3.14159265358979
+  @par
+  Cos and Sin values are in interleaved fashion
 */
 const float32_t twiddleCoef_512[1024] = {
     1.000000000f,  0.000000000f,
@@ -1292,19 +1285,18 @@ const float32_t twiddleCoef_512[1024] = {
     0.999924702f, -0.012271538f
 };
 /**
-* \par
-* Example code for Floating-point Twiddle factors Generation:
-* \par
-* <pre>for(i = 0; i< N/; i++)
-* {
-*	twiddleCoef[2*i]= cos(i * 2*PI/(float)N);
-*	twiddleCoef[2*i+1]= sin(i * 2*PI/(float)N);
-* } </pre>
-* \par
-* where N = 1024	and PI = 3.14159265358979
-* \par
-* Cos and Sin values are in interleaved fashion
-*
+  @par
+  Example code for Floating-point Twiddle factors Generation:
+  @par
+  <pre>for (i = 0; i< N/; i++)
+  {
+ 	twiddleCoef[2*i]   = cos(i * 2*PI/(float)N);
+ 	twiddleCoef[2*i+1] = sin(i * 2*PI/(float)N);
+  } </pre>
+  @par
+  where N = 1024, PI = 3.14159265358979
+  @par
+  Cos and Sin values are in interleaved fashion
 */
 const float32_t twiddleCoef_1024[2048] = {
     1.000000000f,  0.000000000f,
@@ -2334,19 +2326,18 @@ const float32_t twiddleCoef_1024[2048] = {
 };
 
 /**
-* \par
-* Example code for Floating-point Twiddle factors Generation:
-* \par
-* <pre>for(i = 0; i< N/; i++)
-* {
-*	twiddleCoef[2*i]= cos(i * 2*PI/(float)N);
-*	twiddleCoef[2*i+1]= sin(i * 2*PI/(float)N);
-* } </pre>
-* \par
-* where N = 2048	and PI = 3.14159265358979
-* \par
-* Cos and Sin values are in interleaved fashion
-*
+  @par
+  Example code for Floating-point Twiddle factors Generation:
+  @par
+  <pre>for (i = 0; i< N/; i++)
+  {
+ 	twiddleCoef[2*i]   = cos(i * 2*PI/(float)N);
+ 	twiddleCoef[2*i+1] = sin(i * 2*PI/(float)N);
+  } </pre>
+  @par
+  where N = 2048, PI = 3.14159265358979
+  @par
+  Cos and Sin values are in interleaved fashion
 */
 const float32_t twiddleCoef_2048[4096] = {
     1.000000000f,  0.000000000f,
@@ -4400,19 +4391,18 @@ const float32_t twiddleCoef_2048[4096] = {
 };
 
 /**
-* \par
-* Example code for Floating-point Twiddle factors Generation:
-* \par
-* <pre>for(i = 0; i< N/; i++)
-* {
-*	twiddleCoef[2*i]= cos(i * 2*PI/(float)N);
-*	twiddleCoef[2*i+1]= sin(i * 2*PI/(float)N);
-* } </pre>
-* \par
-* where N = 4096	and PI = 3.14159265358979
-* \par
-* Cos and Sin values are in interleaved fashion
-*
+  @par
+  Example code for Floating-point Twiddle factors Generation:
+  @par
+  <pre>for (i = 0; i< N/; i++)
+  {
+ 	twiddleCoef[2*i]   = cos(i * 2*PI/(float)N);
+ 	twiddleCoef[2*i+1] = sin(i * 2*PI/(float)N);
+  } </pre>
+  @par
+  where N = 4096, PI = 3.14159265358979
+  @par
+  Cos and Sin values are in interleaved fashion
 */
 const float32_t twiddleCoef_4096[8192] = {
     1.000000000f,  0.000000000f,
@@ -8513,29 +8503,28 @@ const float32_t twiddleCoef_4096[8192] = {
     0.999998823f, -0.001533980f
 };
 
-/*
-* @brief  Q31 Twiddle factors Table
+/**
+  @brief  Q31 Twiddle factors Table
 */
 
 
 /**
-* \par
-* Example code for Q31 Twiddle factors Generation::
-* \par
-* <pre>for(i = 0; i< 3N/4; i++)
-* {
-*    twiddleCoefQ31[2*i]= cos(i * 2*PI/(float)N);
-*    twiddleCoefQ31[2*i+1]= sin(i * 2*PI/(float)N);
-* } </pre>
-* \par
-* where N = 16	and PI = 3.14159265358979
-* \par
-* Cos and Sin values are interleaved fashion
-* \par
-* Convert Floating point to Q31(Fixed point 1.31):
-*	round(twiddleCoefQ31(i) * pow(2, 31))
-*
-*/
+  @par
+  Example code for Q31 Twiddle factors Generation::
+  @par
+  <pre> for(i = 0; i< 3N/4; i++)
+  {
+     twiddleCoefQ31[2*i]   = cos(i * 2*PI/(float)N);
+     twiddleCoefQ31[2*i+1] = sin(i * 2*PI/(float)N);
+  } </pre>
+  @par
+  where N = 16, PI = 3.14159265358979
+  @par
+  Cos and Sin values are interleaved fashion
+  @par
+  Convert Floating point to Q31(Fixed point 1.31):
+ 	round(twiddleCoefQ31(i) * pow(2, 31))
+ */
 const q31_t twiddleCoef_16_q31[24] = {
     (q31_t)0x7FFFFFFF, (q31_t)0x00000000,
     (q31_t)0x7641AF3C, (q31_t)0x30FBC54D,
@@ -8552,23 +8541,22 @@ const q31_t twiddleCoef_16_q31[24] = {
 };
 
 /**
-* \par
-* Example code for Q31 Twiddle factors Generation::
-* \par
-* <pre>for(i = 0; i< 3N/4; i++)
-* {
-*    twiddleCoefQ31[2*i]= cos(i * 2*PI/(float)N);
-*    twiddleCoefQ31[2*i+1]= sin(i * 2*PI/(float)N);
-* } </pre>
-* \par
-* where N = 32	and PI = 3.14159265358979
-* \par
-* Cos and Sin values are interleaved fashion
-* \par
-* Convert Floating point to Q31(Fixed point 1.31):
-*	round(twiddleCoefQ31(i) * pow(2, 31))
-*
-*/
+  @par
+  Example code for Q31 Twiddle factors Generation::
+  @par
+  <pre>for (i = 0; i< 3N/4; i++)
+  {
+     twiddleCoefQ31[2*i]   = cos(i * 2*PI/(float)N);
+     twiddleCoefQ31[2*i+1] = sin(i * 2*PI/(float)N);
+  } </pre>
+  @par
+  where N = 32, PI = 3.14159265358979
+  @par
+  Cos and Sin values are interleaved fashion
+  @par
+  Convert Floating point to Q31(Fixed point 1.31):
+ 	round(twiddleCoefQ31(i) * pow(2, 31))
+ */
 const q31_t twiddleCoef_32_q31[48] = {
     (q31_t)0x7FFFFFFF, (q31_t)0x00000000,
     (q31_t)0x7D8A5F3F, (q31_t)0x18F8B83C,
@@ -8597,23 +8585,22 @@ const q31_t twiddleCoef_32_q31[48] = {
 };
 
 /**
-* \par
-* Example code for Q31 Twiddle factors Generation::
-* \par
-* <pre>for(i = 0; i< 3N/4; i++)
-* {
-*    twiddleCoefQ31[2*i]= cos(i * 2*PI/(float)N);
-*    twiddleCoefQ31[2*i+1]= sin(i * 2*PI/(float)N);
-* } </pre>
-* \par
-* where N = 64	and PI = 3.14159265358979
-* \par
-* Cos and Sin values are interleaved fashion
-* \par
-* Convert Floating point to Q31(Fixed point 1.31):
-*	round(twiddleCoefQ31(i) * pow(2, 31))
-*
-*/
+  @par
+  Example code for Q31 Twiddle factors Generation::
+  @par
+  <pre>for (i = 0; i< 3N/4; i++)
+  {
+     twiddleCoefQ31[2*i]   = cos(i * 2*PI/(float)N);
+     twiddleCoefQ31[2*i+1] = sin(i * 2*PI/(float)N);
+  } </pre>
+  @par
+  where N = 64, PI = 3.14159265358979
+  @par
+  Cos and Sin values are interleaved fashion
+  @par
+  Convert Floating point to Q31(Fixed point 1.31):
+ 	round(twiddleCoefQ31(i) * pow(2, 31))
+ */
 const q31_t twiddleCoef_64_q31[96] = {
 	(q31_t)0x7FFFFFFF, (q31_t)0x00000000, (q31_t)0x7F62368F,
 	(q31_t)0x0C8BD35E, (q31_t)0x7D8A5F3F, (q31_t)0x18F8B83C,
@@ -8650,23 +8637,22 @@ const q31_t twiddleCoef_64_q31[96] = {
 };
 
 /**
-* \par
-* Example code for Q31 Twiddle factors Generation::
-* \par
-* <pre>for(i = 0; i< 3N/4; i++)
-* {
-*    twiddleCoefQ31[2*i]= cos(i * 2*PI/(float)N);
-*    twiddleCoefQ31[2*i+1]= sin(i * 2*PI/(float)N);
-* } </pre>
-* \par
-* where N = 128	and PI = 3.14159265358979
-* \par
-* Cos and Sin values are interleaved fashion
-* \par
-* Convert Floating point to Q31(Fixed point 1.31):
-*	round(twiddleCoefQ31(i) * pow(2, 31))
-*
-*/
+  @par
+  Example code for Q31 Twiddle factors Generation::
+  @par
+  <pre>for (i = 0; i < 3N/4; i++)
+  {
+     twiddleCoefQ31[2*i]   = cos(i * 2*PI/(float)N);
+     twiddleCoefQ31[2*i+1] = sin(i * 2*PI/(float)N);
+  } </pre>
+  @par
+  where N = 128, PI = 3.14159265358979
+  @par
+  Cos and Sin values are interleaved fashion
+  @par
+  Convert Floating point to Q31(Fixed point 1.31):
+ 	round(twiddleCoefQ31(i) * pow(2, 31))
+ */
 const q31_t twiddleCoef_128_q31[192] = {
 	(q31_t)0x7FFFFFFF, (q31_t)0x00000000, (q31_t)0x7FD8878D,
 	(q31_t)0x0647D97C, (q31_t)0x7F62368F, (q31_t)0x0C8BD35E,
@@ -8735,23 +8721,23 @@ const q31_t twiddleCoef_128_q31[192] = {
 };
 
 /**
-* \par
-* Example code for Q31 Twiddle factors Generation::
-* \par
-* <pre>for(i = 0; i< 3N/4; i++)
-* {
-*    twiddleCoefQ31[2*i]= cos(i * 2*PI/(float)N);
-*    twiddleCoefQ31[2*i+1]= sin(i * 2*PI/(float)N);
-* } </pre>
-* \par
-* where N = 256	and PI = 3.14159265358979
-* \par
-* Cos and Sin values are interleaved fashion
-* \par
-* Convert Floating point to Q31(Fixed point 1.31):
-*	round(twiddleCoefQ31(i) * pow(2, 31))
-*
-*/
+  @par
+  Example code for Q31 Twiddle factors Generation::
+  @par
+  <pre>for (i = 0; i< 3N/4; i++)
+  {
+     twiddleCoefQ31[2*i]   = cos(i * 2*PI/(float)N);
+     twiddleCoefQ31[2*i+1] = sin(i * 2*PI/(float)N);
+  } </pre>
+  @par
+  where N = 256, PI = 3.14159265358979
+  @par
+  Cos and Sin values are interleaved fashion
+  @par
+  Convert Floating point to Q31(Fixed point 1.31):
+ 	round(twiddleCoefQ31(i) * pow(2, 31))
+ 
+ */
 const q31_t twiddleCoef_256_q31[384] = {
 	(q31_t)0x7FFFFFFF, (q31_t)0x00000000, (q31_t)0x7FF62182,
 	(q31_t)0x03242ABF, (q31_t)0x7FD8878D, (q31_t)0x0647D97C,
@@ -8884,23 +8870,23 @@ const q31_t twiddleCoef_256_q31[384] = {
 };
 
 /**
-* \par
-* Example code for Q31 Twiddle factors Generation::
-* \par
-* <pre>for(i = 0; i< 3N/4; i++)
-* {
-*    twiddleCoefQ31[2*i]= cos(i * 2*PI/(float)N);
-*    twiddleCoefQ31[2*i+1]= sin(i * 2*PI/(float)N);
-* } </pre>
-* \par
-* where N = 512	and PI = 3.14159265358979
-* \par
-* Cos and Sin values are interleaved fashion
-* \par
-* Convert Floating point to Q31(Fixed point 1.31):
-*	round(twiddleCoefQ31(i) * pow(2, 31))
-*
-*/
+  @par
+  Example code for Q31 Twiddle factors Generation::
+  @par
+  <pre>for (i = 0; i< 3N/4; i++)
+  {
+     twiddleCoefQ31[2*i]   = cos(i * 2*PI/(float)N);
+     twiddleCoefQ31[2*i+1] = sin(i * 2*PI/(float)N);
+  } </pre>
+  @par
+  where N = 512, PI = 3.14159265358979
+  @par
+  Cos and Sin values are interleaved fashion
+  @par
+  Convert Floating point to Q31(Fixed point 1.31):
+ 	round(twiddleCoefQ31(i) * pow(2, 31))
+ 
+ */
 const q31_t twiddleCoef_512_q31[768] = {
     (q31_t)0x7FFFFFFF, (q31_t)0x00000000, (q31_t)0x7FFD885A,
 	(q31_t)0x01921D1F, (q31_t)0x7FF62182, (q31_t)0x03242ABF,
@@ -9161,23 +9147,23 @@ const q31_t twiddleCoef_512_q31[768] = {
 };
 
 /**
-* \par
-* Example code for Q31 Twiddle factors Generation::
-* \par
-* <pre>for(i = 0; i< 3N/4; i++)
-* {
-*    twiddleCoefQ31[2*i]= cos(i * 2*PI/(float)N);
-*    twiddleCoefQ31[2*i+1]= sin(i * 2*PI/(float)N);
-* } </pre>
-* \par
-* where N = 1024	and PI = 3.14159265358979
-* \par
-* Cos and Sin values are interleaved fashion
-* \par
-* Convert Floating point to Q31(Fixed point 1.31):
-*	round(twiddleCoefQ31(i) * pow(2, 31))
-*
-*/
+  @par
+  Example code for Q31 Twiddle factors Generation::
+  @par
+  <pre>for (i = 0; i< 3N/4; i++)
+  {
+     twiddleCoefQ31[2*i]   = cos(i * 2*PI/(float)N);
+     twiddleCoefQ31[2*i+1] = sin(i * 2*PI/(float)N);
+  } </pre>
+  @par
+  where N = 1024, PI = 3.14159265358979
+  @par
+  Cos and Sin values are interleaved fashion
+  @par
+  Convert Floating point to Q31(Fixed point 1.31):
+ 	round(twiddleCoefQ31(i) * pow(2, 31))
+ 
+ */
 const q31_t twiddleCoef_1024_q31[1536] = {
 	(q31_t)0x7FFFFFFF, (q31_t)0x00000000, (q31_t)0x7FFF6216,
 	(q31_t)0x00C90F88, (q31_t)0x7FFD885A, (q31_t)0x01921D1F,
@@ -9694,23 +9680,22 @@ const q31_t twiddleCoef_1024_q31[1536] = {
 };
 
 /**
-* \par
-* Example code for Q31 Twiddle factors Generation::
-* \par
-* <pre>for(i = 0; i< 3N/4; i++)
-* {
-*    twiddleCoefQ31[2*i]= cos(i * 2*PI/(float)N);
-*    twiddleCoefQ31[2*i+1]= sin(i * 2*PI/(float)N);
-* } </pre>
-* \par
-* where N = 2048	and PI = 3.14159265358979
-* \par
-* Cos and Sin values are interleaved fashion
-* \par
-* Convert Floating point to Q31(Fixed point 1.31):
-*	round(twiddleCoefQ31(i) * pow(2, 31))
-*
-*/
+  @par
+  Example code for Q31 Twiddle factors Generation::
+  @par
+  <pre>for (i = 0; i< 3N/4; i++)
+  {
+     twiddleCoefQ31[2*i]   = cos(i * 2*PI/(float)N);
+     twiddleCoefQ31[2*i+1] = sin(i * 2*PI/(float)N);
+  } </pre>
+  @par
+  where N = 2048, PI = 3.14159265358979
+  @par
+  Cos and Sin values are interleaved fashion
+  @par
+  Convert Floating point to Q31(Fixed point 1.31):
+ 	round(twiddleCoefQ31(i) * pow(2, 31))
+ */
 const q31_t twiddleCoef_2048_q31[3072] = {
 	(q31_t)0x7FFFFFFF, (q31_t)0x00000000, (q31_t)0x7FFFD885,
 	(q31_t)0x006487E3, (q31_t)0x7FFF6216, (q31_t)0x00C90F88,
@@ -10739,23 +10724,22 @@ const q31_t twiddleCoef_2048_q31[3072] = {
 };
 
 /**
-* \par
-* Example code for Q31 Twiddle factors Generation::
-* \par
-* <pre>for(i = 0; i< 3N/4; i++)
-* {
-*    twiddleCoefQ31[2*i]= cos(i * 2*PI/(float)N);
-*    twiddleCoefQ31[2*i+1]= sin(i * 2*PI/(float)N);
-* } </pre>
-* \par
-* where N = 4096	and PI = 3.14159265358979
-* \par
-* Cos and Sin values are interleaved fashion
-* \par
-* Convert Floating point to Q31(Fixed point 1.31):
-*	round(twiddleCoefQ31(i) * pow(2, 31))
-*
-*/
+  @par
+  Example code for Q31 Twiddle factors Generation::
+  @par
+  <pre>for (i = 0; i< 3N/4; i++)
+  {
+     twiddleCoefQ31[2*i]   = cos(i * 2*PI/(float)N);
+     twiddleCoefQ31[2*i+1] = sin(i * 2*PI/(float)N);
+  } </pre>
+  @par
+  where N = 4096, PI = 3.14159265358979
+  @par
+  Cos and Sin values are interleaved fashion
+  @par
+  Convert Floating point to Q31(Fixed point 1.31):
+ 	round(twiddleCoefQ31(i) * pow(2, 31))
+ */
 const q31_t twiddleCoef_4096_q31[6144] =
 {
 	(q31_t)0x7FFFFFFF, (q31_t)0x00000000, (q31_t)0x7FFFF621,
@@ -12810,29 +12794,28 @@ const q31_t twiddleCoef_4096_q31[6144] =
 
 
 
-/*
-* @brief  q15 Twiddle factors Table
+/**
+  @brief  q15 Twiddle factors Table
 */
 
 
 /**
-* \par
-* Example code for q15 Twiddle factors Generation::
-* \par
-* <pre>for(i = 0; i< 3N/4; i++)
-* {
-*    twiddleCoefq15[2*i]= cos(i * 2*PI/(float)N);
-*    twiddleCoefq15[2*i+1]= sin(i * 2*PI/(float)N);
-* } </pre>
-* \par
-* where N = 16	and PI = 3.14159265358979
-* \par
-* Cos and Sin values are interleaved fashion
-* \par
-* Convert Floating point to q15(Fixed point 1.15):
-*	round(twiddleCoefq15(i) * pow(2, 15))
-*
-*/
+  @par
+  Example code for q15 Twiddle factors Generation::
+  @par
+  <pre>fori = 0; i< 3N/4; i++)
+  {
+     twiddleCoefq15[2*i]   = cos(i * 2*PI/(float)N);
+     twiddleCoefq15[2*i+1] = sin(i * 2*PI/(float)N);
+  } </pre>
+  @par
+  where N = 16, PI = 3.14159265358979
+  @par
+  Cos and Sin values are interleaved fashion
+  @par
+  Convert Floating point to q15(Fixed point 1.15):
+ 	round(twiddleCoefq15(i) * pow(2, 15))
+ */
 const q15_t twiddleCoef_16_q15[24] = {
     (q15_t)0x7FFF, (q15_t)0x0000,
     (q15_t)0x7641, (q15_t)0x30FB,
@@ -12849,23 +12832,22 @@ const q15_t twiddleCoef_16_q15[24] = {
 };
 
 /**
-* \par
-* Example code for q15 Twiddle factors Generation::
-* \par
-* <pre>for(i = 0; i< 3N/4; i++)
-* {
-*    twiddleCoefq15[2*i]= cos(i * 2*PI/(float)N);
-*    twiddleCoefq15[2*i+1]= sin(i * 2*PI/(float)N);
-* } </pre>
-* \par
-* where N = 32	and PI = 3.14159265358979
-* \par
-* Cos and Sin values are interleaved fashion
-* \par
-* Convert Floating point to q15(Fixed point 1.15):
-*	round(twiddleCoefq15(i) * pow(2, 15))
-*
-*/
+  @par
+  Example code for q15 Twiddle factors Generation::
+  @par
+  <pre>for (i = 0; i< 3N/4; i++)
+  {
+     twiddleCoefq15[2*i]   = cos(i * 2*PI/(float)N);
+     twiddleCoefq15[2*i+1] = sin(i * 2*PI/(float)N);
+  } </pre>
+  @par
+  where N = 32, PI = 3.14159265358979
+  @par
+  Cos and Sin values are interleaved fashion
+  @par
+  Convert Floating point to q15(Fixed point 1.15):
+ 	round(twiddleCoefq15(i) * pow(2, 15))
+ */
 const q15_t twiddleCoef_32_q15[48] = {
     (q15_t)0x7FFF, (q15_t)0x0000,
     (q15_t)0x7D8A, (q15_t)0x18F8,
@@ -12894,23 +12876,22 @@ const q15_t twiddleCoef_32_q15[48] = {
 };
 
 /**
-* \par
-* Example code for q15 Twiddle factors Generation::
-* \par
-* <pre>for(i = 0; i< 3N/4; i++)
-* {
-*    twiddleCoefq15[2*i]= cos(i * 2*PI/(float)N);
-*    twiddleCoefq15[2*i+1]= sin(i * 2*PI/(float)N);
-* } </pre>
-* \par
-* where N = 64	and PI = 3.14159265358979
-* \par
-* Cos and Sin values are interleaved fashion
-* \par
-* Convert Floating point to q15(Fixed point 1.15):
-*	round(twiddleCoefq15(i) * pow(2, 15))
-*
-*/
+  @par
+  Example code for q15 Twiddle factors Generation::
+  @par
+  <pre>for (i = 0; i< 3N/4; i++)
+  {
+     twiddleCoefq15[2*i]   = cos(i * 2*PI/(float)N);
+     twiddleCoefq15[2*i+1] = sin(i * 2*PI/(float)N);
+  } </pre>
+  @par
+  where N = 64, PI = 3.14159265358979
+  @par
+  Cos and Sin values are interleaved fashion
+  @par
+  Convert Floating point to q15(Fixed point 1.15):
+ 	round(twiddleCoefq15(i) * pow(2, 15))
+ */
 const q15_t twiddleCoef_64_q15[96] = {
 	(q15_t)0x7FFF, (q15_t)0x0000, (q15_t)0x7F62, (q15_t)0x0C8B,
 	(q15_t)0x7D8A, (q15_t)0x18F8, (q15_t)0x7A7D, (q15_t)0x2528,
@@ -12939,23 +12920,22 @@ const q15_t twiddleCoef_64_q15[96] = {
 };
 
 /**
-* \par
-* Example code for q15 Twiddle factors Generation::
-* \par
-* <pre>for(i = 0; i< 3N/4; i++)
-* {
-*    twiddleCoefq15[2*i]= cos(i * 2*PI/(float)N);
-*    twiddleCoefq15[2*i+1]= sin(i * 2*PI/(float)N);
-* } </pre>
-* \par
-* where N = 128	and PI = 3.14159265358979
-* \par
-* Cos and Sin values are interleaved fashion
-* \par
-* Convert Floating point to q15(Fixed point 1.15):
-*	round(twiddleCoefq15(i) * pow(2, 15))
-*
-*/
+  @par
+  Example code for q15 Twiddle factors Generation::
+  @par
+  <pre>for (i = 0; i< 3N/4; i++)
+  {
+     twiddleCoefq15[2*i]   = cos(i * 2*PI/(float)N);
+     twiddleCoefq15[2*i+1] = sin(i * 2*PI/(float)N);
+  } </pre>
+  @par
+  where N = 128, PI = 3.14159265358979
+  @par
+  Cos and Sin values are interleaved fashion
+  @par
+  Convert Floating point to q15(Fixed point 1.15):
+ 	round(twiddleCoefq15(i) * pow(2, 15))
+ */
 const q15_t twiddleCoef_128_q15[192] = {
 	(q15_t)0x7FFF, (q15_t)0x0000, (q15_t)0x7FD8, (q15_t)0x0647,
 	(q15_t)0x7F62, (q15_t)0x0C8B, (q15_t)0x7E9D, (q15_t)0x12C8,
@@ -13008,23 +12988,22 @@ const q15_t twiddleCoef_128_q15[192] = {
 };
 
 /**
-* \par
-* Example code for q15 Twiddle factors Generation::
-* \par
-* <pre>for(i = 0; i< 3N/4; i++)
-* {
-*    twiddleCoefq15[2*i]= cos(i * 2*PI/(float)N);
-*    twiddleCoefq15[2*i+1]= sin(i * 2*PI/(float)N);
-* } </pre>
-* \par
-* where N = 256	and PI = 3.14159265358979
-* \par
-* Cos and Sin values are interleaved fashion
-* \par
-* Convert Floating point to q15(Fixed point 1.15):
-*	round(twiddleCoefq15(i) * pow(2, 15))
-*
-*/
+  @par
+  Example code for q15 Twiddle factors Generation::
+  @par
+  <pre>for (i = 0; i< 3N/4; i++)
+  {
+     twiddleCoefq15[2*i]   = cos(i * 2*PI/(float)N);
+     twiddleCoefq15[2*i+1] = sin(i * 2*PI/(float)N);
+  } </pre>
+  @par
+  where N = 256, PI = 3.14159265358979
+  @par
+  Cos and Sin values are interleaved fashion
+  @par
+  Convert Floating point to q15(Fixed point 1.15):
+ 	round(twiddleCoefq15(i) * pow(2, 15))
+ */
 const q15_t twiddleCoef_256_q15[384] = {
 	(q15_t)0x7FFF, (q15_t)0x0000, (q15_t)0x7FF6, (q15_t)0x0324,
 	(q15_t)0x7FD8, (q15_t)0x0647, (q15_t)0x7FA7, (q15_t)0x096A,
@@ -13125,23 +13104,22 @@ const q15_t twiddleCoef_256_q15[384] = {
 };
 
 /**
-* \par
-* Example code for q15 Twiddle factors Generation::
-* \par
-* <pre>for(i = 0; i< 3N/4; i++)
-* {
-*    twiddleCoefq15[2*i]= cos(i * 2*PI/(float)N);
-*    twiddleCoefq15[2*i+1]= sin(i * 2*PI/(float)N);
-* } </pre>
-* \par
-* where N = 512	and PI = 3.14159265358979
-* \par
-* Cos and Sin values are interleaved fashion
-* \par
-* Convert Floating point to q15(Fixed point 1.15):
-*	round(twiddleCoefq15(i) * pow(2, 15))
-*
-*/
+  @par
+  Example code for q15 Twiddle factors Generation::
+  @par
+  <pre>for (i = 0; i< 3N/4; i++)
+  {
+     twiddleCoefq15[2*i]   = cos(i * 2*PI/(float)N);
+     twiddleCoefq15[2*i+1] = sin(i * 2*PI/(float)N);
+  } </pre>
+  @par
+  where N = 512, PI = 3.14159265358979
+  @par
+  Cos and Sin values are interleaved fashion
+  @par
+  Convert Floating point to q15(Fixed point 1.15):
+ 	round(twiddleCoefq15(i) * pow(2, 15))
+ */
 const q15_t twiddleCoef_512_q15[768] = {
 	(q15_t)0x7FFF, (q15_t)0x0000, (q15_t)0x7FFD, (q15_t)0x0192,
 	(q15_t)0x7FF6, (q15_t)0x0324, (q15_t)0x7FE9, (q15_t)0x04B6,
@@ -13338,23 +13316,23 @@ const q15_t twiddleCoef_512_q15[768] = {
 };
 
 /**
-* \par
-* Example code for q15 Twiddle factors Generation::
-* \par
-* <pre>for(i = 0; i< 3N/4; i++)
-* {
-*    twiddleCoefq15[2*i]= cos(i * 2*PI/(float)N);
-*    twiddleCoefq15[2*i+1]= sin(i * 2*PI/(float)N);
-* } </pre>
-* \par
-* where N = 1024	and PI = 3.14159265358979
-* \par
-* Cos and Sin values are interleaved fashion
-* \par
-* Convert Floating point to q15(Fixed point 1.15):
-*	round(twiddleCoefq15(i) * pow(2, 15))
-*
-*/
+  @par
+  Example code for q15 Twiddle factors Generation::
+  @par
+  <pre>for (i = 0; i< 3N/4; i++)
+  {
+     twiddleCoefq15[2*i]   = cos(i * 2*PI/(float)N);
+     twiddleCoefq15[2*i+1] = sin(i * 2*PI/(float)N);
+  } </pre>
+  @par
+  where N = 1024, PI = 3.14159265358979
+  @par
+  Cos and Sin values are interleaved fashion
+  @par
+  Convert Floating point to q15(Fixed point 1.15):
+ 	round(twiddleCoefq15(i) * pow(2, 15))
+ 
+ */
 const q15_t twiddleCoef_1024_q15[1536] = {
 	(q15_t)0x7FFF, (q15_t)0x0000, (q15_t)0x7FFF, (q15_t)0x00C9,
 	(q15_t)0x7FFD, (q15_t)0x0192, (q15_t)0x7FFA, (q15_t)0x025B,
@@ -13743,23 +13721,22 @@ const q15_t twiddleCoef_1024_q15[1536] = {
 };
 
 /**
-* \par
-* Example code for q15 Twiddle factors Generation::
-* \par
-* <pre>for(i = 0; i< 3N/4; i++)
-* {
-*    twiddleCoefq15[2*i]= cos(i * 2*PI/(float)N);
-*    twiddleCoefq15[2*i+1]= sin(i * 2*PI/(float)N);
-* } </pre>
-* \par
-* where N = 2048	and PI = 3.14159265358979
-* \par
-* Cos and Sin values are interleaved fashion
-* \par
-* Convert Floating point to q15(Fixed point 1.15):
-*	round(twiddleCoefq15(i) * pow(2, 15))
-*
-*/
+  @par
+  Example code for q15 Twiddle factors Generation::
+  @par
+  <pre>for (i = 0; i< 3N/4; i++)
+  {
+     twiddleCoefq15[2*i]   = cos(i * 2*PI/(float)N);
+     twiddleCoefq15[2*i+1] = sin(i * 2*PI/(float)N);
+  } </pre>
+  @par
+  where N = 2048, PI = 3.14159265358979
+  @par
+  Cos and Sin values are interleaved fashion
+  @par
+  Convert Floating point to q15(Fixed point 1.15):
+ 	round(twiddleCoefq15(i) * pow(2, 15))
+ */
 const q15_t twiddleCoef_2048_q15[3072] = {
 	(q15_t)0x7FFF, (q15_t)0x0000, (q15_t)0x7FFF, (q15_t)0x0064,
 	(q15_t)0x7FFF, (q15_t)0x00C9, (q15_t)0x7FFE, (q15_t)0x012D,
@@ -14532,23 +14509,22 @@ const q15_t twiddleCoef_2048_q15[3072] = {
 };
 
 /**
-* \par
-* Example code for q15 Twiddle factors Generation::
-* \par
-* <pre>for(i = 0; i< 3N/4; i++)
-* {
-*    twiddleCoefq15[2*i]= cos(i * 2*PI/(float)N);
-*    twiddleCoefq15[2*i+1]= sin(i * 2*PI/(float)N);
-* } </pre>
-* \par
-* where N = 4096	and PI = 3.14159265358979
-* \par
-* Cos and Sin values are interleaved fashion
-* \par
-* Convert Floating point to q15(Fixed point 1.15):
-*	round(twiddleCoefq15(i) * pow(2, 15))
-*
-*/
+  @par
+  Example code for q15 Twiddle factors Generation::
+  @par
+  <pre>for (i = 0; i< 3N/4; i++)
+  {
+     twiddleCoefq15[2*i]   = cos(i * 2*PI/(float)N);
+     twiddleCoefq15[2*i+1] = sin(i * 2*PI/(float)N);
+  } </pre>
+  @par
+  where N = 4096, PI = 3.14159265358979
+  @par
+  Cos and Sin values are interleaved fashion
+  @par
+  Convert Floating point to q15(Fixed point 1.15):
+ 	round(twiddleCoefq15(i) * pow(2, 15))
+ */
 const q15_t twiddleCoef_4096_q15[6144] =
 {
 	(q15_t)0x7FFF, (q15_t)0x0000, (q15_t)0x7FFF, (q15_t)0x0032,
@@ -16091,13 +16067,13 @@ const q15_t twiddleCoef_4096_q15[6144] =
 
 
 /**
-* @} end of CFFT_CIFFT group
+  @} end of CFFT_CIFFT group
 */
 
-/*
-* @brief  Q15 table for reciprocal
+/**
+  @brief  Q15 table for reciprocal
 */
-const q15_t ALIGN4 armRecipTableQ15[64] = {
+const q15_t __ALIGNED(4) armRecipTableQ15[64] = {
  0x7F03, 0x7D13, 0x7B31, 0x795E, 0x7798, 0x75E0,
  0x7434, 0x7294, 0x70FF, 0x6F76, 0x6DF6, 0x6C82,
  0x6B16, 0x69B5, 0x685C, 0x670C, 0x65C4, 0x6484,
@@ -16111,8 +16087,8 @@ const q15_t ALIGN4 armRecipTableQ15[64] = {
  0x41CC, 0x4146, 0x40C2, 0x4040
 };
 
-/*
-* @brief  Q31 table for reciprocal
+/**
+  @brief  Q31 table for reciprocal
 */
 const q31_t armRecipTableQ31[64] = {
   0x7F03F03F, 0x7D137420, 0x7B31E739, 0x795E9F94, 0x7798FD29, 0x75E06928,
@@ -17767,12 +17743,12 @@ const uint16_t armBitRevIndexTable_fixed_4096[ARMBITREVINDEXTABLE_FIXED_4096_TAB
 };
 
 /**
-* \par
-* Example code for Floating-point RFFT Twiddle factors Generation:
-* \par
-* <pre>TW = exp(2*pi*i*[0:L/2-1]/L - pi/2*i).' </pre>
-* \par
-* Real and Imag values are in interleaved fashion
+  @par
+  Example code for Floating-point RFFT Twiddle factors Generation:
+  @par
+  <pre>TW = exp(2*pi*i*[0:L/2-1]/L - pi/2*i).' </pre>
+  @par
+  Real and Imag values are in interleaved fashion
 */
 const float32_t twiddleCoef_rfft_32[32] = {
     0.000000000f,  1.000000000f,
@@ -21880,18 +21856,17 @@ const float32_t twiddleCoef_rfft_4096[4096] = {
 
 
 /**
- * \par
- * Example code for the generation of the floating-point sine table:
- * <pre>
- * tableSize = 512;
- * for(n = 0; n < (tableSize + 1); n++)
- * {
- *	sinTable[n]=sin(2*pi*n/tableSize);
- * }</pre>
- * \par
- * where pi value is  3.14159265358979
+  @par
+  Example code for the generation of the floating-point sine table:
+  <pre>
+  tableSize = 512;
+  for (n = 0; n < (tableSize + 1); n++)
+  {
+ 	sinTable[n] = sin(2*PI*n/tableSize);
+  }</pre>
+ @par
+  where PI value is  3.14159265358979
  */
-
 const float32_t sinTable_f32[FAST_MATH_TABLE_SIZE + 1] = {
    0.00000000f, 0.01227154f, 0.02454123f, 0.03680722f, 0.04906767f, 0.06132074f,
    0.07356456f, 0.08579731f, 0.09801714f, 0.11022221f, 0.12241068f, 0.13458071f,
@@ -21990,22 +21965,22 @@ const float32_t sinTable_f32[FAST_MATH_TABLE_SIZE + 1] = {
 };
 
 /**
- * \par
- * Table values are in Q31 (1.31 fixed-point format) and generation is done in
- * three steps.  First,  generate sin values in floating point:
- * <pre>
- * tableSize = 512;
- * for(n = 0; n < (tableSize + 1); n++)
- * {
- *	sinTable[n]= sin(2*pi*n/tableSize);
- * } </pre>
- * where pi value is  3.14159265358979
- * \par
- * Second, convert floating-point to Q31 (Fixed point):
- *	(sinTable[i] * pow(2, 31))
- * \par
- * Finally, round to the nearest integer value:
- * 	sinTable[i] += (sinTable[i] > 0 ? 0.5 :-0.5);
+  @par
+  Table values are in Q31 (1.31 fixed-point format) and generation is done in
+  three steps.  First, generate sin values in floating point:
+  <pre>
+  tableSize = 512;
+  for (n = 0; n < (tableSize + 1); n++)
+  {
+ 	sinTable[n] = sin(2*PI*n/tableSize);
+  } </pre>
+  where PI value is 3.14159265358979
+ @par
+  Second, convert floating-point to Q31 (Fixed point):
+ 	(sinTable[i] * pow(2, 31))
+ @par
+  Finally, round to the nearest integer value:
+  	sinTable[i] += (sinTable[i] > 0 ? 0.5 : -0.5);
  */
 const q31_t sinTable_q31[FAST_MATH_TABLE_SIZE + 1] = {
 	0L, 26352928L, 52701887L, 79042909L, 105372028L, 131685278L, 157978697L,
@@ -22102,22 +22077,22 @@ const q31_t sinTable_q31[FAST_MATH_TABLE_SIZE + 1] = {
 };
 
 /**
- * \par
- * Table values are in Q15 (1.15 fixed-point format) and generation is done in
- * three steps.  First,  generate sin values in floating point:
- * <pre>
- * tableSize = 512;
- * for(n = 0; n < (tableSize + 1); n++)
- * {
- *	sinTable[n]= sin(2*pi*n/tableSize);
- * } </pre>
- * where pi value is  3.14159265358979
- * \par
- * Second, convert floating-point to Q15 (Fixed point):
- *	(sinTable[i] * pow(2, 15))
- * \par
- * Finally, round to the nearest integer value:
- * 	sinTable[i] += (sinTable[i] > 0 ? 0.5 :-0.5);
+  @par
+  Table values are in Q15 (1.15 fixed-point format) and generation is done in
+  three steps.  First,  generate sin values in floating point:
+  <pre>
+  tableSize = 512;
+  for (n = 0; n < (tableSize + 1); n++)
+  {
+ 	sinTable[n] = sin(2*PI*n/tableSize);
+  } </pre>
+  where PI value is  3.14159265358979
+ @par
+  Second, convert floating-point to Q15 (Fixed point):
+ 	(sinTable[i] * pow(2, 15))
+ @par
+  Finally, round to the nearest integer value:
+  	sinTable[i] += (sinTable[i] > 0 ? 0.5 :-0.5);
  */
 const q15_t sinTable_q15[FAST_MATH_TABLE_SIZE + 1] = {
 	0, 402, 804, 1206, 1608, 2009, 2411, 2811, 3212, 3612, 4011, 4410, 4808,

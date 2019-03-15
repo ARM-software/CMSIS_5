@@ -1,11 +1,11 @@
 /******************************************************************************
  * @file     mpu_armv8.h
- * @brief    CMSIS MPU API for Armv8-M MPU
- * @version  V5.0.4
- * @date     01. November 2018
+ * @brief    CMSIS MPU API for Armv8-M and Armv8.1-M MPU
+ * @version  V1.1.1
+ * @date     08. March 2019
  ******************************************************************************/
 /*
- * Copyright (c) 2017-2018 Arm Limited. All rights reserved.
+ * Copyright (c) 2017-2019 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -101,6 +101,21 @@
   ((IDX << MPU_RLAR_AttrIndx_Pos) & MPU_RLAR_AttrIndx_Msk) | \
   (MPU_RLAR_EN_Msk))
 
+#if defined(MPU_RLAR_PXN_Pos)
+  
+/** \brief Region Limit Address Register with PXN value
+* \param LIMIT The limit address bits [31:5] for this memory region. The value is one extended.
+* \param PXN Privileged execute never. Defines whether code can be executed from this privileged region.
+* \param IDX The attribute index to be associated with this memory region.
+*/
+#define ARM_MPU_RLAR_PXN(LIMIT, PXN, IDX) \
+  ((LIMIT & MPU_RLAR_LIMIT_Msk) | \
+  ((PXN << MPU_RLAR_PXN_Pos) & MPU_RLAR_PXN_Msk) | \
+  ((IDX << MPU_RLAR_AttrIndx_Pos) & MPU_RLAR_AttrIndx_Msk) | \
+  (MPU_RLAR_EN_Msk))
+  
+#endif
+
 /**
 * Struct for a single MPU Region
 */
@@ -120,6 +135,8 @@ __STATIC_INLINE void ARM_MPU_Enable(uint32_t MPU_Control)
 #ifdef SCB_SHCSR_MEMFAULTENA_Msk
   SCB->SHCSR |= SCB_SHCSR_MEMFAULTENA_Msk;
 #endif
+  __DSB();
+  __ISB();
 }
 
 /** Disable the MPU.
@@ -139,20 +156,19 @@ __STATIC_INLINE void ARM_MPU_Disable(void)
 */
 __STATIC_INLINE void ARM_MPU_Enable_NS(uint32_t MPU_Control)
 {
-  __DSB();
-  __ISB();
   MPU_NS->CTRL = MPU_Control | MPU_CTRL_ENABLE_Msk;
 #ifdef SCB_SHCSR_MEMFAULTENA_Msk
   SCB_NS->SHCSR |= SCB_SHCSR_MEMFAULTENA_Msk;
 #endif
+  __DSB();
+  __ISB();
 }
 
 /** Disable the Non-secure MPU.
 */
 __STATIC_INLINE void ARM_MPU_Disable_NS(void)
 {
-  __DSB();
-  __ISB();
+  __DMB();
 #ifdef SCB_SHCSR_MEMFAULTENA_Msk
   SCB_NS->SHCSR &= ~SCB_SHCSR_MEMFAULTENA_Msk;
 #endif

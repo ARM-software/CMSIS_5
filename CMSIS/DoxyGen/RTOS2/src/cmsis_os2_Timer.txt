@@ -171,7 +171,7 @@ Possible \ref osStatus_t return values:
  - \em osOK: the specified timer has been started or restarted.
  - \em osErrorISR: \b osTimerStart cannot be called from interrupt service routines.
  - \em osErrorParameter: parameter \a timer_id is either \token{NULL} or invalid or \a ticks is incorrect.
- - \em osErrorResource: the timer specified by parameter \a timer_id is in an invalid timer state.
+ - \em osErrorResource: the timer is in an invalid state.
 
 \note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 
@@ -216,7 +216,7 @@ Possible \ref osStatus_t return values:
  - \em osOK: the specified timer has been stopped.
  - \em osErrorISR: \b osTimerStop cannot be called from interrupt service routines.
  - \em osErrorParameter: parameter \a timer_id is either \token{NULL} or invalid.
- - \em osErrorResource: the timer specified by parameter \a timer_id is not running (you can only stop a running timer).
+ - \em osErrorResource: the timer is not running (you can only stop a running timer).
 
 \note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 
@@ -268,7 +268,7 @@ Possible \ref osStatus_t return values:
  - \em osOK: the specified timer has been deleted.
  - \em osErrorISR: \b osTimerDelete cannot be called from interrupt service routines.
  - \em osErrorParameter: parameter \a timer_id is either \token{NULL} or invalid.
- - \em osErrorResource: the timer specified by parameter \a timer_id is in an invalid timer state.
+ - \em osErrorResource: the timer is in an invalid state.
 
 \note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 

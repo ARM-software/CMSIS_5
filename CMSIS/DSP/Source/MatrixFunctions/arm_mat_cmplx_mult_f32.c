@@ -3,13 +3,13 @@
  * Title:        arm_mat_cmplx_mult_f32.c
  * Description:  Floating-point matrix multiplication
  *
- * $Date:        27. January 2017
- * $Revision:    V.1.5.1
+ * $Date:        28. February 2019
+ * $Revision:    V.1.5.5
  *
  * Target Processor: Cortex-M cores
  * -------------------------------------------------------------------- */
 /*
- * Copyright (C) 2010-2017 ARM Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2010-2019 ARM Limited or its affiliates. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -29,73 +29,72 @@
 #include "arm_math.h"
 
 /**
- * @ingroup groupMatrix
+  @ingroup groupMatrix
  */
 
 /**
- * @defgroup CmplxMatrixMult  Complex Matrix Multiplication
- *
- * Complex Matrix multiplication is only defined if the number of columns of the
- * first matrix equals the number of rows of the second matrix.
- * Multiplying an <code>M x N</code> matrix with an <code>N x P</code> matrix results
- * in an <code>M x P</code> matrix.
- * When matrix size checking is enabled, the functions check: (1) that the inner dimensions of
- * <code>pSrcA</code> and <code>pSrcB</code> are equal; and (2) that the size of the output
- * matrix equals the outer dimensions of <code>pSrcA</code> and <code>pSrcB</code>.
- */
+  @defgroup CmplxMatrixMult  Complex Matrix Multiplication
 
-
-/**
- * @addtogroup CmplxMatrixMult
- * @{
+  Complex Matrix multiplication is only defined if the number of columns of the
+  first matrix equals the number of rows of the second matrix.
+  Multiplying an <code>M x N</code> matrix with an <code>N x P</code> matrix results
+  in an <code>M x P</code> matrix.
+  @par
+  When matrix size checking is enabled, the functions check:
+   - that the inner dimensions of <code>pSrcA</code> and <code>pSrcB</code> are equal;
+   - that the size of the output matrix equals the outer dimensions of <code>pSrcA</code> and <code>pSrcB</code>.
  */
 
 /**
- * @brief Floating-point Complex matrix multiplication.
- * @param[in]       *pSrcA points to the first input complex matrix structure
- * @param[in]       *pSrcB points to the second input complex matrix structure
- * @param[out]      *pDst points to output complex matrix structure
- * @return     		The function returns either
- * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.
+  @addtogroup CmplxMatrixMult
+  @{
+ */
+
+/**
+  @brief         Floating-point Complex matrix multiplication.
+  @param[in]     pSrcA      points to first input complex matrix structure
+  @param[in]     pSrcB      points to second input complex matrix structure
+  @param[out]    pDst       points to output complex matrix structure
+  @return        execution status
+                   - \ref ARM_MATH_SUCCESS       : Operation successful
+                   - \ref ARM_MATH_SIZE_MISMATCH : Matrix size check failed
  */
 
 arm_status arm_mat_cmplx_mult_f32(
   const arm_matrix_instance_f32 * pSrcA,
   const arm_matrix_instance_f32 * pSrcB,
-  arm_matrix_instance_f32 * pDst)
+        arm_matrix_instance_f32 * pDst)
 {
-  float32_t *pIn1 = pSrcA->pData;                /* input data matrix pointer A */
-  float32_t *pIn2 = pSrcB->pData;                /* input data matrix pointer B */
-  float32_t *pInA = pSrcA->pData;                /* input data matrix pointer A  */
-  float32_t *pOut = pDst->pData;                 /* output data matrix pointer */
+  float32_t *pIn1 = pSrcA->pData;                /* Input data matrix pointer A */
+  float32_t *pIn2 = pSrcB->pData;                /* Input data matrix pointer B */
+  float32_t *pInA = pSrcA->pData;                /* Input data matrix pointer A */
+  float32_t *pOut = pDst->pData;                 /* Output data matrix pointer */
   float32_t *px;                                 /* Temporary output data matrix pointer */
-  uint16_t numRowsA = pSrcA->numRows;            /* number of rows of input matrix A */
-  uint16_t numColsB = pSrcB->numCols;            /* number of columns of input matrix B */
-  uint16_t numColsA = pSrcA->numCols;            /* number of columns of input matrix A */
-  float32_t sumReal1, sumImag1;                  /* accumulator */
-  float32_t a0, b0, c0, d0;
+  uint16_t numRowsA = pSrcA->numRows;            /* Number of rows of input matrix A */
+  uint16_t numColsB = pSrcB->numCols;            /* Number of columns of input matrix B */
+  uint16_t numColsA = pSrcA->numCols;            /* Number of columns of input matrix A */
+  float32_t sumReal, sumImag;                    /* Accumulator */
   float32_t a1, b1, c1, d1;
-  float32_t sumReal2, sumImag2;                  /* accumulator */
-
-
-  /* Run the below code for Cortex-M4 and Cortex-M3 */
-
-  uint16_t col, i = 0U, j, row = numRowsA, colCnt;      /* loop counters */
+  uint32_t col, i = 0U, j, row = numRowsA, colCnt; /* loop counters */
   arm_status status;                             /* status of matrix multiplication */
+
+#if defined (ARM_MATH_LOOPUNROLL)
+  float32_t a0, b0, c0, d0;
+#endif
 
 #ifdef ARM_MATH_MATRIX_CHECK
 
-
   /* Check for matrix mismatch condition */
   if ((pSrcA->numCols != pSrcB->numRows) ||
-     (pSrcA->numRows != pDst->numRows) || (pSrcB->numCols != pDst->numCols))
+      (pSrcA->numRows != pDst->numRows)  ||
+      (pSrcB->numCols != pDst->numCols)    )
   {
-
     /* Set status as ARM_MATH_SIZE_MISMATCH */
     status = ARM_MATH_SIZE_MISMATCH;
   }
   else
-#endif /*      #ifdef ARM_MATH_MATRIX_CHECK    */
+
+#endif /* #ifdef ARM_MATH_MATRIX_CHECK */
 
   {
     /* The following loop performs the dot-product of each row in pSrcA with each column in pSrcB */
@@ -118,19 +117,18 @@ arm_status arm_mat_cmplx_mult_f32(
       do
       {
         /* Set the variable sum, that acts as accumulator, to zero */
-        sumReal1 = 0.0f;
-        sumImag1 = 0.0f;
+        sumReal = 0.0f;
+        sumImag = 0.0f;
 
-        sumReal2 = 0.0f;
-        sumImag2 = 0.0f;
-
-        /* Initiate the pointer pIn1 to point to the starting address of the column being processed */
+        /* Initiate pointer pIn1 to point to starting address of column being processed */
         pIn1 = pInA;
 
-        /* Apply loop unrolling and compute 4 MACs simultaneously. */
-        colCnt = numColsA >> 2;
+#if defined (ARM_MATH_LOOPUNROLL)
 
-        /* matrix multiplication        */
+        /* Apply loop unrolling and compute 4 MACs simultaneously. */
+        colCnt = numColsA >> 2U;
+
+        /* matrix multiplication */
         while (colCnt > 0U)
         {
 
@@ -146,65 +144,75 @@ arm_status arm_mat_cmplx_mult_f32(
           /* Reading imaginary part of complex matrix B */
           d0 = *(pIn2 + 1U);
 
-          sumReal1 += a0 * c0;
-          sumImag1 += b0 * c0;
+          /* Multiply and Accumlates */
+          sumReal += a0 * c0;
+          sumImag += b0 * c0;
 
+          /* update pointers */
           pIn1 += 2U;
           pIn2 += 2 * numColsB;
 
-          sumReal2 -= b0 * d0;
-          sumImag2 += a0 * d0;
+          /* Multiply and Accumlates */
+          sumReal -= b0 * d0;
+          sumImag += a0 * d0;
 
-          /* c(m,n) = a(1,1)*b(1,1) + a(1,2) * b(2,1) + .... + a(m,p)*b(p,n) */
+          /* c(m,n) = a(1,1) * b(1,1) + a(1,2) * b(2,1) + .... + a(m,p) * b(p,n) */
 
-          a1 = *pIn1;
-          c1 = *pIn2;
-
+          /* read real and imag values from pSrcA and pSrcB buffer */
+          a1 = *(pIn1     );
+          c1 = *(pIn2     );
           b1 = *(pIn1 + 1U);
           d1 = *(pIn2 + 1U);
 
-          sumReal1 += a1 * c1;
-          sumImag1 += b1 * c1;
+          /* Multiply and Accumlates */
+          sumReal += a1 * c1;
+          sumImag += b1 * c1;
 
+          /* update pointers */
           pIn1 += 2U;
           pIn2 += 2 * numColsB;
 
-          sumReal2 -= b1 * d1;
-          sumImag2 += a1 * d1;
+          /* Multiply and Accumlates */
+          sumReal -= b1 * d1;
+          sumImag += a1 * d1;
 
-          a0 = *pIn1;
-          c0 = *pIn2;
-
+          a0 = *(pIn1     );
+          c0 = *(pIn2     );
           b0 = *(pIn1 + 1U);
           d0 = *(pIn2 + 1U);
 
-          sumReal1 += a0 * c0;
-          sumImag1 += b0 * c0;
+          /* Multiply and Accumlates */
+          sumReal += a0 * c0;
+          sumImag += b0 * c0;
 
+          /* update pointers */
           pIn1 += 2U;
           pIn2 += 2 * numColsB;
 
-          sumReal2 -= b0 * d0;
-          sumImag2 += a0 * d0;
+          /* Multiply and Accumlates */
+          sumReal -= b0 * d0;
+          sumImag += a0 * d0;
 
-          /* c(m,n) = a(1,1)*b(1,1) + a(1,2) * b(2,1) + .... + a(m,p)*b(p,n) */
+          /* c(m,n) = a(1,1) * b(1,1) + a(1,2) * b(2,1) + .... + a(m,p) * b(p,n) */
 
-          a1 = *pIn1;
-          c1 = *pIn2;
-
+          a1 = *(pIn1     );
+          c1 = *(pIn2     );
           b1 = *(pIn1 + 1U);
           d1 = *(pIn2 + 1U);
 
-          sumReal1 += a1 * c1;
-          sumImag1 += b1 * c1;
+          /* Multiply and Accumlates */
+          sumReal += a1 * c1;
+          sumImag += b1 * c1;
 
+          /* update pointers */
           pIn1 += 2U;
           pIn2 += 2 * numColsB;
 
-          sumReal2 -= b1 * d1;
-          sumImag2 += a1 * d1;
+          /* Multiply and Accumlates */
+          sumReal -= b1 * d1;
+          sumImag += a1 * d1;
 
-          /* Decrement the loop count */
+          /* Decrement loop count */
           colCnt--;
         }
 
@@ -212,49 +220,55 @@ arm_status arm_mat_cmplx_mult_f32(
          ** No loop unrolling is used. */
         colCnt = numColsA % 0x4U;
 
+#else
+
+        /* Initialize blkCnt with number of samples */
+        colCnt = numColsA;
+
+#endif /* #if defined (ARM_MATH_LOOPUNROLL) */
+
         while (colCnt > 0U)
         {
-          /* c(m,n) = a(1,1)*b(1,1) + a(1,2) * b(2,1) + .... + a(m,p)*b(p,n) */
-          a1 = *pIn1;
-          c1 = *pIn2;
-
+          /* c(m,n) = a(1,1) * b(1,1) + a(1,2) * b(2,1) + .... + a(m,p) * b(p,n) */
+          a1 = *(pIn1     );
+          c1 = *(pIn2     );
           b1 = *(pIn1 + 1U);
           d1 = *(pIn2 + 1U);
 
-          sumReal1 += a1 * c1;
-          sumImag1 += b1 * c1;
+          /* Multiply and Accumlates */
+          sumReal += a1 * c1;
+          sumImag += b1 * c1;
 
+          /* update pointers */
           pIn1 += 2U;
           pIn2 += 2 * numColsB;
 
-          sumReal2 -= b1 * d1;
-          sumImag2 += a1 * d1;
+          /* Multiply and Accumlates */
+          sumReal -= b1 * d1;
+          sumImag += a1 * d1;
 
-          /* Decrement the loop counter */
+          /* Decrement loop counter */
           colCnt--;
         }
 
-        sumReal1 += sumReal2;
-        sumImag1 += sumImag2;
+        /* Store result in destination buffer */
+        *px++ = sumReal;
+        *px++ = sumImag;
 
-        /* Store the result in the destination buffer */
-        *px++ = sumReal1;
-        *px++ = sumImag1;
-
-        /* Update the pointer pIn2 to point to the  starting address of the next column */
+        /* Update pointer pIn2 to point to starting address of next column */
         j++;
         pIn2 = pSrcB->pData + 2U * j;
 
-        /* Decrement the column loop counter */
+        /* Decrement column loop counter */
         col--;
 
       } while (col > 0U);
 
-      /* Update the pointer pInA to point to the  starting address of the next row */
+      /* Update pointer pInA to point to starting address of next row */
       i = i + numColsB;
       pInA = pInA + 2 * numColsA;
 
-      /* Decrement the row loop counter */
+      /* Decrement row loop counter */
       row--;
 
     } while (row > 0U);
@@ -268,5 +282,5 @@ arm_status arm_mat_cmplx_mult_f32(
 }
 
 /**
- * @} end of MatrixMult group
+  @} end of MatrixMult group
  */

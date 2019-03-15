@@ -15,6 +15,7 @@
 #endif
 
 #include "cmsis_cv.h"
+#include "CV_Report.h"
 
 //lint -e970 allow using int for main
 
@@ -48,16 +49,19 @@ int main (void)
 
 #if defined(__CORTEX_A)
 #include "irq_ctrl.h"
+
 #if (defined (__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050)) || \
   (defined ( __GNUC__ ))
-__attribute__((interrupt("IRQ")))
+#define __IRQ __attribute__((interrupt("IRQ")))
 #elif defined ( __CC_ARM )
-__irq
+#define __IRQ __irq
 #elif defined ( __ICCARM__ )
-__irq __arm
+#define __IRQ __irq __arm
 #else
 #error "Unsupported compiler!"
 #endif
+
+__IRQ
 void IRQ_Handler(void) {
   const IRQn_ID_t irqn = IRQ_GetActiveIRQ();
   IRQHandler_t const handler = IRQ_GetHandler(irqn);
@@ -68,12 +72,39 @@ void IRQ_Handler(void) {
   }
   IRQ_EndOfInterrupt(irqn);
 }
+
+__IRQ
+void Undef_Handler (void) {
+  cmsis_cv_abort(__FILENAME__, __LINE__, "Undefined Instruction!");
+  exit(0);
+}
+
+__IRQ
+void SVC_Handler   (void) {
+}
+
+__IRQ
+void PAbt_Handler  (void) {
+  cmsis_cv_abort(__FILENAME__, __LINE__, "Prefetch Abort!");
+  exit(0);
+}
+
+__IRQ
+void DAbt_Handler  (void) {
+  cmsis_cv_abort(__FILENAME__, __LINE__, "Data Abort!");
+  exit(0);
+}
+
+__IRQ
+void FIQ_Handler   (void) {
+}
 #endif
 
 #if defined(__CORTEX_M)
 __NO_RETURN
 extern void HardFault_Handler(void);
 void HardFault_Handler(void) {
+  cmsis_cv_abort(__FILENAME__, __LINE__, "HardFault!");
   #ifdef __MICROLIB
   for(;;) {}
   #else

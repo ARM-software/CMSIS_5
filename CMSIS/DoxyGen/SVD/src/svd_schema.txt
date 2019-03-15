@@ -1668,7 +1668,6 @@ Grouping element to define bit-field properties of a register.
     <bitOffset>1</bitOffset>
     <bitWidth>3</bitWidth>
     <access>read-write</access>
-    <resetValue>0x0</resetValue>
     <modifiedWriteValues>oneToSet</modifiedWriteValues>
     <writeConstraint>
       <range>

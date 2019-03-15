@@ -13,7 +13,7 @@ int Init_Mutex (void)
 {
  
   mid_Thread_Mutex = osMutexNew (NULL);
-  if (!tid_Thread_Mutex) {
+  if (!mid_Thread_Mutex) {
     ; // Mutex object not created, handle failure
   }
  

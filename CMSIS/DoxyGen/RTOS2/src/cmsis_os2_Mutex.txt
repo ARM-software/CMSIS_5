@@ -261,9 +261,8 @@ can have the following values:
 Possible \ref osStatus_t return values:
  - \em osOK: the mutex has been obtained.
  - \em osErrorTimeout: the mutex could not be obtained in the given time.
+ - \em osErrorResource: the mutex could not be obtained when no \a timeout was specified.
  - \em osErrorParameter: parameter \em mutex_id is \token{NULL} or invalid.
- - \em osErrorResource: the mutex specified by parameter \a mutex_id is in an invalid mutex state or the mutex could not be
-   obtained when no \a timeout was specified.
  - \em osErrorISR: cannot be called from interrupt service routines.
 
 \note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
@@ -296,9 +295,8 @@ this mutex will be put into the \ref ThreadStates "READY" state.
 
 Possible \ref osStatus_t return values:
  - \em osOK: the mutex has been correctly released.
+ - \em osErrorResource: the mutex could not be released (mutex was not acquired or running thread is not the owner).
  - \em osErrorParameter: parameter \em mutex_id is \token{NULL} or invalid.
- - \em osErrorResource: the mutex specified by parameter \a mutex_id is in an invalid mutex state or the mutex was not
-   obtained before/the current thread is not the owner of the mutex.
  - \em osErrorISR: \b osMutexRelease cannot be called from interrupt service routines.
 
 \note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
@@ -343,7 +341,7 @@ using the function \ref osMutexNew.
 Possible \ref osStatus_t return values:
  - \em osOK: the mutex object has been deleted.
  - \em osErrorParameter: parameter \em mutex_id is \token{NULL} or invalid.
- - \em osErrorResource: the mutex specified by parameter \a mutex_id is in an invalid mutex state.
+ - \em osErrorResource: the mutex is in an invalid state.
  - \em osErrorISR: \b osMutexDelete cannot be called from interrupt service routines.
 
 \note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".

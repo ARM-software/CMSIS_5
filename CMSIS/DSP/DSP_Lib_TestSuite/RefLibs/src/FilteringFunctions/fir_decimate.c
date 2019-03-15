@@ -6,13 +6,13 @@ void ref_fir_decimate_f32(
   float32_t * pDst,
   uint32_t blockSize)
 {
-  float32_t *pState = S->pState;                 /* State pointer */
-  float32_t *pCoeffs = S->pCoeffs;               /* Coefficient pointer */
-  float32_t *pStateCurnt;                        /* Points to the current sample of the state */
-  float32_t sum0;                                /* Accumulator */
-  float32_t x0, c0;                              /* Temporary variables to hold state and coefficient values */
-  uint32_t numTaps = S->numTaps;                 /* Number of filter coefficients in the filter */
-  uint32_t i, blkCnt;  									 				 /* Loop counters */
+        float32_t *pState = S->pState;                 /* State pointer */
+  const float32_t *pCoeffs = S->pCoeffs;               /* Coefficient pointer */
+        float32_t *pStateCurnt;                        /* Points to the current sample of the state */
+        float32_t sum0;                                /* Accumulator */
+        float32_t x0, c0;                              /* Temporary variables to hold state and coefficient values */
+        uint32_t numTaps = S->numTaps;                 /* Number of filter coefficients in the filter */
+        uint32_t i, blkCnt;  									 				 /* Loop counters */
 
   /* S->pState buffer contains previous frame (numTaps - 1) samples */
   /* pStateCurnt points to the location where the new input data should be written */
@@ -82,13 +82,13 @@ void ref_fir_decimate_q31(
   q31_t * pDst,
   uint32_t blockSize)
 {
-  q31_t *pState = S->pState;                     /* State pointer */
-  q31_t *pCoeffs = S->pCoeffs;                   /* Coefficient pointer */
-  q31_t *pStateCurnt;                            /* Points to the current sample of the state */
-  q31_t x0, c0;                                  /* Temporary variables to hold state and coefficient values */
-  q63_t sum0;                                    /* Accumulator */
-  uint32_t numTaps = S->numTaps;                 /* Number of taps */
-  uint32_t i, blkCnt;  													 /* Loop counters */
+        q31_t *pState = S->pState;                     /* State pointer */
+  const q31_t *pCoeffs = S->pCoeffs;                   /* Coefficient pointer */
+        q31_t *pStateCurnt;                            /* Points to the current sample of the state */
+        q31_t x0, c0;                                  /* Temporary variables to hold state and coefficient values */
+        q63_t sum0;                                    /* Accumulator */
+        uint32_t numTaps = S->numTaps;                 /* Number of taps */
+        uint32_t i, blkCnt;  													 /* Loop counters */
 
   /* S->pState buffer contains previous frame (numTaps - 1) samples */
   /* pStateCurnt points to the location where the new input data should be written */
@@ -159,13 +159,13 @@ void ref_fir_decimate_fast_q31(
   q31_t * pDst,
   uint32_t blockSize)
 {
-  q31_t *pState = S->pState;                     /* State pointer */
-  q31_t *pCoeffs = S->pCoeffs;                   /* Coefficient pointer */
-  q31_t *pStateCurnt;                            /* Points to the current sample of the state */
-  q31_t x0, c0;                                  /* Temporary variables to hold state and coefficient values */
-  q31_t sum0;                                    /* Accumulator */
-  uint32_t numTaps = S->numTaps;                 /* Number of taps */
-  uint32_t i, blkCnt;  													 /* Loop counters */
+        q31_t *pState = S->pState;                     /* State pointer */
+  const q31_t *pCoeffs = S->pCoeffs;                   /* Coefficient pointer */
+        q31_t *pStateCurnt;                            /* Points to the current sample of the state */
+        q31_t x0, c0;                                  /* Temporary variables to hold state and coefficient values */
+        q31_t sum0;                                    /* Accumulator */
+        uint32_t numTaps = S->numTaps;                 /* Number of taps */
+        uint32_t i, blkCnt;  													 /* Loop counters */
 
   /* S->pState buffer contains previous frame (numTaps - 1) samples */
   /* pStateCurnt points to the location where the new input data should be written */
@@ -236,13 +236,13 @@ void ref_fir_decimate_q15(
   q15_t * pDst,
   uint32_t blockSize)
 {
-  q15_t *pState = S->pState;                     /* State pointer */
-  q15_t *pCoeffs = S->pCoeffs;                   /* Coefficient pointer */
-  q15_t *pStateCurnt;                            /* Points to the current sample of the state */
-  q31_t x0, c0;                                  /* Temporary variables to hold state and coefficient values */
-  q63_t sum0;                                    /* Accumulator */
-  uint32_t numTaps = S->numTaps;                 /* Number of taps */
-  uint32_t i, blkCnt;  													 /* Loop counters */
+        q15_t *pState = S->pState;                     /* State pointer */
+  const q15_t *pCoeffs = S->pCoeffs;                   /* Coefficient pointer */
+        q15_t *pStateCurnt;                            /* Points to the current sample of the state */
+        q31_t x0, c0;                                  /* Temporary variables to hold state and coefficient values */
+        q63_t sum0;                                    /* Accumulator */
+        uint32_t numTaps = S->numTaps;                 /* Number of taps */
+        uint32_t i, blkCnt;  													 /* Loop counters */
 
   /* S->pState buffer contains previous frame (numTaps - 1) samples */
   /* pStateCurnt points to the location where the new input data should be written */
@@ -313,13 +313,13 @@ void ref_fir_decimate_fast_q15(
   q15_t * pDst,
   uint32_t blockSize)
 {
-  q15_t *pState = S->pState;                     /* State pointer */
-  q15_t *pCoeffs = S->pCoeffs;                   /* Coefficient pointer */
-  q15_t *pStateCurnt;                            /* Points to the current sample of the state */
-  q15_t x0, c0;                                  /* Temporary variables to hold state and coefficient values */
-  q31_t sum0;                                    /* Accumulator */
-  uint32_t numTaps = S->numTaps;                 /* Number of taps */
-  uint32_t i, blkCnt;  													 /* Loop counters */
+        q15_t *pState = S->pState;                     /* State pointer */
+  const q15_t *pCoeffs = S->pCoeffs;                   /* Coefficient pointer */
+        q15_t *pStateCurnt;                            /* Points to the current sample of the state */
+        q15_t x0, c0;                                  /* Temporary variables to hold state and coefficient values */
+        q31_t sum0;                                    /* Accumulator */
+        uint32_t numTaps = S->numTaps;                 /* Number of taps */
+        uint32_t i, blkCnt;  													 /* Loop counters */
 
   /* S->pState buffer contains previous frame (numTaps - 1) samples */
   /* pStateCurnt points to the location where the new input data should be written */

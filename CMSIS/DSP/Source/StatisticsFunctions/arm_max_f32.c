@@ -3,13 +3,13 @@
  * Title:        arm_max_f32.c
  * Description:  Maximum value of a floating-point vector
  *
- * $Date:        27. January 2017
- * $Revision:    V.1.5.1
+ * $Date:        28. February 2019
+ * $Revision:    V.1.5.5
  *
  * Target Processor: Cortex-M cores
  * -------------------------------------------------------------------- */
 /*
- * Copyright (C) 2010-2017 ARM Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2010-2019 ARM Limited or its affiliates. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -29,134 +29,120 @@
 #include "arm_math.h"
 
 /**
- * @ingroup groupStats
+  @ingroup groupStats
  */
 
 /**
- * @defgroup Max Maximum
- *
- * Computes the maximum value of an array of data.
- * The function returns both the maximum value and its position within the array.
- * There are separate functions for floating-point, Q31, Q15, and Q7 data types.
+  @defgroup Max Maximum
+
+  Computes the maximum value of an array of data.
+  The function returns both the maximum value and its position within the array.
+  There are separate functions for floating-point, Q31, Q15, and Q7 data types.
  */
 
 /**
- * @addtogroup Max
- * @{
+  @addtogroup Max
+  @{
  */
 
-
 /**
- * @brief Maximum value of a floating-point vector.
- * @param[in]       *pSrc points to the input vector
- * @param[in]       blockSize length of the input vector
- * @param[out]      *pResult maximum value returned here
- * @param[out]      *pIndex index of maximum value returned here
- * @return none.
+  @brief         Maximum value of a floating-point vector.
+  @param[in]     pSrc       points to the input vector
+  @param[in]     blockSize  number of samples in input vector
+  @param[out]    pResult    maximum value returned here
+  @param[out]    pIndex     index of maximum value returned here
+  @return        none
  */
 
 void arm_max_f32(
-  float32_t * pSrc,
-  uint32_t blockSize,
-  float32_t * pResult,
-  uint32_t * pIndex)
+  const float32_t * pSrc,
+        uint32_t blockSize,
+        float32_t * pResult,
+        uint32_t * pIndex)
 {
-#if defined (ARM_MATH_DSP)
-  /* Run the below code for Cortex-M4 and Cortex-M3 */
+        float32_t maxVal, out;                         /* Temporary variables to store the output value. */
+        uint32_t blkCnt, outIndex;                     /* Loop counter */
 
-  float32_t maxVal1, maxVal2, out;               /* Temporary variables to store the output value. */
-  uint32_t blkCnt, outIndex, count;              /* loop counter */
+#if defined (ARM_MATH_LOOPUNROLL)
+        uint32_t index;                                /* index of maximum value */
+#endif
 
-  /* Initialise the count value. */
-  count = 0U;
-  /* Initialise the index value to zero. */
+  /* Initialise index value to zero. */
   outIndex = 0U;
   /* Load first input value that act as reference value for comparision */
   out = *pSrc++;
 
-  /* Loop unrolling */
+#if defined (ARM_MATH_LOOPUNROLL)
+  /* Initialise index of maximum value. */
+  index = 0U;
+
+  /* Loop unrolling: Compute 4 outputs at a time */
   blkCnt = (blockSize - 1U) >> 2U;
 
   while (blkCnt > 0U)
   {
-    /* Initialize maxVal to the next consecutive values one by one */
-    maxVal1 = *pSrc++;
-    maxVal2 = *pSrc++;
+    /* Initialize maxVal to next consecutive values one by one */
+    maxVal = *pSrc++;
 
     /* compare for the maximum value */
-    if (out < maxVal1)
+    if (out < maxVal)
     {
-      /* Update the maximum value and its index */
-      out = maxVal1;
-      outIndex = count + 1U;
+      /* Update the maximum value and it's index */
+      out = maxVal;
+      outIndex = index + 1U;
     }
 
-    /* compare for the maximum value */
-    if (out < maxVal2)
+    maxVal = *pSrc++;
+    if (out < maxVal)
     {
-      /* Update the maximum value and its index */
-      out = maxVal2;
-      outIndex = count + 2U;
+      out = maxVal;
+      outIndex = index + 2U;
     }
 
-    /* Initialize maxVal to the next consecutive values one by one */
-    maxVal1 = *pSrc++;
-    maxVal2 = *pSrc++;
-
-    /* compare for the maximum value */
-    if (out < maxVal1)
+    maxVal = *pSrc++;
+    if (out < maxVal)
     {
-      /* Update the maximum value and its index */
-      out = maxVal1;
-      outIndex = count + 3U;
+      out = maxVal;
+      outIndex = index + 3U;
     }
 
-    /* compare for the maximum value */
-    if (out < maxVal2)
+    maxVal = *pSrc++;
+    if (out < maxVal)
     {
-      /* Update the maximum value and its index */
-      out = maxVal2;
-      outIndex = count + 4U;
+      out = maxVal;
+      outIndex = index + 4U;
     }
 
-    count += 4U;
+    index += 4U;
 
-    /* Decrement the loop counter */
+    /* Decrement loop counter */
     blkCnt--;
   }
 
-  /* if (blockSize - 1U) is not multiple of 4 */
+  /* Loop unrolling: Compute remaining outputs */
   blkCnt = (blockSize - 1U) % 4U;
 
 #else
-  /* Run the below code for Cortex-M0 */
 
-  float32_t maxVal1, out;                        /* Temporary variables to store the output value. */
-  uint32_t blkCnt, outIndex;                     /* loop counter */
-
-  /* Initialise the index value to zero. */
-  outIndex = 0U;
-  /* Load first input value that act as reference value for comparision */
-  out = *pSrc++;
-
+  /* Initialize blkCnt with number of samples */
   blkCnt = (blockSize - 1U);
 
-#endif /* #if defined (ARM_MATH_DSP) */
+#endif /* #if defined (ARM_MATH_LOOPUNROLL) */
 
   while (blkCnt > 0U)
   {
     /* Initialize maxVal to the next consecutive values one by one */
-    maxVal1 = *pSrc++;
+    maxVal = *pSrc++;
 
     /* compare for the maximum value */
-    if (out < maxVal1)
+    if (out < maxVal)
     {
       /* Update the maximum value and it's index */
-      out = maxVal1;
+      out = maxVal;
       outIndex = blockSize - blkCnt;
     }
 
-    /* Decrement the loop counter */
+    /* Decrement loop counter */
     blkCnt--;
   }
 
@@ -166,5 +152,5 @@ void arm_max_f32(
 }
 
 /**
- * @} end of Max group
+  @} end of Max group
  */

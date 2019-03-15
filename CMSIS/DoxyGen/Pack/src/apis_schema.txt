@@ -125,6 +125,14 @@ by either implementing or using a set of functions, data types, and definitions.
     <td>optional</td>
   </tr>
   <tr>
+    <td>condition</td>
+    <td>Enter the identifier (attribute \em <b>id</b>) of a \ref element_condition "condition". The element is used if the condition resolves to \token{true}. 
+	If the condition resolves to \token{false}, then the element will be ignored. 
+	For example, an API might be specific for a certain toolchain or processor instruction set.</td>
+    <td>xs:string</td>
+    <td>optional</td>
+  </tr>
+  <tr>
     <td>Capiversion</td>
     <td>Version of this component. Is a mandatory part of the component ID.  The version format is described in \ref VersionType "Version Type".
 	</td>

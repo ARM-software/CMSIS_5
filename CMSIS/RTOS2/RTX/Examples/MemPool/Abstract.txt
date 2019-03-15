@@ -11,4 +11,4 @@ memory pool for dynamic object allocation.
 
 The MemPool example program is available for one target:
 
-  Fixed Virtual Platform:          configured for a simulated on-chip Flash
+  Simulation:          configured for a simulated on-chip Flash

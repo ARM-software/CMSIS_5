@@ -1,8 +1,9 @@
 /** \page coreMISRA_Exceptions_pg MISRA-C Deviations
 CMSIS-Core (Cortex-M) uses the common coding rules for CMSIS components that are documented under 
-<a href="../../General/html/index.html"><b>Introduction</b></a>.
+\ifnot FuSaRTS <a href="../../General/html/index.html"><b>Introduction</b></a> \endif \if FuSaRTS <a href="../../Safety/html/index.html#CodingRules"><b>Coding Rules</b></a> \endif.
+*/
 
-
+/*  MISRA-C:2004 no longer included in build
 CMSIS-Core (Cortex-M) violates the following MISRA-C:2004 rules:
   
 - Required Rule 8.5, object/function definition in header file.<br>
@@ -25,8 +26,9 @@ CMSIS-Core (Cortex-M) violates the following MISRA-C:2004 rules:
    
 - Advisory Rule 19.16, all preprocessing directives must be valid.<br>
   Violated to set default settings for macros. 
+*/
 
-  
+/**
 CMSIS-Core (Cortex-M) violates the following MISRA-C:2012 rules:
   
 - Directive 4.9, function-like macro defined.<br>

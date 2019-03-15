@@ -10,11 +10,12 @@
       <TargetName>cortexM0l</TargetName>
       <ToolsetNumber>0x3</ToolsetNumber>
       <ToolsetName>ARM-GNU</ToolsetName>
+      <uAC6>0</uAC6>
       <TargetOption>
         <TargetCommonOption>
           <Device>ARMCM0</Device>
           <Vendor>ARM</Vendor>
-          <PackID>ARM.CMSIS.5.0.0</PackID>
+          <PackID>ARM.CMSIS.5.5.0-dev2</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IROM(0x00000000,0x40000) IRAM(0x20000000,0x20000) CPUTYPE("Cortex-M0") CLOCK(12000000) ESEL ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -166,6 +167,7 @@
             <hadXRAM>0</hadXRAM>
             <uocXRam>0</uocXRam>
             <RvdsVP>0</RvdsVP>
+            <RvdsMve>0</RvdsMve>
             <hadIRAM2>0</hadIRAM2>
             <hadIROM2>0</hadIROM2>
             <OnChipMemories>
@@ -238,9 +240,9 @@
             <uThumb>1</uThumb>
             <VariousControls>
               <MiscControls>-fno-strict-aliasing -ffunction-sections -fdata-sections</MiscControls>
-              <Define>ARM_MATH_CM0</Define>
+              <Define></Define>
               <Undefine></Undefine>
-              <IncludePath>..\inc;..\..\..\Include</IncludePath>
+              <IncludePath>..\..\..\..\Core\Include;..\..\..\Include;..\inc</IncludePath>
             </VariousControls>
           </Carm>
           <Aarm>
@@ -606,11 +608,12 @@
       <TargetName>cortexM0b</TargetName>
       <ToolsetNumber>0x3</ToolsetNumber>
       <ToolsetName>ARM-GNU</ToolsetName>
+      <uAC6>0</uAC6>
       <TargetOption>
         <TargetCommonOption>
           <Device>ARMCM0</Device>
           <Vendor>ARM</Vendor>
-          <PackID>ARM.CMSIS.5.0.0</PackID>
+          <PackID>ARM.CMSIS.5.5.0-dev2</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IROM(0x00000000,0x40000) IRAM(0x20000000,0x20000) CPUTYPE("Cortex-M0") CLOCK(12000000) ESEL ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -762,6 +765,7 @@
             <hadXRAM>0</hadXRAM>
             <uocXRam>0</uocXRam>
             <RvdsVP>0</RvdsVP>
+            <RvdsMve>0</RvdsMve>
             <hadIRAM2>0</hadIRAM2>
             <hadIROM2>0</hadIROM2>
             <OnChipMemories>
@@ -834,9 +838,9 @@
             <uThumb>1</uThumb>
             <VariousControls>
               <MiscControls>-fno-strict-aliasing -ffunction-sections -fdata-sections</MiscControls>
-              <Define>ARM_MATH_CM0, ARM_MATH_BIG_ENDIAN</Define>
+              <Define>ARM_MATH_BIG_ENDIAN</Define>
               <Undefine></Undefine>
-              <IncludePath>..\inc;..\..\..\Include</IncludePath>
+              <IncludePath>..\..\..\..\Core\Include;..\..\..\Include;..\inc</IncludePath>
             </VariousControls>
           </Carm>
           <Aarm>
@@ -1202,11 +1206,12 @@
       <TargetName>cortexM3l</TargetName>
       <ToolsetNumber>0x3</ToolsetNumber>
       <ToolsetName>ARM-GNU</ToolsetName>
+      <uAC6>0</uAC6>
       <TargetOption>
         <TargetCommonOption>
           <Device>ARMCM3</Device>
           <Vendor>ARM</Vendor>
-          <PackID>ARM.CMSIS.5.0.0</PackID>
+          <PackID>ARM.CMSIS.5.5.0-dev2</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IROM(0x00000000,0x40000) IRAM(0x20000000,0x20000) CPUTYPE("Cortex-M3") CLOCK(12000000) ESEL ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -1358,6 +1363,7 @@
             <hadXRAM>0</hadXRAM>
             <uocXRam>0</uocXRam>
             <RvdsVP>0</RvdsVP>
+            <RvdsMve>0</RvdsMve>
             <hadIRAM2>0</hadIRAM2>
             <hadIROM2>0</hadIROM2>
             <OnChipMemories>
@@ -1430,9 +1436,9 @@
             <uThumb>1</uThumb>
             <VariousControls>
               <MiscControls>-fno-strict-aliasing -ffunction-sections -fdata-sections</MiscControls>
-              <Define>ARM_MATH_CM3</Define>
+              <Define></Define>
               <Undefine></Undefine>
-              <IncludePath>..\inc;..\..\..\Include</IncludePath>
+              <IncludePath>..\..\..\..\Core\Include;..\..\..\Include;..\inc</IncludePath>
             </VariousControls>
           </Carm>
           <Aarm>
@@ -1798,11 +1804,12 @@
       <TargetName>cortexM3b</TargetName>
       <ToolsetNumber>0x3</ToolsetNumber>
       <ToolsetName>ARM-GNU</ToolsetName>
+      <uAC6>0</uAC6>
       <TargetOption>
         <TargetCommonOption>
           <Device>ARMCM3</Device>
           <Vendor>ARM</Vendor>
-          <PackID>ARM.CMSIS.5.0.0</PackID>
+          <PackID>ARM.CMSIS.5.5.0-dev2</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IROM(0x00000000,0x40000) IRAM(0x20000000,0x20000) CPUTYPE("Cortex-M3") CLOCK(12000000) ESEL ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -1954,6 +1961,7 @@
             <hadXRAM>0</hadXRAM>
             <uocXRam>0</uocXRam>
             <RvdsVP>0</RvdsVP>
+            <RvdsMve>0</RvdsMve>
             <hadIRAM2>0</hadIRAM2>
             <hadIROM2>0</hadIROM2>
             <OnChipMemories>
@@ -2026,9 +2034,9 @@
             <uThumb>1</uThumb>
             <VariousControls>
               <MiscControls>-fno-strict-aliasing -ffunction-sections -fdata-sections</MiscControls>
-              <Define>ARM_MATH_CM3, ARM_MATH_BIG_ENDIAN</Define>
+              <Define>ARM_MATH_BIG_ENDIAN</Define>
               <Undefine></Undefine>
-              <IncludePath>..\inc;..\..\..\Include</IncludePath>
+              <IncludePath>..\..\..\..\Core\Include;..\..\..\Include;..\inc</IncludePath>
             </VariousControls>
           </Carm>
           <Aarm>
@@ -2394,11 +2402,12 @@
       <TargetName>cortexM4l</TargetName>
       <ToolsetNumber>0x3</ToolsetNumber>
       <ToolsetName>ARM-GNU</ToolsetName>
+      <uAC6>0</uAC6>
       <TargetOption>
         <TargetCommonOption>
           <Device>ARMCM4</Device>
           <Vendor>ARM</Vendor>
-          <PackID>ARM.CMSIS.5.0.0</PackID>
+          <PackID>ARM.CMSIS.5.5.0-dev2</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IROM(0x00000000,0x80000) IRAM(0x20000000,0x20000) CPUTYPE("Cortex-M4") CLOCK(12000000) ESEL ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -2550,6 +2559,7 @@
             <hadXRAM>0</hadXRAM>
             <uocXRam>0</uocXRam>
             <RvdsVP>0</RvdsVP>
+            <RvdsMve>0</RvdsMve>
             <hadIRAM2>0</hadIRAM2>
             <hadIROM2>0</hadIROM2>
             <OnChipMemories>
@@ -2622,9 +2632,9 @@
             <uThumb>1</uThumb>
             <VariousControls>
               <MiscControls>-fno-strict-aliasing -ffunction-sections -fdata-sections</MiscControls>
-              <Define>ARM_MATH_CM4</Define>
+              <Define></Define>
               <Undefine></Undefine>
-              <IncludePath>..\inc;..\..\..\Include</IncludePath>
+              <IncludePath>..\..\..\..\Core\Include;..\..\..\Include;..\inc</IncludePath>
             </VariousControls>
           </Carm>
           <Aarm>
@@ -2990,11 +3000,12 @@
       <TargetName>cortexM4b</TargetName>
       <ToolsetNumber>0x3</ToolsetNumber>
       <ToolsetName>ARM-GNU</ToolsetName>
+      <uAC6>0</uAC6>
       <TargetOption>
         <TargetCommonOption>
           <Device>ARMCM4</Device>
           <Vendor>ARM</Vendor>
-          <PackID>ARM.CMSIS.5.0.0</PackID>
+          <PackID>ARM.CMSIS.5.5.0-dev2</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IROM(0x00000000,0x80000) IRAM(0x20000000,0x20000) CPUTYPE("Cortex-M4") CLOCK(12000000) ESEL ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -3146,6 +3157,7 @@
             <hadXRAM>0</hadXRAM>
             <uocXRam>0</uocXRam>
             <RvdsVP>0</RvdsVP>
+            <RvdsMve>0</RvdsMve>
             <hadIRAM2>0</hadIRAM2>
             <hadIROM2>0</hadIROM2>
             <OnChipMemories>
@@ -3218,9 +3230,9 @@
             <uThumb>1</uThumb>
             <VariousControls>
               <MiscControls>-fno-strict-aliasing -ffunction-sections -fdata-sections</MiscControls>
-              <Define>ARM_MATH_CM4, ARM_MATH_BIG_ENDIAN</Define>
+              <Define>ARM_MATH_BIG_ENDIAN</Define>
               <Undefine></Undefine>
-              <IncludePath>..\inc;..\..\..\Include</IncludePath>
+              <IncludePath>..\..\..\..\Core\Include;..\..\..\Include;..\inc</IncludePath>
             </VariousControls>
           </Carm>
           <Aarm>
@@ -3586,11 +3598,12 @@
       <TargetName>cortexM4lf</TargetName>
       <ToolsetNumber>0x3</ToolsetNumber>
       <ToolsetName>ARM-GNU</ToolsetName>
+      <uAC6>0</uAC6>
       <TargetOption>
         <TargetCommonOption>
           <Device>ARMCM4_FP</Device>
           <Vendor>ARM</Vendor>
-          <PackID>ARM.CMSIS.5.0.0</PackID>
+          <PackID>ARM.CMSIS.5.5.0-dev2</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IROM(0x00000000,0x80000) IRAM(0x20000000,0x20000) CPUTYPE("Cortex-M4") FPU2 CLOCK(12000000) ESEL ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -3742,6 +3755,7 @@
             <hadXRAM>0</hadXRAM>
             <uocXRam>0</uocXRam>
             <RvdsVP>2</RvdsVP>
+            <RvdsMve>0</RvdsMve>
             <hadIRAM2>0</hadIRAM2>
             <hadIROM2>0</hadIROM2>
             <OnChipMemories>
@@ -3814,9 +3828,9 @@
             <uThumb>1</uThumb>
             <VariousControls>
               <MiscControls>-fno-strict-aliasing -ffunction-sections -fdata-sections -mfpu=fpv4-sp-d16 -mfloat-abi=hard -ffp-contract=off</MiscControls>
-              <Define>ARM_MATH_CM4,__FPU_PRESENT=1U</Define>
+              <Define></Define>
               <Undefine></Undefine>
-              <IncludePath>..\inc;..\..\..\Include</IncludePath>
+              <IncludePath>..\..\..\..\Core\Include;..\..\..\Include;..\inc</IncludePath>
             </VariousControls>
           </Carm>
           <Aarm>
@@ -4182,11 +4196,12 @@
       <TargetName>cortexM4bf</TargetName>
       <ToolsetNumber>0x3</ToolsetNumber>
       <ToolsetName>ARM-GNU</ToolsetName>
+      <uAC6>0</uAC6>
       <TargetOption>
         <TargetCommonOption>
           <Device>ARMCM4_FP</Device>
           <Vendor>ARM</Vendor>
-          <PackID>ARM.CMSIS.5.0.0</PackID>
+          <PackID>ARM.CMSIS.5.5.0-dev2</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IROM(0x00000000,0x80000) IRAM(0x20000000,0x20000) CPUTYPE("Cortex-M4") FPU2 CLOCK(12000000) ESEL ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -4338,6 +4353,7 @@
             <hadXRAM>0</hadXRAM>
             <uocXRam>0</uocXRam>
             <RvdsVP>2</RvdsVP>
+            <RvdsMve>0</RvdsMve>
             <hadIRAM2>0</hadIRAM2>
             <hadIROM2>0</hadIROM2>
             <OnChipMemories>
@@ -4410,9 +4426,9 @@
             <uThumb>1</uThumb>
             <VariousControls>
               <MiscControls>-fno-strict-aliasing -ffunction-sections -fdata-sections -mfpu=fpv4-sp-d16 -mfloat-abi=hard -ffp-contract=off</MiscControls>
-              <Define>ARM_MATH_CM4,ARM_MATH_BIG_ENDIAN,__FPU_PRESENT=1U</Define>
+              <Define>ARM_MATH_BIG_ENDIAN</Define>
               <Undefine></Undefine>
-              <IncludePath>..\inc;..\..\..\Include</IncludePath>
+              <IncludePath>..\..\..\..\Core\Include;..\..\..\Include;..\inc</IncludePath>
             </VariousControls>
           </Carm>
           <Aarm>
@@ -4778,11 +4794,12 @@
       <TargetName>cortexM7l</TargetName>
       <ToolsetNumber>0x3</ToolsetNumber>
       <ToolsetName>ARM-GNU</ToolsetName>
+      <uAC6>0</uAC6>
       <TargetOption>
         <TargetCommonOption>
           <Device>ARMCM7</Device>
           <Vendor>ARM</Vendor>
-          <PackID>ARM.CMSIS.5.0.0</PackID>
+          <PackID>ARM.CMSIS.5.5.0-dev2</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IROM(0x00000000,0x80000) IRAM(0x20000000,0x20000) CPUTYPE("Cortex-M7") CLOCK(12000000) ESEL ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -4934,6 +4951,7 @@
             <hadXRAM>0</hadXRAM>
             <uocXRam>0</uocXRam>
             <RvdsVP>0</RvdsVP>
+            <RvdsMve>0</RvdsMve>
             <hadIRAM2>0</hadIRAM2>
             <hadIROM2>0</hadIROM2>
             <OnChipMemories>
@@ -5006,9 +5024,9 @@
             <uThumb>1</uThumb>
             <VariousControls>
               <MiscControls>-fno-strict-aliasing -ffunction-sections -fdata-sections</MiscControls>
-              <Define>ARM_MATH_CM7</Define>
+              <Define></Define>
               <Undefine></Undefine>
-              <IncludePath>..\inc;..\..\..\Include</IncludePath>
+              <IncludePath>..\..\..\..\Core\Include;..\..\..\Include;..\inc</IncludePath>
             </VariousControls>
           </Carm>
           <Aarm>
@@ -5374,11 +5392,12 @@
       <TargetName>cortexM7b</TargetName>
       <ToolsetNumber>0x3</ToolsetNumber>
       <ToolsetName>ARM-GNU</ToolsetName>
+      <uAC6>0</uAC6>
       <TargetOption>
         <TargetCommonOption>
           <Device>ARMCM7</Device>
           <Vendor>ARM</Vendor>
-          <PackID>ARM.CMSIS.5.0.0</PackID>
+          <PackID>ARM.CMSIS.5.5.0-dev2</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IROM(0x00000000,0x80000) IRAM(0x20000000,0x20000) CPUTYPE("Cortex-M7") CLOCK(12000000) ESEL ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -5530,6 +5549,7 @@
             <hadXRAM>0</hadXRAM>
             <uocXRam>0</uocXRam>
             <RvdsVP>0</RvdsVP>
+            <RvdsMve>0</RvdsMve>
             <hadIRAM2>0</hadIRAM2>
             <hadIROM2>0</hadIROM2>
             <OnChipMemories>
@@ -5602,9 +5622,9 @@
             <uThumb>1</uThumb>
             <VariousControls>
               <MiscControls>-fno-strict-aliasing -ffunction-sections -fdata-sections</MiscControls>
-              <Define>ARM_MATH_CM7, ARM_MATH_BIG_ENDIAN</Define>
+              <Define>ARM_MATH_BIG_ENDIAN</Define>
               <Undefine></Undefine>
-              <IncludePath>..\inc;..\..\..\Include</IncludePath>
+              <IncludePath>..\..\..\..\Core\Include;..\..\..\Include;..\inc</IncludePath>
             </VariousControls>
           </Carm>
           <Aarm>
@@ -5970,11 +5990,12 @@
       <TargetName>cortexM7lfsp</TargetName>
       <ToolsetNumber>0x3</ToolsetNumber>
       <ToolsetName>ARM-GNU</ToolsetName>
+      <uAC6>0</uAC6>
       <TargetOption>
         <TargetCommonOption>
           <Device>ARMCM7_SP</Device>
           <Vendor>ARM</Vendor>
-          <PackID>ARM.CMSIS.5.0.0</PackID>
+          <PackID>ARM.CMSIS.5.5.0-dev2</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IROM(0x00000000,0x80000) IRAM(0x20000000,0x20000) CPUTYPE("Cortex-M7") FPU3(SFPU) CLOCK(12000000) ESEL ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -6126,6 +6147,7 @@
             <hadXRAM>0</hadXRAM>
             <uocXRam>0</uocXRam>
             <RvdsVP>2</RvdsVP>
+            <RvdsMve>0</RvdsMve>
             <hadIRAM2>0</hadIRAM2>
             <hadIROM2>0</hadIROM2>
             <OnChipMemories>
@@ -6198,9 +6220,9 @@
             <uThumb>1</uThumb>
             <VariousControls>
               <MiscControls>-fno-strict-aliasing -ffunction-sections -fdata-sections -mfpu=fpv5-sp-d16 -mfloat-abi=hard -ffp-contract=off</MiscControls>
-              <Define>ARM_MATH_CM7,__FPU_PRESENT=1U</Define>
+              <Define></Define>
               <Undefine></Undefine>
-              <IncludePath>..\inc;..\..\..\Include</IncludePath>
+              <IncludePath>..\..\..\..\Core\Include;..\..\..\Include;..\inc</IncludePath>
             </VariousControls>
           </Carm>
           <Aarm>
@@ -6566,11 +6588,12 @@
       <TargetName>cortexM7bfsp</TargetName>
       <ToolsetNumber>0x3</ToolsetNumber>
       <ToolsetName>ARM-GNU</ToolsetName>
+      <uAC6>0</uAC6>
       <TargetOption>
         <TargetCommonOption>
           <Device>ARMCM7_SP</Device>
           <Vendor>ARM</Vendor>
-          <PackID>ARM.CMSIS.5.0.0</PackID>
+          <PackID>ARM.CMSIS.5.5.0-dev2</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IROM(0x00000000,0x80000) IRAM(0x20000000,0x20000) CPUTYPE("Cortex-M7") FPU3(SFPU) CLOCK(12000000) ESEL ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -6722,6 +6745,7 @@
             <hadXRAM>0</hadXRAM>
             <uocXRam>0</uocXRam>
             <RvdsVP>2</RvdsVP>
+            <RvdsMve>0</RvdsMve>
             <hadIRAM2>0</hadIRAM2>
             <hadIROM2>0</hadIROM2>
             <OnChipMemories>
@@ -6794,9 +6818,9 @@
             <uThumb>1</uThumb>
             <VariousControls>
               <MiscControls>-fno-strict-aliasing -ffunction-sections -fdata-sections -mfpu=fpv5-sp-d16 -mfloat-abi=hard -ffp-contract=off</MiscControls>
-              <Define>ARM_MATH_CM7,ARM_MATH_BIG_ENDIAN,__FPU_PRESENT=1U</Define>
+              <Define>ARM_MATH_BIG_ENDIAN</Define>
               <Undefine></Undefine>
-              <IncludePath>..\inc;..\..\..\Include</IncludePath>
+              <IncludePath>..\..\..\..\Core\Include;..\..\..\Include;..\inc</IncludePath>
             </VariousControls>
           </Carm>
           <Aarm>
@@ -7162,11 +7186,12 @@
       <TargetName>cortexM7lfdp</TargetName>
       <ToolsetNumber>0x3</ToolsetNumber>
       <ToolsetName>ARM-GNU</ToolsetName>
+      <uAC6>0</uAC6>
       <TargetOption>
         <TargetCommonOption>
           <Device>ARMCM7_DP</Device>
           <Vendor>ARM</Vendor>
-          <PackID>ARM.CMSIS.5.0.0</PackID>
+          <PackID>ARM.CMSIS.5.5.0-dev2</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IROM(0x00000000,0x80000) IRAM(0x20000000,0x20000) CPUTYPE("Cortex-M7") FPU3(DFPU) CLOCK(12000000) ESEL ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -7318,6 +7343,7 @@
             <hadXRAM>0</hadXRAM>
             <uocXRam>0</uocXRam>
             <RvdsVP>3</RvdsVP>
+            <RvdsMve>0</RvdsMve>
             <hadIRAM2>0</hadIRAM2>
             <hadIROM2>0</hadIROM2>
             <OnChipMemories>
@@ -7390,9 +7416,9 @@
             <uThumb>1</uThumb>
             <VariousControls>
               <MiscControls>-fno-strict-aliasing -ffunction-sections -fdata-sections -mfpu=fpv5-d16 -mfloat-abi=hard -ffp-contract=off</MiscControls>
-              <Define>ARM_MATH_CM7,__FPU_PRESENT=1U</Define>
+              <Define></Define>
               <Undefine></Undefine>
-              <IncludePath>..\inc;..\..\..\Include</IncludePath>
+              <IncludePath>..\..\..\..\Core\Include;..\..\..\Include;..\inc</IncludePath>
             </VariousControls>
           </Carm>
           <Aarm>
@@ -7758,11 +7784,12 @@
       <TargetName>cortexM7bfdp</TargetName>
       <ToolsetNumber>0x3</ToolsetNumber>
       <ToolsetName>ARM-GNU</ToolsetName>
+      <uAC6>0</uAC6>
       <TargetOption>
         <TargetCommonOption>
           <Device>ARMCM7_DP</Device>
           <Vendor>ARM</Vendor>
-          <PackID>ARM.CMSIS.5.0.0</PackID>
+          <PackID>ARM.CMSIS.5.5.0-dev2</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IROM(0x00000000,0x80000) IRAM(0x20000000,0x20000) CPUTYPE("Cortex-M7") FPU3(DFPU) CLOCK(12000000) ESEL ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -7914,6 +7941,7 @@
             <hadXRAM>0</hadXRAM>
             <uocXRam>0</uocXRam>
             <RvdsVP>3</RvdsVP>
+            <RvdsMve>0</RvdsMve>
             <hadIRAM2>0</hadIRAM2>
             <hadIROM2>0</hadIROM2>
             <OnChipMemories>
@@ -7986,9 +8014,9 @@
             <uThumb>1</uThumb>
             <VariousControls>
               <MiscControls>-fno-strict-aliasing -ffunction-sections -fdata-sections -mfpu=fpv5-d16 -mfloat-abi=hard -ffp-contract=off</MiscControls>
-              <Define>ARM_MATH_CM7,ARM_MATH_BIG_ENDIAN,__FPU_PRESENT=1U</Define>
+              <Define>ARM_MATH_BIG_ENDIAN</Define>
               <Undefine></Undefine>
-              <IncludePath>..\inc;..\..\..\Include</IncludePath>
+              <IncludePath>..\..\..\..\Core\Include;..\..\..\Include;..\inc</IncludePath>
             </VariousControls>
           </Carm>
           <Aarm>
@@ -8354,11 +8382,12 @@
       <TargetName>ARMv8MBLl</TargetName>
       <ToolsetNumber>0x3</ToolsetNumber>
       <ToolsetName>ARM-GNU</ToolsetName>
+      <uAC6>0</uAC6>
       <TargetOption>
         <TargetCommonOption>
           <Device>ARMv8MBL</Device>
           <Vendor>ARM</Vendor>
-          <PackID>ARM.CMSIS.5.0.0</PackID>
+          <PackID>ARM.CMSIS.5.5.0-dev2</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IRAM(0x20000000,0x00020000) IRAM2(0x20200000,0x00020000) IROM(0x00000000,0x00200000) IROM2(0x00200000,0x00200000) CPUTYPE("ARMV8MBL") TZ CLOCK(12000000) ESEL ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -8510,6 +8539,7 @@
             <hadXRAM>0</hadXRAM>
             <uocXRam>0</uocXRam>
             <RvdsVP>2</RvdsVP>
+            <RvdsMve>0</RvdsMve>
             <hadIRAM2>1</hadIRAM2>
             <hadIROM2>1</hadIROM2>
             <OnChipMemories>
@@ -8582,9 +8612,9 @@
             <uThumb>1</uThumb>
             <VariousControls>
               <MiscControls>-fno-strict-aliasing -ffunction-sections -fdata-sections -march=armv8-m.base</MiscControls>
-              <Define>ARM_MATH_ARMV8MBL</Define>
+              <Define></Define>
               <Undefine></Undefine>
-              <IncludePath>..\inc;..\..\..\Include</IncludePath>
+              <IncludePath>..\..\..\..\Core\Include;..\..\..\Include;..\inc</IncludePath>
             </VariousControls>
           </Carm>
           <Aarm>
@@ -8950,11 +8980,12 @@
       <TargetName>ARMv8MMLl</TargetName>
       <ToolsetNumber>0x3</ToolsetNumber>
       <ToolsetName>ARM-GNU</ToolsetName>
+      <uAC6>0</uAC6>
       <TargetOption>
         <TargetCommonOption>
           <Device>ARMv8MML</Device>
           <Vendor>ARM</Vendor>
-          <PackID>ARM.CMSIS.5.0.0</PackID>
+          <PackID>ARM.CMSIS.5.5.0-dev2</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IRAM(0x20000000,0x00020000) IRAM2(0x20200000,0x00020000) IROM(0x00000000,0x00200000) IROM2(0x00200000,0x00200000) CPUTYPE("ARMV8MML") TZ CLOCK(12000000) ESEL ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -9106,6 +9137,7 @@
             <hadXRAM>0</hadXRAM>
             <uocXRam>0</uocXRam>
             <RvdsVP>2</RvdsVP>
+            <RvdsMve>0</RvdsMve>
             <hadIRAM2>1</hadIRAM2>
             <hadIROM2>1</hadIROM2>
             <OnChipMemories>
@@ -9178,9 +9210,9 @@
             <uThumb>1</uThumb>
             <VariousControls>
               <MiscControls>-fno-strict-aliasing -ffunction-sections -fdata-sections -march=armv8-m.main</MiscControls>
-              <Define>ARM_MATH_ARMV8MML</Define>
+              <Define></Define>
               <Undefine></Undefine>
-              <IncludePath>..\inc;..\..\..\Include</IncludePath>
+              <IncludePath>..\..\..\..\Core\Include;..\..\..\Include;..\inc</IncludePath>
             </VariousControls>
           </Carm>
           <Aarm>
@@ -9546,11 +9578,12 @@
       <TargetName>ARMv8MMLlfsp</TargetName>
       <ToolsetNumber>0x3</ToolsetNumber>
       <ToolsetName>ARM-GNU</ToolsetName>
+      <uAC6>0</uAC6>
       <TargetOption>
         <TargetCommonOption>
           <Device>ARMv8MML_SP</Device>
           <Vendor>ARM</Vendor>
-          <PackID>ARM.CMSIS.5.0.0</PackID>
+          <PackID>ARM.CMSIS.5.5.0-dev2</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IRAM(0x20000000,0x00020000) IRAM2(0x20200000,0x00020000) IROM(0x00000000,0x00200000) IROM2(0x00200000,0x00200000) CPUTYPE("ARMV8MML") FPU3(SFPU) TZ CLOCK(12000000) ESEL ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -9702,6 +9735,7 @@
             <hadXRAM>0</hadXRAM>
             <uocXRam>0</uocXRam>
             <RvdsVP>2</RvdsVP>
+            <RvdsMve>0</RvdsMve>
             <hadIRAM2>1</hadIRAM2>
             <hadIROM2>1</hadIROM2>
             <OnChipMemories>
@@ -9774,9 +9808,9 @@
             <uThumb>1</uThumb>
             <VariousControls>
               <MiscControls>-fno-strict-aliasing -ffunction-sections -fdata-sections -march=armv8-m.main -mfpu=fpv5-sp-d16 -mfloat-abi=hard -ffp-contract=off</MiscControls>
-              <Define>ARM_MATH_ARMV8MML, __FPU_PRESENT=1U</Define>
+              <Define></Define>
               <Undefine></Undefine>
-              <IncludePath>..\inc;..\..\..\Include</IncludePath>
+              <IncludePath>..\..\..\..\Core\Include;..\..\..\Include;..\inc</IncludePath>
             </VariousControls>
           </Carm>
           <Aarm>
@@ -10142,11 +10176,12 @@
       <TargetName>ARMv8MMLlfdp</TargetName>
       <ToolsetNumber>0x3</ToolsetNumber>
       <ToolsetName>ARM-GNU</ToolsetName>
+      <uAC6>0</uAC6>
       <TargetOption>
         <TargetCommonOption>
           <Device>ARMv8MML_DP</Device>
           <Vendor>ARM</Vendor>
-          <PackID>ARM.CMSIS.5.0.0</PackID>
+          <PackID>ARM.CMSIS.5.5.0-dev2</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IRAM(0x20000000,0x00020000) IRAM2(0x20200000,0x00020000) IROM(0x00000000,0x00200000) IROM2(0x00200000,0x00200000) CPUTYPE("ARMV8MML") FPU3(DFPU) TZ CLOCK(12000000) ESEL ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -10298,6 +10333,7 @@
             <hadXRAM>0</hadXRAM>
             <uocXRam>0</uocXRam>
             <RvdsVP>3</RvdsVP>
+            <RvdsMve>0</RvdsMve>
             <hadIRAM2>1</hadIRAM2>
             <hadIROM2>1</hadIROM2>
             <OnChipMemories>
@@ -10370,9 +10406,9 @@
             <uThumb>1</uThumb>
             <VariousControls>
               <MiscControls>-fno-strict-aliasing -ffunction-sections -fdata-sections -march=armv8-m.main -mfpu=fpv5-d16 -mfloat-abi=hard -ffp-contract=off</MiscControls>
-              <Define>ARM_MATH_ARMV8MML, __FPU_PRESENT=1U</Define>
+              <Define></Define>
               <Undefine></Undefine>
-              <IncludePath>..\inc;..\..\..\Include</IncludePath>
+              <IncludePath>..\..\..\..\Core\Include;..\..\..\Include;..\inc</IncludePath>
             </VariousControls>
           </Carm>
           <Aarm>
@@ -10738,11 +10774,12 @@
       <TargetName>ARMv8MMLld</TargetName>
       <ToolsetNumber>0x3</ToolsetNumber>
       <ToolsetName>ARM-GNU</ToolsetName>
+      <uAC6>0</uAC6>
       <TargetOption>
         <TargetCommonOption>
           <Device>ARMv8MML_DSP</Device>
           <Vendor>ARM</Vendor>
-          <PackID>ARM.CMSIS.5.0.0</PackID>
+          <PackID>ARM.CMSIS.5.5.0-dev2</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IRAM(0x20000000,0x00020000) IRAM2(0x20200000,0x00020000) IROM(0x00000000,0x00200000) IROM2(0x00200000,0x00200000) CPUTYPE("ARMV8MML") DSP TZ CLOCK(12000000) ESEL ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -10894,6 +10931,7 @@
             <hadXRAM>0</hadXRAM>
             <uocXRam>0</uocXRam>
             <RvdsVP>2</RvdsVP>
+            <RvdsMve>0</RvdsMve>
             <hadIRAM2>1</hadIRAM2>
             <hadIROM2>1</hadIROM2>
             <OnChipMemories>
@@ -10966,9 +11004,9 @@
             <uThumb>1</uThumb>
             <VariousControls>
               <MiscControls>-fno-strict-aliasing -ffunction-sections -fdata-sections -march=armv8-m.main+dsp</MiscControls>
-              <Define>ARM_MATH_ARMV8MML, __DSP_PRESENT=1U</Define>
+              <Define></Define>
               <Undefine></Undefine>
-              <IncludePath>..\inc;..\..\..\Include</IncludePath>
+              <IncludePath>..\..\..\..\Core\Include;..\..\..\Include;..\inc</IncludePath>
             </VariousControls>
           </Carm>
           <Aarm>
@@ -11334,11 +11372,12 @@
       <TargetName>ARMv8MMLldfsp</TargetName>
       <ToolsetNumber>0x3</ToolsetNumber>
       <ToolsetName>ARM-GNU</ToolsetName>
+      <uAC6>0</uAC6>
       <TargetOption>
         <TargetCommonOption>
           <Device>ARMv8MML_DSP_SP</Device>
           <Vendor>ARM</Vendor>
-          <PackID>ARM.CMSIS.5.0.0</PackID>
+          <PackID>ARM.CMSIS.5.5.0-dev2</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IRAM(0x20000000,0x00020000) IRAM2(0x20200000,0x00020000) IROM(0x00000000,0x00200000) IROM2(0x00200000,0x00200000) CPUTYPE("ARMV8MML") FPU3(SFPU) DSP TZ CLOCK(12000000) ESEL ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -11490,6 +11529,7 @@
             <hadXRAM>0</hadXRAM>
             <uocXRam>0</uocXRam>
             <RvdsVP>2</RvdsVP>
+            <RvdsMve>0</RvdsMve>
             <hadIRAM2>1</hadIRAM2>
             <hadIROM2>1</hadIROM2>
             <OnChipMemories>
@@ -11562,9 +11602,9 @@
             <uThumb>1</uThumb>
             <VariousControls>
               <MiscControls>-fno-strict-aliasing -ffunction-sections -fdata-sections -march=armv8-m.main+dsp -mfpu=fpv5-sp-d16 -mfloat-abi=hard -ffp-contract=off</MiscControls>
-              <Define>ARM_MATH_ARMV8MML, __DSP_PRESENT=1U, __FPU_PRESENT=1U</Define>
+              <Define></Define>
               <Undefine></Undefine>
-              <IncludePath>..\inc;..\..\..\Include</IncludePath>
+              <IncludePath>..\..\..\..\Core\Include;..\..\..\Include;..\inc</IncludePath>
             </VariousControls>
           </Carm>
           <Aarm>
@@ -11930,11 +11970,12 @@
       <TargetName>ARMv8MMLldfdp</TargetName>
       <ToolsetNumber>0x3</ToolsetNumber>
       <ToolsetName>ARM-GNU</ToolsetName>
+      <uAC6>0</uAC6>
       <TargetOption>
         <TargetCommonOption>
           <Device>ARMv8MML_DSP_DP</Device>
           <Vendor>ARM</Vendor>
-          <PackID>ARM.CMSIS.5.0.0</PackID>
+          <PackID>ARM.CMSIS.5.5.0-dev2</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IRAM(0x20000000,0x00020000) IRAM2(0x20200000,0x00020000) IROM(0x00000000,0x00200000) IROM2(0x00200000,0x00200000) CPUTYPE("ARMV8MML") FPU3(DFPU) DSP TZ CLOCK(12000000) ESEL ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -12086,6 +12127,7 @@
             <hadXRAM>0</hadXRAM>
             <uocXRam>0</uocXRam>
             <RvdsVP>3</RvdsVP>
+            <RvdsMve>0</RvdsMve>
             <hadIRAM2>1</hadIRAM2>
             <hadIROM2>1</hadIROM2>
             <OnChipMemories>
@@ -12158,9 +12200,9 @@
             <uThumb>1</uThumb>
             <VariousControls>
               <MiscControls>-fno-strict-aliasing -ffunction-sections -fdata-sections -march=armv8-m.main+dsp -mfpu=fpv5-d16 -mfloat-abi=hard -ffp-contract=off</MiscControls>
-              <Define>ARM_MATH_ARMV8MML, __DSP_PRESENT=1U, __FPU_PRESENT=1U</Define>
+              <Define></Define>
               <Undefine></Undefine>
-              <IncludePath>..\inc;..\..\..\Include</IncludePath>
+              <IncludePath>..\..\..\..\Core\Include;..\..\..\Include;..\inc</IncludePath>
             </VariousControls>
           </Carm>
           <Aarm>
@@ -12523,5 +12565,11 @@
       </Groups>
     </Target>
   </Targets>
+
+  <RTE>
+    <apis/>
+    <components/>
+    <files/>
+  </RTE>
 
 </Project>

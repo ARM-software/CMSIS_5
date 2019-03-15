@@ -1,11 +1,11 @@
-/**************************************************************************//**
+^/**************************************************************************//**
  * @file     cmsis_armclang.h
  * @brief    CMSIS compiler armclang (Arm Compiler 6) header file
- * @version  V5.0.4
- * @date     10. January 2018
+ * @version  V5.0.5
+ * @date     13. March 2019
  ******************************************************************************/
 /*
- * Copyright (c) 2009-2018 Arm Limited. All rights reserved.
+ * Copyright (c) 2009-2019 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -43,9 +43,9 @@
 #ifndef   __STATIC_INLINE
   #define __STATIC_INLINE                        static __inline
 #endif
-#ifndef   __STATIC_FORCEINLINE                 
+#ifndef   __STATIC_FORCEINLINE
   #define __STATIC_FORCEINLINE                   __attribute__((always_inline)) static __inline
-#endif                                           
+#endif
 #ifndef   __NO_RETURN
   #define __NO_RETURN                            __attribute__((__noreturn__))
 #endif
@@ -821,14 +821,14 @@ __STATIC_FORCEINLINE void __TZ_set_MSPLIM_NS(uint32_t MainStackPtrLimit)
            so that all instructions following the ISB are fetched from cache or memory,
            after the instruction has been completed.
  */
-#define __ISB()        __builtin_arm_isb(0xF);
+#define __ISB()        __builtin_arm_isb(0xF)
 
 /**
   \brief   Data Synchronization Barrier
   \details Acts as a special kind of Data Memory Barrier.
            It completes when all explicit memory accesses before this instruction complete.
  */
-#define __DSB()        __builtin_arm_dsb(0xF);
+#define __DSB()        __builtin_arm_dsb(0xF)
 
 
 /**
@@ -836,7 +836,7 @@ __STATIC_FORCEINLINE void __TZ_set_MSPLIM_NS(uint32_t MainStackPtrLimit)
   \details Ensures the apparent order of the explicit memory operations before
            and after the instruction, without ensuring their completion.
  */
-#define __DMB()        __builtin_arm_dmb(0xF);
+#define __DMB()        __builtin_arm_dmb(0xF)
 
 
 /**
@@ -908,7 +908,23 @@ __STATIC_FORCEINLINE uint32_t __ROR(uint32_t op1, uint32_t op2)
   \param [in]  value  Value to count the leading zeros
   \return             number of leading zeros in value
  */
-#define __CLZ             (uint8_t)__builtin_clz
+__STATIC_FORCEINLINE uint8_t __CLZ(uint32_t value)
+{
+  /* Even though __builtin_clz produces a CLZ instruction on ARM, formally
+     __builtin_clz(0) is undefined behaviour, so handle this case specially.
+     This guarantees ARM-compatible results if happening to compile on a non-ARM
+     target, and ensures the compiler doesn't decide to activate any
+     optimisations using the logic "value was passed to __builtin_clz, so it
+     is non-zero".
+     ARM Compiler 6.10 and possibly earlier will optimise this test away, leaving a
+     single CLZ instruction.
+   */
+  if (value == 0U)
+  {
+    return 32U;
+  }
+  return __builtin_clz(value);
+}
 
 
 #if ((defined (__ARM_ARCH_7M__      ) && (__ARM_ARCH_7M__      == 1)) || \
@@ -1828,25 +1844,6 @@ __STATIC_FORCEINLINE  int32_t __QSUB( int32_t op1,  int32_t op2)
   __ASM volatile ("qsub %0, %1, %2" : "=r" (result) : "r" (op1), "r" (op2) );
   return(result);
 }
-
-#if 0
-#define __PKHBT(ARG1,ARG2,ARG3) \
-({                          \
-  uint32_t __RES, __ARG1 = (ARG1), __ARG2 = (ARG2); \
-  __ASM ("pkhbt %0, %1, %2, lsl %3" : "=r" (__RES) :  "r" (__ARG1), "r" (__ARG2), "I" (ARG3)  ); \
-  __RES; \
- })
-
-#define __PKHTB(ARG1,ARG2,ARG3) \
-({                          \
-  uint32_t __RES, __ARG1 = (ARG1), __ARG2 = (ARG2); \
-  if (ARG3 == 0) \
-    __ASM ("pkhtb %0, %1, %2" : "=r" (__RES) :  "r" (__ARG1), "r" (__ARG2)  ); \
-  else \
-    __ASM ("pkhtb %0, %1, %2, asr %3" : "=r" (__RES) :  "r" (__ARG1), "r" (__ARG2), "I" (ARG3)  ); \
-  __RES; \
- })
-#endif
 
 #define __PKHBT(ARG1,ARG2,ARG3)          ( ((((uint32_t)(ARG1))          ) & 0x0000FFFFUL) |  \
                                            ((((uint32_t)(ARG2)) << (ARG3)) & 0xFFFF0000UL)  )

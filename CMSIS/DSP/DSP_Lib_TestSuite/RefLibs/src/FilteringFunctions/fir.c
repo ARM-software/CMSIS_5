@@ -2,16 +2,16 @@
 
 void ref_fir_f32(
 	const arm_fir_instance_f32 * S,
-	float32_t * pSrc,
-	float32_t * pDst,
-	uint32_t blockSize)
+	      float32_t * pSrc,
+	      float32_t * pDst,
+	      uint32_t blockSize)
 {
-   float32_t *pState = S->pState;                 /* State pointer */
-   float32_t *pCoeffs = S->pCoeffs;               /* Coefficient pointer */
-   float32_t *pStateCurnt;                        /* Points to the current sample of the state */
-   uint32_t numTaps = S->numTaps;                 /* Number of filter coefficients in the filter */
-   uint32_t i;                    								/* Loop counters */
-   float32_t acc;
+        float32_t *pState = S->pState;                 /* State pointer */
+	const float32_t *pCoeffs = S->pCoeffs;               /* Coefficient pointer */
+        float32_t *pStateCurnt;                        /* Points to the current sample of the state */
+        uint32_t numTaps = S->numTaps;                 /* Number of filter coefficients in the filter */
+        uint32_t i;                    								/* Loop counters */
+        float32_t acc;
 
    /* S->pState points to state array which contains previous frame (numTaps - 1) samples */
    /* pStateCurnt points to the location where the new input data should be written */
@@ -56,16 +56,16 @@ void ref_fir_f32(
 
 void ref_fir_q31(
   const arm_fir_instance_q31 * S,
-  q31_t * pSrc,
-  q31_t * pDst,
-  uint32_t blockSize)
+        q31_t * pSrc,
+        q31_t * pDst,
+        uint32_t blockSize)
 {
-   q31_t *pState = S->pState;                 /* State pointer */
-   q31_t *pCoeffs = S->pCoeffs;               /* Coefficient pointer */
-   q31_t *pStateCurnt;                        /* Points to the current sample of the state */
-   uint32_t numTaps = S->numTaps;             /* Number of filter coefficients in the filter */
-   uint32_t i;                    						/* Loop counters */
-   q63_t acc;
+        q31_t *pState = S->pState;                 /* State pointer */
+	const q31_t *pCoeffs = S->pCoeffs;               /* Coefficient pointer */
+        q31_t *pStateCurnt;                        /* Points to the current sample of the state */
+        uint32_t numTaps = S->numTaps;             /* Number of filter coefficients in the filter */
+        uint32_t i;                                /* Loop counter */
+        q63_t acc;
 
    /* S->pState points to state array which contains previous frame (numTaps - 1) samples */
    /* pStateCurnt points to the location where the new input data should be written */
@@ -110,16 +110,16 @@ void ref_fir_q31(
 
 void ref_fir_fast_q31(
   const arm_fir_instance_q31 * S,
-  q31_t * pSrc,
-  q31_t * pDst,
-  uint32_t blockSize)
+        q31_t * pSrc,
+        q31_t * pDst,
+        uint32_t blockSize)
 {
-   q31_t *pState = S->pState;                 /* State pointer */
-   q31_t *pCoeffs = S->pCoeffs;               /* Coefficient pointer */
-   q31_t *pStateCurnt;                        /* Points to the current sample of the state */
-   uint32_t numTaps = S->numTaps;             /* Number of filter coefficients in the filter */
-   uint32_t i;                    						/* Loop counters */
-   q31_t acc;
+        q31_t *pState = S->pState;                 /* State pointer */
+	const q31_t *pCoeffs = S->pCoeffs;               /* Coefficient pointer */
+        q31_t *pStateCurnt;                        /* Points to the current sample of the state */
+        uint32_t numTaps = S->numTaps;             /* Number of filter coefficients in the filter */
+        uint32_t i;                                /* Loop counter */
+        q31_t acc;
 
    /* S->pState points to state array which contains previous frame (numTaps - 1) samples */
    /* pStateCurnt points to the location where the new input data should be written */
@@ -164,16 +164,16 @@ void ref_fir_fast_q31(
 
 void ref_fir_q15(
   const arm_fir_instance_q15 * S,
-  q15_t * pSrc,
-  q15_t * pDst,
-  uint32_t blockSize)
+        q15_t * pSrc,
+        q15_t * pDst,
+        uint32_t blockSize)
 {
-   q15_t *pState = S->pState;                 /* State pointer */
-   q15_t *pCoeffs = S->pCoeffs;               /* Coefficient pointer */
-   q15_t *pStateCurnt;                        /* Points to the current sample of the state */
-   uint32_t numTaps = S->numTaps;             /* Number of filter coefficients in the filter */
-   uint32_t i;                    						/* Loop counters */
-   q63_t acc;
+        q15_t *pState = S->pState;                 /* State pointer */
+	const q15_t *pCoeffs = S->pCoeffs;               /* Coefficient pointer */
+        q15_t *pStateCurnt;                        /* Points to the current sample of the state */
+        uint32_t numTaps = S->numTaps;             /* Number of filter coefficients in the filter */
+        uint32_t i;                                /* Loop counter */
+        q63_t acc;
 
    /* S->pState points to state array which contains previous frame (numTaps - 1) samples */
    /* pStateCurnt points to the location where the new input data should be written */
@@ -218,16 +218,16 @@ void ref_fir_q15(
 
 void ref_fir_fast_q15(
   const arm_fir_instance_q15 * S,
-  q15_t * pSrc,
-  q15_t * pDst,
-  uint32_t blockSize)
+        q15_t * pSrc,
+        q15_t * pDst,
+        uint32_t blockSize)
 {
-   q15_t *pState = S->pState;                 /* State pointer */
-   q15_t *pCoeffs = S->pCoeffs;               /* Coefficient pointer */
-   q15_t *pStateCurnt;                        /* Points to the current sample of the state */
-   uint32_t numTaps = S->numTaps;             /* Number of filter coefficients in the filter */
-   uint32_t i;                    						/* Loop counters */
-   q31_t acc;
+        q15_t *pState = S->pState;                 /* State pointer */
+	const q15_t *pCoeffs = S->pCoeffs;               /* Coefficient pointer */
+        q15_t *pStateCurnt;                        /* Points to the current sample of the state */
+        uint32_t numTaps = S->numTaps;             /* Number of filter coefficients in the filter */
+        uint32_t i;                                /* Loop counter */
+        q31_t acc;
 
    /* S->pState points to state array which contains previous frame (numTaps - 1) samples */
    /* pStateCurnt points to the location where the new input data should be written */
@@ -272,16 +272,16 @@ void ref_fir_fast_q15(
 
 void ref_fir_q7(
   const arm_fir_instance_q7 * S,
-  q7_t * pSrc,
-  q7_t * pDst,
-  uint32_t blockSize)
+        q7_t * pSrc,
+        q7_t * pDst,
+        uint32_t blockSize)
 {
-   q7_t *pState = S->pState;                 /* State pointer */
-   q7_t *pCoeffs = S->pCoeffs;               /* Coefficient pointer */
-   q7_t *pStateCurnt;                        /* Points to the current sample of the state */
-   uint32_t numTaps = S->numTaps;            /* Number of filter coefficients in the filter */
-   uint32_t i;                    					 /* Loop counters */
-   q31_t acc;
+        q7_t *pState = S->pState;                 /* State pointer */
+	const q7_t *pCoeffs = S->pCoeffs;               /* Coefficient pointer */
+        q7_t *pStateCurnt;                        /* Points to the current sample of the state */
+        uint32_t numTaps = S->numTaps;            /* Number of filter coefficients in the filter */
+        uint32_t i;                               /* Loop counter */
+        q31_t acc;
 
    /* S->pState points to state array which contains previous frame (numTaps - 1) samples */
    /* pStateCurnt points to the location where the new input data should be written */

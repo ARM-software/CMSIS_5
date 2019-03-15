@@ -28,13 +28,12 @@
   #pragma clang system_header   /* treat file as system include file */
 #endif
 
-#ifdef __cplusplus
- extern "C" {
-#endif
-
 #ifndef __CORE_CA_H_GENERIC
 #define __CORE_CA_H_GENERIC
 
+#ifdef __cplusplus
+ extern "C" {
+#endif
 
 /*******************************************************************************
  *                 CMSIS definitions
