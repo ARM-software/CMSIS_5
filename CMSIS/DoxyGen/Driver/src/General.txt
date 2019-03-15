@@ -62,6 +62,13 @@ The following files relevant to CMSIS-Driver are present in the <b>ARM::CMSIS</b
       <th>Description</th>
     </tr>
     <tr>
+      <td>2.6.1</td>
+      <td>
+        - Added WiFi Driver API 1.0.0-beta\n
+        - Added components for project specific driver implementations\n
+      </td>
+    </tr>
+    <tr>
       <td>2.6.0</td>
       <td>
 - Enhanced CAN-Driver API with explicit BUSOFF state.

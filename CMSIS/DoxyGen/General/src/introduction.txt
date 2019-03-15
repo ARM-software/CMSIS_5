@@ -196,7 +196,32 @@ In addition, each CMSIS component has its own release history:
     <tr>
       <td>5.5.0</td>
       <td>
-        - CMSIS-Core (Cortex-M) 5.2.0 added Cortex-M35P device support.
+        - CMSIS-Core (Cortex-M) 5.2.0
+          - Reworked Stack/Heap configuration for ARM startup files.
+          - Added Cortex-M35P device support.
+          - Added generic Armv8.1-M Mainline device support.
+        - CMSIS-Core (Cortex-A) 1.1.3 Minor fixes.
+        - CMSIS-DSP 1.5.5
+          - reworked DSP library source files
+            - added macro ARM_MATH_LOOPUNROLL
+            - removed macro UNALIGNED_SUPPORT_DISABLE
+            - replaced arm_bitreversal2.S with C version
+            - added const-correctness
+            - replaced SIMD pointer construct with memcpy solution
+          - reworked DSP library documentation
+          - moved DSP libraries to folder ./DSP/Lib
+          - ARM DSP Libraries are built with ARMCLANG
+          - Added DSP Libraries Source variant
+        - CMSIS-NN 1.1.0 (unchanged)
+        - CMSIS-Driver 2.6.1
+          - Added WiFi Driver API 1.0.0-beta
+          - Added components for project specific driver implementations
+        - CMSIS-RTOS 2.1.3
+          - RTX 5.5.0 (see revision history)
+        - CMSIS-Pack 1.6.0
+        - CMSIS-SVD 1.3.3 (unchanged)
+        - CMSIS-DAP 2.0.0 (unchanged)
+        - CMSIS-Zone 0.9.0 (Preview)
       </td>
     </tr>
     <tr>

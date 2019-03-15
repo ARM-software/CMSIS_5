@@ -67,6 +67,15 @@ The \ref templates_pg supplied by Arm have been tested and verified with the fol
       <th>Description</th>
     </tr>
     <tr>
+      <td>V1.1.3</td>
+      <td>
+        <ul>
+          <li>Fixed __get_SP_usr()/__set_SP_usr() for ArmClang.</li>
+          <li>Fixed zero argument handling in __CLZ() .</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
       <td>V1.1.2</td>
       <td>
         <ul>
