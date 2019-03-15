@@ -2051,7 +2051,6 @@ typedef struct
     #define NVIC_GetPriorityBoosting    __NVIC_GetPriorityBoosting
     #define NVIC_SetPriorityBoosting    __NVIC_SetPriorityBoosting
     #define NVIC_ClearPriorityBoosting  __NVIC_ClearPriorityBoosting
-    #define NVIC_ResumePriorityBoosting __NVIC_ResumePriorityBoosting
   #endif
 #endif /* CMSIS_NVIC_VIRTUAL */
 
@@ -2091,10 +2090,12 @@ typedef struct
 
 #if defined (__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
 /**
-  \brief   Get Priority Boosting
-  \details Reads the priority boosting bit from the NVIC Interrupt Controller.
-  \return  0  Interrupt Priority Boosting is disabled
-  \return  1  Interrupt Priority Boosting is enabled
+  \brief   Get Secure Interrupt Priority Boosting
+  \details Reads the secure interrupt priority boosting bit from the NVIC interrupt controller.
+           Reads as 0 when called from non-secure mode.
+  \return  Value of PRIS bit in SCB->AIRCR
+           0  secure interrupt priority boosting is disabled
+           1  secure interrupt priority boosting is enabled
  */
 __STATIC_INLINE uint32_t __NVIC_GetPriorityBoosting(void)
 {
@@ -2102,76 +2103,39 @@ __STATIC_INLINE uint32_t __NVIC_GetPriorityBoosting(void)
 }
 
 /**
-  \brief   Set Priority Boosting
-  \details Sets the priority boosting bit (PRIS bit in SCB->AIRCR) using the required unlock sequence.
-           Returns the PRIS bit setting previous to this call.
-  \return  0  Interrupt Priority Boosting was disabled
-  \return  1  Interrupt Priority Boosting was enabled
+  \brief   Set Secure Interrupt Priority Boosting
+  \details Sets the secure interrupt priority boosting (PRIS bit in SCB->AIRCR) using the required unlock sequence.
+           Non-secure exceptions are de-prioritized.
+           This maps the Non-secure SHPRn_NS.PRI_n group priority field values to the bottom half of the priority range
+           by the division by 2 + 0x80.
+           Write is ignored when called from non-secure mode.
  */
-__STATIC_INLINE uint32_t __NVIC_SetPriorityBoosting(void)
+__STATIC_INLINE void __NVIC_SetPriorityBoosting(void)
 {
   uint32_t reg_value;
-  uint32_t prev_value;
-    
-  prev_value =  __NVIC_GetPriorityBoosting();                   /* remember old PRIS bit setting to be returned */
     
   reg_value  =  SCB->AIRCR;                                     /* read old register configuration    */
   reg_value &= ~SCB_AIRCR_VECTKEY_Msk;                          /* clear bits to change               */
   reg_value  =  (reg_value                                   |
                 ((uint32_t)0x5FAUL << SCB_AIRCR_VECTKEY_Pos) |
-                SCB_AIRCR_PRIS_Msk                      );      /* Insert write key and priority boosting bit */
+                SCB_AIRCR_PRIS_Msk                      );      /* insert write key and PRIS bit */
   SCB->AIRCR =  reg_value;
-
-  return        prev_value;
 }
 
 /**
-  \brief   Clear Priority Boosting
-  \details Clears the priority boosting bit (PRIS bit in SCB->AIRCR) using the required unlock sequence.
-           Returns the PRIS bit setting previous to this call.
-  \return  0  Interrupt Priority Boosting was disabled
-  \return  1  Interrupt Priority Boosting was enabled
+  \brief   Clear Secure Interrupt Priority Boosting
+  \details Clears the secure interrupt priority boosting (PRIS bit in SCB->AIRCR) using the required unlock sequence.
+           Write is ignored when called from non-secure mode.
  */
-__STATIC_INLINE uint32_t __NVIC_ClearPriorityBoosting(void)
+__STATIC_INLINE void __NVIC_ClearPriorityBoosting(void)
 {
   uint32_t reg_value;
-  uint32_t prev_value;
-    
-  prev_value =  __NVIC_GetPriorityBoosting();                   /* remember old PRIS bit setting to be returned */
     
   reg_value  =  SCB->AIRCR;                                     /* read old register configuration    */
   reg_value &= ~(SCB_AIRCR_VECTKEY_Msk | SCB_AIRCR_PRIS_Msk);   /* clear bits to change               */
   reg_value  =  (reg_value                                 |
-                ((uint32_t)0x5FAUL << SCB_AIRCR_VECTKEY_Pos));  /* Insert write key                   */
+                ((uint32_t)0x5FAUL << SCB_AIRCR_VECTKEY_Pos));  /* insert write key                   */
   SCB->AIRCR =  reg_value;
-
-  return        prev_value;
-}
-
-/**
-  \brief   Resume Priority Boosting
-  \details Writes the priority boosting bit (PRIS bit in SCB->AIRCR) using the required unlock sequence.
-           Returns the PRIS bit setting previous to this call.
-  \param [in] pris_value
-           0  disables Priority Boosting
-           1  !0 or any other value but 0, enables Priority Boosting
-  \return  0  Interrupt Priority Boosting was disabled
-  \return  1  Interrupt Priority Boosting was enabled
- */
-__STATIC_INLINE uint32_t __NVIC_ResumePriorityBoosting(uint32_t pris_value)
-{
-  uint32_t prev_value;
-    
-  if( 0 != pris_value )
-  {
-     prev_value = __NVIC_SetPriorityBoosting();
-  }
-  else
-  {
-     prev_value = __NVIC_ClearPriorityBoosting();
-  }
-         
-  return  prev_value;
 }
 #endif /* (__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U) */
   
