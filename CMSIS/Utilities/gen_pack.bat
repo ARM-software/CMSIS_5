@@ -63,6 +63,7 @@ XCOPY /Q /S /Y ..\..\CMSIS\DSP\Include\*.* %RELEASE_PATH%\CMSIS\DSP\Include\*.*
 XCOPY /Q /S /Y ..\..\CMSIS\DSP\Source\*.* %RELEASE_PATH%\CMSIS\DSP\Source\*.*
 XCOPY /Q /S /Y ..\..\CMSIS\DSP\Projects\*.* %RELEASE_PATH%\CMSIS\DSP\Projects\*.*
 XCOPY /Q /S /Y ..\..\CMSIS\DSP\Examples\*.* %RELEASE_PATH%\CMSIS\DSP\Examples\*.*
+XCOPY /Q /S /Y ..\..\CMSIS\DSP\Lib\*.* %RELEASE_PATH%\CMSIS\DSP\Lib\*.*
 
 :: -- NN files 
 XCOPY /Q /S /Y ..\..\CMSIS\NN\*.* %RELEASE_PATH%\CMSIS\NN\*.*
