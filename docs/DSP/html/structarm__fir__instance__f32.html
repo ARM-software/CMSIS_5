@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-DSP
-   &#160;<span id="projectnumber">Version 1.5.2</span>
+   &#160;<span id="projectnumber">Version 1.5.5</span>
    </div>
    <div id="projectbrief">CMSIS DSP Software Library</div>
   </td>
@@ -129,8 +129,8 @@ Data Fields</h2></td></tr>
 <tr class="separator:a20cf98c92b5323799b7881c9ff4d2f7c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7afcf4022e8560db9b8fd28b0d090a15"><td class="memItemLeft" align="right" valign="top"><a class="el" href="arm__math_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structarm__fir__instance__f32.html#a7afcf4022e8560db9b8fd28b0d090a15">pState</a></td></tr>
 <tr class="separator:a7afcf4022e8560db9b8fd28b0d090a15"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1c9cfca901d5902afeb640f2831488f4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="arm__math_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structarm__fir__instance__f32.html#a1c9cfca901d5902afeb640f2831488f4">pCoeffs</a></td></tr>
-<tr class="separator:a1c9cfca901d5902afeb640f2831488f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa590e6c845fcb19e027d77307c8ef016"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="arm__math_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structarm__fir__instance__f32.html#aa590e6c845fcb19e027d77307c8ef016">pCoeffs</a></td></tr>
+<tr class="separator:aa590e6c845fcb19e027d77307c8ef016"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Description</h2>
 <div class="textblock"><dl><dt><b>Examples: </b></dt><dd><a class="el" href="arm_fir_example_f32_8c-example.html#_a12">arm_fir_example_f32.c</a>, and <a class="el" href="arm_signal_converge_example_f32_8c-example.html#_a3">arm_signal_converge_example_f32.c</a>.</dd>
@@ -146,22 +146,18 @@ Data Fields</h2></td></tr>
 </div><div class="memdoc">
 <p>number of filter coefficients in the filter. </p>
 
-<p>Referenced by <a class="el" href="group__FIR.html#gae8fb334ea67eb6ecbd31824ddc14cd6a">arm_fir_f32()</a>, and <a class="el" href="group__FIR.html#ga98d13def6427e29522829f945d0967db">arm_fir_init_f32()</a>.</p>
-
 </div>
 </div>
-<a class="anchor" id="a1c9cfca901d5902afeb640f2831488f4"></a>
+<a class="anchor" id="aa590e6c845fcb19e027d77307c8ef016"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="arm__math_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a>* arm_fir_instance_f32::pCoeffs</td>
+          <td class="memname">const <a class="el" href="arm__math_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a>* arm_fir_instance_f32::pCoeffs</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <p>points to the coefficient array. The array is of length numTaps. </p>
-
-<p>Referenced by <a class="el" href="group__FIR.html#gae8fb334ea67eb6ecbd31824ddc14cd6a">arm_fir_f32()</a>, and <a class="el" href="group__FIR.html#ga98d13def6427e29522829f945d0967db">arm_fir_init_f32()</a>.</p>
 
 </div>
 </div>
@@ -176,8 +172,6 @@ Data Fields</h2></td></tr>
 </div><div class="memdoc">
 <p>points to the state variable array. The array is of length numTaps+blockSize-1. </p>
 
-<p>Referenced by <a class="el" href="group__FIR.html#gae8fb334ea67eb6ecbd31824ddc14cd6a">arm_fir_f32()</a>, and <a class="el" href="group__FIR.html#ga98d13def6427e29522829f945d0967db">arm_fir_init_f32()</a>.</p>
-
 </div>
 </div>
 </div><!-- contents -->
@@ -186,7 +180,7 @@ Data Fields</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="structarm__fir__instance__f32.html">arm_fir_instance_f32</a></li>
-    <li class="footer">Generated on Wed Aug 1 2018 17:12:22 for CMSIS-DSP by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Fri Mar 15 2019 16:30:44 for CMSIS-DSP by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

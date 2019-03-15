@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Core (Cortex-M)
-   &#160;<span id="projectnumber">Version 5.1.2</span>
+   &#160;<span id="projectnumber">Version 5.2.0</span>
    </div>
    <div id="projectbrief">CMSIS-Core support for Cortex-M processor-based devices</div>
   </td>
@@ -149,9 +149,9 @@ Functions</h2></td></tr>
 <tr class="memitem:gaeef6f853b6df3a365c838ee5b49a7a26"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__intrinsic__CPU__gr.html#gaeef6f853b6df3a365c838ee5b49a7a26">__REV16</a> (uint32_t value)</td></tr>
 <tr class="memdesc:gaeef6f853b6df3a365c838ee5b49a7a26"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reverse byte order (16 bit)  <a href="#gaeef6f853b6df3a365c838ee5b49a7a26">More...</a><br/></td></tr>
 <tr class="separator:gaeef6f853b6df3a365c838ee5b49a7a26"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga1ec006e6d79063363cb0c2a2e0b3adbe"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__intrinsic__CPU__gr.html#ga1ec006e6d79063363cb0c2a2e0b3adbe">__REVSH</a> (int32_t value)</td></tr>
-<tr class="memdesc:ga1ec006e6d79063363cb0c2a2e0b3adbe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reverse byte order (16 bit)  <a href="#ga1ec006e6d79063363cb0c2a2e0b3adbe">More...</a><br/></td></tr>
-<tr class="separator:ga1ec006e6d79063363cb0c2a2e0b3adbe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga211618c03a0bf3264a7b22ad626d4f0a"><td class="memItemLeft" align="right" valign="top">int16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__intrinsic__CPU__gr.html#ga211618c03a0bf3264a7b22ad626d4f0a">__REVSH</a> (int16_t value)</td></tr>
+<tr class="memdesc:ga211618c03a0bf3264a7b22ad626d4f0a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reverse byte order (16 bit)  <a href="#ga211618c03a0bf3264a7b22ad626d4f0a">More...</a><br/></td></tr>
+<tr class="separator:ga211618c03a0bf3264a7b22ad626d4f0a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gad6f9f297f6b91a995ee199fbc796b863"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__intrinsic__CPU__gr.html#gad6f9f297f6b91a995ee199fbc796b863">__RBIT</a> (uint32_t value)</td></tr>
 <tr class="memdesc:gad6f9f297f6b91a995ee199fbc796b863"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reverse bit order of value.  <a href="#gad6f9f297f6b91a995ee199fbc796b863">More...</a><br/></td></tr>
 <tr class="separator:gad6f9f297f6b91a995ee199fbc796b863"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -250,7 +250,7 @@ Functions</h2></td></tr>
 <p>The following functions generate specific Cortex-M instructions that cannot be directly accessed by the C/C++ Compiler. Refer to the <a class="el" href="index.html#ref_man_sec">Cortex-M Reference Manuals</a> for detailed information about these Cortex-M instructions.</p>
 <dl class="section note"><dt>Note</dt><dd>When using the <b>Arm Compiler Version 5 Toolchain</b> the following <a class="el" href="group__intrinsic__CPU__gr.html">Intrinsic Functions for CPU Instructions</a> are implemented using the Embedded Assembler. As the Embedded Assembler may cause side effects (Refer to <b>Arm Compiler v5.xx User Guide - Using the Inline and Embedded Assemblers of the Arm Compiler</b> for more information) it is possible to disable the following intrinsic functions and therefore the usage of the Embedded Assembler with the <b><em>define __NO_EMBEDDED_ASM</em></b>:<ul>
 <li><a class="el" href="group__intrinsic__CPU__gr.html#gaeef6f853b6df3a365c838ee5b49a7a26">__REV16</a></li>
-<li><a class="el" href="group__intrinsic__CPU__gr.html#ga1ec006e6d79063363cb0c2a2e0b3adbe">__REVSH</a></li>
+<li><a class="el" href="group__intrinsic__CPU__gr.html#ga211618c03a0bf3264a7b22ad626d4f0a">__REVSH</a></li>
 <li><a class="el" href="group__intrinsic__CPU__gr.html#gac09134f1bf9c49db07282001afcc9380">__RRX</a> </li>
 </ul>
 </dd></dl>
@@ -753,14 +753,14 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ga1ec006e6d79063363cb0c2a2e0b3adbe"></a>
+<a class="anchor" id="ga211618c03a0bf3264a7b22ad626d4f0a"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int32_t __REVSH </td>
+          <td class="memname">int16_t __REVSH </td>
           <td>(</td>
-          <td class="paramtype">int32_t&#160;</td>
+          <td class="paramtype">int16_t&#160;</td>
           <td class="paramname"><em>value</em></td><td>)</td>
           <td></td>
         </tr>
@@ -876,7 +876,7 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This function saturates a signed value [not for Cortex-M0, Cortex-M0+, or SC000].</p>
+<p>This function saturates a signed value [not for Cortex-M0, Cortex-M0+, or SC000]. The Q bit is set if saturation occurs.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">value</td><td>Value to be saturated </td></tr>
@@ -1343,7 +1343,7 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This function saturates an unsigned value [not for Cortex-M0, Cortex-M0+, or SC000].</p>
+<p>This function saturates an unsigned value [not for Cortex-M0, Cortex-M0+, or SC000]. The Q bit is set if saturation occurs.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">value</td><td>Value to be saturated </td></tr>
@@ -1411,7 +1411,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Aug 1 2018 17:12:08 for CMSIS-Core (Cortex-M) by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Fri Mar 15 2019 16:30:25 for CMSIS-Core (Cortex-M) by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

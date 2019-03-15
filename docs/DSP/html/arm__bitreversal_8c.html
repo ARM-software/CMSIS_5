@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-DSP
-   &#160;<span id="projectnumber">Version 1.5.2</span>
+   &#160;<span id="projectnumber">Version 1.5.5</span>
    </div>
    <div id="projectbrief">CMSIS DSP Software Library</div>
   </td>
@@ -116,15 +116,18 @@ $(document).ready(function(){initNavTree('arm__bitreversal_8c.html','');});
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a3d4062fdfa6aaa3f51f41cab868e508b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="arm__bitreversal_8c.html#a3d4062fdfa6aaa3f51f41cab868e508b">arm_bitreversal_f32</a> (<a class="el" href="arm__math_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a> *pSrc, uint16_t <a class="el" href="arm__fft__bin__example__f32_8c.html#a9b500899c581f6df3ffc0a9f3a9ef6aa">fftSize</a>, uint16_t bitRevFactor, uint16_t *pBitRevTab)</td></tr>
-<tr class="separator:a3d4062fdfa6aaa3f51f41cab868e508b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a27618705158b5c42db5fb0a381f8efc1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="arm__bitreversal_8c.html#a27618705158b5c42db5fb0a381f8efc1">arm_bitreversal_q31</a> (<a class="el" href="arm__math_8h.html#adc89a3547f5324b7b3b95adec3806bc0">q31_t</a> *pSrc, uint32_t fftLen, uint16_t bitRevFactor, uint16_t *pBitRevTable)</td></tr>
-<tr class="separator:a27618705158b5c42db5fb0a381f8efc1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a12a07b49948c354172ae07358309a4a5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="arm__bitreversal_8c.html#a12a07b49948c354172ae07358309a4a5">arm_bitreversal_q15</a> (<a class="el" href="arm__math_8h.html#ab5a8fb21a5b3b983d5f54f31614052ea">q15_t</a> *pSrc16, uint32_t fftLen, uint16_t bitRevFactor, uint16_t *pBitRevTab)</td></tr>
-<tr class="separator:a12a07b49948c354172ae07358309a4a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a81008b023cbc9d37b3ff849877d1eb52"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="arm__bitreversal_8c.html#a81008b023cbc9d37b3ff849877d1eb52">arm_bitreversal_f32</a> (<a class="el" href="arm__math_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a> *pSrc, uint16_t <a class="el" href="arm__fft__bin__example__f32_8c.html#a9b500899c581f6df3ffc0a9f3a9ef6aa">fftSize</a>, uint16_t bitRevFactor, const uint16_t *pBitRevTab)</td></tr>
+<tr class="memdesc:a81008b023cbc9d37b3ff849877d1eb52"><td class="mdescLeft">&#160;</td><td class="mdescRight">In-place floating-point bit reversal function.  <a href="#a81008b023cbc9d37b3ff849877d1eb52">More...</a><br/></td></tr>
+<tr class="separator:a81008b023cbc9d37b3ff849877d1eb52"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a82acdff1d26c7021c2a016a6e7e9eaf8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="arm__bitreversal_8c.html#a82acdff1d26c7021c2a016a6e7e9eaf8">arm_bitreversal_q31</a> (<a class="el" href="arm__math_8h.html#adc89a3547f5324b7b3b95adec3806bc0">q31_t</a> *pSrc, uint32_t fftLen, uint16_t bitRevFactor, const uint16_t *pBitRevTab)</td></tr>
+<tr class="memdesc:a82acdff1d26c7021c2a016a6e7e9eaf8"><td class="mdescLeft">&#160;</td><td class="mdescRight">In-place Q31 bit reversal function.  <a href="#a82acdff1d26c7021c2a016a6e7e9eaf8">More...</a><br/></td></tr>
+<tr class="separator:a82acdff1d26c7021c2a016a6e7e9eaf8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aca90e3648bb9032de822180ab177f90c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="arm__bitreversal_8c.html#aca90e3648bb9032de822180ab177f90c">arm_bitreversal_q15</a> (<a class="el" href="arm__math_8h.html#ab5a8fb21a5b3b983d5f54f31614052ea">q15_t</a> *pSrc16, uint32_t fftLen, uint16_t bitRevFactor, const uint16_t *pBitRevTab)</td></tr>
+<tr class="memdesc:aca90e3648bb9032de822180ab177f90c"><td class="mdescLeft">&#160;</td><td class="mdescRight">In-place Q15 bit reversal function.  <a href="#aca90e3648bb9032de822180ab177f90c">More...</a><br/></td></tr>
+<tr class="separator:aca90e3648bb9032de822180ab177f90c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="a3d4062fdfa6aaa3f51f41cab868e508b"></a>
+<a class="anchor" id="a81008b023cbc9d37b3ff849877d1eb52"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -149,7 +152,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint16_t *&#160;</td>
+          <td class="paramtype">const uint16_t *&#160;</td>
           <td class="paramname"><em>pBitRevTab</em>&#160;</td>
         </tr>
         <tr>
@@ -159,12 +162,20 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Referenced by <a class="el" href="group__ComplexFFT.html#ga9fadd650b802f612ae558ddaab789a6d">arm_cfft_radix2_f32()</a>, <a class="el" href="group__ComplexFFT.html#ga521f670cd9c571bc61aff9bec89f4c26">arm_cfft_radix4_f32()</a>, and <a class="el" href="group__RealFFT.html#ga3df1766d230532bc068fc4ed69d0fcdc">arm_rfft_f32()</a>.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">pSrc</td><td>points to in-place floating-point data buffer </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">fftSize</td><td>length of FFT </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">bitRevFactor</td><td>bit reversal modifier that supports different size FFTs with the same bit reversal table </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">pBitRevTab</td><td>points to bit reversal table </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>none </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="a12a07b49948c354172ae07358309a4a5"></a>
+<a class="anchor" id="aca90e3648bb9032de822180ab177f90c"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -189,7 +200,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint16_t *&#160;</td>
+          <td class="paramtype">const uint16_t *&#160;</td>
           <td class="paramname"><em>pBitRevTab</em>&#160;</td>
         </tr>
         <tr>
@@ -199,12 +210,20 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Referenced by <a class="el" href="group__ComplexFFT.html#ga55b424341dc3efd3fa0bcaaff4bdbf40">arm_cfft_radix2_q15()</a>, and <a class="el" href="group__ComplexFFT.html#ga8d66cdac41b8bf6cefdb895456eee84a">arm_cfft_radix4_q15()</a>.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">pSrc16</td><td>points to in-place Q15 data buffer </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">fftLen</td><td>length of FFT </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">bitRevFactor</td><td>bit reversal modifier that supports different size FFTs with the same bit reversal table </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">pBitRevTab</td><td>points to bit reversal table </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>none </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="a27618705158b5c42db5fb0a381f8efc1"></a>
+<a class="anchor" id="a82acdff1d26c7021c2a016a6e7e9eaf8"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -229,8 +248,8 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint16_t *&#160;</td>
-          <td class="paramname"><em>pBitRevTable</em>&#160;</td>
+          <td class="paramtype">const uint16_t *&#160;</td>
+          <td class="paramname"><em>pBitRevTab</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -239,8 +258,16 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Referenced by <a class="el" href="group__ComplexFFT.html#ga6321f703ec87a274aedaab33d3e766b4">arm_cfft_radix2_q31()</a>, and <a class="el" href="group__ComplexFFT.html#gafde3ee1f58cf393b45a9073174fff548">arm_cfft_radix4_q31()</a>.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">pSrc</td><td>points to in-place Q31 data buffer. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">fftLen</td><td>length of FFT. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">bitRevFactor</td><td>bit reversal modifier that supports different size FFTs with the same bit reversal table </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">pBitRevTab</td><td>points to bit reversal table </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>none </dd></dl>
 
 </div>
 </div>
@@ -250,7 +277,7 @@ Functions</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_650d82db24a6311fa7658fced19ae149.html">DSP</a></li><li class="navelem"><a class="el" href="dir_cf3b734d050ceea02fbfb06f215bbc8f.html">Source</a></li><li class="navelem"><a class="el" href="dir_f93595924be31e3058e32faa649f9f3e.html">TransformFunctions</a></li><li class="navelem"><a class="el" href="arm__bitreversal_8c.html">arm_bitreversal.c</a></li>
-    <li class="footer">Generated on Wed Aug 1 2018 17:12:20 for CMSIS-DSP by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Fri Mar 15 2019 16:30:41 for CMSIS-DSP by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

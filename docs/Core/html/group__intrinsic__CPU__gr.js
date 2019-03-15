@@ -22,7 +22,7 @@ var group__intrinsic__CPU__gr =
     [ "__RBIT", "group__intrinsic__CPU__gr.html#gad6f9f297f6b91a995ee199fbc796b863", null ],
     [ "__REV", "group__intrinsic__CPU__gr.html#ga4717abc17af5ba29b1e4c055e0a0d9b8", null ],
     [ "__REV16", "group__intrinsic__CPU__gr.html#gaeef6f853b6df3a365c838ee5b49a7a26", null ],
-    [ "__REVSH", "group__intrinsic__CPU__gr.html#ga1ec006e6d79063363cb0c2a2e0b3adbe", null ],
+    [ "__REVSH", "group__intrinsic__CPU__gr.html#ga211618c03a0bf3264a7b22ad626d4f0a", null ],
     [ "__ROR", "group__intrinsic__CPU__gr.html#gaf66beb577bb9d90424c3d1d7f684c024", null ],
     [ "__RRX", "group__intrinsic__CPU__gr.html#gac09134f1bf9c49db07282001afcc9380", null ],
     [ "__SEV", "group__intrinsic__CPU__gr.html#ga3c34da7eb16496ae2668a5b95fa441e7", null ],

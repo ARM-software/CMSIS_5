@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-DSP
-   &#160;<span id="projectnumber">Version 1.5.2</span>
+   &#160;<span id="projectnumber">Version 1.5.5</span>
    </div>
    <div id="projectbrief">CMSIS DSP Software Library</div>
   </td>
@@ -131,10 +131,10 @@ Data Fields</h2></td></tr>
 <tr class="separator:adb1ef2739ddbe62e5cdadc47455a4147"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a61ce8c967b2e998a9c0041cca73cdef8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="arm__math_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structarm__dct4__instance__f32.html#a61ce8c967b2e998a9c0041cca73cdef8">normalize</a></td></tr>
 <tr class="separator:a61ce8c967b2e998a9c0041cca73cdef8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad13544aafad268588c62e3eb35ae662c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="arm__math_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structarm__dct4__instance__f32.html#ad13544aafad268588c62e3eb35ae662c">pTwiddle</a></td></tr>
-<tr class="separator:ad13544aafad268588c62e3eb35ae662c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6da1187e070801e011ce5e0582efa861"><td class="memItemLeft" align="right" valign="top"><a class="el" href="arm__math_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structarm__dct4__instance__f32.html#a6da1187e070801e011ce5e0582efa861">pCosFactor</a></td></tr>
-<tr class="separator:a6da1187e070801e011ce5e0582efa861"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a01fe45dbe46c782245832f2169622c29"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="arm__math_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structarm__dct4__instance__f32.html#a01fe45dbe46c782245832f2169622c29">pTwiddle</a></td></tr>
+<tr class="separator:a01fe45dbe46c782245832f2169622c29"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7762296d8871c58f2ef0b6ce327b8f4e"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="arm__math_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structarm__dct4__instance__f32.html#a7762296d8871c58f2ef0b6ce327b8f4e">pCosFactor</a></td></tr>
+<tr class="separator:a7762296d8871c58f2ef0b6ce327b8f4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a978f37fc19add31af243ab5c63ae502f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structarm__rfft__instance__f32.html">arm_rfft_instance_f32</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structarm__dct4__instance__f32.html#a978f37fc19add31af243ab5c63ae502f">pRfft</a></td></tr>
 <tr class="separator:a978f37fc19add31af243ab5c63ae502f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a018f7860b6e070af533fb7d76c7cdc32"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structarm__cfft__radix4__instance__f32.html">arm_cfft_radix4_instance_f32</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structarm__dct4__instance__f32.html#a018f7860b6e070af533fb7d76c7cdc32">pCfft</a></td></tr>
@@ -152,8 +152,6 @@ Data Fields</h2></td></tr>
 </div><div class="memdoc">
 <p>length of the DCT4. </p>
 
-<p>Referenced by <a class="el" href="group__DCT4__IDCT4.html#gafd538d68886848bc090ec2b0d364cc81">arm_dct4_f32()</a>, and <a class="el" href="group__DCT4__IDCT4.html#gab094ad3bc6fa1b84e8b12a24e1850a06">arm_dct4_init_f32()</a>.</p>
-
 </div>
 </div>
 <a class="anchor" id="adb1ef2739ddbe62e5cdadc47455a4147"></a>
@@ -166,8 +164,6 @@ Data Fields</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>half of the length of the DCT4. </p>
-
-<p>Referenced by <a class="el" href="group__DCT4__IDCT4.html#gafd538d68886848bc090ec2b0d364cc81">arm_dct4_f32()</a>, and <a class="el" href="group__DCT4__IDCT4.html#gab094ad3bc6fa1b84e8b12a24e1850a06">arm_dct4_init_f32()</a>.</p>
 
 </div>
 </div>
@@ -182,8 +178,6 @@ Data Fields</h2></td></tr>
 </div><div class="memdoc">
 <p>normalizing factor. </p>
 
-<p>Referenced by <a class="el" href="group__DCT4__IDCT4.html#gab094ad3bc6fa1b84e8b12a24e1850a06">arm_dct4_init_f32()</a>.</p>
-
 </div>
 </div>
 <a class="anchor" id="a018f7860b6e070af533fb7d76c7cdc32"></a>
@@ -197,22 +191,18 @@ Data Fields</h2></td></tr>
 </div><div class="memdoc">
 <p>points to the complex FFT instance. </p>
 
-<p>Referenced by <a class="el" href="group__DCT4__IDCT4.html#gab094ad3bc6fa1b84e8b12a24e1850a06">arm_dct4_init_f32()</a>.</p>
-
 </div>
 </div>
-<a class="anchor" id="a6da1187e070801e011ce5e0582efa861"></a>
+<a class="anchor" id="a7762296d8871c58f2ef0b6ce327b8f4e"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="arm__math_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a>* arm_dct4_instance_f32::pCosFactor</td>
+          <td class="memname">const <a class="el" href="arm__math_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a>* arm_dct4_instance_f32::pCosFactor</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <p>points to the cosFactor table. </p>
-
-<p>Referenced by <a class="el" href="group__DCT4__IDCT4.html#gafd538d68886848bc090ec2b0d364cc81">arm_dct4_f32()</a>, and <a class="el" href="group__DCT4__IDCT4.html#gab094ad3bc6fa1b84e8b12a24e1850a06">arm_dct4_init_f32()</a>.</p>
 
 </div>
 </div>
@@ -227,22 +217,18 @@ Data Fields</h2></td></tr>
 </div><div class="memdoc">
 <p>points to the real FFT instance. </p>
 
-<p>Referenced by <a class="el" href="group__DCT4__IDCT4.html#gab094ad3bc6fa1b84e8b12a24e1850a06">arm_dct4_init_f32()</a>.</p>
-
 </div>
 </div>
-<a class="anchor" id="ad13544aafad268588c62e3eb35ae662c"></a>
+<a class="anchor" id="a01fe45dbe46c782245832f2169622c29"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="arm__math_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a>* arm_dct4_instance_f32::pTwiddle</td>
+          <td class="memname">const <a class="el" href="arm__math_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a>* arm_dct4_instance_f32::pTwiddle</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <p>points to the twiddle factor table. </p>
-
-<p>Referenced by <a class="el" href="group__DCT4__IDCT4.html#gafd538d68886848bc090ec2b0d364cc81">arm_dct4_f32()</a>, and <a class="el" href="group__DCT4__IDCT4.html#gab094ad3bc6fa1b84e8b12a24e1850a06">arm_dct4_init_f32()</a>.</p>
 
 </div>
 </div>
@@ -252,7 +238,7 @@ Data Fields</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="structarm__dct4__instance__f32.html">arm_dct4_instance_f32</a></li>
-    <li class="footer">Generated on Wed Aug 1 2018 17:12:22 for CMSIS-DSP by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Fri Mar 15 2019 16:30:44 for CMSIS-DSP by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

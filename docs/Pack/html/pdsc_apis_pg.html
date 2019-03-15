@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Pack
-   &#160;<span id="projectnumber">Version 1.5.0</span>
+   &#160;<span id="projectnumber">Version 1.6.0</span>
    </div>
    <div id="projectbrief">Delivery Mechanism for Software Packs</div>
   </td>
@@ -173,6 +173,8 @@ $(document).ready(function(){initNavTree('pdsc_apis_pg.html','');});
 <tr>
 <td>exclusive </td><td>Makes the selection of a component implementing the API exclusive. If set to <span class="XML-Token">0</span>, then multiple components implementing the API can be selected. Default is <span class="XML-Token">1</span>. </td><td>xs:boolean </td><td>optional  </td></tr>
 <tr>
+<td>condition </td><td>Enter the identifier (attribute <em><b>id</b></em>) of a <a class="el" href="pdsc_conditions_pg.html#element_condition">condition</a>. The element is used if the condition resolves to <span class="XML-Token">true</span>. If the condition resolves to <span class="XML-Token">false</span>, then the element will be ignored. For example, an API might be specific for a certain toolchain or processor instruction set. </td><td>xs:string </td><td>optional  </td></tr>
+<tr>
 <td>Capiversion </td><td>Version of this component. Is a mandatory part of the component ID. The version format is described in <a class="el" href="pdsc_package_pg.html#VersionType">Version Type</a>.  </td><td>VersionType </td><td>optional  </td></tr>
 <tr>
 <th>Child&#160;Elements </th><th>Description </th><th>Type </th><th>Occurrence  </th></tr>
@@ -188,7 +190,7 @@ $(document).ready(function(){initNavTree('pdsc_apis_pg.html','');});
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="packFormat.html">Pack Description (*.pdsc) Format</a></li>
-    <li class="footer">Generated on Wed Aug 1 2018 17:12:42 for CMSIS-Pack by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Fri Mar 15 2019 16:31:12 for CMSIS-Pack by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

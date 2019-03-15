@@ -8,6 +8,7 @@ var searchData=
   ['ref_5fdebug_2etxt',['Ref_Debug.txt',['../Ref__Debug_8txt.html',1,'']]],
   ['ref_5ffpu_2etxt',['Ref_FPU.txt',['../Ref__FPU_8txt.html',1,'']]],
   ['ref_5fmpu_2etxt',['Ref_MPU.txt',['../Ref__MPU_8txt.html',1,'']]],
+  ['ref_5fmpu8_2etxt',['Ref_MPU8.txt',['../Ref__MPU8_8txt.html',1,'']]],
   ['ref_5fnvic_2etxt',['Ref_NVIC.txt',['../Ref__NVIC_8txt.html',1,'']]],
   ['ref_5fperipheral_2etxt',['Ref_Peripheral.txt',['../Ref__Peripheral_8txt.html',1,'']]],
   ['ref_5fsystemandclock_2etxt',['Ref_SystemAndClock.txt',['../Ref__SystemAndClock_8txt.html',1,'']]],

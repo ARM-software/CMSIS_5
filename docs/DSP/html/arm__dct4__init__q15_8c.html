@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-DSP
-   &#160;<span id="projectnumber">Version 1.5.2</span>
+   &#160;<span id="projectnumber">Version 1.5.5</span>
    </div>
    <div id="projectbrief">CMSIS DSP Software Library</div>
   </td>
@@ -108,8 +108,7 @@ $(document).ready(function(){initNavTree('arm__dct4__init__q15_8c.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#func-members">Functions</a> &#124;
-<a href="#var-members">Variables</a>  </div>
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">arm_dct4_init_q15.c File Reference</div>  </div>
 </div><!--header-->
@@ -117,28 +116,12 @@ $(document).ready(function(){initNavTree('arm__dct4__init__q15_8c.html','');});
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
+<tr class="memitem:ga0a1c77ce634a63f32285dbffe89d274b"><td class="memItemLeft" align="right" valign="top">static const <a class="el" href="arm__math_8h.html#ab5a8fb21a5b3b983d5f54f31614052ea">q15_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__DCT4__IDCT4__Table.html#ga0a1c77ce634a63f32285dbffe89d274b">__ALIGNED</a> (4)</td></tr>
+<tr class="memdesc:ga0a1c77ce634a63f32285dbffe89d274b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Weights Table.  <a href="group__DCT4__IDCT4__Table.html#ga0a1c77ce634a63f32285dbffe89d274b">More...</a><br/></td></tr>
+<tr class="separator:ga0a1c77ce634a63f32285dbffe89d274b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga966fd1b66a80873964533703ab5dc054"><td class="memItemLeft" align="right" valign="top"><a class="el" href="arm__math_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6">arm_status</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__DCT4__IDCT4.html#ga966fd1b66a80873964533703ab5dc054">arm_dct4_init_q15</a> (<a class="el" href="structarm__dct4__instance__q15.html">arm_dct4_instance_q15</a> *S, <a class="el" href="structarm__rfft__instance__q15.html">arm_rfft_instance_q15</a> *S_RFFT, <a class="el" href="structarm__cfft__radix4__instance__q15.html">arm_cfft_radix4_instance_q15</a> *S_CFFT, uint16_t N, uint16_t Nby2, <a class="el" href="arm__math_8h.html#ab5a8fb21a5b3b983d5f54f31614052ea">q15_t</a> normalize)</td></tr>
 <tr class="memdesc:ga966fd1b66a80873964533703ab5dc054"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialization function for the Q15 DCT4/IDCT4.  <a href="group__DCT4__IDCT4.html#ga966fd1b66a80873964533703ab5dc054">More...</a><br/></td></tr>
 <tr class="separator:ga966fd1b66a80873964533703ab5dc054"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
-Variables</h2></td></tr>
-<tr class="memitem:gaa4ff5e6f062efb1d1ec8c6c2207c3727"><td class="memItemLeft" align="right" valign="top">static const <a class="el" href="arm__math_8h.html#ab5a8fb21a5b3b983d5f54f31614052ea">q15_t</a> <a class="el" href="arm__math_8h.html#a280a402ab28c399fcc4168f2ed631acb">ALIGN4</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__DCT4__IDCT4__Table.html#gaa4ff5e6f062efb1d1ec8c6c2207c3727">WeightsQ15_128</a> [256]</td></tr>
-<tr class="separator:gaa4ff5e6f062efb1d1ec8c6c2207c3727"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gadc8ee250fc217d6cb5c84dd7c1eb6d31"><td class="memItemLeft" align="right" valign="top">static const <a class="el" href="arm__math_8h.html#ab5a8fb21a5b3b983d5f54f31614052ea">q15_t</a> <a class="el" href="arm__math_8h.html#a280a402ab28c399fcc4168f2ed631acb">ALIGN4</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__DCT4__IDCT4__Table.html#gadc8ee250fc217d6cb5c84dd7c1eb6d31">WeightsQ15_512</a> [1024]</td></tr>
-<tr class="separator:gadc8ee250fc217d6cb5c84dd7c1eb6d31"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga2235ec700d0d6925d9733f48541d46f5"><td class="memItemLeft" align="right" valign="top">static const <a class="el" href="arm__math_8h.html#ab5a8fb21a5b3b983d5f54f31614052ea">q15_t</a> <a class="el" href="arm__math_8h.html#a280a402ab28c399fcc4168f2ed631acb">ALIGN4</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__DCT4__IDCT4__Table.html#ga2235ec700d0d6925d9733f48541d46f5">WeightsQ15_2048</a> [4096]</td></tr>
-<tr class="separator:ga2235ec700d0d6925d9733f48541d46f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4fdc60621eb306984a82ce8b2d645bb7"><td class="memItemLeft" align="right" valign="top">static const <a class="el" href="arm__math_8h.html#ab5a8fb21a5b3b983d5f54f31614052ea">q15_t</a> <a class="el" href="arm__math_8h.html#a280a402ab28c399fcc4168f2ed631acb">ALIGN4</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__DCT4__IDCT4__Table.html#ga4fdc60621eb306984a82ce8b2d645bb7">WeightsQ15_8192</a> [16384]</td></tr>
-<tr class="separator:ga4fdc60621eb306984a82ce8b2d645bb7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga1477edd21c7b08b0b59a564f6c24d6c5"><td class="memItemLeft" align="right" valign="top">static const <a class="el" href="arm__math_8h.html#ab5a8fb21a5b3b983d5f54f31614052ea">q15_t</a> <a class="el" href="arm__math_8h.html#a280a402ab28c399fcc4168f2ed631acb">ALIGN4</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__DCT4__IDCT4__Table.html#ga1477edd21c7b08b0b59a564f6c24d6c5">cos_factorsQ15_128</a> [128]</td></tr>
-<tr class="separator:ga1477edd21c7b08b0b59a564f6c24d6c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac056c3d026058eab3ba650828ff5642f"><td class="memItemLeft" align="right" valign="top">static const <a class="el" href="arm__math_8h.html#ab5a8fb21a5b3b983d5f54f31614052ea">q15_t</a> <a class="el" href="arm__math_8h.html#a280a402ab28c399fcc4168f2ed631acb">ALIGN4</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__DCT4__IDCT4__Table.html#gac056c3d026058eab3ba650828ff5642f">cos_factorsQ15_512</a> [512]</td></tr>
-<tr class="separator:gac056c3d026058eab3ba650828ff5642f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaeee5df7c1be2374441868ecbbc6c7e5d"><td class="memItemLeft" align="right" valign="top">static const <a class="el" href="arm__math_8h.html#ab5a8fb21a5b3b983d5f54f31614052ea">q15_t</a> <a class="el" href="arm__math_8h.html#a280a402ab28c399fcc4168f2ed631acb">ALIGN4</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__DCT4__IDCT4__Table.html#gaeee5df7c1be2374441868ecbbc6c7e5d">cos_factorsQ15_2048</a> [2048]</td></tr>
-<tr class="separator:gaeee5df7c1be2374441868ecbbc6c7e5d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga988ff0563cc9df7848c9348871ac6c07"><td class="memItemLeft" align="right" valign="top">static const <a class="el" href="arm__math_8h.html#ab5a8fb21a5b3b983d5f54f31614052ea">q15_t</a> <a class="el" href="arm__math_8h.html#a280a402ab28c399fcc4168f2ed631acb">ALIGN4</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__DCT4__IDCT4__Table.html#ga988ff0563cc9df7848c9348871ac6c07">cos_factorsQ15_8192</a> [8192]</td></tr>
-<tr class="separator:ga988ff0563cc9df7848c9348871ac6c07"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 </div><!-- doc-content -->
@@ -146,7 +129,7 @@ Variables</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_650d82db24a6311fa7658fced19ae149.html">DSP</a></li><li class="navelem"><a class="el" href="dir_cf3b734d050ceea02fbfb06f215bbc8f.html">Source</a></li><li class="navelem"><a class="el" href="dir_f93595924be31e3058e32faa649f9f3e.html">TransformFunctions</a></li><li class="navelem"><a class="el" href="arm__dct4__init__q15_8c.html">arm_dct4_init_q15.c</a></li>
-    <li class="footer">Generated on Wed Aug 1 2018 17:12:20 for CMSIS-DSP by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Fri Mar 15 2019 16:30:42 for CMSIS-DSP by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

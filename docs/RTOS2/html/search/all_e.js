@@ -1,6 +1,8 @@
 var searchData=
 [
   ['os_20tick_20api',['OS Tick API',['../group__CMSIS__RTOS__TickAPI.html',1,'']]],
+  ['os_5fevr_5fthflags',['OS_EVR_THFLAGS',['../rtx__evr_8h.html#a8e1abf0403e5aabff14bffa28c0bf14b',1,'rtx_evr.h']]],
+  ['os_5fevr_5fwait',['OS_EVR_WAIT',['../rtx__evr_8h.html#aad9052994e484a85e2ea7c34b3957f29',1,'rtx_evr.h']]],
   ['os_5fid',['os_id',['../rtx__os_8h.html#a7b7d02cdf33432995469f29878f7dcda',1,'osRtxInfo_t']]],
   ['os_5ftick_2eh',['os_tick.h',['../os__tick_8h.html',1,'']]],
   ['os_5ftick_5facknowledgeirq',['OS_Tick_AcknowledgeIRQ',['../group__CMSIS__RTOS__TickAPI.html#ga57065ec4b281504ad4de13a419870b4f',1,'os_tick.h']]],

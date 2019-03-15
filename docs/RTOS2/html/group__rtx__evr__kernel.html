@@ -131,9 +131,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ga4c2a175b79d39d70a4a5112e270d03f2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__rtx__evr__kernel.html#ga4c2a175b79d39d70a4a5112e270d03f2">EvrRtxKernelGetInfo</a> (<a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#structosVersion__t">osVersion_t</a> *version, char *id_buf, uint32_t id_size)</td></tr>
 <tr class="memdesc:ga4c2a175b79d39d70a4a5112e270d03f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on RTOS kernel information retrieve (API)  <a href="#ga4c2a175b79d39d70a4a5112e270d03f2">More...</a><br/></td></tr>
 <tr class="separator:ga4c2a175b79d39d70a4a5112e270d03f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf09b8cd94ad2384e3ab518f0df94a651"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__rtx__evr__kernel.html#gaf09b8cd94ad2384e3ab518f0df94a651">EvrRtxKernelInfoRetrieved</a> (<a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#structosVersion__t">osVersion_t</a> *version, char *id_buf)</td></tr>
-<tr class="memdesc:gaf09b8cd94ad2384e3ab518f0df94a651"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on successful RTOS kernel information retrieve (Op)  <a href="#gaf09b8cd94ad2384e3ab518f0df94a651">More...</a><br/></td></tr>
-<tr class="separator:gaf09b8cd94ad2384e3ab518f0df94a651"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga85f9569d363a9a8f9677041405d0935f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__rtx__evr__kernel.html#ga85f9569d363a9a8f9677041405d0935f">EvrRtxKernelInfoRetrieved</a> (const <a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#structosVersion__t">osVersion_t</a> *version, const char *id_buf, uint32_t id_size)</td></tr>
+<tr class="memdesc:ga85f9569d363a9a8f9677041405d0935f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on successful RTOS kernel information retrieve (Op)  <a href="#ga85f9569d363a9a8f9677041405d0935f">More...</a><br/></td></tr>
+<tr class="separator:ga85f9569d363a9a8f9677041405d0935f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gad6407e9ff0910629b041866bd801075a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__rtx__evr__kernel.html#gad6407e9ff0910629b041866bd801075a">EvrRtxKernelGetState</a> (<a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#ga08326469274b668140ca934b168a5ad4">osKernelState_t</a> state)</td></tr>
 <tr class="memdesc:gad6407e9ff0910629b041866bd801075a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on current RTOS Kernel state retrieve (API)  <a href="#gad6407e9ff0910629b041866bd801075a">More...</a><br/></td></tr>
 <tr class="separator:gad6407e9ff0910629b041866bd801075a"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -333,21 +333,27 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="gaf09b8cd94ad2384e3ab518f0df94a651"></a>
+<a class="anchor" id="ga85f9569d363a9a8f9677041405d0935f"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">void EvrRtxKernelInfoRetrieved </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#structosVersion__t">osVersion_t</a> *&#160;</td>
+          <td class="paramtype">const <a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#structosVersion__t">osVersion_t</a> *&#160;</td>
           <td class="paramname"><em>version</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">char *&#160;</td>
-          <td class="paramname"><em>id_buf</em>&#160;</td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>id_buf</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>id_size</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -359,15 +365,17 @@ Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">version</td><td>pointer to buffer for retrieving version information. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">id_buf</td><td>pointer to buffer for retrieving kernel identification string.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">id_buf</td><td>pointer to buffer for retrieving kernel identification string. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">id_size</td><td>size of buffer for kernel identification string.</td></tr>
   </table>
   </dd>
 </dl>
 <p>The event <b>KernelInfoRetrieved</b> is generated when the function <a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#ga6f7764e7250c5c5364c00c45a5d1d199">osKernelGetInfo</a> successfully retrieves kernel information.</p>
 <p><b>Value</b> in the Event Recorder shows:</p>
 <ul>
-<li><b>version</b> : memory address of buffer for retrieving version information.</li>
-<li><b>id_buf</b> : memory address of buffer for retrieving kernel identification string. </li>
+<li><b>ver_api</b> : API version.</li>
+<li><b>ver_kernel</b> : kernel version.</li>
+<li><b>id</b> : kernel identification string (Detail). </li>
 </ul>
 
 </div>
@@ -776,7 +784,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Aug 1 2018 17:12:45 for CMSIS-RTOS2 by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Fri Mar 15 2019 16:31:17 for CMSIS-RTOS2 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

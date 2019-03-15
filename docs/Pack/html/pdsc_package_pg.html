@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Pack
-   &#160;<span id="projectnumber">Version 1.5.0</span>
+   &#160;<span id="projectnumber">Version 1.6.0</span>
    </div>
    <div id="projectbrief">Delivery Mechanism for Software Packs</div>
   </td>
@@ -160,6 +160,14 @@ $(document).ready(function(){initNavTree('pdsc_package_pg.html','');});
 <tr>
 <td>xs:noNamespaceSchemaLocation </td><td>Path and file name of the PACK.xsd Schema. For example, <span class="XML-Token">"PACK.xsd"</span>. </td><td>xs:string </td><td>required  </td></tr>
 <tr>
+<td>Dcore </td><td>Pack only used for a specific processor core. Use predefined values as listed in the table <a class="el" href="pdsc_family_pg.html#DcoreEnum">Device Cores</a>. Note: do not apply for packs that define a device </td><td>DcoreEnum </td><td>optional  </td></tr>
+<tr>
+<td>Dvendor </td><td>Pack only used for a specific silicon vendor of the device. Use predefined values as listed in the table <a class="el" href="pdsc_family_pg.html#DeviceVendorEnum">Device Vendor</a>. Note: do not apply for packs that define a device </td><td>DeviceVendorEnum </td><td>optional  </td></tr>
+<tr>
+<td>Dname<b>*</b> </td><td>Pack only used for a specific name of the device. Note: do not apply for packs that define a device </td><td>xs:string </td><td>optional  </td></tr>
+<tr>
+<td>Tcompiler </td><td>Pack only used for a specific compiler toolchain (ARMCC, GCC, IAR, Tasking, ...). Use predefined values as listed in table <a class="el" href="pdsc_conditions_pg.html#CompilerEnumType">Compiler Types</a>. </td><td>CompilerEnumType </td><td>optional  </td></tr>
+<tr>
 <th>Child Elements </th><th>Description </th><th>Type </th><th>Occurrence  </th></tr>
 <tr>
 <td>name </td><td>Name of the <a class="el" href="cp_SWComponents.html">Software Pack</a>. Could be displayed by an installer. </td><td>xs:string  </td><td>1..1   </td></tr>
@@ -173,6 +181,8 @@ $(document).ready(function(){initNavTree('pdsc_package_pg.html','');});
 <td>supportContact </td><td>HTTP URL or e-mail address for users to get support for the content of the Pack </td><td>xs:string </td><td>0..1   </td></tr>
 <tr>
 <td>license </td><td>Path to a license document. </td><td>xs:string  </td><td>0..1   </td></tr>
+<tr>
+<td><a class="el" href="element_dominate.html">dominate</a> </td><td>dominate </td><td>A pack that has <a class="el" href="element_dominate.html">dominate</a> attribute overrules other packs that provide devices, APIs, or software components with the same name. </td><td><em>empty</em>   </td></tr>
 <tr>
 <td><a class="el" href="element_requirements_pg.html#element_requirements">requirements</a> </td><td>Specifies other CMSIS-Packs, programming languages and compiler as well as their respective version or version range required by the components in this pack.  </td><td>RequirementsType </td><td>0..1   </td></tr>
 <tr>
@@ -202,6 +212,12 @@ $(document).ready(function(){initNavTree('pdsc_package_pg.html','');});
 <tr>
 <td><a class="el" href="pdsc_components_pg.html#element_components">components</a> </td><td>Lists the software components that are included in the Pack. </td><td>group </td><td>0..1   </td></tr>
 </table>
+<p><b>*)</b> Wild-cards can be used to match names with the following definitions:</p>
+<ul>
+<li>'*' matches any substring</li>
+<li>'?' matches any single character</li>
+<li>[abc] matches any character in the set (a,b,c)</li>
+</ul>
 <p>&#160;</p>
 <p><a class="anchor" id="VersionType"></a><b>Version Type</b></p>
 <p>CMSIS-Pack version specification is inspired by the <a href="http://semver.org" target="_blank">Semantic Versioning 2.0.0</a>. Under this scheme, version numbers and the way they are incremented convey a meaning about the underlying content quality and the significance of changes from one version to the next. A version consists of 3 mandatory and 2 optional sections:</p>
@@ -259,7 +275,7 @@ $(document).ready(function(){initNavTree('pdsc_package_pg.html','');});
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="packFormat.html">Pack Description (*.pdsc) Format</a></li>
-    <li class="footer">Generated on Wed Aug 1 2018 17:12:42 for CMSIS-Pack by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Fri Mar 15 2019 16:31:12 for CMSIS-Pack by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

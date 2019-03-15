@@ -7,13 +7,8 @@ var NAVTREE =
       [ "Multi-Core Partitioning", "index.html#UseCase_MultiCore", null ]
     ] ],
     [ "Revision History of CMSIS-Zone", "zone_revisionHistory.html", null ],
-    [ "Zone Description Format", "XML_Format.html", "XML_Format" ],
-    [ "Generator Data Model", "GenDataModel.html", [
-      [ "Data Model Structure", "GenDataModel.html#GenDataModel_Structure", null ],
-      [ "Template Examples", "GenDataModel.html#GenDataModel_Examples", [
-        [ "HTML table of all assigned memory blocks", "GenDataModel.html#GenDataModel_Examples_AssignedBlocks", null ]
-      ] ]
-    ] ]
+    [ "Zone Description Format", "zoneFormat.html", "zoneFormat" ],
+    [ "Generator Data Model", "GenDataModel.html", "GenDataModel" ]
   ] ]
 ];
 

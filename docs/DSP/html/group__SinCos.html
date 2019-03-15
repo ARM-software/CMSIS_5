@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-DSP
-   &#160;<span id="projectnumber">Version 1.5.2</span>
+   &#160;<span id="projectnumber">Version 1.5.5</span>
    </div>
    <div id="projectbrief">CMSIS DSP Software Library</div>
   </td>
@@ -169,14 +169,12 @@ Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">theta</td><td>input value in degrees </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">*pSinVal</td><td>points to the processed sine output. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">*pCosVal</td><td>points to the processed cos output. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">pSinVal</td><td>points to processed sine output </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">pCosVal</td><td>points to processed cosine output </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>none. </dd></dl>
-
-<p>References <a class="el" href="arm__math_8h.html#afcb9147c96853bea484cfc2dde07463d">FAST_MATH_TABLE_SIZE</a>, and <a class="el" href="arm__common__tables_8h.html#a1dec82d596780f1a66ef4f76f137c1d9">sinTable_f32</a>.</p>
+<dl class="section return"><dt>Returns</dt><dd>none </dd></dl>
 
 </div>
 </div>
@@ -212,15 +210,13 @@ Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">theta</td><td>scaled input value in degrees </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">*pSinVal</td><td>points to the processed sine output. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">*pCosVal</td><td>points to the processed cosine output. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">pSinVal</td><td>points to processed sine output </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">pCosVal</td><td>points to processed cosine output </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>none.</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>none</dd></dl>
 <p>The Q31 input value is in the range [-1 0.999999] and is mapped to a degree value in the range [-180 179]. </p>
-
-<p>References <a class="el" href="arm__math_8h.html#a9a94b78de0f083bd8fadf3c3abe40431">clip_q63_to_q31()</a>, <a class="el" href="arm__math_8h.html#aaff6d2358c4ada8de838a279254ab550">CONTROLLER_Q31_SHIFT</a>, and <a class="el" href="arm__common__tables_8h.html#a8bfccee9e1c0042cf4a765f4b19d097d">sinTable_q31</a>.</p>
 
 </div>
 </div>
@@ -229,7 +225,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Aug 1 2018 17:12:21 for CMSIS-DSP by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Fri Mar 15 2019 16:30:43 for CMSIS-DSP by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

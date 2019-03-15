@@ -3,8 +3,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<title>MPU Functions for Armv7-M</title>
-<title>CMSIS-Core (Cortex-M): MPU Functions for Armv7-M</title>
+<title>MPU Functions for Armv6-M/v7-M</title>
+<title>CMSIS-Core (Cortex-M): MPU Functions for Armv6-M/v7-M</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="cmsis.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="jquery.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Core (Cortex-M)
-   &#160;<span id="projectnumber">Version 5.1.2</span>
+   &#160;<span id="projectnumber">Version 5.2.0</span>
    </div>
    <div id="projectbrief">CMSIS-Core support for Cortex-M processor-based devices</div>
   </td>
@@ -113,7 +113,7 @@ $(document).ready(function(){initNavTree('group__mpu__functions.html','');});
 <a href="#define-members">Macros</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">MPU Functions for Armv7-M</div>  </div>
+<div class="title">MPU Functions for Armv6-M/v7-M</div>  </div>
 </div><!--header-->
 <div class="contents">
 
@@ -403,7 +403,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<p>The function <a class="el" href="group__mpu__functions.html#ga31406efd492ec9a091a70ffa2d8a42fb">ARM_MPU_Enable</a> writes to the register <a class="el" href="structMPU__Type.html#a769178ef949f0d5d8f18ddbd9e4e926f">MPU-&gt;CTRL</a> and sets bit ENABLE. The parameter <em>MPU_CTRL</em> provides additional bit values (see table below) that configure the MPU behaviour. For processors that implement an <b>MPU Fault Handler</b> the <a class="el" href="group__NVIC__gr.html">MemoryManagement_IRQn</a> exception is enabled by setting the bit MEMFAULTACT in register SBC-&gt;SHCSR.</p>
+<p>The function <a class="el" href="group__mpu8__functions.html#ga5a3f40314553baccdeea551f86d9a997">ARM_MPU_Enable</a> writes to the register <a class="el" href="structMPU__Type.html#a769178ef949f0d5d8f18ddbd9e4e926f">MPU-&gt;CTRL</a> and sets bit ENABLE. The parameter <em>MPU_CTRL</em> provides additional bit values (see table below) that configure the MPU behaviour. For processors that implement an <b>MPU Fault Handler</b> the <a class="el" href="group__NVIC__gr.html">MemoryManagement_IRQn</a> exception is enabled by setting the bit MEMFAULTACT in register SBC-&gt;SHCSR.</p>
 <p>The following table contains possible values for the parameter <em>MPU_CTRL</em> that set specific bits in register MPU-&gt;CTRL. </p>
 <table class="doxtable">
 <tr>
@@ -453,11 +453,11 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section note"><dt>Note</dt><dd>only up to 16 regions can be handled as the function <a class="el" href="group__mpu__functions.html#gafa27b26d5847fa8e465584e376b6078a">ARM_MPU_Load</a> uses the REGION field in <a class="el" href="structMPU__Type.html#a990c609b26d990b8ba832b110adfd353">MPU-&gt;RBAR</a>.</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>only up to 16 regions can be handled as the function <a class="el" href="group__mpu8__functions.html#gaca76614e3091c7324aa9d60e634621bf">ARM_MPU_Load</a> uses the REGION field in <a class="el" href="structMPU__Type.html#a990c609b26d990b8ba832b110adfd353">MPU-&gt;RBAR</a>.</dd></dl>
 <p><b>Example:</b> </p>
 <div class="fragment"><div class="line"><span class="keyword">const</span> <a class="code" href="structARM__MPU__Region__t.html">ARM_MPU_Region_t</a> mpuTable[3][4] = {</div>
 <div class="line">  {</div>
-<div class="line">    { .<a class="code" href="structARM__MPU__Region__t.html#aa5e3c6aeaddbc0c283085dc971dd1a22">RBAR</a> = <a class="code" href="group__mpu__functions.html#ga3fead12dc24a6d00ad53f55a042486ca">ARM_MPU_RBAR</a>(0UL, 0x08000000UL), .RASR = <a class="code" href="group__mpu__functions.html#ga96b93785c92e2dbcb3a2356c25bf2adc">ARM_MPU_RASR</a>(0UL, ARM_MPU_AP_FULL, 0UL, 0UL, 1UL, 1UL, 0x00UL, ARM_MPU_REGION_SIZE_1MB)  },</div>
+<div class="line">    { .<a class="code" href="structARM__MPU__Region__t.html#afe7a7721aa08988d915670efa432cdd2">RBAR</a> = <a class="code" href="group__mpu__functions.html#ga3fead12dc24a6d00ad53f55a042486ca">ARM_MPU_RBAR</a>(0UL, 0x08000000UL), .RASR = <a class="code" href="group__mpu__functions.html#ga96b93785c92e2dbcb3a2356c25bf2adc">ARM_MPU_RASR</a>(0UL, ARM_MPU_AP_FULL, 0UL, 0UL, 1UL, 1UL, 0x00UL, ARM_MPU_REGION_SIZE_1MB)  },</div>
 <div class="line">    { .RBAR = <a class="code" href="group__mpu__functions.html#ga3fead12dc24a6d00ad53f55a042486ca">ARM_MPU_RBAR</a>(1UL, 0x20000000UL), .RASR = <a class="code" href="group__mpu__functions.html#ga96b93785c92e2dbcb3a2356c25bf2adc">ARM_MPU_RASR</a>(1UL, ARM_MPU_AP_FULL, 0UL, 0UL, 1UL, 1UL, 0x00UL, ARM_MPU_REGION_SIZE_32KB) },</div>
 <div class="line">    { .RBAR = <a class="code" href="group__mpu__functions.html#ga3fead12dc24a6d00ad53f55a042486ca">ARM_MPU_RBAR</a>(2UL, 0x40020000UL), .RASR = <a class="code" href="group__mpu__functions.html#ga96b93785c92e2dbcb3a2356c25bf2adc">ARM_MPU_RASR</a>(1UL, ARM_MPU_AP_FULL, 2UL, 0UL, 0UL, 0UL, 0x00UL, ARM_MPU_REGION_SIZE_8KB)  }, </div>
 <div class="line">    { .RBAR = <a class="code" href="group__mpu__functions.html#ga3fead12dc24a6d00ad53f55a042486ca">ARM_MPU_RBAR</a>(3UL, 0x40022000UL), .RASR = <a class="code" href="group__mpu__functions.html#ga96b93785c92e2dbcb3a2356c25bf2adc">ARM_MPU_RASR</a>(1UL, ARM_MPU_AP_FULL, 2UL, 0UL, 0UL, 0UL, 0xC0UL, ARM_MPU_REGION_SIZE_4KB)  }</div>
@@ -564,7 +564,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Aug 1 2018 17:12:08 for CMSIS-Core (Cortex-M) by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Fri Mar 15 2019 16:30:25 for CMSIS-Core (Cortex-M) by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

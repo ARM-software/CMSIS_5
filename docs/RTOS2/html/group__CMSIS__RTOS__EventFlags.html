@@ -244,31 +244,31 @@ Simple event communication</div></div>
 <td class="fieldname">
 name</td>
 <td class="fielddoc">
-name of the event flags <p>Pointer to a string with a human readable name of the event object.<br/>
-Default: <span class="XML-Token">NULL</span>. </p>
+name of the event flags <p>Pointer to a constant string with a human readable name (displayed during debugging) of the event flag object.</p>
+<p>Default: <span class="XML-Token">NULL</span> no name specified. </p>
 </td></tr>
 <tr><td class="fieldtype">
 <a class="anchor" id="a6e93b49cb79c12f768d72580c7731f30"></a>uint32_t</td>
 <td class="fieldname">
 attr_bits</td>
 <td class="fielddoc">
-attribute bits <p>Reserved for future use (set to '0').<br/>
-Default: <span class="XML-Token">0</span>. </p>
+attribute bits <p>Reserved for future use (must be set to '0' for future compatibility). </p>
 </td></tr>
 <tr><td class="fieldtype">
 <a class="anchor" id="a1e100dc33d403841ed3c344e3397868e"></a>void *</td>
 <td class="fieldname">
 cb_mem</td>
 <td class="fielddoc">
-memory for control block <p>Pointer to a memory location for the event control block object. This can optionally be used for custom memory management systems.<br/>
-Default: <span class="XML-Token">NULL</span> (uses kernel memory management). </p>
+memory for control block <p>Pointer to a memory for the event flag control block object. Refer to <a class="el" href="theory_of_operation.html#StaticObjectMemory">Static Object Memory</a> for more information.</p>
+<p>Default: <span class="XML-Token">NULL</span> to use <a class="el" href="group__CMSIS__RTOS__MemoryMgmt.html#CMSIS_RTOS_MemoryMgmt_Automatic">Automatic Dynamic Allocation</a> for the event flag control block. </p>
 </td></tr>
 <tr><td class="fieldtype">
 <a class="anchor" id="aa55a4335d12dc2785dc00fdc292d1159"></a>uint32_t</td>
 <td class="fieldname">
 cb_size</td>
 <td class="fielddoc">
-size of provided memory for control block <p>The size of the memory block passed with <a class="el" href="group__CMSIS__RTOS__EventFlags.html#a1e100dc33d403841ed3c344e3397868e">cb_mem</a>. Must be the size of an event control block object or larger. </p>
+size of provided memory for control block <p>The size (in bytes) of memory block passed with <a class="el" href="group__CMSIS__RTOS__EventFlags.html#a1e100dc33d403841ed3c344e3397868e">cb_mem</a>. For RTX, the minimum value is defined with <a class="el" href="group__rtx5__specific__defines.html#ga68100c8c44931f03547973294c433075">osRtxEventFlagsCbSize</a> (higher values are permitted).</p>
+<p>Default: <span class="XML-Token">0</span> as the default is no memory provided with <a class="el" href="group__CMSIS__RTOS__EventFlags.html#a1e100dc33d403841ed3c344e3397868e">cb_mem</a>. </p>
 </td></tr>
 </table>
 
@@ -376,9 +376,9 @@ size of provided memory for control block <p>The size of the memory block passed
 <p>The function <b>osEventFlagsSet</b> sets the event flags specified by the parameter <em>flags</em> in an event flags object specified by parameter <em>ef_id</em>. All threads waiting for the flag set will be notified to resume from <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ThreadStates">BLOCKED</a> state. The function returns the event flags after setting or an error code (highest bit is set, refer to <a class="el" href="group__flags__error__codes.html">Flags Functions Error Codes</a>).</p>
 <p>Possible <a class="el" href="group__flags__error__codes.html">Flags Functions Error Codes</a> return values:</p>
 <ul>
-<li><em>osFlagsErrorUnknown:</em> Unspecified error.</li>
-<li><em>osFlagsErrorResource:</em> Event flags object specified by parameter <em>ef_id</em> is not ready to be used.</li>
-<li><em>osFlagsErrorParameter:</em> Parameter <em>ef_id</em> does not identify a valid event flags object or <em>flags</em> has highest bit set.</li>
+<li><em>osFlagsErrorUnknown:</em> unspecified error.</li>
+<li><em>osFlagsErrorParameter:</em> parameter <em>ef_id</em> does not identify a valid event flags object or <em>flags</em> has highest bit set.</li>
+<li><em>osFlagsErrorResource:</em> the event flags object is in an invalid state.</li>
 </ul>
 <dl class="section note"><dt>Note</dt><dd>This function may be called from <a class="el" href="theory_of_operation.html#CMSIS_RTOS_ISR_Calls">Interrupt Service Routines</a>.</dd></dl>
 <p><b>Code Example</b> </p>
@@ -441,9 +441,9 @@ size of provided memory for control block <p>The size of the memory block passed
 <p>The function <b>osEventFlagsClear</b> clears the event flags specified by the parameter <em>flags</em> in an event flags object specified by parameter <em>ef_id</em>. The function returns the event flags before clearing or an error code (highest bit is set, refer to <a class="el" href="group__flags__error__codes.html">Flags Functions Error Codes</a>).</p>
 <p>Possible <a class="el" href="group__flags__error__codes.html">Flags Functions Error Codes</a> return values:</p>
 <ul>
-<li><em>osFlagsErrorUnknown:</em> Unspecified error.</li>
-<li><em>osFlagsErrorResource:</em> Event flags object specified by parameter <em>ef_id</em> is not ready to be used.</li>
-<li><em>osFlagsErrorParameter:</em> Parameter <em>ef_id</em> does not identify a valid event flags object or <em>flags</em> has highest bit set.</li>
+<li><em>osFlagsErrorUnknown:</em> unspecified error.</li>
+<li><em>osFlagsErrorParameter:</em> parameter <em>ef_id</em> does not identify a valid event flags object or <em>flags</em> has highest bit set.</li>
+<li><em>osFlagsErrorResource:</em> the event flags object is in an invalid state.</li>
 </ul>
 <dl class="section note"><dt>Note</dt><dd>This function may be called from <a class="el" href="theory_of_operation.html#CMSIS_RTOS_ISR_Calls">Interrupt Service Routines</a>. </dd></dl>
 
@@ -541,10 +541,10 @@ size of provided memory for control block <p>The size of the memory block passed
 <p>The function returns the event flags before clearing or an error code (highest bit is set, refer to <a class="el" href="group__flags__error__codes.html">Flags Functions Error Codes</a>).</p>
 <p>Possible <a class="el" href="group__flags__error__codes.html">Flags Functions Error Codes</a> return values:</p>
 <ul>
-<li><em>osFlagsErrorUnknown:</em> Unspecified error.</li>
-<li><em>osFlagsErrorTimeout:</em> The awaited flags has not been set during given timeout.</li>
-<li><em>osFlagsErrorResource:</em> Event flags object specified by parameter <em>ef_id</em> is not ready to be used.</li>
-<li><em>osFlagsErrorParameter:</em> Parameter <em>ef_id</em> does not identify a valid event flags object or <em>flags</em> has highest bit set.</li>
+<li><em>osFlagsErrorUnknown:</em> unspecified error.</li>
+<li><em>osFlagsErrorTimeout:</em> awaited flags have not been set in the given time.</li>
+<li><em>osFlagsErrorResource:</em> awaited flags have not been set when no <em>timeout</em> was specified.</li>
+<li><em>osFlagsErrorParameter:</em> parameter <em>ef_id</em> does not identify a valid event flags object or <em>flags</em> has highest bit set.</li>
 </ul>
 <dl class="section note"><dt>Note</dt><dd>May be called from <a class="el" href="theory_of_operation.html#CMSIS_RTOS_ISR_Calls">Interrupt Service Routines</a> if the parameter <em>timeout</em> is set to <span class="XML-Token">0</span>.</dd></dl>
 <p><b>Code</b> <b>Example</b> </p>
@@ -598,8 +598,8 @@ size of provided memory for control block <p>The size of the memory block passed
 <ul>
 <li><em>osOK:</em> the specified event flags object has been deleted.</li>
 <li><em>osErrorISR:</em> <b>osEventFlagsDelete</b> cannot be called from interrupt service routines.</li>
-<li><em>osErrorParameter:</em> the value of the parameter <em>ef_id</em> is incorrect.</li>
-<li><em>osErrorResource:</em> parameter <em>ef_id</em> is <span class="XML-Token">NULL</span> or wrong.</li>
+<li><em>osErrorParameter:</em> parameter <em>ef_id</em> is <span class="XML-Token">NULL</span> or invalid.</li>
+<li><em>osErrorResource:</em> the event flags object is in an invalid state.</li>
 </ul>
 <dl class="section note"><dt>Note</dt><dd>This function <b>cannot</b> be called from <a class="el" href="theory_of_operation.html#CMSIS_RTOS_ISR_Calls">Interrupt Service Routines</a>. </dd></dl>
 
@@ -644,7 +644,7 @@ size of provided memory for control block <p>The size of the memory block passed
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Aug 1 2018 17:12:45 for CMSIS-RTOS2 by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Fri Mar 15 2019 16:31:17 for CMSIS-RTOS2 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

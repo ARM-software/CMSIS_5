@@ -212,9 +212,9 @@ Functions</h2></td></tr>
 <p>The function <b>osThreadFlagsSet</b> sets the thread flags for a thread specified by parameter <em>thread_id</em>. It returns the flags set, or an error code if highest bit is set (refer to <a class="el" href="group__flags__error__codes.html">Flags Functions Error Codes</a>). This function may be used also within interrupt service routines. Threads waiting for a flag to be set will resume from <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ThreadStates">BLOCKED</a> state.</p>
 <p>Possible <a class="el" href="group__flags__error__codes.html">Flags Functions Error Codes</a> return values:</p>
 <ul>
-<li><em>osFlagsErrorUnknown:</em> Unspecified error.</li>
-<li><em>osFlagsErrorResource:</em> Thread specified by parameter <em>thread_id</em> is not active to receive flags.</li>
-<li><em>osFlagsErrorParameter:</em> Parameter <em>thread_id</em> is not a valid thread or <em>flags</em> has highest bit set.</li>
+<li><em>osFlagsErrorUnknown:</em> unspecified error.</li>
+<li><em>osFlagsErrorParameter:</em> parameter <em>thread_id</em> is not a valid thread or <em>flags</em> has highest bit set.</li>
+<li><em>osFlagsErrorResource:</em> the thread is in invalid state.</li>
 </ul>
 <dl class="section note"><dt>Note</dt><dd>This function may be called from <a class="el" href="theory_of_operation.html#CMSIS_RTOS_ISR_Calls">Interrupt Service Routines</a>.</dd></dl>
 <p><b>Code</b> <b>Example</b> </p>
@@ -255,9 +255,8 @@ Functions</h2></td></tr>
 <p>The function <b>osThreadFlagsClear</b> clears the specified flags for the currently running thread. It returns the flags before clearing, or an error code if highest bit is set (refer to <a class="el" href="group__flags__error__codes.html">Flags Functions Error Codes</a>).</p>
 <p>Possible <a class="el" href="group__flags__error__codes.html">Flags Functions Error Codes</a> return values:</p>
 <ul>
-<li><em>osFlagsErrorUnknown:</em> Unspecified error, i.e. not called from a running threads context.</li>
-<li><em>osFlagsErrorResource:</em> Running thread is not active to receive flags.</li>
-<li><em>osFlagsErrorParameter:</em> Parameter <em>flags</em> has highest bit set.</li>
+<li><em>osFlagsErrorUnknown:</em> unspecified error, i.e. not called from a running threads context.</li>
+<li><em>osFlagsErrorParameter:</em> parameter <em>flags</em> has highest bit set.</li>
 </ul>
 <dl class="section note"><dt>Note</dt><dd>This function <b>cannot</b> be called from <a class="el" href="theory_of_operation.html#CMSIS_RTOS_ISR_Calls">Interrupt Service Routines</a>. </dd></dl>
 
@@ -337,9 +336,9 @@ Functions</h2></td></tr>
 <p>The function returns the flags before clearing, or an error code if highest bit is set (refer to <a class="el" href="group__flags__error__codes.html">Flags Functions Error Codes</a>).</p>
 <p>Possible <a class="el" href="group__flags__error__codes.html">Flags Functions Error Codes</a> return values:</p>
 <ul>
-<li><em>osFlagsErrorUnknown:</em> Unspecified error, i.e. not called from a running threads context.</li>
-<li><em>osFlagsErrorTimeout:</em> The awaited flags has not been set during given timeout.</li>
-<li><em>osFlagsErrorResource:</em> Running thread is not active to receive flags.</li>
+<li><em>osFlagsErrorUnknown:</em> unspecified error, i.e. not called from a running threads context.</li>
+<li><em>osFlagsErrorTimeout:</em> awaited flags have not been set in the given time.</li>
+<li><em>osFlagsErrorResource:</em> awaited flags have not been set when no <em>timeout</em> was specified.</li>
 <li><em>osFlagsErrorParameter:</em> Parameter <em>flags</em> has highest bit set.</li>
 </ul>
 <dl class="section note"><dt>Note</dt><dd>This function <b>cannot</b> be called from <a class="el" href="theory_of_operation.html#CMSIS_RTOS_ISR_Calls">Interrupt Service Routines</a>.</dd></dl>
@@ -364,7 +363,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Aug 1 2018 17:12:45 for CMSIS-RTOS2 by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Fri Mar 15 2019 16:31:17 for CMSIS-RTOS2 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

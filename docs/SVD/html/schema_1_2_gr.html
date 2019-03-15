@@ -111,43 +111,49 @@ $(document).ready(function(){initNavTree('schema_1_2_gr.html','');});
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><pre class="fragment">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
-&lt;!-- 
- 
+&lt;!--
+
   Copyright (c) 2013-2016 ARM Limited. All rights reserved.
- 
+
   SPDX-License-Identifier: Apache-2.0
- 
+
   Licensed under the Apache License, Version 2.0 (the License); you may
   not use this file except in compliance with the License.
   You may obtain a copy of the License at
- 
+
   www.apache.org/licenses/LICENSE-2.0
- 
+
   Unless required by applicable law or agreed to in writing, software
   distributed under the License is distributed on an AS IS BASIS, WITHOUT
   WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
   See the License for the specific language governing permissions and
   limitations under the License.
- 
-  $Date:         23. September 2016
-  $Revision:     1.3.3
+
+  $Date:         04. September 2018
+  $Revision:     1.3.5
+
+  Version 1.3.5:
+  - add CM35P as enumeration value for cpuNameType.
+
+  Version 1.3.4:
+  - add dspPresent element to cpuType as SIMD instructions became optional for new processors.
 
   Version 1.3.3:
   - update file header to Apache 2.0 License
   - add dimableIdentifierType, as a copy of previous identifierType adding "%s",
   - update identifierType to only allow names without %s included.
   - remove enumerationNameType.
-  - add headerEnumName to enumerationType and to dimArrayIndexType for peripheral arrays 
+  - add headerEnumName to enumerationType and to dimArrayIndexType for peripheral arrays
     overwriting hierarchically generated names
   - add dimName to dimElementGroup. Only valid in &lt;cluster&gt; context, ignored otherwise.
-  
+
   Version 1.3.2:
   adding dimIndexArray to peripheral-, cluster- and register-array to describe
   enumeration of array indices.
 
   Version 1.3.1:
   fixed peripheral name element type to identifierType to support %s for peripheral arrays
-  added optional protection element to addressBlockType and added p=privileged 
+  added optional protection element to addressBlockType and added p=privileged
 
   Version 1.3:
   added dim to peripherals to describe an array of peripherals.
@@ -155,16 +161,16 @@ $(document).ready(function(){initNavTree('schema_1_2_gr.html','');});
   added protection element as part of the registerPropertiesGroup indicating
   special permissions are required for accessing a register.
   CPU Section extended with description of the Secure Attribution Unit.
-  
+
   Version 1.2:
   Cortex-M7 support items have been added as optional tags for the device header file generation:
   fpuDP, icachePresent, dcachePresent, itcmPresent, dtcmPresent
-  
+
   Version 1.1:
   For backward compatibility all additional tags have been made optional.
   Extensions may be mandatory for successful device header file generation
   Other changes are related to some restructuring of the schema.
-  
+
   Note that the memory section has been removed since this would limit the
   reuse of descriptions for a series of devices.
  --&gt;
@@ -182,7 +188,7 @@ $(document).ready(function(){initNavTree('schema_1_2_gr.html','');});
       &lt;xs:pattern value="[\p{IsBasicLatin}\p{IsLatin-1Supplement}]*" /&gt;
     &lt;/xs:restriction&gt;
   &lt;/xs:simpleType&gt;
-  
+
   &lt;!-- cpuType specifies a selection of Cortex-M and Secure-Cores. This list will get extended as new processors are released --&gt;
   &lt;xs:simpleType name="cpuNameType"&gt;
     &lt;xs:restriction base="xs:token"&gt;
@@ -194,6 +200,7 @@ $(document).ready(function(){initNavTree('schema_1_2_gr.html','');});
       &lt;xs:enumeration value="CM23"/&gt;
       &lt;xs:enumeration value="CM3"/&gt;
       &lt;xs:enumeration value="CM33"/&gt;
+      &lt;xs:enumeration value="CM35P"/&gt;
       &lt;xs:enumeration value="SC300"/&gt;
       &lt;xs:enumeration value="CM4"/&gt;
       &lt;xs:enumeration value="CM7"/&gt;
@@ -392,8 +399,8 @@ $(document).ready(function(){initNavTree('schema_1_2_gr.html','');});
       &lt;xs:element name="value" type="xs:integer"/&gt;
     &lt;/xs:sequence&gt;
   &lt;/xs:complexType&gt;
-  &lt;!-- register properties group specifies register size, access permission and reset value 
-       this is used in multiple locations. Settings are inherited downstream. --&gt;  
+  &lt;!-- register properties group specifies register size, access permission and reset value
+       this is used in multiple locations. Settings are inherited downstream. --&gt;
   &lt;xs:group name="registerPropertiesGroup"&gt;
     &lt;xs:sequence&gt;
       &lt;xs:element name="size" type="scaledNonNegativeInteger" minOccurs="0"/&gt;
@@ -404,7 +411,7 @@ $(document).ready(function(){initNavTree('schema_1_2_gr.html','');});
       &lt;xs:element name="resetMask" type="scaledNonNegativeInteger" minOccurs="0"/&gt;
     &lt;/xs:sequence&gt;
   &lt;/xs:group&gt;
-  &lt;!-- bitRangeLsbMsbStyle specifies the bit position of a field within a register 
+  &lt;!-- bitRangeLsbMsbStyle specifies the bit position of a field within a register
        by specifying the least significant and the most significant bit position --&gt;
   &lt;xs:group name="bitRangeLsbMsbStyle"&gt;
     &lt;xs:sequence&gt;
@@ -417,12 +424,12 @@ $(document).ready(function(){initNavTree('schema_1_2_gr.html','');});
   &lt;xs:group name="bitRangeOffsetWidthStyle"&gt;
     &lt;xs:sequence&gt;
       &lt;xs:element name="bitOffset" type="scaledNonNegativeInteger"/&gt;
-      &lt;xs:element name="bitWidth" type="scaledNonNegativeInteger" minOccurs="0"/&gt;   
-    &lt;/xs:sequence&gt; 
+      &lt;xs:element name="bitWidth" type="scaledNonNegativeInteger" minOccurs="0"/&gt;
+    &lt;/xs:sequence&gt;
   &lt;/xs:group&gt;
-  
+
   &lt;!-- dimElementGroup specifies the number of array elements (dim), the address offset
-       between to consecutive array elements and an a comma seperated list of strings 
+       between to consecutive array elements and an a comma seperated list of strings
        being used for identifying each element in the array --&gt;
   &lt;xs:group name="dimElementGroup"&gt;
     &lt;xs:sequence&gt;
@@ -448,6 +455,8 @@ $(document).ready(function(){initNavTree('schema_1_2_gr.html','');});
       &lt;xs:element name="fpuPresent" type="xs:boolean" minOccurs="0"/&gt;
       &lt;!-- V1.2: fpuDP specifies a double precision floating point hardware unit is physically present--&gt;
       &lt;xs:element name="fpuDP" type="xs:boolean" minOccurs="0"/&gt;
+      &lt;!-- V1.3: dspPresent specifies whether the optional SIMD instructions are supported by processor --&gt;
+      &lt;xs:element name="dspPresent" type="xs:boolean" minOccurs="0"/&gt;
       &lt;!-- V1.2: icachePresent specifies that an instruction cache is physically present--&gt;
       &lt;xs:element name="icachePresent" type="xs:boolean" minOccurs="0"/&gt;
       &lt;!-- V1.2: dcachePresent specifies that a data cache is physically present--&gt;
@@ -508,7 +517,7 @@ $(document).ready(function(){initNavTree('schema_1_2_gr.html','');});
       &lt;/xs:choice&gt;
     &lt;/xs:sequence&gt;
   &lt;/xs:complexType&gt;
-  
+
   &lt;xs:complexType name="enumerationType"&gt;
     &lt;xs:sequence&gt;
       &lt;!-- name specfies a reference to this enumeratedValues section for reuse purposes
@@ -516,7 +525,7 @@ $(document).ready(function(){initNavTree('schema_1_2_gr.html','');});
       &lt;xs:element name="name" type="identifierType" minOccurs="0"/&gt;
       &lt;!-- overrides the hierarchical enumeration type in the device header file. User is responsible for uniqueness across description --&gt;
       &lt;xs:element name="headerEnumName" type="identifierType" minOccurs="0"/&gt;
-      &lt;!-- usage specifies whether this enumeration is to be used for read or write or 
+      &lt;!-- usage specifies whether this enumeration is to be used for read or write or
                                                        (read and write) accesses --&gt;
       &lt;xs:element name="usage" type="enumUsageType" minOccurs="0"/&gt;
       &lt;!-- enumeratedValue derivedFrom=&lt;identifierType&gt; --&gt;
@@ -538,7 +547,7 @@ $(document).ready(function(){initNavTree('schema_1_2_gr.html','');});
       &lt;!-- name specifies a field's name. The System Viewer and the device header file will
            use the name of the field as identifier --&gt;
       &lt;xs:element name="name" type="dimableIdentifierType"/&gt;
-      &lt;!-- description contains reference manual level information about the function and 
+      &lt;!-- description contains reference manual level information about the function and
            options of a field --&gt;
       &lt;xs:element name="description" type="stringType" minOccurs="0"/&gt;
       &lt;!-- alternative specifications of the bit position of the field within the register --&gt;
@@ -661,16 +670,16 @@ $(document).ready(function(){initNavTree('schema_1_2_gr.html','');});
       &lt;xs:element name="alternatePeripheral" type="dimableIdentifierType" minOccurs="0"/&gt;
       &lt;!-- groupName assigns this peripheral to a group of peripherals. This is only used bye the System View --&gt;
       &lt;xs:element name="groupName" type="xs:Name" minOccurs="0"/&gt;
-      &lt;!-- prependToName specifies a prefix that is placed in front of each register name of this peripheral. 
+      &lt;!-- prependToName specifies a prefix that is placed in front of each register name of this peripheral.
                          The device header file will show the registers in a C-Struct of the peripheral without the prefix. --&gt;
       &lt;xs:element name="prependToName" type="identifierType" minOccurs="0"/&gt;
-      &lt;!-- appendToName is a postfix that is appended to each register name of this peripheral. The device header 
+      &lt;!-- appendToName is a postfix that is appended to each register name of this peripheral. The device header
                          file will sho the registers in a C-Struct of the peripheral without the postfix --&gt;
       &lt;xs:element name="appendToName" type="identifierType" minOccurs="0"/&gt;
       &lt;!-- V1.1: headerStructName specifies the name for the peripheral structure typedef
                          used in the device header generation instead of the peripheral name --&gt;
       &lt;xs:element name="headerStructName" type="dimableIdentifierType" minOccurs="0"/&gt;
-      &lt;!-- disableCondition contains a logical expression based on constants and register or bit-field values 
+      &lt;!-- disableCondition contains a logical expression based on constants and register or bit-field values
                          if the condition is evaluated to true, the peripheral display will be disabled --&gt;
       &lt;xs:element name="disableCondition" type="stringType" minOccurs="0"/&gt;
       &lt;!-- baseAddress specifies the absolute base address of a peripheral. For derived peripherals it is mandatory
@@ -679,21 +688,21 @@ $(document).ready(function(){initNavTree('schema_1_2_gr.html','');});
       &lt;!-- registerPropertiesGroup elements specify the default values for register size, access permission and
                          reset value. These default values are inherited to all registers contained in this peripheral --&gt;
       &lt;xs:group ref="registerPropertiesGroup" minOccurs="0"/&gt;
-      &lt;!-- addressBlock specifies one or more address ranges that are assigned exclusively to this peripheral. 
+      &lt;!-- addressBlock specifies one or more address ranges that are assigned exclusively to this peripheral.
                          derived peripherals may have no addressBlock, however none-derived peripherals are required to specify
                          at least one address block --&gt;
       &lt;xs:element name="addressBlock" type="addressBlockType" minOccurs="0" maxOccurs="unbounded"/&gt;
       &lt;!-- interrupt specifies can specify one or more interrtupts by name, description and value --&gt;
       &lt;xs:element name="interrupt" type="interruptType" minOccurs="0" maxOccurs="unbounded"/&gt;
       &lt;!-- registers section contains all registers owned by the peripheral. In case a peripheral gets derived it does
-                        not have its own registers section, hence this section is optional. A unique peripheral without a 
+                        not have its own registers section, hence this section is optional. A unique peripheral without a
                         registers section is not allowed --&gt;
       &lt;xs:element name="registers" type="registersType" minOccurs="0" maxOccurs="1"&gt;
       &lt;/xs:element&gt;
     &lt;/xs:sequence&gt;
     &lt;xs:attribute name="derivedFrom" type="dimableIdentifierType" use="optional"/&gt;
   &lt;/xs:complexType&gt;
-  
+
   &lt;!-- ==================================================== --&gt;
   &lt;!-- The top level element of a description is the device --&gt;
   &lt;!-- ==================================================== --&gt;
@@ -719,7 +728,7 @@ $(document).ready(function(){initNavTree('schema_1_2_gr.html','');});
         &lt;!-- V1.1: the tag specifies the filename without extension of the CMSIS System Device include file.
              This tag is used by the header file generator for customizing the include statement referencing the
              CMSIS system file within the CMSIS device header file. By default the filename is "system_&lt;device.name&gt;"
-             In cases a device series shares a single system header file, the name of the series shall be used 
+             In cases a device series shares a single system header file, the name of the series shall be used
              instead of the individual device name. --&gt;
         &lt;xs:element name="headerSystemFilename" type="identifierType" minOccurs="0"/&gt;
         &lt;!-- V1.1: headerDefinitionPrefix specifies the string being prepended to all names of types defined in
@@ -763,7 +772,7 @@ $(document).ready(function(){initNavTree('schema_1_2_gr.html','');});
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Aug 1 2018 17:12:47 for CMSIS-SVD by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Fri Mar 15 2019 16:31:20 for CMSIS-SVD by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

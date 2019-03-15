@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Pack
-   &#160;<span id="projectnumber">Version 1.5.0</span>
+   &#160;<span id="projectnumber">Version 1.6.0</span>
    </div>
    <div id="projectbrief">Delivery Mechanism for Software Packs</div>
   </td>
@@ -729,9 +729,9 @@ Writing debug access sequences</h1>
 <p>To override a default sequence or to create a custom (default) sequence, you need to write <a class="el" href="pdsc_family_pg.html#element_sequence">sequence</a> elements. The following sections show how to use the built-in debug access syntax, expressions, and debug access functions to create custom sequences.</p>
 <h2><a class="anchor" id="DebugSyntaxRules"></a>
 Debug access syntax rules</h2>
-<p>Debug accesses are described in <b>block</b> elements of a debug access sequence (<b>sequence</b> element). The following syntax is used for this purpose:</p>
+<p>Debug accesses are described in <b>block</b> elements (within a debug access <b>sequence</b> or <b>control</b> element). The following syntax is used for this purpose:</p>
 <ul>
-<li>The contents of a <b>block</b> element is a series of statements.</li>
+<li>One or more statements have to be encapsulated in a <b>block</b> element.</li>
 <li>Each statement must begin in a new line and is terminated by a <span class="XML-Token">;</span> character.</li>
 <li>A typical statement consists of variable, followed by a <span class="XML-Token">=</span> character and an expression, where the <span class="XML-Token">=</span> character is an assignment of the <a class="el" href="debug_description.html#ExpressionType">expression</a> result to the variable: <div class="fragment"><div class="line">variable = expression;</div>
 </div><!-- fragment --></li>
@@ -1613,7 +1613,7 @@ Using external tools</h2>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="coresight_setup.html">Debug Setup with CMSIS-Pack</a></li>
-    <li class="footer">Generated on Wed Aug 1 2018 17:12:42 for CMSIS-Pack by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Fri Mar 15 2019 16:31:13 for CMSIS-Pack by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

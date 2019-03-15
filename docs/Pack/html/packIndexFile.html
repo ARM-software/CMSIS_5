@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Pack
-   &#160;<span id="projectnumber">Version 1.5.0</span>
+   &#160;<span id="projectnumber">Version 1.6.0</span>
    </div>
    <div id="projectbrief">Delivery Mechanism for Software Packs</div>
   </td>
@@ -208,12 +208,10 @@ CMSIS-Pack Index Schema File</h1>
     &lt;/xs:restriction&gt;
   &lt;/xs:simpleType&gt;
 
-  &lt;!-- a basic string of letters and numbers plus a dash and underbar, no leading nor trailing spaces and a minimum of 3 characters and a maximum of 32 --&gt;
+  &lt;!-- some strings are used to construct filenames (e.g. package name). Such names can contain only subset of characters and must not contain neither spaces nor dots. --&gt;
   &lt;xs:simpleType name="RestrictedString"&gt;
     &lt;xs:restriction base="xs:string"&gt;
-      &lt;xs:minLength value="3"/&gt;
-      &lt;xs:maxLength value="32"/&gt;
-      &lt;xs:pattern value="[-_A-Za-z0-9]+"/&gt;
+      &lt;xs:pattern value="[\-_A-Za-z0-9]+"/&gt;
       &lt;xs:pattern value="\S(.*\S)?"&gt;&lt;/xs:pattern&gt;
     &lt;/xs:restriction&gt;
   &lt;/xs:simpleType&gt;
@@ -274,7 +272,7 @@ CMSIS-Pack Index Schema File</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Aug 1 2018 17:12:43 for CMSIS-Pack by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Fri Mar 15 2019 16:31:13 for CMSIS-Pack by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

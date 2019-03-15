@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-DSP
-   &#160;<span id="projectnumber">Version 1.5.2</span>
+   &#160;<span id="projectnumber">Version 1.5.5</span>
    </div>
    <div id="projectbrief">CMSIS DSP Software Library</div>
   </td>
@@ -131,10 +131,10 @@ Data Fields</h2></td></tr>
 <tr class="separator:a2ecff6ea735cb4d22e922d0fd5736655"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a101e3f7b0bd6b5b14cd5214f23df4133"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structarm__cfft__radix4__instance__q15.html#a101e3f7b0bd6b5b14cd5214f23df4133">bitReverseFlag</a></td></tr>
 <tr class="separator:a101e3f7b0bd6b5b14cd5214f23df4133"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a29dd693537e45421a36891f8439e1fba"><td class="memItemLeft" align="right" valign="top"><a class="el" href="arm__math_8h.html#ab5a8fb21a5b3b983d5f54f31614052ea">q15_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structarm__cfft__radix4__instance__q15.html#a29dd693537e45421a36891f8439e1fba">pTwiddle</a></td></tr>
-<tr class="separator:a29dd693537e45421a36891f8439e1fba"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4acf704ae0cf30b53bf0fbfae8e34a59"><td class="memItemLeft" align="right" valign="top">uint16_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structarm__cfft__radix4__instance__q15.html#a4acf704ae0cf30b53bf0fbfae8e34a59">pBitRevTable</a></td></tr>
-<tr class="separator:a4acf704ae0cf30b53bf0fbfae8e34a59"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a69a91f93a3cae666b56c42d47beab1b4"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="arm__math_8h.html#ab5a8fb21a5b3b983d5f54f31614052ea">q15_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structarm__cfft__radix4__instance__q15.html#a69a91f93a3cae666b56c42d47beab1b4">pTwiddle</a></td></tr>
+<tr class="separator:a69a91f93a3cae666b56c42d47beab1b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a821544995ab3a0fd8f33bef3110cce0e"><td class="memItemLeft" align="right" valign="top">const uint16_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structarm__cfft__radix4__instance__q15.html#a821544995ab3a0fd8f33bef3110cce0e">pBitRevTable</a></td></tr>
+<tr class="separator:a821544995ab3a0fd8f33bef3110cce0e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af32fdc78bcc27ca385f9b76a0a1f71c3"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structarm__cfft__radix4__instance__q15.html#af32fdc78bcc27ca385f9b76a0a1f71c3">twidCoefModifier</a></td></tr>
 <tr class="separator:af32fdc78bcc27ca385f9b76a0a1f71c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6b010e5f02d1130c621e3d2e26b95df1"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structarm__cfft__radix4__instance__q15.html#a6b010e5f02d1130c621e3d2e26b95df1">bitRevFactor</a></td></tr>
@@ -152,8 +152,6 @@ Data Fields</h2></td></tr>
 </div><div class="memdoc">
 <p>flag that enables (bitReverseFlag=1) or disables (bitReverseFlag=0) bit reversal of output. </p>
 
-<p>Referenced by <a class="el" href="group__ComplexFFT.html#ga0c2acfda3126c452e75b81669e8ad9ef">arm_cfft_radix4_init_q15()</a>, and <a class="el" href="group__ComplexFFT.html#ga8d66cdac41b8bf6cefdb895456eee84a">arm_cfft_radix4_q15()</a>.</p>
-
 </div>
 </div>
 <a class="anchor" id="a6b010e5f02d1130c621e3d2e26b95df1"></a>
@@ -166,8 +164,6 @@ Data Fields</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>bit reversal modifier that supports different size FFTs with the same bit reversal table. </p>
-
-<p>Referenced by <a class="el" href="group__ComplexFFT.html#ga0c2acfda3126c452e75b81669e8ad9ef">arm_cfft_radix4_init_q15()</a>, and <a class="el" href="group__ComplexFFT.html#ga8d66cdac41b8bf6cefdb895456eee84a">arm_cfft_radix4_q15()</a>.</p>
 
 </div>
 </div>
@@ -182,8 +178,6 @@ Data Fields</h2></td></tr>
 </div><div class="memdoc">
 <p>length of the FFT. </p>
 
-<p>Referenced by <a class="el" href="group__ComplexFFT.html#ga0c2acfda3126c452e75b81669e8ad9ef">arm_cfft_radix4_init_q15()</a>, and <a class="el" href="group__ComplexFFT.html#ga8d66cdac41b8bf6cefdb895456eee84a">arm_cfft_radix4_q15()</a>.</p>
-
 </div>
 </div>
 <a class="anchor" id="a2ecff6ea735cb4d22e922d0fd5736655"></a>
@@ -197,37 +191,31 @@ Data Fields</h2></td></tr>
 </div><div class="memdoc">
 <p>flag that selects forward (ifftFlag=0) or inverse (ifftFlag=1) transform. </p>
 
-<p>Referenced by <a class="el" href="group__ComplexFFT.html#ga0c2acfda3126c452e75b81669e8ad9ef">arm_cfft_radix4_init_q15()</a>, and <a class="el" href="group__ComplexFFT.html#ga8d66cdac41b8bf6cefdb895456eee84a">arm_cfft_radix4_q15()</a>.</p>
-
 </div>
 </div>
-<a class="anchor" id="a4acf704ae0cf30b53bf0fbfae8e34a59"></a>
+<a class="anchor" id="a821544995ab3a0fd8f33bef3110cce0e"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint16_t* arm_cfft_radix4_instance_q15::pBitRevTable</td>
+          <td class="memname">const uint16_t* arm_cfft_radix4_instance_q15::pBitRevTable</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <p>points to the bit reversal table. </p>
 
-<p>Referenced by <a class="el" href="group__ComplexFFT.html#ga0c2acfda3126c452e75b81669e8ad9ef">arm_cfft_radix4_init_q15()</a>, and <a class="el" href="group__ComplexFFT.html#ga8d66cdac41b8bf6cefdb895456eee84a">arm_cfft_radix4_q15()</a>.</p>
-
 </div>
 </div>
-<a class="anchor" id="a29dd693537e45421a36891f8439e1fba"></a>
+<a class="anchor" id="a69a91f93a3cae666b56c42d47beab1b4"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="arm__math_8h.html#ab5a8fb21a5b3b983d5f54f31614052ea">q15_t</a>* arm_cfft_radix4_instance_q15::pTwiddle</td>
+          <td class="memname">const <a class="el" href="arm__math_8h.html#ab5a8fb21a5b3b983d5f54f31614052ea">q15_t</a>* arm_cfft_radix4_instance_q15::pTwiddle</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <p>points to the twiddle factor table. </p>
-
-<p>Referenced by <a class="el" href="group__ComplexFFT.html#ga0c2acfda3126c452e75b81669e8ad9ef">arm_cfft_radix4_init_q15()</a>, and <a class="el" href="group__ComplexFFT.html#ga8d66cdac41b8bf6cefdb895456eee84a">arm_cfft_radix4_q15()</a>.</p>
 
 </div>
 </div>
@@ -242,8 +230,6 @@ Data Fields</h2></td></tr>
 </div><div class="memdoc">
 <p>twiddle coefficient modifier that supports different size FFTs with the same twiddle factor table. </p>
 
-<p>Referenced by <a class="el" href="group__ComplexFFT.html#ga0c2acfda3126c452e75b81669e8ad9ef">arm_cfft_radix4_init_q15()</a>, and <a class="el" href="group__ComplexFFT.html#ga8d66cdac41b8bf6cefdb895456eee84a">arm_cfft_radix4_q15()</a>.</p>
-
 </div>
 </div>
 </div><!-- contents -->
@@ -252,7 +238,7 @@ Data Fields</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="structarm__cfft__radix4__instance__q15.html">arm_cfft_radix4_instance_q15</a></li>
-    <li class="footer">Generated on Wed Aug 1 2018 17:12:22 for CMSIS-DSP by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Fri Mar 15 2019 16:30:44 for CMSIS-DSP by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

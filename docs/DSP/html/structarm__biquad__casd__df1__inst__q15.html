@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-DSP
-   &#160;<span id="projectnumber">Version 1.5.2</span>
+   &#160;<span id="projectnumber">Version 1.5.5</span>
    </div>
    <div id="projectbrief">CMSIS DSP Software Library</div>
   </td>
@@ -129,8 +129,8 @@ Data Fields</h2></td></tr>
 <tr class="separator:ad6d95e70abcf4ff1300181415ad92153"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5481104ef2f8f81360b80b47d69ae932"><td class="memItemLeft" align="right" valign="top"><a class="el" href="arm__math_8h.html#ab5a8fb21a5b3b983d5f54f31614052ea">q15_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structarm__biquad__casd__df1__inst__q15.html#a5481104ef2f8f81360b80b47d69ae932">pState</a></td></tr>
 <tr class="separator:a5481104ef2f8f81360b80b47d69ae932"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1edaacdebb5b09d7635bf20c779855fc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="arm__math_8h.html#ab5a8fb21a5b3b983d5f54f31614052ea">q15_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structarm__biquad__casd__df1__inst__q15.html#a1edaacdebb5b09d7635bf20c779855fc">pCoeffs</a></td></tr>
-<tr class="separator:a1edaacdebb5b09d7635bf20c779855fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9219b50b6ca227c92da85f2151ea362e"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="arm__math_8h.html#ab5a8fb21a5b3b983d5f54f31614052ea">q15_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structarm__biquad__casd__df1__inst__q15.html#a9219b50b6ca227c92da85f2151ea362e">pCoeffs</a></td></tr>
+<tr class="separator:a9219b50b6ca227c92da85f2151ea362e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ada7e9d6269e6ed4eacf8f68729e9832d"><td class="memItemLeft" align="right" valign="top">int8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structarm__biquad__casd__df1__inst__q15.html#ada7e9d6269e6ed4eacf8f68729e9832d">postShift</a></td></tr>
 <tr class="separator:ada7e9d6269e6ed4eacf8f68729e9832d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -146,22 +146,18 @@ Data Fields</h2></td></tr>
 </div><div class="memdoc">
 <p>number of 2nd order stages in the filter. Overall order is 2*numStages. </p>
 
-<p>Referenced by <a class="el" href="group__BiquadCascadeDF1.html#gaffb9792c0220882efd4c58f3c6a05fd7">arm_biquad_cascade_df1_fast_q15()</a>, <a class="el" href="group__BiquadCascadeDF1.html#gad54c724132f6d742a444eb6df0e9c731">arm_biquad_cascade_df1_init_q15()</a>, and <a class="el" href="group__BiquadCascadeDF1.html#gadd66a0aefdc645031d607b0a5b37a942">arm_biquad_cascade_df1_q15()</a>.</p>
-
 </div>
 </div>
-<a class="anchor" id="a1edaacdebb5b09d7635bf20c779855fc"></a>
+<a class="anchor" id="a9219b50b6ca227c92da85f2151ea362e"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="arm__math_8h.html#ab5a8fb21a5b3b983d5f54f31614052ea">q15_t</a>* arm_biquad_casd_df1_inst_q15::pCoeffs</td>
+          <td class="memname">const <a class="el" href="arm__math_8h.html#ab5a8fb21a5b3b983d5f54f31614052ea">q15_t</a>* arm_biquad_casd_df1_inst_q15::pCoeffs</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <p>Points to the array of coefficients. The array is of length 5*numStages. </p>
-
-<p>Referenced by <a class="el" href="group__BiquadCascadeDF1.html#gaffb9792c0220882efd4c58f3c6a05fd7">arm_biquad_cascade_df1_fast_q15()</a>, <a class="el" href="group__BiquadCascadeDF1.html#gad54c724132f6d742a444eb6df0e9c731">arm_biquad_cascade_df1_init_q15()</a>, and <a class="el" href="group__BiquadCascadeDF1.html#gadd66a0aefdc645031d607b0a5b37a942">arm_biquad_cascade_df1_q15()</a>.</p>
 
 </div>
 </div>
@@ -176,8 +172,6 @@ Data Fields</h2></td></tr>
 </div><div class="memdoc">
 <p>Additional shift, in bits, applied to each output sample. </p>
 
-<p>Referenced by <a class="el" href="group__BiquadCascadeDF1.html#gaffb9792c0220882efd4c58f3c6a05fd7">arm_biquad_cascade_df1_fast_q15()</a>, <a class="el" href="group__BiquadCascadeDF1.html#gad54c724132f6d742a444eb6df0e9c731">arm_biquad_cascade_df1_init_q15()</a>, and <a class="el" href="group__BiquadCascadeDF1.html#gadd66a0aefdc645031d607b0a5b37a942">arm_biquad_cascade_df1_q15()</a>.</p>
-
 </div>
 </div>
 <a class="anchor" id="a5481104ef2f8f81360b80b47d69ae932"></a>
@@ -191,8 +185,6 @@ Data Fields</h2></td></tr>
 </div><div class="memdoc">
 <p>Points to the array of state coefficients. The array is of length 4*numStages. </p>
 
-<p>Referenced by <a class="el" href="group__BiquadCascadeDF1.html#gaffb9792c0220882efd4c58f3c6a05fd7">arm_biquad_cascade_df1_fast_q15()</a>, <a class="el" href="group__BiquadCascadeDF1.html#gad54c724132f6d742a444eb6df0e9c731">arm_biquad_cascade_df1_init_q15()</a>, and <a class="el" href="group__BiquadCascadeDF1.html#gadd66a0aefdc645031d607b0a5b37a942">arm_biquad_cascade_df1_q15()</a>.</p>
-
 </div>
 </div>
 </div><!-- contents -->
@@ -201,7 +193,7 @@ Data Fields</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="structarm__biquad__casd__df1__inst__q15.html">arm_biquad_casd_df1_inst_q15</a></li>
-    <li class="footer">Generated on Wed Aug 1 2018 17:12:22 for CMSIS-DSP by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Fri Mar 15 2019 16:30:44 for CMSIS-DSP by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

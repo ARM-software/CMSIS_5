@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Core (Cortex-M)
-   &#160;<span id="projectnumber">Version 5.1.2</span>
+   &#160;<span id="projectnumber">Version 5.2.0</span>
    </div>
    <div id="projectbrief">CMSIS-Core support for Cortex-M processor-based devices</div>
   </td>
@@ -108,7 +108,6 @@ $(document).ready(function(){initNavTree('group__version__control__gr.html','');
 
 <div class="header">
   <div class="summary">
-<a href="#groups">Content</a> &#124;
 <a href="#define-members">Macros</a>  </div>
   <div class="headertitle">
 <div class="title">Version Control</div>  </div>
@@ -118,12 +117,6 @@ $(document).ready(function(){initNavTree('group__version__control__gr.html','');
 <p>Version #define symbols for CMSIS release specific C/C++ source code.  
 <a href="#details">More...</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="groups"></a>
-Content</h2></td></tr>
-<tr class="memitem:group__version__control__depricated__gr"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__version__control__depricated__gr.html">Version Control per Core (Depricated)</a></td></tr>
-<tr class="memdesc:group__version__control__depricated__gr"><td class="mdescLeft">&#160;</td><td class="mdescRight">Version #define symbols for CMSIS release specific C/C++ source code. <br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
 <tr class="memitem:ga85987c5fcc1e012d7ac01369ee6ca2b5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__version__control__gr.html#ga85987c5fcc1e012d7ac01369ee6ca2b5">__CM_CMSIS_VERSION_MAIN</a></td></tr>
@@ -151,7 +144,14 @@ Macros</h2></td></tr>
 <div class="line"><span class="preprocessor"></span><span class="preprocessor">#else</span></div>
 <div class="line"><span class="preprocessor"></span><span class="preprocessor">#error We need CMSIS 5.1 or later!</span></div>
 <div class="line"><span class="preprocessor">#endif</span></div>
-</div><!-- fragment --> <h2 class="groupheader">Macro Definition Documentation</h2>
+</div><!-- fragment --><p><b>Deprecated</b></p>
+<p>The following macros are deprecated:</p>
+<ul>
+<li><b>__XXX_CMSIS_VERSION_MAIN</b> which is replaced by <a class="el" href="group__version__control__gr.html#ga85987c5fcc1e012d7ac01369ee6ca2b5">__CM_CMSIS_VERSION_MAIN</a>.</li>
+<li><b>__XXX_CMSIS_VERSION_SUB</b> which is replaced by <a class="el" href="group__version__control__gr.html#ga22083cbe7f0606cfd538ec12b2e41608">__CM_CMSIS_VERSION_SUB</a>.</li>
+<li><b>__XXX_CMSIS_VERSION</b> which is replaced by <a class="el" href="group__version__control__gr.html#ga39f3d64ff95fb58feccc7639e537ff89">__CM_CMSIS_VERSION</a>. </li>
+</ul>
+<h2 class="groupheader">Macro Definition Documentation</h2>
 <a class="anchor" id="ga39f3d64ff95fb58feccc7639e537ff89"></a>
 <div class="memitem">
 <div class="memproto">
@@ -203,11 +203,13 @@ Macros</h2></td></tr>
 <p>This define can be used to differentiate between the various available Cortex-M controllers. Possible values are:</p>
 <ul>
 <li>0 for a Cortex-M0 or Cortex-M0+</li>
+<li>1 for a Cortex-M1</li>
 <li>3 for a Cortex-M3</li>
 <li>4 for a Cortex-M4</li>
 <li>7 for a Cortex-M7</li>
 <li>23 for a Cortex-M23</li>
 <li>33 for a Cortex-M33</li>
+<li>35 for a Cortex-M35P</li>
 </ul>
 <p>This define is only available for Cortex-M class controllers. <b>Code Example:</b> </p>
 <div class="fragment"><div class="line"><span class="preprocessor">#if defined(__CORTEX_M) &amp;&amp; (__CORTEX_M == 4)</span></div>
@@ -246,7 +248,7 @@ Macros</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Aug 1 2018 17:12:08 for CMSIS-Core (Cortex-M) by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Fri Mar 15 2019 16:30:25 for CMSIS-Core (Cortex-M) by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

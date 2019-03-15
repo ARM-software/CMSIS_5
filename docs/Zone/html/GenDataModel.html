@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Zone (Preview)
-   &#160;<span id="projectnumber">Version 0.0.1</span>
+   &#160;<span id="projectnumber">Version 0.9.0</span>
    </div>
    <div id="projectbrief">System Resource Management</div>
   </td>
@@ -110,61 +110,72 @@ $(document).ready(function(){initNavTree('GenDataModel.html','');});
 <div class="title">Generator Data Model </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>The <b>Generator Data Model</b> defines the view on the <b>Zone Description</b> for code generators. By defining a common data model code generators can be developed independendly from actual CMSIS Zone Projects and vendor tools.</p>
-<p>The CMSIS-Zone data (structured according to the Generator Data Model) is combined with file templates using the FreeMarker template engine to generate arbitrary project files, see picture below..</p>
+<div class="textblock"><p>The <b>Generator Data Model</b> defines the resource and partition data structure for code generators. This data structure is connected to a FreeMarker template engine and file templates allow to generate various files that can be used to configure development tools or hardware components.</p>
 <div class="image">
 <img src="generator.png" alt="generator.png"/>
 <div class="caption">
 FreeMarker Template Engine</div></div>
- <h1><a class="anchor" id="GenDataModel_Structure"></a>
-Data Model Structure</h1>
-<p>The class diagram below visualizes the overall structure of the <b>Generator Data Model</b>. The root element visible to the templates is FmZone.</p>
-<div class="image">
-<img src="genmodel.png" alt="genmodel.png"/>
-<div class="caption">
-Generator Data Model Class Diagram</div></div>
-<p> According to <a href="http://freemarker.org/docs/index.html" target="_blank">FreeMarker Documentation</a> one can access the named attributes like <a href="http://freemarker.org/docs/dgui_template_exp.html#dgui_template_exp_var_hash" target="_blank">retrieving data from a hash</a>. The reference implementation documented in detail below make use of the default FreeMarker <a href="http://freemarker.org/docs/pgui_misc_beanwrapper.html" target="_blank">Bean wrapper</a>. This leads to all Java methods named like <em>get&lt;Attribute&gt;</em> or <em>is&lt;Attribute&gt;</em> to be visible just as <em>&lt;Attribute&gt;</em> to the template.</p>
-<p>Please take note about the multiplicities stated in the diagram:</p>
+ <h1><a class="anchor" id="fp_toplevel"></a>
+FreeMarker top-level format</h1>
+<h1><a class="anchor" id="fm_system"></a>
+/fm/system element</h1>
+<p>The <a class="el" href="GenDataModel.html#fm_system">/fm/system element</a> provides the memory layout and the interrupt configuration of the complete system. This information can be used for example, to create a linker script that defines the memory setup of the SoC system.</p>
+<table  class="cmtable" summary="Element: zone">
+<tr>
+<th>Child Elements </th><th>Description </th><th>Type  </th></tr>
+<tr>
+<td><a class="el" href="fm_memory.html">.memory</a> </td><td>A sequence of all memory regions available in the system resource file. </td><td>sequence  </td></tr>
+<tr>
+<td><a class="el" href="fm_interrupt.html">.interrupt</a> </td><td>A sequence of all interrupt sources available. </td><td>sequence  </td></tr>
+<tr>
+<td><a class="el" href="fm_irq_setup.html">.irq_setup</a> </td><td>Contains device specific configuration for the setup of the interrupts. </td><td>sequence  </td></tr>
+</table>
+<h1><a class="anchor" id="fm_zone"></a>
+/fm/zone element</h1>
+<p>The <a class="el" href="GenDataModel.html#fm_zone">/fm/zone element</a> provides the setup information of a zone (or system partition) along with related peripherals. This information can be used for example, to create the MPU setup that is required for various execution zones along with the related linker setup.</p>
+<table  class="cmtable" summary="Element: zone">
+<tr>
+<th>Child Elements </th><th>Description </th><th>Type  </th></tr>
+<tr>
+<td>.name </td><td>The name of the zone (or system partition). </td><td>string  </td></tr>
+<tr>
+<td><a class="el" href="fm_memory.html">.memory</a> </td><td>A sequence of all memory regions that are accessible in the zone (or system partition). </td><td>sequence  </td></tr>
+<tr>
+<td><a class="el" href="fm_peripheral.html">.peripheral</a> </td><td>A sequence of all peripherals that are accessible in the zone (or system partition). </td><td>sequence  </td></tr>
+<tr>
+<td><a class="el" href="fm_mpu_setup.html">.mpu_setup</a> </td><td>A sequence of configuration information for the Memory Protection Unit (MPU). </td><td>sequence  </td></tr>
+</table>
+<h1><a class="anchor" id="fm_basics"></a>
+FreeMarker basics</h1>
+<p>The varible types relevant for CMSIS-Zone are:</p>
+<p><b>scalar:</b> variable that stores a single value of a scalar type scalar-types:</p>
 <ul>
-<li>0..1 indicates an optional value which might be unavailable, consider using <a href="http://freemarker.org/docs/dgui_template_exp.html#dgui_template_exp_missing" target="_blank">missing value handler operators</a>.</li>
-<li>1 indicates a mandatory value which is guaranteed to be valid.</li>
-<li>0..* indicates a collection or hash of values which might be empty.</li>
-<li>1..* indicates a collection or hash of values which is guaranteed to contain at least one element.</li>
+<li>string</li>
+<li>int</li>
+<li>bool</li>
 </ul>
-<p>For detailed descriptions of the data model elements please refere to the <a href="../genmodel/index.html" target="_blank">JavaDoc</a> documentation for</p>
-<ul>
-<li><a href="../genmodel/com/arm/cmsis/zone/gen/data/FmZone.html" target="_blank">FmZone</a></li>
-<li><a href="../genmodel/com/arm/cmsis/zone/gen/data/FmProcess.html" target="_blank">FmProcess</a></li>
-<li><a href="../genmodel/com/arm/cmsis/zone/gen/data/FmDevice.html" target="_blank">FmDevice</a></li>
-<li><a href="../genmodel/com/arm/cmsis/zone/gen/data/FmProcessor.html" target="_blank">FmProcesor</a></li>
-<li><a href="../genmodel/com/arm/cmsis/zone/gen/data/FmBlock.html" target="_blank">FmBlock</a></li>
-</ul>
-<h1><a class="anchor" id="GenDataModel_Examples"></a>
-Template Examples</h1>
-<p>To get an impression of how template files might look like please refere to the simplyfied examples in this section.</p>
-<h2><a class="anchor" id="GenDataModel_Examples_AssignedBlocks"></a>
-HTML table of all assigned memory blocks</h2>
-<p>This examples demonstrates how to iterate over the collection of memory blocks assigned to the project zone currently evaluated. The result of the template below is a HTML table with three columns listing block name, start address and size, respectively.</p>
-<div class="fragment"><div class="line">&lt;table&gt;</div>
-<div class="line">  &lt;th&gt;</div>
-<div class="line">    &lt;td&gt;Name&lt;/td&gt;</div>
-<div class="line">    &lt;td&gt;Start&lt;/td&gt;</div>
-<div class="line">    &lt;td&gt;Size&lt;/td&gt;</div>
-<div class="line">  &lt;/th&gt;</div>
-<div class="line">&lt;#list blocks as block&gt;</div>
-<div class="line">  &lt;tr&gt;</div>
-<div class="line">    &lt;td&gt;${block.name}&lt;/td&gt;</div>
-<div class="line">    &lt;td&gt;${block.start}&lt;/td&gt;</div>
-<div class="line">    &lt;td&gt;${block.size}&lt;/td&gt;</div>
-<div class="line">  &lt;/tr&gt;</div>
+<p><b>hash:</b> variable that that stores one or more variables with a unique lookup name</p>
+<p><b>sequence:</b> variable that stores subvariables without names but instead are selected via index (myVariable[index])</p>
+<p>A variable is accessed using the dollar character followed by a variable or expression in brackets: </p>
+<div class="fragment"><div class="line">${...}</div>
+</div><!-- fragment --><p> Output the name of the zone: </p>
+<div class="fragment"><div class="line">${zone.name}</div>
+</div><!-- fragment --><p>A sequence gets iterated: </p>
+<div class="fragment"><div class="line">&lt;#list zone.memory as mem&gt;</div>
+<div class="line">   Memory region name $mem.name</div>
+<div class="line">&lt;/#list</div>
+<div class="line"></div>
+<div class="line">Printing a sorted list of all available memory entries by start address</div>
+<div class="line">\code</div>
+<div class="line">&lt;#list zone.memory?sort_by(<span class="stringliteral">&quot;start&quot;</span>) as mem&gt;</div>
+<div class="line">  ${mem.start} ${mem.name}</div>
 <div class="line">&lt;/#list&gt;</div>
-<div class="line">&lt;/table&gt;</div>
 </div><!-- fragment --> </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Aug 1 2018 17:12:47 for CMSIS-Zone (Preview) by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Fri Mar 15 2019 16:31:21 for CMSIS-Zone (Preview) by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

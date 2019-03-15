@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-DSP
-   &#160;<span id="projectnumber">Version 1.5.2</span>
+   &#160;<span id="projectnumber">Version 1.5.5</span>
    </div>
    <div id="projectbrief">CMSIS DSP Software Library</div>
   </td>
@@ -120,10 +120,10 @@ Functions</h2></td></tr>
 <tr class="memdesc:ga917bf0270310c1d3f0eda1fc7c0026a0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Floating-point matrix multiplication.  <a href="#ga917bf0270310c1d3f0eda1fc7c0026a0">More...</a><br/></td></tr>
 <tr class="separator:ga917bf0270310c1d3f0eda1fc7c0026a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga08f37d93a5bfef0c5000dc5e0a411f93"><td class="memItemLeft" align="right" valign="top"><a class="el" href="arm__math_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6">arm_status</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__MatrixMult.html#ga08f37d93a5bfef0c5000dc5e0a411f93">arm_mat_mult_fast_q15</a> (const <a class="el" href="structarm__matrix__instance__q15.html">arm_matrix_instance_q15</a> *pSrcA, const <a class="el" href="structarm__matrix__instance__q15.html">arm_matrix_instance_q15</a> *pSrcB, <a class="el" href="structarm__matrix__instance__q15.html">arm_matrix_instance_q15</a> *pDst, <a class="el" href="arm__math_8h.html#ab5a8fb21a5b3b983d5f54f31614052ea">q15_t</a> *pState)</td></tr>
-<tr class="memdesc:ga08f37d93a5bfef0c5000dc5e0a411f93"><td class="mdescLeft">&#160;</td><td class="mdescRight">Q15 matrix multiplication (fast variant) for Cortex-M3 and Cortex-M4.  <a href="#ga08f37d93a5bfef0c5000dc5e0a411f93">More...</a><br/></td></tr>
+<tr class="memdesc:ga08f37d93a5bfef0c5000dc5e0a411f93"><td class="mdescLeft">&#160;</td><td class="mdescRight">Q15 matrix multiplication (fast variant).  <a href="#ga08f37d93a5bfef0c5000dc5e0a411f93">More...</a><br/></td></tr>
 <tr class="separator:ga08f37d93a5bfef0c5000dc5e0a411f93"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga2785e8c1b785348b0c439b56aaf585a3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="arm__math_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6">arm_status</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__MatrixMult.html#ga2785e8c1b785348b0c439b56aaf585a3">arm_mat_mult_fast_q31</a> (const <a class="el" href="structarm__matrix__instance__q31.html">arm_matrix_instance_q31</a> *pSrcA, const <a class="el" href="structarm__matrix__instance__q31.html">arm_matrix_instance_q31</a> *pSrcB, <a class="el" href="structarm__matrix__instance__q31.html">arm_matrix_instance_q31</a> *pDst)</td></tr>
-<tr class="memdesc:ga2785e8c1b785348b0c439b56aaf585a3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Q31 matrix multiplication (fast variant) for Cortex-M3 and Cortex-M4.  <a href="#ga2785e8c1b785348b0c439b56aaf585a3">More...</a><br/></td></tr>
+<tr class="memdesc:ga2785e8c1b785348b0c439b56aaf585a3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Q31 matrix multiplication (fast variant).  <a href="#ga2785e8c1b785348b0c439b56aaf585a3">More...</a><br/></td></tr>
 <tr class="separator:ga2785e8c1b785348b0c439b56aaf585a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga7521d59196189bb6dde26e8cdfb66e21"><td class="memItemLeft" align="right" valign="top"><a class="el" href="arm__math_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6">arm_status</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__MatrixMult.html#ga7521d59196189bb6dde26e8cdfb66e21">arm_mat_mult_q15</a> (const <a class="el" href="structarm__matrix__instance__q15.html">arm_matrix_instance_q15</a> *pSrcA, const <a class="el" href="structarm__matrix__instance__q15.html">arm_matrix_instance_q15</a> *pSrcB, <a class="el" href="structarm__matrix__instance__q15.html">arm_matrix_instance_q15</a> *pDst, <a class="el" href="arm__math_8h.html#ab5a8fb21a5b3b983d5f54f31614052ea">q15_t</a> *pState)</td></tr>
 <tr class="memdesc:ga7521d59196189bb6dde26e8cdfb66e21"><td class="mdescLeft">&#160;</td><td class="mdescRight">Q15 matrix multiplication.  <a href="#ga7521d59196189bb6dde26e8cdfb66e21">More...</a><br/></td></tr>
@@ -138,7 +138,11 @@ Functions</h2></td></tr>
 <img src="MatrixMultiplication.gif" alt="MatrixMultiplication.gif"/>
 <div class="caption">
 Multiplication of two 3 x 3 matrices</div></div>
-<p> Matrix multiplication is only defined if the number of columns of the first matrix equals the number of rows of the second matrix. Multiplying an <code>M x N</code> matrix with an <code>N x P</code> matrix results in an <code>M x P</code> matrix. When matrix size checking is enabled, the functions check: (1) that the inner dimensions of <code>pSrcA</code> and <code>pSrcB</code> are equal; and (2) that the size of the output matrix equals the outer dimensions of <code>pSrcA</code> and <code>pSrcB</code>. </p>
+<p> Matrix multiplication is only defined if the number of columns of the first matrix equals the number of rows of the second matrix. Multiplying an <code>M x N</code> matrix with an <code>N x P</code> matrix results in an <code>M x P</code> matrix. When matrix size checking is enabled, the functions check:</p>
+<ul>
+<li>that the inner dimensions of <code>pSrcA</code> and <code>pSrcB</code> are equal;</li>
+<li>that the size of the output matrix equals the outer dimensions of <code>pSrcA</code> and <code>pSrcB</code>. </li>
+</ul>
 <h2 class="groupheader">Function Documentation</h2>
 <a class="anchor" id="ga917bf0270310c1d3f0eda1fc7c0026a0"></a>
 <div class="memitem">
@@ -171,17 +175,17 @@ Multiplication of two 3 x 3 matrices</div></div>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">*pSrcA</td><td>points to the first input matrix structure </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">*pSrcB</td><td>points to the second input matrix structure </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">*pDst</td><td>points to output matrix structure </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">pSrcA</td><td>points to the first input matrix structure </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">pSrcB</td><td>points to the second input matrix structure </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">pDst</td><td>points to output matrix structure </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The function returns either <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking. </dd></dl>
-
-<p>References <a class="el" href="arm__math_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6a7071b92f1f6bc3c5c312a237ea91105b">ARM_MATH_SIZE_MISMATCH</a>, <a class="el" href="arm__math_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6a9f8b2a10bd827fb4600e77d455902eb0">ARM_MATH_SUCCESS</a>, <a class="el" href="structarm__matrix__instance__f32.html#acdd1fb73734df68b89565c54f1dd8ae2">arm_matrix_instance_f32::numCols</a>, <a class="el" href="structarm__matrix__instance__f32.html#a23f4e34d70a82c9cad7612add5640b7b">arm_matrix_instance_f32::numRows</a>, <a class="el" href="structarm__matrix__instance__f32.html#af3917c032600a9dfd5ed4a96f074910a">arm_matrix_instance_f32::pData</a>, and <a class="el" href="arm__dotproduct__example__f32_8c.html#a88ccb294236ab22b00310c47164c53c3">status</a>.</p>
-
-<p>Referenced by <a class="el" href="arm__class__marks__example__f32_8c.html#a196718f834091385d38586a0ce4009dc">main()</a>.</p>
+<dl class="section return"><dt>Returns</dt><dd>execution status<ul>
+<li><a class="el" href="arm__math_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6a9f8b2a10bd827fb4600e77d455902eb0">ARM_MATH_SUCCESS</a> : Operation successful</li>
+<li><a class="el" href="arm__math_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6a7071b92f1f6bc3c5c312a237ea91105b">ARM_MATH_SIZE_MISMATCH</a> : Matrix size check failed </li>
+</ul>
+</dd></dl>
 
 </div>
 </div>
@@ -220,22 +224,24 @@ Multiplication of two 3 x 3 matrices</div></div>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Q15 matrix multiplication (fast variant) for Cortex-M3 and Cortex-M4.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">*pSrcA</td><td>points to the first input matrix structure </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">*pSrcB</td><td>points to the second input matrix structure </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">*pDst</td><td>points to output matrix structure </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">*pState</td><td>points to the array for storing intermediate results </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">pSrcA</td><td>points to the first input matrix structure </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">pSrcB</td><td>points to the second input matrix structure </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">pDst</td><td>points to output matrix structure </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">pState</td><td>points to the array for storing intermediate results </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The function returns either <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.</dd></dl>
-<p><b>Scaling and Overflow Behavior:</b></p>
-<dl class="section user"><dt></dt><dd>The difference between the function <a class="el" href="group__MatrixMult.html#ga7521d59196189bb6dde26e8cdfb66e21" title="Q15 matrix multiplication. ">arm_mat_mult_q15()</a> and this fast variant is that the fast variant use a 32-bit rather than a 64-bit accumulator. The result of each 1.15 x 1.15 multiplication is truncated to 2.30 format. These intermediate results are accumulated in a 32-bit register in 2.30 format. Finally, the accumulator is saturated and converted to a 1.15 result.</dd></dl>
-<dl class="section user"><dt></dt><dd>The fast version has the same overflow behavior as the standard version but provides less precision since it discards the low 16 bits of each multiplication result. In order to avoid overflows completely the input signals must be scaled down. Scale down one of the input matrices by log2(numColsA) bits to avoid overflows, as a total of numColsA additions are computed internally for each output element.</dd></dl>
-<dl class="section user"><dt></dt><dd>See <code><a class="el" href="group__MatrixMult.html#ga7521d59196189bb6dde26e8cdfb66e21" title="Q15 matrix multiplication. ">arm_mat_mult_q15()</a></code> for a slower implementation of this function which uses 64-bit accumulation to provide higher precision. </dd></dl>
-
-<p>References <a class="el" href="arm__math_8h.html#a9de2e0a5785be82866bcb96012282248">__SIMD32</a>, <a class="el" href="arm__math_8h.html#aa611fdbf6c56c46553701d6596a79aaf">__SMLAD()</a>, <a class="el" href="arm__math_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6a7071b92f1f6bc3c5c312a237ea91105b">ARM_MATH_SIZE_MISMATCH</a>, <a class="el" href="arm__math_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6a9f8b2a10bd827fb4600e77d455902eb0">ARM_MATH_SUCCESS</a>, <a class="el" href="structarm__matrix__instance__q15.html#acbbce67ba058d8e1c867c71d57288c97">arm_matrix_instance_q15::numCols</a>, <a class="el" href="structarm__matrix__instance__q15.html#a9bac6ed54be287c4d4f01a1a28be65f5">arm_matrix_instance_q15::numRows</a>, <a class="el" href="structarm__matrix__instance__q15.html#a6da33a5553e634787d0f515cf8d724af">arm_matrix_instance_q15::pData</a>, and <a class="el" href="arm__dotproduct__example__f32_8c.html#a88ccb294236ab22b00310c47164c53c3">status</a>.</p>
+<dl class="section return"><dt>Returns</dt><dd>execution status<ul>
+<li><a class="el" href="arm__math_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6a9f8b2a10bd827fb4600e77d455902eb0">ARM_MATH_SUCCESS</a> : Operation successful</li>
+<li><a class="el" href="arm__math_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6a7071b92f1f6bc3c5c312a237ea91105b">ARM_MATH_SIZE_MISMATCH</a> : Matrix size check failed</li>
+</ul>
+</dd></dl>
+<dl class="section user"><dt>Scaling and Overflow Behavior</dt><dd>The difference between the function <a class="el" href="group__MatrixMult.html#ga7521d59196189bb6dde26e8cdfb66e21">arm_mat_mult_q15()</a> and this fast variant is that the fast variant use a 32-bit rather than a 64-bit accumulator. The result of each 1.15 x 1.15 multiplication is truncated to 2.30 format. These intermediate results are accumulated in a 32-bit register in 2.30 format. Finally, the accumulator is saturated and converted to a 1.15 result. </dd></dl>
+<dl class="section user"><dt></dt><dd>The fast version has the same overflow behavior as the standard version but provides less precision since it discards the low 16 bits of each multiplication result. In order to avoid overflows completely the input signals must be scaled down. Scale down one of the input matrices by log2(numColsA) bits to avoid overflows, as a total of numColsA additions are computed internally for each output element. </dd></dl>
+<dl class="section remark"><dt>Remarks</dt><dd>Refer to <a class="el" href="group__MatrixMult.html#ga7521d59196189bb6dde26e8cdfb66e21">arm_mat_mult_q15()</a> for a slower implementation of this function which uses 64-bit accumulation to provide higher precision. </dd></dl>
 
 </div>
 </div>
@@ -268,21 +274,23 @@ Multiplication of two 3 x 3 matrices</div></div>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Q31 matrix multiplication (fast variant) for Cortex-M3 and Cortex-M4.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">*pSrcA</td><td>points to the first input matrix structure </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">*pSrcB</td><td>points to the second input matrix structure </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">*pDst</td><td>points to output matrix structure </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">pSrcA</td><td>points to the first input matrix structure </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">pSrcB</td><td>points to the second input matrix structure </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">pDst</td><td>points to output matrix structure </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The function returns either <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.</dd></dl>
-<p><b>Scaling and Overflow Behavior:</b></p>
-<dl class="section user"><dt></dt><dd>The difference between the function <a class="el" href="group__MatrixMult.html#ga2ec612a8c2c4916477fb9bc1ab548a6e" title="Q31 matrix multiplication. ">arm_mat_mult_q31()</a> and this fast variant is that the fast variant use a 32-bit rather than a 64-bit accumulator. The result of each 1.31 x 1.31 multiplication is truncated to 2.30 format. These intermediate results are accumulated in a 32-bit register in 2.30 format. Finally, the accumulator is saturated and converted to a 1.31 result.</dd></dl>
-<dl class="section user"><dt></dt><dd>The fast version has the same overflow behavior as the standard version but provides less precision since it discards the low 32 bits of each multiplication result. In order to avoid overflows completely the input signals must be scaled down. Scale down one of the input matrices by log2(numColsA) bits to avoid overflows, as a total of numColsA additions are computed internally for each output element.</dd></dl>
-<dl class="section user"><dt></dt><dd>See <code><a class="el" href="group__MatrixMult.html#ga2ec612a8c2c4916477fb9bc1ab548a6e" title="Q31 matrix multiplication. ">arm_mat_mult_q31()</a></code> for a slower implementation of this function which uses 64-bit accumulation to provide higher precision. </dd></dl>
-
-<p>References <a class="el" href="arm__math_8h.html#a0162015f6d3458e2934a265481460ec4">__SMMLA()</a>, <a class="el" href="arm__math_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6a7071b92f1f6bc3c5c312a237ea91105b">ARM_MATH_SIZE_MISMATCH</a>, <a class="el" href="arm__math_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6a9f8b2a10bd827fb4600e77d455902eb0">ARM_MATH_SUCCESS</a>, <a class="el" href="structarm__matrix__instance__q31.html#abd161da7614eda927157f18b698074b1">arm_matrix_instance_q31::numCols</a>, <a class="el" href="structarm__matrix__instance__q31.html#a63bacac158a821c8cfc06088d251598c">arm_matrix_instance_q31::numRows</a>, <a class="el" href="structarm__matrix__instance__q31.html#a09a64267c0579fef086efc9059741e56">arm_matrix_instance_q31::pData</a>, and <a class="el" href="arm__dotproduct__example__f32_8c.html#a88ccb294236ab22b00310c47164c53c3">status</a>.</p>
+<dl class="section return"><dt>Returns</dt><dd>execution status<ul>
+<li><a class="el" href="arm__math_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6a9f8b2a10bd827fb4600e77d455902eb0">ARM_MATH_SUCCESS</a> : Operation successful</li>
+<li><a class="el" href="arm__math_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6a7071b92f1f6bc3c5c312a237ea91105b">ARM_MATH_SIZE_MISMATCH</a> : Matrix size check failed</li>
+</ul>
+</dd></dl>
+<dl class="section user"><dt>Scaling and Overflow Behavior</dt><dd>The difference between the function <a class="el" href="group__MatrixMult.html#ga2ec612a8c2c4916477fb9bc1ab548a6e">arm_mat_mult_q31()</a> and this fast variant is that the fast variant use a 32-bit rather than a 64-bit accumulator. The result of each 1.31 x 1.31 multiplication is truncated to 2.30 format. These intermediate results are accumulated in a 32-bit register in 2.30 format. Finally, the accumulator is saturated and converted to a 1.31 result. </dd></dl>
+<dl class="section user"><dt></dt><dd>The fast version has the same overflow behavior as the standard version but provides less precision since it discards the low 32 bits of each multiplication result. In order to avoid overflows completely the input signals must be scaled down. Scale down one of the input matrices by log2(numColsA) bits to avoid overflows, as a total of numColsA additions are computed internally for each output element. </dd></dl>
+<dl class="section remark"><dt>Remarks</dt><dd>Refer to <a class="el" href="group__MatrixMult.html#ga2ec612a8c2c4916477fb9bc1ab548a6e">arm_mat_mult_q31()</a> for a slower implementation of this function which uses 64-bit accumulation to provide higher precision. </dd></dl>
 
 </div>
 </div>
@@ -323,19 +331,20 @@ Multiplication of two 3 x 3 matrices</div></div>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">*pSrcA</td><td>points to the first input matrix structure </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">*pSrcB</td><td>points to the second input matrix structure </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">*pDst</td><td>points to output matrix structure </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">*pState</td><td>points to the array for storing intermediate results (Unused) </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">pSrcA</td><td>points to the first input matrix structure </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">pSrcB</td><td>points to the second input matrix structure </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">pDst</td><td>points to output matrix structure </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">pState</td><td>points to the array for storing intermediate results (Unused) </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The function returns either <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.</dd></dl>
-<p><b>Scaling and Overflow Behavior:</b></p>
-<dl class="section user"><dt></dt><dd>The function is implemented using a 64-bit internal accumulator. The inputs to the multiplications are in 1.15 format and multiplications yield a 2.30 result. The 2.30 intermediate results are accumulated in a 64-bit accumulator in 34.30 format. This approach provides 33 guard bits and there is no risk of overflow. The 34.30 result is then truncated to 34.15 format by discarding the low 15 bits and then saturated to 1.15 format.</dd></dl>
-<dl class="section user"><dt></dt><dd>Refer to <code><a class="el" href="group__MatrixMult.html#ga08f37d93a5bfef0c5000dc5e0a411f93" title="Q15 matrix multiplication (fast variant) for Cortex-M3 and Cortex-M4. ">arm_mat_mult_fast_q15()</a></code> for a faster but less precise version of this function for Cortex-M3 and Cortex-M4. </dd></dl>
-
-<p>References <a class="el" href="arm__math_8h.html#a9de2e0a5785be82866bcb96012282248">__SIMD32</a>, <a class="el" href="arm__math_8h.html#a7aed02041f489a4f65dbd7093073d94e">__SMLALD()</a>, <a class="el" href="arm__math_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6a7071b92f1f6bc3c5c312a237ea91105b">ARM_MATH_SIZE_MISMATCH</a>, <a class="el" href="arm__math_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6a9f8b2a10bd827fb4600e77d455902eb0">ARM_MATH_SUCCESS</a>, <a class="el" href="structarm__matrix__instance__q15.html#acbbce67ba058d8e1c867c71d57288c97">arm_matrix_instance_q15::numCols</a>, <a class="el" href="structarm__matrix__instance__q15.html#a9bac6ed54be287c4d4f01a1a28be65f5">arm_matrix_instance_q15::numRows</a>, <a class="el" href="structarm__matrix__instance__q15.html#a6da33a5553e634787d0f515cf8d724af">arm_matrix_instance_q15::pData</a>, and <a class="el" href="arm__dotproduct__example__f32_8c.html#a88ccb294236ab22b00310c47164c53c3">status</a>.</p>
+<dl class="section return"><dt>Returns</dt><dd>execution status<ul>
+<li><a class="el" href="arm__math_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6a9f8b2a10bd827fb4600e77d455902eb0">ARM_MATH_SUCCESS</a> : Operation successful</li>
+<li><a class="el" href="arm__math_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6a7071b92f1f6bc3c5c312a237ea91105b">ARM_MATH_SIZE_MISMATCH</a> : Matrix size check failed</li>
+</ul>
+</dd></dl>
+<dl class="section user"><dt>Scaling and Overflow Behavior</dt><dd>The function is implemented using an internal 64-bit accumulator. The inputs to the multiplications are in 1.15 format and multiplications yield a 2.30 result. The 2.30 intermediate results are accumulated in a 64-bit accumulator in 34.30 format. This approach provides 33 guard bits and there is no risk of overflow. The 34.30 result is then truncated to 34.15 format by discarding the low 15 bits and then saturated to 1.15 format. </dd></dl>
+<dl class="section user"><dt></dt><dd>Refer to <a class="el" href="group__MatrixMult.html#ga08f37d93a5bfef0c5000dc5e0a411f93">arm_mat_mult_fast_q15()</a> for a faster but less precise version of this function. </dd></dl>
 
 </div>
 </div>
@@ -370,18 +379,19 @@ Multiplication of two 3 x 3 matrices</div></div>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">*pSrcA</td><td>points to the first input matrix structure </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">*pSrcB</td><td>points to the second input matrix structure </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">*pDst</td><td>points to output matrix structure </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">pSrcA</td><td>points to the first input matrix structure </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">pSrcB</td><td>points to the second input matrix structure </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">pDst</td><td>points to output matrix structure </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The function returns either <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.</dd></dl>
-<p><b>Scaling and Overflow Behavior:</b></p>
-<dl class="section user"><dt></dt><dd>The function is implemented using an internal 64-bit accumulator. The accumulator has a 2.62 format and maintains full precision of the intermediate multiplication results but provides only a single guard bit. There is no saturation on intermediate additions. Thus, if the accumulator overflows it wraps around and distorts the result. The input signals should be scaled down to avoid intermediate overflows. The input is thus scaled down by log2(numColsA) bits to avoid overflows, as a total of numColsA additions are performed internally. The 2.62 accumulator is right shifted by 31 bits and saturated to 1.31 format to yield the final result.</dd></dl>
-<dl class="section user"><dt></dt><dd>See <code><a class="el" href="group__MatrixMult.html#ga2785e8c1b785348b0c439b56aaf585a3" title="Q31 matrix multiplication (fast variant) for Cortex-M3 and Cortex-M4. ">arm_mat_mult_fast_q31()</a></code> for a faster but less precise implementation of this function for Cortex-M3 and Cortex-M4. </dd></dl>
-
-<p>References <a class="el" href="arm__math_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6a7071b92f1f6bc3c5c312a237ea91105b">ARM_MATH_SIZE_MISMATCH</a>, <a class="el" href="arm__math_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6a9f8b2a10bd827fb4600e77d455902eb0">ARM_MATH_SUCCESS</a>, <a class="el" href="arm__math_8h.html#a9a94b78de0f083bd8fadf3c3abe40431">clip_q63_to_q31()</a>, <a class="el" href="structarm__matrix__instance__q31.html#abd161da7614eda927157f18b698074b1">arm_matrix_instance_q31::numCols</a>, <a class="el" href="structarm__matrix__instance__q31.html#a63bacac158a821c8cfc06088d251598c">arm_matrix_instance_q31::numRows</a>, <a class="el" href="structarm__matrix__instance__q31.html#a09a64267c0579fef086efc9059741e56">arm_matrix_instance_q31::pData</a>, and <a class="el" href="arm__dotproduct__example__f32_8c.html#a88ccb294236ab22b00310c47164c53c3">status</a>.</p>
+<dl class="section return"><dt>Returns</dt><dd>execution status<ul>
+<li><a class="el" href="arm__math_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6a9f8b2a10bd827fb4600e77d455902eb0">ARM_MATH_SUCCESS</a> : Operation successful</li>
+<li><a class="el" href="arm__math_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6a7071b92f1f6bc3c5c312a237ea91105b">ARM_MATH_SIZE_MISMATCH</a> : Matrix size check failed</li>
+</ul>
+</dd></dl>
+<dl class="section user"><dt>Scaling and Overflow Behavior</dt><dd>The function is implemented using an internal 64-bit accumulator. The accumulator has a 2.62 format and maintains full precision of the intermediate multiplication results but provides only a single guard bit. There is no saturation on intermediate additions. Thus, if the accumulator overflows it wraps around and distorts the result. The input signals should be scaled down to avoid intermediate overflows. The input is thus scaled down by log2(numColsA) bits to avoid overflows, as a total of numColsA additions are performed internally. The 2.62 accumulator is right shifted by 31 bits and saturated to 1.31 format to yield the final result. </dd></dl>
+<dl class="section remark"><dt>Remarks</dt><dd>Refer to <a class="el" href="group__MatrixMult.html#ga2785e8c1b785348b0c439b56aaf585a3">arm_mat_mult_fast_q31()</a> for a faster but less precise implementation of this function. </dd></dl>
 
 </div>
 </div>
@@ -390,7 +400,7 @@ Multiplication of two 3 x 3 matrices</div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Aug 1 2018 17:12:22 for CMSIS-DSP by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Fri Mar 15 2019 16:30:43 for CMSIS-DSP by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

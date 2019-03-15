@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Pack
-   &#160;<span id="projectnumber">Version 1.5.0</span>
+   &#160;<span id="projectnumber">Version 1.6.0</span>
    </div>
    <div id="projectbrief">Delivery Mechanism for Software Packs</div>
   </td>
@@ -1001,7 +1001,9 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <tr>
 <td>Dtz </td><td>Specifies whether an Armv8-M based device implements TrustZone. Use predefined values as listed in the table <a class="el" href="pdsc_family_pg.html#DtzEnum">Device TZ</a>. </td><td>DtzEnum </td><td>required for ARMv8-M based devices  </td></tr>
 <tr>
-<td>Ddsp </td><td>Specifies whether a device supports the DSP instructions set. Use predefined values as listed in the table <a class="el" href="pdsc_family_pg.html#DdspEnum">Device DSP</a>. </td><td>DdspEnum </td><td>required  </td></tr>
+<td>Ddsp </td><td>Specifies whether a device supports the DSP instructions set. Use predefined values as listed in the table <a class="el" href="pdsc_family_pg.html#DdspEnum">Device DSP</a>. </td><td><a class="el" href="pdsc_family_pg.html#DdspEnum">DdspEnum</a> DdspEnum </td><td>required  </td></tr>
+<tr>
+<td>Dmve </td><td>Specifies whether a device supports the M-Profile Vector instruction set extension. Use predefined values as listed in the table <a class="el" href="pdsc_family_pg.html#DmveEnum">Device MVE</a>. </td><td><a class="el" href="pdsc_family_pg.html#DmveEnum">DmveEnum</a> DmveEnum </td><td>required for ARMv8.1-M based devices  </td></tr>
 <tr>
 <td>Dendian </td><td>Specifies the endianess of the processor. Use predefined values as listed in the table <a class="el" href="pdsc_family_pg.html#DendianEnum">Endinaness</a>. </td><td>DendianEnum </td><td>required  </td></tr>
 <tr>
@@ -1035,6 +1037,8 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <td class="XML-Token">Amiccom:147 </td><td>Amiccom </td><td><a href="http://www.amiccom.com.tw">http://www.amiccom.com.tw</a>  </td></tr>
 <tr>
 <td class="XML-Token">Analog Devices:1 </td><td>Analog Devices </td><td><a href="http://www.analog.com">http://www.analog.com</a>  </td></tr>
+<tr>
+<td class="XML-Token">APEXMIC:153 </td><td>Apex Microeletronics Co., Ltd. </td><td><a href="http://www.apexmic.com">http://www.apexmic.com</a>  </td></tr>
 <tr>
 <td class="XML-Token">ARM:82 </td><td>ARM Ltd. </td><td><a href="http://www.arm.com">http://www.arm.com</a>  </td></tr>
 <tr>
@@ -1126,7 +1130,11 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <tr>
 <td class="XML-Token">Triad Semiconductor:104 </td><td>Triad Semiconductor </td><td><a href="http://www.triadsemi.com">http://www.triadsemi.com</a>  </td></tr>
 <tr>
+<td class="XML-Token">Unisoc:152 </td><td>Unisoc Communications, Inc. </td><td><a href="http://www.unisoc.com">http://www.unisoc.com</a>  </td></tr>
+<tr>
 <td class="XML-Token">Vorago:137 </td><td>Vorago Technologies </td><td><a href="http://www.voragotech.com">http://www.voragotech.com</a>  </td></tr>
+<tr>
+<td class="XML-Token">Weltrend:148 </td><td>Weltrend </td><td><a href="http://www.weltrend.com.tw">http://www.weltrend.com.tw</a>  </td></tr>
 <tr>
 <td class="XML-Token">WIZnet:122 </td><td>WIZnet </td><td><a href="http://www.wiznet.co.kr">http://www.wiznet.co.kr</a>  </td></tr>
 <tr>
@@ -1181,6 +1189,8 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <td class="XML-Token">Cortex-M23 </td><td><a href="http://developer.arm.com/products/processors/cortex-m/cortex-m23" target="_blank">Arm Cortex-M23</a> processor based device  </td></tr>
 <tr>
 <td class="XML-Token">Cortex-M33 </td><td><a href="http://developer.arm.com/products/processors/cortex-m/cortex-m33" target="_blank">Arm Cortex-M33</a> processor based device  </td></tr>
+<tr>
+<td class="XML-Token">Cortex-M35P </td><td><a href="http://developer.arm.com/products/processors/cortex-m/cortex-m35p" target="_blank">Arm Cortex-M35P</a> processor based device  </td></tr>
 <tr>
 <td class="XML-Token">SC000 </td><td>SecurCore <a href="http://developer.arm.com/products/processors/cortex-m/sc000-processor" target="_blank">SC000</a> based on technology of Cortex-M0.  </td></tr>
 <tr>
@@ -1314,6 +1324,25 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <td class="XML-Token">DSP </td><td>DSP instructions supported  </td></tr>
 <tr>
 <td class="XML-Token">NO_DSP </td><td>No DSP instructions supported  </td></tr>
+</table>
+<p>&#160;</p>
+<p><a class="anchor" id="DmveEnum"></a><b>Table: Device implements M-Profile Vector Extension Instructions</b></p>
+<p>The table shows predefined values that identify whether a CPU implements MVE instructions (MVE). The values can be used in the elements:</p>
+<ul>
+<li><a class="el" href="pdsc_conditions_pg.html#element_accept">/package/conditions/condition/accept</a></li>
+<li><a class="el" href="pdsc_conditions_pg.html#element_require">/package/conditions/condition/require</a></li>
+<li><a class="el" href="pdsc_conditions_pg.html#element_deny">/package/conditions/condition/deny</a></li>
+<li><a class="el" href="pdsc_family_pg.html#element_processor">/package/devices/family/.../processor</a></li>
+</ul>
+<table  class="cmtable" summary="Enumeration: DmveEnum">
+<tr>
+<th>Dmve= </th><th>Description  </th></tr>
+<tr>
+<td class="XML-Token">NO_MVE </td><td>No MVE instructions supported  </td></tr>
+<tr>
+<td class="XML-Token">MVE </td><td>Integer MVE instructions supported  </td></tr>
+<tr>
+<td class="XML-Token">FP_MVE </td><td>Floating point and Integer MVE instructions supported  </td></tr>
 </table>
 <p>&#160;</p>
 <p><a class="anchor" id="DendianEnum"></a><b>Table: Endianness</b></p>
@@ -2211,7 +2240,9 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <tr>
 <th>Attributes </th><th>Description </th><th>Type </th><th>Use  </th></tr>
 <tr>
-<td>Dvariant </td><td>Name of the device variant. Only alphabetical characters, decimal digits, '-' and '_' are allowed </td><td>RestrictedStringDname </td><td>required  </td></tr>
+<td>Dvariant </td><td><b>May get replaced by 'Dname' in the future</b>. Name of the device on the variant level. This effectively overwrites the device name specified on the device level. Once a device section contains a variant section, only the variant elements describe a 'selectable' device which can be selected in the tools. The Dname of the device level effectively becomes a group name like the Dfamily and DsubFamily attributes. Only alphabetical characters, decimal digits, '-' and '_' are allowed </td><td>RestrictedStringDname </td><td>required  </td></tr>
+<tr>
+<td>Dname </td><td><b>future</b>. Name of the device on the variant level. Only alphabetical characters, decimal digits, '-' and '_' are allowed </td><td>RestrictedStringDname </td><td>required  </td></tr>
 <tr>
 <th>Child Elements </th><th>Description </th><th>Type </th><th>Occurrence  </th></tr>
 <tr>
@@ -2251,7 +2282,7 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="packFormat.html">Pack Description (*.pdsc) Format</a></li><li class="navelem"><a class="el" href="pdsc_devices_pg.html">/package/devices element</a></li>
-    <li class="footer">Generated on Wed Aug 1 2018 17:12:42 for CMSIS-Pack by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Fri Mar 15 2019 16:31:12 for CMSIS-Pack by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

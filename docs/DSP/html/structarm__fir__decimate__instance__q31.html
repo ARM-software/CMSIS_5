@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-DSP
-   &#160;<span id="projectnumber">Version 1.5.2</span>
+   &#160;<span id="projectnumber">Version 1.5.5</span>
    </div>
    <div id="projectbrief">CMSIS DSP Software Library</div>
   </td>
@@ -129,8 +129,8 @@ Data Fields</h2></td></tr>
 <tr class="separator:ad3d6936c36303b30dd38f1eddf248ae5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a37915d42b0dc5e3057ebe83110798482"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structarm__fir__decimate__instance__q31.html#a37915d42b0dc5e3057ebe83110798482">numTaps</a></td></tr>
 <tr class="separator:a37915d42b0dc5e3057ebe83110798482"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a030d0391538c2481c5b348fd09a952ff"><td class="memItemLeft" align="right" valign="top"><a class="el" href="arm__math_8h.html#adc89a3547f5324b7b3b95adec3806bc0">q31_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structarm__fir__decimate__instance__q31.html#a030d0391538c2481c5b348fd09a952ff">pCoeffs</a></td></tr>
-<tr class="separator:a030d0391538c2481c5b348fd09a952ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a530ab6a5d1a39367b281206cd7201dae"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="arm__math_8h.html#adc89a3547f5324b7b3b95adec3806bc0">q31_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structarm__fir__decimate__instance__q31.html#a530ab6a5d1a39367b281206cd7201dae">pCoeffs</a></td></tr>
+<tr class="separator:a530ab6a5d1a39367b281206cd7201dae"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0ef0ef9e265f7ab873cfc6daa7593fdb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="arm__math_8h.html#adc89a3547f5324b7b3b95adec3806bc0">q31_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structarm__fir__decimate__instance__q31.html#a0ef0ef9e265f7ab873cfc6daa7593fdb">pState</a></td></tr>
 <tr class="separator:a0ef0ef9e265f7ab873cfc6daa7593fdb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -146,8 +146,6 @@ Data Fields</h2></td></tr>
 </div><div class="memdoc">
 <p>decimation factor. </p>
 
-<p>Referenced by <a class="el" href="group__FIR__decimate.html#ga3c18cc3d0548a410c577f1bead9582b7">arm_fir_decimate_fast_q31()</a>, <a class="el" href="group__FIR__decimate.html#ga9ed47c4e0f58affa935d84e0508a7f39">arm_fir_decimate_init_q31()</a>, and <a class="el" href="group__FIR__decimate.html#gaef8e86add28f15fdc5ecc484e9dd7a4e">arm_fir_decimate_q31()</a>.</p>
-
 </div>
 </div>
 <a class="anchor" id="a37915d42b0dc5e3057ebe83110798482"></a>
@@ -161,22 +159,18 @@ Data Fields</h2></td></tr>
 </div><div class="memdoc">
 <p>number of coefficients in the filter. </p>
 
-<p>Referenced by <a class="el" href="group__FIR__decimate.html#ga3c18cc3d0548a410c577f1bead9582b7">arm_fir_decimate_fast_q31()</a>, <a class="el" href="group__FIR__decimate.html#ga9ed47c4e0f58affa935d84e0508a7f39">arm_fir_decimate_init_q31()</a>, and <a class="el" href="group__FIR__decimate.html#gaef8e86add28f15fdc5ecc484e9dd7a4e">arm_fir_decimate_q31()</a>.</p>
-
 </div>
 </div>
-<a class="anchor" id="a030d0391538c2481c5b348fd09a952ff"></a>
+<a class="anchor" id="a530ab6a5d1a39367b281206cd7201dae"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="arm__math_8h.html#adc89a3547f5324b7b3b95adec3806bc0">q31_t</a>* arm_fir_decimate_instance_q31::pCoeffs</td>
+          <td class="memname">const <a class="el" href="arm__math_8h.html#adc89a3547f5324b7b3b95adec3806bc0">q31_t</a>* arm_fir_decimate_instance_q31::pCoeffs</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <p>points to the coefficient array. The array is of length numTaps. </p>
-
-<p>Referenced by <a class="el" href="group__FIR__decimate.html#ga3c18cc3d0548a410c577f1bead9582b7">arm_fir_decimate_fast_q31()</a>, <a class="el" href="group__FIR__decimate.html#ga9ed47c4e0f58affa935d84e0508a7f39">arm_fir_decimate_init_q31()</a>, and <a class="el" href="group__FIR__decimate.html#gaef8e86add28f15fdc5ecc484e9dd7a4e">arm_fir_decimate_q31()</a>.</p>
 
 </div>
 </div>
@@ -191,8 +185,6 @@ Data Fields</h2></td></tr>
 </div><div class="memdoc">
 <p>points to the state variable array. The array is of length numTaps+blockSize-1. </p>
 
-<p>Referenced by <a class="el" href="group__FIR__decimate.html#ga3c18cc3d0548a410c577f1bead9582b7">arm_fir_decimate_fast_q31()</a>, <a class="el" href="group__FIR__decimate.html#ga9ed47c4e0f58affa935d84e0508a7f39">arm_fir_decimate_init_q31()</a>, and <a class="el" href="group__FIR__decimate.html#gaef8e86add28f15fdc5ecc484e9dd7a4e">arm_fir_decimate_q31()</a>.</p>
-
 </div>
 </div>
 </div><!-- contents -->
@@ -201,7 +193,7 @@ Data Fields</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="structarm__fir__decimate__instance__q31.html">arm_fir_decimate_instance_q31</a></li>
-    <li class="footer">Generated on Wed Aug 1 2018 17:12:22 for CMSIS-DSP by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Fri Mar 15 2019 16:30:44 for CMSIS-DSP by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

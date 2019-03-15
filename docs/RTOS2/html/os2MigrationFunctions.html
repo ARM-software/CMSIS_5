@@ -179,7 +179,7 @@ Kernel Information and Control</h1>
 <li>Return type changed to <a class="el" href="group__CMSIS__RTOS__Definitions.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813e">osStatus_t</a>.</li>
 </ul>
 </div><div class="mod"> </div><hr/>
-<div class="new"> <code>uint32_t <a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#ga948609ee930d9b38336b9e1c2a4dfe12" title="Lock the RTOS Kernel scheduler. ">osKernelLock</a> (void)</code> <br/>
+<div class="new"> <code>int32_t <a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#ga948609ee930d9b38336b9e1c2a4dfe12" title="Lock the RTOS Kernel scheduler. ">osKernelLock</a> (void)</code> <br/>
  <em>none</em> <br/>
  <br/>
  Lock the RTOS Kernel scheduler. <br/>
@@ -360,7 +360,7 @@ Event Flags</h1>
  <br/>
  Clear the specified Event Flags. <br/>
  New function. </div><hr/>
-<div class="new"> <code>const char *<a class="el" href="group__CMSIS__RTOS__EventFlags.html#ga59f4ddf0ee8c395b1672bb978d1cfc88" title="Get name of an Event Flags object. ">osEventFlagsGetName</a> ((osEventFlagsId_t ef_id)</code> <br/>
+<div class="new"> <code>const char *<a class="el" href="group__CMSIS__RTOS__EventFlags.html#ga59f4ddf0ee8c395b1672bb978d1cfc88" title="Get name of an Event Flags object. ">osEventFlagsGetName</a> (osEventFlagsId_t ef_id)</code> <br/>
  <em>none</em> <br/>
  <br/>
  Get name of an Event Flags object. <br/>
@@ -489,7 +489,7 @@ Mutexes</h1>
 <li>The parameter type changed to <a class="el" href="group__CMSIS__RTOS__MutexMgmt.html#ga313801836c62deb23055efb55a420e42">osMutexId_t</a>.</li>
 </ul>
 </div><div class="mod"> </div><hr/>
-<div class="new"> <code>const char *<a class="el" href="group__CMSIS__RTOS__MutexMgmt.html#ga00b5e58cd247a412d1afd18732d8b752" title="Get name of a Mutex object. ">osMutexGetName</a> ((osMutexId_t mutex_id)</code> <br/>
+<div class="new"> <code>const char *<a class="el" href="group__CMSIS__RTOS__MutexMgmt.html#ga00b5e58cd247a412d1afd18732d8b752" title="Get name of a Mutex object. ">osMutexGetName</a> (osMutexId_t mutex_id)</code> <br/>
  <em>none</em> <br/>
  <br/>
  Get name of a Mutex object. <br/>
@@ -543,7 +543,7 @@ Semaphores</h1>
  <br/>
  Get current Semaphore token count. <br/>
  New function. </div><hr/>
-<div class="new"> <code>const char *<a class="el" href="group__CMSIS__RTOS__SemaphoreMgmt.html#ga9586952051f00285f1482dbe6695bbc4" title="Get name of a Semaphore object. ">osSemaphoreGetName</a> ((osSemaphoreId_t semaphore_id)</code> <br/>
+<div class="new"> <code>const char *<a class="el" href="group__CMSIS__RTOS__SemaphoreMgmt.html#ga9586952051f00285f1482dbe6695bbc4" title="Get name of a Semaphore object. ">osSemaphoreGetName</a> (osSemaphoreId_t semaphore_id)</code> <br/>
  <em>none</em> <br/>
  <br/>
  Get name of a Semaphore object. <br/>
@@ -615,7 +615,7 @@ Memory Pool</h1>
  <br/>
  Get number of memory blocks used in a Memory Pool. <br/>
  New function. </div><hr/>
-<div class="new"> <code>const char *<a class="el" href="group__CMSIS__RTOS__PoolMgmt.html#gab414a1e138205a55820acfa277c8f386" title="Get name of a Memory Pool object. ">osMemoryPoolGetName</a> ((osMemoryPoolId_t mp_id)</code> <br/>
+<div class="new"> <code>const char *<a class="el" href="group__CMSIS__RTOS__PoolMgmt.html#gab414a1e138205a55820acfa277c8f386" title="Get name of a Memory Pool object. ">osMemoryPoolGetName</a> (osMemoryPoolId_t mp_id)</code> <br/>
  <em>none</em> <br/>
  <br/>
  Get name of a Memory Pool object. <br/>
@@ -670,7 +670,7 @@ Message Queue</h1>
  <br/>
  Get maximum message size in a Memory Pool. <br/>
  New function. </div><hr/>
-<div class="new"> <code>const char *<a class="el" href="group__CMSIS__RTOS__Message.html#gae7cf7bf2b97a5ae481fb60fcce99247a" title="Get name of a Message Queue object. ">osMessageQueueGetName</a> ((osMessageQueueId_t mq_id)</code> <br/>
+<div class="new"> <code>const char *<a class="el" href="group__CMSIS__RTOS__Message.html#gae7cf7bf2b97a5ae481fb60fcce99247a" title="Get name of a Message Queue object. ">osMessageQueueGetName</a> (osMessageQueueId_t mq_id)</code> <br/>
  <em>none</em> <br/>
  <br/>
  Get name of a Message Queue object. <br/>
@@ -754,7 +754,7 @@ Deprecated. </div> </div></div><!-- contents -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="index.html">index</a></li><li class="navelem"><a class="el" href="os2Migration.html">Migration from API v1 to API v2</a></li>
-    <li class="footer">Generated on Wed Aug 1 2018 17:12:45 for CMSIS-RTOS2 by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Fri Mar 15 2019 16:31:17 for CMSIS-RTOS2 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

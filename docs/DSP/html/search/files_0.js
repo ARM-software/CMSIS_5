@@ -36,6 +36,7 @@ var searchData=
   ['arm_5fbiquad_5fcascade_5fstereo_5fdf2t_5ff32_2ec',['arm_biquad_cascade_stereo_df2T_f32.c',['../arm__biquad__cascade__stereo__df2T__f32_8c.html',1,'']]],
   ['arm_5fbiquad_5fcascade_5fstereo_5fdf2t_5finit_5ff32_2ec',['arm_biquad_cascade_stereo_df2T_init_f32.c',['../arm__biquad__cascade__stereo__df2T__init__f32_8c.html',1,'']]],
   ['arm_5fbitreversal_2ec',['arm_bitreversal.c',['../arm__bitreversal_8c.html',1,'']]],
+  ['arm_5fbitreversal2_2ec',['arm_bitreversal2.c',['../arm__bitreversal2_8c.html',1,'']]],
   ['arm_5fcfft_5ff32_2ec',['arm_cfft_f32.c',['../arm__cfft__f32_8c.html',1,'']]],
   ['arm_5fcfft_5fq15_2ec',['arm_cfft_q15.c',['../arm__cfft__q15_8c.html',1,'']]],
   ['arm_5fcfft_5fq31_2ec',['arm_cfft_q31.c',['../arm__cfft__q31_8c.html',1,'']]],
@@ -301,16 +302,16 @@ var searchData=
   ['arm_5fvar_5fq15_2ec',['arm_var_q15.c',['../arm__var__q15_8c.html',1,'']]],
   ['arm_5fvar_5fq31_2ec',['arm_var_q31.c',['../arm__var__q31_8c.html',1,'']]],
   ['arm_5fvariance_5fexample_5ff32_2ec',['arm_variance_example_f32.c',['../arm__variance__example__f32_8c.html',1,'']]],
-  ['math_5fhelper_2ec',['math_helper.c',['../arm__linear__interp__example_2math__helper_8c.html',1,'']]],
   ['math_5fhelper_2ec',['math_helper.c',['../arm__signal__converge__example_2math__helper_8c.html',1,'']]],
   ['math_5fhelper_2ec',['math_helper.c',['../arm__fir__example_2math__helper_8c.html',1,'']]],
   ['math_5fhelper_2ec',['math_helper.c',['../arm__convolution__example_2math__helper_8c.html',1,'']]],
   ['math_5fhelper_2ec',['math_helper.c',['../arm__matrix__example_2math__helper_8c.html',1,'']]],
+  ['math_5fhelper_2ec',['math_helper.c',['../arm__linear__interp__example_2math__helper_8c.html',1,'']]],
   ['math_5fhelper_2ec',['math_helper.c',['../arm__graphic__equalizer__example_2math__helper_8c.html',1,'']]],
   ['math_5fhelper_2eh',['math_helper.h',['../arm__graphic__equalizer__example_2math__helper_8h.html',1,'']]],
-  ['math_5fhelper_2eh',['math_helper.h',['../arm__fir__example_2math__helper_8h.html',1,'']]],
-  ['math_5fhelper_2eh',['math_helper.h',['../arm__linear__interp__example_2math__helper_8h.html',1,'']]],
   ['math_5fhelper_2eh',['math_helper.h',['../arm__convolution__example_2math__helper_8h.html',1,'']]],
+  ['math_5fhelper_2eh',['math_helper.h',['../arm__signal__converge__example_2math__helper_8h.html',1,'']]],
   ['math_5fhelper_2eh',['math_helper.h',['../arm__matrix__example_2math__helper_8h.html',1,'']]],
-  ['math_5fhelper_2eh',['math_helper.h',['../arm__signal__converge__example_2math__helper_8h.html',1,'']]]
+  ['math_5fhelper_2eh',['math_helper.h',['../arm__fir__example_2math__helper_8h.html',1,'']]],
+  ['math_5fhelper_2eh',['math_helper.h',['../arm__linear__interp__example_2math__helper_8h.html',1,'']]]
 ];

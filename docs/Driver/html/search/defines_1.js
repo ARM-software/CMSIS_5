@@ -25,6 +25,7 @@ var searchData=
   ['arm_5fdriver_5fflash_5f',['ARM_Driver_Flash_',['../Driver__Flash_8h.html#afda179843b93526222e15d61f226ac8f',1,'Driver_Flash.h']]],
   ['arm_5fdriver_5fstorage_5f',['ARM_Driver_Storage_',['../Driver__Storage_8h.html#af4ce245f055ef69edd1306ef8fde37cf',1,'Driver_Storage.h']]],
   ['arm_5fdriver_5fversion_5fmajor_5fminor',['ARM_DRIVER_VERSION_MAJOR_MINOR',['../Driver__Common_8h.html#a43c7ca1eb0786d818624246c09932a74',1,'Driver_Common.h']]],
+  ['arm_5fdriver_5fwifi_5f',['ARM_Driver_WiFi_',['../Driver__WiFi_8h.html#a035999f5a44af74ed7c6576feacaa2ce',1,'Driver_WiFi.h']]],
   ['arm_5feth_5fduplex_5ffull',['ARM_ETH_DUPLEX_FULL',['../Driver__ETH_8h.html#a7848c83cd1fd6b2645c17919c2990354',1,'Driver_ETH.h']]],
   ['arm_5feth_5fduplex_5fhalf',['ARM_ETH_DUPLEX_HALF',['../Driver__ETH_8h.html#acb15afc2bfe61c56049b7279d6eae8fe',1,'Driver_ETH.h']]],
   ['arm_5feth_5fmac_5fapi_5fversion',['ARM_ETH_MAC_API_VERSION',['../Driver__ETH__MAC_8h.html#a89ade7fd7f91b1b6e21883a8f823a8cc',1,'Driver_ETH_MAC.h']]],
@@ -210,5 +211,6 @@ var searchData=
   ['arm_5fusbh_5fpacket_5fsplit_5fpos',['ARM_USBH_PACKET_SPLIT_Pos',['../Driver__USBH_8h.html#a41e5706fcf6e028c5c86751b37a27dd6',1,'Driver_USBH.h']]],
   ['arm_5fusbh_5fpacket_5ftoken_5fmsk',['ARM_USBH_PACKET_TOKEN_Msk',['../Driver__USBH_8h.html#a366b3541934b74772eba60e6332923ad',1,'Driver_USBH.h']]],
   ['arm_5fusbh_5fpacket_5ftoken_5fpos',['ARM_USBH_PACKET_TOKEN_Pos',['../Driver__USBH_8h.html#a8139a9c76ea4a062795130196d3b6ed9',1,'Driver_USBH.h']]],
-  ['arm_5fusbh_5fsignalendpointevent_5ft',['ARM_USBH_SignalEndpointEvent_t',['../Driver__USBH_8h.html#ab66601b4c31f638479d7ab6efa515dcc',1,'Driver_USBH.h']]]
+  ['arm_5fusbh_5fsignalendpointevent_5ft',['ARM_USBH_SignalEndpointEvent_t',['../Driver__USBH_8h.html#ab66601b4c31f638479d7ab6efa515dcc',1,'Driver_USBH.h']]],
+  ['arm_5fwifi_5fapi_5fversion',['ARM_WIFI_API_VERSION',['../Driver__WiFi_8h.html#aa6a3705716b58d58fdbf72d8308f1383',1,'Driver_WiFi.h']]]
 ];

@@ -479,7 +479,7 @@ May be called from <a class="el" href="theory_of_operation.html#CMSIS_RTOS_ISR_C
 <ul>
 <li><em>osOK:</em> the memory has been freed.</li>
 <li><em>osErrorParameter:</em> parameter <em>mp_id</em> is <span class="XML-Token">NULL</span> or invalid, <em>block</em> points to invalid memory.</li>
-<li><em>osErrorResource:</em> the memory pool specified by parameter <em>mp_id</em> is in an invalid memory pool state.</li>
+<li><em>osErrorResource:</em> the memory pool is in an invalid state.</li>
 </ul>
 <dl class="section note"><dt>Note</dt><dd><b>osMemoryPoolFree</b> may perform certain checks on the <em>block</em> pointer given. But using <b>osMemoryPoolFree</b> with a pointer other than one received from <a class="el" href="group__CMSIS__RTOS__PoolMgmt.html#ga8ead54e99ccb8f112356c88f99d38fbe">osMemoryPoolAlloc</a> has <b>UNPREDICTED</b> behaviour.</dd>
 <dd>
@@ -614,7 +614,7 @@ This function may be called from <a class="el" href="theory_of_operation.html#CM
 <ul>
 <li><em>osOK:</em> the memory pool object has been deleted.</li>
 <li><em>osErrorParameter:</em> parameter <em>mp_id</em> is <span class="XML-Token">NULL</span> or invalid.</li>
-<li><em>osErrorResource:</em> the memory pool specified by parameter <em>mp_id</em> is in an invalid memory pool state.</li>
+<li><em>osErrorResource:</em> the memory pool is in an invalid state.</li>
 <li><em>osErrorISR:</em> <b>osMemoryPoolDelete</b> cannot be called from interrupt service routines.</li>
 </ul>
 <dl class="section note"><dt>Note</dt><dd>This function <b>cannot</b> be called from <a class="el" href="theory_of_operation.html#CMSIS_RTOS_ISR_Calls">Interrupt Service Routines</a>. </dd></dl>
@@ -626,7 +626,7 @@ This function may be called from <a class="el" href="theory_of_operation.html#CM
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Aug 1 2018 17:12:45 for CMSIS-RTOS2 by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Fri Mar 15 2019 16:31:18 for CMSIS-RTOS2 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

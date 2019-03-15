@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Core (Cortex-M)
-   &#160;<span id="projectnumber">Version 5.1.2</span>
+   &#160;<span id="projectnumber">Version 5.2.0</span>
    </div>
    <div id="projectbrief">CMSIS-Core support for Cortex-M processor-based devices</div>
   </td>
@@ -155,8 +155,8 @@ startup_Device.s Template File</h1>
 ; * @file     startup_&lt;Device&gt;.s
 ; * @brief    CMSIS Cortex-M ARMv7-M based Core Device Startup File for
 ; *           Device &lt;Device&gt;
-; * @version  V5.3.1
-; * @date     09. July 2018
+; * @version  V5.4.0
+; * @date     12. December 2018
 ; ******************************************************************************/
 ;/*
 ; * Copyright (c) 2009-2018 Arm Limited. All rights reserved.
@@ -233,7 +233,7 @@ __Vectors       DCD      __initial_sp                        ;     Top of Stack
                 DCD      PendSV_Handler                      ;  -2 PendSV Handler
                 DCD      SysTick_Handler                     ;  -1 SysTick Handler
 
-                ; External Interrupts
+                ; Interrupts
 ; ToDo:  Add here the vectors for the device specific external interrupts handler
                 DCD      Interrupt0_Handler                  ;   0 Interrupt 0
                 DCD      Interrupt1_Handler                  ;   1 Interrupt 1
@@ -307,6 +307,10 @@ $Handler_Name   PROC
 
 ; User setup Stack &amp; Heap
 
+                IF       :LNOT::DEF:__MICROLIB
+                IMPORT   __use_two_region_memory
+                ENDIF
+
                 EXPORT   __stack_limit
                 EXPORT   __initial_sp
                 IF       Heap_Size != 0                      ; Heap is provided
@@ -321,7 +325,7 @@ $Handler_Name   PROC
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="templates_pg.html">CMSIS-Core Device Templates</a></li>
-    <li class="footer">Generated on Wed Aug 1 2018 17:12:08 for CMSIS-Core (Cortex-M) by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Fri Mar 15 2019 16:30:24 for CMSIS-Core (Cortex-M) by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

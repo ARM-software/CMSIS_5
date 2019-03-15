@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Core (Cortex-M)
-   &#160;<span id="projectnumber">Version 5.1.2</span>
+   &#160;<span id="projectnumber">Version 5.2.0</span>
    </div>
    <div id="projectbrief">CMSIS-Core support for Cortex-M processor-based devices</div>
   </td>
@@ -132,21 +132,60 @@ $(document).ready(function(){initNavTree('globals_func_a.html','');});
 <h3><a class="anchor" id="index_a"></a>- a -</h3><ul>
 <li>ARM_MPU_ClrRegion()
 : <a class="el" href="group__mpu__functions.html#ga9dcb0afddf4ac351f33f3c7a5169c62c">Ref_MPU.txt</a>
+, <a class="el" href="group__mpu8__functions.html#ga9dcb0afddf4ac351f33f3c7a5169c62c">Ref_MPU8.txt</a>
+</li>
+<li>ARM_MPU_ClrRegion_NS()
+: <a class="el" href="group__mpu8__functions.html#gac526bc5bfcf048ce57a44c0c0cdadbe4">Ref_MPU8.txt</a>
+</li>
+<li>ARM_MPU_ClrRegionEx()
+: <a class="el" href="group__mpu8__functions.html#ga01fa1151c9ec0ba5de76f908c0999316">Ref_MPU8.txt</a>
 </li>
 <li>ARM_MPU_Disable()
 : <a class="el" href="group__mpu__functions.html#ga7cbc0a4a066ed90e85c8176228235d57">Ref_MPU.txt</a>
+, <a class="el" href="group__mpu8__functions.html#ga61814eba4652a0fdfb76bbe222086327">Ref_MPU8.txt</a>
+</li>
+<li>ARM_MPU_Disable_NS()
+: <a class="el" href="group__mpu8__functions.html#ga389f9b6049d176bc83f9964d3259b712">Ref_MPU8.txt</a>
 </li>
 <li>ARM_MPU_Enable()
 : <a class="el" href="group__mpu__functions.html#ga31406efd492ec9a091a70ffa2d8a42fb">Ref_MPU.txt</a>
+, <a class="el" href="group__mpu8__functions.html#ga5a3f40314553baccdeea551f86d9a997">Ref_MPU8.txt</a>
+</li>
+<li>ARM_MPU_Enable_NS()
+: <a class="el" href="group__mpu8__functions.html#ga5866c75d6deb9148a1e9af6337eec50a">Ref_MPU8.txt</a>
 </li>
 <li>ARM_MPU_Load()
 : <a class="el" href="group__mpu__functions.html#gafa27b26d5847fa8e465584e376b6078a">Ref_MPU.txt</a>
+, <a class="el" href="group__mpu8__functions.html#gaca76614e3091c7324aa9d60e634621bf">Ref_MPU8.txt</a>
+</li>
+<li>ARM_MPU_Load_NS()
+: <a class="el" href="group__mpu8__functions.html#ga7f8c6e09be98067d613e4df1832c543d">Ref_MPU8.txt</a>
+</li>
+<li>ARM_MPU_LoadEx()
+: <a class="el" href="group__mpu8__functions.html#gab6094419f2abd678f1f3b121cd115049">Ref_MPU8.txt</a>
+</li>
+<li>ARM_MPU_OrderedMemcpy()
+: <a class="el" href="group__mpu8__functions.html#gac1a949403bf84eecaf407003fb553ae7">Ref_MPU8.txt</a>
+</li>
+<li>ARM_MPU_SetMemAttr()
+: <a class="el" href="group__mpu8__functions.html#gab5b3c0a53d19c09a5550f1d9071ae65c">Ref_MPU8.txt</a>
+</li>
+<li>ARM_MPU_SetMemAttr_NS()
+: <a class="el" href="group__mpu8__functions.html#ga5100a150a755902af2455a455a329ef9">Ref_MPU8.txt</a>
+</li>
+<li>ARM_MPU_SetMemAttrEx()
+: <a class="el" href="group__mpu8__functions.html#ga1799413f08a157d636a1491371c15ce2">Ref_MPU8.txt</a>
 </li>
 <li>ARM_MPU_SetRegion()
-: <a class="el" href="group__mpu__functions.html#ga16931f9ad84d7289e8218e169ae6db5d">Ref_MPU.txt</a>
+: <a class="el" href="group__mpu8__functions.html#ga6d7f220015c070c0e469948c1775ee3d">Ref_MPU8.txt</a>
+, <a class="el" href="group__mpu__functions.html#ga16931f9ad84d7289e8218e169ae6db5d">Ref_MPU.txt</a>
+</li>
+<li>ARM_MPU_SetRegion_NS()
+: <a class="el" href="group__mpu8__functions.html#ga7566931ca9bb9f22d213a67ec5f8c745">Ref_MPU8.txt</a>
 </li>
 <li>ARM_MPU_SetRegionEx()
 : <a class="el" href="group__mpu__functions.html#ga042ba1a6a1a58795231459ac0410b809">Ref_MPU.txt</a>
+, <a class="el" href="group__mpu8__functions.html#ga3d50ba8546252bea959e45c8fdf16993">Ref_MPU8.txt</a>
 </li>
 </ul>
 </div><!-- contents -->
@@ -154,7 +193,7 @@ $(document).ready(function(){initNavTree('globals_func_a.html','');});
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Aug 1 2018 17:12:09 for CMSIS-Core (Cortex-M) by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Fri Mar 15 2019 16:30:25 for CMSIS-Core (Cortex-M) by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

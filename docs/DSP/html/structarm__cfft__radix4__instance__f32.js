@@ -5,7 +5,7 @@ var structarm__cfft__radix4__instance__f32 =
     [ "fftLen", "structarm__cfft__radix4__instance__f32.html#a7e6a6d290ce158ce9a15a45e364b021a", null ],
     [ "ifftFlag", "structarm__cfft__radix4__instance__f32.html#a25d1da64dd6487c291f04d226f9acc66", null ],
     [ "onebyfftLen", "structarm__cfft__radix4__instance__f32.html#ab9eed39e40b8d7c16381fbccf84467cd", null ],
-    [ "pBitRevTable", "structarm__cfft__radix4__instance__f32.html#a8da0d2ca69749fde8cbb95caeac6fe6a", null ],
-    [ "pTwiddle", "structarm__cfft__radix4__instance__f32.html#a14860c7544911702ca1fa0bf78204ef3", null ],
+    [ "pBitRevTable", "structarm__cfft__radix4__instance__f32.html#ab6e84ac830b6d413768dcafe271514a1", null ],
+    [ "pTwiddle", "structarm__cfft__radix4__instance__f32.html#ac1455c9894e7fc53c41f3806b13bd274", null ],
     [ "twidCoefModifier", "structarm__cfft__radix4__instance__f32.html#abe31ea2157dfa233e389cdfd3b9993ee", null ]
 ];

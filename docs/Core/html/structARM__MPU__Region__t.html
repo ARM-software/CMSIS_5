@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Core (Cortex-M)
-   &#160;<span id="projectnumber">Version 5.1.2</span>
+   &#160;<span id="projectnumber">Version 5.2.0</span>
    </div>
    <div id="projectbrief">CMSIS-Core support for Cortex-M processor-based devices</div>
   </td>
@@ -116,7 +116,7 @@ $(document).ready(function(){initNavTree('structARM__MPU__Region__t.html','');})
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ARM_MPU_Region_t Struct Reference<div class="ingroups"><a class="el" href="group__mpu__functions.html">MPU Functions for Armv7-M</a></div></div>  </div>
+<div class="title">ARM_MPU_Region_t Struct Reference<div class="ingroups"><a class="el" href="group__mpu__functions.html">MPU Functions for Armv6-M/v7-M</a> &#124; <a class="el" href="group__mpu8__functions.html">MPU Functions for Armv8-M</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
@@ -125,16 +125,19 @@ $(document).ready(function(){initNavTree('structARM__MPU__Region__t.html','');})
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:aa5e3c6aeaddbc0c283085dc971dd1a22"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structARM__MPU__Region__t.html#aa5e3c6aeaddbc0c283085dc971dd1a22">RBAR</a></td></tr>
-<tr class="memdesc:aa5e3c6aeaddbc0c283085dc971dd1a22"><td class="mdescLeft">&#160;</td><td class="mdescRight">The region base address register value (<a class="el" href="structMPU__Type.html#a990c609b26d990b8ba832b110adfd353">RBAR</a>)  <a href="#aa5e3c6aeaddbc0c283085dc971dd1a22">More...</a><br/></td></tr>
-<tr class="separator:aa5e3c6aeaddbc0c283085dc971dd1a22"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afe7a7721aa08988d915670efa432cdd2"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structARM__MPU__Region__t.html#afe7a7721aa08988d915670efa432cdd2">RBAR</a></td></tr>
+<tr class="memdesc:afe7a7721aa08988d915670efa432cdd2"><td class="mdescLeft">&#160;</td><td class="mdescRight">The region base address register value (<a class="el" href="structMPU__Type.html#a990c609b26d990b8ba832b110adfd353">RBAR</a>)  <a href="#afe7a7721aa08988d915670efa432cdd2">More...</a><br/></td></tr>
+<tr class="separator:afe7a7721aa08988d915670efa432cdd2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6a3e404b403c8df611f27d902d745d8d"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structARM__MPU__Region__t.html#a6a3e404b403c8df611f27d902d745d8d">RASR</a></td></tr>
 <tr class="memdesc:a6a3e404b403c8df611f27d902d745d8d"><td class="mdescLeft">&#160;</td><td class="mdescRight">The region attribute and size register value (<a class="el" href="structMPU__Type.html#a8f00c4a5e31b0a8d103ed3b0732c17a3">RASR</a>), see <a class="el" href="group__mpu__functions.html#ga96b93785c92e2dbcb3a2356c25bf2adc">ARM_MPU_RASR</a>.  <a href="#a6a3e404b403c8df611f27d902d745d8d">More...</a><br/></td></tr>
 <tr class="separator:a6a3e404b403c8df611f27d902d745d8d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab5d3a650dbffd0b272bf7df5b140e8a8"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structARM__MPU__Region__t.html#ab5d3a650dbffd0b272bf7df5b140e8a8">RLAR</a></td></tr>
+<tr class="separator:ab5d3a650dbffd0b272bf7df5b140e8a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Description</h2>
-<div class="textblock"><p>The typedef <a class="el" href="structARM__MPU__Region__t.html">ARM_MPU_Region_t</a> allows to define a MPU table (array of MPU regions) with pre-compiled register values. Such tables enable efficient MPU setup using the function <a class="el" href="group__mpu__functions.html#gafa27b26d5847fa8e465584e376b6078a">ARM_MPU_Load</a>.</p>
-<p><b>Example:</b> See <a class="el" href="group__mpu__functions.html#gafa27b26d5847fa8e465584e376b6078a">ARM_MPU_Load</a> </p>
+<div class="textblock"><p>The typedef <a class="el" href="structARM__MPU__Region__t.html">ARM_MPU_Region_t</a> allows to define a MPU table (array of MPU regions) with pre-compiled register values. Such tables enable efficient MPU setup using the function <a class="el" href="group__mpu8__functions.html#gaca76614e3091c7324aa9d60e634621bf">ARM_MPU_Load</a>.</p>
+<p><b>Example:</b> See <a class="el" href="group__mpu8__functions.html#gaca76614e3091c7324aa9d60e634621bf">ARM_MPU_Load</a></p>
+<p>Struct for a single MPU Region </p>
 </div><h2 class="groupheader">Field Documentation</h2>
 <a class="anchor" id="a6a3e404b403c8df611f27d902d745d8d"></a>
 <div class="memitem">
@@ -149,17 +152,31 @@ Data Fields</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="aa5e3c6aeaddbc0c283085dc971dd1a22"></a>
+<a class="anchor" id="afe7a7721aa08988d915670efa432cdd2"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">ARM_MPU_Region_t::RBAR</td>
+          <td class="memname">uint32_t ARM_MPU_Region_t::RBAR</td>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Region Base Address Register value</p>
 <p>This value specifies the start address of the MPU protected memory region. The address must be a multiple of the region size (size aligned).</p>
 <p>See <a class="el" href="structMPU__Type.html#a990c609b26d990b8ba832b110adfd353">MPU_Type::RBAR</a> for details about field bit format. </p>
+
+</div>
+</div>
+<a class="anchor" id="ab5d3a650dbffd0b272bf7df5b140e8a8"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t ARM_MPU_Region_t::RLAR</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Region Limit Address Register value </p>
 
 </div>
 </div>
@@ -169,7 +186,7 @@ Data Fields</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="structARM__MPU__Region__t.html">ARM_MPU_Region_t</a></li>
-    <li class="footer">Generated on Wed Aug 1 2018 17:12:09 for CMSIS-Core (Cortex-M) by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Fri Mar 15 2019 16:30:25 for CMSIS-Core (Cortex-M) by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

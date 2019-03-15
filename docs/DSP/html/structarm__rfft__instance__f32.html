@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-DSP
-   &#160;<span id="projectnumber">Version 1.5.2</span>
+   &#160;<span id="projectnumber">Version 1.5.5</span>
    </div>
    <div id="projectbrief">CMSIS DSP Software Library</div>
   </td>
@@ -135,10 +135,10 @@ Data Fields</h2></td></tr>
 <tr class="separator:ac342f3248157cbbd2f04a3c8ec9fc9eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aede85350fb5ae6baa1b3e8bfa15b18d6"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structarm__rfft__instance__f32.html#aede85350fb5ae6baa1b3e8bfa15b18d6">twidCoefRModifier</a></td></tr>
 <tr class="separator:aede85350fb5ae6baa1b3e8bfa15b18d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a534cc7e6e9b3e3dd022fad611c762142"><td class="memItemLeft" align="right" valign="top"><a class="el" href="arm__math_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structarm__rfft__instance__f32.html#a534cc7e6e9b3e3dd022fad611c762142">pTwiddleAReal</a></td></tr>
-<tr class="separator:a534cc7e6e9b3e3dd022fad611c762142"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a23543ecfd027fea2477fe1eea23c3c4d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="arm__math_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structarm__rfft__instance__f32.html#a23543ecfd027fea2477fe1eea23c3c4d">pTwiddleBReal</a></td></tr>
-<tr class="separator:a23543ecfd027fea2477fe1eea23c3c4d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aac5a79a077f3ecbca6e85ba582b33691"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="arm__math_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structarm__rfft__instance__f32.html#aac5a79a077f3ecbca6e85ba582b33691">pTwiddleAReal</a></td></tr>
+<tr class="separator:aac5a79a077f3ecbca6e85ba582b33691"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8c5c8de5d526d3bb9527954ec5c585c9"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="arm__math_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structarm__rfft__instance__f32.html#a8c5c8de5d526d3bb9527954ec5c585c9">pTwiddleBReal</a></td></tr>
+<tr class="separator:a8c5c8de5d526d3bb9527954ec5c585c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9f47ba9f50c81e4445ae3827b981bc05"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structarm__cfft__radix4__instance__f32.html">arm_cfft_radix4_instance_f32</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structarm__rfft__instance__f32.html#a9f47ba9f50c81e4445ae3827b981bc05">pCfft</a></td></tr>
 <tr class="separator:a9f47ba9f50c81e4445ae3827b981bc05"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -154,8 +154,6 @@ Data Fields</h2></td></tr>
 </div><div class="memdoc">
 <p>flag that enables (bitReverseFlagR=1) or disables (bitReverseFlagR=0) bit reversal of output. </p>
 
-<p>Referenced by <a class="el" href="group__RealFFT.html#ga3df1766d230532bc068fc4ed69d0fcdc">arm_rfft_f32()</a>, and <a class="el" href="group__RealFFT.html#ga10717ee326bf50832ef1c25b85a23068">arm_rfft_init_f32()</a>.</p>
-
 </div>
 </div>
 <a class="anchor" id="a075076e07ebb8521d8e3b49a31db6c57"></a>
@@ -168,8 +166,6 @@ Data Fields</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>length of the complex FFT. </p>
-
-<p>Referenced by <a class="el" href="group__RealFFT.html#ga3df1766d230532bc068fc4ed69d0fcdc">arm_rfft_f32()</a>, and <a class="el" href="group__RealFFT.html#ga10717ee326bf50832ef1c25b85a23068">arm_rfft_init_f32()</a>.</p>
 
 </div>
 </div>
@@ -184,8 +180,6 @@ Data Fields</h2></td></tr>
 </div><div class="memdoc">
 <p>length of the real FFT. </p>
 
-<p>Referenced by <a class="el" href="group__RealFFT.html#ga10717ee326bf50832ef1c25b85a23068">arm_rfft_init_f32()</a>.</p>
-
 </div>
 </div>
 <a class="anchor" id="a5ee6d10a934ab4b666e0bb286c3d633f"></a>
@@ -198,8 +192,6 @@ Data Fields</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>flag that selects forward (ifftFlagR=0) or inverse (ifftFlagR=1) transform. </p>
-
-<p>Referenced by <a class="el" href="group__RealFFT.html#ga3df1766d230532bc068fc4ed69d0fcdc">arm_rfft_f32()</a>, and <a class="el" href="group__RealFFT.html#ga10717ee326bf50832ef1c25b85a23068">arm_rfft_init_f32()</a>.</p>
 
 </div>
 </div>
@@ -214,37 +206,31 @@ Data Fields</h2></td></tr>
 </div><div class="memdoc">
 <p>points to the complex FFT instance. </p>
 
-<p>Referenced by <a class="el" href="group__RealFFT.html#ga3df1766d230532bc068fc4ed69d0fcdc">arm_rfft_f32()</a>, and <a class="el" href="group__RealFFT.html#ga10717ee326bf50832ef1c25b85a23068">arm_rfft_init_f32()</a>.</p>
-
 </div>
 </div>
-<a class="anchor" id="a534cc7e6e9b3e3dd022fad611c762142"></a>
+<a class="anchor" id="aac5a79a077f3ecbca6e85ba582b33691"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="arm__math_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a>* arm_rfft_instance_f32::pTwiddleAReal</td>
+          <td class="memname">const <a class="el" href="arm__math_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a>* arm_rfft_instance_f32::pTwiddleAReal</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <p>points to the real twiddle factor table. </p>
 
-<p>Referenced by <a class="el" href="group__RealFFT.html#ga3df1766d230532bc068fc4ed69d0fcdc">arm_rfft_f32()</a>, and <a class="el" href="group__RealFFT.html#ga10717ee326bf50832ef1c25b85a23068">arm_rfft_init_f32()</a>.</p>
-
 </div>
 </div>
-<a class="anchor" id="a23543ecfd027fea2477fe1eea23c3c4d"></a>
+<a class="anchor" id="a8c5c8de5d526d3bb9527954ec5c585c9"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="arm__math_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a>* arm_rfft_instance_f32::pTwiddleBReal</td>
+          <td class="memname">const <a class="el" href="arm__math_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a>* arm_rfft_instance_f32::pTwiddleBReal</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <p>points to the imag twiddle factor table. </p>
-
-<p>Referenced by <a class="el" href="group__RealFFT.html#ga3df1766d230532bc068fc4ed69d0fcdc">arm_rfft_f32()</a>, and <a class="el" href="group__RealFFT.html#ga10717ee326bf50832ef1c25b85a23068">arm_rfft_init_f32()</a>.</p>
 
 </div>
 </div>
@@ -259,8 +245,6 @@ Data Fields</h2></td></tr>
 </div><div class="memdoc">
 <p>twiddle coefficient modifier that supports different size FFTs with the same twiddle factor table. </p>
 
-<p>Referenced by <a class="el" href="group__RealFFT.html#ga3df1766d230532bc068fc4ed69d0fcdc">arm_rfft_f32()</a>, and <a class="el" href="group__RealFFT.html#ga10717ee326bf50832ef1c25b85a23068">arm_rfft_init_f32()</a>.</p>
-
 </div>
 </div>
 </div><!-- contents -->
@@ -269,7 +253,7 @@ Data Fields</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="structarm__rfft__instance__f32.html">arm_rfft_instance_f32</a></li>
-    <li class="footer">Generated on Wed Aug 1 2018 17:12:22 for CMSIS-DSP by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Fri Mar 15 2019 16:30:44 for CMSIS-DSP by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

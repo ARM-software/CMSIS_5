@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-DSP
-   &#160;<span id="projectnumber">Version 1.5.2</span>
+   &#160;<span id="projectnumber">Version 1.5.5</span>
    </div>
    <div id="projectbrief">CMSIS DSP Software Library</div>
   </td>
@@ -146,7 +146,7 @@ Content</h2></td></tr>
 <p>The structure specifies the size of the matrix and then points to an array of data. The array is of size <code>numRows X numCols</code> and the values are arranged in row order. That is, the matrix element (i, j) is stored at: </p>
 <pre>
     pData[i*numCols + j]
-</pre><dl class="section user"><dt>Init Functions</dt><dd>There is an associated initialization function for each type of matrix data structure. The initialization function sets the values of the internal structure fields. Refer to the function <code><a class="el" href="group__MatrixInit.html#ga11e3dc41592a6401c13182fef9416a27" title="Floating-point matrix initialization. ">arm_mat_init_f32()</a></code>, <code><a class="el" href="group__MatrixInit.html#ga48a5e5d37e1f062cc57fcfaf683343cc" title="Q31 matrix initialization. ">arm_mat_init_q31()</a></code> and <code><a class="el" href="group__MatrixInit.html#ga31a7c2b991803d49719393eb2d53dc26" title="Q15 matrix initialization. ">arm_mat_init_q15()</a></code> for floating-point, Q31 and Q15 types, respectively.</dd></dl>
+</pre><dl class="section user"><dt>Init Functions</dt><dd>There is an associated initialization function for each type of matrix data structure. The initialization function sets the values of the internal structure fields. Refer to <a class="el" href="group__MatrixInit.html#ga11e3dc41592a6401c13182fef9416a27">arm_mat_init_f32()</a>, <a class="el" href="group__MatrixInit.html#ga48a5e5d37e1f062cc57fcfaf683343cc">arm_mat_init_q31()</a> and <a class="el" href="group__MatrixInit.html#ga31a7c2b991803d49719393eb2d53dc26">arm_mat_init_q15()</a> for floating-point, Q31 and Q15 types, respectively.</dd></dl>
 <dl class="section user"><dt></dt><dd>Use of the initialization function is optional. However, if initialization function is used then the instance structure cannot be placed into a const data section. To place the instance structure in a const data section, manually initialize the data structure. For example: <pre>
 <code><a class="el" href="structarm__matrix__instance__f32.html" title="Instance structure for the floating-point matrix structure. ">arm_matrix_instance_f32</a> S = {nRows, nColumns, pData};</code>
 <code><a class="el" href="structarm__matrix__instance__q31.html" title="Instance structure for the Q31 matrix structure. ">arm_matrix_instance_q31</a> S = {nRows, nColumns, pData};</code>
@@ -164,7 +164,7 @@ Content</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Aug 1 2018 17:12:21 for CMSIS-DSP by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Fri Mar 15 2019 16:30:43 for CMSIS-DSP by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

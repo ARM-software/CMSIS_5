@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-DSP
-   &#160;<span id="projectnumber">Version 1.5.2</span>
+   &#160;<span id="projectnumber">Version 1.5.5</span>
    </div>
    <div id="projectbrief">CMSIS DSP Software Library</div>
   </td>
@@ -120,7 +120,7 @@ $(document).ready(function(){initNavTree('structarm__fir__decimate__instance__f3
 </div><!--header-->
 <div class="contents">
 
-<p>Instance structure for the floating-point FIR decimator.  
+<p>Instance structure for floating-point FIR decimator.  
 </p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
@@ -129,8 +129,8 @@ Data Fields</h2></td></tr>
 <tr class="separator:a76a8b2161731638eb3d67f277919f95d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2aa2986129db8affef03ede88dd45a03"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structarm__fir__decimate__instance__f32.html#a2aa2986129db8affef03ede88dd45a03">numTaps</a></td></tr>
 <tr class="separator:a2aa2986129db8affef03ede88dd45a03"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a268a8b0e80a3d9764baf33e4bc10dde2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="arm__math_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structarm__fir__decimate__instance__f32.html#a268a8b0e80a3d9764baf33e4bc10dde2">pCoeffs</a></td></tr>
-<tr class="separator:a268a8b0e80a3d9764baf33e4bc10dde2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1aef1d796b60749d87ff36e282284628"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="arm__math_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structarm__fir__decimate__instance__f32.html#a1aef1d796b60749d87ff36e282284628">pCoeffs</a></td></tr>
+<tr class="separator:a1aef1d796b60749d87ff36e282284628"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5bddf29aaaf2011d2e3bcec59a83f633"><td class="memItemLeft" align="right" valign="top"><a class="el" href="arm__math_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structarm__fir__decimate__instance__f32.html#a5bddf29aaaf2011d2e3bcec59a83f633">pState</a></td></tr>
 <tr class="separator:a5bddf29aaaf2011d2e3bcec59a83f633"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -146,8 +146,6 @@ Data Fields</h2></td></tr>
 </div><div class="memdoc">
 <p>decimation factor. </p>
 
-<p>Referenced by <a class="el" href="group__FIR__decimate.html#ga25aa3d58a90bf91b6a82272a0bc518f7">arm_fir_decimate_f32()</a>, and <a class="el" href="group__FIR__decimate.html#gaaa2524b08220fd6c3f753e692ffc7d3b">arm_fir_decimate_init_f32()</a>.</p>
-
 </div>
 </div>
 <a class="anchor" id="a2aa2986129db8affef03ede88dd45a03"></a>
@@ -161,22 +159,18 @@ Data Fields</h2></td></tr>
 </div><div class="memdoc">
 <p>number of coefficients in the filter. </p>
 
-<p>Referenced by <a class="el" href="group__FIR__decimate.html#ga25aa3d58a90bf91b6a82272a0bc518f7">arm_fir_decimate_f32()</a>, and <a class="el" href="group__FIR__decimate.html#gaaa2524b08220fd6c3f753e692ffc7d3b">arm_fir_decimate_init_f32()</a>.</p>
-
 </div>
 </div>
-<a class="anchor" id="a268a8b0e80a3d9764baf33e4bc10dde2"></a>
+<a class="anchor" id="a1aef1d796b60749d87ff36e282284628"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="arm__math_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a>* arm_fir_decimate_instance_f32::pCoeffs</td>
+          <td class="memname">const <a class="el" href="arm__math_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a>* arm_fir_decimate_instance_f32::pCoeffs</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <p>points to the coefficient array. The array is of length numTaps. </p>
-
-<p>Referenced by <a class="el" href="group__FIR__decimate.html#ga25aa3d58a90bf91b6a82272a0bc518f7">arm_fir_decimate_f32()</a>, and <a class="el" href="group__FIR__decimate.html#gaaa2524b08220fd6c3f753e692ffc7d3b">arm_fir_decimate_init_f32()</a>.</p>
 
 </div>
 </div>
@@ -191,8 +185,6 @@ Data Fields</h2></td></tr>
 </div><div class="memdoc">
 <p>points to the state variable array. The array is of length numTaps+blockSize-1. </p>
 
-<p>Referenced by <a class="el" href="group__FIR__decimate.html#ga25aa3d58a90bf91b6a82272a0bc518f7">arm_fir_decimate_f32()</a>, and <a class="el" href="group__FIR__decimate.html#gaaa2524b08220fd6c3f753e692ffc7d3b">arm_fir_decimate_init_f32()</a>.</p>
-
 </div>
 </div>
 </div><!-- contents -->
@@ -201,7 +193,7 @@ Data Fields</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="structarm__fir__decimate__instance__f32.html">arm_fir_decimate_instance_f32</a></li>
-    <li class="footer">Generated on Wed Aug 1 2018 17:12:22 for CMSIS-DSP by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Fri Mar 15 2019 16:30:44 for CMSIS-DSP by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

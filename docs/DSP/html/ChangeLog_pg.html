@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-DSP
-   &#160;<span id="projectnumber">Version 1.5.2</span>
+   &#160;<span id="projectnumber">Version 1.5.5</span>
    </div>
    <div id="projectbrief">CMSIS DSP Software Library</div>
   </td>
@@ -115,6 +115,37 @@ $(document).ready(function(){initNavTree('ChangeLog_pg.html','');});
 <tr>
 <th>Version </th><th>Description  </th></tr>
 <tr>
+<td>V1.5.5 </td><td>Reworked DSP library source files<ul>
+<li>added macro ARM_MATH_LOOPUNROLL</li>
+<li>removed macro UNALIGNED_SUPPORT_DISABLE</li>
+<li>added const-correctness</li>
+<li>replaced SIMD pointer construct with memcopy solution Reworked DSP library documentation Changed DSP folder structure</li>
+<li>moved DSP libraries to ./DSP/Lib ARM DSP Libraries are built with ARMCLANG Added DSP Libraries source variant  </li>
+</ul>
+</td><td>V1.5.4 </td><td><p class="starttd">Note: binaries NOT rebuild!</p>
+<p class="endtd">Updated IAR projects   </p>
+</td></tr>
+<tr>
+<td>V1.5.3 </td><td><p class="starttd">Note: binaries NOT rebuild!</p>
+<p class="endtd">Merged PullRequests</p>
+<ul>
+<li>#439, #430, #369, #265, #166 Modified <a class="el" href="arm__math_8h.html">arm_math.h</a></li>
+<li>reworked macros ARM_MATH_CMx</li>
+<li>removed macros __FPU_USED, __DSP_PRESENT</li>
+<li>used different include files Modified source files (because of new <a class="el" href="arm__math_8h.html">arm_math.h</a>)</li>
+<li><a class="el" href="arm__biquad__cascade__df2T__f32_8c.html">FilteringFunctions\arm_biquad_cascade_df2T_f32.c</a></li>
+<li><a class="el" href="arm__biquad__cascade__df2T__f64_8c.html">FilteringFunctions\arm_biquad_cascade_df2T_f64.c</a></li>
+<li><a class="el" href="arm__biquad__cascade__stereo__df2T__f32_8c.html">FilteringFunctions\arm_biquad_cascade_stereo_df2T_f32.c</a></li>
+<li><a class="el" href="arm__conv__partial__q15_8c.html">FilteringFunctions\arm_conv_partial_q15.c</a></li>
+<li><a class="el" href="arm__correlate__q15_8c.html">FilteringFunctions\arm_correlate_q15.c</a></li>
+<li><a class="el" href="arm__fir__f32_8c.html">FilteringFunctions\arm_fir_f32.c</a></li>
+<li><a class="el" href="arm__mat__scale__q31_8c.html">MatrixFunctions\arm_mat_scale_q31.c</a></li>
+<li><a class="el" href="arm__rms__q31_8c.html">StatisticsFunctions\arm_rms_q31.c</a></li>
+<li>TransformFunctions\arm_bitreversal2.S</li>
+<li><a class="el" href="arm__cfft__radix4__q31_8c.html">TransformFunctions\arm_cfft_radix4_q31.c</a> Reworked DSP_Lib_TestSuite   </li>
+</ul>
+</td></tr>
+<tr>
 <td>V1.5.2 </td><td>Modified <a class="el" href="arm__math_8h.html">arm_math.h</a><ul>
 <li>fixed GNU Compiler specific diagnostics.</li>
 <li>moved __SSAT and __USAT to CMSIS-Core   </li>
@@ -142,7 +173,7 @@ $(document).ready(function(){initNavTree('ChangeLog_pg.html','');});
 </ul>
 <p class="endtd">Modified <a class="el" href="arm__var__f32_8c.html">arm_var_f32.c</a></p>
 <ul>
-<li>improved numerical stability for <a class="el" href="group__variance.html#ga393f26c5a3bfa05624fb8d32232a6d96">arm_var_f32()</a>.   </li>
+<li>improved numerical stability for <a class="el" href="group__variance.html#gaae455544f0c8ac92469a1e25d3906515">arm_var_f32()</a>.   </li>
 </ul>
 </td></tr>
 <tr>
@@ -152,15 +183,15 @@ $(document).ready(function(){initNavTree('ChangeLog_pg.html','');});
 </ul>
 <p>Modified <a class="el" href="arm__conv__partial__q15_8c.html">arm_conv_partial_q15.c</a></p>
 <ul>
-<li>corrected <a class="el" href="group__PartialConv.html#ga209a2a913a0c5e5679c5988da8f46b03">arm_conv_partial_q15()</a> for Cortex-M7 based cores.</li>
+<li>corrected <a class="el" href="group__PartialConv.html#ga09b1f207980df75c2dcf01b1d3c2006f">arm_conv_partial_q15()</a> for Cortex-M7 based cores.</li>
 </ul>
 <p>Modified <a class="el" href="arm__conv__q15_8c.html">arm_conv_q15.c</a></p>
 <ul>
-<li>corrected <a class="el" href="group__Conv.html#gaccd6a89b0ff7a94df64610598e6e6893">arm_conv_q15()</a> for Cortex-M7 based cores.</li>
+<li>corrected <a class="el" href="group__Conv.html#ga372d3fd79b107dc6b12163a00c22da18">arm_conv_q15()</a> for Cortex-M7 based cores.</li>
 </ul>
 <p class="endtd">Modified <a class="el" href="arm__correlate__q15_8c.html">arm_correlate_q15.c</a></p>
 <ul>
-<li>corrected <a class="el" href="group__Corr.html#ga5ec96b8e420d68b0e626df0812274d46">arm_correlate_q15()</a> for Cortex-M7 based cores.   </li>
+<li>corrected <a class="el" href="group__Corr.html#ga8fc4e632ab08b28435ff62e7eb65f508">arm_correlate_q15()</a> for Cortex-M7 based cores.   </li>
 </ul>
 </td></tr>
 <tr>
@@ -190,7 +221,7 @@ $(document).ready(function(){initNavTree('ChangeLog_pg.html','');});
 </td></tr>
 <tr>
 <td>V1.4.6 (no source code change [still labeled 1.4.5]) 2015/08/26 </td><td>Modified <a class="el" href="arm__math_8h.html">arm_math.h</a><ul>
-<li>Updated function <a class="el" href="group__SQRT.html#ga697d82c2747a3302cf44e7c9583da2e8">arm_sqrt_f32</a> for use with IAR.   </li>
+<li>Updated function <a class="el" href="group__SQRT.html#ga5f37f479666ee8ff9711b334286c60ed">arm_sqrt_f32</a> for use with IAR.   </li>
 </ul>
 </td></tr>
 <tr>
@@ -420,7 +451,7 @@ Documentation
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Aug 1 2018 17:12:21 for CMSIS-DSP by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Fri Mar 15 2019 16:30:43 for CMSIS-DSP by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

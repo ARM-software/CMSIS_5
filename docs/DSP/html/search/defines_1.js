@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['align4',['ALIGN4',['../arm__math_8h.html#a280a402ab28c399fcc4168f2ed631acb',1,'arm_math.h']]],
   ['armbitrevindextable_5f1024_5ftable_5flength',['ARMBITREVINDEXTABLE_1024_TABLE_LENGTH',['../arm__common__tables_8h.html#a5f6f615f438c5134a9b7e746139705df',1,'arm_common_tables.h']]],
   ['armbitrevindextable_5f128_5ftable_5flength',['ARMBITREVINDEXTABLE_128_TABLE_LENGTH',['../arm__common__tables_8h.html#abb73376f7efda869394aab2acef4291c',1,'arm_common_tables.h']]],
   ['armbitrevindextable_5f16_5ftable_5flength',['ARMBITREVINDEXTABLE_16_TABLE_LENGTH',['../arm__common__tables_8h.html#ae238c932ca2cc11cc8aebdfc953adb63',1,'arm_common_tables.h']]],

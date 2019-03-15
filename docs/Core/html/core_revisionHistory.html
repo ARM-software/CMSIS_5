@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Core (Cortex-M)
-   &#160;<span id="projectnumber">Version 5.1.2</span>
+   &#160;<span id="projectnumber">Version 5.2.0</span>
    </div>
    <div id="projectbrief">CMSIS-Core support for Cortex-M processor-based devices</div>
   </td>
@@ -115,27 +115,28 @@ $(document).ready(function(){initNavTree('core_revisionHistory.html','');});
 <tr>
 <th>Version </th><th>Description  </th></tr>
 <tr>
+<td>V5.2.0 </td><td>Added: Cortex-M35P support.<br/>
+ Added: Cortex-M1 support.<br/>
+ Added: Armv8.1 architecture support.   </td></tr>
+<tr>
 <td>V5.1.2 </td><td>Removed using get/set built-ins FPSCR in GCC &gt;= 7.2 due to shortcomings.<br/>
  Added __NO_RETURN to __NVIC_SystemReset() to silence compiler warnings.<br/>
  Added support for Cortex-M1 (beta). <br/>
  Removed usage of register keyword. <br/>
  Added defines for EXC_RETURN, FNC_RETURN and integrity signature values. <br/>
- Enhanced MPUv7 API with defines for memory access attributes.<br/>
-   </td></tr>
+ Enhanced MPUv7 API with defines for memory access attributes.   </td></tr>
 <tr>
-<td>V5.1.1 </td><td>Aligned MSPLIM and PSPLIM access functions along supported compilers.<br/>
-   </td></tr>
+<td>V5.1.1 </td><td>Aligned MSPLIM and PSPLIM access functions along supported compilers.   </td></tr>
 <tr>
 <td>V5.1.0 </td><td>Added MPU Functions for ARMv8-M for Cortex-M23/M33.<br/>
  Moved __SSAT and __USAT intrinsics to CMSIS-Core.<br/>
- Aligned __REV, __REV16 and __REVSH intrinsics along supported compilers.<br/>
-   </td></tr>
+ Aligned __REV, __REV16 and __REVSH intrinsics along supported compilers.   </td></tr>
 <tr>
 <td>V5.0.2 </td><td>Added macros <a class="el" href="group__compiler__conntrol__gr.html#gabe8693a7200e573101551d49a1772fb9">__UNALIGNED_UINT16_READ</a>, <a class="el" href="group__compiler__conntrol__gr.html#gadb9cd73446f7e11e92383cd327a23407">__UNALIGNED_UINT16_WRITE</a>.<br/>
  Added macros <a class="el" href="group__compiler__conntrol__gr.html#ga254322c344d954c9f829719a50a88e87">__UNALIGNED_UINT32_READ</a>, <a class="el" href="group__compiler__conntrol__gr.html#gabb2180285c417aa9120a360c51f64b4b">__UNALIGNED_UINT32_WRITE</a>.<br/>
  Deprecated macro <a class="el" href="group__compiler__conntrol__gr.html#ga27fd2ec6767ca1ab66d36b5cc0103268">__UNALIGNED_UINT32</a>.<br/>
  Changed <a class="el" href="group__version__control__gr.html">Version Control</a> macros to be core agnostic. <br/>
- Added <a class="el" href="group__mpu__functions.html">MPU Functions for Armv7-M</a> for Cortex-M0+/M3/M4/M7.   </td></tr>
+ Added <a class="el" href="group__mpu__functions.html">MPU Functions for Armv6-M/v7-M</a> for Cortex-M0+/M3/M4/M7.   </td></tr>
 <tr>
 <td>V5.0.1 </td><td>Added: macro <a class="el" href="group__compiler__conntrol__gr.html#ga4dbb70fab85207c27b581ecb6532b314">__PACKED_STRUCT</a>. <br/>
  Added: uVisor support. <br/>
@@ -262,7 +263,7 @@ Beta 1 </td><td>Renamed: cmsis_armcc_V6.h to cmsis_armclang.h.<br/>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Aug 1 2018 17:12:08 for CMSIS-Core (Cortex-M) by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Fri Mar 15 2019 16:30:24 for CMSIS-Core (Cortex-M) by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

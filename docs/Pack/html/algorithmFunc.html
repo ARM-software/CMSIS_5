@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Pack
-   &#160;<span id="projectnumber">Version 1.5.0</span>
+   &#160;<span id="projectnumber">Version 1.6.0</span>
    </div>
    <div id="projectbrief">Delivery Mechanism for Software Packs</div>
   </td>
@@ -314,10 +314,11 @@ ProgramPage</h1>
 <li>1 on failure.</li>
 </ul>
 </dd></dl>
-<p>The function <b>ProgramPage</b> is used to write code into the Flash memory. It is invoked whenever an attempt is made to download a program to Flash.</p>
-<p>The argument <em>adr</em> specifies the start address of the page that is to be programmed.</p>
-<p>The argument <em>sz</em> specifies the size of the page that is to be programmed.</p>
-<p>The argument <em>buf</em> points to the buffer containing the data to be programmed.</p>
+<p>The function <b>ProgramPage</b> is used to write code into the Flash memory. It is invoked to download a program to Flash. As Flash memory is typically organized in blocks or pages, the parameters to the function <b>ProgramPage</b> must not cross alignment boundaries of these flash pages. The page size is specified in the struct FlashDevice with the value <b>Program Page Size</b>.</p>
+<p>The argument <em>adr</em> specifies the start address of the page that is to be programmed. It is aligned by the host programming system to a start address of a flash page.</p>
+<p>The argument <em>sz</em> specifies the data size in the data buffer. The host programming system ensures that page boundaries are not crossed.</p>
+<p>The argument <em>buf</em> points to the data buffer containing the data to be programmed.</p>
+<dl class="section note"><dt>Note</dt><dd>The host programming system ensures that the argument <em>adr</em> + <em>sz</em> never crosses any page boundary. The function <b>ProgramPage</b> does therefore not require any provisions for that.</dd></dl>
 <p><b>Code Example</b> </p>
 <div class="fragment"><div class="line"><span class="keywordtype">int</span> ProgramPage (<span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> adr, <span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> sz, <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> *buf) {</div>
 <div class="line"> </div>
@@ -426,7 +427,7 @@ Verify</h1>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="flashAlgorithm.html">Flash Programming</a></li>
-    <li class="footer">Generated on Wed Aug 1 2018 17:12:42 for CMSIS-Pack by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Fri Mar 15 2019 16:31:12 for CMSIS-Pack by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

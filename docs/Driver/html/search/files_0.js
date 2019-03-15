@@ -31,5 +31,7 @@ var searchData=
   ['driver_5fusbd_2ec',['Driver_USBD.c',['../Driver__USBD_8c.html',1,'']]],
   ['driver_5fusbd_2eh',['Driver_USBD.h',['../Driver__USBD_8h.html',1,'']]],
   ['driver_5fusbh_2ec',['Driver_USBH.c',['../Driver__USBH_8c.html',1,'']]],
-  ['driver_5fusbh_2eh',['Driver_USBH.h',['../Driver__USBH_8h.html',1,'']]]
+  ['driver_5fusbh_2eh',['Driver_USBH.h',['../Driver__USBH_8h.html',1,'']]],
+  ['driver_5fwifi_2ec',['Driver_WiFi.c',['../Driver__WiFi_8c.html',1,'']]],
+  ['driver_5fwifi_2eh',['Driver_WiFi.h',['../Driver__WiFi_8h.html',1,'']]]
 ];

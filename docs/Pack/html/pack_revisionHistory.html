@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Pack
-   &#160;<span id="projectnumber">Version 1.5.0</span>
+   &#160;<span id="projectnumber">Version 1.6.0</span>
    </div>
    <div id="projectbrief">Delivery Mechanism for Software Packs</div>
   </td>
@@ -114,6 +114,18 @@ $(document).ready(function(){initNavTree('pack_revisionHistory.html','');});
 <tr>
 <th>Version </th><th>Description  </th></tr>
 <tr>
+<td>1.6.0 </td><td>Modifications compared to Version 1.5.0<ul>
+<li>added Armv8.1-M MVE processor feature attribute 'Dmve'.</li>
+<li>added local and global pre-include section <a class="el" href="pdsc_components_pg.html#Pre_Include_Local_h">Pre_Include_Local_h</a>, <a class="el" href="pdsc_components_pg.html#Pre_Include_Global_h">Pre_Include_Global_h</a>.</li>
+<li>added file categories 'preIncludeLocal' and 'preIncludeGlobal' to the <a class="el" href="pdsc_components_pg.html#FileCategoryEnum">FileCategoryEnum</a>.</li>
+<li>added file attribute 'path' for file category 'header' to add support for relative include paths.</li>
+<li>added to <a class="el" href="pdsc_package_pg.html#element_package">package</a> element the possibility to restrict the usage of the with attributes Dcore, Dname, Dvendor, and Tcompiler.</li>
+<li>added <a class="el" href="element_dominate.html">dominate</a> element to overwrites identical <a class="el" href="pdsc_devices_pg.html#element_devices">devices</a>, <a class="el" href="pdsc_apis_pg.html#element_apis">APIs</a>, or <a class="el" href="pdsc_components_pg.html#element_components">components</a>.</li>
+<li>added attribute 'condition' to the <a class="el" href="pdsc_apis_pg.html#element_api">api</a> element so that an API can be excluded based on a condition.</li>
+<li>added new <a class="el" href="cp_Packs.html#pack_Cclass">Software Component Cclasses</a> : "Audio", "Board Part", "Data Exchange", "Extension Board", "IoT Client", "IoT Utility", "Security", "Utility".   </li>
+</ul>
+</td></tr>
+<tr>
 <td>1.5.0 </td><td>Modifications compared to Version 1.4.9<ul>
 <li>added <a class="el" href="sdf_pg.html">System Description File (*.SDF) Format</a></li>
 <li>updates to <a class="el" href="pdsc_family_pg.html#DeviceVendorEnum">Device Vendor</a></li>
@@ -121,7 +133,8 @@ $(document).ready(function(){initNavTree('pack_revisionHistory.html','');});
 <li>added <a class="el" href="pdsc_family_pg.html#element_flashinfo">flashinfo</a> with children &lt;block&gt; and &lt;gap&gt; to describe flash devices for sequence-based flash download</li>
 <li>new <a class="el" href="debug_description.html#DebugFunctions">debug access functions</a> and <a class="el" href="debug_description.html#DebugVars">global debug variables</a> for sequence-based flash download</li>
 <li>added <a class="el" href="element_repository.html">repository</a> element for specifying origin of public repositories</li>
-<li>added attributes to <a class="el" href="element_releases.html#element_release">release</a> element specifying repository tag and url for downloading repository content   </li>
+<li>added attributes to <a class="el" href="element_releases.html#element_release">release</a> element specifying repository tag and url for downloading repository content</li>
+<li>added new processor Cortex-M35P   </li>
 </ul>
 </td></tr>
 <tr>
@@ -265,7 +278,7 @@ $(document).ready(function(){initNavTree('pack_revisionHistory.html','');});
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="index.html">index</a></li>
-    <li class="footer">Generated on Wed Aug 1 2018 17:12:42 for CMSIS-Pack by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Fri Mar 15 2019 16:31:12 for CMSIS-Pack by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

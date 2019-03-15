@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-DSP
-   &#160;<span id="projectnumber">Version 1.5.2</span>
+   &#160;<span id="projectnumber">Version 1.5.5</span>
    </div>
    <div id="projectbrief">CMSIS DSP Software Library</div>
   </td>
@@ -120,7 +120,7 @@ Functions</h2></td></tr>
 <tr class="memdesc:ga542be7aabbf7a2297a4b62cf212910e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Floating-point matrix inverse.  <a href="#ga542be7aabbf7a2297a4b62cf212910e3">More...</a><br/></td></tr>
 <tr class="separator:ga542be7aabbf7a2297a4b62cf212910e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaede2367c02df083cc915ddd5d8fae838"><td class="memItemLeft" align="right" valign="top"><a class="el" href="arm__math_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6">arm_status</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__MatrixInv.html#gaede2367c02df083cc915ddd5d8fae838">arm_mat_inverse_f64</a> (const <a class="el" href="structarm__matrix__instance__f64.html">arm_matrix_instance_f64</a> *pSrc, <a class="el" href="structarm__matrix__instance__f64.html">arm_matrix_instance_f64</a> *pDst)</td></tr>
-<tr class="memdesc:gaede2367c02df083cc915ddd5d8fae838"><td class="mdescLeft">&#160;</td><td class="mdescRight">Floating-point matrix inverse.  <a href="#gaede2367c02df083cc915ddd5d8fae838">More...</a><br/></td></tr>
+<tr class="memdesc:gaede2367c02df083cc915ddd5d8fae838"><td class="mdescLeft">&#160;</td><td class="mdescRight">Floating-point (64 bit) matrix inverse.  <a href="#gaede2367c02df083cc915ddd5d8fae838">More...</a><br/></td></tr>
 <tr class="separator:gaede2367c02df083cc915ddd5d8fae838"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Description</h2>
@@ -158,16 +158,17 @@ Matrix Inverse of a 3 x 3 matrix using Gauss-Jordan Method</div></div>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">*pSrc</td><td>points to input matrix structure </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">*pDst</td><td>points to output matrix structure </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">pSrc</td><td>points to input matrix structure </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">pDst</td><td>points to output matrix structure </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The function returns <code>ARM_MATH_SIZE_MISMATCH</code> if the input matrix is not square or if the size of the output matrix does not match the size of the input matrix. If the input matrix is found to be singular (non-invertible), then the function returns <code>ARM_MATH_SINGULAR</code>. Otherwise, the function returns <code>ARM_MATH_SUCCESS</code>. </dd></dl>
-
-<p>References <a class="el" href="arm__math_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6a91509ea9c819dbd592ac13a6b05382dc">ARM_MATH_SINGULAR</a>, <a class="el" href="arm__math_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6a7071b92f1f6bc3c5c312a237ea91105b">ARM_MATH_SIZE_MISMATCH</a>, <a class="el" href="arm__math_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6a9f8b2a10bd827fb4600e77d455902eb0">ARM_MATH_SUCCESS</a>, <a class="el" href="structarm__matrix__instance__f32.html#acdd1fb73734df68b89565c54f1dd8ae2">arm_matrix_instance_f32::numCols</a>, <a class="el" href="structarm__matrix__instance__f32.html#a23f4e34d70a82c9cad7612add5640b7b">arm_matrix_instance_f32::numRows</a>, <a class="el" href="structarm__matrix__instance__f32.html#af3917c032600a9dfd5ed4a96f074910a">arm_matrix_instance_f32::pData</a>, and <a class="el" href="arm__dotproduct__example__f32_8c.html#a88ccb294236ab22b00310c47164c53c3">status</a>.</p>
-
-<p>Referenced by <a class="el" href="arm__matrix__example__f32_8c.html#a52d2cba30e6946c95578be946ac12a65">main()</a>.</p>
+<dl class="section return"><dt>Returns</dt><dd>execution status<ul>
+<li><a class="el" href="arm__math_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6a9f8b2a10bd827fb4600e77d455902eb0">ARM_MATH_SUCCESS</a> : Operation successful</li>
+<li><a class="el" href="arm__math_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6a7071b92f1f6bc3c5c312a237ea91105b">ARM_MATH_SIZE_MISMATCH</a> : Matrix size check failed</li>
+<li><a class="el" href="arm__math_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6a91509ea9c819dbd592ac13a6b05382dc">ARM_MATH_SINGULAR</a> : Input matrix is found to be singular (non-invertible) </li>
+</ul>
+</dd></dl>
 
 </div>
 </div>
@@ -194,16 +195,20 @@ Matrix Inverse of a 3 x 3 matrix using Gauss-Jordan Method</div></div>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Floating-point matrix inverse.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">*pSrc</td><td>points to input matrix structure </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">*pDst</td><td>points to output matrix structure </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">pSrc</td><td>points to input matrix structure </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">pDst</td><td>points to output matrix structure </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The function returns <code>ARM_MATH_SIZE_MISMATCH</code> if the input matrix is not square or if the size of the output matrix does not match the size of the input matrix. If the input matrix is found to be singular (non-invertible), then the function returns <code>ARM_MATH_SINGULAR</code>. Otherwise, the function returns <code>ARM_MATH_SUCCESS</code>. </dd></dl>
-
-<p>References <a class="el" href="arm__math_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6a91509ea9c819dbd592ac13a6b05382dc">ARM_MATH_SINGULAR</a>, <a class="el" href="arm__math_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6a7071b92f1f6bc3c5c312a237ea91105b">ARM_MATH_SIZE_MISMATCH</a>, <a class="el" href="arm__math_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6a9f8b2a10bd827fb4600e77d455902eb0">ARM_MATH_SUCCESS</a>, <a class="el" href="structarm__matrix__instance__f64.html#ab0f0399aff3201880e2d8a447de9a7ee">arm_matrix_instance_f64::numCols</a>, <a class="el" href="structarm__matrix__instance__f64.html#a8b44d1e5003345047c4ead9e1593bf22">arm_matrix_instance_f64::numRows</a>, <a class="el" href="structarm__matrix__instance__f64.html#a5b2475f8ff1e4818955cdd18bc40a097">arm_matrix_instance_f64::pData</a>, and <a class="el" href="arm__dotproduct__example__f32_8c.html#a88ccb294236ab22b00310c47164c53c3">status</a>.</p>
+<dl class="section return"><dt>Returns</dt><dd>execution status<ul>
+<li><a class="el" href="arm__math_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6a9f8b2a10bd827fb4600e77d455902eb0">ARM_MATH_SUCCESS</a> : Operation successful</li>
+<li><a class="el" href="arm__math_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6a7071b92f1f6bc3c5c312a237ea91105b">ARM_MATH_SIZE_MISMATCH</a> : Matrix size check failed</li>
+<li><a class="el" href="arm__math_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6a91509ea9c819dbd592ac13a6b05382dc">ARM_MATH_SINGULAR</a> : Input matrix is found to be singular (non-invertible) </li>
+</ul>
+</dd></dl>
 
 </div>
 </div>
@@ -212,7 +217,7 @@ Matrix Inverse of a 3 x 3 matrix using Gauss-Jordan Method</div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Aug 1 2018 17:12:22 for CMSIS-DSP by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Fri Mar 15 2019 16:30:43 for CMSIS-DSP by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

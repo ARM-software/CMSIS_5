@@ -183,11 +183,7 @@ CMSIS-RTOS File Structure</div></div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">// System Initialization</span></div>
 <div class="line">  SystemCoreClockUpdate();</div>
-<div class="line"><span class="preprocessor">#ifdef RTE_Compiler_EventRecorder</span></div>
-<div class="line"><span class="preprocessor"></span>  <span class="comment">// Initialize and start Event Recorder</span></div>
-<div class="line">  EventRecorderInitialize(EventRecordError, 1U);</div>
-<div class="line"><span class="preprocessor">#endif</span></div>
-<div class="line"><span class="preprocessor"></span>  <span class="comment">// ...</span></div>
+<div class="line">  <span class="comment">// ...</span></div>
 <div class="line"> </div>
 <div class="line">  <a class="code" href="group__CMSIS__RTOS__KernelCtrl.html#gae818f6611d25ba3140bede410a52d659">osKernelInitialize</a>();                 <span class="comment">// Initialize CMSIS-RTOS</span></div>
 <div class="line">  <a class="code" href="group__CMSIS__RTOS__ThreadMgmt.html#ga48d68b8666d99d28fa646ee1d2182b8f">osThreadNew</a>(app_main, NULL, NULL);    <span class="comment">// Create application main thread</span></div>
@@ -200,7 +196,7 @@ CMSIS-RTOS File Structure</div></div>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="index.html">index</a></li>
-    <li class="footer">Generated on Wed Aug 1 2018 17:12:45 for CMSIS-RTOS2 by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Fri Mar 15 2019 16:31:16 for CMSIS-RTOS2 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

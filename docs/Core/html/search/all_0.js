@@ -64,7 +64,7 @@ var searchData=
   ['_5f_5frbit',['__RBIT',['../group__intrinsic__CPU__gr.html#gad6f9f297f6b91a995ee199fbc796b863',1,'Ref_cmInstr.txt']]],
   ['_5f_5frev',['__REV',['../group__intrinsic__CPU__gr.html#ga4717abc17af5ba29b1e4c055e0a0d9b8',1,'Ref_cmInstr.txt']]],
   ['_5f_5frev16',['__REV16',['../group__intrinsic__CPU__gr.html#gaeef6f853b6df3a365c838ee5b49a7a26',1,'Ref_cmInstr.txt']]],
-  ['_5f_5frevsh',['__REVSH',['../group__intrinsic__CPU__gr.html#ga1ec006e6d79063363cb0c2a2e0b3adbe',1,'Ref_cmInstr.txt']]],
+  ['_5f_5frevsh',['__REVSH',['../group__intrinsic__CPU__gr.html#ga211618c03a0bf3264a7b22ad626d4f0a',1,'Ref_cmInstr.txt']]],
   ['_5f_5fror',['__ROR',['../group__intrinsic__CPU__gr.html#gaf66beb577bb9d90424c3d1d7f684c024',1,'Ref_cmInstr.txt']]],
   ['_5f_5frrx',['__RRX',['../group__intrinsic__CPU__gr.html#gac09134f1bf9c49db07282001afcc9380',1,'Ref_cmInstr.txt']]],
   ['_5f_5fsadd16',['__SADD16',['../group__intrinsic__SIMD__gr.html#gad0bf46373a1c05aabf64517e84be5984',1,'Ref_cm4_simd.txt']]],
@@ -172,9 +172,6 @@ var searchData=
   ['_5f_5fweak',['__WEAK',['../group__compiler__conntrol__gr.html#gac607bf387b29162be6a9b77fc7999539',1,'Ref_CompilerControl.txt']]],
   ['_5f_5fwfe',['__WFE',['../group__intrinsic__CPU__gr.html#gad3efec76c3bfa2b8528ded530386c563',1,'Ref_cmInstr.txt']]],
   ['_5f_5fwfi',['__WFI',['../group__intrinsic__CPU__gr.html#gaed91dfbf3d7d7b7fba8d912fcbeaad88',1,'Ref_cmInstr.txt']]],
-  ['_5f_5fxxx_5fcmsis_5fversion',['__XXX_CMSIS_VERSION',['../group__version__control__depricated__gr.html#gabea7df329b150f620ee42f9d82516241',1,'Ref_VersionControl.txt']]],
-  ['_5f_5fxxx_5fcmsis_5fversion_5fmain',['__XXX_CMSIS_VERSION_MAIN',['../group__version__control__depricated__gr.html#ga2ecc1658e18eb1a0be7959e33b836d05',1,'Ref_VersionControl.txt']]],
-  ['_5f_5fxxx_5fcmsis_5fversion_5fsub',['__XXX_CMSIS_VERSION_SUB',['../group__version__control__depricated__gr.html#ga962096f43e0d194f0b79021964c57fbd',1,'Ref_VersionControl.txt']]],
   ['_5ffld2val',['_FLD2VAL',['../group__peripheral__gr.html#ga139b6e261c981f014f386927ca4a8444',1,'Ref_Peripheral.txt']]],
   ['_5freserved0',['_reserved0',['../unionAPSR__Type.html#afbce95646fd514c10aa85ec0a33db728',1,'APSR_Type::_reserved0()'],['../unionIPSR__Type.html#ad2eb0a06de4f03f58874a727716aa9aa',1,'IPSR_Type::_reserved0()'],['../unionxPSR__Type.html#af438e0f407357e914a70b5bd4d6a97c5',1,'xPSR_Type::_reserved0()'],['../unionCONTROL__Type.html#af8c314273a1e4970a5671bd7f8184f50',1,'CONTROL_Type::_reserved0()']]],
   ['_5fval2fld',['_VAL2FLD',['../group__peripheral__gr.html#ga286e3b913dbd236c7f48ea70c8821f4e',1,'Ref_Peripheral.txt']]]

@@ -48,7 +48,7 @@ var searchData=
   ['_5f_5frbit',['__RBIT',['../group__intrinsic__CPU__gr.html#gad6f9f297f6b91a995ee199fbc796b863',1,'Ref_cmInstr.txt']]],
   ['_5f_5frev',['__REV',['../group__intrinsic__CPU__gr.html#ga4717abc17af5ba29b1e4c055e0a0d9b8',1,'Ref_cmInstr.txt']]],
   ['_5f_5frev16',['__REV16',['../group__intrinsic__CPU__gr.html#gaeef6f853b6df3a365c838ee5b49a7a26',1,'Ref_cmInstr.txt']]],
-  ['_5f_5frevsh',['__REVSH',['../group__intrinsic__CPU__gr.html#ga1ec006e6d79063363cb0c2a2e0b3adbe',1,'Ref_cmInstr.txt']]],
+  ['_5f_5frevsh',['__REVSH',['../group__intrinsic__CPU__gr.html#ga211618c03a0bf3264a7b22ad626d4f0a',1,'Ref_cmInstr.txt']]],
   ['_5f_5fror',['__ROR',['../group__intrinsic__CPU__gr.html#gaf66beb577bb9d90424c3d1d7f684c024',1,'Ref_cmInstr.txt']]],
   ['_5f_5frrx',['__RRX',['../group__intrinsic__CPU__gr.html#gac09134f1bf9c49db07282001afcc9380',1,'Ref_cmInstr.txt']]],
   ['_5f_5fsadd16',['__SADD16',['../group__intrinsic__SIMD__gr.html#gad0bf46373a1c05aabf64517e84be5984',1,'Ref_cm4_simd.txt']]],

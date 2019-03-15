@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-DSP
-   &#160;<span id="projectnumber">Version 1.5.2</span>
+   &#160;<span id="projectnumber">Version 1.5.5</span>
    </div>
    <div id="projectbrief">CMSIS DSP Software Library</div>
   </td>
@@ -204,10 +204,10 @@ $(document).ready(function(){initNavTree('arm_sin_cos_example_f32_8c-example.htm
 <div class="line">    <a class="code" href="arm__sin__cos__example__f32_8c.html#a85b1050fcef4347d69f35a9aee798f8a">cosOutput</a> = <a name="a11"></a><a class="code" href="group__cos.html#gace15287f9c64b9b4084d1c797d4c49d8">arm_cos_f32</a>(<a class="code" href="arm__sin__cos__example__f32_8c.html#a8b3b7113988efd5bf11a247d07ae39a1">testInput_f32</a>[i]);</div>
 <div class="line">    <a class="code" href="arm__sin__cos__example__f32_8c.html#a1e232694019f6b61710fbff5ee27126c">sinOutput</a> = <a name="a12"></a><a class="code" href="group__sin.html#gae164899c4a3fc0e946dc5d55555fe541">arm_sin_f32</a>(<a class="code" href="arm__sin__cos__example__f32_8c.html#a8b3b7113988efd5bf11a247d07ae39a1">testInput_f32</a>[i]);</div>
 <div class="line"></div>
-<div class="line">    <a name="a13"></a><a class="code" href="group__BasicMult.html#gaca3f0b8227da431ab29225b88888aa32">arm_mult_f32</a>(&amp;<a class="code" href="arm__sin__cos__example__f32_8c.html#a85b1050fcef4347d69f35a9aee798f8a">cosOutput</a>, &amp;<a class="code" href="arm__sin__cos__example__f32_8c.html#a85b1050fcef4347d69f35a9aee798f8a">cosOutput</a>, &amp;<a class="code" href="arm__sin__cos__example__f32_8c.html#a2cb185794dcb587d158f346ab049cc4e">cosSquareOutput</a>, 1);</div>
-<div class="line">    <a class="code" href="group__BasicMult.html#gaca3f0b8227da431ab29225b88888aa32">arm_mult_f32</a>(&amp;<a class="code" href="arm__sin__cos__example__f32_8c.html#a1e232694019f6b61710fbff5ee27126c">sinOutput</a>, &amp;<a class="code" href="arm__sin__cos__example__f32_8c.html#a1e232694019f6b61710fbff5ee27126c">sinOutput</a>, &amp;<a class="code" href="arm__sin__cos__example__f32_8c.html#aa5a66e866ebb91eb971f2805209e9d36">sinSquareOutput</a>, 1);</div>
+<div class="line">    <a name="a13"></a><a class="code" href="group__BasicMult.html#gacf950935141cad927bea886e88fd9e9b">arm_mult_f32</a>(&amp;<a class="code" href="arm__sin__cos__example__f32_8c.html#a85b1050fcef4347d69f35a9aee798f8a">cosOutput</a>, &amp;<a class="code" href="arm__sin__cos__example__f32_8c.html#a85b1050fcef4347d69f35a9aee798f8a">cosOutput</a>, &amp;<a class="code" href="arm__sin__cos__example__f32_8c.html#a2cb185794dcb587d158f346ab049cc4e">cosSquareOutput</a>, 1);</div>
+<div class="line">    <a class="code" href="group__BasicMult.html#gacf950935141cad927bea886e88fd9e9b">arm_mult_f32</a>(&amp;<a class="code" href="arm__sin__cos__example__f32_8c.html#a1e232694019f6b61710fbff5ee27126c">sinOutput</a>, &amp;<a class="code" href="arm__sin__cos__example__f32_8c.html#a1e232694019f6b61710fbff5ee27126c">sinOutput</a>, &amp;<a class="code" href="arm__sin__cos__example__f32_8c.html#aa5a66e866ebb91eb971f2805209e9d36">sinSquareOutput</a>, 1);</div>
 <div class="line"></div>
-<div class="line">    <a name="a14"></a><a class="code" href="group__BasicAdd.html#ga6a904a547413b10565dd1d251c6bafbd">arm_add_f32</a>(&amp;<a class="code" href="arm__sin__cos__example__f32_8c.html#a2cb185794dcb587d158f346ab049cc4e">cosSquareOutput</a>, &amp;<a class="code" href="arm__sin__cos__example__f32_8c.html#aa5a66e866ebb91eb971f2805209e9d36">sinSquareOutput</a>, &amp;<a class="code" href="arm__sin__cos__example__f32_8c.html#a324833b61eae796082e07d078a67c34f">testOutput</a>, 1);</div>
+<div class="line">    <a name="a14"></a><a class="code" href="group__BasicAdd.html#gabfef1e86e458314a61f4baa441d9765e">arm_add_f32</a>(&amp;<a class="code" href="arm__sin__cos__example__f32_8c.html#a2cb185794dcb587d158f346ab049cc4e">cosSquareOutput</a>, &amp;<a class="code" href="arm__sin__cos__example__f32_8c.html#aa5a66e866ebb91eb971f2805209e9d36">sinSquareOutput</a>, &amp;<a class="code" href="arm__sin__cos__example__f32_8c.html#a324833b61eae796082e07d078a67c34f">testOutput</a>, 1);</div>
 <div class="line"></div>
 <div class="line">    <span class="comment">/* absolute value of difference between ref and test */</span></div>
 <div class="line">    diff = fabsf(<a class="code" href="arm__sin__cos__example__f32_8c.html#a8bcb5c1f75ed5f1737e435f0de1850a3">testRefOutput_f32</a> - <a class="code" href="arm__sin__cos__example__f32_8c.html#a324833b61eae796082e07d078a67c34f">testOutput</a>);</div>
@@ -233,7 +233,7 @@ $(document).ready(function(){initNavTree('arm_sin_cos_example_f32_8c-example.htm
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Aug 1 2018 17:12:18 for CMSIS-DSP by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Fri Mar 15 2019 16:30:41 for CMSIS-DSP by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

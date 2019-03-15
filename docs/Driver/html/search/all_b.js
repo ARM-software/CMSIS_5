@@ -26,7 +26,11 @@ var searchData=
   ['mmc_5fboot',['mmc_boot',['../group__mci__interface__gr.html#a072a194948489d4dbd2409b94fdca56b',1,'ARM_MCI_CAPABILITIES']]],
   ['mmc_5finterrupt',['mmc_interrupt',['../group__mci__interface__gr.html#a3303194ea68bd1094841d4f958f6dbbf',1,'ARM_MCI_CAPABILITIES']]],
   ['mode',['mode',['../group__i2c__interface__gr.html#a6b29e4f37f4482274af785ad5ffe96a7',1,'ARM_I2C_STATUS']]],
+  ['mode_5fad_5fhoc',['mode_ad_hoc',['../group__wifi__control__gr.html#a03e2afdee736773d9ecf9de3613112f5',1,'ARM_WIFI_CAPABILITIES']]],
+  ['mode_5fap',['mode_ap',['../group__wifi__control__gr.html#ad52b854e92ebad2becc9c4b497b833f0',1,'ARM_WIFI_CAPABILITIES']]],
   ['mode_5ffault',['mode_fault',['../group__spi__interface__gr.html#aeaf54ec655b7a64b9e88578c5f39d4e3',1,'ARM_SPI_STATUS']]],
+  ['mode_5fstation',['mode_station',['../group__wifi__control__gr.html#a49bfb2a8757719e95497d081c5180827',1,'ARM_WIFI_CAPABILITIES']]],
+  ['mode_5fstation_5fap',['mode_station_ap',['../group__wifi__control__gr.html#ab5c1e808f778b2a88555a9f1e75766a9',1,'ARM_WIFI_CAPABILITIES']]],
   ['monitor_5fmode',['monitor_mode',['../group__can__interface__gr.html#a176f42e68d9cba86b3594c40044b86c6',1,'ARM_CAN_CAPABILITIES']]],
   ['mono_5fmode',['mono_mode',['../group__sai__interface__gr.html#a8d92817d8662211abda2d747c52ff4a9',1,'ARM_SAI_CAPABILITIES']]],
   ['multiple_5ffilters',['multiple_filters',['../group__can__interface__gr.html#a3662fb9a8fb81212043cadd90da704af',1,'ARM_CAN_OBJ_CAPABILITIES']]]

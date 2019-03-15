@@ -1,7 +1,7 @@
 var group__BasicMult =
 [
-    [ "arm_mult_f32", "group__BasicMult.html#gaca3f0b8227da431ab29225b88888aa32", null ],
-    [ "arm_mult_q15", "group__BasicMult.html#gafb0778d27ed98a2a6f2ecb7d48cc8c75", null ],
-    [ "arm_mult_q31", "group__BasicMult.html#ga3528c0f54a0607acc603f0490d3ca6c6", null ],
-    [ "arm_mult_q7", "group__BasicMult.html#ga16677275ed83ff0878da531e875c27ef", null ]
+    [ "arm_mult_f32", "group__BasicMult.html#gacf950935141cad927bea886e88fd9e9b", null ],
+    [ "arm_mult_q15", "group__BasicMult.html#gaeeda8cdc2c7e79c8a26e905342a0bb17", null ],
+    [ "arm_mult_q31", "group__BasicMult.html#gaf12c75306edf16759bdedd849984324e", null ],
+    [ "arm_mult_q7", "group__BasicMult.html#ga7b852d225dd7e91f19107fdcea38a3cb", null ]
 ];

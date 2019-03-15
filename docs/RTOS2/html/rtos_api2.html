@@ -129,7 +129,7 @@ Common Design Concepts</h1>
 <p><b>Object Usage</b></p>
 <p>After an object has been created successfully it can be used until it is destroyed. The actions defined for an object depends on its type. Commonly all the <code>osXxxDoSomething</code> access function require the reference to the object to work with as the first <code>xxx_id</code> parameter.</p>
 <p>The access function can be assumed to apply some sort of sanity checking on the id parameter. So that it is assured one cannot accidentally call an access function with a <span class="XML-Token">NULL</span> object reference. Furthermore the concrete object type is verified, i.e. one cannot call access functions of one object type with a reference to another object type.</p>
-<p>All further parameter checks applied are either object and action specific or may even be implementation specific. Thus one should always check action function return values for <code>osErrorParameter</code> to asure the provided arguments were accepted.</p>
+<p>All further parameter checks applied are either object and action specific or may even be implementation specific. Thus one should always check action function return values for <code>osErrorParameter</code> to assure the provided arguments were accepted.</p>
 <p>As a rule of thumb only non-blocking access function can be used from <a class="el" href="theory_of_operation.html#CMSIS_RTOS_ISR_Calls">Interrupt Service Routines</a> (ISR). This incorporates <code>osXxxWait</code> functions (and similar) limited to be called with parameter <code>timeout</code> set to <span class="XML-Token">0</span>, i.e. usage of try-semantics.</p>
 <p><b>Object Destruction</b></p>
 <p>Objects that are not needed anymore can be destructed on demand to free the control block memory. Objects are not destructed implicitly. Thus one can assume an object id to be valid until <code>osXxxDelete</code> is called explicitly. The delete function finally frees the control block memory. In case of user provided control block memory, see above, the memory must be freed manually as well.</p>
@@ -263,7 +263,7 @@ Function Reference</h1>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="index.html">index</a></li><li class="navelem"><a class="el" href="functionOverview.html">Function Overview</a></li>
-    <li class="footer">Generated on Wed Aug 1 2018 17:12:45 for CMSIS-RTOS2 by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Fri Mar 15 2019 16:31:17 for CMSIS-RTOS2 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

@@ -388,7 +388,7 @@ Global Configuration</h2>
 <div class="image">
 <img src="config_wizard_evtrecGlobIni.png" alt="config_wizard_evtrecGlobIni.png"/>
 <div class="caption">
-RTX_Config.h: Initialization and filter setup configuration</div></div>
+RTX_Config.h: Global Configuration</div></div>
 <p> <br/>
 </p>
 <table class="doxtable">
@@ -444,23 +444,27 @@ RTX_Config.h: RTOS Event Filter Setup</div></div>
 <tr>
 <th>Name </th><th>#define </th><th>Description  </th></tr>
 <tr>
-<td>Memory Management </td><td><code>OS_EVR_MEMORY_FILTER</code> </td><td>Filter enable for Memory Management events. </td></tr>
+<td>Memory Management </td><td><code>OS_EVR_MEMORY_LEVEL</code> </td><td>Recording level for Memory Management events. </td></tr>
 <tr>
-<td>Kernel </td><td><code>OS_EVR_KERNEL_FILTER</code> </td><td>Filter enable for Kernel events. </td></tr>
+<td>Kernel </td><td><code>OS_EVR_KERNEL_LEVEL</code> </td><td>Recording level for Kernel events. </td></tr>
 <tr>
-<td>Thread </td><td><code>OS_EVR_THREAD_FILTER</code> </td><td>Filter enable for Thread events. </td></tr>
+<td>Thread </td><td><code>OS_EVR_THREAD_LEVEL</code> </td><td>Recording level for Thread events. </td></tr>
 <tr>
-<td>Timer </td><td><code>OS_EVR_TIMER_FILTER</code> </td><td>Filter enable for Timer events. </td></tr>
+<td>Generic Wait </td><td><code>OS_EVR_WAIT_LEVEL</code> </td><td>Recording level for Generic Wait events. </td></tr>
 <tr>
-<td>Event Flags </td><td><code>OS_EVR_EVFLAGS_FILTER</code> </td><td>Filter enable for Event Flags events. </td></tr>
+<td>Thread Flags </td><td><code>OS_EVR_THFLAGS_LEVEL</code> </td><td>Recording level for Thread Flags events. </td></tr>
 <tr>
-<td>Mutex </td><td><code>OS_EVR_MUTEX_FILTER</code> </td><td>Filter enable for Mutex events. </td></tr>
+<td>Event Flags </td><td><code>OS_EVR_EVFLAGS_LEVEL</code> </td><td>Recording level for Event Flags events. </td></tr>
 <tr>
-<td>Semaphore </td><td><code>OS_EVR_SEMAPHORE_FILTER</code> </td><td>Filter enable for Semaphore events. </td></tr>
+<td>Timer </td><td><code>OS_EVR_TIMER_LEVEL</code> </td><td>Recording level for Timer events. </td></tr>
 <tr>
-<td>Memory Pool </td><td><code>OS_EVR_MEMPOOL_FILTER</code> </td><td>Filter enable for Memory Pool events. </td></tr>
+<td>Mutex </td><td><code>OS_EVR_MUTEX_LEVEL</code> </td><td>Recording level for Mutex events. </td></tr>
 <tr>
-<td>Message Queue </td><td><code>OS_EVR_MSGQUEUE_FILTER</code> </td><td>Filter enable for Message Queue events. </td></tr>
+<td>Semaphore </td><td><code>OS_EVR_SEMAPHORE_LEVEL</code> </td><td>Recording level for Semaphore events. </td></tr>
+<tr>
+<td>Memory Pool </td><td><code>OS_EVR_MEMPOOL_LEVEL</code> </td><td>Recording level for Memory Pool events. </td></tr>
+<tr>
+<td>Message Queue </td><td><code>OS_EVR_MSGQUEUE_LEVEL</code> </td><td>Recording level for Message Queue events. </td></tr>
 </table>
 <h2><a class="anchor" id="evtrecConfigEvtGen"></a>
 RTOS Event Generation</h2>
@@ -475,23 +479,27 @@ RTX_Config.h: Event generation configuration</div></div>
 <tr>
 <th>Name </th><th>#define </th><th>Description  </th></tr>
 <tr>
-<td>Memory Management </td><td><code>OS_EVR_MEMORY</code> </td><td>Enables Memory Management events recording. </td></tr>
+<td>Memory Management </td><td><code>OS_EVR_MEMORY</code> </td><td>Enables Memory Management events generation. </td></tr>
 <tr>
-<td>Kernel </td><td><code>OS_EVR_KERNEL</code> </td><td>Enables Kernel events recording. </td></tr>
+<td>Kernel </td><td><code>OS_EVR_KERNEL</code> </td><td>Enables Kernel events generation. </td></tr>
 <tr>
-<td>Thread </td><td><code>OS_EVR_THREAD</code> </td><td>Enables Thread events recording. </td></tr>
+<td>Thread </td><td><code>OS_EVR_THREAD</code> </td><td>Enables Thread events generation. </td></tr>
 <tr>
-<td>Timer </td><td><code>OS_EVR_TIMER</code> </td><td>Enables Timer events recording. </td></tr>
+<td>Generic Wait </td><td><code>OS_EVR_WAIT</code> </td><td>Enables Generic Wait events generation. </td></tr>
 <tr>
-<td>Event Flags </td><td><code>OS_EVR_EVFLAGS</code> </td><td>Enables Event Flags events recording. </td></tr>
+<td>Thread Flags </td><td><code>OS_EVR_THFLAGS</code> </td><td>Enables Thread Flags events generation. </td></tr>
 <tr>
-<td>Mutex </td><td><code>OS_EVR_MUTEX</code> </td><td>Enables Mutex events recording. </td></tr>
+<td>Event Flags </td><td><code>OS_EVR_EVFLAGS</code> </td><td>Enables Event Flags events generation. </td></tr>
 <tr>
-<td>Semaphore </td><td><code>OS_EVR_SEMAPHORE</code> </td><td>Enables Semaphore events recording. </td></tr>
+<td>Timer </td><td><code>OS_EVR_TIMER</code> </td><td>Enables Timer events generation. </td></tr>
 <tr>
-<td>Memory Pool </td><td><code>OS_EVR_MEMPOOL</code> </td><td>Enables Memory Pool events recording. </td></tr>
+<td>Mutex </td><td><code>OS_EVR_MUTEX</code> </td><td>Enables Mutex events generation. </td></tr>
 <tr>
-<td>Message Queue </td><td><code>OS_EVR_MSGQUEUE</code> </td><td>Enables Message Queue events recording. </td></tr>
+<td>Semaphore </td><td><code>OS_EVR_SEMAPHORE</code> </td><td>Enables Semaphore events generation. </td></tr>
+<tr>
+<td>Memory Pool </td><td><code>OS_EVR_MEMPOOL</code> </td><td>Enables Memory Pool events generation. </td></tr>
+<tr>
+<td>Message Queue </td><td><code>OS_EVR_MSGQUEUE</code> </td><td>Enables Message Queue events generation. </td></tr>
 </table>
 <dl class="section note"><dt>Note</dt><dd>If event generation for a component is disabled, the code that generates the related events is not included. Thus, <a class="el" href="config_rtx5.html#evtrecConfigGlobIni">filters</a> for this component will have no effect and the debugger is unable to display any events for the related component group.</dd></dl>
 <h2><a class="anchor" id="systemConfig_event_recording"></a>
@@ -502,15 +510,15 @@ Manual event configuration</h2>
 <p><b>Kernel</b> <b>events</b> <br/>
 <code>EVR_RTX_KERNEL_ERROR_DISABLE</code>, <code>EVR_RTX_KERNEL_INITIALIZE_DISABLE</code>, <code>EVR_RTX_KERNEL_INITIALIZED_DISABLE</code>, <code>EVR_RTX_KERNEL_GET_INFO_DISABLE</code>, <code>EVR_RTX_KERNEL_INFO_RETRIEVED_DISABLE</code>, <code>EVR_RTX_KERNEL_GET_STATE_DISABLE</code>, <code>EVR_RTX_KERNEL_START_DISABLE</code>, <code>EVR_RTX_KERNEL_STARTED_DISABLE</code>, <code>EVR_RTX_KERNEL_LOCK_DISABLE</code>, <code>EVR_RTX_KERNEL_LOCKED_DISABLE</code>, <code>EVR_RTX_KERNEL_UNLOCK_DISABLE</code>, <code>EVR_RTX_KERNEL_UNLOCKED_DISABLE</code>, <code>EVR_RTX_KERNEL_RESTORE_LOCK_DISABLE</code>, <code>EVR_RTX_KERNEL_LOCK_RESTORED_DISABLE</code>, <code>EVR_RTX_KERNEL_SUSPEND_DISABLE</code>, <code>EVR_RTX_KERNEL_SUSPENDED_DISABLE</code>, <code>EVR_RTX_KERNEL_RESUME_DISABLE</code>, <code>EVR_RTX_KERNEL_RESUMED_DISABLE</code>, <code>EVR_RTX_KERNEL_GET_TICK_COUNT_DISABLE</code>, <code>EVR_RTX_KERNEL_GET_TICK_FREQ_DISABLE</code>, <code>EVR_RTX_KERNEL_GET_SYS_TIMER_COUNT_DISABLE</code>, <code>EVR_RTX_KERNEL_GET_SYS_TIMER_FREQ_DISABLE</code> </p>
 <p><b>Thread</b> <b>events</b> <br/>
-<code>EVR_RTX_THREAD_ERROR_DISABLE</code>, <code>EVR_RTX_THREAD_NEW_DISABLE</code>, <code>EVR_RTX_THREAD_CREATED_DISABLE</code>, <code>EVR_RTX_THREAD_GET_NAME_DISABLE</code>, <code>EVR_RTX_THREAD_GET_ID_DISABLE</code>, <code>EVR_RTX_THREAD_GET_STATE_DISABLE</code>, <code>EVR_RTX_THREAD_GET_STACK_SIZE_DISABLE</code>, <code>EVR_RTX_THREAD_GET_STACK_SPACE_DISABLE</code>, <code>EVR_RTX_THREAD_SET_PRIORITY_DISABLE</code>, <code>EVR_RTX_THREAD_GET_PRIORITY_DISABLE</code>, <code>EVR_RTX_THREAD_YIELD_DISABLE</code>, <code>EVR_RTX_THREAD_SUSPEND_DISABLE</code>, <code>EVR_RTX_THREAD_SUSPENDED_DISABLE</code>, <code>EVR_RTX_THREAD_RESUME_DISABLE</code>, <code>EVR_RTX_THREAD_RESUMED_DISABLE</code>, <code>EVR_RTX_THREAD_DETACH_DISABLE</code>, <code>EVR_RTX_THREAD_DETACHED_DISABLE</code>, <code>EVR_RTX_THREAD_JOIN_DISABLE</code>, <code>EVR_RTX_THREAD_JOIN_PENDING_DISABLE</code>, <code>EVR_RTX_THREAD_JOINED_DISABLE</code>, <code>EVR_RTX_THREAD_BLOCKED_DISABLE</code>, <code>EVR_RTX_THREAD_UNBLOCKED_DISABLE</code>, <code>EVR_RTX_THREAD_PREEMPTED_DISABLE</code>, <code>EVR_RTX_THREAD_SWITCHED_DISABLE</code>, <code>EVR_RTX_THREAD_EXIT_DISABLE</code>, <code>EVR_RTX_THREAD_TERMINATE_DISABLE</code>, <code>EVR_RTX_THREAD_DESTROYED_DISABLE</code>, <code>EVR_RTX_THREAD_GET_COUNT_DISABLE</code>, <code>EVR_RTX_THREAD_ENUMERATE_DISABLE</code> </p>
-<p><b>Thread</b> <b>flag</b> <b>events</b> <br/>
-<code>EVR_RTX_THREAD_FLAGS_SET_DISABLE</code>, <code>EVR_RTX_THREAD_FLAGS_SET_DONE_DISABLE</code>, <code>EVR_RTX_THREAD_FLAGS_CLEAR_DISABLE</code>, <code>EVR_RTX_THREAD_FLAGS_CLEAR_DONE_DISABLE</code>, <code>EVR_RTX_THREAD_FLAGS_GET_DISABLE</code>, <code>EVR_RTX_THREAD_FLAGS_WAIT_DISABLE</code>, <code>EVR_RTX_THREAD_FLAGS_WAIT_PENDING_DISABLE</code>, <code>EVR_RTX_THREAD_FLAGS_WAIT_TIMEOUT_DISABLE</code>, <code>EVR_RTX_THREAD_FLAGS_WAIT_COMPLETED_DISABLE</code>, <code>EVR_RTX_THREAD_FLAGS_WAIT_NOT_COMPLETED_DISABLE</code> </p>
+<code>EVR_RTX_THREAD_ERROR_DISABLE</code>, <code>EVR_RTX_THREAD_NEW_DISABLE</code>, <code>EVR_RTX_THREAD_CREATED_DISABLE</code>, <code>EVR_RTX_THREAD_GET_NAME_DISABLE</code>, <code>EVR_RTX_THREAD_GET_ID_DISABLE</code>, <code>EVR_RTX_THREAD_GET_STATE_DISABLE</code>, <code>EVR_RTX_THREAD_GET_STACK_SIZE_DISABLE</code>, <code>EVR_RTX_THREAD_GET_STACK_SPACE_DISABLE</code>, <code>EVR_RTX_THREAD_SET_PRIORITY_DISABLE</code>, <code>EVR_RTX_THREAD_PRIORITY_UPDATED_DISABLE</code>, <code>EVR_RTX_THREAD_GET_PRIORITY_DISABLE</code>, <code>EVR_RTX_THREAD_YIELD_DISABLE</code>, <code>EVR_RTX_THREAD_SUSPEND_DISABLE</code>, <code>EVR_RTX_THREAD_SUSPENDED_DISABLE</code>, <code>EVR_RTX_THREAD_RESUME_DISABLE</code>, <code>EVR_RTX_THREAD_RESUMED_DISABLE</code>, <code>EVR_RTX_THREAD_DETACH_DISABLE</code>, <code>EVR_RTX_THREAD_DETACHED_DISABLE</code>, <code>EVR_RTX_THREAD_JOIN_DISABLE</code>, <code>EVR_RTX_THREAD_JOIN_PENDING_DISABLE</code>, <code>EVR_RTX_THREAD_JOINED_DISABLE</code>, <code>EVR_RTX_THREAD_BLOCKED_DISABLE</code>, <code>EVR_RTX_THREAD_UNBLOCKED_DISABLE</code>, <code>EVR_RTX_THREAD_PREEMPTED_DISABLE</code>, <code>EVR_RTX_THREAD_SWITCHED_DISABLE</code>, <code>EVR_RTX_THREAD_EXIT_DISABLE</code>, <code>EVR_RTX_THREAD_TERMINATE_DISABLE</code>, <code>EVR_RTX_THREAD_DESTROYED_DISABLE</code>, <code>EVR_RTX_THREAD_GET_COUNT_DISABLE</code>, <code>EVR_RTX_THREAD_ENUMERATE_DISABLE</code> </p>
 <p><b>Generic</b> <b>wait</b> <b>events</b> <br/>
-<code>EVR_RTX_THREAD_DELAY_DISABLE</code>, <code>EVR_RTX_THREAD_DELAY_UNTIL_DISABLE</code>, <code>EVR_RTX_THREAD_DELAY_COMPLETED_DISABLE</code> </p>
-<p><b>Timer</b> <b>events</b> <br/>
-<code>EVR_RTX_TIMER_ERROR_DISABLE</code>, <code>EVR_RTX_TIMER_CALLBACK_DISABLE</code>, <code>EVR_RTX_TIMER_NEW_DISABLE</code>, <code>EVR_RTX_TIMER_CREATED_DISABLE</code>, <code>EVR_RTX_TIMER_GET_NAME_DISABLE</code>, <code>EVR_RTX_TIMER_START_DISABLE</code>, <code>EVR_RTX_TIMER_STARTED_DISABLE</code>, <code>EVR_RTX_TIMER_STOP_DISABLE</code>, <code>EVR_RTX_TIMER_STOPPED_DISABLE</code>, <code>EVR_RTX_TIMER_IS_RUNNING_DISABLE</code>, <code>EVR_RTX_TIMER_DELETE_DISABLE</code>, <code>EVR_RTX_TIMER_DESTROYED_DISABLE</code> </p>
+<code>EVR_RTX_DELAY_ERROR_DISABLE</code>, <code>EVR_RTX_DELAY_DISABLE</code>, <code>EVR_RTX_DELAY_UNTIL_DISABLE</code>, <code>EVR_RTX_DELAY_STARTED_DISABLE</code>, <code>EVR_RTX_DELAY_UNTIL_STARTED_DISABLE</code>, <code>EVR_RTX_DELAY_COMPLETED_DISABLE</code> </p>
+<p><b>Thread</b> <b>flag</b> <b>events</b> <br/>
+<code>EVR_RTX_THREAD_FLAGS_ERROR_DISABLE</code>, <code>EVR_RTX_THREAD_FLAGS_SET_DISABLE</code>, <code>EVR_RTX_THREAD_FLAGS_SET_DONE_DISABLE</code>, <code>EVR_RTX_THREAD_FLAGS_CLEAR_DISABLE</code>, <code>EVR_RTX_THREAD_FLAGS_CLEAR_DONE_DISABLE</code>, <code>EVR_RTX_THREAD_FLAGS_GET_DISABLE</code>, <code>EVR_RTX_THREAD_FLAGS_WAIT_DISABLE</code>, <code>EVR_RTX_THREAD_FLAGS_WAIT_PENDING_DISABLE</code>, <code>EVR_RTX_THREAD_FLAGS_WAIT_TIMEOUT_DISABLE</code>, <code>EVR_RTX_THREAD_FLAGS_WAIT_COMPLETED_DISABLE</code>, <code>EVR_RTX_THREAD_FLAGS_WAIT_NOT_COMPLETED_DISABLE</code> </p>
 <p><b>Event</b> <b>flag</b> <b>events</b> <br/>
 <code>EVR_RTX_EVENT_FLAGS_ERROR_DISABLE</code>, <code>EVR_RTX_EVENT_FLAGS_NEW_DISABLE</code>, <code>EVR_RTX_EVENT_FLAGS_CREATED_DISABLE</code>, <code>EVR_RTX_EVENT_FLAGS_GET_NAME_DISABLE</code>, <code>EVR_RTX_EVENT_FLAGS_SET_DISABLE</code>, <code>EVR_RTX_EVENT_FLAGS_SET_DONE_DISABLE</code>, <code>EVR_RTX_EVENT_FLAGS_CLEAR_DISABLE</code>, <code>EVR_RTX_EVENT_FLAGS_CLEAR_DONE_DISABLE</code>, <code>EVR_RTX_EVENT_FLAGS_GET_DISABLE</code>, <code>EVR_RTX_EVENT_FLAGS_WAIT_DISABLE</code>, <code>EVR_RTX_EVENT_FLAGS_WAIT_PENDING_DISABLE</code>, <code>EVR_RTX_EVENT_FLAGS_WAIT_TIMEOUT_DISABLE</code>, <code>EVR_RTX_EVENT_FLAGS_WAIT_COMPLETED_DISABLE</code>, <code>EVR_RTX_EVENT_FLAGS_WAIT_NOT_COMPLETED_DISABLE</code>, <code>EVR_RTX_EVENT_FLAGS_DELETE_DISABLE</code>, <code>EVR_RTX_EVENT_FLAGS_DESTROYED_DISABLE</code> </p>
+<p><b>Timer</b> <b>events</b> <br/>
+<code>EVR_RTX_TIMER_ERROR_DISABLE</code>, <code>EVR_RTX_TIMER_CALLBACK_DISABLE</code>, <code>EVR_RTX_TIMER_NEW_DISABLE</code>, <code>EVR_RTX_TIMER_CREATED_DISABLE</code>, <code>EVR_RTX_TIMER_GET_NAME_DISABLE</code>, <code>EVR_RTX_TIMER_START_DISABLE</code>, <code>EVR_RTX_TIMER_STARTED_DISABLE</code>, <code>EVR_RTX_TIMER_STOP_DISABLE</code>, <code>EVR_RTX_TIMER_STOPPED_DISABLE</code>, <code>EVR_RTX_TIMER_IS_RUNNING_DISABLE</code>, <code>EVR_RTX_TIMER_DELETE_DISABLE</code>, <code>EVR_RTX_TIMER_DESTROYED_DISABLE</code> </p>
 <p><b>Mutex</b> <b>events</b> <br/>
 <code>EVR_RTX_MUTEX_ERROR_DISABLE</code>, <code>EVR_RTX_MUTEX_NEW_DISABLE</code>, <code>EVR_RTX_MUTEX_CREATED_DISABLE</code>, <code>EVR_RTX_MUTEX_GET_NAME_DISABLE</code>, <code>EVR_RTX_MUTEX_ACQUIRE_DISABLE</code>, <code>EVR_RTX_MUTEX_ACQUIRE_PENDING_DISABLE</code>, <code>EVR_RTX_MUTEX_ACQUIRE_TIMEOUT_DISABLE</code>, <code>EVR_RTX_MUTEX_ACQUIRED_DISABLE</code>, <code>EVR_RTX_MUTEX_NOT_ACQUIRED_DISABLE</code>, <code>EVR_RTX_MUTEX_RELEASE_DISABLE</code>, <code>EVR_RTX_MUTEX_RELEASED_DISABLE</code>, <code>EVR_RTX_MUTEX_GET_OWNER_DISABLE</code>, <code>EVR_RTX_MUTEX_DELETE_DISABLE</code>, <code>EVR_RTX_MUTEX_DESTROYED_DISABLE</code> </p>
 <p><b>Semaphore</b> <b>events</b> <br/>
@@ -525,7 +533,7 @@ Manual event configuration</h2>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="index.html">index</a></li><li class="navelem"><a class="el" href="rtx5_impl.html">RTX v5 Implementation</a></li>
-    <li class="footer">Generated on Wed Aug 1 2018 17:12:45 for CMSIS-RTOS2 by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Fri Mar 15 2019 16:31:17 for CMSIS-RTOS2 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

@@ -11,5 +11,6 @@ var modules =
     [ "SPI Interface", "group__spi__interface__gr.html", "group__spi__interface__gr" ],
     [ "Storage Interface", "group__storage__interface__gr.html", "group__storage__interface__gr" ],
     [ "USART Interface", "group__usart__interface__gr.html", "group__usart__interface__gr" ],
-    [ "USB Interface", "group__usb__interface__gr.html", "group__usb__interface__gr" ]
+    [ "USB Interface", "group__usb__interface__gr.html", "group__usb__interface__gr" ],
+    [ "WiFi Interface", "group__wifi__interface__gr.html", "group__wifi__interface__gr" ]
 ];

@@ -436,10 +436,10 @@ size of provided memory for control block <p>The size (in bytes) of memory block
 </ul>
 <p>Possible <a class="el" href="group__CMSIS__RTOS__Definitions.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813e">osStatus_t</a> return values:</p>
 <ul>
-<li><em>osOK:</em> the token has been obtained.</li>
+<li><em>osOK:</em> the token has been obtained and the token count decremented.</li>
 <li><em>osErrorTimeout:</em> the token could not be obtained in the given time.</li>
 <li><em>osErrorResource:</em> the token could not be obtained when no <em>timeout</em> was specified.</li>
-<li><em>osErrorParameter:</em> the parameter <em>semaphore_id</em> is incorrect.</li>
+<li><em>osErrorParameter:</em> the parameter <em>semaphore_id</em> is <span class="XML-Token">NULL</span> or invalid.</li>
 </ul>
 <dl class="section note"><dt>Note</dt><dd>May be called from <a class="el" href="theory_of_operation.html#CMSIS_RTOS_ISR_Calls">Interrupt Service Routines</a> if the parameter <em>timeout</em> is set to <span class="XML-Token">0</span>.</dd></dl>
 <p><b>Code Example</b></p>
@@ -470,9 +470,9 @@ size of provided memory for control block <p>The size (in bytes) of memory block
 <p>The function <b>osSemaphoreRelease</b> releases a token of the semaphore object specified by parameter <em>semaphore_id</em>. Tokens can only be released up to the maximum count specified at creation time, see <a class="el" href="group__CMSIS__RTOS__SemaphoreMgmt.html#ga2a39806ace781a0008a4374ca701b14a">osSemaphoreNew</a>. Other threads that currently wait for a token of this semaphore object will be put into the <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ThreadStates">READY</a> state.</p>
 <p>Possible <a class="el" href="group__CMSIS__RTOS__Definitions.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813e">osStatus_t</a> return values:</p>
 <ul>
-<li><em>osOK:</em> the token has been correctly released and the count increased.</li>
-<li><em>osErrorResource:</em> the maximum token count has been reached.</li>
-<li><em>osErrorParameter:</em> the parameter <em>semaphore_id</em> is incorrect.</li>
+<li><em>osOK:</em> the token has been released and the count incremented.</li>
+<li><em>osErrorResource:</em> the token could not be released (maximum token count has been reached).</li>
+<li><em>osErrorParameter:</em> the parameter <em>semaphore_id</em> is <span class="XML-Token">NULL</span> or invalid.</li>
 </ul>
 <dl class="section note"><dt>Note</dt><dd>This function may be called from <a class="el" href="theory_of_operation.html#CMSIS_RTOS_ISR_Calls">Interrupt Service Routines</a>.</dd></dl>
 <p><b>Code Example</b></p>
@@ -530,7 +530,7 @@ size of provided memory for control block <p>The size (in bytes) of memory block
 <ul>
 <li><em>osOK:</em> the semaphore object has been deleted.</li>
 <li><em>osErrorParameter:</em> the parameter <em>semaphore_id</em> is <span class="XML-Token">NULL</span> or invalid.</li>
-<li><em>osErrorResource:</em> the semaphore specified by parameter <em>semaphore_id</em> is in an invalid semaphore state.</li>
+<li><em>osErrorResource:</em> the semaphore is in an invalid state.</li>
 <li><em>osErrorISR:</em> <b>osSemaphoreDelete</b> cannot be called from interrupt service routines.</li>
 </ul>
 <dl class="section note"><dt>Note</dt><dd>This function <b>cannot</b> be called from <a class="el" href="theory_of_operation.html#CMSIS_RTOS_ISR_Calls">Interrupt Service Routines</a>. </dd></dl>
@@ -542,7 +542,7 @@ size of provided memory for control block <p>The size (in bytes) of memory block
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Aug 1 2018 17:12:45 for CMSIS-RTOS2 by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Fri Mar 15 2019 16:31:18 for CMSIS-RTOS2 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

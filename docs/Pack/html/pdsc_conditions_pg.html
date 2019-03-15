@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Pack
-   &#160;<span id="projectnumber">Version 1.5.0</span>
+   &#160;<span id="projectnumber">Version 1.6.0</span>
    </div>
    <div id="projectbrief">Delivery Mechanism for Software Packs</div>
   </td>
@@ -218,15 +218,15 @@ $(document).ready(function(){initNavTree('pdsc_conditions_pg.html','');});
 <tr>
 <th>Attributes </th><th>Description </th><th>Type </th><th>Use  </th></tr>
 <tr>
-<td>Dfamily<b>*</b> </td><td>Specifies the device family name (for example: STM32F2 Series). </td><td>xs:string </td><td>optional  </td></tr>
-<tr>
-<td>DsubFamily<b>*</b> </td><td>Specifies the device sub-family name (for example: STM32F205 Series). </td><td>xs:string </td><td>optional  </td></tr>
-<tr>
-<td>Dvariant<b>*</b> </td><td>Specifies the variant name of a device (for example: Step A). </td><td>xs:string </td><td>optional  </td></tr>
-<tr>
 <td>Dvendor </td><td>Specifies the silicon vendor of the device. Use predefined values as listed in the table <a class="el" href="pdsc_family_pg.html#DeviceVendorEnum">Device Vendor</a>. </td><td>DeviceVendorEnum </td><td>optional  </td></tr>
 <tr>
+<td>Dfamily<b>*</b> </td><td><b>DEPRECATED**</b> Specifies the device family name (for example: STM32F2 Series). </td><td>xs:string </td><td>optional  </td></tr>
+<tr>
+<td>DsubFamily<b>*</b> </td><td><b>DEPRECATED**</b>Specifies the device sub-family name (for example: STM32F205 Series). </td><td>xs:string </td><td>optional  </td></tr>
+<tr>
 <td>Dname<b>*</b> </td><td>Specifies the name of the device.  </td><td>xs:string </td><td>optional  </td></tr>
+<tr>
+<td>Dvariant<b>*</b> </td><td><b>DEPRECATED**</b>Specifies the variant name of a device (for example: Step A). </td><td>xs:string </td><td>optional  </td></tr>
 <tr>
 <td>Pname </td><td>Specifies the processor instance in case of multi processor devices. This allows to describe distinct conditions for a specific processor. </td><td>xs:string </td><td>optional  </td></tr>
 <tr>
@@ -289,6 +289,11 @@ $(document).ready(function(){initNavTree('pdsc_conditions_pg.html','');});
 <li>'?' matches any single character</li>
 <li>[abc] matches any character in the set (a,b,c)</li>
 </ul>
+<p><b>**)</b> These attributes must not be used in conditions because</p>
+<ul>
+<li>'Dfamily' and 'DsubFamily' turn out to be volatile.</li>
+<li>conditions shall only filter for selectable devices. 'Dvariant'effectively is just an alias for 'Dname'. Once a &lt;variant&gt; tag exists, the &lt;device&gt; tag no longer represents a selectable device.</li>
+</ul>
 <p>&#160;</p>
 <p><a class="anchor" id="CompilerEnumType"></a><b>Table: Compiler Types</b></p>
 <p>The tale list values representing a C/C++ compiler toolchains from a specific tool vendor. The tokens can be used in the elements:</p>
@@ -321,7 +326,7 @@ $(document).ready(function(){initNavTree('pdsc_conditions_pg.html','');});
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="packFormat.html">Pack Description (*.pdsc) Format</a></li>
-    <li class="footer">Generated on Wed Aug 1 2018 17:12:42 for CMSIS-Pack by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Fri Mar 15 2019 16:31:12 for CMSIS-Pack by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

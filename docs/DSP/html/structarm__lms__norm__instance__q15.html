@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-DSP
-   &#160;<span id="projectnumber">Version 1.5.2</span>
+   &#160;<span id="projectnumber">Version 1.5.5</span>
    </div>
    <div id="projectbrief">CMSIS DSP Software Library</div>
   </td>
@@ -135,8 +135,8 @@ Data Fields</h2></td></tr>
 <tr class="separator:a7ce00f21d11cfda6d963240641deea8c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa0d435fbcf7dedb7179d4467e9b79e9f"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structarm__lms__norm__instance__q15.html#aa0d435fbcf7dedb7179d4467e9b79e9f">postShift</a></td></tr>
 <tr class="separator:aa0d435fbcf7dedb7179d4467e9b79e9f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9aabb0e4c79f3db807e7a441fa36f5f8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="arm__math_8h.html#ab5a8fb21a5b3b983d5f54f31614052ea">q15_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structarm__lms__norm__instance__q15.html#a9aabb0e4c79f3db807e7a441fa36f5f8">recipTable</a></td></tr>
-<tr class="separator:a9aabb0e4c79f3db807e7a441fa36f5f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a07d272351a3291ed09e3f42447609df0"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="arm__math_8h.html#ab5a8fb21a5b3b983d5f54f31614052ea">q15_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structarm__lms__norm__instance__q15.html#a07d272351a3291ed09e3f42447609df0">recipTable</a></td></tr>
+<tr class="separator:a07d272351a3291ed09e3f42447609df0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1c81ded399919d8181026bc1c8602e7b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="arm__math_8h.html#ab5a8fb21a5b3b983d5f54f31614052ea">q15_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structarm__lms__norm__instance__q15.html#a1c81ded399919d8181026bc1c8602e7b">energy</a></td></tr>
 <tr class="separator:a1c81ded399919d8181026bc1c8602e7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3fc1d6f97d2c6d5324871de6895cb7e9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="arm__math_8h.html#ab5a8fb21a5b3b983d5f54f31614052ea">q15_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structarm__lms__norm__instance__q15.html#a3fc1d6f97d2c6d5324871de6895cb7e9">x0</a></td></tr>
@@ -154,8 +154,6 @@ Data Fields</h2></td></tr>
 </div><div class="memdoc">
 <p>saves previous frame energy. </p>
 
-<p>Referenced by <a class="el" href="group__LMS__NORM.html#ga213ab1ee2e154cc2fa30d667b1994b89">arm_lms_norm_init_q15()</a>, and <a class="el" href="group__LMS__NORM.html#gad47486a399dedb0bc85a5990ec5cf981">arm_lms_norm_q15()</a>.</p>
-
 </div>
 </div>
 <a class="anchor" id="a7ce00f21d11cfda6d963240641deea8c"></a>
@@ -168,8 +166,6 @@ Data Fields</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>step size that controls filter coefficient updates. </p>
-
-<p>Referenced by <a class="el" href="group__LMS__NORM.html#ga213ab1ee2e154cc2fa30d667b1994b89">arm_lms_norm_init_q15()</a>, and <a class="el" href="group__LMS__NORM.html#gad47486a399dedb0bc85a5990ec5cf981">arm_lms_norm_q15()</a>.</p>
 
 </div>
 </div>
@@ -184,8 +180,6 @@ Data Fields</h2></td></tr>
 </div><div class="memdoc">
 <p>Number of coefficients in the filter. </p>
 
-<p>Referenced by <a class="el" href="group__LMS__NORM.html#ga213ab1ee2e154cc2fa30d667b1994b89">arm_lms_norm_init_q15()</a>, and <a class="el" href="group__LMS__NORM.html#gad47486a399dedb0bc85a5990ec5cf981">arm_lms_norm_q15()</a>.</p>
-
 </div>
 </div>
 <a class="anchor" id="ae7bca648c75a2ffa02d87852bb78bc8a"></a>
@@ -198,8 +192,6 @@ Data Fields</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>points to the coefficient array. The array is of length numTaps. </p>
-
-<p>Referenced by <a class="el" href="group__LMS__NORM.html#ga213ab1ee2e154cc2fa30d667b1994b89">arm_lms_norm_init_q15()</a>, and <a class="el" href="group__LMS__NORM.html#gad47486a399dedb0bc85a5990ec5cf981">arm_lms_norm_q15()</a>.</p>
 
 </div>
 </div>
@@ -214,8 +206,6 @@ Data Fields</h2></td></tr>
 </div><div class="memdoc">
 <p>bit shift applied to coefficients. </p>
 
-<p>Referenced by <a class="el" href="group__LMS__NORM.html#ga213ab1ee2e154cc2fa30d667b1994b89">arm_lms_norm_init_q15()</a>, and <a class="el" href="group__LMS__NORM.html#gad47486a399dedb0bc85a5990ec5cf981">arm_lms_norm_q15()</a>.</p>
-
 </div>
 </div>
 <a class="anchor" id="aa4de490b3bdbd03561b76ee07901c8e3"></a>
@@ -229,22 +219,18 @@ Data Fields</h2></td></tr>
 </div><div class="memdoc">
 <p>points to the state variable array. The array is of length numTaps+blockSize-1. </p>
 
-<p>Referenced by <a class="el" href="group__LMS__NORM.html#ga213ab1ee2e154cc2fa30d667b1994b89">arm_lms_norm_init_q15()</a>, and <a class="el" href="group__LMS__NORM.html#gad47486a399dedb0bc85a5990ec5cf981">arm_lms_norm_q15()</a>.</p>
-
 </div>
 </div>
-<a class="anchor" id="a9aabb0e4c79f3db807e7a441fa36f5f8"></a>
+<a class="anchor" id="a07d272351a3291ed09e3f42447609df0"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="arm__math_8h.html#ab5a8fb21a5b3b983d5f54f31614052ea">q15_t</a>* arm_lms_norm_instance_q15::recipTable</td>
+          <td class="memname">const <a class="el" href="arm__math_8h.html#ab5a8fb21a5b3b983d5f54f31614052ea">q15_t</a>* arm_lms_norm_instance_q15::recipTable</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <p>Points to the reciprocal initial value table. </p>
-
-<p>Referenced by <a class="el" href="group__LMS__NORM.html#ga213ab1ee2e154cc2fa30d667b1994b89">arm_lms_norm_init_q15()</a>, and <a class="el" href="group__LMS__NORM.html#gad47486a399dedb0bc85a5990ec5cf981">arm_lms_norm_q15()</a>.</p>
 
 </div>
 </div>
@@ -259,8 +245,6 @@ Data Fields</h2></td></tr>
 </div><div class="memdoc">
 <p>saves previous input sample. </p>
 
-<p>Referenced by <a class="el" href="group__LMS__NORM.html#ga213ab1ee2e154cc2fa30d667b1994b89">arm_lms_norm_init_q15()</a>, and <a class="el" href="group__LMS__NORM.html#gad47486a399dedb0bc85a5990ec5cf981">arm_lms_norm_q15()</a>.</p>
-
 </div>
 </div>
 </div><!-- contents -->
@@ -269,7 +253,7 @@ Data Fields</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="structarm__lms__norm__instance__q15.html">arm_lms_norm_instance_q15</a></li>
-    <li class="footer">Generated on Wed Aug 1 2018 17:12:22 for CMSIS-DSP by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Fri Mar 15 2019 16:30:44 for CMSIS-DSP by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

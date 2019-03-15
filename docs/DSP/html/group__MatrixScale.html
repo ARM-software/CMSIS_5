@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-DSP
-   &#160;<span id="projectnumber">Version 1.5.2</span>
+   &#160;<span id="projectnumber">Version 1.5.5</span>
    </div>
    <div id="projectbrief">CMSIS DSP Software Library</div>
   </td>
@@ -168,15 +168,17 @@ Matrix Scaling of a 3 x 3 matrix</div></div>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">*pSrc</td><td>points to input matrix structure </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">pSrc</td><td>points to input matrix </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">scale</td><td>scale factor to be applied </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">*pDst</td><td>points to output matrix structure </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">pDst</td><td>points to output matrix structure </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The function returns either <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking. </dd></dl>
-
-<p>References <a class="el" href="arm__math_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6a7071b92f1f6bc3c5c312a237ea91105b">ARM_MATH_SIZE_MISMATCH</a>, <a class="el" href="arm__math_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6a9f8b2a10bd827fb4600e77d455902eb0">ARM_MATH_SUCCESS</a>, <a class="el" href="structarm__matrix__instance__f32.html#acdd1fb73734df68b89565c54f1dd8ae2">arm_matrix_instance_f32::numCols</a>, <a class="el" href="structarm__matrix__instance__f32.html#a23f4e34d70a82c9cad7612add5640b7b">arm_matrix_instance_f32::numRows</a>, <a class="el" href="structarm__matrix__instance__f32.html#af3917c032600a9dfd5ed4a96f074910a">arm_matrix_instance_f32::pData</a>, and <a class="el" href="arm__dotproduct__example__f32_8c.html#a88ccb294236ab22b00310c47164c53c3">status</a>.</p>
+<dl class="section return"><dt>Returns</dt><dd>execution status<ul>
+<li><a class="el" href="arm__math_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6a9f8b2a10bd827fb4600e77d455902eb0">ARM_MATH_SUCCESS</a> : Operation successful</li>
+<li><a class="el" href="arm__math_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6a7071b92f1f6bc3c5c312a237ea91105b">ARM_MATH_SIZE_MISMATCH</a> : Matrix size check failed </li>
+</ul>
+</dd></dl>
 
 </div>
 </div>
@@ -217,18 +219,19 @@ Matrix Scaling of a 3 x 3 matrix</div></div>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">*pSrc</td><td>points to input matrix </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">pSrc</td><td>points to input matrix </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">scaleFract</td><td>fractional portion of the scale factor </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">shift</td><td>number of bits to shift the result by </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">*pDst</td><td>points to output matrix structure </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">pDst</td><td>points to output matrix structure </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The function returns either <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.</dd></dl>
-<p><b>Scaling and Overflow Behavior:</b> </p>
-<dl class="section user"><dt></dt><dd>The input data <code>*pSrc</code> and <code>scaleFract</code> are in 1.15 format. These are multiplied to yield a 2.30 intermediate result and this is shifted with saturation to 1.15 format. </dd></dl>
-
-<p>References <a class="el" href="arm__math_8h.html#aa505179349146cf6186640b4c8b47714">__PKHBT</a>, <a class="el" href="arm__math_8h.html#af0d54ec57b936994a34f073d0049ea3f">_SIMD32_OFFSET</a>, <a class="el" href="arm__math_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6a7071b92f1f6bc3c5c312a237ea91105b">ARM_MATH_SIZE_MISMATCH</a>, <a class="el" href="arm__math_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6a9f8b2a10bd827fb4600e77d455902eb0">ARM_MATH_SUCCESS</a>, <a class="el" href="structarm__matrix__instance__q15.html#acbbce67ba058d8e1c867c71d57288c97">arm_matrix_instance_q15::numCols</a>, <a class="el" href="structarm__matrix__instance__q15.html#a9bac6ed54be287c4d4f01a1a28be65f5">arm_matrix_instance_q15::numRows</a>, <a class="el" href="structarm__matrix__instance__q15.html#a6da33a5553e634787d0f515cf8d724af">arm_matrix_instance_q15::pData</a>, and <a class="el" href="arm__dotproduct__example__f32_8c.html#a88ccb294236ab22b00310c47164c53c3">status</a>.</p>
+<dl class="section return"><dt>Returns</dt><dd>execution status<ul>
+<li><a class="el" href="arm__math_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6a9f8b2a10bd827fb4600e77d455902eb0">ARM_MATH_SUCCESS</a> : Operation successful</li>
+<li><a class="el" href="arm__math_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6a7071b92f1f6bc3c5c312a237ea91105b">ARM_MATH_SIZE_MISMATCH</a> : Matrix size check failed</li>
+</ul>
+</dd></dl>
+<dl class="section user"><dt>Scaling and Overflow Behavior</dt><dd>The input data <code>*pSrc</code> and <code>scaleFract</code> are in 1.15 format. These are multiplied to yield a 2.30 intermediate result and this is shifted with saturation to 1.15 format. </dd></dl>
 
 </div>
 </div>
@@ -269,18 +272,19 @@ Matrix Scaling of a 3 x 3 matrix</div></div>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">*pSrc</td><td>points to input matrix </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">pSrc</td><td>points to input matrix </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">scaleFract</td><td>fractional portion of the scale factor </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">shift</td><td>number of bits to shift the result by </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">*pDst</td><td>points to output matrix structure </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">pDst</td><td>points to output matrix structure </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The function returns either <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.</dd></dl>
-<p><b>Scaling and Overflow Behavior:</b> </p>
-<dl class="section user"><dt></dt><dd>The input data <code>*pSrc</code> and <code>scaleFract</code> are in 1.31 format. These are multiplied to yield a 2.62 intermediate result and this is shifted with saturation to 1.31 format. </dd></dl>
-
-<p>References <a class="el" href="arm__math_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6a7071b92f1f6bc3c5c312a237ea91105b">ARM_MATH_SIZE_MISMATCH</a>, <a class="el" href="arm__math_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6a9f8b2a10bd827fb4600e77d455902eb0">ARM_MATH_SUCCESS</a>, <a class="el" href="structarm__matrix__instance__q31.html#abd161da7614eda927157f18b698074b1">arm_matrix_instance_q31::numCols</a>, <a class="el" href="structarm__matrix__instance__q31.html#a63bacac158a821c8cfc06088d251598c">arm_matrix_instance_q31::numRows</a>, <a class="el" href="structarm__matrix__instance__q31.html#a09a64267c0579fef086efc9059741e56">arm_matrix_instance_q31::pData</a>, and <a class="el" href="arm__dotproduct__example__f32_8c.html#a88ccb294236ab22b00310c47164c53c3">status</a>.</p>
+<dl class="section return"><dt>Returns</dt><dd>execution status<ul>
+<li><a class="el" href="arm__math_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6a9f8b2a10bd827fb4600e77d455902eb0">ARM_MATH_SUCCESS</a> : Operation successful</li>
+<li><a class="el" href="arm__math_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6a7071b92f1f6bc3c5c312a237ea91105b">ARM_MATH_SIZE_MISMATCH</a> : Matrix size check failed</li>
+</ul>
+</dd></dl>
+<dl class="section user"><dt>Scaling and Overflow Behavior</dt><dd>The input data <code>*pSrc</code> and <code>scaleFract</code> are in 1.31 format. These are multiplied to yield a 2.62 intermediate result which is shifted with saturation to 1.31 format. </dd></dl>
 
 </div>
 </div>
@@ -289,7 +293,7 @@ Matrix Scaling of a 3 x 3 matrix</div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Aug 1 2018 17:12:22 for CMSIS-DSP by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Fri Mar 15 2019 16:30:43 for CMSIS-DSP by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

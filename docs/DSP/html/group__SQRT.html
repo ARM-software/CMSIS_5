@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-DSP
-   &#160;<span id="projectnumber">Version 1.5.2</span>
+   &#160;<span id="projectnumber">Version 1.5.5</span>
    </div>
    <div id="projectbrief">CMSIS DSP Software Library</div>
   </td>
@@ -116,10 +116,9 @@ $(document).ready(function(){initNavTree('group__SQRT.html','');});
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga697d82c2747a3302cf44e7c9583da2e8"><td class="memItemLeft" align="right" valign="top">CMSIS_INLINE __STATIC_INLINE <br class="typebreak"/>
-<a class="el" href="arm__math_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6">arm_status</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__SQRT.html#ga697d82c2747a3302cf44e7c9583da2e8">arm_sqrt_f32</a> (<a class="el" href="arm__math_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a> in, <a class="el" href="arm__math_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a> *pOut)</td></tr>
-<tr class="memdesc:ga697d82c2747a3302cf44e7c9583da2e8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Floating-point square root function.  <a href="#ga697d82c2747a3302cf44e7c9583da2e8">More...</a><br/></td></tr>
-<tr class="separator:ga697d82c2747a3302cf44e7c9583da2e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5f37f479666ee8ff9711b334286c60ed"><td class="memItemLeft" align="right" valign="top">__STATIC_FORCEINLINE <a class="el" href="arm__math_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6">arm_status</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__SQRT.html#ga5f37f479666ee8ff9711b334286c60ed">arm_sqrt_f32</a> (<a class="el" href="arm__math_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a> in, <a class="el" href="arm__math_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a> *pOut)</td></tr>
+<tr class="memdesc:ga5f37f479666ee8ff9711b334286c60ed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Floating-point square root function.  <a href="#ga5f37f479666ee8ff9711b334286c60ed">More...</a><br/></td></tr>
+<tr class="separator:ga5f37f479666ee8ff9711b334286c60ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga119e25831e141d734d7ef10636670058"><td class="memItemLeft" align="right" valign="top"><a class="el" href="arm__math_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6">arm_status</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__SQRT.html#ga119e25831e141d734d7ef10636670058">arm_sqrt_q31</a> (<a class="el" href="arm__math_8h.html#adc89a3547f5324b7b3b95adec3806bc0">q31_t</a> in, <a class="el" href="arm__math_8h.html#adc89a3547f5324b7b3b95adec3806bc0">q31_t</a> *pOut)</td></tr>
 <tr class="memdesc:ga119e25831e141d734d7ef10636670058"><td class="mdescLeft">&#160;</td><td class="mdescRight">Q31 square root function.  <a href="#ga119e25831e141d734d7ef10636670058">More...</a><br/></td></tr>
 <tr class="separator:ga119e25831e141d734d7ef10636670058"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -136,12 +135,12 @@ Functions</h2></td></tr>
     x0 = in/2                         [initial guess]
     x1 = 1/2 * ( x0 + in / x0)        [each iteration]
 </pre> <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="ga697d82c2747a3302cf44e7c9583da2e8"></a>
+<a class="anchor" id="ga5f37f479666ee8ff9711b334286c60ed"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">CMSIS_INLINE __STATIC_INLINE <a class="el" href="arm__math_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6">arm_status</a> arm_sqrt_f32 </td>
+          <td class="memname">__STATIC_FORCEINLINE <a class="el" href="arm__math_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6">arm_status</a> arm_sqrt_f32 </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="arm__math_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a>&#160;</td>
           <td class="paramname"><em>in</em>, </td>
@@ -161,16 +160,16 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">in</td><td>input value. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">pOut</td><td>square root of input value. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">in</td><td>input value </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">pOut</td><td>square root of input value </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The function returns ARM_MATH_SUCCESS if input value is positive value or ARM_MATH_ARGUMENT_ERROR if <code>in</code> is negative value and returns zero output for negative values. </dd></dl>
-
-<p>References <a class="el" href="arm__math_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6a74897e18d4b8f62b12a7d8a01dd2bb35">ARM_MATH_ARGUMENT_ERROR</a>, and <a class="el" href="arm__math_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6a9f8b2a10bd827fb4600e77d455902eb0">ARM_MATH_SUCCESS</a>.</p>
-
-<p>Referenced by <a class="el" href="group__cmplx__mag.html#gae45024c497392cde2ae358a76d435213">arm_cmplx_mag_f32()</a>, <a class="el" href="group__RMS.html#ga0e3ab1b57da32d45388d1fa90d7fd88c">arm_rms_f32()</a>, and <a class="el" href="group__STD.html#ga4969b5b5f3d001377bc401a3ee99dfc2">arm_std_f32()</a>.</p>
+<dl class="section return"><dt>Returns</dt><dd>execution status<ul>
+<li><a class="el" href="arm__math_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6a9f8b2a10bd827fb4600e77d455902eb0">ARM_MATH_SUCCESS</a> : input value is positive</li>
+<li><a class="el" href="arm__math_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6a74897e18d4b8f62b12a7d8a01dd2bb35">ARM_MATH_ARGUMENT_ERROR</a> : input value is negative; *pOut is set to 0 </li>
+</ul>
+</dd></dl>
 
 </div>
 </div>
@@ -199,24 +198,16 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">in</td><td>input value. The range of the input value is [0 +1) or 0x0000 to 0x7FFF. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">pOut</td><td>square root of input value. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">in</td><td>input value. The range of the input value is [0 +1) or 0x0000 to 0x7FFF </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">pOut</td><td>points to square root of input value </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The function returns ARM_MATH_SUCCESS if input value is positive value or ARM_MATH_ARGUMENT_ERROR if <code>in</code> is negative value and returns zero output for negative values.</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">in</td><td>input value. The range of the input value is [0 +1) or 0x0000 to 0x7FFF. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">*pOut</td><td>square root of input value. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>The function returns ARM_MATH_SUCCESS if the input value is positive and ARM_MATH_ARGUMENT_ERROR if the input is negative. For negative inputs, the function returns *pOut = 0. </dd></dl>
-
-<p>References <a class="el" href="arm__math_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6a74897e18d4b8f62b12a7d8a01dd2bb35">ARM_MATH_ARGUMENT_ERROR</a>, and <a class="el" href="arm__math_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6a9f8b2a10bd827fb4600e77d455902eb0">ARM_MATH_SUCCESS</a>.</p>
-
-<p>Referenced by <a class="el" href="group__cmplx__mag.html#ga0a4a8f77a6a51d9b3f3b9d729f85b7a4">arm_cmplx_mag_q15()</a>, <a class="el" href="group__RMS.html#gaf5b836b72dda9e5dfbbd17c7906fd13f">arm_rms_q15()</a>, and <a class="el" href="group__STD.html#gaf9d27afa9928ff28a63cd98ea9218a72">arm_std_q15()</a>.</p>
+<dl class="section return"><dt>Returns</dt><dd>execution status<ul>
+<li><a class="el" href="arm__math_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6a9f8b2a10bd827fb4600e77d455902eb0">ARM_MATH_SUCCESS</a> : input value is positive</li>
+<li><a class="el" href="arm__math_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6a74897e18d4b8f62b12a7d8a01dd2bb35">ARM_MATH_ARGUMENT_ERROR</a> : input value is negative; *pOut is set to 0 </li>
+</ul>
+</dd></dl>
 
 </div>
 </div>
@@ -245,24 +236,16 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">in</td><td>input value. The range of the input value is [0 +1) or 0x00000000 to 0x7FFFFFFF. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">pOut</td><td>square root of input value. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">in</td><td>input value. The range of the input value is [0 +1) or 0x00000000 to 0x7FFFFFFF </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">pOut</td><td>points to square root of input value </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The function returns ARM_MATH_SUCCESS if input value is positive value or ARM_MATH_ARGUMENT_ERROR if <code>in</code> is negative value and returns zero output for negative values.</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">in</td><td>input value. The range of the input value is [0 +1) or 0x00000000 to 0x7FFFFFFF. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">*pOut</td><td>square root of input value. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>The function returns ARM_MATH_SUCCESS if the input value is positive and ARM_MATH_ARGUMENT_ERROR if the input is negative. For negative inputs, the function returns *pOut = 0. </dd></dl>
-
-<p>References <a class="el" href="arm__math_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6a74897e18d4b8f62b12a7d8a01dd2bb35">ARM_MATH_ARGUMENT_ERROR</a>, and <a class="el" href="arm__math_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6a9f8b2a10bd827fb4600e77d455902eb0">ARM_MATH_SUCCESS</a>.</p>
-
-<p>Referenced by <a class="el" href="group__cmplx__mag.html#ga14f82f9230e9d96d5b9774e2fefcb7be">arm_cmplx_mag_q31()</a>, <a class="el" href="group__RMS.html#gae33015fda23fc44e7ead5e5ed7e8d314">arm_rms_q31()</a>, and <a class="el" href="group__STD.html#ga39495e74f96116178be085c9dc7742f5">arm_std_q31()</a>.</p>
+<dl class="section return"><dt>Returns</dt><dd>execution status<ul>
+<li><a class="el" href="arm__math_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6a9f8b2a10bd827fb4600e77d455902eb0">ARM_MATH_SUCCESS</a> : input value is positive</li>
+<li><a class="el" href="arm__math_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6a74897e18d4b8f62b12a7d8a01dd2bb35">ARM_MATH_ARGUMENT_ERROR</a> : input value is negative; *pOut is set to 0 </li>
+</ul>
+</dd></dl>
 
 </div>
 </div>
@@ -271,7 +254,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Aug 1 2018 17:12:21 for CMSIS-DSP by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Fri Mar 15 2019 16:30:43 for CMSIS-DSP by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Driver
-   &#160;<span id="projectnumber">Version 2.6.0</span>
+   &#160;<span id="projectnumber">Version 2.7.0</span>
    </div>
    <div id="projectbrief">Peripheral Interface for Middleware and Application Code</div>
   </td>
@@ -1157,9 +1157,9 @@ when Slave  </td><td>Set the Slave Select mode for the master to <b>Not used</b>
 <tr>
 <th>Parameter <em>event</em> </th><th>Bit </th><th>Description  </th><th>supported when <a class="el" href="group__spi__interface__gr.html#structARM__SPI__CAPABILITIES" title="SPI Driver Capabilities. ">ARM_SPI_CAPABILITIES</a>   </th></tr>
 <tr>
-<td><a class="el" href="group__SPI__events.html#gaabdfc9e17641144cd50d36d15511a1b8">ARM_SPI_EVENT_TRANSFER_COMPLETE</a> </td><td>0 </td><td>Occurs after call to <a class="el" href="group__spi__interface__gr.html#gab2a303d1071e926280d50682f4808479">ARM_SPI_Send</a>, <a class="el" href="group__spi__interface__gr.html#ga726aff54e782ed9b47f7ba1280a3d8f6">ARM_SPI_Receive</a>, or <a class="el" href="group__spi__interface__gr.html#gaa24026b3822c10272e301f1505136ec2">ARM_SPI_Transfer</a> to indicate that all the data has been transferred. The driver is ready for the next transfer operation.  </td><td><em>allways supported</em>   </td></tr>
+<td><a class="el" href="group__SPI__events.html#gaabdfc9e17641144cd50d36d15511a1b8">ARM_SPI_EVENT_TRANSFER_COMPLETE</a> </td><td>0 </td><td>Occurs after call to <a class="el" href="group__spi__interface__gr.html#gab2a303d1071e926280d50682f4808479">ARM_SPI_Send</a>, <a class="el" href="group__spi__interface__gr.html#ga726aff54e782ed9b47f7ba1280a3d8f6">ARM_SPI_Receive</a>, or <a class="el" href="group__spi__interface__gr.html#gaa24026b3822c10272e301f1505136ec2">ARM_SPI_Transfer</a> to indicate that all the data has been transferred. The driver is ready for the next transfer operation.  </td><td><em>always supported</em>   </td></tr>
 <tr>
-<td><a class="el" href="group__SPI__events.html#ga8e63d99c80ea56de596a8d0a51fd8244">ARM_SPI_EVENT_DATA_LOST</a> </td><td>1 </td><td>Occurs in slave mode when data is requested/sent by master but send/receive/transfer operation has not been started and indicates that data is lost. Occurs also in master mode when driver cannot transfer data fast enough.  </td><td><em>allways supported</em>   </td></tr>
+<td><a class="el" href="group__SPI__events.html#ga8e63d99c80ea56de596a8d0a51fd8244">ARM_SPI_EVENT_DATA_LOST</a> </td><td>1 </td><td>Occurs in slave mode when data is requested/sent by master but send/receive/transfer operation has not been started and indicates that data is lost. Occurs also in master mode when driver cannot transfer data fast enough.  </td><td><em>always supported</em>   </td></tr>
 <tr>
 <td><a class="el" href="group__SPI__events.html#ga7eaa229003689aa18598273490b3e630">ARM_SPI_EVENT_MODE_FAULT</a> </td><td>2 </td><td>Occurs in master mode when Slave Select is deactivated and indicates Master Mode Fault. The driver is ready for the next transfer operation.  </td><td>data field <em>event_mode_fault</em> = <span class="XML-Token">1</span>   </td></tr>
 </table>
@@ -1171,7 +1171,7 @@ when Slave  </td><td>Set the Slave Select mode for the master to <b>Not used</b>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Aug 1 2018 17:12:14 for CMSIS-Driver by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Fri Mar 15 2019 16:30:33 for CMSIS-Driver by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

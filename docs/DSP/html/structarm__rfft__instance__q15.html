@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-DSP
-   &#160;<span id="projectnumber">Version 1.5.2</span>
+   &#160;<span id="projectnumber">Version 1.5.5</span>
    </div>
    <div id="projectbrief">CMSIS DSP Software Library</div>
   </td>
@@ -133,10 +133,10 @@ Data Fields</h2></td></tr>
 <tr class="separator:a4c65cd40e0098ec2f5c0dc31488b9bc6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afd444d05858c5f419980e94e8240d5c3"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structarm__rfft__instance__q15.html#afd444d05858c5f419980e94e8240d5c3">twidCoefRModifier</a></td></tr>
 <tr class="separator:afd444d05858c5f419980e94e8240d5c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:affbf2de522ac029432d98e8373c0ec53"><td class="memItemLeft" align="right" valign="top"><a class="el" href="arm__math_8h.html#ab5a8fb21a5b3b983d5f54f31614052ea">q15_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structarm__rfft__instance__q15.html#affbf2de522ac029432d98e8373c0ec53">pTwiddleAReal</a></td></tr>
-<tr class="separator:affbf2de522ac029432d98e8373c0ec53"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a937d815022adc557b435ba8c6cd58b0d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="arm__math_8h.html#ab5a8fb21a5b3b983d5f54f31614052ea">q15_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structarm__rfft__instance__q15.html#a937d815022adc557b435ba8c6cd58b0d">pTwiddleBReal</a></td></tr>
-<tr class="separator:a937d815022adc557b435ba8c6cd58b0d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aab9899263ada770283136d01985a524f"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="arm__math_8h.html#ab5a8fb21a5b3b983d5f54f31614052ea">q15_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structarm__rfft__instance__q15.html#aab9899263ada770283136d01985a524f">pTwiddleAReal</a></td></tr>
+<tr class="separator:aab9899263ada770283136d01985a524f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5b288a44a0ce0154b1fed9386627c4b5"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="arm__math_8h.html#ab5a8fb21a5b3b983d5f54f31614052ea">q15_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structarm__rfft__instance__q15.html#a5b288a44a0ce0154b1fed9386627c4b5">pTwiddleBReal</a></td></tr>
+<tr class="separator:a5b288a44a0ce0154b1fed9386627c4b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4329c15b056444746d37ff082a24d31a"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="structarm__cfft__instance__q15.html">arm_cfft_instance_q15</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structarm__rfft__instance__q15.html#a4329c15b056444746d37ff082a24d31a">pCfft</a></td></tr>
 <tr class="separator:a4329c15b056444746d37ff082a24d31a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -152,8 +152,6 @@ Data Fields</h2></td></tr>
 </div><div class="memdoc">
 <p>flag that enables (bitReverseFlagR=1) or disables (bitReverseFlagR=0) bit reversal of output. </p>
 
-<p>Referenced by <a class="el" href="group__RealFFT.html#ga053450cc600a55410ba5b5605e96245d">arm_rfft_init_q15()</a>, and <a class="el" href="group__RealFFT.html#ga00e615f5db21736ad5b27fb6146f3fc5">arm_rfft_q15()</a>.</p>
-
 </div>
 </div>
 <a class="anchor" id="aac5cf9e825917cbb14f439e56bb86ab3"></a>
@@ -166,8 +164,6 @@ Data Fields</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>length of the real FFT. </p>
-
-<p>Referenced by <a class="el" href="group__RealFFT.html#ga053450cc600a55410ba5b5605e96245d">arm_rfft_init_q15()</a>, and <a class="el" href="group__RealFFT.html#ga00e615f5db21736ad5b27fb6146f3fc5">arm_rfft_q15()</a>.</p>
 
 </div>
 </div>
@@ -182,8 +178,6 @@ Data Fields</h2></td></tr>
 </div><div class="memdoc">
 <p>flag that selects forward (ifftFlagR=0) or inverse (ifftFlagR=1) transform. </p>
 
-<p>Referenced by <a class="el" href="group__RealFFT.html#ga053450cc600a55410ba5b5605e96245d">arm_rfft_init_q15()</a>, and <a class="el" href="group__RealFFT.html#ga00e615f5db21736ad5b27fb6146f3fc5">arm_rfft_q15()</a>.</p>
-
 </div>
 </div>
 <a class="anchor" id="a4329c15b056444746d37ff082a24d31a"></a>
@@ -197,37 +191,31 @@ Data Fields</h2></td></tr>
 </div><div class="memdoc">
 <p>points to the complex FFT instance. </p>
 
-<p>Referenced by <a class="el" href="group__RealFFT.html#ga053450cc600a55410ba5b5605e96245d">arm_rfft_init_q15()</a>, and <a class="el" href="group__RealFFT.html#ga00e615f5db21736ad5b27fb6146f3fc5">arm_rfft_q15()</a>.</p>
-
 </div>
 </div>
-<a class="anchor" id="affbf2de522ac029432d98e8373c0ec53"></a>
+<a class="anchor" id="aab9899263ada770283136d01985a524f"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="arm__math_8h.html#ab5a8fb21a5b3b983d5f54f31614052ea">q15_t</a>* arm_rfft_instance_q15::pTwiddleAReal</td>
+          <td class="memname">const <a class="el" href="arm__math_8h.html#ab5a8fb21a5b3b983d5f54f31614052ea">q15_t</a>* arm_rfft_instance_q15::pTwiddleAReal</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <p>points to the real twiddle factor table. </p>
 
-<p>Referenced by <a class="el" href="group__RealFFT.html#ga053450cc600a55410ba5b5605e96245d">arm_rfft_init_q15()</a>, and <a class="el" href="group__RealFFT.html#ga00e615f5db21736ad5b27fb6146f3fc5">arm_rfft_q15()</a>.</p>
-
 </div>
 </div>
-<a class="anchor" id="a937d815022adc557b435ba8c6cd58b0d"></a>
+<a class="anchor" id="a5b288a44a0ce0154b1fed9386627c4b5"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="arm__math_8h.html#ab5a8fb21a5b3b983d5f54f31614052ea">q15_t</a>* arm_rfft_instance_q15::pTwiddleBReal</td>
+          <td class="memname">const <a class="el" href="arm__math_8h.html#ab5a8fb21a5b3b983d5f54f31614052ea">q15_t</a>* arm_rfft_instance_q15::pTwiddleBReal</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <p>points to the imag twiddle factor table. </p>
-
-<p>Referenced by <a class="el" href="group__RealFFT.html#ga053450cc600a55410ba5b5605e96245d">arm_rfft_init_q15()</a>, and <a class="el" href="group__RealFFT.html#ga00e615f5db21736ad5b27fb6146f3fc5">arm_rfft_q15()</a>.</p>
 
 </div>
 </div>
@@ -242,8 +230,6 @@ Data Fields</h2></td></tr>
 </div><div class="memdoc">
 <p>twiddle coefficient modifier that supports different size FFTs with the same twiddle factor table. </p>
 
-<p>Referenced by <a class="el" href="group__RealFFT.html#ga053450cc600a55410ba5b5605e96245d">arm_rfft_init_q15()</a>, and <a class="el" href="group__RealFFT.html#ga00e615f5db21736ad5b27fb6146f3fc5">arm_rfft_q15()</a>.</p>
-
 </div>
 </div>
 </div><!-- contents -->
@@ -252,7 +238,7 @@ Data Fields</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="structarm__rfft__instance__q15.html">arm_rfft_instance_q15</a></li>
-    <li class="footer">Generated on Wed Aug 1 2018 17:12:22 for CMSIS-DSP by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Fri Mar 15 2019 16:30:44 for CMSIS-DSP by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

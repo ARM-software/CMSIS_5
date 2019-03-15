@@ -138,10 +138,10 @@ Running PC-Lint within MDK - uVision</div></div>
 <li>includes definition file: au-misra3.lnt (12-Jun-2014)</li>
 </ul>
 </li>
-<li>Additional Lint Commands (for both single and mutiple files): <div class="fragment"><div class="line">- emacro(835,<a class="code" href="rtx__os_8h.html#a0eb4da5bed45820d732e23483b870152">osRtxConfigPrivilegedMode</a>)</div>
+<li>Additional Lint Commands (for both single and multiple files): <div class="fragment"><div class="line">- emacro(835,<a class="code" href="rtx__os_8h.html#a0eb4da5bed45820d732e23483b870152">osRtxConfigPrivilegedMode</a>)</div>
 </div><!-- fragment --></li>
 </ul>
-<p>The C source code is annotated with PC-Lint control comments to allows MISRA deviations. These deviations with the underlaying design decisions are described in the following.</p>
+<p>The C source code is annotated with PC-Lint control comments to allows MISRA deviations. These deviations with the underlying design decisions are described in the following.</p>
 <h2>Deviations </h2>
 <p>The RTX source code has the following deviations from MISRA:</p>
 <ul>
@@ -185,10 +185,10 @@ Running PC-Lint within MDK - uVision</div></div>
 <div class="fragment"><div class="line"><span class="comment">//lint -e{904} &quot;Return statement before end of function&quot; [MISRA Note 1]</span></div>
 </div><!-- fragment --><h1><a class="anchor" id="MISRA_2"></a>
 [MISRA Note 2]: Object identifiers are void pointers</h1>
-<p>CMSIS-RTOS is independant of an underlying RTOS implementation. The object idenifiers are therefore defined as void pointers to:</p>
+<p>CMSIS-RTOS is independent of an underlying RTOS implementation. The object identifiers are therefore defined as void pointers to:</p>
 <ul>
 <li>allow application programs that are agnostic from an underlying RTOS implementation.</li>
-<li>avoid accidently accesses an RTOS control block from an application program.</li>
+<li>avoid accidentally accesses an RTOS control block from an application program.</li>
 </ul>
 <p>This design decisions imply the following MISRA deviations:</p>
 <ul>
@@ -197,7 +197,7 @@ Running PC-Lint within MDK - uVision</div></div>
 </ul>
 <p>All locations in the source code are marked with: </p>
 <div class="fragment"><div class="line"><span class="comment">//lint -e{9079} -e{9087} &quot;cast from pointer to void to pointer to object type&quot; [MISRA Note 2]</span></div>
-</div><!-- fragment --><p>In the RTX5 implementation the requried pointer conversions are implemented in the header file rtx_lib.h with the following inline functions:</p>
+</div><!-- fragment --><p>In the RTX5 implementation the required pointer conversions are implemented in the header file rtx_lib.h with the following inline functions:</p>
 <div class="fragment"><div class="line"><a class="code" href="rtx__os_8h.html#structosRtxThread__t">osRtxThread_t</a>       *osRtxThreadId (osThread_t thread_id);</div>
 <div class="line"><a class="code" href="rtx__os_8h.html#structosRtxTimer__t">osRtxTimer_t</a>        *osRtxTimerId (osTimer_t timer_id);</div>
 <div class="line"><a class="code" href="rtx__os_8h.html#structosRtxEventFlags__t">osRtxEventFlags_t</a>   *osRtxEventFlagsId (osEventFlags_t ef_id);</div>
@@ -207,7 +207,7 @@ Running PC-Lint within MDK - uVision</div></div>
 <div class="line"><a class="code" href="rtx__os_8h.html#structosRtxMessageQueue__t">osRtxMessageQueue_t</a> *osRtxMessageQueueId(<a class="code" href="cmsis__os2_8h.html#a206dbc05367e03c39fc6d4d1ebcff317">osMessageQueueId_t</a> mq_id);</div>
 </div><!-- fragment --><h1><a class="anchor" id="MISRA_3"></a>
 [MISRA Note 3]: Conversion to unified object control blocks</h1>
-<p>RTX uses a unified object control block structure that contains common object members. The unified control blocks use a fixed layout at the beginning of the sturcture and starts always with an object identifier. This allows common object functions that receive a pointer to a unified object control block and reference only the pointer or the members in the fixed layout. Using common object functions and data (for example the ISR queue) reduces code complexity and keeps the source code better structured. Refer also to <a class="el" href="misraCompliance5.html#MISRA_4">[MISRA Note 4]: Conversion from unified object control blocks</a></p>
+<p>RTX uses a unified object control block structure that contains common object members. The unified control blocks use a fixed layout at the beginning of the structure and starts always with an object identifier. This allows common object functions that receive a pointer to a unified object control block and reference only the pointer or the members in the fixed layout. Using common object functions and data (for example the ISR queue) reduces code complexity and keeps the source code better structured. Refer also to <a class="el" href="misraCompliance5.html#MISRA_4">[MISRA Note 4]: Conversion from unified object control blocks</a></p>
 <p>This design decisions imply the following MISRA deviations:</p>
 <ul>
 <li>[MISRA 2012 Rule 11.3, required]: A cast shall not be performed between a pointer to object type and a pointer to a different object type</li>
@@ -215,11 +215,11 @@ Running PC-Lint within MDK - uVision</div></div>
 </ul>
 <p>All locations in the source code are marked with: </p>
 <div class="fragment"><div class="line"><span class="comment">//lint -e{9079} -e{9087} &quot;cast from pointer to void to pointer to object type&quot; [MISRA Note 3]</span></div>
-</div><!-- fragment --><p>In the RTX5 implementation the requried pointer conversions are implemented in the header file <em>rtx_lib.h</em> with the following inline function:</p>
+</div><!-- fragment --><p>In the RTX5 implementation the required pointer conversions are implemented in the header file <em>rtx_lib.h</em> with the following inline function:</p>
 <div class="fragment"><div class="line"><a class="code" href="rtx__os_8h.html#structosRtxObject__t">osRtxObject_t</a> *osRtxObject (<span class="keywordtype">void</span> *<span class="keywordtype">object</span>);</div>
 </div><!-- fragment --><h1><a class="anchor" id="MISRA_4"></a>
 [MISRA Note 4]: Conversion from unified object control blocks</h1>
-<p>RTX uses a unified object control block structure that contains common object members. Refer to <a class="el" href="misraCompliance5.html#MISRA_3">[MISRA Note 3]: Conversion to unified object control blocks</a> for more information. To process specifc control block data, pointer conversions are required.</p>
+<p>RTX uses a unified object control block structure that contains common object members. Refer to <a class="el" href="misraCompliance5.html#MISRA_3">[MISRA Note 3]: Conversion to unified object control blocks</a> for more information. To process specific control block data, pointer conversions are required.</p>
 <p>This design decisions imply the following MISRA deviations:</p>
 <ul>
 <li>[MISRA 2012 Rule 1.3, required]: There shall be no occurrence of undefined or critical unspecified behavior</li>
@@ -228,7 +228,7 @@ Running PC-Lint within MDK - uVision</div></div>
 </ul>
 <p>All locations in the source code are marked with: </p>
 <div class="fragment"><div class="line"><span class="comment">//lint -e{740} -e{826} -e{9087} &quot;cast from pointer to generic object to specific object&quot; [MISRA Note 4]</span></div>
-</div><!-- fragment --><p>In the RTX5 source code the requried pointer conversions are implemented in the header file <em>rtx_lib.h</em> with the following inline functions:</p>
+</div><!-- fragment --><p>In the RTX5 source code the required pointer conversions are implemented in the header file <em>rtx_lib.h</em> with the following inline functions:</p>
 <div class="fragment"><div class="line"><a class="code" href="rtx__os_8h.html#structosRtxThread__t">osRtxThread_t</a>       *osRtxThreadObject (<a class="code" href="rtx__os_8h.html#structosRtxObject__t">osRtxObject_t</a> *<span class="keywordtype">object</span>);</div>
 <div class="line"><a class="code" href="rtx__os_8h.html#structosRtxTimer__t">osRtxTimer_t</a>        *osRtxTimerObject (<a class="code" href="rtx__os_8h.html#structosRtxObject__t">osRtxObject_t</a> *<span class="keywordtype">object</span>);</div>
 <div class="line"><a class="code" href="rtx__os_8h.html#structosRtxEventFlags__t">osRtxEventFlags_t</a>   *osRtxEventFlagsObject (<a class="code" href="rtx__os_8h.html#structosRtxObject__t">osRtxObject_t</a> *<span class="keywordtype">object</span>);</div>
@@ -239,7 +239,7 @@ Running PC-Lint within MDK - uVision</div></div>
 <div class="line"><a class="code" href="rtx__os_8h.html#structosRtxMessage__t">osRtxMessage_t</a>      *osRtxMessageObject (<a class="code" href="rtx__os_8h.html#structosRtxObject__t">osRtxObject_t</a> *<span class="keywordtype">object</span>);</div>
 </div><!-- fragment --><h1><a class="anchor" id="MISRA_5"></a>
 [MISRA Note 5]: Conversion to object types</h1>
-<p>The RTX5 kernel has common memory management functions that use void pointers. These memory allocation fuctions returns a void pointer which is correctly aligned for object types.</p>
+<p>The RTX5 kernel has common memory management functions that use void pointers. These memory allocation functions return a void pointer which is correctly aligned for object types.</p>
 <p>This design decision implies the following MISRA deviations:</p>
 <ul>
 <li>[MISRA 2012 Rule 11.5, advisory]: A conversion should not be performed from pointer to void into pointer to object</li>
@@ -269,7 +269,7 @@ Running PC-Lint within MDK - uVision</div></div>
 <div class="line">    :</div>
 <div class="line">    <span class="comment">//lint -e{9079} &quot;conversion from pointer to void to pointer to other type&quot; [MISRA Note 6]</span></div>
 <div class="line">    timer = attr-&gt;<a class="code" href="group__CMSIS__RTOS__TimerMgmt.html#a1e100dc33d403841ed3c344e3397868e">cb_mem</a>;</div>
-<div class="line">        :</div>
+<div class="line">    :</div>
 </div><!-- fragment --><h1><a class="anchor" id="MISRA_7"></a>
 [MISRA Note 7]: Check for proper pointer alignment</h1>
 <p>RTX5 verifies the alignment of user provided storage for object control blocks, stack, and data storage. Refer also to <a class="el" href="misraCompliance5.html#MISRA_6">[MISRA Note 6]: Conversion from user provided storage</a> for more information.</p>
@@ -341,7 +341,7 @@ Running PC-Lint within MDK - uVision</div></div>
 [MISRA Note 11]: SVC calls use assembly code</h1>
 <p>The SVC (Service Call) functions are constructed as a mix of C and inline assembly as it is required to access CPU registers for parameter passing. The function parameters are mapped to the CPU registers R0..R3 and SVC function number to CPU register R12 (or R7). For assembly inter-working the function parameters are casted to unsigned int values.</p>
 <p>The function return value after SVC call is mapped to the CPU register R0. Return value is casted from unsigned int to the target value.</p>
-<p>It has been verified that this method has has no side-effects and is well defined.</p>
+<p>It has been verified that this method has no side-effects and is well defined.</p>
 <p>This design decision implies the following MISRA deviations:</p>
 <ul>
 <li>[MISRA 2012 Rule 10.3, required]: Expression assigned to a narrower or different essential type</li>
@@ -367,7 +367,8 @@ Running PC-Lint within MDK - uVision</div></div>
 </ul>
 <h1><a class="anchor" id="MISRA_12"></a>
 [MISRA Note 12]: Usage of exclusive access instructions</h1>
-<p>The RTX5 implementation uses the CPU instructions LDREX and STREX (when supported by the processor) to implement atomic operations. This atomic operations elimite the requirement for interrupt lock-outs. The atomic operations are implemented using inline assembly.</p>
+<p>The RTX5 implementation uses the CPU instructions LDREX and STREX (when supported by the processor) to implement atomic operations.</p>
+<p>These atomic operations eliminate the requirement for interrupt lock-outs. The atomic operations are implemented using inline assembly.</p>
 <p>PC-lint cannot process assembler instructions including the input/output operand lists and therefore falsely identifies issues:</p>
 <ul>
 <li>Symbol not initialized</li>
@@ -382,8 +383,8 @@ Running PC-Lint within MDK - uVision</div></div>
 <div class="line"><span class="comment">//lint --flb &quot;Library End&quot;</span></div>
 </div><!-- fragment --><h1><a class="anchor" id="MISRA_13"></a>
 [MISRA Note 13]: Usage of Event Recorder</h1>
-<p>The Event Recorder is a generic event logger and the related functions are called to record an event. The function parameters are 32-bit id, 32-bit values, pointer to void (data) and are recorded as 32-bit numbers. The parameters for the Event Recorder may require cast opertions to unsigned int which however has no side-effects and is well defined.</p>
-<p>The return value indicates success or failure. There is no need to check the return value since no action is taken when a Event Recorder function fail. The EventID macro (part of external Event Recorder) constructs the ID based on input parameters which are shifted, masked with '&amp;' and combined with '|'. Zero value input parameters are valid and cause zero used with '&amp;' and '|'.</p>
+<p>The Event Recorder is a generic event logger and the related functions are called to record an event. The function parameters are 32-bit id, 32-bit values, pointer to void (data) and are recorded as 32-bit numbers. The parameters for the Event Recorder may require cast operations to unsigned int which however has no side-effects and is well defined.</p>
+<p>The return value indicates success or failure. There is no need to check the return value since no action is taken when an Event Recorder function fail. The EventID macro (part of external Event Recorder) constructs the ID based on input parameters which are shifted, masked with '&amp;' and combined with '|'. Zero value input parameters are valid and cause zero used with '&amp;' and '|'.</p>
 <p>The usage of the Event Recorder implies the following MISRA deviations:</p>
 <ul>
 <li>[MISRA 2012 Rule 11.1, required]: Conversions shall not be performed between a pointer to a function and any other type</li>
@@ -400,7 +401,7 @@ Running PC-Lint within MDK - uVision</div></div>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="index.html">index</a></li><li class="navelem"><a class="el" href="rtx5_impl.html">RTX v5 Implementation</a></li>
-    <li class="footer">Generated on Wed Aug 1 2018 17:12:45 for CMSIS-RTOS2 by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Fri Mar 15 2019 16:31:17 for CMSIS-RTOS2 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

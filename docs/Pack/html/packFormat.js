@@ -8,6 +8,7 @@ var packFormat =
     ] ],
     [ "/package/keywords element", "element_keywords.html", null ],
     [ "/package/repository element", "element_repository.html", null ],
+    [ "/package/dominate element", "element_dominate.html", null ],
     [ "/package/releases element", "element_releases.html", [
       [ "/package/releases/release", "element_releases.html#element_release", null ]
     ] ],
@@ -59,6 +60,8 @@ var packFormat =
       [ "Component Files", "pdsc_components_pg.html#Component_Files", null ],
       [ "Component Instances", "pdsc_components_pg.html#Component_Instances", null ],
       [ "RTE_Components.h", "pdsc_components_pg.html#RTE_Components_h", null ],
+      [ "Pre_Include_Global_h", "pdsc_components_pg.html#Pre_Include_Global_h", null ],
+      [ "Pre_Include_Local_h", "pdsc_components_pg.html#Pre_Include_Local_h", null ],
       [ "/package/components", "pdsc_components_pg.html#element_components", null ],
       [ "/package/components/bundle", "pdsc_components_pg.html#element_bundle", null ],
       [ "/package/components/.../component", "pdsc_components_pg.html#element_component", null ],

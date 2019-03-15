@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-DSP
-   &#160;<span id="projectnumber">Version 1.5.2</span>
+   &#160;<span id="projectnumber">Version 1.5.5</span>
    </div>
    <div id="projectbrief">CMSIS DSP Software Library</div>
   </td>
@@ -129,8 +129,8 @@ Data Fields</h2></td></tr>
 <tr class="separator:ae6f94dcc0ccd8aa4bc699b20985d9df5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a389e669e13ec56292a70db8e92194b12"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structarm__fir__interpolate__instance__f32.html#a389e669e13ec56292a70db8e92194b12">phaseLength</a></td></tr>
 <tr class="separator:a389e669e13ec56292a70db8e92194b12"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a86053b715980a93c9df630d6de5bb63c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="arm__math_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structarm__fir__interpolate__instance__f32.html#a86053b715980a93c9df630d6de5bb63c">pCoeffs</a></td></tr>
-<tr class="separator:a86053b715980a93c9df630d6de5bb63c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9e1258a3dbe84fde28d5ee67311337f4"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="arm__math_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structarm__fir__interpolate__instance__f32.html#a9e1258a3dbe84fde28d5ee67311337f4">pCoeffs</a></td></tr>
+<tr class="separator:a9e1258a3dbe84fde28d5ee67311337f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a42a8ba1bda85fa86d7b6c84d3da4c75b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="arm__math_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structarm__fir__interpolate__instance__f32.html#a42a8ba1bda85fa86d7b6c84d3da4c75b">pState</a></td></tr>
 <tr class="separator:a42a8ba1bda85fa86d7b6c84d3da4c75b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -146,22 +146,18 @@ Data Fields</h2></td></tr>
 </div><div class="memdoc">
 <p>upsample factor. </p>
 
-<p>Referenced by <a class="el" href="group__FIR__Interpolate.html#ga9cae104c5cf60b4e7671c82264a8c12e">arm_fir_interpolate_f32()</a>, and <a class="el" href="group__FIR__Interpolate.html#ga0f857457a815946f7e4dca989ebf6ff6">arm_fir_interpolate_init_f32()</a>.</p>
-
 </div>
 </div>
-<a class="anchor" id="a86053b715980a93c9df630d6de5bb63c"></a>
+<a class="anchor" id="a9e1258a3dbe84fde28d5ee67311337f4"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="arm__math_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a>* arm_fir_interpolate_instance_f32::pCoeffs</td>
+          <td class="memname">const <a class="el" href="arm__math_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a>* arm_fir_interpolate_instance_f32::pCoeffs</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <p>points to the coefficient array. The array is of length L*phaseLength. </p>
-
-<p>Referenced by <a class="el" href="group__FIR__Interpolate.html#ga9cae104c5cf60b4e7671c82264a8c12e">arm_fir_interpolate_f32()</a>, and <a class="el" href="group__FIR__Interpolate.html#ga0f857457a815946f7e4dca989ebf6ff6">arm_fir_interpolate_init_f32()</a>.</p>
 
 </div>
 </div>
@@ -176,8 +172,6 @@ Data Fields</h2></td></tr>
 </div><div class="memdoc">
 <p>length of each polyphase filter component. </p>
 
-<p>Referenced by <a class="el" href="group__FIR__Interpolate.html#ga9cae104c5cf60b4e7671c82264a8c12e">arm_fir_interpolate_f32()</a>, and <a class="el" href="group__FIR__Interpolate.html#ga0f857457a815946f7e4dca989ebf6ff6">arm_fir_interpolate_init_f32()</a>.</p>
-
 </div>
 </div>
 <a class="anchor" id="a42a8ba1bda85fa86d7b6c84d3da4c75b"></a>
@@ -191,8 +185,6 @@ Data Fields</h2></td></tr>
 </div><div class="memdoc">
 <p>points to the state variable array. The array is of length phaseLength+numTaps-1. </p>
 
-<p>Referenced by <a class="el" href="group__FIR__Interpolate.html#ga9cae104c5cf60b4e7671c82264a8c12e">arm_fir_interpolate_f32()</a>, and <a class="el" href="group__FIR__Interpolate.html#ga0f857457a815946f7e4dca989ebf6ff6">arm_fir_interpolate_init_f32()</a>.</p>
-
 </div>
 </div>
 </div><!-- contents -->
@@ -201,7 +193,7 @@ Data Fields</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="structarm__fir__interpolate__instance__f32.html">arm_fir_interpolate_instance_f32</a></li>
-    <li class="footer">Generated on Wed Aug 1 2018 17:12:22 for CMSIS-DSP by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Fri Mar 15 2019 16:30:44 for CMSIS-DSP by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

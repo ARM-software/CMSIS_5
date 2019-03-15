@@ -18,5 +18,6 @@ var searchData=
   ['arm_5fusbh_5fhci_5finterrupt_5ft',['ARM_USBH_HCI_Interrupt_t',['../group__usbh__hci__gr.html#gac60df9d1f2b3a769f2c30141800a9806',1,'Driver_USBH.h']]],
   ['arm_5fusbh_5fpipe_5fhandle',['ARM_USBH_PIPE_HANDLE',['../group__usbh__host__gr.html#ga2e4d0ebd0851ba7bf364ae1d8948672c',1,'Driver_USBH.h']]],
   ['arm_5fusbh_5fsignalpipeevent_5ft',['ARM_USBH_SignalPipeEvent_t',['../group__usbh__host__gr.html#ga1a32ebfe0db4a002aae2b0c0f8ece30c',1,'Driver_USBH.h']]],
-  ['arm_5fusbh_5fsignalportevent_5ft',['ARM_USBH_SignalPortEvent_t',['../group__usbh__host__gr.html#ga61edcbb6ee863fe87abee488d78e1051',1,'Driver_USBH.h']]]
+  ['arm_5fusbh_5fsignalportevent_5ft',['ARM_USBH_SignalPortEvent_t',['../group__usbh__host__gr.html#ga61edcbb6ee863fe87abee488d78e1051',1,'Driver_USBH.h']]],
+  ['arm_5fwifi_5fsignalevent_5ft',['ARM_WIFI_SignalEvent_t',['../group__wifi__control__gr.html#gac0f04bbdd431c87a680626154c3e0a41',1,'Driver_WiFi.h']]]
 ];

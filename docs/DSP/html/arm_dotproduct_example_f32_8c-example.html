@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-DSP
-   &#160;<span id="projectnumber">Version 1.5.2</span>
+   &#160;<span id="projectnumber">Version 1.5.5</span>
    </div>
    <div id="projectbrief">CMSIS DSP Software Library</div>
   </td>
@@ -217,13 +217,13 @@ $(document).ready(function(){initNavTree('arm_dotproduct_example_f32_8c-example.
 <div class="line">  <a class="code" href="arm__math_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a> diff;     <span class="comment">/* Difference between reference and test outputs */</span></div>
 <div class="line"></div>
 <div class="line">  <span class="comment">/* Multiplication of two input buffers */</span></div>
-<div class="line">  <a name="a8"></a><a class="code" href="group__BasicMult.html#gaca3f0b8227da431ab29225b88888aa32">arm_mult_f32</a>(<a class="code" href="arm__dotproduct__example__f32_8c.html#a0c248a472fdc0507e4ab7d693e4876b6">srcA_buf_f32</a>, <a class="code" href="arm__dotproduct__example__f32_8c.html#a67d9082c1585d4854ae9ca38db170ff5">srcB_buf_f32</a>, <a class="code" href="arm__dotproduct__example__f32_8c.html#ad0bfd425dfe1ff2bda80fb957e464098">multOutput</a>, <a class="code" href="arm__dotproduct__example__f32_8c.html#af8a1d2ed31f7c9a00fec46a798edb61b">MAX_BLOCKSIZE</a>);</div>
+<div class="line">  <a name="a8"></a><a class="code" href="group__BasicMult.html#gacf950935141cad927bea886e88fd9e9b">arm_mult_f32</a>(<a class="code" href="arm__dotproduct__example__f32_8c.html#a0c248a472fdc0507e4ab7d693e4876b6">srcA_buf_f32</a>, <a class="code" href="arm__dotproduct__example__f32_8c.html#a67d9082c1585d4854ae9ca38db170ff5">srcB_buf_f32</a>, <a class="code" href="arm__dotproduct__example__f32_8c.html#ad0bfd425dfe1ff2bda80fb957e464098">multOutput</a>, <a class="code" href="arm__dotproduct__example__f32_8c.html#af8a1d2ed31f7c9a00fec46a798edb61b">MAX_BLOCKSIZE</a>);</div>
 <div class="line"></div>
 <div class="line">  <span class="comment">/* Accumulate the multiplication output values to</span></div>
 <div class="line"><span class="comment">     get the dot product of the two inputs */</span></div>
 <div class="line">  <span class="keywordflow">for</span>(i=0; i&lt; <a class="code" href="arm__dotproduct__example__f32_8c.html#af8a1d2ed31f7c9a00fec46a798edb61b">MAX_BLOCKSIZE</a>; i++)</div>
 <div class="line">  {</div>
-<div class="line">    <a name="a9"></a><a class="code" href="group__BasicAdd.html#ga6a904a547413b10565dd1d251c6bafbd">arm_add_f32</a>(&amp;<a class="code" href="arm__dotproduct__example__f32_8c.html#a324833b61eae796082e07d078a67c34f">testOutput</a>, &amp;<a class="code" href="arm__dotproduct__example__f32_8c.html#ad0bfd425dfe1ff2bda80fb957e464098">multOutput</a>[i], &amp;<a class="code" href="arm__dotproduct__example__f32_8c.html#a324833b61eae796082e07d078a67c34f">testOutput</a>, 1);</div>
+<div class="line">    <a name="a9"></a><a class="code" href="group__BasicAdd.html#gabfef1e86e458314a61f4baa441d9765e">arm_add_f32</a>(&amp;<a class="code" href="arm__dotproduct__example__f32_8c.html#a324833b61eae796082e07d078a67c34f">testOutput</a>, &amp;<a class="code" href="arm__dotproduct__example__f32_8c.html#ad0bfd425dfe1ff2bda80fb957e464098">multOutput</a>[i], &amp;<a class="code" href="arm__dotproduct__example__f32_8c.html#a324833b61eae796082e07d078a67c34f">testOutput</a>, 1);</div>
 <div class="line">  }</div>
 <div class="line"></div>
 <div class="line">  <span class="comment">/* absolute value of difference between ref and test */</span></div>
@@ -248,7 +248,7 @@ $(document).ready(function(){initNavTree('arm_dotproduct_example_f32_8c-example.
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Aug 1 2018 17:12:18 for CMSIS-DSP by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Fri Mar 15 2019 16:30:41 for CMSIS-DSP by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Pack
-   &#160;<span id="projectnumber">Version 1.5.0</span>
+   &#160;<span id="projectnumber">Version 1.6.0</span>
    </div>
    <div id="projectbrief">Delivery Mechanism for Software Packs</div>
   </td>
@@ -174,23 +174,47 @@ Pack File Name</h2>
 <h2><a class="anchor" id="pack_Cclass"></a>
 Software Component Cclasses</h2>
 <p>If you add a software component in the PDSC file, you have to specify a component class (CClass), component group (Cgroup), and the component's version number (Cversion). For more information refer to <a class="el" href="cp_SWComponents.html#cp_Components">Software Components</a>.</p>
-<p>If applicable, try to map the <b>Cclass</b> of your software component to one of the following predefined or already well established classes:</p>
-<ul>
-<li>Board Support: Generic interfaces for evaluation and development boards</li>
-<li>CMSIS: <em>Cortex Microcontroller Software Interface Standard</em> components</li>
-<li>CMSIS Driver: Unified device drivers compliant to the CMSIS-Driver specification</li>
-<li>Compiler: Arm Compiler software extensions</li>
-<li>Data Exchange: Software components for data exchange</li>
-<li>Device: Startup and system setup components</li>
-<li>File System*: File drive support and file system</li>
-<li>Graphics*: Graphical libraries for user interfaces</li>
-<li>Network*: Network stack using Internet protocols</li>
-<li>RTOS*: Real-time operating systems</li>
-<li>Safety: Components for testing application software against safety standards</li>
-<li>Security*: Encryption for secure communication or storage</li>
-<li>USB*: Universal Serial Bus stack</li>
-<li>Wireless*: Communication stacks such as Bluetooth, WiFi, and ZigBee</li>
-</ul>
+<p>If applicable, try to map the <b>Cclass</b> of your software component to one of the following predefined or already well established classes listed below. These <b>Cclass</b> names are pre-defined in the CMSIS pack using the <a class="el" href="element_taxonomy.html">taxonomy</a> element.</p>
+<table class="doxtable">
+<tr>
+<th align="left">Cclass </th><th align="left">Description  </th></tr>
+<tr>
+<td align="left">Audio </td><td align="left">Software components for audio processing </td></tr>
+<tr>
+<td align="left">Board Support </td><td align="left">Generic interfaces for evaluation and development boards </td></tr>
+<tr>
+<td align="left">Board Part * </td><td align="left">Drivers that support an external component available on an evaluation board </td></tr>
+<tr>
+<td align="left">CMSIS </td><td align="left"><em>Cortex Microcontroller Software Interface Standard</em> components </td></tr>
+<tr>
+<td align="left">CMSIS Driver </td><td align="left">Unified device drivers compliant to the CMSIS-Driver specification </td></tr>
+<tr>
+<td align="left">Compiler </td><td align="left">Arm Compiler software extensions </td></tr>
+<tr>
+<td align="left">Data Exchange </td><td align="left">Data exchange components or data formatter, for example JSON </td></tr>
+<tr>
+<td align="left">Device </td><td align="left">Startup and system setup components </td></tr>
+<tr>
+<td align="left">Extension Board * </td><td align="left">Drivers that support an extension boards or shield </td></tr>
+<tr>
+<td align="left">File System* </td><td align="left">File drive support and file system </td></tr>
+<tr>
+<td align="left">Graphics* </td><td align="left">Graphical libraries for user interfaces </td></tr>
+<tr>
+<td align="left">IoT Client * </td><td align="left">IoT cloud client connectors </td></tr>
+<tr>
+<td align="left">IoT Utility * </td><td align="left">IoT specific utilities, i.e. a socket interface </td></tr>
+<tr>
+<td align="left">Network* </td><td align="left">Network stack using Internet protocols </td></tr>
+<tr>
+<td align="left">RTOS* </td><td align="left">Real-time operating systems </td></tr>
+<tr>
+<td align="left">Security* </td><td align="left">Encryption for secure communication or storage </td></tr>
+<tr>
+<td align="left">USB* </td><td align="left">Universal Serial Bus stack </td></tr>
+<tr>
+<td align="left">Utility </td><td align="left">Generic software utility components </td></tr>
+</table>
 <p>Classes with a * should always be used together with a <a class="el" href="pdsc_components_pg.html#Component_Bundle">bundle</a> to avoid conflicts with other software components.</p>
 <p>If you wish to standardize a new Cclass, please send an inquiry to <a href="#" onclick="location.href='mai'+'lto:'+'cms'+'is'+'@ar'+'m.'+'com'; return false;">cmsis<span style="display: none;">.nosp@m.</span>@arm<span style="display: none;">.nosp@m.</span>.com</a> or raise an issue on the public <a href="https://github.com/ARM-software/CMSIS_5/issues">CMSIS GitHub development repository</a>.</p>
 <h1><a class="anchor" id="cp_PackSteps"></a>
@@ -224,7 +248,7 @@ Pack Tutorial</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Aug 1 2018 17:12:42 for CMSIS-Pack by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Fri Mar 15 2019 16:31:12 for CMSIS-Pack by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

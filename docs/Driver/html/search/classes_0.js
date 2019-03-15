@@ -19,6 +19,7 @@ var searchData=
   ['arm_5fdriver_5fusbh',['ARM_DRIVER_USBH',['../group__usbh__host__gr.html#structARM__DRIVER__USBH',1,'']]],
   ['arm_5fdriver_5fusbh_5fhci',['ARM_DRIVER_USBH_HCI',['../group__usbh__hci__gr.html#structARM__DRIVER__USBH__HCI',1,'']]],
   ['arm_5fdriver_5fversion',['ARM_DRIVER_VERSION',['../group__common__drv__gr.html#structARM__DRIVER__VERSION',1,'']]],
+  ['arm_5fdriver_5fwifi',['ARM_DRIVER_WIFI',['../group__wifi__interface__gr.html#structARM__DRIVER__WIFI',1,'']]],
   ['arm_5feth_5flink_5finfo',['ARM_ETH_LINK_INFO',['../group__eth__interface__gr.html#structARM__ETH__LINK__INFO',1,'']]],
   ['arm_5feth_5fmac_5faddr',['ARM_ETH_MAC_ADDR',['../group__eth__interface__gr.html#structARM__ETH__MAC__ADDR',1,'']]],
   ['arm_5feth_5fmac_5fcapabilities',['ARM_ETH_MAC_CAPABILITIES',['../group__eth__mac__interface__gr.html#structARM__ETH__MAC__CAPABILITIES',1,'']]],
@@ -51,5 +52,9 @@ var searchData=
   ['arm_5fusbd_5fstate',['ARM_USBD_STATE',['../group__usbd__interface__gr.html#structARM__USBD__STATE',1,'']]],
   ['arm_5fusbh_5fcapabilities',['ARM_USBH_CAPABILITIES',['../group__usbh__host__gr.html#structARM__USBH__CAPABILITIES',1,'']]],
   ['arm_5fusbh_5fhci_5fcapabilities',['ARM_USBH_HCI_CAPABILITIES',['../group__usbh__hci__gr.html#structARM__USBH__HCI__CAPABILITIES',1,'']]],
-  ['arm_5fusbh_5fport_5fstate',['ARM_USBH_PORT_STATE',['../group__usbh__host__gr.html#structARM__USBH__PORT__STATE',1,'']]]
+  ['arm_5fusbh_5fport_5fstate',['ARM_USBH_PORT_STATE',['../group__usbh__host__gr.html#structARM__USBH__PORT__STATE',1,'']]],
+  ['arm_5fwifi_5fcapabilities',['ARM_WIFI_CAPABILITIES',['../group__wifi__control__gr.html#structARM__WIFI__CAPABILITIES',1,'']]],
+  ['arm_5fwifi_5fconfig_5ft',['ARM_WIFI_CONFIG_t',['../group__wifi__management__gr.html#structARM__WIFI__CONFIG__t',1,'']]],
+  ['arm_5fwifi_5fnet_5finfo_5ft',['ARM_WIFI_NET_INFO_t',['../group__wifi__management__gr.html#structARM__WIFI__NET__INFO__t',1,'']]],
+  ['arm_5fwifi_5fscan_5finfo_5ft',['ARM_WIFI_SCAN_INFO_t',['../group__wifi__management__gr.html#structARM__WIFI__SCAN__INFO__t',1,'']]]
 ];

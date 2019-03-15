@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-DSP
-   &#160;<span id="projectnumber">Version 1.5.2</span>
+   &#160;<span id="projectnumber">Version 1.5.5</span>
    </div>
    <div id="projectbrief">CMSIS DSP Software Library</div>
   </td>
@@ -254,8 +254,8 @@ $(document).ready(function(){initNavTree('arm_convolution_example_f32_8c-example
 <div class="line">  <a class="code" href="group__Fill.html#ga2248e8d3901b4afb7827163132baad94">arm_fill_f32</a>(0.0,  <a class="code" href="arm__convolution__example__f32_8c.html#a88a0167516ae7ed66203fd60e6ddeea3">Bk</a>, <a class="code" href="arm__convolution__example__f32_8c.html#af8a1d2ed31f7c9a00fec46a798edb61b">MAX_BLOCKSIZE</a>);</div>
 <div class="line"></div>
 <div class="line">  <span class="comment">/* Copy the input values to the fft input buffers */</span></div>
-<div class="line">  <a name="a15"></a><a class="code" href="group__copy.html#gadd1f737e677e0e6ca31767c7001417b3">arm_copy_f32</a>(<a class="code" href="arm__convolution__example__f32_8c.html#a7db2f016e1afcb524a2fdc3c5a3cb640">testInputA_f32</a>,  <a class="code" href="arm__convolution__example__f32_8c.html#aed74eacd4b96cc7f71b64d18f2e95705">Ak</a>, <a class="code" href="arm__convolution__example__f32_8c.html#af8a1d2ed31f7c9a00fec46a798edb61b">MAX_BLOCKSIZE</a>/2);</div>
-<div class="line">  <a class="code" href="group__copy.html#gadd1f737e677e0e6ca31767c7001417b3">arm_copy_f32</a>(<a class="code" href="arm__convolution__example__f32_8c.html#acb22287e7e096b677e352dfd363ba60d">testInputB_f32</a>,  <a class="code" href="arm__convolution__example__f32_8c.html#a88a0167516ae7ed66203fd60e6ddeea3">Bk</a>, <a class="code" href="arm__convolution__example__f32_8c.html#af8a1d2ed31f7c9a00fec46a798edb61b">MAX_BLOCKSIZE</a>/2);</div>
+<div class="line">  <a name="a15"></a><a class="code" href="group__copy.html#gaa6dfe9554ca61eb3d1eee498396bce88">arm_copy_f32</a>(<a class="code" href="arm__convolution__example__f32_8c.html#a7db2f016e1afcb524a2fdc3c5a3cb640">testInputA_f32</a>,  <a class="code" href="arm__convolution__example__f32_8c.html#aed74eacd4b96cc7f71b64d18f2e95705">Ak</a>, <a class="code" href="arm__convolution__example__f32_8c.html#af8a1d2ed31f7c9a00fec46a798edb61b">MAX_BLOCKSIZE</a>/2);</div>
+<div class="line">  <a class="code" href="group__copy.html#gaa6dfe9554ca61eb3d1eee498396bce88">arm_copy_f32</a>(<a class="code" href="arm__convolution__example__f32_8c.html#acb22287e7e096b677e352dfd363ba60d">testInputB_f32</a>,  <a class="code" href="arm__convolution__example__f32_8c.html#a88a0167516ae7ed66203fd60e6ddeea3">Bk</a>, <a class="code" href="arm__convolution__example__f32_8c.html#af8a1d2ed31f7c9a00fec46a798edb61b">MAX_BLOCKSIZE</a>/2);</div>
 <div class="line"></div>
 <div class="line">  <span class="comment">/* Initialize the CFFT function to compute 64 point fft */</span></div>
 <div class="line">  status = <a name="a16"></a><a class="code" href="group__ComplexFFT.html#gaf336459f684f0b17bfae539ef1b1b78a">arm_cfft_radix4_init_f32</a>(cfft_instance_ptr, 64, 0, 1);</div>
@@ -266,7 +266,7 @@ $(document).ready(function(){initNavTree('arm_convolution_example_f32_8c-example
 <div class="line">  <a class="code" href="group__ComplexFFT.html#ga521f670cd9c571bc61aff9bec89f4c26">arm_cfft_radix4_f32</a>(cfft_instance_ptr, <a class="code" href="arm__convolution__example__f32_8c.html#a88a0167516ae7ed66203fd60e6ddeea3">Bk</a>);</div>
 <div class="line"></div>
 <div class="line">  <span class="comment">/* Complex Multiplication of the two input buffers in frequency domain */</span></div>
-<div class="line">  <a name="a18"></a><a class="code" href="group__CmplxByCmplxMult.html#ga14b47080054a1ba1250a86805be1ff6b">arm_cmplx_mult_cmplx_f32</a>(<a class="code" href="arm__convolution__example__f32_8c.html#aed74eacd4b96cc7f71b64d18f2e95705">Ak</a>, <a class="code" href="arm__convolution__example__f32_8c.html#a88a0167516ae7ed66203fd60e6ddeea3">Bk</a>, <a class="code" href="arm__convolution__example__f32_8c.html#a13521f3164dc55679f43b7cb2e41e098">AxB</a>, <a class="code" href="arm__convolution__example__f32_8c.html#af8a1d2ed31f7c9a00fec46a798edb61b">MAX_BLOCKSIZE</a>/2);</div>
+<div class="line">  <a name="a18"></a><a class="code" href="group__CmplxByCmplxMult.html#gae221504b01e4abfe5f335eafd801b4ed">arm_cmplx_mult_cmplx_f32</a>(<a class="code" href="arm__convolution__example__f32_8c.html#aed74eacd4b96cc7f71b64d18f2e95705">Ak</a>, <a class="code" href="arm__convolution__example__f32_8c.html#a88a0167516ae7ed66203fd60e6ddeea3">Bk</a>, <a class="code" href="arm__convolution__example__f32_8c.html#a13521f3164dc55679f43b7cb2e41e098">AxB</a>, <a class="code" href="arm__convolution__example__f32_8c.html#af8a1d2ed31f7c9a00fec46a798edb61b">MAX_BLOCKSIZE</a>/2);</div>
 <div class="line"></div>
 <div class="line">  <span class="comment">/* Initialize the CIFFT function to compute 64 point ifft */</span></div>
 <div class="line">  status = <a class="code" href="group__ComplexFFT.html#gaf336459f684f0b17bfae539ef1b1b78a">arm_cfft_radix4_init_f32</a>(cfft_instance_ptr, 64, 1, 1);</div>
@@ -298,7 +298,7 @@ $(document).ready(function(){initNavTree('arm_convolution_example_f32_8c-example
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Aug 1 2018 17:12:18 for CMSIS-DSP by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Fri Mar 15 2019 16:30:41 for CMSIS-DSP by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

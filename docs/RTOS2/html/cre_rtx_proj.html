@@ -125,7 +125,7 @@ $(document).ready(function(){initNavTree('cre_rtx_proj.html','');});
 <img src="project_window.png" alt="project_window.png"/>
 </div>
 </li>
-<li>If using the Variant: <b>Source</b> as statet above, you have to assure to use at least C99 compiler mode (Project Options -&gt; C/C++ -&gt; C99 Mode).</li>
+<li>If using the Variant: <b>Source</b> as stated above, you have to assure to use at least C99 compiler mode (Project Options -&gt; C/C++ -&gt; C99 Mode).</li>
 <li><p class="startli">You can add template files to the project by right-clicking on <b>Source Group 1</b> and selecting <b>Add New Item to 'Source Group 1'</b>. In the new window, click on <b>User Code Template</b>. On the right-hand side you will see all available template files for CMSIS-RTOS RTX:</p>
 <div class="image">
 <img src="add_item.png" alt="add_item.png"/>
@@ -157,9 +157,9 @@ Using Interrupts on Cortex-M</h1>
 <tr>
 <td align="left">PendSV </td><td align="left">lowest </td><td align="left">PendSV (request for system-level service) when calling certain RTX functions from <b>Handler</b> mode </td></tr>
 <tr>
-<td align="left">SCV </td><td align="left">lowest+1 </td><td align="left">Supervisor Call used to enter the RTOS kernel from <b>Thread</b> mode </td></tr>
+<td align="left">SVC </td><td align="left">lowest+1 </td><td align="left">Supervisor Call used to enter the RTOS kernel from <b>Thread</b> mode </td></tr>
 </table>
-<p>Other device interrupts can be used without limitation. For Arm Cortex-M3/M4/M7/M23/M33 processors, interrupts are never disabled by RTX Kernel.</p>
+<p>Other device interrupts can be used without limitation. For Arm Cortex-M3/M4/M7 /M23/M33/M35P processors, interrupts are never disabled by RTX Kernel.</p>
 <p><b>Usage of interrupt priority grouping</b></p>
 <ul>
 <li>The interrupt priority grouping should be configured using the CMSIS-Core function NVIC_SetPriorityGrouping before calling the function <a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#ga9ae2cc00f0d89d7b6a307bba942b5221">osKernelStart()</a>. The RTX kernel uses the priority group value to setup the priority for SysTick and PendSV interrupts.</li>
@@ -181,22 +181,22 @@ Add Event Recorder Visibility</h1>
 <p>RTX5 interfaces to the <a href="http://www.keil.com/pack/doc/compiler/EventRecorder/html/index.html" target="_blank"><b>Event Recorder</b></a> to provide event information which helps you to understand and analyze the operation.</p>
 <ul>
 <li>To use the Event Recorder together with RTX5, select the software component <b>Compiler:Event Recorder</b>.</li>
-<li>Select the <b>Source</b> variant of the software component <b>CMSIS:RTOS2 (API):Keil RTX5</b>. <div class="image">
+<li><p class="startli">Select the <b>Source</b> variant of the software component <b>CMSIS:RTOS2 (API):Keil RTX5</b>.</p>
+<div class="image">
 <img src="event_recorder_rte.png" alt="event_recorder_rte.png"/>
 <div class="caption">
 Component selection for Event Recorder</div></div>
 </li>
 <li>Enable the related settings under <a class="el" href="config_rtx5.html#evtrecConfig">Event Recorder Configuration</a>.</li>
-<li>Build the application code and download it to the debug hardware.</li>
+<li>Build the application code and download it to the debug hardware. Once the target application generates event information, it can be viewed in the µVision debugger using the <b>Event</b> <b>Recorder</b>. </li>
 </ul>
-<p>Once the target application generates event information, it can be viewed in the µVision debugger using the <b>Event</b> <b>Recorder</b>. </p>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="index.html">index</a></li><li class="navelem"><a class="el" href="rtx5_impl.html">RTX v5 Implementation</a></li>
-    <li class="footer">Generated on Wed Aug 1 2018 17:12:45 for CMSIS-RTOS2 by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Fri Mar 15 2019 16:31:16 for CMSIS-RTOS2 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

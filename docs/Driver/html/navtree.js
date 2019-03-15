@@ -41,11 +41,12 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "Driver__CAN_8h.html#ga11c12020b81a63a73a8b53e96a7e3deaa3b6d191c99f1eba4f01bcc5fbfaf67f3",
-"group__can__interface__gr.html#a96ec94acab56690b3801e3c5fbd09fa2",
-"group__flash__interface__gr.html#gaa8baa4618ea33568f8b3752afb2ab5a2",
-"group__nand__driver__ecc__codes.html#gaee653288a88318ee33d1db81baa69bbc",
-"group__spi__interface__gr.html#a7305e7248420cdb4b02ceba87672178d",
-"group__usbd__interface__gr.html#a6fbcf63ac9f962787cddc8f11a44dccb"
+"group__can__interface__gr.html#a2171ea8dff5e4b54e84728aa134854b6",
+"group__flash__interface__gr.html#a8dfb9d5160358e45293bba527762238d",
+"group__nand__bus__mode__codes.html#ga8a2d599082b9fe56cee1c6454bb3c6a1",
+"group__spi__bit__order__ctrls.html#ga41c53c3b396a89ce78018467e561aaaf",
+"group__usart__mode__control.html#gade65a1c27d9097d9ef0e86c02b55cecd",
+"group__wifi__protocol.html#gabacbead83c772f5737b25b4fc390e16d"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

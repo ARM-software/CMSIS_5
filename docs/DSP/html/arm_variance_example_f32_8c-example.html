@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-DSP
-   &#160;<span id="projectnumber">Version 1.5.2</span>
+   &#160;<span id="projectnumber">Version 1.5.5</span>
    </div>
    <div id="projectbrief">CMSIS DSP Software Library</div>
   </td>
@@ -214,13 +214,13 @@ $(document).ready(function(){initNavTree('arm_variance_example_f32_8c-example.ht
 <div class="line"></div>
 <div class="line">  <span class="comment">/* Calculate the dot product of wire1 and wire2 */</span></div>
 <div class="line">  <span class="comment">/* (x(0)* 1 + x(1) * 1 + ...+ x(n-1) * 1) */</span></div>
-<div class="line">  <a name="a12"></a><a class="code" href="group__dot__prod.html#ga55418d4362f6ba84c327f9b4f089a8c3">arm_dot_prod_f32</a>(<a class="code" href="arm__variance__example__f32_8c.html#a9170ec9e681e2b519fe9c46a30455841">testInput_f32</a>, <a class="code" href="arm__variance__example__f32_8c.html#acc43b372d92d5027b9f9cac782c8b3c7">wire1</a>, <a class="code" href="arm__variance__example__f32_8c.html#ab6558f40a619c2502fbc24c880fd4fb0">blockSize</a>, &amp;mean);</div>
+<div class="line">  <a name="a12"></a><a class="code" href="group__BasicDotProd.html#gadf26f6bc62d6416528663ad3e46fbf67">arm_dot_prod_f32</a>(<a class="code" href="arm__variance__example__f32_8c.html#a9170ec9e681e2b519fe9c46a30455841">testInput_f32</a>, <a class="code" href="arm__variance__example__f32_8c.html#acc43b372d92d5027b9f9cac782c8b3c7">wire1</a>, <a class="code" href="arm__variance__example__f32_8c.html#ab6558f40a619c2502fbc24c880fd4fb0">blockSize</a>, &amp;mean);</div>
 <div class="line"></div>
 <div class="line">  <span class="comment">/* Calculation of 1/blockSize */</span></div>
 <div class="line">  oneByBlockSize = 1.0 / (<a class="code" href="arm__variance__example__f32_8c.html#ab6558f40a619c2502fbc24c880fd4fb0">blockSize</a>);</div>
 <div class="line"></div>
 <div class="line">  <span class="comment">/* 1/blockSize * (x(0)* 1 + x(1) * 1 + ... + x(n-1) * 1)  */</span></div>
-<div class="line">  <a name="a13"></a><a class="code" href="group__BasicMult.html#gaca3f0b8227da431ab29225b88888aa32">arm_mult_f32</a>(&amp;mean, &amp;oneByBlockSize, &amp;mean, 1);</div>
+<div class="line">  <a name="a13"></a><a class="code" href="group__BasicMult.html#gacf950935141cad927bea886e88fd9e9b">arm_mult_f32</a>(&amp;mean, &amp;oneByBlockSize, &amp;mean, 1);</div>
 <div class="line"></div>
 <div class="line"></div>
 <div class="line">  <span class="comment">/* Calculation of variance value of input */</span></div>
@@ -231,19 +231,19 @@ $(document).ready(function(){initNavTree('arm_variance_example_f32_8c-example.ht
 <div class="line">  <a class="code" href="group__Fill.html#ga2248e8d3901b4afb7827163132baad94">arm_fill_f32</a>(mean,  <a class="code" href="arm__variance__example__f32_8c.html#a41a9afab5be5ccd2e6f618b83102f0d1">wire2</a>, <a class="code" href="arm__variance__example__f32_8c.html#ab6558f40a619c2502fbc24c880fd4fb0">blockSize</a>);</div>
 <div class="line"></div>
 <div class="line">  <span class="comment">/* wire3 contains (x-x&#39;) */</span></div>
-<div class="line">  <a name="a14"></a><a class="code" href="group__BasicSub.html#ga7f975a472de286331134227c08aad826">arm_sub_f32</a>(<a class="code" href="arm__variance__example__f32_8c.html#a9170ec9e681e2b519fe9c46a30455841">testInput_f32</a>, <a class="code" href="arm__variance__example__f32_8c.html#a41a9afab5be5ccd2e6f618b83102f0d1">wire2</a>, <a class="code" href="arm__variance__example__f32_8c.html#af61f43ad332a2322e43ced590b6d9768">wire3</a>, <a class="code" href="arm__variance__example__f32_8c.html#ab6558f40a619c2502fbc24c880fd4fb0">blockSize</a>);</div>
+<div class="line">  <a name="a14"></a><a class="code" href="group__BasicSub.html#ga76b8b2aec34269c6de0b090cab00fb33">arm_sub_f32</a>(<a class="code" href="arm__variance__example__f32_8c.html#a9170ec9e681e2b519fe9c46a30455841">testInput_f32</a>, <a class="code" href="arm__variance__example__f32_8c.html#a41a9afab5be5ccd2e6f618b83102f0d1">wire2</a>, <a class="code" href="arm__variance__example__f32_8c.html#af61f43ad332a2322e43ced590b6d9768">wire3</a>, <a class="code" href="arm__variance__example__f32_8c.html#ab6558f40a619c2502fbc24c880fd4fb0">blockSize</a>);</div>
 <div class="line"></div>
 <div class="line">  <span class="comment">/* wire2 contains (x-x&#39;) */</span></div>
-<div class="line">  <a name="a15"></a><a class="code" href="group__copy.html#gadd1f737e677e0e6ca31767c7001417b3">arm_copy_f32</a>(<a class="code" href="arm__variance__example__f32_8c.html#af61f43ad332a2322e43ced590b6d9768">wire3</a>, <a class="code" href="arm__variance__example__f32_8c.html#a41a9afab5be5ccd2e6f618b83102f0d1">wire2</a>, <a class="code" href="arm__variance__example__f32_8c.html#ab6558f40a619c2502fbc24c880fd4fb0">blockSize</a>);</div>
+<div class="line">  <a name="a15"></a><a class="code" href="group__copy.html#gaa6dfe9554ca61eb3d1eee498396bce88">arm_copy_f32</a>(<a class="code" href="arm__variance__example__f32_8c.html#af61f43ad332a2322e43ced590b6d9768">wire3</a>, <a class="code" href="arm__variance__example__f32_8c.html#a41a9afab5be5ccd2e6f618b83102f0d1">wire2</a>, <a class="code" href="arm__variance__example__f32_8c.html#ab6558f40a619c2502fbc24c880fd4fb0">blockSize</a>);</div>
 <div class="line"></div>
 <div class="line">  <span class="comment">/* (x(0) - x&#39;) * (x(0) - x&#39;) + (x(1) - x&#39;) * (x(1) - x&#39;) + ... + (x(n-1) - x&#39;) * (x(n-1) - x&#39;) */</span></div>
-<div class="line">  <a class="code" href="group__dot__prod.html#ga55418d4362f6ba84c327f9b4f089a8c3">arm_dot_prod_f32</a>(<a class="code" href="arm__variance__example__f32_8c.html#a41a9afab5be5ccd2e6f618b83102f0d1">wire2</a>, <a class="code" href="arm__variance__example__f32_8c.html#af61f43ad332a2322e43ced590b6d9768">wire3</a>, <a class="code" href="arm__variance__example__f32_8c.html#ab6558f40a619c2502fbc24c880fd4fb0">blockSize</a>, &amp;variance);</div>
+<div class="line">  <a class="code" href="group__BasicDotProd.html#gadf26f6bc62d6416528663ad3e46fbf67">arm_dot_prod_f32</a>(<a class="code" href="arm__variance__example__f32_8c.html#a41a9afab5be5ccd2e6f618b83102f0d1">wire2</a>, <a class="code" href="arm__variance__example__f32_8c.html#af61f43ad332a2322e43ced590b6d9768">wire3</a>, <a class="code" href="arm__variance__example__f32_8c.html#ab6558f40a619c2502fbc24c880fd4fb0">blockSize</a>, &amp;variance);</div>
 <div class="line"></div>
 <div class="line">    <span class="comment">/* Calculation of 1/blockSize */</span></div>
 <div class="line">  oneByBlockSize = 1.0 / (<a class="code" href="arm__variance__example__f32_8c.html#ab6558f40a619c2502fbc24c880fd4fb0">blockSize</a> - 1);</div>
 <div class="line"></div>
 <div class="line">  <span class="comment">/* Calculation of variance */</span></div>
-<div class="line">  <a class="code" href="group__BasicMult.html#gaca3f0b8227da431ab29225b88888aa32">arm_mult_f32</a>(&amp;variance, &amp;oneByBlockSize, &amp;variance, 1);</div>
+<div class="line">  <a class="code" href="group__BasicMult.html#gacf950935141cad927bea886e88fd9e9b">arm_mult_f32</a>(&amp;variance, &amp;oneByBlockSize, &amp;variance, 1);</div>
 <div class="line"></div>
 <div class="line">  <span class="comment">/* absolute value of difference between ref and test */</span></div>
 <div class="line">  diff = fabsf(<a class="code" href="arm__variance__example__f32_8c.html#a26cbbfe2a7905669e8440159465050df">refVarianceOut</a> - variance);</div>
@@ -267,7 +267,7 @@ $(document).ready(function(){initNavTree('arm_variance_example_f32_8c-example.ht
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Aug 1 2018 17:12:18 for CMSIS-DSP by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Fri Mar 15 2019 16:30:41 for CMSIS-DSP by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

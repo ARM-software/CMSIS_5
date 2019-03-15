@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-DSP
-   &#160;<span id="projectnumber">Version 1.5.2</span>
+   &#160;<span id="projectnumber">Version 1.5.5</span>
    </div>
    <div id="projectbrief">CMSIS DSP Software Library</div>
   </td>
@@ -225,7 +225,7 @@ $(document).ready(function(){initNavTree('arm_fir_example_f32_8c-example.html','
 <div class="line">  outputF32 = &amp;<a class="code" href="arm__fir__example__f32_8c.html#afd4d61aad5f35a4e42d580004e2f9a1d">testOutput</a>[0];</div>
 <div class="line"></div>
 <div class="line">  <span class="comment">/* Call FIR init function to initialize the instance structure. */</span></div>
-<div class="line">  <a name="a14"></a><a class="code" href="group__FIR.html#ga98d13def6427e29522829f945d0967db">arm_fir_init_f32</a>(&amp;S, <a class="code" href="arm__fir__example__f32_8c.html#a7579d94e0a80fb9d376ea6c7897f73b0">NUM_TAPS</a>, (<a class="code" href="arm__math_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a> *)&amp;<a class="code" href="arm__fir__example__f32_8c.html#ae070afd14f437ad1ae0a947e4403dd0e">firCoeffs32</a>[0], &amp;<a class="code" href="arm__signal__converge__example__f32_8c.html#a358ec4e79689e6d3787b89fe78bdb772">firStateF32</a>[0], <a class="code" href="arm__fir__example__f32_8c.html#ab6558f40a619c2502fbc24c880fd4fb0">blockSize</a>);</div>
+<div class="line">  <a name="a14"></a><a class="code" href="group__FIR.html#ga5afaa7b8e6735bbc19e582aa9755b0e1">arm_fir_init_f32</a>(&amp;S, <a class="code" href="arm__fir__example__f32_8c.html#a7579d94e0a80fb9d376ea6c7897f73b0">NUM_TAPS</a>, (<a class="code" href="arm__math_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a> *)&amp;<a class="code" href="arm__fir__example__f32_8c.html#ae070afd14f437ad1ae0a947e4403dd0e">firCoeffs32</a>[0], &amp;<a class="code" href="arm__signal__converge__example__f32_8c.html#a358ec4e79689e6d3787b89fe78bdb772">firStateF32</a>[0], <a class="code" href="arm__fir__example__f32_8c.html#ab6558f40a619c2502fbc24c880fd4fb0">blockSize</a>);</div>
 <div class="line"></div>
 <div class="line">  <span class="comment">/* ----------------------------------------------------------------------</span></div>
 <div class="line"><span class="comment">  ** Call the FIR process function for every blockSize samples</span></div>
@@ -233,7 +233,7 @@ $(document).ready(function(){initNavTree('arm_fir_example_f32_8c-example.html','
 <div class="line"></div>
 <div class="line">  <span class="keywordflow">for</span>(i=0; i &lt; <a class="code" href="arm__fir__example__f32_8c.html#af7d5613bda9a19b2ccae5d6cb79a22bc">numBlocks</a>; i++)</div>
 <div class="line">  {</div>
-<div class="line">    <a name="a15"></a><a class="code" href="group__FIR.html#gae8fb334ea67eb6ecbd31824ddc14cd6a">arm_fir_f32</a>(&amp;S, inputF32 + (i * <a class="code" href="arm__fir__example__f32_8c.html#ab6558f40a619c2502fbc24c880fd4fb0">blockSize</a>), outputF32 + (i * blockSize), blockSize);</div>
+<div class="line">    <a name="a15"></a><a class="code" href="group__FIR.html#ga0cf008f650a75f5e2cf82d10691b64d9">arm_fir_f32</a>(&amp;S, inputF32 + (i * <a class="code" href="arm__fir__example__f32_8c.html#ab6558f40a619c2502fbc24c880fd4fb0">blockSize</a>), outputF32 + (i * blockSize), blockSize);</div>
 <div class="line">  }</div>
 <div class="line"></div>
 <div class="line">  <span class="comment">/* ----------------------------------------------------------------------</span></div>
@@ -269,7 +269,7 @@ $(document).ready(function(){initNavTree('arm_fir_example_f32_8c-example.html','
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Aug 1 2018 17:12:18 for CMSIS-DSP by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Fri Mar 15 2019 16:30:41 for CMSIS-DSP by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

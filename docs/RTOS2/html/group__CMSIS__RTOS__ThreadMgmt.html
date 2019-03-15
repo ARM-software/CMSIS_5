@@ -540,7 +540,8 @@ memory for stack <p>Pointer to a memory location for the thread stack (64-bit al
 stack_size</td>
 <td class="fielddoc">
 size of stack <p>The size (in bytes) of the stack specified by <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ad7c9b42355a4c8b9467130ab3fb19e43">stack_mem</a>.</p>
-<p>Default: <span class="XML-Token">0</span> as the default is no memory provided with <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ad7c9b42355a4c8b9467130ab3fb19e43">stack_mem</a>. </p>
+<p>Default: <span class="XML-Token">0</span> as the default is no memory provided with <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ad7c9b42355a4c8b9467130ab3fb19e43">stack_mem</a>.</p>
+<p>/** </p>
 </td></tr>
 <tr><td class="fieldtype">
 <a class="anchor" id="a6a5183df4c54c3e28dc8dc704f2487d5"></a><a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gad4e3e0971b41f2d17584a8c6837342ec">osPriority_t</a></td>
@@ -556,7 +557,8 @@ initial thread priority (default: osPriorityNormal) <p>Specifies the initial thr
 tz_module</td>
 <td class="fielddoc">
 TrustZone module identifier. <p>TrustZone Thread Context Management Identifier to allocate context memory for threads. The RTOS kernel that runs in non-secure state calls the interface functions defined by the header file TZ_context.h. Can safely be set to zero for threads not using secure calls at all. See <a href="../../Core/html/group__context__trustzone__functions.html">TrustZone RTOS Context Management</a>.</p>
-<p>Default: token{0} not thread context specified. </p>
+<p>Default: <span class="XML-Token">0</span> not thread context specified.</p>
+<p>/** </p>
 </td></tr>
 <tr><td class="fieldtype">
 <a class="anchor" id="a66f538babc389986738ec70104e0562b"></a>uint32_t</td>
@@ -1027,7 +1029,7 @@ reserved (must be 0) <p>Reserved for future use. </p>
 <ul>
 <li><em>osOK:</em> the priority of the specified thread has been changed successfully.</li>
 <li><em>osErrorParameter:</em> <em>thread_id</em> is <span class="XML-Token">NULL</span> or invalid or <em>priority</em> is incorrect.</li>
-<li><em>osErrorResource:</em> thread specified by parameter <em>thread_id</em> is in an invalid thread state.</li>
+<li><em>osErrorResource:</em> the thread is in an invalid state.</li>
 <li><em>osErrorISR:</em> the function <b>osThreadSetPriority</b> cannot be called from interrupt service routines.</li>
 </ul>
 <dl class="section note"><dt>Note</dt><dd>This function <b>cannot</b> be called from <a class="el" href="theory_of_operation.html#CMSIS_RTOS_ISR_Calls">Interrupt Service Routines</a>.</dd></dl>
@@ -1159,7 +1161,7 @@ This function <b>has no impact</b> when called when the kernel is locked, see <a
 <ul>
 <li><em>osOK:</em> the thread has been suspended successfully.</li>
 <li><em>osErrorParameter:</em> <em>thread_id</em> is <span class="XML-Token">NULL</span> or invalid.</li>
-<li><em>osErrorResource:</em> thread specified by parameter <em>thread_id</em> is in an invalid thread state.</li>
+<li><em>osErrorResource:</em> the thread is in an invalid state.</li>
 <li><em>osErrorISR:</em> the function <b>osThreadSuspend</b> cannot be called from interrupt service routines.</li>
 </ul>
 <dl class="section note"><dt>Note</dt><dd>This function <b>cannot</b> be called from <a class="el" href="theory_of_operation.html#CMSIS_RTOS_ISR_Calls">Interrupt Service Routines</a>. </dd>
@@ -1195,7 +1197,7 @@ This function <b>must not</b> be called to suspend the running thread when the k
 <ul>
 <li><em>osOK:</em> the thread has been resumed successfully.</li>
 <li><em>osErrorParameter:</em> <em>thread_id</em> is <span class="XML-Token">NULL</span> or invalid.</li>
-<li><em>osErrorResource:</em> thread specified by parameter <em>thread_id</em> is in an invalid thread state.</li>
+<li><em>osErrorResource:</em> the thread is in an invalid state.</li>
 <li><em>osErrorISR:</em> the function <b>osThreadResume</b> cannot be called from interrupt service routines.</li>
 </ul>
 <dl class="section note"><dt>Note</dt><dd>This function <b>cannot</b> be called from <a class="el" href="theory_of_operation.html#CMSIS_RTOS_ISR_Calls">Interrupt Service Routines</a>. </dd>
@@ -1229,7 +1231,7 @@ This function <b>may be</b> called when kernel is locked (<a class="el" href="gr
 <ul>
 <li><em>osOK:</em> the attribute of the specified thread has been changed to detached successfully.</li>
 <li><em>osErrorParameter:</em> <em>thread_id</em> is <span class="XML-Token">NULL</span> or invalid.</li>
-<li><em>osErrorResource:</em> thread specified by parameter <em>thread_id</em> is in an invalid thread state.</li>
+<li><em>osErrorResource:</em> the thread is in an invalid state.</li>
 <li><em>osErrorISR:</em> the function <b>osThreadDetach</b> cannot be called from interrupt service routines.</li>
 </ul>
 <dl class="section note"><dt>Note</dt><dd>This function <b>cannot</b> be called from <a class="el" href="theory_of_operation.html#CMSIS_RTOS_ISR_Calls">Interrupt Service Routines</a>. </dd></dl>
@@ -1261,7 +1263,7 @@ This function <b>may be</b> called when kernel is locked (<a class="el" href="gr
 <ul>
 <li><em>osOK:</em> if the thread has already been terminated and joined or once the thread has been terminated and the join operations succeeds.</li>
 <li><em>osErrorParameter:</em> <em>thread_id</em> is <span class="XML-Token">NULL</span> or invalid.</li>
-<li><em>osErrorResource:</em> parameter <em>thread_id</em> is <span class="XML-Token">NULL</span> or refers to a thread that is not an active thread or the thread is not joinable.</li>
+<li><em>osErrorResource:</em> the thread is in an invalid state (ex: not joinable).</li>
 <li><em>osErrorISR:</em> the function <b>osThreadJoin</b> cannot be called from interrupt service routines.</li>
 </ul>
 <dl class="section note"><dt>Note</dt><dd>This function <b>cannot</b> be called from <a class="el" href="theory_of_operation.html#CMSIS_RTOS_ISR_Calls">Interrupt Service Routines</a>. </dd></dl>
@@ -1317,7 +1319,7 @@ This function <b>may be</b> called when kernel is locked (<a class="el" href="gr
 <ul>
 <li><em>osOK:</em> the specified thread has been removed from the active thread list successfully.</li>
 <li><em>osErrorParameter:</em> <em>thread_id</em> is <span class="XML-Token">NULL</span> or invalid.</li>
-<li><em>osErrorResource:</em> thread specified by parameter <em>thread_id</em> is in an invalid thread state or no other <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ThreadStates">READY</a> thread exists.</li>
+<li><em>osErrorResource:</em> the thread is in an invalid state or no other <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ThreadStates">READY</a> thread exists.</li>
 <li><em>osErrorISR:</em> the function <b>osThreadTerminate</b> cannot be called from interrupt service routines.</li>
 </ul>
 <dl class="section note"><dt>Note</dt><dd>This function <b>cannot</b> be called from <a class="el" href="theory_of_operation.html#CMSIS_RTOS_ISR_Calls">Interrupt Service Routines</a>. </dd>
@@ -1337,10 +1339,10 @@ Avoid calling the function with a <em>thread_id</em> that does not exist or has 
 <div class="line">  status = <a class="code" href="group__CMSIS__RTOS__ThreadMgmt.html#ga2f8ba6dba6e9c065a6e236ffd410d74a">osThreadTerminate</a> (<span class="keywordtype">id</span>);                     <span class="comment">// stop the thread</span></div>
 <div class="line">  <span class="keywordflow">if</span> (status == <a class="code" href="cmsis__os2_8h.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813ea9e1c9e2550bb4de8969a935acffc968f">osOK</a>) {</div>
 <div class="line">                                                       <span class="comment">// Thread was terminated successfully</span></div>
-<div class="line">    }</div>
+<div class="line">  }</div>
 <div class="line">  <span class="keywordflow">else</span> {</div>
 <div class="line">                                                       <span class="comment">// Failed to terminate a thread</span></div>
-<div class="line">    }</div>
+<div class="line">  }</div>
 <div class="line">}</div>
 </div><!-- fragment --> 
 </div>
@@ -1455,7 +1457,7 @@ Avoid calling the function with a <em>thread_id</em> that does not exist or has 
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Aug 1 2018 17:12:45 for CMSIS-RTOS2 by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Fri Mar 15 2019 16:31:17 for CMSIS-RTOS2 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

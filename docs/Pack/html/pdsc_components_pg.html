@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Pack
-   &#160;<span id="projectnumber">Version 1.5.0</span>
+   &#160;<span id="projectnumber">Version 1.6.0</span>
    </div>
    <div id="projectbrief">Delivery Mechanism for Software Packs</div>
   </td>
@@ -245,13 +245,60 @@ RTE_Components.h</h1>
 <div class="line"><span class="preprocessor"></span><span class="preprocessor">#define RTE_Network_Socket_UDP          </span><span class="comment">/* Network Socket UDP */</span><span class="preprocessor"></span></div>
 <div class="line"><span class="preprocessor"></span> </div>
 <div class="line"><span class="preprocessor">#endif </span><span class="comment">/* RTE_COMPONENTS_H */</span><span class="preprocessor"></span></div>
-</div><!-- fragment --><p>The typical usage of the <b>RTE_Components.h</b> file is in header files to control for example the inclusion of files that are related to other components for the same Software Pack.</p>
+</div><!-- fragment --><p>The <b>RTE_Components.h</b> file allows to create software that works with any supported device as it gives access to the <b>CMSIS_device_header</b>. The <b>CMSIS_device_header</b> reflects the current selected device and gives you for example access to the processor configuration. Refer to <b>"Device Header File &lt;device.h&gt;"</b> in <a href="../../Core/html/device_h_pg.html"><b>CMSIS-Core(M)</b></a> or <a href="../../Core_A/html/device_h_pg.html"><b>CMSIS-Core(A)</b></a> for more information.</p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include CMSIS_device_header            </span><span class="comment">/* header file of the selected device in the project */</span><span class="preprocessor"></span></div>
+<div class="line"><span class="preprocessor"></span></div>
+<div class="line"><span class="preprocessor">#if (defined (__MPU_PRESENT)) &amp;&amp; (__MPU_PRESENT == 1)</span></div>
+<div class="line"><span class="preprocessor"></span>  <span class="comment">// device has MPU, start the related code</span></div>
+<div class="line"><span class="preprocessor">#else</span></div>
+<div class="line"><span class="preprocessor"></span><span class="preprocessor">  #error &quot;Software Component requires a device with MPU&quot;</span></div>
+<div class="line"><span class="preprocessor">#endif</span></div>
+</div><!-- fragment --><p>Another typical usage of the <b>RTE_Components.h</b> file is in header files to control for example the inclusion of files that are related to other components for the same Software Pack.</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &quot;RTE_Components.h&quot;</span></div>
 <div class="line"> </div>
 <div class="line"><span class="preprocessor">#ifdef  RTE_Network_Interface_ETH_0    // generated when software component Network Interface ETH 0 is included</span></div>
 <div class="line"><span class="preprocessor"></span><span class="preprocessor">#include &quot;Net_Config_ETH_0.h&quot;</span>          <span class="comment">// add the related configuration file for these component </span></div>
 <div class="line"><span class="preprocessor">#endif</span></div>
 </div><!-- fragment --><p>&#160;</p>
+<hr/>
+<h1><a class="anchor" id="Pre_Include_Global_h"></a>
+Pre_Include_Global_h</h1>
+<p>The build environment shall generate a C/C++ header file with the name <b>Pre_Include_Global.h</b> from all selected components and add this file to the command line as a pre-include file for the build of all modules in the project. Note: the file shall be generated into the RTE/&lt;target&gt; subdirectory.</p>
+<div class="fragment"><div class="line">&lt;component Cclass=<span class="stringliteral">&quot;Other&quot;</span> Cgroup=<span class="stringliteral">&quot;Alpha&quot;</span> ...&gt;</div>
+<div class="line">  &lt;Pre_Include_Global_h&gt;</div>
+<div class="line">    <span class="comment">// enabling global pre include</span></div>
+<div class="line"><span class="preprocessor">    #define GLOBAL_Component_Alpha 0x4</span></div>
+<div class="line"><span class="preprocessor"></span>  &lt;/Pre_Include_Global_h&gt;</div>
+<div class="line">&lt;/component&gt;</div>
+<div class="line"></div>
+<div class="line">&lt;component Cclass=<span class="stringliteral">&quot;Other&quot;</span> Cgroup=<span class="stringliteral">&quot;Beta&quot;</span> ...&gt;</div>
+<div class="line">  &lt;Pre_Include_Global_h&gt;</div>
+<div class="line">    <span class="comment">// enabling global pre include</span></div>
+<div class="line"><span class="preprocessor">    #define GLOBAL_Component_Beta 0x8</span></div>
+<div class="line"><span class="preprocessor"></span>  &lt;/Pre_Include_Global_h&gt;</div>
+<div class="line">&lt;/component&gt;</div>
+</div><!-- fragment --><p>results in .../RTE/target_1/Pre_Include_Global.h: </p>
+<div class="fragment"><div class="line"><span class="comment">// enabling global pre include</span></div>
+<div class="line"><span class="preprocessor">#define GLOBAL_Component_Alpha 0x4</span></div>
+<div class="line"><span class="preprocessor"></span><span class="comment">// enabling global pre include</span></div>
+<div class="line"><span class="preprocessor">#define GLOBAL_Component_Beta 0x8</span></div>
+</div><!-- fragment --><p>No need to explicitly include this file as it is automatically added as pre-include into the build for all modules.</p>
+<p>&#160;</p>
+<hr/>
+<h1><a class="anchor" id="Pre_Include_Local_h"></a>
+Pre_Include_Local_h</h1>
+<p>The build environment shall generate a C/C++ header file with the name <b>Pre_Include_&lt;Cclass&gt;_&lt;component&gt;.h</b> from the selected component and add this file to the command line as a pre-include file for the build of all modules of this component. The same is done for each component containing a "Pre_Include_Local_h" element. Note: files shall be generated into the RTE/&lt;target&gt; subdirectory.</p>
+<div class="fragment"><div class="line">&lt;component Cclass=<span class="stringliteral">&quot;Other&quot;</span> Cgroup=<span class="stringliteral">&quot;Alpha&quot;</span> ...&gt;</div>
+<div class="line">  &lt;Pre_Include_Local_h&gt;</div>
+<div class="line">    <span class="comment">// enabling local pre include</span></div>
+<div class="line"><span class="preprocessor">    #define Local_Component_Alpha 1</span></div>
+<div class="line"><span class="preprocessor"></span>  &lt;/Pre_Include_Local_h&gt;</div>
+<div class="line">&lt;/component&gt;</div>
+</div><!-- fragment --><p>results in .../RTE/target_1/Pre_Include_Other_Alpha.h: </p>
+<div class="fragment"><div class="line"><span class="comment">// enabling local pre include</span></div>
+<div class="line"><span class="preprocessor">#define Local_Component_Alpha 1</span></div>
+</div><!-- fragment --><p>No need to explicitly include this file as it is automatically added as pre-include into the build for all modules of component Other:Alpha.</p>
+<p>&#160;</p>
 <hr/>
 <h1><a class="anchor" id="element_components"></a>
 /package/components</h1>
@@ -349,7 +396,13 @@ RTE_Components.h</h1>
 <tr>
 <td>description </td><td>Brief description of the component. </td><td>xs:string  </td><td>1..1  </td></tr>
 <tr>
-<td>RTE_Components_h </td><td>Source code that is copied into the file <a class="el" href="pdsc_components_pg.html#RTE_Components_h">RTE_Components.h</a> when the component is included into a software project. </td><td>xs:string  </td><td>0..1   </td></tr>
+<td>RTE_Components_h </td><td>Source code that is copied into the file <a class="el" href="pdsc_components_pg.html#RTE_Components_h">RTE_Components.h</a> when the component is selected by the run time environment configuration. </td><td>xs:string  </td><td>0..1   </td></tr>
+<tr>
+<td>Pre_Include_Global_h </td><td>Source code that is copied into the file <a class="el" href="pdsc_components_pg.html#Pre_Include_Global_h">Pre_Include_Global_h</a> when the component is selected by the run time environment configuration. </td><td>xs:string  </td><td>0..1   </td></tr>
+<tr>
+<td>Pre_Include_Local_Component_h </td><td>Source code that is copied into the file <a class="el" href="pdsc_components_pg.html#Pre_Include_Local_h">Pre_Include_Local_h</a> &lt;Cclass&gt;_&lt;Component_name&gt;.h when the component is selected by the run time environment configuration. </td><td>xs:string  </td><td><p class="starttd">0..1  </p>
+<p class="endtd"></p>
+</td></tr>
 <tr>
 <td><a class="el" href="pdsc_components_pg.html#element_files">files</a> </td><td>Grouping element for all files that are part of this component. </td><td>group </td><td>1  </td></tr>
 </table>
@@ -451,9 +504,11 @@ RTE_Components.h</h1>
 <tr>
 <td>name </td><td>File path, file name, and file extension in the format <b>path/name.extension</b>. The file path is relative to the root directory of the Pack. </td><td>xs:string </td><td>required  </td></tr>
 <tr>
-<td>category </td><td>Defines the purpose of the file. Select the predefined value as listed in the table <a class="el" href="pdsc_components_pg.html#FileCategoryEnum">File Categories</a>. </td><td>FileCategoryEnum </td><td>required  </td></tr>
+<td>path </td><td>for <b>category="header"</b> the path attribute explicitly can be used to specify the include path to be added to the commandline of the build tools, specifying an imcomplete path. This way the include file requires the specification of the subdirectory (e.g. #include "sub_dir/includeFile.h") which can act as acting as namespace for header files which otherwise have the same name. </td><td>xs:string </td><td>optional  </td></tr>
 <tr>
-<td>attr </td><td>Defines the special use and handling of a file. Select a predefined value as defined in the table <a class="el" href="pdsc_components_pg.html#FileAttributeEnum">File Attributes</a>.  </td><td>FileAttributeEnum </td><td>optional  </td></tr>
+<td>category </td><td>Defines the purpose of the file. Select the predefined value as listed in the table <a class="el" href="pdsc_components_pg.html#FileCategoryEnum">File Categories</a>. </td><td><a class="el" href="pdsc_components_pg.html#FileCategoryEnum">FileCategoryEnum</a> </td><td>required  </td></tr>
+<tr>
+<td>attr </td><td>Defines the special use and handling of a file. Select a predefined value as defined in the table <a class="el" href="pdsc_components_pg.html#FileAttributeEnum">File Attributes</a>.  </td><td><a class="el" href="pdsc_components_pg.html#FileAttributeEnum">FileAttributeEnum</a> </td><td>optional  </td></tr>
 <tr>
 <td>condition </td><td>Enter the identifier (attribute <em><b>id</b></em>) of a <a class="el" href="pdsc_conditions_pg.html#element_condition">condition</a>. The element is used if the condition resolves to <span class="XML-Token">true</span>. If the condition resolves to <span class="XML-Token">false</span>, then the element will be ignored. For example, a library might be specific for a certain toolchain or processor instruction set. </td><td>xs:string </td><td>optional  </td></tr>
 <tr>
@@ -472,7 +527,7 @@ RTE_Components.h</h1>
 <tr>
 <th>attr= </th><th>Description  </th></tr>
 <tr>
-<td class="XML-Token">config </td><td>The file is a configuration file of the component. It is expected that only configuration options are modified. The file is managed as part of the component, as a project-specific file typically copied into the component section of the project.   </td></tr>
+<td class="XML-Token">config </td><td>The file is a configuration file of the component. It is expected that only configuration options are modified. The file is managed as part of the component, as a project-specific file typically copied into the component section of the project.s  </td></tr>
 <tr>
 <td class="XML-Token">template </td><td><p class="starttd">The file is used as a source code template file. It is expected to be edited and extended by the software developer. The file can be copied into a user section of the project. </p>
 <p class="endtd"></p>
@@ -496,9 +551,9 @@ RTE_Components.h</h1>
 <tr>
 <td class="XML-Token">doc </td><td>Documentation  </td></tr>
 <tr>
-<td class="XML-Token">header </td><td>Header file used in the component. Sets an include file path.  </td></tr>
+<td class="XML-Token">header </td><td>Header file used in the component. Sets an include file path and adds the file name attribute to the list of files to be added to a module using the <b>#include</b> statement. Note: specify only those files as header files that form part of the API of the component, required to use the component  </td></tr>
 <tr>
-<td class="XML-Token">include </td><td>Sets an include file path.  </td></tr>
+<td class="XML-Token">include </td><td>Sets an include file path. Note: ensure that the name attribute specifies a directory and ends with a '/'.  </td></tr>
 <tr>
 <td class="XML-Token">library </td><td>Library file  </td></tr>
 <tr>
@@ -518,6 +573,10 @@ RTE_Components.h</h1>
 <tr>
 <td class="XML-Token">image </td><td>Files of image type are marked for special processing into a File System Image embedded into the application. This category requires the <em>attr</em> being set to <em>template</em>.   </td></tr>
 <tr>
+<td class="XML-Token">preIncludeGlobal </td><td>The specified file is added as a pre-include file to the compiler command line for all modules of the whole <b>project</b> (globally).  </td></tr>
+<tr>
+<td class="XML-Token">preIncludeLocal </td><td>The specified file is added as a pre-include file to the compiler command line for all modules of the <b>component</b> (locally).  </td></tr>
+<tr>
 <td class="XML-Token">other </td><td>Other file types not covered in the list above  </td></tr>
 </table>
 <p>&#160;</p>
@@ -528,7 +587,7 @@ RTE_Components.h</h1>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="packFormat.html">Pack Description (*.pdsc) Format</a></li>
-    <li class="footer">Generated on Wed Aug 1 2018 17:12:42 for CMSIS-Pack by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Fri Mar 15 2019 16:31:12 for CMSIS-Pack by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

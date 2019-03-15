@@ -1,6 +1,7 @@
 var searchData=
 [
   ['b_5ff32',['B_f32',['../arm__matrix__example__f32_8c.html#a974d5f0aace6a99e29ca767907fb3b9f',1,'arm_matrix_example_f32.c']]],
+  ['basicmathfunctions_2ec',['BasicMathFunctions.c',['../BasicMathFunctions_8c.html',1,'']]],
   ['bilinear_20interpolation',['Bilinear Interpolation',['../group__BilinearInterpolate.html',1,'']]],
   ['biquad_20cascade_20iir_20filters_20using_20direct_20form_20i_20structure',['Biquad Cascade IIR Filters Using Direct Form I Structure',['../group__BiquadCascadeDF1.html',1,'']]],
   ['biquad_20cascade_20iir_20filters_20using_20a_20direct_20form_20ii_20transposed_20structure',['Biquad Cascade IIR Filters Using a Direct Form II Transposed Structure',['../group__BiquadCascadeDF2T.html',1,'']]],

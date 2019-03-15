@@ -1,5 +1,7 @@
 var searchData=
 [
+  ['os_5fevr_5fthflags',['OS_EVR_THFLAGS',['../rtx__evr_8h.html#a8e1abf0403e5aabff14bffa28c0bf14b',1,'rtx_evr.h']]],
+  ['os_5fevr_5fwait',['OS_EVR_WAIT',['../rtx__evr_8h.html#aad9052994e484a85e2ea7c34b3957f29',1,'rtx_evr.h']]],
   ['osflagserror',['osFlagsError',['../cmsis__os2_8h.html#a01c1359c3a5640bff6e08f09bf94ce3a',1,'cmsis_os2.h']]],
   ['osrtxconfigprivilegedmode',['osRtxConfigPrivilegedMode',['../rtx__os_8h.html#a0eb4da5bed45820d732e23483b870152',1,'rtx_os.h']]],
   ['osrtxconfigstackcheck',['osRtxConfigStackCheck',['../rtx__os_8h.html#a77f3e906438a6693524cdc257cb0bf23',1,'rtx_os.h']]],

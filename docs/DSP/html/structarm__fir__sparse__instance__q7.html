@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-DSP
-   &#160;<span id="projectnumber">Version 1.5.2</span>
+   &#160;<span id="projectnumber">Version 1.5.5</span>
    </div>
    <div id="projectbrief">CMSIS DSP Software Library</div>
   </td>
@@ -131,8 +131,8 @@ Data Fields</h2></td></tr>
 <tr class="separator:a2d2e65473fe3a3f2b953b4e0b60824df"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a18072cf3ef3666d588f0d49512f2b28f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="arm__math_8h.html#ae541b6f232c305361e9b416fc9eed263">q7_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structarm__fir__sparse__instance__q7.html#a18072cf3ef3666d588f0d49512f2b28f">pState</a></td></tr>
 <tr class="separator:a18072cf3ef3666d588f0d49512f2b28f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3dac86f15e33553e8f3e19e0d712bae5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="arm__math_8h.html#ae541b6f232c305361e9b416fc9eed263">q7_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structarm__fir__sparse__instance__q7.html#a3dac86f15e33553e8f3e19e0d712bae5">pCoeffs</a></td></tr>
-<tr class="separator:a3dac86f15e33553e8f3e19e0d712bae5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7f0989ef34fdb5d08ce5a5abf917218f"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="arm__math_8h.html#ae541b6f232c305361e9b416fc9eed263">q7_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structarm__fir__sparse__instance__q7.html#a7f0989ef34fdb5d08ce5a5abf917218f">pCoeffs</a></td></tr>
+<tr class="separator:a7f0989ef34fdb5d08ce5a5abf917218f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af74dacc1d34c078283e50f2530eb91df"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structarm__fir__sparse__instance__q7.html#af74dacc1d34c078283e50f2530eb91df">maxDelay</a></td></tr>
 <tr class="separator:af74dacc1d34c078283e50f2530eb91df"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac625393c84bc0342ffdf26fc4eba1ac1"><td class="memItemLeft" align="right" valign="top">int32_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structarm__fir__sparse__instance__q7.html#ac625393c84bc0342ffdf26fc4eba1ac1">pTapDelay</a></td></tr>
@@ -150,8 +150,6 @@ Data Fields</h2></td></tr>
 </div><div class="memdoc">
 <p>maximum offset specified by the pTapDelay array. </p>
 
-<p>Referenced by <a class="el" href="group__FIR__Sparse.html#ga98f5c1a097d4572ce4ff3b0c58ebcdbd">arm_fir_sparse_init_q7()</a>, and <a class="el" href="group__FIR__Sparse.html#gae86c145efc2d9ec32dc6d8c1ad2ccb3c">arm_fir_sparse_q7()</a>.</p>
-
 </div>
 </div>
 <a class="anchor" id="a54cdd27ca1c672b126c38763ce678b1c"></a>
@@ -165,22 +163,18 @@ Data Fields</h2></td></tr>
 </div><div class="memdoc">
 <p>number of coefficients in the filter. </p>
 
-<p>Referenced by <a class="el" href="group__FIR__Sparse.html#ga98f5c1a097d4572ce4ff3b0c58ebcdbd">arm_fir_sparse_init_q7()</a>, and <a class="el" href="group__FIR__Sparse.html#gae86c145efc2d9ec32dc6d8c1ad2ccb3c">arm_fir_sparse_q7()</a>.</p>
-
 </div>
 </div>
-<a class="anchor" id="a3dac86f15e33553e8f3e19e0d712bae5"></a>
+<a class="anchor" id="a7f0989ef34fdb5d08ce5a5abf917218f"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="arm__math_8h.html#ae541b6f232c305361e9b416fc9eed263">q7_t</a>* arm_fir_sparse_instance_q7::pCoeffs</td>
+          <td class="memname">const <a class="el" href="arm__math_8h.html#ae541b6f232c305361e9b416fc9eed263">q7_t</a>* arm_fir_sparse_instance_q7::pCoeffs</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <p>points to the coefficient array. The array is of length numTaps. </p>
-
-<p>Referenced by <a class="el" href="group__FIR__Sparse.html#ga98f5c1a097d4572ce4ff3b0c58ebcdbd">arm_fir_sparse_init_q7()</a>, and <a class="el" href="group__FIR__Sparse.html#gae86c145efc2d9ec32dc6d8c1ad2ccb3c">arm_fir_sparse_q7()</a>.</p>
 
 </div>
 </div>
@@ -195,8 +189,6 @@ Data Fields</h2></td></tr>
 </div><div class="memdoc">
 <p>points to the state buffer array. The array is of length maxDelay+blockSize-1. </p>
 
-<p>Referenced by <a class="el" href="group__FIR__Sparse.html#ga98f5c1a097d4572ce4ff3b0c58ebcdbd">arm_fir_sparse_init_q7()</a>, and <a class="el" href="group__FIR__Sparse.html#gae86c145efc2d9ec32dc6d8c1ad2ccb3c">arm_fir_sparse_q7()</a>.</p>
-
 </div>
 </div>
 <a class="anchor" id="ac625393c84bc0342ffdf26fc4eba1ac1"></a>
@@ -209,8 +201,6 @@ Data Fields</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>points to the array of delay values. The array is of length numTaps. </p>
-
-<p>Referenced by <a class="el" href="group__FIR__Sparse.html#ga98f5c1a097d4572ce4ff3b0c58ebcdbd">arm_fir_sparse_init_q7()</a>, and <a class="el" href="group__FIR__Sparse.html#gae86c145efc2d9ec32dc6d8c1ad2ccb3c">arm_fir_sparse_q7()</a>.</p>
 
 </div>
 </div>
@@ -225,8 +215,6 @@ Data Fields</h2></td></tr>
 </div><div class="memdoc">
 <p>state buffer index. Points to the oldest sample in the state buffer. </p>
 
-<p>Referenced by <a class="el" href="group__FIR__Sparse.html#ga98f5c1a097d4572ce4ff3b0c58ebcdbd">arm_fir_sparse_init_q7()</a>, and <a class="el" href="group__FIR__Sparse.html#gae86c145efc2d9ec32dc6d8c1ad2ccb3c">arm_fir_sparse_q7()</a>.</p>
-
 </div>
 </div>
 </div><!-- contents -->
@@ -235,7 +223,7 @@ Data Fields</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="structarm__fir__sparse__instance__q7.html">arm_fir_sparse_instance_q7</a></li>
-    <li class="footer">Generated on Wed Aug 1 2018 17:12:22 for CMSIS-DSP by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Fri Mar 15 2019 16:30:44 for CMSIS-DSP by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

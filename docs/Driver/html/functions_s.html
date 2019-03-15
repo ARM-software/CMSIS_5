@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Driver
-   &#160;<span id="projectnumber">Version 2.6.0</span>
+   &#160;<span id="projectnumber">Version 2.7.0</span>
    </div>
    <div id="projectbrief">Peripheral Interface for Middleware and Application Code</div>
   </td>
@@ -147,6 +147,9 @@ $(document).ready(function(){initNavTree('functions_s.html','');});
 <div class="textblock">Here is a list of all struct and union fields with links to the structures/unions they belong to:</div>
 
 <h3><a class="anchor" id="index_s"></a>- s -</h3><ul>
+<li>Scan
+: <a class="el" href="group__wifi__interface__gr.html#a51d027ef7046c413372103aa952772fb">ARM_DRIVER_WIFI</a>
+</li>
 <li>sdio_interrupt
 : <a class="el" href="group__mci__interface__gr.html#a61e2a440b27d7d22c866ad4427f4b825">ARM_MCI_CAPABILITIES</a>
 , <a class="el" href="group__mci__interface__gr.html#a61e2a440b27d7d22c866ad4427f4b825">ARM_MCI_STATUS</a>
@@ -168,6 +171,9 @@ $(document).ready(function(){initNavTree('functions_s.html','');});
 </li>
 <li>security
 : <a class="el" href="group__storage__interface__gr.html#aee43dd20848f45fe05efc10a8198817a">ARM_STORAGE_INFO</a>
+, <a class="el" href="group__wifi__management__gr.html#a5cd97d88131cf38bcc75189f9569f9b7">ARM_WIFI_CONFIG_t</a>
+, <a class="el" href="group__wifi__management__gr.html#a5cd97d88131cf38bcc75189f9569f9b7">ARM_WIFI_NET_INFO_t</a>
+, <a class="el" href="group__wifi__management__gr.html#a5cd97d88131cf38bcc75189f9569f9b7">ARM_WIFI_SCAN_INFO_t</a>
 </li>
 <li>Send
 : <a class="el" href="group__sai__interface__gr.html#a44eedddf4428cf4b98883b6c27d31922">ARM_DRIVER_SAI</a>
@@ -206,6 +212,9 @@ $(document).ready(function(){initNavTree('functions_s.html','');});
 <li>SetModemControl
 : <a class="el" href="group__usart__interface__gr.html#af6703d4078818df27ab9f8a7a8ad7b7b">ARM_DRIVER_USART</a>
 </li>
+<li>SetOption
+: <a class="el" href="group__wifi__interface__gr.html#a6b5e1c7fcea96ff13f6fd16d57c8b68f">ARM_DRIVER_WIFI</a>
+</li>
 <li>SetupTransfer
 : <a class="el" href="group__mci__interface__gr.html#adc63bab660e8304d78faa1ac429e792b">ARM_DRIVER_MCI</a>
 </li>
@@ -233,6 +242,51 @@ $(document).ready(function(){initNavTree('functions_s.html','');});
 <li>smart_card_clock
 : <a class="el" href="group__usart__interface__gr.html#a7b3c14ea1b5e9ba0a37ebc05fcfd51a6">ARM_USART_CAPABILITIES</a>
 </li>
+<li>SocketAccept
+: <a class="el" href="group__wifi__interface__gr.html#a66bb43c1e713efe7758b6e100c13ed69">ARM_DRIVER_WIFI</a>
+</li>
+<li>SocketBind
+: <a class="el" href="group__wifi__interface__gr.html#afcbc0c2bb3639584521ffeaaffc5a475">ARM_DRIVER_WIFI</a>
+</li>
+<li>SocketClose
+: <a class="el" href="group__wifi__interface__gr.html#a471a1be6d9adbccb83ca1f268643031c">ARM_DRIVER_WIFI</a>
+</li>
+<li>SocketConnect
+: <a class="el" href="group__wifi__interface__gr.html#a45cbca28d9866f2ec2ad9df830787dd7">ARM_DRIVER_WIFI</a>
+</li>
+<li>SocketCreate
+: <a class="el" href="group__wifi__interface__gr.html#aa26f0cefe99161484741977a5443e92c">ARM_DRIVER_WIFI</a>
+</li>
+<li>SocketGetHostByName
+: <a class="el" href="group__wifi__interface__gr.html#a62b2512cbaef03d26eb9c1e3004c3364">ARM_DRIVER_WIFI</a>
+</li>
+<li>SocketGetOpt
+: <a class="el" href="group__wifi__interface__gr.html#a4771324fb6f39fb2837e98d9f0ed48ed">ARM_DRIVER_WIFI</a>
+</li>
+<li>SocketGetPeerName
+: <a class="el" href="group__wifi__interface__gr.html#ac45fbc58fd00742cbe712bf26d857359">ARM_DRIVER_WIFI</a>
+</li>
+<li>SocketGetSockName
+: <a class="el" href="group__wifi__interface__gr.html#ab7c3e0211c87bf99e9c42b17a2249f50">ARM_DRIVER_WIFI</a>
+</li>
+<li>SocketListen
+: <a class="el" href="group__wifi__interface__gr.html#a628706c754e1793ec864453a5b517d5c">ARM_DRIVER_WIFI</a>
+</li>
+<li>SocketRecv
+: <a class="el" href="group__wifi__interface__gr.html#aaad6683992e76e3dd9a16eb6b7d43cf4">ARM_DRIVER_WIFI</a>
+</li>
+<li>SocketRecvFrom
+: <a class="el" href="group__wifi__interface__gr.html#a4343cf48bbcfb2101a422d90c34f84e6">ARM_DRIVER_WIFI</a>
+</li>
+<li>SocketSend
+: <a class="el" href="group__wifi__interface__gr.html#a7ff47d391831d547d310dd66f22c2942">ARM_DRIVER_WIFI</a>
+</li>
+<li>SocketSendTo
+: <a class="el" href="group__wifi__interface__gr.html#a248a293faea6f6e1cb781b8153e468fa">ARM_DRIVER_WIFI</a>
+</li>
+<li>SocketSetOpt
+: <a class="el" href="group__wifi__interface__gr.html#a7019060d0869a7dfae8e31aedb46815d">ARM_DRIVER_WIFI</a>
+</li>
 <li>software_attacks
 : <a class="el" href="Driver__Storage_8h.html#a1b6a0329dd65f25a0ab22496ab708306">ARM_STORAGE_SECURITY_FEATURES</a>
 </li>
@@ -240,6 +294,11 @@ $(document).ready(function(){initNavTree('functions_s.html','');});
 : <a class="el" href="group__eth__interface__gr.html#a220859a8b5da0232739a11cbe7f79fc5">ARM_ETH_LINK_INFO</a>
 , <a class="el" href="group__usbd__interface__gr.html#a220859a8b5da0232739a11cbe7f79fc5">ARM_USBD_STATE</a>
 , <a class="el" href="group__usbh__host__gr.html#a220859a8b5da0232739a11cbe7f79fc5">ARM_USBH_PORT_STATE</a>
+</li>
+<li>ssid
+: <a class="el" href="group__wifi__management__gr.html#ae7eccb3e4df8625b86b5572fc16c37c3">ARM_WIFI_CONFIG_t</a>
+, <a class="el" href="group__wifi__management__gr.html#ae7eccb3e4df8625b86b5572fc16c37c3">ARM_WIFI_NET_INFO_t</a>
+, <a class="el" href="group__wifi__management__gr.html#ae7eccb3e4df8625b86b5572fc16c37c3">ARM_WIFI_SCAN_INFO_t</a>
 </li>
 <li>start
 : <a class="el" href="group__flash__interface__gr.html#a61eb63d26b2fa6c2971603ceccffb14b">ARM_FLASH_SECTOR</a>
@@ -262,7 +321,7 @@ $(document).ready(function(){initNavTree('functions_s.html','');});
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Aug 1 2018 17:12:14 for CMSIS-Driver by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Fri Mar 15 2019 16:30:34 for CMSIS-Driver by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

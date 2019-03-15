@@ -12,6 +12,7 @@ var searchData=
   ['ddr2',['ddr2',['../group__nand__interface__gr.html#ae086693990cbd5d628014c0fcc7c1f2c',1,'ARM_NAND_CAPABILITIES']]],
   ['ddr2_5ftiming_5fmode',['ddr2_timing_mode',['../group__nand__interface__gr.html#a6d9b66da0e56d04d545e0bb6841891b2',1,'ARM_NAND_CAPABILITIES']]],
   ['ddr_5ftiming_5fmode',['ddr_timing_mode',['../group__nand__interface__gr.html#a00c1f5db7d7c4abe7556733c36da7783',1,'ARM_NAND_CAPABILITIES']]],
+  ['deactivate',['Deactivate',['../group__wifi__interface__gr.html#a851b4d458f18406cd26f18fdaf972725',1,'ARM_DRIVER_WIFI']]],
   ['deviceconnect',['DeviceConnect',['../group__usbd__interface__gr.html#a71d312ce5c5335c6a035da55c25848e4',1,'ARM_DRIVER_USBD']]],
   ['devicedisconnect',['DeviceDisconnect',['../group__usbd__interface__gr.html#adff9dd8a0dc764e78b0271113ae3b0af',1,'ARM_DRIVER_USBD']]],
   ['devicegetstate',['DeviceGetState',['../group__usbd__interface__gr.html#ab906727173cbe8372bdc26ef20581baa',1,'ARM_DRIVER_USBD']]],

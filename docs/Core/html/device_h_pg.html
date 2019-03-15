@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Core (Cortex-M)
-   &#160;<span id="projectnumber">Version 5.1.2</span>
+   &#160;<span id="projectnumber">Version 5.2.0</span>
    </div>
    <div id="projectbrief">CMSIS-Core support for Cortex-M processor-based devices</div>
   </td>
@@ -277,7 +277,7 @@ Configuration of the Processor and Core Peripherals</h1>
 <tr>
 <td>__Vendor_SysTickConfig </td><td>0 .. 1 </td><td>0 </td><td>If this define is set to 1, then the default <b>SysTick_Config</b> function is excluded. In this case, the file <em><b>device.h</b></em> must contain a vendor specific implementation of this function.  </td></tr>
 </table>
-<p><b>core_CM33.h</b> or <b>core_ARMv8MML.h</b> </p>
+<p><b>core_CM33.h</b> or <b>core_cm35p.h</b> or <b>core_ARMv8MML.h</b> </p>
 <table  class="cmtable">
 <tr>
 <th>#define </th><th>Value Range </th><th>Default </th><th>Description  </th></tr>
@@ -321,6 +321,12 @@ CMSIS Version and Processor Information</h1>
 <div class="line"><span class="preprocessor">                                        __CM0P_CMSIS_VERSION_SUB          ) </span><span class="comment">/* CMSIS HAL version number */</span><span class="preprocessor"></span></div>
 <div class="line"><span class="preprocessor"></span> </div>
 <div class="line"><span class="preprocessor">#define __CORTEX_M                    (0U)                                  </span><span class="comment">/* Cortex-M Core */</span><span class="preprocessor"></span></div>
+</div><!-- fragment --><p><b>core_cm1.h</b> </p>
+<div class="fragment"><div class="line"><span class="preprocessor">#define __CM1_CMSIS_VERSION_MAIN  (__CM_CMSIS_VERSION_MAIN)              </span></div>
+<div class="line"><span class="preprocessor">#define __CM1_CMSIS_VERSION_SUB   (__CM_CMSIS_VERSION_SUB)               </span></div>
+<div class="line"><span class="preprocessor">#define __CM1_CMSIS_VERSION       ((__CM1_CMSIS_VERSION_MAIN &lt;&lt; 16U) | \</span></div>
+<div class="line"><span class="preprocessor">                                    __CM1_CMSIS_VERSION_SUB           )  </span></div>
+<div class="line"><span class="preprocessor">#define __CORTEX_M                (1U)                                   </span></div>
 </div><!-- fragment --><p><b>core_cm3.h</b> </p>
 <div class="fragment"><div class="line"><span class="preprocessor">#define __CM3_CMSIS_VERSION_MAIN  (5U)                                 </span><span class="comment">/* [31:16] CMSIS HAL main version */</span><span class="preprocessor"></span></div>
 <div class="line"><span class="preprocessor"></span><span class="preprocessor">#define __CM3_CMSIS_VERSION_SUB   (0U)                                 </span><span class="comment">/* [15:0]  CMSIS HAL sub version */</span><span class="preprocessor"></span></div>
@@ -347,14 +353,14 @@ CMSIS Version and Processor Information</h1>
 <div class="line"><span class="preprocessor"></span><span class="preprocessor">#define __SC000_CMSIS_VERSION_SUB   (0U)                                   </span><span class="comment">/* [15:0]  CMSIS HAL sub version */</span><span class="preprocessor"></span></div>
 <div class="line"><span class="preprocessor"></span><span class="preprocessor">#define __SC000_CMSIS_VERSION       ((__SC000_CMSIS_VERSION_MAIN &lt;&lt; 16U) | \</span></div>
 <div class="line"><span class="preprocessor">                                      __SC000_CMSIS_VERSION_SUB          ) </span><span class="comment">/* CMSIS HAL version number */</span><span class="preprocessor"></span></div>
-<div class="line"><span class="preprocessor"></span> </div>
+<div class="line"><span class="preprocessor"></span></div>
 <div class="line"><span class="preprocessor">#define __CORTEX_SC                 (0U)                                   </span><span class="comment">/* Cortex secure core */</span><span class="preprocessor"></span></div>
 </div><!-- fragment --><p><b>core_sc300.h</b> </p>
 <div class="fragment"><div class="line"><span class="preprocessor">#define __SC300_CMSIS_VERSION_MAIN  (5U)                                   </span><span class="comment">/* [31:16] CMSIS HAL main version */</span><span class="preprocessor"></span></div>
 <div class="line"><span class="preprocessor"></span><span class="preprocessor">#define __SC300_CMSIS_VERSION_SUB   (0U)                                   </span><span class="comment">/* [15:0]  CMSIS HAL sub version */</span><span class="preprocessor"></span></div>
 <div class="line"><span class="preprocessor"></span><span class="preprocessor">#define __SC300_CMSIS_VERSION       ((__SC300_CMSIS_VERSION_MAIN &lt;&lt; 16U) | \</span></div>
 <div class="line"><span class="preprocessor">                                      __SC300_CMSIS_VERSION_SUB          ) </span><span class="comment">/* CMSIS HAL version number */</span><span class="preprocessor"></span></div>
-<div class="line"><span class="preprocessor"></span> </div>
+<div class="line"><span class="preprocessor"></span></div>
 <div class="line"><span class="preprocessor">#define __CORTEX_SC                 (300U)                                 </span><span class="comment">/* Cortex secure core */</span><span class="preprocessor"></span></div>
 </div><!-- fragment --><p><b>core_ARMv8MBL.h</b> </p>
 <div class="fragment"><div class="line"><span class="preprocessor">#define __ARMv8MBL_CMSIS_VERSION_MAIN  (5U)                                       </span><span class="comment">/* [31:16] CMSIS HAL main version */</span><span class="preprocessor"></span></div>
@@ -643,7 +649,7 @@ typedef struct
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="templates_pg.html">CMSIS-Core Device Templates</a></li>
-    <li class="footer">Generated on Wed Aug 1 2018 17:12:08 for CMSIS-Core (Cortex-M) by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Fri Mar 15 2019 16:30:24 for CMSIS-Core (Cortex-M) by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

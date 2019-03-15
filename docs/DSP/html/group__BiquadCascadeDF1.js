@@ -1,11 +1,11 @@
 var group__BiquadCascadeDF1 =
 [
-    [ "arm_biquad_cascade_df1_f32", "group__BiquadCascadeDF1.html#gaa0dbe330d763e3c1d8030b3ef12d5bdc", null ],
-    [ "arm_biquad_cascade_df1_fast_q15", "group__BiquadCascadeDF1.html#gaffb9792c0220882efd4c58f3c6a05fd7", null ],
-    [ "arm_biquad_cascade_df1_fast_q31", "group__BiquadCascadeDF1.html#ga456390f5e448afad3a38bed7d6e380e3", null ],
-    [ "arm_biquad_cascade_df1_init_f32", "group__BiquadCascadeDF1.html#ga8e73b69a788e681a61bccc8959d823c5", null ],
-    [ "arm_biquad_cascade_df1_init_q15", "group__BiquadCascadeDF1.html#gad54c724132f6d742a444eb6df0e9c731", null ],
-    [ "arm_biquad_cascade_df1_init_q31", "group__BiquadCascadeDF1.html#gaf42a44f9b16d61e636418c83eefe577b", null ],
-    [ "arm_biquad_cascade_df1_q15", "group__BiquadCascadeDF1.html#gadd66a0aefdc645031d607b0a5b37a942", null ],
-    [ "arm_biquad_cascade_df1_q31", "group__BiquadCascadeDF1.html#ga27b0c54da702713976e5202d20b4473f", null ]
+    [ "arm_biquad_cascade_df1_f32", "group__BiquadCascadeDF1.html#ga812eb9769adde4fed6d5ff4968a011d3", null ],
+    [ "arm_biquad_cascade_df1_fast_q15", "group__BiquadCascadeDF1.html#ga5008df017b9ce4046f35b61482009cbc", null ],
+    [ "arm_biquad_cascade_df1_fast_q31", "group__BiquadCascadeDF1.html#gaa09ea758c0b24eed9ef92b8d1e5c80c2", null ],
+    [ "arm_biquad_cascade_df1_init_f32", "group__BiquadCascadeDF1.html#gad0b680d1c529d941e939d265b3c6ae59", null ],
+    [ "arm_biquad_cascade_df1_init_q15", "group__BiquadCascadeDF1.html#ga1115256c79a0e22a3a54f8e627ac256f", null ],
+    [ "arm_biquad_cascade_df1_init_q31", "group__BiquadCascadeDF1.html#ga5563b156af44d1be2a7548626988bf4e", null ],
+    [ "arm_biquad_cascade_df1_q15", "group__BiquadCascadeDF1.html#ga27af5bfa40dad7c877e48eedc8d67558", null ],
+    [ "arm_biquad_cascade_df1_q31", "group__BiquadCascadeDF1.html#ga4e7dad0ee6949005909fd4fcf1249b79", null ]
 ];

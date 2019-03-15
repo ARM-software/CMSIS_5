@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-DSP
-   &#160;<span id="projectnumber">Version 1.5.2</span>
+   &#160;<span id="projectnumber">Version 1.5.5</span>
    </div>
    <div id="projectbrief">CMSIS DSP Software Library</div>
   </td>
@@ -127,7 +127,7 @@ Functions</h2></td></tr>
 <tr class="separator:gad80f121949ef885a77d83ab36e002567"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Description</h2>
-<p>Computes the trigonometric cosine function using a combination of table lookup and linear interpolation. There are separate functions for Q15, Q31, and floating-point data types. The input to the floating-point version is in radians and in the range [0 2*pi) while the fixed-point Q15 and Q31 have a scaled input with the range [0 +0.9999] mapping to [0 2*pi). The fixed-point range is chosen so that a value of 2*pi wraps around to 0.</p>
+<p>Computes the trigonometric cosine function using a combination of table lookup and linear interpolation. There are separate functions for Q15, Q31, and floating-point data types. The input to the floating-point version is in radians while the fixed-point Q15 and Q31 have a scaled input with the range [0 +0.9999] mapping to [0 2*pi). The fixed-point range is chosen so that a value of 2*pi wraps around to 0.</p>
 <p>The implementation is based on table lookup using 256 values together with linear interpolation. The steps used are:</p>
 <ol type="1">
 <li>Calculation of the nearest integer table index</li>
@@ -136,8 +136,8 @@ Functions</h2></td></tr>
 </ol>
 <p>where </p>
 <pre>
-   b=Table[index+0];
-   c=Table[index+1];
+   b = Table[index];
+   c = Table[index+1];
 </pre> <h2 class="groupheader">Function Documentation</h2>
 <a class="anchor" id="gace15287f9c64b9b4084d1c797d4c49d8"></a>
 <div class="memitem">
@@ -154,15 +154,11 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">x</td><td>input value in radians. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">x</td><td>input value in radians </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>cos(x). </dd></dl>
-
-<p>References <a class="el" href="arm__math_8h.html#afcb9147c96853bea484cfc2dde07463d">FAST_MATH_TABLE_SIZE</a>, and <a class="el" href="arm__common__tables_8h.html#a1dec82d596780f1a66ef4f76f137c1d9">sinTable_f32</a>.</p>
-
-<p>Referenced by <a class="el" href="arm__sin__cos__example__f32_8c.html#a52d2cba30e6946c95578be946ac12a65">main()</a>.</p>
+<dl class="section return"><dt>Returns</dt><dd>cos(x) </dd></dl>
 
 </div>
 </div>
@@ -181,14 +177,12 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">x</td><td>Scaled input value in radians. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">x</td><td>Scaled input value in radians </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>cos(x).</dd></dl>
-<p>The Q15 input value is in the range [0 +0.9999] and is mapped to a radian value in the range [0 2*pi). </p>
-
-<p>References <a class="el" href="arm__math_8h.html#a34716b73c631e65e8dd855e08384ecb2">FAST_MATH_Q15_SHIFT</a>, and <a class="el" href="arm__common__tables_8h.html#a9cbcfe313f61add745ebfeddb4fecd55">sinTable_q15</a>.</p>
+<dl class="section return"><dt>Returns</dt><dd>cos(x)</dd></dl>
+<p>The Q15 input value is in the range [0 +0.9999] and is mapped to a radian value in the range [0 2*PI). </p>
 
 </div>
 </div>
@@ -207,14 +201,12 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">x</td><td>Scaled input value in radians. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">x</td><td>Scaled input value in radians </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>cos(x).</dd></dl>
-<p>The Q31 input value is in the range [0 +0.9999] and is mapped to a radian value in the range [0 2*pi). </p>
-
-<p>References <a class="el" href="arm__math_8h.html#a4268f77b1811a0c7fc2532a0bf6108b0">FAST_MATH_Q31_SHIFT</a>, and <a class="el" href="arm__common__tables_8h.html#a8bfccee9e1c0042cf4a765f4b19d097d">sinTable_q31</a>.</p>
+<dl class="section return"><dt>Returns</dt><dd>cos(x)</dd></dl>
+<p>The Q31 input value is in the range [0 +0.9999] and is mapped to a radian value in the range [0 2*PI). </p>
 
 </div>
 </div>
@@ -223,7 +215,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Aug 1 2018 17:12:21 for CMSIS-DSP by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Fri Mar 15 2019 16:30:43 for CMSIS-DSP by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-DSP
-   &#160;<span id="projectnumber">Version 1.5.2</span>
+   &#160;<span id="projectnumber">Version 1.5.5</span>
    </div>
    <div id="projectbrief">CMSIS DSP Software Library</div>
   </td>
@@ -155,16 +155,16 @@ Functions</h2></td></tr>
 <img src="DCT4.gif" alt="DCT4.gif"/>
 <div class="caption">
 Discrete Cosine Transform - type-IV</div></div>
- <dl class="section user"><dt>Algorithm:</dt><dd>The N-point type-IV DCT is defined as a real, linear transformation by the formula: <div class="image">
+ <dl class="section user"><dt>Algorithm</dt><dd>The N-point type-IV DCT is defined as a real, linear transformation by the formula: <div class="image">
 <img src="DCT4Equation.gif" alt="DCT4Equation.gif"/>
 </div>
- where <code>k = 0,1,2,.....N-1</code> </dd></dl>
+ where <code>k = 0, 1, 2, ..., N-1</code> </dd></dl>
 <dl class="section user"><dt></dt><dd>Its inverse is defined as follows: <div class="image">
 <img src="IDCT4Equation.gif" alt="IDCT4Equation.gif"/>
 </div>
- where <code>n = 0,1,2,.....N-1</code> </dd></dl>
+ where <code>n = 0, 1, 2, ..., N-1</code> </dd></dl>
 <dl class="section user"><dt></dt><dd>The DCT4 matrices become involutory (i.e. they are self-inverse) by multiplying with an overall scale factor of sqrt(2/N). The symmetry of the transform matrix indicates that the fast algorithms for the forward and inverse transform computation are identical. Note that the implementation of Inverse DCT4 and DCT4 is same, hence same process function can be used for both.</dd></dl>
-<dl class="section user"><dt>Lengths supported by the transform:</dt><dd>As DCT4 internally uses Real FFT, it supports all the lengths 128, 512, 2048 and 8192. The library provides separate functions for Q15, Q31, and floating-point data types. </dd></dl>
+<dl class="section user"><dt>Lengths supported by the transform:</dt><dd>As DCT4 internally uses Real FFT, it supports all the lengths 128, 512, 2048 and 8192. The library provides separate functions for Q15, Q31, and floating-point data types.</dd></dl>
 <dl class="section user"><dt>Instance Structure</dt><dd>The instances for Real FFT and FFT, cosine values table and twiddle factor table are stored in an instance data structure. A separate instance structure must be defined for each transform. There are separate instance structure declarations for each of the 3 supported data types.</dd></dl>
 <dl class="section user"><dt>Initialization Functions</dt><dd>There is also an associated initialization function for each data type. The initialization function performs the following operations:<ul>
 <li>Sets the values of the internal structure fields.</li>
@@ -172,10 +172,10 @@ Discrete Cosine Transform - type-IV</div></div>
 </ul>
 </dd></dl>
 <dl class="section user"><dt></dt><dd>Use of the initialization function is optional. However, if the initialization function is used, then the instance structure cannot be placed into a const data section. To place an instance structure into a const data section, the instance structure must be manually initialized. Manually initialize the instance structure as follows: <pre>
-<a class="el" href="structarm__dct4__instance__f32.html" title="Instance structure for the floating-point DCT4/IDCT4 function. ">arm_dct4_instance_f32</a> S = {N, Nby2, normalize, pTwiddle, pCosFactor, pRfft, pCfft};
-<a class="el" href="structarm__dct4__instance__q31.html" title="Instance structure for the Q31 DCT4/IDCT4 function. ">arm_dct4_instance_q31</a> S = {N, Nby2, normalize, pTwiddle, pCosFactor, pRfft, pCfft};
-<a class="el" href="structarm__dct4__instance__q15.html" title="Instance structure for the Q15 DCT4/IDCT4 function. ">arm_dct4_instance_q15</a> S = {N, Nby2, normalize, pTwiddle, pCosFactor, pRfft, pCfft};
- </pre> where <code>N</code> is the length of the DCT4; <code>Nby2</code> is half of the length of the DCT4; <code>normalize</code> is normalizing factor used and is equal to <code>sqrt(2/N)</code>; <code>pTwiddle</code> points to the twiddle factor table; <code>pCosFactor</code> points to the cosFactor table; <code>pRfft</code> points to the real FFT instance; <code>pCfft</code> points to the complex FFT instance; The CFFT and RFFT structures also needs to be initialized, refer to <a class="el" href="group__ComplexFFT.html#ga521f670cd9c571bc61aff9bec89f4c26" title="Processing function for the floating-point Radix-4 CFFT/CIFFT. ">arm_cfft_radix4_f32()</a> and <a class="el" href="group__RealFFT.html#ga3df1766d230532bc068fc4ed69d0fcdc" title="Processing function for the floating-point RFFT/RIFFT. ">arm_rfft_f32()</a> respectively for details regarding static initialization.</dd></dl>
+    <a class="el" href="structarm__dct4__instance__f32.html" title="Instance structure for the floating-point DCT4/IDCT4 function. ">arm_dct4_instance_f32</a> S = {N, Nby2, normalize, pTwiddle, pCosFactor, pRfft, pCfft};
+    <a class="el" href="structarm__dct4__instance__q31.html" title="Instance structure for the Q31 DCT4/IDCT4 function. ">arm_dct4_instance_q31</a> S = {N, Nby2, normalize, pTwiddle, pCosFactor, pRfft, pCfft};
+    <a class="el" href="structarm__dct4__instance__q15.html" title="Instance structure for the Q15 DCT4/IDCT4 function. ">arm_dct4_instance_q15</a> S = {N, Nby2, normalize, pTwiddle, pCosFactor, pRfft, pCfft};
+</pre> where <code>N</code> is the length of the DCT4; <code>Nby2</code> is half of the length of the DCT4; <code>normalize</code> is normalizing factor used and is equal to <code>sqrt(2/N)</code>; <code>pTwiddle</code> points to the twiddle factor table; <code>pCosFactor</code> points to the cosFactor table; <code>pRfft</code> points to the real FFT instance; <code>pCfft</code> points to the complex FFT instance; The CFFT and RFFT structures also needs to be initialized, refer to <a class="el" href="group__ComplexFFT.html#ga521f670cd9c571bc61aff9bec89f4c26" title="Processing function for the floating-point Radix-4 CFFT/CIFFT. ">arm_cfft_radix4_f32()</a> and <a class="el" href="group__RealFFT.html#ga3df1766d230532bc068fc4ed69d0fcdc" title="Processing function for the floating-point RFFT/RIFFT. ">arm_rfft_f32()</a> respectively for details regarding static initialization.</dd></dl>
 <dl class="section user"><dt>Fixed-Point Behavior</dt><dd>Care must be taken when using the fixed-point versions of the DCT4 transform functions. In particular, the overflow and saturation behavior of the accumulator used in each function must be considered. Refer to the function specific documentation below for usage guidelines.</dd></dl>
 <p>end of DCT4_IDCT4_Table group </p>
 <h2 class="groupheader">Function Documentation</h2>
@@ -210,15 +210,13 @@ Discrete Cosine Transform - type-IV</div></div>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">*S</td><td>points to an instance of the floating-point DCT4/IDCT4 structure. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">*pState</td><td>points to state buffer. </td></tr>
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">*pInlineBuffer</td><td>points to the in-place input and output buffer. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">S</td><td>points to an instance of the floating-point DCT4/IDCT4 structure </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">pState</td><td>points to state buffer </td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">pInlineBuffer</td><td>points to the in-place input and output buffer </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>none. </dd></dl>
-
-<p>References <a class="el" href="group__BasicMult.html#gaca3f0b8227da431ab29225b88888aa32">arm_mult_f32()</a>, <a class="el" href="group__scale.html#ga3487af88b112f682ee90589cd419e123">arm_scale_f32()</a>, <a class="el" href="structarm__dct4__instance__f32.html#a262b29a51c371b46efc89120e31ccf37">arm_dct4_instance_f32::N</a>, <a class="el" href="structarm__dct4__instance__f32.html#adb1ef2739ddbe62e5cdadc47455a4147">arm_dct4_instance_f32::Nby2</a>, <a class="el" href="structarm__dct4__instance__f32.html#a6da1187e070801e011ce5e0582efa861">arm_dct4_instance_f32::pCosFactor</a>, and <a class="el" href="structarm__dct4__instance__f32.html#ad13544aafad268588c62e3eb35ae662c">arm_dct4_instance_f32::pTwiddle</a>.</p>
+<dl class="section return"><dt>Returns</dt><dd>none </dd></dl>
 
 </div>
 </div>
@@ -271,23 +269,25 @@ Discrete Cosine Transform - type-IV</div></div>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">*S</td><td>points to an instance of floating-point DCT4/IDCT4 structure. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">*S_RFFT</td><td>points to an instance of floating-point RFFT/RIFFT structure. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">*S_CFFT</td><td>points to an instance of floating-point CFFT/CIFFT structure. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">N</td><td>length of the DCT4. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">Nby2</td><td>half of the length of the DCT4. </td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">S</td><td>points to an instance of floating-point DCT4/IDCT4 structure </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">S_RFFT</td><td>points to an instance of floating-point RFFT/RIFFT structure </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">S_CFFT</td><td>points to an instance of floating-point CFFT/CIFFT structure </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">N</td><td>length of the DCT4 </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">Nby2</td><td>half of the length of the DCT4 </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">normalize</td><td>normalizing factor. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>arm_status function returns ARM_MATH_SUCCESS if initialization is successful or ARM_MATH_ARGUMENT_ERROR if <code>fftLenReal</code> is not a supported transform length. </dd></dl>
-<dl class="section user"><dt>Normalizing factor:</dt><dd>The normalizing factor is <code>sqrt(2/N)</code>, which depends on the size of transform <code>N</code>. Floating-point normalizing factors are mentioned in the table below for different DCT sizes: <div class="image">
+<dl class="section return"><dt>Returns</dt><dd>execution status<ul>
+<li><a class="el" href="arm__math_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6a9f8b2a10bd827fb4600e77d455902eb0">ARM_MATH_SUCCESS</a> : Operation successful</li>
+<li><a class="el" href="arm__math_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6a74897e18d4b8f62b12a7d8a01dd2bb35">ARM_MATH_ARGUMENT_ERROR</a> : <code>N</code> is not a supported transform length</li>
+</ul>
+</dd></dl>
+<dl class="section user"><dt>Normalizing factor</dt><dd>The normalizing factor is <code>sqrt(2/N)</code>, which depends on the size of transform <code>N</code>. Floating-point normalizing factors are mentioned in the table below for different DCT sizes:</dd></dl>
+<div class="image">
 <img src="dct4NormalizingF32Table.gif" alt="dct4NormalizingF32Table.gif"/>
 </div>
- </dd></dl>
-
-<p>References <a class="el" href="arm__math_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6a74897e18d4b8f62b12a7d8a01dd2bb35">ARM_MATH_ARGUMENT_ERROR</a>, <a class="el" href="arm__math_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6a9f8b2a10bd827fb4600e77d455902eb0">ARM_MATH_SUCCESS</a>, <a class="el" href="group__RealFFT.html#ga10717ee326bf50832ef1c25b85a23068">arm_rfft_init_f32()</a>, <a class="el" href="group__DCT4__IDCT4__Table.html#ga16248ed86161ef97538011b49f13e8b7">cos_factors_128</a>, <a class="el" href="group__DCT4__IDCT4__Table.html#ga1ba5306e0bc44730b40ab34cced45fd6">cos_factors_2048</a>, <a class="el" href="group__DCT4__IDCT4__Table.html#ga49fd288352ca5bb43f5cec52273b0d80">cos_factors_512</a>, <a class="el" href="group__DCT4__IDCT4__Table.html#gac12484542bc6aaecc754c855457411de">cos_factors_8192</a>, <a class="el" href="structarm__dct4__instance__f32.html#a262b29a51c371b46efc89120e31ccf37">arm_dct4_instance_f32::N</a>, <a class="el" href="structarm__dct4__instance__f32.html#adb1ef2739ddbe62e5cdadc47455a4147">arm_dct4_instance_f32::Nby2</a>, <a class="el" href="structarm__dct4__instance__f32.html#a61ce8c967b2e998a9c0041cca73cdef8">arm_dct4_instance_f32::normalize</a>, <a class="el" href="structarm__dct4__instance__f32.html#a018f7860b6e070af533fb7d76c7cdc32">arm_dct4_instance_f32::pCfft</a>, <a class="el" href="structarm__dct4__instance__f32.html#a6da1187e070801e011ce5e0582efa861">arm_dct4_instance_f32::pCosFactor</a>, <a class="el" href="structarm__dct4__instance__f32.html#a978f37fc19add31af243ab5c63ae502f">arm_dct4_instance_f32::pRfft</a>, <a class="el" href="structarm__dct4__instance__f32.html#ad13544aafad268588c62e3eb35ae662c">arm_dct4_instance_f32::pTwiddle</a>, <a class="el" href="arm__dotproduct__example__f32_8c.html#a88ccb294236ab22b00310c47164c53c3">status</a>, <a class="el" href="group__DCT4__IDCT4__Table.html#gad00f29d896d64d6da7afbbb9d3e182a4">Weights_128</a>, <a class="el" href="group__DCT4__IDCT4__Table.html#gac3a2a00b3106dfcb5e0a582f50c65692">Weights_2048</a>, <a class="el" href="group__DCT4__IDCT4__Table.html#gaeb67b0be5b3c2139d660e02cedeed908">Weights_512</a>, and <a class="el" href="group__DCT4__IDCT4__Table.html#ga45a8ec91e5da91790566105bc7e6f0c2">Weights_8192</a>.</p>
-
+ 
 </div>
 </div>
 <a class="anchor" id="ga966fd1b66a80873964533703ab5dc054"></a>
@@ -339,23 +339,25 @@ Discrete Cosine Transform - type-IV</div></div>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">*S</td><td>points to an instance of Q15 DCT4/IDCT4 structure. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">*S_RFFT</td><td>points to an instance of Q15 RFFT/RIFFT structure. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">*S_CFFT</td><td>points to an instance of Q15 CFFT/CIFFT structure. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">N</td><td>length of the DCT4. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">Nby2</td><td>half of the length of the DCT4. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">normalize</td><td>normalizing factor. </td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">S</td><td>points to an instance of Q15 DCT4/IDCT4 structure </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">S_RFFT</td><td>points to an instance of Q15 RFFT/RIFFT structure </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">S_CFFT</td><td>points to an instance of Q15 CFFT/CIFFT structure </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">N</td><td>length of the DCT4 </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">Nby2</td><td>half of the length of the DCT4 </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">normalize</td><td>normalizing factor </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>arm_status function returns ARM_MATH_SUCCESS if initialization is successful or ARM_MATH_ARGUMENT_ERROR if <code>N</code> is not a supported transform length. </dd></dl>
-<dl class="section user"><dt>Normalizing factor:</dt><dd>The normalizing factor is <code>sqrt(2/N)</code>, which depends on the size of transform <code>N</code>. Normalizing factors in 1.15 format are mentioned in the table below for different DCT sizes: <div class="image">
+<dl class="section return"><dt>Returns</dt><dd>execution status<ul>
+<li><a class="el" href="arm__math_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6a9f8b2a10bd827fb4600e77d455902eb0">ARM_MATH_SUCCESS</a> : Operation successful</li>
+<li><a class="el" href="arm__math_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6a74897e18d4b8f62b12a7d8a01dd2bb35">ARM_MATH_ARGUMENT_ERROR</a> : <code>N</code> is not a supported transform length</li>
+</ul>
+</dd></dl>
+<dl class="section user"><dt>Normalizing factor</dt><dd>The normalizing factor is <code>sqrt(2/N)</code>, which depends on the size of transform <code>N</code>. Normalizing factors in 1.15 format are mentioned in the table below for different DCT sizes:</dd></dl>
+<div class="image">
 <img src="dct4NormalizingQ15Table.gif" alt="dct4NormalizingQ15Table.gif"/>
 </div>
- </dd></dl>
-
-<p>References <a class="el" href="arm__math_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6a74897e18d4b8f62b12a7d8a01dd2bb35">ARM_MATH_ARGUMENT_ERROR</a>, <a class="el" href="arm__math_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6a9f8b2a10bd827fb4600e77d455902eb0">ARM_MATH_SUCCESS</a>, <a class="el" href="group__RealFFT.html#ga053450cc600a55410ba5b5605e96245d">arm_rfft_init_q15()</a>, <a class="el" href="group__DCT4__IDCT4__Table.html#ga1477edd21c7b08b0b59a564f6c24d6c5">cos_factorsQ15_128</a>, <a class="el" href="group__DCT4__IDCT4__Table.html#gaeee5df7c1be2374441868ecbbc6c7e5d">cos_factorsQ15_2048</a>, <a class="el" href="group__DCT4__IDCT4__Table.html#gac056c3d026058eab3ba650828ff5642f">cos_factorsQ15_512</a>, <a class="el" href="group__DCT4__IDCT4__Table.html#ga988ff0563cc9df7848c9348871ac6c07">cos_factorsQ15_8192</a>, <a class="el" href="structarm__dct4__instance__q15.html#a53d24009bb9b2e93d0aa07db7f1a6c25">arm_dct4_instance_q15::N</a>, <a class="el" href="structarm__dct4__instance__q15.html#af43dcbbc2fc661ffbc525afe3dcbd7da">arm_dct4_instance_q15::Nby2</a>, <a class="el" href="structarm__dct4__instance__q15.html#a197098140d68e89a08f7a249003a0b86">arm_dct4_instance_q15::normalize</a>, <a class="el" href="structarm__dct4__instance__q15.html#a7284932ee8c36107c33815eb62eadffc">arm_dct4_instance_q15::pCfft</a>, <a class="el" href="structarm__dct4__instance__q15.html#ac76df681b1bd502fb4874c06f055dded">arm_dct4_instance_q15::pCosFactor</a>, <a class="el" href="structarm__dct4__instance__q15.html#a11cf95c1cd9dd2dd5e4b81b8f88dc208">arm_dct4_instance_q15::pRfft</a>, <a class="el" href="structarm__dct4__instance__q15.html#abc6c847e9f906781e1d5da40e9aafa76">arm_dct4_instance_q15::pTwiddle</a>, <a class="el" href="arm__dotproduct__example__f32_8c.html#a88ccb294236ab22b00310c47164c53c3">status</a>, <a class="el" href="group__DCT4__IDCT4__Table.html#gaa4ff5e6f062efb1d1ec8c6c2207c3727">WeightsQ15_128</a>, <a class="el" href="group__DCT4__IDCT4__Table.html#ga2235ec700d0d6925d9733f48541d46f5">WeightsQ15_2048</a>, <a class="el" href="group__DCT4__IDCT4__Table.html#gadc8ee250fc217d6cb5c84dd7c1eb6d31">WeightsQ15_512</a>, and <a class="el" href="group__DCT4__IDCT4__Table.html#ga4fdc60621eb306984a82ce8b2d645bb7">WeightsQ15_8192</a>.</p>
-
+ 
 </div>
 </div>
 <a class="anchor" id="ga631bb59c7c97c814ff7147ecba6a716a"></a>
@@ -407,23 +409,25 @@ Discrete Cosine Transform - type-IV</div></div>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">*S</td><td>points to an instance of Q31 DCT4/IDCT4 structure. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">*S_RFFT</td><td>points to an instance of Q31 RFFT/RIFFT structure </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">*S_CFFT</td><td>points to an instance of Q31 CFFT/CIFFT structure </td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">S</td><td>points to an instance of Q31 DCT4/IDCT4 structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">S_RFFT</td><td>points to an instance of Q31 RFFT/RIFFT structure </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">S_CFFT</td><td>points to an instance of Q31 CFFT/CIFFT structure </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">N</td><td>length of the DCT4. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">Nby2</td><td>half of the length of the DCT4. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">normalize</td><td>normalizing factor. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>arm_status function returns ARM_MATH_SUCCESS if initialization is successful or ARM_MATH_ARGUMENT_ERROR if <code>N</code> is not a supported transform length. </dd></dl>
-<dl class="section user"><dt>Normalizing factor:</dt><dd>The normalizing factor is <code>sqrt(2/N)</code>, which depends on the size of transform <code>N</code>. Normalizing factors in 1.31 format are mentioned in the table below for different DCT sizes: <div class="image">
+<dl class="section return"><dt>Returns</dt><dd>execution status<ul>
+<li><a class="el" href="arm__math_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6a9f8b2a10bd827fb4600e77d455902eb0">ARM_MATH_SUCCESS</a> : Operation successful</li>
+<li><a class="el" href="arm__math_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6a74897e18d4b8f62b12a7d8a01dd2bb35">ARM_MATH_ARGUMENT_ERROR</a> : <code>N</code> is not a supported transform length</li>
+</ul>
+</dd></dl>
+<dl class="section user"><dt>Normalizing factor:</dt><dd>The normalizing factor is <code>sqrt(2/N)</code>, which depends on the size of transform <code>N</code>. Normalizing factors in 1.31 format are mentioned in the table below for different DCT sizes:</dd></dl>
+<div class="image">
 <img src="dct4NormalizingQ31Table.gif" alt="dct4NormalizingQ31Table.gif"/>
 </div>
- </dd></dl>
-
-<p>References <a class="el" href="arm__math_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6a74897e18d4b8f62b12a7d8a01dd2bb35">ARM_MATH_ARGUMENT_ERROR</a>, <a class="el" href="arm__math_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6a9f8b2a10bd827fb4600e77d455902eb0">ARM_MATH_SUCCESS</a>, <a class="el" href="group__RealFFT.html#ga5abde938abbe72e95c5bab080eb33c45">arm_rfft_init_q31()</a>, <a class="el" href="group__DCT4__IDCT4__Table.html#gabb8ee2004a3520fd08388db637d43875">cos_factorsQ31_128</a>, <a class="el" href="group__DCT4__IDCT4__Table.html#gaa15fc3fb058482defda371113cd12e74">cos_factorsQ31_2048</a>, <a class="el" href="group__DCT4__IDCT4__Table.html#ga3559569e603cb918911074be88523d0e">cos_factorsQ31_512</a>, <a class="el" href="group__DCT4__IDCT4__Table.html#gaf687c4bbdbc700a3ad5d807d28de63e4">cos_factorsQ31_8192</a>, <a class="el" href="structarm__dct4__instance__q31.html#a46a9f136457350676e2bfd3768ff9d6d">arm_dct4_instance_q31::N</a>, <a class="el" href="structarm__dct4__instance__q31.html#a32d3268ba4629908dba056599f0a904d">arm_dct4_instance_q31::Nby2</a>, <a class="el" href="structarm__dct4__instance__q31.html#ac80ff7b28fca36aeef74dea12e8312dd">arm_dct4_instance_q31::normalize</a>, <a class="el" href="structarm__dct4__instance__q31.html#ac96579cfb28d08bb11dd2fe4c6303833">arm_dct4_instance_q31::pCfft</a>, <a class="el" href="structarm__dct4__instance__q31.html#af97204d1838925621fc82021a0c2d6c1">arm_dct4_instance_q31::pCosFactor</a>, <a class="el" href="structarm__dct4__instance__q31.html#af1487dab5e7963b85dc0fdc6bf492542">arm_dct4_instance_q31::pRfft</a>, <a class="el" href="structarm__dct4__instance__q31.html#a7db236e22673146bb1d2c962f0713f08">arm_dct4_instance_q31::pTwiddle</a>, <a class="el" href="arm__dotproduct__example__f32_8c.html#a88ccb294236ab22b00310c47164c53c3">status</a>, <a class="el" href="group__DCT4__IDCT4__Table.html#ga02d7024538a87214296b01d83ba36b02">WeightsQ31_128</a>, <a class="el" href="group__DCT4__IDCT4__Table.html#ga725b65c25a02b3cad329e18bb832f65e">WeightsQ31_2048</a>, <a class="el" href="group__DCT4__IDCT4__Table.html#ga31a8217a96f7d3171921e98398f31596">WeightsQ31_512</a>, and <a class="el" href="group__DCT4__IDCT4__Table.html#ga16bf6bbe5c4c9b35f88253cf7bdcc435">WeightsQ31_8192</a>.</p>
-
+ 
 </div>
 </div>
 <a class="anchor" id="ga114cb9635059f678df291fcc887aaf2b"></a>
@@ -457,20 +461,18 @@ Discrete Cosine Transform - type-IV</div></div>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">*S</td><td>points to an instance of the Q15 DCT4 structure. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">*pState</td><td>points to state buffer. </td></tr>
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">*pInlineBuffer</td><td>points to the in-place input and output buffer. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">S</td><td>points to an instance of the Q15 DCT4 structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">pState</td><td>points to state buffer. </td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">pInlineBuffer</td><td>points to the in-place input and output buffer. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>none.</dd></dl>
-<dl class="section user"><dt>Input an output formats:</dt><dd>Internally inputs are downscaled in the RFFT process function to avoid overflows. Number of bits downscaled, depends on the size of the transform. The input and output formats for different DCT sizes and number of bits to upscale are mentioned in the table below:</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>none</dd></dl>
+<dl class="section user"><dt>Input an output formats</dt><dd>Internally inputs are downscaled in the RFFT process function to avoid overflows. Number of bits downscaled, depends on the size of the transform. The input and output formats for different DCT sizes and number of bits to upscale are mentioned in the table below:</dd></dl>
 <div class="image">
 <img src="dct4FormatsQ15Table.gif" alt="dct4FormatsQ15Table.gif"/>
 </div>
  
-<p>References <a class="el" href="group__BasicMult.html#gafb0778d27ed98a2a6f2ecb7d48cc8c75">arm_mult_q15()</a>, <a class="el" href="group__shift.html#gaa1757e53279780107acc92cf100adb61">arm_shift_q15()</a>, <a class="el" href="structarm__dct4__instance__q15.html#a53d24009bb9b2e93d0aa07db7f1a6c25">arm_dct4_instance_q15::N</a>, <a class="el" href="structarm__dct4__instance__q15.html#af43dcbbc2fc661ffbc525afe3dcbd7da">arm_dct4_instance_q15::Nby2</a>, <a class="el" href="structarm__dct4__instance__q15.html#ac76df681b1bd502fb4874c06f055dded">arm_dct4_instance_q15::pCosFactor</a>, and <a class="el" href="structarm__dct4__instance__q15.html#abc6c847e9f906781e1d5da40e9aafa76">arm_dct4_instance_q15::pTwiddle</a>.</p>
-
 </div>
 </div>
 <a class="anchor" id="gad04d0baab6ed081d8e8afe02538eb80b"></a>
@@ -504,20 +506,18 @@ Discrete Cosine Transform - type-IV</div></div>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">*S</td><td>points to an instance of the Q31 DCT4 structure. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">*pState</td><td>points to state buffer. </td></tr>
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">*pInlineBuffer</td><td>points to the in-place input and output buffer. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">S</td><td>points to an instance of the Q31 DCT4 structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">pState</td><td>points to state buffer. </td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">pInlineBuffer</td><td>points to the in-place input and output buffer. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>none. </dd></dl>
-<dl class="section user"><dt>Input an output formats:</dt><dd>Input samples need to be downscaled by 1 bit to avoid saturations in the Q31 DCT process, as the conversion from DCT2 to DCT4 involves one subtraction. Internally inputs are downscaled in the RFFT process function to avoid overflows. Number of bits downscaled, depends on the size of the transform. The input and output formats for different DCT sizes and number of bits to upscale are mentioned in the table below:</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>none</dd></dl>
+<dl class="section user"><dt>Input an output formats</dt><dd>Input samples need to be downscaled by 1 bit to avoid saturations in the Q31 DCT process, as the conversion from DCT2 to DCT4 involves one subtraction. Internally inputs are downscaled in the RFFT process function to avoid overflows. Number of bits downscaled, depends on the size of the transform. The input and output formats for different DCT sizes and number of bits to upscale are mentioned in the table below:</dd></dl>
 <div class="image">
 <img src="dct4FormatsQ31Table.gif" alt="dct4FormatsQ31Table.gif"/>
 </div>
  
-<p>References <a class="el" href="group__CmplxByCmplxMult.html#ga1829e50993a90742de225a0ce4213838">arm_cmplx_mult_cmplx_q31()</a>, <a class="el" href="group__BasicMult.html#ga3528c0f54a0607acc603f0490d3ca6c6">arm_mult_q31()</a>, <a class="el" href="group__RealFFT.html#gabaeab5646aeea9844e6d42ca8c73fe3a">arm_rfft_q31()</a>, <a class="el" href="group__shift.html#ga387dd8b7b87377378280978f16cdb13d">arm_shift_q31()</a>, <a class="el" href="structarm__dct4__instance__q31.html#a46a9f136457350676e2bfd3768ff9d6d">arm_dct4_instance_q31::N</a>, <a class="el" href="structarm__dct4__instance__q31.html#a32d3268ba4629908dba056599f0a904d">arm_dct4_instance_q31::Nby2</a>, <a class="el" href="structarm__dct4__instance__q31.html#ac80ff7b28fca36aeef74dea12e8312dd">arm_dct4_instance_q31::normalize</a>, <a class="el" href="structarm__dct4__instance__q31.html#af97204d1838925621fc82021a0c2d6c1">arm_dct4_instance_q31::pCosFactor</a>, <a class="el" href="structarm__dct4__instance__q31.html#af1487dab5e7963b85dc0fdc6bf492542">arm_dct4_instance_q31::pRfft</a>, and <a class="el" href="structarm__dct4__instance__q31.html#a7db236e22673146bb1d2c962f0713f08">arm_dct4_instance_q31::pTwiddle</a>.</p>
-
 </div>
 </div>
 </div><!-- contents -->
@@ -525,7 +525,7 @@ Discrete Cosine Transform - type-IV</div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Aug 1 2018 17:12:22 for CMSIS-DSP by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Fri Mar 15 2019 16:30:44 for CMSIS-DSP by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

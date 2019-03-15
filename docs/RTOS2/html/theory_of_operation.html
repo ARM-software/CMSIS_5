@@ -120,12 +120,14 @@ System Startup</h1>
 <li>Initialization and configuration of hardware including peripherals, memory, pins, clocks and the interrupt system.</li>
 <li>Update the system core clock using the respective <a href="../../Core/html/group__system__init__gr.html">CMSIS-Core (Cortex-M)</a> or <a href="../../Core_A/html/group__system__init__gr.html">CMSIS-Core (Cortex-A)</a> function.</li>
 <li>Initialize the CMSIS-RTOS kernel using <a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#gae818f6611d25ba3140bede410a52d659">osKernelInitialize</a>.</li>
-<li>Optionally, create a new thread <code>app_main</code>, which is used as a main thread using <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga48d68b8666d99d28fa646ee1d2182b8f">osThreadNew</a>. Alternatively, threads can be created in <code>main()</code> directly.</li>
-<li>Start the RTOS scheduler using <a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#ga9ae2cc00f0d89d7b6a307bba942b5221">osKernelStart</a> which also configure system tick timer and RTOS specific interrupts. This function does not return in case of successful execution. Any application code after <b>osKernelStart</b> will therefore not be executed.</li>
+<li>Optionally, create one thread (for example <code>app_main</code>), which is used as a main thread using <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga48d68b8666d99d28fa646ee1d2182b8f">osThreadNew</a>. This thread should take care of creating and starting objects, once it is run by the scheduler. Alternatively, threads can be created in <code>main()</code> directly.</li>
+<li>Start the RTOS scheduler using <a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#ga9ae2cc00f0d89d7b6a307bba942b5221">osKernelStart</a> which also configures the system tick timer and initializes RTOS specific interrupts. This function does not return in case of successful execution. Therefore, any application code after <b>osKernelStart</b> will not be executed.</li>
 </ol>
-<dl class="section note"><dt>Note</dt><dd>Interrupts are initialized in <a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#ga9ae2cc00f0d89d7b6a307bba942b5221">osKernelStart</a>. Modifying basic In case priorities and groupings in the NVIC are altered by the application after the above sequence it might be necessary to call <a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#gae818f6611d25ba3140bede410a52d659">osKernelInitialize</a> again. Incorrect ossibly catched by <a class="el" href="group__rtx5__specific__functions.html#gaf1745a88f9cc60b609ab1c8076bd346d">osRtxErrorNotify</a> or causing a hard fault.</dd>
-<dd>
-The tick timer is configured during <a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#ga9ae2cc00f0d89d7b6a307bba942b5221">osKernelStart</a>. </dd></dl>
+<dl class="section note"><dt>Note</dt><dd><ul>
+<li>Modifying priorities and groupings in the NVIC by the application after the above sequence is not recommended.</li>
+<li>Before executing <a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#ga9ae2cc00f0d89d7b6a307bba942b5221">osKernelStart</a>, only the functions <a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#ga6f7764e7250c5c5364c00c45a5d1d199">osKernelGetInfo</a>, <a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#ga48b69b81012fce051f639be288b243ba">osKernelGetState</a>, and object creation functions (osXxxNew) may be called.</li>
+</ul>
+</dd></dl>
 <h1><a class="anchor" id="Scheduler"></a>
 Scheduler</h1>
 <p>RTX5 implements a low-latency preemptive scheduler. Major parts of RTX5 are executed in handler mode such as</p>
@@ -219,6 +221,7 @@ Statically allocated memory for all objects</div></div>
 <tr>
 <td>Message Queue </td><td><code>.bss.os.msgqueue.cb</code> </td></tr>
 </table>
+<p>It must be assured that these sections are placed into contiguous memory. This can fail, i.e. sections end up being split over multiple memory segments, when assigning compilation units to memory segments, manually.</p>
 <p>The following code example shows how to create an OS object using static memory.</p>
 <p><b> Code Example:</b> </p>
 <div class="fragment"><div class="line"><span class="comment">/*----------------------------------------------------------------------------</span></div>
@@ -313,7 +316,7 @@ Low-Power Operation</h1>
 RTX Kernel Timer Tick</h1>
 <p>RTX uses the generic <a class="el" href="group__CMSIS__RTOS__TickAPI.html">OS Tick API</a> to configure and control its periodic Kernel Tick.</p>
 <p>To use an alternative timer as the Kernel Tick Timer one simply needs to implement a custom version of the <a class="el" href="group__CMSIS__RTOS__TickAPI.html">OS Tick API</a>.</p>
-<dl class="section note"><dt>Note</dt><dd>The OS Tick implementation provided must asure that the used timer interrupt uses the same (low) priority group as the service interrupts, i.e. interrupts used by RTX must not preempt each other. Refer to the <a class="el" href="theory_of_operation.html#Scheduler">Scheduler</a> section for more details.</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>The OS Tick implementation provided must assure that the used timer interrupt uses the same (low) priority group as the service interrupts, i.e. interrupts used by RTX must not preempt each other. Refer to the <a class="el" href="theory_of_operation.html#Scheduler">Scheduler</a> section for more details.</dd></dl>
 <h2><a class="anchor" id="TickLess"></a>
 Tick-less Low-Power Operation</h2>
 <p>RTX5 provides extension for tick-less operation which is useful for applications that use extensively low-power modes where the SysTick timer is also disabled. To provide a time-tick in such power-saving modes, a wake-up timer is used to derive timer intervals. The CMSIS-RTOS2 functions <a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#gae26683e1606ec633354a2876c68f0c1f">osKernelSuspend</a> and <a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#ga8c4b4d7ed34cab73c001665d9176aced">osKernelResume</a> control the tick-less operation.</p>
@@ -422,22 +425,22 @@ RTX5 Header File</h1>
 <div class="line"> <span class="comment"></span></div>
 <div class="line"><span class="comment">/// Kernel Information</span></div>
 <div class="line"><span class="comment"></span><span class="preprocessor">#define osRtxVersionAPI      20010003   </span><span class="comment">///&lt; API version (2.1.3)</span></div>
-<div class="line"><span class="comment"></span>#define osRtxVersionKernel   50040000   <span class="comment">///&lt; Kernel version (5.4.0)</span></div>
-<div class="line"><span class="comment"></span>#define osRtxKernelId     &quot;RTX V5.4.0&quot;  <span class="comment">///&lt; Kernel identification string</span></div>
+<div class="line"><span class="comment"></span>#define osRtxVersionKernel   50050000   <span class="comment">///&lt; Kernel version (5.5.0)</span></div>
+<div class="line"><span class="comment"></span>#define osRtxKernelId     &quot;RTX V5.5.0&quot;  <span class="comment">///&lt; Kernel identification string</span></div>
 <div class="line"><span class="comment"></span> </div>
 <div class="line"> </div>
 <div class="line"><span class="comment">//  ==== Common definitions ====</span></div>
 <div class="line"> <span class="comment"></span></div>
 <div class="line"><span class="comment">/// Object Identifier definitions</span></div>
 <div class="line"><span class="comment"></span><span class="preprocessor">#define osRtxIdInvalid          0x00U</span></div>
-<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define osRtxIdThread           0x01U</span></div>
-<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define osRtxIdTimer            0x02U</span></div>
-<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define osRtxIdEventFlags       0x03U</span></div>
-<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define osRtxIdMutex            0x04U</span></div>
-<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define osRtxIdSemaphore        0x05U</span></div>
-<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define osRtxIdMemoryPool       0x06U</span></div>
-<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define osRtxIdMessage          0x07U</span></div>
-<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define osRtxIdMessageQueue     0x08U</span></div>
+<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define osRtxIdThread           0xF1U</span></div>
+<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define osRtxIdTimer            0xF2U</span></div>
+<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define osRtxIdEventFlags       0xF3U</span></div>
+<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define osRtxIdMutex            0xF5U</span></div>
+<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define osRtxIdSemaphore        0xF6U</span></div>
+<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define osRtxIdMemoryPool       0xF7U</span></div>
+<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define osRtxIdMessage          0xF9U</span></div>
+<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define osRtxIdMessageQueue     0xFAU</span></div>
 <div class="line"><span class="preprocessor"></span> <span class="comment"></span></div>
 <div class="line"><span class="comment">/// Object Flags definitions</span></div>
 <div class="line"><span class="comment"></span><span class="preprocessor">#define osRtxFlagSystemObject   0x01U</span></div>
@@ -887,7 +890,7 @@ Calls from Interrupt Service Routines</h1>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="index.html">index</a></li><li class="navelem"><a class="el" href="rtx5_impl.html">RTX v5 Implementation</a></li>
-    <li class="footer">Generated on Wed Aug 1 2018 17:12:45 for CMSIS-RTOS2 by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Fri Mar 15 2019 16:31:16 for CMSIS-RTOS2 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

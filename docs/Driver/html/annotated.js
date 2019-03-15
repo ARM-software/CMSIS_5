@@ -19,6 +19,7 @@ var annotated =
     [ "ARM_DRIVER_USBH", "group__usbh__host__gr.html#structARM__DRIVER__USBH", "group__usbh__host__gr_structARM__DRIVER__USBH" ],
     [ "ARM_DRIVER_USBH_HCI", "group__usbh__hci__gr.html#structARM__DRIVER__USBH__HCI", "group__usbh__hci__gr_structARM__DRIVER__USBH__HCI" ],
     [ "ARM_DRIVER_VERSION", "group__common__drv__gr.html#structARM__DRIVER__VERSION", "group__common__drv__gr_structARM__DRIVER__VERSION" ],
+    [ "ARM_DRIVER_WIFI", "group__wifi__interface__gr.html#structARM__DRIVER__WIFI", "group__wifi__interface__gr_structARM__DRIVER__WIFI" ],
     [ "ARM_ETH_LINK_INFO", "group__eth__interface__gr.html#structARM__ETH__LINK__INFO", "group__eth__interface__gr_structARM__ETH__LINK__INFO" ],
     [ "ARM_ETH_MAC_ADDR", "group__eth__interface__gr.html#structARM__ETH__MAC__ADDR", "group__eth__interface__gr_structARM__ETH__MAC__ADDR" ],
     [ "ARM_ETH_MAC_CAPABILITIES", "group__eth__mac__interface__gr.html#structARM__ETH__MAC__CAPABILITIES", "group__eth__mac__interface__gr_structARM__ETH__MAC__CAPABILITIES" ],
@@ -51,5 +52,9 @@ var annotated =
     [ "ARM_USBD_STATE", "group__usbd__interface__gr.html#structARM__USBD__STATE", "group__usbd__interface__gr_structARM__USBD__STATE" ],
     [ "ARM_USBH_CAPABILITIES", "group__usbh__host__gr.html#structARM__USBH__CAPABILITIES", "group__usbh__host__gr_structARM__USBH__CAPABILITIES" ],
     [ "ARM_USBH_HCI_CAPABILITIES", "group__usbh__hci__gr.html#structARM__USBH__HCI__CAPABILITIES", "group__usbh__hci__gr_structARM__USBH__HCI__CAPABILITIES" ],
-    [ "ARM_USBH_PORT_STATE", "group__usbh__host__gr.html#structARM__USBH__PORT__STATE", "group__usbh__host__gr_structARM__USBH__PORT__STATE" ]
+    [ "ARM_USBH_PORT_STATE", "group__usbh__host__gr.html#structARM__USBH__PORT__STATE", "group__usbh__host__gr_structARM__USBH__PORT__STATE" ],
+    [ "ARM_WIFI_CAPABILITIES", "group__wifi__control__gr.html#structARM__WIFI__CAPABILITIES", "group__wifi__control__gr_structARM__WIFI__CAPABILITIES" ],
+    [ "ARM_WIFI_CONFIG_t", "group__wifi__management__gr.html#structARM__WIFI__CONFIG__t", "group__wifi__management__gr_structARM__WIFI__CONFIG__t" ],
+    [ "ARM_WIFI_NET_INFO_t", "group__wifi__management__gr.html#structARM__WIFI__NET__INFO__t", "group__wifi__management__gr_structARM__WIFI__NET__INFO__t" ],
+    [ "ARM_WIFI_SCAN_INFO_t", "group__wifi__management__gr.html#structARM__WIFI__SCAN__INFO__t", "group__wifi__management__gr_structARM__WIFI__SCAN__INFO__t" ]
 ];

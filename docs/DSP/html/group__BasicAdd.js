@@ -1,7 +1,7 @@
 var group__BasicAdd =
 [
-    [ "arm_add_f32", "group__BasicAdd.html#ga6a904a547413b10565dd1d251c6bafbd", null ],
-    [ "arm_add_q15", "group__BasicAdd.html#gabb51285a41f511670bbff62fc0e1bf62", null ],
-    [ "arm_add_q31", "group__BasicAdd.html#ga24d6c3f7f8b9fae4847c0c3f26a39a3b", null ],
-    [ "arm_add_q7", "group__BasicAdd.html#gaed633f415a7840a66861debca2dfb96b", null ]
+    [ "arm_add_f32", "group__BasicAdd.html#gabfef1e86e458314a61f4baa441d9765e", null ],
+    [ "arm_add_q15", "group__BasicAdd.html#gacea7c052f62fdd71c8f1a14f0495cbed", null ],
+    [ "arm_add_q31", "group__BasicAdd.html#ga63e5862d90971bff4181b22bfa6ac753", null ],
+    [ "arm_add_q7", "group__BasicAdd.html#gafaecefa2be70b02118c8a317e183f247", null ]
 ];
