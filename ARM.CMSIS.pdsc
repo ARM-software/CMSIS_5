@@ -2457,6 +2457,11 @@ and 8-bit Java bytecodes in Jazelle state.
       <require Dvendor="ARM:82" Dname="ARMv81MML*"/>
       <require Cclass="CMSIS" Cgroup="CORE"/>
     </condition>
+    <condition id="ARMv81MML CMSIS GCC">
+      <description>Generic Armv8-M Mainline device startup and depends on CMSIS Core requiring GCC</description>
+      <require condition="ARMv81MML CMSIS"/>
+      <require condition="GCC"/>
+    </condition>
 
     <condition id="ARMCA5 CMSIS">
       <description>Generic Arm Cortex-A5 device startup and depends on CMSIS Core</description>
@@ -2948,7 +2953,6 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="header"       name="Device/ARM/ARMv81MML/Include/ARMv81MML_DSP_DP_MVE_FP.h"/>
         <!-- startup / system file -->
         <file category="sourceAsm"    name="Device/ARM/ARMv81MML/Source/ARM/startup_ARMv81MML.s"         version="1.0.0" attr="config" condition="ARMCC"/>
-        <file category="linkerScript" name="Device/ARM/ARMv81MML/Source/ARM/ARMv81MML.sct"               version="1.0.0" attr="config" condition="ARMCC"/>
         <file category="sourceAsm"    name="Device/ARM/ARMv81MML/Source/GCC/startup_ARMv81MML.S"         version="1.0.0" attr="config" condition="GCC"/>
         <file category="linkerScript" name="Device/ARM/ARMv81MML/Source/GCC/gcc_arm.ld"                  version="1.0.0" attr="config" condition="GCC"/>
         <file category="sourceAsm"    name="Device/ARM/ARMv81MML/Source/IAR/startup_ARMv81MML.s"         version="1.0.0" attr="config" condition="IAR"/>
@@ -2957,17 +2961,14 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="header"       name="Device/ARM/ARMv81MML/Include/Template/partition_ARMv81MML.h" version="1.0.0" attr="config" condition="ARMv8-M TZ Device"/>
       </files>
     </component>
-    <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cversion="1.0.0" condition="ARMv81MML CMSIS">
+    <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cversion="1.0.0" condition="ARMv81MML CMSIS GCC">
       <description>System and Startup for Generic Armv8.1-M Mainline device</description>
       <files>
         <!-- include folder / device header file -->
         <file category="include"      name="Device/ARM/ARMv81MML/Include/"/>
         <!-- startup / system file -->
-        <file category="sourceC"      name="Device/ARM/ARMv81MML/Source/ARM/startup_ARMv81MML.c"         version="1.0.0" attr="config" condition="ARMCC"/>
-        <file category="linkerScript" name="Device/ARM/ARMv81MML/Source/ARM/ARMv81MML.sct"               version="1.0.0" attr="config" condition="ARMCC"/>
         <file category="sourceC"      name="Device/ARM/ARMv81MML/Source/GCC/startup_ARMv81MML.c"         version="1.0.0" attr="config" condition="GCC"/>
         <file category="linkerScript" name="Device/ARM/ARMv81MML/Source/GCC/gcc_arm.ld"                  version="1.0.0" attr="config" condition="GCC"/>
-        <file category="sourceC"      name="Device/ARM/ARMv81MML/Source/IAR/startup_ARMv81MML.c"         version="1.0.0" attr="config" condition="IAR"/>
         <file category="sourceC"      name="Device/ARM/ARMv81MML/Source/system_ARMv81MML.c"              version="1.0.0" attr="config"/>
         <!-- SAU configuration -->
         <file category="header"       name="Device/ARM/ARMv81MML/Include/Template/partition_ARMv81MML.h" version="1.0.0" attr="config" condition="ARMv8-M TZ Device"/>
