@@ -40,8 +40,8 @@
 
                 .section .stack
                 .align   3
-	              .globl   __StackTop
-	              .globl   __StackLimit
+                .globl   __StackTop
+                .globl   __StackLimit
 __StackLimit:
                 .space   Stack_Size
                 .size    __StackLimit, . - __StackLimit
@@ -59,8 +59,8 @@ __StackTop:
                 .if      Heap_Size != 0                     /* Heap is provided */
                 .section .heap
                 .align   3
-	              .globl   __HeapBase
-	              .globl   __HeapLimit
+                .globl   __HeapBase
+                .globl   __HeapLimit
 __HeapBase:
                 .space   Heap_Size
                 .size    __HeapBase, . - __HeapBase

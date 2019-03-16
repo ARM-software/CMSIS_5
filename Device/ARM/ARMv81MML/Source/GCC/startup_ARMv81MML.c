@@ -1,9 +1,9 @@
 /**************************************************************************//**
- * @file     startup_ARMv8MML.c
+ * @file     startup_ARMv81MML.c
  * @brief    CMSIS Core Device Startup File for
  *           ARMv81MML Device
  * @version  V1.0.0
- * @date     25. February 2019
+ * @date     15. March 2019
  ******************************************************************************/
 /*
  * Copyright (c) 2009-2019 Arm Limited. All rights reserved.
