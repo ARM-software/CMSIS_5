@@ -1,8 +1,8 @@
 /**************************************************************************//**
  * @file     cmsis_armcc.h
  * @brief    CMSIS compiler ARMCC (Arm Compiler 5) header file
- * @version  V5.0.4
- * @date     10. December 2018
+ * @version  V5.0.5
+ * @date     14. December 2018
  ******************************************************************************/
 /*
  * Copyright (c) 2009-2018 Arm Limited. All rights reserved.

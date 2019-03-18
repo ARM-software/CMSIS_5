@@ -3,13 +3,13 @@
  * Title:        arm_bitreversal2.c
  * Description:  Bitreversal functions
  *
- * $Date:        28. February 2019
- * $Revision:    V.1.5.5
+ * $Date:        18. March 2019
+ * $Revision:    V1.0.0
  *
  * Target Processor: Cortex-M cores
  * -------------------------------------------------------------------- */
 /*
- * Copyright (C) 2010-2019 ARM Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2019 ARM Limited or its affiliates. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *

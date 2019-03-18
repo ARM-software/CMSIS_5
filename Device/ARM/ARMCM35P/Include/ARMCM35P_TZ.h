@@ -2,7 +2,7 @@
  * @file     ARMCM35P_TZ.h
  * @brief    CMSIS Core Peripheral Access Layer Header File for
  *           ARMCM35P Device (configured for ARMCM35P without FPU, without DSP extension, with TrustZone)
- * @version  V5.4.1
+ * @version  V1.0.0
  * @date     03. September 2018
  ******************************************************************************/
 /*

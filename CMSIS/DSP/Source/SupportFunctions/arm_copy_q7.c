@@ -3,8 +3,8 @@
  * Title:        arm_copy_q7.c
  * Description:  Copies the elements of a Q7 vector
  *
- * $Date:        28. February 2019
- * $Revision:    V.1.5.5
+ * $Date:        18. March 2019
+ * $Revision:    V1.6.0
  *
  * Target Processor: Cortex-M cores
  * -------------------------------------------------------------------- */

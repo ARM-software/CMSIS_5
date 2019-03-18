@@ -1,8 +1,8 @@
 /******************************************************************************
  * @file     arm_math.h
  * @brief    Public header file for CMSIS DSP Library
- * @version  V1.5.5
- * @date     28. February 2019
+ * @version  V1.6.0
+ * @date     18. March 2019
  ******************************************************************************/
 /*
  * Copyright (c) 2010-2019 Arm Limited or its affiliates. All rights reserved.
@@ -401,7 +401,8 @@ extern "C"
 
 
 /**
-  @brief definition to read/write two 16 bit values (Depricated).
+  @brief definition to read/write two 16 bit values.
+  @deprecated
  */
 #if   defined ( __CC_ARM )
   #define __SIMD32_TYPE int32_t __packed
@@ -425,9 +426,6 @@ extern "C"
 #define __SIMD32_CONST(addr)  ( (__SIMD32_TYPE * )   (addr))
 #define _SIMD32_OFFSET(addr)  (*(__SIMD32_TYPE * )   (addr))
 #define __SIMD64(addr)        (*(      int64_t **) & (addr))
-
-
-
 
 /* SIMD replacement */
 

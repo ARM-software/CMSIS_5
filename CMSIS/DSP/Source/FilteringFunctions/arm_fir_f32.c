@@ -3,8 +3,8 @@
  * Title:        arm_fir_f32.c
  * Description:  Floating-point FIR filter processing function
  *
- * $Date:        28. February 2019
- * $Revision:    V.1.5.5
+ * $Date:        18. March 2019
+ * $Revision:    V1.6.0
  *
  * Target Processor: Cortex-M cores
  * -------------------------------------------------------------------- */

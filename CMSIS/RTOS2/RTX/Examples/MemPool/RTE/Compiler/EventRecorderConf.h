@@ -1,10 +1,10 @@
 /*------------------------------------------------------------------------------
  * MDK - Component ::Event Recorder
- * Copyright (c) 2016 ARM Germany GmbH. All rights reserved.
+ * Copyright (c) 2016-2019 ARM Germany GmbH. All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    EventRecorderConf.h
  * Purpose: Event Recorder Configuration
- * Rev.:    V1.0.0
+ * Rev.:    V1.0.1
  *----------------------------------------------------------------------------*/
 
 //-------- <<< Use Configuration Wizard in Context Menu >>> --------------------

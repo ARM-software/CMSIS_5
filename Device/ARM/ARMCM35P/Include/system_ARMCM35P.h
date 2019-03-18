@@ -2,7 +2,7 @@
  * @file     system_ARMCM35P.h
  * @brief    CMSIS Device System Header File for
  *           ARMCM35P Device
- * @version  V5.4.1
+ * @version  V1.0.0
  * @date     03. September 2018
  ******************************************************************************/
 /*

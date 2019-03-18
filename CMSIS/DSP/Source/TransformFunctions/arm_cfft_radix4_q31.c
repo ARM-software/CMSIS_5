@@ -4,8 +4,8 @@
  * Description:  This file has function definition of Radix-4 FFT & IFFT function and
  *               In-place bit reversal using bit reversal table
  *
- * $Date:        28. February 2019
- * $Revision:    V.1.5.5
+ * $Date:        18. March 2019
+ * $Revision:    V1.6.0
  *
  * Target Processor: Cortex-M cores
  * -------------------------------------------------------------------- */

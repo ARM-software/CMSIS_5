@@ -3,8 +3,8 @@
  * Title:        arm_fir_decimate_init_q31.c
  * Description:  Initialization function for Q31 FIR Decimation filter
  *
- * $Date:        28. February 2019
- * $Revision:    V.1.5.5
+ * $Date:        18. March 2019
+ * $Revision:    V1.6.0
  *
  * Target Processor: Cortex-M cores
  * -------------------------------------------------------------------- */
