@@ -141,11 +141,17 @@ Macros</h2></td></tr>
 <tr class="memdesc:gade2d8d7118f8ff49547f60aa0c3382bb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Recommend that function should be inlined by the compiler.  <a href="#gade2d8d7118f8ff49547f60aa0c3382bb">More...</a><br/></td></tr>
 <tr class="separator:gade2d8d7118f8ff49547f60aa0c3382bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaba87361bfad2ae52cfe2f40c1a1dbf9c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__compiler__conntrol__gr.html#gaba87361bfad2ae52cfe2f40c1a1dbf9c">__STATIC_INLINE</a></td></tr>
-<tr class="memdesc:gaba87361bfad2ae52cfe2f40c1a1dbf9c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define a static function should be inlined by the compiler.  <a href="#gaba87361bfad2ae52cfe2f40c1a1dbf9c">More...</a><br/></td></tr>
+<tr class="memdesc:gaba87361bfad2ae52cfe2f40c1a1dbf9c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define a static function that may be inlined by the compiler.  <a href="#gaba87361bfad2ae52cfe2f40c1a1dbf9c">More...</a><br/></td></tr>
 <tr class="separator:gaba87361bfad2ae52cfe2f40c1a1dbf9c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab904513442afdf77d4f8c74f23cbb040"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__compiler__conntrol__gr.html#gab904513442afdf77d4f8c74f23cbb040">__STATIC_FORCEINLINE</a></td></tr>
+<tr class="memdesc:gab904513442afdf77d4f8c74f23cbb040"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define a static function that should be always inlined by the compiler.  <a href="#gab904513442afdf77d4f8c74f23cbb040">More...</a><br/></td></tr>
+<tr class="separator:gab904513442afdf77d4f8c74f23cbb040"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga153a4a31b276a9758959580538720a51"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__compiler__conntrol__gr.html#ga153a4a31b276a9758959580538720a51">__NO_RETURN</a></td></tr>
 <tr class="memdesc:ga153a4a31b276a9758959580538720a51"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inform the compiler that a function does not return.  <a href="#ga153a4a31b276a9758959580538720a51">More...</a><br/></td></tr>
 <tr class="separator:ga153a4a31b276a9758959580538720a51"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga378ac21329d33f561f90265eef89f564"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__compiler__conntrol__gr.html#ga378ac21329d33f561f90265eef89f564">__RESTRICT</a></td></tr>
+<tr class="memdesc:ga378ac21329d33f561f90265eef89f564"><td class="mdescLeft">&#160;</td><td class="mdescRight">restrict pointer qualifier to enable additional optimizations.  <a href="#ga378ac21329d33f561f90265eef89f564">More...</a><br/></td></tr>
+<tr class="separator:ga378ac21329d33f561f90265eef89f564"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga3e40e4c553fc11588f7a4c2a19e789e0"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__compiler__conntrol__gr.html#ga3e40e4c553fc11588f7a4c2a19e789e0">__USED</a></td></tr>
 <tr class="memdesc:ga3e40e4c553fc11588f7a4c2a19e789e0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inform that a variable shall be retained in executable image.  <a href="#ga3e40e4c553fc11588f7a4c2a19e789e0">More...</a><br/></td></tr>
 <tr class="separator:ga3e40e4c553fc11588f7a4c2a19e789e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -361,6 +367,50 @@ Macros</h2></td></tr>
 </div><!-- fragment --> 
 </div>
 </div>
+<a class="anchor" id="ga378ac21329d33f561f90265eef89f564"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define __RESTRICT</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>The __RESTRICT keyword corresponds to the <b>restrict</b> pointer qualifier that has been introduced in C99. __RESTRICT is a hint to the compiler that enables additional optimizations. It specifies that for the lifetime of the pointer, only the pointer itself or a value directly derived from it (such as pointer + 1) is used to access the object. The compiler may therefore ignore potential pointer aliasing effects and perform additional optimizations.</p>
+<dl class="section note"><dt>Note</dt><dd>For compilers that do not support the restrict keyword, __RESTRICT is defined as an empty macro and a warning is issued.</dd></dl>
+<p><b> Code Example:</b> </p>
+<div class="fragment"><div class="line"><a class="code" href="group__compiler__conntrol__gr.html#gaba87361bfad2ae52cfe2f40c1a1dbf9c">__STATIC_INLINE</a> <span class="keywordtype">void</span> <a class="code" href="group__mpu__functions.html#gac1a949403bf84eecaf407003fb553ae7">ARM_MPU_OrderedMemcpy</a> (<span class="keyword">volatile</span> uint32_t* dst, <span class="keyword">const</span> uint32_t* <a class="code" href="group__compiler__conntrol__gr.html#ga378ac21329d33f561f90265eef89f564">__RESTRICT</a> src, uint32_t len)</div>
+<div class="line">{</div>
+<div class="line">  uint32_t i;</div>
+<div class="line">  <span class="keywordflow">for</span> (i = 0U; i &lt; len; ++i) </div>
+<div class="line">  {</div>
+<div class="line">    dst[i] = src[i];   <span class="comment">// Since src is restrict, the compiler can assume that dst and src are not overlapping may load multiple values at a time</span></div>
+<div class="line">  }</div>
+<div class="line">}</div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a class="anchor" id="gab904513442afdf77d4f8c74f23cbb040"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define __STATIC_FORCEINLINE</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Defines a static function that should be always inlined by the compiler.</p>
+<dl class="section note"><dt>Note</dt><dd>For compilers that do not allow to force function inlining, the macro maps to <a class="el" href="group__compiler__conntrol__gr.html#gaba87361bfad2ae52cfe2f40c1a1dbf9c">__STATIC_INLINE</a>.</dd></dl>
+<p><b> Code Example:</b> </p>
+<div class="fragment"><div class="line">\\ Get Interrupt Vector</div>
+<div class="line"><a class="code" href="group__compiler__conntrol__gr.html#gab904513442afdf77d4f8c74f23cbb040">__STATIC_FORCEINLINE</a> uint32_t <a class="code" href="group__NVIC__gr.html#gaebee9cad6724a5bac1857f0f1fb6d6af">NVIC_GetVector</a>(<a class="code" href="group__NVIC__gr.html#ga7e1129cd8a196f4284d41db3e82ad5c8">IRQn_Type</a> IRQn)</div>
+<div class="line">{</div>
+<div class="line">    uint32_t *vectors = (uint32_t *)SCB-&gt;VTOR;</div>
+<div class="line">    <span class="keywordflow">return</span> vectors[(int32_t)IRQn + NVIC_USER_IRQ_OFFSET];</div>
+<div class="line">}</div>
+</div><!-- fragment --> 
+</div>
+</div>
 <a class="anchor" id="gaba87361bfad2ae52cfe2f40c1a1dbf9c"></a>
 <div class="memitem">
 <div class="memproto">
@@ -521,7 +571,7 @@ Macros</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Fri Mar 15 2019 16:30:25 for CMSIS-Core (Cortex-M) by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Mon Mar 18 2019 16:05:26 for CMSIS-Core (Cortex-M) by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-DSP
-   &#160;<span id="projectnumber">Version 1.5.5</span>
+   &#160;<span id="projectnumber">Version 1.6.0</span>
    </div>
    <div id="projectbrief">CMSIS DSP Software Library</div>
   </td>
@@ -115,24 +115,40 @@ $(document).ready(function(){initNavTree('ChangeLog_pg.html','');});
 <tr>
 <th>Version </th><th>Description  </th></tr>
 <tr>
-<td>V1.5.5 </td><td>Reworked DSP library source files<ul>
+<td>V1.6.0 </td><td><p class="starttd">Reworked DSP library source files</p>
+<ul>
 <li>added macro ARM_MATH_LOOPUNROLL</li>
 <li>removed macro UNALIGNED_SUPPORT_DISABLE</li>
 <li>added const-correctness</li>
-<li>replaced SIMD pointer construct with memcopy solution Reworked DSP library documentation Changed DSP folder structure</li>
-<li>moved DSP libraries to ./DSP/Lib ARM DSP Libraries are built with ARMCLANG Added DSP Libraries source variant  </li>
+<li>replaced SIMD pointer construct with memcopy solution</li>
+<li>replaced macro combination "CMSIS_INLINE __STATIC_INLINE with "__STATIC_FORCEINLINE"</li>
 </ul>
-</td><td>V1.5.4 </td><td><p class="starttd">Note: binaries NOT rebuild!</p>
-<p class="endtd">Updated IAR projects   </p>
+<p>Reworked DSP library documentation</p>
+<p>Changed DSP folder structure</p>
+<ul>
+<li>moved DSP libraries to ./DSP/Lib</li>
+</ul>
+<p>ARM DSP Libraries are built with ARMCLANG</p>
+<p class="endtd">Added DSP Libraries source variant   </p>
+</td></tr>
+<tr>
+<td>V1.5.4 </td><td><p class="starttd">Updated IAR projects</p>
+<p class="endtd">Note: binaries NOT rebuild!   </p>
 </td></tr>
 <tr>
 <td>V1.5.3 </td><td><p class="starttd">Note: binaries NOT rebuild!</p>
-<p class="endtd">Merged PullRequests</p>
+<p>Merged PullRequests</p>
 <ul>
-<li>#439, #430, #369, #265, #166 Modified <a class="el" href="arm__math_8h.html">arm_math.h</a></li>
+<li>#439, #430, #369, #265, #166</li>
+</ul>
+<p>Modified <a class="el" href="arm__math_8h.html">arm_math.h</a></p>
+<ul>
 <li>reworked macros ARM_MATH_CMx</li>
 <li>removed macros __FPU_USED, __DSP_PRESENT</li>
-<li>used different include files Modified source files (because of new <a class="el" href="arm__math_8h.html">arm_math.h</a>)</li>
+<li>used different include files</li>
+</ul>
+<p class="endtd">Modified source files (because of new <a class="el" href="arm__math_8h.html">arm_math.h</a>)</p>
+<ul>
 <li><a class="el" href="arm__biquad__cascade__df2T__f32_8c.html">FilteringFunctions\arm_biquad_cascade_df2T_f32.c</a></li>
 <li><a class="el" href="arm__biquad__cascade__df2T__f64_8c.html">FilteringFunctions\arm_biquad_cascade_df2T_f64.c</a></li>
 <li><a class="el" href="arm__biquad__cascade__stereo__df2T__f32_8c.html">FilteringFunctions\arm_biquad_cascade_stereo_df2T_f32.c</a></li>
@@ -451,7 +467,7 @@ Documentation
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Fri Mar 15 2019 16:30:43 for CMSIS-DSP by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Mon Mar 18 2019 16:05:47 for CMSIS-DSP by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

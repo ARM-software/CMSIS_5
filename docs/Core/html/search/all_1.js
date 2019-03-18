@@ -28,7 +28,7 @@ var searchData=
   ['arm_5fmpu_5fload',['ARM_MPU_Load',['../group__mpu__functions.html#gafa27b26d5847fa8e465584e376b6078a',1,'ARM_MPU_Load(MPU_Region_t const *table, uint32_t cnt):&#160;Ref_MPU.txt'],['../group__mpu8__functions.html#gaca76614e3091c7324aa9d60e634621bf',1,'ARM_MPU_Load(uint32_t rnr, ARM_MPU_Region_t const *table, uint32_t cnt):&#160;Ref_MPU8.txt']]],
   ['arm_5fmpu_5fload_5fns',['ARM_MPU_Load_NS',['../group__mpu8__functions.html#ga7f8c6e09be98067d613e4df1832c543d',1,'Ref_MPU8.txt']]],
   ['arm_5fmpu_5floadex',['ARM_MPU_LoadEx',['../group__mpu8__functions.html#gab6094419f2abd678f1f3b121cd115049',1,'Ref_MPU8.txt']]],
-  ['arm_5fmpu_5forderedmemcpy',['ARM_MPU_OrderedMemcpy',['../group__mpu8__functions.html#gac1a949403bf84eecaf407003fb553ae7',1,'Ref_MPU8.txt']]],
+  ['arm_5fmpu_5forderedmemcpy',['ARM_MPU_OrderedMemcpy',['../group__mpu__functions.html#gac1a949403bf84eecaf407003fb553ae7',1,'ARM_MPU_OrderedMemcpy(volatile uint32_t *dst, const uint32_t *__RESTRICT src, uint32_t len):&#160;Ref_MPU.txt'],['../group__mpu8__functions.html#gac1a949403bf84eecaf407003fb553ae7',1,'ARM_MPU_OrderedMemcpy(volatile uint32_t *dst, const uint32_t *__RESTRICT src, uint32_t len):&#160;Ref_MPU8.txt']]],
   ['arm_5fmpu_5frasr',['ARM_MPU_RASR',['../group__mpu__functions.html#ga96b93785c92e2dbcb3a2356c25bf2adc',1,'Ref_MPU.txt']]],
   ['arm_5fmpu_5frasr_5fex',['ARM_MPU_RASR_EX',['../group__mpu__functions.html#ga332ed5f8969dd4df6b61c6ae32ec36dc',1,'Ref_MPU.txt']]],
   ['arm_5fmpu_5frbar',['ARM_MPU_RBAR',['../group__mpu__functions.html#ga3fead12dc24a6d00ad53f55a042486ca',1,'ARM_MPU_RBAR():&#160;Ref_MPU.txt'],['../group__mpu8__functions.html#gafe39c2f98058bcac7e7e0501e64e7a9d',1,'ARM_MPU_RBAR():&#160;Ref_MPU8.txt']]],

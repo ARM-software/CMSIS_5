@@ -11,6 +11,8 @@ var group__compiler__conntrol__gr =
     [ "__NO_RETURN", "group__compiler__conntrol__gr.html#ga153a4a31b276a9758959580538720a51", null ],
     [ "__PACKED", "group__compiler__conntrol__gr.html#gabe8996d3d985ee1529475443cc635bf1", null ],
     [ "__PACKED_STRUCT", "group__compiler__conntrol__gr.html#ga4dbb70fab85207c27b581ecb6532b314", null ],
+    [ "__RESTRICT", "group__compiler__conntrol__gr.html#ga378ac21329d33f561f90265eef89f564", null ],
+    [ "__STATIC_FORCEINLINE", "group__compiler__conntrol__gr.html#gab904513442afdf77d4f8c74f23cbb040", null ],
     [ "__STATIC_INLINE", "group__compiler__conntrol__gr.html#gaba87361bfad2ae52cfe2f40c1a1dbf9c", null ],
     [ "__UNALIGNED_UINT16_READ", "group__compiler__conntrol__gr.html#gabe8693a7200e573101551d49a1772fb9", null ],
     [ "__UNALIGNED_UINT16_WRITE", "group__compiler__conntrol__gr.html#gadb9cd73446f7e11e92383cd327a23407", null ],

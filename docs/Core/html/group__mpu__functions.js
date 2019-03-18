@@ -26,6 +26,7 @@ var group__mpu__functions =
     [ "ARM_MPU_Disable", "group__mpu__functions.html#ga7cbc0a4a066ed90e85c8176228235d57", null ],
     [ "ARM_MPU_Enable", "group__mpu__functions.html#ga31406efd492ec9a091a70ffa2d8a42fb", null ],
     [ "ARM_MPU_Load", "group__mpu__functions.html#gafa27b26d5847fa8e465584e376b6078a", null ],
+    [ "ARM_MPU_OrderedMemcpy", "group__mpu__functions.html#gac1a949403bf84eecaf407003fb553ae7", null ],
     [ "ARM_MPU_SetRegion", "group__mpu__functions.html#ga16931f9ad84d7289e8218e169ae6db5d", null ],
     [ "ARM_MPU_SetRegionEx", "group__mpu__functions.html#ga042ba1a6a1a58795231459ac0410b809", null ]
 ];

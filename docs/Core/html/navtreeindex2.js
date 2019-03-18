@@ -1,5 +1,8 @@
 var NAVTREEINDEX2 =
 {
+"system_c_pg.html#system_Device_sec":[4,4,0],
+"templates_pg.html":[4],
+"templates_pg.html#CMSIS_Processor_files":[4,0],
 "templates_pg.html#device_examples":[4,1],
 "templates_pg.html#template_files_sec":[4,2],
 "unionAPSR__Type.html":[9,0],

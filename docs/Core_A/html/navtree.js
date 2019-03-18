@@ -26,7 +26,7 @@ var NAVTREEINDEX =
 "annotated.html",
 "group__CMSIS__DFSR__BITS.html#ga7541052737038d737fd9fe00b9815140",
 "group__PL1__timer__functions.html#ga341ae7d1ae29f4dc5dae6310fa453164",
-"unionCPACR__Type.html#a4de69636eb450fcc3f5f3e4a19a869f5"
+"unionCNTP__CTL__Type.html#afdd6b14cdb03e4e694ec7db8163916b0"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

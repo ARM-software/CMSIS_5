@@ -1,5 +1,12 @@
 var NAVTREEINDEX3 =
 {
+"unionCNTP__CTL__Type.html#afdd6b14cdb03e4e694ec7db8163916b0":[6,4,3,0,2],
+"unionCPACR__Type.html":[6,1,3,2],
+"unionCPACR__Type.html#a0275dc6b0eb9f906ebc5c6431b03dc4e":[6,1,3,2,4],
+"unionCPACR__Type.html#a12002991719fb1af7a5db9a73deb323d":[6,1,3,2,13],
+"unionCPACR__Type.html#a1a29bc40d708ac1a43153b11f60b8195":[6,1,3,2,2],
+"unionCPACR__Type.html#a2553fcdfd94ffc09407db9da9db9d586":[6,1,3,2,8],
+"unionCPACR__Type.html#a45d9be266fc37a6ff9f31c2bef897f90":[6,1,3,2,7],
 "unionCPACR__Type.html#a4de69636eb450fcc3f5f3e4a19a869f5":[6,1,3,2,15],
 "unionCPACR__Type.html#a5a6f694264518a813bdbc202ff47664f":[6,1,3,2,14],
 "unionCPACR__Type.html#a6206695a548b18ce0e2ea5276d1eef1d":[6,1,3,2,16],

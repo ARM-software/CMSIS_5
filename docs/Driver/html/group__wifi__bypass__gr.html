@@ -128,9 +128,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ga1dbeb5528095af31a60560e0c48321d4"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__wifi__bypass__gr.html#ga1dbeb5528095af31a60560e0c48321d4">ARM_WIFI_EthReadFrame</a> (uint32_t interface, uint8_t *frame, uint32_t len)</td></tr>
 <tr class="memdesc:ga1dbeb5528095af31a60560e0c48321d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read data of received Ethernet frame (in bypass mode only).  <a href="#ga1dbeb5528095af31a60560e0c48321d4">More...</a><br/></td></tr>
 <tr class="separator:ga1dbeb5528095af31a60560e0c48321d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa8555e8ccf21b5ebf4a8ff5a08a72b2c"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__wifi__bypass__gr.html#gaa8555e8ccf21b5ebf4a8ff5a08a72b2c">ARM_WIFI_EthGetRxFrameSize</a> (uint32_t interface,)</td></tr>
-<tr class="memdesc:gaa8555e8ccf21b5ebf4a8ff5a08a72b2c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get size of received Ethernet frame (in bypass mode only).  <a href="#gaa8555e8ccf21b5ebf4a8ff5a08a72b2c">More...</a><br/></td></tr>
-<tr class="separator:gaa8555e8ccf21b5ebf4a8ff5a08a72b2c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab67442ff061d0c4311a7046bce8d0cd1"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__wifi__bypass__gr.html#gab67442ff061d0c4311a7046bce8d0cd1">ARM_WIFI_EthGetRxFrameSize</a> (uint32_t interface)</td></tr>
+<tr class="memdesc:gab67442ff061d0c4311a7046bce8d0cd1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get size of received Ethernet frame (in bypass mode only).  <a href="#gab67442ff061d0c4311a7046bce8d0cd1">More...</a><br/></td></tr>
+<tr class="separator:gab67442ff061d0c4311a7046bce8d0cd1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Description</h2>
 <p>Transfer Ethernet frames by WiFi module. </p>
@@ -207,10 +207,10 @@ Functions</h2></td></tr>
 <div class="line">  wifi-&gt;<a class="code" href="group__wifi__interface__gr.html#a99e597db8e61d0ff834561cb710e61ad">Initialize</a> ((capabilities.eth_rx_frame_event) ? wifi_notify : NULL);</div>
 <div class="line">  wifi-&gt;<a class="code" href="group__wifi__interface__gr.html#aba8f1c8019af95ffe19c32403e3240ef">PowerControl</a> (<a class="code" href="Driver__Common_8h.html#ga47d6d7c31f88f3b8ae4aaf9d8444afa5abed52b77a9ce4775570e44a842b1295e">ARM_POWER_FULL</a>);</div>
 <div class="line"> </div>
-<div class="line">  <span class="comment">// populate own_mac_address with the address to use</span></div>
-<div class="line">  wifi-&gt;<a class="code" href="group__wifi__interface__gr.html#a6b5e1c7fcea96ff13f6fd16d57c8b68f">SetOption</a>(<a class="code" href="group__WiFi__option.html#gafefb0fe1e5cdfb71f7f8cc7606840865">ARM_WIFI_MAC</a>, &amp;own_mac_address, 6U);</div>
+<div class="line">  <span class="comment">// populate own_mac_address with the address to use for station</span></div>
+<div class="line">  wifi-&gt;<a class="code" href="group__wifi__interface__gr.html#a6b5e1c7fcea96ff13f6fd16d57c8b68f">SetOption</a>(0U, <a class="code" href="group__WiFi__option.html#gafefb0fe1e5cdfb71f7f8cc7606840865">ARM_WIFI_MAC</a>, &amp;own_mac_address, 6U);</div>
 <div class="line"> </div>
-<div class="line">  wifi-&gt;<a class="code" href="group__wifi__interface__gr.html#a18c6762aa46cec65b65135eaeadebf23">BypassControl</a> (1U);     <span class="comment">// Enable bypass mode</span></div>
+<div class="line">  wifi-&gt;<a class="code" href="group__wifi__interface__gr.html#a18c6762aa46cec65b65135eaeadebf23">BypassControl</a> (0U, 1U); <span class="comment">// Enable bypass mode for station</span></div>
 <div class="line">}</div>
 </div><!-- fragment --> 
 </div>
@@ -267,7 +267,7 @@ Functions</h2></td></tr>
 <p>The frame data addressed by <em>frame</em> starts with MAC destination and ends with the last Payload data byte. The frame data is copied into the transmit buffer of the WiFi interface.</p>
 <p>The maximum value for <em>len</em> is implied by the size restrictions of the Ethernet frame but is not verified. Using an invalid value for <em>len</em> may generate unpredicted results.</p>
 <p><b>Example:</b> </p>
-<div class="fragment"><div class="line">status = wifi-&gt;<a class="code" href="group__wifi__interface__gr.html#a2648d7e0d1c10c48923d8d20d99311ab">EthSendFrame</a> (&amp;frame_data[0], frame_length);</div>
+<div class="fragment"><div class="line">status = wifi-&gt;<a class="code" href="group__wifi__interface__gr.html#a2648d7e0d1c10c48923d8d20d99311ab">EthSendFrame</a> (0U, &amp;frame_data[0], frame_length);</div>
 <div class="line"><span class="keywordflow">if</span> (status != <a class="code" href="group__execution__status.html#ga85752c5de59e8adeb001e35ff5be6be7">ARM_DRIVER_OK</a>)  {</div>
 <div class="line">  <span class="comment">// error handling</span></div>
 <div class="line">}</div>
@@ -321,7 +321,7 @@ Functions</h2></td></tr>
 </ul>
 </dd></dl>
 <p>The function <b>ARM_WIFI_EthReadFrame</b> reads an <b>Ethernet frame</b> from the WiFi interface in the bypass mode.</p>
-<p>The <em>len</em> of the Ethernet frame can be checked using the function <a class="el" href="group__wifi__bypass__gr.html#gaa8555e8ccf21b5ebf4a8ff5a08a72b2c">ARM_WIFI_EthGetRxFrameSize</a>.</p>
+<p>The <em>len</em> of the Ethernet frame can be checked using the function <a class="el" href="group__wifi__bypass__gr.html#gab67442ff061d0c4311a7046bce8d0cd1">ARM_WIFI_EthGetRxFrameSize</a>.</p>
 <p>The frame data addressed by <em>frame</em> starts with MAC destination and ends with the last Payload data byte. The frame data is read from the receive buffer of the WiFi interface and the number of bytes written into the memory addressed by <em>frame</em> is returned. A negative return value indicates an error whereby the status code is defined with driver common return codes.</p>
 <p>The function <a class="el" href="group__wifi__bypass__gr.html#ga1dbeb5528095af31a60560e0c48321d4">ARM_WIFI_EthReadFrame</a> may be called with <em>buf</em> = <span class="XML-Token">NULL</span> and <em>len</em> = <span class="XML-Token">0</span> to discard or release a frame. This is useful when an incorrect frame has been received or no memory is available to hold the Ethernet frame.</p>
 <p><b>Example:</b> </p>
@@ -329,14 +329,14 @@ Functions</h2></td></tr>
 <div class="line"><span class="keywordflow">if</span> ((size &lt; 14) || (size &gt; 1514)) {    <span class="comment">// frame excludes CRC</span></div>
 <div class="line">  wifi-&gt;<a class="code" href="group__wifi__interface__gr.html#a544ca40b7157efce5000cd83aa92f8a0">EthReadFrame</a> (NULL, 0);        <span class="comment">// Frame error, release it</span></div>
 <div class="line">}</div>
-<div class="line">len = wifi-&gt;ReadFrame (&amp;frame_data[0], size);</div>
+<div class="line">len = wifi-&gt;ReadFrame (0U, &amp;frame_data[0], size);</div>
 <div class="line"><span class="keywordflow">if</span> (len &lt; 0)  {</div>
 <div class="line">  <span class="comment">// error handling</span></div>
 <div class="line">}</div>
 </div><!-- fragment --> 
 </div>
 </div>
-<a class="anchor" id="gaa8555e8ccf21b5ebf4a8ff5a08a72b2c"></a>
+<a class="anchor" id="gab67442ff061d0c4311a7046bce8d0cd1"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -358,7 +358,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>number of bytes in received frame</dd></dl>
-<p>The function <b>ARM_WIFI_EthGetRxFrameSize</b> returns the size of a received <b>Ethernet frame</b> in the bypass mode. This function is called before <a class="el" href="group__wifi__bypass__gr.html#ga1dbeb5528095af31a60560e0c48321d4">ARM_WIFI_EthReadFrame</a> and supplies the value <em>len</em>.</p>
+<p>The function <b>ARM_WIFI_EthGetRxFrameSize</b> returns the size of a received <b>Ethernet frame</b> in the bypass mode. This function can be called before <a class="el" href="group__wifi__bypass__gr.html#ga1dbeb5528095af31a60560e0c48321d4">ARM_WIFI_EthReadFrame</a> and retrieves the value <em>len</em>.</p>
 <p>The frame size includes MAC destination and ends with the last Payload data byte. Value <span class="XML-Token">0</span> indicates that no Ethernet frame is available in the receive buffer. Values smaller than minimum size of Ethernet frame or larger than maximum size of Ethernet frame indicate an invalid frame which needs to be discarded by calling <a class="el" href="group__wifi__bypass__gr.html#ga1dbeb5528095af31a60560e0c48321d4">ARM_WIFI_EthReadFrame</a>.</p>
 <p><b>Example:</b> </p>
 <ul>
@@ -372,7 +372,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Fri Mar 15 2019 16:30:34 for CMSIS-Driver by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Mon Mar 18 2019 16:05:37 for CMSIS-Driver by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

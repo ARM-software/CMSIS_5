@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-DSP
-   &#160;<span id="projectnumber">Version 1.5.5</span>
+   &#160;<span id="projectnumber">Version 1.6.0</span>
    </div>
    <div id="projectbrief">CMSIS DSP Software Library</div>
   </td>
@@ -331,6 +331,15 @@ Macros</h2></td></tr>
 <tr class="memitem:a1339e9abc11a3870e0c04f822a62166a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="arm__math_8h.html#a1339e9abc11a3870e0c04f822a62166a">INPUT_SPACING</a></td></tr>
 <tr class="memdesc:a1339e9abc11a3870e0c04f822a62166a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Macros required for SINE and COSINE Controller functions.  <a href="#a1339e9abc11a3870e0c04f822a62166a">More...</a><br/></td></tr>
 <tr class="separator:a1339e9abc11a3870e0c04f822a62166a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9de2e0a5785be82866bcb96012282248"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="arm__math_8h.html#a9de2e0a5785be82866bcb96012282248">__SIMD32</a>(addr)</td></tr>
+<tr class="memdesc:a9de2e0a5785be82866bcb96012282248"><td class="mdescLeft">&#160;</td><td class="mdescRight">definition to read/write two 16 bit values.  <a href="#a9de2e0a5785be82866bcb96012282248">More...</a><br/></td></tr>
+<tr class="separator:a9de2e0a5785be82866bcb96012282248"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1185d670d798aaf52eec13f0403f3407"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="arm__math_8h.html#a1185d670d798aaf52eec13f0403f3407">__SIMD32_CONST</a>(addr)</td></tr>
+<tr class="separator:a1185d670d798aaf52eec13f0403f3407"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af0d54ec57b936994a34f073d0049ea3f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="arm__math_8h.html#af0d54ec57b936994a34f073d0049ea3f">_SIMD32_OFFSET</a>(addr)</td></tr>
+<tr class="separator:af0d54ec57b936994a34f073d0049ea3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad1b053da364f9fd82ca1a381df7590b6"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="arm__math_8h.html#ad1b053da364f9fd82ca1a381df7590b6">__SIMD64</a>(addr)</td></tr>
+<tr class="separator:ad1b053da364f9fd82ca1a381df7590b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa505179349146cf6186640b4c8b47714"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="arm__math_8h.html#aa505179349146cf6186640b4c8b47714">__PKHBT</a>(ARG1, ARG2, ARG3)</td></tr>
 <tr class="memdesc:aa505179349146cf6186640b4c8b47714"><td class="mdescLeft">&#160;</td><td class="mdescRight">definition to pack two 16 bit values.  <a href="#aa505179349146cf6186640b4c8b47714">More...</a><br/></td></tr>
 <tr class="separator:aa505179349146cf6186640b4c8b47714"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -1473,6 +1482,71 @@ Functions</h2></td></tr>
           <td></td>
           <td>)</td>
           <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a9de2e0a5785be82866bcb96012282248"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define __SIMD32</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">addr</td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000001">Deprecated:</a></b></dt><dd></dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a1185d670d798aaf52eec13f0403f3407"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define __SIMD32_CONST</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">addr</td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ad1b053da364f9fd82ca1a381df7590b6"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define __SIMD64</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">addr</td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="af0d54ec57b936994a34f073d0049ea3f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define _SIMD32_OFFSET</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">addr</td><td>)</td>
+          <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -3288,7 +3362,7 @@ Functions</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_650d82db24a6311fa7658fced19ae149.html">DSP</a></li><li class="navelem"><a class="el" href="dir_a60f901a1a7665a0737ec2a3f2ba0d4e.html">Include</a></li><li class="navelem"><a class="el" href="arm__math_8h.html">arm_math.h</a></li>
-    <li class="footer">Generated on Fri Mar 15 2019 16:30:42 for CMSIS-DSP by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Mon Mar 18 2019 16:05:47 for CMSIS-DSP by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 
