@@ -14,17 +14,24 @@
        - removed macro UNALIGNED_SUPPORT_DISABLE
        - added const-correctness
        - replaced SIMD pointer construct with memcopy solution
+       - replaced macro combination "CMSIS_INLINE __STATIC_INLINE with "__STATIC_FORCEINLINE"
+
       Reworked DSP library documentation
+
       Changed DSP folder structure
        - moved DSP libraries to ./DSP/Lib
+       
       ARM DSP Libraries are built with ARMCLANG
+      
       Added DSP Libraries source variant
     </td>
+  </tr>
+  <tr>
     <td>V1.5.4</td>
     <td>
-      Note: binaries NOT rebuild!
-
       Updated IAR projects
+
+      Note: binaries NOT rebuild!
     </td>
   </tr>
   <tr>
@@ -34,10 +41,12 @@
 
       Merged PullRequests
        - #439, #430, #369, #265, #166
+
       Modified arm_math.h
        - reworked macros ARM_MATH_CMx
        - removed macros __FPU_USED, __DSP_PRESENT
        - used different include files
+
       Modified source files (because of new arm_math.h)
        - FilteringFunctions\arm_biquad_cascade_df2T_f32.c
        - FilteringFunctions\arm_biquad_cascade_df2T_f64.c
