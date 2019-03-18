@@ -199,7 +199,7 @@ typedef struct {
   \brief         Control WiFi Module Power.
   \param[in]     state     Power state
                    - \ref ARM_POWER_OFF                : Power off: no operation possible
-                   - \ref ARM_POWER_LOW                : Low-power mode: sleep or deep-sleep depending on ARM_WIFI_LP_xxx options set
+                   - \ref ARM_POWER_LOW                : Low-power mode: sleep or deep-sleep depending on \ref ARM_WIFI_LP_TIMER option set
                    - \ref ARM_POWER_FULL               : Power on: full operation at maximum performance
   \return        execution status
                    - \ref ARM_DRIVER_OK                : Operation successful
@@ -265,7 +265,7 @@ typedef struct {
                    - \ref ARM_DRIVER_OK                : Operation successful
                    - \ref ARM_DRIVER_ERROR             : Operation failed
                    - \ref ARM_DRIVER_ERROR_UNSUPPORTED : Operation not supported (security type, WPS or channel autodetect not supported)
-                   - \ref ARM_DRIVER_ERROR_PARAMETER   : Parameter error (invalid interface, security type or NULL config_params pointer)
+                   - \ref ARM_DRIVER_ERROR_PARAMETER   : Parameter error (invalid interface, security type or NULL config pointer)
 */
 /**
   \fn            int32_t ARM_WIFI_Activate (uint32_t mode)

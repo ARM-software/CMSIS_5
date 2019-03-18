@@ -490,7 +490,7 @@ and the addresses of DNS servers are statically configured from the preset value
 \def ARM_WIFI_IP6_DHCP_STATELESS
 \details
 In the stateless DHCP configuration mode, the client obtains only extended information
-from a DHCPv6 server, such as DNS server addresses. Stateless autoconfiguration of
+from a DHCPv6 server, such as DNS server addresses. Stateless auto-configuration of
 IPv6 allows the client device to self configure it's IPv6 addresses and routing based
 on the router advertisements.
 \sa wifi_dhcp_v6_mode
@@ -583,8 +583,8 @@ ip[1] = 168U;
 ip[2] = 0U;
 ip[3] = 1U;
  
-// Set IP static address
-wifi->SetOption (ARM_WIFI_IP, &ip, sizeof(ip));
+// Set IP static address of the Station
+wifi->SetOption (0U, ARM_WIFI_IP, &ip, sizeof(ip));
 \endcode
 */
 
@@ -613,10 +613,10 @@ uint8_t ip[4];          // IP address
 uint8_t mask[4];        // Subnet mask
 uint8_t gateway[4];     // Gateway address
  
-// Get IP address, Subnet mask and Gateway address
-wifi->GetOption (ARM_WIFI_IP, &ip, sizeof(ip));
-wifi->GetOption (ARM_WIFI_IP_SUBNET_MASK, &mask, sizeof(mask));
-wifi->GetOption (ARM_WIFI_IP_GATEWAY, &gateway, sizeof(gateway));
+// Get IP address, Subnet mask and Gateway address of the Station
+wifi->GetOption (0U, ARM_WIFI_IP, &ip, sizeof(ip));
+wifi->GetOption (0U, ARM_WIFI_IP_SUBNET_MASK, &mask, sizeof(mask));
+wifi->GetOption (0U, ARM_WIFI_IP_GATEWAY, &gateway, sizeof(gateway));
 \endcode
 */
 
@@ -628,23 +628,23 @@ int32_t ARM_WIFI_Scan (ARM_WIFI_SCAN_INFO_t scan_info[], uint32_t max_num) {
 \details
 The function \b ARM_WIFI_Scan searches for available WiFi networks. Using this function,
 you can determine which wireless networks are available for the connection. If the network is
-secured, you must also know the password for access so you can connect.
+secured, you must also know the password to connect.
  
-The argument \em ap_info is a pointer to a buffer, where the available network information
-will be returned.
+The argument \em scan_info is a pointer to an array of network information structures, where 
+the available network information will be returned.
 
-The argument \em max_mum specifies maximum number of network information structures,
-that can be stored to the \em ap_info.
+The argument \em max_num specifies maximum number of network information structures,
+that can be stored to the \em scan_info.
 
 \b Example:
 \code
-ARM_WIFI_AP_INFO_t ap_info[8];
+ARM_WIFI_SCAN_INFO_t scan_info[8];
  
-num = wifi->Scan (ap_info, 8U);
+num = wifi->Scan (scan_info, 8U);
  
 // Print SSIDs of available WiFi networks
 for (i = 0; i < num; i++) {
-  printf ("%d. ssid=%s\n", i, ap_info[i].ssid);
+  printf ("%d. ssid=%s\n", i, scan_info[i].ssid);
 }
 \endcode
 */
@@ -655,7 +655,7 @@ int32_t ARM_WIFI_Configure (uint32_t interface, ARM_WIFI_CONFIG_t *config) {
 /**
 \fn int32_t ARM_WIFI_Configure (uint32_t interface, ARM_WIFI_CONFIG_t *config)
 \details
-The function \b ARM_WIFI_Confiure configures the specified interface.
+The function \b ARM_WIFI_Configure configures the specified interface.
 
 The argument \em interface specifies the interface (0 = Station, 1 = Access Point).
 
@@ -670,10 +670,10 @@ or information used to configure the access point (AP) in access point mode.
 \em security specifies the security type which will be used for the connection.
 
 \em ch specifies the WiFi channel which will be used for the connection.
-Valid channels are from \token{1} to \token{13}. If the value for \em ch = \token{0},
+Valid channels for 2.4 GHz frequency are from \token{1} to \token{13}. If the value for \em ch = \token{0},
 the system automatically selects the channel.
 When in station mode the channel of the AP being connect to is used.
-when in access point mode the AP automatically selects the best channel
+When in access point mode the AP automatically selects the best channel
 for the WiFi connection.
 
 \note
@@ -689,7 +689,7 @@ With the \b push-button method, you typically press the button, either real or v
 both at the access point and the station. No credentials are needed.
 
 With \b PIN method, you must provide the PIN code that you read from the label or screen
-on the wireless device, in the access point.
+on the wireless device.
 
 WPS configuration for station is used when station is activated and connects to an access point.
 It enables to connect without specifying SSID, Password, Security Type or WiFi Channel.
@@ -752,7 +752,7 @@ The function returns once the mode is activated:
 When in station mode the wireless network trying to connect to must be available,
 otherwise the connection will fail after a timeout.
 
-Available wireless networks can be scaned by using the function \ref ARM_WIFI_Scan.
+Available wireless networks can be scanned by using the function \ref ARM_WIFI_Scan.
 
 \b Ad-hoc mode is very similar to standard infrastructure mode with a difference that there
 are no dedicated access points in the network but a device can temporarily offer access point
@@ -780,11 +780,11 @@ The function \b ARM_WIFI_Deactivate deactivates the current mode:
  - see \ref ARM_WIFI_GetNetInfo
 */
 
-int32_t ARM_WIFI_IsConnected (void) {
+uint32_t ARM_WIFI_IsConnected (void) {
   return 0;
 }
 /**
-\fn int32_t ARM_WIFI_IsConnected (void)
+\fn uint32_t ARM_WIFI_IsConnected (void)
 \details
 The function \b ARM_WIFI_IsConnected checks if the station is connected to a wireless network
 and returns the connection status.
@@ -804,7 +804,7 @@ int32_t ARM_WIFI_GetNetInfo (ARM_WIFI_NET_INFO_t *net_info) {
 \details
 The function \b ARM_WIFI_GetNetInfo retrieves wireless network information of a connected station.
 
-It can be used to retrieve network connection information fur subsequent connections
+It can be used to retrieve network connection information for subsequent connections
 after initially connecting using WPS.
 
 \b Example:
@@ -837,7 +837,7 @@ if (wifi->IsConnected ()) {
   printf("SSID=%s, Password=%s",net_info.ssid, net_info.pass);
 }
  
-// Disconnet from wireless network
+// Disconnect from wireless network
 wifi->Deactivate ();
 \endcode
 */
@@ -901,10 +901,10 @@ void initialize_wifi_bypass (void) {
   wifi->Initialize ((capabilities.eth_rx_frame_event) ? wifi_notify : NULL);
   wifi->PowerControl (ARM_POWER_FULL);
  
-  // populate own_mac_address with the address to use
-  wifi->SetOption(ARM_WIFI_MAC, &own_mac_address, 6U);
+  // populate own_mac_address with the address to use for station
+  wifi->SetOption(0U, ARM_WIFI_MAC, &own_mac_address, 6U);
  
-  wifi->BypassControl (1U);     // Enable bypass mode
+  wifi->BypassControl (0U, 1U); // Enable bypass mode for station
 }
 \endcode
 */
@@ -928,7 +928,7 @@ but is not verified. Using an invalid value for \em len may generate unpredicted
 
 \b Example:
 \code
-status = wifi->EthSendFrame (&frame_data[0], frame_length);
+status = wifi->EthSendFrame (0U, &frame_data[0], frame_length);
 if (status != ARM_DRIVER_OK)  {
   // error handling
 }
@@ -962,21 +962,21 @@ size = wifi->EthGetRxFrameSize ();
 if ((size < 14) || (size > 1514)) {    // frame excludes CRC
   wifi->EthReadFrame (NULL, 0);        // Frame error, release it
 }
-len = wifi->ReadFrame (&frame_data[0], size);
+len = wifi->ReadFrame (0U, &frame_data[0], size);
 if (len < 0)  {
   // error handling
 }
 \endcode
 */
 
-uint32_t ARM_WIFI_EthGetRxFrameSize (uint32_t interface, ) {
+uint32_t ARM_WIFI_EthGetRxFrameSize (uint32_t interface) {
   return 0;
 }
 /**
-\fn uint32_t ARM_WIFI_EthGetRxFrameSize (uint32_t interface, )
+\fn uint32_t ARM_WIFI_EthGetRxFrameSize (uint32_t interface)
 \details
 The function \b ARM_WIFI_EthGetRxFrameSize returns the size of a received <b>Ethernet frame</b>
-in the bypass mode. This function is called before \ref ARM_WIFI_EthReadFrame and supplies
+in the bypass mode. This function can be called before \ref ARM_WIFI_EthReadFrame and retrieves 
 the value \em len.
 
 The frame size includes MAC destination and ends with the last Payload data byte.
