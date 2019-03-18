@@ -111,7 +111,7 @@ __INLINE static void LED_On (uint32_t led) {
 /**************************************************************************************************/
 /**
 \def __STATIC_INLINE
-\brief Define a static function should be inlined by the compiler.
+\brief Define a static function that may be inlined by the compiler.
 \details
 Defines a static function that may be inlined by the compiler. If the compiler generates inline code for 
 all calls to this functions, no additional function implementation is generated which may further optimize space.
@@ -131,6 +131,29 @@ __STATIC_INLINE uint32_t NVIC_GetVector(IRQn_Type IRQn)
 
 /**************************************************************************************************/
 /**
+\def __STATIC_FORCEINLINE
+\brief Define a static function that should be always inlined by the compiler.
+\details
+Defines a static function that should be always inlined by the compiler. 
+
+\note
+For compilers that do not allow to force function inlining, the macro maps to \ref __STATIC_INLINE.
+
+<b> Code Example:</b>
+\code
+\\ Get Interrupt Vector
+__STATIC_FORCEINLINE uint32_t NVIC_GetVector(IRQn_Type IRQn)
+{
+    uint32_t *vectors = (uint32_t *)SCB->VTOR;
+    return vectors[(int32_t)IRQn + NVIC_USER_IRQ_OFFSET];
+}
+\endcode
+
+*/
+#define __STATIC_FORCEINLINE
+
+/**************************************************************************************************/
+/**
 \def __NO_RETURN
 \brief Inform the compiler that a function does not return.
 \details
@@ -146,6 +169,34 @@ __NO_RETURN void os_idle_demon (void);
 
 */
 #define __NO_RETURN
+
+/**************************************************************************************************/
+/**
+\def __RESTRICT
+\brief restrict pointer qualifier to enable additional optimizations.
+\details
+The __RESTRICT keyword corresponds to the \b restrict pointer qualifier that has been introduced in C99.
+__RESTRICT is a hint to the compiler that enables additional optimizations. It specifies that for the lifetime 
+of the pointer, only the pointer itself or a value directly derived from it (such as pointer + 1) is used to access
+the object. The compiler may therefore ignore potential pointer aliasing effects and perform additional optimizations. 
+
+\note
+For compilers that do not support the restrict keyword, __RESTRICT is defined as an empty macro and a warning is issued.
+ 
+<b> Code Example:</b>
+\code
+__STATIC_INLINE void ARM_MPU_OrderedMemcpy (volatile uint32_t* dst, const uint32_t* __RESTRICT src, uint32_t len)
+{
+  uint32_t i;
+  for (i = 0U; i < len; ++i) 
+  {
+    dst[i] = src[i];   // Since src is restrict, the compiler can assume that dst and src are not overlapping may load multiple values at a time
+  }
+}
+\endcode
+
+*/
+#define __RESTRICT
 
 /**************************************************************************************************/
 /**
