@@ -27,10 +27,12 @@
         - reworked DSP library source files
           * added macro ARM_MATH_LOOPUNROLL
           * removed macro UNALIGNED_SUPPORT_DISABLE
-          * replaced arm_bitreversal2.S with C version
           * added const-correctness
-          * replaced SIMD pointer construct with memcpy solution
+          * replaced SIMD pointer construct with memcopy solution
+          * replaced macro combination "CMSIS_INLINE __STATIC_INLINE with "__STATIC_FORCEINLINE"
         - reworked DSP library documentation
+        - Changed DSP folder structure
+          * moved DSP libraries to ./DSP/Lib
         - moved DSP libraries to folder ./DSP/Lib
         - ARM DSP Libraries are built with ARMCLANG
         - Added DSP Libraries Source variant

@@ -7,7 +7,7 @@
     <th>Description</th>
   </tr>
   <tr>
-    <td>V1.5.5</td>
+    <td>V1.6.0</td>
     <td>
       Reworked DSP library source files
        - added macro ARM_MATH_LOOPUNROLL
