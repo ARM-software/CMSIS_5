@@ -1,8 +1,8 @@
 /**************************************************************************//**
  * @file     mmu_ARMCA9.c
  * @brief    MMU Configuration for Arm Cortex-A9 Device Series
- * @version  V1.00
- * @date     10. January 2018
+ * @version  V1.1.0
+ * @date     23. November 2018
  *
  * @note
  *

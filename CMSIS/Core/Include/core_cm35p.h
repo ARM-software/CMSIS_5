@@ -1,11 +1,11 @@
 /**************************************************************************//**
  * @file     core_cm35p.h
  * @brief    CMSIS Cortex-M35P Core Peripheral Access Layer Header File
- * @version  V5.2.2
- * @date     11. September 2018
+ * @version  V1.0.0
+ * @date     12. November 2018
  ******************************************************************************/
 /*
- * Copyright (c) 2009-2018 Arm Limited. All rights reserved.
+ * Copyright (c) 2018 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *

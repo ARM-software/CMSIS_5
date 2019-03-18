@@ -3,8 +3,8 @@
  * Title:        arm_cfft_radix2_init_q15.c
  * Description:  Radix-2 Decimation in Frequency Q15 FFT & IFFT initialization function
  *
- * $Date:        28. February 2019
- * $Revision:    V.1.5.5
+ * $Date:        18. March 2019
+ * $Revision:    V1.6.0
  *
  * Target Processor: Cortex-M cores
  * -------------------------------------------------------------------- */

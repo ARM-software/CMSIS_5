@@ -1,7 +1,7 @@
 /**************************************************************************//**
  * @file     partition_ARMCM35P.h
  * @brief    CMSIS-CORE Initial Setup for Secure / Non-Secure Zones for ARMCM35P
- * @version  V5.4.1
+ * @version  V1.0.0
  * @date     03. September 2018
  ******************************************************************************/
 /*

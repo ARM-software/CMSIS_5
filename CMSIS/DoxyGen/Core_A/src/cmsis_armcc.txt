@@ -84,6 +84,29 @@ __STATIC_INLINE uint32_t GIC_GetPriority(IRQn_Type IRQn)
 \endcode
 */
 
+/**************************************************************************************************/
+/**
+\def __STATIC_FORCEINLINE
+\brief Define a static function that should be always inlined by the compiler.
+\details
+Defines a static function that should be always inlined by the compiler. 
+
+\note
+For compilers that do not allow to force function inlining, the macro maps to \ref __STATIC_INLINE.
+
+<b> Code Example:</b>
+\code
+\\ Get Interrupt Vector
+__STATIC_FORCEINLINE uint32_t NVIC_GetVector(IRQn_Type IRQn)
+{
+    uint32_t *vectors = (uint32_t *)SCB->VTOR;
+    return vectors[(int32_t)IRQn + NVIC_USER_IRQ_OFFSET];
+}
+\endcode
+
+*/
+#define __STATIC_FORCEINLINE
+
 /**  
 \def __NO_RETURN             
 \brief Inform the compiler that a function does not return.
@@ -162,6 +185,132 @@ struct foo {
 };
 \endcode
 */
+/**************************************************************************************************/
+/**
+\def __PACKED_STRUCT
+\brief Request smallest possible alignment for a structure.
+\details
+Specifies that a structure must have the smallest possible alignment.
+ 
+<b> Code Example:</b>
+\code
+__PACKED_STRUCT foo {
+  uint8_t   u8;
+  uint32_t  u32;
+  uint16_t  u16;
+};
+\endcode
+
+*/
+#define __PACKED_STRUCT
+
+/**************************************************************************************************/
+/**
+\def __UNALIGNED_UINT32
+\brief Pointer for unaligned access of a uint32_t variable.
+\deprecated
+Do not use this macro.
+It has been superseded by \ref __UNALIGNED_UINT32_READ, \ref __UNALIGNED_UINT32_WRITE and will be removed in the future.
+\details
+Defines a pointer to a uint32_t from an address that does not need to be aligned. This can then be used in read/write
+operations. The compiler will generate the appropriate access (aligned or non-aligned) depending on the underlying Arm
+processor core and compiler settings.
+ 
+<b> Code Example:</b>
+\code
+uint32_t val32;
+ 
+void test (uint8_t *ptr) {
+  __UNALIGNED_UINT32(ptr) = val32;
+}
+\endcode
+
+*/
+#define __UNALIGNED_UINT32
+
+/**************************************************************************************************/
+/**
+\def __UNALIGNED_UINT16_READ
+\brief Pointer for unaligned read of a uint16_t variable.
+\details
+Defines a pointer to a uint16_t from an address that does not need to be aligned. This can then be used in read
+operations. The compiler will generate the appropriate access (aligned or non-aligned) depending on the underlying Arm
+processor core and compiler settings.
+ 
+<b> Code Example:</b>
+\code
+uint16_t val16;
+ 
+void test (uint8_t *ptr) {
+   val16 = __UNALIGNED_UINT16_READ(ptr);
+}
+\endcode
+
+*/
+#define __UNALIGNED_UINT16_READ
+
+/**************************************************************************************************/
+/**
+\def __UNALIGNED_UINT16_WRITE
+\brief Pointer for unaligned write of a uint16_t variable.
+\details
+Defines a pointer to a uint16_t from an address that does not need to be aligned. This can then be used in write
+operations. The compiler will generate the appropriate access (aligned or non-aligned) depending on the underlying Arm
+processor core and compiler settings.
+ 
+<b> Code Example:</b>
+\code
+uint16_t val16 = 0U;
+ 
+void test (uint8_t *ptr) {
+   __UNALIGNED_UINT16_WRITE(ptr, val16);
+}
+\endcode
+
+*/
+#define __UNALIGNED_UINT16_WRITE
+
+/**************************************************************************************************/
+/**
+\def __UNALIGNED_UINT32_READ
+\brief Pointer for unaligned read of a uint32_t variable.
+\details
+Defines a pointer to a uint32_t from an address that does not need to be aligned. This can then be used in read
+operations. The compiler will generate the appropriate access (aligned or non-aligned) depending on the underlying Arm
+processor core and compiler settings.
+ 
+<b> Code Example:</b>
+\code
+uint32_t val32;
+ 
+void test (uint8_t *ptr) {
+   val32 = __UNALIGNED_UINT32_READ(ptr);
+}
+\endcode
+
+*/
+#define __UNALIGNED_UINT32_READ
+
+/**************************************************************************************************/
+/**
+\def __UNALIGNED_UINT32_WRITE
+\brief Pointer for unaligned write of a uint32_t variable.
+\details
+Defines a pointer to a uint32_t from an address that does not need to be aligned. This can then be used in write
+operations. The compiler will generate the appropriate access (aligned or non-aligned) depending on the underlying Arm
+processor core and compiler settings.
+ 
+<b> Code Example:</b>
+\code
+uint32_t val32 = 0U;
+ 
+void test (uint8_t *ptr) {
+   __UNALIGNED_UINT32_WRITE(ptr, val32);
+}
+\endcode
+
+*/
+#define __UNALIGNED_UINT32_WRITE
 
 /**
 @}

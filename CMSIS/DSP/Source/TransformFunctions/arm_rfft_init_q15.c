@@ -3,8 +3,8 @@
  * Title:        arm_rfft_init_q15.c
  * Description:  RFFT & RIFFT Q15 initialisation function
  *
- * $Date:        28. February 2019
- * $Revision:    V.1.5.5
+ * $Date:        18. March 2019
+ * $Revision:    V1.6.0
  *
  * Target Processor: Cortex-M cores
  * -------------------------------------------------------------------- */

@@ -48,6 +48,7 @@ XCOPY /Q /S /Y ..\..\Device\*.* %RELEASE_PATH%\Device\*.*
 :: Copy CMSIS folder 
 :: -- Core files 
 XCOPY /Q /S /Y ..\..\CMSIS\Core\Include\*.* %RELEASE_PATH%\CMSIS\Core\Include\*.*
+XCOPY /Q /S /Y ..\..\CMSIS\Core\Include\*.* %RELEASE_PATH%\CMSIS\Include\*.*
 XCOPY /Q /S /Y ..\..\CMSIS\Core\Template\ARMv8-M\*.* %RELEASE_PATH%\CMSIS\Core\Template\ARMv8-M\*.*
 XCOPY /Q /S /Y ..\..\CMSIS\Core_A\Include\*.* %RELEASE_PATH%\CMSIS\Core_A\Include\*.*
 XCOPY /Q /S /Y ..\..\CMSIS\Core_A\Source\*.* %RELEASE_PATH%\CMSIS\Core_A\Source\*.*
@@ -60,6 +61,7 @@ XCOPY /Q /S /Y ..\..\CMSIS\Driver\*.* %RELEASE_PATH%\CMSIS\Driver\*.*
 
 :: -- DSP files 
 XCOPY /Q /S /Y ..\..\CMSIS\DSP\Include\*.* %RELEASE_PATH%\CMSIS\DSP\Include\*.*
+XCOPY /Q /S /Y ..\..\CMSIS\DSP\Include\*.* %RELEASE_PATH%\CMSIS\Include\*.*
 XCOPY /Q /S /Y ..\..\CMSIS\DSP\Source\*.* %RELEASE_PATH%\CMSIS\DSP\Source\*.*
 XCOPY /Q /S /Y ..\..\CMSIS\DSP\Projects\*.* %RELEASE_PATH%\CMSIS\DSP\Projects\*.*
 XCOPY /Q /S /Y ..\..\CMSIS\DSP\Examples\*.* %RELEASE_PATH%\CMSIS\DSP\Examples\*.*

@@ -1,8 +1,8 @@
 /**************************************************************************//**
  * @file     cmsis_gcc.h
  * @brief    CMSIS compiler specific macros, functions, instructions
- * @version  V1.0.2
- * @date     09. April 2018
+ * @version  V1.1.0
+ * @date     20. December 2018
  ******************************************************************************/
 /*
  * Copyright (c) 2009-2018 Arm Limited. All rights reserved.

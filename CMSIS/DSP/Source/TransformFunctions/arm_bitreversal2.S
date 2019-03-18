@@ -5,13 +5,13 @@
 ; *               Called after doing an fft to reorder the output.
 ; *               The function is loop unrolled by 2. arm_bitreversal_16 as well.
 ; *
-; * $Date:        28. February 2019
-; * $Revision:    V.1.5.5
+; * $Date:        18. March 2019
+; * $Revision:    V1.5.2
 ; *
 ; * Target Processor: Cortex-M cores
 ; * -------------------------------------------------------------------- */
 ;/*
-; * Copyright (C) 2010-2018 ARM Limited or its affiliates. All rights reserved.
+; * Copyright (C) 2010-2019 ARM Limited or its affiliates. All rights reserved.
 ; *
 ; * SPDX-License-Identifier: Apache-2.0
 ; *

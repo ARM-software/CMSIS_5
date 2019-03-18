@@ -1,14 +1,14 @@
 /******************************************************************************
  * @file     system_ARMCA9.c
  * @brief    CMSIS Device System Source File for Arm Cortex-A9 Device Series
- * @version  V1.00
- * @date     10. January 2018
+ * @version  V1.0.1
+ * @date     13. February 2019
  *
  * @note
  *
  ******************************************************************************/
 /*
- * Copyright (c) 2009-2018 Arm Limited. All rights reserved.
+ * Copyright (c) 2009-2019 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *

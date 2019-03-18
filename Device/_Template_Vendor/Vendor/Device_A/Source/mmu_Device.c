@@ -2,8 +2,8 @@
  * @file     system_Device.c
  * @brief    MMU Configuration
  *           Device <DeviceAbbreviation>
- * @version  V1.00
- * @date     10. January 2018
+ * @version  V1.1.0
+ * @date     23. November 2018
  ******************************************************************************/
 /*
  * Copyright (c) 2009-2018 Arm Limited. All rights reserved.

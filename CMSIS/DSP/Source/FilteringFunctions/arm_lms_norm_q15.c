@@ -3,8 +3,8 @@
  * Title:        arm_lms_norm_q15.c
  * Description:  Processing function for Q15 normalized LMS filter
  *
- * $Date:        28. February 2019
- * $Revision:    V.1.5.5
+ * $Date:        18. March 2019
+ * $Revision:    V1.6.0
  *
  * Target Processor: Cortex-M cores
  * -------------------------------------------------------------------- */
