@@ -280,7 +280,7 @@ __STATIC_INLINE void ARM_MPU_SetRegion_NS(uint32_t rnr, uint32_t rbar, uint32_t 
 * \param src Source data is copied from.
 * \param len Amount of data words to be copied.
 */
-__STATIC_INLINE void orderedCpy(volatile uint32_t* dst, const uint32_t* __RESTRICT src, uint32_t len)
+__STATIC_INLINE void ARM_MPU_OrderedMemcpy(volatile uint32_t* dst, const uint32_t* __RESTRICT src, uint32_t len)
 {
   uint32_t i;
   for (i = 0U; i < len; ++i) 
@@ -300,7 +300,7 @@ __STATIC_INLINE void ARM_MPU_LoadEx(MPU_Type* mpu, uint32_t rnr, ARM_MPU_Region_
   const uint32_t rowWordSize = sizeof(ARM_MPU_Region_t)/4U;
   if (cnt == 1U) {
     mpu->RNR = rnr;
-    orderedCpy(&(mpu->RBAR), &(table->RBAR), rowWordSize);
+    ARM_MPU_OrderedMemcpy(&(mpu->RBAR), &(table->RBAR), rowWordSize);
   } else {
     uint32_t rnrBase   = rnr & ~(MPU_TYPE_RALIASES-1U);
     uint32_t rnrOffset = rnr % MPU_TYPE_RALIASES;
@@ -308,7 +308,7 @@ __STATIC_INLINE void ARM_MPU_LoadEx(MPU_Type* mpu, uint32_t rnr, ARM_MPU_Region_
     mpu->RNR = rnrBase;
     while ((rnrOffset + cnt) > MPU_TYPE_RALIASES) {
       uint32_t c = MPU_TYPE_RALIASES - rnrOffset;
-      orderedCpy(&(mpu->RBAR)+(rnrOffset*2U), &(table->RBAR), c*rowWordSize);
+      ARM_MPU_OrderedMemcpy(&(mpu->RBAR)+(rnrOffset*2U), &(table->RBAR), c*rowWordSize);
       table += c;
       cnt -= c;
       rnrOffset = 0U;
@@ -316,7 +316,7 @@ __STATIC_INLINE void ARM_MPU_LoadEx(MPU_Type* mpu, uint32_t rnr, ARM_MPU_Region_
       mpu->RNR = rnrBase;
     }
     
-    orderedCpy(&(mpu->RBAR)+(rnrOffset*2U), &(table->RBAR), cnt*rowWordSize);
+    ARM_MPU_OrderedMemcpy(&(mpu->RBAR)+(rnrOffset*2U), &(table->RBAR), cnt*rowWordSize);
   }
 }
 
