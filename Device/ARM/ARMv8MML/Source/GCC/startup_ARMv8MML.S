@@ -2,11 +2,11 @@
  * @file     startup_ARMv8MML.s
  * @brief    CMSIS Core Device Startup File for
  *           ARMv8MML Device
- * @version  V5.3.1
- * @date     09. July 2018
+ * @version  V1.1.0
+ * @date     23. January 2019
  ******************************************************************************/
 /*
- * Copyright (c) 2009-2018 Arm Limited. All rights reserved.
+ * Copyright (c) 2009-2019 Arm Limited. All rights reserved
  *
  * SPDX-License-Identifier: Apache-2.0
  *
