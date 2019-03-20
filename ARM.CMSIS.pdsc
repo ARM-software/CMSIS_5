@@ -8,7 +8,10 @@
   <url>http://www.keil.com/pack/</url>
 
   <releases>
-    <release version="5.5.1-rc0">
+    <release version="5.5.2-dev0">
+      Active development...
+    </release>
+    <release version="5.5.1" date="2019-03-20">
       The following folders are deprecated
         - CMSIS/Include/ (superseded by CMSIS/DSP/Include/ and CMSIS/Core/Include/)
 
