@@ -2,11 +2,11 @@
  * @file     startup_<Device>.S
  * @brief    CMSIS Cortex-M# Core Device Startup File for
  *           Device <Device>
- * @version  V5.3.1
- * @date     09. July 2018
+ * @version  V1.1.0
+ * @date     20. March 2019
  ******************************************************************************/
 /*
- * Copyright (c) 2009-2018 Arm Limited. All rights reserved.
+ * Copyright (c) 2009-2019 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -120,6 +120,8 @@ __Vectors_End:
                 .globl   Reset_Handler
                 .fnstart
 Reset_Handler:
+                bl       SystemInit
+
 /* Firstly it copies data from read only memory to RAM.
  * There are two schemes to copy. One can copy more than one sections.
  * Another can copy only one section. The former scheme needs more
@@ -238,7 +240,6 @@ Reset_Handler:
                 blt      .L_loop3
 #endif /* __STARTUP_CLEAR_BSS_MULTIPLE || __STARTUP_CLEAR_BSS */
 
-                bl       SystemInit
                 bl       _start
 
                 .fnend

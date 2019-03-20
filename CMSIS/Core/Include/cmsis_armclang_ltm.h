@@ -1,8 +1,8 @@
-^/**************************************************************************//**
- * @file     cmsis_armclang.h
+/**************************************************************************//**
+ * @file     cmsis_armclang_ltm.h
  * @brief    CMSIS compiler armclang (Arm Compiler 6) header file
- * @version  V1.0.0
- * @date     13. March 2019
+ * @version  V1.0.1
+ * @date     19. March 2019
  ******************************************************************************/
 /*
  * Copyright (c) 2018-2019 Arm Limited. All rights reserved.
