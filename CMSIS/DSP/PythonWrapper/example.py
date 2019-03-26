@@ -70,7 +70,7 @@ nbSamples=sigQ31.shape[0]
 # Here we demonstrate how we can process a long sequence of samples per block
 # and thus check that the state of the biquad is well updated and preserved
 # between the calls.
-half = round(nbSamples / 2)
+half = int(round(nbSamples / 2))
 res2a=dsp.arm_biquad_cascade_df1_q31(biquadQ31,sigQ31[1:half])
 res2b=dsp.arm_biquad_cascade_df1_q31(biquadQ31,sigQ31[half+1:nbSamples])
 res2=Q31toF32(np.hstack((res2a,res2b)))

@@ -44,7 +44,7 @@ Install some packages
     > pip instal scipy
     > pip instal matplotplib
 
-Now, you can install the cmsisdsp package:
+Now, you can install the cmsisdsp package in editable mode:
 
    > pip install -e "Path To The Folder Containing setup.py"
 
