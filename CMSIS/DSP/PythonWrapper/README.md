@@ -4,27 +4,23 @@ This Python wrapper for CMSIS-DSP is compatible with numpy.
 
 It is a very experimental wrapper with lots of limitations as described in the corresponding section below.
 
-But even with those limitations it can be very useful to test a CMSIS-DSP implemention of an algorithm with all the power oif numpy and scipy.
+But even with those limitations, it can be very useful to test a CMSIS-DSP implemention of an algorithm with all the power of numpy and scipy.
 
 # How to build and install
 
 The build is using a customized arm_math.h in folder cmsisdsp_pkg/src to be able to compile on windows.
 
-As a consequence, if you build on an Arm computer, you won't get the optimizations of the CMSIS library. It is possible to get them by replacing the customized arm_math.h by the official one.
+As a consequence, if you build on an ARM computer, you won't get the optimizations of the CMSIS library. It is possible to get them by replacing the customized arm_math.h by the official one.
 
 Following command will build in place.
 
     > python setup.py build_ext --inplace
 
-If you launch Python from same directory you'll be able to play with the test scripts.
+If you launch Python from same directory you'll be able to play with the test scripts. You'll need to install a few additional Python packages to run the examples. See below.
 
-If you want to install the cmsisdsp package, you need to build a binary distribution with 
+If you want to install the cmsisdsp package, it is advised to install it into a virtualenv
 
-    > python setup.py bdist
-
-Then it is advised to install it into a virtualenv
-
-For instance, with Python 3:
+With Python 3 you could:
 
 Create a folder for this virtual environment. For instance : cmsisdsp_tests
 
@@ -38,7 +34,7 @@ Activate the environment:
 
     > env\Scripts\activate
 
-Install some packages
+Install some packages to be able to run the examples
 
     > pip install numpy
     > pip instal scipy
@@ -46,13 +42,15 @@ Install some packages
 
 Now, you can install the cmsisdsp package in editable mode:
 
-   > pip install -e "Path To The Folder Containing setup.py"
+    > pip install -e "Path To The Folder Containing setup.py"
+
+Then you can copy the scripts testdsp.py and example.py and try to run them from this virtual environment.
 
 # Usage
 
-You can looks at testdsp.py and example.py for some examples.
+You can look at testdsp.py and example.py for some examples.
 
-The idea is to follow as close as possible the CMSIS-DSP API to ease the migration to the final implementation on a board.
+The idea is to follow as closely as possible the CMSIS-DSP API to ease the migration to the final implementation on a board.
 
 First you need to import the module
 
@@ -62,88 +60,101 @@ If you use numpy:
 
     > import numpy as np
 
-Then you can use a CMSIS-DSP function:
+If you use scipy signal processing functions:
+
+    > from scipy import signal
+
+## Functions with no instance arguments
+
+You can use a CMSIS-DSP function with numpy arrays:
 
     > r = dsp.arm_add_f32(np.array([1.,2,3]),np.array([4.,5,7]))
 
-The function call also be called more simply with
+The function can also be called more simply with
 
     > r = dsp.arm_add_f32([1.,2,3],[4.,5,7])
 
-But the result of a CMSIS-DSP function will always be a numpy array whatever the arguments were (numpy array or list).
+The result of a CMSIS-DSP function will always be a numpy array whatever the arguments were (numpy array or list).
 
-When the CMSIS-DSP function is requiring an instance data structure, it is just a bit more complex:
+## Functions with instance arguments 
 
-First we create this instance. 
+When the CMSIS-DSP function is requiring an instance data structure, it is just a bit more complex to use it:
+
+First you need to create this instance:
 
     > firf32 = dsp.arm_fir_instance_f32()
 
+Although the initialization function on Python side can also be used to initialize some of the fields of the corresponding instance using named arguments, it is not advised to do so. In CMSIS-DSP there are initialization functions for this and they may do some additional processing.
 
-Although the initialization function on Python side can also be used to initialize some of the fields of the corresponding instance using named arguments it is not advised to do so. In CMSIS-DSP there are init function for this and they can do some additional processing.
-
-So, we need to call the init function
+So, you need to call an init function:
 
     > dsp.arm_fir_init_f32(firf32,3,[1.,2,3],[0,0,0,0,0,0,0])
 
-The third arument in this function is the state. Since all arguments (except the instance one) are read-only in this Python API, this state will never be changed ! It is just used to communicate the length of the state array which must be allocated by the init function. This argument is required because it is present in the CMSIS-DSP API and in the final C implementation you'll need to allocate a state array with the right dimension.
+The third argument in this function is the state. Since all arguments (except the instance ones) are read-only in this Python API, this state will never be changed ! It is just used to communicate the length of the state array which must be allocated by the init function. This argument is required because it is present in the CMSIS-DSP API and in the final C implementation you'll need to allocate a state array with the right dimension.
 
 Since the goal is to be as close as possible to the C API, the API is forcing the use of this argument.
 
 The only change compared to the C API is that the size variables (like blockSize for filter) are computed automatically from the other arguments. This choice was made to make it a bit easier the use of numpy array with the API.
 
-print(firf32.numTaps())
-filtered_x = signal.lfilter([3,2,1.], 1.0, [1,2,3,4,5,1,2,3,4,5])
-print(filtered_x)
+Now, you can check that the instance was initialized correctly.
 
-Then you can filter a signal. 
+    > print(firf32.numTaps())
 
-    > print(dsp.arm_fir_f32(firf32,[1,2,3,4,5]))
-
-    The size of this signal should be blockSize. blockSize was inferred from the size of the state array : numTaps + blockSize - 1 according to CMSIS-DSP. So here the signal must have 5 samples.
-
-So if you want to filter more them you can just call the function again. The state variable inside firf32 will ensure that it works like in the CMSIS-DSP C code. 
+Then, you can filter with CMSIS-DSP.:
 
     > print(dsp.arm_fir_f32(firf32,[1,2,3,4,5]))
 
-If you want vot compare with scipy it is easy bu warning : coefficients for the filter are in opposite order:
+The size of this signal should be blockSize. blockSize was inferred from the size of the state array : numTaps + blockSize - 1 according to CMSIS-DSP. So here the signal must have 5 samples.
 
-    > filtered_x = signal.lfilter([3,2,1.], 1.0, [1,2,3,4,5,1,2,3,4,5])
+If you want to filter more than 5 samples, then you can just call the function again. The state variable inside firf32 will ensure that it works like in the CMSIS-DSP C code. 
+
+    > print(dsp.arm_fir_f32(firf32,[6,7,8,9,10]))
+
+If you want to compare with scipy it is easy but warning : coefficients for the filter are in opposite order in scipy :
+
+    > filtered_x = signal.lfilter([3,2,1.], 1.0, [1,2,3,4,5,6,7,8,9,10])
     > print(filtered_x)
 
 The principles are the same for all other APIs.
 
-For Fourier transforms there are no init functions for the instance variables which must be initialized from a C struct. To make it simpler to use them from Python, the wrapper is introducing its own init functions.
+## FFT 
 
-So, for instance:
+For Fourier transforms there are no init functions in the CMSIS-DSP for the instance variables. They must be initialized from a C struct. To make it simpler to use them from Python, the wrapper is introducing its own init functions.
 
-The signal we want to use for the FFT.
+Here is an example for using FFT from the Python interface:
+
+Let's define a signal you will use for the FFT.
+
     > nb = 16
     > signal = np.cos(2 * np.pi * np.arange(nb) / nb)
 
-The CMSIS-DSP cfft is requring complex signal with a specific layout in memory.
-To remain as close as possible to the C API, we are not using complex numbers in the wrapper. So the complex signal must be converted into a real one. The function imToReal1D is defined in testdsp.py 
+The CMSIS-DSP cfft is requiring complex signals with a specific layout in memory.
+
+To remain as close as possible to the C API, we are not using complex numbers in the wrapper. So a complex signal must be converted into a real one. The function imToReal1D is defined in testdsp.py 
 
     > signalR = imToReal1D(signal)
 
-The we create our FFT instance:
+Then, you create the FFT instance with:
 
     > cfftf32=dsp.arm_cfft_instance_f32()
 
-We initialize the instance with the init function provided by the wrapper:
+You initialize the instance with the init function provided by the wrapper:
 
-    > status=dsp.arm_cfft_init_f32(cfftf32,nb)
+    > status=dsp.arm_cfft_init_f32(cfftf32, nb)
     > print(status)
 
-We compute the FFT:
+You compute the FFT of the signal with:
 
     > resultR = dsp.arm_cfft_f32(cfftf32,signalR,0,1)
 
-We converte back to a complex format to compare with scipy:
+You convert back to a complex format to compare with scipy:
 
     > resultI = realToIm1D(resultR)
     > print(resultI)
 
-For matrix the instances are masked by the Python API. We decided that for matrix only there was no use for making the CMSIS-DSP instance visibles since they contain the same information as the numpy array (samples, width and dimension).
+## Matrix 
+
+For matrix, the instance variables are masked by the Python API. We decided that for matrix only there was no use for having the CMSIS-DSP instance visibles since they contain the same information as the numpy array (samples and dimension).
 
 So to use a CMSIS-DSP matrix function, it is very simple:
 
@@ -151,9 +162,11 @@ So to use a CMSIS-DSP matrix function, it is very simple:
     > b=np.array([[1.,2,3],[5.1,6,7],[9.1,10,11],[5,8,4]])
 
 Numpy result as reference:
+
     > print(np.dot(a , b))
 
 CMSIS-DSP result:
+
     > v=dsp.arm_mat_mult_f32(a,b)
     > print(v)
 
@@ -172,8 +185,8 @@ Due to the high number of functions in the CMSIS-DSP, the first version of the w
 
 Only a subset of the functions has been tested.
 
-It is likely that some problems are present. The API is quite regular in CMSIS-DSP but there are a few exceptions and the generation script is probably not managing all of them.
+It is likely that some problems are present. The API is quite regular in CMSIS-DSP but there are a few exceptions and the generation script is not managing all of them.
 
-So, API may crash due to unallocated variable or wrong data conversion.
+So, the API may crash due to unallocated variables or wrong data conversions.
 
-The generated C code is a first version for bootstrapping the process. Now that this C file exists, the improvement will be done on it rather than on the generation script.
+The generated C code is a first version for bootstrapping the process. Now that this C file exists, the improvements will be done on the C code rather than on the generation script.
