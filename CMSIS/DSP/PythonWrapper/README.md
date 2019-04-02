@@ -8,15 +8,35 @@ But even with those limitations, it can be very useful to test a CMSIS-DSP imple
 
 # How to build and install
 
+## Tested configurations
+
+The building of this package has been tested on Windows with the Python install from python.org and Microsoft Visual 2017. 
+
+It has also been tested with cygwin. In that case, python-devel must be installed too. To run the examples, scipy and matplotlib must also be installed in cygwin.
+
+On Linux, it worked with standard installation.
+
+Other configurations should work but the setup.py file would have to be improved. It is a first version and the build process will have to be improved.
+
+The package is working with Python 2 and 3.
+
+## Building
+
 The build is using a customized arm_math.h in folder cmsisdsp_pkg/src to be able to compile on windows.
 
 As a consequence, if you build on an ARM computer, you won't get the optimizations of the CMSIS library. It is possible to get them by replacing the customized arm_math.h by the official one.
 
-Following command will build in place.
+Since the CMSIS-DSP wrapper is using numpy, you must first install it if not already done. So, for instance to install it locally you could do:
+
+    > pip install numpy --user
+
+Once numpy is installed, you can build the CMSIS-DSP python wrapper. Go to folder CMSIS/DSP/PythonWrapper.
+
+Following command will build in place if you have the right compiler and if Python can find it.
 
     > python setup.py build_ext --inplace
 
-If you launch Python from same directory you'll be able to play with the test scripts. You'll need to install a few additional Python packages to run the examples. See below.
+Then, if you launch Python from same directory you'll be able to play with the test scripts. You'll need to install a few additional Python packages to run the examples (scipy and matplotlib). See below.
 
 If you want to install the cmsisdsp package, it is advised to install it into a virtualenv
 
@@ -37,14 +57,14 @@ Activate the environment:
 Install some packages to be able to run the examples
 
     > pip install numpy
-    > pip instal scipy
-    > pip instal matplotplib
+    > pip install scipy
+    > pip install matplotlib
 
 Now, you can install the cmsisdsp package in editable mode:
 
     > pip install -e "Path To The Folder Containing setup.py"
 
-Then you can copy the scripts testdsp.py and example.py and try to run them from this virtual environment.
+Then you can copy the scripts testdsp.py and example.py and try to run them from this virtual environment. example.y is requiring a data file to be downloaded from the web. See below in this document for the link.
 
 # Usage
 
@@ -177,6 +197,14 @@ In a real C code, a pointer to a data structure for the result v would have to b
 This example depends on a data file which can be downloaded here:
 
 https://www.physionet.org/pn3/ecgiddb/Person_87/rec_2.dat
+
+This signal was created for a master thesis:
+
+Lugovaya T.S. Biometric human identification based on electrocardiogram. [Master's thesis] Faculty of Computing Technologies and Informatics, Electrotechnical University "LETI", Saint-Petersburg, Russian Federation; June 2005. 
+
+and it is part of the PhysioNet database
+
+Goldberger AL, Amaral LAN, Glass L, Hausdorff JM, Ivanov PCh, Mark RG, Mietus JE, Moody GB, Peng C-K, Stanley HE. PhysioBank, PhysioToolkit, and PhysioNet: Components of a New Research Resource for Complex Physiologic Signals. Circulation 101(23):e215-e220 [Circulation Electronic Pages; http://circ.ahajournals.org/cgi/content/full/101/23/e215]; 2000 (June 13). 
 
 
 # LIMITATIONS
