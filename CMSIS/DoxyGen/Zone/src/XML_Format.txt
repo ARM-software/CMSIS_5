@@ -106,7 +106,8 @@ Security Type
 =============
 The attribute \em security defines the security setting for a memory or peripheral region.
 Only one of the settings is allow:
- - \<empty\>  non-secure: no security restrictions (default)
+ - \<empty\> security not defined (default) 
+ - 'n'  non-secure
  - 'c'  secure on non-secure callable  
  - 's'  secure
  
