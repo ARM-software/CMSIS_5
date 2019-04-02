@@ -28,11 +28,11 @@ This information can be used for example, to create a linker script that defines
   </tr>
 </table>
 
-\section fm_setup_tz setup_tz element
+\section fm_tz_setup tz_setup element
 
-The \ref fm_setup_tz provides the setup information for the initial TrustZone-M configuration.
+The \ref fm_tz_setup provides the setup information for the initial TrustZone-M configuration.
 
-<table class="cmtable" summary="Element: setup_tz">
+<table class="cmtable" summary="Element: tz_setup">
   <tr>
     <th>Child Elements</th>
     <th>Description</th>
@@ -218,7 +218,7 @@ The \ref fm_memory provides a sequence of memory information.
 
 /**************************************************************************************************/
 /**
-\page fm_sau setup_tz/sau[n] sequence element
+\page fm_sau tz_setup/sau[n] sequence element
 
 The \ref fm_sau lists all SAU regions for initialization in this system.
 
@@ -226,6 +226,7 @@ It lists all SAU regions that require either non-secure access or non-secure cal
 The SAU region list is generated from:
   - setup information from \ref xml_si_region
   - memory regions that are assigned to zones with non-secure domain.
+  - memory regions that are configured as secure, non-secure callable.
 
 <table class="cmtable" summary="Element: interrupt[n]">
   <tr>
@@ -233,8 +234,8 @@ The SAU region list is generated from:
     <th colspan="2">Element Chain</th>
   </tr>
   <tr>
-    <td>\ref fm_setup_tz "setup_tz"</td>
-    <td colspan=3>\ref fm_setup_tz</td>
+    <td>\ref fm_tz_setup "tz_setup"</td>
+    <td colspan=3>\ref fm_tz_setup</td>
   </tr>
   <tr>
     <th>Child Elements</th>
@@ -267,7 +268,7 @@ The SAU region list is generated from:
 
 /**************************************************************************************************/
 /**
-\page fm_interrupt setup_tz/interrupt[n] sequence element
+\page fm_interrupt tz_setup/interrupt[n] sequence element
 
 The \ref fm_interrupt lists all interrupt sources available in the system.
 
@@ -277,8 +278,8 @@ The \ref fm_interrupt lists all interrupt sources available in the system.
     <th colspan="2">Element Chain</th>
   </tr>
   <tr>
-    <td>\ref fm_setup_tz "setup_tz"</td>
-    <td colspan=3>\ref fm_setup_tz</td>
+    <td>\ref fm_tz_setup "tz_setup"</td>
+    <td colspan=3>\ref fm_tz_setup</td>
   </tr>s
   <tr>
     <th>Child Elements</th>
@@ -310,7 +311,7 @@ The \ref fm_interrupt lists all interrupt sources available in the system.
 
 /**************************************************************************************************/
 /**
-\page fm_reg_setup setup_tz/reg_setup[n] element
+\page fm_reg_setup tz_setup/reg_setup[n] element
 
 The \ref fm_reg_setup contains a sequence of device specific configuration for the setup of the interrupts.
 
@@ -320,18 +321,13 @@ The \ref fm_reg_setup contains a sequence of device specific configuration for t
     <th colspan="2">Element Chain</th>
   </tr>
   <tr>
-    <td>\ref fm_setup_tz "setup_tz"</td>
-    <td colspan=3>\ref fm_setup_tz</td>
+    <td>\ref fm_tz_setup "tz_setup"</td>
+    <td colspan=3>\ref fm_tz_setup</td>
   </tr>
   <tr>
     <th>Child Elements</th>
     <th>Description</th>
     <th>Type</th>
-  </tr>
-  <tr>
-    <td>.peripheral</td>
-    <td>The name of the interrupt that this setup belongs too.</td>
-    <td>xs:string</td>
   </tr>
   <tr>
     <td>.name</td>
@@ -344,19 +340,14 @@ The \ref fm_reg_setup contains a sequence of device specific configuration for t
     <td>NonNegativeInteger</td>
   </tr>
   <tr>
-    <td>.value</td>
-    <td>The size (in bytes) of the memory region.</td>
+    <td>.value[]</td>
+    <td>An array with register setup values (corresponds to .peripheral[] below.</td>
     <td>NonNegativeInteger</td>
   </tr>
   <tr>
-    <td>.security</td>
-    <td>The \ref security "security" information for this setup.</td>
-    <td>SecurityTypeEnum/xs:string</td>
-  </tr>
-  <tr>
-    <td>.privilege</td>
-    <td>The \ref privilege "privilege type" information for this setup.</td>
-    <td>PrivilegeTypeEnum/xs:string</td>
+    <td>.peripheral[]</td>
+    <td>An array with the peripheral names that setup belongs too.</td>
+    <td>xs:string</td>
   </tr>
 </table>
 */
