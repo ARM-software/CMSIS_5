@@ -82,7 +82,7 @@ resource assignment to prevent undesired misbehavior.
       <th>Description</th>
     </tr>
     <tr>
-      <td>0.0.2 (Preview 2)</td>
+      <td>0.0.3 (Preview 3)</td>
       <td>Initial specification draft</td>
     </tr>
 </table>
