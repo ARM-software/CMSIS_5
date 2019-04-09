@@ -187,10 +187,10 @@ void arm_nn_mult_q7(
   uint32_t blockSize);
  
 /**
- * @brief defition to adding rouding offset
+ * @brief macro for adding rounding offset
  */
 #ifndef ARM_NN_TRUNCATE
-    #define NN_ROUND(out_shift) ( 0x1 << (out_shift - 1) )
+    #define NN_ROUND(out_shift) ( (0x1 << out_shift) >> 1 )
 #else
     #define NN_ROUND(out_shift) 0
 #endif
