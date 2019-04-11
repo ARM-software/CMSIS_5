@@ -277,8 +277,8 @@ four threads (1, 2, 3, and 4). Threads 1 and 2 share the same priority, thread 3
 (\ref osThreadAttr_t::priority). As long as threads 3 and 4 are blocked the scheduler switches between thread 1 and 2 on
 a time-slice basis (round-robin). The time-slice for round-robin scheduling can be configured, see Round-Robin Timeout in \ref systemConfig.
 
-Thread 2 unblocks thread 3 by an arbitrary RTOS-call (executed in SVC handler mode) at time index 2. The scheduler switches to
-thread 3 immediately because thread 3 has the highest priority. Thread 4 is still blocked.
+Thread 2 unblocks thread 3 by an arbitrary RTOS-call (executed in \ref CMSIS_RTOS_svcFunctions "SVC" handler mode) at time
+index 2. The scheduler switches to thread 3 immediately because thread 3 has the highest priority. Thread 4 is still blocked.
 
 At time index 4 an interrupt (ISR) occurs and preempts the SysTick_Handler. RTX does not add any latency to the interrupt
 service execution. The ISR routine uses an RTOS-call that unblocks thread 4. Instead of switching to thread 4 immediately
@@ -625,6 +625,81 @@ The following CMSIS-RTOS2 functions can be called from threads and Interrupt Ser
 Functions that cannot be called from an ISR are verifying the interrupt status and return the status code \b osErrorISR, in
 case they are called from an ISR context. In some implementations, this condition might be caught using the HARD_FAULT
 vector.
+
+\section CMSIS_RTOS_svcFunctions SVC Functions
+
+Supervisor Calls (SVC) are exceptions targeted at software and operating systems for generating system function calls. They
+are sometimes called software interrupts. For example, instead of allowing user programs to directly access hardware, an
+operating system may provide access to hardware through an SVC. So when a user program wants to use certain hardware, it
+generates the exception using SVC instructions. The software exception handler in the operating system executes and provides
+the requested service to the user application. In this way, access to hardware is under the control of the OS, which can
+provide a more robust system by preventing the user applications from directly accessing the hardware.
+
+SVCs can also make software more portable because the user application does not need to know the programming details of the
+underlying hardware. The user program will only need to know the application programming interface (API) function ID and
+parameters; the actual hardware-level programming is handled by device drivers.
+
+SVCs run in \b privileged \b handler mode of the Arm Cortex-M core. SVC functions accept arguments and can return values.
+The functions are used in the same way as other functions; however, they are executed indirectly through the SVC instruction.
+When executing SVC instructions, the controller changes to the privileged handler mode.
+
+Interrupts are \b not \b disabled in this mode. To protect SVC functions from interrupts, you need to include the
+disable/enable intrinsic functions \c __disable_irq() and \c __enable_irq() in your code.
+
+You can use SVC functions to access \b protected \b peripherals, for example, to configure NVIC and interrupts. 
+This is required if you run threads in unprivileged (protected) mode and you need to change interrupts from the within the
+thread.
+
+To implement SVC functions in your Keil RTX5 project, you need to:
+-# Add the SVC User Table file \b svc_user.c to your project folder and include it into your project. This file is available
+   as a user code template.
+-# Write a function implementation. Example:
+   \code
+   uint32_t svc_atomic_inc32 (uint32_t *mem) {
+     // A protected function to increment a counter. 
+     uint32_t val;
+      
+     __disable_irq();
+     val  = *mem;
+     (*mem) = val + 1U;
+     __enable_irq();
+      
+     return (val);
+   }
+   \endcode
+-# Add the function to the SVC function table in the \b svc_user.c module:
+   \code
+   void * const osRtxUserSVC[1+USER_SVC_COUNT] = {
+     (void *)USER_SVC_COUNT,
+     (void *)svc_atomic_inc32,
+   };
+   \endcode
+-# Increment the number of user SVC functions:
+   \code
+   #define USER_SVC_COUNT  1       // Number of user SVC functions
+   \endcode
+-# Declare a function wrapper to be called by the user to execute the SVC call.\n
+   \b Code \b Example (Arm Compiler 6)
+   \code
+   __STATIC_FORCEINLINE uint32_t atomic_inc32 (uint32_t *mem) {
+     register uint32_t val;
+	  
+     __ASM volatile (
+       "svc 1" : "=l" (val) : "l" (mem) : "cc", "memory"
+     );
+     return (val);
+   }
+   \endcode
+   
+   \b Code \b Example (Arm Compiler 5 using \c __svc(x) attribute)
+   \code
+   uint32_t atomic_inc32 (uint32_t *mem) __svc(1);
+   \endcode
+    
+\note
+- The SVC function \token{0} is \b reserved for the Keil RTX5 kernel.
+- Do not leave gaps when numbering SVC functions. They must occupy a \b continuous range of numbers starting from 1.
+- SVC functions can still be interrupted.
 */
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
