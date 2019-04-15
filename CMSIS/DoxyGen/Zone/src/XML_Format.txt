@@ -754,8 +754,9 @@ The \ref xml_rmpc element specifies a Memory Protection Controller (MPC) for the
     <td>required</td>
   </tr>
   <tr>
-    <td>blk_max</td>
-    <td>The maximum value for the block index register.</td>
+    <td>blk_size</td>
+    <td>The size (in bytes) of each memory block.  This value is also the alignment requirement for the memory blocks.
+	    The number of LUT bits is: <i>memory size</i> / <i>blk_size</i>.</td>
     <td>NonNegativeInteger</td>
     <td>required</td>
   </tr>
