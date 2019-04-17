@@ -311,6 +311,54 @@ __STATIC_FORCEINLINE uint8_t __CLZ(uint32_t value)
  */
 #define __USAT             __builtin_arm_usat
 
+/* ###################  Compiler specific Intrinsics  ########################### */
+/** \defgroup CMSIS_SIMD_intrinsics CMSIS SIMD Intrinsics
+  Access to dedicated SIMD instructions
+  @{
+*/
+
+#if (defined (__ARM_FEATURE_DSP) && (__ARM_FEATURE_DSP == 1))
+
+#define     __QADD16                __builtin_arm_qadd16
+#define     __QSUB16                __builtin_arm_qsub16
+#define     __SMUAD                 __builtin_arm_smuad
+#define     __SMUADX                __builtin_arm_smuadx
+#define     __SMLAD                 __builtin_arm_smlad
+#define     __SMLADX                __builtin_arm_smladx
+#define     __SMLALD                __builtin_arm_smlald
+#define     __SMLALDX               __builtin_arm_smlaldx
+
+__STATIC_FORCEINLINE  int32_t __QADD( int32_t op1,  int32_t op2)
+{
+  int32_t result;
+
+  __ASM volatile ("qadd %0, %1, %2" : "=r" (result) : "r" (op1), "r" (op2) );
+  return(result);
+}
+
+__STATIC_FORCEINLINE  int32_t __QSUB( int32_t op1,  int32_t op2)
+{
+  int32_t result;
+
+  __ASM volatile ("qsub %0, %1, %2" : "=r" (result) : "r" (op1), "r" (op2) );
+  return(result);
+}
+
+#define __PKHBT(ARG1,ARG2,ARG3)          ( ((((uint32_t)(ARG1))          ) & 0x0000FFFFUL) |  \
+                                           ((((uint32_t)(ARG2)) << (ARG3)) & 0xFFFF0000UL)  )
+
+#define __PKHTB(ARG1,ARG2,ARG3)          ( ((((uint32_t)(ARG1))          ) & 0xFFFF0000UL) |  \
+                                           ((((uint32_t)(ARG2)) >> (ARG3)) & 0x0000FFFFUL)  )
+
+__STATIC_FORCEINLINE int32_t __SMMLA (int32_t op1, int32_t op2, int32_t op3)
+{
+  int32_t result;
+
+  __ASM volatile ("smmla %0, %1, %2, %3" : "=r" (result): "r"  (op1), "r" (op2), "r" (op3) );
+  return(result);
+}
+
+#endif /* (__ARM_FEATURE_DSP == 1) */
 
 /* ###########################  Core Function Access  ########################### */
 
