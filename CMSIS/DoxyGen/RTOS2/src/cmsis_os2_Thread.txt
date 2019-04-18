@@ -551,7 +551,10 @@ Possible \ref osStatus_t return values:
     - \em osErrorResource: the thread is in an invalid state (ex: not joinable).
     - \em osErrorISR: the function \b osThreadJoin cannot be called from interrupt service routines.
 
-\note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+\note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines". <br>
+\note Only one thread shall call \b osThreadJoin to join the target thread. If multiple threads try to join simultaneously with the same thread,
+       the results are undefined.
+
 */
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
