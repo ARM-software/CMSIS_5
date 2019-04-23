@@ -60,8 +60,8 @@ For further details see also the [Slides of the Embedded World CMSIS Partner Mee
 
 ## Generate CMSIS Pack for Release
 
-This GitHub development repository contains already pre-built libraries of various software components (DSP, RTOS, RTOS2).
-These libraries are validated for release.
+This GitHub development repository contains already pre-built libraries (stored in Git-LFS) of various software components (DSP, RTOS, RTOS2).
+These libraries are validated for release. Git-LFS needs to be installed to retrieve the actual binary files, please see https://git-lfs.github.com/.
 
 To build a complete CMSIS pack for installation the following additional tools are required:
  - **doxygen.exe**    Version: 1.8.6 (Documentation Generator)
