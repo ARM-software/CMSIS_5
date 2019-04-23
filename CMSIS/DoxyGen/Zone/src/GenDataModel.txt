@@ -25,7 +25,7 @@ scalar-types:
 
 \b hash: variable that that stores one or more variables with a unique lookup name
 
-\b sequence: variable that stores subvariables without names but instead are selected via index (myVariable[index])
+\b sequence: variable that stores sub-variables without names but instead are selected via index (myVariable[index])
 
 A variable is accessed using the dollar character followed by a variable or expression in brackets:
 \code
@@ -368,13 +368,23 @@ The \ref fm_mpc_setup contains a sequence of device specific configuration for t
     <td>xs:string</td>
   </tr>
   <tr>
-    <td>.reg_setup[<i>n</i>].blk_cfg</td>
-    <td>The block size information that should be stored in the BLK_CFG register.</td>
+    <td>.reg_setup[<i>n</i>].blk_size</td>
+    <td>The block size information that CMSIS-Zone used for LUT generation.</td>
     <td>NonNegativeInteger</td>
   </tr>
   <tr>
-    <td>.reg_setup[<i>n</i>].blk_lut[<i>m</i>]</td>
-    <td>The values for the BLK_LUT look-up table.</td>
+    <td>.reg_setup[<i>n</i>].S_lut[<i>m</i>]</td>
+    <td>The look-up table (LUT) bit values for Secure attribute.</td>
+    <td>NonNegativeInteger</td>
+  </tr>
+  <tr>
+    <td>.reg_setup[<i>n</i>].P_lut[<i>m</i>]</td>
+    <td>The look-up table (LUT) bit values for Privileged attribute.</td>
+    <td>NonNegativeInteger</td>
+  </tr>
+  <tr>
+    <td>.reg_setup[<i>n</i>].lut[<i>m</i>]</td>
+    <td>The look-up table (LUT) bit values for a combined Secure and Privileged attribute (\ref xml_rmpc - \b format attribute specifies the format of the LUT).</td>
     <td>NonNegativeInteger</td>
   </tr>
   <tr>

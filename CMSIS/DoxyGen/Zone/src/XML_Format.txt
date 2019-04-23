@@ -760,6 +760,23 @@ The \ref xml_rmpc element specifies a Memory Protection Controller (MPC) for the
     <td>NonNegativeInteger</td>
     <td>required</td>
   </tr>
+  <tr>
+    <td>type</td>
+    <td>Specifies the permissions that the MPC verifies for the memory access:\n
+	  - type="s" : (default) only the Secure attribute is verified.
+	  - type="p" : only the Privileged attribute is verified.
+	  - type="sp" : both the Secure are Privileged attribute are verified.
+    <td>MpcTypeEnum</td>
+    <td>optional</td>
+  </tr>
+  <tr>
+    <td>format</td>
+    <td>Generate a combined LUT that contains both Secure and Privileged attribute (default no combined LUT is generated)\n
+	  - format="sp" : odd bits (1, 3, 5, ...) contain Secure attribute; even bits (0, 2, 4, ...) contain Privileged attribute.
+	  - format="ps" : odd bits (1, 3, 5, ...) contain Privileged attribute; even bits (0, 2, 4, ...) contain Secure attribute.
+    <td>MpcFormatEnum</td>
+    <td>optional</td>
+  </tr>
 </table>
 
 
