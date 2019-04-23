@@ -437,6 +437,16 @@ The information in this element is identical with CMSIS-Pack, except that it pro
     <td>required</td>
   </tr>
   <tr>
+    <td>NumInterrupts</td>
+    <td>Number of interrupts available to the processor core.</td>
+    <td>NonNegativeInteger</td>
+  </tr>
+  <tr>
+    <td>sauNumRegions</td>
+    <td>Number of regions in the Security Attribution Unit (SAU) of the processor core.</td>
+    <td>NonNegativeInteger</td>
+  </tr>
+  <tr>
     <td>info</td>
     <td>Brief description of the processor.</td>
     <td>xs:string</td>

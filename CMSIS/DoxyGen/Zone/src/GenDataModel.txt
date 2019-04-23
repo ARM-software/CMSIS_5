@@ -63,6 +63,11 @@ This information can be used for example, to create a linker script that defines
     <th>Type</th>
   </tr>
   <tr>
+    <td>\subpage fm_processor ".processor"</td>
+    <td>A sequence of all processor elements available in the system resource file.</td>
+    <td>sequence</td>
+  </tr>
+  <tr>
     <td>\subpage fm_memory ".memory"</td>
     <td>A sequence of all memory regions available in the system resource file.</td>
     <td>sequence</td>
@@ -129,6 +134,45 @@ the related linker setup.
 </table>
 
 
+*/
+
+
+/**************************************************************************************************/
+/**
+\page fm_processor processor[n] sequence element
+
+The \ref fm_processor provides a sequence of processor elements that are in the system.
+
+<table class="cmtable" summary="Element: memory[n]">
+  <tr>
+    <th>Parent Element</th>
+    <th colspan="2">Element Chain</th>
+  </tr>
+  <tr>
+    <td>\ref fm_system "system"</td>
+    <td colspan=3>\ref fm_system</td>
+  </tr>
+  <tr>
+    <th>Child Elements</th>
+    <th>Description</th>
+    <th>Type</th>
+  </tr>
+  <tr>
+    <td>.processor[<i>n</i>].Pname</td>
+    <td>Name of the processor core.</td>
+    <td>RestrictedString</td>
+  </tr>
+  <tr>
+    <td>.processor[<i>n</i>].NumInterrupts</td>
+    <td>Number of interrupts available to the processor core.</td>
+    <td>NonNegativeInteger</td>
+  </tr>
+  <tr>
+    <td>.processor[<i>n</i>].sauNumRegions</td>
+    <td>Number of regions in the Security Attribution Unit (SAU) of the processor core.</td>
+    <td>NonNegativeInteger</td>
+  </tr>
+</table>
 */
 
 
@@ -363,32 +407,32 @@ The \ref fm_mpc_setup contains a sequence of device specific configuration for t
     <td>xs:string</td>
   </tr>
   <tr>
-    <td>.reg_setup[<i>n</i>].memory</td>
+    <td>.mpc_setup[<i>n</i>].memory</td>
     <td>The name of the physical memory region that is connected via the MPC.</td>
     <td>xs:string</td>
   </tr>
   <tr>
-    <td>.reg_setup[<i>n</i>].blk_size</td>
+    <td>.mpc_setup[<i>n</i>].blk_size</td>
     <td>The block size information that CMSIS-Zone used for LUT generation.</td>
     <td>NonNegativeInteger</td>
   </tr>
   <tr>
-    <td>.reg_setup[<i>n</i>].S_lut[<i>m</i>]</td>
+    <td>.mpc_setup[<i>n</i>].S_lut[<i>m</i>]</td>
     <td>The look-up table (LUT) bit values for Secure attribute.</td>
     <td>NonNegativeInteger</td>
   </tr>
   <tr>
-    <td>.reg_setup[<i>n</i>].P_lut[<i>m</i>]</td>
+    <td>.mpc_setup[<i>n</i>].P_lut[<i>m</i>]</td>
     <td>The look-up table (LUT) bit values for Privileged attribute.</td>
     <td>NonNegativeInteger</td>
   </tr>
   <tr>
-    <td>.reg_setup[<i>n</i>].lut[<i>m</i>]</td>
+    <td>.mpc_setup[<i>n</i>].lut[<i>m</i>]</td>
     <td>The look-up table (LUT) bit values for a combined Secure and Privileged attribute (\ref xml_rmpc - \b format attribute specifies the format of the LUT).</td>
     <td>NonNegativeInteger</td>
   </tr>
   <tr>
-    <td>.reg_setup[<i>n</i>].lut_comment[<i>m</i>]</td>
+    <td>.mpc_setup[<i>n</i>].lut_comment[<i>m</i>]</td>
     <td>The region information for source code comments of the BLK_LUT values.</td>
     <td>xs:string</td>
   </tr>
