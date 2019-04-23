@@ -322,6 +322,9 @@ static osStatus_t svcRtxMutexRelease (osMutexId_t mutex_id) {
       mutex->owner_thread = thread;
       mutex->owner_next   = thread->mutex_list;
       mutex->owner_prev   = NULL;
+      if (thread->mutex_list != NULL) {
+        thread->mutex_list->owner_prev = mutex;
+      }
       thread->mutex_list  = mutex;
       mutex->lock = 1U;
       EvrRtxMutexAcquired(mutex, 1U);
