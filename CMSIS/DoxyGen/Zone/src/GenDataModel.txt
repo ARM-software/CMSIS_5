@@ -417,23 +417,18 @@ The \ref fm_mpc_setup contains a sequence of device specific configuration for t
     <td>NonNegativeInteger</td>
   </tr>
   <tr>
-    <td>.mpc_setup[<i>n</i>].S_lut[<i>m</i>]</td>
-    <td>The look-up table (LUT) bit values for Secure attribute.</td>
+    <td>.mpc_setup[<i>n</i>].S_bits[<i>m</i>]</td>
+    <td>A list of bit values for Secure attribute that are used to compose the LUT.</td>
     <td>NonNegativeInteger</td>
   </tr>
   <tr>
-    <td>.mpc_setup[<i>n</i>].P_lut[<i>m</i>]</td>
-    <td>The look-up table (LUT) bit values for Privileged attribute.</td>
+    <td>.mpc_setup[<i>n</i>].P_bits[<i>m</i>]</td>
+    <td>A list of bit values for Privileged attribute that are used to compose the LUT.</td>
     <td>NonNegativeInteger</td>
   </tr>
   <tr>
-    <td>.mpc_setup[<i>n</i>].lut[<i>m</i>]</td>
-    <td>The look-up table (LUT) bit values for a combined Secure and Privileged attribute (\ref xml_rmpc - \b format attribute specifies the format of the LUT).</td>
-    <td>NonNegativeInteger</td>
-  </tr>
-  <tr>
-    <td>.mpc_setup[<i>n</i>].lut_comment[<i>m</i>]</td>
-    <td>The region information for source code comments of the BLK_LUT values.</td>
+    <td>.mpc_setup[<i>n</i>].bits_comment[<i>m</i>]</td>
+    <td>The memory region information for source code comments that relate to S_bits or P_bits.</td>
     <td>xs:string</td>
   </tr>
 </table>

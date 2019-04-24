@@ -61,6 +61,7 @@ Structure of .rzone XML file
 	
     <memories>           // memories section  
       <memory>           // memory resource
+      <mpc>              // memory protection controller information
     </memories>
     
     <peripherals>        // peripheral resources off-chip
@@ -587,7 +588,11 @@ The \ref xml_si_region contains the region setting for SAU initialization.
 /**
 \page xml_memories /rzone/resources/memories element
 
-The \ref xml_memories contains a list of all memory regions available in this system. Some memory region might restrict the availability to specific processors.
+The \ref xml_memories contains:
+  - a list of all memory regions available in this system.
+  - a list of all Memory Protection Controllers (MPC) in this system.  
+Some memory region or MPC might restrict the availability to specific processors.
+
 
 <b>Example</b>
 \code
@@ -595,6 +600,7 @@ The \ref xml_memories contains a list of all memory regions available in this sy
   <memories>
     <memory name="ExtMem1"    start="0x00000000" physical="0x00000000" size="0x00010000" access="rwx" security=""  type="RAM" info="External memory 1 / remap" external="true" />
     <memory name="Flash_NS"   start="0x08000000"                       size="0x00080000" access="rx"  security=""  type="ROM" info="Flash Memory (non secure)"                 />
+    <mpc    name="IOTKIT_MPCSSRAM0" start="0x08000000"                 size="0x00100000" type="sp"    blk_size="0x20000"      info="MPC for extended Flash"                    />
     <memory name="Flash_S"    start="0x0c000000" physical="0x08001000" size="0x00080000" access="rx"  security="c" type="ROM" info="Flash Memory (secure)"                     />
 
     <memory name="SRAM1_C_NS" start="0x0A000000"                       size="0x00030000" access="rwx" security=""  type="RAM" info="SRAM1 Code (non secure)"   />
@@ -630,6 +636,12 @@ The \ref xml_memories contains a list of all memory regions available in this sy
     <td>complexType</td>
     <td>0..1</td>
   </tr>
+  <tr>
+    <td>\ref xml_rmpc "mpc"</td>
+    <td>Specifies a Memory Protection Controller (MPC) for a physical address range.</td>
+    <td>complexType</td>
+    <td>0..1</td>
+  </tr>
 </table>
 
 \section xml_rmemory /rzone/resources/memories/memory element
@@ -644,18 +656,6 @@ The \ref xml_rmemory lists a logical memory region with physical mapping. Memory
   <tr>
     <td>\ref xml_memories "memories"</td>
     <td colspan=3>\ref xml_memories</td>
-  </tr>
-  <tr>
-    <th>Child Elements</th>
-    <th>Description</th>
-    <th>Type</th>
-    <th>Occurrence</th>
-  </tr>
-  <tr>
-    <td>\ref xml_rmpc "mpc"</td>
-    <td>Specifies a Memory Protection Controller (MPC) for the physical memory.</td>
-    <td>complexType</td>
-    <td>0..1</td>
   </tr>
   <tr>
     <th>Attributes</th>
@@ -738,9 +738,10 @@ The \ref xml_rmemory lists a logical memory region with physical mapping. Memory
 </table>
 
 
-\section xml_rmpc /rzone/resources/memories/memory/mpc element
+\section xml_rmpc /rzone/resources/memories/mpc element
 
-The \ref xml_rmpc element specifies a Memory Protection Controller (MPC) for the physical memory.
+The \ref xml_rmpc element specifies a Memory Protection Controller (MPC) for a physical memory address region.  
+The MPC region must not necessarily overlap a physical memory space which means it can be larger or smaller.
 
 <table class="cmtable" summary="Element: mpc">
   <tr>
@@ -764,6 +765,18 @@ The \ref xml_rmpc element specifies a Memory Protection Controller (MPC) for the
     <td>required</td>
   </tr>
   <tr>
+    <td>start</td>
+    <td>The physical start address of the memory address region that is protected by the MPC.</td>
+    <td>NonNegativeInteger</td>
+    <td>required</td>
+  </tr>
+  <tr>
+    <td>size</td>
+    <td>The size of the memory address region in bytes.</td>
+    <td>NonNegativeInteger</td>
+    <td>required</td>
+  </tr>
+  <tr>
     <td>blk_size</td>
     <td>The size (in bytes) of each memory block.  This value is also the alignment requirement for the memory blocks.
 	    The number of LUT bits is: <i>memory size</i> / <i>blk_size</i>.</td>
@@ -780,15 +793,14 @@ The \ref xml_rmpc element specifies a Memory Protection Controller (MPC) for the
     <td>optional</td>
   </tr>
   <tr>
-    <td>format</td>
-    <td>Generate a combined LUT that contains both Secure and Privileged attribute (default no combined LUT is generated)\n
-	  - format="sp" : odd bits (1, 3, 5, ...) contain Secure attribute; even bits (0, 2, 4, ...) contain Privileged attribute.
-	  - format="ps" : odd bits (1, 3, 5, ...) contain Privileged attribute; even bits (0, 2, 4, ...) contain Secure attribute.
-    <td>MpcFormatEnum</td>
+    <td>info</td>
+    <td>Brief description of the memory region.</td>
+    <td>xs:string</td>
     <td>optional</td>
-  </tr>
+  </tr>  
 </table>
 
+\todo decide if "format" should stay
 
 */
 
