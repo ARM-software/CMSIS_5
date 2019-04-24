@@ -163,12 +163,12 @@ The \ref fm_processor provides a sequence of processor elements that are in the 
     <td>RestrictedString</td>
   </tr>
   <tr>
-    <td>.processor[<i>n</i>].NumInterrupts</td>
+    <td>.processor[<i>n</i>].DnumInterrupts</td>
     <td>Number of interrupts available to the processor core.</td>
     <td>NonNegativeInteger</td>
   </tr>
   <tr>
-    <td>.processor[<i>n</i>].sauNumRegions</td>
+    <td>.processor[<i>n</i>].DnumSauRegions</td>
     <td>Number of regions in the Security Attribution Unit (SAU) of the processor core.</td>
     <td>NonNegativeInteger</td>
   </tr>
