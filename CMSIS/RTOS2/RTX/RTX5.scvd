@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <component_viewer schemaVersion="1.2.0" xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xs:noNamespaceSchemaLocation="Component_Viewer.xsd">
-  <component name="CMSIS:RTOS2:Keil RTX5" shortname="RTX5" version="5.5.0"/>    <!-- name and version of the component -->
+  <component name="CMSIS:RTOS2:Keil RTX5" shortname="RTX5" version="5.5.1"/>    <!-- name and version of the component -->
 
   <typedefs>
     <!-- Attributes structure for thread -->
@@ -1261,7 +1261,7 @@
                 <item property="osMutexRobust"      value="%t[(MCB[i].attr &amp; 0x08) ?  &quot;True&quot; : &quot;False&quot;]" />
               </item>
 
-              <list cond="MCB[i].owner_thread" name="n" start="0" limit="TCB._count">
+              <list cond="MCB[i].lock" name="n" start="0" limit="TCB._count">
                 <item cond="MCB[i].owner_thread == TCB[n]._addr" property="Owner thread" value="id: %x[TCB[n]._addr] %N[TCB[n].name]"/>
               </list>
 
