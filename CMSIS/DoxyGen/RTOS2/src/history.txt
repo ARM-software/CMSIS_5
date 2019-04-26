@@ -99,6 +99,12 @@
       <th>Description</th>
     </tr>
     <tr>
+      <td>V5.5.1</td>
+      <td>
+       - Fixed osMutexRelease issue (thread owning multiple mutexes).
+      </td>
+    </tr>
+    <tr>
       <td>V5.5.0</td>
       <td>
        - Updated and enhanced generated events (reorganized components).
