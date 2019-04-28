@@ -239,7 +239,7 @@
             <wLevel>2</wLevel>
             <uThumb>1</uThumb>
             <VariousControls>
-              <MiscControls>-fno-strict-aliasing -ffunction-sections -fdata-sections</MiscControls>
+              <MiscControls>-fno-strict-aliasing -ffunction-sections -fdata-sections -flto -ffat-lto-objects</MiscControls>
               <Define>ARM_MATH_CM0_FAMILY, ARM_MATH_MATRIX_CHECK, ARM_MATH_ROUNDING, ARM_MATH_LOOPUNROLL</Define>
               <Undefine></Undefine>
               <IncludePath>..\..\Include;..\..\..\Core\Include;..\..\..\Include</IncludePath>
@@ -1917,7 +1917,7 @@
             <wLevel>2</wLevel>
             <uThumb>1</uThumb>
             <VariousControls>
-              <MiscControls>-fno-strict-aliasing -ffunction-sections -fdata-sections</MiscControls>
+              <MiscControls>-fno-strict-aliasing -ffunction-sections -fdata-sections -flto -ffat-lto-objects</MiscControls>
               <Define>ARM_MATH_CM0_FAMILY, ARM_MATH_MATRIX_CHECK, ARM_MATH_ROUNDING, ARM_MATH_LOOPUNROLL, ARM_MATH_BIG_ENDIAN</Define>
               <Undefine></Undefine>
               <IncludePath>..\..\Include;..\..\..\Core\Include;..\..\..\Include</IncludePath>
@@ -3595,7 +3595,7 @@
             <wLevel>2</wLevel>
             <uThumb>1</uThumb>
             <VariousControls>
-              <MiscControls>-fno-strict-aliasing -ffunction-sections -fdata-sections</MiscControls>
+              <MiscControls>-fno-strict-aliasing -ffunction-sections -fdata-sections -flto -ffat-lto-objects</MiscControls>
               <Define>ARM_MATH_MATRIX_CHECK, ARM_MATH_ROUNDING, ARM_MATH_LOOPUNROLL</Define>
               <Undefine></Undefine>
               <IncludePath>..\..\Include;..\..\..\Core\Include;..\..\..\Include</IncludePath>
@@ -5273,7 +5273,7 @@
             <wLevel>2</wLevel>
             <uThumb>1</uThumb>
             <VariousControls>
-              <MiscControls>-fno-strict-aliasing -ffunction-sections -fdata-sections</MiscControls>
+              <MiscControls>-fno-strict-aliasing -ffunction-sections -fdata-sections -flto -ffat-lto-objects</MiscControls>
               <Define>ARM_MATH_MATRIX_CHECK, ARM_MATH_ROUNDING, ARM_MATH_LOOPUNROLL, ARM_MATH_BIG_ENDIAN</Define>
               <Undefine></Undefine>
               <IncludePath>..\..\Include;..\..\..\Core\Include;..\..\..\Include</IncludePath>
@@ -6951,7 +6951,7 @@
             <wLevel>2</wLevel>
             <uThumb>1</uThumb>
             <VariousControls>
-              <MiscControls>-fno-strict-aliasing -ffunction-sections -fdata-sections</MiscControls>
+              <MiscControls>-fno-strict-aliasing -ffunction-sections -fdata-sections -flto -ffat-lto-objects</MiscControls>
               <Define>ARM_MATH_MATRIX_CHECK, ARM_MATH_ROUNDING, ARM_MATH_LOOPUNROLL</Define>
               <Undefine></Undefine>
               <IncludePath>..\..\Include;..\..\..\Core\Include;..\..\..\Include</IncludePath>
@@ -8629,7 +8629,7 @@
             <wLevel>2</wLevel>
             <uThumb>1</uThumb>
             <VariousControls>
-              <MiscControls>-fno-strict-aliasing -ffunction-sections -fdata-sections</MiscControls>
+              <MiscControls>-fno-strict-aliasing -ffunction-sections -fdata-sections -flto -ffat-lto-objects</MiscControls>
               <Define>ARM_MATH_MATRIX_CHECK, ARM_MATH_ROUNDING, ARM_MATH_LOOPUNROLL, ARM_MATH_BIG_ENDIAN</Define>
               <Undefine></Undefine>
               <IncludePath>..\..\Include;..\..\..\Core\Include;..\..\..\Include</IncludePath>
@@ -10307,7 +10307,7 @@
             <wLevel>2</wLevel>
             <uThumb>1</uThumb>
             <VariousControls>
-              <MiscControls>-fno-strict-aliasing -ffunction-sections -fdata-sections -mfpu=fpv4-sp-d16 -mfloat-abi=hard -ffp-contract=off</MiscControls>
+              <MiscControls>-fno-strict-aliasing -ffunction-sections -fdata-sections -mfpu=fpv4-sp-d16 -mfloat-abi=hard -ffp-contract=off -flto -ffat-lto-objects</MiscControls>
               <Define>ARM_MATH_MATRIX_CHECK, ARM_MATH_ROUNDING, ARM_MATH_LOOPUNROLL</Define>
               <Undefine></Undefine>
               <IncludePath>..\..\Include;..\..\..\Core\Include;..\..\..\Include</IncludePath>
@@ -11985,7 +11985,7 @@
             <wLevel>2</wLevel>
             <uThumb>1</uThumb>
             <VariousControls>
-              <MiscControls>-fno-strict-aliasing -ffunction-sections -fdata-sections -mfpu=fpv4-sp-d16 -mfloat-abi=hard -ffp-contract=off</MiscControls>
+              <MiscControls>-fno-strict-aliasing -ffunction-sections -fdata-sections -mfpu=fpv4-sp-d16 -mfloat-abi=hard -ffp-contract=off -flto -ffat-lto-objects</MiscControls>
               <Define>ARM_MATH_MATRIX_CHECK, ARM_MATH_ROUNDING, ARM_MATH_LOOPUNROLL, ARM_MATH_BIG_ENDIAN</Define>
               <Undefine></Undefine>
               <IncludePath>..\..\Include;..\..\..\Core\Include;..\..\..\Include</IncludePath>
@@ -13663,7 +13663,7 @@
             <wLevel>2</wLevel>
             <uThumb>1</uThumb>
             <VariousControls>
-              <MiscControls>-fno-strict-aliasing -ffunction-sections -fdata-sections</MiscControls>
+              <MiscControls>-fno-strict-aliasing -ffunction-sections -fdata-sections -flto -ffat-lto-objects</MiscControls>
               <Define>ARM_MATH_MATRIX_CHECK, ARM_MATH_ROUNDING, ARM_MATH_LOOPUNROLL</Define>
               <Undefine></Undefine>
               <IncludePath>..\..\Include;..\..\..\Core\Include;..\..\..\Include</IncludePath>
@@ -15341,7 +15341,7 @@
             <wLevel>2</wLevel>
             <uThumb>1</uThumb>
             <VariousControls>
-              <MiscControls>-fno-strict-aliasing -ffunction-sections -fdata-sections</MiscControls>
+              <MiscControls>-fno-strict-aliasing -ffunction-sections -fdata-sections -flto -ffat-lto-objects</MiscControls>
               <Define>ARM_MATH_MATRIX_CHECK, ARM_MATH_ROUNDING, ARM_MATH_LOOPUNROLL, ARM_MATH_BIG_ENDIAN</Define>
               <Undefine></Undefine>
               <IncludePath>..\..\Include;..\..\..\Core\Include;..\..\..\Include</IncludePath>
@@ -17019,7 +17019,7 @@
             <wLevel>2</wLevel>
             <uThumb>1</uThumb>
             <VariousControls>
-              <MiscControls>-fno-strict-aliasing -ffunction-sections -fdata-sections -mfpu=fpv5-sp-d16 -mfloat-abi=hard -ffp-contract=off</MiscControls>
+              <MiscControls>-fno-strict-aliasing -ffunction-sections -fdata-sections -mfpu=fpv5-sp-d16 -mfloat-abi=hard -ffp-contract=off -flto -ffat-lto-objects</MiscControls>
               <Define>ARM_MATH_MATRIX_CHECK, ARM_MATH_ROUNDING, ARM_MATH_LOOPUNROLL</Define>
               <Undefine></Undefine>
               <IncludePath>..\..\Include;..\..\..\Core\Include;..\..\..\Include</IncludePath>
@@ -18697,7 +18697,7 @@
             <wLevel>2</wLevel>
             <uThumb>1</uThumb>
             <VariousControls>
-              <MiscControls>-fno-strict-aliasing -ffunction-sections -fdata-sections -mfpu=fpv5-sp-d16 -mfloat-abi=hard -ffp-contract=off</MiscControls>
+              <MiscControls>-fno-strict-aliasing -ffunction-sections -fdata-sections -mfpu=fpv5-sp-d16 -mfloat-abi=hard -ffp-contract=off -flto -ffat-lto-objects</MiscControls>
               <Define>ARM_MATH_MATRIX_CHECK, ARM_MATH_ROUNDING, ARM_MATH_LOOPUNROLL, ARM_MATH_BIG_ENDIAN</Define>
               <Undefine></Undefine>
               <IncludePath>..\..\Include;..\..\..\Core\Include;..\..\..\Include</IncludePath>
@@ -20375,7 +20375,7 @@
             <wLevel>2</wLevel>
             <uThumb>1</uThumb>
             <VariousControls>
-              <MiscControls>-fno-strict-aliasing -ffunction-sections -fdata-sections -mfpu=fpv5-d16 -mfloat-abi=hard -ffp-contract=off</MiscControls>
+              <MiscControls>-fno-strict-aliasing -ffunction-sections -fdata-sections -mfpu=fpv5-d16 -mfloat-abi=hard -ffp-contract=off -flto -ffat-lto-objects</MiscControls>
               <Define>ARM_MATH_MATRIX_CHECK, ARM_MATH_ROUNDING, ARM_MATH_LOOPUNROLL</Define>
               <Undefine></Undefine>
               <IncludePath>..\..\Include;..\..\..\Core\Include;..\..\..\Include</IncludePath>
@@ -22053,7 +22053,7 @@
             <wLevel>2</wLevel>
             <uThumb>1</uThumb>
             <VariousControls>
-              <MiscControls>-fno-strict-aliasing -ffunction-sections -fdata-sections -mfpu=fpv5-d16 -mfloat-abi=hard -ffp-contract=off</MiscControls>
+              <MiscControls>-fno-strict-aliasing -ffunction-sections -fdata-sections -mfpu=fpv5-d16 -mfloat-abi=hard -ffp-contract=off -flto -ffat-lto-objects</MiscControls>
               <Define>ARM_MATH_MATRIX_CHECK, ARM_MATH_ROUNDING, ARM_MATH_LOOPUNROLL, ARM_MATH_BIG_ENDIAN</Define>
               <Undefine></Undefine>
               <IncludePath>..\..\Include;..\..\..\Core\Include;..\..\..\Include</IncludePath>
@@ -23731,7 +23731,7 @@
             <wLevel>2</wLevel>
             <uThumb>1</uThumb>
             <VariousControls>
-              <MiscControls>-fno-strict-aliasing -ffunction-sections -fdata-sections -march=armv8-m.base</MiscControls>
+              <MiscControls>-fno-strict-aliasing -ffunction-sections -fdata-sections -march=armv8-m.base -flto -ffat-lto-objects</MiscControls>
               <Define>ARM_MATH_CM0_FAMILY, ARM_MATH_MATRIX_CHECK, ARM_MATH_ROUNDING, ARM_MATH_LOOPUNROLL</Define>
               <Undefine></Undefine>
               <IncludePath>..\..\Include;..\..\..\Core\Include;..\..\..\Include</IncludePath>
@@ -25409,7 +25409,7 @@
             <wLevel>2</wLevel>
             <uThumb>1</uThumb>
             <VariousControls>
-              <MiscControls>-fno-strict-aliasing -ffunction-sections -fdata-sections -march=armv8-m.main</MiscControls>
+              <MiscControls>-fno-strict-aliasing -ffunction-sections -fdata-sections -march=armv8-m.main -flto -ffat-lto-objects</MiscControls>
               <Define>ARM_MATH_MATRIX_CHECK, ARM_MATH_ROUNDING, ARM_MATH_LOOPUNROLL</Define>
               <Undefine></Undefine>
               <IncludePath>..\..\Include;..\..\..\Core\Include;..\..\..\Include</IncludePath>
@@ -27087,7 +27087,7 @@
             <wLevel>2</wLevel>
             <uThumb>1</uThumb>
             <VariousControls>
-              <MiscControls>-fno-strict-aliasing -ffunction-sections -fdata-sections -march=armv8-m.main -mfpu=fpv5-sp-d16 -mfloat-abi=hard -ffp-contract=off</MiscControls>
+              <MiscControls>-fno-strict-aliasing -ffunction-sections -fdata-sections -march=armv8-m.main -mfpu=fpv5-sp-d16 -mfloat-abi=hard -ffp-contract=off -flto -ffat-lto-objects</MiscControls>
               <Define>ARM_MATH_MATRIX_CHECK, ARM_MATH_ROUNDING, ARM_MATH_LOOPUNROLL</Define>
               <Undefine></Undefine>
               <IncludePath>..\..\Include;..\..\..\Core\Include;..\..\..\Include</IncludePath>
@@ -28765,7 +28765,7 @@
             <wLevel>2</wLevel>
             <uThumb>1</uThumb>
             <VariousControls>
-              <MiscControls>-fno-strict-aliasing -ffunction-sections -fdata-sections -march=armv8-m.main -mfpu=fpv5-d16 -mfloat-abi=hard -ffp-contract=off</MiscControls>
+              <MiscControls>-fno-strict-aliasing -ffunction-sections -fdata-sections -march=armv8-m.main -mfpu=fpv5-d16 -mfloat-abi=hard -ffp-contract=off -flto -ffat-lto-objects</MiscControls>
               <Define>ARM_MATH_MATRIX_CHECK, ARM_MATH_ROUNDING, ARM_MATH_LOOPUNROLL</Define>
               <Undefine></Undefine>
               <IncludePath>..\..\Include;..\..\..\Core\Include;..\..\..\Include</IncludePath>
@@ -30443,7 +30443,7 @@
             <wLevel>2</wLevel>
             <uThumb>1</uThumb>
             <VariousControls>
-              <MiscControls>-fno-strict-aliasing -ffunction-sections -fdata-sections -march=armv8-m.main+dsp</MiscControls>
+              <MiscControls>-fno-strict-aliasing -ffunction-sections -fdata-sections -march=armv8-m.main+dsp -flto -ffat-lto-objects</MiscControls>
               <Define>ARM_MATH_MATRIX_CHECK, ARM_MATH_ROUNDING, ARM_MATH_LOOPUNROLL</Define>
               <Undefine></Undefine>
               <IncludePath>..\..\Include;..\..\..\Core\Include;..\..\..\Include</IncludePath>
@@ -32121,7 +32121,7 @@
             <wLevel>2</wLevel>
             <uThumb>1</uThumb>
             <VariousControls>
-              <MiscControls>-fno-strict-aliasing -ffunction-sections -fdata-sections -march=armv8-m.main+dsp -mfpu=fpv5-sp-d16 -mfloat-abi=hard -ffp-contract=off</MiscControls>
+              <MiscControls>-fno-strict-aliasing -ffunction-sections -fdata-sections -march=armv8-m.main+dsp -mfpu=fpv5-sp-d16 -mfloat-abi=hard -ffp-contract=off -flto -ffat-lto-objects</MiscControls>
               <Define>ARM_MATH_MATRIX_CHECK, ARM_MATH_ROUNDING, ARM_MATH_LOOPUNROLL</Define>
               <Undefine></Undefine>
               <IncludePath>..\..\Include;..\..\..\Core\Include;..\..\..\Include</IncludePath>
@@ -33799,7 +33799,7 @@
             <wLevel>2</wLevel>
             <uThumb>1</uThumb>
             <VariousControls>
-              <MiscControls>-fno-strict-aliasing -ffunction-sections -fdata-sections -march=armv8-m.main+dsp -mfpu=fpv5-d16 -mfloat-abi=hard -ffp-contract=off</MiscControls>
+              <MiscControls>-fno-strict-aliasing -ffunction-sections -fdata-sections -march=armv8-m.main+dsp -mfpu=fpv5-d16 -mfloat-abi=hard -ffp-contract=off -flto -ffat-lto-objects</MiscControls>
               <Define>ARM_MATH_MATRIX_CHECK, ARM_MATH_ROUNDING, ARM_MATH_LOOPUNROLL</Define>
               <Undefine></Undefine>
               <IncludePath>..\..\Include;..\..\..\Core\Include;..\..\..\Include</IncludePath>
@@ -35467,7 +35467,7 @@
             <wLevel>2</wLevel>
             <uThumb>1</uThumb>
             <VariousControls>
-              <MiscControls>-fno-strict-aliasing -ffunction-sections -fdata-sections -march=armv7-a -mfloat-abi=hard -mfpu=vfpv3-d16 -ffp-contract=off</MiscControls>
+              <MiscControls>-fno-strict-aliasing -ffunction-sections -fdata-sections -march=armv7-a -mfloat-abi=hard -mfpu=vfpv3-d16 -ffp-contract=off -flto -ffat-lto-objects</MiscControls>
               <Define>ARM_MATH_MATRIX_CHECK, ARM_MATH_ROUNDING, ARM_MATH_LOOPUNROLL</Define>
               <Undefine></Undefine>
               <IncludePath>..\..\Include;..\..\..\Core\Include;..\..\..\Include</IncludePath>

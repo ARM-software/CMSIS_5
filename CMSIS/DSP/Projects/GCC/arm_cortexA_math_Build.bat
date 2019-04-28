@@ -8,7 +8,7 @@ set UVEXE=C:\Keil_v5\UV4\UV4.EXE
 echo.
 echo Building DSP Libraries GCC
 
-echo   Building DSP Library for Cortex-A9 Little Endian
+echo   Building DSP Library for Cortex-A9 Little Endian with double precision FPU
 %UVEXE% -rb -j0 arm_cortexM_math.uvprojx -t "cortexA9l"     -o "DspLib_cortexA9l_build.log"
 
 echo.
