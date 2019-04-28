@@ -306,6 +306,8 @@
   #define ARM_MATH_CM0_FAMILY            1
 #elif defined (__ARM_ARCH_8M_MAIN__)
 //#define ARM_MATH_CM0_FAMILY            0
+#elif defined (__ARM_ARCH_7A__)
+//#define ARM_MATH_CM0_FAMILY            0
 #else
   #error "Unknown Arm Architecture!"
 #endif
@@ -1742,7 +1744,7 @@ void arm_mat_init_f32(
   typedef struct
   {
           q15_t A0;           /**< The derived gain, A0 = Kp + Ki + Kd . */
-#if !defined (ARM_MATH_DSP)
+#if !defined (ARM_MATH_DSP) && !defined (__ARM_ARCH_7A__)
           q15_t A1;
           q15_t A2;
 #else
@@ -4879,7 +4881,6 @@ __STATIC_FORCEINLINE q31_t arm_pid_q31(
     return (out);
   }
 
-
 /**
   @brief         Process function for the Q15 PID Control.
   @param[in,out] S   points to an instance of the Q15 PID Control structure
@@ -4894,6 +4895,7 @@ __STATIC_FORCEINLINE q31_t arm_pid_q31(
          After all additions have been performed, the accumulator is truncated to 34.15 format by discarding low 15 bits.
          Lastly, the accumulator is saturated to yield a result in 1.15 format.
  */
+#if !defined (__ARM_ARCH_7A__) 
 __STATIC_FORCEINLINE q15_t arm_pid_q15(
   arm_pid_instance_q15 * S,
   q15_t in)
@@ -4932,6 +4934,7 @@ __STATIC_FORCEINLINE q15_t arm_pid_q15(
     /* return to application */
     return (out);
   }
+#endif
 
   /**
    * @} end of PID group
@@ -5030,6 +5033,7 @@ __STATIC_FORCEINLINE q15_t arm_pid_q15(
          The accumulator maintains 1.31 format by truncating lower 31 bits of the intermediate multiplication in 2.62 format.
          There is saturation on the addition, hence there is no risk of overflow.
  */
+#if !defined (__ARM_ARCH_7A__)
 __STATIC_FORCEINLINE void arm_clarke_q31(
   q31_t Ia,
   q31_t Ib,
@@ -5050,6 +5054,7 @@ __STATIC_FORCEINLINE void arm_clarke_q31(
     /* pIbeta is calculated by adding the intermediate products */
     *pIbeta = __QADD(product1, product2);
   }
+#endif
 
   /**
    * @} end of clarke group
@@ -5116,6 +5121,7 @@ __STATIC_FORCEINLINE void arm_clarke_q31(
          The accumulator maintains 1.31 format by truncating lower 31 bits of the intermediate multiplication in 2.62 format.
          There is saturation on the subtraction, hence there is no risk of overflow.
  */
+#if !defined (__ARM_ARCH_7A__)
 __STATIC_FORCEINLINE void arm_inv_clarke_q31(
   q31_t Ialpha,
   q31_t Ibeta,
@@ -5136,6 +5142,7 @@ __STATIC_FORCEINLINE void arm_inv_clarke_q31(
     /* pIb is calculated by subtracting the products */
     *pIb = __QSUB(product2, product1);
   }
+#endif
 
   /**
    * @} end of inv_clarke group
@@ -5220,6 +5227,7 @@ __STATIC_FORCEINLINE void arm_inv_clarke_q31(
          The accumulator maintains 1.31 format by truncating lower 31 bits of the intermediate multiplication in 2.62 format.
          There is saturation on the addition and subtraction, hence there is no risk of overflow.
  */
+#if !defined (__ARM_ARCH_7A__)
 __STATIC_FORCEINLINE void arm_park_q31(
   q31_t Ialpha,
   q31_t Ibeta,
@@ -5250,6 +5258,7 @@ __STATIC_FORCEINLINE void arm_park_q31(
     /* Calculate pIq by subtracting the two intermediate products 3 from 4 */
     *pIq = __QSUB(product4, product3);
   }
+#endif
 
   /**
    * @} end of park group
@@ -5323,6 +5332,7 @@ __STATIC_FORCEINLINE void arm_park_q31(
          The accumulator maintains 1.31 format by truncating lower 31 bits of the intermediate multiplication in 2.62 format.
          There is saturation on the addition, hence there is no risk of overflow.
  */
+#if !defined (__ARM_ARCH_7A__)
 __STATIC_FORCEINLINE void arm_inv_park_q31(
   q31_t Id,
   q31_t Iq,
@@ -5353,6 +5363,7 @@ __STATIC_FORCEINLINE void arm_inv_park_q31(
     /* Calculate pIbeta by using the two intermediate products 3 and 4 */
     *pIbeta = __QADD(product4, product3);
   }
+#endif
 
   /**
    * @} end of Inverse park group
