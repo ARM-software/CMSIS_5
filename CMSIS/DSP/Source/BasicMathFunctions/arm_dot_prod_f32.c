@@ -74,11 +74,12 @@ void arm_dot_prod_f32(
     float32x4_t res;
     float32x2_t accum = vdup_n_f32(0);
 
-    /* Loop unrolling */
+    /* Compute 4 outputs at a time */
     blkCnt = blockSize >> 2U;
 
     vec1 = vld1q_f32(pSrcA);
     vec2 = vld1q_f32(pSrcB);
+
     while (blkCnt > 0U)
     {
         /* C = A[0]*B[0] + A[1]*B[1] + A[2]*B[2] + ... + A[blockSize-1]*B[blockSize-1] */

@@ -111,12 +111,11 @@ void arm_max_f32(
       outV = vld1q_f32(pSrc);
       pSrc += 4;
  
-      /* Loop unrolling */
+      /* Compute 4 outputs at a time */
       blkCnt = (blockSize - 4 ) >> 2U;
     
       while (blkCnt > 0U)
       {
-    
         srcV = vld1q_f32(pSrc);
         pSrc += 4;
     

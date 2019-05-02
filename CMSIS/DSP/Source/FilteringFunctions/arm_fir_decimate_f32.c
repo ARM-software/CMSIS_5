@@ -187,10 +187,10 @@ void arm_fir_decimate_f32(
     /* Initialize coeff pointer */
     pb = pCoeffs;
 
-    /* Loop unrolling.  Process 4 taps at a time. */
+    /* Process 4 taps at a time. */
     tapCnt = numTaps >> 2;
 
-    /* Loop over the number of taps.  Unroll by a factor of 4.
+    /* Loop over the number of taps. 
      ** Repeat until we've computed numTaps-4 coefficients. */
 
     while (tapCnt > 0U)
@@ -287,10 +287,10 @@ void arm_fir_decimate_f32(
     /* Initialize coeff pointer */
     pb = pCoeffs;
 
-    /* Loop unrolling.  Process 4 taps at a time. */
+    /* Process 4 taps at a time. */
     tapCnt = numTaps >> 2;
 
-    /* Loop over the number of taps.  Unroll by a factor of 4.
+    /* Loop over the number of taps.
      ** Repeat until we've computed numTaps-4 coefficients. */
     while (tapCnt > 0U)
     {

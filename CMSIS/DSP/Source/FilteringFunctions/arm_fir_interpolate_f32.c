@@ -163,7 +163,7 @@ void arm_fir_interpolate_f32(
   blkCnt = blockSize >> 3;
   blkCntN4 = blockSize & 7;
 
-  /* Samples loop unrolled by 8 */
+  /* Loop unrolling */
   while (blkCnt > 0U)
   {
     /* Copy new input samples into the state buffer */

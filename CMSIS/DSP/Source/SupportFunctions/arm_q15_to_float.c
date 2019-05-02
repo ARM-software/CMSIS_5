@@ -68,10 +68,9 @@ void arm_q15_to_float(
   int32x4_t inV0, inV1;
   float32x4_t outV;
 
-  /* Loop unrolling */
   blkCnt = blockSize >> 3U;
 
-  /* First part of the processing with loop unrolling.  Compute 8 outputs at a time.
+  /* Compute 8 outputs at a time.
    ** a second loop below computes the remaining 1 to 7 samples. */
   while (blkCnt > 0U)
   {

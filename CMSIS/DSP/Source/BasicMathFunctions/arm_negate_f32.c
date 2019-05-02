@@ -70,14 +70,14 @@ void arm_negate_f32(
     float32x4_t vec1;
     float32x4_t res;
 
-    /* Loop unrolling */
+    /* Compute 4 outputs at a time */
     blkCnt = blockSize >> 2U;
 
     while (blkCnt > 0U)
     {
         /* C = -A */
-        /* Negate and then store the results in the destination buffer. */
 
+    	/* Negate and then store the results in the destination buffer. */
         vec1 = vld1q_f32(pSrc);
         res = vnegq_f32(vec1);
         vst1q_f32(pDst, res);

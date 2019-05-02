@@ -109,7 +109,7 @@ arm_status arm_mat_inverse_f32(
    *
    *     1. First combine the identity matrix and the input matrix separated by a bar to form an
    *        augmented matrix as follows:
-   *                _                  _         _         _
+   *              _                  _         _         _
    *             |  a11  a12 | 1   0  |       |  X11 X12  |
    *             |           |        |   =   |           |
    *             |_ a21  a22 | 0   1 _|       |_ X21 X21 _|
@@ -299,7 +299,6 @@ arm_status arm_mat_inverse_f32(
        * to the right of the pilot element */
       j = (numCols - l) >> 2;
 
-      /* Loop unrolling */
       while (j > 0U)
       {
         /* Divide each element of the row of the input matrix
@@ -331,7 +330,6 @@ arm_status arm_mat_inverse_f32(
       /* Loop over number of columns of the destination matrix */
       j = numCols >> 2;
 
-      /* Loop unrolling */
       while (j > 0U)
       {
         /* Divide each element of the row of the destination matrix
@@ -399,7 +397,6 @@ arm_status arm_mat_inverse_f32(
              to replace the elements in the input matrix */
           j = (numCols - l) >> 2;
 	  
-	  /* Loop unrolling */
           while (j > 0U)
           {
             /* Replace the element by the sum of that row
@@ -433,7 +430,6 @@ arm_status arm_mat_inverse_f32(
              replace the elements in the destination matrix */
           j = numCols >> 2;
 
-	  /* Loop unrolling */
           while (j > 0U)
           {
             /* Replace the element by the sum of that row

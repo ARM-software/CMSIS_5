@@ -67,10 +67,9 @@ void arm_copy_f32(
 
   float32x4_t inV;
 
-  /* Loop unrolling */
   blkCnt = blockSize >> 2U;
 
-  /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.
+  /* Compute 4 outputs at a time.
    ** a second loop below computes the remaining 1 to 3 samples. */
   while (blkCnt > 0U)
   {

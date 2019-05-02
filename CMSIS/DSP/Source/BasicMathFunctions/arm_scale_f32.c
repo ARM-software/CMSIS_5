@@ -84,13 +84,14 @@ void arm_scale_f32(
     float32x4_t vec1;
     float32x4_t res;
 
-    /* Loop unrolling */
+    /* Compute 4 outputs at a time */
     blkCnt = blockSize >> 2U;
 
     while (blkCnt > 0U)
     {
         /* C = A * scale */
-        /* Scale the input and then store the results in the destination buffer. */
+
+    	/* Scale the input and then store the results in the destination buffer. */
         vec1 = vld1q_f32(pSrc);
         res = vmulq_f32(vec1, vdupq_n_f32(scale));
         vst1q_f32(pDst, res);

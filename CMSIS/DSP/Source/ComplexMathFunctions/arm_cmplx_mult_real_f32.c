@@ -82,7 +82,7 @@ void arm_cmplx_mult_real_f32(
     float32x4_t r;
     float32x4x2_t ab,outCplx;
 
-    /* Loop unrolling */
+    /* Compute 4 outputs at a time */
     blkCnt = numSamples >> 2U;
 
     while (blkCnt > 0U)

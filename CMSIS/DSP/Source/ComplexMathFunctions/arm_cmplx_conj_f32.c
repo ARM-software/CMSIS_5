@@ -82,7 +82,7 @@ void arm_cmplx_conj_f32(
 
    zero = vdupq_n_f32(0.0);
 
-   /* Loop unrolling */
+   /* Compute 4 outputs at a time */
    blkCnt = numSamples >> 2U;
 
    while (blkCnt > 0U)

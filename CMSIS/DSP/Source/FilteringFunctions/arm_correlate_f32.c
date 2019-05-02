@@ -359,7 +359,7 @@ void arm_correlate_f32(
       acc3 = 0.0f;
 
 #if defined(ARM_MATH_NEON)
-      /* Apply loop unrolling and compute 4 MACs simultaneously. */
+      /* Compute 4 MACs simultaneously. */
       k = srcBLen >> 2U;
 
       res = vdupq_n_f32(0) ;

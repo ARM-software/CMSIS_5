@@ -95,10 +95,9 @@ arm_status arm_mat_sub_f32(
     /* Total number of samples in the input matrix */
     numSamples = (uint32_t) pSrcA->numRows * pSrcA->numCols;
 
-    /* Loop Unrolling */
     blkCnt = numSamples >> 2U;
 
-    /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.
+    /* Compute 4 outputs at a time.
      ** a second loop below computes the remaining 1 to 3 samples. */
     while (blkCnt > 0U)
     {
@@ -110,7 +109,7 @@ arm_status arm_mat_sub_f32(
       res = vsubq_f32(vec1, vec2);
       vst1q_f32(pOut, res);
 
-      /* update pointers to process next sampels */
+      /* Update pointers to process next samples */
       pIn1 += 4U;
       pIn2 += 4U;
       pOut += 4U;

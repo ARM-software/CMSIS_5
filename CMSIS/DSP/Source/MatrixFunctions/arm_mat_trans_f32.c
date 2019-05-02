@@ -90,13 +90,12 @@ arm_status arm_mat_trans_f32(
       float32x4_t row0V,row1V,row2V,row3V;
       float32x4x2_t ra0,ra1,rb0,rb1;
 
-      /* Loop Unrolling */
       blkCnt = nColumns >> 2;
 
       /* The pointer px is set to starting address of the column being processed */
       px = pOut + i;
 
-      /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.
+      /* Compute 4 outputs at a time.
        ** a second loop below computes the remaining 1 to 3 samples. */
       while (blkCnt > 0U)        /* Column loop */
       {

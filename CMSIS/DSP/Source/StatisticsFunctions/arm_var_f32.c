@@ -79,10 +79,9 @@ void arm_var_f32(
   arm_mean_f32(pSrc,blockSize,&mean);
   avg = vdupq_n_f32(mean);
 
-  /* Loop unrolling */
   blkCnt = blockSize >> 2U;
 
-  /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.
+  /* Compute 4 outputs at a time.
    ** a second loop below computes the remaining 1 to 3 samples. */
   while (blkCnt > 0U)
   {

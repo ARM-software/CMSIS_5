@@ -208,7 +208,7 @@ void arm_lms_f32(
     sum = 0.0f;
     sumV = vdupq_n_f32(0.0);
 
-    /* Loop unrolling.  Process 4 taps at a time. */
+    /* Process 4 taps at a time. */
     tapCnt = numTaps >> 2;
 
     while (tapCnt > 0U)
@@ -257,7 +257,7 @@ void arm_lms_f32(
     /* Initialize coeff pointer */
     pb = (pCoeffs);
 
-    /* Loop unrolling.  Process 4 taps at a time. */
+    /* Process 4 taps at a time. */
     tapCnt = numTaps >> 2;
 
     /* Update filter coefficients */
@@ -305,7 +305,7 @@ void arm_lms_f32(
   /* Points to the start of the pState buffer */
   pStateCurnt = S->pState;
 
-  /* Loop unrolling for (numTaps - 1U) samples copy */
+  /* Process 4 taps at a time for (numTaps - 1U) samples copy */
   tapCnt = (numTaps - 1U) >> 2U;
 
   /* copy data */

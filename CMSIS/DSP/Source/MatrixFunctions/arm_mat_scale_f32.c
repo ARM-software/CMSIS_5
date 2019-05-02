@@ -97,10 +97,9 @@ arm_status arm_mat_scale_f32(
     /* Total number of samples in the input matrix */
     numSamples = (uint32_t) pSrc->numRows * pSrc->numCols;
 
-    /* Loop unrolling */
     blkCnt = numSamples >> 2;
 
-    /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.
+    /* Compute 4 outputs at a time.
      ** a second loop below computes the remaining 1 to 3 samples. */
     while (blkCnt > 0U)
     {

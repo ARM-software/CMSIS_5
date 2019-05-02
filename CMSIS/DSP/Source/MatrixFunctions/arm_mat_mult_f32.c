@@ -169,7 +169,7 @@ arm_status arm_mat_mult_f32(
         acc6 = vdupq_n_f32(0.0);
         acc7 = vdupq_n_f32(0.0);
 
-        /* Apply loop unrolling and compute 4 MACs simultaneously. */
+        /* Compute 4 MACs simultaneously. */
         colCnt = numColsA >> 2U;
 
         /* Matrix multiplication */
@@ -184,7 +184,8 @@ arm_status arm_mat_mult_f32(
           a5V = vld1q_f32(pIn1F); 
           a6V = vld1q_f32(pIn1G); 
           a7V = vld1q_f32(pIn1H); 
-          pIn1 += 4;
+
+	  pIn1 += 4;
           pIn1B += 4;
           pIn1C += 4;
           pIn1D += 4;
@@ -323,7 +324,7 @@ arm_status arm_mat_mult_f32(
 
         acc0 = vdupq_n_f32(0.0);
 
-        /* Apply loop unrolling and compute 4 MACs simultaneously. */
+        /* Compute 4 MACs simultaneously. */
         colCnt = numColsA >> 2U;
 
         /* Matrix multiplication   */

@@ -68,11 +68,10 @@ void arm_fill_f32(
 
   float32x4_t inV = vdupq_n_f32(value);
 
-  /* Loop unrolling */
   blkCnt = blockSize >> 2U;
 
-  /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.
- *    ** a second loop below computes the remaining 1 to 3 samples. */
+  /* Compute 4 outputs at a time.
+   ** a second loop below computes the remaining 1 to 3 samples. */
   while (blkCnt > 0U)
   {
     /* C = value */
@@ -85,7 +84,7 @@ void arm_fill_f32(
   }
 
   /* If the blockSize is not a multiple of 4, compute any remaining output samples here.
- *    ** No loop unrolling is used. */
+   ** No loop unrolling is used. */
   blkCnt = blockSize & 3;
 
   while (blkCnt > 0U)

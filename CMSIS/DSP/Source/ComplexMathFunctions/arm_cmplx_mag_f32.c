@@ -89,7 +89,7 @@ void arm_cmplx_mag_f32(
   float32x4_t vImagB;
   float32x4_t vMagSqB;
 
-  /* Loop unrolling */
+  /* Loop unrolling: Compute 8 outputs at a time */
   blkCnt = numSamples >> 3;
 
   while (blkCnt > 0U)

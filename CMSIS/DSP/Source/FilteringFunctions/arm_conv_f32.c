@@ -206,10 +206,10 @@ void arm_conv_f32(
     res = vdupq_n_f32(0) ;
     accum = vdup_n_f32(0);
 
-    /* Apply loop unrolling and compute 4 MACs simultaneously. */
+    /* Compute 4 MACs simultaneously. */
     k = count >> 2U;
 
-    /* First part of the processing with loop unrolling.  Compute 4 MACs at a time.
+    /* First part of the processing.  Compute 4 MACs at a time.
      ** a second loop below computes MACs for the remaining 1 to 3 samples. */
 
     while (k > 0U)
@@ -556,7 +556,7 @@ void arm_conv_f32(
       float32x4_t y = vdupq_n_f32(0) ;
       float32x2_t accum = vdup_n_f32(0) ;
 
-      /* First part of the processing with loop unrolling.  Compute 4 MACs at a time.
+      /* First part of the processing.  Compute 4 MACs at a time.
        ** a second loop below computes MACs for the remaining 1 to 3 samples. */
       while (k > 0U)
       {
