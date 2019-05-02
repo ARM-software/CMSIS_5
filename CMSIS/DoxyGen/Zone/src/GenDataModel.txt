@@ -143,7 +143,7 @@ the related linker setup.
 
 The \ref fm_processor provides a sequence of processor elements that are in the system.
 
-<table class="cmtable" summary="Element: memory[n]">
+<table class="cmtable" summary="Element: processor[n]">
   <tr>
     <th>Parent Element</th>
     <th colspan="2">Element Chain</th>
@@ -164,7 +164,7 @@ The \ref fm_processor provides a sequence of processor elements that are in the 
   </tr>
   <tr>
     <td>.processor[<i>n</i>].DnumInterrupts</td>
-    <td>Number of interrupts available to the processor core.</td>
+    <td>Number of NVIC interrupts sources available to the processor core (excludes exception vectors).</td>
     <td>NonNegativeInteger</td>
   </tr>
   <tr>
@@ -213,7 +213,7 @@ The \ref fm_memory provides a sequence of memory information.
   <tr>
     <td>.memory[<i>n</i>].type</td>
     <td>The type of memory in this region ("RAM" or "ROM").</td>
-    <td>MemoryTypeEnum/xs:string</td>
+    <td>MemoryTypeEnum</td>
   </tr>
   <tr>
     <td>.memory[<i>n</i>].start</td>
@@ -228,7 +228,7 @@ The \ref fm_memory provides a sequence of memory information.
   <tr>
     <td>.memory[<i>n</i>].security</td>
     <td>The \ref security "security" setting for this memory region.</td>
-    <td>SecurityTypeEnum/xs:string</td>
+    <td>SecurityType</td>
   </tr>
   <tr>
     <td>.memory[<i>n</i>].security.c</td>
@@ -268,6 +268,21 @@ The \ref fm_memory provides a sequence of memory information.
   <tr>
     <td>.memory[<i>n</i>].access.p</td>
     <td>The \em peripheral \ref access "access" information.</td>
+    <td>xs:boolean</td>
+  </tr>
+  <tr>
+    <td>.memory[<i>n</i>].privilege</td>
+    <td>The \ref privilege "privilege type" settings for this memory region in the following separate fields.</td>
+    <td>PrivilegeType</td>
+  </tr>
+  <tr>
+    <td>.memory[<i>n</i>].privilege.p</td>
+    <td>The \em privileged \em level setting of \ref privilege "privilege type".</td>
+    <td>xs:boolean</td>
+  </tr>
+  <tr>
+    <td>.memory[<i>n</i>].privilege.u</td>
+    <td>The \em unprivileged \em level setting of \ref privilege "privilege type".</td>
     <td>xs:boolean</td>
   </tr>
   <tr>
@@ -525,7 +540,7 @@ The \ref fm_peripheral contains a sequence of all peripherals that are accessibl
   <tr>
     <td>.peripheral[<i>n</i>].security</td>
     <td>The \ref security "security" setting for this peripheral.</td>
-    <td>SecurityTypeEnum/xs:string</td>
+    <td>SecurityType</td>
   </tr>
   <tr>
     <td>.peripheral[<i>n</i>].security.s</td>
@@ -540,7 +555,7 @@ The \ref fm_peripheral contains a sequence of all peripherals that are accessibl
   <tr>
     <td>.peripheral[<i>n</i>].access</td>
     <td>The \ref access "access" permissions for this peripheral in the following separate fields.</td>
-    <td>N/A</td>
+    <td>AccessType</td>
   </tr>
   <tr>
     <td>.peripheral[<i>n</i>].access.r</td>
@@ -560,6 +575,21 @@ The \ref fm_peripheral contains a sequence of all peripherals that are accessibl
   <tr>
     <td>.peripheral[<i>n</i>].access.p</td>
     <td>The \em peripheral \ref access "access" information.</td>
+    <td>xs:boolean</td>
+  </tr>
+  <tr>
+    <td>.peripheral[<i>n</i>].privilege</td>
+    <td>The \ref privilege "privilege type" settings for this peripheral in the following separate fields.</td>
+    <td>PrivilegeType</td>
+  </tr>
+  <tr>
+    <td>.peripheral[<i>n</i>].privilege.p</td>
+    <td>The \em privileged \em level setting of \ref privilege "privilege type".</td>
+    <td>xs:boolean</td>
+  </tr>
+  <tr>
+    <td>.peripheral[<i>n</i>].privilege.u</td>
+    <td>The \em unprivileged \em level setting of \ref privilege "privilege type".</td>
     <td>xs:boolean</td>
   </tr>
   <tr>
@@ -597,7 +627,7 @@ The \ref fm_mpu_setup contains the configuration information for the Memory Prot
   </tr>
   <tr>
     <td>mpu_setup.region[<i>n</i>]</td>
-    <td>Sequenc of MPU region settings.</td>
+    <td>Sequence of MPU region settings.</td>
     <td>sequence</td>
   </tr>
   <tr>

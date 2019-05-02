@@ -439,7 +439,7 @@ The information in this element is identical with CMSIS-Pack, except that it pro
   </tr>
   <tr>
     <td>DnumInterrupts</td>
-    <td>Number of interrupts available to the processor core.</td>
+    <td>Number of NVIC interrupt sources available to the processor core (excludes exception vectors).</td>
     <td>NonNegativeInteger</td>
     <td>optional</td>
   </tr>
