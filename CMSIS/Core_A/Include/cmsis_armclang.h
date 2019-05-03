@@ -319,14 +319,28 @@ __STATIC_FORCEINLINE uint8_t __CLZ(uint32_t value)
 
 #if (defined (__ARM_FEATURE_DSP) && (__ARM_FEATURE_DSP == 1))
 
+#define     __QADD8                 __builtin_arm_qadd8
+#define     __QSUB8                 __builtin_arm_qsub8
 #define     __QADD16                __builtin_arm_qadd16
+#define     __SHADD16               __builtin_arm_shadd16
 #define     __QSUB16                __builtin_arm_qsub16
+#define     __SHSUB16               __builtin_arm_shsub16
+#define     __QASX                  __builtin_arm_qasx
+#define     __SHASX                 __builtin_arm_shasx
+#define     __QSAX                  __builtin_arm_qsax
+#define     __SHSAX                 __builtin_arm_shsax
+#define     __SXTB16                __builtin_arm_sxtb16
 #define     __SMUAD                 __builtin_arm_smuad
 #define     __SMUADX                __builtin_arm_smuadx
 #define     __SMLAD                 __builtin_arm_smlad
 #define     __SMLADX                __builtin_arm_smladx
 #define     __SMLALD                __builtin_arm_smlald
 #define     __SMLALDX               __builtin_arm_smlaldx
+#define     __SMUSD                 __builtin_arm_smusd
+#define     __SMUSDX                __builtin_arm_smusdx
+#define     __SMLSDX                __builtin_arm_smlsdx
+
+
 
 __STATIC_FORCEINLINE  int32_t __QADD( int32_t op1,  int32_t op2)
 {
