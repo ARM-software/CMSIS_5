@@ -35467,7 +35467,7 @@
             <wLevel>2</wLevel>
             <uThumb>1</uThumb>
             <VariousControls>
-              <MiscControls>-fno-strict-aliasing -ffunction-sections -fdata-sections -march=armv7-a -mfloat-abi=hard -mfpu=vfpv3-d16 -ffp-contract=off -flto -ffat-lto-objects</MiscControls>
+              <MiscControls>-fno-strict-aliasing -ffunction-sections -fdata-sections -march=armv7-a -mfloat-abi=hard -mfpu=vfpv3-d16 -ffp-contract=off -flto -ffat-lto-objects -Ofast</MiscControls>
               <Define>ARM_MATH_MATRIX_CHECK, ARM_MATH_ROUNDING, ARM_MATH_LOOPUNROLL</Define>
               <Undefine></Undefine>
               <IncludePath>..\..\Include;..\..\..\Core\Include;..\..\..\Include</IncludePath>
