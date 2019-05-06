@@ -2,8 +2,8 @@
  * @file     startup_ARMv81MML.c
  * @brief    CMSIS Core Device Startup File for
  *           ARMv81MML Device
- * @version  V1.0.0
- * @date     25. February 2019
+ * @version  V1.1.0
+ * @date     06. May 2019
  ******************************************************************************/
 /*
  * Copyright (c) 2009-2019 Arm Limited. All rights reserved.
@@ -29,37 +29,21 @@
   #error device not specified!
 #endif
 
-
-/*----------------------------------------------------------------------------
-  Linker generated Symbols
- *----------------------------------------------------------------------------*/
-extern uint32_t CSTACK$$Limit;
-extern uint32_t CSTACK$$Base;
-
 /*----------------------------------------------------------------------------
   Exception / Interrupt Handler Function Prototype
  *----------------------------------------------------------------------------*/
 typedef void( *pFunc )( void );
 
-
 /*----------------------------------------------------------------------------
   External References
  *----------------------------------------------------------------------------*/
-extern void __iar_program_start(void) __attribute__((noreturn)); /* PreeMain (C library entry point) */
-
+extern void __PROGRAM_START(void) __NO_RETURN;
 
 /*----------------------------------------------------------------------------
   Internal References
  *----------------------------------------------------------------------------*/
-void Default_Handler(void) __attribute__ ((noreturn));
-void Reset_Handler  (void) __attribute__ ((noreturn));
-
-
-/*----------------------------------------------------------------------------
-  User Initial Stack & Heap
- *----------------------------------------------------------------------------*/
-#define __initial_sp    CSTACK$$Limit
-#define __stack_limit   CSTACK$$Base
+void Default_Handler(void) __NO_RETURN;
+void Reset_Handler  (void) __NO_RETURN;
 
 /*----------------------------------------------------------------------------
   Exception / Interrupt Handler
@@ -91,9 +75,9 @@ void Interrupt9_Handler     (void) __attribute__ ((weak, alias("Default_Handler"
 /*----------------------------------------------------------------------------
   Exception / Interrupt Vector table
  *----------------------------------------------------------------------------*/
-extern const pFunc __vector_table[496];
-       const pFunc __vector_table[496] @ ".intvec" = {
-  (pFunc)(&__initial_sp),                   /*     Initial Stack Pointer */
+extern const pFunc __Vectors[496];
+       const pFunc __Vectors[496] __VECTOR_ATTR = {
+  (pFunc)(&__INITIAL_SP),                   /*     Initial Stack Pointer */
   Reset_Handler,                            /*     Reset Handler */
   NMI_Handler,                              /* -14 NMI Handler */
   HardFault_Handler,                        /* -13 Hard Fault Handler */
@@ -124,28 +108,23 @@ extern const pFunc __vector_table[496];
                                             /* Interrupts 10 .. 480 are left out */
 };
 
-extern uint32_t __Vectors[496];
-#pragma diag_remark=Pe1153                  /* disable type mismatch warnings */
-#pragma weak __Vectors=__vector_table
-#pragma diag_default=Pe1153                 /* restore type mismatch warnings */
-
 
 /*----------------------------------------------------------------------------
   Reset Handler called on controller reset
  *----------------------------------------------------------------------------*/
-void Reset_Handler(void) {
-
-  __set_MSPLIM((uint32_t)&__stack_limit);
+void Reset_Handler(void)
+{
+  __set_MSPLIM((uint32_t)&__STACK_LIMIT);
 
   SystemInit();                             /* CMSIS System Initialization */
-  __iar_program_start();                    /* Enter PreeMain (C library entry point) */
+  __PROGRAM_START();                        /* Enter PreMain (C library entry point) */
 }
 
 
 /*----------------------------------------------------------------------------
   Default Handler for Exceptions / Interrupts
  *----------------------------------------------------------------------------*/
-void Default_Handler(void) {
-
+void Default_Handler(void)
+{
   while(1);
 }
