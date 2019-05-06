@@ -105,6 +105,16 @@
   #define __RESTRICT                             __restrict
 #endif
 
+/* #########################  Startup and Lowlevel Init  ######################## */
+
+extern uint32_t Image$$ARM_LIB_STACK$$ZI$$Limit;
+extern uint32_t Image$$ARM_LIB_STACK$$ZI$$Base;
+
+#define __PROGRAM_START   __main
+#define __INITIAL_SP      Image$$ARM_LIB_STACK$$ZI$$Limit
+#define __STACK_LIMIT     Image$$ARM_LIB_STACK$$ZI$$Base
+#define __VECTOR_ATTR     __attribute((section("RESET")))
+
 /* ###########################  Core Function Access  ########################### */
 /** \ingroup  CMSIS_Core_FunctionInterface
     \defgroup CMSIS_Core_RegAccFunctions CMSIS Core Register Access Functions

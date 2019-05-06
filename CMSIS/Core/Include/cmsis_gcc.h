@@ -114,6 +114,15 @@
   #define __RESTRICT                             __restrict
 #endif
 
+/* #########################  Startup and Lowlevel Init  ######################## */
+
+extern uint32_t __StackTop;
+extern uint32_t __StackLimit;
+
+#define __PROGRAM_START   _start
+#define __INITIAL_SP      __StackTop
+#define __STACK_LIMIT     __StackLimit
+#define __VECTOR_ATTR     __attribute((used, section(".vectors")))
 
 /* ###########################  Core Function Access  ########################### */
 /** \ingroup  CMSIS_Core_FunctionInterface
