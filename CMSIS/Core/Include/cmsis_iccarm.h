@@ -239,6 +239,13 @@ __packed struct  __iar_u32 { uint32_t v; };
   #endif
 #endif
 
+extern uint32_t CSTACK$$Limit;
+extern uint32_t CSTACK$$Base;
+
+#define __PROGRAM_START   __iar_program_start
+#define __INITIAL_SP      CSTACK$$Limit
+#define __STACK_LIMIT     CSTACK$$Base
+#define __VECTOR_SECTION  @".intvec"
 
 #ifndef __ICCARM_INTRINSICS_VERSION__
   #define __ICCARM_INTRINSICS_VERSION__  0
