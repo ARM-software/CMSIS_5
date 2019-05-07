@@ -432,12 +432,12 @@ The \ref fm_mpc_setup contains a sequence of device specific configuration for t
     <td>NonNegativeInteger</td>
   </tr>
   <tr>
-    <td>.mpc_setup[<i>n</i>].S_bits[<i>m</i>]</td>
+    <td>.mpc_setup[<i>n</i>].S_bit[<i>m</i>]</td>
     <td>A list of bit values for Secure attribute that are used to compose the LUT.</td>
     <td>NonNegativeInteger</td>
   </tr>
   <tr>
-    <td>.mpc_setup[<i>n</i>].P_bits[<i>m</i>]</td>
+    <td>.mpc_setup[<i>n</i>].P_bit[<i>m</i>]</td>
     <td>A list of bit values for Privileged attribute that are used to compose the LUT.</td>
     <td>NonNegativeInteger</td>
   </tr>
