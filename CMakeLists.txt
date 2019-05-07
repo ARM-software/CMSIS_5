@@ -40,7 +40,6 @@ set(CHIRP_CMSIS_SRC ${CHIRP_CMSIS_SRC}
         CMSIS/DSP/Source/TransformFunctions/arm_cfft_f32.c
         CMSIS/DSP/Source/CommonTables/arm_common_tables.c
         CMSIS/DSP/Source/TransformFunctions/arm_cfft_radix8_f32.c
-        CMSIS/DSP/Source/TransformFunctions/arm_bitreversal2.S
         )
 
 if (${ARCH} MATCHES armv6m*)
