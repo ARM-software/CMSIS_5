@@ -689,8 +689,8 @@ Armv8.1-M Mainline based device with TrustZone and MVE
       <!-- <debug svd="Device/ARM/SVD/ARMv8MML.svd"/> -->
       <memory id="IROM1"                                start="0x10000000" size="0x00200000" startup="1" default="1"/>
       <memory id="IROM2"                                start="0x00000000" size="0x00200000" startup="0" default="0"/>
-      <memory id="IRAM1"                                start="0x20000000" size="0x00020000" init   ="0" default="1"/>
-      <memory id="IRAM2"                                start="0x30000000" size="0x00020000" init   ="0" default="0"/>
+      <memory id="IRAM1"                                start="0x30000000" size="0x00020000" init   ="0" default="1"/>
+      <memory id="IRAM2"                                start="0x20000000" size="0x00020000" init   ="0" default="0"/>
       <!--algorithm name="Device/ARM/Flash/NEW_DEVICE.FLM" start="0x00000000" size="0x00040000"             default="1"/-->
 
    
