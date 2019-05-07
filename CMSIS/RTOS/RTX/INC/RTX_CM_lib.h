@@ -3,10 +3,10 @@
  *----------------------------------------------------------------------------
  *      Name:    RTX_CM_LIB.H
  *      Purpose: RTX Kernel System Configuration
- *      Rev.:    V4.81
+ *      Rev.:    V4.82
  *----------------------------------------------------------------------------
  *
- * Copyright (c) 1999-2009 KEIL, 2009-2017 ARM Germany GmbH. All rights reserved.
+ * Copyright (c) 1999-2009 KEIL, 2009-2019 ARM Germany GmbH. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -75,33 +75,28 @@ OS_RESULT _os_mut_wait    (uint32_t p, OS_ID mutex, uint16_t timeout) __svc_indi
 #else
 __attribute__((always_inline))
 static __inline OS_RESULT os_mut_release (OS_ID mutex) {
-  register uint32_t __r0 __asm("r0") = (uint32_t)mutex;
-  register uint32_t __r1 __asm("r1");
-  register uint32_t __r2 __asm("r2");
-  register uint32_t __r3 __asm("r3");
+  register uint32_t __rf __asm("r12") = (uint32_t)rt_mut_release;
+  register uint32_t __r0 __asm("r0")  = (uint32_t)mutex;
   __asm volatile                                                               \
   (                                                                            \
-    "ldr r12,=rt_mut_release\n"                                                \
     "svc 0"                                                                    \
-    :               "=r" (__r0), "=r" (__r1), "=r" (__r2), "=r" (__r3)         \
-    :                "r" (__r0),  "r" (__r1),  "r" (__r2),  "r" (__r3)         \
-    : "r12", "lr", "cc"                                                        \
+    :            "=r" (__r0)                                                   \
+    : "r" (__rf), "r" (__r0)                                                   \
+    : "r1", "r2"                                                               \
   );
   return (OS_RESULT)__r0;
 }
 __attribute__((always_inline))
 static __inline OS_RESULT os_mut_wait (OS_ID mutex, uint16_t timeout) {
-  register uint32_t __r0 __asm("r0") = (uint32_t)mutex;
-  register uint32_t __r1 __asm("r1") = (uint32_t)timeout;
-  register uint32_t __r2 __asm("r2");
-  register uint32_t __r3 __asm("r3");
+  register uint32_t __rf __asm("r12") = (uint32_t)rt_mut_wait;
+  register uint32_t __r0 __asm("r0")  = (uint32_t)mutex;
+  register uint32_t __r1 __asm("r1")  = (uint32_t)timeout;
   __asm volatile                                                               \
   (                                                                            \
-    "ldr r12,=rt_mut_wait\n"                                                   \
     "svc 0"                                                                    \
-    :               "=r" (__r0), "=r" (__r1), "=r" (__r2), "=r" (__r3)         \
-    :                "r" (__r0),  "r" (__r1),  "r" (__r2),  "r" (__r3)         \
-    : "r12", "lr", "cc"                                                        \
+    :            "=r" (__r0)                                                   \
+    : "r" (__rf), "r" (__r0), "r" (__r1)                                       \
+    : "r2"                                                                     \
   );
   return (OS_RESULT)__r0;
 }
