@@ -28,19 +28,19 @@ set(CHIRP_CMSIS_INCLUDE)
 
 # Add the default source files without taking in account the build type or target
 set(CHIRP_CMSIS_SRC ${CHIRP_CMSIS_SRC}
-        src/BasicMathFunctions/arm_add_f32.c
-        src/ComplexMathFunctions/arm_cmplx_mag_squared_f32.c
-        src/FastMathFunctions/arm_cos_f32.c
-        src/SupportFunctions/arm_fill_f32.c
-        src/StatisticsFunctions/arm_min_f32.c
-        src/BasicMathFunctions/arm_mult_f32.c
-        src/BasicMathFunctions/arm_sub_f32.c
-        src/TransformFunctions/arm_rfft_fast_f32.c
-        src/TransformFunctions/arm_rfft_fast_init_f32.c
-        src/TransformFunctions/arm_cfft_f32.c
-        src/CommonTables/arm_common_tables.c
-        src/TransformFunctions/arm_cfft_radix8_f32.c
-        src/TransformFunctions/arm_bitreversal2.S
+        CMSIS/DSP/Source/BasicMathFunctions/arm_add_f32.c
+        CMSIS/DSP/Source/ComplexMathFunctions/arm_cmplx_mag_squared_f32.c
+        CMSIS/DSP/Source/FastMathFunctions/arm_cos_f32.c
+        CMSIS/DSP/Source/SupportFunctions/arm_fill_f32.c
+        CMSIS/DSP/Source/StatisticsFunctions/arm_min_f32.c
+        CMSIS/DSP/Source/BasicMathFunctions/arm_mult_f32.c
+        CMSIS/DSP/Source/BasicMathFunctions/arm_sub_f32.c
+        CMSIS/DSP/Source/TransformFunctions/arm_rfft_fast_f32.c
+        CMSIS/DSP/Source/TransformFunctions/arm_rfft_fast_init_f32.c
+        CMSIS/DSP/Source/TransformFunctions/arm_cfft_f32.c
+        CMSIS/DSP/Source/CommonTables/arm_common_tables.c
+        CMSIS/DSP/Source/TransformFunctions/arm_cfft_radix8_f32.c
+        CMSIS/DSP/Source/TransformFunctions/arm_bitreversal2.S
         )
 
 if (${ARCH} MATCHES armv6m*)
@@ -54,9 +54,15 @@ elseif(${ARCH} MATCHES armv7m*)
 endif()
 
 # Convert the relative path to an absolute one - for the include propagation
-get_filename_component(INC include ABSOLUTE)
+set(INCLUDES
+        CMSIS/Core/Include
+        CMSIS/DSP/Include
+        )
 
-set(CHIRP_CMSIS_INCLUDE ${CHIRP_CMSIS_INCLUDE} ${INC})
+foreach(INC ${INCLUDES})
+    get_filename_component(INC ${INC} ABSOLUTE)
+    set(CHIRP_CMSIS_INCLUDE ${CHIRP_CMSIS_INCLUDE} ${INC})
+endforeach()
 
 # Create the object gathering
 add_library(${OBJECT_FILE_NAME} OBJECT ${CHIRP_CMSIS_SRC})
