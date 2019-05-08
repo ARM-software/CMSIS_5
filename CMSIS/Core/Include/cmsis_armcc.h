@@ -1,11 +1,11 @@
 /**************************************************************************//**
  * @file     cmsis_armcc.h
  * @brief    CMSIS compiler ARMCC (Arm Compiler 5) header file
- * @version  V5.0.5
- * @date     14. December 2018
+ * @version  V5.1.0
+ * @date     08. May 2019
  ******************************************************************************/
 /*
- * Copyright (c) 2009-2018 Arm Limited. All rights reserved.
+ * Copyright (c) 2009-2019 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -107,13 +107,25 @@
 
 /* #########################  Startup and Lowlevel Init  ######################## */
 
-extern uint32_t Image$$ARM_LIB_STACK$$ZI$$Limit;
-extern uint32_t Image$$ARM_LIB_STACK$$ZI$$Base;
+#ifndef __PROGRAM_START
+#define __PROGRAM_START           __main
+#endif
 
-#define __PROGRAM_START   __main
-#define __INITIAL_SP      Image$$ARM_LIB_STACK$$ZI$$Limit
-#define __STACK_LIMIT     Image$$ARM_LIB_STACK$$ZI$$Base
-#define __VECTOR_ATTR     __attribute((section("RESET")))
+#ifndef __INITIAL_SP
+#define __INITIAL_SP              Image$$ARM_LIB_STACK$$ZI$$Limit
+#endif
+
+#ifndef __STACK_LIMIT
+#define __STACK_LIMIT             Image$$ARM_LIB_STACK$$ZI$$Base
+#endif
+
+#ifndef __VECTOR_TABLE
+#define __VECTOR_TABLE            __Vectors
+#endif
+
+#ifndef __VECTOR_TABLE_ATTRIBUTE
+#define __VECTOR_TABLE_ATTRIBUTE  __attribute((used, section("RESET")))
+#endif
 
 /* ###########################  Core Function Access  ########################### */
 /** \ingroup  CMSIS_Core_FunctionInterface

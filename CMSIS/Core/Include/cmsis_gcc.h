@@ -1,11 +1,11 @@
 /**************************************************************************//**
  * @file     cmsis_gcc.h
  * @brief    CMSIS compiler GCC header file
- * @version  V5.1.0
- * @date     20. December 2018
+ * @version  V5.2.0
+ * @date     08. May 2019
  ******************************************************************************/
 /*
- * Copyright (c) 2009-2018 Arm Limited. All rights reserved.
+ * Copyright (c) 2009-2019 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -116,13 +116,59 @@
 
 /* #########################  Startup and Lowlevel Init  ######################## */
 
-extern uint32_t __StackTop;
-extern uint32_t __StackLimit;
+#ifndef __PROGRAM_START
+  
+#include <string.h>
 
-#define __PROGRAM_START   _start
-#define __INITIAL_SP      __StackTop
-#define __STACK_LIMIT     __StackLimit
-#define __VECTOR_ATTR     __attribute((used, section(".vectors")))
+/**
+  \brief   Initializes data and bss sections
+  \details This default implementations initialized all data and additional bss
+           sections relying on .copy.table and .zero.table specified properly
+           in the used linker script.
+  
+ */
+__STATIC_FORCEINLINE __NO_RETURN void __cmsis_start(void)
+{
+  extern void _start(void) __NO_RETURN;
+  extern uint32_t __copy_table_start__;
+  extern uint32_t __copy_table_end__;
+  extern uint32_t __zero_table_start__;
+  extern uint32_t __zero_table_end__;
+
+  for (uint32_t *pTable = &__copy_table_start__; pTable < &__copy_table_end__; pTable = pTable + 3) {
+    const uint32_t *pSrc  = (uint32_t*)*(pTable + 0);
+          uint32_t *pDest = (uint32_t*)*(pTable + 1);
+    const size_t  len     = *(pTable + 2);
+    memcpy(pDest, pSrc, len);
+  }
+
+  for (uint32_t *pTable = &__zero_table_start__; pTable < &__zero_table_end__; pTable = pTable + 2) {
+          uint32_t *pDest = (uint32_t*)*(pTable + 0);
+    const size_t    len   = *(pTable + 1);
+    memset(pDest, 0, len);
+  }
+  
+  _start();
+}
+  
+#define __PROGRAM_START           __cmsis_start
+#endif
+
+#ifndef __INITIAL_SP
+#define __INITIAL_SP              __StackTop
+#endif
+
+#ifndef __STACK_LIMIT
+#define __STACK_LIMIT             __StackLimit
+#endif
+
+#ifndef __VECTOR_TABLE
+#define __VECTOR_TABLE            __Vectors
+#endif
+
+#ifndef __VECTOR_TABLE_ATTRIBUTE
+#define __VECTOR_TABLE_ATTRIBUTE  __attribute((used, section(".vectors")))
+#endif
 
 /* ###########################  Core Function Access  ########################### */
 /** \ingroup  CMSIS_Core_FunctionInterface
