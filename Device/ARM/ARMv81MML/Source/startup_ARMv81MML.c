@@ -1,9 +1,8 @@
-/**************************************************************************//**
+/******************************************************************************
  * @file     startup_ARMv81MML.c
- * @brief    CMSIS Core Device Startup File for
- *           ARMv81MML Device
- * @version  V1.1.0
- * @date     06. May 2019
+ * @brief    CMSIS Core Device Startup File for ARMv81MML Device
+ * @version  V2.0.0
+ * @date     08. May 2019
  ******************************************************************************/
 /*
  * Copyright (c) 2009-2019 Arm Limited. All rights reserved.
@@ -37,6 +36,9 @@ typedef void( *pFunc )( void );
 /*----------------------------------------------------------------------------
   External References
  *----------------------------------------------------------------------------*/
+extern uint32_t __INITIAL_SP;
+extern uint32_t __STACK_LIMIT;
+
 extern void __PROGRAM_START(void) __NO_RETURN;
 
 /*----------------------------------------------------------------------------
@@ -75,8 +77,8 @@ void Interrupt9_Handler     (void) __attribute__ ((weak, alias("Default_Handler"
 /*----------------------------------------------------------------------------
   Exception / Interrupt Vector table
  *----------------------------------------------------------------------------*/
-extern const pFunc __Vectors[496];
-       const pFunc __Vectors[496] __VECTOR_ATTR = {
+extern const pFunc __VECTOR_TABLE[496];
+       const pFunc __VECTOR_TABLE[496] __VECTOR_TABLE_ATTRIBUTE = {
   (pFunc)(&__INITIAL_SP),                   /*     Initial Stack Pointer */
   Reset_Handler,                            /*     Reset Handler */
   NMI_Handler,                              /* -14 NMI Handler */
@@ -114,7 +116,7 @@ extern const pFunc __Vectors[496];
  *----------------------------------------------------------------------------*/
 void Reset_Handler(void)
 {
-  __set_MSPLIM((uint32_t)&__STACK_LIMIT);
+  __set_MSPLIM(&__STACK_LIMIT);
 
   SystemInit();                             /* CMSIS System Initialization */
   __PROGRAM_START();                        /* Enter PreMain (C library entry point) */

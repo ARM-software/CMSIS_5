@@ -1,10 +1,67 @@
-/* Linker script to configure memory regions. */
+/******************************************************************************
+ * @file     gcc_arm.ld
+ * @brief    GNU Linker Script for Cortex-M based device
+ * @version  V2.0.0
+ * @date     08. May 2019
+ ******************************************************************************/
+/*
+ * Copyright (c) 2009-2019 Arm Limited. All rights reserved.
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ *
+ * Licensed under the Apache License, Version 2.0 (the License); you may
+ * not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an AS IS BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+ 
+/*
+;-------- <<< Use Configuration Wizard in Context Menu >>> -------------------
+*/
+
+/*--------------------- Flash Configuration ----------------------------------
+; <h> Flash Configuration
+;   <o0> Flash Base Address <0x0-0xFFFFFFFF:8>
+;   <o1> Flash Size (in Bytes) <0x0-0xFFFFFFFF:8>
+; </h>
+ -----------------------------------------------------------------------------*/
+__ROM_BASE = 0x10000000;
+__ROM_SIZE = 0x00040000;
+
+/*--------------------- Embedded RAM Configuration ---------------------------
+; <h> RAM Configuration
+;   <o0> RAM Base Address    <0x0-0xFFFFFFFF:8>
+;   <o1> RAM Size (in Bytes) <0x0-0xFFFFFFFF:8>
+; </h>
+ -----------------------------------------------------------------------------*/
+__RAM_BASE = 0x30000000;
+__RAM_SIZE = 0x00020000;
+
+/*--------------------- Stack / Heap Configuration ---------------------------
+; <h> Stack / Heap Configuration
+;   <o0> Stack Size (in Bytes) <0x0-0xFFFFFFFF:8>
+;   <o1> Heap Size (in Bytes) <0x0-0xFFFFFFFF:8>
+; </h>
+ -----------------------------------------------------------------------------*/
+__STACK_SIZE = 0x00000400;
+__HEAP_SIZE  = 0x00000C00;
+
+/*
+;-------------------- <<< end of configuration section >>> --------------------
+*/
+
 MEMORY
 {
-  FLASH (rx)  : ORIGIN = 0x00000000, LENGTH = 512K
-  RAM   (rwx) : ORIGIN = 0x20000000, LENGTH = 256K
+  FLASH (rx)  : ORIGIN = __ROM_BASE, LENGTH = __ROM_SIZE
+  RAM   (rwx) : ORIGIN = __RAM_BASE, LENGTH = __RAM_SIZE
 }
-
 
 /* Linker script to place sections and symbol values. Should be used together
  * with other linker script that defines memory regions FLASH and RAM.
@@ -90,10 +147,6 @@ SECTIONS
 	} > FLASH
 	__exidx_end = .;
 
-	/* To copy multiple ROM to RAM sections,
-	 * uncomment .copy.table section and,
-	 * define __STARTUP_COPY_MULTIPLE in startup_ARMCMx.S */
-	/*
 	.copy.table :
 	{
 		. = ALIGN(4);
@@ -101,28 +154,26 @@ SECTIONS
 		LONG (__etext)
 		LONG (__data_start__)
 		LONG (__data_end__ - __data_start__)
+        /** Add each additional data section here */
+        /*
 		LONG (__etext2)
 		LONG (__data2_start__)
 		LONG (__data2_end__ - __data2_start__)
+        */
 		__copy_table_end__ = .;
 	} > FLASH
-	*/
 
-	/* To clear multiple BSS sections,
-	 * uncomment .zero.table section and,
-	 * define __STARTUP_CLEAR_BSS_MULTIPLE in startup_ARMCMx.S */
-	/*
 	.zero.table :
 	{
 		. = ALIGN(4);
 		__zero_table_start__ = .;
-		LONG (__bss_start__)
-		LONG (__bss_end__ - __bss_start__)
-		LONG (__bss2_start__)
-		LONG (__bss2_end__ - __bss2_start__)
+        /** Add each additional bss section here */
+        /* 
+  		LONG (__bss2_start__)
+		LONG (__bss2_end__ - __bss2_start__) 
+        */
 		__zero_table_end__ = .;
 	} > FLASH
-	*/
 
 	/* Location counter can end up 2byte aligned with narrow Thumb code but
 	   __etext is assumed by startup code to be the LMA of a section in RAM
@@ -133,8 +184,9 @@ SECTIONS
 	{
 		__data_start__ = .;
 		*(vtable)
-		*(.data*)
-
+		*(.data)
+        *(.data.*)
+        
 		. = ALIGN(4);
 		/* preinit data */
 		PROVIDE_HIDDEN (__preinit_array_start = .);
@@ -163,37 +215,78 @@ SECTIONS
 
 	} > RAM
 
+    /** 
+     * Secondary data section, optional 
+     * 
+     * Remember to add each additional data section
+     * to the .copy.table above to asure proper
+     * initialization during startup.
+     */
+    /*
+    __etext2 = ALIGN (4);
+
+	.data2 : AT (__etext2)
+	{
+        . = ALIGN(4);
+		__data2_start__ = .;
+        *(.data2)
+        *(.data2.*)
+		. = ALIGN(4);
+		__data2_end__ = .;
+
+	} > RAM 
+    */
+  
 	.bss :
 	{
 		. = ALIGN(4);
 		__bss_start__ = .;
-		*(.bss*)
+        *(.bss)
+		*(.bss.*)
 		*(COMMON)
 		. = ALIGN(4);
 		__bss_end__ = .;
 	} > RAM
 
-	.heap (COPY):
+    /**
+     * Secondary bss section, optional 
+     *
+     * Remember to add each additional bss section
+     * to the .zero.table above to asure proper
+     * initialization during startup.
+     */
+    /*
+	.bss2 :
 	{
+		. = ALIGN(4);
+		__bss2_start__ = .;
+        *(.bss2)
+		*(.bss2.*)
+		. = ALIGN(4);
+		__bss2_end__ = .;
+	} > RAM2
+    */
+
+	.heap :
+	{
+        . = ALIGN(4);
 		__end__ = .;
 		PROVIDE(end = .);
-		*(.heap*)
+		. = . + __HEAP_SIZE;
+        . = ALIGN(4);
 		__HeapLimit = .;
 	} > RAM
 
-	/* .stack_dummy section doesn't contain any symbols. It is only
-	 * used for linker to calculate size of stack sections, and assign
-	 * values to stack symbols later */
-	.stack_dummy (COPY):
+	.stack :
 	{
-		*(.stack*)
+        . = ORIGIN(RAM) + LENGTH(RAM) - __STACK_SIZE;
+        . = ALIGN(4);
+        __StackLimit = .;
+        . = . + __STACK_SIZE;
+        . = ALIGN(4);
+        __StackTop = .;
 	} > RAM
-
-	/* Set stack top to end of RAM, and stack limit move down by
-	 * size of stack_dummy section */
-	__StackTop = ORIGIN(RAM) + LENGTH(RAM);
-	__StackLimit = __StackTop - SIZEOF(.stack_dummy);
-	PROVIDE(__stack = __StackTop);
+    PROVIDE(__stack = __StackTop);
 
 	/* Check if data + heap + stack exceeds RAM limit */
 	ASSERT(__StackLimit >= __HeapLimit, "region RAM overflowed with stack")
