@@ -3,6 +3,22 @@
 \page createPackPublish Publish a Pack
 There are multiple ways to distribute a software pack:
 
+\section cp_prerequisites Prerequisites
+
+Before you start to distribute a software pack, you need to make sure that it does not contain errors. An error- and
+warning-free run of the \c gen_pack.bat script from the \ref PackTutorials is a good start. but you also need to make sure
+that the schema has been validated. Pack Installer provides an easy mechanism to check the XML schema:
+- Install the pack using Pack Installer.
+- Right-click on the pack version number and select <b>Schema Check</b>: \n
+  \image html schema_check.png
+- The \b Output window shows the result. If errors are reported, please make sure to fix them before continuing.\n
+  \image html schema_check_output.png
+  This is
+  especially important when handing in the pack to be indexed by \ref cp_KeilComPack "Arm's pack index service". The pack
+  importer will ignore all PDSC files that do not pass the check against the most recently published PACK.xsd schema file
+  and thus your pack will not be available for download.
+
+
 \section cp_LocalInstallation Local Installation
 The easiest way to distribute a software pack is attaching it to an email or using other means of electronic distribution
 (for example using a company internal file server). The installation of a software pack is usually triggered by
@@ -51,13 +67,13 @@ maintenance purposes for example).
 - Older packs should remain available.
 
 
-\section cp_KeilComPack Publishing on www.keil.com/pack
+\section cp_KeilComPack Publishing using Arm's Pack Index Service
 
 Arm maintains a list of available software packs. If you wish to add your packs to that list, send either your vendor.pidx
 file or your PDSC file to the following email address: <a href="mailto:CMSIS@arm.com">CMSIS@arm.com</a>. The PIDX file will
 be processed and all referenced PDSC files will be validated. The following content will be processed in order to generate
-the web site (<a href="http://www.keil.com/dd2/pack">www.keil.com/dd2/pack</a>) and index file
-(<a href="http://www.keil.com/pack/index.pidx">www.keil.com/pack/index.pidx</a>):
+the web site
+(<a href="https://developer.arm.com/embedded/cmsis/cmsis-packs">https://developer.arm.com/embedded/cmsis/cmsis-packs</a>):
 - Version
 - Release Notes
 - Devices
