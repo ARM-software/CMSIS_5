@@ -2321,7 +2321,8 @@ for RTX see \ref StaticObjectMemory.
   
 osMutexId_t mutex_id;
   
-static uint32_t mutex_cb[osRtxMutexCbSize/4U];  // implementation specific
+static uint32_t mutex_cb[osRtxMutexCbSize/4U] __attribute__((section(.bss.os.mutex.cb)));  // implementation specific
+                                                                                           // Placed on .bss.os.mutex.cb section for RTX5 aware debugging
   
 const osMutexAttr_t Thread_Mutex_attr = {
   "myThreadMutex",                              // human readable mutex name
