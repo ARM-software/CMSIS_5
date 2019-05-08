@@ -1,13 +1,14 @@
 /**************************************************************************//**
  * @file     cmsis_iccarm.h
  * @brief    CMSIS compiler ICCARM (IAR Compiler for Arm) header file
- * @version  V5.0.8
- * @date     04. September 2018
+ * @version  V5.1.0
+ * @date     08. May 2019
  ******************************************************************************/
 
 //------------------------------------------------------------------------------
 //
-// Copyright (c) 2017-2018 IAR Systems
+// Copyright (c) 2017-2019 IAR Systems
+// Copyright (c) 2017-2019 Arm Limited. All rights reserved. 
 //
 // Licensed under the Apache License, Version 2.0 (the "License")
 // you may not use this file except in compliance with the License.
@@ -239,13 +240,25 @@ __packed struct  __iar_u32 { uint32_t v; };
   #endif
 #endif
 
-extern uint32_t CSTACK$$Limit;
-extern uint32_t CSTACK$$Base;
+#ifndef __PROGRAM_START
+#define __PROGRAM_START           __iar_program_start
+#endif
 
-#define __PROGRAM_START   __iar_program_start
-#define __INITIAL_SP      CSTACK$$Limit
-#define __STACK_LIMIT     CSTACK$$Base
-#define __VECTOR_SECTION  @".intvec"
+#ifndef __INITIAL_SP
+#define __INITIAL_SP              CSTACK$$Limit
+#endif
+
+#ifndef __STACK_LIMIT
+#define __STACK_LIMIT             CSTACK$$Base
+#endif
+
+#ifndef __VECTOR_TABLE
+#define __VECTOR_TABLE            __vector_table
+#endif
+
+#ifndef __VECTOR_TABLE_ATTRIBUTE
+#define __VECTOR_TABLE_ATTRIBUTE  @".intvec"
+#endif
 
 #ifndef __ICCARM_INTRINSICS_VERSION__
   #define __ICCARM_INTRINSICS_VERSION__  0
