@@ -41,11 +41,12 @@
 //#define TEST_SIGMOID
 //#define TEST_TANH
 #define TEST_POOL
-#define TEST_RELU
-#define TEST_IP
-#define TEST_CONV
-#define TEST_NONSQUARE
-#define TEST_NNMULT
+#define TEST_POOL_NS
+// #define TEST_RELU
+// #define TEST_IP
+// #define TEST_CONV
+// #define TEST_NONSQUARE
+// #define TEST_NNMULT
 
 int test_index = 0;
 q7_t test_flags[50];
@@ -256,12 +257,6 @@ int main()
         img_in[i] = test1[i];
     }
 
-    // copy over the img input
-    for (int i = 0; i < POOL_IM_DIM * POOL_IM_DIM * POOL_IM_CH; i++)
-    {
-        img_in[i] = test1[i];
-    }
-
     printf("Start avepool ref implementation\n");
 
     arm_avepool_q7_HWC_ref(img_in, POOL_IM_DIM, POOL_IM_CH, 3, 0, 2, POOL_IM_DIM / 2, (q7_t *) test2, pool_out_ref);
@@ -296,7 +291,102 @@ int main()
     delete[]test2;
     delete[]test3;
 
-#endif
+#endif//TEST_POOL
+
+#ifdef TEST_POOL_NS
+
+#define POOL_NS_IM_DIM 64
+#define POOL_NS_IM_CH 4
+
+    test1 = new q7_t[POOL_NS_IM_DIM * 1 * POOL_NS_IM_CH * 2];
+    test2 = new q15_t[POOL_NS_IM_DIM * POOL_NS_IM_CH];
+    test3 = new q7_t[POOL_NS_IM_DIM * 1 * POOL_NS_IM_CH];
+
+    for (int i = 0; i < POOL_NS_IM_DIM * 1 * POOL_NS_IM_CH; i++)
+    {
+        test1[i] = (rand() % 256 - 128);
+    }
+
+    q7_t     *img_in = test1 + POOL_NS_IM_DIM * 1 * POOL_NS_IM_CH;
+    q7_t     *pool_out_ref = test3;
+    q7_t     *pool_out_opt = test3 + POOL_NS_IM_DIM * 1 * POOL_NS_IM_CH / 2;
+
+    for (int i = 0; i < POOL_NS_IM_DIM * 1 * POOL_NS_IM_CH; i++)
+    {
+        test3[i] = 0;
+    }
+
+    // copy over the img input
+    for (int i = 0; i < POOL_NS_IM_DIM * 1 * POOL_NS_IM_CH; i++)
+    {
+        img_in[i] = test1[i];
+    }
+
+    initialize_results_q7(pool_out_ref, pool_out_opt, POOL_NS_IM_DIM / 2 * 1 * POOL_NS_IM_CH);
+
+    printf("Start maxpool reference implementation\n");
+
+    arm_maxpool_q7_HWC_nonsquare_ref(img_in, POOL_NS_IM_DIM, 1, POOL_NS_IM_CH, 3, 0, 0, 0, 2, 0, POOL_NS_IM_DIM / 2, 1, (q7_t *) test2, pool_out_ref)
+
+    // copy over the img input
+    for (int i = 0; i < POOL_NS_IM_DIM * 1 * POOL_NS_IM_CH; i++)
+    {
+        img_in[i] = test1[i];
+    }
+
+    printf("Start maxpool opt implementation\n");
+
+    arm_maxpool_q7_HWC_nonsquare(img_in, POOL_NS_IM_DIM, 1, POOL_NS_IM_CH, 3, 0, 0, 0, 2, 0, POOL_NS_IM_DIM / 2, 1, (q7_t *) test2, pool_out_opt)
+
+    verify_results_q7(pool_out_ref, pool_out_opt, POOL_NS_IM_DIM / 2 * 1 * POOL_NS_IM_CH);
+
+    // copy over the img input
+    for (int i = 0; i < POOL_NS_IM_DIM * 1 * POOL_NS_IM_CH; i++)
+    {
+        img_in[i] = test1[i];
+    }
+
+    initialize_results_q7(pool_out_ref, pool_out_opt, POOL_NS_IM_DIM / 2 * 1 * POOL_NS_IM_CH);
+
+    printf("Start maxpool reference implementation\n");
+
+    arm_avepool_q7_HWC_nonsquare_ref(img_in, POOL_NS_IM_DIM, 1, POOL_NS_IM_CH, 3, 0, 0, 0, 2, 0, POOL_NS_IM_DIM / 2, 1, (q7_t *) test2, pool_out_ref)
+
+    // copy over the img input
+    for (int i = 0; i < POOL_NS_IM_DIM * 1 * POOL_NS_IM_CH; i++)
+    {
+        img_in[i] = test1[i];
+    }
+
+    printf("Start maxpool opt implementation\n");
+
+    arm_avepool_q7_HWC_nonsquare(img_in, POOL_NS_IM_DIM, 1, POOL_NS_IM_CH, 3, 0, 0, 0, 2, 0, POOL_NS_IM_DIM / 2, 1, (q7_t *) test2, pool_out_opt)
+
+    // special check here
+    bool      if_ave_pool_match = true;
+    for (int i = 0; i < POOL_NS_IM_DIM / 2 * 1 * POOL_NS_IM_CH; i++)
+    {
+        // we tolerate at most difference of 1 here because of rounding errors
+        if (pool_out_ref[i] - pool_out_opt[i] >= 2 || pool_out_opt[i] - pool_out_ref[i] >= 2)
+        {
+            printf("Output mismatch at %d, expected %d, actual %d\n", i, pool_out_ref[i], pool_out_opt[i]);
+            if_ave_pool_match = false;
+        }
+    }
+    if (if_ave_pool_match == true)
+    {
+        printf("Outputs match.\n");
+    }
+
+    delete[]test1;
+    delete[]test2;
+    delete[]test3;
+
+
+
+
+#endif//TEST_POOL_NS
+
 
 #ifdef TEST_RELU
 
