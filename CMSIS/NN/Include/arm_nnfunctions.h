@@ -204,6 +204,26 @@ extern    "C"
                                                   q15_t * bufferA,
                                                   q7_t * bufferB);
 
+  /**
+   * @brief Basic Q7 convolution function (1D)
+   * @param[in]       Im_in        pointer to input tensor
+   * @param[in]       dim_im_in   input tensor dimention y
+   * @param[in]       ch_im_in     number of input tensor channels
+   * @param[in]       wt           pointer to kernel weights
+   * @param[in]       ch_im_out    number of filters, i.e., output tensor channels
+   * @param[in]       dim_kernel   filter kernel size y
+   * @param[in]       padding      padding size y
+   * @param[in]       stride.      convolution stride y
+   * @param[in]       bias         pointer to bias
+   * @param[in]       bias_shift   amount of left-shift for bias
+   * @param[in]       out_shift    amount of right-shift for output
+   * @param[in,out]   Im_out       pointer to output tensor
+   * @param[in]       dim_im_out.  output tensor dimension y
+   * @param[in,out]   bufferA      pointer to buffer space for input
+   * @param[in,out]   bufferB      pointer to buffer space for output
+   * @return     The function returns <code>ARM_MATH_SUCCESS</code> 
+   */
+
 static inline arm_status arm_convolve_HWC_q7_basic_nonsquare(
   const q7_t * Im_in,
   const uint16_t dim_im_in,
@@ -373,6 +393,26 @@ static inline arm_status arm_convolve_HWC_q7_basic_nonsquare(
                                                   const uint16_t dim_im_out_y,
                                                   q15_t * bufferA,
                                                   q7_t * bufferB);
+
+  /**
+   * @brief Fast Q7 convolution function (1D)
+   * @param[in]       Im_in        pointer to input tensor
+   * @param[in]       dim_im_in   input tensor dimention y
+   * @param[in]       ch_im_in     number of input tensor channels
+   * @param[in]       wt           pointer to kernel weights
+   * @param[in]       ch_im_out    number of filters, i.e., output tensor channels
+   * @param[in]       dim_kernel   filter kernel size y
+   * @param[in]       padding      padding size y
+   * @param[in]       stride.      convolution stride y
+   * @param[in]       bias         pointer to bias
+   * @param[in]       bias_shift   amount of left-shift for bias
+   * @param[in]       out_shift    amount of right-shift for output
+   * @param[in,out]   Im_out       pointer to output tensor
+   * @param[in]       dim_im_out.  output tensor dimension y
+   * @param[in,out]   bufferA      pointer to buffer space for input
+   * @param[in,out]   bufferB      pointer to buffer space for output
+   * @return     The function returns <code>ARM_MATH_SUCCESS</code> 
+   */
 
 static inline arm_status arm_convolve_HWC_q7_fast_1d(
   const q7_t * Im_in,
@@ -614,6 +654,26 @@ static inline arm_status arm_convolve_HWC_q7_fast_1d(
                               q15_t * bufferA, 
                               q7_t * bufferB);
 			
+
+  /**
+   * @brief Fast Q15 convolution function (1D)
+   * @param[in]       Im_in        pointer to input tensor
+   * @param[in]       dim_im_in   input tensor dimention y
+   * @param[in]       ch_im_in     number of input tensor channels
+   * @param[in]       wt           pointer to kernel weights
+   * @param[in]       ch_im_out    number of filters, i.e., output tensor channels
+   * @param[in]       dim_kernel   filter kernel size y
+   * @param[in]       padding      padding size y
+   * @param[in]       stride.      convolution stride y
+   * @param[in]       bias         pointer to bias
+   * @param[in]       bias_shift   amount of left-shift for bias
+   * @param[in]       out_shift    amount of right-shift for output
+   * @param[in,out]   Im_out       pointer to output tensor
+   * @param[in]       dim_im_out.  output tensor dimension y
+   * @param[in,out]   bufferA      pointer to buffer space for input
+   * @param[in,out]   bufferB      pointer to buffer space for output
+   * @return     The function returns <code>ARM_MATH_SUCCESS</code> 
+   */
 static inline arm_status arm_convolve_HWC_q15_fast_1d(
   const q7_t * Im_in,
   const uint16_t dim_im_in,
