@@ -792,6 +792,213 @@ arm_avepool_q7_HWC_nonsquare(q7_t * Im_in,
 
 }
 
+  /**
+   * @brief Q7 1-D max pooling function
+   * @param[in, out]  Im_in       pointer to input tensor
+   * @param[in]       dim_im_in   input tensor dimention
+   * @param[in]       ch_im_in    number of input tensor channels
+   * @param[in]       dim_kernel  filter kernel size
+   * @param[in]       padding     padding sizes
+   * @param[in]       stride      convolution stride
+   * @param[in]       dim_im_out  output tensor dimension
+   * @param[in,out]   bufferA     pointer to buffer space for input
+   * @param[in,out]   Im_out      pointer to output tensor
+   * @return none.
+   *
+   * @details
+   *
+   * <b>Buffer size:</b>
+   *
+   * bufferA size:  ch_im_in
+   *
+   * The pooling function is implemented on on axis
+   * 
+   * This pooling function is input-destructive. Input data is undefined
+   * after calling this function.
+   *
+   */
+
+void arm_avepool_q7_HWC_1d(const q7_t * Im_in, // input image
+                            const uint16_t dim_im_in,   // input image dimension
+                            const uint16_t ch_im_in,    // number of input image channels
+                            const uint16_t dim_kernel,  // window kernel size
+                            const uint16_t padding, // padding sizes
+                            const uint16_t stride,  // stride
+                            const uint16_t dim_im_out,  // output image dimension
+                            q7_t * bufferA, // a buffer for local storage
+                            q7_t * Im_out) {
+#if defined (ARM_MATH_DSP)
+    /* Run the following code for Cortex-M4 and Cortex-M7 */
+    int16_t   i;
+    /* Run the following code for Cortex-M4 and Cortex-M7 */
+    for (i = 0; i < dim_im_out; i++)
+    {
+
+        /* for each output row */
+        q7_t     *target = Im_out + i * ch_im_in;
+        q7_t     *start;
+        q7_t     *end;
+        /* setting the starting row */
+        if (i * stride - padding < 0)
+        {
+            start = Im_in;
+        } else
+        {
+            start = Im_in + (i * stride - padding) * ch_im_in;
+        }
+        /* setting the stopping row */
+        if (i * stride - padding + dim_kernel >= dim_im_in)
+        {
+            end = Im_in + dim_im_in * ch_im_in;
+        } else
+        {
+            end = Im_in + (i * stride - padding + dim_kernel) * ch_im_in;
+        }
+
+        /* copy over the first row */
+        arm_q7_to_q15_no_shift(start, buffer, ch_im_in);
+        count = 1;
+
+        /* move over to next row */
+        start += ch_im_in ;
+
+        for (; start < end; start += ch_im_in)
+        {
+            accumulate_q7_to_q15(buffer, start, ch_im_in);
+            count++;
+        }
+        buffer_scale_back_q15_to_q7(buffer, target, ch_im_in, count);
+    }
+#else
+    /* Run the following code as reference implementation for Cortex-M0 and Cortex-M3 */
+
+    int16_t   i_ch_in, i;
+    int16_t   k;
+
+    for (i_ch_in = 0; i_ch_in < ch_im_in; i_ch_in++)
+    {
+        for (i = 0; i < dim_im_out; i++)
+        {
+            int sum = 0;
+            int count = 0;
+            int16_t start = i * stride - padding;
+            for (k = start; k < start + dim_kernel; k++)
+            {
+                if (k >= 0 && k < dim_im_in)
+                {
+                    sum += Im_in[i_ch_in + ch_im_in * k];
+                    count++;
+                }
+            }
+            Im_out[i_ch_in + ch_im_in * i] = sum/count;
+        }
+    }
+#endif                          /* ARM_MATH_DSP */
+}
+
+  /**
+   * @brief Q7 1-D max pooling function
+   * @param[in, out]  Im_in       pointer to input tensor
+   * @param[in]       dim_im_in   input tensor dimention
+   * @param[in]       ch_im_in    number of input tensor channels
+   * @param[in]       dim_kernel  filter kernel size
+   * @param[in]       padding     padding sizes
+   * @param[in]       stride      convolution stride
+   * @param[in]       dim_im_out  output tensor dimension
+   * @param[in,out]   bufferA     pointer to buffer space for input
+   * @param[in,out]   Im_out      pointer to output tensor
+   * @return none.
+   *
+   * @details
+   *
+   * <b>Buffer size:</b>
+   *
+   * bufferA size:  0
+   *
+   * The pooling function is implemented on on axis
+   * 
+   * This pooling function is input-destructive. Input data is undefined
+   * after calling this function.
+   *
+   */
+
+void arm_maxpool_q7_HWC_1d(const q7_t * Im_in, // input image
+                            const uint16_t dim_im_in,   // input image dimension
+                            const uint16_t ch_im_in,    // number of input image channels
+                            const uint16_t dim_kernel,  // window kernel size
+                            const uint16_t padding, // padding sizes
+                            const uint16_t stride,  // stride
+                            const uint16_t dim_im_out,  // output image dimension
+                            q7_t * bufferA, // a buffer for local storage
+                            q7_t * Im_out) {
+#if defined (ARM_MATH_DSP)
+    int16_t   i;
+    /* Run the following code for Cortex-M4 and Cortex-M7 */
+    for (i = 0; i < dim_im_out; i++)
+    {
+
+        /* for each output row */
+        q7_t     *target = Im_out + i * ch_im_in;
+        q7_t     *start;
+        q7_t     *end;
+        /* setting the starting row */
+        if (i * stride - padding < 0)
+        {
+            start = Im_in;
+        } else
+        {
+            start = Im_in + (i * stride - padding) * ch_im_in;
+        }
+        /* setting the stopping row */
+        if (i * stride - padding + dim_kernel >= dim_im_in)
+        {
+            end = Im_in + dim_im_in * ch_im_in;
+        } else
+        {
+            end = Im_in + (i * stride - padding + dim_kernel) * ch_im_in;
+        }
+
+        /* copy over the first row */
+        /* arm_copy_q7(row_start, target, dim_im_out * ch_im_in); */
+        memmove(target, start,  ch_im_in);
+
+        /* move over to next row */
+        start +=  dim_im_in;
+
+        for (; start < end; start += ch_im_in)
+        {
+            compare_and_replace_if_larger_q7(target, start, ch_im_in);
+        }
+    }
+
+#else
+    /* Run the following code as reference implementation for Cortex-M0 and Cortex-M3 */
+  
+    int16_t   i_ch_in, i;
+    int16_t   k;
+
+    for (i_ch_in = 0; i_ch_in < ch_im_in; i_ch_in++)
+    {
+        for (i = 0; i < dim_im_out; i++)
+        {
+            int       max = -129;
+            int16_t start = i * stride - padding;
+            for (k = start; k < start + dim_kernel; k++)
+            {
+                if (k >= 0 && k < dim_im_in)
+                {
+                    if (Im_in[i_ch_in + ch_im_in * k] > max)
+                    {
+                        max = Im_in[i_ch_in + ch_im_in * k];
+                    }
+                }
+            }
+            Im_out[i_ch_in + ch_im_in * i] = max;
+        }
+    }
+#endif                          /* ARM_MATH_DSP */
+}
+
 
 /**
  * @} end of Pooling group
