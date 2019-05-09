@@ -1144,6 +1144,40 @@ extern    "C"
                                  q7_t * bufferA, 
                                  q7_t * Im_out);
 
+    /**
+   * @brief Q7 max pooling function
+   * @param[in, out]  Im_in         pointer to input tensor
+   * @param[in]       dim_im_in_x   input tensor dimention along X axis
+   * @param[in]       dim_im_in_y   input tensor dimention along Y axis
+   * @param[in]       ch_im_in      number of input tensor channels
+   * @param[in]       dim_kernel_x  filter kernel size along X axis
+   * @param[in]       dim_kernel_y  filter kernel size along Y axis
+   * @param[in]       padding_x     padding sizes along X axis
+   * @param[in]       padding_y     padding sizes along Y axis
+   * @param[in]       stride_x      convolution stride along X axis
+   * @param[in]       stride_y      convolution stride along Y axis
+   * @param[in]       dim_im_out_x  output tensor dimension along X axis
+   * @param[in]       dim_im_out_y  output tensor dimension along Y axis
+   * @param[in,out]   bufferA       pointer to buffer space for input
+   * @param[in,out]   Im_out        pointer to output tensor
+   * @return none.
+   */
+
+void arm_maxpool_q7_HWC_nonsquare(q7_t * Im_in,
+                   const uint16_t dim_im_in_x,
+                   const uint16_t dim_im_in_y,
+                   const uint16_t ch_im_in,
+                   const uint16_t dim_kernel_x,
+                   const uint16_t dim_kernel_y,
+                   const uint16_t padding_x,
+                   const uint16_t padding_y,
+                   const uint16_t stride_x,
+                   const uint16_t stride_y,
+                   const uint16_t dim_im_out_x,
+                   const uint16_t dim_im_out_y,
+                   q7_t * bufferA, 
+                   q7_t * Im_out);
+
   /**
    * @brief Q7 average pooling function
    * @param[in]       Im_in       pointer to input tensor
@@ -1168,6 +1202,41 @@ extern    "C"
                                  const uint16_t dim_im_out, 
                                  q7_t * bufferA, 
                                  q7_t * Im_out);
+
+  /**
+   * @brief Q7 average pooling function
+   * @param[in, out]  Im_in         pointer to input tensor
+   * @param[in]       dim_im_in_x   input tensor dimention along X axis
+   * @param[in]       dim_im_in_y   input tensor dimention along Y axis
+   * @param[in]       ch_im_in      number of input tensor channels
+   * @param[in]       dim_kernel_x  filter kernel size along X axis
+   * @param[in]       dim_kernel_y  filter kernel size along Y axis
+   * @param[in]       padding_x     padding sizes along X axis
+   * @param[in]       padding_y     padding sizes along Y axis
+   * @param[in]       stride_x      convolution stride along X axis
+   * @param[in]       stride_y      convolution stride along Y axis
+   * @param[in]       dim_im_out_x  output tensor dimension along X axis
+   * @param[in]       dim_im_out_y  output tensor dimension along Y axis
+   * @param[in,out]   bufferA       pointer to buffer space for input
+   * @param[in,out]   Im_out        pointer to output tensor
+   * @return none.
+   */
+
+void arm_avepool_q7_HWC_nonsquare(q7_t * Im_in,
+                   const uint16_t dim_im_in_x,
+                   const uint16_t dim_im_in_y,
+                   const uint16_t ch_im_in,
+                   const uint16_t dim_kernel_x,
+                   const uint16_t dim_kernel_y,
+                   const uint16_t padding_x,
+                   const uint16_t padding_y,
+                   const uint16_t stride_x,
+                   const uint16_t stride_y,
+                   const uint16_t dim_im_out_x,
+                   const uint16_t dim_im_out_y,
+                   q7_t * bufferA, 
+                   q7_t * Im_out);
+
 
 /**
  * @defgroup Softmax Softmax Functions

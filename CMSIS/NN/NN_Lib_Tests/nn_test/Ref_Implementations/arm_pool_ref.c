@@ -123,9 +123,11 @@ arm_avepool_q7_HWC_nonsquare_ref(q7_t * Im_in,
             {
                 int sum = 0;
                 int count = 0;
-                for (k_y = i_y * stride_y - padding_y; k_y < i_y * stride_y - padding_y + dim_kernel_y; k_y++)
+                int16_t y_start = i_y * stride_y - padding_y;
+                int16_t x_start = i_x * stride_x - padding_x;
+                for (k_y = y_start; k_y < y_start + dim_kernel_y; k_y++)
                 {
-                    for (k_x = i_x * stride_x - padding_x; k_x < i_x * stride_x - padding_x + dim_kernel_x; k_x++)
+                    for (k_x = x_start; k_x < x_start + dim_kernel_x; k_x++)
                     {
                         if (k_y >= 0 && k_x >= 0 && k_y < dim_im_in_y && k_x < dim_im_in_x)
                         {
@@ -168,9 +170,11 @@ arm_maxpool_q7_HWC_nonsquare_ref(q7_t * Im_in,
             for (i_x = 0; i_x < dim_im_out_x; i_x++)
             {
                 int       max = -129;
-                for (k_y = i_y * stride_y - padding_y; k_y < i_y * stride_y - padding_y + dim_kernel_y; k_y++)
+                int16_t y_start = i_y * stride_y - padding_y;
+                int16_t x_start = i_x * stride_x - padding_x;
+                for (k_y = y_start; k_y < y_start + dim_kernel_y; k_y++)
                 {
-                    for (k_x = i_x * stride_x - padding_x; k_x < i_x * stride_x - padding_x + dim_kernel_x; k_x++)
+                    for (k_x = x_start; k_x < x_start + dim_kernel_x; k_x++)
                     {
                         if (k_y >= 0 && k_x >= 0 && k_y < dim_im_in_y && k_x < dim_im_in_x)
                         {
