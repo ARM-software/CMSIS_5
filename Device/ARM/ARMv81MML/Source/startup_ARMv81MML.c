@@ -2,7 +2,7 @@
  * @file     startup_ARMv81MML.c
  * @brief    CMSIS Core Device Startup File for ARMv81MML Device
  * @version  V2.0.0
- * @date     08. May 2019
+ * @date     09. May 2019
  ******************************************************************************/
 /*
  * Copyright (c) 2009-2019 Arm Limited. All rights reserved.
@@ -116,7 +116,7 @@ extern const pFunc __VECTOR_TABLE[496];
  *----------------------------------------------------------------------------*/
 void Reset_Handler(void)
 {
-  __set_MSPLIM(&__STACK_LIMIT);
+  __set_MSPLIM((uint32_t)(&__STACK_LIMIT));
 
   SystemInit();                             /* CMSIS System Initialization */
   __PROGRAM_START();                        /* Enter PreMain (C library entry point) */
