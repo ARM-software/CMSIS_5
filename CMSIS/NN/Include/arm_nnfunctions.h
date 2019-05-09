@@ -224,7 +224,7 @@ extern    "C"
    * @return     The function returns <code>ARM_MATH_SUCCESS</code> 
    */
 
-static inline arm_status arm_convolve_HWC_q7_basic_nonsquare(
+static inline arm_status arm_convolve_HWC_q7_basic_1d(
   const q7_t * Im_in,
   const uint16_t dim_im_in,
   const uint16_t ch_im_in,
@@ -412,6 +412,12 @@ static inline arm_status arm_convolve_HWC_q7_basic_nonsquare(
    * @param[in,out]   bufferA      pointer to buffer space for input
    * @param[in,out]   bufferB      pointer to buffer space for output
    * @return     The function returns <code>ARM_MATH_SUCCESS</code> 
+   * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.
+   *
+   * This function is the version with full list of optimization tricks, but with
+   * some contraints:
+   *   ch_im_in is multiple of 4
+   *   ch_im_out is multiple of 2
    */
 
 static inline arm_status arm_convolve_HWC_q7_fast_1d(
@@ -673,6 +679,22 @@ static inline arm_status arm_convolve_HWC_q7_fast_1d(
    * @param[in,out]   bufferA      pointer to buffer space for input
    * @param[in,out]   bufferB      pointer to buffer space for output
    * @return     The function returns <code>ARM_MATH_SUCCESS</code> 
+   * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.
+   *
+   * @details
+   *
+   * <b>Buffer size:</b>
+   *
+   * bufferA size: 2*ch_im_in*dim_kernel_x*dim_kernel_y
+   *
+   * bufferB size: 0
+   *
+   * <b>Input dimension constraints:</b>
+   *
+   * ch_im_in is multiple of 2 
+   *
+   * ch_im_out is multipe of 2
+   *
    */
 static inline arm_status arm_convolve_HWC_q15_fast_1d(
   const q7_t * Im_in,
