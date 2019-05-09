@@ -287,6 +287,179 @@ arm_maxpool_q7_HWC(q7_t * Im_in,
 }
 
   /**
+   * @brief Q7 max pooling function
+   * @param[in, out]  Im_in         pointer to input tensor
+   * @param[in]       dim_im_in_x   input tensor dimention along X axis
+   * @param[in]       dim_im_in_y   input tensor dimention along Y axis
+   * @param[in]       ch_im_in      number of input tensor channels
+   * @param[in]       dim_kernel_x  filter kernel size along X axis
+   * @param[in]       dim_kernel_y  filter kernel size along Y axis
+   * @param[in]       padding_x     padding sizes along X axis
+   * @param[in]       padding_y     padding sizes along Y axis
+   * @param[in]       stride_x      convolution stride along X axis
+   * @param[in]       stride_y      convolution stride along Y axis
+   * @param[in]       dim_im_out_x  output tensor dimension along X axis
+   * @param[in]       dim_im_out_y  output tensor dimension along Y axis
+   * @param[in,out]   bufferA       pointer to buffer space for input
+   * @param[in,out]   Im_out        pointer to output tensor
+   * @return none.
+   *
+   * @details
+   *
+   * <b>Buffer size:</b>
+   *
+   * bufferA size:  0
+   *
+   * The pooling function is implemented as split x-pooling then
+   * y-pooling.
+   *
+   * This pooling function is input-destructive. Input data is undefined
+   * after calling this function.
+   *
+   */
+
+void
+arm_maxpool_q7_HWC_nonsquare(q7_t * Im_in,
+                   const uint16_t dim_im_in_x,
+                   const uint16_t dim_im_in_y,
+                   const uint16_t ch_im_in,
+                   const uint16_t dim_kernel_x,
+                   const uint16_t dim_kernel_y,
+                   const uint16_t padding_x,
+                   const uint16_t padding_y,
+                   const uint16_t stride_x,
+                   const uint16_t stride_y,
+                   const uint16_t dim_im_out_x,
+                   const uint16_t dim_im_out_y,
+                   q7_t * bufferA, 
+                   q7_t * Im_out)
+{
+
+#if defined (ARM_MATH_DSP)
+    /* Run the following code for Cortex-M4 and Cortex-M7 */
+
+    int16_t   i_x, i_y;
+
+    /* first does the pooling along x axis */
+    for (i_y = 0; i_y < dim_im_in_y; i_y++)
+    {
+
+        for (i_x = 0; i_x < dim_im_out_x; i_x++)
+        {
+            /* for each output pixel */
+            q7_t     *target = Im_in + (i_y * dim_im_in_x + i_x) * ch_im_in;
+            q7_t     *win_start;
+            q7_t     *win_stop;
+            if (i_x * stride_x - padding_x < 0)
+            {
+                win_start = target;
+            } else
+            {
+                win_start = Im_in + (i_y * dim_im_in_x + i_x * stride_x - padding_x) * ch_im_in;
+            }
+
+            if (i_x * stride - padding + dim_kernel_x >= dim_im_in_x)
+            {
+                win_stop = Im_in + (i_y * dim_im_in_x + dim_im_in) * ch_im_in;
+            } else
+            {
+                win_stop = Im_in + (i_y * dim_im_in_x + i_x * stride_x - padding_x + dim_kernel_x) * ch_im_in;
+            }
+
+            /* first step is to copy over initial data */
+            /* arm_copy_q7(win_start, target, ch_im_in); */
+            memmove(target, win_start, ch_im_in);
+
+            /* start the max operation from the second part */
+            win_start += ch_im_in;
+            for (; win_start < win_stop; win_start += ch_im_in)
+            {
+                compare_and_replace_if_larger_q7(target, win_start, ch_im_in);
+            }
+        }
+    }
+
+    /* then does the pooling along y axis */
+    for (i_y = 0; i_y < dim_im_out_y; i_y++)
+    {
+
+        /* for each output row */
+        q7_t     *target = Im_out + i_y * dim_im_out_x * ch_im_in;
+        q7_t     *row_start;
+        q7_t     *row_end;
+        /* setting the starting row */
+        /* EQUIVILANT :
+        row_end = Im_in + MAX(0, (i_y * stride_y - padding_y)) * dim_im_in_x * ch_im_in;
+        */
+        if (i_y * stride_y - padding_y < 0)
+        {
+            row_start = Im_in;
+        } else
+        {
+            row_start = Im_in + (i_y * stride_y - padding_y) * dim_im_in_x * ch_im_in;
+        }
+        /* setting the stopping row */
+        /* EQUIVILANT :
+        row_end = Im_in + MIN(dim_im_in_y, i_y * stride_y - padding_y + dim_kernel_y) * dim_im_in_x * ch_im_in;
+        */
+        if (i_y * stride_y - padding_y + dim_kernel_y >= dim_im_in_y)
+        {
+            row_end = Im_in + dim_im_in_y * dim_im_in_x * ch_im_in;
+        } else
+        {
+            row_end = Im_in + (i_y * stride_y - padding_y + dim_kernel_y) * dim_im_in_x * ch_im_in;
+        }
+
+        /* copy over the first row */
+        /* arm_copy_q7(row_start, target, dim_im_out * ch_im_in); */
+        memmove(target, row_start, dim_im_out_y * ch_im_in);
+
+        /* move over to next row */
+        row_start += ch_im_in * dim_im_in_x;
+
+        for (; row_start < row_end; row_start += dim_im_in_y * ch_im_in)
+        {
+            compare_and_replace_if_larger_q7(target, row_start, dim_im_out_x * ch_im_in);
+        }
+    }
+
+#else
+    /* Run the following code as reference implementation for Cortex-M0 and Cortex-M3 */
+
+    int16_t   i_ch_in, i_x, i_y;
+    int16_t   k_x, k_y;
+
+    for (i_ch_in = 0; i_ch_in < ch_im_in; i_ch_in++)
+    {
+        for (i_y = 0; i_y < dim_im_out_y; i_y++)
+        {
+            for (i_x = 0; i_x < dim_im_out_x; i_x++)
+            {
+                int       max = -129;
+                for (k_y = i_y * stride_y - padding_y; k_y < i_y * stride_y - padding_y + dim_kernel_y; k_y++)
+                {
+                    for (k_x = i_x * stride_x - padding_x; k_x < i_x * stride_x - padding_x + dim_kernel_x; k_x++)
+                    {
+                        if (k_y >= 0 && k_x >= 0 && k_y < dim_im_in_y && k_x < dim_im_in_x)
+                        {
+                            if (Im_in[i_ch_in + ch_im_in * (k_x + k_y * dim_im_in_x)] > max)
+                            {
+                                max = Im_in[i_ch_in + ch_im_in * (k_x + k_y * dim_im_in_x)];
+                            }
+                        }
+                    }
+                }
+                Im_out[i_ch_in + ch_im_in * (i_x + i_y * dim_im_out_x)] = max;
+            }
+        }
+    }
+
+#endif                          /* ARM_MATH_DSP */
+
+}
+
+
+  /**
    * @brief Q7 average pooling function
    * @param[in,out]   Im_in       pointer to input tensor
    * @param[in]       dim_im_in   input tensor dimention
@@ -442,6 +615,183 @@ arm_avepool_q7_HWC(q7_t * Im_in,
 #endif                          /* ARM_MATH_DSP */
 
 }
+
+  /**
+   * @brief Q7 average pooling function
+   * @param[in, out]  Im_in         pointer to input tensor
+   * @param[in]       dim_im_in_x   input tensor dimention along X axis
+   * @param[in]       dim_im_in_y   input tensor dimention along Y axis
+   * @param[in]       ch_im_in      number of input tensor channels
+   * @param[in]       dim_kernel_x  filter kernel size along X axis
+   * @param[in]       dim_kernel_y  filter kernel size along Y axis
+   * @param[in]       padding_x     padding sizes along X axis
+   * @param[in]       padding_y     padding sizes along Y axis
+   * @param[in]       stride_x      convolution stride along X axis
+   * @param[in]       stride_y      convolution stride along Y axis
+   * @param[in]       dim_im_out_x  output tensor dimension along X axis
+   * @param[in]       dim_im_out_y  output tensor dimension along Y axis
+   * @param[in,out]   bufferA       pointer to buffer space for input
+   * @param[in,out]   Im_out        pointer to output tensor
+   * @return none.
+   *
+   * @details
+   *
+   * <b>Buffer size:</b>
+   *
+   * bufferA size:  dim_im_out_x*dim_im_out_y*ch_im_in
+   *
+   * The pooling function is implemented as split x-pooling then
+   * y-pooling.
+   *
+   * This pooling function is input-destructive. Input data is undefined
+   * after calling this function.
+   *
+   */
+
+void
+arm_avepool_q7_HWC_nonsquare(q7_t * Im_in,
+                   const uint16_t dim_im_in_x,
+                   const uint16_t dim_im_in_y,
+                   const uint16_t ch_im_in,
+                   const uint16_t dim_kernel_x,
+                   const uint16_t dim_kernel_y,
+                   const uint16_t padding_x,
+                   const uint16_t padding_y,
+                   const uint16_t stride_x,
+                   const uint16_t stride_y,
+                   const uint16_t dim_im_out_x,
+                   const uint16_t dim_im_out_y,
+                   q7_t * bufferA, 
+                   q7_t * Im_out)
+{
+
+#if defined (ARM_MATH_DSP)
+    /* Run the following code for Cortex-M4 and Cortex-M7 */
+
+    int16_t   i_x, i_y;
+    int16_t   count = 0;
+
+    /* first does the pooling along x axis */
+    for (i_y = 0; i_y < dim_im_in_y; i_y++)
+    {
+
+        for (i_x = 0; i_x < dim_im_out_x; i_x++)
+        {
+            /* for each output pixel */
+            q7_t     *target = Im_in + (i_y * dim_im_in_x + i_x) * ch_im_in;
+            q7_t     *win_start;
+            q7_t     *win_stop;
+            if (i_x * stride_x - padding_x < 0)
+            {
+                win_start = target;
+            } else
+            {
+                win_start = Im_in + (i_y * dim_im_in_x + i_x * stride_x - padding_x) * ch_im_in;
+            }
+
+            if (i_x * stride - padding + dim_kernel_x >= dim_im_in_x)
+            {
+                win_stop = Im_in + (i_y * dim_im_in_x + dim_im_in) * ch_im_in;
+            } else
+            {
+                win_stop = Im_in + (i_y * dim_im_in_x + i_x * stride_x - padding_x + dim_kernel_x) * ch_im_in;
+            }
+
+            /* first step is to copy over initial data */
+            arm_q7_to_q15_no_shift(win_start, buffer, ch_im_in);
+            count = 1;
+
+            /* start the max operation from the second part */
+            win_start += ch_im_in;
+            for (; win_start < win_stop; win_start += ch_im_in)
+            {
+                accumulate_q7_to_q15(buffer, win_start, ch_im_in);
+                count++;
+            }
+            buffer_scale_back_q15_to_q7(buffer, target, ch_im_in, count);
+        }
+    }
+
+    /* then does the pooling along y axis */
+    for (i_y = 0; i_y < dim_im_out_y; i_y++)
+    {
+
+        /* for each output row */
+        q7_t     *target = Im_out + i_y * dim_im_out_x * ch_im_in;
+        q7_t     *row_start;
+        q7_t     *row_end;
+        /* setting the starting row */
+        /* EQUIVILANT :
+        row_end = Im_in + MAX(0, (i_y * stride_y - padding_y)) * dim_im_in_x * ch_im_in;
+        */
+        if (i_y * stride_y - padding_y < 0)
+        {
+            row_start = Im_in;
+        } else
+        {
+            row_start = Im_in + (i_y * stride_y - padding_y) * dim_im_in_x * ch_im_in;
+        }
+        /* setting the stopping row */
+        /* EQUIVILANT :
+        row_end = Im_in + MIN(dim_im_in_y, i_y * stride_y - padding_y + dim_kernel_y) * dim_im_in_x * ch_im_in;
+        */
+        if (i_y * stride_y - padding_y + dim_kernel_y >= dim_im_in_y)
+        {
+            row_end = Im_in + dim_im_in_y * dim_im_in_x * ch_im_in;
+        } else
+        {
+            row_end = Im_in + (i_y * stride_y - padding_y + dim_kernel_y) * dim_im_in_x * ch_im_in;
+        }
+
+        /* copy over the first row */
+        arm_q7_to_q15_no_shift(row_start, buffer, dim_im_out_x * ch_im_in);
+        count = 1;
+
+        /* move over to next row */
+        row_start += ch_im_in * dim_im_in_x;
+
+        for (; row_start < row_end; row_start += dim_im_in_y * ch_im_in)
+        {
+            accumulate_q7_to_q15(buffer, row_start, dim_im_out_x * ch_im_in);
+            count++;
+        }
+        buffer_scale_back_q15_to_q7(buffer, target, dim_im_out_x * ch_im_in, count);
+    }
+
+#else
+    /* Run the following code as reference implementation for Cortex-M0 and Cortex-M3 */
+
+    int16_t   i_ch_in, i_x, i_y;
+    int16_t   k_x, k_y;
+
+    for (i_ch_in = 0; i_ch_in < ch_im_in; i_ch_in++)
+    {
+        for (i_y = 0; i_y < dim_im_out_y; i_y++)
+        {
+            for (i_x = 0; i_x < dim_im_out_x; i_x++)
+            {
+                int sum = 0;
+                int count = 0;
+                for (k_y = i_y * stride_y - padding_y; k_y < i_y * stride_y - padding_y + dim_kernel_y; k_y++)
+                {
+                    for (k_x = i_x * stride_x - padding_x; k_x < i_x * stride_x - padding_x + dim_kernel_x; k_x++)
+                    {
+                        if (k_y >= 0 && k_x >= 0 && k_y < dim_im_in_y && k_x < dim_im_in_x)
+                        {
+                            sum += Im_in[i_ch_in + ch_im_in * (k_x + k_y * dim_im_in_x)];
+                            count++
+                        }
+                    }
+                }
+                Im_out[i_ch_in + ch_im_in * (i_x + i_y * dim_im_out_x)] = sum/count;
+            }
+        }
+    }
+
+#endif                          /* ARM_MATH_DSP */
+
+}
+
 
 /**
  * @} end of Pooling group
