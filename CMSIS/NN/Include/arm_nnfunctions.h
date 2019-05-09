@@ -1178,6 +1178,33 @@ void arm_maxpool_q7_HWC_nonsquare(q7_t * Im_in,
                    q7_t * bufferA, 
                    q7_t * Im_out);
 
+static inline
+void      arm_maxpool_q7_HWC_1d(q7_t * Im_in,
+                             const uint16_t dim_im_in,
+                             const uint16_t ch_im_in,
+                             const uint16_t dim_kernel,
+                             const uint16_t padding,
+                             const uint16_t stride, 
+                             const uint16_t dim_im_out, 
+                             q7_t * bufferA, 
+                             q7_t * Im_out) {
+  arm_maxpool_q7_HWC_nonsquare(
+    Im_in,        //q7_t * Im_in,
+    dim_im_in,    //const uint16_t dim_im_in_x,
+    1,            //const uint16_t dim_im_in_y,
+    ch_im_in,     //const uint16_t ch_im_in,
+    dim_kernel,   //const uint16_t dim_kernel_x,
+    1,            //const uint16_t dim_kernel_y,
+    padding,      //const uint16_t padding_x,
+    0,            //const uint16_t padding_y,
+    stride,       //const uint16_t stride_x,
+    0,            //const uint16_t stride_y,
+    dim_im_out,   //const uint16_t dim_im_out_x,
+    1,            //const uint16_t dim_im_out_y,
+    bufferA,      //q7_t * bufferA, 
+    Im_out);      //q7_t * Im_out);
+}
+
   /**
    * @brief Q7 average pooling function
    * @param[in]       Im_in       pointer to input tensor
@@ -1236,6 +1263,33 @@ void arm_avepool_q7_HWC_nonsquare(q7_t * Im_in,
                    const uint16_t dim_im_out_y,
                    q7_t * bufferA, 
                    q7_t * Im_out);
+
+static inline
+void      arm_avepool_q7_HWC_1d(q7_t * Im_in,
+                             const uint16_t dim_im_in,
+                             const uint16_t ch_im_in,
+                             const uint16_t dim_kernel,
+                             const uint16_t padding,
+                             const uint16_t stride, 
+                             const uint16_t dim_im_out, 
+                             q7_t * bufferA, 
+                             q7_t * Im_out) {
+  arm_avepool_q7_HWC_nonsquare(
+    Im_in,        //q7_t * Im_in,
+    dim_im_in,    //const uint16_t dim_im_in_x,
+    1,            //const uint16_t dim_im_in_y,
+    ch_im_in,     //const uint16_t ch_im_in,
+    dim_kernel,   //const uint16_t dim_kernel_x,
+    1,            //const uint16_t dim_kernel_y,
+    padding,      //const uint16_t padding_x,
+    0,            //const uint16_t padding_y,
+    stride,       //const uint16_t stride_x,
+    0,            //const uint16_t stride_y,
+    dim_im_out,   //const uint16_t dim_im_out_x,
+    1,            //const uint16_t dim_im_out_y,
+    bufferA,      //q7_t * bufferA, 
+    Im_out);      //q7_t * Im_out);
+}
 
 
 /**
