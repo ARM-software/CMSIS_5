@@ -39,9 +39,29 @@ The following sections explain:
   in integrated development environments (IDEs).
 - \ref zoneFormat (XML based) that stores system resource information and the configuration of project zones and execution zones.
 - \ref GenDataModel which is used to create tool set-up files and hardware configuration files.
+*/
 
 
-\section UseCases CMSIS-Zone Use Cases
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\page zone_revisionHistory Revision History of CMSIS-Zone
+
+<table class="cmtable" summary="Revision History">
+    <tr>
+      <th>Version</th>
+      <th>Description</th>
+    </tr>
+    <tr>
+      <td>0.0.3 (Preview 3)</td>
+      <td>Initial specification draft</td>
+    </tr>
+</table>
+*/
+
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\page UseCases CMSIS-Zone Use Cases
 
 \b CMSIS-Zone simplifies to manage the complexity and the configuration of modern embedded systems that frequently include multiple processors and/or memory protection hardware.
 It helps to split the embedded application various projects which creates the need to partition system resources.
@@ -49,21 +69,21 @@ And it simplifies the consistent configuration of access rights across the syste
 
 The following section describes several uses cases that benefit from \b CMSIS-Zone.
 
-\subsection UseCase_MPU MPU Protection
+\section UseCase_MPU MPU Protection
 
 Focused on a single core microcontroller one might want to utilize the memory protection unit (MPU) capabilities
 to segregate parts of an application. Thus the need to partition the system resources accordingly arises.
 
 \image html mpu.png  "MPU Protection"
 
-\subsection UseCase_TrustZone TrustZone Partitioning
+\section UseCase_TrustZone TrustZone Partitioning
 
 TrustZone extensions add another degree of segregation which must be handled consistently.
 In this case one has to handle MPU settings per security context and SAU configuration.
 
 \image html trustzone.png  "TrustZone Partitioning and MPU Protection"
 
-\subsection UseCase_MultiCore Multi-Core Partitioning
+\section UseCase_MultiCore Multi-Core Partitioning
 
 Beside traditional single cores asymmetric and hybrid multi-core devices contribute to increasing development complexity
 for embedded systems. Having multiple cores running different parts of an application concurrently needs a well defined
@@ -81,12 +101,10 @@ The following explains how to use the CMSIS-Zone stand-alone utility to create t
 used further in other toolchains.
 
 This documentation contains the following:
- - \subpage zTInstall explains how to install the utility.
- - \subpage zTCreateProject shows this task step-by-step.
- - \subpage zTManageResources explores the options to work with the device's resources.
- - \subpage zTSplit describes how to separate a system into sub-systems.
- - \subpage zTCreatePartition shows how to create security partitions.
- - \subpage zTConfigMPU explains how to set up zones that are used by an MPU.
+ - \subpage zTInstall shows how to install the utility.
+ - \subpage zTUI explains the utility's GUI.
+ - \subpage zTCLI demonstrates how to work with the command line interface.
+ - \subpage zTExamples contains pre-built demos for various devices.
 
 \note
 
@@ -101,10 +119,7 @@ family pcks for your target device need to be installed on your computer.
 \page zTInstall Installation
 
 CMSIS-Zone is currently available as an executable Eclipse environment. Download the zipped archive from
-<a href="" target="_blank">here</a> and save it to your computer. Unzip it and run CDT_2019_3\\eclipse\\eclipse.exe. After
-selecting a workspace, the Eclipse IDE opens:
-
-\image html EclipseStart.png
+<a href="" target="_blank">here</a> and save it to your computer. Unzip it and run CDT_2019_3\\eclipse\\eclipse.exe.
 
 Before creating the first project, you have to point the tool to your pack repository so that it can pick up relevant device
 information. Go to <b>Window - Preferences</b> and select <b>CMSIS Packs</b>:
@@ -119,27 +134,41 @@ This concludes the installation and setup of the Eclipse environment.
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
-\page zTCreateProject Create a CMSIS-Zone Project
+\page zTUI User Interface
 
-To create a new CMSIS-Zone project, go to <b>File - New - Project</b> and then select <b>CMSIS - CMSIS-Zone Project</b>:
-
-\image html NewProjWiz.png
-
-Click \b Next. In the next window, enter a <b>project name</b> and click \b Next:
-
-\image html ProjName.png
-
-Then, select your device and click \b Finish:
-
-\image html SelectDevice.png
-
-Eclipse creates the new project and opens the \<Project name\>.azone file in the <b>CMSIS-Zone Editor</b>.
-*/
+The CMSIS-Zone Utility user interface offers menus, toolbars, dialog boxes, and windows to manage the various aspects of your
+project.
 
 
-/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
-/**
-\page zTManageResources Manage Resources
+\section zTGUI CMSIS-Zone GUI
+
+The utility's GUI provides menus for selecting commands and toolbar buttons in the \b Zone \b Editor window.
+
+The picture shows the CMSIS-Zone utility with an opened .azone file, with the \b Zone tab selected:
+
+\image html GUI.png
+
+
+\subsection zTGUIButtons Toolbar Buttons
+
+The <b>Zone Editor</b> window contains toolbar buttons that offer direct access to functionality of the utility:
+
+\image html Buttons.png
+
+| Button                | Description |
+|-----------------------|-------------|
+| Tree View             | Shows the resources as a tree |
+| List View             | Shows the resources as a simple list |
+| Arrange memory blocks | Arranges memory blocks according to their sizes |
+| Add new zone          | Adds a new zone to the zone map |
+| Generate              | Generates CMSIS-Zone output files |
+
+\section zTUICreateProject Create a CMSIS-Zone Project
+
+Currently, the flow is not complete. Please use one of the pre-built \ref zTExamples instead.
+
+
+\section zTUIResources Memory and Peripheral Resources
 
 The azone file has two tabs: \b Resources and \b Zones. The \b Resources tab shows all resources available to that system or
 sub-system. The default view shows lists of memories, and peripherals. It also displays the available processor cores:
@@ -147,13 +176,9 @@ sub-system. The default view shows lists of memories, and peripherals. It also d
 \image html MyProjAZoneOpen.png
 
 We will revisit this view after we have created some zones in the next step.
-*/
 
 
-
-/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
-/**
-\page zTSplit Split the System
+\section zTUIPatitioning Zone Partitioning
 
 To split a multi-processor system into single-processor sub-systems, you need to create new zones. Switch to the \b Zones tab
 and click the <b>Add new zone</b> button:
@@ -172,6 +197,7 @@ Next, create an additional zone called "CM33_1", attached to processor core 1, w
 
 \image html  SaveButton.png
 
+
 \section zTAssign Assign Resources to Zones
 
 In a first step, assign resources to both processor cores. Based on this assignment, you can later add zones to each core and
@@ -187,12 +213,9 @@ Save your work.
 
 Next, click on the <b>Generate Code</b> button, to create separate rzone and azone files for the two processors. We need
 them to further separate the zones.
-*/
 
 
-/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
-/**
-\page zTCreatePartition Create Secure/Non-Secure Partitions
+\section zTUIGenerate Generate output
 
 In Eclipse's Project Explorer, expand <b>MyProject - CM33_0</b> and double-click \c CM33_0.azone. The file opens in the
 <b>CMSIS-Zone Editor</b>. You now only see the resources that are assigned to this processor:
@@ -234,24 +257,65 @@ checkbox for the assignment is missing:
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
-\page zTConfigMPU Configure MPU Execution Zones
+\page zTCLI Command Line Mode
 
-\todo Add info here.
+The CMSIS-Zone plug-ins provide a headless mode to generate the FTL model and process templates. The command line is:
+
+<tt>eclipsec.exe -noSplash -application com.arm.cmsis.zone.ui.headlessgen -azone FILENME.azone -ftl FTL_DIR -ftl_gen FTL_GEN_DIR</tt>
+
+\b  Where
+<table>
+  <tr>
+    <th>Parameter</th>
+    <th>Description</th>
+    <th>Required</th>
+  </tr>
+  <tr>
+    <td>\c -noSplash</td>
+    <td>Suppresses Eclipse's splash screen</td>
+	<td>[required]</td>
+  </tr>
+  <tr>
+    <td><tt>-application com.arm.cmsis.zone.ui.headlessgen</tt></td>
+    <td>Specifies the plug-in to be called</td>
+	<td>[required]</td>
+  </tr>
+  <tr>
+    <td><tt>-azone FILNAME.azone</tt></td>
+    <td>Specifies the .azone file to be processed</td>
+	<td>[required]</td>
+  </tr>
+  <tr>
+    <td><tt>-ftl FTL_DIR</tt></td>
+    <td>Relative or absolute directory with templates to process</td>
+	<td>[optional - by default, "ftl" directory under the azone's file path is used]</td>
+  </tr>
+  <tr>
+    <td><tt>-ftl_gen FTL_GEN_DIR</tt></td>
+    <td>Relative or absolute output directory to write generated files</td>
+	<td>[optional - by default, "ft_gen" directory under the azone's file path is used]</td>
+  </tr>
+  <tr>
+    <td><tt>-help</tt></td>
+    <td>Shows command line parameter information</td>
+	<td>[optional]</td>
+  </tr>
+</table>
+
+\b Examples
+\code
+eclipsec.exe -noSplash -application com.arm.cmsis.zone.ui.headlessgen -azone Musca-A1.azone
+\endcode
 */
 
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
-\page zone_revisionHistory Revision History of CMSIS-Zone
+\page zTExamples Examples
 
-<table class="cmtable" summary="Revision History">
-    <tr>
-      <th>Version</th>
-      <th>Description</th>
-    </tr>
-    <tr>
-      <td>0.0.3 (Preview 3)</td>
-      <td>Initial specification draft</td>
-    </tr>
-</table>
+\section zTEMusca Arm Musca-A1
+
+\section zTELPC55 NXP LPC55S69
 */
+
+
