@@ -31,6 +31,7 @@ is described with schema files that are located in the ARM.CMSIS pack in the dir
 :-----------|:--------------|:-------------
 *.rzone     | rzone.xsd     | Stores the system resources (processors, memory, peripherals) available.
 *.azone     | azone.xsd     | Stores the system partitioning which includes assignments and memory splits for a related .rzone file.
+*.fzone     | fzone.xsd     | CMSIS-Zone data input file for Freemarker as explained in \ref GenDataModel.
 
 \anchor rzone
 Top-level .rzone XML elements
