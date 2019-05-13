@@ -7,7 +7,9 @@
 #include "matrix_test_group.h"
 #include "statistics_test_group.h"
 #include "support_test_group.h"
+#ifndef ARMv7A
 #include "transform_test_group.h"
+#endif
 #include "intrinsics_test_group.h"
 
 JTEST_DEFINE_GROUP(all_tests)
@@ -23,7 +25,9 @@ JTEST_DEFINE_GROUP(all_tests)
   JTEST_GROUP_CALL(matrix_tests);
   JTEST_GROUP_CALL(statistics_tests);
   JTEST_GROUP_CALL(support_tests);
+#ifndef ARMv7A
   JTEST_GROUP_CALL(transform_tests);
+#endif
   JTEST_GROUP_CALL(intrinsics_tests);
 
   return;
