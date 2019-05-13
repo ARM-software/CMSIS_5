@@ -2321,12 +2321,12 @@ for RTX see \ref StaticObjectMemory.
   
 osMutexId_t mutex_id;
   
-static osRtxMutex_t __attribute__((section(.bss.os.mutex.cb)));  // Placed on .bss.os.mutex.cb section for RTX5 aware debugging
+static osRtxMutex_t mutex_cb __attribute__((section(".bss.os.mutex.cb")));  // Placed on .bss.os.mutex.cb section for RTX5 aware debugging
   
 const osMutexAttr_t Thread_Mutex_attr = {
   "myThreadMutex",                              // human readable mutex name
   osMutexRecursive | osMutexPrioInherit,        // attr_bits
-  mutex_cb,                                     // memory for control block (user-defined)
+  &mutex_cb,                                    // memory for control block (user-defined)
   sizeof(mutex_cb)                              // size for control block (user-defined)
 };
   
