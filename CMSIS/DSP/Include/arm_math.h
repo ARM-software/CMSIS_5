@@ -306,6 +306,9 @@
   #define ARM_MATH_CM0_FAMILY            1
 #elif defined (__ARM_ARCH_8M_MAIN__)
 //#define ARM_MATH_CM0_FAMILY            0
+#elif defined (ARM_MATH_NEON)
+  #include "core_ca.h"
+//  #define ARM_MATH_DSP
 #else
   #error "Unknown Arm Architecture!"
 #endif
@@ -315,7 +318,9 @@
   #define ARM_MATH_DSP                   1
 #endif
 
-
+#if defined(__ARM_NEON)
+#include <arm_neon.h>
+#endif
 
 
 #ifdef   __cplusplus
@@ -735,6 +740,47 @@ __STATIC_FORCEINLINE void write_q7x4_ia (
     return (signBits + 1);
   }
 
+#if defined(ARM_MATH_NEON)
+
+#define FLT_MIN 1E-37
+  
+static inline float32x4_t __arm_vec_sqrt_f32_neon(float32x4_t  x)
+{
+    float32x4_t x1 = vmaxq_f32(x, vdupq_n_f32(FLT_MIN));
+    float32x4_t e = vrsqrteq_f32(x1);
+    e = vmulq_f32(vrsqrtsq_f32(vmulq_f32(x1, e), e), e);
+    e = vmulq_f32(vrsqrtsq_f32(vmulq_f32(x1, e), e), e);
+    return vmulq_f32(x, e);
+}
+
+static inline int16x8_t __arm_vec_sqrt_q15_neon(int16x8_t vec)
+{
+    float32x4_t tempF;
+    int32x4_t tempHI,tempLO;
+
+    tempLO = vmovl_s16(vget_low_s16(vec));
+    tempF = vcvtq_n_f32_s32(tempLO,15);
+    tempF = __arm_vec_sqrt_f32_neon(tempF);
+    tempLO = vcvtq_n_s32_f32(tempF,15);
+
+    tempHI = vmovl_s16(vget_high_s16(vec));
+    tempF = vcvtq_n_f32_s32(tempHI,15);
+    tempF = __arm_vec_sqrt_f32_neon(tempF);
+    tempHI = vcvtq_n_s32_f32(tempF,15);
+
+    return(vcombine_s16(vqmovn_s32(tempLO),vqmovn_s32(tempHI)));
+}
+
+static inline int32x4_t __arm_vec_sqrt_q31_neon(int32x4_t vec)
+{
+  float32x4_t temp;
+
+  temp = vcvtq_n_f32_s32(vec,31);
+  temp = __arm_vec_sqrt_f32_neon(temp);
+  return(vcvtq_n_s32_f32(temp,31));
+}
+
+#endif
 
 /*
  * @brief C custom defined intrinsic functions
@@ -3698,6 +3744,12 @@ arm_status arm_fir_decimate_init_f32(
         uint32_t blockSize);
 
 
+#if defined(ARM_MATH_NEON) 
+void arm_biquad_cascade_df2T_compute_coefs_f32(
+  arm_biquad_cascade_df2T_instance_f32 * S,
+  uint8_t numStages,
+  float32_t * pCoeffs);
+#endif
   /**
    * @brief  Initialization function for the floating-point transposed direct form II Biquad cascade filter.
    * @param[in,out] S          points to an instance of the filter data structure.
@@ -5778,6 +5830,29 @@ arm_status arm_sqrt_q31(
 arm_status arm_sqrt_q15(
   q15_t in,
   q15_t * pOut);
+
+  /**
+   * @brief  Vector Floating-point square root function.
+   * @param[in]  pIn   input vector.
+   * @param[out] pOut  vector of square roots of input elements.
+   * @param[in]  len   length of input vector.
+   * @return The function returns ARM_MATH_SUCCESS if input value is positive value or ARM_MATH_ARGUMENT_ERROR if
+   * <code>in</code> is negative value and returns zero output for negative values.
+   */
+  void arm_vsqrt_f32(
+  float32_t * pIn,
+  float32_t * pOut,
+  uint16_t len);
+
+  void arm_vsqrt_q31(
+  q31_t * pIn,
+  q31_t * pOut,
+  uint16_t len);
+
+  void arm_vsqrt_q15(
+  q15_t * pIn,
+  q15_t * pOut,
+  uint16_t len);
 
   /**
    * @} end of SQRT group

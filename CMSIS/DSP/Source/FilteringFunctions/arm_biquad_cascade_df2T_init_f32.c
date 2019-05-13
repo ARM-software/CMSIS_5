@@ -62,6 +62,96 @@
                    The state variables are updated after each block of data is processed; the coefficients are untouched.
  */
 
+#if defined(ARM_MATH_NEON) 
+void arm_biquad_cascade_df2T_compute_coefs_f32(
+  arm_biquad_cascade_df2T_instance_f32 * S,
+  uint8_t numStages,
+  float32_t * pCoeffs)
+{
+   uint8_t cnt;
+   float32_t *pDstCoeffs;
+   float32_t b0[4],b1[4],b2[4],a1[4],a2[4];
+
+   pDstCoeffs = S->pCoeffs;
+
+   cnt = numStages >> 2; 
+   while(cnt > 0)
+   {
+      for(int i=0;i<4;i++)
+      {
+        b0[i] = pCoeffs[0];
+        b1[i] = pCoeffs[1];
+        b2[i] = pCoeffs[2];
+        a1[i] = pCoeffs[3];
+        a2[i] = pCoeffs[4];
+        pCoeffs += 5;
+      }
+
+      /* Vec 1 */
+      *pDstCoeffs++ = 0;
+      *pDstCoeffs++ = b0[1];
+      *pDstCoeffs++ = b0[2];
+      *pDstCoeffs++ = b0[3];
+
+      /* Vec 2 */
+      *pDstCoeffs++ = 0;
+      *pDstCoeffs++ = 0;
+      *pDstCoeffs++ = b0[1] * b0[2];
+      *pDstCoeffs++ = b0[2] * b0[3];
+
+      /* Vec 3 */
+      *pDstCoeffs++ = 0;
+      *pDstCoeffs++ = 0;
+      *pDstCoeffs++ = 0;
+      *pDstCoeffs++ = b0[1] * b0[2] * b0[3];
+      
+      /* Vec 4 */
+      *pDstCoeffs++ = b0[0];
+      *pDstCoeffs++ = b0[0] * b0[1];
+      *pDstCoeffs++ = b0[0] * b0[1] * b0[2];
+      *pDstCoeffs++ = b0[0] * b0[1] * b0[2] * b0[3];
+
+      /* Vec 5 */
+      *pDstCoeffs++ = b1[0];
+      *pDstCoeffs++ = b1[1];
+      *pDstCoeffs++ = b1[2];
+      *pDstCoeffs++ = b1[3];
+
+      /* Vec 6 */
+      *pDstCoeffs++ = b2[0];
+      *pDstCoeffs++ = b2[1];
+      *pDstCoeffs++ = b2[2];
+      *pDstCoeffs++ = b2[3];
+
+      /* Vec 7 */
+      *pDstCoeffs++ = a1[0];
+      *pDstCoeffs++ = a1[1];
+      *pDstCoeffs++ = a1[2];
+      *pDstCoeffs++ = a1[3];
+
+      /* Vec 8 */
+      *pDstCoeffs++ = a2[0];
+      *pDstCoeffs++ = a2[1];
+      *pDstCoeffs++ = a2[2];
+      *pDstCoeffs++ = a2[3];
+
+      cnt--;
+   }
+
+   cnt = numStages & 0x3;
+   while(cnt > 0)
+   {
+      *pDstCoeffs++ = *pCoeffs++;
+      *pDstCoeffs++ = *pCoeffs++;
+      *pDstCoeffs++ = *pCoeffs++;
+      *pDstCoeffs++ = *pCoeffs++;
+      *pDstCoeffs++ = *pCoeffs++;
+      cnt--;
+   }
+
+}
+#endif 
+
 void arm_biquad_cascade_df2T_init_f32(
         arm_biquad_cascade_df2T_instance_f32 * S,
         uint8_t numStages,

@@ -43,6 +43,8 @@ extern const char * JTEST_CYCLE_STRF;
                          __jtest_cycle_end_count));     \
     } while (0)
 */
+#ifndef ARMv7A
+
 #define JTEST_COUNT_CYCLES(fn_call)                     \
     do                                                  \
     {                                                   \
@@ -56,10 +58,22 @@ extern const char * JTEST_CYCLE_STRF;
         __jtest_cycle_end_count =                       \
             JTEST_SYSTICK_VALUE(SysTick);               \
                                                         \
-		JTEST_SYSTICK_RESET(SysTick);                   \
+		JTEST_SYSTICK_RESET(SysTick);           \
         JTEST_DUMP_STRF(JTEST_CYCLE_STRF,               \
                         (JTEST_SYSTICK_INITIAL_VALUE -  \
                          __jtest_cycle_end_count));     \
     } while (0)
 
+#else
+/* TODO */
+#define JTEST_COUNT_CYCLES(fn_call)                     \
+    do                                                  \
+    {                                                   \
+		fn_call;   										\
+    } while (0)
+
+#endif
+
 #endif /* _JTEST_CYCLE_H_ */
+
+

@@ -78,6 +78,34 @@ void arm_cmplx_mult_real_f32(
         uint32_t blkCnt;                               /* Loop counter */
         float32_t in;                                  /* Temporary variable */
 
+#if defined(ARM_MATH_NEON)
+    float32x4_t r;
+    float32x4x2_t ab,outCplx;
+
+    /* Compute 4 outputs at a time */
+    blkCnt = numSamples >> 2U;
+
+    while (blkCnt > 0U)
+    {
+        ab = vld2q_f32(pSrcCmplx);  // load & separate real/imag pSrcA (de-interleave 2)
+        r = vld1q_f32(pSrcReal);  // load & separate real/imag pSrcB
+
+	/* Increment pointers */
+        pSrcCmplx += 8;
+        pSrcReal += 4;
+
+        outCplx.val[0] = vmulq_f32(ab.val[0], r);
+        outCplx.val[1] = vmulq_f32(ab.val[1], r);
+
+        vst2q_f32(pCmplxDst, outCplx);
+        pCmplxDst += 8;
+
+        blkCnt--;
+    }
+
+    /* Tail */
+    blkCnt = numSamples & 3;
+#else
 #if defined (ARM_MATH_LOOPUNROLL)
 
   /* Loop unrolling: Compute 4 outputs at a time */
@@ -118,6 +146,7 @@ void arm_cmplx_mult_real_f32(
   blkCnt = numSamples;
 
 #endif /* #if defined (ARM_MATH_LOOPUNROLL) */
+#endif /* #if defined(ARM_MATH_NEON) */
 
   while (blkCnt > 0U)
   {

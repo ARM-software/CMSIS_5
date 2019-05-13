@@ -37,6 +37,7 @@
 #endif
 
 /* CMSIS compiler specific defines */
+
 #ifndef   __ASM
   #define __ASM                                  asm
 #endif
@@ -107,6 +108,120 @@
 #ifndef   __COMPILER_BARRIER
   #define __COMPILER_BARRIER()                   __ASM volatile("":::"memory")
 #endif
+
+
+__STATIC_FORCEINLINE uint32_t __QSUB16(uint32_t op1, uint32_t op2)
+{
+  uint32_t result;
+
+  __ASM volatile ("qsub16 %0, %1, %2" : "=r" (result) : "r" (op1), "r" (op2) );
+  return(result);
+}
+
+
+__STATIC_FORCEINLINE uint32_t __QADD16(uint32_t op1, uint32_t op2)
+{
+  uint32_t result;
+
+  __ASM volatile ("qadd16 %0, %1, %2" : "=r" (result) : "r" (op1), "r" (op2) );
+  return(result);
+}
+
+__STATIC_FORCEINLINE  int32_t __QADD( int32_t op1,  int32_t op2)
+{
+  int32_t result;
+
+  __ASM volatile ("qadd %0, %1, %2" : "=r" (result) : "r" (op1), "r" (op2) );
+  return(result);
+}
+
+__STATIC_FORCEINLINE uint64_t __SMLALD (uint32_t op1, uint32_t op2, uint64_t acc)
+{
+  union llreg_u{
+    uint32_t w32[2];
+    uint64_t w64;
+  } llr;
+  llr.w64 = acc;
+
+#ifndef __ARMEB__   /* Little endian */
+  __ASM volatile ("smlald %0, %1, %2, %3" : "=r" (llr.w32[0]), "=r" (llr.w32[1]): "r" (op1), "r" (op2) , "0" (llr.w32[0]), "1" (llr.w32[1]) );
+#else               /* Big endian */
+  __ASM volatile ("smlald %0, %1, %2, %3" : "=r" (llr.w32[1]), "=r" (llr.w32[0]): "r" (op1), "r" (op2) , "0" (llr.w32[1]), "1" (llr.w32[0]) );
+#endif
+
+  return(llr.w64);
+}
+
+__STATIC_FORCEINLINE  int32_t __QSUB( int32_t op1,  int32_t op2)
+{
+  int32_t result;
+
+  __ASM volatile ("qsub %0, %1, %2" : "=r" (result) : "r" (op1), "r" (op2) );
+  return(result);
+}
+
+__STATIC_FORCEINLINE uint32_t __SMUAD  (uint32_t op1, uint32_t op2)
+{
+  uint32_t result;
+
+  __ASM volatile ("smuad %0, %1, %2" : "=r" (result) : "r" (op1), "r" (op2) );
+  return(result);
+}
+
+#define __PKHBT(ARG1,ARG2,ARG3)          ( ((((uint32_t)(ARG1))          ) & 0x0000FFFFUL) |  \
+                                           ((((uint32_t)(ARG2)) << (ARG3)) & 0xFFFF0000UL)  )
+
+__STATIC_FORCEINLINE uint32_t __SMLAD (uint32_t op1, uint32_t op2, uint32_t op3)
+{
+  uint32_t result;
+
+  __ASM volatile ("smlad %0, %1, %2, %3" : "=r" (result) : "r" (op1), "r" (op2), "r" (op3) );
+  return(result);
+}
+
+__STATIC_FORCEINLINE uint32_t __SMUADX (uint32_t op1, uint32_t op2)
+{
+  uint32_t result;
+
+  __ASM volatile ("smuadx %0, %1, %2" : "=r" (result) : "r" (op1), "r" (op2) );
+  return(result);
+}
+
+__STATIC_FORCEINLINE uint32_t __SMLADX (uint32_t op1, uint32_t op2, uint32_t op3)
+{
+  uint32_t result;
+
+  __ASM volatile ("smladx %0, %1, %2, %3" : "=r" (result) : "r" (op1), "r" (op2), "r" (op3) );
+  return(result);
+}
+
+__STATIC_FORCEINLINE uint64_t __SMLALDX (uint32_t op1, uint32_t op2, uint64_t acc)
+{
+  union llreg_u{
+    uint32_t w32[2];
+    uint64_t w64;
+  } llr;
+  llr.w64 = acc;
+
+#ifndef __ARMEB__   /* Little endian */
+  __ASM volatile ("smlaldx %0, %1, %2, %3" : "=r" (llr.w32[0]), "=r" (llr.w32[1]): "r" (op1), "r" (op2) , "0" (llr.w32[0]), "1" (llr.w32[1]) );
+#else               /* Big endian */
+  __ASM volatile ("smlaldx %0, %1, %2, %3" : "=r" (llr.w32[1]), "=r" (llr.w32[0]): "r" (op1), "r" (op2) , "0" (llr.w32[1]), "1" (llr.w32[0]) );
+#endif
+
+  return(llr.w64);
+}
+
+__STATIC_FORCEINLINE int32_t __SMMLA (int32_t op1, int32_t op2, int32_t op3)
+{
+ int32_t result;
+
+ __ASM volatile ("smmla %0, %1, %2, %3" : "=r" (result): "r"  (op1), "r" (op2), "r" (op3) );
+ return(result);
+}
+
+
+
 
 /* ##########################  Core Instruction Access  ######################### */
 /**

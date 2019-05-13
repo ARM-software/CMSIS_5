@@ -116,7 +116,228 @@
   @param[in]     blockSize  number of samples to process
   @return        none
  */
+#if defined(ARM_MATH_NEON)
 
+void arm_fir_f32(
+const arm_fir_instance_f32 * S,
+const float32_t * pSrc,
+float32_t * pDst,
+uint32_t blockSize)
+{
+   float32_t *pState = S->pState;                 /* State pointer */
+   const float32_t *pCoeffs = S->pCoeffs;         /* Coefficient pointer */
+   float32_t *pStateCurnt;                        /* Points to the current sample of the state */
+   float32_t *px;                                 /* Temporary pointers for state buffer */
+   const float32_t *pb;                           /* Temporary pointers for coefficient buffer */
+   uint32_t numTaps = S->numTaps;                 /* Number of filter coefficients in the filter */
+   uint32_t i, tapCnt, blkCnt;                    /* Loop counters */
+
+   float32x4_t accv0,accv1,samples0,samples1,x0,x1,x2,xa,xb,x,b,accv;
+   uint32x4_t x0_u,x1_u,x2_u,xa_u,xb_u;
+   float32_t acc;
+
+   /* S->pState points to state array which contains previous frame (numTaps - 1) samples */
+   /* pStateCurnt points to the location where the new input data should be written */
+   pStateCurnt = &(S->pState[(numTaps - 1U)]);
+
+   /* Loop unrolling */
+   blkCnt = blockSize >> 3;
+
+   while (blkCnt > 0U)
+   {
+      /* Copy 8 samples at a time into state buffers */
+      samples0 = vld1q_f32(pSrc);
+      vst1q_f32(pStateCurnt,samples0);
+
+      pStateCurnt += 4;
+      pSrc += 4 ;
+
+      samples1 = vld1q_f32(pSrc);
+      vst1q_f32(pStateCurnt,samples1);
+
+      pStateCurnt += 4;
+      pSrc += 4 ;
+
+      /* Set the accumulators to zero */
+      accv0 = vdupq_n_f32(0);
+      accv1 = vdupq_n_f32(0);
+
+      /* Initialize state pointer */
+      px = pState;
+
+      /* Initialize coefficient pointer */
+      pb = pCoeffs;
+
+      /* Loop unroling */
+      i = numTaps >> 2;
+
+      /* Perform the multiply-accumulates */
+      x0 = vld1q_f32(px);
+      x1 = vld1q_f32(px + 4);
+
+      while(i > 0)
+      {
+         /* acc =  b[numTaps-1] * x[n-numTaps-1] + b[numTaps-2] * x[n-numTaps-2] + b[numTaps-3] * x[n-numTaps-3] +...+ b[0] * x[0] */
+         x2 = vld1q_f32(px + 8);
+         b = vld1q_f32(pb);
+         xa = x0;
+         xb = x1;
+         accv0 = vmlaq_n_f32(accv0,xa,b[0]);
+         accv1 = vmlaq_n_f32(accv1,xb,b[0]);
+
+         xa = vextq_f32(x0,x1,1);
+         xb = vextq_f32(x1,x2,1);
+         
+	 accv0 = vmlaq_n_f32(accv0,xa,b[1]);
+         accv1 = vmlaq_n_f32(accv1,xb,b[1]);
+
+	 xa = vextq_f32(x0,x1,2);
+         xb = vextq_f32(x1,x2,2);
+
+         accv0 = vmlaq_n_f32(accv0,xa,b[2]);
+         accv1 = vmlaq_n_f32(accv1,xb,b[2]);
+
+	 xa = vextq_f32(x0,x1,3);
+	 xb = vextq_f32(x1,x2,3);
+         
+ 	 accv0 = vmlaq_n_f32(accv0,xa,b[3]);
+         accv1 = vmlaq_n_f32(accv1,xb,b[3]);
+
+         pb += 4;
+         x0 = x1;
+         x1 = x2;
+         px += 4;
+         i--;
+
+      }
+
+      /* Tail */
+      i = numTaps & 3;
+      x2 = vld1q_f32(px + 8);
+
+      /* Perform the multiply-accumulates */
+      switch(i)
+      {
+         case 3:
+         {
+           accv0 = vmlaq_n_f32(accv0,x0,*pb);
+           accv1 = vmlaq_n_f32(accv1,x1,*pb);
+
+           pb++;
+
+	   xa = vextq_f32(x0,x1,1);
+	   xb = vextq_f32(x1,x2,1);
+
+           accv0 = vmlaq_n_f32(accv0,xa,*pb);
+           accv1 = vmlaq_n_f32(accv1,xb,*pb);
+
+           pb++;
+
+           xa = vextq_f32(x0,x1,2);
+           xb = vextq_f32(x1,x2,2);
+           
+	   accv0 = vmlaq_n_f32(accv0,xa,*pb);
+           accv1 = vmlaq_n_f32(accv1,xb,*pb);
+
+         }
+         break;
+         case 2:
+         {
+           accv0 = vmlaq_n_f32(accv0,x0,*pb);
+           accv1 = vmlaq_n_f32(accv1,x1,*pb);
+
+           pb++;
+
+           xa = vextq_f32(x0,x1,1);
+           xb = vextq_f32(x1,x2,1);
+           
+	   accv0 = vmlaq_n_f32(accv0,xa,*pb);
+           accv1 = vmlaq_n_f32(accv1,xb,*pb);
+
+         }
+         break;
+         case 1:
+         {
+           
+           accv0 = vmlaq_n_f32(accv0,x0,*pb);
+           accv1 = vmlaq_n_f32(accv1,x1,*pb);
+
+         }
+         break;
+         default:
+         break;
+      }
+
+      /* The result is stored in the destination buffer. */
+      vst1q_f32(pDst,accv0);
+      pDst += 4;
+      vst1q_f32(pDst,accv1);
+      pDst += 4;
+
+      /* Advance state pointer by 8 for the next 8 samples */
+      pState = pState + 8;
+
+      blkCnt--;
+   }
+
+   /* Tail */
+   blkCnt = blockSize & 0x7;
+
+   while (blkCnt > 0U)
+   {
+      /* Copy one sample at a time into state buffer */
+      *pStateCurnt++ = *pSrc++;
+
+      /* Set the accumulator to zero */
+      acc = 0.0f;
+
+      /* Initialize state pointer */
+      px = pState;
+
+      /* Initialize Coefficient pointer */
+      pb = pCoeffs;
+
+      i = numTaps;
+
+      /* Perform the multiply-accumulates */
+      do
+      {
+         /* acc =  b[numTaps-1] * x[n-numTaps-1] + b[numTaps-2] * x[n-numTaps-2] + b[numTaps-3] * x[n-numTaps-3] +...+ b[0] * x[0] */
+         acc += *px++ * *pb++;
+         i--;
+
+      } while (i > 0U);
+
+      /* The result is stored in the destination buffer. */
+      *pDst++ = acc;
+
+      /* Advance state pointer by 1 for the next sample */
+      pState = pState + 1;
+
+      blkCnt--;
+   }
+
+   /* Processing is complete.
+   ** Now copy the last numTaps - 1 samples to the starting of the state buffer.
+   ** This prepares the state buffer for the next function call. */
+
+   /* Points to the start of the state buffer */
+   pStateCurnt = S->pState;
+
+   /* Copy numTaps number of values */
+   tapCnt = numTaps - 1U;
+
+   /* Copy data */
+   while (tapCnt > 0U)
+   {
+      *pStateCurnt++ = *pState++;
+
+      /* Decrement the loop counter */
+      tapCnt--;
+   }
+
+}
+#else
 void arm_fir_f32(
   const arm_fir_instance_f32 * S,
   const float32_t * pSrc,
@@ -488,6 +709,7 @@ void arm_fir_f32(
 
 }
 
+#endif /* #if defined(ARM_MATH_NEON) */
 /**
-  @} end of FIR group
- */
+* @} end of FIR group
+*/
