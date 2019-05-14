@@ -286,6 +286,26 @@ The \ref fm_memory provides a sequence of memory information.
     <td>xs:boolean</td>
   </tr>
   <tr>
+    <td>.memory[<i>n</i>].startup</td>
+    <td>"1" specifies that this region is used for the startup code of the application. Default value is "0".</td>
+    <td>xs:boolean</td>
+  </tr>
+  <tr>
+    <td>.memory[<i>n</i>].uninit</td>
+    <td>"1" specifies that this region is not zero initialized during startup. Default value is "0".</td>
+    <td>xs:boolean</td>
+  </tr>
+  <tr>
+    <td>.memory[<i>n</i>].shared</td>
+    <td>"1" specifies that this region is used by multiple zones. Default value is "0".</td>
+    <td>xs:boolean</td>
+  </tr>
+  <tr>
+    <td>.memory[<i>n</i>].dma</td>
+    <td>"1" specifies that this region is accessed by a DMA controller. Default value is "0".</td>
+    <td>xs:boolean</td>
+  </tr>
+  <tr>
     <td>.memory[<i>n</i>].info</td>
     <td>Brief description of the memory region.</td>
     <td>xs:string</td>
@@ -590,6 +610,16 @@ The \ref fm_peripheral contains a sequence of all peripherals that are accessibl
   <tr>
     <td>.peripheral[<i>n</i>].privilege.u</td>
     <td>The \em unprivileged \em level setting of \ref privilege "privilege type".</td>
+    <td>xs:boolean</td>
+  </tr>
+  <tr>
+    <td>.peripheral[<i>n</i>].shared</td>
+    <td>"1" specifies that this peripheral is used by multiple zones. Default value is "0".</td>
+    <td>xs:boolean</td>
+  </tr>
+  <tr>
+    <td>.peripheral[<i>n</i>].dma</td>
+    <td>"1" specifies that this peripheral is accessed by a DMA controller. Default value is "0".</td>
     <td>xs:boolean</td>
   </tr>
   <tr>

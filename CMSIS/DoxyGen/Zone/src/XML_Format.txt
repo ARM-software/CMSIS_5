@@ -31,7 +31,7 @@ is described with schema files that are located in the ARM.CMSIS pack in the dir
 :-----------|:--------------|:-------------
 *.rzone     | rzone.xsd     | Stores the system resources (processors, memory, peripherals) available.
 *.azone     | azone.xsd     | Stores the system partitioning which includes assignments and memory splits for a related .rzone file.
-*.fzone     | fzone.xsd     | CMSIS-Zone data input file for Freemarker as explained in \ref GenDataModel.
+*.fzone     | fzone.xsd     | CMSIS-Zone data input file for FreeMarker as explained in \ref GenDataModel.
 
 \anchor rzone
 Top-level .rzone XML elements
@@ -224,23 +224,42 @@ The \ref xml_creator specifies how a derived .rzone file was created.
     <th>Use</th>
   </tr>
   <tr>
+    <td>tool</td>
+    <td>Identification of the tool that generated this *.rzone file.  (i.e. "CMSIS-Zone V1.1.0")</td>
+    <td>xs:string</td>
+    <td>optional</td>
+  </tr>
+  <tr>
     <td>rzone</td>
     <td>Name of the .rzone file which contained top level resources.</td>
     <td>xs:string</td>
-    <td>required</td>
+    <td>optional</td>
   </tr>
   <tr>
     <td>azone</td>
     <td>Name of the .azone file which contained related assignments.</td>
     <td>xs:string</td>
-    <td>required</td>
+    <td>optional</td>
   </tr>
   <tr>
     <td>zone</td>
     <td>Name of the zone that is represented in this derived .rzone file.</td>
     <td>xs:string</td>
-    <td>required</td>
+    <td>optional</td>
   </tr>
+  <tr>
+    <td>zone_info</td>
+    <td>Brief description of the zone.</td>
+    <td>xs:string</td>
+    <td>optional</td>
+  </tr>
+  <tr>
+    <td>security</td>
+    <td>\ref security "Security" setting for this *.rzone file.</td>
+    <td>\ref security "SecurityType"</td>
+    <td>optional</td>
+  </tr>
+
 </table>
 */
 
@@ -685,7 +704,7 @@ The \ref xml_rmemory lists a logical memory region with physical mapping. Memory
     <td>required</td>
   </tr>
   <tr>
-    <td>physcial</td>
+    <td>physical</td>
     <td>The physical start address of the memory region in the address map.  If physical is not specified the start address value is used.</td>
     <td>NonNegativeInteger</td>
     <td>optional</td>
@@ -717,6 +736,24 @@ The \ref xml_rmemory lists a logical memory region with physical mapping. Memory
   <tr>
     <td>startup</td>
     <td>"1" specifies that this region is used for the startup code of the application. Default value is "0".</td>
+    <td>xs:boolean</td>
+    <td>optional</td>
+  </tr>
+  <tr>
+    <td>uninit</td>
+    <td>"1" specifies that this region is not zero initialized during startup. Default value is "0".</td>
+    <td>xs:boolean</td>
+    <td>optional</td>
+  </tr>
+  <tr>
+    <td>shared</td>
+    <td>"1" specifies that this region is used by multiple zones. Default value is "0".</td>
+    <td>xs:boolean</td>
+    <td>optional</td>
+  </tr>
+  <tr>
+    <td>dma</td>
+    <td>"1" specifies that this region is accessed by a DMA controller. Default value is "0".</td>
     <td>xs:boolean</td>
     <td>optional</td>
   </tr>
@@ -907,7 +944,7 @@ The \ref xml_group can be used to logically group peripherals according to funct
     <td>optional</td>
   </tr>
   <tr>
-    <td>physcial</td>
+    <td>physical</td>
     <td>The physical start address of the peripheral group.</td>
     <td>xs:string</td>
     <td>optional</td>
@@ -917,6 +954,18 @@ The \ref xml_group can be used to logically group peripherals according to funct
     <td>The physical size of the peripheral group in bytes.</td>
     <td>xs:string</td>
     <td>required</td>
+  </tr>
+  <tr>
+    <td>shared</td>
+    <td>"1" specifies that this peripheral group is used by multiple zones. Default value is "0".</td>
+    <td>xs:boolean</td>
+    <td>optional</td>
+  </tr>
+  <tr>
+    <td>dma</td>
+    <td>"1" specifies that this peripheral group is accessed by a DMA controller. Default value is "0".</td>
+    <td>xs:boolean</td>
+    <td>optional</td>
   </tr>
   <tr>
     <td>external</td>
@@ -1038,6 +1087,18 @@ The \ref xml_peripheral is used to define an address mapping for one peripheral.
     <td>The physical size of the peripheral in bytes.</td>
     <td>xs:string</td>
     <td>required</td>
+  </tr>
+  <tr>
+    <td>shared</td>
+    <td>"1" specifies that this peripheral group is used by multiple zones. Default value is "0".</td>
+    <td>xs:boolean</td>
+    <td>optional</td>
+  </tr>
+  <tr>
+    <td>dma</td>
+    <td>"1" specifies that this peripheral group is accessed by a DMA controller. Default value is "0".</td>
+    <td>xs:boolean</td>
+    <td>optional</td>
   </tr>
   <tr>
     <td>external</td>
@@ -1515,8 +1576,20 @@ The \ref xml_amemory defines a new memory sub-region that is related to a parent
     <td>optional</td>
   </tr>
   <tr>
-    <td>startup</td>
-    <td>"1" specifies that this region is used for the startup code of the application. Default value is "0".</td>
+    <td>uninit</td>
+    <td>"1" specifies that this region is not zero initialized during startup. Default value is "0".</td>
+    <td>xs:boolean</td>
+    <td>optional</td>
+  </tr>
+  <tr>
+    <td>shared</td>
+    <td>"1" specifies that this region is used by multiple zones. Default value is "0".</td>
+    <td>xs:boolean</td>
+    <td>optional</td>
+  </tr>
+  <tr>
+    <td>dma</td>
+    <td>"1" specifies that this region is accessed by a DMA controller. Default value is "0".</td>
     <td>xs:boolean</td>
     <td>optional</td>
   </tr>
@@ -1703,6 +1776,18 @@ The \ref xml_assign defines the resource assignments of that zone.
     <td>privilege</td>
     <td>\ref privilege "Privilege level" for this assignment.</td>
     <td>\ref privilege "PrivilegeType"</td>
+    <td>optional</td>
+  </tr>
+  <tr>
+    <td>uninit</td>
+    <td>"1" specifies that this region is not zero initialized during startup. Default value is "0".</td>
+    <td>xs:boolean</td>
+    <td>optional</td>
+  </tr>
+  <tr>
+    <td>dma</td>
+    <td>"1" specifies that this region is accessed by a DMA controller. Default value is "0".</td>
+    <td>xs:boolean</td>
     <td>optional</td>
   </tr>
   <tr>
