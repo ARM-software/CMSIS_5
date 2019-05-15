@@ -1,14 +1,14 @@
 /**************************************************************************//**
  * @file     mem_ARMCA5.h
  * @brief    Memory base and size definitions (used in scatter file)
- * @version  V1.00
- * @date     10. January 2018
+ * @version  V1.1.0
+ * @date     15. May 2019
  *
  * @note
  *
  ******************************************************************************/
 /*
- * Copyright (c) 2009-2018 Arm Limited. All rights reserved.
+ * Copyright (c) 2009-2019 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -38,8 +38,9 @@
 /*--------------------- ROM Configuration ------------------------------------
 //
 // <h> ROM Configuration
-//   <o0> ROM Base Address <0x0-0xFFFFFFFF:8>
-//   <o1> ROM Size (in Bytes) <0x0-0xFFFFFFFF:8>
+//   <i> For compatibility with MMU config the sections must be multiple of 1MB
+//   <o0> ROM Base Address <0x0-0xFFFFFFFF:0x100000>
+//   <o1> ROM Size (in Bytes) <0x0-0xFFFFFFFF:0x100000>
 // </h>
  *----------------------------------------------------------------------------*/
 #define __ROM_BASE       0x80000000
@@ -47,10 +48,13 @@
 
 /*--------------------- RAM Configuration -----------------------------------
 // <h> RAM Configuration
-//   <o0> RAM Base Address    <0x0-0xFFFFFFFF:8>
-//   <o1> RAM Total Size (in Bytes) <0x0-0xFFFFFFFF:8>
-//   <o2> RW_DATA Size (in Bytes) <0x0-0xFFFFFFFF:8>
-//   <o3> ZI_DATA Size (in Bytes) <0x0-0xFFFFFFFF:8>
+//   <i> For compatibility with MMU config the sections must be multiple of 1MB
+//   <o0> RAM Base Address    <0x0-0xFFFFFFFF:0x100000>
+//   <o1> RAM Total Size (in Bytes) <0x0-0xFFFFFFFF:0x100000>
+//   <h> Data Sections
+//     <o2> RW_DATA Size (in Bytes) <0x0-0xFFFFFFFF:8>
+//     <o3> ZI_DATA Size (in Bytes) <0x0-0xFFFFFFFF:8>
+//   </h>
 //   <h> Stack / Heap Configuration
 //     <o4>  Stack Size (in Bytes) <0x0-0xFFFFFFFF:8>
 //     <o5>  Heap Size (in Bytes) <0x0-0xFFFFFFFF:8>
@@ -84,11 +88,13 @@
 /*--------------------- TTB Configuration ------------------------------------
 //
 // <h> TTB Configuration
-//   <o0> TTB Base Address <0x0-0xFFFFFFFF:8>
+//   <i> The TLB L1 contains 4096 32-bit entries and must be 16kB aligned
+//   <i> The TLB L2 entries are placed after the L1 in the MMU config
+//   <o0> TTB Base Address <0x0-0xFFFFFFFF:0x4000>
 //   <o1> TTB Size (in Bytes) <0x0-0xFFFFFFFF:8>
 // </h>
  *----------------------------------------------------------------------------*/
 #define __TTB_BASE       0x80500000
-#define __TTB_SIZE       0x00004000
+#define __TTB_SIZE       0x00005000
 
 #endif /* __MEM_ARMCA5_H */
