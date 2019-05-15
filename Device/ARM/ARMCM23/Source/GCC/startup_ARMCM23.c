@@ -76,7 +76,11 @@ void Reset_Handler  (void) __attribute__ ((noreturn));
 //<h> Stack Configuration
 //  <o> Stack Size (in Bytes) <0x0-0xFFFFFFFF:8>
 //</h>
+#if defined (__NEWLIB__)
+#define  __STACK_SIZE  0x0001D000
+#else
 #define  __STACK_SIZE  0x00000400
+#endif
 static uint8_t stack[__STACK_SIZE] __attribute__ ((aligned(8), used, section(".stack")));
 
 //<h> Heap Configuration
