@@ -77,6 +77,52 @@ void arm_cmplx_mag_squared_f32(
         uint32_t blkCnt;                               /* Loop counter */
         float32_t real, imag;                          /* Temporary input variables */
 
+#if defined(ARM_MATH_NEON)
+  float32x4x2_t vecA;
+  float32x4_t vRealA;
+  float32x4_t vImagA;
+  float32x4_t vMagSqA;
+
+  float32x4x2_t vecB;
+  float32x4_t vRealB;
+  float32x4_t vImagB;
+  float32x4_t vMagSqB;
+
+  /* Loop unrolling: Compute 8 outputs at a time */
+  blkCnt = numSamples >> 3;
+
+  while (blkCnt > 0U)
+  {
+    /* out = sqrt((real * real) + (imag * imag)) */
+
+    vecA = vld2q_f32(pSrc);
+    pSrc += 8;
+
+    vRealA = vmulq_f32(vecA.val[0], vecA.val[0]);
+    vImagA = vmulq_f32(vecA.val[1], vecA.val[1]);
+    vMagSqA = vaddq_f32(vRealA, vImagA);
+
+    vecB = vld2q_f32(pSrc);
+    pSrc += 8;
+
+    vRealB = vmulq_f32(vecB.val[0], vecB.val[0]);
+    vImagB = vmulq_f32(vecB.val[1], vecB.val[1]);
+    vMagSqB = vaddq_f32(vRealB, vImagB);
+
+    /* Store the result in the destination buffer. */
+    vst1q_f32(pDst, vMagSqA);
+    pDst += 4;
+
+    vst1q_f32(pDst, vMagSqB);
+    pDst += 4;
+
+    /* Decrement the loop counter */
+    blkCnt--;
+  }
+
+  blkCnt = numSamples & 7;
+
+#else
 #if defined (ARM_MATH_LOOPUNROLL)
 
   /* Loop unrolling: Compute 4 outputs at a time */
@@ -115,6 +161,7 @@ void arm_cmplx_mag_squared_f32(
   blkCnt = numSamples;
 
 #endif /* #if defined (ARM_MATH_LOOPUNROLL) */
+#endif /* #if defined(ARM_MATH_NEON) */
 
   while (blkCnt > 0U)
   {

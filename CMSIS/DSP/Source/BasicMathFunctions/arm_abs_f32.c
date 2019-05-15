@@ -67,6 +67,34 @@ void arm_abs_f32(
 {
         uint32_t blkCnt;                               /* Loop counter */
 
+#if defined(ARM_MATH_NEON)
+    float32x4_t vec1;
+    float32x4_t res;
+
+    /* Compute 4 outputs at a time */
+    blkCnt = blockSize >> 2U;
+
+    while (blkCnt > 0U)
+    {
+        /* C = |A| */
+
+    	/* Calculate absolute values and then store the results in the destination buffer. */
+        vec1 = vld1q_f32(pSrc);
+        res = vabsq_f32(vec1);
+        vst1q_f32(pDst, res);
+
+        /* Increment pointers */
+        pSrc += 4;
+        pDst += 4;
+        
+        /* Decrement the loop counter */
+        blkCnt--;
+    }
+
+    /* Tail */
+    blkCnt = blockSize & 0x3;
+
+#else
 #if defined (ARM_MATH_LOOPUNROLL)
 
   /* Loop unrolling: Compute 4 outputs at a time */
@@ -98,6 +126,7 @@ void arm_abs_f32(
   blkCnt = blockSize;
 
 #endif /* #if defined (ARM_MATH_LOOPUNROLL) */
+#endif /* #if defined(ARM_MATH_NEON) */
 
   while (blkCnt > 0U)
   {

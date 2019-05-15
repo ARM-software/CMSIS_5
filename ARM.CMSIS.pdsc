@@ -8,8 +8,10 @@
   <url>http://www.keil.com/pack/</url>
 
   <releases>
-    <release version="5.5.2-dev2">
+    <release version="5.5.2-dev4">
       Active development...
+      CMSIS-Core(A): 1.1.4 (see revision history for details)
+       - Fixed __FPU_Enable.
       CMSIS-Core(M): 5.3.0 (see revision history for details)
        - Added provisions for compiler-independent C startup code.
       CMSIS-RTOS:
@@ -18,6 +20,8 @@
         - RTX 5.5.1 (see revision history for details)
       Devices:
        - Generalized/fixed startup code for Armv8.1-MML.
+       - Updated Core(A) default memory regions and MMU configurations
+       - Moved Core(A) memory and system config files to avoid include path issues
     </release>
     <release version="5.5.1" date="2019-03-20">
       The following folders are deprecated
@@ -714,11 +718,13 @@ virtual memory capabilities. The Cortex-A5 processor implements the Armv7-A arch
 Arm instructions and 16-bit and 32-bit Thumb instructions. The Cortex-A5 is the smallest member of the Cortex-A processor family.
       </description>
 
-      <memory id="IROM1"                                start="0x80000000" size="0x00200000" startup="1" default="1"/>
-      <memory id="IRAM1"                                start="0x80200000" size="0x00200000" init   ="0" default="1"/>
+      <memory id="IROM1"                                start="0x00000000" size="0x04000000" startup="1" default="1"/> <!-- 64MB NOR -->
+      <memory id="IROM2"                                start="0x0C000000" size="0x04000000" startup="0" default="0"/> <!-- 64MB NOR -->
+      <memory id="IRAM1"                                start="0x14000000" size="0x02000000" init   ="0" default="1"/> <!-- 32MB SRAM -->
+      <memory id="IRAM2"                                start="0x80000000" size="0x40000000" init   ="0" default="0"/> <!-- 1GB DRAM -->
 
       <device Dname="ARMCA5">
-        <processor Dcore="Cortex-A5" DcoreVersion="r0p1" Dfpu="DP_FPU" Dmpu="MPU" Dendian="Configurable"/>
+        <processor Dcore="Cortex-A5" DcoreVersion="r0p1" Dfpu="DP_FPU" Dmpu="MPU" Dendian="Configurable" Dclock="12000000"/>
         <compile header="Device/ARM/ARMCA5/Include/ARMCA5.h" define="ARMCA5"/>
       </device>
     </family>
@@ -732,11 +738,13 @@ The Cortex-A7 MPCore processor has one to four processors in a single multiproce
 an optional integrated GIC, and an optional L2 cache controller.
       </description>
 
-      <memory id="IROM1"                                start="0x80000000" size="0x00200000" startup="1" default="1"/>
-      <memory id="IRAM1"                                start="0x80200000" size="0x00200000" init   ="0" default="1"/>
+      <memory id="IROM1"                                start="0x00000000" size="0x04000000" startup="1" default="1"/> <!-- 64MB NOR -->
+      <memory id="IROM2"                                start="0x0C000000" size="0x04000000" startup="0" default="0"/> <!-- 64MB NOR -->
+      <memory id="IRAM1"                                start="0x14000000" size="0x02000000" init   ="0" default="1"/> <!-- 32MB SRAM -->
+      <memory id="IRAM2"                                start="0x80000000" size="0x40000000" init   ="0" default="0"/> <!-- 1GB DRAM -->
 
       <device Dname="ARMCA7">
-        <processor Dcore="Cortex-A7" DcoreVersion="r0p5" Dfpu="DP_FPU" Dmpu="MPU" Dendian="Configurable"/>
+        <processor Dcore="Cortex-A7" DcoreVersion="r0p5" Dfpu="DP_FPU" Dmpu="MPU" Dendian="Configurable" Dclock="12000000"/>
         <compile header="Device/ARM/ARMCA7/Include/ARMCA7.h" define="ARMCA7"/>
       </device>
     </family>
@@ -750,11 +758,13 @@ The Cortex-A9 processor implements the Armv7-A architecture and runs 32-bit Arm 
 and 8-bit Java bytecodes in Jazelle state.
       </description>
 
-      <memory id="IROM1"                                start="0x80000000" size="0x00200000" startup="1" default="1"/>
-      <memory id="IRAM1"                                start="0x80200000" size="0x00200000" init   ="0" default="1"/>
+      <memory id="IROM1"                                start="0x00000000" size="0x04000000" startup="1" default="1"/> <!-- 64MB NOR -->
+      <memory id="IROM2"                                start="0x0C000000" size="0x04000000" startup="0" default="0"/> <!-- 64MB NOR -->
+      <memory id="IRAM1"                                start="0x14000000" size="0x02000000" init   ="0" default="1"/> <!-- 32MB SRAM -->
+      <memory id="IRAM2"                                start="0x80000000" size="0x40000000" init   ="0" default="0"/> <!-- 1GB DRAM -->
 
       <device Dname="ARMCA9">
-        <processor Dcore="Cortex-A9" DcoreVersion="r4p1" Dfpu="DP_FPU" Dmpu="MPU" Dendian="Configurable"/>
+        <processor Dcore="Cortex-A9" DcoreVersion="r4p1" Dfpu="DP_FPU" Dmpu="MPU" Dendian="Configurable" Dclock="12000000"/>
         <compile header="Device/ARM/ARMCA9/Include/ARMCA9.h" define="ARMCA9"/>
       </device>
     </family>
@@ -2992,8 +3002,8 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="linkerScript" name="Device/ARM/ARMCA5/Source/IAR/ARMCA5.icf"       version="1.0.0" attr="config" condition="IAR"/>
         <file category="sourceC"      name="Device/ARM/ARMCA5/Source/system_ARMCA5.c"      version="1.0.1" attr="config"/>
         <file category="sourceC"      name="Device/ARM/ARMCA5/Source/mmu_ARMCA5.c"         version="1.0.0" attr="config"/>
-        <file category="header"       name="Device/ARM/ARMCA5/Include/system_ARMCA5.h"     version="1.0.0" attr="config"/>
-        <file category="header"       name="Device/ARM/ARMCA5/Include/mem_ARMCA5.h"        version="1.0.0" attr="config"/>
+        <file category="header"       name="Device/ARM/ARMCA5/Config/system_ARMCA5.h"      version="1.0.0" attr="config"/>
+        <file category="header"       name="Device/ARM/ARMCA5/Config/mem_ARMCA5.h"         version="1.0.0" attr="config"/>
 
       </files>
     </component>
@@ -3015,8 +3025,8 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="linkerScript" name="Device/ARM/ARMCA7/Source/IAR/ARMCA7.icf"       version="1.0.0" attr="config" condition="IAR"/>
         <file category="sourceC"      name="Device/ARM/ARMCA7/Source/system_ARMCA7.c"      version="1.0.1" attr="config"/>
         <file category="sourceC"      name="Device/ARM/ARMCA7/Source/mmu_ARMCA7.c"         version="1.0.0" attr="config"/>
-        <file category="header"       name="Device/ARM/ARMCA7/Include/system_ARMCA7.h"     version="1.0.0" attr="config"/>
-        <file category="header"       name="Device/ARM/ARMCA7/Include/mem_ARMCA7.h"        version="1.0.0" attr="config"/>
+        <file category="header"       name="Device/ARM/ARMCA7/Config/system_ARMCA7.h"      version="1.0.0" attr="config"/>
+        <file category="header"       name="Device/ARM/ARMCA7/Config/mem_ARMCA7.h"         version="1.0.0" attr="config"/>
       </files>
     </component>
 
@@ -3037,8 +3047,8 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="linkerScript" name="Device/ARM/ARMCA9/Source/IAR/ARMCA9.icf"       version="1.0.0" attr="config" condition="IAR"/>
         <file category="sourceC"      name="Device/ARM/ARMCA9/Source/system_ARMCA9.c"      version="1.0.1" attr="config"/>
         <file category="sourceC"      name="Device/ARM/ARMCA9/Source/mmu_ARMCA9.c"         version="1.0.0" attr="config"/>
-        <file category="header"       name="Device/ARM/ARMCA9/Include/system_ARMCA9.h"     version="1.0.0" attr="config"/>
-        <file category="header"       name="Device/ARM/ARMCA9/Include/mem_ARMCA9.h"        version="1.0.0" attr="config"/>
+        <file category="header"       name="Device/ARM/ARMCA9/Config/system_ARMCA9.h"      version="1.0.0" attr="config"/>
+        <file category="header"       name="Device/ARM/ARMCA9/Config/mem_ARMCA9.h"         version="1.0.0" attr="config"/>
       </files>
     </component>
 

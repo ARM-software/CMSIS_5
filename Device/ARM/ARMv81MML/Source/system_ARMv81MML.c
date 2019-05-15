@@ -2,8 +2,8 @@
  * @file     system_ARMv81MML.c
  * @brief    CMSIS Device System Source File for
  *           Armv8.1-M Mainline Device Series
- * @version  V1.0.0
- * @date     15. March 2019
+ * @version  V1.1.0
+ * @date     09. May 2019
  ******************************************************************************/
 /*
  * Copyright (c) 2009-2019 Arm Limited. All rights reserved.
@@ -45,7 +45,7 @@
   Externals
  *----------------------------------------------------------------------------*/
 #if defined (__VTOR_PRESENT) && (__VTOR_PRESENT == 1U)
-  extern uint32_t __Vectors;
+  extern uint32_t __VECTOR_TABLE;
 #endif
 
 /*----------------------------------------------------------------------------
@@ -69,7 +69,7 @@ void SystemInit (void)
 {
 
 #if defined (__VTOR_PRESENT) && (__VTOR_PRESENT == 1U)
-  SCB->VTOR = (uint32_t) &__Vectors;
+  SCB->VTOR = (uint32_t)(&__VECTOR_TABLE);
 #endif
 
 #if defined (__FPU_USED) && (__FPU_USED == 1U)
