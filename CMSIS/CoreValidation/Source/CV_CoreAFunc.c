@@ -245,3 +245,25 @@ void TC_CoreAFunc_MVBAR(void) {
   
   __set_MVBAR(mvbar);
 }
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+
+void TC_CoreAFunc_FPU_Enable(void) {
+  uint32_t fpexc = __get_FPEXC();
+  __set_FPEXC(fpexc & ~0x40000000u); // disable FPU
+  
+  uint32_t cp15;
+  __get_CP(15, 0, cp15, 1, 0, 2);
+  
+  cp15 &= ~0x00F00000u;
+  __set_CP(15, 0, cp15, 1, 0, 2); // disable FPU access
+  
+  __FPU_Enable();
+    
+  __get_CP(15, 0, cp15, 1, 0, 2);
+  ASSERT_TRUE((cp15 & 0x00F00000u) == 0x00F00000u);
+
+  fpexc = __get_FPEXC();  
+  ASSERT_TRUE((fpexc & 0x40000000u) == 0x40000000u);
+}
+
