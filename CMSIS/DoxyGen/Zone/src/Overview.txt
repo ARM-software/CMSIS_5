@@ -197,7 +197,7 @@ The <b>Zone Editor</b> window contains toolbar buttons that offer direct access 
 |--------------------------------|-------------------------------------------------|
 | Tree View                      | Shows the resources as a tree                   |
 | List View                      | Shows the resources as a simple list            |
-| Arrange memory blocks          | Arranges memory blocks according to their sizes |
+| Arrange memory regions         | Arranges memory regions according to their sizes |
 | \ref zTUICreate "Add new zone" | Adds a new zone to the zone map                 |
 | \ref zTUIGenerate "Generate"   | Generates CMSIS-Zone output files               |
 */
@@ -207,53 +207,53 @@ The <b>Zone Editor</b> window contains toolbar buttons that offer direct access 
 /**
 \page zTInteractiveMode Interactive Mode
 
-In the \b Interactive \b Mode, use the GUI to
- - \ref zTUICreateProject "create new projects",
- - \ref zTUIMemPerRes "create new memory blocks and change resource properties",
- - \ref zTUIZonePart "partition zones", and
- - \ref zTUIGenerate "generate" the relevant output.
+The following section explains the interactive mode of the CMSIS-Zone Utility.
+The workflow is:
+
+ -# \subpage zTUICreateProject that allows to manage system resources.
+ -# \subpage zTUIMemPerRes allows to create sub-memory regions and defines properties such as access permissions.
+ -# \subpage zTUIZonePart that assigns available resources to sub-projects or execution compartments.
+ -# \subpage zTUIGenerate for device configuration and linker settings.
 
 
-\section zTUICreateProject Create a CMSIS-Zone Project
+\page zTUICreateProject Create a CMSIS-Zone Project
 
 Currently, the flow is not complete. Please use one of the pre-built \ref zTExamples instead:
 - The \ref zTEMusca example shows the configuration of a multi-processor system with two Arm Cortex-M33 cores. Both cores
-  offer TrustZone for Armv8-M and thus two zonoes (secure/non-secure) are created for each processor.
+  offer TrustZone for Armv8-M and thus two zones (secure/non-secure) are created for each processor.
 - the \ref zTELPC55 example is based on a multi-processor system with two Cortex-M33 processors, where only core 0 is eanbled
   with TrustZone for Armv8-M. Thus, the second core is not further divided into sub-zones.
 
 <!--The following sections explain how the \ref zTEMusca example was created.-->
 
 
-\section zTUIMemPerRes Memory and Peripheral Resources
+\page zTUIMemPerRes Memory and Peripheral Resources
 
-Memory and peripherals can be assigned certain permission and privilege levels, as well as a security attribute. Memories
-can be further divided into smaller parts.
+The available memory can be further divided into \ref zTUIMemAdd "smaller regions" that are later assigned to zones, 
+for example a zone for loader and zone for application.
+
+For memory and peripherals \ref zTUIPerProp "properties" such as access permission, privilege, and security level can be configured.
+These settings can be for example used to generate source code files that configure the device at run-time.
 
 
-\subsection zTUIMemAdd Create/add New Memory Block
+\section zTUIMemAdd Create Memory Regions
 
-To create a new memory block, right-click on the memory that you want to divide and select <b>Add memory block</b>:
+To create a new memory region, right-click on the memory that you want to divide and select <b>Add memory region</b>:
 
 \image html AddMemoryBlock.png
 
-A new window opens. A name derived from the parent memory is already entered. Change it at your convenience. Specify the size
-of the new block. In this dialog, you can set permissions, privilege, as well as security levels for the memory block. When
-done, click \b Finish:
+In the dialog a name derived from the parent memory region is provided. Change this region name as needed and specify the size. 
+You In this dialog, you change permissions, privilege, or security level for the memory region. When
+done, click \b Finish.
 
 \image html NewMemoryBlockWiz.png
 
-The new memory block is immediately shown in the zone map. Depending on the security level, you may be able to assign this
-new block only to certain zones. For example, secure memory blocks cannot be assigned to non-secure zones. In this case, the
-checkbox for the assignment is missing:
+The new memory region is immediately shown in the zone map. Depending on the security level, you may be able to assign this
+new region only to certain zones. For example, secure memory regions cannot be assigned to a non-secure zone.
 
 \image html IRAM1_1Display.png
 
-Use this flow to partition the project as required by the system design. When done, \ref zTUIGenerate "generate" the output
-files and continue in your toolchain of choice.
-
-
-\subsection zTUIPerProp Resource Properties
+\section zTUIPerProp Resource Properties
 
 To change the properties of a resource, such as a peripheral for example, right-click the resource and select \b Properties.
 Then, you can set permissions (\c peripheral, \c read, \c write, and \c execute) and select if only \c privileged or
@@ -261,7 +261,7 @@ Then, you can set permissions (\c peripheral, \c read, \c write, and \c execute)
 (\c not specified, \c non-secure, \c non-secure callable, \c secure).
 
 
-\section zTUIZonePart Zone Partitioning
+\page zTUIZonePart Zone Partitioning
 
 Every CMSIS-Zone project consists of one or more zones. The basic flow to create zones is as follows:
 - In case of multi-core devices, create a zone for each processor.
@@ -269,7 +269,7 @@ Every CMSIS-Zone project consists of one or more zones. The basic flow to create
   Arm Cortex-M cores supporting TrustZone for Armv8-M, create a secure and a non-secure partition for each of these cores.
 
 
-\subsection zTUICreate Create Zones
+\section zTUICreate Create Zones
 
 To split a multi-processor system into single-processor sub-systems, you need to create new zones. Switch to the \b Zones tab
 and click the <b>Add new zone</b> button:
@@ -295,7 +295,7 @@ Similarly, an additional zone called "CM33_1" was created and attached to proces
 Adding zones only works for the currently opened \ref azone ".azone" file.
 
 
-\section zTUIGenerate Generate output
+\page zTUIGenerate Generate output files
 
 The main purpose of the CMSIS-Zone utility is to generate files that represent the configured system and that can be used in
 other toolchains for further development. The generator process creates:
@@ -320,9 +320,9 @@ well as \c ftl and \c ftl_gen folders. To generate output in the \c ftl_gen fold
 /**
 \page zTCLI Command Line Mode
 
-As the \ref rzone ".rzone" and \ref azone ".azone" files are XML based, it is possible to create them without the usage of
-the CMSIS-Zone utility. If you create these files manually or using an automated process, use the CMSIS-Zone plug-in in
-headless mode to generate the FTL model and process templates. The command line is:
+As the \ref rzone ".rzone" and \ref azone ".azone" files are XML based, it is possible to create or modify the files in external tools
+without using the \ref zTInteractiveMode. To generate output files the CMSIS-Zone Utility can be started in
+headless mode. The command line format is:
 
 <tt>eclipsec.exe -noSplash  -consoleLog --launcher.suppressErrors -application com.arm.cmsis.zone.ui.headlessgen -azone FILENME.azone  -ftl FTL_DIR -ftl_gen FTL_GEN_DIR</tt>
 
