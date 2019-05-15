@@ -17746,7 +17746,7 @@ const uint16_t armBitRevIndexTable_fixed_4096[ARMBITREVINDEXTABLE_FIXED_4096_TAB
   @par
   Example code for Floating-point RFFT Twiddle factors Generation:
   @par
-  <pre>TW = exp(2*pi*i*[0:L/2-1]/L - pi/2*i).' </pre>
+  <pre>TW = exp(pi/2*i-2*pi*i*[0:L/2-1]/L).' </pre>
   @par
   Real and Imag values are in interleaved fashion
 */
