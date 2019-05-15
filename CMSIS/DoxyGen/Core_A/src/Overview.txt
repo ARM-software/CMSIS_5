@@ -67,6 +67,14 @@ The \ref templates_pg supplied by Arm have been tested and verified with the fol
       <th>Description</th>
     </tr>
     <tr>
+      <td>V1.1.4</td>
+      <td>
+        <ul>
+          <li>Fixed __FPU_Enable().</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
       <td>V1.1.3</td>
       <td>
         <ul>
