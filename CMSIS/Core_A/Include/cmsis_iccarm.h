@@ -496,6 +496,8 @@ __STATIC_INLINE
 void __FPU_Enable(void)
 {
   __ASM volatile(
+    "        PUSH    {R1-R3}           \n"
+
     //Permit access to VFP/NEON, registers by modifying CPACR
     "        MRC     p15,0,R1,c1,c0,2  \n"
     "        ORR     R1,R1,#0x00F00000 \n"
@@ -554,7 +556,10 @@ void __FPU_Enable(void)
     "        VMRS    R2,FPSCR          \n"
     "        MOV32   R3,#0x00086060    \n" //Mask off all bits that do not have to be preserved. Non-preserved bits can/should be zero.
     "        AND     R2,R2,R3          \n"
-    "        VMSR    FPSCR,R2          \n");
+    "        VMSR    FPSCR,R2          \n"
+
+    "        POP     {R1-R3}             "
+   );
 }
 
 

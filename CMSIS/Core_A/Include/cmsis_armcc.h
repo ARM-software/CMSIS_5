@@ -481,6 +481,8 @@ __STATIC_INLINE __ASM void __FPU_Enable(void)
 {
         ARM
 
+        PUSH    {R1-R3}
+
         //Permit access to VFP/NEON, registers by modifying CPACR
         MRC     p15,0,R1,c1,c0,2
         ORR     R1,R1,#0x00F00000
@@ -540,6 +542,8 @@ __STATIC_INLINE __ASM void __FPU_Enable(void)
         LDR     R3,=0x00086060 //Mask off all bits that do not have to be preserved. Non-preserved bits can/should be zero.
         AND     R2,R2,R3
         VMSR    FPSCR,R2
+
+        POP     {R1-R3}
 
         BX      LR
 }
