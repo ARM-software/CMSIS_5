@@ -184,7 +184,7 @@ The \ref xml_rzone_pg element is the root element of the .rzone file which descr
     <td>\subpage xml_creator "creator"</td>
     <td>Specifies how a derived .rzone file was created.</td>
     <td>CreatorType</td>
-    <td>optional</td>
+    <td>0..1</td>
   </tr>
   <tr>
     <td>\subpage xml_device "device"</td>
@@ -789,8 +789,8 @@ The MPC region must not necessarily overlap a physical memory space which means 
     <th colspan="3">Element Chain</th>
   </tr>
   <tr>
-    <td>\ref xml_rmemory "memory"</td>
-    <td colspan=3>\ref xml_rmemory</td>
+    <td>\ref xml_memories "memories"</td>
+    <td colspan=3>\ref xml_memories</td>
   </tr>
   <tr>
     <th>Attributes</th>
@@ -1309,19 +1309,19 @@ The \ref xml_azone_pg element is the root element of the .azone file which store
     <td>\subpage xml_arzone "rzone"</td>
     <td>Reference to rzone file</td>
     <td>RZoneType</td>
-    <td>optional</td>
+    <td>0..1</td>
   </tr>
   <tr>
     <td>\subpage xml_configure "configure"</td>
     <td>Control the operation of the CMSIS-Zone utility</td>
     <td>ConfigureType</td>
-    <td>1..1 </td>
+    <td>0..1 </td>
   </tr>
   <tr>
     <td>\subpage xml_partition "partition"</td>
     <td>Partition information for memory block splits</td>
     <td>RegionsType</td>
-    <td>1..1 </td>
+    <td>0..1 </td>
   </tr>
   <tr>
     <td>\subpage xml_zones "zones"</td>
@@ -1649,7 +1649,7 @@ The \ref xml_zones contains all zone definitions.
     <td>\subpage xml_zone "zone"</td>
     <td>Zone definitions</td>
     <td>complexType</td>
-    <td>0..*</td>
+    <td>1..*</td>
   </tr>
 </table>
 
@@ -1712,7 +1712,7 @@ The \ref xml_zone defines the name of a zone.
     <td>\ref xml_assign "assign"</td>
     <td>Resource Assignments</td>
     <td>complexType</td>
-    <td>0..*</td>
+    <td>1..*</td>
   </tr>
 </table>
 
