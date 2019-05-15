@@ -102,6 +102,7 @@ extern void TC_CoreSimd_MulAcc32 (void);
   extern void TC_CoreAFunc_MPIDR (void);
   extern void TC_CoreAFunc_VBAR (void);
   extern void TC_CoreAFunc_MVBAR (void);
+  extern void TC_CoreAFunc_FPU_Enable (void);
 #endif
 
 extern void TC_MPU_SetClear (void);
