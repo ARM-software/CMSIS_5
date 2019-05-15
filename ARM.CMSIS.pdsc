@@ -8,12 +8,10 @@
   <url>http://www.keil.com/pack/</url>
 
   <releases>
-    <release version="5.5.2-dev3">
+    <release version="5.5.2-dev4">
       Active development...
       CMSIS-Core(A): 1.1.4 (see revision history for details)
        - Fixed __FPU_Enable.
-    </release>
-    <release version="5.5.2-dev2">
       CMSIS-Core(M): 5.3.0 (see revision history for details)
        - Added provisions for compiler-independent C startup code.
       CMSIS-RTOS:
@@ -22,6 +20,7 @@
         - RTX 5.5.1 (see revision history for details)
       Devices:
        - Generalized/fixed startup code for Armv8.1-MML.
+       - Updated Core(A) default memory regions and MMU configurations
     </release>
     <release version="5.5.1" date="2019-03-20">
       The following folders are deprecated
@@ -718,11 +717,13 @@ virtual memory capabilities. The Cortex-A5 processor implements the Armv7-A arch
 Arm instructions and 16-bit and 32-bit Thumb instructions. The Cortex-A5 is the smallest member of the Cortex-A processor family.
       </description>
 
-      <memory id="IROM1"                                start="0x80000000" size="0x00200000" startup="1" default="1"/>
-      <memory id="IRAM1"                                start="0x80200000" size="0x00200000" init   ="0" default="1"/>
+      <memory id="IROM1"                                start="0x00000000" size="0x04000000" startup="1" default="1"/> <!-- 64MB NOR -->
+      <memory id="IROM2"                                start="0x0C000000" size="0x04000000" startup="0" default="0"/> <!-- 64MB NOR -->
+      <memory id="IRAM1"                                start="0x14000000" size="0x02000000" init   ="0" default="1"/> <!-- 32MB SRAM -->
+      <memory id="IRAM2"                                start="0x80000000" size="0x40000000" init   ="0" default="0"/> <!-- 1GB DRAM -->
 
       <device Dname="ARMCA5">
-        <processor Dcore="Cortex-A5" DcoreVersion="r0p1" Dfpu="DP_FPU" Dmpu="MPU" Dendian="Configurable"/>
+        <processor Dcore="Cortex-A5" DcoreVersion="r0p1" Dfpu="DP_FPU" Dmpu="MPU" Dendian="Configurable" Dclock="12000000"/>
         <compile header="Device/ARM/ARMCA5/Include/ARMCA5.h" define="ARMCA5"/>
       </device>
     </family>
@@ -736,11 +737,13 @@ The Cortex-A7 MPCore processor has one to four processors in a single multiproce
 an optional integrated GIC, and an optional L2 cache controller.
       </description>
 
-      <memory id="IROM1"                                start="0x80000000" size="0x00200000" startup="1" default="1"/>
-      <memory id="IRAM1"                                start="0x80200000" size="0x00200000" init   ="0" default="1"/>
+      <memory id="IROM1"                                start="0x00000000" size="0x04000000" startup="1" default="1"/> <!-- 64MB NOR -->
+      <memory id="IROM2"                                start="0x0C000000" size="0x04000000" startup="0" default="0"/> <!-- 64MB NOR -->
+      <memory id="IRAM1"                                start="0x14000000" size="0x02000000" init   ="0" default="1"/> <!-- 32MB SRAM -->
+      <memory id="IRAM2"                                start="0x80000000" size="0x40000000" init   ="0" default="0"/> <!-- 1GB DRAM -->
 
       <device Dname="ARMCA7">
-        <processor Dcore="Cortex-A7" DcoreVersion="r0p5" Dfpu="DP_FPU" Dmpu="MPU" Dendian="Configurable"/>
+        <processor Dcore="Cortex-A7" DcoreVersion="r0p5" Dfpu="DP_FPU" Dmpu="MPU" Dendian="Configurable" Dclock="12000000"/>
         <compile header="Device/ARM/ARMCA7/Include/ARMCA7.h" define="ARMCA7"/>
       </device>
     </family>
@@ -754,11 +757,13 @@ The Cortex-A9 processor implements the Armv7-A architecture and runs 32-bit Arm 
 and 8-bit Java bytecodes in Jazelle state.
       </description>
 
-      <memory id="IROM1"                                start="0x80000000" size="0x00200000" startup="1" default="1"/>
-      <memory id="IRAM1"                                start="0x80200000" size="0x00200000" init   ="0" default="1"/>
+      <memory id="IROM1"                                start="0x00000000" size="0x04000000" startup="1" default="1"/> <!-- 64MB NOR -->
+      <memory id="IROM2"                                start="0x0C000000" size="0x04000000" startup="0" default="0"/> <!-- 64MB NOR -->
+      <memory id="IRAM1"                                start="0x14000000" size="0x02000000" init   ="0" default="1"/> <!-- 32MB SRAM -->
+      <memory id="IRAM2"                                start="0x80000000" size="0x40000000" init   ="0" default="0"/> <!-- 1GB DRAM -->
 
       <device Dname="ARMCA9">
-        <processor Dcore="Cortex-A9" DcoreVersion="r4p1" Dfpu="DP_FPU" Dmpu="MPU" Dendian="Configurable"/>
+        <processor Dcore="Cortex-A9" DcoreVersion="r4p1" Dfpu="DP_FPU" Dmpu="MPU" Dendian="Configurable" Dclock="12000000"/>
         <compile header="Device/ARM/ARMCA9/Include/ARMCA9.h" define="ARMCA9"/>
       </device>
     </family>
