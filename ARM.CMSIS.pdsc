@@ -21,6 +21,7 @@
       Devices:
        - Generalized/fixed startup code for Armv8.1-MML.
        - Updated Core(A) default memory regions and MMU configurations
+       - Moved Core(A) memory and system config files to avoid include path issues
     </release>
     <release version="5.5.1" date="2019-03-20">
       The following folders are deprecated
@@ -3001,8 +3002,8 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="linkerScript" name="Device/ARM/ARMCA5/Source/IAR/ARMCA5.icf"       version="1.0.0" attr="config" condition="IAR"/>
         <file category="sourceC"      name="Device/ARM/ARMCA5/Source/system_ARMCA5.c"      version="1.0.1" attr="config"/>
         <file category="sourceC"      name="Device/ARM/ARMCA5/Source/mmu_ARMCA5.c"         version="1.0.0" attr="config"/>
-        <file category="header"       name="Device/ARM/ARMCA5/Include/system_ARMCA5.h"     version="1.0.0" attr="config"/>
-        <file category="header"       name="Device/ARM/ARMCA5/Include/mem_ARMCA5.h"        version="1.0.0" attr="config"/>
+        <file category="header"       name="Device/ARM/ARMCA5/Config/system_ARMCA5.h"      version="1.0.0" attr="config"/>
+        <file category="header"       name="Device/ARM/ARMCA5/Config/mem_ARMCA5.h"         version="1.0.0" attr="config"/>
 
       </files>
     </component>
@@ -3024,8 +3025,8 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="linkerScript" name="Device/ARM/ARMCA7/Source/IAR/ARMCA7.icf"       version="1.0.0" attr="config" condition="IAR"/>
         <file category="sourceC"      name="Device/ARM/ARMCA7/Source/system_ARMCA7.c"      version="1.0.1" attr="config"/>
         <file category="sourceC"      name="Device/ARM/ARMCA7/Source/mmu_ARMCA7.c"         version="1.0.0" attr="config"/>
-        <file category="header"       name="Device/ARM/ARMCA7/Include/system_ARMCA7.h"     version="1.0.0" attr="config"/>
-        <file category="header"       name="Device/ARM/ARMCA7/Include/mem_ARMCA7.h"        version="1.0.0" attr="config"/>
+        <file category="header"       name="Device/ARM/ARMCA7/Config/system_ARMCA7.h"      version="1.0.0" attr="config"/>
+        <file category="header"       name="Device/ARM/ARMCA7/Config/mem_ARMCA7.h"         version="1.0.0" attr="config"/>
       </files>
     </component>
 
@@ -3046,8 +3047,8 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="linkerScript" name="Device/ARM/ARMCA9/Source/IAR/ARMCA9.icf"       version="1.0.0" attr="config" condition="IAR"/>
         <file category="sourceC"      name="Device/ARM/ARMCA9/Source/system_ARMCA9.c"      version="1.0.1" attr="config"/>
         <file category="sourceC"      name="Device/ARM/ARMCA9/Source/mmu_ARMCA9.c"         version="1.0.0" attr="config"/>
-        <file category="header"       name="Device/ARM/ARMCA9/Include/system_ARMCA9.h"     version="1.0.0" attr="config"/>
-        <file category="header"       name="Device/ARM/ARMCA9/Include/mem_ARMCA9.h"        version="1.0.0" attr="config"/>
+        <file category="header"       name="Device/ARM/ARMCA9/Config/system_ARMCA9.h"      version="1.0.0" attr="config"/>
+        <file category="header"       name="Device/ARM/ARMCA9/Config/mem_ARMCA9.h"         version="1.0.0" attr="config"/>
       </files>
     </component>
 
