@@ -8,8 +8,12 @@
   <url>http://www.keil.com/pack/</url>
 
   <releases>
-    <release version="5.5.2-dev2">
+    <release version="5.5.2-dev3">
       Active development...
+      CMSIS-Core(A): 1.1.4 (see revision history for details)
+       - Fixed __FPU_Enable.
+    </release>
+    <release version="5.5.2-dev2">
       CMSIS-Core(M): 5.3.0 (see revision history for details)
        - Added provisions for compiler-independent C startup code.
       CMSIS-RTOS:
