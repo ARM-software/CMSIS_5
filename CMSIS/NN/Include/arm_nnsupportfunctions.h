@@ -228,7 +228,6 @@ __STATIC_FORCEINLINE q31_t arm_nn_sat_doubling_high_mult(const q31_t m1, const q
     {
         result = Q31_MAX;
     }
-
     return result;
 }
 
