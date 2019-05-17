@@ -22,7 +22,7 @@ REM -- Delete previous generated HTML files ---------------------
 
 REM -- Remove generated doxygen files ---------------------
 PUSHD ..\Documentation
-FOR %%A IN (Core, Core_A, DAP, Driver, DSP, NN, General, Pack, RTOS, RTOS2, SVD, Zone) DO IF EXIST %%A (RMDIR /S /Q %%A)
+FOR %%A IN (Core, Core_A, Core_R, DAP, Driver, DSP, NN, General, Pack, RTOS, RTOS2, SVD, Zone) DO IF EXIST %%A (RMDIR /S /Q %%A)
 POPD
 
 REM -- Generate New HTML Files ---------------------
@@ -35,6 +35,10 @@ popd
 
 pushd Core_A
 CALL doxygen_core_A.bat
+popd
+
+pushd Core_R
+CALL doxygen_core_R.bat
 popd
 
 pushd DAP
