@@ -1,0 +1,19 @@
+/** \mainpage Overview
+
+CMSIS-Core (Cortex-R) implements the basic run-time system for a Cortex-R device and gives the user access to the processor core and the device peripherals.
+In detail it defines:
+ - <b>Hardware Abstraction Layer (HAL)</b> for Cortex-R processor registers with standardized  definitions for the GIC, FPU, MPU, Cache, and core access functions.
+ - <b>System exception names</b> to interface to system exceptions without having compatibility issues.
+ - <b>Methods to organize header files</b> that makes it easy to learn new Cortex-A microcontroller products and improve software portability. This includes naming conventions for device-specific interrupts.
+ - <b>Methods for system initialization</b> to be used by each MCU vendor. For example, the standardized SystemInit() function is essential for configuring the clock system of the device.
+ - <b>Intrinsic functions</b> used to generate CPU instructions that are not supported by standard C functions.
+ - A variable to determine the <b>system clock frequency</b> which simplifies the setup of the system timers.
+
+
+The following sections provide details about the CMSIS-Core (Cortex-A):
+ - \ref using_pg describes the project setup and shows a simple program example.
+ - \ref templates_pg describes the files of the CMSIS-Core (Cortex-A) in detail and explains how to adapt template files provided by Arm to silicon vendor devices.
+ - \ref coreMISRA_Exceptions_pg describes the violations to the MISRA standard.
+ - <a href="Modules.html">\b Reference </a> describe the features and functions of the \ref device_h_pg in detail.
+ - <a href="Annotated.html">\b Data \b Structures </a> describe the data structures of the \ref device_h_pg in detail.
+
