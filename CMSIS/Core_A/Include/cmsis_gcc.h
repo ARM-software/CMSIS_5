@@ -1,8 +1,8 @@
 /**************************************************************************//**
  * @file     cmsis_gcc.h
  * @brief    CMSIS compiler specific macros, functions, instructions
- * @version  V1.1.1
- * @date     15. May 2019
+ * @version  V1.2.0
+ * @date     17. May 2019
  ******************************************************************************/
 /*
  * Copyright (c) 2009-2019 Arm Limited. All rights reserved.
@@ -39,7 +39,7 @@
 /* CMSIS compiler specific defines */
 
 #ifndef   __ASM
-  #define __ASM                                  asm
+  #define __ASM                                  __asm
 #endif
 #ifndef   __INLINE
   #define __INLINE                               inline
