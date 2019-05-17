@@ -116,6 +116,18 @@
    *
    * Define macro ARM_MATH_LOOPUNROLL to enable manual loop unrolling in DSP functions
    *
+   * - ARM_MATH_NEON:
+   *
+   * Define macro ARM_MATH_NEON to enable Neon versions of the DSP functions.
+   * It is not enabled by default when Neon is available because performances are 
+   * dependent on the compiler and target architecture.
+   *
+   * - ARM_MATH_NEON_EXPERIMENTAL:
+   *
+   * Define macro ARM_MATH_NEON_EXPERIMENTAL to enable experimental Neon versions of 
+   * of some DSP functions. Experimental Neon versions currently do not have better
+   * performances than the scalar versions.
+   *
    * <hr>
    * CMSIS-DSP in ARM::CMSIS Pack
    * -----------------------------
@@ -291,27 +303,10 @@
 #endif
 
 
+/* Included for instrinsics definitions */
 #include "cmsis_compiler.h"
 #include "string.h"
 #include "math.h"
-
-/* evaluate ARM architecture */
-#if   defined (__ARM_ARCH_6M__)
-  #define ARM_MATH_CM0_FAMILY            1
-#elif defined (__ARM_ARCH_7M__)
-//#define ARM_MATH_CM0_FAMILY            0
-#elif defined (__ARM_ARCH_7EM__)
-//#define ARM_MATH_CM0_FAMILY            0
-#elif defined (__ARM_ARCH_8M_BASE__)
-  #define ARM_MATH_CM0_FAMILY            1
-#elif defined (__ARM_ARCH_8M_MAIN__)
-//#define ARM_MATH_CM0_FAMILY            0
-#elif defined (ARM_MATH_NEON)
-  #include "core_ca.h"
-//  #define ARM_MATH_DSP
-#else
-  #error "Unknown Arm Architecture!"
-#endif
 
 /* evaluate ARM DSP feature */
 #if (defined (__ARM_FEATURE_DSP) && (__ARM_FEATURE_DSP == 1))
