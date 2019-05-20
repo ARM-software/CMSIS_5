@@ -149,6 +149,7 @@ int32_t main(void)
   printf("START\n");
 #endif
 
+ 
   /* Calculation of mean value of input */
 
   /* x' = 1/blockSize * (x(0)* 1 + x(1) * 1 + ... + x(n-1) * 1) */
