@@ -115,7 +115,7 @@ void __attribute__ ((naked, aligned(32), used, section(".vectors"))) __EL2_Vecto
   );
 }
 
-void __attribute__ ((nKED, aligned(32), used, section(".vectors"))) __EL1_Vectors(void) {
+void __attribute__ ((naked, aligned(32), used, section(".vectors"))) __EL1_Vectors(void) {
   __ASM volatile(
   "B.W    EL1_Reset_Handler      \n"
   "B.W    EL1_Undef_Handler      \n"
