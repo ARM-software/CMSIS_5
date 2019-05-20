@@ -1,4 +1,4 @@
-#! armclang -E --target=arm-arm-none-eabi -mcpu=cortex-m7 -xc
+#! armclang -E --target=arm-arm-none-eabi -march=armv8-m.main -xc
 ; command above MUST be in first line (no comment above!)
 
 /*
@@ -55,6 +55,7 @@ LR_ROM __RO_BASE __RO_SIZE  {                       ; load region size_region
   ER_ROM __RO_BASE __RO_SIZE  {                     ; load address = execution address
    *.o (RESET, +First)
    *(InRoot$$Sections)
+;   *(Veneer$$CMSE)                                  ; uncomment for secure applications
    .ANY (+RO)
    .ANY (+XO)
   }
