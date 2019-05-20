@@ -6,3 +6,5 @@ CMSIS/Documentation/
 CMSIS/RTOS2/RTX/Library/ARM/MDK/RTX_CM.uvguix.*
 CMSIS/CoreValidation/Tests/build
 CMSIS/CoreValidation/Tests/bootloader/build
+*.uvguix.*
+*.uvmpw.uvgui.*
