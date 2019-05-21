@@ -94,7 +94,7 @@ targets:
     include:
       - ./config/core_a
       - ../../Core_A/Include
-      - ../../../Device/ARM/${device}/config
+      - ../../../Device/ARM/${device}/Config
     source:
       - ./config/core_a/mmu.c
       - ../Source/CV_CoreAFunc.c
