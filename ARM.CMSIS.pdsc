@@ -18,6 +18,8 @@
         - RTX 4.82.0 (updated provisions for Arm Compiler 6 when using Cortex-M0/M0+)
       CMSIS-RTOS2:
         - RTX 5.5.1 (see revision history for details)
+      CMSIS-Driver: 2.7.0
+        - Updated WiFi Interface API 1.0.0-beta
       Devices:
        - Generalized C startup code for all Cortex-M familiy devices.
        - Updated Core(A) default memory regions and MMU configurations
