@@ -407,34 +407,9 @@ Many parameters of the WiFi module are configured using the \ref ARM_WIFI_SetOpt
 */
 
 /**
-\defgroup wifi_oper_mode WiFi Operating Mode
-\ingroup wifi_management_gr
-\brief Specifies WiFi operation for \ref ARM_WIFI_Activate.
-\details
-The WiFi operation mode defines in which mode the WiFi module operates when activated.
-@{
-\def ARM_WIFI_MODE_NONE
-\details WiFi module is inactive (default).
-\sa wifi_oper_mode
-\def ARM_WIFI_MODE_STATION
-\details WiFi module operates in station mode.
-\sa wifi_oper_mode
-\def ARM_WIFI_MODE_AP
-\details WiFi module operates in access point mode.
-\sa wifi_oper_mode
-\def ARM_WIFI_MODE_STATION_AP
-\details WiFi module operates in station mode and access point mode simultaneously.
-\sa wifi_oper_mode
-\def ARM_WIFI_MODE_AD_HOC
-\details WiFi module operates in WiFi Ad-hoc mode.
-\sa wifi_oper_mode
-@}
-*/
-
-/**
 \defgroup wifi_sec_type WiFi Security Type
 \ingroup wifi_management_gr
-\brief Specifies WiFi security type for \ref ARM_WIFI_Configure.
+\brief Specifies WiFi security type for \ref ARM_WIFI_Activate.
 \details
 The WiFi security type defines the standard used to protect the wireless network from unauthorized access.
 @{
@@ -459,7 +434,7 @@ The WiFi security type defines the standard used to protect the wireless network
 /**
 \defgroup wifi_wps_method WiFi Protected Setup (WPS) Method
 \ingroup wifi_management_gr
-\brief Specifies WiFi WPS method for \ref ARM_WIFI_Configure.
+\brief Specifies WiFi WPS method for \ref ARM_WIFI_Activate.
 \details
 The WiFi WPS method defines which WPS method is used.
 @{
@@ -508,7 +483,7 @@ a leased IPv6 address and DNS server addresses.
 Provides information needed to connect to the WiFi network for station or how to configure the access point (AP).
 
 <b>Used in:</b>
-  - \ref ARM_WIFI_Configure
+  - \ref ARM_WIFI_Activate
 *******************************************************************************************************************/
 
 /**
@@ -649,19 +624,29 @@ for (i = 0; i < num; i++) {
 \endcode
 */
 
-int32_t ARM_WIFI_Configure (uint32_t interface, ARM_WIFI_CONFIG_t *config) {
+int32_t ARM_WIFI_Activate (uint32_t interface, ARM_WIFI_CONFIG_t *config) {
   return ARM_DRIVER_OK;
 }
 /**
-\fn int32_t ARM_WIFI_Configure (uint32_t interface, ARM_WIFI_CONFIG_t *config)
+\fn int32_t ARM_WIFI_Activate (uint32_t interface, ARM_WIFI_CONFIG_t *config)
 \details
-The function \b ARM_WIFI_Configure configures the specified interface.
+The function \b ARM_WIFI_Activate activates the specified interface.
 
 The argument \em interface specifies the interface (0 = Station, 1 = Access Point).
 
+When station interface is specified, the WiFi module connects to a wireless network.
+
+The wireless network trying to connect to must be available,
+otherwise the operation will fail after a timeout.
+
+Available wireless networks can be scanned by using the function \ref ARM_WIFI_Scan.
+
+When access point interface is specified, the WiFi module creates a wireless network
+by activating the access point.
+
 The argument \em config is a pointer to the configuration \ref ARM_WIFI_CONFIG_t
-which provides information needed to connect to a WiFi network in station mode
-or information used to configure the access point (AP) in access point mode.
+which provides information needed to connect to a WiFi network for station interface
+or information used to configure the access point (AP) for access point interface.
 
 \em ssid specifies the name of the network to connect to or the network to create.
 
@@ -672,9 +657,8 @@ or information used to configure the access point (AP) in access point mode.
 \em ch specifies the WiFi channel which will be used for the connection.
 Valid channels for 2.4 GHz frequency are from \token{1} to \token{13}. If the value for \em ch = \token{0},
 the system automatically selects the channel.
-When in station mode the channel of the AP being connect to is used.
-When in access point mode the AP automatically selects the best channel
-for the WiFi connection.
+For station interface the channel of the AP being connected to is used.
+For access point interface the module automatically selects the best channel for the WiFi connection.
 
 \note
 Optionally BSSID parameter can be also set using \ref ARM_WIFI_SetOption.
@@ -691,11 +675,11 @@ both at the access point and the station. No credentials are needed.
 With \b PIN method, you must provide the PIN code that you read from the label or screen
 on the wireless device.
 
-WPS configuration for station is used when station is activated and connects to an access point.
+WPS configuration for station is used when station connects to an access point.
 It enables to connect without specifying SSID, Password, Security Type or WiFi Channel.
 The actual network information can be retrieved once connected with \ref ARM_WIFI_GetNetInfo.
 
-WPS configuration for access point is used when access point is activated (\ref ARM_WIFI_Activate).
+WPS configuration for access point is used when access point is activated.
 Subsequent activate calls re-trigger the WPS procedure.
 
 \note
@@ -713,68 +697,27 @@ wifi_config.security = ARM_WIFI_SECURITY_WPA2;
 wifi_config.ch = 0U;
 wifi_config.wps_method = ARM_WIFI_WPS_METHOD_NONE;
  
-// Configure station
-status = wifi->Configure (0U, &wifi_config);
-if (status != ARM_DRIVER_OK) {
-  // error handling
-}
- 
 // Connect to wireless network
-status = wifi->Activate (ARM_WIFI_MODE_STATION);
+status = wifi->Activate (0U, &wifi_config);
 if (status != ARM_DRIVER_OK) {
   // error handling
 }
 \endcode
 */
 
-int32_t ARM_WIFI_Activate (uint32_t mode) {
+int32_t ARM_WIFI_Deactivate (uint32_t interface) {
   return ARM_DRIVER_OK;
 }
 /**
-\fn int32_t ARM_WIFI_Activate (uint32_t mode)
+\fn int32_t ARM_WIFI_Deactivate (uint32_t interface)
 \details
-The function \b ARM_WIFI_Activate activates the specified mode of the WiFi module.
+The function \b ARM_WIFI_Deactivate deactivates the specified interface.
 
-The argument \em mode specifies which mode will be activated:
- - Station mode: connect to a wireless network
- - Access Point mode: activate access point
- - Station and Access point mode: connect to a wireless network and activate access point 
- - Ad-hoc mode: connect to or create a wireless network
+The argument \em interface specifies the interface (0 = Station, 1 = Access Point).
 
-The WiFi Station or Access Point needs to be configured before activating.
+When station interface is specified, the WiFi module disconnects from the wireless network.
 
-The function returns once the mode is activated:
- - when station is connected to a wireless network  (Station mode)
- - when access point is activated (Access Point mode)
- - when station is connected and access point is activated (Station and Access point mode)
- - when station is connected or access point is activated (Ad-hoc mode)
-
-When in station mode the wireless network trying to connect to must be available,
-otherwise the connection will fail after a timeout.
-
-Available wireless networks can be scanned by using the function \ref ARM_WIFI_Scan.
-
-\b Ad-hoc mode is very similar to standard infrastructure mode with a difference that there
-are no dedicated access points in the network but a device can temporarily offer access point
-functionality as Soft-AP (no routing capabilities) to other devices in its vicinity.
-
-When in Ad-hoc mode the module tries to connect to network with specified SSID.
-If there is no such network available the module becomes a Soft-AP with BSSID being
-randomly generated (BSSID can be retrieved by using \ref ARM_WIFI_GetOption).
-
-\b Example:
- - see \ref ARM_WIFI_Initialize
-*/
-
-int32_t ARM_WIFI_Deactivate (void) {
-  return ARM_DRIVER_OK;
-}
-/**
-\fn int32_t ARM_WIFI_Deactivate (void)
-\details
-The function \b ARM_WIFI_Deactivate deactivates the current mode:
- - terminates the connection to a wireless network
- - deactivates the access point
+When access point interface is specified, the WiFi module deactivates the access point.
 
 \b Example:
  - see \ref ARM_WIFI_GetNetInfo
@@ -816,14 +759,8 @@ memset(&wifi_config, 0, sizeof(wifi_config);
  
 wifi_config.wps_method = ARM_WIFI_WPS_METHOD_PBC;
  
-// Configure station (WPS)
-status = wifi->Configure (0U, &wifi_config);
-if (status != ARM_DRIVER_OK) {
-  // error handling
-}
- 
-// Connect to wireless network
-status = wifi->Activate (ARM_WIFI_MODE_STATION);
+// Connect to wireless network (WPS)
+status = wifi->Activate (0U, &wifi_config);
 if (status != ARM_DRIVER_OK) {
   // error handling
 }
@@ -838,7 +775,7 @@ if (wifi->IsConnected ()) {
 }
  
 // Disconnect from wireless network
-wifi->Deactivate ();
+wifi->Deactivate (0U);
 \endcode
 */
 
