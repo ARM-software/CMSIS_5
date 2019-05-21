@@ -9,6 +9,7 @@ targets:
       - ./config/core_m
       - ../../Core/Include
     source:
+      - ../../../Device/ARM/${device}/Source/startup_${device}.c
       - ../../../Device/ARM/${device}/Source/system_${device}.c
       - ../Source/CV_CoreFunc.c
       - ../Source/CV_CoreSimd.c
@@ -93,6 +94,7 @@ targets:
     include:
       - ./config/core_a
       - ../../Core_A/Include
+      - ../../../Device/ARM/${device}/config
     source:
       - ./config/core_a/mmu.c
       - ../Source/CV_CoreAFunc.c

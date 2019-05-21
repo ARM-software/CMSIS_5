@@ -13,8 +13,6 @@ targets:
     info        : [ --info summarysizes, --map, --load_addr_map_info, --xref, --callgraph, --symbols, --info sizes, --info totals, --info unused, --info veneers, "--list ${builddir}/${targetName}.map" ]
     linkflags   : [ "--cpu ${cpu}", "--fpu=${fpu}",--strict, --no_remove, --entry Reset_Handler, --diag_suppress=L6314, --diag_suppress=L6092w, "${info}" ]
     linkscript  : "config/core_m/rtebuild.sct"
-    source:
-      - ../../../Device/ARM/${device}/Source/ARM/startup_${device}.s
   armcm0:
     mcpu    : cortex-m0
     cpu     : cortex-m0
