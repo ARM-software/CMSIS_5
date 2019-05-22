@@ -237,7 +237,7 @@ SECTIONS
 	} > RAM 
   */
   
-	.bss :
+	.bss (NOLOAD) :
 	{
 		. = ALIGN(4);
 		__bss_start__ = .;
@@ -256,7 +256,7 @@ SECTIONS
    * initialization during startup.
    */
   /*
-	.bss2 :
+	.bss2 (NOLOAD) :
 	{
 		. = ALIGN(4);
 		__bss2_start__ = .;
@@ -267,23 +267,22 @@ SECTIONS
 	} > RAM2
   */
 
-	.heap :
+	.heap (COPY) :
 	{
-    . = ALIGN(4);
+    . = ALIGN(8);
 		__end__ = .;
 		PROVIDE(end = .);
 		. = . + __HEAP_SIZE;
-    . = ALIGN(4);
+    . = ALIGN(8);
 		__HeapLimit = .;
 	} > RAM
 
-	.stack :
+	.stack (ORIGIN(RAM) + LENGTH(RAM) - __STACK_SIZE) (COPY) :
 	{
-    . = ORIGIN(RAM) + LENGTH(RAM) - __STACK_SIZE;
-    . = ALIGN(4);
+    . = ALIGN(8);
     __StackLimit = .;
     . = . + __STACK_SIZE;
-    . = ALIGN(4);
+    . = ALIGN(8);
     __StackTop = .;
 	} > RAM
   PROVIDE(__stack = __StackTop);
