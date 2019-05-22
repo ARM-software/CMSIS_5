@@ -27,6 +27,7 @@ targets:
     dsuffix: ""
   armcm0plus:
     extends: armcm_v7
+    defines: [ "ARMCM0P=1" ]
     device : ARMCM0plus
     dsuffix: ""
   armcm3:

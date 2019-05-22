@@ -3,8 +3,10 @@
 
 #if defined(ARMCM0)
 #define CMSIS_device_header "ARMCM0.h"
-#elif defined(ARMCM0plus)
+#elif defined(ARMCM0P)
 #define CMSIS_device_header "ARMCM0plus.h"
+#elif defined(ARMCM0P_MPU)
+#define CMSIS_device_header "ARMCM0plus_MPU.h"
 #elif defined(ARMCM3)
 #define CMSIS_device_header "ARMCM3.h"
 #elif defined(ARMCM4)
