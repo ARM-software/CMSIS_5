@@ -34,12 +34,12 @@ Possible \ref osStatus_t return values:
 \code
 #include "cmsis_os2.h"
  
-void Thread_1 (void *arg)  {                // Thread function
-  osStatus_t status;                        // capture the return status
-  uint32_t   delayTime;                     // delay time in milliseconds
+void Thread_1 (void *arg) {             // Thread function
+  osStatus_t status;                    // capture the return status
+  uint32_t   delayTime;                 // delay time in milliseconds
  
-  delayTime = 1000;                         // delay 1 second
-  status = osDelay (delayTime);             // suspend thread execution
+  delayTime = 1000U;                    // delay 1 second
+  status = osDelay(delayTime);          // suspend thread execution
 }
 \endcode
 */ 
@@ -70,12 +70,12 @@ Possible \ref osStatus_t return values:
 \code
 #include "cmsis_os2.h"
  
-void Thread_1 (void *arg)  {                // Thread function
+void Thread_1 (void *arg) {             // Thread function
   uint32_t tick;
-
-  tick = osKernelGetTickCount();            // retrieve the number of system ticks
+ 
+  tick = osKernelGetTickCount();        // retrieve the number of system ticks
   for (;;) {
-    tick += 1000;                           // delay 1000 ticks periodically
+    tick += 1000U;                      // delay 1000 ticks periodically
     osDelayUntil(tick);
     // ...
   }
