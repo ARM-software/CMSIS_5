@@ -298,13 +298,26 @@
 
 #elif defined ( __TASKING__ )
 
+#elif defined ( _MSC_VER )
+
 #else
   #error Unknown compiler
 #endif
 
 
 /* Included for instrinsics definitions */
+#if !defined ( _MSC_VER )
 #include "cmsis_compiler.h"
+#else
+#include <stdint.h>
+#define __STATIC_FORCEINLINE static __forceinline
+#define __ALIGNED(x) __declspec(align(x))
+#define LOW_OPTIMIZATION_ENTER
+#define LOW_OPTIMIZATION_EXIT
+#define IAR_ONLY_LOW_OPTIMIZATION_ENTER 
+#define IAR_ONLY_LOW_OPTIMIZATION_EXIT
+#endif
+
 #include "string.h"
 #include "math.h"
 
@@ -417,7 +430,9 @@ extern "C"
 #elif defined ( __CSMC__ )
   #define __SIMD32_TYPE int32_t
 #elif defined ( __TASKING__ )
-  #define __SIMD32_TYPE __unaligned int32_t
+  #define __SIMD32_TYPE __un(aligned) int32_t
+#elif defined(_MSC_VER )
+  #define __SIMD32_TYPE int32_t
 #else
   #error Unknown compiler
 #endif
@@ -428,6 +443,7 @@ extern "C"
 #define __SIMD64(addr)        (*(      int64_t **) & (addr))
 
 /* SIMD replacement */
+
 
 /**
   @brief         Read 2 Q15 from Q15 pointer.
@@ -556,6 +572,70 @@ __STATIC_FORCEINLINE void write_q7x4_ia (
   *pQ7 += 4;
 }
 
+/*
+
+Normally those kind of definitions are in a compiler file
+in Core or Core_A.
+
+But for MSVC compiler it is a bit special. The goal is very specific
+to CMSIS-DSP and only to allow the use of this library from other
+systems like Python or Matlab.
+
+MSVC is not going to be used to cross-compile to ARM. So, having a MSVC
+compiler file in Core or Core_A would not make sense.
+
+*/
+#if defined ( _MSC_VER )
+    __STATIC_FORCEINLINE uint8_t __CLZ(uint32_t data)
+    {
+      if (data == 0U) { return 32U; }
+
+      uint32_t count = 0U;
+      uint32_t mask = 0x80000000U;
+
+      while ((data & mask) == 0U)
+      {
+        count += 1U;
+        mask = mask >> 1U;
+      }
+      return count;
+    }
+
+  __STATIC_FORCEINLINE int32_t __SSAT(int32_t val, uint32_t sat)
+  {
+    if ((sat >= 1U) && (sat <= 32U))
+    {
+      const int32_t max = (int32_t)((1U << (sat - 1U)) - 1U);
+      const int32_t min = -1 - max ;
+      if (val > max)
+      {
+        return max;
+      }
+      else if (val < min)
+      {
+        return min;
+      }
+    }
+    return val;
+  }
+
+  __STATIC_FORCEINLINE uint32_t __USAT(int32_t val, uint32_t sat)
+  {
+    if (sat <= 31U)
+    {
+      const uint32_t max = ((1U << sat) - 1U);
+      if (val > (int32_t)max)
+      {
+        return max;
+      }
+      else if (val < 0)
+      {
+        return 0U;
+      }
+    }
+    return (uint32_t)val;
+  }
+#endif
 
 #ifndef ARM_MATH_DSP
   /**
@@ -7267,6 +7347,8 @@ arm_status arm_sqrt_q15(
 #elif defined ( __CSMC__ )
 
 #elif defined ( __TASKING__ )
+
+#elif defined ( _MSC_VER )
 
 #else
   #error Unknown compiler

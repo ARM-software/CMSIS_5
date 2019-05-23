@@ -86,10 +86,10 @@ For instance, if you want to use the arm_rfft_fast_f32, in fft.cmake you'll see 
 
 We see that following symbols need to be enabled :
 
-ARM_TABLE_TWIDDLECOEF_F32_16 
-ARM_TABLE_BITREVIDX_FLT_16
-ARM_TABLE_TWIDDLECOEF_RFFT_F32_32
-ARM_TABLE_TWIDDLECOEF_F32_16
+* ARM_TABLE_TWIDDLECOEF_F32_16 
+* ARM_TABLE_BITREVIDX_FLT_16
+* ARM_TABLE_TWIDDLECOEF_RFFT_F32_32
+* ARM_TABLE_TWIDDLECOEF_F32_16
 
 In addition to that, ARM_DSP_CONFIG_TABLES must be enabled and finally ARM_FFT_ALLOW_TABLES must also be defined.
 
