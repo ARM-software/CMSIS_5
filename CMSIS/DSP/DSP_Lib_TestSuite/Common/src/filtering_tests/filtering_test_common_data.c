@@ -10,7 +10,7 @@ float32_t filtering_output_ref[LMS_MAX_BLOCKSIZE*2] = {0};
 float32_t filtering_output_f32_fut[LMS_MAX_BLOCKSIZE*2] = {0};
 float32_t filtering_output_f32_ref[LMS_MAX_BLOCKSIZE*2] = {0};
 float32_t filtering_input_lms[LMS_MAX_BLOCKSIZE*2] = {0};
-float32_t filtering_pState[LMS_MAX_BLOCKSIZE + FILTERING_MAX_NUMTAPS] = {0};
+__ALIGNED(8) float32_t filtering_pState[LMS_MAX_BLOCKSIZE + FILTERING_MAX_NUMTAPS] = {0};
 float32_t filtering_scratch[FILTERING_MAX_BLOCKSIZE * 3] = {0};
 float32_t filtering_scratch2[FILTERING_MAX_BLOCKSIZE * 3] = {0};
 float32_t filtering_coeffs_lms[FILTERING_MAX_NUMTAPS];

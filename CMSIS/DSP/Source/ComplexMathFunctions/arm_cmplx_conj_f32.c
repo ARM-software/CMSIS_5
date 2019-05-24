@@ -68,6 +68,7 @@
   @return        none
  */
 
+
 void arm_cmplx_conj_f32(
   const float32_t * pSrc,
         float32_t * pDst,
@@ -75,6 +76,35 @@ void arm_cmplx_conj_f32(
 {
         uint32_t blkCnt;                               /* Loop counter */
 
+#if defined(ARM_MATH_NEON)
+   float32x4_t zero;
+   float32x4x2_t vec;
+
+   zero = vdupq_n_f32(0.0);
+
+   /* Compute 4 outputs at a time */
+   blkCnt = numSamples >> 2U;
+
+   while (blkCnt > 0U)
+   {
+     /* C[0]+jC[1] = A[0]+(-1)*jA[1] */
+     /* Calculate Complex Conjugate and then store the results in the destination buffer. */
+     vec = vld2q_f32(pSrc);
+     vec.val[1] = vsubq_f32(zero,vec.val[1]);
+     vst2q_f32(pDst,vec);
+
+     /* Increment pointers */
+     pSrc += 8;
+     pDst += 8;
+        
+     /* Decrement the loop counter */
+     blkCnt--;
+   }
+
+   /* Tail */
+   blkCnt = numSamples & 0x3;
+
+#else
 #if defined (ARM_MATH_LOOPUNROLL)
 
   /* Loop unrolling: Compute 4 outputs at a time */
@@ -110,6 +140,7 @@ void arm_cmplx_conj_f32(
   blkCnt = numSamples;
 
 #endif /* #if defined (ARM_MATH_LOOPUNROLL) */
+#endif /* #if defined (ARM_MATH_NEON) */
 
   while (blkCnt > 0U)
   {

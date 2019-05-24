@@ -291,7 +291,7 @@ NUMPYARRAYFROMMATRIX(f64,NPY_DOUBLE);
 NUMPYARRAYFROMMATRIX(q31,NPY_INT32);
 NUMPYARRAYFROMMATRIX(q15,NPY_INT16);
 
-#include "specific.h"
+//#include "specific.h"
 #include "cmsismodule.h"
 
 #if 0

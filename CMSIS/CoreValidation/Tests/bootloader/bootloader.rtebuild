@@ -9,6 +9,7 @@ targets:
       - ./config/core_m
       - ../../../Core/Include
     source:
+      - ../../../../Device/ARM/${device}/Source/startup_${device}.c
       - ../../../../Device/ARM/${device}/Source/system_${device}.c
   armcm23ns:
     extends: armcm

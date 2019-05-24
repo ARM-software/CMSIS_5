@@ -1907,6 +1907,11 @@ Contact cmsis@arm.com to ask for an extension. These values can be used in the e
     <td>http://www.gigadevice.com</td>
   </tr>
   <tr>
+    <td class="XML-Token">Goodix:155</td>
+    <td>Goodix</td>
+    <td>https://www.goodix.com</td>
+  </tr>
+  <tr>
     <td class="XML-Token">HDSC:145</td>
     <td>HUADA Semiconductor</td>
     <td>http://www.hdsc.com.cn</td>

@@ -46,18 +46,18 @@ If the maximum amount of recursive locks is depleted mutex acquire might fail.
 <b>Code Example</b>
 \code
 #include "cmsis_os2.h"
-  
-osMutexId_t mutex_id;  
-  
+ 
+osMutexId_t mutex_id; 
+ 
 const osMutexAttr_t Thread_Mutex_attr = {
   "myThreadMutex",     // human readable mutex name
   osMutexRecursive,    // attr_bits
   NULL,                // memory for control block   
   0U                   // size for control block
 };
-  
+ 
 // must be called from a thread context
-void UseMutexRecursively(int count)  {
+void UseMutexRecursively(int count) {
   osStatus_t result = osMutexAcquire(mutex_id, osWaitForever);  // lock count is incremented, might fail when lock count is depleted
   if (result == osOK) {
     if (count < 10) {
@@ -89,38 +89,38 @@ This example reveals a blocked high priority thread if \ref osMutexPrioInherit i
 
 \code
 #include "cmsis_os2.h"
-  
+ 
 osMutexId_t mutex_id;  
-  
+ 
 const osMutexAttr_t Thread_Mutex_attr = {
   "myThreadMutex",     // human readable mutex name
   osMutexPrioInherit,  // attr_bits
   NULL,                // memory for control block   
   0U                   // size for control block
 };
-  
+ 
 void HighPrioThread(void *argument) {
-  osDelay(1000); // wait 1s until start actual work
+  osDelay(1000U); // wait 1s until start actual work
   while(1) {
     osMutexAcquire(mutex_id, osWaitForever); // try to acquire mutex
     // do stuff
     osMutexRelease(mutex_id);
   }
 }
-  
+ 
 void MidPrioThread(void *argument) {
-  osDelay(1000); // wait 1s until start actual work
+  osDelay(1000U); // wait 1s until start actual work
   while(1) {
     // do non blocking stuff
   }
 }
-  
+ 
 void LowPrioThread(void *argument) {
   while(1) {
     osMutexAcquire(mutex_id, osWaitForever);
-    osDelay(5000); // block mutex for 5s
+    osDelay(5000U); // block mutex for 5s
     osMutexRelease(mutex_id);
-    osDelay(5000); // sleep for 5s
+    osDelay(5000U); // sleep for 5s
   }
 }
 \endcode
@@ -164,16 +164,16 @@ This example reveals a blocked mutex if osMutexRobust is removed.
 
 \code
 #include "cmsis_os2.h"
-  
-osMutexId_t mutex_id;  
-  
+ 
+osMutexId_t mutex_id;
+ 
 const osMutexAttr_t Thread_Mutex_attr = {
   "myThreadMutex",     // human readable mutex name
   osMutexRobust,       // attr_bits
   NULL,                // memory for control block   
   0U                   // size for control block
 };
-  
+ 
 void Thread(void *argument) {
   osMutexAcquire(mutex_id, osWaitForever);
   osThreadExit();
@@ -214,21 +214,21 @@ to \token{NULL}.
 <b>Code Example</b>
 \code
 #include "cmsis_os2.h"
-  
+ 
 osMutexId_t mutex_id;  
-  
+ 
 const osMutexAttr_t Thread_Mutex_attr = {
   "myThreadMutex",                          // human readable mutex name
   osMutexRecursive | osMutexPrioInherit,    // attr_bits
   NULL,                                     // memory for control block   
   0U                                        // size for control block
-  };
-  
+};
+ 
 void CreateMutex (void)  {
   mutex_id = osMutexNew(&Thread_Mutex_attr);
   if (mutex_id != NULL)  {
     // Mutex object created
-  }   
+  }
 }
 \endcode
 */
@@ -270,14 +270,14 @@ Possible \ref osStatus_t return values:
 <b>Code Example</b>
 \code
 #include "cmsis_os2.h"
-  
-void WaitMutex (void)  {
-osMutexId_t mutex_id;   
-osStatus_t  status;
+ 
+void WaitMutex (void) {
+  osMutexId_t mutex_id;
+  osStatus_t  status;
  
   mutex_id = osMutexNew(NULL);
-  if (mutex_id != NULL)  {
-    status  = osMutexAcquire(mutex_id, 0);
+  if (mutex_id != NULL) {
+    status = osMutexAcquire(mutex_id, 0U);
     if (status != osOK)  {
       // handle failure code
     }
@@ -304,12 +304,12 @@ Possible \ref osStatus_t return values:
 <b>Code Example</b>
 \code
 #include "cmsis_os2.h"
-  
+ 
 osMutexId_t mutex_id;                                        // Mutex id populated by the function osMutexNew()
  
-void ReleaseMutex (osMutexId_t mutex_id)  {
+void ReleaseMutex (osMutexId_t mutex_id) {
   osStatus_t status;
-  
+ 
   if (mutex_id != NULL)  {
     status = osMutexRelease(mutex_id);
     if (status != osOK)  {
@@ -349,12 +349,12 @@ Possible \ref osStatus_t return values:
 <b>Code Example</b>
 \code
 #include "cmsis_os2.h"
-  
-osMutexId_t mutex_id;                            // Mutex id populated by the function osMutexNew()
+ 
+osMutexId_t mutex_id;                           // Mutex id populated by the function osMutexNew()
  
 void DeleteMutex (osMutexId_t mutex_id)  {
   osStatus_t status;
-  
+ 
   if (mutex_id != NULL)  {
     status = osMutexDelete(mutex_id);
     if (status != osOK)  {

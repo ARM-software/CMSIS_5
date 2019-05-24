@@ -6,7 +6,7 @@ import sys
 import os
 from config import ROOT
 
-includes = [os.path.join("cmsisdsp_pkg","custom"),os.path.join("cmsisdsp_pkg","src")]
+includes = [os.path.join(ROOT,"Include"),os.path.join("cmsisdsp_pkg","src")]
 
 if sys.platform == 'win32':
   cflags = ["-DWIN",config.cflags,"-DUNALIGNED_SUPPORT_DISABLE"] 
@@ -17,8 +17,8 @@ else:
   cflags = ["-Wno-unused-variable","-Wno-implicit-function-declaration",config.cflags]
 
 transform = glob.glob(os.path.join(ROOT,"Source","TransformFunctions","*.c"))
-transform.remove(os.path.join(ROOT,"Source","TransformFunctions","arm_dct4_init_q15.c"))
-transform.remove(os.path.join(ROOT,"Source","TransformFunctions","arm_rfft_init_q15.c"))
+#transform.remove(os.path.join(ROOT,"Source","TransformFunctions","arm_dct4_init_q15.c"))
+#transform.remove(os.path.join(ROOT,"Source","TransformFunctions","arm_rfft_init_q15.c"))
 transform.remove(os.path.join(ROOT,"Source","TransformFunctions","TransformFunctions.c"))
 
 support = glob.glob(os.path.join(ROOT,"Source","SupportFunctions","*.c"))
@@ -45,8 +45,13 @@ basic.remove(os.path.join(ROOT,"Source","BasicMathFunctions","BasicMathFunctions
 controller = glob.glob(os.path.join(ROOT,"Source","ControllerFunctions","*.c"))
 controller.remove(os.path.join(ROOT,"Source","ControllerFunctions","ControllerFunctions.c"))
 
-modulesrc = glob.glob(os.path.join("cmsisdsp_pkg","src","*.c"))
+common = glob.glob(os.path.join(ROOT,"Source","CommonTables","*.c"))
+common.remove(os.path.join(ROOT,"Source","CommonTables","CommonTables.c"))
 
+#modulesrc = glob.glob(os.path.join("cmsisdsp_pkg","src","*.c"))
+modulesrc = []
+modulesrc.append(os.path.join("cmsisdsp_pkg","src","fftinit.c"))
+modulesrc.append(os.path.join("cmsisdsp_pkg","src","cmsismodule.c"))
 
 module1 = Extension(config.extensionName,
                     sources = (support
@@ -59,6 +64,7 @@ module1 = Extension(config.extensionName,
                               + controller
                               + transform
                               + modulesrc
+                              + common
                               )
                               ,
                     include_dirs =  includes + [numpy.get_include()],

@@ -60,7 +60,17 @@
   @param[out]    pResult    standard deviation value returned here
   @return        none
  */
-
+#if defined(ARM_MATH_NEON_EXPERIMENTAL)
+void arm_std_f32(
+  const float32_t * pSrc,
+        uint32_t blockSize,
+        float32_t * pResult)
+{
+  float32_t var;
+  arm_var_f32(pSrc,blockSize,&var);
+  arm_sqrt_f32(var, pResult);
+}
+#else
 void arm_std_f32(
   const float32_t * pSrc,
         uint32_t blockSize,
@@ -157,6 +167,7 @@ void arm_std_f32(
   arm_sqrt_f32((meanOfSquares - squareOfMean), pResult);
 
 #else
+  /* Run the below code for Cortex-M0 */
 
   /* Compute square of sum */
   squareOfSum = ((sum * sum) / (float32_t) blockSize);
@@ -170,6 +181,7 @@ void arm_std_f32(
 #endif /* #ifndef ARM_MATH_CM0_FAMILY */
 
 }
+#endif /* #if defined(ARM_MATH_NEON) */
 
 /**
   @} end of STD group

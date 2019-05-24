@@ -37,7 +37,7 @@
   Externals
  *----------------------------------------------------------------------------*/
 #if defined (__VTOR_PRESENT) && (__VTOR_PRESENT == 1U)
-  extern uint32_t __Vectors;
+  extern uint32_t __VECTOR_TABLE;
 #endif
 
 /*----------------------------------------------------------------------------
@@ -61,7 +61,7 @@ void SystemInit (void)
 {
 
 #if defined (__VTOR_PRESENT) && (__VTOR_PRESENT == 1U)
-  SCB->VTOR = (uint32_t) &__Vectors;
+  SCB->VTOR = (uint32_t) &__VECTOR_TABLE;
 #endif
 
 #ifdef UNALIGNED_SUPPORT_DISABLE

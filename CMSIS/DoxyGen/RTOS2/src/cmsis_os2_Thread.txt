@@ -60,7 +60,7 @@ __NO_RETURN void thread1 (void *argument) {
 int main (void) {
   osKernelInitialize();
   ;
-  osThreadNew(thread1, NULL, NULL);    // Create thread with default settings
+  osThreadNew(thread1, NULL, NULL);     // Create thread with default settings
   ;
   osKernelStart(); 
 }
@@ -79,12 +79,12 @@ __NO_RETURN void thread1 (void *argument) {
 }
  
 const osThreadAttr_t thread1_attr = {
-  .stack_size = 1024                             // Create the thread stack with a size of 1024 bytes
+  .stack_size = 1024                            // Create the thread stack with a size of 1024 bytes
 };
  
 int main (void) {
   ;  
-  osThreadNew(thread1, NULL, &thread1_attr);     // Create thread with custom sized stack memory
+  osThreadNew(thread1, NULL, &thread1_attr);    // Create thread with custom sized stack memory
   ;
 }
 \endcode
@@ -158,12 +158,12 @@ __NO_RETURN void thread1 (void *argument) {
 }
  
 const osThreadAttr_t thread1_attr = {
-  .priority = osPriorityHigh            //Set initial thread priority to high   
+  .priority = osPriorityHigh                    //Set initial thread priority to high   
 };
  
 int main (void) {
   ;
-  osThreadNew(thread1, NULL, &thread1_attr);   
+  osThreadNew(thread1, NULL, &thread1_attr);
   ;
 }
 \endcode
@@ -176,10 +176,10 @@ return using the \ref osThreadExit call after finished. \ref osThreadJoin is use
 
 
 \code 
-__NO_RETURN void worker (void *argument) {     
-    ; // work a lot on data[] 
-    osDelay(1000);       
-    osThreadExit();
+__NO_RETURN void worker (void *argument) {
+  ; // work a lot on data[] 
+  osDelay(1000U);
+  osThreadExit();
 }
  
 __NO_RETURN void thread1 (void *argument) {
@@ -189,11 +189,11 @@ __NO_RETURN void thread1 (void *argument) {
 
   memset(&worker_attr, 0, sizeof(worker_attr));
   worker_attr.attr_bits = osThreadJoinable;
-  
-  worker_ids[0] = osThreadNew(worker, &data[0][0], &worker_attr);    
-  worker_ids[1] = osThreadNew(worker, &data[1][0], &worker_attr);    
-  worker_ids[2] = osThreadNew(worker, &data[2][0], &worker_attr);    
-  worker_ids[3] = osThreadNew(worker, &data[3][0], &worker_attr);    
+ 
+  worker_ids[0] = osThreadNew(worker, &data[0][0], &worker_attr);
+  worker_ids[1] = osThreadNew(worker, &data[1][0], &worker_attr);
+  worker_ids[2] = osThreadNew(worker, &data[2][0], &worker_attr);
+  worker_ids[3] = osThreadNew(worker, &data[3][0], &worker_attr);
  
   osThreadJoin(worker_ids[0]);
   osThreadJoin(worker_ids[1]);
@@ -329,9 +329,9 @@ The function \b osThreadGetName returns the pointer to the name string of the th
 
 <b>Code Example</b>
 \code
-void ThreadGetName_example (void)  {
-  osThreadId_t thread_id = osThreadGetId ();
-  const char* name = osThreadGetName (thread_id);
+void ThreadGetName_example (void) {
+  osThreadId_t thread_id = osThreadGetId();
+  const char* name = osThreadGetName(thread_id);
   if (name == NULL) {
     // Failed to get the thread name; not in a thread
   }
@@ -349,10 +349,10 @@ The function \b osThreadGetId returns the thread object ID of the currently runn
 
 <b>Code Example</b>
 \code
-void ThreadGetId_example (void)  {
-  osThreadId_t id;                                           // id for the currently running thread
+void ThreadGetId_example (void) {
+  osThreadId_t id;                              // id for the currently running thread
    
-  id = osThreadGetId ();
+  id = osThreadGetId();
   if (id == NULL) {
     // Failed to get the id
   }
@@ -389,21 +389,21 @@ Possible \ref osStatus_t return values:
 \code
 #include "cmsis_os2.h"
  
-void Thread_1 (void const *arg)  {                          // Thread function
-  osThreadId_t id;                                          // id for the currently running thread
-  osStatus_t   status;                                      // status of the executed function
-   
-  :  
-  id = osThreadGetId ();                                    // Obtain ID of current running thread
-   
-  status = osThreadSetPriority (id, osPriorityBelowNormal); // Set thread priority
-  if (status == osOK)  {
+void Thread_1 (void const *arg) {               // Thread function
+  osThreadId_t id;                              // id for the currently running thread
+  osStatus_t   status;                          // status of the executed function
+ 
+  :
+  id = osThreadGetId();                         // Obtain ID of current running thread
+ 
+  status = osThreadSetPriority(id, osPriorityBelowNormal);  // Set thread priority
+  if (status == osOK) {
     // Thread priority changed to BelowNormal
   }
   else {
     // Failed to set the priority
   }
-  :  
+  :
 }
 \endcode
 */
@@ -424,12 +424,12 @@ Possible \ref osPriority_t return values:
 \code
 #include "cmsis_os2.h"
  
-void Thread_1 (void const *arg)  {                         // Thread function
-  osThreadId_t id;                                         // id for the currently running thread
-  osPriority_t priority;                                   // thread priority
+void Thread_1 (void const *arg) {               // Thread function
+  osThreadId_t id;                              // id for the currently running thread
+  osPriority_t priority;                        // thread priority
    
-  id = osThreadGetId ();                                   // Obtain ID of current running thread
-  priority = osThreadGetPriority (id);                     // Obtain the thread priority
+  id = osThreadGetId();                         // Obtain ID of current running thread
+  priority = osThreadGetPriority(id);           // Obtain the thread priority
 }
 \endcode
 */
@@ -454,12 +454,12 @@ Possible \ref osStatus_t return values:
 \code
 #include "cmsis_os2.h"
  
-void Thread_1 (void const *arg)  {                         // Thread function
-  osStatus_t   status;                                     // status of the executed function
+void Thread_1 (void const *arg) {               // Thread function
+  osStatus_t status;                            // status of the executed function
   :
-  while (1)  {
-    status = osThreadYield();                              // 
-    if (status != osOK)  {
+  while (1) {
+    status = osThreadYield();
+    if (status != osOK) {
       // an error occurred
     }
   }
@@ -570,7 +570,7 @@ The function \b osThreadExit terminates the calling thread. This allows the thre
 \code
 __NO_RETURN void worker (void *argument) {
   // do something
-  osDelay(1000);
+  osDelay(1000U);
   osThreadExit();
 }
 \endcode
@@ -597,20 +597,20 @@ Possible \ref osStatus_t return values:
 \code
 #include "cmsis_os2.h"
  
-void Thread_1 (void *arg);                             // function prototype for Thread_1
+void Thread_1 (void *arg);                      // function prototype for Thread_1
  
 void ThreadTerminate_example (void) {
   osStatus_t status;
   osThreadId_t id;
  
-  id = osThreadNew (Thread_1, NULL, NULL);             // create the thread
-                                                       // do something
-  status = osThreadTerminate (id);                     // stop the thread
+  id = osThreadNew(Thread_1, NULL, NULL);       // create the thread
+                                                // do something
+  status = osThreadTerminate(id);               // stop the thread
   if (status == osOK) {
-                                                       // Thread was terminated successfully
+                                                // Thread was terminated successfully
   }
   else {
-                                                       // Failed to terminate a thread
+                                                // Failed to terminate a thread
   }
 }
 \endcode

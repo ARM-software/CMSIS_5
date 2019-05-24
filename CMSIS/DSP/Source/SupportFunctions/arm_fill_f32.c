@@ -57,6 +57,47 @@
   @return        none
  */
 
+#if defined(ARM_MATH_NEON_EXPERIMENTAL)
+void arm_fill_f32(
+  float32_t value,
+  float32_t * pDst,
+  uint32_t blockSize)
+{
+  uint32_t blkCnt;                               /* loop counter */
+
+
+  float32x4_t inV = vdupq_n_f32(value);
+
+  blkCnt = blockSize >> 2U;
+
+  /* Compute 4 outputs at a time.
+   ** a second loop below computes the remaining 1 to 3 samples. */
+  while (blkCnt > 0U)
+  {
+    /* C = value */
+    /* Fill the value in the destination buffer */
+    vst1q_f32(pDst, inV);
+    pDst += 4;
+
+    /* Decrement the loop counter */
+    blkCnt--;
+  }
+
+  /* If the blockSize is not a multiple of 4, compute any remaining output samples here.
+   ** No loop unrolling is used. */
+  blkCnt = blockSize & 3;
+
+  while (blkCnt > 0U)
+  {
+    /* C = value */
+    /* Fill the value in the destination buffer */
+    *pDst++ = value;
+
+    /* Decrement the loop counter */
+    blkCnt--;
+  }
+}
+#else
 void arm_fill_f32(
   float32_t value,
   float32_t * pDst,
@@ -104,7 +145,7 @@ void arm_fill_f32(
     blkCnt--;
   }
 }
-
+#endif /* #if defined(ARM_MATH_NEON) */
 /**
   @} end of Fill group
  */

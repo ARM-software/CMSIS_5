@@ -162,6 +162,160 @@
   @return        none
  */
 
+#if defined(ARM_MATH_NEON) 
+void arm_biquad_cascade_df1_f32(
+  const arm_biquad_casd_df1_inst_f32 * S,
+  const float32_t * pSrc,
+  float32_t * pDst,
+  uint32_t blockSize)
+{
+
+  const float32_t *pIn = pSrc;                         /*  source pointer            */
+  float32_t *pOut = pDst;                        /*  destination pointer       */
+  float32_t *pState = S->pState;                 /*  pState pointer            */
+  const float32_t *pCoeffs = S->pCoeffs;               /*  coefficient pointer       */
+  float32_t acc;                                 /*  Simulates the accumulator */
+  
+  uint32_t sample, stage = S->numStages;         /*  loop counters             */
+
+  float32x4_t Xn;
+  float32x2_t Yn;
+  float32x2_t a;
+  float32x4_t b;
+  
+  float32x4_t x,tmp;
+  float32x2_t t;
+  float32x2x2_t y;
+
+  float32_t Xns;
+
+  while (stage > 0U)
+  {
+    /* Reading the coefficients */
+    Xn = vld1q_f32(pState);
+    Yn = vld1_f32(pState + 2);
+
+    b = vld1q_f32(pCoeffs);
+    b = vrev64q_f32(b);  
+    b = vcombine_f32(vget_high_f32(b), vget_low_f32(b));
+
+    a = vld1_f32(pCoeffs + 3);
+    a = vrev64_f32(a);
+    b[0] = 0.0;
+    pCoeffs += 5;
+    
+    /* Reading the pState values */
+   
+    /* Apply loop unrolling and compute 4 output values simultaneously. */
+    /*      The variable acc hold output values that are being computed:
+     *
+     *    acc =  b0 * x[n] + b1 * x[n-1] + b2 * x[n-2] + a1 * y[n-1] + a2 * y[n-2]
+     *    acc =  b0 * x[n] + b1 * x[n-1] + b2 * x[n-2] + a1 * y[n-1] + a2 * y[n-2]
+     *    acc =  b0 * x[n] + b1 * x[n-1] + b2 * x[n-2] + a1 * y[n-1] + a2 * y[n-2]
+     *    acc =  b0 * x[n] + b1 * x[n-1] + b2 * x[n-2] + a1 * y[n-1] + a2 * y[n-2]
+     */
+
+    /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.
+     ** a second loop below computes the remaining 1 to 3 samples. */
+    sample = blockSize >> 2U;
+
+    while (sample > 0U)
+    {
+      /* Read the first 4 inputs */
+      x = vld1q_f32(pIn);
+
+      pIn += 4;
+
+      tmp = vextq_f32(Xn, x, 1);
+      t = vmul_f32(vget_high_f32(b), vget_high_f32(tmp));
+      t = vmla_f32(t, vget_low_f32(b), vget_low_f32(tmp));
+      t = vmla_f32(t, a, Yn);
+      t = vpadd_f32(t, t);
+      Yn = vext_f32(Yn, t, 1);
+
+      tmp = vextq_f32(Xn, x, 2);
+      t = vmul_f32(vget_high_f32(b), vget_high_f32(tmp));
+      t = vmla_f32(t, vget_low_f32(b), vget_low_f32(tmp));
+      t = vmla_f32(t, a, Yn);
+      t = vpadd_f32(t, t);
+      Yn = vext_f32(Yn, t, 1);
+
+      y.val[0] = Yn;
+
+      tmp = vextq_f32(Xn, x, 3);
+      t = vmul_f32(vget_high_f32(b), vget_high_f32(tmp));
+      t = vmla_f32(t, vget_low_f32(b), vget_low_f32(tmp));
+      t = vmla_f32(t, a, Yn);
+      t = vpadd_f32(t, t);
+      Yn = vext_f32(Yn, t, 1);
+
+      Xn = x;
+      t = vmul_f32(vget_high_f32(b), vget_high_f32(Xn));
+      t = vmla_f32(t, vget_low_f32(b), vget_low_f32(Xn));
+      t = vmla_f32(t, a, Yn);
+      t = vpadd_f32(t, t);
+      Yn = vext_f32(Yn, t, 1);
+      
+      y.val[1] = Yn;
+
+      tmp = vcombine_f32(y.val[0], y.val[1]);
+
+      /* Store the 4 outputs and increment the pointer */
+      vst1q_f32(pOut, tmp);
+      pOut += 4;
+
+      /* Decrement the loop counter */
+      sample--;
+    }
+
+    /* If the block size is not a multiple of 4, compute any remaining output samples here.
+     ** No loop unrolling is used. */
+    sample = blockSize & 0x3U;
+
+    while (sample > 0U)
+    {
+      /* Read the input */
+      Xns = *pIn++;
+
+      /* acc =  b0 * x[n] + b1 * x[n-1] + b2 * x[n-2] + a1 * y[n-1] + a2 * y[n-2] */
+      acc =  (b[1] * Xn[2]) + (b[2] * Xn[3]) + (b[3] * Xns) + (a[0] * Yn[0]) + (a[1] * Yn[1]);
+
+      /* Store the result in the accumulator in the destination buffer. */
+      *pOut++ = acc;
+
+      /* Every time after the output is computed state should be updated. */
+      /* The states should be updated as:    */
+      /* Xn2 = Xn1   */
+      /* Xn1 = Xn    */
+      /* Yn2 = Yn1   */
+      /* Yn1 = acc   */
+      Xn[2] = Xn[3];
+      Xn[3] = Xns;
+      Yn[0] = Yn[1];
+      Yn[1] = acc;
+
+      /* Decrement the loop counter */
+      sample--;
+
+    }
+
+    vst1q_f32(pState,vcombine_f32(vrev64_f32(vget_high_f32(Xn)),vrev64_f32(Yn)));
+    pState += 4;
+    /*  Store the updated state variables back into the pState array */
+   
+    /*  The first stage goes from the input buffer to the output buffer. */
+    /*  Subsequent numStages  occur in-place in the output buffer */
+    pIn = pDst;
+
+    /* Reset the output pointer */
+    pOut = pDst;
+
+    /* Decrement the loop counter */
+    stage--;
+  }
+}
+
+#else
 void arm_biquad_cascade_df1_f32(
   const arm_biquad_casd_df1_inst_f32 * S,
   const float32_t * pSrc,
@@ -335,6 +489,7 @@ void arm_biquad_cascade_df1_f32(
 
 }
 
+#endif /* #if defined(ARM_MATH_NEON) */
 /**
   @} end of BiquadCascadeDF1 group
  */

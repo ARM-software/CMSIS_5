@@ -25,9 +25,12 @@
  *
  *---------------------------------------------------------------------------*/
  
+#include <stdio.h>
+#include <stdlib.h>
+
 /* Use CMSE intrinsics */
 #include <arm_cmse.h>
- 
+
 #include "RTE_Components.h"
 #include CMSIS_device_header
  
@@ -59,3 +62,16 @@ int main(void) {
     __NOP();
   }
 }
+
+#if defined(__CORTEX_M)
+__NO_RETURN
+extern void HardFault_Handler(void);
+void HardFault_Handler(void) {
+  printf("Bootloader HardFault!\n");
+  #ifdef __MICROLIB
+  for(;;) {}
+  #else
+  exit(1);
+  #endif
+}
+#endif
