@@ -72,11 +72,11 @@ typedef enum
  */
 
 /**
- * @brief Converts the elements of the Q7 vector to Q15 vector without left-shift 
- * @param[in]       *pSrc points to the Q7 input vector    
- * @param[out]      *pDst points to the Q15 output vector   
- * @param[in]       blockSize length of the input vector    
- * @return none.    
+ * @brief Converts the elements of the Q7 vector to Q15 vector without left-shift
+ * @param[in]       *pSrc points to the Q7 input vector
+ * @param[out]      *pDst points to the Q15 output vector
+ * @param[in]       blockSize length of the input vector
+ * @return none.
  *
  */
 
@@ -84,10 +84,10 @@ void      arm_q7_to_q15_no_shift(const q7_t * pSrc, q15_t * pDst, uint32_t block
 
 /**
  * @brief  Converts the elements of the Q7 vector to reordered Q15 vector without left-shift
- * @param[in]       *pSrc points to the Q7 input vector    
- * @param[out]      *pDst points to the Q15 output vector   
- * @param[in]       blockSize length of the input vector    
- * @return none.    
+ * @param[in]       *pSrc points to the Q7 input vector
+ * @param[out]      *pDst points to the Q15 output vector
+ * @param[in]       blockSize length of the input vector
+ * @return none.
  *
  */
 
@@ -163,7 +163,7 @@ void arm_nn_mult_q15(
   q15_t * pDst,
   const uint16_t out_shift,
   uint32_t blockSize);
-  
+
 /**
  * @brief           Q7 vector multiplication with variable output shifts
  * @param[in]       *pSrcA        pointer to the first input vector
@@ -185,12 +185,12 @@ void arm_nn_mult_q7(
   q7_t * pDst,
   const uint16_t out_shift,
   uint32_t blockSize);
- 
+
 /**
  * @brief macro for adding rounding offset
  */
 #ifndef ARM_NN_TRUNCATE
-    #define NN_ROUND(out_shift) ( (0x1 << out_shift) >> 1 )
+    #define NN_ROUND(out_shift) ( (0x1u << out_shift) >> 1 )
 #else
     #define NN_ROUND(out_shift) 0
 #endif
