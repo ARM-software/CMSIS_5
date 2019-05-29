@@ -62,22 +62,6 @@
 /**
  *  Assert that buffers A and B are byte-equivalent for a number of bytes.
  */
-#if defined(DUMPPATTERN)
-#define TEST_ASSERT_BUFFERS_EQUAL(buf_a, buf_b, bytes)  \
-    do                                                  \
-    {                                                   \
-        if (memcmp(buf_a, buf_b, bytes) != 0)           \
-        {                                               \
-            JTEST_DUMP_STRF("%s","DUMP PATTERNS\n");    \
-            for(unsigned long i=0;i < bytes; i++)       \
-            {                                           \
-                /*JTEST_DUMP_STRF("%0x %0x\n", *a,*b);*/\
-            }                                           \
-            return JTEST_TEST_FAILED;                   \
-        }                                               \
-    } while (0)
-
-#else
 
 #define TEST_ASSERT_BUFFERS_EQUAL(buf_a, buf_b, bytes)\
     do                                                \
@@ -89,7 +73,7 @@
     } while (0)
 
 
-#endif 
+
 
 /**
  *  Assert that the two entities are equal.
@@ -131,25 +115,6 @@
  *  Assert that the SNR between a reference and test sample is above a given
  *  threshold.
  */
-#if defined(DUMPPATTERN)
-
-#define TEST_ASSERT_SNR(ref_ptr, tst_ptr, block_size, threshold)  \
-    do                                                            \
-    {                                                             \
-        float32_t snr = arm_snr_f32(ref_ptr, tst_ptr, block_size);\
-        if ( snr <= threshold)                                    \
-        {                                                         \
-            JTEST_DUMP_STRF("%s","DUMP PATTERNS\n");                   \
-            for(unsigned long i=0;i < block_size; i++)            \
-            {                                                     \
-                /*JTEST_DUMP_STRF("%f %f\n", ref_ptr[i],tst_ptr[i]);*/\
-            }                                                     \
-            JTEST_DUMP_STRF("SNR: %f\n", snr);                    \
-            return JTEST_TEST_FAILED;                             \
-        }                                                         \
-    } while (0)
-
-#else
 
 #define TEST_ASSERT_SNR(ref_ptr, tst_ptr, block_size, threshold)  \
     do                                                            \
@@ -162,30 +127,11 @@
         }                                                         \
     } while (0)
 
-#endif
+
 /**
  *  Assert that the SNR between a reference and test sample is above a given
  *  threshold.  Special case for float64_t
  */
-#if defined(DUMPPATTERN)
-
-#define TEST_ASSERT_DBL_SNR(ref_ptr, tst_ptr, block_size, threshold)\
-    do                                                              \
-    {                                                               \
-        float64_t snr = arm_snr_f64(ref_ptr, tst_ptr, block_size);  \
-        if ( snr <= threshold)                                      \
-        {                                                           \
-            JTEST_DUMP_STRF("%s","DUMP PATTERNS\n");                    \
-            for(unsigned long i=0;i < block_size; i++)              \
-            {                                                       \
-               /* JTEST_DUMP_STRF("%f %f\n", ref_ptr[i],tst_ptr[i]);*/  \
-            }                                                       \
-            JTEST_DUMP_STRF("SNR: %f\n", snr);                      \
-            return JTEST_TEST_FAILED;                               \
-        }                                                           \
-    } while (0)
-
-#else
 
 #define TEST_ASSERT_DBL_SNR(ref_ptr, tst_ptr, block_size, threshold)\
     do                                                              \
@@ -198,7 +144,6 @@
         }                                                           \
     } while (0)
 
-#endif
 
 /**
  *  Compare test and reference elements by converting to float and
