@@ -15,46 +15,46 @@ JTEST_DEFINE_GROUP(all_tests)
   /*
     To skip a test, comment it out
   */
-#if defined(ENABLE_BASICMATH_TESTS)
+#if !defined(CUSTOMIZE_TESTS) || defined(ENABLE_BASICMATH_TESTS)
   JTEST_GROUP_CALL(basic_math_tests);
 #endif 
 
-#if defined(ENABLE_COMPLEXMATH_TESTS)
+#if !defined(CUSTOMIZE_TESTS) || defined(ENABLE_COMPLEXMATH_TESTS)
   JTEST_GROUP_CALL(complex_math_tests);
 #endif
 
-#if defined(ENABLE_CONTROLLER_TESTS)
+#if !defined(CUSTOMIZE_TESTS) || defined(ENABLE_CONTROLLER_TESTS)
   JTEST_GROUP_CALL(controller_tests);
 #endif
 
-#if defined(ENABLE_FASTMATH_TESTS)
+#if !defined(CUSTOMIZE_TESTS) || defined(ENABLE_FASTMATH_TESTS)
   JTEST_GROUP_CALL(fast_math_tests);
 #endif
 
-#if defined(ENABLE_FILTERING_TESTS)
+#if !defined(CUSTOMIZE_TESTS) || defined(ENABLE_FILTERING_TESTS)
   /* Biquad df2T_f32 will fail with Neon. The test must be updated.
   Neon implementation is requiring a different initialization.
   */
   JTEST_GROUP_CALL(filtering_tests);
 #endif
 
-#if defined(ENABLE_MATRIX_TESTS)
+#if !defined(CUSTOMIZE_TESTS) || defined(ENABLE_MATRIX_TESTS)
   JTEST_GROUP_CALL(matrix_tests);
 #endif 
 
-#if defined(ENABLE_STATISTICS_TESTS)
+#if !defined(CUSTOMIZE_TESTS) || defined(ENABLE_STATISTICS_TESTS)
   JTEST_GROUP_CALL(statistics_tests);
 #endif()
 
-#if defined(ENABLE_SUPPORT_TESTS)
+#if !defined(CUSTOMIZE_TESTS) || defined(ENABLE_SUPPORT_TESTS)
   JTEST_GROUP_CALL(support_tests);
 #endif
 
-#if defined(ENABLE_TRANSFORM_TESTS)
+#if !defined(CUSTOMIZE_TESTS) || defined(ENABLE_TRANSFORM_TESTS)
   JTEST_GROUP_CALL(transform_tests);
 #endif
 
-#if defined(ENABLE_INTRINSICS_TESTS)
+#if !defined(CUSTOMIZE_TESTS) || defined(ENABLE_INTRINSICS_TESTS)
   JTEST_GROUP_CALL(intrinsics_tests);
 #endif
 

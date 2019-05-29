@@ -6,6 +6,7 @@ set(MATRIXCHECK ON)
 set(FASTMATHCOMPUTATIONS OFF)
 option(DUMPPATTERN "Dump test patterns when test is failing" ON)
 
+option(CUSTOMIZE_TESTS "Enable customizations of tests" ON)
 option(BASICMATH_TESTS "Enable Basic Math testing" ON)
 option(COMPLEXMATH_TESTS "Enable Complex Math testing" ON)
 option(CONTROLLER_TESTS "Enable Controller testing" ON)
@@ -74,6 +75,10 @@ add_subdirectory(RefLibs bin_ref)
 
 
 add_executable(DSP_Lib_TestSuite)
+
+if (CUSTOMIZE_TESTS)
+      target_compile_definitions(DSP_Lib_TestSuite PRIVATE CUSTOMIZE_TESTS)
+endif()
 
 if (BASICMATH_TESTS)
       target_compile_definitions(DSP_Lib_TestSuite PRIVATE ENABLE_BASICMATH_TESTS)
