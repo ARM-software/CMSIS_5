@@ -371,6 +371,8 @@ void arm_correlate_f32(
         x2v = vld1q_f32(px);
         c = vld1q_f32(py);
 
+        py += 4;
+
         x = x1v;
         res = vmlaq_n_f32(res,x,c[0]);
 
