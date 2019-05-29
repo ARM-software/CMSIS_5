@@ -16,7 +16,7 @@ get_filename_component(PROJECT_NAME ${CMAKE_CURRENT_SOURCE_DIR} NAME)
 
 cmake_print_variables(PROJECT_NAME)
 
-set(ROOT ${CMAKE_CURRENT_SOURCE_DIR}/../../../../..)
+#set(ROOT ${CMAKE_CURRENT_SOURCE_DIR}/../../../../..)
 
 if (ARMAC6)
 
@@ -90,6 +90,7 @@ if (ARMAC6)
   #
   if (ARM_CPU STREQUAL "cortex-a5")
     cortexa(ARMCA5)
+    target_compile_definitions(${PROJECT_NAME} PRIVATE ARMv7A) 
   endif()
 
   ###################
@@ -98,6 +99,7 @@ if (ARMAC6)
   #
   if (ARM_CPU STREQUAL "cortex-a7")
     cortexa(ARMCA7)
+    target_compile_definitions(${PROJECT_NAME} PRIVATE ARMv7A) 
   endif()
 
   ###################
@@ -106,6 +108,7 @@ if (ARMAC6)
   #
   if (ARM_CPU STREQUAL "cortex-a9")
     cortexa(ARMCA9)
+    target_compile_definitions(${PROJECT_NAME} PRIVATE ARMv7A) 
   endif()
   
 endif()

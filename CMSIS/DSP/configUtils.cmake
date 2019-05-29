@@ -4,7 +4,13 @@ function(cortexm CORE)
     target_include_directories(${PROJECT_NAME} PRIVATE ${ROOT}/Device/ARM/${CORE}/Include)
     target_include_directories(${PROJECT_NAME} PRIVATE ${ROOT}/CMSIS/Core/Include)
   
-    set(SCATTERFILE "${ROOT}/Device/ARM/${CORE}/Source/ARM/${CORE}_ac6.sct")
+    if (TESTFRAMEWORK)
+      # Need bigger sections for test framework
+      # So we use the test framework scatter file
+      set(SCATTERFILE "${ROOT}/CMSIS/DSP/DSP_Lib_TestSuite/Common/platform/ARMCLANG/armcc6_arm.sct")
+    else()
+      set(SCATTERFILE "${ROOT}/Device/ARM/${CORE}/Source/ARM/${CORE}_ac6.sct")
+    endif()
 
     target_link_options(${PROJECT_NAME} PRIVATE "--info=sizes;--entry=Reset_Handler;--scatter=${SCATTERFILE}")
 
@@ -20,9 +26,18 @@ function(cortexa CORE)
     target_include_directories(${PROJECT_NAME} PRIVATE ${ROOT}/CMSIS/Core_A/Include)
     
     target_sources(${PROJECT_NAME} PRIVATE ${ROOT}/Device/ARM/${CORE}/Source/AC6/startup_${CORE}.c)
-    set(SCATTERFILE ${CMAKE_CURRENT_BINARY_DIR}/tempLink/${CORE}.sct)
     
-    target_include_directories(${PROJECT_NAME} PRIVATE ../boot)
+    if (TESTFRAMEWORK)
+      # Test scatter file is missing some sections required by startup file for
+      # cortex-a
+      #set(SCATTERFILE "${ROOT}/CMSIS/DSP/DSP_Lib_TestSuite/Common/platform/ARMCLANG/armcc6_arm.sct")
+      target_include_directories(${PROJECT_NAME} PRIVATE ../Examples/ARM/boot)
+    else()
+      target_include_directories(${PROJECT_NAME} PRIVATE ../boot)
+    endif()
+
+    set(SCATTERFILE ${CMAKE_CURRENT_BINARY_DIR}/tempLink/${CORE}.sct)
+
     
     # Copy the mem file to the build directory 
     # so that it can be find when preprocessing the scatter file

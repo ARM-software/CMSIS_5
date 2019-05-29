@@ -2,8 +2,7 @@ cmake_minimum_required (VERSION 3.6)
 
 project(CMSISDSPController)
 
-
-add_library(CMSISDSPController STATIC ${SRC})
+add_library(CMSISDSPController STATIC)
 
 configdsp(CMSISDSPController ..)
 

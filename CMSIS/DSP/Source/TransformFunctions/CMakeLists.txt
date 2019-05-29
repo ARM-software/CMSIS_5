@@ -38,6 +38,10 @@ target_sources(CMSISDSPTransform PRIVATE arm_cfft_radix4_q31.c)
 target_sources(CMSISDSPTransform PRIVATE arm_cfft_q31.c)
 endif()
 
+if (NOT CONFIGTABLE OR ALLFFT)
+target_sources(CMSISDSPTransform PRIVATE arm_cfft_radix2_init_q15.c)
+target_sources(CMSISDSPTransform PRIVATE arm_cfft_radix2_init_q31.c)
+endif()
 
 if (NOT CONFIGTABLE OR ALLFFT OR DCT4_F32_128 OR DCT4_F32_512 OR DCT4_F32_2048 OR DCT4_F32_8192)
 target_sources(CMSISDSPTransform PRIVATE arm_dct4_f32.c)

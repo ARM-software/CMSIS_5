@@ -46,14 +46,39 @@
   @return        none
 
   @par           Coefficient and State Ordering
-                   The coefficients are stored in the array <code>pCoeffs</code> in the following order:
+                   The coefficients are stored in the array <code>pCoeffs</code> in the following order
+                   in the not Neon version.
   <pre>
       {b10, b11, b12, a11, a12, b20, b21, b22, a21, a22, ...}
   </pre>
+                   
   @par
                    where <code>b1x</code> and <code>a1x</code> are the coefficients for the first stage,
                    <code>b2x</code> and <code>a2x</code> are the coefficients for the second stage,
                    and so on.  The <code>pCoeffs</code> array contains a total of <code>5*numStages</code> values.
+
+                   For Neon version, this array is bigger. If numstages = 4x + y, then the array has size:
+                   32*x + 5*y
+                   and it must be initialized using the function
+                   arm_biquad_cascade_df2T_compute_coefs_f32 which is taking the
+                   standard array coefficient as parameters.
+
+                   But, an array of 8*numstages is a good approximation.
+
+                   Then, the initialization can be done with:
+  <pre>
+                   arm_biquad_cascade_df2T_init_f32(&SNeon, nbCascade, neonCoefs, stateNeon);
+                   arm_biquad_cascade_df2T_compute_coefs_f32(&SNeon,nbCascade,coefs);
+  </pre>
+
+  @par             In this example, neonCoefs is a bigger array of size 8 * numStages.
+                   coefs is the standard array:
+
+  <pre>
+      {b10, b11, b12, a11, a12, b20, b21, b22, a21, a22, ...}
+  </pre>
+
+
   @par
                    The <code>pState</code> is a pointer to state array.
                    Each Biquad stage has 2 state variables <code>d1,</code> and <code>d2</code>.
@@ -63,6 +88,16 @@
  */
 
 #if defined(ARM_MATH_NEON) 
+/*
+
+Must be called after initializing the biquad instance.
+pCoeffs has size 5 * nbCascade
+Whereas the pCoeffs for the init has size (4*4 + 4*4)* nbCascade 
+
+So this pCoeffs is the one which would be used for the not Neon version.
+The pCoeffs passed in init is bigger than the one for the not Neon version.
+
+*/
 void arm_biquad_cascade_df2T_compute_coefs_f32(
   arm_biquad_cascade_df2T_instance_f32 * S,
   uint8_t numStages,

@@ -16,12 +16,16 @@ void debug_init(void)
 
 int main(void)
 {
+#if !defined(FILEIO)
     debug_init();
+#endif
 
     JTEST_INIT();               /* Initialize test framework. */
 
     JTEST_GROUP_CALL(all_tests); /* Run all tests. */
 
     JTEST_ACT_EXIT_FW();        /* Exit test framework.  */
+#if !defined(FILEIO)
     while (1);                   /* Never return. */
+#endif
 }

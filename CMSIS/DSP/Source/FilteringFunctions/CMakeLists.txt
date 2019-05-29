@@ -3,7 +3,7 @@ cmake_minimum_required (VERSION 3.6)
 project(CMSISDSPFiltering)
 
 
-add_library(CMSISDSPFiltering STATIC ${SRC})
+add_library(CMSISDSPFiltering STATIC)
 
 include(interpol)
 interpol(CMSISDSPFiltering)

@@ -1,7 +1,8 @@
 include(CMakePrintHelpers)
+cmake_policy(SET CMP0077 NEW)
 
 SET(CORTEXM ON)
-option(FASTMATH "Fast Math enabled" ON)
+option(FASTMATHCOMPUTATIONS "Fast Math enabled" ON)
 option(NEON "Neon acceleration" OFF)
 option(NEONEXPERIMENTAL "Neon experimental acceleration" OFF)
 option(LOOPUNROLL "Loop unrolling" ON)
@@ -22,7 +23,7 @@ function(configdsp PROJECTNAME DSP)
       target_compile_definitions(${PROJECTNAME} PUBLIC ARM_DSP_CONFIG_TABLES)
   endif()
   
-  if (FASTMATH)
+  if (FASTMATHCOMPUTATIONS)
     target_compile_options(${PROJECTNAME} PUBLIC "-ffast-math")
   endif()
   

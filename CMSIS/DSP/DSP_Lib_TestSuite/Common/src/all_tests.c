@@ -21,6 +21,9 @@ JTEST_DEFINE_GROUP(all_tests)
   JTEST_GROUP_CALL(complex_math_tests);
   JTEST_GROUP_CALL(controller_tests);
   JTEST_GROUP_CALL(fast_math_tests);
+  /* Biquad df2T_f32 will fail with Neon. The test must be updated.
+  Neon implementation is requiring a different initialization.
+  */
   JTEST_GROUP_CALL(filtering_tests);
   JTEST_GROUP_CALL(matrix_tests);
   JTEST_GROUP_CALL(statistics_tests);

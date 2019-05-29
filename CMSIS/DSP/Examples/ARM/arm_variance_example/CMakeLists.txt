@@ -27,6 +27,8 @@ add_subdirectory(../../../Source bin_dsp)
 
 add_executable(arm_variance_example)
 
+set(ROOT ${CMAKE_CURRENT_SOURCE_DIR}/../../../../..)
+
 include(configBoot)
 
 target_sources(arm_variance_example PRIVATE arm_variance_example_f32.c)

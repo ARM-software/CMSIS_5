@@ -59,10 +59,15 @@ extern "C"
   } dataType;
 
 
+#ifndef FLT_MAX
 #define FLT_MAX  3.40282347e+38F
+#endif 
+
 #define DBL_MAX  1.79769313486231571e+308
 
+#ifndef FLT_MIN
 #define FLT_MIN  1.175494351e-38F
+#endif
 #define DBL_MIN  2.22507385850720138e-308
 
 #define SCHAR_MIN (-128)

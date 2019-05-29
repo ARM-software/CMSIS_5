@@ -141,13 +141,13 @@ typedef struct JTEST_FW_struct
  *  Fill the buffer named buf_name with value and dump it to the Keil debugger
  *  using action.
  */
-#ifdef ARMv7A
+#if defined(ARMv7A) || defined(FILEIO)
 
 #define JTEST_ACT_DUMP(action, buf_name, value) \
     do                                          \
     {                                           \
         JTEST_CLEAR_BUFFER(buf_name);           \
-	printf("%s",value);                     \
+	    printf("%s",value);                     \
         strcpy(JTEST_FW.buf_name, (value));     \
         JTEST_TRIGGER_ACTION(action);           \
     } while (0)
@@ -206,7 +206,7 @@ typedef struct JTEST_FW_struct
 /**
  *  Dump a formatted string to the Keil Debugger.
  */
-#ifdef ARMv7A
+#if defined(ARMv7A) || defined(FILEIO)
 
 #define JTEST_DUMP_STRF(format_str, ... )                               \
     do                                                                  \
