@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * $Date:        21. May 2019
+ * $Date:        31. May 2019
  * $Revision:    V1.0 (beta)
  *
  * Project:      WiFi (Wireless Fidelity Interface) Driver definitions
@@ -626,7 +626,7 @@ typedef struct {
   int32_t               (*SetOption)                   (uint32_t interface, uint32_t option, const void *data, uint32_t  len);
   int32_t               (*GetOption)                   (uint32_t interface, uint32_t option,       void *data, uint32_t *len);
   int32_t               (*Scan)                        (ARM_WIFI_SCAN_INFO_t scan_info[], uint32_t max_num);
-  int32_t               (*Activate)                    (uint32_t interface, ARM_WIFI_CONFIG_t *config);
+  int32_t               (*Activate)                    (uint32_t interface, const ARM_WIFI_CONFIG_t *config);
   int32_t               (*Deactivate)                  (uint32_t interface);
   uint32_t              (*IsConnected)                 (void);
   int32_t               (*GetNetInfo)                  (ARM_WIFI_NET_INFO_t *net_info);
