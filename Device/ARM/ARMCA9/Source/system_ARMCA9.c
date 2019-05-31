@@ -53,19 +53,15 @@ void SystemInit (void)
    reaching pre-main. RW section may be overwritten afterwards.          */
 
   // Invalidate entire Unified TLB
-  __set_TLBIALL(0);
+  MMU_InvalidateTLB();
 
   // Invalidate entire branch predictor array
-  __set_BPIALL(0);
-  __DSB();
-  __ISB();
+  L1C_InvalidateBTAC();
 
-  //  Invalidate instruction cache and flush branch target cache
-  __set_ICIALLU(0);
-  __DSB();
-  __ISB();
+  // Invalidate instruction cache and flush branch target cache
+  L1C_InvalidateICacheAll();
 
-  //  Invalidate data cache
+  // Invalidate data cache
   L1C_InvalidateDCacheAll();
 
 #if ((__FPU_PRESENT == 1) && (__FPU_USED == 1))
