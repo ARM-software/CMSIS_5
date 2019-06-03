@@ -6,7 +6,7 @@ targets:
   arm:
     toolchain: GCC
     csettings   : [ -mlittle-endian, -gdwarf-3, "-%{optimize}", -fmessage-length=0, -fsigned-char, -ffunction-sections, -fdata-sections ]
-    cwarnings   : [ -Wall, -Wextra, -Wshadow, -Wundef, -Wstrict-prototypes ]
+    cwarnings   : [ -Wall, -Wextra, -Wshadow, -Wundef, -Wstrict-prototypes, -Wpedantic ]
   armcm:
     cflags      : [ -xc, -std=gnu99, -c, "-mfloat-abi=${float}", "${csettings}", "${cwarnings}" ]
     asmflags    : [ -c,"-mfloat-abi=${float}", "${csettings}", "${cwarnings}" ]
