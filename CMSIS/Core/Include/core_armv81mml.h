@@ -1,8 +1,8 @@
 /**************************************************************************//**
  * @file     core_armv81mml.h
  * @brief    CMSIS Armv8.1-M Mainline Core Peripheral Access Layer Header File
- * @version  V1.0.0
- * @date     15. March 2019
+ * @version  V1.1.0
+ * @date     04. June 2019
  ******************************************************************************/
 /*
  * Copyright (c) 2018-2019 Arm Limited. All rights reserved.
@@ -1560,8 +1560,8 @@ typedef struct
   struct {
   __IOM uint32_t MAIR0;                  /*!< Offset: 0x030 (R/W)  MPU Memory Attribute Indirection Register 0 */
   __IOM uint32_t MAIR1;                  /*!< Offset: 0x034 (R/W)  MPU Memory Attribute Indirection Register 1 */
-  };
-  };
+  } MAIRn;
+  } MAIR;
 } MPU_Type;
 
 #define MPU_TYPE_RALIASES                  4U
