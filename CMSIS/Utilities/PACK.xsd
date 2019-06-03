@@ -764,6 +764,23 @@
       <xs:enumeration value="LCD" />
       <xs:enumeration value="Touch" />
       <xs:enumeration value="Other" />
+      <xs:enumeration value="GPU" />
+      <xs:enumeration value="AI" />
+      <xs:enumeration value="FPGA" />
+      <xs:enumeration value="Application" />
+      <xs:enumeration value="IrDA" />
+      <xs:enumeration value="HDMI" />
+      <xs:enumeration value="MIPI" />
+      <xs:enumeration value="PCIe" />
+      <xs:enumeration value="Bluetooth" />
+      <xs:enumeration value="ZigBee" />
+      <xs:enumeration value="802.15.4" />
+      <xs:enumeration value="WiFi" />
+      <xs:enumeration value="LoRa" />
+      <xs:enumeration value="LTE Cat-M" />
+      <xs:enumeration value="NB-IoT" />
+      <xs:enumeration value="NFC" />
+      <xs:enumeration value="WirelessOther" />
       <!-- deprecated, only for backwards compatibility -->
       <xs:enumeration value="I/O" />
       <xs:enumeration value="D/A" />
