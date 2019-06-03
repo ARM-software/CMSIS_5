@@ -32,12 +32,16 @@
 
 #include "arm_math.h"
 #include "arm_common_tables.h"
-//#include <cstring>
 
 #ifdef __cplusplus
 extern    "C"
 {
 #endif
+
+#define LEFT_SHIFT(_shift)  (_shift > 0 ? _shift : 0)
+#define RIGHT_SHIFT(_shift) (_shift > 0 ? 0 : -_shift)
+#define Q31_MIN (0x80000000L)
+#define Q31_MAX (0x7FFFFFFFL)
 
 /**
  * @brief Union for SIMD access of Q31/Q15/Q7 types
@@ -194,6 +198,70 @@ void arm_nn_mult_q7(
 #else
     #define NN_ROUND(out_shift) 0
 #endif
+
+/**
+ * @brief           Saturating doubling high multiply. Result matches
+ *                  NEON instruction VQRDMULH.
+ * @param[in]       m1        Multiplicand
+ * @param[in]       m2        Multiplier
+ * @return          Result of multiplication.
+ *
+ */
+__STATIC_FORCEINLINE q31_t arm_nn_sat_doubling_high_mult(const q31_t m1, const q31_t m2)
+{
+    q31_t result = 0;
+    // Rounding offset to add for a right shift of 31
+    q63_t mult = 1 << 30;
+
+    if ((m1 < 0) ^ (m2 < 0))
+    {
+        mult = 1 - mult;
+    }
+    // Gets resolved as a SMLAL instruction
+    mult = mult + (q63_t)m1 * m2;
+
+    // Utilize all of the upper 32 bits. This is the doubling step
+    // as well.
+    result = mult / (1UL << 31);
+
+    if ((m1 == m2) && (m1 == Q31_MIN))
+    {
+        result = Q31_MAX;
+    }
+
+    return result;
+}
+
+/**
+ * @brief           Rounding divide by power of two.
+ * @param[in]       dividend - Dividend
+ * @param[in]       exponent - Divisor = power(2, exponent)
+ *                             Range: [0, 31]
+ * @return          Rounded result of division. Midpoint is rounded away from zero.
+ *
+ */
+__STATIC_FORCEINLINE q31_t arm_nn_divide_by_power_of_two(const q31_t dividend, const q31_t exponent)
+{
+    q31_t result = 0;
+    const q31_t remainder_mask = (1l << exponent) - 1;
+    int32_t remainder = remainder_mask & dividend;
+
+    // Basic division
+    result = dividend >> exponent;
+
+    // Adjust 'result' for rounding (mid point away from zero)
+    q31_t threshold = remainder_mask >> 1;
+    if (result < 0)
+    {
+        threshold++;
+    }
+    if (remainder > threshold)
+    {
+        result++;
+    }
+
+    return result;
+}
 
 #ifdef __cplusplus
 }
