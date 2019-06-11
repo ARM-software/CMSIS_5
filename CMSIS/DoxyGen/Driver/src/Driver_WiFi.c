@@ -755,7 +755,7 @@ after initially connecting using WPS.
 ARM_WIFI_CONFIG_t wifi_config;
 ARM_WIFI_NET_INFO_t net_info;
  
-memset(&wifi_config, 0, sizeof(wifi_config);
+memset(&wifi_config, 0, sizeof(wifi_config));
  
 wifi_config.wps_method = ARM_WIFI_WPS_METHOD_PBC;
  
