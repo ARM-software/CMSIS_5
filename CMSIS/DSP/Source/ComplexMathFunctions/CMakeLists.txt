@@ -2,15 +2,18 @@ cmake_minimum_required (VERSION 3.6)
 
 project(CMSISDSPComplexMath)
 
+include(config)
+include(configDsp)
 
 file(GLOB SRC "./*_*.c")
 
 add_library(CMSISDSPComplexMath STATIC ${SRC})
 
-configdsp(CMSISDSPComplexMath ..)
+configLib(CMSISDSPComplexMath ${ROOT})
+configDsp(CMSISDSPComplexMath ${ROOT})
 
 ### Includes
-target_include_directories(CMSISDSPComplexMath PUBLIC "${DSP}/../../Include")
+target_include_directories(CMSISDSPComplexMath PUBLIC "${DSP}/Include")
 
 
 

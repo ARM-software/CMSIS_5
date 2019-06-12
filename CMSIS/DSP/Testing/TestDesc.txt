@@ -1,0 +1,150 @@
+3 1
+n
+n
+3 3
+n
+y
+NN
+2 1
+n
+y
+FullyConnected
+0
+60
+TestCase_1_10_4_input_1.txt
+TestCase_1_10_4_bias_1.txt
+TestCase_1_10_4_weights_1.txt
+TestCase_1_10_4_output_1.txt
+TestCase_1_8_9_input_2.txt
+TestCase_1_8_9_bias_2.txt
+TestCase_1_8_9_weights_2.txt
+TestCase_1_8_9_output_2.txt
+TestCase_1_10_4_input_3.txt
+TestCase_1_10_4_bias_3.txt
+TestCase_1_10_4_weights_3.txt
+TestCase_1_10_4_output_3.txt
+TestCase_1_9_1_input_4.txt
+TestCase_1_9_1_bias_4.txt
+TestCase_1_9_1_weights_4.txt
+TestCase_1_9_1_output_4.txt
+TestCase_1_8_8_input_5.txt
+TestCase_1_8_8_bias_5.txt
+TestCase_1_8_8_weights_5.txt
+TestCase_1_8_8_output_5.txt
+TestCase_9_6_1_input_6.txt
+TestCase_9_6_1_bias_6.txt
+TestCase_9_6_1_weights_6.txt
+TestCase_9_6_1_output_6.txt
+TestCase_8_8_1_input_7.txt
+TestCase_8_8_1_bias_7.txt
+TestCase_8_8_1_weights_7.txt
+TestCase_8_8_1_output_7.txt
+TestCase_4_10_1_input_8.txt
+TestCase_4_10_1_bias_8.txt
+TestCase_4_10_1_weights_8.txt
+TestCase_4_10_1_output_8.txt
+TestCase_9_6_1_input_9.txt
+TestCase_9_6_1_bias_9.txt
+TestCase_9_6_1_weights_9.txt
+TestCase_9_6_1_output_9.txt
+TestCase_4_10_1_input_10.txt
+TestCase_4_10_1_bias_10.txt
+TestCase_4_10_1_weights_10.txt
+TestCase_4_10_1_output_10.txt
+TestCase_8_8_1_input_11.txt
+TestCase_8_8_1_bias_11.txt
+TestCase_8_8_1_weights_11.txt
+TestCase_8_8_1_output_11.txt
+TestCase_9_8_4_input_12.txt
+TestCase_9_8_4_bias_12.txt
+TestCase_9_8_4_weights_12.txt
+TestCase_9_8_4_output_12.txt
+TestCase_8_8_5_input_13.txt
+TestCase_8_8_5_bias_13.txt
+TestCase_8_8_5_weights_13.txt
+TestCase_8_8_5_output_13.txt
+TestCase_4_7_3_input_14.txt
+TestCase_4_7_3_bias_14.txt
+TestCase_4_7_3_weights_14.txt
+TestCase_4_7_3_output_14.txt
+TestCase_8_7_4_input_15.txt
+TestCase_8_7_4_bias_15.txt
+TestCase_8_7_4_weights_15.txt
+TestCase_8_7_4_output_15.txt
+30
+Output1
+Temp1
+Output19
+Temp19
+Output2
+Temp2
+Output3
+Temp3
+Output4
+Temp4
+Output5
+Temp5
+Output6
+Temp6
+Output7
+Temp7
+Output8
+Temp8
+Output9
+Temp9
+Output10
+Temp10
+Output11
+Temp11
+Output12
+Temp12
+Output13
+Temp13
+Output14
+Temp14
+0
+1 1
+n
+n
+1 2
+n
+n
+1 3
+n
+n
+1 4
+n
+n
+1 5
+n
+n
+1 6
+n
+n
+1 7
+n
+n
+1 8
+n
+n
+1 9
+n
+n
+1 10
+n
+n
+1 11
+n
+n
+1 12
+n
+n
+1 13
+n
+n
+1 14
+n
+n
+1 15
+n
+n

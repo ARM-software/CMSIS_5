@@ -279,6 +279,11 @@
 #ifndef _ARM_MATH_H
 #define _ARM_MATH_H
 
+#ifdef   __cplusplus
+extern "C"
+{
+#endif
+
 /* Compiler specific diagnostic adjustment */
 #if   defined ( __CC_ARM )
 
@@ -307,7 +312,11 @@
 
 /* Included for instrinsics definitions */
 #if !defined ( _MSC_VER )
+
+
 #include "cmsis_compiler.h"
+
+
 #else
 #include <stdint.h>
 #define __STATIC_FORCEINLINE static __forceinline
@@ -329,12 +338,6 @@
 
 #if defined(__ARM_NEON)
 #include <arm_neon.h>
-#endif
-
-
-#ifdef   __cplusplus
-extern "C"
-{
 #endif
 
 
@@ -7327,9 +7330,6 @@ arm_status arm_sqrt_q15(
 #endif
 
 
-#ifdef   __cplusplus
-}
-#endif
 
 /* Compiler specific diagnostic adjustment */
 #if   defined ( __CC_ARM )
@@ -7352,6 +7352,11 @@ arm_status arm_sqrt_q15(
 #else
   #error Unknown compiler
 #endif
+
+#ifdef   __cplusplus
+}
+#endif
+
 
 #endif /* _ARM_MATH_H */
 

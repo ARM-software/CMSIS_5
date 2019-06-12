@@ -1,9 +1,18 @@
 cmake_minimum_required (VERSION 3.6)
-
+cmake_policy(SET CMP0077 NEW)
 project(CMSISDSP)
 
+include(config)
 # Needed to find the config modules
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/..)
+
+
+option(FASTMATHCOMPUTATIONS "Fast Math enabled" ON)
+option(NEON "Neon acceleration" OFF)
+option(NEONEXPERIMENTAL "Neon experimental acceleration" OFF)
+option(LOOPUNROLL "Loop unrolling" ON)
+option(ROUNDING "Rounding" OFF)
+option(MATRIXCHECK "Matrix Checks" OFF)
 
 # Select which parts of the CMSIS-DSP must be compiled.
 # There are some dependencies between the parts but they are not tracked
@@ -131,12 +140,11 @@ option(DCT4_Q15_8192         "dct4 q15 8192"                    OFF)
 ###########################
 
 # DSP Sources
-SET(DSP ".")
+SET(DSP ${ROOT}/CMSIS/DSP)
+
+list(APPEND CMAKE_MODULE_PATH ${DSP}/Source)
 
 add_library(CMSISDSP INTERFACE)
-
-include(config)
-
 
 if (BASICMATH)
   add_subdirectory(BasicMathFunctions)
@@ -217,7 +225,7 @@ if (FILTERING OR CONTROLLER OR FASTMATH OR TRANSFORM)
 endif()
 
 ### Includes
-target_include_directories(CMSISDSP INTERFACE "${DSP}/../Include")
+target_include_directories(CMSISDSP INTERFACE "${DSP}/Include")
 
 
 

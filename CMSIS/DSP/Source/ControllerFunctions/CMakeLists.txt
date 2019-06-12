@@ -2,9 +2,13 @@ cmake_minimum_required (VERSION 3.6)
 
 project(CMSISDSPController)
 
+include(config)
+include(configDsp)
+
 add_library(CMSISDSPController STATIC)
 
-configdsp(CMSISDSPController ..)
+configLib(CMSISDSPController ${ROOT})
+configDsp(CMSISDSPController ${ROOT})
 
 include(interpol)
 interpol(CMSISDSPController)
@@ -31,7 +35,7 @@ endif()
 
 
 ### Includes
-target_include_directories(CMSISDSPController PUBLIC "${DSP}/../../Include")
+target_include_directories(CMSISDSPController PUBLIC "${DSP}/Include")
 
 
 

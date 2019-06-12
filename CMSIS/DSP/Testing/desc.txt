@@ -1,0 +1,329 @@
+group Root {
+    class = Root
+
+    group DSP Tests {
+        class = DSPTests
+        folder = DSP
+
+        group Basic Tests {
+           class = BasicTests
+           folder = BasicMaths
+
+           suite Basic Tests F32{
+              class = BasicTestsF32
+              folder = BasicMathsF32
+   
+              Pattern INPUT1_F32_ID : Input1_f32.txt 
+              Pattern INPUT2_F32_ID : Input2_f32.txt 
+   
+              Pattern REF_ADD_F32_ID : Reference1_f32.txt
+              Pattern REF_SUB_F32_ID : Reference2_f32.txt
+              Pattern REF_MULT_F32_ID : Reference3_f32.txt
+              Pattern REF_NEGATE_F32_ID : Reference4_f32.txt
+              Pattern REF_OFFSET_F32_ID : Reference5_f32.txt
+              Pattern REF_SCALE_F32_ID : Reference6_f32.txt
+              Pattern REF_DOT_3_F32_ID : Reference7_f32.txt
+              Pattern REF_DOT_4N_F32_ID : Reference8_f32.txt
+              Pattern REF_DOT_4N1_F32_ID : Reference9_f32.txt
+              Pattern REF_ABS_F32_ID : Reference10_f32.txt
+   
+              Output  OUT_SAMPLES_F32_ID : Output
+              Output  OUT_STATE_F32_ID : State
+   
+              Functions {
+                Test nb=3    arm_add_f32:test_add_f32
+                Test nb=4n   arm_add_f32:test_add_f32
+                Test nb=4n+1 arm_add_f32:test_add_f32
+         
+                Test nb=3    arm_sub_f32:test_sub_f32
+                Test nb=4n   arm_sub_f32:test_sub_f32
+                Test nb=4n+1 arm_sub_f32:test_sub_f32
+         
+                Test nb=3    arm_mult_f32:test_mult_f32
+                Test nb=4n   arm_mult_f32:test_mult_f32
+                Test nb=4n+1 arm_mult_f32:test_mult_f32
+         
+                Test nb=3    arm_negate_f32:test_negate_f32
+                Test nb=4n   arm_negate_f32:test_negate_f32
+                Test nb=4n+1 arm_negate_f32:test_negate_f32
+         
+                Test nb=3    arm_offset_f32:test_offset_f32
+                Test nb=4n   arm_offset_f32:test_offset_f32
+                Test nb=4n+1 arm_offset_f32:test_offset_f32
+         
+                Test nb=3    arm_scale_f32:test_scale_f32
+                Test nb=4n   arm_scale_f32:test_scale_f32
+                Test nb=4n+1 arm_scale_f32:test_scale_f32
+         
+                Test nb=3    arm_dot_prod_f32:test_dot_prod_f32
+                Test nb=4n   arm_dot_prod_f32:test_dot_prod_f32
+                Test nb=4n+1 arm_dot_prod_f32:test_dot_prod_f32
+         
+                Test nb=3    arm_abs_f32:test_abs_f32
+                Test nb=4n   arm_abs_f32:test_abs_f32
+                Test nb=4n+1 arm_abs_f32:test_abs_f32
+              }
+           }
+        }
+    }
+
+    group DSP Benchmarks {
+        class = DSPBenchmarks
+        folder = DSP
+
+        group Basic Maths Benchmarks {
+           class = BasicBenchmarks
+           folder = BasicMaths
+
+           suite BasicMaths Benchmarks F32 {
+              class = BasicMathsBenchmarksF32
+              folder = BasicMathsF32
+  
+              ParamList {
+                  NB
+                  Summary NB
+                  Names "NB Samples"
+                  Formula "NB"
+              }
+  
+              Pattern INPUT1_F32_ID : Input1_f32.txt 
+              Pattern INPUT2_F32_ID : Input2_f32.txt 
+              Output  OUT_SAMPLES_F32_ID : Output
+              Params PARAM1_ID = {
+                  A = [16,32,64,128,256]
+              }
+  
+              Functions {
+                 vec_mult_f32:vec_mult_f32
+                 vec_add_f32:vec_add_f32
+                 vec_sub_f32:vec_sub_f32
+                 vec_abs_f32:vec_abs_f32
+                 vec_negate_f32:vec_negate_f32
+                 vec_offset_f32:vec_offset_f32
+                 vec_scale_f32:vec_scale_f32
+                 vec_dot_f32:vec_dot_f32
+              } -> PARAM1_ID
+           }
+
+           suite BasicMaths Benchmarks Q31 {
+              class = BasicMathsBenchmarksQ31
+              folder = BasicMathsQ31
+  
+              ParamList {
+                  NB
+                  Summary NB
+                  Names "NB Samples"
+                  Formula "NB"
+              }
+  
+              Pattern INPUT1_Q31_ID : Input1_q31.txt 
+              Pattern INPUT2_Q31_ID : Input2_q31.txt 
+              Output  OUT_SAMPLES_Q31_ID : Output
+              Params PARAM1_ID = {
+                  A = [16,32,64,128,256]
+              }
+  
+              Functions {
+                 vec_mult_q31:vec_mult_q31
+                 vec_add_q31:vec_add_q31
+                 vec_sub_q31:vec_sub_q31
+                 vec_abs_q31:vec_abs_q31
+                 vec_negate_q31:vec_negate_q31
+                 vec_offset_q31:vec_offset_q31
+                 vec_scale_q31:vec_scale_q31
+                 vec_dot_q31:vec_dot_q31
+              } -> PARAM1_ID
+           }
+        }
+    }
+
+    group NN Tests
+    {
+       class = NNTests
+       folder = NN
+
+       suite Fully Connected {
+         class = FullyConnected 
+         folder = FullyConnected
+
+         // TestCase_[nbBatches]_[colDim]_[rowDim]_xxx_[testNb].txt
+         // 1
+         Pattern INPUT1_S8_ID : TestCase_1_10_4_input_1.txt
+         Pattern BIAS1_S8_ID : TestCase_1_10_4_bias_1.txt
+         Pattern WEIGHT1_S8_ID : TestCase_1_10_4_weights_1.txt
+         Pattern REF1_S8_ID : TestCase_1_10_4_output_1.txt
+
+         // 2
+         Pattern INPUT19_S8_ID : TestCase_1_8_9_input_2.txt
+         Pattern BIAS19_S8_ID : TestCase_1_8_9_bias_2.txt
+         Pattern WEIGHT19_S8_ID : TestCase_1_8_9_weights_2.txt
+         Pattern REF19_S8_ID : TestCase_1_8_9_output_2.txt
+
+         // 3
+         Pattern INPUT2_S8_ID : TestCase_1_10_4_input_3.txt
+         Pattern BIAS2_S8_ID : TestCase_1_10_4_bias_3.txt
+         Pattern WEIGHT2_S8_ID : TestCase_1_10_4_weights_3.txt
+         Pattern REF2_S8_ID : TestCase_1_10_4_output_3.txt
+
+         // 4
+         Pattern INPUT3_S8_ID : TestCase_1_9_1_input_4.txt
+         Pattern BIAS3_S8_ID : TestCase_1_9_1_bias_4.txt
+         Pattern WEIGHT3_S8_ID : TestCase_1_9_1_weights_4.txt
+         Pattern REF3_S8_ID : TestCase_1_9_1_output_4.txt
+
+         // 5
+         Pattern INPUT4_S8_ID : TestCase_1_8_8_input_5.txt
+         Pattern BIAS4_S8_ID : TestCase_1_8_8_bias_5.txt
+         Pattern WEIGHT4_S8_ID : TestCase_1_8_8_weights_5.txt
+         Pattern REF4_S8_ID : TestCase_1_8_8_output_5.txt
+
+         // 6
+         Pattern INPUT5_S8_ID : TestCase_9_6_1_input_6.txt
+         Pattern BIAS5_S8_ID : TestCase_9_6_1_bias_6.txt
+         Pattern WEIGHT5_S8_ID : TestCase_9_6_1_weights_6.txt
+         Pattern REF5_S8_ID : TestCase_9_6_1_output_6.txt
+
+         // 7
+         Pattern INPUT6_S8_ID : TestCase_8_8_1_input_7.txt
+         Pattern BIAS6_S8_ID : TestCase_8_8_1_bias_7.txt
+         Pattern WEIGHT6_S8_ID : TestCase_8_8_1_weights_7.txt
+         Pattern REF6_S8_ID : TestCase_8_8_1_output_7.txt
+
+         // 8
+         Pattern INPUT7_S8_ID : TestCase_4_10_1_input_8.txt
+         Pattern BIAS7_S8_ID : TestCase_4_10_1_bias_8.txt
+         Pattern WEIGHT7_S8_ID : TestCase_4_10_1_weights_8.txt
+         Pattern REF7_S8_ID : TestCase_4_10_1_output_8.txt
+
+         // 9
+         Pattern INPUT8_S8_ID : TestCase_9_6_1_input_9.txt
+         Pattern BIAS8_S8_ID : TestCase_9_6_1_bias_9.txt
+         Pattern WEIGHT8_S8_ID : TestCase_9_6_1_weights_9.txt
+         Pattern REF8_S8_ID : TestCase_9_6_1_output_9.txt
+
+         // 10
+         Pattern INPUT9_S8_ID : TestCase_4_10_1_input_10.txt
+         Pattern BIAS9_S8_ID : TestCase_4_10_1_bias_10.txt
+         Pattern WEIGHT9_S8_ID : TestCase_4_10_1_weights_10.txt
+         Pattern REF9_S8_ID : TestCase_4_10_1_output_10.txt
+
+         // 11
+         Pattern INPUT10_S8_ID : TestCase_8_8_1_input_11.txt
+         Pattern BIAS10_S8_ID : TestCase_8_8_1_bias_11.txt
+         Pattern WEIGHT10_S8_ID : TestCase_8_8_1_weights_11.txt
+         Pattern REF10_S8_ID : TestCase_8_8_1_output_11.txt
+
+         // 12
+         Pattern INPUT11_S8_ID : TestCase_9_8_4_input_12.txt
+         Pattern BIAS11_S8_ID : TestCase_9_8_4_bias_12.txt
+         Pattern WEIGHT11_S8_ID : TestCase_9_8_4_weights_12.txt
+         Pattern REF11_S8_ID : TestCase_9_8_4_output_12.txt
+
+         // 13
+         Pattern INPUT12_S8_ID : TestCase_8_8_5_input_13.txt
+         Pattern BIAS12_S8_ID : TestCase_8_8_5_bias_13.txt
+         Pattern WEIGHT12_S8_ID : TestCase_8_8_5_weights_13.txt
+         Pattern REF12_S8_ID : TestCase_8_8_5_output_13.txt
+
+         // 14
+         Pattern INPUT13_S8_ID : TestCase_4_7_3_input_14.txt
+         Pattern BIAS13_S8_ID : TestCase_4_7_3_bias_14.txt
+         Pattern WEIGHT13_S8_ID : TestCase_4_7_3_weights_14.txt
+         Pattern REF13_S8_ID : TestCase_4_7_3_output_14.txt
+
+         // 15
+         Pattern INPUT14_S8_ID : TestCase_8_7_4_input_15.txt
+         Pattern BIAS14_S8_ID : TestCase_8_7_4_bias_15.txt
+         Pattern WEIGHT14_S8_ID : TestCase_8_7_4_weights_15.txt
+         Pattern REF14_S8_ID : TestCase_8_7_4_output_15.txt
+
+         Output  OUTPUT1_S8_ID : Output1
+         Output  TEMP1_S16_ID : Temp1
+         Output  OUTPUT19_S8_ID : Output19
+         Output  TEMP19_S16_ID : Temp19
+         Output  OUTPUT2_S8_ID : Output2
+         Output  TEMP2_S16_ID : Temp2
+         Output  OUTPUT3_S8_ID : Output3
+         Output  TEMP3_S16_ID : Temp3
+         Output  OUTPUT4_S8_ID : Output4
+         Output  TEMP4_S16_ID : Temp4
+         Output  OUTPUT5_S8_ID : Output5
+         Output  TEMP5_S16_ID : Temp5
+         Output  OUTPUT6_S8_ID : Output6
+         Output  TEMP6_S16_ID : Temp6
+         Output  OUTPUT7_S8_ID : Output7
+         Output  TEMP7_S16_ID : Temp7
+         Output  OUTPUT8_S8_ID : Output8
+         Output  TEMP8_S16_ID : Temp8
+         Output  OUTPUT9_S8_ID : Output9
+         Output  TEMP9_S16_ID : Temp9
+         Output  OUTPUT10_S8_ID : Output10
+         Output  TEMP10_S16_ID : Temp10
+
+         Output  OUTPUT11_S8_ID : Output11
+         Output  TEMP11_S16_ID : Temp11
+
+         Output  OUTPUT12_S8_ID : Output12
+         Output  TEMP12_S16_ID : Temp12
+
+         Output  OUTPUT13_S8_ID : Output13
+         Output  TEMP13_S16_ID : Temp13
+
+         Output  OUTPUT14_S8_ID : Output14
+         Output  TEMP14_S16_ID : Temp14
+
+         Functions {
+            fully_connected_tflite_s8 test1:test_fully_connected_tflite_s8
+            fully_connected_tflite_s8 test19:test_fully_connected_tflite_s8
+            fully_connected_tflite_s8 test5:test_fully_connected_tflite_s8
+            fully_connected_tflite_s8 test6:test_fully_connected_tflite_s8
+            fully_connected_tflite_s8 test7:test_fully_connected_tflite_s8
+            matmul_tflite_s8 test9:test_fully_connected_tflite_s8
+            matmul_tflite_s8 test5:test_fully_connected_tflite_s8
+            matmul_tflite_s8 test4:test_fully_connected_tflite_s8
+            matmul_tflite_s8 test9B:test_fully_connected_tflite_s8
+            matmul_tflite_s8 test4B:test_fully_connected_tflite_s8
+            matmul_tflite_s8 test5B:test_fully_connected_tflite_s8
+            matmul_tflite_s8 test_4_9:test_fully_connected_tflite_s8
+            matmul_tflite_s8 test_5_8:test_fully_connected_tflite_s8
+            matmul_tflite_s8 test_3_4:test_fully_connected_tflite_s8
+            matmul_tflite_s8 test_4_8:test_fully_connected_tflite_s8
+         }
+       }
+    }
+
+    group NN Benchmarks
+    {
+       class = NNBenchmarks
+       folder = NN
+
+       suite Fully Connected Benchmarks {
+         class = FullyConnectedBench 
+         folder = FullyConnected
+
+         ParamList {
+                REPEAT
+                Summary REPEAT
+                Names "Repetition"
+                Formula "REPEAT"
+            }
+
+         Pattern INPUT1_S8_ID : TestCase_1_input.txt
+         Pattern BIAS_S8_ID : TestCase_1_bias.txt
+         Pattern WEIGHT_S8_ID : TestCase_1_weights_1.txt
+
+         Pattern REF1_S8_ID : TestCase_1_output_1.txt
+
+         Output  OUTPUT1_S8_ID : Output
+         Output  TEMP1_S16_ID : Temp1
+
+         Params PARAM1_ID = {
+                NB = [10,20,100,200]
+            }
+
+         Functions {
+            arm_fully_connected_tflite_s8:test_fully_connected_tflite_s8  -> PARAM1_ID
+         }
+       }
+    }
+}

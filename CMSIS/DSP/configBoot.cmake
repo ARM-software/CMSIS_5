@@ -1,9 +1,7 @@
 include(CMakePrintHelpers)
-include(configUtils)
 
-enable_language(C ASM)
+enable_language(CXX C ASM)
 
-option(FILEIO "Test trace using printf" ON)
 
 # Otherwise there is a .obj on windows and it creates problems
 # with armlink. 
@@ -16,19 +14,47 @@ get_filename_component(PROJECT_NAME ${CMAKE_CURRENT_SOURCE_DIR} NAME)
 
 cmake_print_variables(PROJECT_NAME)
 
-#set(ROOT ${CMAKE_CURRENT_SOURCE_DIR}/../../../../..)
 
-if (ARMAC6)
+function(cortexm CORE PROJECT_NAME ROOT PLATFORMFOLDER)
+   
+    target_include_directories(${PROJECT_NAME} PRIVATE ${ROOT}/CMSIS/Core/Include)
+    
+    target_sources(${PROJECT_NAME} PRIVATE ${PLATFORMFOLDER}/${CORE}/system_${CORE}.c)
+    
 
+    toolchainSpecificLinkForCortexM(${PROJECT_NAME} ${ROOT} ${CORE} ${PLATFORMFOLDER})
+
+    configplatformForApp(${PROJECT_NAME} ${ROOT} ${CORE} ${PLATFORMFOLDER})
+    SET(PLATFORMID ${PLATFORMID} PARENT_SCOPE)
+
+endfunction()
+
+function(cortexa CORE PROJECT_NAME ROOT PLATFORMFOLDER)
+    target_include_directories(${PROJECT_NAME} PRIVATE ${ROOT}/CMSIS/Core_A/Include)
+
+    target_sources(${PROJECT_NAME} PRIVATE ${PLATFORMFOLDER}/${CORE}/irq_ctrl_gic.c)
+    target_sources(${PROJECT_NAME} PRIVATE ${PLATFORMFOLDER}/${CORE}/mmu_${CORE}.c)
+    target_sources(${PROJECT_NAME} PRIVATE ${PLATFORMFOLDER}/${CORE}/system_${CORE}.c)
+
+    
+    target_compile_definitions(${PROJECT_NAME} PRIVATE -DCMSIS_device_header="${CORE}.h")
+
+    toolchainSpecificLinkForCortexA(${PROJECT_NAME} ${ROOT} ${CORE} ${PLATFORMFOLDER})
+
+    configplatformForApp(${PROJECT_NAME} ${ROOT} ${CORE} ${PLATFORMFOLDER})
+    SET(PLATFORMID ${PLATFORMID} PARENT_SCOPE)
+endfunction()
+
+function(configboot PROJECT_NAME ROOT PLATFORMFOLDER)
+
+  target_include_directories(${PROJECT_NAME} PRIVATE ${ROOT}/CMSIS/DSP/Include)
+  set_platform_core()
   ###################
   #
   # Cortex cortex-m7
   #
   if (ARM_CPU STREQUAL "cortex-m7")
-    cortexm(ARMCM7)
-
-    target_compile_definitions(${PROJECT_NAME} PRIVATE ARMCM7_DP)
-    
+    cortexm(${CORE} ${PROJECT_NAME} ${ROOT} ${PLATFORMFOLDER})    
     
   endif()
   
@@ -37,8 +63,7 @@ if (ARMAC6)
   # Cortex cortex-m4
   #
   if (ARM_CPU STREQUAL "cortex-m4")
-      cortexm(ARMCM4)
-      target_compile_definitions(${PROJECT_NAME} PRIVATE ARMCM4_FP)
+      cortexm(${CORE} ${PROJECT_NAME} ${ROOT} ${PLATFORMFOLDER})
   endif()
   
   ###################
@@ -46,8 +71,8 @@ if (ARMAC6)
   # Cortex cortex-m35p
   #
   if (ARM_CPU STREQUAL "cortex-m35")
-      cortexm(ARMCM35P)
-      target_compile_definitions(${PROJECT_NAME} PRIVATE ARMCM35P)
+      cortexm(${CORE} ${PROJECT_NAME} ${ROOT} ${PLATFORMFOLDER})
+      
   endif()
   
   ###################
@@ -55,8 +80,8 @@ if (ARMAC6)
   # Cortex cortex-m33
   #
   if (ARM_CPU STREQUAL "cortex-m33")
-      cortexm(ARMCM33)
-      target_compile_definitions(${PROJECT_NAME} PRIVATE ARMCM33)
+      cortexm(${CORE} ${PROJECT_NAME} ${ROOT} ${PLATFORMFOLDER})
+      
   endif()
   
   ###################
@@ -64,8 +89,8 @@ if (ARMAC6)
   # Cortex cortex-m23
   #
   if (ARM_CPU STREQUAL "cortex-m23")
-      cortexm(ARMCM23)
-      target_compile_definitions(${PROJECT_NAME} PRIVATE ARMCM23)
+      cortexm(${CORE} ${PROJECT_NAME} ${ROOT} ${PLATFORMFOLDER})
+     
   endif()
 
   ###################
@@ -73,7 +98,8 @@ if (ARMAC6)
   # Cortex cortex-m0+
   #
   if (ARM_CPU STREQUAL "cortex-m0p")
-      cortexm(ARMCM0plus)
+      cortexm(${CORE} ${PROJECT_NAME} ${ROOT} ${PLATFORMFOLDER})
+      
   endif()
 
   ###################
@@ -81,7 +107,8 @@ if (ARMAC6)
   # Cortex cortex-m0
   #
   if (ARM_CPU STREQUAL "cortex-m0")
-      cortexm(ARMCM0)
+      cortexm(${CORE} ${PROJECT_NAME} ${ROOT} ${PLATFORMFOLDER})
+      
   endif()
   
   ###################
@@ -89,8 +116,8 @@ if (ARMAC6)
   # Cortex cortex-a5
   #
   if (ARM_CPU STREQUAL "cortex-a5")
-    cortexa(ARMCA5)
-    target_compile_definitions(${PROJECT_NAME} PRIVATE ARMv7A) 
+    cortexa(${CORE} ${PROJECT_NAME} ${ROOT} ${PLATFORMFOLDER})
+    
   endif()
 
   ###################
@@ -98,8 +125,8 @@ if (ARMAC6)
   # Cortex cortex-a7
   #
   if (ARM_CPU STREQUAL "cortex-a7")
-    cortexa(ARMCA7)
-    target_compile_definitions(${PROJECT_NAME} PRIVATE ARMv7A) 
+    cortexa(${CORE} ${PROJECT_NAME} ${ROOT} ${PLATFORMFOLDER})
+    
   endif()
 
   ###################
@@ -107,12 +134,20 @@ if (ARMAC6)
   # Cortex cortex-a9
   #
   if (ARM_CPU STREQUAL "cortex-a9")
-    cortexa(ARMCA9)
-    target_compile_definitions(${PROJECT_NAME} PRIVATE ARMv7A) 
+    cortexa(${CORE} ${PROJECT_NAME} ${ROOT} ${PLATFORMFOLDER})
+    
   endif()
-  
-endif()
 
-if (FILEIO)
-  target_compile_definitions(${PROJECT_NAME} PRIVATE FILEIO)
-endif()
+  ###################
+  #
+  # Cortex cortex-a15
+  #
+  if (ARM_CPU STREQUAL "cortex-a15")
+    cortexa(${CORE} ${PROJECT_NAME} ${ROOT} ${PLATFORMFOLDER})
+    
+  endif()
+
+  SET(PLATFORMID ${PLATFORMID} PARENT_SCOPE)
+  
+endfunction()
+

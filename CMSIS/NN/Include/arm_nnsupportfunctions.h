@@ -43,6 +43,9 @@ extern    "C"
 #define Q31_MIN (0x80000000L)
 #define Q31_MAX (0x7FFFFFFFL)
 
+#define MAX(A,B) (A) > (B) ? (A) : (B) 
+#define MIN(A,B) (A) < (B) ? (A) : (B) 
+
 /**
  * @brief Union for SIMD access of Q31/Q15/Q7 types
  */
@@ -124,9 +127,9 @@ __STATIC_FORCEINLINE void *read_and_pad(void *source, q31_t * out1, q31_t * out2
  * @brief read and expand one Q7 word into two Q15 words with reordering
  */
 
-__STATIC_FORCEINLINE void *read_and_pad_reordered(void *source, q31_t * out1, q31_t * out2)
+__STATIC_FORCEINLINE q7_t *read_and_pad_reordered(q7_t *source, q31_t * out1, q31_t * out2)
 {
-        q31_t     inA = *__SIMD32(source)++;
+        q31_t     inA = read_q7x4_ia(&source);
 #ifndef ARM_MATH_BIG_ENDIAN
         *out2 = __SXTB16(__ROR(inA, 8));
         *out1 = __SXTB16(inA);
@@ -137,7 +140,31 @@ __STATIC_FORCEINLINE void *read_and_pad_reordered(void *source, q31_t * out1, q3
 
         return source;
 }
+
+/**
+ * @brief read and expand one Q7 word into two Q15 words with reordering and add an offset
+ */
+__STATIC_FORCEINLINE q7_t *read_and_pad_reordered_with_offset(q7_t *source, q31_t * out1, q31_t * out2,q31_t offset)
+{
+        q31_t     inA = read_q7x4_ia(&source);
+        
+#ifndef ARM_MATH_BIG_ENDIAN
+        *out2 = __SXTB16(__ROR(inA, 8));
+        *out1 = __SXTB16(inA);
+#else
+        *out1 = __SXTB16(__ROR(inA, 8));
+        *out2 = __SXTB16(inA);
 #endif
+        *out1 = __QADD16(*out1,offset);
+        *out2 = __QADD16(*out2,offset);
+
+        return source;
+}
+
+
+#endif
+
+
 
 /**
  * @defgroup NNBasicMath Basic Math Functions for Neural Network Computation

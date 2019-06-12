@@ -18,6 +18,9 @@ option(STATISTICS_TESTS "Enable Statistics testing" ON)
 option(SUPPORT_TESTS "Enable Support testing" ON)
 option(TRANSFORM_TESTS "Enable Transform testing" ON)
 
+# Change behavior of configBoot for scatter file
+set(TESTFRAMEWORK ON)
+
 
 project(DSP_Lib_TestSuite)
 
@@ -27,6 +30,10 @@ list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/..)
 
 set(ROOT ${CMAKE_CURRENT_SOURCE_DIR}/../../..)
 
+add_executable(DSP_Lib_TestSuite)
+
+include(config)
+configApp(DSP_Lib_TestSuite ${ROOT})
 
 file(GLOB MAIN "Common/src/*.c")
 file(GLOB BASICMATH_TESTS_SRC "Common/src/basic_math_tests/*.c")
@@ -74,7 +81,7 @@ add_subdirectory(../Source bin_dsp)
 add_subdirectory(RefLibs bin_ref)
 
 
-add_executable(DSP_Lib_TestSuite)
+
 
 if (CUSTOMIZE_TESTS)
       target_compile_definitions(DSP_Lib_TestSuite PRIVATE CUSTOMIZE_TESTS)
@@ -116,10 +123,8 @@ if (DUMPPATTERN)
       target_compile_definitions(DSP_Lib_TestSuite PRIVATE DUMPPATTERN)
 endif()
 
-# Change behavior of configBoot for scatter file
-set(TESTFRAMEWORK ON)
 
-include(configBoot)
+
 
 file(COPY ${ROOT}/CMSIS/DSP/Examples/ARM/boot/RTE_Components.h DESTINATION tempLink)
 

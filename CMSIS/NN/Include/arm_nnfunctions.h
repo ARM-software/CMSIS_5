@@ -672,6 +672,52 @@ extern    "C"
                                       q15_t * vec_buffer);
 
   /**
+   * @brief S8 basic fully-connected layer function for TF Lite
+   * @param[in]       pInput                       pointer to pInput vector
+   * @param[in]       pWeight                      pointer to matrix weights
+   * @param[in]       col_dim                      dimension of the input vector
+   * @param[in]       row_dim                      dimension of the output vector
+   * @param[in]       nb_batches                   number of batches
+   * @param[in]       input_offset                 
+   * @param[in]       filter_offset                
+   * @param[in]       out_mult                     requantization parameter
+   * @param[in]       out_shift                    requantization parameter
+   * @param[in]       output_offset                
+   * @param[in]       pBias                        pointer to bias
+   * @param[out]      pOut                         pointer to output vector
+   * @param[in]       output_activation_min        for clamping
+   * @param[in]       output_activation_max        for clamping
+   * @param[in,out]   vec_buffer                   pointer to buffer space for pInput
+   * @return          The function returns         ARM_MATH_SUCCESS
+   *
+   * @details
+   *
+   * <b>Buffer size:</b>
+   *
+   * vec_buffer size: col_dim of word16.
+   *
+   * This basic function is designed to work with regular pWeight
+   * matrix without interleaving.
+   *
+   */
+  arm_status
+  arm_fully_connected_s8(const int8_t   *pInput,             
+                         const int8_t   *weight,                  
+                         const uint16_t input_length,  
+                         const uint16_t num_rows,  
+                         const uint16_t nb_batches,   
+                         const int32_t  input_offset,   
+                         const int32_t  filter_offset,  
+                         const int32_t  out_mult,      
+                         const int32_t  out_shift,     
+                         const int32_t  output_offset,     
+                         const int8_t   *bias,             
+                         int8_t         *pOut,                   
+                         const int32_t  output_activation_min,
+                         const int32_t  output_activation_max,
+                         q15_t          *vec_buffer)  ;  
+
+  /**
    * @brief Q7 opt fully-connected layer function
    * @param[in]       pV          pointer to input vector
    * @param[in]       pM          pointer to matrix weights

@@ -2,10 +2,14 @@ cmake_minimum_required (VERSION 3.6)
 
 project(CMSISDSPFastMath)
 
+include(config)
+include(configDsp)
 
 file(GLOB SRC "./*_*.c")
 
 add_library(CMSISDSPFastMath STATIC)
+configLib(CMSISDSPFastMath ${ROOT})
+configDsp(CMSISDSPFastMath ${ROOT})
 
 include(interpol)
 interpol(CMSISDSPFastMath)
@@ -42,10 +46,11 @@ target_sources(CMSISDSPFastMath PRIVATE arm_sqrt_q15.c)
 target_sources(CMSISDSPFastMath PRIVATE arm_sqrt_q31.c)
 
 
-configdsp(CMSISDSPFastMath ..)
+
+
 
 ### Includes
-target_include_directories(CMSISDSPFastMath PUBLIC "${DSP}/../../Include")
+target_include_directories(CMSISDSPFastMath PUBLIC "${DSP}/Include")
 
 
 

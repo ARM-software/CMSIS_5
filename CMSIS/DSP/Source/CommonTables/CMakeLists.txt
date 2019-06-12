@@ -2,9 +2,13 @@ cmake_minimum_required (VERSION 3.6)
 
 project(CMSISDSPCommon)
 
-
+include(config)
+include(configDsp)
 
 add_library(CMSISDSPCommon STATIC arm_common_tables.c)
+
+configLib(CMSISDSPCommon ${ROOT})
+configDsp(CMSISDSPCommon ${ROOT})
 
 if (CONFIGTABLE AND ALLFFT)
     target_compile_definitions(CMSISDSPCommon PUBLIC ARM_ALL_FFT_TABLES) 
@@ -22,10 +26,9 @@ interpol(CMSISDSPCommon)
 
 target_sources(CMSISDSPCommon PRIVATE arm_const_structs.c)
 
-configdsp(CMSISDSPCommon ..)
 
 ### Includes
-target_include_directories(CMSISDSPCommon PUBLIC "${DSP}/../../Include")
+target_include_directories(CMSISDSPCommon PUBLIC "${DSP}/Include")
 
 
 

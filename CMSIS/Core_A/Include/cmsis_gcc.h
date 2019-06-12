@@ -168,6 +168,8 @@ __STATIC_FORCEINLINE uint32_t __SMUAD  (uint32_t op1, uint32_t op2)
   return(result);
 }
 
+
+
 #define __PKHBT(ARG1,ARG2,ARG3)          ( ((((uint32_t)(ARG1))          ) & 0x0000FFFFUL) |  \
                                            ((((uint32_t)(ARG2)) << (ARG3)) & 0xFFFF0000UL)  )
 

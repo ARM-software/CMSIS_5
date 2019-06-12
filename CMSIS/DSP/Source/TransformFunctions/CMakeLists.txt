@@ -2,9 +2,12 @@ cmake_minimum_required (VERSION 3.6)
 
 project(CMSISDSPTransform)
 
-
+include(config)
+include(configDsp)
 
 add_library(CMSISDSPTransform STATIC)
+configLib(CMSISDSPTransform ${ROOT})
+configDsp(CMSISDSPTransform ${ROOT})
 
 include(fft)
 fft(CMSISDSPTransform)
@@ -107,10 +110,9 @@ target_sources(CMSISDSPTransform PRIVATE arm_cfft_q31.c)
 target_sources(CMSISDSPTransform PRIVATE arm_cfft_radix4_q31.c)
 endif()
 
-configdsp(CMSISDSPTransform ..)
 
 ### Includes
-target_include_directories(CMSISDSPTransform PUBLIC "${DSP}/../../Include")
+target_include_directories(CMSISDSPTransform PUBLIC "${DSP}/Include")
 
 
 

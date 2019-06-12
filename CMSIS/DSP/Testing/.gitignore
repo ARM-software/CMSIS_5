@@ -1,0 +1,12 @@
+bench/
+build/
+build_m7/
+build_a5/
+build_sdsim_a5/
+build_sdsim_a15/
+build_m33/
+TODO.txt
+olddesc.txt
+oldprocessTests.py
+shortdesc.txt
+TestScripts/__pycache__/

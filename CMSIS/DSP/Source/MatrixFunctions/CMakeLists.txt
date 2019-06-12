@@ -2,15 +2,18 @@ cmake_minimum_required (VERSION 3.6)
 
 project(CMSISDSPMatrix)
 
+include(config)
+include(configDsp)
 
 file(GLOB SRC "./*_*.c")
 
 add_library(CMSISDSPMatrix STATIC ${SRC})
 
-configdsp(CMSISDSPMatrix ..)
+configLib(CMSISDSPMatrix ${ROOT})
+configDsp(CMSISDSPMatrix ${ROOT})
 
 ### Includes
-target_include_directories(CMSISDSPMatrix PUBLIC "${DSP}/../../Include")
+target_include_directories(CMSISDSPMatrix PUBLIC "${DSP}/Include")
 
 
 

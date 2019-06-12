@@ -1,0 +1,104 @@
+<|
+"Root " ->
+{<|
+"DSP Test " ->
+{<|
+"Basic Tests " ->
+{<|"NAME" -> "Test nb=3    arm_add_f32","ID" -> 1,"STATUS" -> "PASSED","CYCLES" -> 604,"PARAMS" -> ""|>
+,<|"NAME" -> "Test nb=4n   arm_add_f32","ID" -> 2,"STATUS" -> "PASSED","CYCLES" -> 814,"PARAMS" -> ""|>
+,<|"NAME" -> "Test nb=4n+1 arm_add_f32","ID" -> 3,"STATUS" -> "PASSED","CYCLES" -> 864,"PARAMS" -> ""|>
+,<|"NAME" -> "Test nb=3    arm_sub_f32","ID" -> 4,"STATUS" -> "PASSED","CYCLES" -> 604,"PARAMS" -> ""|>
+,<|"NAME" -> "Test nb=4n   arm_sub_f32","ID" -> 5,"STATUS" -> "PASSED","CYCLES" -> 814,"PARAMS" -> ""|>
+,<|"NAME" -> "Test nb=4n+1 arm_sub_f32","ID" -> 6,"STATUS" -> "PASSED","CYCLES" -> 864,"PARAMS" -> ""|>
+,<|"NAME" -> "Test nb=3    arm_mult_f32","ID" -> 7,"STATUS" -> "PASSED","CYCLES" -> 604,"PARAMS" -> ""|>
+,<|"NAME" -> "Test nb=4n   arm_mult_f32","ID" -> 8,"STATUS" -> "PASSED","CYCLES" -> 814,"PARAMS" -> ""|>
+,<|"NAME" -> "Test nb=4n+1 arm_mult_f32","ID" -> 9,"STATUS" -> "PASSED","CYCLES" -> 864,"PARAMS" -> ""|>
+,<|"NAME" -> "Test nb=3    arm_negate_f32","ID" -> 10,"STATUS" -> "PASSED","CYCLES" -> 597,"PARAMS" -> ""|>
+,<|"NAME" -> "Test nb=4n   arm_negate_f32","ID" -> 11,"STATUS" -> "PASSED","CYCLES" -> 802,"PARAMS" -> ""|>
+,<|"NAME" -> "Test nb=4n+1 arm_negate_f32","ID" -> 12,"STATUS" -> "PASSED","CYCLES" -> 850,"PARAMS" -> ""|>
+,<|"NAME" -> "Test nb=3    arm_offset_f32","ID" -> 13,"STATUS" -> "PASSED","CYCLES" -> 598,"PARAMS" -> ""|>
+,<|"NAME" -> "Test nb=4n   arm_offset_f32","ID" -> 14,"STATUS" -> "PASSED","CYCLES" -> 803,"PARAMS" -> ""|>
+,<|"NAME" -> "Test nb=4n+1 arm_offset_f32","ID" -> 15,"STATUS" -> "PASSED","CYCLES" -> 851,"PARAMS" -> ""|>
+,<|"NAME" -> "Test nb=3    arm_scale_f32","ID" -> 16,"STATUS" -> "PASSED","CYCLES" -> 598,"PARAMS" -> ""|>
+,<|"NAME" -> "Test nb=4n   arm_scale_f32","ID" -> 17,"STATUS" -> "PASSED","CYCLES" -> 803,"PARAMS" -> ""|>
+,<|"NAME" -> "Test nb=4n+1 arm_scale_f32","ID" -> 18,"STATUS" -> "PASSED","CYCLES" -> 851,"PARAMS" -> ""|>
+,<|"NAME" -> "Test nb=3    arm_dot_prod_f32","ID" -> 19,"STATUS" -> "PASSED","CYCLES" -> 343,"PARAMS" -> ""|>
+,<|"NAME" -> "Test nb=4n   arm_dot_prod_f32","ID" -> 20,"STATUS" -> "PASSED","CYCLES" -> 369,"PARAMS" -> ""|>
+,<|"NAME" -> "Test nb=4n+1 arm_dot_prod_f32","ID" -> 21,"STATUS" -> "PASSED","CYCLES" -> 380,"PARAMS" -> ""|>
+,<|"NAME" -> "Test nb=3    arm_abs_f32","ID" -> 22,"STATUS" -> "PASSED","CYCLES" -> 597,"PARAMS" -> ""|>
+,<|"NAME" -> "Test nb=4n   arm_abs_f32","ID" -> 23,"STATUS" -> "PASSED","CYCLES" -> 802,"PARAMS" -> ""|>
+,<|"NAME" -> "Test nb=4n+1 arm_abs_f32","ID" -> 24,"STATUS" -> "PASSED","CYCLES" -> 850,"PARAMS" -> ""|>
+}|>
+,<|
+"Complex Tests " ->
+{<|"NAME" -> "Test A","ID" -> 1,"STATUS" -> "PASSED","CYCLES" -> 229,"PARAMS" -> "1,1,1"|>
+,<|"NAME" -> "Test A","ID" -> 1,"STATUS" -> "PASSED","CYCLES" -> 238,"PARAMS" -> "1,1,3"|>
+,<|"NAME" -> "Test A","ID" -> 1,"STATUS" -> "PASSED","CYCLES" -> 257,"PARAMS" -> "1,1,5"|>
+,<|"NAME" -> "Test A","ID" -> 1,"STATUS" -> "PASSED","CYCLES" -> 238,"PARAMS" -> "1,3,1"|>
+,<|"NAME" -> "Test A","ID" -> 1,"STATUS" -> "PASSED","CYCLES" -> 276,"PARAMS" -> "1,3,3"|>
+,<|"NAME" -> "Test A","ID" -> 1,"STATUS" -> "PASSED","CYCLES" -> 302,"PARAMS" -> "1,3,5"|>
+,<|"NAME" -> "Test A","ID" -> 1,"STATUS" -> "PASSED","CYCLES" -> 257,"PARAMS" -> "1,5,1"|>
+,<|"NAME" -> "Test A","ID" -> 1,"STATUS" -> "PASSED","CYCLES" -> 302,"PARAMS" -> "1,5,3"|>
+,<|"NAME" -> "Test A","ID" -> 1,"STATUS" -> "PASSED","CYCLES" -> 350,"PARAMS" -> "1,5,5"|>
+,<|"NAME" -> "Test A","ID" -> 1,"STATUS" -> "PASSED","CYCLES" -> 238,"PARAMS" -> "3,1,1"|>
+,<|"NAME" -> "Test A","ID" -> 1,"STATUS" -> "PASSED","CYCLES" -> 276,"PARAMS" -> "3,1,3"|>
+,<|"NAME" -> "Test A","ID" -> 1,"STATUS" -> "PASSED","CYCLES" -> 302,"PARAMS" -> "3,1,5"|>
+,<|"NAME" -> "Test A","ID" -> 1,"STATUS" -> "PASSED","CYCLES" -> 276,"PARAMS" -> "3,3,1"|>
+,<|"NAME" -> "Test A","ID" -> 1,"STATUS" -> "PASSED","CYCLES" -> 359,"PARAMS" -> "3,3,3"|>
+,<|"NAME" -> "Test A","ID" -> 1,"STATUS" -> "PASSED","CYCLES" -> 439,"PARAMS" -> "3,3,5"|>
+,<|"NAME" -> "Test A","ID" -> 1,"STATUS" -> "PASSED","CYCLES" -> 302,"PARAMS" -> "3,5,1"|>
+,<|"NAME" -> "Test A","ID" -> 1,"STATUS" -> "PASSED","CYCLES" -> 439,"PARAMS" -> "3,5,3"|>
+,<|"NAME" -> "Test A","ID" -> 1,"STATUS" -> "PASSED","CYCLES" -> 575,"PARAMS" -> "3,5,5"|>
+,<|"NAME" -> "Test A","ID" -> 1,"STATUS" -> "PASSED","CYCLES" -> 257,"PARAMS" -> "5,1,1"|>
+,<|"NAME" -> "Test A","ID" -> 1,"STATUS" -> "PASSED","CYCLES" -> 302,"PARAMS" -> "5,1,3"|>
+,<|"NAME" -> "Test A","ID" -> 1,"STATUS" -> "PASSED","CYCLES" -> 350,"PARAMS" -> "5,1,5"|>
+,<|"NAME" -> "Test A","ID" -> 1,"STATUS" -> "PASSED","CYCLES" -> 302,"PARAMS" -> "5,3,1"|>
+,<|"NAME" -> "Test A","ID" -> 1,"STATUS" -> "PASSED","CYCLES" -> 439,"PARAMS" -> "5,3,3"|>
+,<|"NAME" -> "Test A","ID" -> 1,"STATUS" -> "PASSED","CYCLES" -> 575,"PARAMS" -> "5,3,5"|>
+,<|"NAME" -> "Test A","ID" -> 1,"STATUS" -> "PASSED","CYCLES" -> 350,"PARAMS" -> "5,5,1"|>
+,<|"NAME" -> "Test A","ID" -> 1,"STATUS" -> "PASSED","CYCLES" -> 575,"PARAMS" -> "5,5,3"|>
+,<|"NAME" -> "Test A","ID" -> 1,"STATUS" -> "PASSED","CYCLES" -> 799,"PARAMS" -> "5,5,5"|>
+,<|"NAME" -> "Test B","ID" -> 2,"STATUS" -> "PASSED","CYCLES" -> 234,"PARAMS" -> "1,1,1"|>
+,<|"NAME" -> "Test B","ID" -> 2,"STATUS" -> "PASSED","CYCLES" -> 262,"PARAMS" -> "1,1,3"|>
+,<|"NAME" -> "Test B","ID" -> 2,"STATUS" -> "PASSED","CYCLES" -> 281,"PARAMS" -> "1,1,5"|>
+,<|"NAME" -> "Test B","ID" -> 2,"STATUS" -> "PASSED","CYCLES" -> 262,"PARAMS" -> "1,3,1"|>
+,<|"NAME" -> "Test B","ID" -> 2,"STATUS" -> "PASSED","CYCLES" -> 315,"PARAMS" -> "1,3,3"|>
+,<|"NAME" -> "Test B","ID" -> 2,"STATUS" -> "PASSED","CYCLES" -> 372,"PARAMS" -> "1,3,5"|>
+,<|"NAME" -> "Test B","ID" -> 2,"STATUS" -> "PASSED","CYCLES" -> 281,"PARAMS" -> "1,5,1"|>
+,<|"NAME" -> "Test B","ID" -> 2,"STATUS" -> "PASSED","CYCLES" -> 372,"PARAMS" -> "1,5,3"|>
+,<|"NAME" -> "Test B","ID" -> 2,"STATUS" -> "PASSED","CYCLES" -> 459,"PARAMS" -> "1,5,5"|>
+,<|"NAME" -> "Test B","ID" -> 2,"STATUS" -> "PASSED","CYCLES" -> 262,"PARAMS" -> "3,1,1"|>
+,<|"NAME" -> "Test B","ID" -> 2,"STATUS" -> "PASSED","CYCLES" -> 315,"PARAMS" -> "3,1,3"|>
+,<|"NAME" -> "Test B","ID" -> 2,"STATUS" -> "PASSED","CYCLES" -> 372,"PARAMS" -> "3,1,5"|>
+,<|"NAME" -> "Test B","ID" -> 2,"STATUS" -> "PASSED","CYCLES" -> 315,"PARAMS" -> "3,3,1"|>
+,<|"NAME" -> "Test B","ID" -> 2,"STATUS" -> "PASSED","CYCLES" -> 481,"PARAMS" -> "3,3,3"|>
+,<|"NAME" -> "Test B","ID" -> 2,"STATUS" -> "PASSED","CYCLES" -> 643,"PARAMS" -> "3,3,5"|>
+,<|"NAME" -> "Test B","ID" -> 2,"STATUS" -> "PASSED","CYCLES" -> 372,"PARAMS" -> "3,5,1"|>
+,<|"NAME" -> "Test B","ID" -> 2,"STATUS" -> "PASSED","CYCLES" -> 643,"PARAMS" -> "3,5,3"|>
+,<|"NAME" -> "Test B","ID" -> 2,"STATUS" -> "PASSED","CYCLES" -> 913,"PARAMS" -> "3,5,5"|>
+,<|"NAME" -> "Test B","ID" -> 2,"STATUS" -> "PASSED","CYCLES" -> 281,"PARAMS" -> "5,1,1"|>
+,<|"NAME" -> "Test B","ID" -> 2,"STATUS" -> "PASSED","CYCLES" -> 372,"PARAMS" -> "5,1,3"|>
+,<|"NAME" -> "Test B","ID" -> 2,"STATUS" -> "PASSED","CYCLES" -> 459,"PARAMS" -> "5,1,5"|>
+,<|"NAME" -> "Test B","ID" -> 2,"STATUS" -> "PASSED","CYCLES" -> 372,"PARAMS" -> "5,3,1"|>
+,<|"NAME" -> "Test B","ID" -> 2,"STATUS" -> "PASSED","CYCLES" -> 643,"PARAMS" -> "5,3,3"|>
+,<|"NAME" -> "Test B","ID" -> 2,"STATUS" -> "PASSED","CYCLES" -> 913,"PARAMS" -> "5,3,5"|>
+,<|"NAME" -> "Test B","ID" -> 2,"STATUS" -> "PASSED","CYCLES" -> 459,"PARAMS" -> "5,5,1"|>
+,<|"NAME" -> "Test B","ID" -> 2,"STATUS" -> "PASSED","CYCLES" -> 913,"PARAMS" -> "5,5,3"|>
+,<|"NAME" -> "Test B","ID" -> 2,"STATUS" -> "PASSED","CYCLES" -> 1363,"PARAMS" -> "5,5,5"|>
+}|>
+}|>
+,<|
+"NN Tests" ->
+{<|
+"Fully Connected " ->
+{<|"NAME" -> "arm_fully_connected_tflite_s8","ID" -> 1,"STATUS" -> "PASSED","CYCLES" -> 1330,"PARAMS" -> ""|>
+}|>
+,<|
+"Fully Connected Benchmarks " ->
+{<|"NAME" -> "arm_fully_connected_tflite_s8","ID" -> 1,"STATUS" -> "PASSED","CYCLES" -> 6415,"PARAMS" -> "10"|>
+,<|"NAME" -> "arm_fully_connected_tflite_s8","ID" -> 1,"STATUS" -> "PASSED","CYCLES" -> 12445,"PARAMS" -> "20"|>
+,<|"NAME" -> "arm_fully_connected_tflite_s8","ID" -> 1,"STATUS" -> "PASSED","CYCLES" -> 60685,"PARAMS" -> "100"|>
+,<|"NAME" -> "arm_fully_connected_tflite_s8","ID" -> 1,"STATUS" -> "PASSED","CYCLES" -> 120985,"PARAMS" -> "200"|>
+}|>
+}|>
+}|>
