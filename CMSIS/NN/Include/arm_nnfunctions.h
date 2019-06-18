@@ -205,6 +205,65 @@ extern    "C"
                                                   q7_t * bufferB);
 
   /**
+   * @brief Basic Q7 convolution function (1D)
+   * @param[in]       Im_in        pointer to input tensor
+   * @param[in]       dim_im_in   input tensor dimention y
+   * @param[in]       ch_im_in     number of input tensor channels
+   * @param[in]       wt           pointer to kernel weights
+   * @param[in]       ch_im_out    number of filters, i.e., output tensor channels
+   * @param[in]       dim_kernel   filter kernel size y
+   * @param[in]       padding      padding size y
+   * @param[in]       stride.      convolution stride y
+   * @param[in]       bias         pointer to bias
+   * @param[in]       bias_shift   amount of left-shift for bias
+   * @param[in]       out_shift    amount of right-shift for output
+   * @param[in,out]   Im_out       pointer to output tensor
+   * @param[in]       dim_im_out.  output tensor dimension y
+   * @param[in,out]   bufferA      pointer to buffer space for input
+   * @param[in,out]   bufferB      pointer to buffer space for output
+   * @return     The function returns <code>ARM_MATH_SUCCESS</code> 
+   */
+
+static inline arm_status arm_convolve_HWC_q7_basic_1d(
+  const q7_t * Im_in,
+  const uint16_t dim_im_in,
+  const uint16_t ch_im_in,
+  const q7_t * wt,
+  const uint16_t ch_im_out,
+  const uint16_t dim_kernel,
+  const uint16_t padding,
+  const uint16_t stride,
+  const q7_t * bias,
+  const uint16_t bias_shift,
+  const uint16_t out_shift,
+  q7_t * Im_out,
+  const uint16_t dim_im_out,
+  q15_t * bufferA,
+  q7_t * bufferB ) {
+        return arm_convolve_HWC_q7_basic_nonsquare(
+          Im_in,      //const q7_t * Im_in
+          dim_im_in,  //const uint16_t dim_im_in_x,
+          1,          //const uint16_t dim_im_in_y,
+          ch_im_in,   //const uint16_t ch_im_in,
+          wt,         //const q7_t * wt,
+          ch_im_out,  //const uint16_t ch_im_out,
+          dim_kernel, //const uint16_t dim_kernel_x,
+          1,          //const uint16_t dim_kernel_y,
+          padding,    //const uint16_t padding_x,
+          1,          //const uint16_t padding_y,
+          stride,     //const uint16_t stride_x,
+          1,          //const uint16_t stride_y,
+          bias,       //const q7_t * bias,
+          bias_shift, //const uint16_t bias_shift,
+          out_shift,  //const uint16_t out_shift,
+          Im_out,     //q7_t * Im_out,
+          dim_im_out, //const uint16_t dim_im_out_x,
+          1,          //const uint16_t dim_im_out_y,
+          bufferA,    //q15_t * bufferA,
+          bufferB);   //q7_t * bufferB);
+}
+
+  /**
    * @brief Basic Q15 convolution function
    * @param[in]       Im_in       pointer to input tensor
    * @param[in]       dim_im_in   input tensor dimention
@@ -334,6 +393,71 @@ extern    "C"
                                                   const uint16_t dim_im_out_y,
                                                   q15_t * bufferA,
                                                   q7_t * bufferB);
+
+  /**
+   * @brief Fast Q7 convolution function (1D)
+   * @param[in]       Im_in        pointer to input tensor
+   * @param[in]       dim_im_in   input tensor dimention y
+   * @param[in]       ch_im_in     number of input tensor channels
+   * @param[in]       wt           pointer to kernel weights
+   * @param[in]       ch_im_out    number of filters, i.e., output tensor channels
+   * @param[in]       dim_kernel   filter kernel size y
+   * @param[in]       padding      padding size y
+   * @param[in]       stride.      convolution stride y
+   * @param[in]       bias         pointer to bias
+   * @param[in]       bias_shift   amount of left-shift for bias
+   * @param[in]       out_shift    amount of right-shift for output
+   * @param[in,out]   Im_out       pointer to output tensor
+   * @param[in]       dim_im_out.  output tensor dimension y
+   * @param[in,out]   bufferA      pointer to buffer space for input
+   * @param[in,out]   bufferB      pointer to buffer space for output
+   * @return     The function returns <code>ARM_MATH_SUCCESS</code> 
+   * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.
+   *
+   * This function is the version with full list of optimization tricks, but with
+   * some contraints:
+   *   ch_im_in is multiple of 4
+   *   ch_im_out is multiple of 2
+   */
+
+static inline arm_status arm_convolve_HWC_q7_fast_1d(
+  const q7_t * Im_in,
+  const uint16_t dim_im_in,
+  const uint16_t ch_im_in,
+  const q7_t * wt,
+  const uint16_t ch_im_out,
+  const uint16_t dim_kernel,
+  const uint16_t padding,
+  const uint16_t stride,
+  const q7_t * bias,
+  const uint16_t bias_shift,
+  const uint16_t out_shift,
+  q7_t * Im_out,
+  const uint16_t dim_im_out,
+  q15_t * bufferA,
+  q7_t * bufferB ) {
+        return arm_convolve_HWC_q7_fast_nonsquare(
+          Im_in,      //const q7_t * Im_in
+          dim_im_in,  //const uint16_t dim_im_in_x,
+          1,          //const uint16_t dim_im_in_y,
+          ch_im_in,   //const uint16_t ch_im_in,
+          wt,         //const q7_t * wt,
+          ch_im_out,  //const uint16_t ch_im_out,
+          dim_kernel, //const uint16_t dim_kernel_x,
+          1,          //const uint16_t dim_kernel_y,
+          padding,    //const uint16_t padding_x,
+          1,          //const uint16_t padding_y,
+          stride,     //const uint16_t stride_x,
+          1,          //const uint16_t stride_y,
+          bias,       //const q7_t * bias,
+          bias_shift, //const uint16_t bias_shift,
+          out_shift,  //const uint16_t out_shift,
+          Im_out,     //q7_t * Im_out,
+          dim_im_out, //const uint16_t dim_im_out_x,
+          1,          //const uint16_t dim_im_out_y,
+          bufferA,    //q15_t * bufferA,
+          bufferB);   //q7_t * bufferB);
+}
 
   /**
    * @brief Fast Q7 version of 1x1 convolution (non-sqaure shape)
@@ -502,7 +626,7 @@ extern    "C"
    *
    * <b>Buffer size:</b>
    *
-   * bufferA size: 2*ch_im_in*dim_kernel*dim_kernel
+   * bufferA size: 2*ch_im_in*dim_kernel_x*dim_kernel_y
    *
    * bufferB size: 0
    *
@@ -535,7 +659,83 @@ extern    "C"
                               const uint16_t dim_im_out_y, 
                               q15_t * bufferA, 
                               q7_t * bufferB);
-										 
+			
+
+  /**
+   * @brief Fast Q15 convolution function (1D)
+   * @param[in]       Im_in        pointer to input tensor
+   * @param[in]       dim_im_in   input tensor dimention y
+   * @param[in]       ch_im_in     number of input tensor channels
+   * @param[in]       wt           pointer to kernel weights
+   * @param[in]       ch_im_out    number of filters, i.e., output tensor channels
+   * @param[in]       dim_kernel   filter kernel size y
+   * @param[in]       padding      padding size y
+   * @param[in]       stride.      convolution stride y
+   * @param[in]       bias         pointer to bias
+   * @param[in]       bias_shift   amount of left-shift for bias
+   * @param[in]       out_shift    amount of right-shift for output
+   * @param[in,out]   Im_out       pointer to output tensor
+   * @param[in]       dim_im_out.  output tensor dimension y
+   * @param[in,out]   bufferA      pointer to buffer space for input
+   * @param[in,out]   bufferB      pointer to buffer space for output
+   * @return     The function returns <code>ARM_MATH_SUCCESS</code> 
+   * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.
+   *
+   * @details
+   *
+   * <b>Buffer size:</b>
+   *
+   * bufferA size: 2*ch_im_in*dim_kernel_x*dim_kernel_y
+   *
+   * bufferB size: 0
+   *
+   * <b>Input dimension constraints:</b>
+   *
+   * ch_im_in is multiple of 2 
+   *
+   * ch_im_out is multipe of 2
+   *
+   */
+static inline arm_status arm_convolve_HWC_q15_fast_1d(
+  const q7_t * Im_in,
+  const uint16_t dim_im_in,
+  const uint16_t ch_im_in,
+  const q7_t * wt,
+  const uint16_t ch_im_out,
+  const uint16_t dim_kernel,
+  const uint16_t padding,
+  const uint16_t stride,
+  const q7_t * bias,
+  const uint16_t bias_shift,
+  const uint16_t out_shift,
+  q7_t * Im_out,
+  const uint16_t dim_im_out,
+  q15_t * bufferA,
+  q7_t * bufferB ) {
+        return arm_convolve_HWC_q15_fast_nonsquare(
+          Im_in,      //const q7_t * Im_in
+          dim_im_in,  //const uint16_t dim_im_in_x,
+          1,          //const uint16_t dim_im_in_y,
+          ch_im_in,   //const uint16_t ch_im_in,
+          wt,         //const q7_t * wt,
+          ch_im_out,  //const uint16_t ch_im_out,
+          dim_kernel, //const uint16_t dim_kernel_x,
+          1,          //const uint16_t dim_kernel_y,
+          padding,    //const uint16_t padding_x,
+          1,          //const uint16_t padding_y,
+          stride,     //const uint16_t stride_x,
+          1,          //const uint16_t stride_y,
+          bias,       //const q7_t * bias,
+          bias_shift, //const uint16_t bias_shift,
+          out_shift,  //const uint16_t out_shift,
+          Im_out,     //q7_t * Im_out,
+          dim_im_out, //const uint16_t dim_im_out_x,
+          1,          //const uint16_t dim_im_out_y,
+          bufferA,    //q15_t * bufferA,
+          bufferB);   //q7_t * bufferB);
+}
+
+
   /**
    * @brief Q7 depthwise separable convolution function
    * @param[in]       Im_in       pointer to input tensor
@@ -628,7 +828,6 @@ extern    "C"
                                                              const uint16_t dim_im_out_y,
                                                              q15_t * bufferA,
                                                              q7_t * bufferB);
-
 
 /**
  * @defgroup FC Fully-connected Layer Functions
@@ -949,6 +1148,64 @@ extern    "C"
                                  q7_t * bufferA, 
                                  q7_t * Im_out);
 
+    /**
+   * @brief Q7 max pooling function
+   * @param[in, out]  Im_in         pointer to input tensor
+   * @param[in]       dim_im_in_x   input tensor dimention along X axis
+   * @param[in]       dim_im_in_y   input tensor dimention along Y axis
+   * @param[in]       ch_im_in      number of input tensor channels
+   * @param[in]       dim_kernel_x  filter kernel size along X axis
+   * @param[in]       dim_kernel_y  filter kernel size along Y axis
+   * @param[in]       padding_x     padding sizes along X axis
+   * @param[in]       padding_y     padding sizes along Y axis
+   * @param[in]       stride_x      convolution stride along X axis
+   * @param[in]       stride_y      convolution stride along Y axis
+   * @param[in]       dim_im_out_x  output tensor dimension along X axis
+   * @param[in]       dim_im_out_y  output tensor dimension along Y axis
+   * @param[in,out]   bufferA       pointer to buffer space for input
+   * @param[in,out]   Im_out        pointer to output tensor
+   * @return none.
+   */
+
+void arm_maxpool_q7_HWC_nonsquare(q7_t * Im_in,
+                   const uint16_t dim_im_in_x,
+                   const uint16_t dim_im_in_y,
+                   const uint16_t ch_im_in,
+                   const uint16_t dim_kernel_x,
+                   const uint16_t dim_kernel_y,
+                   const uint16_t padding_x,
+                   const uint16_t padding_y,
+                   const uint16_t stride_x,
+                   const uint16_t stride_y,
+                   const uint16_t dim_im_out_x,
+                   const uint16_t dim_im_out_y,
+                   q7_t * bufferA, 
+                   q7_t * Im_out);
+
+  /**
+   * @brief Q7 1-D max pooling function
+   * @param[in, out]  Im_in       pointer to input tensor
+   * @param[in]       dim_im_in   input tensor dimention
+   * @param[in]       ch_im_in    number of input tensor channels
+   * @param[in]       dim_kernel  filter kernel size
+   * @param[in]       padding     padding sizes
+   * @param[in]       stride      convolution stride
+   * @param[in]       dim_im_out  output tensor dimension
+   * @param[in,out]   bufferA     pointer to buffer space for input
+   * @param[in,out]   Im_out      pointer to output tensor
+   * @return none.
+   */
+
+void arm_maxpool_q7_HWC_1d(const q7_t * Im_in, // input image
+                            const uint16_t dim_im_in,   // input image dimension
+                            const uint16_t ch_im_in,    // number of input image channels
+                            const uint16_t dim_kernel,  // window kernel size
+                            const uint16_t padding, // padding sizes
+                            const uint16_t stride,  // stride
+                            const uint16_t dim_im_out,  // output image dimension
+                            q7_t * bufferA, // a buffer for local storage
+                            q7_t * Im_out);
+
   /**
    * @brief Q7 average pooling function
    * @param[in]       Im_in       pointer to input tensor
@@ -973,6 +1230,65 @@ extern    "C"
                                  const uint16_t dim_im_out, 
                                  q7_t * bufferA, 
                                  q7_t * Im_out);
+
+  /**
+   * @brief Q7 average pooling function
+   * @param[in, out]  Im_in         pointer to input tensor
+   * @param[in]       dim_im_in_x   input tensor dimention along X axis
+   * @param[in]       dim_im_in_y   input tensor dimention along Y axis
+   * @param[in]       ch_im_in      number of input tensor channels
+   * @param[in]       dim_kernel_x  filter kernel size along X axis
+   * @param[in]       dim_kernel_y  filter kernel size along Y axis
+   * @param[in]       padding_x     padding sizes along X axis
+   * @param[in]       padding_y     padding sizes along Y axis
+   * @param[in]       stride_x      convolution stride along X axis
+   * @param[in]       stride_y      convolution stride along Y axis
+   * @param[in]       dim_im_out_x  output tensor dimension along X axis
+   * @param[in]       dim_im_out_y  output tensor dimension along Y axis
+   * @param[in,out]   bufferA       pointer to buffer space for input
+   * @param[in,out]   Im_out        pointer to output tensor
+   * @return none.
+   */
+
+void arm_avepool_q7_HWC_nonsquare(q7_t * Im_in,
+                   const uint16_t dim_im_in_x,
+                   const uint16_t dim_im_in_y,
+                   const uint16_t ch_im_in,
+                   const uint16_t dim_kernel_x,
+                   const uint16_t dim_kernel_y,
+                   const uint16_t padding_x,
+                   const uint16_t padding_y,
+                   const uint16_t stride_x,
+                   const uint16_t stride_y,
+                   const uint16_t dim_im_out_x,
+                   const uint16_t dim_im_out_y,
+                   q7_t * bufferA, 
+                   q7_t * Im_out);
+
+  /**
+   * @brief Q7 1-D max pooling function
+   * @param[in, out]  Im_in       pointer to input tensor
+   * @param[in]       dim_im_in   input tensor dimention
+   * @param[in]       ch_im_in    number of input tensor channels
+   * @param[in]       dim_kernel  filter kernel size
+   * @param[in]       padding     padding sizes
+   * @param[in]       stride      convolution stride
+   * @param[in]       dim_im_out  output tensor dimension
+   * @param[in,out]   bufferA     pointer to buffer space for input
+   * @param[in,out]   Im_out      pointer to output tensor
+   * @return none.
+   */
+
+void arm_avepool_q7_HWC_1d(const q7_t * Im_in, // input image
+                            const uint16_t dim_im_in,   // input image dimension
+                            const uint16_t ch_im_in,    // number of input image channels
+                            const uint16_t dim_kernel,  // window kernel size
+                            const uint16_t padding, // padding sizes
+                            const uint16_t stride,  // stride
+                            const uint16_t dim_im_out,  // output image dimension
+                            q7_t * bufferA, // a buffer for local storage
+                            q7_t * Im_out);
+
 
 /**
  * @defgroup Softmax Softmax Functions
