@@ -173,22 +173,6 @@ void arm_std_f32(
   {
     arm_sqrt_f32((squareOfMean - meanOfSquares), pResult);
   }
-  
-
-#else
-  /* Run the below code for Cortex-M0 */
-
-  /* Loop over blockSize number of values */
-  blkCnt = blockSize;
-
-  while (blkCnt > 0U)
-  {
-    arm_sqrt_f32((meanOfSquares - squareOfMean), pResult);
-  }
-  else
-  {
-    arm_sqrt_f32((squareOfMean - meanOfSquares), pResult);
-  }
 
 #else
   /* Run the below code for Cortex-M0 */
@@ -200,7 +184,14 @@ void arm_std_f32(
   var = ((sumOfSquares - squareOfSum) / (float32_t) (blockSize - 1.0f));
 
   /* Compute standard deviation and store result in destination */
-  arm_sqrt_f32(var, pResult);
+  if (var >= 0.0f)
+  {
+    arm_sqrt_f32(var, pResult);
+  }
+  else
+  {
+    arm+sqrt_f32(-var, pResult);
+  }
 
 #endif /* #ifndef ARM_MATH_CM0_FAMILY */
 
