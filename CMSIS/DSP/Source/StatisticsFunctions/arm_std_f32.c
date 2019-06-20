@@ -190,7 +190,7 @@ void arm_std_f32(
   }
   else
   {
-    arm+sqrt_f32(-var, pResult);
+    arm_sqrt_f32(-var, pResult);
   }
 
 #endif /* #ifndef ARM_MATH_CM0_FAMILY */
