@@ -8,7 +8,7 @@
   <url>http://www.keil.com/pack/</url>
 
   <releases>
-    <release version="5.5.2-dev5">
+    <release version="5.6.0-dev0">
       Active development...
       CMSIS-Core(A): 1.1.4 (see revision history for details)
        - Fixed __FPU_Enable.
@@ -19,7 +19,7 @@
       CMSIS-RTOS2:
         - RTX 5.5.1 (see revision history for details)
       CMSIS-Driver: 2.7.0
-        - Updated WiFi Interface API 1.0.0-beta
+        - WiFi Interface API 1.0.0
       Devices:
        - Generalized C startup code for all Cortex-M familiy devices.
        - Updated Core(A) default memory regions and MMU configurations
@@ -894,7 +894,7 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="header" name="CMSIS/Driver/Include/Driver_USBH.h" />
       </files>
     </api>
-    <api Cclass="CMSIS Driver" Cgroup="WiFi" Capiversion="1.0.0-beta" exclusive="0">
+    <api Cclass="CMSIS Driver" Cgroup="WiFi" Capiversion="1.0.0" exclusive="0">
       <description>WiFi driver</description>
       <files>
         <file category="doc"  name="CMSIS/Documentation/Driver/html/group__wifi__interface__gr.html" />
@@ -3883,7 +3883,7 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="sourceC" attr="template" name="CMSIS/Driver/DriverTemplates/Driver_USBH.c" select="USB Host Driver"/>
       </files>
     </component>
-    <component Cclass="CMSIS Driver" Cgroup="WiFi" Csub="Custom" Cversion="1.0.0-beta" Capiversion="1.0.0-beta">
+    <component Cclass="CMSIS Driver" Cgroup="WiFi" Csub="Custom" Cversion="1.0.0" Capiversion="1.0.0">
       <description>Access to #include Driver_WiFi.h file</description>
       <files>
         <file category="header" name="CMSIS/Driver/Include/Driver_WiFi.h"/>
