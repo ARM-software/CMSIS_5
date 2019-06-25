@@ -3,8 +3,8 @@
 \mainpage Introduction
 
 The <b>Cortex Microcontroller Software Interface Standard</b> (CMSIS) is a vendor-independent
-hardware abstraction layer for the Cortex&reg;-M processor series and defines generic tool
-interfaces.  The CMSIS enables consistent device support and
+hardware abstraction layer for microcontrollers that are based on Arm&reg; Cortex&reg; processors and defines generic tool
+interfaces. The CMSIS enables consistent device support and
 simple software interfaces to the processor and the peripherals, simplifying software re-use,
 reducing the learning curve for microcontroller developers, and reducing the time to market for new devices.
 
