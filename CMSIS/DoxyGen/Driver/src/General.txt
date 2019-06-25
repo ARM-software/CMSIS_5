@@ -62,6 +62,12 @@ The following files relevant to CMSIS-Driver are present in the <b>ARM::CMSIS</b
       <th>Description</th>
     </tr>
     <tr>
+      <td>2.7.1</td>
+      <td>Modifications compared to Version 2.7.0:
+        - Finalized WiFi Interface API 1.0.0.
+      </td>
+    </tr>
+    <tr>
       <td>2.7.0</td>
       <td>Modifications compared to Version 2.6.0:
         - Added WiFi Interface API 1.0.0-beta.

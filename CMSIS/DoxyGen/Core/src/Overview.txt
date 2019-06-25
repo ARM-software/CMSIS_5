@@ -97,6 +97,12 @@ The \ref templates_pg supplied by Arm have been tested and verified with the fol
       <th>Description</th>
     </tr>
     <tr>
+      <td>V5.3.0</td>
+      <td>
+        Added: Provisions for compiler-independent C startup code.
+      </td>
+    </tr>
+    <tr>
       <td>V5.2.1</td>
       <td>
         Fixed: Compilation issue in cmsis_armclang_ltm.h introduced in 5.2.0
