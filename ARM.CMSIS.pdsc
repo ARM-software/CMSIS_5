@@ -14,6 +14,12 @@
        - Fixed __FPU_Enable.
       CMSIS-Core(M): 5.3.0 (see revision history for details)
        - Added provisions for compiler-independent C startup code.
+      CMSIS-DSP: 1.7.0 (see revision history for details)
+        - New Neon versions of f32 functions
+        - Python wrapper
+        - Preliminary cmake build
+        - Compilation flags for FFTs
+        - Changes to arm_math.h
       CMSIS-RTOS:
         - RTX 4.82.0 (updated provisions for Arm Compiler 6 when using Cortex-M0/M0+)
       CMSIS-RTOS2:
