@@ -1,20 +1,19 @@
 /** 
 \page using_pg  Using CMSIS in Embedded Applications
 
-
-\details 
+\details
 
 To use the CMSIS-Core (Cortex-M) the following files are added to the embedded application:
- - \ref startup_s_pg with reset handler and exception vectors.
+ - \ref startup_c_pg (formerly \ref startup_s_pg) with reset handler and exception vectors.
  - \ref system_c_pg with general device configuration (i.e. for clock and BUS setup).
  - \ref device_h_pg gives access to processor core and all peripherals.
 
-\note The files \ref startup_s_pg and \ref system_c_pg may require application specific adaptations and therefore should be copied 
-      into the application project folder prior configuration. The \ref device_h_pg is included in all source files that need device access 
-	  and can be stored on a central include folder that is generic for all projects.
+\note The files \ref startup_c_pg (or \ref startup_s_pg) and \ref system_c_pg may require application specific adaptations and therefore should be copied 
+  into the application project folder prior configuration. The \ref device_h_pg is included in all source files that need device access 
+  and can be stored on a central include folder that is generic for all projects.
 
-The \ref startup_s_pg is executed after reset and calls \ref SystemInit. After the system initialization control is transferred to the C/C++ run-time
-library which performs initialization and calls the \b main function in the user code. In addition the \ref startup_s_pg contains all exception and
+The \ref startup_c_pg (or \ref startup_s_pg) is executed after reset and calls \ref SystemInit. After the system initialization control is transferred to the C/C++ run-time
+library which performs initialization and calls the \b main function in the user code. In addition the \ref startup_c_pg (or \ref startup_s_pg) contains all exception and
 interrupt vectors and implements a default function for every interrupt. It may also contain stack and heap configurations for the user application.
 
 The \ref system_c_pg performs the setup for the processor clock. The variable \ref SystemCoreClock indicates the CPU clock speed.
@@ -32,11 +31,11 @@ CMSIS-Pack provides the <b>\#define CMSIS_header_file</b> in <a href="../../Pack
 
 \image html "CMSIS_CORE_Files_user.png" "CMSIS-Core (Cortex-M) User Files"
 
-The CMSIS-Core (Cortex-M) are device specific. In addition, the \ref startup_s_pg is also compiler vendor specific. 
-The various compiler vendor tool chains may provide folders that contain the CMSIS files for each supported device.
-  
+The CMSIS-Core (Cortex-M) system files are device specific. In addition, the deprecated \ref startup_s_pg is also compiler vendor specific.
+The versions provided by CMSIS are only generic templates. The adopted versions for a concrete device are typically provided by the device
+vendor through the according device familiy pack (DFP).
 
-For example, the following files are provided in MDK to support the STM32F10x Connectivity Line device variants:
+For example, the following files are provided by the STM32F10x device family pack:
 
 <table class="cmtable">
     <tr>
@@ -44,19 +43,19 @@ For example, the following files are provided in MDK to support the STM32F10x Co
       <th>Description</th>
     </tr>
     <tr>
-      <td>".\ARM\Startup\ST\STM32F10x\startup_stm32f10x_cl.s"</td>
+      <td>".\Device\Source\ARM\startup_stm32f10x_cl.s"</td>
       <td>\ref startup_s_pg for the STM32F10x Connectivity Line device variants.</td>
     </tr>
     <tr>
-      <td>".\ARM\Startup\ST\STM32F10x\system_stmf10x.c"</td>
+      <td>".\Device\Source\system_stmf10x.c"</td>
       <td>\ref system_c_pg for the STM32F10x device families.</td>
     </tr>
     <tr>
-      <td>".\ARM\INC\ST\STM32F10x\stm32f10x.h"</td>
+      <td>".\Device\Include\stm32f10x.h"</td>
       <td>\ref device_h_pg for the STM32F10x device families.</td>
     </tr>
     <tr>
-      <td>".\ARM\INC\ST\STM32F10x\system_stm32f10x.h"</td>
+      <td>".\Device\Include\system_stm32f10x.h"</td>
       <td>\ref system_Device_h_sec for the STM32F10x device families.</td>
     </tr>
 </table>
@@ -113,7 +112,7 @@ void Device_Initialization (void)  {             // Configure & Initialize MCU
  
  
 // The processor clock is initialized by CMSIS startup + system file
-void main (void) {	                             // user application starts here
+void main (void) {                               // user application starts here
   Device_Initialization ();                      // Configure & Initialize MCU
   while (1)  {                                   // Endless Loop (the Super-Loop)
     __disable_irq ();                            // Disable all interrupts
@@ -143,9 +142,9 @@ a typical use case where the interrupt vectors are copied to RAM and the SysTick
 #include "ARMCM3.h"                     // Device header
  
 /* externals from startup_ARMCM3.s */
-extern uint32_t __Vectors[];                             /* vector table ROM  */
+extern uint32_t __Vectors[];              /* vector table ROM  */
  
-#define VECTORTABLE_SIZE        (256)          /* size Cortex-M3 vector table */
+#define VECTORTABLE_SIZE        (256)     /* size Cortex-M3 vector table      */
 #define VECTORTABLE_ALIGNMENT   (0x100ul) /* 16 Cortex + 32 ARMCM3 = 48 words */
                                           /* next power of 2 = 256            */
  
@@ -157,7 +156,7 @@ uint32_t vectorTable_RAM[VECTORTABLE_SIZE] __attribute__(( aligned (VECTORTABLE_
  *----------------------------------------------------------------------------*/
 volatile uint32_t msTicks = 0;                        /* counts 1ms timeTicks */
 void SysTick_Handler(void) {
-  msTicks++;                                             /* increment counter */
+  msTicks++;                                          /* increment counter */
 }
  
 /*----------------------------------------------------------------------------
@@ -165,7 +164,7 @@ void SysTick_Handler(void) {
  *----------------------------------------------------------------------------*/
 volatile uint32_t msTicks_RAM = 0;                    /* counts 1ms timeTicks */
 void SysTick_Handler_RAM(void) {
-  msTicks_RAM++;                                         /* increment counter */
+  msTicks_RAM++;                                      /* increment counter */
 }
  
 /*----------------------------------------------------------------------------
@@ -179,7 +178,7 @@ int main (void) {
   }
                                                    /* replace SysTick Handler */
   vectorTable_RAM[SysTick_IRQn + 16] = (uint32_t)SysTick_Handler_RAM;
-	
+  
   /* relocate vector table */ 
   __disable_irq();
     SCB->VTOR = (uint32_t)&vectorTable_RAM;
@@ -210,53 +209,53 @@ The table below lists the folder and device names of the Arm processors.
       <td>".\Device\ARM\ARMCM0"</td>
       <td>Cortex-M0</td>
       <td>Contains \b Include and \b Source template files configured for the Cortex-M0 processor.
-	      The device name is ARMCM0 and the name of the \ref device_h_pg is <ARMCM0.h>.
-	  </td>
+        The device name is ARMCM0 and the name of the \ref device_h_pg is <ARMCM0.h>.
+    </td>
     </tr>
     <tr>
       <td>".\Device\ARM\ARMCM0plus"</td>
       <td>Cortex-M0+</td>
       <td>Contains \b Include and \b Source template files configured for the Cortex-M0+ processor.
-	      The device name is ARMCM0plus and the name of the \ref device_h_pg is <ARMCM0plus.h>.
-	  </td>
+        The device name is ARMCM0plus and the name of the \ref device_h_pg is <ARMCM0plus.h>.
+    </td>
     </tr>
     <tr>
       <td>".\Device\ARM\ARMCM3"</td>
       <td>Cortex-M3</td>
       <td>Contains \b Include and \b Source template files configured for the Cortex-M3 processor.
-	      The device name is ARMCM3 and the name of the \ref device_h_pg is <ARMCM3.h>.
-	  </td>
+        The device name is ARMCM3 and the name of the \ref device_h_pg is <ARMCM3.h>.
+    </td>
     </tr>
     <tr>
       <td>".\Device\ARM\ARMCM4"</td>
       <td>Cortex-M4</td>
       <td>Contains \b Include and \b Source template files configured for the Cortex-M4 processor.
-	      The device name is ARMCM4 and the name of the \ref device_h_pg is <ARMCM4.h>.
-	  </td>
+        The device name is ARMCM4 and the name of the \ref device_h_pg is <ARMCM4.h>.
+    </td>
     </tr>
     <tr>
       <td>".\Device\ARM\ARMCM7"</td>
       <td>Cortex-M7</td>
       <td>Contains \b Include and \b Source template files configured for the Cortex-M7 processor.
-	      The device name is ARMCM7 and the name of the \ref device_h_pg is <ARMCM7.h>.
-	  </td>
+        The device name is ARMCM7 and the name of the \ref device_h_pg is <ARMCM7.h>.
+    </td>
     </tr>
-\if ARMSC	
+\if ARMSC 
     <tr>
       <td>".\Device\ARM\ARMSC000"</td>
       <td>SecurCore SC000</td>
       <td>Contains \b Include and \b Source template files configured for the SecurCore SC000 processor.
-	      The device name is ARMSC000 and the name of the \ref device_h_pg is <ARMSC000.h>.
-	  </td>
+        The device name is ARMSC000 and the name of the \ref device_h_pg is <ARMSC000.h>.
+    </td>
     </tr>
     <tr>
       <td>".\Device\ARM\ARMSC300"</td>
       <td>SecurCore SC300</td>
       <td>Contains \b Include and \b Source template files configured for the SecurCore SC300 processor.
-	      The device name is ARMSC300 and the name of the \ref device_h_pg is <ARMSC300.h>.
-	  </td>
+        The device name is ARMSC300 and the name of the \ref device_h_pg is <ARMSC300.h>.
+    </td>
     </tr>
-\endif	
+\endif  
 </table>
 
 \note
