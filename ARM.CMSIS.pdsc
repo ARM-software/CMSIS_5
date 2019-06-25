@@ -20,6 +20,9 @@
         - Preliminary cmake build
         - Compilation flags for FFTs
         - Changes to arm_math.h
+      CMSIS-NN: Version 1.2.0 (see revision history for details)
+        - New function for depthwise convolution with asymmetric quantization.
+        - New support functions for requantization.
       CMSIS-RTOS:
         - RTX 4.82.0 (updated provisions for Arm Compiler 6 when using Cortex-M0/M0+)
       CMSIS-RTOS2:
@@ -693,12 +696,12 @@ Armv8-M Mainline based device with TrustZone
         <compile header="Device/ARM/ARMv8MML/Include/ARMv8MML_DSP_DP.h" define="ARMv8MML_DSP_DP"/>
       </device>
     </family>
-    
+
     <!-- ******************************  ARMv8.1-M Mainline  ****************************** -->
     <family Dfamily="ARMv8.1-M Mainline" Dvendor="ARM:82">
       <!--book name="Device/ARM/Documents/ARMv8MML_dgug.pdf"       title="ARMv8MML Device Generic Users Guide"/-->
       <description>
-Armv8.1-M Mainline based device with TrustZone and MVE 
+Armv8.1-M Mainline based device with TrustZone and MVE
       </description>
       <!-- <debug svd="Device/ARM/SVD/ARMv8MML.svd"/> -->
       <memory id="IROM1"                                start="0x10000000" size="0x00200000" startup="1" default="1"/>
@@ -707,14 +710,14 @@ Armv8.1-M Mainline based device with TrustZone and MVE
       <memory id="IRAM2"                                start="0x20000000" size="0x00020000" init   ="0" default="0"/>
       <!--algorithm name="Device/ARM/Flash/NEW_DEVICE.FLM" start="0x00000000" size="0x00040000"             default="1"/-->
 
-   
+
       <device Dname="ARMv81MML_DSP_DP_MVE_FP">
         <processor Dcore="ARMV81MML" DcoreVersion="r0p0" Dfpu="DP_FPU" Dmpu="MPU" Dmve="FP_MVE" Ddsp="DSP" Dtz="TZ" Dendian="Configurable" Dclock="10000000"/>
         <description>
           Double Precision Vector Extensions, DSP Instructions, Double Precision Floating Point Unit, TrustZone
         </description>
         <compile header="Device/ARM/ARMv81MML/Include/ARMv81MML_DSP_DP_MVE_FP.h" define="ARMv81MML_DSP_DP_MVE_FP"/>
-      </device>   
+      </device>
     </family>
 
     <!-- ******************************  Cortex-A5  ****************************** -->
@@ -1115,7 +1118,7 @@ and 8-bit Java bytecodes in Jazelle state.
 
     <condition id="ARMv81MML">
       <description>Armv8.1-M Mainline</description>
-      <require Dvendor="ARM:82" Dname="ARMv81MML*"/>   
+      <require Dvendor="ARM:82" Dname="ARMv81MML*"/>
     </condition>
 
     <condition id="CA5_CA9">
@@ -1535,7 +1538,7 @@ and 8-bit Java bytecodes in Jazelle state.
       <require condition="ARMv8MML_DSP_SP_ARMCC"/>
       <require Dendian="Little-endian"/>
     </condition>
-    
+
     <!-- GCC compiler -->
     <condition id="CA_GCC">
       <description>Cortex-A5, Cortex-A7 or Cortex-A9 processor based device for the GCC Compiler</description>
@@ -2610,7 +2613,7 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="sourceC" attr="template" condition="ARMv8-M TZ Device" name="CMSIS/Core/Template/ARMv8-M/tz_context.c" version="1.1.1" select="RTOS Context Management (TrustZone for ARMv8-M)" />
       </files>
     </component>
-   
+
     <component Cclass="CMSIS" Cgroup="CORE" Cversion="1.1.4"  condition="ARMv7-A Device" >
       <description>CMSIS-CORE for Cortex-A</description>
       <files>
@@ -3013,7 +3016,7 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="header"       name="Device/ARM/ARMv81MML/Include/Template/partition_ARMv81MML.h" version="1.0.0" attr="config" condition="ARMv8-M TZ Device"/>
       </files>
     </component>
-    
+
     <!-- Cortex-A5 -->
     <component Cclass="Device" Cgroup="Startup"                      Cversion="1.0.0" condition="ARMCA5 CMSIS">
       <description>System and Startup for Generic Arm Cortex-A5 device</description>
@@ -3235,7 +3238,7 @@ and 8-bit Java bytecodes in Jazelle state.
     </component>
 
     <!-- CMSIS-NN component -->
-    <component Cclass="CMSIS" Cgroup="NN Lib" Cversion="1.1.0" condition="CMSIS NN">
+    <component Cclass="CMSIS" Cgroup="NN Lib" Cversion="1.2.0" condition="CMSIS NN">
       <description>CMSIS-NN Neural Network Library</description>
       <files>
         <file category="doc" name="CMSIS/Documentation/NN/html/index.html"/>
@@ -3795,7 +3798,7 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="source" name="CMSIS/RTOS2/Source/os_systick.c"/>
       </files>
     </component>
-    
+
     <!-- CMSIS-Driver Custom components -->
     <component Cclass="CMSIS Driver" Cgroup="USART" Csub="Custom" Cversion="2.3.0" Capiversion="2.3.0">
       <description>Access to #include Driver_USART.h file and code template for custom implementation</description>
