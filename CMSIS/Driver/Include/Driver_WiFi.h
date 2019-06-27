@@ -16,14 +16,14 @@
  * limitations under the License.
  *
  * $Date:        31. May 2019
- * $Revision:    V1.0 (beta)
+ * $Revision:    V1.0
  *
  * Project:      WiFi (Wireless Fidelity Interface) Driver definitions
  */
 
 /* History:
- *  Version 1.0 (beta)
- *    Initial beta version
+ *  Version 1.0
+ *    Initial release
  */
 
 #ifndef DRIVER_WIFI_H_
