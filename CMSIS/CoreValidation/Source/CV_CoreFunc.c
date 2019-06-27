@@ -2,7 +2,7 @@
  *      Name:         CV_CoreFunc.c
  *      Purpose:      CMSIS CORE validation tests implementation
  *-----------------------------------------------------------------------------
- *      Copyright (c) 2017 - 2018 Arm Limited. All rights reserved.
+ *      Copyright (c) 2017 - 2019 Arm Limited. All rights reserved.
  *----------------------------------------------------------------------------*/
 
 #include "CV_Framework.h"
@@ -194,11 +194,11 @@ Check expected behavior of interrupt vector relocation functions:
 void TC_CoreFunc_IRQVect(void) {
 #if defined(__VTOR_PRESENT) && __VTOR_PRESENT
   /* relocate vector table */
-  extern uint32_t __Vectors[];
+  extern uint32_t __VECTOR_TABLE[];
   static uint32_t vectors[32] __ALIGNED(512);
 
   for(uint32_t i=0U; i<32U; i++) {
-    vectors[i] = __Vectors[i];
+    vectors[i] = __VECTOR_TABLE[i];
   }
 
   const uint32_t orig_vtor = SCB->VTOR;
