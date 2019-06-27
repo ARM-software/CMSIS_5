@@ -1,8 +1,8 @@
 /******************************************************************************
  * @file     mpu_armv8.h
  * @brief    CMSIS MPU API for Armv8-M and Armv8.1-M MPU
- * @version  V5.2.0
- * @date     04. June 2019
+ * @version  V5.1.0
+ * @date     08. March 2019
  ******************************************************************************/
 /*
  * Copyright (c) 2017-2019 Arm Limited. All rights reserved.
@@ -185,11 +185,11 @@ __STATIC_INLINE void ARM_MPU_SetMemAttrEx(MPU_Type* mpu, uint8_t idx, uint8_t at
   const uint32_t pos = ((idx % 4U) * 8U);
   const uint32_t mask = 0xFFU << pos;
   
-  if (reg >= (sizeof(mpu->MAIR.MAIR) / sizeof(mpu->MAIR.MAIR[0]))) {
+  if (reg >= (sizeof(mpu->MAIR) / sizeof(mpu->MAIR[0]))) {
     return; // invalid index
   }
   
-  mpu->MAIR.MAIR[reg] = ((mpu->MAIR.MAIR[reg] & ~mask) | ((attr << pos) & mask));
+  mpu->MAIR[reg] = ((mpu->MAIR[reg] & ~mask) | ((attr << pos) & mask));
 }
 
 /** Set the memory attribute encoding.
