@@ -8,6 +8,24 @@ Use [Issues](https://github.com/ARM-software/CMSIS_5#issues-and-labels) to provi
 
 A [pre-built documentation](http://www.keil.com/pack/doc/CMSIS_Dev/index.html) is updated from time to time, but may be also generated using the instructions under [Generate CMSIS Pack for Release](https://github.com/ARM-software/CMSIS_5#generate-cmsis-pack-for-release).
 
+## Overview of CMSIS Components
+
+The following is an list of all CMSIS components that are available.
+
+| CMSIS-... | Target Processors   | Description  |
+|:----------|:--------------------|:-------------|
+|[Core(M)](http://arm-software.github.io/CMSIS_5/Core/html/index.html)  | All Cortex-M, SecurCore | Standardized API for the Cortex-M processor core and peripherals. It also includes intrinsic functions for Cortex-M4/M7/M33/M35P SIMD instructions.|
+|[Core(A)](http://arm-software.github.io/CMSIS_5/Core_A/html/index.html)| Cortex-A5/A7/A9 | API and basic run-time system for the Cortex-A5/A7/A9 processor core and peripherals.|
+|[Driver](http://arm-software.github.io/CMSIS_5/Driver/html/index.html) | All Cortex-M, SecurCore | Generic peripheral driver interfaces for middleware, making it reusable across supported devices. The API is RTOS independent and connects microcontroller peripherals with middleware that implements for example communication stacks, file systems, or graphic user interfaces.|
+|[DSP](http://arm-software.github.io/CMSIS_5/DSP/html/index.html)       | All Cortex-M | DSP library collection with over 60 Functions for various data types: fixed-point (fractional q7, q15, q31) and single precision floating-point (32-bit). Implementations optimized for the SIMD instruction set are available for Cortex-M4/M7/M33/M35P.|
+|[NN](http://arm-software.github.io/CMSIS_5/NN/html/index.html)        | All Cortex-M | Collection of efficient neural network kernels developed to maximize the performance and minimize the memory footprint on Cortex-M processor cores.|
+|[RTOS v1](http://arm-software.github.io/CMSIS_5/RTOS/html/index.html) | Cortex-M0/M0+/M3/M4/M7 | Common API for real-time operating systems along with a reference implementation based on RTX. It provides a standardized programming interface that is portable to many RTOS and enables software components that can work across multiple RTOS systems.|
+|[RTOS v2](http://arm-software.github.io/CMSIS_5/RTOS2/html/index.html)| All Cortex-M, Cortex-A5/A7/A9 | Extends CMSIS-RTOS v1 with support for Armv8-M architecture, dynamic object creation, provisions for multi-core systems, and a binary compatible interface across ABI compliant compilers.|
+|[Pack](http://arm-software.github.io/CMSIS_5/Pack/html/index.html)    | All Cortex-M, SecurCore, Cortex-A5/A7/A9 | Describes with an XML-based package description (PDSC) file the user and device relevant parts of a file collection (called a software pack) that includes source, header and library files, documentation, Flash programming algorithms, source code templates, and example projects. Development tools and web infrastructures use the PDSC file to extract device parameters, software components, and evaluation board configurations.|
+|[SVD](http://arm-software.github.io/CMSIS_5/SVD/html/index.html)      | All Cortex-M, SecurCore | Peripheral description of a device in an XML file that can be used to create peripheral awareness in debuggers or header files with register and interrupt definitions.|
+|[DAP](http://arm-software.github.io/CMSIS_5/DAP/html/index.html)      | All Cortex | Standardized firmware for a debug unit that connects to the CoreSight Debug Access Port. It is well suited for integration on evaluation boards. |
+|[Zone](http://arm-software.github.io/CMSIS_5/Zone/html/index.html)    | All Cortex | System resource definition and partitioning. Defines methods to describe system resources and to partition these resources into multiple projects and execution areas.|
+
 ## Implemented Enhancements
  - CMSIS-Core-A, RTX5: implementation for Cortex-A5/A7/A9
  - Support for Armv8-M Architecture (Mainline and Baseline) as well as devices Cortex-M23 and Cortex-M33
@@ -31,7 +49,7 @@ For further details see also the [Slides of the Embedded World CMSIS Partner Mee
 ## Other related GitHub repositories
 
 | Repository                  | Description                                               |                
-| --------------------------- | --------------------------------------------------------- |
+|:--------------------------- |:--------------------------------------------------------- |
 | [cmsis-pack-eclipse](https://github.com/ARM-software/cmsis-pack-eclipse)    |  CMSIS-Pack Management for Eclipse reference implementation Pack support  |
 | [CMSIS-FreeRTOS](https://github.com/arm-software/CMSIS-FreeRTOS)            | CMSIS-RTOS adoption of FreeRTOS                                                      |
 | [CMSIS-Driver](https://github.com/arm-software/CMSIS-Driver)                | Generic MCU driver implementations and templates for Ethernet MAC/PHY and Flash.  |
@@ -45,7 +63,7 @@ For further details see also the [Slides of the Embedded World CMSIS Partner Mee
 ## Directory Structure
 
 | Directory            | Content                                                   |                
-| -------------------- | --------------------------------------------------------- |
+|:-------------------- |:--------------------------------------------------------- |
 | CMSIS/Core           | CMSIS-Core(M) related files (for release)                 |
 | CMSIS/Core_A         | CMSIS-Core(A) related files (for release)                 |
 | CMSIS/CoreValidation | Validation for Core(M) and Core(A) (NOT part of release)  |
