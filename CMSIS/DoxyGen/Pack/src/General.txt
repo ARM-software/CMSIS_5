@@ -10,9 +10,19 @@ support. The XML-based package description (PDSC) file describes the content of 
  -  Device parameters along with startup code and programming algorithms
  -  Example projects
 
-The complete file collection along with the PDSC file is shipped in ZIP-format as a Software Pack. The PDSC file is designed
+The complete file collection along with the PDSC file is shipped in ZIP-format (renamed to *.pack). The PDSC file is designed
 for software development environments and describes the user and device relevant context for the files supplied within such
-a Software Pack. A Software Pack can be used for multiple purposes (see below).
+a pack file.
+
+The CMSIS-Pack system solves several problems: 
+
+- It provides meta-data of files that relate to a software component. All files that belong to a software component can be
+  identified and information about the original provider is preserved. 
+- It enables consistent software component upgrade and identifies incompatible configuration files that may be part of the
+  user application. 
+- Software component providers can specify the interfaces and relationship to other software components.
+- The meta-data of a software component can include dependency information for toolchains, devices, and processors which
+  simplifies the integration into application programs.
 
 After installing a \ref cp_SWComponents "Software Pack", all included software components are available to the development
 tools. \ref cp_Components "Software components" are a collection of source modules, header and configuration files as well as
@@ -20,8 +30,11 @@ libraries. Packs containing software components can also include \ref cp_Example
 
 The \subpage pack_revisionHistory lists the main changes between versions.
 
+
 \section SWPackVariants Software Pack Use Cases
 
+A pack can be used for multiple purposes:
+ 
 \image html SPVariants_small.png  "Software Pack Use Cases"
 
 The figure above shows the following use cases for Software Packs:
@@ -35,22 +48,22 @@ The figure above shows the following use cases for Software Packs:
   
 \note A Software Pack can address multiple use cases at the same time!
 
-The following sections give you more details on the basics:
+The following sections provide more information:
 
- - \ref cp_Packs explains the steps required for creating a Software Pack in general.
- - \ref cp_SWComponents gives detailed information on the contents of the PDSC file.
- - \ref createPack_DFP describes additional requirements of Device Family Packs (DFPs).
+ - In the \ref cp_Packs, learn the basics and the required steps for creating a pack.
+ - \ref cp_SWComponents shows how to start a pack from scratch.
+ - \ref createPack_DFP describes how to enable device support in a DFP.
  - \ref createPackBoard covers the creation of Board Support Packs (BSPs).
- - \ref pack_Example explains the Software Pack example that is part of the CMSIS Pack in more detail.
- - \ref createPackPublish shows the options for publishing a Pack.
- - \ref createPackUtil caters to programs that are useful during the creation of a Pack.
+ - \ref pack_Example explains the available example pack in more detail.
+ - Learn how to \ref createPackPublish.
+ - \ref createPackUtil are available that are useful during the creation of a pack.
  - \ref packFormat describes all XML elements that can be used in a PDSC file.
  - \ref configWizard can be used to create GUI-like elements in development tools for configuration files.
- - \ref flashAlgorithm are used to erase or download applications to Flash devices.
- - \ref coresight_setup allow to create tool-agnostic debug and trace configurations
+ - \ref flashAlgorithm algorithms are used to erase or download applications to Flash devices.
+ - \ref coresight_setup allows to create tool-agnostic debug and trace configurations
  - \ref cpdsc_pg is a environment/tool independent definition of a software project. This helps to create only one set of
    example projects that can be used by many different tool vendors.
- - \ref packIndexFile
+ - \ref packIndexFile are used to generate a catalog of available packs.
 
 <hr>
 
