@@ -2,58 +2,32 @@
 /**
 \mainpage Introduction
 
-The <b>Cortex Microcontroller Software Interface Standard</b> (CMSIS) is a vendor-independent
-hardware abstraction layer for microcontrollers that are based on Arm&reg; Cortex&reg; processors. The CMSIS defines generic tool interfaces and enables consistent device support. It provides
-simple software interfaces to the processor and the peripherals, simplifying software re-use,
-reducing the learning curve for microcontroller developers, and reducing the time to market for new devices.
+The <b>CMSIS</b> is a vendor-independent hardware abstraction layer for microcontrollers that are based on Arm&reg;
+Cortex&reg; processors. The CMSIS defines generic tool interfaces and enables consistent device support. It provides simple
+software interfaces to the processor and the peripherals, simplifying software re-use, reducing the learning curve for
+microcontroller developers, and reducing the time to market for new devices.
 
-The CMSIS is defined in close cooperation with various silicon and software vendors and
-provides a common approach to interface to peripherals, real-time operating systems,
-and middleware components. The CMSIS is intended to enable the combination of software components
-from multiple middleware vendors.
+The CMSIS is defined in close cooperation with various silicon and software vendors and provides a common approach to
+interface to peripherals, real-time operating systems, and middleware components. The CMSIS is intended to enable the
+combination of software components from multiple middleware vendors.
 
-CMSIS Version 5 supports also the <a class="el" href="http://www.arm.com/products/processors/instruction-set-architectures/armv8-m-architecture.php" target="_blank">Armv8-M architecture</a>
-including <a class="el" href="http://www.arm.com/products/processors/technologies/trustzone/index.php" target="_blank">TrustZone&reg; for Armv8-M</a> hardware security extensions and the
-<a class="el" href="http://www.arm.com/products/processors/cortex-m/cortex-m23-processor.php" target="_blank">Cortex-M23</a> and <a class="el" href="http://www.arm.com/products/processors/cortex-m/cortex-m33-processor.php" target="_blank">Cortex-M33</a> processors.
+\section CM_Components Components
 
-\anchor CM_Components
-The CMSIS components are:
- - <a href="../../Core/html/index.html"><b>CMSIS-Core (Cortex-M)</b></a>: API for the Cortex-M processor core and peripherals.
-   It provides a standardized interface for Cortex-M0, Cortex-M0+, Cortex-M3, Cortex-M4, Cortex-M7, Cortex-M23, Cortex-M33, Cortex-M35P, SC000, and SC300.
-   Also included are SIMD intrinsic functions for Cortex-M4, Cortex-M7, Cortex-M33 and Cortex-M35P SIMD instructions.
-
- - <a href="../../Core_A/html/index.html"><b>CMSIS-Core (Cortex-A)</b></a>: API and basic run-time system for the Cortex-A5/A7/A9 processor core and peripherals.
-
- - <a href="../../Driver/html/index.html"><b>CMSIS-Driver</b></a>: defines generic peripheral driver interfaces for middleware making it reusable across supported devices. The API is RTOS independent
-    and connects microcontroller peripherals with middleware that implements for example communication stacks, file systems, or graphic user interfaces.
-
- - <a href="../../DSP/html/index.html"><b>CMSIS-DSP</b></a>: DSP Library Collection with over 60 Functions for various data types: fixed-point (fractional q7, q15, q31) and single precision floating-point (32-bit).
-   The library is available for all Cortex-M cores. Implementations that are optimized for the SIMD instruction set are available for Cortex-M4, Cortex-M7, Cortex-M33 and Cortex-M35P.
-
- - <a href="../../NN/html/index.html"><b>CMSIS-NN</b></a>: CMSIS-NN is a collection of efficient neural network kernels developed to maximize the performance and minimize the memory footprint of neural networks on Cortex-M processor cores.
-
- - <a href="../../RTOS/html/index.html"><b>CMSIS-RTOS v1</b></a>: Common API for Real-Time Operating Systems along with reference implementation based on RTX.
-    It provides a standardized programming interface that is portable to many RTOS and enables software components that can work across multiple RTOS systems.
-
- - <a href="../../RTOS2/html/index.html"><b>CMSIS-RTOS v2</b></a>: extends CMSIS-RTOS v1 with support for Armv8-M architecture, dynamic object creation,
-    provisions for multi-core systems, and binary compatible interface across ABI compliant compilers.
-
- - <a href="../../Pack/html/index.html"><b>CMSIS-Pack</b></a>: describes with an XML-based package description (PDSC) file the user and device relevant parts of a file collection (called a software pack) that includes source, header and library files, documentation,
-    Flash programming algorithms, source code templates, and example projects. Development tools and web infrastructures use the PDSC file to extract device parameters,
-    software components, and evaluation board configurations.
-
- - <a href="../../SVD/html/index.html"><b>CMSIS-SVD</b></a>: System View Description for Peripherals. Describes the peripherals of a device in an XML file and can be used to create peripheral awareness in
-    debuggers or header files with peripheral register and interrupt definitions.
-
- - <a href="../../DAP/html/index.html"><b>CMSIS-DAP</b></a>: Debug Access Port. Standardized firmware for a Debug Unit that connects to the CoreSight Debug Access Port. CMSIS-DAP is distributed as a separate package and is
-    well suited for integration on evaluation boards. This component is provided as separate download.
-
- - <a href="../../Zone/html/index.html"><b>CMSIS-Zone</b></a>: System resource definition and partitioning. Defines methods to describe system resources and to partition
-   these resources into multiple projects and execution areas.
+| Component | Target processors | Description |
+|-----------|---------------------|-------------|
+|<a href="../../Core/html/index.html"><b>CMSIS-Core(M)</b></a>|   All Cortex-M and SecurCore processors | Standardized API for the Cortex-M processor core and peripherals. It also includes intrinsic functions for Cortex-M4/M7/M33/M35P SIMD instructions.|
+|<a href="../../Core_A/html/index.html"><b>CMSIS-Core(A)</b></a>| Cortex-A5/A7/A9 processors | API and basic run-time system for the Cortex-A5/A7/A9 processor core and peripherals.|
+|<a href="../../Driver/html/index.html"><b>Driver</b></a>|        All Cortex-M and SecurCore processors | Generic peripheral driver interfaces for middleware, making it reusable across supported devices. The API is RTOS independent and connects microcontroller peripherals with middleware that implements for example communication stacks, file systems, or graphic user interfaces.|
+|<a href="../../DSP/html/index.html"><b>DSP</b></a>|              All Cortex-M processors | DSP library collection with over 60 Functions for various data types: fixed-point (fractional q7, q15, q31) and single precision floating-point (32-bit). Implementations optimized for the SIMD instruction set are available for Cortex-M4/M7/M33/M35P.|
+|<a href="../../NN/html/index.html"><b>NN</b></a>|                All Cortex-M processors | Collection of efficient neural network kernels developed to maximize the performance and minimize the memory footprint on Cortex-M processor cores.|
+|<a href="../../RTOS/html/index.html"><b>RTOS v1</b></a>|         Cortex-M0/M0+/M3/M4/M7 processors| Common API for real-time operating systems along with a reference implementation based on RTX. It provides a standardized programming interface that is portable to many RTOS and enables software components that can work across multiple RTOS systems.|
+|<a href="../../RTOS2/html/index.html"><b>RTOS v2</b></a>|        All Cortex-M and Cortex-A5/A7/A9 processors | Extends CMSIS-RTOS v1 with support for Armv8-M architecture, dynamic object creation, provisions for multi-core systems, and a binary compatible interface across ABI compliant compilers.|
+|<a href="../../Pack/html/index.html"><b>Pack</b></a>|            All Cortex-M, SecurCore, and Cortex-A5/A7/A9 processors | Describes with an XML-based package description (PDSC) file the user and device relevant parts of a file collection (called a software pack) that includes source, header and library files, documentation, Flash programming algorithms, source code templates, and example projects. Development tools and web infrastructures use the PDSC file to extract device parameters, software components, and evaluation board configurations.|
+|<a href="../../SVD/html/index.html"><b>SVD</b></a>|              All Cortex-M and SecurCore processors | Peripheral description of a device in an XML file that can be used to create peripheral awareness in debuggers or header files with register and interrupt definitions.|
+|<a href="../../DAP/html/index.html"><b>DAP</b></a>|              All Cortex processors | Standardized firmware for a debug unit that connects to the CoreSight Debug Access Port. It is well suited for integration on evaluation boards. |
+|<a href="../../Zone/html/index.html"><b>Zone</b></a>|            All Cortex processors | System resource definition and partitioning. Defines methods to describe system resources and to partition these resources into multiple projects and execution areas.|
 
 \note Refer to \ref CM_Pack_Content for more information on the content of the Software Pack.
-
-\image html Overview.png "CMSIS Structure"
 
 \section Motivation Motivation
 
@@ -61,13 +35,15 @@ CMSIS has been created to help the industry in standardization. It enables consi
 CMSIS is not a huge software layer that introduces overhead and does not define standard peripherals. The silicon industry can
 therefore support the wide variations of Cortex-M processor-based devices with this common standard.
 
-In detail the benefits of the CMSIS are:
+\image html Overview.png "CMSIS Structure"
 
- - Overall CMSIS reduces the learning curve, development costs, and time-to-market. Developers can write software quicker through a variety of easy-to-use, standardized software interfaces.
+The benefits of the CMSIS are:
+
+ - CMSIS reduces the learning curve, development costs, and time-to-market. Developers can write software quicker through a variety of easy-to-use, standardized software interfaces.
  - Consistent software interfaces improve the software portability and re-usability. Generic software libraries and interfaces provide consistent software framework.
- - Provides interfaces for debug connectivity, debug peripheral views, software delivery, and device support to reduce time-to-market for new microcontroller deployment.
- - Provides a compiler independent layer that allows using different compilers. CMSIS is supported by mainstream compilers.
- - Enhances program debugging with peripheral information for debuggers and ITM channels for printf-style output and RTOS kernel awareness.
+ - It provides interfaces for debug connectivity, debug peripheral views, software delivery, and device support to reduce time-to-market for new microcontroller deployment.
+ - Being a compiler independent layer, it allows to use the compiler of your choice. Thus, it is supported by mainstream compilers.
+ - It enhances program debugging with peripheral information for debuggers and ITM channels for printf-style output.
  - CMSIS is delivered in CMSIS-Pack format which enables fast software delivery, simplifies updates, and enables consistent integration into development tools.
  - CMSIS-Zone will simplify system resource and partitioning as it manages the configuration of multiple processors, memory areas, and peripherals.
 
@@ -88,7 +64,7 @@ In addition, the CMSIS recommends the following conventions for identifiers:
 
 The CMSIS is documented within the source files with:
  \li Comments that use the C or C++ style.
- \li Doxygen compliant <b>function comments</b> that provide:
+ \li <a href="http://www.doxygen.nl/" target="_blank">Doxygen</a> compliant <b>function comments</b> that provide:
     - brief function overview.
     - detailed description of the function.
     - detailed parameter explanation.
@@ -129,8 +105,7 @@ with C language standards, specifically warnings that may be generated by the va
 
 \section License License
 
-The CMSIS is provided free of charge by Arm under Apache 2.0 license.
-View the <a href="LICENSE.txt">Apache 2.0 License</a>.
+The CMSIS is provided free of charge by Arm under the <a href="LICENSE.txt">Apache 2.0 License</a>.
 
 
 \section CM_Pack_Content ARM::CMSIS Pack
@@ -159,8 +134,8 @@ Directory                 |Content
 \b Include                |Include files for <a href="../../Core/html/index.html"><b>CMSIS-Core (Cortex-M)</b></a> and <a href="../../DSP/html/index.html"><b>CMSIS-DSP</b></a>
 \b Lib                    |<a href="../../DSP/html/index.html"><b>CMSIS-DSP</b></a> generated libraries for ARMCC and GCC
 \b Pack                   |<a href="../../Pack/html/pack_Example.html"><b>CMSIS-Pack</b></a> example
-\b RTOS                   |<a href="../../RTOS/html/index.html"><b>CMSIS-RTOS Version 1</b></a> along with RTX reference implementation
-\b RTOS2                  |<a href="../../RTOS/html/index.html"><b>CMSIS-RTOS Version 2</b></a> along with RTX reference implementation
+\b RTOS                   |<a href="../../RTOS/html/index.html"><b>CMSIS-RTOS Version 1</b></a> along with RTX4 reference implementation
+\b RTOS2                  |<a href="../../RTOS/html/index.html"><b>CMSIS-RTOS Version 2</b></a> along with RTX5 reference implementation
 \b SVD                    |<a href="../../SVD/html/index.html"><b>CMSIS-SVD</b></a> example
 \b Utilities              |PACK.xsd (<a href="../../Pack/html/pack_Example.html"><b>CMSIS-Pack</b></a> schema file), PackChk.exe (checking tool for software packs), \n CMSIS-SVD.xsd (<a href="../../SVD/html/index.html"><b>CMSIS-SVD</b></a> schema file), SVDConv.exe (conversion tool for SVD files)
 
