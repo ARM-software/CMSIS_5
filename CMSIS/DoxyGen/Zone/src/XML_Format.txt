@@ -575,8 +575,8 @@ The \ref xml_si_region contains the region setting for SAU initialization.
     <th>Use</th>
   </tr>
   <tr>
-    <td>Pref</td>
-    <td>The processor(s) that require this setting. If omitted all processors get this setting.</td>
+    <td>Pname</td>
+    <td>The processor that requires this setting. If omitted all processors get this setting.</td>
     <td>xs:string</td>
     <td>optional</td>
   </tr>
@@ -766,8 +766,8 @@ The \ref xml_rmemory lists a logical memory region with physical mapping. Memory
     <td>optional</td>
   </tr>
   <tr>
-    <td>Pref</td>
-    <td>The processor(s) that can access this memory region. If omitted all processors of the system have access.</td>
+    <td>Pname</td>
+    <td>The processor that can access this memory region. If omitted all processors of the system have access.</td>
     <td>xs:string</td>
     <td>optional</td>
   </tr>
@@ -923,7 +923,7 @@ The \ref xml_group can be used to logically group peripherals according to funct
   </tr>
   <tr>
     <td>name</td>
-    <td>The name for the peripheral group must be be unique within a processor (specified by pref).</td>
+    <td>The name for the peripheral group must be be unique within a processor (specified by Pname).</td>
     <td>xs:string</td>
     <td>required</td>
   </tr>
@@ -976,8 +976,8 @@ The \ref xml_group can be used to logically group peripherals according to funct
     <td>optional</td>
   </tr>
   <tr>
-    <td>Pref</td>
-    <td>The processor(s) that can access this peripheral group. If omitted all processors of the system have access.</td>
+    <td>Pname</td>
+    <td>The processor that can access this peripheral group. If omitted all processors of the system have access.</td>
     <td>xs:string</td>
     <td>optional</td>
   </tr>
@@ -1050,7 +1050,7 @@ The \ref xml_peripheral is used to define an address mapping for one peripheral.
   </tr>
   <tr>
     <td>name</td>
-    <td>The name of the peripheral. The combination group / name must be be unique within a processor (specified by pref).</td>
+    <td>The name of the peripheral. The combination group / name must be be unique within a processor (specified by Pname).</td>
     <td>xs:string</td>
     <td>required</td>
   </tr>
@@ -1109,8 +1109,8 @@ The \ref xml_peripheral is used to define an address mapping for one peripheral.
     <td>optional</td>
   </tr>
   <tr>
-    <td>Pref</td>
-    <td>The processor(s) that can access this peripheral. If omitted all processors of the system have access.</td>
+    <td>Pname</td>
+    <td>The processor that can access this peripheral. If omitted all processors of the system have access.</td>
     <td>xs:string</td>
     <td>optional</td>
   </tr>
@@ -1587,12 +1587,6 @@ These memory partitions are based on parent memory definitions specified by \ref
     <td>complexType</td>
     <td>0..*</td>
   </tr>
-  <tr>
-    <td>\ref xml_aslot "slot"</td>
-    <td>Defines a settings for a slot.</td>
-    <td>complexType</td>
-    <td>0..*</td>
-  </tr>
 </table>
 
 \section xml_amemory /azone/partition/memory element
@@ -1689,8 +1683,8 @@ The \ref xml_amemory defines a new memory sub-region that is related to a parent
     <td>optional</td>
   </tr>
   <tr>
-    <td>Pref</td>
-    <td>The processor(s) that can access this memory region. If omitted all processors of the system have access.</td>
+    <td>Pname</td>
+    <td>The processor that can access this memory region. If omitted all processors of the system have access.</td>
     <td>xs:string</td>
     <td>optional</td>
   </tr>
@@ -1725,13 +1719,13 @@ The \ref xml_aperipheral defines settings for a peripheral in a related *.rzone 
   </tr>
   <tr>
     <td>name</td>
-    <td>The name of the peripheral. The combination group / name must be be unique within a processor (specified by pref).</td>
+    <td>The name of the peripheral. The combination group / name must be be unique within a processor (specified by Pname).</td>
     <td>xs:string</td>
     <td>required</td>
   </tr>
   <tr>
     <td>group</td>
-    <td>The group name of the peripheral. The combination group / name must be be unique within a processor (specified by pref).</td>
+    <td>The group name of the peripheral. The combination group / name must be be unique within a processor (specified by Pname).</td>
     <td>xs:string</td>
     <td>required</td>
   </tr>
@@ -1789,9 +1783,21 @@ The \ref xml_aperipheral defines settings for a peripheral in a related *.rzone 
     <td>\ref privilege "PrivilegeType"</td>
     <td>optional</td>
   </tr>
+  <tr>
+    <th>Child Elements</th>
+    <th>Description</th>
+    <th>Type</th>
+    <th>Occurrence</th>
+  </tr>
+  <tr>
+    <td>\ref xml_aslot "slot"</td>
+    <td>Defines a settings for a slot.</td>
+    <td>complexType</td>
+    <td>0..*</td>
+  </tr>
 </table>
 
-\section xml_aslot /azone/partition/slot element
+\section xml_aslot /azone/partition/peripheral/slot element
 
 The \ref xml_aslot defines settings for a slot in a related *.rzone file.
 
@@ -1803,8 +1809,8 @@ The \ref xml_aslot defines settings for a slot in a related *.rzone file.
     <th colspan="3">Element Chain</th>
   </tr>
   <tr>
-    <td>\ref xml_partition "partition"</td>
-    <td colspan=3>\ref xml_partition</td>
+    <td>\ref xml_aperipheral "peripheral"</td>
+    <td colspan=3>\ref xml_aperipheral</td>
   </tr>
   <tr>
     <th>Attributes</th>
@@ -1814,19 +1820,7 @@ The \ref xml_aslot defines settings for a slot in a related *.rzone file.
   </tr>
   <tr>
     <td>name</td>
-    <td>The name of the slot. The combination group / peripheral / name must be be unique within a processor (specified by pref).</td>
-    <td>xs:string</td>
-    <td>required</td>
-  </tr>
-  <tr>
-    <td>peripheral</td>
-    <td>The name of the peripheral. The combination group / peripheral / name must be be unique within a processor (specified by pref).</td>
-    <td>xs:string</td>
-    <td>required</td>
-  </tr>
-  <tr>
-    <td>group</td>
-    <td>The group name of the peripheral. The combination group / peripheral / name must be be unique within a processor (specified by pref).</td>
+    <td>The name of the slot. The combination group / peripheral / name must be be unique within a processor (specified by Pname).</td>
     <td>xs:string</td>
     <td>required</td>
   </tr>
@@ -1921,8 +1915,8 @@ The \ref xml_zone defines the name of a zone.
     <td>optional</td>
   </tr>
   <tr>
-    <td>Pref</td>
-    <td>The processor(s) that can access the memory and peripherals of this zone. If omitted all processors of the system have access.</td>
+    <td>Pname</td>
+    <td>The processor that can access the memory and peripherals of this zone. If omitted all processors of the system have access.</td>
     <td>xs:string</td>
     <td>optional</td>
   </tr>
@@ -1997,8 +1991,8 @@ The \ref xml_assign defines the resource assignments of that zone.
     <td>optional</td>
   </tr>
   <tr>
-    <td>Pref</td>
-    <td>The processor(s) that can access this assignment. If omitted the processors of the zone have access.</td>
+    <td>Pname</td>
+    <td>The processor that can access this assignment. If omitted the processors of the zone have access.</td>
     <td>xs:string</td>
     <td>optional</td>
   </tr>
