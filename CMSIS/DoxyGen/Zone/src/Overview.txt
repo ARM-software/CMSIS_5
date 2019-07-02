@@ -433,23 +433,16 @@ The multiproject workspace contains the secure \c hello_world_s project and the 
 
 The projects use the files generated in CMSIS-Zone as follows:
 
-| File               | Used in |
-|--------------------|---------|
-| mem_layout.h       | hello_world_s and hello_world_ns as input for the scatter files. |
-| hello_world_ns.sct | hello_world_ns as basic scatter file (copied from scatter_ns.sct) |
-| hello_world_s.sct  | hello_world_s as basic scatter file (copied from scatter_s.sct) |
-| tzm_config_mpc.c   | hello_world_s: functions called from tzm_config.c |
-| tzm_config_ppc.c   | hello_world_s: functions called from tzm_config.c |
-| tzm_config_sau.c   | hello_world_s: functions called from tzm_config.c |
+| File               | Used in | Description |
+|--------------------|---------|-------------|
+| mem_layout.h       | hello_world_s, hello_world_ns | Input for the scatter files. |
+| tzm_config_mpc.c   | hello_world_s | Functions called from tzm_config.c |
+| tzm_config_ppc.c   | hello_world_s | Functions called from tzm_config.c |
+| tzm_config_sau.c   | hello_world_s | Functions called from tzm_config.c |
 
-The generated scatter files are a good starting point for the project specific scatter files. Please note the following
-restrictions:
-- You need to set the application's stack and heap in both scatter files.
-- The \c LR_VENEER region in the secure scatter file is based on the first non-secure callable region found in the CMSIS-Zone
-  setup. If required, add more regions manually.
-- In case of multiple load regions (Flash memory areas), the reset vector and the \c RW_DATA regions will be placed in the
-  first load region (\c LR_CODE_*) that is found in the CMSIS-Zone tool. Adoption to the actual application is required.
-  
+The scatter files \c hello_world_s.sct and \c hello_world_ns.sct are based on the original scatter files from NXP and are
+using a preinclude to mem_layout.h to get the information about the different memory regions. 
+
 \note
 If you want to learn more about the general project layout for an Armv8-M project using TrustZone, refer to
 <a href="https://www.keil.com/appnotes/docs/apnt_291.asp" target="_blank">Application Note 291</a>.
