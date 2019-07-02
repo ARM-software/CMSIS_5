@@ -350,27 +350,107 @@ eclipsec.exe -noSplash -application com.arm.cmsis.zone.ui.headlessgen -azone Mus
 /**
 \page zTExamples Examples
 
-Pre-configures projects are available that demonstrate the usage of the CMSIS-Zone utility.
+Pre-configures projects are available in the CMSIS-Zone repository on GitHub: https://github.com/ARM-software/CMSIS-Zone/tree/master/Examples.
+
+The example demonstrate the usage of the CMSIS-Zone utility.
 
 \section zTExImport Import examples
 
 Import the examples to Eclipse using the following flow:
-- Go to <b>File - Import</b> and select <b>General - Projects from Folder or Archive</b>:
+- Go to <b>File - Import</b> and select <b>General - Existing Projects into Workspace</b>:
 
 \image html import_from_file.png
 
 Click \b Next.
 
-Using the \b Archive... button, browse to the import source and select the ZIP file that you want to import. The import
-wizard window shows what is available in the archive. Select the \b Folder that can be imported as an <b>Eclipse project</b>:
+Browse to the root directory, for example "Examples/LPC55S69/Zone", and select the project that you want to import. The import
+projects window shows the available projects:
 
-\image html import_wizard.png
+\image html import_projects.png
 
 Click \b Finish. The project is imported and opened in the \ref zTProjEx.
 
+
 \section zTEMusca Arm Musca-A1
 
+
 \section zTELPC55 NXP LPC55S69
+
+This simple Hello World demo application demonstrates the following techniques for TrustZone applications development:
+-# Application separation between secure and non-secure part
+-# Exporting a secure function to the non-secure world
+-# Calling a non-secure function from the secure world
+-# Creating a veneer table
+
+\subsection zTELPC55_Eclipse Using the CMSIS-Zone project
+
+Import the project as explained in \ref zTExImport. Open the LPC55S69.azone file from the \ref zTProjEx. The \b Zone
+\b Map shows two zones that have been created here: \c hello_worls_s and \c hello_worls_ns:
+
+\image html lpc55_zones.png
+
+The zones use different Flash and SRAM regions for code and data, but share Flash configuration registers. Peripherals, such
+as the system and IO configuration, as well as an UART are available in the secure world only. To generate the output, click
+on the \ref zTUIGenerate "Generate" button in the Zone Editor tool bar. This creates the following files in the \c ftl_gen
+folder:
+
+| File                 | Generated File   | Description |
+|----------------------|------------------|-------------|
+| dump_fzone.txt.ftl   | dump_fzone.txt   | Dumps the complete model into a text file. |
+| helper.ftlinc        | N/A              | Helper file required for some FTL functions. |
+| mem_layout.h.ftl     | mem_layout.h     | Generates a header file containing the region definitions that can be used in scatter files. |
+| scatter_ns.sct.ftl   | scatter_ns.sct   | Creates an exemplary scatter file for the non-secure zone. |
+| scatter_s.sct.ftl    | scatter_s.sct    | Creates an exemplary scatter file for the secure zone. |
+| tzm_config_mpc.c.ftl | tzm_config_mpc.c | Generates the setup of the memory protection controller (MPC). |
+| tzm_config_ppc.c.ftl | tzm_config_ppc.c | Generates the setup of the peripheral protection controller (PPC). |
+| tzm_config_sau.c.ftl | tzm_config_sau.c | Creates the configuration of the secure attribution unit (SAU). |
+
+These files can be used in any IDE to create the final application. In the following, the usage in Arm Keil MDK is described.
+
+\subsection zTELPC55_MDK Using the MDK project
+
+The example project can be loaded, built and debugged in µVision by performing the following steps:
+
+-# Navigate to Examples/LPC55S69/MDK
+-# Open the multi-project workspace hello_world.uvmpw
+-# Optional: Update the generated files by executing the copy_gen.bat scripts in hello_world_s\\mdk and hello_world_ns\\mdk
+   folders.
+-# Run the batch build in MDK. Both projects, hello_world_s and hello_world_ns need to be compiled in order.
+-# Set hello_world_s as active project.
+-# Connect the LPC55S69-EVK using a Micro-USB cable at Debug Link (P6).
+-# Open <b>Options for Target - Debug</b>and make sure that the CMSIS-DAP ARMv8-M Debugger is selected and the LPC-LINK2 is
+   used.
+-# Optional: Open a serial terminal program (i.e. PuTTY) on the virtual serial port provided in parallel to the debugger
+   (e.g. USB Serial Device). Configure the port to 115200/8N1.
+-# Launch a debug session and watch the serial console output:
+   \image html hello_world_output.png
+
+\subsection zTELPC55_MDK_Setup MDK project setup
+
+The multiproject workspace contains the secure \c hello_world_s project and the non-secure \c hello_world_ns project:
+
+\image html hello_world_proj_window.png
+
+The projects use the files generated in CMSIS-Zone as follows:
+
+| File               | Used in |
+|--------------------|---------|
+| mem_layout.h       | hello_world_s and hello_world_ns as input for the scatter files. |
+| hello_world_ns.sct | hello_world_ns as basic scatter file (copied from scatter_ns.sct) |
+| hello_world_s.sct  | hello_world_s as basic scatter file (copied from scatter_s.sct) |
+| tzm_config_mpc.c   | hello_world_s: functions called from tzm_config.c |
+| tzm_config_ppc.c   | hello_world_s: functions called from tzm_config.c |
+| tzm_config_sau.c   | hello_world_s: functions called from tzm_config.c |
+
+The generated scatter files are a good starting point for the project specific scatter files. Please note the following
+restrictions:
+- You need to set the application's stack and heap in both scatter files.
+- The \c LR_VENEER region in the secure scatter file is based on the first non-secure callable region found in the CMSIS-Zone
+  setup. If required, add more regions manually.
+- In case of multiple load regions (Flash memory areas), the reset vector and the \c RW_DATA regions will be placed in the
+  first load region (\c LR_CODE_*) that is found in the CMSIS-Zone tool. Adoption to the actual application is required.
+  
+\note
+If you want to learn more about the general project layout for an Armv8-M project using TrustZone, refer to
+<a href="https://www.keil.com/appnotes/docs/apnt_291.asp" target="_blank">Application Note 291</a>.
 */
-
-
