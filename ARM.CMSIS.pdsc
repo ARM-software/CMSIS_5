@@ -248,7 +248,7 @@
       - added Taxonomy for Graphics
       - updated Taxonomy for unified drivers from "Drivers" to "CMSIS Drivers"
     </release>
-    <release version="4.0.0">
+    <!-- release version="4.0.0">
       - CMSIS-Driver   2.00  Preliminary (incompatible update)
       - CMSIS-Pack     1.1   Preliminary
       - CMSIS-DSP      1.4.2 (see revision history for details)
@@ -256,25 +256,25 @@
       - CMSIS-RTOS RTX 4.74  (see revision history for details)
       - CMSIS-RTOS API 1.02  (unchanged)
       - CMSIS-SVD      1.10  (unchanged)
-    </release>
-    <release version="3.20.4">
+    </release -->
+    <release version="3.20.4" date="2014-02-20">
       - CMSIS-RTOS 4.74 (see revision history for details)
       - PACK Extensions (Boards, Device Features, Flash Programming, Generators, Configuration Wizard). Schema version 1.1.
     </release>
-    <release version="3.20.3">
+    <!-- release version="3.20.3">
       - CMSIS-Driver API Version 1.10 ARM prefix added (incompatible change)
       - CMSIS-RTOS 4.73 (see revision history for details)
-    </release>
-    <release version="3.20.2">
+    </release -->
+    <!-- release version="3.20.2">
       - CMSIS-Pack documentation has been added
       - CMSIS-Drivers header and documentation have been added to PACK
       - CMSIS-CORE, CMSIS-DSP, CMSIS-RTOS API and CMSIS-SVD remain unchanged
-    </release>
-    <release version="3.20.1">
+    </release -->
+    <!-- release version="3.20.1">
       - CMSIS-RTOS Keil RTX V4.72 has been added to PACK
       - CMSIS-CORE, CMSIS-DSP, CMSIS-RTOS API and CMSIS-SVD remain unchanged
-    </release>
-    <release version="3.20.0">
+    </release -->
+    <!-- release version="3.20.0">
       The software portions that are deployed in the application program are now under a BSD license which allows usage
       of CMSIS components in any commercial or open source projects.  The Pack Description file Arm.CMSIS.pdsc describes the use cases
       The individual components have been update as listed below:
@@ -282,7 +282,7 @@
       - CMSIS-DSP library is optimized for more performance and contains several bug fixes.
       - CMSIS-RTOS API is extended with capabilities for short timeouts, Kernel initialization, and prepared for a C++ interface.
       - CMSIS-SVD is unchanged.
-    </release>
+    </release -->
   </releases>
 
   <taxonomy>
@@ -1116,11 +1116,6 @@ and 8-bit Java bytecodes in Jazelle state.
       <require Dcore="ARMV8MML" Ddsp="DSP" Dfpu="SP_FPU"/>
     </condition>
 
-    <condition id="ARMv81MML">
-      <description>Armv8.1-M Mainline</description>
-      <require Dvendor="ARM:82" Dname="ARMv81MML*"/>
-    </condition>
-
     <condition id="CA5_CA9">
       <description>Cortex-A5 or Cortex-A9 processor based device</description>
       <accept Dcore="Cortex-A5"/>
@@ -1298,11 +1293,6 @@ and 8-bit Java bytecodes in Jazelle state.
       <require condition="CM23_ARMCC"/>
       <require Dendian="Little-endian"/>
     </condition>
-    <condition id="CM23_BE_ARMCC">
-      <description>Cortex-M23 processor based device in big endian mode for the Arm Compiler</description>
-      <require condition="CM23_ARMCC"/>
-      <require Dendian="Big-endian"/>
-    </condition>
 
     <condition id="CM33_ARMCC">
       <description>Cortex-M33 processor based device for the Arm Compiler</description>
@@ -1314,11 +1304,6 @@ and 8-bit Java bytecodes in Jazelle state.
       <require condition="CM33_ARMCC"/>
       <require Dendian="Little-endian"/>
     </condition>
-    <condition id="CM33_BE_ARMCC">
-      <description>Cortex-M33 processor based device in big endian mode for the Arm Compiler</description>
-      <require condition="CM33_ARMCC"/>
-      <require Dendian="Big-endian"/>
-    </condition>
 
     <condition id="CM33_FP_ARMCC">
       <description>Cortex-M33 processor based device using Floating Point Unit for the Arm Compiler</description>
@@ -1329,11 +1314,6 @@ and 8-bit Java bytecodes in Jazelle state.
       <description>Cortex-M33 processor based device using Floating Point Unit in little endian mode for the Arm Compiler</description>
       <require condition="CM33_FP_ARMCC"/>
       <require Dendian="Little-endian"/>
-    </condition>
-    <condition id="CM33_FP_BE_ARMCC">
-      <description>Cortex-M33 processor based device using Floating Point Unit in big endian mode for the Arm Compiler</description>
-      <require condition="CM33_FP_ARMCC"/>
-      <require Dendian="Big-endian"/>
     </condition>
 
     <condition id="CM33_NODSP_NOFPU_ARMCC">
@@ -1387,11 +1367,6 @@ and 8-bit Java bytecodes in Jazelle state.
       <require condition="CM35P_ARMCC"/>
       <require Dendian="Little-endian"/>
     </condition>
-    <condition id="CM35P_BE_ARMCC">
-      <description>Cortex-M35P processor based device in big endian mode for the Arm Compiler</description>
-      <require condition="CM35P_ARMCC"/>
-      <require Dendian="Big-endian"/>
-    </condition>
 
     <condition id="CM35P_FP_ARMCC">
       <description>Cortex-M35P processor based device using Floating Point Unit for the Arm Compiler</description>
@@ -1402,11 +1377,6 @@ and 8-bit Java bytecodes in Jazelle state.
       <description>Cortex-M35P processor based device using Floating Point Unit in little endian mode for the Arm Compiler</description>
       <require condition="CM35P_FP_ARMCC"/>
       <require Dendian="Little-endian"/>
-    </condition>
-    <condition id="CM35P_FP_BE_ARMCC">
-      <description>Cortex-M35P processor based device using Floating Point Unit in big endian mode for the Arm Compiler</description>
-      <require condition="CM35P_FP_ARMCC"/>
-      <require Dendian="Big-endian"/>
     </condition>
 
     <condition id="CM35P_NODSP_NOFPU_ARMCC">
@@ -1460,11 +1430,6 @@ and 8-bit Java bytecodes in Jazelle state.
       <require condition="ARMv8MBL_ARMCC"/>
       <require Dendian="Little-endian"/>
     </condition>
-    <condition id="ARMv8MBL_BE_ARMCC">
-      <description>Armv8-M Baseline processor based device in big endian mode for the Arm Compiler</description>
-      <require condition="ARMv8MBL_ARMCC"/>
-      <require Dendian="Big-endian"/>
-    </condition>
 
     <condition id="ARMv8MML_ARMCC">
       <description>Armv8-M Mainline processor based device for the Arm Compiler</description>
@@ -1476,11 +1441,6 @@ and 8-bit Java bytecodes in Jazelle state.
       <require condition="ARMv8MML_ARMCC"/>
       <require Dendian="Little-endian"/>
     </condition>
-    <condition id="ARMv8MML_BE_ARMCC">
-      <description>Armv8-M Mainline processor based device in big endian mode for the Arm Compiler</description>
-      <require condition="ARMv8MML_ARMCC"/>
-      <require Dendian="Big-endian"/>
-    </condition>
 
     <condition id="ARMv8MML_FP_ARMCC">
       <description>Armv8-M Mainline processor based device using Floating Point Unit for the Arm Compiler</description>
@@ -1491,11 +1451,6 @@ and 8-bit Java bytecodes in Jazelle state.
       <description>Armv8-M Mainline processor based device using Floating Point Unit in little endian mode for the Arm Compiler</description>
       <require condition="ARMv8MML_FP_ARMCC"/>
       <require Dendian="Little-endian"/>
-    </condition>
-    <condition id="ARMv8MML_FP_BE_ARMCC">
-      <description>Armv8-M Mainline processor based device using Floating Point Unit in big endian mode for the Arm Compiler</description>
-      <require condition="ARMv8MML_FP_ARMCC"/>
-      <require Dendian="Big-endian"/>
     </condition>
 
     <condition id="ARMv8MML_NODSP_NOFPU_ARMCC">
@@ -1668,11 +1623,6 @@ and 8-bit Java bytecodes in Jazelle state.
       <require condition="CM7_SP_GCC"/>
       <require Dendian="Little-endian"/>
     </condition>
-    <condition id="CM7_SP_BE_GCC">
-      <description>Cortex-M7 processor based device using Floating Point Unit (SP) in big endian mode for the GCC Compiler</description>
-      <require condition="CM7_SP_GCC"/>
-      <require Dendian="Big-endian"/>
-    </condition>
 
     <condition id="CM7_DP_GCC">
       <description>Cortex-M7 processor based device using Floating Point Unit (DP) for the GCC Compiler</description>
@@ -1683,11 +1633,6 @@ and 8-bit Java bytecodes in Jazelle state.
       <description>Cortex-M7 processor based device using Floating Point Unit (DP) in little endian mode for the GCC Compiler</description>
       <require condition="CM7_DP_GCC"/>
       <require Dendian="Little-endian"/>
-    </condition>
-    <condition id="CM7_DP_BE_GCC">
-      <description>Cortex-M7 processor based device using Floating Point Unit (DP) in big endian mode for the GCC Compiler</description>
-      <require condition="CM7_DP_GCC"/>
-      <require Dendian="Big-endian"/>
     </condition>
 
     <condition id="CM23_GCC">
@@ -1700,11 +1645,6 @@ and 8-bit Java bytecodes in Jazelle state.
       <require condition="CM23_GCC"/>
       <require Dendian="Little-endian"/>
     </condition>
-    <condition id="CM23_BE_GCC">
-      <description>Cortex-M23 processor based device in big endian mode for the GCC Compiler</description>
-      <require condition="CM23_GCC"/>
-      <require Dendian="Big-endian"/>
-    </condition>
 
     <condition id="CM33_GCC">
       <description>Cortex-M33 processor based device for the GCC Compiler</description>
@@ -1716,11 +1656,6 @@ and 8-bit Java bytecodes in Jazelle state.
       <require condition="CM33_GCC"/>
       <require Dendian="Little-endian"/>
     </condition>
-    <condition id="CM33_BE_GCC">
-      <description>Cortex-M33 processor based device in big endian mode for the GCC Compiler</description>
-      <require condition="CM33_GCC"/>
-      <require Dendian="Big-endian"/>
-    </condition>
 
     <condition id="CM33_FP_GCC">
       <description>Cortex-M33 processor based device using Floating Point Unit for the GCC Compiler</description>
@@ -1731,11 +1666,6 @@ and 8-bit Java bytecodes in Jazelle state.
       <description>Cortex-M33 processor based device using Floating Point Unit in little endian mode for the GCC Compiler</description>
       <require condition="CM33_FP_GCC"/>
       <require Dendian="Little-endian"/>
-    </condition>
-    <condition id="CM33_FP_BE_GCC">
-      <description>Cortex-M33 processor based device using Floating Point Unit in big endian mode for the GCC Compiler</description>
-      <require condition="CM33_FP_GCC"/>
-      <require Dendian="Big-endian"/>
     </condition>
 
     <condition id="CM33_NODSP_NOFPU_GCC">
@@ -1789,11 +1719,6 @@ and 8-bit Java bytecodes in Jazelle state.
       <require condition="CM35P_GCC"/>
       <require Dendian="Little-endian"/>
     </condition>
-    <condition id="CM35P_BE_GCC">
-      <description>Cortex-M35P processor based device in big endian mode for the GCC Compiler</description>
-      <require condition="CM35P_GCC"/>
-      <require Dendian="Big-endian"/>
-    </condition>
 
     <condition id="CM35P_FP_GCC">
       <description>Cortex-M35P processor based device using Floating Point Unit for the GCC Compiler</description>
@@ -1804,11 +1729,6 @@ and 8-bit Java bytecodes in Jazelle state.
       <description>Cortex-M35P processor based device using Floating Point Unit in little endian mode for the GCC Compiler</description>
       <require condition="CM35P_FP_GCC"/>
       <require Dendian="Little-endian"/>
-    </condition>
-    <condition id="CM35P_FP_BE_GCC">
-      <description>Cortex-M35P processor based device using Floating Point Unit in big endian mode for the GCC Compiler</description>
-      <require condition="CM35P_FP_GCC"/>
-      <require Dendian="Big-endian"/>
     </condition>
 
     <condition id="CM35P_NODSP_NOFPU_GCC">
@@ -1862,11 +1782,6 @@ and 8-bit Java bytecodes in Jazelle state.
       <require condition="ARMv8MBL_GCC"/>
       <require Dendian="Little-endian"/>
     </condition>
-    <condition id="ARMv8MBL_BE_GCC">
-      <description>Armv8-M Baseline processor based device in big endian mode for the GCC Compiler</description>
-      <require condition="ARMv8MBL_GCC"/>
-      <require Dendian="Big-endian"/>
-    </condition>
 
     <condition id="ARMv8MML_GCC">
       <description>Armv8-M Mainline processor based device for the GCC Compiler</description>
@@ -1878,11 +1793,6 @@ and 8-bit Java bytecodes in Jazelle state.
       <require condition="ARMv8MML_GCC"/>
       <require Dendian="Little-endian"/>
     </condition>
-    <condition id="ARMv8MML_BE_GCC">
-      <description>Armv8-M Mainline processor based device in big endian mode for the GCC Compiler</description>
-      <require condition="ARMv8MML_GCC"/>
-      <require Dendian="Big-endian"/>
-    </condition>
 
     <condition id="ARMv8MML_FP_GCC">
       <description>Armv8-M Mainline processor based device using Floating Point Unit for the GCC Compiler</description>
@@ -1893,11 +1803,6 @@ and 8-bit Java bytecodes in Jazelle state.
       <description>Armv8-M Mainline processor based device using Floating Point Unit in little endian mode for the GCC Compiler</description>
       <require condition="ARMv8MML_FP_GCC"/>
       <require Dendian="Little-endian"/>
-    </condition>
-    <condition id="ARMv8MML_FP_BE_GCC">
-      <description>Armv8-M Mainline processor based device using Floating Point Unit in big endian mode for the GCC Compiler</description>
-      <require condition="ARMv8MML_FP_GCC"/>
-      <require Dendian="Big-endian"/>
     </condition>
 
     <condition id="ARMv8MML_NODSP_NOFPU_GCC">
@@ -2102,11 +2007,6 @@ and 8-bit Java bytecodes in Jazelle state.
       <require condition="CM23_IAR"/>
       <require Dendian="Little-endian"/>
     </condition>
-    <condition id="CM23_BE_IAR">
-      <description>Cortex-M23 processor based device in big endian mode for the IAR Compiler</description>
-      <require condition="CM23_IAR"/>
-      <require Dendian="Big-endian"/>
-    </condition>
 
     <condition id="CM33_IAR">
       <description>Cortex-M33 processor based device for the IAR Compiler</description>
@@ -2118,11 +2018,6 @@ and 8-bit Java bytecodes in Jazelle state.
       <require condition="CM33_IAR"/>
       <require Dendian="Little-endian"/>
     </condition>
-    <condition id="CM33_BE_IAR">
-      <description>Cortex-M33 processor based device in big endian mode for the IAR Compiler</description>
-      <require condition="CM33_IAR"/>
-      <require Dendian="Big-endian"/>
-    </condition>
 
     <condition id="CM33_FP_IAR">
       <description>Cortex-M33 processor based device using Floating Point Unit for the IAR Compiler</description>
@@ -2133,11 +2028,6 @@ and 8-bit Java bytecodes in Jazelle state.
       <description>Cortex-M33 processor based device using Floating Point Unit in little endian mode for the IAR Compiler</description>
       <require condition="CM33_FP_IAR"/>
       <require Dendian="Little-endian"/>
-    </condition>
-    <condition id="CM33_FP_BE_IAR">
-      <description>Cortex-M33 processor based device using Floating Point Unit in big endian mode for the IAR Compiler</description>
-      <require condition="CM33_FP_IAR"/>
-      <require Dendian="Big-endian"/>
     </condition>
 
     <condition id="CM33_NODSP_NOFPU_IAR">
@@ -2191,11 +2081,6 @@ and 8-bit Java bytecodes in Jazelle state.
       <require condition="CM35P_IAR"/>
       <require Dendian="Little-endian"/>
     </condition>
-    <condition id="CM35P_BE_IAR">
-      <description>Cortex-M35P processor based device in big endian mode for the IAR Compiler</description>
-      <require condition="CM35P_IAR"/>
-      <require Dendian="Big-endian"/>
-    </condition>
 
     <condition id="CM35P_FP_IAR">
       <description>Cortex-M35P processor based device using Floating Point Unit for the IAR Compiler</description>
@@ -2206,11 +2091,6 @@ and 8-bit Java bytecodes in Jazelle state.
       <description>Cortex-M35P processor based device using Floating Point Unit in little endian mode for the IAR Compiler</description>
       <require condition="CM35P_FP_IAR"/>
       <require Dendian="Little-endian"/>
-    </condition>
-    <condition id="CM35P_FP_BE_IAR">
-      <description>Cortex-M35P processor based device using Floating Point Unit in big endian mode for the IAR Compiler</description>
-      <require condition="CM35P_FP_IAR"/>
-      <require Dendian="Big-endian"/>
     </condition>
 
     <condition id="CM35P_NODSP_NOFPU_IAR">
@@ -2264,11 +2144,6 @@ and 8-bit Java bytecodes in Jazelle state.
       <require condition="ARMv8MBL_IAR"/>
       <require Dendian="Little-endian"/>
     </condition>
-    <condition id="ARMv8MBL_BE_IAR">
-      <description>Armv8-M Baseline processor based device in big endian mode for the IAR Compiler</description>
-      <require condition="ARMv8MBL_IAR"/>
-      <require Dendian="Big-endian"/>
-    </condition>
 
     <condition id="ARMv8MML_IAR">
       <description>Armv8-M Mainline processor based device for the IAR Compiler</description>
@@ -2280,11 +2155,6 @@ and 8-bit Java bytecodes in Jazelle state.
       <require condition="ARMv8MML_IAR"/>
       <require Dendian="Little-endian"/>
     </condition>
-    <condition id="ARMv8MML_BE_IAR">
-      <description>Armv8-M Mainline processor based device in big endian mode for the IAR Compiler</description>
-      <require condition="ARMv8MML_IAR"/>
-      <require Dendian="Big-endian"/>
-    </condition>
 
     <condition id="ARMv8MML_FP_IAR">
       <description>Armv8-M Mainline processor based device using Floating Point Unit for the IAR Compiler</description>
@@ -2295,11 +2165,6 @@ and 8-bit Java bytecodes in Jazelle state.
       <description>Armv8-M Mainline processor based device using Floating Point Unit in little endian mode for the IAR Compiler</description>
       <require condition="ARMv8MML_FP_IAR"/>
       <require Dendian="Little-endian"/>
-    </condition>
-    <condition id="ARMv8MML_FP_BE_IAR">
-      <description>Armv8-M Mainline processor based device using Floating Point Unit in big endian mode for the IAR Compiler</description>
-      <require condition="ARMv8MML_FP_IAR"/>
-      <require Dendian="Big-endian"/>
     </condition>
 
     <condition id="ARMv8MML_NODSP_NOFPU_IAR">
@@ -2344,16 +2209,10 @@ and 8-bit Java bytecodes in Jazelle state.
     </condition>
 
     <!-- conditions selecting single devices and CMSIS Core -->
-    <!-- used for component startup, GCC version is used for C-Startup -->
     <condition id="ARMCM0 CMSIS">
       <description>Generic Arm Cortex-M0 device startup and depends on CMSIS Core</description>
       <require Dvendor="ARM:82" Dname="ARMCM0"/>
       <require Cclass="CMSIS" Cgroup="CORE"/>
-    </condition>
-    <condition id="ARMCM0 CMSIS GCC">
-      <description>Generic ARM Cortex-M0 device startup and depends on CMSIS Core requiring GCC</description>
-      <require condition="ARMCM0 CMSIS"/>
-      <require condition="GCC"/>
     </condition>
 
     <condition id="ARMCM0+ CMSIS">
@@ -2361,21 +2220,11 @@ and 8-bit Java bytecodes in Jazelle state.
       <require Dvendor="ARM:82" Dname="ARMCM0P*"/>
       <require Cclass="CMSIS" Cgroup="CORE"/>
     </condition>
-    <condition id="ARMCM0+ CMSIS GCC">
-      <description>Generic Arm Cortex-M0+ device startup and depends CMSIS Core requiring GCC</description>
-      <require condition="ARMCM0+ CMSIS"/>
-      <require condition="GCC"/>
-    </condition>
 
     <condition id="ARMCM1 CMSIS">
       <description>Generic Arm Cortex-M1 device startup and depends on CMSIS Core</description>
       <require Dvendor="ARM:82" Dname="ARMCM1"/>
       <require Cclass="CMSIS" Cgroup="CORE"/>
-    </condition>
-    <condition id="ARMCM1 CMSIS GCC">
-      <description>Generic ARM Cortex-M1 device startup and depends on CMSIS Core requiring GCC</description>
-      <require condition="ARMCM1 CMSIS"/>
-      <require condition="GCC"/>
     </condition>
 
     <condition id="ARMCM3 CMSIS">
@@ -2383,21 +2232,11 @@ and 8-bit Java bytecodes in Jazelle state.
       <require Dvendor="ARM:82" Dname="ARMCM3"/>
       <require Cclass="CMSIS" Cgroup="CORE"/>
     </condition>
-    <condition id="ARMCM3 CMSIS GCC">
-      <description>Generic Arm Cortex-M3 device startup and depends on CMSIS Core requiring GCC</description>
-      <require condition="ARMCM3 CMSIS"/>
-      <require condition="GCC"/>
-    </condition>
 
     <condition id="ARMCM4 CMSIS">
       <description>Generic Arm Cortex-M4 device startup and depends on CMSIS Core</description>
       <require Dvendor="ARM:82" Dname="ARMCM4*"/>
       <require Cclass="CMSIS" Cgroup="CORE"/>
-    </condition>
-    <condition id="ARMCM4 CMSIS GCC">
-      <description>Generic Arm Cortex-M4 device startup and depends on CMSIS Core requiring GCC</description>
-      <require condition="ARMCM4 CMSIS"/>
-      <require condition="GCC"/>
     </condition>
 
     <condition id="ARMCM7 CMSIS">
@@ -2405,21 +2244,11 @@ and 8-bit Java bytecodes in Jazelle state.
       <require Dvendor="ARM:82" Dname="ARMCM7*"/>
       <require Cclass="CMSIS" Cgroup="CORE"/>
     </condition>
-    <condition id="ARMCM7 CMSIS GCC">
-      <description>Generic Arm Cortex-M7 device startup and depends on CMSIS Core requiring GCC</description>
-      <require condition="ARMCM7 CMSIS"/>
-      <require condition="GCC"/>
-    </condition>
 
     <condition id="ARMCM23 CMSIS">
       <description>Generic Arm Cortex-M23 device startup and depends on CMSIS Core</description>
       <require Dvendor="ARM:82" Dname="ARMCM23*"/>
       <require Cclass="CMSIS" Cgroup="CORE"/>
-    </condition>
-    <condition id="ARMCM23 CMSIS GCC">
-      <description>Generic Arm Cortex-M23 device startup and depends on CMSIS Core requiring GCC</description>
-      <require condition="ARMCM23 CMSIS"/>
-      <require condition="GCC"/>
     </condition>
 
     <condition id="ARMCM33 CMSIS">
@@ -2427,21 +2256,11 @@ and 8-bit Java bytecodes in Jazelle state.
       <require Dvendor="ARM:82" Dname="ARMCM33*"/>
       <require Cclass="CMSIS" Cgroup="CORE"/>
     </condition>
-    <condition id="ARMCM33 CMSIS GCC">
-      <description>Generic Arm Cortex-M33 device startup and depends on CMSIS Core requiring GCC</description>
-      <require condition="ARMCM33 CMSIS"/>
-      <require condition="GCC"/>
-    </condition>
 
     <condition id="ARMCM35P CMSIS">
       <description>Generic Arm Cortex-M35P device startup and depends on CMSIS Core</description>
       <require Dvendor="ARM:82" Dname="ARMCM35P*"/>
       <require Cclass="CMSIS" Cgroup="CORE"/>
-    </condition>
-    <condition id="ARMCM35P CMSIS GCC">
-      <description>Generic Arm Cortex-M35P device startup and depends on CMSIS Core requiring GCC</description>
-      <require condition="ARMCM35P CMSIS"/>
-      <require condition="GCC"/>
     </condition>
 
     <condition id="ARMSC000 CMSIS">
@@ -2449,21 +2268,11 @@ and 8-bit Java bytecodes in Jazelle state.
       <require Dvendor="ARM:82" Dname="ARMSC000"/>
       <require Cclass="CMSIS" Cgroup="CORE"/>
     </condition>
-    <condition id="ARMSC000 CMSIS GCC">
-      <description>Generic Arm SC000 device startup and depends on CMSIS Core requiring GCC</description>
-      <require condition="ARMSC000 CMSIS"/>
-      <require condition="GCC"/>
-    </condition>
 
     <condition id="ARMSC300 CMSIS">
       <description>Generic Arm SC300 device startup and depends on CMSIS Core</description>
       <require Dvendor="ARM:82" Dname="ARMSC300"/>
       <require Cclass="CMSIS" Cgroup="CORE"/>
-    </condition>
-    <condition id="ARMSC300 CMSIS GCC">
-      <description>Generic Arm SC300 device startup and dependson CMSIS Core requiring GCC</description>
-      <require condition="ARMSC300 CMSIS"/>
-      <require condition="GCC"/>
     </condition>
 
     <condition id="ARMv8MBL CMSIS">
@@ -2471,32 +2280,17 @@ and 8-bit Java bytecodes in Jazelle state.
       <require Dvendor="ARM:82" Dname="ARMv8MBL"/>
       <require Cclass="CMSIS" Cgroup="CORE"/>
     </condition>
-    <condition id="ARMv8MBL CMSIS GCC">
-      <description>Generic Armv8-M Baseline device startup and depends on CMSIS Core requiring GCC</description>
-      <require condition="ARMv8MBL CMSIS"/>
-      <require condition="GCC"/>
-    </condition>
 
     <condition id="ARMv8MML CMSIS">
       <description>Generic Armv8-M Mainline device startup and depends on CMSIS Core</description>
       <require Dvendor="ARM:82" Dname="ARMv8MML*"/>
       <require Cclass="CMSIS" Cgroup="CORE"/>
     </condition>
-    <condition id="ARMv8MML CMSIS GCC">
-      <description>Generic Armv8-M Mainline device startup and depends on CMSIS Core requiring GCC</description>
-      <require condition="ARMv8MML CMSIS"/>
-      <require condition="GCC"/>
-    </condition>
 
     <condition id="ARMv81MML CMSIS">
       <description>Generic Armv8.1-M Mainline device startup and depends on CMSIS Core</description>
       <require Dvendor="ARM:82" Dname="ARMv81MML*"/>
       <require Cclass="CMSIS" Cgroup="CORE"/>
-    </condition>
-    <condition id="ARMv81MML CMSIS GCC">
-      <description>Generic Armv8.1-M Mainline device startup and depends on CMSIS Core requiring GCC</description>
-      <require condition="ARMv81MML CMSIS"/>
-      <require condition="GCC"/>
     </condition>
 
     <condition id="ARMCA5 CMSIS">
@@ -2718,7 +2512,7 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="sourceC"      name="Device/ARM/ARMCM3/Source/startup_ARMCM3.c"     version="2.0.0" attr="config"/>
         <file category="linkerScript" name="Device/ARM/ARMCM3/Source/ARM/ARMCM3_ac5.sct"   version="1.0.0" attr="config" condition="ARMCC5"/>
         <file category="linkerScript" name="Device/ARM/ARMCM3/Source/ARM/ARMCM3_ac6.sct"   version="1.0.0" attr="config" condition="ARMCC6"/>
-        <file category="linkerScript" name="Device/ARM/ARMCM3/Source/GCC/gcc_arm.ld"       version="1.0.0" attr="config" condition="GCC"/>
+        <file category="linkerScript" name="Device/ARM/ARMCM3/Source/GCC/gcc_arm.ld"       version="2.0.0" attr="config" condition="GCC"/>
         <file category="sourceC"      name="Device/ARM/ARMCM3/Source/system_ARMCM3.c"      version="1.0.0" attr="config"/>
       </files>
     </component>
@@ -3033,9 +2827,9 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="sourceAsm"    name="Device/ARM/ARMCA5/Source/IAR/startup_ARMCA5.s" version="1.0.0" attr="config" condition="IAR"/>
         <file category="linkerScript" name="Device/ARM/ARMCA5/Source/IAR/ARMCA5.icf"       version="1.0.0" attr="config" condition="IAR"/>
         <file category="sourceC"      name="Device/ARM/ARMCA5/Source/system_ARMCA5.c"      version="1.0.1" attr="config"/>
-        <file category="sourceC"      name="Device/ARM/ARMCA5/Source/mmu_ARMCA5.c"         version="1.0.0" attr="config"/>
+        <file category="sourceC"      name="Device/ARM/ARMCA5/Source/mmu_ARMCA5.c"         version="1.2.0" attr="config"/>
         <file category="header"       name="Device/ARM/ARMCA5/Config/system_ARMCA5.h"      version="1.0.0" attr="config"/>
-        <file category="header"       name="Device/ARM/ARMCA5/Config/mem_ARMCA5.h"         version="1.0.0" attr="config"/>
+        <file category="header"       name="Device/ARM/ARMCA5/Config/mem_ARMCA5.h"         version="1.1.0" attr="config"/>
 
       </files>
     </component>
@@ -3056,9 +2850,9 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="sourceAsm"    name="Device/ARM/ARMCA7/Source/IAR/startup_ARMCA7.s" version="1.0.0" attr="config" condition="IAR"/>
         <file category="linkerScript" name="Device/ARM/ARMCA7/Source/IAR/ARMCA7.icf"       version="1.0.0" attr="config" condition="IAR"/>
         <file category="sourceC"      name="Device/ARM/ARMCA7/Source/system_ARMCA7.c"      version="1.0.1" attr="config"/>
-        <file category="sourceC"      name="Device/ARM/ARMCA7/Source/mmu_ARMCA7.c"         version="1.0.0" attr="config"/>
+        <file category="sourceC"      name="Device/ARM/ARMCA7/Source/mmu_ARMCA7.c"         version="1.2.0" attr="config"/>
         <file category="header"       name="Device/ARM/ARMCA7/Config/system_ARMCA7.h"      version="1.0.0" attr="config"/>
-        <file category="header"       name="Device/ARM/ARMCA7/Config/mem_ARMCA7.h"         version="1.0.0" attr="config"/>
+        <file category="header"       name="Device/ARM/ARMCA7/Config/mem_ARMCA7.h"         version="1.1.0" attr="config"/>
       </files>
     </component>
 
@@ -3078,9 +2872,9 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="sourceAsm"    name="Device/ARM/ARMCA9/Source/IAR/startup_ARMCA9.s" version="1.0.0" attr="config" condition="IAR"/>
         <file category="linkerScript" name="Device/ARM/ARMCA9/Source/IAR/ARMCA9.icf"       version="1.0.0" attr="config" condition="IAR"/>
         <file category="sourceC"      name="Device/ARM/ARMCA9/Source/system_ARMCA9.c"      version="1.0.1" attr="config"/>
-        <file category="sourceC"      name="Device/ARM/ARMCA9/Source/mmu_ARMCA9.c"         version="1.0.0" attr="config"/>
+        <file category="sourceC"      name="Device/ARM/ARMCA9/Source/mmu_ARMCA9.c"         version="1.2.0" attr="config"/>
         <file category="header"       name="Device/ARM/ARMCA9/Config/system_ARMCA9.h"      version="1.0.0" attr="config"/>
-        <file category="header"       name="Device/ARM/ARMCA9/Config/mem_ARMCA9.h"         version="1.0.0" attr="config"/>
+        <file category="header"       name="Device/ARM/ARMCA9/Config/mem_ARMCA9.h"         version="1.1.0" attr="config"/>
       </files>
     </component>
 

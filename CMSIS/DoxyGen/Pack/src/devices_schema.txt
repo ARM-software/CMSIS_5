@@ -1886,7 +1886,7 @@ Contact cmsis@arm.com to ask for an extension. These values can be used in the e
   <tr>
     <td class="XML-Token">Autochips:150</td>
     <td>Autochips Inc.</td>
-    <td>http://www.autochips.com/en/index.php</td>
+    <td>http://www.autochips.com/index_en.aspx</td>
   </tr>
   <tr>
     <td class="XML-Token">CSR:118</td>
@@ -2121,7 +2121,7 @@ Contact cmsis@arm.com to ask for an extension. These values can be used in the e
   <tr>
     <td class="XML-Token">Xinnova:135</td>
     <td>Xinnova Technology</td>
-    <td>http://www.xinnovatech.com/en</td>
+    <td>(n/a)</td>
   </tr>
   <tr>
     <td class="XML-Token">Zilog:89</td>
