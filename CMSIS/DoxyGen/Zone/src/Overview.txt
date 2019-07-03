@@ -329,7 +329,7 @@ headless mode. The command line format is:
 \b  Where
 
 | Parameter                                            | Description                                                    | Required |
-|------------------------------------------------------|----------------------------------------------------------------|----------|
+|:-----------------------------------------------------|:---------------------------------------------------------------|:---------|
 | \c -noSplash                                         | Suppresses Eclipse's splash screen                             | [required] |
 | \c -launcher.suppressErrors                          | Suppresses error dialog                                        | [optional] |
 | \c -consoleLog                                       | Suppresses diagnostic messages                                 | [optional] |
@@ -350,9 +350,14 @@ eclipsec.exe -noSplash -application com.arm.cmsis.zone.ui.headlessgen -azone Mus
 /**
 \page zTExamples Examples
 
-Pre-configures projects are available in the CMSIS-Zone repository on GitHub: https://github.com/ARM-software/CMSIS-Zone/tree/master/Examples.
+The following projects are available in the CMSIS-Zone repository on GitHub: https://github.com/ARM-software/CMSIS-Zone/tree/master/Examples.
+These examples demonstrate the usage of the CMSIS-Zone utility.
 
-The example demonstrate the usage of the CMSIS-Zone utility.
+| Example                    | Description                                                    |
+|:---------------------------|:---------------------------------------------------------------|
+| \subpage zTEMusca          | Musca project                                                  |
+| \subpage zTELPC55          | Single processor Cortex-M33 project with TrustZone setup       |
+
 
 \section zTExImport Import examples
 
@@ -371,18 +376,21 @@ projects window shows the available projects:
 Click \b Finish. The project is imported and opened in the \ref zTProjEx.
 
 
-\section zTEMusca Arm Musca-A1
+\page zTEMusca Arm Musca-A1
 
+todo
 
-\section zTELPC55 NXP LPC55S69
+\page zTELPC55 NXP LPC55S69
 
-This simple Hello World demo application demonstrates the following techniques for TrustZone applications development:
--# Application separation between secure and non-secure part
--# Exporting a secure function to the non-secure world
--# Calling a non-secure function from the secure world
--# Creating a veneer table
+This demo application is a single processor application with TrustZone. It is split into a secure and non-secure part and demonstrates the following techniques with CMSIS-Zone:
+ - Generation of the SAU setup
+ - Generation of the MPU (memory protection) setup
+ - Generation of the PPU (peripheral protection) setup and the related interrupt setup
+ - It also generates the header file mem_layout.h that controls the various linker scatter file (and might be used in other parts of the application)
 
-\subsection zTELPC55_Eclipse Using the CMSIS-Zone project
+The application itself shows how to implement calls between secure and non-secure part.
+
+\section zTELPC55_Eclipse Using the CMSIS-Zone project
 
 Import the project as explained in \ref zTExImport. Open the LPC55S69.azone file from the \ref zTProjEx. The \b Zone
 \b Map shows two zones that have been created here: \c hello_worls_s and \c hello_worls_ns:
@@ -407,7 +415,7 @@ folder:
 
 These files can be used in any IDE to create the final application. In the following, the usage in Arm Keil MDK is described.
 
-\subsection zTELPC55_MDK Using the MDK project
+\section zTELPC55_MDK Using the MDK project
 
 The example project can be loaded, built and debugged in µVision by performing the following steps:
 
@@ -425,7 +433,7 @@ The example project can be loaded, built and debugged in µVision by performing 
 -# Launch a debug session and watch the serial console output:
    \image html hello_world_output.png
 
-\subsection zTELPC55_MDK_Setup MDK project setup
+\section zTELPC55_MDK_Setup MDK project setup
 
 The multiproject workspace contains the secure \c hello_world_s project and the non-secure \c hello_world_ns project:
 
