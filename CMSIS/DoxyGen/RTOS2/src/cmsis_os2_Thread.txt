@@ -592,6 +592,9 @@ Possible \ref osStatus_t return values:
 
 \note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 \note Avoid calling the function with a \em thread_id that does not exist or has been terminated already.
+\note \b osThreadTerminate destroys non-joinable threads and removes their thread_id from the system. Subsequent access to the
+thread_id (for example \ref osThreadGetState) will return an \ref osThreadError. Joinable threads will not be destroyed and
+return the status \ref osThreadTerminated until they are joined with \ref osThreadJoin.
 
 <b>Code Example</b>
 \code
