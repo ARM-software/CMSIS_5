@@ -297,20 +297,19 @@ Adding zones only works for the currently opened \ref azone ".azone" file.
 
 \page zTUIGenerate Generate output files
 
-The main purpose of the CMSIS-Zone utility is to generate files that represent the configured system and that can be used in
+The CMSIS-Zone utility can generate files that represent the configuration of the system. These files can be used
+in the project source files or tool configuration files.
+
 other toolchains for further development. The generator process creates:
--# required files for zones (\ref rzone ".rzone" and \ref azone ".azone" files, once you have \ref  zTUICreate "created" new
-   zones.
--# output files, such as header and scatter files, once you have placed \ref GenDataModel "ftl files" in the project's
-   \c ftl directory.
+-# Files that represent \ref  zTUICreate "created sub-zones" (\ref rzone ".rzone" and \ref azone ".azone").
+-# output files, such as header and scatter files, that are defined by \ref GenDataModel ".ftl files" in the project \c ftl directory.
    
 To start the generation, press the <b>Generate</b> button or use the menu item <b>CMSIS Zone - Generate</b>:
 
 \image html GenCodeButton.png
 
-Check \ref zTProjEx to observe the changes. In the current project, newly generated \c azone and \c rzone files appear, as
-well as \c ftl and \c ftl_gen folders. To generate output in the \c ftl_gen folder, copy the relevant \c ftl files into the
-\c ftl directory and rerun the generation. Observe the output:
+Check \ref zTProjEx to observe the changes. In the project, the generated \c .azone and \c .rzone files appear and the \c ftl_gen directory contains the
+files defined by the \c ftl template files:
 
 \image html gen_output.png
 */
@@ -368,7 +367,7 @@ Import the examples to Eclipse using the following flow:
 
 Click \b Next.
 
-Browse to the root directory, for example "Examples/LPC55S69/Zone", and select the project that you want to import. The import
+Browse to the root directory, for example "Examples\LPC55S69\Zone", and select the project that you want to import. The import
 projects window shows the available projects:
 
 \image html import_projects.png
@@ -395,187 +394,34 @@ The application itself shows how to implement calls between the secure and the n
 
 \section zTELPC55_Eclipse Using the CMSIS-Zone project
 
-Import the project as explained in \ref zTExImport. Open the LPC55S69.azone file from the \ref zTProjEx. The \b Zone
-\b Map shows two zones that have been created here: \c hello_world_s and \c hello_worls_ns:
+  - \ref zTExImport "Import" the project "Examples\LPC55S69\Zone" into the CMSIS-Zone utility
+  - \ref zTProjEx "Open" the LPC55S69.azone file
+  - \ref zTUIGenerate "Generate" the related output files
+  
+The LPC55S69.azone file of that project has the following configuration settings:
+  - \ref zTUICreate "Added the zones" \c hello_world_s and \c hello_worls_ns
+  - \ref zTUIMemAdd "Created the memory regions" \c CODE_NS, \c Config, \c CODE_S, \c Veneer, \c DATA_NS, and \c DATA_S
+  - Selected various memory regions and peripherals for using in the different zones.
 
 \image html lpc55_zones.png
 
 The zones use different Flash and SRAM regions for code and data, but share Flash configuration registers. Peripherals, such
 as the system and IO configuration, as well as an UART are available in the secure world only. To generate the output, click
 on the \ref zTUIGenerate "Generate" button in the Zone Editor tool bar. This creates the following files in the \c ftl_gen
-folder:
+directory:
 
-| File                 | Generated File   | Description |
-|----------------------|------------------|-------------|
-| dump_fzone.txt.ftl   | dump_fzone.txt   | Dumps the complete model into a text file. |
-| helper.ftlinc        | N/A              | Helper file required for some FTL functions. |
-| mem_layout.h.ftl     | \ref zTELPC55_memlayout | Generates a header file containing the region definitions that can be used in scatter files. |
-| scatter_ns.sct.ftl   | scatter_ns.sct   | Creates an exemplary scatter file for the non-secure zone. |
-| scatter_s.sct.ftl    | scatter_s.sct    | Creates an exemplary scatter file for the secure zone. |
-| tzm_config_mpc.c.ftl | \ref zTELPC55_confmpc | Generates the setup of the memory protection controller (MPC). |
-| tzm_config_ppc.c.ftl | \ref zTELPC55_confppc | Generates the setup of the peripheral protection controller (PPC). |
-| tzm_config_sau.c.ftl | \ref zTELPC55_confsau | Creates the configuration of the secure attribution unit (SAU). |
+| Template File        | Generated File   | Description |
+|:---------------------|:-----------------|:-------------|
+| dump_fzone.txt.ftl   | dump_fzone.txt   | Contains the complete model  |
+| helper.ftlinc        | N/A              | Helper template file with FTL functions. |
+| mem_layout.h.ftl     | mem_layout.h     | Header file that contains the memory region definitions, for example for the linker scatter file. |
+| scatter_ns.sct.ftl   | scatter_ns.sct   | Example scatter file for the non-secure zone (currently not used in MDK). |
+| scatter_s.sct.ftl    | scatter_s.sct    | Example scatter file for the secure zone (currently not used in MDK). |
+| tzm_config_mpc.c.ftl | tzm_config_mpc.c | Setup of the memory protection controller (MPC). |
+| tzm_config_ppc.c.ftl | tzm_config_ppc.c | Setup of the peripheral protection controller (PPC). |
+| tzm_config_sau.c.ftl | tzm_config_sau.c | Configuration of the secure attribution unit (SAU) and the NVIC interrupt assignment. |
 
 These files can be used in any IDE to create the final application. In the following, the usage in Arm Keil MDK is described.
-
-\subsection zTELPC55_memlayout mem_layout.h
-
-This header file contains the region definitions that can be used in scatter files. It is a good starting point to make the
-project scatter files generic and reusable. Using scatter files with direct addresses makes later changes a tedious process,
-while using the region definitions makes it easy to add changes at a later stage. The following is generated in the example:
-
-\code
-#ifndef MEM_LAYOUT_H
-#define MEM_LAYOUT_H
- 
-#define REGION_CODE_S_START  0x10000000
-#define REGION_CODE_S_SIZE   0xFE00
-#define REGION_VENEER_START  0x1000FE00
-#define REGION_VENEER_SIZE   0x200
-#define REGION_DATA_S_START  0x30000000
-#define REGION_DATA_S_SIZE   0x8000
-#define REGION_CONFIG_START  0x9DE00
-#define REGION_CONFIG_SIZE   0x2000
-#define REGION_CODE_NS_START 0x10000
-#define REGION_CODE_NS_SIZE  0x72000
-#define REGION_DATA_NS_START 0x20008000
-#define REGION_DATA_NS_SIZE  0x3C000
- 
-#endif
-\endcode
-
-\subsection zTELPC55_confmpc tzm_config_mpc.c
-
-This file contains the function \b TZM_Config_MPC that is called during the TrustZone initialization. It sets up the memory
-protection controller for Flash, Boot ROM, and all SRAMs:
-
-\code
-#include "tzm_config.h" 
-#include "fsl_common.h"
- 
-void TZM_Config_MPC(void)
-{
-  /* Setup Memory Protection Controller (MPC) */
-	/* Flash */
-	AHB_SECURE_CTRL->SEC_CTRL_FLASH_ROM[0].SEC_CTRL_FLASH_MEM_RULE[0] = 0x00000033U;
-	AHB_SECURE_CTRL->SEC_CTRL_FLASH_ROM[0].SEC_CTRL_FLASH_MEM_RULE[1] = 0x00000000U;
-	AHB_SECURE_CTRL->SEC_CTRL_FLASH_ROM[0].SEC_CTRL_FLASH_MEM_RULE[2] = 0x00000000U;
-	/* Boot ROM */
-	AHB_SECURE_CTRL->SEC_CTRL_FLASH_ROM[0].SEC_CTRL_ROM_MEM_RULE[0] = 0x00000000U;
-	AHB_SECURE_CTRL->SEC_CTRL_FLASH_ROM[0].SEC_CTRL_ROM_MEM_RULE[1] = 0x00000000U;
-	AHB_SECURE_CTRL->SEC_CTRL_FLASH_ROM[0].SEC_CTRL_ROM_MEM_RULE[2] = 0x00000000U;
-	AHB_SECURE_CTRL->SEC_CTRL_FLASH_ROM[0].SEC_CTRL_ROM_MEM_RULE[3] = 0x00000000U;
-	/* SRAMX */
-	AHB_SECURE_CTRL->SEC_CTRL_RAMX[0].MEM_RULE[0] = 0x00000000U;
-	/* SRAM Bank 0 */
-	AHB_SECURE_CTRL->SEC_CTRL_RAM0[0].MEM_RULE[0] = 0x11111111U;
-	AHB_SECURE_CTRL->SEC_CTRL_RAM0[0].MEM_RULE[1] = 0x00000000U;
-	/* SRAM Bank 1 */
-	AHB_SECURE_CTRL->SEC_CTRL_RAM1[0].MEM_RULE[0] = 0x00000000U;
-	AHB_SECURE_CTRL->SEC_CTRL_RAM1[0].MEM_RULE[1] = 0x00000000U;
-	/* SRAM Bank 2 */
-	AHB_SECURE_CTRL->SEC_CTRL_RAM2[0].MEM_RULE[0] = 0x00000000U;
-	AHB_SECURE_CTRL->SEC_CTRL_RAM2[0].MEM_RULE[1] = 0x00000000U;
-	/* SRAM Bank 3 */
-	AHB_SECURE_CTRL->SEC_CTRL_RAM3[0].MEM_RULE[0] = 0x00000000U;
-	AHB_SECURE_CTRL->SEC_CTRL_RAM3[0].MEM_RULE[1] = 0x00000000U;
-	/* SRAM Bank 4 */
-	AHB_SECURE_CTRL->SEC_CTRL_RAM4[0].MEM_RULE[0] = 0x00000000U;
-	/* USB SRAM */
-	AHB_SECURE_CTRL->SEC_CTRL_USB_HS[0].MEM_RULE[0] = 0x00000000U;
-}
-\endcode
-
-\subsection zTELPC55_confppc tzm_config_ppc.c
-
-This file contains the function \b TZM_Config_PPC that is called during the TrustZone initialization. It sets up the
-peripheral protection controller:
-
-\code
-#include "tzm_config.h"
-#include "fsl_common.h"
- 
-void TZM_Config_PPC(void)
-{
-  /* Setup Peripheral Protection Controller (PPC) */
-	AHB_SECURE_CTRL->SEC_CTRL_AHB0_0_SLAVE_RULE = 0x03000000U;
-	AHB_SECURE_CTRL->SEC_CTRL_AHB0_1_SLAVE_RULE = 0x00010000U;
-	AHB_SECURE_CTRL->SEC_CTRL_AHB2[0].SEC_CTRL_AHB2_0_SLAVE_RULE = 0x00001001U;
-	AHB_SECURE_CTRL->SEC_CTRL_APB_BRIDGE[0].SEC_CTRL_APB_BRIDGE0_MEM_CTRL0 = 0x00001133U;
-	AHB_SECURE_CTRL->SEC_CTRL_APB_BRIDGE[0].SEC_CTRL_APB_BRIDGE1_MEM_CTRL1 = 0x00010000U;
-	AHB_SECURE_CTRL->SEC_CTRL_APB_BRIDGE[0].SEC_CTRL_APB_BRIDGE1_MEM_CTRL3 = 0x00000301U;
-}\endcode
-
-\subsection zTELPC55_confsau tzm_config_sau.c
-
-This file contains the function \b TZM_Config_SAU that is called during the TrustZone initialization. It sets up the secure
-attribution unit and configures the interrupts to be secure or non-secure:
-
-\code
-#include "tzm_config.h" 
-#include "fsl_common.h"
- 
-void TZM_Config_SAU(void)
-{
-    /* Disable SAU */
-    SAU->CTRL = 0U;
-     
-    /* Configure SAU region 0 - CODE_NS */
-    /* Set SAU region number */
-    SAU->RNR = 0;
-    /* Region base address */   
-    SAU->RBAR = 0x10000;
-    /* Region end address */
-    SAU->RLAR = (0x81FFF & SAU_RLAR_LADDR_Msk) | 
-                 /* Region memory attribute index */
-                 ((0U << SAU_RLAR_NSC_Pos) & SAU_RLAR_NSC_Msk) |
-                 /* Enable region */
-                 ((1U << SAU_RLAR_ENABLE_Pos) & SAU_RLAR_ENABLE_Msk);
-    /* Configure SAU region 1 - Config */
-    /* Set SAU region number */
-    SAU->RNR = 1;
-    /* Region base address */   
-    SAU->RBAR = 0x9DE00;
-    /* Region end address */
-    SAU->RLAR = (0x9FDFF & SAU_RLAR_LADDR_Msk) | 
-                 /* Region memory attribute index */
-                 ((0U << SAU_RLAR_NSC_Pos) & SAU_RLAR_NSC_Msk) |
-                 /* Enable region */
-                 ((1U << SAU_RLAR_ENABLE_Pos) & SAU_RLAR_ENABLE_Msk);
-    /* Configure SAU region 2 - Veneer */
-    /* Set SAU region number */
-    SAU->RNR = 2;
-    /* Region base address */   
-    SAU->RBAR = 0x1000FE00;
-    /* Region end address */
-    SAU->RLAR = (0x1000FFFF & SAU_RLAR_LADDR_Msk) | 
-                 /* Region memory attribute index */
-                 ((1U << SAU_RLAR_NSC_Pos) & SAU_RLAR_NSC_Msk) |
-                 /* Enable region */
-                 ((1U << SAU_RLAR_ENABLE_Pos) & SAU_RLAR_ENABLE_Msk);
-    /* Configure SAU region 3 - DATA_NS */
-    /* Set SAU region number */
-    SAU->RNR = 3;
-    /* Region base address */   
-    SAU->RBAR = 0x20008000;
-    /* Region end address */
-    SAU->RLAR = (0x20043FFF & SAU_RLAR_LADDR_Msk) | 
-                 /* Region memory attribute index */
-                 ((0U << SAU_RLAR_NSC_Pos) & SAU_RLAR_NSC_Msk) |
-                 /* Enable region */
-                 ((1U << SAU_RLAR_ENABLE_Pos) & SAU_RLAR_ENABLE_Msk);
-                  
-     /* Force memory writes before continuing */
-    __DSB();
-    /* Flush and refill pipeline with updated permissions */
-    __ISB();     
-    /* Enable SAU */
-    SAU->CTRL = 1U;
- 
-   /* Interrupt configuration */
-    NVIC->ITNS[0] = 0x2040000C; // RTC, ADC, GINT1, GINT0
-}
-\endcode
 
 
 \section zTELPC55_MDK Using the MDK project
@@ -604,12 +450,12 @@ The multiproject workspace contains the secure \c hello_world_s project and the 
 
 The projects use the files generated in CMSIS-Zone as follows:
 
-| File                    | Used in | Description |
-|-------------------------|---------|-------------|
-| \ref zTELPC55_memlayout | hello_world_s, hello_world_ns | Input for the scatter files. |
-| \ref zTELPC55_confmpc   | hello_world_s | Functions called from tzm_config.c |
-| \ref zTELPC55_confppc   | hello_world_s | Functions called from tzm_config.c |
-| \ref zTELPC55_confsau   | hello_world_s | Functions called from tzm_config.c |
+| File               | Used in | Description |
+|:-------------------|:--------|:------------|
+| mem_layout.h       | hello_world_s, hello_world_ns | Input for the scatter files. |
+| tzm_config_mpc.c   | hello_world_s | Functions called from tzm_config.c |
+| tzm_config_ppc.c   | hello_world_s | Functions called from tzm_config.c |
+| tzm_config_sau.c   | hello_world_s | Functions called from tzm_config.c |
 
 The scatter files \c hello_world_s.sct and \c hello_world_ns.sct are based on the original scatter files from NXP and are
 using a preinclude to mem_layout.h to get the information about the different memory regions.
@@ -620,7 +466,7 @@ If you want to learn more about the general project layout for an Armv8-M projec
 
 \subsection zTELPC55_hwsScatter hello_world_s.sct
 
-As explained previously, the \#defines in \ref zTELPC55_memlayout can be used to create generic scatter files that are easy
+As explained previously, the \#defines in \c mem_layout.h can be used to create generic scatter files that are easy
 to update once changes in the CMSIS-Zone project happen. Using the \b mem_layout.h file from CMSIS-Zone, the following
 scatter file is used in the secure \c hello_world project:
 
