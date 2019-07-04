@@ -382,18 +382,21 @@ todo
 
 \page zTELPC55 NXP LPC55S69
 
-This demo application is a single processor application with TrustZone. It is split into a secure and non-secure part and demonstrates the following techniques with CMSIS-Zone:
- - Generation of the SAU setup
- - Generation of the MPU (memory protection) setup
- - Generation of the PPU (peripheral protection) setup and the related interrupt setup
- - It also generates the header file mem_layout.h that controls the various linker scatter file (and might be used in other parts of the application)
+This single processor demo application shows how to do the \ref UseCase_TrustZone. It is split into a secure and non-secure
+part. Using CMSIS-Zone, it generates:
+ - A header file that contains \#defines to control the various linker scatter files (and might be used in other parts of the
+   application).
+ - Memory protection controller (MPC) setup.
+ - Peripheral protection controller (PPC) and related interrupt setup.
+ - Secure attribution unit (SAU) setup.
 
-The application itself shows how to implement calls between secure and non-secure part.
+The application itself shows how to implement calls between the secure and the non-secure part.
+
 
 \section zTELPC55_Eclipse Using the CMSIS-Zone project
 
 Import the project as explained in \ref zTExImport. Open the LPC55S69.azone file from the \ref zTProjEx. The \b Zone
-\b Map shows two zones that have been created here: \c hello_worls_s and \c hello_worls_ns:
+\b Map shows two zones that have been created here: \c hello_world_s and \c hello_worls_ns:
 
 \image html lpc55_zones.png
 
@@ -406,14 +409,174 @@ folder:
 |----------------------|------------------|-------------|
 | dump_fzone.txt.ftl   | dump_fzone.txt   | Dumps the complete model into a text file. |
 | helper.ftlinc        | N/A              | Helper file required for some FTL functions. |
-| mem_layout.h.ftl     | mem_layout.h     | Generates a header file containing the region definitions that can be used in scatter files. |
+| mem_layout.h.ftl     | \ref zTELPC55_memlayout | Generates a header file containing the region definitions that can be used in scatter files. |
 | scatter_ns.sct.ftl   | scatter_ns.sct   | Creates an exemplary scatter file for the non-secure zone. |
 | scatter_s.sct.ftl    | scatter_s.sct    | Creates an exemplary scatter file for the secure zone. |
-| tzm_config_mpc.c.ftl | tzm_config_mpc.c | Generates the setup of the memory protection controller (MPC). |
-| tzm_config_ppc.c.ftl | tzm_config_ppc.c | Generates the setup of the peripheral protection controller (PPC). |
-| tzm_config_sau.c.ftl | tzm_config_sau.c | Creates the configuration of the secure attribution unit (SAU). |
+| tzm_config_mpc.c.ftl | \ref zTELPC55_confmpc | Generates the setup of the memory protection controller (MPC). |
+| tzm_config_ppc.c.ftl | \ref zTELPC55_confppc | Generates the setup of the peripheral protection controller (PPC). |
+| tzm_config_sau.c.ftl | \ref zTELPC55_confsau | Creates the configuration of the secure attribution unit (SAU). |
 
 These files can be used in any IDE to create the final application. In the following, the usage in Arm Keil MDK is described.
+
+\subsection zTELPC55_memlayout mem_layout.h
+
+This header file contains the region definitions that can be used in scatter files. It is a good starting point to make the
+project scatter files generic and reusable. Using scatter files with direct addresses makes later changes a tedious process,
+while using the region definitions makes it easy to add changes at a later stage. The following is generated in the example:
+
+\code
+#ifndef MEM_LAYOUT_H
+#define MEM_LAYOUT_H
+ 
+#define REGION_CODE_S_START  0x10000000
+#define REGION_CODE_S_SIZE   0xFE00
+#define REGION_VENEER_START  0x1000FE00
+#define REGION_VENEER_SIZE   0x200
+#define REGION_DATA_S_START  0x30000000
+#define REGION_DATA_S_SIZE   0x8000
+#define REGION_CONFIG_START  0x9DE00
+#define REGION_CONFIG_SIZE   0x2000
+#define REGION_CODE_NS_START 0x10000
+#define REGION_CODE_NS_SIZE  0x72000
+#define REGION_DATA_NS_START 0x20008000
+#define REGION_DATA_NS_SIZE  0x3C000
+ 
+#endif
+\endcode
+
+\subsection zTELPC55_confmpc tzm_config_mpc.c
+
+This file contains the function \b TZM_Config_MPC that is called during the TrustZone initialization. It sets up the memory
+protection controller for Flash, Boot ROM, and all SRAMs:
+
+\code
+#include "tzm_config.h" 
+#include "fsl_common.h"
+ 
+void TZM_Config_MPC(void)
+{
+  /* Setup Memory Protection Controller (MPC) */
+	/* Flash */
+	AHB_SECURE_CTRL->SEC_CTRL_FLASH_ROM[0].SEC_CTRL_FLASH_MEM_RULE[0] = 0x00000033U;
+	AHB_SECURE_CTRL->SEC_CTRL_FLASH_ROM[0].SEC_CTRL_FLASH_MEM_RULE[1] = 0x00000000U;
+	AHB_SECURE_CTRL->SEC_CTRL_FLASH_ROM[0].SEC_CTRL_FLASH_MEM_RULE[2] = 0x00000000U;
+	/* Boot ROM */
+	AHB_SECURE_CTRL->SEC_CTRL_FLASH_ROM[0].SEC_CTRL_ROM_MEM_RULE[0] = 0x00000000U;
+	AHB_SECURE_CTRL->SEC_CTRL_FLASH_ROM[0].SEC_CTRL_ROM_MEM_RULE[1] = 0x00000000U;
+	AHB_SECURE_CTRL->SEC_CTRL_FLASH_ROM[0].SEC_CTRL_ROM_MEM_RULE[2] = 0x00000000U;
+	AHB_SECURE_CTRL->SEC_CTRL_FLASH_ROM[0].SEC_CTRL_ROM_MEM_RULE[3] = 0x00000000U;
+	/* SRAMX */
+	AHB_SECURE_CTRL->SEC_CTRL_RAMX[0].MEM_RULE[0] = 0x00000000U;
+	/* SRAM Bank 0 */
+	AHB_SECURE_CTRL->SEC_CTRL_RAM0[0].MEM_RULE[0] = 0x11111111U;
+	AHB_SECURE_CTRL->SEC_CTRL_RAM0[0].MEM_RULE[1] = 0x00000000U;
+	/* SRAM Bank 1 */
+	AHB_SECURE_CTRL->SEC_CTRL_RAM1[0].MEM_RULE[0] = 0x00000000U;
+	AHB_SECURE_CTRL->SEC_CTRL_RAM1[0].MEM_RULE[1] = 0x00000000U;
+	/* SRAM Bank 2 */
+	AHB_SECURE_CTRL->SEC_CTRL_RAM2[0].MEM_RULE[0] = 0x00000000U;
+	AHB_SECURE_CTRL->SEC_CTRL_RAM2[0].MEM_RULE[1] = 0x00000000U;
+	/* SRAM Bank 3 */
+	AHB_SECURE_CTRL->SEC_CTRL_RAM3[0].MEM_RULE[0] = 0x00000000U;
+	AHB_SECURE_CTRL->SEC_CTRL_RAM3[0].MEM_RULE[1] = 0x00000000U;
+	/* SRAM Bank 4 */
+	AHB_SECURE_CTRL->SEC_CTRL_RAM4[0].MEM_RULE[0] = 0x00000000U;
+	/* USB SRAM */
+	AHB_SECURE_CTRL->SEC_CTRL_USB_HS[0].MEM_RULE[0] = 0x00000000U;
+}
+\endcode
+
+\subsection zTELPC55_confppc tzm_config_ppc.c
+
+This file contains the function \b TZM_Config_PPC that is called during the TrustZone initialization. It sets up the
+peripheral protection controller:
+
+\code
+#include "tzm_config.h"
+#include "fsl_common.h"
+ 
+void TZM_Config_PPC(void)
+{
+  /* Setup Peripheral Protection Controller (PPC) */
+	AHB_SECURE_CTRL->SEC_CTRL_AHB0_0_SLAVE_RULE = 0x03000000U;
+	AHB_SECURE_CTRL->SEC_CTRL_AHB0_1_SLAVE_RULE = 0x00010000U;
+	AHB_SECURE_CTRL->SEC_CTRL_AHB2[0].SEC_CTRL_AHB2_0_SLAVE_RULE = 0x00001001U;
+	AHB_SECURE_CTRL->SEC_CTRL_APB_BRIDGE[0].SEC_CTRL_APB_BRIDGE0_MEM_CTRL0 = 0x00001133U;
+	AHB_SECURE_CTRL->SEC_CTRL_APB_BRIDGE[0].SEC_CTRL_APB_BRIDGE1_MEM_CTRL1 = 0x00010000U;
+	AHB_SECURE_CTRL->SEC_CTRL_APB_BRIDGE[0].SEC_CTRL_APB_BRIDGE1_MEM_CTRL3 = 0x00000301U;
+}\endcode
+
+\subsection zTELPC55_confsau tzm_config_sau.c
+
+This file contains the function \b TZM_Config_SAU that is called during the TrustZone initialization. It sets up the secure
+attribution unit and configures the interrupts to be secure or non-secure:
+
+\code
+#include "tzm_config.h" 
+#include "fsl_common.h"
+ 
+void TZM_Config_SAU(void)
+{
+    /* Disable SAU */
+    SAU->CTRL = 0U;
+     
+    /* Configure SAU region 0 - CODE_NS */
+    /* Set SAU region number */
+    SAU->RNR = 0;
+    /* Region base address */   
+    SAU->RBAR = 0x10000;
+    /* Region end address */
+    SAU->RLAR = (0x81FFF & SAU_RLAR_LADDR_Msk) | 
+                 /* Region memory attribute index */
+                 ((0U << SAU_RLAR_NSC_Pos) & SAU_RLAR_NSC_Msk) |
+                 /* Enable region */
+                 ((1U << SAU_RLAR_ENABLE_Pos) & SAU_RLAR_ENABLE_Msk);
+    /* Configure SAU region 1 - Config */
+    /* Set SAU region number */
+    SAU->RNR = 1;
+    /* Region base address */   
+    SAU->RBAR = 0x9DE00;
+    /* Region end address */
+    SAU->RLAR = (0x9FDFF & SAU_RLAR_LADDR_Msk) | 
+                 /* Region memory attribute index */
+                 ((0U << SAU_RLAR_NSC_Pos) & SAU_RLAR_NSC_Msk) |
+                 /* Enable region */
+                 ((1U << SAU_RLAR_ENABLE_Pos) & SAU_RLAR_ENABLE_Msk);
+    /* Configure SAU region 2 - Veneer */
+    /* Set SAU region number */
+    SAU->RNR = 2;
+    /* Region base address */   
+    SAU->RBAR = 0x1000FE00;
+    /* Region end address */
+    SAU->RLAR = (0x1000FFFF & SAU_RLAR_LADDR_Msk) | 
+                 /* Region memory attribute index */
+                 ((1U << SAU_RLAR_NSC_Pos) & SAU_RLAR_NSC_Msk) |
+                 /* Enable region */
+                 ((1U << SAU_RLAR_ENABLE_Pos) & SAU_RLAR_ENABLE_Msk);
+    /* Configure SAU region 3 - DATA_NS */
+    /* Set SAU region number */
+    SAU->RNR = 3;
+    /* Region base address */   
+    SAU->RBAR = 0x20008000;
+    /* Region end address */
+    SAU->RLAR = (0x20043FFF & SAU_RLAR_LADDR_Msk) | 
+                 /* Region memory attribute index */
+                 ((0U << SAU_RLAR_NSC_Pos) & SAU_RLAR_NSC_Msk) |
+                 /* Enable region */
+                 ((1U << SAU_RLAR_ENABLE_Pos) & SAU_RLAR_ENABLE_Msk);
+                  
+     /* Force memory writes before continuing */
+    __DSB();
+    /* Flush and refill pipeline with updated permissions */
+    __ISB();     
+    /* Enable SAU */
+    SAU->CTRL = 1U;
+ 
+   /* Interrupt configuration */
+    NVIC->ITNS[0] = 0x2040000C; // RTC, ADC, GINT1, GINT0
+}
+\endcode
+
 
 \section zTELPC55_MDK Using the MDK project
 
@@ -426,7 +589,7 @@ The example project can be loaded, built and debugged in µVision by performing 
 -# Run the batch build in MDK. Both projects, hello_world_s and hello_world_ns need to be compiled in order.
 -# Set hello_world_s as active project.
 -# Connect the LPC55S69-EVK using a Micro-USB cable at Debug Link (P6).
--# Open <b>Options for Target - Debug</b>and make sure that the CMSIS-DAP ARMv8-M Debugger is selected and the LPC-LINK2 is
+-# Open <b>Options for Target - Debug</b> and make sure that the CMSIS-DAP ARMv8-M Debugger is selected and the LPC-LINK2 is
    used.
 -# Optional: Open a serial terminal program (i.e. PuTTY) on the virtual serial port provided in parallel to the debugger
    (e.g. USB Serial Device). Configure the port to 115200/8N1.
@@ -441,17 +604,76 @@ The multiproject workspace contains the secure \c hello_world_s project and the 
 
 The projects use the files generated in CMSIS-Zone as follows:
 
-| File               | Used in | Description |
-|--------------------|---------|-------------|
-| mem_layout.h       | hello_world_s, hello_world_ns | Input for the scatter files. |
-| tzm_config_mpc.c   | hello_world_s | Functions called from tzm_config.c |
-| tzm_config_ppc.c   | hello_world_s | Functions called from tzm_config.c |
-| tzm_config_sau.c   | hello_world_s | Functions called from tzm_config.c |
+| File                    | Used in | Description |
+|-------------------------|---------|-------------|
+| \ref zTELPC55_memlayout | hello_world_s, hello_world_ns | Input for the scatter files. |
+| \ref zTELPC55_confmpc   | hello_world_s | Functions called from tzm_config.c |
+| \ref zTELPC55_confppc   | hello_world_s | Functions called from tzm_config.c |
+| \ref zTELPC55_confsau   | hello_world_s | Functions called from tzm_config.c |
 
 The scatter files \c hello_world_s.sct and \c hello_world_ns.sct are based on the original scatter files from NXP and are
-using a preinclude to mem_layout.h to get the information about the different memory regions. 
+using a preinclude to mem_layout.h to get the information about the different memory regions.
 
 \note
 If you want to learn more about the general project layout for an Armv8-M project using TrustZone, refer to
 <a href="https://www.keil.com/appnotes/docs/apnt_291.asp" target="_blank">Application Note 291</a>.
+
+\subsection zTELPC55_hwsScatter hello_world_s.sct
+
+As explained previously, the \#defines in \ref zTELPC55_memlayout can be used to create generic scatter files that are easy
+to update once changes in the CMSIS-Zone project happen. Using the \b mem_layout.h file from CMSIS-Zone, the following
+scatter file is used in the secure \c hello_world project:
+
+\code
+; Use Arm compiler 6 to pre-process the scatter file and pull in the defines from the mem_layout.h file:
+#! armclang -E --target=arm-arm-none-eabi -mcpu=cortex-m33 -I../ -xc
+ 
+#include "mem_layout.h"
+ 
+; *------- <<< Use Configuration Wizard in Context Menu >>> ------------------
+ 
+;<h> Stack Configuration
+;  <o> Stack Size (in Bytes) <0x0-0xFFFFFFFF:8>
+;</h>
+#define STACK_SIZE 0x400
+ 
+;<h> Heap Configuration
+;  <o> Heap Size (in Bytes) <0x0-0xFFFFFFFF:8>
+;</h>
+#define HEAP_SIZE 0xC00
+ 
+; *-------------- <<< end of configuration section >>> -----------------------
+
+LR_CODE_S REGION_CODE_S_START REGION_CODE_S_SIZE {
+  ER_CODE_S REGION_CODE_S_START REGION_CODE_S_SIZE {
+  	* (RESET,+FIRST)
+    * (InRoot$$Sections)
+    .ANY (+RO, +XO)
+  }
+  RW_DATA_S REGION_DATA_S_START REGION_DATA_S_SIZE-HEAP_SIZE-STACK_SIZE {
+    .ANY (+RW +ZI)
+  }
+#if HEAP_SIZE>0
+  ARM_LIB_HEAP REGION_DATA_S_START+REGION_DATA_S_SIZE-HEAP_SIZE-STACK_SIZE EMPTY HEAP_SIZE {
+  }
+#endif
+#if STACK_SIZE>0
+  ARM_LIB_STACK REGION_DATA_S_START+REGION_DATA_S_SIZE-STACK_SIZE EMPTY STACK_SIZE {
+  }
+#endif
+}
+LR_VENEER REGION_VENEER_START REGION_VENEER_SIZE {
+  ER_VENEER REGION_VENEER_START REGION_VENEER_SIZE {
+  	*(Veneer$$CMSE)
+  }
+}
+\endcode
+
+\subsection zTELPC55_TZSetup TrustZone Setup at Startup
+
+During the system initialization, the function \b SystemInitHook is called. This is used when application specific code needs
+to be called as close to the reset entry as possible. In this example, this function calls \b BOARD_InitTrustZone, which
+calls the three TZM_Config_* functions:
+
+\image html lpc55_system_startup.png
 */
