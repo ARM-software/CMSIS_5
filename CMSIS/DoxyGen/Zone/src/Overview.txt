@@ -762,4 +762,8 @@ LR_Veneer REGION_VENEER_START REGION_VENEER_SIZE {
   }
 }
 \endcode
+
+The partition.h header file contains Configuration Wizard annotation so that it can be viewed in a graphical window:
+
+\image html partition_h_l5.png
 */
