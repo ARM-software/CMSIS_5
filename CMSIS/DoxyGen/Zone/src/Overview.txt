@@ -101,15 +101,21 @@ resource assignment to prevent undesired misbehavior.
 /**
 \page zoneToolUsage CMSIS-Zone Utility
 
-The following explains how to use the CMSIS-Zone stand-alone utility to create the required configuration files that can be
-used further in other toolchains.
-
-This documentation contains the following:
+The section describes the CMSIS-Zone Utility which is currently a stand-alone Eclipse implementation that allows you to:
+  - View the memory and peripheral resources of a complete system or sub-system.
+  - Partition memory blocks into smaller regions and define access permissions for these regions.
+  - Define access permissions for peripherals.
+  - Configure access rights of peripheral slots, for example for DMA channels or I/O pins. 
+  - Split memory and peripheral resources into zones (used for sub-projects or process separation in RTOS systems).
+  - Generate configuration files for tool and hardware setup.
+  - Generate resource files for sub-systems that allow further partitioning.
+  
+This section describes: 
  - \subpage zTInstall shows how to install the utility.
- - \subpage zTUI introduces the utility's GUI.
+ - \subpage zTUI introduces the GUI of the CMSIS-Zone Utility.
  - \subpage zTInteractiveMode explains how to create projects and zones using the GUI.
  - \subpage zTCLI demonstrates how to work with the command line interface.
- - \subpage zTExamples contains pre-built demos for various devices.
+ - \subpage zTExamples contains ready-to-use projects for various devices.
 
 \note
 
