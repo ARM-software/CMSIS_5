@@ -2069,6 +2069,11 @@ Contact cmsis@arm.com to ask for an extension. These values can be used in the e
     <td>http://www.sinowealth.com</td>
   </tr>
   <tr>
+    <td class="XML-Token">SmartChip:156</td>
+    <td>SmartChip</td>
+    <td></td>
+  </tr>
+  <tr>
     <td class="XML-Token">Spansion:100</td>
     <td>Spansion (previously Fujitsu)</td>
     <td>http://www.spansion.com</td>
