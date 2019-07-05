@@ -463,6 +463,7 @@ These examples demonstrate the usage of the CMSIS-Zone utility.
 |:---------------------------|:---------------------------------------------------------------|
 | \subpage zTEMusca          | Musca project                                                  |
 | \subpage zTELPC55          | Single processor Cortex-M33 project with TrustZone setup       |
+| \subpage zTESTM32L5        | Single processor Cortex-M33 project with TrustZone setup       |
 
 
 \section zTExImport Import examples
@@ -480,12 +481,17 @@ projects window shows the available projects:
 \image html import_projects.png
 
 Click \b Finish. The project is imported and opened in the \ref zTProjEx.
+*/
 
 
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
 \page zTEMusca Arm Musca-A1
+*/
 
-todo
 
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
 \page zTELPC55 NXP LPC55S69
 
 This single processor demo application shows how to do the \ref UseCase_TrustZone. It is split into a secure and non-secure
@@ -629,4 +635,131 @@ to be called as close to the reset entry as possible. In this example, this func
 calls the three TZM_Config_* functions:
 
 \image html lpc55_system_startup.png
+*/
+
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\page zTESTM32L5 STMicroelectronics STM32L5
+
+This single processor demo application shows how to do the \ref UseCase_TrustZone. It is split into a secure and non-secure
+part. Using CMSIS-Zone, it generates:
+ - A header file that contains \#defines to control the various linker scatter files (and might be used in other parts of the
+   application).
+ - The SystemIsolation_Config.c header file that contains memory protection controller (MPC) and peripheral protection
+   controller (PPC) and related interrupt setup.
+ - The partition.h header file that contains the secure attribution unit (SAU) setup.
+
+The application itself shows how to implement calls between the secure and the non-secure part.
+
+
+\section zTESTM32L5_Eclipse Using the CMSIS-Zone project
+
+  - \ref zTExImport "Import" the project "Examples\STM32L5\Zone" into the CMSIS-Zone utility
+  - \ref zTProjEx "Open" the STM32L5.azone file
+  - \ref zTUIGenerate "Generate" the related output files
+  
+The STM32L5.azone file of that project has the following configuration settings:
+  - \ref zTUICreate "Added the zones" \c blinky_s and \c blinky_ns
+  - \ref zTUIMemAdd "Created the memory regions" \c CODE_NS, \c Config, \c CODE_S, \c Veneer, \c DATA_NS, and \c DATA_S
+  - Selected various memory regions and peripherals for using in the different zones.
+
+\image html STM32L5_zones.png
+
+The zones use different Flash and SRAM regions for code and data, but share Flash configuration registers. Peripherals, such
+as the system and IO configuration, as well as an UART are available in the secure world only. To generate the output, click
+on the \ref zTUIGenerate "Generate" button in the Zone Editor tool bar. This creates the following files in the \c ftl_gen
+directory:
+
+| Template File        | Generated File   | Description |
+|:---------------------|:-----------------|:-------------|
+| dump_fzone.txt.ftl   | dump_fzone.txt   | Contains the complete model  |
+| helper.ftlinc        | N/A              | Helper template file with FTL functions. |
+| mem_layout.h.ftl     | mem_layout.h     | Header file that contains the memory region definitions, for example for the linker scatter file. |
+| scatter_ns.sct.ftl   | scatter_ns.sct   | Example scatter file for the non-secure zone (currently not used in MDK). |
+| scatter_s.sct.ftl    | scatter_s.sct    | Example scatter file for the secure zone (currently not used in MDK). |
+| partition.h.ftl      | partition.h      | Setup of the MPC and PPC. |
+| SystemIsolation_Config.c.ftl | SystemIsolation_Config.c | Configuration of the secure attribution unit (SAU) and the NVIC interrupt assignment. |
+
+These files can be used in any IDE to create the final application. In the following, the usage in Arm Keil MDK is described.
+
+
+\section zTESTM32L5_MDK Using the MDK project
+
+The example project can be loaded, built and debugged in µVision by performing the following steps:
+
+-# Navigate to Examples/STM32L5/MDK
+-# Open the multi-project workspace blinky.uvmpw
+-# Optional: Update the generated files by executing the copy_gen.bat scripts in blinky_s\\mdk and blinky_ns\\mdk
+   folders.
+-# Run the batch build in MDK. Both projects, blinky_s and blinky_ns need to be compiled in order.
+
+
+\section zTESTM32L5_MDK_Setup MDK project setup
+
+The multiproject workspace contains the secure \c blinky_s project and the non-secure \c blinky_ns project:
+
+\image html blinky_window.png
+
+The projects use the files generated in CMSIS-Zone as follows:
+
+| File               | Used in | Description |
+|:-------------------|:--------|:------------|
+| mem_layout.h       | blinky_s, blinky_ns | Input for the scatter files. |
+| partition.h   | blinky_s | Setup of the MPC and PPC. |
+| SystemIsolation_Config.c   | blinky_s | Configuration of the secure attribution unit (SAU) and the NVIC interrupt assignment. |
+
+\note
+If you want to learn more about the general project layout for an Armv8-M project using TrustZone, refer to
+<a href="https://www.keil.com/appnotes/docs/apnt_291.asp" target="_blank">Application Note 291</a>.
+
+\subsection zTESTM32L5_hwsScatter blinky_s.sct
+
+As explained previously, the \#defines in \c mem_layout.h can be used to create generic scatter files that are easy
+to update once changes in the CMSIS-Zone project happen. Using the \b mem_layout.h file from CMSIS-Zone, the following
+scatter file is used in the secure \c blinky project:
+
+\code
+; Use Arm compiler 6 to pre-process the scatter file and pull in the defines from the mem_layout.h file:
+#! armclang -E --target=arm-arm-none-eabi -mcpu=cortex-m33 -I../ -xc
+
+#include "mem_layout.h"
+
+; *------- <<< Use Configuration Wizard in Context Menu >>> ------------------
+
+;<h> Stack Configuration
+;  <o> Stack Size (in Bytes) <0x0-0xFFFFFFFF:8>
+;</h>
+#define STACK_SIZE 0x400
+
+;<h> Heap Configuration
+;  <o> Heap Size (in Bytes) <0x0-0xFFFFFFFF:8>
+;</h>
+#define HEAP_SIZE 0xC00
+
+; *-------------- <<< end of configuration section >>> -----------------------
+LR_CODE_S REGION_CODE_S_START REGION_CODE_S_SIZE {
+  ER_CODE_S REGION_CODE_S_START REGION_CODE_S_SIZE {
+  	* (RESET,+FIRST)
+    * (InRoot$$Sections)
+    .ANY (+RO +XO)
+  }
+  RW_DATA_S REGION_DATA_S_START REGION_DATA_S_SIZE-HEAP_SIZE-STACK_SIZE {
+    .ANY (+RW +ZI)
+  }
+#if HEAP_SIZE>0
+  ARM_LIB_HEAP REGION_DATA_S_START+REGION_DATA_S_SIZE-HEAP_SIZE-STACK_SIZE EMPTY HEAP_SIZE {
+  }
+#endif
+#if STACK_SIZE>0
+  ARM_LIB_STACK REGION_DATA_S_START+REGION_DATA_S_SIZE-STACK_SIZE EMPTY STACK_SIZE {
+  }
+#endif  
+}
+LR_Veneer REGION_VENEER_START REGION_VENEER_SIZE {
+  ER_Veneer REGION_VENEER_START REGION_VENEER_SIZE {
+  	*(Veneer$$CMSE)
+  }
+}
+\endcode
 */
