@@ -102,13 +102,14 @@ resource assignment to prevent undesired misbehavior.
 \page zoneToolUsage CMSIS-Zone Utility
 
 The section describes the CMSIS-Zone Utility which is currently a stand-alone Eclipse implementation that allows you to:
-  - View the memory and peripheral resources of a complete system or sub-system.
-  - Partition memory blocks into smaller regions and define access permissions for these regions.
-  - Define access permissions for peripherals.
-  - Configure access rights of peripheral slots, for example for DMA channels or I/O pins. 
-  - Split memory and peripheral resources into zones (used for sub-projects or process separation in RTOS systems).
-  - Generate configuration files for tool and hardware setup.
-  - Generate resource files for sub-systems that allow further partitioning.
+  - \ref zTUIMemView "View the memory and peripheral resources" of a complete system or sub-system.
+  - \ref zTUIMemAdd "Partition memory blocks" into smaller regions and define access permissions for these regions.
+  - \ref zTUIPerProp "Define access permissions" for peripherals.
+  - \ref zTUIPerSlotConf "Configure access rights of peripheral slots" (for example for DMA channels or I/O pins). 
+  - \ref zTUIZonePart "Split memory and peripheral resources into zones" (used for sub-projects or process separation in RTOS
+    systems).
+  - \ref zTUIGenerate "Generate" configuration files for tool and hardware setup, as well as 
+  - \ref zTUIGenerate "Generate" resource files for sub-systems that allow further partitioning.
   
 This section describes: 
  - \subpage zTInstall shows how to install the utility.
@@ -192,6 +193,12 @@ The \b Zone \b map shows the same resources, but mapped to zones that have been 
 
 \image html zone_map.png
 
+Resources assigned to a zone are marked with colors:
+| Color | Meaning |
+|-------|---------|
+| Green | Resource is assigned to one zone |
+| Amber | Resource is assigned to multiple zones |
+
 
 \subsection zTGUIButtons Toolbar Buttons
 
@@ -214,25 +221,38 @@ The <b>Zone Editor</b> window contains toolbar buttons that offer direct access 
 \page zTInteractiveMode Interactive Mode
 
 The following section explains the interactive mode of the CMSIS-Zone Utility.
-The workflow is:
+The following steps are explained:
 
- -# \subpage zTUICreateProject that allows to manage system resources.
- -# \subpage zTUIMemPerRes allows to create sub-memory regions and defines properties such as access permissions.
- -# \subpage zTUIZonePart that assigns available resources to sub-projects or execution compartments.
- -# \subpage zTUIGenerate for device configuration and linker settings.
+ - \subpage zTUICreateProject that allows to manage system resources.
+ - \subpage zTUIMemPerRes allows to create sub-memory regions and defines properties such as access permissions.
+ - \subpage zTUIZonePart that assigns available resources to sub-projects or execution compartments.
+ - \subpage zTUIGenerate for device configuration and linker settings.
+*/
 
 
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
 \page zTUICreateProject Create a CMSIS-Zone Project
 
-Currently, the flow is not complete. Please use one of the pre-built \ref zTExamples instead:
-- The \ref zTEMusca example shows the configuration of a multi-processor system with two Arm Cortex-M33 cores. Both cores
-  offer TrustZone for Armv8-M and thus two zones (secure/non-secure) are created for each processor.
-- the \ref zTELPC55 example is based on a multi-processor system with two Cortex-M33 processors, where only core 0 is eanbled
-  with TrustZone for Armv8-M. Thus, the second core is not further divided into sub-zones.
+Go to <b>File - New - Project</b> and select <b>CMSIS - CMSIS-Zone Project</b>:
 
-<!--The following sections explain how the \ref zTEMusca example was created.-->
+\image html zone_project.png
+
+Click \b Next. In the next window, enter a \b Project \b name:
+
+\image html SetProjectName.png
+
+Click \b Next. In the next window, select <b>Use existing resource file (*.rzone)</b> and browse to the location of the
+*.rzone file:
+
+\image html SpecifyRzoneFile.png
+
+Click \b Finish. The new project is created and an empty *.azone file is added.
+*/
 
 
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
 \page zTUIMemPerRes Memory and Peripheral Resources
 
 The available memory can be further divided into \ref zTUIMemAdd "smaller regions" that are later assigned to zones, 
@@ -242,15 +262,26 @@ For memory and peripherals \ref zTUIPerProp "properties" such as access permissi
 These settings can be for example used to generate source code files that configure the device at run-time.
 
 
+\section zTUIMemView View memory and peripheral resources
+
+Initially, this uses the information in the *.rzone file which defines the generic access permissions for memory and
+peripherals. The CMSIS-Zone Editor shows the \b Resource \b Map of the given device:
+
+\image html lpc55_resource_map.png
+
+Here, you can see all resources that are available on the device.You see \b Memory, \b Peripherals, \b Cores, and \b Info
+related to the resources. \ref zTGUIZoneEditor "Colored resources" are assigned to a zone.
+
+
 \section zTUIMemAdd Create Memory Regions
 
 To create a new memory region, right-click on the memory that you want to divide and select <b>Add memory region</b>:
 
 \image html AddMemoryBlock.png
 
-In the dialog a name derived from the parent memory region is provided. Change this region name as needed and specify the size. 
-You In this dialog, you change permissions, privilege, or security level for the memory region. When
-done, click \b Finish.
+In the dialog a name derived from the parent memory region is provided. Change this region name as needed and specify the
+size. In this dialog, you change permissions, privilege, or security level for the memory region. When
+done, click \b Finish:
 
 \image html NewMemoryBlockWiz.png
 
@@ -259,14 +290,75 @@ new region only to certain zones. For example, secure memory regions cannot be a
 
 \image html IRAM1_1Display.png
 
+The information about the memory regions is stored in the \ref xml_amemory element of the *.azone file.
+
+
+\section zTUIMemDel Delete Memory Regions
+
+To delete a memory region, right-click on the memory region select <b>Delete memory region</b>:
+
+\image html DelMemoryRegion.png
+
+
 \section zTUIPerProp Resource Properties
 
-To change the properties of a resource, such as a peripheral for example, right-click the resource and select \b Properties.
-Then, you can set permissions (\c peripheral, \c read, \c write, and \c execute) and select if only \c privileged or
-\c unprivileged access is possible (or if it is not specified). You can also set a security level for the peripheral
-(\c not specified, \c non-secure, \c non-secure callable, \c secure).
+To change the properties of a resource, such as a peripheral for example, right-click the resource and select \b Properties:
+
+\image html res_prop.png
+
+Then, you can set these properties:
+
+\image html peripheral_properties.png
+
+\b General
+- \c Shared: the resource can be accessed by more than one zone
+- \c Startup: locate the vector table to this region
+- \c No zero init: preserve RAM content at startup
+- \c DMA: enable direct memory access
+
+\b Permissions
+
+- \c peripheral: mark this as a peripheral
+- \c read
+- \c write
+- \c execute
+
+\b Privilege
+
+- \c not specified
+- \c privileged
+- \c unprivileged
+
+\b Security
+- \c not specified
+- \c non-secure
+- \c non-secure callable
+- \c secure
+
+The information about the peripherals is stored in the \ref xml_aperipheral element of the *.azone file.
+
+\section zTUIPerSlotConf Configure peripheral slot access rights
+
+Peripherals can have so called slots that can be configured separately. Depending on the peripheral, the slots have different
+names in the Zone Editor. For example, for DMA they are called \b Channels:
+
+\image html dma_channel_config.png
+
+For GPIOs, they are called \b Pins:
+
+\image html gpio_pins_config.png
+
+In the dialog, you can set security and privilege levels:
+
+\image html dma_gpio_config.png
+
+The information about the slots is stored in the \ref xml_aslot element of the *.azone file.
+
+*/
 
 
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
 \page zTUIZonePart Zone Partitioning
 
 Every CMSIS-Zone project consists of one or more zones. The basic flow to create zones is as follows:
@@ -299,16 +391,25 @@ Similarly, an additional zone called "CM33_1" was created and attached to proces
 \note
 
 Adding zones only works for the currently opened \ref azone ".azone" file.
+The information about the zones is stored in the \ref xml_zones element of the *.azone file.
 
 
+
+*/
+
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
 \page zTUIGenerate Generate output files
 
 The CMSIS-Zone utility can generate files that represent the configuration of the system. These files can be used
 in the project source files or tool configuration files.
 
 other toolchains for further development. The generator process creates:
--# Files that represent \ref  zTUICreate "created sub-zones" (\ref rzone ".rzone" and \ref azone ".azone").
--# output files, such as header and scatter files, that are defined by \ref GenDataModel ".ftl files" in the project \c ftl directory.
+- Configuration files for tool and hardware setup, that are defined by \ref GenDataModel ".ftl files" in the project \c ftl
+  directory.
+- Files that represent \ref  zTUICreate "sub-systems" (\ref rzone ".rzone" and \ref azone ".azone") that can be partitioned
+  further (restart the process).
    
 To start the generation, press the <b>Generate</b> button or use the menu item <b>CMSIS Zone - Generate</b>:
 

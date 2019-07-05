@@ -4,18 +4,18 @@
 
 The <b>Zone Description Format</b> is a tool agnostic storage format and is split into:
 
- - <b>Resource File</b> that describes the system resources available. 
- - <b>Assignment File</b> that describes the resource partitioning.
+ - <b>Resource File (*.rzone)</b> that describes the system resources available. 
+ - <b>Assignment File (*.azone)</b> that describes the resource partitioning.
 
 The combination of both <b>Resource File</b> and <b>Assignment File</b> can be used to create a new derived <b>Resource File</b> that only
 contains the resources available for this project. It is therefore possible to split the resources incrementally as needed.
 
-A <b>Resource File</b> can therefore describe: 
+A <b>Resource File (*.rzone)</b> can therefore describe: 
  - A complete embedded system including device with one or more processors, external memory and/or external peripheral components.
  - TrustZone definition and initial setting for Secure Attribute Unit
  - A resource partition for an independent software project (i.e. boot loader, user application, secure partition) that implement the application for the system.
 
-A <b>Assignment File</b> allows to specify either:
+An <b>Assignment File (*.azone)</b> allows to specify either:
  - The partitioning of a system into multiple independent software projects.
  - The configuration of a Memory Protection Unit (MPU) for functional segregation of a software project. 
  
@@ -29,9 +29,16 @@ is described with schema files that are located in the ARM.CMSIS pack in the dir
 
  File type  | Schema file   | Description
 :-----------|:--------------|:-------------
-*.rzone     | rzone.xsd     | Stores the system resources (processors, memory, peripherals) available.
-*.azone     | azone.xsd     | Stores the system partitioning which includes assignments and memory splits for a related .rzone file.
+\ref rzone "*.rzone"     | rzone.xsd     | Stores the system resources (processors, memory, peripherals) available.
+\ref azone "*.azone"     | azone.xsd     | Stores the system partitioning which includes assignments and memory splits for a related .rzone file.
 *.fzone     | fzone.xsd     | CMSIS-Zone data input file for FreeMarker as explained in \ref GenDataModel.
+
+\note It is important to understand the relationship between *.rzone and *.azone files. While the *.rzone file contains all
+the information about the available resources in a system or sub-system, the *.azone file contains all the information about
+the system partitioning. If the *.rzone file changes (for example because the partitioning of a sub-system
+has changed), you will not loose the work done on the partitioning of that sub-system. If resources are removed, the
+\ref zTGUI will notify you about this and you can make the required changes.
+
 
 \anchor rzone
 Top-level .rzone XML elements
