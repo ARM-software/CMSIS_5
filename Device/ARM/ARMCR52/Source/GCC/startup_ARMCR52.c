@@ -24,6 +24,10 @@
 
 #if defined (ARMCR52)
   #include "ARMCR52.h"
+#elif defined (ARMCR52_FP)
+  #include "ARMCR52_FP.h"
+#elif defined (ARMCR52_DSP_DP_FP)
+  #include "ARMCR52_DSP_DP_FP.h"
 #else
   #error device not specified!
 #endif

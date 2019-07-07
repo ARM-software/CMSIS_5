@@ -23,8 +23,8 @@
  * limitations under the License.
  */
 
-#ifndef ARMCR52_H
-#define ARMCR52_H
+#ifndef ARMCR52_DSP_DP_FP_H
+#define ARMCR52_DSP_DP_FP_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -68,9 +68,9 @@ extern "C" {
 #define __MPU_PRESENT             1U        /* MPU present */
 #define __VTOR_PRESENT            1U        /* VTOR present */
 #define __Vendor_SysTickConfig    0U        /* Set to 1 if different SysTick Config is used */
-#define __FPU_PRESENT             0U        /* FPU present */
-#define __FPU_DP                  0U        /* double precision FPU */
-#define __DSP_PRESENT             0U        /* DSP extension present */
+#define __FPU_PRESENT             1U        /* FPU present */
+#define __FPU_DP                  1U        /* double precision FPU */
+#define __DSP_PRESENT             1U        /* DSP extension present */
 #define __ICACHE_PRESENT          1U
 #define __DCACHE_PRESENT          1U
 #define __DTCM_PRESENT            1U
@@ -103,4 +103,4 @@ extern "C" {
 }
 #endif
 
-#endif  /* ARMCR52_H */
+#endif  /* ARMCR52_DSP_DP_FP_H */

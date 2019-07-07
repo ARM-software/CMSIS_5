@@ -25,6 +25,10 @@
 
 #if defined (ARMCR52)
   #include "ARMCR52.h"
+#elif defined (ARMCR52_FP)
+  #include "ARMCR52_FP.h"
+#elif defined (ARMCR52_DSP_DP_FP)
+  #include "ARMCR52_DSP_DP_FP.h"
 #else
   #error device not specified!
 #endif
@@ -71,13 +75,28 @@ void SystemInit (void)
   /* I-cache & D-cache initialization */
     /* EL2 */
   ctrl = __get_HSCTLR();
-  ctrl |= 0x1004; /* Set I and C bits */
+#if defined (__ICACHE_PRESENT) && (__ICACHE_PRESENT == 1U)
+  ctrl |= 0x1000; /* Set I bit */
+#endif
+#if defined (__DCACHE_PRESENT) && (__DCACHE_PRESENT == 1U)
+  ctrl |= 0x0004; /* Set C bit */
+#endif
   __set_HSCTLR(ctrl);
 
     /* EL1/0 */
   ctrl = __get_SCTLR();
-  ctrl |= 0x1004; /* Set I and C bits */
+#if defined (__ICACHE_PRESENT) && (__ICACHE_PRESENT == 1U)
+  ctrl |= 0x1000; /* Set I bit */
+#endif
+#if defined (__DCACHE_PRESENT) && (__DCACHE_PRESENT == 1U)
+  ctrl |= 0x0004; /* Set C bit */
+#endif
   __set_SCTLR(ctrl);
+
+#if ((__FPU_PRESENT == 1) && (__FPU_USED == 1))
+  // Enable FPU
+  __FPU_Enable();
+#endif
 
   SystemCoreClock = SYSTEM_CLOCK;
 }

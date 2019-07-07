@@ -141,6 +141,32 @@
     #define __CR_REV              0x0000U
     #warning "__CR_REV not defined in device header file; using default!"
   #endif
+
+  #ifndef __FPU_PRESENT
+    #define __FPU_PRESENT             0U
+    #warning "__FPU_PRESENT not defined in device header file; using default!"
+  #endif
+
+  #ifndef __MPU_PRESENT
+    #define __MPU_PRESENT             0U
+    #warning "__MPU_PRESENT not defined in device header file; using default!"
+  #endif
+
+  #ifndef __ICACHE_PRESENT
+    #define __ICACHE_PRESENT          0U
+    #warning "__ICACHE_PRESENT not defined in device header file; using default!"
+  #endif
+
+  #ifndef __DCACHE_PRESENT
+    #define __DCACHE_PRESENT          0U
+    #warning "__DCACHE_PRESENT not defined in device header file; using default!"
+  #endif
+
+  #ifndef __DTCM_PRESENT
+    #define __DTCM_PRESENT            0U
+    #warning "__DTCM_PRESENT        not defined in device header file; using default!"
+  #endif
+
 #endif
 
 /* IO definitions (access restrictions to peripheral registers) */
