@@ -676,9 +676,9 @@ directory:
 | dump_fzone.txt.ftl   | dump_fzone.txt   | Contains the complete model  |
 | helper.ftlinc        | N/A              | Helper template file with FTL functions. |
 | mem_layout.h.ftl     | mem_layout.h     | Header file that contains the memory region definitions, for example for the linker scatter file. |
-| scatter_ns.sct.ftl   | scatter_ns.sct   | Example scatter file for the non-secure zone (currently not used in MDK). |
-| scatter_s.sct.ftl    | scatter_s.sct    | Example scatter file for the secure zone (currently not used in MDK). |
-| partition.h.ftl      | partition.h      | Setup of the MPC and PPC. |
+| scatter_ns.sct.ftl   | scatter_ns.sct   | Example scatter file for the non-secure zone. |
+| scatter_s.sct.ftl    | scatter_s.sct    | Example scatter file for the secure zone. |
+| partition_gen.h.ftl      | partition_gen.h      | Setup of the MPC and PPC. |
 | SystemIsolation_Config.c.ftl | SystemIsolation_Config.c | Configuration of the secure attribution unit (SAU) and the NVIC interrupt assignment. |
 
 These files can be used in any IDE to create the final application. In the following, the usage in Arm Keil MDK is described.
@@ -706,8 +706,10 @@ The projects use the files generated in CMSIS-Zone as follows:
 | File               | Used in | Description |
 |:-------------------|:--------|:------------|
 | mem_layout.h       | blinky_s, blinky_ns | Input for the scatter files. |
-| partition.h   | blinky_s | Setup of the MPC and PPC. |
+| partition_gen.h   | blinky_s | Setup of the MPC and PPC. This file is included in the partition_stm32l5xx.h header file. |
 | SystemIsolation_Config.c   | blinky_s | Configuration of the secure attribution unit (SAU) and the NVIC interrupt assignment. |
+| blinky_ns.sct   | blinky_ns | Scatter file for the non-secure zone, based on the generated one. |
+| blinky_s.sct    | blinky_s | Scatter file for the secure zone, based on the generated one. |
 
 \note
 If you want to learn more about the general project layout for an Armv8-M project using TrustZone, refer to
@@ -717,7 +719,7 @@ If you want to learn more about the general project layout for an Armv8-M projec
 
 As explained previously, the \#defines in \c mem_layout.h can be used to create generic scatter files that are easy
 to update once changes in the CMSIS-Zone project happen. Using the \b mem_layout.h file from CMSIS-Zone, the following
-scatter file is used in the secure \c blinky project:
+scatter file is used in the secure \c blinky project, which is based on the generated scatterf file (scatter_s.sct):
 
 \code
 ; Use Arm compiler 6 to pre-process the scatter file and pull in the defines from the mem_layout.h file:
@@ -763,7 +765,7 @@ LR_Veneer REGION_VENEER_START REGION_VENEER_SIZE {
 }
 \endcode
 
-The partition.h header file contains Configuration Wizard annotation so that it can be viewed in a graphical window:
+The partition_gen.h header file contains Configuration Wizard annotation so that it can be viewed in a graphical window:
 
 \image html partition_h_l5.png
 */
