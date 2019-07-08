@@ -648,7 +648,7 @@ part. Using CMSIS-Zone, it generates:
    application).
  - The SystemIsolation_Config.c header file that contains memory protection controller (MPC) and peripheral protection
    controller (PPC) and related interrupt setup.
- - The partition.h header file that contains the secure attribution unit (SAU) setup.
+ - The partition_gen.h header file that contains the secure attribution unit (SAU) setup and the NVIC configuration for secure/non-secure.
 
 The application itself shows how to implement calls between the secure and the non-secure part.
 
@@ -661,7 +661,7 @@ The application itself shows how to implement calls between the secure and the n
   
 The STM32L5.azone file of that project has the following configuration settings:
   - \ref zTUICreate "Added the zones" \c blinky_s and \c blinky_ns
-  - \ref zTUIMemAdd "Created the memory regions" \c CODE_NS, \c Config, \c CODE_S, \c Veneer, \c DATA_NS, and \c DATA_S
+  - \ref zTUIMemAdd "Created the memory regions" \c CODE_NS, \c CODE_S, \c Veneer, \c DATA_NS, and \c DATA_S
   - Selected various memory regions and peripherals for using in the different zones.
 
 \image html STM32L5_zones.png
@@ -676,10 +676,8 @@ directory:
 | dump_fzone.txt.ftl   | dump_fzone.txt   | Contains the complete model  |
 | helper.ftlinc        | N/A              | Helper template file with FTL functions. |
 | mem_layout.h.ftl     | mem_layout.h     | Header file that contains the memory region definitions, for example for the linker scatter file. |
-| scatter_ns.sct.ftl   | scatter_ns.sct   | Example scatter file for the non-secure zone. |
-| scatter_s.sct.ftl    | scatter_s.sct    | Example scatter file for the secure zone. |
-| partition_gen.h.ftl      | partition_gen.h      | Setup of the MPC and PPC. |
-| SystemIsolation_Config.c.ftl | SystemIsolation_Config.c | Configuration of the secure attribution unit (SAU) and the NVIC interrupt assignment. |
+| partition_gen.h.ftl      | partition_gen.h      | Configuration of the secure attribution unit (SAU) and the NVIC interrupt assignment. |
+| SystemIsolation_Config.c.ftl | SystemIsolation_Config.c | Setup of the MPC and PPC. |
 
 These files can be used in any IDE to create the final application. In the following, the usage in Arm Keil MDK is described.
 
