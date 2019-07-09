@@ -130,7 +130,7 @@
  */
 __STATIC_FORCEINLINE __NO_RETURN void __cmsis_start(void)
 {
-  extern void _start(void) __NO_RETURN;
+  void _start(void) __NO_RETURN;
   
   typedef struct {
     uint32_t const* src;
