@@ -676,8 +676,10 @@ directory:
 | dump_fzone.txt.ftl   | dump_fzone.txt   | Contains the complete model  |
 | helper.ftlinc        | N/A              | Helper template file with FTL functions. |
 | mem_layout.h.ftl     | mem_layout.h     | Header file that contains the memory region definitions, for example for the linker scatter file. |
-| partition_gen.h.ftl      | partition_gen.h      | Configuration of the secure attribution unit (SAU) and the NVIC interrupt assignment. |
+| partition_gen.h.ftl  | partition_gen.h  | Configuration of the secure attribution unit (SAU) and the NVIC interrupt assignment. |
 | SystemIsolation_Config.c.ftl | SystemIsolation_Config.c | Setup of the MPC and PPC. |
+| blinky_ns.sct.ftl    | blinky_ns.sct    | Scatter file for non-secure zone. |
+| blinky_s.sct.ftl     | blinky_s.sct	  | Scatter file for secure zone. |
 
 These files can be used in any IDE to create the final application. In the following, the usage in Arm Keil MDK is described.
 
@@ -701,14 +703,13 @@ The multiproject workspace contains the secure \c blinky_s project and the non-s
 
 The projects use the files generated in CMSIS-Zone as follows:
 
-| File               | Used in | Description |
-|:-------------------|:--------|:------------|
-| mem_layout.h       | blinky_s, blinky_ns | Input for the scatter files. |
-| partition_gen.h   | blinky_s | Setup of the MPC and PPC. This file is included in the partition_stm32l5xx.h header file. |
-| SystemIsolation_Config.c   | blinky_s | Configuration of the secure attribution unit (SAU) and the NVIC interrupt assignment. |
-| blinky_ns.sct   | blinky_ns | Scatter file for the non-secure zone, based on the generated one. |
-| blinky_s.sct    | blinky_s | Scatter file for the secure zone, based on the generated one. |
-
+| File                       | Used in     | Description |
+|:---------------------------|:------------|:------------|
+| mem_layout.h       | blinky_s, blinky_ns | Input for the linker scatter files. |
+| partition_gen.h            | blinky_s    | Configuration of the secure attribution unit (SAU) and the NVIC interrupt assignment. This file is included in the partition_stm32l5xx.h header file. |
+| SystemIsolation_Config.c   | blinky_s    | Setup of the MPC and PPC. |
+| blinky_ns.sct              | blinky_ns   | Scatter file for non-secure zone (initally based on generated file). |
+| blinky_s.sct	             | blinky_s    | Scatter file for secure zone (initally based on generated file). |
 \note
 If you want to learn more about the general project layout for an Armv8-M project using TrustZone, refer to
 <a href="https://www.keil.com/appnotes/docs/apnt_291.asp" target="_blank">Application Note 291</a>.
