@@ -1467,6 +1467,23 @@ The table lists predefined device features (peripherals).
 |LCD|Number of Segment LCD Controller|Com.Seg as a decimal number (see example)|Segment LCD Controller|\<feature type="LCD"  n="1" m="16.40" name="Segment LCD Controller"/\>|1 x 16 x 40  Segment LCD Controller|
 |Touch|Number of Touch Channels|N/A|Capacitive Touch Inputs|\<feature type="Touch"  n="10" name="Capacitive Touch Inputs"/\>|10 x Capacitive Touch Inputs|
 |Other|Number of Features|N/A|Other Feature|\<feature type="Other"  n="2" name="My other Interface"/\>|2 x My other Interface|
+|GPU|IP Name|Number of Shaders|GPU|\<feature type="GPU" n="Mali G71" m="1024"/\>|Mali G71 GPU with 1024 Shaders|
+|AI|N/A|N/A|AI|\<feature type="AI"/\>|AI accelerator|
+|FPGA|Number of Logic Elements|N/A|FPGA Array|\<feature type="FPGA" n="100000"/\>|FPGA with 100000 Logic Elements|
+|Application|Automotive, Industrial, Medical, MilAero|Standard Name|N/A|\<feature type="Application" n="Automotive" m="ISO 26262"/\>|Automotive ISO 26262 Applications|
+|IrDA|Standard Version|Data Rate in Bit/s|Infrared|\<feature type="IrDA" n="" m="1000000"/\>|IrDA 1 Mbit/s|
+|HDMI|Standard Version|N/A|HDMI|\<feature type="HDMI" n="1.3"/\>|HDMI 1.3|
+|MIPI|Standard Version|Data Rate in Bit/s|MIPI|\<feature type="MIPI" n="CSI" m="5000000000"/\>|MIPI CSI 5 Gbit/s|
+|PCIe|Standard Version|Maximum Data Rate in Bit/s|PCIe|\<feature type="PCIe" n="3.0" m="3000000000"/\>|PCIe 3.0 3 GT/s|
+|Bluetooth|Standard Version|Maximum Data Rate in Bit/s|Bluetooth|\<feature type="Bluetooth" n="4.2" name="Bluetooth Low Energy"/\>|Bluetooth Low Energy 4.2|
+|ZigBee|Application Profile|Data Rate in Bit/s|ZigBee|\<feature type="Zigbee" n="Home Automation 2.1"/\>|ZigBee Home Automation 1.2|
+|802.15.4|Standard Version|N/A|802.15.4|\<feature type="802.15.4" n="802.15.4d"/\>|802.15.4d|
+|WiFi|Standard Version|Maximum Data Rate in Bit/s|WiFi|\<feature type="WiFi" n="802.11ac"/\>|802.11ac WiFi|
+|LoRa|Standard Version|Maximum Data Rate in Bit/s|LoRa|\<feature type="LoRa"/\>|LoRa|
+|LTE Cat-M|Standard Version|Maximum Data Rate in Bit/s|LTE Cat-M|\<feature type="LTE-M" n="M1" m="1000000"/\>|LTE-M M1 1 Mbit/s|
+|NB-IoT|Standard Version|Maximum Data Rate in Bit/s|NB IoT|\<feature type="NB-IoT" n="NB1" m="250000"/\>|NB-IoT NB1 250 kbit/s|
+|NFC|Standard Version|Maximum Data Rate in Bit/s|NFC|\<feature type="NFC" n="ISO 18092"/\>|NFC ISO 18092|
+|WirelessOther|Standard Version|Maximum Data Rate in Bit/s|Other Wireless Connectivity|\<feature type="WirelessOther" n="MyStandard" m="1000000"/\>|MyStandard 1 Mbit/s Wireless Connectivity|
 	
 \delim
 
@@ -1869,7 +1886,7 @@ Contact cmsis@arm.com to ask for an extension. These values can be used in the e
   <tr>
     <td class="XML-Token">Autochips:150</td>
     <td>Autochips Inc.</td>
-    <td>http://www.autochips.com/en/index.php</td>
+    <td>http://www.autochips.com/index_en.aspx</td>
   </tr>
   <tr>
     <td class="XML-Token">CSR:118</td>
@@ -1905,6 +1922,11 @@ Contact cmsis@arm.com to ask for an extension. These values can be used in the e
     <td class="XML-Token">GigaDevice:123</td>
     <td>GigaDevice</td>
     <td>http://www.gigadevice.com</td>
+  </tr>
+  <tr>
+    <td class="XML-Token">Goodix:155</td>
+    <td>Goodix</td>
+    <td>https://www.goodix.com</td>
   </tr>
   <tr>
     <td class="XML-Token">HDSC:145</td>
@@ -2047,6 +2069,11 @@ Contact cmsis@arm.com to ask for an extension. These values can be used in the e
     <td>http://www.sinowealth.com</td>
   </tr>
   <tr>
+    <td class="XML-Token">SmartChip:156</td>
+    <td>SmartChip</td>
+    <td></td>
+  </tr>
+  <tr>
     <td class="XML-Token">Spansion:100</td>
     <td>Spansion (previously Fujitsu)</td>
     <td>http://www.spansion.com</td>
@@ -2099,7 +2126,7 @@ Contact cmsis@arm.com to ask for an extension. These values can be used in the e
   <tr>
     <td class="XML-Token">Xinnova:135</td>
     <td>Xinnova Technology</td>
-    <td>http://www.xinnovatech.com/en</td>
+    <td>(n/a)</td>
   </tr>
   <tr>
     <td class="XML-Token">Zilog:89</td>

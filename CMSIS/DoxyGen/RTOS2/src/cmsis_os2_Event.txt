@@ -32,12 +32,12 @@ Here is a simple example that shows how two thread can communicate with each oth
 The following steps are required to use event flags:
 -# In the thread that is supposed to send a event with id sig1_id, call the set function:
 \code
-osDelay (1000);                                           // wait for 1 second
-osEventFlagsSet (sig1_id, 0x0001U);                       // set the flag 0x0001U for event sig1_id
+osDelay(1000U);                                           // wait for 1 second
+osEventFlagsSet(sig1_id, 0x0001U);                        // set the flag 0x0001U for event sig1_id
 \endcode
 -# In another thread (or threads) that are supposed to wait for the event, call the wait function:
 \code
-osEventFlagsWait (sig1_id, 0x0001U, NULL, osWaitForever); // wait forever for any flag
+osEventFlagsWait(sig1_id, 0x0001U, NULL, osWaitForever);  // wait forever for any flag
 \endcode
 
 The following complete example code can be directly used with the "CMSIS-RTOS2 main template" and is also provided as a
@@ -45,42 +45,54 @@ stand-alone template for RTX5:
 
 <b>Code Example</b>
 \code
-void Thread_EventSender   (void *argument);                   // thread function 1
-void Thread_EventReceiver (void *argument);                   // thread function 2
-osThreadId_t tid_Thread_EventSender;                          // thread id 1
-osThreadId_t tid_Thread_EventReceiver;                        // thread id 2
+#include "cmsis_os2.h"                          // CMSIS RTOS header file
  
-osEventFlagsId_t evt_id;                                      // message queue id
+/*----------------------------------------------------------------------------
+ *  Event Flags creation & usage
+ *---------------------------------------------------------------------------*/
  
-#define FLAGS_MSK1 0x00000001ul
+#define FLAGS_MSK1 0x00000001U
  
-void app_main (void)
-{
-  tid_Thread_EventSender = osThreadNew (Thread_EventSender, NULL, NULL);
+osEventFlagsId_t evt_id;                        // event flags id
+ 
+osThreadId_t tid_Thread_EventSender;            // thread id 1
+osThreadId_t tid_Thread_EventReceiver;          // thread id 2
+ 
+void Thread_EventSender   (void *argument);     // thread function 1
+void Thread_EventReceiver (void *argument);     // thread function 2
+ 
+int Init_Events (void) {
+ 
+  evt_id = osEventFlagsNew(NULL);
+  if (evt_id == NULL) {
+    ; // Event Flags object not created, handle failure
+  }
+ 
+  tid_Thread_EventSender = osThreadNew(Thread_EventSender, NULL, NULL);
   if (tid_Thread_EventSender == NULL) {
-    ;                                                         // do something
+    return(-1);
   }
-  tid_Thread_EventReceiver = osThreadNew (Thread_EventReceiver, NULL, NULL);
+  tid_Thread_EventReceiver = osThreadNew(Thread_EventReceiver, NULL, NULL);
   if (tid_Thread_EventReceiver == NULL) {
-    ;                                                         // do something
+    return(-1);
   }
-  ;                                                           // do something
+
+  return(0);
 }
  
-void Thread_EventSender (void *argument)
-{
-  evt_id = osEventFlagsNew(NULL);
+void Thread_EventSender (void *argument) {
+ 
   while (1) {    
     osEventFlagsSet(evt_id, FLAGS_MSK1);
-    osDelay (1000);                                           // suspend thread
+    osThreadYield();                            // suspend thread
   }
 }
  
-void Thread_EventReceiver (void *argument)
-{
+void Thread_EventReceiver (void *argument) {
   uint32_t flags;
+ 
   while (1) {
-    flags = osEventFlagsWait (evt_id,FLAGS_MSK1,osFlagsWaitAny, osWaitForever);
+    flags = osEventFlagsWait(evt_id, FLAGS_MSK1, osFlagsWaitAny, osWaitForever);
     //handle event
   }
 }
@@ -123,27 +135,19 @@ set to \token{NULL}, i.e. kernel memory allocation is used for the event control
 
 <b>Code Example</b>
 \code
-#include "cmsis_os2.h"                                        // CMSIS RTOS header file
+#include "cmsis_os2.h"                          // CMSIS RTOS header file
  
-osEventFlagsId_t evt_id;                                      // message queue id
+osEventFlagsId_t evt_id;                        // message queue id
  
-void Thread_EventSender (void *argument)
-{
+int Init_Events (void) {
+ 
   evt_id = osEventFlagsNew(NULL);
-  while (1) {    
-    osEventFlagsSet(evt_id, FLAGS_MSK1);
-    osThreadYield ();                                         // suspend thread
+  if (evt_id == NULL) {
+    ; // Event Flags object not created, handle failure
+    return(-1);
   }
-}
- 
-void Thread_EventReceiver (void *argument)
-{
-  uint32_t  flags;
- 
-  while (1) {
-    flags = osEventFlagsWait (evt_id,FLAGS_MSK1,osFlagsWaitAny, osWaitForever);
-    //handle event
-  }
+
+  return(0);
 }
 \endcode
 */
@@ -165,26 +169,15 @@ Possible \ref flags_error_codes return values:
 
 <b>Code Example</b>
 \code
-#include "cmsis_os2.h"                                        // CMSIS RTOS header file
+#include "cmsis_os2.h"                          // CMSIS RTOS header file
  
-osEventFlagsId_t evt_id;                                      // message queue id
+osEventFlagsId_t evt_id;                        // event flasg id
  
-void Thread_EventSender (void *argument)
-{
-  evt_id = osEventFlagsNew(NULL);
+void Thread_EventSender (void *argument) {
+ 
   while (1) {    
-    osEventFlagsSet(evt_id, FLAGS_MSK1);
-    osThreadYield ();                                         // suspend thread
-  }
-}
- 
-void Thread_EventReceiver (void *argument)
-{
-  uint32_t  flags;
- 
-  while (1) {
-    flags = osEventFlagsWait (evt_id,FLAGS_MSK1,osFlagsWaitAny, osWaitForever);
-    //handle event
+    osEventFlagsSet(evt_id, 0x00000001U);
+    osThreadYield();                            // suspend thread
   }
 }
 \endcode
@@ -254,25 +247,15 @@ Possible \ref flags_error_codes return values:
 
 \b Code \b Example
 \code
-#include "cmsis_os2.h"                                        // CMSIS RTOS header file
+#include "cmsis_os2.h"                          // CMSIS RTOS header file
  
-osEventFlagsId_t evt_id;                                      // message queue id
+osEventFlagsId_t evt_id;                        // event flasg id
  
-void Thread_EventSender (void *argument)
-{
-  evt_id = osEventFlagsNew(NULL);
-  while (1) {    
-    osEventFlagsSet(evt_id, FLAGS_MSK1);
-    osThreadYield ();                                         // suspend thread
-  }
-}
- 
-void Thread_EventReceiver (void *argument)
-{
-  uint32_t  flags;
+void Thread_EventReceiver (void *argument) {
+  uint32_t flags;
  
   while (1) {
-    flags = osEventFlagsWait (evt_id,FLAGS_MSK1,osFlagsWaitAny, osWaitForever);
+    flags = osEventFlagsWait(evt_id, 0x00000001U, osFlagsWaitAny, osWaitForever);
     //handle event
   }
 }
@@ -308,11 +291,15 @@ The function \b osEventFlagsGetName returns the pointer to the name string of th
 
 <b>Code Example</b>
 \code
+#include "cmsis_os2.h"                          // CMSIS RTOS header file
+ 
+osEventFlagsId_t evt_id;                        // event flasg id
+ 
 void EvtFlagsGetName_example (void)  {
-  char id;                                           // id of the event flags object
+  char *name;
    
-  id = osEventFlagsGetName ();
-  if (id == NULL) {
+  name = osEventFlagsGetName(evt_id);
+  if (name == NULL) {
     // Failed to get the event flags object name
   }
 }

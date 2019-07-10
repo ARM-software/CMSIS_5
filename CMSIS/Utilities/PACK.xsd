@@ -142,6 +142,7 @@
       <xs:enumeration value="Generic:5" />
       <xs:enumeration value="Generalplus:151" />
       <xs:enumeration value="GigaDevice:123" />
+      <xs:enumeration value="Goodix:155" />
       <xs:enumeration value="HDSC:145" />
       <xs:enumeration value="Hilscher:88" />
       <xs:enumeration value="Holtek:106" />
@@ -178,6 +179,7 @@
       <xs:enumeration value="Silergy Corp:139" />
       <xs:enumeration value="Silicon Labs:21" />
       <xs:enumeration value="Sinowealth:149" />
+      <xs:enumeration value="SmartChip:156" />
       <xs:enumeration value="SONiX:110" />
       <xs:enumeration value="Spansion:100" />
       <xs:enumeration value="STMicroelectronics:13" />
@@ -763,6 +765,23 @@
       <xs:enumeration value="LCD" />
       <xs:enumeration value="Touch" />
       <xs:enumeration value="Other" />
+      <xs:enumeration value="GPU" />
+      <xs:enumeration value="AI" />
+      <xs:enumeration value="FPGA" />
+      <xs:enumeration value="Application" />
+      <xs:enumeration value="IrDA" />
+      <xs:enumeration value="HDMI" />
+      <xs:enumeration value="MIPI" />
+      <xs:enumeration value="PCIe" />
+      <xs:enumeration value="Bluetooth" />
+      <xs:enumeration value="ZigBee" />
+      <xs:enumeration value="802.15.4" />
+      <xs:enumeration value="WiFi" />
+      <xs:enumeration value="LoRa" />
+      <xs:enumeration value="LTE Cat-M" />
+      <xs:enumeration value="NB-IoT" />
+      <xs:enumeration value="NFC" />
+      <xs:enumeration value="WirelessOther" />
       <!-- deprecated, only for backwards compatibility -->
       <xs:enumeration value="I/O" />
       <xs:enumeration value="D/A" />

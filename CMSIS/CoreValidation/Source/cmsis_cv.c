@@ -135,6 +135,7 @@ static TEST_CASE TC_LIST[] = {
     TCD ( TC_CoreAFunc_MPIDR,                      TC_COREAFUNC_MPIDR                        ),
     TCD ( TC_CoreAFunc_VBAR,                       TC_COREAFUNC_VBAR                         ),
     TCD ( TC_CoreAFunc_MVBAR,                      TC_COREAFUNC_MVBAR                        ),
+    TCD ( TC_CoreAFunc_FPU_Enable,                 TC_COREAFUNC_FPU_ENABLE                   ),
   #endif
 #endif /* RTE_CV_COREFUNC */
 

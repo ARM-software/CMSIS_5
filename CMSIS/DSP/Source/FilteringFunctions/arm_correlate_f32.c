@@ -103,22 +103,22 @@ void arm_correlate_f32(
 
 #if (1)
 //#if !defined(ARM_MATH_CM0_FAMILY)
-
+  
   const float32_t *pIn1;                               /* InputA pointer */
   const float32_t *pIn2;                               /* InputB pointer */
         float32_t *pOut = pDst;                        /* Output pointer */
   const float32_t *px;                                 /* Intermediate inputA pointer */
   const float32_t *py;                                 /* Intermediate inputB pointer */
-  const float32_t *pSrc1;                              /* Intermediate pointers */
-        float32_t sum;                                 /* Accumulators */
+  const float32_t *pSrc1;
+        float32_t sum;
         uint32_t blockSize1, blockSize2, blockSize3;   /* Loop counters */
         uint32_t j, k, count, blkCnt;                  /* Loop counters */
         uint32_t outBlockSize;                         /* Loop counter */
         int32_t inc = 1;                               /* Destination address modifier */
 
-#if defined (ARM_MATH_LOOPUNROLL)
-        float32_t acc0, acc1, acc2, acc3;              /* Accumulators */
-        float32_t x0, x1, x2, x3, c0;                  /* Temporary variables for holding input and coefficient values */
+#if defined (ARM_MATH_LOOPUNROLL) || defined (ARM_MATH_NEON)
+  float32_t acc0, acc1, acc2, acc3;                    /* Accumulators */
+  float32_t x0, x1, x2, x3, c0;                        /* temporary variables for holding input and coefficient values */
 #endif
 
   /* The algorithm implementation is based on the lengths of the inputs. */
@@ -153,16 +153,6 @@ void arm_correlate_f32(
 
     /* Updating the pointer position to non zero value */
     pOut += j;
-
-    //while (j > 0U)
-    //{
-    //  /* Zero is stored in the destination buffer */
-    //  *pOut++ = 0.0f;
-
-    //  /* Decrement the loop counter */
-    //  j--;
-    //}
-
   }
   else
   {
@@ -183,7 +173,6 @@ void arm_correlate_f32(
 
     /* Destination address modifier is set to -1 */
     inc = -1;
-
   }
 
   /* The function is internally
@@ -231,11 +220,37 @@ void arm_correlate_f32(
     /* Accumulator is made zero for every iteration */
     sum = 0.0f;
 
-#if defined (ARM_MATH_LOOPUNROLL)
+#if defined (ARM_MATH_LOOPUNROLL) || defined(ARM_MATH_NEON)
 
     /* Loop unrolling: Compute 4 outputs at a time */
     k = count >> 2U;
 
+#if defined(ARM_MATH_NEON)
+    float32x4_t x,y;
+    float32x4_t res = vdupq_n_f32(0) ;
+    float32x2_t accum = vdup_n_f32(0);
+
+    while (k > 0U)
+    {
+      x = vld1q_f32(px);
+      y = vld1q_f32(py);
+
+      res = vmlaq_f32(res,x, y);
+
+      px += 4;
+      py += 4;
+
+      /* Decrement the loop counter */
+      k--;
+    }
+
+    accum = vpadd_f32(vget_low_f32(res), vget_high_f32(res));
+    sum += accum[0] + accum[1];
+
+    k = count & 0x3;
+#else
+    /* First part of the processing with loop unrolling.  Compute 4 MACs at a time.
+     ** a second loop below computes MACs for the remaining 1 to 3 samples. */
     while (k > 0U)
     {
       /* x[0] * y[srcBLen - 4] */
@@ -257,12 +272,13 @@ void arm_correlate_f32(
     /* Loop unrolling: Compute remaining outputs */
     k = count % 0x4U;
 
+#endif /* #if defined(ARM_MATH_NEON) */
 #else
 
     /* Initialize k with number of samples */
     k = count;
 
-#endif /* #if defined (ARM_MATH_LOOPUNROLL) */
+#endif /* #if defined (ARM_MATH_LOOPUNROLL) || defined(ARM_MATH_NEON) */
 
     while (k > 0U)
     {
@@ -318,10 +334,21 @@ void arm_correlate_f32(
    * srcBLen should be greater than or equal to 4 */
   if (srcBLen >= 4U)
   {
-#if defined (ARM_MATH_LOOPUNROLL)
+#if defined (ARM_MATH_LOOPUNROLL) || defined(ARM_MATH_NEON)
 
     /* Loop unrolling: Compute 4 outputs at a time */
     blkCnt = blockSize2 >> 2U;
+
+#if defined(ARM_MATH_NEON)
+      float32x4_t c;
+      float32x4_t x1v;
+      float32x4_t x2v;
+      uint32x4_t x1v_u;
+      uint32x4_t x2v_u;
+      float32x4_t x;
+      uint32x4_t x_u;
+      float32x4_t res = vdupq_n_f32(0) ;
+#endif /* #if defined(ARM_MATH_NEON) */
 
     while (blkCnt > 0U)
     {
@@ -331,6 +358,71 @@ void arm_correlate_f32(
       acc2 = 0.0f;
       acc3 = 0.0f;
 
+#if defined(ARM_MATH_NEON)
+      /* Compute 4 MACs simultaneously. */
+      k = srcBLen >> 2U;
+
+      res = vdupq_n_f32(0) ;
+
+      x1v = vld1q_f32(px);
+      px += 4;
+      do
+      {
+        x2v = vld1q_f32(px);
+        c = vld1q_f32(py);
+
+        py += 4;
+
+        x = x1v;
+        res = vmlaq_n_f32(res,x,c[0]);
+
+        x = vextq_f32(x1v,x2v,1);
+
+        res = vmlaq_n_f32(res,x,c[1]);
+
+        x = vextq_f32(x1v,x2v,2);
+
+	res = vmlaq_n_f32(res,x,c[2]);
+
+        x = vextq_f32(x1v,x2v,3);
+
+	res = vmlaq_n_f32(res,x,c[3]);
+
+        x1v = x2v;
+        px+=4;
+        x2v = vld1q_f32(px);
+
+      } while (--k);
+      
+      /* If the srcBLen is not a multiple of 4, compute any remaining MACs here.
+       ** No loop unrolling is used. */
+      k = srcBLen & 0x3;
+
+      while (k > 0U)
+      {
+        /* Read y[srcBLen - 5] sample */
+        c0 = *(py++);
+
+        res = vmlaq_n_f32(res,x1v,c0);
+
+        /* Reuse the present samples for the next MAC */
+        x1v[0] = x1v[1];
+        x1v[1] = x1v[2];
+        x1v[2] = x1v[3];
+
+        x1v[3] = *(px++);
+
+        /* Decrement the loop counter */
+        k--;
+      }
+
+      px-=1;
+
+      acc0 = res[0];
+      acc1 = res[1];
+      acc2 = res[2];
+      acc3 = res[3];
+#else
       /* read x[0], x[1], x[2] samples */
       x0 = *px++;
       x1 = *px++;
@@ -435,6 +527,8 @@ void arm_correlate_f32(
         k--;
       }
 
+#endif /* #if defined(ARM_MATH_NEON) */
+
       /* Store the result in the accumulator in the destination buffer. */
       *pOut = acc0;
       /* Destination pointer is updated according to the address modifier, inc */
@@ -468,18 +562,41 @@ void arm_correlate_f32(
     /* Initialize blkCnt with number of samples */
     blkCnt = blockSize2;
 
-#endif /* #if defined (ARM_MATH_LOOPUNROLL) */
+#endif /* #if defined (ARM_MATH_LOOPUNROLL) || defined(ARM_MATH_NEON) */
 
     while (blkCnt > 0U)
     {
       /* Accumulator is made zero for every iteration */
       sum = 0.0f;
 
-#if defined (ARM_MATH_LOOPUNROLL)
+#if defined (ARM_MATH_LOOPUNROLL) || defined(ARM_MATH_NEON)
 
     /* Loop unrolling: Compute 4 outputs at a time */
       k = srcBLen >> 2U;
 
+#if defined(ARM_MATH_NEON)
+    float32x4_t x,y;
+    float32x4_t res = vdupq_n_f32(0) ;
+    float32x2_t accum = vdup_n_f32(0);
+
+    while (k > 0U)
+    {
+      x = vld1q_f32(px);
+      y = vld1q_f32(py);
+
+      res = vmlaq_f32(res,x, y);
+
+      px += 4;
+      py += 4;
+      /* Decrement the loop counter */
+      k--;
+    }
+
+    accum = vpadd_f32(vget_low_f32(res), vget_high_f32(res));
+    sum += accum[0] + accum[1];
+#else
+      /* First part of the processing with loop unrolling.  Compute 4 MACs at a time.
+       ** a second loop below computes MACs for the remaining 1 to 3 samples. */
       while (k > 0U)
       {
         /* Perform the multiply-accumulate */
@@ -491,16 +608,16 @@ void arm_correlate_f32(
         /* Decrement loop counter */
         k--;
       }
-
-      /* Loop unrolling: Compute remaining outputs */
+#endif /* #if defined(ARM_MATH_NEON) */
+      /* If the srcBLen is not a multiple of 4, compute any remaining MACs here.
+       ** No loop unrolling is used. */
       k = srcBLen % 0x4U;
-
 #else
 
       /* Initialize blkCnt with number of samples */
       k = srcBLen;
 
-#endif /* #if defined (ARM_MATH_LOOPUNROLL) */
+#endif /* #if defined (ARM_MATH_LOOPUNROLL) || defined(ARM_MATH_NEON) */
 
       while (k > 0U)
       {
@@ -513,6 +630,7 @@ void arm_correlate_f32(
 
       /* Store the result in the accumulator in the destination buffer. */
       *pOut = sum;
+
       /* Destination pointer is updated according to the address modifier, inc */
       pOut += inc;
 
@@ -599,11 +717,35 @@ void arm_correlate_f32(
     /* Accumulator is made zero for every iteration */
     sum = 0.0f;
 
-#if defined (ARM_MATH_LOOPUNROLL)
+#if defined (ARM_MATH_LOOPUNROLL) || defined(ARM_MATH_NEON)
 
     /* Loop unrolling: Compute 4 outputs at a time */
     k = count >> 2U;
 
+#if defined(ARM_MATH_NEON)
+    float32x4_t x,y;
+    float32x4_t res = vdupq_n_f32(0) ;
+    float32x2_t accum = vdup_n_f32(0);
+
+    while (k > 0U)
+    {
+      x = vld1q_f32(px);
+      y = vld1q_f32(py);
+
+      res = vmlaq_f32(res,x, y);
+
+      px += 4;
+      py += 4;
+
+      /* Decrement the loop counter */
+      k--;
+    }
+
+    accum = vpadd_f32(vget_low_f32(res), vget_high_f32(res));
+    sum += accum[0] + accum[1];
+#else
+    /* First part of the processing with loop unrolling.  Compute 4 MACs at a time.
+     ** a second loop below computes MACs for the remaining 1 to 3 samples. */
     while (k > 0U)
     {
       /* Perform the multiply-accumulate */
@@ -623,6 +765,7 @@ void arm_correlate_f32(
       k--;
     }
 
+#endif /* #if defined (ARM_MATH_NEON) */
     /* Loop unrolling: Compute remaining outputs */
     k = count % 0x4U;
 
@@ -631,7 +774,7 @@ void arm_correlate_f32(
     /* Initialize blkCnt with number of samples */
     k = count;
 
-#endif /* #if defined (ARM_MATH_LOOPUNROLL) */
+#endif /* #if defined (ARM_MATH_LOOPUNROLL) || defined(ARM_MATH_NEON) */
 
     while (k > 0U)
     {

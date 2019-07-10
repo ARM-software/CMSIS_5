@@ -1,14 +1,14 @@
 /******************************************************************************
  * @file     ARMCA7.h
  * @brief    CMSIS Cortex-A7 Core Peripheral Access Layer Header File 
- * @version  V1.00
- * @date     10. January 2018
+ * @version  V1.1.0
+ * @date     15. May 2019
  *
  * @note
  *
  ******************************************************************************/
 /*
- * Copyright (c) 2009-2018 Arm Limited. All rights reserved.
+ * Copyright (c) 2009-2019 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -35,25 +35,26 @@ extern "C" {
 
 /* -------------------------  Interrupt Number Definition  ------------------------ */
 
+/** Device specific Interrupt IDs */
 typedef enum IRQn
 {
 /******  SGI Interrupts Numbers                 ****************************************/
-  SGI0_IRQn            =  0,
-  SGI1_IRQn            =  1,
-  SGI2_IRQn            =  2,
-  SGI3_IRQn            =  3,
-  SGI4_IRQn            =  4,
-  SGI5_IRQn            =  5,
-  SGI6_IRQn            =  6,
-  SGI7_IRQn            =  7,
-  SGI8_IRQn            =  8,
-  SGI9_IRQn            =  9,
-  SGI10_IRQn           = 10,
-  SGI11_IRQn           = 11,
-  SGI12_IRQn           = 12,
-  SGI13_IRQn           = 13,
-  SGI14_IRQn           = 14,
-  SGI15_IRQn           = 15,
+  SGI0_IRQn            =  0,        /*!< Software Generated Interrupt 0 */
+  SGI1_IRQn            =  1,        /*!< Software Generated Interrupt 1 */
+  SGI2_IRQn            =  2,        /*!< Software Generated Interrupt 2 */
+  SGI3_IRQn            =  3,        /*!< Software Generated Interrupt 3 */
+  SGI4_IRQn            =  4,        /*!< Software Generated Interrupt 4 */
+  SGI5_IRQn            =  5,        /*!< Software Generated Interrupt 5 */
+  SGI6_IRQn            =  6,        /*!< Software Generated Interrupt 6 */
+  SGI7_IRQn            =  7,        /*!< Software Generated Interrupt 7 */
+  SGI8_IRQn            =  8,        /*!< Software Generated Interrupt 8 */
+  SGI9_IRQn            =  9,        /*!< Software Generated Interrupt 9 */
+  SGI10_IRQn           = 10,        /*!< Software Generated Interrupt 10 */
+  SGI11_IRQn           = 11,        /*!< Software Generated Interrupt 11 */
+  SGI12_IRQn           = 12,        /*!< Software Generated Interrupt 12 */
+  SGI13_IRQn           = 13,        /*!< Software Generated Interrupt 13 */
+  SGI14_IRQn           = 14,        /*!< Software Generated Interrupt 14 */
+  SGI15_IRQn           = 15,        /*!< Software Generated Interrupt 15 */
 
 /******  Cortex-A7 Processor Exceptions Numbers ****************************************/
   SecurePhyTimer_IRQn  = 29,        /*!< Physical Timer Interrupt                      */
@@ -82,35 +83,38 @@ typedef enum IRQn
 /******************************************************************************/
 
 /* Peripheral and RAM base address */
-#define VE_A7_MP_FLASH_BASE0                  (0x00000000UL)                        /*!< (FLASH0    ) Base Address */
-#define VE_A7_MP_FLASH_BASE1                  (0x08000000UL)                        /*!< (FLASH1    ) Base Address */
-#define VE_A7_MP_PERIPH_BASE                  (0x18000000UL)                        /*!< (Peripheral) Base Address */
-#define VE_A7_MP_SRAM_BASE                    (0x2E000000UL)                        /*!< (SRAM      ) Base Address */
-#define VE_A7_MP_DRAM_BASE                    (0x80000000UL)                        /*!< (DRAM      ) Base Address */
-#define VE_A7_MP_VRAM_BASE                    (0x18000000UL)                        /*!< (VRAM      ) Base Address */
-#define VE_A7_MP_ETHERNET_BASE                (0x02000000UL + VE_A7_MP_PERIPH_BASE) /*!< (ETHERNET  ) Base Address */
-#define VE_A7_MP_USB_BASE                     (0x03000000UL + VE_A7_MP_PERIPH_BASE) /*!< (USB       ) Base Address */
-#define VE_A7_MP_DAP_BASE                     (0x1C000000UL)                        /*!< (DAP       ) Base Address */
-#define VE_A7_MP_SYSTEM_REG_BASE              (0x00010000UL + 0x1C000000UL)         /*!< (SYSTEM REG) Base Address */
-#define VE_A7_MP_SERIAL_BASE                  (0x00030000UL + 0x1C000000UL)         /*!< (SERIAL    ) Base Address */
-#define VE_A7_MP_AACI_BASE                    (0x00040000UL + 0x1C000000UL)         /*!< (AACI      ) Base Address */
-#define VE_A7_MP_MMCI_BASE                    (0x00050000UL + 0x1C000000UL)         /*!< (MMCI      ) Base Address */
-#define VE_A7_MP_KMI0_BASE                    (0x00060000UL + 0x1C000000UL)         /*!< (KMI0      ) Base Address */
-#define VE_A7_MP_UART_BASE                    (0x00090000UL + 0x1C000000UL)         /*!< (UART      ) Base Address */
-#define VE_A7_MP_WDT_BASE                     (0x000F0000UL + 0x1C000000UL)         /*!< (WDT       ) Base Address */
-#define VE_A7_MP_TIMER_BASE                   (0x00110000UL + 0x1C000000UL)         /*!< (TIMER     ) Base Address */
-#define VE_A7_MP_DVI_BASE                     (0x00160000UL + 0x1C000000UL)         /*!< (DVI       ) Base Address */
-#define VE_A7_MP_RTC_BASE                     (0x00170000UL + 0x1C000000UL)         /*!< (RTC       ) Base Address */
-#define VE_A7_MP_UART4_BASE                   (0x001B0000UL + 0x1C000000UL)         /*!< (UART4     ) Base Address */
-#define VE_A7_MP_CLCD_BASE                    (0x001F0000UL + 0x1C000000UL)         /*!< (CLCD      ) Base Address */
-#define VE_A7_MP_GIC_DISTRIBUTOR_BASE         (0x00001000UL + 0x2C000000UL)         /*!< (GIC DIST  ) Base Address */
-#define VE_A7_MP_GIC_INTERFACE_BASE           (0x00002000UL + 0x2C000000UL)         /*!< (GIC CPU IF) Base Address */
+#define VE_A7_MP_FLASH_BASE0                  (0x00000000UL)                                /*!< (FLASH0     ) Base Address */
+#define VE_A7_MP_FLASH_BASE1                  (0x0C000000UL)                                /*!< (FLASH1     ) Base Address */
+#define VE_A7_MP_SRAM_BASE                    (0x14000000UL)                                /*!< (SRAM       ) Base Address */
+#define VE_A7_MP_PERIPH_BASE_CS2              (0x18000000UL)                                /*!< (Peripheral ) Base Address */
+#define VE_A7_MP_VRAM_BASE                    (0x00000000UL + VE_A7_MP_PERIPH_BASE_CS2)     /*!< (VRAM       ) Base Address */
+#define VE_A7_MP_ETHERNET_BASE                (0x02000000UL + VE_A7_MP_PERIPH_BASE_CS2)     /*!< (ETHERNET   ) Base Address */
+#define VE_A7_MP_USB_BASE                     (0x03000000UL + VE_A7_MP_PERIPH_BASE_CS2)     /*!< (USB        ) Base Address */
+#define VE_A7_MP_PERIPH_BASE_CS3              (0x1C000000UL)                                /*!< (Peripheral ) Base Address */
+#define VE_A7_MP_DAP_BASE                     (0x00000000UL + VE_A7_MP_PERIPH_BASE_CS3)     /*!< (LOCAL DAP  ) Base Address */
+#define VE_A7_MP_SYSTEM_REG_BASE              (0x00010000UL + VE_A7_MP_PERIPH_BASE_CS3)     /*!< (SYSTEM REG ) Base Address */
+#define VE_A7_MP_SERIAL_BASE                  (0x00030000UL + VE_A7_MP_PERIPH_BASE_CS3)     /*!< (SERIAL     ) Base Address */
+#define VE_A7_MP_AACI_BASE                    (0x00040000UL + VE_A7_MP_PERIPH_BASE_CS3)     /*!< (AACI       ) Base Address */
+#define VE_A7_MP_MMCI_BASE                    (0x00050000UL + VE_A7_MP_PERIPH_BASE_CS3)     /*!< (MMCI       ) Base Address */
+#define VE_A7_MP_KMI0_BASE                    (0x00060000UL + VE_A7_MP_PERIPH_BASE_CS3)     /*!< (KMI0       ) Base Address */
+#define VE_A7_MP_UART_BASE                    (0x00090000UL + VE_A7_MP_PERIPH_BASE_CS3)     /*!< (UART       ) Base Address */
+#define VE_A7_MP_WDT_BASE                     (0x000F0000UL + VE_A7_MP_PERIPH_BASE_CS3)     /*!< (WDT        ) Base Address */
+#define VE_A7_MP_TIMER_BASE                   (0x00110000UL + VE_A7_MP_PERIPH_BASE_CS3)     /*!< (TIMER      ) Base Address */
+#define VE_A7_MP_DVI_BASE                     (0x00160000UL + VE_A7_MP_PERIPH_BASE_CS3)     /*!< (DVI        ) Base Address */
+#define VE_A7_MP_RTC_BASE                     (0x00170000UL + VE_A7_MP_PERIPH_BASE_CS3)     /*!< (RTC        ) Base Address */
+#define VE_A7_MP_UART4_BASE                   (0x001B0000UL + VE_A7_MP_PERIPH_BASE_CS3)     /*!< (UART4      ) Base Address */
+#define VE_A7_MP_CLCD_BASE                    (0x001F0000UL + VE_A7_MP_PERIPH_BASE_CS3)     /*!< (CLCD       ) Base Address */
+#define VE_A7_MP_PRIVATE_PERIPH_BASE          (0x2C000000UL)                                /*!< (Peripheral ) Base Address */
+#define VE_A7_MP_GIC_DISTRIBUTOR_BASE         (0x00001000UL + VE_A7_MP_PRIVATE_PERIPH_BASE) /*!< (GIC DIST   ) Base Address */
+#define VE_A7_MP_GIC_INTERFACE_BASE           (0x00002000UL + VE_A7_MP_PRIVATE_PERIPH_BASE) /*!< (GIC CPU IF ) Base Address */
+#define VE_A7_MP_PL310_BASE                   (0x000F0000UL + VE_A7_MP_PRIVATE_PERIPH_BASE) /*!< (L2C-310    ) Base Address */
+#define VE_A7_MP_SSRAM_BASE                   (0x2E000000UL)                                /*!< (System SRAM) Base Address */
+#define VE_A7_MP_DRAM_BASE                    (0x80000000UL)                                /*!< (DRAM       ) Base Address */
 #define GIC_DISTRIBUTOR_BASE                  VE_A7_MP_GIC_DISTRIBUTOR_BASE
 #define GIC_INTERFACE_BASE                    VE_A7_MP_GIC_INTERFACE_BASE
 
 //The VE-A7 model implements L1 cache as architecturally defined, but does not implement L2 cache.
 //Do not enable the L2 cache if you are running RTX on a VE-A7 model as it may cause a data abort.
-#define VE_A7_MP_PL310_BASE                   (0x2C0F0000UL)                        /*!< (L2C-310   ) Base Address */
 #define L2C_310_BASE                          VE_A7_MP_PL310_BASE
 
 /* --------  Configuration of the Cortex-A7 Processor and Core Peripherals  ------- */

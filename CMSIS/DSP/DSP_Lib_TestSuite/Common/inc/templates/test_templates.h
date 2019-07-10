@@ -62,25 +62,29 @@
 /**
  *  Assert that buffers A and B are byte-equivalent for a number of bytes.
  */
-#define TEST_ASSERT_BUFFERS_EQUAL(buf_a, buf_b, bytes)  \
-    do                                                  \
-    {                                                   \
-        if (memcmp(buf_a, buf_b, bytes) != 0)           \
-        {                                               \
-            return JTEST_TEST_FAILED;                   \
-        }                                               \
+
+#define TEST_ASSERT_BUFFERS_EQUAL(buf_a, buf_b, bytes)\
+    do                                                \
+    {                                                 \
+        if (memcmp(buf_a, buf_b, bytes) != 0)         \
+        {                                             \
+            return JTEST_TEST_FAILED;                 \
+        }                                             \
     } while (0)
+
+
+
 
 /**
  *  Assert that the two entities are equal.
  */
-#define TEST_ASSERT_EQUAL(a, b)                         \
-    do                                                  \
-    {                                                   \
-        if ((a) != (b))                                 \
-        {                                               \
-            return JTEST_TEST_FAILED;                   \
-        }                                               \
+#define TEST_ASSERT_EQUAL(a, b)      \
+    do                               \
+    {                                \
+        if ((a) != (b))              \
+        {                            \
+            return JTEST_TEST_FAILED;\
+        }                            \
     } while (0)
 
 /**
@@ -111,31 +115,35 @@
  *  Assert that the SNR between a reference and test sample is above a given
  *  threshold.
  */
-#define TEST_ASSERT_SNR(ref_ptr, tst_ptr, block_size, threshold)    \
-    do                                                              \
-    {                                                               \
-        float32_t snr = arm_snr_f32(ref_ptr, tst_ptr, block_size);  \
-        if ( snr <= threshold)                                       \
-        {                                                           \
-            JTEST_DUMP_STRF("SNR: %f\n", snr);                      \
-            return JTEST_TEST_FAILED;                               \
-        }                                                           \
-    } while (0)                                                      \
+
+#define TEST_ASSERT_SNR(ref_ptr, tst_ptr, block_size, threshold)  \
+    do                                                            \
+    {                                                             \
+        float32_t snr = arm_snr_f32(ref_ptr, tst_ptr, block_size);\
+        if ( snr <= threshold)                                    \
+        {                                                         \
+            JTEST_DUMP_STRF("SNR: %f\n", snr);                    \
+            return JTEST_TEST_FAILED;                             \
+        }                                                         \
+    } while (0)
+
 
 /**
  *  Assert that the SNR between a reference and test sample is above a given
  *  threshold.  Special case for float64_t
  */
-#define TEST_ASSERT_DBL_SNR(ref_ptr, tst_ptr, block_size, threshold)    \
+
+#define TEST_ASSERT_DBL_SNR(ref_ptr, tst_ptr, block_size, threshold)\
     do                                                              \
     {                                                               \
         float64_t snr = arm_snr_f64(ref_ptr, tst_ptr, block_size);  \
-        if ( snr <= threshold)                                       \
+        if ( snr <= threshold)                                      \
         {                                                           \
             JTEST_DUMP_STRF("SNR: %f\n", snr);                      \
             return JTEST_TEST_FAILED;                               \
         }                                                           \
-    } while (0)                                                      \
+    } while (0)
+
 
 /**
  *  Compare test and reference elements by converting to float and

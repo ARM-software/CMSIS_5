@@ -1,52 +1,50 @@
-#include "cmsis_os2.h"                                        // CMSIS RTOS header file
+#include "cmsis_os2.h"                          // CMSIS RTOS header file
  
 /*----------------------------------------------------------------------------
  *      Semaphore creation & usage
  *---------------------------------------------------------------------------*/
  
-void Thread_Semaphore (void *argument);                       // thread function
-osThreadId_t tid_Thread_Semaphore;                            // thread id
+osSemaphoreId_t sid_Semaphore;                  // semaphore id
  
-osSemaphoreId_t sid_Thread_Semaphore;                         // semaphore id
+osThreadId_t tid_Thread_Semaphore;              // thread id
  
+void Thread_Semaphore (void *argument);         // thread function
  
-int Init_Semaphore (void)
-{
+int Init_Semaphore (void) {
  
-  sid_Thread_Semaphore = osSemaphoreNew(2, 2, NULL);
-  if (!sid_Thread_Semaphore) {
+  sid_Semaphore = osSemaphoreNew(2U, 2U, NULL);
+  if (sid_Semaphore == NULL) {
     ; // Semaphore object not created, handle failure
   }
  
-  tid_Thread_Semaphore = osThreadNew (Thread_Semaphore, NULL, NULL);
-  if (!tid_Thread_Semaphore) {
+  tid_Thread_Semaphore = osThreadNew(Thread_Semaphore, NULL, NULL);
+  if (tid_Thread_Semaphore == NULL) {
     return(-1);
   }
  
   return(0);
 }
  
-void Thread_Semaphore (void *argument)
-{
+void Thread_Semaphore (void *argument) {
   int32_t val;
  
   while (1) {
     ; // Insert thread code here...
  
-    val = osSemaphoreAcquire (sid_Thread_Semaphore, 10);      // wait 10 mSec
+    val = osSemaphoreAcquire(sid_Semaphore, 10U);       // wait 10 mSec
     switch (val) {
-    case osOK:
-      ; // Use protected code here...
-      osSemaphoreRelease (sid_Thread_Semaphore);              // Return a token back to a semaphore
-      break;
-    case osErrorResource:
-      break;
-    case osErrorParameter:
-      break;
-    default:
-      break;
+      case osOK:
+        ; // Use protected code here...
+        osSemaphoreRelease(sid_Semaphore);              // return a token back to a semaphore
+        break;
+      case osErrorResource:
+        break;
+      case osErrorParameter:
+        break;
+      default:
+        break;
     }
  
-    osThreadYield ();                                         // suspend thread
+    osThreadYield();                                    // suspend thread
   }
 }

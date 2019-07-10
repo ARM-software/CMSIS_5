@@ -8,7 +8,7 @@
 ;* @param[in]      *pBitRevTab  points to bit reversal table.   
 ;* @return none.   
 ;*/
-void arm_bitreversal_32(uint32_t *pSrc, uint32_t bitRevLen, uint32_t *pBitRevTab)
+void ref_arm_bitreversal_32(uint32_t *pSrc, uint32_t bitRevLen, uint32_t *pBitRevTab)
 {
 	uint32_t a,b,i,tmp;
 	

@@ -141,6 +141,19 @@ typedef struct JTEST_FW_struct
  *  Fill the buffer named buf_name with value and dump it to the Keil debugger
  *  using action.
  */
+#if defined(ARMv7A) || defined(FILEIO)
+
+#define JTEST_ACT_DUMP(action, buf_name, value) \
+    do                                          \
+    {                                           \
+        JTEST_CLEAR_BUFFER(buf_name);           \
+	    printf("%s",value);                     \
+        strcpy(JTEST_FW.buf_name, (value));     \
+        JTEST_TRIGGER_ACTION(action);           \
+    } while (0)
+
+#else
+
 #define JTEST_ACT_DUMP(action, buf_name, value) \
     do                                          \
     {                                           \
@@ -149,6 +162,7 @@ typedef struct JTEST_FW_struct
         JTEST_TRIGGER_ACTION(action);           \
     } while (0)
 
+#endif
 /**
  *  Trigger the "Exit Framework" action in the Keil Debugger.
  */
@@ -192,6 +206,19 @@ typedef struct JTEST_FW_struct
 /**
  *  Dump a formatted string to the Keil Debugger.
  */
+#if defined(ARMv7A) || defined(FILEIO)
+
+#define JTEST_DUMP_STRF(format_str, ... )                               \
+    do                                                                  \
+    {                                                                   \
+        JTEST_CLEAR_STR_BUFFER();                                       \
+        sprintf(JTEST_FW.str_buffer,format_str, __VA_ARGS__);           \
+        printf("%s",JTEST_FW.str_buffer);                               \
+        jtest_dump_str_segments();                                      \
+    } while (0)
+
+#else
+
 #define JTEST_DUMP_STRF(format_str, ... )                               \
     do                                                                  \
     {                                                                   \
@@ -199,6 +226,8 @@ typedef struct JTEST_FW_struct
         sprintf(JTEST_FW.str_buffer,format_str, __VA_ARGS__);           \
         jtest_dump_str_segments();                                      \
     } while (0)
+
+#endif
 
 /* Pass/Fail Macros */
 /*--------------------------------------------------------------------------------*/

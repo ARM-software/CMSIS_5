@@ -7,6 +7,36 @@
     <th>Description</th>
   </tr>
   <tr>
+    <td>V1.7.0</td>
+    <td>
+      New Neon implementations of f32 functions
+       - Can be enabled with macros ARM_MATH_NEON and ARM_MATH_NEON_EXPERIMENTAL
+       
+      Python wrapper compatible with Numpy
+       - DSP/PythonWrapper/README.md is explaining how to build the wrapper
+
+      Preliminary cmake build
+       - DSP/README.md is explaining how to use it.
+         This first version is restricted to AC6 toolchain and
+         assume (hard coded path) that ArmDS is used.
+         Future versions will make it easier to switch toolchains.
+
+      Modified arm_math.h
+       - Removed dependance on cores. It is no more testing for some
+         specific cores but is now using features like ARM_MATH_LOOPUNROLL
+         (see comments in arm_math.h)
+       - Deprecated __SIMD32 and introduced new functions for
+         SIMD accesses.
+
+      Added compilation flags for FFT:
+       - It is now possible to include only the tables required for FFTs.
+         It is explained in DSP/README.md since it is simpler to use
+         it from the cmake (which is defining the right macros). But
+         the macros can also be defined without cmake.
+ 
+    </td>
+  </tr>
+  <tr>
     <td>V1.6.0</td>
     <td>
       Reworked DSP library source files

@@ -74,9 +74,47 @@ void arm_cmplx_mult_cmplx_f32(
         float32_t * pDst,
         uint32_t numSamples)
 {
-        uint32_t blkCnt;                               /* Loop counter */
-        float32_t a, b, c, d;                          /* Temporary variables */
+    uint32_t blkCnt;                               /* Loop counter */
+    float32_t a, b, c, d;  /* Temporary variables to store real and imaginary values */
 
+#if defined(ARM_MATH_NEON)
+    float32x4x2_t va, vb;
+    float32x4_t real, imag;
+    float32x4x2_t outCplx;
+
+    /* Compute 4 outputs at a time */
+    blkCnt = numSamples >> 2U;
+
+    while (blkCnt > 0U)
+    {
+        va = vld2q_f32(pSrcA);  // load & separate real/imag pSrcA (de-interleave 2)
+        vb = vld2q_f32(pSrcB);  // load & separate real/imag pSrcB
+
+	/* Increment pointers */
+        pSrcA += 8;
+        pSrcB += 8;
+	
+	/* Re{C} = Re{A}*Re{B} - Im{A}*Im{B} */
+        outCplx.val[0] = vmulq_f32(va.val[0], vb.val[0]);
+        outCplx.val[0] = vmlsq_f32(outCplx.val[0], va.val[1], vb.val[1]);
+
+	/* Im{C} = Re{A}*Im{B} + Im{A}*Re{B} */
+        outCplx.val[1] = vmulq_f32(va.val[0], vb.val[1]);
+        outCplx.val[1] = vmlaq_f32(outCplx.val[1], va.val[1], vb.val[0]);
+
+        vst2q_f32(pDst, outCplx);
+
+	/* Increment pointer */
+        pDst += 8;
+
+	/* Decrement the loop counter */
+        blkCnt--;
+    }
+
+    /* Tail */
+    blkCnt = numSamples & 3;
+
+#else
 #if defined (ARM_MATH_LOOPUNROLL)
 
   /* Loop unrolling: Compute 4 outputs at a time */
@@ -129,6 +167,7 @@ void arm_cmplx_mult_cmplx_f32(
   blkCnt = numSamples;
 
 #endif /* #if defined (ARM_MATH_LOOPUNROLL) */
+#endif /* #if defined(ARM_MATH_NEON) */
 
   while (blkCnt > 0U)
   {

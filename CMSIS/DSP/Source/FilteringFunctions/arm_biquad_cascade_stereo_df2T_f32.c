@@ -273,14 +273,13 @@ void arm_biquad_cascade_stereo_df2T_f32(
         /* Reset the output working pointer */
         pOut = pDst;
 
-        /* decrement the loop counter */
+        /* Decrement the loop counter */
         stage--;
 
     } while (stage > 0U);
 
 }
 LOW_OPTIMIZATION_EXIT
-
 /**
   @} end of BiquadCascadeDF2T group
  */

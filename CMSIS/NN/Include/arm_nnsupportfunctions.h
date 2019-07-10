@@ -32,12 +32,16 @@
 
 #include "arm_math.h"
 #include "arm_common_tables.h"
-//#include <cstring>
 
 #ifdef __cplusplus
 extern    "C"
 {
 #endif
+
+#define LEFT_SHIFT(_shift)  (_shift > 0 ? _shift : 0)
+#define RIGHT_SHIFT(_shift) (_shift > 0 ? 0 : -_shift)
+#define Q31_MIN (0x80000000L)
+#define Q31_MAX (0x7FFFFFFFL)
 
 /**
  * @brief Union for SIMD access of Q31/Q15/Q7 types
@@ -72,11 +76,11 @@ typedef enum
  */
 
 /**
- * @brief Converts the elements of the Q7 vector to Q15 vector without left-shift 
- * @param[in]       *pSrc points to the Q7 input vector    
- * @param[out]      *pDst points to the Q15 output vector   
- * @param[in]       blockSize length of the input vector    
- * @return none.    
+ * @brief Converts the elements of the Q7 vector to Q15 vector without left-shift
+ * @param[in]       *pSrc points to the Q7 input vector
+ * @param[out]      *pDst points to the Q15 output vector
+ * @param[in]       blockSize length of the input vector
+ * @return none.
  *
  */
 
@@ -84,10 +88,10 @@ void      arm_q7_to_q15_no_shift(const q7_t * pSrc, q15_t * pDst, uint32_t block
 
 /**
  * @brief  Converts the elements of the Q7 vector to reordered Q15 vector without left-shift
- * @param[in]       *pSrc points to the Q7 input vector    
- * @param[out]      *pDst points to the Q15 output vector   
- * @param[in]       blockSize length of the input vector    
- * @return none.    
+ * @param[in]       *pSrc points to the Q7 input vector
+ * @param[out]      *pDst points to the Q15 output vector
+ * @param[in]       blockSize length of the input vector
+ * @return none.
  *
  */
 
@@ -163,7 +167,7 @@ void arm_nn_mult_q15(
   q15_t * pDst,
   const uint16_t out_shift,
   uint32_t blockSize);
-  
+
 /**
  * @brief           Q7 vector multiplication with variable output shifts
  * @param[in]       *pSrcA        pointer to the first input vector
@@ -185,15 +189,78 @@ void arm_nn_mult_q7(
   q7_t * pDst,
   const uint16_t out_shift,
   uint32_t blockSize);
- 
+
 /**
- * @brief defition to adding rouding offset
+ * @brief macro for adding rounding offset
  */
 #ifndef ARM_NN_TRUNCATE
-    #define NN_ROUND(out_shift) ( 0x1 << (out_shift - 1) )
+    #define NN_ROUND(out_shift) ( (0x1u << out_shift) >> 1 )
 #else
     #define NN_ROUND(out_shift) 0
 #endif
+
+/**
+ * @brief           Saturating doubling high multiply. Result matches
+ *                  NEON instruction VQRDMULH.
+ * @param[in]       m1        Multiplicand
+ * @param[in]       m2        Multiplier
+ * @return          Result of multiplication.
+ *
+ */
+__STATIC_FORCEINLINE q31_t arm_nn_sat_doubling_high_mult(const q31_t m1, const q31_t m2)
+{
+    q31_t result = 0;
+    // Rounding offset to add for a right shift of 31
+    q63_t mult = 1 << 30;
+
+    if ((m1 < 0) ^ (m2 < 0))
+    {
+        mult = 1 - mult;
+    }
+    // Gets resolved as a SMLAL instruction
+    mult = mult + (q63_t)m1 * m2;
+
+    // Utilize all of the upper 32 bits. This is the doubling step
+    // as well.
+    result = mult / (1UL << 31);
+
+    if ((m1 == m2) && (m1 == Q31_MIN))
+    {
+        result = Q31_MAX;
+    }
+    return result;
+}
+
+/**
+ * @brief           Rounding divide by power of two.
+ * @param[in]       dividend - Dividend
+ * @param[in]       exponent - Divisor = power(2, exponent)
+ *                             Range: [0, 31]
+ * @return          Rounded result of division. Midpoint is rounded away from zero.
+ *
+ */
+__STATIC_FORCEINLINE q31_t arm_nn_divide_by_power_of_two(const q31_t dividend, const q31_t exponent)
+{
+    q31_t result = 0;
+    const q31_t remainder_mask = (1l << exponent) - 1;
+    int32_t remainder = remainder_mask & dividend;
+
+    // Basic division
+    result = dividend >> exponent;
+
+    // Adjust 'result' for rounding (mid point away from zero)
+    q31_t threshold = remainder_mask >> 1;
+    if (result < 0)
+    {
+        threshold++;
+    }
+    if (remainder > threshold)
+    {
+        result++;
+    }
+
+    return result;
+}
 
 #ifdef __cplusplus
 }

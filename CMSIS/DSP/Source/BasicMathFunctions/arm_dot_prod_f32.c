@@ -68,11 +68,53 @@ void arm_dot_prod_f32(
         uint32_t blkCnt;                               /* Loop counter */
         float32_t sum = 0.0f;                          /* Temporary return variable */
 
+#if defined(ARM_MATH_NEON)
+    float32x4_t vec1;
+    float32x4_t vec2;
+    float32x4_t res;
+    float32x4_t accum = vdupq_n_f32(0);    
+
+    /* Compute 4 outputs at a time */
+    blkCnt = blockSize >> 2U;
+
+    vec1 = vld1q_f32(pSrcA);
+    vec2 = vld1q_f32(pSrcB);
+
+    while (blkCnt > 0U)
+    {
+        /* C = A[0]*B[0] + A[1]*B[1] + A[2]*B[2] + ... + A[blockSize-1]*B[blockSize-1] */
+        /* Calculate dot product and then store the result in a temporary buffer. */
+        
+	accum = vmlaq_f32(accum, vec1, vec2);
+	
+        /* Increment pointers */
+        pSrcA += 4;
+        pSrcB += 4; 
+
+        vec1 = vld1q_f32(pSrcA);
+        vec2 = vld1q_f32(pSrcB);
+        
+        /* Decrement the loop counter */
+        blkCnt--;
+    }
+    
+#if __aarch64__
+    sum = vpadds_f32(vpadd_f32(vget_low_f32(accum), vget_high_f32(accum)));
+#else
+    sum = (vpadd_f32(vget_low_f32(accum), vget_high_f32(accum)))[0] + (vpadd_f32(vget_low_f32(accum), vget_high_f32(accum)))[1];
+#endif    
+
+    /* Tail */
+    blkCnt = blockSize & 0x3;
+
+#else
 #if defined (ARM_MATH_LOOPUNROLL)
 
   /* Loop unrolling: Compute 4 outputs at a time */
   blkCnt = blockSize >> 2U;
 
+  /* First part of the processing with loop unrolling. Compute 4 outputs at a time.
+   ** a second loop below computes the remaining 1 to 3 samples. */
   while (blkCnt > 0U)
   {
     /* C = A[0]* B[0] + A[1]* B[1] + A[2]* B[2] + .....+ A[blockSize-1]* B[blockSize-1] */
@@ -99,6 +141,7 @@ void arm_dot_prod_f32(
   blkCnt = blockSize;
 
 #endif /* #if defined (ARM_MATH_LOOPUNROLL) */
+#endif /* #if defined(ARM_MATH_NEON) */
 
   while (blkCnt > 0U)
   {

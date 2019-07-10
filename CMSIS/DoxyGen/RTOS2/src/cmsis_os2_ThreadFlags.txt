@@ -80,12 +80,12 @@ Possible \ref flags_error_codes return values:
  *      Function 'signal_func' called from multiple threads
  *---------------------------------------------------------------------------*/
 void signal_func (osThreadId_t tid)  {
-  osThreadFlagsSet(tid_clock, 0x0100);      /* set signal to clock thread    */
-  osDelay(500);                             /* delay 500ms                   */
-  osThreadFlagsSet(tid_clock, 0x0100);      /* set signal to clock thread    */
-  osDelay(500);                             /* delay 500ms                   */
-  osThreadFlagsSet(tid, 0x0001);            /* set signal to thread 'thread' */
-  osDelay(500);                             /* delay 500ms                   */
+  osThreadFlagsSet(tid_clock, 0x0100U);     /* set signal to clock thread    */
+  osDelay(500U);                            /* delay 500ms                   */
+  osThreadFlagsSet(tid_clock, 0x0100U);     /* set signal to clock thread    */
+  osDelay(500U);                            /* delay 500ms                   */
+  osThreadFlagsSet(tid, 0x0001U);           /* set signal to thread 'thread' */
+  osDelay(500U);                            /* delay 500ms                   */
 }
 \endcode
 */
@@ -147,13 +147,13 @@ Possible \ref flags_error_codes return values:
  
 void Thread (void* arg) {
   ;
-  osThreadFlagsWait (0x00000001U, osFlagsWaitAny, osWaitForever); // Wait forever until thread flag 1 is set.
+  osThreadFlagsWait(0x00000001U, osFlagsWaitAny, osWaitForever); // Wait forever until thread flag 1 is set.
   ;
-  osThreadFlagsWait (0x00000003U, osFlagsWaitAny, osWaitForever); // Wait forever until either thread flag 0 or 1 is set.
+  osThreadFlagsWait(0x00000003U, osFlagsWaitAny, osWaitForever); // Wait forever until either thread flag 0 or 1 is set.
   ;
-  osThreadFlagsWait (0x00000003U, osFlagsWaitAll, 10); // Wait for 10 timer ticks until thread flags 0 and 1 are set. Timeout afterwards.
+  osThreadFlagsWait(0x00000003U, osFlagsWaitAll, 10U); // Wait for 10 timer ticks until thread flags 0 and 1 are set. Timeout afterwards.
   ;
-  osThreadFlagsWait (0x00000003U, osFlagsWaitAll | osFlagsNoClear, osWaitForever); // Same as the above, but the flags will not be cleared.
+  osThreadFlagsWait(0x00000003U, osFlagsWaitAll | osFlagsNoClear, osWaitForever); // Same as the above, but the flags will not be cleared.
 }
 \endcode
 */
