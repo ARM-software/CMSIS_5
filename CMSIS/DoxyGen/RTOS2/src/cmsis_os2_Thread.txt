@@ -20,7 +20,7 @@ Threads can be in the following states:
    \ref ThreadStates "BLOCKED", the next \ref ThreadStates "READY" thread with the highest priority becomes the \ref ThreadStates "RUNNING" thread.
  - \b BLOCKED: Threads that are blocked either delayed, waiting for an event to occur or suspended are in the \ref ThreadStates "BLOCKED"
    state.
- - \b TERMINATED: When \ref osThreadTerminate is called, threads are \ref ThreadStates "TERMINATED" with resources not yet released. 
+ - \b TERMINATED: When \ref osThreadTerminate is called, threads are \ref ThreadStates "TERMINATED" with resources not yet released (applies to \ref joinable_threads "joinable threads).
  - \b INACTIVE: Threads that are not created or have been terminated with all resources released are in the \ref ThreadStates "INACTIVE" state.
  
 \image html "ThreadStatus.png" "Thread State and State Transitions"
@@ -214,7 +214,7 @@ State of a thread as retrieved by \ref osThreadGetState. In case \b osThreadGetS
 will return \c osThreadError, otherwise it returns the thread state.
 
 \var osThreadState_t::osThreadInactive
-\details The thread is created but not actively used, or has been terminated.
+\details The thread is created but not actively used, or has been terminated (returned for static control block allocation, when memory pools are used \ref osThreadError is returned as the control block is no longer valid)
 
 \var osThreadState_t::osThreadReady
 \details The thread is ready for execution but not currently running.
@@ -226,10 +226,10 @@ will return \c osThreadError, otherwise it returns the thread state.
 \details The thread is currently blocked (delayed, waiting for an event or suspended).
 
 \var osThreadState_t::osThreadTerminated
-\details The thread is terminated and all its resources are freed.
+\details The thread is terminated and all its resources are not yet freed (applies to \ref joinable_threads "joinable threads).
 
 \var osThreadState_t::osThreadError
-\details The thread thread has raised an error condition and cannot be scheduled.
+\details The thread does not exist (has raised an error condition) and cannot be scheduled.
 */
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
