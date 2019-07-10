@@ -20,7 +20,7 @@
         - Preliminary cmake build
         - Compilation flags for FFTs
         - Changes to arm_math.h
-      CMSIS-NN: Version 1.2.0 (see revision history for details)
+      CMSIS-NN: 1.2.0 (see revision history for details)
         - New function for depthwise convolution with asymmetric quantization.
         - New support functions for requantization.
       CMSIS-RTOS:
