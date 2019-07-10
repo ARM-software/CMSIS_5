@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-DSP
-   &#160;<span id="projectnumber">Version 1.6.0</span>
+   &#160;<span id="projectnumber">Version 1.7.0</span>
    </div>
    <div id="projectbrief">CMSIS DSP Software Library</div>
   </td>
@@ -179,6 +179,14 @@ $(document).ready(function(){initNavTree('index.html','');});
 <li>ARM_MATH_LOOPUNROLL:</li>
 </ul>
 <p>Define macro ARM_MATH_LOOPUNROLL to enable manual loop unrolling in DSP functions</p>
+<ul>
+<li>ARM_MATH_NEON:</li>
+</ul>
+<p>Define macro ARM_MATH_NEON to enable Neon versions of the DSP functions. It is not enabled by default when Neon is available because performances are dependent on the compiler and target architecture.</p>
+<ul>
+<li>ARM_MATH_NEON_EXPERIMENTAL:</li>
+</ul>
+<p>Define macro ARM_MATH_NEON_EXPERIMENTAL to enable experimental Neon versions of of some DSP functions. Experimental Neon versions currently do not have better performances than the scalar versions.</p>
 <hr/>
  <h2>CMSIS-DSP in ARM::CMSIS Pack </h2>
 <p>The following files relevant to CMSIS-DSP are present in the <b>ARM::CMSIS</b> Pack directories: </p>
@@ -208,7 +216,7 @@ $(document).ready(function(){initNavTree('index.html','');});
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Mar 21 2019 12:24:26 for CMSIS-DSP by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Wed Jul 10 2019 15:20:40 for CMSIS-DSP Version 1.7.0 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

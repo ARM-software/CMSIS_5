@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Zone (Preview)
-   &#160;<span id="projectnumber">Version 0.9.0</span>
+   &#160;<span id="projectnumber">Version 0.9.2</span>
    </div>
    <div id="projectbrief">System Resource Management</div>
   </td>
@@ -183,6 +183,10 @@ $(document).ready(function(){initNavTree('xml_device.html','');});
 <tr>
 <td>DcoreVersion </td><td>Hardware revision of the processor core </td><td>xs:string </td><td>required  </td></tr>
 <tr>
+<td>DnumInterrupts </td><td>Number of NVIC interrupt sources available to the processor core (excludes exception vectors). </td><td>NonNegativeInteger </td><td>optional  </td></tr>
+<tr>
+<td>DnumSauRegions </td><td>Number of regions in the Security Attribution Unit (SAU) of the processor core. </td><td>NonNegativeInteger </td><td>optional  </td></tr>
+<tr>
 <td>info </td><td>Brief description of the processor. </td><td>xs:string </td><td>optional  </td></tr>
 </table>
 </div></div><!-- contents -->
@@ -191,7 +195,7 @@ $(document).ready(function(){initNavTree('xml_device.html','');});
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="zoneFormat.html">Zone Description Format</a></li><li class="navelem"><a class="el" href="xml_rzone_pg.html">/rzone element</a></li>
-    <li class="footer">Generated on Thu Mar 21 2019 12:25:03 for CMSIS-Zone (Preview) by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Wed Jul 10 2019 15:21:06 for CMSIS-Zone (Preview) Version 0.9.2 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

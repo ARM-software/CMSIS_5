@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Zone (Preview)
-   &#160;<span id="projectnumber">Version 0.9.0</span>
+   &#160;<span id="projectnumber">Version 0.9.2</span>
    </div>
    <div id="projectbrief">System Resource Management</div>
   </td>
@@ -129,7 +129,7 @@ $(document).ready(function(){initNavTree('xml_zones.html','');});
 <tr>
 <th>Child Elements </th><th>Description </th><th>Type </th><th>Occurrence  </th></tr>
 <tr>
-<td><a class="el" href="xml_zones.html#xml_zone">zone</a> </td><td>Zone definitions </td><td>complexType </td><td>0..*  </td></tr>
+<td><a class="el" href="xml_zones.html#xml_zone">zone</a> </td><td>Zone definitions </td><td>complexType </td><td>1..*  </td></tr>
 </table>
 <h1><a class="anchor" id="xml_zone"></a>
 /azone/zones/zone element</h1>
@@ -146,7 +146,7 @@ $(document).ready(function(){initNavTree('xml_zones.html','');});
 <tr>
 <td>info </td><td>Brief description of the zone. </td><td>xs:string </td><td>optional  </td></tr>
 <tr>
-<td>Pref </td><td>The processor(s) that can access the memory and peripherals of this zone. If omitted all processors of the system have access. </td><td>xs:string </td><td>optional  </td></tr>
+<td>Pname </td><td>The processor that can access the memory and peripherals of this zone. If omitted all processors of the system have access. </td><td>xs:string </td><td>optional  </td></tr>
 <tr>
 <td>security </td><td><a class="el" href="zoneFormat.html#security">Security level</a> for code execution in this zone. </td><td><a class="el" href="zoneFormat.html#security">SecurityType</a> </td><td>optional  </td></tr>
 <tr>
@@ -154,7 +154,7 @@ $(document).ready(function(){initNavTree('xml_zones.html','');});
 <tr>
 <th>Child Elements </th><th>Description </th><th>Type </th><th>Occurrence  </th></tr>
 <tr>
-<td><a class="el" href="xml_zones.html#xml_assign">assign</a> </td><td>Resource Assignments </td><td>complexType </td><td>0..*  </td></tr>
+<td><a class="el" href="xml_zones.html#xml_assign">assign</a> </td><td>Resource Assignments </td><td>complexType </td><td>1..*  </td></tr>
 </table>
 <h1><a class="anchor" id="xml_assign"></a>
 /azone/zones/zone/assign element</h1>
@@ -175,11 +175,15 @@ $(document).ready(function(){initNavTree('xml_zones.html','');});
 <tr>
 <td>access </td><td><a class="el" href="zoneFormat.html#access">Access</a> permissions for this assignment. </td><td><a class="el" href="zoneFormat.html#access">AccessType</a> </td><td>optional  </td></tr>
 <tr>
-<td>Pref </td><td>The processor(s) that can access this assignment. If omitted the processors of the zone have access. </td><td>xs:string </td><td>optional  </td></tr>
+<td>Pname </td><td>The processor that can access this assignment. If omitted the processors of the zone have access. </td><td>xs:string </td><td>optional  </td></tr>
 <tr>
 <td>security </td><td><a class="el" href="zoneFormat.html#security">Security</a> attributes for this assignment. </td><td><a class="el" href="zoneFormat.html#security">SecurityType</a> </td><td>optional  </td></tr>
 <tr>
 <td>privilege </td><td><a class="el" href="zoneFormat.html#privilege">Privilege level</a> for this assignment. </td><td><a class="el" href="zoneFormat.html#privilege">PrivilegeType</a> </td><td>optional  </td></tr>
+<tr>
+<td>uninit </td><td>"1" specifies that this region is not zero initialized during startup. Default value is "0". </td><td>xs:boolean </td><td>optional  </td></tr>
+<tr>
+<td>dma </td><td>"1" specifies that this region is accessed by a DMA controller. Default value is "0". </td><td>xs:boolean </td><td>optional  </td></tr>
 <tr>
 <th>Child Elements </th><th>Description </th><th>Type </th><th>Occurrence  </th></tr>
 <tr>
@@ -212,7 +216,7 @@ $(document).ready(function(){initNavTree('xml_zones.html','');});
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="zoneFormat.html">Zone Description Format</a></li><li class="navelem"><a class="el" href="xml_azone_pg.html">/azone element</a></li>
-    <li class="footer">Generated on Thu Mar 21 2019 12:25:04 for CMSIS-Zone (Preview) by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Wed Jul 10 2019 15:21:06 for CMSIS-Zone (Preview) Version 0.9.2 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

@@ -2,7 +2,6 @@ var searchData=
 [
   ['mmu_5fappage',['MMU_APPage',['../group__MMU__functions.html#gac7c88d4d613350059b4d77814ea2c7a0',1,'core_ca.h']]],
   ['mmu_5fapsection',['MMU_APSection',['../group__MMU__functions.html#ga946866c84a72690c385ee07545bf8145',1,'core_ca.h']]],
-  ['mmu_5fcreatetranslationtable',['MMU_CreateTranslationTable',['../system__ARMCA9_8h.html#a4f5b024323a24b2e195c0997b9c82e72',1,'system_ARMCA9.h']]],
   ['mmu_5fdisable',['MMU_Disable',['../group__MMU__functions.html#ga2a2badd06531e04f559b97fdb2aea154',1,'core_ca.h']]],
   ['mmu_5fdomainpage',['MMU_DomainPage',['../group__MMU__functions.html#ga45f5389cb1351bb2806a38ac8c32d416',1,'core_ca.h']]],
   ['mmu_5fdomainsection',['MMU_DomainSection',['../group__MMU__functions.html#gabd88f4c41b74365c38209692785287d0',1,'core_ca.h']]],

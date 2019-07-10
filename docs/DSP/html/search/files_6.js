@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['statisticsfunctions_2ec',['StatisticsFunctions.c',['../StatisticsFunctions_8c.html',1,'']]],
-  ['supportfunctions_2ec',['SupportFunctions.c',['../SupportFunctions_8c.html',1,'']]]
+  ['matrixfunctions_2ec',['MatrixFunctions.c',['../MatrixFunctions_8c.html',1,'']]]
 ];

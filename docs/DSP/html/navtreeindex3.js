@@ -1,5 +1,7 @@
 var NAVTREEINDEX3 =
 {
+"structarm__lms__norm__instance__q31.html":[4,49],
+"structarm__lms__norm__instance__q31.html#a28d7b9e437817f83397e081967e90f3c":[4,49,4],
 "structarm__lms__norm__instance__q31.html#a28e4c085af69c9c3e2e95dacf8004c3e":[4,49,2],
 "structarm__lms__norm__instance__q31.html#a3c0ae42869afec8555dc8e3a7ef9b386":[4,49,0],
 "structarm__lms__norm__instance__q31.html#a47c4466d644e0d8ba407995adfa9b917":[4,49,7],

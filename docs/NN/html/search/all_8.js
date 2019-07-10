@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['main',['main',['../arm__nnexamples__cifar10_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4',1,'main():&#160;arm_nnexamples_cifar10.cpp'],['../arm__nnexamples__gru_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4',1,'main():&#160;arm_nnexamples_gru.cpp']]]
+  ['left_5fshift',['LEFT_SHIFT',['../arm__nnsupportfunctions_8h.html#a2953f124ae444ebdd2b2a0873ac36b7e',1,'arm_nnsupportfunctions.h']]]
 ];

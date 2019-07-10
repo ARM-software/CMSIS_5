@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Zone (Preview)
-   &#160;<span id="projectnumber">Version 0.9.0</span>
+   &#160;<span id="projectnumber">Version 0.9.2</span>
    </div>
    <div id="projectbrief">System Resource Management</div>
   </td>
@@ -138,40 +138,16 @@ CMSIS-Zone development workflow</div></div>
 Hardware partitioning in multiple steps</div></div>
 <p>The following sections explain:</p>
 <ul>
+<li><a class="el" href="zoneToolUsage.html">CMSIS-Zone Utility</a> shows hot to use the CMSIS-Zone stand-alone tool to generate the relevant project information to be used in integrated development environments (IDEs).</li>
 <li><a class="el" href="zoneFormat.html">Zone Description Format</a> (XML based) that stores system resource information and the configuration of project zones and execution zones.</li>
-<li><a class="el" href="GenDataModel.html">Generator Data Model</a> which is used to create tool set-up files and hardware configuration files.</li>
+<li><a class="el" href="GenDataModel.html">Generator Data Model</a> which is used to create tool set-up files and hardware configuration files. </li>
 </ul>
-<h1><a class="anchor" id="UseCases"></a>
-CMSIS-Zone Use Cases</h1>
-<p><b>CMSIS-Zone</b> simplifies to manage the complexity and the configuration of modern embedded systems that frequently include multiple processors and/or memory protection hardware. It helps to split the embedded application various projects which creates the need to partition system resources. And it simplifies the consistent configuration of access rights across the system, for example when using an MPU (memory protection unit).</p>
-<p>The following section describes several uses cases that benefit from <b>CMSIS-Zone</b>.</p>
-<h2><a class="anchor" id="UseCase_MPU"></a>
-MPU Protection</h2>
-<p>Focused on a single core microcontroller one might want to utilize the memory protection unit (MPU) capabilities to segregate parts of an application. Thus the need to partition the system resources accordingly arises.</p>
-<div class="image">
-<img src="mpu.png" alt="mpu.png"/>
-<div class="caption">
-MPU Protection</div></div>
- <h2><a class="anchor" id="UseCase_TrustZone"></a>
-TrustZone Partitioning</h2>
-<p>TrustZone extensions add another degree of segregation which must be handled consistently. In this case one has to handle MPU settings per security context and SAU configuration.</p>
-<div class="image">
-<img src="trustzone.png" alt="trustzone.png"/>
-<div class="caption">
-TrustZone Partitioning and MPU Protection</div></div>
- <h2><a class="anchor" id="UseCase_MultiCore"></a>
-Multi-Core Partitioning</h2>
-<p>Beside traditional single cores asymmetric and hybrid multi-core devices contribute to increasing development complexity for embedded systems. Having multiple cores running different parts of an application concurrently needs a well defined resource assignment to prevent undesired misbehavior.</p>
-<div class="image">
-<img src="multicore.png" alt="multicore.png"/>
-<div class="caption">
-Multi-Core Partitioning</div></div>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Mar 21 2019 12:25:04 for CMSIS-Zone (Preview) by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Wed Jul 10 2019 15:21:06 for CMSIS-Zone (Preview) Version 0.9.2 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

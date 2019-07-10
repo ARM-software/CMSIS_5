@@ -3,8 +3,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<title>/fm/zone/mpu_setup element</title>
-<title>CMSIS-Zone (Preview): /fm/zone/mpu_setup element</title>
+<title>mpu_setup element</title>
+<title>CMSIS-Zone (Preview): mpu_setup element</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="cmsis.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="jquery.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Zone (Preview)
-   &#160;<span id="projectnumber">Version 0.9.0</span>
+   &#160;<span id="projectnumber">Version 0.9.2</span>
    </div>
    <div id="projectbrief">System Resource Management</div>
   </td>
@@ -107,35 +107,35 @@ $(document).ready(function(){initNavTree('fm_mpu_setup.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">/fm/zone/mpu_setup element </div>  </div>
+<div class="title">mpu_setup element </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>The <a class="el" href="fm_mpu_setup.html">/fm/zone/mpu_setup element</a> contains the configuration information for the Memory Protection Unit (MPU).</p>
+<div class="textblock"><p>The <a class="el" href="fm_mpu_setup.html">mpu_setup element</a> contains the configuration information for the Memory Protection Unit (MPU).</p>
 <table  class="cmtable" summary="Element: mpu_setup">
 <tr>
 <th>Parent Element </th><th colspan="2">Element Chain  </th></tr>
 <tr>
-<td><a class="el" href="GenDataModel.html#fm_system">zone</a> </td><td colspan="3"><a class="el" href="GenDataModel.html#fm_zone">/fm/zone element</a>  </td></tr>
+<td><a class="el" href="fm_system.html">zone</a> </td><td colspan="3"><a class="el" href="fm_zone.html">zone element</a>  </td></tr>
 <tr>
 <th>Child Elements </th><th>Description </th><th>Type  </th></tr>
 <tr>
-<td>.type </td><td>Implementation of the MPU ("v7M" or "v8M"). </td><td>xs:string  </td></tr>
+<td>mpu_setup.type </td><td>Implementation of the MPU ("v7M" or "v8M"). </td><td>xs:string  </td></tr>
 <tr>
-<td>.region[<em>n</em>] </td><td>Sequenc of MPU region settings. </td><td>sequence  </td></tr>
+<td>mpu_setup.region[<em>n</em>] </td><td>Sequence of MPU region settings. </td><td>sequence  </td></tr>
 <tr>
-<td>.region[<em>n</em>].no </td><td>Number of the region. </td><td>xs:string  </td></tr>
+<td>mpu_setup.region[<em>n</em>].no </td><td>Number of the region. </td><td>xs:string  </td></tr>
 <tr>
-<td>.region[<em>n</em>].BaseAddress </td><td>The base address of the region. </td><td>xs:string  </td></tr>
+<td>mpu_setup.region[<em>n</em>].BaseAddress </td><td>The base address of the region. </td><td>xs:string  </td></tr>
 <tr>
-<td>.setup[<em>n</em>].RASR </td><td>The MPU region attribute and size register value. </td><td>xs:string  </td></tr>
+<td>mpu_setup.region[<em>n</em>].RASR </td><td>The MPU region attribute and size register value. </td><td>xs:string  </td></tr>
 </table>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="GenDataModel.html">Generator Data Model</a></li>
-    <li class="footer">Generated on Thu Mar 21 2019 12:25:04 for CMSIS-Zone (Preview) by Arm Ltd. All rights reserved.
+    <li class="navelem"><a class="el" href="GenDataModel.html">Generator Data Model</a></li><li class="navelem"><a class="el" href="fm_zone.html">zone element</a></li>
+    <li class="footer">Generated on Wed Jul 10 2019 15:21:06 for CMSIS-Zone (Preview) Version 0.9.2 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

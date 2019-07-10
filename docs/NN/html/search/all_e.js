@@ -1,10 +1,12 @@
 var searchData=
 [
-  ['tanhhtable_5fq15',['tanhHTable_q15',['../arm__nntables_8c.html#a4d093f7b0dc798d4898ff4fd125b21a6',1,'arm_nntables.c']]],
-  ['tanhltable_5fq15',['tanhLTable_q15',['../arm__nntables_8c.html#a7cb5ad2fff7e241d09024332488a706e',1,'arm_nntables.c']]],
-  ['tanhtable_5fq15',['tanhTable_q15',['../arm__nn__tables_8h.html#a6faad2fec173b2702fd0f219a83ca320',1,'tanhTable_q15():&#160;arm_nntables.c'],['../arm__nntables_8c.html#a6faad2fec173b2702fd0f219a83ca320',1,'tanhTable_q15():&#160;arm_nntables.c']]],
-  ['tanhtable_5fq7',['tanhTable_q7',['../arm__nn__tables_8h.html#a4f854bdf13f630ec21b3ad074491e32f',1,'tanhTable_q7():&#160;arm_nntables.c'],['../arm__nntables_8c.html#a4f854bdf13f630ec21b3ad074491e32f',1,'tanhTable_q7():&#160;arm_nntables.c']]],
-  ['test_5fhistory',['test_history',['../arm__nnexamples__gru_8cpp.html#ac327d41d23812b53d83c2da91971cbfe',1,'arm_nnexamples_gru.cpp']]],
-  ['test_5finput1',['test_input1',['../arm__nnexamples__gru_8cpp.html#a8b0acc149c9bd4aadfb9c1fa8345f57a',1,'arm_nnexamples_gru.cpp']]],
-  ['test_5finput2',['test_input2',['../arm__nnexamples__gru_8cpp.html#aad5944359ea4a426550a87efd0d90b02',1,'arm_nnexamples_gru.cpp']]]
+  ['revision_20history_20of_20cmsis_2dnn',['Revision History of CMSIS-NN',['../ChangeLog_pg.html',1,'']]],
+  ['reset_5fbias',['reset_bias',['../namespacepara__gen.html#a3da798c88974b5d760f3e97288a0c490',1,'para_gen']]],
+  ['reset_5fgate_5fbias',['reset_gate_bias',['../arm__nnexamples__gru_8cpp.html#a2a9d5c9f16ee778ecc8170d8664722c7',1,'reset_gate_bias():&#160;arm_nnexamples_gru.cpp'],['../arm__nnexamples__gru__test__data_8h.html#a8b4b6522d1ab0d6c51a1fe3c51d0020d',1,'RESET_GATE_BIAS():&#160;arm_nnexamples_gru_test_data.h']]],
+  ['reset_5fgate_5fweight_5fx2',['RESET_GATE_WEIGHT_X2',['../arm__nnexamples__gru__test__data_8h.html#a52f158cb32bf2b46e3d2c4b94876db75',1,'arm_nnexamples_gru_test_data.h']]],
+  ['reset_5fgate_5fweight_5fx4',['RESET_GATE_WEIGHT_X4',['../arm__nnexamples__gru__test__data_8h.html#a177dc986b0c728df8628a205719be0ee',1,'arm_nnexamples_gru_test_data.h']]],
+  ['reset_5fgate_5fweights',['reset_gate_weights',['../arm__nnexamples__gru_8cpp.html#ac2ae1ff19167c2bb359db2b319ca1060',1,'arm_nnexamples_gru.cpp']]],
+  ['reset_5fweight',['reset_weight',['../namespacepara__gen.html#a4ebba057829420c878a0a29ee9c71582',1,'para_gen']]],
+  ['right_5fshift',['RIGHT_SHIFT',['../arm__nnsupportfunctions_8h.html#a26af54489c1401b91595bf0c92ef87c4',1,'arm_nnsupportfunctions.h']]],
+  ['row_5fdim',['row_dim',['../namespacepara__gen.html#a26cc0a96186b2e6b238d783d9364f14d',1,'para_gen']]]
 ];

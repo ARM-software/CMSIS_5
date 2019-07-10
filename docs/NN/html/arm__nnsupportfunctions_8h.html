@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-NN
-   &#160;<span id="projectnumber">Version 1.1.0</span>
+   &#160;<span id="projectnumber">Version 1.2.0</span>
    </div>
    <div id="projectbrief">CMSIS NN Software Library</div>
   </td>
@@ -125,8 +125,16 @@ Data Structures</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
+<tr class="memitem:a2953f124ae444ebdd2b2a0873ac36b7e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="arm__nnsupportfunctions_8h.html#a2953f124ae444ebdd2b2a0873ac36b7e">LEFT_SHIFT</a>(_shift)</td></tr>
+<tr class="separator:a2953f124ae444ebdd2b2a0873ac36b7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a26af54489c1401b91595bf0c92ef87c4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="arm__nnsupportfunctions_8h.html#a26af54489c1401b91595bf0c92ef87c4">RIGHT_SHIFT</a>(_shift)</td></tr>
+<tr class="separator:a26af54489c1401b91595bf0c92ef87c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1eb725c94dbb052aa24b62321be0445b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="arm__nnsupportfunctions_8h.html#a1eb725c94dbb052aa24b62321be0445b">Q31_MIN</a></td></tr>
+<tr class="separator:a1eb725c94dbb052aa24b62321be0445b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a468734b237f1c95a31715aa2b60a576e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="arm__nnsupportfunctions_8h.html#a468734b237f1c95a31715aa2b60a576e">Q31_MAX</a></td></tr>
+<tr class="separator:a468734b237f1c95a31715aa2b60a576e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4cbd428a2b4a4f6b2a6e4219520c7ce0"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="arm__nnsupportfunctions_8h.html#a4cbd428a2b4a4f6b2a6e4219520c7ce0">NN_ROUND</a>(out_shift)</td></tr>
-<tr class="memdesc:a4cbd428a2b4a4f6b2a6e4219520c7ce0"><td class="mdescLeft">&#160;</td><td class="mdescRight">defition to adding rouding offset  <a href="#a4cbd428a2b4a4f6b2a6e4219520c7ce0">More...</a><br/></td></tr>
+<tr class="memdesc:a4cbd428a2b4a4f6b2a6e4219520c7ce0"><td class="mdescLeft">&#160;</td><td class="mdescRight">macro for adding rounding offset  <a href="#a4cbd428a2b4a4f6b2a6e4219520c7ce0">More...</a><br/></td></tr>
 <tr class="separator:a4cbd428a2b4a4f6b2a6e4219520c7ce0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
@@ -149,8 +157,32 @@ Functions</h2></td></tr>
 <tr class="memitem:gad46c9ab012cceda8ce6681c687a58c70"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__NNBasicMath.html#gad46c9ab012cceda8ce6681c687a58c70">arm_nn_mult_q7</a> (q7_t *pSrcA, q7_t *pSrcB, q7_t *pDst, const uint16_t out_shift, uint32_t blockSize)</td></tr>
 <tr class="memdesc:gad46c9ab012cceda8ce6681c687a58c70"><td class="mdescLeft">&#160;</td><td class="mdescRight">Q7 vector multiplication with variable output shifts.  <a href="group__NNBasicMath.html#gad46c9ab012cceda8ce6681c687a58c70">More...</a><br/></td></tr>
 <tr class="separator:gad46c9ab012cceda8ce6681c687a58c70"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a51721c10f116c9f5b8d9908367989d44"><td class="memItemLeft" align="right" valign="top">__STATIC_FORCEINLINE q31_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="arm__nnsupportfunctions_8h.html#a51721c10f116c9f5b8d9908367989d44">arm_nn_sat_doubling_high_mult</a> (const q31_t m1, const q31_t m2)</td></tr>
+<tr class="memdesc:a51721c10f116c9f5b8d9908367989d44"><td class="mdescLeft">&#160;</td><td class="mdescRight">Saturating doubling high multiply. Result matches NEON instruction VQRDMULH.  <a href="#a51721c10f116c9f5b8d9908367989d44">More...</a><br/></td></tr>
+<tr class="separator:a51721c10f116c9f5b8d9908367989d44"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab6dbc2fd53fae3ccdd1d0d70c8d3b491"><td class="memItemLeft" align="right" valign="top">__STATIC_FORCEINLINE q31_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="arm__nnsupportfunctions_8h.html#ab6dbc2fd53fae3ccdd1d0d70c8d3b491">arm_nn_divide_by_power_of_two</a> (const q31_t dividend, const q31_t exponent)</td></tr>
+<tr class="memdesc:ab6dbc2fd53fae3ccdd1d0d70c8d3b491"><td class="mdescLeft">&#160;</td><td class="mdescRight">Rounding divide by power of two.  <a href="#ab6dbc2fd53fae3ccdd1d0d70c8d3b491">More...</a><br/></td></tr>
+<tr class="separator:ab6dbc2fd53fae3ccdd1d0d70c8d3b491"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Macro Definition Documentation</h2>
+<a class="anchor" id="a2953f124ae444ebdd2b2a0873ac36b7e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define LEFT_SHIFT</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">_shift</td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Referenced by <a class="el" href="group__NNConv.html#ga02a296cb4f6361a70c3ecf1ef1238292">arm_depthwise_conv_u8_basic_ver1()</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="a4cbd428a2b4a4f6b2a6e4219520c7ce0"></a>
 <div class="memitem">
 <div class="memproto">
@@ -166,6 +198,52 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Referenced by <a class="el" href="group__NNConv.html#ga110adcfdaab356c750c6270aa5e05f29">arm_convolve_1x1_HWC_q7_fast_nonsquare()</a>, <a class="el" href="group__NNConv.html#ga55701f213b198084b52eab53097f1f58">arm_convolve_HWC_q15_basic()</a>, <a class="el" href="group__NNConv.html#ga4efb1ccbbaa7dd936961989dcb443f50">arm_convolve_HWC_q15_fast()</a>, <a class="el" href="group__NNConv.html#ga614ec3b71eb96e29952ec3f09e7b9c3c">arm_convolve_HWC_q15_fast_nonsquare()</a>, <a class="el" href="group__NNConv.html#ga210ae8d8fc1d12ee15b41f1fa6947681">arm_convolve_HWC_q7_basic()</a>, <a class="el" href="group__NNConv.html#ga4501fa22c0836002aa47ccc313dce252">arm_convolve_HWC_q7_basic_nonsquare()</a>, <a class="el" href="group__NNConv.html#gae00d3c1285907d59657369fc98bcc83f">arm_convolve_HWC_q7_fast()</a>, <a class="el" href="group__NNConv.html#gabc6d6b991024e9e5c5cdbd7489de88ef">arm_convolve_HWC_q7_fast_nonsquare()</a>, <a class="el" href="group__NNConv.html#ga98f2ead67d7cbdf558b0cd8a3b8fc148">arm_convolve_HWC_q7_RGB()</a>, <a class="el" href="group__NNConv.html#gad3d21b3bc6dbd6f3b97d01104349cb0a">arm_depthwise_separable_conv_HWC_q7()</a>, <a class="el" href="group__NNConv.html#ga32ac508c5467813a84f74f96655dc697">arm_depthwise_separable_conv_HWC_q7_nonsquare()</a>, <a class="el" href="group__FC.html#ga4a1521e7532a1e62d71f3b12762016e2">arm_fully_connected_mat_q7_vec_q15()</a>, <a class="el" href="group__FC.html#gae3857bb6375692e81dde8cbd70adec08">arm_fully_connected_mat_q7_vec_q15_opt()</a>, <a class="el" href="group__FC.html#gaac666c212b209e636c2369dd5c75d0dc">arm_fully_connected_q15()</a>, <a class="el" href="group__FC.html#ga062912078da113f5dd2004fd919a0ff2">arm_fully_connected_q15_opt()</a>, <a class="el" href="group__FC.html#ga8b7e0c2e989e8c75f0dc789f3115323d">arm_fully_connected_q7()</a>, <a class="el" href="group__FC.html#gaf82b71ef472a38f8fc9ac414d9d07e67">arm_fully_connected_q7_opt()</a>, <a class="el" href="arm__nn__mat__mult__kernel__q7__q15_8c.html#abc4fb258cfe8500ee68e812a293a80a3">arm_nn_mat_mult_kernel_q7_q15()</a>, <a class="el" href="arm__nn__mat__mult__kernel__q7__q15__reordered_8c.html#aefe9c7ce9a65060a244b06dffe74c4b3">arm_nn_mat_mult_kernel_q7_q15_reordered()</a>, <a class="el" href="group__NNBasicMath.html#ga08f8340aa6533271b3aa6d211614fe22">arm_nn_mult_q15()</a>, and <a class="el" href="group__NNBasicMath.html#gad46c9ab012cceda8ce6681c687a58c70">arm_nn_mult_q7()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a468734b237f1c95a31715aa2b60a576e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define Q31_MAX</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Referenced by <a class="el" href="arm__nnsupportfunctions_8h.html#a51721c10f116c9f5b8d9908367989d44">arm_nn_sat_doubling_high_mult()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a1eb725c94dbb052aa24b62321be0445b"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define Q31_MIN</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Referenced by <a class="el" href="arm__nnsupportfunctions_8h.html#a51721c10f116c9f5b8d9908367989d44">arm_nn_sat_doubling_high_mult()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a26af54489c1401b91595bf0c92ef87c4"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define RIGHT_SHIFT</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">_shift</td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Referenced by <a class="el" href="group__NNConv.html#ga02a296cb4f6361a70c3ecf1ef1238292">arm_depthwise_conv_u8_basic_ver1()</a>.</p>
 
 </div>
 </div>
@@ -190,13 +268,88 @@ Functions</h2></td></tr>
 
 </div>
 </div>
+<h2 class="groupheader">Function Documentation</h2>
+<a class="anchor" id="ab6dbc2fd53fae3ccdd1d0d70c8d3b491"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">__STATIC_FORCEINLINE q31_t arm_nn_divide_by_power_of_two </td>
+          <td>(</td>
+          <td class="paramtype">const q31_t&#160;</td>
+          <td class="paramname"><em>dividend</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const q31_t&#160;</td>
+          <td class="paramname"><em>exponent</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">dividend</td><td>- Dividend </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">exponent</td><td>- Divisor = power(2, exponent) Range: [0, 31] </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Rounded result of division. Midpoint is rounded away from zero. </dd></dl>
+
+<p>Referenced by <a class="el" href="group__NNConv.html#ga02a296cb4f6361a70c3ecf1ef1238292">arm_depthwise_conv_u8_basic_ver1()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a51721c10f116c9f5b8d9908367989d44"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">__STATIC_FORCEINLINE q31_t arm_nn_sat_doubling_high_mult </td>
+          <td>(</td>
+          <td class="paramtype">const q31_t&#160;</td>
+          <td class="paramname"><em>m1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const q31_t&#160;</td>
+          <td class="paramname"><em>m2</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">m1</td><td>Multiplicand </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">m2</td><td>Multiplier </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Result of multiplication. </dd></dl>
+
+<p>References <a class="el" href="arm__nnsupportfunctions_8h.html#a468734b237f1c95a31715aa2b60a576e">Q31_MAX</a>, and <a class="el" href="arm__nnsupportfunctions_8h.html#a1eb725c94dbb052aa24b62321be0445b">Q31_MIN</a>.</p>
+
+<p>Referenced by <a class="el" href="group__NNConv.html#ga02a296cb4f6361a70c3ecf1ef1238292">arm_depthwise_conv_u8_basic_ver1()</a>.</p>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_06560e3359c5da94845158f0031c08e8.html">NN</a></li><li class="navelem"><a class="el" href="dir_17aeddf785065efc95337b880bac512b.html">Include</a></li><li class="navelem"><a class="el" href="arm__nnsupportfunctions_8h.html">arm_nnsupportfunctions.h</a></li>
-    <li class="footer">Generated on Thu Mar 21 2019 12:24:41 for CMSIS-NN by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Wed Jul 10 2019 15:20:50 for CMSIS-NN Version 1.2.0 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

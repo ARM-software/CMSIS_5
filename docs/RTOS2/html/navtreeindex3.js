@@ -35,6 +35,7 @@ var NAVTREEINDEX3 =
 "theory_of_operation.html":[5,1],
 "theory_of_operation.html#CMSIS_RTOS_ISR_Calls":[5,1,8],
 "theory_of_operation.html#CMSIS_RTOS_TimeOutValue":[5,1,7],
+"theory_of_operation.html#CMSIS_RTOS_svcFunctions":[5,1,9],
 "theory_of_operation.html#GlobalMemoryPool":[5,1,2,0],
 "theory_of_operation.html#MemoryAllocation":[5,1,2],
 "theory_of_operation.html#ObjectMemoryPool":[5,1,2,1],

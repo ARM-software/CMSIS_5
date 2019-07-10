@@ -27,9 +27,9 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS
-   &#160;<span id="projectnumber">Version 5.5.1</span>
+   &#160;<span id="projectnumber">Version 5.6.0</span>
    </div>
-   <div id="projectbrief">Cortex Microcontroller Software Interface Standard</div>
+   <div id="projectbrief">Software Interface Standard for Arm Cortex-based Microcontrollers</div>
   </td>
  </tr>
  </tbody>
@@ -89,6 +89,53 @@ $(document).ready(function(){initNavTree('cm_revisionHistory.html','');});
 <table  class="cmtable" summary="Revision History">
 <tr>
 <th>Version </th><th>Description  </th></tr>
+<tr>
+<td>5.6.0 </td><td><ul>
+<li>CMSIS-Core (Cortex-M) 5.3.0<ul>
+<li>Added provisions for compiler-independent C startup code.</li>
+</ul>
+</li>
+<li>CMSIS-Core (Cortex-A) 1.1.4<ul>
+<li>Fixed __FPU_Enable.</li>
+</ul>
+</li>
+<li>CMSIS-Driver 2.7.1<ul>
+<li>Finalized WiFi Interface API 1.0.0</li>
+</ul>
+</li>
+<li>CMSIS-DSP 1.7.0 (see revision history for details)<ul>
+<li>New Neon versions of f32 functions</li>
+<li>Compilation flags for FFTs</li>
+</ul>
+</li>
+<li>CMSIS-NN 1.2.0 (unchanged)</li>
+<li>CMSIS-RTOS 1.03 (unchanged)<ul>
+<li>RTX 4.82.0 (see revision history for details)</li>
+</ul>
+</li>
+<li>CMSIS-RTOS 2.1.3 (unchanged)<ul>
+<li>RTX 5.5.1 (see revision history for details)</li>
+</ul>
+</li>
+<li>CMSIS-Pack 1.6.0 (unchanged)</li>
+<li>CMSIS-SVD 1.3.3 (unchanged)</li>
+<li>CMSIS-DAP 2.0.0 (unchanged)</li>
+<li>CMSIS-Zone 0.12.0 (preview)<ul>
+<li>Completely reworked</li>
+</ul>
+</li>
+<li>Devices<ul>
+<li>Generalized C startup code for all Cortex-M family devices.</li>
+<li>Updated Cortex-A memory regions and system configuration files.</li>
+</ul>
+</li>
+<li>Utilities<ul>
+<li>SVDConv 3.3.27</li>
+<li>PackChk 1.3.82 (unchanged)   </li>
+</ul>
+</li>
+</ul>
+</td></tr>
 <tr>
 <td>5.5.1 </td><td><ul>
 <li>CMSIS-Core (Cortex-M) 5.2.1<ul>
@@ -325,7 +372,7 @@ $(document).ready(function(){initNavTree('cm_revisionHistory.html','');});
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Mar 21 2019 12:24:28 for CMSIS by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Wed Jul 10 2019 15:20:41 for CMSIS Version 5.6.0 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

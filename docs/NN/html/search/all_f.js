@@ -1,11 +1,9 @@
 var searchData=
 [
-  ['update_5fbias',['update_bias',['../namespacepara__gen.html#a3b9bab83acf3b4296f46165da08ddbc9',1,'para_gen']]],
-  ['update_5fgate_5fbias',['UPDATE_GATE_BIAS',['../arm__nnexamples__gru__test__data_8h.html#a89f5a888f55a353a914ccf6542c41f0b',1,'UPDATE_GATE_BIAS():&#160;arm_nnexamples_gru_test_data.h'],['../arm__nnexamples__gru_8cpp.html#ac5569d687768d693618f987a91e8aee5',1,'update_gate_bias():&#160;arm_nnexamples_gru.cpp']]],
-  ['update_5fgate_5fweight_5fx2',['UPDATE_GATE_WEIGHT_X2',['../arm__nnexamples__gru__test__data_8h.html#ab753489637dfba855233303733416a73',1,'arm_nnexamples_gru_test_data.h']]],
-  ['update_5fgate_5fweight_5fx4',['UPDATE_GATE_WEIGHT_X4',['../arm__nnexamples__gru__test__data_8h.html#abb89228c76ad50a997938f676153b77f',1,'arm_nnexamples_gru_test_data.h']]],
-  ['update_5fgate_5fweights',['update_gate_weights',['../arm__nnexamples__gru_8cpp.html#aa2fc9b2b0449790ed7c37bab7fd3093e',1,'arm_nnexamples_gru.cpp']]],
-  ['update_5fweight',['update_weight',['../namespacepara__gen.html#ab8ce9efdee9cd118a25831839f9c5943',1,'para_gen']]],
-  ['use_5fintrinsic',['USE_INTRINSIC',['../arm__nnfunctions_8h.html#a710b6e009261290c6151f329cf409530',1,'arm_nnfunctions.h']]],
-  ['use_5fx4',['USE_X4',['../arm__nnexamples__gru_8cpp.html#a206812c9f4afd792e23a8d842ffa2984',1,'arm_nnexamples_gru.cpp']]]
+  ['scratch_5fbuffer',['scratch_buffer',['../arm__nnexamples__cifar10_8cpp.html#a19548b1fad7cb85d95f5f276873a5de3',1,'scratch_buffer():&#160;arm_nnexamples_cifar10.cpp'],['../arm__nnexamples__gru_8cpp.html#a935afa741bcc39e4c4c48b019d415d97',1,'scratch_buffer():&#160;arm_nnexamples_gru.cpp']]],
+  ['sigmoidhtable_5fq15',['sigmoidHTable_q15',['../arm__nn__tables_8h.html#a107a16eaa36f4392fa3ed3792ad6c2cb',1,'sigmoidHTable_q15():&#160;arm_nntables.c'],['../arm__nntables_8c.html#a107a16eaa36f4392fa3ed3792ad6c2cb',1,'sigmoidHTable_q15():&#160;arm_nntables.c']]],
+  ['sigmoidltable_5fq15',['sigmoidLTable_q15',['../arm__nn__tables_8h.html#a69dc528cb377690d5b37accfdfd226b1',1,'sigmoidLTable_q15():&#160;arm_nntables.c'],['../arm__nntables_8c.html#a69dc528cb377690d5b37accfdfd226b1',1,'sigmoidLTable_q15():&#160;arm_nntables.c']]],
+  ['sigmoidtable_5fq15',['sigmoidTable_q15',['../arm__nn__tables_8h.html#ab4d7b07c387a3537d4efe21da86115b0',1,'sigmoidTable_q15():&#160;arm_nntables.c'],['../arm__nntables_8c.html#ab4d7b07c387a3537d4efe21da86115b0',1,'sigmoidTable_q15():&#160;arm_nntables.c']]],
+  ['sigmoidtable_5fq7',['sigmoidTable_q7',['../arm__nn__tables_8h.html#ae2ff3f4e7014f535358167150bdd544f',1,'sigmoidTable_q7():&#160;arm_nntables.c'],['../arm__nntables_8c.html#ae2ff3f4e7014f535358167150bdd544f',1,'sigmoidTable_q7():&#160;arm_nntables.c']]],
+  ['softmax_20functions',['Softmax Functions',['../group__Softmax.html',1,'']]]
 ];

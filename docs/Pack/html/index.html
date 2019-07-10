@@ -117,11 +117,19 @@ $(document).ready(function(){initNavTree('index.html','');});
 <li>Device parameters along with startup code and programming algorithms</li>
 <li>Example projects</li>
 </ul>
-<p>The complete file collection along with the PDSC file is shipped in ZIP-format as a Software Pack. The PDSC file is designed for software development environments and describes the user and device relevant context for the files supplied within such a Software Pack. A Software Pack can be used for multiple purposes (see below).</p>
+<p>The complete file collection along with the PDSC file is shipped in ZIP-format (renamed to *.pack). The PDSC file is designed for software development environments and describes the user and device relevant context for the files supplied within such a pack file.</p>
+<p>The CMSIS-Pack system solves several problems:</p>
+<ul>
+<li>It provides meta-data of files that relate to a software component. All files that belong to a software component can be identified and information about the original provider is preserved.</li>
+<li>It enables consistent software component upgrade and identifies incompatible configuration files that may be part of the user application.</li>
+<li>Software component providers can specify the interfaces and relationship to other software components.</li>
+<li>The meta-data of a software component can include dependency information for toolchains, devices, and processors which simplifies the integration into application programs.</li>
+</ul>
 <p>After installing a <a class="el" href="cp_SWComponents.html">Software Pack</a>, all included software components are available to the development tools. <a class="el" href="cp_SWComponents.html#cp_Components">Software components</a> are a collection of source modules, header and configuration files as well as libraries. Packs containing software components can also include <a class="el" href="cp_SWComponents.html#cp_Examples">Example Projects</a> and <a class="el" href="cp_SWComponents.html#cp_CodeTemplates">User Code Templates</a>.</p>
 <p>The <a class="el" href="pack_revisionHistory.html">Revision History of CMSIS-Pack</a> lists the main changes between versions.</p>
 <h1><a class="anchor" id="SWPackVariants"></a>
 Software Pack Use Cases</h1>
+<p>A pack can be used for multiple purposes:</p>
 <div class="image">
 <img src="SPVariants_small.png" alt="SPVariants_small.png"/>
 <div class="caption">
@@ -135,21 +143,21 @@ Software Pack Use Cases</div></div>
 <li><b>In-house Software Packs:</b> usually contain software components that can be distributed within a company or engineering group.</li>
 </ul>
 <dl class="section note"><dt>Note</dt><dd>A Software Pack can address multiple use cases at the same time!</dd></dl>
-<p>The following sections give you more details on the basics:</p>
+<p>The following sections provide more information:</p>
 <ul>
-<li><a class="el" href="cp_Packs.html">Software Packs Overview</a> explains the steps required for creating a Software Pack in general.</li>
-<li><a class="el" href="cp_SWComponents.html">Pack with Software Components</a> gives detailed information on the contents of the PDSC file.</li>
-<li><a class="el" href="createPack_DFP.html">Pack with Device Support</a> describes additional requirements of Device Family Packs (DFPs).</li>
+<li>In the <a class="el" href="cp_Packs.html">Overview</a>, learn the basics and the required steps for creating a pack.</li>
+<li><a class="el" href="cp_SWComponents.html">Pack with Software Components</a> shows how to start a pack from scratch.</li>
+<li><a class="el" href="createPack_DFP.html">Pack with Device Support</a> describes how to enable device support in a DFP.</li>
 <li><a class="el" href="createPackBoard.html">Pack with Board Support</a> covers the creation of Board Support Packs (BSPs).</li>
-<li><a class="el" href="pack_Example.html">Pack Example</a> explains the Software Pack example that is part of the CMSIS Pack in more detail.</li>
-<li><a class="el" href="createPackPublish.html">Publish a Pack</a> shows the options for publishing a Pack.</li>
-<li><a class="el" href="createPackUtil.html">Utilities for Creating Packs</a> caters to programs that are useful during the creation of a Pack.</li>
+<li><a class="el" href="pack_Example.html">Pack Example</a> explains the available example pack in more detail.</li>
+<li>Learn how to <a class="el" href="createPackPublish.html">Publish a Pack</a>.</li>
+<li><a class="el" href="createPackUtil.html">Utilities for Creating Packs</a> are available that are useful during the creation of a pack.</li>
 <li><a class="el" href="packFormat.html">Pack Description (*.pdsc) Format</a> describes all XML elements that can be used in a PDSC file.</li>
 <li><a class="el" href="configWizard.html">Configuration Wizard Annotations</a> can be used to create GUI-like elements in development tools for configuration files.</li>
-<li><a class="el" href="flashAlgorithm.html">Flash Programming</a> are used to erase or download applications to Flash devices.</li>
-<li><a class="el" href="coresight_setup.html">Debug Setup with CMSIS-Pack</a> allow to create tool-agnostic debug and trace configurations</li>
+<li><a class="el" href="flashAlgorithm.html">Flash Programming</a> algorithms are used to erase or download applications to Flash devices.</li>
+<li><a class="el" href="coresight_setup.html">Debug Setup with CMSIS-Pack</a> allows to create tool-agnostic debug and trace configurations</li>
 <li><a class="el" href="cpdsc_pg.html">Project Description (*.cpdsc) Format</a> is a environment/tool independent definition of a software project. This helps to create only one set of example projects that can be used by many different tool vendors.</li>
-<li><a class="el" href="packIndexFile.html">CMSIS-Pack Index Files</a></li>
+<li><a class="el" href="packIndexFile.html">CMSIS-Pack Index Files</a> are used to generate a catalog of available packs.</li>
 </ul>
 <hr/>
 <h2>CMSIS-Pack in ARM::CMSIS Pack </h2>
@@ -170,7 +178,7 @@ Software Pack Use Cases</div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Mar 21 2019 12:24:56 for CMSIS-Pack by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Wed Jul 10 2019 15:21:01 for CMSIS-Pack Version 1.6.0 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

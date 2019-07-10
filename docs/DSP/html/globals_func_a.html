@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-DSP
-   &#160;<span id="projectnumber">Version 1.6.0</span>
+   &#160;<span id="projectnumber">Version 1.7.0</span>
    </div>
    <div id="projectbrief">CMSIS DSP Software Library</div>
   </td>
@@ -144,6 +144,9 @@ $(document).ready(function(){initNavTree('globals_func_a.html','');});
 &#160;
 
 <h3><a class="anchor" id="index_a"></a>- a -</h3><ul>
+<li>add_subdirectory()
+: <a class="el" href="Examples_2ARM_2arm__variance__example_2CMakeLists_8txt.html#ab8684add6c129686a0d750931302978d">Examples/ARM/arm_variance_example/CMakeLists.txt</a>
+</li>
 <li>arm_abs_f32()
 : <a class="el" href="group__BasicAbs.html#ga0e8fc7df3033cdbe9cda8a766a46e6d9">arm_math.h</a>
 , <a class="el" href="group__BasicAbs.html#ga0e8fc7df3033cdbe9cda8a766a46e6d9">arm_abs_f32.c</a>
@@ -177,18 +180,18 @@ $(document).ready(function(){initNavTree('globals_func_a.html','');});
 , <a class="el" href="group__BasicAdd.html#gafaecefa2be70b02118c8a317e183f247">arm_math.h</a>
 </li>
 <li>arm_apply_guard_bits()
-: <a class="el" href="arm__graphic__equalizer__example_2math__helper_8h.html#a13580a6ff7a8a68146de727bdf8fba88">arm_graphic_equalizer_example/math_helper.h</a>
-, <a class="el" href="arm__matrix__example_2math__helper_8h.html#a13580a6ff7a8a68146de727bdf8fba88">arm_matrix_example/math_helper.h</a>
-, <a class="el" href="arm__graphic__equalizer__example_2math__helper_8c.html#a13580a6ff7a8a68146de727bdf8fba88">arm_graphic_equalizer_example/math_helper.c</a>
-, <a class="el" href="arm__signal__converge__example_2math__helper_8c.html#a13580a6ff7a8a68146de727bdf8fba88">arm_signal_converge_example/math_helper.c</a>
+: <a class="el" href="arm__graphic__equalizer__example_2math__helper_8c.html#a13580a6ff7a8a68146de727bdf8fba88">arm_graphic_equalizer_example/math_helper.c</a>
 , <a class="el" href="arm__matrix__example_2math__helper_8c.html#a13580a6ff7a8a68146de727bdf8fba88">arm_matrix_example/math_helper.c</a>
+, <a class="el" href="arm__fir__example_2math__helper_8h.html#a13580a6ff7a8a68146de727bdf8fba88">arm_fir_example/math_helper.h</a>
+, <a class="el" href="arm__matrix__example_2math__helper_8h.html#a13580a6ff7a8a68146de727bdf8fba88">arm_matrix_example/math_helper.h</a>
+, <a class="el" href="arm__linear__interp__example_2math__helper_8h.html#a13580a6ff7a8a68146de727bdf8fba88">arm_linear_interp_example/math_helper.h</a>
+, <a class="el" href="arm__graphic__equalizer__example_2math__helper_8h.html#a13580a6ff7a8a68146de727bdf8fba88">arm_graphic_equalizer_example/math_helper.h</a>
+, <a class="el" href="arm__signal__converge__example_2math__helper_8c.html#a13580a6ff7a8a68146de727bdf8fba88">arm_signal_converge_example/math_helper.c</a>
+, <a class="el" href="arm__convolution__example_2math__helper_8c.html#a13580a6ff7a8a68146de727bdf8fba88">arm_convolution_example/math_helper.c</a>
+, <a class="el" href="arm__fir__example_2math__helper_8c.html#a13580a6ff7a8a68146de727bdf8fba88">arm_fir_example/math_helper.c</a>
+, <a class="el" href="arm__convolution__example_2math__helper_8h.html#a13580a6ff7a8a68146de727bdf8fba88">arm_convolution_example/math_helper.h</a>
 , <a class="el" href="arm__linear__interp__example_2math__helper_8c.html#a13580a6ff7a8a68146de727bdf8fba88">arm_linear_interp_example/math_helper.c</a>
 , <a class="el" href="arm__signal__converge__example_2math__helper_8h.html#a13580a6ff7a8a68146de727bdf8fba88">arm_signal_converge_example/math_helper.h</a>
-, <a class="el" href="arm__convolution__example_2math__helper_8h.html#a13580a6ff7a8a68146de727bdf8fba88">arm_convolution_example/math_helper.h</a>
-, <a class="el" href="arm__fir__example_2math__helper_8h.html#a13580a6ff7a8a68146de727bdf8fba88">arm_fir_example/math_helper.h</a>
-, <a class="el" href="arm__fir__example_2math__helper_8c.html#a13580a6ff7a8a68146de727bdf8fba88">arm_fir_example/math_helper.c</a>
-, <a class="el" href="arm__linear__interp__example_2math__helper_8h.html#a13580a6ff7a8a68146de727bdf8fba88">arm_linear_interp_example/math_helper.h</a>
-, <a class="el" href="arm__convolution__example_2math__helper_8c.html#a13580a6ff7a8a68146de727bdf8fba88">arm_convolution_example/math_helper.c</a>
 </li>
 </ul>
 </div><!-- contents -->
@@ -196,7 +199,7 @@ $(document).ready(function(){initNavTree('globals_func_a.html','');});
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Mar 21 2019 12:24:27 for CMSIS-DSP by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Wed Jul 10 2019 15:20:40 for CMSIS-DSP Version 1.7.0 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

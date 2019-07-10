@@ -46,7 +46,7 @@ var NAVTREEINDEX =
 "group__nand__bus__mode__codes.html#ga8a2d599082b9fe56cee1c6454bb3c6a1",
 "group__spi__bit__order__ctrls.html#ga41c53c3b396a89ce78018467e561aaaf",
 "group__usart__mode__control.html#gade65a1c27d9097d9ef0e86c02b55cecd",
-"group__wifi__protocol.html#gabacbead83c772f5737b25b4fc390e16d"
+"group__wifi__soc__func.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

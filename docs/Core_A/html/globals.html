@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Core (Cortex-A)
-   &#160;<span id="projectnumber">Version 1.1.3</span>
+   &#160;<span id="projectnumber">Version 1.1.4</span>
    </div>
    <div id="projectbrief">CMSIS-Core support for Cortex-A processor-based devices</div>
   </td>
@@ -145,9 +145,6 @@ $(document).ready(function(){initNavTree('globals.html','');});
 <div class="textblock">Here is a list of all functions, variables, defines, enums, and typedefs with links to the files they belong to:</div>
 
 <h3><a class="anchor" id="index__"></a>- _ -</h3><ul>
-<li>__ABT_STACK_SIZE
-: <a class="el" href="mem__ARMCA9_8h.html#ad7f329af0a26f57eda4d42dc664a71c3">mem_ARMCA9.h</a>
-</li>
 <li>__ALIGNED
 : <a class="el" href="group__comp__cntrl__gr.html#gaa65ef8f7a5e8b7a6ea6c1d48b4c78e55">cmsis_armcc.h</a>
 </li>
@@ -182,6 +179,9 @@ $(document).ready(function(){initNavTree('globals.html','');});
 <li>__CMSIS_CP15_H
 : <a class="el" href="cmsis__cp15_8h.html#ae6f92562f567fd8583d8ddd98cae46d5">cmsis_cp15.h</a>
 </li>
+<li>__COMPILER_BARRIER
+: <a class="el" href="cmsis__armcc_8h.html#a6516fb12ab0dd45c734f8cef7d921af6">cmsis_armcc.h</a>
+</li>
 <li>__CORE_CA_H_DEPENDANT
 : <a class="el" href="core__ca_8h.html#add5658d95f6b79934202e6fbf1795b12">core_ca.h</a>
 </li>
@@ -196,9 +196,6 @@ $(document).ready(function(){initNavTree('globals.html','');});
 </li>
 <li>__DSB
 : <a class="el" href="group__CMSIS__Core__InstructionInterface.html#ga067d257a2b34565410acefb5afef2203">cmsis_armcc.h</a>
-</li>
-<li>__FIQ_STACK_SIZE
-: <a class="el" href="mem__ARMCA9_8h.html#a5dbfa394c3e9c61fbbc157bc0fb6cf3e">mem_ARMCA9.h</a>
 </li>
 <li>__FORCEINLINE
 : <a class="el" href="cmsis__armcc_8h.html#a2ecb43ce8e7aa73d32f50afa67b42c76">cmsis_armcc.h</a>
@@ -304,9 +301,6 @@ $(document).ready(function(){initNavTree('globals.html','');});
 : <a class="el" href="core__ca_8h.html#a6690a7e24ea0ec4b36a8fb077d01a820">core_ca.h</a>
 , <a class="el" href="ARMCA9_8h.html#a6690a7e24ea0ec4b36a8fb077d01a820">ARMCA9.h</a>
 </li>
-<li>__HEAP_SIZE
-: <a class="el" href="mem__ARMCA9_8h.html#a12c202be8007621d07d7ab644c27feb2">mem_ARMCA9.h</a>
-</li>
 <li>__I
 : <a class="el" href="core__ca_8h.html#af63697ed9952cc71e1225efe205f6cd3">core_ca.h</a>
 </li>
@@ -321,9 +315,6 @@ $(document).ready(function(){initNavTree('globals.html','');});
 </li>
 <li>__IOM
 : <a class="el" href="core__ca_8h.html#ab6caba5853a60a17e8e04499b52bf691">core_ca.h</a>
-</li>
-<li>__IRQ_STACK_SIZE
-: <a class="el" href="mem__ARMCA9_8h.html#a0332a29850192af0bb278179da4591ed">mem_ARMCA9.h</a>
 </li>
 <li>__ISB
 : <a class="el" href="group__CMSIS__Core__InstructionInterface.html#gaad233022e850a009fc6f7602be1182f6">cmsis_armcc.h</a>
@@ -368,12 +359,6 @@ $(document).ready(function(){initNavTree('globals.html','');});
 : <a class="el" href="group__comp__cntrl__gr.html#ga4dbb70fab85207c27b581ecb6532b314">cmsis_armcc.txt</a>
 , <a class="el" href="cmsis__armcc_8h.html#a4dbb70fab85207c27b581ecb6532b314">cmsis_armcc.h</a>
 </li>
-<li>__RAM_BASE
-: <a class="el" href="mem__ARMCA9_8h.html#a1c8bf4b887d358d549c15e29e6fc8b7a">mem_ARMCA9.h</a>
-</li>
-<li>__RAM_SIZE
-: <a class="el" href="mem__ARMCA9_8h.html#a8709883a5b4c1734f7f451e9d83780f2">mem_ARMCA9.h</a>
-</li>
 <li>__RBIT
 : <a class="el" href="cmsis__armcc_8h.html#ab83768933a612816fad669db5488366f">cmsis_armcc.h</a>
 , <a class="el" href="group__CMSIS__Core__InstructionInterface.html#gad6f9f297f6b91a995ee199fbc796b863">cmsis_armcc.txt</a>
@@ -388,18 +373,9 @@ $(document).ready(function(){initNavTree('globals.html','');});
 <li>__REVSH()
 : <a class="el" href="group__CMSIS__Core__InstructionInterface.html#ga1ec006e6d79063363cb0c2a2e0b3adbe">cmsis_armcc.txt</a>
 </li>
-<li>__ROM_BASE
-: <a class="el" href="mem__ARMCA9_8h.html#a3a38c34d87a310103a5e618bc3ed18a8">mem_ARMCA9.h</a>
-</li>
-<li>__ROM_SIZE
-: <a class="el" href="mem__ARMCA9_8h.html#a23423b37c669c6d70b3aeeec7c3209fc">mem_ARMCA9.h</a>
-</li>
 <li>__ROR
 : <a class="el" href="cmsis__armcc_8h.html#a95b9bd281ddeda378b85afdb8f2ced86">cmsis_armcc.h</a>
 , <a class="el" href="group__CMSIS__Core__InstructionInterface.html#gae05c1a2dac5bb7a399420c804c3048ca">cmsis_armcc.txt</a>
-</li>
-<li>__RW_DATA_SIZE
-: <a class="el" href="mem__ARMCA9_8h.html#a244d488ae9113bf4c972c20a21723ac4">mem_ARMCA9.h</a>
 </li>
 <li>__set_ACTLR()
 : <a class="el" href="cmsis__cp15_8h.html#af0fd00dce8d7368f78c033e5f7fda9cd">cmsis_cp15.h</a>
@@ -506,9 +482,6 @@ $(document).ready(function(){initNavTree('globals.html','');});
 <li>__SSAT
 : <a class="el" href="cmsis__armcc_8h.html#a3c013c2ed76ebc48c283c8bae17b9ab8">cmsis_armcc.h</a>
 </li>
-<li>__STACK_SIZE
-: <a class="el" href="mem__ARMCA9_8h.html#a668ea18a149eeb6a206929f8e4c1099b">mem_ARMCA9.h</a>
-</li>
 <li>__STATIC_FORCEINLINE
 : <a class="el" href="cmsis__armcc_8h.html#ab904513442afdf77d4f8c74f23cbb040">cmsis_armcc.h</a>
 , <a class="el" href="group__comp__cntrl__gr.html#gab904513442afdf77d4f8c74f23cbb040">cmsis_armcc.txt</a>
@@ -525,22 +498,13 @@ $(document).ready(function(){initNavTree('globals.html','');});
 <li>__STREXW
 : <a class="el" href="cmsis__armcc_8h.html#a0c3704e33e90ba0491cee56cfb553090">cmsis_armcc.h</a>
 </li>
-<li>__SVC_STACK_SIZE
-: <a class="el" href="mem__ARMCA9_8h.html#a56b98f7c5dac25e019ab4cc1b195ae60">mem_ARMCA9.h</a>
-</li>
 <li>__TIM_PRESENT
-: <a class="el" href="core__ca_8h.html#a0e57ca9f1bc10c2de05d383d2c76267a">core_ca.h</a>
-, <a class="el" href="ARMCA9_8h.html#a0e57ca9f1bc10c2de05d383d2c76267a">ARMCA9.h</a>
-</li>
-<li>__TTB_BASE
-: <a class="el" href="mem__ARMCA9_8h.html#a5636831f81072fadf130e3b462d7b5f6">mem_ARMCA9.h</a>
-</li>
-<li>__TTB_SIZE
-: <a class="el" href="mem__ARMCA9_8h.html#a7f6661ae744a397001b44a1c5be751ec">mem_ARMCA9.h</a>
+: <a class="el" href="ARMCA9_8h.html#a0e57ca9f1bc10c2de05d383d2c76267a">ARMCA9.h</a>
+, <a class="el" href="core__ca_8h.html#a0e57ca9f1bc10c2de05d383d2c76267a">core_ca.h</a>
 </li>
 <li>__UNALIGNED_UINT16_READ
-: <a class="el" href="group__comp__cntrl__gr.html#gabe8693a7200e573101551d49a1772fb9">cmsis_armcc.txt</a>
-, <a class="el" href="cmsis__armcc_8h.html#ab71b66e5ce403158d3dee62a59f9175f">cmsis_armcc.h</a>
+: <a class="el" href="cmsis__armcc_8h.html#ab71b66e5ce403158d3dee62a59f9175f">cmsis_armcc.h</a>
+, <a class="el" href="group__comp__cntrl__gr.html#gabe8693a7200e573101551d49a1772fb9">cmsis_armcc.txt</a>
 </li>
 <li>__UNALIGNED_UINT16_WRITE
 : <a class="el" href="group__comp__cntrl__gr.html#gadb9cd73446f7e11e92383cd327a23407">cmsis_armcc.txt</a>
@@ -550,15 +514,12 @@ $(document).ready(function(){initNavTree('globals.html','');});
 : <a class="el" href="group__comp__cntrl__gr.html#ga27fd2ec6767ca1ab66d36b5cc0103268">cmsis_armcc.txt</a>
 </li>
 <li>__UNALIGNED_UINT32_READ
-: <a class="el" href="cmsis__armcc_8h.html#a3b931f0b051b8c1a6377a3dcc7559b5e">cmsis_armcc.h</a>
-, <a class="el" href="group__comp__cntrl__gr.html#ga254322c344d954c9f829719a50a88e87">cmsis_armcc.txt</a>
+: <a class="el" href="group__comp__cntrl__gr.html#ga254322c344d954c9f829719a50a88e87">cmsis_armcc.txt</a>
+, <a class="el" href="cmsis__armcc_8h.html#a3b931f0b051b8c1a6377a3dcc7559b5e">cmsis_armcc.h</a>
 </li>
 <li>__UNALIGNED_UINT32_WRITE
-: <a class="el" href="group__comp__cntrl__gr.html#gabb2180285c417aa9120a360c51f64b4b">cmsis_armcc.txt</a>
-, <a class="el" href="cmsis__armcc_8h.html#a203f593d140ed88b81bc189edc861110">cmsis_armcc.h</a>
-</li>
-<li>__UND_STACK_SIZE
-: <a class="el" href="mem__ARMCA9_8h.html#abf1b59273a0120006e7139edf119e731">mem_ARMCA9.h</a>
+: <a class="el" href="cmsis__armcc_8h.html#a203f593d140ed88b81bc189edc861110">cmsis_armcc.h</a>
+, <a class="el" href="group__comp__cntrl__gr.html#gabb2180285c417aa9120a360c51f64b4b">cmsis_armcc.txt</a>
 </li>
 <li>__USAT
 : <a class="el" href="cmsis__armcc_8h.html#ad0e4fa951d563740462d837bb6ddd7bb">cmsis_armcc.h</a>
@@ -575,9 +536,6 @@ $(document).ready(function(){initNavTree('globals.html','');});
 <li>__WFI
 : <a class="el" href="group__CMSIS__Core__InstructionInterface.html#gad23bf2b78a9a4524157c9de0d30b7448">cmsis_armcc.h</a>
 </li>
-<li>__ZI_DATA_SIZE
-: <a class="el" href="mem__ARMCA9_8h.html#a3464db337066101375c085df13b9a2ae">mem_ARMCA9.h</a>
-</li>
 <li>_FLD2VAL
 : <a class="el" href="core__ca_8h.html#a139b6e261c981f014f386927ca4a8444">core_ca.h</a>
 , <a class="el" href="group__peripheral__gr.html#ga139b6e261c981f014f386927ca4a8444">core_ca.txt</a>
@@ -592,7 +550,7 @@ $(document).ready(function(){initNavTree('globals.html','');});
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Mar 21 2019 12:24:08 for CMSIS-Core (Cortex-A) by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Wed Jul 10 2019 15:20:28 for CMSIS-Core (Cortex-A) Version 1.1.4 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

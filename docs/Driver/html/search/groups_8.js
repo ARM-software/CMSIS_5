@@ -7,7 +7,6 @@ var searchData=
   ['wifi_20events',['WiFi Events',['../group__wifi__event.html',1,'']]],
   ['wifi_20interface',['WiFi Interface',['../group__wifi__interface__gr.html',1,'']]],
   ['wifi_20management',['WiFi Management',['../group__wifi__management__gr.html',1,'']]],
-  ['wifi_20operating_20mode',['WiFi Operating Mode',['../group__wifi__oper__mode.html',1,'']]],
   ['wifi_20option_20codes',['WiFi Option Codes',['../group__WiFi__option.html',1,'']]],
   ['wifi_20socket_20protocol_20definitions',['WiFi Socket Protocol definitions',['../group__wifi__protocol.html',1,'']]],
   ['wifi_20security_20type',['WiFi Security Type',['../group__wifi__sec__type.html',1,'']]],

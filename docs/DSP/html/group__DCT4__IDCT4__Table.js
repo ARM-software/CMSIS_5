@@ -1,6 +1,5 @@
 var group__DCT4__IDCT4__Table =
 [
-    [ "__ALIGNED", "group__DCT4__IDCT4__Table.html#ga0a1c77ce634a63f32285dbffe89d274b", null ],
     [ "cos_factors_128", "group__DCT4__IDCT4__Table.html#ga16248ed86161ef97538011b49f13e8b7", null ],
     [ "cos_factors_2048", "group__DCT4__IDCT4__Table.html#ga1ba5306e0bc44730b40ab34cced45fd6", null ],
     [ "cos_factors_512", "group__DCT4__IDCT4__Table.html#ga49fd288352ca5bb43f5cec52273b0d80", null ],

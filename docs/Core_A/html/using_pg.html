@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Core (Cortex-A)
-   &#160;<span id="projectnumber">Version 1.1.3</span>
+   &#160;<span id="projectnumber">Version 1.1.4</span>
    </div>
    <div id="projectbrief">CMSIS-Core support for Cortex-A processor-based devices</div>
   </td>
@@ -124,7 +124,7 @@ $(document).ready(function(){initNavTree('using_pg.html','');});
 <ul>
 <li>set the vector base address register (<a class="el" href="group__CMSIS__VBAR.html#ga582f9a60f7b090ae5a4e8f60ef3b79f8">__set_VBAR</a>),</li>
 <li>set stacks for each exception mode (<a class="el" href="cmsis__armcc_8h.html#a306b0a932918f2243a40d4e855503be2">__set_mode</a>, <a class="el" href="group__CMSIS__SP.html#ga6af63cb939bd108aef1c0f12622350cb">__set_SP</a>),</li>
-<li>call <a class="el" href="system__ARMCA9_8h.html#a93f514700ccf00d08dbdcff7f1224eb2">SystemInit</a>.</li>
+<li>call <a class="el" href="group__system__init__gr.html#ga93f514700ccf00d08dbdcff7f1224eb2">SystemInit</a>.</li>
 </ul>
 <p>After the system initialization control is transferred to the C/C++ run-time library which performs initialization and calls the <b>main</b> function in the user code. In addition the <a class="el" href="startup_c_pg.html">Startup File startup_&lt;device&gt;.c</a> contains a weak default handler implementation for every exception. It may also contain stack and heap configurations for the user application.</p>
 <p>The <a class="el" href="system_c_pg.html">System Configuration Files system_&lt;device&gt;.c and system_&lt;device&gt;.h</a> performs the setup for the processor clock and the initialization of memory caches, memory management unit, generic interrupt interface and floating point unit. The variable <a class="el" href="group__system__init__gr.html#gaa3cd3e43291e81e795d642b79b6088e6">SystemCoreClock</a> indicates the CPU clock speed. <a class="el" href="group__system__init__gr.html">System and Clock Configuration</a> describes the minimum feature set. In addition the file may contain functions for the memory bus setup and clock re-configuration.</p>
@@ -154,7 +154,7 @@ CMSIS-Core-A User Files</div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Mar 21 2019 12:24:07 for CMSIS-Core (Cortex-A) by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Wed Jul 10 2019 15:20:27 for CMSIS-Core (Cortex-A) Version 1.1.4 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

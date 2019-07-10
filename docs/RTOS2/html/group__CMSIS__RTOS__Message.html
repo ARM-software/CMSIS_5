@@ -366,63 +366,67 @@ size of provided memory for data storage <p>The size (in bytes) of memory block 
 </ul>
 <dl class="section note"><dt>Note</dt><dd>May be called from <a class="el" href="theory_of_operation.html#CMSIS_RTOS_ISR_Calls">Interrupt Service Routines</a> if the parameter <em>timeout</em> is set to <span class="XML-Token">0</span>.</dd></dl>
 <p><b>Code Example:</b> </p>
-<div class="fragment"><div class="line"><span class="preprocessor">#include &quot;<a class="code" href="cmsis__os2_8h.html">cmsis_os2.h</a>&quot;</span>                                             <span class="comment">// CMSIS RTOS header file</span></div>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &quot;<a class="code" href="cmsis__os2_8h.html">cmsis_os2.h</a>&quot;</span>                          <span class="comment">// CMSIS RTOS header file</span></div>
 <div class="line"> </div>
 <div class="line"><span class="comment">/*----------------------------------------------------------------------------</span></div>
 <div class="line"><span class="comment"> *      Message Queue creation &amp; usage</span></div>
 <div class="line"><span class="comment"> *---------------------------------------------------------------------------*/</span></div>
-<div class="line">  </div>
-<div class="line"><span class="keywordtype">void</span> Thread_MsgQueue1 (<span class="keywordtype">void</span> *argument);                            <span class="comment">// thread function 1</span></div>
-<div class="line"><span class="keywordtype">void</span> Thread_MsgQueue2 (<span class="keywordtype">void</span> *argument);                            <span class="comment">// thread function 2</span></div>
-<div class="line"><a class="code" href="group__CMSIS__RTOS__ThreadMgmt.html#gaa6c32fe2a3e0a2e01f212d55b02e51c7">osThreadId_t</a> tid_Thread_MsgQueue1;                                 <span class="comment">// thread id 1</span></div>
-<div class="line"><a class="code" href="group__CMSIS__RTOS__ThreadMgmt.html#gaa6c32fe2a3e0a2e01f212d55b02e51c7">osThreadId_t</a> tid_Thread_MsgQueue2;                                 <span class="comment">// thread id 2</span></div>
 <div class="line"> </div>
-<div class="line"><span class="preprocessor">#define MSGQUEUE_OBJECTS      16                                   // number of Message Queue Objects</span></div>
+<div class="line"><span class="preprocessor">#define MSGQUEUE_OBJECTS 16                     // number of Message Queue Objects</span></div>
 <div class="line"><span class="preprocessor"></span> </div>
-<div class="line"><span class="keyword">typedef</span> <span class="keyword">struct </span>{                                                   <span class="comment">// object data type</span></div>
+<div class="line"><span class="keyword">typedef</span> <span class="keyword">struct </span>{                                <span class="comment">// object data type</span></div>
 <div class="line">  uint8_t Buf[32];</div>
 <div class="line">  uint8_t Idx;</div>
 <div class="line">} MSGQUEUE_OBJ_t;</div>
 <div class="line"> </div>
-<div class="line"><a class="code" href="cmsis__os2_8h.html#a206dbc05367e03c39fc6d4d1ebcff317">osMessageQueueId_t</a> mid_MsgQueue;                                   <span class="comment">// message queue id</span></div>
+<div class="line"><a class="code" href="cmsis__os2_8h.html#a206dbc05367e03c39fc6d4d1ebcff317">osMessageQueueId_t</a> mid_MsgQueue;                <span class="comment">// message queue id</span></div>
+<div class="line"> </div>
+<div class="line"><a class="code" href="group__CMSIS__RTOS__ThreadMgmt.html#gaa6c32fe2a3e0a2e01f212d55b02e51c7">osThreadId_t</a> tid_Thread_MsgQueue1;              <span class="comment">// thread id 1</span></div>
+<div class="line"><a class="code" href="group__CMSIS__RTOS__ThreadMgmt.html#gaa6c32fe2a3e0a2e01f212d55b02e51c7">osThreadId_t</a> tid_Thread_MsgQueue2;              <span class="comment">// thread id 2</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">void</span> Thread_MsgQueue1 (<span class="keywordtype">void</span> *argument);         <span class="comment">// thread function 1</span></div>
+<div class="line"><span class="keywordtype">void</span> Thread_MsgQueue2 (<span class="keywordtype">void</span> *argument);         <span class="comment">// thread function 2</span></div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> Init_MsgQueue (<span class="keywordtype">void</span>) {</div>
-<div class="line">  </div>
+<div class="line"> </div>
 <div class="line">  mid_MsgQueue = <a class="code" href="group__CMSIS__RTOS__Message.html#ga24e895a00f9d484db33aaf784c57bfed">osMessageQueueNew</a>(MSGQUEUE_OBJECTS, <span class="keyword">sizeof</span>(MSGQUEUE_OBJ_t), NULL);</div>
-<div class="line">  <span class="keywordflow">if</span> (!mid_MsgQueue) {</div>
+<div class="line">  <span class="keywordflow">if</span> (mid_MsgQueue == NULL) {</div>
 <div class="line">    ; <span class="comment">// Message Queue object not created, handle failure</span></div>
 <div class="line">  }</div>
-<div class="line">  </div>
-<div class="line">  tid_Thread_MsgQueue1 = <a class="code" href="group__CMSIS__RTOS__ThreadMgmt.html#ga48d68b8666d99d28fa646ee1d2182b8f">osThreadNew</a> (Thread_MsgQueue1, NULL, NULL);</div>
-<div class="line">  <span class="keywordflow">if</span> (!tid_Thread_MsgQueue1) <span class="keywordflow">return</span>(-1);</div>
-<div class="line">  tid_Thread_MsgQueue2 = <a class="code" href="group__CMSIS__RTOS__ThreadMgmt.html#ga48d68b8666d99d28fa646ee1d2182b8f">osThreadNew</a> (Thread_MsgQueue2, NULL, NULL);</div>
-<div class="line">  <span class="keywordflow">if</span> (!tid_Thread_MsgQueue2) <span class="keywordflow">return</span>(-1);</div>
-<div class="line">  </div>
+<div class="line"> </div>
+<div class="line">  tid_Thread_MsgQueue1 = <a class="code" href="group__CMSIS__RTOS__ThreadMgmt.html#ga48d68b8666d99d28fa646ee1d2182b8f">osThreadNew</a>(Thread_MsgQueue1, NULL, NULL);</div>
+<div class="line">  <span class="keywordflow">if</span> (tid_Thread_MsgQueue1 == NULL) {</div>
+<div class="line">    <span class="keywordflow">return</span>(-1);</div>
+<div class="line">  }</div>
+<div class="line">  tid_Thread_MsgQueue2 = <a class="code" href="group__CMSIS__RTOS__ThreadMgmt.html#ga48d68b8666d99d28fa646ee1d2182b8f">osThreadNew</a>(Thread_MsgQueue2, NULL, NULL);</div>
+<div class="line">  <span class="keywordflow">if</span> (tid_Thread_MsgQueue2 == NULL) {</div>
+<div class="line">    <span class="keywordflow">return</span>(-1);</div>
+<div class="line">  }</div>
+<div class="line"> </div>
 <div class="line">  <span class="keywordflow">return</span>(0);</div>
 <div class="line">}</div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">void</span> Thread_MsgQueue1 (<span class="keywordtype">void</span> *argument) {</div>
 <div class="line">  MSGQUEUE_OBJ_t msg;</div>
-<div class="line"></div>
+<div class="line"> </div>
 <div class="line">  <span class="keywordflow">while</span> (1) {</div>
 <div class="line">    ; <span class="comment">// Insert thread code here...</span></div>
-<div class="line">    msg.Buf[0] = 0x55;                                           <span class="comment">// do some work...</span></div>
-<div class="line">    msg.Idx    = 0;</div>
-<div class="line">    <a class="code" href="group__CMSIS__RTOS__Message.html#gaa515fc8b956f721a8f72b2c505813bfc">osMessageQueuePut</a> (mid_MsgQueue, &amp;msg, 0, NULL);</div>
-<div class="line">    <a class="code" href="group__CMSIS__RTOS__ThreadMgmt.html#gad01c7ec26535b1de6b018bb9466720e2">osThreadYield</a> ();                                              <span class="comment">// suspend thread</span></div>
+<div class="line">    msg.Buf[0] = 0x55U;                                         <span class="comment">// do some work...</span></div>
+<div class="line">    msg.Idx    = 0U;</div>
+<div class="line">    <a class="code" href="group__CMSIS__RTOS__Message.html#gaa515fc8b956f721a8f72b2c505813bfc">osMessageQueuePut</a>(mid_MsgQueue, &amp;msg, 0U, 0U);</div>
+<div class="line">    <a class="code" href="group__CMSIS__RTOS__ThreadMgmt.html#gad01c7ec26535b1de6b018bb9466720e2">osThreadYield</a>();                                            <span class="comment">// suspend thread</span></div>
 <div class="line">  }</div>
 <div class="line">}</div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">void</span> Thread_MsgQueue2 (<span class="keywordtype">void</span> *argument) {</div>
-<div class="line"></div>
 <div class="line">  MSGQUEUE_OBJ_t msg;</div>
 <div class="line">  osStatus_t status;</div>
-<div class="line"></div>
+<div class="line"> </div>
 <div class="line">  <span class="keywordflow">while</span> (1) {</div>
 <div class="line">    ; <span class="comment">// Insert thread code here...</span></div>
-<div class="line">    status = <a class="code" href="group__CMSIS__RTOS__Message.html#gad90d4959466a7a65105061da8256ab9e">osMessageQueueGet</a> (mid_MsgQueue, &amp;msg, NULL, NULL);  <span class="comment">// wait for message</span></div>
+<div class="line">    status = <a class="code" href="group__CMSIS__RTOS__Message.html#gad90d4959466a7a65105061da8256ab9e">osMessageQueueGet</a>(mid_MsgQueue, &amp;msg, NULL, 0U);   <span class="comment">// wait for message</span></div>
 <div class="line">    <span class="keywordflow">if</span> (status == <a class="code" href="cmsis__os2_8h.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813ea9e1c9e2550bb4de8969a935acffc968f">osOK</a>) {</div>
-<div class="line">        ; <span class="comment">// process data</span></div>
+<div class="line">      ; <span class="comment">// process data</span></div>
 <div class="line">    }</div>
 <div class="line">  }</div>
 <div class="line">}</div>
@@ -663,7 +667,7 @@ size of provided memory for data storage <p>The size (in bytes) of memory block 
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Mar 21 2019 12:25:01 for CMSIS-RTOS2 by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Wed Jul 10 2019 15:21:04 for CMSIS-RTOS2 Version 2.1.3 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

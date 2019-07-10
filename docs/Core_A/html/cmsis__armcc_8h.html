@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Core (Cortex-A)
-   &#160;<span id="projectnumber">Version 1.1.3</span>
+   &#160;<span id="projectnumber">Version 1.1.4</span>
    </div>
    <div id="projectbrief">CMSIS-Core support for Cortex-A processor-based devices</div>
   </td>
@@ -163,6 +163,8 @@ Macros</h2></td></tr>
 <tr class="memitem:gaa65ef8f7a5e8b7a6ea6c1d48b4c78e55"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__comp__cntrl__gr.html#gaa65ef8f7a5e8b7a6ea6c1d48b4c78e55">__ALIGNED</a>(x)&#160;&#160;&#160;__attribute__((aligned(x)))</td></tr>
 <tr class="memdesc:gaa65ef8f7a5e8b7a6ea6c1d48b4c78e55"><td class="mdescLeft">&#160;</td><td class="mdescRight">Minimum alignment for a variable.  <a href="group__comp__cntrl__gr.html#gaa65ef8f7a5e8b7a6ea6c1d48b4c78e55">More...</a><br/></td></tr>
 <tr class="separator:gaa65ef8f7a5e8b7a6ea6c1d48b4c78e55"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6516fb12ab0dd45c734f8cef7d921af6"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cmsis__armcc_8h.html#a6516fb12ab0dd45c734f8cef7d921af6">__COMPILER_BARRIER</a>()&#160;&#160;&#160;__memory_changed()</td></tr>
+<tr class="separator:a6516fb12ab0dd45c734f8cef7d921af6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gabd585ddc865fb9b7f2493af1eee1a572"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__Core__InstructionInterface.html#gabd585ddc865fb9b7f2493af1eee1a572">__NOP</a>&#160;&#160;&#160;__nop</td></tr>
 <tr class="memdesc:gabd585ddc865fb9b7f2493af1eee1a572"><td class="mdescLeft">&#160;</td><td class="mdescRight">No Operation.  <a href="group__CMSIS__Core__InstructionInterface.html#gabd585ddc865fb9b7f2493af1eee1a572">More...</a><br/></td></tr>
 <tr class="separator:gabd585ddc865fb9b7f2493af1eee1a572"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -278,8 +280,8 @@ Functions</h2></td></tr>
 <tr class="separator:ga1e4728985ee8b4fa89cc01c032f69565"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Description</h2>
-<div class="textblock"><dl class="section version"><dt>Version</dt><dd>V1.0.2 </dd></dl>
-<dl class="section date"><dt>Date</dt><dd>10. January 2018 </dd></dl>
+<div class="textblock"><dl class="section version"><dt>Version</dt><dd>V1.0.3 </dd></dl>
+<dl class="section date"><dt>Date</dt><dd>15. May 2019 </dd></dl>
 </div><h2 class="groupheader">Macro Definition Documentation</h2>
 <a class="anchor" id="a7f7b66103530fadcce226375af3c2c03"></a>
 <div class="memitem">
@@ -310,6 +312,21 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>number of leading zeros in value </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a6516fb12ab0dd45c734f8cef7d921af6"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define __COMPILER_BARRIER</td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td>&#160;&#160;&#160;__memory_changed()</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
 
 </div>
 </div>
@@ -1001,7 +1018,7 @@ Functions</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_f806067e3cfd0faadc71b6fb603a0f72.html">Core_A</a></li><li class="navelem"><a class="el" href="dir_3f4b401a2ed0c5733c677abc947b6aa9.html">Include</a></li><li class="navelem"><a class="el" href="cmsis__armcc_8h.html">cmsis_armcc.h</a></li>
-    <li class="footer">Generated on Thu Mar 21 2019 12:24:07 for CMSIS-Core (Cortex-A) by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Wed Jul 10 2019 15:20:27 for CMSIS-Core (Cortex-A) Version 1.1.4 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

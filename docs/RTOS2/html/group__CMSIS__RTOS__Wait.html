@@ -161,12 +161,12 @@ Functions</h2></td></tr>
 <p><b>Code Example</b> </p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &quot;<a class="code" href="cmsis__os2_8h.html">cmsis_os2.h</a>&quot;</span></div>
 <div class="line"> </div>
-<div class="line"><span class="keywordtype">void</span> Thread_1 (<span class="keywordtype">void</span> *arg)  {                <span class="comment">// Thread function</span></div>
-<div class="line">  osStatus_t status;                        <span class="comment">// capture the return status</span></div>
-<div class="line">  uint32_t   delayTime;                     <span class="comment">// delay time in milliseconds</span></div>
+<div class="line"><span class="keywordtype">void</span> Thread_1 (<span class="keywordtype">void</span> *arg) {             <span class="comment">// Thread function</span></div>
+<div class="line">  osStatus_t status;                    <span class="comment">// capture the return status</span></div>
+<div class="line">  uint32_t   delayTime;                 <span class="comment">// delay time in milliseconds</span></div>
 <div class="line"> </div>
-<div class="line">  delayTime = 1000;                         <span class="comment">// delay 1 second</span></div>
-<div class="line">  status = <a class="code" href="group__CMSIS__RTOS__Wait.html#gaf6055a51390ef65b6b6edc28bf47322e">osDelay</a> (delayTime);             <span class="comment">// suspend thread execution</span></div>
+<div class="line">  delayTime = 1000U;                    <span class="comment">// delay 1 second</span></div>
+<div class="line">  status = <a class="code" href="group__CMSIS__RTOS__Wait.html#gaf6055a51390ef65b6b6edc28bf47322e">osDelay</a>(delayTime);          <span class="comment">// suspend thread execution</span></div>
 <div class="line">}</div>
 </div><!-- fragment --> 
 </div>
@@ -204,12 +204,12 @@ Functions</h2></td></tr>
 <p><b>Code Example</b> </p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &quot;<a class="code" href="cmsis__os2_8h.html">cmsis_os2.h</a>&quot;</span></div>
 <div class="line"> </div>
-<div class="line"><span class="keywordtype">void</span> Thread_1 (<span class="keywordtype">void</span> *arg)  {                <span class="comment">// Thread function</span></div>
+<div class="line"><span class="keywordtype">void</span> Thread_1 (<span class="keywordtype">void</span> *arg) {             <span class="comment">// Thread function</span></div>
 <div class="line">  uint32_t tick;</div>
-<div class="line"></div>
-<div class="line">  tick = <a class="code" href="group__CMSIS__RTOS__KernelCtrl.html#ga84bcdbf2fb76b10c8df4e439f0c7e11b">osKernelGetTickCount</a>();            <span class="comment">// retrieve the number of system ticks</span></div>
+<div class="line"> </div>
+<div class="line">  tick = <a class="code" href="group__CMSIS__RTOS__KernelCtrl.html#ga84bcdbf2fb76b10c8df4e439f0c7e11b">osKernelGetTickCount</a>();        <span class="comment">// retrieve the number of system ticks</span></div>
 <div class="line">  <span class="keywordflow">for</span> (;;) {</div>
-<div class="line">    tick += 1000;                           <span class="comment">// delay 1000 ticks periodically</span></div>
+<div class="line">    tick += 1000U;                      <span class="comment">// delay 1000 ticks periodically</span></div>
 <div class="line">    <a class="code" href="group__CMSIS__RTOS__Wait.html#ga3c807924c2d6d43bc2ffb49da3f7f3a1">osDelayUntil</a>(tick);</div>
 <div class="line">    <span class="comment">// ...</span></div>
 <div class="line">  }</div>
@@ -222,7 +222,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Mar 21 2019 12:25:01 for CMSIS-RTOS2 by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Wed Jul 10 2019 15:21:04 for CMSIS-RTOS2 Version 2.1.3 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

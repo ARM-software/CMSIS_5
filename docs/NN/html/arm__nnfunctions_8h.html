@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-NN
-   &#160;<span id="projectnumber">Version 1.1.0</span>
+   &#160;<span id="projectnumber">Version 1.2.0</span>
    </div>
    <div id="projectbrief">CMSIS NN Software Library</div>
   </td>
@@ -203,6 +203,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ga1cacd8b84b8363079311987d0016ebe5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Softmax.html#ga1cacd8b84b8363079311987d0016ebe5">arm_softmax_q15</a> (const q15_t *vec_in, const uint16_t dim_vec, q15_t *p_out)</td></tr>
 <tr class="memdesc:ga1cacd8b84b8363079311987d0016ebe5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Q15 softmax function.  <a href="group__Softmax.html#ga1cacd8b84b8363079311987d0016ebe5">More...</a><br/></td></tr>
 <tr class="separator:ga1cacd8b84b8363079311987d0016ebe5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga02a296cb4f6361a70c3ecf1ef1238292"><td class="memItemLeft" align="right" valign="top">arm_status&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__NNConv.html#ga02a296cb4f6361a70c3ecf1ef1238292">arm_depthwise_conv_u8_basic_ver1</a> (const uint8_t *input, const uint16_t input_x, const uint16_t input_y, const uint16_t input_ch, const uint8_t *kernel, const uint16_t kernel_x, const uint16_t kernel_y, const int16_t ch_mult, const int16_t pad_x, const int16_t pad_y, const int16_t stride_x, const int16_t stride_y, const int16_t dilation_x, const int16_t dilation_y, const int32_t *bias, const int32_t input_offset, const int32_t filter_offset, const int32_t output_offset, uint8_t *output, const uint16_t output_x, const uint16_t output_y, const int32_t output_activation_min, const int32_t output_activation_max, const int32_t out_shift, const int32_t out_mult)</td></tr>
+<tr class="memdesc:ga02a296cb4f6361a70c3ecf1ef1238292"><td class="mdescLeft">&#160;</td><td class="mdescRight">uint8 depthwise convolution function with asymmetric quantization for even number of channel multiplier and input channels. Unless specified otherwise, arguments are mandatory.  <a href="group__NNConv.html#ga02a296cb4f6361a70c3ecf1ef1238292">More...</a><br/></td></tr>
+<tr class="separator:ga02a296cb4f6361a70c3ecf1ef1238292"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Macro Definition Documentation</h2>
 <a class="anchor" id="a710b6e009261290c6151f329cf409530"></a>
@@ -417,7 +420,7 @@ Functions</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_06560e3359c5da94845158f0031c08e8.html">NN</a></li><li class="navelem"><a class="el" href="dir_17aeddf785065efc95337b880bac512b.html">Include</a></li><li class="navelem"><a class="el" href="arm__nnfunctions_8h.html">arm_nnfunctions.h</a></li>
-    <li class="footer">Generated on Thu Mar 21 2019 12:24:41 for CMSIS-NN by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Wed Jul 10 2019 15:20:50 for CMSIS-NN Version 1.2.0 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

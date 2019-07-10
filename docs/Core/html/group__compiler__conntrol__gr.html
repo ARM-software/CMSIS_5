@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Core (Cortex-M)
-   &#160;<span id="projectnumber">Version 5.2.1</span>
+   &#160;<span id="projectnumber">Version 5.3.0</span>
    </div>
    <div id="projectbrief">CMSIS-Core support for Cortex-M processor-based devices</div>
   </td>
@@ -182,6 +182,24 @@ Macros</h2></td></tr>
 <tr class="memitem:ga0c58caa5a273e2c21924509a45f8b849"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__compiler__conntrol__gr.html#ga0c58caa5a273e2c21924509a45f8b849">__ALIGNED</a></td></tr>
 <tr class="memdesc:ga0c58caa5a273e2c21924509a45f8b849"><td class="mdescLeft">&#160;</td><td class="mdescRight">Minimum alignment for a variable.  <a href="#ga0c58caa5a273e2c21924509a45f8b849">More...</a><br/></td></tr>
 <tr class="separator:ga0c58caa5a273e2c21924509a45f8b849"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6f053389e2958b5a239a54d4e4047bf5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__compiler__conntrol__gr.html#ga6f053389e2958b5a239a54d4e4047bf5">__COMPILER_BARRIER</a></td></tr>
+<tr class="memdesc:ga6f053389e2958b5a239a54d4e4047bf5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Barrier to prevent compiler from reordering instructions.  <a href="#ga6f053389e2958b5a239a54d4e4047bf5">More...</a><br/></td></tr>
+<tr class="separator:ga6f053389e2958b5a239a54d4e4047bf5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga72db8b026c5e100254080fefabd9fd88"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__compiler__conntrol__gr.html#ga72db8b026c5e100254080fefabd9fd88">__PROGRAM_START</a></td></tr>
+<tr class="memdesc:ga72db8b026c5e100254080fefabd9fd88"><td class="mdescLeft">&#160;</td><td class="mdescRight">Entry function into the user application or library startup.  <a href="#ga72db8b026c5e100254080fefabd9fd88">More...</a><br/></td></tr>
+<tr class="separator:ga72db8b026c5e100254080fefabd9fd88"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1002e751427b1189f92787d4e4eef965"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__compiler__conntrol__gr.html#ga1002e751427b1189f92787d4e4eef965">__INITIAL_SP</a></td></tr>
+<tr class="memdesc:ga1002e751427b1189f92787d4e4eef965"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compiler/linker symbol specifiying the location of the main stack (MSP).  <a href="#ga1002e751427b1189f92787d4e4eef965">More...</a><br/></td></tr>
+<tr class="separator:ga1002e751427b1189f92787d4e4eef965"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga84b0bad4aa39632d3faea46aa1e102a8"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__compiler__conntrol__gr.html#ga84b0bad4aa39632d3faea46aa1e102a8">__STACK_LIMIT</a></td></tr>
+<tr class="memdesc:ga84b0bad4aa39632d3faea46aa1e102a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compiler/linker symbol specifiying the limit of the main stack (MSP).  <a href="#ga84b0bad4aa39632d3faea46aa1e102a8">More...</a><br/></td></tr>
+<tr class="separator:ga84b0bad4aa39632d3faea46aa1e102a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab94ebeb20055f1848d7b707d3c7cfc5d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__compiler__conntrol__gr.html#gab94ebeb20055f1848d7b707d3c7cfc5d">__VECTOR_TABLE</a></td></tr>
+<tr class="memdesc:gab94ebeb20055f1848d7b707d3c7cfc5d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Symbol name used for the (static) interrupt vector table.  <a href="#gab94ebeb20055f1848d7b707d3c7cfc5d">More...</a><br/></td></tr>
+<tr class="separator:gab94ebeb20055f1848d7b707d3c7cfc5d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4f65c96effa79fbd610fea43ee7d745b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__compiler__conntrol__gr.html#ga4f65c96effa79fbd610fea43ee7d745b">__VECTOR_TABLE_ATTRIBUTE</a></td></tr>
+<tr class="memdesc:ga4f65c96effa79fbd610fea43ee7d745b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Additional decl specs to be used when defining the (static) interrupt vector table.  <a href="#ga4f65c96effa79fbd610fea43ee7d745b">More...</a><br/></td></tr>
+<tr class="separator:ga4f65c96effa79fbd610fea43ee7d745b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Description</h2>
 <p>The CMSIS-Core provides the header file <b>cmsis_compiler.h</b> with consistent #define symbols for generate C or C++ source files that should be compiler agnostic. Each CMSIS compliant compiler should support the functionality described in this section.</p>
@@ -197,7 +215,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Specifies a minimum alignment for a variable or structure field, measured in bytes.</p>
-<p><b> Code Example:</b> </p>
+<p><b>Code Example:</b> </p>
 <div class="fragment"><div class="line">uint32_t stack_space[0x100] <a class="code" href="group__compiler__conntrol__gr.html#ga0c58caa5a273e2c21924509a45f8b849">__ALIGNED</a>(8);   <span class="comment">// 8-byte alignment required</span></div>
 </div><!-- fragment --> 
 </div>
@@ -290,6 +308,39 @@ Macros</h2></td></tr>
 </div><!-- fragment --> 
 </div>
 </div>
+<a class="anchor" id="ga6f053389e2958b5a239a54d4e4047bf5"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define __COMPILER_BARRIER</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This barrier limits the compilers reordering optimizations. It prevents the compiler from swapping instructions resulting from code before and after the barrier.</p>
+<p><b>Code Example:</b> The assignments in the example are independent. Hence the compiler could choose a different order of execution, e.g. for a better pipeline utilization. Using the barrier in between prevents this type of reordering.</p>
+<div class="fragment"><div class="line"><span class="keywordtype">void</span> test (uint8_t *ptr) {</div>
+<div class="line">  var1 = 1;</div>
+<div class="line">  __COMPILE_BARRIER();</div>
+<div class="line">  var2 = var3 + 1;</div>
+<div class="line">}</div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a class="anchor" id="ga1002e751427b1189f92787d4e4eef965"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define __INITIAL_SP</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>The address of the specified symbol is used to initialize the main stack pointer (MSP) during low level init. This is compiler/linker specific. CMSIS specifies common default for supported compilers.</p>
+<dl class="section note"><dt>Note</dt><dd>This define is only intended to be used by the <a class="el" href="startup_c_pg.html">Startup File startup_&lt;device&gt;.c</a>. </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="gade2d8d7118f8ff49547f60aa0c3382bb"></a>
 <div class="memitem">
 <div class="memproto">
@@ -300,7 +351,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Inline functions offer a trade-off between code size and performance. By default, the compiler decides during optimization whether to inline code or not. The <b>__INLINE</b> attribute gives the compiler an hint to inline this function. Still, the compiler may decide not to inline the function. As the function is global an callable function is also generated.</p>
-<p><b> Code Example:</b> </p>
+<p><b>Code Example:</b> </p>
 <div class="fragment"><div class="line"><span class="keyword">const</span> uint32_t led_mask[] = {1U &lt;&lt; 4, 1U &lt;&lt; 5, 1U &lt;&lt; 6, 1U &lt;&lt; 7};</div>
 <div class="line"> </div>
 <div class="line"><span class="comment">/*------------------------------------------------------------------------------</span></div>
@@ -323,7 +374,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Informs the compiler that the function does not return. The compiler can then perform optimizations by removing code that is never reached.</p>
-<p><b> Code Example:</b> </p>
+<p><b>Code Example:</b> </p>
 <div class="fragment"><div class="line"><span class="comment">// OS idle demon (running when no other thread is ready to run).</span></div>
 <div class="line"> </div>
 <div class="line"><a class="code" href="group__compiler__conntrol__gr.html#ga153a4a31b276a9758959580538720a51">__NO_RETURN</a> <span class="keywordtype">void</span> os_idle_demon (<span class="keywordtype">void</span>);</div>
@@ -340,7 +391,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Specifies that a type must have the smallest possible alignment.</p>
-<p><b> Code Example:</b> </p>
+<p><b>Code Example:</b> </p>
 <div class="fragment"><div class="line"><span class="keyword">struct </span>foo {</div>
 <div class="line">  uint8_t  u8;</div>
 <div class="line">  uint32_t u32[2] <a class="code" href="group__compiler__conntrol__gr.html#gabe8996d3d985ee1529475443cc635bf1">__PACKED</a>;</div>
@@ -358,12 +409,32 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Specifies that a structure must have the smallest possible alignment.</p>
-<p><b> Code Example:</b> </p>
+<p><b>Code Example:</b> </p>
 <div class="fragment"><div class="line"><a class="code" href="group__compiler__conntrol__gr.html#ga4dbb70fab85207c27b581ecb6532b314">__PACKED_STRUCT</a> foo {</div>
 <div class="line">  uint8_t   u8;</div>
 <div class="line">  uint32_t  u32;</div>
 <div class="line">  uint16_t  u16;</div>
 <div class="line">};</div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a class="anchor" id="ga72db8b026c5e100254080fefabd9fd88"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define __PROGRAM_START</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Gives the function to be jumped into right after low level initialization, i.e. SystemInit. This is compiler and library specific. CMSIS specifies common default for supported compilers.</p>
+<dl class="section note"><dt>Note</dt><dd>This define is only intended to be used by the <a class="el" href="startup_c_pg.html">Startup File startup_&lt;device&gt;.c</a>.</dd></dl>
+<p><b>Code Example:</b> </p>
+<div class="fragment"><div class="line"><span class="keywordtype">void</span> Reset_Handler(<span class="keywordtype">void</span>)</div>
+<div class="line">{</div>
+<div class="line">  <a class="code" href="group__system__init__gr.html#ga93f514700ccf00d08dbdcff7f1224eb2">SystemInit</a>();                             <span class="comment">/* CMSIS System Initialization */</span></div>
+<div class="line">  <a class="code" href="group__compiler__conntrol__gr.html#ga72db8b026c5e100254080fefabd9fd88">__PROGRAM_START</a>();                        <span class="comment">/* Enter PreMain (C library entry point) */</span></div>
+<div class="line">}</div>
 </div><!-- fragment --> 
 </div>
 </div>
@@ -378,7 +449,7 @@ Macros</h2></td></tr>
 </div><div class="memdoc">
 <p>The __RESTRICT keyword corresponds to the <b>restrict</b> pointer qualifier that has been introduced in C99. __RESTRICT is a hint to the compiler that enables additional optimizations. It specifies that for the lifetime of the pointer, only the pointer itself or a value directly derived from it (such as pointer + 1) is used to access the object. The compiler may therefore ignore potential pointer aliasing effects and perform additional optimizations.</p>
 <dl class="section note"><dt>Note</dt><dd>For compilers that do not support the restrict keyword, __RESTRICT is defined as an empty macro and a warning is issued.</dd></dl>
-<p><b> Code Example:</b> </p>
+<p><b>Code Example:</b> </p>
 <div class="fragment"><div class="line"><a class="code" href="group__compiler__conntrol__gr.html#gaba87361bfad2ae52cfe2f40c1a1dbf9c">__STATIC_INLINE</a> <span class="keywordtype">void</span> <a class="code" href="group__mpu__functions.html#gac1a949403bf84eecaf407003fb553ae7">ARM_MPU_OrderedMemcpy</a> (<span class="keyword">volatile</span> uint32_t* dst, <span class="keyword">const</span> uint32_t* <a class="code" href="group__compiler__conntrol__gr.html#ga378ac21329d33f561f90265eef89f564">__RESTRICT</a> src, uint32_t len)</div>
 <div class="line">{</div>
 <div class="line">  uint32_t i;</div>
@@ -386,6 +457,27 @@ Macros</h2></td></tr>
 <div class="line">  {</div>
 <div class="line">    dst[i] = src[i];   <span class="comment">// Since src is restrict, the compiler can assume that dst and src are not overlapping may load multiple values at a time</span></div>
 <div class="line">  }</div>
+<div class="line">}</div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a class="anchor" id="ga84b0bad4aa39632d3faea46aa1e102a8"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define __STACK_LIMIT</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>The address of the specified symbol is used to initialize the main stack pointer limit (MSPLIM on Armv8-M) during low level init. This is compiler/linker specific. CMSIS specifies common default for supported compilers.</p>
+<dl class="section note"><dt>Note</dt><dd>This define is only intended to be used by the <a class="el" href="startup_c_pg.html">Startup File startup_&lt;device&gt;.c</a>.</dd></dl>
+<p><b>Code Example:</b> </p>
+<div class="fragment"><div class="line"><span class="keywordtype">void</span> Reset_Handler(<span class="keywordtype">void</span>)</div>
+<div class="line">{</div>
+<div class="line">  <a class="code" href="group__Core__Register__gr.html#ga6809a07c5cb7410e361f3fba57f72172">__set_MSPLIM</a>((uint32_t)(&amp;<a class="code" href="group__compiler__conntrol__gr.html#ga84b0bad4aa39632d3faea46aa1e102a8">__STACK_LIMIT</a>));</div>
+<div class="line">  <span class="comment">// :</span></div>
+<div class="line">  <span class="comment">// :</span></div>
 <div class="line">}</div>
 </div><!-- fragment --> 
 </div>
@@ -401,7 +493,7 @@ Macros</h2></td></tr>
 </div><div class="memdoc">
 <p>Defines a static function that should be always inlined by the compiler.</p>
 <dl class="section note"><dt>Note</dt><dd>For compilers that do not allow to force function inlining, the macro maps to <a class="el" href="group__compiler__conntrol__gr.html#gaba87361bfad2ae52cfe2f40c1a1dbf9c">__STATIC_INLINE</a>.</dd></dl>
-<p><b> Code Example:</b> </p>
+<p><b>Code Example:</b> </p>
 <div class="fragment"><div class="line">\\ Get Interrupt Vector</div>
 <div class="line"><a class="code" href="group__compiler__conntrol__gr.html#gab904513442afdf77d4f8c74f23cbb040">__STATIC_FORCEINLINE</a> uint32_t <a class="code" href="group__NVIC__gr.html#gaebee9cad6724a5bac1857f0f1fb6d6af">NVIC_GetVector</a>(<a class="code" href="group__NVIC__gr.html#ga7e1129cd8a196f4284d41db3e82ad5c8">IRQn_Type</a> IRQn)</div>
 <div class="line">{</div>
@@ -421,7 +513,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Defines a static function that may be inlined by the compiler. If the compiler generates inline code for all calls to this functions, no additional function implementation is generated which may further optimize space.</p>
-<p><b> Code Example:</b> </p>
+<p><b>Code Example:</b> </p>
 <div class="fragment"><div class="line">\\ Get Interrupt Vector</div>
 <div class="line"><a class="code" href="group__compiler__conntrol__gr.html#gaba87361bfad2ae52cfe2f40c1a1dbf9c">__STATIC_INLINE</a> uint32_t <a class="code" href="group__NVIC__gr.html#gaebee9cad6724a5bac1857f0f1fb6d6af">NVIC_GetVector</a>(<a class="code" href="group__NVIC__gr.html#ga7e1129cd8a196f4284d41db3e82ad5c8">IRQn_Type</a> IRQn)</div>
 <div class="line">{</div>
@@ -441,7 +533,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Defines a pointer to a uint16_t from an address that does not need to be aligned. This can then be used in read operations. The compiler will generate the appropriate access (aligned or non-aligned) depending on the underlying Arm processor core and compiler settings.</p>
-<p><b> Code Example:</b> </p>
+<p><b>Code Example:</b> </p>
 <div class="fragment"><div class="line">uint16_t val16;</div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">void</span> test (uint8_t *ptr) {</div>
@@ -460,7 +552,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Defines a pointer to a uint16_t from an address that does not need to be aligned. This can then be used in write operations. The compiler will generate the appropriate access (aligned or non-aligned) depending on the underlying Arm processor core and compiler settings.</p>
-<p><b> Code Example:</b> </p>
+<p><b>Code Example:</b> </p>
 <div class="fragment"><div class="line">uint16_t val16 = 0U;</div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">void</span> test (uint8_t *ptr) {</div>
@@ -480,7 +572,7 @@ Macros</h2></td></tr>
 </div><div class="memdoc">
 <dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000001">Deprecated:</a></b></dt><dd>Do not use this macro. It has been superseded by <a class="el" href="group__compiler__conntrol__gr.html#ga254322c344d954c9f829719a50a88e87">__UNALIGNED_UINT32_READ</a>, <a class="el" href="group__compiler__conntrol__gr.html#gabb2180285c417aa9120a360c51f64b4b">__UNALIGNED_UINT32_WRITE</a> and will be removed in the future.</dd></dl>
 <p>Defines a pointer to a uint32_t from an address that does not need to be aligned. This can then be used in read/write operations. The compiler will generate the appropriate access (aligned or non-aligned) depending on the underlying Arm processor core and compiler settings.</p>
-<p><b> Code Example:</b> </p>
+<p><b>Code Example:</b> </p>
 <div class="fragment"><div class="line">uint32_t val32;</div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">void</span> test (uint8_t *ptr) {</div>
@@ -499,7 +591,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Defines a pointer to a uint32_t from an address that does not need to be aligned. This can then be used in read operations. The compiler will generate the appropriate access (aligned or non-aligned) depending on the underlying Arm processor core and compiler settings.</p>
-<p><b> Code Example:</b> </p>
+<p><b>Code Example:</b> </p>
 <div class="fragment"><div class="line">uint32_t val32;</div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">void</span> test (uint8_t *ptr) {</div>
@@ -518,7 +610,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Defines a pointer to a uint32_t from an address that does not need to be aligned. This can then be used in write operations. The compiler will generate the appropriate access (aligned or non-aligned) depending on the underlying Arm processor core and compiler settings.</p>
-<p><b> Code Example:</b> </p>
+<p><b>Code Example:</b> </p>
 <div class="fragment"><div class="line">uint32_t val32 = 0U;</div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">void</span> test (uint8_t *ptr) {</div>
@@ -537,13 +629,41 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Definitions tagged with <b>__USED</b> in the source code should be not removed by the linker when detected as unused.</p>
-<p><b> Code Example:</b> </p>
+<p><b>Code Example:</b> </p>
 <div class="fragment"><div class="line"><span class="comment">/* Export following variables for debugging */</span></div>
 <div class="line"><a class="code" href="group__compiler__conntrol__gr.html#ga3e40e4c553fc11588f7a4c2a19e789e0">__USED</a> uint32_t <span class="keyword">const</span> CMSIS_RTOS_API_Version = osCMSIS;</div>
 <div class="line"><a class="code" href="group__compiler__conntrol__gr.html#ga3e40e4c553fc11588f7a4c2a19e789e0">__USED</a> uint32_t <span class="keyword">const</span> CMSIS_RTOS_RTX_Version = osCMSIS_RTX;</div>
 <div class="line"><a class="code" href="group__compiler__conntrol__gr.html#ga3e40e4c553fc11588f7a4c2a19e789e0">__USED</a> uint32_t <span class="keyword">const</span> os_clockrate = OS_TICK;</div>
 <div class="line"><a class="code" href="group__compiler__conntrol__gr.html#ga3e40e4c553fc11588f7a4c2a19e789e0">__USED</a> uint32_t <span class="keyword">const</span> os_timernum  = 0;</div>
 </div><!-- fragment --> 
+</div>
+</div>
+<a class="anchor" id="gab94ebeb20055f1848d7b707d3c7cfc5d"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define __VECTOR_TABLE</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>The given name is used for defining the static (compiler time) interrupt vector table. The name must comply with any compiler/linker conventions, e.g. if used for vector table relocation or debugger awareness. CMSIS specifies common default for supported compilers.</p>
+<dl class="section note"><dt>Note</dt><dd>This define is only intended to be used by the <a class="el" href="startup_c_pg.html">Startup File startup_&lt;device&gt;.c</a>. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga4f65c96effa79fbd610fea43ee7d745b"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define __VECTOR_TABLE_ATTRIBUTE</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>The given decl specs are used for defining the static (compiler time) interrupt vector table, e.g. to mark the table as used and force it into a specific linker section. CMSIS specifies common default for supported compilers.</p>
+<dl class="section note"><dt>Note</dt><dd>This define is only intended to be used by the <a class="el" href="startup_c_pg.html">Startup File startup_&lt;device&gt;.c</a>. </dd></dl>
+
 </div>
 </div>
 <a class="anchor" id="gac607bf387b29162be6a9b77fc7999539"></a>
@@ -557,7 +677,7 @@ Macros</h2></td></tr>
 </div><div class="memdoc">
 <p>Functions defined with <b>__WEAK</b> export their symbols weakly. A weakly defined function behaves like a normally defined function unless a non-weakly defined function of the same name is linked into the same image. If both a non-weakly defined function and a weakly defined function exist in the same image then all calls to the function resolve to call the non-weak function.</p>
 <p>Functions declared with <b>__WEAK</b> and then defined without <b>__WEAK</b> behave as non-weak functions.</p>
-<p><b> Code Example:</b> </p>
+<p><b>Code Example:</b> </p>
 <div class="fragment"><div class="line"><a class="code" href="group__compiler__conntrol__gr.html#gac607bf387b29162be6a9b77fc7999539">__WEAK</a> <span class="keywordtype">void</span> <a class="code" href="group__system__init__gr.html#ga93f514700ccf00d08dbdcff7f1224eb2">SystemInit</a>(<span class="keywordtype">void</span>)</div>
 <div class="line">{</div>
 <div class="line">  SystemCoreSetup();</div>
@@ -571,7 +691,7 @@ Macros</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Mar 21 2019 12:24:04 for CMSIS-Core (Cortex-M) by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Wed Jul 10 2019 15:20:25 for CMSIS-Core (Cortex-M) Version 5.3.0 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Core (Cortex-M)
-   &#160;<span id="projectnumber">Version 5.2.1</span>
+   &#160;<span id="projectnumber">Version 5.3.0</span>
    </div>
    <div id="projectbrief">CMSIS-Core support for Cortex-M processor-based devices</div>
   </td>
@@ -115,9 +115,9 @@ $(document).ready(function(){initNavTree('using_VTOR_pg.html','');});
 <div class="fragment"><div class="line"><span class="preprocessor">#include &quot;ARMCM3.h&quot;</span>                     <span class="comment">// Device header</span></div>
 <div class="line"> </div>
 <div class="line"><span class="comment">/* externals from startup_ARMCM3.s */</span></div>
-<div class="line"><span class="keyword">extern</span> uint32_t __Vectors[];                             <span class="comment">/* vector table ROM  */</span></div>
+<div class="line"><span class="keyword">extern</span> uint32_t __Vectors[];              <span class="comment">/* vector table ROM  */</span></div>
 <div class="line"> </div>
-<div class="line"><span class="preprocessor">#define VECTORTABLE_SIZE        (256)          </span><span class="comment">/* size Cortex-M3 vector table */</span><span class="preprocessor"></span></div>
+<div class="line"><span class="preprocessor">#define VECTORTABLE_SIZE        (256)     </span><span class="comment">/* size Cortex-M3 vector table      */</span><span class="preprocessor"></span></div>
 <div class="line"><span class="preprocessor"></span><span class="preprocessor">#define VECTORTABLE_ALIGNMENT   (0x100ul) </span><span class="comment">/* 16 Cortex + 32 ARMCM3 = 48 words */</span><span class="preprocessor"></span></div>
 <div class="line"><span class="preprocessor"></span>                                          <span class="comment">/* next power of 2 = 256            */</span></div>
 <div class="line"> </div>
@@ -129,7 +129,7 @@ $(document).ready(function(){initNavTree('using_VTOR_pg.html','');});
 <div class="line"><span class="comment"> *----------------------------------------------------------------------------*/</span></div>
 <div class="line"><span class="keyword">volatile</span> uint32_t msTicks = 0;                        <span class="comment">/* counts 1ms timeTicks */</span></div>
 <div class="line"><span class="keywordtype">void</span> SysTick_Handler(<span class="keywordtype">void</span>) {</div>
-<div class="line">  msTicks++;                                             <span class="comment">/* increment counter */</span></div>
+<div class="line">  msTicks++;                                          <span class="comment">/* increment counter */</span></div>
 <div class="line">}</div>
 <div class="line"> </div>
 <div class="line"><span class="comment">/*----------------------------------------------------------------------------</span></div>
@@ -137,7 +137,7 @@ $(document).ready(function(){initNavTree('using_VTOR_pg.html','');});
 <div class="line"><span class="comment"> *----------------------------------------------------------------------------*/</span></div>
 <div class="line"><span class="keyword">volatile</span> uint32_t msTicks_RAM = 0;                    <span class="comment">/* counts 1ms timeTicks */</span></div>
 <div class="line"><span class="keywordtype">void</span> SysTick_Handler_RAM(<span class="keywordtype">void</span>) {</div>
-<div class="line">  msTicks_RAM++;                                         <span class="comment">/* increment counter */</span></div>
+<div class="line">  msTicks_RAM++;                                      <span class="comment">/* increment counter */</span></div>
 <div class="line">}</div>
 <div class="line"> </div>
 <div class="line"><span class="comment">/*----------------------------------------------------------------------------</span></div>
@@ -151,7 +151,7 @@ $(document).ready(function(){initNavTree('using_VTOR_pg.html','');});
 <div class="line">  }</div>
 <div class="line">                                                   <span class="comment">/* replace SysTick Handler */</span></div>
 <div class="line">  vectorTable_RAM[<a class="code" href="group__NVIC__gr.html#gga7e1129cd8a196f4284d41db3e82ad5c8a6dbff8f8543325f3474cbae2446776e7">SysTick_IRQn</a> + 16] = (uint32_t)SysTick_Handler_RAM;</div>
-<div class="line">        </div>
+<div class="line">  </div>
 <div class="line">  <span class="comment">/* relocate vector table */</span> </div>
 <div class="line">  <a class="code" href="group__Core__Register__gr.html#gaeb8e5f7564a8ea23678fe3c987b04013">__disable_irq</a>();</div>
 <div class="line">    SCB-&gt;VTOR = (uint32_t)&amp;vectorTable_RAM;</div>
@@ -169,7 +169,7 @@ $(document).ready(function(){initNavTree('using_VTOR_pg.html','');});
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="using_pg.html">Using CMSIS in Embedded Applications</a></li>
-    <li class="footer">Generated on Thu Mar 21 2019 12:24:04 for CMSIS-Core (Cortex-M) by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Wed Jul 10 2019 15:20:25 for CMSIS-Core (Cortex-M) Version 5.3.0 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

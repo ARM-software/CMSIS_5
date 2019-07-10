@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Driver
-   &#160;<span id="projectnumber">Version 2.7.0</span>
+   &#160;<span id="projectnumber">Version 2.7.1</span>
    </div>
    <div id="projectbrief">Peripheral Interface for Middleware and Application Code</div>
   </td>
@@ -184,29 +184,23 @@ Functions</h2></td></tr>
 </div><table class="fieldtable">
 <tr><th colspan="3">Data Fields</th></tr>
 <tr><td class="fieldtype">
-<a class="anchor" id="a49bfb2a8757719e95497d081c5180827"></a>uint32_t</td>
+<a class="anchor" id="a3c9e76f6560429efd6dcc41ffd4b67b9"></a>uint32_t</td>
 <td class="fieldname">
-mode_station: 1</td>
+station: 1</td>
 <td class="fielddoc">
-Mode: Station. </td></tr>
+Station. </td></tr>
 <tr><td class="fieldtype">
-<a class="anchor" id="ad52b854e92ebad2becc9c4b497b833f0"></a>uint32_t</td>
+<a class="anchor" id="ae980bcb85233b9c5904072246ac71dd7"></a>uint32_t</td>
 <td class="fieldname">
-mode_ap: 1</td>
+ap: 1</td>
 <td class="fielddoc">
-Mode: Access Point. </td></tr>
+Access Point. </td></tr>
 <tr><td class="fieldtype">
-<a class="anchor" id="ab5c1e808f778b2a88555a9f1e75766a9"></a>uint32_t</td>
+<a class="anchor" id="ad280904e2429375205c09e53fe8cdcb1"></a>uint32_t</td>
 <td class="fieldname">
-mode_station_ap: 1</td>
+station_ap: 1</td>
 <td class="fielddoc">
-Mode: Station and Access Point. </td></tr>
-<tr><td class="fieldtype">
-<a class="anchor" id="a03e2afdee736773d9ecf9de3613112f5"></a>uint32_t</td>
-<td class="fieldname">
-mode_ad_hoc: 1</td>
-<td class="fielddoc">
-Mode: Ad-hoc. </td></tr>
+Concurrent Station and Access Point. </td></tr>
 <tr><td class="fieldtype">
 <a class="anchor" id="a87476544767703fc9f45f81b16cd4429"></a>uint32_t</td>
 <td class="fieldname">
@@ -232,17 +226,17 @@ event_ap_disconnect: 1</td>
 <td class="fielddoc">
 Access Point: event generated on Station disconnect. </td></tr>
 <tr><td class="fieldtype">
-<a class="anchor" id="adbcc47408fb8c50d262a3be535108186"></a>uint32_t</td>
-<td class="fieldname">
-bypass_mode: 1</td>
-<td class="fielddoc">
-Bypass or pass-through mode (Ethernet interface) </td></tr>
-<tr><td class="fieldtype">
 <a class="anchor" id="ac4c6eadec013cf8a11b8eca66b809431"></a>uint32_t</td>
 <td class="fieldname">
 event_eth_rx_frame: 1</td>
 <td class="fielddoc">
 Event generated on Ethernet frame reception in bypass mode. </td></tr>
+<tr><td class="fieldtype">
+<a class="anchor" id="adbcc47408fb8c50d262a3be535108186"></a>uint32_t</td>
+<td class="fieldname">
+bypass_mode: 1</td>
+<td class="fielddoc">
+Bypass or pass-through mode (Ethernet interface) </td></tr>
 <tr><td class="fieldtype">
 <a class="anchor" id="a69ddb9c845da426f636d9dd0dbed4e7e"></a>uint32_t</td>
 <td class="fieldname">
@@ -264,7 +258,7 @@ Ping (ICMP) </td></tr>
 <tr><td class="fieldtype">
 <a class="anchor" id="aa43c4c21b173ada1b6b7568956f0d650"></a>uint32_t</td>
 <td class="fieldname">
-reserved: 19</td>
+reserved: 20</td>
 <td class="fielddoc">
 Reserved (must be zero) </td></tr>
 </table>
@@ -617,7 +611,7 @@ Reserved (must be zero) </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Mar 21 2019 12:24:15 for CMSIS-Driver by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Wed Jul 10 2019 15:20:32 for CMSIS-Driver Version 2.7.1 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

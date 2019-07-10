@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-DSP
-   &#160;<span id="projectnumber">Version 1.6.0</span>
+   &#160;<span id="projectnumber">Version 1.7.0</span>
    </div>
    <div id="projectbrief">CMSIS DSP Software Library</div>
   </td>
@@ -118,13 +118,14 @@ $(document).ready(function(){initNavTree('group__RealFFT__Table.html','');});
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:ga70c20a29dce002df289426d5b4f67fa8"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="arm__math_8h.html#ab5a8fb21a5b3b983d5f54f31614052ea">q15_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__RealFFT__Table.html#ga70c20a29dce002df289426d5b4f67fa8">__ALIGNED</a> (4)</td></tr>
+<tr class="memdesc:ga70c20a29dce002df289426d5b4f67fa8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Weights Table.  <a href="#ga70c20a29dce002df289426d5b4f67fa8">More...</a><br/></td></tr>
 <tr class="separator:ga70c20a29dce002df289426d5b4f67fa8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
-<tr class="memitem:ga8b1ad947c470596674fa3364e16045c6"><td class="memItemLeft" align="right" valign="top">static const <a class="el" href="arm__math_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__RealFFT__Table.html#ga8b1ad947c470596674fa3364e16045c6">realCoefA</a> [8192]</td></tr>
+<tr class="memitem:ga8b1ad947c470596674fa3364e16045c6"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="arm__math_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__RealFFT__Table.html#ga8b1ad947c470596674fa3364e16045c6">realCoefA</a> [8192]</td></tr>
 <tr class="separator:ga8b1ad947c470596674fa3364e16045c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac52f98b52a1f03bfac8b57a67ba07397"><td class="memItemLeft" align="right" valign="top">static const <a class="el" href="arm__math_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__RealFFT__Table.html#gac52f98b52a1f03bfac8b57a67ba07397">realCoefB</a> [8192]</td></tr>
+<tr class="memitem:gac52f98b52a1f03bfac8b57a67ba07397"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="arm__math_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__RealFFT__Table.html#gac52f98b52a1f03bfac8b57a67ba07397">realCoefB</a> [8192]</td></tr>
 <tr class="separator:gac52f98b52a1f03bfac8b57a67ba07397"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaf1592a6cf0504675205074a43c3728a2"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="arm__math_8h.html#adc89a3547f5324b7b3b95adec3806bc0">q31_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__RealFFT__Table.html#gaf1592a6cf0504675205074a43c3728a2">realCoefAQ31</a> [8192]</td></tr>
 <tr class="separator:gaf1592a6cf0504675205074a43c3728a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -146,6 +147,7 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Q15 table for reciprocal.</p>
 <dl class="section user"><dt></dt><dd>Generation fixed-point realCoefAQ15 array in Q15 format: </dd></dl>
 <dl class="section user"><dt></dt><dd>n = 4096 <pre>for (i = 0; i &lt; n; i++)
 {
@@ -159,7 +161,26 @@ Variables</h2></td></tr>
    pBTable[2 * i]     = 0.5 * (1.0 + sin (2 * PI / (double) (2 * n) * (double) i));
    pBTable[2 * i + 1] = 0.5 * (1.0 * cos (2 * PI / (double) (2 * n) * (double) i));
 }</pre> </dd></dl>
-<dl class="section user"><dt></dt><dd>Convert to fixed point Q15 format round(pBTable[i] * pow(2, 15)) </dd></dl>
+<dl class="section user"><dt></dt><dd>Convert to fixed point Q15 format round(pBTable[i] * pow(2, 15))</dd></dl>
+<dl class="section user"><dt></dt><dd>Weights tables are generated using the formula : <pre>weights[n] = e^(-j*n*pi/(2*N))</pre> </dd></dl>
+<dl class="section user"><dt></dt><dd>C command to generate the table <pre>
+for(i = 0; i&lt; N; i++)
+{ 
+  weights[(2*i)]   =  cos(i*c);
+  weights[(2*i)+1] = -sin(i*c);
+} </pre> </dd></dl>
+<dl class="section user"><dt></dt><dd>where <code>N</code> is the Number of weights to be calculated and <code>c</code> is <code>pi/(2*N)</code> </dd></dl>
+<dl class="section user"><dt></dt><dd>Converted the output to q15 format by multiplying with 2^31 and saturated if required. </dd></dl>
+<dl class="section user"><dt></dt><dd>In the tables below the real and imaginary values are placed alternatively, hence the array length is <code>2*N</code>. </dd></dl>
+<dl class="section user"><dt></dt><dd>cosFactor tables are generated using the formula : <pre> cos_factors[n] = 2 * cos((2n+1)*pi/(4*N)) </pre> </dd></dl>
+<dl class="section user"><dt></dt><dd>C command to generate the table <pre>
+for (i = 0; i&lt; N; i++)
+{
+  cos_factors[i] = 2 * cos((2*i+1)*c/2);
+} </pre> </dd></dl>
+<dl class="section user"><dt></dt><dd>where <code>N</code> is the number of factors to generate and <code>c</code> is <code>pi/(2*N)</code> </dd></dl>
+<dl class="section user"><dt></dt><dd>Then converted to q15 format by multiplying with 2^31 and saturated if required.</dd></dl>
+<p>end of DCT4_IDCT4_Table group </p>
 
 </div>
 </div>
@@ -167,19 +188,11 @@ Variables</h2></td></tr>
 <a class="anchor" id="ga8b1ad947c470596674fa3364e16045c6"></a>
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">const <a class="el" href="arm__math_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a> realCoefA[8192]</td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 <dl class="section user"><dt></dt><dd>Generation of realCoefA array: </dd></dl>
 <dl class="section user"><dt></dt><dd>n = 4096 <pre>for (i = 0; i &lt; n; i++)
@@ -212,19 +225,11 @@ Variables</h2></td></tr>
 <a class="anchor" id="gac52f98b52a1f03bfac8b57a67ba07397"></a>
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">const <a class="el" href="arm__math_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a> realCoefB[8192]</td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 <dl class="section user"><dt></dt><dd>Generation of realCoefB array: </dd></dl>
 <dl class="section user"><dt></dt><dd>n = 4096 <pre>for (i = 0; i &lt; n; i++)
@@ -259,7 +264,7 @@ Variables</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Mar 21 2019 12:24:26 for CMSIS-DSP by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Wed Jul 10 2019 15:20:40 for CMSIS-DSP Version 1.7.0 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

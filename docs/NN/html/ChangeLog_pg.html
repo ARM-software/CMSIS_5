@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-NN
-   &#160;<span id="projectnumber">Version 1.1.0</span>
+   &#160;<span id="projectnumber">Version 1.2.0</span>
    </div>
    <div id="projectbrief">CMSIS NN Software Library</div>
   </td>
@@ -115,6 +115,20 @@ $(document).ready(function(){initNavTree('ChangeLog_pg.html','');});
 <tr>
 <th>Version </th><th>Description  </th></tr>
 <tr>
+<td>V1.2.0 </td><td>Added depthwise convolution function with asymmetric quantization.<br/>
+ <ul>
+<li>
+arm_depthwise_conv_u8_basic_ver1 </li>
+</ul>
+Added support functions for requantization.<br/>
+ <ul>
+<li>
+arm_nn_sat_doubling_high_mult </li>
+<li>
+arm_nn_divide_by_power_of_two </li>
+</ul>
+</td></tr>
+<tr>
 <td>V1.1.0 </td><td>Added new math functions:<br/>
  <ul>
 <li>
@@ -135,7 +149,7 @@ Fixed minor issues.   </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Mar 21 2019 12:24:41 for CMSIS-NN by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Wed Jul 10 2019 15:20:50 for CMSIS-NN Version 1.2.0 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

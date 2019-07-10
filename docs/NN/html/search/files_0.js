@@ -9,6 +9,7 @@ var searchData=
   ['arm_5fconvolve_5fhwc_5fq7_5ffast_2ec',['arm_convolve_HWC_q7_fast.c',['../arm__convolve__HWC__q7__fast_8c.html',1,'']]],
   ['arm_5fconvolve_5fhwc_5fq7_5ffast_5fnonsquare_2ec',['arm_convolve_HWC_q7_fast_nonsquare.c',['../arm__convolve__HWC__q7__fast__nonsquare_8c.html',1,'']]],
   ['arm_5fconvolve_5fhwc_5fq7_5frgb_2ec',['arm_convolve_HWC_q7_RGB.c',['../arm__convolve__HWC__q7__RGB_8c.html',1,'']]],
+  ['arm_5fdepthwise_5fconv_5fu8_5fbasic_5fver1_2ec',['arm_depthwise_conv_u8_basic_ver1.c',['../arm__depthwise__conv__u8__basic__ver1_8c.html',1,'']]],
   ['arm_5fdepthwise_5fseparable_5fconv_5fhwc_5fq7_2ec',['arm_depthwise_separable_conv_HWC_q7.c',['../arm__depthwise__separable__conv__HWC__q7_8c.html',1,'']]],
   ['arm_5fdepthwise_5fseparable_5fconv_5fhwc_5fq7_5fnonsquare_2ec',['arm_depthwise_separable_conv_HWC_q7_nonsquare.c',['../arm__depthwise__separable__conv__HWC__q7__nonsquare_8c.html',1,'']]],
   ['arm_5ffully_5fconnected_5fmat_5fq7_5fvec_5fq15_2ec',['arm_fully_connected_mat_q7_vec_q15.c',['../arm__fully__connected__mat__q7__vec__q15_8c.html',1,'']]],

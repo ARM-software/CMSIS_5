@@ -3,8 +3,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<title>/fm/zone/peripheral[n] element</title>
-<title>CMSIS-Zone (Preview): /fm/zone/peripheral[n] element</title>
+<title>../peripheral[n] element</title>
+<title>CMSIS-Zone (Preview): ../peripheral[n] element</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="cmsis.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="jquery.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Zone (Preview)
-   &#160;<span id="projectnumber">Version 0.9.0</span>
+   &#160;<span id="projectnumber">Version 0.9.2</span>
    </div>
    <div id="projectbrief">System Resource Management</div>
   </td>
@@ -107,47 +107,63 @@ $(document).ready(function(){initNavTree('fm_peripheral.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">/fm/zone/peripheral[n] element </div>  </div>
+<div class="title">../peripheral[n] element </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>The <a class="el" href="fm_peripheral.html">/fm/zone/peripheral[n] element</a> contains a sequence of all peripherals that are accessible in the zone (or system partition).</p>
+<div class="textblock"><p>The <a class="el" href="fm_peripheral.html">../peripheral[n] element</a> contains a sequence of all peripherals that are accessible in the zone (or system partition).</p>
 <table  class="cmtable" summary="Element: peripheral[n]">
 <tr>
 <th>Parent Element </th><th colspan="2">Element Chain  </th></tr>
 <tr>
-<td><a class="el" href="GenDataModel.html#fm_zone">zone</a> </td><td colspan="2"><a class="el" href="GenDataModel.html#fm_zone">/fm/zone element</a>  </td></tr>
+<td><a class="el" href="fm_system.html">system</a> </td><td colspan="2"><a class="el" href="fm_system.html">system element</a>  </td></tr>
+<tr>
+<td><a class="el" href="fm_zone.html">zone</a> </td><td colspan="2"><a class="el" href="fm_zone.html">zone element</a>  </td></tr>
 <tr>
 <th>Child Elements </th><th>Description </th><th>Type  </th></tr>
 <tr>
-<td>.name </td><td>The name of the peripheral. </td><td>xs:string  </td></tr>
+<td>.peripheral[<em>n</em>].name </td><td>The name of the peripheral. </td><td>xs:string  </td></tr>
 <tr>
-<td>.group </td><td>The name of the peripheral group that this peripheral belongs too. </td><td>xs:string  </td></tr>
+<td>.peripheral[<em>n</em>].group </td><td>The name of the peripheral group that this peripheral belongs too. </td><td>xs:string  </td></tr>
 <tr>
-<td>.start </td><td>The logical start address of the peripheral in the address map. </td><td>NonNegativeInteger  </td></tr>
+<td>.peripheral[<em>n</em>].start </td><td>The logical start address of the peripheral in the address map. </td><td>NonNegativeInteger  </td></tr>
 <tr>
 <td>.peripheral[<em>n</em>].size </td><td>The size (in bytes) of the peripheral. </td><td>NonNegativeInteger  </td></tr>
 <tr>
-<td>.security </td><td>The <a class="el" href="zoneFormat.html#security">security</a> setting for this peripheral. </td><td>SecurityTypeEnum/xs:string  </td></tr>
+<td>.peripheral[<em>n</em>].security </td><td>The <a class="el" href="zoneFormat.html#security">security</a> setting for this peripheral. </td><td>SecurityType  </td></tr>
 <tr>
-<td>.access </td><td>The <a class="el" href="zoneFormat.html#access">access</a> permissions for this peripheral in the following separate fields. </td><td>N/A  </td></tr>
+<td>.peripheral[<em>n</em>].security.s </td><td>Peripheral is assigned to <em>"secure"</em> state. </td><td>xs:boolean  </td></tr>
 <tr>
-<td>.access.r </td><td>The <em>read</em> <a class="el" href="zoneFormat.html#access">access</a> permission. </td><td>xs:boolean  </td></tr>
+<td>.peripheral[<em>n</em>].security.n </td><td>Peripheral is assigned to <em>"non-secure"</em> state. </td><td>xs:boolean  </td></tr>
 <tr>
-<td>.access.w </td><td>The <em>write</em> <a class="el" href="zoneFormat.html#access">access</a> permission. </td><td>xs:boolean  </td></tr>
+<td>.peripheral[<em>n</em>].access </td><td>The <a class="el" href="zoneFormat.html#access">access</a> permissions for this peripheral in the following separate fields. </td><td>AccessType  </td></tr>
 <tr>
-<td>.access.x </td><td>The <em>execution</em> <a class="el" href="zoneFormat.html#access">access</a> permission. </td><td>xs:boolean  </td></tr>
+<td>.peripheral[<em>n</em>].access.r </td><td>The <em>read</em> <a class="el" href="zoneFormat.html#access">access</a> permission. </td><td>xs:boolean  </td></tr>
 <tr>
-<td>.access.p </td><td>The <em>peripheral</em> <a class="el" href="zoneFormat.html#access">access</a> information. </td><td>xs:boolean  </td></tr>
+<td>.peripheral[<em>n</em>].access.w </td><td>The <em>write</em> <a class="el" href="zoneFormat.html#access">access</a> permission. </td><td>xs:boolean  </td></tr>
 <tr>
-<td>.info </td><td>Brief description of the peripheral region. </td><td>xs:string  </td></tr>
+<td>.peripheral[<em>n</em>].access.x </td><td>The <em>execution</em> <a class="el" href="zoneFormat.html#access">access</a> permission. </td><td>xs:boolean  </td></tr>
+<tr>
+<td>.peripheral[<em>n</em>].access.p </td><td>The <em>peripheral</em> <a class="el" href="zoneFormat.html#access">access</a> information. </td><td>xs:boolean  </td></tr>
+<tr>
+<td>.peripheral[<em>n</em>].privilege </td><td>The <a class="el" href="zoneFormat.html#privilege">privilege type</a> settings for this peripheral in the following separate fields. </td><td>PrivilegeType  </td></tr>
+<tr>
+<td>.peripheral[<em>n</em>].privilege.p </td><td>The <em>privileged</em> <em>level</em> setting of <a class="el" href="zoneFormat.html#privilege">privilege type</a>. </td><td>xs:boolean  </td></tr>
+<tr>
+<td>.peripheral[<em>n</em>].privilege.u </td><td>The <em>unprivileged</em> <em>level</em> setting of <a class="el" href="zoneFormat.html#privilege">privilege type</a>. </td><td>xs:boolean  </td></tr>
+<tr>
+<td>.peripheral[<em>n</em>].shared </td><td>"1" specifies that this peripheral is used by multiple zones. Default value is "0". </td><td>xs:boolean  </td></tr>
+<tr>
+<td>.peripheral[<em>n</em>].dma </td><td>"1" specifies that this peripheral is accessed by a DMA controller. Default value is "0". </td><td>xs:boolean  </td></tr>
+<tr>
+<td>.peripheral[<em>n</em>].info </td><td>Brief description of the peripheral region. </td><td>xs:string  </td></tr>
 </table>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="GenDataModel.html">Generator Data Model</a></li>
-    <li class="footer">Generated on Thu Mar 21 2019 12:25:04 for CMSIS-Zone (Preview) by Arm Ltd. All rights reserved.
+    <li class="navelem"><a class="el" href="GenDataModel.html">Generator Data Model</a></li><li class="navelem"><a class="el" href="fm_zone.html">zone element</a></li>
+    <li class="footer">Generated on Wed Jul 10 2019 15:21:06 for CMSIS-Zone (Preview) Version 0.9.2 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

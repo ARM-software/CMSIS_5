@@ -3,8 +3,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<title>/fm/system/irq_setup[n] element</title>
-<title>CMSIS-Zone (Preview): /fm/system/irq_setup[n] element</title>
+<title>Zone Partitioning</title>
+<title>CMSIS-Zone (Preview): Zone Partitioning</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="cmsis.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="jquery.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Zone (Preview)
-   &#160;<span id="projectnumber">Version 0.9.0</span>
+   &#160;<span id="projectnumber">Version 0.9.2</span>
    </div>
    <div id="projectbrief">System Resource Management</div>
   </td>
@@ -88,7 +88,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   </div>
 </div>
 <script type="text/javascript">
-$(document).ready(function(){initNavTree('fm_irq_setup.html','');});
+$(document).ready(function(){initNavTree('zTUIZonePart.html','');});
 </script>
 <div id="doc-content">
 <!-- window showing the filter options -->
@@ -107,37 +107,39 @@ $(document).ready(function(){initNavTree('fm_irq_setup.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">/fm/system/irq_setup[n] element </div>  </div>
+<div class="title">Zone Partitioning </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>The <a class="el" href="fm_irq_setup.html">/fm/system/irq_setup[n] element</a> contains a sequence of device specific configuration for the setup of the interrupts.</p>
-<table  class="cmtable" summary="Element: irq_setup[n]">
-<tr>
-<th>Parent Element </th><th colspan="2">Element Chain  </th></tr>
-<tr>
-<td><a class="el" href="GenDataModel.html#fm_system">system</a> </td><td colspan="3"><a class="el" href="GenDataModel.html#fm_system">/fm/system element</a>  </td></tr>
-<tr>
-<th>Child Elements </th><th>Description </th><th>Type  </th></tr>
-<tr>
-<td>.irq </td><td>The name of the interrupt that this setup belongs too. </td><td>xs:string  </td></tr>
-<tr>
-<td>.name </td><td>The name of the register or array that holds the configuration information. </td><td>xs:string  </td></tr>
-<tr>
-<td>.index </td><td>The index value for the register array. </td><td>NonNegativeInteger  </td></tr>
-<tr>
-<td>.value </td><td>The size (in bytes) of the memory region. </td><td>NonNegativeInteger  </td></tr>
-<tr>
-<td>.security </td><td>The <a class="el" href="zoneFormat.html#security">security</a> information for this setup. </td><td>SecurityTypeEnum/xs:string  </td></tr>
-<tr>
-<td>.privilege </td><td>The <a class="el" href="zoneFormat.html#privilege">privilege type</a> information for this setup. </td><td>PrivilegeTypeEnum/xs:string  </td></tr>
-</table>
+<div class="textblock"><p>Every CMSIS-Zone project consists of one or more zones. The basic flow to create zones is as follows:</p>
+<ul>
+<li>In case of multi-core devices, create a zone for each processor.</li>
+<li>Then create at least one zone for each processor to be able to assign memories and peripherals. If your device contains Arm Cortex-M cores supporting TrustZone for Armv8-M, create a secure and a non-secure partition for each of these cores.</li>
+</ul>
+<h1><a class="anchor" id="zTUICreate"></a>
+Create Zones</h1>
+<p>To split a multi-processor system into single-processor sub-systems, you need to create new zones. Switch to the <b>Zones</b> tab and click the <b>Add new zone</b> button:</p>
+<div class="image">
+<img src="AddNewZoneButton.png" alt="AddNewZoneButton.png"/>
+</div>
+<p>In the new window, you need to specify a name for the zone, select the applicable core, and choose the security level (secure/non-secure).</p>
+<p>In the <a class="el" href="zTEMusca.html">Musca</a> example, a new zone called "CM33_0" was created and attached to processor core 0 without any security attribute (not specified):</p>
+<div class="image">
+<img src="NewZoneCM33_0.png" alt="NewZoneCM33_0.png"/>
+</div>
+<p>Similarly, an additional zone called "CM33_1" was created and attached to processor core 1, without security attribute.</p>
+<p><b>Save</b> your settings:</p>
+<div class="image">
+<img src="SaveButton.png" alt="SaveButton.png"/>
+</div>
+<dl class="section note"><dt>Note</dt><dd></dd></dl>
+<p>Adding zones only works for the currently opened <a class="el" href="zoneFormat.html#azone">.azone</a> file. The information about the zones is stored in the <a class="el" href="xml_zones.html">/azone/zones element</a> element of the *.azone file. </p>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="GenDataModel.html">Generator Data Model</a></li>
-    <li class="footer">Generated on Thu Mar 21 2019 12:25:04 for CMSIS-Zone (Preview) by Arm Ltd. All rights reserved.
+    <li class="navelem"><a class="el" href="zoneToolUsage.html">CMSIS-Zone Utility</a></li><li class="navelem"><a class="el" href="zTInteractiveMode.html">Interactive Mode</a></li>
+    <li class="footer">Generated on Wed Jul 10 2019 15:21:06 for CMSIS-Zone (Preview) Version 0.9.2 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

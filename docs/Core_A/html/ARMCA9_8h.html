@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Core (Cortex-A)
-   &#160;<span id="projectnumber">Version 1.1.3</span>
+   &#160;<span id="projectnumber">Version 1.1.4</span>
    </div>
    <div id="projectbrief">CMSIS-Core support for Cortex-A processor-based devices</div>
   </td>
@@ -119,60 +119,66 @@ $(document).ready(function(){initNavTree('ARMCA9_8h.html','');});
 Macros</h2></td></tr>
 <tr class="memitem:a292d4e6da76cde7f721581917f45a756"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ARMCA9_8h.html#a292d4e6da76cde7f721581917f45a756">VE_A9_MP_FLASH_BASE0</a>&#160;&#160;&#160;(0x00000000UL)</td></tr>
 <tr class="separator:a292d4e6da76cde7f721581917f45a756"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a51e7ad7d4be59e4a47f4199c08a52f35"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ARMCA9_8h.html#a51e7ad7d4be59e4a47f4199c08a52f35">VE_A9_MP_FLASH_BASE1</a>&#160;&#160;&#160;(0x08000000UL)</td></tr>
+<tr class="memitem:a51e7ad7d4be59e4a47f4199c08a52f35"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ARMCA9_8h.html#a51e7ad7d4be59e4a47f4199c08a52f35">VE_A9_MP_FLASH_BASE1</a>&#160;&#160;&#160;(0x0C000000UL)</td></tr>
 <tr class="separator:a51e7ad7d4be59e4a47f4199c08a52f35"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad22dea20bcb552bd05691f62ff5e5799"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ARMCA9_8h.html#ad22dea20bcb552bd05691f62ff5e5799">VE_A9_MP_PERIPH_BASE</a>&#160;&#160;&#160;(0x18000000UL)</td></tr>
-<tr class="separator:ad22dea20bcb552bd05691f62ff5e5799"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af0e04a3bf444617de5e6f1a4132bb33a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ARMCA9_8h.html#af0e04a3bf444617de5e6f1a4132bb33a">VE_A9_MP_SRAM_BASE</a>&#160;&#160;&#160;(0x2E000000UL)</td></tr>
+<tr class="memitem:af0e04a3bf444617de5e6f1a4132bb33a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ARMCA9_8h.html#af0e04a3bf444617de5e6f1a4132bb33a">VE_A9_MP_SRAM_BASE</a>&#160;&#160;&#160;(0x14000000UL)</td></tr>
 <tr class="separator:af0e04a3bf444617de5e6f1a4132bb33a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1f0eb04274d447fa1261fc34313bbd2f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ARMCA9_8h.html#a1f0eb04274d447fa1261fc34313bbd2f">VE_A9_MP_PERIPH_BASE_CS2</a>&#160;&#160;&#160;(0x18000000UL)</td></tr>
+<tr class="separator:a1f0eb04274d447fa1261fc34313bbd2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adab8c737342be2fc972b2bc39bdf134d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ARMCA9_8h.html#adab8c737342be2fc972b2bc39bdf134d">VE_A9_MP_VRAM_BASE</a>&#160;&#160;&#160;(0x00000000UL + VE_A9_MP_PERIPH_BASE_CS2)</td></tr>
+<tr class="separator:adab8c737342be2fc972b2bc39bdf134d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a338e6b0eddbed74bd8dfcf8be8df004c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ARMCA9_8h.html#a338e6b0eddbed74bd8dfcf8be8df004c">VE_A9_MP_ETHERNET_BASE</a>&#160;&#160;&#160;(0x02000000UL + VE_A9_MP_PERIPH_BASE_CS2)</td></tr>
+<tr class="separator:a338e6b0eddbed74bd8dfcf8be8df004c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8ce6f3127699b175000437b9fd22224c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ARMCA9_8h.html#a8ce6f3127699b175000437b9fd22224c">VE_A9_MP_USB_BASE</a>&#160;&#160;&#160;(0x03000000UL + VE_A9_MP_PERIPH_BASE_CS2)</td></tr>
+<tr class="separator:a8ce6f3127699b175000437b9fd22224c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a15fccfe28c34be132e4b26fecf459d59"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ARMCA9_8h.html#a15fccfe28c34be132e4b26fecf459d59">VE_A9_MP_PERIPH_BASE_CS3</a>&#160;&#160;&#160;(0x1C000000UL)</td></tr>
+<tr class="separator:a15fccfe28c34be132e4b26fecf459d59"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a63a986e5aa2a284f9509b5e91df630dd"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ARMCA9_8h.html#a63a986e5aa2a284f9509b5e91df630dd">VE_A9_MP_DAP_BASE</a>&#160;&#160;&#160;(0x00000000UL + VE_A9_MP_PERIPH_BASE_CS3)</td></tr>
+<tr class="separator:a63a986e5aa2a284f9509b5e91df630dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6be1b1510ebbf938f10c195c2aae50ed"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ARMCA9_8h.html#a6be1b1510ebbf938f10c195c2aae50ed">VE_A9_MP_SYSTEM_REG_BASE</a>&#160;&#160;&#160;(0x00010000UL + VE_A9_MP_PERIPH_BASE_CS3)</td></tr>
+<tr class="separator:a6be1b1510ebbf938f10c195c2aae50ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae59ea495994a48af31e09af0001c65c6"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ARMCA9_8h.html#ae59ea495994a48af31e09af0001c65c6">VE_A9_MP_SERIAL_BASE</a>&#160;&#160;&#160;(0x00030000UL + VE_A9_MP_PERIPH_BASE_CS3)</td></tr>
+<tr class="separator:ae59ea495994a48af31e09af0001c65c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a06ba050a1192b25ec6fbb79d6108d2ed"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ARMCA9_8h.html#a06ba050a1192b25ec6fbb79d6108d2ed">VE_A9_MP_AACI_BASE</a>&#160;&#160;&#160;(0x00040000UL + VE_A9_MP_PERIPH_BASE_CS3)</td></tr>
+<tr class="separator:a06ba050a1192b25ec6fbb79d6108d2ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4c93715226810aa05b1475cae477a9d1"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ARMCA9_8h.html#a4c93715226810aa05b1475cae477a9d1">VE_A9_MP_MMCI_BASE</a>&#160;&#160;&#160;(0x00050000UL + VE_A9_MP_PERIPH_BASE_CS3)</td></tr>
+<tr class="separator:a4c93715226810aa05b1475cae477a9d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abb9205ff2f6f411938d3443f0cc65b4d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ARMCA9_8h.html#abb9205ff2f6f411938d3443f0cc65b4d">VE_A9_MP_KMI0_BASE</a>&#160;&#160;&#160;(0x00060000UL + VE_A9_MP_PERIPH_BASE_CS3)</td></tr>
+<tr class="separator:abb9205ff2f6f411938d3443f0cc65b4d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a74740d1654250a51685800d03e3dc1a0"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ARMCA9_8h.html#a74740d1654250a51685800d03e3dc1a0">VE_A9_MP_UART_BASE</a>&#160;&#160;&#160;(0x00090000UL + VE_A9_MP_PERIPH_BASE_CS3)</td></tr>
+<tr class="separator:a74740d1654250a51685800d03e3dc1a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4d2806a167111f24a4e26764c667db46"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ARMCA9_8h.html#a4d2806a167111f24a4e26764c667db46">VE_A9_MP_WDT_BASE</a>&#160;&#160;&#160;(0x000F0000UL + VE_A9_MP_PERIPH_BASE_CS3)</td></tr>
+<tr class="separator:a4d2806a167111f24a4e26764c667db46"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3dd8c7208925d87eda25e9059e7b5bca"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ARMCA9_8h.html#a3dd8c7208925d87eda25e9059e7b5bca">VE_A9_MP_TIMER_BASE</a>&#160;&#160;&#160;(0x00110000UL + VE_A9_MP_PERIPH_BASE_CS3)</td></tr>
+<tr class="separator:a3dd8c7208925d87eda25e9059e7b5bca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abab45916f8216aee2f417e6b041a1a74"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ARMCA9_8h.html#abab45916f8216aee2f417e6b041a1a74">VE_A9_MP_DVI_BASE</a>&#160;&#160;&#160;(0x00160000UL + VE_A9_MP_PERIPH_BASE_CS3)</td></tr>
+<tr class="separator:abab45916f8216aee2f417e6b041a1a74"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a56ccb39193acdd89d79c794bc3d46dd8"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ARMCA9_8h.html#a56ccb39193acdd89d79c794bc3d46dd8">VE_A9_MP_RTC_BASE</a>&#160;&#160;&#160;(0x00170000UL + VE_A9_MP_PERIPH_BASE_CS3)</td></tr>
+<tr class="separator:a56ccb39193acdd89d79c794bc3d46dd8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a21aa9ad15aa6749c03cadf2dd895aae3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ARMCA9_8h.html#a21aa9ad15aa6749c03cadf2dd895aae3">VE_A9_MP_UART4_BASE</a>&#160;&#160;&#160;(0x001B0000UL + VE_A9_MP_PERIPH_BASE_CS3)</td></tr>
+<tr class="separator:a21aa9ad15aa6749c03cadf2dd895aae3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a628c63b1e4c2656100a00d883ab5e824"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ARMCA9_8h.html#a628c63b1e4c2656100a00d883ab5e824">VE_A9_MP_CLCD_BASE</a>&#160;&#160;&#160;(0x001F0000UL + VE_A9_MP_PERIPH_BASE_CS3)</td></tr>
+<tr class="separator:a628c63b1e4c2656100a00d883ab5e824"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adb063e35f3d63c35ce856561df8cedb4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ARMCA9_8h.html#adb063e35f3d63c35ce856561df8cedb4">VE_A9_MP_PL310_BASE</a>&#160;&#160;&#160;(0x1E00A000UL)</td></tr>
+<tr class="separator:adb063e35f3d63c35ce856561df8cedb4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8d664adb95364c864de72494a7603ee4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ARMCA9_8h.html#a8d664adb95364c864de72494a7603ee4">VE_A9_MP_PRIVATE_PERIPH_BASE</a>&#160;&#160;&#160;(0x2C000000UL)</td></tr>
+<tr class="separator:a8d664adb95364c864de72494a7603ee4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abf58e5b4c2424101181e4e90b013565f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ARMCA9_8h.html#abf58e5b4c2424101181e4e90b013565f">VE_A9_MP_GIC_DISTRIBUTOR_BASE</a>&#160;&#160;&#160;(0x00001000UL + VE_A9_MP_PRIVATE_PERIPH_BASE)</td></tr>
+<tr class="separator:abf58e5b4c2424101181e4e90b013565f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2281d069db0154b71d2307b151151624"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ARMCA9_8h.html#a2281d069db0154b71d2307b151151624">VE_A9_MP_GIC_INTERFACE_BASE</a>&#160;&#160;&#160;(0x00000100UL + VE_A9_MP_PRIVATE_PERIPH_BASE)</td></tr>
+<tr class="separator:a2281d069db0154b71d2307b151151624"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a02dee9c2055176f0f8b39f84188662dc"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ARMCA9_8h.html#a02dee9c2055176f0f8b39f84188662dc">VE_A9_MP_PRIVATE_TIMER</a>&#160;&#160;&#160;(0x00000600UL + VE_A9_MP_PRIVATE_PERIPH_BASE)</td></tr>
+<tr class="separator:a02dee9c2055176f0f8b39f84188662dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a649334fdbe9f99fa6c9e5fb9771deeab"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ARMCA9_8h.html#a649334fdbe9f99fa6c9e5fb9771deeab">VE_A9_MP_SSRAM_BASE</a>&#160;&#160;&#160;(0x2E000000UL)</td></tr>
+<tr class="separator:a649334fdbe9f99fa6c9e5fb9771deeab"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a49c91ca86e9eab3aaa8c8f3fbd2b9855"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ARMCA9_8h.html#a49c91ca86e9eab3aaa8c8f3fbd2b9855">VE_A9_MP_DRAM_BASE</a>&#160;&#160;&#160;(0x80000000UL)</td></tr>
 <tr class="separator:a49c91ca86e9eab3aaa8c8f3fbd2b9855"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adab8c737342be2fc972b2bc39bdf134d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ARMCA9_8h.html#adab8c737342be2fc972b2bc39bdf134d">VE_A9_MP_VRAM_BASE</a>&#160;&#160;&#160;(0x18000000UL)</td></tr>
-<tr class="separator:adab8c737342be2fc972b2bc39bdf134d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a338e6b0eddbed74bd8dfcf8be8df004c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ARMCA9_8h.html#a338e6b0eddbed74bd8dfcf8be8df004c">VE_A9_MP_ETHERNET_BASE</a>&#160;&#160;&#160;(0x02000000UL + VE_A9_MP_PERIPH_BASE)</td></tr>
-<tr class="separator:a338e6b0eddbed74bd8dfcf8be8df004c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8ce6f3127699b175000437b9fd22224c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ARMCA9_8h.html#a8ce6f3127699b175000437b9fd22224c">VE_A9_MP_USB_BASE</a>&#160;&#160;&#160;(0x03000000UL + VE_A9_MP_PERIPH_BASE)</td></tr>
-<tr class="separator:a8ce6f3127699b175000437b9fd22224c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a63a986e5aa2a284f9509b5e91df630dd"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ARMCA9_8h.html#a63a986e5aa2a284f9509b5e91df630dd">VE_A9_MP_DAP_BASE</a>&#160;&#160;&#160;(0x1C000000UL)</td></tr>
-<tr class="separator:a63a986e5aa2a284f9509b5e91df630dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6be1b1510ebbf938f10c195c2aae50ed"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ARMCA9_8h.html#a6be1b1510ebbf938f10c195c2aae50ed">VE_A9_MP_SYSTEM_REG_BASE</a>&#160;&#160;&#160;(0x00010000UL + 0x1C000000UL)</td></tr>
-<tr class="separator:a6be1b1510ebbf938f10c195c2aae50ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae59ea495994a48af31e09af0001c65c6"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ARMCA9_8h.html#ae59ea495994a48af31e09af0001c65c6">VE_A9_MP_SERIAL_BASE</a>&#160;&#160;&#160;(0x00030000UL + 0x1C000000UL)</td></tr>
-<tr class="separator:ae59ea495994a48af31e09af0001c65c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a06ba050a1192b25ec6fbb79d6108d2ed"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ARMCA9_8h.html#a06ba050a1192b25ec6fbb79d6108d2ed">VE_A9_MP_AACI_BASE</a>&#160;&#160;&#160;(0x00040000UL + 0x1C000000UL)</td></tr>
-<tr class="separator:a06ba050a1192b25ec6fbb79d6108d2ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4c93715226810aa05b1475cae477a9d1"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ARMCA9_8h.html#a4c93715226810aa05b1475cae477a9d1">VE_A9_MP_MMCI_BASE</a>&#160;&#160;&#160;(0x00050000UL + 0x1C000000UL)</td></tr>
-<tr class="separator:a4c93715226810aa05b1475cae477a9d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abb9205ff2f6f411938d3443f0cc65b4d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ARMCA9_8h.html#abb9205ff2f6f411938d3443f0cc65b4d">VE_A9_MP_KMI0_BASE</a>&#160;&#160;&#160;(0x00060000UL + 0x1C000000UL)</td></tr>
-<tr class="separator:abb9205ff2f6f411938d3443f0cc65b4d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a74740d1654250a51685800d03e3dc1a0"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ARMCA9_8h.html#a74740d1654250a51685800d03e3dc1a0">VE_A9_MP_UART_BASE</a>&#160;&#160;&#160;(0x00090000UL + 0x1C000000UL)</td></tr>
-<tr class="separator:a74740d1654250a51685800d03e3dc1a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4d2806a167111f24a4e26764c667db46"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ARMCA9_8h.html#a4d2806a167111f24a4e26764c667db46">VE_A9_MP_WDT_BASE</a>&#160;&#160;&#160;(0x000F0000UL + 0x1C000000UL)</td></tr>
-<tr class="separator:a4d2806a167111f24a4e26764c667db46"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3dd8c7208925d87eda25e9059e7b5bca"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ARMCA9_8h.html#a3dd8c7208925d87eda25e9059e7b5bca">VE_A9_MP_TIMER_BASE</a>&#160;&#160;&#160;(0x00110000UL + 0x1C000000UL)</td></tr>
-<tr class="separator:a3dd8c7208925d87eda25e9059e7b5bca"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abab45916f8216aee2f417e6b041a1a74"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ARMCA9_8h.html#abab45916f8216aee2f417e6b041a1a74">VE_A9_MP_DVI_BASE</a>&#160;&#160;&#160;(0x00160000UL + 0x1C000000UL)</td></tr>
-<tr class="separator:abab45916f8216aee2f417e6b041a1a74"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a56ccb39193acdd89d79c794bc3d46dd8"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ARMCA9_8h.html#a56ccb39193acdd89d79c794bc3d46dd8">VE_A9_MP_RTC_BASE</a>&#160;&#160;&#160;(0x00170000UL + 0x1C000000UL)</td></tr>
-<tr class="separator:a56ccb39193acdd89d79c794bc3d46dd8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a21aa9ad15aa6749c03cadf2dd895aae3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ARMCA9_8h.html#a21aa9ad15aa6749c03cadf2dd895aae3">VE_A9_MP_UART4_BASE</a>&#160;&#160;&#160;(0x001B0000UL + 0x1C000000UL)</td></tr>
-<tr class="separator:a21aa9ad15aa6749c03cadf2dd895aae3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a628c63b1e4c2656100a00d883ab5e824"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ARMCA9_8h.html#a628c63b1e4c2656100a00d883ab5e824">VE_A9_MP_CLCD_BASE</a>&#160;&#160;&#160;(0x001F0000UL + 0x1C000000UL)</td></tr>
-<tr class="separator:a628c63b1e4c2656100a00d883ab5e824"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abf58e5b4c2424101181e4e90b013565f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ARMCA9_8h.html#abf58e5b4c2424101181e4e90b013565f">VE_A9_MP_GIC_DISTRIBUTOR_BASE</a>&#160;&#160;&#160;(0x00001000UL + 0x2C000000UL)</td></tr>
-<tr class="separator:abf58e5b4c2424101181e4e90b013565f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2281d069db0154b71d2307b151151624"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ARMCA9_8h.html#a2281d069db0154b71d2307b151151624">VE_A9_MP_GIC_INTERFACE_BASE</a>&#160;&#160;&#160;(0x00000100UL + 0x2C000000UL)</td></tr>
-<tr class="separator:a2281d069db0154b71d2307b151151624"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a02dee9c2055176f0f8b39f84188662dc"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ARMCA9_8h.html#a02dee9c2055176f0f8b39f84188662dc">VE_A9_MP_PRIVATE_TIMER</a>&#160;&#160;&#160;(0x00000600UL + 0x2C000000UL)</td></tr>
-<tr class="separator:a02dee9c2055176f0f8b39f84188662dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5cc9c031f86d3fcb7efcbe2fce4cd552"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ARMCA9_8h.html#a5cc9c031f86d3fcb7efcbe2fce4cd552">GIC_DISTRIBUTOR_BASE</a>&#160;&#160;&#160;<a class="el" href="ARMCA9_8h.html#abf58e5b4c2424101181e4e90b013565f">VE_A9_MP_GIC_DISTRIBUTOR_BASE</a></td></tr>
 <tr class="separator:a5cc9c031f86d3fcb7efcbe2fce4cd552"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adc560f42c09a0a3ce5dcc4aa898209ca"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ARMCA9_8h.html#adc560f42c09a0a3ce5dcc4aa898209ca">GIC_INTERFACE_BASE</a>&#160;&#160;&#160;<a class="el" href="ARMCA9_8h.html#a2281d069db0154b71d2307b151151624">VE_A9_MP_GIC_INTERFACE_BASE</a></td></tr>
 <tr class="separator:adc560f42c09a0a3ce5dcc4aa898209ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a251f8c6600afee0dddf950c7a41d4723"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ARMCA9_8h.html#a251f8c6600afee0dddf950c7a41d4723">TIMER_BASE</a>&#160;&#160;&#160;<a class="el" href="ARMCA9_8h.html#a02dee9c2055176f0f8b39f84188662dc">VE_A9_MP_PRIVATE_TIMER</a></td></tr>
 <tr class="separator:a251f8c6600afee0dddf950c7a41d4723"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adb063e35f3d63c35ce856561df8cedb4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ARMCA9_8h.html#adb063e35f3d63c35ce856561df8cedb4">VE_A9_MP_PL310_BASE</a>&#160;&#160;&#160;(0x1E00A000UL)</td></tr>
-<tr class="separator:adb063e35f3d63c35ce856561df8cedb4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5ce89d9feb78e20a4034f025eec392b4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ARMCA9_8h.html#a5ce89d9feb78e20a4034f025eec392b4">L2C_310_BASE</a>&#160;&#160;&#160;<a class="el" href="ARMCA9_8h.html#adb063e35f3d63c35ce856561df8cedb4">VE_A9_MP_PL310_BASE</a></td></tr>
 <tr class="separator:a5ce89d9feb78e20a4034f025eec392b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga8ebf37d3e9141ccae33bb6b1edf539bd"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__version__ctrl.html#ga8ebf37d3e9141ccae33bb6b1edf539bd">__CA_REV</a>&#160;&#160;&#160;0x0000U</td></tr>
@@ -368,7 +374,7 @@ Enumerations</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define VE_A9_MP_AACI_BASE&#160;&#160;&#160;(0x00040000UL + 0x1C000000UL)</td>
+          <td class="memname">#define VE_A9_MP_AACI_BASE&#160;&#160;&#160;(0x00040000UL + VE_A9_MP_PERIPH_BASE_CS3)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -381,7 +387,7 @@ Enumerations</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define VE_A9_MP_CLCD_BASE&#160;&#160;&#160;(0x001F0000UL + 0x1C000000UL)</td>
+          <td class="memname">#define VE_A9_MP_CLCD_BASE&#160;&#160;&#160;(0x001F0000UL + VE_A9_MP_PERIPH_BASE_CS3)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -394,11 +400,11 @@ Enumerations</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define VE_A9_MP_DAP_BASE&#160;&#160;&#160;(0x1C000000UL)</td>
+          <td class="memname">#define VE_A9_MP_DAP_BASE&#160;&#160;&#160;(0x00000000UL + VE_A9_MP_PERIPH_BASE_CS3)</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>(DAP ) Base Address </p>
+<p>(LOCAL DAP ) Base Address </p>
 
 </div>
 </div>
@@ -420,7 +426,7 @@ Enumerations</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define VE_A9_MP_DVI_BASE&#160;&#160;&#160;(0x00160000UL + 0x1C000000UL)</td>
+          <td class="memname">#define VE_A9_MP_DVI_BASE&#160;&#160;&#160;(0x00160000UL + VE_A9_MP_PERIPH_BASE_CS3)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -433,7 +439,7 @@ Enumerations</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define VE_A9_MP_ETHERNET_BASE&#160;&#160;&#160;(0x02000000UL + VE_A9_MP_PERIPH_BASE)</td>
+          <td class="memname">#define VE_A9_MP_ETHERNET_BASE&#160;&#160;&#160;(0x02000000UL + VE_A9_MP_PERIPH_BASE_CS2)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -459,7 +465,7 @@ Enumerations</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define VE_A9_MP_FLASH_BASE1&#160;&#160;&#160;(0x08000000UL)</td>
+          <td class="memname">#define VE_A9_MP_FLASH_BASE1&#160;&#160;&#160;(0x0C000000UL)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -472,7 +478,7 @@ Enumerations</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define VE_A9_MP_GIC_DISTRIBUTOR_BASE&#160;&#160;&#160;(0x00001000UL + 0x2C000000UL)</td>
+          <td class="memname">#define VE_A9_MP_GIC_DISTRIBUTOR_BASE&#160;&#160;&#160;(0x00001000UL + VE_A9_MP_PRIVATE_PERIPH_BASE)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -485,11 +491,11 @@ Enumerations</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define VE_A9_MP_GIC_INTERFACE_BASE&#160;&#160;&#160;(0x00000100UL + 0x2C000000UL)</td>
+          <td class="memname">#define VE_A9_MP_GIC_INTERFACE_BASE&#160;&#160;&#160;(0x00000100UL + VE_A9_MP_PRIVATE_PERIPH_BASE)</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>(GIC CPU IF) Base Address </p>
+<p>(GIC CPU IF ) Base Address </p>
 
 </div>
 </div>
@@ -498,7 +504,7 @@ Enumerations</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define VE_A9_MP_KMI0_BASE&#160;&#160;&#160;(0x00060000UL + 0x1C000000UL)</td>
+          <td class="memname">#define VE_A9_MP_KMI0_BASE&#160;&#160;&#160;(0x00060000UL + VE_A9_MP_PERIPH_BASE_CS3)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -511,7 +517,7 @@ Enumerations</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define VE_A9_MP_MMCI_BASE&#160;&#160;&#160;(0x00050000UL + 0x1C000000UL)</td>
+          <td class="memname">#define VE_A9_MP_MMCI_BASE&#160;&#160;&#160;(0x00050000UL + VE_A9_MP_PERIPH_BASE_CS3)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -519,16 +525,29 @@ Enumerations</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ad22dea20bcb552bd05691f62ff5e5799"></a>
+<a class="anchor" id="a1f0eb04274d447fa1261fc34313bbd2f"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define VE_A9_MP_PERIPH_BASE&#160;&#160;&#160;(0x18000000UL)</td>
+          <td class="memname">#define VE_A9_MP_PERIPH_BASE_CS2&#160;&#160;&#160;(0x18000000UL)</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>(Peripheral) Base Address </p>
+<p>(Peripheral ) Base Address </p>
+
+</div>
+</div>
+<a class="anchor" id="a15fccfe28c34be132e4b26fecf459d59"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define VE_A9_MP_PERIPH_BASE_CS3&#160;&#160;&#160;(0x1C000000UL)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>(Peripheral ) Base Address </p>
 
 </div>
 </div>
@@ -545,12 +564,25 @@ Enumerations</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="a8d664adb95364c864de72494a7603ee4"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define VE_A9_MP_PRIVATE_PERIPH_BASE&#160;&#160;&#160;(0x2C000000UL)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>(Peripheral ) Base Address </p>
+
+</div>
+</div>
 <a class="anchor" id="a02dee9c2055176f0f8b39f84188662dc"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define VE_A9_MP_PRIVATE_TIMER&#160;&#160;&#160;(0x00000600UL + 0x2C000000UL)</td>
+          <td class="memname">#define VE_A9_MP_PRIVATE_TIMER&#160;&#160;&#160;(0x00000600UL + VE_A9_MP_PRIVATE_PERIPH_BASE)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -563,7 +595,7 @@ Enumerations</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define VE_A9_MP_RTC_BASE&#160;&#160;&#160;(0x00170000UL + 0x1C000000UL)</td>
+          <td class="memname">#define VE_A9_MP_RTC_BASE&#160;&#160;&#160;(0x00170000UL + VE_A9_MP_PERIPH_BASE_CS3)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -576,7 +608,7 @@ Enumerations</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define VE_A9_MP_SERIAL_BASE&#160;&#160;&#160;(0x00030000UL + 0x1C000000UL)</td>
+          <td class="memname">#define VE_A9_MP_SERIAL_BASE&#160;&#160;&#160;(0x00030000UL + VE_A9_MP_PERIPH_BASE_CS3)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -589,11 +621,24 @@ Enumerations</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define VE_A9_MP_SRAM_BASE&#160;&#160;&#160;(0x2E000000UL)</td>
+          <td class="memname">#define VE_A9_MP_SRAM_BASE&#160;&#160;&#160;(0x14000000UL)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <p>(SRAM ) Base Address </p>
+
+</div>
+</div>
+<a class="anchor" id="a649334fdbe9f99fa6c9e5fb9771deeab"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define VE_A9_MP_SSRAM_BASE&#160;&#160;&#160;(0x2E000000UL)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>(System SRAM) Base Address </p>
 
 </div>
 </div>
@@ -602,11 +647,11 @@ Enumerations</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define VE_A9_MP_SYSTEM_REG_BASE&#160;&#160;&#160;(0x00010000UL + 0x1C000000UL)</td>
+          <td class="memname">#define VE_A9_MP_SYSTEM_REG_BASE&#160;&#160;&#160;(0x00010000UL + VE_A9_MP_PERIPH_BASE_CS3)</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>(SYSTEM REG) Base Address </p>
+<p>(SYSTEM REG ) Base Address </p>
 
 </div>
 </div>
@@ -615,7 +660,7 @@ Enumerations</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define VE_A9_MP_TIMER_BASE&#160;&#160;&#160;(0x00110000UL + 0x1C000000UL)</td>
+          <td class="memname">#define VE_A9_MP_TIMER_BASE&#160;&#160;&#160;(0x00110000UL + VE_A9_MP_PERIPH_BASE_CS3)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -628,7 +673,7 @@ Enumerations</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define VE_A9_MP_UART4_BASE&#160;&#160;&#160;(0x001B0000UL + 0x1C000000UL)</td>
+          <td class="memname">#define VE_A9_MP_UART4_BASE&#160;&#160;&#160;(0x001B0000UL + VE_A9_MP_PERIPH_BASE_CS3)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -641,7 +686,7 @@ Enumerations</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define VE_A9_MP_UART_BASE&#160;&#160;&#160;(0x00090000UL + 0x1C000000UL)</td>
+          <td class="memname">#define VE_A9_MP_UART_BASE&#160;&#160;&#160;(0x00090000UL + VE_A9_MP_PERIPH_BASE_CS3)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -654,7 +699,7 @@ Enumerations</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define VE_A9_MP_USB_BASE&#160;&#160;&#160;(0x03000000UL + VE_A9_MP_PERIPH_BASE)</td>
+          <td class="memname">#define VE_A9_MP_USB_BASE&#160;&#160;&#160;(0x03000000UL + VE_A9_MP_PERIPH_BASE_CS2)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -667,7 +712,7 @@ Enumerations</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define VE_A9_MP_VRAM_BASE&#160;&#160;&#160;(0x18000000UL)</td>
+          <td class="memname">#define VE_A9_MP_VRAM_BASE&#160;&#160;&#160;(0x00000000UL + VE_A9_MP_PERIPH_BASE_CS2)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -680,7 +725,7 @@ Enumerations</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define VE_A9_MP_WDT_BASE&#160;&#160;&#160;(0x000F0000UL + 0x1C000000UL)</td>
+          <td class="memname">#define VE_A9_MP_WDT_BASE&#160;&#160;&#160;(0x000F0000UL + VE_A9_MP_PERIPH_BASE_CS3)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -815,7 +860,7 @@ Enumerations</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_bcb5d964daf6ffff28eae5a1dee5d6c3.html">Device</a></li><li class="navelem"><a class="el" href="dir_c7e52d5561930380e5580f41be917c2f.html">ARM</a></li><li class="navelem"><a class="el" href="dir_3b4eaae6c8aa6ae26812da492b5e160f.html">ARMCA9</a></li><li class="navelem"><a class="el" href="dir_cf458401307886261324fb8415ee454f.html">Include</a></li><li class="navelem"><a class="el" href="ARMCA9_8h.html">ARMCA9.h</a></li>
-    <li class="footer">Generated on Thu Mar 21 2019 12:24:07 for CMSIS-Core (Cortex-A) by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Wed Jul 10 2019 15:20:27 for CMSIS-Core (Cortex-A) Version 1.1.4 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

@@ -142,7 +142,7 @@ Scheduler</h1>
 <div class="caption">
 Thread scheduling and interrupt execution</div></div>
 <p> The scheduler combines priority and round-robin based context switches. The example depicted in the image above contains four threads (1, 2, 3, and 4). Threads 1 and 2 share the same priority, thread 3 has a higher one and thread 4 the highest (<a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#a6a5183df4c54c3e28dc8dc704f2487d5">osThreadAttr_t::priority</a>). As long as threads 3 and 4 are blocked the scheduler switches between thread 1 and 2 on a time-slice basis (round-robin). The time-slice for round-robin scheduling can be configured, see Round-Robin Timeout in <a class="el" href="config_rtx5.html#systemConfig">System Configuration</a>.</p>
-<p>Thread 2 unblocks thread 3 by an arbitrary RTOS-call (executed in SVC handler mode) at time index 2. The scheduler switches to thread 3 immediately because thread 3 has the highest priority. Thread 4 is still blocked.</p>
+<p>Thread 2 unblocks thread 3 by an arbitrary RTOS-call (executed in <a class="el" href="theory_of_operation.html#CMSIS_RTOS_svcFunctions">SVC</a> handler mode) at time index 2. The scheduler switches to thread 3 immediately because thread 3 has the highest priority. Thread 4 is still blocked.</p>
 <p>At time index 4 an interrupt (ISR) occurs and preempts the SysTick_Handler. RTX does not add any latency to the interrupt service execution. The ISR routine uses an RTOS-call that unblocks thread 4. Instead of switching to thread 4 immediately the PendSV flag is set to defer the context switching. The PendSV_Handler is executed right after the SysTick_Handler returns and the deferred context switch to thread 4 is carried out. As soon as highest priority thread 4 blocks again by using a blocking RTOS-call execution is switched back to thread 3 immediately during time index 5.</p>
 <p>At time index 5 thread 3 uses a blocking RTOS-call as well. Thus the scheduler switches back to thread 2 for time index 6. At time index 7 the scheduler uses the round-robin mechanism to switch to thread 1 and so on.</p>
 <h1><a class="anchor" id="MemoryAllocation"></a>
@@ -425,8 +425,8 @@ RTX5 Header File</h1>
 <div class="line"> <span class="comment"></span></div>
 <div class="line"><span class="comment">/// Kernel Information</span></div>
 <div class="line"><span class="comment"></span><span class="preprocessor">#define osRtxVersionAPI      20010003   </span><span class="comment">///&lt; API version (2.1.3)</span></div>
-<div class="line"><span class="comment"></span>#define osRtxVersionKernel   50050000   <span class="comment">///&lt; Kernel version (5.5.0)</span></div>
-<div class="line"><span class="comment"></span>#define osRtxKernelId     &quot;RTX V5.5.0&quot;  <span class="comment">///&lt; Kernel identification string</span></div>
+<div class="line"><span class="comment"></span>#define osRtxVersionKernel   50050001   <span class="comment">///&lt; Kernel version (5.5.1)</span></div>
+<div class="line"><span class="comment"></span>#define osRtxKernelId     &quot;RTX V5.5.1&quot;  <span class="comment">///&lt; Kernel identification string</span></div>
 <div class="line"><span class="comment"></span> </div>
 <div class="line"> </div>
 <div class="line"><span class="comment">//  ==== Common definitions ====</span></div>
@@ -883,14 +883,63 @@ Calls from Interrupt Service Routines</h1>
 <li><a class="el" href="group__CMSIS__RTOS__PoolMgmt.html#ga8ead54e99ccb8f112356c88f99d38fbe">osMemoryPoolAlloc</a>, <a class="el" href="group__CMSIS__RTOS__PoolMgmt.html#gabb4f4560daa6d1f8c8789082ee186d16">osMemoryPoolFree</a>, <a class="el" href="group__CMSIS__RTOS__PoolMgmt.html#gad696e94bfbe28f0b6613f9303fdf6a37">osMemoryPoolGetCapacity</a>, <a class="el" href="group__CMSIS__RTOS__PoolMgmt.html#gab2bf059b7fa7679c3cccdaeec60b6c0e">osMemoryPoolGetBlockSize</a>, <a class="el" href="group__CMSIS__RTOS__PoolMgmt.html#ga958a9449bff8c95ce213de98eef5739d">osMemoryPoolGetCount</a>, <a class="el" href="group__CMSIS__RTOS__PoolMgmt.html#ga0394cffa9479a7994e3b03c79c1cb909">osMemoryPoolGetSpace</a></li>
 <li><a class="el" href="group__CMSIS__RTOS__Message.html#gaa515fc8b956f721a8f72b2c505813bfc">osMessageQueuePut</a>, <a class="el" href="group__CMSIS__RTOS__Message.html#gad90d4959466a7a65105061da8256ab9e">osMessageQueueGet</a>, <a class="el" href="group__CMSIS__RTOS__Message.html#gac24f87d4f395e9e9c900c320e45ade8a">osMessageQueueGetCapacity</a>, <a class="el" href="group__CMSIS__RTOS__Message.html#ga96d3d84069b20359de48109e28a1a89e">osMessageQueueGetMsgSize</a>, <a class="el" href="group__CMSIS__RTOS__Message.html#ga6a32ac394fcff568b251c160cc3014b2">osMessageQueueGetCount</a>, <a class="el" href="group__CMSIS__RTOS__Message.html#gaddf0904427436dd3880d46263c2dc9fa">osMessageQueueGetSpace</a></li>
 </ul>
-<p>Functions that cannot be called from an ISR are verifying the interrupt status and return the status code <b>osErrorISR</b>, in case they are called from an ISR context. In some implementations, this condition might be caught using the HARD_FAULT vector. </p>
+<p>Functions that cannot be called from an ISR are verifying the interrupt status and return the status code <b>osErrorISR</b>, in case they are called from an ISR context. In some implementations, this condition might be caught using the HARD_FAULT vector.</p>
+<h1><a class="anchor" id="CMSIS_RTOS_svcFunctions"></a>
+SVC Functions</h1>
+<p>Supervisor Calls (SVC) are exceptions targeted at software and operating systems for generating system function calls. They are sometimes called software interrupts. For example, instead of allowing user programs to directly access hardware, an operating system may provide access to hardware through an SVC. So when a user program wants to use certain hardware, it generates the exception using SVC instructions. The software exception handler in the operating system executes and provides the requested service to the user application. In this way, access to hardware is under the control of the OS, which can provide a more robust system by preventing the user applications from directly accessing the hardware.</p>
+<p>SVCs can also make software more portable because the user application does not need to know the programming details of the underlying hardware. The user program will only need to know the application programming interface (API) function ID and parameters; the actual hardware-level programming is handled by device drivers.</p>
+<p>SVCs run in <b>privileged</b> <b>handler</b> mode of the Arm Cortex-M core. SVC functions accept arguments and can return values. The functions are used in the same way as other functions; however, they are executed indirectly through the SVC instruction. When executing SVC instructions, the controller changes to the privileged handler mode.</p>
+<p>Interrupts are <b>not</b> <b>disabled</b> in this mode. To protect SVC functions from interrupts, you need to include the disable/enable intrinsic functions <code>__disable_irq()</code> and <code>__enable_irq()</code> in your code.</p>
+<p>You can use SVC functions to access <b>protected</b> <b>peripherals</b>, for example, to configure NVIC and interrupts. This is required if you run threads in unprivileged (protected) mode and you need to change interrupts from the within the thread.</p>
+<p>To implement SVC functions in your Keil RTX5 project, you need to:</p>
+<ol type="1">
+<li>Add the SVC User Table file <b>svc_user.c</b> to your project folder and include it into your project. This file is available as a user code template.</li>
+<li>Write a function implementation. Example: <div class="fragment"><div class="line">uint32_t svc_atomic_inc32 (uint32_t *mem) {</div>
+<div class="line">  <span class="comment">// A protected function to increment a counter. </span></div>
+<div class="line">  uint32_t val;</div>
+<div class="line">   </div>
+<div class="line">  __disable_irq();</div>
+<div class="line">  val  = *mem;</div>
+<div class="line">  (*mem) = val + 1U;</div>
+<div class="line">  __enable_irq();</div>
+<div class="line">   </div>
+<div class="line">  <span class="keywordflow">return</span> (val);</div>
+<div class="line">}</div>
+</div><!-- fragment --></li>
+<li>Add the function to the SVC function table in the <b>svc_user.c</b> module: <div class="fragment"><div class="line"><span class="keywordtype">void</span> * <span class="keyword">const</span> osRtxUserSVC[1+USER_SVC_COUNT] = {</div>
+<div class="line">  (<span class="keywordtype">void</span> *)USER_SVC_COUNT,</div>
+<div class="line">  (<span class="keywordtype">void</span> *)svc_atomic_inc32,</div>
+<div class="line">};</div>
+</div><!-- fragment --></li>
+<li>Increment the number of user SVC functions: <div class="fragment"><div class="line"><span class="preprocessor">#define USER_SVC_COUNT  1       // Number of user SVC functions</span></div>
+</div><!-- fragment --></li>
+<li><p class="startli">Declare a function wrapper to be called by the user to execute the SVC call.<br/>
+ <b>Code</b> <b>Example</b> (Arm Compiler 6) </p>
+<div class="fragment"><div class="line">__STATIC_FORCEINLINE uint32_t atomic_inc32 (uint32_t *mem) {</div>
+<div class="line">  <span class="keyword">register</span> uint32_t val;</div>
+<div class="line">       </div>
+<div class="line">  __ASM <span class="keyword">volatile</span> (</div>
+<div class="line">    <span class="stringliteral">&quot;svc 1&quot;</span> : <span class="stringliteral">&quot;=l&quot;</span> (val) : <span class="stringliteral">&quot;l&quot;</span> (mem) : <span class="stringliteral">&quot;cc&quot;</span>, <span class="stringliteral">&quot;memory&quot;</span></div>
+<div class="line">  );</div>
+<div class="line">  <span class="keywordflow">return</span> (val);</div>
+<div class="line">}</div>
+</div><!-- fragment --><p class="startli"><b>Code</b> <b>Example</b> (Arm Compiler 5 using <code>__svc(x)</code> attribute) </p>
+<div class="fragment"><div class="line">uint32_t atomic_inc32 (uint32_t *mem) __svc(1);</div>
+</div><!-- fragment --></li>
+</ol>
+<dl class="section note"><dt>Note</dt><dd><ul>
+<li>The SVC function <span class="XML-Token">0</span> is <b>reserved</b> for the Keil RTX5 kernel.</li>
+<li>Do not leave gaps when numbering SVC functions. They must occupy a <b>continuous</b> range of numbers starting from 1.</li>
+<li>SVC functions can still be interrupted. </li>
+</ul>
+</dd></dl>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="index.html">index</a></li><li class="navelem"><a class="el" href="rtx5_impl.html">RTX v5 Implementation</a></li>
-    <li class="footer">Generated on Thu Mar 21 2019 12:25:00 for CMSIS-RTOS2 by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Wed Jul 10 2019 15:21:03 for CMSIS-RTOS2 Version 2.1.3 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

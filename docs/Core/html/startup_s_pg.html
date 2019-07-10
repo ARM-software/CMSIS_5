@@ -3,8 +3,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<title>Startup File startup_&lt;device&gt;.s</title>
-<title>CMSIS-Core (Cortex-M): Startup File startup_&lt;device&gt;.s</title>
+<title>Startup File startup_&lt;device&gt;.s (deprecated)</title>
+<title>CMSIS-Core (Cortex-M): Startup File startup_&lt;device&gt;.s (deprecated)</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="cmsis.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="jquery.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Core (Cortex-M)
-   &#160;<span id="projectnumber">Version 5.2.1</span>
+   &#160;<span id="projectnumber">Version 5.3.0</span>
    </div>
    <div id="projectbrief">CMSIS-Core support for Cortex-M processor-based devices</div>
   </td>
@@ -108,10 +108,10 @@ $(document).ready(function(){initNavTree('startup_s_pg.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">Startup File startup_&lt;device&gt;.s </div>  </div>
+<div class="title">Startup File startup_&lt;device&gt;.s (deprecated) </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>The <a class="el" href="startup_s_pg.html">Startup File startup_&lt;device&gt;.s</a> contains:</p>
+<div class="textblock"><p>The <a class="el" href="startup_s_pg.html">Startup File startup_&lt;device&gt;.s (deprecated)</a> contains:</p>
 <ul>
 <li>The reset handler which is executed after CPU reset and typically calls the <a class="el" href="group__system__init__gr.html#ga93f514700ccf00d08dbdcff7f1224eb2">SystemInit</a> function.</li>
 <li>The setup values for the Main Stack Pointer (MSP).</li>
@@ -130,8 +130,8 @@ $(document).ready(function(){initNavTree('startup_s_pg.html','');});
 <div class="line">                 :       :</div>
 <div class="line">                DCD     EINT1_IRQHandler         ; 16+30: PIO INT1</div>
 <div class="line">                DCD     EINT0_IRQHandler         ; 16+31: PIO INT0</div>
-<div class="line">         :</div>
-<div class="line">         :</div>
+<div class="line">   :</div>
+<div class="line">   :</div>
 <div class="line">                EXPORT  WAKEUP0_IRQHandler       [WEAK]</div>
 <div class="line">                EXPORT  WAKEUP1_IRQHandler       [WEAK]</div>
 <div class="line">                EXPORT  WAKEUP2_IRQHandler       [WEAK]</div>
@@ -325,7 +325,7 @@ $Handler_Name   PROC
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="templates_pg.html">CMSIS-Core Device Templates</a></li>
-    <li class="footer">Generated on Thu Mar 21 2019 12:24:04 for CMSIS-Core (Cortex-M) by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Wed Jul 10 2019 15:20:25 for CMSIS-Core (Cortex-M) Version 5.3.0 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

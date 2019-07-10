@@ -183,12 +183,12 @@ Behavior of a Periodic Timer</div></div>
 <li>Define the timers: <div class="fragment"><div class="line"><a class="code" href="group__CMSIS__RTOS__TimerMgmt.html#gaad5409379689ee27bb0a0b56ea4a4b34">osTimerId_t</a> one_shot_id, periodic_id;</div>
 </div><!-- fragment --></li>
 <li>Define callback functions: <div class="fragment"><div class="line"><span class="keyword">static</span> <span class="keywordtype">void</span> one_shot_Callback (<span class="keywordtype">void</span> *argument) {</div>
-<div class="line">    int32_t arg = (int32_t)argument; <span class="comment">// cast back argument &#39;0&#39; </span></div>
-<div class="line">    <span class="comment">// do something, i.e. set thread/event flags</span></div>
+<div class="line">  int32_t arg = (int32_t)argument; <span class="comment">// cast back argument &#39;0&#39; </span></div>
+<div class="line">  <span class="comment">// do something, i.e. set thread/event flags</span></div>
 <div class="line">}</div>
 <div class="line"><span class="keyword">static</span> <span class="keywordtype">void</span> periodic_Callback (<span class="keywordtype">void</span> *argument) {</div>
-<div class="line">    int32_t arg = (int32_t)argument; <span class="comment">// cast back argument &#39;5&#39;</span></div>
-<div class="line">    <span class="comment">// do something, i.e. set thread/event flags</span></div>
+<div class="line">  int32_t arg = (int32_t)argument; <span class="comment">// cast back argument &#39;5&#39;</span></div>
+<div class="line">  <span class="comment">// do something, i.e. set thread/event flags</span></div>
 <div class="line">}</div>
 </div><!-- fragment --></li>
 <li>Instantiate and start the timers: <div class="fragment"><div class="line"><span class="comment">// creates a one-shot timer:</span></div>
@@ -197,11 +197,11 @@ Behavior of a Periodic Timer</div></div>
 <div class="line"><span class="comment">// creates a periodic timer:</span></div>
 <div class="line">periodic_id = <a class="code" href="group__CMSIS__RTOS__TimerMgmt.html#gad4e7f785c5f700a509f55a3bf6a62bec">osTimerNew</a>(periodic_Callback, <a class="code" href="group__CMSIS__RTOS__TimerMgmt.html#gga7dc24a4c2b90334427081c3da7a71915ab3463d921dc310938094745c230f2b35">osTimerPeriodic</a>, (<span class="keywordtype">void</span> *)5, NULL); <span class="comment">// (void*)5 is passed as an argument</span></div>
 <div class="line">                                                                               <span class="comment">// to the callback function</span></div>
-<div class="line"><a class="code" href="group__CMSIS__RTOS__TimerMgmt.html#gab6ee2859ea657641b7adfac599b8121d">osTimerStart</a>(one_shot_id, 500);</div>
-<div class="line"><a class="code" href="group__CMSIS__RTOS__TimerMgmt.html#gab6ee2859ea657641b7adfac599b8121d">osTimerStart</a>(periodic_id, 1500);</div>
+<div class="line"><a class="code" href="group__CMSIS__RTOS__TimerMgmt.html#gab6ee2859ea657641b7adfac599b8121d">osTimerStart</a>(one_shot_id, 500U);</div>
+<div class="line"><a class="code" href="group__CMSIS__RTOS__TimerMgmt.html#gab6ee2859ea657641b7adfac599b8121d">osTimerStart</a>(periodic_id, 1500U);</div>
 <div class="line"> </div>
 <div class="line"><span class="comment">// start the one-shot timer again after it has triggered the first time:</span></div>
-<div class="line"><a class="code" href="group__CMSIS__RTOS__TimerMgmt.html#gab6ee2859ea657641b7adfac599b8121d">osTimerStart</a>(one_shot_id, 500);</div>
+<div class="line"><a class="code" href="group__CMSIS__RTOS__TimerMgmt.html#gab6ee2859ea657641b7adfac599b8121d">osTimerStart</a>(one_shot_id, 500U);</div>
 <div class="line"> </div>
 <div class="line"><span class="comment">// when timers are not needed any longer free the resources:</span></div>
 <div class="line"><a class="code" href="group__CMSIS__RTOS__TimerMgmt.html#gad0001dd74721ab461789324806db2453">osTimerDelete</a>(one_shot_id);</div>
@@ -371,27 +371,27 @@ Returned by:</p>
 <p><b>Code Example</b> </p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &quot;<a class="code" href="cmsis__os2_8h.html">cmsis_os2.h</a>&quot;</span></div>
 <div class="line"> </div>
-<div class="line"><span class="keywordtype">void</span> Timer1_Callback (<span class="keywordtype">void</span> *arg);                          <span class="comment">// prototypes for timer callback function</span></div>
-<div class="line"><span class="keywordtype">void</span> Timer2_Callback (<span class="keywordtype">void</span> *arg);                   </div>
+<div class="line"><span class="keywordtype">void</span> Timer1_Callback (<span class="keywordtype">void</span> *arg);               <span class="comment">// prototypes for timer callback function</span></div>
+<div class="line"><span class="keywordtype">void</span> Timer2_Callback (<span class="keywordtype">void</span> *arg);               <span class="comment">// prototypes for timer callback function</span></div>
 <div class="line"> </div>
-<div class="line">uint32_t  exec1;                                           <span class="comment">// argument for the timer call back function</span></div>
-<div class="line">uint32_t  exec2;                                           <span class="comment">// argument for the timer call back function</span></div>
+<div class="line">uint32_t exec1;                                 <span class="comment">// argument for the timer call back function</span></div>
+<div class="line">uint32_t exec2;                                 <span class="comment">// argument for the timer call back function</span></div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">void</span> TimerCreate_example (<span class="keywordtype">void</span>)  {</div>
-<div class="line">  <a class="code" href="group__CMSIS__RTOS__TimerMgmt.html#gaad5409379689ee27bb0a0b56ea4a4b34">osTimerId_t</a> id1;                                         <span class="comment">// timer id</span></div>
-<div class="line">  <a class="code" href="group__CMSIS__RTOS__TimerMgmt.html#gaad5409379689ee27bb0a0b56ea4a4b34">osTimerId_t</a> id2;                                         <span class="comment">// timer id</span></div>
+<div class="line">  <a class="code" href="group__CMSIS__RTOS__TimerMgmt.html#gaad5409379689ee27bb0a0b56ea4a4b34">osTimerId_t</a> id1;                              <span class="comment">// timer id</span></div>
+<div class="line">  <a class="code" href="group__CMSIS__RTOS__TimerMgmt.html#gaad5409379689ee27bb0a0b56ea4a4b34">osTimerId_t</a> id2;                              <span class="comment">// timer id</span></div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">// Create one-shoot timer</span></div>
-<div class="line">  exec1 = 1;</div>
-<div class="line">  id1 = <a class="code" href="group__CMSIS__RTOS__TimerMgmt.html#gad4e7f785c5f700a509f55a3bf6a62bec">osTimerNew</a> (Timer1_Callback, <a class="code" href="group__CMSIS__RTOS__TimerMgmt.html#gga7dc24a4c2b90334427081c3da7a71915a2e0e1f31c742c84b497c4d7143357bdb">osTimerOnce</a>, &amp;exec1, NULL);</div>
-<div class="line">  <span class="keywordflow">if</span> (id1 != NULL)  {</div>
+<div class="line">  exec1 = 1U;</div>
+<div class="line">  id1 = <a class="code" href="group__CMSIS__RTOS__TimerMgmt.html#gad4e7f785c5f700a509f55a3bf6a62bec">osTimerNew</a>(Timer1_Callback, <a class="code" href="group__CMSIS__RTOS__TimerMgmt.html#gga7dc24a4c2b90334427081c3da7a71915a2e0e1f31c742c84b497c4d7143357bdb">osTimerOnce</a>, &amp;exec1, NULL);</div>
+<div class="line">  <span class="keywordflow">if</span> (id1 != NULL) {</div>
 <div class="line">    <span class="comment">// One-shoot timer created</span></div>
 <div class="line">  }</div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">// Create periodic timer</span></div>
-<div class="line">  exec2 = 2;</div>
-<div class="line">  id2 = <a class="code" href="group__CMSIS__RTOS__TimerMgmt.html#gad4e7f785c5f700a509f55a3bf6a62bec">osTimerNew</a> (Timer2_Callback, <a class="code" href="group__CMSIS__RTOS__TimerMgmt.html#gga7dc24a4c2b90334427081c3da7a71915ab3463d921dc310938094745c230f2b35">osTimerPeriodic</a>, &amp;exec2, NULL);</div>
-<div class="line">  <span class="keywordflow">if</span> (id2 != NULL)  {</div>
+<div class="line">  exec2 = 2U;</div>
+<div class="line">  id2 = <a class="code" href="group__CMSIS__RTOS__TimerMgmt.html#gad4e7f785c5f700a509f55a3bf6a62bec">osTimerNew</a>(Timer2_Callback, <a class="code" href="group__CMSIS__RTOS__TimerMgmt.html#gga7dc24a4c2b90334427081c3da7a71915ab3463d921dc310938094745c230f2b35">osTimerPeriodic</a>, &amp;exec2, NULL);</div>
+<div class="line">  <span class="keywordflow">if</span> (id2 != NULL) {</div>
 <div class="line">    <span class="comment">// Periodic timer created</span></div>
 <div class="line">  }</div>
 <div class="line">  :</div>
@@ -466,28 +466,28 @@ Returned by:</p>
 <dl class="section note"><dt>Note</dt><dd>This function <b>cannot</b> be called from <a class="el" href="theory_of_operation.html#CMSIS_RTOS_ISR_Calls">Interrupt Service Routines</a>.</dd></dl>
 <p><b>Code Example</b> </p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &quot;<a class="code" href="cmsis__os2_8h.html">cmsis_os2.h</a>&quot;</span></div>
-<div class="line">  </div>
-<div class="line"><span class="keywordtype">void</span> Timer_Callback (<span class="keywordtype">void</span> *arg)  {                          <span class="comment">// timer callback function</span></div>
-<div class="line">                                                            <span class="comment">// arg contains &amp;exec</span></div>
-<div class="line">                                                            <span class="comment">// called every second after osTimerStart</span></div>
-<div class="line">} </div>
 <div class="line"> </div>
-<div class="line">uint32_t  exec;                                             <span class="comment">// argument for the timer call back function</span></div>
+<div class="line"><span class="keywordtype">void</span> Timer_Callback (<span class="keywordtype">void</span> *arg) {               <span class="comment">// timer callback function</span></div>
+<div class="line">                                                <span class="comment">// arg contains &amp;exec</span></div>
+<div class="line">                                                <span class="comment">// called every second after osTimerStart</span></div>
+<div class="line">}</div>
 <div class="line"> </div>
-<div class="line"><span class="keywordtype">void</span> TimerStart_example (<span class="keywordtype">void</span>)  {</div>
-<div class="line">  <a class="code" href="group__CMSIS__RTOS__TimerMgmt.html#gaad5409379689ee27bb0a0b56ea4a4b34">osTimerId_t</a> id;                                           <span class="comment">// timer id</span></div>
-<div class="line">  uint32_t    timerDelay;                                   <span class="comment">// timer value</span></div>
-<div class="line">  osStatus_t  status;                                       <span class="comment">// function return status</span></div>
+<div class="line">uint32_t exec;                                  <span class="comment">// argument for the timer call back function</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">void</span> TimerStart_example (<span class="keywordtype">void</span>) {</div>
+<div class="line">  <a class="code" href="group__CMSIS__RTOS__TimerMgmt.html#gaad5409379689ee27bb0a0b56ea4a4b34">osTimerId_t</a> id;                               <span class="comment">// timer id</span></div>
+<div class="line">  uint32_t    timerDelay;                       <span class="comment">// timer value</span></div>
+<div class="line">  osStatus_t  status;                           <span class="comment">// function return status</span></div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">// Create periodic timer</span></div>
-<div class="line">  exec = 1;</div>
-<div class="line">  <span class="keywordtype">id</span> = <a class="code" href="group__CMSIS__RTOS__TimerMgmt.html#gad4e7f785c5f700a509f55a3bf6a62bec">osTimerNew</a> (Timer_Callback, <a class="code" href="group__CMSIS__RTOS__TimerMgmt.html#gga7dc24a4c2b90334427081c3da7a71915ab3463d921dc310938094745c230f2b35">osTimerPeriodic</a>, &amp;exec, NULL);</div>
-<div class="line">  <span class="keywordflow">if</span> (<span class="keywordtype">id</span>)  {</div>
-<div class="line">    timerDelay = 1000;</div>
-<div class="line">    status = <a class="code" href="group__CMSIS__RTOS__TimerMgmt.html#gab6ee2859ea657641b7adfac599b8121d">osTimerStart</a> (<span class="keywordtype">id</span>, timerDelay);                 <span class="comment">// start timer</span></div>
-<div class="line">    <span class="keywordflow">if</span> (status != <a class="code" href="cmsis__os2_8h.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813ea9e1c9e2550bb4de8969a935acffc968f">osOK</a>)  {</div>
+<div class="line">  exec = 1U;</div>
+<div class="line">  <span class="keywordtype">id</span> = <a class="code" href="group__CMSIS__RTOS__TimerMgmt.html#gad4e7f785c5f700a509f55a3bf6a62bec">osTimerNew</a>(Timer_Callback, <a class="code" href="group__CMSIS__RTOS__TimerMgmt.html#gga7dc24a4c2b90334427081c3da7a71915ab3463d921dc310938094745c230f2b35">osTimerPeriodic</a>, &amp;exec, NULL);</div>
+<div class="line">  <span class="keywordflow">if</span> (<span class="keywordtype">id</span> != NULL)  {</div>
+<div class="line">    timerDelay = 1000U;</div>
+<div class="line">    status = <a class="code" href="group__CMSIS__RTOS__TimerMgmt.html#gab6ee2859ea657641b7adfac599b8121d">osTimerStart</a>(<span class="keywordtype">id</span>, timerDelay);       <span class="comment">// start timer</span></div>
+<div class="line">    <span class="keywordflow">if</span> (status != <a class="code" href="cmsis__os2_8h.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813ea9e1c9e2550bb4de8969a935acffc968f">osOK</a>) {</div>
 <div class="line">      <span class="comment">// Timer could not be started</span></div>
-<div class="line">    } </div>
+<div class="line">    }</div>
 <div class="line">  }</div>
 <div class="line">  ;</div>
 <div class="line">}</div>
@@ -526,25 +526,25 @@ Returned by:</p>
 <p><b>Code Example</b> </p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &quot;<a class="code" href="cmsis__os2_8h.html">cmsis_os2.h</a>&quot;</span></div>
 <div class="line"> </div>
-<div class="line"><span class="keywordtype">void</span> Timer_Callback (<span class="keywordtype">void</span> *arg);                           <span class="comment">// prototype for timer callback function</span></div>
+<div class="line"><span class="keywordtype">void</span> Timer_Callback (<span class="keywordtype">void</span> *arg);                <span class="comment">// prototype for timer callback function</span></div>
 <div class="line"> </div>
-<div class="line">uint32_t  exec;                                            <span class="comment">// argument for the timer call back function</span></div>
-<div class="line"></div>
+<div class="line">uint32_t exec;                                  <span class="comment">// argument for the timer call back function</span></div>
+<div class="line"> </div>
 <div class="line"><span class="keywordtype">void</span> TimerStop_example (<span class="keywordtype">void</span>) {</div>
-<div class="line">  <a class="code" href="group__CMSIS__RTOS__TimerMgmt.html#gaad5409379689ee27bb0a0b56ea4a4b34">osTimerId_t</a> id;                                          <span class="comment">// timer id</span></div>
-<div class="line">  osStatus_t  status;                                      <span class="comment">// function return status</span></div>
+<div class="line">  <a class="code" href="group__CMSIS__RTOS__TimerMgmt.html#gaad5409379689ee27bb0a0b56ea4a4b34">osTimerId_t</a> id;                               <span class="comment">// timer id</span></div>
+<div class="line">  osStatus_t  status;                           <span class="comment">// function return status</span></div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">// Create periodic timer</span></div>
-<div class="line">  exec = 1;</div>
-<div class="line">  <span class="keywordtype">id</span> = <a class="code" href="group__CMSIS__RTOS__TimerMgmt.html#gad4e7f785c5f700a509f55a3bf6a62bec">osTimerNew</a> (Timer_Callback, <a class="code" href="group__CMSIS__RTOS__TimerMgmt.html#gga7dc24a4c2b90334427081c3da7a71915ab3463d921dc310938094745c230f2b35">osTimerPeriodic</a>, &amp;exec, NULL);</div>
-<div class="line">  <a class="code" href="group__CMSIS__RTOS__TimerMgmt.html#gab6ee2859ea657641b7adfac599b8121d">osTimerStart</a> (<span class="keywordtype">id</span>, 1000);                                 <span class="comment">// start timer</span></div>
+<div class="line">  exec = 1U;</div>
+<div class="line">  <span class="keywordtype">id</span> = <a class="code" href="group__CMSIS__RTOS__TimerMgmt.html#gad4e7f785c5f700a509f55a3bf6a62bec">osTimerNew</a>(Timer_Callback, <a class="code" href="group__CMSIS__RTOS__TimerMgmt.html#gga7dc24a4c2b90334427081c3da7a71915ab3463d921dc310938094745c230f2b35">osTimerPeriodic</a>, &amp;exec, NULL);</div>
+<div class="line">  <a class="code" href="group__CMSIS__RTOS__TimerMgmt.html#gab6ee2859ea657641b7adfac599b8121d">osTimerStart</a>(<span class="keywordtype">id</span>, 1000U);                      <span class="comment">// start timer</span></div>
 <div class="line">  :</div>
-<div class="line">  status = <a class="code" href="group__CMSIS__RTOS__TimerMgmt.html#gabd7a89356da7717293eb0bc5d87b8ac9">osTimerStop</a> (<span class="keywordtype">id</span>);                               <span class="comment">// stop timer</span></div>
+<div class="line">  status = <a class="code" href="group__CMSIS__RTOS__TimerMgmt.html#gabd7a89356da7717293eb0bc5d87b8ac9">osTimerStop</a>(<span class="keywordtype">id</span>);                     <span class="comment">// stop timer</span></div>
 <div class="line">  <span class="keywordflow">if</span> (status != <a class="code" href="cmsis__os2_8h.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813ea9e1c9e2550bb4de8969a935acffc968f">osOK</a>) {</div>
 <div class="line">    <span class="comment">// Timer could not be stopped</span></div>
-<div class="line">  } </div>
+<div class="line">  }</div>
 <div class="line">  ;</div>
-<div class="line">  <a class="code" href="group__CMSIS__RTOS__TimerMgmt.html#gab6ee2859ea657641b7adfac599b8121d">osTimerStart</a> (<span class="keywordtype">id</span>, 1000);                                 <span class="comment">// start timer again</span></div>
+<div class="line">  <a class="code" href="group__CMSIS__RTOS__TimerMgmt.html#gab6ee2859ea657641b7adfac599b8121d">osTimerStart</a>(<span class="keywordtype">id</span>, 1000U);                      <span class="comment">// start timer again</span></div>
 <div class="line">  ;</div>
 <div class="line">}</div>
 </div><!-- fragment --> 
@@ -606,21 +606,21 @@ Returned by:</p>
 <dl class="section note"><dt>Note</dt><dd>This function <b>cannot</b> be called from <a class="el" href="theory_of_operation.html#CMSIS_RTOS_ISR_Calls">Interrupt Service Routines</a>.</dd></dl>
 <p><b>Code Example</b> </p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &quot;<a class="code" href="cmsis__os2_8h.html">cmsis_os2.h</a>&quot;</span></div>
-<div class="line"></div>
-<div class="line"><span class="keywordtype">void</span> Timer_Callback (<span class="keywordtype">void</span> *arg);                           <span class="comment">// prototype for timer callback function</span></div>
 <div class="line"> </div>
-<div class="line">uint32_t  exec;                                            <span class="comment">// argument for the timer call back function</span></div>
-<div class="line"></div>
+<div class="line"><span class="keywordtype">void</span> Timer_Callback (<span class="keywordtype">void</span> *arg);                <span class="comment">// prototype for timer callback function</span></div>
+<div class="line"> </div>
+<div class="line">uint32_t exec;                                  <span class="comment">// argument for the timer call back function</span></div>
+<div class="line"> </div>
 <div class="line"><span class="keywordtype">void</span> TimerDelete_example (<span class="keywordtype">void</span>) {</div>
-<div class="line">  <a class="code" href="group__CMSIS__RTOS__TimerMgmt.html#gaad5409379689ee27bb0a0b56ea4a4b34">osTimerId_t</a> id;                                          <span class="comment">// timer id</span></div>
-<div class="line">  osStatus_t  status;                                      <span class="comment">// function return status  </span></div>
+<div class="line">  <a class="code" href="group__CMSIS__RTOS__TimerMgmt.html#gaad5409379689ee27bb0a0b56ea4a4b34">osTimerId_t</a> id;                               <span class="comment">// timer id</span></div>
+<div class="line">  osStatus_t  status;                           <span class="comment">// function return status  </span></div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">// Create periodic timer</span></div>
-<div class="line">  exec = 1;</div>
-<div class="line">  <span class="keywordtype">id</span> = <a class="code" href="group__CMSIS__RTOS__TimerMgmt.html#gad4e7f785c5f700a509f55a3bf6a62bec">osTimerNew</a> (Timer_Callback, <a class="code" href="group__CMSIS__RTOS__TimerMgmt.html#gga7dc24a4c2b90334427081c3da7a71915ab3463d921dc310938094745c230f2b35">osTimerPeriodic</a>, &amp;exec, NULL);</div>
-<div class="line">  <a class="code" href="group__CMSIS__RTOS__TimerMgmt.html#gab6ee2859ea657641b7adfac599b8121d">osTimerStart</a> (<span class="keywordtype">id</span>, 1000UL);                               <span class="comment">// start timer</span></div>
+<div class="line">  exec = 1U;</div>
+<div class="line">  <span class="keywordtype">id</span> = <a class="code" href="group__CMSIS__RTOS__TimerMgmt.html#gad4e7f785c5f700a509f55a3bf6a62bec">osTimerNew</a>(Timer_Callback, <a class="code" href="group__CMSIS__RTOS__TimerMgmt.html#gga7dc24a4c2b90334427081c3da7a71915ab3463d921dc310938094745c230f2b35">osTimerPeriodic</a>, &amp;exec, NULL);</div>
+<div class="line">  <a class="code" href="group__CMSIS__RTOS__TimerMgmt.html#gab6ee2859ea657641b7adfac599b8121d">osTimerStart</a>(<span class="keywordtype">id</span>, 1000U);                      <span class="comment">// start timer</span></div>
 <div class="line">  ;</div>
-<div class="line">  status = <a class="code" href="group__CMSIS__RTOS__TimerMgmt.html#gad0001dd74721ab461789324806db2453">osTimerDelete</a> (<span class="keywordtype">id</span>);                             <span class="comment">// stop and delete timer</span></div>
+<div class="line">  status = <a class="code" href="group__CMSIS__RTOS__TimerMgmt.html#gad0001dd74721ab461789324806db2453">osTimerDelete</a>(<span class="keywordtype">id</span>);                   <span class="comment">// stop and delete timer</span></div>
 <div class="line">  <span class="keywordflow">if</span> (status != <a class="code" href="cmsis__os2_8h.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813ea9e1c9e2550bb4de8969a935acffc968f">osOK</a>) {</div>
 <div class="line">    <span class="comment">// Timer could not be deleted</span></div>
 <div class="line">  } </div>
@@ -634,7 +634,7 @@ Returned by:</p>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Mar 21 2019 12:25:01 for CMSIS-RTOS2 by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Wed Jul 10 2019 15:21:04 for CMSIS-RTOS2 Version 2.1.3 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

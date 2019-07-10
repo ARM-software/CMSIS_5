@@ -152,12 +152,12 @@ Manual User-defined Allocation</h1>
 <div class="line">  </div>
 <div class="line"><a class="code" href="group__CMSIS__RTOS__MutexMgmt.html#ga313801836c62deb23055efb55a420e42">osMutexId_t</a> mutex_id;</div>
 <div class="line">  </div>
-<div class="line"><span class="keyword">static</span> uint32_t mutex_cb[<a class="code" href="group__rtx5__specific__defines.html#ga188bfaaf7477cf24cbc9f207feaeb53a">osRtxMutexCbSize</a>/4U];  <span class="comment">// implementation specific</span></div>
+<div class="line"><span class="keyword">static</span> <a class="code" href="rtx__os_8h.html#structosRtxMutex__t">osRtxMutex_t</a> mutex_cb __attribute__((section(<span class="stringliteral">&quot;.bss.os.mutex.cb&quot;</span>)));  <span class="comment">// Placed on .bss.os.mutex.cb section for RTX5 aware debugging</span></div>
 <div class="line">  </div>
 <div class="line"><span class="keyword">const</span> <a class="code" href="group__CMSIS__RTOS__MutexMgmt.html#structosMutexAttr__t">osMutexAttr_t</a> Thread_Mutex_attr = {</div>
 <div class="line">  <span class="stringliteral">&quot;myThreadMutex&quot;</span>,                              <span class="comment">// human readable mutex name</span></div>
 <div class="line">  <a class="code" href="group__CMSIS__RTOS__MutexMgmt.html#ga65c2482cc64a35d03871f3180f305926">osMutexRecursive</a> | <a class="code" href="group__CMSIS__RTOS__MutexMgmt.html#ga40fba270cb31a977b3bd551d41eb9599">osMutexPrioInherit</a>,        <span class="comment">// attr_bits</span></div>
-<div class="line">  mutex_cb,                                     <span class="comment">// memory for control block (user-defined)</span></div>
+<div class="line">  &amp;mutex_cb,                                    <span class="comment">// memory for control block (user-defined)</span></div>
 <div class="line">  <span class="keyword">sizeof</span>(mutex_cb)                              <span class="comment">// size for control block (user-defined)</span></div>
 <div class="line">};</div>
 <div class="line">  </div>
@@ -171,7 +171,7 @@ Manual User-defined Allocation</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Mar 21 2019 12:25:00 for CMSIS-RTOS2 by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Wed Jul 10 2019 15:21:04 for CMSIS-RTOS2 Version 2.1.3 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

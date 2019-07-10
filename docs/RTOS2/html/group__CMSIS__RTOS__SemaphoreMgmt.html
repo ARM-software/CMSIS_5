@@ -172,39 +172,36 @@ Refer to <a class="el" href="config_rtx5.html#semaphoreConfig">Semaphore Configu
 <p>To allow multiple threads to run the function, initialize a semaphore to the maximum number of threads that can be allowed. The number of tokens in the semaphore represents the number of additional threads that may enter. If this number is zero, then the next thread trying to access the function will have to wait until one of the other threads exits and releases its token. When all threads have exited the token number is back to n. The following example shows the code for one of the threads that might access the resource:</p>
 <div class="fragment"><div class="line"><a class="code" href="group__CMSIS__RTOS__SemaphoreMgmt.html#ga6e1c1c4b04175bb92b013c8f37249f40">osSemaphoreId_t</a> multiplex_id;</div>
 <div class="line"> </div>
-<div class="line"><span class="keywordtype">void</span> thread_n (<span class="keywordtype">void</span>)</div>
-<div class="line">{</div>
-<div class="line">  multiplex_id = <a class="code" href="group__CMSIS__RTOS__SemaphoreMgmt.html#ga2a39806ace781a0008a4374ca701b14a">osSemaphoreNew</a>(3, 3, NULL);</div>
-<div class="line">  <span class="keywordflow">while</span>(1)</div>
-<div class="line">    {</div>
-<div class="line">      <a class="code" href="group__CMSIS__RTOS__SemaphoreMgmt.html#ga7e94c8b242a0c81f2cc79ec22895c87b">osSemaphoreAcquire</a>(multiplex_id, <a class="code" href="group__CMSIS__RTOS__Definitions.html#ga9eb9a7a797a42e4b55eb171ecc609ddb">osWaitForever</a>);</div>
-<div class="line">      <span class="comment">// do something</span></div>
-<div class="line">      <a class="code" href="group__CMSIS__RTOS__SemaphoreMgmt.html#ga0abcee1b5449d7a6928fb9248c690bb6">osSemaphoreRelease</a>(multiplex_id);</div>
-<div class="line">    }</div>
+<div class="line"><span class="keywordtype">void</span> thread_n (<span class="keywordtype">void</span>) {</div>
+<div class="line"> </div>
+<div class="line">  multiplex_id = <a class="code" href="group__CMSIS__RTOS__SemaphoreMgmt.html#ga2a39806ace781a0008a4374ca701b14a">osSemaphoreNew</a>(3U, 3U, NULL);</div>
+<div class="line">  <span class="keywordflow">while</span>(1) {</div>
+<div class="line">    <a class="code" href="group__CMSIS__RTOS__SemaphoreMgmt.html#ga7e94c8b242a0c81f2cc79ec22895c87b">osSemaphoreAcquire</a>(multiplex_id, <a class="code" href="group__CMSIS__RTOS__Definitions.html#ga9eb9a7a797a42e4b55eb171ecc609ddb">osWaitForever</a>);</div>
+<div class="line">    <span class="comment">// do something</span></div>
+<div class="line">    <a class="code" href="group__CMSIS__RTOS__SemaphoreMgmt.html#ga0abcee1b5449d7a6928fb9248c690bb6">osSemaphoreRelease</a>(multiplex_id);</div>
+<div class="line">  }</div>
 <div class="line">}</div>
 </div><!-- fragment --><p><b>Producer/Consumer Semaphore</b></p>
 <p>The producer-consumer problem can be solved using two semaphores.</p>
 <p>A first semaphore (<span class="XML-Token">empty_id</span>) counts down the available (empty) buffers, i.e. the producer thread can wait for available buffer slots by acquiring from this one.</p>
 <p>A second semaphore (<span class="XML-Token">filled_id</span>) counts up the used (filled) buffers, i.e. the consumer thread can wait for available data by acquiring from this one.</p>
 <p>It is crucial for the correct behaviour that the threads acquire and release on both semaphores in the given sequence. According to this example one can have multiple producer and/or consumer threads running concurrently.</p>
-<div class="fragment"><div class="line"><span class="preprocessor">#define BUFFER_SIZE 10</span></div>
-<div class="line"><span class="preprocessor"></span><a class="code" href="group__CMSIS__RTOS__SemaphoreMgmt.html#ga6e1c1c4b04175bb92b013c8f37249f40">osSemaphoreId_t</a> empty_id = <a class="code" href="group__CMSIS__RTOS__SemaphoreMgmt.html#ga2a39806ace781a0008a4374ca701b14a">osSemaphoreNew</a>(BUFFER_SIZE, BUFFER_SIZE, NULL);</div>
-<div class="line"><a class="code" href="group__CMSIS__RTOS__SemaphoreMgmt.html#ga6e1c1c4b04175bb92b013c8f37249f40">osSemaphoreId_t</a> filled_id = <a class="code" href="group__CMSIS__RTOS__SemaphoreMgmt.html#ga2a39806ace781a0008a4374ca701b14a">osSemaphoreNew</a>(BUFFER_SIZE, 0, NULL);</div>
-<div class="line"></div>
-<div class="line"><span class="keywordtype">void</span> producer_thread (<span class="keywordtype">void</span>)</div>
-<div class="line">{</div>
-<div class="line">  <span class="keywordflow">while</span>(1)</div>
-<div class="line">  {</div>
+<div class="fragment"><div class="line"><span class="preprocessor">#define BUFFER_SIZE 10U</span></div>
+<div class="line"><span class="preprocessor"></span> </div>
+<div class="line"><a class="code" href="group__CMSIS__RTOS__SemaphoreMgmt.html#ga6e1c1c4b04175bb92b013c8f37249f40">osSemaphoreId_t</a> empty_id = <a class="code" href="group__CMSIS__RTOS__SemaphoreMgmt.html#ga2a39806ace781a0008a4374ca701b14a">osSemaphoreNew</a>(BUFFER_SIZE, BUFFER_SIZE, NULL);</div>
+<div class="line"><a class="code" href="group__CMSIS__RTOS__SemaphoreMgmt.html#ga6e1c1c4b04175bb92b013c8f37249f40">osSemaphoreId_t</a> filled_id = <a class="code" href="group__CMSIS__RTOS__SemaphoreMgmt.html#ga2a39806ace781a0008a4374ca701b14a">osSemaphoreNew</a>(BUFFER_SIZE, 0U, NULL);</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">void</span> producer_thread (<span class="keywordtype">void</span>) {</div>
+<div class="line">  <span class="keywordflow">while</span>(1) {</div>
 <div class="line">    <a class="code" href="group__CMSIS__RTOS__SemaphoreMgmt.html#ga7e94c8b242a0c81f2cc79ec22895c87b">osSemaphoreAcquire</a>(empty_id, <a class="code" href="group__CMSIS__RTOS__Definitions.html#ga9eb9a7a797a42e4b55eb171ecc609ddb">osWaitForever</a>);</div>
 <div class="line">    <span class="comment">// produce data</span></div>
 <div class="line">    <a class="code" href="group__CMSIS__RTOS__SemaphoreMgmt.html#ga0abcee1b5449d7a6928fb9248c690bb6">osSemaphoreRelease</a>(filled_id);</div>
 <div class="line">  }</div>
 <div class="line">}</div>
 <div class="line"></div>
-<div class="line"><span class="keywordtype">void</span> consumer_thread (<span class="keywordtype">void</span>)</div>
-<div class="line">{</div>
-<div class="line">  <span class="keywordflow">while</span>(1)</div>
-<div class="line">  {</div>
+<div class="line"><span class="keywordtype">void</span> consumer_thread (<span class="keywordtype">void</span>) {</div>
+<div class="line"> </div>
+<div class="line">  <span class="keywordflow">while</span>(1){</div>
 <div class="line">    <a class="code" href="group__CMSIS__RTOS__SemaphoreMgmt.html#ga7e94c8b242a0c81f2cc79ec22895c87b">osSemaphoreAcquire</a>(filled_id, <a class="code" href="group__CMSIS__RTOS__Definitions.html#ga9eb9a7a797a42e4b55eb171ecc609ddb">osWaitForever</a>);</div>
 <div class="line">    <span class="comment">// consume data</span></div>
 <div class="line">    <a class="code" href="group__CMSIS__RTOS__SemaphoreMgmt.html#ga0abcee1b5449d7a6928fb9248c690bb6">osSemaphoreRelease</a>(empty_id);</div>
@@ -321,51 +318,50 @@ size of provided memory for control block <p>The size (in bytes) of memory block
 <p>The parameter <em>attr</em> specifies additional semaphore attributes. Default attributes will be used if set to <span class="XML-Token">NULL</span>.</p>
 <dl class="section note"><dt>Note</dt><dd>This function <b>cannot</b> be called from <a class="el" href="theory_of_operation.html#CMSIS_RTOS_ISR_Calls">Interrupt Service Routines</a>.</dd></dl>
 <p><b>Code Example</b> </p>
-<div class="fragment"><div class="line"><span class="preprocessor">#include &quot;<a class="code" href="cmsis__os2_8h.html">cmsis_os2.h</a>&quot;</span>                                     <span class="comment">// CMSIS RTOS header file</span></div>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &quot;<a class="code" href="cmsis__os2_8h.html">cmsis_os2.h</a>&quot;</span>                          <span class="comment">// CMSIS RTOS header file</span></div>
 <div class="line"> </div>
-<div class="line"><span class="keywordtype">void</span> Thread_Semaphore (<span class="keywordtype">void</span> *argument);                    <span class="comment">// thread function</span></div>
-<div class="line"><a class="code" href="group__CMSIS__RTOS__ThreadMgmt.html#gaa6c32fe2a3e0a2e01f212d55b02e51c7">osThreadId_t</a> tid_Thread_Semaphore;                         <span class="comment">// thread id</span></div>
+<div class="line"><a class="code" href="group__CMSIS__RTOS__SemaphoreMgmt.html#ga6e1c1c4b04175bb92b013c8f37249f40">osSemaphoreId_t</a> sid_Semaphore;                  <span class="comment">// semaphore id</span></div>
 <div class="line"> </div>
-<div class="line"><a class="code" href="group__CMSIS__RTOS__SemaphoreMgmt.html#ga6e1c1c4b04175bb92b013c8f37249f40">osSemaphoreId_t</a> sid_Thread_Semaphore;                      <span class="comment">// semaphore id</span></div>
+<div class="line"><a class="code" href="group__CMSIS__RTOS__ThreadMgmt.html#gaa6c32fe2a3e0a2e01f212d55b02e51c7">osThreadId_t</a> tid_Thread_Semaphore;              <span class="comment">// thread id</span></div>
 <div class="line"> </div>
-<div class="line"><span class="keywordtype">int</span> Init_Semaphore (<span class="keywordtype">void</span>)</div>
-<div class="line">{</div>
+<div class="line"><span class="keywordtype">void</span> Thread_Semaphore (<span class="keywordtype">void</span> *argument);         <span class="comment">// thread function</span></div>
 <div class="line"> </div>
-<div class="line">  sid_Thread_Semaphore = <a class="code" href="group__CMSIS__RTOS__SemaphoreMgmt.html#ga2a39806ace781a0008a4374ca701b14a">osSemaphoreNew</a>(2, 2, NULL);</div>
-<div class="line">  <span class="keywordflow">if</span> (!sid_Thread_Semaphore) {</div>
+<div class="line"><span class="keywordtype">int</span> Init_Semaphore (<span class="keywordtype">void</span>) {</div>
+<div class="line"> </div>
+<div class="line">  sid_Semaphore = <a class="code" href="group__CMSIS__RTOS__SemaphoreMgmt.html#ga2a39806ace781a0008a4374ca701b14a">osSemaphoreNew</a>(2U, 2U, NULL);</div>
+<div class="line">  <span class="keywordflow">if</span> (sid_Semaphore == NULL) {</div>
 <div class="line">    ; <span class="comment">// Semaphore object not created, handle failure</span></div>
 <div class="line">  }</div>
 <div class="line"> </div>
-<div class="line">  tid_Thread_Semaphore = <a class="code" href="group__CMSIS__RTOS__ThreadMgmt.html#ga48d68b8666d99d28fa646ee1d2182b8f">osThreadNew</a> (Thread_Semaphore, NULL, NULL);</div>
-<div class="line">  <span class="keywordflow">if</span> (!tid_Thread_Semaphore) {</div>
+<div class="line">  tid_Thread_Semaphore = <a class="code" href="group__CMSIS__RTOS__ThreadMgmt.html#ga48d68b8666d99d28fa646ee1d2182b8f">osThreadNew</a>(Thread_Semaphore, NULL, NULL);</div>
+<div class="line">  <span class="keywordflow">if</span> (tid_Thread_Semaphore == NULL) {</div>
 <div class="line">    <span class="keywordflow">return</span>(-1);</div>
 <div class="line">  }</div>
 <div class="line"> </div>
 <div class="line">  <span class="keywordflow">return</span>(0);</div>
 <div class="line">}</div>
-<div class="line">  </div>
-<div class="line"><span class="keywordtype">void</span> Thread_Semaphore (<span class="keywordtype">void</span> *argument)</div>
-<div class="line">{</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">void</span> Thread_Semaphore (<span class="keywordtype">void</span> *argument) {</div>
 <div class="line">  osStatus_t val;</div>
 <div class="line"> </div>
 <div class="line">  <span class="keywordflow">while</span> (1) {</div>
 <div class="line">    ; <span class="comment">// Insert thread code here...</span></div>
 <div class="line"> </div>
-<div class="line">    val = <a class="code" href="group__CMSIS__RTOS__SemaphoreMgmt.html#ga7e94c8b242a0c81f2cc79ec22895c87b">osSemaphoreAcquire</a> (sid_Thread_Semaphore, 10);   <span class="comment">// wait for max. 10 ticks for semaphore token to get available</span></div>
+<div class="line">    val = <a class="code" href="group__CMSIS__RTOS__SemaphoreMgmt.html#ga7e94c8b242a0c81f2cc79ec22895c87b">osSemaphoreAcquire</a>(sid_Semaphore, 10U);       <span class="comment">// wait for max. 10 ticks for semaphore token to get available</span></div>
 <div class="line">    <span class="keywordflow">switch</span> (val) {</div>
-<div class="line">    <span class="keywordflow">case</span> <a class="code" href="cmsis__os2_8h.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813ea9e1c9e2550bb4de8969a935acffc968f">osOK</a>:</div>
-<div class="line">      ; <span class="comment">// Use protected code here...</span></div>
-<div class="line">      <a class="code" href="group__CMSIS__RTOS__SemaphoreMgmt.html#ga0abcee1b5449d7a6928fb9248c690bb6">osSemaphoreRelease</a> (sid_Thread_Semaphore);           <span class="comment">// Return a token back to a semaphore</span></div>
-<div class="line">      <span class="keywordflow">break</span>;</div>
-<div class="line">    <span class="keywordflow">case</span> <a class="code" href="cmsis__os2_8h.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813ea8fc5801e8b0482bdf22ad63a77f0155d">osErrorResource</a>:</div>
-<div class="line">      <span class="keywordflow">break</span>;</div>
-<div class="line">    <span class="keywordflow">case</span> <a class="code" href="cmsis__os2_8h.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813eac24adca6a5d072c9f01c32178ba0d109">osErrorParameter</a>:</div>
-<div class="line">      <span class="keywordflow">break</span>;</div>
-<div class="line">    <span class="keywordflow">default</span>:</div>
-<div class="line">      <span class="keywordflow">break</span>;</div>
+<div class="line">      <span class="keywordflow">case</span> <a class="code" href="cmsis__os2_8h.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813ea9e1c9e2550bb4de8969a935acffc968f">osOK</a>:</div>
+<div class="line">        ; <span class="comment">// Use protected code here...</span></div>
+<div class="line">        <a class="code" href="group__CMSIS__RTOS__SemaphoreMgmt.html#ga0abcee1b5449d7a6928fb9248c690bb6">osSemaphoreRelease</a>(sid_Semaphore);              <span class="comment">// return a token back to a semaphore</span></div>
+<div class="line">        <span class="keywordflow">break</span>;</div>
+<div class="line">      <span class="keywordflow">case</span> <a class="code" href="cmsis__os2_8h.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813ea8fc5801e8b0482bdf22ad63a77f0155d">osErrorResource</a>:</div>
+<div class="line">        <span class="keywordflow">break</span>;</div>
+<div class="line">      <span class="keywordflow">case</span> <a class="code" href="cmsis__os2_8h.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813eac24adca6a5d072c9f01c32178ba0d109">osErrorParameter</a>:</div>
+<div class="line">        <span class="keywordflow">break</span>;</div>
+<div class="line">      <span class="keywordflow">default</span>:</div>
+<div class="line">        <span class="keywordflow">break</span>;</div>
 <div class="line">    }</div>
 <div class="line"> </div>
-<div class="line">    <a class="code" href="group__CMSIS__RTOS__ThreadMgmt.html#gad01c7ec26535b1de6b018bb9466720e2">osThreadYield</a> ();                                      <span class="comment">// suspend thread</span></div>
+<div class="line">    <a class="code" href="group__CMSIS__RTOS__ThreadMgmt.html#gad01c7ec26535b1de6b018bb9466720e2">osThreadYield</a>();                                    <span class="comment">// suspend thread</span></div>
 <div class="line">  }</div>
 <div class="line">}</div>
 </div><!-- fragment --> 
@@ -542,7 +538,7 @@ size of provided memory for control block <p>The size (in bytes) of memory block
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Mar 21 2019 12:25:01 for CMSIS-RTOS2 by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Wed Jul 10 2019 15:21:04 for CMSIS-RTOS2 Version 2.1.3 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['matrixfunctions_2ec',['MatrixFunctions.c',['../MatrixFunctions_8c.html',1,'']]]
+  ['history_2etxt',['history.txt',['../history_8txt.html',1,'']]]
 ];

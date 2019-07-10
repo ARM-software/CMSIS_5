@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['_5f_5faligned',['__ALIGNED',['../arm__common__tables_8c.html#ga70c20a29dce002df289426d5b4f67fa8',1,'__ALIGNED(4):&#160;arm_common_tables.c'],['../group__DCT4__IDCT4__Table.html#ga0a1c77ce634a63f32285dbffe89d274b',1,'__ALIGNED(4):&#160;arm_dct4_init_q15.c'],['../group__RealFFT__Table.html#ga70c20a29dce002df289426d5b4f67fa8',1,'__ALIGNED(4):&#160;arm_rfft_init_q15.c']]],
+  ['_5f_5faligned',['__ALIGNED',['../group__RealFFT__Table.html#ga70c20a29dce002df289426d5b4f67fa8',1,'arm_common_tables.c']]],
   ['_5f_5fqadd',['__QADD',['../arm__math_8h.html#a3cfcec82d3ff1b8570010b771052cb96',1,'arm_math.h']]],
   ['_5f_5fqadd16',['__QADD16',['../arm__math_8h.html#ae849a77250aa7bdc008f3f5e279de24e',1,'arm_math.h']]],
   ['_5f_5fqadd8',['__QADD8',['../arm__math_8h.html#a2fb737513178e1e4b473008d0ebca517',1,'arm_math.h']]],

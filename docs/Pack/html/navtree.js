@@ -3,13 +3,19 @@ var NAVTREE =
   [ "CMSIS-Pack", "index.html", [
     [ "Software Pack Use Cases", "index.html#SWPackVariants", null ],
     [ "Revision History of CMSIS-Pack", "pack_revisionHistory.html", null ],
-    [ "Software Packs Overview", "cp_Packs.html", [
+    [ "Overview", "cp_Packs.html", [
+      [ "Software Components", "cp_Packs.html#cp_Components", null ],
+      [ "References to other software components", "cp_Packs.html#cp_Cond", null ],
+      [ "Requirements", "cp_Packs.html#cp_Requirements", null ],
+      [ "Central API definition", "cp_Packs.html#cp_APIDef", null ],
+      [ "Inventory header file: RTE_Components.h", "cp_Packs.html#cp_RTECompH", null ],
+      [ "Combining software components", "cp_Packs.html#cp_Combine", null ],
+      [ "Steps to Create a Pack", "cp_Packs.html#cp_PackSteps", null ],
+      [ "Pack Tutorial", "cp_Packs.html#PackTutorials", null ],
       [ "Pack Conventions", "cp_Packs.html#PackFilenames", [
         [ "Pack File Name", "cp_Packs.html#pack_filename", null ],
         [ "Software Component Cclasses", "cp_Packs.html#pack_Cclass", null ]
-      ] ],
-      [ "Steps to Create a Pack", "cp_Packs.html#cp_PackSteps", null ],
-      [ "Pack Tutorial", "cp_Packs.html#PackTutorials", null ]
+      ] ]
     ] ],
     [ "Pack with Software Components", "cp_SWComponents.html", [
       [ "Create PDSC File", "cp_SWComponents.html#cp_CreatePDSC", null ],
@@ -41,9 +47,10 @@ var NAVTREE =
     [ "Pack Example", "pack_Example.html", null ],
     [ "Utilities for Creating Packs", "createPackUtil.html", "createPackUtil" ],
     [ "Publish a Pack", "createPackPublish.html", [
+      [ "Prerequisites", "createPackPublish.html#cp_prerequisites", null ],
       [ "Local Installation", "createPackPublish.html#cp_LocalInstallation", null ],
       [ "Web Download", "createPackPublish.html#cp_WebDownload", null ],
-      [ "Publishing on www.keil.com/pack", "createPackPublish.html#cp_KeilComPack", null ],
+      [ "Publishing using Arm's Pack Index Service", "createPackPublish.html#cp_KeilComPack", null ],
       [ "Moving a pack from one URL to another", "createPackPublish.html#cp_PackRehosting", null ]
     ] ],
     [ "Pack Description (*.pdsc) Format", "packFormat.html", "packFormat" ],

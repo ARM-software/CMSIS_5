@@ -303,33 +303,33 @@ size of provided memory for data storage <p>The size of the memory passed with <
 <p>The total amount of memory needed is at least <code>block_count * block_size</code>. Memory from the pool can only be allocated/freed in fixed portions of <code>block_size</code>.</p>
 <dl class="section note"><dt>Note</dt><dd>This function <b>cannot</b> be called from <a class="el" href="theory_of_operation.html#CMSIS_RTOS_ISR_Calls">Interrupt Service Routines</a>.</dd></dl>
 <p><b>Code</b> <b>Example</b> </p>
-<div class="fragment"><div class="line"><span class="preprocessor">#include &quot;<a class="code" href="cmsis__os2_8h.html">cmsis_os2.h</a>&quot;</span>                                        <span class="comment">// CMSIS RTOS header file</span></div>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &quot;<a class="code" href="cmsis__os2_8h.html">cmsis_os2.h</a>&quot;</span>                          <span class="comment">// CMSIS RTOS header file</span></div>
 <div class="line"> </div>
 <div class="line"><span class="comment">/*----------------------------------------------------------------------------</span></div>
 <div class="line"><span class="comment"> *      Memory Pool creation &amp; usage</span></div>
 <div class="line"><span class="comment"> *---------------------------------------------------------------------------*/</span></div>
 <div class="line"> </div>
-<div class="line"><span class="preprocessor">#define MEMPOOL_OBJECTS      16                               // number of Memory Pool Objects</span></div>
+<div class="line"><span class="preprocessor">#define MEMPOOL_OBJECTS 16                      // number of Memory Pool Objects</span></div>
 <div class="line"><span class="preprocessor"></span> </div>
-<div class="line"><span class="keyword">typedef</span> <span class="keyword">struct </span>{                                              <span class="comment">// object data type</span></div>
+<div class="line"><span class="keyword">typedef</span> <span class="keyword">struct </span>{                                <span class="comment">// object data type</span></div>
 <div class="line">  uint8_t Buf[32];</div>
 <div class="line">  uint8_t Idx;</div>
 <div class="line">} MEM_BLOCK_t;</div>
 <div class="line"> </div>
-<div class="line"><span class="keywordtype">void</span> Thread_MemPool (<span class="keywordtype">void</span> *argument);                         <span class="comment">// thread function</span></div>
-<div class="line"><a class="code" href="group__CMSIS__RTOS__ThreadMgmt.html#gaa6c32fe2a3e0a2e01f212d55b02e51c7">osThreadId_t</a> tid_Thread_MemPool;                              <span class="comment">// thread id</span></div>
+<div class="line"><a class="code" href="group__CMSIS__RTOS__PoolMgmt.html#ga2e44473caf338266f56800960294f960">osMemoryPoolId_t</a> mpid_MemPool;                  <span class="comment">// memory pool id</span></div>
 <div class="line"> </div>
-<div class="line"><a class="code" href="group__CMSIS__RTOS__PoolMgmt.html#ga2e44473caf338266f56800960294f960">osMemoryPoolId_t</a> mpid_MemPool;                                <span class="comment">// memory pool id</span></div>
+<div class="line"><a class="code" href="group__CMSIS__RTOS__ThreadMgmt.html#gaa6c32fe2a3e0a2e01f212d55b02e51c7">osThreadId_t</a> tid_Thread_MemPool;                <span class="comment">// thread id</span></div>
 <div class="line"> </div>
-<div class="line"><span class="keywordtype">int</span> Init_MemPool (<span class="keywordtype">void</span>)</div>
-<div class="line">{</div>
+<div class="line"><span class="keywordtype">void</span> Thread_MemPool (<span class="keywordtype">void</span> *argument);           <span class="comment">// thread function</span></div>
 <div class="line"> </div>
-<div class="line">  mpid_MemPool = <a class="code" href="group__CMSIS__RTOS__PoolMgmt.html#ga497ced5d72dc5cd405c4c418516220dc">osMemoryPoolNew</a>(MEMPOOL_OBJECTS,<span class="keyword">sizeof</span>(MEM_BLOCK_t), NULL);</div>
+<div class="line"><span class="keywordtype">int</span> Init_MemPool (<span class="keywordtype">void</span>) {</div>
+<div class="line"> </div>
+<div class="line">  mpid_MemPool = <a class="code" href="group__CMSIS__RTOS__PoolMgmt.html#ga497ced5d72dc5cd405c4c418516220dc">osMemoryPoolNew</a>(MEMPOOL_OBJECTS, <span class="keyword">sizeof</span>(MEM_BLOCK_t), NULL);</div>
 <div class="line">  <span class="keywordflow">if</span> (mpid_MemPool == NULL) {</div>
 <div class="line">    ; <span class="comment">// MemPool object not created, handle failure</span></div>
 <div class="line">  }</div>
 <div class="line"> </div>
-<div class="line">  tid_Thread_MemPool = <a class="code" href="group__CMSIS__RTOS__ThreadMgmt.html#ga48d68b8666d99d28fa646ee1d2182b8f">osThreadNew</a> (Thread_MemPool,NULL , NULL);</div>
+<div class="line">  tid_Thread_MemPool = <a class="code" href="group__CMSIS__RTOS__ThreadMgmt.html#ga48d68b8666d99d28fa646ee1d2182b8f">osThreadNew</a>(Thread_MemPool, NULL, NULL);</div>
 <div class="line">  <span class="keywordflow">if</span> (tid_Thread_MemPool == NULL) {</div>
 <div class="line">    <span class="keywordflow">return</span>(-1);</div>
 <div class="line">  }</div>
@@ -337,33 +337,32 @@ size of provided memory for data storage <p>The size of the memory passed with <
 <div class="line">  <span class="keywordflow">return</span>(0);</div>
 <div class="line">}</div>
 <div class="line"> </div>
-<div class="line"><span class="keywordtype">void</span> Thread_MemPool (<span class="keywordtype">void</span> *argument)</div>
-<div class="line">{</div>
-<div class="line">  osStatus_t     status;</div>
-<div class="line">  MEM_BLOCK_t *pMem = 0;</div>
+<div class="line"><span class="keywordtype">void</span> Thread_MemPool (<span class="keywordtype">void</span> *argument) {</div>
+<div class="line">  MEM_BLOCK_t *pMem;</div>
+<div class="line">  osStatus_t status;</div>
 <div class="line"> </div>
 <div class="line">  <span class="keywordflow">while</span> (1) {</div>
 <div class="line">    ; <span class="comment">// Insert thread code here...</span></div>
 <div class="line"> </div>
-<div class="line">    pMem = (MEM_BLOCK_t *)<a class="code" href="group__CMSIS__RTOS__PoolMgmt.html#ga8ead54e99ccb8f112356c88f99d38fbe">osMemoryPoolAlloc</a> (mpid_MemPool, NULL);    <span class="comment">// get Mem Block</span></div>
-<div class="line">    <span class="keywordflow">if</span> (pMem) {                                                      <span class="comment">// Mem Block was available</span></div>
-<div class="line">      pMem-&gt;Buf[0] = 0x55;                                           <span class="comment">// do some work...</span></div>
-<div class="line">      pMem-&gt;Idx    = 0;</div>
+<div class="line">    pMem = (MEM_BLOCK_t *)<a class="code" href="group__CMSIS__RTOS__PoolMgmt.html#ga8ead54e99ccb8f112356c88f99d38fbe">osMemoryPoolAlloc</a>(mpid_MemPool, 0U);  <span class="comment">// get Mem Block</span></div>
+<div class="line">    <span class="keywordflow">if</span> (pMem != NULL) {                                         <span class="comment">// Mem Block was available</span></div>
+<div class="line">      pMem-&gt;Buf[0] = 0x55U;                                     <span class="comment">// do some work...</span></div>
+<div class="line">      pMem-&gt;Idx    = 0U;</div>
 <div class="line"> </div>
-<div class="line">      status = <a class="code" href="group__CMSIS__RTOS__PoolMgmt.html#gabb4f4560daa6d1f8c8789082ee186d16">osMemoryPoolFree</a> (mpid_MemPool, pMem);                <span class="comment">// free mem block</span></div>
+<div class="line">      status = <a class="code" href="group__CMSIS__RTOS__PoolMgmt.html#gabb4f4560daa6d1f8c8789082ee186d16">osMemoryPoolFree</a>(mpid_MemPool, pMem);            <span class="comment">// free mem block</span></div>
 <div class="line">      <span class="keywordflow">switch</span> (status)  {</div>
-<div class="line">      <span class="keywordflow">case</span> <a class="code" href="cmsis__os2_8h.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813ea9e1c9e2550bb4de8969a935acffc968f">osOK</a>:</div>
-<div class="line">        <span class="keywordflow">break</span>;</div>
-<div class="line">      <span class="keywordflow">case</span> <a class="code" href="cmsis__os2_8h.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813eac24adca6a5d072c9f01c32178ba0d109">osErrorParameter</a>:</div>
-<div class="line">        <span class="keywordflow">break</span>;</div>
-<div class="line">      <span class="keywordflow">case</span> <a class="code" href="cmsis__os2_8h.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813eaf1fac0240218e51eb30a13da2f8aae81">osErrorNoMemory</a>:</div>
-<div class="line">        <span class="keywordflow">break</span>;</div>
-<div class="line">      <span class="keywordflow">default</span>:</div>
-<div class="line">        <span class="keywordflow">break</span>;</div>
+<div class="line">        <span class="keywordflow">case</span> <a class="code" href="cmsis__os2_8h.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813ea9e1c9e2550bb4de8969a935acffc968f">osOK</a>:</div>
+<div class="line">          <span class="keywordflow">break</span>;</div>
+<div class="line">        <span class="keywordflow">case</span> <a class="code" href="cmsis__os2_8h.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813eac24adca6a5d072c9f01c32178ba0d109">osErrorParameter</a>:</div>
+<div class="line">          <span class="keywordflow">break</span>;</div>
+<div class="line">        <span class="keywordflow">case</span> <a class="code" href="cmsis__os2_8h.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813eaf1fac0240218e51eb30a13da2f8aae81">osErrorNoMemory</a>:</div>
+<div class="line">          <span class="keywordflow">break</span>;</div>
+<div class="line">        <span class="keywordflow">default</span>:</div>
+<div class="line">          <span class="keywordflow">break</span>;</div>
 <div class="line">      }</div>
 <div class="line">    }</div>
 <div class="line"> </div>
-<div class="line">    <a class="code" href="group__CMSIS__RTOS__ThreadMgmt.html#gad01c7ec26535b1de6b018bb9466720e2">osThreadYield</a> ();                                                <span class="comment">// suspend thread</span></div>
+<div class="line">    <a class="code" href="group__CMSIS__RTOS__ThreadMgmt.html#gad01c7ec26535b1de6b018bb9466720e2">osThreadYield</a>();                                            <span class="comment">// suspend thread</span></div>
 <div class="line">  }</div>
 <div class="line">}</div>
 </div><!-- fragment --> 
@@ -626,7 +625,7 @@ This function may be called from <a class="el" href="theory_of_operation.html#CM
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Mar 21 2019 12:25:01 for CMSIS-RTOS2 by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Wed Jul 10 2019 15:21:04 for CMSIS-RTOS2 Version 2.1.3 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

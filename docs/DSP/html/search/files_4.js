@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['history_2etxt',['history.txt',['../history_8txt.html',1,'']]]
+  ['fastmathfunctions_2ec',['FastMathFunctions.c',['../FastMathFunctions_8c.html',1,'']]],
+  ['filteringfunctions_2ec',['FilteringFunctions.c',['../FilteringFunctions_8c.html',1,'']]]
 ];

@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-DSP
-   &#160;<span id="projectnumber">Version 1.6.0</span>
+   &#160;<span id="projectnumber">Version 1.7.0</span>
    </div>
    <div id="projectbrief">CMSIS DSP Software Library</div>
   </td>
@@ -205,8 +205,7 @@ Real Inverse Fast Fourier Transform</div></div>
 <dl class="section user"><dt></dt><dd>Use of the initialization function is optional. However, if the initialization function is used, then the instance structure cannot be placed into a const data section. To place an instance structure into a const data section, the instance structure should be manually initialized as follows: <pre>
     <a class="el" href="structarm__rfft__instance__q31.html" title="Instance structure for the Q31 RFFT/RIFFT function. ">arm_rfft_instance_q31</a> S = {fftLenReal, fftLenBy2, ifftFlagR, bitReverseFlagR, twidCoefRModifier, pTwiddleAReal, pTwiddleBReal, pCfft};
     <a class="el" href="structarm__rfft__instance__q15.html" title="Instance structure for the Q15 RFFT/RIFFT function. ">arm_rfft_instance_q15</a> S = {fftLenReal, fftLenBy2, ifftFlagR, bitReverseFlagR, twidCoefRModifier, pTwiddleAReal, pTwiddleBReal, pCfft};
-</pre> where <code>fftLenReal</code> is the length of the real transform; <code>fftLenBy2</code> length of the internal complex transform. <code>ifftFlagR</code> Selects forward (=0) or inverse (=1) transform. <code>bitReverseFlagR</code> Selects bit reversed output (=0) or normal order output (=1). <code>twidCoefRModifier</code> stride modifier for the twiddle factor table. The value is based on the FFT length; <code>pTwiddleAReal</code>points to the A array of twiddle coefficients; <code>pTwiddleBReal</code>points to the B array of twiddle coefficients; <code>pCfft</code> points to the CFFT Instance structure. The CFFT structure must also be initialized. Refer to <a class="el" href="group__ComplexFFT.html#ga521f670cd9c571bc61aff9bec89f4c26" title="Processing function for the floating-point Radix-4 CFFT/CIFFT. ">arm_cfft_radix4_f32()</a> for details regarding static initialization of the complex FFT instance structure.</dd></dl>
-<p>end of RealFFT_Table group </p>
+</pre> where <code>fftLenReal</code> is the length of the real transform; <code>fftLenBy2</code> length of the internal complex transform. <code>ifftFlagR</code> Selects forward (=0) or inverse (=1) transform. <code>bitReverseFlagR</code> Selects bit reversed output (=0) or normal order output (=1). <code>twidCoefRModifier</code> stride modifier for the twiddle factor table. The value is based on the FFT length; <code>pTwiddleAReal</code>points to the A array of twiddle coefficients; <code>pTwiddleBReal</code>points to the B array of twiddle coefficients; <code>pCfft</code> points to the CFFT Instance structure. The CFFT structure must also be initialized. Refer to <a class="el" href="group__ComplexFFT.html#ga521f670cd9c571bc61aff9bec89f4c26" title="Processing function for the floating-point Radix-4 CFFT/CIFFT. ">arm_cfft_radix4_f32()</a> for details regarding static initialization of the complex FFT instance structure. </dd></dl>
 <h2 class="groupheader">Function Documentation</h2>
 <a class="anchor" id="ga71547c601079d55c2525204aa00ef9c2"></a>
 <div class="memitem">
@@ -867,7 +866,7 @@ Input and Output Formats for Q31 RIFFT</div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Mar 21 2019 12:24:26 for CMSIS-DSP by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Wed Jul 10 2019 15:20:40 for CMSIS-DSP Version 1.7.0 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

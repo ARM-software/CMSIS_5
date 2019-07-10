@@ -1,14 +1,16 @@
 var NAVTREE =
 [
   [ "CMSIS-Zone (Preview)", "index.html", [
-    [ "CMSIS-Zone Use Cases", "index.html#UseCases", [
-      [ "MPU Protection", "index.html#UseCase_MPU", null ],
-      [ "TrustZone Partitioning", "index.html#UseCase_TrustZone", null ],
-      [ "Multi-Core Partitioning", "index.html#UseCase_MultiCore", null ]
-    ] ],
     [ "Revision History of CMSIS-Zone", "zone_revisionHistory.html", null ],
+    [ "CMSIS-Zone Use Cases", "UseCases.html", [
+      [ "MPU Protection", "UseCases.html#UseCase_MPU", null ],
+      [ "TrustZone Partitioning", "UseCases.html#UseCase_TrustZone", null ],
+      [ "Multi-Core Partitioning", "UseCases.html#UseCase_MultiCore", null ]
+    ] ],
+    [ "CMSIS-Zone Utility", "zoneToolUsage.html", "zoneToolUsage" ],
     [ "Zone Description Format", "zoneFormat.html", "zoneFormat" ],
-    [ "Generator Data Model", "GenDataModel.html", "GenDataModel" ]
+    [ "Generator Data Model", "GenDataModel.html", "GenDataModel" ],
+    [ "Todo List", "todo.html", null ]
   ] ]
 ];
 

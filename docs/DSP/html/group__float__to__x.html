@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-DSP
-   &#160;<span id="projectnumber">Version 1.6.0</span>
+   &#160;<span id="projectnumber">Version 1.7.0</span>
    </div>
    <div id="projectbrief">CMSIS DSP Software Library</div>
   </td>
@@ -251,17 +251,19 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">pSrc</td><td>points to the floating-point input vector </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">pDst</td><td>points to the Q7 output vector </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">blockSize</td><td>number of samples in each vector </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">*pSrc</td><td>points to the floating-point input vector </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">*pDst</td><td>points to the Q7 output vector </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">blockSize</td><td>length of the input vector </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>none</dd></dl>
-<dl class="section user"><dt>Details</dt><dd>The equation used for the conversion process is: <pre>
-    pDst[n] = (q7_t)(pSrc[n] * 128);   0 &lt;= n &lt; blockSize.
-</pre></dd></dl>
-<dl class="section user"><dt>Scaling and Overflow Behavior</dt><dd>The function uses saturating arithmetic. Results outside of the allowable Q7 range [0x80 0x7F] are saturated. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>none.</dd></dl>
+<dl class="section user"><dt>Description:</dt><dd></dd></dl>
+<dl class="section user"><dt></dt><dd>The equation used for the conversion process is: <pre>
+        pDst[n] = (q7_t)(pSrc[n] * 128);   0 &lt;= n &lt; blockSize.
+ </pre> </dd></dl>
+<dl class="section user"><dt>Scaling and Overflow Behavior:</dt><dd></dd></dl>
+<dl class="section user"><dt></dt><dd>The function uses saturating arithmetic. Results outside of the allowable Q7 range [0x80 0x7F] will be saturated. </dd></dl>
 <dl class="section note"><dt>Note</dt><dd>In order to apply rounding, the library should be rebuilt with the ROUNDING macro defined in the preprocessor section of project options. </dd></dl>
 
 </div>
@@ -271,7 +273,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Mar 21 2019 12:24:26 for CMSIS-DSP by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Wed Jul 10 2019 15:20:40 for CMSIS-DSP Version 1.7.0 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

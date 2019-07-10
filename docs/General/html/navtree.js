@@ -2,11 +2,12 @@ var NAVTREE =
 [
   [ "CMSIS", "index.html", [
     [ "Introduction", "index.html", [
+      [ "CMSIS Components", "index.html#CM_Components", null ],
       [ "Motivation", "index.html#Motivation", null ],
       [ "Coding Rules", "index.html#CodingRules", null ],
       [ "Validation", "index.html#Validation", null ],
       [ "License", "index.html#License", null ],
-      [ "ARM::CMSIS Pack", "index.html#CM_Pack_Content", null ]
+      [ "CMSIS Software Pack", "index.html#CM_Pack_Content", null ]
     ] ],
     [ "Revision History", "cm_revisionHistory.html", null ]
   ] ]

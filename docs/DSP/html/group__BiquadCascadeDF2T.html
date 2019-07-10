@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-DSP
-   &#160;<span id="projectnumber">Version 1.6.0</span>
+   &#160;<span id="projectnumber">Version 1.7.0</span>
    </div>
    <div id="projectbrief">CMSIS DSP Software Library</div>
   </td>
@@ -309,11 +309,20 @@ Single transposed Direct Form II Biquad</div></div>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>none</dd></dl>
-<dl class="section user"><dt>Coefficient and State Ordering</dt><dd>The coefficients are stored in the array <code>pCoeffs</code> in the following order: <pre>
+<dl class="section user"><dt>Coefficient and State Ordering</dt><dd>The coefficients are stored in the array <code>pCoeffs</code> in the following order in the not Neon version. <pre>
     {b10, b11, b12, a11, a12, b20, b21, b22, a21, a22, ...}
-</pre> </dd></dl>
-<dl class="section user"><dt></dt><dd>where <code>b1x</code> and <code>a1x</code> are the coefficients for the first stage, <code>b2x</code> and <code>a2x</code> are the coefficients for the second stage, and so on. The <code>pCoeffs</code> array contains a total of <code>5*numStages</code> values. </dd></dl>
-<dl class="section user"><dt></dt><dd>The <code>pState</code> is a pointer to state array. Each Biquad stage has 2 state variables <code>d1,</code> and <code>d2</code>. The 2 state variables for stage 1 are first, then the 2 state variables for stage 2, and so on. The state array has a total length of <code>2*numStages</code> values. The state variables are updated after each block of data is processed; the coefficients are untouched. </dd></dl>
+</pre></dd></dl>
+<dl class="section user"><dt></dt><dd>where <code>b1x</code> and <code>a1x</code> are the coefficients for the first stage, <code>b2x</code> and <code>a2x</code> are the coefficients for the second stage, and so on. The <code>pCoeffs</code> array contains a total of <code>5*numStages</code> values.</dd></dl>
+<p>For Neon version, this array is bigger. If numstages = 4x + y, then the array has size: 32*x + 5*y and it must be initialized using the function arm_biquad_cascade_df2T_compute_coefs_f32 which is taking the standard array coefficient as parameters.</p>
+<p>But, an array of 8*numstages is a good approximation.</p>
+<p>Then, the initialization can be done with: </p>
+<pre>
+                 arm_biquad_cascade_df2T_init_f32(&amp;SNeon, nbCascade, neonCoefs, stateNeon);
+                 arm_biquad_cascade_df2T_compute_coefs_f32(&amp;SNeon,nbCascade,coefs);
+</pre><dl class="section user"><dt>In this example, neonCoefs is a bigger array of size 8 * numStages.</dt><dd>coefs is the standard array:</dd></dl>
+<pre>
+    {b10, b11, b12, a11, a12, b20, b21, b22, a21, a22, ...}
+</pre><dl class="section user"><dt></dt><dd>The <code>pState</code> is a pointer to state array. Each Biquad stage has 2 state variables <code>d1,</code> and <code>d2</code>. The 2 state variables for stage 1 are first, then the 2 state variables for stage 2, and so on. The state array has a total length of <code>2*numStages</code> values. The state variables are updated after each block of data is processed; the coefficients are untouched. </dd></dl>
 
 </div>
 </div>
@@ -477,7 +486,7 @@ Single transposed Direct Form II Biquad</div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Mar 21 2019 12:24:25 for CMSIS-DSP by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Wed Jul 10 2019 15:20:40 for CMSIS-DSP Version 1.7.0 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

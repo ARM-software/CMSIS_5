@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-DSP
-   &#160;<span id="projectnumber">Version 1.6.0</span>
+   &#160;<span id="projectnumber">Version 1.7.0</span>
    </div>
    <div id="projectbrief">CMSIS DSP Software Library</div>
   </td>
@@ -138,11 +138,7 @@ Functions</h2></td></tr>
 <img src="MatrixMultiplication.gif" alt="MatrixMultiplication.gif"/>
 <div class="caption">
 Multiplication of two 3 x 3 matrices</div></div>
-<p> Matrix multiplication is only defined if the number of columns of the first matrix equals the number of rows of the second matrix. Multiplying an <code>M x N</code> matrix with an <code>N x P</code> matrix results in an <code>M x P</code> matrix. When matrix size checking is enabled, the functions check:</p>
-<ul>
-<li>that the inner dimensions of <code>pSrcA</code> and <code>pSrcB</code> are equal;</li>
-<li>that the size of the output matrix equals the outer dimensions of <code>pSrcA</code> and <code>pSrcB</code>. </li>
-</ul>
+<p> Matrix multiplication is only defined if the number of columns of the first matrix equals the number of rows of the second matrix. Multiplying an <code>M x N</code> matrix with an <code>N x P</code> matrix results in an <code>M x P</code> matrix. When matrix size checking is enabled, the functions check: (1) that the inner dimensions of <code>pSrcA</code> and <code>pSrcB</code> are equal; and (2) that the size of the output matrix equals the outer dimensions of <code>pSrcA</code> and <code>pSrcB</code>. </p>
 <h2 class="groupheader">Function Documentation</h2>
 <a class="anchor" id="ga917bf0270310c1d3f0eda1fc7c0026a0"></a>
 <div class="memitem">
@@ -175,17 +171,13 @@ Multiplication of two 3 x 3 matrices</div></div>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">pSrcA</td><td>points to the first input matrix structure </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">pSrcB</td><td>points to the second input matrix structure </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">pDst</td><td>points to output matrix structure </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">*pSrcA</td><td>points to the first input matrix structure </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">*pSrcB</td><td>points to the second input matrix structure </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">*pDst</td><td>points to output matrix structure </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>execution status<ul>
-<li><a class="el" href="arm__math_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6a9f8b2a10bd827fb4600e77d455902eb0">ARM_MATH_SUCCESS</a> : Operation successful</li>
-<li><a class="el" href="arm__math_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6a7071b92f1f6bc3c5c312a237ea91105b">ARM_MATH_SIZE_MISMATCH</a> : Matrix size check failed </li>
-</ul>
-</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The function returns either <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking. </dd></dl>
 
 </div>
 </div>
@@ -400,7 +392,7 @@ Multiplication of two 3 x 3 matrices</div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Mar 21 2019 12:24:26 for CMSIS-DSP by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Wed Jul 10 2019 15:20:40 for CMSIS-DSP Version 1.7.0 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

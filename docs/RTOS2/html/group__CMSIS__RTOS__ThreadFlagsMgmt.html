@@ -222,12 +222,12 @@ Functions</h2></td></tr>
 <div class="line"><span class="comment"> *      Function &#39;signal_func&#39; called from multiple threads</span></div>
 <div class="line"><span class="comment"> *---------------------------------------------------------------------------*/</span></div>
 <div class="line"><span class="keywordtype">void</span> signal_func (<a class="code" href="group__CMSIS__RTOS__ThreadMgmt.html#gaa6c32fe2a3e0a2e01f212d55b02e51c7">osThreadId_t</a> tid)  {</div>
-<div class="line">  <a class="code" href="group__CMSIS__RTOS__ThreadFlagsMgmt.html#ga6f89ef9caded1d9963c7b12b0f6412c9">osThreadFlagsSet</a>(tid_clock, 0x0100);      <span class="comment">/* set signal to clock thread    */</span></div>
-<div class="line">  <a class="code" href="group__CMSIS__RTOS__Wait.html#gaf6055a51390ef65b6b6edc28bf47322e">osDelay</a>(500);                             <span class="comment">/* delay 500ms                   */</span></div>
-<div class="line">  <a class="code" href="group__CMSIS__RTOS__ThreadFlagsMgmt.html#ga6f89ef9caded1d9963c7b12b0f6412c9">osThreadFlagsSet</a>(tid_clock, 0x0100);      <span class="comment">/* set signal to clock thread    */</span></div>
-<div class="line">  <a class="code" href="group__CMSIS__RTOS__Wait.html#gaf6055a51390ef65b6b6edc28bf47322e">osDelay</a>(500);                             <span class="comment">/* delay 500ms                   */</span></div>
-<div class="line">  <a class="code" href="group__CMSIS__RTOS__ThreadFlagsMgmt.html#ga6f89ef9caded1d9963c7b12b0f6412c9">osThreadFlagsSet</a>(tid, 0x0001);            <span class="comment">/* set signal to thread &#39;thread&#39; */</span></div>
-<div class="line">  <a class="code" href="group__CMSIS__RTOS__Wait.html#gaf6055a51390ef65b6b6edc28bf47322e">osDelay</a>(500);                             <span class="comment">/* delay 500ms                   */</span></div>
+<div class="line">  <a class="code" href="group__CMSIS__RTOS__ThreadFlagsMgmt.html#ga6f89ef9caded1d9963c7b12b0f6412c9">osThreadFlagsSet</a>(tid_clock, 0x0100U);     <span class="comment">/* set signal to clock thread    */</span></div>
+<div class="line">  <a class="code" href="group__CMSIS__RTOS__Wait.html#gaf6055a51390ef65b6b6edc28bf47322e">osDelay</a>(500U);                            <span class="comment">/* delay 500ms                   */</span></div>
+<div class="line">  <a class="code" href="group__CMSIS__RTOS__ThreadFlagsMgmt.html#ga6f89ef9caded1d9963c7b12b0f6412c9">osThreadFlagsSet</a>(tid_clock, 0x0100U);     <span class="comment">/* set signal to clock thread    */</span></div>
+<div class="line">  <a class="code" href="group__CMSIS__RTOS__Wait.html#gaf6055a51390ef65b6b6edc28bf47322e">osDelay</a>(500U);                            <span class="comment">/* delay 500ms                   */</span></div>
+<div class="line">  <a class="code" href="group__CMSIS__RTOS__ThreadFlagsMgmt.html#ga6f89ef9caded1d9963c7b12b0f6412c9">osThreadFlagsSet</a>(tid, 0x0001U);           <span class="comment">/* set signal to thread &#39;thread&#39; */</span></div>
+<div class="line">  <a class="code" href="group__CMSIS__RTOS__Wait.html#gaf6055a51390ef65b6b6edc28bf47322e">osDelay</a>(500U);                            <span class="comment">/* delay 500ms                   */</span></div>
 <div class="line">}</div>
 </div><!-- fragment --> 
 </div>
@@ -347,13 +347,13 @@ Functions</h2></td></tr>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">void</span> Thread (<span class="keywordtype">void</span>* arg) {</div>
 <div class="line">  ;</div>
-<div class="line">  <a class="code" href="group__CMSIS__RTOS__ThreadFlagsMgmt.html#gac11542ad6300b600f872fc96e340ec2b">osThreadFlagsWait</a> (0x00000001U, <a class="code" href="group__CMSIS__RTOS__Definitions.html#ga18e63587b8450d5b8798b6f6ec04e012">osFlagsWaitAny</a>, <a class="code" href="group__CMSIS__RTOS__Definitions.html#ga9eb9a7a797a42e4b55eb171ecc609ddb">osWaitForever</a>); <span class="comment">// Wait forever until thread flag 1 is set.</span></div>
+<div class="line">  <a class="code" href="group__CMSIS__RTOS__ThreadFlagsMgmt.html#gac11542ad6300b600f872fc96e340ec2b">osThreadFlagsWait</a>(0x00000001U, <a class="code" href="group__CMSIS__RTOS__Definitions.html#ga18e63587b8450d5b8798b6f6ec04e012">osFlagsWaitAny</a>, <a class="code" href="group__CMSIS__RTOS__Definitions.html#ga9eb9a7a797a42e4b55eb171ecc609ddb">osWaitForever</a>); <span class="comment">// Wait forever until thread flag 1 is set.</span></div>
 <div class="line">  ;</div>
-<div class="line">  <a class="code" href="group__CMSIS__RTOS__ThreadFlagsMgmt.html#gac11542ad6300b600f872fc96e340ec2b">osThreadFlagsWait</a> (0x00000003U, <a class="code" href="group__CMSIS__RTOS__Definitions.html#ga18e63587b8450d5b8798b6f6ec04e012">osFlagsWaitAny</a>, <a class="code" href="group__CMSIS__RTOS__Definitions.html#ga9eb9a7a797a42e4b55eb171ecc609ddb">osWaitForever</a>); <span class="comment">// Wait forever until either thread flag 0 or 1 is set.</span></div>
+<div class="line">  <a class="code" href="group__CMSIS__RTOS__ThreadFlagsMgmt.html#gac11542ad6300b600f872fc96e340ec2b">osThreadFlagsWait</a>(0x00000003U, <a class="code" href="group__CMSIS__RTOS__Definitions.html#ga18e63587b8450d5b8798b6f6ec04e012">osFlagsWaitAny</a>, <a class="code" href="group__CMSIS__RTOS__Definitions.html#ga9eb9a7a797a42e4b55eb171ecc609ddb">osWaitForever</a>); <span class="comment">// Wait forever until either thread flag 0 or 1 is set.</span></div>
 <div class="line">  ;</div>
-<div class="line">  <a class="code" href="group__CMSIS__RTOS__ThreadFlagsMgmt.html#gac11542ad6300b600f872fc96e340ec2b">osThreadFlagsWait</a> (0x00000003U, <a class="code" href="group__CMSIS__RTOS__Definitions.html#ga8b6f562736fbfb5428940e0c017dec24">osFlagsWaitAll</a>, 10); <span class="comment">// Wait for 10 timer ticks until thread flags 0 and 1 are set. Timeout afterwards.</span></div>
+<div class="line">  <a class="code" href="group__CMSIS__RTOS__ThreadFlagsMgmt.html#gac11542ad6300b600f872fc96e340ec2b">osThreadFlagsWait</a>(0x00000003U, <a class="code" href="group__CMSIS__RTOS__Definitions.html#ga8b6f562736fbfb5428940e0c017dec24">osFlagsWaitAll</a>, 10U); <span class="comment">// Wait for 10 timer ticks until thread flags 0 and 1 are set. Timeout afterwards.</span></div>
 <div class="line">  ;</div>
-<div class="line">  <a class="code" href="group__CMSIS__RTOS__ThreadFlagsMgmt.html#gac11542ad6300b600f872fc96e340ec2b">osThreadFlagsWait</a> (0x00000003U, <a class="code" href="group__CMSIS__RTOS__Definitions.html#ga8b6f562736fbfb5428940e0c017dec24">osFlagsWaitAll</a> | <a class="code" href="group__CMSIS__RTOS__Definitions.html#gaade844a42237d8c37569d4d9b16b9f1c">osFlagsNoClear</a>, <a class="code" href="group__CMSIS__RTOS__Definitions.html#ga9eb9a7a797a42e4b55eb171ecc609ddb">osWaitForever</a>); <span class="comment">// Same as the above, but the flags will not be cleared.</span></div>
+<div class="line">  <a class="code" href="group__CMSIS__RTOS__ThreadFlagsMgmt.html#gac11542ad6300b600f872fc96e340ec2b">osThreadFlagsWait</a>(0x00000003U, <a class="code" href="group__CMSIS__RTOS__Definitions.html#ga8b6f562736fbfb5428940e0c017dec24">osFlagsWaitAll</a> | <a class="code" href="group__CMSIS__RTOS__Definitions.html#gaade844a42237d8c37569d4d9b16b9f1c">osFlagsNoClear</a>, <a class="code" href="group__CMSIS__RTOS__Definitions.html#ga9eb9a7a797a42e4b55eb171ecc609ddb">osWaitForever</a>); <span class="comment">// Same as the above, but the flags will not be cleared.</span></div>
 <div class="line">}</div>
 </div><!-- fragment --> 
 </div>
@@ -363,7 +363,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Mar 21 2019 12:25:01 for CMSIS-RTOS2 by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Wed Jul 10 2019 15:21:04 for CMSIS-RTOS2 Version 2.1.3 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

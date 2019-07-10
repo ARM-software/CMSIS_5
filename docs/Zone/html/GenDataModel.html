@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Zone (Preview)
-   &#160;<span id="projectnumber">Version 0.9.0</span>
+   &#160;<span id="projectnumber">Version 0.9.2</span>
    </div>
    <div id="projectbrief">System Resource Management</div>
   </td>
@@ -117,37 +117,10 @@ $(document).ready(function(){initNavTree('GenDataModel.html','');});
 FreeMarker Template Engine</div></div>
  <h1><a class="anchor" id="fp_toplevel"></a>
 FreeMarker top-level format</h1>
-<h1><a class="anchor" id="fm_system"></a>
-/fm/system element</h1>
-<p>The <a class="el" href="GenDataModel.html#fm_system">/fm/system element</a> provides the memory layout and the interrupt configuration of the complete system. This information can be used for example, to create a linker script that defines the memory setup of the SoC system.</p>
-<table  class="cmtable" summary="Element: zone">
-<tr>
-<th>Child Elements </th><th>Description </th><th>Type  </th></tr>
-<tr>
-<td><a class="el" href="fm_memory.html">.memory</a> </td><td>A sequence of all memory regions available in the system resource file. </td><td>sequence  </td></tr>
-<tr>
-<td><a class="el" href="fm_interrupt.html">.interrupt</a> </td><td>A sequence of all interrupt sources available. </td><td>sequence  </td></tr>
-<tr>
-<td><a class="el" href="fm_irq_setup.html">.irq_setup</a> </td><td>Contains device specific configuration for the setup of the interrupts. </td><td>sequence  </td></tr>
-</table>
-<h1><a class="anchor" id="fm_zone"></a>
-/fm/zone element</h1>
-<p>The <a class="el" href="GenDataModel.html#fm_zone">/fm/zone element</a> provides the setup information of a zone (or system partition) along with related peripherals. This information can be used for example, to create the MPU setup that is required for various execution zones along with the related linker setup.</p>
-<table  class="cmtable" summary="Element: zone">
-<tr>
-<th>Child Elements </th><th>Description </th><th>Type  </th></tr>
-<tr>
-<td>.name </td><td>The name of the zone (or system partition). </td><td>string  </td></tr>
-<tr>
-<td><a class="el" href="fm_memory.html">.memory</a> </td><td>A sequence of all memory regions that are accessible in the zone (or system partition). </td><td>sequence  </td></tr>
-<tr>
-<td><a class="el" href="fm_peripheral.html">.peripheral</a> </td><td>A sequence of all peripherals that are accessible in the zone (or system partition). </td><td>sequence  </td></tr>
-<tr>
-<td><a class="el" href="fm_mpu_setup.html">.mpu_setup</a> </td><td>A sequence of configuration information for the Memory Protection Unit (MPU). </td><td>sequence  </td></tr>
-</table>
+<p><a class="el" href="fm_system.html">system element</a> provides memory layout and TrustZone configuration of the complete system. <a class="el" href="fm_zone.html">zone element</a> setup information of a zone (or system partition) along with related peripherals.</p>
 <h1><a class="anchor" id="fm_basics"></a>
 FreeMarker basics</h1>
-<p>The varible types relevant for CMSIS-Zone are:</p>
+<p>The variable types relevant for CMSIS-Zone are:</p>
 <p><b>scalar:</b> variable that stores a single value of a scalar type scalar-types:</p>
 <ul>
 <li>string</li>
@@ -155,7 +128,7 @@ FreeMarker basics</h1>
 <li>bool</li>
 </ul>
 <p><b>hash:</b> variable that that stores one or more variables with a unique lookup name</p>
-<p><b>sequence:</b> variable that stores subvariables without names but instead are selected via index (myVariable[index])</p>
+<p><b>sequence:</b> variable that stores sub-variables without names but instead are selected via index (myVariable[index])</p>
 <p>A variable is accessed using the dollar character followed by a variable or expression in brackets: </p>
 <div class="fragment"><div class="line">${...}</div>
 </div><!-- fragment --><p> Output the name of the zone: </p>
@@ -175,7 +148,7 @@ FreeMarker basics</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Mar 21 2019 12:25:04 for CMSIS-Zone (Preview) by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Wed Jul 10 2019 15:21:06 for CMSIS-Zone (Preview) Version 0.9.2 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

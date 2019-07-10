@@ -111,6 +111,22 @@ $(document).ready(function(){initNavTree('createPackPublish.html','');});
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><p>There are multiple ways to distribute a software pack:</p>
+<h1><a class="anchor" id="cp_prerequisites"></a>
+Prerequisites</h1>
+<p>Before you start to distribute a software pack, you need to make sure that it does not contain errors. An error- and warning-free run of the <code>gen_pack.bat</code> script from the <a class="el" href="cp_Packs.html#PackTutorials">Pack Tutorial</a> is a good start. but you also need to make sure that the schema has been validated. Pack Installer provides an easy mechanism to check the XML schema:</p>
+<ul>
+<li>Install the pack using Pack Installer.</li>
+<li>Right-click on the pack version number and select <b>Schema Check</b>: <br/>
+ <div class="image">
+<img src="schema_check.png" alt="schema_check.png"/>
+</div>
+</li>
+<li>The <b>Output</b> window shows the result. If errors are reported, please make sure to fix them before continuing.<br/>
+ <div class="image">
+<img src="schema_check_output.png" alt="schema_check_output.png"/>
+</div>
+ This is especially important when handing in the pack to be indexed by <a class="el" href="createPackPublish.html#cp_KeilComPack">Arm's pack index service</a>. The pack importer will ignore all PDSC files that do not pass the check against the most recently published PACK.xsd schema file and thus your pack will not be available for download.</li>
+</ul>
 <h1><a class="anchor" id="cp_LocalInstallation"></a>
 Local Installation</h1>
 <p>The easiest way to distribute a software pack is attaching it to an email or using other means of electronic distribution (for example using a company internal file server). The installation of a software pack is usually triggered by double-clicking the Pack file. The pack management tool is invoked and the Pack is installed on the local machine. After installation, the Pack will be shown in the list of installed packs (tool dependent). If the PDSC file does not contain a valid <code>&lt;url&gt;</code> element, a manual installation is required to update a software pack. Otherwise, pack management tools can check for updates on the server or the local machine that is specified by <code>&lt;url&gt;</code>.</p>
@@ -145,8 +161,8 @@ Web installation and update</div></div>
 </ul>
 </dd></dl>
 <h1><a class="anchor" id="cp_KeilComPack"></a>
-Publishing on www.keil.com/pack</h1>
-<p>Arm maintains a list of available software packs. If you wish to add your packs to that list, send either your vendor.pidx file or your PDSC file to the following email address: <a href="#" onclick="location.href='mai'+'lto:'+'CMS'+'IS'+'@ar'+'m.'+'com'; return false;">CMSIS@arm.com</a>. The PIDX file will be processed and all referenced PDSC files will be validated. The following content will be processed in order to generate the web site (<a href="http://www.keil.com/dd2/pack">www.keil.com/dd2/pack</a>) and index file (<a href="http://www.keil.com/pack/index.pidx">www.keil.com/pack/index.pidx</a>):</p>
+Publishing using Arm's Pack Index Service</h1>
+<p>Arm maintains a list of available software packs. If you wish to add your packs to that list, send either your vendor.pidx file or your PDSC file to the following email address: <a href="#" onclick="location.href='mai'+'lto:'+'CMS'+'IS'+'@ar'+'m.'+'com'; return false;">CMSIS@arm.com</a>. The PIDX file will be processed and all referenced PDSC files will be validated. The following content will be processed in order to generate the web site (<a href="https://developer.arm.com/embedded/cmsis/cmsis-packs">https://developer.arm.com/embedded/cmsis/cmsis-packs</a>):</p>
 <ul>
 <li>Version</li>
 <li>Release Notes</li>
@@ -180,7 +196,7 @@ Moving a pack from one URL to another</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Mar 21 2019 12:24:55 for CMSIS-Pack by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Wed Jul 10 2019 15:21:00 for CMSIS-Pack Version 1.6.0 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

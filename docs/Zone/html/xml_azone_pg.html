@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Zone (Preview)
-   &#160;<span id="projectnumber">Version 0.9.0</span>
+   &#160;<span id="projectnumber">Version 0.9.2</span>
    </div>
    <div id="projectbrief">System Resource Management</div>
   </td>
@@ -127,11 +127,11 @@ $(document).ready(function(){initNavTree('xml_azone_pg.html','');});
 <tr>
 <th>Child Elements </th><th>Description </th><th>Type </th><th>Occurrence  </th></tr>
 <tr>
-<td><a class="el" href="xml_arzone.html">rzone</a> </td><td>Reference to rzone file </td><td>RZoneType </td><td>optional  </td></tr>
+<td><a class="el" href="xml_arzone.html">rzone</a> </td><td>Reference to rzone file </td><td>RZoneType </td><td>0..1  </td></tr>
 <tr>
-<td><a class="el" href="xml_configure.html">configure</a> </td><td>Control the operation of the CMSIS-Zone utility </td><td>ConfigureType </td><td>1..1   </td></tr>
+<td><a class="el" href="xml_configure.html">configure</a> </td><td>Control the operation of the CMSIS-Zone utility </td><td>ConfigureType </td><td>0..1   </td></tr>
 <tr>
-<td><a class="el" href="xml_partition.html">partition</a> </td><td>Partition information for memory block splits </td><td>RegionsType </td><td>1..1   </td></tr>
+<td><a class="el" href="xml_partition.html">partition</a> </td><td>Partition information for memory block splits </td><td>RegionsType </td><td>0..1   </td></tr>
 <tr>
 <td><a class="el" href="xml_zones.html">zones</a> </td><td>Zone assignments of processor, memory, and peripheral resources </td><td>ZonesType </td><td>0..1   </td></tr>
 </table>
@@ -141,7 +141,7 @@ $(document).ready(function(){initNavTree('xml_azone_pg.html','');});
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="zoneFormat.html">Zone Description Format</a></li>
-    <li class="footer">Generated on Thu Mar 21 2019 12:25:04 for CMSIS-Zone (Preview) by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Wed Jul 10 2019 15:21:06 for CMSIS-Zone (Preview) Version 0.9.2 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

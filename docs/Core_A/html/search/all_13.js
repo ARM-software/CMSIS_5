@@ -113,10 +113,9 @@ var searchData=
   ['svc_5fmode',['SVC_MODE',['../startup__ARMCA9_8c.html#a312ff1d5550cc17c9907a153b04e0efa',1,'startup_ARMCA9.c']]],
   ['sw',['SW',['../unionSCTLR__Type.html#a6598f817304ccaef4509843ce041de1c',1,'SCTLR_Type']]],
   ['sys_5fmode',['SYS_MODE',['../startup__ARMCA9_8c.html#ae62d91253c85a3dff6a838244f460f70',1,'startup_ARMCA9.c']]],
-  ['system_5farmca9_2eh',['system_ARMCA9.h',['../system__ARMCA9_8h.html',1,'']]],
   ['system_20configuration_20files_20system_5f_3cdevice_3e_2ec_20and_20system_5f_3cdevice_3e_2eh',['System Configuration Files system_&lt;device&gt;.c and system_&lt;device&gt;.h',['../system_c_pg.html',1,'templates_pg']]],
   ['system_20and_20clock_20configuration',['System and Clock Configuration',['../group__system__init__gr.html',1,'']]],
-  ['systemcoreclock',['SystemCoreClock',['../group__system__init__gr.html#gaa3cd3e43291e81e795d642b79b6088e6',1,'SystemCoreClock():&#160;Ref_SystemAndClock.txt'],['../group__system__init__gr.html#gaa3cd3e43291e81e795d642b79b6088e6',1,'SystemCoreClock():&#160;Ref_SystemAndClock.txt']]],
-  ['systemcoreclockupdate',['SystemCoreClockUpdate',['../group__system__init__gr.html#gae0c36a9591fe6e9c45ecb21a794f0f0f',1,'SystemCoreClockUpdate(void):&#160;Ref_SystemAndClock.txt'],['../system__ARMCA9_8h.html#ae0c36a9591fe6e9c45ecb21a794f0f0f',1,'SystemCoreClockUpdate(void):&#160;system_ARMCA9.h']]],
-  ['systeminit',['SystemInit',['../group__system__init__gr.html#ga93f514700ccf00d08dbdcff7f1224eb2',1,'SystemInit(void):&#160;Ref_SystemAndClock.txt'],['../system__ARMCA9_8h.html#a93f514700ccf00d08dbdcff7f1224eb2',1,'SystemInit(void):&#160;system_ARMCA9.h']]]
+  ['systemcoreclock',['SystemCoreClock',['../group__system__init__gr.html#gaa3cd3e43291e81e795d642b79b6088e6',1,'Ref_SystemAndClock.txt']]],
+  ['systemcoreclockupdate',['SystemCoreClockUpdate',['../group__system__init__gr.html#gae0c36a9591fe6e9c45ecb21a794f0f0f',1,'Ref_SystemAndClock.txt']]],
+  ['systeminit',['SystemInit',['../group__system__init__gr.html#ga93f514700ccf00d08dbdcff7f1224eb2',1,'Ref_SystemAndClock.txt']]]
 ];

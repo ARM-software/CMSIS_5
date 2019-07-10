@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Driver
-   &#160;<span id="projectnumber">Version 2.7.0</span>
+   &#160;<span id="projectnumber">Version 2.7.1</span>
    </div>
    <div id="projectbrief">Peripheral Interface for Middleware and Application Code</div>
   </td>
@@ -206,12 +206,10 @@ Block Diagram of the WiFi interface</div></div>
 <tr class="separator:af264a580d36c33a649b64be845458b03"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a51d027ef7046c413372103aa952772fb"><td class="memItemLeft" align="right" valign="top">int32_t(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__wifi__interface__gr.html#a51d027ef7046c413372103aa952772fb">Scan</a> )(<a class="el" href="group__wifi__management__gr.html#structARM__WIFI__SCAN__INFO__t">ARM_WIFI_SCAN_INFO_t</a> scan_info[], uint32_t max_num)</td></tr>
 <tr class="separator:a51d027ef7046c413372103aa952772fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab9bea3a00744d7e6ffd29a0d1811c673"><td class="memItemLeft" align="right" valign="top">int32_t(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__wifi__interface__gr.html#ab9bea3a00744d7e6ffd29a0d1811c673">Configure</a> )(uint32_t interface, <a class="el" href="group__wifi__management__gr.html#structARM__WIFI__CONFIG__t">ARM_WIFI_CONFIG_t</a> *config)</td></tr>
-<tr class="separator:ab9bea3a00744d7e6ffd29a0d1811c673"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae63589cfa9a2933e93fa3dd7c7088a3e"><td class="memItemLeft" align="right" valign="top">int32_t(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__wifi__interface__gr.html#ae63589cfa9a2933e93fa3dd7c7088a3e">Activate</a> )(uint32_t mode)</td></tr>
-<tr class="separator:ae63589cfa9a2933e93fa3dd7c7088a3e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a851b4d458f18406cd26f18fdaf972725"><td class="memItemLeft" align="right" valign="top">int32_t(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__wifi__interface__gr.html#a851b4d458f18406cd26f18fdaf972725">Deactivate</a> )(void)</td></tr>
-<tr class="separator:a851b4d458f18406cd26f18fdaf972725"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a444ea7bda2c45eab34050d2a895baeec"><td class="memItemLeft" align="right" valign="top">int32_t(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__wifi__interface__gr.html#a444ea7bda2c45eab34050d2a895baeec">Activate</a> )(uint32_t interface, const <a class="el" href="group__wifi__management__gr.html#structARM__WIFI__CONFIG__t">ARM_WIFI_CONFIG_t</a> *config)</td></tr>
+<tr class="separator:a444ea7bda2c45eab34050d2a895baeec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae9a38e69c7b7face914560e872378ed1"><td class="memItemLeft" align="right" valign="top">int32_t(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__wifi__interface__gr.html#ae9a38e69c7b7face914560e872378ed1">Deactivate</a> )(uint32_t interface)</td></tr>
+<tr class="separator:ae9a38e69c7b7face914560e872378ed1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab9771e89a155d316e0b44d3ee89081d3"><td class="memItemLeft" align="right" valign="top">uint32_t(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__wifi__interface__gr.html#ab9771e89a155d316e0b44d3ee89081d3">IsConnected</a> )(void)</td></tr>
 <tr class="separator:ab9771e89a155d316e0b44d3ee89081d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac17eb39c11b7797b88a1f6e0f8cc772d"><td class="memItemLeft" align="right" valign="top">int32_t(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__wifi__interface__gr.html#ac17eb39c11b7797b88a1f6e0f8cc772d">GetNetInfo</a> )(<a class="el" href="group__wifi__management__gr.html#structARM__WIFI__NET__INFO__t">ARM_WIFI_NET_INFO_t</a> *net_info)</td></tr>
@@ -366,36 +364,24 @@ Block Diagram of the WiFi interface</div></div>
 
 </div>
 </div>
-<a class="anchor" id="ab9bea3a00744d7e6ffd29a0d1811c673"></a>
+<a class="anchor" id="a444ea7bda2c45eab34050d2a895baeec"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int32_t(* Configure)(uint32_t interface, <a class="el" href="group__wifi__management__gr.html#structARM__WIFI__CONFIG__t">ARM_WIFI_CONFIG_t</a> *config)</td>
+          <td class="memname">int32_t(* Activate)(uint32_t interface, const <a class="el" href="group__wifi__management__gr.html#structARM__WIFI__CONFIG__t">ARM_WIFI_CONFIG_t</a> *config)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="ae63589cfa9a2933e93fa3dd7c7088a3e"></a>
+<a class="anchor" id="ae9a38e69c7b7face914560e872378ed1"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int32_t(* Activate)(uint32_t mode)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a851b4d458f18406cd26f18fdaf972725"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int32_t(* Deactivate)(void)</td>
+          <td class="memname">int32_t(* Deactivate)(uint32_t interface)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -674,7 +660,7 @@ Block Diagram of the WiFi interface</div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Mar 21 2019 12:24:15 for CMSIS-Driver by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Wed Jul 10 2019 15:20:32 for CMSIS-Driver Version 2.7.1 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

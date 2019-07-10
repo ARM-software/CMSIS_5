@@ -3,7 +3,10 @@ var templates_pg =
     [ "CMSIS-Core Processor Files", "templates_pg.html#CMSIS_Processor_files", null ],
     [ "Device Examples", "templates_pg.html#device_examples", null ],
     [ "Template Files", "templates_pg.html#template_files_sec", null ],
-    [ "Startup File startup_<device>.s", "startup_s_pg.html", [
+    [ "Startup File startup_<device>.c", "startup_c_pg.html", [
+      [ "startup_Device.c Template File", "startup_c_pg.html#startup_c_sec", null ]
+    ] ],
+    [ "Startup File startup_<device>.s (deprecated)", "startup_s_pg.html", [
       [ "startup_Device.s Template File", "startup_s_pg.html#startup_s_sec", null ]
     ] ],
     [ "System Configuration Files system_<device>.c and system_<device>.h", "system_c_pg.html", [

@@ -21,7 +21,8 @@ var rtx5_impl =
       ] ],
       [ "RTX5 Header File", "theory_of_operation.html#rtx_os_h", null ],
       [ "Timeout Value", "theory_of_operation.html#CMSIS_RTOS_TimeOutValue", null ],
-      [ "Calls from Interrupt Service Routines", "theory_of_operation.html#CMSIS_RTOS_ISR_Calls", null ]
+      [ "Calls from Interrupt Service Routines", "theory_of_operation.html#CMSIS_RTOS_ISR_Calls", null ],
+      [ "SVC Functions", "theory_of_operation.html#CMSIS_RTOS_svcFunctions", null ]
     ] ],
     [ "Configure RTX v5", "config_rtx5.html", [
       [ "System Configuration", "config_rtx5.html#systemConfig", [

@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Core (Cortex-M)
-   &#160;<span id="projectnumber">Version 5.2.1</span>
+   &#160;<span id="projectnumber">Version 5.3.0</span>
    </div>
    <div id="projectbrief">CMSIS-Core support for Cortex-M processor-based devices</div>
   </td>
@@ -113,12 +113,12 @@ $(document).ready(function(){initNavTree('using_pg.html','');});
 <div class="contents">
 <div class="textblock"><p>To use the CMSIS-Core (Cortex-M) the following files are added to the embedded application:</p>
 <ul>
-<li><a class="el" href="startup_s_pg.html">Startup File startup_&lt;device&gt;.s</a> with reset handler and exception vectors.</li>
+<li><a class="el" href="startup_c_pg.html">Startup File startup_&lt;device&gt;.c</a> (formerly <a class="el" href="startup_s_pg.html">Startup File startup_&lt;device&gt;.s (deprecated)</a>) with reset handler and exception vectors.</li>
 <li><a class="el" href="system_c_pg.html">System Configuration Files system_&lt;device&gt;.c and system_&lt;device&gt;.h</a> with general device configuration (i.e. for clock and BUS setup).</li>
 <li><a class="el" href="device_h_pg.html">Device Header File &lt;device.h&gt;</a> gives access to processor core and all peripherals.</li>
 </ul>
-<dl class="section note"><dt>Note</dt><dd>The files <a class="el" href="startup_s_pg.html">Startup File startup_&lt;device&gt;.s</a> and <a class="el" href="system_c_pg.html">System Configuration Files system_&lt;device&gt;.c and system_&lt;device&gt;.h</a> may require application specific adaptations and therefore should be copied into the application project folder prior configuration. The <a class="el" href="device_h_pg.html">Device Header File &lt;device.h&gt;</a> is included in all source files that need device access and can be stored on a central include folder that is generic for all projects.</dd></dl>
-<p>The <a class="el" href="startup_s_pg.html">Startup File startup_&lt;device&gt;.s</a> is executed after reset and calls <a class="el" href="group__system__init__gr.html#ga93f514700ccf00d08dbdcff7f1224eb2">SystemInit</a>. After the system initialization control is transferred to the C/C++ run-time library which performs initialization and calls the <b>main</b> function in the user code. In addition the <a class="el" href="startup_s_pg.html">Startup File startup_&lt;device&gt;.s</a> contains all exception and interrupt vectors and implements a default function for every interrupt. It may also contain stack and heap configurations for the user application.</p>
+<dl class="section note"><dt>Note</dt><dd>The files <a class="el" href="startup_c_pg.html">Startup File startup_&lt;device&gt;.c</a> (or <a class="el" href="startup_s_pg.html">Startup File startup_&lt;device&gt;.s (deprecated)</a>) and <a class="el" href="system_c_pg.html">System Configuration Files system_&lt;device&gt;.c and system_&lt;device&gt;.h</a> may require application specific adaptations and therefore should be copied into the application project folder prior configuration. The <a class="el" href="device_h_pg.html">Device Header File &lt;device.h&gt;</a> is included in all source files that need device access and can be stored on a central include folder that is generic for all projects.</dd></dl>
+<p>The <a class="el" href="startup_c_pg.html">Startup File startup_&lt;device&gt;.c</a> (or <a class="el" href="startup_s_pg.html">Startup File startup_&lt;device&gt;.s (deprecated)</a>) is executed after reset and calls <a class="el" href="group__system__init__gr.html#ga93f514700ccf00d08dbdcff7f1224eb2">SystemInit</a>. After the system initialization control is transferred to the C/C++ run-time library which performs initialization and calls the <b>main</b> function in the user code. In addition the <a class="el" href="startup_c_pg.html">Startup File startup_&lt;device&gt;.c</a> (or <a class="el" href="startup_s_pg.html">Startup File startup_&lt;device&gt;.s (deprecated)</a>) contains all exception and interrupt vectors and implements a default function for every interrupt. It may also contain stack and heap configurations for the user application.</p>
 <p>The <a class="el" href="system_c_pg.html">System Configuration Files system_&lt;device&gt;.c and system_&lt;device&gt;.h</a> performs the setup for the processor clock. The variable <a class="el" href="group__system__init__gr.html#gaa3cd3e43291e81e795d642b79b6088e6">SystemCoreClock</a> indicates the CPU clock speed. <a class="el" href="group__system__init__gr.html">System and Clock Configuration</a> describes the minimum feature set. In addition the file may contain functions for the memory BUS setup and clock re-configuration.</p>
 <p>The <a class="el" href="device_h_pg.html">Device Header File &lt;device.h&gt;</a> is the central include file that the application programmer is using in the C source code. It provides the following features:</p>
 <ul>
@@ -134,19 +134,19 @@ $(document).ready(function(){initNavTree('using_pg.html','');});
 <img src="CMSIS_CORE_Files_user.png" alt="CMSIS_CORE_Files_user.png"/>
 <div class="caption">
 CMSIS-Core (Cortex-M) User Files</div></div>
-<p> The CMSIS-Core (Cortex-M) are device specific. In addition, the <a class="el" href="startup_s_pg.html">Startup File startup_&lt;device&gt;.s</a> is also compiler vendor specific. The various compiler vendor tool chains may provide folders that contain the CMSIS files for each supported device.</p>
-<p>For example, the following files are provided in MDK to support the STM32F10x Connectivity Line device variants:</p>
+<p> The CMSIS-Core (Cortex-M) system files are device specific. In addition, the deprecated <a class="el" href="startup_s_pg.html">Startup File startup_&lt;device&gt;.s (deprecated)</a> is also compiler vendor specific. The versions provided by CMSIS are only generic templates. The adopted versions for a concrete device are typically provided by the device vendor through the according device familiy pack (DFP).</p>
+<p>For example, the following files are provided by the STM32F10x device family pack:</p>
 <table  class="cmtable">
 <tr>
 <th>File </th><th>Description  </th></tr>
 <tr>
-<td>".\ARM\Startup\ST\STM32F10x\startup_stm32f10x_cl.s" </td><td><a class="el" href="startup_s_pg.html">Startup File startup_&lt;device&gt;.s</a> for the STM32F10x Connectivity Line device variants.  </td></tr>
+<td>".\Device\Source\ARM\startup_stm32f10x_cl.s" </td><td><a class="el" href="startup_s_pg.html">Startup File startup_&lt;device&gt;.s (deprecated)</a> for the STM32F10x Connectivity Line device variants.  </td></tr>
 <tr>
-<td>".\ARM\Startup\ST\STM32F10x\system_stmf10x.c" </td><td><a class="el" href="system_c_pg.html">System Configuration Files system_&lt;device&gt;.c and system_&lt;device&gt;.h</a> for the STM32F10x device families.  </td></tr>
+<td>".\Device\Source\system_stmf10x.c" </td><td><a class="el" href="system_c_pg.html">System Configuration Files system_&lt;device&gt;.c and system_&lt;device&gt;.h</a> for the STM32F10x device families.  </td></tr>
 <tr>
-<td>".\ARM\INC\ST\STM32F10x\stm32f10x.h" </td><td><a class="el" href="device_h_pg.html">Device Header File &lt;device.h&gt;</a> for the STM32F10x device families.  </td></tr>
+<td>".\Device\Include\stm32f10x.h" </td><td><a class="el" href="device_h_pg.html">Device Header File &lt;device.h&gt;</a> for the STM32F10x device families.  </td></tr>
 <tr>
-<td>".\ARM\INC\ST\STM32F10x\system_stm32f10x.h" </td><td><a class="el" href="system_c_pg.html#system_Device_h_sec">system_Device.h Template File</a> for the STM32F10x device families.  </td></tr>
+<td>".\Device\Include\system_stm32f10x.h" </td><td><a class="el" href="system_c_pg.html#system_Device_h_sec">system_Device.h Template File</a> for the STM32F10x device families.  </td></tr>
 </table>
 <dl class="section note"><dt>Note</dt><dd>The silicon vendors create these device-specific CMSIS-Core (Cortex-M) files based on <a class="el" href="templates_pg.html">CMSIS-Core Device Templates</a> provide by Arm.</dd></dl>
 <p>Thereafter, the functions described under <a href="Modules.html"><b>Reference</b> </a> can be used in the application.</p>
@@ -161,7 +161,7 @@ CMSIS-Core (Cortex-M) User Files</div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Mar 21 2019 12:24:04 for CMSIS-Core (Cortex-M) by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Wed Jul 10 2019 15:20:25 for CMSIS-Core (Cortex-M) Version 5.3.0 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

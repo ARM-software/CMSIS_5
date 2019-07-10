@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Zone (Preview)
-   &#160;<span id="projectnumber">Version 0.9.0</span>
+   &#160;<span id="projectnumber">Version 0.9.2</span>
    </div>
    <div id="projectbrief">System Resource Management</div>
   </td>
@@ -112,16 +112,17 @@ $(document).ready(function(){initNavTree('zoneFormat.html','');});
 <div class="contents">
 <div class="textblock"><p>The <b>Zone Description Format</b> is a tool agnostic storage format and is split into:</p>
 <ul>
-<li><b>Resource File</b> that describes the system resources available.</li>
-<li><b>Assignment File</b> that describes the resource partitioning.</li>
+<li><b>Resource File (*.rzone)</b> that describes the system resources available.</li>
+<li><b>Assignment File (*.azone)</b> that describes the resource partitioning.</li>
 </ul>
 <p>The combination of both <b>Resource File</b> and <b>Assignment File</b> can be used to create a new derived <b>Resource File</b> that only contains the resources available for this project. It is therefore possible to split the resources incrementally as needed.</p>
-<p>A <b>Resource File</b> can therefore describe:</p>
+<p>A <b>Resource File (*.rzone)</b> can therefore describe:</p>
 <ul>
 <li>A complete embedded system including device with one or more processors, external memory and/or external peripheral components.</li>
+<li>TrustZone definition and initial setting for Secure Attribute Unit</li>
 <li>A resource partition for an independent software project (i.e. boot loader, user application, secure partition) that implement the application for the system.</li>
 </ul>
-<p>A <b>Assignment File</b> allows to specify either:</p>
+<p>An <b>Assignment File (*.azone)</b> allows to specify either:</p>
 <ul>
 <li>The partitioning of a system into multiple independent software projects.</li>
 <li>The configuration of a Memory Protection Unit (MPU) for functional segregation of a software project.</li>
@@ -134,10 +135,13 @@ Overall XML structure</h1>
 <tr>
 <th align="left">File type </th><th align="left">Schema file </th><th align="left">Description  </th></tr>
 <tr>
-<td align="left">.rzone </td><td align="left">rzone.xsd </td><td align="left">Stores the system resources (processors, memory, peripherals) available. </td></tr>
+<td align="left"><a class="el" href="zoneFormat.html#rzone">*.rzone</a> </td><td align="left">rzone.xsd </td><td align="left">Stores the system resources (processors, memory, peripherals) available. </td></tr>
 <tr>
-<td align="left">.azone </td><td align="left">azone.xsd </td><td align="left">Stores the system partitioning which includes assignments and memory splits for a related .rzone file. </td></tr>
+<td align="left"><a class="el" href="zoneFormat.html#azone">*.azone</a> </td><td align="left">azone.xsd </td><td align="left">Stores the system partitioning which includes assignments and memory splits for a related .rzone file. </td></tr>
+<tr>
+<td align="left">.fzone </td><td align="left">fzone.xsd </td><td align="left">CMSIS-Zone data input file for FreeMarker as explained in <a class="el" href="GenDataModel.html">Generator Data Model</a>. </td></tr>
 </table>
+<dl class="section note"><dt>Note</dt><dd>It is important to understand the relationship between *.rzone and *.azone files. While the *.rzone file contains all the information about the available resources in a system or sub-system, the *.azone file contains all the information about the system partitioning. If the *.rzone file changes (for example because the partitioning of a sub-system has changed), you will not loose the work done on the partitioning of that sub-system. If resources are removed, the <a class="el" href="zTUI.html#zTGUI">CMSIS-Zone GUI</a> will notify you about this and you can make the required changes.</dd></dl>
 <p><a class="anchor" id="rzone"></a></p>
 <h1>Top-level .rzone XML elements </h1>
 <ul>
@@ -154,18 +158,25 @@ Overall XML structure</h1>
 <div class="line">    &lt;package/&gt;           <span class="comment">// software pack that defines device</span></div>
 <div class="line">    &lt;processor/&gt;         <span class="comment">// processor information</span></div>
 <div class="line">  &lt;/device&gt;</div>
+<div class="line"></div>
 <div class="line">  </div>
 <div class="line">  &lt;resources&gt;            <span class="comment">// physical resources off-chip </span></div>
+<div class="line">    &lt;sau_init&gt;           <span class="comment">// fixed SAU settings required for system</span></div>
+<div class="line">      &lt;region/&gt;          <span class="comment">// region setting for SAU</span></div>
+<div class="line">    &lt;/sau_init&gt;</div>
+<div class="line">        </div>
 <div class="line">    &lt;memories&gt;           <span class="comment">// memories section  </span></div>
 <div class="line">      &lt;memory&gt;           <span class="comment">// memory resource</span></div>
+<div class="line">      &lt;mpc&gt;              <span class="comment">// memory protection controller information</span></div>
 <div class="line">    &lt;/memories&gt;</div>
 <div class="line">    </div>
 <div class="line">    &lt;peripherals&gt;        <span class="comment">// peripheral resources off-chip</span></div>
 <div class="line">      { &lt;group&gt; }        <span class="comment">// peripheral group (optional)</span></div>
 <div class="line">      &lt;peripheral&gt;       <span class="comment">// peripheral description</span></div>
-<div class="line">         &lt;interrupt&gt;     <span class="comment">// optional interrupts</span></div>
-<div class="line">           &lt;setup/&gt;      <span class="comment">// setup information for interrupt</span></div>
-<div class="line">         &lt;/interrupt&gt;</div>
+<div class="line">            { &lt;slot&gt; }       <span class="comment">// slot description (optional)</span></div>
+<div class="line">         &lt;interrupt/&gt;    <span class="comment">// optional interrupts for peripheral</span></div>
+<div class="line">         &lt;setup/&gt;        <span class="comment">// optional register setup for peripheral</span></div>
+<div class="line">                { &lt;slot&gt; }</div>
 <div class="line">      &lt;/peripheral&gt;</div>
 <div class="line">      { &lt;/group&gt; }       <span class="comment">// peripheral group (optional)</span></div>
 <div class="line">    &lt;/peripherals&gt;</div>
@@ -199,7 +210,8 @@ Overall XML structure</h1>
 <h1>Security Type </h1>
 <p>The attribute <em>security</em> defines the security setting for a memory or peripheral region. Only one of the settings is allow:</p>
 <ul>
-<li>&lt;empty&gt; non-secure: no security restrictions (default)</li>
+<li>&lt;empty&gt; security not defined (default)</li>
+<li>'n' non-secure</li>
 <li>'c' secure on non-secure callable</li>
 <li>'s' secure</li>
 </ul>
@@ -225,7 +237,7 @@ Overall XML structure</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Mar 21 2019 12:25:03 for CMSIS-Zone (Preview) by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Wed Jul 10 2019 15:21:06 for CMSIS-Zone (Preview) Version 0.9.2 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

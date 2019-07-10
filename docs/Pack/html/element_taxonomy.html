@@ -201,25 +201,41 @@ $(document).ready(function(){initNavTree('element_taxonomy.html','');});
 <tr>
 <th>Cclass= </th><th>Description  </th></tr>
 <tr>
-<td class="XML-Token">Board Support </td><td>Components providing interfaces for Evaluation and Development Boards </td></tr>
+<td class="XML-Token">Audio </td><td>Software components for audio processing  </td></tr>
+<tr>
+<td class="XML-Token">Board Support </td><td>Components providing interfaces for Evaluation and Development Boards  </td></tr>
+<tr>
+<td class="XML-Token">Board Part </td><td>Drivers that support an external component available on an evaluation board  </td></tr>
+<tr>
+<td class="XML-Token">Compiler </td><td>Components implementing compiler specific interfaces (e.g. Retargeting)  </td></tr>
 <tr>
 <td class="XML-Token">CMSIS </td><td>Components defined by Cortex Microcontroller Software Interface Standard (e.g. <a href="../../Core/html/index.html" class="el">CMSIS-Core(M)</a>, <a href="../../Core_A/html/index.html" class="el">CMSIS-Core(A)</a>, <a href="../../DSP/html/index.html" class="el">CMSIS-DSP</a> and <a href="../../RTOS/html/index.html" class="el">CMSIS-RTOS</a>)  </td></tr>
 <tr>
+<td class="XML-Token">CMSIS Driver </td><td>Components implementing unified device drivers compliant to <a href="../../Driver/html/index.html" class="el">CMSIS-Driver</a> (e.g. UART, SPI, USB, etc.)   </td></tr>
+<tr>
 <td class="XML-Token">Device </td><td>Components containing device specific implementations of non-standard APIs (e.g. HAL drivers, CMSIS Startup files)  </td></tr>
 <tr>
-<td class="XML-Token">CMSIS Driver </td><td>Components implementing unified device drivers compliant to <a href="../../Driver/html/index.html" class="el">CMSIS-Driver</a> (e.g. UART, SPI, USB, etc.)   </td></tr>
+<td class="XML-Token">Data Exchange </td><td>Components implementing some kind of data exchange or data formatter  </td></tr>
+<tr>
+<td class="XML-Token">Extension Board </td><td>Drivers that support an extension board or shield  </td></tr>
 <tr>
 <td class="XML-Token">File System </td><td>Components implementing some kind of File Systems (e.g. Flash or RAM based file systems)  </td></tr>
 <tr>
 <td class="XML-Token">Graphics </td><td>Components implementing some kind of Display and Graphics Software  </td></tr>
 <tr>
-<td class="XML-Token">Network </td><td>Components implementing some kind of Network Communications (e.g. TCP/IP Stack)  </td></tr>
+<td class="XML-Token">IoT Client </td><td>Components implementing some kind of IoT cloud client connector  </td></tr>
+<tr>
+<td class="XML-Token">IoT Utility </td><td>IoT specific software utility  </td></tr>
+<tr>
+<td class="XML-Token">Network </td><td>Components implementing some kind of network communications (e.g. TCP/IP Stack)  </td></tr>
+<tr>
+<td class="XML-Token">RTOS </td><td>Components implementing some kind of real-time operating system (e.g. FreeRTOS, Micrium Real Time Kernel)  </td></tr>
+<tr>
+<td class="XML-Token">Security </td><td>Components implementing some kind of encryption for secure communication or storage  </td></tr>
 <tr>
 <td class="XML-Token">USB </td><td>Components implementing some kind of USB interfaces (e.g. Host and Device interfaces)  </td></tr>
 <tr>
-<td class="XML-Token">Compiler </td><td>Components implementing Compiler specific interfaces (e.g. Retargeting)  </td></tr>
-<tr>
-<td class="XML-Token">RTOS </td><td>Components implementing some kind of Real-time Operating System (e.g. FreeRTOS, Micrium Real Time Kernel)  </td></tr>
+<td class="XML-Token">Utility </td><td>Generic software utility components  </td></tr>
 </table>
 <p>&#160;</p>
 <p><a class="anchor" id="CgroupType"></a><b>Table: Component Groups</b></p>
@@ -247,7 +263,11 @@ $(document).ready(function(){initNavTree('element_taxonomy.html','');});
 <tr>
 <td class="XML-Token">DSP </td><td>A component implementing the <a href="../../DSP/html/index.html" class="el">CMSIS-DSP</a> API specification.  </td></tr>
 <tr>
+<td class="XML-Token">NN Lib </td><td>A component implementing the <a href="../../NN/html/index.html" class="el">CMSIS-NN</a> API specification.  </td></tr>
+<tr>
 <td class="XML-Token">RTOS </td><td>A component implementing the <a href="../../RTOS/html/index.html" class="el">CMSIS-RTOS</a> API specification.  </td></tr>
+<tr>
+<td class="XML-Token">RTOS2 </td><td>A component implementing the <a href="../../RTOS2/html/index.html" class="el">CMSIS-RTOS v2</a> API specification.  </td></tr>
 </table>
 <p>&#160;</p>
 </div></div><!-- contents -->
@@ -256,7 +276,7 @@ $(document).ready(function(){initNavTree('element_taxonomy.html','');});
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="packFormat.html">Pack Description (*.pdsc) Format</a></li>
-    <li class="footer">Generated on Thu Mar 21 2019 12:24:55 for CMSIS-Pack by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Wed Jul 10 2019 15:21:00 for CMSIS-Pack Version 1.6.0 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

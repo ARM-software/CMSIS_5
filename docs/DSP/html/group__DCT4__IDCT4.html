@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-DSP
-   &#160;<span id="projectnumber">Version 1.6.0</span>
+   &#160;<span id="projectnumber">Version 1.7.0</span>
    </div>
    <div id="projectbrief">CMSIS DSP Software Library</div>
   </td>
@@ -176,8 +176,7 @@ Discrete Cosine Transform - type-IV</div></div>
     <a class="el" href="structarm__dct4__instance__q31.html" title="Instance structure for the Q31 DCT4/IDCT4 function. ">arm_dct4_instance_q31</a> S = {N, Nby2, normalize, pTwiddle, pCosFactor, pRfft, pCfft};
     <a class="el" href="structarm__dct4__instance__q15.html" title="Instance structure for the Q15 DCT4/IDCT4 function. ">arm_dct4_instance_q15</a> S = {N, Nby2, normalize, pTwiddle, pCosFactor, pRfft, pCfft};
 </pre> where <code>N</code> is the length of the DCT4; <code>Nby2</code> is half of the length of the DCT4; <code>normalize</code> is normalizing factor used and is equal to <code>sqrt(2/N)</code>; <code>pTwiddle</code> points to the twiddle factor table; <code>pCosFactor</code> points to the cosFactor table; <code>pRfft</code> points to the real FFT instance; <code>pCfft</code> points to the complex FFT instance; The CFFT and RFFT structures also needs to be initialized, refer to <a class="el" href="group__ComplexFFT.html#ga521f670cd9c571bc61aff9bec89f4c26" title="Processing function for the floating-point Radix-4 CFFT/CIFFT. ">arm_cfft_radix4_f32()</a> and <a class="el" href="group__RealFFT.html#ga3df1766d230532bc068fc4ed69d0fcdc" title="Processing function for the floating-point RFFT/RIFFT. ">arm_rfft_f32()</a> respectively for details regarding static initialization.</dd></dl>
-<dl class="section user"><dt>Fixed-Point Behavior</dt><dd>Care must be taken when using the fixed-point versions of the DCT4 transform functions. In particular, the overflow and saturation behavior of the accumulator used in each function must be considered. Refer to the function specific documentation below for usage guidelines.</dd></dl>
-<p>end of DCT4_IDCT4_Table group </p>
+<dl class="section user"><dt>Fixed-Point Behavior</dt><dd>Care must be taken when using the fixed-point versions of the DCT4 transform functions. In particular, the overflow and saturation behavior of the accumulator used in each function must be considered. Refer to the function specific documentation below for usage guidelines. </dd></dl>
 <h2 class="groupheader">Function Documentation</h2>
 <a class="anchor" id="gafd538d68886848bc090ec2b0d364cc81"></a>
 <div class="memitem">
@@ -525,7 +524,7 @@ Discrete Cosine Transform - type-IV</div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Mar 21 2019 12:24:26 for CMSIS-DSP by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Wed Jul 10 2019 15:20:40 for CMSIS-DSP Version 1.7.0 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

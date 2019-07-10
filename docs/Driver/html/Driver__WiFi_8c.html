@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Driver
-   &#160;<span id="projectnumber">Version 2.7.0</span>
+   &#160;<span id="projectnumber">Version 2.7.1</span>
    </div>
    <div id="projectbrief">Peripheral Interface for Middleware and Application Code</div>
   </td>
@@ -146,15 +146,12 @@ Functions</h2></td></tr>
 <tr class="memitem:ga856972af36e51cf0c4112029332d529f"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__wifi__management__gr.html#ga856972af36e51cf0c4112029332d529f">ARM_WIFI_Scan</a> (<a class="el" href="group__wifi__management__gr.html#structARM__WIFI__SCAN__INFO__t">ARM_WIFI_SCAN_INFO_t</a> scan_info[], uint32_t max_num)</td></tr>
 <tr class="memdesc:ga856972af36e51cf0c4112029332d529f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Scan for available networks in range.  <a href="group__wifi__management__gr.html#ga856972af36e51cf0c4112029332d529f">More...</a><br/></td></tr>
 <tr class="separator:ga856972af36e51cf0c4112029332d529f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga90ba28be92405ee2c50e8ec983fad088"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__wifi__management__gr.html#ga90ba28be92405ee2c50e8ec983fad088">ARM_WIFI_Configure</a> (uint32_t interface, <a class="el" href="group__wifi__management__gr.html#structARM__WIFI__CONFIG__t">ARM_WIFI_CONFIG_t</a> *config)</td></tr>
-<tr class="memdesc:ga90ba28be92405ee2c50e8ec983fad088"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configure Network Parameters.  <a href="group__wifi__management__gr.html#ga90ba28be92405ee2c50e8ec983fad088">More...</a><br/></td></tr>
-<tr class="separator:ga90ba28be92405ee2c50e8ec983fad088"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4c405fb5616bee2713edced54a74670f"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__wifi__management__gr.html#ga4c405fb5616bee2713edced54a74670f">ARM_WIFI_Activate</a> (uint32_t mode)</td></tr>
-<tr class="memdesc:ga4c405fb5616bee2713edced54a74670f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Activate selected mode of operation.  <a href="group__wifi__management__gr.html#ga4c405fb5616bee2713edced54a74670f">More...</a><br/></td></tr>
-<tr class="separator:ga4c405fb5616bee2713edced54a74670f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga56e74d91c5599895343f25eefc1c886c"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__wifi__management__gr.html#ga56e74d91c5599895343f25eefc1c886c">ARM_WIFI_Deactivate</a> (void)</td></tr>
-<tr class="memdesc:ga56e74d91c5599895343f25eefc1c886c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deactivate current mode of operation.  <a href="group__wifi__management__gr.html#ga56e74d91c5599895343f25eefc1c886c">More...</a><br/></td></tr>
-<tr class="separator:ga56e74d91c5599895343f25eefc1c886c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7d545744a848702d75043de30ea5260a"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__wifi__management__gr.html#ga7d545744a848702d75043de30ea5260a">ARM_WIFI_Activate</a> (uint32_t interface, <a class="el" href="group__wifi__management__gr.html#structARM__WIFI__CONFIG__t">ARM_WIFI_CONFIG_t</a> *config)</td></tr>
+<tr class="memdesc:ga7d545744a848702d75043de30ea5260a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Activate interface (Connect to a wireless network or activate an access point).  <a href="group__wifi__management__gr.html#ga7d545744a848702d75043de30ea5260a">More...</a><br/></td></tr>
+<tr class="separator:ga7d545744a848702d75043de30ea5260a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1842127df60067481ac2f40d19153e3e"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__wifi__management__gr.html#ga1842127df60067481ac2f40d19153e3e">ARM_WIFI_Deactivate</a> (uint32_t interface)</td></tr>
+<tr class="memdesc:ga1842127df60067481ac2f40d19153e3e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deactivate interface (Disconnect from a wireless network or deactivate an access point).  <a href="group__wifi__management__gr.html#ga1842127df60067481ac2f40d19153e3e">More...</a><br/></td></tr>
+<tr class="separator:ga1842127df60067481ac2f40d19153e3e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga3d641222defb5f52f6dae4ce1d540d0f"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__wifi__management__gr.html#ga3d641222defb5f52f6dae4ce1d540d0f">ARM_WIFI_IsConnected</a> (void)</td></tr>
 <tr class="memdesc:ga3d641222defb5f52f6dae4ce1d540d0f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get station connection status.  <a href="group__wifi__management__gr.html#ga3d641222defb5f52f6dae4ce1d540d0f">More...</a><br/></td></tr>
 <tr class="separator:ga3d641222defb5f52f6dae4ce1d540d0f"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -228,7 +225,7 @@ Functions</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_041cc4048c8229d7729b502626227b03.html">src</a></li><li class="navelem"><a class="el" href="Driver__WiFi_8c.html">Driver_WiFi.c</a></li>
-    <li class="footer">Generated on Thu Mar 21 2019 12:24:12 for CMSIS-Driver by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Wed Jul 10 2019 15:20:30 for CMSIS-Driver Version 2.7.1 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

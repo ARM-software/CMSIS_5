@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-DSP
-   &#160;<span id="projectnumber">Version 1.6.0</span>
+   &#160;<span id="projectnumber">Version 1.7.0</span>
    </div>
    <div id="projectbrief">CMSIS DSP Software Library</div>
   </td>
@@ -114,6 +114,30 @@ $(document).ready(function(){initNavTree('ChangeLog_pg.html','');});
 <div class="textblock"><table  class="cmtable" summary="Revision History">
 <tr>
 <th>Version </th><th>Description  </th></tr>
+<tr>
+<td>V1.7.0 </td><td><p class="starttd">New Neon implementations of f32 functions</p>
+<ul>
+<li>Can be enabled with macros ARM_MATH_NEON and ARM_MATH_NEON_EXPERIMENTAL</li>
+</ul>
+<p>Python wrapper compatible with Numpy</p>
+<ul>
+<li>DSP/PythonWrapper/README.md is explaining how to build the wrapper</li>
+</ul>
+<p>Preliminary cmake build</p>
+<ul>
+<li>DSP/README.md is explaining how to use it. This first version is restricted to AC6 toolchain and assume (hard coded path) that ArmDS is used. Future versions will make it easier to switch toolchains.</li>
+</ul>
+<p>Modified <a class="el" href="arm__math_8h.html">arm_math.h</a></p>
+<ul>
+<li>Removed dependance on cores. It is no more testing for some specific cores but is now using features like ARM_MATH_LOOPUNROLL (see comments in <a class="el" href="arm__math_8h.html">arm_math.h</a>)</li>
+<li>Deprecated __SIMD32 and introduced new functions for SIMD accesses.</li>
+</ul>
+<p>Added compilation flags for FFT:</p>
+<ul>
+<li>It is now possible to include only the tables required for FFTs. It is explained in DSP/README.md since it is simpler to use it from the cmake (which is defining the right macros). But the macros can also be defined without cmake.</li>
+</ul>
+<p class="endtd"></p>
+</td></tr>
 <tr>
 <td>V1.6.0 </td><td><p class="starttd">Reworked DSP library source files</p>
 <ul>
@@ -467,7 +491,7 @@ Documentation
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Mar 21 2019 12:24:25 for CMSIS-DSP by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Wed Jul 10 2019 15:20:39 for CMSIS-DSP Version 1.7.0 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 
