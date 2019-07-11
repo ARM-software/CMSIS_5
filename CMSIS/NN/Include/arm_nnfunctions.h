@@ -121,10 +121,69 @@ extern    "C"
  *
  */
 
+/**
+   * @brief Basic s8 convolution function
+   * @param[in]       input      pointer to input tensor. Range: int8, format: [H,W,in_ch]
+   * @param[in]       input_x    input tensor width
+   * @param[in]       input_y    input tensor height
+   * @param[in]       input_ch   number of input tensor channels
+   * @param[in]       kernel     pointer to kernel weights. Range: int8, format: [out_ch, H, W, in_ch]
+   * @param[in]       output_ch  number of filters, i.e., output tensor channels
+   * @param[in]       kernel_x   filter/kernel width
+   * @param[in]       kernel_y   filter/kernel height
+   * @param[in]       pad_x      padding along width
+   * @param[in]       pad_y      padding along height
+   * @param[in]       stride_x   convolution stride x
+   * @param[in]       stride_y   convolution stride y
+   * @param[in]       bias       pointer to per output channel bias. Range: int8
+   * @param[in,out]   output     pointer to output tensor. format: [H, W, out_ch]
+   * @param[in]       output_shift    pointer to per output channel requantization shift parameter.
+   * @param[in]       output_mult     pointer to per output channel requantization multiplier parameter.
+   * @param[in]       out_offset      output tensor offset.
+   * @param[in]       input_offset    input tensor offset.
+   * @param[in]       output_activation_min   Minimum value to clamp the output to. Range: int8
+   * @param[in]       output_activation_max   Minimum value to clamp the output to. Range: int8
+   * @param[in]       output_x    output tensor width
+   * @param[in]       output_y    output tensor height
+   * @param[in]       buffer_a    pointer to buffer space used for input optimization(partial im2col) and is necessary
+   *                              when ARM_MATH_LOOPUNROLL and ARM_MATH_DSP is defined.
+   *                              Required space: (2 * input_ch * kernel_x * kernel_x) * sizeof(q15_t) bytes
+   * @return     The function returns <code>ARM_MATH_SUCCESS</code>
+   *
+   * @details
+   *    1. Supported framework: TensorFlow Lite micro
+   *    2. q7 is used as data type eventhough it is s8 data. It is done so to be consistent with existing APIs.
+   *    3. Additional memory is required for optimization. Refer to argument 'buffer_a' for details.
+   *
+   */
+    arm_status arm_convolve_s8(const q7_t *input,
+                               const uint16_t input_x,
+                               const uint16_t input_y,
+                               const uint16_t input_ch,
+                               const q7_t *kernel,
+                               const uint16_t output_ch,
+                               const uint16_t kernel_x,
+                               const uint16_t kernel_y,
+                               const uint16_t pad_x,
+                               const uint16_t pad_y,
+                               const uint16_t stride_x,
+                               const uint16_t stride_y,
+                               const q7_t *bias,
+                               q7_t *output,
+                               const int32_t *output_shift,
+                               const int32_t *output_mult,
+                               const int32_t out_offset,
+                               const int32_t input_offset,
+                               const int32_t output_activation_min,
+                               const int32_t output_activation_max,
+                               const uint16_t output_x,
+                               const uint16_t output_y,
+                               q15_t *buffer_a);
+
   /**
    * @brief Basic Q7 convolution function
    * @param[in]       Im_in       pointer to input tensor
-   * @param[in]       dim_im_in   input tensor dimention
+   * @param[in]       dim_im_in   input tensor dimension
    * @param[in]       ch_im_in    number of input tensor channels
    * @param[in]       wt          pointer to kernel weights
    * @param[in]       ch_im_out   number of filters, i.e., output tensor channels
@@ -141,7 +200,6 @@ extern    "C"
    * @return     The function returns <code>ARM_MATH_SUCCESS</code>
    *
    */
-
     arm_status arm_convolve_HWC_q7_basic(const q7_t * Im_in,
                                          const uint16_t dim_im_in,
                                          const uint16_t ch_im_in,
@@ -159,10 +217,10 @@ extern    "C"
                                          q7_t * bufferB);
 
   /**
-   * @brief Basic Q7 convolution function (non-sqaure shape)
+   * @brief Basic Q7 convolution function (non-square shape)
    * @param[in]       Im_in        pointer to input tensor
-   * @param[in]       dim_im_in_x  input tensor dimention x
-   * @param[in]       dim_im_in_y  input tensor dimention y
+   * @param[in]       dim_im_in_x  input tensor dimension x
+   * @param[in]       dim_im_in_y  input tensor dimension y
    * @param[in]       ch_im_in     number of input tensor channels
    * @param[in]       wt           pointer to kernel weights
    * @param[in]       ch_im_out    number of filters, i.e., output tensor channels
@@ -182,7 +240,6 @@ extern    "C"
    * @param[in,out]   bufferB      pointer to buffer space for output
    * @return     The function returns <code>ARM_MATH_SUCCESS</code>
    */
-
     arm_status arm_convolve_HWC_q7_basic_nonsquare(const q7_t * Im_in,
                                                   const uint16_t dim_im_in_x,
                                                   const uint16_t dim_im_in_y,
@@ -207,7 +264,7 @@ extern    "C"
   /**
    * @brief Basic Q15 convolution function
    * @param[in]       Im_in       pointer to input tensor
-   * @param[in]       dim_im_in   input tensor dimention
+   * @param[in]       dim_im_in   input tensor dimension
    * @param[in]       ch_im_in    number of input tensor channels
    * @param[in]       wt          pointer to kernel weights
    * @param[in]       ch_im_out   number of filters, i.e., output tensor channels
@@ -224,7 +281,6 @@ extern    "C"
    * @return     The function returns <code>ARM_MATH_SUCCESS</code>
    *
    */
-
     arm_status arm_convolve_HWC_q15_basic(const q15_t * Im_in,
                                           const uint16_t dim_im_in,
                                           const uint16_t ch_im_in,
@@ -244,7 +300,7 @@ extern    "C"
   /**
    * @brief Fast Q7 convolution function
    * @param[in]       Im_in       pointer to input tensor
-   * @param[in]       dim_im_in   input tensor dimention
+   * @param[in]       dim_im_in   input tensor dimension
    * @param[in]       ch_im_in    number of input tensor channels
    * @param[in]       wt          pointer to kernel weights
    * @param[in]       ch_im_out   number of filters, i.e., output tensor channels
@@ -266,7 +322,6 @@ extern    "C"
    *   ch_im_in is multiple of 4
    *   ch_im_out is multiple of 2
    */
-
     arm_status arm_convolve_HWC_q7_fast(const q7_t * Im_in,
                                         const uint16_t dim_im_in,
                                         const uint16_t ch_im_in,
@@ -286,8 +341,8 @@ extern    "C"
   /**
    * @brief Fast Q7 convolution function (non-sqaure shape)
    * @param[in]       Im_in        pointer to input tensor
-   * @param[in]       dim_im_in_x  input tensor dimention x
-   * @param[in]       dim_im_in_y  input tensor dimention y
+   * @param[in]       dim_im_in_x  input tensor dimension x
+   * @param[in]       dim_im_in_y  input tensor dimension y
    * @param[in]       ch_im_in     number of input tensor channels
    * @param[in]       wt           pointer to kernel weights
    * @param[in]       ch_im_out    number of filters, i.e., output tensor channels
@@ -338,8 +393,8 @@ extern    "C"
   /**
    * @brief Fast Q7 version of 1x1 convolution (non-sqaure shape)
    * @param[in]       Im_in        pointer to input tensor
-   * @param[in]       dim_im_in_x  input tensor dimention x
-   * @param[in]       dim_im_in_y  input tensor dimention y
+   * @param[in]       dim_im_in_x  input tensor dimension x
+   * @param[in]       dim_im_in_y  input tensor dimension y
    * @param[in]       ch_im_in     number of input tensor channels
    * @param[in]       wt           pointer to kernel weights
    * @param[in]       ch_im_out    number of filters, i.e., output tensor channels
@@ -393,7 +448,7 @@ extern    "C"
   /**
    * @brief Q7 version of convolution for RGB image
    * @param[in]       Im_in       pointer to input tensor
-   * @param[in]       dim_im_in   input tensor dimention
+   * @param[in]       dim_im_in   input tensor dimension
    * @param[in]       ch_im_in    number of input tensor channels
    * @param[in]       wt          pointer to kernel weights
    * @param[in]       ch_im_out   number of filters, i.e., output tensor channels
@@ -434,7 +489,7 @@ extern    "C"
   /**
    * @brief Fast Q15 convolution function
    * @param[in]       Im_in       pointer to input tensor
-   * @param[in]       dim_im_in   input tensor dimention
+   * @param[in]       dim_im_in   input tensor dimension
    * @param[in]       ch_im_in    number of input tensor channels
    * @param[in]       wt          pointer to kernel weights
    * @param[in]       ch_im_out   number of filters, i.e., output tensor channels
@@ -476,8 +531,8 @@ extern    "C"
   /**
    * @brief Fast Q15 convolution function (non-sqaure shape)
    * @param[in]       Im_in        pointer to input tensor
-   * @param[in]       dim_im_in_x  input tensor dimention x
-   * @param[in]       dim_im_in_y  input tensor dimention y
+   * @param[in]       dim_im_in_x  input tensor dimension x
+   * @param[in]       dim_im_in_y  input tensor dimension y
    * @param[in]       ch_im_in     number of input tensor channels
    * @param[in]       wt           pointer to kernel weights
    * @param[in]       ch_im_out    number of filters, i.e., output tensor channels
@@ -539,7 +594,7 @@ extern    "C"
   /**
    * @brief Q7 depthwise separable convolution function
    * @param[in]       Im_in       pointer to input tensor
-   * @param[in]       dim_im_in   input tensor dimention
+   * @param[in]       dim_im_in   input tensor dimension
    * @param[in]       ch_im_in    number of input tensor channels
    * @param[in]       wt          pointer to kernel weights
    * @param[in]       ch_im_out   number of filters, i.e., output tensor channels
@@ -581,8 +636,8 @@ extern    "C"
   /**
    * @brief Q7 depthwise separable convolution function (non-square shape)
    * @param[in]       Im_in         pointer to input tensor
-   * @param[in]       dim_im_in_x   input tensor dimention x
-   * @param[in]       dim_im_in_y   input tensor dimention y
+   * @param[in]       dim_im_in_x   input tensor dimension x
+   * @param[in]       dim_im_in_y   input tensor dimension y
    * @param[in]       ch_im_in      number of input tensor channels
    * @param[in]       wt            pointer to kernel weights
    * @param[in]       ch_im_out     number of filters, i.e., output tensor channels
@@ -678,11 +733,11 @@ extern    "C"
    * @param[in]       col_dim                      dimension of the input vector
    * @param[in]       row_dim                      dimension of the output vector
    * @param[in]       nb_batches                   number of batches
-   * @param[in]       input_offset                 
-   * @param[in]       filter_offset                
+   * @param[in]       input_offset
+   * @param[in]       filter_offset
    * @param[in]       out_mult                     requantization parameter
    * @param[in]       out_shift                    requantization parameter
-   * @param[in]       output_offset                
+   * @param[in]       output_offset
    * @param[in]       pBias                        pointer to bias
    * @param[out]      pOut                         pointer to output vector
    * @param[in]       output_activation_min        for clamping
@@ -701,21 +756,21 @@ extern    "C"
    *
    */
   arm_status
-  arm_fully_connected_s8(const int8_t   *pInput,             
-                         const int8_t   *weight,                  
-                         const uint16_t input_length,  
-                         const uint16_t num_rows,  
-                         const uint16_t nb_batches,   
-                         const int32_t  input_offset,   
-                         const int32_t  filter_offset,  
-                         const int32_t  out_mult,      
-                         const int32_t  out_shift,     
-                         const int32_t  output_offset,     
-                         const int8_t   *bias,             
-                         int8_t         *pOut,                   
+  arm_fully_connected_s8(const int8_t   *pInput,
+                         const int8_t   *weight,
+                         const uint16_t input_length,
+                         const uint16_t num_rows,
+                         const uint16_t nb_batches,
+                         const int32_t  input_offset,
+                         const int32_t  filter_offset,
+                         const int32_t  out_mult,
+                         const int32_t  out_shift,
+                         const int32_t  output_offset,
+                         const int8_t   *bias,
+                         int8_t         *pOut,
                          const int32_t  output_activation_min,
                          const int32_t  output_activation_max,
-                         q15_t          *vec_buffer)  ;  
+                         q15_t          *vec_buffer);
 
   /**
    * @brief Q7 opt fully-connected layer function
@@ -875,6 +930,37 @@ extern    "C"
                                             const uint16_t out_shift,
                                             const q7_t * bias,
                                             q7_t * pOut);
+/**
+   * @brief Matrix-multiplication function for convolution with per-channel requantization.
+   * @param[in]       input_a     pointer to operand A
+   * @param[in]       input_b     pointer to operand B, always consists of 2 vectors.
+   * @param[in]       output_ch   number of rows of A
+   * @param[in]       output_shift  pointer to per output channel requantization shift parameter.
+   * @param[in]       output_mult   pointer to per output channel requantization multiplier parameter.
+   * @param[in]       out_offset      output tensor offset.
+   * @param[in]       activation_min   minimum value to clamp the output to. Range : int8
+   * @param[in]       activation_max   maximum value to clamp the output to. Range : int8
+   * @param[in]       num_col_a   number of columns of A
+   * @param[in]       output_bias per output channel bias
+   * @param[in,out]   out_0       pointer to output
+   * @return     The function returns one of the two
+   *              1. The incremented output pointer for a successful operation or
+   *              2. NULL if implementation is not available.
+   *
+   * @details   This function does the matrix multiplication of weight matrix for all output channels
+   *            with 2 columns from im2col producing an output of two elements/output_channel.
+   */
+    q7_t *arm_nn_mat_mult_kernel_s8_s16(const q7_t *input_a,
+                                        const q15_t *input_b,
+                                        const uint16_t output_ch,
+                                        const int32_t *out_shift,
+                                        const int32_t *out_mult,
+                                        const int32_t out_offset,
+                                        const int16_t activation_min,
+                                        const int16_t activation_max,
+                                        const uint16_t num_col_a,
+                                        const q7_t *const output_bias,
+                                        q7_t *out_0);
 
   /**
    * @brief Matrix-multiplication function for convolution with reordered columns
@@ -973,7 +1059,7 @@ extern    "C"
   /**
    * @brief Q7 max pooling function
    * @param[in]       Im_in       pointer to input tensor
-   * @param[in]       dim_im_in   input tensor dimention
+   * @param[in]       dim_im_in   input tensor dimension
    * @param[in]       ch_im_in    number of input tensor channels
    * @param[in]       dim_kernel  filter kernel size
    * @param[in]       padding     padding sizes
@@ -998,7 +1084,7 @@ extern    "C"
   /**
    * @brief Q7 average pooling function
    * @param[in]       Im_in       pointer to input tensor
-   * @param[in]       dim_im_in   input tensor dimention
+   * @param[in]       dim_im_in   input tensor dimension
    * @param[in]       ch_im_in    number of input tensor channels
    * @param[in]       dim_kernel  filter kernel size
    * @param[in]       padding     padding sizes
@@ -1030,7 +1116,7 @@ extern    "C"
   /**
    * @brief Q7 softmax function
    * @param[in]       vec_in      pointer to input vector
-   * @param[in]       dim_vec     input vector dimention
+   * @param[in]       dim_vec     input vector dimension
    * @param[out]      p_out       pointer to output vector
    * @return none.
    *
@@ -1041,7 +1127,7 @@ extern    "C"
   /**
    * @brief Q15 softmax function
    * @param[in]       vec_in      pointer to input vector
-   * @param[in]       dim_vec     input vector dimention
+   * @param[in]       dim_vec     input vector dimension
    * @param[out]      p_out       pointer to output vector
    * @return none.
    *
