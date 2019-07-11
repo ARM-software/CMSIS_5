@@ -21,7 +21,7 @@
  * Title:        arm_nnsupportfunctions.h
  * Description:  Public header file of support functions for CMSIS NN Library
  *
- * $Date:        13. July 2018
+ * $Date:        July 2019
  * $Revision:    V.1.0.0
  *
  * Target Processor:  Cortex-M cores
@@ -104,7 +104,7 @@ void      arm_q7_to_q15_no_shift(const q7_t * pSrc, q15_t * pDst, uint32_t block
  *  sum = input[0] + input[1] + .. + input[block_size -1]
  * </pre>
  *
- */
+ * */
 void arm_nn_add_q7(const q7_t *input, q31_t *output, uint32_t block_size);
 
 /**
@@ -115,8 +115,26 @@ void arm_nn_add_q7(const q7_t *input, q31_t *output, uint32_t block_size);
  * @return none.
  *
  */
-
 void      arm_q7_to_q15_reordered_no_shift(const q7_t * pSrc, q15_t * pDst, uint32_t blockSize);
+
+/**
+ * @brief Converts the elements from a q7 vector to a q15 vector with an added offset
+ * @param[in]    *src       points to the q7 input vector
+ * @param[out]   *dst       points to the q15 output vector
+ * @param[in]    block_size length of the input vector
+ * @param[in]    offset     q7 offset to be added to each input vector element.
+ * @return none.
+ *
+ * \par Description:
+ *
+ * The equation used for the conversion process is:
+ *
+ * <pre>
+ *  dst[n] = (q15_t) src[n] + offset;   0 <= n < block_size.
+ * </pre>
+ *
+ */
+void arm_q7_to_q15_with_offset(const q7_t *src, q15_t *dst, uint32_t block_size, q7_t offset);
 
 #if defined (ARM_MATH_DSP)
 
