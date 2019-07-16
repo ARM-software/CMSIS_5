@@ -141,22 +141,24 @@ a typical use case where the interrupt vectors are copied to RAM and the SysTick
 \code
 #include "ARMCM3.h"                     // Device header
  
-/* externals from startup_ARMCM3.s */
-extern uint32_t __Vectors[];              /* vector table ROM  */
- 
-#define VECTORTABLE_SIZE        (256)     /* size Cortex-M3 vector table      */
-#define VECTORTABLE_ALIGNMENT   (0x100ul) /* 16 Cortex + 32 ARMCM3 = 48 words */
-                                          /* next power of 2 = 256            */
- 
-/* new vector table in RAM */
+#define VECTORTABLE_SIZE        (240)    /* size of the used vector tables    */
+                                         /* see startup file startup_ARMCM3.c */
+#define VECTORTABLE_ALIGNMENT   (0x100U) /* 16 Cortex + 32 ARMCM3 = 48 words  */
+                                         /* next power of 2 = 256             */
+
+/* externals from startup_ARMCM3.c */
+extern uint32_t __VECTOR_TABLE[VECTORTABLE_SIZE];        /* vector table ROM  */
+
+/* new vector table in RAM, same size as vector table in ROM */
 uint32_t vectorTable_RAM[VECTORTABLE_SIZE] __attribute__(( aligned (VECTORTABLE_ALIGNMENT) ));
+
  
 /*----------------------------------------------------------------------------
   SysTick_Handler
  *----------------------------------------------------------------------------*/
 volatile uint32_t msTicks = 0;                        /* counts 1ms timeTicks */
 void SysTick_Handler(void) {
-  msTicks++;                                          /* increment counter */
+  msTicks++;                                             /* increment counter */
 }
  
 /*----------------------------------------------------------------------------
@@ -164,7 +166,7 @@ void SysTick_Handler(void) {
  *----------------------------------------------------------------------------*/
 volatile uint32_t msTicks_RAM = 0;                    /* counts 1ms timeTicks */
 void SysTick_Handler_RAM(void) {
-  msTicks_RAM++;                                      /* increment counter */
+  msTicks_RAM++;                                         /* increment counter */
 }
  
 /*----------------------------------------------------------------------------
@@ -174,7 +176,7 @@ int main (void) {
   uint32_t i;
    
   for (i = 0; i < VECTORTABLE_SIZE; i++) {
-    vectorTable_RAM[i] = __Vectors[i];            /* copy vector table to RAM */
+    vectorTable_RAM[i] = __VECTOR_TABLE[i];       /* copy vector table to RAM */
   }
                                                    /* replace SysTick Handler */
   vectorTable_RAM[SysTick_IRQn + 16] = (uint32_t)SysTick_Handler_RAM;
