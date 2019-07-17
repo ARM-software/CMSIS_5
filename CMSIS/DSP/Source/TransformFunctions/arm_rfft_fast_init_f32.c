@@ -315,7 +315,7 @@ arm_status arm_rfft_fast_init_f32(
     fptr = arm_rfft_256_fast_init_f32;
     break;
 #endif
-#if (defined(ARM_TABLE_TWIDDLECOEF_F32_64) && defined(ARM_TABLE_BITREVIDX_FLT_64) && defined(ARM_TABLE_TWIDDLECOEF_F32_64) && defined(ARM_TABLE_TWIDDLECOEF_RFFT_F32_128))
+#if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) || (defined(ARM_TABLE_TWIDDLECOEF_F32_64) && defined(ARM_TABLE_BITREVIDX_FLT_64) && defined(ARM_TABLE_TWIDDLECOEF_F32_64) && defined(ARM_TABLE_TWIDDLECOEF_RFFT_F32_128))
   case 128U:
     fptr = arm_rfft_128_fast_init_f32;
     break;
