@@ -26,11 +26,41 @@ set(CHIRP_CMSIS_SRC)
 # Include list for CMSIS
 set(CHIRP_CMSIS_INCLUDE)
 
+add_compile_definitions(
+        # Try to optimise computation speed
+        ARM_MATH_LOOPUNROLL
+
+        # Will allow to only compile some tables (FFT or interpolations ones)
+        ARM_DSP_CONFIG_TABLES
+        ARM_FAST_ALLOW_TABLES
+        ARM_FFT_ALLOW_TABLES
+
+        # Only enable FFT tables for the following sizes
+        ARM_TABLE_TWIDDLECOEF_F32_128
+        ARM_TABLE_BITREVIDX_FLT_128
+        ARM_TABLE_TWIDDLECOEF_RFFT_F32_256
+        ARM_TABLE_TWIDDLECOEF_F32_128
+
+        ARM_TABLE_TWIDDLECOEF_F32_256
+        ARM_TABLE_BITREVIDX_FLT_256
+        ARM_TABLE_TWIDDLECOEF_RFFT_F32_512
+        ARM_TABLE_TWIDDLECOEF_F32_256
+
+        ARM_TABLE_TWIDDLECOEF_F32_512
+        ARM_TABLE_BITREVIDX_FLT_512
+        ARM_TABLE_TWIDDLECOEF_RFFT_F32_1024
+        ARM_TABLE_TWIDDLECOEF_F32_512
+
+        # For fast cos and sin
+        ARM_TABLE_SIN_F32
+)
+
 # Add the default source files without taking in account the build type or target
 set(CHIRP_CMSIS_SRC ${CHIRP_CMSIS_SRC}
         CMSIS/DSP/Source/BasicMathFunctions/arm_add_f32.c
         CMSIS/DSP/Source/ComplexMathFunctions/arm_cmplx_mag_squared_f32.c
         CMSIS/DSP/Source/FastMathFunctions/arm_cos_f32.c
+        CMSIS/DSP/Source/FastMathFunctions/arm_sin_f32.c
         CMSIS/DSP/Source/SupportFunctions/arm_fill_f32.c
         CMSIS/DSP/Source/StatisticsFunctions/arm_min_f32.c
         CMSIS/DSP/Source/BasicMathFunctions/arm_mult_f32.c
