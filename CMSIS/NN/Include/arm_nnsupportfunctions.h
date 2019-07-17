@@ -43,20 +43,20 @@ extern    "C"
 #define Q31_MIN (0x80000000L)
 #define Q31_MAX (0x7FFFFFFFL)
 
-#define MAX(A,B) (A) > (B) ? (A) : (B) 
-#define MIN(A,B) (A) < (B) ? (A) : (B) 
+#define MAX(A,B) (A) > (B) ? (A) : (B)
+#define MIN(A,B) (A) < (B) ? (A) : (B)
 
 /**
- * @brief Union for SIMD access of Q31/Q15/Q7 types
+ * @brief Union for SIMD access of q31/q15/q7 types
  */
 union arm_nnword
 {
     q31_t     word;
-               /**< Q31 type */
+               /**< q31 type */
     q15_t     half_words[2];
-               /**< Q15 type */
+               /**< q15 type */
     q7_t      bytes[4];
-               /**< Q7 type */
+               /**< q7 type */
 };
 
 /**
@@ -79,20 +79,38 @@ typedef enum
  */
 
 /**
- * @brief Converts the elements of the Q7 vector to Q15 vector without left-shift
- * @param[in]       *pSrc points to the Q7 input vector
- * @param[out]      *pDst points to the Q15 output vector
+ * @brief Converts the elements of the q7 vector to q15 vector without left-shift
+ * @param[in]       *pSrc points to the q7 input vector
+ * @param[out]      *pDst points to the q15 output vector
  * @param[in]       blockSize length of the input vector
  * @return none.
  *
  */
-
 void      arm_q7_to_q15_no_shift(const q7_t * pSrc, q15_t * pDst, uint32_t blockSize);
 
 /**
- * @brief  Converts the elements of the Q7 vector to reordered Q15 vector without left-shift
- * @param[in]       *pSrc points to the Q7 input vector
- * @param[out]      *pDst points to the Q15 output vector
+ * @brief Non-saturating addition of elements of a q7 vector
+ * @param[in]       *input Pointer to the q7 input vector
+ * @param[out]      *output Pointer to the q31 output variable.
+ * @param[in]       block_size length of the input vector
+ * @return none.
+ * \par Description:
+ *
+ * 2^24 samples can be added without saturating the result.
+ *
+ * The equation used for the conversion process is:
+ *
+ * <pre>
+ *  sum = input[0] + input[1] + .. + input[block_size -1]
+ * </pre>
+ *
+ */
+void arm_nn_add_q7(const q7_t *input, q31_t *output, uint32_t block_size);
+
+/**
+ * @brief  Converts the elements of the q7 vector to reordered q15 vector without left-shift
+ * @param[in]       *pSrc points to the q7 input vector
+ * @param[out]      *pDst points to the q15 output vector
  * @param[in]       blockSize length of the input vector
  * @return none.
  *
@@ -103,7 +121,7 @@ void      arm_q7_to_q15_reordered_no_shift(const q7_t * pSrc, q15_t * pDst, uint
 #if defined (ARM_MATH_DSP)
 
 /**
- * @brief read and expand one Q7 word into two Q15 words
+ * @brief read and expand one q7 word into two q15 words
  */
 
 __STATIC_FORCEINLINE void *read_and_pad(void *source, q31_t * out1, q31_t * out2)
@@ -124,7 +142,7 @@ __STATIC_FORCEINLINE void *read_and_pad(void *source, q31_t * out1, q31_t * out2
 }
 
 /**
- * @brief read and expand one Q7 word into two Q15 words with reordering
+ * @brief read and expand one q7 word into two q15 words with reordering
  */
 
 __STATIC_FORCEINLINE q7_t *read_and_pad_reordered(q7_t *source, q31_t * out1, q31_t * out2)
@@ -142,12 +160,12 @@ __STATIC_FORCEINLINE q7_t *read_and_pad_reordered(q7_t *source, q31_t * out1, q3
 }
 
 /**
- * @brief read and expand one Q7 word into two Q15 words with reordering and add an offset
+ * @brief read and expand one q7 word into two q15 words with reordering and add an offset
  */
 __STATIC_FORCEINLINE q7_t *read_and_pad_reordered_with_offset(q7_t *source, q31_t * out1, q31_t * out2,q31_t offset)
 {
         q31_t     inA = read_q7x4_ia(&source);
-        
+
 #ifndef ARM_MATH_BIG_ENDIAN
         *out2 = __SXTB16(__ROR(inA, 8));
         *out1 = __SXTB16(inA);
@@ -174,7 +192,7 @@ __STATIC_FORCEINLINE q7_t *read_and_pad_reordered_with_offset(q7_t *source, q31_
  */
 
 /**
- * @brief           Q7 vector multiplication with variable output shifts
+ * @brief           q7 vector multiplication with variable output shifts
  * @param[in]       *pSrcA        pointer to the first input vector
  * @param[in]       *pSrcB        pointer to the second input vector
  * @param[out]      *pDst         pointer to the output vector
@@ -185,7 +203,7 @@ __STATIC_FORCEINLINE q7_t *read_and_pad_reordered_with_offset(q7_t *source, q31_
  * <b>Scaling and Overflow Behavior:</b>
  * \par
  * The function uses saturating arithmetic.
- * Results outside of the allowable Q15 range [0x8000 0x7FFF] will be saturated.
+ * Results outside of the allowable q15 range [0x8000 0x7FFF] will be saturated.
  */
 
 void arm_nn_mult_q15(
@@ -196,7 +214,7 @@ void arm_nn_mult_q15(
   uint32_t blockSize);
 
 /**
- * @brief           Q7 vector multiplication with variable output shifts
+ * @brief           q7 vector multiplication with variable output shifts
  * @param[in]       *pSrcA        pointer to the first input vector
  * @param[in]       *pSrcB        pointer to the second input vector
  * @param[out]      *pDst         pointer to the output vector
@@ -207,7 +225,7 @@ void arm_nn_mult_q15(
  * <b>Scaling and Overflow Behavior:</b>
  * \par
  * The function uses saturating arithmetic.
- * Results outside of the allowable Q7 range [0x80 0x7F] will be saturated.
+ * Results outside of the allowable q7 range [0x80 0x7F] will be saturated.
  */
 
 void arm_nn_mult_q7(
@@ -287,6 +305,50 @@ __STATIC_FORCEINLINE q31_t arm_nn_divide_by_power_of_two(const q31_t dividend, c
     }
 
     return result;
+}
+
+/**
+ * @brief           Requantize a given value.
+ * @param[in]       val         Value to be requantized
+ * @param[in]       multiplier  multiplier
+ * @param[in]       shift       left or right shift for 'val * multiplier'
+ *
+ * @return          Returns (val * multiplier)/(2 ^ shift)
+ *
+ */
+__STATIC_FORCEINLINE q31_t arm_nn_requantize(const q31_t val, const q31_t multiplier, const q31_t shift)
+{
+  return arm_nn_divide_by_power_of_two(arm_nn_sat_doubling_high_mult(val * (1 << LEFT_SHIFT(shift)), multiplier),
+                                       RIGHT_SHIFT(shift));
+}
+
+/**
+  @brief         Read 2 q15 elements and post increment pointer.
+  @param[in]     in_q15   Pointer to pointer that holds address of input.
+  @return        q31 value
+ */
+__STATIC_FORCEINLINE q31_t arm_nn_read_q15x2_ia(const q15_t **in_q15)
+{
+  q31_t val;
+
+  memcpy(&val, *in_q15, 4);
+  *in_q15 += 2;
+
+  return (val);
+}
+
+/**
+  @brief         Read 4 q7 from q7 pointer and post increment pointer.
+  @param[in]     in_q7       Pointer to pointer that holds address of input.
+  @return        q31 value
+ */
+__STATIC_FORCEINLINE q31_t arm_nn_read_q7x4_ia(const q7_t **in_q7)
+{
+  q31_t val;
+  memcpy(&val, *in_q7, 4);
+  *in_q7 += 4;
+
+  return (val);
 }
 
 #ifdef __cplusplus
