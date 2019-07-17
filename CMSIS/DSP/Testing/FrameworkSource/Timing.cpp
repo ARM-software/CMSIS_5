@@ -2,7 +2,7 @@
 
 #ifdef CORTEXM
 
-#define JTEST_SYSTICK_INITIAL_VALUE       0xFFFFFF
+#define SYSTICK_INITIAL_VALUE       0xFFFFFF
 static uint32_t startCycles=0;
 
 #if   defined ARMCM0
@@ -64,8 +64,7 @@ void initCycleMeasurement()
 {
 #ifdef CORTEXM
     SysTick->CTRL = SysTick_CTRL_CLKSOURCE_Msk;
-    SysTick->LOAD = JTEST_SYSTICK_INITIAL_VALUE;
-    SysTick->VAL  = JTEST_SYSTICK_INITIAL_VALUE; 
+    SysTick->LOAD = SYSTICK_INITIAL_VALUE;
 #endif 
 
 #ifdef CORTEXA
@@ -101,17 +100,9 @@ void cycleMeasurementStart()
 {
 #ifdef CORTEXM
     SysTick->CTRL = SysTick_CTRL_CLKSOURCE_Msk;
-    SysTick->LOAD = JTEST_SYSTICK_INITIAL_VALUE;
-    SysTick->VAL  = JTEST_SYSTICK_INITIAL_VALUE; 
+    SysTick->LOAD = SYSTICK_INITIAL_VALUE;
 
     SysTick->CTRL = SysTick_CTRL_ENABLE_Msk | SysTick_CTRL_CLKSOURCE_Msk;  
-
-    // In fast model at least, when we start the SysTick, VAL is temporarily
-    // switching to zero. If the benchmark is too quick
-    // VAL has no time to switch to JTEST_SYSTICK_INITIAL_VALUE
-    // and benchmarking value returned is JTEST_SYSTICK_INITIAL_VALUE
-    // instead of 0
-    while(SysTick->VAL == 0);
 
     startCycles = SysTick->VAL;
     
@@ -129,8 +120,7 @@ void cycleMeasurementStop()
 {
 #ifdef CORTEXM
     SysTick->CTRL = SysTick_CTRL_CLKSOURCE_Msk;
-    SysTick->LOAD = JTEST_SYSTICK_INITIAL_VALUE;
-    SysTick->VAL  = JTEST_SYSTICK_INITIAL_VALUE; 
+    SysTick->LOAD = SYSTICK_INITIAL_VALUE;
 #endif
 }
 

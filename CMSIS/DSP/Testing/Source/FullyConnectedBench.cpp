@@ -52,14 +52,14 @@
        
 
        input.reload(FullyConnectedBench::INPUT1_S8_ID,mgr);
-       bias.reload(FullyConnectedBench::BIAS_S8_ID,mgr);
-       weight.reload(FullyConnectedBench::WEIGHT_S8_ID,mgr);
+       bias.reload(FullyConnectedBench::BIAS1_S8_ID,mgr);
+       weight.reload(FullyConnectedBench::WEIGHT1_S8_ID,mgr);
 
        ref.reload(FullyConnectedBench::REF1_S8_ID,mgr);
 
        
-       output.create(ref.nbSamples(),FullyConnectedBench::OUTPUT1_S8_ID,mgr);
-       temp.create(input.nbSamples(),FullyConnectedBench::TEMP1_S16_ID,mgr);
+       output.create(ref.nbSamples(),FullyConnectedBench::OUTPUT_S8_ID,mgr);
+       temp.create(input.nbSamples(),FullyConnectedBench::TEMP_S16_ID,mgr);
 
 
     }

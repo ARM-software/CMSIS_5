@@ -71,8 +71,8 @@ void printPattern(char *s,Client::AnyPattern<q7_t> pat)
 
              ref.reload(FullyConnected::REF1_S8_ID,mgr);
 
-             output.create(ref.nbSamples(),FullyConnected::OUTPUT1_S8_ID,mgr);
-             temp.create(input.nbSamples(),FullyConnected::TEMP1_S16_ID,mgr);
+             output.create(ref.nbSamples(),FullyConnected::OUTPUT_S8_ID,mgr);
+             temp.create(input.nbSamples(),FullyConnected::TEMP_S16_ID,mgr);
 
              colDim=input.nbSamples();
              rowDim=output.nbSamples();
@@ -87,14 +87,14 @@ void printPattern(char *s,Client::AnyPattern<q7_t> pat)
              act_min =-128;
              act_max= 127;
 
-             input.reload(FullyConnected::INPUT19_S8_ID,mgr);
-             bias.reload(FullyConnected::BIAS19_S8_ID,mgr);
-             weight.reload(FullyConnected::WEIGHT19_S8_ID,mgr);
+             input.reload(FullyConnected::INPUT2_S8_ID,mgr);
+             bias.reload(FullyConnected::BIAS2_S8_ID,mgr);
+             weight.reload(FullyConnected::WEIGHT2_S8_ID,mgr);
 
-             ref.reload(FullyConnected::REF19_S8_ID,mgr);
+             ref.reload(FullyConnected::REF2_S8_ID,mgr);
 
-             output.create(ref.nbSamples(),FullyConnected::OUTPUT19_S8_ID,mgr);
-             temp.create(input.nbSamples(),FullyConnected::TEMP19_S16_ID,mgr);
+             output.create(ref.nbSamples(),FullyConnected::OUTPUT_S8_ID,mgr);
+             temp.create(input.nbSamples(),FullyConnected::TEMP_S16_ID,mgr);
 
              colDim=input.nbSamples();
              rowDim=output.nbSamples();
@@ -109,14 +109,14 @@ void printPattern(char *s,Client::AnyPattern<q7_t> pat)
              act_min =-1;
              act_max= 127;
 
-             input.reload(FullyConnected::INPUT2_S8_ID,mgr);
-             bias.reload(FullyConnected::BIAS2_S8_ID,mgr);
-             weight.reload(FullyConnected::WEIGHT2_S8_ID,mgr);
+             input.reload(FullyConnected::INPUT3_S8_ID,mgr);
+             bias.reload(FullyConnected::BIAS3_S8_ID,mgr);
+             weight.reload(FullyConnected::WEIGHT3_S8_ID,mgr);
 
-             ref.reload(FullyConnected::REF2_S8_ID,mgr);
+             ref.reload(FullyConnected::REF3_S8_ID,mgr);
 
-             output.create(ref.nbSamples(),FullyConnected::OUTPUT2_S8_ID,mgr);
-             temp.create(input.nbSamples(),FullyConnected::TEMP2_S16_ID,mgr);
+             output.create(ref.nbSamples(),FullyConnected::OUTPUT_S8_ID,mgr);
+             temp.create(input.nbSamples(),FullyConnected::TEMP_S16_ID,mgr);
 
              colDim=input.nbSamples();
              rowDim=output.nbSamples();
@@ -133,14 +133,14 @@ void printPattern(char *s,Client::AnyPattern<q7_t> pat)
              act_max= 127;
 
 
-             input.reload(FullyConnected::INPUT3_S8_ID,mgr);
-             bias.reload(FullyConnected::BIAS3_S8_ID,mgr);
-             weight.reload(FullyConnected::WEIGHT3_S8_ID,mgr);
+             input.reload(FullyConnected::INPUT4_S8_ID,mgr);
+             bias.reload(FullyConnected::BIAS4_S8_ID,mgr);
+             weight.reload(FullyConnected::WEIGHT4_S8_ID,mgr);
 
-             ref.reload(FullyConnected::REF3_S8_ID,mgr);
+             ref.reload(FullyConnected::REF4_S8_ID,mgr);
 
-             output.create(ref.nbSamples(),FullyConnected::OUTPUT3_S8_ID,mgr);
-             temp.create(input.nbSamples(),FullyConnected::TEMP3_S16_ID,mgr);
+             output.create(ref.nbSamples(),FullyConnected::OUTPUT_S8_ID,mgr);
+             temp.create(input.nbSamples(),FullyConnected::TEMP_S16_ID,mgr);
 
              colDim=input.nbSamples();
              rowDim=output.nbSamples();
@@ -157,14 +157,14 @@ void printPattern(char *s,Client::AnyPattern<q7_t> pat)
              act_max= 127;
 
 
-             input.reload(FullyConnected::INPUT4_S8_ID,mgr);
-             bias.reload(FullyConnected::BIAS4_S8_ID,mgr);
-             weight.reload(FullyConnected::WEIGHT4_S8_ID,mgr);
+             input.reload(FullyConnected::INPUT5_S8_ID,mgr);
+             bias.reload(FullyConnected::BIAS5_S8_ID,mgr);
+             weight.reload(FullyConnected::WEIGHT5_S8_ID,mgr);
 
-             ref.reload(FullyConnected::REF4_S8_ID,mgr);
+             ref.reload(FullyConnected::REF5_S8_ID,mgr);
 
-             output.create(ref.nbSamples(),FullyConnected::OUTPUT4_S8_ID,mgr);
-             temp.create(input.nbSamples(),FullyConnected::TEMP4_S16_ID,mgr);
+             output.create(ref.nbSamples(),FullyConnected::OUTPUT_S8_ID,mgr);
+             temp.create(input.nbSamples(),FullyConnected::TEMP_S16_ID,mgr);
 
              colDim=input.nbSamples();
              rowDim=output.nbSamples();
@@ -185,14 +185,14 @@ void printPattern(char *s,Client::AnyPattern<q7_t> pat)
              colDim=6;
              rowDim=1;
 
-             input.reload(FullyConnected::INPUT5_S8_ID,mgr);
-             bias.reload(FullyConnected::BIAS5_S8_ID,mgr);
-             weight.reload(FullyConnected::WEIGHT5_S8_ID,mgr);
+             input.reload(FullyConnected::INPUT6_S8_ID,mgr);
+             bias.reload(FullyConnected::BIAS6_S8_ID,mgr);
+             weight.reload(FullyConnected::WEIGHT6_S8_ID,mgr);
 
-             ref.reload(FullyConnected::REF5_S8_ID,mgr);
+             ref.reload(FullyConnected::REF6_S8_ID,mgr);
 
-             output.create(ref.nbSamples(),FullyConnected::OUTPUT5_S8_ID,mgr);
-             temp.create(colDim,FullyConnected::TEMP5_S16_ID,mgr);
+             output.create(ref.nbSamples(),FullyConnected::OUTPUT_S8_ID,mgr);
+             temp.create(colDim,FullyConnected::TEMP_S16_ID,mgr);
           break;
 
           case FullyConnected::TEST_FULLY_CONNECTED_TFLITE_S8_7:
@@ -211,14 +211,14 @@ void printPattern(char *s,Client::AnyPattern<q7_t> pat)
              rowDim=1;
 
 
-             input.reload(FullyConnected::INPUT6_S8_ID,mgr);
-             bias.reload(FullyConnected::BIAS6_S8_ID,mgr);
-             weight.reload(FullyConnected::WEIGHT6_S8_ID,mgr);
+             input.reload(FullyConnected::INPUT7_S8_ID,mgr);
+             bias.reload(FullyConnected::BIAS7_S8_ID,mgr);
+             weight.reload(FullyConnected::WEIGHT7_S8_ID,mgr);
 
-             ref.reload(FullyConnected::REF6_S8_ID,mgr);
+             ref.reload(FullyConnected::REF7_S8_ID,mgr);
 
-             output.create(ref.nbSamples(),FullyConnected::OUTPUT6_S8_ID,mgr);
-             temp.create(colDim,FullyConnected::TEMP6_S16_ID,mgr);
+             output.create(ref.nbSamples(),FullyConnected::OUTPUT_S8_ID,mgr);
+             temp.create(colDim,FullyConnected::TEMP_S16_ID,mgr);
           break;
 
           case FullyConnected::TEST_FULLY_CONNECTED_TFLITE_S8_8:
@@ -237,14 +237,14 @@ void printPattern(char *s,Client::AnyPattern<q7_t> pat)
              rowDim=1;
 
 
-             input.reload(FullyConnected::INPUT7_S8_ID,mgr);
-             bias.reload(FullyConnected::BIAS7_S8_ID,mgr);
-             weight.reload(FullyConnected::WEIGHT7_S8_ID,mgr);
+             input.reload(FullyConnected::INPUT8_S8_ID,mgr);
+             bias.reload(FullyConnected::BIAS8_S8_ID,mgr);
+             weight.reload(FullyConnected::WEIGHT8_S8_ID,mgr);
 
-             ref.reload(FullyConnected::REF7_S8_ID,mgr);
+             ref.reload(FullyConnected::REF8_S8_ID,mgr);
 
-             output.create(ref.nbSamples(),FullyConnected::OUTPUT7_S8_ID,mgr);
-             temp.create(colDim,FullyConnected::TEMP7_S16_ID,mgr);
+             output.create(ref.nbSamples(),FullyConnected::OUTPUT_S8_ID,mgr);
+             temp.create(colDim,FullyConnected::TEMP_S16_ID,mgr);
           break;
 
           case FullyConnected::TEST_FULLY_CONNECTED_TFLITE_S8_9:
@@ -262,14 +262,14 @@ void printPattern(char *s,Client::AnyPattern<q7_t> pat)
              colDim=6;
              rowDim=1;
 
-             input.reload(FullyConnected::INPUT8_S8_ID,mgr);
-             bias.reload(FullyConnected::BIAS8_S8_ID,mgr);
-             weight.reload(FullyConnected::WEIGHT8_S8_ID,mgr);
+             input.reload(FullyConnected::INPUT9_S8_ID,mgr);
+             bias.reload(FullyConnected::BIAS9_S8_ID,mgr);
+             weight.reload(FullyConnected::WEIGHT9_S8_ID,mgr);
 
-             ref.reload(FullyConnected::REF8_S8_ID,mgr);
+             ref.reload(FullyConnected::REF9_S8_ID,mgr);
 
-             output.create(ref.nbSamples(),FullyConnected::OUTPUT8_S8_ID,mgr);
-             temp.create(colDim,FullyConnected::TEMP8_S16_ID,mgr);
+             output.create(ref.nbSamples(),FullyConnected::OUTPUT_S8_ID,mgr);
+             temp.create(colDim,FullyConnected::TEMP_S16_ID,mgr);
           break;
 
           case FullyConnected::TEST_FULLY_CONNECTED_TFLITE_S8_10:
@@ -287,14 +287,14 @@ void printPattern(char *s,Client::AnyPattern<q7_t> pat)
              colDim=10;
              rowDim=1;
 
-             input.reload(FullyConnected::INPUT9_S8_ID,mgr);
-             bias.reload(FullyConnected::BIAS9_S8_ID,mgr);
-             weight.reload(FullyConnected::WEIGHT9_S8_ID,mgr);
+             input.reload(FullyConnected::INPUT10_S8_ID,mgr);
+             bias.reload(FullyConnected::BIAS10_S8_ID,mgr);
+             weight.reload(FullyConnected::WEIGHT10_S8_ID,mgr);
 
-             ref.reload(FullyConnected::REF9_S8_ID,mgr);
+             ref.reload(FullyConnected::REF10_S8_ID,mgr);
 
-             output.create(ref.nbSamples(),FullyConnected::OUTPUT9_S8_ID,mgr);
-             temp.create(colDim,FullyConnected::TEMP9_S16_ID,mgr);
+             output.create(ref.nbSamples(),FullyConnected::OUTPUT_S8_ID,mgr);
+             temp.create(colDim,FullyConnected::TEMP_S16_ID,mgr);
           break;
 
           case FullyConnected::TEST_FULLY_CONNECTED_TFLITE_S8_11:
@@ -312,14 +312,14 @@ void printPattern(char *s,Client::AnyPattern<q7_t> pat)
              colDim=8;
              rowDim=1;
 
-             input.reload(FullyConnected::INPUT10_S8_ID,mgr);
-             bias.reload(FullyConnected::BIAS10_S8_ID,mgr);
-             weight.reload(FullyConnected::WEIGHT10_S8_ID,mgr);
+             input.reload(FullyConnected::INPUT11_S8_ID,mgr);
+             bias.reload(FullyConnected::BIAS11_S8_ID,mgr);
+             weight.reload(FullyConnected::WEIGHT11_S8_ID,mgr);
 
-             ref.reload(FullyConnected::REF10_S8_ID,mgr);
+             ref.reload(FullyConnected::REF11_S8_ID,mgr);
 
-             output.create(ref.nbSamples(),FullyConnected::OUTPUT10_S8_ID,mgr);
-             temp.create(colDim,FullyConnected::TEMP10_S16_ID,mgr);
+             output.create(ref.nbSamples(),FullyConnected::OUTPUT_S8_ID,mgr);
+             temp.create(colDim,FullyConnected::TEMP_S16_ID,mgr);
           break;
 
           case FullyConnected::TEST_FULLY_CONNECTED_TFLITE_S8_12:
@@ -338,14 +338,14 @@ void printPattern(char *s,Client::AnyPattern<q7_t> pat)
              rowDim=4;
 
 
-             input.reload(FullyConnected::INPUT11_S8_ID,mgr);
-             bias.reload(FullyConnected::BIAS11_S8_ID,mgr);
-             weight.reload(FullyConnected::WEIGHT11_S8_ID,mgr);
+             input.reload(FullyConnected::INPUT12_S8_ID,mgr);
+             bias.reload(FullyConnected::BIAS12_S8_ID,mgr);
+             weight.reload(FullyConnected::WEIGHT12_S8_ID,mgr);
 
-             ref.reload(FullyConnected::REF11_S8_ID,mgr);
+             ref.reload(FullyConnected::REF12_S8_ID,mgr);
 
-             output.create(ref.nbSamples(),FullyConnected::OUTPUT11_S8_ID,mgr);
-             temp.create(colDim,FullyConnected::TEMP11_S16_ID,mgr);
+             output.create(ref.nbSamples(),FullyConnected::OUTPUT_S8_ID,mgr);
+             temp.create(colDim,FullyConnected::TEMP_S16_ID,mgr);
           break;
 
           case FullyConnected::TEST_FULLY_CONNECTED_TFLITE_S8_13:
@@ -363,14 +363,14 @@ void printPattern(char *s,Client::AnyPattern<q7_t> pat)
              colDim=8;
              rowDim=5;
 
-             input.reload(FullyConnected::INPUT12_S8_ID,mgr);
-             bias.reload(FullyConnected::BIAS12_S8_ID,mgr);
-             weight.reload(FullyConnected::WEIGHT12_S8_ID,mgr);
+             input.reload(FullyConnected::INPUT13_S8_ID,mgr);
+             bias.reload(FullyConnected::BIAS13_S8_ID,mgr);
+             weight.reload(FullyConnected::WEIGHT13_S8_ID,mgr);
 
-             ref.reload(FullyConnected::REF12_S8_ID,mgr);
+             ref.reload(FullyConnected::REF13_S8_ID,mgr);
 
-             output.create(ref.nbSamples(),FullyConnected::OUTPUT12_S8_ID,mgr);
-             temp.create(colDim,FullyConnected::TEMP12_S16_ID,mgr);
+             output.create(ref.nbSamples(),FullyConnected::OUTPUT_S8_ID,mgr);
+             temp.create(colDim,FullyConnected::TEMP_S16_ID,mgr);
           break;
 
           case FullyConnected::TEST_FULLY_CONNECTED_TFLITE_S8_14:
@@ -389,14 +389,14 @@ void printPattern(char *s,Client::AnyPattern<q7_t> pat)
              rowDim=3;
 
 
-             input.reload(FullyConnected::INPUT13_S8_ID,mgr);
-             bias.reload(FullyConnected::BIAS13_S8_ID,mgr);
-             weight.reload(FullyConnected::WEIGHT13_S8_ID,mgr);
+             input.reload(FullyConnected::INPUT14_S8_ID,mgr);
+             bias.reload(FullyConnected::BIAS14_S8_ID,mgr);
+             weight.reload(FullyConnected::WEIGHT14_S8_ID,mgr);
 
-             ref.reload(FullyConnected::REF13_S8_ID,mgr);
+             ref.reload(FullyConnected::REF14_S8_ID,mgr);
 
-             output.create(ref.nbSamples(),FullyConnected::OUTPUT13_S8_ID,mgr);
-             temp.create(colDim,FullyConnected::TEMP13_S16_ID,mgr);
+             output.create(ref.nbSamples(),FullyConnected::OUTPUT_S8_ID,mgr);
+             temp.create(colDim,FullyConnected::TEMP_S16_ID,mgr);
           break;
 
           case FullyConnected::TEST_FULLY_CONNECTED_TFLITE_S8_15:
@@ -415,14 +415,14 @@ void printPattern(char *s,Client::AnyPattern<q7_t> pat)
              rowDim=4;
 
 
-             input.reload(FullyConnected::INPUT14_S8_ID,mgr);
-             bias.reload(FullyConnected::BIAS14_S8_ID,mgr);
-             weight.reload(FullyConnected::WEIGHT14_S8_ID,mgr);
+             input.reload(FullyConnected::INPUT15_S8_ID,mgr);
+             bias.reload(FullyConnected::BIAS15_S8_ID,mgr);
+             weight.reload(FullyConnected::WEIGHT15_S8_ID,mgr);
 
-             ref.reload(FullyConnected::REF14_S8_ID,mgr);
+             ref.reload(FullyConnected::REF15_S8_ID,mgr);
 
-             output.create(ref.nbSamples(),FullyConnected::OUTPUT14_S8_ID,mgr);
-             temp.create(colDim,FullyConnected::TEMP14_S16_ID,mgr);
+             output.create(ref.nbSamples(),FullyConnected::OUTPUT_S8_ID,mgr);
+             temp.create(colDim,FullyConnected::TEMP_S16_ID,mgr);
           break;
        }
        

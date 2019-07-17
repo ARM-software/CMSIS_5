@@ -345,6 +345,21 @@ The output of this script may look like:
 Each test is uniquely identified with the CATEGORY and test ID (ID in the suite).
 The MAX column is the max of cycles computed for all values of A and B which were used for this benchmark.
 
+### Other tools
+
+To convert some benchmark to an older format.
+The PARAMS must be compatible between all suites which are children of AGroup
+
+    python convertToOld.py -f desc.txt -e AGroup
+
+
+To add a to sqlite3 databse:
+
+    python addToDB.py -f desc.txt -e AGroup
+
+
+The database must be created with createDb.sql before this script can be used.
+
 ### FPGA mode
 In FPGA mode, it is slightly different.
 The script processTests and processResult must be used with additional option -e

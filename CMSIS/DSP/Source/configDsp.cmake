@@ -18,4 +18,8 @@ if (MATRIXCHECK)
   target_compile_definitions(${project} PRIVATE ARM_MATH_MATRIX_CHECK)
 endif()
 
+if (NEON OR NEONEXPERIMENTAL)
+    target_include_directories(${project} PRIVATE "${root}/CMSIS/DSP/ComputeLibrary/Include")
+endif()
+
 endfunction()

@@ -27,6 +27,7 @@ option(MATRIX               "Matrix Functions"                  ON)
 option(STATISTICS           "Statistics Functions"              ON)
 option(SUPPORT              "Support Functions"                 ON)
 option(TRANSFORM            "Transform Functions"               ON)
+option(SVM                  "Support Vector Machine Functions"  ON)
 
 # When OFF it is the default behavior : all tables are included.
 option(CONFIGTABLE          "Configuration of table allowed"    OFF)
@@ -222,6 +223,11 @@ if (FILTERING OR CONTROLLER OR FASTMATH OR TRANSFORM)
     endif()
   endif()
   target_link_libraries(CMSISDSP INTERFACE CMSISDSPCommon)
+endif()
+
+if (SVM)
+  add_subdirectory(SVMFunctions)
+  target_link_libraries(CMSISDSP INTERFACE CMSISDSPSVM)
 endif()
 
 ### Includes

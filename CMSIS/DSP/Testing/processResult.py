@@ -220,7 +220,11 @@ def writeBenchmark(elem,benchFile,theId,theError,passed,cycles,params,config):
   if benchFile:
     name=elem.data["class"] 
     category= elem.categoryDesc()
-    benchFile.write("\"%s\",\"%s\",%d,%s,%d,%s\n" % (category,name,theId,params,cycles,config))
+    old=""
+    if "testData" in elem.data:
+      if "oldID" in elem.data["testData"]:
+         old=elem.data["testData"]["oldID"]
+    benchFile.write("\"%s\",\"%s\",%d,\"%s\",%s,%d,%s\n" % (category,name,theId,old,params,cycles,config))
 
 def analyseResult(root,results,embedded,benchmark,formatter):
     formatter.start()
@@ -295,7 +299,7 @@ def analyseResult(root,results,embedded,benchmark,formatter):
                           #print(configList)
                           config = "".join(list(joinit(configList[0],",")))
                           configHeaders = "".join(list(joinit(csvheaders,",")))
-                       benchFile.write("CATEGORY,NAME,ID,%s,CYCLES,%s\n" % (header,configHeaders))
+                       benchFile.write("CATEGORY,NAME,ID,OLDID,%s,CYCLES,%s\n" % (header,configHeaders))
    
                     formatter.printGroup(elem,theId)
       

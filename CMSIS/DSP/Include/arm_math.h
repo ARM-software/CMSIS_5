@@ -275,6 +275,9 @@
  * @defgroup groupExamples Examples
  */
 
+/**
+ * @defgroup groupSVM SVM Functions
+ */
 
 #ifndef _ARM_MATH_H
 #define _ARM_MATH_H
@@ -445,6 +448,9 @@ extern "C"
 #define __SIMD32_CONST(addr)  ( (__SIMD32_TYPE * )   (addr))
 #define _SIMD32_OFFSET(addr)  (*(__SIMD32_TYPE * )   (addr))
 #define __SIMD64(addr)        (*(      int64_t **) & (addr))
+
+#define STEP(x) (x) <= 0 ? 0 : 1
+#define SQ(x) ((x) * (x))
 
 /* SIMD replacement */
 
@@ -819,7 +825,46 @@ compiler file in Core or Core_A would not make sense.
     return (signBits + 1);
   }
 
+/**
+ * @brief Integer exponentiation
+ * @param[in]    x           value
+ * @param[in]    nb          integer exponent >= 1
+ * @return x^nb
+ *
+ */
+static inline float32_t arm_exponent_f32(float32_t x, int nb)
+{
+    float32_t r = x;
+    nb --;
+    while(nb > 0)
+    {
+        r = r * x;
+        nb--;
+    }
+    return(r);
+}
+
 #if defined(ARM_MATH_NEON)
+
+/**
+ * @brief Vectorized integer exponentiation
+ * @param[in]    x           value
+ * @param[in]    nb          integer exponent >= 1
+ * @return x^nb
+ *
+ */
+static inline  float32x4_t arm_vec_exponent_f32(float32x4_t x, int nb)
+{
+    float32x4_t r = x;
+    nb --;
+    while(nb > 0)
+    {
+        r = vmulq_f32(r , x);
+        nb--;
+    }
+    return(r);
+}
+
 
 static inline float32x4_t __arm_vec_sqrt_f32_neon(float32x4_t  x)
 {
@@ -6865,6 +6910,233 @@ arm_status arm_sqrt_q15(
   const q7_t * pSrc,
         q15_t * pDst,
         uint32_t blockSize);
+
+  /**
+ * @brief Struct for specifying SVM Kernel
+ *
+ */
+typedef enum
+{
+    ARM_ML_KERNEL_LINEAR = 0,
+             /**< Linear kernel */
+    ARM_ML_KERNEL_POLYNOMIAL = 1,
+             /**< Polynomial kernel */
+    ARM_ML_KERNEL_RBF = 2,
+             /**< Radial Basis Function kernel */
+    ARM_ML_KERNEL_SIGMOID = 3
+             /**< Sigmoid kernel */
+} arm_ml_kernel_type;
+
+
+
+/**
+ * @brief Instance structure for linear SVM prediction function.
+ */
+typedef struct
+{
+  uint32_t        nbOfSupportVectors;     /**< Number of support vectors */
+  uint32_t        vectorDimension;        /**< Dimension of vector space */
+  float32_t       intercept;              /**< Intercept */
+  const float32_t *dualCoefficients;      /**< Dual coefficients */
+  const float32_t *supportVectors;        /**< Support vectors */
+  const int32_t   *classes;               /**< The two SVM classes */
+} arm_svm_linear_instance_f32;
+
+
+/**
+ * @brief Instance structure for polynomial SVM prediction function.
+ */
+typedef struct
+{
+  uint32_t        nbOfSupportVectors;     /**< Number of support vectors */
+  uint32_t        vectorDimension;        /**< Dimension of vector space */
+  float32_t       intercept;              /**< Intercept */
+  const float32_t *dualCoefficients;      /**< Dual coefficients */
+  const float32_t *supportVectors;        /**< Support vectors */
+  const int32_t   *classes;               /**< The two SVM classes */
+  int             degree;                 /**< Polynomial degree */
+  float32_t       coef0;                  /**< Polynomial constant */
+  float32_t       gamma;                  /**< Gamma factor */
+} arm_svm_polynomial_instance_f32;
+
+/**
+ * @brief Instance structure for rbf SVM prediction function.
+ */
+typedef struct
+{
+  uint32_t        nbOfSupportVectors;     /**< Number of support vectors */
+  uint32_t        vectorDimension;        /**< Dimension of vector space */
+  float32_t       intercept;              /**< Intercept */
+  const float32_t *dualCoefficients;      /**< Dual coefficients */
+  const float32_t *supportVectors;        /**< Support vectors */
+  const int32_t   *classes;               /**< The two SVM classes */
+  float32_t       gamma;                  /**< Gamma factor */
+} arm_svm_rbf_instance_f32;
+
+/**
+ * @brief Instance structure for sigmoid SVM prediction function.
+ */
+typedef struct
+{
+  uint32_t        nbOfSupportVectors;     /**< Number of support vectors */
+  uint32_t        vectorDimension;        /**< Dimension of vector space */
+  float32_t       intercept;              /**< Intercept */
+  const float32_t *dualCoefficients;      /**< Dual coefficients */
+  const float32_t *supportVectors;        /**< Support vectors */
+  const int32_t   *classes;               /**< The two SVM classes */
+  float32_t       coef0;                  /**< Independant constant */
+  float32_t       gamma;                  /**< Gamma factor */
+} arm_svm_sigmoid_instance_f32;
+
+/**
+ * @brief        SVM linear instance init function
+ * @param[in]    nbOfSupportVectors     Number of support vectors
+ * @param[in]    vectorDimension        Dimension of vector space
+ * @param[in]    intercept              Intercept
+ * @param[in]    dualCoefficients       Array of dual coefficients
+ * @param[in]    supportVectors         Array of support vectors
+ * @param[in]    classes                Array of 2 classes ID
+ * @return none.
+ *
+ */
+
+
+void arm_svm_linear_init_f32(arm_svm_linear_instance_f32 *S, 
+  uint32_t nbOfSupportVectors,
+  uint32_t vectorDimension,
+  float32_t intercept,
+  const float32_t *dualCoefficients,
+  const float32_t *supportVectors,
+  const int32_t  *classes);
+
+/**
+ * @brief SVM linear prediction
+ * @param[in]    *S          points to an instance of the linear SVM structure.
+ * @param[in]    vec_in      pointer to input vector
+ * @param[out]   *pResult    decision value
+ * @return none.
+ *
+ */
+  
+void arm_svm_linear_predict_f32(const arm_svm_linear_instance_f32 *S, 
+   const float32_t * in, 
+   int * pResult);
+
+
+/**
+ * @brief        SVM polynomial instance init function
+ * @param[in]    nbOfSupportVectors     Number of support vectors
+ * @param[in]    vectorDimension        Dimension of vector space
+ * @param[in]    intercept              Intercept
+ * @param[in]    dualCoefficients       Array of dual coefficients
+ * @param[in]    supportVectors         Array of support vectors
+ * @param[in]    classes                Array of 2 classes ID
+ * @param[in]    degree                 Polynomial degree
+ * @param[in]    coef0                  coeff0 (scikit-learn terminology)
+ * @param[in]    gamma                  gamma (scikit-learn terminology)
+ * @return none.
+ *
+ */
+
+
+void arm_svm_polynomial_init_f32(arm_svm_polynomial_instance_f32 *S, 
+  uint32_t nbOfSupportVectors,
+  uint32_t vectorDimension,
+  float32_t intercept,
+  const float32_t *dualCoefficients,
+  const float32_t *supportVectors,
+  const int32_t   *classes,
+  int      degree,
+  float32_t coef0,
+  float32_t gamma
+  );
+
+/**
+ * @brief SVM polynomial prediction
+ * @param[in]    *S          points to an instance of the polynomial SVM structure.
+ * @param[in]    vec_in      pointer to input vector
+ * @param[out]   *pResult    decision value
+ * @return none.
+ *
+ */
+  
+void arm_svm_polynomial_predict_f32(const arm_svm_polynomial_instance_f32 *S, 
+   const float32_t * in, 
+   int * pResult);
+
+
+/**
+ * @brief        SVM radial basis function instance init function
+ * @param[in]    nbOfSupportVectors     Number of support vectors
+ * @param[in]    vectorDimension        Dimension of vector space
+ * @param[in]    intercept              Intercept
+ * @param[in]    dualCoefficients       Array of dual coefficients
+ * @param[in]    supportVectors         Array of support vectors
+ * @param[in]    classes                Array of 2 classes ID
+ * @param[in]    gamma                  gamma (scikit-learn terminology)
+ * @return none.
+ *
+ */
+
+void arm_svm_rbf_init_f32(arm_svm_rbf_instance_f32 *S, 
+  uint32_t nbOfSupportVectors,
+  uint32_t vectorDimension,
+  float32_t intercept,
+  const float32_t *dualCoefficients,
+  const float32_t *supportVectors,
+  const int32_t   *classes,
+  float32_t gamma
+  );
+
+/**
+ * @brief SVM rbf prediction
+ * @param[in]    *S          points to an instance of the rbf SVM structure.
+ * @param[in]    vec_in      pointer to input vector
+ * @param[out]   *pResult    decision value
+ * @return none.
+ *
+ */
+  
+void arm_svm_rbf_predict_f32(const arm_svm_rbf_instance_f32 *S, 
+   const float32_t * in, 
+   int * pResult);
+
+/**
+ * @brief        SVM sigmoid instance init function
+ * @param[in]    nbOfSupportVectors     Number of support vectors
+ * @param[in]    vectorDimension        Dimension of vector space
+ * @param[in]    intercept              Intercept
+ * @param[in]    dualCoefficients       Array of dual coefficients
+ * @param[in]    supportVectors         Array of support vectors
+ * @param[in]    classes                Array of 2 classes ID
+ * @param[in]    coef0                  coeff0 (scikit-learn terminology)
+ * @param[in]    gamma                  gamma (scikit-learn terminology)
+ * @return none.
+ *
+ */
+
+void arm_svm_sigmoid_init_f32(arm_svm_sigmoid_instance_f32 *S, 
+  uint32_t nbOfSupportVectors,
+  uint32_t vectorDimension,
+  float32_t intercept,
+  const float32_t *dualCoefficients,
+  const float32_t *supportVectors,
+  const int32_t   *classes,
+  float32_t coef0,
+  float32_t gamma
+  );
+
+/**
+ * @brief SVM sigmoid prediction
+ * @param[in]    *S          points to an instance of the rbf SVM structure.
+ * @param[in]    vec_in      pointer to input vector
+ * @param[out]   *pResult    decision value
+ * @return none.
+ *
+ */
+void arm_svm_sigmoid_predict_f32(const arm_svm_sigmoid_instance_f32 *S, 
+   const float32_t * in, 
+   int * pResult);
 
 
   /**
