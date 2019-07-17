@@ -215,7 +215,7 @@ uint32_t __get_xPSR(void);
 /**************************************************************************************************/
 /** \brief  Read the PSP register
     \details 
-    The function reads the Program Status Pointer (PSP) value using the instruction \b MRS.
+    The function reads the Process Stack Pointer (PSP) value using the instruction \b MRS.
     \n\n
     Physically two different stack pointers (SP) exist: 
     - The Main Stack Pointer (MSP) is the default stack pointer after reset. It is also used when 
@@ -247,7 +247,7 @@ uint32_t __get_PSP(void);
 /**************************************************************************************************/
 /** \brief  Set the PSP register
     \details
-    The function sets the Program Status Pointer (PSP) value using the instruction \b MSR.
+    The function sets the Process Stack Pointer (PSP) value using the instruction \b MSR.
     \n\n
     Physically two different stack pointers (SP) exist: 
     - The Main Stack Pointer (MSP) is the default stack pointer after reset. It is also used when 
@@ -277,7 +277,7 @@ void __set_PSP(uint32_t topOfProcStack);
 /**************************************************************************************************/
 /** \brief  Read the MSP register
     \details 
-    The function reads the Main Status Pointer (MSP) value using the instruction \b MRS.
+    The function reads the Main Stack Pointer (MSP) value using the instruction \b MRS.
     \n\n
     Physically two different stack pointers (SP) exist: 
     - The Main Stack Pointer (MSP) is the default stack pointer after reset. It is also used when 
@@ -308,7 +308,7 @@ uint32_t __get_MSP(void);
 /**************************************************************************************************/
 /** \brief  Set the MSP register
     \details 
-    The function sets the Main Status Pointer (MSP) value using the instruction \b MSR.
+    The function sets the Main Stack Pointer (MSP) value using the instruction \b MSR.
     \n\n
     Physically two different stack pointers (SP) exist: 
     - The Main Stack Pointer (MSP) is the default stack pointer after reset. It is also used when 
