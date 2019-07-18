@@ -5555,7 +5555,7 @@ __STATIC_FORCEINLINE void arm_inv_park_q31(
       /* Iniatilize output for below specified range as least output value of table */
       y = pYData[0];
     }
-    else if ((uint32_t)i >= S->nValues)
+    else if ((uint32_t)i >= (S->nValues - 1))
     {
       /* Iniatilize output for above specified range as last output value of table */
       y = pYData[S->nValues - 1];
