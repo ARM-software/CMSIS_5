@@ -1,5 +1,5 @@
 /******************************************************************************
- * @file     startup_ARMCM4.c
+ * @file     startup_ARMCM7.c
  * @brief    CMSIS-Core(M) Device Startup File for a Cortex-M7 Device
  * @version  V2.0.0
  * @date     04. June 2019
