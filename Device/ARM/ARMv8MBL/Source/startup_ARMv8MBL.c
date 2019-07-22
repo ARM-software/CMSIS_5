@@ -1,8 +1,8 @@
 /******************************************************************************
  * @file     startup_ARMCM4.c
  * @brief    CMSIS-Core(M) Device Startup File for a Cortex-M23 Device
- * @version  V2.0.0
- * @date     04. June 2019
+ * @version  V2.0.1
+ * @date     23. July 2019
  ******************************************************************************/
 /*
  * Copyright (c) 2009-2019 Arm Limited. All rights reserved.
@@ -48,7 +48,7 @@ void __NO_RETURN Reset_Handler  (void);
  *----------------------------------------------------------------------------*/
 /* Exceptions */
 void NMI_Handler            (void) __attribute__ ((weak, alias("Default_Handler")));
-void HardFault_Handler      (void) __attribute__ ((weak, alias("Default_Handler")));
+void HardFault_Handler      (void) __attribute__ ((weak));
 void SVC_Handler            (void) __attribute__ ((weak, alias("Default_Handler")));
 void PendSV_Handler         (void) __attribute__ ((weak, alias("Default_Handler")));
 void SysTick_Handler        (void) __attribute__ ((weak, alias("Default_Handler")));
@@ -120,6 +120,14 @@ void Reset_Handler(void)
 
   SystemInit();                             /* CMSIS System Initialization */
   __PROGRAM_START();                        /* Enter PreMain (C library entry point) */
+}
+
+/*----------------------------------------------------------------------------
+  Hard Fault Handler
+ *----------------------------------------------------------------------------*/
+void HardFault_Handler(void)
+{
+  while(1);
 }
 
 /*----------------------------------------------------------------------------

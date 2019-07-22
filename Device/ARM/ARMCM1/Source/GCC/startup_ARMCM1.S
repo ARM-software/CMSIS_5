@@ -1,8 +1,8 @@
 /**************************************************************************//**
  * @file     startup_ARMCM1.S
  * @brief    CMSIS-Core(M) Device Startup File for Cortex-M1 Device
- * @version  V2.0.0
- * @date     20. May 2019
+ * @version  V2.0.1
+ * @date     23. July 2019
  ******************************************************************************/
 /*
  * Copyright (c) 2009-2019 Arm Limited. All rights reserved.
@@ -126,6 +126,18 @@ Reset_Handler:
                 .fnend
                 .size    Reset_Handler, . - Reset_Handler
 
+/* Define explicit HardFault exception handler
+ * Do not use the default macro because the macro
+ * leads to weired debug information.
+ */
+                .thumb_func
+                .type    HardFault_Handler, %function
+                .weak    HardFault_Handler
+                .fnstart
+HardFault_Handler:
+                b        .
+                .fnend
+                .size    HardFault_Handler, . - HardFault_Handler
 
                 .thumb_func
                 .type    Default_Handler, %function
@@ -149,7 +161,6 @@ Default_Handler:
 /* Default exception/interrupt handler */
 
                 Set_Default_Handler  NMI_Handler
-                Set_Default_Handler  HardFault_Handler
                 Set_Default_Handler  SVC_Handler
                 Set_Default_Handler  PendSV_Handler
                 Set_Default_Handler  SysTick_Handler

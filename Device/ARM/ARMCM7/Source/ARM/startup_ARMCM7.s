@@ -2,11 +2,11 @@
 ; * @file     startup_ARMCM7.s
 ; * @brief    CMSIS Core Device Startup File for
 ; *           ARMCM7 Device
-; * @version  V5.4.0
-; * @date     12. December 2018
+; * @version  V5.4.1
+; * @date     23. July 2019
 ; ******************************************************************************/
 ;/*
-; * Copyright (c) 2009-2018 Arm Limited. All rights reserved.
+; * Copyright (c) 2009-2019 Arm Limited. All rights reserved.
 ; *
 ; * SPDX-License-Identifier: Apache-2.0
 ; *
@@ -112,6 +112,13 @@ Reset_Handler   PROC
                 BX       R0
                 ENDP
 
+; Define explicit HardFault exception handler
+; Do not use the default macro because the macro
+; leads to weired debug information.
+HardFault_Handler PROC
+                EXPORT   HardFault_Handler         [WEAK]
+                B        .
+                ENDP
 
 ; Macro to define default exception/interrupt handlers.
 ; Default handler are weak symbols with an endless loop.
@@ -128,7 +135,6 @@ $Handler_Name   PROC
 ; Default exception/interrupt handler
 
                 Set_Default_Handler  NMI_Handler
-                Set_Default_Handler  HardFault_Handler
                 Set_Default_Handler  MemManage_Handler
                 Set_Default_Handler  BusFault_Handler
                 Set_Default_Handler  UsageFault_Handler

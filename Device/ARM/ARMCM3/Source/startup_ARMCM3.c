@@ -1,8 +1,8 @@
 /******************************************************************************
  * @file     startup_ARMCM3.c
  * @brief    CMSIS-Core(M) Device Startup File for a Cortex-M3 Device
- * @version  V2.0.0
- * @date     04. June 2019
+ * @version  V2.0.1
+ * @date     23. July 2019
  ******************************************************************************/
 /*
  * Copyright (c) 2009-2019 Arm Limited. All rights reserved.
@@ -47,7 +47,7 @@ __NO_RETURN void Reset_Handler  (void);
  *----------------------------------------------------------------------------*/
 /* Exceptions */
 void NMI_Handler            (void) __attribute__ ((weak, alias("Default_Handler")));
-void HardFault_Handler      (void) __attribute__ ((weak, alias("Default_Handler")));
+void HardFault_Handler      (void) __attribute__ ((weak));
 void MemManage_Handler      (void) __attribute__ ((weak, alias("Default_Handler")));
 void BusFault_Handler       (void) __attribute__ ((weak, alias("Default_Handler")));
 void UsageFault_Handler     (void) __attribute__ ((weak, alias("Default_Handler")));
@@ -121,6 +121,14 @@ void Reset_Handler(void)
 {
   SystemInit();                             /* CMSIS System Initialization */
   __PROGRAM_START();                        /* Enter PreMain (C library entry point) */
+}
+
+/*----------------------------------------------------------------------------
+  Hard Fault Handler
+ *----------------------------------------------------------------------------*/
+void HardFault_Handler(void)
+{
+  while(1);
 }
 
 /*----------------------------------------------------------------------------
