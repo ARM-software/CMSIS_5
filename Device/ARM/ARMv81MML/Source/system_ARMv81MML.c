@@ -2,8 +2,8 @@
  * @file     system_ARMv81MML.c
  * @brief    CMSIS Device System Source File for
  *           Armv8.1-M Mainline Device Series
- * @version  V1.1.0
- * @date     09. May 2019
+ * @version  V1.2.0
+ * @date     23. July 2019
  ******************************************************************************/
 /*
  * Copyright (c) 2009-2019 Arm Limited. All rights reserved.
@@ -72,7 +72,8 @@ void SystemInit (void)
   SCB->VTOR = (uint32_t)(&__VECTOR_TABLE);
 #endif
 
-#if defined (__FPU_USED) && (__FPU_USED == 1U)
+#if (defined (__FPU_USED) && (__FPU_USED == 1U)) || \
+    (defined (__MVE_USED) && (__MVE_USED == 1U))
   SCB->CPACR |= ((3U << 10U*2U) |           /* enable CP10 Full Access */
                  (3U << 11U*2U)  );         /* enable CP11 Full Access */
 #endif
