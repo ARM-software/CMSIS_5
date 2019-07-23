@@ -8,8 +8,10 @@
   <url>http://www.keil.com/pack/</url>
 
   <releases>
-    <release version="5.6.1-dev0">
+    <release version="5.7.0-dev0">
       Active development...
+      CMSIS-Core(M): 5.4.0 (see revision history for details)
+       - Enhanced MVE support for Armv8.1-MML
     </release>
     <release version="5.6.0" date="2019-07-10">
       CMSIS-Core(M): 5.3.0 (see revision history for details)
@@ -2397,7 +2399,7 @@ and 8-bit Java bytecodes in Jazelle state.
 
   <components>
     <!-- CMSIS-Core component -->
-    <component Cclass="CMSIS" Cgroup="CORE" Cversion="5.3.0"  condition="ARMv6_7_8-M Device" >
+    <component Cclass="CMSIS" Cgroup="CORE" Cversion="5.4.0"  condition="ARMv6_7_8-M Device" >
       <description>CMSIS-CORE for Cortex-M, SC000, SC300, ARMv8-M, ARMv8.1-M</description>
       <files>
         <!-- CPU independent -->
@@ -2798,7 +2800,7 @@ and 8-bit Java bytecodes in Jazelle state.
     </component>
 
     <!-- ARMv81MML -->
-    <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cversion="2.0.1" condition="ARMv81MML CMSIS">
+    <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cversion="2.1.0" condition="ARMv81MML CMSIS">
       <description>System and Startup for Generic Armv8.1-M Mainline device</description>
       <files>
         <!-- include folder / device header file -->
@@ -2807,7 +2809,7 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="sourceC"      name="Device/ARM/ARMv81MML/Source/startup_ARMv81MML.c"             version="2.0.1" attr="config"/>
         <file category="linkerScript" name="Device/ARM/ARMv81MML/Source/ARM/ARMv81MML_ac6.sct"           version="1.0.0" attr="config" condition="ARMCC6"/>
         <file category="linkerScript" name="Device/ARM/ARMv81MML/Source/GCC/gcc_arm.ld"                  version="2.0.0" attr="config" condition="GCC"/>
-        <file category="sourceC"      name="Device/ARM/ARMv81MML/Source/system_ARMv81MML.c"              version="1.0.0" attr="config"/>
+        <file category="sourceC"      name="Device/ARM/ARMv81MML/Source/system_ARMv81MML.c"              version="1.1.0" attr="config"/>
         <!-- SAU configuration -->
         <file category="header"       name="Device/ARM/ARMv81MML/Include/Template/partition_ARMv81MML.h" version="1.0.0" attr="config" condition="ARMv8-M TZ Device"/>
       </files>

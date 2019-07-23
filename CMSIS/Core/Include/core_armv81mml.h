@@ -1,8 +1,8 @@
 /**************************************************************************//**
  * @file     core_armv81mml.h
  * @brief    CMSIS Armv8.1-M Mainline Core Peripheral Access Layer Header File
- * @version  V1.0.0
- * @date     15. March 2019
+ * @version  V1.1.0
+ * @date     23. July 2019
  ******************************************************************************/
 /*
  * Copyright (c) 2018-2019 Arm Limited. All rights reserved.
@@ -71,11 +71,10 @@
 
 #define __CORTEX_M                     (81U)                                       /*!< Cortex-M Core */
 
-/** __FPU_USED indicates whether an FPU is used or not.
-    For this, __FPU_PRESENT has to be checked prior to making use of FPU specific registers and functions.
-*/
 #if defined ( __CC_ARM )
-  #if defined __TARGET_FPU_VFP
+  #error Legacy Arm Compiler does not support Armv8.1-M target architecture.
+#elif defined (__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050)
+  #if defined __ARM_FP
     #if defined (__FPU_PRESENT) && (__FPU_PRESENT == 1U)
       #define __FPU_USED       1U
     #else
@@ -97,27 +96,15 @@
     #define __DSP_USED         0U
   #endif
   
-#elif defined (__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050)
-  #if defined __ARM_FP
-    #if defined (__FPU_PRESENT) && (__FPU_PRESENT == 1U)
-      #define __FPU_USED       1U
+  #if defined(__ARM_FEATURE_MVE)
+    #if defined(__MVE_PRESENT) && (__MVE_PRESENT == 1U)
+      #define __MVE_USED       1U
     #else
-      #warning "Compiler generates FPU instructions for a device without an FPU (check __FPU_PRESENT)"
-      #define __FPU_USED       0U
+      #error "Compiler generates MVE instructions for a devices without MVE extensions (check __MVE_PRESENT)"
+      #define __MVE_USED         0U    
     #endif
   #else
-    #define __FPU_USED         0U
-  #endif
-
-  #if defined(__ARM_FEATURE_DSP)
-    #if defined(__DSP_PRESENT) && (__DSP_PRESENT == 1U)
-      #define __DSP_USED       1U
-    #else
-      #error "Compiler generates DSP (SIMD) instructions for a devices without DSP extensions (check __DSP_PRESENT)"
-      #define __DSP_USED         0U    
-    #endif
-  #else
-    #define __DSP_USED         0U
+    #define __MVE_USED         0U
   #endif
 
 #elif defined ( __GNUC__ )
@@ -142,6 +129,17 @@
   #else
     #define __DSP_USED         0U
   #endif
+    
+  #if defined(__ARM_FEATURE_MVE)
+    #if defined(__MVE_PRESENT) && (__MVE_PRESENT == 1U)
+      #define __MVE_USED       1U
+    #else
+      #error "Compiler generates MVE instructions for a devices without MVE extensions (check __MVE_PRESENT)"
+      #define __MVE_USED         0U    
+    #endif
+  #else
+    #define __MVE_USED         0U
+  #endif
   
 #elif defined ( __ICCARM__ )
   #if defined __ARMVFP__
@@ -164,6 +162,17 @@
     #endif
   #else
     #define __DSP_USED         0U
+  #endif
+
+  #if defined(__ARM_FEATURE_MVE)
+    #if defined(__MVE_PRESENT) && (__MVE_PRESENT == 1U)
+      #define __MVE_USED       1U
+    #else
+      #error "Compiler generates MVE instructions for a devices without MVE extensions (check __MVE_PRESENT)"
+      #define __MVE_USED         0U    
+    #endif
+  #else
+    #define __MVE_USED         0U
   #endif
   
 #elif defined ( __TI_ARM__ )
@@ -247,6 +256,11 @@
   #ifndef __DSP_PRESENT
     #define __DSP_PRESENT             0U
     #warning "__DSP_PRESENT not defined in device header file; using default!"
+  #endif
+
+  #ifndef __MVE_PRESENT
+    #define __MVE_PRESENT             0U
+    #warning "__MVE_PRESENT not defined in device header file; using default!"
   #endif
 
   #ifndef __NVIC_PRIO_BITS
@@ -1591,8 +1605,8 @@ typedef struct
 #define MPU_RNR_REGION_Msk                 (0xFFUL /*<< MPU_RNR_REGION_Pos*/)             /*!< MPU RNR: REGION Mask */
 
 /* MPU Region Base Address Register Definitions */
-#define MPU_RBAR_ADDR_Pos                   5U                                            /*!< MPU RBAR: ADDR Position */
-#define MPU_RBAR_ADDR_Msk                  (0x7FFFFFFUL << MPU_RBAR_ADDR_Pos)             /*!< MPU RBAR: ADDR Mask */
+#define MPU_RBAR_BASE_Pos                   5U                                            /*!< MPU RBAR: BASE Position */
+#define MPU_RBAR_BASE_Msk                  (0x7FFFFFFUL << MPU_RBAR_BASE_Pos)             /*!< MPU RBAR: BASE Mask */
 
 #define MPU_RBAR_SH_Pos                     3U                                            /*!< MPU RBAR: SH Position */
 #define MPU_RBAR_SH_Msk                    (0x3UL << MPU_RBAR_SH_Pos)                     /*!< MPU RBAR: SH Mask */
@@ -2143,6 +2157,27 @@ typedef struct
 #define NVIC_USER_IRQ_OFFSET          16
 
 
+/* Special LR values for Secure/Non-Secure call handling and exception handling                                               */
+
+/* Function Return Payload (from ARMv8-M Architecture Reference Manual) LR value on entry from Secure BLXNS                   */
+#define FNC_RETURN                 (0xFEFFFFFFUL)     /* bit [0] ignored when processing a branch                             */
+
+/* The following EXC_RETURN mask values are used to evaluate the LR on exception entry */
+#define EXC_RETURN_PREFIX          (0xFF000000UL)     /* bits [31:24] set to indicate an EXC_RETURN value                     */
+#define EXC_RETURN_S               (0x00000040UL)     /* bit [6] stack used to push registers: 0=Non-secure 1=Secure          */
+#define EXC_RETURN_DCRS            (0x00000020UL)     /* bit [5] stacking rules for called registers: 0=skipped 1=saved       */
+#define EXC_RETURN_FTYPE           (0x00000010UL)     /* bit [4] allocate stack for floating-point context: 0=done 1=skipped  */
+#define EXC_RETURN_MODE            (0x00000008UL)     /* bit [3] processor mode for return: 0=Handler mode 1=Thread mode      */
+#define EXC_RETURN_SPSEL           (0x00000004UL)     /* bit [2] stack pointer used to restore context: 0=MSP 1=PSP           */
+#define EXC_RETURN_ES              (0x00000001UL)     /* bit [0] security state exception was taken to: 0=Non-secure 1=Secure */
+
+/* Integrity Signature (from ARMv8-M Architecture Reference Manual) for exception context stacking                            */
+#if defined (__FPU_PRESENT) && (__FPU_PRESENT == 1U)  /* Value for processors with floating-point extension:                  */
+#define EXC_INTEGRITY_SIGNATURE     (0xFEFA125AUL)     /* bit [0] SFTC must match LR bit[4] EXC_RETURN_FTYPE                   */
+#else
+#define EXC_INTEGRITY_SIGNATURE     (0xFEFA125BUL)     /* Value for processors without floating-point extension                */
+#endif
+
 
 /**
   \brief   Set Priority Grouping
@@ -2162,7 +2197,7 @@ __STATIC_INLINE void __NVIC_SetPriorityGrouping(uint32_t PriorityGroup)
   reg_value &= ~((uint32_t)(SCB_AIRCR_VECTKEY_Msk | SCB_AIRCR_PRIGROUP_Msk)); /* clear bits to change               */
   reg_value  =  (reg_value                                   |
                 ((uint32_t)0x5FAUL << SCB_AIRCR_VECTKEY_Pos) |
-                (PriorityGroupTmp << 8U)                      );              /* Insert write key and priorty group */
+                (PriorityGroupTmp << SCB_AIRCR_PRIGROUP_Pos)  );              /* Insert write key and priority group */
   SCB->AIRCR =  reg_value;
 }
 
@@ -2188,7 +2223,9 @@ __STATIC_INLINE void __NVIC_EnableIRQ(IRQn_Type IRQn)
 {
   if ((int32_t)(IRQn) >= 0)
   {
+    __COMPILER_BARRIER();
     NVIC->ISER[(((uint32_t)IRQn) >> 5UL)] = (uint32_t)(1UL << (((uint32_t)IRQn) & 0x1FUL));
+    __COMPILER_BARRIER();
   }
 }
 
@@ -2537,7 +2574,7 @@ __STATIC_INLINE void TZ_NVIC_SetPriorityGrouping_NS(uint32_t PriorityGroup)
   reg_value &= ~((uint32_t)(SCB_AIRCR_VECTKEY_Msk | SCB_AIRCR_PRIGROUP_Msk));             /* clear bits to change               */
   reg_value  =  (reg_value                                   |
                 ((uint32_t)0x5FAUL << SCB_AIRCR_VECTKEY_Pos) |
-                (PriorityGroupTmp << 8U)                      );              /* Insert write key and priorty group */
+                (PriorityGroupTmp << SCB_AIRCR_PRIGROUP_Pos)                      );              /* Insert write key and priority group */
   SCB_NS->AIRCR =  reg_value;
 }
 
