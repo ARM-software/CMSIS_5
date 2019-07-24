@@ -279,6 +279,13 @@
  * @defgroup groupSVM SVM Functions
  */
 
+
+/**
+ * @defgroup groupBayes Bayesian estimators
+ *
+ */
+
+
 #ifndef _ARM_MATH_H
 #define _ARM_MATH_H
 
@@ -7138,6 +7145,35 @@ void arm_svm_sigmoid_predict_f32(const arm_svm_sigmoid_instance_f32 *S,
    const float32_t * in, 
    int * pResult);
 
+
+
+/**
+ * @brief Instance structure for Naive Gaussian Bayesian estimator.
+ */
+typedef struct
+{
+  uint32_t vectorDimension;  /**< Dimension of vector space */
+  uint32_t numberOfClasses;  /**< Number of different classes  */
+  const float32_t *theta;          /**< Mean values for the Gaussians */
+  const float32_t *sigma;          /**< Variances for the Gaussians */
+  const float32_t *classPriors;    /**< Class prior probabilities */
+  float32_t epsilon;         /**< Additive value to variances */
+} arm_gaussian_naive_bayes_instance_f32;
+
+/**
+ * @brief Naive Gaussian Bayesian Estimator
+ *
+ * @param[in]  *S         points to a naive bayes instance structure
+ * @param[in]  *in        points to the elements of the input vector.
+ * @param[in]  *pBuffer   points to a buffer of length numberOfClasses
+ * @return The predicted class
+ *
+ */
+
+
+uint32_t arm_gaussian_naive_bayes_predict_f32(const arm_gaussian_naive_bayes_instance_f32 *S, 
+   const float32_t * in, 
+   float32_t *pBuffer);
 
   /**
    * @ingroup groupInterpolation

@@ -110,6 +110,29 @@ group Root {
               }
            }
         }
+
+        group Bayes Tests {
+           class = BayesTests
+           folder = Bayes 
+
+           suite Bayes F32 {
+              class = BayesF32
+              folder = BayesF32
+
+              Pattern DIMS1_S16_ID : Dims1_s16.txt 
+              Pattern INPUTS1_F32_ID : Inputs1_f32.txt 
+              Pattern PARAMS1_F32_ID : Params1_f32.txt 
+              Pattern PROBAS1_F32_ID : Probas1_f32.txt
+              Pattern PREDICTS1_S16_ID : Predicts1_s16.txt
+
+              Output  OUT_PROBA_F32_ID : Probas
+              Output  OUT_PREDICT_S16_ID : Predicts
+
+              Functions {
+                 arm_gaussian_naive_bayes_predict_f32:test_gaussian_naive_bayes_predict_f32
+              }
+           }
+        }
     }
 
     group DSP Benchmarks {
