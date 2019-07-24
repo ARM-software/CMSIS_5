@@ -126,9 +126,8 @@ Reset_Handler:
                 .fnend
                 .size    Reset_Handler, . - Reset_Handler
 
-/* Define explicit HardFault exception handler
- * Do not use the default macro because the macro
- * leads to weired debug information.
+/* The default macro is not used for HardFault_Handler
+ * because this results in a poor debug illusion.
  */
                 .thumb_func
                 .type    HardFault_Handler, %function

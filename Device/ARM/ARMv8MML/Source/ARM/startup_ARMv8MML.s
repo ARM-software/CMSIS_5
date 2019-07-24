@@ -115,9 +115,8 @@ Reset_Handler   PROC
                 BX       R0
                 ENDP
 
-; Define explicit HardFault exception handler
-; Do not use the default macro because the macro
-; leads to weired debug information.
+; The default macro is not used for HardFault_Handler
+; because this results in a poor debug illusion.
 HardFault_Handler PROC
                 EXPORT   HardFault_Handler         [WEAK]
                 B        .
