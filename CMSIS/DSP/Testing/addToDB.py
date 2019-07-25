@@ -77,7 +77,9 @@ def createTableIfMissing(conn,elem,tableName,full):
      cols = list(full.columns)
      params = list(joinit(elem.params.full,","))
      common = diff(cols + ["TYPE"] , ['OLDID'] + params)  
-     start = ""   
+
+     sql += "%sid INTEGER PRIMARY KEY"  % (tableName)
+     start = ","   
 
      for field in params:
        sql += " %s\n  %s INTEGER"  % (start,field)
@@ -148,9 +150,18 @@ def addRows(conn,elem,tableName,full):
    cols = list(full.columns)
    params = list(joinit(elem.params.full,","))
    common = diff(["TYPE"] + cols , ['OLDID'] + params)  
+   colNameList = [] 
+   for c in params + keep:
+      if c in MKKEYFIELD:
+          colNameList.append(MKKEYFIELDID[c])
+      else:
+         colNameList.append(c)
+   colNames = "".join(joinit(colNameList,","))
+   #print(colNameList)
+   #print(colNames)
    #print(full)
    for index, row in full.iterrows():
-       sql = "INSERT INTO %s VALUES(" % tableName
+       sql = "INSERT INTO %s(%s) VALUES(" % (tableName,colNames)
        keys = {}
 
        # Get data from columns
