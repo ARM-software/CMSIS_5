@@ -7175,6 +7175,113 @@ uint32_t arm_gaussian_naive_bayes_predict_f32(const arm_gaussian_naive_bayes_ins
    const float32_t * in, 
    float32_t *pBuffer);
 
+/**
+ * @brief Computation of the LogSumExp
+ *
+ * In probabilistic computations, the dynamic of the probability values can be very
+ * wide because they come from gaussian functions.
+ * To avoid underflow and overflow issues, the values are represented by their log.
+ * In this representation, multiplying the original exp values is easy : their log are added.
+ * But adding the original exp values is requiring some special handling and it is the
+ * goal of the LogSumExp function.
+ *
+ * If the values are x1...xn, the function is computing:
+ *
+ * ln(exp(x1) + ... + exp(xn)) and the computation is done in such a way that
+ * rounding issues are minimised.
+ *
+ * The max xm of the values if extracted and the function is computing:
+ * xm + ln(exp(x1 - xm) + ... + exp(xn - xm))
+ *
+ * @param[in]    *in         points to an array of input values.
+ * @param[in]  blockSize     number of samples in the input array.
+ * @return LogSumExp
+ *
+ */
+
+
+float32_t arm_logsumexp_f32(const float32_t *in, uint32_t blockSize);
+
+/**
+ * @brief Dot product with log arithmetic
+ *
+ * Vectors are containing the log of the samples
+ *
+ * @param[in]       *pSrcA points to the first input vector
+ * @param[in]       *pSrcB points to the second input vector
+ * @param[in]       blockSize number of samples in each vector
+ * @param[in]       *pTmpBuffer temporary buffer of length blockSize
+ * @return The log of the dot product .
+ *
+ */
+
+
+float32_t arm_logsumexp_dot_prod_f32(const float32_t * pSrcA,
+  const float32_t * pSrcB,
+  uint32_t blockSize,
+  float32_t *pTmpBuffer);
+
+/**
+ * @brief Entropy
+ *
+ * @param[in]  *pSrcA      points to an array of input values.
+ * @param[in]  blockSize   number of samples in the input array.
+ * @return Entropy -Sum(p ln p)
+ *
+ */
+
+
+float32_t arm_entropy_f32(const float32_t * pSrcA,uint32_t blockSize);
+
+
+/**
+ * @brief Kullback-Leibler
+ *
+ * @param[in]  *pSrcA         points to an array of input values for probaility distribution A.
+ * @param[in]  *pSrcB         points to an array of input values for probaility distribution B.
+ * @param[in]  blockSize      number of samples in the input array.
+ * @return Kullback-Leibler divergence D(A || B)
+ *
+ */
+float32_t arm_kullback_leibler_f32(const float32_t * pSrcA
+  ,const float32_t * pSrcB
+  ,uint32_t blockSize);
+
+
+/**
+ * @brief Weighted sum
+ *
+ *
+ * @param[in]    *in         points to an array of input values.
+ * @param[in]    *weigths    weights
+ * @param[in]  blockSize     number of samples in the input array.
+ * @return     Weighted sum
+ *
+ */
+float32_t arm_weighted_sum_f32(const float32_t *in
+  , const float32_t *weigths
+  , uint32_t blockSize);
+
+
+/**
+ * @brief Barycenter
+ *
+ *
+ * @param[in]    *in         List of points
+ * @param[in]    *in         List of weights
+ * @param[out]   *out        Barycenter
+ * @param[in]  nbVectors     number of vectors
+ * @param[in]  vecDim        Dimension of space
+ * @return     None
+ *
+ */
+void arm_barycenter_f32(const float32_t *in
+  , const float32_t *weights
+  , float32_t *out
+  , uint32_t nbVectors
+  , uint32_t vecDim);
+
+
   /**
    * @ingroup groupInterpolation
    */

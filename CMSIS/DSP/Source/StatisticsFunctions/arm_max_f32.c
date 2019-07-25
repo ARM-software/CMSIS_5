@@ -6,7 +6,7 @@
  * $Date:        18. March 2019
  * $Revision:    V1.6.0
  *
- * Target Processor: Cortex-M cores
+ * Target Processor: Cortex-M and Cortex-A cores
  * -------------------------------------------------------------------- */
 /*
  * Copyright (C) 2010-2019 ARM Limited or its affiliates. All rights reserved.

@@ -1,32 +1,32 @@
 #include "Test.h"
 #include "Pattern.h"
-#include "BayesF32.h"
-class BayesTests : public Client::Group
+#include "SupportTestsF32.h"
+class SupportTests : public Client::Group
 {
    public:
-     BayesTests(Testing::testID_t id):Client::Group(id)
- ,BayesF32Var(1)
+     SupportTests(Testing::testID_t id):Client::Group(id)
+ ,SupportTestsF32Var(1)
 
      { 
-        this->addContainer(&BayesF32Var);
+        this->addContainer(&SupportTestsF32Var);
 
      }
     private:
-        BayesF32 BayesF32Var;
+        SupportTestsF32 SupportTestsF32Var;
 ;
 };
 class DSPTests : public Client::Group
 {
    public:
      DSPTests(Testing::testID_t id):Client::Group(id)
- ,BayesTestsVar(3)
+ ,SupportTestsVar(2)
 
      { 
-        this->addContainer(NULL);this->addContainer(NULL);this->addContainer(&BayesTestsVar);
-
+        this->addContainer(NULL);this->addContainer(&SupportTestsVar);
+this->addContainer(NULL);this->addContainer(NULL);this->addContainer(NULL);
      }
     private:
-        BayesTests BayesTestsVar;
+        SupportTests SupportTestsVar;
 ;
 };
 class Root : public Client::Group

@@ -5,6 +5,73 @@ group Root {
         class = DSPTests
         folder = DSP
 
+        group Statistics Tests {
+           class = StatsTests
+           folder = Stats
+
+           suite Statistics Tests F32 {
+              class = StatsTestsF32
+              folder = StatsF32
+
+              Pattern INPUT1_F32_ID : Input1_f32.txt 
+              Pattern DIM1_S16_ID : Dims1_s16.txt 
+              Pattern REF1_ENTROPY_F32_ID : RefEntropy1_f32.txt
+
+              Pattern INPUT2_F32_ID : Input2_f32.txt 
+              Pattern DIM2_S16_ID : Dims2_s16.txt 
+              Pattern REF2_LOGSUMEXP_F32_ID : RefLogSumExp2_f32.txt
+
+              Pattern INPUTA3_F32_ID : InputA3_f32.txt 
+              Pattern INPUTB3_F32_ID : InputB3_f32.txt
+              Pattern DIM3_S16_ID : Dims3_s16.txt 
+              Pattern REF3_KL_F32_ID : RefKL3_f32.txt
+
+              Pattern INPUTA4_F32_ID : InputA4_f32.txt 
+              Pattern INPUTB4_F32_ID : InputB4_f32.txt
+              Pattern DIM4_S16_ID : Dims4_s16.txt 
+              Pattern REF4_LOGSUMEXP_DOT_F32_ID : RefLogSumExpDot4_f32.txt
+
+              Output  OUT_F32_ID : Output
+              Output  TMP_F32_ID : Temp
+
+              Functions {
+                arm_entropy_f32:test_entropy_f32
+                arm_logsumexp_f32:test_logsumexp_f32
+                arm_kullback_leibler_f32:test_kullback_leibler_f32
+                arm_logsumexp_dot_prod_f32:test_logsumexp_dot_prod_f32
+              }
+
+           }
+        }
+
+        group Support Tests {
+           class = SupportTests
+           folder = Support
+
+           suite Support Tests F32 {
+              class = SupportTestsF32
+              folder = SupportF32
+
+              Pattern INPUTS1_F32_ID : Inputs1_f32.txt 
+              Pattern DIMS1_S16_ID : Dims1_s16.txt 
+              Pattern WEIGHTS1_F32_ID : Weights1_f32.txt 
+              Pattern REF1_F32_ID : Ref1_f32.txt
+
+              Pattern INPUTS2_F32_ID : Inputs2_f32.txt 
+              Pattern DIMS2_S16_ID : Dims2_s16.txt 
+              Pattern WEIGHTS2_F32_ID : Weights2_f32.txt 
+              Pattern REF2_F32_ID : Ref2_f32.txt
+
+              Output  OUT_F32_ID : Output
+
+              Functions {
+                arm_barycenter_f32:test_barycenter_f32
+                arm_weighted_sum_f32:test_weighted_sum_f32
+              }
+
+           }
+        }
+
         group Basic Tests {
            class = BasicTests
            folder = BasicMaths

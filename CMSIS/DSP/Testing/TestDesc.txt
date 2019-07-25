@@ -5,25 +5,30 @@ n
 n
 y
 DSP
-3 3
+3 2
 n
 y
-Bayes
+Support
 2 1
 n
 y
-BayesF32
+SupportF32
 0
-5
-Dims1_s16.txt
+8
 Inputs1_f32.txt
-Params1_f32.txt
-Probas1_f32.txt
-Predicts1_s16.txt
-2
-Probas
-Predicts
+Dims1_s16.txt
+Weights1_f32.txt
+Ref1_f32.txt
+Inputs2_f32.txt
+Dims2_s16.txt
+Weights2_f32.txt
+Ref2_f32.txt
+1
+Output
 0
 1 1
+n
+n
+1 2
 n
 n

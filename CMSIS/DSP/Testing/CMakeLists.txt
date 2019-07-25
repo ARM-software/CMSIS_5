@@ -85,6 +85,8 @@ set(TESTSRC testmain.cpp
   Source/BasicMathsBenchmarksQ7.cpp
   Source/SVMF32.cpp
   Source/BayesF32.cpp
+  Source/StatsTestsF32.cpp
+  Source/SupportTestsF32.cpp
   Source/FullyConnected.cpp
   Source/FullyConnectedBench.cpp
   GeneratedSource/TestDesc.cpp
