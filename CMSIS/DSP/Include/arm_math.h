@@ -285,6 +285,11 @@
  *
  */
 
+/**
+ * @defgroup groupDistance Distance functions
+ *
+ */
+
 
 #ifndef _ARM_MATH_H
 #define _ARM_MATH_H
@@ -7280,6 +7285,235 @@ void arm_barycenter_f32(const float32_t *in
   , float32_t *out
   , uint32_t nbVectors
   , uint32_t vecDim);
+
+/**
+ * @brief        Euclidean distance between two vectors
+ * @param[in]    pA         First vector
+ * @param[in]    pB         Second vector
+ * @param[in]    blockSize  vector length
+ * @return distance
+ *
+ */
+
+float32_t arm_euclidean_distance_f32(const float32_t *pA,const float32_t *pB, uint32_t blockSize);
+
+/**
+ * @brief        Bray-Curtis distance between two vectors
+ * @param[in]    pA         First vector
+ * @param[in]    pB         Second vector
+ * @param[in]    blockSize  vector length
+ * @return distance
+ *
+ */
+float32_t arm_braycurtis_distance_f32(const float32_t *pA,const float32_t *pB, uint32_t blockSize);
+
+/**
+ * @brief        Canberra distance between two vectors
+ *
+ * This function may divide by zero when samples pA[i] and pB[i] are both zero.
+ * The result of the computation will be correct. So the division per zero may be
+ * ignored.
+ *
+ * @param[in]    pA         First vector
+ * @param[in]    pB         Second vector
+ * @param[in]    blockSize  vector length
+ * @return distance
+ *
+ */
+float32_t arm_canberra_distance_f32(const float32_t *pA,const float32_t *pB, uint32_t blockSize);
+
+
+/**
+ * @brief        Chebyshev distance between two vectors
+ * @param[in]    pA         First vector
+ * @param[in]    pB         Second vector
+ * @param[in]    blockSize  vector length
+ * @return distance
+ *
+ */
+float32_t arm_chebyshev_distance_f32(const float32_t *pA,const float32_t *pB, uint32_t blockSize);
+
+
+/**
+ * @brief        Cityblock (Manhattan) distance between two vectors
+ * @param[in]    pA         First vector
+ * @param[in]    pB         Second vector
+ * @param[in]    blockSize  vector length
+ * @return distance
+ *
+ */
+float32_t arm_cityblock_distance_f32(const float32_t *pA,const float32_t *pB, uint32_t blockSize);
+
+/**
+ * @brief        Correlation distance between two vectors
+ *
+ * The input vectors are modified in place !
+ *
+ * @param[in]    pA         First vector
+ * @param[in]    pB         Second vector
+ * @param[in]    blockSize  vector length
+ * @return distance
+ *
+ */
+float32_t arm_correlation_distance_f32(float32_t *pA,float32_t *pB, uint32_t blockSize);
+
+/**
+ * @brief        Cosine distance between two vectors
+ *
+ * @param[in]    pA         First vector
+ * @param[in]    pB         Second vector
+ * @param[in]    blockSize  vector length
+ * @return distance
+ *
+ */
+
+float32_t arm_cosine_distance_f32(const float32_t *pA,const float32_t *pB, uint32_t blockSize);
+
+/**
+ * @brief        Jensen-Shannon distance between two vectors
+ *
+ * This function is assuming that elements of second vector are > 0
+ * and 0 only when the corresponding element of first vector is 0.
+ * Otherwise the result of the computation does not make sense
+ * and for speed reasons, the cases returning NaN or Infinity are not
+ * managed.
+ *
+ * When the function is computing x log (x / y) with x 0 and y 0,
+ * it will compute the right value (0) but a division per zero will occur
+ * and shoudl be ignored in client code.
+ *
+ * @param[in]    pA         First vector
+ * @param[in]    pB         Second vector
+ * @param[in]    blockSize  vector length
+ * @return distance
+ *
+ */
+
+float32_t arm_jensenshannon_distance_f32(const float32_t *pA,const float32_t *pB,uint32_t blockSize);
+
+/**
+ * @brief        Minkowski distance between two vectors
+ *
+ * @param[in]    pA         First vector
+ * @param[in]    pB         Second vector
+ * @param[in]    n          Norm order (>= 2)
+ * @param[in]    blockSize  vector length
+ * @return distance
+ *
+ */
+
+
+
+float32_t arm_minkowski_distance_f32(const float32_t *pA,const float32_t *pB, int order, uint32_t blockSize);
+
+/**
+ * @brief        Dice distance between two vectors
+ *
+ * @param[in]    pA              First vector of packed booleans
+ * @param[in]    pB              Second vector of packed booleans
+ * @param[in]    numberOfBools   Number of booleans
+ * @return distance
+ *
+ */
+
+
+float32_t arm_dice_distance(const uint32_t *pA, const uint32_t *pB, uint32_t numberOfBools);
+
+/**
+ * @brief        Hamming distance between two vectors
+ *
+ * @param[in]    pA              First vector of packed booleans
+ * @param[in]    pB              Second vector of packed booleans
+ * @param[in]    numberOfBools   Number of booleans
+ * @return distance
+ *
+ */
+
+float32_t arm_hamming_distance(const uint32_t *pA, const uint32_t *pB, uint32_t numberOfBools);
+
+/**
+ * @brief        Jaccard distance between two vectors
+ *
+ * @param[in]    pA              First vector of packed booleans
+ * @param[in]    pB              Second vector of packed booleans
+ * @param[in]    numberOfBools   Number of booleans
+ * @return distance
+ *
+ */
+
+float32_t arm_jaccard_distance(const uint32_t *pA, const uint32_t *pB, uint32_t numberOfBools);
+
+/**
+ * @brief        Kulsinski distance between two vectors
+ *
+ * @param[in]    pA              First vector of packed booleans
+ * @param[in]    pB              Second vector of packed booleans
+ * @param[in]    numberOfBools   Number of booleans
+ * @return distance
+ *
+ */
+
+float32_t arm_kulsinski_distance(const uint32_t *pA, const uint32_t *pB, uint32_t numberOfBools);
+
+/**
+ * @brief        Roger Stanimoto distance between two vectors
+ *
+ * @param[in]    pA              First vector of packed booleans
+ * @param[in]    pB              Second vector of packed booleans
+ * @param[in]    numberOfBools   Number of booleans
+ * @return distance
+ *
+ */
+
+float32_t arm_rogerstanimoto_distance(const uint32_t *pA, const uint32_t *pB, uint32_t numberOfBools);
+
+/**
+ * @brief        Russell-Rao distance between two vectors
+ *
+ * @param[in]    pA              First vector of packed booleans
+ * @param[in]    pB              Second vector of packed booleans
+ * @param[in]    numberOfBools   Number of booleans
+ * @return distance
+ *
+ */
+
+float32_t arm_russellrao_distance(const uint32_t *pA, const uint32_t *pB, uint32_t numberOfBools);
+
+/**
+ * @brief        Sokal-Michener distance between two vectors
+ *
+ * @param[in]    pA              First vector of packed booleans
+ * @param[in]    pB              Second vector of packed booleans
+ * @param[in]    numberOfBools   Number of booleans
+ * @return distance
+ *
+ */
+
+float32_t arm_sokalmichener_distance(const uint32_t *pA, const uint32_t *pB, uint32_t numberOfBools);
+
+/**
+ * @brief        Sokal-Sneath distance between two vectors
+ *
+ * @param[in]    pA              First vector of packed booleans
+ * @param[in]    pB              Second vector of packed booleans
+ * @param[in]    numberOfBools   Number of booleans
+ * @return distance
+ *
+ */
+
+float32_t arm_sokalsneath_distance(const uint32_t *pA, const uint32_t *pB, uint32_t numberOfBools);
+
+/**
+ * @brief        Yule distance between two vectors
+ *
+ * @param[in]    pA              First vector of packed booleans
+ * @param[in]    pB              Second vector of packed booleans
+ * @param[in]    numberOfBools   Number of booleans
+ * @return distance
+ *
+ */
+
+float32_t arm_yule_distance(const uint32_t *pA, const uint32_t *pB, uint32_t numberOfBools);
 
 
   /**

@@ -16,7 +16,5 @@ configDsp(CMSISDSPSVM ${ROOT})
 target_include_directories(CMSISDSPSVM PUBLIC "${DSP}/Include")
 
 
-if (NEON OR NEONEXPERIMENTAL)
-    target_sources(CMSISDSPSVM PRIVATE "${DSP}/ComputeLibrary/Source/arm_cl_tables.c")
-endif()
+
 

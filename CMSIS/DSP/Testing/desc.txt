@@ -200,6 +200,85 @@ group Root {
               }
            }
         }
+
+        group Distance Tests {
+           class = DistanceTests
+           folder = Distance
+
+           suite Distance Tests F32 {
+              class = DistanceTestsF32
+              folder = DistanceF32
+
+              Pattern DIMS_S16_ID : Dims1_s16.txt 
+              Pattern DIMS_MINKOWSKI_S16_ID : Dims9_s16.txt 
+
+              Pattern INPUTA_F32_ID : InputA1_f32.txt
+              Pattern INPUTB_F32_ID : InputB1_f32.txt
+
+              Pattern INPUTA_JEN_F32_ID : InputA8_f32.txt
+              Pattern INPUTB_JEN_F32_ID : InputB8_f32.txt
+
+              Pattern REF1_F32_ID : Ref1_f32.txt
+              Pattern REF2_F32_ID : Ref2_f32.txt
+              Pattern REF3_F32_ID : Ref3_f32.txt
+              Pattern REF4_F32_ID : Ref4_f32.txt
+              Pattern REF5_F32_ID : Ref5_f32.txt
+              Pattern REF6_F32_ID : Ref6_f32.txt
+              Pattern REF7_F32_ID : Ref7_f32.txt
+              Pattern REF8_F32_ID : Ref8_f32.txt
+              Pattern REF9_F32_ID : Ref9_f32.txt
+
+              Output  OUT_F32_ID : Output
+              Output  TMPA_F32_ID : TmpA
+              Output  TMPB_F32_ID : TmpB
+
+              Functions {
+                 arm_braycurtis_distance_f32:test_braycurtis_distance_f32
+                 arm_canberra_distance_f32:test_canberra_distance_f32
+                 arm_chebyshev_distance_f32:test_chebyshev_distance_f32
+                 arm_cityblock_distance_f32:test_cityblock_distance_f32
+                 arm_correlation_distance_f32:test_correlation_distance_f32
+                 arm_cosine_distance_f32:test_cosine_distance_f32
+                 arm_euclidean_distance_f32:test_euclidean_distance_f32
+                 arm_jensenshannon_distance_f32:test_jensenshannon_distance_f32
+                 arm_minkowski_distance_f32:test_minkowski_distance_f32
+              }
+           }
+
+           suite Distance Tests U32 {
+              class = DistanceTestsU32
+              folder = DistanceU32
+
+              Pattern DIMS_S16_ID : Dims1_s16.txt 
+
+              Pattern INPUTA_U32_ID : InputA1_u32.txt
+              Pattern INPUTB_U32_ID : InputB1_u32.txt
+
+              Pattern REF1_F32_ID : Ref1_f32.txt
+              Pattern REF2_F32_ID : Ref2_f32.txt
+              Pattern REF3_F32_ID : Ref3_f32.txt
+              Pattern REF4_F32_ID : Ref4_f32.txt
+              Pattern REF5_F32_ID : Ref5_f32.txt
+              Pattern REF6_F32_ID : Ref6_f32.txt
+              Pattern REF7_F32_ID : Ref7_f32.txt
+              Pattern REF8_F32_ID : Ref8_f32.txt
+              Pattern REF9_F32_ID : Ref9_f32.txt
+
+               Output  OUT_F32_ID : Output
+
+              Functions {
+                 arm_dice_distance:test_dice_distance
+                 arm_hamming_distance:test_hamming_distance
+                 arm_jaccard_distance:test_jaccard_distance
+                 arm_kulsinski_distance:test_kulsinski_distance
+                 arm_rogerstanimoto_distance:test_rogerstanimoto_distance
+                 arm_russellrao_distance:test_russellrao_distance
+                 arm_sokalmichener_distance:test_sokalmichener_distance
+                 arm_sokalsneath_distance:test_sokalsneath_distance
+                 arm_yule_distance:test_yule_distance
+              }
+           }
+        }
     }
 
     group DSP Benchmarks {

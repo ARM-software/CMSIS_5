@@ -29,6 +29,7 @@ option(SUPPORT              "Support Functions"                 ON)
 option(TRANSFORM            "Transform Functions"               ON)
 option(SVM                  "Support Vector Machine Functions"  ON)
 option(BAYES                "Bayesian Estimators"               ON)
+option(DISTANCE             "Distance Functions"                ON)
 
 # When OFF it is the default behavior : all tables are included.
 option(CONFIGTABLE          "Configuration of table allowed"    OFF)
@@ -209,7 +210,7 @@ if (TRANSFORM)
   target_link_libraries(CMSISDSP INTERFACE CMSISDSPTransform)
 endif()
 
-if (FILTERING OR CONTROLLER OR FASTMATH OR TRANSFORM)
+if (FILTERING OR CONTROLLER OR FASTMATH OR TRANSFORM OR SVM OR DISTANCE)
   add_subdirectory(CommonTables)
   if (TRANSFORM)
     # FFT tables inclusion is allowed
@@ -234,6 +235,11 @@ endif()
 if (BAYES)
   add_subdirectory(BayesFunctions)
   target_link_libraries(CMSISDSP INTERFACE CMSISDSPBayes)
+endif()
+
+if (DISTANCE)
+  add_subdirectory(DistanceFunctions)
+  target_link_libraries(CMSISDSP INTERFACE CMSISDSPDistance)
 endif()
 
 ### Includes

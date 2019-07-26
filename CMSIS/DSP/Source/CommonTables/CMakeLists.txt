@@ -30,5 +30,8 @@ target_sources(CMSISDSPCommon PRIVATE arm_const_structs.c)
 ### Includes
 target_include_directories(CMSISDSPCommon PUBLIC "${DSP}/Include")
 
+if (NEON OR NEONEXPERIMENTAL)
+    target_sources(CMSISDSPCommon PRIVATE "${DSP}/ComputeLibrary/Source/arm_cl_tables.c")
+endif()
 
 
