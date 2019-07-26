@@ -11,7 +11,9 @@ class Pooling:public Client::Suite
             
             Client::Pattern<q7_t> input;
 
+            Client::LocalPattern<q7_t> tmpInput;
             Client::LocalPattern<q7_t> output;
+            Client::LocalPattern<q15_t> temp;
 
             // Reference patterns are not loaded when we are in dump mode
             Client::RefPattern<q7_t> ref;

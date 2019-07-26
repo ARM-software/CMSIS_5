@@ -627,6 +627,8 @@ group Root {
           Pattern REF8_S8_ID : Ref8.txt
 
           Output  OUTPUT_S8_ID : Output
+          Output  TEMP_S8_ID : Temp
+          Output  TEMPINPUT_S8_ID : TempInput
 
           Functions {
             arm_avgpool_s8 Test 1:test_avgpool_s8

@@ -43,8 +43,8 @@ extern    "C"
 #define Q31_MIN (0x80000000L)
 #define Q31_MAX (0x7FFFFFFFL)
 
-#define MAX(A,B) (A) > (B) ? (A) : (B)
-#define MIN(A,B) (A) < (B) ? (A) : (B)
+#define MAX(A,B) ((A) > (B) ? (A) : (B))
+#define MIN(A,B) ((A) < (B) ? (A) : (B))
 
 /**
  * @brief Union for SIMD access of q31/q15/q7 types

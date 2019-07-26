@@ -1187,6 +1187,7 @@ extern    "C"
    * @param[in]       act_max            Max clamping
    * @param[in]       ch_im_in           number of input tensor channels
    * @param[in,out]   Im_in              pointer to input tensor
+   * @param[in,out]   bufferA            temp buffer
    * @param[in,out]   Im_out             pointer to output tensor
    * @return none.
    *
@@ -1196,21 +1197,22 @@ extern    "C"
    */
 
 void
-arm_avgpool_s8( const int input_height,
-  const int input_width,
-  const int output_height,
-  const int output_width,
+arm_avgpool_s8( const int dim_im_in_height,
+  const int dim_im_in_width,
+  const int dim_im_out_height,
+  const int dim_im_out_width,
   const int stride_height,
   const int stride_width,
-  const int filter_height,
-  const int filter_width,
-  const int pad_height,
-  const int pad_width,
+  const int dim_kernel_height,
+  const int dim_kernel_width,
+  const int padding_height,
+  const int padding_width,
   const int act_min,
   const int act_max,
-  const int depth,
-  const int8_t *input_data,
-  int8_t *output_data);
+  const int ch_im_in,
+  int8_t *Im_in,
+  int16_t *bufferA,
+  int8_t *Im_out);
 
 /**
  * @defgroup Softmax Softmax Functions

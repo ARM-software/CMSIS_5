@@ -9,7 +9,11 @@
     void Pooling::test_avgpool_s8()
     {
        const q7_t *inp = input.ptr();
+       q7_t *tmpin = tmpInput.ptr();
        q7_t *outp = output.ptr();
+       q15_t *tempp = temp.ptr();
+
+       memcpy(tmpin,inp,input.nbSamples());
 
        arm_avgpool_s8(
            DIM_IN_Y,
@@ -25,7 +29,8 @@
            ACT_MIN,
            ACT_MAX,
            IN_CHANNEL,
-           inp,
+           tmpin,
+           tempp,
            outp);
        
        ASSERT_EQ(ref,output);
@@ -194,8 +199,12 @@
 
 
        }
-       
-          output.create(ref.nbSamples(),Pooling::OUTPUT_S8_ID,mgr);
+       temp.create(this->DIM_OUT_X * this->IN_CHANNEL,Pooling::TEMP_S8_ID,mgr);
+
+       output.create(ref.nbSamples(),Pooling::OUTPUT_S8_ID,mgr);
+       tmpInput.create(input.nbSamples(),Pooling::TEMPINPUT_S8_ID,mgr);
+
+
 
 
     }
