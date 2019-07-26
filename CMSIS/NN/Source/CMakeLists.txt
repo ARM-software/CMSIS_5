@@ -2,10 +2,14 @@ cmake_minimum_required (VERSION 3.6)
 cmake_policy(SET CMP0077 NEW)
 project(CMSISNN)
 
-include(config)
 # Needed to find the config modules
 list(APPEND CMAKE_MODULE_PATH ${ROOT}/CMSIS/DSP)
+# CMSIS-NN is dependent on features in the CMSIS-DSP
+# and must use similar logic for configuring the build
+list(APPEND CMAKE_MODULE_PATH ${ROOT}/CMSIS/DSP/Source)
 
+include(config)
+include(configDsp)
 
 # Select which parts of the CMSIS-DSP must be compiled.
 # There are some dependencies between the parts but they are not tracked
@@ -27,10 +31,13 @@ option(NNSUPPORT            "NN Support"    ON)
 #
 ###########################
 
-# DSP Sources
+# NN Sources
 SET(NN ${ROOT}/CMSIS/NN)
 
 list(APPEND CMAKE_MODULE_PATH ${NN}/Source)
+
+
+
 
 add_library(CMSISNN INTERFACE)
 

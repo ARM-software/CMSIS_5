@@ -1171,6 +1171,47 @@ extern    "C"
                                  q7_t * bufferA,
                                  q7_t * Im_out);
 
+  /**
+   * @brief Q7 average pooling function
+   * @param[in]       dim_im_in_height   input tensor dimention
+   * @param[in]       dim_im_in_width    input tensor dimention
+   * @param[in]       dim_im_out_height  output tensor dimension
+   * @param[in]       dim_im_out_width   output tensor dimension
+   * @param[in]       stride_height      stride
+   * @param[in]       stride_width       stride
+   * @param[in]       dim_kernel_height  filter kernel size
+   * @param[in]       dim_kernel_width   filter kernel size
+   * @param[in]       padding_height     padding sizes
+   * @param[in]       padding_width      padding sizes
+   * @param[in]       act_min            Min clamping
+   * @param[in]       act_max            Max clamping
+   * @param[in]       ch_im_in           number of input tensor channels
+   * @param[in,out]   Im_in              pointer to input tensor
+   * @param[in,out]   Im_out             pointer to output tensor
+   * @return none.
+   *
+   * @details
+   *
+   *
+   */
+
+void
+arm_avgpool_s8( const int input_height,
+  const int input_width,
+  const int output_height,
+  const int output_width,
+  const int stride_height,
+  const int stride_width,
+  const int filter_height,
+  const int filter_width,
+  const int pad_height,
+  const int pad_width,
+  const int act_min,
+  const int act_max,
+  const int depth,
+  const int8_t *input_data,
+  int8_t *output_data);
+
 /**
  * @defgroup Softmax Softmax Functions
  *

@@ -597,6 +597,48 @@ group Root {
             matmul_tflite_s8 test15:test_fully_connected_tflite_s8
          }
        }
+
+       suite Pooling {
+          class = Pooling
+          folder = Pooling
+
+          Pattern INPUT1_S8_ID : Input1.txt
+          Pattern REF1_S8_ID : Ref1.txt
+
+          Pattern INPUT2_S8_ID : Input2.txt
+          Pattern REF2_S8_ID : Ref2.txt
+
+          Pattern INPUT3_S8_ID : Input3.txt
+          Pattern REF3_S8_ID : Ref3.txt
+
+          Pattern INPUT4_S8_ID : Input4.txt
+          Pattern REF4_S8_ID : Ref4.txt
+
+          Pattern INPUT5_S8_ID : Input5.txt
+          Pattern REF5_S8_ID : Ref5.txt
+
+          Pattern INPUT6_S8_ID : Input6.txt
+          Pattern REF6_S8_ID : Ref6.txt
+
+          Pattern INPUT7_S8_ID : Input7.txt
+          Pattern REF7_S8_ID : Ref7.txt
+
+          Pattern INPUT8_S8_ID : Input8.txt
+          Pattern REF8_S8_ID : Ref8.txt
+
+          Output  OUTPUT_S8_ID : Output
+
+          Functions {
+            arm_avgpool_s8 Test 1:test_avgpool_s8
+            arm_avgpool_s8 Test 2:test_avgpool_s8
+            arm_avgpool_s8 Test 3:test_avgpool_s8
+            arm_avgpool_s8 Test 4:test_avgpool_s8
+            arm_avgpool_s8 Test 5:test_avgpool_s8
+            arm_avgpool_s8 Test 6:test_avgpool_s8
+            arm_avgpool_s8 Test 7:test_avgpool_s8
+            arm_avgpool_s8 Test 8:test_avgpool_s8
+          }
+       }
     }
 
     group NN Benchmarks

@@ -91,6 +91,7 @@ set(TESTSRC testmain.cpp
   Source/DistanceTestsU32.cpp
   Source/FullyConnected.cpp
   Source/FullyConnectedBench.cpp
+  Source/Pooling.cpp
   GeneratedSource/TestDesc.cpp
   )
 
