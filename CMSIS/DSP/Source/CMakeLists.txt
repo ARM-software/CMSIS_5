@@ -225,6 +225,8 @@ if (FILTERING OR CONTROLLER OR FASTMATH OR TRANSFORM OR SVM OR DISTANCE)
     endif()
   endif()
   target_link_libraries(CMSISDSP INTERFACE CMSISDSPCommon)
+  # Common project is adding ComputeLibrary tables used by SVM and Distance
+  # when NEon is ON.
 endif()
 
 if (SVM)
