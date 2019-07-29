@@ -136,6 +136,24 @@ void      arm_q7_to_q15_reordered_no_shift(const q7_t * pSrc, q15_t * pDst, uint
  */
 void arm_q7_to_q15_with_offset(const q7_t *src, q15_t *dst, uint32_t block_size, q7_t offset);
 
+/**
+ * @brief Converts the elements from a q7 vector and accumulate to a q15 vector
+ * @param[in]    *src       points to the q7 input vector
+ * @param[out]   *dst       points to the q15 output vector
+ * @param[in]    block_size length of the input vector
+ * @return none.
+ *
+ * \par Description:
+ *
+ * The equation used for the conversion process is:
+ *
+ * <pre>
+ *  dst[n] += (q15_t) src[n] ;   0 <= n < block_size.
+ * </pre>
+ *
+ */
+void arm_nn_accumulate_q7_to_q15(q15_t *dst, const q7_t *src, uint32_t block_size);
+
 #if defined (ARM_MATH_DSP)
 
 /**
@@ -365,6 +383,19 @@ __STATIC_FORCEINLINE q31_t arm_nn_read_q7x4_ia(const q7_t **in_q7)
   q31_t val;
   memcpy(&val, *in_q7, 4);
   *in_q7 += 4;
+
+  return (val);
+}
+
+/**
+  @brief         Read 2 q15 from q15 pointer.
+  @param[in]     in_q15       Pointer to pointer that holds address of input.
+  @return        q31 value
+ */
+__STATIC_FORCEINLINE q31_t arm_nn_read_q15x2(const q15_t *in_q15)
+{
+  q31_t val;
+  memcpy(&val, in_q15, 4);
 
   return (val);
 }
