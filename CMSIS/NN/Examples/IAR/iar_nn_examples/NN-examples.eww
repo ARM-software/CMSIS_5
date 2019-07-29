@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<workspace>
+    <project>
+        <path>$WS_DIR$\NN-example-cifar10\NN-example-cifar10.ewp</path>
+    </project>
+    <project>
+        <path>$WS_DIR$\NN-example-gru\NN-example-gru.ewp</path>
+    </project>
+    <batchBuild />
+</workspace>
