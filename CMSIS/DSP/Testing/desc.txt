@@ -653,10 +653,10 @@ group Root {
          folder = FullyConnected
 
          ParamList {
-                REPEAT
-                Summary REPEAT
+                NB
+                Summary NB
                 Names "Repetition"
-                Formula "REPEAT"
+                Formula "NB"
             }
 
          Pattern INPUT1_S8_ID : TestCase_1_10_4_input_1.txt
@@ -674,6 +674,33 @@ group Root {
 
          Functions {
             arm_fully_connected_tflite_s8:test_fully_connected_tflite_s8  -> PARAM1_ID
+         }
+       }
+
+       suite Pooling Benchmarks {
+         class = PoolingBench 
+         folder = Pooling
+
+         ParamList {
+                NB
+                Summary NB
+                Names "Repetition"
+                Formula "NB"
+          }
+
+         Pattern INPUT1_S8_ID : Input1.txt
+         Pattern REF1_S8_ID : Ref1.txt
+
+         Output  OUTPUT_S8_ID : Output
+         Output  TEMP_S8_ID : Temp
+         Output  TEMPINPUT_S8_ID : TempInput
+
+         Params PARAM1_ID = {
+                NB = [10,20,100,200]
+            }
+
+         Functions {
+            arm_avgpool_s8 Test 1:test_avgpool_s8  -> PARAM1_ID
          }
        }
     }

@@ -104,7 +104,11 @@ void cycleMeasurementStart()
 
     SysTick->CTRL = SysTick_CTRL_ENABLE_Msk | SysTick_CTRL_CLKSOURCE_Msk;  
 
+    while(SysTick->VAL == 0);
+
     startCycles = SysTick->VAL;
+
+
     
 #endif
 

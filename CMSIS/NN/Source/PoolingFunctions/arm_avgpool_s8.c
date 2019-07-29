@@ -56,6 +56,7 @@
    *
    *
    */
+#if defined (ARM_MATH_DSP)
 static void accumulate_q7_to_q15(q15_t * base, q7_t * target, const uint16_t length)
 {
     q15_t    *pCnt = base;
@@ -124,6 +125,7 @@ static void buffer_scale_back_q15_to_q7_and_clamp(q15_t * buffer, q7_t * target,
         target[i] = (q7_t) (sum);
     }
 }
+#endif
 
 void
 arm_avgpool_s8( const int dim_im_in_height,
