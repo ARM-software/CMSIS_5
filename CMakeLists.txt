@@ -35,42 +35,80 @@ add_compile_definitions(
         ARM_FAST_ALLOW_TABLES
         ARM_FFT_ALLOW_TABLES
 
-        # Only enable FFT tables for the following sizes
-        ARM_TABLE_TWIDDLECOEF_F32_128
-        ARM_TABLE_BITREVIDX_FLT_128
-        ARM_TABLE_TWIDDLECOEF_RFFT_F32_256
-        ARM_TABLE_TWIDDLECOEF_F32_128
-
-        ARM_TABLE_TWIDDLECOEF_F32_256
-        ARM_TABLE_BITREVIDX_FLT_256
-        ARM_TABLE_TWIDDLECOEF_RFFT_F32_512
-        ARM_TABLE_TWIDDLECOEF_F32_256
-
-        ARM_TABLE_TWIDDLECOEF_F32_512
-        ARM_TABLE_BITREVIDX_FLT_512
-        ARM_TABLE_TWIDDLECOEF_RFFT_F32_1024
-        ARM_TABLE_TWIDDLECOEF_F32_512
-
         # For fast cos and sin
         ARM_TABLE_SIN_F32
 )
 
+if(IS_FIXED_POINT)
+    add_compile_definitions(
+            # Only enable FFT tables for the following sizes
+            PUBLIC ARM_TABLE_REALCOEF_Q15
+            ARM_TABLE_TWIDDLECOEF_Q15_256
+            ARM_TABLE_BITREVIDX_FXT_256
+
+            PUBLIC ARM_TABLE_REALCOEF_Q15
+            ARM_TABLE_TWIDDLECOEF_Q15_512
+            ARM_TABLE_BITREVIDX_FXT_512
+
+            PUBLIC ARM_TABLE_REALCOEF_Q15
+            ARM_TABLE_TWIDDLECOEF_Q15_1024
+            ARM_TABLE_BITREVIDX_FXT_1024
+    )
+else()
+    add_compile_definitions(
+            # Only enable FFT tables for the following sizes
+            ARM_TABLE_TWIDDLECOEF_F32_128
+            ARM_TABLE_BITREVIDX_FLT_128
+            ARM_TABLE_TWIDDLECOEF_RFFT_F32_256
+            ARM_TABLE_TWIDDLECOEF_F32_128
+
+            ARM_TABLE_TWIDDLECOEF_F32_256
+            ARM_TABLE_BITREVIDX_FLT_256
+            ARM_TABLE_TWIDDLECOEF_RFFT_F32_512
+            ARM_TABLE_TWIDDLECOEF_F32_256
+
+            ARM_TABLE_TWIDDLECOEF_F32_512
+            ARM_TABLE_BITREVIDX_FLT_512
+            ARM_TABLE_TWIDDLECOEF_RFFT_F32_1024
+            ARM_TABLE_TWIDDLECOEF_F32_512
+    )
+endif()
+
 # Add the default source files without taking in account the build type or target
 set(CHIRP_CMSIS_SRC ${CHIRP_CMSIS_SRC}
         CMSIS/DSP/Source/BasicMathFunctions/arm_add_f32.c
-        CMSIS/DSP/Source/ComplexMathFunctions/arm_cmplx_mag_squared_f32.c
         CMSIS/DSP/Source/FastMathFunctions/arm_cos_f32.c
         CMSIS/DSP/Source/FastMathFunctions/arm_sin_f32.c
         CMSIS/DSP/Source/SupportFunctions/arm_fill_f32.c
         CMSIS/DSP/Source/StatisticsFunctions/arm_min_f32.c
         CMSIS/DSP/Source/BasicMathFunctions/arm_mult_f32.c
         CMSIS/DSP/Source/BasicMathFunctions/arm_sub_f32.c
-        CMSIS/DSP/Source/TransformFunctions/arm_rfft_fast_f32.c
-        CMSIS/DSP/Source/TransformFunctions/arm_rfft_fast_init_f32.c
-        CMSIS/DSP/Source/TransformFunctions/arm_cfft_f32.c
         CMSIS/DSP/Source/CommonTables/arm_common_tables.c
-        CMSIS/DSP/Source/TransformFunctions/arm_cfft_radix8_f32.c
+        CMSIS/DSP/Source/SupportFunctions/arm_q15_to_float.c
+        CMSIS/DSP/Source/SupportFunctions/arm_float_to_q15.c
         )
+
+if(IS_FIXED_POINT)
+    set(CHIRP_CMSIS_SRC ${CHIRP_CMSIS_SRC}
+            CMSIS/DSP/Source/BasicMathFunctions/arm_mult_q15.c
+            CMSIS/DSP/Source/BasicMathFunctions/arm_shift_q15.c
+            CMSIS/DSP/Source/TransformFunctions/arm_rfft_q15.c
+            CMSIS/DSP/Source/TransformFunctions/arm_rfft_init_q15.c
+            CMSIS/DSP/Source/TransformFunctions/arm_cfft_q15.c
+            CMSIS/DSP/Source/TransformFunctions/arm_cfft_radix4_q15.c
+            CMSIS/DSP/Source/TransformFunctions/arm_bitreversal.c
+            CMSIS/DSP/Source/CommonTables/arm_const_structs.c
+            CMSIS/DSP/Source/ComplexMathFunctions/arm_cmplx_mag_squared_q15.c
+            )
+else()
+    set(CHIRP_CMSIS_SRC ${CHIRP_CMSIS_SRC}
+            CMSIS/DSP/Source/TransformFunctions/arm_rfft_fast_f32.c
+            CMSIS/DSP/Source/TransformFunctions/arm_rfft_fast_init_f32.c
+            CMSIS/DSP/Source/TransformFunctions/arm_cfft_f32.c
+            CMSIS/DSP/Source/TransformFunctions/arm_cfft_radix8_f32.c
+            CMSIS/DSP/Source/ComplexMathFunctions/arm_cmplx_mag_squared_f32.c
+            )
+endif()
 
 if (${ARCH} MATCHES armv6m*)
     set(CHIRP_CMSIS_SRC ${CHIRP_CMSIS_SRC}
