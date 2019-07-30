@@ -6,6 +6,7 @@ SET(CORTEXM ON)
 
 option(HARDFP "Hard floating point" ON)
 option(LITTLEENDIAN "Little endian" ON)
+option(FASTMATHCOMPUTATIONS "Fast Math enabled" OFF)
 
 # More detailed identification for benchmark results
 SET(COREID ARMCM7)

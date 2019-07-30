@@ -36,7 +36,14 @@ function(compilerSpecificCompileOptions PROJECTNAME ROOT)
 
   if (ARM_CPU STREQUAL "cortex-m33" )
         target_compile_options(${PROJECTNAME} PUBLIC "-mfpu=fpv5-sp-d16")
-        #target_compile_options(${PROJECTNAME} PUBLIC -funsigned-char;-fshort-enums;-fshort-wchar;-ffunction-sections)
+  endif()
+
+  if (ARM_CPU STREQUAL "cortex-m7" )
+        target_compile_options(${PROJECTNAME} PUBLIC "-mfpu=fpv5-sp-d16")
+  endif()
+
+  if (ARM_CPU STREQUAL "cortex-m4" )
+        target_compile_options(${PROJECTNAME} PUBLIC "-mfpu=fpv4-sp-d16")
   endif()
   
   if (ARM_CPU STREQUAL "cortex-a9" )

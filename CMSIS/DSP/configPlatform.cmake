@@ -1,5 +1,5 @@
 option(SEMIHOSTING "Test trace using printf" ON)
-option(PLATFORM "Platform" "FVP")
+SET(PLATFORM "FVP")
 
 
 if (PLATFORM STREQUAL "FVP")

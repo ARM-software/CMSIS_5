@@ -7,7 +7,6 @@ include(config)
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/..)
 
 
-option(FASTMATHCOMPUTATIONS "Fast Math enabled" ON)
 option(NEON "Neon acceleration" OFF)
 option(NEONEXPERIMENTAL "Neon experimental acceleration" OFF)
 option(LOOPUNROLL "Loop unrolling" ON)
