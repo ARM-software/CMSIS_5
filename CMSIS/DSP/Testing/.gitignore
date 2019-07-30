@@ -11,3 +11,9 @@ olddesc.txt
 oldprocessTests.py
 shortdesc.txt
 TestScripts/__pycache__/
+FullBenchmark/
+Output/
+GeneratedInclude/
+GeneratedSource/
+*.db
+TestDesc.txt

@@ -7,7 +7,7 @@ class BasicTestsF32:public Client::Suite
             void setUp(Testing::testID_t,std::vector<Testing::param_t>& params,Client::PatternMgr *mgr);
             void tearDown(Testing::testID_t,Client::PatternMgr *mgr);
         private:
-            #include "BasicTests_decl.h"
+            #include "BasicTestsF32_decl.h"
             
             Client::Pattern<float32_t> input1;
             Client::Pattern<float32_t> input2;

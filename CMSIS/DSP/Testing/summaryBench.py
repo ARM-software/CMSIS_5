@@ -107,7 +107,7 @@ parser = argparse.ArgumentParser(description='Generate summary benchmarks')
 
 parser.add_argument('-f', nargs='?',type = str, default=None, help="Test description file path")
 parser.add_argument('-b', nargs='?',type = str, default="FullBenchmark", help="Full Benchmark dir path")
-parser.add_argument('-e', action='store_true', help="Embedded test")
+#parser.add_argument('-e', action='store_true', help="Embedded test")
 
 parser.add_argument('others', nargs=argparse.REMAINDER)
 
