@@ -711,14 +711,14 @@ extern    "C"
    * @param[in]       output_activation_max   Minimum value to clamp the output to. Range: int8
    * @param[in]       dilation_x   dilation along x. Not used. Dilation factor of 1 is used.
    * @param[in]       dilation_y   dilation along y. Not used. Dilation factor of 1 is used.
-   * @param[in]       buffer_a     pointer to buffer space used for optimization. Size information will be updated along
-   *                               with the optimized version.
+   * @param[in]       buffer_a     Not used.
+   *
    * @return     The function returns <code>ARM_MATH_SUCCESS</code>
    *
    * @details
    *    1. Supported framework: TensorFlow Lite
    *    2. q7 is used as data type eventhough it is s8 data. It is done so to be consistent with existing APIs.
-   *    3. The optimized version to follow can have limitations on the ranges of certain inputs.
+   *    3. Optimization using DSP extension is not available for the generic case where channel multiplier is > 1.
    *
    */
 
