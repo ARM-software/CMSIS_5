@@ -154,7 +154,7 @@
 * \param InnerCp Configures the inner cache policy.
 * \param IsShareable Configures the memory as shareable or non-shareable.
 */ 
-#define ARM_MPU_ACCESS_NORMAL(OuterCp, InnerCp, IsShareable) ARM_MPU_ACCESS_((4U | (OuterCp)), IsShareable, ((InnerCp) & 2U), ((InnerCp) & 1U))
+#define ARM_MPU_ACCESS_NORMAL(OuterCp, InnerCp, IsShareable) ARM_MPU_ACCESS_((4U | (OuterCp)), IsShareable, ((InnerCp) >> 1U), ((InnerCp) & 1U))
 
 /**
 * MPU Memory Access Attribute non-cacheable policy.
