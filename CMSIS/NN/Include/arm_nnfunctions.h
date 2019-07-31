@@ -146,7 +146,7 @@ extern    "C"
    * @param[in]       output_x    output tensor width
    * @param[in]       output_y    output tensor height
    * @param[in]       buffer_a    pointer to buffer space used for input optimization(partial im2col) and is necessary
-   *                              when ARM_MATH_LOOPUNROLL and ARM_MATH_DSP is defined.
+   *                              when both ARM_MATH_LOOPUNROLL and ARM_MATH_DSP are defined.
    *                              Required space: (2 * input_ch * kernel_x * kernel_x) * sizeof(q15_t) bytes
    * @return     The function returns <code>ARM_MATH_SUCCESS</code>
    *
@@ -749,6 +749,72 @@ extern    "C"
                                      const uint16_t dilation_y,
                                      q15_t *buffer_a);
 
+/**
+   * @brief Optimized s8 depthwise convolution function with constraint that in_channel equals out_channel
+   * @param[in]       input      pointer to input tensor. Range: int8, format: [H,W,in_ch]
+   * @param[in]       input_x    input tensor width
+   * @param[in]       input_y    input tensor height
+   * @param[in]       input_ch   number of input tensor channels
+   * @param[in]       kernel     pointer to kernel weights. Range: int8, Format: [in_ch, H, W, out_ch]
+   * @param[in]       output_ch  Number of output channels.
+   * @param[in]       kernel_x   filter/kernel width
+   * @param[in]       kernel_y   filter/kernel height
+   * @param[in]       pad_x      padding along width
+   * @param[in]       pad_y      padding along height
+   * @param[in]       stride_x   convolution stride along width
+   * @param[in]       stride_y   convolution stride along height
+   * @param[in]       bias       pointer to per output channel bias. Range: int8
+   * @param[in,out]   output     pointer to output tensor. Format: [H, W, out_ch]
+   * @param[in]       output_shift pointer to per output channel requantization shift parameter.
+   * @param[in]       output_mult  pointer to per output channel requantization multiplier parameter.
+   * @param[in]       output_x     output tensor width
+   * @param[in]       output_y     output tensor height
+   * @param[in]       output_offset   offset to elements of output tensor
+   * @param[in]       input_offset    offset to elements of input tensor
+   * @param[in]       output_activation_min   Minimum value to clamp the output to. Range: int8
+   * @param[in]       output_activation_max   Minimum value to clamp the output to. Range: int8
+   * @param[in]       dilation_x   dilation along x. Not used. Dilation factor of 1 is used.
+   * @param[in]       dilation_y   dilation along y. Not used. Dilation factor of 1 is used.
+   * @param[in]       buffer_a     Buffer for partial im2col optimization. This is mandatory when ARM_MATH_LOOPUNROLL and
+   *                               ARM_MATH_DSP are defined.
+   *                               Required space: (2 * input_ch * kernel_x * kernel_x) * sizeof(q15_t) bytes
+   *
+   * @return     The function returns one of the following
+   *                <code>ARM_MATH_SIZE_MISMATCH</code> - Unsupported dimension of tensors
+   *                <code>ARM_MATH_SUCCESS</code> - Successful operation
+   *
+   * @details
+   *    1. Supported framework: TensorFlow Lite
+   *    2. q7 is used as data type eventhough it is s8 data. It is done so to be consistent with existing APIs.
+   *    3. Reccomended when number of channels is 4 or greater.
+   *
+   */
+  arm_status arm_depthwise_conv_s8_opt(const q7_t *input,
+                                       const uint16_t input_x,
+                                       const uint16_t input_y,
+                                       const uint16_t input_ch,
+                                       const q7_t *kernel,
+                                       const uint16_t output_ch,
+                                       const uint16_t kernel_x,
+                                       const uint16_t kernel_y,
+                                       const uint16_t pad_x,
+                                       const uint16_t pad_y,
+                                       const uint16_t stride_x,
+                                       const uint16_t stride_y,
+                                       const q7_t *bias,
+                                       q7_t *output,
+                                       const int32_t *output_shift,
+                                       const int32_t *output_mult,
+                                       const uint16_t output_x,
+                                       const uint16_t output_y,
+                                       const int32_t output_offset,
+                                       const int32_t input_offset,
+                                       const int32_t output_activation_min,
+                                       const int32_t output_activation_max,
+                                       const uint16_t dilation_x,
+                                       const uint16_t dilation_y,
+                                       q15_t *buffer_a);
+
 
 /**
  * @defgroup FC Fully-connected Layer Functions
@@ -1235,7 +1301,7 @@ arm_avgpool_s8( const int dim_im_in_height,
   /**
    * @brief Q7 softmax function with batch parameter
    * @param[in]       vec_in      pointer to input vector
-   * @param[in]       nb_batches  number of batches 
+   * @param[in]       nb_batches  number of batches
    * @param[in]       dim_vec     input vector dimention
    * @param[out]      p_out       pointer to output vector
    * @return none.
@@ -1285,7 +1351,7 @@ void arm_softmax_with_batch_q7(const q7_t * vec_in, const uint16_t nb_batches,co
    * @param[in]     out_shift  Amount of right-shift for output
    * @param[in]     out_mult   Output multiplier for requantization
    * @return        The function returns one of the following
-   *                <code>ARM_MATH_SIZE_MISMATCH</code> - Not supported dimension of tensors
+   *                <code>ARM_MATH_SIZE_MISMATCH</code> - Unsupported dimension of tensors
    *                <code>ARM_MATH_SUCCESS</code> - Successful operation
    *                <code>ARM_MATH_ARGUMENT_ERROR</code> - Implementation not available
    *
