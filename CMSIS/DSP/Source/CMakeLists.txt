@@ -2,9 +2,14 @@ cmake_minimum_required (VERSION 3.6)
 cmake_policy(SET CMP0077 NEW)
 project(CMSISDSP)
 
+# DSP Sources
+SET(DSP ${ROOT}/CMSIS/DSP)
+
+list(APPEND CMAKE_MODULE_PATH ${DSP}/Source)
+list(APPEND CMAKE_MODULE_PATH ${DSP})
+
+
 include(config)
-# Needed to find the config modules
-list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/..)
 
 
 option(NEON "Neon acceleration" OFF)
@@ -141,10 +146,7 @@ option(DCT4_Q15_8192         "dct4 q15 8192"                    OFF)
 #
 ###########################
 
-# DSP Sources
-SET(DSP ${ROOT}/CMSIS/DSP)
 
-list(APPEND CMAKE_MODULE_PATH ${DSP}/Source)
 
 add_library(CMSISDSP INTERFACE)
 

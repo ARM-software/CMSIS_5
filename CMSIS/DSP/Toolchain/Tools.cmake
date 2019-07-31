@@ -6,3 +6,8 @@ endif()
 if (GCC)
     include(Toolchain/GCC)
 endif()
+
+if (MSVC)
+    function(compilerSpecificCompileOptions PROJECTNAME ROOT)
+    endfunction()
+endif()

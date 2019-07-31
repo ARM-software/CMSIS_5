@@ -110,6 +110,10 @@ target_sources(CMSISDSPTransform PRIVATE arm_cfft_q31.c)
 target_sources(CMSISDSPTransform PRIVATE arm_cfft_radix4_q31.c)
 endif()
 
+# For scipy or or wrappers
+if (WRAPPER)
+target_sources(CMSISDSPTransform PRIVATE arm_cfft_radix2_init_f32.c)
+endif()
 
 ### Includes
 target_include_directories(CMSISDSPTransform PUBLIC "${DSP}/Include")
