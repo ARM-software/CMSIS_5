@@ -60,15 +60,15 @@
  * @param[in,out]   Im_out        pointer to output tensor
  * @param[in]       dim_im_out_x  output tensor dimension x
  * @param[in]       dim_im_out_y  output tensor dimension y
- * @param[in,out]   bufferA       pointer to buffer space for input 
+ * @param[in,out]   bufferA       pointer to buffer space for input
  * @param[in,out]   bufferB       pointer to buffer space for output
  * @return     The function returns either
  * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.
  *
  * This function is the version with full list of optimization tricks, but with
  * some contraints:
- *   ch_im_in is multiple of 2
- *   ch_im_out is multiple of 2
+ *   ch_im_in is equal to ch_im_out
+ *
  */
 
 arm_status arm_depthwise_separable_conv_HWC_q7_nonsquare(const q7_t * Im_in,
@@ -88,8 +88,8 @@ arm_status arm_depthwise_separable_conv_HWC_q7_nonsquare(const q7_t * Im_in,
                                                          const uint16_t out_shift,
                                                          q7_t * Im_out,
                                                          const uint16_t dim_im_out_x,
-                                                         const uint16_t dim_im_out_y, 
-                                                         q15_t * bufferA, 
+                                                         const uint16_t dim_im_out_y,
+                                                         q15_t * bufferA,
                                                          q7_t * bufferB)
 {
 
@@ -363,7 +363,7 @@ arm_status arm_depthwise_separable_conv_HWC_q7_nonsquare(const q7_t * Im_in,
 #else
     /* Run the following code as reference implementation for Cortex-M0 and Cortex-M3 */
     int       i_out_y, i_out_x, i_ch_out;
-    int       i_ker_y, i_ker_x; 
+    int       i_ker_y, i_ker_x;
 
     /* do some checking here, basically ch_im_in == ch_im_out */
     if (ch_im_in != ch_im_out)
@@ -377,7 +377,7 @@ arm_status arm_depthwise_separable_conv_HWC_q7_nonsquare(const q7_t * Im_in,
         {
             for (i_ch_out = 0; i_ch_out < ch_im_out; i_ch_out++)
             {
-                // for each output 
+                // for each output
                 int       conv_out = ((q31_t)(bias[i_ch_out]) << bias_shift) + NN_ROUND(out_shift);
                 for (i_ker_y = 0; i_ker_y < dim_kernel_y; i_ker_y++)
                 {
@@ -387,7 +387,7 @@ arm_status arm_depthwise_separable_conv_HWC_q7_nonsquare(const q7_t * Im_in,
                         int       in_col = stride_x * i_out_x + i_ker_x - padding_x;
                         if (in_row >= 0 && in_col >= 0 && in_row < dim_im_in_y && in_col < dim_im_in_x)
                         {
-                            conv_out += Im_in[(in_row * dim_im_in_x + in_col) * ch_im_in + i_ch_out] *                        
+                            conv_out += Im_in[(in_row * dim_im_in_x + in_col) * ch_im_in + i_ch_out] *
                                 wt[(i_ker_y * dim_kernel_x + i_ker_x) * ch_im_out + i_ch_out];
                         }
                     }

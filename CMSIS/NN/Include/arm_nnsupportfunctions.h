@@ -389,13 +389,26 @@ __STATIC_FORCEINLINE q31_t arm_nn_read_q7x4_ia(const q7_t **in_q7)
 
 /**
   @brief         Read 2 q15 from q15 pointer.
-  @param[in]     in_q15       Pointer to pointer that holds address of input.
+  @param[in]     in_q15   pointer to address of input.
   @return        q31 value
  */
 __STATIC_FORCEINLINE q31_t arm_nn_read_q15x2(const q15_t *in_q15)
 {
   q31_t val;
   memcpy(&val, in_q15, 4);
+
+  return (val);
+}
+
+/**
+  @brief         Read 4 q7 values.
+  @param[in]     in_q7       pointer to address of input.
+  @return        q31 value
+ */
+__STATIC_FORCEINLINE q31_t arm_nn_read_q7x4(const q7_t *in_q7)
+{
+  q31_t val;
+  memcpy(&val, in_q7, 4);
 
   return (val);
 }
