@@ -5,7 +5,7 @@ import random
 import numpy as np
 import scipy.special as sp
 
-NBTESTSAMPLES = 1000
+NBTESTSAMPLES = 100
 
 def softmax(v):
   m = sp.softmax(v)
@@ -23,7 +23,7 @@ def writeTest(config,nb,vecDim):
 
 
     for _ in range(0,NBTESTSAMPLES):
-      va = np.random.randn(vecDim)
+      va = np.abs(np.random.randn(vecDim))
       va = va / np.sum(va)
 
       r = sp.softmax(va)
