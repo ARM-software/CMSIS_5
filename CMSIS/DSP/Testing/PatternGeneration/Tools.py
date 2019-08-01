@@ -62,6 +62,9 @@ def to_q7(v):
       r = -0x080
     return ("0x%s" % format(struct.unpack('<B', struct.pack('<b', r))[0],'02X'))
 
+def s8(r):
+  return ("0x%s" % format(struct.unpack('<B', struct.pack('<b', r))[0],'02X'))
+
 def s16(r):
   return ("0x%s" % format(struct.unpack('<H', struct.pack('<h', r))[0],'04X'))
 
@@ -140,6 +143,21 @@ class Config:
           return(os.path.join(self._patternDir,"%s%d_%s.txt" % (name,i,self._ext)))
         else:
           return(os.path.join(self._patternDir,"Reference%d_%s.txt" % (i,self._ext)))
+
+    def refS8P(self,i,name=None):
+        """ Path to a reference pattern from the ID
+      
+        Args:
+          i (int): ID to the reference pattern
+        Raises:
+          Nothing 
+        Returns:
+          str : path to the file where to generate the pattern data
+        """
+        if name:
+          return(os.path.join(self._patternDir,"%s%d_%s.txt" % (name,i,"s8")))
+        else:
+          return(os.path.join(self._patternDir,"Reference%d_%s.txt" % (i,"s8")))
 
     def refS16P(self,i,name=None):
         """ Path to a reference pattern from the ID
@@ -376,6 +394,31 @@ class Config:
                 f.write("// %f\n" % v)
                 f.write("%s\n" % to_q7(v))
 
+    def _writeVectorS8(self,i,data):
+        """ Write pattern data
+        
+        The format is recognized by the text framework script.
+        First line is the sample width (B,H or W for 8,16 or 32 bits)
+        Second line is number of samples
+        Other lines are hexadecimal representation of the samples in format
+        which can be read on big endian ARM.
+        
+          Args:
+            j (int): ID of pattern file
+            data (array): Vector containing the data
+          Raises:
+            Nothing 
+          Returns:
+            Nothing
+        """
+        with open(i,"w") as f:
+            # Write sample dimension nb sample header
+            #np.savetxt(i, data, newline="\n", header="W\n%d" % len(data),comments ="" )
+            f.write("B\n%d\n" % len(data))
+            for v in data:
+                f.write("// %d\n" % v)
+                f.write("%s\n" % s8(v))
+
     def writeReference(self,j,data,name=None):
         if (self._ext == "f32"):
           self._writeVectorF32(self.refP(j,name),data)
@@ -387,6 +430,11 @@ class Config:
           self._writeVectorQ7(self.refP(j,name),data)
         if (self._ext == "u32"):
           self._writeVectorU32(self.refP(j,name),data)
+        if (self._ext == "s8"):
+          self._writeVectorS8(self.refP(j,name),data)
+
+    def writeReferenceS8(self,j,data,name=None):
+        self._writeVectorS8(self.refS8P(j,name),data)
 
     def writeReferenceS16(self,j,data,name=None):
         self._writeVectorS16(self.refS16P(j,name),data)
@@ -408,6 +456,8 @@ class Config:
           self._writeVectorQ7(self.inputP(j,name),data)
         if (self._ext == "u32"):
           self._writeVectorU32(self.inputP(j,name),data)
+        if (self._ext == "s8"):
+          self._writeVectorS8(self.inputP(j,name),data)
 
     def writeInputS16(self,j,data,name=None):
         self._writeVectorS16(self.inputS16P(j,name),data)

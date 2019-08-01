@@ -93,6 +93,7 @@ set(TESTSRC testmain.cpp
   Source/FullyConnectedBench.cpp
   Source/Pooling.cpp
   Source/PoolingBench.cpp
+  Source/Softmax.cpp
   GeneratedSource/TestDesc.cpp
   )
 

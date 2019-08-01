@@ -641,6 +641,23 @@ group Root {
             arm_avgpool_s8 Test 8:test_avgpool_s8
           }
        }
+
+       suite Softmax {
+          class = Softmax
+          folder = SoftmaxQ7
+
+          Pattern INPUT1_Q7_ID : InputA1_q7.txt
+          Pattern DIMS1_S16_ID : Dims1_s16.txt
+          Pattern REF1_S16_ID : Ref1_s16.txt
+          Pattern SAMPLES1_Q7_ID : Samples1_q7.txt
+          
+          Output  OUTPUT_S16_ID : Output
+          Output  TEMP_Q7_ID : Temp
+
+          Functions {
+            arm_softmax_q7 Test 1:test_softmax_q7
+          }
+       }
     }
 
     group NN Benchmarks
