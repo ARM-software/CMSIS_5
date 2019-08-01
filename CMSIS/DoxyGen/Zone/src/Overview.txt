@@ -242,12 +242,36 @@ Click \b Next. In the next window, enter a \b Project \b name:
 
 \image html SetProjectName.png
 
-Click \b Next. In the next window, select <b>Use existing resource file (*.rzone)</b> and browse to the location of the
+Click \b Next.
+
+\section zTUICreateProjectVar1 Variant 1: Using an existing *.rzone file
+
+In the next window, select <b>Use existing resource file (*.rzone)</b> and browse to the location of the
 *.rzone file:
 
 \image html SpecifyRzoneFile.png
 
 Click \b Finish. The new project is created and an empty *.azone file is added.
+
+
+\section zTUICreateProjectVar2 Variant 2: Creating an *.rzone file using the SVD file from the device family pack
+
+In the next window, use <b>Select device to create resource file from device description</b>:
+
+\image html SelectDeviceFrom.png
+
+Next, select your device from the list of installed device family packs:
+
+\image html SelectDevice.png
+
+Click \b Finish. The new project and the *.rzone file are created and an empty *.azone file is added.
+
+\note 
+
+Make sure that you have set the path to your pack installation directory correctly. Go to <b> Window -> Preferences </b> and
+check the entry for the <b>CMSIS Pack root folder</b> (usually set to \c \%localappdata%\\Arm\\Packs):
+
+\image html window_preferences.png
 */
 
 
@@ -377,7 +401,7 @@ and click the <b>Add new zone</b> button:
 In the new window, you need to specify a name for the zone, select the applicable core, and choose the security level
 (secure/non-secure).
 
-In the \ref zTEMusca "Musca" example, a new zone called "CM33_0" was created and attached to processor core 0 without any
+In the \ref zTEMuscaA1 "Musca-A1" example, a new zone called "CM33_0" was created and attached to processor core 0 without any
 security attribute (not specified):
 
 \image html NewZoneCM33_0.png
@@ -392,9 +416,6 @@ Similarly, an additional zone called "CM33_1" was created and attached to proces
 
 Adding zones only works for the currently opened \ref azone ".azone" file.
 The information about the zones is stored in the \ref xml_zones element of the *.azone file.
-
-
-
 */
 
 
@@ -461,7 +482,8 @@ These examples demonstrate the usage of the CMSIS-Zone utility.
 
 | Example                    | Description                                                    |
 |:---------------------------|:---------------------------------------------------------------|
-| \subpage zTEMusca          | Musca project                                                  |
+| \subpage zTEMuscaA1        | Musca project                                                  |
+| \subpage zTEM2351          | Single processor Cortex-M23 project with TrustZone setup       |
 | \subpage zTELPC55          | Single processor Cortex-M33 project with TrustZone setup       |
 | \subpage zTESTM32L5        | Single processor Cortex-M33 project with TrustZone setup       |
 
@@ -486,7 +508,173 @@ Click \b Finish. The project is imported and opened in the \ref zTProjEx.
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
-\page zTEMusca Arm Musca-A1
+\page zTEMuscaA1 Arm Musca-A1
+
+This example shows how to do the \ref UseCase_TrustZone. It is split into a secure and non-secure part. Using
+CMSIS-Zone, it generates:
+ - A header file that contains \#defines to control the various linker scatter files (and might be used in other parts of the
+   application).
+ - Memory protection controller (MPC) setup.
+ - Peripheral protection controller (PPC) and related interrupt setup.
+ - Secure attribution unit (SAU) setup.
+
+
+\section zTEMusca_Eclipse Using the CMSIS-Zone project
+
+  - \ref zTExImport "Import" the project "Examples\Musca-A1\Zone" into the CMSIS-Zone utility
+  - \ref zTProjEx "Open" the Musca-A1.azone file
+  - \ref zTUIGenerate "Generate" the related output files
+  
+The Musca-A1.azone file of that project has the following configuration settings:
+  - \ref zTUICreate "Added the zones" \c SecureFW and \c NonsecureFW
+  - \ref zTUIMemAdd "Created the memory regions" \c SecureRAM, \c NonsecureRAM, \c ScureCode, \c Veneer, and \c NonsecureCode
+  - Selected various memory regions and peripherals for using in the different zones.
+
+\image html muscaA1_zones.png
+
+The zones use different Flash and SRAM regions for code and data. Peripherals, such as the system and IO configuration, as
+well as UART0 are available in the secure world only. To generate the output, click on the \ref zTUIGenerate "Generate"
+button in the Zone Editor tool bar. This creates the following files in the \c ftl_gen directory:
+
+| Template File        | Generated File   | Description |
+|:---------------------|:-----------------|:-------------|
+| dump_fzone.txt.ftl   | dump_fzone.txt   | Contains the complete model  |
+| helper.ftlinc        | N/A              | Helper template file with FTL functions. |
+| mem_layout.h.ftl     | mem_layout.h     | Header file that contains the memory region definitions, for example for the linker scatter file. |
+| partition.h.ftl      | partition.h      | Configuration of the secure attribution unit (SAU) and the NVIC interrupt assignment. |
+
+These files can be used in any IDE to create the final application.
+*/
+
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\page zTEM2351 Nuvoton NuMicro M2351
+
+This single processor demo application shows how to do the \ref UseCase_TrustZone. It is split into a secure and non-secure
+part. Some peripherals are assigned to either the secure or the non-secure zone to demonstrate the generation of PPC setup
+and interrupt configuration in the partition.h template. Using CMSIS-Zone, it generates:
+ - A header file that contains \#defines to control the various linker scatter files (and might be used in other parts of the
+   application).
+ - Secure attribution unit (SAU) setup.
+
+The application itself shows how to implement calls between the secure and the non-secure part and how to use this to blink an
+LED.
+
+
+\section zTEM2351_Eclipse Using the CMSIS-Zone project
+
+  - \ref zTExImport "Import" the project "Examples\M2351\Zone" into the CMSIS-Zone utility
+  - \ref zTProjEx "Open" the M2351.azone file
+  - \ref zTUIGenerate "Generate" the related output files
+  
+The M2351.azone file of that project has the following configuration settings:
+  - \ref zTUICreate "Added the zones" \c Secure and \c NonSecure
+  - \ref zTUIMemAdd "Created the memory regions" \c CODE_NS, \c CODE_S, \c Veneer, \c DATA_NS, and \c DATA_S
+  - Selected various memory regions and peripherals for using in the different zones:
+    \image html m2351_zones.png
+
+The zones use different Flash and SRAM regions for code and data. To generate the output, click on the
+\ref zTUIGenerate "Generate" button in the Zone Editor tool bar. This creates the following files in the \c ftl_gen
+directory:
+
+| Template File        | Generated File   | Description |
+|:---------------------|:-----------------|:-------------|
+| dump_fzone.txt.ftl   | dump_fzone.txt   | Contains the complete model  |
+| helper.ftlinc        | N/A              | Helper template file with FTL functions. |
+| mem_layout.h.ftl     | mem_layout.h     | Header file that contains the memory region definitions, for example for the linker scatter file. |
+| partition_gen.h.ftl  | partition_gen.h  | Configuration of the secure attribution unit (SAU) and the NVIC interrupt assignment. |
+| scatter_ns.sct.ftl   | scatter_ns.sct   | Example scatter file for the non-secure zone. |
+| scatter_s.sct.ftl    | scatter_s.sct    | Example scatter file for the secure zone. |
+
+These files can be used in any IDE to create the final application. In the following, the usage in Arm Keil MDK is described.
+
+
+\section zTEM2351_MDK Using the MDK project
+
+The example project can be loaded, built and debugged in µVision by performing the following steps:
+
+-# Navigate to Examples/M2351/MDK
+-# Open the multi-project workspace TrustZone.uvmpw
+-# Optional: Update the generated files by executing the copy_gen.bat scripts in Secure\\mdk and NonSecure\\mdk
+   folders.
+-# Run the batch build in MDK. Both projects, Secure and NonSecure need to be compiled in order.
+-# Set \c Secure as active project.
+-# Connect the NuMaker-PFM-M2351 board using a Micro-USB cable at ICEJ.
+-# Open <b>Options for Target - Debug</b> and make sure that the NULink Debugger is selected.
+-# Launch a debug session and watch LEDG and LEDY blinking.
+
+
+\section zTEM2351_MDK_Setup MDK project setup
+
+The multiproject workspace contains the \c Secure project and the \c NonSecure project:
+
+\image html m2351_proj_window.png
+
+The projects use the files generated in CMSIS-Zone as follows:
+
+| File               | Used in           | Description |
+|:-------------------|:------------------|:------------|
+| mem_layout.h       | Secure, NonSecure | Input for the scatter files. |
+| partition_gen.h    | Secure            | Configuration of the secure attribution unit (SAU) and the NVIC interrupt assignment. |
+| scatter_ns.sct     | NonSecure         | Scatter file for non-secure zone (initally based on generated file). |
+| scatter_s.sct	     | Secure            | Scatter file for secure zone (initally based on generated file). |
+
+The scatter files \c scatter_s.sct and \c scatter_ns.sct are using a preinclude to mem_layout.h to get the information about
+the different memory regions.
+
+\note
+If you want to learn more about the general project layout for an Armv8-M project using TrustZone, refer to
+<a href="https://www.keil.com/appnotes/docs/apnt_291.asp" target="_blank">Application Note 291</a>.
+
+\subsection zTEM2351_hwsScatter scatter_s.sct
+
+As explained previously, the \#defines in \c mem_layout.h can be used to create generic scatter files that are easy
+to update once changes in the CMSIS-Zone project happen. Using the \b mem_layout.h file from CMSIS-Zone, the following
+scatter file is used in the \c Sections project:
+
+\code
+#! armclang -E --target=arm-arm-none-eabi -mcpu=cortex-m23 -I../ -xc
+
+#include "mem_layout.h"
+
+; *------- <<< Use Configuration Wizard in Context Menu >>> ------------------
+
+;<h> Stack Configuration
+;  <o> Stack Size (in Bytes) <0x0-0xFFFFFFFF:8>
+;</h>
+#define STACK_SIZE 0x400
+
+;<h> Heap Configuration
+;  <o> Heap Size (in Bytes) <0x0-0xFFFFFFFF:8>
+;</h>
+#define HEAP_SIZE 0xC00
+
+; *-------------- <<< end of configuration section >>> -----------------------
+LR_CODE_S REGION_CODE_S_START REGION_CODE_S_SIZE {
+  ER_CODE_S REGION_CODE_S_START REGION_CODE_S_SIZE {
+  	* (RESET,+FIRST)
+    * (InRoot$$Sections)
+    .ANY (+RO +XO)
+  }
+  RW_DATA_S REGION_DATA_S_START REGION_DATA_S_SIZE-HEAP_SIZE-STACK_SIZE {
+    .ANY (+RW +ZI)
+  }
+#if HEAP_SIZE>0
+  ARM_LIB_HEAP REGION_DATA_S_START+REGION_DATA_S_SIZE-HEAP_SIZE-STACK_SIZE EMPTY HEAP_SIZE {
+  }
+#endif
+#if STACK_SIZE>0
+  ARM_LIB_STACK REGION_DATA_S_START+REGION_DATA_S_SIZE-STACK_SIZE EMPTY STACK_SIZE {
+  }
+#endif  
+}
+LR_VENEER REGION_VENEER_START REGION_VENEER_SIZE {
+  ER_VENEER REGION_VENEER_START REGION_VENEER_SIZE {
+  	*(Veneer$$CMSE)
+  }
+}
+\endcode
 */
 
 
@@ -514,9 +702,8 @@ The application itself shows how to implement calls between the secure and the n
 The LPC55S69.azone file of that project has the following configuration settings:
   - \ref zTUICreate "Added the zones" \c hello_world_s and \c hello_worls_ns
   - \ref zTUIMemAdd "Created the memory regions" \c CODE_NS, \c Config, \c CODE_S, \c Veneer, \c DATA_NS, and \c DATA_S
-  - Selected various memory regions and peripherals for using in the different zones.
-
-\image html lpc55_zones.png
+  - Selected various memory regions and peripherals for using in the different zones:
+    \image html lpc55_zones.png
 
 The zones use different Flash and SRAM regions for code and data, but share Flash configuration registers. Peripherals, such
 as the system and IO configuration, as well as an UART are available in the secure world only. To generate the output, click
@@ -662,9 +849,8 @@ The application itself shows how to implement calls between the secure and the n
 The STM32L5.azone file of that project has the following configuration settings:
   - \ref zTUICreate "Added the zones" \c blinky_s and \c blinky_ns
   - \ref zTUIMemAdd "Created the memory regions" \c CODE_NS, \c CODE_S, \c Veneer, \c DATA_NS, and \c DATA_S
-  - Selected various memory regions and peripherals for using in the different zones.
-
-\image html STM32L5_zones.png
+  - Selected various memory regions and peripherals for using in the different zones:
+    \image html STM32L5_zones.png
 
 The zones use different Flash and SRAM regions for code and data, but share Flash configuration registers. Peripherals, such
 as the system and IO configuration, as well as an UART are available in the secure world only. To generate the output, click
