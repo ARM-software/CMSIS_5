@@ -57,11 +57,13 @@ int16_t differences(int16_t *pa,int16_t *pb, int length)
           *pOut++ = maxIndex;
 
           vec_in += this->vecDim;
+          pTmp += this->vecDim;
        }
 
        int diff = differences(ref.ptr(),output.ptr(),this->nbSamples);
-       // 5% of errors are accepted
-       ASSERT_TRUE(100.0*diff/this->nbSamples <= 5);
+       //printf("diffs = %d\n",diff);
+       // 6% of errors are accepted for 20 entry samples
+       ASSERT_TRUE(100.0*diff/this->nbSamples <= 6);
        
     } 
 
@@ -85,13 +87,17 @@ int16_t differences(int16_t *pa,int16_t *pb, int length)
        }
 
         output.create(ref.nbSamples(),Softmax::OUTPUT_S16_ID,mgr);
-        temp.create(this->vecDim,Softmax::TEMP_Q7_ID,mgr);
+        // Used to compare bit exactness of the reference C version
+        // and the optimized version.
+        temp.create(this->vecDim*this->nbSamples,Softmax::TEMP_Q7_ID,mgr);
        
 
     }
 
     void Softmax::tearDown(Testing::testID_t id,Client::PatternMgr *mgr)
     {
-        output.dump(mgr);
+        // Array are big so by default they are not dumped and only
+        // used for debug.
+        //output.dump(mgr);
         //temp.dump(mgr);
     }

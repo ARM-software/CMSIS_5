@@ -5,7 +5,7 @@ import random
 import numpy as np
 import scipy.special as sp
 
-NBTESTSAMPLES = 100
+NBTESTSAMPLES = 500
 
 def softmax(v):
   m = sp.softmax(v)
@@ -46,7 +46,7 @@ def writeTest(config,nb,vecDim):
 
 
 def writeTests(config):
-    writeTest(config,1,15)
+    writeTest(config,1,20)
 
 
 PATTERNDIR = os.path.join("Patterns","NN","Softmax",)
