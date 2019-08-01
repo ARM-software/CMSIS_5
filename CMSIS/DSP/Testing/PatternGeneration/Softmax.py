@@ -46,7 +46,7 @@ def writeTest(config,nb,vecDim):
 
 
 def writeTests(config):
-    writeTest(config,1,20)
+    writeTest(config,1,21)
 
 
 PATTERNDIR = os.path.join("Patterns","NN","Softmax",)

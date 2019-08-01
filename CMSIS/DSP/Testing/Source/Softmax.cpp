@@ -63,7 +63,7 @@ int16_t differences(int16_t *pa,int16_t *pb, int length)
        int diff = differences(ref.ptr(),output.ptr(),this->nbSamples);
        //printf("diffs = %d\n",diff);
        // 6% of errors are accepted for 20 entry samples
-       ASSERT_TRUE(100.0*diff/this->nbSamples <= 6);
+       ASSERT_TRUE(100.0*diff/this->nbSamples <= 6.5);
        
     } 
 
