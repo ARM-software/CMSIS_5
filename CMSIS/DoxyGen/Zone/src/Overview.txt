@@ -32,7 +32,18 @@ smaller sub-systems. For example a multi-core device can be partitioned in steps
 The following SoC diagram exemplifies step 1 and step 2 of this workflow. 
   
 \image html Partitioning_Hardware.png  "Hardware partitioning in multiple steps"
-  
+
+\section mainIntroVideo CMSIS-Zone introduction video
+
+Watch this short video to learn how to use the \ref zoneToolUsage :
+
+\htmlonly
+<video preload="none" controls="" poster="https://community.arm.com/cfs-file/__key/telligent-evolution-videotranscoding-securefilestorage/communityserver-blogs-components-weblogfiles-00-00-00-21-12/Nuvoton_5F00_Zone.mp4.jpg" width="880" height="495">
+			<source type="video/mp4" src="https://community.arm.com/cfs-file/__key/telligent-evolution-videotranscoding-securefilestorage/communityserver-blogs-components-weblogfiles-00-00-00-21-12/Nuvoton_5F00_Zone.mp4.mp4">
+			<source type="video/webm" src="https://community.arm.com/cfs-file/__key/telligent-evolution-videotranscoding-securefilestorage/communityserver-blogs-components-weblogfiles-00-00-00-21-12/Nuvoton_5F00_Zone.mp4.webm">
+	</video>
+\endhtmlonly
+
 
 The following sections explain: 
 - \ref zoneToolUsage shows hot to use the CMSIS-Zone stand-alone tool to generate the relevant project information to be used
