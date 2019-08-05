@@ -305,21 +305,21 @@ namespace Client
         rather than file names.
 
     */
-    void FPGA::ReadParameterList()
+    void FPGA::ReadParameterList(Testing::nbParameters_t nbParams)
     {
 
         unsigned long offset,nb;
-        unsigned long nbParams;
+        unsigned long nbValues;
         char paramKind;
 
-        this->read32(&nbParams);
+        this->read32(&nbValues);
 
         this->DeleteParams();
         this->parameterOffsets->clear();
         this->parameterSizes->clear();
         std::string tmpstr;
 
-        for(int i=0;i<nbParams;i++)
+        for(int i=0;i<nbValues;i++)
         {
            this->readChar(&paramKind);
            struct offsetOrGen gen;
@@ -332,6 +332,7 @@ namespace Client
 
              gen.kind=0;
              gen.nbInputSamples=nb;
+             gen.dimensions = nbParams;
            }
            else
            {
@@ -438,7 +439,7 @@ namespace Client
         if (gen.kind == 0)
         {
            offset=gen.offset;
-           nbEntries = gen.nbInputSamples;
+           nbEntries = gen.nbInputSamples / gen.dimensions;
    
            const char *patternStart = this->m_patterns + offset;
    

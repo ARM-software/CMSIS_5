@@ -60,6 +60,8 @@ function(writeConfig path)
  
 endfunction()
 
+option(BENCHMARK "Benchmarking compiled" OFF)
+
 project(Testing)
 
 # Needed to find the config modules
@@ -67,7 +69,57 @@ project(Testing)
 
 set(ROOT ${CMAKE_CURRENT_SOURCE_DIR}/../../..)
 
-set(TESTSRC testmain.cpp
+
+
+
+add_subdirectory(../Source bin_dsp)
+add_subdirectory(${ROOT}/CMSIS/NN/Source bin_nn)
+
+add_library(TestingLib STATIC)
+add_library(FrameworkLib STATIC)
+
+if (BENCHMARK)
+set(TESTSRC 
+  Source/Benchmarks/BasicMathsBenchmarksF32.cpp
+  Source/Benchmarks/BasicMathsBenchmarksQ31.cpp
+  Source/Benchmarks/BasicMathsBenchmarksQ15.cpp
+  Source/Benchmarks/BasicMathsBenchmarksQ7.cpp
+  Source/Benchmarks/ComplexMathsBenchmarksF32.cpp
+  Source/Benchmarks/ComplexMathsBenchmarksQ31.cpp
+  Source/Benchmarks/ComplexMathsBenchmarksQ15.cpp
+  Source/Benchmarks/FIRF32.cpp
+  Source/Benchmarks/FIRQ31.cpp
+  Source/Benchmarks/FIRQ15.cpp
+  Source/Benchmarks/MISCF32.cpp
+  Source/Benchmarks/MISCQ31.cpp
+  Source/Benchmarks/MISCQ15.cpp
+  Source/Benchmarks/MISCQ7.cpp
+  Source/Benchmarks/DECIMF32.cpp
+  Source/Benchmarks/DECIMQ31.cpp
+  Source/Benchmarks/DECIMQ15.cpp
+  Source/Benchmarks/FullyConnectedBench.cpp
+  Source/Benchmarks/PoolingBench.cpp
+  )
+target_include_directories(TestingLib PRIVATE Include/Benchmarks)
+else()
+
+set(TESTSRC 
+  Source/Tests/BasicTestsF32.cpp
+  Source/Tests/SVMF32.cpp
+  Source/Tests/BayesF32.cpp
+  Source/Tests/StatsTestsF32.cpp
+  Source/Tests/SupportTestsF32.cpp
+  Source/Tests/DistanceTestsF32.cpp
+  Source/Tests/DistanceTestsU32.cpp
+  Source/Tests/FullyConnected.cpp
+  Source/Tests/Pooling.cpp
+  Source/Tests/Softmax.cpp
+  )
+target_include_directories(TestingLib PRIVATE Include/Tests)
+
+endif()
+
+set(FRAMEWORKSRC
   FrameworkSource/Test.cpp
   FrameworkSource/Semihosting.cpp
   FrameworkSource/IORunner.cpp
@@ -78,32 +130,7 @@ set(TESTSRC testmain.cpp
   FrameworkSource/FPGA.cpp
   FrameworkSource/Timing.cpp
   FrameworkSource/Generators.cpp
-  Source/BasicTestsF32.cpp
-  Source/BasicMathsBenchmarksF32.cpp
-  Source/BasicMathsBenchmarksQ31.cpp
-  Source/BasicMathsBenchmarksQ15.cpp
-  Source/BasicMathsBenchmarksQ7.cpp
-  Source/SVMF32.cpp
-  Source/BayesF32.cpp
-  Source/StatsTestsF32.cpp
-  Source/SupportTestsF32.cpp
-  Source/DistanceTestsF32.cpp
-  Source/DistanceTestsU32.cpp
-  Source/FullyConnected.cpp
-  Source/FullyConnectedBench.cpp
-  Source/Pooling.cpp
-  Source/PoolingBench.cpp
-  Source/Softmax.cpp
-  GeneratedSource/TestDesc.cpp
   )
-
-
-add_subdirectory(../Source bin_dsp)
-add_subdirectory(${ROOT}/CMSIS/NN/Source bin_nn)
-
-add_library(TestingLib STATIC)
-
-
 # Change behavior of configBoot for scatter file
 # We use the linker files from older test framework because bigger sections are needed.
 # We should migrate the linker files to this new framework.
@@ -113,25 +140,37 @@ include(config)
 # With -O2, generated code is crashing on some cycle accurate models.
 # (cpp part)
 disableOptimization(TestingLib)
+disableOptimization(FrameworkLib)
 
 
 target_sources(TestingLib PRIVATE ${TESTSRC})
+target_sources(TestingLib PRIVATE testmain.cpp)
+target_sources(TestingLib PRIVATE GeneratedSource/TestDesc.cpp)
+  
 
+target_sources(FrameworkLib PRIVATE ${FRAMEWORKSRC})
 
 ### Includes
 target_link_libraries(TestingLib PRIVATE CMSISDSP)
 target_link_libraries(TestingLib PRIVATE CMSISNN)
-target_include_directories(TestingLib PRIVATE Include)
 target_include_directories(TestingLib PRIVATE FrameworkInclude)
 target_include_directories(TestingLib PRIVATE GeneratedInclude)
+
 configLib(TestingLib ${ROOT})
+
+configLib(FrameworkLib ${ROOT})
+target_include_directories(FrameworkLib PRIVATE FrameworkInclude)
+# arm_math.h is needed for q7,q15,q31 types
+# which are used for access to pattern files.
+target_include_directories(FrameworkLib PRIVATE ${ROOT}/CMSIS/DSP/Include)
+
 
 # Because we need access to core include for
 # timing features in the test framework.
 # So we need to identify the core
 # then reference the right include folder
 set_platform_core()
-core_includes(TestingLib)
+core_includes(FrameworkLib)
 
 add_executable(Testing main.cpp)
 
@@ -142,6 +181,7 @@ disableOptimization(Testing)
 configApp(Testing ${ROOT})
 
 target_link_libraries(Testing PRIVATE TestingLib)
+target_link_libraries(Testing PRIVATE FrameworkLib)
 
 writeConfig("currentConfig.csv")
 

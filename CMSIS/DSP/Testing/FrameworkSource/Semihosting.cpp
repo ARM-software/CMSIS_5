@@ -122,7 +122,7 @@ namespace Client
          This list is for the current suite.
     
       */
-      void Semihosting::ReadParameterList()
+      void Semihosting::ReadParameterList(Testing::nbParameters_t nbParams)
       {
         char tmp[256];
         char paramKind;
@@ -130,14 +130,14 @@ namespace Client
 
         // It is the number of samples in the file.
         // Not the number of parameters controlling the function
-        int nbParams;
-        fscanf(this->infile,"%d\n",&nbParams);
+        int nbValues;
+        fscanf(this->infile,"%d\n",&nbValues);
         
         // Reset the list for the current suite
         this->DeleteParams();
         this->parameterNames->clear();
 
-        for(int i=0;i<nbParams;i++)
+        for(int i=0;i<nbValues;i++)
         {
            fscanf(this->infile,"%c\n",&paramKind);
            struct pathOrGen gen;
@@ -163,6 +163,7 @@ namespace Client
               gen.path=tmp;
 
               gen.nbInputSamples = this->GetFileSize(tmp);
+              gen.dimensions = nbParams;
 
            }
            // Generator
@@ -518,7 +519,7 @@ namespace Client
              len=gen.nbInputSamples;
              result=(char*)malloc(len*sizeof(Testing::param_t));
              p = (Testing::param_t*)result;
-             nbEntries = len;
+             nbEntries = len / gen.dimensions;
    
              for(uint32_t i=0; i < len; i++)
              {

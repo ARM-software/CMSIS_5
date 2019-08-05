@@ -302,11 +302,16 @@ class CodeGen:
          gen data if a generator
          If a generator:
            Generator kind (only 1 = cartesian product generator)
-           Number of samples generated when run
+           Number of input samples (number of values to encode all parameters)
+           Number of output samples (number of generated values)
            Number of dimensions
            For each dimension
              Length
              Samples
+        For instance, with A=[1,2] and B=[1,2,3].
+        Input dimension is 1+2 + 1 + 3 = 7 (number of values needed to encode the two lists
+        with their length).
+        Number of output dimensions is 2 * 3 = 6
 
         So, for a test (which is also a TreeElement in the structure),
         only node kind and node id are generated followed by 

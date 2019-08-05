@@ -4,7 +4,8 @@ import itertools
 import Tools
 
 
-
+# Those patterns are used for tests and benchmarks.
+# For tests, there is the need to add tests for saturation
 
 def writeTests(config):
     NBSAMPLES=256
@@ -51,6 +52,9 @@ def writeTests(config):
     
     ref = abs(data1)
     config.writeReference(10, ref)
+
+    ref = np.array([np.dot(data1 ,data2)])
+    config.writeReference(11, ref)
 
 
 PATTERNDIR = os.path.join("Patterns","DSP","BasicMaths","BasicMaths")

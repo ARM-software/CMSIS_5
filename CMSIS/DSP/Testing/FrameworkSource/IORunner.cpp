@@ -93,7 +93,7 @@ namespace Client
         // Read list of output
         m_io->ReadOutputList();
         // Read list of parameters
-        m_io->ReadParameterList();
+        m_io->ReadParameterList(nbParams);
 
         // Iterate on tests
         for(int i=1; i <= nbTests; i++)

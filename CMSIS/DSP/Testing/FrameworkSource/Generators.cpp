@@ -46,6 +46,7 @@ void generate2(Testing::param_t *result,Testing::param_t *data,Testing::nbParame
 
           *result++ = va;
           *result++ = vb;
+          nbEntries++;
 
        }
     }

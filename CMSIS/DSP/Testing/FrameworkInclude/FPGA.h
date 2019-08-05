@@ -54,7 +54,7 @@ FPGA driver. Used to read a C array describing how to drive the test.
       void ImportPattern(Testing::PatternID_t);
       void ReadPatternList();
       void ReadOutputList();
-      void ReadParameterList();
+      void ReadParameterList(Testing::nbParameters_t);
       Testing::nbSamples_t GetPatternSize(Testing::PatternID_t);
 
       void ImportPattern_f64(Testing::PatternID_t,char*,Testing::nbSamples_t nb);

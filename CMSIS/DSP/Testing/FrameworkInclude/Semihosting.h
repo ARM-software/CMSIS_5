@@ -57,7 +57,7 @@ Semihosting driver. Used to read a text file describing how to drive the test.
       void ImportPattern(Testing::PatternID_t);
       void ReadPatternList();
       void ReadOutputList();
-      void ReadParameterList();
+      void ReadParameterList(Testing::nbParameters_t);
       Testing::nbSamples_t GetPatternSize(Testing::PatternID_t);
       //Testing::nbSamples_t GetParameterSize(Testing::PatternID_t);
       

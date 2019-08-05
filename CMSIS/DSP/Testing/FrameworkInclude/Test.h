@@ -334,7 +334,7 @@ API of Memory managers used in the test framework
           of parameters (cartesian product of lists only).
 
       */
-      virtual void ReadParameterList()=0;
+      virtual void ReadParameterList(Testing::nbParameters_t)=0;
 
       /** Get current node ID
           group, suite or test. A group of test is considered as a test hence
