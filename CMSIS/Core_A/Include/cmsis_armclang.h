@@ -332,7 +332,10 @@ __STATIC_FORCEINLINE uint8_t __CLZ(uint32_t value)
 #define     __SMUSD                 __builtin_arm_smusd
 #define     __SMUSDX                __builtin_arm_smusdx
 #define     __SMLSDX                __builtin_arm_smlsdx
-
+#define     __USAT16                __builtin_arm_usat16
+#define     __SSUB8                 __builtin_arm_ssub8
+#define     __SXTB16                __builtin_arm_sxtb16
+#define     __SXTAB16               __builtin_arm_sxtab16
 
 
 __STATIC_FORCEINLINE  int32_t __QADD( int32_t op1,  int32_t op2)
