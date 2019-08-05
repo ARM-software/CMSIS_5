@@ -1233,6 +1233,17 @@ arm_avgpool_s8( const int dim_im_in_height,
     void      arm_softmax_q7(const q7_t * vec_in, const uint16_t dim_vec, q7_t * p_out);
 
   /**
+   * @brief Q7 softmax function with batch parameter
+   * @param[in]       vec_in      pointer to input vector
+   * @param[in]       nb_batches  number of batches 
+   * @param[in]       dim_vec     input vector dimention
+   * @param[out]      p_out       pointer to output vector
+   * @return none.
+   *
+   */
+
+void arm_softmax_with_batch_q7(const q7_t * vec_in, const uint16_t nb_batches,const uint16_t dim_vec, q7_t * p_out );
+  /**
    * @brief Q15 softmax function
    * @param[in]       vec_in      pointer to input vector
    * @param[in]       dim_vec     input vector dimension

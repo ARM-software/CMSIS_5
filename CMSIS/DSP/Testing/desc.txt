@@ -656,6 +656,7 @@ group Root {
 
           Functions {
             arm_softmax_q7 Test 1:test_softmax_q7
+            arm_softmax_with_batch_q7 Test 2:test_softmax_with_batch_q7
           }
        }
     }
