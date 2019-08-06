@@ -58,17 +58,34 @@
    *  But mathematically, the gradient will be the same
    *  with a log(2) scaling factor.
    *
+   *  If we compare the position of the max value in output of this
+   *  function with a reference float32 softmax (and thus using exp)
+   *  we see that the position of the max value is sometimes different.
+   *
+   *  If we do statistics on lot of input vectors we can compute
+   *  an average error rate in percent. It is the percent of time
+   *  that the max will be at a position different from the one
+   *  computed with a reference float32 implementation.
+   *
+   *  This average error rate is dependent on the vector size.
+   *  We have:
+   *
+   *  Average error rate in percent = -0.555548 + 0.246918 dim_vec
+   *  Variance of the error rate = -0.0112281 + 0.0382476 dim_vec
+   *
+   *
    */
 
-#if defined(ARM_MATH_LOOPUNROLL) && defined (ARM_MATH_DSP)
+#define Q7BITS 8
+#define LOG2Q7BITS 3
 
 void arm_softmax_q7(const q7_t * vec_in, const uint16_t dim_vec, q7_t * p_out )
 {
+#if defined(ARM_MATH_LOOPUNROLL) && defined (ARM_MATH_DSP)
     q31_t     sum;
     int16_t   i;
     uint8_t   shift;
     q15_t     base;
-    base = -128;
     uint16_t blkCnt;
 
     q31_t in,in1,in2;
@@ -77,8 +94,10 @@ void arm_softmax_q7(const q7_t * vec_in, const uint16_t dim_vec, q7_t * p_out )
     q31_t baseV;
     q31_t shiftV;
     const q31_t pad=0x0d0d0d0d;
-
     const q7_t *pIn=vec_in;
+
+    base = -128;
+
 
     /* We first search for the maximum */
     
@@ -96,7 +115,7 @@ void arm_softmax_q7(const q7_t * vec_in, const uint16_t dim_vec, q7_t * p_out )
      * that we ignore really small values. 
      * anyway, they will be 0 after shrinking to q7_t.
      */
-    base = base - (1 << 3);
+    base = base - Q7BITS;
     baseV = ((base & 0x0FF) << 24) | ((base & 0x0FF) << 16) | ((base & 0x0FF) << 8) | ((base & 0x0FF));
 
     sum = 0;
@@ -122,11 +141,11 @@ void arm_softmax_q7(const q7_t * vec_in, const uint16_t dim_vec, q7_t * p_out )
 #endif
 
 
-       shiftV = __USAT16(out1,3);
+       shiftV = __USAT16(out1,LOG2Q7BITS);
        sum += 0x1 << (shiftV & 0x0FF);
        sum += 0x1 << ((shiftV >> 16) & 0x0FF);
 
-       shiftV = __USAT16(out2,3);
+       shiftV = __USAT16(out2,LOG2Q7BITS);
        sum += 0x1 << (shiftV & 0x0FF);
        sum += 0x1 << ((shiftV >> 16) & 0x0FF);
 
@@ -137,7 +156,7 @@ void arm_softmax_q7(const q7_t * vec_in, const uint16_t dim_vec, q7_t * p_out )
     
     while(blkCnt)
     {
-       shift = (uint8_t)__USAT(*pIn++ - base, 3);
+       shift = (uint8_t)__USAT(*pIn++ - base, LOG2Q7BITS);
        sum += 0x1 << shift;
        blkCnt--;
     }
@@ -193,10 +212,7 @@ void arm_softmax_q7(const q7_t * vec_in, const uint16_t dim_vec, q7_t * p_out )
 
         blkCnt --;
     }
-}
 #else
-void arm_softmax_q7(const q7_t * vec_in, const uint16_t dim_vec, q7_t * p_out )
-{
     q31_t     sum;
     int16_t   i;
     uint8_t   shift;
@@ -220,13 +236,13 @@ void arm_softmax_q7(const q7_t * vec_in, const uint16_t dim_vec, q7_t * p_out )
      * that we ignore really small values. 
      * anyway, they will be 0 after shrinking to q7_t.
      */
-    base = base - (1 << 3);
+    base = base - Q7BITS;
 
     sum = 0;
 
     for (i = 0; i < dim_vec; i++)
     {
-        shift = (uint8_t)__USAT(vec_in[i] - base, 3);
+        shift = (uint8_t)__USAT(vec_in[i] - base, LOG2Q7BITS);
         sum += 0x1 << shift;
     }
 
@@ -242,8 +258,8 @@ void arm_softmax_q7(const q7_t * vec_in, const uint16_t dim_vec, q7_t * p_out )
         p_out[i] = (q7_t) __SSAT((output_base >> shift), 8);
         
     }
-}
 #endif
+}
 /**
  * @} end of Softmax group
  */
