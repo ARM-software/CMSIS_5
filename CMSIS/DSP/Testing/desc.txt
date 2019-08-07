@@ -464,6 +464,15 @@ group Root {
             arm_softmax_with_batch_q7 Test 2:test_softmax_with_batch_q7
           }
        }
+
+       suite NNSupport {
+          class = NNSupport
+          folder = SupportQ7
+
+          Functions {
+            test_nn_elementwise_add_s8 Test 1:test_nn_elementwise_add_s8
+          }
+       }
     }
 
 }

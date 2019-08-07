@@ -116,6 +116,7 @@ set(TESTSRC
   Source/Tests/FullyConnected.cpp
   Source/Tests/Pooling.cpp
   Source/Tests/Softmax.cpp
+  Source/Tests/NNSupport.cpp
   )
 target_include_directories(TestingLib PRIVATE Include/Tests)
 

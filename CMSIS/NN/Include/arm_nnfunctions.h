@@ -1385,6 +1385,53 @@ void arm_softmax_with_batch_q7(const q7_t * vec_in, const uint16_t nb_batches,co
                                                 const int32_t output_activation_max,
                                                 const int32_t out_shift,
                                                 const int32_t out_mult);
+
+  /**
+   * @brief S8 element wise add
+   * @param[in]       pInput1                      pointer to pInput1 vector
+   * @param[in]       pInput2                      pointer to pInput2 vector
+   * @param[in]       input1_offset                input1 offset
+   * @param[in]       input1_mult                  input1 multiplier
+   * @param[in]       input1_shift                 input1 shift
+   * @param[in]       input2_offset                input2 offset
+   * @param[in]       input2_mult                  input2 multiplier
+   * @param[in]       input2_shift                 input2 shift
+   * @param[in]       left_shift                    
+   * @param[out]      pOut                         pointer to output vector
+   * @param[in]       output_offset                output offset
+   * @param[in]       output_mult                  output multiplier
+   * @param[in]       output_shift                 output shift
+   * @param[in]       output_activation_min        for clamping
+   * @param[in]       output_activation_max        for clamping
+   * @param[in]       blockSize                    number of samples
+   * @return          The function returns         ARM_MATH_SUCCESS
+   *
+   * @details
+   *
+   *
+   */
+
+
+
+arm_status
+arm_nn_elementwise_add_s8(const int8_t   *pInput1,             
+                          const int8_t   *pInput2,           
+                          const int32_t  input1_offset,   
+                          const int32_t  input1_mult, 
+                          const int32_t  input1_shift, 
+                          const int32_t  input2_offset,
+                          const int32_t  input2_mult, 
+                          const int32_t  input2_shift,
+                          const int32_t  left_shift,
+                          int8_t   *pOutput,
+                          const int32_t  output_offset,             
+                          const int32_t  out_mult,       
+                          const int32_t  out_shift,     
+                          const int32_t  output_activation_min,
+                          const int32_t  output_activation_max,
+                          const uint32_t blockSize
+                          );
+
 #ifdef __cplusplus
 }
 #endif
