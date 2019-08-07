@@ -38,6 +38,18 @@ def float_to_hex(f):
     """
     return hex(struct.unpack('<I', struct.pack('<f', f))[0])
 
+def float64_to_hex(f):
+    """ Convert and x86 float to an ARM unsigned long int.
+  
+    Args:
+      f (float): value to be converted
+    Raises:
+      Nothing 
+    Returns:
+      str : representation of the hex value
+    """
+    return hex(struct.unpack('<Q', struct.pack('<d', f))[0])
+
 def to_q31(v):
     r = int(round(v * 2**31))
     if (r > 0x07FFFFFFF):
@@ -218,6 +230,31 @@ class Config:
           return(os.path.join(self._paramDir,"%s%d.txt" % (name,i)))
         else:
           return(os.path.join(self._paramDir,"Params%d.txt" % i))
+
+    def _writeVectorF64(self,i,data):
+        """ Write pattern data
+        
+        The format is recognized by the text framework script.
+        First line is the sample width (B,H or W,D for 8,16,32 or 64 bits)
+        Second line is number of samples
+        Other lines are hexadecimal representation of the samples in format
+        which can be read on big endian ARM.
+        
+          Args:
+            j (int): ID of pattern file
+            data (array): Vector containing the data
+          Raises:
+            Nothing 
+          Returns:
+            Nothing
+        """
+        with open(i,"w") as f:
+            # Write sample dimension nb sample header
+            #np.savetxt(i, data, newline="\n", header="W\n%d" % len(data),comments ="" )
+            f.write("D\n%d\n" % len(data))
+            for v in data:
+                f.write("// %f\n" % v)
+                f.write("%s\n" % float64_to_hex(v))
 
     def _writeVectorF32(self,i,data):
         """ Write pattern data
@@ -420,6 +457,8 @@ class Config:
                 f.write("%s\n" % s8(v))
 
     def writeReference(self,j,data,name=None):
+        if (self._ext == "f64"):
+          self._writeVectorF64(self.refP(j,name),data)
         if (self._ext == "f32"):
           self._writeVectorF32(self.refP(j,name),data)
         if (self._ext == "q31"):
@@ -446,6 +485,8 @@ class Config:
         self._writeVectorF32(self.refF32P(j,name),data)
 
     def writeInput(self,j,data,name=None):
+        if (self._ext == "f64"):
+          self._writeVectorF64(self.inputP(j,name),data)
         if (self._ext == "f32"):
           self._writeVectorF32(self.inputP(j,name),data)
         if (self._ext == "q31"):

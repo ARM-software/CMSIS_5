@@ -428,6 +428,39 @@ class CodeGen:
            for c in root:
                self._genText(c,textFile)
 
+    def _write64(self,v,f):
+      """ Write four integers into a C char array to represent word32
+      
+      It is used to dump input patterns in include files
+      or test drive in include file
+            
+      Args:
+        v (int) : The int64 to write
+        f (file) : the opended file
+      Raises:
+        Nothing 
+      Returns:
+        Nothing
+      """
+      a=[0,0,0,0,0,0,0,0]
+      a[0]= v & 0x0FF
+      v = v >> 8 
+      a[1]= v & 0x0FF
+      v = v >> 8 
+      a[2]= v & 0x0FF
+      v = v >> 8 
+      a[3]= v & 0x0FF
+      v = v >> 8 
+      a[4]= v & 0x0FF
+      v = v >> 8 
+      a[5]= v & 0x0FF
+      v = v >> 8 
+      a[6]= v & 0x0FF
+      v = v >> 8 
+      a[7]= v & 0x0FF
+      v = v >> 8 
+      f.write("%d,%d,%d,%d,%d,%d,%d,%d,\n" % (a[0],a[1],a[2],a[3],a[4],a[5],a[6],a[7]))
+
     def _write32(self,v,f):
       """ Write four integers into a C char array to represent word32
       
@@ -435,7 +468,7 @@ class CodeGen:
       or test drive in include file
             
       Args:
-        v (int) : The int3 to write
+        v (int) : The int32 to write
         f (file) : the opended file
       Raises:
         Nothing 
@@ -452,6 +485,7 @@ class CodeGen:
       a[3]= v & 0x0FF
       v = v >> 8 
       f.write("%d,%d,%d,%d,\n" % (a[0],a[1],a[2],a[3]))
+
 
     def _write16(self,v,f):
       """ Write 2 integers into a C char array to represent word32
@@ -514,6 +548,8 @@ class CodeGen:
 
     def convertToInt(self,k,s):
       v = 0
+      if k == "D":
+        v = decodeHex(s,64,0x0FFFFFFFFFFFFFFFF)
       if k == "W":
         v = decodeHex(s,32,0x0FFFFFFFF)
       if k == "H":
@@ -554,6 +590,8 @@ class CodeGen:
           
           k =pat.readline().strip()
           sampleSize=1
+          if k == 'D':
+              sampleSize = 8 
           if k == 'W':
               sampleSize = 4 
           if k == 'H':
@@ -578,6 +616,8 @@ class CodeGen:
             v = self.convertToInt(k,pat.readline())
             # Depending on the word size, this hex must be writen to 
             # the C array as 4,2 or 1 number.
+            if k == 'D':
+               self._write64(v,includeFile)
             if k == 'W':
                self._write32(v,includeFile)
             if k == 'H':

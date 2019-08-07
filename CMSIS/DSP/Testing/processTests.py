@@ -29,7 +29,7 @@ if args.f is not None:
     # Parse the test description.
     root = p.parse(args.f)
     d.deprecate(root,args.others)
-    print(root)
+    #print(root)
     # Generate code with the tree of tests
     c.genCodeForTree(root)
 else:

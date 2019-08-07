@@ -669,6 +669,77 @@ group Root {
                 }
               }
            }
+
+           group BIQUAD {
+             class = BIQUAD 
+             folder = BIQUAD
+
+             suite BIQUAD F32 {
+                class = BIQUADF32 
+                folder = BIQUADF32
+
+                ParamList {
+                  NumStages, NB
+                  Summary NumStages, NB
+                  Names "Number of stages","Number of samples"
+                  Formula "NumStages * NB"
+                }
+
+                Pattern SAMPLES1_F32_ID : Samples1_f32.txt 
+                Pattern COEFS1_F32_ID : Coefs1_f32.txt 
+
+                Output  OUT_SAMPLES_F32_ID : Output
+                Output  STATE_F32_ID : State
+
+                Params PARAM1_ID = {
+                  NumStages = [1,2,4]
+                  NB = [16,128,256]
+                }
+
+                Functions {
+                   test_biquad_cascade_df1_f32:test_biquad_cascade_df1_f32 {
+                     oldID = 1
+                   }
+
+                   test_biquad_cascade_df2T_f32:test_biquad_cascade_df2T_f32 {
+                     oldID = 6
+                   }
+
+                   test_biquad_cascade_stereo_df2T_f32:test_biquad_cascade_stereo_df2T_f32 {
+                     oldID = 8
+                   }
+                } -> PARAM1_ID
+              }
+
+             suite BIQUAD F64 {
+                class = BIQUADF64 
+                folder = BIQUADF64
+
+                ParamList {
+                  NumStages, NB
+                  Summary NumStages, NB
+                  Names "Number of stages","Number of samples"
+                  Formula "NumStages * NB"
+                }
+
+                Pattern SAMPLES1_F64_ID : Samples1_f64.txt 
+                Pattern COEFS1_F64_ID : Coefs1_f64.txt 
+
+                Output  OUT_SAMPLES_F64_ID : Output
+                Output  STATE_F64_ID : State
+
+                Params PARAM1_ID = {
+                  NumStages = [1,2,4]
+                  NB = [16,128,256]
+                }
+
+                Functions {
+                   test_biquad_cascade_df2T_f64:test_biquad_cascade_df2T_f64 {
+                     oldID = 7
+                   }
+                } -> PARAM1_ID
+              }
+           }
         }
     }
 

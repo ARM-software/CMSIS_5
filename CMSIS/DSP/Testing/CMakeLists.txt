@@ -97,6 +97,8 @@ set(TESTSRC
   Source/Benchmarks/DECIMF32.cpp
   Source/Benchmarks/DECIMQ31.cpp
   Source/Benchmarks/DECIMQ15.cpp
+  Source/Benchmarks/BIQUADF32.cpp
+  Source/Benchmarks/BIQUADF64.cpp
   Source/Benchmarks/FullyConnectedBench.cpp
   Source/Benchmarks/PoolingBench.cpp
   )
