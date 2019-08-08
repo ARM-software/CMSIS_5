@@ -1,8 +1,8 @@
 /******************************************************************************
  * @file     startup_ARMCR52.c
  * @brief    CMSIS Core Device Startup File for Cortex-R52 Device
- * @version  V1.0.0
- * @date     21. May 2019
+ * @version  V1.0.1
+ * @date     08. Aug 2019
  ******************************************************************************/
 /*
  * Copyright (c) 2019 Arm Limited. All rights reserved.
@@ -36,17 +36,12 @@
   External References
  *----------------------------------------------------------------------------*/
 extern uint32_t __INITIAL_SP;
-extern uint32_t __STACK_LIMIT;
-extern uint32_t __ECC_INIT_START;
-extern uint32_t __ECC_INIT_END;
-
-extern __NO_RETURN void __PROGRAM_START(void);
 
 /*----------------------------------------------------------------------------
   Internal References
  *----------------------------------------------------------------------------*/
-void __NO_RETURN EL2_Default_Handler(void);
-void __NO_RETURN EL1_Default_Handler(void);
+void EL2_Default_Handler(void);
+void EL1_Default_Handler(void);
 void __NAKED_NO_RETURN EL2_Reset_Handler(void);
 
 /*----------------------------------------------------------------------------
@@ -126,14 +121,9 @@ void __NAKED_NO_RETURN SwitchEL2toEL1(uint32_t func) {
   Reset Handler called on controller reset
  *----------------------------------------------------------------------------*/
 void __NAKED_NO_RETURN EL2_Reset_Handler(void) {
-  register uint64_t *pDest64;
 
-  /* ECC initialization:
-   * .bss, heap and stack must be initialized before usage */
-  pDest64 = (uint64_t*)&__ECC_INIT_START;
-  for ( ; pDest64 < (uint64_t*)&__ECC_INIT_END; pDest64++) {
-    *pDest64 = 0xDEADBEEFFEEDCAFEUL;
-  }
+  __EARLY_INIT();
+
   __set_SP((uint32_t)&__INITIAL_SP);
 
   SystemInit(); /* CMSIS System Initialization */

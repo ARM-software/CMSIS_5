@@ -2,8 +2,8 @@
  * @file     ARMCR52.h
  * @brief    CMSIS Core Peripheral Access Layer Header File for
  *           ARMCR52 Device
- * @version  V1.0.0
- * @date     21. May 2019
+ * @version  V1.0.1
+ * @date     08. Aug 2019
  ******************************************************************************/
 /*
  * Copyright (c) 2019 Arm Limited. All rights reserved.
@@ -71,9 +71,10 @@ extern "C" {
 #define __FPU_PRESENT             1U        /* FPU present */
 #define __FPU_DP                  0U        /* double precision FPU */
 #define __DSP_PRESENT             0U        /* DSP extension present */
-#define __ICACHE_PRESENT          1U
-#define __DCACHE_PRESENT          1U
-#define __DTCM_PRESENT            1U
+#define __ICACHE_PRESENT          1U        /* Instruction cache present */
+#define __DCACHE_PRESENT          1U        /* Data cache present */
+#define __DTCM_PRESENT            1U        /* Tightly-Coupled Memory present */
+#define __ECC_PRESENT             1U        /* Memory with Error Correcting Code */
 
 #include "core_cr.h"                        /* Processor and core peripherals */
 #include "system_ARMCR52.h"                 /* System Header */

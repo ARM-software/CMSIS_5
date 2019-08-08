@@ -1,8 +1,8 @@
 /******************************************************************************
  * @file     gcc_arm.ld
  * @brief    GNU Linker Script for Cortex-R based device
- * @version  V1.0.0
- * @date     21. May 2019
+ * @version  V1.0.1
+ * @date     08. Aug 2019
  ******************************************************************************/
 /*
  * Copyright (c) 2019 Arm Limited. All rights reserved.
@@ -79,6 +79,8 @@ MEMORY
  * It defines following symbols, which code can use without definition:
  *   __exidx_start
  *   __exidx_end
+ *   __ecc_table_start__
+ *   __ecc_table_end__
  *   __copy_table_start__
  *   __copy_table_end__
  *   __zero_table_start__
@@ -102,8 +104,6 @@ MEMORY
  *   __stack
  *   __HypStackLimit
  *   __HypStackTop
- *    __ecc_init_start__
- *    __ecc_init_end__
  */
 ENTRY(__EL2_Vectors)
 
@@ -167,12 +167,12 @@ SECTIONS
     __copy_table_start__ = .;
     LONG (__etext)
     LONG (__data_start__)
-    LONG (__data_end__ - __data_start__)
+    LONG ((__data_end__ - __data_start__) / 4)
     /* Add each additional data section here */
 /*
     LONG (__etext2)
     LONG (__data2_start__)
-    LONG (__data2_end__ - __data2_start__)
+    LONG ((__data2_end__ - __data2_start__) / 4)
 */
     __copy_table_end__ = .;
   } > FLASH
@@ -184,9 +184,31 @@ SECTIONS
     /* Add each additional bss section here */
 /*
     LONG (__bss2_start__)
-    LONG (__bss2_end__ - __bss2_start__)
+    LONG ((__bss2_end__ - __bss2_start__) / 4)
 */
     __zero_table_end__ = .;
+  } > FLASH
+
+  /* ECC initialization is done by 64-bit writes thus used symbols
+   * must be 8byte aligned */
+  .ecc.table :
+  {
+    . = ALIGN(8);
+    __ecc_table_start__ = .;
+
+    QUAD (__bss_start__)
+    QUAD ((__bss_end__ - __bss_start__) / 8)
+
+    QUAD (__HeapTop)
+    QUAD ((__HeapLimit - __HeapTop) / 8)
+
+    QUAD (__HypStackLimit)
+    QUAD ((__HypStackLimit - __HypStackTop) / 8)
+
+    QUAD (__StackLimit)
+    QUAD ((__StackLimit - __StackTop) / 8)
+
+    __ecc_table_end__ = .;
   } > FLASH
 
   /**
@@ -196,12 +218,9 @@ SECTIONS
    */
   __etext = ALIGN (4);
 
-  /* ECC initialization is done by 64-bit writes thus __ecc_init_start__
-   * and __ecc_init_end__ must be 8byte aligned */
   .data : AT (__etext)
   {
-    . = ALIGN(8);
-    __ecc_init_start__ = .;
+    . = ALIGN(4);
     __data_start__ = .;
     *(vtable)
     *(.data)
@@ -257,8 +276,8 @@ SECTIONS
   } > RAM2
 */
 
-  /* ECC initialization is done by 64-bit writes thus __ecc_init_start__
-   * and __ecc_init_end__ must be 8byte aligned */
+  /* ECC initialization is done by 64-bit writes thus __bss_start__
+   * and __bss_end__ must be 8byte aligned */
   .bss :
   {
     . = ALIGN(8);
@@ -293,6 +312,7 @@ SECTIONS
   {
     . = ALIGN(8);
     __end__ = .;
+    __HeapTop = .;
     PROVIDE(end = .);
     . = . + __HEAP_SIZE;
     . = ALIGN(8);
@@ -317,7 +337,6 @@ SECTIONS
     . = . + __HYP_STACK_SIZE;
     . = ALIGN(8);
     __HypStackTop = .;
-    __ecc_init_end__ = .;
   } > RAM
 
   PROVIDE(__stack = __StackTop);
