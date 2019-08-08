@@ -196,8 +196,21 @@ SECTIONS
     . = ALIGN(8);
     __ecc_table_start__ = .;
 
+    QUAD (__data_start__)
+    QUAD ((__data_end__ - __data_start__) / 8)
+
+/*
+    QUAD (__data2_start__)
+    QUAD ((__data2_end__ - __data2_start__) / 8)
+*/
+
     QUAD (__bss_start__)
     QUAD ((__bss_end__ - __bss_start__) / 8)
+
+/*
+    QUAD (__bss2_start__)
+    QUAD ((__bss2_end__ - __bss2_start__) / 8)
+*/
 
     QUAD (__HeapTop)
     QUAD ((__HeapLimit - __HeapTop) / 8)
@@ -220,7 +233,7 @@ SECTIONS
 
   .data : AT (__etext)
   {
-    . = ALIGN(4);
+    . = ALIGN(8);
     __data_start__ = .;
     *(vtable)
     *(.data)
@@ -248,7 +261,7 @@ SECTIONS
     PROVIDE_HIDDEN (__fini_array_end = .);
 
     KEEP(*(.jcr*))
-    . = ALIGN(4);
+    . = ALIGN(8);
     /* All data end */
     __data_end__ = .;
 
@@ -258,7 +271,7 @@ SECTIONS
    * Secondary data section, optional
    *
    * Remember to add each additional data section
-   * to the .copy.table above to asure proper
+   * to the .copy.table and .ecc.table above to asure proper
    * initialization during startup.
    */
 /*
@@ -266,11 +279,11 @@ SECTIONS
 
   .data2 : AT (__etext2)
   {
-    . = ALIGN(4);
+    . = ALIGN(8);
     __data2_start__ = .;
     *(.data2)
     *(.data2.*)
-    . = ALIGN(4);
+    . = ALIGN(8);
     __data2_end__ = .;
 
   } > RAM2
@@ -293,7 +306,7 @@ SECTIONS
    * Secondary bss section, optional
    *
    * Remember to add each additional bss section
-   * to the .zero.table above to asure proper
+   * to the .zero.table and .ecc.table above to asure proper
    * initialization during startup.
    */
 /*
@@ -329,7 +342,7 @@ SECTIONS
   } > RAM
 
   /* Set Hypevisor stack top to end of RAM. Then set regular stack top,
-   * and stack limit move down by size of stack_dummy section */
+   * and stack limit move down by size of __STACK_SIZE section */
   .hyp_stack (ORIGIN(RAM) + LENGTH(RAM) - __HYP_STACK_SIZE) (COPY) :
   {
     . = ALIGN(8);
@@ -341,6 +354,6 @@ SECTIONS
 
   PROVIDE(__stack = __StackTop);
 
-  /* Check if data + heap + stack exceeds RAM limit */
+  /* Check if data + heap + stack + hypstack exceeds RAM limit */
   ASSERT(__StackLimit >= __HeapLimit, "region RAM overflowed with stack")
 }

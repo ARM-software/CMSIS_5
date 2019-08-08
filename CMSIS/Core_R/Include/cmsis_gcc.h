@@ -134,7 +134,7 @@ __STATIC_FORCEINLINE void __cmsis_cpu_init(void)
 #if defined (__ECC_PRESENT) && (__ECC_PRESENT == 1U)
   typedef struct {
     uint64_t* dest;
-	uint64_t  wlen;
+    uint64_t  wlen;
   } __ecc_table_t;
 
   extern const __ecc_table_t __ecc_table_start__;

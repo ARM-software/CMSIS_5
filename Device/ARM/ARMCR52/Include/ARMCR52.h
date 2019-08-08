@@ -68,9 +68,9 @@ extern "C" {
 #define __MPU_PRESENT             1U        /* MPU present */
 #define __VTOR_PRESENT            1U        /* VTOR present */
 #define __Vendor_SysTickConfig    0U        /* Set to 1 if different SysTick Config is used */
-#define __FPU_PRESENT             0U        /* FPU present */
-#define __FPU_DP                  0U        /* double precision FPU */
-#define __DSP_PRESENT             0U        /* DSP extension present */
+#define __FPU_PRESENT             0U        /* no FPU present */
+#define __FPU_DP                  0U        /* single precision FPU */
+#define __DSP_PRESENT             0U        /* no DSP extension present */
 #define __ICACHE_PRESENT          1U        /* Instruction cache present */
 #define __DCACHE_PRESENT          1U        /* Data cache present */
 #define __DTCM_PRESENT            1U        /* Tightly-Coupled Memory present */
