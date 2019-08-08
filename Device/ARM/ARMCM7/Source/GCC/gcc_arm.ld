@@ -185,8 +185,21 @@ SECTIONS
     . = ALIGN(4);
     __ecc_table_start__ = .;
 
+    LONG (__data_start__)
+    LONG ((__data_end__ - __data_start__) / 4)
+
+/*
+    LONG (__data2_start__)
+    LONG ((__data2_end__ - __data2_start__) / 4)
+*/
+
     LONG (__bss_start__)
     LONG ((__bss_end__ - __bss_start__) / 4)
+
+/*
+    LONG (__bss2_start__)
+    LONG ((__bss2_end__ - __bss2_start__) / 4)
+*/
 
     LONG (__HeapTop)
     LONG ((__HeapLimit - __HeapTop) / 4)
@@ -243,7 +256,7 @@ SECTIONS
    * Secondary data section, optional
    *
    * Remember to add each additional data section
-   * to the .copy.table above to asure proper
+   * to the .copy.table and .ecc.table above to asure proper
    * initialization during startup.
    */
 /*
@@ -276,7 +289,7 @@ SECTIONS
    * Secondary bss section, optional
    *
    * Remember to add each additional bss section
-   * to the .zero.table above to asure proper
+   * to the .zero.table and .ecc.table above to asure proper
    * initialization during startup.
    */
 /*
