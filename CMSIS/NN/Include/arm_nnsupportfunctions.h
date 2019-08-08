@@ -117,8 +117,8 @@ void      arm_q7_to_q15_reordered_no_shift(const q7_t * pSrc, q15_t * pDst, uint
 
 /**
  * @brief Converts the elements from a q7 vector to a q15 vector with an added offset
- * @param[in]    *src       points to the q7 input vector
- * @param[out]   *dst       points to the q15 output vector
+ * @param[in]    src        pointer to the q7 input vector
+ * @param[out]   dst        pointer to the q15 output vector
  * @param[in]    block_size length of the input vector
  * @param[in]    offset     q7 offset to be added to each input vector element.
  *
@@ -132,6 +132,21 @@ void      arm_q7_to_q15_reordered_no_shift(const q7_t * pSrc, q15_t * pDst, uint
  *
  */
 void arm_q7_to_q15_with_offset(const q7_t *src, q15_t *dst, uint32_t block_size, q7_t offset);
+
+/**
+ * @brief Converts the elements of the q7 vector to reordered q15 vector with an added offset
+ * @param[in]       src        pointer to the q7 input vector
+ * @param[out]      dst        pointer to the q15 output vector
+ * @param[in]       block_size length of the input vector
+ * @param[in]       offset     offset to be added to each input vector element.
+ * @return none.
+ *
+ * @details  This function does the q7 to q15 expansion with re-ordering of bytes. Re-ordering is a consequence of
+ *           the sign extension intrinsic(DSP extension). The tail (i.e., last (N % 4) elements) retains its original
+ *           order.
+ *
+ */
+void arm_q7_to_q15_reordered_with_offset(const q7_t *src, q15_t *dst, uint32_t block_size, q7_t offset);
 
 /**
  * @brief Converts the elements from a q7 vector and accumulate to a q15 vector
@@ -194,7 +209,7 @@ __STATIC_FORCEINLINE q7_t *read_and_pad_reordered(q7_t *source, q31_t * out1, q3
 /**
  * @brief read and expand one q7 word into two q15 words with reordering and add an offset
  */
-__STATIC_FORCEINLINE q7_t *read_and_pad_reordered_with_offset(q7_t *source, q31_t * out1, q31_t * out2,q31_t offset)
+__STATIC_FORCEINLINE q7_t *read_and_pad_reordered_with_offset(q7_t *source, q31_t * out1, q31_t * out2, q31_t offset)
 {
         q31_t     inA = read_q7x4_ia(&source);
 

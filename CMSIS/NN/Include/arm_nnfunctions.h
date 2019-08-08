@@ -139,8 +139,8 @@ extern    "C"
    * @param[in,out]   output     pointer to output tensor. format: [H, W, out_ch]
    * @param[in]       output_shift    pointer to per output channel requantization shift parameter.
    * @param[in]       output_mult     pointer to per output channel requantization multiplier parameter.
-   * @param[in]       out_offset      output tensor offset.
-   * @param[in]       input_offset    input tensor offset.
+   * @param[in]       out_offset      output tensor offset. Range: int8
+   * @param[in]       input_offset    input tensor offset. Range: int8
    * @param[in]       output_activation_min   Minimum value to clamp the output to. Range: int8
    * @param[in]       output_activation_max   Minimum value to clamp the output to. Range: int8
    * @param[in]       output_x    output tensor width
@@ -444,6 +444,65 @@ extern    "C"
                                                       const uint16_t dim_im_out_y,
                                                       q15_t * bufferA,
                                                       q7_t * bufferB);
+
+  /**
+   * @brief Fast s8 version for 1x1 convolution (non-square shape)
+   * @param[in]      input         pointer to input tensor.  Format: [H, W, in_ch]
+   * @param[in]      input_x       input tensor dimension x
+   * @param[in]      input_y       input tensor dimension y
+   * @param[in]      input_ch      number of input tensor channels
+   * @param[in]      kernel        pointer to kernel weights. Format: [out_ch, H, W, in_ch]
+   * @param[in]      output_ch     number of filters, i.e., output tensor channels
+   * @param[in]      pad_x         padding size x
+   * @param[in]      pad_y         padding size y
+   * @param[in]      stride_x      convolution stride x
+   * @param[in]      stride_y      convolution stride y
+   * @param[in]      bias          pointer to bias
+   * @param[in,out]  output        pointer to output tensor.  Format: [H, W, out_ch]
+   * @param[in]      output_shift  pointer to per output channel requantization shift parameter.
+   * @param[in]      output_mult   pointer to per output channel requantization multiplier parameter.
+   * @param[in]      out_offset    output tensor offset. Range: int8
+   * @param[in]      input_offset input tensor offset. Range: int8
+   * @param[in]      out_activation_min   Minimum value to clamp the output to. Range: int8
+   * @param[in]      out_activation_max   Minimum value to clamp the output to. Range: int8
+   * @param[in]      output_x  output tensor width
+   * @param[in]      output_y  output tensor height
+   * @param[in]      buffer_a  pointer to buffer space used for input optimization(partial im2col) and is necessary
+   *                           when ARM_MATH_LOOPUNROLL and ARM_MATH_DSP is defined.
+   *                           Required space: 2 * input_ch * sizeof(q15_t) bytes
+   * @return     The function returns either
+   *                  <code>ARM_MATH_SIZE_MISMATCH</code> if argument constraints fail. or,
+   *                  <code>ARM_MATH_SUCCESS</code> on successful completion.
+   *
+   * @details
+   *   - Supported framework : TensorFlow Lite Micro
+   *   - The following constrains on the arguments apply
+   *      -# output_ch and input_ch are multiples of 2
+   *      -# padding equals 0
+   *      -# Stride equals 1
+   *
+   */
+    arm_status arm_convolve_1x1_s8_fast(const q7_t *input,
+                                        const uint16_t input_x,
+                                        const uint16_t input_y,
+                                        const uint16_t input_ch,
+                                        const q7_t *kernel,
+                                        const uint16_t output_ch,
+                                        const uint16_t pad_x,
+                                        const uint16_t pad_y,
+                                        const uint16_t stride_x,
+                                        const uint16_t stride_y,
+                                        const q7_t *bias,
+                                        q7_t *output,
+                                        const int32_t *output_shift,
+                                        const int32_t *output_mult,
+                                        const int32_t out_offset,
+                                        const int32_t input_offset,
+                                        const int32_t out_activation_min,
+                                        const int32_t out_activation_max,
+                                        const uint16_t output_x,
+                                        const uint16_t output_y,
+                                        q15_t *buffer_a);
 
   /**
    * @brief Q7 version of convolution for RGB image
@@ -1040,7 +1099,7 @@ extern    "C"
  *
  */
 
-  /**
+   /**
    * @brief Matrix-multiplication function for convolution
    * @param[in]       pA          pointer to operand A
    * @param[in]       pInBuffer   pointer to operand B, always conssists of 2 vectors
@@ -1061,7 +1120,7 @@ extern    "C"
                                             const uint16_t out_shift,
                                             const q7_t * bias,
                                             q7_t * pOut);
-/**
+   /**
    * @brief Matrix-multiplication function for convolution with per-channel requantization.
    * @param[in]       input_a     pointer to operand A
    * @param[in]       input_b     pointer to operand B, always consists of 2 vectors.
@@ -1079,7 +1138,9 @@ extern    "C"
    *              2. NULL if implementation is not available.
    *
    * @details   This function does the matrix multiplication of weight matrix for all output channels
-   *            with 2 columns from im2col producing an output of two elements/output_channel.
+   *            with 2 columns from im2col and produces two elements/output_channel. The outputs are
+   *            clamped in the range provided by activation min and max.
+   *            Supported framework: TensorFlow Lite micro.
    */
     q7_t *arm_nn_mat_mult_kernel_s8_s16(const q7_t *input_a,
                                         const q15_t *input_b,
@@ -1093,7 +1154,27 @@ extern    "C"
                                         const q7_t *const output_bias,
                                         q7_t *out_0);
 
-  /**
+   /**
+   * @brief Matrix-multiplication of re-ordered input B with A.
+   *
+   * @details  For arguments, refer arm_nn_mat_mult_kernel_s8_s16. The re-ordering is a consequence
+   *           of sign extension done by the SXTB16 command on input_b. The outputs are clamped in the range
+   *           provided by activation min and max.
+   *           Supported framework: TensorFlow Lite micro.
+   */
+    q7_t *arm_nn_mat_mult_kernel_s8_s16_reordered(const q7_t *input_a,
+                                                  const q15_t *input_b,
+                                                  const uint16_t output_ch,
+                                                  const int32_t *out_shift,
+                                                  const int32_t *out_mult,
+                                                  const int32_t out_offset,
+                                                  const int16_t activation_min,
+                                                  const int16_t activation_max,
+                                                  const uint16_t num_col_a,
+                                                  const q7_t *const output_bias,
+                                                  q7_t *out_0);
+
+    /**
    * @brief Matrix-multiplication function for convolution with reordered columns
    * @param[in]       pA          pointer to operand A
    * @param[in]       pInBuffer   pointer to operand B, always conssists of 2 vectors

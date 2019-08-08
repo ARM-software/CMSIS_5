@@ -18,35 +18,39 @@
 
 /* ----------------------------------------------------------------------
  * Project:      CMSIS NN Library
- * Title:        arm_nn_mat_mult_kernel_s8_s16.c
- * Description:  Matrix-multiplication function for convolution
+ * Title:        arm_nn_mat_mult_kernel_s8_s16_reordered.c
+ * Description:  Matrix-multiplication function for convolution with reordered columns
  *
- * $Date:        June 2019
- * $Revision:    V.0.8.0
+ * $Date:        August 2019
+ * $Revision:    V.1.0.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
 
-#include "arm_math.h"
 #include "arm_nnfunctions.h"
+#include "arm_math.h"
 
 /**
-   * @brief Matrix-multiplication function for convolution with per-channel requantization.
-   *
-   * @note  Refer header file for details.
-   *
-   */
-q7_t *arm_nn_mat_mult_kernel_s8_s16(const q7_t *input_a,
-                                    const q15_t *input_b,
-                                    const uint16_t output_ch,
-                                    const int32_t *out_shift,
-                                    const int32_t *out_mult,
-                                    const int32_t out_offset,
-                                    const int16_t activation_min,
-                                    const int16_t activation_max,
-                                    const uint16_t num_col_a,
-                                    const q7_t *const output_bias,
-                                    q7_t *out_0)
+ * @brief Matrix-multiplication with re-ordered input and bias inputs for convolution with per-channel
+ *        requantization. The re-ordering is a consequence of sign extension is done by the SXTB16 command.
+ *
+ * @note  Refer header file for details. This function differs from arm_nn_mat_mult_kernel_s8_s16(), in that it uses
+ *        read_and_pad_reordered() instead of arm_nn_mat_mult_kernel_s8_s16(). Investigating the cycles impact and
+ *        unifying these two functions is a potential future improvement.
+ *
+ */
+
+q7_t *arm_nn_mat_mult_kernel_s8_s16_reordered(const q7_t *input_a,
+                                              const q15_t *input_b,
+                                              const uint16_t output_ch,
+                                              const int32_t *out_shift,
+                                              const int32_t *out_mult,
+                                              const int32_t out_offset,
+                                              const int16_t activation_min,
+                                              const int16_t activation_max,
+                                              const uint16_t num_col_a,
+                                              const q7_t *const output_bias,
+                                              q7_t *out_0)
 {
 #if defined(ARM_MATH_LOOPUNROLL) && defined(ARM_MATH_DSP)
     /* set up the second output pointers */
@@ -79,8 +83,8 @@ q7_t *arm_nn_mat_mult_kernel_s8_s16(const q7_t *input_a,
             q31_t b0 = arm_nn_read_q15x2_ia(&ip_b0);
             q31_t b1 = arm_nn_read_q15x2_ia(&ip_b1);
 
-            ip_a0 = (q7_t *)read_and_pad((void *)ip_a0, &a01, &a02);
-            ip_a1 = (q7_t *)read_and_pad((void *)ip_a1, &a11, &a12);
+            ip_a0 = (q7_t *)read_and_pad_reordered((void *)ip_a0, &a01, &a02);
+            ip_a1 = (q7_t *)read_and_pad_reordered((void *)ip_a1, &a11, &a12);
 
             ch_0_out_0 = __SMLAD(a01, b0, ch_0_out_0);
             ch_0_out_1 = __SMLAD(a01, b1, ch_0_out_1);
@@ -163,7 +167,7 @@ q7_t *arm_nn_mat_mult_kernel_s8_s16(const q7_t *input_a,
             q31_t b0 = arm_nn_read_q15x2_ia(&ip_b0);
             q31_t b1 = arm_nn_read_q15x2_ia(&ip_b1);
 
-            ip_a0 = (q7_t *)read_and_pad((void *)ip_a0, &a01, &a02);
+            ip_a0 = (q7_t *)read_and_pad_reordered((void *)ip_a0, &a01, &a02);
 
             ch_0_out_0 = __SMLAD(a01, b0, ch_0_out_0);
             ch_0_out_1 = __SMLAD(a01, b1, ch_0_out_1);
