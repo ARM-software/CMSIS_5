@@ -1,8 +1,8 @@
 /******************************************************************************
  * @file     gcc_arm.ld
  * @brief    GNU Linker Script for Cortex-M based device
- * @version  V2.0.0
- * @date     21. May 2019
+ * @version  V2.0.1
+ * @date     08. Aug 2019
  ******************************************************************************/
 /*
  * Copyright (c) 2009-2019 Arm Limited. All rights reserved.
@@ -71,6 +71,8 @@ MEMORY
  * It defines following symbols, which code can use without definition:
  *   __exidx_start
  *   __exidx_end
+ *   __ecc_table_start__
+ *   __ecc_table_end__
  *   __copy_table_start__
  *   __copy_table_end__
  *   __zero_table_start__
@@ -176,6 +178,25 @@ SECTIONS
     __zero_table_end__ = .;
   } > FLASH
 
+  /* ECC initialization is done by 32-bit writes thus used symbols
+   * must be 4byte aligned */
+  .ecc.table :
+  {
+    . = ALIGN(4);
+    __ecc_table_start__ = .;
+
+    LONG (__bss_start__)
+    LONG ((__bss_end__ - __bss_start__) / 4)
+
+    LONG (__HeapTop)
+    LONG ((__HeapLimit - __HeapTop) / 4)
+
+    LONG (__StackLimit)
+    LONG ((__StackLimit - __StackTop) / 4)
+
+    __ecc_table_end__ = .;
+  } > FLASH
+
   /**
    * Location counter can end up 2byte aligned with narrow Thumb code but
    * __etext is assumed by startup code to be the LMA of a section in RAM
@@ -274,6 +295,7 @@ SECTIONS
   {
     . = ALIGN(8);
     __end__ = .;
+    __HeapTop = .;
     PROVIDE(end = .);
     . = . + __HEAP_SIZE;
     . = ALIGN(8);

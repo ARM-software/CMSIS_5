@@ -98,8 +98,9 @@ typedef enum IRQn
 #define __FPU_DP                  1U        /* double precision FPU */
 #define __ICACHE_PRESENT          1U        /* Instruction cache present */
 #define __DCACHE_PRESENT          1U        /* Data cache present */
-#define __DTCM_PRESENT            1U        /* Tightly-Coupled Memory present */
-#define __ECC_PRESENT             1U        /* Memory with Error Correcting Code */
+#define __ITCM_PRESENT            0U        /* no Instruction Tightly-Coupled Memory present */
+#define __DTCM_PRESENT            0U        /* no Data Tightly-Coupled Memory present */
+#define __ECC_PRESENT             0U        /* no Memory with Error Correcting Code */
 
 #include "core_cm7.h"                       /* Processor and core peripherals */
 #include "system_ARMCM7.h"                  /* System Header */
