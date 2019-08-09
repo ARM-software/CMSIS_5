@@ -32,7 +32,7 @@ A variable is accessed using the dollar character followed by a variable or expr
 ${...}
 \endcode
 Output the name of the zone:
-\code
+\codef
 ${zone.name}
 \endcode
 
@@ -666,14 +666,51 @@ The \ref fm_mpu_setup contains the configuration information for the Memory Prot
     <td>xs:string</td>
   </tr>
   <tr>
-    <td>mpu_setup.region[<i>n</i>].BaseAddress</td>
+    <td>mpu_setup.region[<i>n</i>].start</td>
     <td>The base address of the region.</td>
     <td>xs:string</td>
   </tr>
   <tr>
-    <td>mpu_setup.region[<i>n</i>].RASR</td>
-    <td>The MPU region attribute and size register value.</td>
+    <td>mpu_setup.region[<i>n</i>].end</td>
+    <td>The end address of the region.</td>
     <td>xs:string</td>
   </tr>
+  <tr>
+    <td>mpu_setup.region[<i>n</i>].access.r</td>
+    <td>The \em read \ref access "access" permission setting for the region.</td>
+    <td>xs:boolean</td>
+  </tr>
+  <tr>
+    <td>mpu_setup.region[<i>n</i>].access.w</td>
+    <td>The \em write \ref access "access" permission setting for the region..</td>
+    <td>xs:boolean</td>
+  </tr>
+  <tr>
+    <td>mpu_setup.region[<i>n</i>].access.x</td>
+    <td>The \em execution \ref access "access" permission setting for the region.</td>
+    <td>xs:boolean</td>
+  </tr>
+  <tr>
+    <td>mpu_setup.region[<i>n</i>].access.p</td>
+    <td>The \em peripheral \ref access "access" information setting for the region.</td>
+    <td>xs:boolean</td>
+  </tr>
+  <tr>
+    <td>mpu_setup.region[<i>n</i>].privileged</td>
+    <td>'1' indicates that the region is set to Privileged mode.</td>
+    <td>PrivilegeType</td>
+  </tr>
+  <tr>
+    <td>mpu_setup.region[<i>n</i>].shared</td>
+    <td>The \ref privilege "privilege type" setting for the region.</td>
+    <td>PrivilegeType</td>
+  </tr>
+  <tr>
+    <td>mpu_setup.region[<i>n</i>].dma</td>
+    <td>The \ref privilege "privilege type" setting for the region.</td>
+    <td>PrivilegeType</td>
+  </tr>
+  
+  
 </table>
 */

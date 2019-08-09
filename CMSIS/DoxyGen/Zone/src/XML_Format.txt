@@ -60,7 +60,6 @@ Structure of .rzone XML file
     <package/>           // software pack that defines device
     <processor/>         // processor information
   </device>
-
   
   <resources>            // physical resources off-chip 
     <sau_init>           // fixed SAU settings required for system
@@ -75,10 +74,12 @@ Structure of .rzone XML file
     <peripherals>        // peripheral resources off-chip
       { <group> }        // peripheral group (optional)
       <peripheral>       // peripheral description
-	    { <slot> }       // slot description (optional)
+         <slot>          // optional slot description (pin or DMA channel)
+           <interrupt/>  // optional interrupts for slot
+           <setup/>      // optional register setup for slot
+		 </slot>
          <interrupt/>    // optional interrupts for peripheral
          <setup/>        // optional register setup for peripheral
-		{ <slot> }
       </peripheral>
       { </group> }       // peripheral group (optional)
     </peripherals>
@@ -251,13 +252,7 @@ The \ref xml_creator specifies how a derived .rzone file was created.
     <td>optional</td>
   </tr>
   <tr>
-    <td>zone</td>
-    <td>Name of the zone that is represented in this derived .rzone file.</td>
-    <td>xs:string</td>
-    <td>optional</td>
-  </tr>
-  <tr>
-    <td>zone_info</td>
+    <td>info</td>
     <td>Brief description of the zone.</td>
     <td>xs:string</td>
     <td>optional</td>
@@ -1465,9 +1460,9 @@ The \ref xml_configure allows to control the operation of the CMSIS-Zone utility
 <b>Example</b>
 \code
 <configure mode="MPU">     // CMSIS-Zone utility UI behavior
-  <type name="RAM"        hide="0" select="0" />
-  <type name="ROM"        hide="1" select="1" />
-  <type name="Peripheral" hide="1" select="0" />
+  <type name="RAM"        show="1" select="0" />
+  <type name="ROM"        show="0" select="1" />
+  <type name="Peripheral" show="0" select="0" />
 </configure>
 \endcode
 &nbsp;
@@ -1535,8 +1530,8 @@ The \ref xml_ctype defines UI behavior of the CMSIS-Zone utility for a memory or
     <td>required</td>
   </tr>
   <tr>
-    <td>hide</td>
-    <td>"1" specifies that the item type is hidden during configuration in the UI of the CMSIS-Zone utility (default is "0").</td>
+    <td>show</td>
+    <td>"0" specifies that the item type is hidden during configuration in the UI of the CMSIS-Zone utility (default is "1").</td>
     <td>xs:boolean</td>
     <td>optional</td>
   </tr>
