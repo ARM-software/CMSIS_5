@@ -42,8 +42,8 @@
  *
  * @param[in]    pA         First vector
  * @param[in]    pB         Second vector
- * @param[in]    n          Norm order (>= 2)
- * @param[in]    blockSize  vector length
+ * @param[in]    order      Distance order
+ * @param[in]    blockSize  Number of samples
  * @return distance
  *
  */

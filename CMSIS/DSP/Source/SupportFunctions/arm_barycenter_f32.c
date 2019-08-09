@@ -39,6 +39,7 @@
  *
  *
  * @param[in]    *in         List of points
+ * @param[in]    *weights    Weights of the points
  * @param[out]   *out        Barycenter
  * @param[in]  nbVectors     number of vectors
  * @param[in]  vecDim        Dimension of space

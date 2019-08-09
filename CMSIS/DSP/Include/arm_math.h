@@ -7002,6 +7002,7 @@ typedef struct
 
 /**
  * @brief        SVM linear instance init function
+ * @param[in]    S                      Parameters for SVM functions
  * @param[in]    nbOfSupportVectors     Number of support vectors
  * @param[in]    vectorDimension        Dimension of vector space
  * @param[in]    intercept              Intercept
@@ -7023,9 +7024,9 @@ void arm_svm_linear_init_f32(arm_svm_linear_instance_f32 *S,
 
 /**
  * @brief SVM linear prediction
- * @param[in]    *S          points to an instance of the linear SVM structure.
- * @param[in]    vec_in      pointer to input vector
- * @param[out]   *pResult    decision value
+ * @param[in]    S           points to an instance of the linear SVM structure.
+ * @param[in]    in          pointer to input vector
+ * @param[out]   pResult     decision value
  * @return none.
  *
  */
@@ -7037,6 +7038,7 @@ void arm_svm_linear_predict_f32(const arm_svm_linear_instance_f32 *S,
 
 /**
  * @brief        SVM polynomial instance init function
+ * @param[in]    S                      points to an instance of the polynomial SVM structure.
  * @param[in]    nbOfSupportVectors     Number of support vectors
  * @param[in]    vectorDimension        Dimension of vector space
  * @param[in]    intercept              Intercept
@@ -7065,9 +7067,9 @@ void arm_svm_polynomial_init_f32(arm_svm_polynomial_instance_f32 *S,
 
 /**
  * @brief SVM polynomial prediction
- * @param[in]    *S          points to an instance of the polynomial SVM structure.
- * @param[in]    vec_in      pointer to input vector
- * @param[out]   *pResult    decision value
+ * @param[in]    S          points to an instance of the polynomial SVM structure.
+ * @param[in]    in         pointer to input vector
+ * @param[out]   pResult    decision value
  * @return none.
  *
  */
@@ -7079,6 +7081,7 @@ void arm_svm_polynomial_predict_f32(const arm_svm_polynomial_instance_f32 *S,
 
 /**
  * @brief        SVM radial basis function instance init function
+ * @param[in]    S                      points to an instance of the polynomial SVM structure.
  * @param[in]    nbOfSupportVectors     Number of support vectors
  * @param[in]    vectorDimension        Dimension of vector space
  * @param[in]    intercept              Intercept
@@ -7102,9 +7105,9 @@ void arm_svm_rbf_init_f32(arm_svm_rbf_instance_f32 *S,
 
 /**
  * @brief SVM rbf prediction
- * @param[in]    *S          points to an instance of the rbf SVM structure.
- * @param[in]    vec_in      pointer to input vector
- * @param[out]   *pResult    decision value
+ * @param[in]    S          points to an instance of the rbf SVM structure.
+ * @param[in]    in         pointer to input vector
+ * @param[out]   pResult    decision value
  * @return none.
  *
  */
@@ -7115,6 +7118,7 @@ void arm_svm_rbf_predict_f32(const arm_svm_rbf_instance_f32 *S,
 
 /**
  * @brief        SVM sigmoid instance init function
+ * @param[in]    S                      points to an instance of the rbf SVM structure.
  * @param[in]    nbOfSupportVectors     Number of support vectors
  * @param[in]    vectorDimension        Dimension of vector space
  * @param[in]    intercept              Intercept
@@ -7140,9 +7144,9 @@ void arm_svm_sigmoid_init_f32(arm_svm_sigmoid_instance_f32 *S,
 
 /**
  * @brief SVM sigmoid prediction
- * @param[in]    *S          points to an instance of the rbf SVM structure.
- * @param[in]    vec_in      pointer to input vector
- * @param[out]   *pResult    decision value
+ * @param[in]    S          points to an instance of the rbf SVM structure.
+ * @param[in]    in         pointer to input vector
+ * @param[out]   pResult    decision value
  * @return none.
  *
  */
@@ -7168,9 +7172,9 @@ typedef struct
 /**
  * @brief Naive Gaussian Bayesian Estimator
  *
- * @param[in]  *S         points to a naive bayes instance structure
- * @param[in]  *in        points to the elements of the input vector.
- * @param[in]  *pBuffer   points to a buffer of length numberOfClasses
+ * @param[in]  S         points to a naive bayes instance structure
+ * @param[in]  in        points to the elements of the input vector.
+ * @param[in]  pBuffer   points to a buffer of length numberOfClasses
  * @return The predicted class
  *
  */
@@ -7198,7 +7202,7 @@ uint32_t arm_gaussian_naive_bayes_predict_f32(const arm_gaussian_naive_bayes_ins
  * The max xm of the values if extracted and the function is computing:
  * xm + ln(exp(x1 - xm) + ... + exp(xn - xm))
  *
- * @param[in]    *in         points to an array of input values.
+ * @param[in]    in         points to an array of input values.
  * @param[in]  blockSize     number of samples in the input array.
  * @return LogSumExp
  *
@@ -7212,10 +7216,10 @@ float32_t arm_logsumexp_f32(const float32_t *in, uint32_t blockSize);
  *
  * Vectors are containing the log of the samples
  *
- * @param[in]       *pSrcA points to the first input vector
- * @param[in]       *pSrcB points to the second input vector
+ * @param[in]       pSrcA points to the first input vector
+ * @param[in]       pSrcB points to the second input vector
  * @param[in]       blockSize number of samples in each vector
- * @param[in]       *pTmpBuffer temporary buffer of length blockSize
+ * @param[in]       pTmpBuffer temporary buffer of length blockSize
  * @return The log of the dot product .
  *
  */
@@ -7229,7 +7233,7 @@ float32_t arm_logsumexp_dot_prod_f32(const float32_t * pSrcA,
 /**
  * @brief Entropy
  *
- * @param[in]  *pSrcA      points to an array of input values.
+ * @param[in]  pSrcA      points to an array of input values.
  * @param[in]  blockSize   number of samples in the input array.
  * @return Entropy -Sum(p ln p)
  *
@@ -7242,8 +7246,8 @@ float32_t arm_entropy_f32(const float32_t * pSrcA,uint32_t blockSize);
 /**
  * @brief Kullback-Leibler
  *
- * @param[in]  *pSrcA         points to an array of input values for probaility distribution A.
- * @param[in]  *pSrcB         points to an array of input values for probaility distribution B.
+ * @param[in]  pSrcA         points to an array of input values for probaility distribution A.
+ * @param[in]  pSrcB         points to an array of input values for probaility distribution B.
  * @param[in]  blockSize      number of samples in the input array.
  * @return Kullback-Leibler divergence D(A || B)
  *
@@ -7257,8 +7261,8 @@ float32_t arm_kullback_leibler_f32(const float32_t * pSrcA
  * @brief Weighted sum
  *
  *
- * @param[in]    *in         points to an array of input values.
- * @param[in]    *weigths    weights
+ * @param[in]    in         points to an array of input values.
+ * @param[in]    weigths    weights
  * @param[in]  blockSize     number of samples in the input array.
  * @return     Weighted sum
  *
@@ -7272,9 +7276,9 @@ float32_t arm_weighted_sum_f32(const float32_t *in
  * @brief Barycenter
  *
  *
- * @param[in]    *in         List of points
- * @param[in]    *in         List of weights
- * @param[out]   *out        Barycenter
+ * @param[in]    in         List of points
+ * @param[in]    weights    Weights of the points
+ * @param[out]   out        Barycenter
  * @param[in]  nbVectors     number of vectors
  * @param[in]  vecDim        Dimension of space
  * @return     None
@@ -7411,7 +7415,8 @@ float32_t arm_minkowski_distance_f32(const float32_t *pA,const float32_t *pB, in
  *
  * @param[in]    pA              First vector of packed booleans
  * @param[in]    pB              Second vector of packed booleans
- * @param[in]    numberOfBools   Number of booleans
+ * @param[in]    order           Distance order
+ * @param[in]    blockSize       Number of samples
  * @return distance
  *
  */

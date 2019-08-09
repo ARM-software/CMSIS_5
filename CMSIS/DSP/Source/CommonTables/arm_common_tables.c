@@ -48270,6 +48270,7 @@ const q15_t __ALIGNED(4) realCoefBQ15[8192] = {
 */
 
   #if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) || defined(ARM_TABLE_DCT4_Q15_128)
+
     const q15_t __ALIGNED(4) WeightsQ15_128[256] = {
   (q15_t)0x7fff, (q15_t)0x0, (q15_t)0x7ffd, (q15_t)0xfe6e, (q15_t)0x7ff6, (q15_t)0xfcdc, (q15_t)0x7fe9, (q15_t)0xfb4a,
   (q15_t)0x7fd8, (q15_t)0xf9b9, (q15_t)0x7fc2, (q15_t)0xf827, (q15_t)0x7fa7, (q15_t)0xf696, (q15_t)0x7f87, (q15_t)0xf505,

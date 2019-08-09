@@ -47,6 +47,7 @@
 
 /**
  * @brief        SVM linear instance init function
+ * @param[in]    S                      Parameters for the SVM function
  * @param[in]    nbOfSupportVectors     Number of support vectors
  * @param[in]    vectorDimension        Dimension of vector space
  * @param[in]    intercept              Intercept

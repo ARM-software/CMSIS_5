@@ -37,6 +37,7 @@
 
 /**
  * @brief        SVM sigmoid instance init function
+ * @param[in]    S                      points to an instance of the rbf SVM structure.
  * @param[in]    nbOfSupportVectors     Number of support vectors
  * @param[in]    vectorDimension        Dimension of vector space
  * @param[in]    intercept              Intercept

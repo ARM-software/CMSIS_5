@@ -36,6 +36,13 @@
  * @{
  */
 
+extern void arm_boolean_distance_TT_TF_FT(const uint32_t *pA
+       , const uint32_t *pB
+       , uint32_t numberOfBools
+       , uint32_t *cTT
+       , uint32_t *cTF
+       , uint32_t *cFT
+       );
 
 /**
  * @brief        Dice distance between two vectors
@@ -46,13 +53,6 @@
  * @return distance
  *
  */
-extern void arm_boolean_distance_TT_TF_FT(const uint32_t *pA
-       , const uint32_t *pB
-       , uint32_t numberOfBools
-       , uint32_t *cTT
-       , uint32_t *cTF
-       , uint32_t *cFT
-       );
 
 float32_t arm_dice_distance(const uint32_t *pA, const uint32_t *pB, uint32_t numberOfBools)
 {

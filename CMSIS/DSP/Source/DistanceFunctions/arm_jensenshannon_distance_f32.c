@@ -37,6 +37,17 @@
  */
 
 
+static inline double rel_entr(double x, double y)
+{
+    return (x * log(x / y));
+}
+
+
+#if defined(ARM_MATH_NEON)
+
+#include "NEMath.h"
+
+
 /**
  * @brief        Jensen-Shannon distance between two vectors
  *
@@ -57,14 +68,6 @@
  *
  */
 
-static inline double rel_entr(double x, double y)
-{
-    return (x * log(x / y));
-}
-
-#if defined(ARM_MATH_NEON)
-
-#include "NEMath.h"
 
 float32_t arm_jensenshannon_distance_f32(const float32_t *pA,const float32_t *pB, uint32_t blockSize)
 {
@@ -125,6 +128,27 @@ float32_t arm_jensenshannon_distance_f32(const float32_t *pA,const float32_t *pB
 }
 
 #else
+
+
+/**
+ * @brief        Jensen-Shannon distance between two vectors
+ *
+ * This function is assuming that elements of second vector are > 0
+ * and 0 only when the corresponding element of first vector is 0.
+ * Otherwise the result of the computation does not make sense
+ * and for speed reasons, the cases returning NaN or Infinity are not
+ * managed.
+ *
+ * When the function is computing x log (x / y) with x == 0 and y == 0,
+ * it will compute the right result (0) but a division by zero will occur
+ * and should be ignored in client code.
+ *
+ * @param[in]    pA         First vector
+ * @param[in]    pB         Second vector
+ * @param[in]    blockSize  vector length
+ * @return distance
+ *
+ */
 
 
 float32_t arm_jensenshannon_distance_f32(const float32_t *pA,const float32_t *pB, uint32_t blockSize)

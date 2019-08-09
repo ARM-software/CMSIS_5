@@ -38,9 +38,9 @@
 
 /**
  * @brief SVM polynomial prediction
- * @param[in]    *S          points to an instance of the polynomial SVM structure.
- * @param[in]    vec_in      pointer to input vector
- * @param[out]   *pResult    decision value
+ * @param[in]    S          points to an instance of the polynomial SVM structure.
+ * @param[in]    in         pointer to input vector
+ * @param[out]   pResult    decision value
  * @return none.
  *
  */
