@@ -119,6 +119,7 @@ extern const pFunc __VECTOR_TABLE[240];
  *----------------------------------------------------------------------------*/
 void Reset_Handler(void)
 {
+  __EARLY_INIT();
   SystemInit();                             /* CMSIS System Initialization */
   __PROGRAM_START();                        /* Enter PreMain (C library entry point) */
 }

@@ -74,6 +74,7 @@ void Vectors(void) {
   Reset Handler called on controller reset
  *----------------------------------------------------------------------------*/
 void Reset_Handler(void) {
+  __EARLY_INIT();
   __ASM volatile(
 
   // Mask interrupts

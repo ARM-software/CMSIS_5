@@ -1,8 +1,8 @@
 /**************************************************************************//**
  * @file     cmsis_gcc.h
- * @brief    CMSIS compiler specific macros, functions, instructions
- * @version  V1.2.1
- * @date     30. July 2019
+ * @brief    CMSIS compiler GCC header file
+ * @version  V1.2.2
+ * @date     08. August 2019
  ******************************************************************************/
 /*
  * Copyright (c) 2009-2019 Arm Limited. All rights reserved.
@@ -37,7 +37,6 @@
 #endif
 
 /* CMSIS compiler specific defines */
-
 #ifndef   __ASM
   #define __ASM                                  __asm
 #endif
@@ -107,6 +106,12 @@
 #endif
 #ifndef   __COMPILER_BARRIER
   #define __COMPILER_BARRIER()                   __ASM volatile("":::"memory")
+#endif
+
+/* #########################  Startup and Lowlevel Init  ######################## */
+
+#ifndef __EARLY_INIT
+#define __EARLY_INIT()
 #endif
 
 
@@ -554,6 +559,7 @@ __extension__ \
  })
 
 /* ###########################  Core Function Access  ########################### */
+
 
 /**
   \brief   Enable IRQ Interrupts

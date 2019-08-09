@@ -1,8 +1,8 @@
 /**************************************************************************//**
  * @file     cmsis_armcc.h
- * @brief    CMSIS compiler specific macros, functions, instructions
- * @version  V1.0.4
- * @date     30. July 2019
+ * @brief    CMSIS compiler ARMCC (Arm Compiler 5) header file
+ * @version  V1.0.5
+ * @date     09. August 2019
  ******************************************************************************/
 /*
  * Copyright (c) 2009-2019 Arm Limited. All rights reserved.
@@ -24,6 +24,7 @@
 
 #ifndef __CMSIS_ARMCC_H
 #define __CMSIS_ARMCC_H
+
 
 #if defined(__ARMCC_VERSION) && (__ARMCC_VERSION < 400677)
   #error "Please use Arm Compiler Toolchain V4.0.677 or later!"
@@ -88,6 +89,12 @@
 #endif
 #ifndef   __COMPILER_BARRIER
   #define __COMPILER_BARRIER()                   __memory_changed()
+#endif
+
+/* #########################  Startup and Lowlevel Init  ######################## */
+
+#ifndef __EARLY_INIT
+#define __EARLY_INIT()
 #endif
 
 /* ##########################  Core Instruction Access  ######################### */

@@ -1,8 +1,8 @@
 /**************************************************************************//**
  * @file     cmsis_iccarm.h
  * @brief    CMSIS compiler ICCARM (IAR Compiler for Arm) header file
- * @version  V5.1.1
- * @date     30. July 2019
+ * @version  V5.1.2
+ * @date     08. August 2019
  ******************************************************************************/
 
 //------------------------------------------------------------------------------
@@ -242,6 +242,10 @@ __packed struct  __iar_u32 { uint32_t v; };
   #else
     #define __WEAK _Pragma("__weak")
   #endif
+#endif
+
+#ifndef __EARLY_INIT
+#define __EARLY_INIT()
 #endif
 
 #ifndef __PROGRAM_START

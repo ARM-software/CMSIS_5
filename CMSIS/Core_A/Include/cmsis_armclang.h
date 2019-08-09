@@ -1,8 +1,8 @@
 /**************************************************************************//**
  * @file     cmsis_armclang.h
- * @brief    CMSIS compiler specific macros, functions, instructions
- * @version  V1.1.2
- * @date     30. July 2019
+ * @brief    CMSIS compiler armclang (Arm Compiler 6) header file
+ * @version  V1.1.3
+ * @date     08. August 2019
  ******************************************************************************/
 /*
  * Copyright (c) 2009-2019 Arm Limited. All rights reserved.
@@ -104,6 +104,12 @@
 #endif
 #ifndef   __COMPILER_BARRIER
   #define __COMPILER_BARRIER()                   __ASM volatile("":::"memory")
+#endif
+
+/* #########################  Startup and Lowlevel Init  ######################## */
+
+#ifndef __EARLY_INIT
+#define __EARLY_INIT()
 #endif
 
 /* ##########################  Core Instruction Access  ######################### */

@@ -1,8 +1,8 @@
 /**************************************************************************//**
  * @file     cmsis_gcc.h
  * @brief    CMSIS compiler GCC header file
- * @version  V5.2.1
- * @date     30. July 2019
+ * @version  V5.2.2
+ * @date     08. August 2019
  ******************************************************************************/
 /*
  * Copyright (c) 2009-2019 Arm Limited. All rights reserved.
@@ -118,6 +118,10 @@
 #endif
 
 /* #########################  Startup and Lowlevel Init  ######################## */
+
+#ifndef __EARLY_INIT
+#define __EARLY_INIT()
+#endif
 
 #ifndef __PROGRAM_START
 

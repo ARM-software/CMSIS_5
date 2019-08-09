@@ -1,8 +1,8 @@
 /**************************************************************************//**
  * @file     cmsis_iccarm.h
  * @brief    CMSIS compiler ICCARM (IAR Compiler for Arm) header file
- * @version  V5.0.7
- * @date     15. May 2019
+ * @version  V5.0.8
+ * @date     08. August 2019
  ******************************************************************************/
 
 //------------------------------------------------------------------------------
@@ -209,6 +209,9 @@
   #endif
 #endif
 
+#ifndef __EARLY_INIT
+#define __EARLY_INIT()
+#endif
 
 #ifndef __ICCARM_INTRINSICS_VERSION__
   #define __ICCARM_INTRINSICS_VERSION__  0
