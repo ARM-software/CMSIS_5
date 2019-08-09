@@ -13,5 +13,9 @@ class BasicMathsBenchmarksF32:public Client::Suite
             Client::LocalPattern<float32_t> output;
 
             int nb;
+
+            float32_t *inp1;
+            float32_t *inp2;
+            float32_t *outp;
             
     };

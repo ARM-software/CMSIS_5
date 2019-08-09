@@ -44,6 +44,8 @@ namespace Client
       IO *m_io;
       PatternMgr *m_mgr;
       Testing::RunningMode m_runningMode;
+
+      Testing::cycles_t calibration = 0;
   };
 
 }

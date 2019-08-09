@@ -3,14 +3,9 @@
 
    
     void BasicMathsBenchmarksF32::vec_mult_f32()
-    {
-       
-       float32_t *inp1=input1.ptr();
-       float32_t *inp2=input2.ptr();
-       float32_t *outp=output.ptr();
+    {     
 
-
-       arm_mult_f32(inp1,inp2,outp,this->nb);
+       arm_mult_f32(this->inp1,this->inp2,this->outp,this->nb);
         
     } 
 
@@ -111,6 +106,19 @@
 
        
        output.create(this->nb,BasicMathsBenchmarksF32::OUT_SAMPLES_F32_ID,mgr);
+
+       switch(id)
+       {
+         case BasicMathsBenchmarksF32::VEC_MULT_F32_1:
+           /* This an overhead doing this because ptr() function is doing lot of checks
+            to ensure patterns are fresh.
+            So for small benchmark lengths it is better doing it in the setUp function
+           */
+           this->inp1=input1.ptr();
+           this->inp2=input2.ptr();
+           this->outp=output.ptr();
+         break;
+       }
        
     }
 

@@ -235,6 +235,11 @@ def getCyclesFromTrace(trace):
     return(TestScripts.ParseTrace.getCycles(trace))
 
 def analyseResult(root,results,embedded,benchmark,trace,formatter):
+    calibration = 0
+    if trace:
+      # First cycle in the trace is the calibration data
+      # The noramlisation factor must be coherent with the C code one.
+      calibration = int(getCyclesFromTrace(trace) / 20)
     formatter.start()
     path = []
     state = NORMAL
@@ -348,7 +353,7 @@ def analyseResult(root,results,embedded,benchmark,trace,formatter):
       
                     maybeCycles = m.group(4)
                     if maybeCycles == "t":
-                       cycles = getCyclesFromTrace(trace)
+                       cycles = getCyclesFromTrace(trace) - calibration
                     else:
                        cycles = int(maybeCycles)
    

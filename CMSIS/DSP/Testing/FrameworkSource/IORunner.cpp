@@ -36,6 +36,7 @@
 #include "Error.h"
 #include "Timing.h"
 #include "arm_math.h"
+#include "Calibrate.h"
 
 namespace Client
 {
@@ -54,6 +55,36 @@ namespace Client
         }
 
         initCycleMeasurement();
+
+/* 
+
+For calibration :
+
+Calibration means, in this context, removing the overhad of calling
+a C++ function pointer from the cycle measurements.
+
+
+*/
+        Calibrate c((Testing::testID_t)0);
+        Client::Suite *s=(Client::Suite *)&c;
+        Client::test t = (Client::test)&Calibrate::empty;
+
+        cycleMeasurementStart();
+#ifdef EXTBENCH
+        startSection();
+#endif
+        for(int i=0;i < 20;i++)
+        {
+           (s->*t)();
+        }
+#ifdef EXTBENCH
+        stopSection();
+#endif
+#ifndef EXTBENCH
+        calibration=getCycles() / 20;
+#endif
+        cycleMeasurementStop();
+
       }
 
       // Testing.
@@ -152,7 +183,7 @@ namespace Client
                 stopSection();
 #endif
 #ifndef EXTBENCH
-                cycles=getCycles();
+                cycles=getCycles()-calibration;
 #endif
                 cycleMeasurementStop();
               } 

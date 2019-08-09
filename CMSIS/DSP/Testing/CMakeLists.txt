@@ -134,6 +134,7 @@ set(FRAMEWORKSRC
   FrameworkSource/FPGA.cpp
   FrameworkSource/Timing.cpp
   FrameworkSource/Generators.cpp
+  FrameworkSource/Calibrate.cpp
   )
 # Change behavior of configBoot for scatter file
 # We use the linker files from older test framework because bigger sections are needed.
