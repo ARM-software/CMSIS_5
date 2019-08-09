@@ -1,8 +1,8 @@
 /**************************************************************************//**
  * @file     core_cm7.h
  * @brief    CMSIS Cortex-M7 Core Peripheral Access Layer Header File
- * @version  V5.1.1
- * @date     28. March 2019
+ * @version  V5.1.2
+ * @date     09. August 2019
  ******************************************************************************/
 /*
  * Copyright (c) 2009-2019 Arm Limited. All rights reserved.
@@ -217,6 +217,11 @@
   #ifndef __Vendor_SysTickConfig
     #define __Vendor_SysTickConfig    0U
     #warning "__Vendor_SysTickConfig not defined in device header file; using default!"
+  #endif
+
+  #ifndef __ECC_PRESENT
+    #define __ECC_PRESENT            0U
+    #warning "__ECC_PRESENT not defined in device header file; using default!"
   #endif
 #endif
 

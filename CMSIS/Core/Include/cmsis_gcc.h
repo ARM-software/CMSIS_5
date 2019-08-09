@@ -1,8 +1,8 @@
 /**************************************************************************//**
  * @file     cmsis_gcc.h
  * @brief    CMSIS compiler GCC header file
- * @version  V5.2.2
- * @date     08. August 2019
+ * @version  V5.2.3
+ * @date     09. August 2019
  ******************************************************************************/
 /*
  * Copyright (c) 2009-2019 Arm Limited. All rights reserved.
@@ -120,7 +120,33 @@
 /* #########################  Startup and Lowlevel Init  ######################## */
 
 #ifndef __EARLY_INIT
-#define __EARLY_INIT()
+  /**
+    \brief   Early system init: ECC, TCM etc.
+    \details This default implementation initializes ECC memory sections
+             relying on .ecc.table properly in the used linker script.
+
+   */
+__STATIC_FORCEINLINE void __cmsis_cpu_init(void)
+{
+#if defined (__ECC_PRESENT) && (__ECC_PRESENT == 1U)
+  typedef struct {
+    uint32_t* dest;
+    uint32_t  wlen;
+  } __ecc_table_t;
+
+  extern const __ecc_table_t __ecc_table_start__;
+  extern const __ecc_table_t __ecc_table_end__;
+
+  for (__ecc_table_t const* pTable = &__ecc_table_start__; pTable < &__ecc_table_end__; ++pTable) {
+    for(uint32_t i=0u; i<pTable->wlen; ++i) {
+      pTable->dest[i] = 0xDEADBEEF;
+    }
+  }
+#endif
+
+}
+
+#define __EARLY_INIT __cmsis_cpu_init
 #endif
 
 #ifndef __PROGRAM_START

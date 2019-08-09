@@ -1,8 +1,8 @@
 /******************************************************************************
  * @file     gcc_arm.ld
  * @brief    GNU Linker Script for Cortex-M based device
- * @version  V2.0.0
- * @date     21. May 2019
+ * @version  V2.0.1
+ * @date     09. August 2019
  ******************************************************************************/
 /*
  * Copyright (c) 2009-2019 Arm Limited. All rights reserved.
@@ -71,6 +71,8 @@ MEMORY
  * It defines following symbols, which code can use without definition:
  *   __exidx_start
  *   __exidx_end
+ *   __ecc_table_start__
+ *   __ecc_table_end__
  *   __copy_table_start__
  *   __copy_table_end__
  *   __zero_table_start__
@@ -148,6 +150,38 @@ SECTIONS
   } > FLASH
   __exidx_end = .;
 
+  /* ECC initialization is done by 32-bit writes thus used symbols
+   * must be 4byte aligned */
+  .ecc.table :
+  {
+    . = ALIGN(4);
+    __ecc_table_start__ = .;
+
+    LONG (__data_start__)
+    LONG ((__data_end__ - __data_start__) / 4)
+
+/*
+    LONG (__data2_start__)
+    LONG ((__data2_end__ - __data2_start__) / 4)
+*/
+
+    LONG (__bss_start__)
+    LONG ((__bss_end__ - __bss_start__) / 4)
+
+/*
+    LONG (__bss2_start__)
+    LONG ((__bss2_end__ - __bss2_start__) / 4)
+*/
+
+    LONG (__end__)
+    LONG ((__HeapLimit - __end__) / 4)
+
+    LONG (__StackLimit)
+    LONG ((__StackLimit - __StackTop) / 4)
+
+    __ecc_table_end__ = .;
+  } > FLASH
+
   .copy.table :
   {
     . = ALIGN(4);
@@ -175,6 +209,7 @@ SECTIONS
 */
     __zero_table_end__ = .;
   } > FLASH
+
 
   /**
    * Location counter can end up 2byte aligned with narrow Thumb code but
@@ -222,7 +257,7 @@ SECTIONS
    * Secondary data section, optional
    *
    * Remember to add each additional data section
-   * to the .copy.table above to asure proper
+   * to the .copy.table and .ecc.table above to asure proper
    * initialization during startup.
    */
 /*
@@ -255,7 +290,7 @@ SECTIONS
    * Secondary bss section, optional
    *
    * Remember to add each additional bss section
-   * to the .zero.table above to asure proper
+   * to the .zero.table and .ecc.table above to asure proper
    * initialization during startup.
    */
 /*

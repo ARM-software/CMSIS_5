@@ -2,11 +2,11 @@
  * @file     ARMCM7_DP.h
  * @brief    CMSIS Core Peripheral Access Layer Header File for
  *           ARMCM7 Device (configured for CM7 with double precision FPU)
- * @version  V5.3.1
- * @date     09. July 2018
+ * @version  V5.3.2
+ * @date     09. August 2019
  ******************************************************************************/
 /*
- * Copyright (c) 2009-2018 Arm Limited. All rights reserved.
+ * Copyright (c) 2009-2019 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -99,6 +99,7 @@ typedef enum IRQn
 #define __ICACHE_PRESENT          1U
 #define __DCACHE_PRESENT          1U
 #define __DTCM_PRESENT            1U
+#define __ECC_PRESENT             0U        /* no Memory with Error Correcting Code */
 
 #include "core_cm7.h"                       /* Processor and core peripherals */
 #include "system_ARMCM7.h"                  /* System Header */
