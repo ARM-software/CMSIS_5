@@ -1,17 +1,15 @@
 option(SEMIHOSTING "Test trace using printf" ON)
-SET(PLATFORM "FVP")
-
 
 if (PLATFORM STREQUAL "FVP")
-SET(PLATFORMFOLDER "FVP")
+SET(PLATFORMFOLDER ${ROOT}/CMSIS/DSP/Platforms/FVP)
 SET(PLATFORMID "FVP")
 list(APPEND CMAKE_MODULE_PATH ${ROOT}/CMSIS/DSP/Platforms/FVP)
 endif()
 
 if (PLATFORM STREQUAL "SDSIM")
-SET(PLATFORMFOLDER "SDSIM")
+SET(PLATFORMFOLDER ${SDSIMROOT})
 SET(PLATFORMID "SDSIM")
-list(APPEND CMAKE_MODULE_PATH ${ROOT}/CMSIS/DSP/Platforms/SDSIM)
+list(APPEND CMAKE_MODULE_PATH ${SDSIMROOT})
 endif()
 
 SET(CORE ARMCM7)
@@ -117,7 +115,7 @@ function(set_platform_core)
 endfunction()
 
 function(core_includes PROJECTNAME)
-    target_include_directories(${PROJECTNAME} PRIVATE ${ROOT}/CMSIS/DSP/Platforms/${PLATFORMFOLDER}/${CORE}/Include)
+    target_include_directories(${PROJECTNAME} PRIVATE ${PLATFORMFOLDER}/${CORE}/Include)
 endfunction()
 
 function (configplatformForLib PROJECTNAME ROOT)
