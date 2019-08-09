@@ -364,7 +364,11 @@ namespace Client
         }
         else
         {
+#ifdef EXTBENCH
+            printf("%ld 0 0 t Y\n",this->currentId);
+#else
             printf("%ld 0 0 %u Y\n",this->currentId,cycles);
+#endif
         }
       }
 

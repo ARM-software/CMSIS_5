@@ -60,6 +60,10 @@ unsigned int startCycles;
 #define ENABLE_DIVIDER 0 
 #endif
 
+#ifdef EXTBENCH
+unsigned long sectionCounter=0;
+#endif 
+
 void initCycleMeasurement()
 {
 #ifdef CORTEXM
@@ -98,6 +102,7 @@ void initCycleMeasurement()
 
 void cycleMeasurementStart()
 {
+#ifndef EXTBENCH
 #ifdef CORTEXM
     SysTick->CTRL = SysTick_CTRL_CLKSOURCE_Msk;
     SysTick->LOAD = SYSTICK_INITIAL_VALUE;
@@ -118,13 +123,17 @@ void cycleMeasurementStart()
     __get_CP(15, 0, value, 9, 13, 0);
     startCycles =  value;
 #endif
+#endif 
+
 }
 
 void cycleMeasurementStop()
 {
+#ifndef EXTBENCH
 #ifdef CORTEXM
     SysTick->CTRL = SysTick_CTRL_CLKSOURCE_Msk;
     SysTick->LOAD = SYSTICK_INITIAL_VALUE;
+#endif
 #endif
 }
 

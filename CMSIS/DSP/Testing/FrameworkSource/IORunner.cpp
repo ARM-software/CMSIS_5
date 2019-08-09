@@ -144,8 +144,16 @@ namespace Client
                 s->setUp(m_io->CurrentTestID(),params,m_mgr);
                 // Run the test
                 cycleMeasurementStart();
+#ifdef EXTBENCH
+                startSection();
+#endif
                 (s->*t)();
+#ifdef EXTBENCH
+                stopSection();
+#endif
+#ifndef EXTBENCH
                 cycles=getCycles();
+#endif
                 cycleMeasurementStop();
               } 
               catch(Error &ex)

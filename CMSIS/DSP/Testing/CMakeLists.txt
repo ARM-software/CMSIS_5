@@ -61,6 +61,7 @@ function(writeConfig path)
 endfunction()
 
 option(BENCHMARK "Benchmarking compiled" OFF)
+option(EXTBENCH "Benchmarking with external traces" OFF)
 
 project(Testing)
 
@@ -152,6 +153,10 @@ target_sources(TestingLib PRIVATE GeneratedSource/TestDesc.cpp)
   
 
 target_sources(FrameworkLib PRIVATE ${FRAMEWORKSRC})
+
+if (EXTBENCH)
+  target_compile_definitions(FrameworkLib PUBLIC EXTBENCH)
+endif()
 
 ### Includes
 target_link_libraries(TestingLib PRIVATE CMSISDSP)

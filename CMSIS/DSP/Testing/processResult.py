@@ -8,6 +8,8 @@ import TestScripts.CodeGen
 from collections import deque
 import os.path
 import csv
+import TestScripts.ParseTrace
+
 
 def findItem(root,path):
         """ Find a node in a tree
@@ -226,7 +228,13 @@ def writeBenchmark(elem,benchFile,theId,theError,passed,cycles,params,config):
          old=elem.data["testData"]["oldID"]
     benchFile.write("\"%s\",\"%s\",%d,\"%s\",%s,%d,%s\n" % (category,name,theId,old,params,cycles,config))
 
-def analyseResult(root,results,embedded,benchmark,formatter):
+def getCyclesFromTrace(trace):
+  if not trace:
+    return(0)
+  else:
+    return(TestScripts.ParseTrace.getCycles(trace))
+
+def analyseResult(root,results,embedded,benchmark,trace,formatter):
     formatter.start()
     path = []
     state = NORMAL
@@ -321,7 +329,7 @@ def analyseResult(root,results,embedded,benchmark,formatter):
                # In test mode, we are looking for test status.
                # A line starting with S
                # (There may be empty lines or line for data files)
-               passRe = r'^%s([0-9]+)[ ]+([0-9]+)[ ]+([0-9]+)[ ]+([0-9]+)[ ]+([YN]).*$'  % prefix
+               passRe = r'^%s([0-9]+)[ ]+([0-9]+)[ ]+([0-9]+)[ ]+([t0-9]+)[ ]+([YN]).*$'  % prefix
                if re.match(passRe,l):
                     # If we have found a test status then we will start again
                     # in normal mode after this.
@@ -338,7 +346,11 @@ def analyseResult(root,results,embedded,benchmark,formatter):
                     theLine=m.group(3)
                     theLine=int(theLine)
       
-                    cycles = int(m.group(4))
+                    maybeCycles = m.group(4)
+                    if maybeCycles == "t":
+                       cycles = getCyclesFromTrace(trace)
+                    else:
+                       cycles = int(maybeCycles)
    
                     status=m.group(5)
                     passed=0
@@ -388,6 +400,14 @@ def analyseResult(root,results,embedded,benchmark,formatter):
     formatter.end()          
 
 
+def analyze(root,results,args,trace):
+  if args.c:
+     analyseResult(root,results,args.e,args.b,trace,CSVFormatter())
+  elif args.m:
+     analyseResult(root,results,args.e,args.b,trace,MathematicaFormatter())
+  else:
+     analyseResult(root,results,args.e,args.b,trace,TextFormatter())
+
 parser = argparse.ArgumentParser(description='Parse test description')
 
 parser.add_argument('-f', nargs='?',type = str, default=None, help="Test description file path")
@@ -400,20 +420,22 @@ parser.add_argument('-o', nargs='?',type = str, default="Output", help="Output d
 
 parser.add_argument('-b', nargs='?',type = str, default="FullBenchmark", help="Full Benchmark dir path")
 parser.add_argument('-m', action='store_true', help="Mathematica output")
+parser.add_argument('-t', nargs='?',type = str, default=None, help="External trace file")
 
 args = parser.parse_args()
+
 
 if args.f is not None:
     p = parse.Parser()
     # Parse the test description file
     root = p.parse(args.f)
-    with open(args.r,"r") as results:
-        if args.c:
-           analyseResult(root,results,args.e,args.b,CSVFormatter())
-        elif args.m:
-           analyseResult(root,results,args.e,args.b,MathematicaFormatter())
-        else:
-           analyseResult(root,results,args.e,args.b,TextFormatter())
+    if args.t:
+       with open(args.t,"r") as trace:
+         with open(args.r,"r") as results:
+             analyze(root,results,args,iter(trace))
+    else:
+       with open(args.r,"r") as results:
+           analyze(root,results,args,None)
     if args.e:
        # In FPGA mode, extract output files from stdout (result file)
        with open(args.r,"r") as results:
