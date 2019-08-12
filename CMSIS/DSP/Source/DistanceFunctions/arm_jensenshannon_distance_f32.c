@@ -30,17 +30,17 @@
 #include <math.h>
 
 
-
-/**
- * @addtogroup groupDistance
- * @{
- */
-
-
 static inline double rel_entr(double x, double y)
 {
     return (x * log(x / y));
 }
+
+
+/**
+  @addtogroup FloatDist
+  @{
+ */
+
 
 
 #if defined(ARM_MATH_NEON)
@@ -175,5 +175,5 @@ float32_t arm_jensenshannon_distance_f32(const float32_t *pA,const float32_t *pB
 #endif
 
 /**
- * @} end of groupDistance group
+ * @} end of FloatDist group
  */

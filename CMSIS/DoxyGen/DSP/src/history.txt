@@ -7,6 +7,38 @@
     <th>Description</th>
   </tr>
   <tr>
+    <td>V1.8.0</td>
+    <td> 
+      - New folder SVMFunctions : Support vector machines.
+      Training must be done with scikit-learn. 
+      The python script DSP/Testing/PatternGenerations/SVM.py is showing how
+      to generate parameters for CMSIS-DSP from the corresponding trained python object.
+
+      - New folder BayesFunctions : Functions related to Bayesian probability
+      In this version only a naive gaussian classifier.
+      Training must be done with scikit-learn. 
+      The python script DSP/Testing/PatternGenerations/Bayes.py is showing how
+      to generate parameters for CMSIS-DSP from the corresponding trained python object.
+      
+      - New folder DistanceFunctions: Distance functions for clustering algorithms
+
+      - New support functions:
+        arm_barycenter_f32 and arm_weighted_sum_f32
+
+      - New statistics functions :
+        arm_entropy_f32, arm_kullback_leibler_f32, arm_logsumexp_f32
+        and arm_logsumexp_dot_prod_f32
+
+      - New testing framework:
+        Developed for our internal needs. We have released it but won't give
+        support for the first few releases since it is a work in progress.
+
+      - Improvements to the cmake build:
+        It is more easy to switch toolchains. CMAKE_PREFIX_PATH can be used.
+
+    </td>
+  </tr>
+  <tr>
     <td>V1.7.0</td>
     <td>
       New Neon implementations of f32 functions

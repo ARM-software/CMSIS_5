@@ -42,10 +42,9 @@ extern void arm_boolean_distance_TT_FF_TF_FT(const uint32_t *pA
 
 
 /**
- * @addtogroup groupDistance
- * @{
+  @addtogroup BoolDist
+  @{
  */
-
 
 /**
  * @brief        Roger Stanimoto distance between two vectors
@@ -70,5 +69,5 @@ float32_t arm_rogerstanimoto_distance(const uint32_t *pA, const uint32_t *pB, ui
 
 
 /**
- * @} end of groupDistance group
+ * @} end of BoolDist group
  */

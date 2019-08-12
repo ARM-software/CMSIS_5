@@ -29,13 +29,6 @@
 #include <limits.h>
 #include <math.h>
 
-
-
-/**
- * @addtogroup groupDistance
- * @{
- */
-
 extern void arm_boolean_distance_TT_TF_FT(const uint32_t *pA
        , const uint32_t *pB
        , uint32_t numberOfBools
@@ -43,6 +36,30 @@ extern void arm_boolean_distance_TT_TF_FT(const uint32_t *pA
        , uint32_t *cTF
        , uint32_t *cFT
        );
+
+
+/**
+ * @ingroup groupDistance
+ * @{
+ */
+
+/**
+ * @defgroup BoolDist Boolean Distances
+ *
+ * Distances between two vectors of boolean values.
+ *
+ * Booleans are packed in 32 bit words.
+ * numberOfBooleans argument is the number of booleans and not the
+ * number of words.
+ *
+ * Bits are packed in big-endian mode (because of behavior of numpy packbits in
+ * in version < 1.17)
+ */
+
+/**
+  @addtogroup BoolDist
+  @{
+ */
 
 /**
  * @brief        Dice distance between two vectors
@@ -63,6 +80,10 @@ float32_t arm_dice_distance(const uint32_t *pA, const uint32_t *pB, uint32_t num
     return(1.0*(ctf + cft) / (2.0*ctt + cft + ctf));
 }
 
+
+/**
+ * @} end of BoolDist group
+ */
 
 /**
  * @} end of groupDistance group

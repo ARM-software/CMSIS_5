@@ -30,10 +30,9 @@
 #include <math.h>
 
 
-
 /**
- * @addtogroup groupDistance
- * @{
+  @addtogroup FloatDist
+  @{
  */
 
 
@@ -116,5 +115,5 @@ float32_t arm_minkowski_distance_f32(const float32_t *pA,const float32_t *pB, in
 
 
 /**
- * @} end of groupDistance group
+ * @} end of FloatDist group
  */

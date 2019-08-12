@@ -32,8 +32,8 @@
 
 
 /**
- * @addtogroup groupDistance
- * @{
+  @addtogroup FloatDist
+  @{
  */
 
 
@@ -79,5 +79,5 @@ float32_t arm_correlation_distance_f32(float32_t *pA,float32_t *pB, uint32_t blo
 
 
 /**
- * @} end of groupDistance group
+ * @} end of FloatDist group
  */

@@ -39,10 +39,9 @@ extern void arm_boolean_distance_TT_FF_TF_FT(const uint32_t *pA
        , uint32_t *cFT
        );
 
-
 /**
- * @addtogroup groupDistance
- * @{
+  @addtogroup BoolDist
+  @{
  */
 
 
@@ -69,5 +68,5 @@ float32_t arm_yule_distance(const uint32_t *pA, const uint32_t *pB, uint32_t num
 
 
 /**
- * @} end of groupDistance group
+ * @} end of BoolDist group
  */

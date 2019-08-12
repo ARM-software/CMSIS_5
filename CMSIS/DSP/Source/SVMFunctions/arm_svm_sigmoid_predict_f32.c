@@ -37,9 +37,9 @@
 
 /**
  * @brief SVM sigmoid prediction
- * @param[in]    S        points to an instance of the rbf SVM structure.
- * @param[in]    in       pointer to input vector
- * @param[out]   pResult  decision value
+ * @param[in]    S        Pointer to an instance of the rbf SVM structure.
+ * @param[in]    in       Pointer to input vector
+ * @param[out]   pResult  Decision value
  * @return none.
  *
  */

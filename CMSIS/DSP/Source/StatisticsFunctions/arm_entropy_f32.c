@@ -38,12 +38,9 @@
 /**
  * @brief Entropy
  *
- * Distribution may contain 0 probabilities with Neon version.
- * Result will be right but some exception flags will be set.
- *
- * @param[in]  *pSrcA         points to an array of input values.
- * @param[in]  blockSize   number of samples in the input array.
- * @return Entropy -Sum(p ln p)
+ * @param[in]  pSrcA        Array of input values.
+ * @param[in]  blockSize    Number of samples in the input array.
+ * @return     Entropy      -Sum(p ln p)
  *
  */
 

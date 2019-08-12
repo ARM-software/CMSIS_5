@@ -28,12 +28,18 @@
 #include <limits.h>
 #include <math.h>
 
+#define PI_F 3.1415926535897932384626433832795f
+#define DPI_F (2*3.1415926535897932384626433832795f)
 
 /**
  * @addtogroup groupBayes
  * @{
  */
 
+
+#if defined(ARM_MATH_NEON)
+
+#include "NEMath.h"
 
 /**
  * @brief Naive Gaussian Bayesian Estimator
@@ -44,13 +50,6 @@
  * @return The predicted class
  *
  */
-
-#define PI_F 3.1415926535897932384626433832795f
-#define DPI_F (2*3.1415926535897932384626433832795f)
-
-#if defined(ARM_MATH_NEON)
-
-#include "NEMath.h"
 
 uint32_t arm_gaussian_naive_bayes_predict_f32(const arm_gaussian_naive_bayes_instance_f32 *S, 
    const float32_t * in, 
@@ -235,6 +234,16 @@ uint32_t arm_gaussian_naive_bayes_predict_f32(const arm_gaussian_naive_bayes_ins
 }
 
 #else
+
+/**
+ * @brief Naive Gaussian Bayesian Estimator
+ *
+ * @param[in]  *S         points to a naive bayes instance structure
+ * @param[in]  *in        points to the elements of the input vector.
+ * @param[in]  *pBuffer   points to a buffer of length numberOfClasses
+ * @return The predicted class
+ *
+ */
 uint32_t arm_gaussian_naive_bayes_predict_f32(const arm_gaussian_naive_bayes_instance_f32 *S, 
    const float32_t * in, 
    float32_t *pBuffer)

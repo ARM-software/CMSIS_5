@@ -31,11 +31,6 @@
 /**
  * @defgroup groupSVM SVM Functions
  *
- * Computes SVM predictions. 
- *
- * The SVM predictors in CMSIS-DSP are only working with 2 classes.
- * Multi-class support must be built from the building blocks provided by CMSIS-DSP.
- *
  */
 
 
@@ -47,6 +42,10 @@
 
 /**
  * @brief        SVM linear instance init function
+ *
+ * Classes are integer used as output of the function (instead of having -1,1
+ * as class values).
+ *
  * @param[in]    S                      Parameters for the SVM function
  * @param[in]    nbOfSupportVectors     Number of support vectors
  * @param[in]    vectorDimension        Dimension of vector space

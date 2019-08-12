@@ -41,10 +41,9 @@ extern void arm_boolean_distance_TT_FF_TF_FT(const uint32_t *pA
 
 
 /**
- * @addtogroup groupDistance
- * @{
+  @addtogroup BoolDist
+  @{
  */
-
 
 /**
  * @brief        Sokal-Michener distance between two vectors
@@ -71,5 +70,5 @@ float32_t arm_sokalmichener_distance(const uint32_t *pA, const uint32_t *pB, uin
 
 
 /**
- * @} end of groupDistance group
+ * @} end of BoolDist group
  */

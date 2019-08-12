@@ -39,10 +39,10 @@
  * @brief Weighted sum
  *
  *
- * @param[in]    *in         points to an array of input values.
- * @param[in]    *weigths    weights
- * @param[in]  blockSize     number of samples in the input array.
- * @return     Weighted sum
+ * @param[in]    *in           Array of input values.
+ * @param[in]    *weigths      Weights
+ * @param[in]    blockSize     Number of samples in the input array.
+ * @return       Weighted sum
  *
  */
 

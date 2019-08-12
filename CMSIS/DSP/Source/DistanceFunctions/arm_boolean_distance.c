@@ -31,28 +31,6 @@
 
 
 
-/**
- * @addtogroup groupDistance
- * @{
- */
-
-
-/**
- * @brief        Elements of boolean distances
- *
- * Different values which are used to compute boolean distances
- *
- * @param[in]    pA              First vector of packed booleans
- * @param[in]    pB              Second vector of packed booleans
- * @param[in]    numberOfBools   Number of booleans
- * @param[out]   cTT             cTT value
- * @param[out]   cTF             cTF value
- * @param[out]   cFT             cFT value
- * @return None
- *
- */
-
-
 
 #if defined(ARM_MATH_NEON)
 
@@ -98,9 +76,3 @@
 #define EXT _TT
 #include "arm_boolean_distance_template.h"
 
-
-
-
-/**
- * @} end of groupDistance group
- */

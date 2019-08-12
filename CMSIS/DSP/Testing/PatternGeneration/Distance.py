@@ -7,7 +7,7 @@ import scipy.spatial
 
 NBTESTSAMPLES = 10
 
-VECDIM = [12,14,20]
+VECDIM = [35,14,20]
 
 def euclidean(xa,xb):
         r = scipy.spatial.distance.euclidean(xa,xb)

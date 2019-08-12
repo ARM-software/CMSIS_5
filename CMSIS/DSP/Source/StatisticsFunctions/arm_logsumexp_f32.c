@@ -41,7 +41,7 @@
  * In probabilistic computations, the dynamic of the probability values can be very
  * wide because they come from gaussian functions.
  * To avoid underflow and overflow issues, the values are represented by their log.
- * In this representation, multiplying the original exp values is easy : their log are added.
+ * In this representation, multiplying the original exp values is easy : their logs are added.
  * But adding the original exp values is requiring some special handling and it is the
  * goal of the LogSumExp function.
  *
@@ -50,11 +50,11 @@
  * ln(exp(x1) + ... + exp(xn)) and the computation is done in such a way that
  * rounding issues are minimised.
  *
- * The max xm of the values if extracted and the function is computing:
+ * The max xm of the values is extracted and the function is computing:
  * xm + ln(exp(x1 - xm) + ... + exp(xn - xm))
  *
- * @param[in]    *in         points to an array of input values.
- * @param[in]  blockSize     number of samples in the input array.
+ * @param[in]  *in         Pointer to an array of input values.
+ * @param[in]  blockSize   Number of samples in the input array.
  * @return LogSumExp
  *
  */

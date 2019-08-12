@@ -38,8 +38,8 @@ extern void arm_boolean_distance_TF_FT(const uint32_t *pA
        );
 
 /**
- * @addtogroup groupDistance
- * @{
+  @addtogroup BoolDist
+  @{
  */
 
 
@@ -64,5 +64,5 @@ float32_t arm_hamming_distance(const uint32_t *pA, const uint32_t *pB, uint32_t 
 
 
 /**
- * @} end of groupDistance group
+ * @} end of BoolDist group
  */

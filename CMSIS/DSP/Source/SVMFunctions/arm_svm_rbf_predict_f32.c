@@ -37,8 +37,8 @@
 
 /**
  * @brief SVM rbf prediction
- * @param[in]    S         points to an instance of the rbf SVM structure.
- * @param[in]    in        pointer to input vector
+ * @param[in]    S         Pointer to an instance of the rbf SVM structure.
+ * @param[in]    in        Pointer to input vector
  * @param[out]   pResult   decision value
  * @return none.
  *

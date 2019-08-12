@@ -38,6 +38,10 @@
 
 /**
  * @brief        SVM polynomial instance init function
+ *
+ * Classes are integer used as output of the function (instead of having -1,1
+ * as class values).
+ *
  * @param[in]    S                      points to an instance of the polynomial SVM structure.
  * @param[in]    nbOfSupportVectors     Number of support vectors
  * @param[in]    vectorDimension        Dimension of vector space

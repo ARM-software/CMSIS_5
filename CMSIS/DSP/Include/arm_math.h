@@ -29,27 +29,37 @@
    * ------------
    *
    * This user manual describes the CMSIS DSP software library,
-   * a suite of common signal processing functions for use on Cortex-M processor based devices.
+   * a suite of common signal processing functions for use on Cortex-M and Cortex-A processor 
+   * based devices.
    *
    * The library is divided into a number of functions each covering a specific category:
    * - Basic math functions
    * - Fast math functions
    * - Complex math functions
-   * - Filters
+   * - Filtering functions
    * - Matrix functions
    * - Transform functions
    * - Motor control functions
    * - Statistical functions
    * - Support functions
    * - Interpolation functions
+   * - Support Vector Machine functions (SVM)
+   * - Bayes classifier functions
+   * - Distance functions
    *
-   * The library has separate functions for operating on 8-bit integers, 16-bit integers,
+   * The library has generally separate functions for operating on 8-bit integers, 16-bit integers,
    * 32-bit integer and 32-bit floating-point values.
    *
    * Using the Library
    * ------------
    *
    * The library installer contains prebuilt versions of the libraries in the <code>Lib</code> folder.
+   * Pre-built libraries will not be updated to contain new functions. 
+   * So, SVM, Bayes, Distance functions and experimental functions are not included in those libraries.
+   * If you want to use those functions, you'll have to modify the projects, include the missing
+   * files and rebuild.
+   * You can also use the cmake to build the libraries and select what you want to be included.
+   * Here is the list of pre-built libraries :
    * - arm_cortexM7lfdp_math.lib (Cortex-M7, Little endian, Double Precision Floating Point Unit)
    * - arm_cortexM7bfdp_math.lib (Cortex-M7, Big endian, Double Precision Floating Point Unit)
    * - arm_cortexM7lfsp_math.lib (Cortex-M7, Little endian, Single Precision Floating Point Unit)
@@ -94,6 +104,8 @@
    *
    *
    * The libraries can be built by opening the arm_cortexM_math.uvprojx project in MDK-ARM, selecting a specific target, and defining the optional preprocessor macros detailed above.
+   *
+   * There is also a work in progress cmake build. The README file is giving more details.
    *
    * Preprocessor Macros
    * ------------
@@ -277,16 +289,35 @@
 
 /**
  * @defgroup groupSVM SVM Functions
+ * This set of functions is implementing SVM classification on 2 classes.
+ * The training must be done from scikit-learn. The parameters can be easily
+ * generated from the scikit-learn object. Some examples are given in
+ * DSP/Testing/PatternGeneration/SVM.py
+ *
+ * If more than 2 classes are needed, the functions in this folder 
+ * will have to be used, as building blocks, to do multi-class classification.
+ *
+ * No multi-class classification is provided in this SVM folder.
+ * 
  */
 
 
 /**
  * @defgroup groupBayes Bayesian estimators
  *
+ * Implement the naive gaussian Bayes estimator.
+ * The training must be done from scikit-learn.
+ *
+ * The parameters can be easily
+ * generated from the scikit-learn object. Some examples are given in
+ * DSP/Testing/PatternGeneration/Bayes.py
  */
 
 /**
  * @defgroup groupDistance Distance functions
+ *
+ * Distance functions for use with clustering algorithms.
+ * There are distance functions for float vectors and boolean vectors.
  *
  */
 
@@ -7024,9 +7055,9 @@ void arm_svm_linear_init_f32(arm_svm_linear_instance_f32 *S,
 
 /**
  * @brief SVM linear prediction
- * @param[in]    S           points to an instance of the linear SVM structure.
- * @param[in]    in          pointer to input vector
- * @param[out]   pResult     decision value
+ * @param[in]    S          Pointer to an instance of the linear SVM structure.
+ * @param[in]    in         Pointer to input vector
+ * @param[out]   pResult    Decision value
  * @return none.
  *
  */
@@ -7067,13 +7098,12 @@ void arm_svm_polynomial_init_f32(arm_svm_polynomial_instance_f32 *S,
 
 /**
  * @brief SVM polynomial prediction
- * @param[in]    S          points to an instance of the polynomial SVM structure.
- * @param[in]    in         pointer to input vector
- * @param[out]   pResult    decision value
+ * @param[in]    S          Pointer to an instance of the polynomial SVM structure.
+ * @param[in]    in         Pointer to input vector
+ * @param[out]   pResult    Decision value
  * @return none.
  *
  */
-  
 void arm_svm_polynomial_predict_f32(const arm_svm_polynomial_instance_f32 *S, 
    const float32_t * in, 
    int * pResult);
@@ -7105,13 +7135,12 @@ void arm_svm_rbf_init_f32(arm_svm_rbf_instance_f32 *S,
 
 /**
  * @brief SVM rbf prediction
- * @param[in]    S          points to an instance of the rbf SVM structure.
- * @param[in]    in         pointer to input vector
- * @param[out]   pResult    decision value
+ * @param[in]    S         Pointer to an instance of the rbf SVM structure.
+ * @param[in]    in        Pointer to input vector
+ * @param[out]   pResult   decision value
  * @return none.
  *
  */
-  
 void arm_svm_rbf_predict_f32(const arm_svm_rbf_instance_f32 *S, 
    const float32_t * in, 
    int * pResult);
@@ -7144,9 +7173,9 @@ void arm_svm_sigmoid_init_f32(arm_svm_sigmoid_instance_f32 *S,
 
 /**
  * @brief SVM sigmoid prediction
- * @param[in]    S          points to an instance of the rbf SVM structure.
- * @param[in]    in         pointer to input vector
- * @param[out]   pResult    decision value
+ * @param[in]    S        Pointer to an instance of the rbf SVM structure.
+ * @param[in]    in       Pointer to input vector
+ * @param[out]   pResult  Decision value
  * @return none.
  *
  */
@@ -7190,7 +7219,7 @@ uint32_t arm_gaussian_naive_bayes_predict_f32(const arm_gaussian_naive_bayes_ins
  * In probabilistic computations, the dynamic of the probability values can be very
  * wide because they come from gaussian functions.
  * To avoid underflow and overflow issues, the values are represented by their log.
- * In this representation, multiplying the original exp values is easy : their log are added.
+ * In this representation, multiplying the original exp values is easy : their logs are added.
  * But adding the original exp values is requiring some special handling and it is the
  * goal of the LogSumExp function.
  *
@@ -7199,11 +7228,11 @@ uint32_t arm_gaussian_naive_bayes_predict_f32(const arm_gaussian_naive_bayes_ins
  * ln(exp(x1) + ... + exp(xn)) and the computation is done in such a way that
  * rounding issues are minimised.
  *
- * The max xm of the values if extracted and the function is computing:
+ * The max xm of the values is extracted and the function is computing:
  * xm + ln(exp(x1 - xm) + ... + exp(xn - xm))
  *
- * @param[in]    in         points to an array of input values.
- * @param[in]  blockSize     number of samples in the input array.
+ * @param[in]  *in         Pointer to an array of input values.
+ * @param[in]  blockSize   Number of samples in the input array.
  * @return LogSumExp
  *
  */
@@ -7233,9 +7262,9 @@ float32_t arm_logsumexp_dot_prod_f32(const float32_t * pSrcA,
 /**
  * @brief Entropy
  *
- * @param[in]  pSrcA      points to an array of input values.
- * @param[in]  blockSize   number of samples in the input array.
- * @return Entropy -Sum(p ln p)
+ * @param[in]  pSrcA        Array of input values.
+ * @param[in]  blockSize    Number of samples in the input array.
+ * @return     Entropy      -Sum(p ln p)
  *
  */
 
@@ -7246,10 +7275,10 @@ float32_t arm_entropy_f32(const float32_t * pSrcA,uint32_t blockSize);
 /**
  * @brief Kullback-Leibler
  *
- * @param[in]  pSrcA         points to an array of input values for probaility distribution A.
- * @param[in]  pSrcB         points to an array of input values for probaility distribution B.
- * @param[in]  blockSize      number of samples in the input array.
- * @return Kullback-Leibler divergence D(A || B)
+ * @param[in]  pSrcA         Pointer to an array of input values for probability distribution A.
+ * @param[in]  pSrcB         Pointer to an array of input values for probability distribution B.
+ * @param[in]  blockSize     Number of samples in the input array.
+ * @return Kullback-Leibler  Divergence D(A || B)
  *
  */
 float32_t arm_kullback_leibler_f32(const float32_t * pSrcA
@@ -7261,10 +7290,10 @@ float32_t arm_kullback_leibler_f32(const float32_t * pSrcA
  * @brief Weighted sum
  *
  *
- * @param[in]    in         points to an array of input values.
- * @param[in]    weigths    weights
- * @param[in]  blockSize     number of samples in the input array.
- * @return     Weighted sum
+ * @param[in]    *in           Array of input values.
+ * @param[in]    *weigths      Weights
+ * @param[in]    blockSize     Number of samples in the input array.
+ * @return Weighted sum
  *
  */
 float32_t arm_weighted_sum_f32(const float32_t *in
@@ -7276,12 +7305,12 @@ float32_t arm_weighted_sum_f32(const float32_t *in
  * @brief Barycenter
  *
  *
- * @param[in]    in         List of points
- * @param[in]    weights    Weights of the points
+ * @param[in]    in         List of vectors
+ * @param[in]    weights    Weights of the vectors
  * @param[out]   out        Barycenter
- * @param[in]  nbVectors     number of vectors
- * @param[in]  vecDim        Dimension of space
- * @return     None
+ * @param[in]    nbVectors  Number of vectors
+ * @param[in]    vecDim     Dimension of space (vector dimension)
+ * @return       None
  *
  */
 void arm_barycenter_f32(const float32_t *in
