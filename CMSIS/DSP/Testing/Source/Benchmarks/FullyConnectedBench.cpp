@@ -4,13 +4,7 @@
    
     void FullyConnectedBench::test_fully_connected_tflite_s8()
     {
-       
-       q7_t *inp=input.ptr();
-       q7_t *biasp=bias.ptr();
-       q7_t *weightp=weight.ptr();
-       q7_t *outp=output.ptr();
-       q7_t *refp=ref.ptr();
-       q15_t *tempp=temp.ptr();
+      
 
        int32_t output_mult = 1073741824;
        int16_t output_shift = -1;
@@ -61,6 +55,12 @@
        output.create(ref.nbSamples(),FullyConnectedBench::OUTPUT_S8_ID,mgr);
        temp.create(input.nbSamples(),FullyConnectedBench::TEMP_S16_ID,mgr);
 
+       inp=input.ptr();
+       biasp=bias.ptr();
+       weightp=weight.ptr();
+       outp=output.ptr();
+       refp=ref.ptr();
+       tempp=temp.ptr();
 
     }
 

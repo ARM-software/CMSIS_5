@@ -34,4 +34,8 @@ class PoolingBench:public Client::Suite
 
             int repeatNb;
 
+            q7_t *tmpin;
+            q7_t *outp;
+            q15_t *tempp;
+
     };

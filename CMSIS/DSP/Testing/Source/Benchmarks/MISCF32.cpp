@@ -5,24 +5,12 @@
    
     void MISCF32::test_conv_f32()
     {
-       
-       const float32_t *inp1=input1.ptr();
-       const float32_t *inp2=input2.ptr();
-       float32_t *outp=output.ptr();
-
-       arm_conv_f32(inp1, this->nba,inp2, this->nbb, outp);
-        
+       arm_conv_f32(this->inp1, this->nba,this->inp2, this->nbb, this->outp);
     } 
 
     void MISCF32::test_correlate_f32()
     {
-       
-       const float32_t *inp1=input1.ptr();
-       const float32_t *inp2=input2.ptr();
-       float32_t *outp=output.ptr();
-
-       arm_correlate_f32(inp1, this->nba,inp2, this->nbb, outp);
-        
+       arm_correlate_f32(this->inp1, this->nba,this->inp2, this->nbb, this->outp);
     } 
 
    
@@ -48,6 +36,10 @@
              output.create(2*MAX(this->nba , this->nbb) - 1 ,MISCF32::OUT_SAMPLES_F32_ID,mgr);
           break;
        }
+
+       this->inp1=input1.ptr();
+       this->inp2=input2.ptr();
+       this->outp=output.ptr();
        
     }
 

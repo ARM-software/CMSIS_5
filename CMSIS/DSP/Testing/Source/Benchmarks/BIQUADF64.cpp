@@ -5,11 +5,7 @@
    
     void BIQUADF64::test_biquad_cascade_df2T_f64()
     {
-       const float64_t *pSrc=samples.ptr();
-       float64_t *pDst=output.ptr();
-
-       arm_biquad_cascade_df2T_f64(&instBiquadDf2T, (float64_t *)pSrc, pDst, this->nbSamples);
-      
+       arm_biquad_cascade_df2T_f64(&instBiquadDf2T, (float64_t *)this->pSrc, this->pDst, this->nbSamples);
     } 
 
 
@@ -44,6 +40,9 @@
 
           
        }
+
+       this->pSrc=samples.ptr();
+       this->pDst=output.ptr();
        
     }
 

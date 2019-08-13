@@ -4,13 +4,7 @@
    
     void DECIMF32::test_fir_decimate_f32()
     {
-       
-       const float32_t *pSrc=samples.ptr();
-       float32_t *pDst=output.ptr();
-
-       arm_fir_decimate_f32(&instDecim,pSrc,pDst,this->nbSamples);
- 
-        
+       arm_fir_decimate_f32(&instDecim,this->pSrc,this->pDst,this->nbSamples);
     } 
 
  
@@ -18,13 +12,7 @@
    
     void DECIMF32::test_fir_interpolate_f32()
     {
-       
-       const float32_t *pSrc=samples.ptr();
-       float32_t *pDst=output.ptr();
-
-       arm_fir_interpolate_f32(&instInterpol,pSrc,pDst,this->nbSamples);
- 
-        
+       arm_fir_interpolate_f32(&instInterpol,this->pSrc,this->pDst,this->nbSamples);
     } 
     
     void DECIMF32::setUp(Testing::testID_t id,std::vector<Testing::param_t>& params,Client::PatternMgr *mgr)
@@ -67,6 +55,9 @@
 
           
        }
+
+       this->pSrc=samples.ptr();
+       this->pDst=output.ptr();
        
     }
 

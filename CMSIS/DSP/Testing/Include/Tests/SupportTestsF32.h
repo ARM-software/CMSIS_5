@@ -11,17 +11,12 @@ class SupportTestsF32:public Client::Suite
             
             Client::Pattern<float32_t> input;
             Client::Pattern<float32_t> coefs;
-            Client::Pattern<int16_t> dims;
 
             Client::LocalPattern<float32_t> output;
 
             // Reference patterns are not loaded when we are in dump mode
             Client::RefPattern<float32_t> ref;
 
-            int vecDim;
-            int nbPatterns;
-            int nbVectors;
-
-           
+            int nbSamples;
 
     };

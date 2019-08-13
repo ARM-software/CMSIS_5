@@ -4,13 +4,7 @@
    
     void DECIMQ15::test_fir_decimate_q15()
     {
-       
-       const q15_t *pSrc=samples.ptr();
-       q15_t *pDst=output.ptr();
-
-       arm_fir_decimate_q15(&instDecim,pSrc,pDst,this->nbSamples);
- 
-        
+       arm_fir_decimate_q15(&instDecim,this->pSrc,this->pDst,this->nbSamples);
     } 
 
  
@@ -18,13 +12,7 @@
    
     void DECIMQ15::test_fir_interpolate_q15()
     {
-       
-       const q15_t *pSrc=samples.ptr();
-       q15_t *pDst=output.ptr();
-
-       arm_fir_interpolate_q15(&instInterpol,pSrc,pDst,this->nbSamples);
- 
-        
+       arm_fir_interpolate_q15(&instInterpol,this->pSrc,this->pDst,this->nbSamples);
     } 
     
     void DECIMQ15::setUp(Testing::testID_t id,std::vector<Testing::param_t>& params,Client::PatternMgr *mgr)
@@ -67,6 +55,9 @@
 
           
        }
+
+       this->pSrc=samples.ptr();
+       this->pDst=output.ptr();
        
     }
 

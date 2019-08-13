@@ -52,24 +52,36 @@ group Root {
               class = SupportTestsF32
               folder = SupportF32
 
-              Pattern INPUTS1_F32_ID : Inputs1_f32.txt 
-              Pattern DIMS1_S16_ID : Dims1_s16.txt 
-              Pattern WEIGHTS1_F32_ID : Weights1_f32.txt 
-              Pattern REF1_F32_ID : Ref1_f32.txt
-
-              Pattern INPUTS2_F32_ID : Inputs2_f32.txt 
-              Pattern DIMS2_S16_ID : Dims2_s16.txt 
-              Pattern WEIGHTS2_F32_ID : Weights2_f32.txt 
-              Pattern REF2_F32_ID : Ref2_f32.txt
+              Pattern INPUTS_F32_ID : Inputs6_f32.txt 
+              Pattern WEIGHTS_F32_ID : Weights6_f32.txt 
+              Pattern REF_F32_ID : Ref6_f32.txt
 
               Output  OUT_F32_ID : Output
 
               Functions {
-                arm_barycenter_f32:test_barycenter_f32
                 arm_weighted_sum_f32:test_weighted_sum_f32
               }
 
            }
+        }
+
+        suite Support Bar Tests F32 {
+              class = SupportBarTestsF32
+              folder = SupportBarF32
+
+              Pattern SAMPLES_F32_ID : Inputs1_f32.txt 
+              Pattern COEFS_F32_ID : Weights1_f32.txt 
+              Pattern REF_F32_ID : Ref1_f32.txt
+              Pattern DIM_S16_ID : Dims1_s16.txt
+
+
+              Output  OUT_SAMPLES_F32_ID : Output
+
+
+              Functions {
+                test_barycenter_f32:test_barycenter_f32
+              }
+
         }
 
         group Basic Tests {

@@ -15,5 +15,10 @@ class ComplexMathsBenchmarksQ15:public Client::Suite
             Client::LocalPattern<q15_t> output;
 
             int nb;
+
+            const q15_t *inp1;
+            const q15_t *inp2;
+            const q15_t *inp3;
+            q15_t *outp;
             
     };

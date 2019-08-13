@@ -15,5 +15,10 @@ class ComplexMathsBenchmarksQ31:public Client::Suite
             Client::LocalPattern<q31_t> output;
 
             int nb;
+
+            const q31_t *inp1;
+            const q31_t *inp2;
+            const q31_t *inp3;
+            q31_t *outp;
             
     };

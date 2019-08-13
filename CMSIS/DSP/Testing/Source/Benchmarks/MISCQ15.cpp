@@ -5,24 +5,12 @@
    
     void MISCQ15::test_conv_q15()
     {
-       
-       const q15_t *inp1=input1.ptr();
-       const q15_t *inp2=input2.ptr();
-       q15_t *outp=output.ptr();
-
-       arm_conv_q15(inp1, this->nba,inp2, this->nbb, outp);
-        
+       arm_conv_q15(this->inp1, this->nba,this->inp2, this->nbb, this->outp);
     } 
 
     void MISCQ15::test_correlate_q15()
     {
-       
-       const q15_t *inp1=input1.ptr();
-       const q15_t *inp2=input2.ptr();
-       q15_t *outp=output.ptr();
-
-       arm_correlate_q15(inp1, this->nba,inp2, this->nbb, outp);
-        
+       arm_correlate_q15(this->inp1, this->nba,this->inp2, this->nbb, this->outp);  
     } 
 
    
@@ -48,6 +36,10 @@
              output.create(2*MAX(this->nba , this->nbb) - 1 ,MISCQ15::OUT_SAMPLES_Q15_ID,mgr);
           break;
        }
+
+       this->inp1=input1.ptr();
+       this->inp2=input2.ptr();
+       this->outp=output.ptr();
        
     }
 

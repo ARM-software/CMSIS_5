@@ -22,5 +22,11 @@ class FIRQ15:public Client::Suite
             arm_fir_instance_q15  instFir;
             arm_lms_instance_q15  instLms;
             arm_lms_norm_instance_q15 instLmsNorm;
+
+            const q15_t *pSrc;
+            const q15_t *pCoefs;
+            q15_t *pDst;
+            const q15_t *pRef;
+            q15_t *pErr;
             
     };

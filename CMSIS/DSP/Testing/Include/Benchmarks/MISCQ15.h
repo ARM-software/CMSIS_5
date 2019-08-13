@@ -15,4 +15,7 @@ class MISCQ15:public Client::Suite
             int nba;
             int nbb;
             
+            const q15_t *inp1;
+            const q15_t *inp2;
+            q15_t *outp;
     };

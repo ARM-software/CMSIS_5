@@ -4,37 +4,18 @@
    
     void BIQUADF32::test_biquad_cascade_df1_f32()
     {
-       
-       
-       const float32_t *pSrc=samples.ptr();
-       float32_t *pDst=output.ptr();
-
-
-       arm_biquad_cascade_df1_f32(&instBiquadDf1, pSrc, pDst, this->nbSamples);
-       
-        
+       arm_biquad_cascade_df1_f32(&instBiquadDf1, this->pSrc, this->pDst, this->nbSamples);
     } 
 
     void BIQUADF32::test_biquad_cascade_df2T_f32()
     {
-       const float32_t *pSrc=samples.ptr();
-       float32_t *pDst=output.ptr();
-
-
-       arm_biquad_cascade_df2T_f32(&instBiquadDf2T, pSrc, pDst, this->nbSamples);
-        
+       arm_biquad_cascade_df2T_f32(&instBiquadDf2T, this->pSrc, this->pDst, this->nbSamples);
     } 
 
   
     void BIQUADF32::test_biquad_cascade_stereo_df2T_f32()
     {
-       
-       const float32_t *pSrc=samples.ptr();
-       float32_t *pDst=output.ptr();
-
-
-       arm_biquad_cascade_stereo_df2T_f32(&instStereo, pSrc, pDst, this->nbSamples);
-        
+       arm_biquad_cascade_stereo_df2T_f32(&instStereo, this->pSrc, this->pDst, this->nbSamples);
     } 
 
 
@@ -91,6 +72,9 @@
            break;
        }
        
+       this->pSrc=samples.ptr();
+       this->pDst=output.ptr();
+
     }
 
     void BIQUADF32::tearDown(Testing::testID_t id,Client::PatternMgr *mgr)

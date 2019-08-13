@@ -22,5 +22,7 @@ class DECIMQ31:public Client::Suite
             arm_fir_decimate_instance_q31  instDecim;
             arm_fir_interpolate_instance_q31 instInterpol;
             
+            const q31_t *pSrc;
+            q31_t *pDst;
             
     };

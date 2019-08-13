@@ -17,4 +17,11 @@ class FullyConnectedBench:public Client::Suite
             Client::LocalPattern<q15_t> temp;
             // Reference patterns are not loaded when we are in dump mode
             Client::RefPattern<q7_t> ref;
+
+            q7_t *inp;
+            q7_t *biasp;
+            q7_t *weightp;
+            q7_t *outp;
+            q7_t *refp;
+            q15_t *tempp;
     };

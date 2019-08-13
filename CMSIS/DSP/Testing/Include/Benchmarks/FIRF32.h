@@ -22,6 +22,11 @@ class FIRF32:public Client::Suite
             arm_fir_instance_f32  instFir;
             arm_lms_instance_f32  instLms;
             arm_lms_norm_instance_f32 instLmsNorm;
-            
+
+            const float32_t *pSrc;
+            const float32_t *pCoefs;
+            float32_t *pDst;
+            const float32_t *pRef;
+            float32_t *pErr;
             
     };

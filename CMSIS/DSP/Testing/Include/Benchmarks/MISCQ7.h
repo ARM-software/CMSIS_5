@@ -15,4 +15,7 @@ class MISCQ7:public Client::Suite
             int nba;
             int nbb;
             
+            const q7_t *inp1;
+            const q7_t *inp2;
+            q7_t *outp;
     };

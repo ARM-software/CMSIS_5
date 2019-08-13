@@ -4,97 +4,44 @@
    
     void BasicMathsBenchmarksQ31::vec_mult_q31()
     {
-       
-       q31_t *inp1=input1.ptr();
-       q31_t *inp2=input2.ptr();
-       q31_t *outp=output.ptr();
-
-
-       arm_mult_q31(inp1,inp2,outp,this->nb);
-        
+       arm_mult_q31(this->inp1,this->inp2,this->outp,this->nb);
     } 
 
     void BasicMathsBenchmarksQ31::vec_add_q31()
     {
-       
-       q31_t *inp1=input1.ptr();
-       q31_t *inp2=input2.ptr();
-       q31_t *outp=output.ptr();
-
-
-       arm_add_q31(inp1,inp2,outp,this->nb);
-        
+       arm_add_q31(this->inp1,this->inp2,this->outp,this->nb);
     } 
 
     void BasicMathsBenchmarksQ31::vec_sub_q31()
     {
-       
-       q31_t *inp1=input1.ptr();
-       q31_t *inp2=input2.ptr();
-       q31_t *outp=output.ptr();
-
-
-       arm_sub_q31(inp1,inp2,outp,this->nb);
-        
+       arm_sub_q31(this->inp1,this->inp2,this->outp,this->nb); 
     } 
 
     void BasicMathsBenchmarksQ31::vec_abs_q31()
     {
-       
-       q31_t *inp1=input1.ptr();
-       q31_t *inp2=input2.ptr();
-       q31_t *outp=output.ptr();
-
-
-       arm_abs_q31(inp1,outp,this->nb);
-        
+       arm_abs_q31(this->inp1,this->outp,this->nb);
     } 
 
     void BasicMathsBenchmarksQ31::vec_negate_q31()
     {
-       
-       q31_t *inp1=input1.ptr();
-       q31_t *outp=output.ptr();
-
-
-       arm_negate_q31(inp1,outp,this->nb);
-        
+       arm_negate_q31(this->inp1,this->outp,this->nb);
     }
 
     void BasicMathsBenchmarksQ31::vec_offset_q31()
     {
-       
-       q31_t *inp1=input1.ptr();
-       q31_t *inp2=input2.ptr();
-       q31_t *outp=output.ptr();
-
-
-       arm_offset_q31(inp1,1.0,outp,this->nb);
-        
+       arm_offset_q31(this->inp1,1.0,this->outp,this->nb); 
     }
 
    void BasicMathsBenchmarksQ31::vec_scale_q31()
     {
-       
-       q31_t *inp1=input1.ptr();
-       q31_t *inp2=input2.ptr();
-       q31_t *outp=output.ptr();
-
-
-       arm_scale_q31(inp1,0x45,1,outp,this->nb);
-        
+       arm_scale_q31(this->inp1,0x45,1,this->outp,this->nb);
     }
 
     void BasicMathsBenchmarksQ31::vec_dot_q31()
     {
-       
-       q31_t *inp1=input1.ptr();
-       q31_t *inp2=input2.ptr();
        q63_t result;
 
-
-       arm_dot_prod_q31(inp1,inp2,this->nb,&result);
-        
+       arm_dot_prod_q31(this->inp1,this->inp2,this->nb,&result);
     }
 
   
@@ -111,6 +58,30 @@
 
        
        output.create(this->nb,BasicMathsBenchmarksQ31::OUT_SAMPLES_Q31_ID,mgr);
+
+       switch(id)
+       {
+          case BasicMathsBenchmarksQ31::VEC_MULT_Q31_1:
+          case BasicMathsBenchmarksQ31::VEC_ADD_Q31_2:
+          case BasicMathsBenchmarksQ31::VEC_SUB_Q31_3:
+          case BasicMathsBenchmarksQ31::VEC_ABS_Q31_4:
+          case BasicMathsBenchmarksQ31::VEC_OFFSET_Q31_6:
+          case BasicMathsBenchmarksQ31::VEC_SCALE_Q31_7:
+             this->inp1=input1.ptr();
+             this->inp2=input2.ptr();
+             this->outp=output.ptr();
+          break;
+
+          case BasicMathsBenchmarksQ31::VEC_NEGATE_Q31_5:
+             this->inp1=input1.ptr();
+             this->outp=output.ptr();
+          break;
+
+          case BasicMathsBenchmarksQ31::VEC_DOT_Q31_8:
+             this->inp1=input1.ptr();
+             this->inp2=input2.ptr();
+          break;
+       }
        
     }
 

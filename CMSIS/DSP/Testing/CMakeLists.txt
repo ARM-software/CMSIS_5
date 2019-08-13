@@ -100,6 +100,24 @@ set(TESTSRC
   Source/Benchmarks/DECIMQ15.cpp
   Source/Benchmarks/BIQUADF32.cpp
   Source/Benchmarks/BIQUADF64.cpp
+  Source/Benchmarks/ControllerF32.cpp
+  Source/Benchmarks/ControllerQ31.cpp
+  Source/Benchmarks/ControllerQ15.cpp
+  Source/Benchmarks/FastMathF32.cpp
+  Source/Benchmarks/FastMathQ31.cpp
+  Source/Benchmarks/FastMathQ15.cpp
+  Source/Benchmarks/SupportF32.cpp
+  Source/Benchmarks/SupportBarF32.cpp
+  Source/Benchmarks/SupportQ31.cpp
+  Source/Benchmarks/SupportQ15.cpp
+  Source/Benchmarks/SupportQ7.cpp
+  Source/Benchmarks/UnaryF32.cpp
+  Source/Benchmarks/UnaryF64.cpp
+  Source/Benchmarks/UnaryQ31.cpp
+  Source/Benchmarks/UnaryQ15.cpp
+  Source/Benchmarks/BinaryF32.cpp
+  Source/Benchmarks/BinaryQ31.cpp
+  Source/Benchmarks/BinaryQ15.cpp
   Source/Benchmarks/FullyConnectedBench.cpp
   Source/Benchmarks/PoolingBench.cpp
   )
@@ -112,6 +130,7 @@ set(TESTSRC
   Source/Tests/BayesF32.cpp
   Source/Tests/StatsTestsF32.cpp
   Source/Tests/SupportTestsF32.cpp
+  Source/Tests/SupportBarTestsF32.cpp
   Source/Tests/DistanceTestsF32.cpp
   Source/Tests/DistanceTestsU32.cpp
   Source/Tests/FullyConnected.cpp

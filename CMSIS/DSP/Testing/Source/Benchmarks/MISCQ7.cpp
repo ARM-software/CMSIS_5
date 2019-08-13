@@ -5,24 +5,12 @@
    
     void MISCQ7::test_conv_q7()
     {
-       
-       const q7_t *inp1=input1.ptr();
-       const q7_t *inp2=input2.ptr();
-       q7_t *outp=output.ptr();
-
-       arm_conv_q7(inp1, this->nba,inp2, this->nbb, outp);
-        
+       arm_conv_q7(this->inp1, this->nba,this->inp2, this->nbb, this->outp);
     } 
 
     void MISCQ7::test_correlate_q7()
     {
-       
-       const q7_t *inp1=input1.ptr();
-       const q7_t *inp2=input2.ptr();
-       q7_t *outp=output.ptr();
-
-       arm_correlate_q7(inp1, this->nba,inp2, this->nbb, outp);
-        
+       arm_correlate_q7(this->inp1, this->nba,this->inp2, this->nbb, this->outp);
     } 
 
    
@@ -48,6 +36,10 @@
              output.create(2*MAX(this->nba , this->nbb) - 1 ,MISCQ7::OUT_SAMPLES_Q7_ID,mgr);
           break;
        }
+
+       this->inp1=input1.ptr();
+       this->inp2=input2.ptr();
+       this->outp=output.ptr();
        
     }
 

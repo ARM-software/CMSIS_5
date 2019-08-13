@@ -741,6 +741,534 @@ group Root {
               }
            }
         }
+
+        group Controller {
+           class = Controller 
+           folder = Controller 
+
+           suite Controller F32 {
+                class = ControllerF32 
+                folder = ControllerF32
+
+                ParamList {
+                  NB
+                  Summary NB
+                  Names "Number of samples"
+                  Formula "NB"
+                }
+
+                Pattern SAMPLES_F32_ID : Samples1_f32.txt 
+                Output  OUT_SAMPLES_F32_ID : Output
+
+                Params PARAM1_ID = {
+                  NB = [16,64,128,256]
+                }
+
+                Functions {
+                   test_pid_f32:test_pid_f32 {
+                     oldID = 0
+                   }
+                   test_clarke_f32:test_clarke_f32
+                   test_inv_clarke_f32:test_inv_clarke_f32
+                   test_park_f32:test_park_f32
+                   test_inv_park_f32:test_inv_park_f32
+                   test_sin_cos_f32:test_sin_cos_f32
+                } -> PARAM1_ID
+             }
+
+           suite Controller Q31 {
+                class = ControllerQ31 
+                folder = ControllerQ31
+
+                ParamList {
+                  NB
+                  Summary NB
+                  Names "Number of samples"
+                  Formula "NB"
+                }
+
+                Pattern SAMPLES_Q31_ID : Samples1_q31.txt 
+                Output  OUT_SAMPLES_Q31_ID : Output
+
+                Params PARAM1_ID = {
+                  NB = [16,64,128,256]
+                }
+
+                Functions {
+                   test_pid_q31:test_pid_q31
+                   test_clarke_q31:test_clarke_q31
+                   test_inv_clarke_q31:test_inv_clarke_q31
+                   test_park_q31:test_park_q31
+                   test_inv_park_q31:test_inv_park_q31
+                   test_sin_cos_q31:test_sin_cos_q31
+                } -> PARAM1_ID
+             }
+
+           suite Controller Q15 {
+                class = ControllerQ15
+                folder = ControllerQ15
+
+                ParamList {
+                  NB
+                  Summary NB
+                  Names "Number of samples"
+                  Formula "NB"
+                }
+
+                Pattern SAMPLES_Q15_ID : Samples1_q15.txt 
+                Output  OUT_SAMPLES_Q15_ID : Output
+
+                Params PARAM1_ID = {
+                  NB = [16,64,128,256]
+                }
+
+                Functions {
+                   test_pid_q15:test_pid_q15
+                } -> PARAM1_ID
+             }
+        }
+
+        group FastMath {
+           class = FastMath 
+           folder = FastMath 
+
+           suite FastMath F32 {
+                class = FastMathF32 
+                folder = FastMathF32
+
+                ParamList {
+                  NB
+                  Summary NB
+                  Names "Number of samples"
+                  Formula "NB"
+                }
+
+                Pattern SAMPLES_F32_ID : Samples1_f32.txt 
+                Output  OUT_SAMPLES_F32_ID : Output
+
+                Params PARAM1_ID = {
+                  NB = [16,64,128,256]
+                }
+
+                Functions {
+                   test_cos_f32:test_cos_f32
+                   test_sin_f32:test_sin_f32
+                   test_sqrt_f32:test_sqrt_f32
+                } -> PARAM1_ID
+             }
+
+           suite FastMath Q31 {
+                class = FastMathQ31 
+                folder = FastMathQ31
+
+                ParamList {
+                  NB
+                  Summary NB
+                  Names "Number of samples"
+                  Formula "NB"
+                }
+
+                Pattern SAMPLES_Q31_ID : Samples1_q31.txt 
+                Output  OUT_SAMPLES_Q31_ID : Output
+
+                Params PARAM1_ID = {
+                  NB = [16,64,128,256]
+                }
+
+                Functions {
+                   test_cos_q31:test_cos_q31
+                   test_sin_q31:test_sin_q31
+                   test_sqrt_q31:test_sqrt_q31
+                } -> PARAM1_ID
+             }
+
+           suite FastMath Q15 {
+                class = FastMathQ15
+                folder = FastMathQ15
+
+                ParamList {
+                  NB
+                  Summary NB
+                  Names "Number of samples"
+                  Formula "NB"
+                }
+
+                Pattern SAMPLES_Q15_ID : Samples1_q15.txt 
+                Output  OUT_SAMPLES_Q15_ID : Output
+
+                Params PARAM1_ID = {
+                  NB = [16,64,128,256]
+                }
+
+                Functions {
+                   test_cos_q15:test_cos_q15
+                   test_sin_q15:test_sin_q15
+                   test_sqrt_q15:test_sqrt_q15
+                } -> PARAM1_ID
+             }
+        }
+
+        suite SupportBar F32 {
+                class = SupportBarF32 
+                folder = SupportBarF32
+
+                ParamList {
+                  NB,VECDIM
+                  Summary NB,VECDIM
+                  Names "Number of samples","Vector dimension"
+                  Formula "NB*VECDIM"
+                }
+
+                Pattern SAMPLES_F32_ID : Samples1_f32.txt 
+                Pattern COEFS_F32_ID : Coefs1_f32.txt 
+                Output  OUT_SAMPLES_F32_ID : Output
+
+                Params PARAM1_ID = {
+                  NB = [16,64,128]
+                  VECDIM = [5,10,15]
+                }
+
+                Functions {
+                   test_barycenter_f32:test_barycenter_f32
+                } -> PARAM1_ID
+
+        }
+
+        group Support {
+           class = Support 
+           folder = Support 
+
+           suite Support F32 {
+                class = SupportF32 
+                folder = SupportF32
+
+                ParamList {
+                  NB
+                  Summary NB
+                  Names "Number of samples"
+                  Formula "NB"
+                }
+
+                Pattern SAMPLES_F32_ID : Samples1_f32.txt 
+                Pattern SAMPLES_Q15_ID : Samples3_q15.txt 
+                Pattern SAMPLES_Q31_ID : Samples4_q31.txt 
+                Pattern SAMPLES_Q7_ID : Samples5_q7.txt 
+
+                Pattern INPUTS6_F32_ID : Inputs6_f32.txt 
+                Pattern WEIGHTS6_F32_ID : Weights6_f32.txt 
+                Pattern REF6_F32_ID : Ref6_f32.txt
+
+                Output  OUT_SAMPLES_F32_ID : Output
+
+                Params PARAM1_ID = {
+                  NB = [16,64,128,256]
+                }
+
+                Functions {
+                   test_copy_f32:test_copy_f32
+                   test_fill_f32:test_fill_f32
+                   test_q15_to_f32:test_q15_to_f32
+                   test_q31_to_f32:test_q31_to_f32
+                   test_q7_to_f32:test_q7_to_f32
+                   test_weighted_sum_f32:test_weighted_sum_f32
+                } -> PARAM1_ID
+             }
+
+           suite Support Q31 {
+                class = SupportQ31 
+                folder = SupportQ31
+
+                ParamList {
+                  NB
+                  Summary NB
+                  Names "Number of samples"
+                  Formula "NB"
+                }
+
+                Pattern SAMPLES_Q31_ID : Samples1_q31.txt 
+                Pattern SAMPLES_Q15_ID : Samples3_q15.txt 
+                Pattern SAMPLES_Q7_ID : Samples4_q7.txt 
+                Output  OUT_SAMPLES_Q31_ID : Output
+
+                Params PARAM1_ID = {
+                  NB = [16,64,128,256]
+                }
+
+                Functions {
+                   test_copy_q31:test_copy_q31
+                   test_fill_q31:test_fill_q31
+                   test_q15_to_q31:test_q15_to_q31
+                   test_q7_to_q31:test_q7_to_q31
+                } -> PARAM1_ID
+             }
+
+           suite Support Q15 {
+                class = SupportQ15
+                folder = SupportQ15
+
+                ParamList {
+                  NB
+                  Summary NB
+                  Names "Number of samples"
+                  Formula "NB"
+                }
+
+                Pattern SAMPLES_Q15_ID : Samples1_q15.txt 
+                Pattern SAMPLES_Q31_ID : Samples3_q31.txt 
+                Pattern SAMPLES_Q7_ID : Samples4_q7.txt 
+                Output  OUT_SAMPLES_Q15_ID : Output
+
+                Params PARAM1_ID = {
+                  NB = [16,64,128,256]
+                }
+
+                Functions {
+                   test_copy_q15:test_copy_q15
+                   test_fill_q15:test_fill_q15
+                   test_q31_to_q15:test_q31_to_q15
+                   test_q7_to_q15:test_q7_to_q15
+                } -> PARAM1_ID
+             }
+
+           suite Support Q7 {
+                class = SupportQ7
+                folder = SupportQ7
+
+                ParamList {
+                  NB
+                  Summary NB
+                  Names "Number of samples"
+                  Formula "NB"
+                }
+
+                Pattern SAMPLES_Q7_ID : Samples1_q7.txt 
+                Pattern SAMPLES_Q31_ID : Samples3_q31.txt 
+                Pattern SAMPLES_Q15_ID : Samples4_q15.txt 
+                Output  OUT_SAMPLES_Q7_ID : Output
+
+                Params PARAM1_ID = {
+                  NB = [16,64,128,256]
+                }
+
+                Functions {
+                   test_copy_q7:test_copy_q7
+                   test_fill_q7:test_fill_q7
+                   test_q31_to_q7:test_q31_to_q7
+                   test_q15_to_q7:test_q15_to_q7
+                } -> PARAM1_ID
+             }
+        }
+
+        group Matrix {
+           class = Matrix 
+           folder = Matrix 
+
+           group Unary {
+              class = Unary 
+              folder = Unary 
+
+              suite Unary F32 {
+                class = UnaryF32 
+                folder = UnaryF32
+
+                ParamList {
+                  NBR,NBC
+                  Summary NBR,NBC
+                  Names "Number of rows","Number of columns"
+                  Formula "NBR*NBC"
+                }
+
+                Pattern INPUTA_F32_ID : InputA1_f32.txt 
+                Output  OUT_F32_ID : Output
+
+                Params PARAM1_ID = {
+                  NBR = [5,10,40]
+                  NBC = [5,10,40]
+                }
+
+                Functions {
+                   test_mat_scale_f32:test_mat_scale_f32
+                   test_mat_inverse_f32:test_mat_inverse_f32
+                   test_mat_trans_f32:test_mat_trans_f32
+                   test_mat_add_f32:test_mat_add_f32
+                   test_mat_sub_f32:test_mat_sub_f32
+                } -> PARAM1_ID
+              }
+
+              suite Unary Q31 {
+                class = UnaryQ31 
+                folder = UnaryQ31
+
+                ParamList {
+                  NBR,NBC
+                  Summary NBR,NBC
+                  Names "Number of rows","Number of columns"
+                  Formula "NBR*NBC"
+                }
+
+                Pattern INPUTA_Q31_ID : InputA1_q31.txt 
+                Output  OUT_Q31_ID : Output
+
+                Params PARAM1_ID = {
+                  NBR = [5,10,40]
+                  NBC = [5,10,40]
+                }
+
+                Functions {
+                   test_mat_scale_q31:test_mat_scale_q31
+                   test_mat_trans_q31:test_mat_trans_q31
+                   test_mat_add_q31:test_mat_add_q31
+                   test_mat_sub_q31:test_mat_sub_q31
+                } -> PARAM1_ID
+              }
+
+              suite Unary Q15 {
+                class = UnaryQ15 
+                folder = UnaryQ15
+
+                ParamList {
+                  NBR,NBC
+                  Summary NBR,NBC
+                  Names "Number of rows","Number of columns"
+                  Formula "NBR*NBC"
+                }
+
+                Pattern INPUTA_Q15_ID : InputA1_q15.txt 
+                Output  OUT_Q15_ID : Output
+
+                Params PARAM1_ID = {
+                  NBR = [5,10,40]
+                  NBC = [5,10,40]
+                }
+
+                Functions {
+                   test_mat_scale_q15:test_mat_scale_q15
+                   test_mat_trans_q15:test_mat_trans_q15
+                   test_mat_add_q15:test_mat_add_q15
+                   test_mat_sub_q15:test_mat_sub_q15
+                } -> PARAM1_ID
+              }
+
+              suite Unary F64 {
+                class = UnaryF64 
+                folder = UnaryF64
+
+                ParamList {
+                  NBR,NBC
+                  Summary NBR,NBC
+                  Names "Number of rows","Number of columns"
+                  Formula "NBR*NBC"
+                }
+
+                Pattern INPUTA_F64_ID : InputA1_f64.txt 
+                Output  OUT_F64_ID : Output
+
+                Params PARAM1_ID = {
+                  NBR = [5,10,40]
+                  NBC = [5,10,40]
+                }
+
+                Functions {
+                   test_mat_inverse_f64:test_mat_inverse_f64
+                } -> PARAM1_ID
+              }
+           }
+
+           group Binary {
+              class = Binary 
+              folder = Binary 
+
+             suite Binary F32 {
+                class = BinaryF32 
+                folder = BinaryF32
+
+                ParamList {
+                  NBR,NBI,NBC
+                  Summary NBR,NBI,NBC
+                  Names "Number of rows","Inner dimensions","Number of columns"
+                  Formula "NBR*NBI*NBC"
+                }
+
+                Pattern INPUTA_F32_ID : InputA1_f32.txt 
+                Pattern INPUTB_F32_ID : InputB1_f32.txt 
+                Pattern INPUTAC_F32_ID : InputAC1_f32.txt 
+                Pattern INPUTBC_F32_ID : InputBC1_f32.txt 
+                Output  OUT_F32_ID : Output
+
+                Params PARAM1_ID = {
+                  NBR = [5,10,40]
+                  NBI = [5,10,40]
+                  NBC = [5,10,40]
+                }
+
+                Functions {
+                   test_mat_mult_f32:test_mat_mult_f32
+                   test_mat_cmplx_mult_f32:test_mat_cmplx_mult_f32
+                } -> PARAM1_ID
+             }
+
+             suite Binary Q31 {
+                class = BinaryQ31 
+                folder = BinaryQ31
+
+                ParamList {
+                  NBR,NBI,NBC
+                  Summary NBR,NBI,NBC
+                  Names "Number of rows","Inner dimensions","Number of columns"
+                  Formula "NBR*NBI*NBC"
+                }
+
+                Pattern INPUTA_Q31_ID : InputA1_q31.txt 
+                Pattern INPUTB_Q31_ID : InputB1_q31.txt 
+                Pattern INPUTAC_Q31_ID : InputAC1_q31.txt 
+                Pattern INPUTBC_Q31_ID : InputBC1_q31.txt 
+                Output  OUT_Q31_ID : Output
+
+                Params PARAM1_ID = {
+                  NBR = [5,10,40]
+                  NBI = [5,10,40]
+                  NBC = [5,10,40]
+                }
+
+                Functions {
+                   test_mat_mult_q31:test_mat_mult_q31
+                   test_mat_cmplx_mult_q31:test_mat_cmplx_mult_q31
+                   test_mat_mult_fast_q31:test_mat_mult_fast_q31
+                } -> PARAM1_ID
+             }
+
+             suite Binary Q15 {
+                class = BinaryQ15 
+                folder = BinaryQ15
+
+                ParamList {
+                  NBR,NBI,NBC
+                  Summary NBR,NBI,NBC
+                  Names "Number of rows","Inner dimensions","Number of columns"
+                  Formula "NBR*NBI*NBC"
+                }
+
+                Pattern INPUTA_Q15_ID : InputA1_q15.txt 
+                Pattern INPUTB_Q15_ID : InputB1_q15.txt 
+                Pattern INPUTAC_Q15_ID : InputAC1_q15.txt 
+                Pattern INPUTBC_Q15_ID : InputBC1_q15.txt 
+                Output  OUT_Q15_ID : Output
+
+                Params PARAM1_ID = {
+                  NBR = [5,10,40]
+                  NBI = [5,10,40]
+                  NBC = [5,10,40]
+                }
+
+                Functions {
+                   test_mat_mult_q15:test_mat_mult_q15
+                   test_mat_cmplx_mult_q15:test_mat_cmplx_mult_q15
+                   test_mat_mult_fast_q15:test_mat_mult_fast_q15
+                } -> PARAM1_ID
+             }
+           }
+        }
+
     }
 
     group NN Benchmarks

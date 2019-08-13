@@ -14,5 +14,9 @@ class MISCF32:public Client::Suite
 
             int nba;
             int nbb;
+
+            const float32_t *inp1;
+            const float32_t *inp2;
+            float32_t *outp;
             
     };

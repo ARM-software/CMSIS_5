@@ -17,6 +17,9 @@ class BIQUADF64:public Client::Suite
             arm_biquad_cascade_df2T_instance_f64 instBiquadDf2T;
 
             int nbSamples;
-            int numStages;            
+            int numStages;   
+
+            const float64_t *pSrc;
+            float64_t *pDst;     
             
     };

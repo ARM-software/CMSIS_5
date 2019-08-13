@@ -8,10 +8,7 @@
 
     void PoolingBench::test_avgpool_s8()
     {
-       q7_t *tmpin = tmpInput.ptr();
-       q7_t *outp = output.ptr();
-       q15_t *tempp = temp.ptr();
-
+      
       for(int i=0; i < this->repeatNb; i++)
       {
        arm_avgpool_s8(
@@ -75,6 +72,10 @@
        const q7_t *inp = input.ptr();
 
        memcpy(tmpin,inp,input.nbSamples());
+
+       tmpin = tmpInput.ptr();
+       outp = output.ptr();
+       tempp = temp.ptr();
 
 
     }

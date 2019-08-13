@@ -5,27 +5,14 @@
    
     void MISCQ31::test_conv_q31()
     {
-       
-       const q31_t *inp1=input1.ptr();
-       const q31_t *inp2=input2.ptr();
-       q31_t *outp=output.ptr();
-
-       arm_conv_q31(inp1, this->nba,inp2, this->nbb, outp);
-        
+       arm_conv_q31(this->inp1, this->nba,this->inp2, this->nbb, this->outp);
     } 
 
     void MISCQ31::test_correlate_q31()
     {
-       
-       const q31_t *inp1=input1.ptr();
-       const q31_t *inp2=input2.ptr();
-       q31_t *outp=output.ptr();
-
-       arm_correlate_q31(inp1, this->nba,inp2, this->nbb, outp);
-        
+       arm_correlate_q31(this->inp1, this->nba,this->inp2, this->nbb, this->outp);
     } 
 
-   
     
     void MISCQ31::setUp(Testing::testID_t id,std::vector<Testing::param_t>& params,Client::PatternMgr *mgr)
     {
@@ -48,6 +35,10 @@
              output.create(2*MAX(this->nba , this->nbb) - 1 ,MISCQ31::OUT_SAMPLES_Q31_ID,mgr);
           break;
        }
+
+       this->inp1=input1.ptr();
+       this->inp2=input2.ptr();
+       this->outp=output.ptr();
        
     }
 

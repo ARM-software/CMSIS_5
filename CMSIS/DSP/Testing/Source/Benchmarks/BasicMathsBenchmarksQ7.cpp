@@ -4,96 +4,45 @@
    
     void BasicMathsBenchmarksQ7::vec_mult_q7()
     {
-       
-       q7_t *inp1=input1.ptr();
-       q7_t *inp2=input2.ptr();
-       q7_t *outp=output.ptr();
-
-
-       arm_mult_q7(inp1,inp2,outp,this->nb);
-        
+       arm_mult_q7(this->inp1,this->inp2,this->outp,this->nb);
     } 
 
     void BasicMathsBenchmarksQ7::vec_add_q7()
     {
-       
-       q7_t *inp1=input1.ptr();
-       q7_t *inp2=input2.ptr();
-       q7_t *outp=output.ptr();
-
-
-       arm_add_q7(inp1,inp2,outp,this->nb);
-        
+       arm_add_q7(this->inp1,this->inp2,this->outp,this->nb);
     } 
 
     void BasicMathsBenchmarksQ7::vec_sub_q7()
     {
-       
-       q7_t *inp1=input1.ptr();
-       q7_t *inp2=input2.ptr();
-       q7_t *outp=output.ptr();
-
-
-       arm_sub_q7(inp1,inp2,outp,this->nb);
-        
+       arm_sub_q7(this->inp1,this->inp2,this->outp,this->nb);
     } 
 
     void BasicMathsBenchmarksQ7::vec_abs_q7()
     {
-       
-       q7_t *inp1=input1.ptr();
-       q7_t *inp2=input2.ptr();
-       q7_t *outp=output.ptr();
-
-
-       arm_abs_q7(inp1,outp,this->nb);
-        
+       arm_abs_q7(this->inp1,this->outp,this->nb);
     } 
 
     void BasicMathsBenchmarksQ7::vec_negate_q7()
     {
-       
-       q7_t *inp1=input1.ptr();
-       q7_t *outp=output.ptr();
-
-
-       arm_negate_q7(inp1,outp,this->nb);
-        
+       arm_negate_q7(this->inp1,this->outp,this->nb);
     }
 
     void BasicMathsBenchmarksQ7::vec_offset_q7()
     {
-       
-       q7_t *inp1=input1.ptr();
-       q7_t *inp2=input2.ptr();
-       q7_t *outp=output.ptr();
-
-
-       arm_offset_q7(inp1,1.0,outp,this->nb);
-        
+       arm_offset_q7(this->inp1,1.0,this->outp,this->nb);
     }
 
    void BasicMathsBenchmarksQ7::vec_scale_q7()
     {
-       
-       q7_t *inp1=input1.ptr();
-       q7_t *inp2=input2.ptr();
-       q7_t *outp=output.ptr();
-
-
-       arm_scale_q7(inp1,0x45,1,outp,this->nb);
-        
+       arm_scale_q7(this->inp1,0x45,1,this->outp,this->nb);
     }
 
     void BasicMathsBenchmarksQ7::vec_dot_q7()
     {
        
-       q7_t *inp1=input1.ptr();
-       q7_t *inp2=input2.ptr();
        q31_t result;
 
-
-       arm_dot_prod_q7(inp1,inp2,this->nb,&result);
+       arm_dot_prod_q7(this->inp1,this->inp2,this->nb,&result);
         
     }
 
@@ -111,6 +60,28 @@
 
        
        output.create(this->nb,BasicMathsBenchmarksQ7::OUT_SAMPLES_Q7_ID,mgr);
+
+       switch(id)
+       {
+          case BasicMathsBenchmarksQ7::VEC_MULT_Q7_1:
+          case BasicMathsBenchmarksQ7::VEC_ADD_Q7_2:
+          case BasicMathsBenchmarksQ7::VEC_SUB_Q7_3:
+          case BasicMathsBenchmarksQ7::VEC_ABS_Q7_4:
+          case BasicMathsBenchmarksQ7::VEC_OFFSET_Q7_6:
+          case BasicMathsBenchmarksQ7::VEC_SCALE_Q7_7:
+             this->inp1=input1.ptr();
+             this->inp2=input2.ptr();
+             this->outp=output.ptr();
+          break;
+          case BasicMathsBenchmarksQ7::VEC_NEGATE_Q7_5:
+             this->inp1=input1.ptr();
+             this->outp=output.ptr();
+          break;
+          case BasicMathsBenchmarksQ7::VEC_DOT_Q7_8:
+             this->inp1=input1.ptr();
+             this->inp2=input2.ptr();
+          break;
+       }
        
     }
 

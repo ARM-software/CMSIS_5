@@ -14,4 +14,7 @@ class BasicMathsBenchmarksQ31:public Client::Suite
 
             int nb;
             
+            q31_t *inp1;
+            q31_t *inp2;
+            q31_t *outp;
     };

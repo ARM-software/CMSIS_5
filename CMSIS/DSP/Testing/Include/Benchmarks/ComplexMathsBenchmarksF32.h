@@ -15,5 +15,10 @@ class ComplexMathsBenchmarksF32:public Client::Suite
             Client::LocalPattern<float32_t> output;
 
             int nb;
+
+            const float32_t *inp1;
+            const float32_t *inp2;
+            const float32_t *inp3;
+            float32_t *outp;
             
     };
