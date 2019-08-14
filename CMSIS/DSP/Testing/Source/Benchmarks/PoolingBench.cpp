@@ -8,7 +8,7 @@
 
     void PoolingBench::test_avgpool_s8()
     {
-      
+
       for(int i=0; i < this->repeatNb; i++)
       {
        arm_avgpool_s8(
@@ -30,6 +30,7 @@
            outp);
        
        }
+
     } 
 
   
@@ -68,15 +69,14 @@
        output.create(ref.nbSamples(),PoolingBench::OUTPUT_S8_ID,mgr);
        tmpInput.create(input.nbSamples(),PoolingBench::TEMPINPUT_S8_ID,mgr);
 
-       q7_t *tmpin = tmpInput.ptr();
        const q7_t *inp = input.ptr();
 
+
+       this->tmpin = tmpInput.ptr();
+       this->outp = output.ptr();
+       this->tempp = temp.ptr();
+
        memcpy(tmpin,inp,input.nbSamples());
-
-       tmpin = tmpInput.ptr();
-       outp = output.ptr();
-       tempp = temp.ptr();
-
 
     }
 
