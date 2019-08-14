@@ -34,7 +34,7 @@ The following is an list of all CMSIS components that are available.
  - CMSIS-NN: Bare metal Neural Network function library.
  - CMSIS-DAP v2: with WinUSB for faster communication and separate pipe for SWO support
  - Config Wizard extension: access enum’s for configuration information 
- - CMSIS-Pack: [Github based workflow](https://arm-software.github.io/CMSIS_5/Pack/html/element_repository.html) via Eclipse menu *Window - Perferences - CMSIS Packs - Manage Local Repositories* and [MDK](http://www.keil.com/support/man/docs/uv4/uv4_ca_packinst_repo.htm)
+ - CMSIS-Pack: [Git workflow](https://arm-software.github.io/CMSIS_5/Pack/html/element_repository.html) via Eclipse menu *Window - Perferences - CMSIS Packs - Manage Local Repositories* and [MDK](http://www.keil.com/support/man/docs/uv4/uv4_ca_packinst_repo.htm)
  - CMSIS-Pack: [Flash algorithm via debugger](https://arm-software.github.io/CMSIS_5/Pack/html/pdsc_family_pg.html#element_flashinfo) as some TurstZone enable devices cannot execute RAM.
  
 ## Further Planned Enhancements
