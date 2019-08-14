@@ -26,6 +26,21 @@ and max degree regression coefficient.
 
 Change name of columns for result
 
+USING(ID,categoryid,NAME) : would have to be extended with any parameter defining the regression
+formula.
+For instamce, for FFT, if ifft is an external parameter then ifft flag should be
+here.
+
+Here we assume ref and others are generated with same settings and currentConfig.csv
+If not the case, the parameters which may be different (like LOOPUNROLL, OPTIMIZED...) 
+should be added here so that we join the ref and other cores on common benchmark definition.
+
+We should not compute ratio between configuration of benchmarks which are
+not matching.
+
+If we want to compute ratio between CORE AND PLATFORM then the view above should
+be using CORE AND PLATFORM to filter and define the references.
+
 */
 select temp.otherCores.ID as ID,
  CATEGORY.category as CATEGORY,
