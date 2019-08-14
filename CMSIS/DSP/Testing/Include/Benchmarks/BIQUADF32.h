@@ -13,6 +13,7 @@ class BIQUADF32:public Client::Suite
 
             Client::LocalPattern<float32_t> output;
             Client::LocalPattern<float32_t> state;
+            Client::LocalPattern<float32_t> neonCoefs;
 
             arm_biquad_casd_df1_inst_f32 instBiquadDf1;
             arm_biquad_cascade_df2T_instance_f32 instBiquadDf2T;

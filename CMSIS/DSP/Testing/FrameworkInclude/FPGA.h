@@ -67,7 +67,7 @@ FPGA driver. Used to read a C array describing how to drive the test.
       void ImportPattern_u8(Testing::PatternID_t,char*,Testing::nbSamples_t nb);
 
       void DumpParams(std::vector<Testing::param_t>&);
-      Testing::param_t* ImportParams(Testing::PatternID_t,Testing::nbParameterEntries_t &);
+      Testing::param_t* ImportParams(Testing::PatternID_t,Testing::nbParameterEntries_t &,Testing::ParameterKind &);
       bool hasParam();
       Testing::PatternID_t getParamID();
 

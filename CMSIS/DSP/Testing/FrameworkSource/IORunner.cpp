@@ -139,6 +139,7 @@ a C++ function pointer from the cycle measurements.
             std::vector<Testing::param_t> params(nbParams);
             bool canExecute=true;
             int  dataIndex=0;
+            Testing::ParameterKind paramKind;
 
             // Read test identification (test ID)
             m_io->ReadTestIdentification();
@@ -147,7 +148,7 @@ a C++ function pointer from the cycle measurements.
             if (m_io->hasParam())
             {
                Testing::PatternID_t paramID=m_io->getParamID();
-               paramData = m_io->ImportParams(paramID,entries);
+               paramData = m_io->ImportParams(paramID,entries,paramKind);
                dataIndex = 0;
             }
 
@@ -230,7 +231,10 @@ a C++ function pointer from the cycle measurements.
             }
             if (paramData)
             {
-                free(paramData);
+                if (paramKind == Testing::kDynamicBuffer)
+                {
+                  free(paramData);
+                }
                 paramData = NULL;
             }
 

@@ -80,7 +80,7 @@ def summaryBenchmark(elem,path):
     f="".join(f)
     f = re.sub(r':','*',f)
     #print(results.summary())
-    return(pd.Series({'Regression':"%s" % f,'MAX' : m}))
+    return(pd.Series({'Regression':"%s" % f,'MAX' : m,'MAXREGCOEF' : results.params.values[-1]}))
 
    regList = ['ID','OLDID','CATEGORY','NAME'] + csvheaders + groupList 
    

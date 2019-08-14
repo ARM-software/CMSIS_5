@@ -18,9 +18,9 @@ import datetime, time
 import re 
 
 # For table creation
-MKSTRFIELD=['NAME']
+MKSTRFIELD=['NAME','Regression']
 MKBOOLFIELD=['HARDFP', 'FASTMATH', 'NEON', 'UNROLL', 'ROUNDING','OPTIMIZED']
-MKINTFIELD=['ID', 'CYCLES']
+MKINTFIELD=['ID', 'MAX','MAXREGCOEF']
 MKDATEFIELD=['DATE']
 MKKEYFIELD=['CATEGORY', 'PLATFORM', 'CORE', 'COMPILER','TYPE']
 MKKEYFIELDID={'CATEGORY':'categoryid', 
@@ -30,9 +30,9 @@ MKKEYFIELDID={'CATEGORY':'categoryid',
    'TYPE':'typeid'}
 
 # For table value extraction
-VALSTRFIELD=['NAME','VERSION']
+VALSTRFIELD=['NAME','VERSION','Regression']
 VALBOOLFIELD=['HARDFP', 'FASTMATH', 'NEON', 'UNROLL', 'ROUNDING','OPTIMIZED']
-VALINTFIELD=['ID', 'CYCLES']
+VALINTFIELD=['ID', 'MAX','MAXREGCOEF']
 VALDATEFIELD=['DATE']
 VALKEYFIELD=['CATEGORY', 'PLATFORM', 'CORE', 'COMPILER','TYPE']
 
@@ -55,7 +55,7 @@ def diff(first, second):
 def getColumns(elem,full):
   colsToKeep=[]
   cols = list(full.columns)
-  params = list(elem.params.full)
+  params=diff(elem.params.full , elem.params.summary)
   common = diff(cols + ["TYPE"] , ['OLDID'] + params)  
  
   for field in common:
@@ -75,7 +75,7 @@ def createTableIfMissing(conn,elem,tableName,full):
    if not tableExists(conn,tableName):
      sql = "CREATE TABLE %s (" % tableName
      cols = list(full.columns)
-     params = list(elem.params.full)
+     params=diff(elem.params.full , elem.params.summary)
      common = diff(cols + ["TYPE"] , ['OLDID'] + params)
 
      sql += "%sid INTEGER PRIMARY KEY"  % (tableName)
@@ -147,7 +147,7 @@ def addRows(conn,elem,tableName,full):
    # different from the columns in the table
    keep = getColumns(elem,full)
    cols = list(full.columns)
-   params = list(elem.params.full)
+   params=diff(elem.params.full , elem.params.summary)
    common = diff(["TYPE"] + cols , ['OLDID'] + params)  
    colNameList = [] 
    for c in params + keep:
@@ -261,7 +261,7 @@ def addOneBenchmark(elem,fullPath,db,group):
 def addToDB(benchmark,dbpath,elem,group):
   if not elem.data["deprecated"]:
      if elem.params:
-         benchPath = os.path.join(benchmark,elem.fullPath(),"fullBenchmark.csv")
+         benchPath = os.path.join(benchmark,elem.fullPath(),"regression.csv")
          print("Processing %s" % benchPath)
          addOneBenchmark(elem,benchPath,dbpath,group)
          
@@ -275,7 +275,7 @@ parser = argparse.ArgumentParser(description='Generate summary benchmarks')
 parser.add_argument('-f', nargs='?',type = str, default=None, help="Test description file path")
 parser.add_argument('-b', nargs='?',type = str, default="FullBenchmark", help="Full Benchmark dir path")
 #parser.add_argument('-e', action='store_true', help="Embedded test")
-parser.add_argument('-o', nargs='?',type = str, default="bench.db", help="Benchmark database")
+parser.add_argument('-o', nargs='?',type = str, default="reg.db", help="Regression benchmark database")
 
 parser.add_argument('others', nargs=argparse.REMAINDER)
 

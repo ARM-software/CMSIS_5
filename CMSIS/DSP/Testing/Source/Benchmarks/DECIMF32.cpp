@@ -27,13 +27,15 @@
        samples.reload(DECIMF32::SAMPLES1_F32_ID,mgr,this->nbSamples);
        coefs.reload(DECIMF32::COEFS1_F32_ID,mgr,this->nbTaps);
 
-       state.create(this->nbSamples + this->nbTaps - 1,DECIMF32::STATE_F32_ID,mgr);
        output.create(this->nbSamples,DECIMF32::OUT_SAMPLES_F32_ID,mgr);
 
        switch(id)
        {
            case TEST_FIR_DECIMATE_F32_1:
               this->decimationFactor = *it;
+
+              state.create(this->nbSamples + this->nbTaps - 1,DECIMF32::STATE_F32_ID,mgr);
+
               arm_fir_decimate_init_f32(&instDecim,
                  this->nbTaps,
                  this->decimationFactor,
@@ -44,13 +46,19 @@
 
 
            case TEST_FIR_INTERPOLATE_F32_2:
+           {
               this->interpolationFactor = *it;
+              int phase = this->nbTaps / this->interpolationFactor;
+
+              state.create(this->nbSamples + phase - 1,DECIMF32::STATE_F32_ID,mgr);
+
               arm_fir_interpolate_init_f32(&instInterpol,
                  this->interpolationFactor,
                  this->nbTaps,
                  coefs.ptr(),
                  state.ptr(),
                  this->nbSamples);
+           }
            break;
 
           

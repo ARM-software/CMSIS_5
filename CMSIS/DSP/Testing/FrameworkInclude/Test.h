@@ -102,6 +102,13 @@ namespace Testing
   // Number of parameter configurations
   typedef unsigned long nbParameterEntries_t;
 
+  // To know if parameter array is malloc buffer or static buffer in C array
+  enum ParameterKind
+  {
+    kStaticBuffer=0,
+    kDynamicBuffer=1,
+  };
+
 }
 
 namespace Client
@@ -285,7 +292,7 @@ API of Memory managers used in the test framework
 
           They receive parameters as a vector argument for the setUp fucntion.
       */
-      virtual Testing::param_t* ImportParams(Testing::PatternID_t,Testing::nbParameterEntries_t &)=0;
+      virtual Testing::param_t* ImportParams(Testing::PatternID_t,Testing::nbParameterEntries_t &,Testing::ParameterKind &)=0;
 
       /** Dump pattern.
 

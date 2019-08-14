@@ -429,7 +429,7 @@ namespace Client
            printf("\n");
       }
 
-    Testing::param_t* FPGA::ImportParams(Testing::PatternID_t id,Testing::nbParameterEntries_t &nbEntries)
+    Testing::param_t* FPGA::ImportParams(Testing::PatternID_t id,Testing::nbParameterEntries_t &nbEntries,Testing::ParameterKind &paramKind)
     {
         nbEntries=0;
         unsigned long offset,i;
@@ -443,6 +443,8 @@ namespace Client
         if (gen.kind == 0)
         {
            offset=gen.offset;
+           paramKind=Testing::kStaticBuffer;
+
            nbEntries = gen.nbInputSamples / gen.dimensions;
    
            const char *patternStart = this->m_patterns + offset;
@@ -454,6 +456,7 @@ namespace Client
           Testing::param_t* result;
           // Output samples is number of parameter line
           len=gen.nbOutputSamples * gen.dimensions;
+          paramKind=Testing::kDynamicBuffer;
 
           result=(Testing::param_t*)malloc(len*sizeof(Testing::param_t));
 

@@ -48,15 +48,33 @@
            break;
 
            case TEST_BIQUAD_CASCADE_DF2T_F32_2:
-                  samples.reload(BIQUADF32::SAMPLES1_F32_ID,mgr,this->nbSamples);
-                  output.create(this->nbSamples,BIQUADF32::OUT_SAMPLES_F32_ID,mgr);
-                  coefs.reload(BIQUADF32::COEFS1_F32_ID,mgr,this->numStages * 5);
-                  state.create(2*this->numStages,BIQUADF32::STATE_F32_ID,mgr);
+               samples.reload(BIQUADF32::SAMPLES1_F32_ID,mgr,this->nbSamples);
+               output.create(this->nbSamples,BIQUADF32::OUT_SAMPLES_F32_ID,mgr);
+               coefs.reload(BIQUADF32::COEFS1_F32_ID,mgr,this->numStages * 5);
+               state.create(2*this->numStages,BIQUADF32::STATE_F32_ID,mgr);
 
-                  arm_biquad_cascade_df2T_init_f32(&instBiquadDf2T,
+
+#if defined(ARM_MATH_NEON)
+               // For Neon, neonCoefs is the coef array and is bigger
+               neonCoefs.create(8*this->numStages,BIQUADF32::STATE_F32_ID,mgr);
+
+               arm_biquad_cascade_df2T_init_f32(&instBiquadDf2T,
+                    this->numStages,
+                    neonCoefs.ptr(),
+                    state.ptr());
+
+               // Those Neon coefs must be computed from original coefs
+               arm_biquad_cascade_df2T_compute_coefs_f32(&instBiquadDf2T,this->numStages,coefs.ptr());
+#else
+                  
+              // For cortex-M, coefs is the coef array
+              arm_biquad_cascade_df2T_init_f32(&instBiquadDf2T,
                     this->numStages,
                     coefs.ptr(),
                     state.ptr());
+
+                
+#endif
            break;
 
            case TEST_BIQUAD_CASCADE_STEREO_DF2T_F32_3:

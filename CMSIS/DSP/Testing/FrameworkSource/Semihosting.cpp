@@ -495,7 +495,7 @@ namespace Client
            printf("\n");
       }
 
-      Testing::param_t* Semihosting::ImportParams(Testing::PatternID_t id,Testing::nbParameterEntries_t &nbEntries)
+      Testing::param_t* Semihosting::ImportParams(Testing::PatternID_t id,Testing::nbParameterEntries_t &nbEntries,Testing::ParameterKind &paramKind)
       {
           nbEntries = 0;
 
@@ -510,6 +510,7 @@ namespace Client
           if (gen.kind == 0)
           {
              char *result=NULL;
+             paramKind=Testing::kDynamicBuffer;
              FILE *params=fopen(gen.path.c_str(), "r");
              
              if (params==NULL)
@@ -539,6 +540,7 @@ namespace Client
           {
 
              Testing::param_t* result;
+             paramKind=Testing::kDynamicBuffer;
              // Output samples is number of parameter line
              len=gen.nbOutputSamples * gen.dimensions;
 

@@ -690,6 +690,7 @@ group Root {
 
                 Output  OUT_SAMPLES_F32_ID : Output
                 Output  STATE_F32_ID : State
+                Output  NEON_COEFS_F32_ID : NeonCoefs
 
                 Params PARAM1_ID = {
                   NumStages = [1,2,4]
