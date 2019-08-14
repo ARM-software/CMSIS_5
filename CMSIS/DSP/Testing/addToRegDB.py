@@ -20,7 +20,8 @@ import re
 # For table creation
 MKSTRFIELD=['NAME','Regression']
 MKBOOLFIELD=['HARDFP', 'FASTMATH', 'NEON', 'UNROLL', 'ROUNDING','OPTIMIZED']
-MKINTFIELD=['ID', 'MAX','MAXREGCOEF']
+MKINTFIELD=['ID','MAX']
+MKREALFIELD=['MAXREGCOEF']
 MKDATEFIELD=['DATE']
 MKKEYFIELD=['CATEGORY', 'PLATFORM', 'CORE', 'COMPILER','TYPE']
 MKKEYFIELDID={'CATEGORY':'categoryid', 
@@ -32,7 +33,8 @@ MKKEYFIELDID={'CATEGORY':'categoryid',
 # For table value extraction
 VALSTRFIELD=['NAME','VERSION','Regression']
 VALBOOLFIELD=['HARDFP', 'FASTMATH', 'NEON', 'UNROLL', 'ROUNDING','OPTIMIZED']
-VALINTFIELD=['ID', 'MAX','MAXREGCOEF']
+VALINTFIELD=['ID', 'MAX']
+VALREALFIELD=['MAXREGCOEF']
 VALDATEFIELD=['DATE']
 VALKEYFIELD=['CATEGORY', 'PLATFORM', 'CORE', 'COMPILER','TYPE']
 
@@ -63,6 +65,8 @@ def getColumns(elem,full):
           colsToKeep.append(field)
        if field in MKINTFIELD:
           colsToKeep.append(field)
+       if field in MKREALFIELD:
+          colsToKeep.append(field)
        if field in MKKEYFIELD:
           colsToKeep.append(field)
        if field in MKDATEFIELD:
@@ -90,6 +94,8 @@ def createTableIfMissing(conn,elem,tableName,full):
           sql += "%s\n  %s TEXT"  % (start,field)
        if field in MKINTFIELD:
           sql += "%s\n  %s INTEGER"  % (start,field)
+       if field in MKREALFIELD:
+          sql += "%s\n  %s REAL"  % (start,field)
        if field in MKKEYFIELD:
           sql += "%s\n  %s INTEGER"  % (start,MKKEYFIELDID[field])
        if field in MKDATEFIELD:
@@ -201,6 +207,8 @@ def addRows(conn,elem,tableName,full):
             
         if field in VALINTFIELD:
             keys[field]=row[field]
+        if field in VALREALFIELD:
+            keys[field]=row[field]
         if field in VALDATEFIELD:
             keys[field]=row[field]
         if field in VALBOOLFIELD:
@@ -237,7 +245,10 @@ def addRows(conn,elem,tableName,full):
          if field in MKSTRFIELD or field in MKDATEFIELD:
             sql += " %s\n  \"%s\""  % (start,keys[field])
          elif field in keep:
-            sql += " %s\n  %d"  % (start,keys[field])
+            if field in VALREALFIELD:
+              sql += " %s\n  %f"  % (start,keys[field])
+            else:
+              sql += " %s\n  %d"  % (start,keys[field])
          start = ","
 
        sql += "  )"

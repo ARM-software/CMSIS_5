@@ -55,14 +55,14 @@ def formatProd(a,b):
      return(str(b))
   return("%s * %s" % (a,b))
 
-def summaryBenchmark(elem,path):
+def summaryBenchmark(resultPath,elem,path):
    regressionPath=os.path.join(os.path.dirname(path),"regression.csv")
    print("  Generating %s" % regressionPath)
    full=pd.read_csv(path,dtype={'OLDID': str} ,keep_default_na = False)
    #print(full)
    
    csvheaders = []
-   with open('currentConfig.csv', 'r') as f:
+   with open(os.path.join(resultPath,'currentConfig.csv'), 'r') as f:
         reader = csv.reader(f)
         csvheaders = next(reader, None)
 
@@ -91,15 +91,15 @@ def summaryBenchmark(elem,path):
    regression.to_csv(regressionPath,index=False,quoting=csv.QUOTE_NONNUMERIC)
 
 
-def extractBenchmarks(benchmark,elem):
+def extractBenchmarks(resultPath,benchmark,elem):
   if not elem.data["deprecated"]:
      if elem.params:
          benchPath = os.path.join(benchmark,elem.fullPath(),"fullBenchmark.csv")
          print("Processing %s" % benchPath)
-         summaryBenchmark(elem,benchPath)
+         summaryBenchmark(resultPath,elem,benchPath)
          
      for c in elem.children:
-       extractBenchmarks(benchmark,c)
+       extractBenchmarks(resultPath,benchmark,c)
 
 
 
@@ -107,7 +107,8 @@ parser = argparse.ArgumentParser(description='Generate summary benchmarks')
 
 parser.add_argument('-f', nargs='?',type = str, default=None, help="Test description file path")
 parser.add_argument('-b', nargs='?',type = str, default="FullBenchmark", help="Full Benchmark dir path")
-#parser.add_argument('-e', action='store_true', help="Embedded test")
+# Needed to find the currentConfig.csv and know the headers
+parser.add_argument('-r', nargs='?',type = str, default=None, help="Result file path")
 
 parser.add_argument('others', nargs=argparse.REMAINDER)
 
@@ -118,7 +119,8 @@ if args.f is not None:
     # Parse the test description file
     root = p.parse(args.f)
     d.deprecate(root,args.others)
-    extractBenchmarks(args.b,root)
+    resultPath=os.path.dirname(args.r)
+    extractBenchmarks(resultPath,args.b,root)
     
 else:
     parser.print_help()

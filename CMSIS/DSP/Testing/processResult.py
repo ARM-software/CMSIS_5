@@ -234,7 +234,7 @@ def getCyclesFromTrace(trace):
   else:
     return(TestScripts.ParseTrace.getCycles(trace))
 
-def analyseResult(root,results,embedded,benchmark,trace,formatter):
+def analyseResult(resultPath,root,results,embedded,benchmark,trace,formatter):
     calibration = 0
     if trace:
       # First cycle in the trace is the calibration data
@@ -305,7 +305,7 @@ def analyseResult(root,results,embedded,benchmark,trace,formatter):
                        #benchFile.write("ID,%s,PASSED,ERROR,CYCLES\n" % header)
                        csvheaders = ""
 
-                       with open('currentConfig.csv', 'r') as f:
+                       with open(os.path.join(resultPath,'currentConfig.csv'), 'r') as f:
                           reader = csv.reader(f)
                           csvheaders = next(reader, None)
                           configList = list(reader)
@@ -406,12 +406,15 @@ def analyseResult(root,results,embedded,benchmark,trace,formatter):
 
 
 def analyze(root,results,args,trace):
+  # currentConfig.csv should be in the same place
+  resultPath=os.path.dirname(args.r)
+
   if args.c:
-     analyseResult(root,results,args.e,args.b,trace,CSVFormatter())
+     analyseResult(resultPath,root,results,args.e,args.b,trace,CSVFormatter())
   elif args.m:
-     analyseResult(root,results,args.e,args.b,trace,MathematicaFormatter())
+     analyseResult(resultPath,root,results,args.e,args.b,trace,MathematicaFormatter())
   else:
-     analyseResult(root,results,args.e,args.b,trace,TextFormatter())
+     analyseResult(resultPath,root,results,args.e,args.b,trace,TextFormatter())
 
 parser = argparse.ArgumentParser(description='Parse test description')
 

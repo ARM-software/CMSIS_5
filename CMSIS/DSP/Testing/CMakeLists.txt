@@ -211,7 +211,7 @@ configApp(Testing ${ROOT})
 target_link_libraries(Testing PRIVATE TestingLib)
 target_link_libraries(Testing PRIVATE FrameworkLib)
 
-writeConfig("currentConfig.csv")
+writeConfig(${CMAKE_CURRENT_BINARY_DIR}/currentConfig.csv)
 
 
 
