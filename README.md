@@ -34,15 +34,16 @@ The following is an list of all CMSIS components that are available.
  - CMSIS-NN: Bare metal Neural Network function library.
  - CMSIS-DAP v2: with WinUSB for faster communication and separate pipe for SWO support
  - Config Wizard extension: access enum’s for configuration information 
-
+ - CMSIS-Pack: [Github based workflow](https://arm-software.github.io/CMSIS_5/Pack/html/element_repository.html) via Eclipse menu *Window - Perferences - CMSIS Packs - Manage Local Repositories* and [MDK](http://www.keil.com/support/man/docs/uv4/uv4_ca_packinst_repo.htm)
+ - CMSIS-Pack: [Flash algorithm via debugger](https://arm-software.github.io/CMSIS_5/Pack/html/pdsc_family_pg.html#element_flashinfo) as some TurstZone enable devices cannot execute RAM.
+ 
 ## Further Planned Enhancements
- - CMSIS-Zone: management of complex system
+ - CMSIS-Zone: resource management for multi-core and access protection - [see here for pre-release](https://community.arm.com/developer/tools-software/tools/b/tools-software-ides-blog/posts/configuring-armv8-m-systems-with-cmsis-zone)
  - CMSIS-Pack:
    - System Description SDF Format: describe more complex debug topologies than with a Debug Description in a tool agnostic way
-   - Github based workflow: allows to develop software packs using github infra-structure
-   - Flash algorithm via debugger: Some TurstZone enable devices cannot execute RAM. Commands that allow flash programming will be added to Debug Description.
    - CPDSC project file format: allows project templates that are agnostic of an IDE
    - Minimize need for IDE specific settings: CMSIS-Pack supports IDE specific parameters. Analyze and minimize 
+ - CMSIS-Build: command-line driven make system for CMSIS-Pack based projects (to support CI tests)
 
 For further details see also the [Slides of the Embedded World CMSIS Partner Meeting](https://github.com/ARM-software/CMSIS_5/blob/develop/CMSIS_EW2019.pdf).
 
