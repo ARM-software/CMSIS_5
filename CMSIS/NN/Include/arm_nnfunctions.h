@@ -1263,6 +1263,34 @@ extern    "C"
                                       const uint32_t block_size);
 
 /**
+   * @brief s8 element wise multiplication
+   * @param[in]       input_1_vect            pointer to input vector 1
+   * @param[in]       input_2_vect            pointer to input vector 2
+   * @param[in]       input_1_offset          offset for input 1. Range: int8
+   * @param[in]       input_2_offset          offset for input 2. Range: int8
+   * @param[in,out]   output                  pointer to output vector
+   * @param[in]       out_offset              output offset
+   * @param[in]       out_mult                output multiplier
+   * @param[in]       out_shift               output shift
+   * @param[in]       out_activation_min      minimum value to clamp output to
+   * @param[in]       out_activation_max      maximum value to clamp output to
+   * @param[in]       block_size              number of samples
+   * @return          The function returns    ARM_MATH_SUCCESS
+   *
+   * @details   Supported framework: TensorFlow Lite micro
+   */
+  arm_status arm_elementwise_mul_s8(const int8_t *input_1_vect,
+                                    const int8_t *input_2_vect,
+                                    const int32_t input_1_offset,
+                                    const int32_t input_2_offset,
+                                    int8_t *output,
+                                    const int32_t out_offset,
+                                    const int32_t out_mult,
+                                    const int32_t out_shift,
+                                    const int32_t out_activation_min,
+                                    const int32_t out_activation_max,
+                                    const uint32_t block_size);
+/**
  * @defgroup Acti Neural Network Activation Functions
  *
  * Perform activation layers, including ReLU (Rectified Linear Unit),
