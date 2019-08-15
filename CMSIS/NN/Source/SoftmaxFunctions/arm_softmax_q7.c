@@ -45,13 +45,12 @@
    * @param[in]       vec_in      pointer to input vector
    * @param[in]       dim_vec     input vector dimention
    * @param[out]      p_out       pointer to output vector
-   * @return none.
    *
    * @details
    *
    *  Here, instead of typical natural logarithm e based softmax, we use
    *  2-based softmax here, i.e.,:
-   * 
+   *
    *  y_i = 2^(x_i) / sum(2^x_j)
    *
    *  The relative output will be different here.
@@ -100,7 +99,7 @@ void arm_softmax_q7(const q7_t * vec_in, const uint16_t dim_vec, q7_t * p_out )
 
 
     /* We first search for the maximum */
-    
+
     for (i = 0; i < dim_vec; i++)
     {
         if (vec_in[i] > base)
@@ -110,9 +109,9 @@ void arm_softmax_q7(const q7_t * vec_in, const uint16_t dim_vec, q7_t * p_out )
     }
 
 
-    /* 
-     * So the base is set to max-8, meaning 
-     * that we ignore really small values. 
+    /*
+     * So the base is set to max-8, meaning
+     * that we ignore really small values.
      * anyway, they will be 0 after shrinking to q7_t.
      */
     base = base - Q7BITS;
@@ -153,7 +152,7 @@ void arm_softmax_q7(const q7_t * vec_in, const uint16_t dim_vec, q7_t * p_out )
     }
 
     blkCnt = dim_vec & 3;
-    
+
     while(blkCnt)
     {
        shift = (uint8_t)__USAT(*pIn++ - base, LOG2Q7BITS);
@@ -171,7 +170,7 @@ void arm_softmax_q7(const q7_t * vec_in, const uint16_t dim_vec, q7_t * p_out )
     blkCnt = dim_vec >> 2;
     while(blkCnt)
     {
-        
+
         /* Here minimum value of 13+base-vec_in[i] will be 5 */
         in=arm_nn_read_q7x4_ia(&pIn);
         in=__SSUB8(pad,in);
@@ -195,17 +194,17 @@ void arm_softmax_q7(const q7_t * vec_in, const uint16_t dim_vec, q7_t * p_out )
         *p_out++ = (q7_t) __SSAT((output_base >> ((shiftV >> 16) & 0x0FF)), 8);
 
         shiftV = __USAT16(out2,5);
-        *p_out++ = (q7_t) __SSAT((output_base >> (shiftV & 0x0FF)), 8); 
+        *p_out++ = (q7_t) __SSAT((output_base >> (shiftV & 0x0FF)), 8);
         *p_out++ = (q7_t) __SSAT((output_base >> ((shiftV >> 16) & 0x0FF)), 8);
 
         blkCnt --;
     }
 
-    
+
     blkCnt = dim_vec & 3;
     while(blkCnt)
     {
-        
+
         /* Here minimum value of 13+base-vec_in[i] will be 5 */
         shift = (uint8_t)__USAT(13 + base - *pIn++, 5);
         *p_out++ = (q7_t) __SSAT((output_base >> shift), 8);
@@ -221,7 +220,7 @@ void arm_softmax_q7(const q7_t * vec_in, const uint16_t dim_vec, q7_t * p_out )
     base = -128;
 
     /* We first search for the maximum */
-    
+
     for (i = 0; i < dim_vec; i++)
     {
         if (vec_in[i] > base)
@@ -231,9 +230,9 @@ void arm_softmax_q7(const q7_t * vec_in, const uint16_t dim_vec, q7_t * p_out )
     }
 
 
-    /* 
-     * So the base is set to max-8, meaning 
-     * that we ignore really small values. 
+    /*
+     * So the base is set to max-8, meaning
+     * that we ignore really small values.
      * anyway, they will be 0 after shrinking to q7_t.
      */
     base = base - Q7BITS;
@@ -250,13 +249,13 @@ void arm_softmax_q7(const q7_t * vec_in, const uint16_t dim_vec, q7_t * p_out )
     int output_base = (1 << 20) / sum;
 
 
-    for (i = 0; i < dim_vec; i++) 
+    for (i = 0; i < dim_vec; i++)
     {
-        
+
         /* Here minimum value of 13+base-vec_in[i] will be 5 */
         shift = (uint8_t)__USAT(13 + base - vec_in[i], 5);
         p_out[i] = (q7_t) __SSAT((output_base >> shift), 8);
-        
+
     }
 #endif
 }

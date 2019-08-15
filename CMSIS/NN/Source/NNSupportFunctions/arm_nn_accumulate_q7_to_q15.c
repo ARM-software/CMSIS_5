@@ -34,6 +34,11 @@
  * @ingroup groupSupport
  */
 
+/**
+ * @addtogroup NNBasicMath
+ * @{
+ */
+
 void arm_nn_accumulate_q7_to_q15(q15_t * pDst, const q7_t * pSrc, uint32_t length)
 {
     q15_t    *pCnt = pDst;
@@ -58,7 +63,7 @@ void arm_nn_accumulate_q7_to_q15(q15_t * pDst, const q7_t * pSrc, uint32_t lengt
         vo2 = __PKHBT(v2, v1, 16);
 
 #endif
- 
+
         in = arm_nn_read_q15x2(pCnt);
         write_q15x2_ia(&pCnt, __QADD16(vo1, in));
 
@@ -74,3 +79,8 @@ void arm_nn_accumulate_q7_to_q15(q15_t * pDst, const q7_t * pSrc, uint32_t lengt
         cnt--;
     }
 }
+
+/**
+ * @addtogroup NNBasicMath
+ * @{
+ */

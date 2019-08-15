@@ -44,7 +44,6 @@
    * @brief Q15 RELU function
    * @param[in,out]   data        pointer to input
    * @param[in]       size        number of elements
-   * @return none.
    * 
    * @details
    *

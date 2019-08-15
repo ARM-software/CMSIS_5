@@ -30,8 +30,8 @@
 
 #include "arm_nnfunctions.h"
 
-/**    
- * @ingroup groupSupport    
+/**
+ * @ingroup groupSupport
  */
 
 /**
@@ -47,7 +47,6 @@
  * @param[out]      *pDst         pointer to the output vector
  * @param[in]       out_shift     amount of right-shift for output
  * @param[in]       blockSize     number of samples in each vector
- * @return none.
  *
  * <b>Scaling and Overflow Behavior:</b>
  * \par

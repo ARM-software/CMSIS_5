@@ -41,21 +41,11 @@
  * @{
  */
 
-  /**
-   * @brief Q15 neural network activation function using direct table look-up
-   * @param[in,out]   data        pointer to input
-   * @param[in]       size        number of elements
-   * @param[in]       int_width   bit-width of the integer part, assume to be smaller than 3
-   * @param[in]       type        type of activation functions
-   * @return none.
+/**
+   * @brief neural network activation function using direct table look-up
    *
-   * @details
-   * 
-   * This is the direct table look-up approach.
+   * @note  Refer header file for details.
    *
-   * Assume here the integer part of the fixed-point is <= 3.
-   * More than 3 just not making much sense, makes no difference with
-   * saturation followed by any of these activation functions. 
    */
 
 void arm_nn_activations_direct_q15(q15_t * data, uint16_t size, uint16_t int_width, arm_nn_activation_type type)

@@ -45,7 +45,6 @@
    * @param[in]       vec_in      pointer to input vector
    * @param[in]       dim_vec     input vector dimention
    * @param[out]      p_out       pointer to output vector
-   * @return none.
    *
    * @details
    *
@@ -75,7 +74,7 @@ void arm_softmax_q15(const q15_t * vec_in, const uint16_t dim_vec, q15_t * p_out
         }
     }
 
-    /* we ignore really small values  
+    /* we ignore really small values
      * anyway, they will be 0 after shrinking
      * to q15_t
      */
@@ -102,7 +101,7 @@ void arm_softmax_q15(const q15_t * vec_in, const uint16_t dim_vec, q15_t * p_out
      */
     for (i = 0; i < dim_vec; i++)
     {
-        if (vec_in[i] > base) 
+        if (vec_in[i] > base)
         {
             /* Here minimum value of 17+base-vec[i] will be 1 */
             shift = (uint8_t)__USAT(17+base-vec_in[i], 5);
