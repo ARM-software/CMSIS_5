@@ -43,16 +43,15 @@
   /**
    * @brief Q7 softmax function with batch parameter
    * @param[in]       vec_in      pointer to input vector
-   * @param[in]       nb_batches  number of batches 
+   * @param[in]       nb_batches  number of batches
    * @param[in]       dim_vec     input vector dimention
    * @param[out]      p_out       pointer to output vector
-   * @return none.
    *
    * @details
    *
    *  Here, instead of typical natural logarithm e based softmax, we use
    *  2-based softmax here, i.e.,:
-   * 
+   *
    *  y_i = 2^(x_i) / sum(2^x_j)
    *
    *  The relative output will be different here.

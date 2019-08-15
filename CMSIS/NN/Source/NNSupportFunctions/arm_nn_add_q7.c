@@ -79,4 +79,3 @@ void arm_nn_add_q7(const q7_t *input, q31_t *output, uint32_t block_size)
 /**
  * @} end of NNBasicMath group
  */
-

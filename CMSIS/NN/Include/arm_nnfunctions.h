@@ -1066,8 +1066,8 @@ extern    "C"
    * @param[in]       input_a     pointer to operand A
    * @param[in]       input_b     pointer to operand B, always consists of 2 vectors.
    * @param[in]       output_ch   number of rows of A
-   * @param[in]       output_shift  pointer to per output channel requantization shift parameter.
-   * @param[in]       output_mult   pointer to per output channel requantization multiplier parameter.
+   * @param[in]       out_shift  pointer to per output channel requantization shift parameter.
+   * @param[in]       out_mult   pointer to per output channel requantization multiplier parameter.
    * @param[in]       out_offset      output tensor offset.
    * @param[in]       activation_min   minimum value to clamp the output to. Range : int8
    * @param[in]       activation_max   maximum value to clamp the output to. Range : int8
@@ -1104,8 +1104,9 @@ extern    "C"
    * @param[in]       bias        the bias
    * @param[in,out]   pOut        pointer to output
    * @return     The function returns the incremented output pointer
+   *
+   * @details  This function assumes that data in pInBuffer are reordered
    */
-
     q7_t     *arm_nn_mat_mult_kernel_q7_q15_reordered(const q7_t * pA,
                                                       const q15_t * pInBuffer,
                                                       const uint16_t ch_im_out,
@@ -1219,6 +1220,14 @@ extern    "C"
    * @param[in]       int_width   bit-width of the integer part, assume to be smaller than 3
    * @param[in]       type        type of activation functions
    * @return none.
+   *
+   * @details
+   *
+   * This is the direct table look-up approach.
+   *
+   * Assume here the integer part of the fixed-point is <= 3.
+   * More than 3 just not making much sense, makes no difference with
+   * saturation followed by any of these activation functions.
    */
 
     void      arm_nn_activations_direct_q15(q15_t * data, uint16_t size, uint16_t int_width,
@@ -1282,11 +1291,11 @@ extern    "C"
                                  q7_t * Im_out);
 
   /**
-   * @brief Q7 average pooling function
-   * @param[in]       dim_im_in_height   input tensor dimention
-   * @param[in]       dim_im_in_width    input tensor dimention
-   * @param[in]       dim_im_out_height  output tensor dimension
-   * @param[in]       dim_im_out_width   output tensor dimension
+   * @brief s8 average pooling function
+   * @param[in]       dim_src_height     input tensor dimension
+   * @param[in]       dim_src_width      input tensor dimension
+   * @param[in]       dim_dst_height     output tensor dimension
+   * @param[in]       dim_dst_width      output tensor dimension
    * @param[in]       stride_height      stride
    * @param[in]       stride_width       stride
    * @param[in]       dim_kernel_height  filter kernel size
@@ -1295,35 +1304,31 @@ extern    "C"
    * @param[in]       padding_width      padding sizes
    * @param[in]       act_min            Min clamping
    * @param[in]       act_max            Max clamping
-   * @param[in]       ch_im_in           number of input tensor channels
+   * @param[in]       ch_src             number of input tensor channels
    * @param[in,out]   src                pointer to input tensor
    * @param[in,out]   bufferA            temp buffer
    * @param[in,out]   dst                pointer to output tensor
-   * @return none.
    *
    * @details
    *
-   *
    */
 
-void
-arm_avgpool_s8( const int dim_im_in_height,
-  const int dim_im_in_width,
-  const int dim_im_out_height,
-  const int dim_im_out_width,
-  const int stride_height,
-  const int stride_width,
-  const int dim_kernel_height,
-  const int dim_kernel_width,
-  const int padding_height,
-  const int padding_width,
-  const int act_min,
-  const int act_max,
-  const int ch_im_in,
-  int8_t *src,
-  int16_t *bufferA,
-  int8_t *dst);
-
+    void arm_avgpool_s8(const int dim_src_height,
+                        const int dim_src_width,
+                        const int dim_dst_height,
+                        const int dim_dst_width,
+                        const int stride_height,
+                        const int stride_width,
+                        const int dim_kernel_height,
+                        const int dim_kernel_width,
+                        const int padding_height,
+                        const int padding_width,
+                        const int act_min,
+                        const int act_max,
+                        const int ch_src,
+                        int8_t *src,
+                        int16_t *bufferA,
+                        int8_t *dst);
 /**
  * @defgroup Softmax Softmax Functions
  *
@@ -1336,7 +1341,6 @@ arm_avgpool_s8( const int dim_im_in_height,
    * @param[in]       vec_in      pointer to input vector
    * @param[in]       dim_vec     input vector dimension
    * @param[out]      p_out       pointer to output vector
-   * @return none.
    *
    */
 
@@ -1346,7 +1350,7 @@ arm_avgpool_s8( const int dim_im_in_height,
    * @brief Q7 softmax function with batch parameter
    * @param[in]       vec_in      pointer to input vector
    * @param[in]       nb_batches  number of batches
-   * @param[in]       dim_vec     input vector dimention
+   * @param[in]       dim_vec     input vector dimension
    * @param[out]      p_out       pointer to output vector
    * @return none.
    *

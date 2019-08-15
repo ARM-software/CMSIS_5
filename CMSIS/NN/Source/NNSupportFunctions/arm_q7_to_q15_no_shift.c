@@ -44,7 +44,6 @@
  * @param[in]       *pSrc points to the Q7 input vector
  * @param[out]      *pDst points to the Q15 output vector
  * @param[in]       blockSize length of the input vector
- * @return none.
  *
  * \par Description:
  *

@@ -83,7 +83,6 @@ typedef enum
  * @param[in]       *pSrc points to the q7 input vector
  * @param[out]      *pDst points to the q15 output vector
  * @param[in]       blockSize length of the input vector
- * @return none.
  *
  */
 void      arm_q7_to_q15_no_shift(const q7_t * pSrc, q15_t * pDst, uint32_t blockSize);
@@ -93,7 +92,6 @@ void      arm_q7_to_q15_no_shift(const q7_t * pSrc, q15_t * pDst, uint32_t block
  * @param[in]       *input Pointer to the q7 input vector
  * @param[out]      *output Pointer to the q31 output variable.
  * @param[in]       block_size length of the input vector
- * @return none.
  * \par Description:
  *
  * 2^24 samples can be added without saturating the result.
@@ -123,7 +121,6 @@ void      arm_q7_to_q15_reordered_no_shift(const q7_t * pSrc, q15_t * pDst, uint
  * @param[out]   *dst       points to the q15 output vector
  * @param[in]    block_size length of the input vector
  * @param[in]    offset     q7 offset to be added to each input vector element.
- * @return none.
  *
  * \par Description:
  *
@@ -141,7 +138,6 @@ void arm_q7_to_q15_with_offset(const q7_t *src, q15_t *dst, uint32_t block_size,
  * @param[in]    *src       points to the q7 input vector
  * @param[out]   *dst       points to the q15 output vector
  * @param[in]    block_size length of the input vector
- * @return none.
  *
  * \par Description:
  *

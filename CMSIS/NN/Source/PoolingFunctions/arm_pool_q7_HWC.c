@@ -36,7 +36,7 @@
 /**
  * @brief A few utility functions used by pooling functions
  *
- * 
+ *
  */
 
 static void buffer_scale_back_q15_to_q7(q15_t * buffer, q7_t * target, uint16_t length, uint16_t scale)
@@ -156,7 +156,6 @@ static void accumulate_q7_to_q15(q15_t * base, q7_t * target, const uint16_t len
    * @param[in]       dim_im_out  output tensor dimension
    * @param[in,out]   bufferA     pointer to buffer space for input
    * @param[in,out]   Im_out      pointer to output tensor
-   * @return none.
    *
    * @details
    *
@@ -309,7 +308,6 @@ arm_maxpool_q7_HWC(q7_t * Im_in,
    * @param[in]       dim_im_out  output tensor dimension
    * @param[in,out]   bufferA     pointer to buffer space for input
    * @param[in,out]   Im_out      pointer to output tensor
-   * @return none.
    *
    * @details
    *

@@ -32,38 +32,13 @@
 #include "arm_nnfunctions.h"
 
 
-  /**
-   * @brief Q7 average pooling function
-   * @param[in]       dim_src_height   input tensor dimention
-   * @param[in]       dim_src_width    input tensor dimention
-   * @param[in]       dim_dst_height  output tensor dimension
-   * @param[in]       dim_dst_width   output tensor dimension
-   * @param[in]       stride_height      stride
-   * @param[in]       stride_width       stride
-   * @param[in]       dim_kernel_height  filter kernel size
-   * @param[in]       dim_kernel_width   filter kernel size
-   * @param[in]       padding_height     padding sizes
-   * @param[in]       padding_width      padding sizes
-   * @param[in]       act_min            Min clamping
-   * @param[in]       act_max            Max clamping
-   * @param[in]       ch_src           number of input tensor channels
-   * @param[in,out]   src              pointer to input tensor
-   * @param[in,out]   bufferA            temp buffer
-   * @param[in,out]   dst             pointer to output tensor
-   * @return none.
-   *
-   * @details
-   *
-   *
-   */
-
 static void buffer_scale_back_q15_to_q7(q15_t * buffer, q7_t * target, uint16_t length, uint16_t scale)
 {
     int       i;
 
     for (i = 0; i < length; i++)
     {
-        
+
         target[i] = (q7_t) (buffer[i] / scale);
     }
 }
@@ -79,7 +54,7 @@ static void buffer_scale_back_q15_to_q7_and_clamp(q15_t * buffer, q7_t * target,
     for (i = 0; i < length; i++)
     {
         sum = buffer[i] > 0 ? (buffer[i] + count / 2) / count : (buffer[i] - count / 2) / count;
-        
+
         sum = MAX(sum, act_min);
         sum = MIN(sum, act_max);
 
@@ -88,23 +63,28 @@ static void buffer_scale_back_q15_to_q7_and_clamp(q15_t * buffer, q7_t * target,
 }
 #endif
 
-void
-arm_avgpool_s8( const int dim_src_height,
-  const int dim_src_width,
-  const int dim_dst_height,
-  const int dim_dst_width,
-  const int stride_height,
-  const int stride_width,
-  const int dim_kernel_height,
-  const int dim_kernel_width,
-  const int padding_height,
-  const int padding_width,
-  const int act_min,
-  const int act_max,
-  const int ch_src,
-  int8_t *src,
-  int16_t *bufferA,
-  int8_t *dst)
+    /**
+   * @brief s8 average pooling function
+   *
+   * @details Refer to header file for details.
+   *
+   */
+void arm_avgpool_s8(const int dim_src_height,
+                    const int dim_src_width,
+                    const int dim_dst_height,
+                    const int dim_dst_width,
+                    const int stride_height,
+                    const int stride_width,
+                    const int dim_kernel_height,
+                    const int dim_kernel_width,
+                    const int padding_height,
+                    const int padding_width,
+                    const int act_min,
+                    const int act_max,
+                    const int ch_src,
+                    int8_t *src,
+                    int16_t *bufferA,
+                    int8_t *dst)
 {
 
 #if defined(ARM_MATH_LOOPUNROLL) && defined (ARM_MATH_DSP)
@@ -147,7 +127,7 @@ arm_avgpool_s8( const int dim_src_height,
             /* start the average operation from the second part */
             win_start += ch_src;
             for (; win_start < win_stop; win_start += ch_src)
-            { 
+            {
                 arm_nn_accumulate_q7_to_q15(buffer, win_start, ch_src);
                 count++;
             }
@@ -203,7 +183,7 @@ arm_avgpool_s8( const int dim_src_height,
     int16_t   i_ch_in, i_x, i_y;
     int16_t   k_x, k_y;
 
-    
+
     for (i_y = 0; i_y < dim_dst_height; i_y++)
     {
         for (i_x = 0; i_x < dim_dst_width; i_x++)

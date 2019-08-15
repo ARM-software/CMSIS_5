@@ -31,21 +31,10 @@
 #include "arm_nnfunctions.h"
 
   /**
-   * @brief Matrix-multiplication function for convolution
-   * @param[in]       pA          pointer to operand A
-   * @param[in]       pInBuffer   pointer to operand B, always conssists of 2 vectors
-   * @param[in]       ch_im_out   numRow of A
-   * @param[in]       numCol_A    numCol of A
-   * @param[in]       bias_shift  amount of left-shift for bias
-   * @param[in]       out_shift   amount of right-shift for output
-   * @param[in]       bias        the bias
-   * @param[in,out]   pOut        pointer to output
-   * @return     The function returns the incremented output pointer
+   * @brief Matrix-multiplication function for convolution.
    *
-   * @details
+   * @details Refer to header file for details.
    *
-   * This function does the matrix multiplication with weight matrix
-   * and 2 columns from im2col. 
    */
 
 q7_t     *arm_nn_mat_mult_kernel_q7_q15(const q7_t * pA,
@@ -53,8 +42,8 @@ q7_t     *arm_nn_mat_mult_kernel_q7_q15(const q7_t * pA,
                                         const uint16_t ch_im_out,
                                         const uint16_t numCol_A,
                                         const uint16_t bias_shift,
-                                        const uint16_t out_shift, 
-                                        const q7_t * bias, 
+                                        const uint16_t out_shift,
+                                        const q7_t * bias,
                                         q7_t * pOut)
 {
 #if defined (ARM_MATH_DSP)
