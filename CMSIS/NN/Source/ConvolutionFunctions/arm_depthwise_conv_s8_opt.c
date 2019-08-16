@@ -42,11 +42,10 @@
  * @{
  */
 
-/**
-   * @brief Optimized s8 depthwise convolution function with constraint that in_channel equals out_channel
+  /*
+   * Optimized s8 depthwise convolution function with constraint that in_channel equals out_channel
    *
-   * @note
-   *        - Refer prototype header file for details.
+   *  Refer prototype header file for details.
    *
    */
 arm_status arm_depthwise_conv_s8_opt(const q7_t *input,

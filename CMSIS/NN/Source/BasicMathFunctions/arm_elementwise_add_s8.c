@@ -41,35 +41,10 @@
  * @{
  */
 
-/**
-   * @brief s8 element wise add
-   * @param[in]       input_1_vect            pointer to input vector 1
-   * @param[in]       input_2_vect            pointer to input vector 2
-   * @param[in]       input_1_offset          offset for input 1. Range: int8
-   * @param[in]       input_1_mult            multiplier for input 1
-   * @param[in]       input_1_shift           shift for input 1
-   * @param[in]       input_2_offset          offset for input 2. Range: int8
-   * @param[in]       input_2_mult            multiplier for input 2
-   * @param[in]       input_2_shift           shift for input 2
-   * @param[in]       left_shift              input left shift
-   * @param[in,out]   output                  pointer to output vector
-   * @param[in]       out_offset              output offset
-   * @param[in]       out_mult                output multiplier
-   * @param[in]       out_shift               output shift
-   * @param[in]       out_activation_min      minimum value to clamp output to
-   * @param[in]       out_activation_max      maximum value to clamp output to
-   * @param[in]       block_size              number of samples
-   * @return          The function returns    ARM_MATH_SUCCESS
+  /*
+   * s8 element wise add
    *
-   * @details
-   *
-   *
-   */
-
-/**
-   * @brief s8 element wise add
-   *
-   * @note   Refer header file for details.
+   * Refer header file for details.
    *
    */
 

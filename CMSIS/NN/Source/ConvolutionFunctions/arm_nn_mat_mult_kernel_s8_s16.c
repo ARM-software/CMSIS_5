@@ -30,10 +30,10 @@
 #include "arm_math.h"
 #include "arm_nnfunctions.h"
 
-/**
-   * @brief Matrix-multiplication function for convolution with per-channel requantization.
+  /*
+   * Matrix-multiplication function for convolution with per-channel requantization.
    *
-   * @note  Refer header file for details.
+   * Refer header file for details.
    *
    */
 q7_t *arm_nn_mat_mult_kernel_s8_s16(const q7_t *input_a,
