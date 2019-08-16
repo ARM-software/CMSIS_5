@@ -1305,7 +1305,7 @@ extern    "C"
    * @return none.
    */
 
-    void      arm_relu_q7(q7_t * data, uint16_t size);
+    void      arm_relu_q7(q7_t *data, uint16_t size);
 
   /**
    * @brief Q15 RELU function
@@ -1314,7 +1314,7 @@ extern    "C"
    * @return none.
    */
 
-    void      arm_relu_q15(q15_t * data, uint16_t size);
+    void      arm_relu_q15(q15_t *data, uint16_t size);
 
   /**
    * @brief Q7 neural network activation function using direct table look-up
