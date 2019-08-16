@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2018 Arm Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2010-2019 Arm Limited or its affiliates. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -21,7 +21,7 @@
  * Title:        arm_relu_q15.c
  * Description:  Q15 version of ReLU
  *
- * $Date:        17. January 2018
+ * $Date:        August 2019
  * $Revision:    V.1.0.0
  *
  * Target Processor:  Cortex-M cores
@@ -40,33 +40,33 @@
  * @{
  */
 
-  /**
+/**
    * @brief Q15 RELU function
    * @param[in,out]   data        pointer to input
    * @param[in]       size        number of elements
-   * 
+   *
    * @details
    *
    * Optimized relu with QSUB instructions.
    *
    */
 
-void arm_relu_q15(q15_t * data, uint16_t size)
+void arm_relu_q15(q15_t *data, uint16_t size)
 {
 
-#if defined (ARM_MATH_DSP)
-    /* Run the following code for Cortex-M4 and Cortex-M7 */
+#if defined(ARM_MATH_LOOPUNROLL) && defined(ARM_MATH_DSP)
+    /* Run the following code for M cores with DSP extension */
 
-    uint16_t  i = size >> 1;
-    q15_t    *pIn = data;
-    q15_t    *pOut = data;
-    q31_t     in;
-    q31_t     buf;
-    q31_t     mask;
+    uint16_t i = size >> 1;
+    q15_t *input = data;
+    q15_t *output = data;
+    q31_t in;
+    q31_t buf;
+    q31_t mask;
 
     while (i)
     {
-        in = *__SIMD32(pIn)++;
+        in = arm_nn_read_q15x2_ia(&input);
 
         /* extract the first bit */
         buf = __ROR(in & 0x80008000, 15);
@@ -74,21 +74,21 @@ void arm_relu_q15(q15_t * data, uint16_t size)
         /* if MSB=1, mask will be 0xFF, 0x0 otherwise */
         mask = __QSUB16(0x00000000, buf);
 
-        *__SIMD32(pOut)++ = in & (~mask);
+        write_q15x2_ia(&output, in & (~mask));
         i--;
     }
 
     if (size & 0x1)
     {
-        if (*pIn < 0)
+        if (*input < 0)
         {
-            *pIn = 0;
+            *input = 0;
         }
-        pIn++;
+        input++;
     }
 #else
-    /* Run the following code as reference implementation for Cortex-M0 and Cortex-M3 */
-    uint16_t  i;
+    /* Run the following code as reference implementation for M cores without DSP extension */
+    uint16_t i;
 
     for (i = 0; i < size; i++)
     {
@@ -96,8 +96,7 @@ void arm_relu_q15(q15_t * data, uint16_t size)
             data[i] = 0;
     }
 
-#endif                          /* ARM_MATH_DSP */
-
+#endif /* ARM_MATH_DSP */
 }
 
 /**
