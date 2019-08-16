@@ -32,7 +32,7 @@ A variable is accessed using the dollar character followed by a variable or expr
 ${...}
 \endcode
 Output the name of the zone:
-\codef
+\code
 ${zone.name}
 \endcode
 
@@ -509,6 +509,11 @@ The \ref fm_reg_setup contains a sequence of device specific configuration for t
     <td>An array with the peripheral names that setup belongs too.</td>
     <td>xs:string</td>
   </tr>
+  <tr>
+    <td>.reg_setup[<i>n</i>].slot[<i>m</i>]</td>
+    <td>An array with the slot names that setup belongs too. The value is empty when setup is not related to a slot</td>
+    <td>xs:string</td>
+  </tr>
 </table>
 */
 
@@ -661,11 +666,6 @@ The \ref fm_mpu_setup contains the configuration information for the Memory Prot
     <td>sequence</td>
   </tr>
   <tr>
-    <td>mpu_setup.region[<i>n</i>].no</td>
-    <td>Number of the region.</td>
-    <td>xs:string</td>
-  </tr>
-  <tr>
     <td>mpu_setup.region[<i>n</i>].start</td>
     <td>The base address of the region.</td>
     <td>xs:string</td>
@@ -698,17 +698,22 @@ The \ref fm_mpu_setup contains the configuration information for the Memory Prot
   <tr>
     <td>mpu_setup.region[<i>n</i>].privileged</td>
     <td>'1' indicates that the region is set to Privileged mode.</td>
-    <td>PrivilegeType</td>
+    <td>xs:boolean</td>
   </tr>
   <tr>
     <td>mpu_setup.region[<i>n</i>].shared</td>
-    <td>The \ref privilege "privilege type" setting for the region.</td>
-    <td>PrivilegeType</td>
+    <td>'1' indicates that the region is shared across various processors.</td>
+    <td>xs:boolean</td>
   </tr>
   <tr>
     <td>mpu_setup.region[<i>n</i>].dma</td>
-    <td>The \ref privilege "privilege type" setting for the region.</td>
-    <td>PrivilegeType</td>
+    <td>'1' indicates that the region is accessed by a DMA controller.</td>
+    <td>xs:boolean</td>
+  </tr>
+  <tr>
+    <td>mpu_setup.region[<i>n</i>].rom</td>
+    <td>'1' indicates that the memory type of that region is ROM ('0' for RAM or peripheral).</td>
+    <td>xs:boolean</td>
   </tr>
   
   
