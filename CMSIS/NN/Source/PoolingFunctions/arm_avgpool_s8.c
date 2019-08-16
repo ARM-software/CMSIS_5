@@ -62,11 +62,19 @@ static void buffer_scale_back_q15_to_q7_and_clamp(q15_t * buffer, q7_t * target,
     }
 }
 #endif
+/**
+ *  @ingroup groupNN
+ */
 
-    /**
-   * @brief s8 average pooling function
+/**
+ * @addtogroup Pooling
+ * @{
+ */
+
+  /*
+   * s8 average pooling function
    *
-   * @details Refer to header file for details.
+   * Refer to header file for details.
    *
    */
 void arm_avgpool_s8(const int dim_src_height,

@@ -30,11 +30,11 @@
 #include "arm_nnfunctions.h"
 #include "arm_math.h"
 
-/**
- * @brief Matrix-multiplication with re-ordered input and bias inputs for convolution with per-channel
+/*
+ * Matrix-multiplication with re-ordered input and bias inputs for convolution with per-channel
  *        requantization. The re-ordering is a consequence of sign extension is done by the SXTB16 command.
  *
- * @note  Refer header file for details. This function differs from arm_nn_mat_mult_kernel_s8_s16(), in that it uses
+ * Refer header file for details. This function differs from arm_nn_mat_mult_kernel_s8_s16(), in that it uses
  *        read_and_pad_reordered() instead of arm_nn_mat_mult_kernel_s8_s16(). Investigating the cycles impact and
  *        unifying these two functions is a potential future improvement.
  *

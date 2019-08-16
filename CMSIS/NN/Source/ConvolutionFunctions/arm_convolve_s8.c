@@ -40,11 +40,11 @@
  * @{
  */
 
-/**
-   * @brief Basic s8 convolution function.
+  /*
+   * Basic s8 convolution function.
    *
-   * @note  Refer header file for details. Optimal use case for the DSP implementation is when input and output channels
-   *        are multiples of 4 or atleast greater than 4.
+   * Refer header file for details. Optimal use case for the DSP implementation is when input and output channels
+   * are multiples of 4 or atleast greater than 4.
    *
    */
 

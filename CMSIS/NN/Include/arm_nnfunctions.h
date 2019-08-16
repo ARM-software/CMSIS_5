@@ -147,7 +147,7 @@ extern    "C"
    * @param[in]       output_y    output tensor height
    * @param[in]       buffer_a    pointer to buffer space used for input optimization(partial im2col) and is necessary
    *                              when both ARM_MATH_LOOPUNROLL and ARM_MATH_DSP are defined.
-   *                              Required space: (2 * input_ch * kernel_x * kernel_x) * sizeof(q15_t) bytes
+   *                              Required space: (2 * input_ch * kernel_x * kernel_y) * sizeof(q15_t) bytes
    * @return     The function returns <code>ARM_MATH_SUCCESS</code>
    *
    * @details
@@ -750,8 +750,8 @@ extern    "C"
    * @param[in]       input_y    input tensor height
    * @param[in]       input_ch   number of input tensor channels
    * @param[in]       kernel     pointer to kernel weights. Range: int8, format: [in_ch, H, W, out_ch]
-   * @param[in]       output_ch  Number of output channels.
-   * @param[in]       ch_mult    channel multiplier. optput_ch = ch_mult * input_ch
+   * @param[in]       output_ch  Number of output channels. output_ch = ch_mult * input_ch
+   * @param[in]       ch_mult    channel multiplier.
    * @param[in]       kernel_x   filter/kernel width
    * @param[in]       kernel_y   filter/kernel height
    * @param[in]       pad_x      padding along width
@@ -836,7 +836,7 @@ extern    "C"
    * @param[in]       dilation_y   dilation along y. Not used. Dilation factor of 1 is used.
    * @param[in]       buffer_a     Buffer for partial im2col optimization. This is mandatory when ARM_MATH_LOOPUNROLL and
    *                               ARM_MATH_DSP are defined.
-   *                               Required space: (2 * input_ch * kernel_x * kernel_x) * sizeof(q15_t) bytes
+   *                               Required space: (2 * input_ch * kernel_x * kernel_y) * sizeof(q15_t) bytes
    *
    * @return     The function returns one of the following
    *                <code>ARM_MATH_SIZE_MISMATCH</code> - Unsupported dimension of tensors
@@ -917,22 +917,24 @@ extern    "C"
                                       q15_t * vec_buffer);
 
   /**
-   * @brief S8 basic fully-connected layer function for TF Lite
+   * @brief S8 basic fully-connected and matrix multiplication layer function for TF Lite
    * @param[in]       pInput                       pointer to pInput vector
    * @param[in]       pWeight                      pointer to matrix weights
    * @param[in]       col_dim                      dimension of the input vector
    * @param[in]       row_dim                      dimension of the output vector
    * @param[in]       nb_batches                   number of batches
-   * @param[in]       input_offset
-   * @param[in]       filter_offset
+   * @param[in]       input_offset                 tensor offset for input
+   * @param[in]       filter_offset                tensor offset for filter
    * @param[in]       out_mult                     requantization parameter
    * @param[in]       out_shift                    requantization parameter
-   * @param[in]       output_offset
+   * @param[in]       output_offset                tensor offset for output
    * @param[in]       pBias                        pointer to bias
    * @param[out]      pOut                         pointer to output vector
    * @param[in]       output_activation_min        for clamping
    * @param[in]       output_activation_max        for clamping
-   * @param[in,out]   vec_buffer                   pointer to buffer space for pInput
+   * @param[in]       vec_buffer                   pointer to buffer space used for optimization and is necessary
+   *                                               when both ARM_MATH_LOOPUNROLL and ARM_MATH_DSP are defined.
+   *                                               Required space: col_dim * sizeof(q15_t) bytes
    * @return          The function returns         ARM_MATH_SUCCESS
    *
    * @details
@@ -941,26 +943,30 @@ extern    "C"
    *
    * vec_buffer size: col_dim of word16.
    *
-   * This basic function is designed to work with regular pWeight
-   * matrix without interleaving.
+   *  This basic function is designed to work with regular pWeight
+   *  matrix without interleaving.
+   *
+   *    1. Supported framework: TensorFlow Lite
+   *    2. q7 is used as data type eventhough it is s8 data. It is done so to be consistent with existing APIs.
    *
    */
-  arm_status
-  arm_fully_connected_s8(const int8_t   *pInput,
-                         const int8_t   *weight,
-                         const uint16_t input_length,
-                         const uint16_t num_rows,
-                         const uint16_t nb_batches,
-                         const int32_t  input_offset,
-                         const int32_t  filter_offset,
-                         const int32_t  out_mult,
-                         const int32_t  out_shift,
-                         const int32_t  output_offset,
-                         const int8_t   *bias,
-                         int8_t         *pOut,
-                         const int32_t  output_activation_min,
-                         const int32_t  output_activation_max,
-                         q15_t          *vec_buffer);
+
+    arm_status
+    arm_fully_connected_s8(const int8_t *pInput,
+                           const int8_t *pWeight,
+                           const uint16_t col_dim,
+                           const uint16_t row_dim,
+                           const uint16_t nb_batches,
+                           const int32_t input_offset,
+                           const int32_t filter_offset,
+                           const int32_t out_mult,
+                           const int32_t out_shift,
+                           const int32_t output_offset,
+                           const int8_t *pBias,
+                           int8_t *pOut,
+                           const int32_t output_activation_min,
+                           const int32_t output_activation_max,
+                           q15_t *vec_buffer);
 
   /**
    * @brief Q7 opt fully-connected layer function
@@ -1377,20 +1383,26 @@ extern    "C"
    * @param[in]       dim_src_width      input tensor dimension
    * @param[in]       dim_dst_height     output tensor dimension
    * @param[in]       dim_dst_width      output tensor dimension
-   * @param[in]       stride_height      stride
-   * @param[in]       stride_width       stride
-   * @param[in]       dim_kernel_height  filter kernel size
-   * @param[in]       dim_kernel_width   filter kernel size
-   * @param[in]       padding_height     padding sizes
-   * @param[in]       padding_width      padding sizes
+   * @param[in]       stride_height      stride along y
+   * @param[in]       stride_width       stride along x
+   * @param[in]       dim_kernel_height  filter kernel size along y
+   * @param[in]       dim_kernel_width   filter kernel size along x
+   * @param[in]       padding_height     padding size along y
+   * @param[in]       padding_width      padding size along x
    * @param[in]       act_min            Min clamping
    * @param[in]       act_max            Max clamping
    * @param[in]       ch_src             number of input tensor channels
    * @param[in,out]   src                pointer to input tensor
-   * @param[in,out]   bufferA            temp buffer
+   * @param[in]       bufferA            temporary buffer used for optimization and is necessary  when both
+   *                                     ARM_MATH_LOOPUNROLL and ARM_MATH_DSP are defined.
+   *                                     Required space: (input_ch * dim_dst_width) * sizeof(q15_t) bytes
    * @param[in,out]   dst                pointer to output tensor
    *
+   * @note This pooling function is input-destructive. Input data is undefined after calling this function.
+   *
    * @details
+   *    - The pooling function is implemented as split x-pooling then y-pooling.
+   *    - Supported Framework: TensorFlow Lite
    *
    */
 

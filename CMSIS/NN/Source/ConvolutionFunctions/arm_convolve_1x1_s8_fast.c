@@ -40,11 +40,11 @@
  * @{
  */
 
-/**
-   * @brief Fast s8 version for 1x1 convolution (non-square shape)
+  /*
+   * Fast s8 version for 1x1 convolution (non-square shape)
    *
-   * @note  Refer header file for details. Optimal use case for the DSP implementation is when input and output channels
-   *        are multiples of 4 or atleast greater than 4.
+   * Refer header file for details. Optimal use case for the DSP implementation is when input and output channels
+   *    are multiples of 4 or atleast greater than 4.
    *
    */
 

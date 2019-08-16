@@ -40,12 +40,11 @@
  * @{
  */
 
-/**
-   * @brief Basic s8 depthwise convolution function.
+  /*
+   *  Basic s8 depthwise convolution function.
    *
-   * @note
-   *        - Refer header file for details.
-   *        - Optimization using DSP extension is not available for the generic case where channel multiplier is > 1.
+   *  Refer header file for details.
+   *  Optimization using DSP extension is not available for the generic case where channel multiplier is > 1.
    *
    */
 arm_status arm_depthwise_conv_s8(const q7_t *input,
