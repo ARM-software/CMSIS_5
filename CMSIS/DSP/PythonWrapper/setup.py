@@ -14,7 +14,7 @@ if sys.platform == 'win32':
   # since the visual compiler and the win platform are
   # not supported by default in arm_math.h
 else:
-  cflags = ["-Wno-unused-variable","-Wno-implicit-function-declaration",config.cflags]
+  cflags = ["-Wno-unused-variable","-Wno-implicit-function-declaration",config.cflags,"-D__GNUC_PYTHON__"]
 
 transform = glob.glob(os.path.join(ROOT,"Source","TransformFunctions","*.c"))
 #transform.remove(os.path.join(ROOT,"Source","TransformFunctions","arm_dct4_init_q15.c"))

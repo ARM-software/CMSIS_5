@@ -357,21 +357,23 @@ extern "C"
 
 
 /* Included for instrinsics definitions */
-#if !defined ( _MSC_VER )
-
-
-#include "cmsis_compiler.h"
-
-
-#else
+#if defined (_MSC_VER ) 
 #include <stdint.h>
 #define __STATIC_FORCEINLINE static __forceinline
 #define __ALIGNED(x) __declspec(align(x))
-#define LOW_OPTIMIZATION_ENTER
-#define LOW_OPTIMIZATION_EXIT
-#define IAR_ONLY_LOW_OPTIMIZATION_ENTER 
-#define IAR_ONLY_LOW_OPTIMIZATION_EXIT
+
+#elif defined (__GNUC_PYTHON__)
+#include <stdint.h>
+#define  __ALIGNED(x) __attribute__((aligned(x)))
+#define __STATIC_FORCEINLINE static __attribute__((inline))
+#pragma GCC diagnostic ignored "-Wunused-function"
+#pragma GCC diagnostic ignored "-Wattributes"
+
+#else
+#include "cmsis_compiler.h"
 #endif
+
+
 
 #include "string.h"
 #include "math.h"
@@ -638,7 +640,7 @@ MSVC is not going to be used to cross-compile to ARM. So, having a MSVC
 compiler file in Core or Core_A would not make sense.
 
 */
-#if defined ( _MSC_VER )
+#if defined ( _MSC_VER ) || (__GNUC_PYTHON__)
     __STATIC_FORCEINLINE uint8_t __CLZ(uint32_t data)
     {
       if (data == 0U) { return 32U; }
@@ -7974,6 +7976,11 @@ float32_t arm_yule_distance(const uint32_t *pA, const uint32_t *pB, uint32_t num
   #if defined ( __ARM_ARCH_7EM__ )
     #define LOW_OPTIMIZATION_ENTER \
        _Pragma ("optimize=low")
+#elif define ( _MSC_VER)
+      #define LOW_OPTIMIZATION_ENTER
+      #define LOW_OPTIMIZATION_EXIT
+      #define IAR_ONLY_LOW_OPTIMIZATION_ENTER 
+      #define IAR_ONLY_LOW_OPTIMIZATION_EXIT
   #else
     #define LOW_OPTIMIZATION_ENTER
   #endif
