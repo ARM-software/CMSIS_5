@@ -7976,7 +7976,7 @@ float32_t arm_yule_distance(const uint32_t *pA, const uint32_t *pB, uint32_t num
   #if defined ( __ARM_ARCH_7EM__ )
     #define LOW_OPTIMIZATION_ENTER \
        _Pragma ("optimize=low")
-#elif define ( _MSC_VER)
+#elif defined ( _MSC_VER)
       #define LOW_OPTIMIZATION_ENTER
       #define LOW_OPTIMIZATION_EXIT
       #define IAR_ONLY_LOW_OPTIMIZATION_ENTER 
