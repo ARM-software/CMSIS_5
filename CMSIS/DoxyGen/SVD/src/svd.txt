@@ -72,6 +72,11 @@ version 1.0.
   <th>Description</th>
 </tr>
 <tr>
+  <td>V1.3.4</td>
+  <td> 
+       - Added information about the Linux version of \ref svd_SVDConv_pg. </td>
+</tr>
+<tr>
   <td>V1.3.3</td>
   <td> 
        - Updated file header to Apache 2.0 License.
@@ -85,7 +90,7 @@ version 1.0.
 <tr>
   <td>V1.3.2</td>
   <td> 
-       - Extended command line of SVDConv.exe for partition.h file generation.
+       - Extended command line of \ref svd_SVDConv_pg for partition.h file generation.
        - added \refelem{dimArrayIndex} to \refelem{peripheral}, \refelem{cluster}, and \refelem{register} 
          to describe enumeration of array indices.</td>
 </tr>
@@ -151,7 +156,7 @@ claims compliance with a certain format. The schema file <em>CMSIS-SVD.xsd</em> 
 the folder <b>.\\CMSIS\\Utilities</b> of the \b ARM::CMSIS Pack. 
 \n\n
 -# <b>SVD Conversion Utility:</b> The conversion utility \ref svd_SVDConv_pg checks the semantics and consistency of the data contained in a CMSIS-SVD file. 
-\b SVDConv.exe is included in the CMSIS distribution. 
+\b SVDConv is included in the CMSIS distribution. 
 
 <div class="title">Usage</div>
 CMSIS-SVD files can be used to generate:
@@ -180,12 +185,13 @@ CMSIS-SVD files can be used to generate:
 
 /* ************************************************************************************************ */
 /**
-\page svd_SVDConv_pg SVDConv.exe
+\page svd_SVDConv_pg SVDConv
 
-\b SVDConv.exe is a command-line utility to validate CMSIS-SVD files and to generate CMSIS-compliant device header files.
-\b SVDConv.exe is distributed with the \b ARM::CMSIS Pack (in the CMSIS\\Utilities directory) together with the CMSIS-SVD schema file. 
+\b SVDConv is a command-line utility to validate CMSIS-SVD files and to generate CMSIS-compliant device header files.
+\b SVDConv is distributed with the \b ARM::CMSIS Pack (in the CMSIS\\Utilities directory) together with the \b CMSIS-SVD.xsd schema file. 
+\b SVDConv is available for Windows and Linux operating systems.
 
-\b SVDConv.exe performs the following operations:
+\b SVDConv performs the following operations:
   - Checks the syntactical and structural compliance with the specified CMSIS-SVD format.
   - Checks the consistency, correctness, and completeness of the CMSIS-SVD file against the CMSIS-SVD schema file.
   - Generates CMSIS-compliant device header files, which can be used for software development.
@@ -196,7 +202,7 @@ CMSIS-SVD files can be used to generate:
 
 Operation
 ---------
-\b SVDConv.exe is invoked form the command line. The general command format is:
+\b SVDConv is invoked form the command line. The general command format is:
 \code
 SVDConv.exe <SVD_file> <options>
 \endcode
@@ -276,7 +282,7 @@ SVDConv.exe <SVD_file> <options>
 Return Codes
 -------------
 
-\b SVDConv.exe returns the following codes:
+\b SVDConv returns the following codes:
 \n
 Code | Description             | Action
 :---:|:------------------------|:--------------------
@@ -288,12 +294,12 @@ Code | Description             | Action
 <b>Examples</b> \n
 -# Retrieve help information on screen.
    \code 
-     SVDConv.exe 
+     SVDConv 
    \endcode
    \n
 -# Perform a consistency check by passing only the SVD file name. Errors and warnings are printed on screen. 
    \code 
-     SVDConv.exe ARM_Example.svd 
+     SVDConv ARM_Example.svd 
    \endcode
    \n
    The result is printed on screen:
@@ -312,7 +318,7 @@ Code | Description             | Action
    \n
 -# Generate the header file. Performs a consistency check. Errors and warnings are printed on screen. 
    \code 
-     SVDConv.exe ARM_Example.svd --generate=header
+     SVDConv ARM_Example.svd --generate=header
    \endcode
    \n
    Code snippet from the generated header file showing the structure for \b TIMER0.
@@ -321,7 +327,7 @@ Code | Description             | Action
    \n
 -# Generate the header file containing bit fields. Performs a consistency check. Errors and warnings are printed on screen. 
    \code 
-     SVDConv.exe ARM_Example.svd --generate=header --fields=struct
+     SVDConv ARM_Example.svd --generate=header --fields=struct
    \endcode
    \n
    Code snippet from the generated header file showing the structure for \b TIMER0.

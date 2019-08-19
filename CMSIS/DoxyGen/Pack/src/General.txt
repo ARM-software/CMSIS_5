@@ -88,6 +88,12 @@ Files relevant to CMSIS-Pack are present in the following \b ARM::CMSIS director
     <th>Description</th>
   </tr>
   <tr>
+    <td>1.6.1</td>
+    <td>Modifications compared to Version 1.6.0
+- added \ref bash_script to support pack generation on Linux or Windows
+    </td>
+  </tr>
+  <tr>
     <td>1.6.0</td>
     <td>Modifications compared to Version 1.5.0
 - added Armv8.1-M MVE processor feature attribute 'Dmve'.

@@ -13,8 +13,9 @@ that the schema has been validated. Pack Installer provides an easy mechanism to
   \image html schema_check.png
 - The \b Output window shows the result. If errors are reported, please make sure to fix them before continuing.\n
   \image html schema_check_output.png
-  This is
-  especially important when handing in the pack to be indexed by \ref cp_KeilComPack "Arm's pack index service". The pack
+
+\note This is
+  especially important when the pack should be indexed by a \ref cp_KeilComPack "pack index service". The pack
   importer will ignore all PDSC files that do not pass the check against the most recently published PACK.xsd schema file
   and thus your pack will not be available for download.
 
@@ -67,13 +68,21 @@ maintenance purposes for example).
 - Older packs should remain available.
 
 
-\section cp_KeilComPack Publishing using Arm's Pack Index Service
+\section cp_KeilComPack Publish with Pack Index Service
 
-Arm maintains a list of available software packs. If you wish to add your packs to that list, send either your vendor.pidx
-file or your PDSC file to the following email address: <a href="mailto:CMSIS@arm.com">CMSIS@arm.com</a>. The PIDX file will
-be processed and all referenced PDSC files will be validated. The following content will be processed in order to generate
+Several companies maintain a Pack Index Server to make packs within tools or web pages. Once you are ready to deploy packs via such services, you 
+may send the URL of the \elem{vendor}.\elem{name}.pdsc or \elem{vendor}.pidx file to the following email addresses:
+
+- for Arm and Keil tools and web pages email to <a href="mailto:CMSIS@arm.com">CMSIS@arm.com</a>
+- for IAR tools email to <a href="mailto:CMSIS@arm.com">CMSIS@iar.com</a>
+
+The *.pidx file allows you to change pack versions and add packs to your distribution list. All packs that are referenced in the 
+*.pidx file will be processed and validated. <b>Only packs that pass the \ref packChk and schema check</b> will become available via 
+web pages and development tools. 
+
+For example, Arm uses the pack information to generate a list of available software packs. The following content will be processed in order to generate
 the web site
-(<a href="https://developer.arm.com/embedded/cmsis/cmsis-packs">https://developer.arm.com/embedded/cmsis/cmsis-packs</a>):
+(<a href="https://developer.arm.com/embedded/cmsis/cmsis-packs" target="_blank">https://developer.arm.com/embedded/cmsis/cmsis-packs</a>):
 - Version
 - Release Notes
 - Devices
