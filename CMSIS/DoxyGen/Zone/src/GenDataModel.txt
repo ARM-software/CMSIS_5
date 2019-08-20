@@ -500,11 +500,6 @@ The \ref fm_reg_setup contains a sequence of device specific configuration for t
     <td>NonNegativeInteger</td>
   </tr>
   <tr>
-    <td>.reg_setup[<i>n</i>].value[<i>m</i>]</td>
-    <td>An array with register setup values (corresponds to .peripheral[<i>m</i>] below.</td>
-    <td>NonNegativeInteger</td>
-  </tr>
-  <tr>
     <td>.reg_setup[<i>n</i>].peripheral[<i>m</i>]</td>
     <td>An array with the peripheral names that setup belongs too.</td>
     <td>xs:string</td>
@@ -513,6 +508,11 @@ The \ref fm_reg_setup contains a sequence of device specific configuration for t
     <td>.reg_setup[<i>n</i>].slot[<i>m</i>]</td>
     <td>An array with the slot names that setup belongs too. The value is empty when setup is not related to a slot</td>
     <td>xs:string</td>
+  </tr>
+  <tr>
+    <td>.reg_setup[<i>n</i>].value[<i>m</i>]</td>
+    <td>An array with register setup values (corresponds to .peripheral[<i>m</i>] and .slot[<i>m</i>] above).</td>
+    <td>NonNegativeInteger</td>
   </tr>
 </table>
 */

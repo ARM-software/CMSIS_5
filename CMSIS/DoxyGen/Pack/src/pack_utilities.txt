@@ -65,37 +65,37 @@ the output filename according the CMSIS-Pack conventions and validates the pack 
 Below is a sample output (reduced).
 \code
 $ ./gen_pack.sh
-
+ 
 Starting CMSIS-Pack Generation: 19 Aug 2019 15:34:02
 7z is /C/Program Files/7-Zip/7z
 PackChk is /C/Keil_v5/ARM/PACK/ARM/CMSIS/5.6.0/CMSIS/Utilities/Win32/PackChk
-
+ 
 Generating Pack Version: for MyVendor.MyPack
-
+ 
 Adding directories to pack:
 Include/ Source/
-
+ 
 Adding files to pack:
 License.txt ReadMe.txt
-
+ 
 PackChk.exe 1.3.87
 Copyright (C) 2012-2019 ARM Ltd and ARM Germany GmbH. All rights reserved.
-
+ 
 M362: Also suppressing Messages M502 and M504
-
+ 
 Phase1: Read PDSC files
 Phase2: Static Data & Dependencies check
 *** WARNING M304: C:\W\CMSIS_5\CMSIS\Pack\Bash\build\MyVendor.MyPack.pdsc
   No package URL (<url>-tag and/or value) found in PDSC file!
-
+ 
 Phase3: RTE Model based Data & Dependencies check
 Found 0 Error(s) and 1 Warning(s).
-
+ 
 creating pack file MyVendor.MyPack.1.0.0.pack
-
+ 
 Creating archive: C:/W/CMSIS_5/CMSIS/Pack/Bash/output/MyVendor.MyPack.1.0.0.pack
 Add new data to archive: 2 folders, 5 files, 1165 bytes (2 KiB)
-
+ 
 Everything is Ok
 Completed CMSIS-Pack Generation ...
 \endcode
