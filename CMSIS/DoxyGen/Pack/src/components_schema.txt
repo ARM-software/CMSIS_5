@@ -236,18 +236,18 @@ No need to explicitly include this file as it is automatically added as pre-incl
 <p>&nbsp;</p>
 <hr>
 
-\section Pre_Include_Local_h
+\section Pre_Include_Local_Component_h
 The build environment shall generate a C/C++ header file with the name <b>Pre_Include_\<Cclass>_\<component>.h</b> 
 from the selected component and add this file to the command line as a pre-include file for the build of all modules of this component.
-The same is done for each component containing a "Pre_Include_Local_h" element.
+The same is done for each component containing a "Pre_Include_Local_Component_h" element.
 Note: files shall be generated into the RTE/\<target> subdirectory.
 
 \code
 <component Cclass="Other" Cgroup="Alpha" ...>
-  <Pre_Include_Local_h>
+  <Pre_Include_Local_Component_h>
     // enabling local pre include
     #define Local_Component_Alpha 1
-  </Pre_Include_Local_h>
+  </Pre_Include_Local_Component_h>
 </component>
 
 \endcode
@@ -524,7 +524,7 @@ A component describes a collection of files (source, header, configuration, libr
   </tr>
   <tr>
     <td>Pre_Include_Local_Component_h</td>
-    <td>Source code that is copied into the file \ref Pre_Include_Local_h \<Cclass>_\<Component_name>.h when the component is selected by the run time environment configuration.</td>
+    <td>Source code that is copied into the file \ref Pre_Include_Local_Component_h \<Cclass>_\<Component_name>.h when the component is selected by the run time environment configuration.</td>
     <td>xs:string </td>
     <td>0..1 </td>
   </tr>
