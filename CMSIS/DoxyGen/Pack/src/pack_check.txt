@@ -106,54 +106,6 @@ packChk MyVendor.MVCM3.pdsc -x M304 -x M331        // option repeated
 
 The following table shows the errors and warnings issued by packChk.
 
-Internal Errors
----------------
-If you encounter one of the following errors, please send a problem report via email to cmsis@arm.com.
-
-<table class="cmtable" summary="packChk Internal Msgs">
-  <tr>
-    <th>Message Number</th>
-    <th>Type</th>
-    <th>Description</th>
-    <th>Action</th>
-  </tr>
-<tr><td>M100</td> 
-	<td>ERROR</td> <td>GetModuleHandle failed</td>
-	<td>Call support.</td>
-</tr>
-<tr><td>M101</td> 
-	<td>ERROR</td> <td>Unknown error!</td>
-	<td>Call support.
-</td>
-</tr>
-<tr><td>M102</td> 
-	<td>ERROR</td> <td>MFC initialization failed</td>
-	<td>Call support.</td>
-</tr>
-<tr><td>M103</td> 
-	<td>ERROR</td> <td>Internal Error: \em 'REF'</td>
-	<td>Call support and submit the error message.</td>
-</tr>
-<tr><td>M104 - M107</td>
-	<td>N.A.</td> <td><i>not in use</i></td>
-	<td>---</td>
-</tr>
-<tr><td>M108</td> 
-	<td>ERROR</td> <td>Reading PDSC File failed!</td>
-	<td>Verify file and folder permissions. Verify whether the file is corrupt or in another folder. 
-	Repeat the process. If this error persists, call support.</td>
-</tr>
-<tr><td>M109</td> 
-	<td>ERROR</td> <td>Constructing Model failed!</td>
-	<td>Building Model based on the PDSC information failed. Repeat the process. If this error persists, call support.</td>
-</tr>
-<tr><td>M110</td> 
-	<td>ERROR</td> <td>Verifying Model failed</td>
-	<td>Model based verification of the PDCS information failed. Repeat the process. If this error persists, call support.</td>
-</tr>
-</table>
-
-
 Invocation Errors
 -----------------
 
