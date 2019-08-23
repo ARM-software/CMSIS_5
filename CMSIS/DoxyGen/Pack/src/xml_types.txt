@@ -1656,6 +1656,8 @@ debug access variables which are evaluated for the function call.
 - Some target access functions determine the used debug and access port by the current values of the <b>__dp</b> and
   <b>__ap</b> debug access variables. If a target access requires a different debug or access port than the default ones, it
   must change these values. This change is held until finishing the sequence the change has occurred in.
+- A call to WriteDP() to change the DP SELECT register does not implicitly change the value of the debug access variable
+  <b>__ap</b>. It needs to be explicitly updated to select a different AP for subsequent AP register and memory accesses.
   
 \subsection DebugVars Debug access variables
 

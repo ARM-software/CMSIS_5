@@ -97,7 +97,7 @@ Files relevant to CMSIS-Pack are present in the following \b ARM::CMSIS director
     <td>1.6.0</td>
     <td>Modifications compared to Version 1.5.0
 - added Armv8.1-M MVE processor feature attribute 'Dmve'.
-- added local and global pre-include section \ref Pre_Include_Local_h, \ref Pre_Include_Global_h.
+- added local and global pre-include section \ref Pre_Include_Local_Component_h, \ref Pre_Include_Global_h.
 - added file categories 'preIncludeLocal' and 'preIncludeGlobal' to the \ref FileCategoryEnum.
 - added file attribute 'path' for file category 'header' to add support for relative include paths.
 - added to \ref element_package "package" element the possibility to restrict the usage of the with attributes Dcore, Dname, Dvendor, and Tcompiler.
