@@ -42,6 +42,9 @@ extern    "C"
 #define RIGHT_SHIFT(_shift) (_shift > 0 ? 0 : -_shift)
 #define Q31_MIN ((q31_t)(0x80000000L))
 #define Q31_MAX ((q31_t)(0x7FFFFFFFL))
+#define Q7_MIN ((q7_t)(0x80))
+#define Q7_MAX ((q7_t)(0x7F))
+
 
 #define MAX(A,B) ((A) > (B) ? (A) : (B))
 #define MIN(A,B) ((A) < (B) ? (A) : (B))
