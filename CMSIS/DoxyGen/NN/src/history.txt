@@ -7,6 +7,28 @@
     <th>Description</th>
   </tr>
   <tr>
+    <td>vTBD</td>
+    <td>
+      Added following functions for int8 operators with symmetric quantization.<br>
+      <ul>
+        <li>arm_convolve_s8</li>
+        <li>arm_depthwise_conv_s8</li>
+        <li>arm_depthwise_conv_s8_opt</li>
+        <li>arm_convolve_1x1_s8_fast</li>
+        <li>arm_fully_connected_s8</li>
+        <li>arm_softmax_q7</li>
+        <li>arm_elementwise_add_s8</li>
+        <li>arm_avgpool_s8</li>
+        <li>arm_elementwise_add_s8</li>
+      </ul>
+      Added following support functions.<br>
+      <ul>
+        <li>arm_nn_mat_mul_kernel_s8_s16</li>
+        <li>arm_nn_mat_mul_kernel_s8_s16_reordered</li>
+      </ul>
+    </td>
+  </tr>
+  <tr>
     <td>V1.2.0</td>
     <td>
       Added depthwise convolution function with asymmetric quantization.<br>
