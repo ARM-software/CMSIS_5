@@ -1499,6 +1499,47 @@ extern    "C"
                              int8_t *input,
                              int16_t *tmp_buffer,
                              int8_t *output);
+
+  /**
+   * @brief s8 pure C max pooling function
+   * @param[in]       input_y     input tensor dimension along y
+   * @param[in]       input_x     input tensor dimension along x
+   * @param[in]       output_y    output tensor dimension along y
+   * @param[in]       output_x    output tensor dimension along x
+   * @param[in]       stride_y    stride along y
+   * @param[in]       stride_x    stride along x
+   * @param[in]       kernel_y    filter kernel size along y
+   * @param[in]       kernel_x    filter kernel size along x
+   * @param[in]       pad_y       padding size along y
+   * @param[in]       pad_x       padding size along x
+   * @param[in]       act_min     Activation min. Lower limit to clamp output to. Range: int8
+   * @param[in]       act_max     Activation max. Upper limit to clamp output to. Range: int8
+   * @param[in]       channel_in  number of input channels
+   * @param[in]       input       pointer to input tensor
+   * @param[in]       tmp_buffer  Not used.
+   * @param[in,out]   output      pointer to output tensor
+   *
+   * @details
+   *    - This basic implementation is recommended when number of channels is less than 4 and/or
+   *      dimensions are small.
+   *
+   */
+    void arm_max_pool_s8(const uint16_t input_y,
+                         const uint16_t input_x,
+                         const uint16_t output_y,
+                         const uint16_t output_x,
+                         const uint16_t stride_y,
+                         const uint16_t stride_x,
+                         const uint16_t kernel_y,
+                         const uint16_t kernel_x,
+                         const uint16_t pad_y,
+                         const uint16_t pad_x,
+                         const int8_t act_min,
+                         const int8_t act_max,
+                         const uint16_t channel_in,
+                         int8_t *input,
+                         int16_t *tmp_buffer,
+                         int8_t *output);
 /**
  * @defgroup Softmax Softmax Functions
  *
