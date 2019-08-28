@@ -55,7 +55,7 @@
    * @param[in]       out_shift   amount of right-shift for output
    * @param[in,out]   Im_out      pointer to output tensor
    * @param[in]       dim_im_out  output tensor dimension
-   * @param[in,out]   bufferA     pointer to buffer space for input 
+   * @param[in,out]   bufferA     pointer to buffer space for input
    * @param[in,out]   bufferB     pointer to buffer space for output
    * @return     The function returns either
    * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.
@@ -70,7 +70,7 @@
    *
    * <b>Input dimension constraints:</b>
    *
-   * ch_im_in is multiple of 2 
+   * ch_im_in is multiple of 2
    *
    * ch_im_out is multipe of 2
    *
@@ -88,12 +88,12 @@ arm_convolve_HWC_q15_fast(const q15_t * Im_in,
                           const q15_t * bias,
                           const uint16_t bias_shift,
                           const uint16_t out_shift,
-                          q15_t * Im_out, 
-                          const uint16_t dim_im_out, 
-                          q15_t * bufferA, 
+                          q15_t * Im_out,
+                          const uint16_t dim_im_out,
+                          q15_t * bufferA,
                           q7_t * bufferB)
 {
-
+    (void)bufferB;
 #if defined (ARM_MATH_DSP)
     int16_t   i_out_y, i_out_x, i_ker_y, i_ker_x;
 

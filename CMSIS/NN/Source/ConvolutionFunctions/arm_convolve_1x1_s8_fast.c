@@ -83,6 +83,7 @@ arm_status arm_convolve_1x1_s8_fast(const q7_t *input,
     /* Optimized version for M cores with DSP extension */
     int16_t i_out_y, i_out_x;
     int16_t i_ch_out;
+    (void)input_y;
 
     /* Partial(two columns) im2col buffer */
     q15_t *two_column_buffer = buffer_a;

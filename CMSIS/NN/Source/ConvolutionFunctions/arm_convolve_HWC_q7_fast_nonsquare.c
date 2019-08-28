@@ -60,7 +60,7 @@
  * @param[in,out]   Im_out       pointer to output tensor
  * @param[in]       dim_im_out_x output tensor dimension x
  * @param[in]       dim_im_out_y output tensor dimension y
- * @param[in,out]   bufferA      pointer to buffer space for input 
+ * @param[in,out]   bufferA      pointer to buffer space for input
  * @param[in,out]   bufferB      pointer to buffer space for output
  * @return     The function returns either
  * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.
@@ -88,11 +88,11 @@ arm_status arm_convolve_HWC_q7_fast_nonsquare(const q7_t * Im_in,
                                               const uint16_t out_shift,
                                               q7_t * Im_out,
                                               const uint16_t dim_im_out_x,
-                                              const uint16_t dim_im_out_y, 
-                                              q15_t * bufferA, 
+                                              const uint16_t dim_im_out_y,
+                                              q15_t * bufferA,
                                               q7_t * bufferB)
 {
-
+    (void)bufferB;
 #if defined (ARM_MATH_DSP)
     /* Run the following code for Cortex-M4 and Cortex-M7 */
 
@@ -357,7 +357,7 @@ arm_status arm_convolve_HWC_q7_fast_nonsquare(const q7_t * Im_in,
                             for (l = 0; l < ch_im_in; l++)
                             {
                                 conv_out += Im_in[(in_row * dim_im_in_x + in_col) * ch_im_in + l] *
-                                    wt[i * ch_im_in * dim_kernel_y * dim_kernel_x + (m * dim_kernel_x + n) * ch_im_in + l];      
+                                    wt[i * ch_im_in * dim_kernel_y * dim_kernel_x + (m * dim_kernel_x + n) * ch_im_in + l];
                             }
                         }
                     }

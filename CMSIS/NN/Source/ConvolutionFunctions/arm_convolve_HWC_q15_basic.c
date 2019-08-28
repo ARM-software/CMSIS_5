@@ -57,7 +57,7 @@
    * @param[in]       dim_im_out  output tensor dimension
    * @param[in,out]   bufferA     pointer to buffer space for input
    * @param[in,out]   bufferB     pointer to buffer space for output
-   * @return     The function returns <code>ARM_MATH_SUCCESS</code> 
+   * @return     The function returns <code>ARM_MATH_SUCCESS</code>
    *
    * @details
    *
@@ -68,7 +68,7 @@
    * bufferB size: 0
    *
    * This basic version is designed to work for any input tensor and weight
-   * dimension. 
+   * dimension.
    */
 
 arm_status
@@ -83,12 +83,12 @@ arm_convolve_HWC_q15_basic(const q15_t * Im_in,
                            const q15_t * bias,
                            const uint16_t bias_shift,
                            const uint16_t out_shift,
-                           q15_t * Im_out, 
-                           const uint16_t dim_im_out, 
-                           q15_t * bufferA, 
+                           q15_t * Im_out,
+                           const uint16_t dim_im_out,
+                           q15_t * bufferA,
                            q7_t * bufferB)
 {
-
+    (void)bufferB;
 #if defined (ARM_MATH_DSP)
     /* Run the following code for Cortex-M4 and Cortex-M7 */
 

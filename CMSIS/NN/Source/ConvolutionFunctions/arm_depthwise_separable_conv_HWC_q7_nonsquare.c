@@ -93,6 +93,8 @@ arm_status arm_depthwise_separable_conv_HWC_q7_nonsquare(const q7_t * Im_in,
                                                          q7_t * bufferB)
 {
 
+    (void)bufferB;
+
 #if defined (ARM_MATH_DSP)
     /* Run the following code for Cortex-M4 and Cortex-M7 */
 

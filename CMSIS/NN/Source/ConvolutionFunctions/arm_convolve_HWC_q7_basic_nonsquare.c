@@ -85,13 +85,13 @@ arm_status arm_convolve_HWC_q7_basic_nonsquare(const q7_t * Im_in,
                                                q15_t * bufferA,
                                                q7_t * bufferB)
 {
-
+    (void)bufferB;
 #if defined (ARM_MATH_DSP)
     /* Run the following code for Cortex-M4 and Cortex-M7 */
 
     int16_t   i_out_y, i_out_x, i_ker_y, i_ker_x;
 
-    /* 
+    /*
      *  Here we use bufferA as q15_t internally as computation are done with q15_t level
      *  im2col are done to output in q15_t format from q7_t input
      */
@@ -205,8 +205,8 @@ arm_status arm_convolve_HWC_q7_basic_nonsquare(const q7_t * Im_in,
                             for (l = 0; l < ch_im_in; l++)
                             {
                                 conv_out +=
-                                    Im_in[(in_row * dim_im_in_x + in_col) * ch_im_in + l] * 
-                                         wt[i * ch_im_in * dim_kernel_y * dim_kernel_x + 
+                                    Im_in[(in_row * dim_im_in_x + in_col) * ch_im_in + l] *
+                                         wt[i * ch_im_in * dim_kernel_y * dim_kernel_x +
                                          (m * dim_kernel_x + n) * ch_im_in + l];
                             }
                         }

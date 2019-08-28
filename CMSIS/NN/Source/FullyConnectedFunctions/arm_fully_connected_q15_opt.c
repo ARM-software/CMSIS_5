@@ -99,12 +99,12 @@ arm_fully_connected_q15_opt(const q15_t * pV,
                             const uint16_t dim_vec,
                             const uint16_t num_of_rows,
                             const uint16_t bias_shift,
-                            const uint16_t out_shift, 
-                            const q15_t * bias, 
-                            q15_t * pOut, 
+                            const uint16_t out_shift,
+                            const q15_t * bias,
+                            q15_t * pOut,
                             q15_t * vec_buffer)
 {
-
+    (void)vec_buffer;
 #if defined (ARM_MATH_DSP)
     /* Run the following code for Cortex-M4 and Cortex-M7 */
 
@@ -118,9 +118,9 @@ arm_fully_connected_q15_opt(const q15_t * pV,
     while (rowCnt)
     {
         q31_t     sum =  ((q31_t)(*pBias++) << bias_shift) + NN_ROUND(out_shift);
-        q31_t     sum2 = ((q31_t)(*pBias++) << bias_shift) + NN_ROUND(out_shift); 
-        q31_t     sum3 = ((q31_t)(*pBias++) << bias_shift) + NN_ROUND(out_shift); 
-        q31_t     sum4 = ((q31_t)(*pBias++) << bias_shift) + NN_ROUND(out_shift); 
+        q31_t     sum2 = ((q31_t)(*pBias++) << bias_shift) + NN_ROUND(out_shift);
+        q31_t     sum3 = ((q31_t)(*pBias++) << bias_shift) + NN_ROUND(out_shift);
+        q31_t     sum4 = ((q31_t)(*pBias++) << bias_shift) + NN_ROUND(out_shift);
 
         uint16_t  colCnt = dim_vec >> 1;
 
