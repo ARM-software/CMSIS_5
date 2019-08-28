@@ -32,6 +32,8 @@
 #include "arm_nnfunctions.h"
 
 
+#if defined(ARM_MATH_LOOPUNROLL) && defined (ARM_MATH_DSP)
+
 static void buffer_scale_back_q15_to_q7(q15_t * buffer, q7_t * target, uint16_t length, uint16_t scale)
 {
     int       i;
@@ -42,8 +44,6 @@ static void buffer_scale_back_q15_to_q7(q15_t * buffer, q7_t * target, uint16_t 
         target[i] = (q7_t) (buffer[i] / scale);
     }
 }
-
-#if defined (ARM_MATH_DSP)
 
 static void buffer_scale_back_q15_to_q7_and_clamp(q15_t * buffer, q7_t * target, uint16_t length, uint16_t count,const int act_min,
   const int act_max)
@@ -188,9 +188,9 @@ void arm_avgpool_s8(const int dim_src_height,
 
 /* Reference C code adapted from CMSIS-NN arm_avepool_q7_HWC.
  */
+    (void)bufferA;
     int16_t   i_ch_in, i_x, i_y;
     int16_t   k_x, k_y;
-
 
     for (i_y = 0; i_y < dim_dst_height; i_y++)
     {

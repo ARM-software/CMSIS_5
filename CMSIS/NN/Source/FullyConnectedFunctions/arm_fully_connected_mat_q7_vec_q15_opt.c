@@ -93,7 +93,7 @@
    *  | a17 | a27 | a37 | a47 |
    *
    *  For the left-over rows, we do 1x1 computation, so the data remains
-   *  as its original order. 
+   *  as its original order.
    *
    *  So the stored weight matrix looks like this:
    *
@@ -122,6 +122,7 @@ arm_fully_connected_mat_q7_vec_q15_opt(const q15_t * pV,
                                        const uint16_t out_shift, const q7_t * bias, q15_t * pOut, q15_t * vec_buffer)
 {
 
+    (void)vec_buffer;
 #if defined (ARM_MATH_DSP)
     /* Run the following code for Cortex-M4 and Cortex-M7 */
 
@@ -319,8 +320,8 @@ arm_fully_connected_mat_q7_vec_q15_opt(const q15_t * pV,
     {
         q31_t     sum =  ((q31_t)(*pBias++) << bias_shift) + NN_ROUND(out_shift);
         q31_t     sum2 = ((q31_t)(*pBias++) << bias_shift) + NN_ROUND(out_shift);
-        q31_t     sum3 = ((q31_t)(*pBias++) << bias_shift) + NN_ROUND(out_shift); 
-        q31_t     sum4 = ((q31_t)(*pBias++) << bias_shift) + NN_ROUND(out_shift); 
+        q31_t     sum3 = ((q31_t)(*pBias++) << bias_shift) + NN_ROUND(out_shift);
+        q31_t     sum4 = ((q31_t)(*pBias++) << bias_shift) + NN_ROUND(out_shift);
         uint16_t  colCnt = dim_vec >> 1;
 
         pA = pV;

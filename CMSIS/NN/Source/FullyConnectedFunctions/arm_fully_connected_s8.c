@@ -213,6 +213,7 @@ arm_fully_connected_s8(const int8_t *pInput,
     return (ARM_MATH_SUCCESS);
 
 #else
+    (void)vec_buffer;
     const int8_t *pInputA;
     const int8_t *pBiasTmp = pBias;
     const int8_t *pWeightTmp = pWeight;

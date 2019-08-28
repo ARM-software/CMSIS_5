@@ -175,7 +175,7 @@ arm_status arm_convolve_s8(const q7_t *input,
     }
 #else
     /* Run the following code as reference implementation for Cortex-M0 and Cortex-M3 */
-
+    (void)buffer_a;
     uint16_t i, j, k, l, m, n;
     int conv_out;
     signed char in_row, in_col;

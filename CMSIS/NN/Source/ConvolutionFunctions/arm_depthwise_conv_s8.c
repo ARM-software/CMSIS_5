@@ -78,6 +78,7 @@ arm_status arm_depthwise_conv_s8(const q7_t *input,
     (void)dilation_x;
     (void)dilation_y;
     (void)buffer_a;
+    (void)output_ch;
 
     for (int i_out_y = 0; i_out_y < output_y; i_out_y++)
     {
@@ -95,8 +96,8 @@ arm_status arm_depthwise_conv_s8(const q7_t *input,
                     const int ker_y_start = MAX(0, -base_idx_y);
                     const int ker_x_start = MAX(0, -base_idx_x);
                     /* Condition for kernel end dimension: (base_idx_<x,y> + ker_<x,y>_end) < input_<x,y> */
-                    const int ker_y_end = MIN(input_y, input_y - base_idx_y);
-                    const int ker_x_end = MIN(input_x, input_x - base_idx_x);
+                    const int ker_y_end = MIN(kernel_y, input_y - base_idx_y);
+                    const int ker_x_end = MIN(kernel_x, input_x - base_idx_x);
                     acc_0 = bias[idx_out_ch];
 
                     for (int i_ker_y = ker_y_start; i_ker_y < ker_y_end; i_ker_y++)
@@ -111,6 +112,7 @@ arm_status arm_depthwise_conv_s8(const q7_t *input,
                             acc_0 += (input[idx_0] + input_offset) * kernel[ker_idx_0];
                         }
                     }
+
                     /* Requantize and clamp output to provided range */
                     acc_0 = arm_nn_requantize(acc_0, output_mult[idx_out_ch], output_shift[idx_out_ch]);
                     acc_0 += output_offset;

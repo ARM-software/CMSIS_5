@@ -84,6 +84,8 @@ arm_status arm_depthwise_conv_s8_opt(const q7_t *input,
 
 #if defined(ARM_MATH_LOOPUNROLL) && defined(ARM_MATH_DSP)
     /* Run the following code in cores using DSP extension */
+    (void)dilation_x;
+    (void)dilation_y;
 
     int16_t i_out_y, i_out_x;
     int16_t i_ker_y, i_ker_x;
