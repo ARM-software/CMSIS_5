@@ -45,13 +45,13 @@ q7_t *arm_nn_mat_mult_kernel_s8_s16(const q7_t *input_a,
                                     const int16_t activation_min,
                                     const int16_t activation_max,
                                     const uint16_t num_col_a,
-                                    const q7_t *const output_bias,
+                                    const int32_t *const output_bias,
                                     q7_t *out_0)
 {
 #if defined(ARM_MATH_LOOPUNROLL) && defined(ARM_MATH_DSP)
     /* set up the second output pointers */
     q7_t *out_1 = out_0 + output_ch;
-    const q7_t *bias = output_bias;
+    const int32_t *bias = output_bias;
 
     uint16_t row_count = output_ch / 2;
     const q7_t *ip_a0 = input_a;
@@ -66,10 +66,10 @@ q7_t *arm_nn_mat_mult_kernel_s8_s16(const q7_t *input_a,
         const q7_t *ip_a1 = ip_a0 + num_col_a;
 
         /* Init accumulator with bias for channel N and N + 1 */
-        q31_t ch_0_out_0 = (q31_t)*bias;
-        q31_t ch_0_out_1 = (q31_t)*bias++;
-        q31_t ch_1_out_0 = (q31_t)*bias;
-        q31_t ch_1_out_1 = (q31_t)*bias++;
+        q31_t ch_0_out_0 = *bias;
+        q31_t ch_0_out_1 = *bias++;
+        q31_t ch_1_out_0 = *bias;
+        q31_t ch_1_out_1 = *bias++;
 
         uint16_t col_count = num_col_a / 4;
         /* accumulate over the vector */
@@ -153,8 +153,8 @@ q7_t *arm_nn_mat_mult_kernel_s8_s16(const q7_t *input_a,
         const q15_t *ip_b1 = ip_b0 + num_col_a;
 
         /* load the bias */
-        q31_t ch_0_out_0 = (q31_t)*bias;
-        q31_t ch_0_out_1 = (q31_t)*bias++;
+        q31_t ch_0_out_0 = *bias;
+        q31_t ch_0_out_1 = *bias++;
 
         uint16_t col_count = num_col_a >> 2;
         while (col_count)

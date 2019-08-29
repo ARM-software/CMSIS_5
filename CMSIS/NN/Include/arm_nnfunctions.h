@@ -135,7 +135,7 @@ extern    "C"
    * @param[in]       pad_y      padding along height
    * @param[in]       stride_x   convolution stride x
    * @param[in]       stride_y   convolution stride y
-   * @param[in]       bias       pointer to per output channel bias. Range: int8
+   * @param[in]       bias       pointer to per output channel bias. Range: int32
    * @param[in,out]   output     pointer to output tensor. format: [H, W, out_ch]
    * @param[in]       output_shift    pointer to per output channel requantization shift parameter.
    * @param[in]       output_mult     pointer to per output channel requantization multiplier parameter.
@@ -168,7 +168,7 @@ extern    "C"
                                const uint16_t pad_y,
                                const uint16_t stride_x,
                                const uint16_t stride_y,
-                               const q7_t *bias,
+                               const int32_t *bias,
                                q7_t *output,
                                const int32_t *output_shift,
                                const int32_t *output_mult,
@@ -457,7 +457,7 @@ extern    "C"
    * @param[in]      pad_y         padding size y
    * @param[in]      stride_x      convolution stride x
    * @param[in]      stride_y      convolution stride y
-   * @param[in]      bias          pointer to bias
+   * @param[in]      bias          pointer to per channel bias. Range : int32
    * @param[in,out]  output        pointer to output tensor.  Format: [H, W, out_ch]
    * @param[in]      output_shift  pointer to per output channel requantization shift parameter.
    * @param[in]      output_mult   pointer to per output channel requantization multiplier parameter.
@@ -492,7 +492,7 @@ extern    "C"
                                         const uint16_t pad_y,
                                         const uint16_t stride_x,
                                         const uint16_t stride_y,
-                                        const q7_t *bias,
+                                        const int32_t *bias,
                                         q7_t *output,
                                         const int32_t *output_shift,
                                         const int32_t *output_mult,
@@ -758,7 +758,7 @@ extern    "C"
    * @param[in]       pad_y      padding along height
    * @param[in]       stride_x   convolution stride along width
    * @param[in]       stride_y   convolution stride along height
-   * @param[in]       bias       pointer to per output channel bias. Range: int8
+   * @param[in]       bias       pointer to per output channel bias. Range: int32
    * @param[in,out]   output     pointer to output tensor. Format: [H, W, out_ch]
    * @param[in]       output_shift pointer to per output channel requantization shift parameter.
    * @param[in]       output_mult  pointer to per output channel requantization multiplier parameter.
@@ -794,7 +794,7 @@ extern    "C"
                                      const uint16_t pad_y,
                                      const uint16_t stride_x,
                                      const uint16_t stride_y,
-                                     const q7_t *bias,
+                                     const int32_t *bias,
                                      q7_t *output,
                                      const int32_t *output_shift,
                                      const int32_t *output_mult,
@@ -860,7 +860,7 @@ extern    "C"
                                        const uint16_t pad_y,
                                        const uint16_t stride_x,
                                        const uint16_t stride_y,
-                                       const q7_t *bias,
+                                       const int32_t *bias,
                                        q7_t *output,
                                        const int32_t *output_shift,
                                        const int32_t *output_mult,
@@ -1137,7 +1137,7 @@ extern    "C"
    * @param[in]       activation_min   minimum value to clamp the output to. Range : int8
    * @param[in]       activation_max   maximum value to clamp the output to. Range : int8
    * @param[in]       num_col_a   number of columns of A
-   * @param[in]       output_bias per output channel bias
+   * @param[in]       output_bias per output channel bias. Range : int32
    * @param[in,out]   out_0       pointer to output
    * @return     The function returns one of the two
    *              1. The incremented output pointer for a successful operation or
@@ -1157,7 +1157,7 @@ extern    "C"
                                         const int16_t activation_min,
                                         const int16_t activation_max,
                                         const uint16_t num_col_a,
-                                        const q7_t *const output_bias,
+                                        const int32_t *const output_bias,
                                         q7_t *out_0);
 
    /**
@@ -1177,7 +1177,7 @@ extern    "C"
                                                   const int16_t activation_min,
                                                   const int16_t activation_max,
                                                   const uint16_t num_col_a,
-                                                  const q7_t *const output_bias,
+                                                  const int32_t *const output_bias,
                                                   q7_t *out_0);
 
     /**
