@@ -117,6 +117,41 @@ the related linker setup.
     <td>string</td>
   </tr>
   <tr>
+    <td>.Pname</td>
+    <td>Name of the processor core.</td>
+    <td>RestrictedString</td>
+  </tr>
+  <tr>
+    <td>.security</td>
+    <td>The \ref security "security" setting for this zone in the following separate fields.</td>
+    <td>SecurityType</td>
+  </tr>
+  <tr>
+    <td>.security.s</td>
+    <td>Zone is executed in \em "secure" state.</td>
+    <td>xs:boolean</td>
+  </tr>
+  <tr>
+    <td>.security.n</td>
+    <td>Zone is executed in \em "non-secure" state.</td>
+    <td>xs:boolean</td>
+  </tr>
+  <tr>
+    <td>.privilege</td>
+    <td>The \ref privilege "privilege type" settings for this zone in the following separate fields.</td>
+    <td>PrivilegeType</td>
+  </tr>
+  <tr>
+    <td>.privilege.p</td>
+    <td>Zone is executed in privileged level.</td>
+    <td>xs:boolean</td>
+  </tr>
+  <tr>
+    <td>.privilege.u</td>
+    <td>Zone is executed in unprivileged level.</td>
+    <td>xs:boolean</td>
+  </tr>
+  <tr>
     <td>\subpage fm_memory ".memory"</td>
     <td>A sequence of all memory regions that are accessible in the zone (or system partition).</td>
     <td>sequence</td>

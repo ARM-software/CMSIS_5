@@ -465,13 +465,13 @@ The information in this element is identical with CMSIS-Pack, except that it pro
     <td>DnumInterrupts</td>
     <td>Number of NVIC interrupt sources available to the processor core (excludes exception vectors).</td>
     <td>NonNegativeInteger</td>
-    <td>optional</td>
+    <td>required for Armv8-M with TrustZone</td>
   </tr>
   <tr>
     <td>DnumSauRegions</td>
     <td>Number of regions in the Security Attribution Unit (SAU) of the processor core.</td>
     <td>NonNegativeInteger</td>
-    <td>optional</td>
+    <td>required for Armv8-M with TrustZone</td>
   </tr>
   <tr>
     <td>info</td>
