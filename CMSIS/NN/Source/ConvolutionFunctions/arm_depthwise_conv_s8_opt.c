@@ -60,7 +60,7 @@ arm_status arm_depthwise_conv_s8_opt(const q7_t *input,
                                      const uint16_t pad_y,
                                      const uint16_t stride_x,
                                      const uint16_t stride_y,
-                                     const q7_t *bias,
+                                     const int32_t *bias,
                                      q7_t *output,
                                      const int32_t *output_shift,
                                      const int32_t *output_mult,
@@ -91,7 +91,7 @@ arm_status arm_depthwise_conv_s8_opt(const q7_t *input,
     int16_t i_ker_y, i_ker_x;
     q15_t *const col_buffer_start = buffer_a;
     q15_t *col_buffer = col_buffer_start;
-    const q7_t *const bias_start_pos = bias;
+    const int32_t *const bias_start_pos = bias;
     const q31_t *const out_mult_start_pos = output_mult;
     const q31_t *const out_shift_start_pos = output_shift;
     uint16_t row_count;
@@ -151,10 +151,10 @@ arm_status arm_depthwise_conv_s8_opt(const q7_t *input,
 
             while (row_count)
             {
-                q31_t sum = (q31_t)(*bias++);
-                q31_t sum_2 = (q31_t)(*bias++);
-                q31_t sum_3 = (q31_t)(*bias++);
-                q31_t sum_4 = (q31_t)(*bias++);
+                q31_t sum =   *bias++;
+                q31_t sum_2 = *bias++;
+                q31_t sum_3 = *bias++;
+                q31_t sum_4 = *bias++;
 
                 uint16_t col_count = (kernel_x * kernel_y) / 2;
                 q15_t *col_pos = col_buffer_start + row_shift;
@@ -255,7 +255,7 @@ arm_status arm_depthwise_conv_s8_opt(const q7_t *input,
             {
                 q15_t *col_pos = col_buffer_start + row_shift;
                 const q7_t *row_pos = kernel + row_shift;
-                q31_t sum = (q31_t)*bias++;
+                q31_t sum = *bias++;
                 const uint16_t col_count = (kernel_x * kernel_y);
                 row_shift += 1;
 

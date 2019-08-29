@@ -61,7 +61,7 @@ arm_status arm_convolve_1x1_s8_fast(const q7_t *input,
                                     const uint16_t pad_y,
                                     const uint16_t stride_x,
                                     const uint16_t stride_y,
-                                    const q7_t *bias,
+                                    const int32_t *bias,
                                     q7_t *output,
                                     const int32_t *output_shift,
                                     const int32_t *output_mult,
@@ -124,7 +124,7 @@ arm_status arm_convolve_1x1_s8_fast(const q7_t *input,
         const q7_t *ker_a = kernel;
         for (i_ch_out = 0; i_ch_out < output_ch; i_ch_out++)
         {
-            q31_t sum = (q31_t)bias[i_ch_out];
+            q31_t sum = bias[i_ch_out];
 
             /* Point to the beginning of the im2col buffer where the input is available as a rearranged column */
             q15_t *ip_as_col = buffer_a;
