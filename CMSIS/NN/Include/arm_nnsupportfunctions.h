@@ -165,15 +165,70 @@ void arm_q7_to_q15_reordered_with_offset(const q7_t *src, q15_t *dst, uint32_t b
  */
 void arm_nn_accumulate_q7_to_q15(q15_t *dst, const q7_t *src, uint32_t block_size);
 
+/**
+  @brief         Read 2 q15 elements and post increment pointer.
+  @param[in]     in_q15   Pointer to pointer that holds address of input.
+  @return        q31 value
+ */
+__STATIC_FORCEINLINE q31_t arm_nn_read_q15x2_ia(const q15_t **in_q15)
+{
+  q31_t val;
+
+  memcpy(&val, *in_q15, 4);
+  *in_q15 += 2;
+
+  return (val);
+}
+
+/**
+  @brief         Read 4 q7 from q7 pointer and post increment pointer.
+  @param[in]     in_q7       Pointer to pointer that holds address of input.
+  @return        q31 value
+ */
+__STATIC_FORCEINLINE q31_t arm_nn_read_q7x4_ia(const q7_t **in_q7)
+{
+  q31_t val;
+  memcpy(&val, *in_q7, 4);
+  *in_q7 += 4;
+
+  return (val);
+}
+
+/**
+  @brief         Read 2 q15 from q15 pointer.
+  @param[in]     in_q15   pointer to address of input.
+  @return        q31 value
+ */
+__STATIC_FORCEINLINE q31_t arm_nn_read_q15x2(const q15_t *in_q15)
+{
+  q31_t val;
+  memcpy(&val, in_q15, 4);
+
+  return (val);
+}
+
+/**
+  @brief         Read 4 q7 values.
+  @param[in]     in_q7       pointer to address of input.
+  @return        q31 value
+ */
+__STATIC_FORCEINLINE q31_t arm_nn_read_q7x4(const q7_t *in_q7)
+{
+  q31_t val;
+  memcpy(&val, in_q7, 4);
+
+  return (val);
+}
+
 #if defined (ARM_MATH_DSP)
 
 /**
  * @brief read and expand one q7 word into two q15 words
  */
 
-__STATIC_FORCEINLINE void *read_and_pad(void *source, q31_t * out1, q31_t * out2)
+__STATIC_FORCEINLINE const q7_t *read_and_pad(const q7_t *source, q31_t * out1, q31_t * out2)
 {
-        q31_t     inA = *__SIMD32(source)++;
+        q31_t     inA = arm_nn_read_q7x4_ia(&source);
         q31_t     inAbuf1 = __SXTB16(__ROR(inA, 8));
         q31_t     inAbuf2 = __SXTB16(inA);
 
@@ -192,9 +247,9 @@ __STATIC_FORCEINLINE void *read_and_pad(void *source, q31_t * out1, q31_t * out2
  * @brief read and expand one q7 word into two q15 words with reordering
  */
 
-__STATIC_FORCEINLINE q7_t *read_and_pad_reordered(q7_t *source, q31_t * out1, q31_t * out2)
+__STATIC_FORCEINLINE const q7_t *read_and_pad_reordered(const q7_t *source, q31_t * out1, q31_t * out2)
 {
-        q31_t     inA = read_q7x4_ia(&source);
+        q31_t     inA = arm_nn_read_q7x4_ia(&source);
 #ifndef ARM_MATH_BIG_ENDIAN
         *out2 = __SXTB16(__ROR(inA, 8));
         *out1 = __SXTB16(inA);
@@ -209,9 +264,9 @@ __STATIC_FORCEINLINE q7_t *read_and_pad_reordered(q7_t *source, q31_t * out1, q3
 /**
  * @brief read and expand one q7 word into two q15 words with reordering and add an offset
  */
-__STATIC_FORCEINLINE q7_t *read_and_pad_reordered_with_offset(q7_t *source, q31_t * out1, q31_t * out2, q31_t offset)
+__STATIC_FORCEINLINE const q7_t *read_and_pad_reordered_with_offset(const q7_t *source, q31_t * out1, q31_t * out2, q31_t offset)
 {
-        q31_t     inA = read_q7x4_ia(&source);
+        q31_t     inA = arm_nn_read_q7x4_ia(&source);
 
 #ifndef ARM_MATH_BIG_ENDIAN
         *out2 = __SXTB16(__ROR(inA, 8));
@@ -225,7 +280,6 @@ __STATIC_FORCEINLINE q7_t *read_and_pad_reordered_with_offset(q7_t *source, q31_
 
         return source;
 }
-
 
 #endif
 
@@ -367,61 +421,6 @@ __STATIC_FORCEINLINE q31_t arm_nn_requantize(const q31_t val, const q31_t multip
 {
   return arm_nn_divide_by_power_of_two(arm_nn_sat_doubling_high_mult(val * (1 << LEFT_SHIFT(shift)), multiplier),
                                        RIGHT_SHIFT(shift));
-}
-
-/**
-  @brief         Read 2 q15 elements and post increment pointer.
-  @param[in]     in_q15   Pointer to pointer that holds address of input.
-  @return        q31 value
- */
-__STATIC_FORCEINLINE q31_t arm_nn_read_q15x2_ia(const q15_t **in_q15)
-{
-  q31_t val;
-
-  memcpy(&val, *in_q15, 4);
-  *in_q15 += 2;
-
-  return (val);
-}
-
-/**
-  @brief         Read 4 q7 from q7 pointer and post increment pointer.
-  @param[in]     in_q7       Pointer to pointer that holds address of input.
-  @return        q31 value
- */
-__STATIC_FORCEINLINE q31_t arm_nn_read_q7x4_ia(const q7_t **in_q7)
-{
-  q31_t val;
-  memcpy(&val, *in_q7, 4);
-  *in_q7 += 4;
-
-  return (val);
-}
-
-/**
-  @brief         Read 2 q15 from q15 pointer.
-  @param[in]     in_q15   pointer to address of input.
-  @return        q31 value
- */
-__STATIC_FORCEINLINE q31_t arm_nn_read_q15x2(const q15_t *in_q15)
-{
-  q31_t val;
-  memcpy(&val, in_q15, 4);
-
-  return (val);
-}
-
-/**
-  @brief         Read 4 q7 values.
-  @param[in]     in_q7       pointer to address of input.
-  @return        q31 value
- */
-__STATIC_FORCEINLINE q31_t arm_nn_read_q7x4(const q7_t *in_q7)
-{
-  q31_t val;
-  memcpy(&val, in_q7, 4);
-
-  return (val);
 }
 
 #ifdef __cplusplus

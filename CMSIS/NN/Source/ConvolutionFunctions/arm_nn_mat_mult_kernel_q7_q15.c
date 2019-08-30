@@ -76,8 +76,8 @@ q7_t     *arm_nn_mat_mult_kernel_q7_q15(const q7_t * pA,
             q31_t     inB1 = *__SIMD32(pB)++;
             q31_t     inB2 = *__SIMD32(pB2)++;
 
-            pA = (q7_t *) read_and_pad((void *)pA, &inA11, &inA12);
-            pA2 = (q7_t *) read_and_pad((void *)pA2, &inA21, &inA22);
+            pA = read_and_pad(pA, &inA11, &inA12);
+            pA2 = read_and_pad(pA2, &inA21, &inA22);
 
             sum = __SMLAD(inA11, inB1, sum);
             sum2 = __SMLAD(inA11, inB2, sum2);
@@ -136,7 +136,7 @@ q7_t     *arm_nn_mat_mult_kernel_q7_q15(const q7_t * pA,
             q31_t     inB1 = *__SIMD32(pB)++;
             q31_t     inB2 = *__SIMD32(pB2)++;
 
-            pA = (q7_t *) read_and_pad((void *)pA, &inA11, &inA12);
+            pA = read_and_pad(pA, &inA11, &inA12);
 
             sum = __SMLAD(inA11, inB1, sum);
             sum2 = __SMLAD(inA11, inB2, sum2);

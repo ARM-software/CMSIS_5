@@ -79,8 +79,8 @@ q7_t *arm_nn_mat_mult_kernel_s8_s16(const q7_t *input_a,
             q31_t b0 = arm_nn_read_q15x2_ia(&ip_b0);
             q31_t b1 = arm_nn_read_q15x2_ia(&ip_b1);
 
-            ip_a0 = (q7_t *)read_and_pad((void *)ip_a0, &a01, &a02);
-            ip_a1 = (q7_t *)read_and_pad((void *)ip_a1, &a11, &a12);
+            ip_a0 = read_and_pad(ip_a0, &a01, &a02);
+            ip_a1 = read_and_pad(ip_a1, &a11, &a12);
 
             ch_0_out_0 = __SMLAD(a01, b0, ch_0_out_0);
             ch_0_out_1 = __SMLAD(a01, b1, ch_0_out_1);
@@ -163,7 +163,7 @@ q7_t *arm_nn_mat_mult_kernel_s8_s16(const q7_t *input_a,
             q31_t b0 = arm_nn_read_q15x2_ia(&ip_b0);
             q31_t b1 = arm_nn_read_q15x2_ia(&ip_b1);
 
-            ip_a0 = (q7_t *)read_and_pad((void *)ip_a0, &a01, &a02);
+            ip_a0 = read_and_pad(ip_a0, &a01, &a02);
 
             ch_0_out_0 = __SMLAD(a01, b0, ch_0_out_0);
             ch_0_out_1 = __SMLAD(a01, b1, ch_0_out_1);

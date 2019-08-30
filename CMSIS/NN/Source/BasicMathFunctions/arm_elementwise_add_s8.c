@@ -92,8 +92,8 @@ arm_elementwise_add_s8(const int8_t *input_1_vect,
   {
     /* 4 outputs are calculated in one loop. The order of calculation is follows the order of output sign extension
        intrinsic */
-    input_1_vect = read_and_pad_reordered((q7_t *)input_1_vect, &b_1, &a_1);
-    input_2_vect = read_and_pad_reordered((q7_t *)input_2_vect, &b_2, &a_2);
+    input_1_vect = read_and_pad_reordered(input_1_vect, &b_1, &a_1);
+    input_2_vect = read_and_pad_reordered(input_2_vect, &b_2, &a_2);
 
     a_1 = __SADD16(a_1, offset_1_packed);
     b_1 = __SADD16(b_1, offset_1_packed);

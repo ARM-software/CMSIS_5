@@ -98,8 +98,8 @@ arm_fully_connected_q7(const q7_t * pV,
         while (colCnt)
         {
             q31_t     inV, inM11, inM12, inM21, inM22;
-            pB = (q7_t *) read_and_pad_reordered((void *)pB, &inM11, &inM12);
-            pB2 = (q7_t *) read_and_pad_reordered((void *)pB2, &inM21, &inM22);
+            pB = read_and_pad_reordered(pB, &inM11, &inM12);
+            pB2 = read_and_pad_reordered(pB2, &inM21, &inM22);
 
             inV = *__SIMD32(pA)++;
 

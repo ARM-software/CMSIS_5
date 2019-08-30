@@ -137,7 +137,7 @@ arm_status arm_convolve_s8(const q7_t *input,
             q31_t sum = bias[i];
 
             /* Point to the beginning of the im2col buffer where the input is available as a rearranged column */
-            q15_t *ip_as_col = buffer_a;
+            const q15_t *ip_as_col = buffer_a;
 
             /* 4 multiply and accumulates are done in one loop. */
             uint16_t col_count = (input_ch * kernel_y * kernel_x) >> 2;
@@ -147,11 +147,11 @@ arm_status arm_convolve_s8(const q7_t *input,
                 q31_t ker_a1, ker_a2;
                 q31_t ip_b1, ip_b2;
 
-                ker_a = (q7_t *)read_and_pad((void *)ker_a, &ker_a1, &ker_a2);
+                ker_a = read_and_pad(ker_a, &ker_a1, &ker_a2);
 
-                ip_b1 = arm_nn_read_q15x2_ia((const q15_t **)&ip_as_col);
+                ip_b1 = arm_nn_read_q15x2_ia(&ip_as_col);
                 sum = __SMLAD(ker_a1, ip_b1, sum);
-                ip_b2 = arm_nn_read_q15x2_ia((const q15_t **)&ip_as_col);
+                ip_b2 = arm_nn_read_q15x2_ia(&ip_as_col);
                 sum = __SMLAD(ker_a2, ip_b2, sum);
 
                 col_count--;

@@ -100,8 +100,8 @@ arm_fully_connected_mat_q7_vec_q15(const q15_t * pV,
         while (colCnt)
         {
             q31_t     inV, inM11, inM12, inM21, inM22;
-            pB = (q7_t *) read_and_pad((void *)pB, &inM11, &inM12);
-            pB2 = (q7_t *) read_and_pad((void *)pB2, &inM21, &inM22);
+            pB = read_and_pad(pB, &inM11, &inM12);
+            pB2 = read_and_pad(pB2, &inM21, &inM22);
 
             inV = *__SIMD32(pA)++;
 
@@ -148,7 +148,7 @@ arm_fully_connected_mat_q7_vec_q15(const q15_t * pV,
         {
             q31_t     inV1, inV2, inM11, inM12;
 
-            pB = (q7_t *) read_and_pad((void *)pB, &inM11, &inM12);
+            pB = read_and_pad(pB, &inM11, &inM12);
 
             inV1 = *__SIMD32(pA)++;
             sum = __SMLAD(inV1, inM11, sum);

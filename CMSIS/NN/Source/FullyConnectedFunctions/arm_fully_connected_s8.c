@@ -107,8 +107,8 @@ arm_fully_connected_s8(const int8_t *input,
             while (colCnt)
             {
                 q31_t inV, inM11, inM12, inM21, inM22;
-                pB = read_and_pad_reordered_with_offset((q7_t *)pB, &inM11, &inM12, foffset);
-                pB2 = read_and_pad_reordered_with_offset((q7_t *)pB2, &inM21, &inM22, foffset);
+                pB = read_and_pad_reordered_with_offset(pB, &inM11, &inM12, foffset);
+                pB2 = read_and_pad_reordered_with_offset(pB2, &inM21, &inM22, foffset);
 
                 inV = read_q15x2_ia(&pA);
                 inV = __QADD16(inV, ioffset);
@@ -172,7 +172,7 @@ arm_fully_connected_s8(const int8_t *input,
             {
                 q31_t inV, inM11, inM12;
 
-                pB = read_and_pad_reordered_with_offset((q7_t *)pB, &inM11, &inM12, foffset);
+                pB = read_and_pad_reordered_with_offset(pB, &inM11, &inM12, foffset);
 
                 inV = read_q15x2_ia(&pA);
                 inV = __QADD16(inV, ioffset);

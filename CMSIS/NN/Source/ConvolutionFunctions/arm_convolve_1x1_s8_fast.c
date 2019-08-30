@@ -127,18 +127,18 @@ arm_status arm_convolve_1x1_s8_fast(const q7_t *input,
             q31_t sum = bias[i_ch_out];
 
             /* Point to the beginning of the im2col buffer where the input is available as a rearranged column */
-            q15_t *ip_as_col = buffer_a;
+            const q15_t *ip_as_col = buffer_a;
             uint16_t col_count = (input_ch * DIM_KER_X * DIM_KER_Y) >> 2;
 
             while (col_count)
             {
                 q31_t ker_a1, ker_a2;
                 q31_t in_b1, in_b2;
-                ker_a = (const q7_t *)read_and_pad_reordered((void *)ker_a, &ker_a1, &ker_a2);
+                ker_a = read_and_pad_reordered(ker_a, &ker_a1, &ker_a2);
 
-                in_b1 = arm_nn_read_q15x2_ia((const q15_t **)&ip_as_col);
+                in_b1 = arm_nn_read_q15x2_ia(&ip_as_col);
                 sum = __SMLAD(ker_a1, in_b1, sum);
-                in_b2 = arm_nn_read_q15x2_ia((const q15_t **)&ip_as_col);
+                in_b2 = arm_nn_read_q15x2_ia(&ip_as_col);
                 sum = __SMLAD(ker_a2, in_b2, sum);
 
                 col_count--;
