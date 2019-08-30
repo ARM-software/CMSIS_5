@@ -66,7 +66,7 @@ void arm_relu_q7(q7_t *data, uint16_t size)
 
     while (i)
     {
-        in = arm_nn_read_q7x4(input);
+        in = read_q7x4_ia(&input);
 
         /* extract the first bit */
         buf = __ROR(in & 0x80808080, 7);

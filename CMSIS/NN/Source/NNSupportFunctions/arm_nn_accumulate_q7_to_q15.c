@@ -39,17 +39,17 @@
  * @{
  */
 
-void arm_nn_accumulate_q7_to_q15(q15_t * pDst, const q7_t * pSrc, uint32_t length)
+void arm_nn_accumulate_q7_to_q15(q15_t *pDst, const q7_t *pSrc, uint32_t length)
 {
-    q15_t    *pCnt = pDst;
-    const q7_t     *pV = pSrc;
-    q31_t     v1, v2, vo1, vo2;
-    uint16_t  cnt = length >> 2;
-    q31_t     in;
+    q15_t *pCnt = pDst;
+    const q7_t *pV = pSrc;
+    q31_t v1, v2, vo1, vo2;
+    int32_t cnt = length >> 2;
+    q31_t in;
 
-    while (cnt > 0u)
+    while (cnt > 0l)
     {
-        q31_t     value = *__SIMD32(pV)++;
+        q31_t value = arm_nn_read_q7x4_ia(&pV);
         v1 = __SXTB16(__ROR(value, 8));
         v2 = __SXTB16(value);
 #ifndef ARM_MATH_BIG_ENDIAN
@@ -68,12 +68,12 @@ void arm_nn_accumulate_q7_to_q15(q15_t * pDst, const q7_t * pSrc, uint32_t lengt
         write_q15x2_ia(&pCnt, __QADD16(vo1, in));
 
         in = arm_nn_read_q15x2(pCnt);
-        write_q15x2_ia(&pCnt,__QADD16(vo2, in));
+        write_q15x2_ia(&pCnt, __QADD16(vo2, in));
 
         cnt--;
     }
     cnt = length & 0x3;
-    while (cnt > 0u)
+    while (cnt > 0l)
     {
         *pCnt++ += *pV++;
         cnt--;

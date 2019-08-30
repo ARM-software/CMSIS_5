@@ -66,7 +66,7 @@ void arm_relu_q15(q15_t *data, uint16_t size)
 
     while (i)
     {
-        in = arm_nn_read_q15x2_ia((const q15_t **)&input);
+        in = read_q15x2_ia(&input);
 
         /* extract the first bit */
         buf = __ROR(in & 0x80008000, 15);

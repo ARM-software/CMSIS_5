@@ -159,7 +159,7 @@ arm_status arm_convolve_HWC_q7_basic_nonsquare(const q7_t * Im_in,
                 q31_t     inA1, inA2;
                 q31_t     inB1, inB2;
 
-                pA = (q7_t *) read_and_pad((void *)pA, &inA1, &inA2);
+                pA = read_and_pad(pA, &inA1, &inA2);
 
                 inB1 = *__SIMD32(pB)++;
                 sum = __SMLAD(inA1, inB1, sum);

@@ -44,7 +44,7 @@
  * @param[in]       *pSrc points to the Q7 input vector
  * @param[out]      *pDst points to the Q15 output vector
  * @param[in]       blockSize length of the input vector
- * 
+ *
  * @details
  *
  * This function does the q7 to q15 expansion with re-ordering
@@ -94,7 +94,7 @@ void arm_q7_to_q15_reordered_no_shift(const q7_t * pSrc, q15_t * pDst, uint32_t 
     {
         /* C = (q15_t) A << 8 */
         /* convert from q7 to q15 and then store the results in the destination buffer */
-        in = *__SIMD32(pIn)++;
+        in = arm_nn_read_q7x4_ia(&pIn);
 
         /* rotatate in by 8 and extend two q7_t values to q15_t values */
         in1 = __SXTB16(__ROR(in, 8));
