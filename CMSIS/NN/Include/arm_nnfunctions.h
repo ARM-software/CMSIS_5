@@ -1450,6 +1450,47 @@ extern    "C"
                         int8_t *src,
                         int16_t *bufferA,
                         int8_t *dst);
+
+   /**
+   * @brief s8 DSP optimized max pooling function
+   * @param[in]       input_y     input tensor dimension along y
+   * @param[in]       input_x     input tensor dimension along x
+   * @param[in]       output_y    output tensor dimension along y
+   * @param[in]       output_x    output tensor dimension along x
+   * @param[in]       stride_y    stride along y
+   * @param[in]       stride_x    stride along x
+   * @param[in]       kernel_y    filter kernel size along y
+   * @param[in]       kernel_x    filter kernel size along x
+   * @param[in]       pad_y       padding size along y
+   * @param[in]       pad_x       padding size along x
+   * @param[in]       act_min     Activation min. Lower limit to clamp output to. Range: int8
+   * @param[in]       act_max     Activation max. Upper limit to clamp output to. Range: int8
+   * @param[in]       depth       number of input channels
+   * @param[in]       input       pointer to input tensor
+   * @param[in]       tmp_buffer  Not used.
+   * @param[in,out]   output      pointer to output tensor
+   *
+   * @note The input data is corrupted by this function.
+   * @details This optimized implementation is recommended when depth is >=  4 and dimensions are large.
+   *
+   */
+
+    void arm_max_pool_s8_opt(const uint16_t input_y,
+                             const uint16_t input_x,
+                             const uint16_t output_y,
+                             const uint16_t output_x,
+                             const uint16_t stride_y,
+                             const uint16_t stride_x,
+                             const uint16_t kernel_y,
+                             const uint16_t kernel_x,
+                             const uint16_t pad_y,
+                             const uint16_t pad_x,
+                             const int8_t act_min,
+                             const int8_t act_max,
+                             const uint16_t depth,
+                             int8_t *input,
+                             int16_t *tmp_buffer,
+                             int8_t *output);
 /**
  * @defgroup Softmax Softmax Functions
  *
