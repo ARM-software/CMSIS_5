@@ -176,41 +176,47 @@ arm_status arm_convolve_s8(const q7_t *input,
 #else
     /* Run the following code as reference implementation for Cortex-M0 and Cortex-M3 */
     (void)buffer_a;
-    uint16_t i, j, k, l, m, n;
-    int conv_out;
-    signed char in_row, in_col;
+    int32_t i_out_ch, i_out_y, i_out_x, i_input_ch, i_ker_y, i_ker_x;
+    int32_t conv_out;
+    int32_t in_row, in_col;
 
-    for (i = 0; i < output_ch; i++)
+    for (i_out_ch = 0; i_out_ch < output_ch; i_out_ch++)
     {
-        for (j = 0; j < output_y; j++)
+        for (i_out_y = 0; i_out_y < output_y; i_out_y++)
         {
-            for (k = 0; k < output_x; k++)
+            for (i_out_x = 0; i_out_x < output_x; i_out_x++)
             {
-                conv_out = bias[i];
-                for (m = 0; m < kernel_y; m++)
+                conv_out = bias[i_out_ch];
+
+                const int32_t base_idx_y = stride_y * i_out_y - pad_y;
+                const int32_t base_idx_x = stride_x * i_out_x - pad_x;
+
+                const int32_t ker_y_start = MAX(0, -base_idx_y);
+                const int32_t ker_x_start = MAX(0, -base_idx_x);
+
+                const int32_t ker_y_end = MIN(kernel_y, input_y - base_idx_y);
+                const int32_t ker_x_end = MIN(kernel_x, input_x - base_idx_x);
+
+                for (i_ker_y = ker_y_start; i_ker_y < ker_y_end; i_ker_y++)
                 {
-                    for (n = 0; n < kernel_x; n++)
+                    for (i_ker_x = ker_x_start; i_ker_x < ker_x_end; i_ker_x++)
                     {
-                        // if-for implementation
-                        in_row = stride_y * j + m - pad_y;
-                        in_col = stride_x * k + n - pad_x;
-                        if (in_row >= 0 && in_col >= 0 && in_row < input_y && in_col < input_x)
+                        const int32_t in_row = base_idx_y + i_ker_y;
+                        const int32_t in_col = base_idx_x + i_ker_x;
+                        for (i_input_ch = 0; i_input_ch < input_ch; i_input_ch++)
                         {
-                            for (l = 0; l < input_ch; l++)
-                            {
-                                conv_out +=
-                                    (input[(in_row * input_x + in_col) * input_ch + l] + input_offset) *
-                                    kernel[i * input_ch * kernel_y * kernel_x +
-                                           (m * kernel_x + n) * input_ch + l];
-                            }
+                            conv_out +=
+                                (input[(in_row * input_x + in_col) * input_ch + i_input_ch] + input_offset) *
+                                kernel[i_out_ch * input_ch * kernel_y * kernel_x +
+                                       (i_ker_y * kernel_x + i_ker_x) * input_ch + i_input_ch];
                         }
                     }
                 }
-                conv_out = arm_nn_requantize(conv_out, output_mult[i], output_shift[i]);
+                conv_out = arm_nn_requantize(conv_out, output_mult[i_out_ch], output_shift[i_out_ch]);
                 conv_out += out_offset;
                 conv_out = MAX(conv_out, out_activation_min);
                 conv_out = MIN(conv_out, out_activation_max);
-                output[i + (j * output_x + k) * output_ch] = (q7_t)conv_out;
+                output[i_out_ch + (i_out_y * output_x + i_out_x) * output_ch] = (int8_t)conv_out;
             }
         }
     }
