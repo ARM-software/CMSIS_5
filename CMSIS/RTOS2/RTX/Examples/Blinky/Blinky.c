@@ -22,9 +22,10 @@
 
 #include <stdio.h>
 
-#include "ARMCM3.h"                     // Device header
 #include "cmsis_os2.h"                  // ARM::CMSIS:RTOS2:Keil RTX5
 
+#include "RTE_Components.h"
+#include CMSIS_device_header
 
 osThreadId_t tid_phaseA;                /* Thread id of thread: phase_a      */
 osThreadId_t tid_phaseB;                /* Thread id of thread: phase_b      */
