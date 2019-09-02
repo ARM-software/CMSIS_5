@@ -335,6 +335,7 @@ Extension Board * | Drivers that support an extension boards or shield
 File System*      | File drive support and file system
 Graphics*         | Graphical libraries for user interfaces
 IoT Client        | IoT cloud client connectors
+IoT Service       | IoT specific services, i.e. device on-boarding
 IoT Utility       | IoT specific utilities, i.e. a socket interface
 Network*          | Network stack using Internet protocols
 RTOS*             | Real-time operating systems
