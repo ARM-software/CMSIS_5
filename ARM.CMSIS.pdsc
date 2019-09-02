@@ -301,6 +301,7 @@
     <description Cclass="Extension Board">Drivers that support an extension board or shield</description>
     <description Cclass="File System">File Drive Support and File System</description>
     <description Cclass="IoT Client">IoT cloud client connector</description>
+    <description Cclass="IoT Service">IoT specific services</description>
     <description Cclass="IoT Utility">IoT specific software utility</description>
     <description Cclass="Graphics">Graphical User Interface</description>
     <description Cclass="Network">Network Stack using Internet Protocols</description>
