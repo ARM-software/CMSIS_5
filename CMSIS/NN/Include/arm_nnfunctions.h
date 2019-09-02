@@ -1308,6 +1308,14 @@ extern    "C"
     void      arm_relu_q7(q7_t *data, uint16_t size);
 
   /**
+   * @brief s8 ReLU6 function
+   * @param[in,out]   data        pointer to input
+   * @param[in]       size        number of elements
+   */
+
+    void      arm_relu6_s8(q7_t *data, uint16_t size);
+
+  /**
    * @brief Q15 RELU function
    * @param[in,out]   data        pointer to input
    * @param[in]       size        number of elements
