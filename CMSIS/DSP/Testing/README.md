@@ -111,7 +111,7 @@ The text is used when reporting the results of the tests.
 The same function can be used for different tests in the suite. The tests will be different due to different input data or parameters.
 
 A test is requiring input patterns, reference patterns and outputs (to be compared to the reference).
-Since the test must not know where is the data and how to get it, this information is provided in the test descriptino file.
+Since the test must not know where is the data and how to get it, this information is provided in the test description file.
 
 So, the test suite would be:
 
@@ -137,7 +137,7 @@ The root folder for pattern and output is different.
 
 #### Benchmarks
 
-A benchmark will often have to be run with different length for the input.
+A benchmark will often have to be run with different lengths for the input.
 So we need a way to communicate arguments to a function.
 
 We make the assumption that those arguments are integers.
@@ -256,6 +256,11 @@ It is implemented with a Runner class. The only implementation provided is IORun
 A Runner is just an implementation of the visitor pattern. A runner is applied to the tree of tests.
 In case of the IO runner, the IO mechanism and the memory manager must be provided.
 
+The runner is running a test and for benchmark measuring the cycles.
+If cycles measurement is based on internal counter and not external trace.
+Generally, there is a calibration at beginning of the Runner to estimate the overhead of
+cycle measurements. This overhead is then removed when doing the measurement.
+
 #### IO
 According to R12 and R15, tests do not know how to access patterns. It is a responsiblity implemented with the IO, Pattern and PatternMgr.
 
@@ -301,7 +306,9 @@ If you want to compute summary statistics with regression:
 ### Generate the build system
 
     mkdir build
-    cmake -DCMAKE_PREFIX_PATH="path/to/tools" -DCMAKE_TOOLCHAIN_FILE=../../armcc.cmake -DARM_CPU="cortex-a5" -DPLATFORM="FVP" -G "Unix Makefiles" ..
+    cmake -DCMAKE_PREFIX_PATH="path/to/tools" -DCMAKE_TOOLCHAIN_FILE=../../armcc.cmake -DARM_CPU="cortex-a5" -DPLATFORM="FVP" -DBENCHMARK=OFF -G "Unix Makefiles" ..
+
+If BENCHMARK=ON is used, other options should be enabled to have better performances.
 
 ### Generate the cpp,h and txt files from the desc.txt file
 
@@ -316,6 +323,14 @@ You can add a test ID to specify that you wan to run only a specific test in the
 
     python processTests.py -f desc.txt BasicTests 4
 
+First time this script is run, it is expecting some folder and some headers.
+To create the folder, the script createDefaultFolder.sh can be used.
+
+Then, before filtering desc.txt by using a C++ class, you should (at least once) parse the full file without filtering.
+
+The reason is that the cmake build is not aware of the filtering and will include some source files which
+are not needed when filtered out. So those files should at least be present to allow the compilation to proceed. So they need to be generated at least once.
+
 ### Build and run the tests
 
 Folder Output/BasicMaths should exist
@@ -328,6 +343,9 @@ Folder Output/BasicMaths should exist
 
     cd ..
     python processResult.py -f desc.txt -r build\result.txt
+
+-e option is needed if the mode -e was used with processTests because the output has a different
+format with or without -e option.
 
 ### Generate summary statistics
 
@@ -473,6 +491,11 @@ So, MyClass.cpp could be:
      } 
 ```
 
+Warning : in case of a benchmark the xxx.ptr() function calls should be done in the setup function because they have an overhead.
+
+If you use regression formula, this overhead will modify the intercept but the coefficient of highest
+degree should not be changed.
+
 Then setUp should load the patterns:
 
 ```cpp
@@ -508,5 +531,59 @@ It is also here that you specify what you want to dump if you're in dump mode.
         output.dump(mgr);
     }
 ```
+## Benchmarks and database
+
+### Creating and filling the databases
+
+To add a to sqlite3 databse:
+
+    python addToDB.py -f desc.txt AGroup
+
+AGroup should be the class name of a Group in the desc.txt
+
+The suite in this Group should eb compatible and have the same parameters.
+
+For instance, we have a BasicBenchmarks group is desc.txt
+This group is containing the suites BasicMathsBenchmarksF32, BasicMathsBenchmarksQ31, BasicMathsBenchmarks15 and BasicMathsBenchmarksQ7.
+
+Each suite is defining the same parameters : NB.
+
+If you use:
+
+    python addToDB.py -f desc.txt BasicBenchmarks
+
+A table BasicBenchmarks will be create and the benchmarks result for F32, Q31, Q15 and Q7 will be added to this table.
+
+But, if you do:
+
+    python addToDB.py -f desc.txt BasicMathsBenchmarksF32
+
+The a table BasicMathsBenchmarksF32 will be created which is probably not what you want since the table is containing a type column (f32,q31, q15, q7)
+
+The script addToRegDB.py is working on the same principle but using the regression csv to fill a regression database.
+
+To create an empty database you can use  (for default database)
+
+    sqlite3.exe bench.db < createDb.sql 
+
+And for regression database:
+
+    sqlite3.exe reg.db < createDb.sql 
+
+Since the python scripts are using bench.db and reg.db as default names for the databases.
+
+### Processing the database
+
+Database schema (defined in createDb.sql) is creating several columns for the fields which are common to lot of rows like core, compiler, compiler version, datatype etc ...
+
+Like that it is easier to change the name of this additional information and it makes the database smaller.
+
+But then it means that to display the tables in a readbale format by the user, some joins are needed.
+
+examples.sql and diff.sql are showing some examples.
+
+examples.sql : how to do simple queries and join with the configuration columns to get a readable format.
+
+diff.sql : How to compute a performance ratio (max cycle and regression) based on a reference core (which could be extended to a reference configuration if needed).
 
 ## HOW TO EXTEND IT

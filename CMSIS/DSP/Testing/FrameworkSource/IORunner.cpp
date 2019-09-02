@@ -70,9 +70,28 @@ a C++ function pointer from the cycle measurements.
         Client::test t = (Client::test)&Calibrate::empty;
 
         cycleMeasurementStart();
+/* 
+
+EXTBENCH is set when benchmarking is done through external traces
+instead of using internal counters.
+
+Currently the post-processing scripts are only supporting traces generated from
+fast models.
+
+*/
 #ifdef EXTBENCH
         startSection();
 #endif
+
+/*
+
+For calibration, we measure the time it takes to call 20 times an empty benchmark and compute
+the average.
+(20 is an arbitrary value.)
+
+This overhead is removed from benchmarks in the Runner..
+
+*/
         for(int i=0;i < 20;i++)
         {
            (s->*t)();
