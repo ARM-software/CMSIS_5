@@ -962,7 +962,7 @@ extern    "C"
                            const int32_t out_mult,
                            const int32_t out_shift,
                            const int32_t output_offset,
-                           const int8_t *pBias,
+                           const int32_t *pBias,
                            int8_t *pOut,
                            const int32_t output_activation_min,
                            const int32_t output_activation_max,

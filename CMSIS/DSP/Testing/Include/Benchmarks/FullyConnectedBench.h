@@ -11,7 +11,7 @@ class FullyConnectedBench:public Client::Suite
             
             int repeatNb;
             Client::Pattern<q7_t> input;
-            Client::Pattern<q7_t> bias;
+            Client::Pattern<q31_t> bias;
             Client::Pattern<q7_t> weight;
             Client::LocalPattern<q7_t> output;
             Client::LocalPattern<q15_t> temp;
@@ -19,7 +19,7 @@ class FullyConnectedBench:public Client::Suite
             Client::RefPattern<q7_t> ref;
 
             q7_t *inp;
-            q7_t *biasp;
+            q31_t *biasp;
             q7_t *weightp;
             q7_t *outp;
             q7_t *refp;

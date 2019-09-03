@@ -26,7 +26,7 @@
            ,output_mult
            ,output_shift
            ,output_offset
-           ,(const int8_t*)biasp
+           ,(const int32_t*)biasp
            ,(int8_t*)outp 
            ,-128 
            ,127 

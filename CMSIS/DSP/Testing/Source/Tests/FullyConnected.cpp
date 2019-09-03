@@ -20,7 +20,7 @@ void printPattern(char *s,Client::AnyPattern<q7_t> pat)
     {
        
        q7_t *inp=input.ptr();
-       q7_t *biasp=bias.ptr();
+       q31_t *biasp=bias.ptr();
        q7_t *weightp=weight.ptr();
        q7_t *outp=output.ptr();
        q7_t *refp=ref.ptr();
@@ -36,7 +36,7 @@ void printPattern(char *s,Client::AnyPattern<q7_t> pat)
         ,output_mult
         ,output_shift
         ,output_offset
-        ,(const int8_t*)biasp
+        ,(const int32_t*)biasp
         ,(int8_t*)outp 
         ,act_min 
         ,act_max

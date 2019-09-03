@@ -58,7 +58,7 @@ arm_fully_connected_s8(const int8_t *input,
                        const int32_t out_mult,
                        const int32_t out_shift,
                        const int32_t output_offset,
-                       const int8_t *bias,
+                       const int32_t *bias,
                        int8_t *output,
                        const int32_t output_activation_min,
                        const int32_t output_activation_max,
@@ -76,7 +76,7 @@ arm_fully_connected_s8(const int8_t *input,
        which are used in this implementation.
 
     */
-    const int8_t *pBiasTmp = bias;
+    const int32_t *pBiasTmp = bias;
     const q7_t *pB = kernel;
     const q7_t *pB2;
     q7_t *pO = output;
@@ -215,7 +215,7 @@ arm_fully_connected_s8(const int8_t *input,
 #else
     (void)vec_buffer;
     const int8_t *pInputA;
-    const int8_t *pBiasTmp = bias;
+    const int32_t *pBiasTmp = bias;
     const int8_t *pWeightTmp = kernel;
     uint16_t batchCnt = nb_batches;
 

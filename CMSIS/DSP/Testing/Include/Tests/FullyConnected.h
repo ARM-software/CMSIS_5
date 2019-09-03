@@ -21,7 +21,7 @@ class FullyConnected:public Client::Suite
             int32_t colDim;
             
             Client::Pattern<q7_t> input;
-            Client::Pattern<q7_t> bias;
+            Client::Pattern<q31_t> bias;
             Client::Pattern<q7_t> weight;
             Client::LocalPattern<q7_t> output;
             Client::LocalPattern<q15_t> temp;
