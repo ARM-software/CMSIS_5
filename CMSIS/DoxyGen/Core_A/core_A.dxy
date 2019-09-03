@@ -768,8 +768,8 @@ INPUT                  = src/Overview.txt \
                          ../../Core_A/Source/irq_ctrl_gic.c \
                          ../../Core_A/Include/irq_ctrl.h \
                          ../../../Device/ARM/ARMCA9/Include/ARMCA9.h \
-                         ../../../Device/ARM/ARMCA9/Include/mem_ARMCA9.h \
-                         ../../../Device/ARM/ARMCA9/Include/system_ARMCA9.h \
+                         ../../../Device/ARM/ARMCA9/Config/mem_ARMCA9.h \
+                         ../../../Device/ARM/ARMCA9/Config/system_ARMCA9.h \
                          ../../../Device/ARM/ARMCA9/Source/AC6/startup_ARMCA9.c
 
 # This tag can be used to specify the character encoding of the source files
