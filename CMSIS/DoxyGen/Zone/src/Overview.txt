@@ -63,6 +63,17 @@ The following sections explain:
       <th>Description</th>
     </tr>
     <tr>
+      <td>0.9.5 (Preview)</td>
+      <td>
+        <ul>
+          <li>generation of \ref fm_mpu_setup in .fzone files (currently limited to Armv8 architecture)</li>
+          <li>support for \ref xml_configure in .azone files: show and assign memory regions and peripherals according to the settings</li>
+          <li>Setup page in the editor to view zone properties and configure settings</li>
+          <li>bug fixes</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
       <td>0.9.4 (Preview)</td>
       <td>
         <ul>
