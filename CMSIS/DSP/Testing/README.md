@@ -541,7 +541,7 @@ To add a to sqlite3 databse:
 
 AGroup should be the class name of a Group in the desc.txt
 
-The suite in this Group should eb compatible and have the same parameters.
+The suite in this Group should be compatible and have the same parameters.
 
 For instance, we have a BasicBenchmarks group is desc.txt
 This group is containing the suites BasicMathsBenchmarksF32, BasicMathsBenchmarksQ31, BasicMathsBenchmarks15 and BasicMathsBenchmarksQ7.
@@ -578,7 +578,7 @@ Database schema (defined in createDb.sql) is creating several columns for the fi
 
 Like that it is easier to change the name of this additional information and it makes the database smaller.
 
-But then it means that to display the tables in a readbale format by the user, some joins are needed.
+But then it means that to display the tables in a readable format by the user, some joins are needed.
 
 examples.sql and diff.sql are showing some examples.
 

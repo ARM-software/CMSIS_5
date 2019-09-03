@@ -15,14 +15,15 @@ include(configDsp)
 # There are some dependencies between the parts but they are not tracked
 # by this cmake. So, enabling some functions may require to enable some
 # other ones.
-option(FULLYCONNECTED        "Fully Connected"              ON)
-option(CONVOLUTION           "Convolutions"              ON)
-option(ACTIVATION           "Activations"              ON)
-option(POOLING           "Pooling"              ON)
-option(SOFTMAX           "Softmax"              ON)
+option(FULLYCONNECTED       "Fully Connected"       ON)
+option(CONVOLUTION          "Convolutions"          ON)
+option(ACTIVATION           "Activations"           ON)
+option(POOLING              "Pooling"               ON)
+option(SOFTMAX              "Softmax"               ON)
+option(BASICMATHSNN         "Basic Maths for NN"    ON)
 
 # When OFF it is the default behavior : all tables are included.
-option(NNSUPPORT            "NN Support"    ON)
+option(NNSUPPORT            "NN Support"            ON)
 
 
 ###########################
@@ -40,6 +41,11 @@ list(APPEND CMAKE_MODULE_PATH ${NN}/Source)
 
 
 add_library(CMSISNN INTERFACE)
+
+if (BASICMATHSNN)
+  add_subdirectory(BasicMathFunctions)
+  target_link_libraries(CMSISNN INTERFACE CMSISNNBasicMaths)
+endif()
 
 if (FULLYCONNECTED)
   add_subdirectory(FullyConnectedFunctions)
