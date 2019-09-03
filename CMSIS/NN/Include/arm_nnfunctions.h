@@ -477,7 +477,7 @@ extern    "C"
    * @details
    *   - Supported framework : TensorFlow Lite Micro
    *   - The following constrains on the arguments apply
-   *      -# output_ch and input_ch are multiples of 2
+   *      -# input_ch is a multiple of 4
    *      -# padding equals 0
    *      -# Stride equals 1
    *

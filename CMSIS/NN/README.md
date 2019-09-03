@@ -10,7 +10,7 @@ Group | API | Base Operator | Input Constraints | Additional memory required for
 |:----| :---| :------------ | :---------------- | :--------------------------------------------------------| :-------------| :------------- | :------------- |
 |[Conv](https://arm-software.github.io/CMSIS_5/NN/html/group__NNConv.html)||||| |  ||
 ||arm_convolve_s8()|CONV|dilation = 1|4 * ker_x * ker_y * input_ch| Yes | No ||
-||arm_convolve_1x1_s8_fast() | CONV | dilation = 1 <br/> ker_x = 1, ker_y = 1 <br/> pad = 0<br/> stride = 1| 4 * input_ch | Yes |No ||
+||arm_convolve_1x1_s8_fast() | CONV | dilation = 1 <br/> ker_x = 1, ker_y = 1 <br/> pad = 0<br/> stride = 1<br/> input_ch % 4 = 0| 4 * input_ch | Yes |No ||
 | | arm_depthwise_conv_s8() | DEPTHWISE_CONV | dilation = 1  | No|No|No||
 || arm_depthwise_conv_s8_opt()| DEPTHWISE_CONV | dilation = 1 <br/> depth_multiplier = 1 | 4 * ker_x * ker_y * input_ch | Yes| No| Best case is when channels are multiple of 4 or <br/>at the least >= 4 |
 |[Fully Connected](https://arm-software.github.io/CMSIS_5/NN/html/group__FC.html)||||| |  | |

@@ -74,9 +74,9 @@ arm_status arm_convolve_1x1_s8_fast(const q7_t *input,
                                     q15_t *buffer_a)
 {
     /* The constraints on padding and stride simplifies the creation of im2col buffer */
-   if (pad_x != 0 || pad_y != 0 || stride_x != 1 || stride_y != 1)
+    if (input_ch % 4 != 0 || pad_x != 0 || pad_y != 0 || stride_x != 1 || stride_y != 1)
     {
-       return ARM_MATH_SIZE_MISMATCH;
+        return ARM_MATH_SIZE_MISMATCH;
     }
 
 #if defined(ARM_MATH_LOOPUNROLL) && defined(ARM_MATH_DSP)
