@@ -118,6 +118,9 @@ set(TESTSRC
   Source/Benchmarks/BinaryF32.cpp
   Source/Benchmarks/BinaryQ31.cpp
   Source/Benchmarks/BinaryQ15.cpp
+  Source/Benchmarks/TransformF32.cpp
+  Source/Benchmarks/TransformQ31.cpp
+  Source/Benchmarks/TransformQ15.cpp
   Source/Benchmarks/FullyConnectedBench.cpp
   Source/Benchmarks/PoolingBench.cpp
   )

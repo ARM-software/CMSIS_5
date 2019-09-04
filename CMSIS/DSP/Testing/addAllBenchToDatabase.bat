@@ -22,3 +22,5 @@ echo "Unary Matrix"
 python addToDB.py -f bench.txt  Unary 
 echo "Binary Matrix"
 python addToDB.py -f bench.txt  Binary
+echo "Transform"
+python addToDB.py -f bench.txt  Transform

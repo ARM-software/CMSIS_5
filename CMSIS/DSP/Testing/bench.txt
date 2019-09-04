@@ -1270,6 +1270,143 @@ group Root {
            }
         }
 
+        group Transform {
+           class = Transform 
+           folder = Transform 
+
+           suite Transform F32 {
+                class = TransformF32 
+                folder = TransformF32
+
+                ParamList {
+                  NB,IFFT,BITREV
+                  Summary NB
+                  Names "Number of samples,Inverse FFT, Bit Reversal"
+                  Formula "NB"
+                }
+
+                Pattern INPUTR_F32_ID : RealSamples1_f32.txt 
+                Pattern INPUTC_F32_ID : ComplexSamples1_f32.txt 
+                Output  OUT_F32_ID : Output
+                Output  STATE_F32_ID : Output
+
+                
+                Params CFFT_PARAM_ID = {
+                  NB = [16,64,128,256]
+                  IFFT = [0,1]
+                  REV = [0,1]
+                }
+
+                Params RFFT_PARAM_ID = {
+                  NB = [32,64,128,256]
+                  IFFT = [0,1]
+                  REV = [1]
+                }
+
+                Params DCT_PARAM_ID = {
+                  NB = [128,512,2048]
+                  IFFT = [0]
+                  REV = [1]
+                }
+
+                Functions {
+                   test_cfft_f32:test_cfft_f32 -> CFFT_PARAM_ID
+                   test_rfft_f32:test_rfft_f32 -> RFFT_PARAM_ID
+                   test_dct4_f32:test_dct4_f32 -> DCT_PARAM_ID
+                   test_cfft_radix4_f32:test_cfft_radix4_f32 -> CFFT_PARAM_ID
+                   test_cfft_radix2_f32:test_cfft_radix2_f32 -> CFFT_PARAM_ID
+                }
+           }
+
+           suite Transform Q31 {
+                class = TransformQ31 
+                folder = TransformQ31
+
+                ParamList {
+                  NB,IFFT,BITREV
+                  Summary NB
+                  Names "Number of samples,Inverse FFT, Bit Reversal"
+                  Formula "NB"
+                }
+
+                Pattern INPUTR_Q31_ID : RealSamples1_q31.txt 
+                Pattern INPUTC_Q31_ID : ComplexSamples1_q31.txt 
+                Output  OUT_Q31_ID : Output
+                Output  STATE_Q31_ID : Output
+
+                
+                Params CFFT_PARAM_ID = {
+                  NB = [16,64,128,256]
+                  IFFT = [0,1]
+                  REV = [0,1]
+                }
+
+                Params RFFT_PARAM_ID = {
+                  NB = [32,64,128,256]
+                  IFFT = [0,1]
+                  REV = [0,1]
+                }
+
+                Params DCT_PARAM_ID = {
+                  NB = [128,512,2048]
+                  IFFT = [0]
+                  REV = [1]
+                }
+
+                Functions {
+                   test_cfft_q31:test_cfft_q31 -> CFFT_PARAM_ID
+                   test_rfft_q31:test_rfft_q31 -> RFFT_PARAM_ID
+                   test_dct4_q31:test_dct4_q31 -> DCT_PARAM_ID
+                   test_cfft_radix4_q31:test_cfft_radix4_q31 -> CFFT_PARAM_ID
+                   test_cfft_radix2_q31:test_cfft_radix2_q31 -> CFFT_PARAM_ID
+                }
+           }
+
+           suite Transform Q15 {
+                class = TransformQ15 
+                folder = TransformQ15
+
+                ParamList {
+                  NB,IFFT,BITREV
+                  Summary NB
+                  Names "Number of samples,Inverse FFT, Bit Reversal"
+                  Formula "NB"
+                }
+
+                Pattern INPUTR_Q15_ID : RealSamples1_q15.txt 
+                Pattern INPUTC_Q15_ID : ComplexSamples1_q15.txt 
+                Output  OUT_Q15_ID : Output
+                Output  STATE_Q15_ID : Output
+
+                
+                Params CFFT_PARAM_ID = {
+                  NB = [16,64,128,256]
+                  IFFT = [0,1]
+                  REV = [0,1]
+                }
+
+                Params RFFT_PARAM_ID = {
+                  NB = [32,64,128,256]
+                  IFFT = [0,1]
+                  REV = [1]
+                }
+
+                Params DCT_PARAM_ID = {
+                  NB = [128,512,2048]
+                  IFFT = [0]
+                  REV = [1]
+                }
+
+                Functions {
+                   test_cfft_q15:test_cfft_q15 -> CFFT_PARAM_ID
+                   test_rfft_q15:test_rfft_q15 -> RFFT_PARAM_ID
+                   test_dct4_q15:test_dct4_q15 -> DCT_PARAM_ID
+                   test_cfft_radix4_q15:test_cfft_radix4_q15 -> CFFT_PARAM_ID
+                   test_cfft_radix2_q15:test_cfft_radix2_q15 -> CFFT_PARAM_ID
+                }
+           }
+        }
+
     }
 
     group NN Benchmarks
