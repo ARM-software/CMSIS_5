@@ -236,14 +236,14 @@ SVDConv.exe <SVD_file> <options>
   <tr>
     <td> \-\-generate=header </td>
     <td>Generate Device Header File</td>
-    <td>Generates the device header file. The name of the generated file is derived from the value of the tag \<device\<name> in the CMSIS-SVD file. 
+    <td>Generates the device header file. The name of the generated file is derived from the value of the tag \<devicename\> in the CMSIS-SVD file. 
     Refer to \refelem{device}.
     </td>
   </tr>
   <tr>
     <td> \-\-generate=partition </td>
     <td>Generate Partition file for Cortex-M Security Extensions (Armv8-M)</td>
-    <td>Generates the device partition file. The name of the generated file is composed of <em>partition_</em> and the value of the device <em>\<name></em>
+    <td>Generates the device partition file. The name of the generated file is composed of <em>partition_</em> and the value of the device <em>\<name\></em>
     (for example, <em>partition_CMSDK_ARMv8MBL.h</em>).
     Refer to \ref elem_device. The content of the file uses Configuration Wizard annotations and is derived 
     from the SAU-specific information of the \ref elem_sauRegionsConfig and the interrupts specified in the \ref elem_peripherals.</td>
@@ -334,6 +334,241 @@ Code | Description             | Action
    \n Compare to the code snippet above.
    \include "ARM_ExampleT0Struct.h"
 
+\section svdconvMessages Error and Warning Messages
+
+The following table shows the errors and warnings issued by svdconv.
+
+Invocation Errors
+-----------------
+
+<table class="cmtable" summary="svdconv Invocation Msgs">
+  <tr>
+    <th>Message Number</th>
+    <th>Type</th>
+    <th>Description</th>
+    <th>Action</th>
+  </tr>
+  <tr><td>M020</td> <td>Text</td><td>SVD_STRING_OPTIONS</td><td>Displays programm help.</td></tr>
+  <tr><td>M021</td> <td>Text</td><td>"\n%DESCR% V%VER%\n%COPYRIGHT%\n"</td><td>Displays module name, version, date.</td></tr>
+  <tr><td>M022</td> <td>Text</td><td>"Found %ERR% Error(s) and %WARN% Warning(s)."</td><td>Displays the number of errors/warnings found.</td></tr>
+  <tr><td>M023</td> <td>Text</td><td>"\nPhase%CHECK%"</td><td>Information about the check pahse.</td></tr>    
+  <tr><td>M024</td> <td>Text</td><td>"Arguments: %OPTS%"</td><td>Specify arguments.</td></tr>
+</table>
+
+Informative messages
+-----------------
+
+<table class="cmtable" summary="Info Messages">
+  <tr>
+    <th>Message Number</th>
+    <th>Type</th>
+    <th>Description</th>
+    <th>Action</th>
+  </tr>
+  <tr><td>M040</td> <td>Info</td><td>"%NAME%: %TIME%ms. Passed"</td><td></td></tr>
+  <tr><td>M041</td> <td>Info</td><td>"Overall time: %TIME%ms."</td><td></td></tr>
+  <tr><td>M050</td> <td>Info</td><td>"Current Working Directory: '%PATH%'"</td><td></td></tr>
+  <tr><td>M051</td> <td>Info</td><td>"Reading SVD File: '%PATH%'"</td><td></td></tr>
+  <tr><td>M061</td> <td>Info</td><td>"Checking SVD Description"</td><td></td></tr>
+</table>
+
+Invocation errors
+-----------------
+
+<table class="cmtable" summary="Internal and Invocation Errors">
+  <tr>
+    <th>Message Number</th>
+    <th>Type</th>
+    <th>Description</th>
+    <th>Action</th>
+  </tr>
+  <tr><td>M101</td> <td>Error</td><td>"Unknown error!"</td><td>Please contact support.</td></tr>
+  <tr><td>M102</td> <td>Error</td><td>"MFC initialization failed"</td><td>Please contact support.</td></tr>
+  <tr><td>M103</td> <td>Error</td><td>"Internal Error: %REF%"</td><td>Please contact support.</td></tr>
+  <tr><td>M104</td> <td>Critical</td><td>"%MSG%"</td><td>Please contact support.</td></tr>
+  <tr><td>M105</td> <td>Error</td><td>"Cannot add Register to group sorter: '%NAME%'"</td><td></td></tr>
+  <tr><td>M106</td> <td>Error</td><td>"Command '%NAME%' failed: %NUM%: %MSG%"</td><td></td></tr>
+  <tr><td>M107</td> <td>Error</td><td>"Lost xml file stream."</td><td>Check SVD file.</td></tr>
+  <tr><td>M108</td> <td>Error</td><td>"SfrDis not supported."</td>Disassembly not supported.<td></td></tr>
+  <tr><td>M109</td> <td>Error</td><td>"Cannot find '%NAME%'"</td><td>Check specified file.</td></tr>
+  <tr><td>M111</td> <td>Progress</td><td>"%NAME% failed!"</td><td>Check specified file.</td></tr>
+  <tr><td>M120</td> <td>Error</td><td>"Invalid arguments!"</td><td>Provide a list of valid arguments.</td></tr>
+  <tr><td>M121</td> <td>Error</td><td>"File not found %NAME%"</td>Check specified file.<td></td></tr>
+  <tr><td>M122</td> <td>Error</td><td>"Name of command file should follow '@'"</td><td>Check specified command.</td></tr>
+  <tr><td>M123</td> <td>Error</td><td>"File not found: '%PATH%'!"</td><td>Check speficied path.</td></tr>
+  <tr><td>M124</td> <td>Error</td><td>"Cannot execute SfrCC2: '%PATH%'!"</td><td>Check path to SfrCC2.</td></tr>
+  <tr><td>M125</td> <td>Warning</td><td>"SfrCC2 report:\n%MSG%\nSfrCC2 report end.\n"</td><td></td></tr>
+  <tr><td>M126</td> <td>Warning</td><td>"SfrDis: %MSG%"</td><td></td></tr>
+  <tr><td>M127</td> <td>Error</td><td>"SfrCC2 reports errors!"</td><td>Check SVD file.</td></tr>
+  <tr><td>M128</td> <td>Warning</td><td>"SfrCC2 reports warnings!"</td><td>Check SVD file.</td></tr>
+  <tr><td>M129</td> <td>Error</td><td>"Option unknown: %OPT%'"</td><td>Check given option.</td></tr>
+  <tr><td>M130</td> <td>Error</td><td>"Cannot create file '%NAME%'"</td><td>Check user rights.</td></tr>
+  <tr><td>M132</td> <td>Error</td><td>"SfrCC2 report:\n%MSG%\nSfrCC2 report end.\n"</td><td></td></tr>
+</table>
+
+Validation errors
+-----------------
+
+<table class="cmtable" summary="Validation Errors">
+  <tr>
+    <th>Message Number</th>
+    <th>Type</th>
+    <th>Description</th>
+    <th>Action</th>
+  </tr>
+  <tr><td>M201</td> <td>Error</td><td>"Tag <%TAG%> unknown or not allowed on this level."</td><td>Check tag</td></tr>
+  <tr><td>M202</td> <td>Error</td><td>"Parse error: <%TAG%> = '%VALUE%'"</td><td>Check tag/value.</td></tr>
+  <tr><td>M203</td> <td>Error</td><td>"Value already set: <%TAG%> = '%VALUE%'"</td><td>Check tag/value.</td></tr>
+  <tr><td>M204</td> <td>Error</td><td>"Parse Error: '%VALUE%'"</td><td>Check value.</td></tr>
+  <tr><td>M205</td> <td>Warning</td><td>"Tag <%TAG%> empty"</td><td>Assign value to tag.</td></tr>
+  <tr><td>M206</td> <td>Error</td><td>"DerivedFrom not found: '%NAME%'"</td><td>Check derivate.</td></tr>
+  <tr><td>M207</td> <td>Error</td><td>"Expression marker found but no <dim> specified: '%NAME%'"</td><td>Specify dimension.</td></tr>
+  <tr><td>M208</td> <td>Error</td><td>"Ignoring <dimIndex> because specified <name> requires Array generation."</td><td>Generate an array.</td></tr>
+  <tr><td>M209</td> <td>Warning</td><td>"CPU section not set. This is required for CMSIS Headerfile generation and debug support."</td><td>Add CPU section.</td></tr>
+  <tr><td>M210</td> <td>Warning</td><td>"Use new Format CMSIS-SVD >= V1.1 and add \<CPU\> Section."</td><td>Update schema and add CPU section.</td></tr>
+  <tr><td>M211</td> <td>Error</td><td>"Ignoring %LEVEL% %NAME% (see previous message)"</td><td></td></tr>
+  <tr><td>M212</td> <td>Error</td><td>"Address Block <usage> parse error: '%NAME%'"</td><td>Correct address block.</td></tr>
+  <tr><td>M213</td> <td>Error</td><td>"Expression for '%NAME%' incomplete, <%TAG%> missing."</td><td>Add tag.</td></tr>
+  <tr><td>M214</td> <td>Error</td><td>"Peripheral '%NAME%' <dim> single-instantiation is not supported (use Array instead)."</td><td>Correct Reg%s to Reg[%s].</td></tr>
+  <tr><td>M215</td> <td>Warning</td><td>"Size of <dim> is only one element for '%NAME%', is this intended?"</td><td>Check single element.</td></tr>
+  <tr><td>M216</td> <td>Warning</td><td>"Unsupported character found in '%NAME%' : %HEX%."</td><td>Correct name.</td></tr>
+  <tr><td>M217</td> <td>Warning</td><td>"Forbidden Trigraph '??%CHAR%' found in '%NAME%'."</td><td></td></tr>
+  <tr><td>M218</td> <td>Warning</td><td>"Unsupported ESC sequence found in '%NAME%' : %CHAR%."</td><td>Correct escape sequence.</td></tr>
+  <tr><td>M219</td> <td>Error</td><td>"C Code generation error: %MSG%"</td><td></td></tr>
+  <tr><td>M220</td> <td>Warning</td><td>"C Code generation warning: %MSG%"</td><td></td></tr>
+  <tr><td>M221</td> <td>Warning</td><td>"Input filename must end with .svd: '%NAME%"</td><td>Correct input filename extension.</td></tr>
+  <tr><td>M222</td> <td>Warning</td><td>"Input filename has no extension: '%NAME%"</td><td>Correct input filename extension.</td></tr>
+  <tr><td>M223</td> <td>Error</td><td>"Input File Name '%INFILE%' does not match the tag <name> in the <device> section: '%NAME%'"</td><td>Correct the MCU name.</td></tr>
+  <tr><td>M224</td> <td>Warning</td><td>"Deprecated: '%NAME%' Use '%NAME2%' instead"</td><td>Update SVD file.</td></tr>
+  <tr><td>M225</td> <td>Error</td><td>"Upper/lower case error: '%NAME%', should be '%NAME2%'"</td><td>Update SVD file.</td></tr>
+  <tr><td>M226</td> <td>Error</td><td>"SFD Code generation error: %MSG%"</td><td></td></tr>
+  <tr><td>M227</td> <td>Warning</td><td>"SFD Code generation warning: %MSG%"</td><td></td></tr>
+  <tr><td>M228</td> <td>Error</td><td>"Enumerated Value Container: Only one Item allowed on this Level!"</td><td>Remove additional items.</td></tr>
+  <tr><td>M229</td> <td>Error</td><td>"Register '%NAME%' is not an array, <dimArrayIndex> is not applicable"</td><td>Correct SVD.</td></tr>
+  <tr><td>M230</td> <td>Error</td><td>"Value '%NAME%:%NUM%' out of Range for %LEVEL% '%NAME2%[%NUM2%]'."</td><td>Correct SVD.</td></tr>
+  <tr><td>M231</td> <td>Error</td><td>"Value <isDefault> not allowed for %LEVEL%."</td><td>Correct SVD.</td></tr>
+  <tr><td>M232</td> <td>Error</td><td>"Tag <%TAG%> name '%NAME%' must not have specifier '%CHAR%'. Ignoring entry."</td><td>Correct SVD.</td></tr>
+  <tr><td>M233</td> <td>Error</td><td>"Parse error: <%TAG%> = '%VALUE%'"</td><td>Correct SVD.</td></tr>
+  <tr><td>M234</td> <td>Error</td><td>"No valid items found for %LEVEL% '%NAME%'"</td><td>Correct SVD.</td></tr>
+  <tr><td>M235</td> <td>Error</td><td>"%LEVEL% '%NAME%' cannot be an array."</td><td>Correct SVD.</td></tr>
+  <tr><td>M236</td> <td>Error</td><td>"Expression for <%TAG%> '%NAME%' not allowed."</td><td>Correct SVD.</td></tr>
+  <tr><td>M237</td> <td>Error</td><td>"Nameless %LEVEL% must have <%TAG%>."</td><td>Correct SVD.</td></tr>
+  <tr><td>M238</td> <td>Error</td><td>"%LEVEL% must not have <%TAG%>."</td><td>Correct SVD.</td></tr>
+  <tr><td>M239</td> <td>Error</td><td>"Dimed %LEVEL% '%NAME%' must have an expression."</td><td>Correct SVD.</td></tr>
+  <tr><td>M240</td> <td>Error</td><td>"Tag <%TAG%> unknown or not allowed on %LEVEL2%:%LEVEL%."</td><td>Correct SVD.</td></tr>
+  <tr><td>M241</td> <td>Error</td><td>"Parse Error: '%VALUE%' invalid for Array generation"</td><td>Correct SVD.</td></tr>
+  <tr><td>M242</td> <td>Warning</td><td>"%LEVEL% '%NAME%' <dimArrayIndex> found, but no <dim>"</td><td>Correct SVD.</td></tr>
+  <tr><td>M243</td> <td>Warning</td><td>"%LEVEL% '%NAME%' <dimArrayIndex> found, but <dim> does not describe an array"</td><td>Correct SVD.</td></tr>
+</table>
+
+Data Check Errors
+-----------------
+
+<table class="cmtable" summary="Data Check Errors">
+  <tr>
+    <th>Message Number</th>
+    <th>Type</th>
+    <th>Description</th>
+    <th>Action</th>
+  </tr>
+  <tr><td>M301</td> <td>Error</td><td>"Interrupt number '%NUM% : %NAME%' already defined: %NAME2% %LINE%"</td><td></td></tr>
+  <tr><td>M302</td> <td>Error</td><td>"Size of Register '%NAME%:%NUM%' must be 8, 16 or 32 Bits"</td><td></td></tr>         
+  <tr><td>M303</td> <td>Warning</td><td>"Register name '%NAME%' is prefixed with Peripheral name '%NAME2%'"</td><td>RegName = USART_CR ==> USART->USART_CR</td></tr>
+  <tr><td>M304</td> <td>Warning</td><td>"Interrupt number overwrite: '%NUM% : %NAME%' %LINE%"</td><td></td></tr>              
+  <tr><td>M305</td> <td>Error</td><td>"Name not C compliant: '%NAME%' : %HEX%, replaced by '_'"</td><td></td></tr>            
+  <tr><td>M306</td> <td>Error</td><td>"Schema Version not set for <device>."</td><td></td></tr>                               
+  <tr><td>M307</td> <td>Error</td><td>"Name is equal to Value: '%NAME%'"</td><td></td></tr>                                   
+  <tr><td>M308</td> <td>Error</td><td>"Number of <dimIndex> Elements '%NUM%' is different to number of <dim> instances '%NUM2%'"</td><td></td></tr>
+  <tr><td>M309</td> <td>Error</td><td>"Field '%NAME%': Offset error: %NUM%"</td><td></td></tr>                   
+  <tr><td>M310</td> <td>Error</td><td>"Field '%NAME%': BitWidth error: %NUM%"</td><td></td></tr>                 
+  <tr><td>M311</td> <td>Error</td><td>"Field '%NAME%': Calculation: MSB or LSB == -1"</td><td></td></tr>         
+  <tr><td>M312</td> <td>Error</td><td>"Address Block missing for Peripheral '%NAME%'"</td><td></td></tr>         
+  <tr><td>M313</td> <td>Error</td><td>"Field '%NAME%': LSB > MSB: BitWith calculates to %NUM%"</td><td></td></tr>
+  <tr><td>M314</td> <td>Error</td><td>"Address Block: <offset> or <size> not set."</td><td></td></tr>            
+  <tr><td>M315</td> <td>Error</td><td>"Address Block: <size> is zero."</td><td></td></tr>                        
+  <tr><td>M316</td> <td>Error</td><td>"%LEVEL% <name> not set."</td><td></td></tr>             
+  <tr><td>M317</td> <td>Warning</td><td>"%LEVEL% <description> not set."</td><td></td></tr>                                
+  <tr><td>M318</td> <td>Warning</td><td>"%LEVEL% '%NAME%' <%TAG%> is equal to <name>"</td><td></td></tr>                   
+  <tr><td>M319</td> <td>Warning</td><td>"%LEVEL% <%TAG%> '%NAME%' ends with newline, is this intended?"</td><td></td></tr> 
+  <tr><td>M320</td> <td>Warning</td><td>"%LEVEL% <description> '%NAME%' is not very descriptive"</td><td></td></tr>       
+  <tr><td>M321</td> <td>Warning</td><td>"%LEVEL% <%ITEM%> '%NAME%' starts with '_', is this intended?"</td><td></td></tr> 
+  <tr><td>M322</td> <td>Error</td><td>"%LEVEL% %ITEM% '%NAME%' is meaningless text. Deleted."</td><td></td></tr>          
+  <tr><td>M323</td> <td>Warning</td><td>"%LEVEL% <%ITEM%> '%NAME%' contains text '%TEXT%'"</td><td></td></tr>             
+  <tr><td>M324</td> <td>Error</td><td>"Field '%NAME%' %BITRANGE% does not fit into Register '%NAME2%:%NUM%' %LINE%"</td><td></td></tr>
+  <tr><td>M325</td> <td>Error</td><td>"CPU Revision is not set"</td><td></td></tr>                                                   
+  <tr><td>M326</td> <td>Error</td><td>"Endianess is not set, using default (little)"</td><td></td></tr>                         
+  <tr><td>M327</td> <td>Error</td><td>"NVIC Prio Bits not set or wrong value, must be 2..8. Using default (4)"</td><td></td></tr>
+  <tr><td>M328</td> <td>Warning</td><td>"%LEVEL% '%NAME%' has no Registers, ignoring %LEVEL%."</td><td></td></tr>                 
+  <tr><td>M329</td> <td>Error</td><td>"CPU Type is not set, using default (Cortex-M3)"</td><td></td></tr>                         
+  <tr><td>M330</td> <td>Error</td><td>"Interrupt '%NAME%' Number not set."</td><td></td></tr>                                     
+  <tr><td>M331</td> <td>Error</td><td>"Interrupt '%NAME%' Number '%NUM%' greater 239."</td><td></td></tr>                         
+  <tr><td>M332</td> <td>Warning</td><td>"%LEVEL% '%NAME%' has only one Register."</td><td></td></tr>                              
+  <tr><td>M333</td> <td>Error</td><td>"Duplicate <enumeratedValue> %NUM%: '%NAME%' (%USAGE%), already used by '%NAME2%' (%USAGE2%) %LINE%"</td><td></td></tr>
+  <tr><td>M334</td> <td>Warning</td><td>"%LEVEL% <%ITEM%> '%NAME%' is very long, use <description> and a shorter <name>"</td><td></td></tr>
+  <tr><td>M335</td> <td>Error</td><td>"Value '%NAME%:%NUM%' does not fit into field '%NAME2%' %BITRANGE%."</td><td></td></tr>
+  <tr><td>M336</td> <td>Error</td><td>"%LEVEL% '%NAME%' already defined %LINE%"</td><td></td></tr>                           
+  <tr><td>M337</td> <td>Error</td><td>"%LEVEL% '%NAME%' already defined %LINE%"</td><td></td></tr>                           
+  <tr><td>M338</td> <td>Error</td><td>"Field '%NAME%' %BITRANGE% (%ACCESS%) overlaps '%NAME2%' %BITRANGE2% (%ACCESS2%) %LINE%"</td><td></td></tr>
+  <tr><td>M339</td> <td>Error</td><td>"Register '%NAME%' (%ACCESS%) (@%ADDRSIZE%) has same address or overlaps '%NAME2%' (%ACCESS2%) (@%ADDRSIZE2%) %LINE%"</td><td></td></tr>
+  <tr><td>M340</td> <td>Error</td><td>"No Devices found."</td><td></td></tr>                                              
+  <tr><td>M341</td> <td>Error</td><td>"More than one devices found, only one is allowed per SVD File."</td><td></td></tr> 
+  <tr><td>M342</td> <td>Error</td><td>"Dim-extended %LEVEL% '%NAME%' must not have <headerStructName>"</td><td></td></tr> 
+  <tr><td>M343</td> <td>Error</td><td>"%LEVEL% '%NAME%' (@%ADDR%) has same address as '%NAME2%' %LINE%"</td><td></td></tr> 
+  <tr><td>M344</td> <td>Error</td><td>"Register '%NAME%' (@%ADDRSIZE%) is outside or does not fit any <addressBlock> specified for Peripheral '%NAME2%'\n%TEXT%"</td><td></td></tr>
+  <tr><td>M345</td> <td>Error</td><td>"Field '%NAME%' %BITRANGE% does not fit into Register '%NAME2%:%NUM%'"</td><td></td></tr>
+  <tr><td>M346</td> <td>Warning</td><td>"Register '%NAME%' (@%ADDR%) offset is equal or is greater than it's Peripheral base address '%NAME2%' (@%ADDR2%), is this intended?"</td><td></td></tr>
+  <tr><td>M347</td> <td>Warning</td><td>"Field '%NAME%' (width < 6Bit) without any <enumeratedValue> found."</td><td></td></tr>  
+  <tr><td>M348</td> <td>Error</td><td>"Alternate %LEVEL% '%NAME%' does not exist at %LEVEL% address (@%ADDR%)"</td><td></td></tr>
+  <tr><td>M349</td> <td>Error</td><td>"Alternate %LEVEL% '%NAME%' is equal to %LEVEL% name '%NAME2%'"</td><td></td></tr>         
+  <tr><td>M350</td> <td>Warning</td><td>"Peripheral '%NAME%' (@%ADDR%) is not 4Byte-aligned."</td><td></td></tr>                 
+  <tr><td>M351</td> <td>Warning</td><td>"Peripheral %TYPE% '%NAME%' is equal to Peripheral name."</td><td></td></tr>             
+  <tr><td>M352</td> <td>Warning</td><td>"AddressBlock of Peripheral '%NAME%' (@%ADDR%) %TEXT% overlaps '%NAME2%' (@%ADDR2%) %TEXT2% %LINE%"</td><td></td></tr>
+  <tr><td>M353</td> <td>Warning</td><td>"Peripheral group name '%NAME%' should not end with '_'"</td><td></td></tr>
+  <tr><td>M354</td> <td>Error</td><td>"Interrupt '%NUM%:%NAME%' specifies a Core Interrupt. Core Interrupts must not be defined, they are set through \<cpu><name>."</td><td></td></tr>
+  <tr><td>M355</td> <td>Error</td><td>"No Interrupts found on pos. 0..15. External (Vendor-)Interrupts possibly defined on position 16+. External Interrupts must start on position 0"</td><td></td></tr>
+  <tr><td>M356</td> <td>Warning</td><td>"No Interrupt definitions found."</td><td></td></tr>
+  <tr><td>M357</td> <td>Error</td><td>"Core Interrupts found. Interrupt Numbers are wrong. Internal Interrupts must not be described, External Interrupts must start at 0."</td><td></td></tr>
+  <tr><td>M358</td> <td>Error</td><td>"AddressBlock of Peripheral '%NAME%' %TEXT% overlaps AddressBlock %TEXT2% in same peripheral %LINE%"</td><td></td></tr>
+  <tr><td>M359</td> <td>Error</td><td>"Address Block: <usage> not set."</td><td></td></tr>                                      
+  <tr><td>M360</td> <td>Error</td><td>"Address Block: found <%TAG%> (%HEXNUM%) > %HEXNUM2%."</td><td></td></tr>                 
+  <tr><td>M361</td> <td>Error</td><td>"%LEVEL% %ITEM% '%NAME%': 'RESERVED' items must not be defined."</td><td></td></tr>       
+  <tr><td>M362</td> <td>Warning</td><td>"%LEVEL% %ITEM% '%NAME%': 'RESERVED' items must not be defined."</td><td></td></tr>     
+  <tr><td>M363</td> <td>Error</td><td>"CPU: <sauNumRegions> not set."</td><td></td></tr>                                        
+  <tr><td>M364</td> <td>Error</td><td>"CPU: <sauNumRegions> value '%NUM%' greater than SAU max num (%NUM2%)"</td><td></td></tr>
+  <tr><td>M365</td> <td>Warning</td><td>"Register '%NAME%' (%ACCESS%) (@%ADDRSIZE%) has same address or overlaps '%NAME2%' (%ACCESS2%) (@%ADDRSIZE2%) %LINE%"</td><td></td></tr>
+  <tr><td>M366</td> <td>Error</td><td>"Register '%NAME%' size (%NUM%Bit) is greater than <dimIncrement> * <addressBitsUnits> (%NUM2%Bit)."</td><td></td></tr>
+  <tr><td>M367</td> <td>Warning</td><td>"Access Type: Field '%NAME%' (%ACCESS%) does not match Register '%NAME2%' (%ACCESS2%)"</td><td></td></tr>
+  <tr><td>M368</td> <td>Warning</td><td>"%LEVEL% '%NAME%' (@%ADDR%) has same address as '%NAME2%' %LINE%"</td><td></td></tr>
+  <tr><td>M369</td> <td>Error</td><td>"Enumerated Value '%NAME%': <value> not set."</td><td></td></tr>                      
+  <tr><td>M370</td> <td>Error</td><td>"%LEVEL% '%NAME%': <offset> not set."</td><td></td></tr>                              
+  <tr><td>M371</td> <td>Error</td><td>"%LEVEL% '%NAME%' <headerStructName> is equal to hirachical name"</td><td></td></tr>  
+  <tr><td>M372</td> <td>Error</td><td>"%LEVEL% <%TAG%> '%NAME%' already defined %LINE%"</td><td></td></tr>                  
+  <tr><td>M373</td> <td>Error</td><td>"%LEVEL% <%TAG%> '%NAME%' already defined %LINE%"</td><td></td></tr>                  
+  <tr><td>M374</td> <td>Warning</td><td>"\<enumeratedValues\> can be one <enumeratedValues> container for all \<enumeratedValue\>s, where <usage> can be read, write, or read-write or two <enumeratedValues> containers, where one is set to <usage>read and the other is set to <usage>write"</td><td></td></tr>
+  <tr><td>M375</td> <td>Error</td><td>"%LEVEL% '%NAME%' (\<enumeratedValues\> '%NAME2%'): Too many <enumeratedValues> container specified."</td><td></td></tr>
+  <tr><td>M376</td> <td>Error</td><td>"%LEVEL% '%NAME%' (\<enumeratedValues\> '%NAME2%'): '%USAGE%' container already defined in %LINE%."</td><td></td></tr>
+  <tr><td>M377</td> <td>Error</td><td>"%LEVEL% '%NAME%' (\<enumeratedValues\> '%NAME2%'): '%USAGE%' container conflicts with '%NAME3%' %LINE%."</td><td></td></tr>
+  <tr><td>M378</td> <td>Error</td><td>"Register Array: Register '%NAME%' size (%NUM%Bit) does not match \<dimIncrement\> (%NUM2%Bit)."</td><td></td></tr>
+  <tr><td>M379</td> <td>Error</td><td>"XBin Number '%NAME%' too large, skipping evaluation."</td><td></td></tr>
+  <tr><td>M380</td> <td>Error</td><td>"AddressBlock of Peripheral '%NAME%' (@%ADDR%) %TEXT% does not fit into 32Bit Address Space."</td><td></td></tr>
+  <tr><td>M381</td> <td>Error</td><td>"Interrupt '%NAME%' Number '%NUM%' greater or equal deviceNumInterrupts (%NUM2%)."</td><td></td></tr>
+  <tr><td>M382</td> <td>Error</td><td>"%LEVEL% '%NAME%': %NAME2% '%HEXNUM%' does not fit into %LEVEL% width: %NUM% Bit."</td><td></td></tr>
+</table>
+
+Data modification errors
+-----------------
+
+<table class="cmtable" summary="SfrCC2 related Data modification Errors">
+  <tr>
+    <th>Message Number</th>
+    <th>Type</th>
+    <th>Description</th>
+    <th>Action</th>
+  </tr>
+  <tr><td>M517</td> <td>Warning</td><td>"SFD Code generation: Forbidden Trigraph '??%CHAR%' found in '%NAME%'."</td><td></td></tr>
+  <tr><td>M516</td> <td>Warning</td><td>"SFD Code generation: Unsupported character found in '%NAME%' : %HEX%."</td><td></td></tr>
+  <tr><td>M518</td> <td>Warning</td><td>"SFD Code generation: Unsupported ESC sequence found in '%NAME%' : %CHAR%."</td><td></td></tr>
+</table>
 */
 
 
