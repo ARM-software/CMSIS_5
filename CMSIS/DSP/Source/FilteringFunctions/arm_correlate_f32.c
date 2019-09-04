@@ -390,8 +390,6 @@ void arm_correlate_f32(
 
         x1v = x2v;
         px+=4;
-        x2v = vld1q_f32(px);
-
       } while (--k);
       
       /* If the srcBLen is not a multiple of 4, compute any remaining MACs here.
