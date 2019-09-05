@@ -72,6 +72,16 @@ version 1.0.
   <th>Description</th>
 </tr>
 <tr>
+  <td>V1.3.6</td>
+  <td> 
+       - Added ARMV81MML as enumeration value for \ref elem_cpu_sc "cpuNameType".</td>
+</tr>
+<tr>
+  <td>V1.3.5</td>
+  <td> 
+       - Added CM35P as enumeration value for \ref elem_cpu_sc "cpuNameType".</td>
+</tr>
+<tr>
   <td>V1.3.4</td>
   <td> 
        - Added information about the Linux version of \ref svd_SVDConv_pg. </td>
