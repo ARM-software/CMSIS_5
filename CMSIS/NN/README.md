@@ -22,5 +22,6 @@ Group | API | Base Operator | Input Constraints | Additional memory required for
 ||arm_elementwise_add_s8()| ELEMENTWISE ADD | None | None | Yes| No| Reshape is not done in this function <br/> Only minor improvements are expected |
 ||arm_elementwise_mul_s8()| ELEMENTWISE MUL | None | None | Yes| No| Reshape is not done in this function <br/> Only minor improvements are expected |
 ||arm_relu_q7() | RELU | None | None | Yes| No|
+||arm_relu6_s8() | RELU | None | None | Yes| No|
 | |  |  | | | ||
 
