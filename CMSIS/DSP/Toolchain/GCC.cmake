@@ -92,7 +92,7 @@ function(preprocessScatter CORE PLATFORMFOLDER SCATTERFILE)
     add_dependencies(${PROJECTNAME} scatter)
 endfunction()
 
-function(toolchainSpecificLinkForCortexM  PROJECTNAME ROOT CORE PLATFORMFOLDER)
+function(toolchainSpecificLinkForCortexM  PROJECTNAME ROOT CORE PLATFORMFOLDER HASCSTARTUP)
     target_sources(${PROJECTNAME} PRIVATE  ${PLATFORMFOLDER}/${CORE}/Startup/GCC/startup_${CORE}.S)
     target_sources(${PROJECTNAME} PRIVATE  ${PLATFORMFOLDER}/${CORE}/Startup/GCC/support.c)
 

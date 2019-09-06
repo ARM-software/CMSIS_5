@@ -65,14 +65,22 @@ function(compilerSpecificCompileOptions PROJECTNAME ROOT)
         target_compile_options(${PROJECTNAME} PUBLIC "-mfpu=vfpv4-d16")
       endif()
   endif()
+
+  if(EXPERIMENTAL)
+    experimentalCompilerSpecificCompileOptions(${PROJECTNAME} ${ROOT})
+  endif()
 endfunction()
 
 
-function(toolchainSpecificLinkForCortexM PROJECTNAME ROOT CORE PLATFORMFOLDER)
+function(toolchainSpecificLinkForCortexM PROJECTNAME ROOT CORE PLATFORMFOLDER HASCSTARTUP)
     # A specific library is created for ASM file
     # since we do not want standard compile flags (for C) to be applied to 
     # ASM files.
-    target_sources(${PROJECTNAME} PRIVATE ${PLATFORMFOLDER}/${CORE}/Startup/AC6/startup_${CORE}.s)
+    if (HASCSTARTUP)
+      target_sources(${PROJECTNAME} PRIVATE ${PLATFORMFOLDER}/${CORE}/Startup/AC6/startup_${CORE}.c)
+    else()
+      target_sources(${PROJECTNAME} PRIVATE ${PLATFORMFOLDER}/${CORE}/Startup/AC6/startup_${CORE}.s)
+    endif() 
     target_include_directories(${PROJECTNAME} PRIVATE ${PLATFORMFOLDER}/${CORE}/LinkScripts/AC6)
 
     set(SCATTERFILE "${PLATFORMFOLDER}/${CORE}/LinkScripts/AC6/lnk.sct")

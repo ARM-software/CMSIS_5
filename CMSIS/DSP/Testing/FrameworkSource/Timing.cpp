@@ -45,6 +45,8 @@ static uint32_t startCycles=0;
   #include "ARMv8MML_DP.h"
 #elif defined ARMv8MML_DSP_DP
   #include "ARMv8MML_DSP_DP.h"
+#elif defined ARMv81MML_DSP_DP_MVE_FP
+  #include "ARMv81MML_DSP_DP_MVE_FP.h"
 #elif defined ARMv7A
   /* TODO */
 #else

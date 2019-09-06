@@ -15,14 +15,14 @@ get_filename_component(PROJECT_NAME ${CMAKE_CURRENT_SOURCE_DIR} NAME)
 cmake_print_variables(PROJECT_NAME)
 
 
-function(cortexm CORE PROJECT_NAME ROOT PLATFORMFOLDER)
+function(cortexm CORE PROJECT_NAME ROOT PLATFORMFOLDER CSTARTUP)
    
     target_include_directories(${PROJECT_NAME} PRIVATE ${ROOT}/CMSIS/Core/Include)
     
     target_sources(${PROJECT_NAME} PRIVATE ${PLATFORMFOLDER}/${CORE}/system_${CORE}.c)
     
 
-    toolchainSpecificLinkForCortexM(${PROJECT_NAME} ${ROOT} ${CORE} ${PLATFORMFOLDER})
+    toolchainSpecificLinkForCortexM(${PROJECT_NAME} ${ROOT} ${CORE} ${PLATFORMFOLDER} ${CSTARTUP})
 
     configplatformForApp(${PROJECT_NAME} ${ROOT} ${CORE} ${PLATFORMFOLDER})
     SET(PLATFORMID ${PLATFORMID} PARENT_SCOPE)
@@ -49,12 +49,21 @@ function(configboot PROJECT_NAME ROOT PLATFORMFOLDER)
 
   target_include_directories(${PROJECT_NAME} PRIVATE ${ROOT}/CMSIS/DSP/Include)
   set_platform_core()
+
+  if(EXPERIMENTAL)
+    experimentalConfigboot(${PROJECT_NAME} ${ROOT} ${PLATFORMFOLDER})
+    if (ISCORTEXM)
+      cortexm(${CORE} ${PROJECT_NAME} ${ROOT} ${PLATFORMFOLDER} ${HASCSTARTUP})    
+    else()
+      cortexa(${CORE} ${PROJECT_NAME} ${ROOT} ${PLATFORMFOLDER})
+    endif()
+  endif()
   ###################
   #
   # Cortex cortex-m7
   #
   if (ARM_CPU STREQUAL "cortex-m7")
-    cortexm(${CORE} ${PROJECT_NAME} ${ROOT} ${PLATFORMFOLDER})    
+    cortexm(${CORE} ${PROJECT_NAME} ${ROOT} ${PLATFORMFOLDER} OFF)    
     
   endif()
   
@@ -63,7 +72,7 @@ function(configboot PROJECT_NAME ROOT PLATFORMFOLDER)
   # Cortex cortex-m4
   #
   if (ARM_CPU STREQUAL "cortex-m4")
-      cortexm(${CORE} ${PROJECT_NAME} ${ROOT} ${PLATFORMFOLDER})
+      cortexm(${CORE} ${PROJECT_NAME} ${ROOT} ${PLATFORMFOLDER} OFF)
   endif()
   
   ###################
@@ -71,7 +80,7 @@ function(configboot PROJECT_NAME ROOT PLATFORMFOLDER)
   # Cortex cortex-m35p
   #
   if (ARM_CPU STREQUAL "cortex-m35")
-      cortexm(${CORE} ${PROJECT_NAME} ${ROOT} ${PLATFORMFOLDER})
+      cortexm(${CORE} ${PROJECT_NAME} ${ROOT} ${PLATFORMFOLDER} OFF)
       
   endif()
   
@@ -80,7 +89,7 @@ function(configboot PROJECT_NAME ROOT PLATFORMFOLDER)
   # Cortex cortex-m33
   #
   if (ARM_CPU STREQUAL "cortex-m33")
-      cortexm(${CORE} ${PROJECT_NAME} ${ROOT} ${PLATFORMFOLDER})
+      cortexm(${CORE} ${PROJECT_NAME} ${ROOT} ${PLATFORMFOLDER} OFF)
       
   endif()
   
@@ -89,7 +98,7 @@ function(configboot PROJECT_NAME ROOT PLATFORMFOLDER)
   # Cortex cortex-m23
   #
   if (ARM_CPU STREQUAL "cortex-m23")
-      cortexm(${CORE} ${PROJECT_NAME} ${ROOT} ${PLATFORMFOLDER})
+      cortexm(${CORE} ${PROJECT_NAME} ${ROOT} ${PLATFORMFOLDER} OFF)
      
   endif()
 
@@ -98,7 +107,7 @@ function(configboot PROJECT_NAME ROOT PLATFORMFOLDER)
   # Cortex cortex-m0+
   #
   if (ARM_CPU STREQUAL "cortex-m0p")
-      cortexm(${CORE} ${PROJECT_NAME} ${ROOT} ${PLATFORMFOLDER})
+      cortexm(${CORE} ${PROJECT_NAME} ${ROOT} ${PLATFORMFOLDER} OFF)
       
   endif()
 
@@ -107,7 +116,7 @@ function(configboot PROJECT_NAME ROOT PLATFORMFOLDER)
   # Cortex cortex-m0
   #
   if (ARM_CPU STREQUAL "cortex-m0")
-      cortexm(${CORE} ${PROJECT_NAME} ${ROOT} ${PLATFORMFOLDER})
+      cortexm(${CORE} ${PROJECT_NAME} ${ROOT} ${PLATFORMFOLDER} OFF)
       
   endif()
   

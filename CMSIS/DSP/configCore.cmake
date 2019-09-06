@@ -19,6 +19,10 @@ SET(COREID ARMCM7)
 function(configcore PROJECTNAME ROOT)
 
 
+  if(EXPERIMENTAL)
+    experimentalConfigcore(${PROJECTNAME} ${ROOT})
+    SET(COREID ${COREID} PARENT_SCOPE)
+  endif()
   ###################
   #
   # CORTEX-A

@@ -17,6 +17,11 @@ SET(CORE ARMCM7)
 include(platform)
 
 function(set_platform_core)
+
+  if(EXPERIMENTAL)
+     experimental_set_platform_core()
+     SET(CORE ${CORE} PARENT_SCOPE) 
+  endif()
   ###################
   #
   # Cortex cortex-m7

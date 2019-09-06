@@ -1,11 +1,5 @@
 bench/
-build/
-build_m7/
-build_a5/
-build_m0/
-build_sdsim_a5/
-build_sdsim_a15/
-build_m33/
+build_*/
 TODO.txt
 olddesc.txt
 oldprocessTests.py

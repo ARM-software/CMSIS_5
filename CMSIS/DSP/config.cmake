@@ -1,3 +1,8 @@
+if(EXPERIMENTAL)
+list(APPEND CMAKE_MODULE_PATH ${EXPROOT})
+include(experimental)
+endif()
+
 include(Toolchain/Tools)
 SET(PLATFORMFOLDER ${ROOT}/CMSIS/DSP/Platforms/FVP)
 option(OPTIMIZED "Compile for speed" ON)
