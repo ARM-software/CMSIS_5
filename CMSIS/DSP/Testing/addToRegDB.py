@@ -19,7 +19,7 @@ import re
 
 # For table creation
 MKSTRFIELD=['NAME','Regression']
-MKBOOLFIELD=['HARDFP', 'FASTMATH', 'NEON', 'UNROLL', 'ROUNDING','OPTIMIZED']
+MKBOOLFIELD=['HARDFP', 'FASTMATH', 'NEON', 'HELIUM','UNROLL', 'ROUNDING','OPTIMIZED']
 MKINTFIELD=['ID','MAX']
 MKREALFIELD=['MAXREGCOEF']
 MKDATEFIELD=['DATE']
@@ -32,7 +32,7 @@ MKKEYFIELDID={'CATEGORY':'categoryid',
 
 # For table value extraction
 VALSTRFIELD=['NAME','VERSION','Regression']
-VALBOOLFIELD=['HARDFP', 'FASTMATH', 'NEON', 'UNROLL', 'ROUNDING','OPTIMIZED']
+VALBOOLFIELD=['HARDFP', 'FASTMATH', 'NEON', 'HELIUM','UNROLL', 'ROUNDING','OPTIMIZED']
 VALINTFIELD=['ID', 'MAX']
 VALREALFIELD=['MAXREGCOEF']
 VALDATEFIELD=['DATE']
@@ -257,16 +257,17 @@ def addRows(conn,elem,tableName,full):
    conn.commit() 
 
 def addOneBenchmark(elem,fullPath,db,group):
-   full=pd.read_csv(fullPath,dtype={'OLDID': str} ,keep_default_na = False)
-   full['DATE'] = datetime.datetime.now()
-   if group:
-      tableName = group
-   else:
-      tableName = elem.data["class"]
-   conn = sqlite3.connect(db)
-   createTableIfMissing(conn,elem,tableName,full)
-   addRows(conn,elem,tableName,full)
-   conn.close()
+   if os.path.isfile(fullPath):
+      full=pd.read_csv(fullPath,dtype={'OLDID': str} ,keep_default_na = False)
+      full['DATE'] = datetime.datetime.now()
+      if group:
+         tableName = group
+      else:
+         tableName = elem.data["class"]
+      conn = sqlite3.connect(db)
+      createTableIfMissing(conn,elem,tableName,full)
+      addRows(conn,elem,tableName,full)
+      conn.close()
 
 
 def addToDB(benchmark,dbpath,elem,group):

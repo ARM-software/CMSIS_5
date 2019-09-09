@@ -18,9 +18,13 @@ using namespace std;
 #include "Patterns.h"
 
 
+
 int testmain()
 {
     char *memoryBuf=NULL;
+
+
+
   
     memoryBuf = (char*)malloc(MEMSIZE);
     if (memoryBuf !=NULL)

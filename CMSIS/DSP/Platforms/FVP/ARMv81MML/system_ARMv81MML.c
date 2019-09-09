@@ -40,6 +40,11 @@
 
 #define  SYSTEM_CLOCK    (5U * XTAL)
 
+#define DEBUG_DEMCR  (*((unsigned int *)0xE000EDFC))
+#define DEBUG_TRCENA (1<<24) //Global debug enable bit
+
+#define CCR      (*((volatile unsigned int *)0xE000ED14))
+#define CCR_DL   (1 << 19)
 
 /*----------------------------------------------------------------------------
   Externals
@@ -87,5 +92,11 @@ void SystemInit (void)
 #endif
 
   SystemCoreClock = SYSTEM_CLOCK;
+
+  //Disable debug
+  DEBUG_DEMCR &=~ DEBUG_TRCENA;
+
+  // enable DL branch cache
+  CCR |= CCR_DL;
 
 }

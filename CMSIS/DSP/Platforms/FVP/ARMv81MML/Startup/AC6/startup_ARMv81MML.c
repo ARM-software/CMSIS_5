@@ -128,6 +128,7 @@ void Reset_Handler(void)
   __set_MSPLIM((uint32_t)(&__STACK_LIMIT));
 
   SystemInit();                             /* CMSIS System Initialization */
+
   __PROGRAM_START();                        /* Enter PreMain (C library entry point) */
 }
 

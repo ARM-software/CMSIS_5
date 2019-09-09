@@ -180,13 +180,16 @@ function(configcore PROJECTNAME ROOT)
   #
     
   if (NEON AND NOT CORTEXM)
-    #target_compile_definitions(${PROJECTNAME} PRIVATE ARM_MATH_NEON __FPU_PRESENT)
     target_compile_definitions(${PROJECTNAME} PRIVATE ARM_MATH_NEON)
   endif()
   
   if (NEONEXPERIMENTAL AND NOT CORTEXM)
     #target_compile_definitions(${PROJECTNAME} PRIVATE ARM_MATH_NEON_EXPERIMENTAL __FPU_PRESENT)
     target_compile_definitions(${PROJECTNAME} PRIVATE ARM_MATH_NEON_EXPERIMENTAL)
+  endif()
+
+  if (HELIUM AND CORTEXM)
+    target_compile_definitions(${PROJECTNAME} PRIVATE ARM_MATH_HELIUM)
   endif()
 
   compilerSpecificCompileOptions(${PROJECTNAME} ${ROOT})

@@ -7,7 +7,7 @@ list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/..)
 
 function(writeConfig path)
   set(output "")
-  list(APPEND output "OPTIMIZED,HARDFP,FASTMATH,NEON,UNROLL,ROUNDING,PLATFORM,CORE,COMPILER,VERSION\n")
+  list(APPEND output "OPTIMIZED,HARDFP,FASTMATH,NEON,HELIUM,UNROLL,ROUNDING,PLATFORM,CORE,COMPILER,VERSION\n")
 
   if (OPTIMIZED)
     list(APPEND output "1")
@@ -28,6 +28,12 @@ function(writeConfig path)
   endif()
 
   if (NEON OR NEONEXPERIMENTAL)
+    list(APPEND output ",1")
+  else()
+    list(APPEND output ",0")
+  endif()
+
+  if (HELIUM)
     list(APPEND output ",1")
   else()
     list(APPEND output ",0")

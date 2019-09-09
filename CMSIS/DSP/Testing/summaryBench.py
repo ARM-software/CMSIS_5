@@ -57,38 +57,40 @@ def formatProd(a,b):
 
 def summaryBenchmark(resultPath,elem,path):
    regressionPath=os.path.join(os.path.dirname(path),"regression.csv")
-   print("  Generating %s" % regressionPath)
-   full=pd.read_csv(path,dtype={'OLDID': str} ,keep_default_na = False)
-   #print(full)
-   
-   csvheaders = []
-   with open(os.path.join(resultPath,'currentConfig.csv'), 'r') as f:
-        reader = csv.reader(f)
-        csvheaders = next(reader, None)
 
-   groupList = list(set(elem.params.full) - set(elem.params.summary))
-   #grouped=full.groupby(list(elem.params.summary) + ['ID','CATEGORY']).max()
-   #grouped.reset_index(level=grouped.index.names, inplace=True)
-   #print(grouped)
-   #print(grouped.columns)
+   if os.path.isfile(path):
+      print("  Generating %s" % regressionPath)
+      full=pd.read_csv(path,dtype={'OLDID': str} ,keep_default_na = False)
+      #print(full)
+      
+      csvheaders = []
+      with open(os.path.join(resultPath,'currentConfig.csv'), 'r') as f:
+           reader = csv.reader(f)
+           csvheaders = next(reader, None)
+   
+      groupList = list(set(elem.params.full) - set(elem.params.summary))
+      #grouped=full.groupby(list(elem.params.summary) + ['ID','CATEGORY']).max()
+      #grouped.reset_index(level=grouped.index.names, inplace=True)
+      #print(grouped)
+      #print(grouped.columns)
 
   
-   def reg(d):
-    m=d["CYCLES"].max()
-    results = smf.ols('CYCLES ~ ' + elem.params.formula, data=d).fit()
-    f=joinit([formatProd(a,b) for (a,b) in zip(results.params.index,results.params.values)]," + ")
-    f="".join(f)
-    f = re.sub(r':','*',f)
-    #print(results.summary())
-    return(pd.Series({'Regression':"%s" % f,'MAX' : m,'MAXREGCOEF' : results.params.values[-1]}))
-
-   regList = ['ID','OLDID','CATEGORY','NAME'] + csvheaders + groupList 
+      def reg(d):
+       m=d["CYCLES"].max()
+       results = smf.ols('CYCLES ~ ' + elem.params.formula, data=d).fit()
+       f=joinit([formatProd(a,b) for (a,b) in zip(results.params.index,results.params.values)]," + ")
+       f="".join(f)
+       f = re.sub(r':','*',f)
+       #print(results.summary())
+       return(pd.Series({'Regression':"%s" % f,'MAX' : m,'MAXREGCOEF' : results.params.values[-1]}))
    
-   regression=full.groupby(regList).apply(reg)
-   regression.reset_index(level=regression.index.names, inplace=True)
-   renamingDict = { a : b for (a,b) in zip(elem.params.full,elem.params.paramNames)}
-   regression = regression.rename(columns=renamingDict)
-   regression.to_csv(regressionPath,index=False,quoting=csv.QUOTE_NONNUMERIC)
+      regList = ['ID','OLDID','CATEGORY','NAME'] + csvheaders + groupList 
+      
+      regression=full.groupby(regList).apply(reg)
+      regression.reset_index(level=regression.index.names, inplace=True)
+      renamingDict = { a : b for (a,b) in zip(elem.params.full,elem.params.paramNames)}
+      regression = regression.rename(columns=renamingDict)
+      regression.to_csv(regressionPath,index=False,quoting=csv.QUOTE_NONNUMERIC)
 
 
 def extractBenchmarks(resultPath,benchmark,elem):

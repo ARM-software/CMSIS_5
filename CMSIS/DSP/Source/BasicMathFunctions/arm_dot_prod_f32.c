@@ -59,6 +59,46 @@
   @return        none
  */
 
+#if defined (ARM_MATH_HELIUM)
+
+#include "arm_mve.h"
+#include "arm_helium_utils.h"
+
+void arm_dot_prod_f32(
+    const float32_t * pSrcA,
+    const float32_t * pSrcB,
+    uint32_t    blockSize,
+    float32_t * result)
+{
+    float32x4_t vecA, vecB;
+    float32x4_t vecSum;
+    vecSum = vdupq_n_f32(0.0);
+
+    do {
+        /*
+         * C = A[0]* B[0] + A[1]* B[1] + A[2]* B[2] + .....+ A[blockSize-1]* B[blockSize-1]
+         * Calculate dot product and then store the result in a temporary buffer.
+         */
+        mve_pred16_t p = vctp32q(blockSize);
+
+        vecA = vldrwq_z_f32(pSrcA, p);
+        vecB = vldrwq_z_f32(pSrcB, p);
+        vecSum = vfmaq_m(vecSum, vecA, vecB, p);
+        /*
+         * Decrement the blockSize loop counter
+         * Advance vector source and destination pointers
+         */
+        post_incr_vec_size(pSrcA);
+        post_incr_vec_size(pSrcB);
+        blockSize -= VEC_LANES_F32;
+    }
+    while ((int32_t) blockSize > 0);
+
+    *result = vecAddAcrossF32Mve(vecSum);
+}
+
+#else
+
 void arm_dot_prod_f32(
   const float32_t * pSrcA,
   const float32_t * pSrcB,
@@ -158,6 +198,7 @@ void arm_dot_prod_f32(
   *result = sum;
 }
 
+#endif /* ARM_MATH_HELIUM */
 /**
   @} end of BasicDotProd group
  */
