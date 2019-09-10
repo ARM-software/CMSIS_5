@@ -131,9 +131,10 @@ def findInCompilerTable(conn,kind,version):
     if result != None:
       return(result[0])
     else:
-      conn.execute("INSERT INTO COMPILER(compilerkindid,version) VALUES(?,?)" ,(kind,version))
+      fullDate = datetime.datetime.now()
+      conn.execute("INSERT INTO COMPILER(compilerkindid,version,date) VALUES(?,?,?)" ,(kind,version,fullDate))
       conn.commit()
-      r = conn.execute("select compilerid from COMPILER where compilerkindid=? AND version=?"  , (kind,version))
+      r = conn.execute("select compilerid from COMPILER where compilerkindid=? AND version=? AND date=?"  , (kind,version,fullDate))
       result=r.fetchone()
       if result != None:
          #print(result)
@@ -145,6 +146,9 @@ def findInCompilerTable(conn,kind,version):
 def addRows(conn,elem,tableName,full):
    # List of columns we have in DB which is
    # different from the columns in the table
+   compilerid = 0
+   platformid = 0 
+   coreid = 0
    keep = getColumns(elem,full)
    cols = list(full.columns)
    params = list(elem.params.full)
@@ -216,9 +220,11 @@ def addRows(conn,elem,tableName,full):
             if field == "CORE":
               val = findInTable(conn,"CORE","coredef",row[field],"coreid")
               keys[field]=val
+              coreid = val
             if field == "PLATFORM":
               val = findInTable(conn,"PLATFORM","platform",row[field],"platformid")
               keys[field]=val
+              platformid = val
             if field == "TYPE":
               val = findInTable(conn,"TYPE","type",keys["TYPE"],"typeid")
               keys[field]=val
@@ -226,6 +232,7 @@ def addRows(conn,elem,tableName,full):
               compilerkind = findInTable(conn,"COMPILERKIND","compiler",row[field],"compilerkindid")
               compiler = findInCompilerTable(conn,compilerkind,keys["VERSION"])
               keys[field]=compiler
+              compilerid = compiler
 
        # Generate sql command
        start = ""  
@@ -244,18 +251,25 @@ def addRows(conn,elem,tableName,full):
        #print(sql)
        conn.execute(sql)  
    conn.commit() 
+   return({'compilerid':compilerid,'platformid':platformid,'coreid':coreid})
+
+def addConfig(conn,config,fullDate):
+  conn.execute("INSERT INTO CONFIG(compilerid,platformid,coreid,date) VALUES(?,?,?,?)" ,(config['compilerid'],config['platformid'],config['coreid'],fullDate))
+  conn.commit()
 
 def addOneBenchmark(elem,fullPath,db,group):
    if os.path.isfile(fullPath):
       full=pd.read_csv(fullPath,dtype={'OLDID': str} ,keep_default_na = False)
-      full['DATE'] = datetime.datetime.now()
+      fullDate = datetime.datetime.now()
+      full['DATE'] = fullDate
       if group:
          tableName = group
       else:
          tableName = elem.data["class"]
       conn = sqlite3.connect(db)
-      createTableIfMissing(conn,elem,tableName,full)
-      addRows(conn,elem,tableName,full)
+      #createTableIfMissing(conn,elem,tableName,full)
+      config = addRows(conn,elem,tableName,full)
+      addConfig(conn,config,fullDate)
       conn.close()
 
 

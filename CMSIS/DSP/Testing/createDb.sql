@@ -21,10 +21,13 @@ CREATE TABLE COMPILER (
     compilerid INTEGER PRIMARY KEY,
     compilerkindid INTEGER ,
     version text,
+    date text,
     FOREIGN KEY(compilerkindid) REFERENCES COMPILERKIND(compilerkindid)
     );
 
 CREATE INDEX compiler_index ON COMPILER(compilerkindid,version);
+CREATE INDEX compiler_date_index ON COMPILER(date);
+CREATE INDEX compiler_all_index ON COMPILER(compilerkindid,version,date);
 
 CREATE TABLE TYPE (
     typeid INTEGER PRIMARY KEY,
@@ -37,6 +40,17 @@ CREATE TABLE CATEGORY (
     category text);
 
 CREATE INDEX category_index ON CATEGORY(category);
+
+CREATE TABLE CONFIG (
+    configid INTEGER PRIMARY KEY,
+    compilerid INTEGER,
+    platformid INTEGER,
+    coreid INTEGER,
+    date text,
+    FOREIGN KEY(compilerid) REFERENCES COMPILER(compilerid),
+    FOREIGN KEY(platformid) REFERENCES PLATFORM(platformid),
+    FOREIGN KEY(coreid) REFERENCES CORE(coreid)
+);
 
 INSERT INTO TYPE VALUES(1, "q7");
 INSERT INTO TYPE VALUES(2, "q15");
@@ -56,7 +70,6 @@ INSERT INTO TYPE VALUES(14,"u64");
 INSERT INTO COMPILERKIND VALUES(1,"AC6");
 INSERT INTO COMPILERKIND VALUES(2,"GCC");
 
-INSERT INTO COMPILER VALUES(1,1,"6120001"); 
 
 INSERT INTO CORE VALUES(1,"m0","ARMCM0");
 INSERT INTO CORE VALUES(2,"m0p","ARMCM0P");
