@@ -42,22 +42,22 @@ If we want to compute ratio between CORE AND PLATFORM then the view above should
 be using CORE AND PLATFORM to filter and define the references.
 
 */
-select temp.otherCores.ID as ID,
+select otherCores.ID as ID,
  CATEGORY.category as CATEGORY,
- temp.otherCores.NAME as NAME,
+ otherCores.NAME as NAME,
+ (1.0*refCore.MAX / otherCores.MAX) as MAXRATIO,
+ (1.0*refCore.MAXREGCOEF / otherCores.MAXREGCOEF) as REGRESSIONRATIO,
  PLATFORM.platform as PLATFORM,
  CORE.core as CORE,
  COMPILERKIND.compiler as COMPILER,
  COMPILER.version as COMPILERVERSION,
  TYPE.type as TYPE,
- temp.otherCores.DATE as DATE,
- (1.0*temp.refCore.MAX / temp.otherCores.MAX) as MAXRATIO,
- (1.0*temp.refCore.MAXREGCOEF / temp.otherCores.MAXREGCOEF) as REGRESSIONRATIO
- from temp.otherCores
- INNER JOIN temp.refCore USING(ID,categoryid,NAME)
- INNER JOIN CATEGORY USING(categoryid)
- INNER JOIN PLATFORM USING(platformid)
- INNER JOIN CORE USING(coreid)
- INNER JOIN COMPILER USING(compilerid)
- INNER JOIN COMPILERKIND USING(compilerkindid)
- INNER JOIN TYPE USING(typeid)
+ otherCores.DATE as DATE
+ from otherCores
+ INNER JOIN refCore ON refCore.ID = otherCores.ID AND refCore.categoryid = otherCores.categoryid AND refCore.NAME = otherCores.NAME
+ INNER JOIN CATEGORY ON CATEGORY.categoryid = otherCores.categoryid
+ INNER JOIN PLATFORM ON PLATFORM.platformid = otherCores.platformid
+ INNER JOIN CORE ON CORE.coreid = otherCores.coreid
+ INNER JOIN COMPILER ON COMPILER.compilerid = otherCores.compilerid
+ INNER JOIN COMPILERKIND ON COMPILERKIND.compilerkindid = COMPILER.compilerkindid
+ INNER JOIN TYPE ON TYPE.typeid = otherCores.typeid;

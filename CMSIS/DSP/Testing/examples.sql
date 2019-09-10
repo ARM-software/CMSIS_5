@@ -38,6 +38,13 @@ Get last values
 
 */
 
+/*
+
+Better to use the ON syntax than the USING syntax.
+See diff.sql for example
+
+*/
+
 select NB,CATEGORY.category,NAME,CYCLES,PLATFORM.platform,CORE.core,COMPILERKIND.compiler,COMPILER.version,DATE 
   from BasicBenchmarks
   INNER JOIN CATEGORY USING(categoryid)
