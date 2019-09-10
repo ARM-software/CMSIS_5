@@ -24,4 +24,16 @@ class FullyConnectedBench:public Client::Suite
             q7_t *outp;
             q7_t *refp;
             q15_t *tempp;
+
+            int32_t output_mult = 1073741824;
+            int16_t output_shift = -1;
+            int32_t filter_offset = 1;
+            int32_t input_offset = 1;
+            int32_t output_offset = -1;
+            int32_t act_min =-128;
+            int32_t act_max= 127;
+            int32_t nb_batches=1;
+            int32_t rowDim;
+            int32_t colDim;
+            
     };

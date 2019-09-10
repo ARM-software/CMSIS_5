@@ -1425,17 +1425,16 @@ group Root {
                 Formula "NB"
             }
 
-         Pattern INPUT1_S8_ID : TestCase_1_10_4_input_1.txt
-         Pattern BIAS1_S8_ID : TestCase_1_10_4_bias_1.txt
-         Pattern WEIGHT1_S8_ID : TestCase_1_10_4_weights_1.txt
-
-         Pattern REF1_S8_ID : TestCase_1_10_4_output_1.txt
+         Pattern INPUT13_S8_ID : TestCase_8_8_5_input_13.txt
+         Pattern BIAS13_S8_ID : TestCase_8_8_5_bias_13.txt
+         Pattern WEIGHT13_S8_ID : TestCase_8_8_5_weights_13.txt
+         Pattern REF13_S8_ID : TestCase_8_8_5_output_13.txt
 
          Output  OUTPUT_S8_ID : Output
          Output  TEMP_S16_ID : Temp
 
          Params PARAM1_ID = {
-                NB = [10,20,100,200]
+                NB = [10,20,40,50]
             }
 
          Functions {
@@ -1462,7 +1461,7 @@ group Root {
          Output  TEMPINPUT_S8_ID : TempInput
 
          Params PARAM1_ID = {
-                NB = [10,20,100,200]
+                NB = [1]
             }
 
          Functions {

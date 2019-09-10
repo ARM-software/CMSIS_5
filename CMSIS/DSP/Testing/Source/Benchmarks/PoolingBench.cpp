@@ -9,7 +9,7 @@
     void PoolingBench::test_avgpool_s8()
     {
 
-      for(int i=0; i < this->repeatNb; i++)
+      //for(int i=0; i < this->repeatNb; i++)
       {
        arm_avgpool_s8(
            DIM_IN_Y,
@@ -30,6 +30,8 @@
            outp);
        
        }
+
+       //ASSERT_EQ(this->ref,this->output);
 
     } 
 
