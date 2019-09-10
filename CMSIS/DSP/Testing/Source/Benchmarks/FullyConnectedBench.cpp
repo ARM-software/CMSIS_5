@@ -5,33 +5,24 @@
     void FullyConnectedBench::test_fully_connected_tflite_s8()
     {
       
-
-       int32_t output_mult = 1073741824;
-       int16_t output_shift = -1;
-       int32_t filter_offset = 1;
-       int32_t input_offset = 1;
-       int32_t output_offset = -1;
-
-
-
-       for(int i=0; i < this->repeatNb; i++)
+      for(int i=0; i < this->repeatNb; i++)
        {
-          arm_fully_connected_s8((int8_t*)inp
-           ,(const int8_t*)weightp
-           ,input.nbSamples()
-           ,output.nbSamples()
-           ,1
-           ,input_offset
-           ,filter_offset
-           ,output_mult
-           ,output_shift
-           ,output_offset
-           ,(const int32_t*)biasp
-           ,(int8_t*)outp 
-           ,-128 
-           ,127 
-           ,tempp
-           );
+          arm_fully_connected_s8((int8_t*)this->inp
+            ,(const int8_t*)this->weightp
+            ,colDim
+            ,rowDim
+            ,nb_batches
+            ,input_offset
+            ,filter_offset
+            ,output_mult
+            ,output_shift
+            ,output_offset
+            ,(const int32_t*)this->biasp
+            ,(int8_t*)this->outp 
+            ,act_min 
+            ,act_max
+            ,this->tempp
+            );
        }
       
     } 
@@ -45,23 +36,35 @@
        this->repeatNb = *it;
        
 
-       input.reload(FullyConnectedBench::INPUT1_S8_ID,mgr);
-       bias.reload(FullyConnectedBench::BIAS1_S8_ID,mgr);
-       weight.reload(FullyConnectedBench::WEIGHT1_S8_ID,mgr);
+        output_mult = 1077969154;
+        output_shift = 2;
+        filter_offset = 0;
+        input_offset = 0;
+        output_offset = 1;
+        act_min =-128;
+        act_max= 127;
 
-       ref.reload(FullyConnectedBench::REF1_S8_ID,mgr);
+          
+        nb_batches=8;
 
-       
-       output.create(ref.nbSamples(),FullyConnectedBench::OUTPUT_S8_ID,mgr);
-       temp.create(input.nbSamples(),FullyConnectedBench::TEMP_S16_ID,mgr);
+        colDim=8;
+        rowDim=5;
 
-       inp=input.ptr();
-       biasp=bias.ptr();
-       weightp=weight.ptr();
-       outp=output.ptr();
-       refp=ref.ptr();
-       tempp=temp.ptr();
+        input.reload(FullyConnectedBench::INPUT13_S8_ID,mgr);
+        bias.reload(FullyConnectedBench::BIAS13_S8_ID,mgr);
+        weight.reload(FullyConnectedBench::WEIGHT13_S8_ID,mgr);
 
+        //ref.reload(FullyConnectedBench::REF13_S8_ID,mgr);
+
+        output.create(ref.nbSamples(),FullyConnectedBench::OUTPUT_S8_ID,mgr);
+        temp.create(colDim,FullyConnectedBench::TEMP_S16_ID,mgr);
+
+        this->inp=input.ptr();
+        this->biasp=bias.ptr();
+        this->weightp=weight.ptr();
+        this->outp=output.ptr();
+        //this->refp=ref.ptr();
+        this->tempp=temp.ptr();
     }
 
     void FullyConnectedBench::tearDown(Testing::testID_t id,Client::PatternMgr *mgr)
