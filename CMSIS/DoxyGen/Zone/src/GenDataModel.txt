@@ -40,7 +40,8 @@ A sequence gets iterated:
 \code
 <#list zone.memory as mem>
    Memory region name $mem.name
-</#list
+</#list>
+\endcode
 
 Printing a sorted list of all available memory entries by start address
 \code
