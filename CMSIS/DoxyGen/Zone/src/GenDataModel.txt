@@ -87,7 +87,7 @@ This information can be used for example, to create a linker script that defines
     <td>\subpage fm_interrupt ".interrupt"</td>
     <td>A sequence of all interrupt sources available.</td>
     <td>sequence</td>
-  </tr>
+  </tr>`
   <tr>
     <td>\subpage fm_mpc_setup ".mpc_setup"</td>
     <td>Contains the device specific configuration registers for the setup of the Memory Protection Controller (MPC).</td>
@@ -214,7 +214,7 @@ The \ref fm_processor provides a sequence of processor elements that are in the 
 
 /**************************************************************************************************/
 /**
-\page fm_memory ../memory[n] sequence element
+\page fm_memory memory[n] sequence element
 
 The \ref fm_memory provides a sequence of memory information.
 
@@ -556,7 +556,7 @@ The \ref fm_reg_setup contains a sequence of device specific configuration for t
 
 /**************************************************************************************************/
 /**
-\page fm_peripheral ../peripheral[n] element
+\page fm_peripheral peripheral[n] element
 
 The \ref fm_peripheral contains a sequence of all peripherals that are accessible in the zone (or system partition).
 
@@ -718,7 +718,7 @@ The \ref fm_mpu_setup contains the configuration information for the Memory Prot
   </tr>
   <tr>
     <td>mpu_setup.region[<i>n</i>].access.w</td>
-    <td>The \em write \ref access "access" permission setting for the region..</td>
+    <td>The \em write \ref access "access" permission setting for the region.</td>
     <td>xs:boolean</td>
   </tr>
   <tr>
@@ -750,6 +750,21 @@ The \ref fm_mpu_setup contains the configuration information for the Memory Prot
     <td>mpu_setup.region[<i>n</i>].rom</td>
     <td>'1' indicates that the memory type of that region is ROM ('0' for RAM or peripheral).</td>
     <td>xs:boolean</td>
+  </tr>
+  <tr>
+    <td>mpu_setup.region[<i>n</i>].addr_v7M</td>
+    <td>Only for v7M: Region base address field value for v7M register MPU_RBAR.</td>
+    <td>xs:string</td>
+  </tr>
+  <tr>
+    <td>mpu_setup.region[<i>n</i>].size_v7M</td>
+    <td>Only for v7M: Block size field value for v7M register MPU_RASR (examples: 4=32bytes, 9=1KB, 19=1MB).</td>
+    <td>xs:string</td>
+  </tr>
+  <tr>
+    <td>mpu_setup.region[<i>n</i>].srd_v7M</td>
+    <td>Only for v7M: Subregion disable value for v7M register MPU_RASR.</td>
+    <td>xs:string</td>
   </tr>
   
   
