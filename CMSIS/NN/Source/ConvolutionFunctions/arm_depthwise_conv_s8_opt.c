@@ -109,7 +109,7 @@ arm_status arm_depthwise_conv_s8_opt(const q7_t *input,
                the x axis */
             const int ker_y_start = MAX(0, -base_idx_y);
             /* Condition for kernel end dimension: (base_idx_y + ker_y_end) < input_y */
-            const int ker_y_end = MIN(input_y, input_y - base_idx_y);
+            const int ker_y_end = MIN(kernel_y, input_y - base_idx_y);
 
             int32_t index = 0;
             if (ker_y_start != 0)
