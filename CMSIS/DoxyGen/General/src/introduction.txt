@@ -25,7 +25,7 @@ combination of software components from multiple middleware vendors.
 |<a href="../../Pack/html/index.html"><b>Pack</b></a>|      All Cortex-M, SecurCore, Cortex-A5/A7/A9 | Describes a delivery mechanism for software components, device parameters, and evaluation board support. It simplifies software re-use and product life-cycle management (PLM). |
 |<a href="../../SVD/html/index.html"><b>SVD</b></a>|        All Cortex-M, SecurCore | Peripheral description of a device that can be used to create peripheral awareness in debuggers or CMSIS-Core header files.|
 |<a href="../../DAP/html/index.html"><b>DAP</b></a>|        All Cortex | Firmware for a debug unit that interfaces to the CoreSight Debug Access Port. |
-|<a href="../../Zone/html/index.html"><b>Zone</b></a>|      All Cortex | Defines methods to describe system resources and to partition these resources into multiple projects and execution areas. |
+|<a href="../../Zone/html/index.html"><b>Zone</b></a>|      All Cortex-M | Defines methods to describe system resources and to partition these resources into multiple projects and execution areas. |
 
 
 \section Motivation Motivation
