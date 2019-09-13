@@ -24,7 +24,7 @@ The following is an list of all CMSIS components that are available.
 |[Pack](http://arm-software.github.io/CMSIS_5/Pack/html/index.html)    | All Cortex-M, SecurCore, Cortex-A5/A7/A9 | Describes a delivery mechanism for software components, device parameters, and evaluation board support. It simplifies software re-use and product life-cycle management (PLM). |
 |[SVD](http://arm-software.github.io/CMSIS_5/SVD/html/index.html)      | All Cortex-M, SecurCore | Peripheral description of a device that can be used to create peripheral awareness in debuggers or CMSIS-Core header files.|
 |[DAP](http://arm-software.github.io/CMSIS_5/DAP/html/index.html)      | All Cortex | Firmware for a debug unit that interfaces to the CoreSight Debug Access Port. |
-|[Zone](http://arm-software.github.io/CMSIS_5/Zone/html/index.html)    | All Cortex | Defines methods to describe system resources and to partition these resources into multiple projects and execution areas. |
+|[Zone](http://arm-software.github.io/CMSIS_5/Zone/html/index.html)    | All Cortex-M | Defines methods to describe system resources and to partition these resources into multiple projects and execution areas. |
 
 ## Implemented Enhancements
  - CMSIS-Core-A, RTX5: implementation for Cortex-A5/A7/A9
