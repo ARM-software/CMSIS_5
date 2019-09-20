@@ -94,12 +94,7 @@ void assert_relative_error(unsigned long nb,AnyPattern<float32_t> &pa, AnyPatter
     }
 };
 
-/*
 
-SNR functions below are just computing the error noise.
-Signal power needs to be computed.
-
-*/
 
 /**
  * @brief  Caluclation of SNR
@@ -107,61 +102,51 @@ Signal power needs to be computed.
  * @param  float*   Pointer to the test buffer
  * @param  uint32_t     total number of samples
  * @return float    SNR
- * The function Caluclates signal to noise ratio for the reference output
+ * The function calculates signal to noise ratio for the reference output
  * and test output
  */
+
+/* If NaN, force SNR to 0.0 to ensure test will fail */
+#define IFNANRETURNZERO(val)\
+     if (isnan((val)))      \
+     {                      \
+       return(0.0);         \
+     }
+
+#define IFINFINITERETURN(val,def)\
+     if (isinf((val)))           \
+     {                           \
+       return(def);              \
+     }
 
 float arm_snr_f32(float *pRef, float *pTest, uint32_t buffSize)
 {
   float EnergySignal = 0.0, EnergyError = 0.0;
   uint32_t i;
   float SNR;
-  int temp;
-  int *test;
-
+ 
   for (i = 0; i < buffSize; i++)
     {
       /* Checking for a NAN value in pRef array */
-      test =   (int *)(&pRef[i]);
-      temp =  *test;
-
-      if (temp == 0x7FC00000)
-      {
-        return(100000.0);
-      }
-
+      IFNANRETURNZERO(pRef[i]);
+      
       /* Checking for a NAN value in pTest array */
-      test =   (int *)(&pTest[i]);
-      temp =  *test;
+      IFNANRETURNZERO(pTest[i]);
 
-      if (temp == 0x7FC00000)
-      {
-        return(100000.0);
-      }
       EnergySignal += pRef[i] * pRef[i];
       EnergyError += (pRef[i] - pTest[i]) * (pRef[i] - pTest[i]);
     }
 
     /* Checking for a NAN value in EnergyError */
-    test =   (int *)(&EnergyError);
-    temp =  *test;
-
-    if (temp == 0x7FC00000)
-    {
-        return(100000.0);
-    }
+    IFNANRETURNZERO(EnergyError);
 
 
-  SNR = 10 * log10f (EnergySignal / EnergyError);
+    SNR = 10 * log10f (EnergySignal / EnergyError);
 
     /* Checking for a NAN value in SNR */
-    test =   (int *)(&SNR);
-    temp =  *test;
-
-    if (temp == 0x7FC00000)
-    {
-        return(100000.0);
-    }
+    IFNANRETURNZERO(SNR);
+    IFINFINITERETURN(SNR,100000.0);
+    
 
   return (SNR);
 
@@ -172,21 +157,27 @@ float arm_snr_q31(q31_t *pRef, q31_t *pTest, uint32_t buffSize)
   float EnergySignal = 0.0, EnergyError = 0.0;
   uint32_t i;
   float SNR;
-  int temp;
-  float32_t test,ref;
+ 
+  float32_t testVal,refVal;
 
   for (i = 0; i < buffSize; i++)
     {
      
-      test = (float32_t)pTest[i]  / 2147483648.0f;
-      ref = (float32_t)pRef[i]  / 2147483648.0f;
+      testVal = ((float32_t)pTest[i])  / 2147483648.0f;
+      refVal = ((float32_t)pRef[i])  / 2147483648.0f;
 
-      EnergySignal += pRef[i] * pRef[i];
-      EnergyError += (pRef[i] - pTest[i]) * (pRef[i] - pTest[i]);
+      EnergySignal += refVal * refVal;
+      EnergyError += (refVal - testVal) * (refVal - testVal);
     }
 
 
   SNR = 10 * log10f (EnergySignal / EnergyError);
+
+  /* Checking for a NAN value in SNR */
+   IFNANRETURNZERO(SNR);
+   IFINFINITERETURN(SNR,100000.0);
+   
+   //printf("SNR = %f\n",SNR);
 
   return (SNR);
 
@@ -197,21 +188,27 @@ float arm_snr_q15(q15_t *pRef, q15_t *pTest, uint32_t buffSize)
   float EnergySignal = 0.0, EnergyError = 0.0;
   uint32_t i;
   float SNR;
-  int temp;
-  float32_t test,ref;
+ 
+  float32_t testVal,refVal;
 
   for (i = 0; i < buffSize; i++)
     {
      
-      test = (float32_t)pTest[i]   / 32768.0f;
-      ref = (float32_t)pRef[i]  / 32768.0f;
+      testVal = ((float32_t)pTest[i])   / 32768.0f;
+      refVal = ((float32_t)pRef[i])  / 32768.0f;
 
-      EnergySignal += pRef[i] * pRef[i];
-      EnergyError += (pRef[i] - pTest[i]) * (pRef[i] - pTest[i]);
+      EnergySignal += refVal * refVal;
+      EnergyError += (refVal - testVal) * (refVal - testVal);
     }
 
 
   SNR = 10 * log10f (EnergySignal / EnergyError);
+
+  /* Checking for a NAN value in SNR */
+  IFNANRETURNZERO(SNR);
+  IFINFINITERETURN(SNR,100000.0);
+
+  //printf("SNR = %f\n",SNR);
 
   return (SNR);
 
@@ -222,21 +219,24 @@ float arm_snr_q7(q7_t *pRef, q7_t *pTest, uint32_t buffSize)
   float EnergySignal = 0.0, EnergyError = 0.0;
   uint32_t i;
   float SNR;
-  int temp;
-  float32_t test,ref;
+  
+  float32_t testVal,refVal;
 
   for (i = 0; i < buffSize; i++)
     {
      
-      test = (float32_t)pTest[i]   / 128.0f;
-      ref = (float32_t)pRef[i]  / 128.0f;
+      testVal = ((float32_t)pTest[i])   / 128.0f;
+      refVal = ((float32_t)pRef[i])  / 128.0f;
 
-      EnergySignal += pRef[i] * pRef[i];
-      EnergyError += (pRef[i] - pTest[i]) * (pRef[i] - pTest[i]);
+      EnergySignal += refVal * refVal;
+      EnergyError += (refVal - testVal) * (refVal - testVal);
     }
 
 
   SNR = 10 * log10f (EnergySignal / EnergyError);
+
+  IFNANRETURNZERO(SNR);
+  IFINFINITERETURN(SNR,100000.0);
 
   return (SNR);
 
@@ -247,52 +247,28 @@ double arm_snr_f64(double *pRef, double *pTest, uint32_t buffSize)
   double EnergySignal = 0.0, EnergyError = 0.0;
   uint32_t i;
   double SNR;
-  int temp;
-  int *test;
-
+  
   for (i = 0; i < buffSize; i++)
     {
       /* Checking for a NAN value in pRef array */
-      test =   (int *)(&pRef[i]);
-      temp =  *test;
-
-      if (temp == 0x7FC00000)
-      {
-        return(100000.0);
-      }
+      IFNANRETURNZERO(pRef[i]);
+      
 
       /* Checking for a NAN value in pTest array */
-      test =   (int *)(&pTest[i]);
-      temp =  *test;
-
-      if (temp == 0x7FC00000)
-      {
-        return(100000.0);
-      }
+      IFNANRETURNZERO(pTest[i]);
+      
       EnergySignal += pRef[i] * pRef[i];
       EnergyError += (pRef[i] - pTest[i]) * (pRef[i] - pTest[i]);
     }
 
     /* Checking for a NAN value in EnergyError */
-    test =   (int *)(&EnergyError);
-    temp =  *test;
+    IFNANRETURNZERO(EnergyError);
 
-    if (temp == 0x7FC00000)
-    {
-        return(100000.0);
-    }
-
-
-  SNR = 10 * log10 (EnergySignal / EnergyError);
+    SNR = 10 * log10 (EnergySignal / EnergyError);
 
     /* Checking for a NAN value in SNR */
-    test =   (int *)(&SNR);
-    temp =  *test;
-
-    if (temp == 0x7FC00000)
-    {
-        return(10000.0);
-    }
+    IFNANRETURNZERO(SNR);
+    IFINFINITERETURN(SNR,100000.0);
 
   return (SNR);
 

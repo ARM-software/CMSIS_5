@@ -39,6 +39,7 @@ namespace Client {
          this->tail=tail;
          this->m_bufferLength = bufferLength;
          this->m_generation=0;
+         this->memError=false;
          memset((void*)ptr, 0, bufferLength);
      }
 
@@ -52,9 +53,15 @@ namespace Client {
          this->tail=true;
          this->m_bufferLength = bufferLength;
          this->m_generation=0;
+         this->memError=false;
          memset((void*)ptr, 0, bufferLength);
         }
      
+     bool ArrayMemory::HasMemError()
+     {
+         return(this->memError);
+     }
+
      char *ArrayMemory::NewBuffer(size_t length)
      {
          if (length == 0)
@@ -91,6 +98,7 @@ namespace Client {
          }
          else
         {
+            this->memError=true;
             return(NULL);
         }
      }
@@ -112,6 +120,7 @@ namespace Client {
         memset(this->m_ptr, 0, this->m_bufferLength);
         this->m_currentPtr=this->m_ptr;
         this->m_generation++;
+        this->memError=false;
 
     }
 }

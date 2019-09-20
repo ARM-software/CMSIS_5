@@ -151,6 +151,11 @@ API of Memory managers used in the test framework
     // and increment the memory generation number.
     virtual void FreeMemory()=0;
 
+    // Memory allocation errors must be tracked during a test.
+    // The runner should force the test status to FAILED
+    // when a memory error occured.
+    virtual bool HasMemError()=0;
+
     // Get the memory generation number
     unsigned long generation()
     {
@@ -426,12 +431,20 @@ public:
     */
     void freeAll();
 
-    /** MEMory manager generation
+    /** MeMory manager generation
 
     */
     unsigned long generation()
     {
       return(m_mem->generation());
+    }
+
+    // Memory allocation errors must be tracked during a test.
+    // The runner should force the test status to FAILED
+    // when a memory error occured.
+    bool HasMemError()
+    {
+      return(m_mem->HasMemError());
     }
 
     // Set by the runner when in dump mode

@@ -50,7 +50,7 @@
 
 #include "NEMath.h"
 
-float32_t arm_minkowski_distance_f32(const float32_t *pA,const float32_t *pB, int order, uint32_t blockSize)
+float32_t arm_minkowski_distance_f32(const float32_t *pA,const float32_t *pB, int32_t order, uint32_t blockSize)
 {
     float32_t sum,diff;
     uint32_t i, blkCnt;
@@ -96,7 +96,7 @@ float32_t arm_minkowski_distance_f32(const float32_t *pA,const float32_t *pB, in
 #else
 
 
-float32_t arm_minkowski_distance_f32(const float32_t *pA,const float32_t *pB, int order, uint32_t blockSize)
+float32_t arm_minkowski_distance_f32(const float32_t *pA,const float32_t *pB, int32_t order, uint32_t blockSize)
 {
     float32_t sum,diff;
     uint32_t i;

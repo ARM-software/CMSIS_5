@@ -94,7 +94,10 @@ This overhead is removed from benchmarks in the Runner..
 */
         for(int i=0;i < 20;i++)
         {
-           (s->*t)();
+          if (!m_mgr->HasMemError())
+          {
+             (s->*t)();
+          }
         }
 #ifdef EXTBENCH
         stopSection();
@@ -193,12 +196,16 @@ This overhead is removed from benchmarks in the Runner..
                 // setUp will generally load patterns
                 // and do specific initialization for the tests
                 s->setUp(m_io->CurrentTestID(),params,m_mgr);
-                // Run the test
+                
+                   // Run the test
                 cycleMeasurementStart();
 #ifdef EXTBENCH
                 startSection();
 #endif
-                (s->*t)();
+                if (!m_mgr->HasMemError())
+                {
+                    (s->*t)();
+                }
 #ifdef EXTBENCH
                 stopSection();
 #endif
@@ -209,6 +216,7 @@ This overhead is removed from benchmarks in the Runner..
               } 
               catch(Error &ex)
               {
+                 cycleMeasurementStop();
                  // In dump only mode we ignore the tests 
                  // since the reference patterns are not loaded
                  // so tests will fail.
@@ -220,6 +228,7 @@ This overhead is removed from benchmarks in the Runner..
                  }
               }
               catch (...) { 
+                cycleMeasurementStop();
                 // In dump only mode we ignore the tests 
                 // since the reference patterns are not loaded
                 // so tests will fail.
@@ -238,6 +247,18 @@ This overhead is removed from benchmarks in the Runner..
               catch(...)
               {
               
+              }
+
+              if (m_mgr->HasMemError())
+              {
+                /* We keep the current error if set.
+                */
+                if (result == Testing::kTestPassed)
+                {
+                  result = Testing::kTestFailed;
+                  error = MEMORY_ALLOCATION_ERROR;
+                  line = 0;
+                }
               }
               
               // Free all memory of memory manager so that next test

@@ -64,7 +64,7 @@ void arm_svm_polynomial_init_f32(arm_svm_polynomial_instance_f32 *S,
   const float32_t *dualCoefficients,
   const float32_t *supportVectors,
   const int32_t *classes,
-  int      degree,
+  int32_t      degree,
   float32_t coef0,
   float32_t gamma
   )

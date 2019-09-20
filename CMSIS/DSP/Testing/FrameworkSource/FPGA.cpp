@@ -505,9 +505,12 @@ namespace Client
         const float64_t *src = (const float64_t*)patternStart;
         float64_t *dst = (float64_t*)p;
 
-        for(i=0; i < nb; i++)
+        if (dst)
         {
-            *dst++ = *src++;
+           for(i=0; i < nb; i++)
+           {
+               *dst++ = *src++;
+           }
         }
     }
 
@@ -521,11 +524,13 @@ namespace Client
         const float32_t *src = (const float32_t*)patternStart;
         float32_t *dst = (float32_t*)p;
 
-        for(i=0; i < nb; i++)
+        if (dst)
         {
-            *dst++ = *src++;
+           for(i=0; i < nb; i++)
+           {
+               *dst++ = *src++;
+           }
         }
-        
 
     }
 
@@ -539,9 +544,12 @@ namespace Client
         const q31_t *src = (const q31_t*)patternStart;
         q31_t *dst = (q31_t*)p;
 
-        for(i=0; i < nb; i++)
+        if (dst)
         {
-            *dst++ = *src++;
+           for(i=0; i < nb; i++)
+           {
+               *dst++ = *src++;
+           }
         }
     }
 
@@ -555,9 +563,12 @@ namespace Client
         const q15_t *src = (const q15_t*)patternStart;
         q15_t *dst = (q15_t*)p;
 
-        for(i=0; i < nb; i++)
+        if (dst)
         {
-            *dst++ = *src++;
+           for(i=0; i < nb; i++)
+           {
+               *dst++ = *src++;
+           }
         }
     }
 
@@ -571,9 +582,12 @@ namespace Client
         const q7_t *src = (const q7_t*)patternStart;
         q7_t *dst = (q7_t*)p;
 
-        for(i=0; i < nb; i++)
+        if (dst)
         {
-            *dst++ = *src++;
+           for(i=0; i < nb; i++)
+           {
+               *dst++ = *src++;
+           }
         }
     }
 
@@ -587,9 +601,12 @@ namespace Client
         const uint32_t *src = (const uint32_t*)patternStart;
         uint32_t *dst = (uint32_t*)p;
 
-        for(i=0; i < nb; i++)
+        if (dst)
         {
-            *dst++ = *src++;
+            for(i=0; i < nb; i++)
+            {
+                *dst++ = *src++;
+            }
         }
     }
 
@@ -603,9 +620,12 @@ namespace Client
         const uint16_t *src = (const uint16_t*)patternStart;
         uint16_t *dst = (uint16_t*)p;
 
-        for(i=0; i < nb; i++)
+        if (dst)
         {
-            *dst++ = *src++;
+           for(i=0; i < nb; i++)
+           {
+               *dst++ = *src++;
+           }
         }
     }
 
@@ -619,9 +639,12 @@ namespace Client
         const uint8_t *src = (const uint8_t*)patternStart;
         uint8_t *dst = (uint8_t*)p;
 
-        for(i=0; i < nb; i++)
+        if (dst)
         {
-            *dst++ = *src++;
+            for(i=0; i < nb; i++)
+            {
+                *dst++ = *src++;
+            }
         }
     }
     
@@ -636,129 +659,153 @@ namespace Client
     void FPGA::DumpPattern_f64(Testing::outputID_t id,Testing::nbSamples_t nb, float64_t* data)
     {
         std::string fileName = this->getOutputPath(id); 
-        printf("D: %s\n",fileName.c_str());
-        Testing::nbSamples_t i=0;
-        uint64_t t;
-        float64_t v;
-        for(i=0; i < nb; i++)
+        if (data)
         {
-           v = data[i];
-           t = TOINT64(v);
-           printf("D: 0x%016llx\n",t);
+           printf("D: %s\n",fileName.c_str());
+           Testing::nbSamples_t i=0;
+           uint64_t t;
+           float64_t v;
+           for(i=0; i < nb; i++)
+           {
+              v = data[i];
+              t = TOINT64(v);
+              printf("D: 0x%016llx\n",t);
+           }
+           printf("D: END\n");
         }
-        printf("D: END\n");
 
     }
     void FPGA::DumpPattern_f32(Testing::outputID_t id,Testing::nbSamples_t nb, float32_t* data)
     {
         std::string fileName = this->getOutputPath(id); 
-        printf("D: %s\n",fileName.c_str());
-        Testing::nbSamples_t i=0;
-        uint32_t t;
-        float32_t v;
-        for(i=0; i < nb; i++)
+        if (data)
         {
-           v = data[i];
-           t = TOINT32(v);
-           printf("D: 0x%08x\n",t);
+            printf("D: %s\n",fileName.c_str());
+            Testing::nbSamples_t i=0;
+            uint32_t t;
+            float32_t v;
+            for(i=0; i < nb; i++)
+            {
+               v = data[i];
+               t = TOINT32(v);
+               printf("D: 0x%08x\n",t);
+            }
+            printf("D: END\n");
         }
-        printf("D: END\n");
     }
 
     void FPGA::DumpPattern_q31(Testing::outputID_t id,Testing::nbSamples_t nb, q31_t* data)
     {
         std::string fileName = this->getOutputPath(id); 
-        printf("D: %s\n",fileName.c_str());
-        Testing::nbSamples_t i=0;
-        uint32_t t;
-        q31_t v;
-        for(i=0; i < nb; i++)
+        if (data)
         {
-           v = data[i];
-           t = (uint32_t)v;
-           printf("D: 0x%08x\n",t);
+           printf("D: %s\n",fileName.c_str());
+           Testing::nbSamples_t i=0;
+           uint32_t t;
+           q31_t v;
+           for(i=0; i < nb; i++)
+           {
+              v = data[i];
+              t = (uint32_t)v;
+              printf("D: 0x%08x\n",t);
+           }
+           printf("D: END\n");
         }
-        printf("D: END\n");
     }
 
     void FPGA::DumpPattern_q15(Testing::outputID_t id,Testing::nbSamples_t nb, q15_t* data)
     {
         std::string fileName = this->getOutputPath(id); 
-        printf("D: %s\n",fileName.c_str());
-        Testing::nbSamples_t i=0;
-        uint32_t t;
-        q15_t v;
-        for(i=0; i < nb; i++)
+        if (data)
         {
-           v = data[i];
-           t = (uint32_t)v;
-           printf("D: 0x%08x\n",t);
+           printf("D: %s\n",fileName.c_str());
+           Testing::nbSamples_t i=0;
+           uint32_t t;
+           q15_t v;
+           for(i=0; i < nb; i++)
+           {
+              v = data[i];
+              t = (uint32_t)v;
+              printf("D: 0x%08x\n",t);
+           }
+           printf("D: END\n");
         }
-        printf("D: END\n");
     }
 
     void FPGA::DumpPattern_q7(Testing::outputID_t id,Testing::nbSamples_t nb, q7_t* data)
     {
         std::string fileName = this->getOutputPath(id); 
-        printf("D: %s\n",fileName.c_str());
-        Testing::nbSamples_t i=0;
-        uint32_t t;
-        q7_t v;
-        for(i=0; i < nb; i++)
+        if (data)
         {
-           v = data[i];
-           t = (uint32_t)v;
-           printf("D: 0x%08x\n",t);
+            printf("D: %s\n",fileName.c_str());
+            Testing::nbSamples_t i=0;
+            uint32_t t;
+            q7_t v;
+            for(i=0; i < nb; i++)
+            {
+               v = data[i];
+               t = (uint32_t)v;
+               printf("D: 0x%08x\n",t);
+            }
+            printf("D: END\n");
         }
-        printf("D: END\n");
     }
 
     void FPGA::DumpPattern_u32(Testing::outputID_t id,Testing::nbSamples_t nb, uint32_t* data)
     {
         std::string fileName = this->getOutputPath(id); 
-        printf("D: %s\n",fileName.c_str());
-        Testing::nbSamples_t i=0;
-        uint32_t t;
-        uint32_t v;
-        for(i=0; i < nb; i++)
+        if (data)
         {
-           v = data[i];
-           t = (uint32_t)v;
-           printf("D: 0x%08x\n",t);
+           printf("D: %s\n",fileName.c_str());
+           Testing::nbSamples_t i=0;
+           uint32_t t;
+           uint32_t v;
+           for(i=0; i < nb; i++)
+           {
+              v = data[i];
+              t = (uint32_t)v;
+              printf("D: 0x%08x\n",t);
+           }
+           printf("D: END\n");
         }
-        printf("D: END\n");
     }
 
     void FPGA::DumpPattern_u16(Testing::outputID_t id,Testing::nbSamples_t nb, uint16_t* data)
     {
         std::string fileName = this->getOutputPath(id); 
-        printf("D: %s\n",fileName.c_str());
-        Testing::nbSamples_t i=0;
-        uint32_t t;
-        uint16_t v;
-        for(i=0; i < nb; i++)
+        if (data)
         {
-           v = data[i];
-           t = (uint32_t)v;
-           printf("D: 0x%08x\n",t);
+            printf("D: %s\n",fileName.c_str());
+            Testing::nbSamples_t i=0;
+            uint32_t t;
+            uint16_t v;
+            for(i=0; i < nb; i++)
+            {
+               v = data[i];
+               t = (uint32_t)v;
+               printf("D: 0x%08x\n",t);
+            }
+            printf("D: END\n");
         }
-        printf("D: END\n");
     }
 
     void FPGA::DumpPattern_u8(Testing::outputID_t id,Testing::nbSamples_t nb, uint8_t* data)
     {
         std::string fileName = this->getOutputPath(id); 
-        printf("D: %s\n",fileName.c_str());
-        Testing::nbSamples_t i=0;
-        uint32_t t;
-        uint8_t v;
-        for(i=0; i < nb; i++)
+        if (data)
         {
-           v = data[i];
-           t = (uint32_t)v;
-           printf("D: 0x%08x\n",t);
+            printf("D: %s\n",fileName.c_str());
+            Testing::nbSamples_t i=0;
+            uint32_t t;
+            uint8_t v;
+            for(i=0; i < nb; i++)
+            {
+               v = data[i];
+               t = (uint32_t)v;
+               printf("D: 0x%08x\n",t);
+            }
+            printf("D: END\n");
         }
-        printf("D: END\n");
     }
 
     Testing::testID_t FPGA::CurrentTestID()

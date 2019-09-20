@@ -64,7 +64,10 @@ float64_t *PatternMgr::load_f64(Testing::PatternID_t id,Testing::nbSamples_t& nb
     }
   
     char *b = m_mem->NewBuffer(sizeof(float64_t)*nbSamples);
-    m_io->ImportPattern_f64(id,b,nbSamples);
+    if (b != NULL)
+    {
+       m_io->ImportPattern_f64(id,b,nbSamples);
+    }
     return((float64_t*)b);
    
 }
@@ -79,7 +82,10 @@ float32_t *PatternMgr::load_f32(Testing::PatternID_t id,Testing::nbSamples_t& nb
     }
 
     char *b = m_mem->NewBuffer(sizeof(float32_t)*nbSamples);
-    m_io->ImportPattern_f32(id,b,nbSamples);
+    if (b != NULL)
+    {
+       m_io->ImportPattern_f32(id,b,nbSamples);
+    }
     return((float32_t*)b);
    
 }
@@ -94,7 +100,10 @@ q31_t *PatternMgr::load_q31(Testing::PatternID_t id,Testing::nbSamples_t& nbSamp
     }
 
     char *b = m_mem->NewBuffer(sizeof(q31_t)*nbSamples);
-    m_io->ImportPattern_q31(id,b,nbSamples);
+    if (b != NULL)
+    {
+       m_io->ImportPattern_q31(id,b,nbSamples);
+    }
     return((q31_t*)b);
 }
 
@@ -108,7 +117,10 @@ q15_t *PatternMgr::load_q15(Testing::PatternID_t id,Testing::nbSamples_t& nbSamp
     }
 
     char *b = m_mem->NewBuffer(sizeof(q15_t)*nbSamples);
-    m_io->ImportPattern_q15(id,b,nbSamples);
+    if (b != NULL)
+    {
+       m_io->ImportPattern_q15(id,b,nbSamples);
+    }
     return((q15_t*)b);
 }
 
@@ -122,7 +134,10 @@ q7_t *PatternMgr::load_q7(Testing::PatternID_t id,Testing::nbSamples_t& nbSample
     }
 
     char *b = m_mem->NewBuffer(sizeof(q7_t)*nbSamples);
-    m_io->ImportPattern_q7(id,b,nbSamples);
+    if (b != NULL)
+    {
+       m_io->ImportPattern_q7(id,b,nbSamples);
+    }
     return((q7_t*)b);
 }
 
@@ -136,7 +151,10 @@ uint32_t *PatternMgr::load_u32(Testing::PatternID_t id,Testing::nbSamples_t& nbS
     }
 
     char *b = m_mem->NewBuffer(sizeof(uint32_t)*nbSamples);
-    m_io->ImportPattern_u32(id,b,nbSamples);
+    if (b != NULL)
+    {
+       m_io->ImportPattern_u32(id,b,nbSamples);
+    }
     return((uint32_t*)b);
 }
 
@@ -150,7 +168,10 @@ uint16_t *PatternMgr::load_u16(Testing::PatternID_t id,Testing::nbSamples_t& nbS
     }
 
     char *b = m_mem->NewBuffer(sizeof(uint16_t)*nbSamples);
-    m_io->ImportPattern_u16(id,b,nbSamples);
+    if (b != NULL)
+    {
+       m_io->ImportPattern_u16(id,b,nbSamples);
+    }
     return((uint16_t*)b);
 }
 
@@ -164,7 +185,10 @@ uint8_t *PatternMgr::load_u8(Testing::PatternID_t id,Testing::nbSamples_t& nbSam
     }
 
     char *b = m_mem->NewBuffer(sizeof(uint8_t)*nbSamples);
-    m_io->ImportPattern_u8(id,b,nbSamples);
+    if (b != NULL)
+    {
+       m_io->ImportPattern_u8(id,b,nbSamples);
+    }
     return((uint8_t*)b);
 }
 

@@ -1285,8 +1285,8 @@ group Root {
                   Formula "NB"
                 }
 
-                Pattern INPUTR_F32_ID : RealSamples1_f32.txt 
-                Pattern INPUTC_F32_ID : ComplexSamples1_f32.txt 
+                Pattern INPUTR_F32_ID : RealInputSamples19_f32.txt 
+                Pattern INPUTC_F32_ID : ComplexInputSamples_Noisy_512_6_f32.txt 
                 Output  OUT_F32_ID : Output
                 Output  STATE_F32_ID : Output
 
@@ -1329,8 +1329,8 @@ group Root {
                   Formula "NB"
                 }
 
-                Pattern INPUTR_Q31_ID : RealSamples1_q31.txt 
-                Pattern INPUTC_Q31_ID : ComplexSamples1_q31.txt 
+                Pattern INPUTR_Q31_ID : RealInputSamples19_q31.txt 
+                Pattern INPUTC_Q31_ID : ComplexInputSamples_Noisy_512_6_q31.txt 
                 Output  OUT_Q31_ID : Output
                 Output  STATE_Q31_ID : Output
 
@@ -1373,8 +1373,8 @@ group Root {
                   Formula "NB"
                 }
 
-                Pattern INPUTR_Q15_ID : RealSamples1_q15.txt 
-                Pattern INPUTC_Q15_ID : ComplexSamples1_q15.txt 
+                Pattern INPUTR_Q15_ID : RealInputSamples19_q15.txt 
+                Pattern INPUTC_Q15_ID : ComplexInputSamples_Noisy_512_6_q15.txt 
                 Output  OUT_Q15_ID : Output
                 Output  STATE_Q15_ID : Output
 

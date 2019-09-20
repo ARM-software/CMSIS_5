@@ -39,6 +39,7 @@
 #define SNR_ERROR 5
 #define DIFFERENT_LENGTH_ERROR 6
 #define BOOL_ERROR 7
+#define MEMORY_ALLOCATION_ERROR 8
 
 namespace Client {
 

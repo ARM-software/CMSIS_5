@@ -43,6 +43,7 @@ class ArrayMemory:public Client::Memory
     ArrayMemory(char* ptr, size_t bufferLength);
     char *NewBuffer(size_t length);
     void FreeMemory();
+    bool HasMemError();
    
    private:
      // Pointer to C array used for memory
@@ -57,6 +58,8 @@ class ArrayMemory:public Client::Memory
      // Current pointer to the memory 
      // It is where a new buffer will be allocated
      char *m_currentPtr;
+     // Error occured
+     bool memError=false;
 };
 }
 

@@ -30,7 +30,7 @@
 #include <math.h>
 
 
-static inline double rel_entr(double x, double y)
+static inline float32_t rel_entr(float32_t x, float32_t y)
 {
     return (x * log(x / y));
 }

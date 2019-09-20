@@ -604,13 +604,16 @@ namespace Client
              len = nb;
           }
 
-          for(i=0;i<len;i++)
+          if (ptr)
           {
-            // Ignore comment
-             fgets(tmp,256,pattern);
-             fscanf(pattern,"0x%16llx\n",&val);
-             *ptr = TOTYP(float64_t,val);
-             ptr++;
+             for(i=0;i<len;i++)
+             {
+               // Ignore comment
+                fgets(tmp,256,pattern);
+                fscanf(pattern,"0x%16llx\n",&val);
+                *ptr = TOTYP(float64_t,val);
+                ptr++;
+             }
           }
 
           fclose(pattern);
@@ -641,14 +644,17 @@ namespace Client
 
           //printf(":::: %s\n",fileName.c_str());
 
-          for(i=0;i<len;i++)
+          if (ptr)
           {
-             // Ignore comment
-             fgets(tmp,256,pattern);
-             fscanf(pattern,"0x%08X\n",&val);
-             //printf(":::: %08X %f\n",val, TOTYP(float32_t,val));
-             *ptr = TOTYP(float32_t,val);
-             ptr++;
+             for(i=0;i<len;i++)
+             {
+                // Ignore comment
+                fgets(tmp,256,pattern);
+                fscanf(pattern,"0x%08X\n",&val);
+                //printf(":::: %08X %f\n",val, TOTYP(float32_t,val));
+                *ptr = TOTYP(float32_t,val);
+                ptr++;
+             }
           }
 
           fclose(pattern);
@@ -677,13 +683,16 @@ namespace Client
              len = nb;
           }
 
-          for(i=0;i<len;i++)
+          if (ptr)
           {
-            // Ignore comment
-             fgets(tmp,256,pattern);
-             fscanf(pattern,"0x%08X\n",&val);
-             *ptr = TOTYP(q31_t,val);
-             ptr++;
+             for(i=0;i<len;i++)
+             {
+               // Ignore comment
+                fgets(tmp,256,pattern);
+                fscanf(pattern,"0x%08X\n",&val);
+                *ptr = TOTYP(q31_t,val);
+                ptr++;
+             }
           }
 
           fclose(pattern);
@@ -712,13 +721,16 @@ namespace Client
              len = nb;
           }
 
-          for(i=0;i<len;i++)
+          if (ptr)
           {
-            // Ignore comment
-             fgets(tmp,256,pattern);
-             fscanf(pattern,"0x%08X\n",&val);
-             *ptr = TOTYP(q15_t,val);
-             ptr++;
+             for(i=0;i<len;i++)
+             {
+               // Ignore comment
+                fgets(tmp,256,pattern);
+                fscanf(pattern,"0x%08X\n",&val);
+                *ptr = TOTYP(q15_t,val);
+                ptr++;
+             }
           }
 
           fclose(pattern);
@@ -747,13 +759,16 @@ namespace Client
              len = nb;
           }
 
-          for(i=0;i<len;i++)
+          if (ptr)
           {
-            // Ignore comment
-             fgets(tmp,256,pattern);
-             fscanf(pattern,"0x%08X\n",&val);
-             *ptr = TOTYP(q7_t,val);
-             ptr++;
+              for(i=0;i<len;i++)
+              {
+                // Ignore comment
+                 fgets(tmp,256,pattern);
+                 fscanf(pattern,"0x%08X\n",&val);
+                 *ptr = TOTYP(q7_t,val);
+                 ptr++;
+              }
           }
 
           fclose(pattern);
@@ -782,13 +797,16 @@ namespace Client
              len = nb;
           }
 
-          for(i=0;i<len;i++)
+          if (ptr)
           {
-            // Ignore comment
-             fgets(tmp,256,pattern);
-             fscanf(pattern,"0x%08X\n",&val);
-             *ptr = val;
-             ptr++;
+              for(i=0;i<len;i++)
+              {
+                // Ignore comment
+                 fgets(tmp,256,pattern);
+                 fscanf(pattern,"0x%08X\n",&val);
+                 *ptr = val;
+                 ptr++;
+              }
           }
 
           fclose(pattern);
@@ -817,13 +835,16 @@ namespace Client
              len = nb;
           }
 
-          for(i=0;i<len;i++)
+          if (ptr)
           {
-            // Ignore comment
-             fgets(tmp,256,pattern);
-             fscanf(pattern,"0x%08X\n",&val);
-             *ptr = (uint16_t)val;
-             ptr++;
+              for(i=0;i<len;i++)
+              {
+                // Ignore comment
+                 fgets(tmp,256,pattern);
+                 fscanf(pattern,"0x%08X\n",&val);
+                 *ptr = (uint16_t)val;
+                 ptr++;
+              }
           }
 
           fclose(pattern);
@@ -852,13 +873,16 @@ namespace Client
              len = nb;
           }
           
-          for(i=0;i<len;i++)
+          if (ptr)
           {
-            // Ignore comment
-             fgets(tmp,256,pattern);
-             fscanf(pattern,"0x%08X\n",&val);
-             *ptr = (uint8_t)val;
-             ptr++;
+              for(i=0;i<len;i++)
+              {
+                // Ignore comment
+                 fgets(tmp,256,pattern);
+                 fscanf(pattern,"0x%08X\n",&val);
+                 *ptr = (uint8_t)val;
+                 ptr++;
+              }
           }
 
           fclose(pattern);
@@ -868,111 +892,135 @@ namespace Client
       void Semihosting::DumpPattern_f64(Testing::outputID_t id,Testing::nbSamples_t nb, float64_t* data)
       {
             std::string fileName = this->getOutputPath(id);
-            FILE *f = fopen(fileName.c_str(),"w");
-            Testing::nbSamples_t i=0;
-            uint64_t t;
-            float64_t v;
-            for(i=0; i < nb; i++)
+            if (data)
             {
-               v = data[i];
-               t = TOINT64(v);
-               fprintf(f,"0x%016llx\n",t);
+                FILE *f = fopen(fileName.c_str(),"w");
+                Testing::nbSamples_t i=0;
+                uint64_t t;
+                float64_t v;
+                for(i=0; i < nb; i++)
+                {
+                   v = data[i];
+                   t = TOINT64(v);
+                   fprintf(f,"0x%016llx\n",t);
+                }
+                fclose(f);
             }
-            fclose(f);
 
       }
       void Semihosting::DumpPattern_f32(Testing::outputID_t id,Testing::nbSamples_t nb, float32_t* data)
       {
             std::string fileName = this->getOutputPath(id);
-            FILE *f = fopen(fileName.c_str(),"w");
-            Testing::nbSamples_t i=0;
-            uint32_t t;
-            float32_t v;
-            for(i=0; i < nb; i++)
+            if (data)
             {
-               v = data[i];
-               t = TOINT32(v);
-               fprintf(f,"0x%08x\n",t);
+               FILE *f = fopen(fileName.c_str(),"w");
+               Testing::nbSamples_t i=0;
+               uint32_t t;
+               float32_t v;
+               for(i=0; i < nb; i++)
+               {
+                  v = data[i];
+                  t = TOINT32(v);
+                  fprintf(f,"0x%08x\n",t);
+               }
+               fclose(f);
             }
-            fclose(f);
       }
       void Semihosting::DumpPattern_q31(Testing::outputID_t id,Testing::nbSamples_t nb, q31_t* data)
       {
             std::string fileName = this->getOutputPath(id);
-            FILE *f = fopen(fileName.c_str(),"w");
-            Testing::nbSamples_t i=0;
-            uint32_t t;
-            for(i=0; i < nb; i++)
+            if (data)
             {
-               t = (uint32_t)data[i];
-               fprintf(f,"0x%08x\n",t);
+                FILE *f = fopen(fileName.c_str(),"w");
+                Testing::nbSamples_t i=0;
+                uint32_t t;
+                for(i=0; i < nb; i++)
+                {
+                   t = (uint32_t)data[i];
+                   fprintf(f,"0x%08x\n",t);
+                }
+                fclose(f);
             }
-            fclose(f);
       }
       void Semihosting::DumpPattern_q15(Testing::outputID_t id,Testing::nbSamples_t nb, q15_t* data)
       {
             std::string fileName = this->getOutputPath(id);
-            FILE *f = fopen(fileName.c_str(),"w");
-            Testing::nbSamples_t i=0;
-            uint32_t t;
-            for(i=0; i < nb; i++)
+            if (data)
             {
-               t = (uint32_t)data[i];
-               fprintf(f,"0x%08x\n",t);
+                FILE *f = fopen(fileName.c_str(),"w");
+                Testing::nbSamples_t i=0;
+                uint32_t t;
+                for(i=0; i < nb; i++)
+                {
+                   t = (uint32_t)data[i];
+                   fprintf(f,"0x%08x\n",t);
+                }
+                fclose(f);
             }
-            fclose(f);
       }
       void Semihosting::DumpPattern_q7(Testing::outputID_t id,Testing::nbSamples_t nb, q7_t* data)
       {
             std::string fileName = this->getOutputPath(id);
-            FILE *f = fopen(fileName.c_str(),"w");
-            Testing::nbSamples_t i=0;
-            uint32_t t;
-            for(i=0; i < nb; i++)
+            if (data)
             {
-               t = (uint32_t)data[i];
-               fprintf(f,"0x%08x\n",t);
+                FILE *f = fopen(fileName.c_str(),"w");
+                Testing::nbSamples_t i=0;
+                uint32_t t;
+                for(i=0; i < nb; i++)
+                {
+                   t = (uint32_t)data[i];
+                   fprintf(f,"0x%08x\n",t);
+                }
+                fclose(f);
             }
-            fclose(f);
       }
       void Semihosting::DumpPattern_u32(Testing::outputID_t id,Testing::nbSamples_t nb, uint32_t* data)
       {
             std::string fileName = this->getOutputPath(id);
-            FILE *f = fopen(fileName.c_str(),"w");
-            Testing::nbSamples_t i=0;
-            uint32_t t;
-            for(i=0; i < nb; i++)
+            if (data)
             {
-               t = (uint32_t)data[i];
-               fprintf(f,"0x%08x\n",t);
+                FILE *f = fopen(fileName.c_str(),"w");
+                Testing::nbSamples_t i=0;
+                uint32_t t;
+                for(i=0; i < nb; i++)
+                {
+                   t = (uint32_t)data[i];
+                   fprintf(f,"0x%08x\n",t);
+                }
+                fclose(f);
             }
-            fclose(f);
       }
       void Semihosting::DumpPattern_u16(Testing::outputID_t id,Testing::nbSamples_t nb, uint16_t* data)
       {
             std::string fileName = this->getOutputPath(id);
-            FILE *f = fopen(fileName.c_str(),"w");
-            Testing::nbSamples_t i=0;
-            uint32_t t;
-            for(i=0; i < nb; i++)
+            if (data)
             {
-               t = (uint32_t)data[i];
-               fprintf(f,"0x%08x\n",t);
+                FILE *f = fopen(fileName.c_str(),"w");
+                Testing::nbSamples_t i=0;
+                uint32_t t;
+                for(i=0; i < nb; i++)
+                {
+                   t = (uint32_t)data[i];
+                   fprintf(f,"0x%08x\n",t);
+                }
+                fclose(f);
             }
-            fclose(f);
       }
       void Semihosting::DumpPattern_u8(Testing::outputID_t id,Testing::nbSamples_t nb, uint8_t* data)
       {
             std::string fileName = this->getOutputPath(id);
-            FILE *f = fopen(fileName.c_str(),"w");
-            Testing::nbSamples_t i=0;
-            uint32_t t;
-            for(i=0; i < nb; i++)
+            if (data)
             {
-               t = (uint32_t)data[i];
-               fprintf(f,"0x%08x\n",t);
+               FILE *f = fopen(fileName.c_str(),"w");
+               Testing::nbSamples_t i=0;
+               uint32_t t;
+               for(i=0; i < nb; i++)
+               {
+                  t = (uint32_t)data[i];
+                  fprintf(f,"0x%08x\n",t);
+               }
+               fclose(f);
             }
-            fclose(f);
       }
       
     

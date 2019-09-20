@@ -877,7 +877,7 @@ compiler file in Core or Core_A would not make sense.
  * @return x^nb
  *
  */
-static inline float32_t arm_exponent_f32(float32_t x, int nb)
+__STATIC_INLINE float32_t arm_exponent_f32(float32_t x, int32_t nb)
 {
     float32_t r = x;
     nb --;
@@ -898,7 +898,7 @@ static inline float32_t arm_exponent_f32(float32_t x, int nb)
  * @return x^nb
  *
  */
-static inline  float32x4_t arm_vec_exponent_f32(float32x4_t x, int nb)
+__STATIC_INLINE  float32x4_t arm_vec_exponent_f32(float32x4_t x, int32_t nb)
 {
     float32x4_t r = x;
     nb --;
@@ -911,7 +911,7 @@ static inline  float32x4_t arm_vec_exponent_f32(float32x4_t x, int nb)
 }
 
 
-static inline float32x4_t __arm_vec_sqrt_f32_neon(float32x4_t  x)
+__STATIC_INLINE float32x4_t __arm_vec_sqrt_f32_neon(float32x4_t  x)
 {
     float32x4_t x1 = vmaxq_f32(x, vdupq_n_f32(FLT_MIN));
     float32x4_t e = vrsqrteq_f32(x1);
@@ -920,7 +920,7 @@ static inline float32x4_t __arm_vec_sqrt_f32_neon(float32x4_t  x)
     return vmulq_f32(x, e);
 }
 
-static inline int16x8_t __arm_vec_sqrt_q15_neon(int16x8_t vec)
+__STATIC_INLINE int16x8_t __arm_vec_sqrt_q15_neon(int16x8_t vec)
 {
     float32x4_t tempF;
     int32x4_t tempHI,tempLO;
@@ -938,7 +938,7 @@ static inline int16x8_t __arm_vec_sqrt_q15_neon(int16x8_t vec)
     return(vcombine_s16(vqmovn_s32(tempLO),vqmovn_s32(tempHI)));
 }
 
-static inline int32x4_t __arm_vec_sqrt_q31_neon(int32x4_t vec)
+__STATIC_INLINE int32x4_t __arm_vec_sqrt_q31_neon(int32x4_t vec)
 {
   float32x4_t temp;
 
@@ -6999,7 +6999,7 @@ typedef struct
   const float32_t *dualCoefficients;      /**< Dual coefficients */
   const float32_t *supportVectors;        /**< Support vectors */
   const int32_t   *classes;               /**< The two SVM classes */
-  int             degree;                 /**< Polynomial degree */
+  int32_t         degree;                 /**< Polynomial degree */
   float32_t       coef0;                  /**< Polynomial constant */
   float32_t       gamma;                  /**< Gamma factor */
 } arm_svm_polynomial_instance_f32;
@@ -7066,7 +7066,7 @@ void arm_svm_linear_init_f32(arm_svm_linear_instance_f32 *S,
   
 void arm_svm_linear_predict_f32(const arm_svm_linear_instance_f32 *S, 
    const float32_t * in, 
-   int * pResult);
+   int32_t * pResult);
 
 
 /**
@@ -7093,7 +7093,7 @@ void arm_svm_polynomial_init_f32(arm_svm_polynomial_instance_f32 *S,
   const float32_t *dualCoefficients,
   const float32_t *supportVectors,
   const int32_t   *classes,
-  int      degree,
+  int32_t      degree,
   float32_t coef0,
   float32_t gamma
   );
@@ -7108,7 +7108,7 @@ void arm_svm_polynomial_init_f32(arm_svm_polynomial_instance_f32 *S,
  */
 void arm_svm_polynomial_predict_f32(const arm_svm_polynomial_instance_f32 *S, 
    const float32_t * in, 
-   int * pResult);
+   int32_t * pResult);
 
 
 /**
@@ -7145,7 +7145,7 @@ void arm_svm_rbf_init_f32(arm_svm_rbf_instance_f32 *S,
  */
 void arm_svm_rbf_predict_f32(const arm_svm_rbf_instance_f32 *S, 
    const float32_t * in, 
-   int * pResult);
+   int32_t * pResult);
 
 /**
  * @brief        SVM sigmoid instance init function
@@ -7183,7 +7183,7 @@ void arm_svm_sigmoid_init_f32(arm_svm_sigmoid_instance_f32 *S,
  */
 void arm_svm_sigmoid_predict_f32(const arm_svm_sigmoid_instance_f32 *S, 
    const float32_t * in, 
-   int * pResult);
+   int32_t * pResult);
 
 
 
@@ -7439,7 +7439,7 @@ float32_t arm_jensenshannon_distance_f32(const float32_t *pA,const float32_t *pB
 
 
 
-float32_t arm_minkowski_distance_f32(const float32_t *pA,const float32_t *pB, int order, uint32_t blockSize);
+float32_t arm_minkowski_distance_f32(const float32_t *pA,const float32_t *pB, int32_t order, uint32_t blockSize);
 
 /**
  * @brief        Dice distance between two vectors

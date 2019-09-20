@@ -50,7 +50,7 @@
 void arm_svm_rbf_predict_f32(
     const arm_svm_rbf_instance_f32 *S,
     const float32_t * in,
-    int * pResult)
+    int32_t * pResult)
 {
     float32_t sum = S->intercept;
    
@@ -220,7 +220,7 @@ void arm_svm_rbf_predict_f32(
 void arm_svm_rbf_predict_f32(
     const arm_svm_rbf_instance_f32 *S,
     const float32_t * in,
-    int * pResult)
+    int32_t * pResult)
 {
     float32_t sum=S->intercept;
     float32_t dot=0;

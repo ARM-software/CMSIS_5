@@ -2,6 +2,8 @@ import os.path
 import struct
 import numpy as np
 
+# Tools to generate pattern files
+
 def createMissingDir(destPath):
   theDir=os.path.normpath(destPath)
   if not os.path.exists(theDir):
