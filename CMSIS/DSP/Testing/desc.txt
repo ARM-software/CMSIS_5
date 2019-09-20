@@ -638,19 +638,19 @@ group Root {
                  cifft_noisy_64_q15:test_cifft_q15
                  cifft_noisy_128_q15:test_cifft_q15
                  cifft_noisy_256_q15:test_cifft_q15
-                 cifft_noisy_512_q15:test_cifft_q15
-                 cifft_noisy_1024_q15:test_cifft_q15
-                 cifft_noisy_2048_q15:test_cifft_q15
-                 cifft_noisy_4096_q15:test_cifft_q15
+                 disabled {cifft_noisy_512_q15:test_cifft_q15}
+                 disabled {cifft_noisy_1024_q15:test_cifft_q15}
+                 disabled {cifft_noisy_2048_q15:test_cifft_q15}
+                 disabled {cifft_noisy_4096_q15:test_cifft_q15}
                  cifft_step_16_q15:test_cifft_q15
                  cifft_step_32_q15:test_cifft_q15
                  cifft_step_64_q15:test_cifft_q15
                  cifft_step_128_q15:test_cifft_q15
                  cifft_step_256_q15:test_cifft_q15
-                 cifft_step_512_q15:test_cifft_q15
-                 cifft_step_1024_q15:test_cifft_q15
-                 cifft_step_2048_q15:test_cifft_q15
-                 cifft_step_4096_q15:test_cifft_q15
+                 disabled {cifft_step_512_q15:test_cifft_q15}
+                 disabled {cifft_step_1024_q15:test_cifft_q15}
+                 disabled {cifft_step_2048_q15:test_cifft_q15}
+                 disabled {cifft_step_4096_q15:test_cifft_q15}
               }
 
             }
