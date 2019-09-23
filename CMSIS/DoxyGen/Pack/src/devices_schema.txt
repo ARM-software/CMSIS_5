@@ -1909,6 +1909,11 @@ Contact cmsis@arm.com to ask for an extension. These values can be used in the e
     <td>http://www.elmos.com</td>
   </tr>
   <tr>
+    <td class="XML-Token">EtaCompute:157</td>
+	<td>Eta Compute Inc.</td>
+	<td>https://www.etacompute.com</td>
+  </tr>
+  <tr>
     <td class="XML-Token">Generic:5</td>
     <td>Generic: Not a vendor specific device</td>
     <td></td>

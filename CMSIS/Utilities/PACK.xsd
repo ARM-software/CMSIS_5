@@ -138,6 +138,7 @@
       <xs:enumeration value="Ember:98" />
       <xs:enumeration value="Energy Micro:97" />
       <xs:enumeration value="EnOcean:91" />
+      <xs:enumeration value="EtaCompute:157" />
       <xs:enumeration value="Evatronix:64" />
       <xs:enumeration value="Generic:5" />
       <xs:enumeration value="Generalplus:151" />
