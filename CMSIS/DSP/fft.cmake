@@ -224,7 +224,7 @@ if (CONFIGTABLE AND RFFT_F32_32)
 endif()
 
 if (CONFIGTABLE AND RFFT_F32_64)
-    target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_REALCOEF_Q31) 
+    target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_REALCOEF_F32) 
     # For cfft_radix4_init
     target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_BITREV_1024) 
     target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_TWIDDLECOEF_F32_4096) 
