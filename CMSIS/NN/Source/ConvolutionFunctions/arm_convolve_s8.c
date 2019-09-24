@@ -227,6 +227,20 @@ arm_status arm_convolve_s8(const q7_t *input,
     return ARM_MATH_SUCCESS;
 }
 
+int32_t arm_convolve_s8_get_buffer_size(const uint16_t input_ch,
+                                        const uint16_t kernel_x,
+                                        const uint16_t kernel_y)
+{
+#if defined(ARM_MATH_LOOPUNROLL) && defined (ARM_MATH_DSP)
+    return (2 * input_ch * kernel_x * kernel_y) * sizeof(int16_t);
+#else
+    (void)input_ch;
+    (void)kernel_x;
+    (void)kernel_y;
+    return 0;
+#endif
+}
+
 /**
  * @} end of NNConv group
  */

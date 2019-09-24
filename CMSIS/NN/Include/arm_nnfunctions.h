@@ -148,6 +148,7 @@ extern    "C"
    * @param[in]       buffer_a    pointer to buffer space used for input optimization(partial im2col) and is necessary
    *                              when both ARM_MATH_LOOPUNROLL and ARM_MATH_DSP are defined.
    *                              Required space: (2 * input_ch * kernel_x * kernel_y) * sizeof(q15_t) bytes
+   *                              Use arm_convolve_s8_get_buffer_size() to get the size.
    * @return     The function returns <code>ARM_MATH_SUCCESS</code>
    *
    * @details
@@ -179,6 +180,18 @@ extern    "C"
                                const uint16_t output_x,
                                const uint16_t output_y,
                                q15_t *buffer_a);
+
+  /**
+   * @brief Get the required buffer size for s8 convolution function
+   * @param[in]       input_ch              number of input tensor channels
+   * @param[in]       kernel_x              filter/kernel width
+   * @param[in]       kernel_y              filter/kernel height
+   * @return          The function returns  required buffer size
+   *
+   */
+    int32_t arm_convolve_s8_get_buffer_size(const uint16_t input_ch,
+                                            const uint16_t kernel_x,
+                                            const uint16_t kernel_y);
 
   /**
    * @brief Basic Q7 convolution function
@@ -470,6 +483,7 @@ extern    "C"
    * @param[in]      buffer_a  pointer to buffer space used for input optimization(partial im2col) and is necessary
    *                           when ARM_MATH_LOOPUNROLL and ARM_MATH_DSP is defined.
    *                           Required space: 2 * input_ch * sizeof(q15_t) bytes
+   *                           Use arm_convolve_1x1_s8_fast_get_buffer_size() to get teh size
    * @return     The function returns either
    *                  <code>ARM_MATH_SIZE_MISMATCH</code> if argument constraints fail. or,
    *                  <code>ARM_MATH_SUCCESS</code> on successful completion.
@@ -503,6 +517,15 @@ extern    "C"
                                         const uint16_t output_x,
                                         const uint16_t output_y,
                                         q15_t *buffer_a);
+
+  /**
+   * @brief Get the required buffer size for the fast 1x1 convolution
+   * (non-square shape) s8 convolution function
+   * @param[in]       input_ch              number of input tensor channels
+   * @return          The function returns  required buffer size
+   *
+   */
+    int32_t arm_convolve_1x1_s8_fast_get_buffer_size(const uint16_t input_ch);
 
   /**
    * @brief Q7 version of convolution for RGB image
@@ -837,6 +860,7 @@ extern    "C"
    * @param[in]       buffer_a     Buffer for partial im2col optimization. This is mandatory when ARM_MATH_LOOPUNROLL and
    *                               ARM_MATH_DSP are defined.
    *                               Required space: (2 * input_ch * kernel_x * kernel_y) * sizeof(q15_t) bytes
+   *                               Use arm_depthwise_conv_s8_opt_get_buffer_size() to get the size.
    *
    * @return     The function returns one of the following
    *                <code>ARM_MATH_SIZE_MISMATCH</code> - Unsupported dimension of tensors
@@ -874,6 +898,18 @@ extern    "C"
                                        const uint16_t dilation_y,
                                        q15_t *buffer_a);
 
+  /**
+   * @brief Get the required buffer size for optimized s8 depthwise convolution
+   * function with constraint that in_channel equals out_channel.
+   * @param[in]       input_ch              number of input tensor channels
+   * @param[in]       kernel_x              filter/kernel width
+   * @param[in]       kernel_y              filter/kernel height
+   * @return          The function returns  required buffer size
+   *
+   */
+int32_t arm_depthwise_conv_s8_opt_get_buffer_size(const uint16_t input_ch,
+                                                  const uint16_t kernel_x,
+                                                  const uint16_t kernel_y);
 
 /**
  * @defgroup FC Fully-connected Layer Functions
@@ -935,6 +971,7 @@ extern    "C"
    * @param[in]       vec_buffer                   pointer to buffer space used for optimization and is necessary
    *                                               when both ARM_MATH_LOOPUNROLL and ARM_MATH_DSP are defined.
    *                                               Required space: col_dim * sizeof(q15_t) bytes
+   *                                               Use arm_fully_connected_s8_get_buffer_size() to get the size.
    * @return          The function returns         ARM_MATH_SUCCESS
    *
    * @details
@@ -967,6 +1004,15 @@ extern    "C"
                            const int32_t output_activation_min,
                            const int32_t output_activation_max,
                            q15_t *vec_buffer);
+
+  /**
+   * @brief Get the required buffer size for S8 basic fully-connected and
+   * matrix multiplication layer function for TF Lite
+   * @param[in]       col_dim                      dimension of the input vector
+   * @return          The function returns         required buffer size
+   *
+   */
+    int32_t arm_fully_connected_s8_get_buffer_size(const uint16_t col_dim);
 
   /**
    * @brief Q7 opt fully-connected layer function
@@ -1431,7 +1477,8 @@ extern    "C"
    * @param[in,out]   src                pointer to input tensor
    * @param[in]       bufferA            temporary buffer used for optimization and is necessary  when both
    *                                     ARM_MATH_LOOPUNROLL and ARM_MATH_DSP are defined.
-   *                                     Required space: (input_ch * dim_dst_width) * sizeof(q15_t) bytes
+   *                                     Required space: (ch_src * dim_dst_width) * sizeof(q15_t) bytes
+   *                                     Use arm_avgpool_s8_get_buffer_size() to get the size
    * @param[in,out]   dst                pointer to output tensor
    *
    * @note This pooling function is input-destructive. Input data is undefined after calling this function.
@@ -1458,6 +1505,16 @@ extern    "C"
                         int8_t *src,
                         int16_t *bufferA,
                         int8_t *dst);
+
+  /**
+   * @brief Get the required buffer size for S8 average pooling function
+   * @param[in]       dim_dst_width         output tensor dimension
+   * @param[in]       ch_src                number of input tensor channels
+   * @return          The function returns  required buffer size
+   *
+   */
+    int32_t arm_avgpool_s8_get_buffer_size(const int dim_dst_width,
+                                           const int ch_src);
 
    /**
    * @brief s8 DSP optimized max pooling function
@@ -1555,7 +1612,7 @@ extern    "C"
    *
    */
 
-    void      arm_softmax_q7(const q7_t * vec_in, const uint16_t dim_vec, q7_t * p_out);
+void arm_softmax_q7(const q7_t * vec_in, const uint16_t dim_vec, q7_t * p_out);
 
   /**
    * @brief Q7 softmax function with batch parameter
@@ -1577,7 +1634,7 @@ void arm_softmax_with_batch_q7(const q7_t * vec_in, const uint16_t nb_batches,co
    *
    */
 
-    void      arm_softmax_q15(const q15_t * vec_in, const uint16_t dim_vec, q15_t * p_out);
+void arm_softmax_q15(const q15_t * vec_in, const uint16_t dim_vec, q15_t * p_out);
 
   /**
    * @brief uint8 depthwise convolution function with asymmetric quantization for even number of channel multiplier

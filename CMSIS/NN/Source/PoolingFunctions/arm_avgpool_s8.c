@@ -222,6 +222,18 @@ void arm_avgpool_s8(const int dim_src_height,
 #endif
 }
 
+int32_t arm_avgpool_s8_get_buffer_size(const int dim_dst_width,
+                                       const int ch_src)
+{
+#if defined(ARM_MATH_LOOPUNROLL) && defined (ARM_MATH_DSP)
+    return (ch_src * dim_dst_width) * sizeof(int16_t);
+#else
+    (void)dim_dst_width;
+    (void)ch_src;
+    return 0;
+#endif
+}
+
 /**
  * @} end of Pooling group
  */
