@@ -41,9 +41,9 @@ class ArrayMemory:public Client::Memory
    public:
     ArrayMemory(char* ptr, size_t bufferLength,int aligned, bool tail);
     ArrayMemory(char* ptr, size_t bufferLength);
-    char *NewBuffer(size_t length);
-    void FreeMemory();
-    bool HasMemError();
+    virtual char *NewBuffer(size_t length);
+    virtual void FreeMemory();
+    virtual bool HasMemError();
    
    private:
      // Pointer to C array used for memory

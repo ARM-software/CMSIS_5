@@ -238,6 +238,8 @@ void merge_rfft_f32(
   @par
                    The complex transforms used internally include scaling to prevent fixed-point
                    overflows.  The overall scaling equals 1/(fftLen/2).
+                   Due to the use of complex transform internally, the source buffer is
+                   modified by the rfft.
   @par
                    A separate instance structure must be defined for each transform used but
                    twiddle factor and bit reversal tables can be reused.
@@ -279,7 +281,7 @@ void merge_rfft_f32(
 /**
   @brief         Processing function for the floating-point real FFT.
   @param[in]     S         points to an arm_rfft_fast_instance_f32 structure
-  @param[in]     p         points to input buffer
+  @param[in]     p         points to input buffer (Source buffer is modified by this function.)
   @param[in]     pOut      points to output buffer
   @param[in]     ifftFlag
                    - value = 0: RFFT

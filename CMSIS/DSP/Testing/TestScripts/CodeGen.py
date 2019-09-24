@@ -12,7 +12,7 @@ groupCode="""class %s : public Client::Group
         %s
      }
     private:
-        %s;
+        %s
 };
 """
 

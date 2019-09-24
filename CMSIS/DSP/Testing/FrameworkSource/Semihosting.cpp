@@ -32,10 +32,12 @@
 
 #include <string>
 #include <cstddef>
-#include "Semihosting.h"
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 #include "Generators.h"
+#include "Semihosting.h"
+
 
 namespace Client
 {
@@ -175,9 +177,9 @@ namespace Client
            //   Samples
            else
            {
-              int kind,nbInputSamples,nbOutputSamples,dimensions,len,sample;
+              int kind,nbInputSamples,nbOutputSamples,dimensions,sample;
               Testing::param_t *p,*current;
-              size_t length;
+             
               // Generator kind. Not yet used since there is only one kind of generator
               fscanf(this->infile,"%d\n",&kind);
               // Input data in config file

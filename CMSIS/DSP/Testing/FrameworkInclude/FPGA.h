@@ -28,6 +28,7 @@
 #ifndef _FPGA_H_
 #define _FPGA_H_
 #include <string>
+#include "stdlib.h"
 
 namespace Client
 {
@@ -46,41 +47,40 @@ FPGA driver. Used to read a C array describing how to drive the test.
      public:
       FPGA(const char *testDesc,const char *patterns);
       ~FPGA();
-      void ReadIdentification();
-      void ReadTestIdentification();
-      Testing::nbParameters_t ReadNbParameters();
-      void DispStatus(Testing::TestStatus,Testing::errorID_t,unsigned long,Testing::cycles_t);
-      void EndGroup();
-      void ImportPattern(Testing::PatternID_t);
-      void ReadPatternList();
-      void ReadOutputList();
-      void ReadParameterList(Testing::nbParameters_t);
-      Testing::nbSamples_t GetPatternSize(Testing::PatternID_t);
+      virtual void ReadIdentification();
+      virtual void ReadTestIdentification();
+      virtual Testing::nbParameters_t ReadNbParameters();
+      virtual void DispStatus(Testing::TestStatus,Testing::errorID_t,unsigned long,Testing::cycles_t);
+      virtual void EndGroup();
+      virtual void ReadPatternList();
+      virtual void ReadOutputList();
+      virtual void ReadParameterList(Testing::nbParameters_t);
+      virtual Testing::nbSamples_t GetPatternSize(Testing::PatternID_t);
 
-      void ImportPattern_f64(Testing::PatternID_t,char*,Testing::nbSamples_t nb);
-      void ImportPattern_f32(Testing::PatternID_t,char*,Testing::nbSamples_t nb);
-      void ImportPattern_q31(Testing::PatternID_t,char*,Testing::nbSamples_t nb);
-      void ImportPattern_q15(Testing::PatternID_t,char*,Testing::nbSamples_t nb);
-      void ImportPattern_q7(Testing::PatternID_t,char*,Testing::nbSamples_t nb);
-      void ImportPattern_u32(Testing::PatternID_t,char*,Testing::nbSamples_t nb);
-      void ImportPattern_u16(Testing::PatternID_t,char*,Testing::nbSamples_t nb);
-      void ImportPattern_u8(Testing::PatternID_t,char*,Testing::nbSamples_t nb);
+      virtual void ImportPattern_f64(Testing::PatternID_t,char*,Testing::nbSamples_t nb);
+      virtual void ImportPattern_f32(Testing::PatternID_t,char*,Testing::nbSamples_t nb);
+      virtual void ImportPattern_q31(Testing::PatternID_t,char*,Testing::nbSamples_t nb);
+      virtual void ImportPattern_q15(Testing::PatternID_t,char*,Testing::nbSamples_t nb);
+      virtual void ImportPattern_q7(Testing::PatternID_t,char*,Testing::nbSamples_t nb);
+      virtual void ImportPattern_u32(Testing::PatternID_t,char*,Testing::nbSamples_t nb);
+      virtual void ImportPattern_u16(Testing::PatternID_t,char*,Testing::nbSamples_t nb);
+      virtual void ImportPattern_u8(Testing::PatternID_t,char*,Testing::nbSamples_t nb);
 
-      void DumpParams(std::vector<Testing::param_t>&);
-      Testing::param_t* ImportParams(Testing::PatternID_t,Testing::nbParameterEntries_t &,Testing::ParameterKind &);
-      bool hasParam();
-      Testing::PatternID_t getParamID();
+      virtual void DumpParams(std::vector<Testing::param_t>&);
+      virtual Testing::param_t* ImportParams(Testing::PatternID_t,Testing::nbParameterEntries_t &,Testing::ParameterKind &);
+      virtual bool hasParam();
+      virtual Testing::PatternID_t getParamID();
 
-      void DumpPattern_f64(Testing::outputID_t,Testing::nbSamples_t nb, float64_t* data);
-      void DumpPattern_f32(Testing::outputID_t,Testing::nbSamples_t nb, float32_t* data);
-      void DumpPattern_q31(Testing::outputID_t,Testing::nbSamples_t nb, q31_t* data);
-      void DumpPattern_q15(Testing::outputID_t,Testing::nbSamples_t nb, q15_t* data);
-      void DumpPattern_q7(Testing::outputID_t,Testing::nbSamples_t nb, q7_t* data);
-      void DumpPattern_u32(Testing::outputID_t,Testing::nbSamples_t nb, uint32_t* data);
-      void DumpPattern_u16(Testing::outputID_t,Testing::nbSamples_t nb, uint16_t* data);
-      void DumpPattern_u8(Testing::outputID_t,Testing::nbSamples_t nb, uint8_t* data);
+      virtual void DumpPattern_f64(Testing::outputID_t,Testing::nbSamples_t nb, float64_t* data);
+      virtual void DumpPattern_f32(Testing::outputID_t,Testing::nbSamples_t nb, float32_t* data);
+      virtual void DumpPattern_q31(Testing::outputID_t,Testing::nbSamples_t nb, q31_t* data);
+      virtual void DumpPattern_q15(Testing::outputID_t,Testing::nbSamples_t nb, q15_t* data);
+      virtual void DumpPattern_q7(Testing::outputID_t,Testing::nbSamples_t nb, q7_t* data);
+      virtual void DumpPattern_u32(Testing::outputID_t,Testing::nbSamples_t nb, uint32_t* data);
+      virtual void DumpPattern_u16(Testing::outputID_t,Testing::nbSamples_t nb, uint16_t* data);
+      virtual void DumpPattern_u8(Testing::outputID_t,Testing::nbSamples_t nb, uint8_t* data);
       
-      Testing::testID_t CurrentTestID();
+      virtual Testing::testID_t CurrentTestID();
      private:
       void recomputeTestDir();
       void DeleteParams();

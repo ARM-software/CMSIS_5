@@ -340,9 +340,8 @@ namespace Client
            }
            else
            {
-              unsigned long kind,nbInputSamples,nbOutputSamples,dimensions,len,sample;
+              unsigned long kind,nbInputSamples,nbOutputSamples,dimensions,sample;
               Testing::param_t *p,*current;
-              size_t length;
 
               // Generator kind
               this->read32(&kind);
@@ -432,10 +431,8 @@ namespace Client
     Testing::param_t* FPGA::ImportParams(Testing::PatternID_t id,Testing::nbParameterEntries_t &nbEntries,Testing::ParameterKind &paramKind)
     {
         nbEntries=0;
-        unsigned long offset,i;
+        unsigned long offset;
 
-        Testing::param_t *p;
-        uint32_t val;
 
         Testing::nbSamples_t len;
         struct offsetOrGen gen = this->getParameterDesc(id);

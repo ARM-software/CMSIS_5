@@ -98,7 +98,7 @@ float32_t arm_minkowski_distance_f32(const float32_t *pA,const float32_t *pB, in
 
 float32_t arm_minkowski_distance_f32(const float32_t *pA,const float32_t *pB, int32_t order, uint32_t blockSize)
 {
-    float32_t sum,diff;
+    float32_t sum;
     uint32_t i;
 
     sum = 0.0; 
@@ -108,7 +108,7 @@ float32_t arm_minkowski_distance_f32(const float32_t *pA,const float32_t *pB, in
     }
 
 
-    return(pow(sum,(1.0/order)));
+    return(pow(sum,(1.0f/order)));
 
 }
 #endif

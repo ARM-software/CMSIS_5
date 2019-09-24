@@ -4,8 +4,8 @@ class DistanceTestsU32:public Client::Suite
     {
         public:
             DistanceTestsU32(Testing::testID_t id);
-            void setUp(Testing::testID_t,std::vector<Testing::param_t>& paramsArgs,Client::PatternMgr *mgr);
-            void tearDown(Testing::testID_t,Client::PatternMgr *mgr);
+            virtual void setUp(Testing::testID_t,std::vector<Testing::param_t>& paramsArgs,Client::PatternMgr *mgr);
+            virtual void tearDown(Testing::testID_t,Client::PatternMgr *mgr);
         private:
             #include "DistanceTestsU32_decl.h"
             

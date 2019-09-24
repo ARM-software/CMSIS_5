@@ -38,8 +38,8 @@ namespace Client
       IORunner(IO*,PatternMgr*);
       IORunner(IO*,PatternMgr*, Testing::RunningMode);
       ~IORunner();
-      Testing::TestStatus run(Suite *s);
-      Testing::TestStatus run(Group *g);
+      virtual Testing::TestStatus run(Suite *s);
+      virtual Testing::TestStatus run(Group *g);
      private:
       IO *m_io;
       PatternMgr *m_mgr;

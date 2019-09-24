@@ -128,7 +128,7 @@ float32_t arm_canberra_distance_f32(const float32_t *pA,const float32_t *pB, uin
 
       diff = fabs(tmpA - tmpB);
       sum = fabs(tmpA) + fabs(tmpB);
-      if ((tmpA != 0.0) || (tmpB != 0.0))
+      if ((tmpA != 0.0f) || (tmpB != 0.0f))
       {
          accum += (diff / sum);
       }

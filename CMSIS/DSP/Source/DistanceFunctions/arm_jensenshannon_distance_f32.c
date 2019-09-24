@@ -30,7 +30,7 @@
 #include <math.h>
 
 
-static inline float32_t rel_entr(float32_t x, float32_t y)
+__STATIC_INLINE float32_t rel_entr(float32_t x, float32_t y)
 {
     return (x * log(x / y));
 }
@@ -160,14 +160,14 @@ float32_t arm_jensenshannon_distance_f32(const float32_t *pA,const float32_t *pB
     right = 0.0;
     for(i=0; i < blockSize; i++)
     {
-      tmp = (pA[i] + pB[i]) / 2.0;
+      tmp = (pA[i] + pB[i]) / 2.0f;
       left  += rel_entr(pA[i], tmp);
       right += rel_entr(pB[i], tmp);
     }
 
 
     sum = left + right;
-    arm_sqrt_f32(sum/2.0, &result);
+    arm_sqrt_f32(sum/2.0f, &result);
     return(result);
 
 }

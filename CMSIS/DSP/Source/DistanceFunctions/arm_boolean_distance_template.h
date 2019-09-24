@@ -96,7 +96,7 @@ void FUNC(EXT)(const uint32_t *pA
     uint32_t _cft=0;
 #endif
     uint32_t nbBoolBlock;
-    uint32_t a,b,ba,bb,cc=1;
+    uint32_t a,b,ba,bb;
     int shift;
     uint32x4_t aV, bV;
 #ifdef TT
@@ -315,7 +315,7 @@ void FUNC(EXT)(const uint32_t *pA
 #ifdef FT
     uint32_t _cft=0;
 #endif
-    uint32_t a,b,ba,bb,cc=1;
+    uint32_t a,b,ba,bb;
     int shift;
 
     while(numberOfBools >= 32)

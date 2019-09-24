@@ -47,9 +47,9 @@ namespace Client
 /* Client */
 
   Suite::Suite(Testing::testID_t id):
+     TestContainer(id),
      m_tests(std::vector<test>()),
-     m_testIds(std::vector<Testing::testID_t>()),
-     TestContainer(id)
+     m_testIds(std::vector<Testing::testID_t>())
   {
 
   }
@@ -74,8 +74,8 @@ namespace Client
 
 
   Group::Group(Testing::testID_t id):
-     m_groups(std::vector<TestContainer*>()),
-     TestContainer(id)
+     TestContainer(id),
+     m_groups(std::vector<TestContainer*>())
   {
 
   }

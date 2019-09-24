@@ -60,98 +60,19 @@ function(configboot PROJECT_NAME ROOT PLATFORMFOLDER)
   endif()
   ###################
   #
-  # Cortex cortex-m7
+  # Cortex M
   #
-  if (ARM_CPU STREQUAL "cortex-m7")
+  if (ARM_CPU MATCHES  "^[cC]ortex-[Mm].*$")
     cortexm(${CORE} ${PROJECT_NAME} ${ROOT} ${PLATFORMFOLDER} OFF)    
     
   endif()
   
-  ###################
-  #
-  # Cortex cortex-m4
-  #
-  if (ARM_CPU STREQUAL "cortex-m4")
-      cortexm(${CORE} ${PROJECT_NAME} ${ROOT} ${PLATFORMFOLDER} OFF)
-  endif()
-  
-  ###################
-  #
-  # Cortex cortex-m35p
-  #
-  if (ARM_CPU STREQUAL "cortex-m35")
-      cortexm(${CORE} ${PROJECT_NAME} ${ROOT} ${PLATFORMFOLDER} OFF)
-      
-  endif()
-  
-  ###################
-  #
-  # Cortex cortex-m33
-  #
-  if (ARM_CPU STREQUAL "cortex-m33")
-      cortexm(${CORE} ${PROJECT_NAME} ${ROOT} ${PLATFORMFOLDER} OFF)
-      
-  endif()
-  
-  ###################
-  #
-  # Cortex cortex-m23
-  #
-  if (ARM_CPU STREQUAL "cortex-m23")
-      cortexm(${CORE} ${PROJECT_NAME} ${ROOT} ${PLATFORMFOLDER} OFF)
-     
-  endif()
-
-  ###################
-  #
-  # Cortex cortex-m0+
-  #
-  if (ARM_CPU STREQUAL "cortex-m0p")
-      cortexm(${CORE} ${PROJECT_NAME} ${ROOT} ${PLATFORMFOLDER} OFF)
-      
-  endif()
-
-  ###################
-  #
-  # Cortex cortex-m0
-  #
-  if (ARM_CPU STREQUAL "cortex-m0")
-      cortexm(${CORE} ${PROJECT_NAME} ${ROOT} ${PLATFORMFOLDER} OFF)
-      
-  endif()
   
   ###################
   #
   # Cortex cortex-a5
   #
-  if (ARM_CPU STREQUAL "cortex-a5")
-    cortexa(${CORE} ${PROJECT_NAME} ${ROOT} ${PLATFORMFOLDER})
-    
-  endif()
-
-  ###################
-  #
-  # Cortex cortex-a7
-  #
-  if (ARM_CPU STREQUAL "cortex-a7")
-    cortexa(${CORE} ${PROJECT_NAME} ${ROOT} ${PLATFORMFOLDER})
-    
-  endif()
-
-  ###################
-  #
-  # Cortex cortex-a9
-  #
-  if (ARM_CPU STREQUAL "cortex-a9")
-    cortexa(${CORE} ${PROJECT_NAME} ${ROOT} ${PLATFORMFOLDER})
-    
-  endif()
-
-  ###################
-  #
-  # Cortex cortex-a15
-  #
-  if (ARM_CPU STREQUAL "cortex-a15")
+  if (ARM_CPU MATCHES "^[cC]ortex-[Aa].*")
     cortexa(${CORE} ${PROJECT_NAME} ${ROOT} ${PLATFORMFOLDER})
     
   endif()

@@ -4,8 +4,8 @@ class ControllerQ31:public Client::Suite
     {
         public:
             ControllerQ31(Testing::testID_t id);
-            void setUp(Testing::testID_t,std::vector<Testing::param_t>& params,Client::PatternMgr *mgr);
-            void tearDown(Testing::testID_t,Client::PatternMgr *mgr);
+            virtual void setUp(Testing::testID_t,std::vector<Testing::param_t>& params,Client::PatternMgr *mgr);
+            virtual void tearDown(Testing::testID_t,Client::PatternMgr *mgr);
         private:
             #include "ControllerQ31_decl.h"
             Client::Pattern<q31_t> samples;

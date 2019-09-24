@@ -276,7 +276,7 @@ uint32_t arm_gaussian_naive_bayes_predict_f32(const arm_gaussian_naive_bayes_ins
         for(nbDim = 0; nbDim < S->vectorDimension; nbDim++)
         {
            sigma = *pSigma + S->epsilon;
-           acc1 += log(2.0 * PI_F * sigma);
+           acc1 += log(2.0f * PI_F * sigma);
            acc2 += (*pIn - *pTheta) * (*pIn - *pTheta) / sigma;
 
            pIn++;
@@ -284,8 +284,8 @@ uint32_t arm_gaussian_naive_bayes_predict_f32(const arm_gaussian_naive_bayes_ins
            pSigma++;
         }
 
-        tmp = -0.5 * acc1;
-        tmp -= 0.5 * acc2;
+        tmp = -0.5f * acc1;
+        tmp -= 0.5f * acc2;
 
 
         *buffer = tmp + log(*pPrior++);

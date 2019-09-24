@@ -12,7 +12,6 @@
 
       float32_t *refp         = ref.ptr();
       float32_t *outp         = output.ptr();
-      float32_t *result;
 
       for(int i=0;i < this->nbPatterns; i++)
       {
@@ -30,7 +29,6 @@
 
       float32_t *refp         = ref.ptr();
       float32_t *outp         = output.ptr();
-      float32_t *result;
 
       for(int i=0;i < this->nbPatterns; i++)
       {
@@ -50,7 +48,6 @@
 
       float32_t *refp         = ref.ptr();
       float32_t *outp         = output.ptr();
-      float32_t *result;
 
       for(int i=0;i < this->nbPatterns; i++)
       {
@@ -71,7 +68,6 @@
       float32_t *refp         = ref.ptr();
       float32_t *outp         = output.ptr();
       float32_t *tmpp         = tmp.ptr();
-      float32_t *result;
 
       for(int i=0;i < this->nbPatterns; i++)
       {

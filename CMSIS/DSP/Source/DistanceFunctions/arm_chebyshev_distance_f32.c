@@ -129,7 +129,6 @@ float32_t arm_chebyshev_distance_f32(const float32_t *pA,const float32_t *pB, ui
 float32_t arm_chebyshev_distance_f32(const float32_t *pA,const float32_t *pB, uint32_t blockSize)
 {
    float32_t diff=0.0,  maxVal,tmpA, tmpB;
-   uint32_t i;
 
    tmpA = *pA++;
    tmpB = *pB++;

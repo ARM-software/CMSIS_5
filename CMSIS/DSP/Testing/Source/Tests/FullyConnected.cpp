@@ -2,6 +2,7 @@
 #include "Error.h"
 #include "arm_nnfunctions.h"
 #include "Test.h"
+#include "stdio.h"
 
 #include <cstdio>
 

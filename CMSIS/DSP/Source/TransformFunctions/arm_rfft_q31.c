@@ -56,7 +56,7 @@ void arm_split_rifft_q31(
 /**
   @brief         Processing function for the Q31 RFFT/RIFFT.
   @param[in]     S     points to an instance of the Q31 RFFT/RIFFT structure
-  @param[in]     pSrc  points to input buffer
+  @param[in]     pSrc  points to input buffer (Source buffer is modified by this function)
   @param[out]    pDst  points to output buffer
   @return        none
 

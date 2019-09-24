@@ -58,6 +58,8 @@ if(IS_IN_TRY_COMPILE)
     add_link_options("--specs=nosys.specs")
 endif()
 
+add_link_options("-Wl,--start-group")
+
 # Where is the target environment
 #SET(CMAKE_FIND_ROOT_PATH "${tools}")
 # Search for programs in the build host directories

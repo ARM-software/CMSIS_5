@@ -29,7 +29,7 @@ function(configcore PROJECTNAME ROOT)
   #
 
   # CORTEX-A15
-  if (ARM_CPU STREQUAL "cortex-a15" )
+  if (ARM_CPU  MATCHES  "^[cC]ortex-[aA]15([^0-9].*)?$" )
     target_include_directories(${PROJECTNAME} PUBLIC "${ROOT}/CMSIS/Core_A/Include")
     SET(CORTEXM OFF)
     target_compile_definitions(${PROJECTNAME} PRIVATE ARMv7A) 
@@ -41,7 +41,7 @@ function(configcore PROJECTNAME ROOT)
   endif()
   
   # CORTEX-A9
-  if (ARM_CPU STREQUAL "cortex-a9" )
+  if (ARM_CPU MATCHES "^[cC]ortex-[aA]9([^0-9].*)?$" )
     target_include_directories(${PROJECTNAME} PUBLIC "${ROOT}/CMSIS/Core_A/Include")
     SET(CORTEXM OFF)
     target_compile_definitions(${PROJECTNAME} PRIVATE ARMv7A) 
@@ -54,7 +54,7 @@ function(configcore PROJECTNAME ROOT)
   endif()
   
   # CORTEX-A7
-  if (ARM_CPU STREQUAL "cortex-a7" )
+  if (ARM_CPU MATCHES "^[cC]ortex-[aA]7([^0-9].*)?$" )
     target_include_directories(${PROJECTNAME} PUBLIC "${ROOT}/CMSIS/Core_A/Include")
     SET(CORTEXM OFF)
   
@@ -68,7 +68,7 @@ function(configcore PROJECTNAME ROOT)
   endif()
   
   # CORTEX-A5
-  if (ARM_CPU STREQUAL "cortex-a5" )
+  if (ARM_CPU MATCHES "^[cC]ortex-[aA]5([^0-9].*)?$" )
     target_include_directories(${PROJECTNAME} PUBLIC "${ROOT}/CMSIS/Core_A/Include")
     SET(CORTEXM OFF)
     
@@ -87,7 +87,7 @@ function(configcore PROJECTNAME ROOT)
   #
   
   # CORTEX-M35
-  if (ARM_CPU STREQUAL "cortex-m35")
+  if (ARM_CPU MATCHES "^[cC]ortex-[mM]35([^0-9].*)?$")
     target_include_directories(${PROJECTNAME} PUBLIC "${ROOT}/CMSIS/Core/Include")
     target_compile_definitions(${PROJECTNAME} PUBLIC CORTEXM)
     target_compile_definitions(${PROJECTNAME} PRIVATE ARMCM35P_DSP_FP)
@@ -98,7 +98,7 @@ function(configcore PROJECTNAME ROOT)
   endif()
   
   # CORTEX-M33
-  if (ARM_CPU STREQUAL "cortex-m33")
+  if (ARM_CPU MATCHES "^[cC]ortex-[mM]33([^0-9].*)?$")
     target_include_directories(${PROJECTNAME} PUBLIC "${ROOT}/CMSIS/Core/Include")
     target_compile_definitions(${PROJECTNAME} PUBLIC CORTEXM)
     target_compile_definitions(${PROJECTNAME} PRIVATE ARMCM33_DSP_FP)
@@ -109,7 +109,7 @@ function(configcore PROJECTNAME ROOT)
   endif()
   
   # CORTEX-M23
-  if (ARM_CPU STREQUAL "cortex-m23")
+  if (ARM_CPU MATCHES "^[cC]ortex-[mM]23([^0-9].*)?$")
     target_include_directories(${PROJECTNAME} PUBLIC "${ROOT}/CMSIS/Core/Include")
     target_compile_definitions(${PROJECTNAME} PUBLIC CORTEXM)
     target_compile_definitions(${PROJECTNAME} PRIVATE ARMCM23)
@@ -120,7 +120,7 @@ function(configcore PROJECTNAME ROOT)
   endif()
   
   # CORTEX-M7
-  if (ARM_CPU STREQUAL "cortex-m7")
+  if (ARM_CPU MATCHES "^[cC]ortex-[mM]7([^0-9].*)?$")
     target_include_directories(${PROJECTNAME} PUBLIC "${ROOT}/CMSIS/Core/Include")  
     target_compile_definitions(${PROJECTNAME} PUBLIC CORTEXM)
     target_compile_definitions(${PROJECTNAME} PRIVATE ARMCM7_DP)
@@ -131,7 +131,7 @@ function(configcore PROJECTNAME ROOT)
   endif()
   
   # CORTEX-M4
-  if (ARM_CPU STREQUAL "cortex-m4")
+  if (ARM_CPU MATCHES "^[cC]ortex-[mM]4([^0-9].*)?$")
     target_include_directories(${PROJECTNAME} PUBLIC "${ROOT}/CMSIS/Core/Include")
     target_compile_definitions(${PROJECTNAME} PUBLIC CORTEXM)
     target_compile_definitions(${PROJECTNAME} PRIVATE ARMCM4_FP)
@@ -142,7 +142,7 @@ function(configcore PROJECTNAME ROOT)
   endif()
   
   # CORTEX-M3
-  if (ARM_CPU STREQUAL "cortex-m3")
+  if (ARM_CPU MATCHES "^[cC]ortex-[mM]3([^0-9].*)?$")
     target_include_directories(${PROJECTNAME} PUBLIC "${ROOT}/CMSIS/Core/Include")
     target_compile_definitions(${PROJECTNAME} PUBLIC CORTEXM)
     target_compile_definitions(${PROJECTNAME} PRIVATE ARMCM3)
@@ -153,7 +153,7 @@ function(configcore PROJECTNAME ROOT)
   endif()
   
   # CORTEX-M0plus
-  if (ARM_CPU STREQUAL "cortex-m0p")
+  if (ARM_CPU MATCHES "^[cC]ortex-[mM]0p([^0-9].*)?$")
     target_include_directories(${PROJECTNAME} PUBLIC "${ROOT}/CMSIS/Core/Include")
     target_compile_definitions(${PROJECTNAME} PUBLIC CORTEXM)
     target_compile_definitions(${PROJECTNAME} PRIVATE ARMCM0P)
@@ -164,7 +164,7 @@ function(configcore PROJECTNAME ROOT)
   endif()
   
   # CORTEX-M0
-  if (ARM_CPU STREQUAL "cortex-m0")
+  if (ARM_CPU MATCHES "^[cC]ortex-[mM]0([^0-9].*)?$")
     target_include_directories(${PROJECTNAME} PUBLIC "${ROOT}/CMSIS/Core/Include")
     target_compile_definitions(${PROJECTNAME} PUBLIC CORTEXM)
     target_compile_definitions(${PROJECTNAME} PRIVATE ARMCM0)

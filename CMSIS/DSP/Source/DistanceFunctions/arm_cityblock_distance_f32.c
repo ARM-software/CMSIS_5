@@ -90,8 +90,7 @@ float32_t arm_cityblock_distance_f32(const float32_t *pA,const float32_t *pB, ui
 #else
 float32_t arm_cityblock_distance_f32(const float32_t *pA,const float32_t *pB, uint32_t blockSize)
 {
-   float32_t diff=0.0,  accum,tmpA, tmpB;
-   uint32_t i;
+   float32_t accum,tmpA, tmpB;
 
    accum = 0.0;
    while(blockSize > 0)

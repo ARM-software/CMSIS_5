@@ -153,5 +153,4 @@ Testing::cycles_t getCycles()
     return(value - startCycles);
 #endif
 
-    return(0);
 }

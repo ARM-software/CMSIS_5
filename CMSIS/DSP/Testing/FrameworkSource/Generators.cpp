@@ -2,11 +2,10 @@
 
 void generate1(Testing::param_t *result,Testing::param_t *data,Testing::nbParameterEntries_t &nbEntries)
 {
-    Testing::param_t *pa,*paStart,va;
+    Testing::param_t *pa,va;
 
     pa = data;
     int nba = *pa++;
-    paStart = pa;
     nbEntries = 0;
     for(int ia=0; ia < nba ; ia ++)
     {

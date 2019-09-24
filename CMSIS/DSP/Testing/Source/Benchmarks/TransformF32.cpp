@@ -7,31 +7,22 @@ const arm_cfft_instance_f32 *arm_cfft_get_instance_f32(uint16_t fftLen)
 switch (fftLen) {
      case 16:
        return(&arm_cfft_sR_f32_len16);
-       break;
      case 32:
        return(&arm_cfft_sR_f32_len32);
-       break;
      case 64:
        return(&arm_cfft_sR_f32_len64);
-       break;
      case 128:
        return(&arm_cfft_sR_f32_len128);
-       break;
      case 256:
        return(&arm_cfft_sR_f32_len256);
-       break;
      case 512:
        return(&arm_cfft_sR_f32_len512);
-       break;
      case 1024:
        return(&arm_cfft_sR_f32_len1024);
-       break;
      case 2048:
        return(&arm_cfft_sR_f32_len2048);
-       break;
      case 4096:
        return(&arm_cfft_sR_f32_len4096);
-       break;
    }
    return(NULL);
 }

@@ -65,7 +65,7 @@ void assert_relative_error(unsigned long nb,float32_t &a, float32_t &b, float32_
     float32_t rel,delta,average;
 
     delta=abs(a-b);
-    average = (abs(a) + abs(b)) / 2.0;
+    average = (abs(a) + abs(b)) / 2.0f;
     if (average !=0)
     {
         rel = delta / average;

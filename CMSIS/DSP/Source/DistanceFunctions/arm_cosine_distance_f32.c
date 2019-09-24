@@ -50,7 +50,6 @@
 float32_t arm_cosine_distance_f32(const float32_t *pA,const float32_t *pB, uint32_t blockSize)
 {
     float32_t pwra,pwrb,dot,tmp;
-    uint32_t i;
 
     arm_power_f32(pA, blockSize, &pwra);
     arm_power_f32(pB, blockSize, &pwrb);
@@ -58,7 +57,7 @@ float32_t arm_cosine_distance_f32(const float32_t *pA,const float32_t *pB, uint3
     arm_dot_prod_f32(pA,pB,blockSize,&dot);
 
     arm_sqrt_f32(pwra * pwrb, &tmp);
-    return(1.0 - dot / tmp);
+    return(1.0f - dot / tmp);
 
 }
 
