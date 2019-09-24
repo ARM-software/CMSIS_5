@@ -180,6 +180,16 @@ arm_status arm_convolve_1x1_s8_fast(const q7_t *input,
     return ARM_MATH_SUCCESS;
 }
 
+int32_t arm_convolve_1x1_s8_fast_get_buffer_size(const uint16_t input_ch)
+{
+#if defined(ARM_MATH_LOOPUNROLL) && defined (ARM_MATH_DSP)
+    return 2 * input_ch * sizeof(int16_t);
+#else
+    (void)input_ch;
+    return 0;
+#endif
+}
+
 /**
  * @} end of NNConv group
  */

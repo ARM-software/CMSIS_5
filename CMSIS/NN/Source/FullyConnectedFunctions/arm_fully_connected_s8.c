@@ -254,6 +254,16 @@ arm_fully_connected_s8(const int8_t *input,
     return (ARM_MATH_SUCCESS);
 #endif /*  defined(ARM_MATH_LOOPUNROLL) && defined (ARM_MATH_DSP) */
 }
+
+int32_t arm_fully_connected_s8_get_buffer_size(const uint16_t col_dim)
+{
+#if defined(ARM_MATH_LOOPUNROLL) && defined (ARM_MATH_DSP)
+    return col_dim * sizeof(int16_t);
+#else
+    (void)col_dim;
+    return 0;
+#endif
+}
 /**
  * @} end of FC group
  */
