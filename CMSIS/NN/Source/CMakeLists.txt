@@ -8,7 +8,7 @@ list(APPEND CMAKE_MODULE_PATH ${ROOT}/CMSIS/DSP)
 # and must use similar logic for configuring the build
 list(APPEND CMAKE_MODULE_PATH ${ROOT}/CMSIS/DSP/Source)
 
-include(config)
+include(configLib)
 include(configDsp)
 
 # Select which parts of the CMSIS-DSP must be compiled.

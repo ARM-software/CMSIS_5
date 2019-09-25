@@ -2,7 +2,7 @@ cmake_minimum_required (VERSION 3.6)
 
 project(CMSISDSPCommon)
 
-include(config)
+include(configLib)
 include(configDsp)
 
 add_library(CMSISDSPCommon STATIC arm_common_tables.c)

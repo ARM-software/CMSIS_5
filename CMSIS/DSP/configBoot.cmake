@@ -1,13 +1,5 @@
 include(CMakePrintHelpers)
 
-enable_language(CXX C ASM)
-
-
-# Otherwise there is a .obj on windows and it creates problems
-# with armlink. 
-SET(CMAKE_C_OUTPUT_EXTENSION .o)
-SET(CMAKE_CXX_OUTPUT_EXTENSION .o)
-SET(CMAKE_ASM_OUTPUT_EXTENSION .o)
 
 
 get_filename_component(PROJECT_NAME ${CMAKE_CURRENT_SOURCE_DIR} NAME)

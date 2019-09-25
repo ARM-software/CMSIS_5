@@ -360,12 +360,14 @@ extern "C"
 #if defined (_MSC_VER ) 
 #include <stdint.h>
 #define __STATIC_FORCEINLINE static __forceinline
+#define __STATIC_INLINE static __inline
 #define __ALIGNED(x) __declspec(align(x))
 
 #elif defined (__GNUC_PYTHON__)
 #include <stdint.h>
 #define  __ALIGNED(x) __attribute__((aligned(x)))
 #define __STATIC_FORCEINLINE static __attribute__((inline))
+#define __STATIC_INLINE static __attribute__((inline))
 #pragma GCC diagnostic ignored "-Wunused-function"
 #pragma GCC diagnostic ignored "-Wattributes"
 
@@ -7976,11 +7978,6 @@ float32_t arm_yule_distance(const uint32_t *pA, const uint32_t *pB, uint32_t num
   #if defined ( __ARM_ARCH_7EM__ )
     #define LOW_OPTIMIZATION_ENTER \
        _Pragma ("optimize=low")
-#elif defined ( _MSC_VER)
-      #define LOW_OPTIMIZATION_ENTER
-      #define LOW_OPTIMIZATION_EXIT
-      #define IAR_ONLY_LOW_OPTIMIZATION_ENTER 
-      #define IAR_ONLY_LOW_OPTIMIZATION_EXIT
   #else
     #define LOW_OPTIMIZATION_ENTER
   #endif
@@ -8016,7 +8013,12 @@ float32_t arm_yule_distance(const uint32_t *pA, const uint32_t *pB, uint32_t num
   #define LOW_OPTIMIZATION_EXIT
   #define IAR_ONLY_LOW_OPTIMIZATION_ENTER
   #define IAR_ONLY_LOW_OPTIMIZATION_EXIT
-
+       
+#elif defined ( _MSC_VER ) || (__GNUC_PYTHON__)
+      #define LOW_OPTIMIZATION_ENTER
+      #define LOW_OPTIMIZATION_EXIT
+      #define IAR_ONLY_LOW_OPTIMIZATION_ENTER 
+      #define IAR_ONLY_LOW_OPTIMIZATION_EXIT
 #endif
 
 

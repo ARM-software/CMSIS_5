@@ -2,7 +2,7 @@ cmake_minimum_required (VERSION 3.6)
 
 project(CMSISDSPBasicMath)
 
-include(config)
+include(configLib)
 include(configDsp)
 
 file(GLOB SRC "./*_*.c")

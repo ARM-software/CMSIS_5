@@ -2,7 +2,7 @@ cmake_minimum_required (VERSION 3.6)
 
 project(CMSISNNConvolutions)
 
-include(config)
+include(configLib)
 
 file(GLOB SRC "./*_*.c")
 

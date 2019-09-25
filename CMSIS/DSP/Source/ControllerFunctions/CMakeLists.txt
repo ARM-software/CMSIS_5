@@ -2,7 +2,7 @@ cmake_minimum_required (VERSION 3.6)
 
 project(CMSISDSPController)
 
-include(config)
+include(configLib)
 include(configDsp)
 
 add_library(CMSISDSPController STATIC)

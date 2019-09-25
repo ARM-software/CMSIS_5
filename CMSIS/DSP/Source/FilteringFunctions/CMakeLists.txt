@@ -2,7 +2,7 @@ cmake_minimum_required (VERSION 3.6)
 
 project(CMSISDSPFiltering)
 
-include(config)
+include(configLib)
 include(configDsp)
 
 add_library(CMSISDSPFiltering STATIC)

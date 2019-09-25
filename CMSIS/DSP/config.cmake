@@ -3,12 +3,11 @@ list(APPEND CMAKE_MODULE_PATH ${EXPROOT})
 include(experimental)
 endif()
 
-include(Toolchain/Tools)
+
+include(configLib)
 SET(PLATFORMFOLDER ${ROOT}/CMSIS/DSP/Platforms/FVP)
-option(OPTIMIZED "Compile for speed" ON)
 include(configPlatform)
 include(configBoot)
-include(configCore)
 
 define_property(TARGET 
                 PROPERTY DISABLEOPTIMIZATION
@@ -22,12 +21,6 @@ function(disableOptimization project)
   set_target_properties(${project} PROPERTIES DISABLEOPTIMIZATION ON)
 endfunction()
 
-
-function(configLib project cmsisRoot)
-  configcore(${project} ${cmsisRoot})
-  configplatformForLib(${project} ${cmsisRoot})
-  SET(COREID ${COREID} PARENT_SCOPE)
-endfunction()
 
 # Config app
 function (configApp project cmsisRoot)
