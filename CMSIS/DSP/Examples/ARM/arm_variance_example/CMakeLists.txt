@@ -3,8 +3,12 @@ project (arm_variance_example VERSION 0.1)
 
 
 # Needed to include the configBoot module
-list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/../../..)
+# Define the path to CMSIS-DSP (ROOT is defined on command line when using cmake)
 set(ROOT ${CMAKE_CURRENT_SOURCE_DIR}/../../../../..)
+set(DSP ${ROOT}/CMSIS/DSP)
+
+# Add DSP folder to module path
+list(APPEND CMAKE_MODULE_PATH ${DSP})
 
 ################################### 
 #
