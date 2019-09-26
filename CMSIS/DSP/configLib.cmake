@@ -5,6 +5,7 @@
 
 include(Toolchain/Tools)
 option(OPTIMIZED "Compile for speed" ON)
+option(AUTOVECTORIZE "Prefer autovectorizable code to one using C intrinsics" OFF)
 
 enable_language(CXX C ASM)
 
