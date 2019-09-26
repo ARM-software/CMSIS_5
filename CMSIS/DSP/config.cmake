@@ -1,3 +1,5 @@
+include(CMakePrintHelpers)
+
 if(EXPERIMENTAL)
 list(APPEND CMAKE_MODULE_PATH ${EXPROOT})
 include(experimental)

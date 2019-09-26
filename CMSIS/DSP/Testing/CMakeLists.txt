@@ -77,7 +77,11 @@ project(Testing)
 set(ROOT ${CMAKE_CURRENT_SOURCE_DIR}/../../..)
 
 
-
+# Change behavior of configBoot for scatter file
+# We use the linker files from older test framework because bigger sections are needed.
+# We should migrate the linker files to this new framework.
+set(TESTFRAMEWORK ON)
+include(config)
 
 add_subdirectory(../Source bin_dsp)
 add_subdirectory(${ROOT}/CMSIS/NN/Source bin_nn)
@@ -167,11 +171,7 @@ set(FRAMEWORKSRC
   FrameworkSource/Generators.cpp
   FrameworkSource/Calibrate.cpp
   )
-# Change behavior of configBoot for scatter file
-# We use the linker files from older test framework because bigger sections are needed.
-# We should migrate the linker files to this new framework.
-set(TESTFRAMEWORK ON)
-include(config)
+
 
 # With -O2, generated code is crashing on some cycle accurate models.
 # (cpp part)
