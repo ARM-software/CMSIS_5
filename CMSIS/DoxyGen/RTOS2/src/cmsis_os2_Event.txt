@@ -158,7 +158,8 @@ int Init_Events (void) {
 \details
 The function \b osEventFlagsSet sets the event flags specified by the parameter \a flags in an event flags object specified
 by parameter \a ef_id. All threads waiting for the flag set will be notified to resume from \ref ThreadStates "BLOCKED" state.
-The function returns the event flags after setting or an error code (highest bit is set, refer to \ref flags_error_codes).
+The function returns the event flags stored in the event control block or an error code (highest bit is set, refer to
+\ref flags_error_codes).
 
 Possible \ref flags_error_codes return values:
     - \em osFlagsErrorUnknown: unspecified error.

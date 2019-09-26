@@ -63,9 +63,12 @@ void app_main (void *argument) {
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /** \fn uint32_t osThreadFlagsSet (osThreadId_t thread_id, uint32_t flags )
-The function \b osThreadFlagsSet sets the thread flags for a thread specified by parameter \em thread_id. It returns the
-flags set, or an error code if highest bit is set (refer to \ref flags_error_codes). This function may
-be used also within interrupt service routines. Threads waiting for a flag to be set will resume from \ref ThreadStates "BLOCKED" state.
+The function \b osThreadFlagsSet sets the thread flags for a thread specified by parameter \em thread_id. The thread returns
+the flags stored in the thread control block, or an error code if highest bit is set (refer to \ref flags_error_codes).
+Refer to \b Usage \b Examples below to understand how the return value is computed.
+
+This function maybe used also within interrupt service routines. Threads waiting for a flag to be set will resume from
+\ref ThreadStates "BLOCKED" state.
 
 Possible \ref flags_error_codes return values:
     - \em osFlagsErrorUnknown: unspecified error.
@@ -88,6 +91,49 @@ void signal_func (osThreadId_t tid)  {
   osDelay(500U);                            /* delay 500ms                   */
 }
 \endcode
+
+\b Usage \b Examples
+
+The following diagram assumes that in the control block of Thread1 the flag 1 is already set. Thread2 now sets flag 2 and
+Thread1 returns the updated value immediately:
+
+\msc
+ a [label="",    textcolor="indigo", linecolor="indigo", arclinecolor="red"],
+ b [label="",    textcolor="blue",   linecolor="blue",   arclinecolor="blue"];
+ 
+ a note a [label="Thread1",       textbgcolour="#FFCCCF"],
+ b note b [label="Thread2",       textbgcolour="#E0E0FF"];
+ 
+ a box a [label = "Flags == 1"];
+ a<-b [label = "osThreadFlagsSet(2)"];
+ a>>b [label = "return(3)"];
+ a->a [label = "while(1)"];
+\endmsc
+
+Depending on thread scheduling, the flag status can be modified before returning: 
+
+\msc
+ a [label="",    textcolor="indigo", linecolor="indigo", arclinecolor="red"],
+ b [label="",    textcolor="blue",   linecolor="blue",   arclinecolor="blue"];
+ 
+ a note a [label="Thread1",       textbgcolour="#FFCCCF"],
+ b note b [label="Thread2",       textbgcolour="#E0E0FF"];
+ 
+ b box b [label = "Flags == 0"];
+ b->b [label = "osThreadFlagsWait(1)"];
+ b box b [label = "thread state = blocked"];
+ a->b [label = "osThreadFlagsSet(1)"];
+ b box b [label = "Flags == 1"];
+ b box b [label = "thread state = ready"];
+ b box b [label = "Flags == 0*"];
+ --- [label = "If Thread2 priority > Thread1 priority, it gets scheduled immediately"];
+ b->b [label = "return(1)"];
+ b->b [label = "osThreadFlagsWait(1)"];
+ b box b [label = "thread state = blocked"];
+ --- [label = "endif"];
+ b->a [label = "return(0)"];
+\endmsc
+\note * In this case \ref osThreadFlagsWait auto-clears the flag.
 */
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
