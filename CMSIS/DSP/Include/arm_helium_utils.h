@@ -29,7 +29,12 @@
 #ifndef _ARM_UTILS_HELIUM_H_
 #define _ARM_UTILS_HELIUM_H_
 
-#if defined (ARM_MATH_HELIUM)
+/***************************************
+
+Definitions available for MVEF and MVEI
+
+***************************************/
+#if defined (ARM_MATH_HELIUM) || defined(ARM_MATH_MVEF) || defined(ARM_MATH_MVEI)
 
 #define nbLanes(sz)             (128/sz)
 
@@ -56,6 +61,18 @@
          const float16_t*: VEC_LANES_F16, \
                   default: "err")
 
+
+
+#define post_incr_vec_size(ptr)         ptr += nb_vec_lanes(ptr)
+
+#endif /* defined (ARM_MATH_HELIUM) || defined(ARM_MATH_MVEF) || defined(ARM_MATH_MVEI) */
+
+/***************************************
+
+Definitions available for MVEF only
+
+***************************************/
+#if defined (ARM_MATH_HELIUM) || defined(ARM_MATH_MVEF)
 __STATIC_FORCEINLINE float32_t vecAddAcrossF32Mve(float32x4_t in)
 {
     float32_t acc;
@@ -65,9 +82,14 @@ __STATIC_FORCEINLINE float32_t vecAddAcrossF32Mve(float32x4_t in)
 
     return acc;
 }
+#endif /* defined (ARM_MATH_HELIUM) || defined(ARM_MATH_MVEF) */
 
-#define post_incr_vec_size(ptr)         ptr += nb_vec_lanes(ptr)
+/***************************************
 
-#endif
+Definitions available for MVEI only
+
+***************************************/
+#if defined (ARM_MATH_HELIUM) || defined(ARM_MATH_MVEI)
+#endif /* defined (ARM_MATH_HELIUM) || defined(ARM_MATH_MVEI) */
 
 #endif

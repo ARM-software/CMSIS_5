@@ -33,7 +33,7 @@ function(writeConfig path)
     list(APPEND output ",0")
   endif()
 
-  if (HELIUM)
+  if (HELIUM OR MVEI OR MVEF)
     list(APPEND output ",1")
   else()
     list(APPEND output ",0")

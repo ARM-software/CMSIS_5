@@ -192,6 +192,14 @@ function(configcore PROJECTNAME ROOT)
     target_compile_definitions(${PROJECTNAME} PRIVATE ARM_MATH_HELIUM)
   endif()
 
+  if (MVEF AND CORTEXM)
+    target_compile_definitions(${PROJECTNAME} PRIVATE ARM_MATH_MVEF)
+  endif()
+
+  if (MVEI AND CORTEXM)
+    target_compile_definitions(${PROJECTNAME} PRIVATE ARM_MATH_MVEI)
+  endif()
+
   compilerSpecificCompileOptions(${PROJECTNAME} ${ROOT})
 
 endfunction()
