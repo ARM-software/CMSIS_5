@@ -143,6 +143,288 @@ group Root {
                 Test nb=4n+1 arm_abs_f32:test_abs_f32
               }
            }
+
+           suite Basic Tests Q31{
+              class = BasicTestsQ31
+              folder = BasicMathsQ31
+   
+              Pattern INPUT1_Q31_ID : Input1_q31.txt 
+              Pattern INPUT2_Q31_ID : Input2_q31.txt 
+              Pattern INPUTRAND_Q31_ID : Input12_q31.txt
+
+              Pattern MAXNEG_Q31_ID : MaxNegInput12_s32.txt
+              Pattern MAXNEG2_Q31_ID : MaxNeg2Input12_s32.txt
+              Pattern MAXPOS_Q31_ID : MaxPosInput12_s32.txt
+   
+              Pattern REF_ADD_Q31_ID : Reference1_q31.txt
+              Pattern REF_SUB_Q31_ID : Reference2_q31.txt
+              Pattern REF_MULT_Q31_ID : Reference3_q31.txt
+              Pattern REF_NEGATE_Q31_ID : Reference4_q31.txt
+              Pattern REF_OFFSET_Q31_ID : Reference5_q31.txt
+              Pattern REF_SCALE_Q31_ID : Reference6_q31.txt
+              Pattern REF_DOT_3_Q31_ID : Reference7_q63.txt
+              Pattern REF_DOT_4N_Q31_ID : Reference8_q63.txt
+              Pattern REF_DOT_4N1_Q31_ID : Reference9_q63.txt
+              Pattern REF_ABS_Q31_ID : Reference10_q31.txt
+
+              Pattern REF_POSSAT_12_Q31_ID : PosSat12_q31.txt
+              Pattern REF_NEGSAT_13_Q31_ID : NegSat13_q31.txt
+              Pattern REF_POSSAT_14_Q31_ID : PosSat14_q31.txt
+              Pattern REF_NEGSAT_15_Q31_ID : NegSat15_q31.txt
+              Pattern REF_POSSAT_16_Q31_ID : PosSat16_q31.txt
+              Pattern REF_POSSAT_17_Q31_ID : PosSat17_q31.txt
+              Pattern REF_POSSAT_18_Q31_ID : PosSat18_q31.txt
+              Pattern REF_NEGSAT_19_Q31_ID : NegSat19_q31.txt
+              Pattern REF_POSSAT_20_Q31_ID : PosSat20_q31.txt
+
+              Pattern REF_SHIFT_21_Q31_ID : Shift21_q31.txt
+              Pattern REF_SHIFT_POSSAT_22_Q31_ID : Shift22_q31.txt
+              Pattern REF_SHIFT_NEGSAT_23_Q31_ID : Shift23_q31.txt
+
+              Output  OUT_SAMPLES_Q31_ID : Output
+              Output  OUT_STATE_Q31_ID : State
+   
+              Functions {
+                Test nb=3    arm_add_q31:test_add_q31
+                Test nb=4n   arm_add_q31:test_add_q31
+                Test nb=4n+1 arm_add_q31:test_add_q31
+         
+                Test nb=3    arm_sub_q31:test_sub_q31
+                Test nb=4n   arm_sub_q31:test_sub_q31
+                Test nb=4n+1 arm_sub_q31:test_sub_q31
+         
+                Test nb=3    arm_mult_q31:test_mult_q31
+                Test nb=4n   arm_mult_q31:test_mult_q31
+                Test nb=4n+1 arm_mult_q31:test_mult_q31
+         
+                Test nb=3    arm_negate_q31:test_negate_q31
+                Test nb=4n   arm_negate_q31:test_negate_q31
+                Test nb=4n+1 arm_negate_q31:test_negate_q31
+         
+                Test nb=3    arm_offset_q31:test_offset_q31
+                Test nb=4n   arm_offset_q31:test_offset_q31
+                Test nb=4n+1 arm_offset_q31:test_offset_q31
+         
+                Test nb=3    arm_scale_q31:test_scale_q31
+                Test nb=4n   arm_scale_q31:test_scale_q31
+                Test nb=4n+1 arm_scale_q31:test_scale_q31
+         
+                Test nb=3    arm_dot_prod_q31:test_dot_prod_q31
+                Test nb=4n   arm_dot_prod_q31:test_dot_prod_q31
+                Test nb=4n+1 arm_dot_prod_q31:test_dot_prod_q31
+         
+                Test nb=3    arm_abs_q31:test_abs_q31
+                Test nb=4n   arm_abs_q31:test_abs_q31
+                Test nb=4n+1 arm_abs_q31:test_abs_q31
+
+                Test add sat pos:test_add_q31
+                Test add sat neg:test_add_q31
+
+                Test sub sat pos:test_sub_q31
+                Test sub sat neg:test_sub_q31
+
+                Test mul sat:test_mult_q31
+
+                Test neg sat:test_negate_q31
+
+                Test offset pos sat:test_offset_q31
+                Test offset neg sat:test_offset_q31
+
+                Test scale pos sat:test_scale_q31
+
+                Test shift:test_shift_q31
+                Test shift pos sat:test_shift_q31
+                Test shift neg sat:test_shift_q31
+              }
+           }
+
+           suite Basic Tests Q15{
+              class = BasicTestsQ15
+              folder = BasicMathsQ15
+   
+              Pattern INPUT1_Q15_ID : Input1_q15.txt 
+              Pattern INPUT2_Q15_ID : Input2_q15.txt 
+              Pattern INPUTRAND_Q15_ID : Input12_q15.txt
+
+              Pattern MAXNEG_Q15_ID : MaxNegInput12_s16.txt
+              Pattern MAXNEG2_Q15_ID : MaxNeg2Input12_s16.txt
+              Pattern MAXPOS_Q15_ID : MaxPosInput12_s16.txt
+   
+              Pattern REF_ADD_Q15_ID : Reference1_q15.txt
+              Pattern REF_SUB_Q15_ID : Reference2_q15.txt
+              Pattern REF_MULT_Q15_ID : Reference3_q15.txt
+              Pattern REF_NEGATE_Q15_ID : Reference4_q15.txt
+              Pattern REF_OFFSET_Q15_ID : Reference5_q15.txt
+              Pattern REF_SCALE_Q15_ID : Reference6_q15.txt
+              Pattern REF_DOT_3_Q15_ID : Reference7_q63.txt
+              Pattern REF_DOT_4N_Q15_ID : Reference8_q63.txt
+              Pattern REF_DOT_4N1_Q15_ID : Reference9_q63.txt
+              Pattern REF_ABS_Q15_ID : Reference10_q15.txt
+
+              Pattern REF_POSSAT_12_Q15_ID : PosSat12_q15.txt
+              Pattern REF_NEGSAT_13_Q15_ID : NegSat13_q15.txt
+              Pattern REF_POSSAT_14_Q15_ID : PosSat14_q15.txt
+              Pattern REF_NEGSAT_15_Q15_ID : NegSat15_q15.txt
+              Pattern REF_POSSAT_16_Q15_ID : PosSat16_q15.txt
+              Pattern REF_POSSAT_17_Q15_ID : PosSat17_q15.txt
+              Pattern REF_POSSAT_18_Q15_ID : PosSat18_q15.txt
+              Pattern REF_NEGSAT_19_Q15_ID : NegSat19_q15.txt
+              Pattern REF_POSSAT_20_Q15_ID : PosSat20_q15.txt
+
+              Pattern REF_SHIFT_21_Q15_ID : Shift21_q15.txt
+              Pattern REF_SHIFT_POSSAT_22_Q15_ID : Shift22_q15.txt
+              Pattern REF_SHIFT_NEGSAT_23_Q15_ID : Shift23_q15.txt
+
+              Output  OUT_SAMPLES_Q15_ID : Output
+              Output  OUT_STATE_Q15_ID : State
+   
+              Functions {
+                Test nb=3    arm_add_q15:test_add_q15
+                Test nb=4n   arm_add_q15:test_add_q15
+                Test nb=4n+1 arm_add_q15:test_add_q15
+         
+                Test nb=3    arm_sub_q15:test_sub_q15
+                Test nb=4n   arm_sub_q15:test_sub_q15
+                Test nb=4n+1 arm_sub_q15:test_sub_q15
+         
+                Test nb=3    arm_mult_q15:test_mult_q15
+                Test nb=4n   arm_mult_q15:test_mult_q15
+                Test nb=4n+1 arm_mult_q15:test_mult_q15
+         
+                Test nb=3    arm_negate_q15:test_negate_q15
+                Test nb=4n   arm_negate_q15:test_negate_q15
+                Test nb=4n+1 arm_negate_q15:test_negate_q15
+         
+                Test nb=3    arm_offset_q15:test_offset_q15
+                Test nb=4n   arm_offset_q15:test_offset_q15
+                Test nb=4n+1 arm_offset_q15:test_offset_q15
+         
+                Test nb=3    arm_scale_q15:test_scale_q15
+                Test nb=4n   arm_scale_q15:test_scale_q15
+                Test nb=4n+1 arm_scale_q15:test_scale_q15
+         
+                Test nb=3    arm_dot_prod_q15:test_dot_prod_q15
+                Test nb=4n   arm_dot_prod_q15:test_dot_prod_q15
+                Test nb=4n+1 arm_dot_prod_q15:test_dot_prod_q15
+         
+                Test nb=3    arm_abs_q15:test_abs_q15
+                Test nb=4n   arm_abs_q15:test_abs_q15
+                Test nb=4n+1 arm_abs_q15:test_abs_q15
+
+                Test add sat pos:test_add_q15
+                Test add sat neg:test_add_q15
+
+                Test sub sat pos:test_sub_q15
+                Test sub sat neg:test_sub_q15
+
+                Test mul sat:test_mult_q15
+
+                Test neg sat:test_negate_q15
+
+                Test offset pos sat:test_offset_q15
+                Test offset neg sat:test_offset_q15
+
+                Test scale pos sat:test_scale_q15
+
+                Test shift:test_shift_q15
+                Test shift pos sat:test_shift_q15
+                Test shift neg sat:test_shift_q15
+              }
+           }
+
+           suite Basic Tests Q7{
+              class = BasicTestsQ7
+              folder = BasicMathsQ7
+   
+              Pattern INPUT1_Q7_ID : Input1_q7.txt 
+              Pattern INPUT2_Q7_ID : Input2_q7.txt 
+              Pattern INPUTRAND_Q7_ID : Input12_q7.txt
+
+              Pattern MAXNEG_Q7_ID : MaxNegInput12_s8.txt
+              Pattern MAXNEG2_Q7_ID : MaxNeg2Input12_s8.txt
+              Pattern MAXPOS_Q7_ID : MaxPosInput12_s8.txt
+   
+              Pattern REF_ADD_Q7_ID : Reference1_q7.txt
+              Pattern REF_SUB_Q7_ID : Reference2_q7.txt
+              Pattern REF_MULT_Q7_ID : Reference3_q7.txt
+              Pattern REF_NEGATE_Q7_ID : Reference4_q7.txt
+              Pattern REF_OFFSET_Q7_ID : Reference5_q7.txt
+              Pattern REF_SCALE_Q7_ID : Reference6_q7.txt
+              Pattern REF_DOT_3_Q7_ID : Reference7_q31.txt
+              Pattern REF_DOT_4N_Q7_ID : Reference8_q31.txt
+              Pattern REF_DOT_4N1_Q7_ID : Reference9_q31.txt
+              Pattern REF_ABS_Q7_ID : Reference10_q7.txt
+
+              Pattern REF_POSSAT_12_Q7_ID : PosSat12_q7.txt
+              Pattern REF_NEGSAT_13_Q7_ID : NegSat13_q7.txt
+              Pattern REF_POSSAT_14_Q7_ID : PosSat14_q7.txt
+              Pattern REF_NEGSAT_15_Q7_ID : NegSat15_q7.txt
+              Pattern REF_POSSAT_16_Q7_ID : PosSat16_q7.txt
+              Pattern REF_POSSAT_17_Q7_ID : PosSat17_q7.txt
+              Pattern REF_POSSAT_18_Q7_ID : PosSat18_q7.txt
+              Pattern REF_NEGSAT_19_Q7_ID : NegSat19_q7.txt
+              Pattern REF_POSSAT_20_Q7_ID : PosSat20_q7.txt
+
+              Pattern REF_SHIFT_21_Q7_ID : Shift21_q7.txt
+              Pattern REF_SHIFT_POSSAT_22_Q7_ID : Shift22_q7.txt
+              Pattern REF_SHIFT_NEGSAT_23_Q7_ID : Shift23_q7.txt
+
+              Output  OUT_SAMPLES_Q7_ID : Output
+              Output  OUT_STATE_Q7_ID : State
+   
+              Functions {
+                Test nb=3    arm_add_q7:test_add_q7
+                Test nb=4n   arm_add_q7:test_add_q7
+                Test nb=4n+1 arm_add_q7:test_add_q7
+         
+                Test nb=3    arm_sub_q7:test_sub_q7
+                Test nb=4n   arm_sub_q7:test_sub_q7
+                Test nb=4n+1 arm_sub_q7:test_sub_q7
+         
+                Test nb=3    arm_mult_q7:test_mult_short_q7
+                Test nb=4n   arm_mult_q7:test_mult_q7
+                Test nb=4n+1 arm_mult_q7:test_mult_q7
+         
+                Test nb=3    arm_negate_q7:test_negate_q7
+                Test nb=4n   arm_negate_q7:test_negate_q7
+                Test nb=4n+1 arm_negate_q7:test_negate_q7
+         
+                Test nb=3    arm_offset_q7:test_offset_q7
+                Test nb=4n   arm_offset_q7:test_offset_q7
+                Test nb=4n+1 arm_offset_q7:test_offset_q7
+         
+                Test nb=3    arm_scale_q7:test_scale_q7
+                Test nb=4n   arm_scale_q7:test_scale_q7
+                Test nb=4n+1 arm_scale_q7:test_scale_q7
+         
+                Test nb=3    arm_dot_prod_q7:test_dot_prod_q7
+                Test nb=4n   arm_dot_prod_q7:test_dot_prod_q7
+                Test nb=4n+1 arm_dot_prod_q7:test_dot_prod_q7
+         
+                Test nb=3    arm_abs_q7:test_abs_q7
+                Test nb=4n   arm_abs_q7:test_abs_q7
+                Test nb=4n+1 arm_abs_q7:test_abs_q7
+
+                Test add sat pos:test_add_q7
+                Test add sat neg:test_add_q7
+
+                Test sub sat pos:test_sub_q7
+                Test sub sat neg:test_sub_q7
+
+                Test mul sat:test_mult_q7
+
+                Test neg sat:test_negate_q7
+
+                Test offset pos sat:test_offset_q7
+                Test offset neg sat:test_offset_q7
+
+                Test scale pos sat:test_scale_q7
+
+                Test shift:test_shift_q7
+                Test shift pos sat:test_shift_q7
+                Test shift neg sat:test_shift_q7
+              }
+           }
         }
 
         group SVM Tests {

@@ -60,6 +60,10 @@
   @return        none
  */
 
+#if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
+
+#include "arm_helium_utils.h"
+
 void arm_offset_f32(
   const float32_t * pSrc,
         float32_t offset,
@@ -68,9 +72,53 @@ void arm_offset_f32(
 {
         uint32_t blkCnt;                               /* Loop counter */
 
-#if defined(ARM_MATH_NEON_EXPERIMENTAL)
-    float32x4_t vec1;
-    float32x4_t res;
+    f32x4_t vec1;
+    f32x4_t res;
+
+    /* Compute 4 outputs at a time */
+    blkCnt = blockSize >> 2U;
+    while (blkCnt > 0U)
+    {
+        /* C = A + offset */
+ 
+        /* Add offset and then store the results in the destination buffer. */
+        vec1 = vld1q(pSrc);
+        res = vaddq(vec1,offset);
+        vst1q(pDst, res);
+
+        /* Increment pointers */
+        pSrc += 4;
+        pDst += 4;
+        
+        /* Decrement the loop counter */
+        blkCnt--;
+    }
+
+    /* Tail */
+    blkCnt = blockSize & 0x3;
+
+    if (blkCnt > 0U)
+    {
+        mve_pred16_t p0 = vctp32q(blkCnt);
+        vec1 = vld1q((float32_t const *) pSrc);
+        vstrwq_p(pDst, vaddq(vec1, offset), p0);
+    }
+
+
+}
+
+#else
+void arm_offset_f32(
+  const float32_t * pSrc,
+        float32_t offset,
+        float32_t * pDst,
+        uint32_t blockSize)
+{
+        uint32_t blkCnt;                               /* Loop counter */
+
+#if defined(ARM_MATH_NEON_EXPERIMENTAL) && !defined(ARM_MATH_AUTOVECTORIZE)
+    f32x4_t vec1;
+    f32x4_t res;
 
     /* Compute 4 outputs at a time */
     blkCnt = blockSize >> 2U;
@@ -96,7 +144,7 @@ void arm_offset_f32(
     blkCnt = blockSize & 0x3;
 
 #else
-#if defined (ARM_MATH_LOOPUNROLL)
+#if defined (ARM_MATH_LOOPUNROLL) && !defined(ARM_MATH_AUTOVECTORIZE)
 
   /* Loop unrolling: Compute 4 outputs at a time */
   blkCnt = blockSize >> 2U;
@@ -141,6 +189,7 @@ void arm_offset_f32(
   }
 
 }
+#endif /* defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE) */
 
 /**
   @} end of BasicOffset group

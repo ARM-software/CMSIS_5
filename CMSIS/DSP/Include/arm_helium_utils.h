@@ -36,35 +36,6 @@ Definitions available for MVEF and MVEI
 ***************************************/
 #if defined (ARM_MATH_HELIUM) || defined(ARM_MATH_MVEF) || defined(ARM_MATH_MVEI)
 
-#define nbLanes(sz)             (128/sz)
-
-#define VEC_LANES_F32       nbLanes(32)
-#define VEC_LANES_F16       nbLanes(16)
-#define VEC_LANES_Q63       nbLanes(64)
-#define VEC_LANES_Q31       nbLanes(32)
-#define VEC_LANES_Q15       nbLanes(16)
-#define VEC_LANES_Q7        nbLanes(8)
-
-#define nb_vec_lanes(ptr) _Generic((ptr), \
-               uint32_t *: VEC_LANES_Q31, \
-               uint16_t *: VEC_LANES_Q15, \
-                uint8_t *: VEC_LANES_Q7,  \
-                  q31_t *: VEC_LANES_Q31, \
-                  q15_t *: VEC_LANES_Q15, \
-                   q7_t *: VEC_LANES_Q7,  \
-               float32_t*: VEC_LANES_F32, \
-               float16_t*: VEC_LANES_F16, \
-            const q31_t *: VEC_LANES_Q31, \
-            const q15_t *: VEC_LANES_Q15, \
-             const q7_t *: VEC_LANES_Q7,  \
-         const float32_t*: VEC_LANES_F32, \
-         const float16_t*: VEC_LANES_F16, \
-                  default: "err")
-
-
-
-#define post_incr_vec_size(ptr)         ptr += nb_vec_lanes(ptr)
-
 #endif /* defined (ARM_MATH_HELIUM) || defined(ARM_MATH_MVEF) || defined(ARM_MATH_MVEI) */
 
 /***************************************

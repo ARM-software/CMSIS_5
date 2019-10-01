@@ -50,7 +50,51 @@
                    The function uses saturating arithmetic.
                    The Q15 value -1 (0x8000) is saturated to the maximum allowable positive value 0x7FFF.
  */
+#if defined(ARM_MATH_MVEI)
 
+#include "arm_helium_utils.h"
+
+void arm_negate_q15(
+    const q15_t  * pSrc,
+    q15_t  * pDst,
+    uint32_t blockSize)
+{
+    uint32_t  blkCnt;           /* loop counters */
+    q15x8_t vecSrc;
+
+    /* Compute 8 outputs at a time */
+    blkCnt = blockSize >> 3;
+    while (blkCnt > 0U)
+    {
+        /*
+         * C = -A
+         * Negate and then store the results in the destination buffer.
+         */
+        vecSrc = vld1q(pSrc);
+        vst1q(pDst, vqnegq(vecSrc));
+        /*
+         * Decrement the blockSize loop counter
+         */
+        blkCnt--;
+        /*
+         * advance vector source and destination pointers
+         */
+        pSrc += 8;
+        pDst += 8;
+    }
+    /*
+     * tail
+     */
+    blkCnt = blockSize & 7;
+    if (blkCnt > 0U)
+    {
+        mve_pred16_t p0 = vctp16q(blkCnt);
+        vecSrc = vld1q(pSrc);
+        vstrhq_p(pDst, vqnegq(vecSrc), p0);
+    }
+}
+
+#else
 void arm_negate_q15(
   const q15_t * pSrc,
         q15_t * pDst,
@@ -120,6 +164,7 @@ void arm_negate_q15(
   }
 
 }
+#endif /* defined(ARM_MATH_MVEI) */
 
 /**
   @} end of BasicNegate group

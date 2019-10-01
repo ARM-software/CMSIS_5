@@ -1,7 +1,7 @@
 #include "BasicTestsF32.h"
 #include "Error.h"
 
-#define FULL 1
+#define SNR_THRESHOLD 120
 
 #define GET_F32_PTR() \
 const float32_t *inp1=input1.ptr(); \
@@ -16,17 +16,17 @@ float32_t *outp=output.ptr();
         arm_add_f32(inp1,inp2,outp,input1.nbSamples());
         
 
-        ASSERT_NEAR_EQ(ref,output,(float)1e-6);
+        ASSERT_SNR(output,ref,(float32_t)SNR_THRESHOLD);
 
     } 
-#ifdef FULL
+
     void BasicTestsF32::test_sub_f32()
     {
         GET_F32_PTR();
 
         arm_sub_f32(inp1,inp2,outp,input1.nbSamples());
         
-        ASSERT_NEAR_EQ(ref,output,(float)1e-6);
+        ASSERT_SNR(output,ref,(float32_t)SNR_THRESHOLD);
        
     } 
 
@@ -36,7 +36,7 @@ float32_t *outp=output.ptr();
 
         arm_mult_f32(inp1,inp2,outp,input1.nbSamples());
 
-        ASSERT_NEAR_EQ(ref,output,(float)1e-6);
+        ASSERT_SNR(output,ref,(float32_t)SNR_THRESHOLD);
        
     } 
 
@@ -46,7 +46,7 @@ float32_t *outp=output.ptr();
 
         arm_negate_f32(inp1,outp,input1.nbSamples());
 
-        ASSERT_NEAR_EQ(ref,output,(float)1e-6);
+        ASSERT_SNR(output,ref,(float32_t)SNR_THRESHOLD);
        
     } 
 
@@ -56,7 +56,7 @@ float32_t *outp=output.ptr();
 
         arm_offset_f32(inp1,0.5,outp,input1.nbSamples());
 
-        ASSERT_NEAR_EQ(ref,output,(float)1e-6);
+        ASSERT_SNR(output,ref,(float32_t)SNR_THRESHOLD);
        
     } 
 
@@ -66,7 +66,7 @@ float32_t *outp=output.ptr();
 
         arm_scale_f32(inp1,0.5,outp,input1.nbSamples());
 
-        ASSERT_NEAR_EQ(ref,output,(float)1e-6);
+        ASSERT_SNR(output,ref,(float32_t)SNR_THRESHOLD);
        
     } 
 
@@ -78,7 +78,10 @@ float32_t *outp=output.ptr();
 
         arm_dot_prod_f32(inp1,inp2,input1.nbSamples(),&r);
 
-        ASSERT_NEAR_EQ(r,refp[0],(float)1e-6);
+        outp[0] = r;
+
+        ASSERT_SNR(output,ref,(float32_t)SNR_THRESHOLD);
+
        
     } 
 
@@ -88,11 +91,11 @@ float32_t *outp=output.ptr();
 
         arm_abs_f32(inp1,outp,input1.nbSamples());
 
-        ASSERT_NEAR_EQ(ref,output,(float)1e-6);
+        ASSERT_SNR(output,ref,(float32_t)SNR_THRESHOLD);
        
     } 
 
-  #endif
+ 
     void BasicTestsF32::setUp(Testing::testID_t id,std::vector<Testing::param_t>& params,Client::PatternMgr *mgr)
     {
       
@@ -105,7 +108,7 @@ float32_t *outp=output.ptr();
           nb = 3;
           ref.reload(BasicTestsF32::REF_ADD_F32_ID,mgr,nb);
           break;
-  #ifdef FULL
+
         case BasicTestsF32::TEST_ADD_F32_2:
           nb = 8;
           ref.reload(BasicTestsF32::REF_ADD_F32_ID,mgr,nb);
@@ -206,14 +209,14 @@ float32_t *outp=output.ptr();
           nb = 9;
           ref.reload(BasicTestsF32::REF_ABS_F32_ID,mgr,nb);
           break;
-#endif
+
        }
       
 
        input1.reload(BasicTestsF32::INPUT1_F32_ID,mgr,nb);
        input2.reload(BasicTestsF32::INPUT2_F32_ID,mgr,nb);
 
-       output.create(input1.nbSamples(),BasicTestsF32::OUT_SAMPLES_F32_ID,mgr);
+       output.create(ref.nbSamples(),BasicTestsF32::OUT_SAMPLES_F32_ID,mgr);
     }
 
     void BasicTestsF32::tearDown(Testing::testID_t id,Client::PatternMgr *mgr)

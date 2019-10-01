@@ -126,7 +126,7 @@
                    - Scaling of coefficients
                    - Overflow and saturation
 
- @par            Scaling of Coefficients
+ @par            Scaling of Coefficients (fixed point versions)
                    Filter coefficients are represented as fractional values and
                    coefficients are restricted to lie in the range <code>[-1 +1)</code>.
                    The fixed-point functions have an additional scaling parameter <code>postShift</code>.
@@ -135,7 +135,7 @@
                    allows the filter coefficients to exceed the range <code>[+1 -1)</code>.
                    The value of <code>postShift</code> is set by the user based on the expected gain through the system being modeled.
 
- @par            Overflow and Saturation
+ @par            Overflow and Saturation (fixed point versions)
                    Overflow and saturation behavior of the fixed-point Q15 and Q31 versions are
                    described separately as part of the function specific documentation below.
  */

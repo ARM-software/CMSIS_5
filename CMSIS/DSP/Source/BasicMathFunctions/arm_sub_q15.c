@@ -50,6 +50,57 @@
                    Results outside of the allowable Q15 range [0x8000 0x7FFF] are saturated.
  */
 
+#if defined(ARM_MATH_MVEI)
+
+#include "arm_helium_utils.h"
+
+void arm_sub_q15(
+    const q15_t * pSrcA,
+    const q15_t * pSrcB,
+    q15_t * pDst,
+    uint32_t blockSize)
+{
+    uint32_t  blkCnt;           /* loop counters */
+    q15x8_t vecA;
+    q15x8_t vecB;
+
+    /* Compute 8 outputs at a time */
+    blkCnt = blockSize >> 3;
+    while (blkCnt > 0U)
+    {
+        /*
+         * C = A - B
+         * Subtract and then store the results in the destination buffer.
+         */
+        vecA = vld1q(pSrcA);
+        vecB = vld1q(pSrcB);
+        vst1q(pDst, vqsubq(vecA, vecB));
+        /*
+         * Decrement the blockSize loop counter
+         */
+        blkCnt--;
+        /*
+         * advance vector source and destination pointers
+         */
+        pSrcA  += 8;
+        pSrcB  += 8;
+        pDst   += 8;
+    }
+    /*
+     * tail
+     */
+    blkCnt = blockSize & 7;
+    if (blkCnt > 0U)
+    {
+        mve_pred16_t p0 = vctp16q(blkCnt);
+        vecA = vld1q(pSrcA);
+        vecB = vld1q(pSrcB);
+        vstrhq_p(pDst, vqsubq(vecA, vecB), p0);
+    }
+}
+
+
+#else
 void arm_sub_q15(
   const q15_t * pSrcA,
   const q15_t * pSrcB,
@@ -120,6 +171,7 @@ void arm_sub_q15(
   }
 
 }
+#endif /* defined(ARM_MATH_MVEI) */
 
 /**
   @} end of BasicSub group

@@ -67,6 +67,56 @@
                    Results outside of the allowable Q31 range [0x80000000 0x7FFFFFFF] are saturated.
  */
 
+#if defined(ARM_MATH_MVEI)
+
+#include "arm_helium_utils.h"
+
+void arm_shift_q31(
+    const q31_t * pSrc,
+    int8_t shiftBits,
+    q31_t * pDst,
+    uint32_t blockSize)
+{
+    uint32_t  blkCnt;           /* loop counters */
+    q31x4_t vecSrc;
+    q31x4_t vecDst;
+
+    /* Compute 4 outputs at a time */
+    blkCnt = blockSize >> 2;
+    while (blkCnt > 0U)
+    {
+        /*
+         * C = A (>> or <<) shiftBits
+         * Shift the input and then store the result in the destination buffer.
+         */
+        vecSrc = vld1q((q31_t const *) pSrc);
+        vecDst = vqshlq_r(vecSrc, shiftBits);
+        vst1q(pDst, vecDst);
+        /*
+         * Decrement the blockSize loop counter
+         */
+        blkCnt--;
+        /*
+         * advance vector source and destination pointers
+         */
+        pSrc += 4;
+        pDst += 4;
+    }
+    /*
+     * tail
+     */
+    blkCnt = blockSize & 3;
+    if (blkCnt > 0U)
+    {
+        mve_pred16_t p0 = vctp32q(blkCnt);
+        vecSrc = vld1q((q31_t const *) pSrc);
+        vecDst = vqshlq_r(vecSrc, shiftBits);
+        vstrwq_p(pDst, vecDst, p0);
+    }
+}
+
+
+#else
 void arm_shift_q31(
   const q31_t * pSrc,
         int8_t shiftBits,
@@ -175,6 +225,7 @@ void arm_shift_q31(
   }
 
 }
+#endif /* defined(ARM_MATH_MVEI) */
 
 /**
   @} end of BasicShift group

@@ -187,8 +187,8 @@ float arm_snr_q15(q15_t *pRef, q15_t *pTest, uint32_t buffSize)
 {
   float EnergySignal = 0.0, EnergyError = 0.0;
   uint32_t i;
-  float SNR;
- 
+  float SNR; 
+
   float32_t testVal,refVal;
 
   for (i = 0; i < buffSize; i++)
@@ -331,6 +331,7 @@ void assert_snr_error(unsigned long nb,AnyPattern<q15_t> &pa,AnyPattern<q15_t> &
 
    snr = arm_snr_q15(ptrA, ptrB, pa.nbSamples());
 
+   //printf("SNR = %f\n",snr);
 
    if (snr < threshold)
    {
@@ -353,6 +354,7 @@ void assert_snr_error(unsigned long nb,AnyPattern<q7_t> &pa,AnyPattern<q7_t> &pb
 
    snr = arm_snr_q7(ptrA, ptrB, pa.nbSamples());
 
+   //printf("SNR = %f\n",snr);
 
    if (snr < threshold)
    {

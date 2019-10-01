@@ -12,10 +12,15 @@ class BasicMathsBenchmarksF32:public Client::Suite
             Client::Pattern<float32_t> input2;
             Client::LocalPattern<float32_t> output;
 
+            Client::RefPattern<float32_t> ref;
+
+
             int nb;
 
             float32_t *inp1;
             float32_t *inp2;
             float32_t *outp;
+
+            float32_t *refp;
             
     };

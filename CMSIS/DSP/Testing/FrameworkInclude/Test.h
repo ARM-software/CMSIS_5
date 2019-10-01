@@ -280,6 +280,7 @@ API of Memory managers used in the test framework
       */
       virtual void ImportPattern_f64(Testing::PatternID_t,char*,Testing::nbSamples_t nb=MAX_NB_SAMPLES)=0;
       virtual void ImportPattern_f32(Testing::PatternID_t,char*,Testing::nbSamples_t nb=MAX_NB_SAMPLES)=0;
+      virtual void ImportPattern_q63(Testing::PatternID_t,char*,Testing::nbSamples_t nb=MAX_NB_SAMPLES)=0;
       virtual void ImportPattern_q31(Testing::PatternID_t,char*,Testing::nbSamples_t nb=MAX_NB_SAMPLES)=0;
       virtual void ImportPattern_q15(Testing::PatternID_t,char*,Testing::nbSamples_t nb=MAX_NB_SAMPLES)=0;
       virtual void ImportPattern_q7(Testing::PatternID_t,char*,Testing::nbSamples_t nb=MAX_NB_SAMPLES)=0;
@@ -308,6 +309,7 @@ API of Memory managers used in the test framework
       */
       virtual void DumpPattern_f64(Testing::outputID_t,Testing::nbSamples_t nb, float64_t*)=0;
       virtual void DumpPattern_f32(Testing::outputID_t,Testing::nbSamples_t nb, float32_t*)=0;
+      virtual void DumpPattern_q63(Testing::outputID_t,Testing::nbSamples_t nb, q63_t*)=0;
       virtual void DumpPattern_q31(Testing::outputID_t,Testing::nbSamples_t nb, q31_t*)=0;
       virtual void DumpPattern_q15(Testing::outputID_t,Testing::nbSamples_t nb, q15_t*)=0;
       virtual void DumpPattern_q7(Testing::outputID_t,Testing::nbSamples_t nb, q7_t*)=0;
@@ -386,6 +388,7 @@ public:
     */
     float64_t *load_f64(Testing::PatternID_t,Testing::nbSamples_t&,Testing::nbSamples_t maxSamples=MAX_NB_SAMPLES);
     float32_t *load_f32(Testing::PatternID_t,Testing::nbSamples_t&,Testing::nbSamples_t maxSamples=MAX_NB_SAMPLES);
+    q63_t *load_q63(Testing::PatternID_t,Testing::nbSamples_t&,Testing::nbSamples_t maxSamples=MAX_NB_SAMPLES);
     q31_t *load_q31(Testing::PatternID_t,Testing::nbSamples_t&,Testing::nbSamples_t maxSamples=MAX_NB_SAMPLES);
     q15_t *load_q15(Testing::PatternID_t,Testing::nbSamples_t&,Testing::nbSamples_t maxSamples=MAX_NB_SAMPLES);
     q7_t *load_q7(Testing::PatternID_t,Testing::nbSamples_t&,Testing::nbSamples_t maxSamples=MAX_NB_SAMPLES);
@@ -402,6 +405,7 @@ public:
     */
     float64_t *local_f64(Testing::nbSamples_t);
     float32_t *local_f32(Testing::nbSamples_t);
+    q63_t *local_q63(Testing::nbSamples_t);
     q31_t *local_q31(Testing::nbSamples_t);
     q15_t *local_q15(Testing::nbSamples_t);
     q7_t *local_q7(Testing::nbSamples_t);
@@ -416,6 +420,7 @@ public:
     void dumpPattern_f64(Testing::outputID_t,Testing::nbSamples_t,float64_t*);
     void dumpPattern_f32(Testing::outputID_t,Testing::nbSamples_t,float32_t*);
 
+    void dumpPattern_q63(Testing::outputID_t,Testing::nbSamples_t,q63_t*);
     void dumpPattern_q31(Testing::outputID_t,Testing::nbSamples_t,q31_t*);
     void dumpPattern_q15(Testing::outputID_t,Testing::nbSamples_t,q15_t*);
     void dumpPattern_q7(Testing::outputID_t,Testing::nbSamples_t,q7_t*);

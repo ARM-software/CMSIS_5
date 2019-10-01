@@ -139,6 +139,9 @@ else()
 
 set(TESTSRC 
   Source/Tests/BasicTestsF32.cpp
+  Source/Tests/BasicTestsQ31.cpp
+  Source/Tests/BasicTestsQ15.cpp
+  Source/Tests/BasicTestsQ7.cpp
   Source/Tests/SVMF32.cpp
   Source/Tests/BayesF32.cpp
   Source/Tests/TransformF32.cpp

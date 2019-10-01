@@ -46,6 +46,7 @@ TYPE *PatternMgr::local_##EXT(Testing::nbSamples_t nbSamples) \
 
 LOCAL(float64_t,f64)
 LOCAL(float32_t,f32)
+LOCAL(q63_t,q63)
 LOCAL(q31_t,q31)
 LOCAL(q15_t,q15)
 LOCAL(q7_t,q7)
@@ -89,6 +90,24 @@ float32_t *PatternMgr::load_f32(Testing::PatternID_t id,Testing::nbSamples_t& nb
     return((float32_t*)b);
    
 }
+
+q63_t *PatternMgr::load_q63(Testing::PatternID_t id,Testing::nbSamples_t& nbSamples,Testing::nbSamples_t maxSamples)
+{
+    nbSamples=m_io->GetPatternSize(id);
+
+    if ((maxSamples != MAX_NB_SAMPLES) && (maxSamples < nbSamples))
+    {
+        nbSamples = maxSamples;
+    }
+
+    char *b = m_mem->NewBuffer(sizeof(q63_t)*nbSamples);
+    if (b != NULL)
+    {
+       m_io->ImportPattern_q63(id,b,nbSamples);
+    }
+    return((q63_t*)b);
+}
+
 
 q31_t *PatternMgr::load_q31(Testing::PatternID_t id,Testing::nbSamples_t& nbSamples,Testing::nbSamples_t maxSamples)
 {
@@ -201,6 +220,11 @@ void PatternMgr::dumpPattern_f64(Testing::outputID_t id,Testing::nbSamples_t nbS
 void PatternMgr::dumpPattern_f32(Testing::outputID_t id,Testing::nbSamples_t nbSamples,float32_t* data)
 {
    m_io->DumpPattern_f32(id,nbSamples,data);
+}
+
+void PatternMgr::dumpPattern_q63(Testing::outputID_t id,Testing::nbSamples_t nbSamples,q63_t* data)
+{
+   m_io->DumpPattern_q63(id,nbSamples,data);
 }
 
 void PatternMgr::dumpPattern_q31(Testing::outputID_t id,Testing::nbSamples_t nbSamples,q31_t* data)

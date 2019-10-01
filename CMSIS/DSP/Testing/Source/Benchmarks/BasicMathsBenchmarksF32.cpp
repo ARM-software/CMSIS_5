@@ -42,6 +42,7 @@
        float32_t result;
 
        arm_dot_prod_f32(inp1,inp2,this->nb,&result);   
+
     }
 
     

@@ -49,6 +49,51 @@
                    The Q31 value -1 (0x80000000) will be saturated to the maximum allowable positive value 0x7FFFFFFF.
  */
 
+#if defined(ARM_MATH_MVEI)
+
+#include "arm_helium_utils.h"
+
+void arm_abs_q31(
+    const q31_t * pSrc,
+    q31_t * pDst,
+    uint32_t blockSize)
+{
+    uint32_t  blkCnt;           /* loop counters */
+    q31x4_t vecSrc;
+
+    /* Compute 4 outputs at a time */
+    blkCnt = blockSize >> 2;
+    while (blkCnt > 0U)
+    {
+        /*
+         * C = |A|
+         * Calculate absolute and then store the results in the destination buffer.
+         */
+        vecSrc = vld1q(pSrc);
+        vst1q(pDst, vqabsq(vecSrc));
+        /*
+         * Decrement the blockSize loop counter
+         */
+        blkCnt--;
+        /*
+         * advance vector source and destination pointers
+         */
+        pSrc += 4;
+        pDst += 4;
+    }
+    /*
+     * tail
+     */
+    blkCnt = blockSize & 3;
+    if (blkCnt > 0U)
+    {
+        mve_pred16_t p0 = vctp32q(blkCnt);
+        vecSrc = vld1q(pSrc);
+        vstrwq_p(pDst, vqabsq(vecSrc), p0);
+    }
+}
+
+#else
 void arm_abs_q31(
   const q31_t * pSrc,
         q31_t * pDst,
@@ -126,7 +171,7 @@ void arm_abs_q31(
   }
 
 }
-
+#endif /* defined(ARM_MATH_MVEI) */
 /**
   @} end of BasicAbs group
  */

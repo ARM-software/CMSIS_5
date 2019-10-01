@@ -96,6 +96,10 @@ namespace Client
       delete(this->outputNames);
     }
 
+    /** Read word 64 from C array
+
+    */
+
     /** Read word 32 from C array
 
     */
@@ -531,6 +535,25 @@ namespace Client
 
     }
 
+    void FPGA::ImportPattern_q63(Testing::PatternID_t id,char* p,Testing::nbSamples_t nb)
+    {
+        unsigned long offset,i;
+
+        offset=this->getPatternOffset(id);
+
+        const char *patternStart = this->m_patterns + offset;
+        const q63_t *src = (const q63_t*)patternStart;
+        q63_t *dst = (q63_t*)p;
+
+        if (dst)
+        {
+           for(i=0; i < nb; i++)
+           {
+               *dst++ = *src++;
+           }
+        }
+    }
+
     void FPGA::ImportPattern_q31(Testing::PatternID_t id,char* p,Testing::nbSamples_t nb)
     {
         unsigned long offset,i;
@@ -688,6 +711,25 @@ namespace Client
                printf("D: 0x%08x\n",t);
             }
             printf("D: END\n");
+        }
+    }
+
+    void FPGA::DumpPattern_q63(Testing::outputID_t id,Testing::nbSamples_t nb, q63_t* data)
+    {
+        std::string fileName = this->getOutputPath(id); 
+        if (data)
+        {
+           printf("D: %s\n",fileName.c_str());
+           Testing::nbSamples_t i=0;
+           uint64_t t;
+           q63_t v;
+           for(i=0; i < nb; i++)
+           {
+              v = data[i];
+              t = (uint64_t)v;
+              printf("D: 0x%016llx\n",t);
+           }
+           printf("D: END\n");
         }
     }
 

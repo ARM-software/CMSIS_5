@@ -59,10 +59,10 @@
   @return        none
  */
 
-#if defined (ARM_MATH_HELIUM)
+#if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
 
-#include "arm_mve.h"
 #include "arm_helium_utils.h"
+
 
 void arm_dot_prod_f32(
     const float32_t * pSrcA,
@@ -70,31 +70,51 @@ void arm_dot_prod_f32(
     uint32_t    blockSize,
     float32_t * result)
 {
-    float32x4_t vecA, vecB;
-    float32x4_t vecSum;
+    f32x4_t vecA, vecB;
+    f32x4_t vecSum;
+    uint32_t blkCnt; 
+    float32_t sum = 0.0f;  
     vecSum = vdupq_n_f32(0.0);
 
-    do {
+    /* Compute 4 outputs at a time */
+    blkCnt = blockSize >> 2U;
+    while (blkCnt > 0U)
+    {
         /*
          * C = A[0]* B[0] + A[1]* B[1] + A[2]* B[2] + .....+ A[blockSize-1]* B[blockSize-1]
          * Calculate dot product and then store the result in a temporary buffer.
+         * and advance vector source and destination pointers
          */
-        mve_pred16_t p = vctp32q(blockSize);
+        vecA = vld1q(pSrcA);
+        pSrcA += 4;
+        
+        vecB = vld1q(pSrcB);
+        pSrcB += 4;
 
-        vecA = vldrwq_z_f32(pSrcA, p);
-        vecB = vldrwq_z_f32(pSrcB, p);
-        vecSum = vfmaq_m(vecSum, vecA, vecB, p);
+        vecSum = vfmaq(vecSum, vecA, vecB);
         /*
          * Decrement the blockSize loop counter
-         * Advance vector source and destination pointers
          */
-        post_incr_vec_size(pSrcA);
-        post_incr_vec_size(pSrcB);
-        blockSize -= VEC_LANES_F32;
+        blkCnt --;
     }
-    while ((int32_t) blockSize > 0);
 
-    *result = vecAddAcrossF32Mve(vecSum);
+
+    blkCnt = blockSize & 3;
+    if (blkCnt > 0U)
+    {
+        /* C = A[0]* B[0] + A[1]* B[1] + A[2]* B[2] + .....+ A[blockSize-1]* B[blockSize-1] */
+
+        mve_pred16_t p0 = vctp32q(blkCnt);
+        vecA = vld1q(pSrcA);
+        vecB = vld1q(pSrcB);
+        vecSum = vfmaq_m(vecSum, vecA, vecB, p0);
+    }
+
+    sum = vecAddAcrossF32Mve(vecSum);
+
+    /* Store result in destination buffer */
+    *result = sum;
+
 }
 
 #else
@@ -108,11 +128,11 @@ void arm_dot_prod_f32(
         uint32_t blkCnt;                               /* Loop counter */
         float32_t sum = 0.0f;                          /* Temporary return variable */
 
-#if defined(ARM_MATH_NEON)
-    float32x4_t vec1;
-    float32x4_t vec2;
-    float32x4_t res;
-    float32x4_t accum = vdupq_n_f32(0);    
+#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+    f32x4_t vec1;
+    f32x4_t vec2;
+    f32x4_t res;
+    f32x4_t accum = vdupq_n_f32(0);    
 
     /* Compute 4 outputs at a time */
     blkCnt = blockSize >> 2U;
@@ -125,7 +145,7 @@ void arm_dot_prod_f32(
         /* C = A[0]*B[0] + A[1]*B[1] + A[2]*B[2] + ... + A[blockSize-1]*B[blockSize-1] */
         /* Calculate dot product and then store the result in a temporary buffer. */
         
-	accum = vmlaq_f32(accum, vec1, vec2);
+	      accum = vmlaq_f32(accum, vec1, vec2);
 	
         /* Increment pointers */
         pSrcA += 4;
@@ -148,7 +168,7 @@ void arm_dot_prod_f32(
     blkCnt = blockSize & 0x3;
 
 #else
-#if defined (ARM_MATH_LOOPUNROLL)
+#if defined (ARM_MATH_LOOPUNROLL) && !defined(ARM_MATH_AUTOVECTORIZE)
 
   /* Loop unrolling: Compute 4 outputs at a time */
   blkCnt = blockSize >> 2U;
@@ -198,7 +218,7 @@ void arm_dot_prod_f32(
   *result = sum;
 }
 
-#endif /* ARM_MATH_HELIUM */
+#endif /* defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE) */
 /**
   @} end of BasicDotProd group
  */
