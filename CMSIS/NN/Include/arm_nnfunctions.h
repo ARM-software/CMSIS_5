@@ -1702,6 +1702,24 @@ void arm_softmax_q15(const q15_t * vec_in, const uint16_t dim_vec, q15_t * p_out
                                                 const int32_t out_shift,
                                                 const int32_t out_mult);
 
+/**
+ * @defgroup Reshape Reshape Functions
+ *
+ */
+
+   /**
+    * @brief Reshape a s8 vector into another with different shape
+    * @param[in]  input      points to the s8 input vector
+    * @param[out] output     points to the s8 output vector
+    * @param[in]  total_size total size of the input and output vectors in bytes
+    *
+    * @note The output is expected to be in a memory area that does not overlap with the input's
+    *
+    */
+    void arm_reshape_s8(const int8_t *input,
+                        int8_t *output,
+                        const uint32_t total_size);
+
 
 #ifdef __cplusplus
 }

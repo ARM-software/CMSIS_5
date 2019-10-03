@@ -21,6 +21,7 @@ option(ACTIVATION           "Activations"           ON)
 option(POOLING              "Pooling"               ON)
 option(SOFTMAX              "Softmax"               ON)
 option(BASICMATHSNN         "Basic Maths for NN"    ON)
+option(RESHAPE              "Reshape"               ON)
 
 # When OFF it is the default behavior : all tables are included.
 option(NNSUPPORT            "NN Support"            ON)
@@ -75,6 +76,11 @@ endif()
 if (NNSUPPORT)
   add_subdirectory(NNSupportFunctions)
   target_link_libraries(CMSISNN INTERFACE CMSISNNSupport)
+endif()
+
+if (RESHAPE)
+  add_subdirectory(ReshapeFunctions)
+  target_link_libraries(CMSISNN INTERFACE CMSISNNReshape)
 endif()
 
 ### Includes
