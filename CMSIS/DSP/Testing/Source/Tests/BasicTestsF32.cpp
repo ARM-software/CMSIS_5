@@ -3,6 +3,14 @@
 
 #define SNR_THRESHOLD 120
 
+/* 
+
+Reference patterns are generated with
+a double precision computation.
+
+*/
+#define REL_ERROR (1.0e-6)
+
 #define GET_F32_PTR() \
 const float32_t *inp1=input1.ptr(); \
 const float32_t *inp2=input2.ptr(); \
@@ -14,9 +22,12 @@ float32_t *outp=output.ptr();
         GET_F32_PTR();
 
         arm_add_f32(inp1,inp2,outp,input1.nbSamples());
-        
+
+        ASSERT_EMPTY_TAIL(output);
 
         ASSERT_SNR(output,ref,(float32_t)SNR_THRESHOLD);
+
+        ASSERT_REL_ERROR(output,ref,REL_ERROR);
 
     } 
 
@@ -25,8 +36,12 @@ float32_t *outp=output.ptr();
         GET_F32_PTR();
 
         arm_sub_f32(inp1,inp2,outp,input1.nbSamples());
+
+        ASSERT_EMPTY_TAIL(output);
         
         ASSERT_SNR(output,ref,(float32_t)SNR_THRESHOLD);
+
+        ASSERT_REL_ERROR(output,ref,REL_ERROR);
        
     } 
 
@@ -36,7 +51,11 @@ float32_t *outp=output.ptr();
 
         arm_mult_f32(inp1,inp2,outp,input1.nbSamples());
 
+        ASSERT_EMPTY_TAIL(output);
+
         ASSERT_SNR(output,ref,(float32_t)SNR_THRESHOLD);
+
+        ASSERT_REL_ERROR(output,ref,REL_ERROR);
        
     } 
 
@@ -46,7 +65,11 @@ float32_t *outp=output.ptr();
 
         arm_negate_f32(inp1,outp,input1.nbSamples());
 
+        ASSERT_EMPTY_TAIL(output);
+
         ASSERT_SNR(output,ref,(float32_t)SNR_THRESHOLD);
+
+        ASSERT_REL_ERROR(output,ref,REL_ERROR);
        
     } 
 
@@ -56,7 +79,11 @@ float32_t *outp=output.ptr();
 
         arm_offset_f32(inp1,0.5,outp,input1.nbSamples());
 
+        ASSERT_EMPTY_TAIL(output);
+
         ASSERT_SNR(output,ref,(float32_t)SNR_THRESHOLD);
+
+        ASSERT_REL_ERROR(output,ref,REL_ERROR);
        
     } 
 
@@ -66,7 +93,11 @@ float32_t *outp=output.ptr();
 
         arm_scale_f32(inp1,0.5,outp,input1.nbSamples());
 
+        ASSERT_EMPTY_TAIL(output);
+
         ASSERT_SNR(output,ref,(float32_t)SNR_THRESHOLD);
+
+        ASSERT_REL_ERROR(output,ref,REL_ERROR);
        
     } 
 
@@ -82,6 +113,8 @@ float32_t *outp=output.ptr();
 
         ASSERT_SNR(output,ref,(float32_t)SNR_THRESHOLD);
 
+        ASSERT_REL_ERROR(output,ref,REL_ERROR);
+
        
     } 
 
@@ -91,7 +124,11 @@ float32_t *outp=output.ptr();
 
         arm_abs_f32(inp1,outp,input1.nbSamples());
 
+        ASSERT_EMPTY_TAIL(output);
+
         ASSERT_SNR(output,ref,(float32_t)SNR_THRESHOLD);
+
+        ASSERT_REL_ERROR(output,ref,REL_ERROR);
        
     } 
 

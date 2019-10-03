@@ -29,6 +29,19 @@
 
 namespace Client {
 
+template <typename T> 
+void assert_not_empty_generic(unsigned long nb, AnyPattern<T> &p)
+{
+   if (p.nbSamples() == 0)                    
+   {                                          
+        throw (Error(EMPTY_PATTERN_ERROR,nb));
+   }                                          
+   if (p.ptr() == NULL)                       
+   {                                          
+        throw (Error(EMPTY_PATTERN_ERROR,nb));
+   }
+};
+
 template <> 
 void assert_near_equal(unsigned long nb,float32_t pa, float32_t pb, float32_t threshold)
 {
@@ -41,6 +54,9 @@ void assert_near_equal(unsigned long nb,float32_t pa, float32_t pb, float32_t th
 template <>
 void assert_near_equal(unsigned long nb,AnyPattern<float32_t> &pa, AnyPattern<float32_t> &pb, float32_t threshold)
 {
+    ASSERT_NOT_EMPTY(pa);
+    ASSERT_NOT_EMPTY(pb);
+
     if (pa.nbSamples() != pb.nbSamples())
     {
         throw (Error(DIFFERENT_LENGTH_ERROR,nb));
@@ -60,15 +76,41 @@ void assert_near_equal(unsigned long nb,AnyPattern<float32_t> &pa, AnyPattern<fl
     }
 };
 
-void assert_relative_error(unsigned long nb,float32_t &a, float32_t &b, float32_t threshold)
+void assert_not_empty(unsigned long nb, AnyPattern<float32_t> &p)
 {
-    float32_t rel,delta,average;
+  assert_not_empty_generic(nb,p);
+}
+
+void assert_not_empty(unsigned long nb, AnyPattern<q63_t> &p)
+{
+  assert_not_empty_generic(nb,p);
+}
+
+void assert_not_empty(unsigned long nb, AnyPattern<q31_t> &p)
+{
+  assert_not_empty_generic(nb,p);
+}
+
+void assert_not_empty(unsigned long nb, AnyPattern<q15_t> &p)
+{
+  assert_not_empty_generic(nb,p);
+}
+
+void assert_not_empty(unsigned long nb, AnyPattern<q7_t> &p)
+{
+  assert_not_empty_generic(nb,p);
+}
+
+void assert_relative_error(unsigned long nb,float32_t &a, float32_t &b, double threshold)
+{
+    double rel,delta,average;
 
     delta=abs(a-b);
     average = (abs(a) + abs(b)) / 2.0f;
     if (average !=0)
     {
         rel = delta / average;
+        //printf("%6.9f %6.9f %6.9f\n",a,b,rel);
         if (rel > threshold)
         {
             throw (Error(RELATIVE_ERROR,nb));
@@ -76,8 +118,11 @@ void assert_relative_error(unsigned long nb,float32_t &a, float32_t &b, float32_
     }
 };
 
-void assert_relative_error(unsigned long nb,AnyPattern<float32_t> &pa, AnyPattern<float32_t> &pb, float32_t threshold)
+void assert_relative_error(unsigned long nb,AnyPattern<float32_t> &pa, AnyPattern<float32_t> &pb, double threshold)
 {
+    ASSERT_NOT_EMPTY(pa);
+    ASSERT_NOT_EMPTY(pb);
+
     if (pa.nbSamples() != pb.nbSamples())
     {
         throw (Error(DIFFERENT_LENGTH_ERROR,nb));
@@ -97,7 +142,7 @@ void assert_relative_error(unsigned long nb,AnyPattern<float32_t> &pa, AnyPatter
 
 
 /**
- * @brief  Caluclation of SNR
+ * @brief  Calculation of SNR
  * @param  float*   Pointer to the reference buffer
  * @param  float*   Pointer to the test buffer
  * @param  uint32_t     total number of samples
@@ -116,7 +161,14 @@ void assert_relative_error(unsigned long nb,AnyPattern<float32_t> &pa, AnyPatter
 #define IFINFINITERETURN(val,def)\
      if (isinf((val)))           \
      {                           \
-       return(def);              \
+       if ((val) > 0)            \
+       {                         \
+          return(def);           \
+       }                         \
+       else                      \
+       {                         \
+         return(-def);           \
+       }                         \
      }
 
 float arm_snr_f32(float *pRef, float *pTest, uint32_t buffSize)
@@ -147,6 +199,39 @@ float arm_snr_f32(float *pRef, float *pTest, uint32_t buffSize)
     IFNANRETURNZERO(SNR);
     IFINFINITERETURN(SNR,100000.0);
     
+
+  return (SNR);
+
+}
+
+float arm_snr_q63(q63_t *pRef, q63_t *pTest, uint32_t buffSize)
+{
+  double EnergySignal = 0.0, EnergyError = 0.0;
+  uint32_t i;
+  float SNR;
+ 
+  double testVal,refVal;
+
+  for (i = 0; i < buffSize; i++)
+    {
+     
+      testVal = ((float32_t)pTest[i])  / 9223372036854775808.0;
+      refVal = ((float32_t)pRef[i])  / 9223372036854775808.0;
+
+      EnergySignal += refVal * refVal;
+      EnergyError += (refVal - testVal) * (refVal - testVal);
+
+    }
+
+
+  SNR = 10 * log10 (EnergySignal / EnergyError);
+
+
+  /* Checking for a NAN value in SNR */
+   IFNANRETURNZERO(SNR);
+   IFINFINITERETURN(SNR,100000.0);
+   
+  //printf("SNR = %f\n",SNR);
 
   return (SNR);
 
@@ -278,6 +363,9 @@ void assert_snr_error(unsigned long nb,AnyPattern<float32_t> &pa,AnyPattern<floa
 {
    float32_t snr;
 
+   ASSERT_NOT_EMPTY(pa);
+   ASSERT_NOT_EMPTY(pb);
+
    if (pa.nbSamples() != pb.nbSamples())
    {
         throw (Error(DIFFERENT_LENGTH_ERROR,nb));
@@ -288,16 +376,47 @@ void assert_snr_error(unsigned long nb,AnyPattern<float32_t> &pa,AnyPattern<floa
 
    snr = arm_snr_f32(ptrA, ptrB, pa.nbSamples());
 
-
+   //printf("SNR = %f\n",snr);
+   
    if (snr < threshold)
    {
      throw (Error(SNR_ERROR,nb));
    }
 }
 
+void assert_snr_error(unsigned long nb,AnyPattern<q63_t> &pa,AnyPattern<q63_t> &pb, float32_t threshold)
+{
+   float32_t snr;
+
+   ASSERT_NOT_EMPTY(pa);
+   ASSERT_NOT_EMPTY(pb);
+
+   if (pa.nbSamples() != pb.nbSamples())
+   {
+        throw (Error(DIFFERENT_LENGTH_ERROR,nb));
+   }
+
+   q63_t *ptrA = pa.ptr();
+   q63_t *ptrB = pb.ptr();
+
+
+   snr = arm_snr_q63(ptrA, ptrB, pa.nbSamples());
+
+   //printf("SNR = %f\n",snr);
+
+   if (snr < threshold)
+   {
+     throw (Error(SNR_ERROR,nb));
+   }
+
+}
+
 void assert_snr_error(unsigned long nb,AnyPattern<q31_t> &pa,AnyPattern<q31_t> &pb, float32_t threshold)
 {
    float32_t snr;
+
+   ASSERT_NOT_EMPTY(pa);
+   ASSERT_NOT_EMPTY(pb);
 
    if (pa.nbSamples() != pb.nbSamples())
    {
@@ -306,6 +425,7 @@ void assert_snr_error(unsigned long nb,AnyPattern<q31_t> &pa,AnyPattern<q31_t> &
 
    q31_t *ptrA = pa.ptr();
    q31_t *ptrB = pb.ptr();
+
 
    snr = arm_snr_q31(ptrA, ptrB, pa.nbSamples());
 
@@ -320,6 +440,9 @@ void assert_snr_error(unsigned long nb,AnyPattern<q31_t> &pa,AnyPattern<q31_t> &
 void assert_snr_error(unsigned long nb,AnyPattern<q15_t> &pa,AnyPattern<q15_t> &pb, float32_t threshold)
 {
    float32_t snr;
+
+   ASSERT_NOT_EMPTY(pa);
+   ASSERT_NOT_EMPTY(pb);
 
    if (pa.nbSamples() != pb.nbSamples())
    {
@@ -343,6 +466,9 @@ void assert_snr_error(unsigned long nb,AnyPattern<q15_t> &pa,AnyPattern<q15_t> &
 void assert_snr_error(unsigned long nb,AnyPattern<q7_t> &pa,AnyPattern<q7_t> &pb, float32_t threshold)
 {
    float32_t snr;
+
+   ASSERT_NOT_EMPTY(pa);
+   ASSERT_NOT_EMPTY(pb);
 
    if (pa.nbSamples() != pb.nbSamples())
    {

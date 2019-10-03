@@ -135,6 +135,18 @@ class AnyPattern {
             this->m_nbSamples = 0;
        }
 
+       bool isTailEmpty()
+       {
+          if (m_mgr)
+          {
+             return(m_mgr->IsTailEmpty((char*)this->ptr(),this->nbSamples()*sizeof(T)));
+          }
+          else
+          {
+            return(true);
+          }
+       }
+
        /** Get pointer to the pattern data.
 
            Pointer is NULL in following conditions:
@@ -145,6 +157,10 @@ class AnyPattern {
        */
        T *ptr()
        {
+           if (this->m_mgr == NULL)
+           {
+              return(NULL);
+           }
           
            if (this->currentGen != this->m_mgr->generation())
            {
@@ -172,7 +188,23 @@ class AnyPattern {
 
        Testing::nbSamples_t nbSamples()
        {
-          return(this->m_nbSamples);
+          if (this->m_mgr == NULL)
+          {
+            return(0);
+          }
+
+          if (this->currentGen != this->m_mgr->generation())
+          {
+              return(0);
+          }
+          if (this->isLoaded)
+          {
+             return(this->m_nbSamples);
+          }
+          else
+          {
+            return(0);
+          }
        }
 
 };
@@ -280,9 +312,20 @@ class LocalPattern : public AnyPattern<T>{
 
        void dump(PatternMgr *mgr)
        {
-           if (this->m_mgr->runningMode() != Testing::kTestOnly)
+           /*
+
+           If the pattern has never been created then m_mgr is NULL.
+
+           */
+           if (this->m_mgr != NULL)
            {
-              dumpPattern(this->m_id,this->m_nbSamples,this->data,this->m_mgr);
+              if (this->m_mgr->runningMode() != Testing::kTestOnly)
+              {
+                 if ((this->ptr() != NULL) && (this->nbSamples() > 0))
+                 {
+                    dumpPattern(this->m_id,this->m_nbSamples,this->data,this->m_mgr);
+                 }
+              }
            }
        }
 };

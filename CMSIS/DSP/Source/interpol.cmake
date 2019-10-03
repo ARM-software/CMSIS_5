@@ -40,4 +40,12 @@ if (CONFIGTABLE AND ARM_LMS_NORM_Q15)
     target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_RECIP_Q15)
 endif()
 
+if (CONFIGTABLE AND ARM_CMPLX_MAG_Q31 AND (MVEI OR HELIUM))
+    target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_FAST_SQRT_Q31_MVE)
+endif()
+
+if (CONFIGTABLE AND ARM_CMPLX_MAG_Q15 AND (MVEI OR HELIUM))
+    target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_FAST_SQRT_Q15_MVE)
+endif()
+
 endfunction()

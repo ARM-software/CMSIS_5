@@ -2,6 +2,36 @@ import os.path
 import struct
 import numpy as np
 
+TAILONLY = 1
+BODYONLY = 2
+BODYANDTAIL = 3
+
+def loopnb(format,loopkind):
+    nb = 0
+    if loopkind == TAILONLY:
+        if format == 0 or format == 31:
+            nb = 3 
+        if format == 15:
+            nb = 7
+        if format == 7:
+            nb = 15
+    if loopkind == BODYONLY:
+        if format == 0 or format == 31:
+            nb = 8 
+        if format == 15:
+            nb = 16
+        if format == 7:
+            nb = 32
+    if loopkind == BODYANDTAIL:
+        if format == 0 or format == 31:
+            nb = 9 
+        if format == 15:
+            nb = 17
+        if format == 7:
+            nb = 33
+
+    return(nb)
+
 # Tools to generate pattern files
 
 def createMissingDir(destPath):

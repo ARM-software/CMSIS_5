@@ -69,6 +69,56 @@
   @return        none
  */
 
+#if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
+
+void arm_cmplx_mag_squared_f32(
+  const float32_t * pSrc,
+        float32_t * pDst,
+        uint32_t numSamples)
+{
+    int32_t blockSize = numSamples;  /* loop counters */
+    uint32_t  blkCnt;           /* loop counters */
+    f32x4x2_t vecSrc;
+    f32x4_t sum;
+    float32_t real, imag;                          /* Temporary input variables */
+
+    /* Compute 4 complex samples at a time */
+    blkCnt = blockSize >> 2;
+    while (blkCnt > 0U)
+    {
+        vecSrc = vld2q(pSrc);
+        sum = vmulq(vecSrc.val[0], vecSrc.val[0]);
+        sum = vfmaq(sum, vecSrc.val[1], vecSrc.val[1]);
+        vst1q(pDst, sum);
+
+        pSrc += 8;
+        pDst += 4;
+        
+        /*
+         * Decrement the blockSize loop counter
+         */
+        blkCnt--;
+    }
+
+    /* Tail */
+    blkCnt = blockSize & 3;
+    while (blkCnt > 0U)
+    {
+      /* C[0] = (A[0] * A[0] + A[1] * A[1]) */
+  
+      real = *pSrc++;
+      imag = *pSrc++;
+  
+      /* store result in destination buffer. */
+      *pDst++ = (real * real) + (imag * imag);
+  
+      /* Decrement loop counter */
+      blkCnt--;
+    }
+
+}
+
+#else
 void arm_cmplx_mag_squared_f32(
   const float32_t * pSrc,
         float32_t * pDst,
@@ -77,7 +127,7 @@ void arm_cmplx_mag_squared_f32(
         uint32_t blkCnt;                               /* Loop counter */
         float32_t real, imag;                          /* Temporary input variables */
 
-#if defined(ARM_MATH_NEON)
+#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
   float32x4x2_t vecA;
   float32x4_t vRealA;
   float32x4_t vImagA;
@@ -123,7 +173,7 @@ void arm_cmplx_mag_squared_f32(
   blkCnt = numSamples & 7;
 
 #else
-#if defined (ARM_MATH_LOOPUNROLL)
+#if defined (ARM_MATH_LOOPUNROLL) && !defined(ARM_MATH_AUTOVECTORIZE)
 
   /* Loop unrolling: Compute 4 outputs at a time */
   blkCnt = numSamples >> 2U;
@@ -178,6 +228,7 @@ void arm_cmplx_mag_squared_f32(
   }
 
 }
+#endif /* defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE) */
 
 /**
   @} end of cmplx_mag_squared group

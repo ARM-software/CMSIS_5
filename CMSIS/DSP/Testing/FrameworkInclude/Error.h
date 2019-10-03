@@ -40,6 +40,8 @@
 #define DIFFERENT_LENGTH_ERROR 6
 #define BOOL_ERROR 7
 #define MEMORY_ALLOCATION_ERROR 8
+#define EMPTY_PATTERN_ERROR 9
+#define TAIL_NOT_EMPTY_ERROR 10
 
 namespace Client {
 
@@ -68,7 +70,45 @@ to get the line number.
 
 */
 
-template <typename T> 
+
+
+extern void assert_relative_error(unsigned long nb,float32_t &a, float32_t &b, double threshold);
+extern void assert_relative_error(unsigned long nb,AnyPattern<float32_t> &pa, AnyPattern<float32_t> &pb, double threshold);
+
+extern void assert_snr_error(unsigned long nb,AnyPattern<float32_t> &pa,AnyPattern<float32_t> &pb, float32_t threshold);
+extern void assert_snr_error(unsigned long nb,AnyPattern<q63_t> &pa,AnyPattern<q63_t> &pb, float32_t threshold);
+extern void assert_snr_error(unsigned long nb,AnyPattern<q31_t> &pa,AnyPattern<q31_t> &pb, float32_t threshold);
+extern void assert_snr_error(unsigned long nb,AnyPattern<q15_t> &pa,AnyPattern<q15_t> &pb, float32_t threshold);
+extern void assert_snr_error(unsigned long nb,AnyPattern<q7_t> &pa,AnyPattern<q7_t> &pb, float32_t threshold);
+
+extern void assert_true(unsigned long nb,bool cond);
+extern void assert_false(unsigned long nb,bool cond);
+
+extern void assert_not_empty(unsigned long nb, AnyPattern<float32_t> &p);
+extern void assert_not_empty(unsigned long nb, AnyPattern<q63_t> &p);
+extern void assert_not_empty(unsigned long nb, AnyPattern<q31_t> &p);
+extern void assert_not_empty(unsigned long nb, AnyPattern<q15_t> &p);
+extern void assert_not_empty(unsigned long nb, AnyPattern<q7_t> &p);
+
+
+}
+
+/*
+
+Macros to use to implement tests.
+
+*/
+#define ASSERT_EQ(A,B) Client::assert_equal(__LINE__,A,B)
+#define ASSERT_NEAR_EQ(A,B,THRESH) Client::assert_near_equal(__LINE__,A,B,THRESH)
+#define ASSERT_REL_ERROR(A,B,THRESH) Client::assert_relative_error(__LINE__,A,B,THRESH)
+#define ASSERT_SNR(A,B,SNR) Client::assert_snr_error(__LINE__,A,B,SNR)
+#define ASSERT_TRUE(A) Client::assert_true(__LINE__,A)
+#define ASSERT_FALSE(A) Client::assert_false(__LINE__,A)
+#define ASSERT_NOT_EMPTY(A) Client::assert_not_empty(__LINE__,A)
+#define ASSERT_EMPTY_TAIL(A) if (!A.isTailEmpty()) throw (Client::Error(TAIL_NOT_EMPTY_ERROR,__LINE__))
+
+namespace Client {
+    template <typename T> 
 void assert_equal(unsigned long nb,T pa, T pb)
 {
     if (pa != pb)
@@ -81,6 +121,9 @@ void assert_equal(unsigned long nb,T pa, T pb)
 template <typename T> 
 void assert_equal(unsigned long nb,AnyPattern<T> &pa, AnyPattern<T> &pb)
 {
+    ASSERT_NOT_EMPTY(pa);
+    ASSERT_NOT_EMPTY(pb);
+    
     if (pa.nbSamples() != pb.nbSamples())
     {
         throw (Error(EQUAL_ERROR,nb));
@@ -112,6 +155,10 @@ void assert_near_equal(unsigned long nb,float32_t pa, float32_t pb, float32_t th
 template <typename T> 
 void assert_near_equal(unsigned long nb,AnyPattern<T> &pa, AnyPattern<T> &pb, T threshold)
 {
+
+    ASSERT_NOT_EMPTY(pa);
+    ASSERT_NOT_EMPTY(pb);
+
     if (pa.nbSamples() != pb.nbSamples())
     {
         throw (Error(NEAR_EQUAL_ERROR,nb));
@@ -134,29 +181,5 @@ void assert_near_equal(unsigned long nb,AnyPattern<T> &pa, AnyPattern<T> &pb, T 
 template <> 
 void assert_near_equal(unsigned long nb,AnyPattern<float32_t> &pa, AnyPattern<float32_t> &pb, float32_t threshold);
 
-
-extern void assert_relative_error(unsigned long nb,float32_t &a, float32_t &b, float32_t threshold);
-extern void assert_relative_error(unsigned long nb,AnyPattern<float32_t> &pa, AnyPattern<float32_t> &pb, float32_t threshold);
-
-extern void assert_snr_error(unsigned long nb,AnyPattern<float32_t> &pa,AnyPattern<float32_t> &pb, float32_t threshold);
-extern void assert_snr_error(unsigned long nb,AnyPattern<q31_t> &pa,AnyPattern<q31_t> &pb, float32_t threshold);
-extern void assert_snr_error(unsigned long nb,AnyPattern<q15_t> &pa,AnyPattern<q15_t> &pb, float32_t threshold);
-extern void assert_snr_error(unsigned long nb,AnyPattern<q7_t> &pa,AnyPattern<q7_t> &pb, float32_t threshold);
-
-extern void assert_true(unsigned long nb,bool cond);
-extern void assert_false(unsigned long nb,bool cond);
-
 }
-
-/*
-
-Macros to use to implement tests.
-
-*/
-#define ASSERT_EQ(A,B) Client::assert_equal(__LINE__,A,B)
-#define ASSERT_NEAR_EQ(A,B,THRESH) Client::assert_near_equal(__LINE__,A,B,THRESH)
-#define ASSERT_REL_ERROR(A,B,THRESH) Client::assert_relative_error(__LINE__,A,B,THRESH)
-#define ASSERT_SNR(A,B,SNR) Client::assert_snr_error(__LINE__,A,B,SNR)
-#define ASSERT_TRUE(A) Client::assert_true(__LINE__,A)
-#define ASSERT_FALSE(A) Client::assert_false(__LINE__,A)
 #endif

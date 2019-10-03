@@ -432,6 +432,12 @@ extern "C"
   /* -1 to +1 is divided into 360 values so total spacing is (2/360) */
 #define INPUT_SPACING         0xB60B61
 
+  /**
+   * @brief Macros for complex numbers
+   */
+
+  /* Dimension C vector space */
+  #define CMPLX_DIM 2
 
   /**
    * @brief Error status returned by some functions in the library.

@@ -62,6 +62,18 @@ namespace Client {
          return(this->memError);
      }
 
+     size_t ArrayMemory::getTailSize()
+     {
+        if (this->tail)
+        {
+           return(16);  
+        }
+        else
+        {
+            return(0);
+        }
+     }
+
      char *ArrayMemory::NewBuffer(size_t length)
      {
          if (length == 0)
@@ -71,11 +83,8 @@ namespace Client {
          
          size_t tailSize = 0;
          // Add a tail of 16 bytes corresponding to the max number of lanes.
-         if (this->tail)
-         {
-           tailSize = 16;  
-         }
-
+         tailSize = this->getTailSize();  
+         
          // Compute some offset to align the new buffer to be allocated
          if (this->alignSize > 0)
          {
@@ -100,6 +109,29 @@ namespace Client {
         {
             this->memError=true;
             return(NULL);
+        }
+     }
+
+     bool ArrayMemory::IsTailEmpty(char *ptr, size_t length)
+     {
+        if ((ptr == NULL) || (length == 0))
+        {
+           return(true);
+        }
+        else
+        {
+            char *p=ptr + length;
+            bool isEmpty=true;
+    
+            for(int i=0; i < this->getTailSize() ; i++)
+            {
+                //printf("%d\n",p[i]);
+                if (p[i] != 0)
+                {
+                    isEmpty = false;
+                }
+            }
+            return(isEmpty);
         }
      }
 

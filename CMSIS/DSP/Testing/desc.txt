@@ -279,37 +279,37 @@ group Root {
               Output  OUT_STATE_Q15_ID : State
    
               Functions {
-                Test nb=3    arm_add_q15:test_add_q15
-                Test nb=4n   arm_add_q15:test_add_q15
-                Test nb=4n+1 arm_add_q15:test_add_q15
+                Test nb=7    arm_add_q15:test_add_q15
+                Test nb=8n   arm_add_q15:test_add_q15
+                Test nb=8n+1 arm_add_q15:test_add_q15
          
-                Test nb=3    arm_sub_q15:test_sub_q15
-                Test nb=4n   arm_sub_q15:test_sub_q15
-                Test nb=4n+1 arm_sub_q15:test_sub_q15
+                Test nb=7    arm_sub_q15:test_sub_q15
+                Test nb=8n   arm_sub_q15:test_sub_q15
+                Test nb=8n+1 arm_sub_q15:test_sub_q15
          
-                Test nb=3    arm_mult_q15:test_mult_q15
-                Test nb=4n   arm_mult_q15:test_mult_q15
-                Test nb=4n+1 arm_mult_q15:test_mult_q15
+                Test nb=7    arm_mult_q15:test_mult_q15
+                Test nb=8n   arm_mult_q15:test_mult_q15
+                Test nb=8n+1 arm_mult_q15:test_mult_q15
          
-                Test nb=3    arm_negate_q15:test_negate_q15
-                Test nb=4n   arm_negate_q15:test_negate_q15
-                Test nb=4n+1 arm_negate_q15:test_negate_q15
+                Test nb=7    arm_negate_q15:test_negate_q15
+                Test nb=8n   arm_negate_q15:test_negate_q15
+                Test nb=8n+1 arm_negate_q15:test_negate_q15
          
-                Test nb=3    arm_offset_q15:test_offset_q15
-                Test nb=4n   arm_offset_q15:test_offset_q15
-                Test nb=4n+1 arm_offset_q15:test_offset_q15
+                Test nb=7    arm_offset_q15:test_offset_q15
+                Test nb=8n   arm_offset_q15:test_offset_q15
+                Test nb=8n+1 arm_offset_q15:test_offset_q15
          
-                Test nb=3    arm_scale_q15:test_scale_q15
-                Test nb=4n   arm_scale_q15:test_scale_q15
-                Test nb=4n+1 arm_scale_q15:test_scale_q15
+                Test nb=7    arm_scale_q15:test_scale_q15
+                Test nb=8n   arm_scale_q15:test_scale_q15
+                Test nb=8n+1 arm_scale_q15:test_scale_q15
          
-                Test nb=3    arm_dot_prod_q15:test_dot_prod_q15
-                Test nb=4n   arm_dot_prod_q15:test_dot_prod_q15
-                Test nb=4n+1 arm_dot_prod_q15:test_dot_prod_q15
+                Test nb=7    arm_dot_prod_q15:test_dot_prod_q15
+                Test nb=8n   arm_dot_prod_q15:test_dot_prod_q15
+                Test nb=8n+1 arm_dot_prod_q15:test_dot_prod_q15
          
-                Test nb=3    arm_abs_q15:test_abs_q15
-                Test nb=4n   arm_abs_q15:test_abs_q15
-                Test nb=4n+1 arm_abs_q15:test_abs_q15
+                Test nb=7    arm_abs_q15:test_abs_q15
+                Test nb=8n   arm_abs_q15:test_abs_q15
+                Test nb=8n+1 arm_abs_q15:test_abs_q15
 
                 Test add sat pos:test_add_q15
                 Test add sat neg:test_add_q15
@@ -373,37 +373,37 @@ group Root {
               Output  OUT_STATE_Q7_ID : State
    
               Functions {
-                Test nb=3    arm_add_q7:test_add_q7
-                Test nb=4n   arm_add_q7:test_add_q7
-                Test nb=4n+1 arm_add_q7:test_add_q7
+                Test nb=15    arm_add_q7:test_add_q7
+                Test nb=15n   arm_add_q7:test_add_q7
+                Test nb=15n+1 arm_add_q7:test_add_q7
          
-                Test nb=3    arm_sub_q7:test_sub_q7
-                Test nb=4n   arm_sub_q7:test_sub_q7
-                Test nb=4n+1 arm_sub_q7:test_sub_q7
+                Test nb=15    arm_sub_q7:test_sub_q7
+                Test nb=16n   arm_sub_q7:test_sub_q7
+                Test nb=16n+1 arm_sub_q7:test_sub_q7
          
-                Test nb=3    arm_mult_q7:test_mult_short_q7
-                Test nb=4n   arm_mult_q7:test_mult_q7
-                Test nb=4n+1 arm_mult_q7:test_mult_q7
+                Test nb=15    arm_mult_q7:test_mult_short_q7
+                Test nb=16n   arm_mult_q7:test_mult_q7
+                Test nb=16n+1 arm_mult_q7:test_mult_q7
          
-                Test nb=3    arm_negate_q7:test_negate_q7
-                Test nb=4n   arm_negate_q7:test_negate_q7
-                Test nb=4n+1 arm_negate_q7:test_negate_q7
+                Test nb=15    arm_negate_q7:test_negate_q7
+                Test nb=16n   arm_negate_q7:test_negate_q7
+                Test nb=16n+1 arm_negate_q7:test_negate_q7
          
-                Test nb=3    arm_offset_q7:test_offset_q7
-                Test nb=4n   arm_offset_q7:test_offset_q7
-                Test nb=4n+1 arm_offset_q7:test_offset_q7
+                Test nb=15    arm_offset_q7:test_offset_q7
+                Test nb=16n   arm_offset_q7:test_offset_q7
+                Test nb=16n+1 arm_offset_q7:test_offset_q7
          
-                Test nb=3    arm_scale_q7:test_scale_q7
-                Test nb=4n   arm_scale_q7:test_scale_q7
-                Test nb=4n+1 arm_scale_q7:test_scale_q7
+                Test nb=15    arm_scale_q7:test_scale_q7
+                Test nb=16n   arm_scale_q7:test_scale_q7
+                Test nb=16n+1 arm_scale_q7:test_scale_q7
          
-                Test nb=3    arm_dot_prod_q7:test_dot_prod_q7
-                Test nb=4n   arm_dot_prod_q7:test_dot_prod_q7
-                Test nb=4n+1 arm_dot_prod_q7:test_dot_prod_q7
+                Test nb=15    arm_dot_prod_q7:test_dot_prod_q7
+                Test nb=16n   arm_dot_prod_q7:test_dot_prod_q7
+                Test nb=16n+1 arm_dot_prod_q7:test_dot_prod_q7
          
-                Test nb=3    arm_abs_q7:test_abs_q7
-                Test nb=4n   arm_abs_q7:test_abs_q7
-                Test nb=4n+1 arm_abs_q7:test_abs_q7
+                Test nb=15    arm_abs_q7:test_abs_q7
+                Test nb=16n   arm_abs_q7:test_abs_q7
+                Test nb=16n+1 arm_abs_q7:test_abs_q7
 
                 Test add sat pos:test_add_q7
                 Test add sat neg:test_add_q7
@@ -425,6 +425,156 @@ group Root {
                 Test shift neg sat:test_shift_q7
               }
            }
+        }
+
+        group Complex Tests {
+           class = ComplexTests
+           folder = ComplexMaths
+
+           suite Complex Tests F32{
+              class = ComplexTestsF32
+              folder = ComplexMathsF32
+
+              Pattern INPUT1_F32_ID : Input1_f32.txt 
+              Pattern INPUT2_F32_ID : Input2_f32.txt 
+              Pattern INPUT3_F32_ID : Input3_f32.txt 
+
+              Pattern REF_CONJ_F32_ID : Reference1_f32.txt
+              Pattern REF_DOT_PROD_3_F32_ID : Reference2_f32.txt
+              Pattern REF_DOT_PROD_4N_F32_ID : Reference3_f32.txt
+              Pattern REF_DOT_PROD_4N1_F32_ID : Reference4_f32.txt
+              Pattern REF_MAG_F32_ID : Reference5_f32.txt
+              Pattern REF_MAG_SQUARED_F32_ID : Reference6_f32.txt
+              Pattern REF_CMPLX_MULT_CMPLX_F32_ID : Reference7_f32.txt
+              Pattern REF_CMPLX_MULT_REAL_F32_ID : Reference8_f32.txt
+
+              Output  OUT_SAMPLES_F32_ID : Output
+              Output  OUT_STATE_F32_ID : State
+
+              Functions {
+                Test nb=3    arm_cmplx_conj_f32:test_cmplx_conj_f32
+                Test nb=4n   arm_cmplx_conj_f32:test_cmplx_conj_f32
+                Test nb=4n+1 arm_cmplx_conj_f32:test_cmplx_conj_f32
+
+                Test nb=3    arm_cmplx_dot_prod_f32:test_cmplx_dot_prod_f32
+                Test nb=4n   arm_cmplx_dot_prod_f32:test_cmplx_dot_prod_f32
+                Test nb=4n+1 arm_cmplx_dot_prod_f32:test_cmplx_dot_prod_f32
+
+                Test nb=3    arm_cmplx_mag_f32:test_cmplx_mag_f32
+                Test nb=4n   arm_cmplx_mag_f32:test_cmplx_mag_f32
+                Test nb=4n+1 arm_cmplx_mag_f32:test_cmplx_mag_f32
+
+                Test nb=3    arm_cmplx_mag_squared_f32:test_cmplx_mag_squared_f32
+                Test nb=4n   arm_cmplx_mag_squared_f32:test_cmplx_mag_squared_f32
+                Test nb=4n+1 arm_cmplx_mag_squared_f32:test_cmplx_mag_squared_f32
+
+                Test nb=3    arm_cmplx_mult_cmplx_f32:test_cmplx_mult_cmplx_f32
+                Test nb=4n   arm_cmplx_mult_cmplx_f32:test_cmplx_mult_cmplx_f32
+                Test nb=4n+1 arm_cmplx_mult_cmplx_f32:test_cmplx_mult_cmplx_f32
+
+                Test nb=3    arm_cmplx_mult_real_f32:test_cmplx_mult_real_f32
+                Test nb=4n   arm_cmplx_mult_real_f32:test_cmplx_mult_real_f32
+                Test nb=4n+1 arm_cmplx_mult_real_f32:test_cmplx_mult_real_f32
+              }
+
+           }
+
+           suite Complex Tests Q31{
+              class = ComplexTestsQ31
+              folder = ComplexMathsQ31
+
+              Pattern INPUT1_Q31_ID : Input1_q31.txt 
+              Pattern INPUT2_Q31_ID : Input2_q31.txt 
+              Pattern INPUT3_Q31_ID : Input3_q31.txt 
+
+              Pattern REF_CONJ_Q31_ID : Reference1_q31.txt
+              Pattern REF_DOT_PROD_3_Q31_ID : Reference2_q63.txt
+              Pattern REF_DOT_PROD_4N_Q31_ID : Reference3_q63.txt
+              Pattern REF_DOT_PROD_4N1_Q31_ID : Reference4_q63.txt
+              Pattern REF_MAG_Q31_ID : Reference5_q31.txt
+              Pattern REF_MAG_SQUARED_Q31_ID : Reference6_q31.txt
+              Pattern REF_CMPLX_MULT_CMPLX_Q31_ID : Reference7_q31.txt
+              Pattern REF_CMPLX_MULT_REAL_Q31_ID : Reference8_q31.txt
+
+              Output  OUT_SAMPLES_Q31_ID : Output
+              Output  OUT_STATE_Q31_ID : State
+
+              Functions {
+                Test nb=3    arm_cmplx_conj_q31:test_cmplx_conj_q31
+                Test nb=4n   arm_cmplx_conj_q31:test_cmplx_conj_q31
+                Test nb=4n+1 arm_cmplx_conj_q31:test_cmplx_conj_q31
+
+                Test nb=3    arm_cmplx_dot_prod_q31:test_cmplx_dot_prod_q31
+                Test nb=4n   arm_cmplx_dot_prod_q31:test_cmplx_dot_prod_q31
+                Test nb=4n+1 arm_cmplx_dot_prod_q31:test_cmplx_dot_prod_q31
+
+                Test nb=3    arm_cmplx_mag_q31:test_cmplx_mag_q31
+                Test nb=4n   arm_cmplx_mag_q31:test_cmplx_mag_q31
+                Test nb=4n+1 arm_cmplx_mag_q31:test_cmplx_mag_q31
+
+                Test nb=3    arm_cmplx_mag_squared_q31:test_cmplx_mag_squared_q31
+                Test nb=4n   arm_cmplx_mag_squared_q31:test_cmplx_mag_squared_q31
+                Test nb=4n+1 arm_cmplx_mag_squared_q31:test_cmplx_mag_squared_q31
+
+                Test nb=3    arm_cmplx_mult_cmplx_q31:test_cmplx_mult_cmplx_q31
+                Test nb=4n   arm_cmplx_mult_cmplx_q31:test_cmplx_mult_cmplx_q31
+                Test nb=4n+1 arm_cmplx_mult_cmplx_q31:test_cmplx_mult_cmplx_q31
+
+                Test nb=3    arm_cmplx_mult_real_q31:test_cmplx_mult_real_q31
+                Test nb=4n   arm_cmplx_mult_real_q31:test_cmplx_mult_real_q31
+                Test nb=4n+1 arm_cmplx_mult_real_q31:test_cmplx_mult_real_q31
+              }
+
+           }
+
+           suite Complex Tests Q15{
+              class = ComplexTestsQ15
+              folder = ComplexMathsQ15
+
+              Pattern INPUT1_Q15_ID : Input1_q15.txt 
+              Pattern INPUT2_Q15_ID : Input2_q15.txt 
+              Pattern INPUT3_Q15_ID : Input3_q15.txt 
+
+              Pattern REF_CONJ_Q15_ID : Reference1_q15.txt
+              Pattern REF_DOT_PROD_3_Q15_ID : Reference2_q31.txt
+              Pattern REF_DOT_PROD_4N_Q15_ID : Reference3_q31.txt
+              Pattern REF_DOT_PROD_4N1_Q15_ID : Reference4_q31.txt
+              Pattern REF_MAG_Q15_ID : Reference5_q15.txt
+              Pattern REF_MAG_SQUARED_Q15_ID : Reference6_q15.txt
+              Pattern REF_CMPLX_MULT_CMPLX_Q15_ID : Reference7_q15.txt
+              Pattern REF_CMPLX_MULT_REAL_Q15_ID : Reference8_q15.txt
+
+              Output  OUT_SAMPLES_Q15_ID : Output
+              Output  OUT_STATE_Q15_ID : State
+
+              Functions {
+                Test nb=3    arm_cmplx_conj_q15:test_cmplx_conj_q15
+                Test nb=4n   arm_cmplx_conj_q15:test_cmplx_conj_q15
+                Test nb=4n+1 arm_cmplx_conj_q15:test_cmplx_conj_q15
+
+                Test nb=3    arm_cmplx_dot_prod_q15:test_cmplx_dot_prod_q15
+                Test nb=4n   arm_cmplx_dot_prod_q15:test_cmplx_dot_prod_q15
+                Test nb=4n+1 arm_cmplx_dot_prod_q15:test_cmplx_dot_prod_q15
+
+                Test nb=3    arm_cmplx_mag_q15:test_cmplx_mag_q15
+                Test nb=4n   arm_cmplx_mag_q15:test_cmplx_mag_q15
+                Test nb=4n+1 arm_cmplx_mag_q15:test_cmplx_mag_q15
+
+                Test nb=3    arm_cmplx_mag_squared_q15:test_cmplx_mag_squared_q15
+                Test nb=4n   arm_cmplx_mag_squared_q15:test_cmplx_mag_squared_q15
+                Test nb=4n+1 arm_cmplx_mag_squared_q15:test_cmplx_mag_squared_q15
+
+                Test nb=3    arm_cmplx_mult_cmplx_q15:test_cmplx_mult_cmplx_q15
+                Test nb=4n   arm_cmplx_mult_cmplx_q15:test_cmplx_mult_cmplx_q15
+                Test nb=4n+1 arm_cmplx_mult_cmplx_q15:test_cmplx_mult_cmplx_q15
+
+                Test nb=3    arm_cmplx_mult_real_q15:test_cmplx_mult_real_q15
+                Test nb=4n   arm_cmplx_mult_real_q15:test_cmplx_mult_real_q15
+                Test nb=4n+1 arm_cmplx_mult_real_q15:test_cmplx_mult_real_q15
+              }
+
+           }
+
         }
 
         group SVM Tests {

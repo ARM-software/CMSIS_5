@@ -44,6 +44,7 @@ class ArrayMemory:public Client::Memory
     virtual char *NewBuffer(size_t length);
     virtual void FreeMemory();
     virtual bool HasMemError();
+    virtual bool IsTailEmpty(char *, size_t);
    
    private:
      // Pointer to C array used for memory
@@ -60,6 +61,8 @@ class ArrayMemory:public Client::Memory
      char *m_currentPtr;
      // Error occured
      bool memError=false;
+
+     size_t getTailSize();
 };
 }
 

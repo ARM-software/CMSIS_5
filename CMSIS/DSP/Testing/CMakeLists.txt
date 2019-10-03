@@ -142,6 +142,9 @@ set(TESTSRC
   Source/Tests/BasicTestsQ31.cpp
   Source/Tests/BasicTestsQ15.cpp
   Source/Tests/BasicTestsQ7.cpp
+  Source/Tests/ComplexTestsF32.cpp
+  Source/Tests/ComplexTestsQ31.cpp
+  Source/Tests/ComplexTestsQ15.cpp
   Source/Tests/SVMF32.cpp
   Source/Tests/BayesF32.cpp
   Source/Tests/TransformF32.cpp

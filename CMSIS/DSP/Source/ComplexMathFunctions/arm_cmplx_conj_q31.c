@@ -49,6 +49,62 @@
                    The Q31 value -1 (0x80000000) is saturated to the maximum allowable positive value 0x7FFFFFFF.
  */
 
+#if defined(ARM_MATH_MVEI)
+
+void arm_cmplx_conj_q31(
+  const q31_t * pSrc,
+        q31_t * pDst,
+        uint32_t numSamples)
+{
+
+    int32_t blockSize = numSamples * CMPLX_DIM;   /* loop counters */
+    int32_t blkCnt;
+    q31x4_t vecSrc;
+    q31x4_t vecSign;
+    q31_t in;                                      /* Temporary input variable */
+
+    /*
+     * {2, 0, 2, 0} - {1, 1, 1, 1}
+     */
+    vecSign = vsubq(vdwdupq_u32(2, 4, 2), vdupq_n_u32(1));
+
+    /* Compute 4 real samples at a time */
+    blkCnt = blockSize >> 2U;
+
+    while (blkCnt > 0U)
+    {
+
+        vecSrc = vld1q(pSrc);
+        vst1q(pDst,vmulq(vecSrc, vecSign));
+        /*
+         * Decrement the blkCnt loop counter
+         * Advance vector source and destination pointers
+         */
+        pSrc += 4;
+        pDst += 4;
+        blkCnt --;
+    }
+
+     /* Tail */
+    blkCnt = (blockSize & 0x3) >> 1;
+
+    while (blkCnt > 0U)
+    {
+      /* C[0] + jC[1] = A[0]+ j(-1)A[1] */
+  
+      /* Calculate Complex Conjugate and store result in destination buffer. */
+      *pDst++ =  *pSrc++;
+      in = *pSrc++;
+      *pDst++ = __QSUB(0, in);
+  
+      /* Decrement loop counter */
+      blkCnt--;
+    }
+
+
+}
+#else
+
 void arm_cmplx_conj_q31(
   const q31_t * pSrc,
         q31_t * pDst,
@@ -131,6 +187,7 @@ void arm_cmplx_conj_q31(
   }
 
 }
+#endif /* defined(ARM_MATH_MVEI) */
 
 /**
   @} end of cmplx_conj group

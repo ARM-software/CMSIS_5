@@ -9,7 +9,10 @@ from collections import deque
 import os.path
 import csv
 import TestScripts.ParseTrace
+import colorama
+from colorama import init,Fore, Back, Style
 
+init()
 
 def findItem(root,path):
         """ Find a node in a tree
@@ -57,21 +60,21 @@ class TextFormatter:
            if elem.kind == TestScripts.Parser.TreeElem.GROUP:
               kind = "Group"
            #print(elem.path)
-           print("%s%s : %s (%d)" % (ident,kind,message,theId))
+           print(Style.BRIGHT + ("%s%s : %s (%d)" % (ident,kind,message,theId)) + Style.RESET_ALL)
 
       def printTest(self,elem, theId, theError,theLine,passed,cycles,params):
           message=elem.data["message"]
           if not elem.data["deprecated"]:
              kind = "Test"
              ident = " " * elem.ident
-             p="FAILED"
+             p=Fore.RED + "FAILED" + Style.RESET_ALL
              if passed == 1:
-                p="PASSED"
-             print("%s%s (%d) : %s (cycles = %d)" % (ident,message,theId,p,cycles))
+                p= Fore.GREEN + "PASSED" + Style.RESET_ALL
+             print("%s%s %s(%d)%s : %s (cycles = %d)" % (ident,message,Style.BRIGHT,theId,Style.RESET_ALL,p,cycles))
              if params:
                 print("%s %s" % (ident,params))
              if passed != 1:
-                print("%s Error = %d at line %d" % (ident, theError, theLine))
+                print(Fore.RED + ("%s Error = %d at line %d" % (ident, theError, theLine)) + Style.RESET_ALL)
 
       def pop(self):
           None

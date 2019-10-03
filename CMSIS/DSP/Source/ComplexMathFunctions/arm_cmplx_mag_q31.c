@@ -49,6 +49,76 @@
                    Input down scaling is not required.
  */
 
+#if defined(ARM_MATH_MVEI)
+
+#include "arm_helium_utils.h"
+
+void arm_cmplx_mag_q31(
+  const q31_t * pSrc,
+        q31_t * pDst,
+        uint32_t numSamples)
+{
+    int32_t blockSize = numSamples;  /* loop counters */
+    uint32_t  blkCnt;           /* loop counters */
+
+    q31x4x2_t vecSrc;
+    q31x4_t sum;
+
+    q31_t real, imag;                              /* Temporary input variables */
+    q31_t acc0, acc1;                              /* Accumulators */
+
+    /* Compute 4 complex samples at a time */
+    blkCnt = blockSize >> 2;
+    while (blkCnt > 0U)
+    {
+        vecSrc = vld2q(pSrc);
+
+        sum = vqaddq(vmulhq(vecSrc.val[0], vecSrc.val[0]),
+                     vmulhq(vecSrc.val[1], vecSrc.val[1]));
+
+        sum = vshrq(sum, 1);
+
+        /*
+
+        This function is using a table. There are compilations flags to avoid
+        including this table (and in this case, arm_cmplx_maq_q31 must not
+        be built and linked.)
+
+        */
+        sum = FAST_VSQRT_Q31(sum);
+
+        vst1q(pDst, sum);
+
+        /*
+         * Decrement the blockSize loop counter
+         */
+        blkCnt--;
+        pSrc += 8;
+        pDst += 4;
+    }
+
+    /*
+     * tail
+     */
+    blkCnt = blockSize & 3;
+    while (blkCnt > 0U)
+    {
+      /* C[0] = sqrt(A[0] * A[0] + A[1] * A[1]) */
+  
+      real = *pSrc++;
+      imag = *pSrc++;
+      acc0 = (q31_t) (((q63_t) real * real) >> 33);
+      acc1 = (q31_t) (((q63_t) imag * imag) >> 33);
+  
+      /* store result in 2.30 format in destination buffer. */
+      arm_sqrt_q31(acc0 + acc1, pDst++);
+  
+      /* Decrement loop counter */
+      blkCnt--;
+    }
+}
+
+#else
 void arm_cmplx_mag_q31(
   const q31_t * pSrc,
         q31_t * pDst,
@@ -124,6 +194,7 @@ void arm_cmplx_mag_q31(
   }
 
 }
+#endif /* defined(ARM_MATH_MVEI) */
 
 /**
   @} end of cmplx_mag group

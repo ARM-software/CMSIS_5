@@ -3,6 +3,15 @@
 
 #define SNR_THRESHOLD 100
 
+/* 
+
+Reference patterns are generated with
+a double precision computation.
+
+*/
+#define ABS_ERROR_Q31 2
+#define ABS_ERROR_Q63 (1<<16)
+
 #define ONEHALF 0x40000000
 
 #define GET_Q31_PTR() \
@@ -17,8 +26,11 @@ q31_t *outp=output.ptr();
 
         arm_add_q31(inp1,inp2,outp,input1.nbSamples());
         
+        ASSERT_EMPTY_TAIL(output);
 
         ASSERT_SNR(output,ref,(float32_t)SNR_THRESHOLD);
+
+        ASSERT_NEAR_EQ(output,ref,ABS_ERROR_Q31);
 
     } 
 
@@ -27,8 +39,12 @@ q31_t *outp=output.ptr();
         GET_Q31_PTR();
 
         arm_sub_q31(inp1,inp2,outp,input1.nbSamples());
+
+        ASSERT_EMPTY_TAIL(output);
         
         ASSERT_SNR(output,ref,(float32_t)SNR_THRESHOLD);
+
+        ASSERT_NEAR_EQ(output,ref,ABS_ERROR_Q31);
        
     } 
 
@@ -38,7 +54,11 @@ q31_t *outp=output.ptr();
 
         arm_mult_q31(inp1,inp2,outp,input1.nbSamples());
 
+        ASSERT_EMPTY_TAIL(output);
+
         ASSERT_SNR(output,ref,(float32_t)SNR_THRESHOLD);
+
+        ASSERT_NEAR_EQ(output,ref,ABS_ERROR_Q31);
        
     } 
 
@@ -50,7 +70,11 @@ q31_t *outp=output.ptr();
 
         arm_negate_q31(inp1,outp,input1.nbSamples());
 
+        ASSERT_EMPTY_TAIL(output);
+
         ASSERT_SNR(output,ref,(float32_t)SNR_THRESHOLD);
+
+        ASSERT_NEAR_EQ(output,ref,ABS_ERROR_Q31);
        
     } 
 
@@ -62,7 +86,11 @@ q31_t *outp=output.ptr();
 
         arm_offset_q31(inp1,this->scalar,outp,input1.nbSamples());
 
+        ASSERT_EMPTY_TAIL(output);
+
         ASSERT_SNR(output,ref,(float32_t)SNR_THRESHOLD);
+
+        ASSERT_NEAR_EQ(output,ref,ABS_ERROR_Q31);
        
     } 
 
@@ -74,7 +102,11 @@ q31_t *outp=output.ptr();
 
         arm_scale_q31(inp1,this->scalar,0,outp,input1.nbSamples());
 
+        ASSERT_EMPTY_TAIL(output);
+
         ASSERT_SNR(output,ref,(float32_t)SNR_THRESHOLD);
+
+        ASSERT_NEAR_EQ(output,ref,ABS_ERROR_Q31);
        
     } 
 
@@ -89,11 +121,14 @@ q31_t *outp=output.ptr();
 
         arm_dot_prod_q31(inp1,inp2,input1.nbSamples(),&r);
 
+
         outp[0] = r;
 
-        ASSERT_SNR(output,ref,(float32_t)SNR_THRESHOLD);
+        ASSERT_SNR(dotOutput,dotRef,(float32_t)SNR_THRESHOLD);
 
-       
+
+        ASSERT_NEAR_EQ(dotOutput,dotRef,(q63_t)ABS_ERROR_Q63);
+
     } 
 
     void BasicTestsQ31::test_abs_q31()
@@ -102,7 +137,11 @@ q31_t *outp=output.ptr();
 
         arm_abs_q31(inp1,outp,input1.nbSamples());
 
+        ASSERT_EMPTY_TAIL(output);
+
         ASSERT_SNR(output,ref,(float32_t)SNR_THRESHOLD);
+
+        ASSERT_NEAR_EQ(output,ref,ABS_ERROR_Q31);
        
     } 
 
@@ -114,7 +153,11 @@ q31_t *outp=output.ptr();
 
         arm_shift_q31(inp1,1,outp,input1.nbSamples());
 
+        ASSERT_EMPTY_TAIL(output);
+
         ASSERT_SNR(output,ref,(float32_t)SNR_THRESHOLD);
+
+        ASSERT_NEAR_EQ(output,ref,ABS_ERROR_Q31);
        
     } 
 

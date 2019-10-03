@@ -48,6 +48,64 @@
                    The function implements 1.15 by 1.15 multiplications and finally output is converted into 3.13 format.
  */
 
+#if defined(ARM_MATH_MVEI)
+
+void arm_cmplx_mag_squared_q15(
+  const q15_t * pSrc,
+        q15_t * pDst,
+        uint32_t numSamples)
+{
+  int32_t blockSize = numSamples;  /* loop counters */
+  uint32_t  blkCnt;           /* loop counters */
+  q31_t in;
+  q31_t acc0;                                    /* Accumulators */
+  q15x8x2_t vecSrc;
+  q15x8_t vReal, vImag;
+  q15x8_t vMagSq;
+
+  
+  blkCnt = blockSize >> 3;
+  while (blkCnt > 0U)
+  {
+    vecSrc = vld2q(pSrc);
+    vReal = vmulhq(vecSrc.val[0], vecSrc.val[0]);
+    vImag = vmulhq(vecSrc.val[1], vecSrc.val[1]);
+    vMagSq = vqaddq(vReal, vImag);
+    vMagSq = vshrq(vMagSq, 1);
+
+    vst1q(pDst, vMagSq);
+
+    pSrc += 16;
+    pDst += 8;
+    /*
+     * Decrement the blkCnt loop counter
+     * Advance vector source and destination pointers
+     */
+    blkCnt --;
+  }
+
+  /*
+   * tail
+   */
+  blkCnt = blockSize & 7;
+  while (blkCnt > 0U)
+  {
+    /* C[0] = (A[0] * A[0] + A[1] * A[1]) */
+
+    in = read_q15x2_ia ((q15_t **) &pSrc);
+    acc0 = __SMUAD(in, in);
+
+    /* store result in 3.13 format in destination buffer. */
+    *pDst++ = (q15_t) (acc0 >> 17);
+
+
+    /* Decrement loop counter */
+    blkCnt--;
+  }
+
+}
+
+#else
 void arm_cmplx_mag_squared_q15(
   const q15_t * pSrc,
         q15_t * pDst,
@@ -155,6 +213,8 @@ void arm_cmplx_mag_squared_q15(
   }
 
 }
+
+#endif /* defined(ARM_MATH_MVEI) */
 
 /**
   @} end of cmplx_mag_squared group

@@ -156,6 +156,17 @@ API of Memory managers used in the test framework
     // when a memory error occured.
     virtual bool HasMemError()=0;
 
+    // When memory manager is supporting tail
+    // then we can check that the tail of the buffer has not been 
+    // corrupted.
+    // The tail being the additional words after the end of the buffer allocated
+    // by the memory manager so that there is some seperation between
+    // successive buffers.
+    // When memory manager is not supporting tail, this function should
+    // always succeed.
+    virtual bool IsTailEmpty(char *, size_t)=0;
+
+
     // Get the memory generation number
     unsigned long generation()
     {
@@ -466,6 +477,11 @@ public:
     Testing::RunningMode runningMode()
     {
       return(this->m_runningMode);
+    }
+
+    bool IsTailEmpty(char *ptr, size_t length)
+    {
+        return(m_mem->IsTailEmpty(ptr,length));
     }
 
 private:

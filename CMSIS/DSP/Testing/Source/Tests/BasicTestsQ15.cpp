@@ -3,6 +3,15 @@
 
 #define SNR_THRESHOLD 70
 
+/* 
+
+Reference patterns are generated with
+a double precision computation.
+
+*/
+#define ABS_ERROR_Q15 ((q15_t)2)
+#define ABS_ERROR_Q63 ((q63_t)(1<<16))
+
 #define MULT_SNR_THRESHOLD 60
 
 #define ONEHALF 0x4000
@@ -19,8 +28,11 @@ q15_t *outp=output.ptr();
 
         arm_add_q15(inp1,inp2,outp,input1.nbSamples());
         
+        ASSERT_EMPTY_TAIL(output);
 
         ASSERT_SNR(output,ref,(float32_t)SNR_THRESHOLD);
+
+        ASSERT_NEAR_EQ(output,ref,ABS_ERROR_Q15);
 
     } 
 
@@ -29,8 +41,12 @@ q15_t *outp=output.ptr();
         GET_Q15_PTR();
 
         arm_sub_q15(inp1,inp2,outp,input1.nbSamples());
+
+        ASSERT_EMPTY_TAIL(output);
         
         ASSERT_SNR(output,ref,(float32_t)SNR_THRESHOLD);
+
+        ASSERT_NEAR_EQ(output,ref,ABS_ERROR_Q15);
        
     } 
 
@@ -40,7 +56,11 @@ q15_t *outp=output.ptr();
 
         arm_mult_q15(inp1,inp2,outp,input1.nbSamples());
 
+        ASSERT_EMPTY_TAIL(output);
+
         ASSERT_SNR(output,ref,(float32_t)MULT_SNR_THRESHOLD);
+
+        ASSERT_NEAR_EQ(output,ref,ABS_ERROR_Q15);
        
     } 
 
@@ -54,7 +74,11 @@ q15_t *outp=output.ptr();
 
         arm_negate_q15(inp1,outp,input1.nbSamples());
 
+        ASSERT_EMPTY_TAIL(output);
+
         ASSERT_SNR(output,ref,(float32_t)SNR_THRESHOLD);
+
+        ASSERT_NEAR_EQ(output,ref,ABS_ERROR_Q15);
        
     } 
 
@@ -66,7 +90,11 @@ q15_t *outp=output.ptr();
 
         arm_offset_q15(inp1,this->scalar,outp,input1.nbSamples());
 
+        ASSERT_EMPTY_TAIL(output);
+
         ASSERT_SNR(output,ref,(float32_t)SNR_THRESHOLD);
+
+        ASSERT_NEAR_EQ(output,ref,ABS_ERROR_Q15);
        
     } 
 
@@ -78,7 +106,11 @@ q15_t *outp=output.ptr();
 
         arm_scale_q15(inp1,this->scalar,0,outp,input1.nbSamples());
 
+        ASSERT_EMPTY_TAIL(output);
+
         ASSERT_SNR(output,ref,(float32_t)SNR_THRESHOLD);
+
+        ASSERT_NEAR_EQ(output,ref,ABS_ERROR_Q15);
        
     } 
 
@@ -95,8 +127,9 @@ q15_t *outp=output.ptr();
 
         outp[0] = r;
 
-        ASSERT_SNR(output,ref,(float32_t)SNR_THRESHOLD);
+        ASSERT_SNR(dotOutput,dotRef,(float32_t)SNR_THRESHOLD);
 
+        ASSERT_NEAR_EQ(dotOutput,dotRef,ABS_ERROR_Q63);
        
     } 
 
@@ -106,7 +139,11 @@ q15_t *outp=output.ptr();
 
         arm_abs_q15(inp1,outp,input1.nbSamples());
 
+        ASSERT_EMPTY_TAIL(output);
+
         ASSERT_SNR(output,ref,(float32_t)SNR_THRESHOLD);
+
+        ASSERT_NEAR_EQ(output,ref,ABS_ERROR_Q15);
        
     } 
 
@@ -118,7 +155,11 @@ q15_t *outp=output.ptr();
 
         arm_shift_q15(inp1,1,outp,input1.nbSamples());
 
+        ASSERT_EMPTY_TAIL(output);
+
         ASSERT_SNR(output,ref,(float32_t)SNR_THRESHOLD);
+
+        ASSERT_NEAR_EQ(output,ref,ABS_ERROR_Q15);
        
     } 
 
@@ -134,7 +175,7 @@ q15_t *outp=output.ptr();
        switch(id)
        {
         case BasicTestsQ15::TEST_ADD_Q15_1:
-          nb = 3;
+          nb = 7;
           ref.reload(BasicTestsQ15::REF_ADD_Q15_ID,mgr,nb);
           output.create(ref.nbSamples(),BasicTestsQ15::OUT_SAMPLES_Q15_ID,mgr);
           input1.reload(BasicTestsQ15::INPUT1_Q15_ID,mgr,nb);
@@ -142,14 +183,14 @@ q15_t *outp=output.ptr();
           break;
 
         case BasicTestsQ15::TEST_ADD_Q15_2:
-          nb = 8;
+          nb = 16;
           ref.reload(BasicTestsQ15::REF_ADD_Q15_ID,mgr,nb);
           output.create(ref.nbSamples(),BasicTestsQ15::OUT_SAMPLES_Q15_ID,mgr);
           input1.reload(BasicTestsQ15::INPUT1_Q15_ID,mgr,nb);
           input2.reload(BasicTestsQ15::INPUT2_Q15_ID,mgr,nb);
           break;
         case BasicTestsQ15::TEST_ADD_Q15_3:
-          nb = 9;
+          nb = 17;
           ref.reload(BasicTestsQ15::REF_ADD_Q15_ID,mgr,nb);
           output.create(ref.nbSamples(),BasicTestsQ15::OUT_SAMPLES_Q15_ID,mgr);
           input1.reload(BasicTestsQ15::INPUT1_Q15_ID,mgr,nb);
@@ -158,21 +199,21 @@ q15_t *outp=output.ptr();
 
 
         case BasicTestsQ15::TEST_SUB_Q15_4:
-          nb = 3;
+          nb = 7;
           ref.reload(BasicTestsQ15::REF_SUB_Q15_ID,mgr,nb);
           output.create(ref.nbSamples(),BasicTestsQ15::OUT_SAMPLES_Q15_ID,mgr);
           input1.reload(BasicTestsQ15::INPUT1_Q15_ID,mgr,nb);
           input2.reload(BasicTestsQ15::INPUT2_Q15_ID,mgr,nb);
           break;
         case BasicTestsQ15::TEST_SUB_Q15_5:
-          nb = 8;
+          nb = 16;
           ref.reload(BasicTestsQ15::REF_SUB_Q15_ID,mgr,nb);
           output.create(ref.nbSamples(),BasicTestsQ15::OUT_SAMPLES_Q15_ID,mgr);
           input1.reload(BasicTestsQ15::INPUT1_Q15_ID,mgr,nb);
           input2.reload(BasicTestsQ15::INPUT2_Q15_ID,mgr,nb);
           break;
         case BasicTestsQ15::TEST_SUB_Q15_6:
-          nb = 9;
+          nb = 17;
           ref.reload(BasicTestsQ15::REF_SUB_Q15_ID,mgr,nb);
           output.create(ref.nbSamples(),BasicTestsQ15::OUT_SAMPLES_Q15_ID,mgr);
           input1.reload(BasicTestsQ15::INPUT1_Q15_ID,mgr,nb);
@@ -180,21 +221,21 @@ q15_t *outp=output.ptr();
           break;
 
         case BasicTestsQ15::TEST_MULT_Q15_7:
-          nb = 3;
+          nb = 7;
           ref.reload(BasicTestsQ15::REF_MULT_Q15_ID,mgr,nb);
           output.create(ref.nbSamples(),BasicTestsQ15::OUT_SAMPLES_Q15_ID,mgr);
           input1.reload(BasicTestsQ15::INPUT1_Q15_ID,mgr,nb);
           input2.reload(BasicTestsQ15::INPUT2_Q15_ID,mgr,nb);
           break;
         case BasicTestsQ15::TEST_MULT_Q15_8:
-          nb = 8;
+          nb = 16;
           ref.reload(BasicTestsQ15::REF_MULT_Q15_ID,mgr,nb);
           output.create(ref.nbSamples(),BasicTestsQ15::OUT_SAMPLES_Q15_ID,mgr);
           input1.reload(BasicTestsQ15::INPUT1_Q15_ID,mgr,nb);
           input2.reload(BasicTestsQ15::INPUT2_Q15_ID,mgr,nb);
           break;
         case BasicTestsQ15::TEST_MULT_Q15_9:
-          nb = 9;
+          nb = 17;
           ref.reload(BasicTestsQ15::REF_MULT_Q15_ID,mgr,nb);
           output.create(ref.nbSamples(),BasicTestsQ15::OUT_SAMPLES_Q15_ID,mgr);
           input1.reload(BasicTestsQ15::INPUT1_Q15_ID,mgr,nb);
@@ -202,78 +243,78 @@ q15_t *outp=output.ptr();
           break;
 
         case BasicTestsQ15::TEST_NEGATE_Q15_10:
-          nb = 3;
+          nb = 7;
           ref.reload(BasicTestsQ15::REF_NEGATE_Q15_ID,mgr,nb);
           output.create(ref.nbSamples(),BasicTestsQ15::OUT_SAMPLES_Q15_ID,mgr);
           input1.reload(BasicTestsQ15::INPUT1_Q15_ID,mgr,nb);
           break;
         case BasicTestsQ15::TEST_NEGATE_Q15_11:
-          nb = 8;
+          nb = 16;
           ref.reload(BasicTestsQ15::REF_NEGATE_Q15_ID,mgr,nb);
           output.create(ref.nbSamples(),BasicTestsQ15::OUT_SAMPLES_Q15_ID,mgr);
           input1.reload(BasicTestsQ15::INPUT1_Q15_ID,mgr,nb);
           break;
         case BasicTestsQ15::TEST_NEGATE_Q15_12:
-          nb = 9;
+          nb = 17;
           ref.reload(BasicTestsQ15::REF_NEGATE_Q15_ID,mgr,nb);
           output.create(ref.nbSamples(),BasicTestsQ15::OUT_SAMPLES_Q15_ID,mgr);
           input1.reload(BasicTestsQ15::INPUT1_Q15_ID,mgr,nb);
           break;
 
         case BasicTestsQ15::TEST_OFFSET_Q15_13:
-          nb = 3;
+          nb = 7;
           ref.reload(BasicTestsQ15::REF_OFFSET_Q15_ID,mgr,nb);
           output.create(ref.nbSamples(),BasicTestsQ15::OUT_SAMPLES_Q15_ID,mgr);
           input1.reload(BasicTestsQ15::INPUT1_Q15_ID,mgr,nb);
           break;
         case BasicTestsQ15::TEST_OFFSET_Q15_14:
-          nb = 8;
+          nb = 16;
           ref.reload(BasicTestsQ15::REF_OFFSET_Q15_ID,mgr,nb);
           output.create(ref.nbSamples(),BasicTestsQ15::OUT_SAMPLES_Q15_ID,mgr);
           input1.reload(BasicTestsQ15::INPUT1_Q15_ID,mgr,nb);
           break;
         case BasicTestsQ15::TEST_OFFSET_Q15_15:
-          nb = 9;
+          nb = 17;
           ref.reload(BasicTestsQ15::REF_OFFSET_Q15_ID,mgr,nb);
           output.create(ref.nbSamples(),BasicTestsQ15::OUT_SAMPLES_Q15_ID,mgr);
           input1.reload(BasicTestsQ15::INPUT1_Q15_ID,mgr,nb);
           break;
 
         case BasicTestsQ15::TEST_SCALE_Q15_16:
-          nb = 3;
+          nb = 7;
           ref.reload(BasicTestsQ15::REF_SCALE_Q15_ID,mgr,nb);
           output.create(ref.nbSamples(),BasicTestsQ15::OUT_SAMPLES_Q15_ID,mgr);
           input1.reload(BasicTestsQ15::INPUT1_Q15_ID,mgr,nb);
           break;
         case BasicTestsQ15::TEST_SCALE_Q15_17:
-          nb = 8;
+          nb = 16;
           ref.reload(BasicTestsQ15::REF_SCALE_Q15_ID,mgr,nb);
           output.create(ref.nbSamples(),BasicTestsQ15::OUT_SAMPLES_Q15_ID,mgr);
           input1.reload(BasicTestsQ15::INPUT1_Q15_ID,mgr,nb);
           break;
         case BasicTestsQ15::TEST_SCALE_Q15_18:
-          nb = 9;
+          nb = 17;
           ref.reload(BasicTestsQ15::REF_SCALE_Q15_ID,mgr,nb);
           output.create(ref.nbSamples(),BasicTestsQ15::OUT_SAMPLES_Q15_ID,mgr);
           input1.reload(BasicTestsQ15::INPUT1_Q15_ID,mgr,nb);
           break;
 
         case BasicTestsQ15::TEST_DOT_PROD_Q15_19:
-          nb = 3;
+          nb = 7;
           dotRef.reload(BasicTestsQ15::REF_DOT_3_Q15_ID,mgr);
           dotOutput.create(dotRef.nbSamples(),BasicTestsQ15::OUT_SAMPLES_Q15_ID,mgr);
           input1.reload(BasicTestsQ15::INPUT1_Q15_ID,mgr,nb);
           input2.reload(BasicTestsQ15::INPUT2_Q15_ID,mgr,nb);
           break;
         case BasicTestsQ15::TEST_DOT_PROD_Q15_20:
-          nb = 8;
+          nb = 16;
           dotRef.reload(BasicTestsQ15::REF_DOT_4N_Q15_ID,mgr);
           dotOutput.create(dotRef.nbSamples(),BasicTestsQ15::OUT_SAMPLES_Q15_ID,mgr);
           input1.reload(BasicTestsQ15::INPUT1_Q15_ID,mgr,nb);
           input2.reload(BasicTestsQ15::INPUT2_Q15_ID,mgr,nb);
           break;
         case BasicTestsQ15::TEST_DOT_PROD_Q15_21:
-          nb = 9;
+          nb = 17;
           dotRef.reload(BasicTestsQ15::REF_DOT_4N1_Q15_ID,mgr);
           dotOutput.create(dotRef.nbSamples(),BasicTestsQ15::OUT_SAMPLES_Q15_ID,mgr);
           input1.reload(BasicTestsQ15::INPUT1_Q15_ID,mgr,nb);
@@ -281,21 +322,21 @@ q15_t *outp=output.ptr();
           break;
 
         case BasicTestsQ15::TEST_ABS_Q15_22:
-          nb = 3;
+          nb = 7;
           ref.reload(BasicTestsQ15::REF_ABS_Q15_ID,mgr,nb);
           output.create(ref.nbSamples(),BasicTestsQ15::OUT_SAMPLES_Q15_ID,mgr);
           input1.reload(BasicTestsQ15::INPUT1_Q15_ID,mgr,nb);
           input2.reload(BasicTestsQ15::INPUT2_Q15_ID,mgr,nb);
           break;
         case BasicTestsQ15::TEST_ABS_Q15_23:
-          nb = 8;
+          nb = 16;
           ref.reload(BasicTestsQ15::REF_ABS_Q15_ID,mgr,nb);
           output.create(ref.nbSamples(),BasicTestsQ15::OUT_SAMPLES_Q15_ID,mgr);
           input1.reload(BasicTestsQ15::INPUT1_Q15_ID,mgr,nb);
           input2.reload(BasicTestsQ15::INPUT2_Q15_ID,mgr,nb);
           break;
         case BasicTestsQ15::TEST_ABS_Q15_24:
-          nb = 9;
+          nb = 17;
           ref.reload(BasicTestsQ15::REF_ABS_Q15_ID,mgr,nb);
           output.create(ref.nbSamples(),BasicTestsQ15::OUT_SAMPLES_Q15_ID,mgr);
           input1.reload(BasicTestsQ15::INPUT1_Q15_ID,mgr,nb);

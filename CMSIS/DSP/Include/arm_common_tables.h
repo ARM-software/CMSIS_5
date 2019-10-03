@@ -373,6 +373,19 @@
     extern const q15_t sinTable_q15[FAST_MATH_TABLE_SIZE + 1];
   #endif /* !defined(ARM_DSP_CONFIG_TABLES) defined(ARM_ALL_FAST_TABLES) */
 
+  #if defined(ARM_MATH_MVEI)
+     #if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FAST_TABLES) || defined(ARM_TABLE_FAST_SQRT_Q31_MVE)
+       extern const q31_t sqrtTable_Q31[256];
+     #endif /* !defined(ARM_DSP_CONFIG_TABLES) defined(ARM_ALL_FAST_TABLES) */
+  #endif
+
+  #if defined(ARM_MATH_MVEI)
+     #if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FAST_TABLES) || defined(ARM_TABLE_FAST_SQRT_Q15_MVE)
+       extern const q15_t sqrtTable_Q15[256];
+     #endif /* !defined(ARM_DSP_CONFIG_TABLES) defined(ARM_ALL_FAST_TABLES) */
+  #endif
+
 #endif /* if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_FAST_TABLES) */
 
 #endif /*  ARM_COMMON_TABLES_H */
+

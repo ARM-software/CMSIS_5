@@ -7,6 +7,7 @@ import Tools
 # Those patterns are used for tests and benchmarks.
 # For tests, there is the need to add tests for saturation
 
+
 def writeTests(config,format):
     NBSAMPLES=256
 
@@ -38,29 +39,49 @@ def writeTests(config,format):
     ref = data1 * 0.5
     config.writeReference(6, ref)
     
-    nb = 3
-    ref = np.array([np.dot(data1[0:nb] ,data2[0:nb])]) / 2**15
+    
+   
+    nb = Tools.loopnb(format,Tools.TAILONLY)
+    ref = np.array([np.dot(data1[0:nb] ,data2[0:nb])])
+
     if format == 31 or format == 15:
+       if format==31:
+          ref = ref / 2**15 # Because CMSIS format is 16.48
+       if format==15:
+          ref = ref / 2**33 # Because CMSIS format is 34.30
        config.writeReferenceQ63(7, ref)
     elif format == 7:
+       ref = ref / 2**17 # Because CMSIS format is 18.14
        config.writeReferenceQ31(7, ref)
     else:
        config.writeReference(7, ref)
     
-    nb = 8
-    ref = np.array([np.dot(data1[0:nb] ,data2[0:nb])]) / 2**15
+    nb = Tools.loopnb(format,Tools.BODYONLY)
+    ref = np.array([np.dot(data1[0:nb] ,data2[0:nb])])
+
     if format == 31 or format == 15:
+       if format==31:
+          ref = ref / 2**15 # Because CMSIS format is 16.48
+       if format==15:
+          ref = ref / 2**33 # Because CMSIS format is 34.30
        config.writeReferenceQ63(8, ref)
     elif format == 7:
+       ref = ref / 2**17 # Because CMSIS format is 18.14
        config.writeReferenceQ31(8, ref)
     else:
        config.writeReference(8, ref)
     
-    nb = 9
-    ref = np.array([np.dot(data1[0:nb] ,data2[0:nb])]) / 2**15
+    nb = Tools.loopnb(format,Tools.BODYANDTAIL)
+    ref = np.array([np.dot(data1[0:nb] ,data2[0:nb])])
+
     if format == 31 or format == 15:
+       if format==31:
+          ref = ref / 2**15 # Because CMSIS format is 16.48
+       if format==15:
+          ref = ref / 2**33 # Because CMSIS format is 34.30
        config.writeReferenceQ63(9, ref)
     elif format == 7:
+       ref = ref / 2**17 # Because CMSIS format is 18.14
        config.writeReferenceQ31(9, ref)
     else:
        config.writeReference(9, ref)
@@ -68,8 +89,8 @@ def writeTests(config,format):
     ref = abs(data1)
     config.writeReference(10, ref)
 
-    ref = np.array([np.dot(data1 ,data2)])
-    config.writeReference(11, ref)
+    #ref = np.array([np.dot(data1 ,data2)])
+    #config.writeReference(11, ref)
 
     return(11)
 
@@ -95,22 +116,22 @@ def writeTestsWithSat(config,format):
     datar = datar/max(datar)
     datar = datar / 3.0 # Because used to test shift of 2 without saturation
 
-    config.writeInput(12, datar)
+    config.writeInput(nb+1, datar)
 
     if format == 31:
-       config.writeInputS32(12,data1-1,"MaxPosInput")
-       config.writeInputS32(12,data2+1,"MaxNegInput")
-       config.writeInputS32(12,data2,"MaxNeg2Input")
+       config.writeInputS32(nb+1,data1-1,"MaxPosInput")
+       config.writeInputS32(nb+1,data2+1,"MaxNegInput")
+       config.writeInputS32(nb+1,data2,"MaxNeg2Input")
 
     if format == 15:
-       config.writeInputS16(12,data1-1,"MaxPosInput")
-       config.writeInputS16(12,data2+1,"MaxNegInput")
-       config.writeInputS16(12,data2,"MaxNeg2Input")
+       config.writeInputS16(nb+1,data1-1,"MaxPosInput")
+       config.writeInputS16(nb+1,data2+1,"MaxNegInput")
+       config.writeInputS16(nb+1,data2,"MaxNeg2Input")
 
     if format == 7:
-       config.writeInputS8(12,data1-1,"MaxPosInput")
-       config.writeInputS8(12,data2+1,"MaxNegInput")
-       config.writeInputS8(12,data2,"MaxNeg2Input")
+       config.writeInputS8(nb+1,data1-1,"MaxPosInput")
+       config.writeInputS8(nb+1,data2+1,"MaxNegInput")
+       config.writeInputS8(nb+1,data2,"MaxNeg2Input")
        
     d1 = 1.0*(data1-1) / 2**format
     d2 = 1.0*(data2+1) / 2**format
@@ -164,7 +185,7 @@ configq7=Tools.Config(PATTERNDIR,PARAMDIR,"q7")
 
 
 
-#writeTests(configf32,0)
+writeTests(configf32,0)
 writeTestsWithSat(configq31,31)
 writeTestsWithSat(configq15,15)
 writeTestsWithSat(configq7,7)

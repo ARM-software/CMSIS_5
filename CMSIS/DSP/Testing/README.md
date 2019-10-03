@@ -290,7 +290,8 @@ For R14, we have a python script which will process the result of tests and form
 ### Needed packages
 
     pip install pyparsing 
-
+    pip install Colorama
+    
 If you want to compute summary statistics with regression:
 
     pip install statsmodels

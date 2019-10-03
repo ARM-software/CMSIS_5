@@ -101,15 +101,44 @@ def logSumExpDotTest(config,nb):
     config.writeInputS16(nb, dims,"Dims")
     config.writeReference(nb, outputs,"RefLogSumExpDot")
 
-def writeTests(config):
+def writeF32OnlyTests(config):
     entropyTest(config,1)
     logsumexpTest(config,2)
     klTest(config,3)
     logSumExpDotTest(config,4)
+    return(4)
+
+def generateMaxTests(config,nb,format,data):
+
+    nbiters = Tools.loopnb(format,Tools.TAILONLY)
+    
+    index=np.argmax(data[0:nbiters])
+    maxvalue=data[index]
+
+   
+    return(nb+1)
+
+def writeTests(config,nb,format):
+    data1=np.random.randn(NBSAMPLES)
+    data2=np.random.randn(NBSAMPLES)
+    
+    data1 = data1/max(data1)
+    data2 = data1/max(data2)
+
+    nb=generateMaxTests(config,nb,format,data1)
+
+
 
 PATTERNDIR = os.path.join("Patterns","DSP","Stats","Stats")
 PARAMDIR = os.path.join("Parameters","DSP","Stats","Stats")
 
 configf32=Tools.Config(PATTERNDIR,PARAMDIR,"f32")
+configq31=Tools.Config(PATTERNDIR,PARAMDIR,"q31")
+configq15=Tools.Config(PATTERNDIR,PARAMDIR,"q15")
+configq7 =Tools.Config(PATTERNDIR,PARAMDIR,"q7")
 
-writeTests(configf32)
+nb=writeF32OnlyTests(configf32)
+writeTests(nb+1,configf32,0)
+writeTests(nb+1,configq31,31)
+writeTests(nb+1,configq15,15)
+writeTests(nb+1,configq7,7)
