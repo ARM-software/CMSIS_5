@@ -21,8 +21,8 @@
  * Title:        arm_elementwise_add_s8
  * Description:  Element wise add
  *
- * $Date:        7. August 2019
- * $Revision:    V.1.0.0
+ * $Date:        October 2019
+ * $Revision:    V.2.0.0
  *
  * Target Processor:  Cortex-M cores
  *
@@ -31,6 +31,9 @@
 #include "arm_math.h"
 #include "arm_nnfunctions.h"
 #include "arm_nnsupportfunctions.h"
+#if defined(ARM_MATH_MVEI)
+#include "arm_helium_utils.h"
+#endif
 
 /**
  *  @ingroup groupNN
@@ -41,14 +44,22 @@
  * @{
  */
 
-  /*
-   * s8 element wise add
-   *
-   * Refer header file for details.
-   *
-   */
+/*
+ * s8 element wise add
+ *
+ * Refer header file for details.
+ *
+ */
 
-#define SAT_INPUT(__INPUT, __MULT, __SHIFT)                \
+/* Note: __SHIFT is expected to be <=0 */
+
+#if defined(ARM_MATH_MVEI)
+#define SAT_INPUT_VECT(__INPUT_V, __MULT, __SHIFT)               \
+  __INPUT_V = arm_mve_sat_doubling_high_mult(__INPUT_V, __MULT); \
+  __INPUT_V = arm_mve_divide_by_power_of_two(__INPUT_V, -__SHIFT);
+#endif
+
+#define SAT_INPUT(__INPUT, __MULT, __SHIFT)                 \
   __INPUT = arm_nn_sat_doubling_high_mult(__INPUT, __MULT); \
   __INPUT = arm_nn_divide_by_power_of_two(__INPUT, -__SHIFT);
 
@@ -70,7 +81,44 @@ arm_elementwise_add_s8(const int8_t *input_1_vect,
                        const int32_t out_activation_max,
                        const uint32_t block_size)
 {
+#if defined(ARM_MATH_MVEI)
+  int32_t count = (int32_t)block_size;
 
+  while (count > 0)
+  {
+    int32x4_t vect_1;
+    int32x4_t vect_2;
+
+    mve_pred16_t p = vctp32q((uint32_t)count);
+
+    vect_1 = vldrbq_z_s32(input_1_vect, p);
+    vect_2 = vldrbq_z_s32(input_2_vect, p);
+
+    vect_1 = vaddq_s32(vect_1, vdupq_n_s32(input_1_offset));
+    vect_2 = vaddq_s32(vect_2, vdupq_n_s32(input_2_offset));
+
+    vect_1 = vshlq_r_s32(vect_1, left_shift);
+    vect_2 = vshlq_r_s32(vect_2, left_shift);
+
+    SAT_INPUT_VECT(vect_1, input_1_mult, input_1_shift);
+    SAT_INPUT_VECT(vect_2, input_2_mult, input_2_shift);
+
+    vect_1 = vaddq_s32(vect_1, vect_2);
+    SAT_INPUT_VECT(vect_1, out_mult, out_shift);
+
+    vect_1 = vaddq_n_s32(vect_1, out_offset);
+
+    vect_1 = vmaxq_s32(vect_1, vdupq_n_s32(out_activation_min));
+    vect_1 = vminq_s32(vect_1, vdupq_n_s32(out_activation_max));
+
+    input_1_vect += 4;
+    input_2_vect += 4;
+    vstrbq_p_s32(output, vect_1, p);
+
+    output += 4;
+    count -= 4;
+  }
+#else
   uint32_t loop_count;
   int32_t input_1;
   int32_t input_2;
@@ -192,6 +240,8 @@ arm_elementwise_add_s8(const int8_t *input_1_vect,
     /* Decrement loop counter */
     loop_count--;
   }
+
+#endif /* ARM_MATH_MVEI */
 
   return (ARM_MATH_SUCCESS);
 }

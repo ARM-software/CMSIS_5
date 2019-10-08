@@ -426,6 +426,52 @@ __STATIC_FORCEINLINE q31_t arm_nn_requantize(const q31_t val, const q31_t multip
                                        RIGHT_SHIFT(shift));
 }
 
+#if defined(ARM_MATH_MVEI)
+/**
+ * @brief           Vector saturating doubling high multiply returning high half.
+ * @param[in]       m1        Multiplicand
+ * @param[in]       m2        Multiplier
+ * @return          Result of multiplication.
+ *
+ */
+__STATIC_FORCEINLINE int32x4_t arm_mve_sat_doubling_high_mult(const int32x4_t m1, const q31_t m2)
+{
+    return vqrdmulhq_n_s32(m1, m2);
+}
+
+/**
+ * @brief           Vector rounding divide by power of two.
+ * @param[in]       dividend - Dividend vector
+ * @param[in]       exponent - Divisor = power(2, exponent)
+ *                             Range: [0, 31]
+ * @return          Rounded result of division. Midpoint is rounded away from zero.
+ *
+ */
+__STATIC_FORCEINLINE int32x4_t arm_mve_divide_by_power_of_two(const int32x4_t dividend, const q31_t exponent)
+{
+  const int32x4_t shift = vdupq_n_s32(-exponent);
+  const int32x4_t fixup = vshrq_n_s32(vandq_s32(dividend, shift), 31);
+  const int32x4_t fixed_up_dividend = vqaddq_s32(dividend, fixup);
+  return vrshlq_s32(fixed_up_dividend, shift);
+}
+
+/**
+ * @brief           Requantize a given vector.
+ * @param[in]       val         Vector to be requantized
+ * @param[in]       multiplier  multiplier
+ * @param[in]       shift       shift
+ *
+ * @return          Returns (val * multiplier)/(2 ^ shift)
+ *
+ */
+__STATIC_FORCEINLINE int32x4_t arm_mve_requantize(const int32x4_t val, const q31_t multiplier, const q31_t shift)
+{
+  return arm_mve_divide_by_power_of_two(
+          arm_mve_sat_doubling_high_mult(vshlq_s32(val, vdupq_n_s32(LEFT_SHIFT(shift))), multiplier),
+          RIGHT_SHIFT(shift));
+}
+#endif
+
 #ifdef __cplusplus
 }
 #endif
