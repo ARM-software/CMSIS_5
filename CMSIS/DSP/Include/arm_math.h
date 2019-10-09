@@ -1211,6 +1211,91 @@ __STATIC_INLINE float32_t arm_exponent_f32(float32_t x, int32_t nb)
     return(r);
 }
 
+/**
+ * @brief  64-bit to 32-bit unsigned normalization
+ * @param[in]  in           is input unsigned long long value
+ * @param[out] normalized   is the 32-bit normalized value
+ * @param[out] norm         is norm scale
+ */
+__STATIC_INLINE  void arm_norm_64_to_32u(uint64_t in, q31_t * normalized, int *norm)
+{
+    q31_t     n1;
+    q31_t     hi = (q31_t) (in >> 32);
+    q31_t     lo = (q31_t) ((in << 32) >> 32);
+
+    n1 = __CLZ(hi) - 32;
+    if (!n1)
+    {
+        /*
+         * input fits in 32-bit
+         */
+        n1 = __CLZ(lo);
+        if (!n1)
+        {
+            /*
+             * MSB set, need to scale down by 1
+             */
+            *norm = -1;
+            *normalized = (((unsigned long) lo) >> 1);
+        } else
+        {
+            if (n1 == 32)
+            {
+                /*
+                 * input is zero
+                 */
+                *norm = 0;
+                *normalized = 0;
+            } else
+            {
+                /*
+                 * 32-bit normalization
+                 */
+                *norm = n1 - 1;
+                *normalized = lo << *norm;
+            }
+        }
+    } else
+    {
+        /*
+         * input fits in 64-bit
+         */
+        n1 = 1 - n1;
+        *norm = -n1;
+        /*
+         * 64 bit normalization
+         */
+        *normalized = (((unsigned long) lo) >> n1) | (hi << (32 - n1));
+    }
+}
+
+__STATIC_INLINE q31_t arm_div_q63_to_q31(q63_t num, q31_t den)
+{
+    q31_t   result;
+    q63_t   absNum;
+    q31_t   normalized;
+    q31_t   norm;
+
+    /*
+     * if sum fits in 32bits
+     * avoid costly 64-bit division
+     */
+    absNum = num > 0 ? num : -num;
+    arm_norm_64_to_32u(absNum, &normalized, &norm);
+    if (norm > 0)
+        /*
+         * 32-bit division
+         */
+        result = (q31_t) num / den;
+    else
+        /*
+         * 64-bit division
+         */
+        result = num / den;
+
+    return result;
+}
+
 #if defined(ARM_MATH_NEON)
 
 /**

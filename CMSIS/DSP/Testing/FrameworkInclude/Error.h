@@ -27,7 +27,7 @@
  */
 #ifndef _ASSERT_H_
 #define _ASSERT_H_
-
+#include "arm_math.h"
 #include <exception>
 #include "Test.h"
 #include "Pattern.h"
@@ -80,6 +80,12 @@ extern void assert_snr_error(unsigned long nb,AnyPattern<q63_t> &pa,AnyPattern<q
 extern void assert_snr_error(unsigned long nb,AnyPattern<q31_t> &pa,AnyPattern<q31_t> &pb, float32_t threshold);
 extern void assert_snr_error(unsigned long nb,AnyPattern<q15_t> &pa,AnyPattern<q15_t> &pb, float32_t threshold);
 extern void assert_snr_error(unsigned long nb,AnyPattern<q7_t> &pa,AnyPattern<q7_t> &pb, float32_t threshold);
+
+extern void assert_snr_error(unsigned long nb,float32_t pa,float32_t pb, float32_t threshold);
+extern void assert_snr_error(unsigned long nb,q63_t pa,q63_t pb, float32_t threshold);
+extern void assert_snr_error(unsigned long nb,q31_t pa,q31_t pb, float32_t threshold);
+extern void assert_snr_error(unsigned long nb,q15_t pa,q15_t pb, float32_t threshold);
+extern void assert_snr_error(unsigned long nb,q7_t pa,q7_t pb, float32_t threshold);
 
 extern void assert_true(unsigned long nb,bool cond);
 extern void assert_false(unsigned long nb,bool cond);
@@ -145,7 +151,7 @@ void assert_near_equal(unsigned long nb,T pa, T pb, T threshold)
 {
     if (abs(pa - pb) > threshold)
     {
-         throw (Error(EQUAL_ERROR,nb));
+         throw (Error(NEAR_EQUAL_ERROR,nb));
     }
 };
 

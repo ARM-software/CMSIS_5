@@ -57,7 +57,22 @@
   @param[out]    pResult    root mean square value returned here
   @return        none
  */
-#if defined(ARM_MATH_NEON)
+
+#if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
+void arm_rms_f32(
+  const float32_t * pSrc,
+  uint32_t blockSize,
+  float32_t * pResult)
+{
+    float32_t pow = 0.0f;
+
+    arm_power_f32(pSrc, blockSize, &pow);
+
+    /* Compute Rms and store the result in the destination */
+    arm_sqrt_f32(pow / (float32_t) blockSize, pResult);
+}
+#else
+#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
 void arm_rms_f32(
   const float32_t * pSrc,
   uint32_t blockSize,
@@ -118,7 +133,7 @@ void arm_rms_f32(
         float32_t sum = 0.0f;                          /* Temporary result storage */
         float32_t in;                                  /* Temporary variable to store input value */
 
-#if defined (ARM_MATH_LOOPUNROLL)
+#if defined (ARM_MATH_LOOPUNROLL) && !defined(ARM_MATH_AUTOVECTORIZE)
 
   /* Loop unrolling: Compute 4 outputs at a time */
   blkCnt = blockSize >> 2U;
@@ -170,6 +185,7 @@ void arm_rms_f32(
   arm_sqrt_f32(sum / (float32_t) blockSize, pResult);
 }
 #endif /* #if defined(ARM_MATH_NEON) */
+#endif /* defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE) */
 
 /**
   @} end of RMS group

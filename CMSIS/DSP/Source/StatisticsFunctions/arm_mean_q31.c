@@ -52,7 +52,45 @@
                    full precision of intermediate result is preserved.
                    Finally, the accumulator is truncated to yield a result of 1.31 format.
  */
+#if defined(ARM_MATH_MVEI)
+void arm_mean_q31(
+  const q31_t * pSrc,
+        uint32_t blockSize,
+        q31_t * pResult)
+{
+    int32_t  blkCnt;           /* loop counters */
+    q31x4_t vecSrc;
+    q63_t     sum = 0LL;
 
+
+    /* Compute 4 outputs at a time */
+    blkCnt = blockSize >> 2U;
+    while (blkCnt > 0U)
+    {
+
+        vecSrc = vldrwq_s32(pSrc);
+        /*
+         * sum lanes
+         */
+        sum = vaddlvaq(sum, vecSrc);
+
+        blkCnt --;
+        pSrc += 4;
+    }
+
+    /* Tail */
+    blkCnt = blockSize & 0x3;
+
+    while (blkCnt > 0U)
+    {
+      /* C = (A[0] + A[1] + A[2] + ... + A[blockSize-1]) */
+      sum += *pSrc++;
+      blkCnt --;
+    }
+
+    *pResult = arm_div_q63_to_q31(sum, blockSize);
+}
+#else
 void arm_mean_q31(
   const q31_t * pSrc,
         uint32_t blockSize,
@@ -104,6 +142,7 @@ void arm_mean_q31(
   /* Store result to destination */
   *pResult = (q31_t) (sum / blockSize);
 }
+#endif /* defined(ARM_MATH_MVEI) */
 
 /**
   @} end of mean group

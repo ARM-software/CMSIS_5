@@ -14,6 +14,31 @@ from colorama import init,Fore, Back, Style
 
 init()
 
+def errorStr(id):
+  if id == 1:
+     return("UNKNOWN_ERROR")
+  if id == 2:
+     return("Equality error")
+  if id == 3:
+     return("Absolute difference error")
+  if id == 4:
+     return("Relative difference error")
+  if id == 5:
+     return("SNR error")
+  if id == 6:
+     return("Different length error")
+  if id == 7:
+     return("Assertion error")
+  if id == 8:
+     return("Memory allocation error")
+  if id == 9:
+     return("Empty pattern error")
+  if id == 10:
+     return("Buffer tail corrupted")
+
+  return("Unknown error %d" % id)
+
+
 def findItem(root,path):
         """ Find a node in a tree
       
@@ -74,7 +99,7 @@ class TextFormatter:
              if params:
                 print("%s %s" % (ident,params))
              if passed != 1:
-                print(Fore.RED + ("%s Error = %d at line %d" % (ident, theError, theLine)) + Style.RESET_ALL)
+                print(Fore.RED + ("%s %s at line %d" % (ident, errorStr(theError), theLine)) + Style.RESET_ALL)
 
       def pop(self):
           None
@@ -421,7 +446,7 @@ def analyze(root,results,args,trace):
 
 parser = argparse.ArgumentParser(description='Parse test description')
 
-parser.add_argument('-f', nargs='?',type = str, default=None, help="Test description file path")
+parser.add_argument('-f', nargs='?',type = str, default="Output.pickle", help="Test description file path")
 # Where the result file can be found
 parser.add_argument('-r', nargs='?',type = str, default=None, help="Result file path")
 parser.add_argument('-c', action='store_true', help="CSV output")
@@ -437,9 +462,10 @@ args = parser.parse_args()
 
 
 if args.f is not None:
-    p = parse.Parser()
+    #p = parse.Parser()
     # Parse the test description file
-    root = p.parse(args.f)
+    #root = p.parse(args.f)
+    root=parse.loadRoot(args.f)
     if args.t:
        with open(args.t,"r") as trace:
          with open(args.r,"r") as results:

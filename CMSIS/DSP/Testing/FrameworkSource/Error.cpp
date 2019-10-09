@@ -25,6 +25,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+#include "arm_math.h"
 #include "Error.h"
 
 namespace Client {
@@ -384,6 +385,20 @@ void assert_snr_error(unsigned long nb,AnyPattern<float32_t> &pa,AnyPattern<floa
    }
 }
 
+void assert_snr_error(unsigned long nb,float32_t a,float32_t b, float32_t threshold)
+{
+   float32_t snr;
+
+   snr = arm_snr_f32(&a, &b, 1);
+
+   //printf("SNR = %f, %f %f\n",snr,a,b);
+   
+   if (snr < threshold)
+   {
+     throw (Error(SNR_ERROR,nb));
+   }
+}
+
 void assert_snr_error(unsigned long nb,AnyPattern<q63_t> &pa,AnyPattern<q63_t> &pb, float32_t threshold)
 {
    float32_t snr;
@@ -401,6 +416,21 @@ void assert_snr_error(unsigned long nb,AnyPattern<q63_t> &pa,AnyPattern<q63_t> &
 
 
    snr = arm_snr_q63(ptrA, ptrB, pa.nbSamples());
+
+   //printf("SNR = %f\n",snr);
+
+   if (snr < threshold)
+   {
+     throw (Error(SNR_ERROR,nb));
+   }
+
+}
+
+void assert_snr_error(unsigned long nb,q63_t a,q63_t b, float32_t threshold)
+{
+   float32_t snr;
+
+   snr = arm_snr_q63(&a, &b, 1);
 
    //printf("SNR = %f\n",snr);
 
@@ -437,6 +467,20 @@ void assert_snr_error(unsigned long nb,AnyPattern<q31_t> &pa,AnyPattern<q31_t> &
 
 }
 
+void assert_snr_error(unsigned long nb,q31_t a,q31_t b, float32_t threshold)
+{
+   float32_t snr;
+
+   snr = arm_snr_q31(&a, &b, 1);
+
+
+   if (snr < threshold)
+   {
+     throw (Error(SNR_ERROR,nb));
+   }
+
+}
+
 void assert_snr_error(unsigned long nb,AnyPattern<q15_t> &pa,AnyPattern<q15_t> &pb, float32_t threshold)
 {
    float32_t snr;
@@ -463,6 +507,21 @@ void assert_snr_error(unsigned long nb,AnyPattern<q15_t> &pa,AnyPattern<q15_t> &
 
 }
 
+void assert_snr_error(unsigned long nb,q15_t a,q15_t b, float32_t threshold)
+{
+   float32_t snr;
+
+   snr = arm_snr_q15(&a, &b, 1);
+
+   //printf("SNR = %f\n",snr);
+
+   if (snr < threshold)
+   {
+     throw (Error(SNR_ERROR,nb));
+   }
+
+}
+
 void assert_snr_error(unsigned long nb,AnyPattern<q7_t> &pa,AnyPattern<q7_t> &pb, float32_t threshold)
 {
    float32_t snr;
@@ -479,6 +538,21 @@ void assert_snr_error(unsigned long nb,AnyPattern<q7_t> &pa,AnyPattern<q7_t> &pb
    q7_t *ptrB = pb.ptr();
 
    snr = arm_snr_q7(ptrA, ptrB, pa.nbSamples());
+
+   //printf("SNR = %f\n",snr);
+
+   if (snr < threshold)
+   {
+     throw (Error(SNR_ERROR,nb));
+   }
+
+}
+
+void assert_snr_error(unsigned long nb,q7_t a,q7_t b, float32_t threshold)
+{
+   float32_t snr;
+
+   snr = arm_snr_q7(&a, &b, 1);
 
    //printf("SNR = %f\n",snr);
 

@@ -1,7 +1,12 @@
 from pyparsing import *
 import TestScripts.Parser as p
+import pickle
 
-
+def loadRoot(f):
+    root = None
+    with open(f,"rb") as inf:
+         root=pickle.load(inf)
+    return(root)
 
 class Params:
     def __init__(self):

@@ -53,6 +53,47 @@
                    Finally, the accumulator is truncated to yield a result of 1.15 format.
  */
 
+#if defined(ARM_MATH_MVEI)
+void arm_mean_q15(
+  const q15_t * pSrc,
+        uint32_t blockSize,
+        q15_t * pResult)
+{
+    int32_t  blkCnt;           /* loop counters */
+    q15x8_t  vecSrc;
+    q31_t     sum = 0L;
+
+    /* Compute 8 outputs at a time */
+    blkCnt = blockSize >> 3U;
+    while (blkCnt > 0U)
+    {
+        vecSrc = vldrhq_s16(pSrc);
+        /*
+         * sum lanes
+         */
+        sum = vaddvaq(sum, vecSrc);
+
+        blkCnt--;
+        pSrc += 8;
+    }
+
+    /* Tail */
+    blkCnt = blockSize & 0x7;
+
+    while (blkCnt > 0U)
+    {
+       /* C = (A[0] + A[1] + A[2] + ... + A[blockSize-1]) */
+       sum += *pSrc++;
+
+       /* Decrement loop counter */
+       blkCnt--;
+    }
+
+    /* C = (A[0] + A[1] + A[2] + ... + A[blockSize-1]) / blockSize  */
+    /* Store the result to the destination */
+    *pResult = (q15_t) (sum / (int32_t) blockSize);
+}
+#else
 void arm_mean_q15(
   const q15_t * pSrc,
         uint32_t blockSize,
@@ -108,6 +149,7 @@ void arm_mean_q15(
   /* Store result to destination */
   *pResult = (q15_t) (sum / (int32_t) blockSize);
 }
+#endif /* defined(ARM_MATH_MVEI) */
 
 /**
   @} end of mean group

@@ -87,7 +87,7 @@ def extractBenchmarks(benchmark,elem):
 
 parser = argparse.ArgumentParser(description='Generate summary benchmarks')
 
-parser.add_argument('-f', nargs='?',type = str, default=None, help="Test description file path")
+parser.add_argument('-f', nargs='?',type = str, default="Output.pickle", help="Test description file path")
 parser.add_argument('-b', nargs='?',type = str, default="FullBenchmark", help="Full Benchmark dir path")
 parser.add_argument('-e', action='store_true', help="Embedded test")
 parser.add_argument('-o', nargs='?',type = str, default="bench.csv", help="Output csv file using old format")
@@ -97,9 +97,10 @@ parser.add_argument('others', nargs=argparse.REMAINDER)
 args = parser.parse_args()
 
 if args.f is not None:
-    p = parse.Parser()
+    #p = parse.Parser()
     # Parse the test description file
-    root = p.parse(args.f)
+    #root = p.parse(args.f)
+    root=parse.loadRoot(args.f)
     d.deprecate(root,args.others)
     extractBenchmarks(args.b,root)
     finalResult = pd.concat(result)

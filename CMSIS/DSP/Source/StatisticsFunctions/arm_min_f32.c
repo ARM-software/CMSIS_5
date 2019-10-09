@@ -27,7 +27,11 @@
  */
 
 #include "arm_math.h"
+
+#if (defined(ARM_MATH_NEON) || defined(ARM_MATH_MVEF)) && !defined(ARM_MATH_AUTOVECTORIZE)
 #include <limits.h>
+#endif
+
 
 /**
   @ingroup groupStats
@@ -54,7 +58,93 @@
   @param[out]    pIndex     index of minimum value returned here
   @return        none
  */
-#if defined(ARM_MATH_NEON)
+
+#if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
+
+void arm_min_f32(
+  const float32_t * pSrc,
+  uint32_t blockSize,
+  float32_t * pResult,
+  uint32_t * pIndex)
+{
+    int32_t  blkCnt;           /* loop counters */
+    f32x4_t vecSrc;
+    float32_t const *pSrcVec;
+    f32x4_t curExtremValVec = vdupq_n_f32(FLT_MAX);
+    float32_t minValue = FLT_MAX;
+    uint32_t  idx = blockSize;
+    uint32x4_t indexVec;
+    uint32x4_t curExtremIdxVec;
+    float32_t tmp;
+    mve_pred16_t p0;
+
+    indexVec = vidupq_u32(0, 1);
+    curExtremIdxVec = vdupq_n_u32(0);
+
+    pSrcVec = (float32_t const *) pSrc;
+    /* Compute 4 outputs at a time */
+    blkCnt = blockSize >> 2U;
+    while (blkCnt > 0U)
+    {
+        vecSrc = vldrwq_f32(pSrcVec);  
+        pSrcVec += 4;
+        /*
+         * Get current max per lane and current index per lane
+         * when a max is selected
+         */
+        p0 = vcmpleq(vecSrc, curExtremValVec);
+        curExtremValVec = vpselq(vecSrc, curExtremValVec, p0);
+        curExtremIdxVec = vpselq(indexVec, curExtremIdxVec, p0);
+
+        indexVec = indexVec +  4;
+        /*
+         * Decrement the blockSize loop counter
+         */
+        blkCnt--;
+    }
+    
+    /*
+     * Get min value across the vector
+     */
+    minValue = vminnmvq(minValue, curExtremValVec);
+    /*
+     * set index for lower values to max possible index
+     */
+    p0 = vcmpleq(curExtremValVec, minValue);
+    indexVec = vpselq(curExtremIdxVec, vdupq_n_u32(blockSize), p0);
+    /*
+     * Get min index which is thus for a max value
+     */
+    idx = vminvq(idx, indexVec);
+
+    /*
+     * tail
+     */
+    blkCnt = blockSize & 0x3;
+
+    while (blkCnt > 0U)
+    {
+      /* Initialize minVal to the next consecutive values one by one */
+      tmp = *pSrc++;
+  
+      /* compare for the minimum value */
+      if (minValue > tmp)
+      {
+        /* Update the minimum value and it's index */
+        minValue = tmp;
+        idx = blockSize - blkCnt;
+      }
+      blkCnt--;
+    }
+    /*
+     * Save result
+     */
+    *pIndex = idx;
+    *pResult = minValue;
+}
+
+#else
+#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
 void arm_min_f32(
   const float32_t * pSrc,
   uint32_t blockSize,
@@ -173,7 +263,7 @@ void arm_min_f32(
         float32_t minVal, out;                         /* Temporary variables to store the output value. */
         uint32_t blkCnt, outIndex;                     /* Loop counter */
 
-#if defined (ARM_MATH_LOOPUNROLL)
+#if defined (ARM_MATH_LOOPUNROLL) && !defined(ARM_MATH_AUTOVECTORIZE)
         uint32_t index;                                /* index of maximum value */
 #endif
 
@@ -183,7 +273,7 @@ void arm_min_f32(
   /* Load first input value that act as reference value for comparision */
   out = *pSrc++;
 
-#if defined (ARM_MATH_LOOPUNROLL)
+#if defined (ARM_MATH_LOOPUNROLL) && !defined(ARM_MATH_AUTOVECTORIZE)
   /* Initialise index of maximum value. */
   index = 0U;
 
@@ -262,6 +352,7 @@ void arm_min_f32(
   *pIndex = outIndex;
 }
 #endif /* #if defined(ARM_MATH_NEON) */
+#endif /* defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE) */
 
 /**
   @} end of Min group

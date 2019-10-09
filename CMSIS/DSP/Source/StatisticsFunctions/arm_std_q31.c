@@ -57,7 +57,18 @@
                    After division, internal variables should be Q18.46
                    Finally, the 18.46 accumulator is right shifted by 15 bits to yield a 1.31 format value.
  */
+#if defined(ARM_MATH_MVEI)
+void arm_std_q31(
+  const q31_t * pSrc,
+        uint32_t blockSize,
+        q31_t * pResult)
+{
+    q31_t var=0;
 
+    arm_var_q31(pSrc, blockSize, &var);
+    arm_sqrt_q31(var, pResult);
+}
+#else
 void arm_std_q31(
   const q31_t * pSrc,
         uint32_t blockSize,
@@ -141,6 +152,7 @@ void arm_std_q31(
   /* Compute standard deviation and store result in destination */
   arm_sqrt_q31((meanOfSquares - squareOfMean) >> 15U, pResult);
 }
+#endif /* defined(ARM_MATH_MVEI) */
 
 /**
   @} end of STD group

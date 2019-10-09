@@ -59,7 +59,7 @@
  *
  */
 
-#if defined(ARM_MATH_NEON)
+#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
 
 #include "NEMath.h"
 float32_t arm_logsumexp_f32(const float32_t *in, uint32_t blockSize)

@@ -313,16 +313,30 @@ If BENCHMARK=ON is used, other options should be enabled to have better performa
 
 ### Generate the cpp,h and txt files from the desc.txt file
 
+
     cd ..
-    python processTests.py -f desc.txt
+
+    python preprocess.py -f desc.txt 
+
+This will create a file Output.pickle which is containing a Python object representing
+the parsed data structure. It is done because parsing a big test descriptino file is quite slow.
+
+So, it is only done once.
+
+    python processTests.py -f Output.pickle
+
+or just
+
+    python processTests.py
+
 
 You can pass a C++ class to specifiy that you want to generate tests only for a specific group or suite.
 
-    python processTests.py -f desc.txt BasicTests
+    python processTests.py BasicTests
 
 You can add a test ID to specify that you wan to run only a specific test in the suite:
 
-    python processTests.py -f desc.txt BasicTests 4
+    python processTests.py BasicTests 4
 
 First time this script is run, it is expecting some folder and some headers.
 To create the folder, the script createDefaultFolder.sh can be used.
@@ -343,10 +357,12 @@ Folder Output/BasicMaths should exist
 ### Parse the results
 
     cd ..
-    python processResult.py -f desc.txt -r build\result.txt
+    python processResult.py -r build\result.txt
 
 -e option is needed if the mode -e was used with processTests because the output has a different
 format with or without -e option.
+
+It is also using the Output.pickle file by default for the test description.
 
 ### Generate summary statistics
 
@@ -354,7 +370,9 @@ The result parsing may have generated some statistics in FullBenchmark folder.
 
 The script summaryBench can parse those results and compute regression formula.
 
-    python summaryBench.py -f desc.txt -r build\result.txt
+    python summaryBench.py -r build\result.txt
+
+The Output.pickle file is used by default. It can be changed with -f option.
 
 The output of this script may look like:
 
@@ -369,13 +387,15 @@ The MAX column is the max of cycles computed for all values of A and B which wer
 To convert some benchmark to an older format.
 The PARAMS must be compatible between all suites which are children of AGroup
 
-    python convertToOld.py -f desc.txt -e AGroup
+    python convertToOld.py -e AGroup
 
+Output.pickle is used by default. It can be changed with -f option.
 
 To add a to sqlite3 databse:
 
-    python addToDB.py -f desc.txt -e AGroup
+    python addToDB.py -e AGroup
 
+Output.pickle is used by default. It can be changed with -f option.
 
 The database must be created with createDb.sql before this script can be used.
 
@@ -538,7 +558,9 @@ It is also here that you specify what you want to dump if you're in dump mode.
 
 To add a to sqlite3 databse:
 
-    python addToDB.py -f desc.txt AGroup
+    python addToDB.py AGroup
+
+Output.pickle is used by default. It can be changed with -f option.
 
 AGroup should be the class name of a Group in the desc.txt
 
@@ -551,13 +573,15 @@ Each suite is defining the same parameters : NB.
 
 If you use:
 
-    python addToDB.py -f desc.txt BasicBenchmarks
+    python addToDB.py BasicBenchmarks
+
+Output.pickle is used by default. It can be changed with -f option.
 
 A table BasicBenchmarks will be create and the benchmarks result for F32, Q31, Q15 and Q7 will be added to this table.
 
 But, if you do:
 
-    python addToDB.py -f desc.txt BasicMathsBenchmarksF32
+    python addToDB.py BasicMathsBenchmarksF32
 
 The a table BasicMathsBenchmarksF32 will be created which is probably not what you want since the table is containing a type column (f32,q31, q15, q7)
 

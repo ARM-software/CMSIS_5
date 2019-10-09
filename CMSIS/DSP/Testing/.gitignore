@@ -14,3 +14,4 @@ TestDesc.txt
 currentConfig.csv
 test.txt
 __pycache__
+bugcheck.py

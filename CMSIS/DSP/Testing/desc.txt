@@ -14,31 +14,228 @@ group Root {
               folder = StatsF32
 
               Pattern INPUT1_F32_ID : Input1_f32.txt 
-              Pattern DIM1_S16_ID : Dims1_s16.txt 
-              Pattern REF1_ENTROPY_F32_ID : RefEntropy1_f32.txt
-
               Pattern INPUT2_F32_ID : Input2_f32.txt 
-              Pattern DIM2_S16_ID : Dims2_s16.txt 
-              Pattern REF2_LOGSUMEXP_F32_ID : RefLogSumExp2_f32.txt
+              Pattern MAXINDEXES_S16_ID : MaxIndexes1_s16.txt
+              Pattern MAXVALS_F32_ID : MaxVals1_f32.txt
+              Pattern MEANVALS_F32_ID : MeanVals2_f32.txt
+              Pattern MININDEXES_S16_ID : MinIndexes3_s16.txt
+              Pattern MINVALS_F32_ID : MinVals3_f32.txt
+              Pattern POWERVALS_F32_ID : PowerVals4_f32.txt
+              Pattern RMSVALS_F32_ID : RmsVals5_f32.txt
+              Pattern STDVALS_F32_ID : StdVals6_f32.txt
+              Pattern VARVALS_F32_ID : VarVals7_f32.txt
 
-              Pattern INPUTA3_F32_ID : InputA3_f32.txt 
-              Pattern INPUTB3_F32_ID : InputB3_f32.txt
-              Pattern DIM3_S16_ID : Dims3_s16.txt 
-              Pattern REF3_KL_F32_ID : RefKL3_f32.txt
+              Pattern INPUT22_F32_ID : Input22_f32.txt 
+              Pattern DIM22_S16_ID : Dims22_s16.txt 
+              Pattern REF22_ENTROPY_F32_ID : RefEntropy22_f32.txt
 
-              Pattern INPUTA4_F32_ID : InputA4_f32.txt 
-              Pattern INPUTB4_F32_ID : InputB4_f32.txt
-              Pattern DIM4_S16_ID : Dims4_s16.txt 
-              Pattern REF4_LOGSUMEXP_DOT_F32_ID : RefLogSumExpDot4_f32.txt
+              Pattern INPUT23_F32_ID : Input23_f32.txt 
+              Pattern DIM23_S16_ID : Dims23_s16.txt 
+              Pattern REF23_LOGSUMEXP_F32_ID : RefLogSumExp23_f32.txt
+
+              Pattern INPUTA24_F32_ID : InputA24_f32.txt 
+              Pattern INPUTB24_F32_ID : InputB24_f32.txt
+              Pattern DIM24_S16_ID : Dims24_s16.txt 
+              Pattern REF24_KL_F32_ID : RefKL24_f32.txt
+
+              Pattern INPUTA25_F32_ID : InputA25_f32.txt 
+              Pattern INPUTB25_F32_ID : InputB25_f32.txt
+              Pattern DIM25_S16_ID : Dims25_s16.txt 
+              Pattern REF25_LOGSUMEXP_DOT_F32_ID : RefLogSumExpDot25_f32.txt
 
               Output  OUT_F32_ID : Output
+              Output  OUT_S16_ID : Index
               Output  TMP_F32_ID : Temp
 
               Functions {
+                Test nb=3    arm_max_f32:test_max_f32
+                Test nb=4n   arm_max_f32:test_max_f32
+                Test nb=4n+1 arm_max_f32:test_max_f32
+
+                Test nb=3    arm_mean_f32:test_mean_f32
+                Test nb=4n   arm_mean_f32:test_mean_f32
+                Test nb=4n+1 arm_mean_f32:test_mean_f32
+
+                Test nb=3    arm_min_f32:test_min_f32
+                Test nb=4n   arm_min_f32:test_min_f32
+                Test nb=4n+1 arm_min_f32:test_min_f32
+
+                Test nb=3    arm_power_f32:test_power_f32
+                Test nb=4n   arm_power_f32:test_power_f32
+                Test nb=4n+1 arm_power_f32:test_power_f32
+
+                Test nb=3    arm_rms_f32:test_rms_f32
+                Test nb=4n   arm_rms_f32:test_rms_f32
+                Test nb=4n+1 arm_rms_f32:test_rms_f32
+
+                Test nb=3    arm_std_f32:test_std_f32
+                Test nb=4n   arm_std_f32:test_std_f32
+                Test nb=4n+1 arm_std_f32:test_std_f32
+
+                Test nb=3    arm_var_f32:test_var_f32
+                Test nb=4n   arm_var_f32:test_var_f32
+                Test nb=4n+1 arm_var_f32:test_var_f32
+
                 arm_entropy_f32:test_entropy_f32
                 arm_logsumexp_f32:test_logsumexp_f32
                 arm_kullback_leibler_f32:test_kullback_leibler_f32
                 arm_logsumexp_dot_prod_f32:test_logsumexp_dot_prod_f32
+              }
+
+           }
+
+           suite Statistics Tests Q31 {
+              class = StatsTestsQ31
+              folder = StatsQ31
+
+              Pattern INPUT1_Q31_ID : Input1_q31.txt 
+              Pattern INPUT2_Q31_ID : Input2_q31.txt 
+              Pattern MAXINDEXES_S16_ID : MaxIndexes1_s16.txt
+              Pattern MAXVALS_Q31_ID : MaxVals1_q31.txt
+              Pattern MEANVALS_Q31_ID : MeanVals2_q31.txt
+              Pattern MININDEXES_S16_ID : MinIndexes3_s16.txt
+              Pattern MINVALS_Q31_ID : MinVals3_q31.txt
+              Pattern POWERVALS_Q63_ID : PowerVals4_q63.txt
+              Pattern RMSVALS_Q31_ID : RmsVals5_q31.txt
+              Pattern STDVALS_Q31_ID : StdVals6_q31.txt
+              Pattern VARVALS_Q31_ID : VarVals7_q31.txt
+
+              Output  OUT_Q31_ID : Output
+              Output  OUT_Q63_ID : Output
+              Output  OUT_S16_ID : Index
+              Output  TMP_Q31_ID : Temp
+
+              Functions {
+                Test nb=3    arm_max_q31:test_max_q31
+                Test nb=4n   arm_max_q31:test_max_q31
+                Test nb=4n+1 arm_max_q31:test_max_q31
+
+                Test nb=3    arm_mean_q31:test_mean_q31
+                Test nb=4n   arm_mean_q31:test_mean_q31
+                Test nb=4n+1 arm_mean_q31:test_mean_q31
+
+                Test nb=3    arm_min_q31:test_min_q31
+                Test nb=4n   arm_min_q31:test_min_q31
+                Test nb=4n+1 arm_min_q31:test_min_q31
+
+                Test nb=3    arm_power_q31:test_power_q31
+                Test nb=4n   arm_power_q31:test_power_q31
+                Test nb=4n+1 arm_power_q31:test_power_q31
+
+                Test nb=3    arm_rms_q31:test_rms_q31
+                Test nb=4n   arm_rms_q31:test_rms_q31
+                Test nb=4n+1 arm_rms_q31:test_rms_q31
+
+                Test nb=3    arm_std_q31:test_std_q31
+                Test nb=4n   arm_std_q31:test_std_q31
+                Test nb=4n+1 arm_std_q31:test_std_q31
+
+                Test nb=3    arm_var_q31:test_var_q31
+                Test nb=4n   arm_var_q31:test_var_q31
+                Test nb=4n+1 arm_var_q31:test_var_q31
+
+              }
+
+           }
+
+           suite Statistics Tests Q15 {
+              class = StatsTestsQ15
+              folder = StatsQ15
+
+              Pattern INPUT1_Q15_ID : Input1_q15.txt 
+              Pattern INPUT2_Q15_ID : Input2_q15.txt 
+              Pattern MAXINDEXES_S16_ID : MaxIndexes1_s16.txt
+              Pattern MAXVALS_Q15_ID : MaxVals1_q15.txt
+              Pattern MEANVALS_Q15_ID : MeanVals2_q15.txt
+              Pattern MININDEXES_S16_ID : MinIndexes3_s16.txt
+              Pattern MINVALS_Q15_ID : MinVals3_q15.txt
+              Pattern POWERVALS_Q63_ID : PowerVals4_q63.txt
+              Pattern RMSVALS_Q15_ID : RmsVals5_q15.txt
+              Pattern STDVALS_Q15_ID : StdVals6_q15.txt
+              Pattern VARVALS_Q15_ID : VarVals7_q15.txt
+
+              Output  OUT_Q15_ID : Output
+              Output  OUT_Q63_ID : Output
+              Output  OUT_S16_ID : Index
+              Output  TMP_Q15_ID : Temp
+
+              Functions {
+                Test nb=7    arm_max_q15:test_max_q15
+                Test nb=8n   arm_max_q15:test_max_q15
+                Test nb=8n+1 arm_max_q15:test_max_q15
+
+                Test nb=7    arm_mean_q15:test_mean_q15
+                Test nb=8n   arm_mean_q15:test_mean_q15
+                Test nb=8n+1 arm_mean_q15:test_mean_q15
+
+                Test nb=7    arm_min_q15:test_min_q15
+                Test nb=8n   arm_min_q15:test_min_q15
+                Test nb=8n+1 arm_min_q15:test_min_q15
+
+                Test nb=7    arm_power_q15:test_power_q15
+                Test nb=8n   arm_power_q15:test_power_q15
+                Test nb=8n+1 arm_power_q15:test_power_q15
+
+                Test nb=7    arm_rms_q15:test_rms_q15
+                Test nb=8n   arm_rms_q15:test_rms_q15
+                Test nb=8n+1 arm_rms_q15:test_rms_q15
+
+                Test nb=7    arm_std_q15:test_std_q15
+                Test nb=8n   arm_std_q15:test_std_q15
+                Test nb=8n+1 arm_std_q15:test_std_q15
+
+                Test nb=7    arm_var_q15:test_var_q15
+                Test nb=8n   arm_var_q15:test_var_q15
+                Test nb=8n+1 arm_var_q15:test_var_q15
+
+              }
+
+           }
+
+           suite Statistics Tests Q7 {
+              class = StatsTestsQ7
+              folder = StatsQ7
+
+              Pattern INPUT1_Q7_ID : Input1_q7.txt 
+              Pattern INPUT2_Q7_ID : Input2_q7.txt 
+              Pattern MAXINDEXES_S16_ID : MaxIndexes1_s16.txt
+              Pattern MAXVALS_Q7_ID : MaxVals1_q7.txt
+              Pattern MEANVALS_Q7_ID : MeanVals2_q7.txt
+              Pattern MININDEXES_S16_ID : MinIndexes3_s16.txt
+              Pattern MINVALS_Q7_ID : MinVals3_q7.txt
+              Pattern POWERVALS_Q31_ID : PowerVals4_q31.txt
+              Pattern MAXINDEXMAX_Q7_ID : InputMaxIndexMax1_q7.txt
+              Pattern MININDEXMAX_Q7_ID : InputMinIndexMax3_q7.txt
+
+              //Pattern RMSVALS_Q7_ID : RmsVals5_q7.txt
+              //Pattern STDVALS_Q7_ID : StdVals6_q7.txt
+              //Pattern VARVALS_Q7_ID : VarVals7_q7.txt
+
+              Output  OUT_Q7_ID : Output
+              Output  OUT_Q31_ID : Output
+              Output  OUT_S16_ID : Index
+              Output  TMP_Q7_ID : Temp
+
+              Functions {
+                Test nb=15    arm_max_q7:test_max_q7
+                Test nb=16n   arm_max_q7:test_max_q7
+                Test nb=16n+1 arm_max_q7:test_max_q7
+
+                Test nb=15    arm_mean_q7:test_mean_q7
+                Test nb=16n   arm_mean_q7:test_mean_q7
+                Test nb=16n+1 arm_mean_q7:test_mean_q7
+
+                Test nb=15    arm_min_q7:test_min_q7
+                Test nb=16n   arm_min_q7:test_min_q7
+                Test nb=16n+1 arm_min_q7:test_min_q7
+
+                Test nb=15    arm_power_q7:test_power_q7
+                Test nb=16n   arm_power_q7:test_power_q7
+                Test nb=16n+1 arm_power_q7:test_power_q7
+
+                Test big index  arm_max_q7:test_max_q7
+                Test big index  arm_min_q7:test_min_q7
+
               }
 
            }

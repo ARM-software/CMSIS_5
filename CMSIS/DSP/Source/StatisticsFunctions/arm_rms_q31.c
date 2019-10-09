@@ -56,7 +56,23 @@
                    log2(blockSize) bits, as a total of blockSize additions are performed internally.
                    Finally, the 2.62 accumulator is right shifted by 31 bits to yield a 1.31 format value.
  */
+#if defined(ARM_MATH_MVEI)
 
+void arm_rms_q31(
+  const q31_t * pSrc,
+        uint32_t blockSize,
+        q31_t * pResult)
+{
+    q63_t pow = 0.0f;
+    q31_t normalizedPower;
+    arm_power_q31(pSrc, blockSize, &pow);
+
+    normalizedPower=clip_q63_to_q31((pow / (q63_t) blockSize) >> 17);
+    arm_sqrt_q31(normalizedPower, pResult);
+
+}
+
+#else
 void arm_rms_q31(
   const q31_t * pSrc,
         uint32_t blockSize,
@@ -118,6 +134,7 @@ void arm_rms_q31(
   /* Compute Rms and store result in destination vector */
   arm_sqrt_q31(clip_q63_to_q31((sum / (q63_t) blockSize) >> 31), pResult);
 }
+#endif /* defined(ARM_MATH_MVEI) */
 
 /**
   @} end of RMS group
