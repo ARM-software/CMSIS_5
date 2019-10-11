@@ -109,7 +109,8 @@ arm_elementwise_add_s8(const int8_t *input_1_vect,
     SAT_INPUT(input_2, input_2_mult, input_2_shift);
 
     sum = input_1 + input_2;
-    sum = arm_nn_requantize(sum, out_mult, out_shift) + out_offset;
+    SAT_INPUT(sum, out_mult, out_shift);
+    sum += out_offset;
     sum = MAX(sum, out_activation_min);
     sum = MIN(sum, out_activation_max);
     r1 = (q7_t)sum;
@@ -122,7 +123,8 @@ arm_elementwise_add_s8(const int8_t *input_1_vect,
     SAT_INPUT(input_2, input_2_mult, input_2_shift);
 
     sum = input_1 + input_2;
-    sum = arm_nn_requantize(sum, out_mult, out_shift) + out_offset;
+    SAT_INPUT(sum, out_mult, out_shift);
+    sum += out_offset;
     sum = MAX(sum, out_activation_min);
     sum = MIN(sum, out_activation_max);
     r3 = (q7_t)sum;
@@ -135,7 +137,8 @@ arm_elementwise_add_s8(const int8_t *input_1_vect,
     SAT_INPUT(input_2, input_2_mult, input_2_shift);
 
     sum = input_1 + input_2;
-    sum = arm_nn_requantize(sum, out_mult, out_shift) + out_offset;
+    SAT_INPUT(sum, out_mult, out_shift);
+    sum += out_offset;
     sum = MAX(sum, out_activation_min);
     sum = MIN(sum, out_activation_max);
     r2 = (q7_t)sum;
@@ -148,7 +151,8 @@ arm_elementwise_add_s8(const int8_t *input_1_vect,
     SAT_INPUT(input_2, input_2_mult, input_2_shift);
 
     sum = input_1 + input_2;
-    sum = arm_nn_requantize(sum, out_mult, out_shift) + out_offset;
+    SAT_INPUT(sum, out_mult, out_shift);
+    sum += out_offset;
     sum = MAX(sum, out_activation_min);
     sum = MIN(sum, out_activation_max);
     r4 = (q7_t)sum;
@@ -177,7 +181,8 @@ arm_elementwise_add_s8(const int8_t *input_1_vect,
     input_2 = arm_nn_divide_by_power_of_two(input_2, -input_2_shift);
 
     sum = input_1 + input_2;
-    sum = arm_nn_requantize(sum, out_mult, out_shift) + out_offset;
+    SAT_INPUT(sum, out_mult, out_shift);
+    sum += out_offset;
 
     sum = MAX(sum, out_activation_min);
     sum = MIN(sum, out_activation_max);
