@@ -382,10 +382,10 @@ extern "C"
 #include <float.h>
 #include <limits.h>
 
-#define Q31_MAX   LONG_MAX
+#define Q31_MAX   (0x7FFFFFFFL)
 #define Q15_MAX   SHRT_MAX
 #define Q7_MAX    SCHAR_MAX
-#define Q31_MIN   LONG_MIN
+#define Q31_MIN   (0x80000000L)
 #define Q15_MIN   SHRT_MIN
 #define Q7_MIN    SCHAR_MIN
 

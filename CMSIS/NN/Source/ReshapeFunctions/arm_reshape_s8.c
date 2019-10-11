@@ -22,7 +22,7 @@
  * Description:  Reshape a s8 vector
  *
  * $Date:        September 2019
- * $Revision:    0.0.1
+ * $Revision:    V.1.0.0
  *
  * Target Processor:  Cortex-M cores
  *
