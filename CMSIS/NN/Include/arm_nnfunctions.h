@@ -1614,6 +1614,9 @@ extern    "C"
    * @param[in]       dim_vec     input vector dimension
    * @param[out]      p_out       pointer to output vector
    *
+   * @note This function is an optimized version which is not bit-accurate with
+   *       TensorFlow Lite's kernel
+   *
    */
 
 void arm_softmax_q7(const q7_t * vec_in, const uint16_t dim_vec, q7_t * p_out);
@@ -1626,6 +1629,9 @@ void arm_softmax_q7(const q7_t * vec_in, const uint16_t dim_vec, q7_t * p_out);
    * @param[out]      p_out       pointer to output vector
    * @return none.
    *
+   * @note This function is an optimized version which is not bit-accurate with
+   *       TensorFlow Lite's kernel
+   *
    */
 
 void arm_softmax_with_batch_q7(const q7_t * vec_in, const uint16_t nb_batches,const uint16_t dim_vec, q7_t * p_out );
@@ -1636,9 +1642,35 @@ void arm_softmax_with_batch_q7(const q7_t * vec_in, const uint16_t nb_batches,co
    * @param[out]      p_out       pointer to output vector
    * @return none.
    *
+   * @note This function is an optimized version which is not bit-accurate with
+   *       TensorFlow Lite's kernel
+   *
    */
 
 void arm_softmax_q15(const q15_t * vec_in, const uint16_t dim_vec, q15_t * p_out);
+
+  /**
+   * @brief S8 softmax function
+   * @param[in]  input     Pointer to the input tensor
+   * @param[in]  num_rows  Number of rows in the input tensor
+   * @param[in]  row_size  Number of elements in each input row
+   * @param[in]  mult      Input quantization multiplier
+   * @param[in]  shift     Input quantization shift within the range [0, 31]
+   * @param[in]  diff_min  Minimum difference with max in row. Used to check if
+   *                       the quantized exponential operation can be performed
+   * @param[out] output    Pointer to the output tensor
+   *
+   * @note Supported framework: TensorFlow Lite micro (bit-accurate)
+   *
+   */
+
+void arm_softmax_s8(const int8_t *input,
+                    const int32_t num_rows,
+                    const int32_t row_size,
+                    const int32_t mult,
+                    const int32_t shift,
+                    const int8_t diff_min,
+                    int8_t *output);
 
   /**
    * @brief uint8 depthwise convolution function with asymmetric quantization for even number of channel multiplier
