@@ -15,6 +15,7 @@ include(configDsp)
 # There are some dependencies between the parts but they are not tracked
 # by this cmake. So, enabling some functions may require to enable some
 # other ones.
+option(CONCATENATION        "Concatenation"         ON)
 option(FULLYCONNECTED       "Fully Connected"       ON)
 option(CONVOLUTION          "Convolutions"          ON)
 option(ACTIVATION           "Activations"           ON)
@@ -46,6 +47,11 @@ add_library(CMSISNN INTERFACE)
 if (BASICMATHSNN)
   add_subdirectory(BasicMathFunctions)
   target_link_libraries(CMSISNN INTERFACE CMSISNNBasicMaths)
+endif()
+
+if (CONCATENATION)
+  add_subdirectory(ConcatenationFunctions)
+  target_link_libraries(CMSISNN INTERFACE CMSISNNConcatenation)
 endif()
 
 if (FULLYCONNECTED)
