@@ -1724,7 +1724,180 @@ void arm_softmax_q15(const q15_t * vec_in, const uint16_t dim_vec, q15_t * p_out
                         int8_t *output,
                         const uint32_t total_size);
 
+  /**
+   * @brief int8/uint8 concatenation function to be used for concatenating N-tensors along the X axis
+   *        This function should be called for each input tensor to concatenate. The argument offset_x
+   *        will be used to store the input tensor in the correct position in the output tensor
+   *
+   *        i.e.    offset_x = 0
+   *                for(i = 0 i < num_input_tensors; ++i)
+   *                {
+   *                    arm_concatenation_s8_x(&input[i], ..., &output, ..., ..., offset_x)
+   *                    offset_x += input_x[i]
+   *                }
+   *
+   *        This function assumes that the output tensor has:
+   *        -# The same height of the input tensor
+   *        -# The same number of channels of the input tensor
+   *        -# The same batch size of the input tensor
+   *
+   *        Unless specified otherwise, arguments are mandatory.
+   *
+   * @note This function, data layout independent, can be used to concatenate either int8 or uint8 tensors because does not involve any arithmetic operation
+   *
+   * @param[in]  input    Pointer to input tensor
+   * @param[in]  input_x  Width of input tensor
+   * @param[in]  input_y  Height of input tensor
+   * @param[in]  input_z  Channels in input tensor
+   * @param[in]  input_w  Batch size in input tensor
+   * @param[out] output   Pointer to output tensor
+   * @param[in]  output_x Width of output tensor
+   * @param[in]  offset_x The offset (in number of elements) on the X axis to start concatenating the input tensor
+   *                      It is user responsibility to provide the correct value
+   * @return     None
+   *
+   * <b> Input constraints</b>
+   * offset_x is less than output_x
+   *
+   */
+    void arm_concatenation_s8_x(const int8_t *input,
+                                const uint16_t input_x,
+                                const uint16_t input_y,
+                                const uint16_t input_z,
+                                const uint16_t input_w,
+                                int8_t *output,
+                                const uint16_t output_x,
+                                const uint32_t offset_x);
 
+  /**
+   * @brief int8/uint8 concatenation function to be used for concatenating N-tensors along the Y axis
+   *        This function should be called for each input tensor to concatenate. The argument offset_y
+   *        will be used to store the input tensor in the correct position in the output tensor
+   *
+   *        i.e.    offset_y = 0
+   *                for(i = 0 i < num_input_tensors; ++i)
+   *                {
+   *                    arm_concatenation_s8_y(&input[i], ..., &output, ..., ..., offset_y)
+   *                    offset_y += input_y[i]
+   *                }
+   *
+   *        This function assumes that the output tensor has:
+   *        -# The same width of the input tensor
+   *        -# The same number of channels of the input tensor
+   *        -# The same batch size of the input tensor
+   *
+   *        Unless specified otherwise, arguments are mandatory.
+   *
+   * @note This function, data layout independent, can be used to concatenate either int8 or uint8 tensors because does not involve any arithmetic operation
+   *
+   * @param[in]  input    Pointer to input tensor
+   * @param[in]  input_x  Width of input tensor
+   * @param[in]  input_y  Height of input tensor
+   * @param[in]  input_z  Channels in input tensor
+   * @param[in]  input_w  Batch size in input tensor
+   * @param[out] output   Pointer to output tensor
+   * @param[in]  output_y Height of output tensor
+   * @param[in]  offset_y The offset on the Y axis to start concatenating the input tensor
+   *                      It is user responsibility to provide the correct value
+   * @return     None
+   *
+   * <b> Input constraints</b>
+   * offset_y is less than output_y
+   *
+   */
+    void arm_concatenation_s8_y(const int8_t *input,
+                                const uint16_t input_x,
+                                const uint16_t input_y,
+                                const uint16_t input_z,
+                                const uint16_t input_w,
+                                int8_t *output,
+                                const uint16_t output_y,
+                                const uint32_t offset_y);
+
+  /**
+   * @brief int8/uint8 concatenation function to be used for concatenating N-tensors along the Z axis
+   *        This function should be called for each input tensor to concatenate. The argument offset_z
+   *        will be used to store the input tensor in the correct position in the output tensor
+   *
+   *        i.e.    offset_z = 0
+   *                for(i = 0 i < num_input_tensors; ++i)
+   *                {
+   *                    arm_concatenation_s8_z(&input[i], ..., &output, ..., ..., offset_z)
+   *                    offset_z += input_z[i]
+   *                }
+   *
+   *        This function assumes that the output tensor has:
+   *        -# The same width of the input tensor
+   *        -# The same height of the input tensor
+   *        -# The same batch size of the input tensor
+   *
+   *        Unless specified otherwise, arguments are mandatory.
+   *
+   * @note This function, data layout independent, can be used to concatenate either int8 or uint8 tensors because does not involve any arithmetic operation
+   *
+   * @param[in]  input    Pointer to input tensor
+   * @param[in]  input_x  Width of input tensor
+   * @param[in]  input_y  Height of input tensor
+   * @param[in]  input_z  Channels in input tensor
+   * @param[in]  input_w  Batch size in input tensor
+   * @param[out] output   Pointer to output tensor
+   * @param[in]  output_z Channels in output tensor
+   * @param[in]  offset_z The offset on the Z axis to start concatenating the input tensor
+   *                      It is user responsibility to provide the correct value
+   * @return     None
+   *
+   * <b> Input constraints</b>
+   * offset_z is less than output_z
+   *
+   */
+    void arm_concatenation_s8_z(const int8_t *input,
+                                const uint16_t input_x,
+                                const uint16_t input_y,
+                                const uint16_t input_z,
+                                const uint16_t input_w,
+                                int8_t *output,
+                                const uint16_t output_z,
+                                const uint32_t offset_z);
+
+  /**
+   * @brief int8/uint8 concatenation function to be used for concatenating N-tensors along the W axis (Batch size)
+   *        This function should be called for each input tensor to concatenate. The argument offset_w
+   *        will be used to store the input tensor in the correct position in the output tensor
+   *
+   *        i.e.    offset_w = 0
+   *                for(i = 0 i < num_input_tensors; ++i)
+   *                {
+   *                    arm_concatenation_s8_w(&input[i], ..., &output, ..., ..., offset_w)
+   *                    offset_w += input_w[i]
+   *                }
+   *
+   *        This function assumes that the output tensor has:
+   *        -# The same width of the input tensor
+   *        -# The same height of the input tensor
+   *        -# The same number o channels of the input tensor
+   *
+   *        Unless specified otherwise, arguments are mandatory.
+   *
+   * @note This function, data layout independent, can be used to concatenate either int8 or uint8 tensors because does not involve any arithmetic operation
+   *
+   * @param[in]  input    Pointer to input tensor
+   * @param[in]  input_x  Width of input tensor
+   * @param[in]  input_y  Height of input tensor
+   * @param[in]  input_z  Channels in input tensor
+   * @param[in]  input_w  Batch size in input tensor
+   * @param[out] output   Pointer to output tensor
+   * @param[in]  offset_w The offset on the W axis to start concatenating the input tensor
+   *                      It is user responsibility to provide the correct value
+   * @return     None
+   *
+   */
+    void arm_concatenation_s8_w(const int8_t *input,
+                                const uint16_t input_x,
+                                const uint16_t input_y,
+                                const uint16_t input_z,
+                                const uint16_t input_w,
+                                int8_t *output,
+                                const uint32_t offset_w);
 #ifdef __cplusplus
 }
 #endif
