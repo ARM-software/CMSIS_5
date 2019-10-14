@@ -84,7 +84,7 @@ if (RESHAPE)
 endif()
 
 ### Includes
-target_include_directories(CMSISDSP INTERFACE "${NN}/Include")
+target_include_directories(CMSISNN INTERFACE "${NN}/Include")
 
 
 

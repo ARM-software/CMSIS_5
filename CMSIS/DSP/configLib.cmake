@@ -1,6 +1,10 @@
 # This is for building a library only
 # It is similar to the config.cmake but ignoring anything related to the platform
 # and boot code
+if(EXPERIMENTAL)
+list(APPEND CMAKE_MODULE_PATH ${EXPROOT})
+include(experimental)
+endif()
 
 
 include(Toolchain/Tools)

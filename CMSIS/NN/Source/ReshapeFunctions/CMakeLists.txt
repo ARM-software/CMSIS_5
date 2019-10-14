@@ -2,7 +2,9 @@ cmake_minimum_required (VERSION 3.6)
 
 project(CMSISNNReshape)
 
-include(config)
+include(configLib)
+include(configDsp)
+
 
 file(GLOB SRC "./*_*.c")
 
