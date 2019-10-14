@@ -377,9 +377,17 @@ extern "C"
 
 
 
-#include "string.h"
-#include "math.h"
-#include "float.h"
+#include <string.h>
+#include <math.h>
+#include <float.h>
+#include <limits.h>
+
+#define Q31_MAX   LONG_MAX
+#define Q15_MAX   SHRT_MAX
+#define Q7_MAX    SCHAR_MAX
+#define Q31_MIN   LONG_MIN
+#define Q15_MIN   SHRT_MIN
+#define Q7_MIN    SCHAR_MIN
 
 /* evaluate ARM DSP feature */
 #if (defined (__ARM_FEATURE_DSP) && (__ARM_FEATURE_DSP == 1))

@@ -79,14 +79,6 @@ Definitions available for MVEI only
 ***************************************/
 #if defined (ARM_MATH_HELIUM) || defined(ARM_MATH_MVEI)
 
-#include <limits.h>
-
-#define Q31_MAX   LONG_MAX
-#define Q15_MAX   SHRT_MAX
-#define Q7_MAX    SCHAR_MAX
-#define Q31_MIN   LONG_MIN
-#define Q15_MIN   SHRT_MIN
-#define Q7_MIN    SCHAR_MIN
 
 #include "arm_common_tables.h"
 
