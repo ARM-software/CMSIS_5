@@ -27,6 +27,7 @@
  */
 #include "arm_math.h"
 #include "Error.h"
+#include <stdlib.h> 
 
 namespace Client {
 
@@ -43,6 +44,16 @@ void assert_not_empty_generic(unsigned long nb, AnyPattern<T> &p)
    }
 };
 
+
+template <> 
+void assert_near_equal(unsigned long nb,double pa, double pb, double threshold)
+{
+    if (fabs(pa - pb) > threshold)
+    {
+         throw (Error(EQUAL_ERROR,nb));
+    }
+};
+
 template <> 
 void assert_near_equal(unsigned long nb,float32_t pa, float32_t pb, float32_t threshold)
 {
@@ -52,30 +63,43 @@ void assert_near_equal(unsigned long nb,float32_t pa, float32_t pb, float32_t th
     }
 };
 
-template <>
-void assert_near_equal(unsigned long nb,AnyPattern<float32_t> &pa, AnyPattern<float32_t> &pb, float32_t threshold)
+
+template <> 
+void assert_near_equal(unsigned long nb,q63_t pa, q63_t pb, q63_t threshold)
 {
-    ASSERT_NOT_EMPTY(pa);
-    ASSERT_NOT_EMPTY(pb);
-
-    if (pa.nbSamples() != pb.nbSamples())
+    if (abs(pa - pb) > threshold)
     {
-        throw (Error(DIFFERENT_LENGTH_ERROR,nb));
-    }
-
-    unsigned long i=0;
-
-    float32_t *ptrA = pa.ptr();
-    float32_t *ptrB = pb.ptr();
-
-    for(i=0; i < pa.nbSamples(); i++)
-    {
-       if (fabs(ptrA[i] - ptrB[i]) > threshold)
-       {
-         throw (Error(NEAR_EQUAL_ERROR,nb));
-       }
+         throw (Error(EQUAL_ERROR,nb));
     }
 };
+
+template <> 
+void assert_near_equal(unsigned long nb,q31_t pa, q31_t pb, q31_t threshold)
+{
+    if (abs(pa - pb) > threshold)
+    {
+         throw (Error(EQUAL_ERROR,nb));
+    }
+};
+
+template <> 
+void assert_near_equal(unsigned long nb,q15_t pa, q15_t pb, q15_t threshold)
+{
+    if (abs(pa - pb) > threshold)
+    {
+         throw (Error(EQUAL_ERROR,nb));
+    }
+};
+
+template <> 
+void assert_near_equal(unsigned long nb,q7_t pa, q7_t pb, q7_t threshold)
+{
+    if (abs(pa - pb) > threshold)
+    {
+         throw (Error(EQUAL_ERROR,nb));
+    }
+};
+
 
 void assert_not_empty(unsigned long nb, AnyPattern<float32_t> &p)
 {
@@ -216,8 +240,8 @@ float arm_snr_q63(q63_t *pRef, q63_t *pTest, uint32_t buffSize)
   for (i = 0; i < buffSize; i++)
     {
      
-      testVal = ((float32_t)pTest[i])  / 9223372036854775808.0;
-      refVal = ((float32_t)pRef[i])  / 9223372036854775808.0;
+      testVal = ((double)pTest[i])  / 9223372036854775808.0;
+      refVal = ((double)pRef[i])  / 9223372036854775808.0;
 
       EnergySignal += refVal * refVal;
       EnergyError += (refVal - testVal) * (refVal - testVal);

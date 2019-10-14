@@ -156,7 +156,17 @@ void assert_near_equal(unsigned long nb,T pa, T pb, T threshold)
 };
 
 template <> 
+void assert_near_equal(unsigned long nb,double pa, double pb, double threshold);
+template <> 
 void assert_near_equal(unsigned long nb,float32_t pa, float32_t pb, float32_t threshold);
+template <> 
+void assert_near_equal(unsigned long nb,q63_t pa, q63_t pb, q63_t threshold);
+template <> 
+void assert_near_equal(unsigned long nb,q31_t pa, q31_t pb, q31_t threshold);
+template <> 
+void assert_near_equal(unsigned long nb,q15_t pa, q15_t pb, q15_t threshold);
+template <> 
+void assert_near_equal(unsigned long nb,q7_t pa, q7_t pb, q7_t threshold);
 
 template <typename T> 
 void assert_near_equal(unsigned long nb,AnyPattern<T> &pa, AnyPattern<T> &pb, T threshold)
@@ -177,15 +187,10 @@ void assert_near_equal(unsigned long nb,AnyPattern<T> &pa, AnyPattern<T> &pb, T 
 
     for(i=0; i < pa.nbSamples(); i++)
     {
-       if (abs(ptrA[i] - ptrB[i]) > threshold)
-       {
-         throw (Error(NEAR_EQUAL_ERROR,nb));
-       }
+       assert_near_equal(nb,ptrA[i],ptrB[i],threshold);
     }
 };
 
-template <> 
-void assert_near_equal(unsigned long nb,AnyPattern<float32_t> &pa, AnyPattern<float32_t> &pb, float32_t threshold);
 
 }
 #endif

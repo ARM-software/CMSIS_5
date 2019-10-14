@@ -71,7 +71,7 @@ q7_t *outp=output.ptr();
 
         ASSERT_EMPTY_TAIL(output);
 
-        ASSERT_SNR(output,ref,(float32_t)SNR_THRESHOLD - 1.0);
+        ASSERT_SNR(output,ref,(float32_t)SNR_THRESHOLD - 1.0f);
 
         ASSERT_NEAR_EQ(output,ref,ABS_ERROR_Q7);
        
