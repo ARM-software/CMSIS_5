@@ -10,3 +10,8 @@ add_library(CMSISNNReshape STATIC ${SRC})
 
 configLib(CMSISNNReshape ${ROOT})
 configDsp(CMSISNNReshape ${ROOT})
+
+### Includes
+target_include_directories(CMSISNNReshape PUBLIC "${NN}/Include")
+target_include_directories(CMSISNNReshape PUBLIC "${ROOT}/CMSIS/DSP/Include")
+
