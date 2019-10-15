@@ -196,6 +196,21 @@ class Config:
         else:
           return(os.path.join(self._patternDir,"Input%d_%s.txt" % (i,"s8")))
 
+    def inputF32P(self,i,name=None):
+        """ Path to a reference pattern from the ID
+      
+        Args:
+          i (int): ID to the reference pattern
+        Raises:
+          Nothing 
+        Returns:
+          str : path to the file where to generate the pattern data
+        """
+        if name:
+          return(os.path.join(self._patternDir,"%s%d_%s.txt" % (name,i,"f32")))
+        else:
+          return(os.path.join(self._patternDir,"Input%d_%s.txt" % (i,"f32")))
+
     def inputQ31P(self,i,name=None):
         """ Path to a reference pattern from the ID
       
@@ -677,6 +692,9 @@ class Config:
           self._writeVectorU32(self.inputP(j,name),data)
         if (self._ext == "s8"):
           self._writeVectorS8(self.inputP(j,name),data)
+
+    def writeInputF32(self,j,data,name=None):
+        self._writeVectorF32(self.inputF32P(j,name),data)
 
     def writeInputQ31(self,j,data,name=None):
         self._writeVectorQ31(self.inputQ31P(j,name),data)

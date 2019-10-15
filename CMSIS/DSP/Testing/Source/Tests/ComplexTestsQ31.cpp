@@ -48,6 +48,8 @@ a double precision computation.
 
         ASSERT_NEAR_EQ(dotOutput,dotRef,ABS_ERROR_Q63);
 
+         ASSERT_EMPTY_TAIL(dotOutput);
+
        
     } 
 

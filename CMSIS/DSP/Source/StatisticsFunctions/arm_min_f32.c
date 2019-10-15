@@ -70,8 +70,8 @@ void arm_min_f32(
     int32_t  blkCnt;           /* loop counters */
     f32x4_t vecSrc;
     float32_t const *pSrcVec;
-    f32x4_t curExtremValVec = vdupq_n_f32(FLT_MAX);
-    float32_t minValue = FLT_MAX;
+    f32x4_t curExtremValVec = vdupq_n_f32(F32_MAX);
+    float32_t minValue = F32_MAX;
     uint32_t  idx = blockSize;
     uint32x4_t indexVec;
     uint32x4_t curExtremIdxVec;

@@ -42,6 +42,7 @@
 #define MEMORY_ALLOCATION_ERROR 8
 #define EMPTY_PATTERN_ERROR 9
 #define TAIL_NOT_EMPTY_ERROR 10
+#define CLOSE_ERROR 11
 
 namespace Client {
 
@@ -75,6 +76,10 @@ to get the line number.
 extern void assert_relative_error(unsigned long nb,float32_t &a, float32_t &b, double threshold);
 extern void assert_relative_error(unsigned long nb,AnyPattern<float32_t> &pa, AnyPattern<float32_t> &pb, double threshold);
 
+/* Similar to numpy isclose */
+extern void assert_close_error(unsigned long nb,float32_t &ref, float32_t &val, double absthreshold, double relthreshold);
+extern void assert_close_error(unsigned long nb,AnyPattern<float32_t> &pref, AnyPattern<float32_t> &pval, double absthreshold, double relthreshold);
+
 extern void assert_snr_error(unsigned long nb,AnyPattern<float32_t> &pa,AnyPattern<float32_t> &pb, float32_t threshold);
 extern void assert_snr_error(unsigned long nb,AnyPattern<q63_t> &pa,AnyPattern<q63_t> &pb, float32_t threshold);
 extern void assert_snr_error(unsigned long nb,AnyPattern<q31_t> &pa,AnyPattern<q31_t> &pb, float32_t threshold);
@@ -107,6 +112,7 @@ Macros to use to implement tests.
 #define ASSERT_EQ(A,B) Client::assert_equal(__LINE__,A,B)
 #define ASSERT_NEAR_EQ(A,B,THRESH) Client::assert_near_equal(__LINE__,A,B,THRESH)
 #define ASSERT_REL_ERROR(A,B,THRESH) Client::assert_relative_error(__LINE__,A,B,THRESH)
+#define ASSERT_CLOSE_ERROR(A,B,ABSTHRESH,RELTHRESH) Client::assert_close_error(__LINE__,A,B,ABSTHRESH,RELTHRESH)
 #define ASSERT_SNR(A,B,SNR) Client::assert_snr_error(__LINE__,A,B,SNR)
 #define ASSERT_TRUE(A) Client::assert_true(__LINE__,A)
 #define ASSERT_FALSE(A) Client::assert_false(__LINE__,A)

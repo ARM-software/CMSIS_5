@@ -35,6 +35,8 @@ def errorStr(id):
      return("Empty pattern error")
   if id == 10:
      return("Buffer tail corrupted")
+  if id == 11:
+     return("Close float error")
 
   return("Unknown error %d" % id)
 

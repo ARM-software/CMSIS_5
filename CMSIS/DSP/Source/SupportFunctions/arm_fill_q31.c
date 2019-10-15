@@ -44,7 +44,43 @@
   @param[in]     blockSize  number of samples in each vector
   @return        none
  */
+#if defined(ARM_MATH_MVEI)
+void arm_fill_q31(
+        q31_t value,
+        q31_t * pDst,
+        uint32_t blockSize)
+{
+  uint32_t blkCnt;
+  blkCnt = blockSize >> 2U;
 
+  /* Compute 4 outputs at a time */
+  while (blkCnt > 0U)
+  {
+
+        vstrwq_s32(pDst,vdupq_n_s32(value));
+        /*
+         * Decrement the blockSize loop counter
+         * Advance vector source and destination pointers
+         */
+        pDst += 4;
+        blkCnt --;
+  }
+
+  blkCnt = blockSize & 3;
+  while (blkCnt > 0U)
+  {
+    /* C = value */
+
+    /* Fill value in destination buffer */
+    *pDst++ = value;
+
+    /* Decrement loop counter */
+    blkCnt--;
+  }
+    
+}
+
+#else
 void arm_fill_q31(
   q31_t value,
   q31_t * pDst,
@@ -92,6 +128,7 @@ void arm_fill_q31(
     blkCnt--;
   }
 }
+#endif /* defined(ARM_MATH_MVEI) */
 
 /**
   @} end of Fill group

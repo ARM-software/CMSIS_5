@@ -41,6 +41,8 @@
         ASSERT_SNR(output,ref,(float32_t)SNR_THRESHOLD);
 
         ASSERT_REL_ERROR(output,ref,REL_ERROR);
+
+        ASSERT_EMPTY_TAIL(output);
     } 
 
     void ComplexTestsF32::test_cmplx_mag_f32()

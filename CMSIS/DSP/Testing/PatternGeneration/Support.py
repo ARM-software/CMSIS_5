@@ -11,19 +11,30 @@ NBVECTORS = [4,10,16]
 
 VECDIM = [12,14,20]
 
-def genWsum(config,nb,vecDim):
-    dims=[] 
+def genWsum(config,nb):
+    DIM=10
     inputs=[] 
     weights=[]
     output=[] 
 
 
-    va = np.random.rand(vecDim)
-    vb = np.random.rand(vecDim)
-    e = np.sum(va.T * vb) / np.sum(vb) 
+    va = np.random.rand(DIM)
+    vb = np.random.rand(DIM)
     inputs += list(va)
     weights += list(vb)
+
+    nbiters = Tools.loopnb(0,Tools.TAILONLY)
+    e = np.sum(va[0:nbiters].T * vb[0:nbiters]) / np.sum(vb[0:nbiters]) 
     output.append(e)
+
+    nbiters = Tools.loopnb(0,Tools.BODYONLY)
+    e = np.sum(va[0:nbiters].T * vb[0:nbiters]) / np.sum(vb[0:nbiters]) 
+    output.append(e)
+
+    nbiters = Tools.loopnb(0,Tools.BODYANDTAIL)
+    e = np.sum(va[0:nbiters].T * vb[0:nbiters]) / np.sum(vb[0:nbiters]) 
+    output.append(e)
+
     inputs=np.array(inputs)
     weights=np.array(weights)
     output=np.array(output)
@@ -31,18 +42,21 @@ def genWsum(config,nb,vecDim):
     config.writeInput(nb, weights,"Weights")
     config.writeReference(nb, output,"Ref")
 
-def genBarycenter(config,nb,nbTests,nbVecs,vecDim):
+def genBarycenter(config,nb,nbTests,nbVecsArray,vecDimArray):
     dims=[] 
     inputs=[] 
     weights=[]
     output=[] 
 
     dims.append(nbTests)
-    dims.append(nbVecs)
-    dims.append(vecDim)
+    
 
-    for _ in range(0,nbTests):
-      
+    for i in range(0,nbTests):
+      nbVecs = nbVecsArray[i % len(nbVecsArray)]
+      vecDim = vecDimArray[i % len(vecDimArray)]
+      dims.append(nbVecs )
+      dims.append(vecDim)
+
       vecs = []
       b = np.zeros(vecDim)
       coefs = np.random.rand(nbVecs)
@@ -69,6 +83,7 @@ def writeTestsF32(config):
     NBSAMPLES=256
 
     va = np.random.rand(NBSAMPLES)
+    va = va / np.max(va)
     config.writeInput(1,va,"Samples")
 
     config.writeInputQ15(3,va,"Samples")
@@ -76,7 +91,7 @@ def writeTestsF32(config):
     config.writeInputQ7(5,va,"Samples")
 
     # This is for benchmarking the weighted sum and we use only one test pattern
-    genWsum(config,6,256)
+    genWsum(config,6)
     
 
 
@@ -84,33 +99,39 @@ def writeTestsQ31(config):
     NBSAMPLES=256
 
     va = np.random.rand(NBSAMPLES)
-    config.writeInput(1,va,"Samples")
-
+    va = va / np.max(va)
+    config.writeInputF32(1,va,"Samples")
     config.writeInputQ15(3,va,"Samples")
-    config.writeInputQ7(4,va,"Samples")
+    config.writeInput(4,va,"Samples")
+    config.writeInputQ7(5,va,"Samples")
 
 
 def writeTestsQ15(config):
     NBSAMPLES=256
 
     va = np.random.rand(NBSAMPLES)
-    config.writeInput(1,va,"Samples")
-
-    config.writeInputQ31(3,va,"Samples")
-    config.writeInputQ7(4,va,"Samples")
+    va = va / np.max(va)
+    config.writeInputF32(1,va,"Samples")
+    config.writeInput(3,va,"Samples")
+    config.writeInputQ31(4,va,"Samples")
+    config.writeInputQ7(5,va,"Samples")
 
 def writeTestsQ7(config):
     NBSAMPLES=256
 
     va = np.random.rand(NBSAMPLES)
-    config.writeInput(1,va,"Samples")
-
-    config.writeInputQ31(3,va,"Samples")
-    config.writeInputQ15(4,va,"Samples")
+    va = va / np.max(va)
+    config.writeInputF32(1,va,"Samples")
+    config.writeInputQ15(3,va,"Samples")
+    config.writeInputQ31(4,va,"Samples")
+    config.writeInput(5,va,"Samples")
 
 def writeBarTests(config):
     # For testing
-    genBarycenter(config,1,NBTESTSAMPLES,10,14)
+    NBSAMPLES = 10
+    nbVecsArray = [4,8,9] 
+    vecDimArray = [4,4,4,8,8,8,9,9,9]
+    genBarycenter(config,1,NBTESTSAMPLES,nbVecsArray,vecDimArray)
 
     # For benchmarks
     va = np.random.rand(128*15)

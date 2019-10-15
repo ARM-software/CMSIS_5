@@ -10,22 +10,29 @@
     {
        const float32_t *inp = input.ptr();
        const float32_t *coefsp = coefs.ptr();
+       const int16_t *dimsp=dims.ptr();
+       int nbVecs;
+       int vecDim;
 
        float32_t *outp = output.ptr();
        
        for(int i=0; i < this->nbTests ; i ++)
        {
+          nbVecs = dimsp[2*i+1];
+          vecDim = dimsp[2*i+2];
+
         arm_barycenter_f32(inp, coefsp,
             outp, 
-            this->nbVecs, 
-            this->vecDim);
+            nbVecs, 
+            vecDim);
          
-          inp += this->vecDim * this->nbVecs;
-          coefsp += this->nbVecs;
-          outp += this->vecDim;
+          inp += vecDim * nbVecs;
+          coefsp += nbVecs;
+          outp += vecDim;
        }
 
         ASSERT_NEAR_EQ(output,ref,(float32_t)1e-3);
+        ASSERT_EMPTY_TAIL(output);
     } 
 
   
@@ -33,12 +40,10 @@
     {
         dims.reload(SupportBarTestsF32::DIM_S16_ID,mgr);
 
-        int16_t *dimsp=dims.ptr();
+        const int16_t *dimsp=dims.ptr();
 
         this->nbTests=dimsp[0];
-        this->nbVecs=dimsp[1];
-        this->vecDim=dimsp[2];
-    
+       
 
         switch(id)
         {

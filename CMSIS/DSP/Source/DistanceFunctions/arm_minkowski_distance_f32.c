@@ -46,6 +46,54 @@
  * @return distance
  *
  */
+
+#if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
+
+#include "arm_helium_utils.h"
+#include "arm_vec_math.h"
+
+float32_t arm_minkowski_distance_f32(const float32_t *pA,const float32_t *pB, int32_t order, uint32_t blockSize)
+{
+    int32_t         blkCnt;
+    f32x4_t         a, b, tmpV, accumV, sumV;
+
+    sumV = vdupq_n_f32(0.0f);
+    accumV = vdupq_n_f32(0.0f);
+
+    blkCnt = blockSize >> 2;
+    while (blkCnt > 0U) {
+        a = vld1q(pA);
+        b = vld1q(pB);
+
+        tmpV = vabdq(a, b);
+        tmpV = vpowq_f32(tmpV, vdupq_n_f32(order));
+        sumV = vaddq(sumV, tmpV);
+
+        pA += 4;
+        pB += 4;
+        blkCnt--;
+    }
+
+    /*
+     * tail
+     * (will be merged thru tail predication)
+     */
+    blkCnt = blockSize & 3;
+    if (blkCnt > 0U) {
+        mve_pred16_t    p0 = vctp32q(blkCnt);
+
+        a = vldrwq_z_f32(pA, p0);
+        b = vldrwq_z_f32(pB, p0);
+
+        tmpV = vabdq(a, b);
+        tmpV = vpowq_f32(tmpV, vdupq_n_f32(order));
+        sumV = vaddq_m(sumV, sumV, tmpV, p0);
+    }
+
+    return (powf(vecAddAcrossF32Mve(sumV), (1.0f / (float32_t) order)));
+}
+
+#else
 #if defined(ARM_MATH_NEON)
 
 #include "NEMath.h"
@@ -57,8 +105,8 @@ float32_t arm_minkowski_distance_f32(const float32_t *pA,const float32_t *pB, in
     float32x4_t sumV,aV,bV, tmpV, n;
     float32x2_t sumV2;
 
-    sum = 0.0; 
-    sumV = vdupq_n_f32(0.0);
+    sum = 0.0f; 
+    sumV = vdupq_n_f32(0.0f);
     n = vdupq_n_f32(order);
 
     blkCnt = blockSize >> 2;
@@ -83,13 +131,13 @@ float32_t arm_minkowski_distance_f32(const float32_t *pA,const float32_t *pB, in
     blkCnt = blockSize & 3;
     while(blkCnt > 0)
     {
-       sum += pow(fabs(*pA++ - *pB++),order);
+       sum += powf(fabsf(*pA++ - *pB++),order);
 
        blkCnt --;
     }
 
 
-    return(pow(sum,(1.0/order)));
+    return(powf(sum,(1.0f/order)));
 
 }
 
@@ -101,17 +149,18 @@ float32_t arm_minkowski_distance_f32(const float32_t *pA,const float32_t *pB, in
     float32_t sum;
     uint32_t i;
 
-    sum = 0.0; 
+    sum = 0.0f; 
     for(i=0; i < blockSize; i++)
     {
-       sum += pow(fabs(pA[i] - pB[i]),order);
+       sum += powf(fabsf(pA[i] - pB[i]),order);
     }
 
 
-    return(pow(sum,(1.0f/order)));
+    return(powf(sum,(1.0f/order)));
 
 }
 #endif
+#endif /* defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE) */
 
 
 /**

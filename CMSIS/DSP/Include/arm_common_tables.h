@@ -387,5 +387,14 @@
 
 #endif /* if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_FAST_TABLES) */
 
+#if (defined(ARM_MATH_MVEF) || defined(ARM_MATH_HELIUM)) && !defined(ARM_MATH_AUTOVECTORIZE)
+       extern const float32_t exp_tab[8];
+       extern const float32_t __logf_lut_f32[8];
+#endif /* (defined(ARM_MATH_MVEF) || defined(ARM_MATH_HELIUM)) && !defined(ARM_MATH_AUTOVECTORIZE) */
+
+#if (defined(ARM_MATH_MVEI) || defined(ARM_MATH_HELIUM))
+extern const unsigned char hwLUT[256];
+#endif /* (defined(ARM_MATH_MVEI) || defined(ARM_MATH_HELIUM)) */
+
 #endif /*  ARM_COMMON_TABLES_H */
 

@@ -142,6 +142,8 @@ q7_t *outp=output.ptr();
 
         ASSERT_NEAR_EQ(dotOutput,dotRef,ABS_ERROR_Q31);
 
+        ASSERT_EMPTY_TAIL(dotOutput);
+
        
     } 
 

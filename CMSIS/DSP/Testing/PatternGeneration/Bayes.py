@@ -39,11 +39,14 @@ NBTRAININGSAMPLES = 30
 # distributed around the centers)
 CENTER_DISTANCE = 1
 
-# Generate a randon points distributed around ome cluster.
+TRAININGRATIO = 6.0
+PREDICTRATIO = 12.0
+
+# Generate random points distributed around one cluster.
 # Cluster are on each axis like (1,0,0,0), (0,1,0,0), (0,0,1,0) etc ...
-def newRandomVector(nbClasses,vecDim):
+def newRandomVector(nbClasses,vecDim,ratio):
         v = np.random.randn(vecDim)
-        v = v * CENTER_DISTANCE/2.0/6.0 
+        v = v * CENTER_DISTANCE/2.0/ratio
         c = np.random.choice(range(0,nbClasses))
         c0 = np.zeros(vecDim)
         c1 = np.copy(c0)
@@ -56,7 +59,7 @@ def trainGaussian(nbClasses,vecDim):
 
         # Generate test patterns for this classifier
         for i in range(0,NBTRAININGSAMPLES):
-            v,c=newRandomVector(nbClasses,vecDim)
+            v,c=newRandomVector(nbClasses,vecDim,TRAININGRATIO)
 
             inputs.append(v)
             outputs.append(c)
@@ -103,7 +106,7 @@ def generateNewTest(config,nb):
     #print(classNb,vecDim)
     for _ in range(0,NBTESTSAMPLES):
         # Generate a test pattern for this classifier
-        v,c=newRandomVector(classNb,vecDim)
+        v,c=newRandomVector(classNb,vecDim,PREDICTRATIO)
         inputs += v
         #print("inputs=",end="")
         #printV(v)

@@ -154,7 +154,13 @@ set(TESTSRC
   Source/Tests/StatsTestsQ31.cpp
   Source/Tests/StatsTestsQ15.cpp
   Source/Tests/StatsTestsQ7.cpp
+  Source/Tests/FastMathF32.cpp
+  Source/Tests/FastMathQ31.cpp
+  Source/Tests/FastMathQ15.cpp
   Source/Tests/SupportTestsF32.cpp
+  Source/Tests/SupportTestsQ31.cpp
+  Source/Tests/SupportTestsQ15.cpp
+  Source/Tests/SupportTestsQ7.cpp
   Source/Tests/SupportBarTestsF32.cpp
   Source/Tests/DistanceTestsF32.cpp
   Source/Tests/DistanceTestsU32.cpp
@@ -206,6 +212,7 @@ target_include_directories(TestingLib PRIVATE FrameworkInclude)
 target_include_directories(TestingLib PRIVATE GeneratedInclude)
 
 configLib(TestingLib ${ROOT})
+configDsp(TestingLib ${ROOT})
 
 configLib(FrameworkLib ${ROOT})
 target_include_directories(FrameworkLib PRIVATE FrameworkInclude)

@@ -29,17 +29,12 @@
 #include <math.h>
 
 #define PI_F 3.1415926535897932384626433832795f
-#define DPI_F (2*3.1415926535897932384626433832795f)
+#define DPI_F (2.0f*3.1415926535897932384626433832795f)
 
 /**
  * @addtogroup groupBayes
  * @{
  */
-
-
-#if defined(ARM_MATH_NEON)
-
-#include "NEMath.h"
 
 /**
  * @brief Naive Gaussian Bayesian Estimator
@@ -50,6 +45,101 @@
  * @return The predicted class
  *
  */
+
+#if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
+
+#include "arm_helium_utils.h"
+#include "arm_vec_math.h"
+
+uint32_t arm_gaussian_naive_bayes_predict_f32(const arm_gaussian_naive_bayes_instance_f32 *S, 
+   const float32_t * in, 
+   float32_t *pBuffer)
+{
+    int             nbClass;
+    const float32_t *pTheta = S->theta;
+    const float32_t *pSigma = S->sigma;
+    float32_t      *buffer = pBuffer;
+    const float32_t *pIn = in;
+    float32_t       result;
+    f32x4_t         vsigma;
+    float32_t       tmp;
+    f32x4_t         vacc1, vacc2;
+    uint32_t        index;
+    float32_t       logclassPriors[S->numberOfClasses];
+    float32_t      *pLogPrior = logclassPriors;
+
+    arm_vlog_f32((float32_t *) S->classPriors, logclassPriors, S->numberOfClasses);
+
+    pTheta = S->theta;
+    pSigma = S->sigma;
+
+    for (nbClass = 0; nbClass < S->numberOfClasses; nbClass++) {
+        pIn = in;
+
+        vacc1 = vdupq_n_f32(0);
+        vacc2 = vdupq_n_f32(0);
+
+        int32_t         blkCnt =S->vectorDimension >> 2;
+        while (blkCnt > 0U) {
+            f32x4_t         vinvSigma, vtmp;
+
+            vsigma = vaddq_n_f32(vld1q(pSigma), S->epsilon);
+            vacc1 = vaddq(vacc1, vlogq_f32(vmulq_n_f32(vsigma, 2.0f * PI)));
+
+            vinvSigma = vrecip_medprec_f32(vsigma);
+
+            vtmp = vsubq(vld1q(pIn), vld1q(pTheta));
+            /* squaring */
+            vtmp = vmulq(vtmp, vtmp);
+
+            vacc2 = vfmaq(vacc2, vtmp, vinvSigma);
+
+            pIn += 4;
+            pTheta += 4;
+            pSigma += 4;
+            blkCnt--;
+        }
+
+        blkCnt = S->vectorDimension & 3;
+        if (blkCnt > 0U) {
+            mve_pred16_t    p0 = vctp32q(blkCnt);
+            f32x4_t         vinvSigma, vtmp;
+
+            vsigma = vaddq_n_f32(vld1q(pSigma), S->epsilon);
+            vacc1 =
+                vaddq_m_f32(vacc1, vacc1, vlogq_f32(vmulq_n_f32(vsigma, 2.0f * PI)), p0);
+
+            vinvSigma = vrecip_medprec_f32(vsigma);
+
+            vtmp = vsubq(vld1q(pIn), vld1q(pTheta));
+            /* squaring */
+            vtmp = vmulq(vtmp, vtmp);
+
+            vacc2 = vfmaq_m_f32(vacc2, vtmp, vinvSigma, p0);
+
+            pTheta += blkCnt;
+            pSigma += blkCnt;
+        }
+
+        tmp = -0.5f * vecAddAcrossF32Mve(vacc1);
+        tmp -= 0.5f * vecAddAcrossF32Mve(vacc2);
+
+        *buffer = tmp + *pLogPrior++;
+        buffer++;
+    }
+
+    arm_max_f32(pBuffer, S->numberOfClasses, &result, &index);
+
+    return (index);
+}
+
+#else
+
+#if defined(ARM_MATH_NEON)
+
+#include "NEMath.h"
+
+
 
 uint32_t arm_gaussian_naive_bayes_predict_f32(const arm_gaussian_naive_bayes_instance_f32 *S, 
    const float32_t * in, 
@@ -90,10 +180,10 @@ uint32_t arm_gaussian_naive_bayes_predict_f32(const arm_gaussian_naive_bayes_ins
         
         pIn = in;
 
-        tmp = log(*pPrior++);
-        tmp1 = log(*pPrior++);
-        tmpV = vdupq_n_f32(0.0);
-        tmpV1 = vdupq_n_f32(0.0);
+        tmp = logf(*pPrior++);
+        tmp1 = logf(*pPrior++);
+        tmpV = vdupq_n_f32(0.0f);
+        tmpV1 = vdupq_n_f32(0.0f);
 
         vecBlkCnt = S->vectorDimension >> 2;
         while(vecBlkCnt > 0)
@@ -111,21 +201,21 @@ uint32_t arm_gaussian_naive_bayes_predict_f32(const arm_gaussian_naive_bayes_ins
 
            tmpVb = vmulq_n_f32(sigmaV,DPI_F);
            tmpVb = vlogq_f32(tmpVb);
-           tmpV = vmlsq_n_f32(tmpV,tmpVb,0.5);
+           tmpV = vmlsq_n_f32(tmpV,tmpVb,0.5f);
 
            tmpVb = vmulq_n_f32(sigmaV1,DPI_F);
            tmpVb = vlogq_f32(tmpVb);
-           tmpV1 = vmlsq_n_f32(tmpV1,tmpVb,0.5);
+           tmpV1 = vmlsq_n_f32(tmpV1,tmpVb,0.5f);
            
            tmpVb = vsubq_f32(inV,thetaV);
            tmpVb = vmulq_f32(tmpVb,tmpVb);
            tmpVb = vmulq_f32(tmpVb, vinvq_f32(sigmaV));
-           tmpV = vmlsq_n_f32(tmpV,tmpVb,0.5);
+           tmpV = vmlsq_n_f32(tmpV,tmpVb,0.5f);
 
            tmpVb = vsubq_f32(inV,thetaV1);
            tmpVb = vmulq_f32(tmpVb,tmpVb);
            tmpVb = vmulq_f32(tmpVb, vinvq_f32(sigmaV1));
-           tmpV1 = vmlsq_n_f32(tmpV1,tmpVb,0.5);
+           tmpV1 = vmlsq_n_f32(tmpV1,tmpVb,0.5f);
 
            pIn += 4;
            pTheta += 4;
@@ -147,11 +237,11 @@ uint32_t arm_gaussian_naive_bayes_predict_f32(const arm_gaussian_naive_bayes_ins
            sigma = *pSigma + S->epsilon;
            sigma1 = *pSigma1 + S->epsilon;
 
-           tmp -= 0.5*log(2.0 * PI_F * sigma);
-           tmp -= 0.5*(*pIn - *pTheta) * (*pIn - *pTheta) / sigma;
+           tmp -= 0.5f*logf(2.0f * PI_F * sigma);
+           tmp -= 0.5f*(*pIn - *pTheta) * (*pIn - *pTheta) / sigma;
 
-           tmp1 -= 0.5*log(2.0 * PI_F * sigma1);
-           tmp1 -= 0.5*(*pIn - *pTheta1) * (*pIn - *pTheta1) / sigma1;
+           tmp1 -= 0.5f*logf(2.0f * PI_F * sigma1);
+           tmp1 -= 0.5f*(*pIn - *pTheta1) * (*pIn - *pTheta1) / sigma1;
 
            pIn++;
            pTheta++;
@@ -180,8 +270,8 @@ uint32_t arm_gaussian_naive_bayes_predict_f32(const arm_gaussian_naive_bayes_ins
         
         pIn = in;
 
-        tmp = log(*pPrior++);
-        tmpV = vdupq_n_f32(0.0);
+        tmp = logf(*pPrior++);
+        tmpV = vdupq_n_f32(0.0f);
 
         vecBlkCnt = S->vectorDimension >> 2;
         while(vecBlkCnt > 0)
@@ -194,12 +284,12 @@ uint32_t arm_gaussian_naive_bayes_predict_f32(const arm_gaussian_naive_bayes_ins
 
            tmpVb = vmulq_n_f32(sigmaV,DPI_F);
            tmpVb = vlogq_f32(tmpVb);
-           tmpV = vmlsq_n_f32(tmpV,tmpVb,0.5);
+           tmpV = vmlsq_n_f32(tmpV,tmpVb,0.5f);
            
            tmpVb = vsubq_f32(inV,thetaV);
            tmpVb = vmulq_f32(tmpVb,tmpVb);
            tmpVb = vmulq_f32(tmpVb, vinvq_f32(sigmaV));
-           tmpV = vmlsq_n_f32(tmpV,tmpVb,0.5);
+           tmpV = vmlsq_n_f32(tmpV,tmpVb,0.5f);
 
            pIn += 4;
            pTheta += 4;
@@ -214,8 +304,8 @@ uint32_t arm_gaussian_naive_bayes_predict_f32(const arm_gaussian_naive_bayes_ins
         while(vecBlkCnt > 0)
         {
            sigma = *pSigma + S->epsilon;
-           tmp -= 0.5*log(2.0 * PI_F * sigma);
-           tmp -= 0.5*(*pIn - *pTheta) * (*pIn - *pTheta) / sigma;
+           tmp -= 0.5f*logf(2.0f * PI_F * sigma);
+           tmp -= 0.5f*(*pIn - *pTheta) * (*pIn - *pTheta) / sigma;
 
            pIn++;
            pTheta++;
@@ -270,13 +360,13 @@ uint32_t arm_gaussian_naive_bayes_predict_f32(const arm_gaussian_naive_bayes_ins
         
         pIn = in;
 
-        tmp = log(*pPrior);
-        acc1 = 0;
-        acc2 = 0;
+        tmp = logf(*pPrior);
+        acc1 = 0.0f;
+        acc2 = 0.0f;
         for(nbDim = 0; nbDim < S->vectorDimension; nbDim++)
         {
            sigma = *pSigma + S->epsilon;
-           acc1 += log(2.0f * PI_F * sigma);
+           acc1 += logf(2.0f * PI_F * sigma);
            acc2 += (*pIn - *pTheta) * (*pIn - *pTheta) / sigma;
 
            pIn++;
@@ -288,7 +378,7 @@ uint32_t arm_gaussian_naive_bayes_predict_f32(const arm_gaussian_naive_bayes_ins
         tmp -= 0.5f * acc2;
 
 
-        *buffer = tmp + log(*pPrior++);
+        *buffer = tmp + logf(*pPrior++);
         buffer++;
     }
 
@@ -298,6 +388,8 @@ uint32_t arm_gaussian_naive_bayes_predict_f32(const arm_gaussian_naive_bayes_ins
 }
 
 #endif
+#endif /* defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE) */
+
 /**
  * @} end of groupBayes group
  */

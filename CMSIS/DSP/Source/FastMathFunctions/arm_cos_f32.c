@@ -67,7 +67,6 @@
   @param[in]     x  input value in radians
   @return        cos(x)
  */
-
 float32_t arm_cos_f32(
   float32_t x)
 {

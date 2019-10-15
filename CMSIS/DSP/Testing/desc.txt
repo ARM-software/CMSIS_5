@@ -80,6 +80,10 @@ group Root {
                 arm_logsumexp_f32:test_logsumexp_f32
                 arm_kullback_leibler_f32:test_kullback_leibler_f32
                 arm_logsumexp_dot_prod_f32:test_logsumexp_dot_prod_f32
+
+                Test nb=3    arm_max_no_idx_f32:test_max_no_idx_f32
+                Test nb=4n   arm_max_no_idx_f32:test_max_no_idx_f32
+                Test nb=4n+1 arm_max_no_idx_f32:test_max_no_idx_f32
               }
 
            }
@@ -252,11 +256,125 @@ group Root {
               Pattern INPUTS_F32_ID : Inputs6_f32.txt 
               Pattern WEIGHTS_F32_ID : Weights6_f32.txt 
               Pattern REF_F32_ID : Ref6_f32.txt
+              Pattern SAMPLES_F32_ID : Samples1_f32.txt 
+              Pattern SAMPLES_Q15_ID : Samples3_q15.txt 
+              Pattern SAMPLES_Q31_ID : Samples4_q31.txt 
+              Pattern SAMPLES_Q7_ID : Samples5_q7.txt 
 
               Output  OUT_F32_ID : Output
 
               Functions {
-                arm_weighted_sum_f32:test_weighted_sum_f32
+                test_weighted_sum_f32 nb=3:test_weighted_sum_f32
+                test_weighted_sum_f32 nb=4n:test_weighted_sum_f32
+                test_weighted_sum_f32 nb=4n+1:test_weighted_sum_f32
+                test_copy_f32 nb=3:test_copy_f32
+                test_copy_f32 nb=4n:test_copy_f32
+                test_copy_f32 nb=4n+1:test_copy_f32
+                test_fill_f32 nb=3:test_fill_f32
+                test_fill_f32 nb=4n:test_fill_f32
+                test_fill_f32 nb=4n+1:test_fill_f32
+                test_float_q15 nb=7:test_float_to_q15
+                test_float_q15 nb=8n:test_float_to_q15
+                test_float_q15 nb=8n+1:test_float_to_q15
+                test_float_q31 nb=3:test_float_to_q31
+                test_float_q31 nb=4n:test_float_to_q31
+                test_float_q31 nb=4n+1:test_float_to_q31
+                test_float_q7 nb=15:test_float_to_q7
+                test_float_q7 nb=16n:test_float_to_q7
+                test_float_q7 nb=16n+1:test_float_to_q7
+              }
+
+           }
+
+           suite Support Tests Q31 {
+              class = SupportTestsQ31
+              folder = SupportQ31
+
+              Pattern SAMPLES_F32_ID : Samples1_f32.txt 
+              Pattern SAMPLES_Q15_ID : Samples3_q15.txt 
+              Pattern SAMPLES_Q31_ID : Samples4_q31.txt 
+              Pattern SAMPLES_Q7_ID : Samples5_q7.txt 
+
+              Output  OUT_ID : Output
+
+              Functions {
+                test_copy_q31 nb=3:test_copy_q31
+                test_copy_q31 nb=4n:test_copy_q31
+                test_copy_q31 nb=4n+1:test_copy_q31
+                test_fill_q31 nb=3:test_fill_q31
+                test_fill_q31 nb=4n:test_fill_q31
+                test_fill_q31 nb=4n+1:test_fill_q31
+                test_q31_float nb=3:test_q31_float
+                test_q31_float nb=4n:test_q31_float
+                test_q31_float nb=4n+1:test_q31_float
+                test_q31_q15 nb=3:test_q31_q15
+                test_q31_q15 nb=4n:test_q31_q15
+                test_q31_q15 nb=4n+1:test_q31_q15
+                test_q31_q7 nb=3:test_q31_q7
+                test_q31_q7 nb=4n:test_q31_q7
+                test_q31_q7 nb=4n+1:test_q31_q7
+              }
+
+           }
+
+           suite Support Tests Q15 {
+              class = SupportTestsQ15
+              folder = SupportQ15
+
+              Pattern SAMPLES_F32_ID : Samples1_f32.txt 
+              Pattern SAMPLES_Q15_ID : Samples3_q15.txt 
+              Pattern SAMPLES_Q31_ID : Samples4_q31.txt 
+              Pattern SAMPLES_Q7_ID : Samples5_q7.txt 
+
+              Output  OUT_ID : Output
+
+              Functions {
+                test_copy_q15 nb=7:test_copy_q15
+                test_copy_q15 nb=8n:test_copy_q15
+                test_copy_q15 nb=8n+1:test_copy_q15
+                test_fill_q15 nb=7:test_fill_q15
+                test_fill_q15 nb=8n:test_fill_q15
+                test_fill_q15 nb=8n+1:test_fill_q15
+                test_q15_float nb=7:test_q15_float
+                test_q15_float nb=8n:test_q15_float
+                test_q15_float nb=8n+1:test_q15_float
+                test_q15_q31 nb=7:test_q15_q31
+                test_q15_q31 nb=8n:test_q15_q31
+                test_q15_q31 nb=8n+1:test_q15_q31
+                test_q15_q7 nb=7:test_q15_q7
+                test_q15_q7 nb=8n:test_q15_q7
+                test_q15_q7 nb=8n+1:test_q15_q7
+              }
+
+           }
+
+           suite Support Tests Q7 {
+              class = SupportTestsQ7
+              folder = SupportQ7
+
+              Pattern SAMPLES_F32_ID : Samples1_f32.txt 
+              Pattern SAMPLES_Q15_ID : Samples3_q15.txt 
+              Pattern SAMPLES_Q31_ID : Samples4_q31.txt 
+              Pattern SAMPLES_Q7_ID : Samples5_q7.txt 
+
+              Output  OUT_ID : Output
+
+              Functions {
+                test_copy_q7 nb=15:test_copy_q7
+                test_copy_q7 nb=16n:test_copy_q7
+                test_copy_q7 nb=16n+1:test_copy_q7
+                test_fill_q7 nb=15:test_fill_q7
+                test_fill_q7 nb=16n:test_fill_q7
+                test_fill_q7 nb=16n+1:test_fill_q7
+                test_q7_float nb=15:test_q7_float
+                test_q7_float nb=16n:test_q7_float
+                test_q7_float nb=16n+1:test_q7_float
+                test_q7_q31 nb=15:test_q7_q31
+                test_q7_q31 nb=16n:test_q7_q31
+                test_q7_q31 nb=16n+1:test_q7_q31
+                test_q7_q15 nb=15:test_q7_q15
+                test_q7_q15 nb=16n:test_q7_q15
+                test_q7_q15 nb=16n+1:test_q7_q15
               }
 
            }
@@ -772,6 +890,81 @@ group Root {
 
            }
 
+        }
+
+        group Fast Maths Tests {
+          class = FastMath
+          folder = FastMath 
+
+          suite Fast Maths F32 {
+              class = FastMathF32
+              folder = FastMathF32
+
+              Pattern ANGLES1_F32_ID : Angles1_f32.txt
+              Pattern SQRTINPUT1_F32_ID : SqrtInput1_f32.txt
+              Pattern LOGINPUT1_F32_ID : LogInput1_f32.txt
+              Pattern EXPINPUT1_F32_ID : ExpInput1_f32.txt
+              
+              Pattern COS1_F32_ID : Cos1_f32.txt 
+              Pattern SIN1_F32_ID : Sin1_f32.txt 
+              Pattern SQRT1_F32_ID : Sqrt1_f32.txt 
+              Pattern LOG1_F32_ID : Log1_f32.txt 
+              Pattern EXP1_F32_ID : Exp1_f32.txt 
+
+              Output  OUT_F32_ID : Output
+
+              Functions {
+                test_cos_f32:test_cos_f32
+                test_sin_f32:test_sin_f32
+                test_sqrt_f32:test_sqrt_f32
+                test_vlog_f32:test_vlog_f32
+                test_vlog_f32 nb=3:test_vlog_f32
+                test_vlog_f32 nb=4n:test_vlog_f32
+                test_vlog_f32 nb=4n+1:test_vlog_f32
+                test_vexp_f32:test_vexp_f32
+                test_vexp_f32 nb=3:test_vexp_f32
+                test_vexp_f32 nb=4n:test_vexp_f32
+                test_vexp_f32 nb=4n+1:test_vexp_f32
+              }
+          }
+
+          suite Fast Maths Q31 {
+              class = FastMathQ31
+              folder = FastMathQ31
+
+              Pattern ANGLES1_Q31_ID : Angles1_q31.txt
+              Pattern SQRTINPUT1_Q31_ID : SqrtInput1_q31.txt
+              Pattern COS1_Q31_ID : Cos1_q31.txt 
+              Pattern SIN1_Q31_ID : Sin1_q31.txt 
+              Pattern SQRT1_Q31_ID : Sqrt1_q31.txt 
+
+              Output  OUT_Q31_ID : Output
+
+              Functions {
+                test_cos_q31:test_cos_q31
+                test_sin_q31:test_sin_q31
+                test_sqrt_q31:test_sqrt_q31
+              }
+          }
+
+          suite Fast Maths Q15 {
+              class = FastMathQ15
+              folder = FastMathQ15
+
+              Pattern ANGLES1_Q15_ID : Angles1_q15.txt
+              Pattern SQRTINPUT1_Q15_ID : SqrtInput1_q15.txt
+              Pattern COS1_Q15_ID : Cos1_q15.txt 
+              Pattern SIN1_Q15_ID : Sin1_q15.txt 
+              Pattern SQRT1_Q15_ID : Sqrt1_q15.txt 
+
+              Output  OUT_Q15_ID : Output
+
+              Functions {
+                test_cos_q15:test_cos_q15
+                test_sin_q15:test_sin_q15
+                test_sqrt_q15:test_sqrt_q15
+              }
+          }
         }
 
         group SVM Tests {

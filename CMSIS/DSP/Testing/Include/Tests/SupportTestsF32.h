@@ -13,10 +13,17 @@ class SupportTestsF32:public Client::Suite
             Client::Pattern<float32_t> coefs;
 
             Client::LocalPattern<float32_t> output;
+            Client::LocalPattern<q15_t> outputQ15;
+            Client::LocalPattern<q31_t> outputQ31;
+            Client::LocalPattern<q7_t> outputQ7;
 
             // Reference patterns are not loaded when we are in dump mode
             Client::RefPattern<float32_t> ref;
+            Client::RefPattern<q15_t> refQ15;
+            Client::RefPattern<q31_t> refQ31;
+            Client::RefPattern<q7_t> refQ7;
 
             int nbSamples;
+            int offset;
 
     };

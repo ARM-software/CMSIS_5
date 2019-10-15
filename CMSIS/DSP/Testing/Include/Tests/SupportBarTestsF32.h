@@ -16,7 +16,6 @@ class SupportBarTestsF32:public Client::Suite
             Client::LocalPattern<float32_t> output;
 
             int nbTests;
-            int nbVecs;
-            int vecDim;
+
 
     };

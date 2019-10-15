@@ -55,6 +55,46 @@
   </pre>
  */
 
+#if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
+void arm_q15_to_float(
+  const q15_t * pSrc,
+  float32_t * pDst,
+  uint32_t blockSize)
+{
+  uint32_t blkCnt;
+
+  q15x8_t vecDst;
+  q15_t const *pSrcVec;
+  
+  pSrcVec = (q15_t const *) pSrc;
+  blkCnt = blockSize >> 2;
+  while (blkCnt > 0U)
+  {
+      /* C = (float32_t) A / 32768 */
+      /* convert from q15 to float and then store the results in the destination buffer */
+      vecDst = vldrhq_s32(pSrcVec); 
+      pSrcVec += 4;
+      vstrwq(pDst, vcvtq_n_f32_s32(vecDst, 15));  
+      pDst += 4;
+      /*
+       * Decrement the blockSize loop counter
+       */
+      blkCnt--;
+  }
+
+  blkCnt = blockSize & 3;
+  while (blkCnt > 0U)
+  {
+    /* C = (float32_t) A / 32768 */
+
+    /* Convert from q15 to float and store result in destination buffer */
+    *pDst++ = ((float32_t) *pSrcVec++ / 32768.0f);
+
+    /* Decrement loop counter */
+    blkCnt--;
+  }
+}
+#else
 #if defined(ARM_MATH_NEON_EXPERIMENTAL)
 void arm_q15_to_float(
   const q15_t * pSrc,
@@ -160,6 +200,7 @@ void arm_q15_to_float(
 
 }
 #endif /* #if defined(ARM_MATH_NEON) */
+#endif /* defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE) */
 
 /**
   @} end of q15_to_x group

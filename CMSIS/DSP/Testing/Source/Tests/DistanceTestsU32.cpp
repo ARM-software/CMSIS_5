@@ -5,7 +5,7 @@
 
 #include <cstdio>
 
-#define ERROR_THRESHOLD 1e-5
+#define ERROR_THRESHOLD 1e-8
 
     void DistanceTestsU32::test_dice_distance()
     {
@@ -23,7 +23,7 @@
           outp ++;
        }
 
-        ASSERT_NEAR_EQ(output,ref,(float32_t)ERROR_THRESHOLD);
+        ASSERT_REL_ERROR(output,ref,(float32_t)ERROR_THRESHOLD);
     } 
 
     void DistanceTestsU32::test_hamming_distance()

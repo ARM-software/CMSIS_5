@@ -43,7 +43,237 @@
  * @return none.
  *
  */
+#if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
 
+#include "arm_helium_utils.h"
+
+void arm_svm_linear_predict_f32(
+    const arm_svm_linear_instance_f32 *S,
+    const float32_t * in,
+    int32_t * pResult)
+{
+        /* inlined Matrix x Vector function interleaved with dot prod */
+    uint32_t        numRows = S->nbOfSupportVectors;
+    uint32_t        numCols = S->vectorDimension;
+    const float32_t *pSupport = S->supportVectors;
+    const float32_t *pSrcA = pSupport;
+    const float32_t *pInA0;
+    const float32_t *pInA1;
+    int32_t         row;
+    int32_t         blkCnt;     /* loop counters */
+    const float32_t *pDualCoef = S->dualCoefficients;
+    float32_t       sum = S->intercept;
+    row = numRows;
+
+    /*
+     * compute 4 rows in parrallel
+     */
+    while (row >= 4) 
+    {
+        const float32_t *pInA2, *pInA3;
+        float32_t const *pSrcA0Vec, *pSrcA1Vec, *pSrcA2Vec, *pSrcA3Vec, *pInVec;
+        f32x4_t         vecIn, acc0, acc1, acc2, acc3;
+        float32_t const *pSrcVecPtr = in;
+
+        /*
+         * Initialize the pointers to 4 consecutive MatrixA rows
+         */
+        pInA0 = pSrcA;
+        pInA1 = pInA0 + numCols;
+        pInA2 = pInA1 + numCols;
+        pInA3 = pInA2 + numCols;
+        /*
+         * Initialize the vector pointer
+         */
+        pInVec = pSrcVecPtr;
+        /*
+         * reset accumulators
+         */
+        acc0 = vdupq_n_f32(0.0f);
+        acc1 = vdupq_n_f32(0.0f);
+        acc2 = vdupq_n_f32(0.0f);
+        acc3 = vdupq_n_f32(0.0f);
+
+        pSrcA0Vec = pInA0;
+        pSrcA1Vec = pInA1;
+        pSrcA2Vec = pInA2;
+        pSrcA3Vec = pInA3;
+
+        blkCnt = numCols >> 2;
+        while (blkCnt > 0U) {
+            f32x4_t         vecA;
+
+            vecIn = vld1q(pInVec);
+            pInVec += 4;
+            vecA = vld1q(pSrcA0Vec);
+            pSrcA0Vec += 4;
+            acc0 = vfmaq(acc0, vecIn, vecA);
+            vecA = vld1q(pSrcA1Vec);
+            pSrcA1Vec += 4;
+            acc1 = vfmaq(acc1, vecIn, vecA);
+            vecA = vld1q(pSrcA2Vec);
+            pSrcA2Vec += 4;
+            acc2 = vfmaq(acc2, vecIn, vecA);
+            vecA = vld1q(pSrcA3Vec);
+            pSrcA3Vec += 4;
+            acc3 = vfmaq(acc3, vecIn, vecA);
+
+            blkCnt--;
+        }
+        /*
+         * tail
+         * (will be merged thru tail predication)
+         */
+        blkCnt = numCols & 3;
+        if (blkCnt > 0U) {
+            mve_pred16_t    p0 = vctp32q(blkCnt);
+            f32x4_t         vecA;
+
+            vecIn = vldrwq_z_f32(pInVec, p0);
+            vecA = vldrwq_z_f32(pSrcA0Vec, p0);
+            acc0 = vfmaq(acc0, vecIn, vecA);
+            vecA = vldrwq_z_f32(pSrcA1Vec, p0);
+            acc1 = vfmaq(acc1, vecIn, vecA);
+            vecA = vldrwq_z_f32(pSrcA2Vec, p0);
+            acc2 = vfmaq(acc2, vecIn, vecA);
+            vecA = vldrwq_z_f32(pSrcA3Vec, p0);
+            acc3 = vfmaq(acc3, vecIn, vecA);
+        }
+        /*
+         * Sum the partial parts
+         */
+        sum += *pDualCoef++ * vecAddAcrossF32Mve(acc0);
+        sum += *pDualCoef++ * vecAddAcrossF32Mve(acc1);
+        sum += *pDualCoef++ * vecAddAcrossF32Mve(acc2);
+        sum += *pDualCoef++ * vecAddAcrossF32Mve(acc3);
+
+        pSrcA += numCols * 4;
+        /*
+         * Decrement the row loop counter
+         */
+        row -= 4;
+    }
+
+    /*
+     * compute 2 rows in parallel
+     */
+    if (row >= 2) {
+        float32_t const *pSrcA0Vec, *pSrcA1Vec, *pInVec;
+        f32x4_t         vecIn, acc0, acc1;
+        float32_t const *pSrcVecPtr = in;
+
+        /*
+         * Initialize the pointers to 2 consecutive MatrixA rows
+         */
+        pInA0 = pSrcA;
+        pInA1 = pInA0 + numCols;
+        /*
+         * Initialize the vector pointer
+         */
+        pInVec = pSrcVecPtr;
+        /*
+         * reset accumulators
+         */
+        acc0 = vdupq_n_f32(0.0f);
+        acc1 = vdupq_n_f32(0.0f);
+        pSrcA0Vec = pInA0;
+        pSrcA1Vec = pInA1;
+
+        blkCnt = numCols >> 2;
+        while (blkCnt > 0U) {
+            f32x4_t         vecA;
+
+            vecIn = vld1q(pInVec);
+            pInVec += 4;
+            vecA = vld1q(pSrcA0Vec);
+            pSrcA0Vec += 4;
+            acc0 = vfmaq(acc0, vecIn, vecA);
+            vecA = vld1q(pSrcA1Vec);
+            pSrcA1Vec += 4;
+            acc1 = vfmaq(acc1, vecIn, vecA);
+
+            blkCnt--;
+        }
+        /*
+         * tail
+         * (will be merged thru tail predication)
+         */
+        blkCnt = numCols & 3;
+        if (blkCnt > 0U) {
+            mve_pred16_t    p0 = vctp32q(blkCnt);
+            f32x4_t         vecA;
+
+            vecIn = vldrwq_z_f32(pInVec, p0);
+            vecA = vldrwq_z_f32(pSrcA0Vec, p0);
+            acc0 = vfmaq(acc0, vecIn, vecA);
+            vecA = vldrwq_z_f32(pSrcA1Vec, p0);
+            acc1 = vfmaq(acc1, vecIn, vecA);
+        }
+        /*
+         * Sum the partial parts
+         */
+        sum += *pDualCoef++ * vecAddAcrossF32Mve(acc0);
+        sum += *pDualCoef++ * vecAddAcrossF32Mve(acc1);
+
+        pSrcA += numCols * 2;
+        row -= 2;
+    }
+
+    if (row >= 1) {
+        f32x4_t         vecIn, acc0;
+        float32_t const *pSrcA0Vec, *pInVec;
+        float32_t const *pSrcVecPtr = in;
+        /*
+         * Initialize the pointers to last MatrixA row
+         */
+        pInA0 = pSrcA;
+        /*
+         * Initialize the vector pointer
+         */
+        pInVec = pSrcVecPtr;
+        /*
+         * reset accumulators
+         */
+        acc0 = vdupq_n_f32(0.0f);
+
+        pSrcA0Vec = pInA0;
+
+        blkCnt = numCols >> 2;
+        while (blkCnt > 0U) {
+            f32x4_t         vecA;
+
+            vecIn = vld1q(pInVec);
+            pInVec += 4;
+            vecA = vld1q(pSrcA0Vec);
+            pSrcA0Vec += 4;
+            acc0 = vfmaq(acc0, vecIn, vecA);
+
+            blkCnt--;
+        }
+        /*
+         * tail
+         * (will be merged thru tail predication)
+         */
+        blkCnt = numCols & 3;
+        if (blkCnt > 0U) {
+            mve_pred16_t    p0 = vctp32q(blkCnt);
+            f32x4_t         vecA;
+
+            vecIn = vldrwq_z_f32(pInVec, p0);
+            vecA = vldrwq_z_f32(pSrcA0Vec, p0);
+            acc0 = vfmaq(acc0, vecIn, vecA);
+        }
+        /*
+         * Sum the partial parts
+         */
+        sum += *pDualCoef++ * vecAddAcrossF32Mve(acc0);
+
+    }
+
+    *pResult = S->classes[STEP(sum)];
+}
+
+#else
 #if defined(ARM_MATH_NEON)
 void arm_svm_linear_predict_f32(
     const arm_svm_linear_instance_f32 *S,
@@ -159,7 +389,7 @@ void arm_svm_linear_predict_f32(
     while (vectorBlkCnt > 0U)
     {
         accum = vdupq_n_f32(0);
-        dot = 0.0;
+        dot = 0.0f;
         pIn = in;
 
         blkCnt = S->vectorDimension >> 2;
@@ -215,6 +445,7 @@ void arm_svm_linear_predict_f32(
     *pResult=S->classes[STEP(sum)];
 }
 #endif
+#endif /* defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE) */
 
 /**
  * @} end of groupSVM group

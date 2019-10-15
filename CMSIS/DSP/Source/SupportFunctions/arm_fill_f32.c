@@ -56,7 +56,43 @@
   @param[in]     blockSize  number of samples in each vector
   @return        none
  */
+#if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
+void arm_fill_f32(
+  float32_t value,
+  float32_t * pDst,
+  uint32_t blockSize)
+{
+  uint32_t blkCnt;
+  blkCnt = blockSize >> 2U;
 
+  /* Compute 4 outputs at a time */
+  while (blkCnt > 0U)
+  {
+
+    vstrwq_f32(pDst,vdupq_n_f32(value));
+    /*
+     * Decrement the blockSize loop counter
+     * Advance vector source and destination pointers
+     */
+    pDst += 4;
+    blkCnt --;
+  }
+
+  blkCnt = blockSize & 3;
+
+  while (blkCnt > 0U)
+  {
+    /* C = value */
+
+    /* Fill value in destination buffer */
+    *pDst++ = value;
+
+    /* Decrement loop counter */
+    blkCnt--;
+  }
+
+}
+#else
 #if defined(ARM_MATH_NEON_EXPERIMENTAL)
 void arm_fill_f32(
   float32_t value,
@@ -146,6 +182,8 @@ void arm_fill_f32(
   }
 }
 #endif /* #if defined(ARM_MATH_NEON) */
+#endif /* defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE) */
+
 /**
   @} end of Fill group
  */

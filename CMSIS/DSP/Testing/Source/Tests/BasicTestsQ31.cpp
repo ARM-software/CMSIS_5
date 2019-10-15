@@ -129,6 +129,8 @@ q31_t *outp=output.ptr();
 
         ASSERT_NEAR_EQ(dotOutput,dotRef,(q63_t)ABS_ERROR_Q63);
 
+        ASSERT_EMPTY_TAIL(dotOutput);
+
     } 
 
     void BasicTestsQ31::test_abs_q31()

@@ -56,20 +56,75 @@
  * @return distance
  *
  */
+#if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
 
+#include "arm_helium_utils.h"
+
+float32_t arm_braycurtis_distance_f32(const float32_t *pA,const float32_t *pB, uint32_t blockSize)
+{
+    float32_t       accumDiff = 0.0f, accumSum = 0.0f;
+    int32_t         blkCnt;
+    f32x4_t         a, b, c, accumDiffV, accumSumV;
+
+
+    accumDiffV = vdupq_n_f32(0.0f);
+    accumSumV = vdupq_n_f32(0.0f);
+
+    blkCnt = blockSize >> 2;
+    while (blkCnt > 0) {
+        a = vld1q(pA);
+        b = vld1q(pB);
+
+        c = vabdq(a, b);
+        accumDiffV = vaddq(accumDiffV, c);
+
+        c = vaddq_f32(a, b);
+        c = vabsq_f32(c);
+        accumSumV = vaddq(accumSumV, c);
+
+        pA += 4;
+        pB += 4;
+        blkCnt--;
+    }
+
+    blkCnt = blockSize & 3;
+    if (blkCnt > 0U) {
+        mve_pred16_t    p0 = vctp32q(blkCnt);
+
+        a = vldrwq_z_f32(pA, p0);
+        b = vldrwq_z_f32(pB, p0);
+
+        c = vabdq(a, b);
+        accumDiffV = vaddq_m(accumDiffV, accumDiffV, c, p0);
+
+        c = vaddq_f32(a, b);
+        c = vabsq_f32(c);
+        accumSumV = vaddq_m(accumSumV, accumSumV, c, p0);
+    }
+
+    accumDiff = vecAddAcrossF32Mve(accumDiffV);
+    accumSum = vecAddAcrossF32Mve(accumSumV);
+
+    /*
+       It is assumed that accumSum is not zero. Since it is the sum of several absolute
+       values it would imply that all of them are zero. It is very unlikely for long vectors.
+     */
+    return (accumDiff / accumSum);
+}
+#else
 #if defined(ARM_MATH_NEON)
 
 #include "NEMath.h"
 
 float32_t arm_braycurtis_distance_f32(const float32_t *pA,const float32_t *pB, uint32_t blockSize)
 {
-   float32_t accumDiff=0.0, accumSum=0.0, tmp;
+   float32_t accumDiff=0.0f, accumSum=0.0f, tmp;
    uint32_t i,blkCnt;
    float32x4_t a,b,c,accumDiffV, accumSumV;
    float32x2_t accumV2;
 
-   accumDiffV = vdupq_n_f32(0.0);
-   accumSumV = vdupq_n_f32(0.0);
+   accumDiffV = vdupq_n_f32(0.0f);
+   accumSumV = vdupq_n_f32(0.0f);
 
    blkCnt = blockSize >> 2;
    while(blkCnt > 0)
@@ -97,8 +152,8 @@ float32_t arm_braycurtis_distance_f32(const float32_t *pA,const float32_t *pB, u
    blkCnt = blockSize & 3;
    while(blkCnt > 0)
    {
-      accumDiff += fabs(*pA - *pB);
-      accumSum += fabs(*pA++ + *pB++);
+      accumDiff += fabsf(*pA - *pB);
+      accumSum += fabsf(*pA++ + *pB++);
       blkCnt --;
    }
    /*
@@ -113,14 +168,14 @@ float32_t arm_braycurtis_distance_f32(const float32_t *pA,const float32_t *pB, u
 #else
 float32_t arm_braycurtis_distance_f32(const float32_t *pA,const float32_t *pB, uint32_t blockSize)
 {
-   float32_t accumDiff=0.0, accumSum=0.0, tmpA, tmpB;
+   float32_t accumDiff=0.0f, accumSum=0.0f, tmpA, tmpB;
 
    while(blockSize > 0)
    {
       tmpA = *pA++;
       tmpB = *pB++;
-      accumDiff += fabs(tmpA - tmpB);
-      accumSum += fabs(tmpA + tmpB);
+      accumDiff += fabsf(tmpA - tmpB);
+      accumSum += fabsf(tmpA + tmpB);
       blockSize --;
    }
    /*
@@ -132,6 +187,7 @@ float32_t arm_braycurtis_distance_f32(const float32_t *pA,const float32_t *pB, u
    return(accumDiff / accumSum);
 }
 #endif
+#endif /* defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE) */
 
 
 /**

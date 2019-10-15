@@ -44,9 +44,8 @@ endif()
 
 target_sources(CMSISDSPFastMath PRIVATE arm_sqrt_q15.c)
 target_sources(CMSISDSPFastMath PRIVATE arm_sqrt_q31.c)
-
-
-
+target_sources(CMSISDSPFastMath PRIVATE arm_vlog_f32.c)
+target_sources(CMSISDSPFastMath PRIVATE arm_vexp_f32.c)
 
 
 ### Includes

@@ -5,14 +5,14 @@
 
 //#include <cstdio>
 
-#define SNR_THRESHOLD 60
+#define SNR_THRESHOLD 50
 /* 
 
 Reference patterns are generated with
 a double precision computation.
 
 */
-#define ABS_ERROR_Q15 ((q15_t)20)
+#define ABS_ERROR_Q15 ((q15_t)100)
 #define ABS_ERROR_Q63 (1<<17)
 
     void StatsTestsQ15::test_max_q15()

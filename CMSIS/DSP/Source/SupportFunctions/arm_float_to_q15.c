@@ -58,6 +58,66 @@
                    In order to apply rounding, the library should be rebuilt with the ROUNDING macro
                    defined in the preprocessor section of project options.
  */
+
+#if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
+void arm_float_to_q15(
+  const float32_t * pSrc,
+  q15_t * pDst,
+  uint32_t blockSize)
+{
+    int32_t         blkCnt;
+    float32_t       maxQ = (float32_t) Q15_MAX;
+    f32x4x2_t       tmp;
+    q15x8_t         vecDst;
+
+
+    blkCnt = blockSize >> 3;
+    while (blkCnt > 0U) 
+    {
+        /* C = A * 32768 */
+        /* convert from float to q15 and then store the results in the destination buffer */
+        tmp = vld2q(pSrc);
+
+        tmp.val[0] = vmulq(tmp.val[0], maxQ);
+        tmp.val[1] = vmulq(tmp.val[1], maxQ);
+
+        vecDst = vqmovnbq(vecDst, vcvtaq_s32_f32(tmp.val[0]));
+        vecDst = vqmovntq(vecDst, vcvtaq_s32_f32(tmp.val[1]));
+        vst1q(pDst, vecDst);
+        /*
+         * Decrement the blockSize loop counter
+         */
+        blkCnt--;
+        pDst += 8;
+        pSrc += 8;
+    }
+
+    blkCnt = blockSize & 7;
+    while (blkCnt > 0U)
+    {
+      /* C = A * 32768 */
+
+      /* convert from float to Q15 and store result in destination buffer */
+#ifdef ARM_MATH_ROUNDING
+
+      in = (*pSrc++ * 32768.0f);
+      in += in > 0.0f ? 0.5f : -0.5f;
+      *pDst++ = (q15_t) (__SSAT((q31_t) (in), 16));
+
+#else
+
+      /* C = A * 32768 */
+      /* Convert from float to q15 and then store the results in the destination buffer */
+      *pDst++ = (q15_t) __SSAT((q31_t) (*pSrc++ * 32768.0f), 16);
+
+#endif /* #ifdef ARM_MATH_ROUNDING */
+
+      /* Decrement loop counter */
+      blkCnt--;
+    }
+}
+
+#else
 #if defined(ARM_MATH_NEON_EXPERIMENTAL)
 void arm_float_to_q15(
   const float32_t * pSrc,
@@ -238,6 +298,7 @@ void arm_float_to_q15(
 
 }
 #endif /* #if defined(ARM_MATH_NEON) */
+#endif /* defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE) */
 
 /**
   @} end of float_to_x group

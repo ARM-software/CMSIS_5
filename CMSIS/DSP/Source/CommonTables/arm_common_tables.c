@@ -57339,3 +57339,40 @@ const q15_t sqrtTable_Q15[256] = {
 
 
 #endif /* if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_FAST_TABLES) */
+
+#if (defined(ARM_MATH_MVEF) || defined(ARM_MATH_HELIUM)) && !defined(ARM_MATH_AUTOVECTORIZE)
+const float32_t exp_tab[8] = {
+    (1.f),
+    (0.0416598916054f),
+    (0.500000596046f),
+    (0.0014122662833f),
+    (1.00000011921f),
+    (0.00833693705499f),
+    (0.166665703058f),
+    (0.000195780929062f),
+};
+
+const float32_t __logf_lut_f32[8] = {
+    -2.295614848256274,         /*p0*/
+    -2.470711633419806,         /*p4*/
+    -5.686926051100417,         /*p2*/
+    -0.165253547131978,         /*p6*/
+    +5.175912446351073,         /*p1*/
+    +0.844006986174912,         /*p5*/
+    +4.584458825456749,         /*p3*/
+    +0.014127821926000          /*p7*/
+};
+
+#endif /* (defined(ARM_MATH_MVEF) || defined(ARM_MATH_HELIUM)) && !defined(ARM_MATH_AUTOVECTORIZE) */
+
+#if (defined(ARM_MATH_MVEI) || defined(ARM_MATH_HELIUM)) 
+
+/* haming weight LUT for bytes */
+#define B2(n) n, n + 1, n + 1, n + 2
+#define B4(n) B2(n) , B2(n + 1), B2(n + 1), B2(n + 2)
+#define B6(n) B4(n) , B4(n + 1), B4(n + 1), B4(n + 2)
+
+// Lookup table that store the reverse of each table 
+const unsigned char hwLUT[256] = { B6(0), B6(1), B6(1), B6(2) };
+
+#endif /* (defined(ARM_MATH_MVEI) || defined(ARM_MATH_HELIUM)) */

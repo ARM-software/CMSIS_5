@@ -135,7 +135,7 @@ void assert_relative_error(unsigned long nb,float32_t &a, float32_t &b, double t
     if (average !=0)
     {
         rel = delta / average;
-        //printf("%6.9f %6.9f %6.9f\n",a,b,rel);
+        //printf("%6.9f %6.9f %6.9f %g %g\n",a,b,rel,delta,average);
         if (rel > threshold)
         {
             throw (Error(RELATIVE_ERROR,nb));
@@ -165,6 +165,35 @@ void assert_relative_error(unsigned long nb,AnyPattern<float32_t> &pa, AnyPatter
 };
 
 
+void assert_close_error(unsigned long nb,float32_t &ref, float32_t &val, double absthreshold,double relthreshold)
+{
+    
+    if (abs(val - ref) > (absthreshold + relthreshold * abs(ref)))
+    {
+        throw (Error(CLOSE_ERROR,nb));
+    }
+};
+
+void assert_close_error(unsigned long nb,AnyPattern<float32_t> &pref, AnyPattern<float32_t> &pval, double absthreshold,double relthreshold)
+{
+    ASSERT_NOT_EMPTY(pref);
+    ASSERT_NOT_EMPTY(pval);
+
+    if (pref.nbSamples() != pval.nbSamples())
+    {
+        throw (Error(DIFFERENT_LENGTH_ERROR,nb));
+    }
+
+    unsigned long i=0;
+
+    float32_t *ptrA = pref.ptr();
+    float32_t *ptrB = pval.ptr();
+
+    for(i=0; i < pref.nbSamples(); i++)
+    {
+       assert_close_error(nb,ptrA[i],ptrB[i],absthreshold,relthreshold);
+    }
+};
 
 /**
  * @brief  Calculation of SNR

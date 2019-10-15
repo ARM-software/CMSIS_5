@@ -115,6 +115,8 @@ float32_t *outp=output.ptr();
 
         ASSERT_REL_ERROR(output,ref,REL_ERROR);
 
+        ASSERT_EMPTY_TAIL(output);
+
        
     } 
 

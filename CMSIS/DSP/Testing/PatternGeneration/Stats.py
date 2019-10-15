@@ -11,11 +11,13 @@ NBTESTS = 10
 VECDIM = [12,14,20]
 
 def entropyTest(config,nb):
+    DIMS = [3,8,9,12]
     inputs = [] 
     outputs = [] 
-    vecDim = VECDIM[nb % len(VECDIM)]
-    dims=np.array([NBTESTS,vecDim])
-    for _ in range(0,NBTESTS):
+    dims=[NBTESTS]
+    for i in range(0,NBTESTS):
+       vecDim = DIMS[i % len(DIMS)]
+       dims.append(vecDim)
        v = np.random.rand(vecDim)
        v = v / np.sum(v)
        e = scipy.stats.entropy(v)
@@ -23,16 +25,19 @@ def entropyTest(config,nb):
        outputs.append(e)
     inputs = np.array(inputs)
     outputs = np.array(outputs)
+    dims = np.array(dims)
     config.writeInput(nb, inputs,"Input")
     config.writeInputS16(nb, dims,"Dims")
     config.writeReference(nb, outputs,"RefEntropy")
 
 def logsumexpTest(config,nb):
+    DIMS = [3,8,9,12]
     inputs = [] 
     outputs = [] 
-    vecDim = VECDIM[nb % len(VECDIM)]
-    dims=np.array([NBTESTS,vecDim])
-    for _ in range(0,NBTESTS):
+    dims=[NBTESTS]
+    for i in range(0,NBTESTS):
+       vecDim = DIMS[i % len(DIMS)]
+       dims.append(vecDim)
        v = np.random.rand(vecDim)
        v = v / np.sum(v)
        e = scipy.special.logsumexp(v)
@@ -40,17 +45,21 @@ def logsumexpTest(config,nb):
        outputs.append(e)
     inputs = np.array(inputs)
     outputs = np.array(outputs)
+    dims = np.array(dims)
     config.writeInput(nb, inputs,"Input")
     config.writeInputS16(nb, dims,"Dims")
     config.writeReference(nb, outputs,"RefLogSumExp")
 
 def klTest(config,nb):
+    DIMS = [3,8,9,12]
     inputsA = [] 
     inputsB = [] 
     outputs = [] 
     vecDim = VECDIM[nb % len(VECDIM)]
-    dims=np.array([NBTESTS,vecDim])
-    for _ in range(0,NBTESTS):
+    dims=[NBTESTS]
+    for i in range(0,NBTESTS):
+       vecDim = DIMS[i % len(DIMS)]
+       dims.append(vecDim)
        va = np.random.rand(vecDim)
        va = va / np.sum(va)
 
@@ -64,18 +73,22 @@ def klTest(config,nb):
     inputsA = np.array(inputsA)
     inputsB = np.array(inputsB)
     outputs = np.array(outputs)
+    dims = np.array(dims)
     config.writeInput(nb, inputsA,"InputA")
     config.writeInput(nb, inputsB,"InputB")
     config.writeInputS16(nb, dims,"Dims")
     config.writeReference(nb, outputs,"RefKL")
 
 def logSumExpDotTest(config,nb):
+    DIMS = [3,8,9,12]
     inputsA = [] 
     inputsB = [] 
     outputs = [] 
     vecDim = VECDIM[nb % len(VECDIM)]
-    dims=np.array([NBTESTS,vecDim])
-    for _ in range(0,NBTESTS):
+    dims=[NBTESTS]
+    for i in range(0,NBTESTS):
+       vecDim = DIMS[i % len(DIMS)]
+       dims.append(vecDim)
        va = np.random.rand(vecDim)
        va = va / np.sum(va)
 
@@ -97,6 +110,7 @@ def logSumExpDotTest(config,nb):
     inputsA = np.array(inputsA)
     inputsB = np.array(inputsB)
     outputs = np.array(outputs)
+    dims = np.array(dims)
     config.writeInput(nb, inputsA,"InputA")
     config.writeInput(nb, inputsB,"InputB")
     config.writeInputS16(nb, dims,"Dims")
@@ -108,6 +122,16 @@ def writeF32OnlyTests(config,nb):
     klTest(config,nb+2)
     logSumExpDotTest(config,nb+3)
     return(nb+4)
+
+# For index in min and max we need to ensure that the difference between values
+# of the input is big enough to be representable on q31, q15 or q7.
+# Otherwise python will compute an index different from the one
+# computed by CMSIS which is normal but then the CMSIS test will fail.
+
+#vfunc = np.vectorize(squarer)
+
+def floatRound(x,f):
+    return(np.round(x * 2**f)/2**f)
 
 def generateMaxTests(config,nb,format,data):
 
@@ -278,6 +302,19 @@ def writeTests(config,nb,format):
     
     data1 = data1/max(data1)
     data2 = np.abs(data1)
+
+    # Force quantization so that computation of indexes
+    # in min/max is coherent between Python and CMSIS.
+    # Otherwise there will be normal differences and the test
+    # will be displayed as failed.
+    if format==31:
+       data1=floatRound(data1,31)
+
+    if format==15:
+       data1=floatRound(data1,15)
+
+    if format==7:
+       data1=floatRound(data1,7)
 
     config.writeInput(1, data1,"Input")
     config.writeInput(2, data2,"Input")

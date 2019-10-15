@@ -45,13 +45,65 @@
  *
  */
 
+#if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
+
+#include "arm_helium_utils.h"
+#include "arm_vec_math.h"
+
+float32_t arm_chebyshev_distance_f32(const float32_t *pA,const float32_t *pB, uint32_t blockSize)
+{
+    int32_t         blkCnt;     /* loop counters */
+    f32x4_t         vecA, vecB;
+    f32x4_t         vecDiff = vdupq_n_f32(0.0);
+    float32_t       maxValue = 0.0;
+
+
+    blkCnt = blockSize >> 2;
+    while (blkCnt > 0U) {
+        vecA = vld1q(pA);
+        pA += 4;
+        vecB = vld1q(pB);
+        pB += 4;
+        /*
+         * update per-lane max.
+         */
+        vecDiff = vmaxnmaq(vsubq(vecA, vecB), vecDiff);
+        /*
+         * Decrement the blockSize loop counter
+         */
+        blkCnt--;
+    }
+    /*
+     * tail
+     * (will be merged thru tail predication)
+     */
+    blkCnt = blockSize & 3;
+    if (blkCnt > 0U) {
+        mve_pred16_t    p0 = vctp32q(blkCnt);
+
+        vecA = vldrwq_z_f32(pA, p0);
+        vecB = vldrwq_z_f32(pB, p0);
+
+        /*
+         * Get current max per lane and current index per lane
+         * when a max is selected
+         */
+        vecDiff = vmaxnmaq_m(vecDiff, vsubq(vecA, vecB), p0);
+    }
+    /*
+     * Get max value across the vector
+     */
+    return vmaxnmavq(maxValue, vecDiff);
+}
+
+#else
 #if defined(ARM_MATH_NEON)
 
 #include "NEMath.h"
 
 float32_t arm_chebyshev_distance_f32(const float32_t *pA,const float32_t *pB, uint32_t blockSize)
 {
-   float32_t diff=0.0, maxVal=0.0, tmpA, tmpB;
+   float32_t diff=0.0f, maxVal=0.0f, tmpA, tmpB;
    uint32_t i,blkCnt;
    float32x4_t a,b,diffV, maxValV;
    float32x2_t maxValV2;
@@ -60,7 +112,7 @@ float32_t arm_chebyshev_distance_f32(const float32_t *pA,const float32_t *pB, ui
    {
       tmpA = *pA++;
       tmpB = *pB++;
-      diff = fabs(tmpA - tmpB);
+      diff = fabsf(tmpA - tmpB);
       maxVal = diff;
       blockSize--;
    
@@ -68,7 +120,7 @@ float32_t arm_chebyshev_distance_f32(const float32_t *pA,const float32_t *pB, ui
       {
          tmpA = *pA++;
          tmpB = *pB++;
-         diff = fabs(tmpA - tmpB);
+         diff = fabsf(tmpA - tmpB);
          if (diff > maxVal)
          {
            maxVal = diff;
@@ -114,7 +166,7 @@ float32_t arm_chebyshev_distance_f32(const float32_t *pA,const float32_t *pB, ui
       {
          tmpA = *pA++;
          tmpB = *pB++;
-         diff = fabs(tmpA - tmpB);
+         diff = fabsf(tmpA - tmpB);
          if (diff > maxVal)
          {
             maxVal = diff;
@@ -128,11 +180,11 @@ float32_t arm_chebyshev_distance_f32(const float32_t *pA,const float32_t *pB, ui
 #else
 float32_t arm_chebyshev_distance_f32(const float32_t *pA,const float32_t *pB, uint32_t blockSize)
 {
-   float32_t diff=0.0,  maxVal,tmpA, tmpB;
+   float32_t diff=0.0f,  maxVal,tmpA, tmpB;
 
    tmpA = *pA++;
    tmpB = *pB++;
-   diff = fabs(tmpA - tmpB);
+   diff = fabsf(tmpA - tmpB);
    maxVal = diff;
    blockSize--;
 
@@ -140,7 +192,7 @@ float32_t arm_chebyshev_distance_f32(const float32_t *pA,const float32_t *pB, ui
    {
       tmpA = *pA++;
       tmpB = *pB++;
-      diff = fabs(tmpA - tmpB);
+      diff = fabsf(tmpA - tmpB);
       if (diff > maxVal)
       {
         maxVal = diff;
@@ -151,6 +203,7 @@ float32_t arm_chebyshev_distance_f32(const float32_t *pA,const float32_t *pB, ui
    return(maxVal);
 }
 #endif
+#endif /* defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE) */
 
 
 /**

@@ -382,12 +382,34 @@ extern "C"
 #include <float.h>
 #include <limits.h>
 
+
+#define F64_MAX   DBL_MAX
+#define F32_MAX   FLT_MAX
+#define F16_MAX   (float16_t)FLT_MAX
+#define F64_MIN   -DBL_MAX
+#define F32_MIN   -FLT_MAX
+#define F16_MIN   -(float16_t)FLT_MAX
+
+#define F64_ABSMAX   DBL_MAX
+#define F32_ABSMAX   FLT_MAX
+#define F16_ABSMAX   (float16_t)FLT_MAX
+#define F64_ABSMIN   (float64_t)0.0
+#define F32_ABSMIN   (float32_t)0.0
+#define F16_ABSMIN   (float16_t)0.0
+
 #define Q31_MAX   (0x7FFFFFFFL)
-#define Q15_MAX   SHRT_MAX
-#define Q7_MAX    SCHAR_MAX
+#define Q15_MAX   (0x7FFF)
+#define Q7_MAX    (0x7F)
 #define Q31_MIN   (0x80000000L)
-#define Q15_MIN   SHRT_MIN
-#define Q7_MIN    SCHAR_MIN
+#define Q15_MIN   (0x8000)
+#define Q7_MIN    (0x80)
+
+#define Q31_ABSMAX   (0x7FFFFFFFL)
+#define Q15_ABSMAX   (0x7FFF)
+#define Q7_ABSMAX    (0x7F)
+#define Q31_ABSMIN   0
+#define Q15_ABSMIN   0
+#define Q7_ABSMIN    0
 
 /* evaluate ARM DSP feature */
 #if (defined (__ARM_FEATURE_DSP) && (__ARM_FEATURE_DSP == 1))
@@ -1304,65 +1326,6 @@ __STATIC_INLINE q31_t arm_div_q63_to_q31(q63_t num, q31_t den)
     return result;
 }
 
-#if defined(ARM_MATH_NEON)
-
-/**
- * @brief Vectorized integer exponentiation
- * @param[in]    x           value
- * @param[in]    nb          integer exponent >= 1
- * @return x^nb
- *
- */
-__STATIC_INLINE  float32x4_t arm_vec_exponent_f32(float32x4_t x, int32_t nb)
-{
-    float32x4_t r = x;
-    nb --;
-    while(nb > 0)
-    {
-        r = vmulq_f32(r , x);
-        nb--;
-    }
-    return(r);
-}
-
-
-__STATIC_INLINE float32x4_t __arm_vec_sqrt_f32_neon(float32x4_t  x)
-{
-    float32x4_t x1 = vmaxq_f32(x, vdupq_n_f32(FLT_MIN));
-    float32x4_t e = vrsqrteq_f32(x1);
-    e = vmulq_f32(vrsqrtsq_f32(vmulq_f32(x1, e), e), e);
-    e = vmulq_f32(vrsqrtsq_f32(vmulq_f32(x1, e), e), e);
-    return vmulq_f32(x, e);
-}
-
-__STATIC_INLINE int16x8_t __arm_vec_sqrt_q15_neon(int16x8_t vec)
-{
-    float32x4_t tempF;
-    int32x4_t tempHI,tempLO;
-
-    tempLO = vmovl_s16(vget_low_s16(vec));
-    tempF = vcvtq_n_f32_s32(tempLO,15);
-    tempF = __arm_vec_sqrt_f32_neon(tempF);
-    tempLO = vcvtq_n_s32_f32(tempF,15);
-
-    tempHI = vmovl_s16(vget_high_s16(vec));
-    tempF = vcvtq_n_f32_s32(tempHI,15);
-    tempF = __arm_vec_sqrt_f32_neon(tempF);
-    tempHI = vcvtq_n_s32_f32(tempF,15);
-
-    return(vcombine_s16(vqmovn_s32(tempLO),vqmovn_s32(tempHI)));
-}
-
-__STATIC_INLINE int32x4_t __arm_vec_sqrt_q31_neon(int32x4_t vec)
-{
-  float32x4_t temp;
-
-  temp = vcvtq_n_f32_s32(vec,31);
-  temp = __arm_vec_sqrt_f32_neon(temp);
-  return(vcvtq_n_s32_f32(temp,31));
-}
-
-#endif
 
 /*
  * @brief C custom defined intrinsic functions
@@ -6315,6 +6278,30 @@ __STATIC_FORCEINLINE void arm_inv_park_q31(
   q15_t x);
 
 
+/**
+  @brief         Floating-point vector of log values.
+  @param[in]     pSrc       points to the input vector
+  @param[out]    pDst       points to the output vector
+  @param[in]     blockSize  number of samples in each vector
+  @return        none
+ */
+  void arm_vlog_f32(
+  const float32_t * pSrc,
+        float32_t * pDst,
+        uint32_t blockSize);
+
+/**
+  @brief         Floating-point vector of exp values.
+  @param[in]     pSrc       points to the input vector
+  @param[out]    pDst       points to the output vector
+  @param[in]     blockSize  number of samples in each vector
+  @return        none
+ */
+  void arm_vexp_f32(
+  const float32_t * pSrc,
+        float32_t * pDst,
+        uint32_t blockSize);
+
   /**
    * @ingroup groupFastMath
    */
@@ -7185,6 +7172,17 @@ arm_status arm_sqrt_q15(
         float32_t * pResult,
         uint32_t * pIndex);
 
+  /**
+    @brief         Maximum value of a floating-point vector.
+    @param[in]     pSrc       points to the input vector
+    @param[in]     blockSize  number of samples in input vector
+    @param[out]    pResult    maximum value returned here
+    @return        none
+   */
+  void arm_max_no_idx_f32(
+      const float32_t *pSrc,
+      uint32_t   blockSize,
+      float32_t *pResult);
 
   /**
    * @brief  Q15 complex-by-complex multiplication

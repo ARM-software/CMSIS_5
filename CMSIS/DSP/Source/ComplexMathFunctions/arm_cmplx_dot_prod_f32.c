@@ -158,8 +158,8 @@ void arm_cmplx_dot_prod_f32(
     float32x4_t accR,accI;
     float32x2_t accum = vdup_n_f32(0);
 
-    accR = vdupq_n_f32(0.0);
-    accI = vdupq_n_f32(0.0);
+    accR = vdupq_n_f32(0.0f);
+    accI = vdupq_n_f32(0.0f);
 
     /* Loop unrolling: Compute 8 outputs at a time */
     blkCnt = numSamples >> 3U;

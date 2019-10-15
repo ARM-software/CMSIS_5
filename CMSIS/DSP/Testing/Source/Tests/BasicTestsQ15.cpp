@@ -130,6 +130,8 @@ q15_t *outp=output.ptr();
         ASSERT_SNR(dotOutput,dotRef,(float32_t)SNR_THRESHOLD);
 
         ASSERT_NEAR_EQ(dotOutput,dotRef,ABS_ERROR_Q63);
+
+        ASSERT_EMPTY_TAIL(dotOutput);
        
     } 
 

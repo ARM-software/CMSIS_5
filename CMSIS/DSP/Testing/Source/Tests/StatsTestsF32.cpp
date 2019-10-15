@@ -12,7 +12,7 @@ Reference patterns are generated with
 a double precision computation.
 
 */
-#define REL_ERROR (1.0e-6)
+#define REL_ERROR (1.0e-5)
 
     void StatsTestsF32::test_max_f32()
     {
@@ -37,6 +37,26 @@ a double precision computation.
 
         ASSERT_EQ(result,refp[this->refOffset]);
         ASSERT_EQ((int16_t)indexval,refind[this->refOffset]);
+
+    }
+
+    void StatsTestsF32::test_max_no_idx_f32()
+    {
+        const float32_t *inp  = inputA.ptr();
+
+        float32_t result;
+
+        float32_t *refp  = ref.ptr();
+
+        float32_t *outp  = output.ptr();
+
+        arm_max_no_idx_f32(inp,
+              inputA.nbSamples(),
+              &result);
+
+        outp[0] = result;
+
+        ASSERT_EQ(result,refp[this->refOffset]);
 
     }
 
@@ -179,35 +199,42 @@ a double precision computation.
     void StatsTestsF32::test_entropy_f32()
     {
       const float32_t *inp  = inputA.ptr();
+      const int16_t *dimsp  = dims.ptr();
 
       float32_t *refp         = ref.ptr();
       float32_t *outp         = output.ptr();
 
       for(int i=0;i < this->nbPatterns; i++)
       {
-         *outp = arm_entropy_f32(inp,this->vecDim);
+         *outp = arm_entropy_f32(inp,dimsp[i+1]);
          outp++;
-         inp += vecDim;
+         inp += dimsp[i+1];
       }
 
-      ASSERT_NEAR_EQ(ref,output,(float32_t)1e-6);
+      ASSERT_SNR(ref,output,(float32_t)SNR_THRESHOLD);
+
+      ASSERT_REL_ERROR(ref,output,REL_ERROR);
+
     } 
 
     void StatsTestsF32::test_logsumexp_f32()
     {
       const float32_t *inp  = inputA.ptr();
+      const int16_t *dimsp  = dims.ptr();
 
       float32_t *refp         = ref.ptr();
       float32_t *outp         = output.ptr();
 
       for(int i=0;i < this->nbPatterns; i++)
       {
-         *outp = arm_logsumexp_f32(inp,this->vecDim);
+         *outp = arm_logsumexp_f32(inp,dimsp[i+1]);
          outp++;
-         inp += vecDim;
+         inp += dimsp[i+1];
       }
 
-      ASSERT_NEAR_EQ(ref,output,(float32_t)1e-6);
+      ASSERT_SNR(ref,output,(float32_t)SNR_THRESHOLD);
+
+      ASSERT_REL_ERROR(ref,output,REL_ERROR);
     } 
 
 
@@ -215,25 +242,29 @@ a double precision computation.
     {
       const float32_t *inpA  = inputA.ptr();
       const float32_t *inpB  = inputB.ptr();
+      const int16_t *dimsp  = dims.ptr();
 
       float32_t *refp         = ref.ptr();
       float32_t *outp         = output.ptr();
 
       for(int i=0;i < this->nbPatterns; i++)
       {
-         *outp = arm_kullback_leibler_f32(inpA,inpB,this->vecDim);
+         *outp = arm_kullback_leibler_f32(inpA,inpB,dimsp[i+1]);
          outp++;
-         inpA += vecDim;
-         inpB += vecDim;
+         inpA += dimsp[i+1];
+         inpB += dimsp[i+1];
       }
 
-      ASSERT_NEAR_EQ(ref,output,(float32_t)1e-6);
+      ASSERT_SNR(ref,output,(float32_t)SNR_THRESHOLD);
+
+      ASSERT_REL_ERROR(ref,output,REL_ERROR);
     } 
 
     void StatsTestsF32::test_logsumexp_dot_prod_f32()
     {
       const float32_t *inpA  = inputA.ptr();
       const float32_t *inpB  = inputB.ptr();
+      const int16_t *dimsp  = dims.ptr();
 
       float32_t *refp         = ref.ptr();
       float32_t *outp         = output.ptr();
@@ -241,13 +272,15 @@ a double precision computation.
 
       for(int i=0;i < this->nbPatterns; i++)
       {
-         *outp = arm_logsumexp_dot_prod_f32(inpA,inpB,this->vecDim,tmpp);
+         *outp = arm_logsumexp_dot_prod_f32(inpA,inpB,dimsp[i+1],tmpp);
          outp++;
-         inpA += vecDim;
-         inpB += vecDim;
+         inpA += dimsp[i+1];
+         inpB += dimsp[i+1];
       }
 
-      ASSERT_NEAR_EQ(ref,output,(float32_t)1e-6);
+      ASSERT_SNR(ref,output,(float32_t)SNR_THRESHOLD);
+
+      ASSERT_REL_ERROR(ref,output,REL_ERROR);
     } 
 
    
@@ -529,7 +562,6 @@ a double precision computation.
 
                const int16_t *dimsp  = dims.ptr();
                this->nbPatterns=dimsp[0];
-               this->vecDim=dimsp[1];
             }
             break;
 
@@ -542,7 +574,6 @@ a double precision computation.
 
                const int16_t *dimsp  = dims.ptr();
                this->nbPatterns=dimsp[0];
-               this->vecDim=dimsp[1];
             }
             break;
 
@@ -556,7 +587,6 @@ a double precision computation.
 
                const int16_t *dimsp  = dims.ptr();
                this->nbPatterns=dimsp[0];
-               this->vecDim=dimsp[1];
             }
             break;
 
@@ -570,9 +600,45 @@ a double precision computation.
 
                const int16_t *dimsp  = dims.ptr();
                this->nbPatterns=dimsp[0];
-               this->vecDim=dimsp[1];
 
-               tmp.create(this->vecDim,StatsTestsF32::TMP_F32_ID,mgr);
+               /* 12 is max vecDim as defined in Python script generating the data */
+               tmp.create(12,StatsTestsF32::TMP_F32_ID,mgr);
+            }
+            break;
+
+            case StatsTestsF32::TEST_MAX_NO_IDX_F32_26:
+            {
+               inputA.reload(StatsTestsF32::INPUT1_F32_ID,mgr,3);
+              
+               ref.reload(StatsTestsF32::MAXVALS_F32_ID,mgr);
+               
+               output.create(1,StatsTestsF32::OUT_F32_ID,mgr);
+
+               refOffset = 0;
+            }
+            break;
+
+            case StatsTestsF32::TEST_MAX_NO_IDX_F32_27:
+            {
+               inputA.reload(StatsTestsF32::INPUT1_F32_ID,mgr,8);
+              
+               ref.reload(StatsTestsF32::MAXVALS_F32_ID,mgr);
+               
+               output.create(1,StatsTestsF32::OUT_F32_ID,mgr);
+
+               refOffset = 1;
+            }
+            break;
+
+            case StatsTestsF32::TEST_MAX_NO_IDX_F32_28:
+            {
+               inputA.reload(StatsTestsF32::INPUT1_F32_ID,mgr,9);
+              
+               ref.reload(StatsTestsF32::MAXVALS_F32_ID,mgr);
+               
+               output.create(1,StatsTestsF32::OUT_F32_ID,mgr);
+
+               refOffset = 2;
             }
             break;
         }
