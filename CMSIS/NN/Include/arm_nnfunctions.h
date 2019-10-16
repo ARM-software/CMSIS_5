@@ -123,20 +123,21 @@ extern    "C"
 
 /**
    * @brief Basic s8 convolution function
-   * @param[in]       input      pointer to input tensor. Range: int8, format: [H,W,in_ch]
-   * @param[in]       input_x    input tensor width
-   * @param[in]       input_y    input tensor height
-   * @param[in]       input_ch   number of input tensor channels
-   * @param[in]       kernel     pointer to kernel weights. Range: int8, format: [out_ch, H, W, in_ch]
-   * @param[in]       output_ch  number of filters, i.e., output tensor channels
-   * @param[in]       kernel_x   filter/kernel width
-   * @param[in]       kernel_y   filter/kernel height
-   * @param[in]       pad_x      padding along width
-   * @param[in]       pad_y      padding along height
-   * @param[in]       stride_x   convolution stride x
-   * @param[in]       stride_y   convolution stride y
-   * @param[in]       bias       pointer to per output channel bias. Range: int32
-   * @param[in,out]   output     pointer to output tensor. format: [H, W, out_ch]
+   * @param[in]       input           pointer to input tensor. Range: int8, format: [N,H,W,in_ch]
+   * @param[in]       input_x         input tensor width
+   * @param[in]       input_y         input tensor height
+   * @param[in]       input_ch        number of input tensor channels
+   * @param[in]       input_batches   number of input batches
+   * @param[in]       kernel          pointer to kernel weights. Range: int8, format: [out_ch, H, W, in_ch]
+   * @param[in]       output_ch       number of filters, i.e., output tensor channels
+   * @param[in]       kernel_x        filter/kernel width
+   * @param[in]       kernel_y        filter/kernel height
+   * @param[in]       pad_x           padding along width
+   * @param[in]       pad_y           padding along height
+   * @param[in]       stride_x        convolution stride x
+   * @param[in]       stride_y        convolution stride y
+   * @param[in]       bias            pointer to per output channel bias. Range: int32
+   * @param[in,out]   output          pointer to output tensor. format: [H, W, out_ch]
    * @param[in]       output_shift    pointer to per output channel requantization shift parameter.
    * @param[in]       output_mult     pointer to per output channel requantization multiplier parameter.
    * @param[in]       out_offset      output tensor offset. Range: int8
@@ -161,6 +162,7 @@ extern    "C"
                                const uint16_t input_x,
                                const uint16_t input_y,
                                const uint16_t input_ch,
+                               const uint16_t input_batches,
                                const q7_t *kernel,
                                const uint16_t output_ch,
                                const uint16_t kernel_x,
@@ -460,22 +462,23 @@ extern    "C"
 
   /**
    * @brief Fast s8 version for 1x1 convolution (non-square shape)
-   * @param[in]      input         pointer to input tensor.  Format: [H, W, in_ch]
-   * @param[in]      input_x       input tensor dimension x
-   * @param[in]      input_y       input tensor dimension y
-   * @param[in]      input_ch      number of input tensor channels
-   * @param[in]      kernel        pointer to kernel weights. Format: [out_ch, H, W, in_ch]
-   * @param[in]      output_ch     number of filters, i.e., output tensor channels
-   * @param[in]      pad_x         padding size x
-   * @param[in]      pad_y         padding size y
-   * @param[in]      stride_x      convolution stride x
-   * @param[in]      stride_y      convolution stride y
-   * @param[in]      bias          pointer to per channel bias. Range : int32
-   * @param[in,out]  output        pointer to output tensor.  Format: [H, W, out_ch]
-   * @param[in]      output_shift  pointer to per output channel requantization shift parameter.
-   * @param[in]      output_mult   pointer to per output channel requantization multiplier parameter.
-   * @param[in]      out_offset    output tensor offset. Range: int8
-   * @param[in]      input_offset input tensor offset. Range: int8
+   * @param[in]      input                pointer to input tensor.  Format: [N, H, W, in_ch]
+   * @param[in]      input_x              input tensor dimension x
+   * @param[in]      input_y              input tensor dimension y
+   * @param[in]      input_ch             number of input tensor channels
+   * @param[in]      input_batches        number of input batches
+   * @param[in]      kernel               pointer to kernel weights. Format: [out_ch, H, W, in_ch]
+   * @param[in]      output_ch            number of filters, i.e., output tensor channels
+   * @param[in]      pad_x                padding size x
+   * @param[in]      pad_y                padding size y
+   * @param[in]      stride_x             convolution stride x
+   * @param[in]      stride_y             convolution stride y
+   * @param[in]      bias                 pointer to per channel bias. Range : int32
+   * @param[in,out]  output               pointer to output tensor.  Format: [H, W, out_ch]
+   * @param[in]      output_shift         pointer to per output channel requantization shift parameter.
+   * @param[in]      output_mult          pointer to per output channel requantization multiplier parameter.
+   * @param[in]      out_offset           output tensor offset. Range: int8
+   * @param[in]      input_offset         input tensor offset. Range: int8
    * @param[in]      out_activation_min   Minimum value to clamp the output to. Range: int8
    * @param[in]      out_activation_max   Minimum value to clamp the output to. Range: int8
    * @param[in]      output_x  output tensor width
@@ -500,6 +503,7 @@ extern    "C"
                                         const uint16_t input_x,
                                         const uint16_t input_y,
                                         const uint16_t input_ch,
+                                        const uint16_t input_batches,
                                         const q7_t *kernel,
                                         const uint16_t output_ch,
                                         const uint16_t pad_x,
