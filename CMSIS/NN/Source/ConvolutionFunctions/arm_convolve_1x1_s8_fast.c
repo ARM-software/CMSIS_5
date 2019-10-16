@@ -55,6 +55,7 @@ arm_status arm_convolve_1x1_s8_fast(const q7_t *input,
                                     const uint16_t input_x,
                                     const uint16_t input_y,
                                     const uint16_t input_ch,
+                                    const uint16_t input_batches,
                                     const q7_t *kernel,
                                     const uint16_t output_ch,
                                     const uint16_t pad_x,
@@ -79,102 +80,107 @@ arm_status arm_convolve_1x1_s8_fast(const q7_t *input,
         return ARM_MATH_SIZE_MISMATCH;
     }
 
+    int i_batch;
+    for (i_batch = 0; i_batch < input_batches; i_batch++)
+    {
+        input += i_batch * (input_x * input_y * input_ch);
+        output += i_batch * (output_x * output_y * output_ch);
 #if defined(ARM_MATH_LOOPUNROLL) && defined(ARM_MATH_DSP)
-    /* Optimized version for M cores with DSP extension */
-    int16_t i_out_y, i_out_x;
-    int16_t i_ch_out;
-    (void)input_y;
+        /* Optimized version for M cores with DSP extension */
+        int16_t i_out_y, i_out_x;
+        int16_t i_ch_out;
+        (void)input_y;
 
-    /* Partial(two columns) im2col buffer */
-    q15_t *two_column_buffer = buffer_a;
-    q7_t *out = output;
+        /* Partial(two columns) im2col buffer */
+        q15_t *two_column_buffer = buffer_a;
+        q7_t *out = output;
 
-    for (i_out_y = 0; i_out_y < output_y; i_out_y++)
-    {
-        for (i_out_x = 0; i_out_x < output_x; i_out_x++)
+        for (i_out_y = 0; i_out_y < output_y; i_out_y++)
         {
-            /* Fill buffer for partial im2col */
-            arm_q7_to_q15_reordered_with_offset(input + (i_out_y * input_x + i_out_x) * input_ch,
-                                                two_column_buffer,
-                                                input_ch,
-                                                (q7_t)input_offset);
-            two_column_buffer += input_ch;
-
-            if (two_column_buffer == buffer_a + 2 * input_ch * DIM_KER_X * DIM_KER_Y)
+            for (i_out_x = 0; i_out_x < output_x; i_out_x++)
             {
-                out = arm_nn_mat_mult_kernel_s8_s16_reordered(kernel,
-                                                              buffer_a,
-                                                              output_ch,
-                                                              output_shift,
-                                                              output_mult,
-                                                              (q7_t)out_offset,
-                                                              out_activation_min,
-                                                              out_activation_max,
-                                                              input_ch * DIM_KER_Y * DIM_KER_X,
-                                                              bias, out);
-                /* counter reset */
-                two_column_buffer = buffer_a;
+                /* Fill buffer for partial im2col */
+                arm_q7_to_q15_reordered_with_offset(input + (i_out_y * input_x + i_out_x) * input_ch,
+                                                    two_column_buffer,
+                                                    input_ch,
+                                                    (q7_t)input_offset);
+                two_column_buffer += input_ch;
+
+                if (two_column_buffer == buffer_a + 2 * input_ch * DIM_KER_X * DIM_KER_Y)
+                {
+                    out = arm_nn_mat_mult_kernel_s8_s16_reordered(kernel,
+                                                                buffer_a,
+                                                                output_ch,
+                                                                output_shift,
+                                                                output_mult,
+                                                                (q7_t)out_offset,
+                                                                out_activation_min,
+                                                                out_activation_max,
+                                                                input_ch * DIM_KER_Y * DIM_KER_X,
+                                                                bias, out);
+                    /* counter reset */
+                    two_column_buffer = buffer_a;
+                }
             }
         }
-    }
 
-    /* check if there is an odd column left-over for computation */
-    if (two_column_buffer != buffer_a)
-    {
-        const q7_t *ker_a = kernel;
-        for (i_ch_out = 0; i_ch_out < output_ch; i_ch_out++)
+        /* check if there is an odd column left-over for computation */
+        if (two_column_buffer != buffer_a)
         {
-            q31_t sum = bias[i_ch_out];
-
-            /* Point to the beginning of the im2col buffer where the input is available as a rearranged column */
-            const q15_t *ip_as_col = buffer_a;
-            uint16_t col_count = (input_ch * DIM_KER_X * DIM_KER_Y) >> 2;
-
-            while (col_count)
+            const q7_t *ker_a = kernel;
+            for (i_ch_out = 0; i_ch_out < output_ch; i_ch_out++)
             {
-                q31_t ker_a1, ker_a2;
-                q31_t in_b1, in_b2;
-                ker_a = read_and_pad_reordered(ker_a, &ker_a1, &ker_a2);
+                q31_t sum = bias[i_ch_out];
 
-                in_b1 = arm_nn_read_q15x2_ia(&ip_as_col);
-                sum = __SMLAD(ker_a1, in_b1, sum);
-                in_b2 = arm_nn_read_q15x2_ia(&ip_as_col);
-                sum = __SMLAD(ker_a2, in_b2, sum);
+                /* Point to the beginning of the im2col buffer where the input is available as a rearranged column */
+                const q15_t *ip_as_col = buffer_a;
+                uint16_t col_count = (input_ch * DIM_KER_X * DIM_KER_Y) >> 2;
 
-                col_count--;
+                while (col_count)
+                {
+                    q31_t ker_a1, ker_a2;
+                    q31_t in_b1, in_b2;
+                    ker_a = read_and_pad_reordered(ker_a, &ker_a1, &ker_a2);
+
+                    in_b1 = arm_nn_read_q15x2_ia(&ip_as_col);
+                    sum = __SMLAD(ker_a1, in_b1, sum);
+                    in_b2 = arm_nn_read_q15x2_ia(&ip_as_col);
+                    sum = __SMLAD(ker_a2, in_b2, sum);
+
+                    col_count--;
+                }
+                col_count = input_ch * DIM_KER_Y * DIM_KER_X & 0x3;
+                while (col_count)
+                {
+                    q7_t ker_a1 = *ker_a++;
+                    q15_t in_b1 = *ip_as_col++;
+                    sum += ker_a1 * in_b1;
+                    col_count--;
+                }
+                sum = arm_nn_requantize(sum, output_mult[i_ch_out], output_shift[i_ch_out]);
+                sum += out_offset;
+                sum = MAX(sum, out_activation_min);
+                sum = MIN(sum, out_activation_max);
+                *out++ = (q7_t)sum;
             }
-            col_count = input_ch * DIM_KER_Y * DIM_KER_X & 0x3;
-            while (col_count)
-            {
-                q7_t ker_a1 = *ker_a++;
-                q15_t in_b1 = *ip_as_col++;
-                sum += ker_a1 * in_b1;
-                col_count--;
-            }
-            sum = arm_nn_requantize(sum, output_mult[i_ch_out], output_shift[i_ch_out]);
-            sum += out_offset;
-            sum = MAX(sum, out_activation_min);
-            sum = MIN(sum, out_activation_max);
-            *out++ = (q7_t)sum;
         }
-    }
-
 #else
-    /* Run the following code as reference implementation for M cores with no DSP extension or when loop unrolling is
-       not to be done */
-    (void)buffer_a;
-    return arm_convolve_s8(input, input_x, input_y,
-                           input_ch, kernel, output_ch,
-                           DIM_KER_X, DIM_KER_Y,
-                           pad_x, pad_y,
-                           stride_x, stride_y,
-                           bias, output,
-                           output_shift, output_mult,
-                           out_offset, input_offset,
-                           out_activation_min, out_activation_max,
-                           output_x, output_y,
-                           NULL);
+        /* Run the following code as reference implementation for M cores with no DSP extension or when loop unrolling is
+        not to be done */
+        (void)buffer_a;
+        return arm_convolve_s8(input, input_x, input_y,
+                            input_ch, input_batches, kernel, output_ch,
+                            DIM_KER_X, DIM_KER_Y,
+                            pad_x, pad_y,
+                            stride_x, stride_y,
+                            bias, output,
+                            output_shift, output_mult,
+                            out_offset, input_offset,
+                            out_activation_min, out_activation_max,
+                            output_x, output_y,
+                            NULL);
 #endif
+    }
 
     /* Return to application */
     return ARM_MATH_SUCCESS;
