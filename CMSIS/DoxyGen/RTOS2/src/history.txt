@@ -99,6 +99,12 @@
       <th>Description</th>
     </tr>
     <tr>
+      <td>V5.5.2</td>
+      <td>
+       - Fixed thread priority restore on mutex acquire timeout (when priority inherit is used).
+      </td>
+    </tr>
+    <tr>
       <td>V5.5.1</td>
       <td>
        - Fixed osMutexRelease issue (thread owning multiple mutexes).
