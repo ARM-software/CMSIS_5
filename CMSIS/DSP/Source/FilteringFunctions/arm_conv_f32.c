@@ -103,8 +103,7 @@ void arm_conv_f32(
         float32_t * pDst)
 {
 
-#if (1)
-//#if !defined(ARM_MATH_CM0_FAMILY)
+#if defined(ARM_MATH_DSP)
 
   const float32_t *pIn1;                               /* InputA pointer */
   const float32_t *pIn2;                               /* InputB pointer */
@@ -116,9 +115,11 @@ void arm_conv_f32(
         uint32_t blockSize1, blockSize2, blockSize3;   /* Loop counters */
         uint32_t j, k, count, blkCnt;                  /* Loop counters */
 
-#if defined (ARM_MATH_LOOPUNROLL) || defined(ARM_MATH_NEON)
-        float32_t acc0, acc1, acc2, acc3;              /* Accumulators */
-        float32_t x0, x1, x2, x3, c0;                  /* Temporary variables to hold state and coefficient values */
+#if defined (ARM_MATH_LOOPUNROLL)
+        float32_t acc0, acc1, acc2, acc3, c0;              /* Accumulators */
+#if !defined(ARM_MATH_NEON)
+        float32_t x0, x1, x2, x3;                  /* Temporary variables to hold state and coefficient values */
+#endif
 #endif
 
   /* The algorithm implementation is based on the lengths of the inputs. */
@@ -259,7 +260,7 @@ void arm_conv_f32(
 
 #endif /* #if defined(ARM_MATH_NEON) */
 
-#else
+#else /* defined (ARM_MATH_LOOPUNROLL) || defined(ARM_MATH_NEON) */
     /* Initialize k with number of samples */
     k = count;
 
@@ -322,9 +323,6 @@ void arm_conv_f32(
       float32x4_t c;
       float32x4_t x1v;
       float32x4_t x2v;
-      uint32x4_t x1v_u;
-      uint32x4_t x2v_u;
-      uint32x4_t x_u;
       float32x4_t x;
       float32x4_t res = vdupq_n_f32(0) ;
 #endif /* #if defined(ARM_MATH_NEON) */

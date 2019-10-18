@@ -76,8 +76,8 @@ void arm_cmplx_conj_f32(
     uint32_t numSamples)
 {
     static const float32_t cmplx_conj_sign[4] = { 1.0f, -1.0f, 1.0f, -1.0f };
-    int32_t blockSize = numSamples * CMPLX_DIM;   /* loop counters */
-    int32_t blkCnt;
+    uint32_t blockSize = numSamples * CMPLX_DIM;   /* loop counters */
+    uint32_t blkCnt;
     f32x4_t vecSrc;
     f32x4_t vecSign;
 

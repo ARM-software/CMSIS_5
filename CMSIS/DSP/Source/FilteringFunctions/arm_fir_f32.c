@@ -132,8 +132,7 @@ uint32_t blockSize)
    uint32_t numTaps = S->numTaps;                 /* Number of filter coefficients in the filter */
    uint32_t i, tapCnt, blkCnt;                    /* Loop counters */
 
-   float32x4_t accv0,accv1,samples0,samples1,x0,x1,x2,xa,xb,x,b,accv;
-   uint32x4_t x0_u,x1_u,x2_u,xa_u,xb_u;
+   float32x4_t accv0,accv1,samples0,samples1,x0,x1,x2,xa,xb,b;
    float32_t acc;
 
    /* S->pState points to state array which contains previous frame (numTaps - 1) samples */

@@ -30,16 +30,18 @@
 #include <math.h>
 
 
-__STATIC_INLINE float32_t rel_entr(float32_t x, float32_t y)
-{
-    return (x * logf(x / y));
-}
-
-
 /**
   @addtogroup FloatDist
   @{
  */
+
+#if !defined(ARM_MATH_MVEF) || defined(ARM_MATH_AUTOVECTORIZE)
+__STATIC_INLINE float32_t rel_entr(float32_t x, float32_t y)
+{
+    return (x * logf(x / y));
+}
+#endif
+
 
 #if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
 
@@ -48,7 +50,7 @@ __STATIC_INLINE float32_t rel_entr(float32_t x, float32_t y)
 
 float32_t arm_jensenshannon_distance_f32(const float32_t *pA,const float32_t *pB, uint32_t blockSize)
 {
-    int32_t         blkCnt;
+    uint32_t        blkCnt;
     float32_t       tmp;
     f32x4_t         a, b, t, tmpV, accumV;
 
@@ -134,7 +136,7 @@ float32_t arm_jensenshannon_distance_f32(const float32_t *pA,const float32_t *pB
 float32_t arm_jensenshannon_distance_f32(const float32_t *pA,const float32_t *pB, uint32_t blockSize)
 {
     float32_t accum, result, tmp,a,b;
-    uint32_t i, blkCnt;
+    uint32_t blkCnt;
     float32x4_t aV,bV,t, tmpV, accumV;
     float32x2_t accumV2;
 

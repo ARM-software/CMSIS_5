@@ -63,7 +63,7 @@ void arm_var_q31(
         uint32_t blockSize,
         q31_t * pResult)
 {
-    int32_t  blkCnt;     /* loop counters */
+    uint32_t  blkCnt;     /* loop counters */
     q31x4_t         vecSrc;
     q63_t           sumOfSquares = 0LL;
     q63_t           meanOfSquares, squareOfMean;        /* square of mean and mean of square */

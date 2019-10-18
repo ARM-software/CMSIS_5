@@ -50,7 +50,7 @@
 
 float32_t arm_cityblock_distance_f32(const float32_t *pA,const float32_t *pB, uint32_t blockSize)
 {
-    int32_t         blkCnt;
+    uint32_t        blkCnt;
     f32x4_t         a, b, accumV, tempV;
 
     accumV = vdupq_n_f32(0.0f);
@@ -93,8 +93,8 @@ float32_t arm_cityblock_distance_f32(const float32_t *pA,const float32_t *pB, ui
 
 float32_t arm_cityblock_distance_f32(const float32_t *pA,const float32_t *pB, uint32_t blockSize)
 {
-   float32_t diff=0.0f, accum=0.0f, tmpA, tmpB;
-   uint32_t i,blkCnt;
+   float32_t accum=0.0f, tmpA, tmpB;
+   uint32_t blkCnt;
    float32x4_t a,b,accumV, tempV;
    float32x2_t accumV2;
 

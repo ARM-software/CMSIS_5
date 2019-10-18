@@ -76,8 +76,8 @@ void arm_cmplx_mult_cmplx_f32(
         float32_t * pDst,
         uint32_t numSamples)
 {
-    int32_t  blkCnt;           /* loop counters */
-    int32_t blockSize = numSamples;  /* loop counters */
+    uint32_t blkCnt;           /* loop counters */
+    uint32_t blockSize = numSamples;  /* loop counters */
     float32_t a, b, c, d;  /* Temporary variables to store real and imaginary values */
 
     f32x4x2_t vecA;
@@ -140,7 +140,6 @@ void arm_cmplx_mult_cmplx_f32(
 
 #if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
     float32x4x2_t va, vb;
-    float32x4_t real, imag;
     float32x4x2_t outCplx;
 
     /* Compute 4 outputs at a time */

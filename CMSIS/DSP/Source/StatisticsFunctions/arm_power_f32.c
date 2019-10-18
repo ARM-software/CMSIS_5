@@ -66,7 +66,7 @@ void arm_power_f32(
   uint32_t blockSize,
   float32_t * pResult)
 {
-    int32_t         blkCnt;     /* loop counters */
+    uint32_t        blkCnt;     /* loop counters */
     f32x4_t         vecSrc;
     f32x4_t         sumVec = vdupq_n_f32(0.0f);
     float32_t       sum = 0.0f;

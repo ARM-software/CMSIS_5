@@ -69,7 +69,7 @@ void arm_float_to_q31(
   q31_t * pDst,
   uint32_t blockSize)
 {
-    int32_t         blkCnt;
+    uint32_t         blkCnt;
     float32_t       maxQ = (float32_t) Q31_MAX;
     f32x4_t         vecDst;
 
@@ -130,9 +130,9 @@ void arm_float_to_q31(
   const float32_t *pIn = pSrc;                         /* Src pointer */
   uint32_t blkCnt;                               /* loop counter */
 
-  float32_t in;
   float32x4_t inV;
   #ifdef ARM_MATH_ROUNDING
+  float32_t in;
   float32x4_t zeroV = vdupq_n_f32(0.0f);
   float32x4_t pHalf = vdupq_n_f32(0.5f / 2147483648.0f);
   float32x4_t mHalf = vdupq_n_f32(-0.5f / 2147483648.0f);

@@ -992,7 +992,7 @@ MSVC is not going to be used to cross-compile to ARM. So, having a MSVC
 compiler file in Core or Core_A would not make sense.
 
 */
-#if defined ( _MSC_VER ) || (__GNUC_PYTHON__)
+#if defined ( _MSC_VER ) || defined(__GNUC_PYTHON__)
     __STATIC_FORCEINLINE uint8_t __CLZ(uint32_t data)
     {
       if (data == 0U) { return 32U; }
@@ -1247,11 +1247,11 @@ __STATIC_INLINE float32_t arm_exponent_f32(float32_t x, int32_t nb)
  * @param[out] normalized   is the 32-bit normalized value
  * @param[out] norm         is norm scale
  */
-__STATIC_INLINE  void arm_norm_64_to_32u(uint64_t in, q31_t * normalized, int *norm)
+__STATIC_INLINE  void arm_norm_64_to_32u(uint64_t in, int32_t * normalized, int32_t *norm)
 {
-    q31_t     n1;
-    q31_t     hi = (q31_t) (in >> 32);
-    q31_t     lo = (q31_t) ((in << 32) >> 32);
+    int32_t     n1;
+    int32_t     hi = (int32_t) (in >> 32);
+    int32_t     lo = (int32_t) ((in << 32) >> 32);
 
     n1 = __CLZ(hi) - 32;
     if (!n1)
@@ -1266,7 +1266,7 @@ __STATIC_INLINE  void arm_norm_64_to_32u(uint64_t in, q31_t * normalized, int *n
              * MSB set, need to scale down by 1
              */
             *norm = -1;
-            *normalized = (((unsigned long) lo) >> 1);
+            *normalized = (((uint32_t) lo) >> 1);
         } else
         {
             if (n1 == 32)
@@ -1295,16 +1295,16 @@ __STATIC_INLINE  void arm_norm_64_to_32u(uint64_t in, q31_t * normalized, int *n
         /*
          * 64 bit normalization
          */
-        *normalized = (((unsigned long) lo) >> n1) | (hi << (32 - n1));
+        *normalized = (((uint32_t) lo) >> n1) | (hi << (32 - n1));
     }
 }
 
 __STATIC_INLINE q31_t arm_div_q63_to_q31(q63_t num, q31_t den)
 {
     q31_t   result;
-    q63_t   absNum;
-    q31_t   normalized;
-    q31_t   norm;
+    uint64_t   absNum;
+    int32_t   normalized;
+    int32_t   norm;
 
     /*
      * if sum fits in 32bits
@@ -8425,7 +8425,7 @@ float32_t arm_yule_distance(const uint32_t *pA, const uint32_t *pB, uint32_t num
   #define IAR_ONLY_LOW_OPTIMIZATION_ENTER
   #define IAR_ONLY_LOW_OPTIMIZATION_EXIT
        
-#elif defined ( _MSC_VER ) || (__GNUC_PYTHON__)
+#elif defined ( _MSC_VER ) || defined(__GNUC_PYTHON__)
       #define LOW_OPTIMIZATION_ENTER
       #define LOW_OPTIMIZATION_EXIT
       #define IAR_ONLY_LOW_OPTIMIZATION_ENTER 

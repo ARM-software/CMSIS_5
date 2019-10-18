@@ -57,8 +57,8 @@ void arm_cmplx_mult_cmplx_q15(
         q15_t * pDst,
         uint32_t numSamples)
 {
-  int32_t  blkCnt;           /* loop counters */
-  int32_t blockSize = numSamples * CMPLX_DIM;  /* loop counters */
+  uint32_t blkCnt;           /* loop counters */
+  uint32_t blockSize = numSamples * CMPLX_DIM;  /* loop counters */
   q15_t a, b, c, d;  
 
   q15x8_t vecA;

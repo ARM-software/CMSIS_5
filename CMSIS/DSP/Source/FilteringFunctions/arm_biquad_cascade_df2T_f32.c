@@ -65,12 +65,6 @@ void arm_biquad_cascade_df2T_f32(
    uint32_t sample, stageCnt,stage = S->numStages;         /*   loop counters   */
 
 
-   float32_t Xn2, Xn3, Xn4;                       /*  Input State variables     */
-   float32_t acc2, acc3, acc4;                    /*  accumulator               */
-
-
-   float32_t p0, p1, p2, p3, p4, A1;
-
    float32x4_t XnV, YnV;
    float32x4x2_t dV;
    float32x4_t zeroV = vdupq_n_f32(0.0);

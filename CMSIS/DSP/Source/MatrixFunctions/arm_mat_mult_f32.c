@@ -82,7 +82,6 @@ arm_status arm_mat_mult_f32(
   uint16_t numColsA = pSrcA->numCols;            /* number of columns of input matrix A */
 
 
-  float32_t in1, in2, in3, in4;
   uint16_t col, i = 0U, j, row = numRowsA, rowCnt, colCnt;      /* loop counters */
   arm_status status;                             /* status of matrix multiplication */
 

@@ -59,6 +59,7 @@ a double precision computation.
         for(i=0; i < ref.nbSamples(); i++)
         {
            status=arm_sqrt_q15(inp[i],&outp[i]);
+           ASSERT_TRUE((status == ARM_MATH_SUCCESS) || ((inp[i] <= 0) && (status == ARM_MATH_ARGUMENT_ERROR)));
         }
 
         ASSERT_SNR(ref,output,(float32_t)SNR_THRESHOLD);

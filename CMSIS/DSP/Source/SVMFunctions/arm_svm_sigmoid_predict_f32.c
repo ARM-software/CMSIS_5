@@ -61,8 +61,8 @@ void arm_svm_sigmoid_predict_f32(
     const float32_t *pSrcA = pSupport;
     const float32_t *pInA0;
     const float32_t *pInA1;
-    int32_t         row;
-    int32_t         blkCnt;     /* loop counters */
+    uint32_t         row;
+    uint32_t         blkCnt;     /* loop counters */
     const float32_t *pDualCoef = S->dualCoefficients;
     float32_t       sum = S->intercept;
     f32x4_t         vSum = vdupq_n_f32(0.0f);
@@ -462,12 +462,13 @@ void arm_svm_sigmoid_predict_f32(
 {
     float32_t sum=S->intercept;
     float32_t dot=0;
+    uint32_t i,j;
     const float32_t *pSupport = S->supportVectors;
 
-    for(int i=0; i < S->nbOfSupportVectors; i++)
+    for(i=0; i < S->nbOfSupportVectors; i++)
     {
         dot=0;
-        for(int j=0; j < S->vectorDimension; j++)
+        for(j=0; j < S->vectorDimension; j++)
         {
             dot = dot + in[j]* *pSupport++;
         }

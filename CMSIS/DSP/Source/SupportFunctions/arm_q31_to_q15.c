@@ -56,7 +56,7 @@ void arm_q31_to_q15(
         q15_t * pDst,
         uint32_t blockSize)
 {
-    int32_t  blkCnt;           /* loop counters */
+    uint32_t  blkCnt;           /* loop counters */
     q31x4x2_t tmp;
     q15x8_t vecDst;
     q31_t const *pSrcVec;

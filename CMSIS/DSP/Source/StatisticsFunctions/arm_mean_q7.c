@@ -60,7 +60,7 @@ void arm_mean_q7(
         uint32_t blockSize,
         q7_t * pResult)
 {
-    int32_t  blkCnt;           /* loop counters */
+    uint32_t  blkCnt;           /* loop counters */
     q7x16_t vecSrc;
     q31_t     sum = 0L;
 

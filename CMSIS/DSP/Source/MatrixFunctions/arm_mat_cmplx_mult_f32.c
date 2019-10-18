@@ -75,7 +75,6 @@ arm_status arm_mat_cmplx_mult_f32(
   uint16_t numColsB = pSrcB->numCols;            /* number of columns of input matrix B */
   uint16_t numColsA = pSrcA->numCols;            /* number of columns of input matrix A */
   float32_t sumReal1, sumImag1;                  /* accumulator */
-  float32_t a0, b0, c0, d0;
   float32_t a1, a1B,b1, b1B, c1, d1;
   float32_t sumReal2, sumImag2;                  /* accumulator */
 

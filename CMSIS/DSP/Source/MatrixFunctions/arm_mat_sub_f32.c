@@ -69,9 +69,6 @@ arm_status arm_mat_sub_f32(
   float32_t *pOut = pDst->pData;                 /* output data matrix pointer  */
 
 
-  float32_t inA1, inA2, inB1, inB2, out1, out2;  /* temporary variables */
-
-
   uint32_t numSamples;                           /* total number of elements in the matrix  */
   uint32_t blkCnt;                               /* loop counters */
   arm_status status;                             /* status of matrix subtraction */

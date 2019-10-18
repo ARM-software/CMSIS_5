@@ -55,9 +55,9 @@ static void arm_small_blk_max_q7(
     q7_t * pResult,
     uint32_t * pIndex)
 {
-    int32_t  blkCnt;           /* loop counters */
-    q7x16_t        vecSrc;
-    q7x16_t        curExtremValVec = vdupq_n_s8( Q7_MIN);
+    uint32_t        blkCnt;           /* loop counters */
+    q7x16_t         vecSrc;
+    q7x16_t         curExtremValVec = vdupq_n_s8( Q7_MIN);
     q7_t            maxValue = Q7_MIN, temp;
     uint32_t        idx = blockSize;
     uint8x16_t      indexVec;

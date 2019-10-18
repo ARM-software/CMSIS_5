@@ -57,8 +57,8 @@ void arm_cmplx_conj_q31(
         uint32_t numSamples)
 {
 
-    int32_t blockSize = numSamples * CMPLX_DIM;   /* loop counters */
-    int32_t blkCnt;
+    uint32_t blockSize = numSamples * CMPLX_DIM;   /* loop counters */
+    uint32_t blkCnt;
     q31x4_t vecSrc;
     q31x4_t vecSign;
     q31_t in;                                      /* Temporary input variable */

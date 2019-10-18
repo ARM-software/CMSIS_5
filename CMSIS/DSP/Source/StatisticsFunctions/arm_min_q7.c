@@ -56,7 +56,7 @@ static void arm_small_blk_min_q7(
     q7_t * pResult,
     uint32_t * pIndex)
 {
-    int32_t  blkCnt;           /* loop counters */
+    uint32_t  blkCnt;           /* loop counters */
     q7x16_t        vecSrc;
     q7x16_t        curExtremValVec = vdupq_n_s8(Q7_MAX);
     q7_t            minValue = Q7_MAX,temp;

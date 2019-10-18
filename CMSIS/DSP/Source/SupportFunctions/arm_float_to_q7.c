@@ -64,7 +64,7 @@ void arm_float_to_q7(
   q7_t * pDst,
   uint32_t blockSize)
 {
-    int32_t         blkCnt;     /* loop counters */
+    uint32_t         blkCnt;     /* loop counters */
     float32_t       maxQ = powf(2.0, 7);
     f32x4x4_t       tmp;
     q15x8_t         evVec, oddVec;
@@ -142,9 +142,9 @@ void arm_float_to_q7(
   const float32_t *pIn = pSrc;                         /* Src pointer */
   uint32_t blkCnt;                               /* loop counter */
 
-  float32_t in;
   float32x4_t inV;
   #ifdef ARM_MATH_ROUNDING
+  float32_t in;
   float32x4_t zeroV = vdupq_n_f32(0.0f);
   float32x4_t pHalf = vdupq_n_f32(0.5f / 128.0f);
   float32x4_t mHalf = vdupq_n_f32(-0.5f / 128.0f);
@@ -152,7 +152,6 @@ void arm_float_to_q7(
   uint32x4_t cmp;
   #endif
 
-  int32x4_t cvt;
   int16x4_t cvt1,cvt2;
   int8x8_t outV;
 

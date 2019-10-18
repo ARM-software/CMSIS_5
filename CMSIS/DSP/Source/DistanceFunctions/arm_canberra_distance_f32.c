@@ -57,8 +57,8 @@
 
 float32_t arm_canberra_distance_f32(const float32_t *pA,const float32_t *pB, uint32_t blockSize)
 {
-      float32_t       accum = 0.0f;
-    int32_t         blkCnt;
+    float32_t       accum = 0.0f;
+    uint32_t         blkCnt;
     f32x4_t         a, b, c, accumV;
 
     accumV = vdupq_n_f32(0.0f);
@@ -132,8 +132,8 @@ float32_t arm_canberra_distance_f32(const float32_t *pA,const float32_t *pB, uin
 float32_t arm_canberra_distance_f32(const float32_t *pA,const float32_t *pB, uint32_t blockSize)
 {
    float32_t accum=0.0f, tmpA, tmpB,diff,sum;
-   uint32_t i,blkCnt;
-   float32x4_t a,b,c,d,accumV;
+   uint32_t blkCnt;
+   float32x4_t a,b,c,accumV;
    float32x2_t accumV2;
    int32x4_t   isZeroV;
    float32x4_t zeroV = vdupq_n_f32(0.0f);

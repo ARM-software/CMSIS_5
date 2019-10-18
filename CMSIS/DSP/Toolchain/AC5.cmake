@@ -36,6 +36,10 @@ function(compilerSpecificCompileOptions PROJECTNAME ROOT)
         target_compile_options(${PROJECTNAME} PUBLIC "--fpu=FPv5_D16")
         target_compile_options(${PROJECTNAME} PUBLIC "--thumb")
   endif()
+
+  if (ARM_CPU STREQUAL "Cortex-A5.neon" )
+        target_compile_options(${PROJECTNAME} PUBLIC "--fp16_format=ieee")
+  endif()
   
 
   if(EXPERIMENTAL)

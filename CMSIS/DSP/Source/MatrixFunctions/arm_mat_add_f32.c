@@ -75,7 +75,6 @@ arm_status arm_mat_add_f32(
   float32_t *pIn2 = pSrcB->pData;                /* input data matrix pointer B  */
   float32_t *pOut = pDst->pData;                 /* output data matrix pointer   */
 
-  float32_t inA1, inA2, inB1, inB2, out1, out2;  /* temporary variables */
 
   uint32_t numSamples;                           /* total number of elements in the matrix  */
   uint32_t blkCnt;                               /* loop counters */

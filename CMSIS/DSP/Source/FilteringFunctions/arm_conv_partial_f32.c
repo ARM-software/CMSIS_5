@@ -86,10 +86,7 @@ arm_status arm_conv_partial_f32(
         uint32_t firstIndex,
         uint32_t numPoints)
 {
-
-#if (1)
-//#if !defined(ARM_MATH_CM0_FAMILY)
-
+#if defined (ARM_MATH_DSP)
   const float32_t *pIn1 = pSrcA;                       /* InputA pointer */
   const float32_t *pIn2 = pSrcB;                       /* InputB pointer */
         float32_t *pOut = pDst;                        /* Output pointer */
@@ -98,7 +95,7 @@ arm_status arm_conv_partial_f32(
   const float32_t *pSrc1, *pSrc2;                      /* Intermediate pointers */
         float32_t sum;                                 /* Accumulator */
         uint32_t j, k, count, blkCnt, check;
-        int32_t blockSize1, blockSize2, blockSize3;    /* Loop counters */
+        uint32_t blockSize1, blockSize2, blockSize3;    /* Loop counters */
         arm_status status;                             /* Status of Partial convolution */
 
 #if defined (ARM_MATH_LOOPUNROLL)
@@ -667,8 +664,7 @@ arm_status arm_conv_partial_f32(
   /* Return to application */
   return (status);
 
-#endif /* #if !defined(ARM_MATH_CM0_FAMILY) */
-
+#endif /* defined(ARM_MATH_DSP) */
 }
 
 /**

@@ -64,8 +64,8 @@ void arm_cmplx_mult_real_q15(
   q15x8_t cmplxVec;
   q15x8_t dstVec;
   uint16x8_t strideVec;
-  int32_t blockSizeC = numSamples * CMPLX_DIM;   /* loop counters */
-  int32_t blkCnt;
+  uint32_t blockSizeC = numSamples * CMPLX_DIM;   /* loop counters */
+  uint32_t blkCnt;
   q15_t in;  
 
   /*

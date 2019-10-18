@@ -266,6 +266,7 @@ arm_status arm_mat_mult_q15(
         uint16_t numRowsA = pSrcA->numRows;            /* Number of rows of input matrix A    */
         uint32_t col, i = 0U, row = numRowsA, colCnt;  /* Loop counters */
         arm_status status;                             /* Status of matrix multiplication */
+        (void)pState;
 
 #ifdef ARM_MATH_MATRIX_CHECK
 

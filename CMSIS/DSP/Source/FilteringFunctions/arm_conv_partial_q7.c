@@ -64,8 +64,7 @@ arm_status arm_conv_partial_q7(
         uint32_t numPoints)
 {
 
-#if (1)
-//#if !defined(ARM_MATH_CM0_FAMILY)
+#if ARM_MATH_DSP
 
   const q7_t *pIn1;                                    /* InputA pointer */
   const q7_t *pIn2;                                    /* InputB pointer */
@@ -75,7 +74,7 @@ arm_status arm_conv_partial_q7(
   const q7_t *pSrc1, *pSrc2;                           /* Intermediate pointers */
         q31_t sum;                                     /* Accumulator */
         uint32_t j, k, count, blkCnt, check;           /* Loop counters */
-        int32_t blockSize1, blockSize2, blockSize3;    /* Loop counters */
+        uint32_t blockSize1, blockSize2, blockSize3;    /* Loop counters */
         arm_status status;                             /* Status of Partial convolution */
 
 #if defined (ARM_MATH_LOOPUNROLL)

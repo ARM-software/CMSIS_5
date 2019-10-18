@@ -55,7 +55,7 @@ uint32_t arm_gaussian_naive_bayes_predict_f32(const arm_gaussian_naive_bayes_ins
    const float32_t * in, 
    float32_t *pBuffer)
 {
-    int             nbClass;
+    uint32_t         nbClass;
     const float32_t *pTheta = S->theta;
     const float32_t *pSigma = S->sigma;
     float32_t      *buffer = pBuffer;
@@ -79,7 +79,7 @@ uint32_t arm_gaussian_naive_bayes_predict_f32(const arm_gaussian_naive_bayes_ins
         vacc1 = vdupq_n_f32(0);
         vacc2 = vdupq_n_f32(0);
 
-        int32_t         blkCnt =S->vectorDimension >> 2;
+        uint32_t         blkCnt =S->vectorDimension >> 2;
         while (blkCnt > 0U) {
             f32x4_t         vinvSigma, vtmp;
 
@@ -145,8 +145,7 @@ uint32_t arm_gaussian_naive_bayes_predict_f32(const arm_gaussian_naive_bayes_ins
    const float32_t * in, 
    float32_t *pBuffer)
 {
-    int nbClass;
-    int nbDim;
+    
     const float32_t *pPrior = S->classPriors;
 
     const float32_t *pTheta = S->theta;
@@ -338,8 +337,8 @@ uint32_t arm_gaussian_naive_bayes_predict_f32(const arm_gaussian_naive_bayes_ins
    const float32_t * in, 
    float32_t *pBuffer)
 {
-    int nbClass;
-    int nbDim;
+    uint32_t nbClass;
+    uint32_t nbDim;
     const float32_t *pPrior = S->classPriors;
     const float32_t *pTheta = S->theta;
     const float32_t *pSigma = S->sigma;

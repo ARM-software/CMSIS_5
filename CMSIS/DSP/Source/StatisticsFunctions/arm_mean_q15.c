@@ -59,7 +59,7 @@ void arm_mean_q15(
         uint32_t blockSize,
         q15_t * pResult)
 {
-    int32_t  blkCnt;           /* loop counters */
+    uint32_t  blkCnt;           /* loop counters */
     q15x8_t  vecSrc;
     q31_t     sum = 0L;
 

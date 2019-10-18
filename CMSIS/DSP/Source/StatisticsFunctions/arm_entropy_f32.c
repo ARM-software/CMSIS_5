@@ -51,7 +51,7 @@
 
 float32_t arm_entropy_f32(const float32_t * pSrcA,uint32_t blockSize)
 {
-    int32_t         blkCnt;
+    uint32_t        blkCnt;
     float32_t       accum=0.0f,p;
 
 

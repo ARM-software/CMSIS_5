@@ -55,7 +55,7 @@ void arm_max_q15(
         q15_t * pResult,
         uint32_t * pIndex)
 {
-    int32_t  blkCnt;           /* loop counters */
+    uint32_t blkCnt;           /* loop counters */
     q15x8_t vecSrc;
     q15x8_t curExtremValVec = vdupq_n_s16(Q15_MIN);
     q15_t maxValue = Q15_MIN, temp;

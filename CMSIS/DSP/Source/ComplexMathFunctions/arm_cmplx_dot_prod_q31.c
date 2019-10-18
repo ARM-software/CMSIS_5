@@ -64,8 +64,8 @@ void arm_cmplx_dot_prod_q31(
         q63_t * realResult,
         q63_t * imagResult)
 {
-    int32_t blockSize = numSamples * CMPLX_DIM;  /* loop counters */
-    int32_t blkCnt;
+    uint32_t blockSize = numSamples * CMPLX_DIM;  /* loop counters */
+    uint32_t blkCnt;
     q31x4_t vecSrcA, vecSrcB;
     q63_t accReal = 0LL; 
     q63_t accImag = 0LL;

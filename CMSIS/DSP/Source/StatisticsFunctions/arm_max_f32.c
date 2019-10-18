@@ -149,7 +149,7 @@ void arm_max_f32(
   float32_t * pResult,
   uint32_t * pIndex)
 {
-  float32_t maxVal1, maxVal2, out;               /* Temporary variables to store the output value. */
+  float32_t maxVal1, out;               /* Temporary variables to store the output value. */
   uint32_t blkCnt, outIndex, count;              /* loop counter */
 
   float32x4_t outV, srcV;

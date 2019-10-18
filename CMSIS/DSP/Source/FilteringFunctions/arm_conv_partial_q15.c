@@ -76,7 +76,7 @@ arm_status arm_conv_partial_q15(
   const q15_t *py;                                     /* Intermediate inputB pointer */
   const q15_t *pSrc1, *pSrc2;                          /* Intermediate pointers */
         q31_t x0, x1, x2, x3, c0;                      /* Temporary input variables to hold state and coefficient values */
-        int32_t blockSize1, blockSize2, blockSize3;    /* Loop counters */
+        uint32_t blockSize1, blockSize2, blockSize3;    /* Loop counters */
         uint32_t j, k, count, blkCnt, check;
         arm_status status;                             /* Status of Partial convolution */
 

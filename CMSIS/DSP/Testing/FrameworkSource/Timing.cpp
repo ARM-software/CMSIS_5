@@ -149,7 +149,7 @@ Testing::cycles_t getCycles()
 #ifdef CORTEXA
     unsigned int value;
     // Read CCNT Register
-    asm volatile ("MRC p15, 0, %0, c9, c13, 0\t\n":"=r" (value));
+    __get_CP(15, 0, value, 9, 13, 0);
     return(value - startCycles);
 #endif
 

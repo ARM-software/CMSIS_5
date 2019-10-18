@@ -56,7 +56,7 @@ void arm_min_q15(
         q15_t * pResult,
         uint32_t * pIndex)
 {
-    int32_t  blkCnt;           /* loop counters */
+    uint32_t  blkCnt;           /* loop counters */
     q15x8_t vecSrc;
     q15x8_t curExtremValVec = vdupq_n_s16(Q15_MAX);
     q15_t minValue = Q15_MAX,temp;

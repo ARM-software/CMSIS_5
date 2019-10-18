@@ -79,8 +79,8 @@ void arm_cmplx_mult_real_f32(
 {
     const static uint32_t stride_cmplx_x_real_32[4] = { 0, 0, 1, 1 };
 
-    int32_t blockSizeC = numSamples * CMPLX_DIM;   /* loop counters */
-    int32_t blkCnt;
+    uint32_t blockSizeC = numSamples * CMPLX_DIM;   /* loop counters */
+    uint32_t blkCnt;
     f32x4_t rVec;
     f32x4_t cmplxVec;
     f32x4_t dstVec;

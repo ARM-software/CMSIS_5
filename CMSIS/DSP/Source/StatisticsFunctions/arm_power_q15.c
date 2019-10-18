@@ -60,7 +60,7 @@ void arm_power_q15(
         uint32_t blockSize,
         q63_t * pResult)
 {
-    int32_t  blkCnt;           /* loop counters */
+    uint32_t  blkCnt;           /* loop counters */
     q15x8_t vecSrc;
     q63_t     sum = 0LL;
     q15_t in;

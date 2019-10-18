@@ -141,18 +141,15 @@ void arm_fir_interpolate_f32(
   float32_t *ptr1;                               /* Temporary pointers for state buffer */
   const float32_t *ptr2;                         /* Temporary pointers for coefficient buffer */
   float32_t sum0;                                /* Accumulators */
-  float32_t x0, c0;                              /* Temporary variables to hold state and coefficient values */
+  float32_t c0;                              /* Temporary variables to hold state and coefficient values */
   uint32_t i, blkCnt, j;                         /* Loop counters */
   uint16_t phaseLen = S->phaseLength, tapCnt;    /* Length of each polyphase filter component */
-  float32_t acc0, acc1, acc2, acc3;
-  float32_t x1, x2, x3;
   uint32_t blkCntN4;
   float32_t c1, c2, c3;
 
   float32x4_t sum0v;
-  float32x4_t accV,accV0,accV1;
+  float32x4_t accV0,accV1;
   float32x4_t x0v,x1v,x2v,xa,xb;
-  uint32x4_t x0v_u,x1v_u,x2v_u,xa_u,xb_u;
   float32x2_t tempV;
 
   /* S->pState buffer contains previous frame (phaseLen - 1) samples */

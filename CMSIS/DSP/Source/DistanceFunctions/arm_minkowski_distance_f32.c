@@ -54,7 +54,7 @@
 
 float32_t arm_minkowski_distance_f32(const float32_t *pA,const float32_t *pB, int32_t order, uint32_t blockSize)
 {
-    int32_t         blkCnt;
+    uint32_t        blkCnt;
     f32x4_t         a, b, tmpV, accumV, sumV;
 
     sumV = vdupq_n_f32(0.0f);
@@ -100,8 +100,8 @@ float32_t arm_minkowski_distance_f32(const float32_t *pA,const float32_t *pB, in
 
 float32_t arm_minkowski_distance_f32(const float32_t *pA,const float32_t *pB, int32_t order, uint32_t blockSize)
 {
-    float32_t sum,diff;
-    uint32_t i, blkCnt;
+    float32_t sum;
+    uint32_t blkCnt;
     float32x4_t sumV,aV,bV, tmpV, n;
     float32x2_t sumV2;
 

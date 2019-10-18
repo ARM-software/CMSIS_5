@@ -52,7 +52,7 @@
 
 float32_t arm_chebyshev_distance_f32(const float32_t *pA,const float32_t *pB, uint32_t blockSize)
 {
-    int32_t         blkCnt;     /* loop counters */
+    uint32_t        blkCnt;     /* loop counters */
     f32x4_t         vecA, vecB;
     f32x4_t         vecDiff = vdupq_n_f32(0.0);
     float32_t       maxValue = 0.0;
@@ -104,7 +104,7 @@ float32_t arm_chebyshev_distance_f32(const float32_t *pA,const float32_t *pB, ui
 float32_t arm_chebyshev_distance_f32(const float32_t *pA,const float32_t *pB, uint32_t blockSize)
 {
    float32_t diff=0.0f, maxVal=0.0f, tmpA, tmpB;
-   uint32_t i,blkCnt;
+   uint32_t blkCnt;
    float32x4_t a,b,diffV, maxValV;
    float32x2_t maxValV2;
 

@@ -71,7 +71,7 @@ arm_status arm_conv_partial_fast_q31(
   const q31_t *pSrc1, *pSrc2;                          /* Intermediate pointers */
         q31_t sum;                                     /* Accumulators */
         uint32_t j, k, count, check, blkCnt;
-        int32_t blockSize1, blockSize2, blockSize3;    /* Loop counters */
+        uint32_t blockSize1, blockSize2, blockSize3;    /* Loop counters */
         arm_status status;                             /* Status of Partial convolution */
 
 #if defined (ARM_MATH_LOOPUNROLL)

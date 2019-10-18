@@ -56,8 +56,8 @@ void arm_cmplx_conj_q15(
         q15_t * pDst,
         uint32_t numSamples)
 {
-    int32_t blockSize = numSamples * CMPLX_DIM;   /* loop counters */
-    int32_t blkCnt;
+    uint32_t blockSize = numSamples * CMPLX_DIM;   /* loop counters */
+    uint32_t blkCnt;
     q31_t in1; 
 
     q15x8_t vecSrc;

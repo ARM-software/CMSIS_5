@@ -103,7 +103,7 @@ void FUNC(EXT)(const uint32_t *pA
     const uint8_t  *pB8 = (const uint8_t *) pB;
 
     /* handle vector blocks */
-    int32_t         blkCnt = numberOfBools / 128;
+    uint32_t         blkCnt = numberOfBools / 128;
 
 
 

@@ -55,7 +55,7 @@ void arm_max_q31(
         q31_t * pResult,
         uint32_t * pIndex)
 {
-    int32_t  blkCnt;           /* loop counters */
+    uint32_t  blkCnt;           /* loop counters */
     q31x4_t vecSrc;
     q31x4_t curExtremValVec = vdupq_n_s32( Q31_MIN);
     q31_t maxValue = Q31_MIN;

@@ -83,8 +83,8 @@ void arm_cmplx_dot_prod_f32(
     float32_t * realResult,
     float32_t * imagResult)
 {
-    int32_t blockSize = numSamples * CMPLX_DIM;  /* loop counters */
-    int32_t blkCnt;
+    uint32_t blockSize = numSamples * CMPLX_DIM;  /* loop counters */
+    uint32_t blkCnt;
     float32_t real_sum, imag_sum;
     f32x4_t vecSrcA, vecSrcB;
     f32x4_t vec_acc = vdupq_n_f32(0.0f);

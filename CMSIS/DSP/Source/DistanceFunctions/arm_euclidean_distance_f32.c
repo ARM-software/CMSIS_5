@@ -51,7 +51,7 @@
 #include "arm_vec_math.h"
 float32_t arm_euclidean_distance_f32(const float32_t *pA,const float32_t *pB, uint32_t blockSize)
 {
-    int32_t         blkCnt;
+    uint32_t        blkCnt;
     float32_t       tmp;
     f32x4_t         a, b, accumV, tempV;
 
@@ -96,7 +96,7 @@ float32_t arm_euclidean_distance_f32(const float32_t *pA,const float32_t *pB, ui
 float32_t arm_euclidean_distance_f32(const float32_t *pA,const float32_t *pB, uint32_t blockSize)
 {
    float32_t accum=0.0f,tmp;
-   uint32_t i,blkCnt;
+   uint32_t blkCnt;
    float32x4_t a,b,accumV;
    float32x2_t accumV2;
 

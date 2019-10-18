@@ -67,7 +67,7 @@ void arm_min_f32(
   float32_t * pResult,
   uint32_t * pIndex)
 {
-    int32_t  blkCnt;           /* loop counters */
+    uint32_t  blkCnt;           /* loop counters */
     f32x4_t vecSrc;
     float32_t const *pSrcVec;
     f32x4_t curExtremValVec = vdupq_n_f32(F32_MAX);
@@ -151,7 +151,7 @@ void arm_min_f32(
   float32_t * pResult,
   uint32_t * pIndex)
 {
-  float32_t maxVal1, maxVal2, out;               /* Temporary variables to store the output value. */
+  float32_t maxVal1, out;               /* Temporary variables to store the output value. */
   uint32_t blkCnt, outIndex, count;              /* loop counter */
 
   float32x4_t outV, srcV;

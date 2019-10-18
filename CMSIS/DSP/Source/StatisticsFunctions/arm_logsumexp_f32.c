@@ -125,7 +125,6 @@ float32_t arm_logsumexp_f32(const float32_t *in, uint32_t blockSize)
     float32_t maxVal;
     float32_t tmp;
     float32x4_t tmpV, tmpVb;
-    float32x2_t tmpV2;
     float32x4_t maxValV;
     uint32x4_t idxV;
     float32x4_t accumV;

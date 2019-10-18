@@ -60,7 +60,7 @@ void arm_q31_to_float(
         float32_t * pDst,
         uint32_t blockSize)
 {
-    int32_t  blkCnt;           /* loop counters */
+    uint32_t  blkCnt;           /* loop counters */
     q31x4_t vecDst;
     q31_t const *pSrcVec;
 
