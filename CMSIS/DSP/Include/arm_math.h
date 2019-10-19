@@ -1282,7 +1282,7 @@ __STATIC_INLINE q31_t arm_div_q63_to_q31(q63_t num, q31_t den)
     q31_t   result;
     q63_t   absNum;
     q31_t   normalized;
-    q31_t   norm;
+    int     norm;
 
     /*
      * if sum fits in 32bits
