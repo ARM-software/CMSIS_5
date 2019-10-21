@@ -26,6 +26,10 @@ if (NEON OR NEONEXPERIMENTAL)
     target_include_directories(${project} PRIVATE "${root}/CMSIS/DSP/ComputeLibrary/Include")
 endif()
 
+if (FLOAT16)
+    target_compile_definitions(${project} PRIVATE ARM_MATH_FLOAT16) 
+endif()
+
 
 
 endfunction()

@@ -385,17 +385,31 @@ extern "C"
 
 #define F64_MAX   DBL_MAX
 #define F32_MAX   FLT_MAX
+
+#if defined(ARM_MATH_FLOAT16)
 #define F16_MAX   (float16_t)FLT_MAX
+#endif
+
 #define F64_MIN   -DBL_MAX
 #define F32_MIN   -FLT_MAX
+
+#if defined(ARM_MATH_FLOAT16)
 #define F16_MIN   -(float16_t)FLT_MAX
+#endif
 
 #define F64_ABSMAX   DBL_MAX
 #define F32_ABSMAX   FLT_MAX
+
+#if defined(ARM_MATH_FLOAT16)
 #define F16_ABSMAX   (float16_t)FLT_MAX
+#endif
+
 #define F64_ABSMIN   (float64_t)0.0
 #define F32_ABSMIN   (float32_t)0.0
+
+#if defined(ARM_MATH_FLOAT16)
 #define F16_ABSMIN   (float16_t)0.0
+#endif
 
 #define Q31_MAX   (0x7FFFFFFFL)
 #define Q15_MAX   (0x7FFF)
@@ -422,10 +436,12 @@ extern "C"
 
 #if defined (ARM_MATH_HELIUM)
   #define ARM_MATH_MVEF
+  #define ARM_MATH_FLOAT16
 #endif
 
 #if defined (ARM_MATH_MVEF)
   #define ARM_MATH_MVEI
+  #define ARM_MATH_FLOAT16
 #endif
 
 #if defined (ARM_MATH_HELIUM) || defined(ARM_MATH_MVEF) || defined(ARM_MATH_MVEI)
@@ -608,10 +624,12 @@ extern "C"
    */
   typedef float32x4_t f32x4_t;
 
+#if defined(ARM_MATH_FLOAT16)
   /**
    * @brief 16-bit floating-point 128-bit vector data type
    */
   typedef __ALIGNED(2) float16x8_t f16x8_t;
+#endif
 
   /**
    * @brief 32-bit floating-point 128-bit vector pair data type
@@ -623,6 +641,7 @@ extern "C"
    */
   typedef float32x4x4_t f32x4x4_t;
 
+#if defined(ARM_MATH_FLOAT16)
   /**
    * @brief 16-bit floating-point 128-bit vector pair data type
    */
@@ -632,6 +651,7 @@ extern "C"
    * @brief 16-bit floating-point 128-bit vector quadruplet data type
    */
   typedef float16x8x4_t f16x8x4_t;
+#endif
 
   /**
    * @brief 32-bit ubiquitous 128-bit vector data type
@@ -642,6 +662,7 @@ extern "C"
       int32x4_t       i;
   } any32x4_t;
 
+#if defined(ARM_MATH_FLOAT16)
   /**
    * @brief 16-bit ubiquitous 128-bit vector data type
    */
@@ -650,6 +671,7 @@ extern "C"
       float16x8_t     f;
       int16x8_t       i;
   } any16x8_t;
+#endif
 
 #endif
 
@@ -674,21 +696,24 @@ extern "C"
    */
   typedef float32x2_t  f32x2_t;
 
+#if defined(ARM_MATH_FLOAT16)
   /**
    * @brief 16-bit float 64-bit vector data type.
    */
   typedef  __ALIGNED(2) float16x4_t f16x4_t;
+#endif 
 
   /**
    * @brief 32-bit floating-point 128-bit vector triplet data type
    */
   typedef float32x4x3_t f32x4x3_t;
 
+#if defined(ARM_MATH_FLOAT16)
   /**
    * @brief 16-bit floating-point 128-bit vector triplet data type
    */
   typedef float16x8x3_t f16x8x3_t;
-
+#endif
 
   /**
    * @brief 32-bit fractional 128-bit vector triplet data type in 1.31 format
@@ -720,6 +745,7 @@ extern "C"
    */
   typedef float32x2x4_t f32x2x4_t;
 
+#if defined(ARM_MATH_FLOAT16)
   /**
    * @brief 16-bit floating-point 64-bit vector pair data type
    */
@@ -734,6 +760,7 @@ extern "C"
    * @brief 16-bit floating-point 64-bit vector quadruplet data type
    */
   typedef float16x4x4_t f16x4x4_t;
+#endif 
 
   /**
    * @brief 32-bit fractional 64-bit vector pair data type in 1.31 format
@@ -789,6 +816,7 @@ extern "C"
       int32x2_t       i;
   } any32x2_t;
 
+#if defined(ARM_MATH_FLOAT16)
   /**
    * @brief 16-bit ubiquitous 64-bit vector data type
    */
@@ -797,6 +825,7 @@ extern "C"
       float16x4_t     f;
       int16x4_t       i;
   } any16x4_t;
+#endif 
 
   /**
    * @brief 32-bit status 64-bit vector data type.

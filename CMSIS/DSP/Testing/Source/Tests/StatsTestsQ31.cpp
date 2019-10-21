@@ -12,8 +12,8 @@ Reference patterns are generated with
 a double precision computation.
 
 */
-#define ABS_ERROR_Q31 100
-#define ABS_ERROR_Q63 (1<<18)
+#define ABS_ERROR_Q31 ((q31_t)(100))
+#define ABS_ERROR_Q63 ((q63_t)(1<<18))
 
     void StatsTestsQ31::test_max_q31()
     {
