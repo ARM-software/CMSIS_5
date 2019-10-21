@@ -86,10 +86,12 @@ void osRtxMutexOwnerRestore (const os_mutex_t *mutex, const os_thread_t *thread_
     thread   = mutex->owner_thread;
     priority = thread->priority_base;
     mutex0   = thread->mutex_list;
-    while (mutex0 != NULL) {
-      // Mutexes owned by Thread
+    // Check Mutexes owned by Thread
+    do {
+      // Check Threads waiting for Mutex
       thread0 = mutex0->thread_list;
-      while ((thread0 != NULL) && (thread0 == thread_wakeup)) {
+      if (thread0 == thread_wakeup) {
+        // Skip thread that is waken-up
         thread0 = thread0->thread_next;
       }
       if ((thread0 != NULL) && (thread0->priority > priority)) {
@@ -97,7 +99,7 @@ void osRtxMutexOwnerRestore (const os_mutex_t *mutex, const os_thread_t *thread_
         priority = thread0->priority;
       }
       mutex0 = mutex0->owner_next;
-    }
+    } while (mutex0 != NULL);
     if (thread->priority != priority) {
       thread->priority = priority;
       osRtxThreadListSort(thread);
@@ -337,8 +339,8 @@ static osStatus_t svcRtxMutexRelease (osMutexId_t mutex_id) {
     if ((mutex->attr & osMutexPrioInherit) != 0U) {
       priority = thread->priority_base;
       mutex0   = thread->mutex_list;
+      // Check mutexes owned by running Thread
       while (mutex0 != NULL) {
-        // Mutexes owned by running Thread
         if ((mutex0->thread_list != NULL) && (mutex0->thread_list->priority > priority)) {
           // Higher priority Thread is waiting for Mutex
           priority = mutex0->thread_list->priority;
@@ -429,8 +431,8 @@ static osStatus_t svcRtxMutexDelete (osMutexId_t mutex_id) {
     if ((mutex->attr & osMutexPrioInherit) != 0U) {
       priority = thread->priority_base;
       mutex0   = thread->mutex_list;
+      // Check Mutexes owned by Thread
       while (mutex0 != NULL) {
-        // Mutexes owned by Thread
         if ((mutex0->thread_list != NULL) && (mutex0->thread_list->priority > priority)) {
           // Higher priority Thread is waiting for Mutex
           priority = mutex0->thread_list->priority;
