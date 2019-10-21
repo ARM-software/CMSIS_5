@@ -486,7 +486,7 @@ extern    "C"
    * @param[in]      buffer_a  pointer to buffer space used for input optimization(partial im2col) and is necessary
    *                           when ARM_MATH_LOOPUNROLL and ARM_MATH_DSP is defined.
    *                           Required space: 2 * input_ch * sizeof(q15_t) bytes
-   *                           Use arm_convolve_1x1_s8_fast_get_buffer_size() to get teh size
+   *                           Use arm_convolve_1x1_s8_fast_get_buffer_size() to get the size
    * @return     The function returns either
    *                  <code>ARM_MATH_SIZE_MISMATCH</code> if argument constraints fail. or,
    *                  <code>ARM_MATH_SUCCESS</code> on successful completion.
@@ -495,8 +495,10 @@ extern    "C"
    *   - Supported framework : TensorFlow Lite Micro
    *   - The following constrains on the arguments apply
    *      -# input_ch is a multiple of 4
+   *      -# output_ch is a multiple of 2
    *      -# padding equals 0
    *      -# Stride equals 1
+   *      -# kernel dimension is 1x1 (Not provided in the argument list)
    *
    */
     arm_status arm_convolve_1x1_s8_fast(const q7_t *input,
@@ -1216,7 +1218,12 @@ int32_t arm_depthwise_conv_s8_opt_get_buffer_size(const uint16_t input_ch,
    * @details  For arguments, refer arm_nn_mat_mult_kernel_s8_s16. The re-ordering is a consequence
    *           of sign extension done by the SXTB16 command on input_b. The outputs are clamped in the range
    *           provided by activation min and max.
-   *           Supported framework: TensorFlow Lite micro.
+   *   * @details
+   *   - Supported framework : TensorFlow Lite Micro
+   *   - The following constrains on the arguments apply
+   *      -# num_col_a is a multiple of 4
+   *      -# output_ch is a multiple of 2
+   *
    */
     q7_t *arm_nn_mat_mult_kernel_s8_s16_reordered(const q7_t *input_a,
                                                   const q15_t *input_b,
