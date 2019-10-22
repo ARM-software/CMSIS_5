@@ -60,11 +60,12 @@ void arm_offset_q31(
     q31_t * pDst,
     uint32_t blockSize)
 {
-    uint32_t  blkCnt;           /* loop counters */
+    uint32_t  blkCnt;           /* Loop counters */
     q31x4_t vecSrc;
 
     /* Compute 4 outputs at a time */
     blkCnt = blockSize >> 2;
+
     while (blkCnt > 0U)
     {
         /*
@@ -78,15 +79,16 @@ void arm_offset_q31(
          */
         blkCnt--;
         /*
-         * advance vector source and destination pointers
+         * Advance vector source and destination pointers
          */
         pSrc += 4;
         pDst += 4;
     }
     /*
-     * tail
+     * Tail
      */
     blkCnt = blockSize & 3;
+
     if (blkCnt > 0U)
     {
         mve_pred16_t p0 = vctp32q(blkCnt);
@@ -104,6 +106,44 @@ void arm_offset_q31(
 {
         uint32_t blkCnt;                               /* Loop counter */
 
+#if defined(ARM_MATH_NEON_EXPERIMENTAL)
+    int32x4_t vec1;
+    int32x4_t res;
+
+    /* Compute 4 outputs at a time */  
+    blkCnt = blockSize >> 2U;
+
+    while (blkCnt > 0U)
+    {
+        /* C = A + offset */
+        /* Add offset and then store the result in the destination buffer. */
+
+        vec1 = vld1q_s32(pSrc);
+        res = vqaddq_s32(vec1,vdupq_n_s32(offset));
+        vst1q_s32(pDst, res);
+
+        /* Increment pointers */
+        pSrc += 4;
+        pDst += 4;
+        
+        /* Decrement the blockSize loop counter */
+        blkCnt--;
+    }
+
+    /* Tail */
+    blkCnt = blockSize & 0x3;
+
+    while (blkCnt > 0U)
+    {
+      /* C = A + offset */
+      /* Add offset and then store the result in the destination buffer. */
+      *pDst++ = __QADD(*pSrc++, offset);
+  
+      /* Decrement the loop counter */
+      blkCnt--;
+    }
+
+#else
 #if defined (ARM_MATH_LOOPUNROLL)
 
   /* Loop unrolling: Compute 4 outputs at a time */
@@ -166,9 +206,10 @@ void arm_offset_q31(
     /* Decrement loop counter */
     blkCnt--;
   }
+#endif /* #if defined (ARM_MATH_NEON) */
 
 }
-#endif /* defined(ARM_MATH_MVEI) */
+#endif /* #if defined (ARM_MATH_MVEI) */
 
 /**
   @} end of BasicOffset group

@@ -66,6 +66,7 @@ void arm_sub_q31(
 
     /* Compute 4 outputs at a time */
     blkCnt = blockSize >> 2;
+
     while (blkCnt > 0U)
     {
         /*
@@ -80,16 +81,17 @@ void arm_sub_q31(
          */
         blkCnt--;
         /*
-         * advance vector source and destination pointers
+         * Advance vector source and destination pointers
          */
         pSrcA  += 4;
         pSrcB  += 4;
         pDst   += 4;
     }
     /*
-     * tail
+     * Tail
      */
     blkCnt = blockSize & 3;
+
     if (blkCnt > 0U)
     {
         mve_pred16_t p0 = vctp32q(blkCnt);
@@ -108,6 +110,44 @@ void arm_sub_q31(
 {
         uint32_t blkCnt;                               /* Loop counter */
 
+#if defined(ARM_MATH_NEON)
+    int32x4_t vec1;
+    int32x4_t vec2;
+    int32x4_t res;
+
+    /* Compute 4 outputs at a time */  
+    blkCnt = blockSize >> 2U;
+
+    while (blkCnt > 0U)
+    {
+        /* C = A - B */
+        /* Subtract and then store the results in the destination buffer. */
+
+        vec1 = vld1q_s32(pSrcA);
+        vec2 = vld1q_s32(pSrcB);
+        res = vqsubq_s32(vec1, vec2);
+        vst1q_s32(pDst, res);
+
+        /* Increment pointers */
+        pSrcA += 4;
+        pSrcB += 4; 
+        pDst += 4;
+        
+        /* Decrement the blockSize loop counter */
+        blkCnt--;
+    }
+
+    /* Tail */
+    blkCnt = blockSize & 0x3;
+
+    while (blkCnt > 0U)
+    {
+        *pDst++ = __QSUB(*pSrcA++, *pSrcB++);
+
+        /* Decrement the blockSize loop counter */
+        blkCnt--;
+    }
+#else
 #if defined (ARM_MATH_LOOPUNROLL)
 
   /* Loop unrolling: Compute 4 outputs at a time */
@@ -150,9 +190,9 @@ void arm_sub_q31(
     /* Decrement loop counter */
     blkCnt--;
   }
-
+#endif /* #if defined (ARM_MATH_NEON) */
 }
-#endif /* defined(ARM_MATH_MVEI) */
+#endif /* #if defined (ARM_MATH_MVEI) */
 
 /**
   @} end of BasicSub group

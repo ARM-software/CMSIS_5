@@ -59,11 +59,12 @@ void arm_mult_q31(
     q31_t * pDst,
     uint32_t blockSize)
 {
-    uint32_t  blkCnt;           /* loop counters */
+    uint32_t  blkCnt;           /* Loop counters */
     q31x4_t vecA, vecB;
 
     /* Compute 4 outputs at a time */
     blkCnt = blockSize >> 2;
+
     while (blkCnt > 0U)
     {
         /*
@@ -78,16 +79,17 @@ void arm_mult_q31(
          */
         blkCnt--;
         /*
-         * advance vector source and destination pointers
+         * Advance vector source and destination pointers
          */
         pSrcA  += 4;
         pSrcB  += 4;
         pDst   += 4;
     }
     /*
-     * tail
+     * Tail
      */
     blkCnt = blockSize & 3;
+
     if (blkCnt > 0U)
     {
         mve_pred16_t p0 = vctp32q(blkCnt);
@@ -107,6 +109,46 @@ void arm_mult_q31(
         uint32_t blkCnt;                               /* Loop counter */
         q31_t out;                                     /* Temporary output variable */
 
+#if defined(ARM_MATH_NEON)
+    int32x4_t vec1;
+    int32x4_t vec2;
+    int32x4_t res;
+
+    /* Compute 4 outputs at a time */  
+    blkCnt = blockSize >> 2U;
+
+    while (blkCnt > 0U)
+    {
+        /* C = A * B */
+        /* Multiply the inputs and then store the results in the destination buffer. */
+        vec1 = vld1q_s32(pSrcA);
+        vec2 = vld1q_s32(pSrcB);
+        res = vqdmulhq_s32(vec1, vec2);
+        vst1q_s32(pDst, res);
+
+        /* Increment pointers */
+        pSrcA += 4;
+        pSrcB += 4; 
+        pDst += 4;
+        
+        /* Decrement the blockSize loop counter */
+        blkCnt--;
+    }
+
+    /* Tail */
+    blkCnt = blockSize & 0x3;
+
+    while (blkCnt > 0U)
+    {
+        out = ((q63_t) *pSrcA++ * *pSrcB++) >> 32;
+        out = __SSAT(out, 31);
+        *pDst++ = out << 1U;
+
+        /* Decrement the blockSize loop counter */
+        blkCnt--;
+    }
+
+#else
 #if defined (ARM_MATH_LOOPUNROLL)
 
   /* Loop unrolling: Compute 4 outputs at a time */
@@ -159,9 +201,9 @@ void arm_mult_q31(
     /* Decrement loop counter */
     blkCnt--;
   }
-
+#endif /* #if defined (ARM_MATH_NEON) */
 }
-#endif /* defined(ARM_MATH_MVEI) */
+#endif /* #if defined (ARM_MATH_MVEI) */
 
 /**
   @} end of BasicMult group

@@ -62,12 +62,13 @@ void arm_scale_q31(
     q31_t * pDst,
     uint32_t blockSize)
 {
-    uint32_t  blkCnt;           /* loop counters */
+    uint32_t  blkCnt;           /* Loop counters */
     q31x4_t vecSrc;
     q31x4_t vecDst;
 
     /* Compute 4 outputs at a time */
     blkCnt = blockSize >> 2;
+
     while (blkCnt > 0U)
     {
         /*
@@ -89,9 +90,10 @@ void arm_scale_q31(
         pDst += 4;
     }
     /*
-     * tail
+     * Tail
      */
     blkCnt = blockSize & 3;
+
     if (blkCnt > 0U)
     {
         mve_pred16_t p0 = vctp32q(blkCnt);
@@ -115,6 +117,46 @@ void arm_scale_q31(
         int8_t kShift = shift + 1;                     /* Shift to apply after scaling */
         int8_t sign = (kShift & 0x80);
 
+#if defined(ARM_MATH_NEON)
+    int32x4_t vec1;
+    int32x4_t scaleShift;
+    int32x4_t res;
+
+#ifdef FAST_SCALE_Q31
+    scaleShift=vdupq_n_s32(shift);
+#else
+    scaleShift=vdupq_n_s32(shift+1);
+#endif
+
+    /* Compute 4 outputs at a time */  
+    blkCnt = blockSize >> 2U;
+
+    while (blkCnt > 0U)
+    {
+        /* C = A * scale */
+        /* Scale the input and then store the result in the destination buffer. */
+
+        vec1 = vld1q_s32(pSrc);
+        res = vqdmulhq_s32(vec1, vdupq_n_s32(scaleFract));
+#ifdef FAST_SCALE_Q31
+        res = vshlq_s32(res,scaleShift);
+#else
+        res = vshrq_n_s32(res,1);
+        res = vshlq_s32(res,scaleShift);
+#endif
+        vst1q_s32(pDst, res);
+
+        /* Increment pointers */
+        pSrc += 4; 
+        pDst += 4;
+        
+        /* Decrement the blockSize loop counter */
+        blkCnt--;
+    }
+
+    /* Tail */
+    blkCnt = blockSize & 0x3;
+#else
 #if defined (ARM_MATH_LOOPUNROLL)
 
   /* Loop unrolling: Compute 4 outputs at a time */
@@ -200,6 +242,7 @@ void arm_scale_q31(
   blkCnt = blockSize;
 
 #endif /* #if defined (ARM_MATH_LOOPUNROLL) */
+#endif /* #if defined (ARM_MATH_NEON) */
 
   if (sign == 0U)
   {
@@ -237,7 +280,7 @@ void arm_scale_q31(
   }
 
 }
-#endif /* defined(ARM_MATH_MVEI) */
+#endif /* #if defined (ARM_MATH_MVEI) */
 
 /**
   @} end of BasicScale group

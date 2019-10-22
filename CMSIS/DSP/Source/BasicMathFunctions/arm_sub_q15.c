@@ -60,12 +60,13 @@ void arm_sub_q15(
     q15_t * pDst,
     uint32_t blockSize)
 {
-    uint32_t  blkCnt;           /* loop counters */
+    uint32_t  blkCnt;           /* Loop counters */
     q15x8_t vecA;
     q15x8_t vecB;
 
     /* Compute 8 outputs at a time */
     blkCnt = blockSize >> 3;
+
     while (blkCnt > 0U)
     {
         /*
@@ -80,16 +81,17 @@ void arm_sub_q15(
          */
         blkCnt--;
         /*
-         * advance vector source and destination pointers
+         * Advance vector source and destination pointers
          */
         pSrcA  += 8;
         pSrcB  += 8;
         pDst   += 8;
     }
     /*
-     * tail
+     * Tail
      */
     blkCnt = blockSize & 7;
+
     if (blkCnt > 0U)
     {
         mve_pred16_t p0 = vctp16q(blkCnt);
@@ -109,6 +111,43 @@ void arm_sub_q15(
 {
         uint32_t blkCnt;                               /* Loop counter */
 
+#if defined(ARM_MATH_NEON)
+    int16x8_t vec1;
+    int16x8_t vec2;
+    int16x8_t res;
+
+    /* Compute 8 outputs at a time */  
+    blkCnt = blockSize >> 3U;
+
+    while (blkCnt > 0U)
+    {
+        /* C = A - B */
+        /* Subtract and then store the result in the destination buffer. */
+        vec1 = vld1q_s16(pSrcA);
+        vec2 = vld1q_s16(pSrcB);
+        res = vqsubq_s16(vec1, vec2);
+        vst1q_s16(pDst, res);
+
+        /* Increment pointers */
+        pSrcA += 8;
+        pSrcB += 8; 
+        pDst += 8;
+        
+        /* Decrement the blockSize loop counter */
+        blkCnt--;
+    }
+
+    /* Tail */
+    blkCnt = blockSize & 0x7;
+
+    while (blkCnt > 0U)
+    {
+        *pDst++ = (q15_t) __QSUB16(*pSrcA++, *pSrcB++);
+
+        /* Decrement the blockSize loop counter */
+        blkCnt--;
+    }
+#else
 #if defined (ARM_MATH_LOOPUNROLL)
 
 #if defined (ARM_MATH_DSP)
@@ -169,9 +208,9 @@ void arm_sub_q15(
     /* Decrement loop counter */
     blkCnt--;
   }
-
+#endif /* #if defined (ARM_MATH_NEON) */
 }
-#endif /* defined(ARM_MATH_MVEI) */
+#endif /* #if defined (ARM_MATH_MVEI) */
 
 /**
   @} end of BasicSub group

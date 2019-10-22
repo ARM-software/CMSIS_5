@@ -59,11 +59,12 @@ void arm_negate_q15(
     q15_t  * pDst,
     uint32_t blockSize)
 {
-    uint32_t  blkCnt;           /* loop counters */
+    uint32_t  blkCnt;           /* Loop counters */
     q15x8_t vecSrc;
 
     /* Compute 8 outputs at a time */
     blkCnt = blockSize >> 3;
+
     while (blkCnt > 0U)
     {
         /*
@@ -77,15 +78,16 @@ void arm_negate_q15(
          */
         blkCnt--;
         /*
-         * advance vector source and destination pointers
+         * Advance vector source and destination pointers
          */
         pSrc += 8;
         pDst += 8;
     }
     /*
-     * tail
+     * Tail
      */
     blkCnt = blockSize & 7;
+
     if (blkCnt > 0U)
     {
         mve_pred16_t p0 = vctp16q(blkCnt);
@@ -103,8 +105,35 @@ void arm_negate_q15(
         uint32_t blkCnt;                               /* Loop counter */
         q15_t in;                                      /* Temporary input variable */
 
-#if defined (ARM_MATH_LOOPUNROLL)
+#if defined(ARM_MATH_NEON)
+    int16x8_t vec1;
+    int16x8_t res;
 
+    /* Compute 8 outputs at a time */  
+    blkCnt = blockSize >> 3U;
+
+    while (blkCnt > 0U)
+    {
+        /* C = -A */
+        /* Negate and then store the result in the destination buffer. */
+
+        vec1 = vld1q_s16(pSrc);
+        res = vqnegq_s16(vec1);
+        vst1q_s16(pDst, res);
+
+        /* Increment pointers */
+        pSrc += 8;
+        pDst += 8;
+        
+        /* Decrement the blockSize loop counter */
+        blkCnt--;
+    }
+
+    /* Tail */
+    blkCnt = blockSize & 0x7;
+
+#else
+#if defined (ARM_MATH_LOOPUNROLL)
 #if defined (ARM_MATH_DSP)
   q31_t in1;                                    /* Temporary input variables */
 #endif
@@ -150,6 +179,7 @@ void arm_negate_q15(
   blkCnt = blockSize;
 
 #endif /* #if defined (ARM_MATH_LOOPUNROLL) */
+#endif /* #if defined (ARM_MATH_NEON) */
 
   while (blkCnt > 0U)
   {
@@ -164,7 +194,7 @@ void arm_negate_q15(
   }
 
 }
-#endif /* defined(ARM_MATH_MVEI) */
+#endif /* #if defined (ARM_MATH_MVEI) */
 
 /**
   @} end of BasicNegate group

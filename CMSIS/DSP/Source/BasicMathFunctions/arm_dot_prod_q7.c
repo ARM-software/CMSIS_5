@@ -63,13 +63,14 @@ void arm_dot_prod_q7(
     uint32_t blockSize,
     q31_t * result)
 {
-    uint32_t  blkCnt;           /* loop counters */
+    uint32_t  blkCnt;           /* Loop counters */
     q7x16_t vecA;
     q7x16_t vecB;
     q31_t     sum = 0;
 
     /* Compute 16 outputs at a time */
     blkCnt = blockSize >> 4;
+
     while (blkCnt > 0U)
     {
         /*
@@ -84,15 +85,16 @@ void arm_dot_prod_q7(
          */
         blkCnt--;
         /*
-         * advance vector source and destination pointers
+         * Advance vector source and destination pointers
          */
         pSrcA += 16;
         pSrcB += 16;
     }
     /*
-     * tail
+     * Tail
      */
     blkCnt = blockSize & 0xF;
+
     if (blkCnt > 0U)
     {
         mve_pred16_t p0 = vctp8q(blkCnt);
@@ -113,6 +115,57 @@ void arm_dot_prod_q7(
         uint32_t blkCnt;                               /* Loop counter */
         q31_t sum = 0;                                 /* Temporary return variable */
 
+#if defined(ARM_MATH_NEON)
+    int8x16_t vec1;
+    int8x16_t vec2;
+
+    int16x8_t res0=vdupq_n_s16(0);
+    int16x8_t res1=vdupq_n_s16(0);
+    int32x4_t temp0;
+    int64x2_t temp1;
+
+    /* Compute 16 outputs at a time */  
+    blkCnt = blockSize >> 4U;
+
+    vec1 = vld1q_s8(pSrcA);
+    vec2 = vld1q_s8(pSrcB);
+
+    while (blkCnt > 0U)
+    {
+        /* C = A[0]* B[0] + A[1]* B[1] + A[2]* B[2] + .....+ A[blockSize-1]* B[blockSize-1] */
+        /* Calculate dot product and then store the result in a temporary buffer. */
+#ifdef FAST_DOT_PRODUCT_Q7
+        res0 = vmlal_s8(res0,vget_low_s8(vec1), vget_low_s8(vec2));
+        res1 = vmlal_s8(res1,vget_high_s8(vec1), vget_high_s8(vec2));
+#else
+        res0 = vmull_s8(vget_low_s8(vec1), vget_low_s8(vec2));
+        res1 = vmlal_s8(res0,vget_high_s8(vec1), vget_high_s8(vec2));
+        temp0= vpaddlq_s16(res1);
+        temp1= vpaddlq_s32(temp0);
+        sum += temp1[0] + temp1[1] ;
+#endif
+        
+        /* Increment pointers */
+        pSrcA += 16;
+        pSrcB += 16; 
+
+        vec1 = vld1q_s8(pSrcA);
+        vec2 = vld1q_s8(pSrcB);
+        
+        /* Decrement the blockSize loop counter */
+        blkCnt--;
+    }
+#ifdef FAST_DOT_PRODUCT_Q7
+    res0=vqaddq_s16(res0,res1);
+    temp0=vpaddlq_s16(res0);
+    temp1=vpaddlq_s32(temp0);
+
+    sum += temp1[0] + temp1[1];
+#endif
+
+    /* Tail */
+    blkCnt = blockSize & 0xF;       
+#else
 #if defined (ARM_MATH_LOOPUNROLL)
 
 #if defined (ARM_MATH_DSP)
@@ -165,6 +218,7 @@ void arm_dot_prod_q7(
   blkCnt = blockSize;
 
 #endif /* #if defined (ARM_MATH_LOOPUNROLL) */
+#endif /* #if defined (ARM_MATH_NEON) */
 
   while (blkCnt > 0U)
   {
@@ -184,7 +238,7 @@ void arm_dot_prod_q7(
   /* Store result in destination buffer in 18.14 format */
   *result = sum;
 }
-#endif /* defined(ARM_MATH_MVEI) */
+#endif /* #if defined (ARM_MATH_MVEI) */
 
 /**
   @} end of BasicDotProd group

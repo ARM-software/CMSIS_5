@@ -77,12 +77,13 @@ void arm_shift_q31(
     q31_t * pDst,
     uint32_t blockSize)
 {
-    uint32_t  blkCnt;           /* loop counters */
+    uint32_t  blkCnt;           /* Loop counters */
     q31x4_t vecSrc;
     q31x4_t vecDst;
 
     /* Compute 4 outputs at a time */
     blkCnt = blockSize >> 2;
+
     while (blkCnt > 0U)
     {
         /*
@@ -97,15 +98,16 @@ void arm_shift_q31(
          */
         blkCnt--;
         /*
-         * advance vector source and destination pointers
+         * Advance vector source and destination pointers
          */
         pSrc += 4;
         pDst += 4;
     }
     /*
-     * tail
+     * Tail
      */
     blkCnt = blockSize & 3;
+
     if (blkCnt > 0U)
     {
         mve_pred16_t p0 = vctp32q(blkCnt);
@@ -114,8 +116,6 @@ void arm_shift_q31(
         vstrwq_p(pDst, vecDst, p0);
     }
 }
-
-
 #else
 void arm_shift_q31(
   const q31_t * pSrc,
@@ -126,6 +126,33 @@ void arm_shift_q31(
         uint32_t blkCnt;                               /* Loop counter */
         uint8_t sign = (shiftBits & 0x80);             /* Sign of shiftBits */
 
+#if defined(ARM_MATH_NEON_EXPERIMENTAL)
+    int32x4_t vec1;
+    int32x4_t res;
+
+    /* Compute 4 outputs at a time */  
+    blkCnt = blockSize >> 2U;
+
+    while (blkCnt > 0U)
+    {
+        /* C = A (>> or <<) shiftBits */
+        /* Shift the input and then store the result in the destination buffer. */
+
+        vec1 = vld1q_s32(pSrc);
+        res = vqshlq_s32(vec1,vdupq_n_s32(shiftBits));
+        vst1q_s32(pDst, res);
+
+        /* Increment pointers */
+        pSrc += 4;
+        pDst += 4;
+        
+        /* Decrement the blockSize loop counter */
+        blkCnt--;
+    }
+
+    /* Tail */
+    blkCnt = blockSize & 0x3;
+#else
 #if defined (ARM_MATH_LOOPUNROLL)
 
   q31_t in, out;                                 /* Temporary variables */
@@ -195,6 +222,7 @@ void arm_shift_q31(
   blkCnt = blockSize;
 
 #endif /* #if defined (ARM_MATH_LOOPUNROLL) */
+#endif /* #if defined (ARM_MATH_NEON) */
 
   /* If the shift value is positive then do right shift else left shift */
   if (sign == 0U)
@@ -225,7 +253,7 @@ void arm_shift_q31(
   }
 
 }
-#endif /* defined(ARM_MATH_MVEI) */
+#endif /* #if defined (ARM_MATH_MVEI) */
 
 /**
   @} end of BasicShift group
