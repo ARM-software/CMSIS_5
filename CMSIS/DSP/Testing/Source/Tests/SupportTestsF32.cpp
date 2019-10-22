@@ -136,7 +136,7 @@
             break;
 
             case TEST_WEIGHTED_SUM_F32_3:
-              this->nbSamples = 9;
+              this->nbSamples = 11;
               input.reload(SupportTestsF32::INPUTS_F32_ID,mgr,this->nbSamples);
               coefs.reload(SupportTestsF32::WEIGHTS_F32_ID,mgr,this->nbSamples);
               ref.reload(SupportTestsF32::REF_F32_ID,mgr);
@@ -163,7 +163,7 @@
             break;
 
             case TEST_COPY_F32_6:
-              this->nbSamples = 9;
+              this->nbSamples = 11;
               input.reload(SupportTestsF32::SAMPLES_F32_ID,mgr,this->nbSamples);
 
               output.create(input.nbSamples(),SupportTestsF32::OUT_F32_ID,mgr);
@@ -185,7 +185,7 @@
             break;
 
             case TEST_FILL_F32_9:
-              this->nbSamples = 9;
+              this->nbSamples = 11;
 
               output.create(this->nbSamples,SupportTestsF32::OUT_F32_ID,mgr);
 
@@ -232,7 +232,7 @@
             break;
 
             case TEST_FLOAT_TO_Q31_15:
-              this->nbSamples = 9;
+              this->nbSamples = 11;
               input.reload(SupportTestsF32::SAMPLES_F32_ID,mgr,this->nbSamples);
               refQ31.reload(SupportTestsF32::SAMPLES_Q31_ID,mgr,this->nbSamples);
               outputQ31.create(this->nbSamples,SupportTestsF32::OUT_F32_ID,mgr);

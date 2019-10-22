@@ -164,6 +164,13 @@ set(TESTSRC
   Source/Tests/SupportBarTestsF32.cpp
   Source/Tests/DistanceTestsF32.cpp
   Source/Tests/DistanceTestsU32.cpp
+  Source/Tests/UnaryTestsQ31.cpp
+  Source/Tests/UnaryTestsQ15.cpp
+  Source/Tests/UnaryTestsF32.cpp
+  Source/Tests/UnaryTestsF64.cpp
+  Source/Tests/BinaryTestsF32.cpp
+  Source/Tests/BinaryTestsQ31.cpp
+  Source/Tests/BinaryTestsQ15.cpp
   Source/Tests/FullyConnected.cpp
   Source/Tests/Pooling.cpp
   Source/Tests/Softmax.cpp

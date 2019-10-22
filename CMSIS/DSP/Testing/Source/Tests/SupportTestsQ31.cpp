@@ -112,7 +112,7 @@
             break;
 
             case TEST_COPY_Q31_3:
-              this->nbSamples = 9;
+              this->nbSamples = 11;
               inputQ31.reload(SupportTestsQ31::SAMPLES_Q31_ID,mgr,this->nbSamples);
 
               outputQ31.create(inputQ31.nbSamples(),SupportTestsQ31::OUT_ID,mgr);
@@ -134,7 +134,7 @@
             break;
 
             case TEST_FILL_Q31_6:
-              this->nbSamples = 9;
+              this->nbSamples = 11;
 
               outputQ31.create(this->nbSamples,SupportTestsQ31::OUT_ID,mgr);
 
@@ -181,7 +181,7 @@
             break;
 
             case TEST_Q31_Q15_12:
-              this->nbSamples = 9;
+              this->nbSamples = 11;
               inputQ31.reload(SupportTestsQ31::SAMPLES_Q31_ID,mgr,this->nbSamples);
               refQ15.reload(SupportTestsQ31::SAMPLES_Q15_ID,mgr,this->nbSamples);
               outputQ15.create(this->nbSamples,SupportTestsQ31::OUT_ID,mgr);

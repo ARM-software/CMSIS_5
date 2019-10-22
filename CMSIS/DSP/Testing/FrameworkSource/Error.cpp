@@ -100,6 +100,10 @@ void assert_near_equal(unsigned long nb,q7_t pa, q7_t pb, q7_t threshold)
     }
 };
 
+void assert_not_empty(unsigned long nb, AnyPattern<float64_t> &p)
+{
+  assert_not_empty_generic(nb,p);
+}
 
 void assert_not_empty(unsigned long nb, AnyPattern<float32_t> &p)
 {
@@ -164,6 +168,35 @@ void assert_relative_error(unsigned long nb,AnyPattern<float32_t> &pa, AnyPatter
     }
 };
 
+void assert_close_error(unsigned long nb,float64_t &ref, float64_t &val, double absthreshold,double relthreshold)
+{
+    
+    if (abs(val - ref) > (absthreshold + relthreshold * abs(ref)))
+    {
+        throw (Error(CLOSE_ERROR,nb));
+    }
+};
+
+void assert_close_error(unsigned long nb,AnyPattern<float64_t> &pref, AnyPattern<float64_t> &pval, double absthreshold,double relthreshold)
+{
+    ASSERT_NOT_EMPTY(pref);
+    ASSERT_NOT_EMPTY(pval);
+
+    if (pref.nbSamples() != pval.nbSamples())
+    {
+        throw (Error(DIFFERENT_LENGTH_ERROR,nb));
+    }
+
+    unsigned long i=0;
+
+    float64_t *ptrA = pref.ptr();
+    float64_t *ptrB = pval.ptr();
+
+    for(i=0; i < pref.nbSamples(); i++)
+    {
+       assert_close_error(nb,ptrA[i],ptrB[i],absthreshold,relthreshold);
+    }
+};
 
 void assert_close_error(unsigned long nb,float32_t &ref, float32_t &val, double absthreshold,double relthreshold)
 {
@@ -445,6 +478,31 @@ void assert_snr_error(unsigned long nb,float32_t a,float32_t b, float32_t thresh
    snr = arm_snr_f32(&a, &b, 1);
 
    //printf("SNR = %f, %f %f\n",snr,a,b);
+   
+   if (snr < threshold)
+   {
+     throw (Error(SNR_ERROR,nb));
+   }
+}
+
+void assert_snr_error(unsigned long nb,AnyPattern<float64_t> &pa,AnyPattern<float64_t> &pb, float64_t threshold)
+{
+   float64_t snr;
+
+   ASSERT_NOT_EMPTY(pa);
+   ASSERT_NOT_EMPTY(pb);
+
+   if (pa.nbSamples() != pb.nbSamples())
+   {
+        throw (Error(DIFFERENT_LENGTH_ERROR,nb));
+   }
+
+   float64_t *ptrA = pa.ptr();
+   float64_t *ptrB = pb.ptr();
+
+   snr = arm_snr_f64(ptrA, ptrB, pa.nbSamples());
+
+   //printf("SNR = %f\n",snr);
    
    if (snr < threshold)
    {

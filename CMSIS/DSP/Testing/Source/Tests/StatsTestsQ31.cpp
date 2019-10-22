@@ -213,7 +213,7 @@ a double precision computation.
 
             case StatsTestsQ31::TEST_MAX_Q31_3:
             {
-               inputA.reload(StatsTestsQ31::INPUT1_Q31_ID,mgr,9);
+               inputA.reload(StatsTestsQ31::INPUT1_Q31_ID,mgr,11);
               
                maxIndexes.reload(StatsTestsQ31::MAXINDEXES_S16_ID,mgr);
                ref.reload(StatsTestsQ31::MAXVALS_Q31_ID,mgr);
@@ -251,7 +251,7 @@ a double precision computation.
 
             case StatsTestsQ31::TEST_MEAN_Q31_6:
             {
-               inputA.reload(StatsTestsQ31::INPUT2_Q31_ID,mgr,9);
+               inputA.reload(StatsTestsQ31::INPUT2_Q31_ID,mgr,11);
               
                ref.reload(StatsTestsQ31::MEANVALS_Q31_ID,mgr);
                
@@ -291,7 +291,7 @@ a double precision computation.
 
             case StatsTestsQ31::TEST_MIN_Q31_9:
             {
-               inputA.reload(StatsTestsQ31::INPUT1_Q31_ID,mgr,9);
+               inputA.reload(StatsTestsQ31::INPUT1_Q31_ID,mgr,11);
               
                minIndexes.reload(StatsTestsQ31::MININDEXES_S16_ID,mgr);
                ref.reload(StatsTestsQ31::MINVALS_Q31_ID,mgr);
@@ -329,7 +329,7 @@ a double precision computation.
 
             case StatsTestsQ31::TEST_POWER_Q31_12:
             {
-               inputA.reload(StatsTestsQ31::INPUT1_Q31_ID,mgr,9);
+               inputA.reload(StatsTestsQ31::INPUT1_Q31_ID,mgr,11);
               
                refPower.reload(StatsTestsQ31::POWERVALS_Q63_ID,mgr);
                
@@ -365,7 +365,7 @@ a double precision computation.
 
             case StatsTestsQ31::TEST_RMS_Q31_15:
             {
-               inputA.reload(StatsTestsQ31::INPUT1_Q31_ID,mgr,9);
+               inputA.reload(StatsTestsQ31::INPUT1_Q31_ID,mgr,11);
               
                ref.reload(StatsTestsQ31::RMSVALS_Q31_ID,mgr);
                
@@ -401,7 +401,7 @@ a double precision computation.
 
             case StatsTestsQ31::TEST_STD_Q31_18:
             {
-               inputA.reload(StatsTestsQ31::INPUT1_Q31_ID,mgr,9);
+               inputA.reload(StatsTestsQ31::INPUT1_Q31_ID,mgr,11);
               
                ref.reload(StatsTestsQ31::STDVALS_Q31_ID,mgr);
                
@@ -437,7 +437,7 @@ a double precision computation.
 
             case StatsTestsQ31::TEST_VAR_Q31_21:
             {
-               inputA.reload(StatsTestsQ31::INPUT1_Q31_ID,mgr,9);
+               inputA.reload(StatsTestsQ31::INPUT1_Q31_ID,mgr,11);
               
                ref.reload(StatsTestsQ31::VARVALS_Q31_ID,mgr);
                

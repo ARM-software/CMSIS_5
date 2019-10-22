@@ -15,29 +15,30 @@ def writeTests(config):
     inputsA=np.random.randn(NBSAMPLES)
     inputsB=np.random.randn(NBSAMPLES)
 
-    inputsA = inputsA/max(inputsA)
-    inputsB = inputsB/max(inputsB)
+    inputsA = Tools.normalize(inputsA)
+    inputsB = Tools.normalize(inputsB)
     
 
     config.writeInput(1, inputsA,"InputsA")
     config.writeInput(1, inputsB,"InputsB")
 
     
+def generatePatterns():
+    PATTERNDIR = os.path.join("Patterns","DSP","Filtering","MISC","MISC")
+    PARAMDIR = os.path.join("Parameters","DSP","Filtering","MISC","MISC")
+    
+    configf32=Tools.Config(PATTERNDIR,PARAMDIR,"f32")
+    configq31=Tools.Config(PATTERNDIR,PARAMDIR,"q31")
+    configq15=Tools.Config(PATTERNDIR,PARAMDIR,"q15")
+    configq7=Tools.Config(PATTERNDIR,PARAMDIR,"q7")
+    
+    
+    
+    writeTests(configf32)
+    writeTests(configq31)
+    writeTests(configq15)
+    writeTests(configq7)
 
-PATTERNDIR = os.path.join("Patterns","DSP","Filtering","MISC","MISC")
-PARAMDIR = os.path.join("Parameters","DSP","Filtering","MISC","MISC")
 
-configf32=Tools.Config(PATTERNDIR,PARAMDIR,"f32")
-configq31=Tools.Config(PATTERNDIR,PARAMDIR,"q31")
-configq15=Tools.Config(PATTERNDIR,PARAMDIR,"q15")
-configq7=Tools.Config(PATTERNDIR,PARAMDIR,"q7")
-
-
-
-writeTests(configf32)
-writeTests(configq31)
-writeTests(configq15)
-writeTests(configq7)
-
-
-
+if __name__ == '__main__':
+  generatePatterns()

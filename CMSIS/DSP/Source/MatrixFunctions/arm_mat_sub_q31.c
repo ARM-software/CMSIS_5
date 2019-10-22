@@ -50,7 +50,85 @@
                    The function uses saturating arithmetic.
                    Results outside of the allowable Q31 range [0x80000000 0x7FFFFFFF] are saturated.
  */
+#if defined(ARM_MATH_MVEI)
+arm_status arm_mat_sub_q31(
+  const arm_matrix_instance_q31 * pSrcA,
+  const arm_matrix_instance_q31 * pSrcB,
+        arm_matrix_instance_q31 * pDst)
+{
+    uint32_t        numSamples;       /* total number of elements in the matrix  */
+    q31_t          *pDataA, *pDataB, *pDataDst;
+    q31x4_t       vecA, vecB, vecDst;
+    q31_t const   *pSrcAVec;
+    q31_t const   *pSrcBVec;
+    uint32_t        blkCnt;           /* loop counters */
+    arm_status status;                             /* status of matrix subtraction */
 
+    pDataA = pSrcA->pData;
+    pDataB = pSrcB->pData;
+    pDataDst = pDst->pData;
+    pSrcAVec = (q31_t const *) pDataA;
+    pSrcBVec = (q31_t const *) pDataB;
+
+#ifdef ARM_MATH_MATRIX_CHECK
+
+  /* Check for matrix mismatch condition */
+  if ((pSrcA->numRows != pSrcB->numRows) ||
+      (pSrcA->numCols != pSrcB->numCols) ||
+      (pSrcA->numRows != pDst->numRows)  ||
+      (pSrcA->numCols != pDst->numCols)    )
+  {
+    /* Set status as ARM_MATH_SIZE_MISMATCH */
+    status = ARM_MATH_SIZE_MISMATCH;
+  }
+  else
+
+#endif /* #ifdef ARM_MATH_MATRIX_CHECK */
+  {
+
+    /*
+     * Total number of samples in the input matrix
+     */
+    numSamples = (uint32_t) pSrcA->numRows * pSrcA->numCols;
+    blkCnt = numSamples >> 2;
+    while (blkCnt > 0U)
+    {
+        /* C(m,n) = A(m,n) + B(m,n) */
+        /* sub and then store the results in the destination buffer. */
+        vecA = vld1q(pSrcAVec); 
+        pSrcAVec += 4;
+        vecB = vld1q(pSrcBVec); 
+        pSrcBVec += 4;
+        vecDst = vqsubq(vecA, vecB);
+        vst1q(pDataDst, vecDst);  
+        pDataDst += 4;
+        /*
+         * Decrement the blockSize loop counter
+         */
+        blkCnt--;
+    }
+    /*
+     * tail
+     */
+    blkCnt = numSamples & 3;
+    if (blkCnt > 0U)
+    {
+        mve_pred16_t p0 = vctp32q(blkCnt);
+        vecA = vld1q(pSrcAVec); 
+        pSrcAVec += 4;
+        vecB = vld1q(pSrcBVec); 
+        pSrcBVec += 4;
+        vecDst = vqsubq_m(vecDst, vecA, vecB, p0);
+        vstrwq_p(pDataDst, vecDst, p0);
+    }
+    status = ARM_MATH_SUCCESS;
+  }
+
+  /* Return to application */
+  return (status);
+}
+
+#else
 arm_status arm_mat_sub_q31(
   const arm_matrix_instance_q31 * pSrcA,
   const arm_matrix_instance_q31 * pSrcB,
@@ -133,6 +211,7 @@ arm_status arm_mat_sub_q31(
   /* Return to application */
   return (status);
 }
+#endif /* defined(ARM_MATH_MVEI) */
 
 /**
   @} end of MatrixSub group

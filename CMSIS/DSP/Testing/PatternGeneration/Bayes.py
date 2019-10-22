@@ -142,9 +142,13 @@ def generateNewTest(config,nb):
 def writeTests(config):
     generateNewTest(config,1)
 
-PATTERNDIR = os.path.join("Patterns","DSP","Bayes","Bayes")
-PARAMDIR = os.path.join("Parameters","DSP","Bayes","Bayes")
+def generatePatterns():
+    PATTERNDIR = os.path.join("Patterns","DSP","Bayes","Bayes")
+    PARAMDIR = os.path.join("Parameters","DSP","Bayes","Bayes")
+    
+    configf32=Tools.Config(PATTERNDIR,PARAMDIR,"f32")
+    
+    writeTests(configf32)
 
-configf32=Tools.Config(PATTERNDIR,PARAMDIR,"f32")
-
-writeTests(configf32)
+if __name__ == '__main__':
+  generatePatterns()

@@ -158,8 +158,8 @@ a double precision computation.
 
             case FastMathF32::TEST_VLOG_F32_7:
             {
-               input.reload(FastMathF32::LOGINPUT1_F32_ID,mgr,9);
-               ref.reload(FastMathF32::LOG1_F32_ID,mgr,9);
+               input.reload(FastMathF32::LOGINPUT1_F32_ID,mgr,11);
+               ref.reload(FastMathF32::LOG1_F32_ID,mgr,11);
                output.create(ref.nbSamples(),FastMathF32::OUT_F32_ID,mgr);
 
             }
@@ -194,8 +194,8 @@ a double precision computation.
 
             case FastMathF32::TEST_VEXP_F32_11:
             {
-               input.reload(FastMathF32::EXPINPUT1_F32_ID,mgr,9);
-               ref.reload(FastMathF32::EXP1_F32_ID,mgr,9);
+               input.reload(FastMathF32::EXPINPUT1_F32_ID,mgr,11);
+               ref.reload(FastMathF32::EXP1_F32_ID,mgr,11);
                output.create(ref.nbSamples(),FastMathF32::OUT_F32_ID,mgr);
 
             }

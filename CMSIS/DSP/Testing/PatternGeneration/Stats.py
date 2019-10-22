@@ -300,7 +300,7 @@ def writeTests(config,nb,format):
     data1=np.random.randn(NBSAMPLES)
     data2=np.random.randn(NBSAMPLES)
     
-    data1 = data1/max(data1)
+    data1 = Tools.normalize(data1)
     data2 = np.abs(data1)
 
     # Force quantization so that computation of indexes
@@ -329,18 +329,21 @@ def writeTests(config,nb,format):
     return(nb)
 
 
+def generatePatterns():
+    PATTERNDIR = os.path.join("Patterns","DSP","Stats","Stats")
+    PARAMDIR = os.path.join("Parameters","DSP","Stats","Stats")
+    
+    configf32=Tools.Config(PATTERNDIR,PARAMDIR,"f32")
+    configq31=Tools.Config(PATTERNDIR,PARAMDIR,"q31")
+    configq15=Tools.Config(PATTERNDIR,PARAMDIR,"q15")
+    configq7 =Tools.Config(PATTERNDIR,PARAMDIR,"q7")
+    
+    nb=writeTests(configf32,1,0)
+    nb=writeF32OnlyTests(configf32,22)
+    
+    writeTests(configq31,1,31)
+    writeTests(configq15,1,15)
+    writeTests(configq7,1,7)
 
-PATTERNDIR = os.path.join("Patterns","DSP","Stats","Stats")
-PARAMDIR = os.path.join("Parameters","DSP","Stats","Stats")
-
-configf32=Tools.Config(PATTERNDIR,PARAMDIR,"f32")
-configq31=Tools.Config(PATTERNDIR,PARAMDIR,"q31")
-configq15=Tools.Config(PATTERNDIR,PARAMDIR,"q15")
-configq7 =Tools.Config(PATTERNDIR,PARAMDIR,"q7")
-
-nb=writeTests(configf32,1,0)
-nb=writeF32OnlyTests(configf32,22)
-
-writeTests(configq31,1,31)
-writeTests(configq15,1,15)
-writeTests(configq7,1,7)
+if __name__ == '__main__':
+  generatePatterns()

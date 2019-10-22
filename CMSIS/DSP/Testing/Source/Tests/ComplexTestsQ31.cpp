@@ -10,7 +10,7 @@ a double precision computation.
 
 */
 #define ABS_ERROR_Q31 ((q31_t)20)
-#define ABS_ERROR_Q63 ((q63_t)(1<<16))
+#define ABS_ERROR_Q63 ((q63_t)(1<<18))
 
 
     void ComplexTestsQ31::test_cmplx_conj_q31()
@@ -146,7 +146,7 @@ a double precision computation.
           output.create(ref.nbSamples(),ComplexTestsQ31::OUT_SAMPLES_Q31_ID,mgr);
           break;
         case ComplexTestsQ31::TEST_CMPLX_CONJ_Q31_3:
-          nb = 9;
+          nb = 11;
           ref.reload(ComplexTestsQ31::REF_CONJ_Q31_ID,mgr,nb << 1);
           input1.reload(ComplexTestsQ31::INPUT1_Q31_ID,mgr,nb << 1);
 
@@ -171,7 +171,7 @@ a double precision computation.
           break;
 
         case ComplexTestsQ31::TEST_CMPLX_DOT_PROD_Q31_6:
-          nb = 9;
+          nb = 11;
           dotRef.reload(ComplexTestsQ31::REF_DOT_PROD_4N1_Q31_ID,mgr);
           input1.reload(ComplexTestsQ31::INPUT1_Q31_ID,mgr,nb << 1);
           input2.reload(ComplexTestsQ31::INPUT2_Q31_ID,mgr,nb << 1);
@@ -193,7 +193,7 @@ a double precision computation.
           output.create(ref.nbSamples(),ComplexTestsQ31::OUT_SAMPLES_Q31_ID,mgr);
           break;
         case ComplexTestsQ31::TEST_CMPLX_MAG_Q31_9:
-          nb = 9;
+          nb = 11;
           ref.reload(ComplexTestsQ31::REF_MAG_Q31_ID,mgr,nb);
           input1.reload(ComplexTestsQ31::INPUT1_Q31_ID,mgr,nb << 1);
 
@@ -214,7 +214,7 @@ a double precision computation.
           output.create(ref.nbSamples(),ComplexTestsQ31::OUT_SAMPLES_Q31_ID,mgr);
           break;
         case ComplexTestsQ31::TEST_CMPLX_MAG_SQUARED_Q31_12:
-          nb = 9;
+          nb = 11;
           ref.reload(ComplexTestsQ31::REF_MAG_SQUARED_Q31_ID,mgr,nb);
           input1.reload(ComplexTestsQ31::INPUT1_Q31_ID,mgr,nb << 1);
 
@@ -237,7 +237,7 @@ a double precision computation.
           output.create(ref.nbSamples(),ComplexTestsQ31::OUT_SAMPLES_Q31_ID,mgr);
           break;
         case ComplexTestsQ31::TEST_CMPLX_MULT_CMPLX_Q31_15:
-          nb = 9;
+          nb = 11;
           ref.reload(ComplexTestsQ31::REF_CMPLX_MULT_CMPLX_Q31_ID,mgr,nb << 1);
           input1.reload(ComplexTestsQ31::INPUT1_Q31_ID,mgr,nb << 1);
           input2.reload(ComplexTestsQ31::INPUT2_Q31_ID,mgr,nb << 1);
@@ -261,7 +261,7 @@ a double precision computation.
           output.create(ref.nbSamples(),ComplexTestsQ31::OUT_SAMPLES_Q31_ID,mgr);
           break;
         case ComplexTestsQ31::TEST_CMPLX_MULT_REAL_Q31_18:
-          nb = 9;
+          nb = 11;
           ref.reload(ComplexTestsQ31::REF_CMPLX_MULT_REAL_Q31_ID,mgr,nb << 1);
           input1.reload(ComplexTestsQ31::INPUT1_Q31_ID,mgr,nb << 1);
           input2.reload(ComplexTestsQ31::INPUT3_Q31_ID,mgr,nb);

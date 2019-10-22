@@ -145,7 +145,7 @@ a double precision computation.
           output.create(ref.nbSamples(),ComplexTestsQ15::OUT_SAMPLES_Q15_ID,mgr);
           break;
         case ComplexTestsQ15::TEST_CMPLX_CONJ_Q15_3:
-          nb = 17;
+          nb = 23;
           ref.reload(ComplexTestsQ15::REF_CONJ_Q15_ID,mgr,nb << 1);
           input1.reload(ComplexTestsQ15::INPUT1_Q15_ID,mgr,nb << 1);
 
@@ -170,7 +170,7 @@ a double precision computation.
           break;
 
         case ComplexTestsQ15::TEST_CMPLX_DOT_PROD_Q15_6:
-          nb = 17;
+          nb = 23;
           dotRef.reload(ComplexTestsQ15::REF_DOT_PROD_4N1_Q15_ID,mgr);
           input1.reload(ComplexTestsQ15::INPUT1_Q15_ID,mgr,nb << 1);
           input2.reload(ComplexTestsQ15::INPUT2_Q15_ID,mgr,nb << 1);
@@ -192,7 +192,7 @@ a double precision computation.
           output.create(ref.nbSamples(),ComplexTestsQ15::OUT_SAMPLES_Q15_ID,mgr);
           break;
         case ComplexTestsQ15::TEST_CMPLX_MAG_Q15_9:
-          nb = 17;
+          nb = 23;
           ref.reload(ComplexTestsQ15::REF_MAG_Q15_ID,mgr,nb);
           input1.reload(ComplexTestsQ15::INPUT1_Q15_ID,mgr,nb << 1);
 
@@ -213,7 +213,7 @@ a double precision computation.
           output.create(ref.nbSamples(),ComplexTestsQ15::OUT_SAMPLES_Q15_ID,mgr);
           break;
         case ComplexTestsQ15::TEST_CMPLX_MAG_SQUARED_Q15_12:
-          nb = 17;
+          nb = 23;
           ref.reload(ComplexTestsQ15::REF_MAG_SQUARED_Q15_ID,mgr,nb);
           input1.reload(ComplexTestsQ15::INPUT1_Q15_ID,mgr,nb << 1);
 
@@ -236,7 +236,7 @@ a double precision computation.
           output.create(ref.nbSamples(),ComplexTestsQ15::OUT_SAMPLES_Q15_ID,mgr);
           break;
         case ComplexTestsQ15::TEST_CMPLX_MULT_CMPLX_Q15_15:
-          nb = 17;
+          nb = 23;
           ref.reload(ComplexTestsQ15::REF_CMPLX_MULT_CMPLX_Q15_ID,mgr,nb << 1);
           input1.reload(ComplexTestsQ15::INPUT1_Q15_ID,mgr,nb << 1);
           input2.reload(ComplexTestsQ15::INPUT2_Q15_ID,mgr,nb << 1);
@@ -260,7 +260,7 @@ a double precision computation.
           output.create(ref.nbSamples(),ComplexTestsQ15::OUT_SAMPLES_Q15_ID,mgr);
           break;
         case ComplexTestsQ15::TEST_CMPLX_MULT_REAL_Q15_18:
-          nb = 17;
+          nb = 23;
           ref.reload(ComplexTestsQ15::REF_CMPLX_MULT_REAL_Q15_ID,mgr,nb << 1);
           input1.reload(ComplexTestsQ15::INPUT1_Q15_ID,mgr,nb << 1);
           input2.reload(ComplexTestsQ15::INPUT3_Q15_ID,mgr,nb);

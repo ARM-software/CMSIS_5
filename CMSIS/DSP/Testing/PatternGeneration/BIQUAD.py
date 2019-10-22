@@ -16,32 +16,33 @@ def writeTests(config):
     samples=np.random.randn(NBSAMPLES)
     coefs=np.random.randn(NUMSTAGES*5)
 
-    samples = samples/max(samples)
-    coefs = coefs/max(coefs)
+    samples = Tools.normalize(samples)
+    coefs = Tools.normalize(coefs)
     
 
     config.writeInput(1, samples,"Samples")
     config.writeInput(1, coefs,"Coefs")
 
     
+def generatePatterns():
+    PATTERNDIR = os.path.join("Patterns","DSP","Filtering","BIQUAD","BIQUAD")
+    PARAMDIR = os.path.join("Parameters","DSP","Filtering","BIQUAD","BIQUAD")
+    
+    configf64=Tools.Config(PATTERNDIR,PARAMDIR,"f64")
+    configf32=Tools.Config(PATTERNDIR,PARAMDIR,"f32")
+    configq31=Tools.Config(PATTERNDIR,PARAMDIR,"q31")
+    configq15=Tools.Config(PATTERNDIR,PARAMDIR,"q15")
+    #configq7=Tools.Config(PATTERNDIR,PARAMDIR,"q7")
+    
+    
+    
+    writeTests(configf32)
+    writeTests(configq31)
+    writeTests(configq15)
+    writeTests(configf64)
+    
+    #writeTests(configq7)
 
-PATTERNDIR = os.path.join("Patterns","DSP","Filtering","BIQUAD","BIQUAD")
-PARAMDIR = os.path.join("Parameters","DSP","Filtering","BIQUAD","BIQUAD")
-
-configf64=Tools.Config(PATTERNDIR,PARAMDIR,"f64")
-configf32=Tools.Config(PATTERNDIR,PARAMDIR,"f32")
-configq31=Tools.Config(PATTERNDIR,PARAMDIR,"q31")
-configq15=Tools.Config(PATTERNDIR,PARAMDIR,"q15")
-#configq7=Tools.Config(PATTERNDIR,PARAMDIR,"q7")
-
-
-
-writeTests(configf32)
-writeTests(configq31)
-writeTests(configq15)
-writeTests(configf64)
-
-#writeTests(configq7)
-
-
+if __name__ == '__main__':
+  generatePatterns()
 

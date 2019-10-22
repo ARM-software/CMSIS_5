@@ -9,7 +9,7 @@ Reference patterns are generated with
 a double precision computation.
 
 */
-#define REL_ERROR (1.0e-6)
+#define REL_ERROR (2.0e-6)
 
 #define GET_F32_PTR() \
 const float32_t *inp1=input1.ptr(); \
@@ -153,7 +153,7 @@ float32_t *outp=output.ptr();
           ref.reload(BasicTestsF32::REF_ADD_F32_ID,mgr,nb);
           break;
         case BasicTestsF32::TEST_ADD_F32_3:
-          nb = 9;
+          nb = 11;
           ref.reload(BasicTestsF32::REF_ADD_F32_ID,mgr,nb);
           break;
 
@@ -167,7 +167,7 @@ float32_t *outp=output.ptr();
           ref.reload(BasicTestsF32::REF_SUB_F32_ID,mgr,nb);
           break;
         case BasicTestsF32::TEST_SUB_F32_6:
-          nb = 9;
+          nb = 11;
           ref.reload(BasicTestsF32::REF_SUB_F32_ID,mgr,nb);
           break;
 
@@ -180,7 +180,7 @@ float32_t *outp=output.ptr();
           ref.reload(BasicTestsF32::REF_MULT_F32_ID,mgr,nb);
           break;
         case BasicTestsF32::TEST_MULT_F32_9:
-          nb = 9;
+          nb = 11;
           ref.reload(BasicTestsF32::REF_MULT_F32_ID,mgr,nb);
           break;
 
@@ -193,7 +193,7 @@ float32_t *outp=output.ptr();
           ref.reload(BasicTestsF32::REF_NEGATE_F32_ID,mgr,nb);
           break;
         case BasicTestsF32::TEST_NEGATE_F32_12:
-          nb = 9;
+          nb = 11;
           ref.reload(BasicTestsF32::REF_NEGATE_F32_ID,mgr,nb);
           break;
 
@@ -206,7 +206,7 @@ float32_t *outp=output.ptr();
           ref.reload(BasicTestsF32::REF_OFFSET_F32_ID,mgr,nb);
           break;
         case BasicTestsF32::TEST_OFFSET_F32_15:
-          nb = 9;
+          nb = 11;
           ref.reload(BasicTestsF32::REF_OFFSET_F32_ID,mgr,nb);
           break;
 
@@ -219,7 +219,7 @@ float32_t *outp=output.ptr();
           ref.reload(BasicTestsF32::REF_SCALE_F32_ID,mgr,nb);
           break;
         case BasicTestsF32::TEST_SCALE_F32_18:
-          nb = 9;
+          nb = 11;
           ref.reload(BasicTestsF32::REF_SCALE_F32_ID,mgr,nb);
           break;
 
@@ -232,7 +232,7 @@ float32_t *outp=output.ptr();
           ref.reload(BasicTestsF32::REF_DOT_4N_F32_ID,mgr);
           break;
         case BasicTestsF32::TEST_DOT_PROD_F32_21:
-          nb = 9;
+          nb = 11;
           ref.reload(BasicTestsF32::REF_DOT_4N1_F32_ID,mgr);
           break;
 
@@ -245,7 +245,7 @@ float32_t *outp=output.ptr();
           ref.reload(BasicTestsF32::REF_ABS_F32_ID,mgr,nb);
           break;
         case BasicTestsF32::TEST_ABS_F32_24:
-          nb = 9;
+          nb = 11;
           ref.reload(BasicTestsF32::REF_ABS_F32_ID,mgr,nb);
           break;
 

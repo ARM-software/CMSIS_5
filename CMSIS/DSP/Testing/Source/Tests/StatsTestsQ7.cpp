@@ -231,7 +231,7 @@ But the tests are kept for when they will be available.
 
             case StatsTestsQ7::TEST_MAX_Q7_3:
             {
-               inputA.reload(StatsTestsQ7::INPUT1_Q7_ID,mgr,33);
+               inputA.reload(StatsTestsQ7::INPUT1_Q7_ID,mgr,47);
               
                maxIndexes.reload(StatsTestsQ7::MAXINDEXES_S16_ID,mgr);
                ref.reload(StatsTestsQ7::MAXVALS_Q7_ID,mgr);
@@ -277,7 +277,7 @@ But the tests are kept for when they will be available.
 
             case StatsTestsQ7::TEST_MEAN_Q7_6:
             {
-               inputA.reload(StatsTestsQ7::INPUT2_Q7_ID,mgr,33);
+               inputA.reload(StatsTestsQ7::INPUT2_Q7_ID,mgr,47);
               
                ref.reload(StatsTestsQ7::MEANVALS_Q7_ID,mgr);
                
@@ -317,7 +317,7 @@ But the tests are kept for when they will be available.
 
             case StatsTestsQ7::TEST_MIN_Q7_9:
             {
-               inputA.reload(StatsTestsQ7::INPUT1_Q7_ID,mgr,33);
+               inputA.reload(StatsTestsQ7::INPUT1_Q7_ID,mgr,47);
               
                minIndexes.reload(StatsTestsQ7::MININDEXES_S16_ID,mgr);
                ref.reload(StatsTestsQ7::MINVALS_Q7_ID,mgr);
@@ -355,7 +355,7 @@ But the tests are kept for when they will be available.
 
             case StatsTestsQ7::TEST_POWER_Q7_12:
             {
-               inputA.reload(StatsTestsQ7::INPUT1_Q7_ID,mgr,33);
+               inputA.reload(StatsTestsQ7::INPUT1_Q7_ID,mgr,47);
               
                refPower.reload(StatsTestsQ7::POWERVALS_Q31_ID,mgr);
                
@@ -398,7 +398,7 @@ But the tests are kept for when they will be available.
 
             case StatsTestsQ7::TEST_RMS_Q7_15:
             {
-               inputA.reload(StatsTestsQ7::INPUT1_Q7_ID,mgr,33);
+               inputA.reload(StatsTestsQ7::INPUT1_Q7_ID,mgr,47);
               
                ref.reload(StatsTestsQ7::RMSVALS_Q7_ID,mgr);
                
@@ -434,7 +434,7 @@ But the tests are kept for when they will be available.
 
             case StatsTestsQ7::TEST_STD_Q7_18:
             {
-               inputA.reload(StatsTestsQ7::INPUT1_Q7_ID,mgr,33);
+               inputA.reload(StatsTestsQ7::INPUT1_Q7_ID,mgr,47);
               
                ref.reload(StatsTestsQ7::STDVALS_Q7_ID,mgr);
                
@@ -470,7 +470,7 @@ But the tests are kept for when they will be available.
 
             case StatsTestsQ7::TEST_VAR_Q7_21:
             {
-               inputA.reload(StatsTestsQ7::INPUT1_Q7_ID,mgr,33);
+               inputA.reload(StatsTestsQ7::INPUT1_Q7_ID,mgr,47);
               
                ref.reload(StatsTestsQ7::VARVALS_Q7_ID,mgr);
                

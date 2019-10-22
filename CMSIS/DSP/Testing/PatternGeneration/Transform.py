@@ -14,7 +14,7 @@ NOISES=[0.1,0.4]
 
 def randComplex(nb):
     data = np.random.randn(2*nb)
-    data = data/max(data)
+    data = Tools.normalize(data)
     data_comp = data.view(dtype=np.complex128)
     return(data_comp)
 
@@ -24,7 +24,7 @@ def asReal(a):
 
 def randComplex(nb):
     data = np.random.randn(2*nb)
-    data = data/max(data)
+    data = Tools.normalize(data)
     data_comp = data.view(dtype=np.complex128)
     return(data_comp)
 
@@ -81,24 +81,26 @@ def writeTests(configs):
         j = j + 1
 
     data1=np.random.randn(512)
-    data1 = data1/max(data1)
+    data1 = Tools.normalize(data1)
     for config,scaling in configs:
         config.writeInput(i, data1,"RealInputSamples" )
 
    
+def generatePatterns():
+    PATTERNDIR = os.path.join("Patterns","DSP","Transform","Transform")
+    PARAMDIR = os.path.join("Parameters","DSP","Transform","Transform")
+    
+    configf32=Tools.Config(PATTERNDIR,PARAMDIR,"f32")
+    configq31=Tools.Config(PATTERNDIR,PARAMDIR,"q31")
+    configq15=Tools.Config(PATTERNDIR,PARAMDIR,"q15")
+    
+    
+    scalings = [4,5,6,7,8,9,10,11,12]
+    writeTests([(configf32,None)
+        ,(configq31,scalings)
+        ,(configq15,scalings)])
 
-PATTERNDIR = os.path.join("Patterns","DSP","Transform","Transform")
-PARAMDIR = os.path.join("Parameters","DSP","Transform","Transform")
-
-configf32=Tools.Config(PATTERNDIR,PARAMDIR,"f32")
-configq31=Tools.Config(PATTERNDIR,PARAMDIR,"q31")
-configq15=Tools.Config(PATTERNDIR,PARAMDIR,"q15")
 
 
-scalings = [4,5,6,7,8,9,10,11,12]
-writeTests([(configf32,None)
-    ,(configq31,scalings)
-    ,(configq15,scalings)])
-
-
-
+if __name__ == '__main__':
+  generatePatterns()

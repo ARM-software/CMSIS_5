@@ -141,10 +141,13 @@ def writeTests(config):
 
     
 
+def generatePatterns():
+    PATTERNDIR = os.path.join("Patterns","DSP","SVM","SVM")
+    PARAMDIR = os.path.join("Parameters","DSP","SVM","SVM")
+    
+    configf32=Tools.Config(PATTERNDIR,PARAMDIR,"f32")
+    
+    writeTests(configf32)
 
-PATTERNDIR = os.path.join("Patterns","DSP","SVM","SVM")
-PARAMDIR = os.path.join("Parameters","DSP","SVM","SVM")
-
-configf32=Tools.Config(PATTERNDIR,PARAMDIR,"f32")
-
-writeTests(configf32)
+if __name__ == '__main__':
+  generatePatterns()

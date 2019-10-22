@@ -3,7 +3,7 @@
 
 #define SNR_THRESHOLD 120
 
-#define REL_ERROR (1.0e-6)
+#define REL_ERROR (2.0e-6)
 
     void ComplexTestsF32::test_cmplx_conj_f32()
     {
@@ -133,7 +133,7 @@
           output.create(ref.nbSamples(),ComplexTestsF32::OUT_SAMPLES_F32_ID,mgr);
           break;
         case ComplexTestsF32::TEST_CMPLX_CONJ_F32_3:
-          nb = 9;
+          nb = 11;
           ref.reload(ComplexTestsF32::REF_CONJ_F32_ID,mgr,nb << 1);
           input1.reload(ComplexTestsF32::INPUT1_F32_ID,mgr,nb << 1);
 
@@ -158,7 +158,7 @@
           break;
 
         case ComplexTestsF32::TEST_CMPLX_DOT_PROD_F32_6:
-          nb = 9;
+          nb = 11;
           ref.reload(ComplexTestsF32::REF_DOT_PROD_4N1_F32_ID,mgr);
           input1.reload(ComplexTestsF32::INPUT1_F32_ID,mgr,nb << 1);
           input2.reload(ComplexTestsF32::INPUT2_F32_ID,mgr,nb << 1);
@@ -180,7 +180,7 @@
           output.create(ref.nbSamples(),ComplexTestsF32::OUT_SAMPLES_F32_ID,mgr);
           break;
         case ComplexTestsF32::TEST_CMPLX_MAG_F32_9:
-          nb = 9;
+          nb = 11;
           ref.reload(ComplexTestsF32::REF_MAG_F32_ID,mgr,nb);
           input1.reload(ComplexTestsF32::INPUT1_F32_ID,mgr,nb << 1);
 
@@ -201,7 +201,7 @@
           output.create(ref.nbSamples(),ComplexTestsF32::OUT_SAMPLES_F32_ID,mgr);
           break;
         case ComplexTestsF32::TEST_CMPLX_MAG_SQUARED_F32_12:
-          nb = 9;
+          nb = 11;
           ref.reload(ComplexTestsF32::REF_MAG_SQUARED_F32_ID,mgr,nb);
           input1.reload(ComplexTestsF32::INPUT1_F32_ID,mgr,nb << 1);
 
@@ -224,7 +224,7 @@
           output.create(ref.nbSamples(),ComplexTestsF32::OUT_SAMPLES_F32_ID,mgr);
           break;
         case ComplexTestsF32::TEST_CMPLX_MULT_CMPLX_F32_15:
-          nb = 9;
+          nb = 11;
           ref.reload(ComplexTestsF32::REF_CMPLX_MULT_CMPLX_F32_ID,mgr,nb << 1);
           input1.reload(ComplexTestsF32::INPUT1_F32_ID,mgr,nb << 1);
           input2.reload(ComplexTestsF32::INPUT2_F32_ID,mgr,nb << 1);
@@ -248,7 +248,7 @@
           output.create(ref.nbSamples(),ComplexTestsF32::OUT_SAMPLES_F32_ID,mgr);
           break;
         case ComplexTestsF32::TEST_CMPLX_MULT_REAL_F32_18:
-          nb = 9;
+          nb = 11;
           ref.reload(ComplexTestsF32::REF_CMPLX_MULT_REAL_F32_ID,mgr,nb << 1);
           input1.reload(ComplexTestsF32::INPUT1_F32_ID,mgr,nb << 1);
           input2.reload(ComplexTestsF32::INPUT3_F32_ID,mgr,nb);

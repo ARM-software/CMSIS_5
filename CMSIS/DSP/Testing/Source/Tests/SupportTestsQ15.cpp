@@ -113,7 +113,7 @@
             break;
 
             case TEST_COPY_Q15_3:
-              this->nbSamples = 17;
+              this->nbSamples = 23;
               inputQ15.reload(SupportTestsQ15::SAMPLES_Q15_ID,mgr,this->nbSamples);
 
               outputQ15.create(inputQ15.nbSamples(),SupportTestsQ15::OUT_ID,mgr);
@@ -135,7 +135,7 @@
             break;
 
             case TEST_FILL_Q15_6:
-              this->nbSamples = 17;
+              this->nbSamples = 23;
 
               outputQ15.create(this->nbSamples,SupportTestsQ15::OUT_ID,mgr);
 
@@ -158,7 +158,7 @@
             break;
 
             case TEST_Q15_FLOAT_9:
-              this->nbSamples = 17;
+              this->nbSamples = 23;
               inputQ15.reload(SupportTestsQ15::SAMPLES_Q15_ID,mgr,this->nbSamples);
               refF32.reload(SupportTestsQ15::SAMPLES_F32_ID,mgr,this->nbSamples);
               outputF32.create(this->nbSamples,SupportTestsQ15::OUT_ID,mgr);
@@ -182,7 +182,7 @@
             break;
 
             case TEST_Q15_Q31_12:
-              this->nbSamples = 17;
+              this->nbSamples = 23;
               inputQ15.reload(SupportTestsQ15::SAMPLES_Q15_ID,mgr,this->nbSamples);
               refQ31.reload(SupportTestsQ15::SAMPLES_Q31_ID,mgr,this->nbSamples);
               outputQ31.create(this->nbSamples,SupportTestsQ15::OUT_ID,mgr);
@@ -206,7 +206,7 @@
             break;
 
             case TEST_Q15_Q7_15:
-              this->nbSamples = 17;
+              this->nbSamples = 23;
               inputQ15.reload(SupportTestsQ15::SAMPLES_Q15_ID,mgr,this->nbSamples);
               refQ7.reload(SupportTestsQ15::SAMPLES_Q7_ID,mgr,this->nbSamples);
               outputQ7.create(this->nbSamples,SupportTestsQ15::OUT_ID,mgr);

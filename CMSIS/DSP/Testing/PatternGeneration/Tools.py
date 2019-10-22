@@ -2,6 +2,9 @@ import os.path
 import struct
 import numpy as np
 
+def normalize(a):
+  return(a/max(np.abs(a)))
+
 TAILONLY = 1
 BODYONLY = 2
 BODYANDTAIL = 3
@@ -24,11 +27,11 @@ def loopnb(format,loopkind):
             nb = 32
     if loopkind == BODYANDTAIL:
         if format == 0 or format == 31:
-            nb = 9 
+            nb = 11 # 9
         if format == 15:
-            nb = 17
+            nb = 23 # 17
         if format == 7:
-            nb = 33
+            nb = 47 # 33
 
     return(nb)
 
@@ -55,7 +58,7 @@ def packset(a):
         #print(c[i,:])
         #print("%X %X %X %X" % (c[i,0],c[i,1],c[i,2],c[i,3]))
         d = (c[i,0] << 24) | (c[i,1] << 16) | (c[i,2] << 8) | c[i,3] 
-        result.append(d)
+        result.append(np.uint32(d))
     return(result) 
 
 def float_to_hex(f):
@@ -124,7 +127,7 @@ def s32(r):
   return ("0x%s" % format(struct.unpack('<I', struct.pack('<i', r))[0],'08X'))
 
 def u32(r):
-  return ("0x%s" % format(struct.unpack('<I', struct.pack('<i', r))[0],'08X'))
+  return ("0x%s" % format(struct.unpack('<I', struct.pack('<I', r))[0],'08X'))
 
 class Config:
     def __init__(self,patternDir,paramDir,ext):

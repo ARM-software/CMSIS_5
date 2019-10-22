@@ -9,7 +9,7 @@ import Tools
 
 def randComplex(nb):
     data = np.random.randn(2*nb)
-    data = data/max(data)
+    data = Tools.normalize(data)
     data_comp = data.view(dtype=np.complex128)
     return(data_comp)
 
@@ -23,7 +23,7 @@ def writeTests(config,format):
     data1=randComplex(NBSAMPLES)
     data2=randComplex(NBSAMPLES)
     data3=np.random.randn(NBSAMPLES)
-    data3 = data3/max(data3)
+    data3 = Tools.normalize(data3)
     
 
     config.writeInput(1, asReal(data1))
@@ -90,19 +90,20 @@ def writeTests(config,format):
     ref = data1 * data3
     config.writeReference(8, asReal(ref))
     
+def  generatePatterns():
+     PATTERNDIR = os.path.join("Patterns","DSP","ComplexMaths","ComplexMaths")
+     PARAMDIR = os.path.join("Parameters","DSP","ComplexMaths","ComplexMaths")
+     
+     configf32=Tools.Config(PATTERNDIR,PARAMDIR,"f32")
+     configq31=Tools.Config(PATTERNDIR,PARAMDIR,"q31")
+     configq15=Tools.Config(PATTERNDIR,PARAMDIR,"q15")
+     
+     
+     writeTests(configf32,0)
+     writeTests(configq31,31)
+     writeTests(configq15,15)
 
-PATTERNDIR = os.path.join("Patterns","DSP","ComplexMaths","ComplexMaths")
-PARAMDIR = os.path.join("Parameters","DSP","ComplexMaths","ComplexMaths")
-
-configf32=Tools.Config(PATTERNDIR,PARAMDIR,"f32")
-configq31=Tools.Config(PATTERNDIR,PARAMDIR,"q31")
-configq15=Tools.Config(PATTERNDIR,PARAMDIR,"q15")
-
-
-writeTests(configf32,0)
-writeTests(configq31,31)
-writeTests(configq15,15)
-
-
+if __name__ == '__main__':
+  generatePatterns()
 
 

@@ -41,7 +41,7 @@ def writeTestsF32(config,format):
     data1 = np.random.randn(20)
     data1 = np.abs(data1)
     data1 = data1 + 1e-3 # To avoid zero values
-    data1 = data1/max(data1)
+    data1 = Tools.normalize(data1)
 
     samples=np.concatenate((np.array([0.1,0.3,0.5,1.0,2.0]) , data1))
     config.writeInput(1, samples,"LogInput")
@@ -54,19 +54,20 @@ def writeTestsF32(config,format):
     config.writeReference(1, v,"Exp")
 
     
+def generatePatterns():
+    PATTERNDIR = os.path.join("Patterns","DSP","FastMath","FastMath")
+    PARAMDIR = os.path.join("Parameters","DSP","FastMath","FastMath")
+    
+    configf32=Tools.Config(PATTERNDIR,PARAMDIR,"f32")
+    configq31=Tools.Config(PATTERNDIR,PARAMDIR,"q31")
+    configq15=Tools.Config(PATTERNDIR,PARAMDIR,"q15")
+    
+    
+    writeTestsF32(configf32,0)
+    writeTests(configq31,31)
+    writeTests(configq15,15)
 
-PATTERNDIR = os.path.join("Patterns","DSP","FastMath","FastMath")
-PARAMDIR = os.path.join("Parameters","DSP","FastMath","FastMath")
 
-configf32=Tools.Config(PATTERNDIR,PARAMDIR,"f32")
-configq31=Tools.Config(PATTERNDIR,PARAMDIR,"q31")
-configq15=Tools.Config(PATTERNDIR,PARAMDIR,"q15")
-
-
-writeTestsF32(configf32,0)
-writeTests(configq31,31)
-writeTests(configq15,15)
-
-
-
+if __name__ == '__main__':
+  generatePatterns()
 

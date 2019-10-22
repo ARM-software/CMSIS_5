@@ -36,6 +36,9 @@ Definitions available for MVEF and MVEI
 ***************************************/
 #if defined (ARM_MATH_HELIUM) || defined(ARM_MATH_MVEF) || defined(ARM_MATH_MVEI)
 
+#define INACTIVELANE            0 /* inactive lane content */
+
+
 #endif /* defined (ARM_MATH_HELIUM) || defined(ARM_MATH_MVEF) || defined(ARM_MATH_MVEI) */
 
 /***************************************
@@ -81,6 +84,138 @@ Definitions available for MVEI only
 
 
 #include "arm_common_tables.h"
+
+/* Following functions are used to transpose matrix in f32 and q31 cases */
+__STATIC_INLINE arm_status arm_mat_trans_32bit_2x2_mve(
+    uint32_t * pDataSrc,
+    uint32_t * pDataDest)
+{
+    uint32x4_t   vecOffs;
+    uint32x4_t   vecIn;
+
+    static const uint32_t  stridesTr22[4] = { 0, 2, 1, 3 };
+    /*
+     *
+     * | 0   1 |   =>  |  0   2 |
+     * | 2   3 |       |  1   3 |
+     *
+     */
+    vecOffs = vldrwq_u32((uint32_t const *)stridesTr22);
+    vecIn = vldrwq_u32((uint32_t const *)pDataSrc);
+    vstrwq_scatter_shifted_offset_u32(pDataDest, vecOffs, vecIn);
+
+    return (ARM_MATH_SUCCESS);
+}
+
+__STATIC_INLINE arm_status arm_mat_trans_32bit_3x3_mve(
+    uint32_t * pDataSrc,
+    uint32_t * pDataDest)
+{
+    static const uint32_t stridesTr33_1[4] = { 0, 3, 6, 1};
+    static const uint32_t stridesTr33_2[4] = { 4, 7, 2, 5};
+    uint32x4_t vecOffs1, vecOffs2;
+    uint32x4_t vecIn1, vecIn2;
+    /*
+     *
+     *  | 0   1   2 |       | 0   3   6 |  4 x 32 flattened version | 0   3   6   1 |
+     *  | 3   4   5 |   =>  | 1   4   7 |            =>             | 4   7   2   5 |
+     *  | 6   7   8 |       | 2   5   8 |       (row major)         | 8   .   .   . |
+     *
+     */
+    vecOffs1 = vldrwq_u32((uint32_t const *) stridesTr33_1);
+    vecOffs2 = vldrwq_u32((uint32_t const *) stridesTr33_2);
+
+    vecIn1 = vldrwq_u32((uint32_t const *) pDataSrc);
+    vecIn2 = vldrwq_u32((uint32_t const *) &pDataSrc[4]);
+
+    vstrwq_scatter_shifted_offset_u32(pDataDest, vecOffs1, vecIn1);
+    vstrwq_scatter_shifted_offset_u32(pDataDest, vecOffs2, vecIn2);
+
+    pDataDest[8] = pDataSrc[8];
+
+    return (ARM_MATH_SUCCESS);
+}
+
+__STATIC_INLINE arm_status arm_mat_trans_32bit_4x4_mve(uint32_t * pDataSrc, uint32_t * pDataDest)
+{
+    /*
+     * 4x4 Matrix transposition
+     * is 4 x de-interleave operation
+     *
+     * 0   1   2   3       0   4   8   12
+     * 4   5   6   7       1   5   9   13
+     * 8   9   10  11      2   6   10  14
+     * 12  13  14  15      3   7   11  15
+     */
+
+    uint32x4x4_t vecIn;
+
+    vecIn = vld4q((uint32_t const *) pDataSrc);
+    vstrwq(pDataDest, vecIn.val[0]);
+    pDataDest += 4;
+    vstrwq(pDataDest, vecIn.val[1]);
+    pDataDest += 4;
+    vstrwq(pDataDest, vecIn.val[2]);
+    pDataDest += 4;
+    vstrwq(pDataDest, vecIn.val[3]);
+
+    return (ARM_MATH_SUCCESS);
+}
+
+
+__STATIC_INLINE arm_status arm_mat_trans_32bit_generic_mve(
+    uint16_t    srcRows,
+    uint16_t    srcCols,
+    uint32_t  * pDataSrc,
+    uint32_t  * pDataDest)
+{
+    uint32x4_t vecOffs;
+    uint32_t  i;
+    uint32_t  blkCnt;
+    uint32_t const *pDataC;
+    uint32_t *pDataDestR;
+    uint32x4_t vecIn;
+
+    vecOffs = vidupq_u32(0, 1);
+    vecOffs = vecOffs * srcCols;
+
+    i = srcCols;
+    do
+    {
+        pDataC = (uint32_t const *) pDataSrc;
+        pDataDestR = pDataDest;
+
+        blkCnt = srcRows >> 2;
+        while (blkCnt > 0U)
+        {
+            vecIn = vldrwq_gather_shifted_offset_u32(pDataC, vecOffs);
+            vstrwq(pDataDestR, vecIn); 
+            pDataDestR += 4;
+            pDataC = pDataC + srcCols * 4;
+            /*
+             * Decrement the blockSize loop counter
+             */
+            blkCnt--;
+        }
+
+        /*
+         * tail
+         */
+        blkCnt = srcRows & 3;
+        if (blkCnt > 0U)
+        {
+            mve_pred16_t p0 = vctp32q(blkCnt);
+            vecIn = vldrwq_gather_shifted_offset_u32(pDataC, vecOffs);
+            vstrwq_p(pDataDestR, vecIn, p0);
+        }
+
+        pDataSrc += 1;
+        pDataDest += srcRows;
+    }
+    while (--i);
+
+    return (ARM_MATH_SUCCESS);
+}
 
 #if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FAST_TABLES) || defined(ARM_TABLE_FAST_SQRT_Q31_MVE)
 __STATIC_INLINE q31x4_t FAST_VSQRT_Q31(q31x4_t vecIn)

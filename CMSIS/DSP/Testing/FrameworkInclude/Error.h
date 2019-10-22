@@ -77,15 +77,20 @@ extern void assert_relative_error(unsigned long nb,float32_t &a, float32_t &b, d
 extern void assert_relative_error(unsigned long nb,AnyPattern<float32_t> &pa, AnyPattern<float32_t> &pb, double threshold);
 
 /* Similar to numpy isclose */
+extern void assert_close_error(unsigned long nb,float64_t &ref, float64_t &val, double absthreshold, double relthreshold);
+extern void assert_close_error(unsigned long nb,AnyPattern<float64_t> &pref, AnyPattern<float64_t> &pval, double absthreshold, double relthreshold);
+
 extern void assert_close_error(unsigned long nb,float32_t &ref, float32_t &val, double absthreshold, double relthreshold);
 extern void assert_close_error(unsigned long nb,AnyPattern<float32_t> &pref, AnyPattern<float32_t> &pval, double absthreshold, double relthreshold);
 
+extern void assert_snr_error(unsigned long nb,AnyPattern<float64_t> &pa,AnyPattern<float64_t> &pb, float64_t threshold);
 extern void assert_snr_error(unsigned long nb,AnyPattern<float32_t> &pa,AnyPattern<float32_t> &pb, float32_t threshold);
 extern void assert_snr_error(unsigned long nb,AnyPattern<q63_t> &pa,AnyPattern<q63_t> &pb, float32_t threshold);
 extern void assert_snr_error(unsigned long nb,AnyPattern<q31_t> &pa,AnyPattern<q31_t> &pb, float32_t threshold);
 extern void assert_snr_error(unsigned long nb,AnyPattern<q15_t> &pa,AnyPattern<q15_t> &pb, float32_t threshold);
 extern void assert_snr_error(unsigned long nb,AnyPattern<q7_t> &pa,AnyPattern<q7_t> &pb, float32_t threshold);
 
+extern void assert_snr_error(unsigned long nb,float64_t pa,float64_t pb, float32_t threshold);
 extern void assert_snr_error(unsigned long nb,float32_t pa,float32_t pb, float32_t threshold);
 extern void assert_snr_error(unsigned long nb,q63_t pa,q63_t pb, float32_t threshold);
 extern void assert_snr_error(unsigned long nb,q31_t pa,q31_t pb, float32_t threshold);
@@ -95,6 +100,7 @@ extern void assert_snr_error(unsigned long nb,q7_t pa,q7_t pb, float32_t thresho
 extern void assert_true(unsigned long nb,bool cond);
 extern void assert_false(unsigned long nb,bool cond);
 
+extern void assert_not_empty(unsigned long nb, AnyPattern<float64_t> &p);
 extern void assert_not_empty(unsigned long nb, AnyPattern<float32_t> &p);
 extern void assert_not_empty(unsigned long nb, AnyPattern<q63_t> &p);
 extern void assert_not_empty(unsigned long nb, AnyPattern<q31_t> &p);

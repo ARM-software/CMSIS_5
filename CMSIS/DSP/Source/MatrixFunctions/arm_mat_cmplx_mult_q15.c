@@ -57,7 +57,261 @@
                    This approach provides 33 guard bits and there is no risk of overflow. The 34.30 result is then
                    truncated to 34.15 format by discarding the low 15 bits and then saturated to 1.15 format.
  */
+#if defined(ARM_MATH_MVEI)
 
+#define MVE_ASRL_SAT16(acc, shift)          ((sqrshrl_sat48(acc, -(32-shift)) >> 32) & 0xffffffff)
+
+arm_status arm_mat_cmplx_mult_q15(
+  const arm_matrix_instance_q15 * pSrcA,
+  const arm_matrix_instance_q15 * pSrcB,
+        arm_matrix_instance_q15 * pDst,
+        q15_t                   * pScratch)
+{
+    q15_t const *pInA = (q15_t const *) pSrcA->pData;   /* input data matrix pointer A of Q15 type */
+    q15_t const *pInB = (q15_t const *) pSrcB->pData;   /* input data matrix pointer B of Q15 type */
+    q15_t const *pInB2;
+    q15_t       *px;               /* Temporary output data matrix pointer */
+    uint32_t     numRowsA = pSrcA->numRows;    /* number of rows of input matrix A    */
+    uint32_t     numColsB = pSrcB->numCols;    /* number of columns of input matrix B */
+    uint32_t     numColsA = pSrcA->numCols;    /* number of columns of input matrix A */
+    uint32_t     numRowsB = pSrcB->numRows;    /* number of rows of input matrix A    */
+    uint32_t     col, i = 0u, j, row = numRowsB;   /* loop counters */
+    uint32_t  blkCnt;           /* loop counters */
+    uint16x8_t vecOffs, vecColBOffs;
+    arm_status status;                             /* Status of matrix multiplication */
+    (void)pScratch;
+
+#ifdef ARM_MATH_MATRIX_CHECK
+
+  /* Check for matrix mismatch condition */
+  if ((pSrcA->numCols != pSrcB->numRows) ||
+      (pSrcA->numRows != pDst->numRows)  ||
+      (pSrcB->numCols != pDst->numCols)    )
+  {
+    /* Set status as ARM_MATH_SIZE_MISMATCH */
+    status = ARM_MATH_SIZE_MISMATCH;
+  }
+  else
+
+#endif /* #ifdef ARM_MATH_MATRIX_CHECK */
+
+  {
+    vecColBOffs[0] = 0;
+    vecColBOffs[1] = 1;
+    vecColBOffs[2] = numColsB * CMPLX_DIM;
+    vecColBOffs[3] = (numColsB * CMPLX_DIM) + 1;
+    vecColBOffs[4] = 2 * numColsB * CMPLX_DIM;
+    vecColBOffs[5] = 2 * (numColsB * CMPLX_DIM) + 1;
+    vecColBOffs[6] = 3 * numColsB * CMPLX_DIM;
+    vecColBOffs[7] = 3 * (numColsB * CMPLX_DIM) + 1;
+
+    /*
+     * Reset the variables for the usage in the following multiplication process
+     */
+    i = 0;
+    row = numRowsA;
+    px = pDst->pData;
+
+    /*
+     * The following loop performs the dot-product of each row in pSrcA with each column in pSrcB
+     */
+
+    /*
+     * row loop
+     */
+    while (row > 0u)
+    {
+        /*
+         * For every row wise process, the column loop counter is to be initiated
+         */
+        col = numColsB >> 1;
+        j = 0;
+        /*
+         * column loop
+         */
+        while (col > 0u)
+        {
+            q15_t const *pSrcAVec;
+            //, *pSrcBVec, *pSrcB2Vec;
+            q15x8_t vecA, vecB, vecB2;
+            q63_t     acc0, acc1, acc2, acc3;
+
+            /*
+             * Initiate the pointer pIn1 to point to the starting address of the column being processed
+             */
+            pInA = pSrcA->pData + i;
+            pInB = pSrcB->pData + j;
+            pInB2 = pInB + CMPLX_DIM;
+
+            j += 2 * CMPLX_DIM;
+            /*
+             * Decrement the column loop counter
+             */
+            col--;
+
+            /*
+             * Initiate the pointers
+             * - current Matrix A rows
+             * - 2 x consecutive Matrix B' rows (j increment is 2 x numRowsB)
+             */
+            pSrcAVec = (q15_t const *) pInA;
+
+            acc0 = 0LL;
+            acc1 = 0LL;
+            acc2 = 0LL;
+            acc3 = 0LL;
+
+            vecOffs = vecColBOffs;
+          
+
+            blkCnt = (numColsA * CMPLX_DIM) >> 3;
+            while (blkCnt > 0U)
+            {
+                vecA = vld1q(pSrcAVec); 
+                pSrcAVec += 8;
+                vecB = vldrhq_gather_shifted_offset(pInB, vecOffs);
+
+                acc0 = vmlsldavaq(acc0, vecA, vecB);
+                acc1 = vmlaldavaxq(acc1, vecA, vecB);
+                vecB2 = vldrhq_gather_shifted_offset(pInB2, vecOffs);
+                /*
+                 * move Matrix B read offsets, 4 rows down
+                 */
+                vecOffs = vaddq(vecOffs, (uint16_t) (numColsB * 4 * CMPLX_DIM));
+
+                acc2 = vmlsldavaq(acc2, vecA, vecB2);
+                acc3 = vmlaldavaxq(acc3, vecA, vecB2);
+
+                blkCnt--;
+            }
+
+            /*
+             * tail
+             */
+            blkCnt = (numColsA * CMPLX_DIM) & 7;
+            if (blkCnt > 0U)
+            {
+                mve_pred16_t p0 = vctp16q(blkCnt);
+                vecB = vldrhq_gather_shifted_offset(pInB, vecOffs);
+
+                vecA = vldrhq_z_s16(pSrcAVec, p0);
+
+                acc0 = vmlsldavaq(acc0, vecA, vecB);
+                acc1 = vmlaldavaxq(acc1, vecA, vecB);
+                vecB2 = vldrhq_gather_shifted_offset(pInB2, vecOffs);
+
+                /*
+                 * move Matrix B read offsets, 4 rows down
+                 */
+                vecOffs = vaddq(vecOffs, (uint16_t) (numColsB * 4 * CMPLX_DIM));
+
+                acc2 = vmlsldavaq(acc2, vecA, vecB2);
+                acc3 = vmlaldavaxq(acc3, vecA, vecB2);
+
+            }
+            /*
+             * Convert to 1.15, Store the results (1 x 2 block) in the destination buffer
+             */
+            *px++ = (q15_t)MVE_ASRL_SAT16(acc0, 15);
+            *px++ = (q15_t)MVE_ASRL_SAT16(acc1, 15);
+            *px++ = (q15_t)MVE_ASRL_SAT16(acc2, 15);
+            *px++ = (q15_t)MVE_ASRL_SAT16(acc3, 15);
+        }
+
+        col = numColsB & 1;
+        /*
+         * column loop
+         */
+        while (col > 0u)
+        {
+
+            q15_t const *pSrcAVec;
+            //, *pSrcBVec, *pSrcB2Vec;
+            q15x8_t vecA, vecB;
+            q63_t     acc0, acc1;
+
+            /*
+             * Initiate the pointer pIn1 to point to the starting address of the column being processed
+             */
+            pInA = pSrcA->pData + i;
+            pInB = pSrcB->pData + j;
+
+            j += CMPLX_DIM;
+            /*
+             * Decrement the column loop counter
+             */
+            col--;
+
+            /*
+             * Initiate the pointers
+             * - current Matrix A rows
+             * - 2 x consecutive Matrix B' rows (j increment is 2 x numRowsB)
+             */
+            pSrcAVec = (q15_t const *) pInA;
+
+            acc0 = 0LL;
+            acc1 = 0LL;
+           
+
+            vecOffs = vecColBOffs;
+           
+            
+
+            blkCnt = (numColsA * CMPLX_DIM) >> 3;
+            while (blkCnt > 0U)
+            {
+                vecA = vld1q(pSrcAVec); 
+                pSrcAVec += 8;
+                vecB = vldrhq_gather_shifted_offset(pInB, vecOffs);
+
+                acc0 = vmlsldavaq(acc0, vecA, vecB);
+                acc1 = vmlaldavaxq(acc1, vecA, vecB);
+                /*
+                 * move Matrix B read offsets, 4 rows down
+                 */
+                vecOffs = vaddq(vecOffs, (uint16_t) (numColsB * 4 * CMPLX_DIM));
+
+                blkCnt--;
+            }
+
+            /*
+             * tail
+             */
+            blkCnt = (numColsA * CMPLX_DIM) & 7;
+            if (blkCnt > 0U)
+            {
+                mve_pred16_t p0 = vctp16q(blkCnt);
+                vecB = vldrhq_gather_shifted_offset(pInB, vecOffs);
+                vecA = vldrhq_z_s16(pSrcAVec, p0);
+
+                acc0 = vmlsldavaq(acc0, vecA, vecB);
+                acc1 = vmlaldavaxq(acc1, vecA, vecB);
+               
+            }
+            /*
+             * Convert to 1.15, Store the results (1 x 2 block) in the destination buffer
+             */
+            *px++ = (q15_t)MVE_ASRL_SAT16(acc0, 15);
+            *px++ = (q15_t)MVE_ASRL_SAT16(acc1, 15);
+           
+        }
+
+        i = i + numColsA * CMPLX_DIM;
+        
+        /*
+         * Decrement the row loop counter
+         */
+        row--;
+    }
+
+
+    status = ARM_MATH_SUCCESS;
+  }
+
+  /* Return to application */
+  return (status);
+}
+#else
 arm_status arm_mat_cmplx_mult_q15(
   const arm_matrix_instance_q15 * pSrcA,
   const arm_matrix_instance_q15 * pSrcB,
@@ -334,6 +588,7 @@ arm_status arm_mat_cmplx_mult_q15(
   /* Return to application */
   return (status);
 }
+#endif /* defined(ARM_MATH_MVEI) */
 
 /**
   @} end of MatrixMult group

@@ -25,7 +25,7 @@
           p++;
        }
 
-        ASSERT_REL_ERROR(outputProbas,probas,(float32_t)1e-6);
+        ASSERT_REL_ERROR(outputProbas,probas,(float32_t)5e-6);
         ASSERT_EQ(outputPredicts,predicts);
     } 
 

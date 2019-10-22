@@ -15,8 +15,8 @@ def writeTests(config,format):
     data2=np.random.randn(NBSAMPLES)
     data3=np.random.randn(1)
     
-    data1 = data1/max(data1)
-    data2 = data1/max(data2)
+    data1 = Tools.normalize(data1)
+    data2 = Tools.normalize(data2)
 
     config.writeInput(1, data1)
     config.writeInput(2, data2)
@@ -113,7 +113,7 @@ def writeTestsWithSat(config,format):
     data2[1::2] = -2
 
     datar=np.random.randn(NBSAMPLES)
-    datar = datar/max(datar)
+    datar = Tools.normalize(datar)
     datar = datar / 3.0 # Because used to test shift of 2 without saturation
 
     config.writeInput(nb+1, datar)
@@ -174,25 +174,27 @@ def writeTestsWithSat(config,format):
     config.writeReference(nb+12, ref,"Shift")
 
 
+def generatePatterns():
+    PATTERNDIR = os.path.join("Patterns","DSP","BasicMaths","BasicMaths")
+    PARAMDIR = os.path.join("Parameters","DSP","BasicMaths","BasicMaths")
+    
+    configf32=Tools.Config(PATTERNDIR,PARAMDIR,"f32")
+    configq31=Tools.Config(PATTERNDIR,PARAMDIR,"q31")
+    configq15=Tools.Config(PATTERNDIR,PARAMDIR,"q15")
+    configq7=Tools.Config(PATTERNDIR,PARAMDIR,"q7")
+    
+    
+    
+    writeTests(configf32,0)
+    writeTestsWithSat(configq31,31)
+    writeTestsWithSat(configq15,15)
+    writeTestsWithSat(configq7,7)
+    
+    # Params just as example
+    someLists=[[1,3,5],[1,3,5],[1,3,5]]
+    
+    r=np.array([element for element in itertools.product(*someLists)])
+    configf32.writeParam(1, r.reshape(81))
 
-PATTERNDIR = os.path.join("Patterns","DSP","BasicMaths","BasicMaths")
-PARAMDIR = os.path.join("Parameters","DSP","BasicMaths","BasicMaths")
-
-configf32=Tools.Config(PATTERNDIR,PARAMDIR,"f32")
-configq31=Tools.Config(PATTERNDIR,PARAMDIR,"q31")
-configq15=Tools.Config(PATTERNDIR,PARAMDIR,"q15")
-configq7=Tools.Config(PATTERNDIR,PARAMDIR,"q7")
-
-
-
-writeTests(configf32,0)
-writeTestsWithSat(configq31,31)
-writeTestsWithSat(configq15,15)
-writeTestsWithSat(configq7,7)
-
-# Params just as example
-someLists=[[1,3,5],[1,3,5],[1,3,5]]
-
-r=np.array([element for element in itertools.product(*someLists)])
-configf32.writeParam(1, r.reshape(81))
-
+if __name__ == '__main__':
+  generatePatterns()

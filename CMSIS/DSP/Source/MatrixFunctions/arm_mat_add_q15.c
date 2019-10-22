@@ -50,7 +50,84 @@
                    The function uses saturating arithmetic.
                    Results outside of the allowable Q15 range [0x8000 0x7FFF] are saturated.
  */
+#if defined(ARM_MATH_MVEI)
 
+arm_status arm_mat_add_q15(
+  const arm_matrix_instance_q15 * pSrcA,
+  const arm_matrix_instance_q15 * pSrcB,
+        arm_matrix_instance_q15 * pDst)
+{
+    uint32_t        numSamples;       /* total number of elements in the matrix  */
+    q15_t          *pDataA, *pDataB, *pDataDst;
+    q15x8_t       vecA, vecB, vecDst;
+    q15_t const   *pSrcAVec;
+    q15_t const   *pSrcBVec;
+    uint32_t        blkCnt;           /* loop counters */
+    arm_status status;                             /* status of matrix addition */
+
+    pDataA = pSrcA->pData;
+    pDataB = pSrcB->pData;
+    pDataDst = pDst->pData;
+    pSrcAVec = (q15_t const *) pDataA;
+    pSrcBVec = (q15_t const *) pDataB;
+
+  #ifdef ARM_MATH_MATRIX_CHECK
+
+  /* Check for matrix mismatch condition */
+  if ((pSrcA->numRows != pSrcB->numRows) ||
+      (pSrcA->numCols != pSrcB->numCols) ||
+      (pSrcA->numRows != pDst->numRows)  ||
+      (pSrcA->numCols != pDst->numCols)    )
+  {
+    /* Set status as ARM_MATH_SIZE_MISMATCH */
+    status = ARM_MATH_SIZE_MISMATCH;
+  }
+  else
+
+#endif /* #ifdef ARM_MATH_MATRIX_CHECK */
+
+  {
+
+    /*
+     * Total number of samples in the input matrix
+     */
+    numSamples = (uint32_t) pSrcA->numRows * pSrcA->numCols;
+    blkCnt = numSamples >> 3;
+    while (blkCnt > 0U)
+    {
+        /* C(m,n) = A(m,n) + B(m,n) */
+        /* Add and then store the results in the destination buffer. */
+        vecA = vld1q(pSrcAVec); pSrcAVec += 8;
+        vecB = vld1q(pSrcBVec); pSrcBVec += 8;
+        vecDst = vqaddq(vecA, vecB);
+        vst1q(pDataDst, vecDst);  pDataDst += 8;
+        /*
+         * Decrement the blockSize loop counter
+         */
+        blkCnt--;
+    }
+    /*
+     * tail
+     * (will be merged thru tail predication)
+     */
+    blkCnt = numSamples & 7;
+    if (blkCnt > 0U)
+    {
+        mve_pred16_t p0 = vctp16q(blkCnt);
+        vecA = vld1q(pSrcAVec); pSrcAVec += 8;
+        vecB = vld1q(pSrcBVec); pSrcBVec += 8;
+        vecDst = vqaddq_m(vecDst, vecA, vecB, p0);
+        vstrhq_p(pDataDst, vecDst, p0);
+    }
+  /* Set status as ARM_MATH_SUCCESS */
+    status = ARM_MATH_SUCCESS;
+  }
+
+  /* Return to application */
+  return (status);
+}
+
+#else
 arm_status arm_mat_add_q15(
   const arm_matrix_instance_q15 * pSrcA,
   const arm_matrix_instance_q15 * pSrcB,
@@ -143,6 +220,7 @@ arm_status arm_mat_add_q15(
   /* Return to application */
   return (status);
 }
+#endif /* defined(ARM_MATH_MVEI) */
 
 /**
   @} end of MatrixAdd group

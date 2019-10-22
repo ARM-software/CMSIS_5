@@ -213,7 +213,7 @@ a double precision computation.
 
             case StatsTestsQ15::TEST_MAX_Q15_3:
             {
-               inputA.reload(StatsTestsQ15::INPUT1_Q15_ID,mgr,17);
+               inputA.reload(StatsTestsQ15::INPUT1_Q15_ID,mgr,23);
               
                maxIndexes.reload(StatsTestsQ15::MAXINDEXES_S16_ID,mgr);
                ref.reload(StatsTestsQ15::MAXVALS_Q15_ID,mgr);
@@ -251,7 +251,7 @@ a double precision computation.
 
             case StatsTestsQ15::TEST_MEAN_Q15_6:
             {
-               inputA.reload(StatsTestsQ15::INPUT2_Q15_ID,mgr,17);
+               inputA.reload(StatsTestsQ15::INPUT2_Q15_ID,mgr,23);
               
                ref.reload(StatsTestsQ15::MEANVALS_Q15_ID,mgr);
                
@@ -291,7 +291,7 @@ a double precision computation.
 
             case StatsTestsQ15::TEST_MIN_Q15_9:
             {
-               inputA.reload(StatsTestsQ15::INPUT1_Q15_ID,mgr,17);
+               inputA.reload(StatsTestsQ15::INPUT1_Q15_ID,mgr,23);
               
                minIndexes.reload(StatsTestsQ15::MININDEXES_S16_ID,mgr);
                ref.reload(StatsTestsQ15::MINVALS_Q15_ID,mgr);
@@ -329,7 +329,7 @@ a double precision computation.
 
             case StatsTestsQ15::TEST_POWER_Q15_12:
             {
-               inputA.reload(StatsTestsQ15::INPUT1_Q15_ID,mgr,17);
+               inputA.reload(StatsTestsQ15::INPUT1_Q15_ID,mgr,23);
               
                refPower.reload(StatsTestsQ15::POWERVALS_Q63_ID,mgr);
                
@@ -365,7 +365,7 @@ a double precision computation.
 
             case StatsTestsQ15::TEST_RMS_Q15_15:
             {
-               inputA.reload(StatsTestsQ15::INPUT1_Q15_ID,mgr,17);
+               inputA.reload(StatsTestsQ15::INPUT1_Q15_ID,mgr,23);
               
                ref.reload(StatsTestsQ15::RMSVALS_Q15_ID,mgr);
                
@@ -401,7 +401,7 @@ a double precision computation.
 
             case StatsTestsQ15::TEST_STD_Q15_18:
             {
-               inputA.reload(StatsTestsQ15::INPUT1_Q15_ID,mgr,17);
+               inputA.reload(StatsTestsQ15::INPUT1_Q15_ID,mgr,23);
               
                ref.reload(StatsTestsQ15::STDVALS_Q15_ID,mgr);
                
@@ -437,7 +437,7 @@ a double precision computation.
 
             case StatsTestsQ15::TEST_VAR_Q15_21:
             {
-               inputA.reload(StatsTestsQ15::INPUT1_Q15_ID,mgr,17);
+               inputA.reload(StatsTestsQ15::INPUT1_Q15_ID,mgr,23);
               
                ref.reload(StatsTestsQ15::VARVALS_Q15_ID,mgr);
                

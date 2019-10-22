@@ -48,10 +48,14 @@ def writeTest(config,nb,vecDim):
 def writeTests(config):
     writeTest(config,1,21)
 
+def generatePatterns():
+    PATTERNDIR = os.path.join("Patterns","NN","Softmax",)
+    PARAMDIR = os.path.join("Parameters","NN","Softmax")
+    
+    configq7=Tools.Config(PATTERNDIR,PARAMDIR,"q7")
+    
+    writeTests(configq7)
 
-PATTERNDIR = os.path.join("Patterns","NN","Softmax",)
-PARAMDIR = os.path.join("Parameters","NN","Softmax")
 
-configq7=Tools.Config(PATTERNDIR,PARAMDIR,"q7")
-
-writeTests(configq7)
+if __name__ == '__main__':
+  generatePatterns()

@@ -1114,6 +1114,216 @@ group Root {
            }
         }
 
+        group Matrix Tests {
+           class = MatrixTests
+           folder = Matrix
+
+           group Unary Tests {
+              class = UnaryTests
+              folder = Unary
+
+              suite Unary Tests F32 {
+                class = UnaryTestsF32 
+                folder = UnaryF32
+
+                Pattern INPUTS1_F32_ID : InputA1_f32.txt 
+                Pattern INPUTS2_F32_ID : InputB1_f32.txt 
+                Pattern INPUTSINV_F32_ID : InputInvert1_f32.txt 
+                Pattern DIMSUNARY1_S16_ID : DimsUnary1_s16.txt 
+                Pattern DIMSINVERT1_S16_ID : DimsInvert1_s16.txt 
+                
+                Pattern REFADD1_F32_ID : RefAdd1_f32.txt
+                Pattern REFSUB1_F32_ID : RefSub1_f32.txt
+                Pattern REFSCALE1_F32_ID : RefScale1_f32.txt
+                Pattern REFTRANS1_F32_ID : RefTranspose1_f32.txt
+                Pattern REFINV1_F32_ID : RefInvert1_f32.txt
+
+                Output  OUT_F32_ID : Output
+                Output  TMPA_F32_ID : TmpA
+                Output  TMPB_F32_ID : TmpB
+
+                Functions {
+                 test matrix add:test_mat_add_f32
+                 test matrix sub:test_mat_sub_f32
+                 test matrix scale:test_mat_scale_f32
+                 test matrix transpose:test_mat_trans_f32
+                 test matrix inverse:test_mat_inverse_f32
+                }
+
+              }
+
+              suite Unary Tests Q31 {
+                class = UnaryTestsQ31 
+                folder = UnaryQ31
+
+                Pattern INPUTS1_Q31_ID : InputA1_q31.txt 
+                Pattern INPUTS2_Q31_ID : InputB1_q31.txt 
+                Pattern INPUTSINV_Q31_ID : InputInvert1_q31.txt 
+                Pattern DIMSUNARY1_S16_ID : DimsUnary1_s16.txt 
+                Pattern DIMSINVERT1_S16_ID : DimsInvert1_s16.txt 
+                
+                Pattern REFADD1_Q31_ID : RefAdd1_q31.txt
+                Pattern REFSUB1_Q31_ID : RefSub1_q31.txt
+                Pattern REFSCALE1_Q31_ID : RefScale1_q31.txt
+                Pattern REFTRANS1_Q31_ID : RefTranspose1_q31.txt
+                Pattern REFINV1_Q31_ID : RefInvert1_q31.txt
+
+                Output  OUT_Q31_ID : Output
+                Output  TMPA_Q31_ID : TmpA
+                Output  TMPB_Q31_ID : TmpB
+
+                Functions {
+                 test matrix add:test_mat_add_q31
+                 test matrix sub:test_mat_sub_q31
+                 test matrix scale:test_mat_scale_q31
+                 test matrix transpose:test_mat_trans_q31
+                }
+
+              }
+
+              suite Unary Tests Q15 {
+                class = UnaryTestsQ15 
+                folder = UnaryQ15
+
+                Pattern INPUTS1_Q15_ID : InputA1_q15.txt 
+                Pattern INPUTS2_Q15_ID : InputB1_q15.txt 
+                Pattern INPUTSINV_Q15_ID : InputInvert1_q15.txt 
+                Pattern DIMSUNARY1_S16_ID : DimsUnary1_s16.txt 
+                Pattern DIMSINVERT1_S16_ID : DimsInvert1_s16.txt 
+                
+                Pattern REFADD1_Q15_ID : RefAdd1_q15.txt
+                Pattern REFSUB1_Q15_ID : RefSub1_q15.txt
+                Pattern REFSCALE1_Q15_ID : RefScale1_q15.txt
+                Pattern REFTRANS1_Q15_ID : RefTranspose1_q15.txt
+                Pattern REFINV1_Q15_ID : RefInvert1_q15.txt
+
+                Output  OUT_Q15_ID : Output
+                Output  TMPA_Q15_ID : TmpA
+                Output  TMPB_Q15_ID : TmpB
+
+                Functions {
+                 test matrix add:test_mat_add_q15
+                 test matrix sub:test_mat_sub_q15
+                 test matrix scale:test_mat_scale_q15
+                 test matrix transpose:test_mat_trans_q15
+                }
+
+              }
+
+              suite Unary Tests F64 {
+                class = UnaryTestsF64 
+                folder = UnaryF64
+
+                Pattern INPUTS1_F64_ID : InputA1_f64.txt 
+                Pattern INPUTS2_F64_ID : InputB1_f64.txt 
+                Pattern INPUTSINV_F64_ID : InputInvert1_f64.txt 
+                Pattern DIMSUNARY1_S16_ID : DimsUnary1_s16.txt 
+                Pattern DIMSINVERT1_S16_ID : DimsInvert1_s16.txt 
+                
+                Pattern REFADD1_F64_ID : RefAdd1_f64.txt
+                Pattern REFSUB1_F64_ID : RefSub1_f64.txt
+                Pattern REFSCALE1_F64_ID : RefScale1_f64.txt
+                Pattern REFTRANS1_F64_ID : RefTranspose1_f64.txt
+                Pattern REFINV1_F64_ID : RefInvert1_f64.txt
+
+                Output  OUT_F64_ID : Output
+                Output  TMPA_F64_ID : TmpA
+                Output  TMPB_F64_ID : TmpB
+
+                Functions {
+                 disabled {test matrix add:test_mat_add_f64}
+                 disabled {test matrix sub:test_mat_sub_f64}
+                 disabled {test matrix scale:test_mat_scale_f64}
+                 disabled {test matrix transpose:test_mat_trans_f64}
+                 test matrix inverse:test_mat_inverse_f64
+                }
+
+              }
+           }
+
+           group Binary Tests{
+              class = BinaryTests 
+              folder = Binary 
+
+             suite Binary F32 {
+                class = BinaryTestsF32 
+                folder = BinaryF32
+
+                Pattern INPUTS1_F32_ID : InputA1_f32.txt 
+                Pattern INPUTS2_F32_ID : InputB1_f32.txt 
+
+                Pattern INPUTSC1_F32_ID : InputAC1_f32.txt 
+                Pattern INPUTSC2_F32_ID : InputBC1_f32.txt 
+
+                Pattern REFMUL1_F32_ID : RefMul1_f32.txt
+                Pattern REFCMPLXMUL1_F32_ID : RefCmplxMul1_f32.txt
+                Pattern DIMSBINARY1_S16_ID : DimsBinary1_s16.txt 
+
+                Output  OUT_F32_ID : Output
+                Output  TMPA_F32_ID : TmpA
+                Output  TMPB_F32_ID : TmpB
+
+                Functions {
+                  test mult:test_mat_mult_f32
+                  test complex mult:test_mat_cmplx_mult_f32
+                }
+
+             }
+
+             suite Binary Q31 {
+                class = BinaryTestsQ31 
+                folder = BinaryQ31
+
+                Pattern INPUTS1_Q31_ID : InputA1_q31.txt 
+                Pattern INPUTS2_Q31_ID : InputB1_q31.txt 
+
+                Pattern INPUTSC1_Q31_ID : InputAC1_q31.txt 
+                Pattern INPUTSC2_Q31_ID : InputBC1_q31.txt 
+
+                Pattern REFMUL1_Q31_ID : RefMul1_q31.txt
+                Pattern REFCMPLXMUL1_Q31_ID : RefCmplxMul1_q31.txt
+                Pattern DIMSBINARY1_S16_ID : DimsBinary1_s16.txt 
+
+                Output  OUT_Q31_ID : Output
+                Output  TMPA_Q31_ID : TmpA
+                Output  TMPB_Q31_ID : TmpB
+
+                Functions {
+                  test mult:test_mat_mult_q31
+                  test complex mult:test_mat_cmplx_mult_q31
+                }
+
+             }
+
+             suite Binary Q15 {
+                class = BinaryTestsQ15 
+                folder = BinaryQ15
+
+                Pattern INPUTS1_Q15_ID : InputA1_q15.txt 
+                Pattern INPUTS2_Q15_ID : InputB1_q15.txt 
+
+                Pattern INPUTSC1_Q15_ID : InputAC1_q15.txt 
+                Pattern INPUTSC2_Q15_ID : InputBC1_q15.txt 
+
+                Pattern REFMUL1_Q15_ID : RefMul1_q15.txt
+                Pattern REFCMPLXMUL1_Q15_ID : RefCmplxMul1_q15.txt
+                Pattern DIMSBINARY1_S16_ID : DimsBinary1_s16.txt 
+
+                Output  OUT_Q15_ID : Output
+                Output  TMPA_Q15_ID : TmpA
+                Output  TMPB_Q15_ID : TmpB
+                Output  TMP_Q15_ID : Tmp
+
+                Functions {
+                  test mult:test_mat_mult_q15
+                  test complex mult:test_mat_cmplx_mult_q15
+                }
+
+             }
+           }
+
+        }
+
         group Transform Tests {
            class = TransformTests
            folder = Transform 
