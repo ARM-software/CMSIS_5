@@ -58,11 +58,12 @@ void arm_abs_q31(
     q31_t * pDst,
     uint32_t blockSize)
 {
-    uint32_t  blkCnt;           /* loop counters */
+    uint32_t  blkCnt;           /* Loop counters */
     q31x4_t vecSrc;
 
     /* Compute 4 outputs at a time */
     blkCnt = blockSize >> 2;
+
     while (blkCnt > 0U)
     {
         /*
@@ -76,15 +77,16 @@ void arm_abs_q31(
          */
         blkCnt--;
         /*
-         * advance vector source and destination pointers
+         * Advance vector source and destination pointers
          */
         pSrc += 4;
         pDst += 4;
     }
     /*
-     * tail
+     * Tail
      */
     blkCnt = blockSize & 3;
+
     if (blkCnt > 0U)
     {
         mve_pred16_t p0 = vctp32q(blkCnt);
@@ -102,6 +104,34 @@ void arm_abs_q31(
         uint32_t blkCnt;                               /* Loop counter */
         q31_t in;                                      /* Temporary variable */
 
+#if defined(ARM_MATH_NEON)
+    int32x4_t vec1;
+    int32x4_t res;
+
+    /* Compute 4 outputs at a time */  
+    blkCnt = blockSize >> 2U;
+
+    while (blkCnt > 0U)
+    {
+        /* C = |A| */
+        /* Calculate absolute and then store the results in the destination buffer. */
+
+        vec1 = vld1q_s32(pSrc);
+        res = vqabsq_s32(vec1);
+        vst1q_s32(pDst, res);
+
+        /* Increment pointers */
+        pSrc += 4;
+        pDst += 4;
+        
+        /* Decrement the blockSize loop counter */
+        blkCnt--;
+    }
+
+    /* Tail */
+    blkCnt = blockSize & 0x3;
+
+#else
 #if defined (ARM_MATH_LOOPUNROLL)
 
   /* Loop unrolling: Compute 4 outputs at a time */
@@ -153,6 +183,7 @@ void arm_abs_q31(
   blkCnt = blockSize;
 
 #endif /* #if defined (ARM_MATH_LOOPUNROLL) */
+#endif /* #if defined (ARM_MATH_NEON) */
 
   while (blkCnt > 0U)
   {
@@ -171,7 +202,7 @@ void arm_abs_q31(
   }
 
 }
-#endif /* defined(ARM_MATH_MVEI) */
+#endif /* #if defined (ARM_MATH_MVEI) */
 /**
   @} end of BasicAbs group
  */
