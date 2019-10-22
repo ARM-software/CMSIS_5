@@ -1680,6 +1680,29 @@ void arm_softmax_s8(const int8_t *input,
                     int8_t *output);
 
   /**
+   * @brief U8 softmax function
+   * @param[in]  input     Pointer to the input tensor
+   * @param[in]  num_rows  Number of rows in the input tensor
+   * @param[in]  row_size  Number of elements in each input row
+   * @param[in]  mult      Input quantization multiplier
+   * @param[in]  shift     Input quantization shift within the range [0, 31]
+   * @param[in]  diff_min  Minimum difference with max in row. Used to check if
+   *                       the quantized exponential operation can be performed
+   * @param[out] output    Pointer to the output tensor
+   *
+   * @note Supported framework: TensorFlow Lite micro (bit-accurate)
+   *
+   */
+
+void arm_softmax_u8(const uint8_t *input,
+                    const int32_t num_rows,
+                    const int32_t row_size,
+                    const int32_t mult,
+                    const int32_t shift,
+                    const int32_t diff_min,
+                    uint8_t *output);
+
+  /**
    * @brief uint8 depthwise convolution function with asymmetric quantization for even number of channel multiplier
    *        and input channels. Unless specified otherwise, arguments are mandatory.
    *

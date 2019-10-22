@@ -18,11 +18,11 @@
 
 /* ----------------------------------------------------------------------
  * Project:      CMSIS NN Library
- * Title:        arm_softmax_s8.c
- * Description:  S8 softmax function
+ * Title:        arm_softmax_u8.c
+ * Description:  U8 softmax function
  *
  * $Date:        October 2019
- * $Revision:    V.1.0.0
+ * $Revision:    V.0.0.1
  *
  * Target Processor:  Cortex-M cores
  *
@@ -40,13 +40,13 @@
  * @addtogroup Softmax
  * @{
  */
-void arm_softmax_s8(const int8_t *input,
+void arm_softmax_u8(const uint8_t *input,
                     const int32_t num_rows,
                     const int32_t row_size,
                     const int32_t mult,
                     const int32_t shift,
-                    const int8_t diff_min,
-                    int8_t *output)
+                    const int32_t diff_min,
+                    uint8_t *output)
 {
     const int32_t mask = (1 << shift);
 
@@ -56,14 +56,14 @@ void arm_softmax_s8(const int8_t *input,
     for(row_idx = 0; row_idx < num_rows; ++row_idx)
     {
         // Find the maximum value in order to ensure numerical stability
-        int8_t max = *input;
+        uint8_t max = *input;
 
         for (col = 1; col < row_size; ++col)
         {
             max = MAX(max, input[col]);
         }
 
-        int8_t diff = 0;
+        int32_t diff = 0;
         int32_t sum = 0;
 
         for (col = 0; col < row_size; ++col)
@@ -84,12 +84,12 @@ void arm_softmax_s8(const int8_t *input,
             diff = input[col] - max;
             if (diff >= diff_min)
             {
-                const int32_t res = DIV_POW2(MUL_SAT(shifted_scale, EXP_ON_NEG(MUL_SAT(diff * mask, mult))), bits_over_unit) - 128;
-                output[col] = (int8_t) CLAMP(res, (int32_t)127, (int32_t)-128);
+                const int32_t res = DIV_POW2(MUL_SAT(shifted_scale, EXP_ON_NEG(MUL_SAT(diff * mask, mult))), bits_over_unit);
+                output[col] = (int8_t) CLAMP(res, (int32_t)255, (int32_t)0);
             }
             else
             {
-                output[col] = -128;
+                output[col] = 0;
             }
         }
         input  += row_size;
