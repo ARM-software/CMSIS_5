@@ -1,11 +1,23 @@
 /*
  * Copyright (c) 2013-2019 Arm Limited. All rights reserved.
  *
- * Licensed under the Arm Software Development Tools license LES-PRE-21260.
+ * SPDX-License-Identifier: Apache-2.0
+ *
+ * Licensed under the Apache License, Version 2.0 (the License); you may
+ * not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an AS IS BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  *
  * -----------------------------------------------------------------------------
  *
- * $Revision:   V5.5.0
+ * $Revision:   V5.5.1
  *
  * Project:     CMSIS-RTOS RTX
  * Title:       RTX Configuration definitions
@@ -331,7 +343,7 @@
 //   <e>Global Initialization
 //   <i> Initialize Event Recorder during 'osKernelInitialize'.
 #ifndef OS_EVR_INIT
-#define OS_EVR_INIT                 0
+#define OS_EVR_INIT                 1
 #endif
  
 //     <q>Start recording
@@ -556,7 +568,9 @@
 // Number of Threads which use standard C/C++ library libspace
 // (when thread specific memory allocation is not used).
 #if (OS_THREAD_OBJ_MEM == 0)
+#ifndef OS_THREAD_LIBSPACE_NUM
 #define OS_THREAD_LIBSPACE_NUM      4
+#endif
 #else
 #define OS_THREAD_LIBSPACE_NUM      OS_THREAD_NUM
 #endif

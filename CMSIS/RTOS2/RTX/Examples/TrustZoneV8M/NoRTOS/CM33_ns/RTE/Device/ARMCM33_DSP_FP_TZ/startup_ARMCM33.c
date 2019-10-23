@@ -1,8 +1,8 @@
 /******************************************************************************
  * @file     startup_ARMCM33.c
  * @brief    CMSIS Core Device Startup File for Cortex-M33 Device
- * @version  V2.0.0
- * @date     20. May 2019
+ * @version  V2.0.1
+ * @date     23. July 2019
  ******************************************************************************/
 /*
  * Copyright (c) 2009-2019 Arm Limited. All rights reserved.
@@ -45,20 +45,21 @@ typedef void( *pFunc )( void );
 extern uint32_t __INITIAL_SP;
 extern uint32_t __STACK_LIMIT;
 
-extern void __PROGRAM_START(void) __NO_RETURN;
+extern __NO_RETURN void __PROGRAM_START(void);
 
 /*----------------------------------------------------------------------------
   Internal References
  *----------------------------------------------------------------------------*/
-void Default_Handler(void) __NO_RETURN;
-void Reset_Handler  (void) __NO_RETURN;
+void __NO_RETURN Default_Handler(void);
+void __NO_RETURN Reset_Handler  (void);
+void __NO_RETURN HardFault_Handler(void);
 
 /*----------------------------------------------------------------------------
   Exception / Interrupt Handler
  *----------------------------------------------------------------------------*/
 /* Exceptions */
 void NMI_Handler            (void) __attribute__ ((weak, alias("Default_Handler")));
-void HardFault_Handler      (void) __attribute__ ((weak, alias("Default_Handler")));
+void HardFault_Handler      (void) __attribute__ ((weak));
 void MemManage_Handler      (void) __attribute__ ((weak, alias("Default_Handler")));
 void BusFault_Handler       (void) __attribute__ ((weak, alias("Default_Handler")));
 void UsageFault_Handler     (void) __attribute__ ((weak, alias("Default_Handler")));
@@ -83,6 +84,12 @@ void Interrupt9_Handler     (void) __attribute__ ((weak, alias("Default_Handler"
 /*----------------------------------------------------------------------------
   Exception / Interrupt Vector table
  *----------------------------------------------------------------------------*/
+
+#if defined ( __GNUC__ )
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wpedantic"
+#endif
+
 extern const pFunc __VECTOR_TABLE[496];
        const pFunc __VECTOR_TABLE[496] __VECTOR_TABLE_ATTRIBUTE = {
   (pFunc)(&__INITIAL_SP),                   /*     Initial Stack Pointer */
@@ -116,6 +123,9 @@ extern const pFunc __VECTOR_TABLE[496];
                                             /* Interrupts 10 .. 480 are left out */
 };
 
+#if defined ( __GNUC__ )
+#pragma GCC diagnostic pop
+#endif
 
 /*----------------------------------------------------------------------------
   Reset Handler called on controller reset
@@ -128,6 +138,14 @@ void Reset_Handler(void)
   __PROGRAM_START();                        /* Enter PreMain (C library entry point) */
 }
 
+
+/*----------------------------------------------------------------------------
+  Hard Fault Handler
+ *----------------------------------------------------------------------------*/
+void HardFault_Handler(void)
+{
+  while(1);
+}
 
 /*----------------------------------------------------------------------------
   Default Handler for Exceptions / Interrupts

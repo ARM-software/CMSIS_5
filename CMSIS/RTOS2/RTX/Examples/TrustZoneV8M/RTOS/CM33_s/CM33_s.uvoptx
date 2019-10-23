@@ -148,12 +148,17 @@
         <Ww>
           <count>0</count>
           <WinNumber>1</WinNumber>
-          <ItemText>val1</ItemText>
+          <ItemText>counterA</ItemText>
         </Ww>
         <Ww>
           <count>1</count>
           <WinNumber>1</WinNumber>
-          <ItemText>val2</ItemText>
+          <ItemText>counterB</ItemText>
+        </Ww>
+        <Ww>
+          <count>2</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>counterC</ItemText>
         </Ww>
       </WatchWindow1>
       <MemoryWindow1>

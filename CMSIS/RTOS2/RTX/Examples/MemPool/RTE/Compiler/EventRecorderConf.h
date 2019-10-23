@@ -23,7 +23,7 @@
 //      <0=> DWT Cycle Counter  <1=> SysTick  <2=> CMSIS-RTOS2 System Timer
 //      <3=> User Timer (Normal Reset)  <4=> User Timer (Power-On Reset)
 //   <i>Selects source for 32-bit time stamp
-#define EVENT_TIMESTAMP_SOURCE  0
+#define EVENT_TIMESTAMP_SOURCE  2
 
 //   <o>Time Stamp Clock Frequency [Hz] <0-1000000000>
 //   <i>Defines default time stamp clock frequency (0 when not used)

@@ -1,5 +1,5 @@
 /* -------------------------------------------------------------------------- 
- * Copyright (c) 2013-2016 ARM Limited. All rights reserved.
+ * Copyright (c) 2013-2019 ARM Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- *      Name:    BLinky.c
+ *      Name:    Blinky.c
  *      Purpose: RTX example program
  *
  *---------------------------------------------------------------------------*/
@@ -40,13 +40,12 @@ struct phases_t {
   int_fast8_t phaseD;
 } g_phases;
 
-osMutexId_t phases_mut_id;
 
 /*----------------------------------------------------------------------------
  *      Switch LED on
  *---------------------------------------------------------------------------*/
 void Switch_On (unsigned char led) {
-  printf("LED On: #%d\n\r", led);
+  printf("LED On:  #%d\n\r", led);
 }
 
 /*----------------------------------------------------------------------------
@@ -75,9 +74,11 @@ void signal_func (osThreadId_t tid)  {
 void phaseA (void *argument) {
   for (;;) {
     osThreadFlagsWait(0x0001, osFlagsWaitAny ,osWaitForever);    /* wait for an event flag 0x0001 */
+    Switch_On(0);
     g_phases.phaseA = 1;
     signal_func(tid_phaseB);                                     /* call common signal function   */
     g_phases.phaseA = 0;
+    Switch_Off(0);
   }
 }
 
@@ -87,9 +88,11 @@ void phaseA (void *argument) {
 void phaseB (void *argument) {
   for (;;) {
     osThreadFlagsWait(0x0001, osFlagsWaitAny, osWaitForever);    /* wait for an event flag 0x0001 */
+    Switch_On(1);
     g_phases.phaseB = 1;
     signal_func(tid_phaseC);                /* call common signal function   */
     g_phases.phaseB = 0;
+    Switch_Off(1);
   }
 }
 
@@ -99,9 +102,11 @@ void phaseB (void *argument) {
 void phaseC (void *argument) {
   for (;;) {
     osThreadFlagsWait(0x0001, osFlagsWaitAny, osWaitForever);    /* wait for an event flag 0x0001 */
+    Switch_On(2);
     g_phases.phaseC = 1;
     signal_func(tid_phaseD);                /* call common signal function   */
     g_phases.phaseC = 0;
+    Switch_Off(2);
   }
 }
 
@@ -111,9 +116,11 @@ void phaseC (void *argument) {
 void phaseD (void *argument) {
   for (;;) {
     osThreadFlagsWait(0x0001, osFlagsWaitAny, osWaitForever);    /* wait for an event flag 0x0001 */
+    Switch_On(3);
     g_phases.phaseD = 1;
     signal_func(tid_phaseA);                /* call common signal function   */
     g_phases.phaseD = 0;
+    Switch_Off(3);
   }
 }
 
@@ -138,10 +145,9 @@ void app_main (void *argument) {
   tid_phaseD = osThreadNew(phaseD, NULL, NULL);
   tid_clock  = osThreadNew(clock,  NULL, NULL);
 
-  osThreadFlagsSet(tid_phaseA, 0x0001);          /* set signal to phaseA thread   */
+  osThreadFlagsSet(tid_phaseA, 0x0001);     /* set signal to phaseA thread   */
 
   osDelay(osWaitForever);
-  while(1);
 }
 
 int main (void) {
