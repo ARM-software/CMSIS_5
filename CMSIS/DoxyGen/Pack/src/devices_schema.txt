@@ -2398,14 +2398,13 @@ The values can be used in the elements:
 
 <p>&nbsp;</p>		
 
-\anchor DsecureEnum <b>Table: Software Model Secure </b>
+\anchor DsecureEnum <b>Table: Software Model Selection </b>
 
 The table shows predefined values that identify whether an application will run in secure mode.
 The values can be used in the elements:
 - \ref element_accept  
 - \ref element_require 
 - \ref element_deny  
-- \ref element_processor
 
 <table class="cmtable" summary="Enumeration: DsecureEnum">
   <tr>
@@ -2414,11 +2413,15 @@ The values can be used in the elements:
   </tr>
   <tr>
     <td class="XML-Token">Secure</td>
-    <td>Application is built to run in secure mode</td>
+    <td>Application is built to run in secure mode.</td>
   </tr>
   <tr>
     <td class="XML-Token">Non-secure</td>
-    <td>Application is built to run in non-secure mode</td>
+    <td>Application is built to run in non-secure mode.</td>
+  </tr>
+  <tr>
+    <td class="XML-Token">TrustZone-disabled</td>
+    <td>Application is built with TrustZone security disabled.</td>
   </tr>
 </table>
 

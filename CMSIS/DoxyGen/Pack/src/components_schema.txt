@@ -460,8 +460,8 @@ A component describes a collection of files (source, header, configuration, libr
   </tr>
   <tr>
     <td>Capiversion</td>
-    <td>For components that are based on an API, it defines the version of the API used by this component.
-        It ensures that the API header file with this or any higher version is acceptable for using that component.
+    <td>For components that are based on an \ref pdsc_apis_pg "API header files", it defines the version of the API used by this component.
+        It ensures that the API header file with the same or higher version is acceptable for using that component.
         The version format is described in \ref VersionType "Version Type".		
 	</td>
     <td>VersionType</td>
@@ -472,6 +472,13 @@ A component describes a collection of files (source, header, configuration, libr
     <td>Enter the \b id of a \ref element_conditions "condition". The component is available and can be selected when the condition is true.</td>
     <td>xs:string</td>
     <td>optional</td>
+  </tr>
+  <tr>
+    <td>custom</td>
+    <td>When set to \token{true}, the component requires a custom implementation. This attribute should suppress the automatic component resolver, so it 
+	requires always manual selection.</td>
+    <td>xs:boolean </td>
+    <td>0..1 </td>
   </tr>
   <tr>
     <td>maxInstances</td>
@@ -493,12 +500,6 @@ A component describes a collection of files (source, header, configuration, libr
     <td>optional</td>
   </tr>
   <tr>
-    <th>Child Elements</th>
-    <th>Description</th>
-    <th>Type</th>
-    <th>Occurrence</th>
-  </tr>
-  <tr>
     <td>deprecated</td>
     <td>When set to \token{true}, then the component is deprecated and no longer maintained. Default is \token{false} to indicate an actively maintained component.</td>
     <td>xs:boolean </td>
@@ -509,6 +510,12 @@ A component describes a collection of files (source, header, configuration, libr
     <td>Brief description of the component.</td>
     <td>xs:string </td>
     <td>1..1</td>
+  </tr>
+  <tr>
+    <th>Child Elements</th>
+    <th>Description</th>
+    <th>Type</th>
+    <th>Occurrence</th>
   </tr>
   <tr>
     <td>RTE_Components_h</td>
