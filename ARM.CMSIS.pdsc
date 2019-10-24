@@ -14,6 +14,8 @@
        - Enhanced MVE support for Armv8.1-MML
       CMSIS-RTOS2:
         - RTX 5.5.2 (see revision history for details)
+	  CMSIS-Pack: 
+	    - added custom attribute to components that require custom implementation
     </release>
     <release version="5.6.0" date="2019-07-10">
       CMSIS-Core(M): 5.3.0 (see revision history for details)
@@ -3601,63 +3603,63 @@ and 8-bit Java bytecodes in Jazelle state.
     </component>
 
     <!-- CMSIS-Driver Custom components -->
-    <component Cclass="CMSIS Driver" Cgroup="USART" Csub="Custom" Cversion="2.3.0" Capiversion="2.3.0">
+    <component Cclass="CMSIS Driver" Cgroup="USART" Csub="Custom" Cversion="2.3.0" Capiversion="2.3.0" custom="1">
       <description>Access to #include Driver_USART.h file and code template for custom implementation</description>
       <files>
         <file category="header" name="CMSIS/Driver/Include/Driver_USART.h" />
         <file category="sourceC" attr="template" name="CMSIS/Driver/DriverTemplates/Driver_USART.c" select="USART Driver"/>
       </files>
     </component>
-    <component Cclass="CMSIS Driver" Cgroup="SPI" Csub="Custom" Cversion="2.2.0" Capiversion="2.2.0">
+    <component Cclass="CMSIS Driver" Cgroup="SPI" Csub="Custom" Cversion="2.2.0" Capiversion="2.2.0" custom="1">
       <description>Access to #include Driver_SPI.h file and code template for custom implementation</description>
       <files>
         <file category="header" name="CMSIS/Driver/Include/Driver_SPI.h" />
         <file category="sourceC" attr="template" name="CMSIS/Driver/DriverTemplates/Driver_SPI.c" select="SPI Driver"/>
       </files>
     </component>
-    <component Cclass="CMSIS Driver" Cgroup="SAI" Csub="Custom" Cversion="1.1.0" Capiversion="1.1.0">
+    <component Cclass="CMSIS Driver" Cgroup="SAI" Csub="Custom" Cversion="1.1.0" Capiversion="1.1.0" custom="1">
       <description>Access to #include Driver_SAI.h file and code template for custom implementation</description>
       <files>
         <file category="header" name="CMSIS/Driver/Include/Driver_SAI.h" />
         <file category="sourceC" attr="template" name="CMSIS/Driver/DriverTemplates/Driver_SAI.c" select="SAI Driver"/>
       </files>
     </component>
-    <component Cclass="CMSIS Driver" Cgroup="I2C" Csub="Custom" Cversion="2.3.0" Capiversion="2.3.0">
+    <component Cclass="CMSIS Driver" Cgroup="I2C" Csub="Custom" Cversion="2.3.0" Capiversion="2.3.0" custom="1">
       <description>Access to #include Driver_I2C.h file and code template for custom implementation</description>
       <files>
         <file category="header" name="CMSIS/Driver/Include/Driver_I2C.h" />
         <file category="sourceC" attr="template" name="CMSIS/Driver/DriverTemplates/Driver_I2C.c" select="I2C Driver"/>
       </files>
     </component>
-    <component Cclass="CMSIS Driver" Cgroup="CAN" Csub="Custom" Cversion="1.2.0" Capiversion="1.2.0">
+    <component Cclass="CMSIS Driver" Cgroup="CAN" Csub="Custom" Cversion="1.2.0" Capiversion="1.2.0" custom="1">
       <description>Access to #include Driver_CAN.h file and code template for custom implementation</description>
       <files>
         <file category="header" name="CMSIS/Driver/Include/Driver_CAN.h" />
         <file category="sourceC" attr="template" name="CMSIS/Driver/DriverTemplates/Driver_CAN.c" select="CAN Driver"/>
       </files>
     </component>
-    <component Cclass="CMSIS Driver" Cgroup="Flash" Csub="Custom" Cversion="2.2.0" Capiversion="2.2.0">
+    <component Cclass="CMSIS Driver" Cgroup="Flash" Csub="Custom" Cversion="2.2.0" Capiversion="2.2.0" custom="1">
       <description>Access to #include Driver_Flash.h file and code template for custom implementation</description>
       <files>
         <file category="header" name="CMSIS/Driver/Include/Driver_Flash.h" />
         <file category="sourceC" attr="template" name="CMSIS/Driver/DriverTemplates/Driver_Flash.c" select="Flash Driver"/>
       </files>
     </component>
-    <component Cclass="CMSIS Driver" Cgroup="MCI" Csub="Custom" Cversion="2.3.0" Capiversion="2.3.0">
+    <component Cclass="CMSIS Driver" Cgroup="MCI" Csub="Custom" Cversion="2.3.0" Capiversion="2.3.0" custom="1">
       <description>Access to #include Driver_MCI.h file and code template for custom implementation</description>
       <files>
         <file category="header" name="CMSIS/Driver/Include/Driver_MCI.h" />
         <file category="sourceC" attr="template" name="CMSIS/Driver/DriverTemplates/Driver_MCI.c" select="MCI Driver"/>
       </files>
     </component>
-    <component Cclass="CMSIS Driver" Cgroup="NAND" Csub="Custom" Cversion="2.3.0" Capiversion="2.3.0">
+    <component Cclass="CMSIS Driver" Cgroup="NAND" Csub="Custom" Cversion="2.3.0" Capiversion="2.3.0" custom="1">
       <description>Access to #include Driver_NAND.h file and code template for custom implementation</description>
       <files>
         <file category="header" name="CMSIS/Driver/Include/Driver_NAND.h" />
         <!-- <file category="sourceC" attr="template" name="CMSIS/Driver/DriverTemplates/Driver_NAND.c" select="NAND Flash Driver"/> -->
       </files>
     </component>
-    <component Cclass="CMSIS Driver" Cgroup="Ethernet" Csub="Custom" Cversion="2.1.0" Capiversion="2.1.0">
+    <component Cclass="CMSIS Driver" Cgroup="Ethernet" Csub="Custom" Cversion="2.1.0" Capiversion="2.1.0" custom="1">
       <description>Access to #include Driver_ETH_PHY/MAC.h files and code templates for custom implementation</description>
       <files>
         <file category="header" name="CMSIS/Driver/Include/Driver_ETH_MAC.h" />
@@ -3666,35 +3668,35 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="sourceC" attr="template" name="CMSIS/Driver/DriverTemplates/Driver_ETH_MAC.c" select="Ethernet PHY and MAC Driver"/>
       </files>
     </component>
-    <component Cclass="CMSIS Driver" Cgroup="Ethernet MAC" Csub="Custom" Cversion="2.1.0" Capiversion="2.1.0">
+    <component Cclass="CMSIS Driver" Cgroup="Ethernet MAC" Csub="Custom" Cversion="2.1.0" Capiversion="2.1.0" custom="1">
       <description>Access to #include Driver_ETH_MAC.h file and code template for custom implementation</description>
       <files>
         <file category="header" name="CMSIS/Driver/Include/Driver_ETH_MAC.h" />
         <file category="sourceC" attr="template" name="CMSIS/Driver/DriverTemplates/Driver_ETH_MAC.c" select="Ethernet MAC Driver"/>
       </files>
     </component>
-    <component Cclass="CMSIS Driver" Cgroup="Ethernet PHY" Csub="Custom" Cversion="2.1.0" Capiversion="2.1.0">
+    <component Cclass="CMSIS Driver" Cgroup="Ethernet PHY" Csub="Custom" Cversion="2.1.0" Capiversion="2.1.0" custom="1">
       <description>Access to #include Driver_ETH_PHY.h file and code template for custom implementation</description>
       <files>
         <file category="header" name="CMSIS/Driver/Include/Driver_ETH_PHY.h" />
         <file category="sourceC" attr="template" name="CMSIS/Driver/DriverTemplates/Driver_ETH_PHY.c" select="Ethernet PHY Driver"/>
       </files>
     </component>
-    <component Cclass="CMSIS Driver" Cgroup="USB Device" Csub="Custom" Cversion="2.2.0" Capiversion="2.2.0">
+    <component Cclass="CMSIS Driver" Cgroup="USB Device" Csub="Custom" Cversion="2.2.0" Capiversion="2.2.0" custom="1">
       <description>Access to #include Driver_USBD.h file and code template for custom implementation</description>
       <files>
         <file category="header" name="CMSIS/Driver/Include/Driver_USBD.h" />
         <file category="sourceC" attr="template" name="CMSIS/Driver/DriverTemplates/Driver_USBD.c" select="USB Device Driver"/>
       </files>
     </component>
-    <component Cclass="CMSIS Driver" Cgroup="USB Host" Csub="Custom" Cversion="2.2.0" Capiversion="2.2.0">
+    <component Cclass="CMSIS Driver" Cgroup="USB Host" Csub="Custom" Cversion="2.2.0" Capiversion="2.2.0" custom="1">
       <description>Access to #include Driver_USBH.h file and code template for custom implementation</description>
       <files>
         <file category="header" name="CMSIS/Driver/Include/Driver_USBH.h" />
         <file category="sourceC" attr="template" name="CMSIS/Driver/DriverTemplates/Driver_USBH.c" select="USB Host Driver"/>
       </files>
     </component>
-    <component Cclass="CMSIS Driver" Cgroup="WiFi" Csub="Custom" Cversion="1.0.0" Capiversion="1.0.0">
+    <component Cclass="CMSIS Driver" Cgroup="WiFi" Csub="Custom" Cversion="1.0.0" Capiversion="1.0.0" custom="1">
       <description>Access to #include Driver_WiFi.h file</description>
       <files>
         <file category="header" name="CMSIS/Driver/Include/Driver_WiFi.h"/>
