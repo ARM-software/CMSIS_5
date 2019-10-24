@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
  
-  Copyright (c) 2013-2018 ARM Limited. All rights reserved.
+  Copyright (c) 2013-2019 ARM Limited. All rights reserved.
  
   SPDX-License-Identifier: Apache-2.0
  
@@ -17,16 +17,21 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 
-  $Date:        14. March 2019
-  $Revision:    1.6.0
+  $Date:        24. October 2019
+  $Revision:    1.6.1
 
   $Project: Schema File for Package Description File Format Specification
 
   Package file name convention <vendor>.<name>.<version>.pack
-  SchemaVersion=1.6.0
+  SchemaVersion=1.6.1
 
+  24. October 2019: 1.6.1
+  - added value to DsecureEnum: 2 = TZ-disabled.
+  - added component boolean attribute 'custom', indicating that the component requires implementation.
+  - updated DmveEnum to select between single and double precision floating point support (MVE_FP deprecated).
+  
   14. March 2019: 1.6.0
-  - added Armv8.1-M MVE processor feature attribute 'Dmve'
+  - added Armv8.1-M MVE processor feature attribute 'Dmve'.
   - added local and global pre-include section Pre_Include_Local_Component_h, Pre_Include_Global_h.
   - added file categories 'preIncludeLocal' and 'preIncludeGlobal' FileCategoryEnum.
   - added file attribute 'path' for file category 'header' to add support for relative include paths. 
@@ -936,10 +941,12 @@
   <!-- Dsecure enumeration type -->
   <xs:simpleType name="DsecureEnum">
     <xs:restriction base="xs:token">
-      <xs:enumeration value="Secure" />
       <xs:enumeration value="Non-secure" />
-      <xs:enumeration value="1" />
+      <xs:enumeration value="Secure" />
+      <xs:enumeration value="TZ-disabled" />
       <xs:enumeration value="0" />
+      <xs:enumeration value="1" />
+      <xs:enumeration value="2" />
       <xs:enumeration value="*" />
     </xs:restriction>
   </xs:simpleType>
@@ -960,10 +967,12 @@
     <xs:restriction base="xs:token">
       <xs:enumeration value="NO_MVE"/>
       <xs:enumeration value="MVE"/>
-      <xs:enumeration value="FP_MVE"/>
+      <xs:enumeration value="MVE_SP_FP"/>
+      <xs:enumeration value="MVE_DP_FP"/>
       <xs:enumeration value="0"/>
       <xs:enumeration value="1"/>
       <xs:enumeration value="2"/>
+      <xs:enumeration value="3"/>
       <xs:enumeration value="*"/>
     </xs:restriction>
   </xs:simpleType>
@@ -1949,6 +1958,8 @@
                         <xs:attribute name="generator" type="xs:string" use="optional" />
                         <!-- identifies this component variant to be the preferred variant [Version 1.4.0] -->
                         <xs:attribute name="isDefaultVariant" type="xs:boolean" use="optional" />
+                        <!-- identifies that this component requires custom implementation -->
+                        <xs:attribute name="custom" type="xs:boolean" use="optional" />
                       </xs:complexType>
                     </xs:element>
                   </xs:sequence>
@@ -2002,6 +2013,8 @@
                   <xs:attribute name="generator" type="xs:string" use="optional" />
                   <!-- identifies this component variant to be the preferred variant [Version 1.4.0] -->
                   <xs:attribute name="isDefaultVariant" type="xs:boolean" use="optional" />
+                  <!-- identifies that this component requires custom implementation -->
+                  <xs:attribute name="custom" type="xs:boolean" use="optional" />
                 </xs:complexType>
               </xs:element>
             </xs:choice>
