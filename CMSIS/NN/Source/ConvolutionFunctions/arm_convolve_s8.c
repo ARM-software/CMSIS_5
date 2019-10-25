@@ -40,7 +40,7 @@
  * @{
  */
 
-  /*
+/*
    * Basic s8 convolution function.
    *
    * Refer header file for details. Optimal use case for the DSP implementation is when input and output channels
@@ -78,7 +78,7 @@ arm_status arm_convolve_s8(const q7_t *input,
     {
         input += i_batch * (input_x * input_y * input_ch);
         output += i_batch * (output_x * output_y * output_ch);
-#if defined(ARM_MATH_LOOPUNROLL) && defined (ARM_MATH_DSP)
+#if defined(ARM_MATH_LOOPUNROLL) && defined(ARM_MATH_DSP)
         int16_t i_out_y, i_out_x, i_ker_y, i_ker_x;
 
         /* Generate two columns from the input tensor a GEMM computation */
@@ -113,16 +113,16 @@ arm_status arm_convolve_s8(const q7_t *input,
                 {
                     out =
                         arm_nn_mat_mult_kernel_s8_s16(kernel,
-                                                    buffer_a,
-                                                    output_ch,
-                                                    output_shift,
-                                                    output_mult,
-                                                    out_offset,
-                                                    out_activation_min,
-                                                    out_activation_max,
-                                                    input_ch * kernel_y * kernel_x,
-                                                    bias,
-                                                    out);
+                                                      buffer_a,
+                                                      output_ch,
+                                                      output_shift,
+                                                      output_mult,
+                                                      out_offset,
+                                                      out_activation_min,
+                                                      out_activation_max,
+                                                      input_ch * kernel_y * kernel_x,
+                                                      bias,
+                                                      out);
 
                     /* counter reset */
                     two_column_buf = buffer_a;
@@ -213,7 +213,7 @@ arm_status arm_convolve_s8(const q7_t *input,
                                 conv_out +=
                                     (input[(in_row * input_x + in_col) * input_ch + i_input_ch] + input_offset) *
                                     kernel[i_out_ch * input_ch * kernel_y * kernel_x +
-                                        (i_ker_y * kernel_x + i_ker_x) * input_ch + i_input_ch];
+                                           (i_ker_y * kernel_x + i_ker_x) * input_ch + i_input_ch];
                             }
                         }
                     }
@@ -236,7 +236,7 @@ int32_t arm_convolve_s8_get_buffer_size(const uint16_t input_ch,
                                         const uint16_t kernel_x,
                                         const uint16_t kernel_y)
 {
-#if defined(ARM_MATH_LOOPUNROLL) && defined (ARM_MATH_DSP)
+#if defined(ARM_MATH_LOOPUNROLL) && defined(ARM_MATH_DSP)
     return (2 * input_ch * kernel_x * kernel_y) * sizeof(int16_t);
 #else
     (void)input_ch;

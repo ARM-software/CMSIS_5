@@ -476,6 +476,30 @@ __STATIC_FORCEINLINE int32x4_t arm_mve_requantize(const int32x4_t val, const q31
           arm_mve_sat_doubling_high_mult(vshlq_s32(val, vdupq_n_s32(LEFT_SHIFT(shift))), multiplier),
           RIGHT_SHIFT(shift));
 }
+
+__STATIC_FORCEINLINE int32x4_t arm_mve_sat_doubling_high_mult_32x4(const int32x4_t m1, const int32x4_t m2)
+{
+  return vqrdmulhq_s32(m1, m2);
+}
+
+__STATIC_FORCEINLINE int32x4_t arm_mve_divide_by_power_of_two_32x4(const int32x4_t dividend, const int32x4_t exponent)
+{
+  const int32x4_t shift = -exponent;
+  const int32x4_t fixup = vshrq_n_s32(vandq_s32(dividend, shift), 31);
+  const int32x4_t fixed_up_dividend = vqaddq_s32(dividend, fixup);
+  return vrshlq_s32(fixed_up_dividend, shift);
+}
+
+__STATIC_FORCEINLINE int32x4_t arm_mve_requantize_32x4(const int32x4_t val, const int32x4_t multiplier, const int32x4_t shift)
+{
+  const int32x4_t zz = vdupq_n_s32(0);
+  const mve_pred16_t p = vcmpgtq_n_s32(shift, 0);
+
+  const int32x4_t left_shift = vpselq_s32(shift, zz, p);
+  const int32x4_t right_shift = -vpselq_s32(zz, shift, p);
+
+  return arm_mve_divide_by_power_of_two_32x4(arm_mve_sat_doubling_high_mult_32x4(vshlq_s32(val, left_shift), multiplier), right_shift);
+}
 #endif
 
 // @note The following functions are used only for softmax layer, scaled bits = 5 assumed
