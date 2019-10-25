@@ -63,10 +63,9 @@ void arm_scale_q7(
     q7_t * pDst,
     uint32_t blockSize)
 {
-    uint32_t  blkCnt;           /* loop counters */
+    uint32_t  blkCnt;           /* Loop counters */
     q7x16_t vecSrc;
     q7x16_t vecDst;
-
 
     /* Compute 16 outputs at a time */
     blkCnt = blockSize >> 4;
@@ -86,15 +85,16 @@ void arm_scale_q7(
          */
         blkCnt--;
         /*
-         * advance vector source and destination pointers
+         * Advance vector source and destination pointers
          */
         pSrc += 16;
         pDst += 16;
     }
     /*
-     * tail
+     * Tail
      */
     blkCnt = blockSize & 0xF;
+
     if (blkCnt > 0U)
     {
         mve_pred16_t p0 = vctp8q(blkCnt);
@@ -105,7 +105,6 @@ void arm_scale_q7(
     }
 
 }
-
 #else
 void arm_scale_q7(
   const q7_t * pSrc,
@@ -117,6 +116,56 @@ void arm_scale_q7(
         uint32_t blkCnt;                               /* Loop counter */
         int8_t kShift = 7 - shift;                     /* Shift to apply after scaling */
 
+#if defined(ARM_MATH_NEON)
+    int8x16_t vec1;
+    int8x16_t vec2;
+    int8x16_t scaleShift;
+    int8x16_t res;
+    int8x8_t resLow;
+    int8x8_t resHigh;
+    int16x8_t temp;
+
+    scaleShift=vdupq_n_s8(shift - 8);
+    vec2 = vdupq_n_s8(scaleFract);
+
+    /* Compute 16 outputs at a time */  
+    blkCnt = blockSize >> 4U;
+
+    while (blkCnt > 0U)
+    {
+        /* C = A * scale */
+        /* Scale the input and then store the result in the destination buffer. */
+        vec1 = vld1q_s8(pSrc);
+
+        /* Widening */
+        temp = vmulq_s16(vmovl_s8(vget_low_s8(vec1)),vmovl_s8(vget_low_s8(vec2)));
+        temp = vqaddq_s16(temp,temp);
+        /* Narrowing */
+        temp = vshlq_s16(temp, scaleShift);
+        resLow = vmovn_s16(temp);
+
+        /* Widening */
+        temp = vmulq_s16(vmovl_s8(vget_high_s8(vec1)),vmovl_s8(vget_high_s8(vec2)));
+        temp = vqaddq_s16(temp,temp);
+        /* Narrowing */
+        temp = vshlq_s16(temp, scaleShift);
+        resHigh = vmovn_s16(temp);
+
+        /* Store result */
+        res = vcombine_s8(resLow,resHigh);
+        vst1q_s8(pDst, res);
+
+        /* Increment pointers */
+        pSrc += 16; 
+        pDst += 16;
+        
+        /* Decrement the blockSize loop counter */
+        blkCnt--;
+    }
+
+    /* Tail */
+    blkCnt = blockSize & 0xF;
+#else
 #if defined (ARM_MATH_LOOPUNROLL)
 
 #if defined (ARM_MATH_DSP)
@@ -166,6 +215,7 @@ void arm_scale_q7(
   blkCnt = blockSize;
 
 #endif /* #if defined (ARM_MATH_LOOPUNROLL) */
+#endif /* #if defined (ARM_MATH_NEON) */
 
   while (blkCnt > 0U)
   {
@@ -179,7 +229,7 @@ void arm_scale_q7(
   }
 
 }
-#endif /* defined(ARM_MATH_MVEI) */
+#endif /* #if defined (ARM_MATH_MVEI) */
 
 /**
   @} end of BasicScale group

@@ -59,11 +59,12 @@ void arm_offset_q7(
     q7_t * pDst,
     uint32_t blockSize)
 {
-    uint32_t  blkCnt;           /* loop counters */
+    uint32_t  blkCnt;           /* Loop counters */
     q7x16_t vecSrc;
 
     /* Compute 16 outputs at a time */
     blkCnt = blockSize >> 4;
+
     while (blkCnt > 0U)
     {
         /*
@@ -77,15 +78,16 @@ void arm_offset_q7(
          */
         blkCnt--;
         /*
-         * advance vector source and destination pointers
+         * Advance vector source and destination pointers
          */
         pSrc += 16;
         pDst += 16;
     }
     /*
-     * tail
+     * Tail
      */
     blkCnt = blockSize & 0xF;
+
     if (blkCnt > 0U)
     {
         mve_pred16_t p0 = vctp8q(blkCnt);
@@ -103,6 +105,34 @@ void arm_offset_q7(
 {
         uint32_t blkCnt;                               /* Loop counter */
 
+#if defined(ARM_MATH_NEON)
+    int8x16_t vec1;
+    int8x16_t res;
+
+    /* Compute 16 outputs at a time */
+    blkCnt = blockSize >> 4U;
+
+    while (blkCnt > 0U)
+    {
+        /* C = A + offset */
+        /* Add offset and then store the result in the destination buffer. */
+
+        vec1 = vld1q_s8(pSrc);
+        res = vqaddq_s8(vec1, vdupq_n_s8(offset));
+        vst1q_s8(pDst, res);
+
+        /* Increment pointers */
+        pSrc += 16;
+        pDst += 16;
+        
+        /* Decrement the blockSize loop counter */
+        blkCnt--;
+    }
+
+    /* Tail */
+    blkCnt = blockSize & 0xF;
+
+#else
 #if defined (ARM_MATH_LOOPUNROLL)
 
 #if defined (ARM_MATH_DSP)
@@ -142,6 +172,7 @@ void arm_offset_q7(
   blkCnt = blockSize;
 
 #endif /* #if defined (ARM_MATH_LOOPUNROLL) */
+#endif /* #if defined (ARM_MATH_NEON) */
 
   while (blkCnt > 0U)
   {
@@ -155,7 +186,7 @@ void arm_offset_q7(
   }
 
 }
-#endif /* defined(ARM_MATH_MVEI) */
+#endif /* #if defined (ARM_MATH_MVEI) */
 
 /**
   @} end of BasicOffset group

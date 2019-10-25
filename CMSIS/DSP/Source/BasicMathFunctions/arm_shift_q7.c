@@ -62,18 +62,20 @@ void arm_shift_q7(
     q7_t * pDst,
     uint32_t blockSize)
 {
-    uint32_t  blkCnt;           /* loop counters */
+    uint32_t  blkCnt;           /* Loop counters */
     q7x16_t vecSrc;
     q7x16_t vecDst;
 
     /* Compute 16 outputs at a time */
     blkCnt = blockSize >> 4;
+
     while (blkCnt > 0U)
     {
         /*
          * C = A (>> or <<) shiftBits
          * Shift the input and then store the result in the destination buffer.
          */
+
         vecSrc = vld1q(pSrc);
         vecDst = vqshlq_r(vecSrc, shiftBits);
         vst1q(pDst, vecDst);
@@ -82,15 +84,16 @@ void arm_shift_q7(
          */
         blkCnt--;
         /*
-         * advance vector source and destination pointers
+         * Advance vector source and destination pointers
          */
         pSrc += 16;
         pDst += 16;
     }
     /*
-     * tail
+     * Tail
      */
     blkCnt = blockSize & 0xF;
+
     if (blkCnt > 0U)
     {
         mve_pred16_t p0 = vctp8q(blkCnt);
@@ -110,6 +113,34 @@ void arm_shift_q7(
         uint32_t blkCnt;                               /* Loop counter */
         uint8_t sign = (shiftBits & 0x80);             /* Sign of shiftBits */
 
+#if defined(ARM_MATH_NEON)
+    int8x16_t vec1;
+    int8x16_t res;
+
+    /* Compute 16 outputs at a time */  
+    blkCnt = blockSize >> 4U;
+
+    while (blkCnt > 0U)
+    {
+        /* C = A (>> or <<) shiftBits */
+        /* Shift the input and then store the result in the destination buffer. */
+
+        vec1 = vld1q_s8(pSrc);
+        res = vqshlq_s8(vec1,vdupq_n_s8(shiftBits));
+        vst1q_s8(pDst, res);
+
+        /* Increment pointers */
+        pSrc += 16;
+        pDst += 16;
+        
+        /* Decrement the blockSize loop counter */
+        blkCnt--;
+    }
+
+    /* Tail */
+    blkCnt = blockSize & 0xF; 
+
+#else
 #if defined (ARM_MATH_LOOPUNROLL)
 
 #if defined (ARM_MATH_DSP)
@@ -188,6 +219,7 @@ void arm_shift_q7(
   blkCnt = blockSize;
 
 #endif /* #if defined (ARM_MATH_LOOPUNROLL) */
+#endif /* #if defined (ARM_MATH_NEON) */
 
   /* If the shift value is positive then do right shift else left shift */
   if (sign == 0U)
@@ -218,7 +250,7 @@ void arm_shift_q7(
   }
 
 }
-#endif /* defined(ARM_MATH_MVEI) */
+#endif /* #if defined (ARM_MATH_MVEI) */
 
 /**
   @} end of BasicShift group

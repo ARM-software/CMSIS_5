@@ -62,10 +62,9 @@ void arm_scale_q15(
     q15_t * pDst,
     uint32_t blockSize)
 {
-    uint32_t  blkCnt;           /* loop counters */
+    uint32_t  blkCnt;           /* Loop counters */
     q15x8_t vecSrc;
     q15x8_t vecDst;
-
 
     /* Compute 8 outputs at a time */
     blkCnt = blockSize >> 3;
@@ -85,15 +84,16 @@ void arm_scale_q15(
          */
         blkCnt--;
         /*
-         * advance vector source and destination pointers
+         * Advance vector source and destination pointers
          */
         pSrc += 8;
         pDst += 8;
     }
     /*
-     * tail
+     * Tail
      */
     blkCnt = blockSize & 7;
+
     if (blkCnt > 0U)
     {
         mve_pred16_t p0 = vctp16q(blkCnt);;
@@ -102,10 +102,7 @@ void arm_scale_q15(
         vecDst = vqshlq_r(vecDst, shift + 1);
         vstrhq_p(pDst, vecDst, p0);
     }
-
 }
-
-
 #else
 void arm_scale_q15(
   const q15_t *pSrc,
@@ -117,6 +114,41 @@ void arm_scale_q15(
         uint32_t blkCnt;                               /* Loop counter */
         int8_t kShift = 15 - shift;                    /* Shift to apply after scaling */
 
+#if defined(ARM_MATH_NEON)
+    int16x8_t vec1;
+    int16x8_t scaleShift;
+    int16x8_t res;
+    int32x4_t res0;
+    int32x4_t res1;
+    scaleShift=vdupq_n_s16(shift);
+
+    /* Compute 8 outputs at a time */  
+    blkCnt = blockSize >> 3U;
+
+    while (blkCnt > 0U)
+    {
+        /* C = A * scale */
+        /* Scale the input and then store the result in the destination buffer. */
+
+        vec1 = vld1q_s16(pSrc);
+
+        res = vqdmulhq_s16(vec1, vdupq_n_s16(scaleFract));
+        res = vshlq_s16(res, scaleShift);
+
+	vst1q_s16(pDst, res);
+
+        /* Increment pointers */
+        pSrc += 8; 
+        pDst += 8;
+        
+        /* Decrement the blockSize loop counter */
+        blkCnt--;
+    }
+
+    /* Tail */
+    blkCnt = blockSize & 0x7;
+
+#else
 #if defined (ARM_MATH_LOOPUNROLL)
 #if defined (ARM_MATH_DSP)
   q31_t inA1, inA2;
@@ -181,6 +213,7 @@ void arm_scale_q15(
   blkCnt = blockSize;
 
 #endif /* #if defined (ARM_MATH_LOOPUNROLL) */
+#endif /* #if defined (ARM_MATH_NEON) */
 
   while (blkCnt > 0U)
   {
@@ -194,7 +227,7 @@ void arm_scale_q15(
   }
 
 }
-#endif /* defined(ARM_MATH_MVEI) */
+#endif /* #if defined (ARM_MATH_MVEI) */
 
 /**
   @} end of BasicScale group

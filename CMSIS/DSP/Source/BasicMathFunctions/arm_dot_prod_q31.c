@@ -64,13 +64,14 @@ void arm_dot_prod_q31(
     uint32_t blockSize,
     q63_t * result)
 {
-    uint32_t  blkCnt;           /* loop counters */
-    q31x4_t vecA;
-    q31x4_t vecB;
-    q63_t     sum = 0LL;
+    uint32_t blkCnt;           /* Loop counters */
+    q31x4_t  vecA;
+    q31x4_t  vecB;
+    q63_t    sum = 0LL;
 
     /* Compute 4 outputs at a time */
     blkCnt = blockSize >> 2;
+
     while (blkCnt > 0U)
     {
         /*
@@ -85,15 +86,16 @@ void arm_dot_prod_q31(
          */
         blkCnt--;
         /*
-         * advance vector source and destination pointers
+         * Advance vector source and destination pointers
          */
         pSrcA += 4;
         pSrcB += 4;
     }
     /*
-     * tail
+     * Tail
      */
     blkCnt = blockSize & 3;
+
     if (blkCnt > 0U)
     {
         mve_pred16_t p0 = vctp32q(blkCnt);
@@ -121,6 +123,51 @@ void arm_dot_prod_q31(
         uint32_t blkCnt;                               /* Loop counter */
         q63_t sum = 0;                                 /* Temporary return variable */
 
+#if defined(ARM_MATH_NEON_EXPERIMENTAL)
+    int32x4_t vec1;
+    int32x4_t vec2;
+    int32x4_t res;
+    int64x2_t accum1=vdupq_n_s64(0);
+    int64x2_t accum2=vdupq_n_s64(0);
+
+    /* Compute 4 outputs at a time */  
+    blkCnt = blockSize >> 2U;
+
+    vec1 = vld1q_s32(pSrcA);
+    vec2 = vld1q_s32(pSrcB);
+
+    while (blkCnt > 0U)
+    {
+        /* C = A[0]* B[0] + A[1]* B[1] + A[2]* B[2] + .....+ A[blockSize-1]* B[blockSize-1] */
+        /* Calculate dot product and then store the result in a temporary buffer. */
+
+        /* To be bit exact with original version, an intermediate shift of 14 is required
+           after each multiplication. It is less efficient than a solution using multiply
+	   and accumulate instructions */
+        accum1=vmull_s32(vget_low_s32(vec1), vget_low_s32(vec2));
+        accum1=vshrq_n_s64(accum1, 14);
+        
+        accum2=vmull_s32(vget_high_s32(vec1), vget_high_s32(vec2));
+        accum2=vshrq_n_s64(accum2, 14);
+
+	accum2=vaddq_s64(accum2, accum1);
+        sum += accum2[0] + accum2[1] ;
+
+        /* Increment pointers */
+        pSrcA += 4;
+        pSrcB += 4; 
+
+        vec1 = vld1q_s32(pSrcA);
+        vec2 = vld1q_s32(pSrcB);
+        
+        /* Decrement the blockSize loop counter */
+        blkCnt--;
+    }
+
+    /* Tail */
+    blkCnt = blockSize & 0x3;
+
+#else
 #if defined (ARM_MATH_LOOPUNROLL)
 
   /* Loop unrolling: Compute 4 outputs at a time */
@@ -152,6 +199,7 @@ void arm_dot_prod_q31(
   blkCnt = blockSize;
 
 #endif /* #if defined (ARM_MATH_LOOPUNROLL) */
+#endif /* #if defined (ARM_MATH_NEON) */
 
   while (blkCnt > 0U)
   {
@@ -167,7 +215,7 @@ void arm_dot_prod_q31(
   /* Store result in destination buffer in 16.48 format */
   *result = sum;
 }
-#endif /* defined(ARM_MATH_MVEI) */
+#endif /* #if defined (ARM_MATH_MVEI) */
 
 /**
   @} end of BasicDotProd group

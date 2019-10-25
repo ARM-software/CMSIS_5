@@ -60,12 +60,13 @@ void arm_add_q7(
     q7_t * pDst,
     uint32_t blockSize)
 {
-    uint32_t  blkCnt;           /* loop counters */
+    uint32_t  blkCnt;           /* Loop counters */
     q7x16_t vecA;
     q7x16_t vecB;
 
     /* Compute 16 outputs at a time */
     blkCnt = blockSize >> 4;
+
     while (blkCnt > 0U)
     {
         /*
@@ -80,16 +81,17 @@ void arm_add_q7(
          */
         blkCnt--;
         /*
-         * advance vector source and destination pointers
+         * Advance vector source and destination pointers
          */
         pSrcA  += 16;
         pSrcB  += 16;
         pDst   += 16;
     }
     /*
-     * tail
+     * Tail
      */
     blkCnt = blockSize & 0xF;
+
     if (blkCnt > 0U)
     {
         mve_pred16_t p0 = vctp8q(blkCnt);
@@ -107,6 +109,37 @@ void arm_add_q7(
 {
         uint32_t blkCnt;                               /* Loop counter */
 
+#if defined(ARM_MATH_NEON)
+    int8x16_t vec1;
+    int8x16_t vec2;
+    int8x16_t res;
+
+    /* Compute 16 outputs at a time */  
+    blkCnt = blockSize >> 4U;
+
+    while (blkCnt > 0U)
+    {
+        /* C = A + B */
+        /* Add and then store the results in the destination buffer. */
+        
+        vec1 = vld1q_s8(pSrcA);
+        vec2 = vld1q_s8(pSrcB);
+        res = vqaddq_s8(vec1, vec2);
+        vst1q_s8(pDst, res);
+
+        /* Increment pointers */
+        pSrcA += 16;
+        pSrcB += 16; 
+        pDst += 16;
+        
+        /* Decrement the blockSize loop counter */
+        blkCnt--;
+    }
+
+    /* Tail */
+    blkCnt = blockSize & 0xF;
+
+#else
 #if defined (ARM_MATH_LOOPUNROLL)
 
   /* Loop unrolling: Compute 4 outputs at a time */
@@ -139,6 +172,7 @@ void arm_add_q7(
   blkCnt = blockSize;
 
 #endif /* #if defined (ARM_MATH_LOOPUNROLL) */
+#endif /* #if defined (ARM_MATH_NEON) */
 
   while (blkCnt > 0U)
   {
@@ -152,7 +186,7 @@ void arm_add_q7(
   }
 
 }
-#endif /* defined(ARM_MATH_MVEI) */
+#endif /* #if defined (ARM_MATH_MVEI) */
 /**
   @} end of BasicAdd group
  */

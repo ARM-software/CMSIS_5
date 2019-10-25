@@ -62,13 +62,14 @@ void arm_dot_prod_q15(
     uint32_t blockSize,
     q63_t * result)
 {
-    uint32_t  blkCnt;           /* loop counters */
+    uint32_t  blkCnt;           /* Loop counters */
     q15x8_t vecA;
     q15x8_t vecB;
     q63_t     sum = 0LL;
 
     /* Compute 8 outputs at a time */
     blkCnt = blockSize >> 3;
+
     while (blkCnt > 0U)
     {
         /*
@@ -83,15 +84,16 @@ void arm_dot_prod_q15(
          */
         blkCnt--;
         /*
-         * advance vector source and destination pointers
+         * Advance vector source and destination pointers
          */
         pSrcA += 8;
         pSrcB += 8;
     }
     /*
-     * tail
+     * Tail
      */
     blkCnt = blockSize & 7;
+
     if (blkCnt > 0U)
     {
         mve_pred16_t p0 = vctp16q(blkCnt);
@@ -113,6 +115,57 @@ void arm_dot_prod_q15(
         uint32_t blkCnt;                               /* Loop counter */
         q63_t sum = 0;                                 /* Temporary return variable */
 
+#if defined(ARM_MATH_NEON)
+    int16x8_t vec1;
+    int16x8_t vec2;
+
+    int32x4_t res0=vdupq_n_s32(0);
+    int64x2_t res1;
+    int64x2_t accum0=vdupq_n_s64(0);
+
+    /* Compute 8 outputs at a time */  
+    blkCnt = blockSize >> 3U;
+
+    vec1 = vld1q_s16(pSrcA);
+    vec2 = vld1q_s16(pSrcB);
+
+    while (blkCnt > 0U)
+    {
+        /* C = A[0]* B[0] + A[1]* B[1] + A[2]* B[2] + .....+ A[blockSize-1]* B[blockSize-1] */
+        /* Calculate dot product and then store the result in a temporary buffer. */
+
+        res0 = vqdmlal_s16(res0, vget_low_s16(vec1),  vget_low_s16(vec2));
+        res0 = vqdmlal_s16(res0, vget_high_s16(vec1), vget_high_s16(vec2));
+        
+        /* Increment pointers */
+        pSrcA += 8;
+        pSrcB += 8; 
+
+        vec1 = vld1q_s16(pSrcA);
+        vec2 = vld1q_s16(pSrcB);
+        
+        /* Decrement the blockSize loop counter */
+        blkCnt--;
+    }
+
+    res1 = vpaddlq_s32(res0);
+
+    /* Apply rounding */
+    sum += (res1[0] + res1[1] + 1) >> 1 ;
+
+    /* Tail */
+    blkCnt = blockSize & 0x7;
+
+    while (blkCnt > 0U)
+    {
+      /* C = A[0]* B[0] + A[1]* B[1] + A[2]* B[2] + .....+ A[blockSize-1]* B[blockSize-1] */
+      /* Calculate dot product and then store the results in a temporary buffer. */
+      sum = __SMLALD(*pSrcA++, *pSrcB++, sum);
+  
+      /* Decrement the loop counter */
+      blkCnt--;
+    }
+#else
 #if defined (ARM_MATH_LOOPUNROLL)
 
   /* Loop unrolling: Compute 4 outputs at a time */
@@ -161,11 +214,12 @@ void arm_dot_prod_q15(
     /* Decrement loop counter */
     blkCnt--;
   }
+#endif /* #if defined (ARM_MATH_LOOPUNROLL) */
 
   /* Store result in destination buffer in 34.30 format */
   *result = sum;
 }
-#endif /* defined(ARM_MATH_MVEI) */
+#endif /* #if defined (ARM_MATH_MVEI) */
 
 /**
   @} end of BasicDotProd group
