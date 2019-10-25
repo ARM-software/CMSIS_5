@@ -44,9 +44,27 @@ void arm_q7_to_q15_with_offset(const q7_t *src,
                                uint32_t block_size,
                                q7_t offset)
 {
-    uint32_t  block_cnt;
+    int block_cnt;
 
-#if defined(ARM_MATH_LOOPUNROLL) && defined (ARM_MATH_DSP)
+#if defined(ARM_MATH_MVEI)
+
+    int16x8_t source;
+    const int16x8_t source_offset = vdupq_n_s16(offset);
+    block_cnt = block_size / 8;
+
+    while (block_cnt > 0)
+    {
+        source = vldrbq_s16(src);
+        source = vaddq_s16(source, source_offset);
+        vstrhq_s16(dst, source);
+        dst += 8;
+        src += 8;
+        block_cnt--;
+    }
+
+    block_cnt = block_size & 0x7;
+
+#elif defined(ARM_MATH_LOOPUNROLL) && defined(ARM_MATH_DSP)
     /* Run the below code for cores that support SIMD instructions  */
     q31_t in_q7x4;
     q31_t in_q15x2_1;
@@ -55,10 +73,10 @@ void arm_q7_to_q15_with_offset(const q7_t *src,
     q31_t out_q15x2_2;
 
     /*loop unrolling */
-    block_cnt = block_size >> 2u;
+    block_cnt = block_size >> 2;
 
     /* First part of the processing with loop unrolling.  Compute 4 outputs at a time. */
-    while (block_cnt > 0u)
+    while (block_cnt > 0)
     {
         /* convert from q7 to q15 and then store the results in the destination buffer */
         in_q7x4 = arm_nn_read_q7x4_ia(&src);
@@ -81,7 +99,7 @@ void arm_q7_to_q15_with_offset(const q7_t *src,
         block_cnt--;
     }
     /* Handle left over samples */
-    block_cnt = block_size % 0x4u;
+    block_cnt = block_size % 0x4;
 
 #else
     /* Run the below code for Cortex-M0 */
