@@ -118,9 +118,17 @@ void arm_scale_q15(
     int16x8_t vec1;
     int16x8_t scaleShift;
     int16x8_t res;
+
+#ifndef FAST_SCALE_Q15
     int32x4_t res0;
     int32x4_t res1;
+#endif
+
+#ifdef FAST_SCALE_Q15    
     scaleShift=vdupq_n_s16(shift);
+#else
+    scaleShift=vdupq_n_s16(-kShift);
+#endif
 
     /* Compute 8 outputs at a time */  
     blkCnt = blockSize >> 3U;
@@ -132,8 +140,16 @@ void arm_scale_q15(
 
         vec1 = vld1q_s16(pSrc);
 
+#ifdef FAST_SCALE_Q15
         res = vqdmulhq_s16(vec1, vdupq_n_s16(scaleFract));
         res = vshlq_s16(res, scaleShift);
+#else
+        res0 = vmull_s16(vget_low_s16(vec1),vdup_n_s16(scaleFract));
+        res1 = vmull_s16(vget_high_s16(vec1),vdup_n_s16(scaleFract));
+        res0 = vshlq_s32(res0,scaleShift);
+        res1 = vshlq_s32(res1,scaleShift);
+        res  = vcombine_s16(vqmovn_s32(res0),vqmovn_s32(res1));
+#endif
 
 	vst1q_s16(pDst, res);
 

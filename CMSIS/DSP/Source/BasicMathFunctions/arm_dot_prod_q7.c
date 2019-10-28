@@ -135,9 +135,17 @@ void arm_dot_prod_q7(
         /* C = A[0]* B[0] + A[1]* B[1] + A[2]* B[2] + .....+ A[blockSize-1]* B[blockSize-1] */
         /* Calculate dot product and then store the result in a temporary buffer. */
 
-        res0 = vmlal_s8(res0, vget_low_s8(vec1),  vget_low_s8(vec2));
-        res1 = vmlal_s8(res1, vget_high_s8(vec1), vget_high_s8(vec2));
-        
+#ifdef FAST_DOT_PRODUCT_Q7
+        res0 = vmlal_s8(res0,vget_low_s8(vec1), vget_low_s8(vec2));
+        res1 = vmlal_s8(res1,vget_high_s8(vec1), vget_high_s8(vec2));
+#else
+        res0 = vmull_s8(vget_low_s8(vec1), vget_low_s8(vec2));
+        res1 = vmlal_s8(res0,vget_high_s8(vec1), vget_high_s8(vec2));
+        temp0= vpaddlq_s16(res1);
+        temp1= vpaddlq_s32(temp0);
+        sum += temp1[0] + temp1[1];
+#endif
+
         /* Increment pointers */
         pSrcA += 16;
         pSrcB += 16; 
@@ -149,11 +157,13 @@ void arm_dot_prod_q7(
         blkCnt--;
     }
 
-    res0=vqaddq_s16(res0, res1);
+#ifdef FAST_DOT_PRODUCT_Q7
+    res0=vqaddq_s16(res0,res1);
     temp0=vpaddlq_s16(res0);
     temp1=vpaddlq_s32(temp0);
 
     sum += temp1[0] + temp1[1];
+#endif
 
     /* Tail */
     blkCnt = blockSize & 0xF;       

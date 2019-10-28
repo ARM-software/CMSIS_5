@@ -122,7 +122,11 @@ void arm_scale_q31(
     int32x4_t scaleShift;
     int32x4_t res;
 
+#ifdef FAST_SCALE_Q31
     scaleShift=vdupq_n_s32(shift);
+#else
+    scaleShift=vdupq_n_s32(shift+1);
+#endif
 
     /* Compute 4 outputs at a time */  
     blkCnt = blockSize >> 2U;
@@ -135,7 +139,12 @@ void arm_scale_q31(
         vec1 = vld1q_s32(pSrc);
 
 	res = vqdmulhq_s32(vec1, vdupq_n_s32(scaleFract));
-        res = vshlq_s32(res,scaleShift);
+#ifdef FAST_SCALE_Q31
+	res = vshlq_s32(res, scaleShift);
+#else
+        res = vshrq_n_s32(res, 1);
+        res = vshlq_s32(res, scaleShift);
+#endif
 
 	vst1q_s32(pDst, res);
 
