@@ -975,7 +975,8 @@ int32_t arm_depthwise_conv_s8_opt_get_buffer_size(const uint16_t input_ch,
    * @param[in]       output_activation_min        for clamping
    * @param[in]       output_activation_max        for clamping
    * @param[in]       vec_buffer                   pointer to buffer space used for optimization and is necessary
-   *                                               when both ARM_MATH_LOOPUNROLL and ARM_MATH_DSP are defined.
+   *                                               when both ARM_MATH_LOOPUNROLL and ARM_MATH_DSP are defined but not
+   *                                               ARM_MATH_MVEI.
    *                                               Required space: col_dim * sizeof(q15_t) bytes
    *                                               Use arm_fully_connected_s8_get_buffer_size() to get the size.
    * @return          The function returns         ARM_MATH_SUCCESS
