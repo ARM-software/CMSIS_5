@@ -570,6 +570,7 @@ void assert_snr_error(unsigned long nb,AnyPattern<q31_t> &pa,AnyPattern<q31_t> &
 
    snr = arm_snr_q31(ptrA, ptrB, pa.nbSamples());
 
+   // printf("SNR = %f\n",snr);
 
    if (snr < threshold)
    {

@@ -172,6 +172,10 @@ set(TESTSRC
   Source/Tests/BinaryTestsQ31.cpp
   Source/Tests/BinaryTestsQ15.cpp
   Source/Tests/FullyConnected.cpp
+  Source/Tests/MISCF32.cpp
+  Source/Tests/MISCQ31.cpp
+  Source/Tests/MISCQ15.cpp
+  Source/Tests/MISCQ7.cpp
   Source/Tests/Pooling.cpp
   Source/Tests/Softmax.cpp
   Source/Tests/NNSupport.cpp

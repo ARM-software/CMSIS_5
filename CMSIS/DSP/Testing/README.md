@@ -31,14 +31,14 @@ We need to be able to specify how those parameters are varied.
 
 #### R7 : It shall be possible to specify a subset of parameters (which could be empty) to compute regression.
 For instance, if our test is dependent on a vector size, we may want to compute a linear regression
-to know how the performances are dependent on the cycle size.
+to know how the performances are dependent on the vector size.
 
-But, our test may also depend on another parameter B which are not interesting us in the regression. In that case, the regression formula should not take into account B. And we would have several regression formula for each value of the parameter B.
+But, our test may also depend on another parameter B which is not interesting us in the regression. In that case, the regression formula should not take into account B. And we would have several regression formula for each value of the parameter B.
 
 The parameters of the tests would be Vector Size and B but the Summary parameter only Vector Size.
 
 #### R8 : The concept of a test suite shall be supported.
-A test suite is a set of tests using the same data.
+A test suite is a set of tests packaged with some data.
 
 ### Test execution
 
@@ -81,7 +81,7 @@ A test description file is defined with a specific syntax to support R1 to R8.
                class = BasicTests
                folder = BasicMaths
 
-The tests are organized in a hierarchy. For each node of thee hierarchy, a C++ class is specified.
+The tests are organized in a hierarchy. For each node of the hierarchy, a C++ class is specified.
 The script processTest.py is generating C++ codee for the group.
 For the test suite, the script is generating a partial implementation since a test suite is containing tests and you need to add the test themselves.
 
@@ -90,7 +90,7 @@ to be organized in exactly the same way. So, the folder property of a node is op
 
 A folder can be reused for different nodes. For instance, you may have a suite for testing and one for benchmarking and both may use the same pattern folder.
 
-A test suite is more complex since it contains the descriptino of the tests and related information.
+A test suite is more complex than a group since it contains the description of the tests and related information.
 
 #### Test suite
 
@@ -131,9 +131,9 @@ So, the test suite would be:
 
 A pattern or output description is an ID (to be used in the code) followed by a filename.
 
-The file is is the folder defined with the folder properties of the group / suites.
+The file is in the folder defined with the folder properties of the group / suites.
 
-The root folder for pattern and output is different.
+The root folder for pattern files and output files is different.
 
 #### Benchmarks
 
@@ -161,23 +161,23 @@ So, we have the possibility in the suite section to add a parameter section to d
             Pattern INPUT1_F32_ID : Input1_f32.txt 
 
 
-In above example we declare that thee functions of the suite are using 3 parameters named A,B and C.
+In above example we declare that the functions of the suite are using 3 parameters named A,B and C.
 We declare that a regression formula will use only A and B. So for each C value, we will get a different
 regression formula.
 
 We list the names to use when formatting the output of benchmarks.
-We define a regression formula using R syntax. (We do not write cycles ~ A*B but only A*B)
+We define a regression formula using R syntax. (We do not write "cycles ~ A*B" but only "A*B")
 
 Once parameters have been described, we need a way to feed parameter values to a test.
 
-There are 2 ways. First is a parameter file. Problem of a parameter file when it has to be included in the test (C array) is that it may be big. So, we also have a parameter generator. It is less felxible but enough for lot of cases.
+There are 2 ways. First way is a parameter file. Problem of a parameter file when it has to be included in the test (C array) is that it may be big. So, we also have a parameter generator. It is less flexible but enough for lot of cases.
 
 Those parameters values, when specified with a file, are described with:
 
             Output  OUT_SAMPLES_F32_ID : Output
             Params PARAM1_ID : Params1.txt
 
-They follow the outputs and use similar syntax.
+They follow the outputs section and use similar syntax.
 
 When the parameter is specified with a generator then the syntax is :
 
@@ -238,7 +238,7 @@ So, the number of possible run must be a multiple of 3 since we need to specify 
 
 Any node (Group, Suite or Function) can be disabled by using disabled { ...}.
 
-A disabled group/suite/test is not executed (and its code not generated fro group/suite).
+A disabled group/suite/test is not executed (and its code not generated for group/suite).
 Using disabled for tests is allowing to disable a test without changing the test ID of following tests.
 
 
@@ -254,10 +254,10 @@ According to R13 , the test may be controlled on the DUT or from an external hos
 It is implemented with a Runner class. The only implementation provided is IORunner,
 
 A Runner is just an implementation of the visitor pattern. A runner is applied to the tree of tests.
-In case of the IO runner, the IO mechanism and the memory manager must be provided.
+In case of the IO runner, an IO mechanism and a memory manager must be provided.
 
 The runner is running a test and for benchmark measuring the cycles.
-If cycles measurement is based on internal counter and not external trace.
+Cycles measurement can be based on internal counter or external trace.
 Generally, there is a calibration at beginning of the Runner to estimate the overhead of
 cycle measurements. This overhead is then removed when doing the measurement.
 
@@ -279,7 +279,9 @@ According to R10 and R11, one must be able to disable tests done on the DUT and 
 When instantiating a runner, you can specify the running mode with an enum. For instance Testing::kTestAndDump.
 There are 3 modes, Test only, Dump only, Test and dump. 
 
+In dump only mode, tests using pattern will fail but the tests will be considered as passed (because we are only interested in the output).
 
+But it means that no test using patterns shoudl be used in the middle of the test or some part of it may not be executed. Those tests must be kept at the end.
 
 #### processResult
 For R14, we have a python script which will process the result of tests and format it into several possible formats like text, CSV, Mathematica dataset. 
@@ -307,6 +309,7 @@ If you want to compute summary statistics with regression:
 ### Generate the build system
 
     mkdir build
+    cd build
     cmake -DCMAKE_PREFIX_PATH="path/to/tools" -DCMAKE_TOOLCHAIN_FILE=../../armcc.cmake -DARM_CPU="cortex-a5" -DPLATFORM="FVP" -DBENCHMARK=OFF -G "Unix Makefiles" ..
 
 If BENCHMARK=ON is used, other options should be enabled to have better performances.
@@ -319,9 +322,11 @@ If BENCHMARK=ON is used, other options should be enabled to have better performa
     python preprocess.py -f desc.txt 
 
 This will create a file Output.pickle which is containing a Python object representing
-the parsed data structure. It is done because parsing a big test descriptino file is quite slow.
+the parsed data structure. It is done because parsing a big test description file is quite slow.
 
 So, it is only done once.
+
+Then the tests can be processed to configure the test environment with
 
     python processTests.py -f Output.pickle
 
@@ -339,16 +344,16 @@ You can add a test ID to specify that you wan to run only a specific test in the
     python processTests.py BasicTests 4
 
 First time this script is run, it is expecting some folder and some headers.
-To create the folder, the script createDefaultFolder.sh can be used.
+To create the folders, the script createDefaultFolder.sh can be used.
 
-Then, before filtering desc.txt by using a C++ class, you should (at least once) parse the full file without filtering.
+Before filtering desc.txt by using a C++ class, you should (at least once) parse the full file without filtering.
 
 The reason is that the cmake build is not aware of the filtering and will include some source files which
-are not needed when filtered out. So those files should at least be present to allow the compilation to proceed. So they need to be generated at least once.
+are not needed when filtered out. So those files should at least be present to allow the compilation to proceed. They need to be generated at least once.
 
 ### Build and run the tests
 
-Folder Output/BasicMaths should exist
+Folder Output/BasicMaths should exist. For example, on windows with ArmDS:
 
     cd build
     make VERBOSE=1
@@ -362,11 +367,10 @@ Folder Output/BasicMaths should exist
 -e option is needed if the mode -e was used with processTests because the output has a different
 format with or without -e option.
 
-It is also using the Output.pickle file by default for the test description.
 
 ### Generate summary statistics
 
-The result parsing may have generated some statistics in FullBenchmark folder.
+The parsing of the results may have generated some statistics in FullBenchmark folder.
 
 The script summaryBench can parse those results and compute regression formula.
 
@@ -429,7 +433,7 @@ Client::IORunner runner(&io,&mgr,Testing::kTestOnly);
 Must be replaced by
 
 ```cpp
-Client::IORunner runner(&io,&mgr,Testing::DumoOnly);
+Client::IORunner runner(&io,&mgr,Testing::DumpOnly);
 ```
 
 or
@@ -438,7 +442,7 @@ or
 Client::IORunner runner(&io,&mgr,Testing::kTestAndDump);
 ```
 
-and of course, the test must have a line to dump the outputs.
+and of course, the test must contain a line to dump the outputs.
 
 ## testmain.cpp
 
@@ -455,7 +459,7 @@ To start the tests you need to:
 
 For a test suite MyClass, the scripts are generating an include file MyClass_decl.h 
 
-You should create another include MyClass.h and another cpp file MyClass.cpp 
+You should create another include Include/MyClass.h and another cpp file Source/MyClass.cpp in TEsting folder.
 
 MyClass.h should contain:
 

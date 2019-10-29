@@ -1114,6 +1114,600 @@ group Root {
            }
         }
 
+        group Filtering Tests {
+           class = FilteringTests
+           folder = Filtering
+
+           group MISC {
+             class = MISC 
+             folder = MISC
+
+             suite MISC F32 {
+                class = MISCF32 
+                folder = MISCF32
+
+                Pattern INPUTA_F32_ID : InputsA1_f32.txt
+                Pattern INPUTB_F32_ID : InputsB1_f32.txt
+
+                Pattern REF1_F32_ID : Reference1_f32.txt
+                Pattern REF2_F32_ID : Reference2_f32.txt
+                Pattern REF3_F32_ID : Reference3_f32.txt
+                Pattern REF4_F32_ID : Reference4_f32.txt
+                Pattern REF5_F32_ID : Reference5_f32.txt
+                Pattern REF6_F32_ID : Reference6_f32.txt
+                Pattern REF7_F32_ID : Reference7_f32.txt
+                Pattern REF8_F32_ID : Reference8_f32.txt
+                Pattern REF9_F32_ID : Reference9_f32.txt
+                Pattern REF10_F32_ID : Reference10_f32.txt
+                Pattern REF11_F32_ID : Reference11_f32.txt
+                Pattern REF12_F32_ID : Reference12_f32.txt
+                Pattern REF13_F32_ID : Reference13_f32.txt
+                Pattern REF14_F32_ID : Reference14_f32.txt
+                Pattern REF15_F32_ID : Reference15_f32.txt
+                Pattern REF16_F32_ID : Reference16_f32.txt
+                Pattern REF17_F32_ID : Reference17_f32.txt
+                Pattern REF18_F32_ID : Reference18_f32.txt
+                Pattern REF19_F32_ID : Reference19_f32.txt
+                Pattern REF20_F32_ID : Reference20_f32.txt
+                Pattern REF21_F32_ID : Reference21_f32.txt
+                Pattern REF22_F32_ID : Reference22_f32.txt
+                Pattern REF23_F32_ID : Reference23_f32.txt
+                Pattern REF24_F32_ID : Reference24_f32.txt
+                Pattern REF25_F32_ID : Reference25_f32.txt
+                Pattern REF26_F32_ID : Reference26_f32.txt
+                Pattern REF27_F32_ID : Reference27_f32.txt
+                Pattern REF28_F32_ID : Reference28_f32.txt
+                Pattern REF29_F32_ID : Reference29_f32.txt
+                Pattern REF30_F32_ID : Reference30_f32.txt
+                Pattern REF31_F32_ID : Reference31_f32.txt
+                Pattern REF32_F32_ID : Reference32_f32.txt
+                Pattern REF33_F32_ID : Reference33_f32.txt
+                Pattern REF34_F32_ID : Reference34_f32.txt
+                Pattern REF35_F32_ID : Reference35_f32.txt
+                Pattern REF36_F32_ID : Reference36_f32.txt
+                Pattern REF37_F32_ID : Reference37_f32.txt
+                Pattern REF38_F32_ID : Reference38_f32.txt
+                Pattern REF39_F32_ID : Reference39_f32.txt
+                Pattern REF40_F32_ID : Reference40_f32.txt
+                Pattern REF41_F32_ID : Reference41_f32.txt
+                Pattern REF42_F32_ID : Reference42_f32.txt
+                Pattern REF43_F32_ID : Reference43_f32.txt
+                Pattern REF44_F32_ID : Reference44_f32.txt
+                Pattern REF45_F32_ID : Reference45_f32.txt
+                Pattern REF46_F32_ID : Reference46_f32.txt
+                Pattern REF47_F32_ID : Reference47_f32.txt
+                Pattern REF48_F32_ID : Reference48_f32.txt
+                Pattern REF49_F32_ID : Reference49_f32.txt
+                Pattern REF50_F32_ID : Reference50_f32.txt
+                Pattern REF51_F32_ID : Reference51_f32.txt
+                Pattern REF52_F32_ID : Reference52_f32.txt
+                Pattern REF53_F32_ID : Reference53_f32.txt
+                Pattern REF54_F32_ID : Reference54_f32.txt
+                Pattern REF55_F32_ID : Reference55_f32.txt
+                Pattern REF56_F32_ID : Reference56_f32.txt
+                Pattern REF57_F32_ID : Reference57_f32.txt
+                Pattern REF58_F32_ID : Reference58_f32.txt
+                Pattern REF59_F32_ID : Reference59_f32.txt
+                Pattern REF60_F32_ID : Reference60_f32.txt
+                Pattern REF61_F32_ID : Reference61_f32.txt
+                Pattern REF62_F32_ID : Reference62_f32.txt
+                Pattern REF63_F32_ID : Reference63_f32.txt
+                Pattern REF64_F32_ID : Reference64_f32.txt
+                Pattern REF65_F32_ID : Reference65_f32.txt
+                Pattern REF66_F32_ID : Reference66_f32.txt
+                Pattern REF67_F32_ID : Reference67_f32.txt
+                Pattern REF68_F32_ID : Reference68_f32.txt
+                Pattern REF69_F32_ID : Reference69_f32.txt
+                Pattern REF70_F32_ID : Reference70_f32.txt
+                Pattern REF71_F32_ID : Reference71_f32.txt
+                Pattern REF72_F32_ID : Reference72_f32.txt
+                Pattern REF73_F32_ID : Reference73_f32.txt
+                Pattern REF74_F32_ID : Reference74_f32.txt
+                Pattern REF75_F32_ID : Reference75_f32.txt
+                Pattern REF76_F32_ID : Reference76_f32.txt
+                Pattern REF77_F32_ID : Reference77_f32.txt
+                Pattern REF78_F32_ID : Reference78_f32.txt
+                Pattern REF79_F32_ID : Reference79_f32.txt
+                Pattern REF80_F32_ID : Reference80_f32.txt
+
+
+                Output  OUT_F32_ID : Output
+
+                Functions {
+                  arm_correlate_f32 nba=4 nbb=1:test_correlate_f32
+                  arm_correlate_f32 nba=4 nbb=2:test_correlate_f32
+                  arm_correlate_f32 nba=4 nbb=3:test_correlate_f32
+                  arm_correlate_f32 nba=4 nbb=8:test_correlate_f32
+                  arm_correlate_f32 nba=4 nbb=11:test_correlate_f32
+                  arm_correlate_f32 nba=5 nbb=1:test_correlate_f32
+                  arm_correlate_f32 nba=5 nbb=2:test_correlate_f32
+                  arm_correlate_f32 nba=5 nbb=3:test_correlate_f32
+                  arm_correlate_f32 nba=5 nbb=8:test_correlate_f32
+                  arm_correlate_f32 nba=5 nbb=11:test_correlate_f32
+                  arm_correlate_f32 nba=6 nbb=1:test_correlate_f32
+                  arm_correlate_f32 nba=6 nbb=2:test_correlate_f32
+                  arm_correlate_f32 nba=6 nbb=3:test_correlate_f32
+                  arm_correlate_f32 nba=6 nbb=8:test_correlate_f32
+                  arm_correlate_f32 nba=6 nbb=11:test_correlate_f32
+                  arm_correlate_f32 nba=9 nbb=1:test_correlate_f32
+                  arm_correlate_f32 nba=9 nbb=2:test_correlate_f32
+                  arm_correlate_f32 nba=9 nbb=3:test_correlate_f32
+                  arm_correlate_f32 nba=9 nbb=8:test_correlate_f32
+                  arm_correlate_f32 nba=9 nbb=11:test_correlate_f32
+                  arm_correlate_f32 nba=10 nbb=1:test_correlate_f32
+                  arm_correlate_f32 nba=10 nbb=2:test_correlate_f32
+                  arm_correlate_f32 nba=10 nbb=3:test_correlate_f32
+                  arm_correlate_f32 nba=10 nbb=8:test_correlate_f32
+                  arm_correlate_f32 nba=10 nbb=11:test_correlate_f32
+                  arm_correlate_f32 nba=11 nbb=1:test_correlate_f32
+                  arm_correlate_f32 nba=11 nbb=2:test_correlate_f32
+                  arm_correlate_f32 nba=11 nbb=3:test_correlate_f32
+                  arm_correlate_f32 nba=11 nbb=8:test_correlate_f32
+                  arm_correlate_f32 nba=11 nbb=11:test_correlate_f32
+                  arm_correlate_f32 nba=12 nbb=1:test_correlate_f32
+                  arm_correlate_f32 nba=12 nbb=2:test_correlate_f32
+                  arm_correlate_f32 nba=12 nbb=3:test_correlate_f32
+                  arm_correlate_f32 nba=12 nbb=8:test_correlate_f32
+                  arm_correlate_f32 nba=12 nbb=11:test_correlate_f32
+                  arm_correlate_f32 nba=13 nbb=1:test_correlate_f32
+                  arm_correlate_f32 nba=13 nbb=2:test_correlate_f32
+                  arm_correlate_f32 nba=13 nbb=3:test_correlate_f32
+                  arm_correlate_f32 nba=13 nbb=8:test_correlate_f32
+                  arm_correlate_f32 nba=13 nbb=11:test_correlate_f32
+                  arm_conv_f32 nba=4 nbb=1:test_conv_f32
+                  arm_conv_f32 nba=4 nbb=2:test_conv_f32
+                  arm_conv_f32 nba=4 nbb=3:test_conv_f32
+                  arm_conv_f32 nba=4 nbb=8:test_conv_f32
+                  arm_conv_f32 nba=4 nbb=11:test_conv_f32
+                  arm_conv_f32 nba=5 nbb=1:test_conv_f32
+                  arm_conv_f32 nba=5 nbb=2:test_conv_f32
+                  arm_conv_f32 nba=5 nbb=3:test_conv_f32
+                  arm_conv_f32 nba=5 nbb=8:test_conv_f32
+                  arm_conv_f32 nba=5 nbb=11:test_conv_f32
+                  arm_conv_f32 nba=6 nbb=1:test_conv_f32
+                  arm_conv_f32 nba=6 nbb=2:test_conv_f32
+                  arm_conv_f32 nba=6 nbb=3:test_conv_f32
+                  arm_conv_f32 nba=6 nbb=8:test_conv_f32
+                  arm_conv_f32 nba=6 nbb=11:test_conv_f32
+                  arm_conv_f32 nba=9 nbb=1:test_conv_f32
+                  arm_conv_f32 nba=9 nbb=2:test_conv_f32
+                  arm_conv_f32 nba=9 nbb=3:test_conv_f32
+                  arm_conv_f32 nba=9 nbb=8:test_conv_f32
+                  arm_conv_f32 nba=9 nbb=11:test_conv_f32
+                  arm_conv_f32 nba=10 nbb=1:test_conv_f32
+                  arm_conv_f32 nba=10 nbb=2:test_conv_f32
+                  arm_conv_f32 nba=10 nbb=3:test_conv_f32
+                  arm_conv_f32 nba=10 nbb=8:test_conv_f32
+                  arm_conv_f32 nba=10 nbb=11:test_conv_f32
+                  arm_conv_f32 nba=11 nbb=1:test_conv_f32
+                  arm_conv_f32 nba=11 nbb=2:test_conv_f32
+                  arm_conv_f32 nba=11 nbb=3:test_conv_f32
+                  arm_conv_f32 nba=11 nbb=8:test_conv_f32
+                  arm_conv_f32 nba=11 nbb=11:test_conv_f32
+                  arm_conv_f32 nba=12 nbb=1:test_conv_f32
+                  arm_conv_f32 nba=12 nbb=2:test_conv_f32
+                  arm_conv_f32 nba=12 nbb=3:test_conv_f32
+                  arm_conv_f32 nba=12 nbb=8:test_conv_f32
+                  arm_conv_f32 nba=12 nbb=11:test_conv_f32
+                  arm_conv_f32 nba=13 nbb=1:test_conv_f32
+                  arm_conv_f32 nba=13 nbb=2:test_conv_f32
+                  arm_conv_f32 nba=13 nbb=3:test_conv_f32
+                  arm_conv_f32 nba=13 nbb=8:test_conv_f32
+                  arm_conv_f32 nba=13 nbb=11:test_conv_f32
+                }
+
+             }
+
+             suite MISC Q31 {
+                class = MISCQ31
+                folder = MISCQ31
+
+                Pattern INPUTA_Q31_ID : InputsA1_q31.txt
+                Pattern INPUTB_Q31_ID : InputsB1_q31.txt
+
+                Pattern REF1_Q31_ID : Reference1_q31.txt
+                Pattern REF2_Q31_ID : Reference2_q31.txt
+                Pattern REF3_Q31_ID : Reference3_q31.txt
+                Pattern REF4_Q31_ID : Reference4_q31.txt
+                Pattern REF5_Q31_ID : Reference5_q31.txt
+                Pattern REF6_Q31_ID : Reference6_q31.txt
+                Pattern REF7_Q31_ID : Reference7_q31.txt
+                Pattern REF8_Q31_ID : Reference8_q31.txt
+                Pattern REF9_Q31_ID : Reference9_q31.txt
+                Pattern REF10_Q31_ID : Reference10_q31.txt
+                Pattern REF11_Q31_ID : Reference11_q31.txt
+                Pattern REF12_Q31_ID : Reference12_q31.txt
+                Pattern REF13_Q31_ID : Reference13_q31.txt
+                Pattern REF14_Q31_ID : Reference14_q31.txt
+                Pattern REF15_Q31_ID : Reference15_q31.txt
+                Pattern REF16_Q31_ID : Reference16_q31.txt
+                Pattern REF17_Q31_ID : Reference17_q31.txt
+                Pattern REF18_Q31_ID : Reference18_q31.txt
+                Pattern REF19_Q31_ID : Reference19_q31.txt
+                Pattern REF20_Q31_ID : Reference20_q31.txt
+                Pattern REF21_Q31_ID : Reference21_q31.txt
+                Pattern REF22_Q31_ID : Reference22_q31.txt
+                Pattern REF23_Q31_ID : Reference23_q31.txt
+                Pattern REF24_Q31_ID : Reference24_q31.txt
+                Pattern REF25_Q31_ID : Reference25_q31.txt
+                Pattern REF26_Q31_ID : Reference26_q31.txt
+                Pattern REF27_Q31_ID : Reference27_q31.txt
+                Pattern REF28_Q31_ID : Reference28_q31.txt
+                Pattern REF29_Q31_ID : Reference29_q31.txt
+                Pattern REF30_Q31_ID : Reference30_q31.txt
+                Pattern REF31_Q31_ID : Reference31_q31.txt
+                Pattern REF32_Q31_ID : Reference32_q31.txt
+                Pattern REF33_Q31_ID : Reference33_q31.txt
+                Pattern REF34_Q31_ID : Reference34_q31.txt
+                Pattern REF35_Q31_ID : Reference35_q31.txt
+                Pattern REF36_Q31_ID : Reference36_q31.txt
+                Pattern REF37_Q31_ID : Reference37_q31.txt
+                Pattern REF38_Q31_ID : Reference38_q31.txt
+                Pattern REF39_Q31_ID : Reference39_q31.txt
+                Pattern REF40_Q31_ID : Reference40_q31.txt
+                Pattern REF41_Q31_ID : Reference41_q31.txt
+                Pattern REF42_Q31_ID : Reference42_q31.txt
+                Pattern REF43_Q31_ID : Reference43_q31.txt
+                Pattern REF44_Q31_ID : Reference44_q31.txt
+                Pattern REF45_Q31_ID : Reference45_q31.txt
+                Pattern REF46_Q31_ID : Reference46_q31.txt
+                Pattern REF47_Q31_ID : Reference47_q31.txt
+                Pattern REF48_Q31_ID : Reference48_q31.txt
+                Pattern REF49_Q31_ID : Reference49_q31.txt
+                Pattern REF50_Q31_ID : Reference50_q31.txt
+                Pattern REF51_Q31_ID : Reference51_q31.txt
+                Pattern REF52_Q31_ID : Reference52_q31.txt
+                Pattern REF53_Q31_ID : Reference53_q31.txt
+                Pattern REF54_Q31_ID : Reference54_q31.txt
+                Pattern REF55_Q31_ID : Reference55_q31.txt
+                Pattern REF56_Q31_ID : Reference56_q31.txt
+                Pattern REF57_Q31_ID : Reference57_q31.txt
+                Pattern REF58_Q31_ID : Reference58_q31.txt
+                Pattern REF59_Q31_ID : Reference59_q31.txt
+                Pattern REF60_Q31_ID : Reference60_q31.txt
+                Pattern REF61_Q31_ID : Reference61_q31.txt
+                Pattern REF62_Q31_ID : Reference62_q31.txt
+                Pattern REF63_Q31_ID : Reference63_q31.txt
+                Pattern REF64_Q31_ID : Reference64_q31.txt
+                Pattern REF65_Q31_ID : Reference65_q31.txt
+                Pattern REF66_Q31_ID : Reference66_q31.txt
+                Pattern REF67_Q31_ID : Reference67_q31.txt
+                Pattern REF68_Q31_ID : Reference68_q31.txt
+                Pattern REF69_Q31_ID : Reference69_q31.txt
+                Pattern REF70_Q31_ID : Reference70_q31.txt
+                Pattern REF71_Q31_ID : Reference71_q31.txt
+                Pattern REF72_Q31_ID : Reference72_q31.txt
+                Pattern REF73_Q31_ID : Reference73_q31.txt
+                Pattern REF74_Q31_ID : Reference74_q31.txt
+                Pattern REF75_Q31_ID : Reference75_q31.txt
+                Pattern REF76_Q31_ID : Reference76_q31.txt
+                Pattern REF77_Q31_ID : Reference77_q31.txt
+                Pattern REF78_Q31_ID : Reference78_q31.txt
+                Pattern REF79_Q31_ID : Reference79_q31.txt
+                Pattern REF80_Q31_ID : Reference80_q31.txt
+
+
+                Output  OUT_Q31_ID : Output
+
+                Functions {
+                  arm_correlate_q31 nba=4 nbb=1:test_correlate_q31
+                  arm_correlate_q31 nba=4 nbb=2:test_correlate_q31
+                  arm_correlate_q31 nba=4 nbb=3:test_correlate_q31
+                  arm_correlate_q31 nba=4 nbb=8:test_correlate_q31
+                  arm_correlate_q31 nba=4 nbb=11:test_correlate_q31
+                  arm_correlate_q31 nba=5 nbb=1:test_correlate_q31
+                  arm_correlate_q31 nba=5 nbb=2:test_correlate_q31
+                  arm_correlate_q31 nba=5 nbb=3:test_correlate_q31
+                  arm_correlate_q31 nba=5 nbb=8:test_correlate_q31
+                  arm_correlate_q31 nba=5 nbb=11:test_correlate_q31
+                  arm_correlate_q31 nba=6 nbb=1:test_correlate_q31
+                  arm_correlate_q31 nba=6 nbb=2:test_correlate_q31
+                  arm_correlate_q31 nba=6 nbb=3:test_correlate_q31
+                  arm_correlate_q31 nba=6 nbb=8:test_correlate_q31
+                  arm_correlate_q31 nba=6 nbb=11:test_correlate_q31
+                  arm_correlate_q31 nba=9 nbb=1:test_correlate_q31
+                  arm_correlate_q31 nba=9 nbb=2:test_correlate_q31
+                  arm_correlate_q31 nba=9 nbb=3:test_correlate_q31
+                  arm_correlate_q31 nba=9 nbb=8:test_correlate_q31
+                  arm_correlate_q31 nba=9 nbb=11:test_correlate_q31
+                  arm_correlate_q31 nba=10 nbb=1:test_correlate_q31
+                  arm_correlate_q31 nba=10 nbb=2:test_correlate_q31
+                  arm_correlate_q31 nba=10 nbb=3:test_correlate_q31
+                  arm_correlate_q31 nba=10 nbb=8:test_correlate_q31
+                  arm_correlate_q31 nba=10 nbb=11:test_correlate_q31
+                  arm_correlate_q31 nba=11 nbb=1:test_correlate_q31
+                  arm_correlate_q31 nba=11 nbb=2:test_correlate_q31
+                  arm_correlate_q31 nba=11 nbb=3:test_correlate_q31
+                  arm_correlate_q31 nba=11 nbb=8:test_correlate_q31
+                  arm_correlate_q31 nba=11 nbb=11:test_correlate_q31
+                  arm_correlate_q31 nba=12 nbb=1:test_correlate_q31
+                  arm_correlate_q31 nba=12 nbb=2:test_correlate_q31
+                  arm_correlate_q31 nba=12 nbb=3:test_correlate_q31
+                  arm_correlate_q31 nba=12 nbb=8:test_correlate_q31
+                  arm_correlate_q31 nba=12 nbb=11:test_correlate_q31
+                  arm_correlate_q31 nba=13 nbb=1:test_correlate_q31
+                  arm_correlate_q31 nba=13 nbb=2:test_correlate_q31
+                  arm_correlate_q31 nba=13 nbb=3:test_correlate_q31
+                  arm_correlate_q31 nba=13 nbb=8:test_correlate_q31
+                  arm_correlate_q31 nba=13 nbb=11:test_correlate_q31
+                  arm_conv_q31 nba=4 nbb=1:test_conv_q31
+                  arm_conv_q31 nba=4 nbb=2:test_conv_q31
+                  arm_conv_q31 nba=4 nbb=3:test_conv_q31
+                  arm_conv_q31 nba=4 nbb=8:test_conv_q31
+                  arm_conv_q31 nba=4 nbb=11:test_conv_q31
+                  arm_conv_q31 nba=5 nbb=1:test_conv_q31
+                  arm_conv_q31 nba=5 nbb=2:test_conv_q31
+                  arm_conv_q31 nba=5 nbb=3:test_conv_q31
+                  arm_conv_q31 nba=5 nbb=8:test_conv_q31
+                  arm_conv_q31 nba=5 nbb=11:test_conv_q31
+                  arm_conv_q31 nba=6 nbb=1:test_conv_q31
+                  arm_conv_q31 nba=6 nbb=2:test_conv_q31
+                  arm_conv_q31 nba=6 nbb=3:test_conv_q31
+                  arm_conv_q31 nba=6 nbb=8:test_conv_q31
+                  arm_conv_q31 nba=6 nbb=11:test_conv_q31
+                  arm_conv_q31 nba=9 nbb=1:test_conv_q31
+                  arm_conv_q31 nba=9 nbb=2:test_conv_q31
+                  arm_conv_q31 nba=9 nbb=3:test_conv_q31
+                  arm_conv_q31 nba=9 nbb=8:test_conv_q31
+                  arm_conv_q31 nba=9 nbb=11:test_conv_q31
+                  arm_conv_q31 nba=10 nbb=1:test_conv_q31
+                  arm_conv_q31 nba=10 nbb=2:test_conv_q31
+                  arm_conv_q31 nba=10 nbb=3:test_conv_q31
+                  arm_conv_q31 nba=10 nbb=8:test_conv_q31
+                  arm_conv_q31 nba=10 nbb=11:test_conv_q31
+                  arm_conv_q31 nba=11 nbb=1:test_conv_q31
+                  arm_conv_q31 nba=11 nbb=2:test_conv_q31
+                  arm_conv_q31 nba=11 nbb=3:test_conv_q31
+                  arm_conv_q31 nba=11 nbb=8:test_conv_q31
+                  arm_conv_q31 nba=11 nbb=11:test_conv_q31
+                  arm_conv_q31 nba=12 nbb=1:test_conv_q31
+                  arm_conv_q31 nba=12 nbb=2:test_conv_q31
+                  arm_conv_q31 nba=12 nbb=3:test_conv_q31
+                  arm_conv_q31 nba=12 nbb=8:test_conv_q31
+                  arm_conv_q31 nba=12 nbb=11:test_conv_q31
+                  arm_conv_q31 nba=13 nbb=1:test_conv_q31
+                  arm_conv_q31 nba=13 nbb=2:test_conv_q31
+                  arm_conv_q31 nba=13 nbb=3:test_conv_q31
+                  arm_conv_q31 nba=13 nbb=8:test_conv_q31
+                  arm_conv_q31 nba=13 nbb=11:test_conv_q31
+                }
+
+             }
+
+             suite MISC Q15 {
+                class = MISCQ15
+                folder = MISCQ15
+
+                Pattern INPUTA_Q15_ID : InputsA1_q15.txt
+                Pattern INPUTB_Q15_ID : InputsB1_q15.txt
+
+                Pattern REF1_Q15_ID : Reference1_q15.txt
+                Pattern REF2_Q15_ID : Reference2_q15.txt
+                Pattern REF3_Q15_ID : Reference3_q15.txt
+                Pattern REF4_Q15_ID : Reference4_q15.txt
+                Pattern REF5_Q15_ID : Reference5_q15.txt
+                Pattern REF6_Q15_ID : Reference6_q15.txt
+                Pattern REF7_Q15_ID : Reference7_q15.txt
+                Pattern REF8_Q15_ID : Reference8_q15.txt
+                Pattern REF9_Q15_ID : Reference9_q15.txt
+                Pattern REF10_Q15_ID : Reference10_q15.txt
+                Pattern REF11_Q15_ID : Reference11_q15.txt
+                Pattern REF12_Q15_ID : Reference12_q15.txt
+                Pattern REF13_Q15_ID : Reference13_q15.txt
+                Pattern REF14_Q15_ID : Reference14_q15.txt
+                Pattern REF15_Q15_ID : Reference15_q15.txt
+                Pattern REF16_Q15_ID : Reference16_q15.txt
+                Pattern REF17_Q15_ID : Reference17_q15.txt
+                Pattern REF18_Q15_ID : Reference18_q15.txt
+                Pattern REF19_Q15_ID : Reference19_q15.txt
+                Pattern REF20_Q15_ID : Reference20_q15.txt
+                Pattern REF21_Q15_ID : Reference21_q15.txt
+                Pattern REF22_Q15_ID : Reference22_q15.txt
+                Pattern REF23_Q15_ID : Reference23_q15.txt
+                Pattern REF24_Q15_ID : Reference24_q15.txt
+                Pattern REF25_Q15_ID : Reference25_q15.txt
+                Pattern REF26_Q15_ID : Reference26_q15.txt
+                Pattern REF27_Q15_ID : Reference27_q15.txt
+                Pattern REF28_Q15_ID : Reference28_q15.txt
+                Pattern REF29_Q15_ID : Reference29_q15.txt
+                Pattern REF30_Q15_ID : Reference30_q15.txt
+                Pattern REF31_Q15_ID : Reference31_q15.txt
+                Pattern REF32_Q15_ID : Reference32_q15.txt
+                Pattern REF33_Q15_ID : Reference33_q15.txt
+                Pattern REF34_Q15_ID : Reference34_q15.txt
+                Pattern REF35_Q15_ID : Reference35_q15.txt
+                Pattern REF36_Q15_ID : Reference36_q15.txt
+                Pattern REF37_Q15_ID : Reference37_q15.txt
+                Pattern REF38_Q15_ID : Reference38_q15.txt
+                Pattern REF39_Q15_ID : Reference39_q15.txt
+                Pattern REF40_Q15_ID : Reference40_q15.txt
+                Pattern REF41_Q15_ID : Reference41_q15.txt
+                Pattern REF42_Q15_ID : Reference42_q15.txt
+                Pattern REF43_Q15_ID : Reference43_q15.txt
+                Pattern REF44_Q15_ID : Reference44_q15.txt
+                Pattern REF45_Q15_ID : Reference45_q15.txt
+                Pattern REF46_Q15_ID : Reference46_q15.txt
+                Pattern REF47_Q15_ID : Reference47_q15.txt
+                Pattern REF48_Q15_ID : Reference48_q15.txt
+                Pattern REF49_Q15_ID : Reference49_q15.txt
+                Pattern REF50_Q15_ID : Reference50_q15.txt
+
+
+                Output  OUT_Q15_ID : Output
+
+                Functions {
+                  arm_correlate_q15 nba=14 nbb=15:test_correlate_q15
+                  arm_correlate_q15 nba=14 nbb=16:test_correlate_q15
+                  arm_correlate_q15 nba=14 nbb=17:test_correlate_q15
+                  arm_correlate_q15 nba=14 nbb=18:test_correlate_q15
+                  arm_correlate_q15 nba=14 nbb=33:test_correlate_q15
+                  arm_correlate_q15 nba=15 nbb=15:test_correlate_q15
+                  arm_correlate_q15 nba=15 nbb=16:test_correlate_q15
+                  arm_correlate_q15 nba=15 nbb=17:test_correlate_q15
+                  arm_correlate_q15 nba=15 nbb=18:test_correlate_q15
+                  arm_correlate_q15 nba=15 nbb=33:test_correlate_q15
+                  arm_correlate_q15 nba=16 nbb=15:test_correlate_q15
+                  arm_correlate_q15 nba=16 nbb=16:test_correlate_q15
+                  arm_correlate_q15 nba=16 nbb=17:test_correlate_q15
+                  arm_correlate_q15 nba=16 nbb=18:test_correlate_q15
+                  arm_correlate_q15 nba=16 nbb=33:test_correlate_q15
+                  arm_correlate_q15 nba=17 nbb=15:test_correlate_q15
+                  arm_correlate_q15 nba=17 nbb=16:test_correlate_q15
+                  arm_correlate_q15 nba=17 nbb=17:test_correlate_q15
+                  arm_correlate_q15 nba=17 nbb=18:test_correlate_q15
+                  arm_correlate_q15 nba=17 nbb=33:test_correlate_q15
+                  arm_correlate_q15 nba=32 nbb=15:test_correlate_q15
+                  arm_correlate_q15 nba=32 nbb=16:test_correlate_q15
+                  arm_correlate_q15 nba=32 nbb=17:test_correlate_q15
+                  arm_correlate_q15 nba=32 nbb=18:test_correlate_q15
+                  arm_correlate_q15 nba=32 nbb=33:test_correlate_q15
+                  arm_conv_q15 nba=14 nbb=15:test_conv_q15
+                  arm_conv_q15 nba=14 nbb=16:test_conv_q15
+                  arm_conv_q15 nba=14 nbb=17:test_conv_q15
+                  arm_conv_q15 nba=14 nbb=18:test_conv_q15
+                  arm_conv_q15 nba=14 nbb=33:test_conv_q15
+                  arm_conv_q15 nba=15 nbb=15:test_conv_q15
+                  arm_conv_q15 nba=15 nbb=16:test_conv_q15
+                  arm_conv_q15 nba=15 nbb=17:test_conv_q15
+                  arm_conv_q15 nba=15 nbb=18:test_conv_q15
+                  arm_conv_q15 nba=15 nbb=33:test_conv_q15
+                  arm_conv_q15 nba=16 nbb=15:test_conv_q15
+                  arm_conv_q15 nba=16 nbb=16:test_conv_q15
+                  arm_conv_q15 nba=16 nbb=17:test_conv_q15
+                  arm_conv_q15 nba=16 nbb=18:test_conv_q15
+                  arm_conv_q15 nba=16 nbb=33:test_conv_q15
+                  arm_conv_q15 nba=17 nbb=15:test_conv_q15
+                  arm_conv_q15 nba=17 nbb=16:test_conv_q15
+                  arm_conv_q15 nba=17 nbb=17:test_conv_q15
+                  arm_conv_q15 nba=17 nbb=18:test_conv_q15
+                  arm_conv_q15 nba=17 nbb=33:test_conv_q15
+                  arm_conv_q15 nba=32 nbb=15:test_conv_q15
+                  arm_conv_q15 nba=32 nbb=16:test_conv_q15
+                  arm_conv_q15 nba=32 nbb=17:test_conv_q15
+                  arm_conv_q15 nba=32 nbb=18:test_conv_q15
+                  arm_conv_q15 nba=32 nbb=33:test_conv_q15
+                }
+
+             }
+
+             suite MISC Q7 {
+                class = MISCQ7
+                folder = MISCQ7
+
+                Pattern INPUTA_Q7_ID : InputsA1_q7.txt
+                Pattern INPUTB_Q7_ID : InputsB1_q7.txt
+
+                Pattern REF1_Q7_ID : Reference1_q7.txt
+                Pattern REF2_Q7_ID : Reference2_q7.txt
+                Pattern REF3_Q7_ID : Reference3_q7.txt
+                Pattern REF4_Q7_ID : Reference4_q7.txt
+                Pattern REF5_Q7_ID : Reference5_q7.txt
+                Pattern REF6_Q7_ID : Reference6_q7.txt
+                Pattern REF7_Q7_ID : Reference7_q7.txt
+                Pattern REF8_Q7_ID : Reference8_q7.txt
+                Pattern REF9_Q7_ID : Reference9_q7.txt
+                Pattern REF10_Q7_ID : Reference10_q7.txt
+                Pattern REF11_Q7_ID : Reference11_q7.txt
+                Pattern REF12_Q7_ID : Reference12_q7.txt
+                Pattern REF13_Q7_ID : Reference13_q7.txt
+                Pattern REF14_Q7_ID : Reference14_q7.txt
+                Pattern REF15_Q7_ID : Reference15_q7.txt
+                Pattern REF16_Q7_ID : Reference16_q7.txt
+                Pattern REF17_Q7_ID : Reference17_q7.txt
+                Pattern REF18_Q7_ID : Reference18_q7.txt
+                Pattern REF19_Q7_ID : Reference19_q7.txt
+                Pattern REF20_Q7_ID : Reference20_q7.txt
+                Pattern REF21_Q7_ID : Reference21_q7.txt
+                Pattern REF22_Q7_ID : Reference22_q7.txt
+                Pattern REF23_Q7_ID : Reference23_q7.txt
+                Pattern REF24_Q7_ID : Reference24_q7.txt
+                Pattern REF25_Q7_ID : Reference25_q7.txt
+                Pattern REF26_Q7_ID : Reference26_q7.txt
+                Pattern REF27_Q7_ID : Reference27_q7.txt
+                Pattern REF28_Q7_ID : Reference28_q7.txt
+                Pattern REF29_Q7_ID : Reference29_q7.txt
+                Pattern REF30_Q7_ID : Reference30_q7.txt
+                Pattern REF31_Q7_ID : Reference31_q7.txt
+                Pattern REF32_Q7_ID : Reference32_q7.txt
+                Pattern REF33_Q7_ID : Reference33_q7.txt
+                Pattern REF34_Q7_ID : Reference34_q7.txt
+                Pattern REF35_Q7_ID : Reference35_q7.txt
+                Pattern REF36_Q7_ID : Reference36_q7.txt
+                Pattern REF37_Q7_ID : Reference37_q7.txt
+                Pattern REF38_Q7_ID : Reference38_q7.txt
+                Pattern REF39_Q7_ID : Reference39_q7.txt
+                Pattern REF40_Q7_ID : Reference40_q7.txt
+                Pattern REF41_Q7_ID : Reference41_q7.txt
+                Pattern REF42_Q7_ID : Reference42_q7.txt
+                Pattern REF43_Q7_ID : Reference43_q7.txt
+                Pattern REF44_Q7_ID : Reference44_q7.txt
+                Pattern REF45_Q7_ID : Reference45_q7.txt
+                Pattern REF46_Q7_ID : Reference46_q7.txt
+                Pattern REF47_Q7_ID : Reference47_q7.txt
+                Pattern REF48_Q7_ID : Reference48_q7.txt
+                Pattern REF49_Q7_ID : Reference49_q7.txt
+                Pattern REF50_Q7_ID : Reference50_q7.txt
+
+
+                Output  OUT_Q7_ID : Output
+
+                Functions {
+                  arm_correlate_q7 nba=30 nbb=31:test_correlate_q7
+                  arm_correlate_q7 nba=30 nbb=32:test_correlate_q7
+                  arm_correlate_q7 nba=30 nbb=33:test_correlate_q7
+                  arm_correlate_q7 nba=30 nbb=34:test_correlate_q7
+                  arm_correlate_q7 nba=30 nbb=49:test_correlate_q7
+                  arm_correlate_q7 nba=31 nbb=31:test_correlate_q7
+                  arm_correlate_q7 nba=31 nbb=32:test_correlate_q7
+                  arm_correlate_q7 nba=31 nbb=33:test_correlate_q7
+                  arm_correlate_q7 nba=31 nbb=34:test_correlate_q7
+                  arm_correlate_q7 nba=31 nbb=49:test_correlate_q7
+                  arm_correlate_q7 nba=32 nbb=31:test_correlate_q7
+                  arm_correlate_q7 nba=32 nbb=32:test_correlate_q7
+                  arm_correlate_q7 nba=32 nbb=33:test_correlate_q7
+                  arm_correlate_q7 nba=32 nbb=34:test_correlate_q7
+                  arm_correlate_q7 nba=32 nbb=49:test_correlate_q7
+                  arm_correlate_q7 nba=33 nbb=31:test_correlate_q7
+                  arm_correlate_q7 nba=33 nbb=32:test_correlate_q7
+                  arm_correlate_q7 nba=33 nbb=33:test_correlate_q7
+                  arm_correlate_q7 nba=33 nbb=34:test_correlate_q7
+                  arm_correlate_q7 nba=33 nbb=49:test_correlate_q7
+                  arm_correlate_q7 nba=48 nbb=31:test_correlate_q7
+                  arm_correlate_q7 nba=48 nbb=32:test_correlate_q7
+                  arm_correlate_q7 nba=48 nbb=33:test_correlate_q7
+                  arm_correlate_q7 nba=48 nbb=34:test_correlate_q7
+                  arm_correlate_q7 nba=48 nbb=49:test_correlate_q7
+                  arm_conv_q7 nba=30 nbb=31:test_conv_q7
+                  arm_conv_q7 nba=30 nbb=32:test_conv_q7
+                  arm_conv_q7 nba=30 nbb=33:test_conv_q7
+                  arm_conv_q7 nba=30 nbb=34:test_conv_q7
+                  arm_conv_q7 nba=30 nbb=49:test_conv_q7
+                  arm_conv_q7 nba=31 nbb=31:test_conv_q7
+                  arm_conv_q7 nba=31 nbb=32:test_conv_q7
+                  arm_conv_q7 nba=31 nbb=33:test_conv_q7
+                  arm_conv_q7 nba=31 nbb=34:test_conv_q7
+                  arm_conv_q7 nba=31 nbb=49:test_conv_q7
+                  arm_conv_q7 nba=32 nbb=31:test_conv_q7
+                  arm_conv_q7 nba=32 nbb=32:test_conv_q7
+                  arm_conv_q7 nba=32 nbb=33:test_conv_q7
+                  arm_conv_q7 nba=32 nbb=34:test_conv_q7
+                  arm_conv_q7 nba=32 nbb=49:test_conv_q7
+                  arm_conv_q7 nba=33 nbb=31:test_conv_q7
+                  arm_conv_q7 nba=33 nbb=32:test_conv_q7
+                  arm_conv_q7 nba=33 nbb=33:test_conv_q7
+                  arm_conv_q7 nba=33 nbb=34:test_conv_q7
+                  arm_conv_q7 nba=33 nbb=49:test_conv_q7
+                  arm_conv_q7 nba=48 nbb=31:test_conv_q7
+                  arm_conv_q7 nba=48 nbb=32:test_conv_q7
+                  arm_conv_q7 nba=48 nbb=33:test_conv_q7
+                  arm_conv_q7 nba=48 nbb=34:test_conv_q7
+                  arm_conv_q7 nba=48 nbb=49:test_conv_q7
+                }
+
+             }
+          }
+        }
+
         group Matrix Tests {
            class = MatrixTests
            folder = Matrix
