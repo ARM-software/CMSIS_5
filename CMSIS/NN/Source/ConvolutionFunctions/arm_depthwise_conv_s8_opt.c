@@ -42,7 +42,7 @@
  * @{
  */
 
-  /*
+/*
    * Optimized s8 depthwise convolution function with constraint that in_channel equals out_channel
    *
    *  Refer prototype header file for details.
@@ -75,20 +75,114 @@ arm_status arm_depthwise_conv_s8_opt(const q7_t *input,
                                      q15_t *buffer_a)
 {
 
-
     /* Check input constraints input_ch == output_ch */
     if (input_ch != output_ch)
     {
         return ARM_MATH_SIZE_MISMATCH;
     }
-
-#if defined(ARM_MATH_LOOPUNROLL) && defined(ARM_MATH_DSP)
-    /* Run the following code in cores using DSP extension */
+#ifdef ARM_MATH_MVEI
     (void)dilation_x;
     (void)dilation_y;
 
-    int16_t i_out_y, i_out_x;
-    int16_t i_ker_y, i_ker_x;
+    /* Generate two columns from the input tensor */
+    q15_t *two_column_buf = buffer_a;
+    q7_t *out = output;
+
+    /* This part implements the im2col function */
+    for (int i_out_y = 0; i_out_y < output_y; i_out_y++)
+    {
+        const int32_t base_idx_y = i_out_y * stride_y - pad_y;
+        for (int i_out_x = 0; i_out_x < output_x; i_out_x++)
+        {
+            const int32_t base_idx_x = (i_out_x * stride_x) - pad_x;
+            for (int i_ker_y = base_idx_y; i_ker_y < base_idx_y + kernel_y; i_ker_y++)
+            {
+                for (int i_ker_x = base_idx_x; i_ker_x < base_idx_x + kernel_x; i_ker_x++)
+                {
+                    if (i_ker_y < 0 || i_ker_y >= input_y || i_ker_x < 0 || i_ker_x >= input_x)
+                    {
+                        /* Filling 0 for out-of-bound paddings */
+                        memset(two_column_buf, 0, sizeof(q15_t) * input_ch);
+                    }
+                    else
+                    {
+                        /* Copying the pixel data to column */
+                        arm_q7_to_q15_with_offset(input + (i_ker_y * input_x + i_ker_x) * input_ch, two_column_buf, input_ch, input_offset);
+                    }
+                    two_column_buf += input_ch;
+                }
+            }
+
+            /* Computation is filed for every 2 columns */
+            if (two_column_buf == buffer_a + 2 * input_ch * kernel_y * kernel_x)
+            {
+                two_column_buf = buffer_a;
+                out = arm_nn_depthwise_conv_s8_core(kernel,
+                                                    buffer_a,
+                                                    output_ch,
+                                                    output_shift,
+                                                    output_mult,
+                                                    output_offset,
+                                                    output_activation_min,
+                                                    output_activation_max,
+                                                    kernel_x * kernel_y,
+                                                    bias,
+                                                    out);
+            }
+        }
+    }
+
+    /* left-over pixels */
+    if (two_column_buf != buffer_a)
+    {
+        int32_t ch_count = (output_ch + 3) / 4;
+        const int32_t *out_bias = bias;
+
+        int32_t idx = 0;
+        int32_t out_ch = output_ch;
+        while (ch_count > 0)
+        {
+            int32_t ker_count = kernel_x * kernel_y;
+
+            const int32_t offset = idx * 4;
+            const int8_t *row = kernel + offset;
+            int16_t *col = buffer_a + offset;
+            mve_pred16_t p = vctp32q(out_ch);
+
+            int32x4_t res = vldrwq_z_s32(out_bias, p);
+            out_bias += 4;
+
+            while (ker_count > 0)
+            {
+                const int32x4_t ip = vldrhq_z_s32(col, p);
+                const int32x4_t ker = vldrbq_z_s32(row, p);
+                col += output_ch;
+                row += output_ch;
+                res += vmlasq_n_s32(ip, ker, 0);
+                ker_count--;
+            }
+
+            int32x4_t mult = vldrwq_z_s32(output_mult, p);
+            int32x4_t shift = vldrwq_z_s32(output_shift, p);
+            output_mult += 4;
+            output_shift += 4;
+            res = arm_mve_requantize_32x4(res, mult, shift);
+
+            res = vaddq_n_s32(res, output_offset);
+            res = vmaxq_s32(res, vdupq_n_s32(output_activation_min));
+            res = vminq_s32(res, vdupq_n_s32(output_activation_max));
+            vstrbq_p_s32(out, res, p);
+            out += 4;
+            idx++;
+            out_ch -= 4;
+            ch_count--;
+        }
+    }
+
+#elif defined(ARM_MATH_LOOPUNROLL) && defined(ARM_MATH_DSP)
+    /* Run the following code in cores using DSP extension */
+    (void)dilation_x;
+    (void)dilation_y;
     q15_t *const col_buffer_start = buffer_a;
     q15_t *col_buffer = col_buffer_start;
     const int32_t *const bias_start_pos = bias;
@@ -97,11 +191,10 @@ arm_status arm_depthwise_conv_s8_opt(const q7_t *input,
     uint16_t row_count;
     uint16_t row_shift;
 
-
-    for (i_out_y = 0; i_out_y < output_y; i_out_y++)
+    for (int i_out_y = 0; i_out_y < output_y; i_out_y++)
     {
         const int16_t base_idx_y = (i_out_y * stride_y) - pad_y;
-        for (i_out_x = 0; i_out_x < output_x; i_out_x++)
+        for (int i_out_x = 0; i_out_x < output_x; i_out_x++)
         {
             const int16_t base_idx_x = (i_out_x * stride_x) - pad_x;
 
@@ -118,11 +211,11 @@ arm_status arm_depthwise_conv_s8_opt(const q7_t *input,
                 index += (kernel_x * input_ch) * ker_y_start;
             }
 
-            for (i_ker_y = ker_y_start; i_ker_y < ker_y_end; i_ker_y++)
+            for (int i_ker_y = ker_y_start; i_ker_y < ker_y_end; i_ker_y++)
             {
                 const int32_t idx_y = base_idx_y + i_ker_y;
 
-                for (i_ker_x = 0; i_ker_x < kernel_x; i_ker_x++)
+                for (int i_ker_x = 0; i_ker_x < kernel_x; i_ker_x++)
                 {
                     const int32_t idx_x = base_idx_x + i_ker_x;
                     if (idx_x < 0 || idx_x >= input_x)
@@ -151,7 +244,7 @@ arm_status arm_depthwise_conv_s8_opt(const q7_t *input,
 
             while (row_count)
             {
-                q31_t sum =   *bias++;
+                q31_t sum = *bias++;
                 q31_t sum_2 = *bias++;
                 q31_t sum_3 = *bias++;
                 q31_t sum_4 = *bias++;
@@ -306,7 +399,7 @@ arm_status arm_depthwise_conv_s8_opt(const q7_t *input,
                                  dilation_x,
                                  dilation_y,
                                  NULL);
-#endif /* ARM_MATH_DSP & ARM_MATH_LOOPUNROLL*/
+#endif /* ARM_MATH_MVEI | (ARM_MATH_DSP & ARM_MATH_LOOPUNROLL) */
 
     /* Return to application */
     return ARM_MATH_SUCCESS;
@@ -316,8 +409,10 @@ int32_t arm_depthwise_conv_s8_opt_get_buffer_size(const uint16_t input_ch,
                                                   const uint16_t kernel_x,
                                                   const uint16_t kernel_y)
 {
-#if defined(ARM_MATH_LOOPUNROLL) && defined (ARM_MATH_DSP)
+#if defined(ARM_MATH_MVEI)
     return (2 * input_ch * kernel_x * kernel_y) * sizeof(int16_t);
+#elif defined(ARM_MATH_LOOPUNROLL) && defined (ARM_MATH_DSP)
+    return (input_ch * kernel_x * kernel_y) * sizeof(int16_t);
 #else
     (void)input_ch;
     (void)kernel_x;
@@ -329,4 +424,3 @@ int32_t arm_depthwise_conv_s8_opt_get_buffer_size(const uint16_t input_ch,
 /**
  * @} end of NNConv group
  */
-

@@ -168,6 +168,37 @@ void arm_q7_to_q15_reordered_with_offset(const q7_t *src, q15_t *dst, uint32_t b
 void arm_nn_accumulate_q7_to_q15(q15_t *dst, const q7_t *src, uint32_t block_size);
 
 /**
+ * @brief Depthwise conv on an im2col buffer where the input channel equals output channel.
+ * @param[in]    row     pointer to row
+ * @param[in]    col     pointer to im2col buffer, always consists of 2 columns.
+ * @param[in]    num_ch   number of channels
+ * @param[in]    out_shift  pointer to per output channel requantization shift parameter.
+ * @param[in]    out_mult   pointer to per output channel requantization multiplier parameter.
+ * @param[in]    out_offset      output tensor offset.
+ * @param[in]    activation_min   minimum value to clamp the output to. Range : int8
+ * @param[in]    activation_max   maximum value to clamp the output to. Range : int8
+ * @param[in]    kernel_size   number of elements in one column.
+ * @param[in]    output_bias per output channel bias. Range : int32
+ * @param[out]   out_0       pointer to output
+ * @return     The function returns one of the two
+ *              1. The incremented output pointer for a successful operation or
+ *              2. NULL if implementation is not available.
+ *
+ * @details     Supported framework: TensorFlow Lite micro.
+ */
+q7_t *arm_nn_depthwise_conv_s8_core(const q7_t *row,
+                                    const q15_t *col,
+                                    const uint16_t num_ch,
+                                    const int32_t *out_shift,
+                                    const int32_t *out_mult,
+                                    const int32_t out_offset,
+                                    const int32_t activation_min,
+                                    const int32_t activation_max,
+                                    const uint16_t kernel_size,
+                                    const int32_t *const output_bias,
+                                    q7_t *out);
+
+/**
   @brief         Read 2 q15 elements and post increment pointer.
   @param[in]     in_q15   Pointer to pointer that holds address of input.
   @return        q31 value
