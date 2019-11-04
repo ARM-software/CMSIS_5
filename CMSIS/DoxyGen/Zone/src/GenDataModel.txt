@@ -257,6 +257,11 @@ The \ref fm_memory provides a sequence of memory information.
     <td>NonNegativeInteger</td>
   </tr>
   <tr>
+    <td>.memory[<i>n</i>].physical</td>
+    <td>The physical start address of the memory region in the address map.</td>
+    <td>NonNegativeInteger</td>
+  </tr>
+  <tr>
     <td>.memory[<i>n</i>].size</td>
     <td>The size (in bytes) of the memory region.</td>
     <td>NonNegativeInteger</td>
