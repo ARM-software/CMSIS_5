@@ -2586,9 +2586,18 @@ Default debugger configuration for a target connection.
     <td>optional</td>
   </tr>
   <tr>
+    <td>dormant</td>
+    <td>
+      The device is accessed via a CoreSight DP that requires the dormant state to switch debug protocols.
+      Default value is \token{false}.
+    </td>
+    <td>xs:bool</td>
+    <td>optional</td>
+  </tr>
+  <tr>
     <td>sdf</td>
     <td>
-      This attribute specifies the filename and path of the system description file (SFD).
+      This attribute specifies the filename and path of the system description file (SDF).
       The system description file contains information about CoreSight components, there versions and how they
       are interconnected and hooked to debug and access ports. If not specified an autodetection needs to
       be initiated by the debugger at connection time.

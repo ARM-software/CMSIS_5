@@ -278,27 +278,59 @@ Prepare the target debug port for connection.
 \code  
   <sequence name="DebugPortSetup">
     <block>
-      __var isSWJ    = ((__protocol &amp; 0x00010000) != 0);
-      __var protType = __protocol &amp; 0x0000FFFF;
+      __var isSWJ      = ((__protocol &amp; 0x00010000) != 0);
+      __var hasDormant = __protocol &amp; 0x00020000;
+      __var protType   = __protocol &amp; 0x0000FFFF;
     </block>
-  
+    
     <!-- JTAG Protocol -->
     <control if="protType == 1">
     
       <control if="isSWJ">
-      
-        <block atomic="1">
-          // Ensure current debug interface is in reset state
-          DAP_SWJ_Sequence(51, 0x0007FFFFFFFFFFFF);
+    
+        <control if="hasDormant">
+    
+          <block atomic="1">
+            // Ensure current debug interface is in reset state
+            DAP_SWJ_Sequence(51, 0x0007FFFFFFFFFFFF);
+            
+            // Select Dormant State (from SWD)
+            DAP_SWJ_Sequence(16, 0xE3BC);
+            
+            // At least 8 cycles SWDIO/TMS HIGH
+            DAP_SWJ_Sequence(8, 0xFF);
+            
+            // Alert Sequence Bits  0.. 63
+            DAP_SWJ_Sequence(64, 0x86852D956209F392);
           
-          // Execute SWJ-DP Switch Sequence SWD to JTAG (0xE73C)
-          // Change if SWJ-DP uses deprecated switch code (0xAEAE)
-          DAP_SWJ_Sequence(16, 0xE73C);
-          
-          // Ensure JTAG interface is reset
-          DAP_SWJ_Sequence(6, 0x3F);
-        </block>
-        
+            // Alert Sequence Bits 64..127
+            DAP_SWJ_Sequence(64, 0x19BC0EA2E3DDAFE9);
+    
+            // 4 cycles SWDIO/TMS LOW + 8-Bit JTAG Activation Code (0x0A)            
+            DAP_SWJ_Sequence(12, 0x0A0);
+           
+            // Ensure JTAG interface is reset
+            DAP_SWJ_Sequence(6, 0x3F);
+          </block>
+    
+        </control>
+    
+        <control if="!hasDormant">
+    
+          <block atomic="1">
+            // Ensure current debug interface is in reset state
+            DAP_SWJ_Sequence(51, 0x0007FFFFFFFFFFFF);
+            
+            // Execute SWJ-DP Switch Sequence SWD to JTAG (0xE73C)
+            // Change if SWJ-DP uses deprecated switch code (0xAEAE)
+            DAP_SWJ_Sequence(16, 0xE73C);
+            
+            // Ensure JTAG interface is reset
+            DAP_SWJ_Sequence(6, 0x3F);
+          </block>
+    
+        </control>
+    
       </control>
     
       <block atomic="1">
@@ -306,7 +338,7 @@ Prepare the target debug port for connection.
         DAP_JTAG_Sequence(6, 1, 0x3F);
         DAP_JTAG_Sequence(1, 0, 0x01);
       </block>
-
+    
     </control>
     
     <!-- SWD Protocol -->
@@ -314,28 +346,89 @@ Prepare the target debug port for connection.
     
       <control if="isSWJ">
         
-        <block atomic="1">
-          // Ensure current debug interface is in reset state
-          DAP_SWJ_Sequence(51, 0x0007FFFFFFFFFFFF);
+        <control if="hasDormant">
+    
+          <block atomic="1">
+            // Ensure current debug interface is in reset state
+            DAP_SWJ_Sequence(51, 0x0007FFFFFFFFFFFF);
+            
+            // Select Dormant State (from JTAG)
+            DAP_SWJ_Sequence(31, 0x33BBBBBA);
+            
+            // At least 8 cycles SWDIO/TMS HIGH
+            DAP_SWJ_Sequence(8, 0xFF);
+            
+            // Alert Sequence Bits  0.. 63
+            DAP_SWJ_Sequence(64, 0x86852D956209F392);
           
-          // Execute SWJ-DP Switch Sequence JTAG to SWD (0xE79E)
-          // Change if SWJ-DP uses deprecated switch code (0xEDB6)
-          DAP_SWJ_Sequence(16, 0xE79E);
-          
-          // Enter SWD Line Reset State
-          DAP_SWJ_Sequence(51, 0x0007FFFFFFFFFFFF);  // &gt; 50 cycles SWDIO/TMS High
-          DAP_SWJ_Sequence(3,  0x00);                // At least 2 idle cycles (SWDIO/TMS Low)
-        </block>
+            // Alert Sequence Bits 64..127
+            DAP_SWJ_Sequence(64, 0x19BC0EA2E3DDAFE9);
+    
+            // 4 cycles SWDIO/TMS LOW + 8-Bit SWD Activation Code (0x1A)            
+            DAP_SWJ_Sequence(12, 0x1A0);
+           
+            // Enter SWD Line Reset State
+            DAP_SWJ_Sequence(51, 0x0007FFFFFFFFFFFF);  // &gt; 50 cycles SWDIO/TMS High
+            DAP_SWJ_Sequence(3,  0x00);                // At least 2 idle cycles (SWDIO/TMS Low)
+          </block>
+    
+        </control>
+    
+        <control if="!hasDormant">
+    
+          <block atomic="1">
+            // Ensure current debug interface is in reset state
+            DAP_SWJ_Sequence(51, 0x0007FFFFFFFFFFFF);
+            
+            // Execute SWJ-DP Switch Sequence JTAG to SWD (0xE79E)
+            // Change if SWJ-DP uses deprecated switch code (0xEDB6)
+            DAP_SWJ_Sequence(16, 0xE79E);
+            
+            // Enter SWD Line Reset State
+            DAP_SWJ_Sequence(51, 0x0007FFFFFFFFFFFF);  // &gt; 50 cycles SWDIO/TMS High
+            DAP_SWJ_Sequence(3,  0x00);                // At least 2 idle cycles (SWDIO/TMS Low)
+          </block>
       
+        </control>
+    
       </control>
     
       <control if="!isSWJ">
       
-        <block atomic="1">
-          // Enter SWD Line Reset State
-          DAP_SWJ_Sequence(51, 0x0007FFFFFFFFFFFF);  // &gt; 50 cycles SWDIO/TMS High
-          DAP_SWJ_Sequence(3,  0x00);                // At least 2 idle cycles (SWDIO/TMS Low)
-        </block>
+        <control if="hasDormant">
+    
+          <block atomic="1">
+            // Ensure current debug interface is in reset state
+            DAP_SWJ_Sequence(51, 0x0007FFFFFFFFFFFF);
+            
+            // At least 8 cycles SWDIO/TMS HIGH
+            DAP_SWJ_Sequence(8, 0xFF);
+            
+            // Alert Sequence Bits  0.. 63
+            DAP_SWJ_Sequence(64, 0x86852D956209F392);
+          
+            // Alert Sequence Bits 64..127
+            DAP_SWJ_Sequence(64, 0x19BC0EA2E3DDAFE9);
+    
+            // 4 cycles SWDIO/TMS LOW + 8-Bit SWD Activation Code (0x1A)            
+            DAP_SWJ_Sequence(12, 0x1A0);
+           
+            // Enter SWD Line Reset State
+            DAP_SWJ_Sequence(51, 0x0007FFFFFFFFFFFF);  // &gt; 50 cycles SWDIO/TMS High
+            DAP_SWJ_Sequence(3,  0x00);                // At least 2 idle cycles (SWDIO/TMS Low)
+          </block>
+    
+        </control>
+    
+        <control if="!hasDormant">
+    
+          <block atomic="1">
+            // Enter SWD Line Reset State
+            DAP_SWJ_Sequence(51, 0x0007FFFFFFFFFFFF);  // &gt; 50 cycles SWDIO/TMS High
+            DAP_SWJ_Sequence(3,  0x00);                // At least 2 idle cycles (SWDIO/TMS Low)
+          </block>
+    
+        </control>
         
       </control>
       
@@ -343,7 +436,7 @@ Prepare the target debug port for connection.
         // Read DPIDR to enable SWD interface (SW-DPv1 and SW-DPv2)
         ReadDP(0x0);
       </block>
-
+    
     </control>
     
   </sequence>
@@ -1691,7 +1784,8 @@ A debugger needs to support a set of pre-defined debug access variables. These a
         - \token{2}: Serial Wire Debug (SWD)<br>
         - \token{3}: CJTAG<br>
       - Bit 16: SWJ-DP
-      - Bit 17..63: Reserved
+      - Bit 17: Switch through dormant state
+      - Bit 18..63: Reserved
     </td>
   </tr>
   <tr>
