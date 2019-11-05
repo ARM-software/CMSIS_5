@@ -200,6 +200,7 @@
       <xs:enumeration value="Weltrend:148" />
       <xs:enumeration value="WIZnet:122" />
       <xs:enumeration value="Xinnova:135" />
+      <xs:enumeration value="XMC:158" />
       <xs:enumeration value="Zilog:89" />
       <!-- deprecated: do not use -->
       <xs:enumeration value="Freescale:78" />

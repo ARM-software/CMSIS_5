@@ -2134,6 +2134,11 @@ Contact cmsis@arm.com to ask for an extension. These values can be used in the e
     <td>(n/a)</td>
   </tr>
   <tr>
+    <td class="XML-Token">XMC:158</td>
+    <td>Wuhan Xinxin Semiconductor Manufacturing Co., Ltd.</td>
+    <td>http://www.xmcwh.com/</td>
+  </tr>
+  <tr>
     <td class="XML-Token">Zilog:89</td>
     <td>Zilog</td>
     <td>http://zilog.com/</td>
