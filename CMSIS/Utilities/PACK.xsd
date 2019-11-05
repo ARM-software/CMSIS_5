@@ -17,13 +17,18 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 
-  $Date:        24. October 2019
-  $Revision:    1.6.1
+  $Date:        05. November 2019
+  $Revision:    1.6.2
 
   $Project: Schema File for Package Description File Format Specification
 
   Package file name convention <vendor>.<name>.<version>.pack
-  SchemaVersion=1.6.1
+  SchemaVersion=1.6.2
+
+  05. November 2019: v1.6.2
+  - added <accessportV1> and <accessportV2> to describe CoreSight access port parameters.
+  - added attribute '__apid' to <debug> and <datapatch> to reference <accessportV1> and <accessportV2> elements.
+  - added attribute 'dormant' to <debugconfig> element.
 
   24. October 2019: 1.6.1
   - added value to DsecureEnum: 2 = TZ-disabled.
@@ -325,6 +330,7 @@
     <xs:attribute name="default" type="DebugProtocolEnum" use="optional" default="swd" />
     <xs:attribute name="clock" type="xs:unsignedInt" use="optional" />
     <xs:attribute name="swj" type="xs:boolean" use="optional" />
+    <xs:attribute name="dormant" type="xs:boolean" use="optional" />
     <!-- Debugger System Description File -->
     <xs:attribute name="sdf" type="xs:string" use="optional" />
     <xs:anyAttribute processContents="lax" />
@@ -356,6 +362,23 @@
     <xs:anyAttribute processContents="lax" />
   </xs:complexType>
 
+  <!-- AccessPortV1Type -->
+  <xs:complexType name="AccessPortV1Type">
+    <xs:attribute name="__apid" type="xs:unsignedInt" use="required" />
+    <xs:attribute name="__dp" type="xs:unsignedInt" use="optional" />
+    <xs:attribute name="index" type="xs:unsignedInt" use="required" />
+    <xs:anyAttribute processContents="lax" />
+  </xs:complexType>
+  
+  <!-- AccessPortV2Type -->
+  <xs:complexType name="AccessPortV2Type">
+    <xs:attribute name="__apid" type="xs:unsignedInt" use="required" />
+    <xs:attribute name="__dp" type="xs:unsignedInt" use="optional" />
+    <xs:attribute name="address" type="xs:unsignedInt" use="required" />
+    <xs:attribute name="parent" type="xs:unsignedInt" use="optional" />
+    <xs:anyAttribute processContents="lax" />
+  </xs:complexType>
+
   <!-- DataPatchAccessTypeEnum enumeration type -->
   <xs:simpleType name="DataPatchAccessTypeEnum">
     <xs:restriction base="xs:token">
@@ -379,6 +402,7 @@
     <xs:attribute name="value" type="NonNegativeInteger" use="required" />
     <xs:attribute name="mask" type="NonNegativeInteger" use="optional" />
     <xs:attribute name="info" type="xs:string" use="optional" />
+    <xs:attribute name="__apid" type="xs:unsignedInt" use="optional" />
     <xs:anyAttribute processContents="lax" />
   </xs:complexType>
 
@@ -446,6 +470,7 @@
     <xs:attribute name="Pname" type="RestrictedString" use="optional" />
     <xs:attribute name="Punit" type="xs:unsignedInt" use="optional" />
     <xs:attribute name="defaultResetSequence" type="xs:string" use="optional" />
+    <xs:attribute name="__apid" type="xs:unsignedInt" use="optional" />
     <xs:anyAttribute processContents="lax" />
   </xs:complexType>
 
@@ -641,6 +666,8 @@
       <xs:element name="feature" type="DeviceFeatureType" />
       <xs:element name="environment" type="EnvironmentType" />
       <xs:element name="debugport" type="DebugPortType" />
+      <xs:element name="accessportV1" type="AccessPortV1Type" />
+      <xs:element name="accessportV2" type="AccessPortV2Type" />
       <xs:element name="debug" type="DebugType" />
       <xs:element name="trace" type="TraceType" />
       <xs:element name="debugvars" type="DebugVarsType" />
