@@ -31,7 +31,7 @@
 
 
 #define STACK_SIZE     0x00003000
-#define HEAP_SIZE      0x00100000
+#define HEAP_SIZE      0x00040000
 
 
 

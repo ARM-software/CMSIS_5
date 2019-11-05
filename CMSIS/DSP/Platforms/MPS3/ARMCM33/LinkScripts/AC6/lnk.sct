@@ -5,6 +5,8 @@
 ;-------- <<< Use Configuration Wizard in Context Menu >>> -------------------
 */
 
+#include "mem_ARMCM33.h"
+
 /*--------------------- Flash Configuration ----------------------------------
 ; <h> Flash Configuration
 ;   <o0> RAM1 Base Address <0x0-0xFFFFFFFF:8>
@@ -30,8 +32,8 @@
 ;   <o1> Heap Size (in Bytes) <0x0-0xFFFFFFFF:8>
 ; </h>
  *----------------------------------------------------------------------------*/
-#define __STACK_SIZE    0x00001000
-#define __HEAP_SIZE     0x00040000
+#define __STACK_SIZE    STACK_SIZE
+#define __HEAP_SIZE     HEAP_SIZE
 #define RW_RAM2_SIZE	(__RAM2_SIZE - __STACK_SIZE)
 
 LR_ROM1 __RAM1_BASE __RAM1_SIZE  {                             ; load region size_region
