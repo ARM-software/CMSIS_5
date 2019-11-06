@@ -96,3 +96,6 @@ void arm_softmax_u8(const uint8_t *input,
         output += row_size;
     }
 }
+/**
+ * @} end of Softmax group
+ */

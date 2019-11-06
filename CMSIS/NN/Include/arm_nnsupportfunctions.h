@@ -380,8 +380,14 @@ void arm_nn_mult_q7(
 
 // Macros for shortening quantization functions' names and avoid long lines
 #define MUL_SAT(a, b)  arm_nn_sat_doubling_high_mult((a), (b))
+#define MUL_SAT_MVE(a, b) arm_sat_doubling_high_mult_mve_32x4((a), (b))
 #define MUL_POW2(a, b) arm_nn_mult_by_power_of_two((a), (b))
+
+
 #define DIV_POW2(a, b) arm_nn_divide_by_power_of_two((a), (b))
+#define DIV_POW2_MVE(a, b) arm_divide_by_power_of_two_mve((a), (b))
+
+
 #define EXP_ON_NEG(x)  arm_nn_exp_on_negative_values((x))
 #define ONE_OVER1(x)   arm_nn_one_over_one_plus_x_for_x_in_0_1((x))
 
@@ -410,7 +416,7 @@ __STATIC_FORCEINLINE q31_t arm_nn_sat_doubling_high_mult(const q31_t m1, const q
     // as well.
     result = mult / (1UL << 31);
 
-    if ((m1 == m2) && (m1 == Q31_MIN))
+    if ((m1 == m2) && (m1 == (int32_t)Q31_MIN))
     {
         result = Q31_MAX;
     }
@@ -471,7 +477,7 @@ __STATIC_FORCEINLINE q31_t arm_nn_requantize(const q31_t val, const q31_t multip
  * @return          Result of multiplication.
  *
  */
-__STATIC_FORCEINLINE int32x4_t arm_mve_sat_doubling_high_mult(const int32x4_t m1, const q31_t m2)
+__STATIC_FORCEINLINE int32x4_t arm_sat_doubling_high_mult_mve(const int32x4_t m1, const q31_t m2)
 {
     return vqrdmulhq_n_s32(m1, m2);
 }
@@ -484,7 +490,7 @@ __STATIC_FORCEINLINE int32x4_t arm_mve_sat_doubling_high_mult(const int32x4_t m1
  * @return          Rounded result of division. Midpoint is rounded away from zero.
  *
  */
-__STATIC_FORCEINLINE int32x4_t arm_mve_divide_by_power_of_two(const int32x4_t dividend, const q31_t exponent)
+__STATIC_FORCEINLINE int32x4_t arm_divide_by_power_of_two_mve(const int32x4_t dividend, const q31_t exponent)
 {
   const int32x4_t shift = vdupq_n_s32(-exponent);
   const int32x4_t fixup = vshrq_n_s32(vandq_s32(dividend, shift), 31);
@@ -501,19 +507,19 @@ __STATIC_FORCEINLINE int32x4_t arm_mve_divide_by_power_of_two(const int32x4_t di
  * @return          Returns (val * multiplier)/(2 ^ shift)
  *
  */
-__STATIC_FORCEINLINE int32x4_t arm_mve_requantize(const int32x4_t val, const q31_t multiplier, const q31_t shift)
+__STATIC_FORCEINLINE int32x4_t arm_requantize_mve(const int32x4_t val, const q31_t multiplier, const q31_t shift)
 {
-  return arm_mve_divide_by_power_of_two(
-          arm_mve_sat_doubling_high_mult(vshlq_s32(val, vdupq_n_s32(LEFT_SHIFT(shift))), multiplier),
+  return arm_divide_by_power_of_two_mve(
+          arm_sat_doubling_high_mult_mve(vshlq_s32(val, vdupq_n_s32(LEFT_SHIFT(shift))), multiplier),
           RIGHT_SHIFT(shift));
 }
 
-__STATIC_FORCEINLINE int32x4_t arm_mve_sat_doubling_high_mult_32x4(const int32x4_t m1, const int32x4_t m2)
+__STATIC_FORCEINLINE int32x4_t arm_sat_doubling_high_mult_mve_32x4(const int32x4_t m1, const int32x4_t m2)
 {
   return vqrdmulhq_s32(m1, m2);
 }
 
-__STATIC_FORCEINLINE int32x4_t arm_mve_divide_by_power_of_two_32x4(const int32x4_t dividend, const int32x4_t exponent)
+__STATIC_FORCEINLINE int32x4_t arm_divide_by_power_of_two_mve_32x4(const int32x4_t dividend, const int32x4_t exponent)
 {
   const int32x4_t shift = -exponent;
   const int32x4_t fixup = vshrq_n_s32(vandq_s32(dividend, shift), 31);
@@ -521,7 +527,7 @@ __STATIC_FORCEINLINE int32x4_t arm_mve_divide_by_power_of_two_32x4(const int32x4
   return vrshlq_s32(fixed_up_dividend, shift);
 }
 
-__STATIC_FORCEINLINE int32x4_t arm_mve_requantize_32x4(const int32x4_t val, const int32x4_t multiplier, const int32x4_t shift)
+__STATIC_FORCEINLINE int32x4_t arm_requantize_mve_32x4(const int32x4_t val, const int32x4_t multiplier, const int32x4_t shift)
 {
   const int32x4_t zz = vdupq_n_s32(0);
   const mve_pred16_t p = vcmpgtq_n_s32(shift, 0);
@@ -529,7 +535,7 @@ __STATIC_FORCEINLINE int32x4_t arm_mve_requantize_32x4(const int32x4_t val, cons
   const int32x4_t left_shift = vpselq_s32(shift, zz, p);
   const int32x4_t right_shift = -vpselq_s32(zz, shift, p);
 
-  return arm_mve_divide_by_power_of_two_32x4(arm_mve_sat_doubling_high_mult_32x4(vshlq_s32(val, left_shift), multiplier), right_shift);
+  return arm_divide_by_power_of_two_mve_32x4(arm_sat_doubling_high_mult_mve_32x4(vshlq_s32(val, left_shift), multiplier), right_shift);
 }
 #endif
 

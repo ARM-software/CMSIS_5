@@ -147,8 +147,8 @@ q7_t *arm_nn_mat_mult_kernel_s8_s16(const q7_t *input_a,
         out_mult += ROW_PER_LOOP;
         out_shift += ROW_PER_LOOP;
 
-        out_vec_0 = arm_mve_requantize_32x4(out_vec_0, mult, shift);
-        out_vec_1 = arm_mve_requantize_32x4(out_vec_1, mult, shift);
+        out_vec_0 = arm_requantize_mve_32x4(out_vec_0, mult, shift);
+        out_vec_1 = arm_requantize_mve_32x4(out_vec_1, mult, shift);
 
         out_vec_0 = vaddq_n_s32(out_vec_0, out_offset);
         out_vec_0 = vmaxq_s32(out_vec_0, vdupq_n_s32(activation_min));
@@ -194,8 +194,8 @@ q7_t *arm_nn_mat_mult_kernel_s8_s16(const q7_t *input_a,
             mult_tail[i_ch] = out_mult[i_ch];
             shift_tail[i_ch] = out_shift[i_ch];
         }
-        out_vec_0 = arm_mve_requantize_32x4(out_vec_0, mult_tail, shift_tail);
-        out_vec_1 = arm_mve_requantize_32x4(out_vec_1, mult_tail, shift_tail);
+        out_vec_0 = arm_requantize_mve_32x4(out_vec_0, mult_tail, shift_tail);
+        out_vec_1 = arm_requantize_mve_32x4(out_vec_1, mult_tail, shift_tail);
 
         out_vec_0 = vaddq_n_s32(out_vec_0, out_offset);
         out_vec_0 = vmaxq_s32(out_vec_0, vdupq_n_s32(activation_min));
