@@ -160,7 +160,7 @@ arm_fully_connected_s8(const int8_t *input,
             acc[2] = acc3;
             acc[3] = acc4;
 
-            acc = arm_mve_requantize(acc, out_mult, out_shift);
+            acc = arm_requantize_mve(acc, out_mult, out_shift);
             acc = vaddq_s32(acc, vdupq_n_s32(output_offset));
             acc = vmaxq_s32(acc, vdupq_n_s32(output_activation_min));
             acc = vminq_s32(acc, vdupq_n_s32(output_activation_max));
