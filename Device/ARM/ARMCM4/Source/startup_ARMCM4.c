@@ -51,27 +51,31 @@ void __NO_RETURN Reset_Handler  (void);
 /*----------------------------------------------------------------------------
   Exception / Interrupt Handler
  *----------------------------------------------------------------------------*/
+ #define WEAK_ISR(__NAME, ...)                                                  \
+    __attribute__ ((weak))                                                      \
+    void __NAME(void) { __VA_ARGS__ }
+ 
 /* Exceptions */
-void NMI_Handler            (void) __attribute__ ((weak, alias("Default_Handler")));
-void HardFault_Handler      (void) __attribute__ ((weak));
-void MemManage_Handler      (void) __attribute__ ((weak, alias("Default_Handler")));
-void BusFault_Handler       (void) __attribute__ ((weak, alias("Default_Handler")));
-void UsageFault_Handler     (void) __attribute__ ((weak, alias("Default_Handler")));
-void SVC_Handler            (void) __attribute__ ((weak, alias("Default_Handler")));
-void DebugMon_Handler       (void) __attribute__ ((weak, alias("Default_Handler")));
-void PendSV_Handler         (void) __attribute__ ((weak, alias("Default_Handler")));
-void SysTick_Handler        (void) __attribute__ ((weak, alias("Default_Handler")));
+WEAK_ISR( NMI_Handler           )
+WEAK_ISR( HardFault_Handler      , while(1);)
+WEAK_ISR( MemManage_Handler      , while(1);)
+WEAK_ISR( BusFault_Handler       , while(1);)
+WEAK_ISR( UsageFault_Handler     , while(1);)
+WEAK_ISR( SVC_Handler           )
+WEAK_ISR( DebugMon_Handler       , while(1);)
+WEAK_ISR( PendSV_Handler        )
+WEAK_ISR( SysTick_Handler       )
 
-void Interrupt0_Handler     (void) __attribute__ ((weak, alias("Default_Handler")));
-void Interrupt1_Handler     (void) __attribute__ ((weak, alias("Default_Handler")));
-void Interrupt2_Handler     (void) __attribute__ ((weak, alias("Default_Handler")));
-void Interrupt3_Handler     (void) __attribute__ ((weak, alias("Default_Handler")));
-void Interrupt4_Handler     (void) __attribute__ ((weak, alias("Default_Handler")));
-void Interrupt5_Handler     (void) __attribute__ ((weak, alias("Default_Handler")));
-void Interrupt6_Handler     (void) __attribute__ ((weak, alias("Default_Handler")));
-void Interrupt7_Handler     (void) __attribute__ ((weak, alias("Default_Handler")));
-void Interrupt8_Handler     (void) __attribute__ ((weak, alias("Default_Handler")));
-void Interrupt9_Handler     (void) __attribute__ ((weak, alias("Default_Handler")));
+WEAK_ISR( Interrupt0_Handler    )
+WEAK_ISR( Interrupt1_Handler    )
+WEAK_ISR( Interrupt2_Handler    )
+WEAK_ISR( Interrupt3_Handler    )
+WEAK_ISR( Interrupt4_Handler    )
+WEAK_ISR( Interrupt5_Handler    )
+WEAK_ISR( Interrupt6_Handler    )
+WEAK_ISR( Interrupt7_Handler    )
+WEAK_ISR( Interrupt8_Handler    )
+WEAK_ISR( Interrupt9_Handler    )
 
 
 /*----------------------------------------------------------------------------
@@ -129,18 +133,3 @@ void Reset_Handler(void)
   __PROGRAM_START();                        /* Enter PreMain (C library entry point) */
 }
 
-/*----------------------------------------------------------------------------
-  Hard Fault Handler
- *----------------------------------------------------------------------------*/
-void HardFault_Handler(void)
-{
-  while(1);
-}
-
-/*----------------------------------------------------------------------------
-  Default Handler for Exceptions / Interrupts
- *----------------------------------------------------------------------------*/
-void Default_Handler(void)
-{
-  while(1);
-}
