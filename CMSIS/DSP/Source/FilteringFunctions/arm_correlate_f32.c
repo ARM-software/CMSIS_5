@@ -27,7 +27,6 @@
  */
 
 #include "arm_math.h"
-#include "arm_vec_filtering.h"
 
 /**
   @ingroup groupFilters
@@ -97,6 +96,7 @@
 #if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
 
 #include "arm_helium_utils.h"
+#include "arm_vec_filtering.h"
 
 
 void arm_correlate_f32(
