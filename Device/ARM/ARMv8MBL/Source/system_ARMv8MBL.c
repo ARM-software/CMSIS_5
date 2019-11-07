@@ -41,7 +41,7 @@
   Externals
  *----------------------------------------------------------------------------*/
 #if defined (__VTOR_PRESENT) && (__VTOR_PRESENT == 1U)
-  extern uint32_t __Vectors;
+extern const pFunc __VECTOR_TABLE[240];
 #endif
 
 /*----------------------------------------------------------------------------
@@ -65,7 +65,7 @@ void SystemInit (void)
 {
 
 #if defined (__VTOR_PRESENT) && (__VTOR_PRESENT == 1U)
-  SCB->VTOR = (uint32_t) &__Vectors;
+    SCB->VTOR = (uint32_t)(&__Vectors__VECTOR_TABLE);
 #endif
 
 #if defined (__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)

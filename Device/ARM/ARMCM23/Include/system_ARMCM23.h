@@ -30,6 +30,11 @@
 extern "C" {
 #endif
 
+/*----------------------------------------------------------------------------
+  Exception / Interrupt Handler Function Prototype
+ *----------------------------------------------------------------------------*/
+typedef void( *pFunc )( void );
+
 extern uint32_t SystemCoreClock;     /*!< System Clock Frequency (Core Clock) */
 
 
