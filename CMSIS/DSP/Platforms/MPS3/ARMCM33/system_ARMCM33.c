@@ -304,7 +304,7 @@ void SystemInit (void)
 __attribute__((constructor(255)))
 void platform_init(void)
 {
-    printf("\r\nYamin Cortex-M33 Generic Template...\r\n");
+    printf("\r\nMPS3 Cortex-M33 Generic Template...\r\n");
     printf("\r\n_[TEST START]____________________________________________________\r\n");
 }
 
