@@ -35,8 +35,11 @@ extern "C" {
  *----------------------------------------------------------------------------*/
 typedef void( *pFunc )( void );
 
+<<<<<<< HEAD
 extern const pFunc __VECTOR_TABLE[48];
 
+=======
+>>>>>>> 92e0a1ee38fa2276553bc5891d3fa0bf2b7821d4
 extern uint32_t SystemCoreClock;     /*!< System Clock Frequency (Core Clock) */
 
 

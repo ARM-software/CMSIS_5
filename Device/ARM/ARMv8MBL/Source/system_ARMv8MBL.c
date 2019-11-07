@@ -38,6 +38,16 @@
 
 
 /*----------------------------------------------------------------------------
+<<<<<<< HEAD
+=======
+  Externals
+ *----------------------------------------------------------------------------*/
+#if defined (__VTOR_PRESENT) && (__VTOR_PRESENT == 1U)
+extern const pFunc __VECTOR_TABLE[240];
+#endif
+
+/*----------------------------------------------------------------------------
+>>>>>>> 92e0a1ee38fa2276553bc5891d3fa0bf2b7821d4
   System Core Clock Variable
  *----------------------------------------------------------------------------*/
 uint32_t SystemCoreClock = SYSTEM_CLOCK;  /* System Core Clock Frequency */
@@ -58,7 +68,11 @@ void SystemInit (void)
 {
 
 #if defined (__VTOR_PRESENT) && (__VTOR_PRESENT == 1U)
+<<<<<<< HEAD
     SCB->VTOR = (uint32_t) &__VECTOR_TABLE;
+=======
+    SCB->VTOR = (uint32_t)(&__Vectors__VECTOR_TABLE);
+>>>>>>> 92e0a1ee38fa2276553bc5891d3fa0bf2b7821d4
 #endif
 
 #if defined (__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
