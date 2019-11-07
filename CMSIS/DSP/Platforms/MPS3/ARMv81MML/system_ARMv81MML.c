@@ -1,12 +1,12 @@
 /**************************************************************************//**
- * @file     system_ARMCM33.c
+ * @file     system_ARMv81MML.c
  * @brief    CMSIS Device System Source File for
- *           ARMCM33 Device
- * @version  V5.3.1
- * @date     09. July 2018
+ *           Armv8.1-M Mainline Device Series
+ * @version  V1.2.0
+ * @date     23. July 2019
  ******************************************************************************/
 /*
- * Copyright (c) 2009-2018 Arm Limited. All rights reserved.
+ * Copyright (c) 2009-2019 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -30,25 +30,17 @@
 #include <assert.h>
 #include <rt_sys.h>
 
-#if defined (ARMCM33)
-  #include "ARMCM33.h"
-#elif defined (ARMCM33_TZ)
-  #include "ARMCM33_TZ.h"
 
-  #if defined (__ARM_FEATURE_CMSE) &&  (__ARM_FEATURE_CMSE == 3U)
-    #include "partition_ARMCM33.h"
-  #endif
-#elif defined (ARMCM33_DSP_FP)
-  #include "ARMCM33_DSP_FP.h"
-#elif defined (ARMCM33_DSP_FP_TZ)
-  #include "ARMCM33_DSP_FP_TZ.h"
-
-  #if defined (__ARM_FEATURE_CMSE) &&  (__ARM_FEATURE_CMSE == 3U)
-    #include "partition_ARMCM33.h"
-  #endif
+#if defined (ARMv81MML_DSP_DP_MVE_FP)
+  #include "ARMv81MML_DSP_DP_MVE_FP.h"
 #else
   #error device not specified!
 #endif
+
+#if defined (__ARM_FEATURE_CMSE) &&  (__ARM_FEATURE_CMSE == 3U)
+  #include "partition_ARMv81MML.h"
+#endif
+
 
 
 #include "cmsis_compiler.h"
@@ -134,10 +126,15 @@
 /*----------------------------------------------------------------------------
   Define clocks
  *----------------------------------------------------------------------------*/
-//#define  XTAL            (50000000UL)     /* Oscillator frequency */
+#define  XTAL            ( 5000000UL)      /* Oscillator frequency */
 
-#define  SYSTEM_CLOCK    (32000000UL)
+#define  SYSTEM_CLOCK    (5U * XTAL)
 
+#define DEBUG_DEMCR  (*((unsigned int *)0xE000EDFC))
+#define DEBUG_TRCENA (1<<24) //Global debug enable bit
+
+#define CCR      (*((volatile unsigned int *)0xE000ED14))
+#define CCR_DL   (1 << 19)
 
 /*----------------------------------------------------------------------------
   Externals
@@ -149,7 +146,7 @@
 /*----------------------------------------------------------------------------
   System Core Clock Variable
  *----------------------------------------------------------------------------*/
-uint32_t SystemCoreClock = SYSTEM_CLOCK;  /* System Core Clock Frequency */
+uint32_t SystemCoreClock = SYSTEM_CLOCK;
 
 
 /*----------------------------------------------------------------------------
@@ -159,7 +156,6 @@ void SystemCoreClockUpdate (void)
 {
   SystemCoreClock = SYSTEM_CLOCK;
 }
-
 
 /*----------------------------------------------------------------------------
   UART functions
@@ -279,10 +275,11 @@ void SystemInit (void)
 {
 
 #if defined (__VTOR_PRESENT) && (__VTOR_PRESENT == 1U)
-  SCB->VTOR = (uint32_t) &__VECTOR_TABLE;
+  SCB->VTOR = (uint32_t)(&__VECTOR_TABLE);
 #endif
 
-#if defined (__FPU_USED) && (__FPU_USED == 1U)
+#if (defined (__FPU_USED) && (__FPU_USED == 1U)) || \
+    (defined (__MVE_USED) && (__MVE_USED == 1U))
   SCB->CPACR |= ((3U << 10U*2U) |           /* enable CP10 Full Access */
                  (3U << 11U*2U)  );         /* enable CP11 Full Access */
 #endif
@@ -294,15 +291,23 @@ void SystemInit (void)
 #if defined (__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
   TZ_SAU_Setup();
 #endif
-  uart_config(SYSTEM_CLOCK);
-  SystemCoreClock = SYSTEM_CLOCK;
-}
 
+  SystemCoreClock = SYSTEM_CLOCK;
+
+  //Disable debug
+  DEBUG_DEMCR &=~ DEBUG_TRCENA;
+
+  // enable DL branch cache
+  CCR |= CCR_DL;
+
+  uart_config(SYSTEM_CLOCK);
+
+}
 
 __attribute__((constructor(255)))
 void platform_init(void)
 {
-    printf("\r\MPS3 Cortex-M33 Generic Template...\r\n");
+    printf("\r\nMPS3 Yamin Generic Template...\r\n");
     printf("\r\n_[TEST START]____________________________________________________\r\n");
 }
 
