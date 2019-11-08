@@ -25,11 +25,6 @@
 #include "ARMSC300.h"
 
 /*----------------------------------------------------------------------------
-  Exception / Interrupt Handler Function Prototype
- *----------------------------------------------------------------------------*/
-typedef void( *pFunc )( void );
-
-/*----------------------------------------------------------------------------
   External References
  *----------------------------------------------------------------------------*/
 extern uint32_t __INITIAL_SP;
@@ -77,8 +72,7 @@ void Interrupt9_Handler     (void) __attribute__ ((weak, alias("Default_Handler"
 #pragma GCC diagnostic ignored "-Wpedantic"
 #endif
 
-extern const pFunc __VECTOR_TABLE[240];
-       const pFunc __VECTOR_TABLE[240] __VECTOR_TABLE_ATTRIBUTE = {
+const pFunc __VECTOR_TABLE[240] __VECTOR_TABLE_ATTRIBUTE = {
   (pFunc)(&__INITIAL_SP),                   /*     Initial Stack Pointer */
   Reset_Handler,                            /*     Reset Handler */
   NMI_Handler,                              /* -14 NMI Handler */

@@ -42,13 +42,6 @@
 
 
 /*----------------------------------------------------------------------------
-  Externals
- *----------------------------------------------------------------------------*/
-#if defined (__VTOR_PRESENT) && (__VTOR_PRESENT == 1U)
-  extern uint32_t __VECTOR_TABLE;
-#endif
-
-/*----------------------------------------------------------------------------
   System Core Clock Variable
  *----------------------------------------------------------------------------*/
 uint32_t SystemCoreClock = SYSTEM_CLOCK;  /* System Core Clock Frequency */
@@ -69,7 +62,7 @@ void SystemInit (void)
 {
 
 #if defined (__VTOR_PRESENT) && (__VTOR_PRESENT == 1U)
-  SCB->VTOR = (uint32_t) &__VECTOR_TABLE;
+  SCB->VTOR = (uint32_t) &(__VECTOR_TABLE);
 #endif
 
 #if defined (__FPU_USED) && (__FPU_USED == 1U)
