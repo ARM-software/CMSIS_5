@@ -12,19 +12,31 @@
       Added following functions for int8 operators with symmetric quantization.<br>
       <ul>
         <li>arm_convolve_s8</li>
+        <li>arm_convolve_1x1_s8_fast</li>
         <li>arm_depthwise_conv_s8</li>
         <li>arm_depthwise_conv_s8_opt</li>
-        <li>arm_convolve_1x1_s8_fast</li>
         <li>arm_fully_connected_s8</li>
         <li>arm_softmax_q7</li>
+        <li>arm_softmax_s8</li>
+        <li>arm_softmax_u8</li>
+        <li>arm_elementwise_mul_s8</li>
         <li>arm_elementwise_add_s8</li>
         <li>arm_avgpool_s8</li>
-        <li>arm_elementwise_add_s8</li>
+        <li>arm_maxpool_s8</li>
+        <li>arm_maxpool_s8_opt</li>
+        <li>arm_relu6_s8</li>
+        <li>arm_reshape_s8</li>
+        <li>arm_fully_connected_s8</li>
+        <li>arm_concatenation_s8_w/li>
+        <li>arm_concatenation_s8_x/li>
+        <li>arm_concatenation_s8_y/li>
+        <li>arm_concatenation_s8_z/li>
       </ul>
       Added following support functions.<br>
       <ul>
         <li>arm_nn_mat_mul_kernel_s8_s16</li>
         <li>arm_nn_mat_mul_kernel_s8_s16_reordered</li>
+        <li>arm_nn_depthwise_conv_s8_core/li>
       </ul>
     </td>
   </tr>
