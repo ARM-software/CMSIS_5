@@ -54,7 +54,7 @@ FVP_MPS2_Cortex-M7.exe -a arm_variance_example
 
 ## Customization
 
-armcc.make is use to cross compil with AC6 coming from ArmDS.
+armcc.make is use to cross compile with AC6 coming from ArmDS.
 
 You'll need to create a different toolchain file if you use something different.
 Then you'll need to pass this file to cmake on the command line.
