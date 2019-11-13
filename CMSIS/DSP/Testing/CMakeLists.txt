@@ -176,6 +176,10 @@ set(TESTSRC
   Source/Tests/MISCQ31.cpp
   Source/Tests/MISCQ15.cpp
   Source/Tests/MISCQ7.cpp
+  Source/Tests/FIRF32.cpp
+  Source/Tests/FIRQ31.cpp
+  Source/Tests/FIRQ15.cpp
+  Source/Tests/FIRQ7.cpp
   Source/Tests/Pooling.cpp
   Source/Tests/Softmax.cpp
   Source/Tests/NNSupport.cpp

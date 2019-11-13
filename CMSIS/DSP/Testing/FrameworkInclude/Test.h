@@ -231,6 +231,12 @@ API of Memory managers used in the test framework
       virtual void DispStatus(Testing::TestStatus,Testing::errorID_t,unsigned long,Testing::cycles_t cycles)=0;
       
 
+      /** Dump additional details for the error
+
+          For instance, for SNR error, it may contain the SNR value.
+      */
+      virtual void DispErrorDetails(const char* )=0;
+
       /** Dump parameters for a test
 
           When a test is run several time with different

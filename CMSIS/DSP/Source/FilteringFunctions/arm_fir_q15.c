@@ -262,14 +262,14 @@ void arm_fir_q15(
 
     tapCnt = numTaps >> 1U;
 
-    do
+    while (tapCnt > 0U)
     {
       acc0 += (q31_t) *px++ * *pb++;
-	  acc0 += (q31_t) *px++ * *pb++;
+	    acc0 += (q31_t) *px++ * *pb++;
 
       tapCnt--;
     }
-    while (tapCnt > 0U);
+    
 
     /* The result is in 2.30 format. Convert to 1.15 with saturation.
        Then store the output in the destination buffer. */

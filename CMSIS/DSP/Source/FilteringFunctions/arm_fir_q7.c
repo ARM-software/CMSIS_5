@@ -256,11 +256,11 @@ void arm_fir_q7(
     i = numTaps;
 
     /* Perform the multiply-accumulates */
-    do
+    while (i > 0U)
     {
       acc0 += (q15_t) * (px++) * (*(pb++));
       i--;
-    } while (i > 0U);
+    } 
 
     /* The result is in 2.14 format. Convert to 1.7
        Then store the output in the destination buffer. */

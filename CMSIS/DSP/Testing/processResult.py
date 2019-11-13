@@ -89,7 +89,7 @@ class TextFormatter:
            #print(elem.path)
            print(Style.BRIGHT + ("%s%s : %s (%d)" % (ident,kind,message,theId)) + Style.RESET_ALL)
 
-      def printTest(self,elem, theId, theError,theLine,passed,cycles,params):
+      def printTest(self,elem, theId, theError,errorDetail,theLine,passed,cycles,params):
           message=elem.data["message"]
           if not elem.data["deprecated"]:
              kind = "Test"
@@ -102,6 +102,8 @@ class TextFormatter:
                 print("%s %s" % (ident,params))
              if passed != 1:
                 print(Fore.RED + ("%s %s at line %d" % (ident, errorStr(theError), theLine)) + Style.RESET_ALL)
+                if (len(errorDetail)>0):
+                   print(Fore.RED + ident + " " + errorDetail + Style.RESET_ALL)
 
       def pop(self):
           None
@@ -134,7 +136,7 @@ class CSVFormatter:
            if elem.kind == TestScripts.Parser.TreeElem.GROUP:
               kind = "Group"
 
-      def printTest(self,elem, theId, theError, theLine,passed,cycles,params):
+      def printTest(self,elem, theId, theError, errorDetail,theLine,passed,cycles,params):
           message=elem.data["message"]
           if not elem.data["deprecated"]:
              kind = "Test"
@@ -181,7 +183,7 @@ class MathematicaFormatter:
            #else:
            #   self._toPop.append("")
 
-      def printTest(self,elem, theId, theError,theLine,passed,cycles,params):
+      def printTest(self,elem, theId, theError,errorDetail,theLine,passed,cycles,params):
           message=elem.data["message"]
           if not elem.data["deprecated"]:
              kind = "Test"
@@ -210,6 +212,7 @@ class MathematicaFormatter:
 NORMAL = 1 
 INTEST = 2
 TESTPARAM = 3
+ERRORDESC = 4
 
 def createMissingDir(destPath):
   theDir=os.path.normpath(os.path.dirname(destPath))
@@ -277,6 +280,7 @@ def analyseResult(resultPath,root,results,embedded,benchmark,trace,formatter):
     elem=None
     theId=None
     theError=None
+    errorDetail=""
     theLine=None
     passed=0
     cycles=None
@@ -402,7 +406,7 @@ def analyseResult(resultPath,root,results,embedded,benchmark,trace,formatter):
                     elem = findItem(root,newPath)
    
                     
-                    state = TESTPARAM
+                    state = ERRORDESC
                else:
                  if re.match(r'^%sp.*$' % prefix,l):
                    if benchFile:
@@ -414,6 +418,15 @@ def analyseResult(resultPath,root,results,embedded,benchmark,trace,formatter):
                     state = INTEST
                  else:
                     state = NORMAL
+           elif state == ERRORDESC:
+                    if len(l) > 0:
+                       if re.match(r'^.*E:.*$',l):
+                          if re.match(r'^.*E:[ ].*$',l):
+                             m = re.match(r'^.*E:[ ](.*)$',l)
+                             errorDetail = m.group(1)
+                          else:
+                             errorDetail = ""
+                          state = TESTPARAM
            else:
              if len(l) > 0:
                 state = INTEST 
@@ -429,7 +442,7 @@ def analyseResult(resultPath,root,results,embedded,benchmark,trace,formatter):
                    params=""
                    writeBenchmark(elem,benchFile,theId,theError,passed,cycles,params,config)
                    # Format the node
-                formatter.printTest(elem,theId,theError,theLine,passed,cycles,params)
+                formatter.printTest(elem,theId,theError,errorDetail,theLine,passed,cycles,params)
 
              
     formatter.end()          

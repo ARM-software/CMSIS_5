@@ -383,47 +383,47 @@ extern "C"
 #include <limits.h>
 
 
-#define F64_MAX   DBL_MAX
-#define F32_MAX   FLT_MAX
+#define F64_MAX   ((float64_t)DBL_MAX)
+#define F32_MAX   ((float32_t)FLT_MAX)
 
 #if defined(ARM_MATH_FLOAT16)
-#define F16_MAX   (float16_t)FLT_MAX
+#define F16_MAX   ((float16_t)FLT_MAX)
 #endif
 
-#define F64_MIN   -DBL_MAX
-#define F32_MIN   -FLT_MAX
+#define F64_MIN   (-DBL_MAX)
+#define F32_MIN   (-FLT_MAX)
 
 #if defined(ARM_MATH_FLOAT16)
-#define F16_MIN   -(float16_t)FLT_MAX
+#define F16_MIN   (-(float16_t)FLT_MAX)
 #endif
 
-#define F64_ABSMAX   DBL_MAX
-#define F32_ABSMAX   FLT_MAX
+#define F64_ABSMAX   ((float64_t)DBL_MAX)
+#define F32_ABSMAX   ((float32_t)FLT_MAX)
 
 #if defined(ARM_MATH_FLOAT16)
-#define F16_ABSMAX   (float16_t)FLT_MAX
+#define F16_ABSMAX   ((float16_t)FLT_MAX)
 #endif
 
-#define F64_ABSMIN   (float64_t)0.0
-#define F32_ABSMIN   (float32_t)0.0
+#define F64_ABSMIN   ((float64_t)0.0)
+#define F32_ABSMIN   ((float32_t)0.0)
 
 #if defined(ARM_MATH_FLOAT16)
-#define F16_ABSMIN   (float16_t)0.0
+#define F16_ABSMIN   ((float16_t)0.0)
 #endif
 
-#define Q31_MAX   (0x7FFFFFFFL)
-#define Q15_MAX   (0x7FFF)
-#define Q7_MAX    (0x7F)
-#define Q31_MIN   (0x80000000L)
-#define Q15_MIN   (0x8000)
-#define Q7_MIN    (0x80)
+#define Q31_MAX   ((q31_t)(0x7FFFFFFFL))
+#define Q15_MAX   ((q15_t)(0x7FFF))
+#define Q7_MAX    ((q7_t)(0x7F))
+#define Q31_MIN   ((q31_t)(0x80000000L))
+#define Q15_MIN   ((q15_t)(0x8000))
+#define Q7_MIN    ((q7_t)(0x80))
 
-#define Q31_ABSMAX   (0x7FFFFFFFL)
-#define Q15_ABSMAX   (0x7FFF)
-#define Q7_ABSMAX    (0x7F)
-#define Q31_ABSMIN   0
-#define Q15_ABSMIN   0
-#define Q7_ABSMIN    0
+#define Q31_ABSMAX   ((q31_t)(0x7FFFFFFFL))
+#define Q15_ABSMAX   ((q15_t)(0x7FFF))
+#define Q7_ABSMAX    ((q7_t)(0x7F))
+#define Q31_ABSMIN   ((q31_t)0)
+#define Q15_ABSMIN   ((q15_t)0)
+#define Q7_ABSMIN    ((q7_t)0)
 
 /* evaluate ARM DSP feature */
 #if (defined (__ARM_FEATURE_DSP) && (__ARM_FEATURE_DSP == 1))
@@ -453,8 +453,8 @@ extern "C"
    * @brief Macros required for reciprocal calculation in Normalized LMS
    */
 
-#define DELTA_Q31          (0x100)
-#define DELTA_Q15          0x5
+#define DELTA_Q31          ((q31_t)(0x100))
+#define DELTA_Q15          ((q15_t)0x5)
 #define INDEX_MASK         0x0000003F
 #ifndef PI
   #define PI               3.14159265358979f

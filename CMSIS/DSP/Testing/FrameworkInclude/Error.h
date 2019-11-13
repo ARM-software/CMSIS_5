@@ -55,10 +55,19 @@ class Error: public std::exception
     {
         this->errorID = id;
         this->lineNumber = nb;
+        this->details[0]='\0';
+    };
+
+    Error(Testing::errorID_t id,unsigned long nb, const char *details)
+    {
+        this->errorID = id;
+        this->lineNumber = nb;
+        strcpy(this->details,details);
     };
 
     Testing::errorID_t errorID;
     unsigned long lineNumber;
+    char details[200];
 };
 
 /*
@@ -148,13 +157,23 @@ void assert_equal(unsigned long nb,AnyPattern<T> &pa, AnyPattern<T> &pb)
     }
 
     unsigned long i=0;
+    char id[40];
 
     T *ptrA = pa.ptr();
     T *ptrB = pb.ptr();
 
     for(i=0; i < pa.nbSamples(); i++)
     {
-       assert_equal(nb,ptrA[i],ptrB[i]);
+       try
+       {
+          assert_equal(nb,ptrA[i],ptrB[i]);
+       }
+       catch(Error &err)
+       {          
+          sprintf(id," (id=%lu)",i);
+          strcat(err.details,id);
+          throw(err);
+       }
     }
 };
 
@@ -193,13 +212,24 @@ void assert_near_equal(unsigned long nb,AnyPattern<T> &pa, AnyPattern<T> &pb, T 
     }
 
     unsigned long i=0;
+    char id[40];
 
     T *ptrA = pa.ptr();
     T *ptrB = pb.ptr();
 
     for(i=0; i < pa.nbSamples(); i++)
     {
-       assert_near_equal(nb,ptrA[i],ptrB[i],threshold);
+       
+       try
+       {
+          assert_near_equal(nb,ptrA[i],ptrB[i],threshold);
+       }
+       catch(Error &err)
+       {          
+          sprintf(id," (id=%lu)",i);
+          strcat(err.details,id);
+          throw(err);
+       }
     }
 };
 

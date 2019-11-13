@@ -374,6 +374,11 @@ namespace Client
         }
       }
 
+      void Semihosting::DispErrorDetails(const char* details)
+      {
+          printf("E: %s\n",details);
+      }
+
       /**
            Signal end of group
 

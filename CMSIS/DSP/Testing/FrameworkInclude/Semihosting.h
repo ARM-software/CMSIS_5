@@ -53,6 +53,7 @@ Semihosting driver. Used to read a text file describing how to drive the test.
       virtual void ReadTestIdentification();
       virtual Testing::nbParameters_t ReadNbParameters();
       virtual void DispStatus(Testing::TestStatus,Testing::errorID_t,unsigned long,Testing::cycles_t);
+      virtual void DispErrorDetails(const char* );
       virtual void EndGroup();
       virtual void ImportPattern(Testing::PatternID_t);
       virtual void ReadPatternList();

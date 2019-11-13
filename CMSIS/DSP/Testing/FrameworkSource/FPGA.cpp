@@ -272,6 +272,11 @@ namespace Client
         }
     }
 
+    void FPGA::DispErrorDetails(const char* details)
+    {
+          printf("E: %s\n",details);
+    }
+
     void FPGA::EndGroup()
     {
        printf("S: p\n");

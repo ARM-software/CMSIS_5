@@ -134,6 +134,7 @@ This overhead is removed from benchmarks in the Runner..
         int failedTests=0;
         Testing::errorID_t error=0;
         unsigned long line = 0;
+        char details[200];
         Testing::cycles_t cycles=0;
         Testing::nbParameters_t nbParams;
 
@@ -157,6 +158,7 @@ This overhead is removed from benchmarks in the Runner..
             error = UNKNOWN_ERROR;
             line = 0;
             cycles = 0;
+            details[0]='\0';
             Testing::param_t *paramData=NULL;
             Testing::nbParameterEntries_t entries=0;
             std::vector<Testing::param_t> params(nbParams);
@@ -225,6 +227,7 @@ This overhead is removed from benchmarks in the Runner..
                  {
                     error = ex.errorID;
                     line = ex.lineNumber;
+                    strcpy(details,ex.details);
                     result=Testing::kTestFailed;
                  }
               }
@@ -268,6 +271,7 @@ This overhead is removed from benchmarks in the Runner..
   
               // Dump test status to output
               m_io->DispStatus(result,error,line,cycles);
+              m_io->DispErrorDetails(details);
               m_io->DumpParams(params);
             }
             if (paramData)

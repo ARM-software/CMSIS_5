@@ -1705,6 +1705,84 @@ group Root {
                 }
 
              }
+          }
+
+
+           group FIR {
+             class = FIR 
+             folder = FIR
+
+             suite FIR F32 {
+                class = FIRF32 
+                folder = FIRF32
+
+                Pattern FIRINPUTS_F32_ID : FirInput1_f32.txt
+                Pattern FIRCOEFS_F32_ID : FirCoefs1_f32.txt
+                Pattern FIRCONFIGS_S16_ID : FirConfigs1_s16.txt 
+
+                Pattern FIRREFS_F32_ID : FirRefs1_f32.txt
+
+                Output  OUT_F32_ID : Output
+
+                Functions {
+                  arm_fir_f32:test_fir_f32
+                }
+
+             }
+
+             suite FIR Q31 {
+                class = FIRQ31 
+                folder = FIRQ31
+
+                Pattern FIRINPUTS_Q31_ID : FirInput1_q31.txt
+                Pattern FIRCOEFS_Q31_ID : FirCoefs1_q31.txt
+                Pattern FIRCONFIGS_S16_ID : FirConfigs1_s16.txt 
+
+                Pattern FIRREFS_Q31_ID : FirRefs1_q31.txt
+
+                Output  OUT_Q31_ID : Output
+
+                Functions {
+                  arm_fir_q31:test_fir_q31
+                }
+
+             }
+
+             suite FIR Q15 {
+                class = FIRQ15 
+                folder = FIRQ15
+
+                Pattern FIRINPUTS_Q15_ID : FirInput1_q15.txt
+                Pattern FIRCOEFS_Q15_ID : FirCoefs1_q15.txt
+                Pattern FIRCONFIGS_S16_ID : FirConfigs1_s16.txt 
+
+                Pattern FIRREFS_Q15_ID : FirRefs1_q15.txt
+
+                Output  OUT_Q15_ID : Output
+
+                Functions {
+                  arm_fir_q15:test_fir_q15
+                }
+
+             }
+
+             suite FIR Q7 {
+                class = FIRQ7 
+                folder = FIRQ7
+
+                Pattern FIRINPUTS_Q7_ID : FirInput1_q7.txt
+                Pattern FIRCOEFS_Q7_ID : FirCoefs1_q7.txt
+                Pattern FIRCONFIGS_S16_ID : FirConfigs1_s16.txt 
+
+                Pattern FIRREFS_Q7_ID : FirRefs1_q7.txt
+
+                Output  OUT_Q7_ID : Output
+
+                Functions {
+                  arm_fir_q7:test_fir_q7
+                }
+
+             }
            }
         }
 
