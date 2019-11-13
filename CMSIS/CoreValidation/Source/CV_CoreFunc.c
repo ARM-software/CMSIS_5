@@ -194,13 +194,10 @@ Check expected behavior of interrupt vector relocation functions:
 void TC_CoreFunc_IRQVect(void) {
 #if defined(__VTOR_PRESENT) && __VTOR_PRESENT
   /* relocate vector table */
-  extern uint32_t __VECTOR_TABLE[];
-  static uint32_t vectors[32] __ALIGNED(512);
+  static VECTOR_TABLE_Type vectors[sizeof(__VECTOR_TABLE)/sizeof(__VECTOR_TABLE[0])] __ALIGNED(512);
 
-  for(uint32_t i=0U; i<32U; i++) {
-    vectors[i] = __VECTOR_TABLE[i];
-  }
-
+  memcpy(vectors, __VECTOR_TABLE, sizeof(__VECTOR_TABLE));
+  
   const uint32_t orig_vtor = SCB->VTOR;
   const uint32_t vtor = ((uint32_t)vectors) & SCB_VTOR_TBLOFF_Msk;
   SCB->VTOR = vtor;
