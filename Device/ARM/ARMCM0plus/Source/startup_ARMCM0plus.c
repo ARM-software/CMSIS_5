@@ -74,8 +74,8 @@ void Interrupt9_Handler     (void) __attribute__ ((weak, alias("Default_Handler"
 #pragma GCC diagnostic ignored "-Wpedantic"
 #endif
 
-const pFunc __VECTOR_TABLE[48] __VECTOR_TABLE_ATTRIBUTE = {
-  (pFunc)(&__INITIAL_SP),                   /*     Initial Stack Pointer */
+const VECTOR_TABLE_Type __VECTOR_TABLE[48] __VECTOR_TABLE_ATTRIBUTE = {
+  (VECTOR_TABLE_Type)(&__INITIAL_SP),       /*     Initial Stack Pointer */
   Reset_Handler,                            /*     Reset Handler */
   NMI_Handler,                              /* -14 NMI Handler */
   HardFault_Handler,                        /* -13 Hard Fault Handler */
@@ -122,7 +122,7 @@ void Reset_Handler(void)
 /*----------------------------------------------------------------------------
   Hard Fault Handler
  *----------------------------------------------------------------------------*/
-void HardFault_Handler(void)
+__NO_RETURN void HardFault_Handler(void)
 {
   while(1);
 }

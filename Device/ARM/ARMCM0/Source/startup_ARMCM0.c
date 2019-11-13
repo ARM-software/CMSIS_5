@@ -68,8 +68,8 @@ void Interrupt9_Handler     (void) __attribute__ ((weak, alias("Default_Handler"
 #pragma GCC diagnostic ignored "-Wpedantic"
 #endif
 
-const pFunc __VECTOR_TABLE[48] __VECTOR_TABLE_ATTRIBUTE = {
-  (pFunc)(&__INITIAL_SP),                   /*     Initial Stack Pointer */
+const VECTOR_TABLE_Type __VECTOR_TABLE[48] __VECTOR_TABLE_ATTRIBUTE = {
+  (VECTOR_TABLE_Type)(&__INITIAL_SP),       /*     Initial Stack Pointer */
   Reset_Handler,                            /*     Reset Handler */
   NMI_Handler,                              /* -14 NMI Handler */
   HardFault_Handler,                        /* -13 Hard Fault Handler */
@@ -107,7 +107,7 @@ const pFunc __VECTOR_TABLE[48] __VECTOR_TABLE_ATTRIBUTE = {
 /*----------------------------------------------------------------------------
   Reset Handler called on controller reset
  *----------------------------------------------------------------------------*/
-void Reset_Handler(void)
+__NO_RETURN void Reset_Handler(void)
 {
   SystemInit();                             /* CMSIS System Initialization */
   __PROGRAM_START();                        /* Enter PreMain (C library entry point) */

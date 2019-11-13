@@ -33,9 +33,9 @@ extern "C" {
 /*----------------------------------------------------------------------------
   Exception / Interrupt Handler Function Prototype
  *----------------------------------------------------------------------------*/
-typedef void( *pFunc )( void );
+typedef void( *VECTOR_TABLE_Type )( void );
 
-extern const pFunc __VECTOR_TABLE[240];
+extern const VECTOR_TABLE_Type __VECTOR_TABLE[240];
 
 extern uint32_t SystemCoreClock;     /*!< System Clock Frequency (Core Clock) */
 
