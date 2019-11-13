@@ -52,3 +52,7 @@ void arm_reshape_s8(const int8_t *input,
 {
     memcpy(output, input, total_size);
 }
+
+/**
+ * @} end of Reshape group
+ */

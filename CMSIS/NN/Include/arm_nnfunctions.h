@@ -38,17 +38,29 @@
    * performance and minimize the memory footprint of neural networks on Cortex-M processor cores.
    *
    * The library is divided into a number of functions each covering a specific category:
-   * - Neural Network Convolution Functions
-   * - Neural Network Activation Functions
+   * - Convolution Functions
+   * - Activation Functions
    * - Fully-connected Layer Functions
-   * - Neural Network Pooling Functions
+   * - Pooling Functions
    * - Softmax Functions
-   * - Neural Network Support Functions
+   * - Basic math Functions
    *
    * The library has separate functions for operating on different weight and activation data
    * types including 8-bit integers (q7_t) and 16-bit integers (q15_t). The descrition of the
    * kernels are included in the function description. The implementation details are also
    * described in this paper [1].
+   *
+   * Function Classification
+   * --------
+   * The functions can be classified into two segments
+   * - Legacy functions supporting ARM's internal symmetric quantization(8 bits).
+   * - Functions that support TensorFlow Lite framework with symmetric quantization(8 bits).
+   *
+   * The legacy functions can be identified with their suffix of _q7 or _q15 and are no new development is done there. The article in [2] describes in detail
+   * how to run a network using the legacy functions.
+   *
+   * The functions supporting TensorFlow Lite framework is identified by the _s8 suffix and can be invoked from TFL micro. The functions are bit exact to
+   * TensorFlow Lite. Refer to the TensorFlow's documentation in [3] on how to run a TensorFlow Lite model using optimized CMSIS-NN kernels.
    *
    * Block Diagram
    * --------
@@ -62,15 +74,20 @@
    * Pre-processor Macros
    * ------------
    *
-   * Each library project have differant pre-processor macros.
+   * Each library project have different pre-processor macros.
    *
    * - ARM_MATH_DSP:
    *
    * Define macro ARM_MATH_DSP, If the silicon supports DSP instructions.
    *
+   * - ARM_MATH_MVEI:
+   *
+   * Define macro ARM_MATH_MVEI, If the silicon supports M-Profile Vector Extension.
+   *
    * - ARM_MATH_BIG_ENDIAN:
    *
-   * Define macro ARM_MATH_BIG_ENDIAN to build the library for big endian targets. By default library builds for little endian targets.
+   * Define macro ARM_MATH_BIG_ENDIAN to build the library for big endian targets. This is supported only for the legacy functions i.e, functions targetted at
+   * TensorFlow Lite do not support big endianness. By default library builds for little endian targets.
    *
    * - ARM_NN_TRUNCATE:
    *
@@ -79,14 +96,20 @@
    * Copyright Notice
    * ------------
    *
-   * Copyright (C) 2010-2018 Arm Limited. All rights reserved.
+   * Copyright (C) 2010-2019 Arm Limited. All rights reserved.
    *
    * [1] CMSIS-NN: Efficient Neural Network Kernels for Arm Cortex-M CPUs https://arxiv.org/abs/1801.06601
+   *
+   * [2] Converting a Neural Network for Arm Cortex-M with CMSIS-NN
+   *     https://developer.arm.com/solutions/machine-learning-on-arm/developer-material/how-to-guides/converting-a-neural-network-for-arm-cortex-m-with-cmsis-nn/single-page
+   * [3] https://www.tensorflow.org/lite/microcontrollers/library
+   *
    */
 
 /**
  * @defgroup groupNN Neural Network Functions
- * These functions perform basic operations for neural network layers.
+ * A collection of functions to perform basic operations for neural network layers. Functions with a _s8 suffix support
+ * TensorFlow Lite framework.
  */
 
 #ifndef _ARM_NNFUNCTIONS_H
@@ -105,9 +128,9 @@ extern    "C"
 #endif
 
 /**
- * @defgroup NNConv Neural Network Convolution Functions
+ * @defgroup NNConv Convolution Functions
  *
- * Perform convolution layer
+ * Collection of convolution, depthwise convolution functions and their variants.
  *
  * The convolution is implemented in 2 steps: im2col and GEMM
  *
@@ -920,7 +943,7 @@ int32_t arm_depthwise_conv_s8_opt_get_buffer_size(const uint16_t input_ch,
 /**
  * @defgroup FC Fully-connected Layer Functions
  *
- * Perform fully-connected layer
+ * Collection of fully-connected and matrix multiplication functions.
  *
  * Fully-connected layer is basically a matrix-vector multiplication
  * with bias. The matrix is the weights and the input/output vectors
@@ -1279,7 +1302,7 @@ extern    "C"
 /**
  * @defgroup BasicMath Basic math functions
  *
- * Perform element wise add and multiplication operations.
+ * Element wise add and multiplication functions.
  *
  */
 
@@ -1349,7 +1372,7 @@ extern    "C"
                                     const int32_t out_activation_max,
                                     const uint32_t block_size);
 /**
- * @defgroup Acti Neural Network Activation Functions
+ * @defgroup Acti Activation Functions
  *
  * Perform activation layers, including ReLU (Rectified Linear Unit),
  * sigmoid and tanh
@@ -1415,7 +1438,7 @@ extern    "C"
                                             arm_nn_activation_type type);
 
 /**
- * @defgroup Pooling Neural Network Pooling Functions
+ * @defgroup Pooling Pooling Functions
  *
  * Perform pooling functions, including max pooling and average pooling
  *
@@ -1612,7 +1635,7 @@ extern    "C"
 /**
  * @defgroup Softmax Softmax Functions
  *
- * EXP(2) based softmax function
+ * EXP(2) based softmax functions.
  *
  */
 
@@ -1787,6 +1810,11 @@ void arm_softmax_u8(const uint8_t *input,
                         int8_t *output,
                         const uint32_t total_size);
 
+/**
+ * @defgroup Concatenation Concatenation Functions
+ *
+ */
+
   /**
    * @brief int8/uint8 concatenation function to be used for concatenating N-tensors along the X axis
    *        This function should be called for each input tensor to concatenate. The argument offset_x
@@ -1817,7 +1845,6 @@ void arm_softmax_u8(const uint8_t *input,
    * @param[in]  output_x Width of output tensor
    * @param[in]  offset_x The offset (in number of elements) on the X axis to start concatenating the input tensor
    *                      It is user responsibility to provide the correct value
-   * @return     None
    *
    * <b> Input constraints</b>
    * offset_x is less than output_x
@@ -1862,7 +1889,6 @@ void arm_softmax_u8(const uint8_t *input,
    * @param[in]  output_y Height of output tensor
    * @param[in]  offset_y The offset on the Y axis to start concatenating the input tensor
    *                      It is user responsibility to provide the correct value
-   * @return     None
    *
    * <b> Input constraints</b>
    * offset_y is less than output_y
@@ -1907,7 +1933,6 @@ void arm_softmax_u8(const uint8_t *input,
    * @param[in]  output_z Channels in output tensor
    * @param[in]  offset_z The offset on the Z axis to start concatenating the input tensor
    *                      It is user responsibility to provide the correct value
-   * @return     None
    *
    * <b> Input constraints</b>
    * offset_z is less than output_z
@@ -1951,7 +1976,6 @@ void arm_softmax_u8(const uint8_t *input,
    * @param[out] output   Pointer to output tensor
    * @param[in]  offset_w The offset on the W axis to start concatenating the input tensor
    *                      It is user responsibility to provide the correct value
-   * @return     None
    *
    */
     void arm_concatenation_s8_w(const int8_t *input,

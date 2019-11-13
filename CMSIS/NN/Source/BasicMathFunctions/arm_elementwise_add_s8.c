@@ -35,6 +35,16 @@
 #include "arm_helium_utils.h"
 #endif
 
+#if defined(ARM_MATH_MVEI)
+#define SAT_INPUT_VECT(__INPUT_V, __MULT, __SHIFT)               \
+  __INPUT_V = arm_mve_sat_doubling_high_mult(__INPUT_V, __MULT); \
+  __INPUT_V = arm_mve_divide_by_power_of_two(__INPUT_V, -__SHIFT);
+#endif
+
+#define SAT_INPUT(__INPUT, __MULT, __SHIFT)                 \
+  __INPUT = arm_nn_sat_doubling_high_mult(__INPUT, __MULT); \
+  __INPUT = arm_nn_divide_by_power_of_two(__INPUT, -__SHIFT);
+
 /**
  *  @ingroup groupNN
  */
@@ -53,15 +63,6 @@
 
 /* Note: __SHIFT is expected to be <=0 */
 
-#if defined(ARM_MATH_MVEI)
-#define SAT_INPUT_VECT(__INPUT_V, __MULT, __SHIFT)               \
-  __INPUT_V = arm_sat_doubling_high_mult_mve(__INPUT_V, __MULT); \
-  __INPUT_V = arm_divide_by_power_of_two_mve(__INPUT_V, -__SHIFT);
-#endif
-
-#define SAT_INPUT(__INPUT, __MULT, __SHIFT)                 \
-  __INPUT = arm_nn_sat_doubling_high_mult(__INPUT, __MULT); \
-  __INPUT = arm_nn_divide_by_power_of_two(__INPUT, -__SHIFT);
 
 arm_status
 arm_elementwise_add_s8(const int8_t *input_1_vect,
