@@ -179,7 +179,7 @@ void arm_nn_accumulate_q7_to_q15(q15_t *dst, const q7_t *src, uint32_t block_siz
  * @param[in]    activation_max   maximum value to clamp the output to. Range : int8
  * @param[in]    kernel_size   number of elements in one column.
  * @param[in]    output_bias per output channel bias. Range : int32
- * @param[out]   out_0       pointer to output
+ * @param[out]   out         pointer to output
  * @return     The function returns one of the two
  *              1. The incremented output pointer for a successful operation or
  *              2. NULL if implementation is not available.

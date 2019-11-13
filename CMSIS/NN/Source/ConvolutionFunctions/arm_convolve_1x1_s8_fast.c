@@ -30,6 +30,9 @@
 
 #include "arm_nnfunctions.h"
 
+#define DIM_KER_X (1U)
+#define DIM_KER_Y (1U)
+
 /**
  *  @ingroup groupNN
  */
@@ -45,9 +48,6 @@
    * Refer header file for details.
    *
    */
-
-#define DIM_KER_X (1U)
-#define DIM_KER_Y (1U)
 
 arm_status arm_convolve_1x1_s8_fast(const q7_t *input,
                                     const uint16_t input_x,
