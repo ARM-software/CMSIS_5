@@ -179,6 +179,10 @@ set(TESTSRC
   Source/Tests/Pooling.cpp
   Source/Tests/Softmax.cpp
   Source/Tests/NNSupport.cpp
+  Source/Tests/ExampleCategoryF32.cpp
+  Source/Tests/ExampleCategoryQ31.cpp
+  Source/Tests/ExampleCategoryQ15.cpp
+  Source/Tests/ExampleCategoryQ7.cpp
   )
 target_include_directories(TestingLib PRIVATE Include/Tests)
 

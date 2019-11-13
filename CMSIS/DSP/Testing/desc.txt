@@ -1705,7 +1705,7 @@ group Root {
                 }
 
              }
-          }
+           }
         }
 
         group Matrix Tests {
@@ -2283,8 +2283,7 @@ group Root {
         }
     }
 
-    group NN Tests
-    {
+    group NN Tests {
        class = NNTests
        folder = NN
 
@@ -2474,6 +2473,81 @@ group Root {
           Functions {
             test_nn_elementwise_add_s8 Test 1:test_nn_elementwise_add_s8
           }
+       }
+    }
+
+    group Example Tests {
+       class = ExampleTests
+       folder = Example
+
+       group ExampleCategory {
+         class = ExampleCategory
+         folder = ExampleCategory
+
+         suite ExampleCategory F32 {
+            class = ExampleCategoryF32
+            folder = ExampleCategoryF32
+
+            Pattern INPUT1_F32_ID : Input1_f32.txt 
+            Pattern INPUT2_F32_ID : Input2_f32.txt 
+   
+            Pattern REF_OUT_F32_ID : Reference1_f32.txt
+             
+            Output  OUT_F32_ID : Output
+
+            Functions {
+                Short description of tests should go here:test_op_f32
+                Test with 9 samples:test_op_f32
+            }
+         }
+
+         suite ExampleCategory Q31 {
+            class = ExampleCategoryQ31
+            folder = ExampleCategoryQ31
+
+            Pattern INPUT1_Q31_ID : Input1_q31.txt 
+            Pattern INPUT2_Q31_ID : Input2_q31.txt 
+   
+            Pattern REF_OUT_Q31_ID : Reference1_q31.txt
+             
+            Output  OUT_Q31_ID : Output
+
+            Functions {
+                Short description of tests:test_op_q31
+            }
+         }
+
+         suite ExampleCategory Q15 {
+            class = ExampleCategoryQ15
+            folder = ExampleCategoryQ15
+
+            Pattern INPUT1_Q15_ID : Input1_q15.txt 
+            Pattern INPUT2_Q15_ID : Input2_q15.txt 
+   
+            Pattern REF_OUT_Q15_ID : Reference1_q15.txt
+             
+            Output  OUT_Q15_ID : Output
+
+            Functions {
+                Short description of tests:test_op_q15
+            }
+         }
+
+         suite ExampleCategory Q7 {
+            class = ExampleCategoryQ7
+            folder = ExampleCategoryQ7
+
+            Pattern INPUT1_Q7_ID : Input1_q7.txt 
+            Pattern INPUT2_Q7_ID : Input2_q7.txt 
+   
+            Pattern REF_OUT_Q7_ID : Reference1_q7.txt
+             
+            Output  OUT_Q7_ID : Output
+
+            Functions {
+                Short description of tests:test_op_q7
+            }
+         }
        }
     }
 
