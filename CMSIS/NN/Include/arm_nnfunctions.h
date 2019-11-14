@@ -483,8 +483,8 @@ extern    "C"
    * @param[in]      out_activation_max   Minimum value to clamp the output to. Range: int8
    * @param[in]      output_x  output tensor width
    * @param[in]      output_y  output tensor height
-   * @param[in]      buffer_a  pointer to buffer space used for input optimization(partial im2col) and is necessary
-   *                           when ARM_MATH_LOOPUNROLL and ARM_MATH_DSP is defined.
+   * @param[in]      buffer_a  pointer to buffer space used for input optimization and is necessary
+   *                           when both ARM_MATH_LOOPUNROLL and ARM_MATH_DSP are defined , but not ARM_MATH_MVEI.
    *                           Required space: 2 * input_ch * sizeof(q15_t) bytes
    *                           Use arm_convolve_1x1_s8_fast_get_buffer_size() to get the size
    * @return     The function returns either

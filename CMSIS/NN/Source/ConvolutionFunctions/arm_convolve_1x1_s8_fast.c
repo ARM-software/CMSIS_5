@@ -28,7 +28,6 @@
  *
  * -------------------------------------------------------------------- */
 
-#include "arm_math.h"
 #include "arm_nnfunctions.h"
 
 /**
@@ -43,8 +42,7 @@
 /*
    * Fast s8 version for 1x1 convolution (non-square shape)
    *
-   * Refer header file for details. Optimal use case for the DSP implementation is when input and output channels
-   *    are multiples of 4 or atleast greater than 4.
+   * Refer header file for details.
    *
    */
 
@@ -80,10 +78,72 @@ arm_status arm_convolve_1x1_s8_fast(const q7_t *input,
     {
         return ARM_MATH_SIZE_MISMATCH;
     }
+#if defined(ARM_MATH_MVEI)
+    (void)buffer_a;
+    /* Process 4 * N input elements */
+    output = arm_nn_mat_mult_s8(kernel,
+                                input,
+                                output_ch,
+                                input_ch,
+                                output_shift,
+                                output_mult,
+                                out_offset,
+                                input_offset,
+                                0,
+                                out_activation_min,
+                                out_activation_max,
+                                input_x * input_y * input_batches,
+                                bias,
+                                output);
 
-#if defined(ARM_MATH_LOOPUNROLL) && defined(ARM_MATH_DSP)
+    const int32_t num_elements = input_x * input_y * input_batches;
+    input += (num_elements & ~3) * input_ch;
+    for (int i_items = 0; i_items < (num_elements & 3); i_items++)
+    {
+        for (int i_out_ch = 0; i_out_ch < output_ch; i_out_ch++)
+        {
+            const int8_t *ip_n_0 = input + i_items * input_ch;
+            const int8_t *ker_n_0 = kernel + i_out_ch * input_ch;
+            int32_t acc = bias[i_out_ch];
+            int col_loop = input_ch / 16;
+            int32_t off = 0;
+            int32_t sum_k = 0;
+
+            while (col_loop > 0)
+            {
+                const int8x16_t k_0 = vldrbq_s8(ker_n_0 + off);
+                sum_k += vaddvq_s8(k_0);
+                const int8x16_t n_0 = vldrbq_s8(ip_n_0 + off);
+                acc += vmladavq_s8(n_0, k_0);
+                off += 16;
+                col_loop--;
+            }
+
+            col_loop = (input_ch & 0xF);
+            if (col_loop != 0)
+            {
+                const mve_pred16_t p = vctp8q(col_loop);
+                const int8x16_t k_0 = vldrbq_z_s8(ker_n_0 + off, p);
+                sum_k += vaddvq_p_s32(k_0, p);
+
+                const int8x16_t n_0 = vldrbq_z_s8(ip_n_0 + off, p);
+                acc += vmladavq_p_s8(n_0, k_0, p);
+            }
+
+            sum_k = (sum_k * input_offset);
+            acc += sum_k;
+            acc = arm_nn_requantize(acc, output_mult[i_out_ch], output_shift[i_out_ch]);
+            acc +=  out_offset;
+
+            acc = MAX(acc, out_activation_min);
+            acc = MIN(acc, out_activation_max);
+
+            *output++ = acc;
+        }
+    }
+
+#elif defined(ARM_MATH_LOOPUNROLL) && defined(ARM_MATH_DSP)
     int32_t i_element;
-
     (void)input_y;
 
     /* Partial(two columns) im2col buffer */
@@ -143,7 +203,8 @@ arm_status arm_convolve_1x1_s8_fast(const q7_t *input,
                 col_count--;
             }
 
-            sum = arm_nn_requantize(sum, output_mult[i_ch_out], output_shift[i_ch_out]);
+            sum = arm_nn_requantize(sum, output_mult[i_ch_out],
+                                    output_shift[i_ch_out]);
             sum += out_offset;
             sum = MAX(sum, out_activation_min);
             sum = MIN(sum, out_activation_max);
@@ -173,7 +234,7 @@ arm_status arm_convolve_1x1_s8_fast(const q7_t *input,
 
 int32_t arm_convolve_1x1_s8_fast_get_buffer_size(const uint16_t input_ch)
 {
-#if defined(ARM_MATH_LOOPUNROLL) && defined(ARM_MATH_DSP)
+#if defined(ARM_MATH_LOOPUNROLL) && defined(ARM_MATH_DSP) && !defined(ARM_MATH_MVEI)
     return 2 * input_ch * sizeof(int16_t);
 #else
     (void)input_ch;

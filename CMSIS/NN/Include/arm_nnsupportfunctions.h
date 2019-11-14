@@ -198,6 +198,43 @@ q7_t *arm_nn_depthwise_conv_s8_core(const q7_t *row,
                                     const int32_t *const output_bias,
                                     q7_t *out);
 
+   /**
+   * @brief General Matrix-multiplication function with per-channel requantization.
+   * @param[in]       input_row    pointer to row operand
+   * @param[in]       input_col    pointer to col operand
+   * @param[in]       output_ch    number of rows of input_row
+   * @param[in]       input_ch     number of columns of input_col
+   * @param[in]       output_shift  pointer to per output channel requantization shift parameter.
+   * @param[in]       output_mult   pointer to per output channel requantization multiplier parameter.
+   * @param[in]       out_offset    output tensor offset.
+   * @param[in]       col_offset    input tensor(col) offset.
+   * @param[in]       row_offset    kernel offset(row). Not used.
+   * @param[in]       out_activation_min   minimum value to clamp the output to. Range : int8
+   * @param[in]       out_activation_max   maximum value to clamp the output to. Range : int8
+   * @param[in]       col_len       number of elements in input_col
+   * @param[in]       bias          per output channel bias. Range : int32
+   * @param[in,out]   out           pointer to output
+   * @return     The function returns one of the two
+   *              1. The incremented output pointer for a successful operation or
+   *              2. NULL if implementation is not available.
+   *
+   * @details   Supported framework: TensorFlow Lite
+   */
+q7_t *arm_nn_mat_mult_s8(const q7_t *input_row,
+                         const q7_t *input_col,
+                         const uint16_t output_ch,
+                         const uint16_t input_ch,
+                         const int32_t *output_shift,
+                         const int32_t *output_mult,
+                         const int32_t out_offset,
+                         const int32_t col_offset,
+                         const int32_t row_offset,
+                         const int16_t out_activation_min,
+                         const int16_t out_activation_max,
+                         const uint16_t col_len,
+                         const int32_t *const bias,
+                         q7_t *out);
+
 /**
   @brief         Read 2 q15 elements and post increment pointer.
   @param[in]     in_q15   Pointer to pointer that holds address of input.
