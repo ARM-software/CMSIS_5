@@ -55,12 +55,11 @@
  @remark
                    Refer to \ref arm_fir_fast_q31() for a faster but less precise implementation of this filter.
  */
-//#if defined(ARM_MATH_MVEI)
-#if 0
-
-/* Work in progress. This MVEI implementation is not yet working */
+#if defined(ARM_MATH_MVEI)
 
 #include "arm_helium_utils.h"
+                                        
+
 
 static void arm_fir_q31_1_4_mve(const arm_fir_instance_q31 * S, const q31_t * pSrc, q31_t * pDst, uint32_t blockSize)
 {
@@ -132,6 +131,7 @@ static void arm_fir_q31_1_4_mve(const arm_fir_instance_q31 * S, const q31_t * pS
     }
 
     uint32_t  residual = blockSize & 3;
+    
     switch (residual)
     {
     case 3:
@@ -139,6 +139,7 @@ static void arm_fir_q31_1_4_mve(const arm_fir_instance_q31 * S, const q31_t * pS
             /*
              * Save 4 input samples in the history buffer
              */
+
             *(q31x4_t *) pStateCur = *(q31x4_t *) pTempSrc;
             pStateCur += 4;
             pTempSrc += 4;
@@ -204,11 +205,12 @@ static void arm_fir_q31_1_4_mve(const arm_fir_instance_q31 * S, const q31_t * pS
         break;
     }
 
+
     /*
      * Copy the samples back into the history buffer start
      */
-    pTempSrc = &pState[blockSize];
-    pTempDest = pState;
+    pTempSrc = &S->pState[blockSize];
+    pTempDest = S->pState;
 
     blkCnt = numTaps >> 2;
     while (blkCnt > 0U)
@@ -333,13 +335,13 @@ static void arm_fir_q31_5_8_mve(const arm_fir_instance_q31 * S, const q31_t * pS
             vecIn0 = vld1q(&pSamples[2]);
             acc2 = vrmlaldavhq(vecIn0, vecCoeffs1_4);
 
-            vecIn0 = vld1q(&pSamples[3]);
+            vecIn0 = vld1q(&pSamples[4]);
             acc0 = vrmlaldavhaq(acc0, vecIn0, vecCoeffs5_8);
 
-            vecIn0 = vld1q(&pSamples[4]);
+            vecIn0 = vld1q(&pSamples[5]);
             acc1 = vrmlaldavhaq(acc1, vecIn0, vecCoeffs5_8);
 
-            vecIn0 = vld1q(&pSamples[5]);
+            vecIn0 = vld1q(&pSamples[6]);
             acc2 = vrmlaldavhaq(acc2, vecIn0, vecCoeffs5_8);
 
             acc0 = asrl(acc0, 23);
@@ -406,8 +408,8 @@ static void arm_fir_q31_5_8_mve(const arm_fir_instance_q31 * S, const q31_t * pS
     /*
      * Copy the samples back into the history buffer start
      */
-    pTempSrc = &pState[blockSize];
-    pTempDest = pState;
+    pTempSrc = &S->pState[blockSize];
+    pTempDest = S->pState;
 
     blkCnt = numTaps >> 2;
     while (blkCnt > 0U)
@@ -448,216 +450,354 @@ void arm_fir_q31(
     /*
      * [1 to 8 taps] specialized routines
      */
-    if (numTaps <= 4)
+    
+    if (blockSize >= 8)
     {
-        arm_fir_q31_1_4_mve(S, pSrc, pDst, blockSize);
-        return;
+        if (numTaps <= 4)
+        {
+            arm_fir_q31_1_4_mve(S, pSrc, pDst, blockSize);
+            return;
+        }
+        else if (numTaps <= 8)
+        {
+            arm_fir_q31_5_8_mve(S, pSrc, pDst, blockSize);
+            return;
+        }
     }
-    else if (numTaps <= 8)
-    {
-        arm_fir_q31_5_8_mve(S, pSrc, pDst, blockSize);
-        return;
-    }
+
 
     /*
      * pState points to state array which contains previous frame (numTaps - 1) samples
      * pStateCur points to the location where the new input data should be written
      */
-    pStateCur   = &(pState[(numTaps - 1u)]);
-    pSamples    = pState;
-    pTempSrc    = pSrc;
-    pOutput     = pDst;
-    blkCnt      = blockSize >> 2;
-    while (blkCnt > 0U)
+    if (blockSize >= 8)
     {
-        const q31_t    *pCoeffsTmp = pCoeffs;
-        const q31_t    *pSamplesTmp = pSamples;
-
-        acc0 = 0LL;
-        acc1 = 0LL;
-        acc2 = 0LL;
-        acc3 = 0LL;
-
-        /*
-         * Save 4 input samples in the history buffer
-         */
-        vst1q(pStateCur, vld1q(pTempSrc));
-        pStateCur += 4;
-        pTempSrc += 4;
-
-        uint32_t       i = tapsBlkCnt;
-        while (i > 0U)
-        {
-            /*
-             * load 4 coefs
-             */
-            vecCoeffs = *(q31x4_t *) pCoeffsTmp;
-
-            vecIn0 = vld1q(pSamplesTmp);
-            acc0 = vrmlaldavhaq(acc0, vecIn0, vecCoeffs);
-
-            vecIn0 = vld1q(&pSamplesTmp[1]);
-            acc1 = vrmlaldavhaq(acc1, vecIn0, vecCoeffs);
-
-            vecIn0 = vld1q(&pSamplesTmp[2]);
-            acc2 = vrmlaldavhaq(acc2, vecIn0, vecCoeffs);
-
-            vecIn0 = vld1q(&pSamplesTmp[3]);
-            acc3 = vrmlaldavhaq(acc3, vecIn0, vecCoeffs);
-
-            pSamplesTmp += 4;
-            pCoeffsTmp += 4;
-            /*
-             * Decrement the taps block loop counter
-             */
-            i--;
-        }
-
-        /* .54-> .31 conversion and store accumulators */
-        acc0 = asrl(acc0, 23);
-        acc1 = asrl(acc1, 23);
-        acc2 = asrl(acc2, 23);
-        acc3 = asrl(acc3, 23);
-
-        *pOutput++ = (q31_t) acc0;
-        *pOutput++ = (q31_t) acc1;
-        *pOutput++ = (q31_t) acc2;
-        *pOutput++ = (q31_t) acc3;
-
-        pSamples += 4;
-
-        /*
-         * Decrement the sample block loop counter
-         */
-        blkCnt--;
-    }
-
-    uint32_t  residual = blockSize & 3;
-    switch (residual)
-    {
-    case 3:
+        pStateCur   = &(pState[(numTaps - 1u)]);
+        pSamples    = pState;
+        pTempSrc    = pSrc;
+        pOutput     = pDst;
+        blkCnt      = blockSize >> 2;
+        while (blkCnt > 0U)
         {
             const q31_t    *pCoeffsTmp = pCoeffs;
             const q31_t    *pSamplesTmp = pSamples;
-
+    
             acc0 = 0LL;
             acc1 = 0LL;
             acc2 = 0LL;
-
+            acc3 = 0LL;
+    
             /*
              * Save 4 input samples in the history buffer
              */
-            *(q31x4_t *) pStateCur = *(q31x4_t *) pTempSrc;
+            vst1q(pStateCur, vld1q(pTempSrc));
             pStateCur += 4;
             pTempSrc += 4;
-
-            uint32_t       i = tapsBlkCnt;
+    
+            tapsBlkCnt = (numTaps ) / 4;
+            uint32_t       i = tapsBlkCnt ;
             while (i > 0U)
             {
+                /*
+                 * load 4 coefs
+                 */
                 vecCoeffs = *(q31x4_t *) pCoeffsTmp;
-
+    
                 vecIn0 = vld1q(pSamplesTmp);
                 acc0 = vrmlaldavhaq(acc0, vecIn0, vecCoeffs);
-
+    
                 vecIn0 = vld1q(&pSamplesTmp[1]);
                 acc1 = vrmlaldavhaq(acc1, vecIn0, vecCoeffs);
-
+    
                 vecIn0 = vld1q(&pSamplesTmp[2]);
                 acc2 = vrmlaldavhaq(acc2, vecIn0, vecCoeffs);
-
+    
+                vecIn0 = vld1q(&pSamplesTmp[3]);
+                acc3 = vrmlaldavhaq(acc3, vecIn0, vecCoeffs);
+    
                 pSamplesTmp += 4;
                 pCoeffsTmp += 4;
+                /*
+                 * Decrement the taps block loop counter
+                 */
                 i--;
             }
 
+            tapsBlkCnt = (numTaps ) & 3;
+            i = tapsBlkCnt ;
+            while (i > 0U)
+            {
+                /*
+                 * load 4 coefs
+                 */
+
+                /* acc =  b[numTaps-1] * x[n-numTaps-1] + b[numTaps-2] * x[n-numTaps-2] + b[numTaps-3] * x[n-numTaps-3] +...+ b[0] * x[0] */
+                acc0 += ((q63_t) *pSamplesTmp * *pCoeffsTmp) >> 8;
+                acc1 += ((q63_t) pSamplesTmp[1] * *pCoeffsTmp) >> 8;
+                acc2 += ((q63_t) pSamplesTmp[2] * *pCoeffsTmp) >> 8;
+                acc3 += ((q63_t) pSamplesTmp[3] * *pCoeffsTmp) >> 8;
+
+    
+                pSamplesTmp += 1;
+                pCoeffsTmp += 1;
+                /*
+                 * Decrement the taps block loop counter
+                 */
+                i--;
+            }
+    
+            /* .54-> .31 conversion and store accumulators */
             acc0 = asrl(acc0, 23);
             acc1 = asrl(acc1, 23);
             acc2 = asrl(acc2, 23);
-
+            acc3 = asrl(acc3, 23);
+    
             *pOutput++ = (q31_t) acc0;
             *pOutput++ = (q31_t) acc1;
             *pOutput++ = (q31_t) acc2;
-        }
-        break;
+            *pOutput++ = (q31_t) acc3;
+    
+            pSamples += 4;
 
-    case 2:
-        {
-            const q31_t    *pCoeffsTmp = pCoeffs;
-            const q31_t    *pSamplesTmp = pSamples;
-
-            acc0 = 0LL;
-            acc1 = 0LL;
-
+            
             /*
-             * Save 4 input samples in the history buffer
+             * Decrement the sample block loop counter
              */
-            vst1q(pStateCur, vld1q(pTempSrc));
-            pStateCur += 4;
-            pTempSrc += 4;
-
-            uint32_t       i = tapsBlkCnt;
-            while (i > 0U)
-            {
-                vecCoeffs = *(q31x4_t *) pCoeffsTmp;
-
-                vecIn0 = vld1q(pSamplesTmp);
-                acc0 = vrmlaldavhaq(acc0, vecIn0, vecCoeffs);
-
-                vecIn0 = vld1q(&pSamplesTmp[1]);
-                acc1 = vrmlaldavhaq(acc1, vecIn0, vecCoeffs);
-
-                pSamplesTmp += 4;
-                pCoeffsTmp += 4;
-                i--;
-            }
-
-            acc0 = asrl(acc0, 23);
-            acc1 = asrl(acc1, 23);
-
-            *pOutput++ = (q31_t) acc0;
-            *pOutput++ = (q31_t) acc1;
+            blkCnt--;
         }
-        break;
-
-    case 1:
+    
+        uint32_t  residual = blockSize & 3;
+        switch (residual)
         {
-            const q31_t    *pCoeffsTmp = pCoeffs;
-            const q31_t    *pSamplesTmp = pSamples;
-
-            acc0 = 0LL;
-
-            /*
-             * Save 4 input samples in the history buffer
-             */
-            vst1q(pStateCur, vld1q(pTempSrc));
-            pStateCur += 4;
-            pTempSrc += 4;
-
-            uint32_t       i = tapsBlkCnt;
-            while (i > 0U)
+        case 3:
             {
-                vecCoeffs = *(q31x4_t *) pCoeffsTmp;
+                const q31_t    *pCoeffsTmp = pCoeffs;
+                const q31_t    *pSamplesTmp = pSamples;
+    
+                acc0 = 0LL;
+                acc1 = 0LL;
+                acc2 = 0LL;
+    
+                /*
+                 * Save 4 input samples in the history buffer
+                 */
+              
+                *(q31x4_t *) pStateCur = *(q31x4_t *) pTempSrc;
+                pStateCur += 4;
+                pTempSrc += 4;
+    
+                tapsBlkCnt = numTaps  / 4;
+                uint32_t       i = tapsBlkCnt;
+                while (i > 0U)
+                {
+                    vecCoeffs = *(q31x4_t *) pCoeffsTmp;
 
-                vecIn0 = vld1q(pSamplesTmp);
-                acc0 = vrmlaldavhaq(acc0, vecIn0, vecCoeffs);
+                    vecIn0 = vld1q(pSamplesTmp);
+                    acc0 = vrmlaldavhaq(acc0, vecIn0, vecCoeffs);
+    
+                    vecIn0 = vld1q(&pSamplesTmp[1]);
+                    acc1 = vrmlaldavhaq(acc1, vecIn0, vecCoeffs);
+    
+                    vecIn0 = vld1q(&pSamplesTmp[2]);
+                    acc2 = vrmlaldavhaq(acc2, vecIn0, vecCoeffs);
+    
+                    pSamplesTmp += 4;
+                    pCoeffsTmp += 4;
+                    i--;
+                }
 
-                pSamplesTmp += 4;
-                pCoeffsTmp += 4;
-                i--;
+                tapsBlkCnt = (numTaps ) & 3;
+                
+                i = tapsBlkCnt ;
+                while (i > 0U)
+                {
+                   
+                    /* acc =  b[numTaps-1] * x[n-numTaps-1] + b[numTaps-2] * x[n-numTaps-2] + b[numTaps-3] * x[n-numTaps-3] +...+ b[0] * x[0] */
+                    acc0 += ((q63_t) *pSamplesTmp * *pCoeffsTmp) >> 8;
+                    acc1 += ((q63_t) pSamplesTmp[1] * *pCoeffsTmp) >> 8;
+                    acc2 += ((q63_t) pSamplesTmp[2] * *pCoeffsTmp) >> 8;
+    
+                    pSamplesTmp += 1;
+                    pCoeffsTmp += 1;
+                    /*
+                     * Decrement the taps block loop counter
+                     */
+                    i--;
+                }
+    
+    
+                acc0 = asrl(acc0, 23);
+                acc1 = asrl(acc1, 23);
+                acc2 = asrl(acc2, 23);
+    
+                *pOutput++ = (q31_t) acc0;
+                *pOutput++ = (q31_t) acc1;
+                *pOutput++ = (q31_t) acc2;
             }
+            break;
+    
+        case 2:
+            {
+                const q31_t    *pCoeffsTmp = pCoeffs;
+                const q31_t    *pSamplesTmp = pSamples;
+    
+                acc0 = 0LL;
+                acc1 = 0LL;
+    
+                /*
+                 * Save 4 input samples in the history buffer
+                 */
+                vst1q(pStateCur, vld1q(pTempSrc));
+                pStateCur += 4;
+                pTempSrc += 4;
+    
+                tapsBlkCnt = (numTaps ) / 4;
+                uint32_t       i = tapsBlkCnt;
+                while (i > 0U)
+                {
+                    vecCoeffs = *(q31x4_t *) pCoeffsTmp;
+    
+                    vecIn0 = vld1q(pSamplesTmp);
+                    acc0 = vrmlaldavhaq(acc0, vecIn0, vecCoeffs);
+    
+                    vecIn0 = vld1q(&pSamplesTmp[1]);
+                    acc1 = vrmlaldavhaq(acc1, vecIn0, vecCoeffs);
+    
+                    pSamplesTmp += 4;
+                    pCoeffsTmp += 4;
+                    i--;
+                }
 
-            acc0 = asrl(acc0, 23);
+                tapsBlkCnt = (numTaps ) & 3;
+                i = tapsBlkCnt ;
+                while (i > 0U)
+                {
+                   
 
-            *pOutput++ = (q31_t) acc0;
+                    /* acc =  b[numTaps-1] * x[n-numTaps-1] + b[numTaps-2] * x[n-numTaps-2] + b[numTaps-3] * x[n-numTaps-3] +...+ b[0] * x[0] */
+                    acc0 += ((q63_t) *pSamplesTmp * *pCoeffsTmp) >> 8;
+                    acc1 += ((q63_t) pSamplesTmp[1] * *pCoeffsTmp) >> 8;
+    
+                    pSamplesTmp += 1;
+                    pCoeffsTmp += 1;
+                    /*
+                     * Decrement the taps block loop counter
+                     */
+                    i--;
+                }
+    
+                acc0 = asrl(acc0, 23);
+                acc1 = asrl(acc1, 23);
+    
+                *pOutput++ = (q31_t) acc0;
+                *pOutput++ = (q31_t) acc1;
+            }
+            break;
+    
+        case 1:
+            {
+                const q31_t    *pCoeffsTmp = pCoeffs;
+                const q31_t    *pSamplesTmp = pSamples;
+    
+                acc0 = 0LL;
+    
+                /*
+                 * Save 4 input samples in the history buffer
+                 */
+                vst1q(pStateCur, vld1q(pTempSrc));
+                pStateCur += 4;
+                pTempSrc += 4;
+    
+                tapsBlkCnt = (numTaps ) / 4;
+                uint32_t       i = tapsBlkCnt;
+                while (i > 0U)
+                {
+                    vecCoeffs = *(q31x4_t *) pCoeffsTmp;
+    
+                    vecIn0 = vld1q(pSamplesTmp);
+                    acc0 = vrmlaldavhaq(acc0, vecIn0, vecCoeffs);
+    
+                    pSamplesTmp += 4;
+                    pCoeffsTmp += 4;
+                    i--;
+                }
+
+                tapsBlkCnt = (numTaps ) & 3;
+                i = tapsBlkCnt ;
+                while (i > 0U)
+                {
+                   
+
+                    /* acc =  b[numTaps-1] * x[n-numTaps-1] + b[numTaps-2] * x[n-numTaps-2] + b[numTaps-3] * x[n-numTaps-3] +...+ b[0] * x[0] */
+                    acc0 += ((q63_t) *pSamplesTmp * *pCoeffsTmp) >> 8;
+    
+                    pSamplesTmp += 1;
+                    pCoeffsTmp += 1;
+                    /*
+                     * Decrement the taps block loop counter
+                     */
+                    i--;
+                }
+    
+                acc0 = asrl(acc0, 23);
+    
+                *pOutput++ = (q31_t) acc0;
+            }
+            break;
         }
-        break;
+    }
+    else
+    {
+         
+                q31_t *pStateCurnt;                            /* Points to the current sample of the state */
+                q31_t *px;                                     /* Temporary pointer for state buffer */
+          const q31_t *pb;                                     /* Temporary pointer for coefficient buffer */
+                q63_t acc0;                                    /* Accumulator */
+                uint32_t i, blkCnt;                    /* Loop counters */
+          pStateCurnt = &(S->pState[(numTaps - 1U)]);
+          blkCnt = blockSize;
+        
+          while (blkCnt > 0U)
+          {
+            /* Copy one sample at a time into state buffer */
+            *pStateCurnt++ = *pSrc++;
+        
+            /* Set the accumulator to zero */
+            acc0 = 0;
+        
+            /* Initialize state pointer */
+            px = pState;
+        
+            /* Initialize Coefficient pointer */
+            pb = pCoeffs;
+        
+            i = numTaps;
+        
+            /* Perform the multiply-accumulates */
+            do
+            {
+              /* acc =  b[numTaps-1] * x[n-numTaps-1] + b[numTaps-2] * x[n-numTaps-2] + b[numTaps-3] * x[n-numTaps-3] +...+ b[0] * x[0] */
+              acc0 += (q63_t) *px++ * *pb++;
+        
+              i--;
+            } while (i > 0U);
+        
+            /* Result is in 2.62 format. Convert to 1.31 and store in destination buffer. */
+            *pDst++ = (q31_t) (acc0 >> 31U);
+        
+            /* Advance state pointer by 1 for the next sample */
+            pState = pState + 1U;
+        
+            /* Decrement loop counter */
+            blkCnt--;
+        }
     }
 
     /*
      * Copy the samples back into the history buffer start
      */
-    pTempSrc = &pState[blockSize];
-    pTempDest = pState;
+    pTempSrc = &S->pState[blockSize];
+    pTempDest = S->pState;
 
     blkCnt = numTaps >> 2;
     while (blkCnt > 0U)

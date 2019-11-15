@@ -5,19 +5,25 @@
 
 #define ABS_ERROR_Q31 ((q31_t)2)
 
+#if defined(ARM_MATH_MVEI)
+static __ALIGNED(8) q31_t coeffArray[32];
+#endif
     void FIRQ31::test_fir_q31()
     {
         
 
         const int16_t *configp = configs.ptr();
         q31_t *statep = state.ptr();
-        const q31_t *coefsp = coefs.ptr();
+        const q31_t *orgcoefsp = coefs.ptr();
+
+        const q31_t *coefsp;
         const q31_t *inputp = inputs.ptr();
         q31_t *outp = output.ptr();
 
-        int i;
+        int i,j;
         int blockSize;
         int numTaps;
+        int nb=0;
 
         /*
 
@@ -27,10 +33,24 @@
         We loop on those configs.
 
         */
-        for(i=0; i < configs.nbSamples() >> 1; i++)
+        for(i=0; i < configs.nbSamples() ; i += 2)
         {
            blockSize = configp[0];
            numTaps = configp[1];
+
+#if defined(ARM_MATH_MVEI)
+           /* Copy coefficients and pad to zero 
+           */
+           memset(coeffArray,0,32);
+           for(j=0;j < numTaps; j++)
+           {
+              coeffArray[j] = orgcoefsp[j];
+           }
+   
+           coefsp = coeffArray;
+#else
+           coefsp = orgcoefsp;
+#endif
 
            /*
 
@@ -54,13 +74,16 @@
 
            */
            arm_fir_q31(&this->S,inputp,outp,blockSize);
-           inputp += blockSize;
            outp += blockSize;
+
+           inputp += blockSize;
            arm_fir_q31(&this->S,inputp,outp,blockSize);
+           outp += blockSize;
 
            configp += 2;
-           coefsp += numTaps;
-           outp += blockSize;
+           orgcoefsp += numTaps;
+
+           nb += 2*blockSize;
 
         }
 

@@ -51,7 +51,7 @@ void assert_near_equal(unsigned long nb,double pa, double pb, double threshold)
     if (fabs(pa - pb) > threshold)
     {
          char details[200];
-         sprintf(details,"diff %g > %g",fabs(pa - pb) , threshold);
+         sprintf(details,"diff %g > %g (%g,%g)",fabs(pa - pb) , threshold,pa,pb);
          throw (Error(EQUAL_ERROR,nb,details));
     }
 };
@@ -62,7 +62,7 @@ void assert_near_equal(unsigned long nb,float32_t pa, float32_t pb, float32_t th
     if (fabs(pa - pb) > threshold)
     {
          char details[200];
-         sprintf(details,"diff %g > %g",fabs(pa - pb) , threshold);
+         sprintf(details,"diff %g > %g (%g,%g)",fabs(pa - pb) , threshold, pa, pb);
          throw (Error(EQUAL_ERROR,nb,details));
     }
 };
@@ -74,7 +74,7 @@ void assert_near_equal(unsigned long nb,q63_t pa, q63_t pb, q63_t threshold)
     if (abs(pa - pb) > threshold)
     {
          char details[200];
-         sprintf(details,"diff %lld > %lld",abs(pa - pb) , threshold);
+         sprintf(details,"diff %lld > %lld (%016llX,%016llX)",abs(pa - pb) , threshold,pa,pb);
          throw (Error(EQUAL_ERROR,nb,details));
     }
 };
@@ -85,7 +85,7 @@ void assert_near_equal(unsigned long nb,q31_t pa, q31_t pb, q31_t threshold)
     if (abs(pa - pb) > threshold)
     {
          char details[200];
-         sprintf(details,"diff %d > %d",abs(pa - pb) , threshold);
+         sprintf(details,"diff %d > %d (%08X,%08X)",abs(pa - pb) , threshold,pa,pb);
          throw (Error(EQUAL_ERROR,nb,details));
     }
 };
@@ -96,7 +96,7 @@ void assert_near_equal(unsigned long nb,q15_t pa, q15_t pb, q15_t threshold)
     if (abs(pa - pb) > threshold)
     {
          char details[200];
-         sprintf(details,"diff %d > %d",abs(pa - pb) , threshold);
+         sprintf(details,"diff %d > %d (%04X,%04X)",abs(pa - pb) , threshold,pa,pb);
          throw (Error(EQUAL_ERROR,nb,details));
     }
 };
@@ -107,7 +107,7 @@ void assert_near_equal(unsigned long nb,q7_t pa, q7_t pb, q7_t threshold)
     if (abs(pa - pb) > threshold)
     {
          char details[200];
-         sprintf(details,"diff %d > %d",abs(pa - pb) , threshold);
+         sprintf(details,"diff %d > %d (%02X,%02X)",abs(pa - pb) , threshold,pa,pb);
          throw (Error(EQUAL_ERROR,nb,details));
     }
 };
@@ -186,7 +186,7 @@ void assert_relative_error(unsigned long nb,AnyPattern<float32_t> &pa, AnyPatter
        }
        catch(Error &err)
        {          
-          sprintf(id," (id=%lu)",i);
+          sprintf(id," (nb=%lu)",i+1);
           strcat(err.details,id);
           throw(err);
        }
@@ -228,7 +228,7 @@ void assert_close_error(unsigned long nb,AnyPattern<float64_t> &pref, AnyPattern
        }
        catch(Error &err)
        {          
-          sprintf(id," (id=%lu)",i);
+          sprintf(id," (nb=%lu)",i+1);
           strcat(err.details,id);
           throw(err);
        }
@@ -271,7 +271,7 @@ void assert_close_error(unsigned long nb,AnyPattern<float32_t> &pref, AnyPattern
        }
        catch(Error &err)
        {          
-          sprintf(id," (id=%lu)",i);
+          sprintf(id," (nb=%lu)",i+1);
           strcat(err.details,id);
           throw(err);
        }

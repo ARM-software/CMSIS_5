@@ -11,7 +11,9 @@ a double precision computation.
 */
 #define REL_ERROR (3.0e-5)
 
-__ALIGNED(8) float32_t coeffArray[32];
+#if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
+static __ALIGNED(8) float32_t coeffArray[32];
+#endif 
 
     void FIRF32::test_fir_f32()
     {

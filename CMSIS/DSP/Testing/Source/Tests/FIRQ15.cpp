@@ -1,9 +1,13 @@
 #include "FIRQ15.h"
 #include "Error.h"
 
-#define SNR_THRESHOLD 60
+#define SNR_THRESHOLD 59
 
 #define ABS_ERROR_Q15 ((q15_t)2)
+
+#if defined(ARM_MATH_MVEI)
+static __ALIGNED(8) q15_t coeffArray[32];
+#endif 
 
     void FIRQ15::test_fir_q15()
     {
@@ -11,13 +15,16 @@
 
         const int16_t *configp = configs.ptr();
         q15_t *statep = state.ptr();
-        const q15_t *coefsp = coefs.ptr();
+        const q15_t *orgcoefsp = coefs.ptr();
+
+        const q15_t *coefsp;
         const q15_t *inputp = inputs.ptr();
         q15_t *outp = output.ptr();
 
-        int i;
+        int i,j;
         int blockSize;
         int numTaps;
+        int nb=0;
 
         /*
 
@@ -27,10 +34,25 @@
         We loop on those configs.
 
         */
-        for(i=0; i < configs.nbSamples() >> 1; i++)
+        for(i=0; i < configs.nbSamples(); i += 2)
         {
            blockSize = configp[0];
            numTaps = configp[1];
+
+#if defined(ARM_MATH_MVEI)
+           /* Copy coefficients and pad to zero 
+           */
+           memset(coeffArray,0,32);
+           for(j=0;j < numTaps; j++)
+           {
+              coeffArray[j] = orgcoefsp[j];
+           }
+   
+           coefsp = coeffArray;
+#else
+           coefsp = orgcoefsp;
+#endif
+
 
            /*
 
@@ -55,13 +77,16 @@
 
            */
            arm_fir_q15(&this->S,inputp,outp,blockSize);
-           inputp += blockSize;
            outp += blockSize;
+
+           inputp += blockSize;
            arm_fir_q15(&this->S,inputp,outp,blockSize);
            outp += blockSize;
 
            configp += 2;
-           coefsp += numTaps;
+           orgcoefsp += numTaps;
+
+           nb += 2*blockSize;
 
         }
 

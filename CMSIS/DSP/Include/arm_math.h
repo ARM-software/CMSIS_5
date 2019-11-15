@@ -1350,7 +1350,7 @@ __STATIC_INLINE q31_t arm_div_q63_to_q31(q63_t num, q31_t den)
         /*
          * 64-bit division
          */
-        result = num / den;
+        result = (q31_t) num / den;
 
     return result;
 }
@@ -5548,7 +5548,7 @@ __STATIC_FORCEINLINE q15_t arm_pid_q15(
     acc += (q31_t) S->state[2] << 15;
 
     /* saturate the output */
-    out = (q15_t) (__SSAT((acc >> 15), 16));
+    out = (q15_t) (__SSAT((q31_t)(acc >> 15), 16));
 
     /* Update state */
     S->state[1] = S->state[0];

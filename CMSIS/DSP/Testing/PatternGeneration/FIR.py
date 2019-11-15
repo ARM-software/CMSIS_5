@@ -55,13 +55,13 @@ def writeTests(config,format):
     defs=[] 
 
     if format == 0 or format == 31:
-       blk = [1, 2, 3, 8, 11, 16, 23]
+       blk = [1, 2, 3, 8, 9,10,11, 16, 23]
        taps = [1, 2, 3, 4, 5, 6, 7, 8, 11, 16, 23, 25]
     elif format == 15:
-       blk = [1, 2, 3, 8, 11]
-       taps = [1, 2, 3, 4, 5, 6, 7, 8, 11, 25]
+       blk = [1, 2, 3, 12,13,14,15]
+       taps = [2, 3, 4, 5, 6, 7, 8, 11, 25]
     elif format == 7:
-       blk = [1, 2, 3, 8, 11]
+       blk = [1, 2, 3 ,20,21,22,23]
        taps = [1, 2, 3, 4, 5, 6, 7, 8, 11, 25]
 
     configs = cartesian(blk,taps)

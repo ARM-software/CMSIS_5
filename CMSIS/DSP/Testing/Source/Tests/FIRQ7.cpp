@@ -5,17 +5,23 @@
 
 #define ABS_ERROR_Q7 ((q7_t)2)
 
+#if defined(ARM_MATH_MVEI)
+static __ALIGNED(8) q7_t coeffArray[32];
+#endif 
+
     void FIRQ7::test_fir_q7()
     {
         
 
         const int16_t *configp = configs.ptr();
         q7_t *statep = state.ptr();
-        const q7_t *coefsp = coefs.ptr();
+        const q7_t *orgcoefsp = coefs.ptr();
+
+        const q7_t *coefsp;
         const q7_t *inputp = inputs.ptr();
         q7_t *outp = output.ptr();
 
-        int i;
+        int i,j;
         int blockSize;
         int numTaps;
 
@@ -31,6 +37,20 @@
         {
            blockSize = configp[0];
            numTaps = configp[1];
+
+#if defined(ARM_MATH_MVEI)
+           /* Copy coefficients and pad to zero 
+           */
+           memset(coeffArray,0,32);
+           for(j=0;j < numTaps; j++)
+           {
+              coeffArray[j] = orgcoefsp[j];
+           }
+   
+           coefsp = coeffArray;
+#else
+           coefsp = orgcoefsp;
+#endif
 
            /*
 
@@ -54,13 +74,14 @@
 
            */
            arm_fir_q7(&this->S,inputp,outp,blockSize);
-           inputp += blockSize;
            outp += blockSize;
+
+           inputp += blockSize;
            arm_fir_q7(&this->S,inputp,outp,blockSize);
+           outp += blockSize;
 
            configp += 2;
-           coefsp += numTaps;
-           outp += blockSize;
+           orgcoefsp += numTaps;
 
         }
 
