@@ -97,7 +97,7 @@ arm_elementwise_mul_s8(const int8_t *input_1_vect,
     input_2 = (int16_t)(b_2 & 0x0FFFFL);
 
     mul_res = input_1 * input_2;
-    mul_res = arm_nn_divide_by_power_of_two(arm_nn_sat_doubling_high_mult(mul_res, out_mult), -out_shift) + out_offset;
+    mul_res = arm_nn_requantize(mul_res, out_mult, out_shift) + out_offset;
 
     mul_res = MAX(mul_res, out_activation_min);
     mul_res = MIN(mul_res, out_activation_max);
@@ -108,7 +108,7 @@ arm_elementwise_mul_s8(const int8_t *input_1_vect,
     input_2 = (int16_t)((b_2 >> 16U) & 0x0FFFFL);
 
     mul_res = input_1 * input_2;
-    mul_res = arm_nn_divide_by_power_of_two(arm_nn_sat_doubling_high_mult(mul_res, out_mult), -out_shift) + out_offset;
+    mul_res = arm_nn_requantize(mul_res, out_mult, out_shift) + out_offset;
     mul_res = MAX(mul_res, out_activation_min);
     mul_res = MIN(mul_res, out_activation_max);
     r3 = (q7_t)mul_res;
@@ -118,7 +118,7 @@ arm_elementwise_mul_s8(const int8_t *input_1_vect,
     input_2 = (int16_t)(a_2 & 0x0FFFFL);
 
     mul_res = input_1 * input_2;
-    mul_res = arm_nn_divide_by_power_of_two(arm_nn_sat_doubling_high_mult(mul_res, out_mult), -out_shift) + out_offset;
+    mul_res = arm_nn_requantize(mul_res, out_mult, out_shift) + out_offset;
     mul_res = MAX(mul_res, out_activation_min);
     mul_res = MIN(mul_res, out_activation_max);
     r2 = (q7_t)mul_res;
@@ -128,7 +128,7 @@ arm_elementwise_mul_s8(const int8_t *input_1_vect,
     input_2 = (int16_t)((a_2 >> 16U) & 0x0FFFFL);
 
     mul_res = input_1 * input_2;
-    mul_res = arm_nn_divide_by_power_of_two(arm_nn_sat_doubling_high_mult(mul_res, out_mult), -out_shift) + out_offset;
+    mul_res = arm_nn_requantize(mul_res, out_mult, out_shift) + out_offset;
     mul_res = MAX(mul_res, out_activation_min);
     mul_res = MIN(mul_res, out_activation_max);
     r4 = (q7_t)mul_res;
@@ -151,7 +151,7 @@ arm_elementwise_mul_s8(const int8_t *input_1_vect,
     input_2 = *input_2_vect++ + input_2_offset;
 
     mul_res = input_1 * input_2;
-    mul_res = arm_nn_divide_by_power_of_two(arm_nn_sat_doubling_high_mult(mul_res, out_mult), -out_shift) + out_offset;
+    mul_res = arm_nn_requantize(mul_res, out_mult, out_shift) + out_offset;
 
     mul_res = MAX(mul_res, out_activation_min);
     mul_res = MIN(mul_res, out_activation_max);
