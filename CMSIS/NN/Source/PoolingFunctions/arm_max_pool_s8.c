@@ -68,7 +68,7 @@ void arm_max_pool_s8(const uint16_t input_y,
             for (i_ch_in = 0; i_ch_in < channel_in; i_ch_in++)
             {
                 /* Native data type for inner loop variables  */
-                int32_t max_val = (int32_t)Q7_MIN;
+                int32_t max_val = (int8_t)Q7_MIN;
                 /* Condition for kernel start dimension: (base_idx_<x,y> + ker_<x,y>_start) >= 0 */
                 const int32_t base_idx_y = (i_out_y * stride_y) - pad_y;
                 const int32_t base_idx_x = (i_out_x * stride_x) - pad_x;

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2018 Arm Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2010-2019 Arm Limited or its affiliates. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -21,7 +21,7 @@
  * Title:        arm_nnsupportfunctions.h
  * Description:  Public header file of support functions for CMSIS NN Library
  *
- * $Date:        July 2019
+ * $Date:        25 November 2019
  * $Revision:    V.1.0.0
  *
  * Target Processor:  Cortex-M cores
