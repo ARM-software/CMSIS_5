@@ -21,7 +21,7 @@
  * Title:        arm_max_pool_s8_opt.c
  * Description:  Pooling function implementations
  *
- * $Date:        September 2019
+ * $Date:        25 November 2019
  * $Revision:    V.1.0.0
  *
  * Target Processor:  Cortex-M
@@ -31,13 +31,46 @@
 #include "arm_math.h"
 #include "arm_nnfunctions.h"
 
-
 #if defined(ARM_MATH_LOOPUNROLL) && defined(ARM_MATH_DSP)
 
 static void compare_and_replace_if_larger_q7(q7_t *base,
                                              const q7_t *target,
                                              const uint16_t length)
 {
+#if defined(ARM_MATH_MVEI)
+
+    int loop_count = length / 16;
+    while (loop_count)
+    {
+        const int8x16_t op_1 = vldrbq_s8(base);
+        const int8x16_t op_2 = vldrbq_s8(target);
+        const int8x16_t max = vmaxq_s8(op_1, op_2);
+        vstrbq_s8(base, max);
+        base += 16;
+        target += 16;
+        loop_count--;
+    }
+
+    if (((length & 0xF) / 8) > 0)
+    {
+        const int16x8_t op_1 = vldrbq_s16(base);
+        const int16x8_t op_2 = vldrbq_s16(target);
+        const int16x8_t max = vmaxq_s16(op_1, op_2);
+        vstrbq_s16(base, max);
+
+        base += 8;
+        target += 8;
+    }
+
+    for (int i = 0; i < (length & 7); i++)
+    {
+        if (target[i] > base[i])
+        {
+            base[i] = target[i];
+        }
+    }
+
+#else
     q7_t *dst = base;
     const q7_t *src = target;
     union arm_nnword ref_max;
@@ -82,10 +115,44 @@ static void compare_and_replace_if_larger_q7(q7_t *base,
         src++;
         cnt--;
     }
+#endif
 }
 
 static void clamp_output(q7_t *source, const uint16_t length, const int32_t act_min, const int32_t act_max)
 {
+#if defined(ARM_MATH_MVEI)
+
+    int cnt = length / 16;
+    while (cnt > 0)
+    {
+        const int8x16_t src = vldrbq_s8(source);
+        int8x16_t res = vmaxq_s8(src, vdupq_n_s8((int8_t)act_min));
+        res = vminq_s8(src, vdupq_n_s8((int8_t)act_max));
+        vstrbq_s8(source, res);
+        source += 16;
+        cnt--;
+    }
+
+    if (((length & 0xF) / 8) > 0)
+    {
+        const int16x8_t src = vldrbq_s16(source);
+        int16x8_t res = vmaxq_s16(src, vdupq_n_s16((int16_t)act_min));
+        res = vminq_s16(src, vdupq_n_s16((int16_t)act_max));
+        vstrbq_s16(source, res);
+        source += 8;
+    }
+
+    cnt = length & 7;
+    while (cnt > 0)
+    {
+        int32_t comp = *source;
+        comp = MAX(comp, act_min);
+        comp = MIN(comp, act_max);
+        *source++ = (int8_t)comp;
+        cnt--;
+    }
+
+#else
     union arm_nnword in;
     int32_t cnt = length >> 2;
 
@@ -115,13 +182,13 @@ static void clamp_output(q7_t *source, const uint16_t length, const int32_t act_
         *source++ = (int8_t)comp;
         cnt--;
     }
+#endif
 }
 #endif
 
 /**
  *  @ingroup groupNN
  */
-
 
 /**
  * @addtogroup Pooling
@@ -158,7 +225,6 @@ void arm_max_pool_s8_opt(const uint16_t input_y,
     /* Run the following code for Cortex-M4 and Cortex-M7 */
     (void)tmp_buffer;
     int32_t i_x, i_y;
-    int32_t count = 0;
 
     /* first does the pooling along x axis */
     for (i_y = 0; i_y < input_y; i_y++)
@@ -170,22 +236,23 @@ void arm_max_pool_s8_opt(const uint16_t input_y,
             q7_t *target = src + (i_y * input_x + i_x) * depth;
             q7_t *win_start;
             q7_t *win_stop;
-            if (i_x * stride_x - pad_y < 0)
+            const int32_t x_origin = i_x * stride_x - pad_x;
+            if (x_origin < 0)
             {
                 win_start = target;
             }
             else
             {
-                win_start = src + (i_y * input_x + i_x * stride_x - pad_y) * depth;
+                win_start = src + (i_y * input_x + x_origin) * depth;
             }
 
-            if (i_x * stride_x - pad_y + kernel_x >= input_x)
+            if (x_origin + kernel_x >= input_x)
             {
                 win_stop = src + (i_y * input_x + input_x) * depth;
             }
             else
             {
-                win_stop = src + (i_y * input_x + i_x * stride_x - pad_y + kernel_x) * depth;
+                win_stop = src + (i_y * input_x + x_origin + kernel_x) * depth;
             }
 
             /* first step is to copy over initial data(along channel) along the channel in  x direction */
@@ -207,23 +274,24 @@ void arm_max_pool_s8_opt(const uint16_t input_y,
         q7_t *target = dst + i_y * output_x * depth;
         q7_t *row_start;
         q7_t *row_end;
+        const int32_t y_origin = i_y * stride_y - pad_y;
         /* setting the starting row */
-        if (i_y * stride_y - pad_y < 0)
+        if (y_origin < 0)
         {
             row_start = src;
         }
         else
         {
-            row_start = src + (i_y * stride_y - pad_y) * input_x * depth;
+            row_start = src + y_origin * input_x * depth;
         }
         /* setting the stopping row */
-        if (i_y * stride_y - pad_y + kernel_y >= input_y)
+        if (y_origin + kernel_y >= input_y)
         {
             row_end = src + input_y * input_x * depth;
         }
         else
         {
-            row_end = src + (i_y * stride_y - pad_y + kernel_y) * input_x * depth;
+            row_end = src + (y_origin + kernel_y) * input_x * depth;
         }
 
         /* copy over the complete first row. */
