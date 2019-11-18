@@ -2,10 +2,10 @@
  * @file     cmsis_gcc.h
  * @brief    CMSIS compiler GCC header file
  * @version  V5.3.0
- * @date     28. January 2020
+ * @date     26. March 2020
  ******************************************************************************/
 /*
- * Copyright (c) 2009-2019 Arm Limited. All rights reserved.
+ * Copyright (c) 2009-2020 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -179,7 +179,7 @@ __STATIC_FORCEINLINE __NO_RETURN void __cmsis_start(void)
 #endif
 
 #ifndef __VECTOR_TABLE_ATTRIBUTE
-#define __VECTOR_TABLE_ATTRIBUTE  __attribute((used, section(".vectors")))
+#define __VECTOR_TABLE_ATTRIBUTE  __attribute__((used, section(".vectors")))
 #endif
 
 /* ###########################  Core Function Access  ########################### */
