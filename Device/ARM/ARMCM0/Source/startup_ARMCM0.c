@@ -1,8 +1,8 @@
 /******************************************************************************
  * @file     startup_ARMCM0.c
  * @brief    CMSIS-Core(M) Device Startup File for a Cortex-M0 Device
- * @version  V2.0.1
- * @date     23. July 2019
+ * @version  V2.0.2
+ * @date     15. November 2019
  ******************************************************************************/
 /*
  * Copyright (c) 2009-2019 Arm Limited. All rights reserved.
@@ -68,7 +68,8 @@ void Interrupt9_Handler     (void) __attribute__ ((weak, alias("Default_Handler"
 #pragma GCC diagnostic ignored "-Wpedantic"
 #endif
 
-const VECTOR_TABLE_Type __VECTOR_TABLE[48] __VECTOR_TABLE_ATTRIBUTE = {
+extern const VECTOR_TABLE_Type __VECTOR_TABLE[48];
+       const VECTOR_TABLE_Type __VECTOR_TABLE[48] __VECTOR_TABLE_ATTRIBUTE = {
   (VECTOR_TABLE_Type)(&__INITIAL_SP),       /*     Initial Stack Pointer */
   Reset_Handler,                            /*     Reset Handler */
   NMI_Handler,                              /* -14 NMI Handler */

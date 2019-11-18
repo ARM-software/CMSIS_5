@@ -3,7 +3,7 @@
  * @brief    CMSIS Device System Source File for
  *           Armv8.1-M Mainline Device Series
  * @version  V1.2.0
- * @date     23. July 2019
+ * @date     15. November 2019
  ******************************************************************************/
 /*
  * Copyright (c) 2009-2019 Arm Limited. All rights reserved.
@@ -42,6 +42,12 @@
 
 
 /*----------------------------------------------------------------------------
+  Exception / Interrupt Vector table
+ *----------------------------------------------------------------------------*/
+extern const VECTOR_TABLE_Type __VECTOR_TABLE[496];
+
+
+/*----------------------------------------------------------------------------
   System Core Clock Variable
  *----------------------------------------------------------------------------*/
 uint32_t SystemCoreClock = SYSTEM_CLOCK;
@@ -62,7 +68,7 @@ void SystemInit (void)
 {
 
 #if defined (__VTOR_PRESENT) && (__VTOR_PRESENT == 1U)
-  SCB->VTOR = (uint32_t)(&__VECTOR_TABLE);
+  SCB->VTOR = (uint32_t)(&__VECTOR_TABLE[0]);
 #endif
 
 #if (defined (__FPU_USED) && (__FPU_USED == 1U)) || \

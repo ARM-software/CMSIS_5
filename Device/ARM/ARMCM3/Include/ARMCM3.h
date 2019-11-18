@@ -56,7 +56,7 @@ typedef enum IRQn
   Interrupt6_IRQn               =   6,
   Interrupt7_IRQn               =   7,
   Interrupt8_IRQn               =   8,
-  Interrupt9_IRQn               =   9,
+  Interrupt9_IRQn               =   9
   /* Interrupts 10 .. 224 are left out */
 } IRQn_Type;
 

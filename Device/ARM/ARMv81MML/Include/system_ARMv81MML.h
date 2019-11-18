@@ -2,8 +2,8 @@
  * @file     system_ARMv81MML.h
  * @brief    CMSIS Device System Header File for
  *           Armv8.1-M Mainline Device Series
- * @version  V1.0.0
- * @date     25. February 2019
+ * @version  V1.0.1
+ * @date     15. Novemer 2019
  ******************************************************************************/
 /*
  * Copyright (c) 2009-2019 Arm Limited. All rights reserved.
@@ -30,14 +30,15 @@
 extern "C" {
 #endif
 
-/*----------------------------------------------------------------------------
-  Exception / Interrupt Handler Function Prototype
- *----------------------------------------------------------------------------*/
-typedef void( *VECTOR_TABLE_Type )( void );
+/**
+  \brief Exception / Interrupt Handler Function Prototype
+*/
+typedef void(*VECTOR_TABLE_Type)(void);
 
-extern const VECTOR_TABLE_Type __VECTOR_TABLE[496];
-
-extern uint32_t SystemCoreClock;     /*!< System Clock Frequency (Core Clock) */
+/**
+  \brief System Clock Frequency (Core Clock)
+*/
+extern uint32_t SystemCoreClock;
 
 
 /**
