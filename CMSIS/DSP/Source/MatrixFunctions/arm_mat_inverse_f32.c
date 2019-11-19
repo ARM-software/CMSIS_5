@@ -1471,7 +1471,7 @@ arm_status arm_mat_inverse_f32(
         for (i = (l + 1U); i < numRows; i++)
         {
           /* Update the input and destination pointers */
-          pInT2 = pInT1 + (numCols * l);
+          pInT2 = pInT1 + (numCols * i);
           pOutT2 = pOutT1 + (numCols * k);
 
           /* Check if there is a non zero pivot element to
