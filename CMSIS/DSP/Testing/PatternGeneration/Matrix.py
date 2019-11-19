@@ -650,8 +650,9 @@ def writeUnaryTests(config,format):
        vals = vals + r
     config.writeReference(1, vals,"RefScale")
 
-    dims=NA
-    config.writeInputS16(1, dims,"DimsInvert")
+    # Current algo is not very accurate for big matrix.
+    # But big matrix required to check the vectorized code.
+    dims=[1,2,3,4,7,8,9,15,16,17,32,33]
 
     vals = []
     inp=[]
@@ -660,6 +661,15 @@ def writeUnaryTests(config,format):
         inp = inp + list(ma.reshape(d*d))
         r = numpy.linalg.inv(ma)
         vals = vals + list(r.reshape(d*d))
+
+    # Add matrix for testing null pivot condition
+    ma = np.array([[0., 3.], [4., 5.]])
+    inp = inp + list(ma.reshape(4))
+    r = np.linalg.inv(ma)
+    vals = vals + list(r.reshape(4))
+    dims.append(2)
+
+    config.writeInputS16(1, dims,"DimsInvert")
     config.writeInput(1, inp,"InputInvert")
     config.writeReference(1, vals,"RefInvert")
     # One kind of matrix shape

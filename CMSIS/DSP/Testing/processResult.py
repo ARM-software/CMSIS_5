@@ -111,6 +111,69 @@ class TextFormatter:
       def end(self):
         None
 
+# Return test result as a text tree
+class HTMLFormatter:
+      def __init__(self):
+        self.nb=1
+        self.suite=False
+
+      def start(self):
+          print("<html><head><title>Test Results</title></head><body>") 
+
+      def printGroup(self,elem,theId):
+        if elem is None:
+           elem = root
+        message=elem.data["message"]
+        if not elem.data["deprecated"]:
+           kind = "Suite"
+           ident = " " * elem.ident
+           if elem.kind == TestScripts.Parser.TreeElem.GROUP:
+              kind = "Group"
+           if kind == "Group":
+              print("<h%d> %s (%d) </h%d>" % (self.nb,message,theId,self.nb)) 
+           else:
+              print("<h%d> %s (%d) </h%d>" % (self.nb,message,theId,self.nb)) 
+              self.suite=True
+              print("<table style=\"width:100%\">")
+              print("<tr>")
+              print("<td>Name</td>")
+              print("<td>ID</td>")
+              print("<td>Status</td>")
+              print("<td>Cycles</td>")
+              print("</tr>")
+           self.nb = self.nb + 1
+
+      def printTest(self,elem, theId, theError,errorDetail,theLine,passed,cycles,params):
+          message=elem.data["message"]
+          if not elem.data["deprecated"]:
+             kind = "Test"
+             ident = " " * elem.ident
+             p="<font color=\"red\">FAILED</font>"
+             if passed == 1:
+                p= "<font color=\"green\">PASSED</font>"
+             print("<tr>")
+             print("<td><pre>%s</pre></td>" % message)
+             print("<td>%d</td>" % theId)
+             print("<td>%s</td>" % p)
+             print("<td>%d</td>" % cycles)
+             print("</tr>")
+             #if params:
+             #   print("%s %s" % (ident,params))
+             if passed != 1:
+
+                print("<tr><td colspan=4><font color=\"red\">%s at line %d</font></td></tr>" % (errorStr(theError), theLine))
+                if (len(errorDetail)>0):
+                   print("<tr><td colspan=4><font color=\"red\">" + errorDetail + "</font></td></tr>")
+
+      def pop(self):
+          if self.suite:
+            print("</table>")
+          self.nb = self.nb - 1
+          self.suite=False
+
+      def end(self):
+        print("</body></html>")
+
 # Return test result as a CSV
 class CSVFormatter:
 
@@ -454,6 +517,8 @@ def analyze(root,results,args,trace):
 
   if args.c:
      analyseResult(resultPath,root,results,args.e,args.b,trace,CSVFormatter())
+  elif args.html:
+     analyseResult(resultPath,root,results,args.e,args.b,trace,HTMLFormatter())
   elif args.m:
      analyseResult(resultPath,root,results,args.e,args.b,trace,MathematicaFormatter())
   else:
@@ -465,6 +530,7 @@ parser.add_argument('-f', nargs='?',type = str, default="Output.pickle", help="T
 # Where the result file can be found
 parser.add_argument('-r', nargs='?',type = str, default=None, help="Result file path")
 parser.add_argument('-c', action='store_true', help="CSV output")
+parser.add_argument('-html', action='store_true', help="HTML output")
 parser.add_argument('-e', action='store_true', help="Embedded test")
 # -o needed when -e is true to know where to extract the output files
 parser.add_argument('-o', nargs='?',type = str, default="Output", help="Output dir path")
