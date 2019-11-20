@@ -139,6 +139,7 @@ class HTMLFormatter:
               print("<td>Name</td>")
               print("<td>ID</td>")
               print("<td>Status</td>")
+              print("<td>Params</td>")
               print("<td>Cycles</td>")
               print("</tr>")
            self.nb = self.nb + 1
@@ -155,10 +156,13 @@ class HTMLFormatter:
              print("<td><pre>%s</pre></td>" % message)
              print("<td>%d</td>" % theId)
              print("<td>%s</td>" % p)
+             if params:
+                print("<td>%s</td>\n" % (params))
+             else:
+                print("<td></td>\n")
              print("<td>%d</td>" % cycles)
              print("</tr>")
-             #if params:
-             #   print("%s %s" % (ident,params))
+
              if passed != 1:
 
                 print("<tr><td colspan=4><font color=\"red\">%s at line %d</font></td></tr>" % (errorStr(theError), theLine))
