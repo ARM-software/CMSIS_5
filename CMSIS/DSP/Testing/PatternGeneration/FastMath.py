@@ -7,6 +7,8 @@ import math
 # Those patterns are used for tests and benchmarks.
 # For tests, there is the need to add tests for saturation
 
+# For benchmarks
+NBSAMPLES=256
 
 
 def writeTests(config,format):
@@ -35,6 +37,12 @@ def writeTests(config,format):
     config.writeReference(1, refsin,"Sin")
     config.writeReference(1, sqrtvals,"Sqrt")
 
+    # For benchmarks
+    samples=np.random.randn(NBSAMPLES)
+    samples = np.abs(Tools.normalize(samples))
+    config.writeInput(1, samples,"Samples")
+
+
 def writeTestsF32(config,format):
     writeTests(config,format)
 
@@ -52,6 +60,11 @@ def writeTestsF32(config,format):
     config.writeInput(1, samples,"ExpInput")
     v = np.exp(samples)
     config.writeReference(1, v,"Exp")
+
+    # For benchmarks
+    samples=np.random.randn(NBSAMPLES)
+    samples = np.abs(Tools.normalize(samples))
+    config.writeInput(1, samples,"Samples")
 
     
 def generatePatterns():

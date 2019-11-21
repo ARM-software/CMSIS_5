@@ -986,9 +986,9 @@ group Root {
                   Formula "NB"
                 }
 
-                Pattern SAMPLES_Q31_ID : Samples1_q31.txt 
+                Pattern SAMPLES_Q31_ID : Samples4_q31.txt 
                 Pattern SAMPLES_Q15_ID : Samples3_q15.txt 
-                Pattern SAMPLES_Q7_ID : Samples4_q7.txt 
+                Pattern SAMPLES_Q7_ID : Samples5_q7.txt 
                 Output  OUT_SAMPLES_Q31_ID : Output
 
                 Params PARAM1_ID = {
@@ -1014,9 +1014,9 @@ group Root {
                   Formula "NB"
                 }
 
-                Pattern SAMPLES_Q15_ID : Samples1_q15.txt 
-                Pattern SAMPLES_Q31_ID : Samples3_q31.txt 
-                Pattern SAMPLES_Q7_ID : Samples4_q7.txt 
+                Pattern SAMPLES_Q15_ID : Samples3_q15.txt 
+                Pattern SAMPLES_Q31_ID : Samples4_q31.txt 
+                Pattern SAMPLES_Q7_ID : Samples5_q7.txt 
                 Output  OUT_SAMPLES_Q15_ID : Output
 
                 Params PARAM1_ID = {
@@ -1042,9 +1042,9 @@ group Root {
                   Formula "NB"
                 }
 
-                Pattern SAMPLES_Q7_ID : Samples1_q7.txt 
-                Pattern SAMPLES_Q31_ID : Samples3_q31.txt 
-                Pattern SAMPLES_Q15_ID : Samples4_q15.txt 
+                Pattern SAMPLES_Q7_ID : Samples5_q7.txt 
+                Pattern SAMPLES_Q31_ID : Samples4_q31.txt 
+                Pattern SAMPLES_Q15_ID : Samples3_q15.txt 
                 Output  OUT_SAMPLES_Q7_ID : Output
 
                 Params PARAM1_ID = {

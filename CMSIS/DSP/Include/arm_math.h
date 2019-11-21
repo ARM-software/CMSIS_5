@@ -1350,7 +1350,7 @@ __STATIC_INLINE q31_t arm_div_q63_to_q31(q63_t num, q31_t den)
         /*
          * 64-bit division
          */
-        result = (q31_t) num / den;
+        result = (q31_t) (num / den);
 
     return result;
 }

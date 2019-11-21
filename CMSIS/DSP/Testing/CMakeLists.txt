@@ -216,6 +216,10 @@ disableOptimization(FrameworkLib)
 target_sources(TestingLib PRIVATE ${TESTSRC})
 target_sources(TestingLib PRIVATE testmain.cpp)
 target_sources(TestingLib PRIVATE GeneratedSource/TestDesc.cpp)
+
+if (BENCHMARK)
+  target_compile_definitions(TestingLib PUBLIC BENCHMARK)
+endif()
   
 
 target_sources(FrameworkLib PRIVATE ${FRAMEWORKSRC})
