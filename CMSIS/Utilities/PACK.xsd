@@ -17,13 +17,16 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 
-  $Date:        05. November 2019
-  $Revision:    1.6.2
+  $Date:        21. November 2019
+  $Revision:    1.6.3
 
   $Project: Schema File for Package Description File Format Specification
 
   Package file name convention <vendor>.<name>.<version>.pack
-  SchemaVersion=1.6.2
+  SchemaVersion=1.6.3
+
+  21. November 2019: v1.6.3
+  - added attribute 'uninit' to <memory> element to replace deprecated 'init' attribute
 
   05. November 2019: v1.6.2
   - added <accessportV1> and <accessportV2> to describe CoreSight access port parameters.
@@ -519,8 +522,10 @@
     <xs:attribute name="access" type="AccessType" use="optional" default="r" />
     <!-- alias: reference to another memory by 'name' to express that the same physical memory is mapped at another address (added in 1.4.4) -->
     <xs:attribute name="alias" type="RestrictedString" use="optional" />
-    <!-- !!! deprecated, do not use / ignore !!! specifies whether the memory shall be 0 initialized -->
+    <!-- !!! deprecated, do not use / ignore !!! specifies whether the memory shall NOT be 0 initialized , use uninit instead-->
     <xs:attribute name="init" type="xs:boolean" use="optional" default="0" />
+    <!-- specifies whether the memory shall not be 0 initialized -->
+    <xs:attribute name="uninit" type="xs:boolean" use="optional" default="0" />
     <!-- specifies whether the memory is used as default by linker -->
     <xs:attribute name="default" type="xs:boolean" use="optional" default="0" />
     <!-- specifies whether the memory shall be used for the startup by linker -->
@@ -1537,8 +1542,10 @@
     <xs:attribute name="remove" type="xs:boolean" use="optional" default="0" />
     <!-- if true, this memory is used for the startup code -->
     <xs:attribute name="startup" type="xs:boolean" use="optional" default="0" />
-    <!-- if true, this memory is initialized with 0 -->
+    <!-- !!! deprecated, do not use / ignore !!! specifies whether the memory shall NOT be 0 initialized , use uninit instead-->
     <xs:attribute name="init" type="xs:boolean" use="optional" default="0" />
+    <!-- specifies whether the memory shall not be 0 initialized -->
+    <xs:attribute name="uninit" type="xs:boolean" use="optional" default="0" />
     <!-- overrides access permisson configured by the DFP -->
     <xs:attribute name="access" type="AccessType" use="optional" />
     <!-- specifies whether the memory is used as default by linker -->
