@@ -27,6 +27,7 @@
 
   21. November 2019: v1.6.3
   - added attribute 'uninit' to <memory> element to replace deprecated 'init' attribute
+  - DmveEnum is changed according to specification
 
   05. November 2019: v1.6.2
   - added <accessportV1> and <accessportV2> to describe CoreSight access port parameters.
@@ -1000,12 +1001,7 @@
     <xs:restriction base="xs:token">
       <xs:enumeration value="NO_MVE"/>
       <xs:enumeration value="MVE"/>
-      <xs:enumeration value="MVE_SP_FP"/>
-      <xs:enumeration value="MVE_DP_FP"/>
-      <xs:enumeration value="0"/>
-      <xs:enumeration value="1"/>
-      <xs:enumeration value="2"/>
-      <xs:enumeration value="3"/>
+      <xs:enumeration value="FP_MVE"/>
       <xs:enumeration value="*"/>
     </xs:restriction>
   </xs:simpleType>
