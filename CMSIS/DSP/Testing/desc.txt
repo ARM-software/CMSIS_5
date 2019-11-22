@@ -2000,6 +2000,125 @@ group Root {
            class = TransformTests
            folder = Transform 
 
+           suite Transform F64 {
+              class = TransformF64
+              folder = TransformF64
+
+              Pattern INPUTS_CFFT_NOISY_16_F64_ID : ComplexInputSamples_Noisy_16_1_f64.txt 
+              Pattern INPUTS_CIFFT_NOISY_16_F64_ID : ComplexInputIFFTSamples_Noisy_16_1_f64.txt 
+              Pattern REF_CFFT_NOISY_16_F64_ID : ComplexFFTSamples_Noisy_16_1_f64.txt 
+
+              Pattern INPUTS_CFFT_NOISY_32_F64_ID : ComplexInputSamples_Noisy_32_2_f64.txt 
+              Pattern INPUTS_CIFFT_NOISY_32_F64_ID : ComplexInputIFFTSamples_Noisy_32_2_f64.txt 
+              Pattern REF_CFFT_NOISY_32_F64_ID : ComplexFFTSamples_Noisy_32_2_f64.txt 
+
+              Pattern INPUTS_CFFT_NOISY_64_F64_ID : ComplexInputSamples_Noisy_64_3_f64.txt
+              Pattern INPUTS_CIFFT_NOISY_64_F64_ID : ComplexInputIFFTSamples_Noisy_64_3_f64.txt 
+              Pattern REF_CFFT_NOISY_64_F64_ID : ComplexFFTSamples_Noisy_64_3_f64.txt 
+
+              Pattern INPUTS_CFFT_NOISY_128_F64_ID : ComplexInputSamples_Noisy_128_4_f64.txt 
+              Pattern INPUTS_CIFFT_NOISY_128_F64_ID : ComplexInputIFFTSamples_Noisy_128_4_f64.txt 
+              Pattern REF_CFFT_NOISY_128_F64_ID : ComplexFFTSamples_Noisy_128_4_f64.txt 
+
+              Pattern INPUTS_CFFT_NOISY_256_F64_ID : ComplexInputSamples_Noisy_256_5_f64.txt 
+              Pattern INPUTS_CIFFT_NOISY_256_F64_ID : ComplexInputIFFTSamples_Noisy_256_5_f64.txt 
+              Pattern REF_CFFT_NOISY_256_F64_ID : ComplexFFTSamples_Noisy_256_5_f64.txt 
+
+              Pattern INPUTS_CFFT_NOISY_512_F64_ID : ComplexInputSamples_Noisy_512_6_f64.txt 
+              Pattern INPUTS_CIFFT_NOISY_512_F64_ID : ComplexInputIFFTSamples_Noisy_512_6_f64.txt 
+              Pattern REF_CFFT_NOISY_512_F64_ID : ComplexFFTSamples_Noisy_512_6_f64.txt 
+
+              Pattern INPUTS_CFFT_NOISY_1024_F64_ID : ComplexInputSamples_Noisy_1024_7_f64.txt 
+              Pattern INPUTS_CIFFT_NOISY_1024_F64_ID : ComplexInputIFFTSamples_Noisy_1024_7_f64.txt 
+              Pattern REF_CFFT_NOISY_1024_F64_ID : ComplexFFTSamples_Noisy_1024_7_f64.txt 
+
+              Pattern INPUTS_CFFT_NOISY_2048_F64_ID : ComplexInputSamples_Noisy_2048_8_f64.txt 
+              Pattern INPUTS_CIFFT_NOISY_2048_F64_ID : ComplexInputIFFTSamples_Noisy_2048_8_f64.txt 
+              Pattern REF_CFFT_NOISY_2048_F64_ID : ComplexFFTSamples_Noisy_2048_8_f64.txt 
+
+              Pattern INPUTS_CFFT_NOISY_4096_F64_ID : ComplexInputSamples_Noisy_4096_9_f64.txt 
+              Pattern INPUTS_CIFFT_NOISY_4096_F64_ID : ComplexInputIFFTSamples_Noisy_4096_9_f64.txt 
+              Pattern REF_CFFT_NOISY_4096_F64_ID : ComplexFFTSamples_Noisy_4096_9_f64.txt 
+
+              Pattern INPUTS_CFFT_STEP_16_F64_ID : ComplexInputSamples_Step_16_10_f64.txt 
+              Pattern INPUTS_CIFFT_STEP_16_F64_ID : ComplexInputIFFTSamples_Step_16_10_f64.txt 
+              Pattern REF_CFFT_STEP_16_F64_ID : ComplexFFTSamples_Step_16_10_f64.txt 
+
+              Pattern INPUTS_CFFT_STEP_32_F64_ID : ComplexInputSamples_Step_32_11_f64.txt 
+              Pattern INPUTS_CIFFT_STEP_32_F64_ID : ComplexInputIFFTSamples_Step_32_11_f64.txt 
+              Pattern REF_CFFT_STEP_32_F64_ID : ComplexFFTSamples_Step_32_11_f64.txt 
+
+              Pattern INPUTS_CFFT_STEP_64_F64_ID : ComplexInputSamples_Step_64_12_f64.txt 
+              Pattern INPUTS_CIFFT_STEP_64_F64_ID : ComplexInputIFFTSamples_Step_64_12_f64.txt 
+              Pattern REF_CFFT_STEP_64_F64_ID : ComplexFFTSamples_Step_64_12_f64.txt 
+
+              Pattern INPUTS_CFFT_STEP_128_F64_ID : ComplexInputSamples_Step_128_13_f64.txt 
+              Pattern INPUTS_CIFFT_STEP_128_F64_ID : ComplexInputIFFTSamples_Step_128_13_f64.txt 
+              Pattern REF_CFFT_STEP_128_F64_ID : ComplexFFTSamples_Step_128_13_f64.txt 
+
+              Pattern INPUTS_CFFT_STEP_256_F64_ID : ComplexInputSamples_Step_256_14_f64.txt 
+              Pattern INPUTS_CIFFT_STEP_256_F64_ID : ComplexInputIFFTSamples_Step_256_14_f64.txt 
+              Pattern REF_CFFT_STEP_256_F64_ID : ComplexFFTSamples_Step_256_14_f64.txt 
+
+              Pattern INPUTS_CFFT_STEP_512_F64_ID : ComplexInputSamples_Step_512_15_f64.txt 
+              Pattern INPUTS_CIFFT_STEP_512_F64_ID : ComplexInputIFFTSamples_Step_512_15_f64.txt 
+              Pattern REF_CFFT_STEP_512_F64_ID : ComplexFFTSamples_Step_512_15_f64.txt 
+
+              Pattern INPUTS_CFFT_STEP_1024_F64_ID : ComplexInputSamples_Step_1024_16_f64.txt 
+              Pattern INPUTS_CIFFT_STEP_1024_F64_ID : ComplexInputIFFTSamples_Step_1024_16_f64.txt 
+              Pattern REF_CFFT_STEP_1024_F64_ID : ComplexFFTSamples_Step_1024_16_f64.txt 
+
+              Pattern INPUTS_CFFT_STEP_2048_F64_ID : ComplexInputSamples_Step_2048_17_f64.txt 
+              Pattern INPUTS_CIFFT_STEP_2048_F64_ID : ComplexInputIFFTSamples_Step_2048_17_f64.txt 
+              Pattern REF_CFFT_STEP_2048_F64_ID : ComplexFFTSamples_Step_2048_17_f64.txt 
+
+              Pattern INPUTS_CFFT_STEP_4096_F64_ID : ComplexInputSamples_Step_4096_18_f64.txt 
+              Pattern INPUTS_CIFFT_STEP_4096_F64_ID : ComplexInputIFFTSamples_Step_4096_18_f64.txt 
+              Pattern REF_CFFT_STEP_4096_F64_ID : ComplexFFTSamples_Step_4096_18_f64.txt 
+
+              Output  OUTPUT_CFFT_F64_ID : ComplexFFTSamples
+
+              Functions {
+                 cfft_noisy_16_f64:test_cfft_f64
+                 cfft_noisy_32_f64:test_cfft_f64
+                 cfft_noisy_64_f64:test_cfft_f64
+                 cfft_noisy_128_f64:test_cfft_f64
+                 cfft_noisy_256_f64:test_cfft_f64
+                 cfft_noisy_512_f64:test_cfft_f64
+                 cfft_noisy_1024_f64:test_cfft_f64
+                 cfft_noisy_2048_f64:test_cfft_f64
+                 cfft_noisy_4096_f64:test_cfft_f64
+                 cfft_step_16_f64:test_cfft_f64
+                 cfft_step_32_f64:test_cfft_f64
+                 cfft_step_64_f64:test_cfft_f64
+                 cfft_step_128_f64:test_cfft_f64
+                 cfft_step_256_f64:test_cfft_f64
+                 cfft_step_512_f64:test_cfft_f64
+                 cfft_step_1024_f64:test_cfft_f64
+                 cfft_step_2048_f64:test_cfft_f64
+                 cfft_step_4096_f64:test_cfft_f64
+                 cifft_noisy_16_f64:test_cfft_f64
+                 cifft_noisy_32_f64:test_cfft_f64
+                 cifft_noisy_64_f64:test_cfft_f64
+                 cifft_noisy_128_f64:test_cfft_f64
+                 cifft_noisy_256_f64:test_cfft_f64
+                 cifft_noisy_512_f64:test_cfft_f64
+                 cifft_noisy_1024_f64:test_cfft_f64
+                 cifft_noisy_2048_f64:test_cfft_f64
+                 cifft_noisy_4096_f64:test_cfft_f64
+                 cifft_step_16_f64:test_cfft_f64
+                 cifft_step_32_f64:test_cfft_f64
+                 cifft_step_64_f64:test_cfft_f64
+                 cifft_step_128_f64:test_cfft_f64
+                 cifft_step_256_f64:test_cfft_f64
+                 cifft_step_512_f64:test_cfft_f64
+                 cifft_step_1024_f64:test_cfft_f64
+                 cifft_step_2048_f64:test_cfft_f64
+                 cifft_step_4096_f64:test_cfft_f64
+              }
+
+            }
+
            suite Transform F32 {
               class = TransformF32
               folder = TransformF32

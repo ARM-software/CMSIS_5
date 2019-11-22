@@ -90,13 +90,15 @@ def generatePatterns():
     PATTERNDIR = os.path.join("Patterns","DSP","Transform","Transform")
     PARAMDIR = os.path.join("Parameters","DSP","Transform","Transform")
     
+    configf64=Tools.Config(PATTERNDIR,PARAMDIR,"f64")
     configf32=Tools.Config(PATTERNDIR,PARAMDIR,"f32")
     configq31=Tools.Config(PATTERNDIR,PARAMDIR,"q31")
     configq15=Tools.Config(PATTERNDIR,PARAMDIR,"q15")
     
     
     scalings = [4,5,6,7,8,9,10,11,12]
-    writeTests([(configf32,None)
+    writeTests([(configf64,None),
+        (configf32,None)
         ,(configq31,scalings)
         ,(configq15,scalings)])
 
