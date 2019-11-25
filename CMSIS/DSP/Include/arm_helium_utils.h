@@ -90,18 +90,14 @@ __STATIC_INLINE arm_status arm_mat_trans_32bit_2x2_mve(
     uint32_t * pDataSrc,
     uint32_t * pDataDest)
 {
-    uint32x4_t   vecOffs;
-    uint32x4_t   vecIn;
-
-    static const uint32_t  stridesTr22[4] = { 0, 2, 1, 3 };
+    static const uint32x4_t vecOffs = { 0, 2, 1, 3 };
     /*
      *
      * | 0   1 |   =>  |  0   2 |
      * | 2   3 |       |  1   3 |
      *
      */
-    vecOffs = vldrwq_u32((uint32_t const *)stridesTr22);
-    vecIn = vldrwq_u32((uint32_t const *)pDataSrc);
+    uint32x4_t vecIn = vldrwq_u32((uint32_t const *)pDataSrc);
     vstrwq_scatter_shifted_offset_u32(pDataDest, vecOffs, vecIn);
 
     return (ARM_MATH_SUCCESS);
@@ -111,10 +107,8 @@ __STATIC_INLINE arm_status arm_mat_trans_32bit_3x3_mve(
     uint32_t * pDataSrc,
     uint32_t * pDataDest)
 {
-    static const uint32_t stridesTr33_1[4] = { 0, 3, 6, 1};
-    static const uint32_t stridesTr33_2[4] = { 4, 7, 2, 5};
-    uint32x4_t vecOffs1, vecOffs2;
-    uint32x4_t vecIn1, vecIn2;
+    const uint32x4_t vecOffs1 = { 0, 3, 6, 1};
+    const uint32x4_t vecOffs2 = { 4, 7, 2, 5};
     /*
      *
      *  | 0   1   2 |       | 0   3   6 |  4 x 32 flattened version | 0   3   6   1 |
@@ -122,11 +116,8 @@ __STATIC_INLINE arm_status arm_mat_trans_32bit_3x3_mve(
      *  | 6   7   8 |       | 2   5   8 |       (row major)         | 8   .   .   . |
      *
      */
-    vecOffs1 = vldrwq_u32((uint32_t const *) stridesTr33_1);
-    vecOffs2 = vldrwq_u32((uint32_t const *) stridesTr33_2);
-
-    vecIn1 = vldrwq_u32((uint32_t const *) pDataSrc);
-    vecIn2 = vldrwq_u32((uint32_t const *) &pDataSrc[4]);
+    uint32x4_t vecIn1 = vldrwq_u32((uint32_t const *) pDataSrc);
+    uint32x4_t vecIn2 = vldrwq_u32((uint32_t const *) &pDataSrc[4]);
 
     vstrwq_scatter_shifted_offset_u32(pDataDest, vecOffs1, vecIn1);
     vstrwq_scatter_shifted_offset_u32(pDataDest, vecOffs2, vecIn2);
