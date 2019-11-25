@@ -12,21 +12,6 @@ FFTSIZES=[16,32,64,128,256,512,1024,2048,4096]
 SINES=[0.25,0.5,0.9]
 NOISES=[0.1,0.4]
 
-def randComplex(nb):
-    data = np.random.randn(2*nb)
-    data = Tools.normalize(data)
-    data_comp = data.view(dtype=np.complex128)
-    return(data_comp)
-
-def asReal(a):
-    #return(a.view(dtype=np.float64))
-    return(a.reshape(np.size(a)).view(dtype=np.float64))
-
-def randComplex(nb):
-    data = np.random.randn(2*nb)
-    data = Tools.normalize(data)
-    data_comp = data.view(dtype=np.complex128)
-    return(data_comp)
 
 def asReal(a):
     #return(a.view(dtype=np.float64))
@@ -57,6 +42,21 @@ def writeFFTForSignal(config,sig,scaling,i,j,nb,signame):
     config.writeInput(i, asReal(fft),"ComplexFFTSamples_%s_%d_" % (signame,nb))
     config.writeInput(i, asReal(fft),"ComplexInputIFFTSamples_%s_%d_" % (signame,nb))
 
+def writeRFFTForSignal(config,sig,scaling,i,j,nb,signame):
+    rfft=scipy.fftpack.rfft(sig)
+    # Changed for f32 and f64 to reproduce CMSIS behavior.
+    if not scaling:
+       rfft=np.insert(rfft, 1, rfft[-1])
+       rfft[-1]=0.0
+       
+    rifft = np.copy(rfft)
+    if scaling:
+        rfft = np.array([x/2**scaling[j] for x in rfft])
+    config.writeInput(i, (sig),"RealInputSamples_%s_%d_" % (signame,nb))
+    config.writeInput(i, (rfft),"RealFFTSamples_%s_%d_" % (signame,nb))
+    config.writeInput(i, (rfft),"RealInputIFFTSamples_%s_%d_" % (signame,nb))
+
+
 def writeTests(configs):
     i = 1
 
@@ -64,9 +64,10 @@ def writeTests(configs):
     j = 0
     for nb in FFTSIZES:
         sig = noisySineSignal(0.05,0.7,nb)
-        sig = np.array([complex(x) for x in sig])
+        sigc = np.array([complex(x) for x in sig])
         for config,scaling in configs:
-            writeFFTForSignal(config,sig,scaling,i,j,nb,"Noisy")
+            writeFFTForSignal(config,sigc,scaling,i,j,nb,"Noisy")
+            writeRFFTForSignal(config,sig,scaling,i,j,nb,"Noisy")
         i = i + 1
         j = j + 1
 
@@ -74,12 +75,14 @@ def writeTests(configs):
     j = 0
     for nb in FFTSIZES:
         sig = stepSignal(0.9,nb)
-        sig = np.array([complex(x) for x in sig])
+        sigc = np.array([complex(x) for x in sig])
         for config,scaling in configs:
-            writeFFTForSignal(config,sig,scaling,i,j,nb,"Step")
+            writeFFTForSignal(config,sigc,scaling,i,j,nb,"Step")
+            writeRFFTForSignal(config,sig,scaling,i,j,nb,"Step")
         i = i + 1
         j = j + 1
 
+    # Used for benchmarks
     data1=np.random.randn(512)
     data1 = Tools.normalize(data1)
     for config,scaling in configs:
