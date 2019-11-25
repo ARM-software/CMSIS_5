@@ -33,8 +33,14 @@
 
 #include <stdbool.h>
 typedef bool bool_t;
+
+#ifndef FALSE
 #define FALSE                   ((bool_t)0)
+#endif
+
+#ifndef TRUE
 #define TRUE                    ((bool_t)1)
+#endif
 
 #ifdef  RTE_CMSIS_RTOS2_RTX5_ARMV8M_NS
 #define DOMAIN_NS               1
