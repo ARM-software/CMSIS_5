@@ -287,10 +287,11 @@ __STATIC_FORCEINLINE void PIN_DELAY_SLOW (uint32_t delay) {
 #else
 __STATIC_FORCEINLINE void PIN_DELAY_SLOW (uint32_t delay) {
   __ASM volatile (
+  ".syntax unified\n"
   "0:\n\t"
     "subs %0,%0,#1\n\t"
     "bne  0b\n"
-  : "+r" (delay) : : "cc"
+  : "+l" (delay) : : "cc"
   );
 }
 #endif
