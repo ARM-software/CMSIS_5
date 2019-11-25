@@ -28,6 +28,9 @@
 #ifndef __DAP_H__
 #define __DAP_H__
 
+#include <stddef.h>
+#include <stdint.h>
+#include "cmsis_compiler.h"
 
 // DAP Firmware Version
 #ifdef  DAP_FW_V1
@@ -192,10 +195,6 @@
 #define SWD_SEQUENCE_DIN                0x80U   // SWDIO capture
 
 
-#include <stddef.h>
-#include <stdint.h>
-#include "cmsis_compiler.h"
-
 // DAP Data structure
 typedef struct {
   uint8_t     debug_port;                       // Debug Port
@@ -228,6 +227,10 @@ typedef struct {
   } jtag_dev;
 #endif
 } DAP_Data_t;
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 extern          DAP_Data_t DAP_Data;            // DAP Data
 extern volatile uint8_t    DAP_TransferAbort;   // Transfer Abort Flag
@@ -311,5 +314,8 @@ __STATIC_FORCEINLINE void PIN_DELAY_FAST (void) {
 #endif
 }
 
+#ifdef __cplusplus
+}
+#endif
 
 #endif  /* __DAP_H__ */
