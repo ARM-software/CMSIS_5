@@ -165,6 +165,54 @@ q15_t *outp=output.ptr();
        
     } 
 
+    void BasicTestsQ15::test_and_q15()
+    {
+        GET_Q15_PTR();
+
+        arm_and_q15(inp1,inp2,outp,input1.nbSamples());
+        
+        ASSERT_EMPTY_TAIL(output);
+
+        ASSERT_EQ(output,ref);
+
+    } 
+
+    void BasicTestsQ15::test_or_q15()
+    {
+        GET_Q15_PTR();
+
+        arm_or_q15(inp1,inp2,outp,input1.nbSamples());
+        
+        ASSERT_EMPTY_TAIL(output);
+
+        ASSERT_EQ(output,ref);
+
+    } 
+
+    void BasicTestsQ15::test_not_q15()
+    {
+        GET_Q15_PTR();
+
+        arm_not_q15(inp1,outp,input1.nbSamples());
+        
+        ASSERT_EMPTY_TAIL(output);
+
+        ASSERT_EQ(output,ref);
+
+    } 
+
+    void BasicTestsQ15::test_xor_q15()
+    {
+        GET_Q15_PTR();
+
+        arm_xor_q15(inp1,inp2,outp,input1.nbSamples());
+        
+        ASSERT_EMPTY_TAIL(output);
+
+        ASSERT_EQ(output,ref);
+
+    } 
+
 
     void BasicTestsQ15::setUp(Testing::testID_t id,std::vector<Testing::param_t>& params,Client::PatternMgr *mgr)
     {
@@ -427,6 +475,99 @@ q15_t *outp=output.ptr();
           output.create(ref.nbSamples(),BasicTestsQ15::OUT_SAMPLES_Q15_ID,mgr);
           input1.reload(BasicTestsQ15::MAXNEG_Q15_ID,mgr);
         break;
+
+	case BasicTestsQ15::TEST_AND_Q15_37:
+          nb = 7;
+          ref.reload(BasicTestsQ15::REF_AND_Q15_ID,mgr,nb);
+          output.create(ref.nbSamples(),BasicTestsQ15::OUT_SAMPLES_Q15_ID,mgr);
+          input1.reload(BasicTestsQ15::INPUT1_BITWISE_Q15_ID,mgr,nb);
+          input2.reload(BasicTestsQ15::INPUT2_BITWISE_Q15_ID,mgr,nb);
+          break;
+
+        case BasicTestsQ15::TEST_AND_Q15_38:
+          nb = 16;
+          ref.reload(BasicTestsQ15::REF_AND_Q15_ID,mgr,nb);
+          output.create(ref.nbSamples(),BasicTestsQ15::OUT_SAMPLES_Q15_ID,mgr);
+          input1.reload(BasicTestsQ15::INPUT1_BITWISE_Q15_ID,mgr,nb);
+          input2.reload(BasicTestsQ15::INPUT2_BITWISE_Q15_ID,mgr,nb);
+          break;
+        case BasicTestsQ15::TEST_AND_Q15_39:
+          nb = 23;
+          ref.reload(BasicTestsQ15::REF_AND_Q15_ID,mgr,nb);
+          output.create(ref.nbSamples(),BasicTestsQ15::OUT_SAMPLES_Q15_ID,mgr);
+          input1.reload(BasicTestsQ15::INPUT1_BITWISE_Q15_ID,mgr,nb);
+          input2.reload(BasicTestsQ15::INPUT2_BITWISE_Q15_ID,mgr,nb);
+          break;
+
+	case BasicTestsQ15::TEST_OR_Q15_40:
+          nb = 7;
+          ref.reload(BasicTestsQ15::REF_OR_Q15_ID,mgr,nb);
+          output.create(ref.nbSamples(),BasicTestsQ15::OUT_SAMPLES_Q15_ID,mgr);
+          input1.reload(BasicTestsQ15::INPUT1_BITWISE_Q15_ID,mgr,nb);
+          input2.reload(BasicTestsQ15::INPUT2_BITWISE_Q15_ID,mgr,nb);
+          break;
+
+        case BasicTestsQ15::TEST_OR_Q15_41:
+          nb = 16;
+          ref.reload(BasicTestsQ15::REF_OR_Q15_ID,mgr,nb);
+          output.create(ref.nbSamples(),BasicTestsQ15::OUT_SAMPLES_Q15_ID,mgr);
+          input1.reload(BasicTestsQ15::INPUT1_BITWISE_Q15_ID,mgr,nb);
+          input2.reload(BasicTestsQ15::INPUT2_BITWISE_Q15_ID,mgr,nb);
+          break;
+        case BasicTestsQ15::TEST_OR_Q15_42:
+          nb = 23;
+          ref.reload(BasicTestsQ15::REF_OR_Q15_ID,mgr,nb);
+          output.create(ref.nbSamples(),BasicTestsQ15::OUT_SAMPLES_Q15_ID,mgr);
+          input1.reload(BasicTestsQ15::INPUT1_BITWISE_Q15_ID,mgr,nb);
+          input2.reload(BasicTestsQ15::INPUT2_BITWISE_Q15_ID,mgr,nb);
+          break;
+
+	case BasicTestsQ15::TEST_NOT_Q15_43:
+          nb = 7;
+          ref.reload(BasicTestsQ15::REF_NOT_Q15_ID,mgr,nb);
+          output.create(ref.nbSamples(),BasicTestsQ15::OUT_SAMPLES_Q15_ID,mgr);
+          input1.reload(BasicTestsQ15::INPUT1_BITWISE_Q15_ID,mgr,nb);
+          input2.reload(BasicTestsQ15::INPUT2_BITWISE_Q15_ID,mgr,nb);
+          break;
+
+	case BasicTestsQ15::TEST_NOT_Q15_44:
+          nb = 16;
+          ref.reload(BasicTestsQ15::REF_NOT_Q15_ID,mgr,nb);
+          output.create(ref.nbSamples(),BasicTestsQ15::OUT_SAMPLES_Q15_ID,mgr);
+          input1.reload(BasicTestsQ15::INPUT1_BITWISE_Q15_ID,mgr,nb);
+          input2.reload(BasicTestsQ15::INPUT2_BITWISE_Q15_ID,mgr,nb);
+          break;
+        case BasicTestsQ15::TEST_NOT_Q15_45:
+          nb = 23;
+          ref.reload(BasicTestsQ15::REF_NOT_Q15_ID,mgr,nb);
+          output.create(ref.nbSamples(),BasicTestsQ15::OUT_SAMPLES_Q15_ID,mgr);
+          input1.reload(BasicTestsQ15::INPUT1_BITWISE_Q15_ID,mgr,nb);
+          input2.reload(BasicTestsQ15::INPUT2_BITWISE_Q15_ID,mgr,nb);
+          break;
+
+	case BasicTestsQ15::TEST_XOR_Q15_46:
+          nb = 7;
+          ref.reload(BasicTestsQ15::REF_XOR_Q15_ID,mgr,nb);
+          output.create(ref.nbSamples(),BasicTestsQ15::OUT_SAMPLES_Q15_ID,mgr);
+          input1.reload(BasicTestsQ15::INPUT1_BITWISE_Q15_ID,mgr,nb);
+          input2.reload(BasicTestsQ15::INPUT2_BITWISE_Q15_ID,mgr,nb);
+          break;
+
+        case BasicTestsQ15::TEST_XOR_Q15_47:
+          nb = 16;
+          ref.reload(BasicTestsQ15::REF_XOR_Q15_ID,mgr,nb);
+          output.create(ref.nbSamples(),BasicTestsQ15::OUT_SAMPLES_Q15_ID,mgr);
+          input1.reload(BasicTestsQ15::INPUT1_BITWISE_Q15_ID,mgr,nb);
+          input2.reload(BasicTestsQ15::INPUT2_BITWISE_Q15_ID,mgr,nb);
+          break;
+        case BasicTestsQ15::TEST_XOR_Q15_48:
+          nb = 23;
+          ref.reload(BasicTestsQ15::REF_XOR_Q15_ID,mgr,nb);
+          output.create(ref.nbSamples(),BasicTestsQ15::OUT_SAMPLES_Q15_ID,mgr);
+          input1.reload(BasicTestsQ15::INPUT1_BITWISE_Q15_ID,mgr,nb);
+          input2.reload(BasicTestsQ15::INPUT2_BITWISE_Q15_ID,mgr,nb);
+          break;
+
 
        }
       

@@ -106,7 +106,7 @@ def writeTestsWithSat(config,format):
        NBSAMPLES=33
 
     nb = writeTests(config,format)
-
+    
     data1 = np.full(NBSAMPLES, 2**format - 1)
     data1[1::2] = 2
     data2 = np.full(NBSAMPLES, -2**format)
@@ -173,6 +173,83 @@ def writeTestsWithSat(config,format):
     ref = d2 * 2.0
     config.writeReference(nb+12, ref,"Shift")
 
+    return(nb+13)
+
+
+def writeTests2(config,format):
+
+    NBSAMPLES = Tools.loopnb(format,Tools.BODYANDTAIL)
+
+    nb = writeTestsWithSat(config,format)
+
+    if format == 31:
+       maxVal = 0x7fffffff
+    if format == 15:
+       maxVal = 0x7fff
+    if format == 7:
+       maxVal = 0x7f 
+
+    minVal = -maxVal-1
+
+    data1 = np.random.randint(minVal, maxVal, size=NBSAMPLES)
+    data2 = np.random.randint(minVal, maxVal, size=NBSAMPLES)
+
+    if format == 31:
+       config.writeInputS32(nb,data1,"BitwiseInput")
+       config.writeInputS32(nb+1,data2,"BitwiseInput")
+
+    if format == 15:
+       config.writeInputS16(nb,data1,"BitwiseInput")
+       config.writeInputS16(nb+1,data2,"BitwiseInput")
+
+    if format == 7:
+       config.writeInputS8(nb,data1,"BitwiseInput")
+       config.writeInputS8(nb+1,data2,"BitwiseInput")
+
+    ref = np.bitwise_and(data1, data2)
+
+    if format == 31:
+      config.writeReferenceS32(nb, ref, "And")
+
+    if format == 15:
+      config.writeReferenceS16(nb, ref, "And")
+
+    if format == 7:
+      config.writeReferenceS8(nb, ref, "And")
+
+    ref = np.bitwise_or(data1, data2)
+
+    if format == 31:
+      config.writeReferenceS32(nb+1, ref, "Or")
+
+    if format == 15:
+      config.writeReferenceS16(nb+1, ref, "Or")
+
+    if format == 7:
+      config.writeReferenceS8(nb+1, ref, "Or")
+
+    ref = np.invert(data1)
+
+    if format == 31:
+      config.writeReferenceS32(nb+2, ref, "Not")
+
+    if format == 15:
+      config.writeReferenceS16(nb+2, ref, "Not")
+
+    if format == 7:
+      config.writeReferenceS8(nb+2, ref, "Not")
+
+    ref = np.bitwise_xor(data1, data2)
+
+    if format == 31:
+      config.writeReferenceS32(nb+3, ref, "Xor")
+
+    if format == 15:
+      config.writeReferenceS16(nb+3, ref, "Xor")
+
+    if format == 7:
+      config.writeReferenceS8(nb+3, ref, "Xor")
+
 
 def generatePatterns():
     PATTERNDIR = os.path.join("Patterns","DSP","BasicMaths","BasicMaths")
@@ -183,13 +260,12 @@ def generatePatterns():
     configq15=Tools.Config(PATTERNDIR,PARAMDIR,"q15")
     configq7=Tools.Config(PATTERNDIR,PARAMDIR,"q7")
     
-    
-    
     writeTests(configf32,0)
-    writeTestsWithSat(configq31,31)
-    writeTestsWithSat(configq15,15)
-    writeTestsWithSat(configq7,7)
-    
+
+    writeTests2(configq31,31)
+    writeTests2(configq15,15)
+    writeTests2(configq7,7)
+
     # Params just as example
     someLists=[[1,3,5],[1,3,5],[1,3,5]]
     

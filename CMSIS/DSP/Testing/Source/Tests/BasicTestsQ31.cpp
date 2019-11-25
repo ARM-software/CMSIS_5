@@ -163,6 +163,53 @@ q31_t *outp=output.ptr();
        
     } 
 
+    void BasicTestsQ31::test_and_q31()
+    {
+        GET_Q31_PTR();
+
+        arm_and_q31(inp1,inp2,outp,input1.nbSamples());
+        
+        ASSERT_EMPTY_TAIL(output);
+
+        ASSERT_EQ(output,ref);
+
+    } 
+
+    void BasicTestsQ31::test_or_q31()
+    {
+        GET_Q31_PTR();
+
+        arm_or_q31(inp1,inp2,outp,input1.nbSamples());
+        
+        ASSERT_EMPTY_TAIL(output);
+
+        ASSERT_EQ(output,ref);
+
+    } 
+
+    void BasicTestsQ31::test_not_q31()
+    {
+        GET_Q31_PTR();
+
+        arm_not_q31(inp1,outp,input1.nbSamples());
+        
+        ASSERT_EMPTY_TAIL(output);
+
+        ASSERT_EQ(output,ref);
+
+    } 
+
+    void BasicTestsQ31::test_xor_q31()
+    {
+        GET_Q31_PTR();
+
+        arm_xor_q31(inp1,inp2,outp,input1.nbSamples());
+        
+        ASSERT_EMPTY_TAIL(output);
+
+        ASSERT_EQ(output,ref);
+
+    } 
 
     void BasicTestsQ31::setUp(Testing::testID_t id,std::vector<Testing::param_t>& params,Client::PatternMgr *mgr)
     {
@@ -425,6 +472,99 @@ q31_t *outp=output.ptr();
           output.create(ref.nbSamples(),BasicTestsQ31::OUT_SAMPLES_Q31_ID,mgr);
           input1.reload(BasicTestsQ31::MAXNEG_Q31_ID,mgr);
         break;
+
+	case BasicTestsQ31::TEST_AND_Q31_37:
+          nb = 3;
+          ref.reload(BasicTestsQ31::REF_AND_Q31_ID,mgr,nb);
+          output.create(ref.nbSamples(),BasicTestsQ31::OUT_SAMPLES_Q31_ID,mgr);
+          input1.reload(BasicTestsQ31::INPUT1_BITWISE_Q31_ID,mgr,nb);
+          input2.reload(BasicTestsQ31::INPUT2_BITWISE_Q31_ID,mgr,nb);
+          break;
+
+        case BasicTestsQ31::TEST_AND_Q31_38:
+          nb = 8;
+          ref.reload(BasicTestsQ31::REF_AND_Q31_ID,mgr,nb);
+          output.create(ref.nbSamples(),BasicTestsQ31::OUT_SAMPLES_Q31_ID,mgr);
+          input1.reload(BasicTestsQ31::INPUT1_BITWISE_Q31_ID,mgr,nb);
+          input2.reload(BasicTestsQ31::INPUT2_BITWISE_Q31_ID,mgr,nb);
+          break;
+        case BasicTestsQ31::TEST_AND_Q31_39:
+          nb = 11;
+          ref.reload(BasicTestsQ31::REF_AND_Q31_ID,mgr,nb);
+          output.create(ref.nbSamples(),BasicTestsQ31::OUT_SAMPLES_Q31_ID,mgr);
+          input1.reload(BasicTestsQ31::INPUT1_BITWISE_Q31_ID,mgr,nb);
+          input2.reload(BasicTestsQ31::INPUT2_BITWISE_Q31_ID,mgr,nb);
+          break;
+
+	case BasicTestsQ31::TEST_OR_Q31_40:
+          nb = 3;
+          ref.reload(BasicTestsQ31::REF_OR_Q31_ID,mgr,nb);
+          output.create(ref.nbSamples(),BasicTestsQ31::OUT_SAMPLES_Q31_ID,mgr);
+          input1.reload(BasicTestsQ31::INPUT1_BITWISE_Q31_ID,mgr,nb);
+          input2.reload(BasicTestsQ31::INPUT2_BITWISE_Q31_ID,mgr,nb);
+          break;
+
+        case BasicTestsQ31::TEST_OR_Q31_41:
+          nb = 8;
+          ref.reload(BasicTestsQ31::REF_OR_Q31_ID,mgr,nb);
+          output.create(ref.nbSamples(),BasicTestsQ31::OUT_SAMPLES_Q31_ID,mgr);
+          input1.reload(BasicTestsQ31::INPUT1_BITWISE_Q31_ID,mgr,nb);
+          input2.reload(BasicTestsQ31::INPUT2_BITWISE_Q31_ID,mgr,nb);
+          break;
+        case BasicTestsQ31::TEST_OR_Q31_42:
+          nb = 11;
+          ref.reload(BasicTestsQ31::REF_OR_Q31_ID,mgr,nb);
+          output.create(ref.nbSamples(),BasicTestsQ31::OUT_SAMPLES_Q31_ID,mgr);
+          input1.reload(BasicTestsQ31::INPUT1_BITWISE_Q31_ID,mgr,nb);
+          input2.reload(BasicTestsQ31::INPUT2_BITWISE_Q31_ID,mgr,nb);
+          break;
+
+	case BasicTestsQ31::TEST_NOT_Q31_43:
+          nb = 3;
+          ref.reload(BasicTestsQ31::REF_NOT_Q31_ID,mgr,nb);
+          output.create(ref.nbSamples(),BasicTestsQ31::OUT_SAMPLES_Q31_ID,mgr);
+          input1.reload(BasicTestsQ31::INPUT1_BITWISE_Q31_ID,mgr,nb);
+          input2.reload(BasicTestsQ31::INPUT2_BITWISE_Q31_ID,mgr,nb);
+          break;
+
+        case BasicTestsQ31::TEST_NOT_Q31_44:
+          nb = 8;
+          ref.reload(BasicTestsQ31::REF_NOT_Q31_ID,mgr,nb);
+          output.create(ref.nbSamples(),BasicTestsQ31::OUT_SAMPLES_Q31_ID,mgr);
+          input1.reload(BasicTestsQ31::INPUT1_BITWISE_Q31_ID,mgr,nb);
+          input2.reload(BasicTestsQ31::INPUT2_BITWISE_Q31_ID,mgr,nb);
+          break;
+        case BasicTestsQ31::TEST_NOT_Q31_45:
+          nb = 11;
+          ref.reload(BasicTestsQ31::REF_NOT_Q31_ID,mgr,nb);
+          output.create(ref.nbSamples(),BasicTestsQ31::OUT_SAMPLES_Q31_ID,mgr);
+          input1.reload(BasicTestsQ31::INPUT1_BITWISE_Q31_ID,mgr,nb);
+          input2.reload(BasicTestsQ31::INPUT2_BITWISE_Q31_ID,mgr,nb);
+          break;
+
+	case BasicTestsQ31::TEST_XOR_Q31_46:
+          nb = 3;
+          ref.reload(BasicTestsQ31::REF_XOR_Q31_ID,mgr,nb);
+          output.create(ref.nbSamples(),BasicTestsQ31::OUT_SAMPLES_Q31_ID,mgr);
+          input1.reload(BasicTestsQ31::INPUT1_BITWISE_Q31_ID,mgr,nb);
+          input2.reload(BasicTestsQ31::INPUT2_BITWISE_Q31_ID,mgr,nb);
+          break;
+
+        case BasicTestsQ31::TEST_XOR_Q31_47:
+          nb = 8;
+          ref.reload(BasicTestsQ31::REF_XOR_Q31_ID,mgr,nb);
+          output.create(ref.nbSamples(),BasicTestsQ31::OUT_SAMPLES_Q31_ID,mgr);
+          input1.reload(BasicTestsQ31::INPUT1_BITWISE_Q31_ID,mgr,nb);
+          input2.reload(BasicTestsQ31::INPUT2_BITWISE_Q31_ID,mgr,nb);
+          break;
+        case BasicTestsQ31::TEST_XOR_Q31_48:
+          nb = 11;
+          ref.reload(BasicTestsQ31::REF_XOR_Q31_ID,mgr,nb);
+          output.create(ref.nbSamples(),BasicTestsQ31::OUT_SAMPLES_Q31_ID,mgr);
+          input1.reload(BasicTestsQ31::INPUT1_BITWISE_Q31_ID,mgr,nb);
+          input2.reload(BasicTestsQ31::INPUT2_BITWISE_Q31_ID,mgr,nb);
+          break;
+
 
        }
       
