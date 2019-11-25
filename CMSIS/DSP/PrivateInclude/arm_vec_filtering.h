@@ -1658,4 +1658,4 @@ extern "C"
 #endif
 
 
-#endif /* _ARM_VEC_MATH_H */
+#endif /* _ARM_VEC_FILTERING_H_ */

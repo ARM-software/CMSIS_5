@@ -617,7 +617,6 @@ extern "C"
 
 #endif
 
-
 #if defined(ARM_MATH_NEON) || defined(ARM_MATH_MVEF) /* floating point vector*/
   /**
    * @brief 32-bit floating-point 128-bit vector type
@@ -2034,6 +2033,278 @@ __STATIC_INLINE q31_t arm_div_q63_to_q31(q63_t num, q31_t den)
 
 
   /**
+   * @brief         Compute the logical bitwise AND of two fixed-point vectors.
+   * @param[in]     pSrcA      points to input vector A
+   * @param[in]     pSrcB      points to input vector B
+   * @param[out]    pDst       points to output vector
+   * @param[in]     blockSize  number of samples in each vector
+   * @return        none
+   */
+  void arm_and_q15(
+    const q15_t * pSrcA,
+    const q15_t * pSrcB,
+    q15_t * pDst,
+    uint32_t blockSize);
+
+  /**
+   * @brief         Compute the logical bitwise AND of two fixed-point vectors.
+   * @param[in]     pSrcA      points to input vector A
+   * @param[in]     pSrcB      points to input vector B
+   * @param[out]    pDst       points to output vector
+   * @param[in]     blockSize  number of samples in each vector
+   * @return        none
+   */
+  void arm_and_q31(
+    const q31_t * pSrcA,
+    const q31_t * pSrcB,
+    q31_t * pDst,
+    uint32_t blockSize);
+
+  /**
+   * @brief         Compute the logical bitwise AND of two fixed-point vectors.
+   * @param[in]     pSrcA      points to input vector A
+   * @param[in]     pSrcB      points to input vector B
+   * @param[out]    pDst       points to output vector
+   * @param[in]     blockSize  number of samples in each vector
+   * @return        none
+   */
+  void arm_and_q7(
+    const q7_t * pSrcA,
+    const q7_t * pSrcB,
+    q7_t * pDst,
+    uint32_t blockSize);
+
+  /**
+   * @brief         Compute the logical bitwise OR of two fixed-point vectors.
+   * @param[in]     pSrcA      points to input vector A
+   * @param[in]     pSrcB      points to input vector B
+   * @param[out]    pDst       points to output vector
+   * @param[in]     blockSize  number of samples in each vector
+   * @return        none
+   */
+  void arm_or_q15(
+    const q15_t * pSrcA,
+    const q15_t * pSrcB,
+    q15_t * pDst,
+    uint32_t blockSize);
+
+  /**
+   * @brief         Compute the logical bitwise OR of two fixed-point vectors.
+   * @param[in]     pSrcA      points to input vector A
+   * @param[in]     pSrcB      points to input vector B
+   * @param[out]    pDst       points to output vector
+   * @param[in]     blockSize  number of samples in each vector
+   * @return        none
+   */
+  void arm_or_q31(
+    const q31_t * pSrcA,
+    const q31_t * pSrcB,
+    q31_t * pDst,
+    uint32_t blockSize);
+
+  /**
+   * @brief         Compute the logical bitwise OR of two fixed-point vectors.
+   * @param[in]     pSrcA      points to input vector A
+   * @param[in]     pSrcB      points to input vector B
+   * @param[out]    pDst       points to output vector
+   * @param[in]     blockSize  number of samples in each vector
+   * @return        none
+   */
+  void arm_or_q7(
+    const q7_t * pSrcA,
+    const q7_t * pSrcB,
+    q7_t * pDst,
+    uint32_t blockSize);
+
+  /**
+   * @brief         Compute the logical bitwise NOT of a fixed-point vector.
+   * @param[in]     pSrc       points to input vector 
+   * @param[out]    pDst       points to output vector
+   * @param[in]     blockSize  number of samples in each vector
+   * @return        none
+   */
+  void arm_not_q15(
+    const q15_t * pSrc,
+          q15_t * pDst,
+    uint32_t blockSize);
+
+  /**
+   * @brief         Compute the logical bitwise NOT of a fixed-point vector.
+   * @param[in]     pSrc       points to input vector 
+   * @param[out]    pDst       points to output vector
+   * @param[in]     blockSize  number of samples in each vector
+   * @return        none
+   */
+  void arm_not_q31(
+    const q31_t * pSrc,
+          q31_t * pDst,
+    uint32_t blockSize);
+
+  /**
+   * @brief         Compute the logical bitwise NOT of a fixed-point vector.
+   * @param[in]     pSrc       points to input vector 
+   * @param[out]    pDst       points to output vector
+   * @param[in]     blockSize  number of samples in each vector
+   * @return        none
+   */
+  void arm_not_q7(
+    const q7_t * pSrc,
+          q7_t * pDst,
+    uint32_t blockSize);
+
+/**
+   * @brief         Compute the logical bitwise XOR of two fixed-point vectors.
+   * @param[in]     pSrcA      points to input vector A
+   * @param[in]     pSrcB      points to input vector B
+   * @param[out]    pDst       points to output vector
+   * @param[in]     blockSize  number of samples in each vector
+   * @return        none
+   */
+  void arm_xor_q15(
+    const q15_t * pSrcA,
+    const q15_t * pSrcB,
+    q15_t * pDst,
+    uint32_t blockSize);
+
+  /**
+   * @brief         Compute the logical bitwise XOR of two fixed-point vectors.
+   * @param[in]     pSrcA      points to input vector A
+   * @param[in]     pSrcB      points to input vector B
+   * @param[out]    pDst       points to output vector
+   * @param[in]     blockSize  number of samples in each vector
+   * @return        none
+   */
+  void arm_xor_q31(
+    const q31_t * pSrcA,
+    const q31_t * pSrcB,
+    q31_t * pDst,
+    uint32_t blockSize);
+
+  /**
+   * @brief         Compute the logical bitwise XOR of two fixed-point vectors.
+   * @param[in]     pSrcA      points to input vector A
+   * @param[in]     pSrcB      points to input vector B
+   * @param[out]    pDst       points to output vector
+   * @param[in]     blockSize  number of samples in each vector
+   * @return        none
+   */
+  void arm_xor_q7(
+    const q7_t * pSrcA,
+    const q7_t * pSrcB,
+    q7_t * pDst,
+    uint32_t blockSize);
+
+  /**
+   * @brief Struct for specifying sorting algorithm
+   */
+  typedef enum
+  {
+    ARM_SORT_BITONIC   = 0,
+             /**< Bitonic sort   */
+    ARM_SORT_BUBBLE    = 1,
+             /**< Bubble sort    */
+    ARM_SORT_HEAP      = 2,
+             /**< Heap sort      */
+    ARM_SORT_INSERTION = 3,
+             /**< Insertion sort */
+    ARM_SORT_MERGE     = 4,
+             /**< Merge sort     */
+    ARM_SORT_QUICK     = 5,
+             /**< Quick sort     */
+    ARM_SORT_SELECTION = 6
+             /**< Selection sort */
+  } arm_sort_alg;
+
+  /**
+   * @brief Struct for specifying sorting algorithm
+   */
+  typedef enum
+  {
+    ARM_SORT_DESCENDING = 0,
+             /**< Descending order (9 to 0) */
+    ARM_SORT_ASCENDING = 1
+             /**< Ascending order (0 to 9) */
+  } arm_sort_dir;
+
+  /**
+   * @brief Instance structure for the sorting algorithms.
+   */
+  typedef struct            
+  {
+    arm_sort_alg alg;        /**< Sorting algorithm selected */
+    arm_sort_dir dir;        /**< Sorting order (direction)  */
+  } arm_sort_instance_f32;  
+
+  /**
+   * @param[in]  S          points to an instance of the sorting structure.
+   * @param[in]  pSrc       points to the block of input data.
+   * @param[out] pDst       points to the block of output data.
+   * @param[in]  blockSize  number of samples to process.
+   */
+  void arm_sort_f32(
+    const arm_sort_instance_f32 * S, 
+          float32_t * pSrc, 
+          float32_t * pDst, 
+          uint32_t blockSize);
+
+  /**
+   * @param[in,out]  S            points to an instance of the sorting structure.
+   * @param[in]      alg          Selected algorithm.
+   * @param[in]      dir          Sorting order.
+   * @param[in]      inPlaceFlag  In place flag.
+   */
+  void arm_sort_init_f32(
+    arm_sort_instance_f32 * S, 
+    arm_sort_alg alg, 
+    arm_sort_dir dir); 
+
+  /**
+   * @brief Struct for specifying cubic spline type
+   */
+  typedef enum
+  {
+    ARM_SPLINE_NATURAL = 0,           /**< Natural spline */
+    ARM_SPLINE_PARABOLIC_RUNOUT = 1   /**< Parabolic runout spline */
+  } arm_spline_type;
+
+  /**
+   * @brief Instance structure for the floating-point cubic spline interpolation.
+   */
+  typedef struct
+  {
+    uint32_t n_x;              /**< Number of known data points */
+    arm_spline_type type;      /**< Type (boundary conditions) */
+  } arm_spline_instance_f32;
+
+  /**
+   * @brief Processing function for the floating-point cubic spline interpolation.
+   * @param[in]  S          points to an instance of the floating-point spline structure.
+   * @param[in]  x          points to the x values of the known data points.
+   * @param[in]  y          points to the y values of the known data points.
+   * @param[in]  xq         points to the x values ot the interpolated data points.
+   * @param[out] pDst       points to the block of output data.
+   * @param[in]  blockSize  number of samples of output data.
+   */
+  void arm_spline_f32(
+          arm_spline_instance_f32 * S,
+    const float32_t * x,
+    const float32_t * y,
+    const float32_t * xq,
+          float32_t * pDst,
+	  uint32_t blockSize);
+
+  /**
+   * @brief Initialization function for the floating-point cubic spline interpolation.
+   * @param[in,out] S        points to an instance of the floating-point spline structure.
+   * @param[in]     n        number of known data points.
+   * @param[in]     type     type of cubic spline interpolation (boundary conditions)
+   */
+  void arm_spline_init_f32(
+    arm_spline_instance_f32 * S,
+    uint32_t n,
+    arm_spline_type type);
+
+  /**
    * @brief Instance structure for the floating-point matrix structure.
    */
   typedef struct
@@ -2042,9 +2313,8 @@ __STATIC_INLINE q31_t arm_div_q63_to_q31(q63_t num, q31_t den)
     uint16_t numCols;     /**< number of columns of the matrix.  */
     float32_t *pData;     /**< points to the data of the matrix. */
   } arm_matrix_instance_f32;
-
-
-  /**
+ 
+ /**
    * @brief Instance structure for the floating-point matrix structure.
    */
   typedef struct
@@ -7473,9 +7743,8 @@ arm_status arm_sqrt_q15(
         q15_t * pDst,
         uint32_t blockSize);
 
-  /**
+/**
  * @brief Struct for specifying SVM Kernel
- *
  */
 typedef enum
 {
@@ -7488,7 +7757,6 @@ typedef enum
     ARM_ML_KERNEL_SIGMOID = 3
              /**< Sigmoid kernel */
 } arm_ml_kernel_type;
-
 
 
 /**

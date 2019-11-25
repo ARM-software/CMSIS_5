@@ -254,8 +254,28 @@ group Root {
               folder = SupportF32
 
               Pattern INPUTS_F32_ID : Inputs6_f32.txt 
+              Pattern INPUT_SORT_F32_ID : Input7_f32.txt
+	      Pattern INPUT_BITONIC_SORT_16_F32_ID : Input8_f32.txt
+	      Pattern INPUT_BITONIC_SORT_32_F32_ID : Input9_f32.txt
+              Pattern INPUT_SORT_CONST_F32_ID : Input10_f32.txt
+	      Pattern INPUT_SPLINE_SQU_X_F32_ID : InputX11_f32.txt
+	      Pattern INPUT_SPLINE_SQU_Y_F32_ID : InputY11_f32.txt
+	      Pattern OUTPUT_SPLINE_SQU_X_F32_ID : OutputX11_f32.txt
+	      Pattern INPUT_SPLINE_SIN_X_F32_ID : InputX12_f32.txt 
+              Pattern INPUT_SPLINE_SIN_Y_F32_ID : InputY12_f32.txt
+	      Pattern OUTPUT_SPLINE_SIN_X_F32_ID : OutputX12_f32.txt 
+	      Pattern INPUT_SPLINE_RAM_X_F32_ID : InputX13_f32.txt
+	      Pattern INPUT_SPLINE_RAM_Y_F32_ID : InputY13_f32.txt
+	      Pattern OUTPUT_SPLINE_RAM_X_F32_ID : OutputX13_f32.txt
               Pattern WEIGHTS_F32_ID : Weights6_f32.txt 
               Pattern REF_F32_ID : Ref6_f32.txt
+              Pattern REF_SORT_F32_ID : Reference7_f32.txt 
+	      Pattern REF_BITONIC_SORT_16_F32_ID : Reference8_f32.txt
+	      Pattern REF_BITONIC_SORT_32_F32_ID : Reference9_f32.txt
+	      Pattern REF_SORT_CONST_F32_ID : Reference10_f32.txt
+              Pattern REF_SPLINE_SQU_F32_ID : Reference11_f32.txt
+              Pattern REF_SPLINE_SIN_F32_ID : Reference12_f32.txt
+	      Pattern REF_SPLINE_RAM_F32_ID : Reference13_f32.txt
               Pattern SAMPLES_F32_ID : Samples1_f32.txt 
               Pattern SAMPLES_Q15_ID : Samples3_q15.txt 
               Pattern SAMPLES_Q31_ID : Samples4_q31.txt 
@@ -282,6 +302,32 @@ group Root {
                 test_float_q7 nb=15:test_float_to_q7
                 test_float_q7 nb=16n:test_float_to_q7
                 test_float_q7 nb=16n+1:test_float_to_q7
+
+                test_bitonic_sort_f32 nb=16 outofoplace:test_bitonic_sort_out_f32   
+                test_bitonic_sort_f32 nb=32 outofplace:test_bitonic_sort_out_f32
+                test_bitonic_sort_f32 nb=32 inplace:test_bitonic_sort_in_f32
+		test_bitonic_sort_f32 nb=16 const:test_bitonic_sort_const_f32
+                test_bubble_sort_f32 nb=11 outofplace:test_bubble_sort_out_f32
+		test_bubble_sort_f32 nb=11 inplace:test_bubble_sort_in_f32
+		test_bubble_sort_f32 nb=16 const:test_bubble_sort_const_f32
+                test_heap_sort_f32 nb=11 outofplace:test_heap_sort_out_f32
+                test_heap_sort_f32 nb=11 inplace:test_heap_sort_in_f32
+                test_heap_sort_f32 nb=16 const:test_heap_sort_const_f32
+                test_insertion_sort_f32 nb=11 outofplace:test_insertion_sort_out_f32 
+                test_insertion_sort_f32 nb=11 inplace:test_insertion_sort_in_f32 
+                test_insertion_sort_f32 nb=16 const:test_insertion_sort_const_f32 
+                test_merge_sort_f32 nb=11 outofplace:test_merge_sort_out_f32 
+                test_merge_sort_f32 nb=16 const:test_merge_sort_const_f32 
+                test_quick_sort_f32 nb=11 outofplace:test_quick_sort_out_f32
+                test_quick_sort_f32 nb=11 inplace:test_quick_sort_in_f32 
+                test_quick_sort_f32 nb=16 const:test_quick_sort_const_f32 
+                test_selection_sort_f32 nb=11 outofplace:test_selection_sort_out_f32 
+                test_selection_sort_f32 nb=11 inplace:test_selection_sort_in_f32
+		test_selection_sort_f32 nb=16 const:test_selection_sort_const_f32
+
+                test_spline_f32 square:test_spline_square_f32
+		test_spline_f32 sin:test_spline_sine_f32
+		test_spline_f32 ramp:test_spline_ramp_f32
               }
 
            }
@@ -470,7 +516,10 @@ group Root {
               Pattern MAXNEG_Q31_ID : MaxNegInput12_s32.txt
               Pattern MAXNEG2_Q31_ID : MaxNeg2Input12_s32.txt
               Pattern MAXPOS_Q31_ID : MaxPosInput12_s32.txt
-   
+ 
+	      Pattern INPUT1_BITWISE_Q31_ID : BitwiseInput24_s32.txt
+	      Pattern INPUT2_BITWISE_Q31_ID : BitwiseInput25_s32.txt
+  
               Pattern REF_ADD_Q31_ID : Reference1_q31.txt
               Pattern REF_SUB_Q31_ID : Reference2_q31.txt
               Pattern REF_MULT_Q31_ID : Reference3_q31.txt
@@ -495,6 +544,11 @@ group Root {
               Pattern REF_SHIFT_21_Q31_ID : Shift21_q31.txt
               Pattern REF_SHIFT_POSSAT_22_Q31_ID : Shift22_q31.txt
               Pattern REF_SHIFT_NEGSAT_23_Q31_ID : Shift23_q31.txt
+
+	      Pattern REF_AND_Q31_ID : And24_s32.txt
+	      Pattern REF_OR_Q31_ID  : Or25_s32.txt
+	      Pattern REF_NOT_Q31_ID : Not26_s32.txt
+	      Pattern REF_XOR_Q31_ID : Xor27_s32.txt
 
               Output  OUT_SAMPLES_Q31_ID : Output
               Output  OUT_STATE_Q31_ID : State
@@ -550,6 +604,23 @@ group Root {
                 Test shift:test_shift_q31
                 Test shift pos sat:test_shift_q31
                 Test shift neg sat:test_shift_q31
+
+		Test nb=3    arm_and_q31:test_and_q31
+		Test nb=4n   arm_and_q31:test_and_q31
+		Test nb=4n+3 arm_and_q31:test_and_q31
+
+		Test nb=3    arm_or_q31:test_or_q31
+		Test nb=4n   arm_or_q31:test_or_q31
+		Test nb=4n+3 arm_or_q31:test_or_q31
+
+		Test nb=3    arm_not_q31:test_not_q31
+		Test nb=4n   arm_not_q31:test_not_q31
+		Test nb=4n+3 arm_not_q31:test_not_q31
+
+		Test nb=3    arm_xor_q31:test_xor_q31
+		Test nb=4n   arm_xor_q31:test_xor_q31
+		Test nb=4n+3 arm_xor_q31:test_xor_q31
+
               }
            }
 
@@ -564,7 +635,10 @@ group Root {
               Pattern MAXNEG_Q15_ID : MaxNegInput12_s16.txt
               Pattern MAXNEG2_Q15_ID : MaxNeg2Input12_s16.txt
               Pattern MAXPOS_Q15_ID : MaxPosInput12_s16.txt
-   
+
+   	      Pattern INPUT1_BITWISE_Q15_ID : BitwiseInput24_s16.txt
+	      Pattern INPUT2_BITWISE_Q15_ID : BitwiseInput25_s16.txt 
+
               Pattern REF_ADD_Q15_ID : Reference1_q15.txt
               Pattern REF_SUB_Q15_ID : Reference2_q15.txt
               Pattern REF_MULT_Q15_ID : Reference3_q15.txt
@@ -589,6 +663,11 @@ group Root {
               Pattern REF_SHIFT_21_Q15_ID : Shift21_q15.txt
               Pattern REF_SHIFT_POSSAT_22_Q15_ID : Shift22_q15.txt
               Pattern REF_SHIFT_NEGSAT_23_Q15_ID : Shift23_q15.txt
+
+	      Pattern REF_AND_Q15_ID : And24_s16.txt
+	      Pattern REF_OR_Q15_ID  : Or25_s16.txt
+	      Pattern REF_NOT_Q15_ID : Not26_s16.txt
+	      Pattern REF_XOR_Q15_ID : Xor27_s16.txt
 
               Output  OUT_SAMPLES_Q15_ID : Output
               Output  OUT_STATE_Q15_ID : State
@@ -644,6 +723,23 @@ group Root {
                 Test shift:test_shift_q15
                 Test shift pos sat:test_shift_q15
                 Test shift neg sat:test_shift_q15
+
+		Test nb=7    arm_and_q15:test_and_q15
+		Test nb=8n   arm_and_q15:test_and_q15
+		Test nb=8n+7 arm_and_q15:test_and_q15
+
+		Test nb=7    arm_or_q15:test_or_q15
+		Test nb=8n   arm_or_q15:test_or_q15
+		Test nb=8n+7 arm_or_q15:test_or_q15
+
+		Test nb=7    arm_not_q15:test_not_q15
+		Test nb=8n   arm_not_q15:test_not_q15
+		Test nb=8n+7 arm_not_q15:test_not_q15
+
+		Test nb=7    arm_xor_q15:test_xor_q15
+		Test nb=8n   arm_xor_q15:test_xor_q15
+		Test nb=8n+7 arm_xor_q15:test_xor_q15
+
               }
            }
 
@@ -658,7 +754,10 @@ group Root {
               Pattern MAXNEG_Q7_ID : MaxNegInput12_s8.txt
               Pattern MAXNEG2_Q7_ID : MaxNeg2Input12_s8.txt
               Pattern MAXPOS_Q7_ID : MaxPosInput12_s8.txt
-   
+
+    	      Pattern INPUT1_BITWISE_Q7_ID : BitwiseInput24_s8.txt
+	      Pattern INPUT2_BITWISE_Q7_ID : BitwiseInput25_s8.txt 
+  
               Pattern REF_ADD_Q7_ID : Reference1_q7.txt
               Pattern REF_SUB_Q7_ID : Reference2_q7.txt
               Pattern REF_MULT_Q7_ID : Reference3_q7.txt
@@ -683,6 +782,11 @@ group Root {
               Pattern REF_SHIFT_21_Q7_ID : Shift21_q7.txt
               Pattern REF_SHIFT_POSSAT_22_Q7_ID : Shift22_q7.txt
               Pattern REF_SHIFT_NEGSAT_23_Q7_ID : Shift23_q7.txt
+
+	      Pattern REF_AND_Q7_ID : And24_s8.txt
+	      Pattern REF_OR_Q7_ID  : Or25_s8.txt
+	      Pattern REF_NOT_Q7_ID : Not26_s8.txt
+	      Pattern REF_XOR_Q7_ID : Xor27_s8.txt
 
               Output  OUT_SAMPLES_Q7_ID : Output
               Output  OUT_STATE_Q7_ID : State
@@ -738,6 +842,22 @@ group Root {
                 Test shift:test_shift_q7
                 Test shift pos sat:test_shift_q7
                 Test shift neg sat:test_shift_q7
+
+		Test nb=15     arm_and_q7:test_and_q7
+		Test nb=16n    arm_and_q7:test_and_q7
+		Test nb=16n+15 arm_and_q7:test_and_q7
+ 
+		Test nb=15     arm_or_q7:test_or_q7
+		Test nb=16n    arm_or_q7:test_or_q7
+		Test nb=16n+15 arm_or_q7:test_or_q7
+ 
+		Test nb=15     arm_not_q7:test_not_q7
+		Test nb=16n    arm_not_q7:test_not_q7
+		Test nb=16n+15 arm_not_q7:test_not_q7
+ 
+		Test nb=15     arm_xor_q7:test_xor_q7
+		Test nb=16n    arm_xor_q7:test_xor_q7
+		Test nb=16n+15 arm_xor_q7:test_xor_q7
               }
            }
         }
