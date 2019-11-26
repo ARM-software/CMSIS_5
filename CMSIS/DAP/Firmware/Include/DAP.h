@@ -17,7 +17,7 @@
  *
  * ----------------------------------------------------------------------
  *
- * $Date:        20. November 2019
+ * $Date:        26. November 2019
  * $Revision:    V2.0.0
  *
  * Project:      CMSIS-DAP Include
@@ -233,6 +233,11 @@ extern          DAP_Data_t DAP_Data;            // DAP Data
 extern volatile uint8_t    DAP_TransferAbort;   // Transfer Abort Flag
 
 
+#ifdef  __cplusplus
+extern "C"
+{
+#endif
+
 // Functions
 extern void     SWJ_Sequence    (uint32_t count, const uint8_t *data);
 extern void     SWD_Sequence    (uint32_t info,  const uint8_t *swdo, uint8_t *swdi);
@@ -311,6 +316,10 @@ __STATIC_FORCEINLINE void PIN_DELAY_FAST (void) {
   __NOP();
 #endif
 }
+
+#ifdef  __cplusplus
+}
+#endif
 
 
 #endif  /* __DAP_H__ */
