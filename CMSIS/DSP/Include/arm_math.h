@@ -1904,6 +1904,16 @@ __STATIC_INLINE q31_t arm_div_q63_to_q31(q63_t num, q31_t den)
     const float32_t *pCoeffs;      /**< Points to the array of coefficients.  The array is of length 5*numStages. */
   } arm_biquad_casd_df1_inst_f32;
 
+#if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
+  /**
+   * @brief Instance structure for the modified Biquad coefs required by vectorized code.
+   */
+  typedef struct
+  {
+      float32_t coeffs[8][4]; /**< Points to the array of modified coefficients.  The array is of length 32. There is one per stage */
+  } arm_biquad_mod_coef_f32;
+#endif 
+
   /**
    * @brief Processing function for the Q15 Biquad cascade filter.
    * @param[in]  S          points to an instance of the Q15 Biquad cascade structure.
@@ -2004,13 +2014,24 @@ __STATIC_INLINE q31_t arm_div_q63_to_q31(q63_t num, q31_t den)
    * @param[in,out] S          points to an instance of the floating-point Biquad cascade structure.
    * @param[in]     numStages  number of 2nd order stages in the filter.
    * @param[in]     pCoeffs    points to the filter coefficients.
+   * @param[in]     pCoeffsMod points to the modified filter coefficients (only MVE version).
    * @param[in]     pState     points to the state buffer.
    */
+#if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
+  void arm_biquad_cascade_df1_mve_init_f32(
+      arm_biquad_casd_df1_inst_f32 * S,
+      uint8_t numStages,
+      const float32_t * pCoeffs, 
+      arm_biquad_mod_coef_f32 * pCoeffsMod, 
+      float32_t * pState);
+#endif
+  
   void arm_biquad_cascade_df1_init_f32(
         arm_biquad_casd_df1_inst_f32 * S,
         uint8_t numStages,
   const float32_t * pCoeffs,
         float32_t * pState);
+
 
   /**
    * @brief Instance structure for the floating-point matrix structure.

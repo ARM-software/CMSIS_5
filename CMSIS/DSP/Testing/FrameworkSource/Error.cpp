@@ -142,6 +142,26 @@ void assert_not_empty(unsigned long nb, AnyPattern<q7_t> &p)
   assert_not_empty_generic(nb,p);
 }
 
+void assert_relative_error(unsigned long nb,float64_t &a, float64_t &b, double threshold)
+{
+    float64_t rel,delta,average;
+
+    delta=abs(a-b);
+    average = (abs(a) + abs(b)) / 2.0f;
+    if (average !=0)
+    {
+        rel = delta / average;
+        //printf("%6.9f %6.9f %6.9f %g %g\n",a,b,rel,delta,average);
+        if (rel > threshold)
+        {
+            //printf("rel = %g, threshold %g \n",rel,threshold);
+            char details[200];
+            sprintf(details,"diff (%g,%g), %g > %g",a,b,rel , threshold);
+            throw (Error(RELATIVE_ERROR,nb,details));
+        }
+    }
+};
+
 void assert_relative_error(unsigned long nb,float32_t &a, float32_t &b, double threshold)
 {
     double rel,delta,average;
@@ -159,6 +179,37 @@ void assert_relative_error(unsigned long nb,float32_t &a, float32_t &b, double t
             sprintf(details,"diff (%g,%g), %g > %g",a,b,rel , threshold);
             throw (Error(RELATIVE_ERROR,nb,details));
         }
+    }
+};
+
+void assert_relative_error(unsigned long nb,AnyPattern<float64_t> &pa, AnyPattern<float64_t> &pb, double threshold)
+{
+    ASSERT_NOT_EMPTY(pa);
+    ASSERT_NOT_EMPTY(pb);
+
+    if (pa.nbSamples() != pb.nbSamples())
+    {
+        throw (Error(DIFFERENT_LENGTH_ERROR,nb));
+    }
+
+    unsigned long i=0;
+
+    float64_t *ptrA = pa.ptr();
+    float64_t *ptrB = pb.ptr();
+    char id[40];
+
+    for(i=0; i < pa.nbSamples(); i++)
+    {
+       try
+       {
+          assert_relative_error(nb,ptrA[i],ptrB[i],threshold);
+       }
+       catch(Error &err)
+       {          
+          sprintf(id," (nb=%lu)",i+1);
+          strcat(err.details,id);
+          throw(err);
+       }
     }
 };
 

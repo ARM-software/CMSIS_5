@@ -55,7 +55,269 @@
   @remark
                    Refer to \ref arm_biquad_cascade_df1_fast_q31() for a faster but less precise implementation of this filter.
  */
+#if defined(ARM_MATH_MVEI)
 
+void arm_biquad_cascade_df1_q31(
+  const arm_biquad_casd_df1_inst_q31 * S,
+  const q31_t * pSrc,
+        q31_t * pDst,
+        uint32_t blockSize)
+{
+    const q31_t    *pIn = pSrc; /*  input pointer initialization  */
+    q31_t          *pOut = pDst;        /*  output pointer initialization */
+    int             shift;
+    uint32_t        stages = S->numStages;      /*  loop counters                 */
+    int             postShift = S->postShift;
+    q31x4_t         b0Coeffs, b1Coeffs, a0Coeffs, a1Coeffs;     /*  Coefficients vector           */
+    q31x4_t         stateVec;
+    q31_t          *pState = S->pState; /*  pState pointer initialization */
+    q31x4_t         inVec0;
+    int64_t         acc;
+    const q31_t          *pCoeffs = S->pCoeffs;       /*  coeff pointer initialization  */
+    q31_t           out, out1;
+
+
+    shift = (postShift + 1 + 8);
+
+    do {
+        /*
+         * Reading the coefficients
+         * generates :
+         * Fwd0 { b2  b1  b0  0  }
+         * Fwd1 { 0   b2  b1  b0 }
+         * Bwd0 { 0   0   a2  a1 }
+         * Bwd0 { 0   0   a1  a2 }
+         * (can be moved in init)
+         */
+        b0Coeffs = vdupq_n_s32(0);
+        a0Coeffs = vdupq_n_s32(0);
+
+        b0Coeffs[0] = pCoeffs[2];       // b2
+        b0Coeffs[1] = pCoeffs[1];       // b1
+        b0Coeffs[2] = pCoeffs[0];       // b0
+
+        b1Coeffs = b0Coeffs;
+        uint32_t        zero = 0;
+        b1Coeffs = vshlcq_s32(b1Coeffs, &zero, 32);
+
+        a0Coeffs[2] = pCoeffs[4];
+        a0Coeffs[3] = pCoeffs[3];
+        a1Coeffs = vrev64q_s32(a0Coeffs);
+
+
+        /*
+         * prologue consumes history samples
+         */
+
+        /* 2 first elements are garbage, will be updated with history */
+        inVec0 = vld1q(pIn - 2);
+
+        inVec0[0] = pState[1];
+        inVec0[1] = pState[0];
+
+        stateVec[2] = pState[3];
+        stateVec[3] = pState[2];
+
+        acc = vrmlaldavhq(b0Coeffs, inVec0);
+        acc = vrmlaldavhaq(acc, a0Coeffs, stateVec);
+        acc = lsll(acc, shift);
+        out = (q31_t) ((acc >> 32) & 0xffffffff);
+
+        stateVec[2] = out;
+        acc = vrmlaldavhq(b1Coeffs, inVec0);
+        acc = vrmlaldavhaq(acc, a1Coeffs, stateVec);
+
+        acc = lsll(acc, shift);
+        out1 = (q31_t) ((acc >> 32) & 0xffffffff);
+
+
+        inVec0 = vld1q(pIn);
+        pIn += 2;
+
+        /*
+         * main loop
+         */
+        uint32_t            sample = (blockSize - 2) >> 2U;
+        /*
+         * First part of the processing with loop unrolling.
+         * Compute 4 outputs at a time.
+         */
+        while (sample > 0U) {
+
+            stateVec[3] = out1;
+
+            *pOut++ = out;
+            *pOut++ = out1;
+
+            /*
+             * in         { x0  x1  x2  x3 }
+             *                    x
+             * b0Coeffs   { b2  b1  b0  0  }
+             */
+            acc = vrmlaldavhq(b0Coeffs, inVec0);
+            /*
+             * out         { 0   0   yn2 yn1 }
+             *                    x
+             * a0Coeffs    { 0   0   a2  a1  }
+             */
+            acc = vrmlaldavhaq(acc, a0Coeffs, stateVec);
+            acc = lsll(acc, shift);
+            out = (q31_t) ((acc >> 32) & 0xffffffff);
+
+            stateVec[2] = out;
+
+            /*
+             * in         { x0  x1  x2  x3 }
+             *                    x
+             * b0Coeffs   {  0  b2  b1  b0 }
+             */
+            acc = vrmlaldavhq(b1Coeffs, inVec0);
+            /*
+             * out         { 0   0   y0  yn1 }
+             *                    x
+             * a0Coeffs    { 0   0   a1  a2  }
+             */
+            acc = vrmlaldavhaq(acc, a1Coeffs, stateVec);
+            acc = lsll(acc, shift);
+            out1 = (q31_t) ((acc >> 32) & 0xffffffff);
+
+            stateVec[3] = out1;
+
+            inVec0 = vld1q(pIn);
+            pIn += 2;
+
+            /* unrolled part */
+            *pOut++ = out;
+            *pOut++ = out1;
+
+            acc = vrmlaldavhq(b0Coeffs, inVec0);
+            acc = vrmlaldavhaq(acc, a0Coeffs, stateVec);
+            acc = lsll(acc, shift);
+            out = (q31_t) ((acc >> 32) & 0xffffffff);
+
+            stateVec[2] = out;
+
+            acc = vrmlaldavhq(b1Coeffs, inVec0);
+            acc = vrmlaldavhaq(acc, a1Coeffs, stateVec);
+            acc = lsll(acc, shift);
+            out1 = (q31_t) ((acc >> 32) & 0xffffffff);
+
+            inVec0 = vld1q(pIn);
+            pIn += 2;
+
+            sample--;
+        }
+
+        *pOut++ = out;
+        *pOut++ = out1;
+
+        /*
+         * Tail handling
+         */
+        int32_t         loopRemainder = blockSize & 3;
+        if (loopRemainder == 2) {
+            /*
+             * Store the updated state variables back into the pState array
+             */
+            pState[0] = inVec0[1];
+            pState[1] = inVec0[0];
+            pState[3] = out;
+            pState[2] = out1;
+        } else if (loopRemainder == 1) {
+            stateVec[3] = out1;
+
+            acc = vrmlaldavhq(b0Coeffs, inVec0);
+            acc = vrmlaldavhaq(acc, a0Coeffs, stateVec);
+            acc = lsll(acc, shift);
+            out = (q31_t) ((acc >> 32) & 0xffffffff);
+
+            stateVec[2] = out;
+
+            acc = vrmlaldavhq(b1Coeffs, inVec0);
+            acc = vrmlaldavhaq(acc, a1Coeffs, stateVec);
+            acc = lsll(acc, shift);
+            out1 = (q31_t) ((acc >> 32) & 0xffffffff);
+
+            stateVec[3] = out1;
+
+            inVec0 = vld1q(pIn);
+            pIn += 2;
+
+            *pOut++ = out;
+            *pOut++ = out1;
+
+            acc = vrmlaldavhq(b0Coeffs, inVec0);
+            acc = vrmlaldavhaq(acc, a0Coeffs, stateVec);
+            acc = lsll(acc, shift);
+            out = (q31_t) ((acc >> 32) & 0xffffffff);
+
+            *pOut++ = out;
+
+            /*
+             * Store the updated state variables back into the pState array
+             */
+            pState[0] = inVec0[2];
+            pState[1] = inVec0[1];
+            pState[3] = out1;
+            pState[2] = out;
+        } else if (loopRemainder == 0) {
+            stateVec[3] = out1;
+
+            acc = vrmlaldavhq(b0Coeffs, inVec0);
+            acc = vrmlaldavhaq(acc, a0Coeffs, stateVec);
+            acc = lsll(acc, shift);
+            out = (q31_t) ((acc >> 32) & 0xffffffff);
+
+            stateVec[2] = out;
+
+            acc = vrmlaldavhq(b1Coeffs, inVec0);
+            acc = vrmlaldavhaq(acc, a1Coeffs, stateVec);
+            acc = lsll(acc, shift);
+            out1 = (q31_t) ((acc >> 32) & 0xffffffff);
+
+            *pOut++ = out;
+            *pOut++ = out1;
+
+            /*
+             * Store the updated state variables back into the pState array
+             */
+            pState[0] = inVec0[3];
+            pState[1] = inVec0[2];
+            pState[3] = out;
+            pState[2] = out1;
+        } else {
+            stateVec[3] = out1;
+
+            acc = vrmlaldavhq(b0Coeffs, inVec0);
+            acc = vrmlaldavhaq(acc, a0Coeffs, stateVec);
+            acc = lsll(acc, shift);
+            out = (q31_t) ((acc >> 32) & 0xffffffff);
+
+            *pOut++ = out;
+
+            /*
+             * Store the updated state variables back into the pState array
+             */
+            pState[0] = inVec0[2];
+            pState[1] = inVec0[1];
+            pState[3] = out1;
+            pState[2] = out;
+        }
+
+
+        pCoeffs += 5;
+        pState += 4;
+
+        /*  The first stage goes from the input buffer to the output buffer. */
+        /*  Subsequent stages occur in-place in the output buffer */
+        pIn = pDst;
+
+        /* Reset to destination pointer */
+        pOut = pDst;
+    }
+    while (--stages);
+}
+#else
 void arm_biquad_cascade_df1_q31(
   const arm_biquad_casd_df1_inst_q31 * S,
   const q31_t * pSrc,
@@ -241,6 +503,7 @@ void arm_biquad_cascade_df1_q31(
   } while (stage > 0U);
 
 }
+#endif /* defined(ARM_MATH_MVEI) */
 
 /**
   @} end of BiquadCascadeDF1 group

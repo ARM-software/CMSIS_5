@@ -45,7 +45,140 @@
   @param[in]     blockSize number of samples to process
   @return        none
  */
+#if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
+#include "arm_helium_utils.h"
 
+void arm_biquad_cascade_stereo_df2T_f32(
+  const arm_biquad_cascade_stereo_df2T_instance_f32 * S,
+  const float32_t * pSrc,
+        float32_t * pDst,
+        uint32_t blockSize)
+{
+    const float32_t *pIn = pSrc;              /*  source pointer            */
+    float32_t *pOut = pDst;             /*  destination pointer       */
+    float32_t *pState = S->pState;      /*  State pointer             */
+    const float32_t *pCoeffs = S->pCoeffs;    /*  coefficient pointer       */
+    float32_t b0, b1, b2, a1, a2;       /*  Filter coefficients       */
+    uint32_t  sample, stage = S->numStages; /*  loop counters           */
+    float32_t scratch[6];
+    uint32x4_t loadIdxVec;
+    f32x4_t aCoeffs, bCoeffs;
+    f32x4_t stateVec0, stateVec1;
+    f32x4_t inVec;
+    uint32_t  startIdx = 0;
+
+    /*
+     * {0, 1, 0, 1} generator
+     */
+    loadIdxVec = viwdupq_u32(&startIdx, 2, 1);
+
+    /*
+     * scratch top clearing
+     * layout : [d1a d1b d2a d2b 0 0]
+     */
+    scratch[4] = 0.0f;
+    scratch[5] = 0.0f;
+
+    do
+    {
+        /*
+         * Reading the coefficients
+         */
+        b0 = *pCoeffs++;
+        b1 = *pCoeffs++;
+        b2 = *pCoeffs++;
+        a1 = *pCoeffs++;
+        a2 = *pCoeffs++;
+
+        /*
+         * aCoeffs = {a1 a1 a2 a2}
+         */
+        aCoeffs = vdupq_n_f32(a1);
+        aCoeffs = vsetq_lane(a2, aCoeffs, 2);
+        aCoeffs = vsetq_lane(a2, aCoeffs, 3);
+
+        /*
+         * bCoeffs = {b1 b1 b2 b2}
+         */
+        bCoeffs = vdupq_n_f32(b1);
+        bCoeffs = vsetq_lane(b2, bCoeffs, 2);
+        bCoeffs = vsetq_lane(b2, bCoeffs, 3);
+
+        /*
+         * Reading the state values
+         * Save into scratch
+         */
+        *(f32x4_t *) scratch = *(f32x4_t *) pState;
+
+        sample = blockSize;
+
+        while (sample > 0U)
+        {
+            /*
+             * step 1
+             *
+             * 0   | acc1a = xn1a * b0 + d1a
+             * 1   | acc1b = xn1b * b0 + d1b
+             * 2   | acc1a = xn1a * b0 + d1a
+             * 3   | acc1b = xn1b * b0 + d1b
+             */
+            /*
+             * load {d1a, d1b, d1a, d1b}
+             */
+            stateVec0 = vldrwq_gather_shifted_offset((uint32_t const *) scratch, loadIdxVec);
+            /*
+             * load {in0 in1 in0 in1}
+             */
+            inVec = vldrwq_gather_shifted_offset((uint32_t const *) pIn, loadIdxVec);
+
+            stateVec0 = vfmaq(stateVec0, inVec, b0);
+            *pOut++ = vgetq_lane(stateVec0, 0);
+            *pOut++ = vgetq_lane(stateVec0, 1);
+
+            /*
+             * step 2
+             *
+             * 0  | d1a = b1 * xn1a  +  a1 * acc1a  +  d2a
+             * 1  | d1b = b1 * xn1b  +  a1 * acc1b  +  d2b
+             * 2  | d2a = b2 * xn1a  +  a2 * acc1a  +  0
+             * 3  | d2b = b2 * xn1b  +  a2 * acc1b  +  0
+             */
+
+            /*
+             * load {d2a, d2b, 0, 0}
+             */
+            stateVec1 = *(f32x4_t *) & scratch[2];
+            stateVec1 = vfmaq(stateVec1, stateVec0, aCoeffs);
+            stateVec1 = vfmaq(stateVec1, inVec, bCoeffs);
+            *(f32x4_t *) scratch = stateVec1;
+
+            pIn = pIn + 2;
+            sample--;
+        }
+
+        /*
+         * Store the updated state variables back into the state array
+         */
+        vst1q(pState, stateVec1);
+        pState += 4;
+
+        /*
+         * The current stage input is given as the output to the next stage
+         */
+        pIn = pDst;
+        /*
+         * Reset the output working pointer
+         */
+        pOut = pDst;
+        /*
+         * decrement the loop counter
+         */
+        stage--;
+    }
+    while (stage > 0U);
+}
+
+#else
 LOW_OPTIMIZATION_ENTER
 void arm_biquad_cascade_stereo_df2T_f32(
   const arm_biquad_cascade_stereo_df2T_instance_f32 * S,
@@ -280,6 +413,8 @@ void arm_biquad_cascade_stereo_df2T_f32(
 
 }
 LOW_OPTIMIZATION_EXIT
+#endif /* defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE) */
+
 /**
   @} end of BiquadCascadeDF2T group
  */

@@ -65,7 +65,14 @@
                    The 4 state variables for stage 1 are first, then the 4 state variables for stage 2, and so on.
                    The state array has a total length of <code>4*numStages</code> values.
                    The state variables are updated after each block of data is processed; the coefficients are untouched.
+ 
+  @par             For MVE code, an additional buffer of modified coefficients is required.
+                   Its size is numStages and each element of this buffer has type arm_biquad_mod_coef_f32.
+                   So, its total size is 32*numStages float32_t elements.
+
+                   The initialization function which must be used is arm_biquad_cascade_df1_mve_init_f32.
  */
+
 
 void arm_biquad_cascade_df1_init_f32(
         arm_biquad_casd_df1_inst_f32 * S,
@@ -85,6 +92,54 @@ void arm_biquad_cascade_df1_init_f32(
   /* Assign state pointer */
   S->pState = pState;
 }
+
+
+#if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
+
+static void generateCoefsFastBiquadF32(float32_t b0, float32_t b1, float32_t b2, float32_t a1, float32_t a2,
+                                arm_biquad_mod_coef_f32 * newCoef)
+{
+    float32_t coeffs[4][8] = {
+        {0, 0, 0, b0, b1, b2, a1, a2},
+        {0, 0, b0, b1, b2, 0, a2, 0},
+        {0, b0, b1, b2, 0, 0, 0, 0},
+        {b0, b1, b2, 0, 0, 0, 0, 0},
+    };
+
+    for (int i = 0; i < 8; i++)
+    {
+        coeffs[1][i] += a1 * coeffs[0][i];
+        coeffs[2][i] += a1 * coeffs[1][i] + a2 * coeffs[0][i];
+        coeffs[3][i] += a1 * coeffs[2][i] + a2 * coeffs[1][i];
+
+        /*
+         * transpose
+         */
+        newCoef->coeffs[i][0] = (float32_t) coeffs[0][i];
+        newCoef->coeffs[i][1] = (float32_t) coeffs[1][i];
+        newCoef->coeffs[i][2] = (float32_t) coeffs[2][i];
+        newCoef->coeffs[i][3] = (float32_t) coeffs[3][i];
+    }
+}
+
+void arm_biquad_cascade_df1_mve_init_f32(
+      arm_biquad_casd_df1_inst_f32 * S,
+      uint8_t numStages,
+      const float32_t * pCoeffs, 
+      arm_biquad_mod_coef_f32 * pCoeffsMod, 
+      float32_t * pState)
+{
+    arm_biquad_cascade_df1_init_f32(S, numStages, (float32_t *)pCoeffsMod, pState);
+
+    /* Generate SIMD friendly modified coefs */
+    for (int i = 0; i < numStages; i++)
+    {
+        generateCoefsFastBiquadF32(pCoeffs[0], pCoeffs[1], pCoeffs[2], pCoeffs[3], pCoeffs[4], pCoeffsMod);
+        pCoeffs += 5;
+        pCoeffsMod++;
+    }
+}
+#endif 
 
 /**
   @} end of BiquadCascadeDF1 group

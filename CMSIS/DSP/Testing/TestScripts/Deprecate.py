@@ -11,6 +11,14 @@ def correctDeprecation(node):
     node.data["deprecated"] = current
     return(current)
 
+def inheritDeprecation(node,deprecated):
+    current = node.data["deprecated"] or deprecated
+    node.data["deprecated"] = current
+    if node.kind != TestScripts.Parser.TreeElem.TEST:
+      for c in node.children:
+        inheritDeprecation(c,current)
+        
+
 def deprecateRec(root,others,deprecated):
     if others:
         newOthers=others.copy()
@@ -35,6 +43,7 @@ def deprecateRec(root,others,deprecated):
                  deprecateRec(c,others,deprecated)
 
 def deprecate(root,others):
+    inheritDeprecation(root,False)
     if others:
        deprecateRec(root,deque(others),True)
        correctDeprecation(root)

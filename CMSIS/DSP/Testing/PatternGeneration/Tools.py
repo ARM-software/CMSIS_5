@@ -12,6 +12,8 @@ BODYANDTAIL = 3
 def loopnb(format,loopkind):
     nb = 0
     if loopkind == TAILONLY:
+        if format == 64:
+            nb = 1 
         if format == 0 or format == 31:
             nb = 3 
         if format == 15:
@@ -19,6 +21,8 @@ def loopnb(format,loopkind):
         if format == 7:
             nb = 15
     if loopkind == BODYONLY:
+        if format == 64:
+            nb = 4 
         if format == 0 or format == 31:
             nb = 8 
         if format == 15:
@@ -26,6 +30,8 @@ def loopnb(format,loopkind):
         if format == 7:
             nb = 32
     if loopkind == BODYANDTAIL:
+        if format == 64:
+            nb = 5
         if format == 0 or format == 31:
             nb = 11 # 9
         if format == 15:

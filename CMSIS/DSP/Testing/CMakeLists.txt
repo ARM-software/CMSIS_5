@@ -147,9 +147,9 @@ set(TESTSRC
   Source/Tests/ComplexTestsQ15.cpp
   Source/Tests/SVMF32.cpp
   Source/Tests/BayesF32.cpp
-  Source/Tests/TransformCF64.cpp
+  #Source/Tests/TransformCF64.cpp
   Source/Tests/TransformCF32.cpp
-  Source/Tests/TransformRF64.cpp
+  #Source/Tests/TransformRF64.cpp
   Source/Tests/TransformRF32.cpp
   Source/Tests/TransformQ31.cpp
   Source/Tests/TransformQ15.cpp
@@ -183,6 +183,10 @@ set(TESTSRC
   Source/Tests/FIRQ31.cpp
   Source/Tests/FIRQ15.cpp
   Source/Tests/FIRQ7.cpp
+  Source/Tests/BIQUADF64.cpp
+  Source/Tests/BIQUADF32.cpp
+  Source/Tests/BIQUADQ31.cpp
+  Source/Tests/BIQUADQ15.cpp
   Source/Tests/Pooling.cpp
   Source/Tests/Softmax.cpp
   Source/Tests/NNSupport.cpp

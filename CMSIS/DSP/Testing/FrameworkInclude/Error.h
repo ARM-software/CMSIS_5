@@ -85,6 +85,9 @@ to get the line number.
 extern void assert_relative_error(unsigned long nb,float32_t &a, float32_t &b, double threshold);
 extern void assert_relative_error(unsigned long nb,AnyPattern<float32_t> &pa, AnyPattern<float32_t> &pb, double threshold);
 
+extern void assert_relative_error(unsigned long nb,float64_t &a, float64_t &b, double threshold);
+extern void assert_relative_error(unsigned long nb,AnyPattern<float64_t> &pa, AnyPattern<float64_t> &pb, double threshold);
+
 /* Similar to numpy isclose */
 extern void assert_close_error(unsigned long nb,float64_t &ref, float64_t &val, double absthreshold, double relthreshold);
 extern void assert_close_error(unsigned long nb,AnyPattern<float64_t> &pref, AnyPattern<float64_t> &pval, double absthreshold, double relthreshold);

@@ -1784,6 +1784,98 @@ group Root {
 
              }
            }
+
+           group BIQUAD {
+             class = BIQUAD 
+             folder = BIQUAD
+
+             suite BIQUAD F64 {
+                class = BIQUADF64
+                folder = BIQUADF64
+
+                Pattern BIQUADINPUTS_F64_ID : BiquadInput1_f64.txt
+                Pattern BIQUADCOEFS_F64_ID : BiquadCoefs1_f64.txt
+                Pattern BIQUADREFS_F64_ID : BiquadOutput1_f64.txt
+
+                Pattern ALLBIQUADINPUTS_F64_ID : AllBiquadInputs2_f64.txt
+                Pattern ALLBIQUADCOEFS_F64_ID : AllBiquadCoefs2_f64.txt
+                Pattern ALLBIQUADREFS_F64_ID : AllBiquadRefs2_f64.txt
+                Pattern ALLBIQUADCONFIGS_S16_ID : AllBiquadConfigs2_s16.txt
+
+                Output  OUT_F64_ID : Output
+                Output  STATE_F64_ID : State
+
+                Functions {
+                  arm_biquad_cascade_df2T ref pattern:test_biquad_cascade_df2T_ref
+                  arm_biquad_cascade_df2T random pattern:test_biquad_cascade_df2T_rand
+                }
+             }
+
+             suite BIQUAD F32 {
+                class = BIQUADF32 
+                folder = BIQUADF32
+
+                Pattern BIQUADINPUTS_F32_ID : BiquadInput1_f32.txt
+                Pattern BIQUADCOEFS_F32_ID : BiquadCoefs1_f32.txt
+                Pattern BIQUADREFS_F32_ID : BiquadOutput1_f32.txt
+
+                Pattern ALLBIQUADINPUTS_F32_ID : AllBiquadInputs2_f32.txt
+                Pattern ALLBIQUADSTEREOINPUTS_F32_ID : AllBiquadStereoInputs2_f32.txt
+                Pattern ALLBIQUADCOEFS_F32_ID : AllBiquadCoefs2_f32.txt
+                Pattern ALLBIQUADREFS_F32_ID : AllBiquadRefs2_f32.txt
+                Pattern ALLBIQUADSTEREOREFS_F32_ID : AllBiquadStereoRefs2_f32.txt
+                Pattern ALLBIQUADCONFIGS_S16_ID : AllBiquadConfigs2_s16.txt
+
+                Output  OUT_F32_ID : Output
+                Output  STATE_F32_ID : State
+
+                Functions {
+                  arm_biquad_cascade_df1 ref pattern:test_biquad_cascade_df1_ref
+                  arm_biquad_cascade_df2T ref pattern:test_biquad_cascade_df2T_ref
+                  arm_biquad_cascade_df1 random pattern:test_biquad_cascade_df1_rand
+                  arm_biquad_cascade_df2T random pattern:test_biquad_cascade_df2T_rand
+                  arm_biquad_cascade_stereo_df2T random pattern:test_biquad_cascade_stereo_df2T_rand
+                }
+
+             }
+
+             suite BIQUAD Q31 {
+                class = BIQUADQ31
+                folder = BIQUADQ31
+
+                Pattern BIQUADINPUTS_Q31_ID : BiquadInput1_q31.txt
+                Pattern BIQUADCOEFS_Q31_ID : BiquadCoefs1_q31.txt
+
+                Pattern BIQUADREFS_Q31_ID : BiquadOutput1_q31.txt
+
+                Output  OUT_Q31_ID : Output
+                Output  STATE_Q64_ID : State64
+
+                Functions {
+                  arm_biquad_cascade_df1:test_biquad_cascade_df1
+                  arm_biquad_cascade_df1_32x64:test_biquad_cascade_df1_32x64
+                }
+
+             }
+
+             suite BIQUAD Q15 {
+                class = BIQUADQ15
+                folder = BIQUADQ15
+
+                Pattern BIQUADINPUTS_Q15_ID : BiquadInput1_q15.txt
+                Pattern BIQUADCOEFS_Q15_ID : BiquadCoefs1_q15.txt
+
+                Pattern BIQUADREFS_Q15_ID : BiquadOutput1_q15.txt
+
+                Output  OUT_Q15_ID : Output
+
+                Functions {
+                  arm_biquad_cascade_df1:test_biquad_cascade_df1
+                }
+
+             }
+           }
+
         }
 
         group Matrix Tests {
@@ -2000,7 +2092,7 @@ group Root {
            class = TransformTests
            folder = Transform 
 
-           suite Transform Complex F64 {
+           disabled {suite Transform Complex F64 {
               class = TransformCF64
               folder = TransformF64
 
@@ -2118,8 +2210,9 @@ group Root {
               }
 
             }
+           }
 
-           suite Transform Real F64 {
+           disabled { suite Transform Real F64 {
               class = TransformRF64
               folder = TransformF64
 
@@ -2226,6 +2319,7 @@ group Root {
               }
 
             }
+           }
 
            suite Transform Complex F32 {
               class = TransformCF32
