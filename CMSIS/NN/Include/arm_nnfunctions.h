@@ -1515,6 +1515,10 @@ extern    "C"
    *                                     Required space: (ch_src * dim_dst_width) * sizeof(q15_t) bytes
    *                                     Use arm_avgpool_s8_get_buffer_size() to get the size
    * @param[in,out]   dst                pointer to output tensor
+   * @return                             The function returns one of the following
+   *                                     <code>ARM_MATH_SIZE_MISMATCH</code> - Unsupported dimension of tensors
+   *                                     <code>ARM_MATH_SUCCESS</code> - Successful operation
+   *                                     <code>ARM_MATH_ARGUMENT_ERROR</code> - Implementation not available
    *
    * @note This pooling function is input-destructive. Input data is undefined after calling this function.
    *
@@ -1524,22 +1528,22 @@ extern    "C"
    *
    */
 
-    void arm_avgpool_s8(const int dim_src_height,
-                        const int dim_src_width,
-                        const int dim_dst_height,
-                        const int dim_dst_width,
-                        const int stride_height,
-                        const int stride_width,
-                        const int dim_kernel_height,
-                        const int dim_kernel_width,
-                        const int padding_height,
-                        const int padding_width,
-                        const int act_min,
-                        const int act_max,
-                        const int ch_src,
-                        int8_t *src,
-                        int16_t *bufferA,
-                        int8_t *dst);
+    arm_status arm_avgpool_s8(const int dim_src_height,
+                              const int dim_src_width,
+                              const int dim_dst_height,
+                              const int dim_dst_width,
+                              const int stride_height,
+                              const int stride_width,
+                              const int dim_kernel_height,
+                              const int dim_kernel_width,
+                              const int padding_height,
+                              const int padding_width,
+                              const int act_min,
+                              const int act_max,
+                              const int ch_src,
+                              int8_t *src,
+                              int16_t *bufferA,
+                              int8_t *dst);
 
   /**
    * @brief Get the required buffer size for S8 average pooling function
@@ -1569,28 +1573,31 @@ extern    "C"
    * @param[in]       input       pointer to input tensor
    * @param[in]       tmp_buffer  Not used.
    * @param[in,out]   output      pointer to output tensor
-   *
+   * @return                      The function returns one of the following
+   *                              <code>ARM_MATH_SIZE_MISMATCH</code> - Unsupported dimension of tensors
+   *                              <code>ARM_MATH_SUCCESS</code> - Successful operation
+   *                              <code>ARM_MATH_ARGUMENT_ERROR</code> - Implementation not available
    * @note The input data is corrupted by this function.
    * @details This optimized implementation is recommended when depth is >=  4 and dimensions are large.
    *
    */
 
-    void arm_max_pool_s8_opt(const uint16_t input_y,
-                             const uint16_t input_x,
-                             const uint16_t output_y,
-                             const uint16_t output_x,
-                             const uint16_t stride_y,
-                             const uint16_t stride_x,
-                             const uint16_t kernel_y,
-                             const uint16_t kernel_x,
-                             const uint16_t pad_y,
-                             const uint16_t pad_x,
-                             const int8_t act_min,
-                             const int8_t act_max,
-                             const uint16_t depth,
-                             int8_t *input,
-                             int16_t *tmp_buffer,
-                             int8_t *output);
+    arm_status arm_max_pool_s8_opt(const uint16_t input_y,
+                                   const uint16_t input_x,
+                                   const uint16_t output_y,
+                                   const uint16_t output_x,
+                                   const uint16_t stride_y,
+                                   const uint16_t stride_x,
+                                   const uint16_t kernel_y,
+                                   const uint16_t kernel_x,
+                                   const uint16_t pad_y,
+                                   const uint16_t pad_x,
+                                   const int8_t act_min,
+                                   const int8_t act_max,
+                                   const uint16_t depth,
+                                   int8_t *input,
+                                   int16_t *tmp_buffer,
+                                   int8_t *output);
 
   /**
    * @brief s8 pure C max pooling function
@@ -1610,28 +1617,32 @@ extern    "C"
    * @param[in]       input       pointer to input tensor
    * @param[in]       tmp_buffer  Not used.
    * @param[in,out]   output      pointer to output tensor
+   * @return                      The function returns one of the following
+   *                              <code>ARM_MATH_SIZE_MISMATCH</code> - Unsupported dimension of tensors
+   *                              <code>ARM_MATH_SUCCESS</code> - Successful operation
+   *                              <code>ARM_MATH_ARGUMENT_ERROR</code> - Implementation not available
    *
    * @details
    *    - This basic implementation is recommended when number of channels is less than 4 and/or
    *      dimensions are small.
    *
    */
-    void arm_max_pool_s8(const uint16_t input_y,
-                         const uint16_t input_x,
-                         const uint16_t output_y,
-                         const uint16_t output_x,
-                         const uint16_t stride_y,
-                         const uint16_t stride_x,
-                         const uint16_t kernel_y,
-                         const uint16_t kernel_x,
-                         const uint16_t pad_y,
-                         const uint16_t pad_x,
-                         const int8_t act_min,
-                         const int8_t act_max,
-                         const uint16_t channel_in,
-                         int8_t *input,
-                         int16_t *tmp_buffer,
-                         int8_t *output);
+    arm_status arm_max_pool_s8(const uint16_t input_y,
+                               const uint16_t input_x,
+                               const uint16_t output_y,
+                               const uint16_t output_x,
+                               const uint16_t stride_y,
+                               const uint16_t stride_x,
+                               const uint16_t kernel_y,
+                               const uint16_t kernel_x,
+                               const uint16_t pad_y,
+                               const uint16_t pad_x,
+                               const int8_t act_min,
+                               const int8_t act_max,
+                               const uint16_t channel_in,
+                               int8_t *input,
+                               int16_t *tmp_buffer,
+                               int8_t *output);
 /**
  * @defgroup Softmax Softmax Functions
  *
