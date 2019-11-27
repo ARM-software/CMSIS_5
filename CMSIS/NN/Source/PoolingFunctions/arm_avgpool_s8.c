@@ -99,19 +99,19 @@ void arm_avgpool_s8(const int dim_src_height,
                     int8_t *dst)
 {
     (void)bufferA;
-    int16_t   i_x, i_y;
-    int16_t   k_x, k_y;
+    int32_t   i_x, i_y;
+    int32_t   k_x, k_y;
 
     for (i_y = 0; i_y < dim_dst_height; i_y++)
     {
         for (i_x = 0; i_x < dim_dst_width; i_x++)
         {
 
-            int       k_y_start,k_y_end;
-            int       k_x_start,k_x_end;
-            uint32_t  chCnt;
-            int8_t   *pTmp,*pTmpInner;
-            int8_t *pDst;
+            int32_t   k_y_start,k_y_end;
+            int32_t   k_x_start,k_x_end;
+            int32_t   chCnt;
+            int8_t    *pTmp,*pTmpInner;
+            int8_t    *pDst;
 
             k_y_start = MAX(0, i_y * stride_height - padding_height);
             k_y_end = MIN(i_y * stride_height - padding_height + dim_kernel_height,dim_src_height);
@@ -131,7 +131,7 @@ void arm_avgpool_s8(const int dim_src_height,
                 int8x16_t tempV;
                 int16x8_t tempVLO, tempVHI;
                 int32x4_t tempVLOLO, tempVLOHI, tempVHILO, tempVHIHI;
-                int       count = 0;
+                int32_t   count = 0;
 
                 sumV1 = vdupq_n_s32(0);
                 sumV2 = vdupq_n_s32(0);
@@ -216,8 +216,8 @@ void arm_avgpool_s8(const int dim_src_height,
             chCnt = ch_src & 0xF;
             while(chCnt > 0)
             {
-                int       sum = 0;
-                int       count = 0;
+                int32_t       sum = 0;
+                int32_t       count = 0;
 
                 for (k_y = k_y_start; k_y < k_y_end; k_y++)
                 {
