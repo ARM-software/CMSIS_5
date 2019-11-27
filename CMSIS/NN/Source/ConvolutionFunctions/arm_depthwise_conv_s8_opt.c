@@ -166,7 +166,7 @@ arm_status arm_depthwise_conv_s8_opt(const q7_t *input,
             int32x4_t shift = vldrwq_z_s32(output_shift, p);
             output_mult += 4;
             output_shift += 4;
-            res = arm_mve_requantize_32x4(res, mult, shift);
+            res = arm_requantize_mve_32x4(res, mult, shift);
 
             res = vaddq_n_s32(res, output_offset);
             res = vmaxq_s32(res, vdupq_n_s32(output_activation_min));

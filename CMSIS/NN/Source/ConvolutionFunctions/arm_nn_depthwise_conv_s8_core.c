@@ -136,8 +136,8 @@ q7_t *arm_nn_depthwise_conv_s8_core(const q7_t *row,
         out_mult += 4;
         out_shift += 4;
 
-        out_0 = arm_mve_requantize_32x4(out_0, mult, shift);
-        out_1 = arm_mve_requantize_32x4(out_1, mult, shift);
+        out_0 = arm_requantize_mve_32x4(out_0, mult, shift);
+        out_1 = arm_requantize_mve_32x4(out_1, mult, shift);
 
         out_0 = vaddq_n_s32(out_0, out_offset);
         out_0 = vmaxq_s32(out_0, vdupq_n_s32(activation_min));
@@ -185,8 +185,8 @@ q7_t *arm_nn_depthwise_conv_s8_core(const q7_t *row,
         const int32x4_t mult = vldrwq_z_s32(out_mult, p);
         const int32x4_t shift = vldrwq_z_s32(out_shift, p);
 
-        col_0_sum = arm_mve_requantize_32x4(col_0_sum, mult, shift);
-        col_1_sum = arm_mve_requantize_32x4(col_1_sum, mult, shift);
+        col_0_sum = arm_requantize_mve_32x4(col_0_sum, mult, shift);
+        col_1_sum = arm_requantize_mve_32x4(col_1_sum, mult, shift);
 
         col_0_sum = vaddq_n_s32(col_0_sum, out_offset);
         col_0_sum = vmaxq_s32(col_0_sum, vdupq_n_s32(activation_min));
