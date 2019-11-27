@@ -81,22 +81,22 @@ static void buffer_scale_back_q15_to_q7_and_clamp(q15_t * buffer, q7_t * target,
 #if defined (ARM_MATH_MVEI)
 
 
-void arm_avgpool_s8(const int dim_src_height,
-                    const int dim_src_width,
-                    const int dim_dst_height,
-                    const int dim_dst_width,
-                    const int stride_height,
-                    const int stride_width,
-                    const int dim_kernel_height,
-                    const int dim_kernel_width,
-                    const int padding_height,
-                    const int padding_width,
-                    const int act_min,
-                    const int act_max,
-                    const int ch_src,
-                    int8_t *src,
-                    int16_t *bufferA,
-                    int8_t *dst)
+arm_status arm_avgpool_s8(const int dim_src_height,
+                          const int dim_src_width,
+                          const int dim_dst_height,
+                          const int dim_dst_width,
+                          const int stride_height,
+                          const int stride_width,
+                          const int dim_kernel_height,
+                          const int dim_kernel_width,
+                          const int padding_height,
+                          const int padding_width,
+                          const int act_min,
+                          const int act_max,
+                          const int ch_src,
+                          int8_t *src,
+                          int16_t *bufferA,
+                          int8_t *dst)
 {
     (void)bufferA;
     int32_t   i_x, i_y;
@@ -238,25 +238,26 @@ void arm_avgpool_s8(const int dim_src_height,
             }
         }
     }
+    return ARM_MATH_SUCCESS;
 }
 
 #else
-void arm_avgpool_s8(const int dim_src_height,
-                    const int dim_src_width,
-                    const int dim_dst_height,
-                    const int dim_dst_width,
-                    const int stride_height,
-                    const int stride_width,
-                    const int dim_kernel_height,
-                    const int dim_kernel_width,
-                    const int padding_height,
-                    const int padding_width,
-                    const int act_min,
-                    const int act_max,
-                    const int ch_src,
-                    int8_t *src,
-                    int16_t *bufferA,
-                    int8_t *dst)
+arm_status arm_avgpool_s8(const int dim_src_height,
+                          const int dim_src_width,
+                          const int dim_dst_height,
+                          const int dim_dst_width,
+                          const int stride_height,
+                          const int stride_width,
+                          const int dim_kernel_height,
+                          const int dim_kernel_width,
+                          const int padding_height,
+                          const int padding_width,
+                          const int act_min,
+                          const int act_max,
+                          const int ch_src,
+                          int8_t *src,
+                          int16_t *bufferA,
+                          int8_t *dst)
 {
 
 #if defined(ARM_MATH_LOOPUNROLL) && defined (ARM_MATH_DSP)
@@ -384,6 +385,7 @@ void arm_avgpool_s8(const int dim_src_height,
         }
     }
 #endif
+    return ARM_MATH_SUCCESS;
 }
 
 

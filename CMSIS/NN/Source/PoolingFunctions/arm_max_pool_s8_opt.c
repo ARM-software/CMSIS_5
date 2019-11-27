@@ -202,22 +202,22 @@ static void clamp_output(q7_t *source, const uint16_t length, const int32_t act_
    *
    */
 
-void arm_max_pool_s8_opt(const uint16_t input_y,
-                         const uint16_t input_x,
-                         const uint16_t output_y,
-                         const uint16_t output_x,
-                         const uint16_t stride_y,
-                         const uint16_t stride_x,
-                         const uint16_t kernel_y,
-                         const uint16_t kernel_x,
-                         const uint16_t pad_y,
-                         const uint16_t pad_x,
-                         const int8_t act_min,
-                         const int8_t act_max,
-                         const uint16_t depth,
-                         int8_t *src,
-                         int16_t *tmp_buffer,
-                         int8_t *dst)
+arm_status arm_max_pool_s8_opt(const uint16_t input_y,
+                               const uint16_t input_x,
+                               const uint16_t output_y,
+                               const uint16_t output_x,
+                               const uint16_t stride_y,
+                               const uint16_t stride_x,
+                               const uint16_t kernel_y,
+                               const uint16_t kernel_x,
+                               const uint16_t pad_y,
+                               const uint16_t pad_x,
+                               const int8_t act_min,
+                               const int8_t act_max,
+                               const uint16_t depth,
+                               int8_t *src,
+                               int16_t *tmp_buffer,
+                               int8_t *dst)
 {
 
 #if defined(ARM_MATH_LOOPUNROLL) && defined(ARM_MATH_DSP)
@@ -327,6 +327,7 @@ void arm_max_pool_s8_opt(const uint16_t input_y,
                     tmp_buffer,
                     dst);
 #endif
+  return ARM_MATH_SUCCESS;
 }
 
 /**

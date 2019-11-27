@@ -40,22 +40,22 @@
  * @{
  */
 
-void arm_max_pool_s8(const uint16_t input_y,
-                     const uint16_t input_x,
-                     const uint16_t output_y,
-                     const uint16_t output_x,
-                     const uint16_t stride_y,
-                     const uint16_t stride_x,
-                     const uint16_t kernel_y,
-                     const uint16_t kernel_x,
-                     const uint16_t pad_y,
-                     const uint16_t pad_x,
-                     const int8_t act_min,
-                     const int8_t act_max,
-                     const uint16_t channel_in,
-                     int8_t *input,
-                     int16_t *tmp_buffer,
-                     int8_t *output)
+arm_status arm_max_pool_s8(const uint16_t input_y,
+                           const uint16_t input_x,
+                           const uint16_t output_y,
+                           const uint16_t output_x,
+                           const uint16_t stride_y,
+                           const uint16_t stride_x,
+                           const uint16_t kernel_y,
+                           const uint16_t kernel_x,
+                           const uint16_t pad_y,
+                           const uint16_t pad_x,
+                           const int8_t act_min,
+                           const int8_t act_max,
+                           const uint16_t channel_in,
+                           int8_t *input,
+                           int16_t *tmp_buffer,
+                           int8_t *output)
 {
     int32_t i_ch_in, i_out_x, i_out_y;
     int32_t i_ker_x, i_ker_y;
@@ -98,6 +98,7 @@ void arm_max_pool_s8(const uint16_t input_y,
             }
         }
     }
+    return ARM_MATH_SUCCESS;
 }
 
 /**
