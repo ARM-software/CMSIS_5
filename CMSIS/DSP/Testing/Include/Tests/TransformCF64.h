@@ -14,7 +14,7 @@ class TransformCF64:public Client::Suite
 
             Client::RefPattern<float64_t> ref;
 
-            //const arm_cfft_instance_f64 *instCfftF64;
+            const arm_cfft_instance_f64 *instCfftF64;
 
             int ifft;
             

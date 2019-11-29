@@ -2777,6 +2777,24 @@ void arm_cfft_q31(
         uint8_t ifftFlag,
         uint8_t bitReverseFlag);
 
+
+  /**
+   * @brief Instance structure for the Double Precision Floating-point CFFT/CIFFT function.
+   */
+  typedef struct
+  {
+          uint16_t fftLen;                   /**< length of the FFT. */
+    const float64_t *pTwiddle;         /**< points to the Twiddle factor table. */
+    const uint16_t *pBitRevTable;      /**< points to the bit reversal table. */
+          uint16_t bitRevLength;             /**< bit reversal table length. */
+  } arm_cfft_instance_f64;
+
+  void arm_cfft_f64(
+  const arm_cfft_instance_f64 * S,
+        float64_t * p1,
+        uint8_t ifftFlag,
+        uint8_t bitReverseFlag);
+
   /**
    * @brief Instance structure for the Q15 RFFT/RIFFT function.
    */
@@ -2853,6 +2871,42 @@ void arm_cfft_q31(
   const arm_rfft_instance_f32 * S,
         float32_t * pSrc,
         float32_t * pDst);
+
+  /**
+   * @brief Instance structure for the Double Precision Floating-point RFFT/RIFFT function.
+   */
+typedef struct
+  {
+          arm_cfft_instance_f64 Sint;      /**< Internal CFFT structure. */
+          uint16_t fftLenRFFT;             /**< length of the real sequence */
+    const float64_t * pTwiddleRFFT;        /**< Twiddle factors real stage  */
+  } arm_rfft_fast_instance_f64 ;
+
+arm_status arm_rfft_fast_init_f64 (
+         arm_rfft_fast_instance_f64 * S,
+         uint16_t fftLen);
+
+arm_status arm_rfft_32_fast_init_f64 ( arm_rfft_fast_instance_f64 * S );
+
+arm_status arm_rfft_64_fast_init_f64 ( arm_rfft_fast_instance_f64 * S );
+
+arm_status arm_rfft_128_fast_init_f64 ( arm_rfft_fast_instance_f64 * S );
+
+arm_status arm_rfft_256_fast_init_f64 ( arm_rfft_fast_instance_f64 * S );
+
+arm_status arm_rfft_512_fast_init_f64 ( arm_rfft_fast_instance_f64 * S );
+
+arm_status arm_rfft_1024_fast_init_f64 ( arm_rfft_fast_instance_f64 * S );
+
+arm_status arm_rfft_2048_fast_init_f64 ( arm_rfft_fast_instance_f64 * S );
+
+arm_status arm_rfft_4096_fast_init_f64 ( arm_rfft_fast_instance_f64 * S );
+
+void arm_rfft_fast_f64(
+    arm_rfft_fast_instance_f64 * S,
+    float64_t * p, float64_t * pOut,
+    uint8_t ifftFlag);
+
 
   /**
    * @brief Instance structure for the floating-point RFFT/RIFFT function.
