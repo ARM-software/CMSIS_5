@@ -6,7 +6,7 @@
 
 #include <cstdio>
 
-#define SNR_THRESHOLD 120
+#define SNR_THRESHOLD 250
 
 
 
@@ -19,24 +19,24 @@
        float64_t *outp = outputfft.ptr();
 
        memcpy(tmp,inp,sizeof(float64_t)*input.nbSamples());
-   /*
+
         arm_rfft_fast_f64(
              &this->instRfftF64,
              tmp,
              outp,
              this->ifft);
-          */
+
         ASSERT_SNR(outputfft,ref,(float64_t)SNR_THRESHOLD);
         ASSERT_EMPTY_TAIL(outputfft);
-        
-    } 
 
-  
+    }
+
+
     void TransformRF64::setUp(Testing::testID_t id,std::vector<Testing::param_t>& paramsArgs,Client::PatternMgr *mgr)
     {
 
 
-       
+
 
        switch(id)
        {
@@ -46,7 +46,7 @@
             input.reload(TransformRF64::INPUTS_RFFT_NOISY_32_F64_ID,mgr);
             ref.reload(  TransformRF64::REF_RFFT_NOISY_32_F64_ID,mgr);
 
-            //arm_rfft_fast_init_f64(&this->instRfftF64 ,32);
+            arm_rfft_fast_init_f64(&this->instRfftF64 ,32);
 
             inputchanged.create(input.nbSamples(),TransformRF64::TEMP_F64_ID,mgr);
 
@@ -59,7 +59,7 @@
             input.reload(TransformRF64::INPUTS_RIFFT_NOISY_64_F64_ID,mgr);
             ref.reload(  TransformRF64::INPUTS_RFFT_NOISY_64_F64_ID,mgr);
 
-            //arm_rfft_fast_init_f64(&this->instRfftF64 ,64);
+            arm_rfft_fast_init_f64(&this->instRfftF64 ,64);
 
             inputchanged.create(input.nbSamples(),TransformRF64::TEMP_F64_ID,mgr);
 
@@ -72,7 +72,7 @@
             input.reload(TransformRF64::INPUTS_RFFT_NOISY_64_F64_ID,mgr);
             ref.reload(  TransformRF64::REF_RFFT_NOISY_64_F64_ID,mgr);
 
-            //arm_rfft_fast_init_f64(&this->instRfftF64 ,64);
+            arm_rfft_fast_init_f64(&this->instRfftF64 ,64);
 
             inputchanged.create(input.nbSamples(),TransformRF64::TEMP_F64_ID,mgr);
 
@@ -85,7 +85,7 @@
             input.reload(TransformRF64::INPUTS_RIFFT_NOISY_64_F64_ID,mgr);
             ref.reload(  TransformRF64::INPUTS_RFFT_NOISY_64_F64_ID,mgr);
 
-            //arm_rfft_fast_init_f64(&this->instRfftF64 ,64);
+            arm_rfft_fast_init_f64(&this->instRfftF64 ,64);
 
             inputchanged.create(input.nbSamples(),TransformRF64::TEMP_F64_ID,mgr);
 
@@ -98,7 +98,7 @@
             input.reload(TransformRF64::INPUTS_RFFT_NOISY_128_F64_ID,mgr);
             ref.reload(  TransformRF64::REF_RFFT_NOISY_128_F64_ID,mgr);
 
-            //arm_rfft_fast_init_f64(&this->instRfftF64 ,128);
+            arm_rfft_fast_init_f64(&this->instRfftF64 ,128);
 
             inputchanged.create(input.nbSamples(),TransformRF64::TEMP_F64_ID,mgr);
 
@@ -111,7 +111,7 @@
             input.reload(TransformRF64::INPUTS_RIFFT_NOISY_128_F64_ID,mgr);
             ref.reload(  TransformRF64::INPUTS_RFFT_NOISY_128_F64_ID,mgr);
 
-            //arm_rfft_fast_init_f64(&this->instRfftF64 ,128);
+            arm_rfft_fast_init_f64(&this->instRfftF64 ,128);
 
             inputchanged.create(input.nbSamples(),TransformRF64::TEMP_F64_ID,mgr);
 
@@ -124,7 +124,7 @@
             input.reload(TransformRF64::INPUTS_RFFT_NOISY_256_F64_ID,mgr);
             ref.reload(  TransformRF64::REF_RFFT_NOISY_256_F64_ID,mgr);
 
-            //arm_rfft_fast_init_f64(&this->instRfftF64 ,256);
+            arm_rfft_fast_init_f64(&this->instRfftF64 ,256);
 
             inputchanged.create(input.nbSamples(),TransformRF64::TEMP_F64_ID,mgr);
 
@@ -137,7 +137,7 @@
             input.reload(TransformRF64::INPUTS_RIFFT_NOISY_256_F64_ID,mgr);
             ref.reload(  TransformRF64::INPUTS_RFFT_NOISY_256_F64_ID,mgr);
 
-            //arm_rfft_fast_init_f64(&this->instRfftF64 ,256);
+            arm_rfft_fast_init_f64(&this->instRfftF64 ,256);
 
             inputchanged.create(input.nbSamples(),TransformRF64::TEMP_F64_ID,mgr);
 
@@ -150,7 +150,7 @@
             input.reload(TransformRF64::INPUTS_RFFT_NOISY_512_F64_ID,mgr);
             ref.reload(  TransformRF64::REF_RFFT_NOISY_512_F64_ID,mgr);
 
-            //arm_rfft_fast_init_f64(&this->instRfftF64 ,512);
+            arm_rfft_fast_init_f64(&this->instRfftF64 ,512);
 
             inputchanged.create(input.nbSamples(),TransformRF64::TEMP_F64_ID,mgr);
 
@@ -163,7 +163,7 @@
             input.reload(TransformRF64::INPUTS_RIFFT_NOISY_512_F64_ID,mgr);
             ref.reload(  TransformRF64::INPUTS_RFFT_NOISY_512_F64_ID,mgr);
 
-            //arm_rfft_fast_init_f64(&this->instRfftF64 ,512);
+            arm_rfft_fast_init_f64(&this->instRfftF64 ,512);
 
             inputchanged.create(input.nbSamples(),TransformRF64::TEMP_F64_ID,mgr);
 
@@ -176,7 +176,7 @@
             input.reload(TransformRF64::INPUTS_RFFT_NOISY_1024_F64_ID,mgr);
             ref.reload(  TransformRF64::REF_RFFT_NOISY_1024_F64_ID,mgr);
 
-            //arm_rfft_fast_init_f64(&this->instRfftF64 ,1024);
+            arm_rfft_fast_init_f64(&this->instRfftF64 ,1024);
 
             inputchanged.create(input.nbSamples(),TransformRF64::TEMP_F64_ID,mgr);
 
@@ -189,7 +189,7 @@
             input.reload(TransformRF64::INPUTS_RIFFT_NOISY_1024_F64_ID,mgr);
             ref.reload(  TransformRF64::INPUTS_RFFT_NOISY_1024_F64_ID,mgr);
 
-            //arm_rfft_fast_init_f64(&this->instRfftF64 ,1024);
+            arm_rfft_fast_init_f64(&this->instRfftF64 ,1024);
 
             inputchanged.create(input.nbSamples(),TransformRF64::TEMP_F64_ID,mgr);
 
@@ -202,7 +202,7 @@
             input.reload(TransformRF64::INPUTS_RFFT_NOISY_2048_F64_ID,mgr);
             ref.reload(  TransformRF64::REF_RFFT_NOISY_2048_F64_ID,mgr);
 
-            //arm_rfft_fast_init_f64(&this->instRfftF64 ,2048);
+            arm_rfft_fast_init_f64(&this->instRfftF64 ,2048);
 
             inputchanged.create(input.nbSamples(),TransformRF64::TEMP_F64_ID,mgr);
 
@@ -215,7 +215,7 @@
             input.reload(TransformRF64::INPUTS_RIFFT_NOISY_2048_F64_ID,mgr);
             ref.reload(  TransformRF64::INPUTS_RFFT_NOISY_2048_F64_ID,mgr);
 
-            //arm_rfft_fast_init_f64(&this->instRfftF64 ,2048);
+            arm_rfft_fast_init_f64(&this->instRfftF64 ,2048);
 
             inputchanged.create(input.nbSamples(),TransformRF64::TEMP_F64_ID,mgr);
 
@@ -228,7 +228,7 @@
             input.reload(TransformRF64::INPUTS_RFFT_NOISY_4096_F64_ID,mgr);
             ref.reload(  TransformRF64::REF_RFFT_NOISY_4096_F64_ID,mgr);
 
-            //arm_rfft_fast_init_f64(&this->instRfftF64 ,4096);
+            arm_rfft_fast_init_f64(&this->instRfftF64 ,4096);
 
             inputchanged.create(input.nbSamples(),TransformRF64::TEMP_F64_ID,mgr);
 
@@ -241,7 +241,7 @@
             input.reload(TransformRF64::INPUTS_RIFFT_NOISY_4096_F64_ID,mgr);
             ref.reload(  TransformRF64::INPUTS_RFFT_NOISY_4096_F64_ID,mgr);
 
-            //arm_rfft_fast_init_f64(&this->instRfftF64 ,4096);
+            arm_rfft_fast_init_f64(&this->instRfftF64 ,4096);
 
             inputchanged.create(input.nbSamples(),TransformRF64::TEMP_F64_ID,mgr);
 
@@ -256,7 +256,7 @@
             input.reload(TransformRF64::INPUTS_RFFT_STEP_32_F64_ID,mgr);
             ref.reload(  TransformRF64::REF_RFFT_STEP_32_F64_ID,mgr);
 
-            //arm_rfft_fast_init_f64(&this->instRfftF64 ,32);
+            arm_rfft_fast_init_f64(&this->instRfftF64 ,32);
 
             inputchanged.create(input.nbSamples(),TransformRF64::TEMP_F64_ID,mgr);
 
@@ -269,7 +269,7 @@
             input.reload(TransformRF64::INPUTS_RIFFT_STEP_64_F64_ID,mgr);
             ref.reload(  TransformRF64::INPUTS_RFFT_STEP_64_F64_ID,mgr);
 
-            //arm_rfft_fast_init_f64(&this->instRfftF64 ,64);
+            arm_rfft_fast_init_f64(&this->instRfftF64 ,64);
 
             inputchanged.create(input.nbSamples(),TransformRF64::TEMP_F64_ID,mgr);
 
@@ -282,7 +282,7 @@
             input.reload(TransformRF64::INPUTS_RFFT_STEP_64_F64_ID,mgr);
             ref.reload(  TransformRF64::REF_RFFT_STEP_64_F64_ID,mgr);
 
-            //arm_rfft_fast_init_f64(&this->instRfftF64 ,64);
+            arm_rfft_fast_init_f64(&this->instRfftF64 ,64);
 
             inputchanged.create(input.nbSamples(),TransformRF64::TEMP_F64_ID,mgr);
 
@@ -295,7 +295,7 @@
             input.reload(TransformRF64::INPUTS_RIFFT_STEP_64_F64_ID,mgr);
             ref.reload(  TransformRF64::INPUTS_RFFT_STEP_64_F64_ID,mgr);
 
-            //arm_rfft_fast_init_f64(&this->instRfftF64 ,64);
+            arm_rfft_fast_init_f64(&this->instRfftF64 ,64);
 
             inputchanged.create(input.nbSamples(),TransformRF64::TEMP_F64_ID,mgr);
 
@@ -308,7 +308,7 @@
             input.reload(TransformRF64::INPUTS_RFFT_STEP_128_F64_ID,mgr);
             ref.reload(  TransformRF64::REF_RFFT_STEP_128_F64_ID,mgr);
 
-            //arm_rfft_fast_init_f64(&this->instRfftF64 ,128);
+            arm_rfft_fast_init_f64(&this->instRfftF64 ,128);
 
             inputchanged.create(input.nbSamples(),TransformRF64::TEMP_F64_ID,mgr);
             this->ifft=0;
@@ -320,7 +320,7 @@
             input.reload(TransformRF64::INPUTS_RIFFT_STEP_128_F64_ID,mgr);
             ref.reload(  TransformRF64::INPUTS_RFFT_STEP_128_F64_ID,mgr);
 
-            //arm_rfft_fast_init_f64(&this->instRfftF64 ,128);
+            arm_rfft_fast_init_f64(&this->instRfftF64 ,128);
 
             inputchanged.create(input.nbSamples(),TransformRF64::TEMP_F64_ID,mgr);
 
@@ -333,7 +333,7 @@
             input.reload(TransformRF64::INPUTS_RFFT_STEP_256_F64_ID,mgr);
             ref.reload(  TransformRF64::REF_RFFT_STEP_256_F64_ID,mgr);
 
-            //arm_rfft_fast_init_f64(&this->instRfftF64 ,256);
+            arm_rfft_fast_init_f64(&this->instRfftF64 ,256);
 
             inputchanged.create(input.nbSamples(),TransformRF64::TEMP_F64_ID,mgr);
 
@@ -346,7 +346,7 @@
             input.reload(TransformRF64::INPUTS_RIFFT_STEP_256_F64_ID,mgr);
             ref.reload(  TransformRF64::INPUTS_RFFT_STEP_256_F64_ID,mgr);
 
-            //arm_rfft_fast_init_f64(&this->instRfftF64 ,256);
+            arm_rfft_fast_init_f64(&this->instRfftF64 ,256);
 
             inputchanged.create(input.nbSamples(),TransformRF64::TEMP_F64_ID,mgr);
 
@@ -359,7 +359,7 @@
             input.reload(TransformRF64::INPUTS_RFFT_STEP_512_F64_ID,mgr);
             ref.reload(  TransformRF64::REF_RFFT_STEP_512_F64_ID,mgr);
 
-            //arm_rfft_fast_init_f64(&this->instRfftF64 ,512);
+            arm_rfft_fast_init_f64(&this->instRfftF64 ,512);
 
             inputchanged.create(input.nbSamples(),TransformRF64::TEMP_F64_ID,mgr);
 
@@ -372,7 +372,7 @@
             input.reload(TransformRF64::INPUTS_RIFFT_STEP_512_F64_ID,mgr);
             ref.reload(  TransformRF64::INPUTS_RFFT_STEP_512_F64_ID,mgr);
 
-            //arm_rfft_fast_init_f64(&this->instRfftF64 ,512);
+            arm_rfft_fast_init_f64(&this->instRfftF64 ,512);
 
             inputchanged.create(input.nbSamples(),TransformRF64::TEMP_F64_ID,mgr);
 
@@ -385,7 +385,7 @@
             input.reload(TransformRF64::INPUTS_RFFT_STEP_1024_F64_ID,mgr);
             ref.reload(  TransformRF64::REF_RFFT_STEP_1024_F64_ID,mgr);
 
-            //arm_rfft_fast_init_f64(&this->instRfftF64 ,1024);
+            arm_rfft_fast_init_f64(&this->instRfftF64 ,1024);
 
             inputchanged.create(input.nbSamples(),TransformRF64::TEMP_F64_ID,mgr);
 
@@ -398,7 +398,7 @@
             input.reload(TransformRF64::INPUTS_RIFFT_STEP_1024_F64_ID,mgr);
             ref.reload(  TransformRF64::INPUTS_RFFT_STEP_1024_F64_ID,mgr);
 
-            //arm_rfft_fast_init_f64(&this->instRfftF64 ,1024);
+            arm_rfft_fast_init_f64(&this->instRfftF64 ,1024);
 
             inputchanged.create(input.nbSamples(),TransformRF64::TEMP_F64_ID,mgr);
 
@@ -411,7 +411,7 @@
             input.reload(TransformRF64::INPUTS_RFFT_STEP_2048_F64_ID,mgr);
             ref.reload(  TransformRF64::REF_RFFT_STEP_2048_F64_ID,mgr);
 
-            //arm_rfft_fast_init_f64(&this->instRfftF64 ,2048);
+            arm_rfft_fast_init_f64(&this->instRfftF64 ,2048);
 
             inputchanged.create(input.nbSamples(),TransformRF64::TEMP_F64_ID,mgr);
 
@@ -424,7 +424,7 @@
             input.reload(TransformRF64::INPUTS_RIFFT_STEP_2048_F64_ID,mgr);
             ref.reload(  TransformRF64::INPUTS_RFFT_STEP_2048_F64_ID,mgr);
 
-            //arm_rfft_fast_init_f64(&this->instRfftF64 ,2048);
+            arm_rfft_fast_init_f64(&this->instRfftF64 ,2048);
 
             inputchanged.create(input.nbSamples(),TransformRF64::TEMP_F64_ID,mgr);
 
@@ -437,7 +437,7 @@
             input.reload(TransformRF64::INPUTS_RFFT_STEP_4096_F64_ID,mgr);
             ref.reload(  TransformRF64::REF_RFFT_STEP_4096_F64_ID,mgr);
 
-            //arm_rfft_fast_init_f64(&this->instRfftF64 ,4096);
+            arm_rfft_fast_init_f64(&this->instRfftF64 ,4096);
 
             inputchanged.create(input.nbSamples(),TransformRF64::TEMP_F64_ID,mgr);
 
@@ -450,7 +450,7 @@
             input.reload(TransformRF64::INPUTS_RIFFT_STEP_4096_F64_ID,mgr);
             ref.reload(  TransformRF64::INPUTS_RFFT_STEP_4096_F64_ID,mgr);
 
-            //arm_rfft_fast_init_f64(&this->instRfftF64 ,4096);
+            arm_rfft_fast_init_f64(&this->instRfftF64 ,4096);
 
             inputchanged.create(input.nbSamples(),TransformRF64::TEMP_F64_ID,mgr);
 
@@ -462,9 +462,9 @@
 
        }
 
-       
+
       outputfft.create(ref.nbSamples(),TransformRF64::OUTPUT_RFFT_F64_ID,mgr);
-       
+
 
     }
 

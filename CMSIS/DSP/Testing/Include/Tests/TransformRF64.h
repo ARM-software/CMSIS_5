@@ -15,7 +15,7 @@ class TransformRF64:public Client::Suite
 
             Client::RefPattern<float64_t> ref;
 
-            //arm_rfft_fast_instance_f64 instRfftF64;
+            arm_rfft_fast_instance_f64 instRfftF64;
 
             int ifft;
             

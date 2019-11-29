@@ -33,6 +33,16 @@
 #include "arm_math.h"
 #include "arm_common_tables.h"
 
+   extern const arm_cfft_instance_f64 arm_cfft_sR_f64_len16;
+   extern const arm_cfft_instance_f64 arm_cfft_sR_f64_len32;
+   extern const arm_cfft_instance_f64 arm_cfft_sR_f64_len64;
+   extern const arm_cfft_instance_f64 arm_cfft_sR_f64_len128;
+   extern const arm_cfft_instance_f64 arm_cfft_sR_f64_len256;
+   extern const arm_cfft_instance_f64 arm_cfft_sR_f64_len512;
+   extern const arm_cfft_instance_f64 arm_cfft_sR_f64_len1024;
+   extern const arm_cfft_instance_f64 arm_cfft_sR_f64_len2048;
+   extern const arm_cfft_instance_f64 arm_cfft_sR_f64_len4096;
+
    extern const arm_cfft_instance_f32 arm_cfft_sR_f32_len16;
    extern const arm_cfft_instance_f32 arm_cfft_sR_f32_len32;
    extern const arm_cfft_instance_f32 arm_cfft_sR_f32_len64;
