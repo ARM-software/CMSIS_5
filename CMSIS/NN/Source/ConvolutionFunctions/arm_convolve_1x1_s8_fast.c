@@ -124,7 +124,7 @@ arm_status arm_convolve_1x1_s8_fast(const q7_t *input,
             {
                 const mve_pred16_t p = vctp8q(col_loop);
                 const int8x16_t k_0 = vldrbq_z_s8(ker_n_0 + off, p);
-                sum_k += vaddvq_p_s32(k_0, p);
+                sum_k += vaddvq_p_s8(k_0, p);
 
                 const int8x16_t n_0 = vldrbq_z_s8(ip_n_0 + off, p);
                 acc += vmladavq_p_s8(n_0, k_0, p);
