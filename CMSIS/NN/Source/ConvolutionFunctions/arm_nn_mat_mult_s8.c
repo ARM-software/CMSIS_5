@@ -100,7 +100,7 @@ q7_t *arm_nn_mat_mult_s8(const q7_t *input_row,
                 const mve_pred16_t p = vctp8q(col_loop);
 
                 const int8x16_t k_0 = vldrbq_z_s8(ker_n_0 + offset, p);
-                sum_row += vaddvq_p_s32(k_0, p);
+                sum_row += vaddvq_p_s8(k_0, p);
 
                 const int8x16_t n_0 = vldrbq_z_s8(ip_n_0 + offset, p);
                 const int8x16_t n_1 = vldrbq_z_s8(ip_n_1 + offset, p);
@@ -132,7 +132,7 @@ q7_t *arm_nn_mat_mult_s8(const q7_t *input_row,
             out[i_out_ch + output_ch * 3] = res[3];
         }
 
-        out += ((i_items + 1) * 4 * output_ch);
+        out += (4 * output_ch);
     }
 
     return out;
