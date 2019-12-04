@@ -8,7 +8,7 @@
   <url>http://www.keil.com/pack/</url>
 
   <releases>
-    <release version="5.7.0-dev0">
+    <release version="5.7.0-dev1">
       Active development...
       CMSIS-Core(M): 5.4.0 (see revision history for details)
          - Enhanced MVE support for Armv8.1-MML
