@@ -89,8 +89,8 @@ static osStatus_t svcRtxKernelInitialize (void) {
   }
 #endif
 
-  // Initialize osRtxInfo
-  memset(&osRtxInfo.kernel, 0, sizeof(osRtxInfo) - offsetof(osRtxInfo_t, kernel));
+  // Initialize osRtxInfo from kernel member onwards (leaving the OS ID and Version)
+  memset((char *)&osRtxInfo + offsetof(osRtxInfo_t, kernel), 0, sizeof(osRtxInfo) - offsetof(osRtxInfo_t, kernel));
 
   osRtxInfo.isr_queue.data = osRtxConfig.isr_queue.data;
   osRtxInfo.isr_queue.max  = osRtxConfig.isr_queue.max;
