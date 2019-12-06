@@ -44,6 +44,9 @@
  * @param[in]  *pBuffer   points to a buffer of length numberOfClasses
  * @return The predicted class
  *
+ * @par If the number of classes is big, MVE version will consume lot of
+ * stack since the log prior are computed on the stack.
+ *
  */
 
 #if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
@@ -359,7 +362,7 @@ uint32_t arm_gaussian_naive_bayes_predict_f32(const arm_gaussian_naive_bayes_ins
         
         pIn = in;
 
-        tmp = logf(*pPrior);
+        tmp = 0.0;
         acc1 = 0.0f;
         acc2 = 0.0f;
         for(nbDim = 0; nbDim < S->vectorDimension; nbDim++)
