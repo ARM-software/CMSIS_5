@@ -3192,7 +3192,7 @@
                 </option>
                 <option>
                     <name>OGLastSavedByProductVersion</name>
-                    <state>8.32.2.19370</state>
+                    <state>8.32.3.20186</state>
                 </option>
                 <option>
                     <name>GeneralEnableMisra</name>
@@ -4234,7 +4234,7 @@
                 </option>
                 <option>
                     <name>OGLastSavedByProductVersion</name>
-                    <state>8.32.2.19370</state>
+                    <state>8.32.3.20186</state>
                 </option>
                 <option>
                     <name>GeneralEnableMisra</name>
@@ -4699,7 +4699,7 @@
                 </option>
                 <option>
                     <name>ADefines</name>
-                    <state></state>
+                    <state>DOMAIN_NS=1</state>
                 </option>
                 <option>
                     <name>AList</name>
@@ -5277,7 +5277,7 @@
                 </option>
                 <option>
                     <name>OGLastSavedByProductVersion</name>
-                    <state>8.32.2.19370</state>
+                    <state>8.32.3.20186</state>
                 </option>
                 <option>
                     <name>GeneralEnableMisra</name>
@@ -6319,7 +6319,7 @@
                 </option>
                 <option>
                     <name>OGLastSavedByProductVersion</name>
-                    <state>8.32.2.19370</state>
+                    <state>8.32.3.20186</state>
                 </option>
                 <option>
                     <name>GeneralEnableMisra</name>
@@ -6784,7 +6784,7 @@
                 </option>
                 <option>
                     <name>ADefines</name>
-                    <state></state>
+                    <state>DOMAIN_NS=1</state>
                 </option>
                 <option>
                     <name>AList</name>
@@ -7362,7 +7362,7 @@
                 </option>
                 <option>
                     <name>OGLastSavedByProductVersion</name>
-                    <state>8.32.2.19370</state>
+                    <state>8.32.3.20186</state>
                 </option>
                 <option>
                     <name>GeneralEnableMisra</name>
@@ -8404,7 +8404,7 @@
                 </option>
                 <option>
                     <name>OGLastSavedByProductVersion</name>
-                    <state>8.32.2.19370</state>
+                    <state>8.32.3.20186</state>
                 </option>
                 <option>
                     <name>GeneralEnableMisra</name>
@@ -8869,7 +8869,7 @@
                 </option>
                 <option>
                     <name>ADefines</name>
-                    <state></state>
+                    <state>DOMAIN_NS=1</state>
                 </option>
                 <option>
                     <name>AList</name>
