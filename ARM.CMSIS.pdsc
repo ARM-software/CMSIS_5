@@ -2334,7 +2334,7 @@ and 8-bit Java bytecodes in Jazelle state.
     <!-- CMSIS NN -->
     <condition id="CMSIS NN">
       <description>Components required for NN</description>
-      <require condition="CMSIS DSP"/>
+      <require Cclass="CMSIS" Cgroup="DSP"/>
     </condition>
 
     <!-- RTOS RTX -->
