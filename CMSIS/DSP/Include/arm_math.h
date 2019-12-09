@@ -2291,10 +2291,10 @@ __STATIC_INLINE q31_t arm_div_q63_to_q31(q63_t num, q31_t den)
   } arm_sort_instance_f32;  
 
   /**
-   * @param[in]  S          points to an instance of the sorting structure.
-   * @param[in]  pSrc       points to the block of input data.
-   * @param[out] pDst       points to the block of output data.
-   * @param[in]  blockSize  number of samples to process.
+   * @param[in]      S          points to an instance of the sorting structure.
+   * @param[in,out]  pSrc       points to the block of input data.
+   * @param[out]     pDst       points to the block of output data.
+   * @param[in]      blockSize  number of samples to process.
    */
   void arm_sort_f32(
     const arm_sort_instance_f32 * S, 
@@ -2390,6 +2390,109 @@ __STATIC_INLINE q31_t arm_div_q63_to_q31(q63_t num, q31_t den)
     uint32_t n,
     arm_spline_type type,
     float32_t * buffer);
+
+  /**
+   * @brief Instance structure for the floating-point exponential smoothing.
+   */
+  typedef struct
+  {
+    float32_t alpha;
+    uint32_t vectorSize;
+  } arm_exp_smooth_instance_f32;
+
+  /**
+   * @param[in]  S          points to an instance of the exponential smoothing structure.
+   * @param[in]  pSrc       points to the block of input data.
+   * @param[out] pDst       points to the block of output data.
+   * @param[in]  blockSize  number of samples to process.
+   */
+  void arm_exponential_smoothing_f32(
+    arm_exp_smooth_instance_f32* S,
+    const float32_t * pSrc, 
+    float32_t * pDst, 
+    uint32_t blockSize);
+
+  /**
+   * @param[in,out]  S           points to an instance of the exponential smoothing structure.
+   * @param[in]      alpha       smoothing factor (IIR filter coefficient).
+   * @param[in]      vectorSize  number of samples of one vector.
+   */
+  void arm_exponential_smoothing_init_f32(
+    arm_exp_smooth_instance_f32* S, 
+    float32_t alpha, 
+    uint32_t vectorSize);
+
+  /**
+   * @brief Instance structure for the floating-point Goertzel DFT.
+   */
+  typedef struct
+  {
+    float32_t cosine;
+    float32_t sine;
+    float32_t * coeffs;
+    float32_t scaling;
+  } arm_goertzel_instance_f32;
+
+  /**
+   * @brief Processing function for the floating-point Goertzel DFT.
+   * @param[in]  S          points to an instance of the floating-point Goertzel DFT structure.
+   * @param[in]  pSrc       points to the block of input data.
+   * @param[out] pDst       points to the block of output data.
+   * @param[in]  blockSize  number of samples to process.
+   */
+  void arm_goertzel_f32(
+        arm_goertzel_instance_f32 *S,
+  const float32_t * pSrc,
+        float32_t * pDst,
+        uint32_t blockSize);
+
+  /**
+   * @brief  Initialization function for the floating-point Goertzel DFT.
+   * @param[in,out] S        points to an instance of the floating-point Goertzel DFT structure.
+   * @param[in]     w0       frequency to be analysed [rad/samples].
+   * @param[in]     scaling  scaling factor of the output.
+   */
+  void arm_goertzel_init_f32(
+    arm_goertzel_instance_f32 *S,
+    float32_t w0,
+    float32_t * coeffs,
+    float32_t scaling);
+
+  /**
+   * @brief Instance structure for the floating-point median filter.
+   */
+  typedef struct
+  {
+     uint32_t windowSize;
+     float32_t * pBuffer;
+     float32_t * pDelay;
+  } arm_median_filter_instance_f32;
+
+  /**
+   * @brief Processing function for the floating-point median filter.
+   * @param[in]  S          points to an instance of the floating-point median filter structure.
+   * @param[in]  pSrc       points to the block of input data.
+   * @param[out] pDst       points to the block of output data.
+   * @param[in]  blockSize  number of samples to process.
+   */
+  void arm_median_filter_f32(
+          arm_median_filter_instance_f32 * S,
+    const float32_t * pSrc,
+          float32_t * pDst,
+          uint32_t blockSize);
+
+  /**
+   * @brief  Initialization function for the floating-point median filter.
+   * @param[in,out] S           points to an instance of the floating-point median filter structure.
+   * @param[in]     windowSize  size of the window.
+   * @param[in]     pBuffer     points to to the working array.
+   * @param[in]     pDelay      points to to the delay samples used at the beginning.
+   */
+  void arm_median_filter_init_f32(
+    arm_median_filter_instance_f32 * S,
+    uint32_t windowSize,
+    float32_t * pBuffer,
+    float32_t * pDelay);
 
   /**
    * @brief Instance structure for the floating-point matrix structure.
@@ -2733,6 +2836,15 @@ void arm_mat_init_f32(
         uint16_t nColumns,
         float32_t * pData);
 
+/**
+  @brief         Floating-point Cholesky decomposition.
+  @param[in]     pSrc      points to input matrix structure
+  @param[out]    pDst      points to output matrix structure
+  @return        none
+ */
+void arm_mat_cholesky_f32(
+  const arm_matrix_instance_f32 * pSrc,
+        arm_matrix_instance_f32 * pDst);
 
   /**
    * @brief Instance structure for the Q15 PID Control.
@@ -5042,7 +5154,92 @@ void arm_biquad_cascade_df2T_compute_coefs_f32(
         q15_t * pState,
         uint32_t blockSize);
 
+  /**
+   * @brief Struct for specifying IIR type
+   */
+  typedef enum
+  {
+    ARM_IIR_DF1  = 0,
+             /**< Direct form 1 */
+    ARM_IIR_DF2  = 1,
+             /**< Direct form 2 */
+    ARM_IIR_DF1T = 2,
+             /**< Direct form 1 transposed */
+    ARM_IIR_DF2T = 3,
+             /**< Direct form 2 transposed */
+  } arm_iir_type;
 
+  /**
+   * @brief Instance structure for the floating-point IIR filter.
+   */
+  typedef struct
+  {
+    uint32_t numStages;
+    float32_t *pState;
+    float32_t *pCoeffs;
+    uint32_t len;
+    arm_iir_type iirType;
+    uint16_t order;
+    uint8_t inPlaceFlag;
+    uint8_t simdFlag;
+    uint8_t debugFlag;
+  } arm_iir_instance_f32;
+
+  /**
+   * @brief  Processing function for the floating-point IIR filter.
+   * @param[in]     S          points to an instance of the floating-point IIR filter.
+   * @param[in]     pSrc       points to the block of input data.
+   * @param[out]    pDst       points to the block of output data.
+   * @param[in]     blockSize  number of samples to process.
+   */
+  void arm_iir_f32(
+    const arm_iir_instance_f32 * S,
+          float32_t * pSrc,
+          float32_t * pDst,
+          uint32_t blockSize);
+
+  /**
+   * @brief  Control function for the floating-point IIR filter.
+   * @param[in]     iirType      type of IIR filter.
+   * @param[in]     order        order of IIR filter.
+   * @param[in]     nbCascaded   number of stages
+   * @param[in]     simdFlag     flag for SIMD version
+   * @param[out]    stateSize    points to the needed size for the state
+   * @param[out]    coeffSize    points to the needed size for the coefficients
+   * @param[out]    stateAlign   points to the needed alignment for the state
+   * @param[out]    coeffAlign   points to the needed alignment for the coefficients
+   */
+  void arm_iir_req_f32(
+    arm_iir_type iirType, 
+    uint16_t order, 
+    uint32_t nbCascaded, 
+    uint16_t simdFlag, 
+    uint32_t * stateSize, 
+    uint32_t * coeffSize, 
+    uint32_t * stateAlign, 
+    uint32_t * coeffAlign);
+
+  /**
+   * @brief  Initialization function for the floating-point IIR filter.
+   * @param[in,out] S            points to an instance of the floating-point IIR filter.
+   * @param[in]     iirType      type of IIR filter.
+   * @param[in]     order        order of IIR filter.
+   * @param[in]     nbCascaded   number of stages
+   * @param[in]     simdFlag     flag for SIMD version
+   * @param[in]     debugFlag    flag for debug
+   * @param[in]     pState       points to the state values
+   * @param[in]     pCoeffs      points to the coefficients (b0 ... bk a1 ... ak); (b0 ... bk a1 ... ak) ...
+   */
+  void arm_iir_init_f32(
+    arm_iir_instance_f32 * S,
+    arm_iir_type iirType,
+    uint16_t order,
+    uint32_t nbCascaded,
+    uint8_t simdFlag,
+    uint8_t debugFlag,
+    float32_t * pState,
+    float32_t * pCoeffs );
+ 
   /**
    * @brief Instance structure for the floating-point LMS filter.
    */

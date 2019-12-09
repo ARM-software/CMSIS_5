@@ -106,8 +106,8 @@ void arm_correlate_f32(
         uint32_t srcBLen,
         float32_t * pDst)
 {
-    const float32_t *pIn1 = pSrcA;    /* inputA pointer               */
-    const float32_t *pIn2 = pSrcB + (srcBLen - 1U);   /* inputB pointer               */
+    const float32_t *pIn1 = pSrcA;                    /* inputA pointer */
+    const float32_t *pIn2 = pSrcB + (srcBLen - 1U);   /* inputB pointer */
     const float32_t *pX, *pY;
     const float32_t *pA, *pB;
     int32_t   i = 0U, j = 0;    /* loop counters */
@@ -320,7 +320,7 @@ void arm_correlate_f32(
         uint32_t outBlockSize;                         /* Loop counter */
         int32_t inc = 1;                               /* Destination address modifier */
 
-#if defined (ARM_MATH_LOOPUNROLL) || defined(ARM_MATH_NEON)
+#if defined (ARM_MATH_LOOPUNROLL) || defined(ARM_MATH_NEON) 
     float32_t acc0, acc1, acc2, acc3,c0;                    /* Accumulators */
 #if !defined(ARM_MATH_NEON)
     float32_t x0, x1, x2, x3;                        /* temporary variables for holding input and coefficient values */
@@ -585,11 +585,11 @@ void arm_correlate_f32(
 
         x = vextq_f32(x1v,x2v,2);
 
-	res = vmlaq_n_f32(res,x,c[2]);
+        res = vmlaq_n_f32(res,x,c[2]);
 
         x = vextq_f32(x1v,x2v,3);
 
-	res = vmlaq_n_f32(res,x,c[3]);
+        res = vmlaq_n_f32(res,x,c[3]);
 
         x1v = x2v;
         px+=4;

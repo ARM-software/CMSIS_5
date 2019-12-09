@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include "Error.h"
 
-#define SNR_THRESHOLD 120
+#define SNR_THRESHOLD 100
 
 /* 
 
@@ -10,8 +10,8 @@ Reference patterns are generated with
 a double precision computation.
 
 */
-#define REL_ERROR (1.0e-6)
-#define ABS_ERROR (1.0e-5)
+#define REL_ERROR (1.0e-5)
+#define ABS_ERROR (1.0e-4)
 
 /*
 
@@ -223,11 +223,39 @@ void UnaryTestsF32::test_mat_inverse_f32()
 
     }
 
+    void UnaryTestsF32::test_mat_cholesky_f32()
+    {
+      float32_t *inp1=input1.ptr();    
+      float32_t *outp=output.ptr();          
+      arm_matrix_instance_f32 Sin, Sout;
+      uint32_t size;
+
+      if(input1.nbSamples()==9)
+        size = 3;
+      if(input1.nbSamples()==121)
+        size = 11;
+
+      arm_mat_init_f32(&Sin, size, size, inp1);
+      arm_mat_init_f32(&Sout, size, size, outp);
+
+      arm_mat_cholesky_f32(&Sin, &Sout);
+
+
+for(int i=0; i<input1.nbSamples() ; i++)
+{
+//         outp[i] = (ref.ptr())[i];
+//        printf("> %f - %f\n", outp[i], (ref.ptr())[i] );
+}
+      ASSERT_EMPTY_TAIL(output);
+      ASSERT_SNR(output,ref,(float32_t)SNR_THRESHOLD);
+      ASSERT_CLOSE_ERROR(output,ref,ABS_ERROR,REL_ERROR);
+
+    } 
+
+
     void UnaryTestsF32::setUp(Testing::testID_t id,std::vector<Testing::param_t>& params,Client::PatternMgr *mgr)
     {
-
-
-    
+   
       switch(id)
       {
          case TEST_MAT_ADD_F32_1:
@@ -283,9 +311,20 @@ void UnaryTestsF32::test_mat_inverse_f32()
             output.create(ref.nbSamples(),UnaryTestsF32::OUT_F32_ID,mgr);
             a.create(MAXMATRIXDIM*MAXMATRIXDIM,UnaryTestsF32::TMPA_F32_ID,mgr);
          break;
-      }
-       
 
+         case TEST_MAT_CHOLESKY_F32_6:
+            input1.reload(UnaryTestsF32::INPUTCHOLESKY1_F32_ID,mgr,9);
+            ref.reload(UnaryTestsF32::REFCHOLESKY1_F32_ID,mgr,9);
+            output.create(9,UnaryTestsF32::OUT_F32_ID,mgr);
+         break;
+
+         case TEST_MAT_CHOLESKY_F32_7:
+            input1.reload(UnaryTestsF32::INPUTCHOLESKY2_F32_ID,mgr,121);
+            ref.reload(UnaryTestsF32::REFCHOLESKY2_F32_ID,mgr,121);
+            output.create(121,UnaryTestsF32::OUT_F32_ID,mgr);
+         break;
+
+      }
     
     }
 

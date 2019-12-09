@@ -198,7 +198,7 @@ void arm_fir_interpolate_f32(
      
       x0v = vld1q_f32(ptr1);
       x1v = vld1q_f32(ptr1 + 4);
-	
+
       while (tapCnt > 0U)
       {
         /* Read the input samples */
@@ -213,7 +213,7 @@ void arm_fir_interpolate_f32(
        
         /* Read the coefficients, inputs and perform multiply-accumulate */
         c1 = *(ptr2 + S->L);
-	
+
         xa = vextq_f32(x0v,x1v,1);
         xb = vextq_f32(x1v,x2v,1);
 
@@ -222,11 +222,11 @@ void arm_fir_interpolate_f32(
 
         /* Read the coefficients, inputs and perform multiply-accumulate */
         c2 = *(ptr2 + S->L * 2);
-	
+
         xa = vextq_f32(x0v,x1v,2);
         xb = vextq_f32(x1v,x2v,2);
         
-	accV0 = vmlaq_n_f32(accV0,xa,c2);
+        accV0 = vmlaq_n_f32(accV0,xa,c2);
         accV1 = vmlaq_n_f32(accV1,xb,c2);
 
         /* Read the coefficients, inputs and perform multiply-accumulate */
@@ -235,7 +235,7 @@ void arm_fir_interpolate_f32(
         xa = vextq_f32(x0v,x1v,3);
         xb = vextq_f32(x1v,x2v,3);
         
-	accV0 = vmlaq_n_f32(accV0,xa,c3);
+        accV0 = vmlaq_n_f32(accV0,xa,c3);
         accV1 = vmlaq_n_f32(accV1,xb,c3);
 
         /* Upsampling is done by stuffing L-1 zeros between each sample.
@@ -277,7 +277,7 @@ void arm_fir_interpolate_f32(
              xa = vextq_f32(x0v,x1v,2);
              xb = vextq_f32(x1v,x2v,2);
              
-	     accV0 = vmlaq_n_f32(accV0,xa,c0);
+             accV0 = vmlaq_n_f32(accV0,xa,c0);
              accV1 = vmlaq_n_f32(accV1,xb,c0);
              ptr2 += S->L;
 
@@ -294,7 +294,7 @@ void arm_fir_interpolate_f32(
              xa = vextq_f32(x0v,x1v,1);
              xb = vextq_f32(x1v,x2v,1);
              
-	     accV0 = vmlaq_n_f32(accV0,xa,c0);
+             accV0 = vmlaq_n_f32(accV0,xa,c0);
              accV1 = vmlaq_n_f32(accV1,xb,c0);
              ptr2 += S->L;
 

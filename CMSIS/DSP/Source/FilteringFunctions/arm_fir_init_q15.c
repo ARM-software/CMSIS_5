@@ -40,7 +40,7 @@
 /**
   @brief         Initialization function for the Q15 FIR filter.
   @param[in,out] S          points to an instance of the Q15 FIR filter structure.
-  @param[in] 	 numTaps    number of filter coefficients in the filter. Must be even and greater than or equal to 4.
+  @param[in]     numTaps    number of filter coefficients in the filter. Must be even and greater than or equal to 4.
   @param[in]     pCoeffs    points to the filter coefficients buffer.
   @param[in]     pState     points to the state buffer.
   @param[in]     blockSize  number of samples processed per call.

@@ -877,7 +877,7 @@ arm_status arm_mat_inverse_f32(
           /* Loop over the number of columns to the right of the pivot element,
              to replace the elements in the input matrix */
           j = (numCols - l) >> 2;
-	  
+  
           while (j > 0U)
           {
             /* Replace the element by the sum of that row
@@ -893,7 +893,7 @@ arm_status arm_mat_inverse_f32(
             j--;
           }
 
-	  /* Tail */
+          /* Tail */
           j = (numCols - l) & 3;
 
           while (j > 0U)
@@ -926,7 +926,7 @@ arm_status arm_mat_inverse_f32(
             j--;
           }
 
-	  /* Tail */
+          /* Tail */
           j = numCols & 3;
 
           while (j > 0U)

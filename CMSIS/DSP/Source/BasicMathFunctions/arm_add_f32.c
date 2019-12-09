@@ -131,7 +131,7 @@ void arm_add_f32(
     {
         /* C = A + B */
 
-    	/* Add and then store the results in the destination buffer. */
+        /* Add and then store the results in the destination buffer. */
         vec1 = vld1q_f32(pSrcA);
         vec2 = vld1q_f32(pSrcB);
         res = vaddq_f32(vec1, vec2);

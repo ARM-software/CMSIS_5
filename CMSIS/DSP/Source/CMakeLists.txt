@@ -178,6 +178,9 @@ option(DCT4_Q15_8192         "dct4 q15 8192"                    OFF)
 
 add_library(CMSISDSP INTERFACE)
 
+add_subdirectory(CommonFunctions)
+target_link_libraries(CMSISDSP INTERFACE CMSISDSPCommonFunctions)
+
 if (BASICMATH)
   add_subdirectory(BasicMathFunctions)
   target_link_libraries(CMSISDSP INTERFACE CMSISDSPBasicMath)

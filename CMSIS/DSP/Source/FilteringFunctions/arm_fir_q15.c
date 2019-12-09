@@ -729,7 +729,7 @@ void arm_fir_q15(
     while (tapCnt > 0U)
     {
       acc0 += (q31_t) *px++ * *pb++;
-	    acc0 += (q31_t) *px++ * *pb++;
+      acc0 += (q31_t) *px++ * *pb++;
 
       tapCnt--;
     }

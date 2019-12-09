@@ -39,10 +39,10 @@
  */
 
 /**
-   * @param[in]  S          points to an instance of the sorting structure.
-   * @param[in]  pSrc       points to the block of input data.
-   * @param[out] pDst       points to the block of output data
-   * @param[in]  blockSize  number of samples to process.
+   * @param[in]      S          points to an instance of the sorting structure.
+   * @param[in,out]  pSrc       points to the block of input data.
+   * @param[out]     pDst       points to the block of output data
+   * @param[in]      blockSize  number of samples to process.
    *
    * @par        Algorithm
    *               The insertion sort is a simple sorting algorithm that
@@ -50,7 +50,8 @@
    *               at a time, finds the location it belongs in the final sorted list, 
    *               and inserts it there. 
    *
-   * @par          It's an in-place algorithm. In order to obtain an out-of-place
+   * @par
+   *               It's an in-place algorithm. In order to obtain an out-of-place
    *               function, a memcpy of the source vector is performed.
    */
 
@@ -65,7 +66,8 @@ void arm_insertion_sort_f32(
     uint32_t i, j;
     float32_t temp;
 
-    if(pSrc != pDst) // out-of-place
+    /* Out-of-place */
+    if(pSrc != pDst)
     {   
         memcpy(pDst, pSrc, blockSize*sizeof(float32_t) );
         pA = pDst;
@@ -73,16 +75,16 @@ void arm_insertion_sort_f32(
     else
         pA = pSrc;
  
-    // Real all the element of the input array
+    /* Real all the element of the input array */
     for(i=0; i<blockSize; i++)
     {
-	// Move the i-th element to the right position
+        /* Move the i-th element to the right position */
         for (j = i; j>0 && dir==(pA[j]<pA[j-1]); j--)
         {
-	    // Swap
+            /* Swap */
             temp = pA[j];
-	    pA[j] = pA[j-1];
-	    pA[j-1] = temp;
+            pA[j] = pA[j-1];
+            pA[j-1] = temp;
         }
     }
 } 

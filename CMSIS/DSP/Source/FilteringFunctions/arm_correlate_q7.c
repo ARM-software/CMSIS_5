@@ -667,7 +667,7 @@ void arm_correlate_q7(
       *pOut = (q7_t) (__SSAT(acc3 >> 7, 8));
       pOut += inc;
 
-	  count += 4U;
+      count += 4U;
       /* Update the inputA and inputB pointers for next MAC calculation */
       px = pIn1 + count;
       py = pIn2;

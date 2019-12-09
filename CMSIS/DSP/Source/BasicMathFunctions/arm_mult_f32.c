@@ -129,7 +129,7 @@ void arm_mult_f32(
     {
         /* C = A * B */
 
-    	/* Multiply the inputs and then store the results in the destination buffer. */
+        /* Multiply the inputs and then store the results in the destination buffer. */
         vec1 = vld1q_f32(pSrcA);
         vec2 = vld1q_f32(pSrcB);
         res = vmulq_f32(vec1, vec2);

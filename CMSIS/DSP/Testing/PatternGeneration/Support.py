@@ -3,7 +3,11 @@ import itertools
 import Tools
 import random
 import numpy as np
+import pandas
+from pandas import DataFrame
 from scipy import interpolate
+from scipy import signal
+from scipy import ndimage
 
 NBTESTSAMPLES = 10
 
@@ -193,6 +197,48 @@ def writeTests2(config, format):
     ynew = interpolate.CubicSpline(x,y)
     config.writeReference(13, ynew(xnew))
 
+# Exponential smoothing
+    NBVEC = Tools.loopnb(format,Tools.BODYANDTAIL)
+    NBSAMPLES = 5
+    NBSAMPLESTOT = NBSAMPLES*NBVEC; 
+
+    data = np.random.randn(NBSAMPLESTOT)
+    data = Tools.normalize(data)
+    for i in range(NBVEC):
+        data[i]=0; # state=0 because the pandas function works differently
+
+    config.writeInput(14, data)
+
+    alpha = 0.6
+
+    vData = np.zeros((NBVEC, NBSAMPLES))
+    for i in range(NBVEC):
+        for j in range(NBSAMPLES):
+            vData[i][j]=data[j*NBVEC+i]
+
+    ref = []
+    for i in range(NBVEC):
+        df=DataFrame(vData[i])
+        ewma=df.ewm(alpha=alpha, adjust=False).mean()
+        ref = np.concatenate((ref, (ewma.values[NBSAMPLES-1])), axis=None)
+
+    config.writeReference(14,ref)
+
+# Median filter
+    NBSAMPLES=40
+    WNDSIZE=5
+    data=np.random.randn(NBSAMPLES)
+    data = Tools.normalize(data)
+    config.writeInput(15, data)
+    ref = ndimage.median_filter(data, size=WNDSIZE, mode='constant', cval=data[0], origin=int((WNDSIZE-1)/2) )
+    config.writeReference(15, ref)
+
+    data=np.random.randn(NBSAMPLES)
+    data = Tools.normalize(data)
+    config.writeInput(16, data)
+    ref = ndimage.median_filter(data, size=WNDSIZE, mode='wrap', origin=int((WNDSIZE-1)/2) )
+    config.writeReference(16, ref)
+ 
 def generatePatterns():
     PATTERNDIR = os.path.join("Patterns","DSP","Support","Support")
     PARAMDIR = os.path.join("Parameters","DSP","Support","Support")

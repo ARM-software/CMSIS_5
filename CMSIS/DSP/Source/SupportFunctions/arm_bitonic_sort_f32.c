@@ -29,62 +29,7 @@
 #include "arm_math.h"
 #include "arm_sorting.h"
 
-
-#if !defined(ARM_MATH_NEON)
-
-static void arm_bitonic_sort_core_f32(float32_t *pSrc, uint32_t n, uint8_t dir)
-{
-    uint32_t step;
-    uint32_t k, j;
-    float32_t *leftPtr, *rightPtr;
-    float32_t temp;
-
-    step = n>>1;
-    leftPtr = pSrc;
-    rightPtr = pSrc+n-1;
-
-    for(k=0; k<step; k++)
-    {
-	if(dir == (*leftPtr > *rightPtr))
-	{
-            // Swap
-	    temp=*leftPtr;
-	    *leftPtr=*rightPtr;
-	    *rightPtr=temp;
-	}
-
-	leftPtr++;  // Move right
-	rightPtr--; // Move left
-    }
-
-    // Merge
-    for(step=(n>>2); step>0; step/=2)
-    {
-	for(j=0; j<n; j=j+step*2)
-	{
-	    leftPtr  = pSrc+j;
-	    rightPtr = pSrc+j+step;
-
-	    for(k=0; k<step; k++)
-	    {
-		if(*leftPtr > *rightPtr)
-		{
-		    // Swap
-	    	    temp=*leftPtr;
-		    *leftPtr=*rightPtr;
-		    *rightPtr=temp;
-		}
-
-		leftPtr++;
-		rightPtr++;
-	    }
-	}
-    }
-}
-#endif
-
-#if defined(ARM_MATH_NEON)
-
+#ifdef ARM_MATH_NEON
 
 static float32x4x2_t arm_bitonic_resort_8_f32(float32x4_t a, float32x4_t b, uint8_t dir)
 {
@@ -130,20 +75,19 @@ static float32x4x2_t arm_bitonic_resort_8_f32(float32x4_t a, float32x4_t b, uint
     return vzipq_f32(a, b);
 }
 
-
 static float32x4x2_t arm_bitonic_merge_8_f32(float32x4_t a, float32x4_t b, uint8_t dir)
 {
     /* a and b are guaranteed to be bitonic */
-    // Reverse the element of the second vector
+    /* Reverse the element of the second vector */
     b = vrev128q_f32(b);
 
-    // Compare the two vectors
+    /* Compare the two vectors */
     if(dir)
         vminmaxq(a, b);
     else
-    vminmaxq(b, a);
+        vminmaxq(b, a);
 
-    // Merge the two vectors
+    /* Merge the two vectors */
     float32x4x2_t ab = arm_bitonic_resort_8_f32(a, b, dir);
 
     return ab;
@@ -218,7 +162,7 @@ static void arm_bitonic_resort_16_f32(float32_t * pOut, float32x4x2_t a, float32
 
 static void arm_bitonic_merge_16_f32(float32_t * pOut, float32x4x2_t a, float32x4x2_t b, uint8_t dir)
 {
-    // Merge two preordered float32x4x2_t
+    /* Merge two preordered float32x4x2_t */
     vrev256q_f32(b);
 
     if(dir)
@@ -229,6 +173,7 @@ static void arm_bitonic_merge_16_f32(float32_t * pOut, float32x4x2_t a, float32x
     arm_bitonic_resort_16_f32(pOut, a, b, dir);
 }
 
+
 static void arm_bitonic_sort_16_f32(float32_t *pSrc, float32_t *pDst, uint8_t dir)
 {
     float32x4_t a;
@@ -236,13 +181,13 @@ static void arm_bitonic_sort_16_f32(float32_t *pSrc, float32_t *pDst, uint8_t di
     float32x4_t c;
     float32x4_t d;
 
-    // Load 16 samples
+    /* Load 16 samples */
     a = vld1q_f32(pSrc);
     b = vld1q_f32(pSrc+4);
     c = vld1q_f32(pSrc+8); 
     d = vld1q_f32(pSrc+12);
     
-    // Bitonic sorting network for 4 samples x 4 times
+    /* Bitonic sorting network for 4 samples x 4 times */
     if(dir)
     {
         vminmaxq(a, b);
@@ -269,27 +214,23 @@ static void arm_bitonic_sort_16_f32(float32_t *pSrc, float32_t *pDst, uint8_t di
     float32x4x2_t ab = vtrnq_f32 (a, b);
     float32x4x2_t cd = vtrnq_f32 (c, d);
     
-    // Transpose 4 ordered arrays of 4 samples
+    /* Transpose 4 ordered arrays of 4 samples */
     a = vcombine_f32(vget_low_f32(ab.val[0]), vget_low_f32(cd.val[0]));
     b = vcombine_f32(vget_low_f32(ab.val[1]), vget_low_f32(cd.val[1]));
     c = vcombine_f32(vget_high_f32(ab.val[0]), vget_high_f32(cd.val[0]));
     d = vcombine_f32(vget_high_f32(ab.val[1]), vget_high_f32(cd.val[1]));
 
-    // Merge pairs of arrays of 4 samples
+    /* Merge pairs of arrays of 4 samples */
     ab = arm_bitonic_merge_8_f32(a, b, dir);
     cd = arm_bitonic_merge_8_f32(c, d, dir);
     
-    // Merge arrays of 8 samples
+    /* Merge arrays of 8 samples */
     arm_bitonic_merge_16_f32(pDst, ab, cd, dir);
 }
 
-
-
-
-
 static void arm_bitonic_merge_32_f32(float32_t * pSrc, float32x4x2_t ab1, float32x4x2_t ab2, float32x4x2_t cd1, float32x4x2_t cd2, uint8_t dir)
 {
-    //Compare
+    /* Compare */
     if(dir)
     {
         vminmax256q(ab1, cd1);
@@ -300,7 +241,8 @@ static void arm_bitonic_merge_32_f32(float32_t * pSrc, float32x4x2_t ab1, float3
         vminmax256q(cd1, ab1);
         vminmax256q(cd2, ab2);
     }
-    //Transpose 256
+
+    /* Transpose */
     float32x4_t temp;
 
     temp = ab2.val[0];
@@ -310,7 +252,7 @@ static void arm_bitonic_merge_32_f32(float32_t * pSrc, float32x4x2_t ab1, float3
     ab2.val[1] = cd1.val[1];
     cd1.val[1] = temp;
 
-    //Compare
+    /* Compare */
     if(dir)
     {
         vminmax256q(ab1, cd1);
@@ -322,7 +264,7 @@ static void arm_bitonic_merge_32_f32(float32_t * pSrc, float32x4x2_t ab1, float3
         vminmax256q(cd2, ab2);
     }
     
-    //Transpose 128
+    /* Transpose */
     arm_bitonic_merge_16_f32(pSrc+0,  ab1, cd1, dir);
     arm_bitonic_merge_16_f32(pSrc+16, ab2, cd2, dir);
 }
@@ -332,7 +274,7 @@ static void arm_bitonic_merge_64_f32(float32_t * pSrc, uint8_t dir)
     float32x4x2_t ab1, ab2, ab3, ab4;
     float32x4x2_t cd1, cd2, cd3, cd4;
 
-    //Load and reverse second array
+    /* Load and reverse second array */
     ab1.val[0] = vld1q_f32(pSrc+0 );
     ab1.val[1] = vld1q_f32(pSrc+4 );
     ab2.val[0] = vld1q_f32(pSrc+8 ); 
@@ -351,7 +293,7 @@ static void arm_bitonic_merge_64_f32(float32_t * pSrc, uint8_t dir)
     vldrev128q_f32(cd1.val[1], pSrc+56);
     vldrev128q_f32(cd1.val[0], pSrc+60);
     
-    //Compare
+    /* Compare */
     if(dir)
     {
         vminmax256q(ab1, cd1);
@@ -367,7 +309,7 @@ static void arm_bitonic_merge_64_f32(float32_t * pSrc, uint8_t dir)
         vminmax256q(cd4, ab4);
     }
 
-    //Transpose 512
+    /* Transpose */
     float32x4_t temp;
 
     temp = ab3.val[0];
@@ -383,7 +325,7 @@ static void arm_bitonic_merge_64_f32(float32_t * pSrc, uint8_t dir)
     ab4.val[1] = cd2.val[1];
     cd2.val[1] = temp;
 
-    //Compare
+    /* Compare */
     if(dir)
     {
         vminmax256q(ab1, cd1);
@@ -399,7 +341,7 @@ static void arm_bitonic_merge_64_f32(float32_t * pSrc, uint8_t dir)
         vminmax256q(cd4, ab4);
     }
     
-    //Transpose 256
+    /* Transpose */
     arm_bitonic_merge_32_f32(pSrc+0,  ab1, ab2, cd1, cd2, dir);
     arm_bitonic_merge_32_f32(pSrc+32, ab3, ab4, cd3, cd4, dir);
 }
@@ -409,7 +351,7 @@ static void arm_bitonic_merge_128_f32(float32_t * pSrc, uint8_t dir)
     float32x4x2_t ab1, ab2, ab3, ab4, ab5, ab6, ab7, ab8;
     float32x4x2_t cd1, cd2, cd3, cd4, cd5, cd6, cd7, cd8;
 
-    //Load and reverse second array
+    /* Load and reverse second array */
     ab1.val[0] = vld1q_f32(pSrc+0 );
     ab1.val[1] = vld1q_f32(pSrc+4 );
     ab2.val[0] = vld1q_f32(pSrc+8 ); 
@@ -444,7 +386,7 @@ static void arm_bitonic_merge_128_f32(float32_t * pSrc, uint8_t dir)
     vldrev128q_f32(cd1.val[1], pSrc+120);
     vldrev128q_f32(cd1.val[0], pSrc+124);
     
-    //Compare
+    /* Compare */
     if(dir)
     {
         vminmax256q(ab1, cd1);
@@ -468,7 +410,7 @@ static void arm_bitonic_merge_128_f32(float32_t * pSrc, uint8_t dir)
         vminmax256q(cd8, ab8);
     }
     
-    //Transpose
+    /* Transpose */
     float32x4_t temp;
 
     temp = ab5.val[0];
@@ -496,7 +438,7 @@ static void arm_bitonic_merge_128_f32(float32_t * pSrc, uint8_t dir)
     ab8.val[1] = cd4.val[1];
     cd4.val[1] = temp;
 
-    //Compare
+    /* Compare */
     if(dir)
     {
         vminmax256q(ab1, cd1);
@@ -553,7 +495,7 @@ static void arm_bitonic_merge_128_f32(float32_t * pSrc, uint8_t dir)
     vst1q_f32(pSrc+120, cd8.val[0]);
     vst1q_f32(pSrc+124, cd8.val[1]);
 
-    //Transpose
+    /* Transpose */
     arm_bitonic_merge_64_f32(pSrc+0 , dir);
     arm_bitonic_merge_64_f32(pSrc+64, dir);
 }
@@ -565,7 +507,7 @@ static void arm_bitonic_merge_256_f32(float32_t * pSrc, uint8_t dir)
     float32x4x2_t cd1, cd2, cd3, cd4, cd5, cd6, cd7, cd8;
     float32x4x2_t cd9, cd10, cd11, cd12, cd13, cd14, cd15, cd16;
 
-    //Load and reverse second array
+    /* Load and reverse second array */
     ab1.val[0]  = vld1q_f32(pSrc+0  );
     ab1.val[1]  = vld1q_f32(pSrc+4  );
     ab2.val[0]  = vld1q_f32(pSrc+8  ); 
@@ -632,7 +574,7 @@ static void arm_bitonic_merge_256_f32(float32_t * pSrc, uint8_t dir)
     vldrev128q_f32(cd1.val[1] , pSrc+248);
     vldrev128q_f32(cd1.val[0] , pSrc+252);
     
-    //Compare
+    /* Compare */
     if(dir)
     {
         vminmax256q(ab1 , cd1 );
@@ -672,7 +614,7 @@ static void arm_bitonic_merge_256_f32(float32_t * pSrc, uint8_t dir)
         vminmax256q(cd16, ab16);
     }
 
-    //Transpose
+    /* Transpose */
     float32x4_t temp;
 
     temp = ab9.val[0];
@@ -724,7 +666,7 @@ static void arm_bitonic_merge_256_f32(float32_t * pSrc, uint8_t dir)
     ab16.val[1] = cd8.val[1];
     cd8.val[1] = temp;
 
-    //Compare
+    /* Compare */
     if(dir)
     {
         vminmax256q(ab1 , cd1 );
@@ -829,46 +771,52 @@ static void arm_bitonic_merge_256_f32(float32_t * pSrc, uint8_t dir)
     vst1q_f32(pSrc+248, cd16.val[0]);
     vst1q_f32(pSrc+252, cd16.val[1]);
 
-    //Transpose
+    /* Transpose */
     arm_bitonic_merge_128_f32(pSrc+0  , dir);
     arm_bitonic_merge_128_f32(pSrc+128, dir);
 }
-
-#define SWAP(a,i,j)                            \
-    temp = vgetq_lane_f32(a, j);                   \
-    a = vsetq_lane_f32(vgetq_lane_f32(a, i), a, j);\
-    a = vsetq_lane_f32(temp, a, i);
 
 static float32x4_t arm_bitonic_sort_4_f32(float32x4_t a, uint8_t dir)
 {
     float32_t temp;
 
-
-    if( dir==(vgetq_lane_f32(a, 0) > vgetq_lane_f32(a, 1)) )
+    if( dir==(a[0]>a[1]) )
     {
-        SWAP(a,0,1);
+        temp = a[1];
+        a[1] = a[0];
+        a[0] = temp;
     }
-    if( dir==(vgetq_lane_f32(a, 2) > vgetq_lane_f32(a, 3)) )
+    if( dir==(a[2]>a[3]) )
     {
-       SWAP(a,2,3);
-    }
-
-    if( dir==(vgetq_lane_f32(a, 0) > vgetq_lane_f32(a, 3)) )
-    {
-      SWAP(a,0,3);
-    }
-    if( dir==(vgetq_lane_f32(a, 1) > vgetq_lane_f32(a, 2)) )
-    {
-      SWAP(a,1,2);
+        temp = a[3];
+        a[3] = a[2];
+        a[2] = temp;
     }
 
-    if( dir==(vgetq_lane_f32(a, 0) > vgetq_lane_f32(a, 1)) )
+    if( dir==(a[0]>a[3]) )
     {
-      SWAP(a,0,1);
+        temp = a[3];
+        a[3] = a[0];
+        a[0] = temp;
     }
-    if( dir==(vgetq_lane_f32(a, 2)>vgetq_lane_f32(a, 3)) )
+    if( dir==(a[1]>a[2]) )
     {
-      SWAP(a,2,3);
+        temp = a[2];
+        a[2] = a[1];
+        a[1] = temp;
+    }
+
+    if( dir==(a[0]>a[1]) )
+    {
+        temp = a[1];
+        a[1] = a[0];
+        a[0] = temp;
+    }
+    if( dir==(a[2]>a[3]) )
+    {
+        temp = a[3];
+        a[3] = a[2];
+        a[2] = temp;
     }
 
     return a;
@@ -878,10 +826,62 @@ static float32x4x2_t arm_bitonic_sort_8_f32(float32x4_t a, float32x4_t b, uint8_
 {
     a = arm_bitonic_sort_4_f32(a, dir);
     b = arm_bitonic_sort_4_f32(b, dir);
+
     return arm_bitonic_merge_8_f32(a, b, dir);
 }
 
+#else
 
+static void arm_bitonic_sort_core_f32(float32_t *pSrc, uint32_t n, uint8_t dir)
+{
+    uint32_t step;
+    uint32_t k, j;
+    float32_t *leftPtr, *rightPtr;
+    float32_t temp;
+
+    step = n>>1;
+    leftPtr = pSrc;
+    rightPtr = pSrc+n-1;
+
+    for(k=0; k<step; k++)
+    {
+        if(dir == (*leftPtr > *rightPtr))
+        {
+            /* Swap */
+            temp=*leftPtr;
+            *leftPtr=*rightPtr;
+            *rightPtr=temp;
+        }
+    
+        /* Move pointers right and left */
+        leftPtr++;
+        rightPtr--;
+    }
+
+    /* Merge */
+    for(step=(n>>2); step>0; step/=2)
+    {
+        for(j=0; j<n; j=j+step*2)
+        {
+            leftPtr  = pSrc+j;
+            rightPtr = pSrc+j+step;
+    
+            for(k=0; k<step; k++)
+            {
+                if(*leftPtr > *rightPtr)
+                {
+                    /* Swap */
+                    temp=*leftPtr;
+                    *leftPtr=*rightPtr;
+                    *rightPtr=temp;
+                }
+    
+            leftPtr++;
+            rightPtr++;
+            }
+        }
+    }
+}
 
 #endif
 
@@ -892,9 +892,10 @@ static float32x4x2_t arm_bitonic_sort_8_f32(float32x4_t a, float32x4_t b, uint8_
 /**
   @defgroup Sorting Vector sorting algorithms
 
-  Sort the elements of a vector
+  Sort the elements of a vector.
 
-  There are separate functions for floating-point, Q31, Q15, and Q7 data types.
+  This set of functions implements different sorting algorithms to order
+  the elements of an input array in ascending or descending order.
  */
 
 /**
@@ -903,58 +904,72 @@ static float32x4x2_t arm_bitonic_sort_8_f32(float32x4_t a, float32x4_t b, uint8_
  */
 
 /**
-   * @param[in]  S          points to an instance of the sorting structure.
-   * @param[in]  pSrc       points to the block of input data.
-   * @param[out] pDst       points to the block of output data
-   * @param[in]  blockSize  number of samples to process.
+   * @param[in]      S          points to an instance of the sorting structure.
+   * @param[in,out]  pSrc       points to the block of input data.
+   * @param[out]     pDst       points to the block of output data.
+   * @param[in]      blockSize  number of samples to process.
+   *
+   * @par       Algorithm
+   *               The bitonic sort is a parallel algorithm based on a sorting
+   *               network (an abstract description of how the values are compared 
+   *               and swapped). It has been described for the first time by Kenneth
+   *               Batcher [Batcher, K. E. (1968) Sorting networks and their applications.
+   *               Proceedings of the April 30 - May 2, 1968, spring joint computer conference, 
+   *               pp. 307-314]. The bitonic sort network has a complexity of O(n log^2(n)).
+   *
+   * @par
+   *               It is devised for input lengths being power of 2.
+   *               It can work in-place or out-of-place.
    */
+
 void arm_bitonic_sort_f32(
 const arm_sort_instance_f32 * S, 
       float32_t * pSrc,
       float32_t * pDst, 
       uint32_t blockSize)
 {
-    uint16_t s, i;
+    uint16_t i;
     uint8_t dir = S->dir;
 
 #ifdef ARM_MATH_NEON
-    (void)s;
 
     float32_t * pOut;
     uint16_t counter = blockSize>>5;
 
-    if( (blockSize & (blockSize-1)) == 0 ) // Powers of 2 only
+    /* Check if power of 2 */
+    if( (blockSize & (blockSize-1)) == 0 )
     {
-        if(pSrc == pDst) // in-place
+        /* In-place */    
+        if(pSrc == pDst)
             pOut = pSrc;
         else
-    	    pOut = pDst;
+            pOut = pDst;
     
         float32x4x2_t ab1, ab2;
         float32x4x2_t cd1, cd2;
 
-	if(blockSize == 1)
-		pOut = pSrc;
-	else if(blockSize == 2)
-	{
-            float32_t temp;
-            
-            if( dir==(pSrc[0]>pSrc[1]) )
-            {
-                temp = pSrc[1];
-                pOut[1] = pSrc[0];
-                pOut[0] = temp;
-            }
-	    else
-		pOut = pSrc;
-	}
-	else if(blockSize == 4)
+        if(blockSize == 1)
+            pOut = pSrc;
+        else if(blockSize == 2)
         {
-    	    float32x4_t a = vld1q_f32(pSrc);
+                float32_t temp;
+                
+                if( dir==(pSrc[0]>pSrc[1]) )
+                {
+                    temp = pSrc[1];
+                    pOut[1] = pSrc[0];
+                    pOut[0] = temp;
+                }
+                else
+                    pOut = pSrc;
+        }
+        else if(blockSize == 4)
+        {
+            float32x4_t a = vld1q_f32(pSrc);
 
-    	    a = arm_bitonic_sort_4_f32(a, dir);
+            a = arm_bitonic_sort_4_f32(a, dir);
 
-    	    vst1q_f32(pOut, a);
+            vst1q_f32(pOut, a);
         }
         else if(blockSize == 8)
         {
@@ -972,14 +987,14 @@ const arm_sort_instance_f32 * S,
         }
         else if(blockSize >=16)
         {
-            // Order 16 bits long vectors
+            /* Order 16 bits long vectors */
             for(i=0; i<blockSize; i=i+16)
                 arm_bitonic_sort_16_f32(pSrc+i, pOut+i, dir);
         
-            // Merge
+            /* Merge */
             for(i=0; i<counter; i++)
             {
-                // Load and reverse second vector
+                /* Load and reverse second vector */
                 ab1.val[0] = vld1q_f32(pOut+32*i+0 );
                 ab1.val[1] = vld1q_f32(pOut+32*i+4 );
                 ab2.val[0] = vld1q_f32(pOut+32*i+8 ); 
@@ -1005,11 +1020,12 @@ const arm_sort_instance_f32 * S,
             for(i=0; i<counter; i++)
                 arm_bitonic_merge_256_f32(pOut+256*i, dir);
 
-            // Etc...
+            /* Etc... */
         }
     }
 
 #else
+    uint16_t s;
 
     float32_t * pA;
 
@@ -1026,8 +1042,8 @@ const arm_sort_instance_f32 * S,
     {
         for(s=2; s<=blockSize; s=s*2)
         {
-    	    for(i=0; i<blockSize; i=i+s)
-    	        arm_bitonic_sort_core_f32(pA+i, s, dir);
+            for(i=0; i<blockSize; i=i+s)
+                arm_bitonic_sort_core_f32(pA+i, s, dir);
         }
     }
 #endif
@@ -1036,3 +1052,4 @@ const arm_sort_instance_f32 * S,
 /**
   @} end of Sorting group
  */
+

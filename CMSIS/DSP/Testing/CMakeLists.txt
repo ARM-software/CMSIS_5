@@ -187,6 +187,8 @@ set(TESTSRC
   Source/Tests/BIQUADF32.cpp
   Source/Tests/BIQUADQ31.cpp
   Source/Tests/BIQUADQ15.cpp
+  Source/Tests/IIRTestsF32.cpp
+  Source/Tests/GoertzelTestsF32.cpp
   Source/Tests/Pooling.cpp
   Source/Tests/Softmax.cpp
   Source/Tests/NNSupport.cpp

@@ -58,7 +58,7 @@
                    and saturated to 1.31 format to yield the final result.
                    The output signal and error signal are in 1.31 format.
  @par
-  	               In this filter, filter coefficients are updated for each sample and the
+                   In this filter, filter coefficients are updated for each sample and the
                    updation of filter cofficients are saturted.
  */
 

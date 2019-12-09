@@ -39,10 +39,10 @@
  */
 
 /**
-   * @param[in]  S          points to an instance of the sorting structure.
-   * @param[in]  pSrc       points to the block of input data.
-   * @param[out] pDst       points to the block of output data
-   * @param[in]  blockSize  number of samples to process.
+   * @param[in]      S          points to an instance of the sorting structure.
+   * @param[in,out]  pSrc       points to the block of input data.
+   * @param[out]     pDst       points to the block of output data
+   * @param[in]      blockSize  number of samples to process.
    *
    * @par        Algorithm
    *               The Selection sort algorithm is a comparison algorithm that
@@ -52,7 +52,8 @@
    *               element in the unsorted sublist, swapping it with the leftmost
    *               one, and moving the sublists boundary one element to the right.
    *
-   * @par          It's an in-place algorithm. In order to obtain an out-of-place
+   * @par
+   *               It's an in-place algorithm. In order to obtain an out-of-place
    *               function, a memcpy of the source vector is performed.
    */
 
@@ -65,10 +66,10 @@ void arm_selection_sort_f32(
     uint32_t i, j, k;
     uint8_t dir = S->dir;
     float32_t temp;
-
     float32_t * pA;
 
-    if(pSrc != pDst) // out-of-place
+    /* Out-of-place */
+    if(pSrc != pDst)
     {
         memcpy(pDst, pSrc, blockSize*sizeof(float32_t) );
         pA = pDst;
@@ -96,8 +97,8 @@ void arm_selection_sort_f32(
         {
             /* Swap the minimum/maximum with the leftmost element */
             temp=pA[i];
-	    pA[i]=pA[k];
-	    pA[k]=temp;
+            pA[i]=pA[k];
+            pA[k]=temp;
         }
     }
 }

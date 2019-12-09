@@ -26,8 +26,14 @@
  * limitations under the License.
  */
 
+#include "arm_math.h"
+
+#if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
+#include "arm_helium_utils.h"
+#endif
+
 /**
-  @ingroup groupSupport
+  @ingroup groupMath
  */
 
 /**
@@ -44,8 +50,6 @@
   @return        none
  */
 
-#include "arm_math.h"
-
 void arm_xor_q7(
     const q7_t * pSrcA,
     const q7_t * pSrcB,
@@ -53,6 +57,39 @@ void arm_xor_q7(
     uint32_t blockSize)
 {
     uint32_t blkCnt;      /* Loop counter */
+
+#if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
+    q7x16_t vecSrcA, vecSrcB;
+
+    /* Compute 16 outputs at a time */
+    blkCnt = blockSize >> 4;
+
+    while (blkCnt > 0U)
+    {
+        vecSrcA = vld1q(pSrcA);
+        vecSrcB = vld1q(pSrcB);
+
+        vst1q(pDst, veorq_s8(vecSrcA, vecSrcB) );
+
+        pSrcA += 16;
+        pSrcB += 16;
+        pDst  += 16;
+
+        /* Decrement the loop counter */
+        blkCnt--;
+    }
+
+    /* Tail */
+    blkCnt = blockSize & 0xF;
+
+    if (blkCnt > 0U)
+    {
+        mve_pred16_t p0 = vctp8q(blkCnt);
+        vecSrcA = vld1q(pSrcA);
+        vecSrcB = vld1q(pSrcB);
+        vstrbq_p(pDst, veorq_s8(vecSrcA, vecSrcB), p0);
+    }
+#else
 
 #if defined(ARM_MATH_NEON)
     int8x16_t vecA, vecB;
@@ -89,6 +126,8 @@ void arm_xor_q7(
         /* Decrement the loop counter */
         blkCnt--;
     }
+
+#endif /* if defined(ARM_MATH_MVEF) */
 }
 
 /**

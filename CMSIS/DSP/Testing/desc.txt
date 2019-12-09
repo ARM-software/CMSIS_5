@@ -267,6 +267,9 @@ group Root {
               Pattern INPUT_SPLINE_RAM_X_F32_ID : InputX13_f32.txt
               Pattern INPUT_SPLINE_RAM_Y_F32_ID : InputY13_f32.txt
               Pattern OUTPUT_SPLINE_RAM_X_F32_ID : OutputX13_f32.txt
+              Pattern INPUT_EXPSMOOTH_F32_ID : Input14_f32.txt
+              Pattern INPUT_MEDIANFILTER_F32_ID : Input15_f32.txt
+              Pattern INPUT_MEDIANFILTER_DELAY_F32_ID : Input16_f32.txt
               Pattern WEIGHTS_F32_ID : Weights6_f32.txt 
               Pattern REF_F32_ID : Ref6_f32.txt
               Pattern REF_SORT_F32_ID : Reference7_f32.txt 
@@ -276,6 +279,9 @@ group Root {
               Pattern REF_SPLINE_SQU_F32_ID : Reference11_f32.txt
               Pattern REF_SPLINE_SIN_F32_ID : Reference12_f32.txt
               Pattern REF_SPLINE_RAM_F32_ID : Reference13_f32.txt
+              Pattern REF_EXPSMOOTH_F32_ID : Reference14_f32.txt
+              Pattern REF_MEDIANFILTER_F32_ID : Reference15_f32.txt
+              Pattern REF_MEDIANFILTER_DELAY_F32_ID : Reference16_f32.txt
               Pattern SAMPLES_F32_ID : Samples1_f32.txt 
               Pattern SAMPLES_Q15_ID : Samples3_q15.txt 
               Pattern SAMPLES_Q31_ID : Samples4_q31.txt 
@@ -318,9 +324,9 @@ group Root {
                 test_insertion_sort_f32 nb=16 const:test_insertion_sort_const_f32 
                 test_merge_sort_f32 nb=11 outofplace:test_merge_sort_out_f32 
                 test_merge_sort_f32 nb=16 const:test_merge_sort_const_f32 
-                disabled{test_quick_sort_f32 nb=11 outofplace:test_quick_sort_out_f32}
-                disabled{test_quick_sort_f32 nb=11 inplace:test_quick_sort_in_f32} 
-                disabled{test_quick_sort_f32 nb=16 const:test_quick_sort_const_f32}
+                test_quick_sort_f32 nb=11 outofplace:test_quick_sort_out_f32
+                test_quick_sort_f32 nb=11 inplace:test_quick_sort_in_f32
+                test_quick_sort_f32 nb=16 const:test_quick_sort_const_f32
                 test_selection_sort_f32 nb=11 outofplace:test_selection_sort_out_f32 
                 test_selection_sort_f32 nb=11 inplace:test_selection_sort_in_f32
                 test_selection_sort_f32 nb=16 const:test_selection_sort_const_f32
@@ -328,6 +334,11 @@ group Root {
                 test_spline_f32 square:test_spline_square_f32
                 test_spline_f32 sin:test_spline_sine_f32
                 test_spline_f32 ramp:test_spline_ramp_f32
+
+                test_exp_smoothing_f32 rand nb=11:test_exp_smoothing_f32
+
+                test_median_filter_f32 rand:test_median_filter_rand_f32
+                test_median_filter_f32 rand delay:test_median_filter_rand_delay_f32
               }
 
            }
@@ -2004,6 +2015,89 @@ group Root {
              }
            }
 
+           group IIR Tests {
+             class = IIRTests 
+             folder = IIR
+
+             suite IIR Tests F32 {
+                class = IIRTestsF32 
+                folder = IIRF32
+
+                Pattern INPUT_IIR_1ST_F32_ID : IIR_1st_Input1_f32.txt
+                Pattern COEFS_IIR_1ST_F32_ID : IIR_1st_Coefs1_f32.txt
+                Pattern INPUT_IIR_2ND_F32_ID : IIR_2nd_Input1_f32.txt
+                Pattern COEFS_IIR_2ND_F32_ID : IIR_2nd_Coefs1_f32.txt
+                Pattern INPUT_IIR_3RD_F32_ID : IIR_3rd_Input1_f32.txt
+                Pattern COEFS_IIR_3RD_F32_ID : IIR_3rd_Coefs1_f32.txt
+                Pattern INPUT_IIR_5TH_F32_ID : IIR_5th_Input1_f32.txt
+                Pattern COEFS_IIR_5TH_F32_ID : IIR_5th_Coefs1_f32.txt
+                Pattern COEFS_IIR_1ST_CASC_F32_ID : IIR_1st_Coefs2_f32.txt
+                Pattern COEFS_IIR_2ND_CASC_F32_ID : IIR_2nd_Coefs2_f32.txt
+                Pattern COEFS_IIR_3RD_CASC_F32_ID : IIR_3rd_Coefs2_f32.txt
+                Pattern COEFS_IIR_5TH_CASC_F32_ID : IIR_5th_Coefs2_f32.txt
+
+                Pattern REF_IIR_1ST_F32_ID : IIR_1st_Reference1_f32.txt
+                Pattern REF_IIR_2ND_F32_ID : IIR_2nd_Reference1_f32.txt
+                Pattern REF_IIR_3RD_F32_ID : IIR_3rd_Reference1_f32.txt
+                Pattern REF_IIR_5TH_F32_ID : IIR_5th_Reference1_f32.txt
+                Pattern REF_IIR_1ST_CASC_F32_ID : IIR_1st_Reference2_f32.txt
+                Pattern REF_IIR_2ND_CASC_F32_ID : IIR_2nd_Reference2_f32.txt
+                Pattern REF_IIR_3RD_CASC_F32_ID : IIR_3rd_Reference2_f32.txt
+                Pattern REF_IIR_5TH_CASC_F32_ID : IIR_5th_Reference2_f32.txt
+
+                Output  OUT_SAMPLES_F32_ID : Output
+                Output  STATE_F32_ID : State
+
+                Functions {
+                  arm_iir_1st_df1 n=11:test_iir_1st_df1
+                  arm_iir_2nd_df1 n=11:test_iir_2nd_df1
+                  arm_iir_3rd_df1 n=11:test_iir_3rd_df1
+                  arm_iir_5th_df1 n=11:test_iir_5th_df1
+
+                  arm_iir_1st_df1 n=11 simd:test_iir_1st_df1_simd
+                  arm_iir_2nd_df1 n=11 simd:test_iir_2nd_df1_simd
+                  arm_iir_3rd_df1 n=11 simd:test_iir_3rd_df1_simd
+                  arm_iir_5th_df1 n=11 simd:test_iir_5th_df1_simd
+
+                  arm_iir_1st_df1 n=11 casc=2:test_iir_1st_df1_casc
+                  arm_iir_2nd_df1 n=11 casc=2:test_iir_2nd_df1_casc
+                  arm_iir_3rd_df1 n=11 casc=2:test_iir_3rd_df1_casc
+                  arm_iir_5th_df1 n=11 casc=2:test_iir_5th_df1_casc
+
+                  arm_iir_1st_df1 n=11 simd casc=2:test_iir_1st_df1_simd_casc
+                  arm_iir_2nd_df1 n=11 simd casc=2:test_iir_2nd_df1_simd_casc
+                  arm_iir_3rd_df1 n=11 simd casc=2:test_iir_3rd_df1_simd_casc
+                  arm_iir_5th_df1 n=11 simd casc=2:test_iir_5th_df1_simd_casc
+                 }
+             }
+           }
+
+           group Goertzel Tests {
+             class = GoertzelTests
+             folder = Goertzel
+
+             suite Goertzel Tests F32 {
+                class = GoertzelTestsF32
+                folder = GoertzelF32
+               
+                Pattern INPUT_GOERTZEL_CONST_F32_ID : Goertzel_Input1_f32.txt
+                Pattern INPUT_GOERTZEL_SIN_F32_ID : Goertzel_Input2_f32.txt
+                Pattern INPUT_GOERTZEL_RAND_F32_ID : Goertzel_Input3_f32.txt
+
+                Pattern REF_GOERTZEL_CONST_F32_ID : Goertzel_Reference1_f32.txt
+                Pattern REF_GOERTZEL_SIN_F32_ID : Goertzel_Reference2_f32.txt
+                Pattern REF_GOERTZEL_RAND_F32_ID : Goertzel_Reference3_f32.txt
+
+                Output  OUT_F32_ID : Output
+ 
+                Functions {
+                  test_goertzel_f32 const:test_goertzel_const_f32
+                  test_goertzel_f32 sin:test_goertzel_sin_f32
+                  test_goertzel_f32 rand:test_goertzel_rand_f32
+                 }
+             }
+           }
+
         }
 
         group Matrix Tests {
@@ -2023,12 +2117,16 @@ group Root {
                 Pattern INPUTSINV_F32_ID : InputInvert1_f32.txt 
                 Pattern DIMSUNARY1_S16_ID : DimsUnary1_s16.txt 
                 Pattern DIMSINVERT1_S16_ID : DimsInvert1_s16.txt 
-                
+                Pattern INPUTCHOLESKY1_F32_ID : InputCholesky1_f32.txt
+                Pattern INPUTCHOLESKY2_F32_ID : InputCholesky2_f32.txt
+
                 Pattern REFADD1_F32_ID : RefAdd1_f32.txt
                 Pattern REFSUB1_F32_ID : RefSub1_f32.txt
                 Pattern REFSCALE1_F32_ID : RefScale1_f32.txt
                 Pattern REFTRANS1_F32_ID : RefTranspose1_f32.txt
                 Pattern REFINV1_F32_ID : RefInvert1_f32.txt
+                Pattern REFCHOLESKY1_F32_ID : RefCholesky1_f32.txt
+                Pattern REFCHOLESKY2_F32_ID : RefCholesky2_f32.txt 
 
                 Output  OUT_F32_ID : Output
                 Output  TMPA_F32_ID : TmpA
@@ -2040,6 +2138,9 @@ group Root {
                  test matrix scale:test_mat_scale_f32
                  test matrix transpose:test_mat_trans_f32
                  test matrix inverse:test_mat_inverse_f32
+                 test matrix Cholesky n=3:test_mat_cholesky_f32
+                 test matrix Cholesky n=11:test_mat_cholesky_f32
+
                 }
 
               }

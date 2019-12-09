@@ -674,6 +674,29 @@ def writeUnaryTests(config,format):
     config.writeReference(1, vals,"RefInvert")
     # One kind of matrix shape
 
+
+def writeUnaryTests2(config,format):
+    # For benchmarks
+    NBA=3
+    data = np.random.rand(NBA,NBA)
+    data = np.dot(data,data.transpose())
+    ref = np.linalg.cholesky(data)
+    data = np.reshape(data, NBA*NBA)
+    ref = np.reshape(ref, NBA*NBA)
+    config.writeInput(1,data,"InputCholesky")
+    config.writeReference(1,ref,"RefCholesky")
+
+    NBA=11
+    data = np.random.rand(NBA,NBA)
+    data = np.dot(data,data.transpose())
+    ref = np.linalg.cholesky(data)
+    data = np.reshape(data, NBA*NBA)
+    ref = np.reshape(ref, NBA*NBA)
+    config.writeInput(2,data,"InputCholesky")
+    config.writeReference(2,ref,"RefCholesky")
+
+
+
 def generatePatterns():
     PATTERNBINDIR = os.path.join("Patterns","DSP","Matrix","Binary","Binary")
     PARAMBINDIR = os.path.join("Parameters","DSP","Matrix","Binary","Binary")
@@ -701,6 +724,10 @@ def generatePatterns():
     writeUnaryTests(configUnaryf32,0)
     writeUnaryTests(configUnaryq31,31)
     writeUnaryTests(configUnaryq15,15)
+
+
+    writeUnaryTests2(configUnaryf32,0)
+
 
 if __name__ == '__main__':
   generatePatterns()

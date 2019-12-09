@@ -144,7 +144,7 @@ void arm_cmplx_mult_real_f32(
         ab = vld2q_f32(pSrcCmplx);  // load & separate real/imag pSrcA (de-interleave 2)
         r = vld1q_f32(pSrcReal);  // load & separate real/imag pSrcB
 
-	/* Increment pointers */
+        /* Increment pointers */
         pSrcCmplx += 8;
         pSrcReal += 4;
 

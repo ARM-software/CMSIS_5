@@ -27,6 +27,9 @@
  */
 
 #include "arm_math.h"
+#if defined(ARM_ERROR_HANDLER)
+#include "arm_error.h"
+#endif
 
 /**
  * @ingroup groupInterpolation
@@ -50,12 +53,18 @@ void arm_spline_init_f32(
     arm_spline_type type,
     float32_t * buffer)
 {
-    S->n_x  = n;
+#if defined (ARM_ERROR_HANDLER)
+    if( n<2 )
+       arm_error_handler(ARM_ERROR_MATH, "At least 2 points are needed.");
+#endif
+    S->n_x = n;
+
     S->type = type;
     /* Type (boundary conditions):
      *  - Natural spline          ( S1''(x1)=0 ; Sn''(xn)=0 )
      *  - Parabolic runout spline ( S1''(x1)=S2''(x2) ; Sn-1''(xn-1)=Sn''(xn) )
      */
+
     S->buffer = buffer;
 }
 

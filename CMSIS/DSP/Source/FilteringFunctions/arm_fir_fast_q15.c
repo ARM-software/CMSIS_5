@@ -265,7 +265,7 @@ void arm_fir_fast_q15(
     do
     {
       acc0 += (q31_t) *px++ * *pb++;
-	  acc0 += (q31_t) *px++ * *pb++;
+      acc0 += (q31_t) *px++ * *pb++;
 
       tapCnt--;
     }

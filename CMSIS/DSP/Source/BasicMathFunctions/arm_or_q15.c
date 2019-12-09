@@ -28,8 +28,12 @@
 
 #include "arm_math.h"
 
+#if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
+#include "arm_helium_utils.h"
+#endif
+
 /**
-  @ingroup groupSupport
+  @ingroup groupMath
  */
 
 /**
@@ -61,6 +65,39 @@ void arm_or_q15(
     uint32_t blockSize)
 {
     uint32_t blkCnt;      /* Loop counter */
+
+#if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
+    q15x8_t vecSrcA, vecSrcB;
+
+    /* Compute 8 outputs at a time */
+    blkCnt = blockSize >> 3;
+
+    while (blkCnt > 0U)
+    {
+        vecSrcA = vld1q(pSrcA);
+        vecSrcB = vld1q(pSrcB);
+
+        vst1q(pDst, vorrq_s16(vecSrcA, vecSrcB) );
+
+        pSrcA += 8;
+        pSrcB += 8;
+        pDst  += 8;
+
+        /* Decrement the loop counter */
+        blkCnt--;
+    }
+
+    /* Tail */
+    blkCnt = blockSize & 7;
+
+    if (blkCnt > 0U)
+    {
+        mve_pred16_t p0 = vctp16q(blkCnt);
+        vecSrcA = vld1q(pSrcA);
+        vecSrcB = vld1q(pSrcB);
+        vstrhq_p(pDst, vorrq_s16(vecSrcA, vecSrcB), p0);
+    }
+#else
 
 #if defined(ARM_MATH_NEON)
     int16x8_t vecA, vecB;
@@ -97,6 +134,8 @@ void arm_or_q15(
         /* Decrement the loop counter */
         blkCnt--;
     }
+
+#endif /* if defined(ARM_MATH_MVEF) */
 }
 
 /**

@@ -471,6 +471,59 @@
        ASSERT_SNR(output,ref,(float32_t)SNR_THRESHOLD);
     } 
 
+    void SupportTestsF32::test_exp_smoothing_f32()
+    {
+       float32_t *inp = input.ptr();
+       float32_t *outp = output.ptr();
+       arm_exp_smooth_instance_f32 S;
+       float32_t alpha = 0.6;
+
+       arm_exponential_smoothing_init_f32(&S, alpha, 11);
+       arm_exponential_smoothing_f32(&S,inp,outp,this->nbSamples);
+        
+       ASSERT_EMPTY_TAIL(output);
+       ASSERT_SNR(output,ref, (float32_t)SNR_THRESHOLD);
+
+    } 
+
+    void SupportTestsF32::test_median_filter_rand_f32()
+    {
+       float32_t *inp = input.ptr();
+       float32_t *outp = output.ptr();
+       float32_t *buf = buffer.ptr();
+       buf = (float32_t*)malloc(5*sizeof(float32_t));
+       arm_median_filter_instance_f32 S;
+
+       arm_median_filter_init_f32(&S, 5, buf, NULL);
+       arm_median_filter_f32(&S, inp, outp, 40);
+
+       ASSERT_EMPTY_TAIL(output);
+       ASSERT_SNR(output,ref, (float32_t)SNR_THRESHOLD);
+    } 
+
+    void SupportTestsF32::test_median_filter_rand_delay_f32()
+    {
+       float32_t *inp = input.ptr();
+       float32_t *outp = output.ptr();
+       float32_t *buf = buffer.ptr();
+       buf = (float32_t*)malloc(5*sizeof(float32_t));
+       float32_t bufDelay[4];
+       bufDelay[0]=inp[36];
+       bufDelay[1]=inp[37];
+       bufDelay[2]=inp[38];
+       bufDelay[3]=inp[39];
+
+       arm_median_filter_instance_f32 S;
+
+       arm_median_filter_init_f32(&S, 5, buf, bufDelay);
+       arm_median_filter_f32(&S, inp, outp, 40);
+
+       ASSERT_EMPTY_TAIL(output);
+       ASSERT_SNR(output,ref, (float32_t)SNR_THRESHOLD);
+    } 
+
+
+
     void SupportTestsF32::setUp(Testing::testID_t id,std::vector<Testing::param_t>& paramsArgs,Client::PatternMgr *mgr)
     {
 
@@ -626,176 +679,198 @@
 
             break;
 
-	    case TEST_BITONIC_SORT_OUT_F32_19:
+        case TEST_BITONIC_SORT_OUT_F32_19:
               this->nbSamples = 16;
               input.reload(SupportTestsF32::INPUT_BITONIC_SORT_16_F32_ID,mgr,this->nbSamples);
               ref.reload(SupportTestsF32::REF_BITONIC_SORT_16_F32_ID,mgr);
               output.create(this->nbSamples,SupportTestsF32::OUT_F32_ID,mgr);
-	    break;
+        break;
 
-	    case TEST_BITONIC_SORT_OUT_F32_20:
+        case TEST_BITONIC_SORT_OUT_F32_20:
               this->nbSamples = 32;
               input.reload(SupportTestsF32::INPUT_BITONIC_SORT_32_F32_ID,mgr,this->nbSamples);
               ref.reload(SupportTestsF32::REF_BITONIC_SORT_32_F32_ID,mgr);
               output.create(this->nbSamples,SupportTestsF32::OUT_F32_ID,mgr); 
-	    break;
+        break;
 
-	    case TEST_BITONIC_SORT_IN_F32_21:
+        case TEST_BITONIC_SORT_IN_F32_21:
               this->nbSamples = 32;
               input.reload(SupportTestsF32::INPUT_BITONIC_SORT_32_F32_ID,mgr,this->nbSamples);
               ref.reload(SupportTestsF32::REF_BITONIC_SORT_32_F32_ID,mgr);
               output.create(this->nbSamples,SupportTestsF32::OUT_F32_ID,mgr); 
-	    break;
+        break;
 
-	    case TEST_BITONIC_SORT_CONST_F32_22:
+        case TEST_BITONIC_SORT_CONST_F32_22:
               this->nbSamples = 16;
               input.reload(SupportTestsF32::INPUT_SORT_CONST_F32_ID,mgr,this->nbSamples);
               ref.reload(SupportTestsF32::REF_SORT_CONST_F32_ID,mgr);
               output.create(this->nbSamples,SupportTestsF32::OUT_F32_ID,mgr); 
-	    break;
+        break;
 
-	    case TEST_BUBBLE_SORT_OUT_F32_23:
+        case TEST_BUBBLE_SORT_OUT_F32_23:
               this->nbSamples = 11;
               input.reload(SupportTestsF32::INPUT_SORT_F32_ID,mgr,this->nbSamples);
               ref.reload(SupportTestsF32::REF_SORT_F32_ID,mgr);
               output.create(this->nbSamples,SupportTestsF32::OUT_F32_ID,mgr);            
-	    break;
+        break;
 
-	    case TEST_BUBBLE_SORT_IN_F32_24:
+        case TEST_BUBBLE_SORT_IN_F32_24:
               this->nbSamples = 11;
               input.reload(SupportTestsF32::INPUT_SORT_F32_ID,mgr,this->nbSamples);
               ref.reload(SupportTestsF32::REF_SORT_F32_ID,mgr);
               output.create(this->nbSamples,SupportTestsF32::OUT_F32_ID,mgr);            
-	    break;
+        break;
 
-	    case TEST_BUBBLE_SORT_CONST_F32_25:
+        case TEST_BUBBLE_SORT_CONST_F32_25:
               this->nbSamples = 16;
               input.reload(SupportTestsF32::INPUT_SORT_CONST_F32_ID,mgr,this->nbSamples);
               ref.reload(SupportTestsF32::REF_SORT_CONST_F32_ID,mgr);
               output.create(this->nbSamples,SupportTestsF32::OUT_F32_ID,mgr); 
-	    break;
+        break;
 
-	    case TEST_HEAP_SORT_OUT_F32_26:
+        case TEST_HEAP_SORT_OUT_F32_26:
               this->nbSamples = 11;
               input.reload(SupportTestsF32::INPUT_SORT_F32_ID,mgr,this->nbSamples);
               ref.reload(SupportTestsF32::REF_SORT_F32_ID,mgr);
               output.create(this->nbSamples,SupportTestsF32::OUT_F32_ID,mgr);            
-	    break;
+        break;
 
-	    case TEST_HEAP_SORT_IN_F32_27:
+        case TEST_HEAP_SORT_IN_F32_27:
               this->nbSamples = 11;
               input.reload(SupportTestsF32::INPUT_SORT_F32_ID,mgr,this->nbSamples);
               ref.reload(SupportTestsF32::REF_SORT_F32_ID,mgr);
               output.create(this->nbSamples,SupportTestsF32::OUT_F32_ID,mgr);            
-	    break;
+        break;
 
-	    case TEST_HEAP_SORT_CONST_F32_28:
+        case TEST_HEAP_SORT_CONST_F32_28:
               this->nbSamples = 16;
               input.reload(SupportTestsF32::INPUT_SORT_CONST_F32_ID,mgr,this->nbSamples);
               ref.reload(SupportTestsF32::REF_SORT_CONST_F32_ID,mgr);
               output.create(this->nbSamples,SupportTestsF32::OUT_F32_ID,mgr); 
-	    break;
+        break;
 
-	    case TEST_INSERTION_SORT_OUT_F32_29:
+        case TEST_INSERTION_SORT_OUT_F32_29:
               this->nbSamples = 11;
               input.reload(SupportTestsF32::INPUT_SORT_F32_ID,mgr,this->nbSamples);
               ref.reload(SupportTestsF32::REF_SORT_F32_ID,mgr);
               output.create(this->nbSamples,SupportTestsF32::OUT_F32_ID,mgr);            
-	    break;
+        break;
 
-	    case TEST_INSERTION_SORT_IN_F32_30:
+        case TEST_INSERTION_SORT_IN_F32_30:
               this->nbSamples = 11;
               input.reload(SupportTestsF32::INPUT_SORT_F32_ID,mgr,this->nbSamples);
               ref.reload(SupportTestsF32::REF_SORT_F32_ID,mgr);
               output.create(this->nbSamples,SupportTestsF32::OUT_F32_ID,mgr);            
-	    break;
+        break;
 
-	    case TEST_INSERTION_SORT_CONST_F32_31:
+        case TEST_INSERTION_SORT_CONST_F32_31:
               this->nbSamples = 16;
               input.reload(SupportTestsF32::INPUT_SORT_CONST_F32_ID,mgr,this->nbSamples);
               ref.reload(SupportTestsF32::REF_SORT_CONST_F32_ID,mgr);
               output.create(this->nbSamples,SupportTestsF32::OUT_F32_ID,mgr); 
-	    break;
+        break;
 
-	    case TEST_MERGE_SORT_OUT_F32_32:
+        case TEST_MERGE_SORT_OUT_F32_32:
               this->nbSamples = 11;
               input.reload(SupportTestsF32::INPUT_SORT_F32_ID,mgr,this->nbSamples);
               ref.reload(SupportTestsF32::REF_SORT_F32_ID,mgr);
               output.create(this->nbSamples,SupportTestsF32::OUT_F32_ID,mgr);            
-	    break;
+        break;
 
-	    case TEST_MERGE_SORT_CONST_F32_33:
+        case TEST_MERGE_SORT_CONST_F32_33:
               this->nbSamples = 16;
               input.reload(SupportTestsF32::INPUT_SORT_CONST_F32_ID,mgr,this->nbSamples);
               ref.reload(SupportTestsF32::REF_SORT_CONST_F32_ID,mgr);
               output.create(this->nbSamples,SupportTestsF32::OUT_F32_ID,mgr); 
-	    break;
+        break;
 
-	    case TEST_QUICK_SORT_OUT_F32_34:
+        case TEST_QUICK_SORT_OUT_F32_34:
               this->nbSamples = 11;
               input.reload(SupportTestsF32::INPUT_SORT_F32_ID,mgr,this->nbSamples);
               ref.reload(SupportTestsF32::REF_SORT_F32_ID,mgr);
               output.create(this->nbSamples,SupportTestsF32::OUT_F32_ID,mgr);            
-	    break;
+        break;
 
-	    case TEST_QUICK_SORT_IN_F32_35:
+        case TEST_QUICK_SORT_IN_F32_35:
               this->nbSamples = 11;
               input.reload(SupportTestsF32::INPUT_SORT_F32_ID,mgr,this->nbSamples);
               ref.reload(SupportTestsF32::REF_SORT_F32_ID,mgr);
               output.create(this->nbSamples,SupportTestsF32::OUT_F32_ID,mgr);            
-	    break;
+        break;
 
-	    case TEST_QUICK_SORT_CONST_F32_36:
+        case TEST_QUICK_SORT_CONST_F32_36:
               this->nbSamples = 16;
               input.reload(SupportTestsF32::INPUT_SORT_CONST_F32_ID,mgr,this->nbSamples);
               ref.reload(SupportTestsF32::REF_SORT_CONST_F32_ID,mgr);
               output.create(this->nbSamples,SupportTestsF32::OUT_F32_ID,mgr); 
-	    break;
+        break;
 
-	    case TEST_SELECTION_SORT_OUT_F32_37:
+        case TEST_SELECTION_SORT_OUT_F32_37:
               this->nbSamples = 11;
               input.reload(SupportTestsF32::INPUT_SORT_F32_ID,mgr,this->nbSamples);
               ref.reload(SupportTestsF32::REF_SORT_F32_ID,mgr);
               output.create(this->nbSamples,SupportTestsF32::OUT_F32_ID,mgr);            
-	    break;
+        break;
 
-	    case TEST_SELECTION_SORT_IN_F32_38:
+        case TEST_SELECTION_SORT_IN_F32_38:
               this->nbSamples = 11;
               input.reload(SupportTestsF32::INPUT_SORT_F32_ID,mgr,this->nbSamples);
               ref.reload(SupportTestsF32::REF_SORT_F32_ID,mgr);
               output.create(this->nbSamples,SupportTestsF32::OUT_F32_ID,mgr);            
-	    break;
+        break;
 
-	    case TEST_SELECTION_SORT_CONST_F32_39:
+        case TEST_SELECTION_SORT_CONST_F32_39:
               this->nbSamples = 16;
               input.reload(SupportTestsF32::INPUT_SORT_CONST_F32_ID,mgr,this->nbSamples);
               ref.reload(SupportTestsF32::REF_SORT_CONST_F32_ID,mgr);
               output.create(this->nbSamples,SupportTestsF32::OUT_F32_ID,mgr); 
-	    break;
+        break;
 
-	    case TEST_SPLINE_SQUARE_F32_40:
-	      inputX.reload(SupportTestsF32::INPUT_SPLINE_SQU_X_F32_ID,mgr,4);
-	      inputY.reload(SupportTestsF32::INPUT_SPLINE_SQU_Y_F32_ID,mgr,4);
-	      outputX.reload(SupportTestsF32::OUTPUT_SPLINE_SQU_X_F32_ID,mgr,20);
-	      ref.reload(SupportTestsF32::REF_SPLINE_SQU_F32_ID,mgr,20);
-	      output.create(20,SupportTestsF32::OUT_F32_ID,mgr);
-	    break;
+        case TEST_SPLINE_SQUARE_F32_40:
+          inputX.reload(SupportTestsF32::INPUT_SPLINE_SQU_X_F32_ID,mgr,4);
+          inputY.reload(SupportTestsF32::INPUT_SPLINE_SQU_Y_F32_ID,mgr,4);
+          outputX.reload(SupportTestsF32::OUTPUT_SPLINE_SQU_X_F32_ID,mgr,20);
+          ref.reload(SupportTestsF32::REF_SPLINE_SQU_F32_ID,mgr,20);
+          output.create(20,SupportTestsF32::OUT_F32_ID,mgr);
+        break;
+    
+        case TEST_SPLINE_SINE_F32_41:
+          inputX.reload(SupportTestsF32::INPUT_SPLINE_SIN_X_F32_ID,mgr,9);
+          inputY.reload(SupportTestsF32::INPUT_SPLINE_SIN_Y_F32_ID,mgr,9);
+          outputX.reload(SupportTestsF32::OUTPUT_SPLINE_SIN_X_F32_ID,mgr,33);
+          ref.reload(SupportTestsF32::REF_SPLINE_SIN_F32_ID,mgr,33);
+          output.create(33,SupportTestsF32::OUT_F32_ID,mgr);
+        break;
+    
+        case TEST_SPLINE_RAMP_F32_42:
+          inputX.reload(SupportTestsF32::INPUT_SPLINE_RAM_X_F32_ID,mgr,3);
+          inputY.reload(SupportTestsF32::INPUT_SPLINE_RAM_Y_F32_ID,mgr,3);
+          outputX.reload(SupportTestsF32::OUTPUT_SPLINE_RAM_X_F32_ID,mgr,30);
+          ref.reload(SupportTestsF32::REF_SPLINE_RAM_F32_ID,mgr,30);
+          output.create(30,SupportTestsF32::OUT_F32_ID,mgr);
+        break;
 
-	    case TEST_SPLINE_SINE_F32_41:
-	      inputX.reload(SupportTestsF32::INPUT_SPLINE_SIN_X_F32_ID,mgr,9);
-	      inputY.reload(SupportTestsF32::INPUT_SPLINE_SIN_Y_F32_ID,mgr,9);
-	      outputX.reload(SupportTestsF32::OUTPUT_SPLINE_SIN_X_F32_ID,mgr,33);
-	      ref.reload(SupportTestsF32::REF_SPLINE_SIN_F32_ID,mgr,33);
-	      output.create(33,SupportTestsF32::OUT_F32_ID,mgr);
-	    break;
+        case TEST_EXP_SMOOTHING_F32_43:
+              this->nbSamples = 11*5;
+              input.reload(SupportTestsF32::INPUT_EXPSMOOTH_F32_ID,mgr,this->nbSamples);
+              ref.reload(SupportTestsF32::REF_EXPSMOOTH_F32_ID,mgr);
+              output.create(11,SupportTestsF32::OUT_F32_ID,mgr);            
+        break;
 
-	    case TEST_SPLINE_RAMP_F32_42:
-	      inputX.reload(SupportTestsF32::INPUT_SPLINE_RAM_X_F32_ID,mgr,3);
-	      inputY.reload(SupportTestsF32::INPUT_SPLINE_RAM_Y_F32_ID,mgr,3);
-	      outputX.reload(SupportTestsF32::OUTPUT_SPLINE_RAM_X_F32_ID,mgr,30);
-	      ref.reload(SupportTestsF32::REF_SPLINE_RAM_F32_ID,mgr,30);
-	      output.create(30,SupportTestsF32::OUT_F32_ID,mgr);
-	    break;
+        case TEST_MEDIAN_FILTER_RAND_F32_44:
+              this->nbSamples = 40;
+              input.reload(SupportTestsF32::INPUT_MEDIANFILTER_F32_ID,mgr,this->nbSamples);
+              ref.reload(SupportTestsF32::REF_MEDIANFILTER_F32_ID,mgr);
+              output.create(40,SupportTestsF32::OUT_F32_ID,mgr);            
+        break;
+
+        case TEST_MEDIAN_FILTER_RAND_DELAY_F32_45:
+              this->nbSamples = 40;
+              input.reload(SupportTestsF32::INPUT_MEDIANFILTER_DELAY_F32_ID,mgr,this->nbSamples);
+              ref.reload(SupportTestsF32::REF_MEDIANFILTER_DELAY_F32_ID,mgr);
+              output.create(40,SupportTestsF32::OUT_F32_ID,mgr);            
+        break;
+
 
         }       
 

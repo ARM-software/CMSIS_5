@@ -39,10 +39,10 @@
  */
 
 /**
-   * @param[in]  S          points to an instance of the sorting structure.
-   * @param[in]  pSrc       points to the block of input data.
-   * @param[out] pDst       points to the block of output data
-   * @param[in]  blockSize  number of samples to process.
+   * @param[in]      S          points to an instance of the sorting structure.
+   * @param[in,out]  pSrc       points to the block of input data.
+   * @param[out]     pDst       points to the block of output data.
+   * @param[in]      blockSize  number of samples to process.
    *
    * @par        Algorithm
    *               The bubble sort algorithm is a simple comparison algorithm that
@@ -52,7 +52,8 @@
    *               left to swap. Bubble sort is fast for input vectors that are
    *               nearly sorted.
    *
-   * @par          It's an in-place algorithm. In order to obtain an out-of-place
+   * @par
+   *               It's an in-place algorithm. In order to obtain an out-of-place
    *               function, a memcpy of the source vector is performed
    */
 
@@ -68,33 +69,35 @@ void arm_bubble_sort_f32(
     float32_t * pA;
     float32_t temp;
 
-    if(pSrc != pDst) // out-of-place
+    /* Out-of-place */
+    if(pSrc != pDst)
     {
-	memcpy(pDst, pSrc, blockSize*sizeof(float32_t) );
-	pA = pDst;
+        memcpy(pDst, pSrc, blockSize*sizeof(float32_t) );
+        pA = pDst;
     }
     else
-	pA = pSrc;
+        pA = pSrc;
 
-    while(swapped==1) // If nothing has been swapped after one loop stop
+    /* Continue until nothing has been swapped */
+    while(swapped==1)
     {
-	swapped=0;
+        swapped=0;
 
         for(i=0; i<blockSize-1; i++)
-	{
-	    if(dir==(pA[i]>pA[i+1]))
-	    {
-		// Swap
-		temp = pA[i];
-		pA[i] = pA[i+1];
-		pA[i+1] = temp;
+        {
+            if(dir==(pA[i]>pA[i+1]))
+            {
+                /* Swap */
+                temp = pA[i];
+                pA[i] = pA[i+1];
+                pA[i+1] = temp;
 
-		// Update flag
-		swapped = 1;
-	    }
-	}
+                /* Update flag */
+                swapped = 1;
+            }
+        }
 
-	blockSize--;
+        blockSize--;
     }
 }
 

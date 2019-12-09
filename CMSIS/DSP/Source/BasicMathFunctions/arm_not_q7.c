@@ -28,8 +28,12 @@
 
 #include "arm_math.h"
 
+#if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
+#include "arm_helium_utils.h"
+#endif
+
 /**
-  @ingroup groupSupport
+  @ingroup groupMath
  */
 
 /**
@@ -51,6 +55,36 @@ void arm_not_q7(
     uint32_t blockSize)
 {
     uint32_t blkCnt;      /* Loop counter */
+
+#if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
+    q7x16_t vecSrc;
+
+    /* Compute 16 outputs at a time */
+    blkCnt = blockSize >> 4;
+
+    while (blkCnt > 0U)
+    {
+        vecSrc = vld1q(pSrc);
+
+        vst1q(pDst, vmvnq_s8(vecSrc) );
+
+        pSrc += 16;
+        pDst += 16;
+
+        /* Decrement the loop counter */
+        blkCnt--;
+    }
+
+    /* Tail */
+    blkCnt = blockSize & 0xF;
+
+    if (blkCnt > 0U)
+    {
+        mve_pred16_t p0 = vctp8q(blkCnt);
+        vecSrc = vld1q(pSrc);
+        vstrbq_p(pDst, vmvnq_s8(vecSrc), p0);
+    }
+#else
 
 #if defined(ARM_MATH_NEON)
     int8x16_t inV;
@@ -85,6 +119,8 @@ void arm_not_q7(
         /* Decrement the loop counter */
         blkCnt--;
     }
+
+#endif /* if defined(ARM_MATH_MVEF) */
 }
 
 /**

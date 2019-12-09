@@ -166,36 +166,36 @@ void arm_cmplx_dot_prod_f32(
 
     while (blkCnt > 0U)
     {
-	/* C = (A[0]+jA[1])*(B[0]+jB[1]) + ...  */
+        /* C = (A[0]+jA[1])*(B[0]+jB[1]) + ...  */
         /* Calculate dot product and then store the result in a temporary buffer. */
 
-	      vec1 = vld2q_f32(pSrcA);
+        vec1 = vld2q_f32(pSrcA);
         vec2 = vld2q_f32(pSrcB);
 
-	/* Increment pointers */
+        /* Increment pointers */
         pSrcA += 8;
         pSrcB += 8;
 
-	/* Re{C} = Re{A}*Re{B} - Im{A}*Im{B} */
+        /* Re{C} = Re{A}*Re{B} - Im{A}*Im{B} */
         accR = vmlaq_f32(accR,vec1.val[0],vec2.val[0]);
         accR = vmlsq_f32(accR,vec1.val[1],vec2.val[1]);
 
-	/* Im{C} = Re{A}*Im{B} + Im{A}*Re{B} */
+        /* Im{C} = Re{A}*Im{B} + Im{A}*Re{B} */
         accI = vmlaq_f32(accI,vec1.val[1],vec2.val[0]);
         accI = vmlaq_f32(accI,vec1.val[0],vec2.val[1]);
 
         vec3 = vld2q_f32(pSrcA);
         vec4 = vld2q_f32(pSrcB);
-	
-	/* Increment pointers */
+
+        /* Increment pointers */
         pSrcA += 8;
         pSrcB += 8;
 
-	/* Re{C} = Re{A}*Re{B} - Im{A}*Im{B} */
+        /* Re{C} = Re{A}*Re{B} - Im{A}*Im{B} */
         accR = vmlaq_f32(accR,vec3.val[0],vec4.val[0]);
         accR = vmlsq_f32(accR,vec3.val[1],vec4.val[1]);
 
-	/* Im{C} = Re{A}*Im{B} + Im{A}*Re{B} */
+        /* Im{C} = Re{A}*Im{B} + Im{A}*Re{B} */
         accI = vmlaq_f32(accI,vec3.val[1],vec4.val[0]);
         accI = vmlaq_f32(accI,vec3.val[0],vec4.val[1]);
 

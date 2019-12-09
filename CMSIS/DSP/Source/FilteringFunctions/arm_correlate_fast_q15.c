@@ -271,7 +271,7 @@ void arm_correlate_fast_q15(
       x0 = read_q15x2 ((q15_t *) px);
       /* read x[1], x[2] samples */
       x1 = read_q15x2 ((q15_t *) px + 1);
-	  px += 2U;
+      px += 2U;
 
       /* Apply loop unrolling and compute 4 MACs simultaneously. */
       k = srcBLen >> 2U;
@@ -316,7 +316,7 @@ void arm_correlate_fast_q15(
 
         /* Read x[5], x[6] */
         x1 = read_q15x2 ((q15_t *) px + 3);
-		px += 4U;
+        px += 4U;
 
         /* acc2 +=  x[4] * y[2] + x[5] * y[3] */
         acc2 = __SMLAD(x0, c0, acc2);
@@ -346,7 +346,7 @@ void arm_correlate_fast_q15(
 
         /* Read x[7] */
         x3 = read_q15x2 ((q15_t *) px);
-		px++;
+        px++;
 
         /* Perform the multiply-accumulates */
         acc0 = __SMLAD (x0, c0, acc0);
@@ -365,7 +365,7 @@ void arm_correlate_fast_q15(
 
         /* Read x[9] */
         x2 = read_q15x2 ((q15_t *) px + 1);
-		px += 2U;
+        px += 2U;
 
         /* Perform the multiply-accumulates */
         acc0 = __SMLAD(x0, c0, acc0);
@@ -401,7 +401,7 @@ void arm_correlate_fast_q15(
 
         /* Read x[10] */
         x3 = read_q15x2 ((q15_t *) px + 2);
-		px += 3U;
+        px += 3U;
 
         /* Perform the multiply-accumulates */
         acc0 = __SMLADX(x1, c0, acc0);
