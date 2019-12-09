@@ -9,7 +9,7 @@ Reference patterns are generated with
 a double precision computation.
 
 */
-#define REL_ERROR (2.0e-6)
+#define REL_ERROR (8.0e-6)
 
 #define GET_F32_PTR() \
 const float32_t *inp1=input1.ptr(); \

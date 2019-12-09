@@ -7,8 +7,8 @@
 
 #define SNR_THRESHOLD 120
 #define REL_ERROR (1.0e-5)
-#define ABS_Q15_ERROR ((q15_t)200)
-#define ABS_Q31_ERROR ((q31_t)(1<<23))
+#define ABS_Q15_ERROR ((q15_t)(1<<8))
+#define ABS_Q31_ERROR ((q31_t)(1<<24))
 #define ABS_Q7_ERROR ((q7_t)10)
 
 

@@ -116,26 +116,6 @@ extern "C"
           float32_t * pDst,
           uint32_t blockSize);
 
-  static void arm_bitonic_sort_core_f32(float32_t *pSrc, uint32_t n, uint8_t dir);
-#if defined(ARM_MATH_NEON)
-  static float32x4_t arm_bitonic_sort_4_f32(float32x4_t a, uint8_t dir);
-  static float32x4x2_t arm_bitonic_sort_8_f32(float32x4_t a, float32x4_t b, uint8_t dir);
-  static void arm_bitonic_sort_16_f32(float32_t *pSrc, float32_t *pDst, uint8_t dir);
-  static float32x4x2_t arm_bitonic_resort_8_f32(float32x4_t a, float32x4_t b, uint8_t dir);
-  static void arm_bitonic_resort_16_f32(float32_t * pOut, float32x4x2_t a, float32x4x2_t b, uint8_t dir);
-  static float32x4x2_t arm_bitonic_merge_8_f32(float32x4_t a, float32x4_t b, uint8_t dir);
-  static void arm_bitonic_merge_16_f32(float32_t * pOut, float32x4x2_t a, float32x4x2_t b, uint8_t dir);
-  static void arm_bitonic_merge_32_f32(float32_t * pSrc, float32x4x2_t ab1, float32x4x2_t ab2, 
-  		float32x4x2_t cd1, float32x4x2_t cd2, uint8_t dir);
-  static void arm_bitonic_merge_64_f32(float32_t * pSrc, uint8_t dir);
-  static void arm_bitonic_merge_128_f32(float32_t * pSrc, uint8_t dir);
-  static void arm_bitonic_merge_256_f32(float32_t * pSrc, uint8_t dir);
-#endif
-  static void arm_heapify(float32_t * pSrc, uint32_t n, uint32_t i, uint8_t dir);
-  static void arm_merge_sort_core_f32(float32_t *B, uint32_t iBegin, uint32_t iEnd, float32_t *A, uint8_t dir);
-  static void topDownMerge(float32_t *A, uint32_t iBegin, uint32_t iMiddle, uint32_t iEnd, float32_t *B, uint8_t dir);
-  static void arm_quick_sort_core_f32(float32_t *pSrc, uint32_t first, uint32_t last, uint8_t dir);
-
 #if defined(ARM_MATH_NEON)
 
 #define vtrn256_128q(a, b)                   \

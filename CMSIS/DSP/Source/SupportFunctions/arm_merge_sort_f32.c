@@ -53,18 +53,7 @@
    *               equal and the results will be stored in pDst.
    */
 
-static void arm_merge_sort_core_f32(float32_t * pB, uint32_t begin, uint32_t end, float32_t * pA, uint8_t dir)
-{
-    if((int32_t)end - (int32_t)begin >= 2 )           // If run size != 1 divide
-    {                                 
-        int32_t middle = (end + begin) / 2;           // Take the middle point
 
-        arm_merge_sort_core_f32(pA, begin,  middle, pB, dir);  // Sort the left part
-        arm_merge_sort_core_f32(pA, middle,    end, pB, dir);  // Sort the right part
-
-        topDownMerge(pB, begin, middle, end, pA, dir);
-    }
-}
 
 static void topDownMerge(float32_t * pA, uint32_t begin, uint32_t middle, uint32_t end, float32_t * pB, uint8_t dir)
 {
@@ -91,6 +80,19 @@ static void topDownMerge(float32_t * pA, uint32_t begin, uint32_t middle, uint32
             pB[k] = pA[j];
             j++;
         }
+    }
+}
+
+static void arm_merge_sort_core_f32(float32_t * pB, uint32_t begin, uint32_t end, float32_t * pA, uint8_t dir)
+{
+    if((int32_t)end - (int32_t)begin >= 2 )           // If run size != 1 divide
+    {                                 
+        int32_t middle = (end + begin) / 2;           // Take the middle point
+
+        arm_merge_sort_core_f32(pA, begin,  middle, pB, dir);  // Sort the left part
+        arm_merge_sort_core_f32(pA, middle,    end, pB, dir);  // Sort the right part
+
+        topDownMerge(pB, begin, middle, end, pA, dir);
     }
 }
 

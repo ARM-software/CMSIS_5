@@ -10,7 +10,7 @@ a double precision computation.
 
 */
 #define ABS_ERROR_Q31 ((q31_t)2)
-#define ABS_ERROR_Q63 ((q63_t)(1<<16))
+#define ABS_ERROR_Q63 ((q63_t)(1<<17))
 
 #define ONEHALF 0x40000000
 

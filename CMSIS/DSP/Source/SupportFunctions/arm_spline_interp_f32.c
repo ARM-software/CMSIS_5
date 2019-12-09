@@ -139,7 +139,7 @@ void arm_spline_f32(
         float32_t * pDst,
 	uint32_t blockSize)
 {
-    uint32_t n = S->n_x;
+    int32_t n = S->n_x;
     arm_spline_type type = S->type;
 
     float32_t hi, hm1;
@@ -236,7 +236,7 @@ void arm_spline_f32(
         civ = vdupq_n_f32(c[i]);
         div = vdupq_n_f32(di);
 
-        while( *(pXq+4) <= x[i+1] && blkCnt > 4U )
+        while( *(pXq+4) <= x[i+1] && blkCnt > 4 )
 	{
 	    /* Load [xq(k) xq(k+1) xq(k+2) xq(k+3)] */
             xqv = vld1q_f32(pXq);
@@ -264,7 +264,7 @@ void arm_spline_f32(
 	    blkCnt-=4;
 	}
 #endif
-        while( *pXq <= x[i+1] && blkCnt > 0U )	
+        while( *pXq <= x[i+1] && blkCnt > 0 )	
 	{
 	    x_sc = *pXq++;
 
@@ -280,7 +280,7 @@ void arm_spline_f32(
     /* Compute 4 outputs at a time */
     blkCnt2 = blkCnt >> 2;
 
-    while(blkCnt2 > 0U) 
+    while(blkCnt2 > 0) 
     { 
         /* Load [xq(k) xq(k+1) xq(k+2) xq(k+3)] */ 
         xqv = vld1q_f32(pXq);
@@ -314,7 +314,7 @@ void arm_spline_f32(
     blkCnt2 = blkCnt;                                          
 #endif
 
-    while(blkCnt2 > 0U)                                       
+    while(blkCnt2 > 0)                                       
     { 
         x_sc = *pXq++; 
   
