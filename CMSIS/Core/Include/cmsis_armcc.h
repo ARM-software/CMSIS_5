@@ -62,9 +62,9 @@
 #ifndef   __STATIC_INLINE
   #define __STATIC_INLINE                        static __inline
 #endif
-#ifndef   __STATIC_FORCEINLINE                 
+#ifndef   __STATIC_FORCEINLINE
   #define __STATIC_FORCEINLINE                   static __forceinline
-#endif           
+#endif
 #ifndef   __NO_RETURN
   #define __NO_RETURN                            __declspec(noreturn)
 #endif
@@ -460,7 +460,7 @@ __STATIC_INLINE void __set_FPSCR(uint32_t fpscr)
  */
 #define __DMB()                           __dmb(0xF)
 
-                  
+
 /**
   \brief   Reverse byte order (32 bit)
   \details Reverses the byte order in unsigned integer value. For example, 0x12345678 becomes 0x78563412.
@@ -874,6 +874,21 @@ __attribute__((always_inline)) __STATIC_INLINE uint32_t __USAT(int32_t val, uint
 
 #define __SMMLA(ARG1,ARG2,ARG3)          ( (int32_t)((((int64_t)(ARG1) * (ARG2)) + \
                                                       ((int64_t)(ARG3) << 32U)     ) >> 32U))
+
+__STATIC_FORCEINLINE uint32_t __SXTB16_ROR8(uint32_t x)
+{
+  return (__SXTB16(__ROR(x, 8)));
+}
+
+__STATIC_FORCEINLINE uint32_t __SXTB16_ROR16(uint32_t x)
+{
+  return (__SXTB16(__ROR(x, 16)));
+}
+
+__STATIC_FORCEINLINE uint32_t __SXTB16_ROR24(uint32_t x)
+{
+  return (__SXTB16(__ROR(x, 24)));
+}
 
 #endif /* ((defined (__ARM_ARCH_7EM__) && (__ARM_ARCH_7EM__ == 1))     ) */
 /*@} end of group CMSIS_SIMD_intrinsics */

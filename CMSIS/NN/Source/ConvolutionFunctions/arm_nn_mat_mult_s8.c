@@ -29,7 +29,7 @@
 
 #include "arm_math.h"
 #include "arm_nnfunctions.h"
-
+#include "arm_nnsupportfunctions.h"
 /*
    * s8 General matrix multiplication function with per-channel requantization.
    *
@@ -153,6 +153,386 @@ q7_t *arm_nn_mat_mult_s8(const q7_t *input_row,
     (void)col_len;
     (void)bias;
     (void)out;
+    return NULL;
+#endif
+}
+
+/*
+ * s8 General matrix multiplication function with per-channel requantization.
+ *
+ * This function assumes:
+ * LHS input matrix NOT transposed
+ * RHS input matrix transposed
+ *
+ * Refer header file for details.
+ *
+ */
+
+q7_t * arm_nn_mat_mult_nt_t_s8(const q7_t *lhs,
+                               const q7_t *rhs,
+                               const int32_t *bias,
+                               const int32_t *dst_multipliers,
+                               const int32_t *dst_shifts,
+                               const int32_t m,
+                               const int32_t n,
+                               const int32_t k,
+                               const int32_t lhs_offset,
+                               const int32_t dst_offset,
+                               const int32_t activation_min,
+                               const int32_t activation_max,
+                               q7_t *dst) {
+
+#if defined(ARM_MATH_LOOPUNROLL) && defined(ARM_MATH_DSP)
+    // Check input constraint. "n" must be a multiple of two
+    if (n % 2)
+    {
+        return NULL;
+    }
+
+    // Run the following code for Cortex-M4 and Cortex-M7
+    const int32_t off0 = k - 4;
+
+    for (int32_t n_idx = 0; n_idx < n; n_idx+=2)
+    {
+        const q7_t *lhs_ptr = &lhs[0];
+        q7_t *dst_ptr = &dst[0];
+
+        int32_t offset_contribution0 = 0;
+        int32_t offset_contribution1 = 0;
+
+        // Calculate the offset contribution
+        for(int32_t x = 0; x < k; ++x)
+        {
+            offset_contribution0 += rhs[x];
+            offset_contribution1 += rhs[x + k];
+        }
+
+        offset_contribution0 *= lhs_offset;
+        offset_contribution1 *= lhs_offset;
+
+        offset_contribution0 += bias[n_idx];
+        offset_contribution1 += bias[n_idx + 1];
+
+        int32_t m_idx = 0;
+
+        for (; m_idx <= (m - 2); m_idx+=2)
+        {
+            const q7_t *rhs_ptr = &rhs[0];
+
+            // Initialize the accumulators with the offset contribution
+            int32_t res00 = offset_contribution0;
+            int32_t res01 = offset_contribution1;
+            int32_t res10 = offset_contribution0;
+            int32_t res11 = offset_contribution1;
+
+            int32_t k_idx = 0;
+            for (; k_idx <= (k - 16); k_idx+=16)
+            {
+                // Load 4 input values from the LHS/RHS matrix
+                uint32_t rhs00 = *((uint32_t*)&rhs_ptr[0]);
+                rhs_ptr += 4;
+                uint32_t rhs10 = *((uint32_t*)&rhs_ptr[off0]);
+                uint32_t lhs00 = *((uint32_t*)&lhs_ptr[0]);
+                lhs_ptr += 4;
+
+                // SMALD performs the multiply accumulate for two 16-bit input values
+                // In order to use it, we need to extend two 8-bit values to 16-bit values
+                // Since we load four 8-bit input values, we need two registers to hold the extended 16-bit values
+                // sxtb16 extracts the bits[23:16] and bits[7:0]
+                // sxtb16, ROR #8 rotate by 8 bits the input register and extracts the bits[23:16] and bits[7:0]
+                uint32_t rhs01 = __SXTB16(rhs00);
+                uint32_t lhs01 = __SXTB16(lhs00);
+                uint32_t rhs11 = __SXTB16(rhs10);
+                rhs00 = __SXTB16_ROR8(rhs00);
+                lhs00 = __SXTB16_ROR8(lhs00);
+                rhs10 = __SXTB16_ROR8(rhs10);
+
+                res00 = __SMLAD(lhs00, rhs00, res00);
+                res00 = __SMLAD(lhs01, rhs01, res00);
+                res01 = __SMLAD(lhs00, rhs10, res01);
+                res01 = __SMLAD(lhs01, rhs11, res01);
+
+                lhs00 = *((uint32_t*)&lhs_ptr[off0]);
+                lhs01 = __SXTB16(lhs00);
+                lhs00 = __SXTB16_ROR8(lhs00);
+                res10 = __SMLAD(lhs00, rhs00, res10);
+                res10 = __SMLAD(lhs01, rhs01, res10);
+                res11 = __SMLAD(lhs00, rhs10, res11);
+                res11 = __SMLAD(lhs01, rhs11, res11);
+
+                rhs00 = *((uint32_t*)&rhs_ptr[0]);
+                rhs_ptr += 4;
+                rhs10 = *((uint32_t*)&rhs_ptr[off0]);
+                lhs00 = *((uint32_t*)&lhs_ptr[0]);
+                lhs_ptr += 4;
+
+                rhs01 = __SXTB16(rhs00);
+                lhs01 = __SXTB16(lhs00);
+                rhs11 = __SXTB16(rhs10);
+                rhs00 = __SXTB16_ROR8(rhs00);
+                lhs00 = __SXTB16_ROR8(lhs00);
+                rhs10 = __SXTB16_ROR8(rhs10);
+
+                res00 = __SMLAD(lhs00, rhs00, res00);
+                res00 = __SMLAD(lhs01, rhs01, res00);
+                res01 = __SMLAD(lhs00, rhs10, res01);
+                res01 = __SMLAD(lhs01, rhs11, res01);
+
+                lhs00 = *((uint32_t*)&lhs_ptr[off0]);
+                lhs01 = __SXTB16(lhs00);
+                lhs00 = __SXTB16_ROR8(lhs00);
+                res10 = __SMLAD(lhs00, rhs00, res10);
+                res10 = __SMLAD(lhs01, rhs01, res10);
+                res11 = __SMLAD(lhs00, rhs10, res11);
+                res11 = __SMLAD(lhs01, rhs11, res11);
+
+                rhs00 = *((uint32_t*)&rhs_ptr[0]);
+                rhs_ptr += 4;
+                rhs10 = *((uint32_t*)&rhs_ptr[off0]);
+                lhs00 = *((uint32_t*)&lhs_ptr[0]);
+                lhs_ptr += 4;
+
+                rhs01 = __SXTB16(rhs00);
+                lhs01 = __SXTB16(lhs00);
+                rhs11 = __SXTB16(rhs10);
+                rhs00 = __SXTB16_ROR8(rhs00);
+                lhs00 = __SXTB16_ROR8(lhs00);
+                rhs10 = __SXTB16_ROR8(rhs10);
+
+                res00 = __SMLAD(lhs00, rhs00, res00);
+                res00 = __SMLAD(lhs01, rhs01, res00);
+                res01 = __SMLAD(lhs00, rhs10, res01);
+                res01 = __SMLAD(lhs01, rhs11, res01);
+
+                lhs00 = *((uint32_t*)&lhs_ptr[off0]);
+                lhs01 = __SXTB16(lhs00);
+                lhs00 = __SXTB16_ROR8(lhs00);
+                res10 = __SMLAD(lhs00, rhs00, res10);
+                res10 = __SMLAD(lhs01, rhs01, res10);
+                res11 = __SMLAD(lhs00, rhs10, res11);
+                res11 = __SMLAD(lhs01, rhs11, res11);
+
+                rhs00 = *((uint32_t*)&rhs_ptr[0]);
+                rhs_ptr += 4;
+                rhs10 = *((uint32_t*)&rhs_ptr[off0]);
+                lhs00 = *((uint32_t*)&lhs_ptr[0]);
+                lhs_ptr += 4;
+
+                rhs01 = __SXTB16(rhs00);
+                lhs01 = __SXTB16(lhs00);
+                rhs11 = __SXTB16(rhs10);
+                rhs00 = __SXTB16_ROR8(rhs00);
+                lhs00 = __SXTB16_ROR8(lhs00);
+                rhs10 = __SXTB16_ROR8(rhs10);
+
+                res00 = __SMLAD(lhs00, rhs00, res00);
+                res00 = __SMLAD(lhs01, rhs01, res00);
+                res01 = __SMLAD(lhs00, rhs10, res01);
+                res01 = __SMLAD(lhs01, rhs11, res01);
+
+                lhs00 = *((uint32_t*)&lhs_ptr[off0]);
+                lhs01 = __SXTB16(lhs00);
+                lhs00 = __SXTB16_ROR8(lhs00);
+                res10 = __SMLAD(lhs00, rhs00, res10);
+                res10 = __SMLAD(lhs01, rhs01, res10);
+                res11 = __SMLAD(lhs00, rhs10, res11);
+                res11 = __SMLAD(lhs01, rhs11, res11);
+            }
+
+            // Left-over accumulations
+            for (; k_idx < k; ++k_idx)
+            {
+                uint32_t rhs_value0 = rhs_ptr[0];
+                uint32_t rhs_value1 = rhs_ptr[k];
+                uint32_t lhs_value  = lhs_ptr[0];
+
+                res00 = __SMLAD(lhs_value, rhs_value0, res00);
+                res01 = __SMLAD(lhs_value, rhs_value1, res01);
+
+                lhs_value  = lhs_ptr[k];
+                res10 = __SMLAD(lhs_value, rhs_value0, res10);
+                res11 = __SMLAD(lhs_value, rhs_value1, res11);
+
+                ++rhs_ptr;
+                ++lhs_ptr;
+            }
+
+            // Quantize down
+            res00 = arm_nn_requantize(res00, dst_multipliers[n_idx], dst_shifts[n_idx]);
+            res01 = arm_nn_requantize(res01, dst_multipliers[n_idx + 1], dst_shifts[n_idx + 1]);
+            res10 = arm_nn_requantize(res10, dst_multipliers[n_idx], dst_shifts[n_idx]);
+            res11 = arm_nn_requantize(res11, dst_multipliers[n_idx + 1], dst_shifts[n_idx + 1]);
+
+            // Add offset
+            res00 += dst_offset;
+            res01 += dst_offset;
+            res10 += dst_offset;
+            res11 += dst_offset;
+
+            // Clamp the result
+            res00 = MAX(res00, activation_min);
+            res00 = MIN(res00, activation_max);
+            res01 = MAX(res01, activation_min);
+            res01 = MIN(res01, activation_max);
+            res10 = MAX(res10, activation_min);
+            res10 = MIN(res10, activation_max);
+            res11 = MAX(res11, activation_min);
+            res11 = MIN(res11, activation_max);
+
+            dst_ptr[0] = (q7_t)res00;
+            dst_ptr[1] = (q7_t)res01;
+            dst_ptr += n;
+            dst_ptr[0] = (q7_t)res10;
+            dst_ptr[1] = (q7_t)res11;
+            dst_ptr += n;
+
+            lhs_ptr += k;
+        }
+
+        // Left-over rows
+        for (; m_idx < m; ++m_idx)
+        {
+            const q7_t *rhs_ptr = &rhs[0];
+
+            // Initialize the accumulators with the offset contribution
+            int32_t res00 = offset_contribution0;
+            int32_t res01 = offset_contribution1;
+
+            int32_t k_idx = 0;
+            for (; k_idx <= (k - 16); k_idx+=16)
+            {
+                // Load 4 input values from the LHS/RHS matrix
+                uint32_t rhs00 = *((uint32_t*)&rhs_ptr[0]);
+                rhs_ptr += 4;
+                uint32_t rhs10 = *((uint32_t*)&rhs_ptr[off0]);
+                uint32_t lhs00 = *((uint32_t*)&lhs_ptr[0]);
+                lhs_ptr += 4;
+
+                // SMALD performs the multiply accumulate for two 16-bit input values
+                // In order to use it, we need to extend two 8-bit values to 16-bit values
+                // Since we load four 8-bit input values, we need two registers to hold the extended 16-bit values
+                // sxtb16 extracts the bits[23:16] and bits[7:0]
+                // sxtb16, ROR #8 rotate by 8 bits the input register and extracts the bits[23:16] and bits[7:0]
+                uint32_t rhs01 = __SXTB16(rhs00);
+                uint32_t lhs01 = __SXTB16(lhs00);
+                uint32_t rhs11 = __SXTB16(rhs10);
+                rhs00 = __SXTB16_ROR8(rhs00);
+                lhs00 = __SXTB16_ROR8(lhs00);
+                rhs10 = __SXTB16_ROR8(rhs10);
+
+                res00 = __SMLAD(lhs00, rhs00, res00);
+                res00 = __SMLAD(lhs01, rhs01, res00);
+                res01 = __SMLAD(lhs00, rhs10, res01);
+                res01 = __SMLAD(lhs01, rhs11, res01);
+
+                rhs00 = *((uint32_t*)&rhs_ptr[0]);
+                rhs_ptr += 4;
+                rhs10 = *((uint32_t*)&rhs_ptr[off0]);
+                lhs00 = *((uint32_t*)&lhs_ptr[0]);
+                lhs_ptr += 4;
+
+                rhs01 = __SXTB16(rhs00);
+                lhs01 = __SXTB16(lhs00);
+                rhs11 = __SXTB16(rhs10);
+                rhs00 = __SXTB16_ROR8(rhs00);
+                lhs00 = __SXTB16_ROR8(lhs00);
+                rhs10 = __SXTB16_ROR8(rhs10);
+
+                res00 = __SMLAD(lhs00, rhs00, res00);
+                res00 = __SMLAD(lhs01, rhs01, res00);
+                res01 = __SMLAD(lhs00, rhs10, res01);
+                res01 = __SMLAD(lhs01, rhs11, res01);
+
+                rhs00 = *((uint32_t*)&rhs_ptr[0]);
+                rhs_ptr += 4;
+                rhs10 = *((uint32_t*)&rhs_ptr[off0]);
+                lhs00 = *((uint32_t*)&lhs_ptr[0]);
+                lhs_ptr += 4;
+
+                rhs01 = __SXTB16(rhs00);
+                lhs01 = __SXTB16(lhs00);
+                rhs11 = __SXTB16(rhs10);
+                rhs00 = __SXTB16_ROR8(rhs00);
+                lhs00 = __SXTB16_ROR8(lhs00);
+                rhs10 = __SXTB16_ROR8(rhs10);
+
+                res00 = __SMLAD(lhs00, rhs00, res00);
+                res00 = __SMLAD(lhs01, rhs01, res00);
+                res01 = __SMLAD(lhs00, rhs10, res01);
+                res01 = __SMLAD(lhs01, rhs11, res01);
+
+                rhs00 = *((uint32_t*)&rhs_ptr[0]);
+                rhs_ptr += 4;
+                rhs10 = *((uint32_t*)&rhs_ptr[off0]);
+                lhs00 = *((uint32_t*)&lhs_ptr[0]);
+                lhs_ptr += 4;
+
+                rhs01 = __SXTB16(rhs00);
+                lhs01 = __SXTB16(lhs00);
+                rhs11 = __SXTB16(rhs10);
+                rhs00 = __SXTB16_ROR8(rhs00);
+                lhs00 = __SXTB16_ROR8(lhs00);
+                rhs10 = __SXTB16_ROR8(rhs10);
+
+                res00 = __SMLAD(lhs00, rhs00, res00);
+                res00 = __SMLAD(lhs01, rhs01, res00);
+                res01 = __SMLAD(lhs00, rhs10, res01);
+                res01 = __SMLAD(lhs01, rhs11, res01);
+            }
+
+            // Left-over accumulations
+            for (; k_idx < k; ++k_idx)
+            {
+                uint32_t rhs_value0 = rhs_ptr[0];
+                uint32_t rhs_value1 = rhs_ptr[k];
+                uint32_t lhs_value  = lhs_ptr[0];
+
+                res00 = __SMLAD(lhs_value, rhs_value0, res00);
+                res01 = __SMLAD(lhs_value, rhs_value1, res01);
+
+                ++rhs_ptr;
+                ++lhs_ptr;
+            }
+
+            // Quantize down
+            res00 = arm_nn_requantize(res00, dst_multipliers[n_idx], dst_shifts[n_idx]);
+            res01 = arm_nn_requantize(res01, dst_multipliers[n_idx + 1], dst_shifts[n_idx + 1]);
+
+            // Add offset
+            res00 += dst_offset;
+            res01 += dst_offset;
+
+            // Clamp the result
+            res00 = MAX(res00, activation_min);
+            res00 = MIN(res00, activation_max);
+            res01 = MAX(res01, activation_min);
+            res01 = MIN(res01, activation_max);
+
+            dst_ptr[0] = (q7_t)res00;
+            dst_ptr[1] = (q7_t)res01;
+            dst_ptr += n;
+        }
+
+        rhs += 2 * k;
+        dst += 2;
+    }
+
+    return dst;
+#else // defined(ARM_MATH_LOOPUNROLL) && defined(ARM_MATH_DSP)
+    // TODO: Add support for no-DSP extension
+    (void)lhs;
+    (void)rhs;
+    (void)bias;
+    (void)dst_multipliers;
+    (void)dst_shifts;
+    (void)m;
+    (void)n;
+    (void)k;
+    (void)lhs_offset;
+    (void)dst_offset;
+    (void)activation_min;
+    (void)activation_max;
+    (void)dst;
     return NULL;
 #endif
 }

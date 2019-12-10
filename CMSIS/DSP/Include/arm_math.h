@@ -29,7 +29,7 @@
    * ------------
    *
    * This user manual describes the CMSIS DSP software library,
-   * a suite of common signal processing functions for use on Cortex-M and Cortex-A processor 
+   * a suite of common signal processing functions for use on Cortex-M and Cortex-A processor
    * based devices.
    *
    * The library is divided into a number of functions each covering a specific category:
@@ -54,7 +54,7 @@
    * ------------
    *
    * The library installer contains prebuilt versions of the libraries in the <code>Lib</code> folder.
-   * Pre-built libraries will not be updated to contain new functions. 
+   * Pre-built libraries will not be updated to contain new functions.
    * So, SVM, Bayes, Distance functions and experimental functions are not included in those libraries.
    * If you want to use those functions, you'll have to modify the projects, include the missing
    * files and rebuild.
@@ -131,12 +131,12 @@
    * - ARM_MATH_NEON:
    *
    * Define macro ARM_MATH_NEON to enable Neon versions of the DSP functions.
-   * It is not enabled by default when Neon is available because performances are 
+   * It is not enabled by default when Neon is available because performances are
    * dependent on the compiler and target architecture.
    *
    * - ARM_MATH_NEON_EXPERIMENTAL:
    *
-   * Define macro ARM_MATH_NEON_EXPERIMENTAL to enable experimental Neon versions of 
+   * Define macro ARM_MATH_NEON_EXPERIMENTAL to enable experimental Neon versions of
    * of some DSP functions. Experimental Neon versions currently do not have better
    * performances than the scalar versions.
    *
@@ -294,11 +294,11 @@
  * generated from the scikit-learn object. Some examples are given in
  * DSP/Testing/PatternGeneration/SVM.py
  *
- * If more than 2 classes are needed, the functions in this folder 
+ * If more than 2 classes are needed, the functions in this folder
  * will have to be used, as building blocks, to do multi-class classification.
  *
  * No multi-class classification is provided in this SVM folder.
- * 
+ *
  */
 
 
@@ -357,7 +357,7 @@ extern "C"
 
 
 /* Included for instrinsics definitions */
-#if defined (_MSC_VER ) 
+#if defined (_MSC_VER )
 #include <stdint.h>
 #define __STATIC_FORCEINLINE static __forceinline
 #define __STATIC_INLINE static __inline
@@ -700,7 +700,7 @@ extern "C"
    * @brief 16-bit float 64-bit vector data type.
    */
   typedef  __ALIGNED(2) float16x4_t f16x4_t;
-#endif 
+#endif
 
   /**
    * @brief 32-bit floating-point 128-bit vector triplet data type
@@ -759,7 +759,7 @@ extern "C"
    * @brief 16-bit floating-point 64-bit vector quadruplet data type
    */
   typedef float16x4x4_t f16x4x4_t;
-#endif 
+#endif
 
   /**
    * @brief 32-bit fractional 64-bit vector pair data type in 1.31 format
@@ -824,7 +824,7 @@ extern "C"
       float16x4_t     f;
       int16x4_t       i;
   } any16x4_t;
-#endif 
+#endif
 
   /**
    * @brief 32-bit status 64-bit vector data type.
@@ -1676,6 +1676,42 @@ __STATIC_INLINE q31_t arm_div_q63_to_q31(q63_t num, q31_t den)
                        ((((q31_t)x <<  8) >>  8) & (q31_t)0xFFFF0000)  ));
   }
 
+   /*
+   * @brief C custom defined SXTB16 with immediate rotate right 8 bits
+   */
+  __STATIC_FORCEINLINE uint32_t __SXTB16_ROR8(
+  uint32_t x)
+  {
+    uint32_t y = __ROR(x, 8);
+
+    return ((uint32_t)(((((q31_t)y << 24) >> 24) & (q31_t)0x0000FFFF) |
+                       ((((q31_t)y <<  8) >>  8) & (q31_t)0xFFFF0000)  ));
+  }
+
+   /*
+   * @brief C custom defined SXTB16 with immediate rotate right 16 bits
+   */
+  __STATIC_FORCEINLINE uint32_t __SXTB16_ROR16(
+  uint32_t x)
+  {
+    uint32_t y = __ROR(x, 16);
+
+    return ((uint32_t)(((((q31_t)y << 24) >> 24) & (q31_t)0x0000FFFF) |
+                       ((((q31_t)y <<  8) >>  8) & (q31_t)0xFFFF0000)  ));
+  }
+
+   /*
+   * @brief C custom defined SXTB16 with immediate rotate right 24 bits
+   */
+  __STATIC_FORCEINLINE uint32_t __SXTB16_ROR24(
+  uint32_t x)
+  {
+    uint32_t y = __ROR(x, 24);
+
+    return ((uint32_t)(((((q31_t)y << 24) >> 24) & (q31_t)0x0000FFFF) |
+                       ((((q31_t)y <<  8) >>  8) & (q31_t)0xFFFF0000)  ));
+  }
+
   /*
    * @brief C custom defined SMMLA
    */
@@ -1911,7 +1947,7 @@ __STATIC_INLINE q31_t arm_div_q63_to_q31(q63_t num, q31_t den)
   {
       float32_t coeffs[8][4]; /**< Points to the array of modified coefficients.  The array is of length 32. There is one per stage */
   } arm_biquad_mod_coef_f32;
-#endif 
+#endif
 
   /**
    * @brief Processing function for the Q15 Biquad cascade filter.
@@ -2020,11 +2056,11 @@ __STATIC_INLINE q31_t arm_div_q63_to_q31(q63_t num, q31_t den)
   void arm_biquad_cascade_df1_mve_init_f32(
       arm_biquad_casd_df1_inst_f32 * S,
       uint8_t numStages,
-      const float32_t * pCoeffs, 
-      arm_biquad_mod_coef_f32 * pCoeffsMod, 
+      const float32_t * pCoeffs,
+      arm_biquad_mod_coef_f32 * pCoeffsMod,
       float32_t * pState);
 #endif
-  
+
   void arm_biquad_cascade_df1_init_f32(
         arm_biquad_casd_df1_inst_f32 * S,
         uint8_t numStages,
@@ -2118,7 +2154,7 @@ __STATIC_INLINE q31_t arm_div_q63_to_q31(q63_t num, q31_t den)
 
   /**
    * @brief         Compute the logical bitwise NOT of a fixed-point vector.
-   * @param[in]     pSrc       points to input vector 
+   * @param[in]     pSrc       points to input vector
    * @param[out]    pDst       points to output vector
    * @param[in]     blockSize  number of samples in each vector
    * @return        none
@@ -2130,7 +2166,7 @@ __STATIC_INLINE q31_t arm_div_q63_to_q31(q63_t num, q31_t den)
 
   /**
    * @brief         Compute the logical bitwise NOT of a fixed-point vector.
-   * @param[in]     pSrc       points to input vector 
+   * @param[in]     pSrc       points to input vector
    * @param[out]    pDst       points to output vector
    * @param[in]     blockSize  number of samples in each vector
    * @return        none
@@ -2142,7 +2178,7 @@ __STATIC_INLINE q31_t arm_div_q63_to_q31(q63_t num, q31_t den)
 
   /**
    * @brief         Compute the logical bitwise NOT of a fixed-point vector.
-   * @param[in]     pSrc       points to input vector 
+   * @param[in]     pSrc       points to input vector
    * @param[out]    pDst       points to output vector
    * @param[in]     blockSize  number of samples in each vector
    * @return        none
@@ -2229,11 +2265,11 @@ __STATIC_INLINE q31_t arm_div_q63_to_q31(q63_t num, q31_t den)
   /**
    * @brief Instance structure for the sorting algorithms.
    */
-  typedef struct            
+  typedef struct
   {
     arm_sort_alg alg;        /**< Sorting algorithm selected */
     arm_sort_dir dir;        /**< Sorting order (direction)  */
-  } arm_sort_instance_f32;  
+  } arm_sort_instance_f32;
 
   /**
    * @param[in]  S          points to an instance of the sorting structure.
@@ -2242,9 +2278,9 @@ __STATIC_INLINE q31_t arm_div_q63_to_q31(q63_t num, q31_t den)
    * @param[in]  blockSize  number of samples to process.
    */
   void arm_sort_f32(
-    const arm_sort_instance_f32 * S, 
-          float32_t * pSrc, 
-          float32_t * pDst, 
+    const arm_sort_instance_f32 * S,
+          float32_t * pSrc,
+          float32_t * pDst,
           uint32_t blockSize);
 
   /**
@@ -2254,9 +2290,9 @@ __STATIC_INLINE q31_t arm_div_q63_to_q31(q63_t num, q31_t den)
    * @param[in]      inPlaceFlag  In place flag.
    */
   void arm_sort_init_f32(
-    arm_sort_instance_f32 * S, 
-    arm_sort_alg alg, 
-    arm_sort_dir dir); 
+    arm_sort_instance_f32 * S,
+    arm_sort_alg alg,
+    arm_sort_dir dir);
 
   /**
    * @brief Struct for specifying cubic spline type
@@ -2313,7 +2349,7 @@ __STATIC_INLINE q31_t arm_div_q63_to_q31(q63_t num, q31_t den)
     uint16_t numCols;     /**< number of columns of the matrix.  */
     float32_t *pData;     /**< points to the data of the matrix. */
   } arm_matrix_instance_f32;
- 
+
  /**
    * @brief Instance structure for the floating-point matrix structure.
    */
@@ -4663,7 +4699,7 @@ arm_status arm_fir_decimate_init_f32(
         uint32_t blockSize);
 
 
-#if defined(ARM_MATH_NEON) 
+#if defined(ARM_MATH_NEON)
 void arm_biquad_cascade_df2T_compute_coefs_f32(
   arm_biquad_cascade_df2T_instance_f32 * S,
   uint8_t numStages,
@@ -7832,7 +7868,7 @@ typedef struct
  */
 
 
-void arm_svm_linear_init_f32(arm_svm_linear_instance_f32 *S, 
+void arm_svm_linear_init_f32(arm_svm_linear_instance_f32 *S,
   uint32_t nbOfSupportVectors,
   uint32_t vectorDimension,
   float32_t intercept,
@@ -7848,9 +7884,9 @@ void arm_svm_linear_init_f32(arm_svm_linear_instance_f32 *S,
  * @return none.
  *
  */
-  
-void arm_svm_linear_predict_f32(const arm_svm_linear_instance_f32 *S, 
-   const float32_t * in, 
+
+void arm_svm_linear_predict_f32(const arm_svm_linear_instance_f32 *S,
+   const float32_t * in,
    int32_t * pResult);
 
 
@@ -7871,7 +7907,7 @@ void arm_svm_linear_predict_f32(const arm_svm_linear_instance_f32 *S,
  */
 
 
-void arm_svm_polynomial_init_f32(arm_svm_polynomial_instance_f32 *S, 
+void arm_svm_polynomial_init_f32(arm_svm_polynomial_instance_f32 *S,
   uint32_t nbOfSupportVectors,
   uint32_t vectorDimension,
   float32_t intercept,
@@ -7891,8 +7927,8 @@ void arm_svm_polynomial_init_f32(arm_svm_polynomial_instance_f32 *S,
  * @return none.
  *
  */
-void arm_svm_polynomial_predict_f32(const arm_svm_polynomial_instance_f32 *S, 
-   const float32_t * in, 
+void arm_svm_polynomial_predict_f32(const arm_svm_polynomial_instance_f32 *S,
+   const float32_t * in,
    int32_t * pResult);
 
 
@@ -7910,7 +7946,7 @@ void arm_svm_polynomial_predict_f32(const arm_svm_polynomial_instance_f32 *S,
  *
  */
 
-void arm_svm_rbf_init_f32(arm_svm_rbf_instance_f32 *S, 
+void arm_svm_rbf_init_f32(arm_svm_rbf_instance_f32 *S,
   uint32_t nbOfSupportVectors,
   uint32_t vectorDimension,
   float32_t intercept,
@@ -7928,8 +7964,8 @@ void arm_svm_rbf_init_f32(arm_svm_rbf_instance_f32 *S,
  * @return none.
  *
  */
-void arm_svm_rbf_predict_f32(const arm_svm_rbf_instance_f32 *S, 
-   const float32_t * in, 
+void arm_svm_rbf_predict_f32(const arm_svm_rbf_instance_f32 *S,
+   const float32_t * in,
    int32_t * pResult);
 
 /**
@@ -7947,7 +7983,7 @@ void arm_svm_rbf_predict_f32(const arm_svm_rbf_instance_f32 *S,
  *
  */
 
-void arm_svm_sigmoid_init_f32(arm_svm_sigmoid_instance_f32 *S, 
+void arm_svm_sigmoid_init_f32(arm_svm_sigmoid_instance_f32 *S,
   uint32_t nbOfSupportVectors,
   uint32_t vectorDimension,
   float32_t intercept,
@@ -7966,8 +8002,8 @@ void arm_svm_sigmoid_init_f32(arm_svm_sigmoid_instance_f32 *S,
  * @return none.
  *
  */
-void arm_svm_sigmoid_predict_f32(const arm_svm_sigmoid_instance_f32 *S, 
-   const float32_t * in, 
+void arm_svm_sigmoid_predict_f32(const arm_svm_sigmoid_instance_f32 *S,
+   const float32_t * in,
    int32_t * pResult);
 
 
@@ -7996,8 +8032,8 @@ typedef struct
  */
 
 
-uint32_t arm_gaussian_naive_bayes_predict_f32(const arm_gaussian_naive_bayes_instance_f32 *S, 
-   const float32_t * in, 
+uint32_t arm_gaussian_naive_bayes_predict_f32(const arm_gaussian_naive_bayes_instance_f32 *S,
+   const float32_t * in,
    float32_t *pBuffer);
 
 /**
@@ -8796,11 +8832,11 @@ float32_t arm_yule_distance(const uint32_t *pA, const uint32_t *pB, uint32_t num
   #define LOW_OPTIMIZATION_EXIT
   #define IAR_ONLY_LOW_OPTIMIZATION_ENTER
   #define IAR_ONLY_LOW_OPTIMIZATION_EXIT
-       
+
 #elif defined ( _MSC_VER ) || defined(__GNUC_PYTHON__)
       #define LOW_OPTIMIZATION_ENTER
       #define LOW_OPTIMIZATION_EXIT
-      #define IAR_ONLY_LOW_OPTIMIZATION_ENTER 
+      #define IAR_ONLY_LOW_OPTIMIZATION_ENTER
       #define IAR_ONLY_LOW_OPTIMIZATION_EXIT
 #endif
 

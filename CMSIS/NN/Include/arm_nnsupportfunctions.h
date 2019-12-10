@@ -235,6 +235,50 @@ q7_t *arm_nn_mat_mult_s8(const q7_t *input_row,
                          const int32_t *const bias,
                          q7_t *out);
 
+   /**
+   * @brief General Matrix-multiplication function with per-channel requantization.
+   *        This function assumes:
+   *        - LHS input matrix NOT transposed
+   *        - RHS input matrix transposed
+   *
+   *  @note This operation also performs the broadcast bias addition before the requantization
+   *
+   * @param[in]  lhs                Pointer to the LHS input matrix
+   * @param[in]  rhs                Pointer to the RHS input matrix
+   * @param[in]  bias               Pointer to the bias vector. The length of this vector is equal to the number of output columns (or RHS input rows)
+   * @param[in]  dst_multipliers    Pointer to the multipliers vector needed for the per-channel requantization. The length of this vector is equal to
+    *                              the number of output columns (or RHS input rows)
+   * @param[in]  dst_shifts         Pointer to the shifts vector needed for the per-channel requantization. The length of this vector is equal to
+    *                              the number of output columns (or RHS input rows)
+   * @param[in]  m                  Number of LHS input rows
+   * @param[in]  n                  Number of RHS input rows
+   * @param[in]  k                  Number of LHS/RHS input columns
+   * @param[in]  lhs_offset         Offset to be applied to the LHS input valus
+   * @param[in]  dst_offset         Offset to be applied the output result
+   * @param[in]  activation_min     Minimum value to clamp down the output. Range : int8
+   * @param[in]  activation_max     Maximum value to clamp up the output. Range : int8
+   * @param[out] dst                Pointer to the output matrix with "m" rows and "n" colums
+   *
+   * @return     The function returns one of the two
+   *              1. The incremented output pointer for a successful operation or
+   *              2. NULL if implementation is not available.
+   *
+   * @details   Supported framework: TensorFlow Lite
+   */
+q7_t *arm_nn_mat_mult_nt_t_s8(const q7_t *lhs,
+                              const q7_t *rhs,
+                              const int32_t *bias,
+                              const int32_t *dst_multipliers,
+                              const int32_t *dst_shifts,
+                              const int32_t m,
+                              const int32_t n,
+                              const int32_t k,
+                              const int32_t lhs_offset,
+                              const int32_t dst_offset,
+                              const int32_t activation_min,
+                              const int32_t activation_max,
+                              q7_t *dst);
+
 /**
   @brief         Read 2 q15 elements and post increment pointer.
   @param[in]     in_q15   Pointer to pointer that holds address of input.
