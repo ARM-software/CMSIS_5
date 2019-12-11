@@ -17,6 +17,7 @@ The following sections provide more information:
 
 - \subpage build_revisionHistory
 - \subpage build_configuration explains the prerequisites for using the tools.
+- \subpage build_cpcreatereposh sets up a new CMSIS-Pack repository.
 - \subpage build_cbuild_uvprojxsh generates a *.cpdsc file from a µVision uvprojx project file.
 - \subpage build_cbuildsh is used to run through the whole build process.
 - \subpage build_cbuildgen can either configure the target project or create the project's make file.
@@ -104,6 +105,29 @@ corresponding .mak file for the toolchain in the project root folder and if not 
 for it.
 
 ToDo: Reference to description of CMSIS-Build options.
+*/
+
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\page build_cpcreatereposh cpcreaterepo.sh script
+
+The \c cpcreaterepo.sh script allows you to setup a new pack repository for the build run.
+
+Below is a sample output (reduced).
+
+\code
+\endcode
+
+<b>cpcreaterepo.sh Bash script template file</b>
+
+The \b cpcreaterepo.sh script template allwos you to configure:
+- item 1
+- item 2
+- item 3
+
+\code
+\endcode
 */
 
 
