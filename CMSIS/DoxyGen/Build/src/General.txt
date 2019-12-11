@@ -1,23 +1,30 @@
-
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
 \mainpage
 
-<b>CMSIS-Build</b> is a set of command-line tools that enables Continuous Integration (CI) workflow for CMSIS-based software projects. It is available for Windows and Linux platforms.
+<b>CMSIS-Build</b> is a set of command-line tools that enables Continuous Integration (CI) workflows for CMSIS-based
+software projects. It is available for Windows and Linux platforms.
 
-CMSIS-Build flow is displayed on the Figure below. It relies on the *.cpdsc file format that specifies the target project. Based on the *.cpdsc file  \ref build_cbuildgen creates a standard makefile for compiler toolchain invocation. The \ref build_ccmerge updates components' configuration files. Finally using make build process the executable firmware is generated.
+THe CMSIS-Build flow is displayed on the figure below. It relies on the
+<a href="https://arm-software.github.io/CMSIS_5/Pack/html/cpdsc_pg.html" target="_blank">*.cpdsc</a> file format that
+specifies the target project. Based on the *.cpdsc file, \ref build_cbuildgen creates a standard makefile for compiler
+toolchain invocation. The \ref build_ccmerge updates components' configuration files. Finally using make build process the
+executable firmware is generated.
 
 \image html cmsis_build_flow.png
 
 The following sections provide more information:
 
-- \subpage build_revisionHistory contains...
-- \subpage build_configuration contains...
-- \subpage build_cbuildsh ...
-- \subpage build_cbuildgen explains.. 
-- \subpage build_ccmerge describes..
-- \subpage build_examples provides.. 
-
+- \subpage build_revisionHistory
+- \subpage build_configuration explains the prerequisites for using the tools.
+- \subpage build_cbuild_uvprojxsh generates a *.cpdsc file from a µVision uvprojx project file.
+- \subpage build_cbuildsh is used to run through the whole build process.
+- \subpage build_cbuildgen can either configure the target project or create the project's make file.
+- \subpage build_cpinstall shows how to install CMSIS-Packs that are listed in the *.cpdsc file.
+- \subpage build_ccmerge merges configuration files based on
+  <a href="https://arm-software.github.io/CMSIS_5/Pack/html/configWizard.html" target="_blank">Configuration Wizard</a>
+  annotations.
+- \subpage build_examples provides example projects that can be used to setup and test the flow.
 
 <hr>
 CMSIS-Build in ARM::CMSIS Pack
@@ -28,13 +35,12 @@ Files relevant to CMSIS-Build are present in the following \b ARM::CMSIS directo
 |\b CMSIS\\Documentation\\Build | <b>This documentation </b>  |
 |\b CMSIS\\Utilities\\Windows | <b>CMSIS-Build utilities for Windows platform </b>   |
 |\b CMSIS\\Utilities\\Linux   | <b>CMSIS-Build utilities for Linux platform</b>     |
-
-<hr>
 */
+
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
-\page build_revisionHistory Revision History of CMSIS-Build 
+\page build_revisionHistory Revision history
 
 <table class="cmtable" summary="Revision History">
   <tr>
@@ -44,6 +50,8 @@ Files relevant to CMSIS-Build are present in the following \b ARM::CMSIS directo
 </table>
 */
 
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
 \page build_configuration  Configuration
 
@@ -62,7 +70,8 @@ CMSIS-Build requires following environment variables to be present in the User e
  - \b CMSIS_COMPILER_ROOT - optional. Use tbd.
  - \b CMSIS_BUILD_ROOT - CMSIS-Build installation directory.
 
-To simplify the configuration there is a special \b setup script file in CMSIS-Build installation directory (for example in Windows\\x64\\Debug\\etc\) folder that defines corresponding environment variables. 
+To simplify the configuration there is a special \b setup script file in CMSIS-Build installation directory (for example, in
+Windows\\x64\\Debug\\etc\) folder that defines corresponding environment variables. 
 
 Note that this script creates variables only for the duration of the bash session and not permanently:
 
@@ -82,28 +91,74 @@ It can be modified for a particular project and executed from the bash console b
 Toolchain configuration files
 --------------
 
-CMSIS-Build relies on toolchain-specific configuration .mak files that define the path to the toolchain and do the mapping of the toolchain-specific options to the toolchain-independent options of CMSIS-Build.
+CMSIS-Build relies on toolchain-specific configuration .mak files that define the path to the toolchain and do the mapping
+of the toolchain-specific options to the toolchain-independent options of CMSIS-Build.
 
 The .mak file has a following naming format:
 <b>\<toolchain\>.\<version\>.mak </b>
 
 For example: \c ARMCC.5.6.6.750.mak, \c ARMCLANG.6.13.0.mak
 
-The target toolchain is specified in project *.cpdsc file. CMSIS-Build (cbuildgen.exe utility) first tries to find the corresponding .mak file for the toolchain in the project root folder and if not found searches CMSIS_BUILD_ROOT directory for it. 
+The target toolchain is specified in project *.cpdsc file. CMSIS-Build (cbuildgen.exe utility) first tries to find the
+corresponding .mak file for the toolchain in the project root folder and if not found searches CMSIS_BUILD_ROOT directory
+for it.
 
 ToDo: Reference to description of CMSIS-Build options.
-
 */
 
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\page build_cbuild_uvprojxsh cbuild_uvprojx.sh script
+
+The \c cbuild_uvprojx.sh script allows you to convert your µVision project from the *.uvprojx format into the required
+*.cpdsc format.
+
+Below is a sample output (reduced).
+
+\code
+\endcode
+
+<b>cbuild_uvprojx.sh Bash script template file</b>
+
+The \b cbuild_uvprojx.sh script template allwos you to configure:
+- item 1
+- item 2
+- item 3
+
+\code
+\endcode
+*/
+
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
 \page build_cbuildsh cbuild.sh script
 
+The \c cbuild.sh script allows you ...
+
+Below is a sample output (reduced).
+
+\code
+\endcode
+
+<b>cbuild.sh Bash script template file</b>
+
+The \b cbuild.sh script template allwos you to configure:
+- item 1
+- item 2
+- item 3
+
+\code
+\endcode
 */
 
-/**
-\page build_cbuildgen  cbuildgen.exe utility
 
-CMSIS-Build package contains cbuildgen.exe utility that...
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\page build_cbuildgen  cbuildgen utility
+
+CMSIS-Build package contains cbuildgen utility that...
 
 Operation
 -----------------------------
@@ -124,12 +179,14 @@ with the commands and options explained in the table below
   <tr>
     <td>config</td>
     <td>Run in configuration mode</td>	
-    <td>The tool checks whether CMSIS packs installed in \c CMSIS_PACK_ROOT directory and writes URLs of missing packs into \<ProjectFile\>_cfg.cpinstall file.</td>
+    <td>The tool checks whether CMSIS packs installed in \c CMSIS_PACK_ROOT directory and writes URLs of missing packs into
+    \<ProjectFile\>_cfg.cpinstall file.</td>
   </tr>
   <tr>
     <td>make</td>
     <td>Run in make mode</td>	
-    <td>The tool generates the makefile \<ProjectFile\>.mak that can be used by the \b make utility to build the firmware image.</td
+    <td>The tool generates the makefile \<ProjectFile\>.mak that can be used by the \b make utility to build the firmware
+    image.</td>
   </tr>
   <tr>
     <th>[options]</th>
@@ -139,7 +196,8 @@ with the commands and options explained in the table below
   <tr>
     <td>\--merge=\<MergeTool></td>
     <td nowrap>Merge components configuration files</td>	
-    <td>Requests to run the specified \<MergeTool> to merge the differences between the latest component configuration files in \c CMSIS_PACK_ROOT directory with the ones currently used in the project.
+    <td>Requests to run the specified \<MergeTool> to merge the differences between the latest component configuration files
+    in \c CMSIS_PACK_ROOT directory with the ones currently used in the project.
 	</td>
   </tr>
 </table>
@@ -184,23 +242,129 @@ Invocation Errors
   <td>More than one command was provided in arguments. Only one command shall be used. </td>
 </tr>
 </table>
-
 */
 
 
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
-\page build_ccmerge  ccmerge.exe utility
+\page build_cpinstall  cpinstall.sh script
 
+The \c cpinstall.sh script allows you to install missing CMSIS-Packs that are listed in the *.cpdsc file into your
+repository.
+
+Below is a sample output (reduced).
+
+\code
+\endcode
+
+<b>cpinstall.sh Bash script template file</b>
+
+The \b cpinstall.sh script template allwos you to configure:
+- item 1
+- item 2
+- item 3
+
+\code
+\endcode
 */
 
 
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
-\page build_cbuild_uvprojxsh cbuild_uvprojx.sh script
+\page build_ccmerge  ccmerge utility
 
+CMSIS-Build package contains cbuildgen utility that...
+
+Operation
+-----------------------------
+The usage syntax is following:
+
+\code
+ cbuildgen <command> <ProjectFile>.cpdsc [options]
+\endcode 
+
+with the commands and options explained in the table below
+
+<table class="cmtable" summary="cbuildgen Args">
+  <tr>
+    <th>\<commands></th>
+    <th>Short Name           </th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>config</td>
+    <td>Run in configuration mode</td>	
+    <td>The tool checks whether CMSIS packs installed in \c CMSIS_PACK_ROOT directory and writes URLs of missing packs into
+    \<ProjectFile\>_cfg.cpinstall file.</td>
+  </tr>
+  <tr>
+    <td>make</td>
+    <td>Run in make mode</td>	
+    <td>The tool generates the makefile \<ProjectFile\>.mak that can be used by the \b make utility to build the firmware
+    image.</td
+  </tr>
+  <tr>
+    <th>[options]</th>
+	<th> </th>
+    <th> </th>
+  </tr>
+  <tr>
+    <td>\--merge=\<MergeTool></td>
+    <td nowrap>Merge components configuration files</td>	
+    <td>Requests to run the specified \<MergeTool> to merge the differences between the latest component configuration files
+    in \c CMSIS_PACK_ROOT directory with the ones currently used in the project.
+	</td>
+  </tr>
+</table>
+
+Examples
+-----------------------------
+For example run the 
+
+\code
+ cbuildgen config MyProject.cpdsc
+\endcode
+
+\code
+ cbuildgen make MyProject.cpdsc --merge=ccmerge
+\endcode
+
+where <b>ccmerge</b> is the \ref build_ccmerge for Windows platform provided with the CMSIS-Build package.
+  
+Invocation Errors
+-----------------
+
+<table class="cmtable" summary="cbuildgen Invocation Msgs">
+  <tr>
+    <th>Message Number</th>
+    <th>Type</th>
+    <th>Description</th>
+    <th>Action</th>
+  </tr>
+<tr><td>M200</td> <td>ERROR</td> <td>Invalid arguments!</td>
+  <td>At least one argument is wrong. Correct the argument.</td>
+</tr>
+<tr><td>M202</td> <td>ERROR</td> <td>No CPDSC input file was specified</td>
+  <td>A *.cpdsc file is not provided as an argument. </td>
+</tr>
+<tr><td>M205</td> <td>ERROR</td> <td>tbd</td>
+  <td>tbd</td>
+</tr>
+<tr><td>M206</td> <td>ERROR</td> <td>tbd</td>
+  <td>tbd</td>
+</tr>
+<tr><td>M207</td> <td>ERROR</td> <td>Multiple commands were specified!</td>
+  <td>More than one command was provided in arguments. Only one command shall be used. </td>
+</tr>
+</table>
 */
 
 
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
 \page build_examples  Examples
 
+Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque
+penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium
+quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu.
 */
