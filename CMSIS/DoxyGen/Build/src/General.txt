@@ -16,15 +16,9 @@ executable firmware is generated.
 The following sections provide more information:
 
 - \subpage build_revisionHistory
-- \subpage build_configuration explains the prerequisites for using the tools.
-- \subpage build_cpcreatereposh sets up a new CMSIS-Pack repository.
-- \subpage build_cbuild_uvprojxsh generates a *.cpdsc file from a µVision uvprojx project file.
-- \subpage build_cbuildsh is used to run through the whole build process.
-- \subpage build_cbuildgen can either configure the target project or create the project's make file.
-- \subpage build_cpinstall shows how to install CMSIS-Packs that are listed in the *.cpdsc file.
-- \subpage build_ccmerge merges configuration files based on
-  <a href="https://arm-software.github.io/CMSIS_5/Pack/html/configWizard.html" target="_blank">Configuration Wizard</a>
-  annotations.
+- \subpage build_bashenvsetup runs through the installation and setup of the tools.
+- \subpage build_optheory explains the technical details of CMSIS-Build.
+- \subpage build_runbuild shows how to use CMSIS-Build.
 - \subpage build_examples provides example projects that can be used to setup and test the flow.
 
 <hr>
@@ -54,7 +48,26 @@ Files relevant to CMSIS-Build are present in the following \b ARM::CMSIS directo
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
-\page build_configuration  Configuration
+\page build_bashenvsetup  Bash environment setup
+
+CMSIS-Build requires a Bash environment on your PC. For Windows PCs, install for example
+<a href="https://gitforwindows.org/" target="_blank">git for Windows</a> which includes the MINGW64 Bash environment.
+
+Installation
+------------
+
+- Download the installer from <a href="">cbuild_install.sh</a>.
+- Open a Bash terminal and run the installer: <pre>$ ./cbuild_install.sh</pre>
+- You will be asked to provide:
+  - An installation directory. 
+  - Your CMSIS-Pack root directory.
+  - A directory to store the compiler setup files.
+  - The path to the Arm Compiler 6 installation.
+  - The path to the Arm Compiler 5 installation.
+- After the installation source the setup file from &lt;installation_path&gt;/etc/setup.
+
+Manual setup
+------------
 
 For its correct operation CMSIS-Build needs to be provided with some configuration parameters:
 
@@ -104,13 +117,26 @@ The target toolchain is specified in project *.cpdsc file. CMSIS-Build (cbuildge
 corresponding .mak file for the toolchain in the project root folder and if not found searches CMSIS_BUILD_ROOT directory
 for it.
 
-ToDo: Reference to description of CMSIS-Build options.
+\todo Reference to description of CMSIS-Build options.
 */
 
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
-\page build_cpcreatereposh cpcreaterepo.sh script
+\page build_optheory Theory of operation
+
+This page explains the technical details about the CMSIS-Build flow.
+*/
+
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\page build_runbuild Running CMSIS-Build
+
+This page shows how to run the CMSIS-Build flow.
+
+
+\section build_cpcreatereposh cpcreaterepo.sh script
 
 The \c cpcreaterepo.sh script allows you to setup a new pack repository for the build run.
 
@@ -128,12 +154,9 @@ The \b cpcreaterepo.sh script template allwos you to configure:
 
 \code
 \endcode
-*/
 
 
-/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
-/**
-\page build_cbuild_uvprojxsh cbuild_uvprojx.sh script
+\section build_cbuild_uvprojxsh cbuild_uvprojx.sh script
 
 The \c cbuild_uvprojx.sh script allows you to convert your µVision project from the *.uvprojx format into the required
 *.cpdsc format.
@@ -152,12 +175,9 @@ The \b cbuild_uvprojx.sh script template allwos you to configure:
 
 \code
 \endcode
-*/
 
 
-/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
-/**
-\page build_cbuildsh cbuild.sh script
+\section build_cbuildsh cbuild.sh script
 
 The \c cbuild.sh script allows you ...
 
@@ -175,12 +195,9 @@ The \b cbuild.sh script template allwos you to configure:
 
 \code
 \endcode
-*/
 
 
-/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
-/**
-\page build_cbuildgen  cbuildgen utility
+\subsection build_cbuildgen  cbuildgen utility
 
 CMSIS-Build package contains cbuildgen utility that...
 
@@ -266,12 +283,9 @@ Invocation Errors
   <td>More than one command was provided in arguments. Only one command shall be used. </td>
 </tr>
 </table>
-*/
 
 
-/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
-/**
-\page build_cpinstall  cpinstall.sh script
+\subsection build_cpinstall  cpinstall.sh script
 
 The \c cpinstall.sh script allows you to install missing CMSIS-Packs that are listed in the *.cpdsc file into your
 repository.
@@ -290,12 +304,9 @@ The \b cpinstall.sh script template allwos you to configure:
 
 \code
 \endcode
-*/
 
 
-/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
-/**
-\page build_ccmerge  ccmerge utility
+\subsection build_ccmerge  ccmerge utility
 
 CMSIS-Build package contains cbuildgen utility that...
 
