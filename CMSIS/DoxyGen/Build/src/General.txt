@@ -2,23 +2,27 @@
 /**
 \mainpage
 
-<b>CMSIS-Build</b> is a set of command-line tools that enables Continuous Integration (CI) workflows for CMSIS-based
-software projects. It is available for Windows and Linux platforms.
+<b>CMSIS-Build</b> is a set of command-line tools that enables Continuous Integration (CI) workflows for CMSIS-Pack based
+software projects. It is available for Windows and Linux.
 
-THe CMSIS-Build flow is displayed on the figure below. It relies on the
-<a href="https://arm-software.github.io/CMSIS_5/Pack/html/cpdsc_pg.html" target="_blank">*.cpdsc</a> file format that
-specifies the target project. Based on the *.cpdsc file, \ref build_cbuildgen creates a standard makefile for compiler
-toolchain invocation. The \ref build_ccmerge updates components' configuration files. Finally using make build process the
-executable firmware is generated.
+The CMSIS-Build flow is displayed on the figure below:
 
 \image html cmsis_build_flow.png
+
+- [Optional] Setup your CMSIS-Pack repository if you have not done so already.
+- [Optional] Convert your project file format to *.cpdsc.
+- Run the build script that
+  - installs all packs
+  - merges configuration files
+  - generates \c make files
+  - and creates the binary image
 
 The following sections provide more information:
 
 - \subpage build_revisionHistory
 - \subpage build_bashenvsetup runs through the installation and setup of the tools.
 - \subpage build_optheory explains the technical details of CMSIS-Build.
-- \subpage build_runbuild shows how to use CMSIS-Build.
+- \subpage build_runbuild shows usage details.
 - \subpage build_examples provides example projects that can be used to setup and test the flow.
 
 <hr>
@@ -28,8 +32,8 @@ Files relevant to CMSIS-Build are present in the following \b ARM::CMSIS directo
 |Folder            |Content                                       | 
 |------------------|----------------------------------------------|
 |\b CMSIS\\Documentation\\Build | <b>This documentation </b>  |
-|\b CMSIS\\Utilities\\Windows | <b>CMSIS-Build utilities for Windows platform </b>   |
-|\b CMSIS\\Utilities\\Linux   | <b>CMSIS-Build utilities for Linux platform</b>     |
+|\b CMSIS\\Utilities\\Windows   | <b>CMSIS-Build utilities for Windows platform </b>   |
+|\b CMSIS\\Utilities\\Linux     | <b>CMSIS-Build utilities for Linux platform</b>     |
 */
 
 
@@ -125,15 +129,90 @@ for it.
 /**
 \page build_optheory Theory of operation
 
-This page explains the technical details about the CMSIS-Build flow.
+This page explains the technical details about the CMSIS-Build flow. The following image shows the steps with their
+correlated scripts/tools:
+
+\image html cmsis_build_flow_detail.png
+
+
+\section build_optheory_1 Setup the CMSIS-Pack repository
+
+\image html cpreaterepo_sh.png
+
+If you have not done already, you start by setting up a CMSIS-Pack repository. The \ref build_cpcreatereposh sets up a new
+repository at the given location. Use this to start your CMSIS-Build run from a scratch.
+
+The repository will be used to \ref build_optheory_3_2
+
+
+\section build_optheory_2 Convert project format
+
+If you have created your project with µVision, the \ref build_cbuild_uvprojxsh project allows you to convert the original
+µVision uvprojx format into the cpdsc format:
+
+\image html cbuild_uvprojx_sh.png
+
+\note You can write cpdsc files also by hand. Refer to the \ref build_examples section for more information.
+
+
+\section build_optheory_3 Run the build script
+
+The \ref build_cbuildsh covers all the steps that are required to create the binary file (either an executable or a library
+object).
+
+
+\subsection build_optheory_3_1 Create list of missing packs
+
+Run the \ref build_cbuildgen utility in config mode to scan the *.cpdsc file for all packs that are used in the project.
+The utility creates a list of all included packs.
+
+\image html cbuildgen_config.png
+
+
+\subsection build_optheory_3_2 Install missing packs
+
+The \ref build_cpinstall reads the list of required packs, checks the CMSIS-Pack repository for their availability and
+starts to download the missing packs into the repository.
+
+\image html cpinstall_sh.png
+
+
+\subsection build_optheory_3_3 Generate make files
+
+Run the \ref build_cbuildgen utility in make mode to create make files. The utility create two make files:
+- The \c project_cfg.mak contains a list of all configuration files that are coming from software components from the
+  CMSIS-Packs.
+- The \c project.mak file is the make file that is used to create the binary.
+
+\image html cbuildgen_make.png
+
+
+\subsection build_optheory_3_4 Merge configuration files
+
+Berfore the actual build step, the configuration files from the software components need to be merged. make uses the
+\ref build_ccmerge utility to merge the configuration files from the pack repository with the ones that the user has already
+been working on in the project.
+
+\note This step only works for configuration files that are using
+<a href="../../Pack/html/configWizard.html" target="_blank">Configuration Wizard Annotations</a>.
+
+\image html make_cfg.png
+
+
+\subsection build_optheory_3_5 Build target
+
+Finally, make creates the binary image from all the sources that are required for a successful build. It uses the toolchain
+information that is created in the \ref build_bashenvsetup step.
+
+\image html make.png
 */
 
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
-\page build_runbuild Running CMSIS-Build
+\page build_runbuild Scripts and utilities
 
-This page shows how to run the CMSIS-Build flow.
+This page explains the usage details of the scripts and utilities in the CMSIS-Build flow.
 
 
 \section build_cpcreatereposh cpcreaterepo.sh script
@@ -309,6 +388,94 @@ The \b cpinstall.sh script template allwos you to configure:
 \subsection build_ccmerge  ccmerge utility
 
 CMSIS-Build package contains cbuildgen utility that...
+
+Operation
+-----------------------------
+The usage syntax is following:
+
+\code
+ cbuildgen <command> <ProjectFile>.cpdsc [options]
+\endcode 
+
+with the commands and options explained in the table below
+
+<table class="cmtable" summary="cbuildgen Args">
+  <tr>
+    <th>\<commands></th>
+    <th>Short Name           </th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>config</td>
+    <td>Run in configuration mode</td>	
+    <td>The tool checks whether CMSIS packs installed in \c CMSIS_PACK_ROOT directory and writes URLs of missing packs into
+    \<ProjectFile\>_cfg.cpinstall file.</td>
+  </tr>
+  <tr>
+    <td>make</td>
+    <td>Run in make mode</td>	
+    <td>The tool generates the makefile \<ProjectFile\>.mak that can be used by the \b make utility to build the firmware
+    image.</td
+  </tr>
+  <tr>
+    <th>[options]</th>
+	<th> </th>
+    <th> </th>
+  </tr>
+  <tr>
+    <td>\--merge=\<MergeTool></td>
+    <td nowrap>Merge components configuration files</td>	
+    <td>Requests to run the specified \<MergeTool> to merge the differences between the latest component configuration files
+    in \c CMSIS_PACK_ROOT directory with the ones currently used in the project.
+	</td>
+  </tr>
+</table>
+
+Examples
+-----------------------------
+For example run the 
+
+\code
+ cbuildgen config MyProject.cpdsc
+\endcode
+
+\code
+ cbuildgen make MyProject.cpdsc --merge=ccmerge
+\endcode
+
+where <b>ccmerge</b> is the \ref build_ccmerge for Windows platform provided with the CMSIS-Build package.
+  
+Invocation Errors
+-----------------
+
+<table class="cmtable" summary="cbuildgen Invocation Msgs">
+  <tr>
+    <th>Message Number</th>
+    <th>Type</th>
+    <th>Description</th>
+    <th>Action</th>
+  </tr>
+<tr><td>M200</td> <td>ERROR</td> <td>Invalid arguments!</td>
+  <td>At least one argument is wrong. Correct the argument.</td>
+</tr>
+<tr><td>M202</td> <td>ERROR</td> <td>No CPDSC input file was specified</td>
+  <td>A *.cpdsc file is not provided as an argument. </td>
+</tr>
+<tr><td>M205</td> <td>ERROR</td> <td>tbd</td>
+  <td>tbd</td>
+</tr>
+<tr><td>M206</td> <td>ERROR</td> <td>tbd</td>
+  <td>tbd</td>
+</tr>
+<tr><td>M207</td> <td>ERROR</td> <td>Multiple commands were specified!</td>
+  <td>More than one command was provided in arguments. Only one command shall be used. </td>
+</tr>
+</table>
+
+
+\subsection build_make  make utility
+
+CMSIS-Build package contains a make utility that...
 
 Operation
 -----------------------------
