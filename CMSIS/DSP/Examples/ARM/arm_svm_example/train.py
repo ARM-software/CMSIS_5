@@ -6,7 +6,7 @@ import math
 from pylab import scatter,figure, clf, plot, xlabel, ylabel, xlim, ylim, title, grid, axes, show,semilogx, semilogy
 import matplotlib.pyplot as plt
 from matplotlib.ticker import MaxNLocator
-from matplotlib.colors import BoundaryNorm
+from matplotlib.colors import BoundaryNorm,ListedColormap
 
 # Generation of data to train the SVM classifier
 # 100 vectors are generated. Vector have dimension 2 so can be represented as points
@@ -86,6 +86,7 @@ print(supportVectors)
 # Graphical representation to display the cluster of points
 # and the SVM boundary
 r=plt.figure()
+plt.axis('off')
 XX, YY = np.mgrid[x_min:x_max:200j, y_min:y_max:200j]
 Z = clf.decision_function(np.c_[XX.ravel(), YY.ravel()])
 
@@ -94,17 +95,29 @@ Z = Z.reshape(XX.shape)
 
 levels = MaxNLocator(nbins=15).tick_values(Z.min(), Z.max())
 
-cmap = plt.get_cmap('gray')
+#cmap = plt.get_cmap('gray')
+newcolors = ['#FFFFFF','#FFFFFF']
+cmap = ListedColormap(newcolors)
 norm = BoundaryNorm(levels, ncolors=cmap.N, clip=True)
 
-plt.pcolormesh(XX, YY, Z > 0, cmap=plt.get_cmap('gray'),norm=norm)
+plt.pcolormesh(XX, YY, Z > 0, cmap=cmap,norm=norm)
 plt.contour(XX, YY, Z, colors=['k', 'k', 'k'],
                 linestyles=['--', '-', '--'], levels=[-.5, 0, .5])
 
-scatter(x[:,0],x[:,1],s=1.0)
-scatter(xa[:,0],xa[:,1],s=1.0)
+scatter(x[:,0],x[:,1],s=1.0,color='#FF6B00')
+scatter(xa[:,0],xa[:,1],s=1.0,color='#95D600')
 
 # The test points are displayed in red.
 scatter(test1[:,0],test1[:,1],s=6.0,color='Red')
 scatter(test2[:,0],test2[:,1],s=6.0,color='Red')
+#r.savefig('fig1.jpeg')
+#plt.close(r)
 show()
+
+
+#r=plt.figure()
+#plt.axis('off')
+#scatter(x[:,0],x[:,1],s=1.0,color='#FF6B00')
+#scatter(xa[:,0],xa[:,1],s=1.0,color='#95D600')
+#r.savefig('fig2.jpeg')
+#plt.close(r)
