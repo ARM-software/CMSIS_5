@@ -85,6 +85,14 @@ This video show how to use the \ref zoneToolUsage :
       <th>Description</th>
     </tr>
     <tr>
+      <td>1.0.0</td>
+      <td>
+        <ul>
+          <li>Initial release including the main functionality.</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
       <td>0.9.5 (Preview)</td>
       <td>
         <ul>
@@ -202,8 +210,20 @@ family pcks for your target device need to be installed on your computer.
 /**
 \page zTInstall Installation
 
-CMSIS-Zone is currently available as an executable Eclipse environment. Download the zipped archive from
-<a href="" target="_blank">here</a> and save it to your computer. Unzip it and run CDT_2019_3\\eclipse\\eclipse.exe.
+CMSIS-Zone is currently available as an Eclipse plug-in (we recomment to use Eclipse 64-bit 2018.1 or newer). Download the
+zipped archive from
+<a href="https://github.com/ARM-software/cmsis-pack-eclipse/releases/download/v2.5.0/CmsisPackPlugIn2.5.0.zip" target="_blank">here</a>
+and save it to your computer.
+
+Open Eclipse and go to <b>Help - Install New Software...</b>. In the dialog, select \b Add and then \b Archive... and point
+to the ZIP file on your PC. Click \b Add. The content of the ZIP file is shown:
+
+\image html InstallPlugIns.png
+
+Select <b>CMSIS Eclipse PLig Ins</b> and click \b Next twice. Accept the license agreement and click \b Finish. When
+prompted, restart Eclipse:
+
+\image html EclipseRestart.png
 
 Before creating the first project, you have to point the tool to your pack repository so that it can pick up relevant device
 information. Go to <b>Window - Preferences</b> and select <b>CMSIS Packs</b>:

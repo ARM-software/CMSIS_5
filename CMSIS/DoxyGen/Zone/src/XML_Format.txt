@@ -1583,8 +1583,6 @@ These memory partitions are based on parent memory definitions specified by \ref
 
 The \ref xml_amemory defines a new memory sub-region that is related to a parent region in the *.rzone file.
 
-\todo this needs verification
-
 <table class="cmtable" summary="Element: memory">
   <tr>
     <th>Parent Element</th>
@@ -1673,12 +1671,6 @@ The \ref xml_amemory defines a new memory sub-region that is related to a parent
     <td>optional</td>
   </tr>
   <tr>
-    <td>Pname</td>
-    <td>The processor that can access this memory region. If omitted all processors of the system have access.</td>
-    <td>xs:string</td>
-    <td>optional</td>
-  </tr>
-  <tr>
     <td>info</td>
     <td>Brief description of the memory block.</td>
     <td>xs:string</td>
@@ -1689,8 +1681,6 @@ The \ref xml_amemory defines a new memory sub-region that is related to a parent
 \section xml_aperipheral /azone/partition/peripheral element
 
 The \ref xml_aperipheral defines settings for a peripheral in a related *.rzone file.
-
-\todo this needs verification
 
 <table class="cmtable" summary="Element: peripheral">
   <tr>
@@ -1728,12 +1718,6 @@ The \ref xml_aperipheral defines settings for a peripheral in a related *.rzone 
   <tr>
     <td>start_s</td>
     <td>The logical start address of the peripheral in secure mode only.</td>
-    <td>xs:string</td>
-    <td>optional</td>
-  </tr>
-  <tr>
-    <td>physical</td>
-    <td>The physical start address of the peripheral group (in case that peripheral is shared in multi-processor system on different address).</td>
     <td>xs:string</td>
     <td>optional</td>
   </tr>
@@ -1790,8 +1774,6 @@ The \ref xml_aperipheral defines settings for a peripheral in a related *.rzone 
 \section xml_aslot /azone/partition/peripheral/slot element
 
 The \ref xml_aslot defines settings for a slot in a related *.rzone file.
-
-\todo this needs verification
 
 <table class="cmtable" summary="Element: slot">
   <tr>
