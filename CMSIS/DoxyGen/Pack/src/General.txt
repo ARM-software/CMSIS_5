@@ -93,6 +93,7 @@ Files relevant to CMSIS-Pack are present in the following \b ARM::CMSIS director
 - added \ref bash_script to support pack generation on Linux or Windows
 - added \b custom attribute to \ref element_component "component element"
 - added \b TrustZone-disabled value to \ref DsecureEnum "software model selection"
+- added \ref dbg_setup_tutorial in CMSIS-Pack documentation
     </td>
   </tr>
   <tr>

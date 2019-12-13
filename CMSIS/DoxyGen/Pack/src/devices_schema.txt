@@ -2716,6 +2716,7 @@ __var uservar = value;  // Comment: Define "uservar" and initialize to "value"
   </tr>
   <tr>
     <td>configfile</td>
+    \anchor debugvars_configfile
     <td>
       Configuration file with path relative to the package base folder (extension *.DBGCONF). This file contains 
       assignments of a default value to global debug access variables. This file gets copied to the project folder
@@ -3248,7 +3249,7 @@ Refer to \ref usage_of_sequences for details.<br>
   </tr>
   <tr>
     <td>disable</td>
-    <td>Disables execution of the \ref default_sequences "Default Debug Access Sequence".</td>
+    <td>Disables execution of the \ref default_sequences "Predefined Debug Access Sequence".</td>
     <td>xs:boolean</td>
     <td>optional</td>
   </tr>
@@ -3702,10 +3703,9 @@ to all connections.
     <td>optional</td>
   </tr>
   <tr>
-    <td>defaultResetSequence</td>
+    <td>\anchor defaultResetSequence defaultResetSequence</td>
     <td>
-      Specifies the debug sequence that is to be used for the device. Refer to \ref writing_sequences for more
-      information.
+      Specifies the debug sequence that shall be used by default for the reset operation. It can be set to one of the predefined reset sequences such as \ref resetSystem, \ref resetHardware and \ref resetProcessor or also to any user-defined debug sequence. If not specified then \ref resetSystem sequence will be set as default.
     </td>
     <td>xs:string</td>
     <td>optional</td>

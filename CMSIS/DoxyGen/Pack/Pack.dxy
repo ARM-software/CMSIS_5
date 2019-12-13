@@ -234,6 +234,7 @@ ALIASES                = "token{1}=<span class=\"XML-Token\">\1</span>" \
                          "elem{1}=\b \<\1>" \
                          "tagem{1}=<em>\<\1\></em>" \
                          "refelem{1}=\ref element_\1 \"\1\"" \
+                         "refdebugvar{1}=\ref \1 \"\__\1\"" \
                          "delim=<p>&nbsp;<p> <hr>"
 
 # This tag can be used to specify a number of word-keyword mappings (TCL only).
@@ -776,7 +777,8 @@ INPUT                  = . \
                          src/xml_types.txt \
                          src/cpdsc_schema.txt \
                          src/sdf_schema.txt \
-                         src/pack_index.txt
+                         src/pack_index.txt \
+                         src/pack_dbg_setup_tutorial.txt 
 
 # This tag can be used to specify the character encoding of the source files
 # that doxygen parses. Internally doxygen uses the UTF-8 encoding. Doxygen uses
