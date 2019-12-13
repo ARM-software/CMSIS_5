@@ -21,8 +21,8 @@
  * Title:        arm_elementwise_mul_s8
  * Description:  Element wise multiplication
  *
- * $Date:        August 2019
- * $Revision:    V.1.0.0
+ * $Date:        December 16 2019
+ * $Revision:    V.1.0.1
  *
  * Target Processor:  Cortex-M cores
  *
@@ -63,6 +63,38 @@ arm_elementwise_mul_s8(const int8_t *input_1_vect,
 {
 
   uint32_t loop_count;
+#if defined(ARM_MATH_MVEI)
+
+  loop_count = (block_size + 3) / 4;
+  uint32_t num_elements = block_size;
+
+  for (int i = 0; i < loop_count; i++)
+  {
+    mve_pred16_t p = vctp32q(num_elements);
+
+    int32x4_t input_1 = vldrbq_z_s32(input_1_vect, p);
+    input_1 = vaddq_n_s32(input_1, input_1_offset);
+
+    int32x4_t input_2 = vldrbq_z_s32(input_2_vect, p);
+    input_2 = vaddq_n_s32(input_2, input_2_offset);
+
+    int32x4_t res_0 = vmulq_s32(input_1, input_2);
+
+    res_0 = arm_requantize_mve_32x4(res_0, vdupq_n_s32(out_mult), vdupq_n_s32(out_shift));
+
+    res_0 += vdupq_n_s32(out_offset);
+
+    res_0 = vmaxq_s32(res_0, vdupq_n_s32(out_activation_min));
+    res_0 = vminq_s32(res_0, vdupq_n_s32(out_activation_max));
+
+    vstrbq_p_s32(output, res_0, p);
+    input_1_vect += 4;
+    input_2_vect += 4;
+    output += 4;
+    num_elements -= 4;
+  }
+
+#else
   int32_t input_1;
   int32_t input_2;
   int32_t mul_res;
@@ -161,8 +193,8 @@ arm_elementwise_mul_s8(const int8_t *input_1_vect,
     /* Decrement loop counter */
     loop_count--;
   }
-
-  return (ARM_MATH_SUCCESS);
+#endif
+  return ARM_MATH_SUCCESS;
 }
 
 /**
