@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <title>reg_setup[n] element</title>
-<title>CMSIS-Zone (Preview): reg_setup[n] element</title>
+<title>CMSIS-Zone: reg_setup[n] element</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="cmsis.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="jquery.js"></script>
@@ -31,8 +31,8 @@
  <tr style="height: 46px;">
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
-   <div id="projectname">CMSIS-Zone (Preview)
-   &#160;<span id="projectnumber">Version 0.9.2</span>
+   <div id="projectname">CMSIS-Zone
+   &#160;<span id="projectnumber">Version 1.0.0</span>
    </div>
    <div id="projectbrief">System Resource Management</div>
   </td>
@@ -123,9 +123,11 @@ $(document).ready(function(){initNavTree('fm_reg_setup.html','');});
 <tr>
 <td>.reg_setup[<em>n</em>].index </td><td>The index value for the register array. </td><td>NonNegativeInteger  </td></tr>
 <tr>
-<td>.reg_setup[<em>n</em>].value[<em>m</em>] </td><td>An array with register setup values (corresponds to .peripheral[<em>m</em>] below. </td><td>NonNegativeInteger  </td></tr>
-<tr>
 <td>.reg_setup[<em>n</em>].peripheral[<em>m</em>] </td><td>An array with the peripheral names that setup belongs too. </td><td>xs:string  </td></tr>
+<tr>
+<td>.reg_setup[<em>n</em>].slot[<em>m</em>] </td><td>An array with the slot names that setup belongs too. The value is empty when setup is not related to a slot </td><td>xs:string  </td></tr>
+<tr>
+<td>.reg_setup[<em>n</em>].value[<em>m</em>] </td><td>An array with register setup values (corresponds to .peripheral[<em>m</em>] and .slot[<em>m</em>] above). </td><td>NonNegativeInteger  </td></tr>
 </table>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
@@ -133,7 +135,7 @@ $(document).ready(function(){initNavTree('fm_reg_setup.html','');});
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="GenDataModel.html">Generator Data Model</a></li><li class="navelem"><a class="el" href="fm_system.html">system element</a></li>
-    <li class="footer">Generated on Wed Jul 10 2019 15:21:06 for CMSIS-Zone (Preview) Version 0.9.2 by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Fri Dec 13 2019 14:48:02 for CMSIS-Zone Version 1.0.0 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

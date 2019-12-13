@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Pack
-   &#160;<span id="projectnumber">Version 1.6.0</span>
+   &#160;<span id="projectnumber">Version 1.6.1</span>
    </div>
    <div id="projectbrief">Delivery Mechanism for Software Packs</div>
   </td>
@@ -290,7 +290,7 @@ Steps to Create a Pack</h1>
 <li><b>Produce input:</b> Create the files that will be delivered with the Pack.</li>
 <li><b>Organize files:</b> Use directories to separate the content of the Pack.</li>
 <li><b>Create PDSC file:</b> The XML based PDSC file can be created using any text editor. Editors that can validate XML code against a schema file help to find bugs early in the Pack development stage.</li>
-<li><b>Generate Pack:</b> Any compression tool supporting the ZIP format can be used to create a Pack file. <a class="el" href="packChk.html">packChk.exe</a> is helpful for the validation of the contents of a Pack.</li>
+<li><b>Generate Pack:</b> Any compression tool supporting the ZIP format can be used to create a Pack file. <a class="el" href="packChk.html">packChk</a> is helpful for the validation of the contents of a Pack.</li>
 </ol>
 <p>The following pages will show how to create a Software Pack from scratch. The page <a class="el" href="cp_SWComponents.html">Pack with Software Components</a> will start with a simple Pack containing only the PDSC file and a single software component and will then explain further elements of a Pack in more detail. The page <a class="el" href="createPack_DFP.html">Pack with Device Support</a> adds information on the additional requirements that a DFP has, while <a class="el" href="createPackBoard.html">Pack with Board Support</a> will elaborate on the content specific to a BSP.</p>
 <h1><a class="anchor" id="PackTutorials"></a>
@@ -366,9 +366,11 @@ Software Component Cclasses</h2>
 <tr>
 <td align="left">Graphics* </td><td align="left">Graphical libraries for user interfaces </td></tr>
 <tr>
-<td align="left">IoT Client * </td><td align="left">IoT cloud client connectors </td></tr>
+<td align="left">IoT Client </td><td align="left">IoT cloud client connectors </td></tr>
 <tr>
-<td align="left">IoT Utility * </td><td align="left">IoT specific utilities, i.e. a socket interface </td></tr>
+<td align="left">IoT Service </td><td align="left">IoT specific services, i.e. device on-boarding </td></tr>
+<tr>
+<td align="left">IoT Utility </td><td align="left">IoT specific utilities, i.e. a socket interface </td></tr>
 <tr>
 <td align="left">Network* </td><td align="left">Network stack using Internet protocols </td></tr>
 <tr>
@@ -387,7 +389,7 @@ Software Component Cclasses</h2>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Jul 10 2019 15:21:00 for CMSIS-Pack Version 1.6.0 by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Fri Dec 13 2019 14:56:14 for CMSIS-Pack Version 1.6.1 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Pack
-   &#160;<span id="projectnumber">Version 1.6.0</span>
+   &#160;<span id="projectnumber">Version 1.6.1</span>
    </div>
    <div id="projectbrief">Delivery Mechanism for Software Packs</div>
   </td>
@@ -114,9 +114,17 @@ $(document).ready(function(){initNavTree('pack_revisionHistory.html','');});
 <tr>
 <th>Version </th><th>Description  </th></tr>
 <tr>
+<td>1.6.1 </td><td>Modifications compared to Version 1.6.0<ul>
+<li>added <a class="el" href="bash_script.html">Bash Script gen_pack.sh</a> to support pack generation on Linux or Windows</li>
+<li>added <b>custom</b> attribute to <a class="el" href="pdsc_components_pg.html#element_component">component element</a></li>
+<li>added <b>TrustZone-disabled</b> value to <a class="el" href="pdsc_family_pg.html#DsecureEnum">software model selection</a></li>
+<li>added <a class="el" href="dbg_setup_tutorial.html">Debug Setup Tutorial</a> in CMSIS-Pack documentation   </li>
+</ul>
+</td></tr>
+<tr>
 <td>1.6.0 </td><td>Modifications compared to Version 1.5.0<ul>
 <li>added Armv8.1-M MVE processor feature attribute 'Dmve'.</li>
-<li>added local and global pre-include section <a class="el" href="pdsc_components_pg.html#Pre_Include_Local_h">Pre_Include_Local_h</a>, <a class="el" href="pdsc_components_pg.html#Pre_Include_Global_h">Pre_Include_Global_h</a>.</li>
+<li>added local and global pre-include section <a class="el" href="pdsc_components_pg.html#Pre_Include_Local_Component_h">Pre_Include_Local_Component_h</a>, <a class="el" href="pdsc_components_pg.html#Pre_Include_Global_h">Pre_Include_Global_h</a>.</li>
 <li>added file categories 'preIncludeLocal' and 'preIncludeGlobal' to the <a class="el" href="pdsc_components_pg.html#FileCategoryEnum">FileCategoryEnum</a>.</li>
 <li>added file attribute 'path' for file category 'header' to add support for relative include paths.</li>
 <li>added to <a class="el" href="pdsc_package_pg.html#element_package">package</a> element the possibility to restrict the usage of the with attributes Dcore, Dname, Dvendor, and Tcompiler.</li>
@@ -249,7 +257,7 @@ $(document).ready(function(){initNavTree('pack_revisionHistory.html','');});
 <li><em>Removed</em> external RAMn and ROMn memory IDs in memory tag</li>
 <li><em>Added</em> FileCategoryTypes in &lt;file&gt; element for C, C++, Assembler, Linker</li>
 <li><em>Extended</em> specification of &lt;require&gt;, &lt;accept&gt; and &lt;deny&gt; with Cversion and Capiversion ranges</li>
-<li><em>Added</em> <a class="el" href="createPackUtil.html">Utilities for Creating Packs</a> and <a class="el" href="packChk.html">packChk.exe</a> for Pack validation</li>
+<li><em>Added</em> <a class="el" href="createPackUtil.html">Utilities for Creating Packs</a> and <a class="el" href="packChk.html">packChk</a> for Pack validation</li>
 <li><em>Added</em> documentation for the Example Pack based on LPC1800 Device Family</li>
 <li><em>Refined</em> &lt;debug&gt; element description</li>
 <li>Many clarifications in the documentation along with examples   </li>
@@ -278,7 +286,7 @@ $(document).ready(function(){initNavTree('pack_revisionHistory.html','');});
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="index.html">index</a></li>
-    <li class="footer">Generated on Wed Jul 10 2019 15:21:00 for CMSIS-Pack Version 1.6.0 by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Fri Dec 13 2019 14:56:14 for CMSIS-Pack Version 1.6.1 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

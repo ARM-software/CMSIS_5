@@ -1,6 +1,9 @@
 var NAVTREE =
 [
-  [ "CMSIS-Zone (Preview)", "index.html", [
+  [ "CMSIS-Zone", "index.html", [
+    [ "Overview", "index.html#Overview", null ],
+    [ "Manual Sections", "index.html#ManualSections", null ],
+    [ "Introduction Video", "index.html#mainIntroVideo", null ],
     [ "Revision History of CMSIS-Zone", "zone_revisionHistory.html", null ],
     [ "CMSIS-Zone Use Cases", "UseCases.html", [
       [ "MPU Protection", "UseCases.html#UseCase_MPU", null ],
@@ -9,8 +12,7 @@ var NAVTREE =
     ] ],
     [ "CMSIS-Zone Utility", "zoneToolUsage.html", "zoneToolUsage" ],
     [ "Zone Description Format", "zoneFormat.html", "zoneFormat" ],
-    [ "Generator Data Model", "GenDataModel.html", "GenDataModel" ],
-    [ "Todo List", "todo.html", null ]
+    [ "Generator Data Model", "GenDataModel.html", "GenDataModel" ]
   ] ]
 ];
 

@@ -3,8 +3,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<title>packChk.exe</title>
-<title>CMSIS-Pack: packChk.exe</title>
+<title>packChk</title>
+<title>CMSIS-Pack: packChk</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="cmsis.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="jquery.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Pack
-   &#160;<span id="projectnumber">Version 1.6.0</span>
+   &#160;<span id="projectnumber">Version 1.6.1</span>
    </div>
    <div id="projectbrief">Delivery Mechanism for Software Packs</div>
   </td>
@@ -107,11 +107,11 @@ $(document).ready(function(){initNavTree('packChk.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">packChk.exe </div>  </div>
+<div class="title">packChk </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><b>packChk.exe</b> is a utility for validation of a Software Pack. It operates on the unzipped content of the Software Pack and is located in the directory <b>.\CMSIS\Utilities</b> of the <b>ARM::CMSIS</b> Pack.</p>
-<p><b>packChk.exe</b> performs the following operations:</p>
+<div class="textblock"><p><b>packChk</b> is a utility for validation of a Software Pack. It operates on the unzipped content of the Software Pack and is located in the directory <b>.\CMSIS\Utilities</b> of the <b>ARM::CMSIS</b> Pack. <b>packChk</b> is available for Windows and Linux operating systems.</p>
+<p><b>packChk</b> performs the following operations:</p>
 <ul>
 <li>Reads the content of the specified *.pdsc file. The path to this *.pdsc file is considered as root directory of the Software Pack.</li>
 <li>Verifies the existence of all files in the Software Pack that are referenced in the *.pdsc file.</li>
@@ -125,9 +125,9 @@ $(document).ready(function(){initNavTree('packChk.html','');});
  1 : errors during validation detected</li>
 </ul>
 <h2>Operation </h2>
-<p><b>packChk.exe</b> is invoked from the command line:<br/>
+<p><b>packChk</b> is invoked from the command line:<br/>
 </p>
-<div class="fragment"><div class="line">packChk.exe &lt;pdsc_file&gt; &lt;options&gt;</div>
+<div class="fragment"><div class="line">packChk &lt;pdsc_file&gt; &lt;options&gt;</div>
 </div><!-- fragment --><p><br/>
 </p>
 <table  class="cmtable" summary="packChk Args">
@@ -138,7 +138,7 @@ $(document).ready(function(){initNavTree('packChk.html','');});
 <tr>
 <td>-n &lt;file&gt; </td><td>Write Pack file name </td><td>Write a standardized name for the Software Pack to the specified ASCII file.  </td></tr>
 <tr>
-<td>-s </td><td>Verify SVD files </td><td>Each SVD file referenced in the *.pdsc file is <a href="../../SVD/html/svd_validate_file_pg.html"><b>validated</b></a> with <b>SVDConv.exe</b>. With this option set, <b>SVDConv.exe</b> is invoked from the same directory as <b>packChk.exe</b>.   </td></tr>
+<td>-s </td><td>Verify SVD files </td><td>Each SVD file referenced in the *.pdsc file is <a href="../../SVD/html/svd_validate_file_pg.html"><b>validated</b></a> with <b>SVDConv</b>. With this option set, <b>SVDConv.exe</b> is invoked from the same directory as <b>packChk</b>.   </td></tr>
 <tr>
 <td>-u &lt;url&gt; </td><td>Pack Server URL </td><td>Verifies that the specified URL matches the &lt;url&gt; element in the *.pdsc file.  </td></tr>
 <tr>
@@ -149,40 +149,18 @@ $(document).ready(function(){initNavTree('packChk.html','');});
 <td>-h/-? </td><td>Help </td><td>Show help.  </td></tr>
 </table>
 <p><b>Examples</b></p>
-<p>Run <b>packChk.exe</b> on the package description file called <b>MyVendor.MyPack.pdsc</b>. <b>packChk.exe</b> verifies the file against the Software Pack that is located in the same directory. </p>
-<pre class="fragment">packChk.exe MyVendor.MyPack.pdsc
-</pre><p>Run <b>packChk.exe</b> on the package description file called <b>MyVendor.MyPack.pdsc</b> in the current directory and try to resolve conditions using the ARM.CMSIS.pdsc file based in another directory. </p>
-<pre class="fragment">packChk.exe MyVendor.MyPack.pdsc -i ..\..\PACK\ARM\CMSIS\ARM.CMSIS.pdsc
-</pre><p>Run <b>packChk.exe</b> on the package description file called <b>MyVendor.MVCM3.pdsc</b>, verify SVD files, verify the URL to the Pack Server, and generate a ASCII text file with the standardized name of the Software Pack. </p>
-<pre class="fragment">packChk.exe "MyVendor.MVCM3.pdsc" -s -u "http://www.myvendor.com/pack" -n packname.txt
-</pre><p>Run <b>packChk.exe</b> on the package description file called <b>MyVendor.MVCM3.pdsc</b>. Suppress validation messages M304 and M331. </p>
-<pre class="fragment">packChk.exe MyVendor.MVCM3.pdsc -x M304 M331           // messages as a list
-packChk.exe MyVendor.MVCM3.pdsc -x M304 -x M331        // option repeated
+<p>Run <b>packChk</b> on the package description file called <b>MyVendor.MyPack.pdsc</b>. <b>packChk</b> verifies the file against the Software Pack that is located in the same directory. </p>
+<pre class="fragment">packChk MyVendor.MyPack.pdsc
+</pre><p>Run <b>packChk</b> on the package description file called <b>MyVendor.MyPack.pdsc</b> in the current directory and try to resolve conditions using the ARM.CMSIS.pdsc file based in another directory. </p>
+<pre class="fragment">packChk MyVendor.MyPack.pdsc -i ..\..\PACK\ARM\CMSIS\ARM.CMSIS.pdsc
+</pre><p>Run <b>packChk</b> on the package description file called <b>MyVendor.MVCM3.pdsc</b>, verify SVD files, verify the URL to the Pack Server, and generate a ASCII text file with the standardized name of the Software Pack. </p>
+<pre class="fragment">packChk "MyVendor.MVCM3.pdsc" -s -u "http://www.myvendor.com/pack" -n packname.txt
+</pre><p>Run <b>packChk</b> on the package description file called <b>MyVendor.MVCM3.pdsc</b>. Suppress validation messages M304 and M331. </p>
+<pre class="fragment">packChk MyVendor.MVCM3.pdsc -x M304 M331           // messages as a list
+packChk MyVendor.MVCM3.pdsc -x M304 -x M331        // option repeated
 </pre><h1><a class="anchor" id="packChkMessages"></a>
 Error and Warning Messages</h1>
 <p>The following table shows the errors and warnings issued by packChk.</p>
-<h2>Internal Errors </h2>
-<p>If you encounter one of the following errors, please send a problem report via email to <a href="#" onclick="location.href='mai'+'lto:'+'cms'+'is'+'@ar'+'m.'+'com'; return false;">cmsis<span style="display: none;">.nosp@m.</span>@arm<span style="display: none;">.nosp@m.</span>.com</a>.</p>
-<table  class="cmtable" summary="packChk Internal Msgs">
-<tr>
-<th>Message Number </th><th>Type </th><th>Description </th><th>Action  </th></tr>
-<tr>
-<td>M100 </td><td>ERROR </td><td>GetModuleHandle failed </td><td>Call support.  </td></tr>
-<tr>
-<td>M101 </td><td>ERROR </td><td>Unknown error! </td><td>Call support.   </td></tr>
-<tr>
-<td>M102 </td><td>ERROR </td><td>MFC initialization failed </td><td>Call support.  </td></tr>
-<tr>
-<td>M103 </td><td>ERROR </td><td>Internal Error: <em>'REF'</em>  </td><td>Call support and submit the error message.  </td></tr>
-<tr>
-<td>M104 - M107 </td><td>N.A. </td><td><em>not in use</em> </td><td>&mdash;  </td></tr>
-<tr>
-<td>M108 </td><td>ERROR </td><td>Reading PDSC File failed! </td><td>Verify file and folder permissions. Verify whether the file is corrupt or in another folder. Repeat the process. If this error persists, call support.  </td></tr>
-<tr>
-<td>M109 </td><td>ERROR </td><td>Constructing Model failed! </td><td>Building Model based on the PDSC information failed. Repeat the process. If this error persists, call support.  </td></tr>
-<tr>
-<td>M110 </td><td>ERROR </td><td>Verifying Model failed </td><td>Model based verification of the PDCS information failed. Repeat the process. If this error persists, call support.  </td></tr>
-</table>
 <h2>Invocation Errors </h2>
 <table  class="cmtable" summary="packChk Invocation Msgs">
 <tr>
@@ -192,7 +170,7 @@ Error and Warning Messages</h1>
 <tr>
 <td>M201 </td><td>ERROR </td><td>Too many arguments! </td><td>The list of arguments is too long. Verify if you have used one argument twice.  </td></tr>
 <tr>
-<td>M202 </td><td>ERROR </td><td>No PDSC input file specified </td><td>Correct the command line. <b>packChk.exe</b> expects a *.pdsc file name as input.  </td></tr>
+<td>M202 </td><td>ERROR </td><td>No PDSC input file specified </td><td>Correct the command line. <b>packChk</b> expects a *.pdsc file name as input.  </td></tr>
 <tr>
 <td>M203 </td><td>ERROR </td><td>Error reading PDSC file <em>'PATH/FILENAME'!</em>  </td><td>Verify the PDSC file for consistency.   </td></tr>
 <tr>
@@ -206,7 +184,7 @@ Error and Warning Messages</h1>
  Expected: <em>'PDSC1.pdsc'</em> <br/>
  Actual : <em>'PDSC2.pdsc'</em>  </td><td>The PDSC file expected has not been found. Rename or exchange the PDSC file.  </td></tr>
 <tr>
-<td>M208 </td><td>ERROR </td><td>Error calling SVDConv.exe: <em>'PATH'</em>  </td><td>SVDConv.exe was not found. Copy the executable into the directory of packChk.exe or enter the path where SVDConv.exe is located. Default is <span class="XML-Token">CMSIS\Utilities</span>.  </td></tr>
+<td>M208 </td><td>ERROR </td><td>Error calling SVDConv: <em>'PATH'</em>  </td><td>SVDConv.exe was not found. Copy the executable into the directory of <b>packChk</b> or enter the path where <b>SVDConv</b> is located. Default is <span class="XML-Token">CMSIS\Utilities</span>.  </td></tr>
 <tr>
 <td>M209 </td><td>ERROR </td><td>Unknown Option: <em>'OPT'</em>  </td><td>The command line option entered is not known or invalid.  </td></tr>
 <tr>
@@ -404,7 +382,7 @@ Error and Warning Messages</h1>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="createPackUtil.html">Utilities for Creating Packs</a></li>
-    <li class="footer">Generated on Wed Jul 10 2019 15:21:00 for CMSIS-Pack Version 1.6.0 by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Fri Dec 13 2019 14:56:15 for CMSIS-Pack Version 1.6.1 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

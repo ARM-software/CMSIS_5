@@ -5,7 +5,7 @@ var coresight_setup =
       [ "Debug description elements", "debug_description.html#das_elements", null ],
       [ "Debug access sequences", "debug_description.html#pdsc_SequenceNameEnum_pg", null ],
       [ "Usage of debug access sequences", "debug_description.html#usage_of_sequences", null ],
-      [ "Default debug access sequences", "debug_description.html#default_sequences", [
+      [ "Predefined debug access sequences", "debug_description.html#default_sequences", [
         [ "DebugPortSetup", "debug_description.html#debugPortSetup", null ],
         [ "DebugPortStart", "debug_description.html#debugPortStart", null ],
         [ "DebugPortStop", "debug_description.html#debugPortStop", null ],
@@ -20,9 +20,9 @@ var coresight_setup =
         [ "ResetCatchClear", "debug_description.html#resetCatchClear", null ]
       ] ],
       [ "Examples of non-standard debug access sequences", "debug_description.html#nonstdExamples", [
-        [ "TraceStart", "debug_description.html#traceStart", null ],
-        [ "DebugDeviceUnlock", "debug_description.html#debugDeviceUnlock", null ],
-        [ "User-defined hardware reset sequence", "debug_description.html#hwReset", null ],
+        [ "User implementation of TraceStart sequence", "debug_description.html#userTraceStart", null ],
+        [ "User implementation of DebugDeviceUnlock sequence", "debug_description.html#userDebugDeviceUnlock", null ],
+        [ "User implementation of hardware reset sequence", "debug_description.html#hwReset", null ],
         [ "Calling sequences in a control block", "debug_description.html#sequenceExample", null ]
       ] ],
       [ "Writing debug access sequences", "debug_description.html#writing_sequences", [
@@ -32,5 +32,6 @@ var coresight_setup =
         [ "Debug access variables", "debug_description.html#DebugVars", null ],
         [ "Using external tools", "debug_description.html#externalTools", null ]
       ] ]
-    ] ]
+    ] ],
+    [ "Debug Setup Tutorial", "dbg_setup_tutorial.html", "dbg_setup_tutorial" ]
 ];

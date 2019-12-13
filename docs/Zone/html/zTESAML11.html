@@ -3,8 +3,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<title>Arm Musca-A1</title>
-<title>CMSIS-Zone (Preview): Arm Musca-A1</title>
+<title>Microchip SAML11</title>
+<title>CMSIS-Zone: Microchip SAML11</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="cmsis.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="jquery.js"></script>
@@ -31,8 +31,8 @@
  <tr style="height: 46px;">
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
-   <div id="projectname">CMSIS-Zone (Preview)
-   &#160;<span id="projectnumber">Version 0.9.2</span>
+   <div id="projectname">CMSIS-Zone
+   &#160;<span id="projectnumber">Version 1.0.0</span>
    </div>
    <div id="projectbrief">System Resource Management</div>
   </td>
@@ -88,7 +88,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   </div>
 </div>
 <script type="text/javascript">
-$(document).ready(function(){initNavTree('zTEMusca.html','');});
+$(document).ready(function(){initNavTree('zTESAML11.html','');});
 </script>
 <div id="doc-content">
 <!-- window showing the filter options -->
@@ -107,16 +107,65 @@ $(document).ready(function(){initNavTree('zTEMusca.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">Arm Musca-A1 </div>  </div>
+<div class="title">Microchip SAML11 </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"></div></div><!-- contents -->
+<div class="textblock"><p>This single processor demo application shows how to do the <a class="el" href="UseCases.html#UseCase_TrustZone">TrustZone Partitioning</a>. It is split into a secure and non-secure part. Using CMSIS-Zone, it generates:</p>
+<ul>
+<li>A header file that contains #defines to control the various linker scatter files (and might be used in other parts of the application).</li>
+<li>The SystemIsolation_Config.c header file that contains memory protection controller (MPC) and peripheral protection controller (PPC) and related interrupt setup.</li>
+<li>The partition_gen.h header file that contains the secure attribution unit (SAU) setup and the NVIC configuration for secure/non-secure.</li>
+</ul>
+<p>The application itself shows how to implement calls between the secure and the non-secure part.</p>
+<h1><a class="anchor" id="zTESAML11_Eclipse"></a>
+Using the CMSIS-Zone project</h1>
+<ul>
+<li><a class="el" href="zTExamples.html#zTExImport">Import</a> the project "Examples\SAML11\Zone" into the CMSIS-Zone utility</li>
+<li><a class="el" href="zTUI.html#zTProjEx">Open</a> the SAML11.azone file</li>
+<li><a class="el" href="zTUIGenerate.html">Generate</a> the related output files</li>
+</ul>
+<p>The SAML11.azone file of that project has the following configuration settings:</p>
+<ul>
+<li><a class="el" href="zTUIZonePart.html#zTUICreate">Added the zones</a> <code>sApp</code> and <code>nsApp</code> </li>
+<li><a class="el" href="zTUIMemPerRes.html#zTUIMemAdd">Created the memory regions</a> <code>APP_NS</code>, <code>APP_S</code>, <code>APP_NSC</code>, <code>DATA_NS</code>, <code>DATA_S</code>, <code>RAM_NS</code>, and <code>RAM_NS</code> </li>
+<li>Selected various memory regions and peripherals for using in the different zones: <div class="image">
+<img src="SAML11_zones.png" alt="SAML11_zones.png"/>
+</div>
+</li>
+</ul>
+<p>The zones use different Flash and SRAM regions for code and data. To generate the output, click on the <a class="el" href="zTUIGenerate.html">Generate</a> button in the Zone Editor tool bar. This creates the following files in the <code>ftl_gen</code> directory:</p>
+<table class="doxtable">
+<tr>
+<th align="left">Template File </th><th align="left">Generated File </th><th align="left">Description  </th></tr>
+<tr>
+<td align="left">dump_fzone.txt.ftl </td><td align="left">dump_fzone.txt </td><td align="left">Contains the complete model </td></tr>
+<tr>
+<td align="left">flash.dbgconf.ftl </td><td align="left">flash.dbgconf </td><td align="left">Flash algorithm configuration for security settings </td></tr>
+<tr>
+<td align="left">flash.dbgconf.lst.ftl</td><td align="left">flash.dbgconf.lst</td><td align="left">Flash algorithm configuration for security settings </td></tr>
+<tr>
+<td align="left">helper.ftlinc </td><td align="left">N/A </td><td align="left">Helper template file with FTL functions. </td></tr>
+<tr>
+<td align="left">scatter_ns.sct.ftl </td><td align="left">scatter_ns.sct </td><td align="left">Example scatter file for non-secure zone. </td></tr>
+<tr>
+<td align="left">scatter_s.sct.ftl </td><td align="left">scatter_s.sct </td><td align="left">Example scatter file for secure zone. </td></tr>
+</table>
+<p>These files can be used in any IDE to create the final application. In the following, the usage in Arm Keil MDK is described.</p>
+<h1><a class="anchor" id="zTESAML11_MDK"></a>
+Using the MDK project</h1>
+<p>The example project can be loaded, built and debugged in µVision by performing the following steps:</p>
+<ol type="1">
+<li>Navigate to Examples/SAML11/MDK</li>
+<li>Open the multi-project workspace NoRTOS.uvmpw</li>
+<li>Run the batch build in MDK. Both projects, sApp and nsApp need to be compiled in order. </li>
+</ol>
+</div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="zoneToolUsage.html">CMSIS-Zone Utility</a></li><li class="navelem"><a class="el" href="zTExamples.html">Examples</a></li>
-    <li class="footer">Generated on Wed Jul 10 2019 15:21:06 for CMSIS-Zone (Preview) Version 0.9.2 by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Fri Dec 13 2019 14:48:02 for CMSIS-Zone Version 1.0.0 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

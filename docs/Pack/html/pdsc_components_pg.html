@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Pack
-   &#160;<span id="projectnumber">Version 1.6.0</span>
+   &#160;<span id="projectnumber">Version 1.6.1</span>
    </div>
    <div id="projectbrief">Delivery Mechanism for Software Packs</div>
   </td>
@@ -285,14 +285,14 @@ Pre_Include_Global_h</h1>
 </div><!-- fragment --><p>No need to explicitly include this file as it is automatically added as pre-include into the build for all modules.</p>
 <p>&#160;</p>
 <hr/>
-<h1><a class="anchor" id="Pre_Include_Local_h"></a>
-Pre_Include_Local_h</h1>
-<p>The build environment shall generate a C/C++ header file with the name <b>Pre_Include_&lt;Cclass&gt;_&lt;component&gt;.h</b> from the selected component and add this file to the command line as a pre-include file for the build of all modules of this component. The same is done for each component containing a "Pre_Include_Local_h" element. Note: files shall be generated into the RTE/&lt;target&gt; subdirectory.</p>
+<h1><a class="anchor" id="Pre_Include_Local_Component_h"></a>
+Pre_Include_Local_Component_h</h1>
+<p>The build environment shall generate a C/C++ header file with the name <b>Pre_Include_&lt;Cclass&gt;_&lt;component&gt;.h</b> from the selected component and add this file to the command line as a pre-include file for the build of all modules of this component. The same is done for each component containing a "Pre_Include_Local_Component_h" element. Note: files shall be generated into the RTE/&lt;target&gt; subdirectory.</p>
 <div class="fragment"><div class="line">&lt;component Cclass=<span class="stringliteral">&quot;Other&quot;</span> Cgroup=<span class="stringliteral">&quot;Alpha&quot;</span> ...&gt;</div>
-<div class="line">  &lt;Pre_Include_Local_h&gt;</div>
+<div class="line">  &lt;Pre_Include_Local_Component_h&gt;</div>
 <div class="line">    <span class="comment">// enabling local pre include</span></div>
 <div class="line"><span class="preprocessor">    #define Local_Component_Alpha 1</span></div>
-<div class="line"><span class="preprocessor"></span>  &lt;/Pre_Include_Local_h&gt;</div>
+<div class="line"><span class="preprocessor"></span>  &lt;/Pre_Include_Local_Component_h&gt;</div>
 <div class="line">&lt;/component&gt;</div>
 </div><!-- fragment --><p>results in .../RTE/target_1/Pre_Include_Other_Alpha.h: </p>
 <div class="fragment"><div class="line"><span class="comment">// enabling local pre include</span></div>
@@ -380,9 +380,11 @@ Pre_Include_Local_h</h1>
 <td>Cversion </td><td>Defines the version of this component. Is a mandatory part of the component ID. The version format is described in <a class="el" href="pdsc_package_pg.html#VersionType">Version Type</a>. <br/>
  <span class="XML-Token">Must not be specified for a component within a bundle.</span> </td><td>VersionType </td><td>required  </td></tr>
 <tr>
-<td>Capiversion </td><td>For components that are based on an API, it defines the version of the API used by this component. It ensures that the API header file with this or any higher version is acceptable for using that component. The version format is described in <a class="el" href="pdsc_package_pg.html#VersionType">Version Type</a>.  </td><td>VersionType </td><td>optional  </td></tr>
+<td>Capiversion </td><td>For components that are based on an <a class="el" href="pdsc_apis_pg.html">API header files</a>, it defines the version of the API used by this component. It ensures that the API header file with the same or higher version is acceptable for using that component. The version format is described in <a class="el" href="pdsc_package_pg.html#VersionType">Version Type</a>.  </td><td>VersionType </td><td>optional  </td></tr>
 <tr>
 <td>condition </td><td>Enter the <b>id</b> of a <a class="el" href="pdsc_conditions_pg.html#element_conditions">condition</a>. The component is available and can be selected when the condition is true. </td><td>xs:string </td><td>optional  </td></tr>
+<tr>
+<td>custom </td><td>When set to <span class="XML-Token">true</span>, the component requires a custom implementation. This attribute should suppress the automatic component resolver, so it requires always manual selection. </td><td>xs:boolean  </td><td>0..1   </td></tr>
 <tr>
 <td>maxInstances </td><td>Maximum allowed instances of a component in a project. Default is <span class="XML-Token">1</span> for one instance. The range is [<span class="XML-Token">1..10</span>]. </td><td>xs:integer </td><td>optional  </td></tr>
 <tr>
@@ -390,17 +392,17 @@ Pre_Include_Local_h</h1>
 <tr>
 <td>generator </td><td>This links the component with a generator description located in the same file. If this component is selected by the run time configuration, the tool will test whether the configured <a class="el" href="pdsc_generators_pg.html">gpdsc file</a> does already exist or not. If the file is not present, then the command specified by the referenced generator section, will be invoked. If the gpdsc file already exists it will be included into the project </td><td>xs:string </td><td>optional  </td></tr>
 <tr>
-<th>Child Elements </th><th>Description </th><th>Type </th><th>Occurrence  </th></tr>
-<tr>
 <td>deprecated </td><td>When set to <span class="XML-Token">true</span>, then the component is deprecated and no longer maintained. Default is <span class="XML-Token">false</span> to indicate an actively maintained component. </td><td>xs:boolean  </td><td>0..1   </td></tr>
 <tr>
 <td>description </td><td>Brief description of the component. </td><td>xs:string  </td><td>1..1  </td></tr>
+<tr>
+<th>Child Elements </th><th>Description </th><th>Type </th><th>Occurrence  </th></tr>
 <tr>
 <td>RTE_Components_h </td><td>Source code that is copied into the file <a class="el" href="pdsc_components_pg.html#RTE_Components_h">RTE_Components.h</a> when the component is selected by the run time environment configuration. </td><td>xs:string  </td><td>0..1   </td></tr>
 <tr>
 <td>Pre_Include_Global_h </td><td>Source code that is copied into the file <a class="el" href="pdsc_components_pg.html#Pre_Include_Global_h">Pre_Include_Global_h</a> when the component is selected by the run time environment configuration. </td><td>xs:string  </td><td>0..1   </td></tr>
 <tr>
-<td>Pre_Include_Local_Component_h </td><td>Source code that is copied into the file <a class="el" href="pdsc_components_pg.html#Pre_Include_Local_h">Pre_Include_Local_h</a> &lt;Cclass&gt;_&lt;Component_name&gt;.h when the component is selected by the run time environment configuration. </td><td>xs:string  </td><td><p class="starttd">0..1  </p>
+<td>Pre_Include_Local_Component_h </td><td>Source code that is copied into the file <a class="el" href="pdsc_components_pg.html#Pre_Include_Local_Component_h">Pre_Include_Local_Component_h</a> &lt;Cclass&gt;_&lt;Component_name&gt;.h when the component is selected by the run time environment configuration. </td><td>xs:string  </td><td><p class="starttd">0..1  </p>
 <p class="endtd"></p>
 </td></tr>
 <tr>
@@ -587,7 +589,7 @@ Pre_Include_Local_h</h1>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="packFormat.html">Pack Description (*.pdsc) Format</a></li>
-    <li class="footer">Generated on Wed Jul 10 2019 15:21:01 for CMSIS-Pack Version 1.6.0 by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Fri Dec 13 2019 14:56:15 for CMSIS-Pack Version 1.6.1 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

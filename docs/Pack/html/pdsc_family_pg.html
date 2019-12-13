@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Pack
-   &#160;<span id="projectnumber">Version 1.6.0</span>
+   &#160;<span id="projectnumber">Version 1.6.1</span>
    </div>
    <div id="projectbrief">Delivery Mechanism for Software Packs</div>
   </td>
@@ -1090,6 +1090,8 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <tr>
 <td class="XML-Token">Elmos Semiconductor AG:138 </td><td>Elmos Semiconductor AG </td><td><a href="http://www.elmos.com">http://www.elmos.com</a>  </td></tr>
 <tr>
+<td class="XML-Token">EtaCompute:157 </td><td>Eta Compute Inc. </td><td><a href="https://www.etacompute.com">https://www.etacompute.com</a>  </td></tr>
+<tr>
 <td class="XML-Token">Generic:5 </td><td>Generic: Not a vendor specific device </td><td></td></tr>
 <tr>
 <td class="XML-Token">Generalplus:151 </td><td>Generalplus Technology Inc. </td><td><a href="http://www.generalplus.com">http://www.generalplus.com</a>  </td></tr>
@@ -1177,6 +1179,8 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <td class="XML-Token">WIZnet:122 </td><td>WIZnet </td><td><a href="http://www.wiznet.co.kr">http://www.wiznet.co.kr</a>  </td></tr>
 <tr>
 <td class="XML-Token">Xinnova:135 </td><td>Xinnova Technology </td><td>(n/a)  </td></tr>
+<tr>
+<td class="XML-Token">XMC:158 </td><td>Wuhan Xinxin Semiconductor Manufacturing Co., Ltd. </td><td><a href="http://www.xmcwh.com/">http://www.xmcwh.com/</a>  </td></tr>
 <tr>
 <td class="XML-Token">Zilog:89 </td><td>Zilog </td><td><a href="http://zilog.com/">http://zilog.com/</a>  </td></tr>
 </table>
@@ -1330,21 +1334,22 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <td class="XML-Token">NO_TZ </td><td>No TrustZone is present  </td></tr>
 </table>
 <p>&#160;</p>
-<p><a class="anchor" id="DsecureEnum"></a><b>Table: Software Model Secure </b></p>
+<p><a class="anchor" id="DsecureEnum"></a><b>Table: Software Model Selection </b></p>
 <p>The table shows predefined values that identify whether an application will run in secure mode. The values can be used in the elements:</p>
 <ul>
 <li><a class="el" href="pdsc_conditions_pg.html#element_accept">/package/conditions/condition/accept</a></li>
 <li><a class="el" href="pdsc_conditions_pg.html#element_require">/package/conditions/condition/require</a></li>
 <li><a class="el" href="pdsc_conditions_pg.html#element_deny">/package/conditions/condition/deny</a></li>
-<li><a class="el" href="pdsc_family_pg.html#element_processor">/package/devices/family/.../processor</a></li>
 </ul>
 <table  class="cmtable" summary="Enumeration: DsecureEnum">
 <tr>
 <th>Dsecure= </th><th>Description  </th></tr>
 <tr>
-<td class="XML-Token">Secure </td><td>Application is built to run in secure mode  </td></tr>
+<td class="XML-Token">Secure </td><td>Application is built to run in secure mode.  </td></tr>
 <tr>
-<td class="XML-Token">Non-secure </td><td>Application is built to run in non-secure mode  </td></tr>
+<td class="XML-Token">Non-secure </td><td>Application is built to run in non-secure mode.  </td></tr>
+<tr>
+<td class="XML-Token">TrustZone-disabled </td><td>Application is built with TrustZone security disabled.  </td></tr>
 </table>
 <p>&#160;</p>
 <p><a class="anchor" id="DdspEnum"></a><b>Table: Device implements DSP Instructions</b></p>
@@ -1433,7 +1438,9 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <tr>
 <td>swj </td><td>The device is accessed via a CoreSight SWJ-DP capable of switching between Serial Wire Debug (SWD) and JTAG protocols. Default value is <span class="XML-Token">true</span>.  </td><td>xs:bool </td><td>optional  </td></tr>
 <tr>
-<td>sdf </td><td>This attribute specifies the filename and path of the system description file (SFD). The system description file contains information about CoreSight components, there versions and how they are interconnected and hooked to debug and access ports. If not specified an autodetection needs to be initiated by the debugger at connection time.  </td><td>xs:string </td><td>optional  </td></tr>
+<td>dormant </td><td>The device is accessed via a CoreSight DP that requires the dormant state to switch debug protocols. Default value is <span class="XML-Token">false</span>.  </td><td>xs:bool </td><td>optional  </td></tr>
+<tr>
+<td>sdf </td><td>This attribute specifies the filename and path of the system description file (SDF). The system description file contains information about CoreSight components, there versions and how they are interconnected and hooked to debug and access ports. If not specified an autodetection needs to be initiated by the debugger at connection time.  </td><td>xs:string </td><td>optional  </td></tr>
 </table>
 <p>&#160;</p>
 <p><a class="anchor" id="DebugProtocolEnum"></a><b>Table: Debug Protocol Type</b></p>
@@ -1505,7 +1512,7 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <tr>
 <th>Attributes </th><th>Description </th><th>Type </th><th>Use  </th></tr>
 <tr>
-<td>configfile </td><td>Configuration file with path relative to the package base folder (extension *.DBGCONF). This file contains assignments of a default value to global debug access variables. This file gets copied to the project folder and is editable by the end-user. This file is read by the debugger after processing the global debug access variables. By editing the values of the debug access variables, the end-user effectively controls the behavior of sequences. The file can only assign new values but must not specify any new debug access variables. <a class="el" href="configWizard.html">Configuration Wizard Annotations</a> shall be used within the file to provide a graphical user interface for editing configuration options.  </td><td>xs:string </td><td>optional  </td></tr>
+<td>configfile <a class="anchor" id="debugvars_configfile"></a> </td><td>Configuration file with path relative to the package base folder (extension *.DBGCONF). This file contains assignments of a default value to global debug access variables. This file gets copied to the project folder and is editable by the end-user. This file is read by the debugger after processing the global debug access variables. By editing the values of the debug access variables, the end-user effectively controls the behavior of sequences. The file can only assign new values but must not specify any new debug access variables. <a class="el" href="configWizard.html">Configuration Wizard Annotations</a> shall be used within the file to provide a graphical user interface for editing configuration options.  </td><td>xs:string </td><td>optional  </td></tr>
 <tr>
 <td><a class="el" href="pdsc_package_pg.html#VersionType">version</a> </td><td>Version refers to the file version of the configfile attribute. If a configfile is specified the version attribute becomes mandatory. The version shall be incremented if any changes have been made to the global debug access variable names or default values. Based on the version information the tool environment will load a configfile with the version required by the debug description. The end-user may be required to update the settings after updating to a new version.  </td><td><a class="el" href="pdsc_package_pg.html#VersionType">VersionType</a> </td><td>optional  </td></tr>
 <tr>
@@ -1803,7 +1810,7 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <tr>
 <td>Pname </td><td>Reference to a processor identifier as specified for a <b>processor</b> element. If <b>Pname</b> is set for this <b>sequence</b> element, a debugger executes the debug access sequence only for a debug connection to the referenced processor. Otherwise, it is executed for all processors. <b>This attribute must be set if defining multiple implementations of the same debug access sequence.</b> Only alphabetical characters, decimal digits, '-' and '_' are allowed.  </td><td>RestrictedString </td><td>optional  </td></tr>
 <tr>
-<td>disable </td><td>Disables execution of the <a class="el" href="debug_description.html#default_sequences">Default Debug Access Sequence</a>. </td><td>xs:boolean </td><td>optional  </td></tr>
+<td>disable </td><td>Disables execution of the <a class="el" href="debug_description.html#default_sequences">Predefined Debug Access Sequence</a>. </td><td>xs:boolean </td><td>optional  </td></tr>
 <tr>
 <td>info </td><td>Descriptive text to display for example for error diagnostics. </td><td>xs:string </td><td>optional  </td></tr>
 <tr>
@@ -2047,7 +2054,7 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <tr>
 <td>Punit </td><td>Use "Punit" in addition to "Pname" to select a specific processor unit of a symmetric MPCore that the &lt;debug&gt; configuration applies to. "Punit" is a '0'-based index and must be less than "Punits" of &lt;processor&gt;. If "Punit" is not specified, the &lt;debug&gt; configuration applies to all processor units of the MPCore.  </td><td>xs:unsignedInt </td><td>optional  </td></tr>
 <tr>
-<td>defaultResetSequence </td><td>Specifies the debug sequence that is to be used for the device. Refer to <a class="el" href="debug_description.html#writing_sequences">Writing debug access sequences</a> for more information.  </td><td>xs:string </td><td>optional  </td></tr>
+<td><a class="anchor" id="defaultResetSequence"></a>defaultResetSequence </td><td>Specifies the debug sequence that shall be used by default for the reset operation. It can be set to one of the predefined reset sequences such as <a class="el" href="debug_description.html#resetSystem">ResetSystem</a>, <a class="el" href="debug_description.html#resetHardware">ResetHardware</a> and <a class="el" href="debug_description.html#resetProcessor">ResetProcessor</a> or also to any user-defined debug sequence. If not specified then <a class="el" href="debug_description.html#resetSystem">ResetSystem</a> sequence will be set as default.  </td><td>xs:string </td><td>optional  </td></tr>
 <tr>
 <th>Child&#160;Elements </th><th>Description </th><th>Type </th><th>Occurrence  </th></tr>
 <tr>
@@ -2320,7 +2327,7 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="packFormat.html">Pack Description (*.pdsc) Format</a></li><li class="navelem"><a class="el" href="pdsc_devices_pg.html">/package/devices element</a></li>
-    <li class="footer">Generated on Wed Jul 10 2019 15:21:01 for CMSIS-Pack Version 1.6.0 by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Fri Dec 13 2019 14:56:15 for CMSIS-Pack Version 1.6.1 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

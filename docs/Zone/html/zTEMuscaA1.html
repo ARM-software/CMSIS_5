@@ -3,8 +3,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<title>Todo List</title>
-<title>CMSIS-Zone (Preview): Todo List</title>
+<title>Arm Musca-A1</title>
+<title>CMSIS-Zone: Arm Musca-A1</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="cmsis.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="jquery.js"></script>
@@ -31,8 +31,8 @@
  <tr style="height: 46px;">
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
-   <div id="projectname">CMSIS-Zone (Preview)
-   &#160;<span id="projectnumber">Version 0.9.2</span>
+   <div id="projectname">CMSIS-Zone
+   &#160;<span id="projectnumber">Version 1.0.0</span>
    </div>
    <div id="projectbrief">System Resource Management</div>
   </td>
@@ -88,7 +88,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   </div>
 </div>
 <script type="text/javascript">
-$(document).ready(function(){initNavTree('todo.html','');});
+$(document).ready(function(){initNavTree('zTEMuscaA1.html','');});
 </script>
 <div id="doc-content">
 <!-- window showing the filter options -->
@@ -107,22 +107,55 @@ $(document).ready(function(){initNavTree('todo.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">Todo List </div>  </div>
+<div class="title">Arm Musca-A1 </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><dl class="reflist">
-<dt><a class="anchor" id="_todo000001"></a>Page <a class="el" href="xml_partition.html">/azone/partition element</a>  </dt>
-<dd><p class="startdd">this needs verification</p>
-<p>this needs verification</p>
-<p class="enddd">this needs verification</p>
-</dd>
-</dl>
+<div class="textblock"><p>This example shows how to do the <a class="el" href="UseCases.html#UseCase_TrustZone">TrustZone Partitioning</a>. It is split into a secure and non-secure part. Using CMSIS-Zone, it generates:</p>
+<ul>
+<li>A header file that contains #defines to control the various linker scatter files (and might be used in other parts of the application).</li>
+<li>Memory protection controller (MPC) setup.</li>
+<li>Peripheral protection controller (PPC) and related interrupt setup.</li>
+<li>Secure attribution unit (SAU) setup.</li>
+</ul>
+<h1><a class="anchor" id="zTEMusca_Eclipse"></a>
+Using the CMSIS-Zone project</h1>
+<ul>
+<li><a class="el" href="zTExamples.html#zTExImport">Import</a> the project "Examples\Musca-A1\Zone" into the CMSIS-Zone utility</li>
+<li><a class="el" href="zTUI.html#zTProjEx">Open</a> the Musca-A1.azone file</li>
+<li><a class="el" href="zTUIGenerate.html">Generate</a> the related output files</li>
+</ul>
+<p>The Musca-A1.azone file of that project has the following configuration settings:</p>
+<ul>
+<li><a class="el" href="zTUIZonePart.html#zTUICreate">Added the zones</a> <code>SecureFW</code> and <code>NonsecureFW</code> </li>
+<li><a class="el" href="zTUIMemPerRes.html#zTUIMemAdd">Created the memory regions</a> <code>SecureRAM</code>, <code>NonsecureRAM</code>, <code>ScureCode</code>, <code>Veneer</code>, and <code>NonsecureCode</code> </li>
+<li>Selected various memory regions and peripherals for using in the different zones.</li>
+</ul>
+<div class="image">
+<img src="muscaA1_zones.png" alt="muscaA1_zones.png"/>
+</div>
+<p>The zones use different Flash and SRAM regions for code and data. Peripherals, such as the system and IO configuration, as well as UART0 are available in the secure world only. To generate the output, click on the <a class="el" href="zTUIGenerate.html">Generate</a> button in the Zone Editor tool bar. This creates the following files in the <code>ftl_gen</code> directory:</p>
+<table class="doxtable">
+<tr>
+<th align="left">Template File </th><th align="left">Generated File </th><th align="left">Description  </th></tr>
+<tr>
+<td align="left">dump_fzone.txt.ftl </td><td align="left">dump_fzone.txt </td><td align="left">Contains the complete model </td></tr>
+<tr>
+<td align="left">helper.ftlinc </td><td align="left">N/A </td><td align="left">Helper template file with FTL functions. </td></tr>
+<tr>
+<td align="left">mem_layout.h.ftl </td><td align="left">mem_layout.h </td><td align="left">Header file that contains the memory region definitions, for example for the linker scatter file. </td></tr>
+<tr>
+<td align="left">tz_sau_nvic.c.ftl </td><td align="left">tz_sau_nvic.c </td><td align="left">Configuration of the secure attribution unit (SAU) and the NVIC interrupt assignment. </td></tr>
+<tr>
+<td align="left">tz_mpc_ppc.c.ftl </td><td align="left">tz_mpc_ppc.c </td><td align="left">Configuration of the memory (MPC) and peripheral (PPC) protection controller. </td></tr>
+</table>
+<p>These files can be used in any IDE to create the final application. </p>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Jul 10 2019 15:21:06 for CMSIS-Zone (Preview) Version 0.9.2 by Arm Ltd. All rights reserved.
+    <li class="navelem"><a class="el" href="zoneToolUsage.html">CMSIS-Zone Utility</a></li><li class="navelem"><a class="el" href="zTExamples.html">Examples</a></li>
+    <li class="footer">Generated on Fri Dec 13 2019 14:48:02 for CMSIS-Zone Version 1.0.0 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

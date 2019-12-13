@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <title>Revision History of CMSIS-Zone</title>
-<title>CMSIS-Zone (Preview): Revision History of CMSIS-Zone</title>
+<title>CMSIS-Zone: Revision History of CMSIS-Zone</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="cmsis.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="jquery.js"></script>
@@ -31,8 +31,8 @@
  <tr style="height: 46px;">
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
-   <div id="projectname">CMSIS-Zone (Preview)
-   &#160;<span id="projectnumber">Version 0.9.2</span>
+   <div id="projectname">CMSIS-Zone
+   &#160;<span id="projectnumber">Version 1.0.0</span>
    </div>
    <div id="projectbrief">System Resource Management</div>
   </td>
@@ -114,6 +114,54 @@ $(document).ready(function(){initNavTree('zone_revisionHistory.html','');});
 <tr>
 <th>Version </th><th>Description  </th></tr>
 <tr>
+<td>1.0.0 </td><td><ul>
+<li>
+Initial release including the main functionality. </li>
+</ul>
+</td></tr>
+<tr>
+<td>0.9.5 (Preview) </td><td><ul>
+<li>
+generation of <a class="el" href="fm_mpu_setup.html">mpu_setup element</a> in .fzone files (currently limited to Armv8 architecture) </li>
+<li>
+support for <a class="el" href="xml_configure.html">/azone/configure element</a> in .azone files: show and assign memory regions and peripherals according to the settings </li>
+<li>
+Setup page in the editor to view zone properties and configure settings </li>
+<li>
+bug fixes </li>
+</ul>
+</td></tr>
+<tr>
+<td>0.9.4 (Preview) </td><td><ul>
+<li>
+look and feed: icons and colors </li>
+<li>
+improved error processing and reporting </li>
+<li>
+bug fixes </li>
+</ul>
+</td></tr>
+<tr>
+<td>0.9.2 (Preview) </td><td><ul>
+<li>
+additional flags for memory regions: init, DMA, startup </li>
+<li>
+fixes and enhancements in MPC and SAU handling </li>
+<li>
+enhanced algorithm for memory region arrangement with MPC </li>
+<li>
+possibility to save altered permissions for top-level memory regions and peripherals </li>
+<li>
+individual configuration of peripheral channels and pins </li>
+<li>
+improved new CMSIS Zone project wizard: it is possible to specify an available .rzone file instead of device </li>
+<li>
+UI enhancements and bugfixes </li>
+</ul>
+</td></tr>
+<tr>
+<td>0.9.0-alpha (Preview) </td><td>Alpha with completely revised workflow.  </td></tr>
+<tr>
 <td>0.0.3 (Preview 3) </td><td>Initial specification draft  </td></tr>
 </table>
 </div></div><!-- contents -->
@@ -121,7 +169,7 @@ $(document).ready(function(){initNavTree('zone_revisionHistory.html','');});
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Jul 10 2019 15:21:06 for CMSIS-Zone (Preview) Version 0.9.2 by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Fri Dec 13 2019 14:48:01 for CMSIS-Zone Version 1.0.0 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

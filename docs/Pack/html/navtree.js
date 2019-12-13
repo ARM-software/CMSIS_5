@@ -50,8 +50,9 @@ var NAVTREE =
       [ "Prerequisites", "createPackPublish.html#cp_prerequisites", null ],
       [ "Local Installation", "createPackPublish.html#cp_LocalInstallation", null ],
       [ "Web Download", "createPackPublish.html#cp_WebDownload", null ],
-      [ "Publishing using Arm's Pack Index Service", "createPackPublish.html#cp_KeilComPack", null ],
-      [ "Moving a pack from one URL to another", "createPackPublish.html#cp_PackRehosting", null ]
+      [ "Publish with Pack Index Service", "createPackPublish.html#cp_KeilComPack", null ],
+      [ "Rehost pack to different URL", "createPackPublish.html#cp_PackRehosting", null ],
+      [ "Web Infra-structure", "createPackPublish.html#cp_HowWebDownloadWorks", null ]
     ] ],
     [ "Pack Description (*.pdsc) Format", "packFormat.html", "packFormat" ],
     [ "Configuration Wizard Annotations", "configWizard.html", [
@@ -109,7 +110,8 @@ var NAVTREE =
 
 var NAVTREEINDEX =
 [
-"algorithmFunc.html"
+"algorithmFunc.html",
+"sdf_pg.html#sdf_element_cluster"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

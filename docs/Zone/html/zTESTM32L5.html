@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <title>STMicroelectronics STM32L5</title>
-<title>CMSIS-Zone (Preview): STMicroelectronics STM32L5</title>
+<title>CMSIS-Zone: STMicroelectronics STM32L5</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="cmsis.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="jquery.js"></script>
@@ -31,8 +31,8 @@
  <tr style="height: 46px;">
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
-   <div id="projectname">CMSIS-Zone (Preview)
-   &#160;<span id="projectnumber">Version 0.9.2</span>
+   <div id="projectname">CMSIS-Zone
+   &#160;<span id="projectnumber">Version 1.0.0</span>
    </div>
    <div id="projectbrief">System Resource Management</div>
   </td>
@@ -128,11 +128,11 @@ Using the CMSIS-Zone project</h1>
 <ul>
 <li><a class="el" href="zTUIZonePart.html#zTUICreate">Added the zones</a> <code>blinky_s</code> and <code>blinky_ns</code> </li>
 <li><a class="el" href="zTUIMemPerRes.html#zTUIMemAdd">Created the memory regions</a> <code>CODE_NS</code>, <code>CODE_S</code>, <code>Veneer</code>, <code>DATA_NS</code>, and <code>DATA_S</code> </li>
-<li>Selected various memory regions and peripherals for using in the different zones.</li>
-</ul>
-<div class="image">
+<li>Selected various memory regions and peripherals for using in the different zones: <div class="image">
 <img src="STM32L5_zones.png" alt="STM32L5_zones.png"/>
 </div>
+</li>
+</ul>
 <p>The zones use different Flash and SRAM regions for code and data, but share Flash configuration registers. Peripherals, such as the system and IO configuration, as well as an UART are available in the secure world only. To generate the output, click on the <a class="el" href="zTUIGenerate.html">Generate</a> button in the Zone Editor tool bar. This creates the following files in the <code>ftl_gen</code> directory:</p>
 <table class="doxtable">
 <tr>
@@ -148,9 +148,9 @@ Using the CMSIS-Zone project</h1>
 <tr>
 <td align="left">SystemIsolation_Config.c.ftl </td><td align="left">SystemIsolation_Config.c </td><td align="left">Setup of the MPC and PPC. </td></tr>
 <tr>
-<td align="left">blinky_ns.sct.ftl </td><td align="left">blinky_ns.sct </td><td align="left">Scatter file for non-secure zone. </td></tr>
+<td align="left">scatter_ns.sct.ftl </td><td align="left">scatter_ns.sct </td><td align="left">Example scatter file for non-secure zone. </td></tr>
 <tr>
-<td align="left">blinky_s.sct.ftl </td><td align="left">blinky_s.sct </td><td align="left">Scatter file for secure zone. </td></tr>
+<td align="left">scatter_s.sct.ftl </td><td align="left">scatter_s.sct </td><td align="left">Example scatter file for secure zone. </td></tr>
 </table>
 <p>These files can be used in any IDE to create the final application. In the following, the usage in Arm Keil MDK is described.</p>
 <h1><a class="anchor" id="zTESTM32L5_MDK"></a>
@@ -238,7 +238,7 @@ blinky_s.sct</h2>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="zoneToolUsage.html">CMSIS-Zone Utility</a></li><li class="navelem"><a class="el" href="zTExamples.html">Examples</a></li>
-    <li class="footer">Generated on Wed Jul 10 2019 15:21:06 for CMSIS-Zone (Preview) Version 0.9.2 by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Fri Dec 13 2019 14:48:02 for CMSIS-Zone Version 1.0.0 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 
