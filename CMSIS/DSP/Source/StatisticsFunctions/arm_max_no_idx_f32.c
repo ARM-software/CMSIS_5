@@ -35,12 +35,6 @@
   @ingroup groupStats
  */
 
-/**
-  @defgroup Max Maximum without index
-
-  Computes the maximum value of an array of data.
-  The function returns only the maximum value and not its position within the array.
- */
 
 /**
   @addtogroup Max
@@ -138,3 +132,7 @@ void arm_max_no_idx_f32(
 }
 
 #endif /* defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE) */
+
+/**
+  @} end of Max group
+ */

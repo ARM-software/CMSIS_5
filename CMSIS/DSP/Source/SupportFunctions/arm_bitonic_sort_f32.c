@@ -29,29 +29,7 @@
 #include "arm_math.h"
 #include "arm_sorting.h"
 
-/**
-  @ingroup groupSupport
- */
 
-/**
-  @defgroup Sorting Vector sorting algorithms
-
-  Sort the elements of a vector
-
-  There are separate functions for floating-point, Q31, Q15, and Q7 data types.
- */
-
-/**
-  @addtogroup Sorting
-  @{
- */
-
-/**
-   * @param[in]  S          points to an instance of the sorting structure.
-   * @param[in]  pSrc       points to the block of input data.
-   * @param[out] pDst       points to the block of output data
-   * @param[in]  blockSize  number of samples to process.
-   */
 
 static void arm_bitonic_sort_core_f32(float32_t *pSrc, uint32_t n, uint8_t dir)
 {
@@ -903,6 +881,29 @@ static float32x4_t arm_bitonic_sort_4_f32(float32x4_t a, uint8_t dir)
 
 #endif
 
+/**
+  @ingroup groupSupport
+ */
+
+/**
+  @defgroup Sorting Vector sorting algorithms
+
+  Sort the elements of a vector
+
+  There are separate functions for floating-point, Q31, Q15, and Q7 data types.
+ */
+
+/**
+  @addtogroup Sorting
+  @{
+ */
+
+/**
+   * @param[in]  S          points to an instance of the sorting structure.
+   * @param[in]  pSrc       points to the block of input data.
+   * @param[out] pDst       points to the block of output data
+   * @param[in]  blockSize  number of samples to process.
+   */
 void arm_bitonic_sort_f32(
 const arm_sort_instance_f32 * S, 
       float32_t * pSrc,

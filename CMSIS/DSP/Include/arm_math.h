@@ -2251,7 +2251,6 @@ __STATIC_INLINE q31_t arm_div_q63_to_q31(q63_t num, q31_t den)
    * @param[in,out]  S            points to an instance of the sorting structure.
    * @param[in]      alg          Selected algorithm.
    * @param[in]      dir          Sorting order.
-   * @param[in]      inPlaceFlag  In place flag.
    */
   void arm_sort_init_f32(
     arm_sort_instance_f32 * S, 

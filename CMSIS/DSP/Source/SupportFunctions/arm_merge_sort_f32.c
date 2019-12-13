@@ -29,31 +29,6 @@
 #include "arm_math.h"
 #include "arm_sorting.h"
 
-/**
-  @ingroup groupSupport
- */
-
-/**
-  @addtogroup Sorting
-  @{
- */
-
-/**
-   * @param[in]  S          points to an instance of the sorting structure.
-   * @param[in]  pSrc       points to the block of input data.
-   * @param[out] pDst       points to the block of output data
-   * @param[in]  blockSize  number of samples to process.
-   *
-   * @par        Algorithm
-   *               The merge sort algorithm is a comparison algorithm that
-   *               divide the input array in sublists and merge them to produce
-   *               longer sorted sublists until there is only one list remaining.
-   *
-   * @par          A work array is always needed, hence pSrc and pDst cannot be
-   *               equal and the results will be stored in pDst.
-   */
-
-
 
 static void topDownMerge(float32_t * pA, uint32_t begin, uint32_t middle, uint32_t end, float32_t * pB, uint8_t dir)
 {
@@ -95,6 +70,32 @@ static void arm_merge_sort_core_f32(float32_t * pB, uint32_t begin, uint32_t end
         topDownMerge(pB, begin, middle, end, pA, dir);
     }
 }
+
+
+/**
+  @ingroup groupSupport
+ */
+
+/**
+  @addtogroup Sorting
+  @{
+ */
+
+/**
+   * @param[in]  S          points to an instance of the sorting structure.
+   * @param[in]  pSrc       points to the block of input data.
+   * @param[out] pDst       points to the block of output data
+   * @param[in]  blockSize  number of samples to process.
+   *
+   * @par        Algorithm
+   *               The merge sort algorithm is a comparison algorithm that
+   *               divide the input array in sublists and merge them to produce
+   *               longer sorted sublists until there is only one list remaining.
+   *
+   * @par          A work array is always needed, hence pSrc and pDst cannot be
+   *               equal and the results will be stored in pDst.
+   */
+
 
 void arm_merge_sort_f32(
   const arm_sort_instance_f32 * S, 

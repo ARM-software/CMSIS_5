@@ -29,31 +29,7 @@
 #include "arm_math.h"
 #include "arm_sorting.h"
 
-/**
-  @ingroup groupSupport
- */
 
-/**
-  @addtogroup Sorting
-  @{
- */
-
-/**
-   * @param[in]  S          points to an instance of the sorting structure.
-   * @param[in]  pSrc       points to the block of input data.
-   * @param[out] pDst       points to the block of output data
-   * @param[in]  blockSize  number of samples to process.
-   *
-   * @par        Algorithm
-   *               The heap sort algorithm is a comparison algorithm that
-   *               divides the input array into a sorted and an unsorted region, 
-   *               and shrinks the unsorted region by extracting the largest 
-   *               element and moving it to the sorted region. A heap data 
-   *               structure is used to find the maximum.
-   *
-   * @par          It's an in-place algorithm. In order to obtain an out-of-place
-   *               function, a memcpy of the source vector is performed.
-   */
 
 static void arm_heapify(float32_t * pSrc, uint32_t n, uint32_t i, uint8_t dir)
 {
@@ -79,6 +55,31 @@ static void arm_heapify(float32_t * pSrc, uint32_t n, uint32_t i, uint8_t dir)
     }
 }
 
+/**
+  @ingroup groupSupport
+ */
+
+/**
+  @addtogroup Sorting
+  @{
+ */
+
+/**
+   * @param[in]  S          points to an instance of the sorting structure.
+   * @param[in]  pSrc       points to the block of input data.
+   * @param[out] pDst       points to the block of output data
+   * @param[in]  blockSize  number of samples to process.
+   *
+   * @par        Algorithm
+   *               The heap sort algorithm is a comparison algorithm that
+   *               divides the input array into a sorted and an unsorted region, 
+   *               and shrinks the unsorted region by extracting the largest 
+   *               element and moving it to the sorted region. A heap data 
+   *               structure is used to find the maximum.
+   *
+   * @par          It's an in-place algorithm. In order to obtain an out-of-place
+   *               function, a memcpy of the source vector is performed.
+   */
 void arm_heap_sort_f32(
   const arm_sort_instance_f32 * S, 
         float32_t * pSrc, 

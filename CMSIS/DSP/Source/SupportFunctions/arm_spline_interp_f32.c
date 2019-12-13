@@ -33,90 +33,108 @@
  */
 
 /**
- * @defgroup SplineInterpolate Cubic Spline Interpolation
- *
- * Spline interpolation is a method of interpolation where the interpolant
- * is a piecewise-defined polynomial called "spline". 
- *
- * \par Introduction
- * Given a function f defined on the interval [a,b], a set of n nodes x(i) 
- * where a=x(1)<x(2)<...<x(n)=b and a set of n values y(i) = f(x(i)), 
- * a cubic spline interpolant S(x) is defined as: <br>
- * <pre>
- *         S1(x)       x(1) < x < x(2)
- * S(x) =   ...         
- *         Sn-1(x)   x(n-1) < x < x(n)
- * <\pre><br>
- * where<br>
- * <pre> 
- * Si(x) = a_i+b_i(x-xi)+c_i(x-xi)^2+d_i(x-xi)^3    i=1, ..., n-1
- * <\pre>
- *
- * \par Algorithm
- * Having defined h(i) = x(i+1) - x(i)<br>
- * <pre>
- * h(i-1)c(i-1)+2[h(i-1)+h(i)]c(i)+h(i)c(i+1) = 3/h(i)*[a(i+1)-a(i)]-3/h(i-1)*[a(i)-a(i-1)]    i=2, ..., n-1
- * <\pre><br>
- * It is possible to write the previous conditions in matrix form (Ax=B).<br>
- * In order to solve the system two boundary conidtions are needed.<br>
- * - Natural spline: S1''(x1)=2*c(1)=0 ; Sn''(xn)=2*c(n)=0<br>
- * In matrix form:<br>
- * <pre>
- * |  1        0         0  ...    0         0           0     ||  c(1)  | |                        0                        |
- * | h(0) 2[h(0)+h(1)] h(1) ...    0         0           0     ||  c(2)  | |      3/h(2)*[a(3)-a(2)]-3/h(1)*[a(2)-a(1)]      |
- * | ...      ...       ... ...   ...       ...         ...    ||  ...   |=|                       ...                       |
- * |  0        0         0  ... h(n-2) 2[h(n-2)+h(n-1)] h(n-1) || c(n-1) | | 3/h(n-1)*[a(n)-a(n-1)]-3/h(n-2)*[a(n-1)-a(n-2)] |
- * |  0        0         0  ...    0         0           1     ||  c(n)  | |                        0                        |
- * </pre><br>
- * - Parabolic runout spline: S1''(x1)=2*c(1)=S2''(x2)=2*c(2) ; Sn-1''(xn-1)=2*c(n-1)=Sn''(xn)=2*c(n)<br>
- * In matrix form:<br>
- * <pre>
- * |  1       -1         0  ...    0         0           0     ||  c(1)  | |                        0                        |
- * | h(0) 2[h(0)+h(1)] h(1) ...    0         0           0     ||  c(2)  | |      3/h(2)*[a(3)-a(2)]-3/h(1)*[a(2)-a(1)]      |
- * | ...      ...       ... ...   ...       ...         ...    ||  ...   |=|                       ...                       |
- * |  0        0         0  ... h(n-2) 2[h(n-2)+h(n-1)] h(n-1) || c(n-1) | | 3/h(n-1)*[a(n)-a(n-1)]-3/h(n-2)*[a(n-1)-a(n-2)] |
- * |  0        0         0  ...    0        -1           1     ||  c(n)  | |                        0                        |
- * </pre><br>
- * A is a tridiagonal matrix (a band matrix of bandwidth 3) of size N=n+1. The factorization
- * algorithms (A=LU) can be simplified considerably because a large number of zeros appear
- * in regular patterns. The Crout method has been used:<br>
- * 1) Solve LZ=B<br>
- * <pre>
- * u(1,2) = A(1,2)/A(1,1)
- * z(1)   = B(1)/l(11)
- *
- * FOR i=2, ..., N-1
- *   l(i,i)   = A(i,i)-A(i,i-1)u(i-1,i)
- *   u(i,i+1) = a(i,i+1)/l(i,i)
- *   z(i)     = [B(i)-A(i,i-1)z(i-1)]/l(i,i)
- * 
- * l(N,N) = A(N,N)-A(N,N-1)u(N-1,N)
- * z(N)   = [B(N)-A(N,N-1)z(N-1)]/l(N,N)
- * </pre><br>
- * 2) Solve UX=Z<br>
- * <pre>
- * c(N)=z(N)
- * 
- * FOR i=N-1, ..., 1
- *   c(i)=z(i)-u(i,i+1)c(i+1) 
- * </pre><br>
- * c(i) for i=1, ..., n-1 are needed to compute the n-1 polynomials. <br>
- * b(i) and d(i) are computed as:<br>
- * - b(i) = [y(i+1)-y(i)]/h(i)-h(i)*[c(i+1)+2*c(i)]/3 <br>
- * - d(i) = [c(i+1)-c(i)]/[3*h(i)] <br>
- * Moreover, a(i)=y(i).
- * 
- * \par Usage
- * The x input array must be strictly sorted in ascending order and it must
- * not contain twice the same value (x(i)<x(i+1)).
- *
- * \par
- * It is possible to compute the interpolated vector for x values outside the 
- * input range (xq<x(1); xq>x(n)). The coefficients used to compute the y values for
- * xq<x(1) are going to be the ones used for the first interval, while for xq>x(n) the 
- * coefficients used for the last interval.
- *
+  @defgroup SplineInterpolate Cubic Spline Interpolation
+ 
+  Spline interpolation is a method of interpolation where the interpolant
+  is a piecewise-defined polynomial called "spline". 
+ 
+  @par Introduction
+
+  Given a function f defined on the interval [a,b], a set of n nodes x(i) 
+  where a=x(1)<x(2)<...<x(n)=b and a set of n values y(i) = f(x(i)), 
+  a cubic spline interpolant S(x) is defined as: 
+
+  <pre>
+          S1(x)       x(1) < x < x(2)
+  S(x) =   ...         
+          Sn-1(x)   x(n-1) < x < x(n)
+  </pre>
+
+  where
+
+  <pre> 
+  Si(x) = a_i+b_i(x-xi)+c_i(x-xi)^2+d_i(x-xi)^3    i=1, ..., n-1
+  </pre>
+ 
+  @par Algorithm
+
+  Having defined h(i) = x(i+1) - x(i)
+
+  <pre>
+  h(i-1)c(i-1)+2[h(i-1)+h(i)]c(i)+h(i)c(i+1) = 3/h(i)*[a(i+1)-a(i)]-3/h(i-1)*[a(i)-a(i-1)]    i=2, ..., n-1
+  </pre>
+
+  It is possible to write the previous conditions in matrix form (Ax=B).
+  In order to solve the system two boundary conidtions are needed.
+  - Natural spline: S1''(x1)=2*c(1)=0 ; Sn''(xn)=2*c(n)=0
+  In matrix form:
+
+  <pre>
+  |  1        0         0  ...    0         0           0     ||  c(1)  | |                        0                        |
+  | h(0) 2[h(0)+h(1)] h(1) ...    0         0           0     ||  c(2)  | |      3/h(2)*[a(3)-a(2)]-3/h(1)*[a(2)-a(1)]      |
+  | ...      ...       ... ...   ...       ...         ...    ||  ...   |=|                       ...                       |
+  |  0        0         0  ... h(n-2) 2[h(n-2)+h(n-1)] h(n-1) || c(n-1) | | 3/h(n-1)*[a(n)-a(n-1)]-3/h(n-2)*[a(n-1)-a(n-2)] |
+  |  0        0         0  ...    0         0           1     ||  c(n)  | |                        0                        |
+  </pre>
+
+  - Parabolic runout spline: S1''(x1)=2*c(1)=S2''(x2)=2*c(2) ; Sn-1''(xn-1)=2*c(n-1)=Sn''(xn)=2*c(n)
+  In matrix form:
+
+  <pre>
+  |  1       -1         0  ...    0         0           0     ||  c(1)  | |                        0                        |
+  | h(0) 2[h(0)+h(1)] h(1) ...    0         0           0     ||  c(2)  | |      3/h(2)*[a(3)-a(2)]-3/h(1)*[a(2)-a(1)]      |
+  | ...      ...       ... ...   ...       ...         ...    ||  ...   |=|                       ...                       |
+  |  0        0         0  ... h(n-2) 2[h(n-2)+h(n-1)] h(n-1) || c(n-1) | | 3/h(n-1)*[a(n)-a(n-1)]-3/h(n-2)*[a(n-1)-a(n-2)] |
+  |  0        0         0  ...    0        -1           1     ||  c(n)  | |                        0                        |
+  </pre>
+
+  A is a tridiagonal matrix (a band matrix of bandwidth 3) of size N=n+1. The factorization
+  algorithms (A=LU) can be simplified considerably because a large number of zeros appear
+  in regular patterns. The Crout method has been used:
+  1) Solve LZ=B
+
+  <pre>
+  u(1,2) = A(1,2)/A(1,1)
+  z(1)   = B(1)/l(11)
+ 
+  FOR i=2, ..., N-1
+    l(i,i)   = A(i,i)-A(i,i-1)u(i-1,i)
+    u(i,i+1) = a(i,i+1)/l(i,i)
+    z(i)     = [B(i)-A(i,i-1)z(i-1)]/l(i,i)
+  
+  l(N,N) = A(N,N)-A(N,N-1)u(N-1,N)
+  z(N)   = [B(N)-A(N,N-1)z(N-1)]/l(N,N)
+  </pre>
+
+  2) Solve UX=Z
+
+  <pre>
+  c(N)=z(N)
+  
+  FOR i=N-1, ..., 1
+    c(i)=z(i)-u(i,i+1)c(i+1) 
+  </pre>
+
+  c(i) for i=1, ..., n-1 are needed to compute the n-1 polynomials. 
+  b(i) and d(i) are computed as:
+  - b(i) = [y(i+1)-y(i)]/h(i)-h(i)*[c(i+1)+2*c(i)]/3 
+  - d(i) = [c(i+1)-c(i)]/[3*h(i)] 
+  Moreover, a(i)=y(i).
+  
+  @par Usage
+
+  The x input array must be strictly sorted in ascending order and it must
+  not contain twice the same value (x(i)<x(i+1)).
+ 
+  @par
+
+  It is possible to compute the interpolated vector for x values outside the 
+  input range (xq<x(1); xq>x(n)). The coefficients used to compute the y values for
+  xq<x(1) are going to be the ones used for the first interval, while for xq>x(n) the 
+  coefficients used for the last interval.
+ 
  */
+
 /**
   @addtogroup SplineInterpolate
   @{

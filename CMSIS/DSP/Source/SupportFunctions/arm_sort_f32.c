@@ -30,6 +30,12 @@
 #include "arm_sorting.h"
 
 /**
+  @ingroup groupSupport
+ */
+
+/**
+ * @brief Generic sorting function
+ *
  * @param[in]  S          points to an instance of the sorting structure.
  * @param[in]  pSrc       points to the block of input data.
  * @param[out] pDst       points to the block of output data.
@@ -73,3 +79,7 @@ void arm_sort_f32(
         break;
     }
 }
+
+/**
+ * @} end of groupSupport group
+ */

@@ -29,36 +29,7 @@
 #include "arm_math.h"
 #include "arm_sorting.h"
 
-/**
-  @ingroup groupSupport
- */
 
-/**
-  @addtogroup Sorting
-  @{
- */
-
-/**
-   * @param[in]  S          points to an instance of the sorting structure.
-   * @param[in]  pSrc       points to the block of input data.
-   * @param[out] pDst       points to the block of output data
-   * @param[in]  blockSize  number of samples to process.
-   *
-   * @par        Algorithm
-   *                The quick sort algorithm is a comparison algorithm that
-   *                divides the input array into two smaller sub-arrays and 
-   *                recursively sort them. An element of the array (the pivot)
-   *                is chosen, all the elements with values smaller than the 
-   *                pivot are moved before the pivot, while all elements with 
-   *                values greater than the pivot are moved after it (partition).
-   *
-   * @par
-   * 		   In this implementation the Hoare partition scheme has been 
-   * 		   used and the first element has always been chosen as the pivot.
-   *
-   * @par          It's an in-place algorithm. In order to obtain an out-of-place
-   *               function, a memcpy of the source vector is performed.
-   */
 
 static void arm_quick_sort_core_f32(float32_t *pSrc, uint32_t first, uint32_t last, uint8_t dir)
 {
@@ -138,6 +109,36 @@ static void arm_quick_sort_core_f32(float32_t *pSrc, uint32_t first, uint32_t la
 
 }
 
+/**
+  @ingroup groupSupport
+ */
+
+/**
+  @addtogroup Sorting
+  @{
+ */
+
+/**
+   * @param[in]  S          points to an instance of the sorting structure.
+   * @param[in]  pSrc       points to the block of input data.
+   * @param[out] pDst       points to the block of output data
+   * @param[in]  blockSize  number of samples to process.
+   *
+   * @par        Algorithm
+   *                The quick sort algorithm is a comparison algorithm that
+   *                divides the input array into two smaller sub-arrays and 
+   *                recursively sort them. An element of the array (the pivot)
+   *                is chosen, all the elements with values smaller than the 
+   *                pivot are moved before the pivot, while all elements with 
+   *                values greater than the pivot are moved after it (partition).
+   *
+   * @par
+   *       In this implementation the Hoare partition scheme has been 
+   *       used and the first element has always been chosen as the pivot.
+   *
+   * @par          It's an in-place algorithm. In order to obtain an out-of-place
+   *               function, a memcpy of the source vector is performed.
+   */
 void arm_quick_sort_f32(
   const arm_sort_instance_f32 * S, 
         float32_t * pSrc, 
