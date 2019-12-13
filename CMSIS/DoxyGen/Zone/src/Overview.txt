@@ -574,10 +574,13 @@ These examples demonstrate the usage of the CMSIS-Zone utility.
 
 | Example                    | Description                                                    |
 |:---------------------------|:---------------------------------------------------------------|
-| \subpage zTEMuscaA1        | Musca project                                                  |
+| \subpage zTEMuscaA1        | Musca A1 (Cortex-M33) project with TrustZone setup             |
+| \subpage zTEMuscaS1        | Musca S1 (Cortex-M33) project with TrustZone setup             |
 | \subpage zTEM2351          | Single processor Cortex-M23 project with TrustZone setup       |
 | \subpage zTELPC55          | Single processor Cortex-M33 project with TrustZone setup       |
 | \subpage zTESTM32L5        | Single processor Cortex-M33 project with TrustZone setup       |
+| \subpage zTESAML11         | Single processor Cortex-M23 project with TrustZone setup       |
+| \subpage zTEMCB400         | Single processor Cortex-M3 project with MPU setup              |
 
 
 \section zTExImport Import examples
@@ -633,11 +636,52 @@ button in the Zone Editor tool bar. This creates the following files in the \c f
 | dump_fzone.txt.ftl   | dump_fzone.txt   | Contains the complete model  |
 | helper.ftlinc        | N/A              | Helper template file with FTL functions. |
 | mem_layout.h.ftl     | mem_layout.h     | Header file that contains the memory region definitions, for example for the linker scatter file. |
-| partition.h.ftl      | partition.h      | Configuration of the secure attribution unit (SAU) and the NVIC interrupt assignment. |
+| tz_sau_nvic.c.ftl    | tz_sau_nvic.c    | Configuration of the secure attribution unit (SAU) and the NVIC interrupt assignment. |
+| tz_mpc_ppc.c.ftl     | tz_mpc_ppc.c     | Configuration of the memory (MPC) and peripheral (PPC) protection controller. |
 
 These files can be used in any IDE to create the final application.
 */
 
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\page zTEMuscaS1 Arm Musca-S1
+
+This example shows how to do the \ref UseCase_TrustZone. It is split into a secure and non-secure part. Using
+CMSIS-Zone, it generates:
+ - A header file that contains \#defines to control the various linker scatter files (and might be used in other parts of the
+   application).
+ - Memory protection controller (MPC) setup.
+ - Peripheral protection controller (PPC) and related interrupt setup.
+ - Secure attribution unit (SAU) setup.
+
+
+\section zTEMusca_Eclipse Using the CMSIS-Zone project
+
+  - \ref zTExImport "Import" the project "Examples\Musca-AS\Zone" into the CMSIS-Zone utility
+  - \ref zTProjEx "Open" the Musca-AS.azone file
+  - \ref zTUIGenerate "Generate" the related output files
+  
+The Musca-AS.azone file of that project has the following configuration settings:
+  - \ref zTUICreate "Added the zones" \c SecureFW and \c NonsecureFW
+  - \ref zTUIMemAdd "Created the memory regions" \c SecureRAM, \c NonsecureRAM, \c ScureCode, \c Veneer, and \c NonsecureCode
+  - Selected various memory regions and peripherals for using in the different zones.
+
+\image html muscaS1_zones.png
+
+The zones use different Flash and SRAM regions for code and data. Peripherals, such as the system and IO configuration, as
+well as UART0 are available in the secure world only. To generate the output, click on the \ref zTUIGenerate "Generate"
+button in the Zone Editor tool bar. This creates the following files in the \c ftl_gen directory:
+
+| Template File        | Generated File   | Description |
+|:---------------------|:-----------------|:-------------|
+| dump_fzone.txt.ftl   | dump_fzone.txt   | Contains the complete model  |
+| helper.ftlinc        | N/A              | Helper template file with FTL functions. |
+| mem_layout.h.ftl     | mem_layout.h     | Header file that contains the memory region definitions, for example for the linker scatter file. |
+| tz_sau_nvic.c.ftl    | tz_sau_nvic.c    | Configuration of the secure attribution unit (SAU) and the NVIC interrupt assignment. |
+| tz_mpc_ppc.c.ftl     | tz_mpc_ppc.c     | Configuration of the memory (MPC) and peripheral (PPC) protection controller. |
+
+These files can be used in any IDE to create the final application.
+*/
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
@@ -672,7 +716,6 @@ directory:
 
 | Template File        | Generated File   | Description |
 |:---------------------|:-----------------|:-------------|
-| dump_fzone.txt.ftl   | dump_fzone.txt   | Contains the complete model  |
 | helper.ftlinc        | N/A              | Helper template file with FTL functions. |
 | mem_layout.h.ftl     | mem_layout.h     | Header file that contains the memory region definitions, for example for the linker scatter file. |
 | partition_gen.h.ftl  | partition_gen.h  | Configuration of the secure attribution unit (SAU) and the NVIC interrupt assignment. |
@@ -956,8 +999,8 @@ directory:
 | mem_layout.h.ftl     | mem_layout.h     | Header file that contains the memory region definitions, for example for the linker scatter file. |
 | partition_gen.h.ftl  | partition_gen.h  | Configuration of the secure attribution unit (SAU) and the NVIC interrupt assignment. |
 | SystemIsolation_Config.c.ftl | SystemIsolation_Config.c | Setup of the MPC and PPC. |
-| blinky_ns.sct.ftl    | blinky_ns.sct    | Scatter file for non-secure zone. |
-| blinky_s.sct.ftl     | blinky_s.sct	  | Scatter file for secure zone. |
+| scatter_ns.sct.ftl   | scatter_ns.sct   | Example scatter file for non-secure zone. |
+| scatter_s.sct.ftl    | scatter_s.sct	  | Example scatter file for secure zone. |
 
 These files can be used in any IDE to create the final application. In the following, the usage in Arm Keil MDK is described.
 
@@ -983,7 +1026,7 @@ The projects use the files generated in CMSIS-Zone as follows:
 
 | File                       | Used in     | Description |
 |:---------------------------|:------------|:------------|
-| mem_layout.h       | blinky_s, blinky_ns | Input for the linker scatter files. |
+| mem_layout.h               | blinky_s, blinky_ns | Input for the linker scatter files. |
 | partition_gen.h            | blinky_s    | Configuration of the secure attribution unit (SAU) and the NVIC interrupt assignment. This file is included in the partition_stm32l5xx.h header file. |
 | SystemIsolation_Config.c   | blinky_s    | Setup of the MPC and PPC. |
 | blinky_ns.sct              | blinky_ns   | Scatter file for non-secure zone (initally based on generated file). |
@@ -1045,4 +1088,183 @@ LR_Veneer REGION_VENEER_START REGION_VENEER_SIZE {
 The partition_gen.h header file contains Configuration Wizard annotation so that it can be viewed in a graphical window:
 
 \image html partition_h_l5.png
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\page zTESAML11 Microchip SAML11
+
+This single processor demo application shows how to do the \ref UseCase_TrustZone. It is split into a secure and non-secure
+part. Using CMSIS-Zone, it generates:
+ - A header file that contains \#defines to control the various linker scatter files (and might be used in other parts of the
+   application).
+ - The SystemIsolation_Config.c header file that contains memory protection controller (MPC) and peripheral protection
+   controller (PPC) and related interrupt setup.
+ - The partition_gen.h header file that contains the secure attribution unit (SAU) setup and the NVIC configuration for secure/non-secure.
+
+The application itself shows how to implement calls between the secure and the non-secure part.
+
+
+\section zTESAML11_Eclipse Using the CMSIS-Zone project
+
+  - \ref zTExImport "Import" the project "Examples\SAML11\Zone" into the CMSIS-Zone utility
+  - \ref zTProjEx "Open" the SAML11.azone file
+  - \ref zTUIGenerate "Generate" the related output files
+  
+The SAML11.azone file of that project has the following configuration settings:
+  - \ref zTUICreate "Added the zones" \c sApp and \c nsApp
+  - \ref zTUIMemAdd "Created the memory regions" \c APP_NS, \c APP_S, \c APP_NSC, \c DATA_NS, \c DATA_S, \c RAM_NS, and \c RAM_NS
+  - Selected various memory regions and peripherals for using in the different zones:
+    \image html SAML11_zones.png
+
+The zones use different Flash and SRAM regions for code and data. To generate the output, click
+on the \ref zTUIGenerate "Generate" button in the Zone Editor tool bar. This creates the following files in the \c ftl_gen
+directory:
+
+| Template File        | Generated File   | Description |
+|:---------------------|:-----------------|:-------------|
+| dump_fzone.txt.ftl   | dump_fzone.txt   | Contains the complete model  |
+| flash.dbgconf.ftl    | flash.dbgconf    | Flash algorithm configuration for security settings |
+| flash.dbgconf.lst.ftl| flash.dbgconf.lst| Flash algorithm configuration for security settings |
+| helper.ftlinc        | N/A              | Helper template file with FTL functions. |
+| scatter_ns.sct.ftl   | scatter_ns.sct   | Example scatter file for non-secure zone. |
+| scatter_s.sct.ftl    | scatter_s.sct	  | Example scatter file for secure zone. |
+
+These files can be used in any IDE to create the final application. In the following, the usage in Arm Keil MDK is described.
+
+\section zTESAML11_MDK Using the MDK project
+
+The example project can be loaded, built and debugged in µVision by performing the following steps:
+
+-# Navigate to Examples/SAML11/MDK
+-# Open the multi-project workspace NoRTOS.uvmpw
+-# Run the batch build in MDK. Both projects, sApp and nsApp need to be compiled in order.
+
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\page zTEMCB400 Keil MCBSTM32F400 Evaluation Board
+
+This single processor demo application shows how to do the \ref UseCase_MPU. Using CMSIS-Zone, it generates:
+ - A header file that contains \#defines to control the various linker scatter files (and might be used in other parts of the
+   application).
+ - The MPU configuration table source and header files. These contain MPU register settings used during thread switching
+   to update accessible memory regions.
+
+The application itself shows how to isolate network stack threads from the user application.
+
+
+\section zTEMCB400_Eclipse Using the CMSIS-Zone project
+
+  - \ref zTExImport "Import" the project "Examples\MCBSTM32F400\Zone" into the CMSIS-Zone utility
+  - \ref zTProjEx "Open" the MCBSTM32F400.azone file
+  - \ref zTUIGenerate "Generate" the related output files
+  
+The MCBSTM32F400.azone file of that project has the following configuration settings:
+  - Project mode is set to \c Execution.
+  - \ref zTUICreate "Added the zones" \c Net, \c Main, \c RTX, \c Blinky, \c Timer, \c Idle
+  - \ref zTUIMemAdd "Created the memory regions" \c CODE, \c RAM_SHARED, \c RAM_NET, \c RAM_MAIN, \c RAM_PRIVILEGED,
+    \c RAM_EVR, \c RAM_BSD, \c RAM_LED, \c RAM_ADC, \c RAM_TIMER, and \c RAM_IDLE
+  - Selected various memory regions and peripherals for using in the different zones:
+    \image html MCB400_zones.png
+
+The zones use common Flash region for all the application code but different SRAM regions to segregate thread data.
+To generate the output, click on the \ref zTUIGenerate "Generate" button in the Zone Editor tool bar. This creates
+the following files in the \c ftl_gen directory:
+
+| Template File        | Generated File   | Description |
+|:---------------------|:-----------------|:-------------|
+| dump_fzone.txt.ftl   | dump_fzone.txt   | Contains the complete model  |
+| helper.ftlinc        | N/A              | Helper template file with FTL functions. |
+| mem_layout.h.ftl     | mem_layout.h     | Header file that contains the memory region definitions, for example for the linker scatter file. |
+| mputable.c.ftl       | mputable.c       | MPU Table data definition. |
+| mputable.h.ftl       | mputable.h       | MPU Table data declaration. |
+| scatter.sct.ftl      | scatter.sct      | Example scatter file for MPU protection. |
+
+
+These files can be used in any IDE to create the final application. In the following, the usage in Arm Keil MDK is described.
+
+\section zTEMCB400_MDK Using the MDK project
+
+The example project can be loaded, built and debugged in µVision by performing the following steps:
+
+-# Navigate to Examples/MCBSTM32F400/MDK
+-# Open the project workspace Blinky_Net.uvprojx
+-# Optional: Update the generated files by executing the copy_gen.bat script.
+-# Run the build in MDK.
+
+
+\section zTEMCB400_MDK_Setup MDK project setup
+
+The projects Blinky_Net use the files generated in CMSIS-Zone as follows:
+
+| File                       | Description |
+|:---------------------------|:------------|
+| mem_layout.h               | Input for the linker scatter files. |
+| mputable.c                 | MPU Table data definition. |
+| mputable.h                 | MPU Table data declaration. |
+| scatter.sct                | Initial template for scatter file. |
+
+\subsection zTEMCB400_hwsScatter scatter.sct
+
+As explained previously, the \#defines in \c mem_layout.h can be used to create generic scatter files that are easy
+to update once changes in the CMSIS-Zone project happen. Using the \b mem_layout.h file from CMSIS-Zone, the following
+scatter file is used in the \c Blinky_Net project, which is based on the generated scatter file template (scatter.sct):
+
+\code
+#! armclang -E --target=arm-arm-none-eabi -mcpu=cortex-m3 -xc
+
+#include "mem_layout.h"
+
+LR_CODE REGION_CODE_START REGION_CODE_SIZE {
+  ER_CODE REGION_CODE_START REGION_CODE_SIZE {
+  	*.o (RESET,+FIRST)
+    * (InRoot$$Sections)
+    .ANY (+RO, +XO)
+  }
+  RW_RAM_PRIVILEGED REGION_RAM_PRIVILEGED_START REGION_RAM_PRIVILEGED_SIZE {
+     Net_Config.o (.bss.os.*.cb)
+    .ANY (+RW +ZI)
+  }
+  RW_RAM_SHARED REGION_RAM_SHARED_START REGION_RAM_SHARED_SIZE {
+    system_stm32f4xx.o (.data.SystemCoreClock)
+;   *.o (.data.shared)
+    *.o (.bss.shared)
+  }
+  RW_RAM_EVR REGION_RAM_EVR_START UNINIT REGION_RAM_EVR_SIZE {
+    EventRecorder.o (+ZI)
+  }
+  RW_RAM_BSD REGION_RAM_BSD_START REGION_RAM_BSD_SIZE {
+    bsd.o (+RW +ZI)
+  }
+  RW_RAM_NET REGION_RAM_NET_START REGION_RAM_NET_SIZE {
+    *Net*.lib (+RW +ZI)
+    Net_Config.o (.bss*)
+    emac_stm32f4xx.o (+RW +ZI)
+    phy_ksz8081rna.o (+RW +ZI)
+    phy_st802rt1.o (+RW +ZI)
+  }
+  RW_RAM_TIMER REGION_RAM_TIMER_START REGION_RAM_TIMER_SIZE {
+    timer.o (+RW +ZI)
+    *.o (.bss.os.thread.stack.rtx.timer)
+  }
+  RW_RAM_ADC REGION_RAM_ADC_START REGION_RAM_ADC_SIZE {
+    adc.o (+RW +ZI)
+    adc_mcbstm32f400.o (+RW +ZI)
+  }
+  RW_RAM_LED REGION_RAM_LED_START REGION_RAM_LED_SIZE {
+    led.o (+RW +ZI)
+  }
+  RW_RAM_MAIN REGION_RAM_MAIN_START REGION_RAM_MAIN_SIZE {
+    app.o (+RW +ZI)
+  }
+  RW_RAM_IDLE REGION_RAM_IDLE_START REGION_RAM_IDLE_SIZE {
+    RTX_Config.o (+RW +ZI)
+    *.o (.bss.os.thread.stack.rtx.idle)
+  }
+}
+\endcode
+
+The data segments of segregated software components have been allocated to distinct memory regions.
 */
