@@ -119,7 +119,7 @@ arm_status arm_avgpool_s8(const int dim_src_height,
             k_x_start = MAX(0,i_x * stride_width - padding_width);
             k_x_end = MIN(i_x * stride_width - padding_width + dim_kernel_width, dim_src_width);
 
- 
+
             pTmp = src;
             pDst = &dst[ch_src * (i_x + i_y * dim_dst_width)];
 
@@ -205,7 +205,7 @@ arm_status arm_avgpool_s8(const int dim_src_height,
 
                 tempV = vmovnbq_s16(tempV,tempVLO);
                 tempV = vmovntq_s16(tempV,tempVHI);
-                            
+
                 vstrbq_s8(pDst,tempV);
                 pDst += 16;
 
@@ -388,11 +388,12 @@ arm_status arm_avgpool_s8(const int dim_src_height,
     return ARM_MATH_SUCCESS;
 }
 
+#endif /* ARM_MATH_HELIUM */
 
 int32_t arm_avgpool_s8_get_buffer_size(const int dim_dst_width,
                                        const int ch_src)
 {
-#if defined(ARM_MATH_LOOPUNROLL) && defined (ARM_MATH_DSP)
+#if defined(ARM_MATH_LOOPUNROLL) && defined(ARM_MATH_DSP) && !defined(ARM_MATH_MVEI)
     return (ch_src * dim_dst_width) * sizeof(int16_t);
 #else
     (void)dim_dst_width;
@@ -400,9 +401,6 @@ int32_t arm_avgpool_s8_get_buffer_size(const int dim_dst_width,
     return 0;
 #endif
 }
-
-
-#endif /* ARM_MATH_HELIUM */
 /**
  * @} end of Pooling group
  */
