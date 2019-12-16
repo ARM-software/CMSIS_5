@@ -13,7 +13,7 @@ NBVECTORS = [4,10,16]
 VECDIM = [12,14,20]
 
 def genWsum(config,nb):
-    DIM=10
+    DIM=50
     inputs=[] 
     weights=[]
     output=[] 
