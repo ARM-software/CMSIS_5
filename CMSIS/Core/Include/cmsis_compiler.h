@@ -1,8 +1,8 @@
 /**************************************************************************//**
  * @file     cmsis_compiler.h
  * @brief    CMSIS compiler generic header file
- * @version  V5.1.0
- * @date     09. October 2018
+ * @version  V5.2.0
+ * @date     19. December 2019
  ******************************************************************************/
 /*
  * Copyright (c) 2009-2018 Arm Limited. All rights reserved.
@@ -117,6 +117,14 @@
     __PACKED_STRUCT T_UINT32_READ { uint32_t v; };
     #define __UNALIGNED_UINT32_READ(addr)          (((const struct T_UINT32_READ *)(const void *)(addr))->v)
   #endif
+  #ifndef   __UNALIGNED_UINT64_WRITE
+    __PACKED_STRUCT T_UINT64_WRITE { uint64_t v; };
+    #define __UNALIGNED_UINT64_WRITE(addr, val)    (void)((((struct T_UINT64_WRITE *)(void *)(addr))->v) = (val))
+  #endif
+  #ifndef   __UNALIGNED_UINT64_READ
+    __PACKED_STRUCT T_UINT64_READ { uint64_t v; };
+    #define __UNALIGNED_UINT64_READ(addr)          (((const struct T_UINT64_READ *)(const void *)(addr))->v)
+  #endif
   #ifndef   __ALIGNED
     #define __ALIGNED(x)                           __attribute__((aligned(x)))
   #endif
@@ -189,6 +197,14 @@
     __PACKED_STRUCT T_UINT32_READ { uint32_t v; };
     #define __UNALIGNED_UINT32_READ(addr)          (((const struct T_UINT32_READ *)(const void *)(addr))->v)
   #endif
+  #ifndef   __UNALIGNED_UINT64_WRITE
+    __PACKED_STRUCT T_UINT64_WRITE { uint64_t v; };
+    #define __UNALIGNED_UINT64_WRITE(addr, val)    (void)((((struct T_UINT64_WRITE *)(void *)(addr))->v) = (val))
+  #endif
+  #ifndef   __UNALIGNED_UINT64_READ
+    __PACKED_STRUCT T_UINT64_READ { uint64_t v; };
+    #define __UNALIGNED_UINT64_READ(addr)          (((const struct T_UINT64_READ *)(const void *)(addr))->v)
+  #endif
   #ifndef   __ALIGNED
     #define __ALIGNED(x)              __align(x)
   #endif
@@ -259,6 +275,14 @@
   #ifndef   __UNALIGNED_UINT32_READ
     __PACKED_STRUCT T_UINT32_READ { uint32_t v; };
     #define __UNALIGNED_UINT32_READ(addr)          (((const struct T_UINT32_READ *)(const void *)(addr))->v)
+  #endif
+  #ifndef   __UNALIGNED_UINT64_WRITE
+    __PACKED_STRUCT T_UINT64_WRITE { uint64_t v; };
+    #define __UNALIGNED_UINT64_WRITE(addr, val)    (void)((((struct T_UINT64_WRITE *)(void *)(addr))->v) = (val))
+  #endif
+  #ifndef   __UNALIGNED_UINT64_READ
+    __PACKED_STRUCT T_UINT64_READ { uint64_t v; };
+    #define __UNALIGNED_UINT64_READ(addr)          (((const struct T_UINT64_READ *)(const void *)(addr))->v)
   #endif
   #ifndef   __ALIGNED
     #warning No compiler specific solution for __ALIGNED. __ALIGNED is ignored.

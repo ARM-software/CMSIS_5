@@ -1,8 +1,8 @@
 /**************************************************************************//**
  * @file     cmsis_gcc.h
  * @brief    CMSIS compiler GCC header file
- * @version  V5.2.1
- * @date     30. July 2019
+ * @version  V5.3.0
+ * @date     19. December 2019
  ******************************************************************************/
 /*
  * Copyright (c) 2009-2019 Arm Limited. All rights reserved.
@@ -106,6 +106,22 @@
   __PACKED_STRUCT T_UINT32_READ { uint32_t v; };
   #pragma GCC diagnostic pop
   #define __UNALIGNED_UINT32_READ(addr)          (((const struct T_UINT32_READ *)(const void *)(addr))->v)
+#endif
+#ifndef   __UNALIGNED_UINT64_WRITE
+  #pragma GCC diagnostic push
+  #pragma GCC diagnostic ignored "-Wpacked"
+  #pragma GCC diagnostic ignored "-Wattributes"
+  __PACKED_STRUCT T_UINT64_WRITE { uint64_t v; };
+  #pragma GCC diagnostic pop
+  #define __UNALIGNED_UINT64_WRITE(addr, val)    (void)((((struct T_UINT64_WRITE *)(void *)(addr))->v) = (val))
+#endif
+#ifndef   __UNALIGNED_UINT64_READ
+  #pragma GCC diagnostic push
+  #pragma GCC diagnostic ignored "-Wpacked"
+  #pragma GCC diagnostic ignored "-Wattributes"
+  __PACKED_STRUCT T_UINT64_READ { uint64_t v; };
+  #pragma GCC diagnostic pop
+  #define __UNALIGNED_UINT64_READ(addr)          (((const struct T_UINT64_READ *)(const void *)(addr))->v)
 #endif
 #ifndef   __ALIGNED
   #define __ALIGNED(x)                           __attribute__((aligned(x)))

@@ -1,8 +1,8 @@
 /**************************************************************************//**
  * @file     cmsis_iccarm.h
  * @brief    CMSIS compiler ICCARM (IAR Compiler for Arm) header file
- * @version  V5.0.7
- * @date     15. May 2019
+ * @version  V5.1.0
+ * @date     19. December 2019
  ******************************************************************************/
 
 //------------------------------------------------------------------------------
@@ -155,7 +155,7 @@
   #pragma language=extended
   __IAR_FT void __iar_uint16_write(void const *ptr, uint16_t val)
   {
-    *(__packed uint16_t*)(ptr) = val;;
+    *(__packed uint16_t*)(ptr) = val;
   }
   #pragma language=restore
   #define __UNALIGNED_UINT16_WRITE(PTR,VAL) __iar_uint16_write(PTR,VAL)
@@ -177,10 +177,32 @@
   #pragma language=extended
   __IAR_FT void __iar_uint32_write(void const *ptr, uint32_t val)
   {
-    *(__packed uint32_t*)(ptr) = val;;
+    *(__packed uint32_t*)(ptr) = val;
   }
   #pragma language=restore
   #define __UNALIGNED_UINT32_WRITE(PTR,VAL) __iar_uint32_write(PTR,VAL)
+#endif
+
+#ifndef __UNALIGNED_UINT64_READ
+  #pragma language=save
+  #pragma language=extended
+  __IAR_FT uint64_t __iar_uint64_read(void const *ptr)
+  {
+    return *(__packed uint64_t*)(ptr);
+  }
+  #pragma language=restore
+  #define __UNALIGNED_UINT64_READ(PTR) __iar_uint64_read(PTR)
+#endif
+
+#ifndef __UNALIGNED_UINT64_WRITE
+  #pragma language=save
+  #pragma language=extended
+  __IAR_FT void __iar_uint64_write(void const *ptr, uint64_t val)
+  {
+    *(__packed uint64_t*)(ptr) = val;
+  }
+  #pragma language=restore
+  #define __UNALIGNED_UINT64_WRITE(PTR,VAL) __iar_uint64_write(PTR,VAL)
 #endif
 
 #if 0
