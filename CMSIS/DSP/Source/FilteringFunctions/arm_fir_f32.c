@@ -767,26 +767,26 @@ uint32_t blockSize)
          b = vld1q_f32(pb);
          xa = x0;
          xb = x1;
-         accv0 = vmlaq_n_f32(accv0,xa,b[0]);
-         accv1 = vmlaq_n_f32(accv1,xb,b[0]);
+         accv0 = vmlaq_n_f32(accv0,xa,vgetq_lane_f32(b, 0));
+         accv1 = vmlaq_n_f32(accv1,xb,vgetq_lane_f32(b, 0));
 
          xa = vextq_f32(x0,x1,1);
          xb = vextq_f32(x1,x2,1);
-         
-	 accv0 = vmlaq_n_f32(accv0,xa,b[1]);
-         accv1 = vmlaq_n_f32(accv1,xb,b[1]);
+        
+         accv0 = vmlaq_n_f32(accv0,xa,vgetq_lane_f32(b, 1));
+         accv1 = vmlaq_n_f32(accv1,xb,vgetq_lane_f32(b, 1));
 
-	 xa = vextq_f32(x0,x1,2);
+         xa = vextq_f32(x0,x1,2);
          xb = vextq_f32(x1,x2,2);
 
-         accv0 = vmlaq_n_f32(accv0,xa,b[2]);
-         accv1 = vmlaq_n_f32(accv1,xb,b[2]);
+         accv0 = vmlaq_n_f32(accv0,xa,vgetq_lane_f32(b, 2));
+         accv1 = vmlaq_n_f32(accv1,xb,vgetq_lane_f32(b, 2));
 
-	 xa = vextq_f32(x0,x1,3);
-	 xb = vextq_f32(x1,x2,3);
+         xa = vextq_f32(x0,x1,3);
+         xb = vextq_f32(x1,x2,3);
          
- 	 accv0 = vmlaq_n_f32(accv0,xa,b[3]);
-         accv1 = vmlaq_n_f32(accv1,xb,b[3]);
+         accv0 = vmlaq_n_f32(accv0,xa,vgetq_lane_f32(b, 3));
+         accv1 = vmlaq_n_f32(accv1,xb,vgetq_lane_f32(b, 3));
 
          pb += 4;
          x0 = x1;
@@ -810,8 +810,8 @@ uint32_t blockSize)
 
            pb++;
 
-	   xa = vextq_f32(x0,x1,1);
-	   xb = vextq_f32(x1,x2,1);
+           xa = vextq_f32(x0,x1,1);
+           xb = vextq_f32(x1,x2,1);
 
            accv0 = vmlaq_n_f32(accv0,xa,*pb);
            accv1 = vmlaq_n_f32(accv1,xb,*pb);
@@ -821,7 +821,7 @@ uint32_t blockSize)
            xa = vextq_f32(x0,x1,2);
            xb = vextq_f32(x1,x2,2);
            
-	   accv0 = vmlaq_n_f32(accv0,xa,*pb);
+           accv0 = vmlaq_n_f32(accv0,xa,*pb);
            accv1 = vmlaq_n_f32(accv1,xb,*pb);
 
          }
@@ -836,7 +836,7 @@ uint32_t blockSize)
            xa = vextq_f32(x0,x1,1);
            xb = vextq_f32(x1,x2,1);
            
-	   accv0 = vmlaq_n_f32(accv0,xa,*pb);
+           accv0 = vmlaq_n_f32(accv0,xa,*pb);
            accv1 = vmlaq_n_f32(accv1,xb,*pb);
 
          }

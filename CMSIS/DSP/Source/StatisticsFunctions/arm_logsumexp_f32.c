@@ -173,7 +173,7 @@ float32_t arm_logsumexp_f32(const float32_t *in, uint32_t blockSize)
 
       accumV2 = vpmax_f32(vget_low_f32(maxValV),vget_high_f32(maxValV));
       accumV2 = vpmax_f32(accumV2,accumV2);
-      maxVal = accumV2[0];
+      maxVal = vget_lane_f32(accumV2, 0) ;
 
       blkCnt = (blockSize - 4) & 3;
 
@@ -211,7 +211,7 @@ float32_t arm_logsumexp_f32(const float32_t *in, uint32_t blockSize)
     
     }
     accumV2 = vpadd_f32(vget_low_f32(accumV),vget_high_f32(accumV));
-    accum = accumV2[0] + accumV2[1];
+    accum = vget_lane_f32(accumV2, 0) + vget_lane_f32(accumV2, 1);
 
     blkCnt = blockSize & 0x3;
     while(blkCnt > 0)

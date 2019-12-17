@@ -396,25 +396,26 @@ void arm_svm_rbf_predict_f32(
             blkCnt -- ;
         }
         accum2 = vpadd_f32(vget_low_f32(accuma),vget_high_f32(accuma));
-        dotV[0] = accum2[0] + accum2[1];
+        dotV = vsetq_lane_f32(vget_lane_f32(accum2, 0) + vget_lane_f32(accum2, 1),dotV,0);
 
         accum2 = vpadd_f32(vget_low_f32(accumb),vget_high_f32(accumb));
-        dotV[1] = accum2[0] + accum2[1];
+        dotV = vsetq_lane_f32(vget_lane_f32(accum2, 0) + vget_lane_f32(accum2, 1),dotV,1);
 
         accum2 = vpadd_f32(vget_low_f32(accumc),vget_high_f32(accumc));
-        dotV[2] = accum2[0] + accum2[1];
+        dotV = vsetq_lane_f32(vget_lane_f32(accum2, 0) + vget_lane_f32(accum2, 1),dotV,2);
 
         accum2 = vpadd_f32(vget_low_f32(accumd),vget_high_f32(accumd));
-        dotV[3] = accum2[0] + accum2[1];
+        dotV = vsetq_lane_f32(vget_lane_f32(accum2, 0) + vget_lane_f32(accum2, 1),dotV,3);
 
 
         blkCnt = S->vectorDimension & 3;
         while (blkCnt > 0U)
         {
-            dotV[0] = dotV[0] + SQ(*pIn - *pSupporta);
-            dotV[1] = dotV[1] + SQ(*pIn - *pSupportb);
-            dotV[2] = dotV[2] + SQ(*pIn - *pSupportc);
-            dotV[3] = dotV[3] + SQ(*pIn - *pSupportd);
+            dotV = vsetq_lane_f32(vgetq_lane_f32(dotV,0) + SQ(*pIn - *pSupporta), dotV,0);
+            dotV = vsetq_lane_f32(vgetq_lane_f32(dotV,1) + SQ(*pIn - *pSupportb), dotV,1);
+            dotV = vsetq_lane_f32(vgetq_lane_f32(dotV,2) + SQ(*pIn - *pSupportc), dotV,2);
+            dotV = vsetq_lane_f32(vgetq_lane_f32(dotV,3) + SQ(*pIn - *pSupportd), dotV,3);
+
             pSupporta++;
             pSupportb++;
             pSupportc++;
@@ -434,7 +435,7 @@ void arm_svm_rbf_predict_f32(
 
         accum = vmulq_f32(vec1,dotV);
         accum2 = vpadd_f32(vget_low_f32(accum),vget_high_f32(accum));
-        sum += accum2[0] + accum2[1];
+        sum += vget_lane_f32(accum2, 0) + vget_lane_f32(accum2, 1);
 
         pSupporta += 3*S->vectorDimension;
         pSupportb += 3*S->vectorDimension;
@@ -468,7 +469,7 @@ void arm_svm_rbf_predict_f32(
             blkCnt -- ;
         }
         accum2 = vpadd_f32(vget_low_f32(accum),vget_high_f32(accum));
-        dot = accum2[0] + accum2[1];
+        dot = vget_lane_f32(accum2, 0) + vget_lane_f32(accum2, 1);
 
 
         blkCnt = S->vectorDimension & 3;

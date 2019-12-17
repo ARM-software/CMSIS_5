@@ -157,6 +157,11 @@ void arm_spline_f32(
         float32_t * pDst,
 	uint32_t blockSize)
 {
+    /* 
+
+    As explained in arm_spline_interp_init_f32.c, this must be > 1
+    
+    */
     int32_t n = S->n_x;
     arm_spline_type type = S->type;
 
@@ -168,6 +173,9 @@ void arm_spline_f32(
 
     float32_t bi, di;
     float32_t x_sc;
+
+    bi = 0.0f;
+    di = 0.0f;
 
     const float32_t * pXq = xq;
 

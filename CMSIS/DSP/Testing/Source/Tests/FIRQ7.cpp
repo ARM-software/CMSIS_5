@@ -1,4 +1,5 @@
 #include "FIRQ7.h"
+#include <stdio.h>
 #include "Error.h"
 
 #define SNR_THRESHOLD 10
@@ -21,7 +22,10 @@ static __ALIGNED(8) q7_t coeffArray[32];
         const q7_t *inputp = inputs.ptr();
         q7_t *outp = output.ptr();
 
-        int i,j;
+        int i;
+#if defined(ARM_MATH_MVEI)
+        int j;
+#endif
         int blockSize;
         int numTaps;
 
@@ -97,8 +101,6 @@ static __ALIGNED(8) q7_t coeffArray[32];
     void FIRQ7::setUp(Testing::testID_t id,std::vector<Testing::param_t>& params,Client::PatternMgr *mgr)
     {
       
-       Testing::nbSamples_t nb=MAX_NB_SAMPLES; 
-
        
        switch(id)
        {

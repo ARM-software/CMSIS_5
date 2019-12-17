@@ -1,10 +1,9 @@
 #include "MISCQ15.h"
+#include <stdio.h>
 #include "Error.h"
 #include "arm_math.h"
 #include "arm_vec_math.h"
 #include "Test.h"
-
-#include <cstdio>
 
 #define SNR_THRESHOLD 70
 /* 

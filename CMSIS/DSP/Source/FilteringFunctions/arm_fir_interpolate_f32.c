@@ -314,15 +314,15 @@ void arm_fir_interpolate_f32(
       }
 
       /* The result is in the accumulator, store in the destination buffer. */
-      *pDst = accV0[0];
-      *(pDst + S->L) = accV0[1];
-      *(pDst + 2 * S->L) = accV0[2];
-      *(pDst + 3 * S->L) = accV0[3];
+      *pDst = vgetq_lane_f32(accV0, 0);
+      *(pDst + S->L) = vgetq_lane_f32(accV0, 1);
+      *(pDst + 2 * S->L) = vgetq_lane_f32(accV0, 2);
+      *(pDst + 3 * S->L) = vgetq_lane_f32(accV0, 3);
 
-      *(pDst + 4 * S->L) = accV1[0];
-      *(pDst + 5 * S->L) = accV1[1];
-      *(pDst + 6 * S->L) = accV1[2];
-      *(pDst + 7 * S->L) = accV1[3];
+      *(pDst + 4 * S->L) = vgetq_lane_f32(accV1, 0);
+      *(pDst + 5 * S->L) = vgetq_lane_f32(accV1, 1);
+      *(pDst + 6 * S->L) = vgetq_lane_f32(accV1, 2);
+      *(pDst + 7 * S->L) = vgetq_lane_f32(accV1, 3);
 
       pDst++;
 
@@ -375,7 +375,7 @@ void arm_fir_interpolate_f32(
       while (tapCnt > 0U)
       {
         /* Read the coefficient */
-        x1v[0] = *(ptr2);
+        x1v = vsetq_lane_f32(*(ptr2),x1v,0);
 
         /* Upsampling is done by stuffing L-1 zeros between each sample.
          * So instead of multiplying zeros with coefficients,
@@ -387,19 +387,19 @@ void arm_fir_interpolate_f32(
         ptr1 += 4;
 
         /* Read the coefficient */
-        x1v[1] = *(ptr2);
+        x1v = vsetq_lane_f32(*(ptr2),x1v,1);
 
         /* Increment the coefficient pointer by interpolation factor times. */
         ptr2 += S->L;
 
         /* Read the coefficient */
-        x1v[2] = *(ptr2);
+        x1v = vsetq_lane_f32(*(ptr2),x1v,2);
 
         /* Increment the coefficient pointer by interpolation factor times. */
         ptr2 += S->L;
 
         /* Read the coefficient */
-        x1v[3] = *(ptr2);
+        x1v = vsetq_lane_f32(*(ptr2),x1v,3);
 
         /* Increment the coefficient pointer by interpolation factor times. */
         ptr2 += S->L;
@@ -411,7 +411,7 @@ void arm_fir_interpolate_f32(
       }
 
       tempV = vpadd_f32(vget_low_f32(sum0v),vget_high_f32(sum0v));
-      sum0 = tempV[0] + tempV[1];
+      sum0 = vget_lane_f32(tempV, 0) + vget_lane_f32(tempV, 1);
 
       /* If the polyPhase length is not a multiple of 4, compute the remaining filter taps */
       tapCnt = phaseLen % 0x4U;

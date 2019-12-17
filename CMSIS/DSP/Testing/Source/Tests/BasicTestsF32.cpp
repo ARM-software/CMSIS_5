@@ -1,4 +1,5 @@
 #include "BasicTestsF32.h"
+#include <stdio.h>
 #include "Error.h"
 
 #define SNR_THRESHOLD 120

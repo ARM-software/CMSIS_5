@@ -152,20 +152,24 @@ void arm_min_f32(
   uint32_t * pIndex)
 {
   float32_t maxVal1, out;               /* Temporary variables to store the output value. */
-  uint32_t blkCnt, outIndex, count;              /* loop counter */
+  uint32_t blkCnt, outIndex;              /* loop counter */
 
   float32x4_t outV, srcV;
   float32x2_t outV2;
 
   uint32x4_t idxV;
-  uint32x4_t maxIdx={ULONG_MAX,ULONG_MAX,ULONG_MAX,ULONG_MAX};
-  uint32x4_t index={4,5,6,7};
-  uint32x4_t delta={4,4,4,4};
-  uint32x4_t countV={0,1,2,3};
+  static const uint32_t indexInit[4]={4,5,6,7};
+  static const uint32_t countVInit[4]={0,1,2,3};
+  uint32x4_t maxIdx;
+  uint32x4_t index;
+  uint32x4_t delta;
+  uint32x4_t countV;
   uint32x2_t countV2;
 
-  /* Initialise the count value. */
-  count = 0U;
+  maxIdx = vdupq_n_u32(ULONG_MAX);
+  delta = vdupq_n_u32(4);
+  index = vld1q_u32(indexInit);
+  countV = vld1q_u32(countVInit);
 
   /* Initialise the index value to zero. */
   outIndex = 0U;
@@ -219,14 +223,14 @@ void arm_min_f32(
     
       outV2 = vpmin_f32(vget_low_f32(outV),vget_high_f32(outV));
       outV2 = vpmin_f32(outV2,outV2);
-      out = outV2[0];
+      out = vget_lane_f32(outV2,0); 
     
       idxV = vceqq_f32(outV, vdupq_n_f32(out));
       countV = vbslq_u32(idxV, countV,maxIdx);
       
       countV2 = vpmin_u32(vget_low_u32(countV),vget_high_u32(countV));
       countV2 = vpmin_u32(countV2,countV2);
-      outIndex = countV2[0];
+      outIndex = vget_lane_u32(countV2,0); 
     
       /* if (blockSize - 1U) is not multiple of 4 */
       blkCnt = (blockSize - 4 ) % 4U;

@@ -219,16 +219,16 @@ void arm_fir_decimate_f32(
     }
 
     temp = vpadd_f32(vget_low_f32(acc0v),vget_high_f32(acc0v));
-    accv[0] = temp[0] + temp[1];
+    accv = vsetq_lane_f32(vget_lane_f32(temp, 0) + vget_lane_f32(temp, 1),accv,0);
 
     temp = vpadd_f32(vget_low_f32(acc1v),vget_high_f32(acc1v));
-    accv[1] = temp[0] + temp[1];
+    accv = vsetq_lane_f32(vget_lane_f32(temp, 0) + vget_lane_f32(temp, 1),accv,1);
 
     temp = vpadd_f32(vget_low_f32(acc2v),vget_high_f32(acc2v));
-    accv[2] = temp[0] + temp[1];
+    accv = vsetq_lane_f32(vget_lane_f32(temp, 0) + vget_lane_f32(temp, 1),accv,2);
 
     temp = vpadd_f32(vget_low_f32(acc3v),vget_high_f32(acc3v));
-    accv[3] = temp[0] + temp[1];
+    accv = vsetq_lane_f32(vget_lane_f32(temp, 0) + vget_lane_f32(temp, 1),accv,3);
 
     /* If the filter length is not a multiple of 4, compute the remaining filter taps */
     tapCnt = numTaps % 0x4U;
@@ -245,10 +245,10 @@ void arm_fir_decimate_f32(
       x3 = *(px3++);
 
       /* Perform the multiply-accumulate */
-      accv[0] += x0 * c0;
-      accv[1] += x1 * c0;
-      accv[2] += x2 * c0;
-      accv[3] += x3 * c0;
+      accv = vsetq_lane_f32(vgetq_lane_f32(accv, 0) + x0 * c0,accv,0);
+      accv = vsetq_lane_f32(vgetq_lane_f32(accv, 1) + x1 * c0,accv,1);
+      accv = vsetq_lane_f32(vgetq_lane_f32(accv, 2) + x2 * c0,accv,2);
+      accv = vsetq_lane_f32(vgetq_lane_f32(accv, 3) + x3 * c0,accv,3);
 
       /* Decrement the loop counter */
       tapCnt--;
@@ -306,7 +306,7 @@ void arm_fir_decimate_f32(
     }
 
     temp = vpadd_f32(vget_low_f32(sum0v),vget_high_f32(sum0v));
-    sum0 = temp[0] + temp[1];
+    sum0 = vget_lane_f32(temp, 0) + vget_lane_f32(temp, 1);
 
     /* If the filter length is not a multiple of 4, compute the remaining filter taps */
     tapCnt = numTaps % 0x4U;

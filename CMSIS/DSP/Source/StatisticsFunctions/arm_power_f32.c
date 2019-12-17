@@ -136,7 +136,7 @@ void arm_power_f32(
     blkCnt--;
   }
   sumV2 = vpadd_f32(vget_low_f32(sumV),vget_high_f32(sumV));
-  sum = sumV2[0] + sumV2[1];
+  sum = vget_lane_f32(sumV2, 0) + vget_lane_f32(sumV2, 1);
 
   /* If the blockSize is not a multiple of 4, compute any remaining output samples here.
    ** No loop unrolling is used. */

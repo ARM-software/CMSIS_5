@@ -320,7 +320,7 @@ void arm_correlate_f32(
         uint32_t outBlockSize;                         /* Loop counter */
         int32_t inc = 1;                               /* Destination address modifier */
 
-#if defined (ARM_MATH_LOOPUNROLL) 
+#if defined (ARM_MATH_LOOPUNROLL) || defined(ARM_MATH_NEON)
     float32_t acc0, acc1, acc2, acc3,c0;                    /* Accumulators */
 #if !defined(ARM_MATH_NEON)
     float32_t x0, x1, x2, x3;                        /* temporary variables for holding input and coefficient values */

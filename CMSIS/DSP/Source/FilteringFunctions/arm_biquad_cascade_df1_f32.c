@@ -370,19 +370,20 @@ void arm_biquad_cascade_df1_f32(
   while (stage > 0U)
   {
     /* Reading the coefficients */
-    Xn = vdupq_n_f32(0.0);
-    Xn[2] = pState[0];
-    Xn[3] = pState[1];
-    Yn[0] = pState[2];
-    Yn[1] = pState[3];
+    Xn = vdupq_n_f32(0.0f);
 
+    Xn = vsetq_lane_f32(pState[0],Xn,2);
+    Xn = vsetq_lane_f32(pState[1],Xn,3);
+    Yn = vset_lane_f32(pState[2],Yn,0);
+    Yn = vset_lane_f32(pState[3],Yn,1);
+  
     b = vld1q_f32(pCoeffs);
     b = vrev64q_f32(b);  
     b = vcombine_f32(vget_high_f32(b), vget_low_f32(b));
 
     a = vld1_f32(pCoeffs + 3);
     a = vrev64_f32(a);
-    b[0] = 0.0;
+    b = vsetq_lane_f32(0.0f,b,0);
     pCoeffs += 5;
     
     /* Reading the pState values */
@@ -460,7 +461,11 @@ void arm_biquad_cascade_df1_f32(
       Xns = *pIn++;
 
       /* acc =  b0 * x[n] + b1 * x[n-1] + b2 * x[n-2] + a1 * y[n-1] + a2 * y[n-2] */
-      acc =  (b[1] * Xn[2]) + (b[2] * Xn[3]) + (b[3] * Xns) + (a[0] * Yn[0]) + (a[1] * Yn[1]);
+      acc =  (vgetq_lane_f32(b, 1) * vgetq_lane_f32(Xn, 2)) 
+      + (vgetq_lane_f32(b, 2) * vgetq_lane_f32(Xn, 3)) 
+      + (vgetq_lane_f32(b, 3) * Xns) 
+      + (vget_lane_f32(a, 0) * vget_lane_f32(Yn, 0)) 
+      + (vget_lane_f32(a, 1) * vget_lane_f32(Yn, 1));
 
       /* Store the result in the accumulator in the destination buffer. */
       *pOut++ = acc;
@@ -471,10 +476,10 @@ void arm_biquad_cascade_df1_f32(
       /* Xn1 = Xn    */
       /* Yn2 = Yn1   */
       /* Yn1 = acc   */
-      Xn[2] = Xn[3];
-      Xn[3] = Xns;
-      Yn[0] = Yn[1];
-      Yn[1] = acc;
+      Xn = vsetq_lane_f32(vgetq_lane_f32(Xn, 3),Xn,2);
+      Xn = vsetq_lane_f32(Xns,Xn,3);
+      Yn = vset_lane_f32(vget_lane_f32(Yn, 1),Yn,0);
+      Yn = vset_lane_f32(acc,Yn,1);
 
       /* Decrement the loop counter */
       sample--;

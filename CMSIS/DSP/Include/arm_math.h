@@ -93,8 +93,10 @@
    * Toolchain Support
    * ------------
    *
-   * The library has been developed and tested with MDK version 5.14.0.0
-   * The library is being tested in GCC and IAR toolchains and updates on this activity will be made available shortly.
+   * The library is now tested on Fast Models building with cmake.
+   * Core M0, M7, A5 are tested.
+   * 
+   * 
    *
    * Building the Library
    * ------------
@@ -139,6 +141,23 @@
    * Define macro ARM_MATH_NEON_EXPERIMENTAL to enable experimental Neon versions of 
    * of some DSP functions. Experimental Neon versions currently do not have better
    * performances than the scalar versions.
+   *
+   * - ARM_MATH_HELIUM:
+   *
+   * It implies the flags ARM_MATH_MVEF and ARM_MATH_MVEI and ARM_MATH_FLOAT16.
+   *
+   * - ARM_MATH_MVEF:
+   *
+   * Select Helium versions of the f32 algorithms.
+   * It implies ARM_MATH_FLOAT16 and ARM_MATH_MVEI.
+   *
+   * - ARM_MATH_MVEI:
+   *
+   * Select Helium versions of the int and fixed point algorithms.
+   *
+   * - ARM_MATH_FLOAT16:
+   *
+   * Float16 implementations of some algorithms (Requires MVE extension).
    *
    * <hr>
    * CMSIS-DSP in ARM::CMSIS Pack

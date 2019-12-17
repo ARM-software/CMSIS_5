@@ -136,10 +136,10 @@ float32_t arm_weighted_sum_f32(const float32_t *in,const float32_t *weigths, uin
     }
 
     tempV = vpadd_f32(vget_low_f32(accum1V),vget_high_f32(accum1V));
-    accum1 = tempV[0] + tempV[1];
+    accum1 = vget_lane_f32(tempV, 0) + vget_lane_f32(tempV, 1);
 
     tempV = vpadd_f32(vget_low_f32(accum2V),vget_high_f32(accum2V));
-    accum2 = tempV[0] + tempV[1];
+    accum2 = vget_lane_f32(tempV, 0) + vget_lane_f32(tempV, 1);
 
     blkCnt = blockSize & 3;
     while(blkCnt > 0)

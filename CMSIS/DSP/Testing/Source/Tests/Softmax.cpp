@@ -1,9 +1,8 @@
 #include "Softmax.h"
+#include <stdio.h>
 #include "Error.h"
 #include "arm_nnfunctions.h"
 #include "Test.h"
-
-#include <cstdio>
 
 /*
 

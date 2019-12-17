@@ -37,6 +37,11 @@ function(compilerSpecificCompileOptions PROJECTNAME)
      target_compile_options(${PROJECTNAME} PUBLIC "-march=armv7e-m;-mfpu=fpv5-d16")
      target_link_options(${PROJECTNAME} PUBLIC "-march=armv7e-m;-mfpu=fpv5-d16")
   endif()
+
+  if (ARM_CPU STREQUAL "cortex-m0" )
+     target_compile_options(${PROJECTNAME} PUBLIC "-march=armv6-m")
+     target_link_options(${PROJECTNAME} PUBLIC "-march=armv6-m")
+  endif()
   
   
   if (ARM_CPU STREQUAL "cortex-a9" )
@@ -113,14 +118,14 @@ function(toolchainSpecificLinkForCortexA  PROJECTNAME ROOT CORE PLATFORMFOLDER)
 
     # RTE Components
     target_include_directories(${PROJECTNAME} PRIVATE ${ROOT}/CMSIS/DSP/Testing)
+    target_include_directories(${PROJECTNAME} PRIVATE ${PLATFORMFOLDER}/${CORE}/LinkScripts/GCC)
 
-    # Using the mem file which is included.
-    # Since meme file in same temp directory, it is found by linker 
-    # when processing the scatter file
+    file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/tempLink)
     set(SCATTERFILE ${CMAKE_CURRENT_BINARY_DIR}/tempLink/lnk.ld)
     preprocessScatter(${CORE} ${PLATFORMFOLDER} ${SCATTERFILE})
 
-    target_include_directories(${PROJECTNAME} PRIVATE ${PLATFORMFOLDER}/${CORE}/LinkScripts/GCC)
+
+    set_target_properties(${PROJECTNAME} PROPERTIES LINK_DEPENDS "${SCATTERFILE}")
 
     target_link_options(${PROJECTNAME} PRIVATE "--entry=Reset_Handler;-T${SCATTERFILE}")
 endfunction()

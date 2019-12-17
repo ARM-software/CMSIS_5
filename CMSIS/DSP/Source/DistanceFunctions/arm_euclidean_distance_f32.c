@@ -114,7 +114,7 @@ float32_t arm_euclidean_distance_f32(const float32_t *pA,const float32_t *pB, ui
         blkCnt --;
    }
    accumV2 = vpadd_f32(vget_low_f32(accumV),vget_high_f32(accumV));
-   accum = accumV2[0] + accumV2[1];
+   accum = vget_lane_f32(accumV2, 0) + vget_lane_f32(accumV2, 1);
 
    blkCnt = blockSize & 3;
    while(blkCnt > 0)

@@ -834,47 +834,41 @@ static void arm_bitonic_merge_256_f32(float32_t * pSrc, uint8_t dir)
     arm_bitonic_merge_128_f32(pSrc+128, dir);
 }
 
+#define SWAP(a,i,j)                            \
+    temp = vgetq_lane_f32(a, j);                   \
+    a = vsetq_lane_f32(vgetq_lane_f32(a, i), a, j);\
+    a = vsetq_lane_f32(temp, a, i);
+
 static float32x4_t arm_bitonic_sort_4_f32(float32x4_t a, uint8_t dir)
 {
     float32_t temp;
 
-    if( dir==(a[0]>a[1]) )
+
+    if( dir==(vgetq_lane_f32(a, 0) > vgetq_lane_f32(a, 1)) )
     {
-    temp = a[1];
-    a[1] = a[0];
-    a[0] = temp;
+        SWAP(a,0,1);
     }
-    if( dir==(a[2]>a[3]) )
+    if( dir==(vgetq_lane_f32(a, 2) > vgetq_lane_f32(a, 3)) )
     {
-    temp = a[3];
-    a[3] = a[2];
-    a[2] = temp;
+       SWAP(a,2,3);
     }
 
-    if( dir==(a[0]>a[3]) )
+    if( dir==(vgetq_lane_f32(a, 0) > vgetq_lane_f32(a, 3)) )
     {
-    temp = a[3];
-    a[3] = a[0];
-    a[0] = temp;
+      SWAP(a,0,3);
     }
-    if( dir==(a[1]>a[2]) )
+    if( dir==(vgetq_lane_f32(a, 1) > vgetq_lane_f32(a, 2)) )
     {
-    temp = a[2];
-    a[2] = a[1];
-    a[1] = temp;
+      SWAP(a,1,2);
     }
 
-    if( dir==(a[0]>a[1]) )
+    if( dir==(vgetq_lane_f32(a, 0) > vgetq_lane_f32(a, 1)) )
     {
-    temp = a[1];
-    a[1] = a[0];
-    a[0] = temp;
+      SWAP(a,0,1);
     }
-    if( dir==(a[2]>a[3]) )
+    if( dir==(vgetq_lane_f32(a, 2)>vgetq_lane_f32(a, 3)) )
     {
-    temp = a[3];
-    a[3] = a[2];
-    a[2] = temp;
+      SWAP(a,2,3);
     }
 
     return a;

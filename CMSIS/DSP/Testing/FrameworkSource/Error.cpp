@@ -25,9 +25,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#include "arm_math.h"
-#include "Error.h"
 #include <stdlib.h> 
+#include <stdio.h>
+#include "Error.h"
+#include "arm_math.h"
 
 namespace Client {
 

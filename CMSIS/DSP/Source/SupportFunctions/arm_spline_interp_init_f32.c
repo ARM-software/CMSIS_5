@@ -40,7 +40,7 @@
 /**
   * @brief Initialization function for the floating-point cubic spline interpolation.
   * @param[in,out] S        points to an instance of the floating-point spline structure.
-  * @param[in]     n        number of known data points.
+  * @param[in]     n        number of known data points (must > 1).
   * @param[in]     type     type of cubic spline interpolation (boundary conditions)
   */
 

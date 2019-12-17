@@ -1,4 +1,5 @@
 #include "BIQUADF64.h"
+#include <stdio.h>
 #include "Error.h"
 
 #define SNR_THRESHOLD 98
@@ -28,10 +29,7 @@ static __ALIGNED(8) float64_t coeffArray[64];
         float64_t *inputp = inputs.ptr();
         float64_t *outp = output.ptr();
 
-        int i,j;
         int blockSize;
-        int numTaps;
-        int nb=0;
 
         
 
@@ -45,7 +43,6 @@ static __ALIGNED(8) float64_t coeffArray[64];
         */
         
            blockSize = inputs.nbSamples() >> 1;
-           numTaps = coefs.nbSamples();
 
            /*
 
@@ -98,7 +95,6 @@ static __ALIGNED(8) float64_t coeffArray[64];
 
         int blockSize;
         int numStages;
-        int nb=0;
 
         int i;
 
@@ -158,8 +154,6 @@ static __ALIGNED(8) float64_t coeffArray[64];
     void BIQUADF64::setUp(Testing::testID_t id,std::vector<Testing::param_t>& params,Client::PatternMgr *mgr)
     {
       
-       Testing::nbSamples_t nb=MAX_NB_SAMPLES; 
-
        
        switch(id)
        {

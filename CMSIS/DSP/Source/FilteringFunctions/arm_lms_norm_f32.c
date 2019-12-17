@@ -233,7 +233,7 @@ void arm_lms_norm_f32(
       tapCnt--;
     }
     tempV2 = vpadd_f32(vget_low_f32(sumV),vget_high_f32(sumV));
-    sum = tempV2[0] + tempV2[1];
+    sum = vget_lane_f32(tempV2, 0) + vget_lane_f32(tempV2, 1);
 
     /* If the filter length is not a multiple of 4, compute the remaining filter taps */
     tapCnt = numTaps % 0x4U;

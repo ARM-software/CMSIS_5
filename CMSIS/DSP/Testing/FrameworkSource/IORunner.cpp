@@ -33,6 +33,7 @@
 #include <string>
 #include <cstddef>
 #include <stdlib.h>
+#include <stdio.h>
 #include "IORunner.h"
 #include "Error.h"
 #include "Timing.h"

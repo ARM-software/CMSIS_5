@@ -1,9 +1,8 @@
 #include "SupportBarTestsF32.h"
+#include <stdio.h>
 #include "Error.h"
 #include "arm_math.h"
 #include "Test.h"
-
-#include <cstdio>
 
 
     void SupportBarTestsF32::test_barycenter_f32()

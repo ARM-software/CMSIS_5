@@ -21,7 +21,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#include "mem_ARMCM7.h" 
+#include "mem_ARMCM0.h" 
 /*
  *-------- <<< Use Configuration Wizard in Context Menu >>> -------------------
  */

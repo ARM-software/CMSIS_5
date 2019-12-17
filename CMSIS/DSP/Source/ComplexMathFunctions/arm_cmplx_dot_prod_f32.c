@@ -169,7 +169,7 @@ void arm_cmplx_dot_prod_f32(
 	/* C = (A[0]+jA[1])*(B[0]+jB[1]) + ...  */
         /* Calculate dot product and then store the result in a temporary buffer. */
 
-	vec1 = vld2q_f32(pSrcA);
+	      vec1 = vld2q_f32(pSrcA);
         vec2 = vld2q_f32(pSrcB);
 
 	/* Increment pointers */
@@ -204,10 +204,10 @@ void arm_cmplx_dot_prod_f32(
     }
 
     accum = vpadd_f32(vget_low_f32(accR), vget_high_f32(accR));
-    real_sum += accum[0] + accum[1];
+    real_sum += vget_lane_f32(accum, 0) + vget_lane_f32(accum, 1);
 
     accum = vpadd_f32(vget_low_f32(accI), vget_high_f32(accI));
-    imag_sum += accum[0] + accum[1];
+    imag_sum += vget_lane_f32(accum, 0) + vget_lane_f32(accum, 1);
 
     /* Tail */
     blkCnt = numSamples & 0x7;

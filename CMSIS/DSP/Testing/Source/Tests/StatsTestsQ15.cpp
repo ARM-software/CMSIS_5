@@ -1,5 +1,6 @@
 #include "arm_math.h"
 #include "StatsTestsQ15.h"
+#include <stdio.h>
 #include "Error.h"
 #include "Test.h"
 

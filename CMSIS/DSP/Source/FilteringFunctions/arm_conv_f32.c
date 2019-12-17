@@ -263,7 +263,8 @@ void arm_conv_f32(
         uint32_t blockSize1, blockSize2, blockSize3;   /* Loop counters */
         uint32_t j, k, count, blkCnt;                  /* Loop counters */
 
-#if defined (ARM_MATH_LOOPUNROLL)
+
+#if defined (ARM_MATH_LOOPUNROLL) || defined(ARM_MATH_NEON)
         float32_t acc0, acc1, acc2, acc3, c0;              /* Accumulators */
 #if !defined(ARM_MATH_NEON)
         float32_t x0, x1, x2, x3;                  /* Temporary variables to hold state and coefficient values */

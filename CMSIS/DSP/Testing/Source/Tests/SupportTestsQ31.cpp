@@ -1,9 +1,8 @@
 #include "SupportTestsQ31.h"
+#include <stdio.h>
 #include "Error.h"
 #include "arm_math.h"
 #include "Test.h"
-
-#include <cstdio>
 
 #define SNR_THRESHOLD 120
 #define REL_ERROR (1.0e-5)

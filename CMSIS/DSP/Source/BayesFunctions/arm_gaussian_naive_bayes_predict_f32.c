@@ -228,10 +228,10 @@ uint32_t arm_gaussian_naive_bayes_predict_f32(const arm_gaussian_naive_bayes_ins
            vecBlkCnt--;
         }
         tmpV2 = vpadd_f32(vget_low_f32(tmpV),vget_high_f32(tmpV));
-        tmp += tmpV2[0] + tmpV2[1];
-
+        tmp += vget_lane_f32(tmpV2, 0) + vget_lane_f32(tmpV2, 1);
+         
         tmpV2 = vpadd_f32(vget_low_f32(tmpV1),vget_high_f32(tmpV1));
-        tmp1 += tmpV2[0] + tmpV2[1];
+        tmp1 += vget_lane_f32(tmpV2, 0) + vget_lane_f32(tmpV2, 1);
 
         vecBlkCnt = S->vectorDimension & 3;
         while(vecBlkCnt > 0)
@@ -300,7 +300,7 @@ uint32_t arm_gaussian_naive_bayes_predict_f32(const arm_gaussian_naive_bayes_ins
            vecBlkCnt--;
         }
         tmpV2 = vpadd_f32(vget_low_f32(tmpV),vget_high_f32(tmpV));
-        tmp += tmpV2[0] + tmpV2[1];
+        tmp += vget_lane_f32(tmpV2, 0) + vget_lane_f32(tmpV2, 1);
 
         vecBlkCnt = S->vectorDimension & 3;
         while(vecBlkCnt > 0)

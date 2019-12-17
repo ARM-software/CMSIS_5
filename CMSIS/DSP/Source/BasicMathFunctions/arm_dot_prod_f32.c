@@ -131,7 +131,8 @@ void arm_dot_prod_f32(
 #if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
     f32x4_t vec1;
     f32x4_t vec2;
-    f32x4_t accum = vdupq_n_f32(0);    
+    f32x4_t accum = vdupq_n_f32(0);   
+    f32x2_t tmp = vdup_n_f32(0);    
 
     /* Compute 4 outputs at a time */
     blkCnt = blockSize >> 2U;
@@ -160,7 +161,9 @@ void arm_dot_prod_f32(
 #if __aarch64__
     sum = vpadds_f32(vpadd_f32(vget_low_f32(accum), vget_high_f32(accum)));
 #else
-    sum = (vpadd_f32(vget_low_f32(accum), vget_high_f32(accum)))[0] + (vpadd_f32(vget_low_f32(accum), vget_high_f32(accum)))[1];
+    tmp = vpadd_f32(vget_low_f32(accum), vget_high_f32(accum));
+    sum = vget_lane_f32(tmp, 0) + vget_lane_f32(tmp, 1);
+
 #endif    
 
     /* Tail */

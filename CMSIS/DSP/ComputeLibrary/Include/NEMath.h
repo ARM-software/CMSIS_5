@@ -69,11 +69,11 @@ static inline float32x4_t vinvq_f32(float32x4_t x);
 /** Perform a 7th degree polynomial approximation using Estrin's method.
  *
  * @param[in] x      Input vector value in F32 format.
- * @param[in] coeffs Polynomial coefficients table.
+ * @param[in] coeffs Polynomial coefficients table. (array of flattened float32x4_t vectors)
  *
  * @return The calculated approximation.
  */
-static inline float32x4_t vtaylor_polyq_f32(float32x4_t x, const float32x4_t *coeffs);
+static inline float32x4_t vtaylor_polyq_f32(float32x4_t x, const float32_t *coeffs);
 
 /** Calculate exponential
  *
@@ -180,21 +180,21 @@ static inline float16x8_t vpowq_f16(float16x8_t val, float16x8_t n);
 #endif /* __ARM_FEATURE_FP16_VECTOR_ARITHMETIC */
 
 /** Exponent polynomial coefficients */
-extern const float32x4_t exp_tab[8];
+extern const float32_t exp_tab[4*8];
 
 
 /** Logarithm polynomial coefficients */
-extern const float32x4_t log_tab[8];
+extern const float32_t log_tab[4*8];
 
 #ifndef DOXYGEN_SKIP_THIS
 inline float32x4_t vfloorq_f32(float32x4_t val)
 {
-    static const float32x4_t CONST_1 = {1.f,1.f,1.f,1.f};
+    static const float32_t CONST_1[4] = {1.f,1.f,1.f,1.f};
 
     const int32x4_t   z = vcvtq_s32_f32(val);
     const float32x4_t r = vcvtq_f32_s32(z);
 
-    return vbslq_f32(vcgtq_f32(r, val), vsubq_f32(r, CONST_1), r);
+    return vbslq_f32(vcgtq_f32(r, val), vsubq_f32(r, vld1q_f32(CONST_1)), r);
 }
 
 inline float32x2_t vinvsqrt_f32(float32x2_t x)
@@ -231,12 +231,12 @@ inline float32x4_t vinvq_f32(float32x4_t x)
     return recip;
 }
 
-inline float32x4_t vtaylor_polyq_f32(float32x4_t x, const float32x4_t *coeffs)
+inline float32x4_t vtaylor_polyq_f32(float32x4_t x, const float32_t *coeffs)
 {
-    float32x4_t A   = vmlaq_f32(coeffs[0], coeffs[4], x);
-    float32x4_t B   = vmlaq_f32(coeffs[2], coeffs[6], x);
-    float32x4_t C   = vmlaq_f32(coeffs[1], coeffs[5], x);
-    float32x4_t D   = vmlaq_f32(coeffs[3], coeffs[7], x);
+    float32x4_t A   = vmlaq_f32(vld1q_f32(&coeffs[4*0]), vld1q_f32(&coeffs[4*4]), x);
+    float32x4_t B   = vmlaq_f32(vld1q_f32(&coeffs[4*2]), vld1q_f32(&coeffs[4*6]), x);
+    float32x4_t C   = vmlaq_f32(vld1q_f32(&coeffs[4*1]), vld1q_f32(&coeffs[4*5]), x);
+    float32x4_t D   = vmlaq_f32(vld1q_f32(&coeffs[4*3]), vld1q_f32(&coeffs[4*7]), x);
     float32x4_t x2  = vmulq_f32(x, x);
     float32x4_t x4  = vmulq_f32(x2, x2);
     float32x4_t res = vmlaq_f32(vmlaq_f32(A, B, x2), vmlaq_f32(C, D, x2), x4);
@@ -245,54 +245,54 @@ inline float32x4_t vtaylor_polyq_f32(float32x4_t x, const float32x4_t *coeffs)
 
 inline float32x4_t vexpq_f32(float32x4_t x)
 {
-    static const float32x4_t CONST_LN2          = {0.6931471805f,0.6931471805f,0.6931471805f,0.6931471805f}; // ln(2)
-    static const float32x4_t CONST_INV_LN2      = {1.4426950408f,1.4426950408f,1.4426950408f,1.4426950408f}; // 1/ln(2)
-    static const float32x4_t CONST_0            = {0.f,0.f,0.f,0.f};
-    static const int32x4_t   CONST_NEGATIVE_126 = {-126,-126,-126,-126};
+    static const float32_t CONST_LN2[4]          = {0.6931471805f,0.6931471805f,0.6931471805f,0.6931471805f}; // ln(2)
+    static const float32_t CONST_INV_LN2[4]      = {1.4426950408f,1.4426950408f,1.4426950408f,1.4426950408f}; // 1/ln(2)
+    static const float32_t CONST_0[4]            = {0.f,0.f,0.f,0.f};
+    static const int32_t   CONST_NEGATIVE_126[4] = {-126,-126,-126,-126};
 
     // Perform range reduction [-log(2),log(2)]
-    int32x4_t   m   = vcvtq_s32_f32(vmulq_f32(x, CONST_INV_LN2));
-    float32x4_t val = vmlsq_f32(x, vcvtq_f32_s32(m), CONST_LN2);
+    int32x4_t   m   = vcvtq_s32_f32(vmulq_f32(x, vld1q_f32(CONST_INV_LN2)));
+    float32x4_t val = vmlsq_f32(x, vcvtq_f32_s32(m), vld1q_f32(CONST_LN2));
 
     // Polynomial Approximation
     float32x4_t poly = vtaylor_polyq_f32(val, exp_tab);
 
     // Reconstruct
     poly = vreinterpretq_f32_s32(vqaddq_s32(vreinterpretq_s32_f32(poly), vqshlq_n_s32(m, 23)));
-    poly = vbslq_f32(vcltq_s32(m, CONST_NEGATIVE_126), CONST_0, poly);
+    poly = vbslq_f32(vcltq_s32(m, vld1q_s32(CONST_NEGATIVE_126)), vld1q_f32(CONST_0), poly);
 
     return poly;
 }
 
 inline float32x4_t vlogq_f32(float32x4_t x)
 {
-    static const int32x4_t   CONST_127 = {127,127,127,127};           // 127
-    static const float32x4_t CONST_LN2 = {0.6931471805f,0.6931471805f,0.6931471805f,0.6931471805f}; // ln(2)
+    static const int32_t   CONST_127[4] = {127,127,127,127};           // 127
+    static const float32_t CONST_LN2[4] = {0.6931471805f,0.6931471805f,0.6931471805f,0.6931471805f}; // ln(2)
 
     // Extract exponent
-    int32x4_t   m   = vsubq_s32(vreinterpretq_s32_u32(vshrq_n_u32(vreinterpretq_u32_f32(x), 23)), CONST_127);
+    int32x4_t   m   = vsubq_s32(vreinterpretq_s32_u32(vshrq_n_u32(vreinterpretq_u32_f32(x), 23)), vld1q_s32(CONST_127));
     float32x4_t val = vreinterpretq_f32_s32(vsubq_s32(vreinterpretq_s32_f32(x), vshlq_n_s32(m, 23)));
 
     // Polynomial Approximation
     float32x4_t poly = vtaylor_polyq_f32(val, log_tab);
 
     // Reconstruct
-    poly = vmlaq_f32(poly, vcvtq_f32_s32(m), CONST_LN2);
+    poly = vmlaq_f32(poly, vcvtq_f32_s32(m), vld1q_f32(CONST_LN2));
 
     return poly;
 }
 
 inline float32x4_t vtanhq_f32(float32x4_t val)
 {
-    static const float32x4_t CONST_1        = {1.f,1.f,1.f,1.f};
-    static const float32x4_t CONST_2        = {2.f,2.f,2.f,2.f};
-    static const float32x4_t CONST_MIN_TANH = {-10.f,-10.f,-10.f,-10.f};
-    static const float32x4_t CONST_MAX_TANH = {10.f,10.f,10.f,10.f};
+    static const float32_t CONST_1[4]        = {1.f,1.f,1.f,1.f};
+    static const float32_t CONST_2[4]        = {2.f,2.f,2.f,2.f};
+    static const float32_t CONST_MIN_TANH[4] = {-10.f,-10.f,-10.f,-10.f};
+    static const float32_t CONST_MAX_TANH[4] = {10.f,10.f,10.f,10.f};
 
-    float32x4_t x     = vminq_f32(vmaxq_f32(val, CONST_MIN_TANH), CONST_MAX_TANH);
-    float32x4_t exp2x = vexpq_f32(vmulq_f32(CONST_2, x));
-    float32x4_t num   = vsubq_f32(exp2x, CONST_1);
-    float32x4_t den   = vaddq_f32(exp2x, CONST_1);
+    float32x4_t x     = vminq_f32(vmaxq_f32(val, vld1q_f32(CONST_MIN_TANH)), vld1q_f32(CONST_MAX_TANH));
+    float32x4_t exp2x = vexpq_f32(vmulq_f32(vld1q_f32(CONST_2), x));
+    float32x4_t num   = vsubq_f32(exp2x, vld1q_f32(CONST_1));
+    float32x4_t den   = vaddq_f32(exp2x, vld1q_f32(CONST_1));
     float32x4_t tanh  = vmulq_f32(num, vinvq_f32(den));
     return tanh;
 }
@@ -309,12 +309,12 @@ inline float32x4_t vpowq_f32(float32x4_t val, float32x4_t n)
 #ifndef DOXYGEN_SKIP_THIS
 inline float16x8_t vfloorq_f16(float16x8_t val)
 {
-    static const float16x8_t CONST_1 = {1.f,1.f,1.f,1.f};
+    static const float16_t CONST_1[8] = {1.f,1.f,1.f,1.f,1.f,1.f,1.f,1.f};
 
     const int16x8_t   z = vcvtq_s16_f16(val);
     const float16x8_t r = vcvtq_f16_s16(z);
 
-    return vbslq_f16(vcgtq_f16(r, val), vsubq_f16(r, CONST_1), r);
+    return vbslq_f16(vcgtq_f16(r, val), vsubq_f16(r, vld1q_f16(CONST_1)), r);
 }
 inline float16x4_t vinvsqrt_f16(float16x4_t x)
 {
@@ -350,15 +350,15 @@ inline float16x8_t vinvq_f16(float16x8_t x)
 
 inline float16x8_t vtanhq_f16(float16x8_t val)
 {
-    const float16x8_t CONST_1        = {1.f,1.f,1.f,1.f};
-    const float16x8_t CONST_2        = {2.f,2.f,2.f,2.f};
-    const float16x8_t CONST_MIN_TANH = {-10.f,-10.f,-10.f,-10.f};
-    const float16x8_t CONST_MAX_TANH = {10.f,10.f,10.f,10.f};
+    const float16_t CONST_1[8]        = {1.f,1.f,1.f,1.f,1.f,1.f,1.f,1.f};
+    const float16_t CONST_2[8]        = {2.f,2.f,2.f,2.f,2.f,2.f,2.f,2.f};
+    const float16_t CONST_MIN_TANH[8] = {-10.f,-10.f,-10.f,-10.f,-10.f,-10.f,-10.f,-10.f};
+    const float16_t CONST_MAX_TANH[8] = {10.f,10.f,10.f,10.f,10.f,10.f,10.f,10.f};
 
-    const float16x8_t x     = vminq_f16(vmaxq_f16(val, CONST_MIN_TANH), CONST_MAX_TANH);
-    const float16x8_t exp2x = vexpq_f16(vmulq_f16(CONST_2, x));
-    const float16x8_t num   = vsubq_f16(exp2x, CONST_1);
-    const float16x8_t den   = vaddq_f16(exp2x, CONST_1);
+    const float16x8_t x     = vminq_f16(vmaxq_f16(val, vld1q_f16(CONST_MIN_TANH)), vld1q_f16(CONST_MAX_TANH));
+    const float16x8_t exp2x = vexpq_f16(vmulq_f16(vld1q_f16(CONST_2), x));
+    const float16x8_t num   = vsubq_f16(exp2x, vld1q_f16(CONST_1));
+    const float16x8_t den   = vaddq_f16(exp2x, vld1q_f16(CONST_1));
     const float16x8_t tanh  = vmulq_f16(num, vinvq_f16(den));
     return tanh;
 }

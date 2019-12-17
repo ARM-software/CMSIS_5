@@ -1,9 +1,8 @@
 #include "Pooling.h"
+#include <stdio.h>
 #include "Error.h"
 #include "arm_nnfunctions.h"
 #include "Test.h"
-
-#include <cstdio>
 
 
     void Pooling::test_avgpool_s8()

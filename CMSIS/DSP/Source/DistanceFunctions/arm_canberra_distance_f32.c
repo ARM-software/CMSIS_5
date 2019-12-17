@@ -135,7 +135,7 @@ float32_t arm_canberra_distance_f32(const float32_t *pA,const float32_t *pB, uin
    uint32_t blkCnt;
    float32x4_t a,b,c,accumV;
    float32x2_t accumV2;
-   int32x4_t   isZeroV;
+   uint32x4_t   isZeroV;
    float32x4_t zeroV = vdupq_n_f32(0.0f);
 
    accumV = vdupq_n_f32(0.0f);
@@ -162,7 +162,7 @@ float32_t arm_canberra_distance_f32(const float32_t *pA,const float32_t *pB, uin
          * Force result of a division by 0 to 0. It the behavior of the
          * sklearn canberra function.
          */
-        a = vbicq_s32(a,isZeroV);
+        a = vreinterpretq_f32_s32(vbicq_s32(vreinterpretq_s32_f32(a),vreinterpretq_s32_u32(isZeroV)));
         c = vmulq_f32(c,a);
         accumV = vaddq_f32(accumV,c);
 
@@ -171,7 +171,7 @@ float32_t arm_canberra_distance_f32(const float32_t *pA,const float32_t *pB, uin
         blkCnt --;
    }
    accumV2 = vpadd_f32(vget_low_f32(accumV),vget_high_f32(accumV));
-   accum = accumV2[0] + accumV2[1];
+   accum = vget_lane_f32(accumV2, 0) + vget_lane_f32(accumV2, 1);
 
 
    blkCnt = blockSize & 3;

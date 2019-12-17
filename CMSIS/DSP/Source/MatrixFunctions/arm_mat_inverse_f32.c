@@ -774,7 +774,7 @@ arm_status arm_mat_inverse_f32(
 
       /* Pivot element of the row */
       in = *pPivotRowIn;
-      tmpV = vdupq_n_f32(1.0/in);
+      tmpV = vdupq_n_f32(1.0f/in);
 
       /* Loop over number of columns
        * to the right of the pilot element */

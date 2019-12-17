@@ -1,4 +1,5 @@
 #include "BIQUADQ31.h"
+#include <stdio.h>
 #include "Error.h"
 
 
@@ -24,10 +25,7 @@ static __ALIGNED(8) q31_t coeffArray[32];
         const q31_t *inputp = inputs.ptr();
         q31_t *outp = output.ptr();
 
-        int i,j;
         int blockSize;
-        int numTaps;
-        int nb=0;
 
         
 
@@ -41,7 +39,6 @@ static __ALIGNED(8) q31_t coeffArray[32];
         */
         
            blockSize = inputs.nbSamples() >> 1;
-           numTaps = coefs.nbSamples();
 
            /*
 
@@ -87,10 +84,7 @@ static __ALIGNED(8) q31_t coeffArray[32];
         q31_t *inputp = inputs.ptr();
         q31_t *outp = output.ptr();
 
-        int i,j;
         int blockSize;
-        int numTaps;
-        int nb=0;
 
         
 
@@ -104,7 +98,6 @@ static __ALIGNED(8) q31_t coeffArray[32];
         */
         
            blockSize = inputs.nbSamples() >> 1;
-           numTaps = coefs.nbSamples();
 
            /*
 
@@ -145,8 +138,6 @@ static __ALIGNED(8) q31_t coeffArray[32];
     void BIQUADQ31::setUp(Testing::testID_t id,std::vector<Testing::param_t>& params,Client::PatternMgr *mgr)
     {
       
-       Testing::nbSamples_t nb=MAX_NB_SAMPLES; 
-
        
        switch(id)
        {

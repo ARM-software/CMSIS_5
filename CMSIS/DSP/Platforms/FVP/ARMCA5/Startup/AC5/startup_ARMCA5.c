@@ -41,8 +41,8 @@
 /*----------------------------------------------------------------------------
   Internal References
  *----------------------------------------------------------------------------*/
-void Vectors       (void) __attribute__ ((naked, section("RESET")));
-void Reset_Handler (void) __attribute__ ((naked));
+void Vectors       (void) __attribute__ ((section("RESET")));
+void Reset_Handler (void);
 
 /*----------------------------------------------------------------------------
   Exception / Interrupt Handler
@@ -59,14 +59,14 @@ void FIQ_Handler   (void) __attribute__ ((weak, alias("Default_Handler")));
  *----------------------------------------------------------------------------*/
 void Vectors(void) {
   __ASM volatile(
-  "LDR    PC, =Reset_Handler                        \n"
-  "LDR    PC, =Undef_Handler                        \n"
-  "LDR    PC, =SVC_Handler                          \n"
-  "LDR    PC, =PAbt_Handler                         \n"
-  "LDR    PC, =DAbt_Handler                         \n"
+  "LDR    __current_pc, =Reset_Handler                        \n"
+  "LDR    __current_pc, =Undef_Handler                        \n"
+  "LDR    __current_pc, =SVC_Handler                          \n"
+  "LDR    __current_pc, =PAbt_Handler                         \n"
+  "LDR    __current_pc, =DAbt_Handler                         \n"
   "NOP                                              \n"
-  "LDR    PC, =IRQ_Handler                          \n"
-  "LDR    PC, =FIQ_Handler                          \n"
+  "LDR    __current_pc, =IRQ_Handler                          \n"
+  "LDR    __current_pc, =FIQ_Handler                          \n"
   );
 }
 

@@ -268,7 +268,7 @@ void arm_biquad_cascade_df2T_f32(
          dV.val[1] = vmulq_f32(s, b2V);
          dV.val[1] = vmlaq_f32(dV.val[1], YnV, a2V);
 
-         *pOut++ = YnV[3];
+         *pOut++ = vgetq_lane_f32(YnV, 3) ;
 
          sample--;
       }

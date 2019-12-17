@@ -9,21 +9,29 @@
   <tr>
     <td>V1.8.0</td>
     <td> 
+      - Helium implementation of lots of functions in the CMSIS-DSP.
+      More will be added in future releases.
+
       - New folder SVMFunctions : Support vector machines.
       Training must be done with scikit-learn. 
-      The python script DSP/Testing/PatternGenerations/SVM.py is showing how
-      to generate parameters for CMSIS-DSP from the corresponding trained python object.
+      - DSP/Examples/ARM/arm_svm_example is showing how to train with scikit-learn
+      and dump the result for use with CMSIS-DSP
 
       - New folder BayesFunctions : Functions related to Bayesian probability
       In this version only a naive gaussian classifier.
       Training must be done with scikit-learn. 
-      The python script DSP/Testing/PatternGenerations/Bayes.py is showing how
-      to generate parameters for CMSIS-DSP from the corresponding trained python object.
+      - DSP/Examples/ARM/arm_bayes_example is showing how to train with scikit-learn
+      and dump the result for use with CMSIS-DSP
       
       - New folder DistanceFunctions: Distance functions for clustering algorithms
 
+      - New BasicMathFunctions:
+        Elementwise bit operations.
+
       - New support functions:
-        arm_barycenter_f32 and arm_weighted_sum_f32
+        arm_barycenter_f32 and arm_weighted_sum_f32.
+        Sorting functions.
+        Spline interpolation.
 
       - New statistics functions :
         arm_entropy_f32, arm_kullback_leibler_f32, arm_logsumexp_f32
@@ -35,6 +43,10 @@
 
       - Improvements to the cmake build:
         It is more easy to switch toolchains. CMAKE_PREFIX_PATH can be used.
+
+      - The new folders SVMFunctions, BayesFunctions and DistanceFunctions are not
+      built by default in the MDK or ArmDS projects. You'll need to rebuild those folders
+      if you want to use those new functions.
 
     </td>
   </tr>

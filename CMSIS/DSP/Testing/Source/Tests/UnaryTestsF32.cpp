@@ -1,4 +1,5 @@
 #include "UnaryTestsF32.h"
+#include <stdio.h>
 #include "Error.h"
 
 #define SNR_THRESHOLD 120
@@ -207,7 +208,7 @@ void UnaryTestsF32::test_mat_inverse_f32()
           PREPAREDATA1(false);
 
           status=arm_mat_inverse_f32(&this->in1,&this->out);
-          //ASSERT_TRUE(status==ARM_MATH_SUCCESS);
+          ASSERT_TRUE(status==ARM_MATH_SUCCESS);
 
           outp += (rows * columns);
           inp1 += (rows * columns);
@@ -216,7 +217,7 @@ void UnaryTestsF32::test_mat_inverse_f32()
 
       ASSERT_EMPTY_TAIL(output);
 
-      //ASSERT_SNR(output,ref,(float32_t)SNR_THRESHOLD_INV);
+      ASSERT_SNR(output,ref,(float32_t)SNR_THRESHOLD_INV);
 
       ASSERT_CLOSE_ERROR(output,ref,ABS_ERROR_INV,REL_ERROR_INV);
 

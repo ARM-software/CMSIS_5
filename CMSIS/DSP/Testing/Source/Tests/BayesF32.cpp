@@ -1,9 +1,9 @@
 #include "BayesF32.h"
+#include <stdio.h>
 #include "Error.h"
 #include "arm_math.h"
 #include "Test.h"
 
-#include <cstdio>
 
 
     void BayesF32::test_gaussian_naive_bayes_predict_f32()

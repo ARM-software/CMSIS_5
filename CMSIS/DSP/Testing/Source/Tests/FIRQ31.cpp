@@ -1,4 +1,5 @@
 #include "FIRQ31.h"
+#include <stdio.h>
 #include "Error.h"
 
 #define SNR_THRESHOLD 100
@@ -20,10 +21,12 @@ static __ALIGNED(8) q31_t coeffArray[32];
         const q31_t *inputp = inputs.ptr();
         q31_t *outp = output.ptr();
 
-        int i,j;
+        int i;
+#if defined(ARM_MATH_MVEI)
+        int j;
+#endif
         int blockSize;
         int numTaps;
-        int nb=0;
 
         /*
 
@@ -83,7 +86,6 @@ static __ALIGNED(8) q31_t coeffArray[32];
            configp += 2;
            orgcoefsp += numTaps;
 
-           nb += 2*blockSize;
 
         }
 
@@ -99,8 +101,6 @@ static __ALIGNED(8) q31_t coeffArray[32];
     void FIRQ31::setUp(Testing::testID_t id,std::vector<Testing::param_t>& params,Client::PatternMgr *mgr)
     {
       
-       Testing::nbSamples_t nb=MAX_NB_SAMPLES; 
-
        
        switch(id)
        {

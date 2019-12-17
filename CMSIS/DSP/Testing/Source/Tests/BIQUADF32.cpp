@@ -1,4 +1,5 @@
 #include "BIQUADF32.h"
+#include <stdio.h>
 #include "Error.h"
 
 #define SNR_THRESHOLD 98
@@ -31,10 +32,7 @@ static __ALIGNED(8) float32_t coeffArray[32];
         arm_biquad_mod_coef_f32 *coefsmodp = (arm_biquad_mod_coef_f32*)vecCoefs.ptr();
         #endif
 
-        int i,j;
         int blockSize;
-        int numTaps;
-        int nb=0;
 
         
 
@@ -48,7 +46,6 @@ static __ALIGNED(8) float32_t coeffArray[32];
         */
         
            blockSize = inputs.nbSamples() >> 1;
-           numTaps = coefs.nbSamples();
 
            /*
 
@@ -107,10 +104,7 @@ static __ALIGNED(8) float32_t coeffArray[32];
         const float32_t *inputp = inputs.ptr();
         float32_t *outp = output.ptr();
 
-        int i,j;
         int blockSize;
-        int numTaps;
-        int nb=0;
 
         
 
@@ -124,7 +118,6 @@ static __ALIGNED(8) float32_t coeffArray[32];
         */
         
            blockSize = inputs.nbSamples() >> 1;
-           numTaps = coefs.nbSamples();
 
            /*
 
@@ -189,7 +182,6 @@ static __ALIGNED(8) float32_t coeffArray[32];
 
         int blockSize;
         int numStages;
-        int nb=0;
         int i;
 
         
@@ -267,7 +259,6 @@ static __ALIGNED(8) float32_t coeffArray[32];
 
         int blockSize;
         int numStages;
-        int nb=0;
 
         int i;
 
@@ -350,7 +341,6 @@ static __ALIGNED(8) float32_t coeffArray[32];
 
         int blockSize;
         int numStages;
-        int nb=0;
 
         int i;
 
@@ -410,8 +400,6 @@ static __ALIGNED(8) float32_t coeffArray[32];
     void BIQUADF32::setUp(Testing::testID_t id,std::vector<Testing::param_t>& params,Client::PatternMgr *mgr)
     {
       
-       Testing::nbSamples_t nb=MAX_NB_SAMPLES; 
-
        
        switch(id)
        {

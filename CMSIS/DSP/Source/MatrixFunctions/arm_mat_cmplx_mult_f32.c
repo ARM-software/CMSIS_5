@@ -938,20 +938,21 @@ arm_status arm_mat_cmplx_mult_f32(
           pIn1 += 8;
           pIn1B += 8;
 
-          tempR[0] = *pIn2;
-          tempI[0] = *(pIn2 + 1U);
+          tempR = vsetq_lane_f32(*pIn2,tempR,0);
+          tempI = vsetq_lane_f32(*(pIn2 + 1U),tempI,0);
           pIn2 += 2 * numColsB;
 
-          tempR[1] = *pIn2;
-          tempI[1] = *(pIn2 + 1U);
+
+          tempR = vsetq_lane_f32(*pIn2,tempR,1);
+          tempI = vsetq_lane_f32(*(pIn2 + 1U),tempI,1);
           pIn2 += 2 * numColsB;
 
-          tempR[2] = *pIn2;
-          tempI[2] = *(pIn2 + 1U);
+          tempR = vsetq_lane_f32(*pIn2,tempR,2);
+          tempI = vsetq_lane_f32(*(pIn2 + 1U),tempI,2);
           pIn2 += 2 * numColsB;
 
-          tempR[3] = *pIn2;
-          tempI[3] = *(pIn2 + 1U);
+          tempR = vsetq_lane_f32(*pIn2,tempR,3);
+          tempI = vsetq_lane_f32(*(pIn2 + 1U),tempI,3);
           pIn2 += 2 * numColsB;
 
           accR0 = vmlaq_f32(accR0,a0V.val[0],tempR);
@@ -971,16 +972,16 @@ arm_status arm_mat_cmplx_mult_f32(
         }
 
         accum = vpadd_f32(vget_low_f32(accR0), vget_high_f32(accR0));
-        sumReal1 += accum[0] + accum[1];
+        sumReal1 += vget_lane_f32(accum, 0) + vget_lane_f32(accum, 1);
 
         accum = vpadd_f32(vget_low_f32(accI0), vget_high_f32(accI0));
-        sumImag1 += accum[0] + accum[1];
+        sumImag1 += vget_lane_f32(accum, 0) + vget_lane_f32(accum, 1);
 
         accum = vpadd_f32(vget_low_f32(accR1), vget_high_f32(accR1));
-        sumReal1B += accum[0] + accum[1];
+        sumReal1B += vget_lane_f32(accum, 0) + vget_lane_f32(accum, 1);
 
         accum = vpadd_f32(vget_low_f32(accI1), vget_high_f32(accI1));
-        sumImag1B += accum[0] + accum[1];
+        sumImag1B += vget_lane_f32(accum, 0) + vget_lane_f32(accum, 1);
 
         /* If the columns of pSrcA is not a multiple of 4, compute any remaining MACs here.
          ** No loop unrolling is used. */
@@ -1088,20 +1089,20 @@ arm_status arm_mat_cmplx_mult_f32(
           a0V = vld2q_f32(pIn1);  // load & separate real/imag pSrcA (de-interleave 2)
           pIn1 += 8;
 
-          tempR[0] = *pIn2;
-          tempI[0] = *(pIn2 + 1U);
+          tempR = vsetq_lane_f32(*pIn2,tempR,0);
+          tempI = vsetq_lane_f32(*(pIn2 + 1U),tempI,0);
           pIn2 += 2 * numColsB;
 
-          tempR[1] = *pIn2;
-          tempI[1] = *(pIn2 + 1U);
+          tempR = vsetq_lane_f32(*pIn2,tempR,1);
+          tempI = vsetq_lane_f32(*(pIn2 + 1U),tempI,1);
           pIn2 += 2 * numColsB;
 
-          tempR[2] = *pIn2;
-          tempI[2] = *(pIn2 + 1U);
+          tempR = vsetq_lane_f32(*pIn2,tempR,2);
+          tempI = vsetq_lane_f32(*(pIn2 + 1U),tempI,2);
           pIn2 += 2 * numColsB;
 
-          tempR[3] = *pIn2;
-          tempI[3] = *(pIn2 + 1U);
+          tempR = vsetq_lane_f32(*pIn2,tempR,3);
+          tempI = vsetq_lane_f32(*(pIn2 + 1U),tempI,3);
           pIn2 += 2 * numColsB;
 
           accR0 = vmlaq_f32(accR0,a0V.val[0],tempR);
@@ -1115,10 +1116,10 @@ arm_status arm_mat_cmplx_mult_f32(
         }
 
         accum = vpadd_f32(vget_low_f32(accR0), vget_high_f32(accR0));
-        sumReal1 += accum[0] + accum[1];
+        sumReal1 += vget_lane_f32(accum, 0) + vget_lane_f32(accum, 1);
 
         accum = vpadd_f32(vget_low_f32(accI0), vget_high_f32(accI0));
-        sumImag1 += accum[0] + accum[1];
+        sumImag1 += vget_lane_f32(accum, 0) + vget_lane_f32(accum, 1);
 
         /* If the columns of pSrcA is not a multiple of 4, compute any remaining MACs here.
          ** No loop unrolling is used. */

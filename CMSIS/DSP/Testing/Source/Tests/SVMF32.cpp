@@ -1,4 +1,5 @@
 #include "SVMF32.h"
+#include <stdio.h>
 #include "Error.h"
 
 
