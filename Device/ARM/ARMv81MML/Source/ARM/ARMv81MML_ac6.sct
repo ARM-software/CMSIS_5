@@ -1,9 +1,17 @@
-#! armclang -E --target=arm-arm-none-eabi -mcpu=cortex-m33 -xc
+#! armclang -E --target=arm-arm-none-eabi -march=armv8.1-m.main -xc
 ; command above MUST be in first line (no comment above!)
 
 /*
 ;-------- <<< Use Configuration Wizard in Context Menu >>> -------------------
 */
+
+/* memory regions are:
+       secure ROM: 0x10000000
+   non-secure ROM: 0x00000000
+   
+       secure RAM: 0x30000000
+   non-secure RAM: 0x20000000
+ */
 
 /*--------------------- Flash Configuration ----------------------------------
 ; <h> Flash Configuration
@@ -11,7 +19,7 @@
 ;   <o1> Flash Size (in Bytes) <0x0-0xFFFFFFFF:8>
 ; </h>
  *----------------------------------------------------------------------------*/
-#define __ROM_BASE      0x10000000
+#define __ROM_BASE      0x00000000
 #define __ROM_SIZE      0x00080000
 
 /*--------------------- Embedded RAM Configuration ---------------------------
@@ -20,7 +28,7 @@
 ;   <o1> RAM Size (in Bytes) <0x0-0xFFFFFFFF:8>
 ; </h>
  *----------------------------------------------------------------------------*/
-#define __RAM_BASE      0x30000000
+#define __RAM_BASE      0x20000000
 #define __RAM_SIZE      0x00040000
 
 /*--------------------- Stack / Heap Configuration ---------------------------
