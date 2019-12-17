@@ -3,13 +3,16 @@
 \page pdsc_components_pg  /package/components element
 
 The element \ref element_components describes software components contained in the Pack.
-A component lists the files that belong to a component and that are relevant for a project. The component itself or each individual file may
-refer to a \ref element_condition "condition" that must resolve to true; if it is false the component or file is not applicable in the given context.
+A component lists the files that belong to a component and that are relevant for a project. The component itself or each
+individual file may refer to a \ref element_condition "condition" that must resolve to true; if it is false the component
+or file is not applicable in the given context.
 
-Each component must have a Class (Cclass=), a Group (Cgroup=), and a Version (Cversion=) which is used to identify the component. Optionally a component
-may have a Sub-Group (Csub=) and Variant (Cvariant=) to add further categories.  The Class, Group, Sub-Group, Variant and Version is used together with the
-vendor specified by the Pack, to identify a component. A component vendor must ensure that the combination Class, Group, Sub-Group and Version is unique and
-not used by multiple components.
+Each component must have a class (Cclass=) and/or bundle (Cbundle), a group (Cgroup=), and a version (Cversion=) which is
+used to identify the component. Optionally, a component may have a sub-group (Csub=) and variant (Cvariant=) to add further
+categories. A component is identified by the class/bundle, group, sub-group, variant and version information together with
+the vendor specified by the pack. A component vendor must ensure that the combination of class/bundle, group, sub-group,
+version, and variant is unique and not used by multiple components (after evaluating filter
+\ref pdsc_conditions_pg "conditions").
 
 \b Example
 \code
@@ -34,10 +37,9 @@ not used by multiple components.
         <file category="header" condition="SC300" name="CMSIS/Include/core_sc300.h"/>
       </files>
     </component>
-
+ 
     <component Cclass="CMSIS" Cgroup="DSP" Cversion="1.1.0" condition="CMSIS DSP">
       <description>CMSIS-DSP Library for Cortex-M0, Cortex-M3 and Cortex-M4 as well as SC000 and SC300 processor based devices</description>
-
       <files>
         <!-- CPU independent -->
         <file category="doc" name="CMSIS/Documentation/DSP/html/index.html"/>
@@ -64,17 +66,34 @@ not used by multiple components.
         <file category="library" condition="CM4F_LE_G++"   name="CMSIS/Lib/G++/libarm_cortexM4lf_math.a"/>
       </files>
     </component>
-
-    <component condition="ARM_CM0" Cclass="Device" Cgroup="Startup" Cversion="3.1.1">
-      <description>System Startup for generic Arm Cortex-M0 device</description>
+ 
+    <!-- Cortex-M0 -->
+    <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cversion="2.0.0" condition="ARMCM0 CMSIS">
+      <description>System and Startup for Generic Arm Cortex-M0 device</description>
       <files>
-        <file category="header" name="Device/ARM/ARMCM0/Include/ARMCM0.h"/>
-        <file category="header" name="Device/ARM/ARMCM0/Include/system_ARMCM0.h"/>
-        <file category="source" condition="Compiler_ARM" name="Device/ARM/ARMCM0/Source/ARM/startup_ARMCM0.s"/>
-        <file category="source" condition="Compiler_GCC" name="Device/ARM/ARMCM0/Source/GCC/startup_ARMCM0.S"/>
-        <file category="source" condition="Compiler_G++" name="Device/ARM/ARMCM0/Source/G++/startup_ARMCM0.S"/>
-        <file category="source" condition="Compiler_IAR" name="Device/ARM/ARMCM0/Source/IAR/startup_ARMCM0.s"/>
-        <file category="source" name="Device/ARM/ARMCM0/Source/system_ARMCM0.c" attr="template"/>
+        <!-- include folder / device header file -->
+        <file category="header"  name="Device/ARM/ARMCM0/Include/ARMCM0.h"/>
+        <!-- startup / system file -->
+        <file category="sourceC"      name="Device/ARM/ARMCM0/Source/startup_ARMCM0.c"     version="2.0.0" attr="config"/>
+        <file category="linkerScript" name="Device/ARM/ARMCM0/Source/ARM/ARMCM0_ac5.sct"   version="1.0.0" attr="config" condition="ARMCC5"/>
+        <file category="linkerScript" name="Device/ARM/ARMCM0/Source/ARM/ARMCM0_ac6.sct"   version="1.0.0" attr="config" condition="ARMCC6"/>
+        <file category="linkerScript" name="Device/ARM/ARMCM0/Source/GCC/gcc_arm.ld"       version="2.0.0" attr="config" condition="GCC"/>
+        <file category="sourceC"      name="Device/ARM/ARMCM0/Source/system_ARMCM0.c"      version="1.0.0" attr="config"/>
+      </files>
+    </component>
+ 
+    <!-- Cortex-M0+ - the same component as above, but with different filter conditions, so each one is unique -->
+    <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cversion="2.0.0" condition="ARMCM0+ CMSIS">
+      <description>System and Startup for Generic Arm Cortex-M0+ device</description>
+      <files>
+        <!-- include folder / device header file -->
+        <file category="header"  name="Device/ARM/ARMCM0plus/Include/ARMCM0plus.h"/>
+        <!-- startup / system file -->
+        <file category="sourceC"      name="Device/ARM/ARMCM0plus/Source/startup_ARMCM0plus.c"     version="2.0.0" attr="config"/>
+        <file category="linkerScript" name="Device/ARM/ARMCM0plus/Source/ARM/ARMCM0plus_ac5.sct"   version="1.0.0" attr="config" condition="ARMCC5"/>
+        <file category="linkerScript" name="Device/ARM/ARMCM0plus/Source/ARM/ARMCM0plus_ac6.sct"   version="1.0.0" attr="config" condition="ARMCC6"/>
+        <file category="linkerScript" name="Device/ARM/ARMCM0plus/Source/GCC/gcc_arm.ld"           version="2.0.0" attr="config" condition="GCC"/>
+        <file category="sourceC"      name="Device/ARM/ARMCM0plus/Source/system_ARMCM0plus.c"      version="1.0.0" attr="config"/>
       </files>
     </component>
   </components>
