@@ -42,7 +42,7 @@
 void arm_q7_to_q15_with_offset(const q7_t *src,
                                q15_t *dst,
                                uint32_t block_size,
-                               q7_t offset)
+                               q15_t offset)
 {
     int block_cnt;
 
@@ -80,7 +80,7 @@ void arm_q7_to_q15_with_offset(const q7_t *src,
     {
         /* convert from q7 to q15 and then store the results in the destination buffer */
         in_q7x4 = arm_nn_read_q7x4_ia(&src);
-        q31_t offset_q15x2 = (offset << 16l) | offset;
+        q31_t offset_q15x2 = __PKHBT(offset, offset, 16);
 
         /* Extract and sign extend each of the four q7 values to q15 */
         in_q15x2_1 = __SXTB16(__ROR(in_q7x4, 8));
