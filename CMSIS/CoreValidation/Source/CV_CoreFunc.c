@@ -194,6 +194,7 @@ Check expected behavior of interrupt vector relocation functions:
 void TC_CoreFunc_IRQVect(void) {
 #if defined(__VTOR_PRESENT) && __VTOR_PRESENT
   /* relocate vector table */
+  extern const VECTOR_TABLE_Type __VECTOR_TABLE[48];
   static VECTOR_TABLE_Type vectors[sizeof(__VECTOR_TABLE)/sizeof(__VECTOR_TABLE[0])] __ALIGNED(512);
 
   memcpy(vectors, __VECTOR_TABLE, sizeof(__VECTOR_TABLE));
