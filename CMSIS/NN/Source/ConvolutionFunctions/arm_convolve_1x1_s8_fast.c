@@ -157,7 +157,7 @@ arm_status arm_convolve_1x1_s8_fast(const q7_t *input,
         arm_q7_to_q15_reordered_with_offset(&input[i_element * 2 * input_ch],
                                             two_column_buffer,
                                             input_ch * 2,
-                                            (q7_t)input_offset);
+                                            input_offset);
 
         out = arm_nn_mat_mult_kernel_s8_s16_reordered(kernel,
                                                       two_column_buffer,
@@ -179,7 +179,7 @@ arm_status arm_convolve_1x1_s8_fast(const q7_t *input,
 
         arm_q7_to_q15_reordered_with_offset(
             &input[(num_elements - 1) * input_ch],
-            two_column_buffer, input_ch, (q7_t)input_offset);
+            two_column_buffer, input_ch, input_offset);
 
         for (i_ch_out = 0; i_ch_out < output_ch; i_ch_out++)
         {

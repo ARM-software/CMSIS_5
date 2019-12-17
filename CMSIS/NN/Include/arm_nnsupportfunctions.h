@@ -133,7 +133,7 @@ void      arm_q7_to_q15_reordered_no_shift(const q7_t * pSrc, q15_t * pDst, uint
  * </pre>
  *
  */
-void arm_q7_to_q15_with_offset(const q7_t *src, q15_t *dst, uint32_t block_size, q7_t offset);
+void arm_q7_to_q15_with_offset(const q7_t *src, q15_t *dst, uint32_t block_size, q15_t offset);
 
 /**
  * @brief Converts the elements of the q7 vector to reordered q15 vector with an added offset
@@ -148,7 +148,7 @@ void arm_q7_to_q15_with_offset(const q7_t *src, q15_t *dst, uint32_t block_size,
  *           order.
  *
  */
-void arm_q7_to_q15_reordered_with_offset(const q7_t *src, q15_t *dst, uint32_t block_size, q7_t offset);
+void arm_q7_to_q15_reordered_with_offset(const q7_t *src, q15_t *dst, uint32_t block_size, q15_t offset);
 
 /**
  * @brief Converts the elements from a q7 vector and accumulate to a q15 vector
