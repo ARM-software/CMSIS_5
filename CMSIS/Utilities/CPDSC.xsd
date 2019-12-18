@@ -1,0 +1,578 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+  Copyright (c) 2019 ARM Limited. All rights reserved.
+
+  SPDX-License-Identifier: Apache-2.0
+
+  Licensed under the Apache License, Version 2.0 (the License); you may
+  not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+  www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an AS IS BASIS, WITHOUT
+  WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+
+  $Date:        12. December 2019
+  $Revision:    0.0.5
+
+  $Project: Schema File for CMSIS Project Description File Format Specification
+
+  SchemaVersion=0.0.5
+
+0.0.5: removing digits and wildcard from enumerations. Restricted to single compiler specified.
+0.0.4: set file attribute of LinkerFlagsType element as optional
+       renamed ConditionVersionType in VersionRangeType
+       changed CompilerType version attribute
+0.0.3: add missing file category "doc" which is files in the project space of type doc
+       required packages specify a single version not a version range (not supported by today's implementations
+0.0.2: removed language requirements as this shall be covered in the CFLAGS/CXXFLAGS
+0.0.1: initial version
+-->
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="qualified" version="0.0.4">
+
+  <xs:simpleType name="RestrictedString">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="[\-_A-Za-z0-9]+" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="RestrictedStringDname">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="[\-\*\?_A-Za-z0-9/]+" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="SchemaVersionType">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="[0-9]+\.[0-9]+((\.[0-9]+)|())" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="ComponentVersionType">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="[0-9]+\.[0-9]+((\.[0-9]+)|())((\-[0-9A-Za-z_\-\.]+)|([_A-Za-z][0-9A-Za-z_\-\.]*)|())((\+[\-\._A-Za-z0-9]+)|())" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <!-- version can contain one or more of alphanumeric characters and symbols '_' '-' '.' 
+       Important: version pattern shall remain the same while versions change
+  -->
+  <xs:simpleType name="PackVersionType">
+    <xs:restriction base="xs:string">
+      <!-- major . minor . patch [[-]quality] [+build] -->
+      <xs:pattern value="[0-9]+.[0-9]+.[0-9]+((\-[0-9A-Za-z_\-\.]+)|([_A-Za-z][0-9A-Za-z_\-\.]*)|())((\+[\-\._A-Za-z0-9]+)|())" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <!-- version can contain one or more of alphanumeric characters and symbols '_' '-' '.' 
+       Allows specifing a version range: minVersion : maxVersion
+  -->
+  <xs:simpleType name="VersionRangeType">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="[0-9]+.[0-9]+((.[0-9]+)|())((\-[0-9A-Za-z_\-\.]+)|([_A-Za-z][0-9A-Za-z_\-\.]*)|())((\+[\-\._A-Za-z0-9]+)|())((:[0-9]+.[0-9]+((.[0-9]+)|()))|())((\-[0-9A-Za-z_\-\.]+)|([_A-Za-z][0-9A-Za-z_\-\.]*)|())((\+[\-\._A-Za-z0-9]+)|())" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <!-- Registered Device Vendors -->
+  <xs:simpleType name="DeviceVendorEnum">
+    <xs:union memberTypes="xs:string"/>
+  </xs:simpleType>
+
+  <!-- Component Class Name Type: specify your own Class in taxonomy -->
+  <xs:simpleType name="CclassType">
+    <xs:union memberTypes="xs:string"/>
+  </xs:simpleType>
+
+  <!-- Component Group Name Type (no leading or trailing spaces allowed) -->
+  <xs:simpleType name="CgroupType">
+    <xs:union memberTypes="xs:string"/>
+  </xs:simpleType>
+
+  <!-- Component Sub Name Type -->
+  <xs:simpleType name="CsubType">
+    <xs:union memberTypes="xs:string"/>
+  </xs:simpleType>
+
+  <!-- Component Variant Name Type -->
+  <xs:simpleType name="CvariantType">
+    <xs:union memberTypes="xs:string"/>
+  </xs:simpleType>
+
+  <!-- Processor Type -->
+  <xs:complexType name="ProcessorType">
+    <!-- Pname defines an identifier for a specific processor in a multi-processor devices -->
+    <xs:attribute name="Pname" type="RestrictedString" />
+    <!-- Punits specifies the number of processing units in a symmetric multi-processor core -->
+    <xs:attribute name="Punits" type="InstancesType" />
+    <!-- Dcore specifies the processor from a list of supported processors -->
+    <xs:attribute name="Dcore" type="DcoreEnum" />
+    <!-- Dfpu specifies the hardware floating point unit -->
+    <xs:attribute name="Dfpu" type="DfpuEnum" />
+    <!-- Dmpu specifies the memory protection unit -->
+    <xs:attribute name="Dmpu" type="DmpuEnum" />
+    <!-- Dtz specifies the processor TrustZone support -->
+    <xs:attribute name="Dtz" type="DtzEnum" />
+    <!-- Ddsp specifies the processor support for DSP instructions -->
+    <xs:attribute name="Ddsp" type="DdspEnum" />
+    <!-- Dmve specifies the processor Cortex-M vector extensions -->
+    <xs:attribute name="Dmve" type="DmveEnum" />
+    <!-- Dendian specifies the endianess supported by the processor -->
+    <xs:attribute name="Dendian" type="DendianEnum" />
+    <!-- Dclock specifies the maximum core clock frequency -->
+    <xs:attribute name="Dclock" type="xs:unsignedInt" />
+    <!-- DcoreVersion specifies the revision of the processor -->
+    <xs:attribute name="DcoreVersion" type="xs:string" />
+  </xs:complexType>
+
+  <!-- Description Type-->
+  <xs:complexType name="DescriptionType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <!-- Pname identifies the processor this setting belongs to -->
+        <xs:attribute name="Pname" type="RestrictedString" />
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <!-- Dcore enumeration type -->
+  <xs:simpleType name="DcoreEnum">
+    <xs:union memberTypes="xs:string"/>
+  </xs:simpleType>
+
+  <!-- Dendian enumeration type -->
+  <xs:simpleType name="DendianEnum">
+    <xs:restriction base="xs:token">
+      <xs:enumeration value="Little-endian" />
+      <xs:enumeration value="Big-endian" />
+      <xs:enumeration value="Configurable" />
+      <xs:enumeration value="*" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <!-- Dfpu enumeration type -->
+  <xs:simpleType name="DfpuEnum">
+    <xs:restriction base="xs:token">
+      <!-- core has FPU (type of FPU depends on Dcore) -->
+      <xs:enumeration value="FPU" />
+      <xs:enumeration value="1" />
+      <!-- core has no FPU -->
+      <xs:enumeration value="NO_FPU" />
+      <xs:enumeration value="0" />
+      <!-- single precision FPU -->
+      <xs:enumeration value="SP_FPU" />
+      <!-- double precision FPU -->
+      <xs:enumeration value="DP_FPU" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <!-- Dmpu enumeration type -->
+  <xs:simpleType name="DmpuEnum">
+    <xs:restriction base="xs:token">
+      <xs:enumeration value="MPU" />
+      <xs:enumeration value="NO_MPU" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <!-- Dtz TrustZone enumeration type -->
+  <xs:simpleType name="DtzEnum">
+    <xs:restriction base="xs:token">
+      <xs:enumeration value="TZ" />
+      <xs:enumeration value="NO_TZ" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <!-- Dsecure enumeration type -->
+  <xs:simpleType name="DsecureEnum">
+    <xs:restriction base="xs:token">
+      <xs:enumeration value="Secure" />
+      <xs:enumeration value="Non-secure" />
+      <xs:enumeration value="TZ-disabled" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <!-- Ddsp DSP extensions enumeration type -->
+  <xs:simpleType name="DdspEnum">
+    <xs:restriction base="xs:token">
+      <xs:enumeration value="DSP" />
+      <xs:enumeration value="NO_DSP" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <!-- Dmve extension enumeration type -->
+  <xs:simpleType name="DmveEnum">
+    <xs:restriction base="xs:token">
+      <xs:enumeration value="NO_MVE"/>
+      <xs:enumeration value="MVE"/>
+      <xs:enumeration value="FP_MVE"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <!-- file category type -->
+  <xs:simpleType name="FileCategoryType">
+    <xs:restriction base="xs:token">
+      <xs:enumeration value="doc" />
+      <xs:enumeration value="header" />
+      <xs:enumeration value="library" />
+      <xs:enumeration value="object" />
+      <xs:enumeration value="source" />
+      <xs:enumeration value="sourceC" />
+      <xs:enumeration value="sourceCpp" />
+      <xs:enumeration value="sourceAsm" />
+      <xs:enumeration value="linkerScript" />
+      <xs:enumeration value="utility" />
+      <xs:enumeration value="image" />
+      <xs:enumeration value="other" />
+      <xs:enumeration value="preIncludeGlobal"/>
+      <xs:enumeration value="preIncludeLocal"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <!-- file attribute type -->
+  <xs:simpleType name="FileAttributeType">
+    <xs:restriction base="xs:token">
+      <xs:enumeration value="config" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <!-- option action -->
+  <xs:simpleType name="OptionActionEnumType">
+    <xs:restriction base="xs:token">
+      <xs:enumeration value="add"/>
+      <xs:enumeration value="remove"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <!-- compiler toolchain enumeration -->
+  <xs:simpleType name="CompilerEnumType">
+    <xs:restriction base="xs:token">
+      <xs:enumeration value="GCC" />
+      <xs:enumeration value="ARMCC" />
+      <xs:enumeration value="IAR" />
+      <xs:enumeration value="Tasking" />
+      <xs:enumeration value="GHS" />
+      <xs:enumeration value="Cosmic" />
+      <xs:enumeration value="G++"/>
+      <!-- Code Sourcery -->
+      <xs:enumeration value="*" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <!-- compiler specific options/mode -->
+  <xs:simpleType name="CompilerOptionsEnumType">
+    <xs:restriction base="xs:token">
+      <xs:enumeration value="AC5" />
+      <xs:enumeration value="AC6" />
+      <xs:enumeration value="AC6LTO" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <!-- compiler output enumeration -->
+  <xs:simpleType name="CompilerOutputType">
+    <xs:restriction base="xs:token">
+      <xs:enumeration value="exe" />
+      <!-- executable -->
+      <xs:enumeration value="lib" />
+      <!-- library -->
+      <xs:enumeration value="*" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name="ComponentCategoryType">
+    <xs:attribute name="Cvendor" type="xs:string" use="optional" />
+    <xs:attribute name="Cbundle" type="xs:string" use="optional" />
+    <xs:attribute name="Cclass" type="CclassType" use="required" />
+    <xs:attribute name="Cgroup" type="CgroupType" use="optional" />
+    <xs:attribute name="Csub" type="CsubType" use="optional" />
+    <xs:attribute name="Cvariant" type="CvariantType" use="optional" />
+    <xs:attribute name="Cversion" type="ComponentVersionType" use="optional" />
+    <xs:attribute name="Capiversion" type="ComponentVersionType" use="optional" />
+    <xs:attribute name="instances" type="InstancesType" use="optional" default="1" />
+  </xs:complexType>
+
+  <xs:complexType name="BoardReferenceType">
+    <xs:attribute name="name"        type="xs:string"        use="required"/>
+    <!-- refers to Board Description by name   -->
+    <xs:attribute name="vendor"      type="xs:string"        use="required"/>
+    <!-- refers to Board Description by vendor -->
+  </xs:complexType>
+
+  <xs:simpleType name="InstancesType">
+    <xs:restriction base="xs:unsignedInt">
+      <xs:minInclusive value="1" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <!-- PackageType creates a unique ID for a package / if no version specified use "latest" -->
+  <xs:complexType name="PackageType">
+    <!-- vendor of the package -->
+    <xs:attribute name="vendor"  type="xs:string" use="required" />
+    <!-- name of the package -->
+    <xs:attribute name="name"    type="xs:string" use="required" />
+    <!-- version of the package (no range supported) -->
+    <xs:attribute name="version" type="PackVersionType" use="optional" />
+  </xs:complexType>
+
+  <!-- Package dependency section type -->
+  <xs:complexType name="PackagesType">
+    <xs:sequence maxOccurs="unbounded">
+      <xs:element name="package" type="PackageType" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- LanguageType creates a unique language ID -->
+  <xs:complexType name="LanguageType">
+    <!-- language name e.g. C -->
+    <xs:attribute name="name"    type="xs:string" use="required" />
+    <!-- language version e.g. C99 -->
+    <xs:attribute name="version" type="xs:string" use="required" />
+  </xs:complexType>
+
+  <!-- CompilerType creates a unique toolchain ID, e.g. armcc 5.4.0 -->
+  <xs:complexType name="CompilerType">
+    <xs:attribute name="name"    type="CompilerEnumType" use="required" />
+    <xs:attribute name="version" type="VersionRangeType" use="required" />
+  </xs:complexType>
+
+  <!-- Compiler section type -->
+  <xs:complexType name="CompilersType">
+    <xs:sequence maxOccurs="1">
+      <xs:element name="compiler" type="CompilerType" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- Requirements Section: -->
+  <xs:complexType name="RequirementsType">
+    <xs:all>
+      <xs:element name="packages"  type="PackagesType"  minOccurs="0" />
+      <xs:element name="compilers" type="CompilersType" minOccurs="0" />
+    </xs:all>
+  </xs:complexType>
+
+  <!-- Project target specification: -->
+  <xs:complexType name="TargetType">
+    <xs:choice maxOccurs="unbounded">
+      <!-- build options -->
+      <xs:element name="output"    type="OutputType" />
+      <!-- linker command-line -->
+      <xs:element name="ldflags"   type="LinkerFlagsType" />
+      <!-- C-Compiler command-line -->
+      <xs:element name="cflags"    type="ToolOptionType" />
+      <!-- C++ Compiler command-line -->
+      <xs:element name="cxxflags"  type="ToolOptionType" />
+      <!-- Assembler command-line -->
+      <xs:element name="asflags"   type="ToolOptionType" />
+    </xs:choice>
+    <!-- Board Vendor -->
+    <xs:attribute name="Bvendor"  type="xs:string"   use="optional" />
+    <!-- Board Name -->
+    <xs:attribute name="Bname"    type="xs:string"   use="optional" />
+    <!-- Board Version -->
+    <xs:attribute name="Bversion" type="xs:string"   use="optional" />
+    <!-- Device Vendor -->
+    <xs:attribute name="Dvendor"  type="xs:string"   use="optional" />
+    <!-- Device Name -->
+    <xs:attribute name="Dname"    type="xs:string"   use="optional" />
+    <!-- Processor Instance Name -->
+    <xs:attribute name="Pname"    type="xs:string"   use="optional" />
+    <!-- FPU used in target build -->
+    <xs:attribute name="Dfpu"     type="DfpuEnum"    use="optional" />
+    <!-- Endianess used in target build -->
+    <xs:attribute name="Dendian"  type="DendianEnum" use="optional" />
+    <!-- MPU used in target build -->
+    <xs:attribute name="Dmpu"     type="DmpuEnum"    use="optional" />
+    <xs:attribute name="Ddsp"     type="DdspEnum"    use="optional" />
+    <xs:attribute name="Dmve"     type="DmveEnum"    use="optional" />
+    <xs:attribute name="Dtz"      type="DtzEnum"     use="optional" />
+    <xs:attribute name="Dsecure"  type="DsecureEnum" use="optional" />
+  </xs:complexType>
+
+  <!-- Build settings for the project, setting RTE filter options -->
+  <xs:complexType name="OutputType">
+    <!-- Project output file name -->
+    <xs:attribute name="name"  type="xs:string"          use="required" />
+    <xs:attribute name="obj"   type="xs:string"          use="optional" />
+    <xs:attribute name="list"  type="xs:string"          use="optional" />
+    <!-- Project output library or executable -->
+    <xs:attribute name="type"  type="CompilerOutputType" use="required" />
+    <!-- Project build for debug -->
+    <xs:attribute name="debug" type="xs:boolean"         use="required" />
+  </xs:complexType>
+
+  <xs:complexType name="LinkerFlagsType">
+    <xs:attribute name="file"   type="xs:string"/>
+    <xs:attribute name="add"    type="xs:string"/>
+    <xs:attribute name="remove" type="xs:string"/>
+  </xs:complexType>
+
+  <xs:complexType name="ToolOptionType">
+    <xs:attribute name="add"    type="xs:string" />
+    <xs:attribute name="remove" type="xs:string" />
+  </xs:complexType>
+
+  <!-- Group section contains a list of files and (sub-)groups -->
+  <xs:complexType name="GroupType">
+    <xs:choice maxOccurs="unbounded">
+      <xs:element name="cflags"    type="ToolOptionType" />
+      <xs:element name="cxxflags"  type="ToolOptionType" />
+      <xs:element name="asflags"   type="ToolOptionType" />
+      <xs:element name="file"      type="FileType" />
+      <xs:element name="group"     type="GroupType" />
+    </xs:choice>
+    <xs:attribute name="name" use="required" />
+  </xs:complexType>
+
+  <!-- file type definition -->
+  <xs:complexType name="FileType">
+    <xs:choice minOccurs="0">
+      <xs:element name="cflags"   type="ToolOptionType" />
+      <xs:element name="cxxflags" type="ToolOptionType" />
+      <xs:element name="asflags"  type="ToolOptionType" />
+    </xs:choice>
+    <!-- path + filename + extension -->
+    <xs:attribute name="name"     type="xs:string"        use="required" />
+    <!-- file item category: source, header, include path, etc.  -->
+    <xs:attribute name="category" type="FileCategoryType" use="required" />
+    <!-- for category="header" path explicitly specifies the include path added to the commandline.-->
+    <!-- Ignored for all other categories -->
+    <xs:attribute name="path"     type="xs:string"        use="optional" />
+    <!-- path(s) to find source files for a library, paths are delimited with semicolon (;) -->
+    <xs:attribute name="src"      type="xs:string"        use="optional" />
+  </xs:complexType>
+
+  <!-- Files section within the project section -->
+  <xs:complexType name="FilesType">
+    <xs:choice maxOccurs="unbounded">
+      <!-- C-Compiler command-line -->
+      <xs:element name="cflags"    type="ToolOptionType" />
+      <!-- C++ Compiler command-line -->
+      <xs:element name="cxxflags"  type="ToolOptionType" />
+      <!-- Assembler command-line -->
+      <xs:element name="asflags"   type="ToolOptionType" />
+      <xs:element name="file" type="FileType" />
+      <xs:element name="group" type="GroupType" />
+    </xs:choice>
+  </xs:complexType>
+
+  <!-- Component selection section -->
+  <xs:complexType name="ComponentSelectType">
+    <xs:sequence>
+      <xs:element name="component" maxOccurs="unbounded">
+        <xs:complexType>
+          <xs:choice minOccurs="0" maxOccurs="unbounded">
+            <!-- all config files -->
+            <xs:element name="file">
+              <xs:complexType>
+                <!-- file item category: source, header, include path, etc.  -->
+                <xs:attribute name="category"  type="FileCategoryType"     use="required" />
+                <!-- file item action attribute : config (copy to project, template, interface)  -->
+                <xs:attribute name="attr"      type="FileAttributeType"    use="optional" />
+                <!-- path + filename + extension -->
+                <xs:attribute name="name"      type="xs:string"            use="required" />
+                <!-- configuration file version: to be used by RTE to see whether the file requires updating or not -->
+                <xs:attribute name="version"   type="ComponentVersionType" use="required" />
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="cflags"   type="ToolOptionType" minOccurs="0"/>
+            <xs:element name="cxxflags" type="ToolOptionType" minOccurs="0"/>
+            <xs:element name="asflags"  type="ToolOptionType" minOccurs="0"/>
+          </xs:choice>
+          <xs:attribute name="Cvendor"     type="xs:string"            use="optional" />
+          <xs:attribute name="Cbundle"     type="xs:string"            use="optional" />
+          <xs:attribute name="Cclass"      type="CclassType"           use="required" />
+          <xs:attribute name="Cgroup"      type="CgroupType"           use="required" />
+          <xs:attribute name="Csub"        type="CsubType"             use="optional" />
+          <xs:attribute name="Cvariant"    type="CvariantType"         use="optional" />
+          <xs:attribute name="Cversion"    type="ComponentVersionType" use="optional" />
+          <xs:attribute name="Capiversion" type="ComponentVersionType" use="optional" />
+          <xs:attribute name="instances"   type="InstancesType"        use="optional" default="1"/>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- Project section: -->
+  <xs:complexType name="ProjectType">
+    <xs:all>
+      <!-- target selection and configuration -->
+      <xs:element name="target" type="TargetType" />
+      <!-- components selected for project -->
+      <xs:element name="select" type="ComponentSelectType" />
+      <!-- project files not contained in components -->
+      <xs:element name="files"  type="FilesType" />
+    </xs:all>
+    <!-- if no project name is provided, the filename of the GPDSC is used -->
+    <xs:attribute name="name"          type="xs:string"  use="optional" />
+    <!-- optional link/reference to documentation about the project -->
+    <xs:attribute name="documentation" type="xs:string"  use="optional" />
+    <!-- if true, the vendor gives permission for the documentation being extracted from the pack and displayed on a web-page -->
+    <!-- links to web pages are assumed public -->
+    <xs:attribute name="public"        type="xs:boolean" use="optional" default="false" />
+  </xs:complexType>
+
+  <!-- Create Section: -->
+  <xs:complexType name="CreateType">
+    <xs:sequence>
+      <!-- project section -->
+      <xs:element name="project" type="ProjectType" maxOccurs="unbounded" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- release contains version as an attribute and notes as element text -->
+  <xs:complexType name="ReleaseType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="version"     type="PackVersionType" use="required" />
+        <xs:attribute name="date"        type="xs:date"         use="optional" />
+        <xs:attribute name="tag"         type="xs:string"       use="optional"/>
+        <xs:attribute name="deprecated"  type="xs:date"         use="optional" />
+        <xs:attribute name="replacement" type="xs:string"       use="optional" />
+        <xs:attribute name="url"         type="xs:anyURI"       use="optional"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="ReleasesType">
+    <xs:sequence>
+      <xs:element name="release" type="ReleaseType" minOccurs="1" maxOccurs="unbounded" />
+    </xs:sequence>
+  </xs:complexType>
+
+
+  <!-- package description root point -->
+  <xs:element name="package" nillable="true">
+    <xs:complexType>
+      <xs:all>
+        <!-- name of the solution -->
+        <xs:element name="name"           type="RestrictedString" minOccurs="1" />
+        <!-- company name of the developer/maintainer of this solution -->
+        <xs:element name="vendor"         type="RestrictedString" minOccurs="1" />
+        <!-- brief description of the content and purpose of the solution -->
+        <xs:element name="description"    type="xs:string"        minOccurs="0" />
+        <!-- download location of this PDSC and corresponding package file -->
+        <xs:element name="url"            type="xs:anyURI"        minOccurs="0" />
+        <!-- optional: e.g. mailto:Support@<vendor>.com or www.<vendor>.com/supportRequest -->
+        <xs:element name="supportContact" type="xs:string"        minOccurs="0" />
+        <!-- optional: click through license file name and relative path -->
+        <xs:element name="license"        type="xs:string"        minOccurs="0" />
+        <!-- optional: section listing requirements (1.4.2) -->
+        <xs:element name="requirements"   type="RequirementsType" minOccurs="0" />
+        <!-- Version numbers and release history -->
+        <xs:element name="releases"       type="ReleasesType"     minOccurs="0" />
+        <!-- optional: section used for tool independant project creation (one shot) -->
+        <xs:element name="create"         type="CreateType"       minOccurs="0" />
+      </xs:all>
+      <xs:attribute name="schemaVersion"  type="SchemaVersionType" use="required" />
+      <!-- optional package level filter attributes -->
+      <xs:attribute name="Dvendor"        type="DeviceVendorEnum"  use="optional" />
+      <xs:attribute name="Dname"          type="xs:string"         use="optional" />
+      <xs:attribute name="Dcore"          type="DcoreEnum"         use="optional" />
+      <xs:attribute name="Tcompiler"      type="CompilerEnumType"  use="optional" />
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
