@@ -2752,7 +2752,7 @@ and 8-bit Java bytecodes in Jazelle state.
     </component>
 
     <!-- Cortex-SC000 -->
-    <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cversion="2.0.2" condition="ARMSC000 CMSIS">
+    <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cversion="2.0.3" condition="ARMSC000 CMSIS">
       <description>System and Startup for Generic Arm SC000 device</description>
       <files>
         <!-- include folder / device header file -->
@@ -2765,7 +2765,7 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="sourceC"      name="Device/ARM/ARMSC000/Source/system_ARMSC000.c"      version="1.0.0" attr="config"/>
       </files>
     </component>
-    <component Cclass="Device" Cgroup="Startup"                      Cversion="1.2.2" condition="ARMSC000 CMSIS">
+    <component Cclass="Device" Cgroup="Startup"                      Cversion="1.2.3" condition="ARMSC000 CMSIS">
       <description>DEPRECATED: System and Startup for Generic Arm SC000 device</description>
       <files>
         <!-- include folder / device header file -->
@@ -2780,7 +2780,7 @@ and 8-bit Java bytecodes in Jazelle state.
     </component>
 
     <!-- Cortex-SC300 -->
-    <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cversion="2.0.2" condition="ARMSC300 CMSIS">
+    <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cversion="2.0.3" condition="ARMSC300 CMSIS">
       <description>System and Startup for Generic Arm SC300 device</description>
       <files>
         <!-- include folder / device header file -->
@@ -2793,7 +2793,7 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="sourceC"      name="Device/ARM/ARMSC300/Source/system_ARMSC300.c"      version="1.0.1" attr="config"/>
       </files>
     </component>
-    <component Cclass="Device" Cgroup="Startup"                      Cversion="1.2.2" condition="ARMSC300 CMSIS">
+    <component Cclass="Device" Cgroup="Startup"                      Cversion="1.2.3" condition="ARMSC300 CMSIS">
       <description>DEPRECATED: System and Startup for Generic Arm SC300 device</description>
       <files>
         <!-- include folder / device header file -->
