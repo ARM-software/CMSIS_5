@@ -22,8 +22,8 @@
  * Description:  Converts the elements of the Q7 vector to a reordered Q15 vector with an added offset. The re-ordering
  *               is a signature of sign extension intrinsic(DSP extension).
  *
- * $Date:        August 2019
- * $Revision:    V.1.0.0
+ * $Date:        18 December 2019
+ * $Revision:    V.2.0.0
  *
  * Target Processor:  Cortex-M cores
  *

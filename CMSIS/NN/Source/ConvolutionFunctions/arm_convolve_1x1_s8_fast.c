@@ -21,7 +21,7 @@
  * Title:        arm_convolve_1x1_s8_fast.c
  * Description:  Fast q7 version of 1x1 convolution (non-square shape)
  *
- * $Date:        August 2019
+ * $Date:        18 December 2019
  * $Revision:    V.1.0.0
  *
  * Target Processor:  Cortex-M cores

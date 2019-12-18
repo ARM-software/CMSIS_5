@@ -21,8 +21,8 @@
  * Title:        arm_q7_to_q15_with_offset.c
  * Description:  Converts the elements of the Q7 vector to Q15 vector with an added offset
  *
- * $Date:        July 2019
- * $Revision:    V.1.0.0
+ * $Date:        18 December 2019
+ * $Revision:    V.2.0.0
  *
  * Target Processor:  Cortex-M cores
  *
