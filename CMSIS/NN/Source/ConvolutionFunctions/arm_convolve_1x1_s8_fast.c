@@ -144,6 +144,7 @@ arm_status arm_convolve_1x1_s8_fast(const q7_t *input,
 
 #elif defined(ARM_MATH_LOOPUNROLL) && defined(ARM_MATH_DSP)
     int32_t i_element;
+    (void)input_x;
     (void)input_y;
 
     /* Partial(two columns) im2col buffer */
