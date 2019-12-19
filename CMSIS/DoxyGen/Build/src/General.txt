@@ -25,7 +25,7 @@ The following sections provide more information:
 - \subpage build_revisionHistory
 - \subpage build_bashenvsetup runs through the installation and setup of the tools.
 - \subpage build_runbuild shows usage details.
-- \subpage build_examples provides example projects that can be used to setup and test the flow.
+- \subpage build_examples provides a test project that can be used to setup and test the flow.
 
 <hr>
 CMSIS-Build in ARM::CMSIS Pack
@@ -124,91 +124,24 @@ For example: \c ARMCC.5.6.6.750.mak, \c ARMCLANG.6.13.0.mak
 The target toolchain is specified in project *.cpdsc file. The \ref build_cbuildgen tries to find the corresponding .mak
 file for the toolchain in the project root folder. If it is not present there, it searches the \c $CMSIS_BUILD_ROOT directory
 for it.
+
+
+\section build_helper Required helper files
+
+The \ref build_cbuildsh checks the XML structure of the *.cpdsc file that is used in the build run. For that, it requires
+<a href="http://xmlsoft.org/index.html" target="_blank">xmllint</a> to be installed. In Linux environments, this is already
+available. If you use CMSIS-Build on a Windows PC, you have to add it manually.
+
+- Go to the official <a href="https://www.zlatkovic.com/pub/libxml/" target="_blank">libxml Windows binaries</a>.
+- Download the ZIP files for \c iconv, \c libxml, \c libxmlsec, and \c zlib.
+- Extract the \c /bin directory of each of the ZIP files to a folder on your disk, for example \c C:\\xmllint.
+- Add this folder to your
+  <a href="https://answers.microsoft.com/en-us/windows/forum/windows_10-other_settings/adding-path-variable/97300613-20cb-4d85-8d0e-cc9d3549ba23" target="_blank"><tt>PATH</tt> variable</a>.
+
+Now, the \ref build_cbuildsh will be able to find \c xmllint and run the schema check.
+
+\note You need to restart the git Bash console to re-read the \c PATH variable.
 */
-
-<!--
-/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
-/**
-\page build_optheory Theory of operation
-
-This page explains the technical details about the CMSIS-Build flow. The following image shows the steps with their
-correlated scripts/tools:
-
-\image html cmsis_build_flow_detail.png
-
-
-\section build_optheory_1 Setup the CMSIS-Pack repository
-
-\image html cpreaterepo_sh.png
-
-If you have not done already, you start by setting up a CMSIS-Pack repository. The \ref build_cpcreatereposh sets up a new
-repository at the given location. Use this to start your CMSIS-Build run from a scratch.
-
-The repository will be used to \ref build_optheory_3_2
-
-
-\section build_optheory_2 Convert project format
-
-If you have created your project with µVision, the \ref build_cbuild_uvprojxsh project allows you to convert the original
-µVision uvprojx format into the cpdsc format:
-
-\image html cbuild_uvprojx_sh.png
-
-\note You can write cpdsc files also by hand. Refer to the \ref build_examples section for more information.
-
-
-\section build_optheory_3 Run the build script
-
-The \ref build_cbuildsh covers all the steps that are required to create the binary file (either an executable or a library
-object).
-
-
-\subsection build_optheory_3_1 Create list of missing packs
-
-Run the \ref build_cbuildgen utility in config mode to scan the *.cpdsc file for all packs that are used in the project.
-The utility creates a list of all included packs.
-
-\image html cbuildgen_config.png
-
-
-\subsection build_optheory_3_2 Install missing packs
-
-The \ref build_cpinstall reads the list of required packs, checks the CMSIS-Pack repository for their availability and
-starts to download the missing packs into the repository.
-
-\image html cpinstall_sh.png
-
-
-\subsection build_optheory_3_3 Generate make files
-
-Run the \ref build_cbuildgen utility in make mode to create make files. The utility create two make files:
-- The \c project_cfg.mak contains a list of all configuration files that are coming from software components from the
-  CMSIS-Packs.
-- The \c project.mak file is the make file that is used to create the binary.
-
-\image html cbuildgen_make.png
-
-
-\subsection build_optheory_3_4 Merge configuration files
-
-Berfore the actual build step, the configuration files from the software components need to be merged. make uses the
-\ref build_ccmerge utility to merge the configuration files from the pack repository with the ones that the user has already
-been working on in the project.
-
-\note This step only works for configuration files that are using
-<a href="../../Pack/html/configWizard.html" target="_blank">Configuration Wizard Annotations</a>.
-
-\image html make_cfg.png
-
-
-\subsection build_optheory_3_5 Build target
-
-Finally, make creates the binary image from all the sources that are required for a successful build. It uses the toolchain
-information that is created in the \ref build_bashenvsetup step.
-
-\image html make.png
-*/
--->
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
@@ -253,7 +186,7 @@ The generated makefile is named &lt;ProjectFile>.mak. and includes two additiona
   spaces in folders and filenames by the \c make tool.
 - include \c ${CMSIS_COMPILER_ROOT}/&lt;name>.&lt;version>.mak
 
-The basic invokation of the makefile is
+The basic invocation of the makefile is:
 \code
 $ make -f MyProject.mak
 \endcode
@@ -314,7 +247,7 @@ where <b>ccmerge</b> is the \ref build_ccmerge for Windows platform provided wit
 Invocation Errors
 -----------------
 
-<table class="cmtable" summary="cbuildgen Invocation Msgs">
+<table class="cmtable" summary="cbuildgen invocation messages">
   <tr>
     <th>Message Number</th>
     <th>Type</th>
@@ -325,7 +258,7 @@ Invocation Errors
   <td>At least one argument is wrong. See usage and correct the argument.</td>
 </tr>
 <tr><td>M201</td> <td>ERROR</td> <td>Too many arguments!</td>
-  <td>There is more arguments passed than allowed. See usage and correct the commandline.</td>
+  <td>There is more arguments passed than allowed. See usage and correct the command line.</td>
 <tr><td>M202</td> <td>ERROR</td> <td>No CPDSC input file was specified</td>
   <td>A *.cpdsc file is not provided as an argument. </td>
 </tr>
@@ -352,7 +285,7 @@ Invocation Errors
 RTE Model Errors
 -----------------
 
-<table class="cmtable" summary="cbuildgen RTE Model Msgs">
+<table class="cmtable" summary="cbuildgen RTE model messages">
   <tr>
     <th>Message Number</th>
     <th>Type</th>
@@ -373,7 +306,7 @@ RTE Model Errors
 Generator Messages
 -----------------
 
-<table class="cmtable" summary="cbuildgen Generator Msgs">
+<table class="cmtable" summary="cbuildgen generator messages">
   <tr>
     <th>Message Number</th>
     <th>Type</th>
@@ -468,7 +401,7 @@ The \c cbuild.sh script is an example implementation of a build flow chaining th
 build steps of existing CMSIS-Pack aware IDEs and also attempts to merge configuration files if necessary.
 
 The script:
-- reads the CPDSC file and identifies missing packs.
+- reads and \ref build_helper "checks" the CPDSC file and identifies missing packs.
 - installs missing packs.
 - reads the CPDSC file and generates RTE header files and copies missing configuration files.
 - generates the project makefile <tt>&lt;project>.mak</tt>.
@@ -558,7 +491,7 @@ folder structure \c ${CMSIS_PACK_ROOT}/&lt;vendor>/&lt;packname>/&lt;version>.
 - The mandatory commandline argument for the \c cpinstall.sh bash script is the filename of the file listing valid URLs of
   the packs that need to get installed.
 - The \c $CMSIS_PACK_ROOT environment variable has to be set and must reference an existing CMSIS-Pack directory containing
-  at least the file ./Web/index.pidx (use \ref build_cpcreatereposh "cpcreaterepo.sh" to intialize a new CMSIS-Pack
+  at least the file ./Web/index.pidx (use \ref build_cpcreatereposh "cpcreaterepo.sh" to initialize a new CMSIS-Pack
   directory).
 - In the input file, every CMSIS pack download url is specified per line:
   \code
@@ -723,9 +656,94 @@ total: 2 failed: 0
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
-\page build_examples  Examples
+\page build_examples  Usage example
 
-Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque
-penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium
-quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu.
+The following example project demonstrates how to run through the CMSIS-Build flow.
+
+
+\section build_examples_man_cpdsc Basic example
+
+Prerequisites
+-------------
+- Run through the \ref build_bashenvsetup_install.
+- Copy the <a href="MyProject.zip" target="_blank"><b>MyProject.zip</b></a> file to your PC and extract its contents to your
+  project directory.
+- This description assumes that the project directory is called <tt>/c/project</tt> and that CMSIS-Build is installed in
+  <tt>/c/cbuild</tt>.
+
+Running CMSIS-Build
+-------------------
+- Open a Bash console in the directory <tt>/c/project</tt>.
+- Source the setup file in your console:
+  \code
+  $ source /c/cbuild/etc/setup
+  \endcode
+  The console output shows the settings that have been sourced:
+  \code
+  Set CMSIS_PACK_ROOT=/C/Users/user/AppData/Local/Arm/Packs
+  Set CMSIS_BUILD_ROOT=/C/cbuild/bin
+  Set CMSIS_COMPILER_ROOT=/C/Users/user/AppData/Local/Arm/Compilers
+  Added /C/cbuild/bin into the PATH
+  \endcode
+- For a CI test, it can be beneficial to setup the whole environment from scratch. So run the \ref build_cpcreatereposh to
+  create a new CMSIS-Pack repository:
+  \code
+  $ cpcreaterepo.sh MyPackRepo
+  \endcode
+  The console output shows a successful creation of the repository:
+  \code
+  CMSIS Pack create new pack repository utility (cpcreaterepo.sh) 0.1.0 (Wed, Dec 18, 2019  5:18:22 PM)
+  Copyright (C) 2019 ARM Ltd and ARM Germany GmbH. All rights reserved.
+  info: reading directory: MyPackRepo
+  downloading package index file from
+  ######################################################################## 100.0%
+  pack repository created successfully in:
+  /C/Users/user/AppData/Local/Arm/Packs
+  \endcode
+- You now need to change the \c CMSIS_PACK_ROOT variable to the newly created location:
+  \code
+  $ export CMSIS_PACK_ROOT=/c/project/MyPackRepo
+  \endcode
+- The project already contains a MyProject.cpdsc file, so we can immediately start the \ref build_cbuildsh
+  \code
+  $ cbuild.sh MyProject.cpdsc
+  \endcode
+  The console output shows a successful build:
+  \code
+  CMSIS Build (cbuild.sh) 0.1.0 (Wed, Dec 18, 2019  4:35:27 PM)
+  Copyright (C) 2019 ARM Ltd and ARM Germany GmbH. All rights reserved.
+  MyProject.cpdsc validates
+  CMSIS Build (cbuildgen) 0.1.1 (Dec 12 2019, 14:36:01)
+  Copyright (C) 2019 ARM Ltd and ARM Germany GmbH. All rights reserved.
+  M654: URL 'http://www.keil.com/pack/ARM.CMSIS.5.6.0.pack' was added to the list of missing packages.
+  M650: Setup run successfully.
+  dos2unix: converting file MyProject.cpinstall to Unix format...
+  CMSIS Pack installation utility (cpinstall.sh) 0.1.0 (Mon, Dec 16, 2019  3:12:37 PM)
+  Copyright (C) 2019 ARM Ltd and ARM Germany GmbH. All rights reserved.
+  info: reading file: MyProject.cpinstall
+  dos2unix: converting file MyProject.cpinstall to Unix format...
+  http://www.keil.com/pack/ARM.CMSIS.5.6.0.pack
+  ######################################################################## 100.0%#=#=#
+  info: ARM.CMSIS.5.6.0.pack installing into /c/project/MyPackRepo/ARM/CMSIS/5.6.0
+  pack installation completed successfully
+  CMSIS Build (cbuildgen) 0.1.1 (Dec 12 2019, 14:36:01)
+  Copyright (C) 2019 ARM Ltd and ARM Germany GmbH. All rights reserved.
+  M653: Local config file RTE/Device/ARMCM0/ARMCM0_ac6.sct was not found. Copying default file from package.
+  M653: Local config file RTE/Device/ARMCM0/startup_ARMCM0.c was not found. Copying default file from package.
+  M653: Local config file RTE/Device/ARMCM0/system_ARMCM0.c was not found. Copying default file from package.
+  M651: Generated makefile for merging config files: 'MyProject_cfg.mak'
+  M652: Generated makefile for project building:'MyProject.mak'
+  mkdir -p "Objects/RTE/Device/Startup/C Startup"
+  mkdir -p "Objects/Source"
+  "/C/Keil_v5/ARM/ARMCLANG/bin/armclang"  @"Objects/Source/MyMain.o._cc"
+  "/C/Keil_v5/ARM/ARMCLANG/bin/armclang"  @"Objects/RTE/Device/Startup/C Startup/startup_ARMCM0.o._cc"
+  "/C/Keil_v5/ARM/ARMCLANG/bin/armclang"  @"Objects/RTE/Device/Startup/C Startup/system_ARMCM0.o._cc"
+  "/C/Keil_v5/ARM/ARMCLANG/bin/armlink" --via="Objects/MyBinary.axf._ld"
+  cbuild.sh finished successfully!
+  \endcode
+- The project binary will be created in the \c ./Objects directory:
+  \code
+  $ ls ./Objects
+  MyBinary.axf  MyBinary.axf._ld  RTE/  Source/
+  \endcode
 */
