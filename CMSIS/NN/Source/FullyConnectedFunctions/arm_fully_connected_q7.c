@@ -146,7 +146,7 @@ arm_fully_connected_q7(const q7_t * pV,
         {
             q31_t     inV1, inV2, inM11, inM12;
 
-            pB = (q7_t *) read_and_pad_reordered((void *)pB, &inM11, &inM12);
+            pB = read_and_pad_reordered(pB, &inM11, &inM12);
 
             inV1 = *__SIMD32(pA)++;
             sum = __SMLAD(inV1, inM11, sum);
