@@ -66,7 +66,7 @@
                 </option>
                 <option>
                     <name>OGLastSavedByProductVersion</name>
-                    <state>8.32.2.19370</state>
+                    <state>8.32.3.20186</state>
                 </option>
                 <option>
                     <name>GeneralEnableMisra</name>
@@ -1108,7 +1108,7 @@
                 </option>
                 <option>
                     <name>OGLastSavedByProductVersion</name>
-                    <state>8.32.2.19370</state>
+                    <state>8.32.3.20186</state>
                 </option>
                 <option>
                     <name>GeneralEnableMisra</name>
@@ -2150,7 +2150,7 @@
                 </option>
                 <option>
                     <name>OGLastSavedByProductVersion</name>
-                    <state>8.32.2.19370</state>
+                    <state>8.32.3.20186</state>
                 </option>
                 <option>
                     <name>GeneralEnableMisra</name>
@@ -3192,7 +3192,7 @@
                 </option>
                 <option>
                     <name>OGLastSavedByProductVersion</name>
-                    <state>8.32.2.19370</state>
+                    <state>8.32.3.20186</state>
                 </option>
                 <option>
                     <name>GeneralEnableMisra</name>
@@ -4234,7 +4234,7 @@
                 </option>
                 <option>
                     <name>OGLastSavedByProductVersion</name>
-                    <state>8.32.2.19370</state>
+                    <state>8.32.3.20186</state>
                 </option>
                 <option>
                     <name>GeneralEnableMisra</name>
@@ -5277,7 +5277,7 @@
                 </option>
                 <option>
                     <name>OGLastSavedByProductVersion</name>
-                    <state>8.32.2.19370</state>
+                    <state>8.32.3.20186</state>
                 </option>
                 <option>
                     <name>GeneralEnableMisra</name>
@@ -6319,7 +6319,7 @@
                 </option>
                 <option>
                     <name>OGLastSavedByProductVersion</name>
-                    <state>8.32.2.19370</state>
+                    <state>8.32.3.20186</state>
                 </option>
                 <option>
                     <name>GeneralEnableMisra</name>
@@ -7362,7 +7362,7 @@
                 </option>
                 <option>
                     <name>OGLastSavedByProductVersion</name>
-                    <state>8.32.2.19370</state>
+                    <state>8.32.3.20186</state>
                 </option>
                 <option>
                     <name>GeneralEnableMisra</name>
@@ -8404,7 +8404,7 @@
                 </option>
                 <option>
                     <name>OGLastSavedByProductVersion</name>
-                    <state>8.32.2.19370</state>
+                    <state>8.32.3.20186</state>
                 </option>
                 <option>
                     <name>GeneralEnableMisra</name>
@@ -9432,6 +9432,20 @@
                 <configuration>CM0</configuration>
                 <configuration>CM3</configuration>
                 <configuration>CM4F</configuration>
+                <configuration>V8MBN</configuration>
+                <configuration>V8MM</configuration>
+                <configuration>V8MMN</configuration>
+                <configuration>V8MMF</configuration>
+                <configuration>V8MMFN</configuration>
+            </excluded>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\..\Source\IAR\irq_armv8mbl_ns.s</name>
+            <excluded>
+                <configuration>CM0</configuration>
+                <configuration>CM3</configuration>
+                <configuration>CM4F</configuration>
+                <configuration>V8MB</configuration>
                 <configuration>V8MM</configuration>
                 <configuration>V8MMN</configuration>
                 <configuration>V8MMF</configuration>
@@ -9446,6 +9460,20 @@
                 <configuration>CM4F</configuration>
                 <configuration>V8MB</configuration>
                 <configuration>V8MBN</configuration>
+                <configuration>V8MMN</configuration>
+                <configuration>V8MMFN</configuration>
+            </excluded>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\..\Source\IAR\irq_armv8mml_ns.s</name>
+            <excluded>
+                <configuration>CM0</configuration>
+                <configuration>CM3</configuration>
+                <configuration>CM4F</configuration>
+                <configuration>V8MB</configuration>
+                <configuration>V8MBN</configuration>
+                <configuration>V8MM</configuration>
+                <configuration>V8MMF</configuration>
             </excluded>
         </file>
         <file>
