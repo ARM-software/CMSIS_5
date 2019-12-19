@@ -140,15 +140,10 @@ void arm_add_q7(
 
 #endif /* #if defined (ARM_MATH_LOOPUNROLL) */
 
-  while (blkCnt > 0U)
+  for (int i = 0; i < blkCnt; i++)
   {
     /* C = A + B */
-
-    /* Add and store result in destination buffer. */
-    *pDst++ = (q7_t) __SSAT((q15_t) *pSrcA++ + *pSrcB++, 8);
-
-    /* Decrement loop counter */
-    blkCnt--;
+    pDst[i] = (q7_t) __SSAT((q15_t) pSrcA[i] + pSrcB[i], 8);
   }
 
 }
