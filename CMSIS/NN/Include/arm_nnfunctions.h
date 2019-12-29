@@ -1371,6 +1371,19 @@ extern    "C"
                                     const int32_t out_activation_min,
                                     const int32_t out_activation_max,
                                     const uint32_t block_size);
+
+   /**
+   * @brief s8 element-wise negation of a vector
+   * @param[in, out]       vect            pointer to input vector
+   * @param[in]            size            number of elements
+   * @return none
+   * 
+   * @details   Supported framework: TensorFlow Lite micro
+   */
+
+    void      arm_negate_s8(int8_t *vect, uint16_t size);
+
+
 /**
  * @defgroup Acti Activation Functions
  *
