@@ -74,18 +74,6 @@ extern "C"
    * @param[out] pDst       points to the block of output data
    * @param[in]  blockSize  number of samples to process.
    */
-  void arm_merge_sort_f32(
-    const arm_sort_instance_f32 * S, 
-          float32_t *pSrc, 
-          float32_t *pDst, 
-    uint32_t blockSize);
-
-  /**
-   * @param[in]  S          points to an instance of the sorting structure.
-   * @param[in]  pSrc       points to the block of input data.
-   * @param[out] pDst       points to the block of output data
-   * @param[in]  blockSize  number of samples to process.
-   */
   void arm_quick_sort_f32(
     const arm_sort_instance_f32 * S, 
           float32_t * pSrc, 

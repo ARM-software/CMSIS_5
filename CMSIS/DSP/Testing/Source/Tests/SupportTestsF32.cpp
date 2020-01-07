@@ -297,11 +297,12 @@
     {
        float32_t *inp = input.ptr();
        float32_t *outp = output.ptr();
-       arm_sort_instance_f32 S;
+       float32_t *buf = buffer.ptr();
+       buf = (float32_t *)malloc((this->nbSamples)*sizeof(float32_t) );
+       arm_merge_sort_instance_f32 S;
 
-       arm_sort_init_f32(&S, ARM_SORT_MERGE, ARM_SORT_ASCENDING);
-
-       arm_sort_f32(&S,inp,outp,this->nbSamples);
+       arm_merge_sort_init_f32(&S, ARM_SORT_ASCENDING, buf);
+       arm_merge_sort_f32(&S,inp,outp,this->nbSamples);
         
        ASSERT_EMPTY_TAIL(output);
 
@@ -313,11 +314,12 @@
     {
        float32_t *inp = input.ptr();
        float32_t *outp = output.ptr();
-       arm_sort_instance_f32 S;
+       float32_t *buf = buffer.ptr();
+       buf = (float32_t *)malloc((this->nbSamples)*sizeof(float32_t) );
+       arm_merge_sort_instance_f32 S;
 
-       arm_sort_init_f32(&S, ARM_SORT_MERGE, ARM_SORT_ASCENDING);
-
-       arm_sort_f32(&S,inp,outp,this->nbSamples);
+       arm_merge_sort_init_f32(&S, ARM_SORT_ASCENDING, buf);
+       arm_merge_sort_f32(&S,inp,outp,this->nbSamples);
         
        ASSERT_EMPTY_TAIL(output);
 
@@ -424,10 +426,11 @@
        const float32_t *inpY = inputY.ptr();
        const float32_t *outX = outputX.ptr();
        float32_t *outp = output.ptr();
-
+       float32_t *buf = buffer.ptr();
+       buf=(float32_t*)malloc((3*4-1)*sizeof(float32_t));
        arm_spline_instance_f32 S;
 
-       arm_spline_init_f32(&S, 4, ARM_SPLINE_PARABOLIC_RUNOUT);
+       arm_spline_init_f32(&S, 4, ARM_SPLINE_PARABOLIC_RUNOUT, buf);
        arm_spline_f32(&S, inpX, inpY, outX, outp, 20);
 
        ASSERT_EMPTY_TAIL(output);
@@ -440,10 +443,11 @@
        const float32_t *inpY = inputY.ptr();
        const float32_t *outX = outputX.ptr();
        float32_t *outp = output.ptr();
-
+       float32_t *buf = buffer.ptr();
+       buf=(float32_t*)malloc((3*9-1)*sizeof(float32_t));
        arm_spline_instance_f32 S;
 
-       arm_spline_init_f32(&S, 9, ARM_SPLINE_NATURAL);
+       arm_spline_init_f32(&S, 9, ARM_SPLINE_NATURAL, buf);
        arm_spline_f32(&S, inpX, inpY, outX, outp, 33);
 
        ASSERT_EMPTY_TAIL(output);
@@ -456,10 +460,11 @@
        const float32_t *inpY = inputY.ptr();
        const float32_t *outX = outputX.ptr();
        float32_t *outp = output.ptr();
-
+       float32_t *buf = buffer.ptr();
+       buf=(float32_t*)malloc((3*3-1)*sizeof(float32_t));
        arm_spline_instance_f32 S;
 
-       arm_spline_init_f32(&S, 3, ARM_SPLINE_PARABOLIC_RUNOUT);
+       arm_spline_init_f32(&S, 3, ARM_SPLINE_PARABOLIC_RUNOUT, buf);
        arm_spline_f32(&S, inpX, inpY, outX, outp, 30);
 
        ASSERT_EMPTY_TAIL(output);

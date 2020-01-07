@@ -2264,11 +2264,9 @@ __STATIC_INLINE q31_t arm_div_q63_to_q31(q63_t num, q31_t den)
              /**< Heap sort      */
     ARM_SORT_INSERTION = 3,
              /**< Insertion sort */
-    ARM_SORT_MERGE     = 4,
-             /**< Merge sort     */
-    ARM_SORT_QUICK     = 5,
+    ARM_SORT_QUICK     = 4,
              /**< Quick sort     */
-    ARM_SORT_SELECTION = 6
+    ARM_SORT_SELECTION = 5
              /**< Selection sort */
   } arm_sort_alg;
 
@@ -2315,6 +2313,37 @@ __STATIC_INLINE q31_t arm_div_q63_to_q31(q63_t num, q31_t den)
     arm_sort_dir dir); 
 
   /**
+   * @brief Instance structure for the sorting algorithms.
+   */
+  typedef struct            
+  {
+    arm_sort_dir dir;        /**< Sorting order (direction)  */
+    float32_t * buffer;      /**< Working buffer */
+  } arm_merge_sort_instance_f32;  
+
+  /**
+   * @param[in]      S          points to an instance of the sorting structure.
+   * @param[in,out]  pSrc       points to the block of input data.
+   * @param[out]     pDst       points to the block of output data
+   * @param[in]      blockSize  number of samples to process.
+   */
+  void arm_merge_sort_f32(
+    const arm_merge_sort_instance_f32 * S,
+          float32_t *pSrc,
+          float32_t *pDst,
+          uint32_t blockSize);
+
+  /**
+   * @param[in,out]  S            points to an instance of the sorting structure.
+   * @param[in]      dir          Sorting order.
+   * @param[in]      buffer       Working buffer.
+   */
+  void arm_merge_sort_init_f32(
+    arm_merge_sort_instance_f32 * S,
+    arm_sort_dir dir,
+    float32_t * buffer);
+
+  /**
    * @brief Struct for specifying cubic spline type
    */
   typedef enum
@@ -2330,6 +2359,7 @@ __STATIC_INLINE q31_t arm_div_q63_to_q31(q63_t num, q31_t den)
   {
     uint32_t n_x;              /**< Number of known data points */
     arm_spline_type type;      /**< Type (boundary conditions) */
+    float32_t * buffer;
   } arm_spline_instance_f32;
 
   /**
@@ -2347,7 +2377,7 @@ __STATIC_INLINE q31_t arm_div_q63_to_q31(q63_t num, q31_t den)
     const float32_t * y,
     const float32_t * xq,
           float32_t * pDst,
-	  uint32_t blockSize);
+          uint32_t blockSize);
 
   /**
    * @brief Initialization function for the floating-point cubic spline interpolation.
@@ -2358,7 +2388,8 @@ __STATIC_INLINE q31_t arm_div_q63_to_q31(q63_t num, q31_t den)
   void arm_spline_init_f32(
     arm_spline_instance_f32 * S,
     uint32_t n,
-    arm_spline_type type);
+    arm_spline_type type,
+    float32_t * buffer);
 
   /**
    * @brief Instance structure for the floating-point matrix structure.

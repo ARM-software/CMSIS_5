@@ -47,15 +47,16 @@
 void arm_spline_init_f32(
     arm_spline_instance_f32 * S, 
     uint32_t n, 
-    arm_spline_type type)
+    arm_spline_type type,
+    float32_t * buffer)
 {
-    S->n_x    = n;
-    S->type   = type;
-
+    S->n_x  = n;
+    S->type = type;
     /* Type (boundary conditions):
-     *   0: Natural spline          ( S1''(x1)=0 ; Sn''(xn)=0 )
-     *   1: Parabolic runout spline ( S1''(x1)=S2''(x2) ; Sn-1''(xn-1)=Sn''(xn) )
+     *  - Natural spline          ( S1''(x1)=0 ; Sn''(xn)=0 )
+     *  - Parabolic runout spline ( S1''(x1)=S2''(x2) ; Sn-1''(xn-1)=Sn''(xn) )
      */
+    S->buffer = buffer;
 }
 
 /**

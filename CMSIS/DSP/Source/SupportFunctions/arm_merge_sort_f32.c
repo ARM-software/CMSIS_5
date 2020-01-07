@@ -92,24 +92,35 @@ static void arm_merge_sort_core_f32(float32_t * pB, uint32_t begin, uint32_t end
    *               divide the input array in sublists and merge them to produce
    *               longer sorted sublists until there is only one list remaining.
    *
-   * @par          A work array is always needed, hence pSrc and pDst cannot be
-   *               equal and the results will be stored in pDst.
+   * @par          A work array is always needed. It must be allocated by the user 
+   *               linked to the instance at initialization time.
+   *
+   * @par          It's an in-place algorithm. In order to obtain an out-of-place
+   *               function, a memcpy of the source vector is performed
    */
 
 
 void arm_merge_sort_f32(
-  const arm_sort_instance_f32 * S, 
+  const arm_merge_sort_instance_f32 * S, 
         float32_t *pSrc, 
         float32_t *pDst, 
         uint32_t blockSize)
 {
-    // A work array is needed: pDst
-    if(pSrc != pDst) // out-of-place only
-    {
-	memcpy(pDst, pSrc, blockSize*sizeof(float32_t));
+    float32_t * pA;
 
-	arm_merge_sort_core_f32(pSrc, 0, blockSize, pDst, S->dir);
+    /* Out-of-place */ 
+    if(pSrc != pDst)
+    {
+        memcpy(pDst, pSrc, blockSize*sizeof(float32_t));
+        pA = pDst;
     }
+    else
+        pA = pSrc;
+
+    /* A working buffer is needed */
+    memcpy(S->buffer, pSrc, blockSize*sizeof(float32_t));
+
+    arm_merge_sort_core_f32(S->buffer, 0, blockSize, pA, S->dir);
 }
 /**
   @} end of Sorting group

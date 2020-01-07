@@ -163,28 +163,16 @@ void arm_spline_f32(
   const float32_t * y,
   const float32_t * xq,
         float32_t * pDst,
-	uint32_t blockSize)
+        uint32_t blockSize)
 {
-
-    /* 
-
-    As explained in arm_spline_interp_init_f32.c, this must be > 1
-    
-    */
     int32_t n = S->n_x;
     arm_spline_type type = S->type;
 
     float32_t hi, hm1;
-
-    /* 
-
-    Temporary variables for system AX=B.
-    This will be replaced by new arguments for the function.
-
-     */
-    float32_t u[MAX_DATA_POINTS], z[MAX_DATA_POINTS], c[MAX_DATA_POINTS];
+    float32_t * u = (S->buffer);     /* (n-1)-long buffer for u elements */
+    float32_t * z = (S->buffer)+(n-1);   /* n-long buffer for z elements */
+    float32_t * c = (S->buffer)+(n+n-1); /* n-long buffer for c elements */
     float32_t Bi, li;
-
     float32_t bi, di;
     float32_t x_sc;
 
@@ -231,7 +219,7 @@ void arm_spline_f32(
         hi = x[i+1]-x[i];
         Bi = 3*(y[i+1]-y[i])/hi - 3*(y[i]-y[i-1])/hm1;
         /* l(i) = a(ii)-a(i,i-1)*u(i-1) = 2[h(i-1)+h(i)]-h(i-1)*u(i-1) */
-	li = 2*(hi+hm1) - hm1*u[i-1];
+        li = 2*(hi+hm1) - hm1*u[i-1];
         /* u(i) = a(i,i+1)/l(i) = h(i)/l(i) */
         u[i] = hi/li;
         /* z(i) = [B(i)-h(i-1)*z(i-1)]/l(i) */
@@ -264,12 +252,12 @@ void arm_spline_f32(
     /* === Compute b(i) and d(i) from c(i) and create output for x(i)<x<x(i+1) === */
     for (i=0; i<n-1; i++)
     {
-	hi = x[i+1]-x[i];
+        hi = x[i+1]-x[i];
         bi = (y[i+1]-y[i])/hi-hi*(c[i+1]+2*c[i])/3;
         di = (c[i+1]-c[i])/(3*hi);
 
 #ifdef ARM_MATH_NEON
-	xiv = vdupq_n_f32(x[i]);
+        xiv = vdupq_n_f32(x[i]);
 
         aiv = vdupq_n_f32(y[i]);
         biv = vdupq_n_f32(bi);
@@ -277,42 +265,42 @@ void arm_spline_f32(
         div = vdupq_n_f32(di);
 
         while( *(pXq+4) <= x[i+1] && blkCnt > 4 )
-	{
-	    /* Load [xq(k) xq(k+1) xq(k+2) xq(k+3)] */
+        {
+            /* Load [xq(k) xq(k+1) xq(k+2) xq(k+3)] */
             xqv = vld1q_f32(pXq);
-	    pXq+=4;
-
-	    /* Compute [xq(k)-x(i) xq(k+1)-x(i) xq(k+2)-x(i) xq(k+3)-x(i)] */
+            pXq+=4;
+        
+            /* Compute [xq(k)-x(i) xq(k+1)-x(i) xq(k+2)-x(i) xq(k+3)-x(i)] */
             diff = vsubq_f32(xqv, xiv);
-	    temp = diff;
-
-	    /* y(i) = a(i) + ... */
+            temp = diff;
+        
+            /* y(i) = a(i) + ... */
             yv = aiv;
-	    /* ... + b(i)*(x-x(i)) + ... */
-	    yv = vmlaq_f32(yv, biv, temp);
-	    /* ... + c(i)*(x-x(i))^2 + ... */
-	    temp = vmulq_f32(temp, diff);
-	    yv = vmlaq_f32(yv, civ, temp);
+            /* ... + b(i)*(x-x(i)) + ... */
+            yv = vmlaq_f32(yv, biv, temp);
+            /* ... + c(i)*(x-x(i))^2 + ... */
+            temp = vmulq_f32(temp, diff);
+            yv = vmlaq_f32(yv, civ, temp);
             /* ... + d(i)*(x-x(i))^3 */
-	    temp = vmulq_f32(temp, diff);
-	    yv = vmlaq_f32(yv, div, temp);
-
+            temp = vmulq_f32(temp, diff);
+            yv = vmlaq_f32(yv, div, temp);
+        
             /* Store [y(k) y(k+1) y(k+2) y(k+3)] */
-	    vst1q_f32(pDst, yv);
-	    pDst+=4;
-
-	    blkCnt-=4;
-	}
+            vst1q_f32(pDst, yv);
+            pDst+=4;
+        
+            blkCnt-=4;
+        }
 #endif
-        while( *pXq <= x[i+1] && blkCnt > 0 )	
-	{
-	    x_sc = *pXq++;
+        while( *pXq <= x[i+1] && blkCnt > 0 )
+        {
+            x_sc = *pXq++;
 
             *pDst = y[i]+bi*(x_sc-x[i])+c[i]*(x_sc-x[i])*(x_sc-x[i])+di*(x_sc-x[i])*(x_sc-x[i])*(x_sc-x[i]);
 
             pDst++;
-	    blkCnt--;
-	}
+            blkCnt--;
+        }
     }
 
     /* == Create output for remaining samples (x>=x(n)) == */
