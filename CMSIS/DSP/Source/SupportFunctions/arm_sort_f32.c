@@ -66,10 +66,6 @@ void arm_sort_f32(
         arm_insertion_sort_f32(S, pSrc, pDst, blockSize);
         break;
 
-        case ARM_SORT_MERGE:
-        arm_merge_sort_f32(S, pSrc, pDst, blockSize);
-        break;
-
         case ARM_SORT_QUICK:
         arm_quick_sort_f32(S, pSrc, pDst, blockSize);
         break;
