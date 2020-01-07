@@ -10,6 +10,9 @@
 #define ABS_Q31_ERROR ((q31_t)(1<<24))
 #define ABS_Q7_ERROR ((q7_t)10)
 
+#if defined ( __CC_ARM )
+#pragma diag_suppress 170
+#endif
 
     void SupportTestsQ7::test_copy_q7()
     {
@@ -89,6 +92,53 @@
        ASSERT_EMPTY_TAIL(outputQ15);
 
     } 
+
+    static const q7_t testReadQ7[4]={-4,-3,-2,1};
+    static q7_t testWriteQ7[4]={0,0,0,0};
+
+    void SupportTestsQ7::test_read_q7x4_ia()
+    {
+        q31_t result=0;
+        q7_t *p = (q7_t*)testReadQ7;
+
+        result = read_q7x4_ia(&p);
+        printf("%08X\n",result);
+
+        ASSERT_TRUE(result == 0x01FEFDFC);
+        ASSERT_TRUE(p == testReadQ7 + 4);
+    }
+
+   void SupportTestsQ7::test_read_q7x4_da()
+    {
+
+        q31_t result=0;
+        q7_t *p = (q7_t*)testReadQ7;
+
+        result = read_q7x4_da(&p);
+
+        ASSERT_TRUE(result == 0x01FEFDFC);
+        ASSERT_TRUE(p == testReadQ7 - 4);
+    }
+
+    void SupportTestsQ7::test_write_q7x4_ia()
+    {
+        q31_t val = 0x01FEFDFC;
+        q7_t *p = (q7_t*)testWriteQ7;
+
+        testWriteQ7[0] = 0;
+        testWriteQ7[1] = 0;
+        testWriteQ7[2] = 0;
+        testWriteQ7[3] = 0;
+
+        write_q7x4_ia(&p,val);
+
+        ASSERT_TRUE(testWriteQ7[0] == -4);
+        ASSERT_TRUE(testWriteQ7[1] == -3);
+        ASSERT_TRUE(testWriteQ7[2] == -2);
+        ASSERT_TRUE(testWriteQ7[3] == 1);
+        ASSERT_TRUE(p == testWriteQ7 + 4);
+
+    }
 
   
     void SupportTestsQ7::setUp(Testing::testID_t id,std::vector<Testing::param_t>& paramsArgs,Client::PatternMgr *mgr)

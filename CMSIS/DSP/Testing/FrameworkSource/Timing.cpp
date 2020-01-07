@@ -106,6 +106,11 @@ void cycleMeasurementStart()
 {
 #ifndef EXTBENCH
 #ifdef CORTEXM
+    /* 
+    TODO:
+    This code is likely to be wrong. Don't rely on it for benchmarks.
+
+    */
     SysTick->CTRL = SysTick_CTRL_CLKSOURCE_Msk;
     SysTick->LOAD = SYSTICK_INITIAL_VALUE;
 

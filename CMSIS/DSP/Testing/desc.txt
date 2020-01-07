@@ -390,6 +390,11 @@ group Root {
                 test_q15_q7 nb=7:test_q15_q7
                 test_q15_q7 nb=8n:test_q15_q7
                 test_q15_q7 nb=8n+1:test_q15_q7
+                test_read_q15x2:test_read_q15x2
+                test_read_q15x2_ia:test_read_q15x2_ia
+                test_read_q15x2_da:test_read_q15x2_da
+                test_write_q15x2_ia:test_write_q15x2_ia
+                test_write_q15x2:test_write_q15x2
               }
 
            }
@@ -421,6 +426,9 @@ group Root {
                 test_q7_q15 nb=15:test_q7_q15
                 test_q7_q15 nb=16n:test_q7_q15
                 test_q7_q15 nb=16n+1:test_q7_q15
+                test_read_q7x4_ia:test_read_q7x4_ia
+                test_read_q7x4_da:test_read_q7x4_da
+                test_write_q7x4_ia:test_write_q7x4_ia
               }
 
            }

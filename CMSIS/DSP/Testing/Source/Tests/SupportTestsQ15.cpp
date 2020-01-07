@@ -10,6 +10,9 @@
 #define ABS_Q31_ERROR ((q31_t)40000)
 #define ABS_Q7_ERROR ((q7_t)10)
 
+#if defined ( __CC_ARM )
+#pragma diag_suppress 170
+#endif
 
     void SupportTestsQ15::test_copy_q15()
     {
@@ -87,6 +90,72 @@
        ASSERT_EMPTY_TAIL(outputQ7);
 
     } 
+
+    __ALIGNED(2) static const q15_t testReadQ15[2]={-2,1};
+    __ALIGNED(2) static q15_t testWriteQ15[2]={0,0};
+
+    void SupportTestsQ15::test_read_q15x2()
+    {
+        q31_t result=0;
+
+        result = read_q15x2((q15_t*)testReadQ15);
+
+        printf("%08X\n",result);
+
+        ASSERT_TRUE(result == 0x0001FFFE);
+
+    }
+
+    void SupportTestsQ15::test_read_q15x2_ia()
+    {
+        q31_t result=0;
+        q15_t *p = (q15_t*)testReadQ15;
+
+        result = read_q15x2_ia(&p);
+
+        ASSERT_TRUE(result == 0x0001FFFE);
+        ASSERT_TRUE(p == testReadQ15 + 2);
+    }
+
+    void SupportTestsQ15::test_read_q15x2_da()
+    {
+        q31_t result=0;
+        q15_t *p = (q15_t*)testReadQ15;
+
+        result = read_q15x2_da(&p);
+
+        ASSERT_TRUE(result == 0x0001FFFE);
+        ASSERT_TRUE(p == testReadQ15 - 2);
+    }
+
+    void SupportTestsQ15::test_write_q15x2_ia()
+    {
+         q31_t val = 0x0001FFFE;
+         q15_t *p = testWriteQ15;
+
+         testWriteQ15[0] = 0;
+         testWriteQ15[1] = 0;
+
+         write_q15x2_ia(&p,val);
+
+         ASSERT_TRUE(testWriteQ15[0] == -2);
+         ASSERT_TRUE(testWriteQ15[1] == 1);
+         ASSERT_TRUE(p == testWriteQ15 + 2);
+
+    }
+
+    void SupportTestsQ15::test_write_q15x2()
+    {
+         q31_t val = 0x0001FFFE;
+
+         testWriteQ15[0] = 0;
+         testWriteQ15[1] = 0;
+
+         write_q15x2(testWriteQ15,val);
+
+         ASSERT_TRUE(testWriteQ15[0] == -2);
+         ASSERT_TRUE(testWriteQ15[1] == 1);
+    }
 
   
     void SupportTestsQ15::setUp(Testing::testID_t id,std::vector<Testing::param_t>& paramsArgs,Client::PatternMgr *mgr)

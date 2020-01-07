@@ -909,7 +909,11 @@ __STATIC_FORCEINLINE q31_t read_q15x2 (
 {
   q31_t val;
 
+#ifdef __ARM_FEATURE_UNALIGNED
   memcpy (&val, pQ15, 4);
+#else
+  val = (pQ15[1] << 16) | (pQ15[0] & 0x0FFFF) ;
+#endif
 
   return (val);
 }
@@ -924,10 +928,14 @@ __STATIC_FORCEINLINE q31_t read_q15x2_ia (
 {
   q31_t val;
 
+#ifdef __ARM_FEATURE_UNALIGNED
   memcpy (&val, *pQ15, 4);
-  *pQ15 += 2;
+#else
+  val = ((*pQ15)[1] << 16) | ((*pQ15)[0] & 0x0FFFF);
+#endif
 
-  return (val);
+ *pQ15 += 2;
+ return (val);
 }
 
 /**
@@ -940,9 +948,13 @@ __STATIC_FORCEINLINE q31_t read_q15x2_da (
 {
   q31_t val;
 
+#ifdef __ARM_FEATURE_UNALIGNED
   memcpy (&val, *pQ15, 4);
-  *pQ15 -= 2;
+#else
+  val = ((*pQ15)[1] << 16) | ((*pQ15)[0] & 0x0FFFF);
+#endif
 
+  *pQ15 -= 2;
   return (val);
 }
 
@@ -957,9 +969,14 @@ __STATIC_FORCEINLINE void write_q15x2_ia (
   q31_t    value)
 {
   q31_t val = value;
-
+#ifdef __ARM_FEATURE_UNALIGNED
   memcpy (*pQ15, &val, 4);
-  *pQ15 += 2;
+#else
+  (*pQ15)[0] = (val & 0x0FFFF);
+  (*pQ15)[1] = (val >> 16) & 0x0FFFF;
+#endif
+
+ *pQ15 += 2;
 }
 
 /**
@@ -974,7 +991,12 @@ __STATIC_FORCEINLINE void write_q15x2 (
 {
   q31_t val = value;
 
+#ifdef __ARM_FEATURE_UNALIGNED
   memcpy (pQ15, &val, 4);
+#else
+  pQ15[0] = val & 0x0FFFF;
+  pQ15[1] = val >> 16;
+#endif
 }
 
 
@@ -988,7 +1010,13 @@ __STATIC_FORCEINLINE q31_t read_q7x4_ia (
 {
   q31_t val;
 
+
+#ifdef __ARM_FEATURE_UNALIGNED
   memcpy (&val, *pQ7, 4);
+#else
+  val =(((*pQ7)[3] & 0x0FF) << 24)  | (((*pQ7)[2] & 0x0FF) << 16)  | (((*pQ7)[1] & 0x0FF) << 8)  | ((*pQ7)[0] & 0x0FF);
+#endif 
+
   *pQ7 += 4;
 
   return (val);
@@ -1003,8 +1031,11 @@ __STATIC_FORCEINLINE q31_t read_q7x4_da (
   q7_t ** pQ7)
 {
   q31_t val;
-
+#ifdef __ARM_FEATURE_UNALIGNED
   memcpy (&val, *pQ7, 4);
+#else
+  val = ((((*pQ7)[3]) & 0x0FF) << 24) | ((((*pQ7)[2]) & 0x0FF) << 16)   | ((((*pQ7)[1]) & 0x0FF) << 8)  | ((*pQ7)[0] & 0x0FF);
+#endif 
   *pQ7 -= 4;
 
   return (val);
@@ -1021,8 +1052,15 @@ __STATIC_FORCEINLINE void write_q7x4_ia (
   q31_t   value)
 {
   q31_t val = value;
-
+#ifdef __ARM_FEATURE_UNALIGNED
   memcpy (*pQ7, &val, 4);
+#else
+  (*pQ7)[0] = val & 0x0FF;
+  (*pQ7)[1] = (val >> 8) & 0x0FF;
+  (*pQ7)[2] = (val >> 16) & 0x0FF;
+  (*pQ7)[3] = (val >> 24) & 0x0FF;
+
+#endif
   *pQ7 += 4;
 }
 
