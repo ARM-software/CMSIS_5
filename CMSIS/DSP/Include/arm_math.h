@@ -4626,7 +4626,7 @@ arm_status arm_fir_decimate_init_f32(
    */
   void arm_biquad_cas_df1_32x64_q31(
   const arm_biquad_cas_df1_32x64_ins_q31 * S,
-        q31_t * pSrc,
+  const q31_t * pSrc,
         q31_t * pDst,
         uint32_t blockSize);
 
@@ -4673,7 +4673,7 @@ arm_status arm_fir_decimate_init_f32(
   {
           uint8_t numStages;         /**< number of 2nd order stages in the filter.  Overall order is 2*numStages. */
           float64_t *pState;         /**< points to the array of state coefficients.  The array is of length 2*numStages. */
-          float64_t *pCoeffs;        /**< points to the array of coefficients.  The array is of length 5*numStages. */
+    const float64_t *pCoeffs;        /**< points to the array of coefficients.  The array is of length 5*numStages. */
   } arm_biquad_cascade_df2T_instance_f64;
 
 
@@ -4714,7 +4714,7 @@ arm_status arm_fir_decimate_init_f32(
    */
   void arm_biquad_cascade_df2T_f64(
   const arm_biquad_cascade_df2T_instance_f64 * S,
-        float64_t * pSrc,
+  const float64_t * pSrc,
         float64_t * pDst,
         uint32_t blockSize);
 
@@ -4763,7 +4763,7 @@ void arm_biquad_cascade_df2T_compute_coefs_f32(
   void arm_biquad_cascade_df2T_init_f64(
         arm_biquad_cascade_df2T_instance_f64 * S,
         uint8_t numStages,
-        float64_t * pCoeffs,
+        const float64_t * pCoeffs,
         float64_t * pState);
 
 

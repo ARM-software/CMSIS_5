@@ -177,7 +177,7 @@
 #include "arm_helium_utils.h"
 void arm_biquad_cas_df1_32x64_q31(
   const arm_biquad_cas_df1_32x64_ins_q31 * S,
-        q31_t * pSrc,
+  const q31_t * pSrc,
         q31_t * pDst,
         uint32_t blockSize)
 {
@@ -409,11 +409,11 @@ void arm_biquad_cas_df1_32x64_q31(
 #else
 void arm_biquad_cas_df1_32x64_q31(
   const arm_biquad_cas_df1_32x64_ins_q31 * S,
-        q31_t * pSrc,
+  const q31_t * pSrc,
         q31_t * pDst,
         uint32_t blockSize)
 {
-        q31_t *pIn = pSrc;                             /* input pointer initialization */
+  const q31_t *pIn = pSrc;                             /* input pointer initialization */
         q31_t *pOut = pDst;                            /* output pointer initialization */
         q63_t *pState = S->pState;                     /* state pointer initialization */
   const q31_t *pCoeffs = S->pCoeffs;                   /* coeff pointer initialization */
