@@ -2564,6 +2564,7 @@ group Root {
                  cifft_step_1024_f32:test_cfft_f32
                  cifft_step_2048_f32:test_cfft_f32
                  cifft_step_4096_f32:test_cfft_f32
+
               }
 
             }

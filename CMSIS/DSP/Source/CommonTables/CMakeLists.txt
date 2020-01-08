@@ -34,4 +34,8 @@ if (NEON OR NEONEXPERIMENTAL)
     target_sources(CMSISDSPCommon PRIVATE "${DSP}/ComputeLibrary/Source/arm_cl_tables.c")
 endif()
 
+if (HELIUM OR MVEF)
+    target_sources(CMSISDSPCommon PRIVATE "${DSP}/Source/CommonTables/arm_mve_tables.c")
+endif()
+
 

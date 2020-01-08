@@ -58,3 +58,4 @@
 #include "arm_rfft_init_q31.c"
 #include "arm_rfft_q15.c"
 #include "arm_rfft_q31.c"
+#include "arm_cfft_init_f32.c"

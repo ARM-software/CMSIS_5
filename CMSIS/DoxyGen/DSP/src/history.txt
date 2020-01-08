@@ -9,43 +9,45 @@
   <tr>
     <td>V1.8.0</td>
     <td> 
-      - Helium implementation of lots of functions in the CMSIS-DSP.
+      Helium implementation of lots of functions in the CMSIS-DSP.
       More will be added in future releases.
+      - ARM_MATH_HELIUM, ARM_MATH_MVEF or ARM_MATH_MVEI must be defined.
 
-      - New folder SVMFunctions : Support vector machines.
-      Training must be done with scikit-learn. 
+      New folder SVMFunctions : Support vector machines.
+      - Training must be done with scikit-learn. 
       - DSP/Examples/ARM/arm_svm_example is showing how to train with scikit-learn
       and dump the result for use with CMSIS-DSP
 
-      - New folder BayesFunctions : Functions related to Bayesian probability.
+      New folder BayesFunctions : Functions related to Bayesian probability.
       In this version only a naive gaussian classifier.
-      Training must be done with scikit-learn. 
+      - Training must be done with scikit-learn. 
       - DSP/Examples/ARM/arm_bayes_example is showing how to train with scikit-learn
       and dump the result for use with CMSIS-DSP
       
-      - New folder DistanceFunctions: Distance functions for clustering algorithms.
+      New folder DistanceFunctions: 
+      - Distance functions for clustering algorithms.
 
-      - New BasicMathFunctions:
-        Elementwise bit operations.
+      New BasicMathFunctions:
+      - Elementwise bit operations.
 
-      - New support functions:
-        arm_barycenter_f32 and arm_weighted_sum_f32.
-        Sorting functions.
-        Spline interpolation.
+      New support functions:
+      - arm_barycenter_f32 and arm_weighted_sum_f32.
+      - Sorting functions.
+      - Spline interpolation.
 
-      - New statistics functions:
-        arm_entropy_f32, arm_kullback_leibler_f32, arm_logsumexp_f32
+      New statistics functions:
+      - arm_entropy_f32, arm_kullback_leibler_f32, arm_logsumexp_f32
         and arm_logsumexp_dot_prod_f32
 
-      - New testing framework:
-        Developed for our internal needs. We have released it but won't give
+      New testing framework:
+      - Developed for our internal needs. We have released it but won't give
         support for the first few releases since it is a work in progress.
 
-      - Improvements to the cmake build:
-        It is more easy to switch toolchains. CMAKE_PREFIX_PATH can be used.
+      Improvements to the cmake build:
+      - It is more easy to switch toolchains. CMAKE_PREFIX_PATH can be used.
 
-      - The new folders SVMFunctions, BayesFunctions and DistanceFunctions are not
-      built by default in the MDK or ArmDS projects. You'll need to rebuild those folders
+      The new folders SVMFunctions, BayesFunctions and DistanceFunctions and the new functions
+      are not built by default in the MDK or ArmDS projects. You'll need to rebuild using cmake
       if you want to use those new functions.
 
     </td>

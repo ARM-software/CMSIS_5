@@ -29,6 +29,10 @@
 
 #include "arm_const_structs.h"
 
+/*
+ALLOW TABLE is true when config table is enabled and the Tramsform folder is included 
+for compilation.
+*/
 #if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_FFT_ALLOW_TABLES)
 
 /* Floating-point structs */
@@ -87,11 +91,24 @@ const arm_cfft_instance_f64 arm_cfft_sR_f64_len4096 = {
 #endif
 
 /* Floating-point structs */
+#if !defined(ARM_MATH_MVEF) || defined(ARM_MATH_AUTOVECTORIZE)
+
+/* 
+
+Those structures cannot be used to initialize the MVE version of the FFT F32 instances.
+So they are not compiled when MVE is defined.
+
+For the MVE version, the new arm_cfft_init_f32 must be used.
+
+
+*/
+
 #if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) || (defined(ARM_TABLE_TWIDDLECOEF_F32_16) && defined(ARM_TABLE_BITREVIDX_FLT_16))
 const arm_cfft_instance_f32 arm_cfft_sR_f32_len16 = {
   16, twiddleCoef_16, armBitRevIndexTable16, ARMBITREVINDEXTABLE_16_TABLE_LENGTH
 };
 #endif
+
 
 #if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) || (defined(ARM_TABLE_TWIDDLECOEF_F32_32) && defined(ARM_TABLE_BITREVIDX_FLT_32))
 const arm_cfft_instance_f32 arm_cfft_sR_f32_len32 = {
@@ -140,6 +157,8 @@ const arm_cfft_instance_f32 arm_cfft_sR_f32_len4096 = {
   4096, twiddleCoef_4096, armBitRevIndexTable4096, ARMBITREVINDEXTABLE_4096_TABLE_LENGTH
 };
 #endif
+
+#endif /* !defined(ARM_MATH_MVEF) || defined(ARM_MATH_AUTOVECTORIZE) */
 
 /* Fixed-point structs */
 
@@ -320,6 +339,8 @@ const arm_rfft_fast_instance_f64 arm_rfft_fast_sR_f64_len4096 = {
 
 /* Floating-point structs */
 
+#if !defined(ARM_MATH_MVEF) || defined(ARM_MATH_AUTOVECTORIZE)
+
 #if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) || (defined(ARM_TABLE_TWIDDLECOEF_F32_32) && defined(ARM_TABLE_BITREVIDX_FLT_32) && defined(ARM_TABLE_TWIDDLECOEF_RFFT_F32_32))
 const arm_rfft_fast_instance_f32 arm_rfft_fast_sR_f32_len32 = {
   { 16, twiddleCoef_32, armBitRevIndexTable32, ARMBITREVINDEXTABLE_16_TABLE_LENGTH },
@@ -383,6 +404,8 @@ const arm_rfft_fast_instance_f32 arm_rfft_fast_sR_f32_len4096 = {
   (float32_t *)twiddleCoef_rfft_4096
 };
 #endif
+
+#endif /* #if !defined(ARM_MATH_MVEF) || defined(ARM_MATH_AUTOVECTORIZE) */
 
 /* Fixed-point structs */
 /* q31_t */

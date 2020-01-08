@@ -14,26 +14,27 @@
        float32_t *outfftp = outputfft.ptr();
 
         memcpy(outfftp,inp,sizeof(float32_t)*input.nbSamples());
+
+        ASSERT_TRUE(status == ARM_MATH_SUCCESS);
    
         arm_cfft_f32(
-             this->instCfftF32,
+             &(this->varInstCfftF32),
              outfftp,
              this->ifft,
              1);
+       
+
           
         ASSERT_SNR(outputfft,ref,(float32_t)SNR_THRESHOLD);
         ASSERT_EMPTY_TAIL(outputfft);
+
+
         
     } 
 
-
-
-  
     void TransformCF32::setUp(Testing::testID_t id,std::vector<Testing::param_t>& paramsArgs,Client::PatternMgr *mgr)
     {
 
-
-       
 
        switch(id)
        {
@@ -42,7 +43,7 @@
             input.reload(TransformCF32::INPUTS_CFFT_NOISY_16_F32_ID,mgr);
             ref.reload(  TransformCF32::REF_CFFT_NOISY_16_F32_ID,mgr);
 
-            instCfftF32 = &arm_cfft_sR_f32_len16;
+            status=arm_cfft_init_f32(&varInstCfftF32,16);
 
             this->ifft=0;
 
@@ -53,7 +54,7 @@
             input.reload(TransformCF32::INPUTS_CIFFT_NOISY_16_F32_ID,mgr);
             ref.reload(  TransformCF32::INPUTS_CFFT_NOISY_16_F32_ID,mgr);
 
-            instCfftF32 = &arm_cfft_sR_f32_len16;
+            status=arm_cfft_init_f32(&varInstCfftF32,16);
 
             this->ifft=1;
 
@@ -64,7 +65,7 @@
             input.reload(TransformCF32::INPUTS_CFFT_NOISY_32_F32_ID,mgr);
             ref.reload(  TransformCF32::REF_CFFT_NOISY_32_F32_ID,mgr);
 
-            instCfftF32 = &arm_cfft_sR_f32_len32;
+            status=arm_cfft_init_f32(&varInstCfftF32,32);
 
             this->ifft=0;
 
@@ -75,7 +76,7 @@
             input.reload(TransformCF32::INPUTS_CIFFT_NOISY_32_F32_ID,mgr);
             ref.reload(  TransformCF32::INPUTS_CFFT_NOISY_32_F32_ID,mgr);
 
-            instCfftF32 = &arm_cfft_sR_f32_len32;
+            status=arm_cfft_init_f32(&varInstCfftF32,32);
 
             this->ifft=1;
 
@@ -86,7 +87,8 @@
             input.reload(TransformCF32::INPUTS_CFFT_NOISY_64_F32_ID,mgr);
             ref.reload(  TransformCF32::REF_CFFT_NOISY_64_F32_ID,mgr);
 
-            instCfftF32 = &arm_cfft_sR_f32_len64;
+            status=arm_cfft_init_f32(&varInstCfftF32,64);
+
 
             this->ifft=0;
 
@@ -97,7 +99,8 @@
             input.reload(TransformCF32::INPUTS_CIFFT_NOISY_64_F32_ID,mgr);
             ref.reload(  TransformCF32::INPUTS_CFFT_NOISY_64_F32_ID,mgr);
 
-            instCfftF32 = &arm_cfft_sR_f32_len64;
+            status=arm_cfft_init_f32(&varInstCfftF32,64);
+
 
             this->ifft=1;
 
@@ -108,7 +111,8 @@
             input.reload(TransformCF32::INPUTS_CFFT_NOISY_128_F32_ID,mgr);
             ref.reload(  TransformCF32::REF_CFFT_NOISY_128_F32_ID,mgr);
 
-            instCfftF32 = &arm_cfft_sR_f32_len128;
+            status=arm_cfft_init_f32(&varInstCfftF32,128);
+
 
             this->ifft=0;
 
@@ -119,7 +123,8 @@
             input.reload(TransformCF32::INPUTS_CIFFT_NOISY_128_F32_ID,mgr);
             ref.reload(  TransformCF32::INPUTS_CFFT_NOISY_128_F32_ID,mgr);
 
-            instCfftF32 = &arm_cfft_sR_f32_len128;
+            status=arm_cfft_init_f32(&varInstCfftF32,128);
+
 
             this->ifft=1;
 
@@ -130,7 +135,8 @@
             input.reload(TransformCF32::INPUTS_CFFT_NOISY_256_F32_ID,mgr);
             ref.reload(  TransformCF32::REF_CFFT_NOISY_256_F32_ID,mgr);
 
-            instCfftF32 = &arm_cfft_sR_f32_len256;
+            status=arm_cfft_init_f32(&varInstCfftF32,256);
+
 
             this->ifft=0;
 
@@ -141,7 +147,8 @@
             input.reload(TransformCF32::INPUTS_CIFFT_NOISY_256_F32_ID,mgr);
             ref.reload(  TransformCF32::INPUTS_CFFT_NOISY_256_F32_ID,mgr);
 
-            instCfftF32 = &arm_cfft_sR_f32_len256;
+            status=arm_cfft_init_f32(&varInstCfftF32,256);
+
 
             this->ifft=1;
 
@@ -152,7 +159,8 @@
             input.reload(TransformCF32::INPUTS_CFFT_NOISY_512_F32_ID,mgr);
             ref.reload(  TransformCF32::REF_CFFT_NOISY_512_F32_ID,mgr);
 
-            instCfftF32 = &arm_cfft_sR_f32_len512;
+            status=arm_cfft_init_f32(&varInstCfftF32,512);
+
 
             this->ifft=0;
 
@@ -163,7 +171,8 @@
             input.reload(TransformCF32::INPUTS_CIFFT_NOISY_512_F32_ID,mgr);
             ref.reload(  TransformCF32::INPUTS_CFFT_NOISY_512_F32_ID,mgr);
 
-            instCfftF32 = &arm_cfft_sR_f32_len512;
+            status=arm_cfft_init_f32(&varInstCfftF32,512);
+
 
             this->ifft=1;
 
@@ -174,7 +183,8 @@
             input.reload(TransformCF32::INPUTS_CFFT_NOISY_1024_F32_ID,mgr);
             ref.reload(  TransformCF32::REF_CFFT_NOISY_1024_F32_ID,mgr);
 
-            instCfftF32 = &arm_cfft_sR_f32_len1024;
+            status=arm_cfft_init_f32(&varInstCfftF32,1024);
+
 
             this->ifft=0;
 
@@ -185,7 +195,8 @@
             input.reload(TransformCF32::INPUTS_CIFFT_NOISY_1024_F32_ID,mgr);
             ref.reload(  TransformCF32::INPUTS_CFFT_NOISY_1024_F32_ID,mgr);
 
-            instCfftF32 = &arm_cfft_sR_f32_len1024;
+            status=arm_cfft_init_f32(&varInstCfftF32,1024);
+
 
             this->ifft=1;
 
@@ -196,7 +207,8 @@
             input.reload(TransformCF32::INPUTS_CFFT_NOISY_2048_F32_ID,mgr);
             ref.reload(  TransformCF32::REF_CFFT_NOISY_2048_F32_ID,mgr);
 
-            instCfftF32 = &arm_cfft_sR_f32_len2048;
+            status=arm_cfft_init_f32(&varInstCfftF32,2048);
+
 
             this->ifft=0;
 
@@ -207,7 +219,8 @@
             input.reload(TransformCF32::INPUTS_CIFFT_NOISY_2048_F32_ID,mgr);
             ref.reload(  TransformCF32::INPUTS_CFFT_NOISY_2048_F32_ID,mgr);
 
-            instCfftF32 = &arm_cfft_sR_f32_len2048;
+            status=arm_cfft_init_f32(&varInstCfftF32,2048);
+
 
             this->ifft=1;
 
@@ -218,7 +231,8 @@
             input.reload(TransformCF32::INPUTS_CFFT_NOISY_4096_F32_ID,mgr);
             ref.reload(  TransformCF32::REF_CFFT_NOISY_4096_F32_ID,mgr);
 
-            instCfftF32 = &arm_cfft_sR_f32_len4096;
+            status=arm_cfft_init_f32(&varInstCfftF32,4096);
+
 
             this->ifft=0;
 
@@ -229,7 +243,8 @@
             input.reload(TransformCF32::INPUTS_CIFFT_NOISY_4096_F32_ID,mgr);
             ref.reload(  TransformCF32::INPUTS_CFFT_NOISY_4096_F32_ID,mgr);
 
-            instCfftF32 = &arm_cfft_sR_f32_len4096;
+            status=arm_cfft_init_f32(&varInstCfftF32,4096);
+
 
             this->ifft=1;
 
@@ -242,7 +257,7 @@
             input.reload(TransformCF32::INPUTS_CFFT_STEP_16_F32_ID,mgr);
             ref.reload(  TransformCF32::REF_CFFT_STEP_16_F32_ID,mgr);
 
-            instCfftF32 = &arm_cfft_sR_f32_len16;
+            status=arm_cfft_init_f32(&varInstCfftF32,16);
 
             this->ifft=0;
 
@@ -253,7 +268,8 @@
             input.reload(TransformCF32::INPUTS_CIFFT_STEP_16_F32_ID,mgr);
             ref.reload(  TransformCF32::INPUTS_CFFT_STEP_16_F32_ID,mgr);
 
-            instCfftF32 = &arm_cfft_sR_f32_len16;
+            status=arm_cfft_init_f32(&varInstCfftF32,16);
+
 
             this->ifft=1;
 
@@ -264,7 +280,8 @@
             input.reload(TransformCF32::INPUTS_CFFT_STEP_32_F32_ID,mgr);
             ref.reload(  TransformCF32::REF_CFFT_STEP_32_F32_ID,mgr);
 
-            instCfftF32 = &arm_cfft_sR_f32_len32;
+            status=arm_cfft_init_f32(&varInstCfftF32,32);
+
 
             this->ifft=0;
 
@@ -275,7 +292,8 @@
             input.reload(TransformCF32::INPUTS_CIFFT_STEP_32_F32_ID,mgr);
             ref.reload(  TransformCF32::INPUTS_CFFT_STEP_32_F32_ID,mgr);
 
-            instCfftF32 = &arm_cfft_sR_f32_len32;
+            status=arm_cfft_init_f32(&varInstCfftF32,32);
+
 
             this->ifft=1;
 
@@ -286,7 +304,8 @@
             input.reload(TransformCF32::INPUTS_CFFT_STEP_64_F32_ID,mgr);
             ref.reload(  TransformCF32::REF_CFFT_STEP_64_F32_ID,mgr);
 
-            instCfftF32 = &arm_cfft_sR_f32_len64;
+            status=arm_cfft_init_f32(&varInstCfftF32,64);
+
 
             this->ifft=0;
 
@@ -297,7 +316,8 @@
             input.reload(TransformCF32::INPUTS_CIFFT_STEP_64_F32_ID,mgr);
             ref.reload(  TransformCF32::INPUTS_CFFT_STEP_64_F32_ID,mgr);
 
-            instCfftF32 = &arm_cfft_sR_f32_len64;
+            status=arm_cfft_init_f32(&varInstCfftF32,64);
+
 
             this->ifft=1;
 
@@ -308,7 +328,8 @@
             input.reload(TransformCF32::INPUTS_CFFT_STEP_128_F32_ID,mgr);
             ref.reload(  TransformCF32::REF_CFFT_STEP_128_F32_ID,mgr);
 
-            instCfftF32 = &arm_cfft_sR_f32_len128;
+            status=arm_cfft_init_f32(&varInstCfftF32,128);
+
 
             this->ifft=0;
 
@@ -319,7 +340,8 @@
             input.reload(TransformCF32::INPUTS_CIFFT_STEP_128_F32_ID,mgr);
             ref.reload(  TransformCF32::INPUTS_CFFT_STEP_128_F32_ID,mgr);
 
-            instCfftF32 = &arm_cfft_sR_f32_len128;
+            status=arm_cfft_init_f32(&varInstCfftF32,128);
+
 
             this->ifft=1;
 
@@ -330,7 +352,8 @@
             input.reload(TransformCF32::INPUTS_CFFT_STEP_256_F32_ID,mgr);
             ref.reload(  TransformCF32::REF_CFFT_STEP_256_F32_ID,mgr);
 
-            instCfftF32 = &arm_cfft_sR_f32_len256;
+            status=arm_cfft_init_f32(&varInstCfftF32,256);
+
 
             this->ifft=0;
 
@@ -341,7 +364,8 @@
             input.reload(TransformCF32::INPUTS_CIFFT_STEP_256_F32_ID,mgr);
             ref.reload(  TransformCF32::INPUTS_CFFT_STEP_256_F32_ID,mgr);
 
-            instCfftF32 = &arm_cfft_sR_f32_len256;
+            status=arm_cfft_init_f32(&varInstCfftF32,256);
+
 
             this->ifft=1;
 
@@ -352,7 +376,8 @@
             input.reload(TransformCF32::INPUTS_CFFT_STEP_512_F32_ID,mgr);
             ref.reload(  TransformCF32::REF_CFFT_STEP_512_F32_ID,mgr);
 
-            instCfftF32 = &arm_cfft_sR_f32_len512;
+            status=arm_cfft_init_f32(&varInstCfftF32,512);
+
 
             this->ifft=0;
 
@@ -363,7 +388,8 @@
             input.reload(TransformCF32::INPUTS_CIFFT_STEP_512_F32_ID,mgr);
             ref.reload(  TransformCF32::INPUTS_CFFT_STEP_512_F32_ID,mgr);
 
-            instCfftF32 = &arm_cfft_sR_f32_len512;
+            status=arm_cfft_init_f32(&varInstCfftF32,512);
+
 
             this->ifft=1;
 
@@ -374,7 +400,8 @@
             input.reload(TransformCF32::INPUTS_CFFT_STEP_1024_F32_ID,mgr);
             ref.reload(  TransformCF32::REF_CFFT_STEP_1024_F32_ID,mgr);
 
-            instCfftF32 = &arm_cfft_sR_f32_len1024;
+            status=arm_cfft_init_f32(&varInstCfftF32,1024);
+
 
             this->ifft=0;
 
@@ -385,7 +412,8 @@
             input.reload(TransformCF32::INPUTS_CIFFT_STEP_1024_F32_ID,mgr);
             ref.reload(  TransformCF32::INPUTS_CFFT_STEP_1024_F32_ID,mgr);
 
-            instCfftF32 = &arm_cfft_sR_f32_len1024;
+            status=arm_cfft_init_f32(&varInstCfftF32,1024);
+
 
             this->ifft=1;
 
@@ -396,7 +424,8 @@
             input.reload(TransformCF32::INPUTS_CFFT_STEP_2048_F32_ID,mgr);
             ref.reload(  TransformCF32::REF_CFFT_STEP_2048_F32_ID,mgr);
 
-            instCfftF32 = &arm_cfft_sR_f32_len2048;
+            status=arm_cfft_init_f32(&varInstCfftF32,2048);
+
 
             this->ifft=0;
 
@@ -407,7 +436,8 @@
             input.reload(TransformCF32::INPUTS_CIFFT_STEP_2048_F32_ID,mgr);
             ref.reload(  TransformCF32::INPUTS_CFFT_STEP_2048_F32_ID,mgr);
 
-            instCfftF32 = &arm_cfft_sR_f32_len2048;
+            status=arm_cfft_init_f32(&varInstCfftF32,2048);
+
 
             this->ifft=1;
 
@@ -418,7 +448,8 @@
             input.reload(TransformCF32::INPUTS_CFFT_STEP_4096_F32_ID,mgr);
             ref.reload(  TransformCF32::REF_CFFT_STEP_4096_F32_ID,mgr);
 
-            instCfftF32 = &arm_cfft_sR_f32_len4096;
+            status=arm_cfft_init_f32(&varInstCfftF32,4096);
+
 
             this->ifft=0;
 
@@ -429,11 +460,13 @@
             input.reload(TransformCF32::INPUTS_CIFFT_STEP_4096_F32_ID,mgr);
             ref.reload(  TransformCF32::INPUTS_CFFT_STEP_4096_F32_ID,mgr);
 
-            instCfftF32 = &arm_cfft_sR_f32_len4096;
+            status=arm_cfft_init_f32(&varInstCfftF32,4096);
+
 
             this->ifft=1;
 
           break;
+
 
 
        }

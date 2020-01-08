@@ -14,8 +14,10 @@ class TransformCF32:public Client::Suite
 
             Client::RefPattern<float32_t> ref;
 
-            const arm_cfft_instance_f32 *instCfftF32;
+            arm_cfft_instance_f32 varInstCfftF32;
 
             int ifft;
+
+            arm_status status;
             
     };

@@ -25,6 +25,7 @@ target_sources(CMSISDSPTransform PRIVATE arm_cfft_radix2_f32.c)
 target_sources(CMSISDSPTransform PRIVATE arm_cfft_radix4_f32.c)
 target_sources(CMSISDSPTransform PRIVATE arm_cfft_radix8_f32.c)
 target_sources(CMSISDSPTransform PRIVATE arm_cfft_f32.c)
+target_sources(CMSISDSPTransform PRIVATE arm_cfft_init_f32.c)
 endif()
 
 if (NOT CONFIGTABLE OR ALLFFT OR CFFT_F64_16 OR CFFT_F64_32 OR CFFT_F64_64 OR CFFT_F64_128 OR CFFT_F64_256 OR CFFT_F64_512 

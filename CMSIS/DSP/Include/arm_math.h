@@ -3147,7 +3147,20 @@ void arm_cfft_q31(
     const float32_t *pTwiddle;         /**< points to the Twiddle factor table. */
     const uint16_t *pBitRevTable;      /**< points to the bit reversal table. */
           uint16_t bitRevLength;             /**< bit reversal table length. */
+#if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
+   const uint32_t *rearranged_twiddle_tab_stride1_arr;        /**< Per stage reordered twiddle pointer (offset 1) */                                                       \
+   const uint32_t *rearranged_twiddle_tab_stride2_arr;        /**< Per stage reordered twiddle pointer (offset 2) */                                                       \
+   const uint32_t *rearranged_twiddle_tab_stride3_arr;        /**< Per stage reordered twiddle pointer (offset 3) */                                                       \
+   const float32_t *rearranged_twiddle_stride1; /**< reordered twiddle offset 1 storage */                                                                   \
+   const float32_t *rearranged_twiddle_stride2; /**< reordered twiddle offset 2 storage */                                                                   \
+   const float32_t *rearranged_twiddle_stride3;
+#endif
   } arm_cfft_instance_f32;
+
+
+  arm_status arm_cfft_init_f32(
+  arm_cfft_instance_f32 * S,
+  uint16_t fftLen);
 
   void arm_cfft_f32(
   const arm_cfft_instance_f32 * S,

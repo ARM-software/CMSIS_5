@@ -40,6 +40,7 @@ extern "C"
 
 static const float32_t __logf_rng_f32=0.693147180f;
 
+
 /* fast inverse approximation (3x newton) */
 __STATIC_INLINE f32x4_t vrecip_medprec_f32(
     f32x4_t x)
