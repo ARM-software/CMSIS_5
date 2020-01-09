@@ -1746,6 +1746,24 @@ __STATIC_INLINE q31_t arm_div_q63_to_q31(q63_t num, q31_t den)
 
 #endif /* !defined (ARM_MATH_DSP) */
 
+  /*
+   * @brief Function to extract two 8-bit values from an operand (op1) rotated by 8/16/24 bits (rotate) and sign-extend them to 16 bits each
+   * @param[in] op1     input operand
+   * @param[in] rotate  number of bits (allowed 8/16/24) to rotate the input operand
+   * @return            the 8-bit values sign-extended to 16-bit values
+   */
+#if defined __GNUC__ && !defined __ARMCC_VERSION && defined(ARM_MATH_DSP)
+  __STATIC_FORCEINLINE uint32_t __SXTB16_ROR(uint32_t op1, uint32_t rotate)
+  {
+    uint32_t result;
+
+    __ASM("sxtb16 %0, %1, ROR %2" : "=r" (result) : "r" (op1), "i" (rotate) );
+
+    return result;
+  }
+#else
+  #define __SXTB16_ROR(op1, rotate) __SXTB16(__ROR(op1, rotate))
+#endif
 
   /**
    * @brief Instance structure for the Q7 FIR filter.
