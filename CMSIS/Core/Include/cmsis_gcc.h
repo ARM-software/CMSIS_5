@@ -1,8 +1,8 @@
 /**************************************************************************//**
  * @file     cmsis_gcc.h
  * @brief    CMSIS compiler GCC header file
- * @version  V5.2.1
- * @date     30. July 2019
+ * @version  V5.3.0
+ * @date     28. January 2020
  ******************************************************************************/
 /*
  * Copyright (c) 2009-2019 Arm Limited. All rights reserved.
@@ -1960,6 +1960,15 @@ __STATIC_FORCEINLINE uint32_t __SXTB16(uint32_t op1)
 
   __ASM ("sxtb16 %0, %1" : "=r" (result) : "r" (op1));
   return(result);
+}
+
+__STATIC_FORCEINLINE uint32_t __SXTB16_RORn(uint32_t op1, uint32_t rotate)
+{
+  uint32_t result;
+
+  __ASM ("sxtb16 %0, %1, ROR %2" : "=r" (result) : "r" (op1), "i" (rotate) );
+
+  return result;
 }
 
 __STATIC_FORCEINLINE uint32_t __SXTAB16(uint32_t op1, uint32_t op2)
