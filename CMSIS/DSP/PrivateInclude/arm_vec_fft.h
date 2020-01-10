@@ -33,7 +33,7 @@ extern "C"
 {
 #endif
 
-#if (defined(ARM_MATH_MVEF) || defined(ARM_MATH_HELIUM)) && !defined(ARM_MATH_AUTOVECTORIZE)
+#if (defined(ARM_MATH_MVEF) || defined(ARM_MATH_MVEI) || defined(ARM_MATH_HELIUM)) && !defined(ARM_MATH_AUTOVECTORIZE)
 
 #define MVE_CMPLX_ADD_A_ixB(A, B)           vcaddq_rot90(A,B)
 #define MVE_CMPLX_SUB_A_ixB(A,B)            vcaddq_rot270(A,B)

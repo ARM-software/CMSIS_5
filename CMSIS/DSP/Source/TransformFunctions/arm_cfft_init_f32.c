@@ -65,67 +65,67 @@ arm_status arm_cfft_radix4by2_rearrange_twiddles_f32(arm_cfft_instance_f32 *S, i
 
 #if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) || defined(ARM_TABLE_BITREVIDX_FXT_4096)
         case 4096U:                                                                                
-            S->rearranged_twiddle_tab_stride1_arr = rearranged_twiddle_tab_stride1_arr_4096;
-            S->rearranged_twiddle_stride1  =  rearranged_twiddle_stride1_4096;     
+            S->rearranged_twiddle_tab_stride1_arr = rearranged_twiddle_tab_stride1_arr_4096_f32;
+            S->rearranged_twiddle_stride1  =  rearranged_twiddle_stride1_4096_f32;     
 
-            S->rearranged_twiddle_tab_stride2_arr = rearranged_twiddle_tab_stride2_arr_4096;
-            S->rearranged_twiddle_stride2  =  rearranged_twiddle_stride2_4096;    
+            S->rearranged_twiddle_tab_stride2_arr = rearranged_twiddle_tab_stride2_arr_4096_f32;
+            S->rearranged_twiddle_stride2  =  rearranged_twiddle_stride2_4096_f32;    
 
-            S->rearranged_twiddle_tab_stride3_arr = rearranged_twiddle_tab_stride3_arr_4096;
-            S->rearranged_twiddle_stride3  =  rearranged_twiddle_stride3_4096;                                                     
+            S->rearranged_twiddle_tab_stride3_arr = rearranged_twiddle_tab_stride3_arr_4096_f32;
+            S->rearranged_twiddle_stride3  =  rearranged_twiddle_stride3_4096_f32;                                                     
             break; 
 #endif                                  
 
 #if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) || defined(ARM_TABLE_BITREVIDX_FXT_1024) || defined(ARM_TABLE_BITREVIDX_FXT_2048)                                                                                                   
         case 1024U:                                                                                
-            S->rearranged_twiddle_tab_stride1_arr = rearranged_twiddle_tab_stride1_arr_1024;
-            S->rearranged_twiddle_stride1  =  rearranged_twiddle_stride1_1024;     
+            S->rearranged_twiddle_tab_stride1_arr = rearranged_twiddle_tab_stride1_arr_1024_f32;
+            S->rearranged_twiddle_stride1  =  rearranged_twiddle_stride1_1024_f32;     
 
-            S->rearranged_twiddle_tab_stride2_arr = rearranged_twiddle_tab_stride2_arr_1024;
-            S->rearranged_twiddle_stride2  =  rearranged_twiddle_stride2_1024;    
+            S->rearranged_twiddle_tab_stride2_arr = rearranged_twiddle_tab_stride2_arr_1024_f32;
+            S->rearranged_twiddle_stride2  =  rearranged_twiddle_stride2_1024_f32;    
 
-            S->rearranged_twiddle_tab_stride3_arr = rearranged_twiddle_tab_stride3_arr_1024;
-            S->rearranged_twiddle_stride3  =  rearranged_twiddle_stride3_1024;                                                                          
+            S->rearranged_twiddle_tab_stride3_arr = rearranged_twiddle_tab_stride3_arr_1024_f32;
+            S->rearranged_twiddle_stride3  =  rearranged_twiddle_stride3_1024_f32;                                                                          
             break;                                                                                 
  #endif 
 
  #if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) || defined(ARM_TABLE_BITREVIDX_FXT_256) || defined(ARM_TABLE_BITREVIDX_FXT_512)                                                                                                  
         case 256U:                                                                                 
-            S->rearranged_twiddle_tab_stride1_arr = rearranged_twiddle_tab_stride1_arr_256;
-            S->rearranged_twiddle_stride1  =  rearranged_twiddle_stride1_256;     
+            S->rearranged_twiddle_tab_stride1_arr = rearranged_twiddle_tab_stride1_arr_256_f32;
+            S->rearranged_twiddle_stride1  =  rearranged_twiddle_stride1_256_f32;     
 
-            S->rearranged_twiddle_tab_stride2_arr = rearranged_twiddle_tab_stride2_arr_256;
-            S->rearranged_twiddle_stride2  =  rearranged_twiddle_stride2_256;    
+            S->rearranged_twiddle_tab_stride2_arr = rearranged_twiddle_tab_stride2_arr_256_f32;
+            S->rearranged_twiddle_stride2  =  rearranged_twiddle_stride2_256_f32;    
 
-            S->rearranged_twiddle_tab_stride3_arr = rearranged_twiddle_tab_stride3_arr_256;
-            S->rearranged_twiddle_stride3  =  rearranged_twiddle_stride3_256;    
+            S->rearranged_twiddle_tab_stride3_arr = rearranged_twiddle_tab_stride3_arr_256_f32;
+            S->rearranged_twiddle_stride3  =  rearranged_twiddle_stride3_256_f32;    
 
             break;                     
 #endif 
 
 #if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) || defined(ARM_TABLE_BITREVIDX_FXT_64) || defined(ARM_TABLE_BITREVIDX_FXT_128)
         case 64U:                                                                                  
-            S->rearranged_twiddle_tab_stride1_arr = rearranged_twiddle_tab_stride1_arr_64;
-            S->rearranged_twiddle_stride1  =  rearranged_twiddle_stride1_64;     
+            S->rearranged_twiddle_tab_stride1_arr = rearranged_twiddle_tab_stride1_arr_64_f32;
+            S->rearranged_twiddle_stride1  =  rearranged_twiddle_stride1_64_f32;     
 
-            S->rearranged_twiddle_tab_stride2_arr = rearranged_twiddle_tab_stride2_arr_64;
-            S->rearranged_twiddle_stride2  =  rearranged_twiddle_stride2_64;    
+            S->rearranged_twiddle_tab_stride2_arr = rearranged_twiddle_tab_stride2_arr_64_f32;
+            S->rearranged_twiddle_stride2  =  rearranged_twiddle_stride2_64_f32;    
 
-            S->rearranged_twiddle_tab_stride3_arr = rearranged_twiddle_tab_stride3_arr_64;
-            S->rearranged_twiddle_stride3  =  rearranged_twiddle_stride3_64;                                                                         
+            S->rearranged_twiddle_tab_stride3_arr = rearranged_twiddle_tab_stride3_arr_64_f32;
+            S->rearranged_twiddle_stride3  =  rearranged_twiddle_stride3_64_f32;                                                                         
             break;  
 #endif                                                                               
               
 #if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) || defined(ARM_TABLE_BITREVIDX_FXT_16) || defined(ARM_TABLE_BITREVIDX_FXT_32)                                                                                                                                                                                                                
         case 16U:                                                                                  
-            S->rearranged_twiddle_tab_stride1_arr = rearranged_twiddle_tab_stride1_arr_16;
-            S->rearranged_twiddle_stride1  =  rearranged_twiddle_stride1_16;     
+            S->rearranged_twiddle_tab_stride1_arr = rearranged_twiddle_tab_stride1_arr_16_f32;
+            S->rearranged_twiddle_stride1  =  rearranged_twiddle_stride1_16_f32;     
 
-            S->rearranged_twiddle_tab_stride2_arr = rearranged_twiddle_tab_stride2_arr_16;
-            S->rearranged_twiddle_stride2  =  rearranged_twiddle_stride2_16;    
+            S->rearranged_twiddle_tab_stride2_arr = rearranged_twiddle_tab_stride2_arr_16_f32;
+            S->rearranged_twiddle_stride2  =  rearranged_twiddle_stride2_16_f32;    
 
-            S->rearranged_twiddle_tab_stride3_arr = rearranged_twiddle_tab_stride3_arr_16;
-            S->rearranged_twiddle_stride3  =  rearranged_twiddle_stride3_16;                                                                       
+            S->rearranged_twiddle_tab_stride3_arr = rearranged_twiddle_tab_stride3_arr_16_f32;
+            S->rearranged_twiddle_stride3  =  rearranged_twiddle_stride3_16_f32;                                                                       
             break;  
 #endif                                                                               
                                                                                                    

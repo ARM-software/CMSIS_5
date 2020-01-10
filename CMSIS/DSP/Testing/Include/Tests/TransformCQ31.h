@@ -1,21 +1,21 @@
 #include "Test.h"
 #include "Pattern.h"
-class TransformQ15:public Client::Suite
+class TransformCQ31:public Client::Suite
     {
         public:
-            TransformQ15(Testing::testID_t id);
+            TransformCQ31(Testing::testID_t id);
             virtual void setUp(Testing::testID_t,std::vector<Testing::param_t>& paramsArgs,Client::PatternMgr *mgr);
             virtual void tearDown(Testing::testID_t,Client::PatternMgr *mgr);
         private:
-            #include "TransformQ15_decl.h"
+            #include "TransformCQ31_decl.h"
             
-            Client::Pattern<q15_t> input;
-            Client::LocalPattern<q15_t> outputfft;
-            Client::LocalPattern<q15_t> outputifft;
+            Client::Pattern<q31_t> input;
+            Client::LocalPattern<q31_t> outputfft;
+            Client::LocalPattern<q31_t> outputifft;
 
-            Client::RefPattern<q15_t> ref;
+            Client::RefPattern<q31_t> ref;
 
-            const arm_cfft_instance_q15 *instCfftQ15;
+            arm_cfft_instance_q31 instCfftQ31;
 
             int ifft;
 
@@ -27,5 +27,7 @@ class TransformQ15:public Client::Suite
 
             */
             int scaling;
+
+            arm_status status;
             
     };

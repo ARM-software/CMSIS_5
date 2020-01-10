@@ -45,6 +45,7 @@ if (NOT CONFIGTABLE OR ALLFFT OR CFFT_Q31_16 OR CFFT_Q31_32 OR CFFT_Q31_64 OR CF
 target_sources(CMSISDSPTransform PRIVATE arm_cfft_radix2_q31.c)
 target_sources(CMSISDSPTransform PRIVATE arm_cfft_radix4_q31.c)
 target_sources(CMSISDSPTransform PRIVATE arm_cfft_q31.c)
+target_sources(CMSISDSPTransform PRIVATE arm_cfft_init_q31.c)
 endif()
 
 if (NOT CONFIGTABLE OR ALLFFT)
@@ -69,6 +70,7 @@ target_sources(CMSISDSPTransform PRIVATE arm_dct4_init_q31.c)
 target_sources(CMSISDSPTransform PRIVATE arm_rfft_init_q31.c)
 target_sources(CMSISDSPTransform PRIVATE arm_rfft_q31.c)
 target_sources(CMSISDSPTransform PRIVATE arm_cfft_q31.c)
+target_sources(CMSISDSPTransform PRIVATE arm_cfft_init_q31.c)
 target_sources(CMSISDSPTransform PRIVATE arm_cfft_radix4_init_q31.c)
 target_sources(CMSISDSPTransform PRIVATE arm_cfft_radix4_q31.c)
 endif()
@@ -90,6 +92,7 @@ if (NOT CONFIGTABLE OR ALLFFT OR RFFT_FAST_F32_32 OR RFFT_FAST_F32_64 OR RFFT_FA
 target_sources(CMSISDSPTransform PRIVATE arm_rfft_fast_f32.c)
 target_sources(CMSISDSPTransform PRIVATE arm_rfft_fast_init_f32.c)
 target_sources(CMSISDSPTransform PRIVATE arm_cfft_f32.c)
+target_sources(CMSISDSPTransform PRIVATE arm_cfft_init_f32.c)
 target_sources(CMSISDSPTransform PRIVATE arm_cfft_radix8_f32.c)
 endif()
 
@@ -122,6 +125,7 @@ if (NOT CONFIGTABLE OR ALLFFT OR RFFT_Q31_32 OR RFFT_Q31_64 OR RFFT_Q31_128 OR R
 target_sources(CMSISDSPTransform PRIVATE arm_rfft_init_q31.c)
 target_sources(CMSISDSPTransform PRIVATE arm_rfft_q31.c)
 target_sources(CMSISDSPTransform PRIVATE arm_cfft_q31.c)
+target_sources(CMSISDSPTransform PRIVATE arm_cfft_init_q31.c)
 target_sources(CMSISDSPTransform PRIVATE arm_cfft_radix4_q31.c)
 endif()
 

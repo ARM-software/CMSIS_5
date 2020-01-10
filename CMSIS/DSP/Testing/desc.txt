@@ -2681,8 +2681,8 @@ group Root {
 
             }
 
-           suite Transform Q31 {
-              class = TransformQ31
+           suite Transform Complex Q31 {
+              class = TransformCQ31
               folder = TransformQ31
 
               Pattern INPUTS_CFFT_NOISY_16_Q31_ID : ComplexInputSamples_Noisy_16_1_q31.txt 
@@ -2801,8 +2801,121 @@ group Root {
 
             }
 
-           suite Transform Q15 {
-              class = TransformQ15
+           suite Transform Real Q31 {
+              class = TransformRQ31
+              folder = TransformQ31
+
+              Pattern INPUTS_RFFT_NOISY_32_Q31_ID : RealInputSamples_Noisy_32_2_q31.txt 
+              Pattern INPUTS_RIFFT_NOISY_32_Q31_ID : RealInputIFFTSamples_Noisy_32_2_q31.txt 
+              Pattern REF_RFFT_NOISY_32_Q31_ID : RealFFTSamples_Noisy_32_2_q31.txt 
+
+              Pattern INPUTS_RFFT_NOISY_64_Q31_ID : RealInputSamples_Noisy_64_3_q31.txt
+              Pattern INPUTS_RIFFT_NOISY_64_Q31_ID : RealInputIFFTSamples_Noisy_64_3_q31.txt 
+              Pattern REF_RFFT_NOISY_64_Q31_ID : RealFFTSamples_Noisy_64_3_q31.txt 
+
+              Pattern INPUTS_RFFT_NOISY_128_Q31_ID : RealInputSamples_Noisy_128_4_q31.txt 
+              Pattern INPUTS_RIFFT_NOISY_128_Q31_ID : RealInputIFFTSamples_Noisy_128_4_q31.txt 
+              Pattern REF_RFFT_NOISY_128_Q31_ID : RealFFTSamples_Noisy_128_4_q31.txt 
+
+              Pattern INPUTS_RFFT_NOISY_256_Q31_ID : RealInputSamples_Noisy_256_5_q31.txt 
+              Pattern INPUTS_RIFFT_NOISY_256_Q31_ID : RealInputIFFTSamples_Noisy_256_5_q31.txt 
+              Pattern REF_RFFT_NOISY_256_Q31_ID : RealFFTSamples_Noisy_256_5_q31.txt 
+
+              Pattern INPUTS_RFFT_NOISY_512_Q31_ID : RealInputSamples_Noisy_512_6_q31.txt 
+              Pattern INPUTS_RIFFT_NOISY_512_Q31_ID : RealInputIFFTSamples_Noisy_512_6_q31.txt 
+              Pattern REF_RFFT_NOISY_512_Q31_ID : RealFFTSamples_Noisy_512_6_q31.txt 
+
+              Pattern INPUTS_RFFT_NOISY_1024_Q31_ID : RealInputSamples_Noisy_1024_7_q31.txt 
+              Pattern INPUTS_RIFFT_NOISY_1024_Q31_ID : RealInputIFFTSamples_Noisy_1024_7_q31.txt 
+              Pattern REF_RFFT_NOISY_1024_Q31_ID : RealFFTSamples_Noisy_1024_7_q31.txt 
+
+              Pattern INPUTS_RFFT_NOISY_2048_Q31_ID : RealInputSamples_Noisy_2048_8_q31.txt 
+              Pattern INPUTS_RIFFT_NOISY_2048_Q31_ID : RealInputIFFTSamples_Noisy_2048_8_q31.txt 
+              Pattern REF_RFFT_NOISY_2048_Q31_ID : RealFFTSamples_Noisy_2048_8_q31.txt 
+
+              Pattern INPUTS_RFFT_NOISY_4096_Q31_ID : RealInputSamples_Noisy_4096_9_q31.txt 
+              Pattern INPUTS_RIFFT_NOISY_4096_Q31_ID : RealInputIFFTSamples_Noisy_4096_9_q31.txt 
+              Pattern REF_RFFT_NOISY_4096_Q31_ID : RealFFTSamples_Noisy_4096_9_q31.txt 
+
+              Pattern INPUTS_RFFT_STEP_16_Q31_ID : RealInputSamples_Step_16_10_q31.txt 
+              Pattern INPUTS_RIFFT_STEP_16_Q31_ID : RealInputIFFTSamples_Step_16_10_q31.txt 
+              Pattern REF_RFFT_STEP_16_Q31_ID : RealFFTSamples_Step_16_10_q31.txt 
+
+              Pattern INPUTS_RFFT_STEP_32_Q31_ID : RealInputSamples_Step_32_11_q31.txt 
+              Pattern INPUTS_RIFFT_STEP_32_Q31_ID : RealInputIFFTSamples_Step_32_11_q31.txt 
+              Pattern REF_RFFT_STEP_32_Q31_ID : RealFFTSamples_Step_32_11_q31.txt 
+
+              Pattern INPUTS_RFFT_STEP_64_Q31_ID : RealInputSamples_Step_64_12_q31.txt 
+              Pattern INPUTS_RIFFT_STEP_64_Q31_ID : RealInputIFFTSamples_Step_64_12_q31.txt 
+              Pattern REF_RFFT_STEP_64_Q31_ID : RealFFTSamples_Step_64_12_q31.txt 
+
+              Pattern INPUTS_RFFT_STEP_128_Q31_ID : RealInputSamples_Step_128_13_q31.txt 
+              Pattern INPUTS_RIFFT_STEP_128_Q31_ID : RealInputIFFTSamples_Step_128_13_q31.txt 
+              Pattern REF_RFFT_STEP_128_Q31_ID : RealFFTSamples_Step_128_13_q31.txt 
+
+              Pattern INPUTS_RFFT_STEP_256_Q31_ID : RealInputSamples_Step_256_14_q31.txt 
+              Pattern INPUTS_RIFFT_STEP_256_Q31_ID : RealInputIFFTSamples_Step_256_14_q31.txt 
+              Pattern REF_RFFT_STEP_256_Q31_ID : RealFFTSamples_Step_256_14_q31.txt 
+
+              Pattern INPUTS_RFFT_STEP_512_Q31_ID : RealInputSamples_Step_512_15_q31.txt 
+              Pattern INPUTS_RIFFT_STEP_512_Q31_ID : RealInputIFFTSamples_Step_512_15_q31.txt 
+              Pattern REF_RFFT_STEP_512_Q31_ID : RealFFTSamples_Step_512_15_q31.txt 
+
+              Pattern INPUTS_RFFT_STEP_1024_Q31_ID : RealInputSamples_Step_1024_16_q31.txt 
+              Pattern INPUTS_RIFFT_STEP_1024_Q31_ID : RealInputIFFTSamples_Step_1024_16_q31.txt 
+              Pattern REF_RFFT_STEP_1024_Q31_ID : RealFFTSamples_Step_1024_16_q31.txt 
+
+              Pattern INPUTS_RFFT_STEP_2048_Q31_ID : RealInputSamples_Step_2048_17_q31.txt 
+              Pattern INPUTS_RIFFT_STEP_2048_Q31_ID : RealInputIFFTSamples_Step_2048_17_q31.txt 
+              Pattern REF_RFFT_STEP_2048_Q31_ID : RealFFTSamples_Step_2048_17_q31.txt 
+
+              Pattern INPUTS_RFFT_STEP_4096_Q31_ID : RealInputSamples_Step_4096_18_q31.txt 
+              Pattern INPUTS_RIFFT_STEP_4096_Q31_ID : RealInputIFFTSamples_Step_4096_18_q31.txt 
+              Pattern REF_RFFT_STEP_4096_Q31_ID : RealFFTSamples_Step_4096_18_q31.txt 
+              
+              Output  OUTPUT_RFFT_Q31_ID : RealFFTSamples
+              Output  TEMP_Q31_ID : Temp
+              Output  FULLOUTPUT_Q31_ID : RFFTFullOutput
+
+              Functions {
+                 rfft_noisy_32_q31:test_rfft_q31
+                 rfft_noisy_64_q31:test_rfft_q31
+                 rfft_noisy_128_q31:test_rfft_q31
+                 rfft_noisy_256_q31:test_rfft_q31
+                 rfft_noisy_512_q31:test_rfft_q31
+                 rfft_noisy_1024_q31:test_rfft_q31
+                 rfft_noisy_2048_q31:test_rfft_q31
+                 rfft_noisy_4096_q31:test_rfft_q31
+                 rfft_step_32_q31:test_rfft_q31
+                 rfft_step_64_q31:test_rfft_q31
+                 rfft_step_128_q31:test_rfft_q31
+                 rfft_step_256_q31:test_rfft_q31
+                 rfft_step_512_q31:test_rfft_q31
+                 rfft_step_1024_q31:test_rfft_q31
+                 rfft_step_2048_q31:test_rfft_q31
+                 rfft_step_4096_q31:test_rfft_q31
+                 rifft_noisy_32_q31:test_rfft_q31
+                 rifft_noisy_64_q31:test_rfft_q31
+                 rifft_noisy_128_q31:test_rfft_q31
+                 rifft_noisy_256_q31:test_rfft_q31
+                 rifft_noisy_512_q31:test_rfft_q31
+                 rifft_noisy_1024_q31:test_rfft_q31
+                 rifft_noisy_2048_q31:test_rfft_q31
+                 rifft_noisy_4096_q31:test_rfft_q31
+                 rifft_step_32_q31:test_rfft_q31
+                 rifft_step_64_q31:test_rfft_q31
+                 rifft_step_128_q31:test_rfft_q31
+                 rifft_step_256_q31:test_rfft_q31
+                 rifft_step_512_q31:test_rfft_q31
+                 rifft_step_1024_q31:test_rfft_q31
+                 rifft_step_2048_q31:test_rfft_q31
+                 rifft_step_4096_q31:test_rfft_q31
+              }
+
+            }
+
+           suite Transform Complex Q15 {
+              class = TransformCQ15
               folder = TransformQ15
 
               Pattern INPUTS_CFFT_NOISY_16_Q15_ID : ComplexInputSamples_Noisy_16_1_q15.txt 
@@ -2917,6 +3030,119 @@ group Root {
                  disabled {cifft_step_1024_q15:test_cifft_q15}
                  disabled {cifft_step_2048_q15:test_cifft_q15}
                  disabled {cifft_step_4096_q15:test_cifft_q15}
+              }
+
+            }
+
+           suite Transform Real Q15 {
+              class = TransformRQ15
+              folder = TransformQ15
+
+              Pattern INPUTS_RFFT_NOISY_32_Q15_ID : RealInputSamples_Noisy_32_2_q15.txt 
+              Pattern INPUTS_RIFFT_NOISY_32_Q15_ID : RealInputIFFTSamples_Noisy_32_2_q15.txt 
+              Pattern REF_RFFT_NOISY_32_Q15_ID : RealFFTSamples_Noisy_32_2_q15.txt 
+
+              Pattern INPUTS_RFFT_NOISY_64_Q15_ID : RealInputSamples_Noisy_64_3_q15.txt
+              Pattern INPUTS_RIFFT_NOISY_64_Q15_ID : RealInputIFFTSamples_Noisy_64_3_q15.txt 
+              Pattern REF_RFFT_NOISY_64_Q15_ID : RealFFTSamples_Noisy_64_3_q15.txt 
+
+              Pattern INPUTS_RFFT_NOISY_128_Q15_ID : RealInputSamples_Noisy_128_4_q15.txt 
+              Pattern INPUTS_RIFFT_NOISY_128_Q15_ID : RealInputIFFTSamples_Noisy_128_4_q15.txt 
+              Pattern REF_RFFT_NOISY_128_Q15_ID : RealFFTSamples_Noisy_128_4_q15.txt 
+
+              Pattern INPUTS_RFFT_NOISY_256_Q15_ID : RealInputSamples_Noisy_256_5_q15.txt 
+              Pattern INPUTS_RIFFT_NOISY_256_Q15_ID : RealInputIFFTSamples_Noisy_256_5_q15.txt 
+              Pattern REF_RFFT_NOISY_256_Q15_ID : RealFFTSamples_Noisy_256_5_q15.txt 
+
+              Pattern INPUTS_RFFT_NOISY_512_Q15_ID : RealInputSamples_Noisy_512_6_q15.txt 
+              Pattern INPUTS_RIFFT_NOISY_512_Q15_ID : RealInputIFFTSamples_Noisy_512_6_q15.txt 
+              Pattern REF_RFFT_NOISY_512_Q15_ID : RealFFTSamples_Noisy_512_6_q15.txt 
+
+              Pattern INPUTS_RFFT_NOISY_1024_Q15_ID : RealInputSamples_Noisy_1024_7_q15.txt 
+              Pattern INPUTS_RIFFT_NOISY_1024_Q15_ID : RealInputIFFTSamples_Noisy_1024_7_q15.txt 
+              Pattern REF_RFFT_NOISY_1024_Q15_ID : RealFFTSamples_Noisy_1024_7_q15.txt 
+
+              Pattern INPUTS_RFFT_NOISY_2048_Q15_ID : RealInputSamples_Noisy_2048_8_q15.txt 
+              Pattern INPUTS_RIFFT_NOISY_2048_Q15_ID : RealInputIFFTSamples_Noisy_2048_8_q15.txt 
+              Pattern REF_RFFT_NOISY_2048_Q15_ID : RealFFTSamples_Noisy_2048_8_q15.txt 
+
+              Pattern INPUTS_RFFT_NOISY_4096_Q15_ID : RealInputSamples_Noisy_4096_9_q15.txt 
+              Pattern INPUTS_RIFFT_NOISY_4096_Q15_ID : RealInputIFFTSamples_Noisy_4096_9_q15.txt 
+              Pattern REF_RFFT_NOISY_4096_Q15_ID : RealFFTSamples_Noisy_4096_9_q15.txt 
+
+              Pattern INPUTS_RFFT_STEP_16_Q15_ID : RealInputSamples_Step_16_10_q15.txt 
+              Pattern INPUTS_RIFFT_STEP_16_Q15_ID : RealInputIFFTSamples_Step_16_10_q15.txt 
+              Pattern REF_RFFT_STEP_16_Q15_ID : RealFFTSamples_Step_16_10_q15.txt 
+
+              Pattern INPUTS_RFFT_STEP_32_Q15_ID : RealInputSamples_Step_32_11_q15.txt 
+              Pattern INPUTS_RIFFT_STEP_32_Q15_ID : RealInputIFFTSamples_Step_32_11_q15.txt 
+              Pattern REF_RFFT_STEP_32_Q15_ID : RealFFTSamples_Step_32_11_q15.txt 
+
+              Pattern INPUTS_RFFT_STEP_64_Q15_ID : RealInputSamples_Step_64_12_q15.txt 
+              Pattern INPUTS_RIFFT_STEP_64_Q15_ID : RealInputIFFTSamples_Step_64_12_q15.txt 
+              Pattern REF_RFFT_STEP_64_Q15_ID : RealFFTSamples_Step_64_12_q15.txt 
+
+              Pattern INPUTS_RFFT_STEP_128_Q15_ID : RealInputSamples_Step_128_13_q15.txt 
+              Pattern INPUTS_RIFFT_STEP_128_Q15_ID : RealInputIFFTSamples_Step_128_13_q15.txt 
+              Pattern REF_RFFT_STEP_128_Q15_ID : RealFFTSamples_Step_128_13_q15.txt 
+
+              Pattern INPUTS_RFFT_STEP_256_Q15_ID : RealInputSamples_Step_256_14_q15.txt 
+              Pattern INPUTS_RIFFT_STEP_256_Q15_ID : RealInputIFFTSamples_Step_256_14_q15.txt 
+              Pattern REF_RFFT_STEP_256_Q15_ID : RealFFTSamples_Step_256_14_q15.txt 
+
+              Pattern INPUTS_RFFT_STEP_512_Q15_ID : RealInputSamples_Step_512_15_q15.txt 
+              Pattern INPUTS_RIFFT_STEP_512_Q15_ID : RealInputIFFTSamples_Step_512_15_q15.txt 
+              Pattern REF_RFFT_STEP_512_Q15_ID : RealFFTSamples_Step_512_15_q15.txt 
+
+              Pattern INPUTS_RFFT_STEP_1024_Q15_ID : RealInputSamples_Step_1024_16_q15.txt 
+              Pattern INPUTS_RIFFT_STEP_1024_Q15_ID : RealInputIFFTSamples_Step_1024_16_q15.txt 
+              Pattern REF_RFFT_STEP_1024_Q15_ID : RealFFTSamples_Step_1024_16_q15.txt 
+
+              Pattern INPUTS_RFFT_STEP_2048_Q15_ID : RealInputSamples_Step_2048_17_q15.txt 
+              Pattern INPUTS_RIFFT_STEP_2048_Q15_ID : RealInputIFFTSamples_Step_2048_17_q15.txt 
+              Pattern REF_RFFT_STEP_2048_Q15_ID : RealFFTSamples_Step_2048_17_q15.txt 
+
+              Pattern INPUTS_RFFT_STEP_4096_Q15_ID : RealInputSamples_Step_4096_18_q15.txt 
+              Pattern INPUTS_RIFFT_STEP_4096_Q15_ID : RealInputIFFTSamples_Step_4096_18_q15.txt 
+              Pattern REF_RFFT_STEP_4096_Q15_ID : RealFFTSamples_Step_4096_18_q15.txt 
+              
+              Output  OUTPUT_RFFT_Q15_ID : RealFFTSamples
+              Output  TEMP_Q15_ID : Temp
+              Output  FULLOUTPUT_Q15_ID : RFFTFullOutput
+
+              Functions {
+                 rfft_noisy_32_q15:test_rfft_q15
+                 rfft_noisy_64_q15:test_rfft_q15
+                 rfft_noisy_128_q15:test_rfft_q15
+                 rfft_noisy_256_q15:test_rfft_q15
+                 rfft_noisy_512_q15:test_rfft_q15
+                 rfft_noisy_1024_q15:test_rfft_q15
+                 rfft_noisy_2048_q15:test_rfft_q15
+                 rfft_noisy_4096_q15:test_rfft_q15
+                 rfft_step_32_q15:test_rfft_q15
+                 rfft_step_64_q15:test_rfft_q15
+                 rfft_step_128_q15:test_rfft_q15
+                 rfft_step_256_q15:test_rfft_q15
+                 rfft_step_512_q15:test_rfft_q15
+                 rfft_step_1024_q15:test_rfft_q15
+                 rfft_step_2048_q15:test_rfft_q15
+                 rfft_step_4096_q15:test_rfft_q15
+                 rifft_noisy_32_q15:test_rfft_q15
+                 rifft_noisy_64_q15:test_rfft_q15
+                 rifft_noisy_128_q15:test_rfft_q15
+                 disabled{rifft_noisy_256_q15:test_rfft_q15}
+                 disabled{rifft_noisy_512_q15:test_rfft_q15}
+                 disabled{rifft_noisy_1024_q15:test_rfft_q15}
+                 disabled{rifft_noisy_2048_q15:test_rfft_q15}
+                 disabled{rifft_noisy_4096_q15:test_rfft_q15}
+                 rifft_step_32_q15:test_rfft_q15
+                 rifft_step_64_q15:test_rfft_q15
+                 rifft_step_128_q15:test_rfft_q15
+                 disabled{rifft_step_256_q15:test_rfft_q15}
+                 disabled{rifft_step_512_q15:test_rfft_q15}
+                 disabled{rifft_step_1024_q15:test_rfft_q15}
+                 disabled{rifft_step_2048_q15:test_rfft_q15}
+                 disabled{rifft_step_4096_q15:test_rfft_q15}
               }
 
             }

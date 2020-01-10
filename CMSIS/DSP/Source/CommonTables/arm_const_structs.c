@@ -27,6 +27,7 @@
  * limitations under the License.
  */
 
+#include "arm_math.h"
 #include "arm_const_structs.h"
 
 /*
@@ -162,6 +163,18 @@ const arm_cfft_instance_f32 arm_cfft_sR_f32_len4096 = {
 
 /* Fixed-point structs */
 
+#if !defined(ARM_MATH_MVEI)
+
+/* 
+
+Those structures cannot be used to initialize the MVE version of the FFT Q31 instances.
+So they are not compiled when MVE is defined.
+
+For the MVE version, the new arm_cfft_init_f32 must be used.
+
+
+*/
+
 #if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) || (defined(ARM_TABLE_TWIDDLECOEF_Q31_16) && defined(ARM_TABLE_BITREVIDX_FXT_16))
 const arm_cfft_instance_q31 arm_cfft_sR_q31_len16 = {
   16, twiddleCoef_16_q31, armBitRevIndexTable_fixed_16, ARMBITREVINDEXTABLE_FIXED_16_TABLE_LENGTH
@@ -215,6 +228,8 @@ const arm_cfft_instance_q31 arm_cfft_sR_q31_len4096 = {
   4096, twiddleCoef_4096_q31, armBitRevIndexTable_fixed_4096, ARMBITREVINDEXTABLE_FIXED_4096_TABLE_LENGTH
 };
 #endif
+
+#endif /* !defined(ARM_MATH_MVEI) */
 
 #if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) || (defined(ARM_TABLE_TWIDDLECOEF_Q15_16) && defined(ARM_TABLE_BITREVIDX_FXT_16))
 const arm_cfft_instance_q15 arm_cfft_sR_q15_len16 = {
@@ -410,6 +425,18 @@ const arm_rfft_fast_instance_f32 arm_rfft_fast_sR_f32_len4096 = {
 /* Fixed-point structs */
 /* q31_t */
 
+#if !defined(ARM_MATH_MVEI)
+
+/* 
+
+Those structures cannot be used to initialize the MVE version of the FFT Q31 instances.
+So they are not compiled when MVE is defined.
+
+For the MVE version, the new arm_cfft_init_f32 must be used.
+
+
+*/
+
 #if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) || (defined(ARM_TABLE_REALCOEF_Q31) && defined(ARM_TABLE_TWIDDLECOEF_Q31_16) && defined(ARM_TABLE_BITREVIDX_FXT_16))
 const arm_rfft_instance_q31 arm_rfft_sR_q31_len32 = {
   32U,
@@ -517,6 +544,9 @@ const arm_rfft_instance_q31 arm_rfft_sR_q31_len8192 = {
   &arm_cfft_sR_q31_len4096
 };
 #endif
+
+#endif /* !defined(ARM_MATH_MVEI) */
+
 
 /* q15_t */
 #if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) || (defined(ARM_TABLE_REALCOEF_Q15) && defined(ARM_TABLE_TWIDDLECOEF_Q15_16) && defined(ARM_TABLE_BITREVIDX_FXT_16))

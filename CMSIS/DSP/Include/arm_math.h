@@ -3130,7 +3130,19 @@ void arm_cfft_q15(
     const q31_t *pTwiddle;             /**< points to the Twiddle factor table. */
     const uint16_t *pBitRevTable;      /**< points to the bit reversal table. */
           uint16_t bitRevLength;             /**< bit reversal table length. */
+#if defined(ARM_MATH_MVEI)
+   const uint32_t *rearranged_twiddle_tab_stride1_arr;        /**< Per stage reordered twiddle pointer (offset 1) */                                                       \
+   const uint32_t *rearranged_twiddle_tab_stride2_arr;        /**< Per stage reordered twiddle pointer (offset 2) */                                                       \
+   const uint32_t *rearranged_twiddle_tab_stride3_arr;        /**< Per stage reordered twiddle pointer (offset 3) */                                                       \
+   const q31_t *rearranged_twiddle_stride1; /**< reordered twiddle offset 1 storage */                                                                   \
+   const q31_t *rearranged_twiddle_stride2; /**< reordered twiddle offset 2 storage */                                                                   \
+   const q31_t *rearranged_twiddle_stride3;
+#endif
   } arm_cfft_instance_q31;
+
+arm_status arm_cfft_init_q31(
+  arm_cfft_instance_q31 * S,
+  uint16_t fftLen);
 
 void arm_cfft_q31(
     const arm_cfft_instance_q31 * S,
@@ -3222,7 +3234,11 @@ void arm_cfft_q31(
           uint32_t twidCoefRModifier;                 /**< twiddle coefficient modifier that supports different size FFTs with the same twiddle factor table. */
     const q31_t *pTwiddleAReal;                       /**< points to the real twiddle factor table. */
     const q31_t *pTwiddleBReal;                       /**< points to the imag twiddle factor table. */
+#if defined(ARM_MATH_MVEI)
+    arm_cfft_instance_q31 cfftInst;
+#else
     const arm_cfft_instance_q31 *pCfft;         /**< points to the complex FFT instance. */
+#endif
   } arm_rfft_instance_q31;
 
   arm_status arm_rfft_init_q31(

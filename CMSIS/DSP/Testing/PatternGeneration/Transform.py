@@ -44,17 +44,29 @@ def writeFFTForSignal(config,sig,scaling,i,j,nb,signame):
 
 def writeRFFTForSignal(config,sig,scaling,i,j,nb,signame):
     rfft=scipy.fftpack.rfft(sig)
+
     # Changed for f32 and f64 to reproduce CMSIS behavior.
     if not scaling:
        rfft=np.insert(rfft, 1, rfft[-1])
        rfft[-1]=0.0
+       rifft = np.copy(rfft)
+    else:
+        rfft=np.insert(rfft, 1, 0.0)
+        rifft = np.copy(rfft)
        
-    rifft = np.copy(rfft)
+    
     if scaling:
         rfft = np.array([x/2**scaling[j] for x in rfft])
+        rifft = np.hstack((rfft,rfft))
+        rifft[rfft.size] = 0.0
+        rifft[rfft.size+1:2*rfft.size:2] = np.flip(rfft[0:rfft.size-1:2])
+        rifft[rfft.size+2:2*rfft.size:2] = -np.flip(rfft[1:rfft.size-1:2])
+        rifft[2*rfft.size-2] = 0
+        rifft[2*rfft.size-1] = 0
+
     config.writeInput(i, (sig),"RealInputSamples_%s_%d_" % (signame,nb))
     config.writeInput(i, (rfft),"RealFFTSamples_%s_%d_" % (signame,nb))
-    config.writeInput(i, (rfft),"RealInputIFFTSamples_%s_%d_" % (signame,nb))
+    config.writeInput(i, (rifft),"RealInputIFFTSamples_%s_%d_" % (signame,nb))
 
 
 def writeTests(configs):
@@ -104,6 +116,7 @@ def generatePatterns():
         (configf32,None)
         ,(configq31,scalings)
         ,(configq15,scalings)])
+
 
 
 

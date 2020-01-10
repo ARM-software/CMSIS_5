@@ -151,8 +151,10 @@ set(TESTSRC
   Source/Tests/TransformCF32.cpp
   #Source/Tests/TransformRF64.cpp
   Source/Tests/TransformRF32.cpp
-  Source/Tests/TransformQ31.cpp
-  Source/Tests/TransformQ15.cpp
+  Source/Tests/TransformCQ31.cpp
+  Source/Tests/TransformRQ31.cpp
+  Source/Tests/TransformCQ15.cpp
+  Source/Tests/TransformRQ15.cpp
   Source/Tests/StatsTestsF32.cpp
   Source/Tests/StatsTestsQ31.cpp
   Source/Tests/StatsTestsQ15.cpp
