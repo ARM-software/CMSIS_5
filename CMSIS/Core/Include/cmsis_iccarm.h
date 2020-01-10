@@ -1,8 +1,8 @@
 /**************************************************************************//**
  * @file     cmsis_iccarm.h
  * @brief    CMSIS compiler ICCARM (IAR Compiler for Arm) header file
- * @version  V5.1.1
- * @date     30. July 2019
+ * @version  V5.2.0
+ * @date     28. January 2020
  ******************************************************************************/
 
 //------------------------------------------------------------------------------
@@ -960,5 +960,7 @@ __packed struct  __iar_u32 { uint32_t v; };
 
 #pragma diag_default=Pe940
 #pragma diag_default=Pe177
+
+#define __SXTB16_RORn(ARG1, ARG2) __SXTB16(__ROR(ARG1, ARG2))
 
 #endif /* __CMSIS_ICCARM_H__ */
