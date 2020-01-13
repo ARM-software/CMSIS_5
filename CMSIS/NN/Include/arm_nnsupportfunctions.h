@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2019 Arm Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2010-2020 Arm Limited or its affiliates. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -21,8 +21,8 @@
  * Title:        arm_nnsupportfunctions.h
  * Description:  Public header file of support functions for CMSIS NN Library
  *
- * $Date:        18 December 2019
- * $Revision:    V.2.0.0
+ * $Date:        15 January 2020
+ * $Revision:    V.2.0.1
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -198,28 +198,28 @@ q7_t *arm_nn_depthwise_conv_s8_core(const q7_t *row,
                                     const int32_t *const output_bias,
                                     q7_t *out);
 
-   /**
-   * @brief General Matrix-multiplication function with per-channel requantization.
-   * @param[in]       input_row    pointer to row operand
-   * @param[in]       input_col    pointer to col operand
-   * @param[in]       output_ch    number of rows of input_row
-   * @param[in]       input_ch     number of columns of input_col
-   * @param[in]       output_shift  pointer to per output channel requantization shift parameter.
-   * @param[in]       output_mult   pointer to per output channel requantization multiplier parameter.
-   * @param[in]       out_offset    output tensor offset.
-   * @param[in]       col_offset    input tensor(col) offset.
-   * @param[in]       row_offset    kernel offset(row). Not used.
-   * @param[in]       out_activation_min   minimum value to clamp the output to. Range : int8
-   * @param[in]       out_activation_max   maximum value to clamp the output to. Range : int8
-   * @param[in]       col_len       number of elements in input_col
-   * @param[in]       bias          per output channel bias. Range : int32
-   * @param[in,out]   out           pointer to output
-   * @return     The function returns one of the two
-   *              1. The incremented output pointer for a successful operation or
-   *              2. NULL if implementation is not available.
-   *
-   * @details   Supported framework: TensorFlow Lite
-   */
+/**
+ * @brief General Matrix-multiplication function with per-channel requantization.
+ * @param[in]       input_row    pointer to row operand
+ * @param[in]       input_col    pointer to col operand
+ * @param[in]       output_ch    number of rows of input_row
+ * @param[in]       input_ch     number of columns of input_col
+ * @param[in]       output_shift  pointer to per output channel requantization shift parameter.
+ * @param[in]       output_mult   pointer to per output channel requantization multiplier parameter.
+ * @param[in]       out_offset    output tensor offset.
+ * @param[in]       col_offset    input tensor(col) offset.
+ * @param[in]       row_offset    kernel offset(row). Not used.
+ * @param[in]       out_activation_min   minimum value to clamp the output to. Range : int8
+ * @param[in]       out_activation_max   maximum value to clamp the output to. Range : int8
+ * @param[in]       col_len       number of elements in input_col
+ * @param[in]       bias          per output channel bias. Range : int32
+ * @param[in,out]   out           pointer to output
+ * @return     The function returns one of the two
+ *              1. The incremented output pointer for a successful operation or
+ *              2. NULL if implementation is not available.
+ *
+ * @details   Supported framework: TensorFlow Lite
+*/
 q7_t *arm_nn_mat_mult_s8(const q7_t *input_row,
                          const q7_t *input_col,
                          const uint16_t output_ch,
@@ -234,6 +234,55 @@ q7_t *arm_nn_mat_mult_s8(const q7_t *input_row,
                          const uint16_t col_len,
                          const int32_t *const bias,
                          q7_t *out);
+
+/**
+ * @brief General Matrix-multiplication without requantization for one row & one column
+ * @param[in]       row_elements  number of row elements
+ * @param[in]       row_base      pointer to row operand
+ * @param[in]       col_base      pointer to col operand
+ * @param[out]      sum_col       pointer to store sum of column elements
+ * @param[out]      output        pointer to store result of multiply-accumulate
+ * @return     The function returns the multiply-accumulated result of the row by column.
+ *
+ * @details Pseudo-code
+ *      *output = 0
+ *      sum_col = 0
+ *      for (i = 0; i < row_elements; i++)
+ *          *output += row_base[i] * col_base[i]
+ *          sum_col += col_base[i]
+ *
+*/
+arm_status arm_nn_mat_mul_core_1x_s8(int32_t row_elements,
+                                     const int8_t *row_base,
+                                     const int8_t *col_base,
+                                     int32_t *const sum_col,
+                                     int32_t *const output);
+
+/**
+ * @brief General Matrix-multiplication without requantization for four rows and one column
+ * @param[in]       row_elements  number of row elements
+ * @param[in]       row_base      pointer to row operand
+ * @param[in]       col_base      pointer to col operand
+ * @param[out]      sum_col       pointer to store sum of column elements
+ * @param[out]      output        pointer to store result(4 int32's) of multiply-accumulate
+ * @return     The function returns the multiply-accumulated result of the row by column
+ *
+ * @details Pseudo-code
+ *      output[0] = 0
+ *         ..
+ *      output[3] = 0
+ *      sum_col = 0
+ *      for (i = 0; i < row_elements; i++)
+ *          output[0] += row_base[i] * col_base[i]
+ *                ..
+ *          output[3] += row_base[i + (row_elements * 3)] * col_base[i]
+ *          sum_col += col_base[i]
+*/
+arm_status arm_nn_mat_mul_core_4x_s8(const int32_t row_elements,
+                                     const int8_t *row_base,
+                                     const int8_t *col_base,
+                                     int32_t *const sum_col,
+                                     int32_t *const output);
 
 /**
   @brief         Read 2 q15 elements and post increment pointer.
