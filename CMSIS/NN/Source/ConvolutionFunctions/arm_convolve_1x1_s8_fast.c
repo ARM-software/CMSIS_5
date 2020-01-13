@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2019 Arm Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2010-2020 Arm Limited or its affiliates. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -21,8 +21,8 @@
  * Title:        arm_convolve_1x1_s8_fast.c
  * Description:  Fast q7 version of 1x1 convolution (non-square shape)
  *
- * $Date:        18 December 2019
- * $Revision:    V.1.0.0
+ * $Date:        January 15, 2020
+ * $Revision:    V.1.0.1
  *
  * Target Processor:  Cortex-M cores
  *
@@ -80,67 +80,65 @@ arm_status arm_convolve_1x1_s8_fast(const q7_t *input,
     }
 #if defined(ARM_MATH_MVEI)
     (void)buffer_a;
-    /* Process 4 * N input elements */
-    output = arm_nn_mat_mult_s8(kernel,
-                                input,
-                                output_ch,
-                                input_ch,
-                                output_shift,
-                                output_mult,
-                                out_offset,
-                                input_offset,
-                                0,
-                                out_activation_min,
-                                out_activation_max,
-                                input_x * input_y * input_batches,
-                                bias,
-                                output);
 
-    const int32_t num_elements = input_x * input_y * input_batches;
-    input += (num_elements & ~3) * input_ch;
-    for (int i_items = 0; i_items < (num_elements & 3); i_items++)
+    int32_t col_len = input_x * input_y * input_batches;
+
+    for (int i_items = 0; i_items <= (col_len - 4); i_items += 4)
     {
         for (int i_out_ch = 0; i_out_ch < output_ch; i_out_ch++)
         {
-            const int8_t *ip_n_0 = input + i_items * input_ch;
-            const int8_t *ker_n_0 = kernel + i_out_ch * input_ch;
-            int32_t acc = bias[i_out_ch];
-            int col_loop = input_ch / 16;
-            int32_t off = 0;
-            int32_t sum_k = 0;
+            int32_t sum_row = 0;
+            int32_t temp_out[4];
 
-            while (col_loop > 0)
-            {
-                const int8x16_t k_0 = vldrbq_s8(ker_n_0 + off);
-                sum_k += vaddvq_s8(k_0);
-                const int8x16_t n_0 = vldrbq_s8(ip_n_0 + off);
-                acc += vmladavq_s8(n_0, k_0);
-                off += 16;
-                col_loop--;
-            }
+            (void)arm_nn_mat_mul_core_4x_s8(input_ch,
+                                            input + i_items * input_ch,
+                                            kernel + i_out_ch * input_ch,
+                                            &sum_row,
+                                            temp_out);
+            int32x4_t res = vldrwq_s32(temp_out);
 
-            col_loop = (input_ch & 0xF);
-            if (col_loop != 0)
-            {
-                const mve_pred16_t p = vctp8q(col_loop);
-                const int8x16_t k_0 = vldrbq_z_s8(ker_n_0 + off, p);
-                sum_k += vaddvq_p_s8(k_0, p);
+            res = vaddq_n_s32(res, bias[i_out_ch]);
+            sum_row = sum_row * input_offset;
+            res = vaddq_n_s32(res, sum_row);
+            res = arm_requantize_mve(res, output_mult[i_out_ch], output_shift[i_out_ch]);
+            res = vaddq_n_s32(res, out_offset);
 
-                const int8x16_t n_0 = vldrbq_z_s8(ip_n_0 + off, p);
-                acc += vmladavq_p_s8(n_0, k_0, p);
-            }
+            res = vmaxq_s32(res, vdupq_n_s32(out_activation_min));
+            res = vminq_s32(res, vdupq_n_s32(out_activation_max));
 
-            sum_k = (sum_k * input_offset);
-            acc += sum_k;
+            const uint32x4_t scatter_offset = {0, output_ch, output_ch * 2, output_ch * 3};
+            vstrbq_scatter_offset_s32(output, scatter_offset, res);
+            output++;
+        }
+        output += (3 * output_ch);
+    }
+
+    /* Handle left over elements */
+    for (int i_items = (col_len & ~0x3); i_items < col_len; i_items++)
+    {
+        for (int i_out_ch = 0; i_out_ch < output_ch; i_out_ch++)
+        {
+            int32_t sum_row = 0;
+
+            int32_t acc;
+            (void)arm_nn_mat_mul_core_1x_s8(input_ch,
+                                            input + i_items * input_ch,
+                                            kernel + i_out_ch * input_ch,
+                                            &sum_row,
+                                            &acc);
+
+            acc += bias[i_out_ch];
+            sum_row = (sum_row * input_offset);
+            acc += sum_row;
             acc = arm_nn_requantize(acc, output_mult[i_out_ch], output_shift[i_out_ch]);
-            acc +=  out_offset;
+            acc += out_offset;
 
             acc = MAX(acc, out_activation_min);
             acc = MIN(acc, out_activation_max);
-
             *output++ = acc;
         }
     }
+
 
 #elif defined(ARM_MATH_LOOPUNROLL) && defined(ARM_MATH_DSP)
     int32_t i_element;
@@ -232,6 +230,7 @@ arm_status arm_convolve_1x1_s8_fast(const q7_t *input,
     /* Return to application */
     return ARM_MATH_SUCCESS;
 }
+
 
 int32_t arm_convolve_1x1_s8_fast_get_buffer_size(const uint16_t input_ch)
 {
