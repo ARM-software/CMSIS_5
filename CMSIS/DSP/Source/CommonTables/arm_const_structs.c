@@ -229,7 +229,6 @@ const arm_cfft_instance_q31 arm_cfft_sR_q31_len4096 = {
 };
 #endif
 
-#endif /* !defined(ARM_MATH_MVEI) */
 
 #if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) || (defined(ARM_TABLE_TWIDDLECOEF_Q15_16) && defined(ARM_TABLE_BITREVIDX_FXT_16))
 const arm_cfft_instance_q15 arm_cfft_sR_q15_len16 = {
@@ -284,6 +283,8 @@ const arm_cfft_instance_q15 arm_cfft_sR_q15_len4096 = {
   4096, twiddleCoef_4096_q15, armBitRevIndexTable_fixed_4096, ARMBITREVINDEXTABLE_FIXED_4096_TABLE_LENGTH
 };
 #endif
+
+#endif /* !defined(ARM_MATH_MVEI) */
 
 /* Structure for real-value inputs */
 /* Double precision strucs */
@@ -545,7 +546,6 @@ const arm_rfft_instance_q31 arm_rfft_sR_q31_len8192 = {
 };
 #endif
 
-#endif /* !defined(ARM_MATH_MVEI) */
 
 
 /* q15_t */
@@ -656,5 +656,8 @@ const arm_rfft_instance_q15 arm_rfft_sR_q15_len8192 = {
   &arm_cfft_sR_q15_len4096
 };
 #endif
+
+#endif /* !defined(ARM_MATH_MVEI) */
+
 
 #endif

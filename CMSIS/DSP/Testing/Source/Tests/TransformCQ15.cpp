@@ -13,10 +13,10 @@
 
        q15_t *outfftp = outputfft.ptr();
 
-        memcpy(outfftp,inp,sizeof(q15_t)*input.nbSamples());
+       memcpy(outfftp,inp,sizeof(q15_t)*input.nbSamples());
    
-        arm_cfft_q15(
-             this->instCfftQ15,
+       arm_cfft_q15(
+             &(this->instCfftQ15),
              outfftp,
              this->ifft,
              1);
@@ -37,7 +37,7 @@
         memcpy(outfftp,inp,sizeof(q15_t)*input.nbSamples());
    
         arm_cfft_q15(
-             this->instCfftQ15,
+             &(this->instCfftQ15),
              outfftp,
              this->ifft,
              1);
@@ -68,7 +68,7 @@
             input.reload(TransformCQ15::INPUTS_CFFT_NOISY_16_Q15_ID,mgr);
             ref.reload(  TransformCQ15::REF_CFFT_NOISY_16_Q15_ID,mgr);
 
-            instCfftQ15 = &arm_cfft_sR_q15_len16;
+            status=arm_cfft_init_q15(&instCfftQ15,16);
 
             this->ifft=0;
 
@@ -79,7 +79,7 @@
             input.reload(TransformCQ15::INPUTS_CIFFT_NOISY_16_Q15_ID,mgr);
             ref.reload(  TransformCQ15::INPUTS_CFFT_NOISY_16_Q15_ID,mgr);
 
-            instCfftQ15 = &arm_cfft_sR_q15_len16;
+            status=arm_cfft_init_q15(&instCfftQ15,16);
 
             this->ifft=1;
             this->scaling = 4;
@@ -91,7 +91,7 @@
             input.reload(TransformCQ15::INPUTS_CFFT_NOISY_32_Q15_ID,mgr);
             ref.reload(  TransformCQ15::REF_CFFT_NOISY_32_Q15_ID,mgr);
 
-            instCfftQ15 = &arm_cfft_sR_q15_len32;
+            status=arm_cfft_init_q15(&instCfftQ15,32);
 
             this->ifft=0;
 
@@ -102,7 +102,7 @@
             input.reload(TransformCQ15::INPUTS_CIFFT_NOISY_32_Q15_ID,mgr);
             ref.reload(  TransformCQ15::INPUTS_CFFT_NOISY_32_Q15_ID,mgr);
 
-            instCfftQ15 = &arm_cfft_sR_q15_len32;
+            status=arm_cfft_init_q15(&instCfftQ15,32);
 
             this->ifft=1;
             this->scaling = 5;
@@ -114,7 +114,7 @@
             input.reload(TransformCQ15::INPUTS_CFFT_NOISY_64_Q15_ID,mgr);
             ref.reload(  TransformCQ15::REF_CFFT_NOISY_64_Q15_ID,mgr);
 
-            instCfftQ15 = &arm_cfft_sR_q15_len64;
+           status=arm_cfft_init_q15(&instCfftQ15,64);
 
             this->ifft=0;
 
@@ -126,7 +126,7 @@
             input.reload(TransformCQ15::INPUTS_CIFFT_NOISY_64_Q15_ID,mgr);
             ref.reload(  TransformCQ15::INPUTS_CFFT_NOISY_64_Q15_ID,mgr);
 
-            instCfftQ15 = &arm_cfft_sR_q15_len64;
+            status=arm_cfft_init_q15(&instCfftQ15,64);
 
             this->ifft=1;
             this->scaling=6;
@@ -138,7 +138,7 @@
             input.reload(TransformCQ15::INPUTS_CFFT_NOISY_128_Q15_ID,mgr);
             ref.reload(  TransformCQ15::REF_CFFT_NOISY_128_Q15_ID,mgr);
 
-            instCfftQ15 = &arm_cfft_sR_q15_len128;
+            status=arm_cfft_init_q15(&instCfftQ15,128);
 
             this->ifft=0;
 
@@ -149,7 +149,7 @@
             input.reload(TransformCQ15::INPUTS_CIFFT_NOISY_128_Q15_ID,mgr);
             ref.reload(  TransformCQ15::INPUTS_CFFT_NOISY_128_Q15_ID,mgr);
 
-            instCfftQ15 = &arm_cfft_sR_q15_len128;
+            status=arm_cfft_init_q15(&instCfftQ15,128);
 
             this->ifft=1;
             this->scaling=7;
@@ -161,7 +161,7 @@
             input.reload(TransformCQ15::INPUTS_CFFT_NOISY_256_Q15_ID,mgr);
             ref.reload(  TransformCQ15::REF_CFFT_NOISY_256_Q15_ID,mgr);
 
-            instCfftQ15 = &arm_cfft_sR_q15_len256;
+            status=arm_cfft_init_q15(&instCfftQ15,256);
 
             this->ifft=0;
 
@@ -172,7 +172,7 @@
             input.reload(TransformCQ15::INPUTS_CIFFT_NOISY_256_Q15_ID,mgr);
             ref.reload(  TransformCQ15::INPUTS_CFFT_NOISY_256_Q15_ID,mgr);
 
-            instCfftQ15 = &arm_cfft_sR_q15_len256;
+            status=arm_cfft_init_q15(&instCfftQ15,256);
 
             this->ifft=1;
             this->scaling=8;
@@ -184,7 +184,7 @@
             input.reload(TransformCQ15::INPUTS_CFFT_NOISY_512_Q15_ID,mgr);
             ref.reload(  TransformCQ15::REF_CFFT_NOISY_512_Q15_ID,mgr);
 
-            instCfftQ15 = &arm_cfft_sR_q15_len512;
+            status=arm_cfft_init_q15(&instCfftQ15,512);
 
             this->ifft=0;
 
@@ -196,7 +196,7 @@
             input.reload(TransformCQ15::INPUTS_CIFFT_NOISY_512_Q15_ID,mgr);
             ref.reload(  TransformCQ15::INPUTS_CFFT_NOISY_512_Q15_ID,mgr);
 
-            instCfftQ15 = &arm_cfft_sR_q15_len512;
+            status=arm_cfft_init_q15(&instCfftQ15,512);
 
             this->ifft=1;
             this->scaling=9;
@@ -209,7 +209,7 @@
             input.reload(TransformCQ15::INPUTS_CFFT_NOISY_1024_Q15_ID,mgr);
             ref.reload(  TransformCQ15::REF_CFFT_NOISY_1024_Q15_ID,mgr);
 
-            instCfftQ15 = &arm_cfft_sR_q15_len1024;
+            status=arm_cfft_init_q15(&instCfftQ15,1024);
 
             this->ifft=0;
 
@@ -220,7 +220,7 @@
             input.reload(TransformCQ15::INPUTS_CIFFT_NOISY_1024_Q15_ID,mgr);
             ref.reload(  TransformCQ15::INPUTS_CFFT_NOISY_1024_Q15_ID,mgr);
 
-            instCfftQ15 = &arm_cfft_sR_q15_len1024;
+            status=arm_cfft_init_q15(&instCfftQ15,1024);
 
             this->ifft=1;
             this->scaling=10;
@@ -232,7 +232,7 @@
             input.reload(TransformCQ15::INPUTS_CFFT_NOISY_2048_Q15_ID,mgr);
             ref.reload(  TransformCQ15::REF_CFFT_NOISY_2048_Q15_ID,mgr);
 
-            instCfftQ15 = &arm_cfft_sR_q15_len2048;
+            status=arm_cfft_init_q15(&instCfftQ15,2048);
 
             this->ifft=0;
 
@@ -243,7 +243,7 @@
             input.reload(TransformCQ15::INPUTS_CIFFT_NOISY_2048_Q15_ID,mgr);
             ref.reload(  TransformCQ15::INPUTS_CFFT_NOISY_2048_Q15_ID,mgr);
 
-            instCfftQ15 = &arm_cfft_sR_q15_len2048;
+            status=arm_cfft_init_q15(&instCfftQ15,2048);
 
             this->ifft=1;
             this->scaling=11;
@@ -255,7 +255,7 @@
             input.reload(TransformCQ15::INPUTS_CFFT_NOISY_4096_Q15_ID,mgr);
             ref.reload(  TransformCQ15::REF_CFFT_NOISY_4096_Q15_ID,mgr);
 
-            instCfftQ15 = &arm_cfft_sR_q15_len4096;
+            status=arm_cfft_init_q15(&instCfftQ15,4096);
 
             this->ifft=0;
 
@@ -266,7 +266,7 @@
             input.reload(TransformCQ15::INPUTS_CIFFT_NOISY_4096_Q15_ID,mgr);
             ref.reload(  TransformCQ15::INPUTS_CFFT_NOISY_4096_Q15_ID,mgr);
 
-            instCfftQ15 = &arm_cfft_sR_q15_len4096;
+            status=arm_cfft_init_q15(&instCfftQ15,4096);
 
             this->ifft=1;
             this->scaling=12;
@@ -280,7 +280,7 @@
             input.reload(TransformCQ15::INPUTS_CFFT_STEP_16_Q15_ID,mgr);
             ref.reload(  TransformCQ15::REF_CFFT_STEP_16_Q15_ID,mgr);
 
-            instCfftQ15 = &arm_cfft_sR_q15_len16;
+            status=arm_cfft_init_q15(&instCfftQ15,16);
 
             this->ifft=0;
 
@@ -291,7 +291,7 @@
             input.reload(TransformCQ15::INPUTS_CIFFT_STEP_16_Q15_ID,mgr);
             ref.reload(  TransformCQ15::INPUTS_CFFT_STEP_16_Q15_ID,mgr);
 
-            instCfftQ15 = &arm_cfft_sR_q15_len16;
+            status=arm_cfft_init_q15(&instCfftQ15,16);
 
             this->ifft=1;
             this->scaling=4;
@@ -303,7 +303,7 @@
             input.reload(TransformCQ15::INPUTS_CFFT_STEP_32_Q15_ID,mgr);
             ref.reload(  TransformCQ15::REF_CFFT_STEP_32_Q15_ID,mgr);
 
-            instCfftQ15 = &arm_cfft_sR_q15_len32;
+            status=arm_cfft_init_q15(&instCfftQ15,32);
 
             this->ifft=0;
 
@@ -314,7 +314,7 @@
             input.reload(TransformCQ15::INPUTS_CIFFT_STEP_32_Q15_ID,mgr);
             ref.reload(  TransformCQ15::INPUTS_CFFT_STEP_32_Q15_ID,mgr);
 
-            instCfftQ15 = &arm_cfft_sR_q15_len32;
+            status=arm_cfft_init_q15(&instCfftQ15,32);
 
             this->ifft=1;
             this->scaling=5;
@@ -326,7 +326,7 @@
             input.reload(TransformCQ15::INPUTS_CFFT_STEP_64_Q15_ID,mgr);
             ref.reload(  TransformCQ15::REF_CFFT_STEP_64_Q15_ID,mgr);
 
-            instCfftQ15 = &arm_cfft_sR_q15_len64;
+            status=arm_cfft_init_q15(&instCfftQ15,64);
 
             this->ifft=0;
 
@@ -337,7 +337,7 @@
             input.reload(TransformCQ15::INPUTS_CIFFT_STEP_64_Q15_ID,mgr);
             ref.reload(  TransformCQ15::INPUTS_CFFT_STEP_64_Q15_ID,mgr);
 
-            instCfftQ15 = &arm_cfft_sR_q15_len64;
+            status=arm_cfft_init_q15(&instCfftQ15,64);
 
             this->ifft=1;
             this->scaling=6;
@@ -349,7 +349,7 @@
             input.reload(TransformCQ15::INPUTS_CFFT_STEP_128_Q15_ID,mgr);
             ref.reload(  TransformCQ15::REF_CFFT_STEP_128_Q15_ID,mgr);
 
-            instCfftQ15 = &arm_cfft_sR_q15_len128;
+            status=arm_cfft_init_q15(&instCfftQ15,128);
 
             this->ifft=0;
 
@@ -360,7 +360,7 @@
             input.reload(TransformCQ15::INPUTS_CIFFT_STEP_128_Q15_ID,mgr);
             ref.reload(  TransformCQ15::INPUTS_CFFT_STEP_128_Q15_ID,mgr);
 
-            instCfftQ15 = &arm_cfft_sR_q15_len128;
+            status=arm_cfft_init_q15(&instCfftQ15,128);
 
             this->ifft=1;
             this->scaling=7;
@@ -372,7 +372,7 @@
             input.reload(TransformCQ15::INPUTS_CFFT_STEP_256_Q15_ID,mgr);
             ref.reload(  TransformCQ15::REF_CFFT_STEP_256_Q15_ID,mgr);
 
-            instCfftQ15 = &arm_cfft_sR_q15_len256;
+            status=arm_cfft_init_q15(&instCfftQ15,256);
 
             this->ifft=0;
 
@@ -383,7 +383,7 @@
             input.reload(TransformCQ15::INPUTS_CIFFT_STEP_256_Q15_ID,mgr);
             ref.reload(  TransformCQ15::INPUTS_CFFT_STEP_256_Q15_ID,mgr);
 
-            instCfftQ15 = &arm_cfft_sR_q15_len256;
+            status=arm_cfft_init_q15(&instCfftQ15,256);
 
             this->ifft=1;
             this->scaling=8;
@@ -395,7 +395,7 @@
             input.reload(TransformCQ15::INPUTS_CFFT_STEP_512_Q15_ID,mgr);
             ref.reload(  TransformCQ15::REF_CFFT_STEP_512_Q15_ID,mgr);
 
-            instCfftQ15 = &arm_cfft_sR_q15_len512;
+            status=arm_cfft_init_q15(&instCfftQ15,512);
 
             this->ifft=0;
 
@@ -406,7 +406,7 @@
             input.reload(TransformCQ15::INPUTS_CIFFT_STEP_512_Q15_ID,mgr);
             ref.reload(  TransformCQ15::INPUTS_CFFT_STEP_512_Q15_ID,mgr);
 
-            instCfftQ15 = &arm_cfft_sR_q15_len512;
+            status=arm_cfft_init_q15(&instCfftQ15,512);
 
             this->ifft=1;
             this->scaling=9;
@@ -418,7 +418,7 @@
             input.reload(TransformCQ15::INPUTS_CFFT_STEP_1024_Q15_ID,mgr);
             ref.reload(  TransformCQ15::REF_CFFT_STEP_1024_Q15_ID,mgr);
 
-            instCfftQ15 = &arm_cfft_sR_q15_len1024;
+            status=arm_cfft_init_q15(&instCfftQ15,1024);
 
             this->ifft=0;
 
@@ -429,7 +429,7 @@
             input.reload(TransformCQ15::INPUTS_CIFFT_STEP_1024_Q15_ID,mgr);
             ref.reload(  TransformCQ15::INPUTS_CFFT_STEP_1024_Q15_ID,mgr);
 
-            instCfftQ15 = &arm_cfft_sR_q15_len1024;
+            status=arm_cfft_init_q15(&instCfftQ15,1024);
 
             this->ifft=1;
             this->scaling=10;
@@ -441,7 +441,7 @@
             input.reload(TransformCQ15::INPUTS_CFFT_STEP_2048_Q15_ID,mgr);
             ref.reload(  TransformCQ15::REF_CFFT_STEP_2048_Q15_ID,mgr);
 
-            instCfftQ15 = &arm_cfft_sR_q15_len2048;
+            status=arm_cfft_init_q15(&instCfftQ15,2048);
 
             this->ifft=0;
 
@@ -452,7 +452,7 @@
             input.reload(TransformCQ15::INPUTS_CIFFT_STEP_2048_Q15_ID,mgr);
             ref.reload(  TransformCQ15::INPUTS_CFFT_STEP_2048_Q15_ID,mgr);
 
-            instCfftQ15 = &arm_cfft_sR_q15_len2048;
+            status=arm_cfft_init_q15(&instCfftQ15,2048);
 
             this->ifft=1;
             this->scaling=11;
@@ -464,7 +464,7 @@
             input.reload(TransformCQ15::INPUTS_CFFT_STEP_4096_Q15_ID,mgr);
             ref.reload(  TransformCQ15::REF_CFFT_STEP_4096_Q15_ID,mgr);
 
-            instCfftQ15 = &arm_cfft_sR_q15_len4096;
+            status=arm_cfft_init_q15(&instCfftQ15,4096);
 
             this->ifft=0;
 
@@ -475,7 +475,7 @@
             input.reload(TransformCQ15::INPUTS_CIFFT_STEP_4096_Q15_ID,mgr);
             ref.reload(  TransformCQ15::INPUTS_CFFT_STEP_4096_Q15_ID,mgr);
 
-            instCfftQ15 = &arm_cfft_sR_q15_len4096;
+            status=arm_cfft_init_q15(&instCfftQ15,4096);
 
             this->ifft=1;
             this->scaling=12;

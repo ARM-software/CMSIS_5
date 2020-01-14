@@ -15,7 +15,7 @@ class TransformCQ15:public Client::Suite
 
             Client::RefPattern<q15_t> ref;
 
-            const arm_cfft_instance_q15 *instCfftQ15;
+            arm_cfft_instance_q15 instCfftQ15;
 
             int ifft;
 
@@ -27,5 +27,7 @@ class TransformCQ15:public Client::Suite
 
             */
             int scaling;
+
+            arm_status status;
             
     };

@@ -75,7 +75,11 @@ void arm_rfft_q15(
         q15_t * pSrc,
         q15_t * pDst)
 {
+#if defined(ARM_MATH_MVEI)
+  const arm_cfft_instance_q15 *S_CFFT = &(S->cfftInst);
+#else
   const arm_cfft_instance_q15 *S_CFFT = S->pCfft;
+#endif
         uint32_t L2 = S->fftLenReal >> 1U;
         uint32_t i;
 

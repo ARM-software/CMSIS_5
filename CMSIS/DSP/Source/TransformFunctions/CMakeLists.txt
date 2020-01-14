@@ -38,6 +38,7 @@ if (NOT CONFIGTABLE OR ALLFFT OR CFFT_Q15_16 OR CFFT_Q15_32 OR CFFT_Q15_64 OR CF
 target_sources(CMSISDSPTransform PRIVATE arm_cfft_radix2_q15.c)
 target_sources(CMSISDSPTransform PRIVATE arm_cfft_radix4_q15.c)
 target_sources(CMSISDSPTransform PRIVATE arm_cfft_q15.c)
+target_sources(CMSISDSPTransform PRIVATE arm_cfft_init_q15.c)
 endif()
 
 if (NOT CONFIGTABLE OR ALLFFT OR CFFT_Q31_16 OR CFFT_Q31_32 OR CFFT_Q31_64 OR CFFT_Q31_128 OR CFFT_Q31_256 OR CFFT_Q31_512 
@@ -82,6 +83,7 @@ target_sources(CMSISDSPTransform PRIVATE arm_dct4_q15.c)
 target_sources(CMSISDSPTransform PRIVATE arm_rfft_init_q15.c)
 target_sources(CMSISDSPTransform PRIVATE arm_rfft_q15.c)
 target_sources(CMSISDSPTransform PRIVATE arm_cfft_q15.c)
+target_sources(CMSISDSPTransform PRIVATE arm_cfft_init_q15.c)
 target_sources(CMSISDSPTransform PRIVATE arm_cfft_radix4_init_q15.c)
 target_sources(CMSISDSPTransform PRIVATE arm_cfft_radix4_q15.c)
 endif()
@@ -117,6 +119,7 @@ if (NOT CONFIGTABLE OR ALLFFT OR RFFT_Q15_32 OR RFFT_Q15_64 OR RFFT_Q15_128 OR R
 target_sources(CMSISDSPTransform PRIVATE arm_rfft_init_q15.c)
 target_sources(CMSISDSPTransform PRIVATE arm_rfft_q15.c)
 target_sources(CMSISDSPTransform PRIVATE arm_cfft_q15.c)
+target_sources(CMSISDSPTransform PRIVATE arm_cfft_init_q15.c)
 target_sources(CMSISDSPTransform PRIVATE arm_cfft_radix4_q15.c)
 endif()
 
