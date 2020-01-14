@@ -24,7 +24,7 @@
              1);
           
         ASSERT_SNR(outputfft,ref,(float32_t)SNR_THRESHOLD);
-        ASSERT_NEAR_EQ(outputfft,ref,32);
+        ASSERT_NEAR_EQ(outputfft,ref,(q31_t)32);
         ASSERT_EMPTY_TAIL(outputfft);
        
         
