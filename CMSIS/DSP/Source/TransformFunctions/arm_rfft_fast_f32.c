@@ -200,6 +200,15 @@ void merge_rfft_f32(
         float32_t *pB = p;                          /* decreasing pointer */
         float32_t xAR, xAI, xBR, xBI;               /* temporary variables */
         float32_t t1a, t1b, r, s, t, u;             /* temporary variables */
+
+        float32x4x2_t tw,xA,xB;
+        float32x4x2_t tmp1, tmp2, res;
+        uint32x4_t     vecStridesFwd, vecStridesBkwd;
+
+        vecStridesFwd = vidupq_u32(0, 2);
+        vecStridesBkwd = -vecStridesFwd;
+
+        int blockCnt;
         
 
    k = (S->Sint).fftLen - 1;
@@ -215,7 +224,57 @@ void merge_rfft_f32(
    pB  =  p + 2*k ;
    pA +=  2    ;
 
-   while (k > 0U)
+   blockCnt = k >> 2;
+   while (blockCnt > 0)
+   {
+      /* G is half of the frequency complex spectrum */
+      //for k = 2:N
+      //    Xk(k) = 1/2 * (G(k) + conj(G(N-k+2)) + Tw(k)*( G(k) - conj(G(N-k+2))));
+      xA = vld2q_f32(pA);
+      pA += 8;
+
+      xB = vld2q_f32(pB);
+
+      xB.val[0] = vldrwq_gather_shifted_offset_f32(pB, vecStridesBkwd);
+      xB.val[1] = vldrwq_gather_shifted_offset_f32(&pB[1], vecStridesBkwd);
+
+      xB.val[1] = vnegq_f32(xB.val[1]);
+      pB -= 8;
+
+
+      tw = vld2q_f32(pCoeff);
+      tw.val[1] = vnegq_f32(tw.val[1]);
+      pCoeff += 8;
+
+
+      tmp1.val[0] = vaddq_f32(xA.val[0],xB.val[0]);
+      tmp1.val[1] = vaddq_f32(xA.val[1],xB.val[1]);
+
+      tmp2.val[0] = vsubq_f32(xB.val[0],xA.val[0]);
+      tmp2.val[1] = vsubq_f32(xB.val[1],xA.val[1]);
+
+      res.val[0] = vmulq(tw.val[0], tmp2.val[0]);
+      res.val[0] = vfmsq(res.val[0],tw.val[1], tmp2.val[1]);
+
+      res.val[1] = vmulq(tw.val[0], tmp2.val[1]);
+      res.val[1] = vfmaq(res.val[1], tw.val[1], tmp2.val[0]);
+
+      res.val[0] = vaddq_f32(res.val[0],tmp1.val[0] );
+      res.val[1] = vaddq_f32(res.val[1],tmp1.val[1] );
+
+      res.val[0] = vmulq_n_f32(res.val[0], 0.5f);
+      res.val[1] = vmulq_n_f32(res.val[1], 0.5f);
+
+
+      vst2q_f32(pOut, res);
+      pOut += 8;
+
+    
+      blockCnt--;
+   }
+
+   blockCnt = k & 3;
+   while (blockCnt > 0)
    {
       /* G is half of the frequency complex spectrum */
       //for k = 2:N
@@ -243,7 +302,7 @@ void merge_rfft_f32(
 
       pA += 2;
       pB -= 2;
-      k--;
+      blockCnt--;
    }
 
 }
