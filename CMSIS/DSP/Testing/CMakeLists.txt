@@ -177,6 +177,9 @@ set(TESTSRC
   Source/Tests/BinaryTestsQ31.cpp
   Source/Tests/BinaryTestsQ15.cpp
   Source/Tests/FullyConnected.cpp
+  Source/Tests/DECIMF32.cpp
+  Source/Tests/DECIMQ31.cpp
+  Source/Tests/DECIMQ15.cpp
   Source/Tests/MISCF32.cpp
   Source/Tests/MISCQ31.cpp
   Source/Tests/MISCQ15.cpp

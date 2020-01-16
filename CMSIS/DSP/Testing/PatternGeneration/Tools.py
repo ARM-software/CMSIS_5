@@ -597,7 +597,7 @@ class Config:
             #np.savetxt(i, data, newline="\n", header="W\n%d" % len(data),comments ="" )
             f.write("W\n%d\n" % len(data))
             for v in data:
-                f.write("// %s\n" % u32(v))
+                f.write("// %s\n" % v)
                 f.write("%s\n" % u32(v))
 
     def _writeVectorQ7(self,i,data):

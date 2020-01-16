@@ -57,6 +57,263 @@
                    Refer to \ref arm_fir_decimate_fast_q15() for a faster but less precise implementation of this function.
  */
 
+#if defined(ARM_MATH_MVEI)
+
+#include "arm_helium_utils.h"
+
+void arm_fir_decimate_q15(
+  const arm_fir_decimate_instance_q15 * S,
+  const q15_t * pSrc,
+        q15_t * pDst,
+        uint32_t blockSize)
+{
+    q15_t    *pState = S->pState;   /* State pointer */
+    const q15_t    *pCoeffs = S->pCoeffs; /* Coefficient pointer */
+    q15_t    *pStateCurnt;      /* Points to the current sample of the state */
+    const q15_t    *px, *pb;          /* Temporary pointers for state and coefficient buffers */
+    uint32_t  numTaps = S->numTaps; /* Number of filter coefficients in the filter */
+    uint32_t  i, tapCnt, blkCnt, outBlockSize = blockSize / S->M;   /* Loop counters */
+    uint32_t  blkCntN4;
+    const q15_t  *px0, *px1, *px2, *px3;
+    q63_t     acc0v, acc1v, acc2v, acc3v;
+    q15x8_t x0v, x1v, x2v, x3v;
+    q15x8_t c0v;
+
+    /*
+     * S->pState buffer contains previous frame (numTaps - 1) samples
+     * pStateCurnt points to the location where the new input data should be written
+     */
+    pStateCurnt = S->pState + (numTaps - 1U);
+    /*
+     * Total number of output samples to be computed
+     */
+    blkCnt = outBlockSize / 4;
+    blkCntN4 = outBlockSize - (4 * blkCnt);
+
+    while (blkCnt > 0U)
+    {
+        /*
+         * Need extra temp variables as 4 * S->M is not necessarily a multiple of 8
+         * and cause final tail predicated post incremented pointers to jump ahead
+         */
+        const q15_t      *pSrcTmp = pSrc;
+        q15_t      *pStateCurntTmp = pStateCurnt;
+
+        /*
+         * Copy 4 * decimation factor number of new input samples into the state buffer
+         */
+        i = (4 * S->M) >> 3;
+        while (i > 0U)
+        {
+            vstrhq_s16(pStateCurntTmp, vldrhq_s16(pSrcTmp));
+            pSrcTmp += 8;
+            pStateCurntTmp += 8;
+            i--;
+        }
+        i = (4 * S->M) & 7;
+        if (i > 0U)
+        {
+            mve_pred16_t p0 = vctp16q(i);
+            vstrhq_p_s16(pStateCurntTmp, vldrhq_s16(pSrcTmp), p0);
+        }
+
+        pSrc += (4 * S->M);
+        pStateCurnt += (4 * S->M);
+
+        /*
+         * Clear all accumulators
+         */
+        acc0v = 0LL;
+        acc1v = 0LL;
+        acc2v = 0LL;
+        acc3v = 0LL;
+        /*
+         * Initialize state pointer for all the samples
+         */
+        px0 = pState;
+        px1 = pState + S->M;
+        px2 = pState + 2 * S->M;
+        px3 = pState + 3 * S->M;
+        /*
+         * Initialize coeff. pointer
+         */
+        pb = pCoeffs;
+
+        tapCnt = numTaps >> 3;
+        /*
+         * Loop over the number of taps.  Unroll by a factor of 4.
+         * Repeat until we've computed numTaps-4 coefficients.
+         */
+        while (tapCnt > 0U)
+        {
+            /*
+             * Read the b[numTaps-1] coefficient
+             */
+            c0v = vldrhq_s16(pb);
+            pb += 8;
+            /*
+             * Read x[n-numTaps-1] sample for acc0
+             */
+            x0v = vld1q(px0);
+            x1v = vld1q(px1);
+            x2v = vld1q(px2);
+            x3v = vld1q(px3);
+            px0 += 8;
+            px1 += 8;
+            px2 += 8;
+            px3 += 8;
+
+            acc0v = vmlaldavaq(acc0v, x0v, c0v);
+            acc1v = vmlaldavaq(acc1v, x1v, c0v);
+            acc2v = vmlaldavaq(acc2v, x2v, c0v);
+            acc3v = vmlaldavaq(acc3v, x3v, c0v);
+            /*
+             * Decrement the loop counter
+             */
+            tapCnt--;
+        }
+
+        /*
+         * If the filter length is not a multiple of 4, compute the remaining filter taps
+         * should be tail predicated
+         */
+        tapCnt = numTaps & 7;
+        if (tapCnt > 0U)
+        {
+            mve_pred16_t p0 = vctp16q(tapCnt);
+            /*
+             * Read the b[numTaps-1] coefficient
+             */
+            c0v = vldrhq_z_s16(pb, p0);
+            pb += 8;
+            /*
+             * Read x[n-numTaps-1] sample for acc0
+             */
+            x0v = vld1q(px0);
+            x1v = vld1q(px1);
+            x2v = vld1q(px2);
+            x3v = vld1q(px3);
+            px0 += 8;
+            px1 += 8;
+            px2 += 8;
+            px3 += 8;
+
+            acc0v = vmlaldavaq(acc0v, x0v, c0v);
+            acc1v = vmlaldavaq(acc1v, x1v, c0v);
+            acc2v = vmlaldavaq(acc2v, x2v, c0v);
+            acc3v = vmlaldavaq(acc3v, x3v, c0v);
+        }
+
+        acc0v = asrl(acc0v, 15);
+        acc1v = asrl(acc1v, 15);
+        acc2v = asrl(acc2v, 15);
+        acc3v = asrl(acc3v, 15);
+        /*
+         * store in the destination buffer.
+         */
+        *pDst++ = (q15_t) __SSAT((q31_t) acc0v, 16);
+        *pDst++ = (q15_t) __SSAT((q31_t) acc1v, 16);;
+        *pDst++ = (q15_t) __SSAT((q31_t) acc2v, 16);;
+        *pDst++ = (q15_t) __SSAT((q31_t) acc3v, 16);;
+
+        /*
+         * Advance the state pointer by the decimation factor
+         * to process the next group of decimation factor number samples
+         */
+        pState = pState + 4 * S->M;
+        /*
+         * Decrement the loop counter
+         */
+        blkCnt--;
+    }
+
+    while (blkCntN4 > 0U)
+    {
+        /*
+         * Copy decimation factor number of new input samples into the state buffer
+         */
+        i = S->M;
+        do
+        {
+            *pStateCurnt++ = *pSrc++;
+        }
+        while (--i);
+        /*
+         * Set accumulator to zero
+         */
+        acc0v = 0LL;
+        /*
+         * Initialize state pointer
+         */
+        px = pState;
+        /*
+         * Initialize coeff. pointer
+         */
+        pb = pCoeffs;
+
+        tapCnt = numTaps >> 3;
+        while (tapCnt > 0U)
+        {
+            c0v = vldrhq_s16(pb);
+            x0v = vldrhq_s16(px);
+            pb += 8;
+            px += 8;
+            acc0v = vmlaldavaq(acc0v, x0v, c0v);
+            /*
+             * Decrement the loop counter
+             */
+            tapCnt--;
+        }
+
+        tapCnt = numTaps & 7;
+        if (tapCnt > 0U)
+        {
+            mve_pred16_t p0 = vctp16q(tapCnt);
+            c0v = vldrhq_z_s16(pb, p0);
+            x0v = vldrhq_z_s16(px, p0);
+            acc0v = vmlaldavaq_p(acc0v, x0v, c0v, p0);
+        }
+
+        acc0v = asrl(acc0v, 15);
+
+        /*
+         * Advance the state pointer by the decimation factor
+         * to process the next group of decimation factor number samples
+         */
+        pState = pState + S->M;
+        /*
+         * The result is in the accumulator, store in the destination buffer.
+         */
+        *pDst++ = (q15_t) __SSAT((q31_t) acc0v, 16);
+        /*
+         * Decrement the loop counter
+         */
+        blkCntN4--;
+    }
+
+    /*
+     * Processing is complete.
+     * Now copy the last numTaps - 1 samples to the start of the state buffer.
+     * This prepares the state buffer for the next function call.
+     */
+
+    pStateCurnt = S->pState;
+    blkCnt = (numTaps - 1) >> 3;
+    while (blkCnt > 0U)
+    {
+        vstrhq_s16(pStateCurnt, vldrhq_s16(pState));
+        pState += 8;
+        pStateCurnt += 8;
+        blkCnt--;
+    }
+    blkCnt = (numTaps - 1) & 7;
+    if (blkCnt > 0U)
+    {
+        mve_pred16_t p0 = vctp16q(blkCnt);
+        vstrhq_p_s16(pStateCurnt, vldrhq_s16(pState), p0);
+    }  
+}
+#else
 #if defined (ARM_MATH_DSP)
 
 void arm_fir_decimate_q15(
@@ -589,7 +846,7 @@ void arm_fir_decimate_q15(
 }
 
 #endif /* #if defined (ARM_MATH_DSP) */
-
+#endif /* defined(ARM_MATH_MVEI) */
 /**
   @} end of FIR_decimate group
  */

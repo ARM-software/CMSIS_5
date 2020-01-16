@@ -93,6 +93,11 @@ the average.
 
 This overhead is removed from benchmarks in the Runner..
 
+Calibration is removed from the python script when external trace is used for the cycles.
+Indeed, in that case the calibration value can only be measured by parsing the trace.
+
+Otherwise, the calibration is measured below.
+
 */
         for(int i=0;i < 20;i++)
         {

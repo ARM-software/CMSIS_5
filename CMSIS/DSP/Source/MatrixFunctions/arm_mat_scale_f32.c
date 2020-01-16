@@ -146,10 +146,6 @@ arm_status arm_mat_scale_f32(
   arm_status status;                             /* status of matrix scaling     */
 
 
-  float32_t in1, in2, in3, in4;                  /* temporary variables */
-  float32_t out1, out2, out3, out4;              /* temporary variables */
-
-
 #ifdef ARM_MATH_MATRIX_CHECK
   /* Check for matrix mismatch condition */
   if ((pSrc->numRows != pDst->numRows) || (pSrc->numCols != pDst->numCols))

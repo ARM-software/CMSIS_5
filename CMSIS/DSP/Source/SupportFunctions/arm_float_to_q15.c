@@ -127,7 +127,6 @@ void arm_float_to_q15(
   const float32_t *pIn = pSrc;                         /* Src pointer */
   uint32_t blkCnt;                               /* loop counter */
 
-  float32_t in;
   float32x4_t inV;
   #ifdef ARM_MATH_ROUNDING
   float32x4_t zeroV = vdupq_n_f32(0.0f);
