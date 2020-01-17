@@ -39,6 +39,7 @@
         <li>arm_nn_depthwise_conv_s8_core/li>
         <li>arm_nn_mat_mul_core_4x_s8/li>
         <li>arm_nn_mat_mul_core_1x_s8/li>
+        <li>arm_convolve_1_x_n_s8/li>
       </ul>
     </td>
   </tr>

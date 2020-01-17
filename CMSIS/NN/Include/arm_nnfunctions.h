@@ -78,12 +78,15 @@
    *
    * - ARM_MATH_DSP:
    *
-   * Define macro ARM_MATH_DSP, If the silicon supports DSP instructions.
+   * Define macro ARM_MATH_DSP, If the silicon supports DSP instructions(DSP extension).
    *
    * - ARM_MATH_MVEI:
    *
    * Define macro ARM_MATH_MVEI, If the silicon supports M-Profile Vector Extension.
-   *
+
+   * - ARM_MATH_AUTOVECTORIZE
+   *  Used in conjucture with ARM_MATH_MVEI to let the compiler auto vectorize for the functions that uses inline assembly.
+   *  It does not affect functions that use C or intrinsics.
    * - ARM_MATH_BIG_ENDIAN:
    *
    * Define macro ARM_MATH_BIG_ENDIAN to build the library for big endian targets. This is supported only for the legacy functions i.e, functions targetted at
@@ -451,7 +454,8 @@ extern    "C"
    * @param[in,out]   bufferA      pointer to buffer space for input
    * @param[in,out]   bufferB      pointer to buffer space for output
    * @return     The function returns either
-   * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.
+   *                          <code>ARM_MATH_SIZE_MISMATCH</code> if argument constraints fail. or,
+   *                          <code>ARM_MATH_SUCCESS</code> on successful completion.
    *
    * This function implement convolution with 1x1 kernel size (i.e., dim_kernel_x=1
    * and dim_kernel_y=1). It can be used for
@@ -504,12 +508,12 @@ extern    "C"
    * @param[in]      input_offset         input tensor offset. Range: int8
    * @param[in]      out_activation_min   Minimum value to clamp the output to. Range: int8
    * @param[in]      out_activation_max   Minimum value to clamp the output to. Range: int8
-   * @param[in]      output_x  output tensor width
-   * @param[in]      output_y  output tensor height
-   * @param[in]      buffer_a  pointer to buffer space used for input optimization and is necessary
-   *                           when both ARM_MATH_LOOPUNROLL and ARM_MATH_DSP are defined , but not ARM_MATH_MVEI.
-   *                           Required space: 2 * input_ch * sizeof(q15_t) bytes
-   *                           Use arm_convolve_1x1_s8_fast_get_buffer_size() to get the size
+   * @param[in]      output_x             output tensor width
+   * @param[in]      output_y             output tensor height
+   * @param[in]      buffer_a             pointer to buffer space used for input optimization and is necessary
+   *                                      when both ARM_MATH_LOOPUNROLL and ARM_MATH_DSP are defined , but not ARM_MATH_MVEI.
+   *                                      Required space: 2 * input_ch * sizeof(q15_t) bytes
+   *                                      Use arm_convolve_1x1_s8_fast_get_buffer_size() to get the size
    * @return     The function returns either
    *                  <code>ARM_MATH_SIZE_MISMATCH</code> if argument constraints fail. or,
    *                  <code>ARM_MATH_SUCCESS</code> on successful completion.
@@ -545,6 +549,65 @@ extern    "C"
                                         const uint16_t output_x,
                                         const uint16_t output_y,
                                         q15_t *buffer_a);
+
+  /**
+   * @brief TODO
+   * @param[in]      input                pointer to input tensor.  Format: [N, H, W, in_ch]
+   * @param[in]      input_x              input tensor dimension x
+   * @param[in]      input_ch             number of input tensor channels
+   * @param[in]      input_batches        argument is not used.
+   * @param[in]      kernel               pointer to kernel weights. Format: [out_ch, H, W, in_ch]
+   * @param[in]      output_ch            number of filters, i.e., output tensor channels
+   * @param[in]      pad_x                padding along x
+   * @param[in]      stride_x             stride along x
+   * @param[in]      bias                 pointer to per channel bias. Range : int32
+   * @param[out]     output               pointer to output tensor.  Format: [H, W, out_ch]
+   * @param[in]      output_shift         pointer to per output channel requantization shift parameter.
+   * @param[in]      output_mult          pointer to per output channel requantization multiplier parameter.
+   * @param[in]      out_offset           output tensor offset. Range: int8
+   * @param[in]      input_offset         input tensor offset. Range: int8
+   * @param[in]      out_activation_min   Minimum value to clamp the output to. Range: int8
+   * @param[in]      out_activation_max   Minimum value to clamp the output to. Range: int8
+   * @param[in]      output_x             output tensor width
+   * @param[in]      buffer_a             pointer to buffer space used for input optimization and is necessary
+   *                                      when both ARM_MATH_LOOPUNROLL and ARM_MATH_DSP are defined , but not ARM_MATH_MVEI.
+   *                                      Required space: 2 * input_ch * sizeof(q15_t) bytes
+   *                                      Use arm_convolve_1_x_n_s8_get_buffer_size() to get the size
+   * @return     The function returns either
+   *                  <code>ARM_MATH_SIZE_MISMATCH</code> if argument constraints fail. or,
+   *                  <code>ARM_MATH_SUCCESS</code> on successful completion.
+   *
+   * @details
+   *   - Supported framework : TensorFlow Lite Micro
+   *   - The following constrains on the arguments apply
+   *      -# input_batches equals 1
+   *      -# ouput_x is a multiple of 4
+   *      -# Explicit constraints(since it is for 1xN convolution)
+   *      -## input_y equals 1
+   *      -## output_y equals 1
+   *      -## kernel_y equals 1
+   *@todo  Remove constraint on output_x to make the function generic.
+   *
+   */
+   arm_status arm_convolve_1_x_n_s8(const q7_t *input,
+                                    const uint16_t input_x,
+                                    const uint16_t input_ch,
+                                    const uint16_t input_batches,
+                                    const q7_t *kernel,
+                                    const uint16_t output_ch,
+                                    const uint16_t kernel_x,
+                                    const uint16_t pad_x,
+                                    const uint16_t stride_x,
+                                    const int32_t *bias,
+                                    q7_t *output,
+                                    const int32_t *output_shift,
+                                    const int32_t *output_mult,
+                                    const int32_t out_offset,
+                                    const int32_t input_offset,
+                                    const int32_t out_activation_min,
+                                    const int32_t out_activation_max,
+                                    const uint16_t output_x,
+                                    q15_t *buffer_a);
 
   /**
    * @brief Get the required buffer size for the fast 1x1 convolution

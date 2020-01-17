@@ -21,8 +21,8 @@
  * Title:        arm_nn_mat_mul_core_1x_s8.c
  * Description:  General Matrix-multiplication function
  *
- * $Date:        January 15, 2020
- * $Revision:    V.1.0.0
+ * $Date:        January 20, 2020
+ * $Revision:    V.1.0.1
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -55,7 +55,7 @@ arm_status arm_nn_mat_mul_core_1x_s8(int32_t row_elements,
     int32_t acc_n0 = 0;
     int32_t sum_tmp = 0;
 
-#if defined(ARM_MATH_MVEI)
+#if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
 
         __asm volatile (
            "   vldrb.8         q0, [%[col]], 16     \n"
