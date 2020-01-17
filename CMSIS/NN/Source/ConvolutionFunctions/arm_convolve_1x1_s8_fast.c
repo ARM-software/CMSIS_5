@@ -91,6 +91,7 @@ arm_status arm_convolve_1x1_s8_fast(const q7_t *input,
             int32_t temp_out[4];
 
             (void)arm_nn_mat_mul_core_4x_s8(input_ch,
+                                            input_ch,
                                             input + i_items * input_ch,
                                             kernel + i_out_ch * input_ch,
                                             &sum_row,

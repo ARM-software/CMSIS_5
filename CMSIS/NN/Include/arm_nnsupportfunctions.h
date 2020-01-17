@@ -21,8 +21,8 @@
  * Title:        arm_nnsupportfunctions.h
  * Description:  Public header file of support functions for CMSIS NN Library
  *
- * $Date:        15 January 2020
- * $Revision:    V.2.0.1
+ * $Date:        20 January 2020
+ * $Revision:    V.3.0.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -261,6 +261,8 @@ arm_status arm_nn_mat_mul_core_1x_s8(int32_t row_elements,
 /**
  * @brief General Matrix-multiplication without requantization for four rows and one column
  * @param[in]       row_elements  number of row elements
+ * @param[in]       offset        offset between rows. Can be the same as row_elements.
+ *                                For e.g, in a 1x1 conv scenario with stride as 1.
  * @param[in]       row_base      pointer to row operand
  * @param[in]       col_base      pointer to col operand
  * @param[out]      sum_col       pointer to store sum of column elements
@@ -279,6 +281,7 @@ arm_status arm_nn_mat_mul_core_1x_s8(int32_t row_elements,
  *          sum_col += col_base[i]
 */
 arm_status arm_nn_mat_mul_core_4x_s8(const int32_t row_elements,
+                                     const int32_t offset,
                                      const int8_t *row_base,
                                      const int8_t *col_base,
                                      int32_t *const sum_col,
