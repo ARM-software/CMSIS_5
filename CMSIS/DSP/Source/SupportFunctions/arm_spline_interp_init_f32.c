@@ -42,6 +42,7 @@
   * @param[in,out] S        points to an instance of the floating-point spline structure.
   * @param[in]     n        number of known data points (must > 1).
   * @param[in]     type     type of cubic spline interpolation (boundary conditions)
+  * @param[out]    buffer   Temporary buffer
   */
 
 void arm_spline_init_f32(
