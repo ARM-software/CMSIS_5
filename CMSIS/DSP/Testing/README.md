@@ -378,6 +378,10 @@ Folder Output/BasicMaths should exist. For example, on Windows with ArmDS:
 format with or without -e option.
 
 
+Some cycles are displayed with the test status (passed or failed). **Don't trust** those cycles for a benchmark.
+
+At this point they are only an indication. The timing code will have to be tested and validated.
+
 ### Generate summary statistics
 
 The parsing of the results may have generated some statistics in FullBenchmark folder.

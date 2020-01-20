@@ -14,6 +14,7 @@ from colorama import init,Fore, Back, Style
 
 init()
 
+
 def errorStr(id):
   if id == 1:
      return("UNKNOWN_ERROR")
@@ -526,6 +527,11 @@ def analyze(root,results,args,trace):
   elif args.m:
      analyseResult(resultPath,root,results,args.e,args.b,trace,MathematicaFormatter())
   else:
+     print("")
+     print(Fore.RED + "The cycles displayed by this script must not be trusted." + Style.RESET_ALL)
+     print(Fore.RED + "They are just an indication. The timing code has not yet been validated." + Style.RESET_ALL)
+     print("")
+
      analyseResult(resultPath,root,results,args.e,args.b,trace,TextFormatter())
 
 parser = argparse.ArgumentParser(description='Parse test description')
