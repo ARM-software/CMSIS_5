@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2019 Arm Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2010-2020 Arm Limited or its affiliates. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -21,8 +21,8 @@
  * Title:        arm_nn_mat_mult_kernel_s8_s16_reordered.c
  * Description:  Matrix-multiplication function for convolution with reordered columns
  *
- * $Date:        August 2019
- * $Revision:    V.1.0.0
+ * $Date:        January 20, 2020
+ * $Revision:    V.1.0.1
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -134,6 +134,51 @@ q7_t *arm_nn_mat_mult_kernel_s8_s16_reordered(const q7_t *input_a,
         ip_a0 += num_col_a;
         row_count--;
     }
+
+    if (output_ch & 1)
+    {
+        /* setup pointers for B */
+        const q15_t *ip_b0 = input_b;
+        const q15_t *ip_b1 = ip_b0 + num_col_a;
+
+        /* Init accumulator with bias for channel N + 1 */
+        q31_t ch_0_out_0 = *bias;
+        q31_t ch_0_out_1 = ch_0_out_0;
+
+        int32_t col_count = num_col_a / 4;
+        while (col_count)
+        {
+            q31_t a01, a02;
+            q31_t b0 = arm_nn_read_q15x2_ia(&ip_b0);
+            q31_t b1 = arm_nn_read_q15x2_ia(&ip_b1);
+
+            ip_a0 = read_and_pad_reordered(ip_a0, &a01, &a02);
+
+            ch_0_out_0 = __SMLAD(a01, b0, ch_0_out_0);
+            ch_0_out_1 = __SMLAD(a01, b1, ch_0_out_1);
+
+            b0 = arm_nn_read_q15x2_ia(&ip_b0);
+            b1 = arm_nn_read_q15x2_ia(&ip_b1);
+
+            ch_0_out_0 = __SMLAD(a02, b0, ch_0_out_0);
+            ch_0_out_1 = __SMLAD(a02, b1, ch_0_out_1);
+
+            col_count--;
+        } /* while over col_count */
+
+        ch_0_out_0 = arm_nn_requantize(ch_0_out_0, *out_mult, *out_shift);
+        ch_0_out_0 += out_offset;
+        ch_0_out_0 = MAX(ch_0_out_0, activation_min);
+        ch_0_out_0 = MIN(ch_0_out_0, activation_max);
+        *out_0++ = (q7_t)ch_0_out_0;
+
+        ch_0_out_1 = arm_nn_requantize(ch_0_out_1, *out_mult, *out_shift);
+        ch_0_out_1 += out_offset;
+        ch_0_out_1 = MAX(ch_0_out_1, activation_min);
+        ch_0_out_1 = MIN(ch_0_out_1, activation_max);
+        *out_1++ = (q7_t)ch_0_out_1;
+    }
+
     out_0 += output_ch;
 
     /* return the new output pointer with offset */

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2019 Arm Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2010-2020 Arm Limited or its affiliates. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -21,8 +21,8 @@
  * Title:        arm_nnfunctions.h
  * Description:  Public header file for CMSIS NN Library
  *
- * $Date:        25 November 2019
- * $Revision:    V.1.0.0
+ * $Date:        January 20, 2020
+ * $Revision:    V.1.0.1
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -518,7 +518,6 @@ extern    "C"
    *   - Supported framework : TensorFlow Lite Micro
    *   - The following constrains on the arguments apply
    *      -# input_ch is a multiple of 4
-   *      -# output_ch is a multiple of 2
    *      -# padding equals 0
    *      -# Stride equals 1
    *      -# kernel dimension is 1x1 (Not provided in the argument list)

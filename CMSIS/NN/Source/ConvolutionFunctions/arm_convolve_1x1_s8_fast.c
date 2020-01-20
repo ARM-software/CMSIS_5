@@ -21,8 +21,8 @@
  * Title:        arm_convolve_1x1_s8_fast.c
  * Description:  Fast q7 version of 1x1 convolution (non-square shape)
  *
- * $Date:        January 15, 2020
- * $Revision:    V.1.0.1
+ * $Date:        January 20, 2020
+ * $Revision:    V.1.0.2
  *
  * Target Processor:  Cortex-M cores
  *
@@ -72,7 +72,7 @@ arm_status arm_convolve_1x1_s8_fast(const q7_t *input,
                                     const uint16_t output_y,
                                     q15_t *buffer_a)
 {
-    if (input_ch % 4 != 0 || output_ch % 2 != 0 ||
+    if (input_ch % 4 != 0 ||
         pad_x != 0 || pad_y != 0 ||
         stride_x != 1 || stride_y != 1)
     {
