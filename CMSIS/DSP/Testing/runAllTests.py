@@ -79,6 +79,9 @@ processAndRun(BUILDFOLDER,FVP,"SupportBarTestsF32",custom=custom)
 msg("Basic Tests")
 processAndRun(BUILDFOLDER,FVP,"BasicTests",custom=custom)
 
+msg("Interpolation Tests")
+processAndRun(BUILDFOLDER,FVP,"InterpolationTests",custom=custom)
+
 msg("Complex Tests")
 processAndRun(BUILDFOLDER,FVP,"ComplexTests",custom=custom)
 

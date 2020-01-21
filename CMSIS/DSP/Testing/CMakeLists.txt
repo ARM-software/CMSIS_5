@@ -194,6 +194,10 @@ set(TESTSRC
   Source/Tests/BIQUADQ15.cpp
   Source/Tests/Pooling.cpp
   Source/Tests/Softmax.cpp
+  Source/Tests/InterpolationTestsF32.cpp
+  Source/Tests/InterpolationTestsQ31.cpp
+  Source/Tests/InterpolationTestsQ15.cpp
+  Source/Tests/InterpolationTestsQ7.cpp
   Source/Tests/NNSupport.cpp
   Source/Tests/ExampleCategoryF32.cpp
   Source/Tests/ExampleCategoryQ31.cpp

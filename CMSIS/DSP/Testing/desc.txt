@@ -453,6 +453,75 @@ group Root {
 
         }
 
+        group Interpolation Tests{
+          class = InterpolationTests
+          folder = Interpolation
+
+          suite Interpolation Tests F32{
+              class = InterpolationTestsF32
+              folder = InterpolationF32
+
+              Pattern INPUT_F32_ID : Input1_f32.txt 
+              Pattern YVAL_F32_ID : YVals1_f32.txt 
+
+              Pattern REF_LINEAR_F32_ID : Reference1_f32.txt
+
+              Output  OUT_SAMPLES_F32_ID : Output
+
+              Functions {
+                Test arm_linear_interp_f32:test_linear_interp_f32
+              }
+          }
+
+          suite Interpolation Tests Q31{
+              class = InterpolationTestsQ31
+              folder = InterpolationQ31
+
+              Pattern INPUT_Q31_ID : Input1_q31.txt 
+              Pattern YVAL_Q31_ID : YVals1_q31.txt 
+
+              Pattern REF_LINEAR_Q31_ID : Reference1_q31.txt
+
+              Output  OUT_SAMPLES_Q31_ID : Output
+
+              Functions {
+                Test arm_linear_interp_q31:test_linear_interp_q31
+              }
+          }
+
+          suite Interpolation Tests Q15{
+              class = InterpolationTestsQ15
+              folder = InterpolationQ15
+
+              Pattern INPUT_Q31_ID : Input1_q31.txt 
+              Pattern YVAL_Q15_ID : YVals1_q15.txt 
+
+              Pattern REF_LINEAR_Q15_ID : Reference1_q15.txt
+
+              Output  OUT_SAMPLES_Q15_ID : Output
+
+              Functions {
+                Test arm_linear_interp_q15:test_linear_interp_q15
+              }
+          }
+
+          suite Interpolation Tests Q7{
+              class = InterpolationTestsQ7
+              folder = InterpolationQ7
+
+              Pattern INPUT_Q31_ID : Input1_q31.txt 
+              Pattern YVAL_Q7_ID : YVals1_q7.txt 
+
+              Pattern REF_LINEAR_Q7_ID : Reference1_q7.txt
+
+              Output  OUT_SAMPLES_Q7_ID : Output
+
+              Functions {
+                Test arm_linear_interp_q7:test_linear_interp_q7
+              }
+          }
+        }
+
         group Basic Tests {
            class = BasicTests
            folder = BasicMaths
