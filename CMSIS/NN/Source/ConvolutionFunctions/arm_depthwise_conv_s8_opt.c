@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2019 Arm Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2010-2020 Arm Limited or its affiliates. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -22,7 +22,7 @@
  * Description:  Optimized s8 depthwise separable convolution function for
  *               channel multiplier of 1.
  *
- * $Date:        August 2019
+ * $Date:        January 21, 2020
  * $Revision:    V.1.0.0
  *
  * Target Processor:  Cortex-M cores
@@ -262,58 +262,50 @@ arm_status arm_depthwise_conv_s8_opt(const q7_t *input,
                     q31_t ip_a1, ip_a2, ip_b1, ip_b2, op_a, op_b, op_c;
                     /* Read 4 weights */
                     ip_b1 = arm_nn_read_q7x4(row_pos);
-                    row_pos += input_ch;
-                    ip_a2 = __SXTB16(ip_b1);
-                    ip_b1 = __SXTB16(__ROR(ip_b1, 8));
-                    ip_a1 = arm_nn_read_q7x4(row_pos);
-                    row_pos += input_ch;
-                    ip_b2 = __SXTB16(ip_a1);
-                    ip_a1 = __SXTB16(__ROR(ip_a1, 8));
-                    /* Read channel 0 and channel 1 for col position N and N + 1 */
+                    ip_a1 = arm_nn_read_q7x4(row_pos + input_ch);
                     op_a = arm_nn_read_q15x2(col_pos);
                     op_b = arm_nn_read_q15x2(col_pos + input_ch);
-                    op_c = __PKHBT(op_a, op_b, 16);
-                    op_a = __PKHTB(op_a, op_b, 16);
-                    op_b = __PKHBT(ip_a2, ip_b2, 16);
+
+                    ip_a2 = __SXTB16(ip_b1);
+                    ip_b1 = __SXTB16(__ROR(ip_b1, 8));
+
+                    ip_b2 = __SXTB16(ip_a1);
+                    ip_a1 = __SXTB16(__ROR(ip_a1, 8));
+
+                    op_c = __PKHBT(op_b, op_a, 16);
+                    op_a = __PKHTB(op_b, op_a, 16);
+                    op_b = __PKHBT(ip_b2, ip_a2, 16);
                     sum = __SMLAD(op_c, op_b, sum);
-                    op_b = __PKHBT(ip_a1, ip_b1, 16);
-                    sum_2 = __SMLAD(op_b, op_a, sum_2);
-                    ip_a2 = __PKHTB(ip_a2, ip_b2, 16);
-                    /* Read channel 2 and channel 3 for col position N and N + 1 */
+
+                    op_b = __PKHBT(ip_b1, ip_a1, 16);
+                    sum_2 = __SMLAD(op_a, op_b, sum_2);
+
                     op_a = arm_nn_read_q15x2(col_pos + 2);
-                    col_pos += input_ch;
-                    op_b = arm_nn_read_q15x2(col_pos + 2);
-                    ip_b2 = __PKHTB(ip_a1, ip_b1, 16);
-                    ip_b1 = __PKHBT(op_b, op_a, 16);
-                    sum_3 = __SMLAD(ip_b1, ip_a2, sum_3);
-                    op_b = __PKHTB(op_b, op_a, 16);
-                    sum_4 = __SMLAD(op_b, ip_b2, sum_4);
-                    col_pos += input_ch;
+                    op_b = arm_nn_read_q15x2(col_pos + input_ch + 2);
+
+                    op_c = __PKHBT(op_b, op_a, 16);
+                    op_a = __PKHTB(op_b, op_a, 16);
+                    op_b = __PKHTB(ip_a2, ip_b2, 16);
+                    sum_3 = __SMLAD(op_c, op_b, sum_3);
+
+                    op_b = __PKHTB(ip_a1, ip_b1, 16);
+                    sum_4 = __SMLAD(op_a, op_b, sum_4);
+
+                    row_pos += input_ch << 1;
+                    col_pos += input_ch << 1;
                     col_count--;
                 }
 
                 col_count = (kernel_x * kernel_y) & 0x1;
                 while (col_count)
                 {
-                    q31_t ip_a2, ip_b1, op_a, op_b;
-                    ip_b1 = arm_nn_read_q7x4(row_pos);
+                    sum   += row_pos[0] * col_pos[0];
+                    sum_2 += row_pos[1] * col_pos[1];
+                    sum_3 += row_pos[2] * col_pos[2];
+                    sum_4 += row_pos[3] * col_pos[3];
+
                     row_pos += input_ch;
-
-                    ip_a2 = __SXTB16(ip_b1);
-                    ip_b1 = __SXTB16(__ROR(ip_b1, 8));
-
-                    op_a = arm_nn_read_q15x2(col_pos);
-                    op_b = arm_nn_read_q15x2(col_pos + 2);
                     col_pos += input_ch;
-
-                    sum += (ip_a2 & 0xFFFF) * (op_a & 0xFFFF);
-                    op_a >>= 16;
-                    sum_2 += (ip_b1 & 0xFFFF) * (op_a);
-                    ip_a2 >>= 16;
-                    ip_b1 >>= 16;
-                    sum_3 += (ip_a2) * (op_b & 0xFFFF);
-                    op_b >>= 16;
-                    sum_4 += (ip_b1) * (op_b);
 
                     col_count--;
                 }
