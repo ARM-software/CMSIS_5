@@ -37,7 +37,7 @@ def writeBenchmarks(config):
     config.writeInput(1, taps,"Coefs")
 
     
-def generatePatterns():
+def generateBenchmarkPatterns():
     PATTERNDIR = os.path.join("Patterns","DSP","Filtering","DECIM","DECIM")
     PARAMDIR = os.path.join("Parameters","DSP","Filtering","DECIM","DECIM")
     
@@ -231,7 +231,7 @@ def generateTestPatterns():
     writeTests(configq15,15)
 
 if __name__ == '__main__':
-  #generateBenchmarkPatterns()
+  generateBenchmarkPatterns()
   generateTestPatterns()
 
 
