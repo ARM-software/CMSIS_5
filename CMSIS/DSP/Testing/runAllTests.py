@@ -13,7 +13,7 @@ def msg(t):
 def processTest(test):
     subprocess.call(["python","processTests.py","-e",test])
 
-def build(build,fvp,test):
+def build(build,fvp,test,custom=None):
     result = "results_%s.txt" % test
     resultPath = os.path.join(build,result)
 
@@ -24,20 +24,24 @@ def build(build,fvp,test):
        subprocess.call(["make"])
        msg("Run %s" % test)
        with open(result,"w") as results:
-          subprocess.call([fvp,"-a","Testing"],stdout=results)
+          if custom:
+            subprocess.call([fvp] + custom,stdout=results)
+          else:
+             subprocess.call([fvp,"-a","Testing"],stdout=results)
     finally:
        os.chdir(current)
 
     msg("Parse result for %s" % test)
     subprocess.call(["python","processResult.py","-e","-r",resultPath])
 
-def processAndRun(buildfolder,fvp,test):
+def processAndRun(buildfolder,fvp,test,custom=None):
     processTest(test)
-    build(buildfolder,fvp,test)
+    build(buildfolder,fvp,test,custom=custom)
 
 parser = argparse.ArgumentParser(description='Parse test description')
 parser.add_argument('-f', nargs='?',type = str, default="build_m7", help="Build folder")
 parser.add_argument('-v', nargs='?',type = str, default="C:\\Program Files\\ARM\\Development Studio 2019.0\\sw\\models\\bin\\FVP_MPS2_Cortex-M7.exe", help="Fast Model")
+parser.add_argument('-c', nargs='?',type = str, help="Custom args")
 
 args = parser.parse_args()
 
@@ -51,6 +55,12 @@ if args.v is not None:
 else:
    FVP="C:\\Program Files\\ARM\\Development Studio 2019.0\\sw\\models\\bin\\FVP_MPS2_Cortex-M7.exe"
 
+
+if args.c:
+    custom = args.c.split()
+else:
+    custom = None
+
 msg("Process test description file")
 subprocess.call(["python", "preprocess.py","-f","desc.txt"])
 
@@ -58,39 +68,39 @@ msg("Generate all missing C files")
 subprocess.call(["python","processTests.py", "-e"])
 
 msg("Statistics Tests")
-processAndRun(BUILDFOLDER,FVP,"StatsTests")
+processAndRun(BUILDFOLDER,FVP,"StatsTests",custom=custom)
 
 msg("Support Tests")
-processAndRun(BUILDFOLDER,FVP,"SupportTests")
+processAndRun(BUILDFOLDER,FVP,"SupportTests",custom=custom)
 
 msg("Support Bar Tests F32")
-processAndRun(BUILDFOLDER,FVP,"SupportBarTestsF32")
+processAndRun(BUILDFOLDER,FVP,"SupportBarTestsF32",custom=custom)
 
 msg("Basic Tests")
-processAndRun(BUILDFOLDER,FVP,"BasicTests")
+processAndRun(BUILDFOLDER,FVP,"BasicTests",custom=custom)
 
 msg("Complex Tests")
-processAndRun(BUILDFOLDER,FVP,"ComplexTests")
+processAndRun(BUILDFOLDER,FVP,"ComplexTests",custom=custom)
 
 msg("Fast Maths Tests")
-processAndRun(BUILDFOLDER,FVP,"FastMath")
+processAndRun(BUILDFOLDER,FVP,"FastMath",custom=custom)
 
 msg("SVM Tests")
-processAndRun(BUILDFOLDER,FVP,"SVMTests")
+processAndRun(BUILDFOLDER,FVP,"SVMTests",custom=custom)
 
 msg("Bayes Tests")
-processAndRun(BUILDFOLDER,FVP,"BayesTests")
+processAndRun(BUILDFOLDER,FVP,"BayesTests",custom=custom)
 
 msg("Distance Tests")
-processAndRun(BUILDFOLDER,FVP,"DistanceTests")
+processAndRun(BUILDFOLDER,FVP,"DistanceTests",custom=custom)
 
 msg("Filtering Tests")
-processAndRun(BUILDFOLDER,FVP,"FilteringTests")
+processAndRun(BUILDFOLDER,FVP,"FilteringTests",custom=custom)
 
 msg("Matrix Tests")
-processAndRun(BUILDFOLDER,FVP,"MatrixTests")
+processAndRun(BUILDFOLDER,FVP,"MatrixTests",custom=custom)
 
 msg("Transform Tests")
-processAndRun(BUILDFOLDER,FVP,"TransformTests")
+processAndRun(BUILDFOLDER,FVP,"TransformTests",custom=custom)
 
 
