@@ -60,7 +60,7 @@
 
 /**
   @brief         Floating-point matrix inverse.
-  @param[in]     pSrc      points to input matrix structure
+  @param[in]     pSrc      points to input matrix structure. The source matrix is modified by the function.
   @param[out]    pDst      points to output matrix structure
   @return        execution status
                    - \ref ARM_MATH_SUCCESS       : Operation successful
