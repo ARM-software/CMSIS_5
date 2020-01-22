@@ -49,7 +49,7 @@
                    The input is represented in 1.31 format, which is then downshifted by 8 bits
                    which yields 1.23, and intermediate multiplication yields a 2.46 format.
                    The accumulator maintains full precision of the intermediate multiplication results,
-                   but provides only a 16 guard bits.
+                   and as a consequence has only 16 guard bits.
                    There is no saturation on intermediate additions.
                    If the accumulator overflows it wraps around and distorts the result.
                    In order to avoid overflows completely the input signal must be scaled down by
