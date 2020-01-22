@@ -462,14 +462,21 @@ group Root {
               folder = InterpolationF32
 
               Pattern INPUT_F32_ID : Input1_f32.txt 
+              Pattern INPUTBI_F32_ID : Input2_f32.txt 
+              Pattern CONFIGBI_S16_ID : Config2_s16.txt 
+
               Pattern YVAL_F32_ID : YVals1_f32.txt 
+              Pattern YVALBI_F32_ID : YVals2_f32.txt 
 
               Pattern REF_LINEAR_F32_ID : Reference1_f32.txt
+              Pattern REF_BILINEAR_F32_ID : Reference2_f32.txt
+
 
               Output  OUT_SAMPLES_F32_ID : Output
 
               Functions {
                 Test arm_linear_interp_f32:test_linear_interp_f32
+                Test arm_bilinear_interp_f32:test_bilinear_interp_f32
               }
           }
 
@@ -478,14 +485,20 @@ group Root {
               folder = InterpolationQ31
 
               Pattern INPUT_Q31_ID : Input1_q31.txt 
+              Pattern INPUTBI_Q31_ID : Input2_q31.txt 
+              Pattern CONFIGBI_S16_ID : Config2_s16.txt 
+
               Pattern YVAL_Q31_ID : YVals1_q31.txt 
+              Pattern YVALBI_Q31_ID : YVals2_q31.txt 
 
               Pattern REF_LINEAR_Q31_ID : Reference1_q31.txt
+              Pattern REF_BILINEAR_Q31_ID : Reference2_q31.txt
 
               Output  OUT_SAMPLES_Q31_ID : Output
 
               Functions {
                 Test arm_linear_interp_q31:test_linear_interp_q31
+                Test arm_bilinear_interp_q31:test_bilinear_interp_q31
               }
           }
 
@@ -494,14 +507,20 @@ group Root {
               folder = InterpolationQ15
 
               Pattern INPUT_Q31_ID : Input1_q31.txt 
+              Pattern INPUTBI_Q31_ID : Input2_q31.txt 
+              Pattern CONFIGBI_S16_ID : Config2_s16.txt 
+              
               Pattern YVAL_Q15_ID : YVals1_q15.txt 
+              Pattern YVALBI_Q15_ID : YVals2_q15.txt 
 
               Pattern REF_LINEAR_Q15_ID : Reference1_q15.txt
+              Pattern REF_BILINEAR_Q15_ID : Reference2_q15.txt
 
               Output  OUT_SAMPLES_Q15_ID : Output
 
               Functions {
                 Test arm_linear_interp_q15:test_linear_interp_q15
+                Test arm_bilinear_interp_q15:test_bilinear_interp_q15
               }
           }
 
@@ -510,14 +529,20 @@ group Root {
               folder = InterpolationQ7
 
               Pattern INPUT_Q31_ID : Input1_q31.txt 
+              Pattern INPUTBI_Q31_ID : Input2_q31.txt 
+              Pattern CONFIGBI_S16_ID : Config2_s16.txt 
+              
               Pattern YVAL_Q7_ID : YVals1_q7.txt 
+              Pattern YVALBI_Q7_ID : YVals2_q7.txt 
 
               Pattern REF_LINEAR_Q7_ID : Reference1_q7.txt
+              Pattern REF_BILINEAR_Q7_ID : Reference2_q7.txt
 
               Output  OUT_SAMPLES_Q7_ID : Output
 
               Functions {
                 Test arm_linear_interp_q7:test_linear_interp_q7
+                Test arm_bilinear_interp_q7:test_bilinear_interp_q7
               }
           }
         }

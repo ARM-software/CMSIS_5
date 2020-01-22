@@ -10,7 +10,7 @@ Reference patterns are generated with
 a double precision computation.
 
 */
-#define ABS_ERROR_Q31 ((q31_t)5)
+#define ABS_ERROR_Q31 ((q31_t)2000)
 
 
 
@@ -33,12 +33,35 @@ a double precision computation.
 
     } 
 
+
+    void InterpolationTestsQ31::test_bilinear_interp_q31()
+    {
+       const q31_t *inp = input.ptr();
+       q31_t *outp = output.ptr();
+       q31_t x,y;
+       int i=0;
+       int nb;
+       for(nb = 0; nb < input.nbSamples(); nb += 2)
+       {
+          x = inp[nb];
+          y = inp[nb+1];
+          *outp++=arm_bilinear_interp_q31(&SBI,x,y);
+       }
+
+       ASSERT_EMPTY_TAIL(output);
+
+       ASSERT_SNR(output,ref,(float32_t)SNR_THRESHOLD);
+
+       ASSERT_NEAR_EQ(output,ref,ABS_ERROR_Q31);
+
+    } 
+
  
     void InterpolationTestsQ31::setUp(Testing::testID_t id,std::vector<Testing::param_t>& params,Client::PatternMgr *mgr)
     {
       
        Testing::nbSamples_t nb=MAX_NB_SAMPLES; 
-
+       const int16_t *pConfig;
        
        switch(id)
        {
@@ -47,6 +70,21 @@ a double precision computation.
           y.reload(InterpolationTestsQ31::YVAL_Q31_ID,mgr,nb);
           ref.reload(InterpolationTestsQ31::REF_LINEAR_Q31_ID,mgr,nb);
 
+          break;
+
+        case InterpolationTestsQ31::TEST_BILINEAR_INTERP_Q31_2:
+          input.reload(InterpolationTestsQ31::INPUTBI_Q31_ID,mgr,nb);
+          config.reload(InterpolationTestsQ31::CONFIGBI_S16_ID,mgr,nb);
+          y.reload(InterpolationTestsQ31::YVALBI_Q31_ID,mgr,nb);
+          ref.reload(InterpolationTestsQ31::REF_BILINEAR_Q31_ID,mgr,nb);
+
+          pConfig = config.ptr();
+
+          SBI.numRows = pConfig[1];
+          SBI.numCols = pConfig[0];
+          
+          SBI.pData = y.ptr();
+         
           break;
 
        }

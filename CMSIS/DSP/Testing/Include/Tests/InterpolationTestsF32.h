@@ -11,9 +11,12 @@ class InterpolationTestsF32:public Client::Suite
             
             Client::Pattern<float32_t> input;
             Client::Pattern<float32_t> y;
+            Client::Pattern<int16_t> config;
             Client::LocalPattern<float32_t> output;
             // Reference patterns are not loaded when we are in dump mode
             Client::RefPattern<float32_t> ref;
 
             arm_linear_interp_instance_f32 S;
+            arm_bilinear_interp_instance_f32 SBI;
+
     };

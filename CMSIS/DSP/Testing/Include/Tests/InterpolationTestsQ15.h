@@ -11,8 +11,11 @@ class InterpolationTestsQ15:public Client::Suite
             
             Client::Pattern<q31_t> input;
             Client::Pattern<q15_t> y;
+            Client::Pattern<int16_t> config;
             Client::LocalPattern<q15_t> output;
             // Reference patterns are not loaded when we are in dump mode
             Client::RefPattern<q15_t> ref;
+
+            arm_bilinear_interp_instance_q15 SBI;
 
     };
