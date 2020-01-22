@@ -424,7 +424,7 @@ void arm_biquad_cascade_df2T_f64(
 
       pState += 2U;
 
-      /* The current stage input is given as the output to the next stage */
+      /* The current stage output is given as the input to the next stage */
       pIn = pDst;
 
       /* Reset the output working pointer */

@@ -165,7 +165,7 @@ void arm_biquad_cascade_df2T_f32(
             *pState++ = vgetq_lane(state, 1);
         }
         /*
-         * The current stage input is given as the output to the next stage
+         * The current stage output is given as the input to the next stage
          */
         pIn = pDst;
         /*
@@ -277,7 +277,7 @@ void arm_biquad_cascade_df2T_f32(
       vst2q_f32(pState,dV);
       pState += 8;
 
-      /* The current stage input is given as the output to the next stage */
+      /* The current stage output is given as the input to the next stage */
       pIn = pDst;
 
       /*Reset the output working pointer */
@@ -332,7 +332,7 @@ void arm_biquad_cascade_df2T_f32(
       *pState++ = d1;
       *pState++ = d2;
 
-      /* The current stage input is given as the output to the next stage */
+      /* The current stage output is given as the input to the next stage */
       pIn = pDst;
 
       /*Reset the output working pointer */
@@ -631,7 +631,7 @@ void arm_biquad_cascade_df2T_f32(
 
       pState += 2U;
 
-      /* The current stage input is given as the output to the next stage */
+      /* The current stage output is given as the input to the next stage */
       pIn = pDst;
 
       /* Reset the output working pointer */
