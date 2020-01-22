@@ -52,8 +52,8 @@
 
   where
   <pre>
-     b = Table[index];
-     c = Table[index+1];
+     a = Table[index];
+     b = Table[index+1];
   </pre>
  */
 
