@@ -39,7 +39,6 @@ a double precision computation.
        const float32_t *inp = input.ptr();
        float32_t *outp = output.ptr();
        float32_t x,y;
-       int i=0;
        int nb;
        for(nb = 0; nb < input.nbSamples(); nb += 2)
        {

@@ -3363,7 +3363,7 @@ arm_status arm_rfft_4096_fast_init_f32 ( arm_rfft_fast_instance_f32 * S );
 
 
   void arm_rfft_fast_f32(
-        arm_rfft_fast_instance_f32 * S,
+        const arm_rfft_fast_instance_f32 * S,
         float32_t * p, float32_t * pOut,
         uint8_t ifftFlag);
 

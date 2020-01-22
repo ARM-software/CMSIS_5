@@ -39,7 +39,6 @@ a double precision computation.
        const q31_t *inp = input.ptr();
        q15_t *outp = output.ptr();
        q31_t x,y;
-       int i=0;
        int nb;
        for(nb = 0; nb < input.nbSamples(); nb += 2)
        {
