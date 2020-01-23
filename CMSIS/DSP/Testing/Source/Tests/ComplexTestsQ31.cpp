@@ -10,7 +10,7 @@ Reference patterns are generated with
 a double precision computation.
 
 */
-#define ABS_ERROR_Q31 ((q31_t)20)
+#define ABS_ERROR_Q31 ((q31_t)100)
 #define ABS_ERROR_Q63 ((q63_t)(1<<18))
 
 
@@ -64,7 +64,6 @@ a double precision computation.
 
         ASSERT_EMPTY_TAIL(output);
         
-
         ASSERT_SNR(output,ref,(float32_t)SNR_THRESHOLD);
 
         ASSERT_NEAR_EQ(output,ref,ABS_ERROR_Q31);
@@ -269,6 +268,49 @@ a double precision computation.
 
           output.create(ref.nbSamples(),ComplexTestsQ31::OUT_SAMPLES_Q31_ID,mgr);
           break;
+
+        case ComplexTestsQ31::TEST_CMPLX_CONJ_Q31_19:
+          nb = 256;
+          ref.reload(ComplexTestsQ31::REF_CONJ_Q31_ID,mgr,nb << 1);
+          input1.reload(ComplexTestsQ31::INPUT1_Q31_ID,mgr,nb << 1);
+
+          output.create(ref.nbSamples(),ComplexTestsQ31::OUT_SAMPLES_Q31_ID,mgr);
+        break;
+
+        case ComplexTestsQ31::TEST_CMPLX_MAG_Q31_20:
+          nb = 256;
+          ref.reload(ComplexTestsQ31::REF_MAG_Q31_ID,mgr,nb);
+          input1.reload(ComplexTestsQ31::INPUT1_Q31_ID,mgr,nb << 1);
+
+          output.create(ref.nbSamples(),ComplexTestsQ31::OUT_SAMPLES_Q31_ID,mgr);
+        break;
+        
+        case ComplexTestsQ31::TEST_CMPLX_MAG_SQUARED_Q31_21:
+          nb = 256;
+          ref.reload(ComplexTestsQ31::REF_MAG_SQUARED_Q31_ID,mgr,nb);
+          input1.reload(ComplexTestsQ31::INPUT1_Q31_ID,mgr,nb << 1);
+
+          output.create(ref.nbSamples(),ComplexTestsQ31::OUT_SAMPLES_Q31_ID,mgr);
+        break;
+        
+        case ComplexTestsQ31::TEST_CMPLX_MULT_CMPLX_Q31_22:
+          nb = 256;
+          ref.reload(ComplexTestsQ31::REF_CMPLX_MULT_CMPLX_Q31_ID,mgr,nb << 1);
+          input1.reload(ComplexTestsQ31::INPUT1_Q31_ID,mgr,nb << 1);
+          input2.reload(ComplexTestsQ31::INPUT2_Q31_ID,mgr,nb << 1);
+
+          output.create(ref.nbSamples(),ComplexTestsQ31::OUT_SAMPLES_Q31_ID,mgr);
+        break;
+        
+        case ComplexTestsQ31::TEST_CMPLX_MULT_REAL_Q31_23:
+          nb = 256;
+          ref.reload(ComplexTestsQ31::REF_CMPLX_MULT_REAL_Q31_ID,mgr,nb << 1);
+          input1.reload(ComplexTestsQ31::INPUT1_Q31_ID,mgr,nb << 1);
+          input2.reload(ComplexTestsQ31::INPUT3_Q31_ID,mgr,nb);
+
+          output.create(ref.nbSamples(),ComplexTestsQ31::OUT_SAMPLES_Q31_ID,mgr);
+        break;
+        
        }
       
 
