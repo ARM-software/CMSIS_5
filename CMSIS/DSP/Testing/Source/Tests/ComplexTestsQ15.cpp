@@ -11,7 +11,7 @@ Reference patterns are generated with
 a double precision computation.
 
 */
-#define ABS_ERROR_Q15 ((q15_t)30)
+#define ABS_ERROR_Q15 ((q15_t)50)
 #define ABS_ERROR_Q31 ((q31_t)(1<<15))
 
     void ComplexTestsQ15::test_cmplx_conj_q15()
