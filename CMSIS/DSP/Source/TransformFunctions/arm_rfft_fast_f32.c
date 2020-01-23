@@ -533,17 +533,15 @@ void merge_rfft_f32(
                     - Initializes twiddle factor table and bit reversal table pointers.
                     - Initializes the internal complex FFT data structure.
   @par
-                   Use of the initialization function is optional.
-                   However, if the initialization function is used, then the instance structure
-                   cannot be placed into a const data section. To place an instance structure
-                   into a const data section, the instance structure should be manually
-                   initialized as follows:
+                   Use of the initialization function is optional **except for MVE versions where it is mandatory**.
+                   If you don't use the initialization functions, then the structures should be initialized with code
+                   similar to the one below:
   <pre>
       arm_rfft_instance_q31 S = {fftLenReal, fftLenBy2, ifftFlagR, bitReverseFlagR, twidCoefRModifier, pTwiddleAReal, pTwiddleBReal, pCfft};
       arm_rfft_instance_q15 S = {fftLenReal, fftLenBy2, ifftFlagR, bitReverseFlagR, twidCoefRModifier, pTwiddleAReal, pTwiddleBReal, pCfft};
   </pre>
                    where <code>fftLenReal</code> is the length of the real transform;
-                   <code>fftLenBy2</code> length of  the internal complex transform.
+                   <code>fftLenBy2</code> length of  the internal complex transform (fftLenReal/2).
                    <code>ifftFlagR</code> Selects forward (=0) or inverse (=1) transform.
                    <code>bitReverseFlagR</code> Selects bit reversed output (=0) or normal order
                    output (=1).
@@ -552,8 +550,10 @@ void merge_rfft_f32(
                    <code>pTwiddleAReal</code>points to the A array of twiddle coefficients;
                    <code>pTwiddleBReal</code>points to the B array of twiddle coefficients;
                    <code>pCfft</code> points to the CFFT Instance structure. The CFFT structure
-                   must also be initialized.  Refer to arm_cfft_radix4_f32() for details regarding
-                   static initialization of the complex FFT instance structure.
+                   must also be initialized.  
+@par
+                   Note that with MVE versions you can't initialize instance structures directly and **must
+                   use the initialization function**.
  */
 
 /**

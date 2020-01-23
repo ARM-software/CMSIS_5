@@ -41,6 +41,7 @@
 #if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) || (defined(ARM_TABLE_TWIDDLECOEF_F32_16) && defined(ARM_TABLE_BITREVIDX_FLT_16) && defined(ARM_TABLE_TWIDDLECOEF_F32_16) && defined(ARM_TABLE_TWIDDLECOEF_RFFT_F32_32))
 
 /**
+  @private
   @brief         Initialization function for the 32pt floating-point real FFT.
   @param[in,out] S  points to an arm_rfft_fast_instance_f32 structure
   @return        execution status
@@ -48,7 +49,7 @@
                    - \ref ARM_MATH_ARGUMENT_ERROR : an error is detected
  */
 
-arm_status arm_rfft_32_fast_init_f32( arm_rfft_fast_instance_f32 * S ) {
+static arm_status arm_rfft_32_fast_init_f32( arm_rfft_fast_instance_f32 * S ) {
 
   arm_status status;
 
@@ -70,6 +71,7 @@ arm_status arm_rfft_32_fast_init_f32( arm_rfft_fast_instance_f32 * S ) {
 #if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) || (defined(ARM_TABLE_TWIDDLECOEF_F32_32) && defined(ARM_TABLE_BITREVIDX_FLT_32) && defined(ARM_TABLE_TWIDDLECOEF_F32_32) && defined(ARM_TABLE_TWIDDLECOEF_RFFT_F32_64))
 
 /**
+  @private
   @brief         Initialization function for the 64pt floating-point real FFT.
   @param[in,out] S  points to an arm_rfft_fast_instance_f32 structure
   @return        execution status
@@ -77,7 +79,7 @@ arm_status arm_rfft_32_fast_init_f32( arm_rfft_fast_instance_f32 * S ) {
                    - \ref ARM_MATH_ARGUMENT_ERROR : an error is detected
  */
 
-arm_status arm_rfft_64_fast_init_f32( arm_rfft_fast_instance_f32 * S ) {
+static arm_status arm_rfft_64_fast_init_f32( arm_rfft_fast_instance_f32 * S ) {
 
   arm_status status;
 
@@ -99,6 +101,7 @@ arm_status arm_rfft_64_fast_init_f32( arm_rfft_fast_instance_f32 * S ) {
 #if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) || (defined(ARM_TABLE_TWIDDLECOEF_F32_64) && defined(ARM_TABLE_BITREVIDX_FLT_64) && defined(ARM_TABLE_TWIDDLECOEF_F32_64) && defined(ARM_TABLE_TWIDDLECOEF_RFFT_F32_128))
 
 /**
+  @private
   @brief         Initialization function for the 128pt floating-point real FFT.
   @param[in,out] S  points to an arm_rfft_fast_instance_f32 structure
   @return        execution status
@@ -106,7 +109,7 @@ arm_status arm_rfft_64_fast_init_f32( arm_rfft_fast_instance_f32 * S ) {
                    - \ref ARM_MATH_ARGUMENT_ERROR : an error is detected
  */
 
-arm_status arm_rfft_128_fast_init_f32( arm_rfft_fast_instance_f32 * S ) {
+static arm_status arm_rfft_128_fast_init_f32( arm_rfft_fast_instance_f32 * S ) {
 
   arm_status status;
 
@@ -128,6 +131,7 @@ arm_status arm_rfft_128_fast_init_f32( arm_rfft_fast_instance_f32 * S ) {
 #if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) || (defined(ARM_TABLE_TWIDDLECOEF_F32_128) && defined(ARM_TABLE_BITREVIDX_FLT_128) && defined(ARM_TABLE_TWIDDLECOEF_F32_128) && defined(ARM_TABLE_TWIDDLECOEF_RFFT_F32_256))
 
 /**
+  @private
   @brief         Initialization function for the 256pt floating-point real FFT.
   @param[in,out] S  points to an arm_rfft_fast_instance_f32 structure
   @return        execution status
@@ -135,7 +139,7 @@ arm_status arm_rfft_128_fast_init_f32( arm_rfft_fast_instance_f32 * S ) {
                    - \ref ARM_MATH_ARGUMENT_ERROR : an error is detected
 */
 
-arm_status arm_rfft_256_fast_init_f32( arm_rfft_fast_instance_f32 * S ) {
+static arm_status arm_rfft_256_fast_init_f32( arm_rfft_fast_instance_f32 * S ) {
 
   arm_status status;
 
@@ -157,6 +161,7 @@ arm_status arm_rfft_256_fast_init_f32( arm_rfft_fast_instance_f32 * S ) {
 #if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) || (defined(ARM_TABLE_TWIDDLECOEF_F32_256) && defined(ARM_TABLE_BITREVIDX_FLT_256) && defined(ARM_TABLE_TWIDDLECOEF_F32_256) && defined(ARM_TABLE_TWIDDLECOEF_RFFT_F32_512))
 
 /**
+  @private
   @brief         Initialization function for the 512pt floating-point real FFT.
   @param[in,out] S  points to an arm_rfft_fast_instance_f32 structure
   @return        execution status
@@ -164,7 +169,7 @@ arm_status arm_rfft_256_fast_init_f32( arm_rfft_fast_instance_f32 * S ) {
                    - \ref ARM_MATH_ARGUMENT_ERROR : an error is detected
  */
 
-arm_status arm_rfft_512_fast_init_f32( arm_rfft_fast_instance_f32 * S ) {
+static arm_status arm_rfft_512_fast_init_f32( arm_rfft_fast_instance_f32 * S ) {
 
   arm_status status;
 
@@ -185,6 +190,7 @@ arm_status arm_rfft_512_fast_init_f32( arm_rfft_fast_instance_f32 * S ) {
 
 #if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) || (defined(ARM_TABLE_TWIDDLECOEF_F32_512) && defined(ARM_TABLE_BITREVIDX_FLT_512) && defined(ARM_TABLE_TWIDDLECOEF_F32_512) && defined(ARM_TABLE_TWIDDLECOEF_RFFT_F32_1024))
 /**
+  @private
   @brief         Initialization function for the 1024pt floating-point real FFT.
   @param[in,out] S  points to an arm_rfft_fast_instance_f32 structure
   @return        execution status
@@ -192,7 +198,7 @@ arm_status arm_rfft_512_fast_init_f32( arm_rfft_fast_instance_f32 * S ) {
                    - \ref ARM_MATH_ARGUMENT_ERROR : an error is detected
  */
 
-arm_status arm_rfft_1024_fast_init_f32( arm_rfft_fast_instance_f32 * S ) {
+static arm_status arm_rfft_1024_fast_init_f32( arm_rfft_fast_instance_f32 * S ) {
 
   arm_status status;
 
@@ -213,13 +219,14 @@ arm_status arm_rfft_1024_fast_init_f32( arm_rfft_fast_instance_f32 * S ) {
 
 #if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) || (defined(ARM_TABLE_TWIDDLECOEF_F32_1024) && defined(ARM_TABLE_BITREVIDX_FLT_1024) && defined(ARM_TABLE_TWIDDLECOEF_F32_1024) && defined(ARM_TABLE_TWIDDLECOEF_RFFT_F32_2048))
 /**
+  @private
   @brief         Initialization function for the 2048pt floating-point real FFT.
   @param[in,out] S  points to an arm_rfft_fast_instance_f32 structure
   @return        execution status
                    - \ref ARM_MATH_SUCCESS        : Operation successful
                    - \ref ARM_MATH_ARGUMENT_ERROR : an error is detected
  */
-arm_status arm_rfft_2048_fast_init_f32( arm_rfft_fast_instance_f32 * S ) {
+static arm_status arm_rfft_2048_fast_init_f32( arm_rfft_fast_instance_f32 * S ) {
 
   arm_status status;
 
@@ -240,6 +247,7 @@ arm_status arm_rfft_2048_fast_init_f32( arm_rfft_fast_instance_f32 * S ) {
 
 #if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) || (defined(ARM_TABLE_TWIDDLECOEF_F32_2048) && defined(ARM_TABLE_BITREVIDX_FLT_2048) && defined(ARM_TABLE_TWIDDLECOEF_F32_2048) && defined(ARM_TABLE_TWIDDLECOEF_RFFT_F32_4096))
 /**
+  @private
 * @brief         Initialization function for the 4096pt floating-point real FFT.
 * @param[in,out] S  points to an arm_rfft_fast_instance_f32 structure
   @return        execution status
@@ -247,7 +255,7 @@ arm_status arm_rfft_2048_fast_init_f32( arm_rfft_fast_instance_f32 * S ) {
                    - \ref ARM_MATH_ARGUMENT_ERROR : an error is detected
  */
 
-arm_status arm_rfft_4096_fast_init_f32( arm_rfft_fast_instance_f32 * S ) {
+static arm_status arm_rfft_4096_fast_init_f32( arm_rfft_fast_instance_f32 * S ) {
 
   arm_status status;
 

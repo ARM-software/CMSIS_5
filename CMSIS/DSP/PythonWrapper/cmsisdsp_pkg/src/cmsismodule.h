@@ -7950,7 +7950,7 @@ cmsis_arm_rfft_fast_init_f64(PyObject *obj, PyObject *args)
   return(NULL);
 }
 
-
+#if 0
 static PyObject *
 cmsis_arm_rfft_32_fast_init_f64(PyObject *obj, PyObject *args)
 {
@@ -8141,7 +8141,7 @@ cmsis_arm_rfft_4096_fast_init_f64(PyObject *obj, PyObject *args)
   }
   return(NULL);
 }
-
+#endif
 
 static PyObject *
 cmsis_arm_rfft_fast_f64(PyObject *obj, PyObject *args)
@@ -8201,6 +8201,7 @@ cmsis_arm_rfft_fast_init_f32(PyObject *obj, PyObject *args)
   return(NULL);
 }
 
+#if 0
 
 static PyObject *
 cmsis_arm_rfft_32_fast_init_f32(PyObject *obj, PyObject *args)
@@ -8393,6 +8394,7 @@ cmsis_arm_rfft_4096_fast_init_f32(PyObject *obj, PyObject *args)
   return(NULL);
 }
 
+#endif 
 
 static PyObject *
 cmsis_arm_rfft_fast_f32(PyObject *obj, PyObject *args)
@@ -15589,24 +15591,8 @@ static PyMethodDef CMSISMLMethods[] = {
 {"arm_rfft_init_f32",  cmsis_arm_rfft_init_f32, METH_VARARGS,""},
 {"arm_rfft_f32",  cmsis_arm_rfft_f32, METH_VARARGS,""},
 {"arm_rfft_fast_init_f64",  cmsis_arm_rfft_fast_init_f64, METH_VARARGS,""},
-{"arm_rfft_32_fast_init_f64",  cmsis_arm_rfft_32_fast_init_f64, METH_VARARGS,""},
-{"arm_rfft_64_fast_init_f64",  cmsis_arm_rfft_64_fast_init_f64, METH_VARARGS,""},
-{"arm_rfft_128_fast_init_f64",  cmsis_arm_rfft_128_fast_init_f64, METH_VARARGS,""},
-{"arm_rfft_256_fast_init_f64",  cmsis_arm_rfft_256_fast_init_f64, METH_VARARGS,""},
-{"arm_rfft_512_fast_init_f64",  cmsis_arm_rfft_512_fast_init_f64, METH_VARARGS,""},
-{"arm_rfft_1024_fast_init_f64",  cmsis_arm_rfft_1024_fast_init_f64, METH_VARARGS,""},
-{"arm_rfft_2048_fast_init_f64",  cmsis_arm_rfft_2048_fast_init_f64, METH_VARARGS,""},
-{"arm_rfft_4096_fast_init_f64",  cmsis_arm_rfft_4096_fast_init_f64, METH_VARARGS,""},
 {"arm_rfft_fast_f32",  cmsis_arm_rfft_fast_f32, METH_VARARGS,""},
 {"arm_rfft_fast_init_f32",  cmsis_arm_rfft_fast_init_f32, METH_VARARGS,""},
-{"arm_rfft_32_fast_init_f32",  cmsis_arm_rfft_32_fast_init_f32, METH_VARARGS,""},
-{"arm_rfft_64_fast_init_f32",  cmsis_arm_rfft_64_fast_init_f32, METH_VARARGS,""},
-{"arm_rfft_128_fast_init_f32",  cmsis_arm_rfft_128_fast_init_f32, METH_VARARGS,""},
-{"arm_rfft_256_fast_init_f32",  cmsis_arm_rfft_256_fast_init_f32, METH_VARARGS,""},
-{"arm_rfft_512_fast_init_f32",  cmsis_arm_rfft_512_fast_init_f32, METH_VARARGS,""},
-{"arm_rfft_1024_fast_init_f32",  cmsis_arm_rfft_1024_fast_init_f32, METH_VARARGS,""},
-{"arm_rfft_2048_fast_init_f32",  cmsis_arm_rfft_2048_fast_init_f32, METH_VARARGS,""},
-{"arm_rfft_4096_fast_init_f32",  cmsis_arm_rfft_4096_fast_init_f32, METH_VARARGS,""},
 {"arm_rfft_fast_f32",  cmsis_arm_rfft_fast_f32, METH_VARARGS,""},
 {"arm_dct4_init_f32",  cmsis_arm_dct4_init_f32, METH_VARARGS,""},
 {"arm_dct4_f32",  cmsis_arm_dct4_f32, METH_VARARGS,""},

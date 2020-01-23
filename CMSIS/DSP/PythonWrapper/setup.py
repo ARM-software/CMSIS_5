@@ -50,7 +50,6 @@ common.remove(os.path.join(ROOT,"Source","CommonTables","CommonTables.c"))
 
 #modulesrc = glob.glob(os.path.join("cmsisdsp_pkg","src","*.c"))
 modulesrc = []
-modulesrc.append(os.path.join("cmsisdsp_pkg","src","fftinit.c"))
 modulesrc.append(os.path.join("cmsisdsp_pkg","src","cmsismodule.c"))
 
 module1 = Extension(config.extensionName,

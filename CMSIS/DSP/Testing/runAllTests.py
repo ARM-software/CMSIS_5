@@ -103,7 +103,27 @@ processAndRun(BUILDFOLDER,FVP,"FilteringTests",custom=custom)
 msg("Matrix Tests")
 processAndRun(BUILDFOLDER,FVP,"MatrixTests",custom=custom)
 
-msg("Transform Tests")
-processAndRun(BUILDFOLDER,FVP,"TransformTests",custom=custom)
+# Too many patterns to run the full transform directly
+msg("Transform Tests CF64")
+processAndRun(BUILDFOLDER,FVP,"TransformCF64",custom=custom)
 
+msg("Transform Tests RF64")
+processAndRun(BUILDFOLDER,FVP,"TransformRF64",custom=custom)
 
+msg("Transform Tests CF32")
+processAndRun(BUILDFOLDER,FVP,"TransformCF32",custom=custom)
+
+msg("Transform Tests RF32")
+processAndRun(BUILDFOLDER,FVP,"TransformRF32",custom=custom)
+
+msg("Transform Tests CQ31")
+processAndRun(BUILDFOLDER,FVP,"TransformCQ31",custom=custom)
+
+msg("Transform Tests RQ31")
+processAndRun(BUILDFOLDER,FVP,"TransformRQ31",custom=custom)
+
+msg("Transform Tests CQ15")
+processAndRun(BUILDFOLDER,FVP,"TransformCQ15",custom=custom)
+
+msg("Transform Tests RQ15")
+processAndRun(BUILDFOLDER,FVP,"TransformRQ15",custom=custom)

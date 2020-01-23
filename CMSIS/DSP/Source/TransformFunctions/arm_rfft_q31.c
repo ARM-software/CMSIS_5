@@ -68,6 +68,9 @@ void arm_split_rifft_q31(
                    \image html RFFTQ31.gif "Input and Output Formats for Q31 RFFT"
   @par
                    \image html RIFFTQ31.gif "Input and Output Formats for Q31 RIFFT"
+  @par
+                   If the input buffer is of length N, the output buffer must have length 2*N.
+                   The input buffer is modified by this function.
  */
 
 void arm_rfft_q31(

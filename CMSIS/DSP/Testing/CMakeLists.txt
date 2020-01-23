@@ -147,9 +147,9 @@ set(TESTSRC
   Source/Tests/ComplexTestsQ15.cpp
   Source/Tests/SVMF32.cpp
   Source/Tests/BayesF32.cpp
-  #Source/Tests/TransformCF64.cpp
+  Source/Tests/TransformCF64.cpp
   Source/Tests/TransformCF32.cpp
-  #Source/Tests/TransformRF64.cpp
+  Source/Tests/TransformRF64.cpp
   Source/Tests/TransformRF32.cpp
   Source/Tests/TransformCQ31.cpp
   Source/Tests/TransformRQ31.cpp

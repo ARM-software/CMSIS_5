@@ -2391,7 +2391,7 @@ group Root {
            class = TransformTests
            folder = Transform 
 
-           disabled {suite Transform Complex F64 {
+           suite Transform Complex F64 {
               class = TransformCF64
               folder = TransformF64
 
@@ -2509,9 +2509,8 @@ group Root {
               }
 
             }
-           }
 
-           disabled { suite Transform Real F64 {
+           suite Transform Real F64 {
               class = TransformRF64
               folder = TransformF64
 
@@ -2618,7 +2617,7 @@ group Root {
               }
 
             }
-           }
+           
 
            suite Transform Complex F32 {
               class = TransformCF32
