@@ -3,6 +3,7 @@
 #include "Error.h"
 
 #define SNR_THRESHOLD 25
+#define SNR_HIGH_THRESHOLD 60
 
 /* 
 
@@ -10,7 +11,7 @@ Reference patterns are generated with
 a double precision computation.
 
 */
-#define ABS_ERROR_Q15 ((q15_t)20)
+#define ABS_ERROR_Q15 ((q15_t)30)
 #define ABS_ERROR_Q31 ((q31_t)(1<<15))
 
     void ComplexTestsQ15::test_cmplx_conj_q15()
@@ -48,7 +49,7 @@ a double precision computation.
 
         ASSERT_NEAR_EQ(dotOutput,dotRef,ABS_ERROR_Q31);
 
-         ASSERT_EMPTY_TAIL(dotOutput);
+        ASSERT_EMPTY_TAIL(dotOutput);
 
        
     } 
@@ -64,7 +65,7 @@ a double precision computation.
         ASSERT_EMPTY_TAIL(output);
         
 
-        ASSERT_SNR(output,ref,(float32_t)SNR_THRESHOLD);
+        ASSERT_SNR(output,ref,(float32_t)SNR_HIGH_THRESHOLD);
 
         ASSERT_NEAR_EQ(output,ref,ABS_ERROR_Q15);
 
@@ -268,6 +269,48 @@ a double precision computation.
 
           output.create(ref.nbSamples(),ComplexTestsQ15::OUT_SAMPLES_Q15_ID,mgr);
           break;
+
+        case ComplexTestsQ15::TEST_CMPLX_CONJ_Q15_19:
+          nb = 256;
+          ref.reload(ComplexTestsQ15::REF_CONJ_Q15_ID,mgr,nb << 1);
+          input1.reload(ComplexTestsQ15::INPUT1_Q15_ID,mgr,nb << 1);
+
+          output.create(ref.nbSamples(),ComplexTestsQ15::OUT_SAMPLES_Q15_ID,mgr);
+        break;
+
+        case ComplexTestsQ15::TEST_CMPLX_MAG_Q15_20:
+          nb = 256;
+          ref.reload(ComplexTestsQ15::REF_MAG_Q15_ID,mgr,nb);
+          input1.reload(ComplexTestsQ15::INPUT1_Q15_ID,mgr,nb << 1);
+
+          output.create(ref.nbSamples(),ComplexTestsQ15::OUT_SAMPLES_Q15_ID,mgr);
+        break;
+        
+        case ComplexTestsQ15::TEST_CMPLX_MAG_SQUARED_Q15_21:
+          nb = 256;
+          ref.reload(ComplexTestsQ15::REF_MAG_SQUARED_Q15_ID,mgr,nb);
+          input1.reload(ComplexTestsQ15::INPUT1_Q15_ID,mgr,nb << 1);
+
+          output.create(ref.nbSamples(),ComplexTestsQ15::OUT_SAMPLES_Q15_ID,mgr);
+        break;
+        
+        case ComplexTestsQ15::TEST_CMPLX_MULT_CMPLX_Q15_22:
+          nb = 256;
+          ref.reload(ComplexTestsQ15::REF_CMPLX_MULT_CMPLX_Q15_ID,mgr,nb << 1);
+          input1.reload(ComplexTestsQ15::INPUT1_Q15_ID,mgr,nb << 1);
+          input2.reload(ComplexTestsQ15::INPUT2_Q15_ID,mgr,nb << 1);
+
+          output.create(ref.nbSamples(),ComplexTestsQ15::OUT_SAMPLES_Q15_ID,mgr);
+        break;
+        
+        case ComplexTestsQ15::TEST_CMPLX_MULT_REAL_Q15_23:
+          nb = 256;
+          ref.reload(ComplexTestsQ15::REF_CMPLX_MULT_REAL_Q15_ID,mgr,nb << 1);
+          input1.reload(ComplexTestsQ15::INPUT1_Q15_ID,mgr,nb << 1);
+          input2.reload(ComplexTestsQ15::INPUT3_Q15_ID,mgr,nb);
+
+          output.create(ref.nbSamples(),ComplexTestsQ15::OUT_SAMPLES_Q15_ID,mgr);
+        break;
        }
       
 
