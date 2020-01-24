@@ -16,6 +16,7 @@
         - RTX 5.5.2 (see revision history for details)
       CMSIS-Driver: 2.8.0
         - removed volatile from status related typedefs in APIs
+        - enhanced WiFi Interface API with support for polling Socket Receive/Send
       CMSIS-Pack: 
         - added custom attribute to components that require custom implementation
       Devices:
