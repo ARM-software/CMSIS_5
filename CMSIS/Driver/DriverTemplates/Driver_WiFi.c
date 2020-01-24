@@ -18,7 +18,7 @@
 
 #include "Driver_WiFi.h"
 
-#define ARM_WIFI_DRV_VERSION ARM_DRIVER_VERSION_MAJOR_MINOR(1,0)        // Driver version
+#define ARM_WIFI_DRV_VERSION ARM_DRIVER_VERSION_MAJOR_MINOR(1, 0)        // Driver version
 
 // Driver Version
 static const ARM_DRIVER_VERSION driver_version = {
