@@ -1,18 +1,33 @@
 /*
- * Copyright (c) 2006-2017, ARM Limited, All Rights Reserved
+ * Copyright (c) 2013-2020 ARM Limited. All rights reserved.
+ *
  * SPDX-License-Identifier: Apache-2.0
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may
+ * Licensed under the Apache License, Version 2.0 (the License); you may
  * not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
  * www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * distributed under the License is distributed on an AS IS BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ *
+ * $Date:        24. January 2020
+ * $Revision:    V1.2
+ *
+ * Project:      Storage Driver definitions
+ */
+
+/* History:
+ *  Version 1.2
+ *    Removed volatile from ARM_STORAGE_STATUS
+ *  Version 1.1
+ *    ARM_STORAGE_STATUS made volatile
+ *  Version 1.00
+ *    Initial release
  */
 
 #ifndef DRIVER_STORAGE_H_
@@ -24,7 +39,7 @@ extern "C" {
 
 #include "Driver_Common.h"
 
-#define ARM_STORAGE_API_VERSION ARM_DRIVER_VERSION_MAJOR_MINOR(1,1)  /* API version */
+#define ARM_STORAGE_API_VERSION ARM_DRIVER_VERSION_MAJOR_MINOR(1,2)  /* API version */
 
 
 #define _ARM_Driver_Storage_(n)      Driver_Storage##n
@@ -161,7 +176,7 @@ typedef struct _ARM_STORAGE_INFO {
 /**
 \brief Operating status of the storage controller.
 */
-typedef volatile struct _ARM_STORAGE_STATUS {
+typedef struct _ARM_STORAGE_STATUS {
   uint32_t busy     : 1;                ///< Controller busy flag
   uint32_t error    : 1;                ///< Read/Program/Erase error flag (cleared on start of next operation)
   uint32_t reserved : 30;

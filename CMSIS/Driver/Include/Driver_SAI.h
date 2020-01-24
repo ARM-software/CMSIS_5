@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2017 ARM Limited. All rights reserved.
+ * Copyright (c) 2013-2020 ARM Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -15,13 +15,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * $Date:        2. Feb 2017
- * $Revision:    V1.1
+ * $Date:        24. January 2020
+ * $Revision:    V1.2
  *
  * Project:      SAI (Serial Audio Interface) Driver definitions
  */
 
 /* History:
+ *  Version 1.2
+ *    Removed volatile from ARM_SAI_STATUS
  *  Version 1.1
  *    ARM_SAI_STATUS made volatile
  *  Version 1.0
@@ -38,7 +40,7 @@ extern "C"
 
 #include "Driver_Common.h"
 
-#define ARM_SAI_API_VERSION ARM_DRIVER_VERSION_MAJOR_MINOR(1,1)  /* API version */
+#define ARM_SAI_API_VERSION ARM_DRIVER_VERSION_MAJOR_MINOR(1,2)  /* API version */
 
 
 /****** SAI Control Codes *****/
@@ -183,7 +185,7 @@ extern "C"
 /**
 \brief SAI Status
 */
-typedef volatile struct _ARM_SAI_STATUS {
+typedef struct _ARM_SAI_STATUS {
   uint32_t tx_busy          : 1;        ///< Transmitter busy flag
   uint32_t rx_busy          : 1;        ///< Receiver busy flag
   uint32_t tx_underflow     : 1;        ///< Transmit data underflow detected (cleared on start of next send operation)
