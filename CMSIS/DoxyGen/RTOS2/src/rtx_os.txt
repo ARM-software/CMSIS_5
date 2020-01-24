@@ -11,7 +11,7 @@ The RTX5 kernel can be customized for different application requirements:
   
 - The function \ref osRtxErrorNotify may be extended to handle system runtime errors.
 
-RTX5 interfaces to the <a href="http://www.keil.com/pack/doc/compiler/EventRecorder/html/index.html" target="_blank"><b>Event Recorder</b></a> 
+RTX5 interfaces to the <a href="https://www.keil.com/pack/doc/compiler/EventRecorder/html/index.html" target="_blank"><b>Event Recorder</b></a> 
 and provides event information that helps to analyze the operation. Refer to \ref rtx_evr for more information.
 
 
