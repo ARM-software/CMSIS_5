@@ -441,7 +441,7 @@ Further driver reference implementations are available in Device Family Packs (D
 /**
 \page driverValidation Driver Validation
 
-The <a href="http://www.keil.com/pack/" target=_blank>Software Pack</a> named <b>ARM::CMSIS-Driver_Validation</b> contains the following:
+The <a href="https://www.keil.com/pack/" target=_blank>Software Pack</a> named <b>ARM::CMSIS-Driver_Validation</b> contains the following:
 
  - Source code of a CMSIS-Driver Validation Suite along with configuration file.
  - Documentation of the CMSIS-Driver Validation Suite.

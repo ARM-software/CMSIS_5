@@ -615,7 +615,7 @@ Figure below shows how the typically available reset options map to the correspo
 
 \image html dbg_uVision_reset_options.png
 
-Detailed meanings for available options are explained in the documentation of corresponding debug adapter. For example for ULINKpro <a href="http://www.keil.com/support/man/docs/ulinkpro/ulinkpro_ctx_debug.htm#/connect" target="__blank"><b>Connect & Reset Options</b></a>
+Detailed meanings for available options are explained in the documentation of corresponding debug adapter. For example for ULINKpro <a href="https://www.keil.com/support/man/docs/ulinkpro/ulinkpro_ctx_debug.htm#/connect" target="__blank"><b>Connect & Reset Options</b></a>
 
 \section dbg_uVision_dbgconf Debug configuration file (*.dbgconf)
 
@@ -655,7 +655,7 @@ Figure below shows how the options "with Pre-reset" and "under Reset" map to the
 
 \image html dbg_uVision_connect_options.png
 
-Detailed explanation for available options are can be found in the documentation of corresponding debug adapter. For example for ULINKpro <a href="http://www.keil.com/support/man/docs/ulinkpro/ulinkpro_ctx_debug.htm#/connect" target="__blank"><b>Connect & Reset Options</b></a>
+Detailed explanation for available options are can be found in the documentation of corresponding debug adapter. For example for ULINKpro <a href="https://www.keil.com/support/man/docs/ulinkpro/ulinkpro_ctx_debug.htm#/connect" target="__blank"><b>Connect & Reset Options</b></a>
 
 \ref dbg_sqns_uvision_dbg_setting_reset explains the \b Reset dropdown menu in the same area and its mapping to the reset types used in \ref usage_of_sequences.
 

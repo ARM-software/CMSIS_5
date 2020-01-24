@@ -137,7 +137,7 @@ The steps to create a microcontroller application using RTX5 are:
 - Create a new project and select a microcontroller device.
 - In the Manage Run-Time Environment window, select <b>CMSIS\::CORE</b> and <b>CMSIS\::RTOS2 (API)\::Keil RTX5</b>. You can
   choose to either add RTX as a library (Variant: \b Library) or to add the full source code (Variant: \b Source - required
-  if using the <a href="http://www.keil.com/pack/doc/compiler/EventRecorder/html/index.html" target="_blank"><b>Event Recorder</b></a>):
+  if using the <a href="https://www.keil.com/pack/doc/compiler/EventRecorder/html/index.html" target="_blank"><b>Event Recorder</b></a>):
 
    \image html manage_rte_output.png
 
@@ -214,7 +214,7 @@ If you require some of the \ref rtx5_specific "RTX specific functions" in your a
 \section cre_rtx_proj_er Add Event Recorder Visibility
 
 \ifnot FuSaRTS
-RTX5 interfaces to the <a href="http://www.keil.com/pack/doc/compiler/EventRecorder/html/index.html" target="_blank"><b>Event Recorder</b></a> 
+RTX5 interfaces to the <a href="https://www.keil.com/pack/doc/compiler/EventRecorder/html/index.html" target="_blank"><b>Event Recorder</b></a> 
 to provide event information which helps you to understand and analyze the operation.
 
 - To use the Event Recorder together with RTX5, select the software component <b>Compiler:Event Recorder</b>.
@@ -576,7 +576,7 @@ void osRtxIdleThread (void) {
 
 \note
 \c __WFE() is not available in every Arm Cortex-M implementation. Check device manuals for availability. 
-The alternative using \c __WFI() has other issues, please take note of http://www.keil.com/support/docs/3591.htm as well.
+The alternative using \c __WFI() has other issues, please take note of https://www.keil.com/support/docs/3591.htm as well.
 
 \section rtx_os_h RTX5 Header File
 
@@ -716,7 +716,7 @@ using the CMSIS-RTOS RTX kernel. The configuration options are explained in deta
 - \ref semaphoreConfig provides several parameters to configure the \ref CMSIS_RTOS_SemaphoreMgmt functions.
 - \ref memPoolConfig provides several parameters to configure the \ref CMSIS_RTOS_PoolMgmt functions.
 - \ref msgQueueConfig provides several parameters to configure the \ref CMSIS_RTOS_Message functions.
-- \ref evtrecConfig provides several parameters to configure RTX for usage with <a href="http://www.keil.com/pack/doc/compiler/EventRecorder/html/index.html" target="_blank"><b>Event Recorder</b></a>.
+- \ref evtrecConfig provides several parameters to configure RTX for usage with <a href="https://www.keil.com/pack/doc/compiler/EventRecorder/html/index.html" target="_blank"><b>Event Recorder</b></a>.
 
 The file "RTX_Config.c" contains default implementations of the functions \ref osRtxIdleThread and \ref osRtxErrorNotify. Both functions
 can simply be overwritten with a customized behavior by redefining them as part of the user code.
@@ -984,7 +984,7 @@ The total storage size reserved for all queues is configured in \c OS_MSGQUEUE_D
 
 \section evtrecConfig Event Recorder Configuration
 
-This section describes the configuration settings for the <a href="http://www.keil.com/pack/doc/compiler/EventRecorder/html/index.html" target="_blank">Event Recorder</a>
+This section describes the configuration settings for the <a href="https://www.keil.com/pack/doc/compiler/EventRecorder/html/index.html" target="_blank">Event Recorder</a>
 annotations. The usage requires the source variant of RTX5; refer to \ref cre_rtx_proj_er for more information.
 
 \subsection evtrecConfigGlobIni Global Configuration
@@ -1593,7 +1593,7 @@ The RTX5 C source files use <b><a class=el href="http://www.misra.org.uk/" targe
 
 For MISRA validation, <b><a class=el href="http://www.gimpel.com/" target="_blank">PC-lint</a></b> V9.00L is used with configuration for Arm Compiler V6.9.
 The PC-Lint validation setup is part of the project file <b>.\\CMSIS\\RTOS2\\RTX\\Library\\ARM\\MDK\\RTX_CM.uvprojx</b> as shown below. 
-Refer to <b><a class=el href="http://www.keil.com/support/man/docs/uv4/uv4_ut_pclint_validation.htm" target="_blank">Setup for PC-Lint</a></b> for more information.
+Refer to <b><a class=el href="https://www.keil.com/support/man/docs/uv4/uv4_ut_pclint_validation.htm" target="_blank">Setup for PC-Lint</a></b> for more information.
 
 \image html "PC-Lint.png" "Running PC-Lint within MDK - uVision"
 

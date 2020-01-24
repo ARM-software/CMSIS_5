@@ -56,13 +56,13 @@ PACK.xsd file into the working directory):
       <url>file:///c:/temp/working</url>
       \endverbatim
     - It is important to understand how the \<url\> element works. If you specify a URL, for example
-      <a href="http://www.keil.com/pack/" target="_blank">http://www.keil.com/pack</a>,
+      <a href="https://www.keil.com/pack/" target="_blank">https://www.keil.com/pack</a>,
       then you have to make the PDSC file and the corresponding Pack file(s) available for download at that exact location.
       The naming of the files follow the standard naming rules. For example, the ARM::CMSIS PDSC and Pack files are available
       here:\n
-      <a href="http://www.keil.com/pack/ARM.CMSIS.pdsc" target="_blank">http://www.keil.com/pack/ARM.CMSIS.pdsc</a> and \n
-      <a href="http://www.keil.com/pack/ARM.CMSIS.4.3.0.pack" target="_blank">http://www.keil.com/pack/ARM.CMSIS.4.3.0.pack</a> and \n
-      <a href="http://www.keil.com/pack/ARM.CMSIS.4.2.0.pack" target="_blank">http://www.keil.com/pack/ARM.CMSIS.4.2.0.pack</a> and ... \n
+      <a href="https://www.keil.com/pack/ARM.CMSIS.pdsc" target="_blank">https://www.keil.com/pack/ARM.CMSIS.pdsc</a> and \n
+      <a href="https://www.keil.com/pack/ARM.CMSIS.4.3.0.pack" target="_blank">https://www.keil.com/pack/ARM.CMSIS.4.3.0.pack</a> and \n
+      <a href="https://www.keil.com/pack/ARM.CMSIS.4.2.0.pack" target="_blank">https://www.keil.com/pack/ARM.CMSIS.4.2.0.pack</a> and ... \n
       At the specified location, you need to have one (unversioned) PDSC file and can have multiple versioned Pack files,
       but at least the latest one.
 - \ref element_package "<supportContact>" may provide an email address or web page URL for Pack specific questions/problems

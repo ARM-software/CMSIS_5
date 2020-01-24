@@ -27,7 +27,7 @@ requirements:
 CMSIS-DAP Firmware
 ------------------
 The CMSIS-DAP Firmware can be configured for a new Debug Unit using at least the 
-<a href="http://www.keil.com/mdk5" target="_blank">Keil MDK-Plus or MDK-Professional Edition</a>.
+<a href="https://www.keil.com/mdk5" target="_blank">Keil MDK-Plus or MDK-Professional Edition</a>.
 Reference implementations are provided as source code with complete project files
 and may be used as starting point for the firmware deployment to a new Debug Unit.
 

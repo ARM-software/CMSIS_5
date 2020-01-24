@@ -715,14 +715,14 @@ Running CMSIS-Build
   MyProject.cpdsc validates
   CMSIS Build (cbuildgen) 0.1.1 (Dec 12 2019, 14:36:01)
   Copyright (C) 2019 ARM Ltd and ARM Germany GmbH. All rights reserved.
-  M654: URL 'http://www.keil.com/pack/ARM.CMSIS.5.6.0.pack' was added to the list of missing packages.
+  M654: URL 'https://www.keil.com/pack/ARM.CMSIS.5.6.0.pack' was added to the list of missing packages.
   M650: Setup run successfully.
   dos2unix: converting file MyProject.cpinstall to Unix format...
   CMSIS Pack installation utility (cpinstall.sh) 0.1.0 (Mon, Dec 16, 2019  3:12:37 PM)
   Copyright (C) 2019 ARM Ltd and ARM Germany GmbH. All rights reserved.
   info: reading file: MyProject.cpinstall
   dos2unix: converting file MyProject.cpinstall to Unix format...
-  http://www.keil.com/pack/ARM.CMSIS.5.6.0.pack
+  https://www.keil.com/pack/ARM.CMSIS.5.6.0.pack
   ######################################################################## 100.0%#=#=#
   info: ARM.CMSIS.5.6.0.pack installing into /c/project/MyPackRepo/ARM/CMSIS/5.6.0
   pack installation completed successfully

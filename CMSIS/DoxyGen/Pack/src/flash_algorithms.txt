@@ -27,7 +27,7 @@ settings are required. Follow these steps to create and configure a new Flash pr
 
 \note
 - Creating a Flash programming algorithm with
-  <a class="el" href="http://www.keil.com/arm/selector.asp" target="_blank">MDK-Lite</a> is not supported.
+  <a class="el" href="https://www.keil.com/arm/selector.asp" target="_blank">MDK-Lite</a> is not supported.
 - Flash programming algorithms use <b>Read-Only Position Independent</b> and <b>Read-Write Position Independent</b> program
   code. These options are set in the dialogs \b Project - <b>Options for Target</b> - \b C/C++ and \b Project -
   <b>Options for Target</b> - \b Asm.

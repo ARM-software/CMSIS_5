@@ -96,7 +96,7 @@ ensure that the pack is found by a \ref cp_KeilComPack "Pack Index Service", fol
 
 Tool, software, or silicon vendors may provide a web infra-structure that lists packs that are available from multiple vendors.
 Companies like Arm or IAR provide a \ref cp_KeilComPack "Pack Index Service" that uses either a \elem{vendor}.\elem{name}.pdsc or a
-\elem{vendor}.pidx file to obtain the latest pack versions.  This information is used to make the packs available in the development tools (via a <b><a href="http://www.keil.com/mdk5/packinstaller/">Pack Installer</a></b>) and/or to publish information on certain web pages, for example a <b><a href="https://developer.arm.com/embedded/cmsis/cmsis-packs/devices" target="_blank">device list</a></b>.
+\elem{vendor}.pidx file to obtain the latest pack versions.  This information is used to make the packs available in the development tools (via a <b><a href="https://www.keil.com/mdk5/packinstaller/">Pack Installer</a></b>) and/or to publish information on certain web pages, for example a <b><a href="https://developer.arm.com/embedded/cmsis/cmsis-packs/devices" target="_blank">device list</a></b>.
 
 The following diagram explains how these services are working behind the scene. 
 

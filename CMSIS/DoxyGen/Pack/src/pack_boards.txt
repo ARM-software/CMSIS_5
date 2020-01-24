@@ -23,7 +23,7 @@ A BSP is typically provided by a Board Vendor and is used to
 <b>extend development tools</b> with support for development boards. In general, the BSP enables Board Vendors to
 distribute tool independent board support for their development platforms.\n
 BSPs can also be used to provide information for the display on <b>web sites</b>. One example is the new boards page on
-<a class=el href="http://www.keil.com/boards2/" target="_blank">www.keil.com/boards2/</a>:
+<a class=el href="https://www.keil.com/boards2/" target="_blank">www.keil.com/boards2/</a>:
 
 \image html BoardsSectionMCB1500.png "Board information on a web site extracted from a BSP"
 
@@ -32,7 +32,7 @@ BSPs can also be used to provide information for the display on <b>web sites</b>
 
 <b>Preparations</b>
 -# Install the Software Pack
-   <a class=el href="http://www.keil.com/dd2/arm/armcm3/" target="_blank">Keil::ARMCortex_DFP</a> as this
+   <a class=el href="https://www.keil.com/dd2/arm/armcm3/" target="_blank">Keil::ARMCortex_DFP</a> as this
    will be required for the BSP to function properly.
 -# Create a working directory on your PC, for example <b>C:\\temp\\working_bsp</b>.
 -# Go to the directory <b>\\CMSIS\\Pack\\Tutorials</b> available in the \b ARM::CMSIS Pack installation. Please
