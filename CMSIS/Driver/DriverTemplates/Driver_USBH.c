@@ -20,7 +20,7 @@
 
 /* USB Host Driver */
 
-#define ARM_USBH_DRV_VERSION    ARM_DRIVER_VERSION_MAJOR_MINOR(2, 0) /* driver version */
+#define ARM_USBH_DRV_VERSION    ARM_DRIVER_VERSION_MAJOR_MINOR(1, 0) /* driver version */
 
 /* Driver Version */
 static const ARM_DRIVER_VERSION usbh_driver_version = { 
