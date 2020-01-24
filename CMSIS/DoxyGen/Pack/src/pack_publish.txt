@@ -111,6 +111,6 @@ The following diagram explains how these services are working behind the scene.
 
 Depending on the implementation, the web infra-structure may provide index files with additional information:
  - \elem{vendor}.vidx file (\ref vidxFile) lists pack index locations known by the service. Arm scans these locations every 24 hours to import new packs. If your location is not listed
- - http://www.keil.com/pack/index.pidx is a list of all packs that are correctly imported. If a pack does not appear, the pack did not pass the \ref cp_prerequisites "validation process".
+ - https://www.keil.com/pack/index.pidx is a list of all packs that are correctly imported. If a pack does not appear, the pack did not pass the \ref cp_prerequisites "validation process".
 
 */

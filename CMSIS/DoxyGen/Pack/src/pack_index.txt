@@ -80,11 +80,11 @@ The latest index file of CMSIS-Packs belonging to vendor="ARM" and vendor="Keil"
 is maintained here: <a href="http://www.keil.com/pack/Keil.pidx">www.keil.com/pack/Keil.pidx</a>
 
 ARM also maintains a flat list of all CMSIS-Pack compliant packs reported to ARM here:
-<a href="http://www.keil.com/pack/index.pidx">www.keil.com/pack/index.pidx</a>
+<a href="https://www.keil.com/pack/index.pidx">www.keil.com/pack/index.pidx</a>
 
 The vendor index file containing references to the package index files (or optionally PDSC files) used for compiling this
 summary index file are listed in the Keil.vidx file and can be downloaded from here:
-<a href="http://www.keil.com/pack/Keil.vidx">www.keil.com/pack/Keil.vidx</a>
+<a href="https://www.keil.com/pack/Keil.vidx">www.keil.com/pack/Keil.vidx</a>
 
 Based on these publicly available index files, everyone is equally positioned to create an index of available packs and their
 latest versions.
