@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 Arm Limited. All rights reserved.
+ * Copyright (c) 2019-2020 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -15,13 +15,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * $Date:        31. May 2019
- * $Revision:    V1.0
+ * $Date:        24. January 2020
+ * $Revision:    V1.1
  *
  * Project:      WiFi (Wireless Fidelity Interface) Driver definitions
  */
 
 /* History:
+ *  Version 1.1
+ *    Extended Socket Receive/Send (support for polling)
  *  Version 1.0
  *    Initial release
  */
@@ -36,7 +38,7 @@ extern "C"
 
 #include "Driver_Common.h"
 
-#define ARM_WIFI_API_VERSION ARM_DRIVER_VERSION_MAJOR_MINOR(1,0)  /* API version */
+#define ARM_WIFI_API_VERSION ARM_DRIVER_VERSION_MAJOR_MINOR(1,1)  /* API version */
 
 #define _ARM_Driver_WiFi_(n)      Driver_WiFi##n
 #define  ARM_Driver_WiFi_(n) _ARM_Driver_WiFi_(n)
@@ -418,7 +420,7 @@ typedef struct {
   \param[out]    buf      Pointer to buffer where data should be stored
   \param[in]     len      Length of buffer (in bytes)
   \return        status information
-                   - number of bytes received (>0)
+                   - number of bytes received (>=0)
                    - \ref ARM_SOCKET_ESOCK             : Invalid socket
                    - \ref ARM_SOCKET_EINVAL            : Invalid argument (pointer to buffer or length)
                    - \ref ARM_SOCKET_ENOTCONN          : Socket is not connected
@@ -439,7 +441,7 @@ typedef struct {
                    - length of stored 'ip' on output
   \param[out]    port     Pointer to buffer where remote source port shall be returned (NULL for none)
   \return        status information
-                   - number of bytes received (>0)
+                   - number of bytes received (>=0)
                    - \ref ARM_SOCKET_ESOCK             : Invalid socket
                    - \ref ARM_SOCKET_EINVAL            : Invalid argument (pointer to buffer or length)
                    - \ref ARM_SOCKET_ENOTCONN          : Socket is not connected
@@ -455,7 +457,7 @@ typedef struct {
   \param[in]     buf      Pointer to buffer containing data to send
   \param[in]     len      Length of data (in bytes)
   \return        status information
-                   - number of bytes sent (>0)
+                   - number of bytes sent (>=0)
                    - \ref ARM_SOCKET_ESOCK             : Invalid socket
                    - \ref ARM_SOCKET_EINVAL            : Invalid argument (pointer to buffer or length)
                    - \ref ARM_SOCKET_ENOTCONN          : Socket is not connected
@@ -474,7 +476,7 @@ typedef struct {
   \param[in]     ip_len   Length of 'ip' address in bytes
   \param[in]     port     Remote destination port number
   \return        status information
-                   - number of bytes sent (>0)
+                   - number of bytes sent (>=0)
                    - \ref ARM_SOCKET_ESOCK             : Invalid socket
                    - \ref ARM_SOCKET_EINVAL            : Invalid argument (pointer to buffer or length)
                    - \ref ARM_SOCKET_ENOTCONN          : Socket is not connected
