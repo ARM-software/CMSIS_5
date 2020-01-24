@@ -918,7 +918,7 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="header" name="CMSIS/Driver/Include/Driver_USBH.h" />
       </files>
     </api>
-    <api Cclass="CMSIS Driver" Cgroup="WiFi" Capiversion="1.0.0" exclusive="0">
+    <api Cclass="CMSIS Driver" Cgroup="WiFi" Capiversion="1.1.0" exclusive="0">
       <description>WiFi driver</description>
       <files>
         <file category="doc"  name="CMSIS/Documentation/Driver/html/group__wifi__interface__gr.html" />
