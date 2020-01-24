@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2017 ARM Limited. All rights reserved.
+ * Copyright (c) 2013-2020 ARM Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -15,13 +15,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * $Date:        14. Nov 2017
- * $Revision:    V2.3
+ * $Date:        24. January 2020
+ * $Revision:    V2.4
  *
  * Project:      NAND Flash Driver definitions
  */
 
 /* History:
+ *  Version 2.4
+ *    Removed volatile from ARM_NAND_STATUS
  *  Version 2.3
  *    Extended ARM_NAND_ECC_INFO structure
  *  Version 2.2
@@ -53,7 +55,7 @@ extern "C"
 
 #include "Driver_Common.h"
 
-#define ARM_NAND_API_VERSION ARM_DRIVER_VERSION_MAJOR_MINOR(2,3)  /* API version */
+#define ARM_NAND_API_VERSION ARM_DRIVER_VERSION_MAJOR_MINOR(2,4)  /* API version */
 
 
 /****** NAND Device Power *****/
@@ -197,7 +199,7 @@ typedef struct _ARM_NAND_ECC_INFO {
 /**
 \brief NAND Status
 */
-typedef volatile struct _ARM_NAND_STATUS {
+typedef struct _ARM_NAND_STATUS {
   uint32_t busy      : 1;               ///< Driver busy flag
   uint32_t ecc_error : 1;               ///< ECC error detected (cleared on next Read/WriteData or ExecuteSequence)
   uint32_t reserved  : 30;

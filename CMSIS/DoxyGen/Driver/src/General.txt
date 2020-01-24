@@ -62,50 +62,56 @@ The following files relevant to CMSIS-Driver are present in the <b>ARM::CMSIS</b
       <th>Description</th>
     </tr>
     <tr>
+      <td>2.8.0</td>
+      <td>
+        - Changed: removed volatile from status related typedefs
+      </td>
+    </tr>
+    <tr>
       <td>2.7.1</td>
-      <td>Modifications compared to Version 2.7.0:
+      <td>
         - Finalized WiFi Interface API 1.0.0.
       </td>
     </tr>
     <tr>
       <td>2.7.0</td>
-      <td>Modifications compared to Version 2.6.0:
+      <td>
         - Added WiFi Interface API 1.0.0-beta.
         - Added custom driver selection to simplify implementation of new CMSIS-Driver.
       </td>
     </tr>
     <tr>
       <td>2.6.0</td>
-      <td>Modifications compared to Version 2.05:
-- Enhanced CAN-Driver API with explicit BUSOFF state.
-- Enhanced NAND-Driver API for ECC handling.
+      <td>
+        - Enhanced CAN-Driver API with explicit BUSOFF state.
+        - Enhanced NAND-Driver API for ECC handling.
       </td>
     </tr>
     <tr>
       <td>2.05</td>
-      <td>Modifications compared to Version 2.04:
- - Changed: All typedefs related to status have been made volatile. 
+      <td>
+        - Changed: All typedefs related to status have been made volatile. 
       </td>
     </tr>
     <tr>
       <td>2.04</td>
-      <td>Modifications compared to Version 2.03:
- - Added: template files for CAN interface driver.
+      <td>
+        - Added: template files for CAN interface driver.
       </td>
     </tr>
     <tr>
       <td>2.03</td>
-      <td>Modifications compared to Version 2.02:
- - Added: CAN API for an interface to CAN peripherals
- - Added: Overview of the \ref driverValidation "CMSIS-Driver Validation" Software Pack.
- - Enhanced: documentation and clarified behavior of the \ref CallSequence.
+      <td>
+        - Added: CAN API for an interface to CAN peripherals
+        - Added: Overview of the \ref driverValidation "CMSIS-Driver Validation" Software Pack.
+        - Enhanced: documentation and clarified behavior of the \ref CallSequence.
       </td>
     </tr>
     <tr>
       <td>2.02</td>
-      <td>Modifications compared to Version 2.00:
- - Minor API changes, for exact details refer to the header file of each driver.
- - Added: Flash Interface, NAND interface.
+      <td>
+        - Minor API changes, for exact details refer to the header file of each driver.
+        - Added: Flash Interface, NAND interface.
       </td>
     </tr>
     <tr>

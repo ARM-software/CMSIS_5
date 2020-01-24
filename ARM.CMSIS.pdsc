@@ -14,6 +14,8 @@
          - Enhanced MVE support for Armv8.1-MML
       CMSIS-RTOS2:
         - RTX 5.5.2 (see revision history for details)
+      CMSIS-Driver: 2.8.0
+        - removed volatile from status related typedefs in APIs
       CMSIS-Pack: 
         - added custom attribute to components that require custom implementation
       Devices:
@@ -823,63 +825,63 @@ and 8-bit Java bytecodes in Jazelle state.
       </files>
     </api>
     <!-- CMSIS Driver API -->
-    <api Cclass="CMSIS Driver" Cgroup="USART" Capiversion="2.3.0" exclusive="0">
+    <api Cclass="CMSIS Driver" Cgroup="USART" Capiversion="2.4.0" exclusive="0">
       <description>USART Driver API for Cortex-M</description>
       <files>
         <file category="doc" name="CMSIS/Documentation/Driver/html/group__usart__interface__gr.html" />
         <file category="header" name="CMSIS/Driver/Include/Driver_USART.h" />
       </files>
     </api>
-    <api Cclass="CMSIS Driver" Cgroup="SPI" Capiversion="2.2.0" exclusive="0">
+    <api Cclass="CMSIS Driver" Cgroup="SPI" Capiversion="2.3.0" exclusive="0">
       <description>SPI Driver API for Cortex-M</description>
       <files>
         <file category="doc" name="CMSIS/Documentation/Driver/html/group__spi__interface__gr.html" />
         <file category="header" name="CMSIS/Driver/Include/Driver_SPI.h" />
       </files>
     </api>
-    <api Cclass="CMSIS Driver" Cgroup="SAI" Capiversion="1.1.0" exclusive="0">
+    <api Cclass="CMSIS Driver" Cgroup="SAI" Capiversion="1.2.0" exclusive="0">
       <description>SAI Driver API for Cortex-M</description>
       <files>
         <file category="doc" name="CMSIS/Documentation/Driver/html/group__sai__interface__gr.html"/>
         <file category="header" name="CMSIS/Driver/Include/Driver_SAI.h" />
       </files>
     </api>
-    <api Cclass="CMSIS Driver" Cgroup="I2C" Capiversion="2.3.0" exclusive="0">
+    <api Cclass="CMSIS Driver" Cgroup="I2C" Capiversion="2.4.0" exclusive="0">
       <description>I2C Driver API for Cortex-M</description>
       <files>
         <file category="doc" name="CMSIS/Documentation/Driver/html/group__i2c__interface__gr.html"/>
         <file category="header" name="CMSIS/Driver/Include/Driver_I2C.h" />
       </files>
     </api>
-    <api Cclass="CMSIS Driver" Cgroup="CAN" Capiversion="1.2.0" exclusive="0">
+    <api Cclass="CMSIS Driver" Cgroup="CAN" Capiversion="1.3.0" exclusive="0">
       <description>CAN Driver API for Cortex-M</description>
       <files>
         <file category="doc" name="CMSIS/Documentation/Driver/html/group__can__interface__gr.html"/>
         <file category="header" name="CMSIS/Driver/Include/Driver_CAN.h" />
       </files>
     </api>
-    <api Cclass="CMSIS Driver" Cgroup="Flash" Capiversion="2.2.0" exclusive="0">
+    <api Cclass="CMSIS Driver" Cgroup="Flash" Capiversion="2.3.0" exclusive="0">
       <description>Flash Driver API for Cortex-M</description>
       <files>
         <file category="doc" name="CMSIS/Documentation/Driver/html/group__flash__interface__gr.html" />
         <file category="header" name="CMSIS/Driver/Include/Driver_Flash.h" />
       </files>
     </api>
-    <api Cclass="CMSIS Driver" Cgroup="MCI" Capiversion="2.3.0" exclusive="0">
+    <api Cclass="CMSIS Driver" Cgroup="MCI" Capiversion="2.4.0" exclusive="0">
       <description>MCI Driver API for Cortex-M</description>
       <files>
         <file category="doc" name="CMSIS/Documentation/Driver/html/group__mci__interface__gr.html" />
         <file category="header" name="CMSIS/Driver/Include/Driver_MCI.h" />
       </files>
     </api>
-    <api Cclass="CMSIS Driver" Cgroup="NAND" Capiversion="2.3.0" exclusive="0">
+    <api Cclass="CMSIS Driver" Cgroup="NAND" Capiversion="2.4.0" exclusive="0">
       <description>NAND Flash Driver API for Cortex-M</description>
       <files>
         <file category="doc" name="CMSIS/Documentation/Driver/html/group__nand__interface__gr.html" />
         <file category="header" name="CMSIS/Driver/Include/Driver_NAND.h" />
       </files>
     </api>
-    <api Cclass="CMSIS Driver" Cgroup="Ethernet" Capiversion="2.1.0" exclusive="0">
+    <api Cclass="CMSIS Driver" Cgroup="Ethernet" Capiversion="2.2.0" exclusive="0">
       <description>Ethernet MAC and PHY Driver API for Cortex-M</description>
       <files>
         <file category="doc" name="CMSIS/Documentation/Driver/html/group__eth__interface__gr.html" />
@@ -887,28 +889,28 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="header" name="CMSIS/Driver/Include/Driver_ETH_PHY.h" />
       </files>
     </api>
-    <api Cclass="CMSIS Driver" Cgroup="Ethernet MAC" Capiversion="2.1.0" exclusive="0">
+    <api Cclass="CMSIS Driver" Cgroup="Ethernet MAC" Capiversion="2.2.0" exclusive="0">
       <description>Ethernet MAC Driver API for Cortex-M</description>
       <files>
         <file category="doc" name="CMSIS/Documentation/Driver/html/group__eth__mac__interface__gr.html" />
         <file category="header" name="CMSIS/Driver/Include/Driver_ETH_MAC.h" />
       </files>
     </api>
-    <api Cclass="CMSIS Driver" Cgroup="Ethernet PHY" Capiversion="2.1.0" exclusive="0">
+    <api Cclass="CMSIS Driver" Cgroup="Ethernet PHY" Capiversion="2.2.0" exclusive="0">
       <description>Ethernet PHY Driver API for Cortex-M</description>
       <files>
         <file category="doc" name="CMSIS/Documentation/Driver/html/group__eth__phy__interface__gr.html" />
         <file category="header" name="CMSIS/Driver/Include/Driver_ETH_PHY.h" />
       </files>
     </api>
-    <api Cclass="CMSIS Driver" Cgroup="USB Device" Capiversion="2.2.0" exclusive="0">
+    <api Cclass="CMSIS Driver" Cgroup="USB Device" Capiversion="2.3.0" exclusive="0">
       <description>USB Device Driver API for Cortex-M</description>
       <files>
         <file category="doc" name="CMSIS/Documentation/Driver/html/group__usbd__interface__gr.html" />
         <file category="header" name="CMSIS/Driver/Include/Driver_USBD.h" />
       </files>
     </api>
-    <api Cclass="CMSIS Driver" Cgroup="USB Host" Capiversion="2.2.0" exclusive="0">
+    <api Cclass="CMSIS Driver" Cgroup="USB Host" Capiversion="2.3.0" exclusive="0">
       <description>USB Host Driver API for Cortex-M</description>
       <files>
         <file category="doc" name="CMSIS/Documentation/Driver/html/group__usbh__interface__gr.html" />

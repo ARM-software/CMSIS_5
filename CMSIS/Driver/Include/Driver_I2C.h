@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2017 ARM Limited. All rights reserved.
+ * Copyright (c) 2013-2020 ARM Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -15,13 +15,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * $Date:        2. Feb 2017
- * $Revision:    V2.3
+ * $Date:        24. January 2020
+ * $Revision:    V2.4
  *
  * Project:      I2C (Inter-Integrated Circuit) Driver definitions
  */
 
 /* History:
+ *  Version 2.4
+ *    Removed volatile from ARM_I2C_STATUS
  *  Version 2.3
  *    ARM_I2C_STATUS made volatile
  *  Version 2.2
@@ -60,7 +62,7 @@ extern "C"
 
 #include "Driver_Common.h"
 
-#define ARM_I2C_API_VERSION ARM_DRIVER_VERSION_MAJOR_MINOR(2,3)  /* API version */
+#define ARM_I2C_API_VERSION ARM_DRIVER_VERSION_MAJOR_MINOR(2,4)  /* API version */
 
 
 /****** I2C Control Codes *****/
@@ -86,7 +88,7 @@ extern "C"
 /**
 \brief I2C Status
 */
-typedef volatile struct _ARM_I2C_STATUS {
+typedef struct _ARM_I2C_STATUS {
   uint32_t busy             : 1;        ///< Busy flag
   uint32_t mode             : 1;        ///< Mode: 0=Slave, 1=Master
   uint32_t direction        : 1;        ///< Direction: 0=Transmitter, 1=Receiver

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2017 ARM Limited. All rights reserved.
+ * Copyright (c) 2013-2020 ARM Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -15,13 +15,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * $Date:        2. Feb 2017
- * $Revision:    V2.2
+ * $Date:        24. January 2020
+ * $Revision:    V2.3
  *
  * Project:      SPI (Serial Peripheral Interface) Driver definitions
  */
 
 /* History:
+ *  Version 2.3
+ *    Removed volatile from ARM_SPI_STATUS
  *  Version 2.2
  *    ARM_SPI_STATUS made volatile
  *  Version 2.1
@@ -54,7 +56,7 @@ extern "C"
 
 #include "Driver_Common.h"
 
-#define ARM_SPI_API_VERSION ARM_DRIVER_VERSION_MAJOR_MINOR(2,2)  /* API version */
+#define ARM_SPI_API_VERSION ARM_DRIVER_VERSION_MAJOR_MINOR(2,3)  /* API version */
 
 
 /****** SPI Control Codes *****/
@@ -127,7 +129,7 @@ extern "C"
 /**
 \brief SPI Status
 */
-typedef volatile struct _ARM_SPI_STATUS {
+typedef struct _ARM_SPI_STATUS {
   uint32_t busy       : 1;              ///< Transmitter/Receiver busy flag
   uint32_t data_lost  : 1;              ///< Data lost: Receive overflow / Transmit underflow (cleared on start of transfer operation)
   uint32_t mode_fault : 1;              ///< Mode fault detected; optional (cleared on start of transfer operation)
