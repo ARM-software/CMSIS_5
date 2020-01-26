@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2019 Arm Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2010-2020 Arm Limited or its affiliates. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -21,8 +21,8 @@
  * Title:        arm_nn_mat_mult_kernel_s8_s16.c
  * Description:  Matrix-multiplication function for convolution
  *
- * $Date:        November 2019
- * $Revision:    V.0.9.0
+ * $Date:        January 26 2020
+ * $Revision:    V.1.0.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -54,19 +54,21 @@ q7_t *arm_nn_mat_mult_kernel_s8_s16(const q7_t *input_a,
 #define COL_PER_LOOP (8)
 
     const q7_t *ip_a0_s8 = input_a;
-    const q7_t *ip_a1_s8 = input_a + num_col_a;
-    const q7_t *ip_a2_s8 = input_a + num_col_a * 2;
-    const q7_t *ip_a3_s8 = input_a + num_col_a * 3;
     q7_t *out_1 = out_0 + output_ch;
 
     const int32_t *bias = output_bias;
 
-    const q15_t *ip_b0_s16 = input_b;
-    const q15_t *ip_b1_s16 = input_b + num_col_a;
     int32_t row_count = output_ch / ROW_PER_LOOP;
 
     while (row_count)
     {
+        const q15_t *ip_b0_s16 = input_b;
+        const q15_t *ip_b1_s16 = input_b + num_col_a;
+
+        const q7_t *ip_a1_s8 = ip_a0_s8 + num_col_a;
+        const q7_t *ip_a2_s8 = ip_a0_s8 + num_col_a * 2;
+        const q7_t *ip_a3_s8 = ip_a0_s8 + num_col_a * 3;
+
         q31_t ch_0_out_n = bias[0];
         q31_t ch_1_out_n = bias[1];
         q31_t ch_2_out_n = bias[2];
@@ -129,6 +131,7 @@ q7_t *arm_nn_mat_mult_kernel_s8_s16(const q7_t *input_a,
             ch_3_out_n1 += b1 * ip_a3_s8[col_count];
             col_count--;
         }
+        ip_a0_s8 += (num_col_a & (COL_PER_LOOP - 1));
 
         int32x4_t out_vec_0;
         int32x4_t out_vec_1;
@@ -162,6 +165,7 @@ q7_t *arm_nn_mat_mult_kernel_s8_s16(const q7_t *input_a,
         vstrbq_s32(out_1, out_vec_1);
         out_1 += ROW_PER_LOOP;
         row_count--;
+        ip_a0_s8 += (num_col_a * 3);
     }
 
     row_count = output_ch & (ROW_PER_LOOP - 1);
