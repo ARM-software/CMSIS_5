@@ -59,34 +59,33 @@ void arm_cmplx_conj_q31(
 
     uint32_t blockSize = numSamples * CMPLX_DIM;   /* loop counters */
     uint32_t blkCnt;
-    q31x4_t vecSrc;
-    q31x4_t vecSign;
+    q31x4x2_t vecSrc;
     q31_t in;                                      /* Temporary input variable */
+    q31x4_t zero;
 
-    /*
-     * {2, 0, 2, 0} - {1, 1, 1, 1}
-     */
-    vecSign = vsubq(vdwdupq_u32(2, 4, 2), vdupq_n_u32(1));
+    zero = vdupq_n_s32(0);
 
+   
     /* Compute 4 real samples at a time */
-    blkCnt = blockSize >> 2U;
+    blkCnt = blockSize >> 3U;
 
     while (blkCnt > 0U)
     {
 
-        vecSrc = vld1q(pSrc);
-        vst1q(pDst,vmulq(vecSrc, vecSign));
+        vecSrc = vld2q(pSrc);
+        vecSrc.val[1] = vqsubq(zero, vecSrc.val[1]);
+        vst2q(pDst,vecSrc);
         /*
          * Decrement the blkCnt loop counter
          * Advance vector source and destination pointers
          */
-        pSrc += 4;
-        pDst += 4;
+        pSrc += 8;
+        pDst += 8;
         blkCnt --;
     }
 
      /* Tail */
-    blkCnt = (blockSize & 0x3) >> 1;
+    blkCnt = (blockSize & 0x7) >> 1;
 
     while (blkCnt > 0U)
     {

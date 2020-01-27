@@ -10,7 +10,7 @@ Reference patterns are generated with
 a double precision computation.
 
 */
-#define REL_ERROR (8.0e-6)
+#define REL_ERROR (5.0e-5)
 
 #define GET_F32_PTR() \
 const float32_t *inp1=input1.ptr(); \
@@ -249,6 +249,38 @@ float32_t *outp=output.ptr();
           nb = 11;
           ref.reload(BasicTestsF32::REF_ABS_F32_ID,mgr,nb);
           break;
+
+        case BasicTestsF32::TEST_ADD_F32_25:
+          ref.reload(BasicTestsF32::REF_ADD_F32_ID,mgr,nb);
+        break;
+
+        case BasicTestsF32::TEST_SUB_F32_26:
+          ref.reload(BasicTestsF32::REF_SUB_F32_ID,mgr,nb);
+        break;
+
+        case BasicTestsF32::TEST_MULT_F32_27:
+          ref.reload(BasicTestsF32::REF_MULT_F32_ID,mgr,nb);
+        break;
+
+        case BasicTestsF32::TEST_NEGATE_F32_28:
+          ref.reload(BasicTestsF32::REF_NEGATE_F32_ID,mgr,nb);
+        break;
+
+        case BasicTestsF32::TEST_OFFSET_F32_29:
+          ref.reload(BasicTestsF32::REF_OFFSET_F32_ID,mgr,nb);
+        break;
+
+        case BasicTestsF32::TEST_SCALE_F32_30:
+          ref.reload(BasicTestsF32::REF_SCALE_F32_ID,mgr,nb);
+        break;
+
+        case BasicTestsF32::TEST_DOT_PROD_F32_31:
+          ref.reload(BasicTestsF32::REF_DOT_LONG_F32_ID,mgr);
+        break;
+
+        case BasicTestsF32::TEST_ABS_F32_32:
+          ref.reload(BasicTestsF32::REF_ABS_F32_ID,mgr,nb);
+        break;
 
        }
       

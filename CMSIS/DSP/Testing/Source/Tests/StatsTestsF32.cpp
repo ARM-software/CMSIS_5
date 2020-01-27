@@ -641,6 +641,46 @@ a double precision computation.
                refOffset = 2;
             }
             break;
+
+            case TEST_MEAN_F32_29:
+               inputA.reload(StatsTestsF32::INPUT2_F32_ID,mgr,100);
+              
+               ref.reload(StatsTestsF32::MEANVALS_F32_ID,mgr);
+               
+               output.create(1,StatsTestsF32::OUT_F32_ID,mgr);
+
+               refOffset = 3;
+            break;
+
+            case TEST_RMS_F32_30:
+               inputA.reload(StatsTestsF32::INPUT1_F32_ID,mgr,100);
+              
+               ref.reload(StatsTestsF32::RMSVALS_F32_ID,mgr);
+               
+               output.create(1,StatsTestsF32::OUT_F32_ID,mgr);
+
+               refOffset = 3;
+            break;
+
+            case TEST_STD_F32_31:
+               inputA.reload(StatsTestsF32::INPUT1_F32_ID,mgr,100);
+              
+               ref.reload(StatsTestsF32::STDVALS_F32_ID,mgr);
+               
+               output.create(1,StatsTestsF32::OUT_F32_ID,mgr);
+
+               refOffset = 3;
+            break;
+
+            case TEST_VAR_F32_32:
+               inputA.reload(StatsTestsF32::INPUT1_F32_ID,mgr,100);
+              
+               ref.reload(StatsTestsF32::VARVALS_F32_ID,mgr);
+               
+               output.create(1,StatsTestsF32::OUT_F32_ID,mgr);
+
+               refOffset = 3;
+            break;
         }
         
     }

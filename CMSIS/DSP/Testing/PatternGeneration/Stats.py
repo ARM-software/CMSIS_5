@@ -268,6 +268,10 @@ def generateFuncTests(config,nb,format,data,func,name):
     funcvalue=func(format,data[0:nbiters])
     funcvals.append(funcvalue)
 
+    nbiters = 100
+    funcvalue=func(format,data[0:nbiters])
+    funcvals.append(funcvalue)
+
     config.writeReference(nb, funcvals,name)
     return(nb+1)
 

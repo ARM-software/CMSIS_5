@@ -89,6 +89,16 @@ def writeTests(config,format):
 #
     ref = data1 * data3
     config.writeReference(8, asReal(ref))
+
+    ref = np.array(np.dot(data1 ,data2))
+    if format==31:
+        ref = ref / 2**15 # Because CMSIS format is 16.48
+        config.writeReferenceQ63(9, asReal(ref))
+    elif format==15:
+        ref = ref / 2**7 # Because CMSIS format is 8.24
+        config.writeReferenceQ31(9, asReal(ref))
+    else:
+        config.writeReference(9, asReal(ref))
     
 def  generatePatterns():
      PATTERNDIR = os.path.join("Patterns","DSP","ComplexMaths","ComplexMaths")

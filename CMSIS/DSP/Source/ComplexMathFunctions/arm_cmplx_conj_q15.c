@@ -60,32 +60,29 @@ void arm_cmplx_conj_q15(
     uint32_t blkCnt;
     q31_t in1; 
 
-    q15x8_t vecSrc;
-    q15x8_t vecSign;
+    q15x8x2_t vecSrc;
+    q15x8_t zero;
 
-    /*
-     * {2, 0, 2, 0, 2, 0, 2, 0} - {1, 1, 1, 1, 1, 1, 1, 1}
-     */
-    vecSign = vsubq(vdwdupq_u16(2, 4, 2), vdupq_n_u16(1));
-
+    zero = vdupq_n_s16(0);
 
     /* Compute 8 real samples at a time */
-    blkCnt = blockSize >> 3U;
+    blkCnt = blockSize >> 4U;
     while (blkCnt > 0U)
     {
-        vecSrc = vld1q(pSrc);
-        vst1q(pDst,vmulq(vecSrc, vecSign));
+        vecSrc = vld2q(pSrc);
+        vecSrc.val[1] = vqsubq(zero, vecSrc.val[1]);
+        vst2q(pDst,vecSrc);
         /*
          * Decrement the blkCnt loop counter
          * Advance vector source and destination pointers
          */
-        pSrc += 8;
-        pDst += 8;
+        pSrc += 16;
+        pDst += 16;
         blkCnt --;
     }
     
      /* Tail */
-    blkCnt = (blockSize & 0x7) >> 1;
+    blkCnt = (blockSize & 0xF) >> 1;
 
     while (blkCnt > 0U)
     {

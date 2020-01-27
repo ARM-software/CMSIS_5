@@ -84,6 +84,11 @@ group Root {
                 Test nb=3    arm_max_no_idx_f32:test_max_no_idx_f32
                 Test nb=4n   arm_max_no_idx_f32:test_max_no_idx_f32
                 Test nb=4n+1 arm_max_no_idx_f32:test_max_no_idx_f32
+
+                Test long  arm_mean_f32:test_mean_f32
+                Test long  arm_rms_f32:test_rms_f32
+                Test long  arm_std_f32:test_std_f32
+                Test long  arm_var_f32:test_var_f32
               }
 
            }
@@ -568,6 +573,7 @@ group Root {
               Pattern REF_DOT_4N_F32_ID : Reference8_f32.txt
               Pattern REF_DOT_4N1_F32_ID : Reference9_f32.txt
               Pattern REF_ABS_F32_ID : Reference10_f32.txt
+              Pattern REF_DOT_LONG_F32_ID : Reference11_f32.txt
    
               Output  OUT_SAMPLES_F32_ID : Output
               Output  OUT_STATE_F32_ID : State
@@ -604,6 +610,15 @@ group Root {
                 Test nb=3    arm_abs_f32:test_abs_f32
                 Test nb=4n   arm_abs_f32:test_abs_f32
                 Test nb=4n+1 arm_abs_f32:test_abs_f32
+
+                Test long    arm_add_f32:test_add_f32
+                Test long    arm_sub_f32:test_sub_f32
+                Test long    arm_mult_f32:test_mult_f32
+                Test long    arm_negate_f32:test_negate_f32
+                Test long    arm_offset_f32:test_offset_f32
+                Test long    arm_scale_f32:test_scale_f32
+                Test long    arm_dot_prod_f32:test_dot_prod_f32
+                Test long    arm_abs_f32:test_abs_f32
               }
            }
 
@@ -632,6 +647,7 @@ group Root {
               Pattern REF_DOT_4N_Q31_ID : Reference8_q63.txt
               Pattern REF_DOT_4N1_Q31_ID : Reference9_q63.txt
               Pattern REF_ABS_Q31_ID : Reference10_q31.txt
+              Pattern REF_DOT_LONG_Q31_ID : Reference11_q63.txt
 
               Pattern REF_POSSAT_12_Q31_ID : PosSat12_q31.txt
               Pattern REF_NEGSAT_13_Q31_ID : NegSat13_q31.txt
@@ -723,6 +739,15 @@ group Root {
                 Test nb=4n   arm_xor_q31:test_xor_q31
                 Test nb=4n+3 arm_xor_q31:test_xor_q31
 
+                Test long    arm_add_q31:test_add_q31
+                Test long    arm_sub_q31:test_sub_q31
+                Test long    arm_mult_q31:test_mult_q31
+                Test long    arm_negate_q31:test_negate_q31
+                Test long    arm_offset_q31:test_offset_q31
+                Test long    arm_scale_q31:test_scale_q31
+                Test long    arm_dot_prod_q31:test_dot_prod_q31
+                Test long    arm_abs_q31:test_abs_q31
+
               }
            }
 
@@ -751,6 +776,7 @@ group Root {
               Pattern REF_DOT_4N_Q15_ID : Reference8_q63.txt
               Pattern REF_DOT_4N1_Q15_ID : Reference9_q63.txt
               Pattern REF_ABS_Q15_ID : Reference10_q15.txt
+              Pattern REF_DOT_LONG_Q15_ID : Reference11_q63.txt
 
               Pattern REF_POSSAT_12_Q15_ID : PosSat12_q15.txt
               Pattern REF_NEGSAT_13_Q15_ID : NegSat13_q15.txt
@@ -842,6 +868,15 @@ group Root {
                 Test nb=8n   arm_xor_q15:test_xor_q15
                 Test nb=8n+7 arm_xor_q15:test_xor_q15
 
+                Test long    arm_add_q15:test_add_q15
+                Test long    arm_sub_q15:test_sub_q15
+                Test long    arm_mult_q15:test_mult_q15
+                Test long    arm_negate_q15:test_negate_q15
+                Test long    arm_offset_q15:test_offset_q15
+                Test long    arm_scale_q15:test_scale_q15
+                Test long    arm_dot_prod_q15:test_dot_prod_q15
+                Test long    arm_abs_q15:test_abs_q15
+
               }
            }
 
@@ -870,6 +905,7 @@ group Root {
               Pattern REF_DOT_4N_Q7_ID : Reference8_q31.txt
               Pattern REF_DOT_4N1_Q7_ID : Reference9_q31.txt
               Pattern REF_ABS_Q7_ID : Reference10_q7.txt
+              Pattern REF_DOT_LONG_Q7_ID : Reference11_q31.txt
 
               Pattern REF_POSSAT_12_Q7_ID : PosSat12_q7.txt
               Pattern REF_NEGSAT_13_Q7_ID : NegSat13_q7.txt
@@ -960,6 +996,15 @@ group Root {
                 Test nb=15     arm_xor_q7:test_xor_q7
                 Test nb=16n    arm_xor_q7:test_xor_q7
                 Test nb=16n+15 arm_xor_q7:test_xor_q7
+
+                Test long    arm_add_q7:test_add_q7
+                Test long    arm_sub_q7:test_sub_q7
+                Test long    arm_mult_q7:test_mult_q7
+                Test long    arm_negate_q7:test_negate_q7
+                Test long    arm_offset_q7:test_offset_q7
+                Test long    arm_scale_q7:test_scale_q7
+                Test long    arm_dot_prod_q7:test_dot_prod_q7
+                Test long    arm_abs_q7:test_abs_q7
               }
            }
         }
@@ -984,6 +1029,7 @@ group Root {
               Pattern REF_MAG_SQUARED_F32_ID : Reference6_f32.txt
               Pattern REF_CMPLX_MULT_CMPLX_F32_ID : Reference7_f32.txt
               Pattern REF_CMPLX_MULT_REAL_F32_ID : Reference8_f32.txt
+              Pattern REF_DOT_PROD_LONG_F32_ID : Reference9_f32.txt
 
               Output  OUT_SAMPLES_F32_ID : Output
               Output  OUT_STATE_F32_ID : State
@@ -1012,6 +1058,14 @@ group Root {
                 Test nb=3    arm_cmplx_mult_real_f32:test_cmplx_mult_real_f32
                 Test nb=4n   arm_cmplx_mult_real_f32:test_cmplx_mult_real_f32
                 Test nb=4n+1 arm_cmplx_mult_real_f32:test_cmplx_mult_real_f32
+
+                Test long    arm_cmplx_conj_f32:test_cmplx_conj_f32
+                Test long    arm_cmplx_dot_prod_f32:test_cmplx_dot_prod_f32
+                Test long    arm_cmplx_mag_f32:test_cmplx_mag_f32
+                Test long    arm_cmplx_mag_squared_f32:test_cmplx_mag_squared_f32
+                Test long    arm_cmplx_mult_cmplx_f32:test_cmplx_mult_cmplx_f32
+                Test long    arm_cmplx_mult_real_f32:test_cmplx_mult_real_f32
+
               }
 
            }

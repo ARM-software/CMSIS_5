@@ -89,8 +89,18 @@ def writeTests(config,format):
     ref = abs(data1)
     config.writeReference(10, ref)
 
-    #ref = np.array([np.dot(data1 ,data2)])
-    #config.writeReference(11, ref)
+    ref = np.array([np.dot(data1 ,data2)])
+    if format == 31 or format == 15:
+       if format==31:
+          ref = ref / 2**15 # Because CMSIS format is 16.48
+       if format==15:
+          ref = ref / 2**33 # Because CMSIS format is 34.30
+       config.writeReferenceQ63(11, ref)
+    elif format == 7:
+       ref = ref / 2**17 # Because CMSIS format is 18.14
+       config.writeReferenceQ31(11, ref)
+    else:
+       config.writeReference(11, ref)
 
     return(11)
 
