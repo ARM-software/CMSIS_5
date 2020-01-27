@@ -1390,8 +1390,9 @@ The argument \a len specifies the length of data in bytes.
 Return value, when positive, represents the number of bytes sent, which can be less than \a len.
 
 \note
-The function can also be used to check if the socket is ready to send data by specifying \token{0} for argument \em len
-(argument \em buf is ignored). The function returns \token{0} if the socket is writable or error code otherwise.
+The function can also be used to check if the socket is ready to send data by specifying \token{0} 
+for argument \em len (argument \em buf is ignored).
+The function returns \token{0} if the socket is writable or error code otherwise.
 
 \b Example:
  - see \ref ARM_WIFI_SocketListen
@@ -1432,8 +1433,9 @@ For the stream sockets, arguments \em ip, \em ip_len and \em port are ignored.
 Return value, when positive, represents the number of bytes sent, which can be less than \a len.
 
 \note
-The function can also be used to check if the socket is ready to send data by specifying \token{0} for argument \em len
-(argument \em buf is ignored). The function returns \token{0} if the socket is writable or error code otherwise.
+The function can also be used to check if the socket is ready to send data by specifying \token{0} 
+for argument \em len (arguments \em buf, \em ip, \em ip_len and \em port are ignored).
+The function returns \token{0} if the socket is writable or error code otherwise.
 
 \b Example:
  - see \ref ARM_WIFI_SocketRecvFrom
