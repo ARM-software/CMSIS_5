@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2019 Arm Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2010-2020 Arm Limited or its affiliates. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -21,8 +21,8 @@
  * Title:        arm_nn_depthwise_conv_s8_core.c
  * Description:  Depthwise convolution on im2col buffers.
  *
- * $Date:        November 2019
- * $Revision:    V.1.0.0
+ * $Date:        January 27 2020
+ * $Revision:    V.1.0.1
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -70,7 +70,7 @@ q7_t *arm_nn_depthwise_conv_s8_core(const q7_t *row,
         const int32_t offset = idx * 4;
         const int8_t *row_0 = row + offset;
         const int16_t *col_0 = col + offset;
-        const int16_t *col_1 = col + kernel_size * num_ch;
+        const int16_t *col_1 = col + kernel_size * num_ch + offset;
 
         int32x4_t ker_0 = vldrbq_s32(row_0);
 
