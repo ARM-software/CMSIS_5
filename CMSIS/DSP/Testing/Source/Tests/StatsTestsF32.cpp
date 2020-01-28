@@ -196,6 +196,52 @@ a double precision computation.
 
     }
 
+
+    void StatsTestsF32::test_std_stability_f32()
+    {
+      /*
+
+      With the textbook algorithm, those values will produce a negative
+      value for the variance.
+
+      The CMSIS-DSP variance algorithm is the two pass one so will work
+      with those values.
+
+      So, it should be possible to compute the square root for the standard
+      deviation.
+
+      */
+      float32_t in[4]={4.0f, 7.0f, 13.0f, 16.0f};
+      float32_t result;
+      int i;
+      arm_status status;
+
+      /*
+
+      Add bigger offset so that average is much bigger than standard deviation.
+
+      */
+      for(i=0 ; i < 4; i++)
+      {
+        in[i] += 3e4;
+      }
+
+      arm_std_f32(in,4,&result);
+
+      /*
+
+      If variance is giving a negative value, the square root
+      should return zero.
+
+      We check it is not happening here.
+
+
+      */
+
+      ASSERT_TRUE(fabs(5.47723f - result) < 1.0e-4);
+
+    }
+
     void StatsTestsF32::test_entropy_f32()
     {
       const float32_t *inp  = inputA.ptr();

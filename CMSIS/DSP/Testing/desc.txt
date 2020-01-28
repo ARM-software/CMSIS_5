@@ -89,6 +89,8 @@ group Root {
                 Test long  arm_rms_f32:test_rms_f32
                 Test long  arm_std_f32:test_std_f32
                 Test long  arm_var_f32:test_var_f32
+
+                Test stability  arm_std_f32:test_std_stability_f32
               }
 
            }
