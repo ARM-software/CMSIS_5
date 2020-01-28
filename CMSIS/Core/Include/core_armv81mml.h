@@ -2757,7 +2757,41 @@ __STATIC_INLINE uint32_t SCB_GetFPUType(void)
 
 /*@} end of CMSIS_Core_FpuFunctions */
 
+/* ##########################  MVE functions  #################################### */
+/**
+  \ingroup  CMSIS_Core_FunctionInterface
+  \defgroup CMSIS_Core_MveFunctions MVE Functions
+  \brief    Function that provides MVE type.
+  @{
+ */
 
+/**
+  \brief   get MVE type
+  \details returns the MVE type
+  \returns
+   - \b  0: No Vector Extension (MVE)
+   - \b  1: Integer Vector Extension (MVE-I)
+   - \b  2: Floating-point Vector Extension (MVE-F)
+ */
+__STATIC_INLINE uint32_t SCB_GetMVEType(void)
+{
+  const uint32_t mvfr1 = FPU->MVFR1;
+  if      ((mvfr1 & FPU_MVFR1_MVE_Msk) == (0x2U << FPU_MVFR1_MVE_Pos))
+  {
+    return 2U;
+  }
+  else if ((mvfr1 & FPU_MVFR1_MVE_Msk) == (0x1U << FPU_MVFR1_MVE_Pos))
+  {
+    return 1U;
+  }
+  else
+  {
+    return 0U;
+  }
+}
+
+
+/*@} end of CMSIS_Core_MveFunctions */
 
 /* ##########################   SAU functions  #################################### */
 /**
