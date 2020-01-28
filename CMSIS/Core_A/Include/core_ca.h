@@ -1282,7 +1282,8 @@ __STATIC_INLINE void GIC_SetPendingIRQ(IRQn_Type IRQn)
     GICDistributor->ISPENDR[IRQn / 32U] = 1U << (IRQn % 32U);
   } else {
     // INTID 0-15 Software Generated Interrupt
-    GICDistributor->SPENDSGIR[IRQn / 4U] = 1U << ((IRQn % 4U) * 8U);
+    // Forward the interrupt to the CPU interface that requested it
+    GICDistributor->SGIR = (IRQn | 0x02000000U);
   }
 }
 
