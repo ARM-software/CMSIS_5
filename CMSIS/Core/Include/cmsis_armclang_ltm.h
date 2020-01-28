@@ -1,8 +1,8 @@
 /**************************************************************************//**
  * @file     cmsis_armclang_ltm.h
  * @brief    CMSIS compiler armclang (Arm Compiler 6) header file
- * @version  V1.2.1
- * @date     30. July 2019
+ * @version  V1.3.0
+ * @date     19. December 2019
  ******************************************************************************/
 /*
  * Copyright (c) 2018-2019 Arm Limited. All rights reserved.
@@ -103,6 +103,22 @@
   __PACKED_STRUCT T_UINT32_READ { uint32_t v; };
   #pragma clang diagnostic pop
   #define __UNALIGNED_UINT32_READ(addr)          (((const struct T_UINT32_READ *)(const void *)(addr))->v)
+#endif
+#ifndef   __UNALIGNED_UINT64_WRITE
+  #pragma clang diagnostic push
+  #pragma clang diagnostic ignored "-Wpacked"
+/*lint -esym(9058, T_UINT64_WRITE)*/ /* disable MISRA 2012 Rule 2.4 for T_UINT64_WRITE */
+  __PACKED_STRUCT T_UINT64_WRITE { uint64_t v; };
+  #pragma clang diagnostic pop
+  #define __UNALIGNED_UINT64_WRITE(addr, val)    (void)((((struct T_UINT64_WRITE *)(void *)(addr))->v) = (val))
+#endif
+#ifndef   __UNALIGNED_UINT64_READ
+  #pragma clang diagnostic push
+  #pragma clang diagnostic ignored "-Wpacked"
+/*lint -esym(9058, T_UINT64_READ)*/ /* disable MISRA 2012 Rule 2.4 for T_UINT64_READ */
+  __PACKED_STRUCT T_UINT64_READ { uint64_t v; };
+  #pragma clang diagnostic pop
+  #define __UNALIGNED_UINT64_READ(addr)          (((const struct T_UINT64_READ *)(const void *)(addr))->v)
 #endif
 #ifndef   __ALIGNED
   #define __ALIGNED(x)                           __attribute__((aligned(x)))

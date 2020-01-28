@@ -1,8 +1,8 @@
 /**************************************************************************//**
  * @file     cmsis_armcc.h
  * @brief    CMSIS compiler ARMCC (Arm Compiler 5) header file
- * @version  V5.1.1
- * @date     30. July 2019
+ * @version  V5.2.0
+ * @date     19. December 2019
  ******************************************************************************/
 /*
  * Copyright (c) 2009-2019 Arm Limited. All rights reserved.
@@ -97,6 +97,12 @@
 #endif
 #ifndef   __UNALIGNED_UINT32_READ
   #define __UNALIGNED_UINT32_READ(addr)          (*((const __packed uint32_t *)(addr)))
+#endif
+#ifndef   __UNALIGNED_UINT64_WRITE
+  #define __UNALIGNED_UINT64_WRITE(addr, val)    ((*((__packed uint64_t *)(addr))) = (val))
+#endif
+#ifndef   __UNALIGNED_UINT64_READ
+  #define __UNALIGNED_UINT64_READ(addr)          (*((const __packed uint64_t *)(addr)))
 #endif
 #ifndef   __ALIGNED
   #define __ALIGNED(x)                           __attribute__((aligned(x)))
