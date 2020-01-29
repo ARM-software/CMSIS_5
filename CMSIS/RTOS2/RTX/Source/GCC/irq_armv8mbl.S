@@ -24,7 +24,6 @@
 ; */
 
 
-        .file    "irq_armv8mbl.S"
         .syntax  unified
 
         .ifndef  DOMAIN_NS
