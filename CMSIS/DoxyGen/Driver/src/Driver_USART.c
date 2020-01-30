@@ -774,7 +774,7 @@ The following events can be generated:
        data field \em cts = \token{1}           </td>
 </tr>
 <tr>
-  <td> ARM_USART_EVENT_CTS                      </td><td>  11 </td><td> Indicates that DSR modem line state has changed.
+  <td> ARM_USART_EVENT_DSR                      </td><td>  11 </td><td> Indicates that DSR modem line state has changed.
                                                                         Data field \em  dsr = \token{1} of \ref ARM_USART_MODEM_STATUS. </td>     
   <td> data field \em event_dsr = \token{1} and <br>
        data field \em dsr = \token{1}           </td>
