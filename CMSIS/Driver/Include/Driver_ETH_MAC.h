@@ -70,12 +70,12 @@ extern "C"
 
 /****** Ethernet MAC Control Codes *****/
 
-#define ARM_ETH_MAC_CONFIGURE           (0x01)      ///< Configure MAC; arg = configuration
-#define ARM_ETH_MAC_CONTROL_TX          (0x02)      ///< Transmitter; arg: 0=disabled (default), 1=enabled
-#define ARM_ETH_MAC_CONTROL_RX          (0x03)      ///< Receiver; arg: 0=disabled (default), 1=enabled
-#define ARM_ETH_MAC_FLUSH               (0x04)      ///< Flush buffer; arg = ARM_ETH_MAC_FLUSH_...
-#define ARM_ETH_MAC_SLEEP               (0x05)      ///< Sleep mode; arg: 1=enter and wait for Magic packet, 0=exit
-#define ARM_ETH_MAC_VLAN_FILTER         (0x06)      ///< VLAN Filter for received frames; arg15..0: VLAN Tag; arg16: optional ARM_ETH_MAC_VLAN_FILTER_ID_ONLY; 0=disabled (default)
+#define ARM_ETH_MAC_CONFIGURE           (0x01UL)    ///< Configure MAC; arg = configuration
+#define ARM_ETH_MAC_CONTROL_TX          (0x02UL)    ///< Transmitter; arg: 0=disabled (default), 1=enabled
+#define ARM_ETH_MAC_CONTROL_RX          (0x03UL)    ///< Receiver; arg: 0=disabled (default), 1=enabled
+#define ARM_ETH_MAC_FLUSH               (0x04UL)    ///< Flush buffer; arg = ARM_ETH_MAC_FLUSH_...
+#define ARM_ETH_MAC_SLEEP               (0x05UL)    ///< Sleep mode; arg: 1=enter and wait for Magic packet, 0=exit
+#define ARM_ETH_MAC_VLAN_FILTER         (0x06UL)    ///< VLAN Filter for received frames; arg15..0: VLAN Tag; arg16: optional ARM_ETH_MAC_VLAN_FILTER_ID_ONLY; 0=disabled (default)
 
 /*----- Ethernet MAC Configuration -----*/
 #define ARM_ETH_MAC_SPEED_Pos            0
@@ -109,12 +109,12 @@ extern "C"
 
 
 /****** Ethernet MAC Timer Control Codes *****/
-#define ARM_ETH_MAC_TIMER_GET_TIME      (0x01)      ///< Get current time
-#define ARM_ETH_MAC_TIMER_SET_TIME      (0x02)      ///< Set new time
-#define ARM_ETH_MAC_TIMER_INC_TIME      (0x03)      ///< Increment current time
-#define ARM_ETH_MAC_TIMER_DEC_TIME      (0x04)      ///< Decrement current time
-#define ARM_ETH_MAC_TIMER_SET_ALARM     (0x05)      ///< Set alarm time
-#define ARM_ETH_MAC_TIMER_ADJUST_CLOCK  (0x06)      ///< Adjust clock frequency; time->ns: correction factor * 2^31
+#define ARM_ETH_MAC_TIMER_GET_TIME      (0x01UL)    ///< Get current time
+#define ARM_ETH_MAC_TIMER_SET_TIME      (0x02UL)    ///< Set new time
+#define ARM_ETH_MAC_TIMER_INC_TIME      (0x03UL)    ///< Increment current time
+#define ARM_ETH_MAC_TIMER_DEC_TIME      (0x04UL)    ///< Decrement current time
+#define ARM_ETH_MAC_TIMER_SET_ALARM     (0x05UL)    ///< Set alarm time
+#define ARM_ETH_MAC_TIMER_ADJUST_CLOCK  (0x06UL)    ///< Adjust clock frequency; time->ns: correction factor * 2^31
 
 
 /**

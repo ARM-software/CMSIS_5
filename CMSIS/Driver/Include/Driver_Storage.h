@@ -105,10 +105,10 @@ typedef struct _ARM_STORAGE_BLOCK {
  * Please ensure that the maximum of the following memory types doesn't exceed 16; we
  * encode this in a 4-bit field within ARM_STORAGE_INFO::programmability.
  */
-#define ARM_STORAGE_PROGRAMMABILITY_RAM       (0x0)
-#define ARM_STORAGE_PROGRAMMABILITY_ROM       (0x1) ///< Read-only memory.
-#define ARM_STORAGE_PROGRAMMABILITY_WORM      (0x2) ///< write-once-read-only-memory (WORM).
-#define ARM_STORAGE_PROGRAMMABILITY_ERASABLE  (0x3) ///< re-programmable based on erase. Supports multiple writes.
+#define ARM_STORAGE_PROGRAMMABILITY_RAM       (0U)
+#define ARM_STORAGE_PROGRAMMABILITY_ROM       (1U)  ///< Read-only memory.
+#define ARM_STORAGE_PROGRAMMABILITY_WORM      (2U)  ///< write-once-read-only-memory (WORM).
+#define ARM_STORAGE_PROGRAMMABILITY_ERASABLE  (3U)  ///< re-programmable based on erase. Supports multiple writes.
 
 /**
  * Values for encoding data-retention levels for storage blocks.
@@ -116,11 +116,11 @@ typedef struct _ARM_STORAGE_BLOCK {
  * Please ensure that the maximum of the following retention types doesn't exceed 16; we
  * encode this in a 4-bit field within ARM_STORAGE_INFO::retention_level.
  */
-#define ARM_RETENTION_WHILE_DEVICE_ACTIVE     (0x0) ///< Data is retained only during device activity.
-#define ARM_RETENTION_ACROSS_SLEEP            (0x1) ///< Data is retained across processor sleep.
-#define ARM_RETENTION_ACROSS_DEEP_SLEEP       (0x2) ///< Data is retained across processor deep-sleep.
-#define ARM_RETENTION_BATTERY_BACKED          (0x3) ///< Data is battery-backed. Device can be powered off.
-#define ARM_RETENTION_NVM                     (0x4) ///< Data is retained in non-volatile memory.
+#define ARM_RETENTION_WHILE_DEVICE_ACTIVE     (0U)  ///< Data is retained only during device activity.
+#define ARM_RETENTION_ACROSS_SLEEP            (1U)  ///< Data is retained across processor sleep.
+#define ARM_RETENTION_ACROSS_DEEP_SLEEP       (2U)  ///< Data is retained across processor deep-sleep.
+#define ARM_RETENTION_BATTERY_BACKED          (3U)  ///< Data is battery-backed. Device can be powered off.
+#define ARM_RETENTION_NVM                     (4U)  ///< Data is retained in non-volatile memory.
 
 /**
  * Device Data Security Protection Features. Applicable mostly to EXTERNAL_NVM.

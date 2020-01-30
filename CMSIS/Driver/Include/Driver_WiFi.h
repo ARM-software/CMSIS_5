@@ -94,7 +94,7 @@ extern "C"
 /**
 \brief WiFi Configuration
 */
-typedef struct {
+typedef struct ARM_WIFI_CONFIG_s {
   const char   *ssid;                                   ///< Pointer to Service Set Identifier (SSID) null-terminated string
   const char   *pass;                                   ///< Pointer to Password null-terminated string
         uint8_t security;                               ///< Security type (ARM_WIFI_SECURITY_xxx)
@@ -107,7 +107,7 @@ typedef struct {
 /**
 \brief WiFi Scan Information
 */
-typedef struct {
+typedef struct ARM_WIFI_SCAN_INFO_s {
   char    ssid[32+1];                                   ///< Service Set Identifier (SSID) null-terminated string
   uint8_t bssid[6];                                     ///< Basic Service Set Identifier (BSSID)
   uint8_t security;                                     ///< Security type (ARM_WIFI_SECURITY_xxx)
@@ -118,7 +118,7 @@ typedef struct {
 /**
 \brief WiFi Network Information
 */
-typedef struct {
+typedef struct ARM_WIFI_NET_INFO_s {
   char    ssid[32+1];                                   ///< Service Set Identifier (SSID) null-terminated string
   char    pass[64+1];                                   ///< Password null-terminated string
   uint8_t security;                                     ///< Security type (ARM_WIFI_SECURITY_xxx)
@@ -599,7 +599,7 @@ typedef void (*ARM_WIFI_SignalEvent_t) (uint32_t event, void *arg); ///< Pointer
 /**
 \brief WiFi Driver Capabilities.
 */
-typedef struct {
+typedef struct _ARM_WIFI_CAPABILITIES {
   uint32_t station               : 1;   ///< Station
   uint32_t ap                    : 1;   ///< Access Point
   uint32_t station_ap            : 1;   ///< Concurrent Station and Access Point
@@ -618,7 +618,7 @@ typedef struct {
 /**
 \brief Access structure of the WiFi Driver.
 */
-typedef struct {
+typedef struct _ARM_DRIVER_WIFI {
   ARM_DRIVER_VERSION    (*GetVersion)                  (void);
   ARM_WIFI_CAPABILITIES (*GetCapabilities)             (void);
   int32_t               (*Initialize)                  (ARM_WIFI_SignalEvent_t cb_event);
