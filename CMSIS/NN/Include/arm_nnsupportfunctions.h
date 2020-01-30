@@ -21,7 +21,7 @@
  * Title:        arm_nnsupportfunctions.h
  * Description:  Public header file of support functions for CMSIS NN Library
  *
- * $Date:        20 January 2020
+ * $Date:        30 January 2020
  * $Revision:    V.3.0.0
  *
  * Target Processor:  Cortex-M cores
@@ -286,6 +286,40 @@ arm_status arm_nn_mat_mul_core_4x_s8(const int32_t row_elements,
                                      const int8_t *col_base,
                                      int32_t *const sum_col,
                                      int32_t *const output);
+
+/**
+ * @brief s8 Vector by Matrix (transposed) multiplication
+ *
+ * @param[in]      lhs             Input left-hand side vector
+ * @param[in]      rhs             Input right-hand side matrix (transposed)
+ * @param[in]      bias            Input bias
+ * @param[out]     dst             Output vector
+ * @param[in]      lhs_offset      Offset to be added to the input values of the left-hand side vector. Range: -127 to 128
+ * @param[in]      rhs_offset      Offset to be added to the input values of the right-hand side matrix. Range: -127 to 128
+ * @param[in]      dst_offset      Offset to be added to the output values. Range: -127 to 128
+ * @param[in]      dst_multiplier  Output multiplier
+ * @param[in]      dst_shift       Output shift
+ * @param[in]      rhs_cols        Number of columns in the right-hand side input matrix
+ * @param[in]      rhs_rows        Number of rows in the right-hand side input matrix
+ * @param[in]      activation_min  Minimum value to clamp the output to. Range: int8
+ * @param[in]      activation_max  Maximum value to clamp the output to. Range: int8
+ *
+ * @return         The function returns <code>ARM_MATH_SUCCESS</code>
+ *
+ */
+arm_status arm_nn_vec_mat_mult_t_s8(const q7_t *lhs,
+                                    const q7_t *rhs,
+                                    const q31_t *bias,
+                                    q7_t *dst,
+                                    const int32_t lhs_offset,
+                                    const int32_t rhs_offset,
+                                    const int32_t dst_offset,
+                                    const int32_t dst_multiplier,
+                                    const int32_t dst_shift,
+                                    const int32_t rhs_cols,
+                                    const int32_t rhs_rows,
+                                    const int32_t activation_min,
+                                    const int32_t activation_max);
 
 /**
   @brief         Read 2 q15 elements and post increment pointer.
