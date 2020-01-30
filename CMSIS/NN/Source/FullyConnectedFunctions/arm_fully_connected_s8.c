@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2019 Arm Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2010-2020 Arm Limited or its affiliates. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -21,7 +21,7 @@
  * Title:        arm_fully_connected_s8
  * Description:  Fully connected function compatible with TF Lite.
  *
- * $Date:        10. July 2019
+ * $Date:        30. January 2020
  * $Revision:    V.1.0.0
  *
  * Target Processor:  Cortex-M and Cortex-A cores
@@ -251,205 +251,36 @@ arm_fully_connected_s8(const int8_t *input,
                        const int32_t output_activation_max,
                        q15_t *vec_buffer)
 {
-#if defined(ARM_MATH_LOOPUNROLL) && defined(ARM_MATH_DSP)
-    q31_t acc;
-
-    uint16_t batchCnt = nb_batches;
-
-    /* CMSIS-DSP and NN are generally using q7 and q15 types.
-     Here we are computing with s8 and not q7.
-     So, q7_t is not really the right type to use but
-     it is kept for consistency with some function APIs
-     which are used in this implementation.
-     */
-    const int32_t *pBiasTmp = bias;
-    const q7_t *pB = kernel;
-    const q7_t *pB2;
-    q7_t *pO = output;
-    q15_t *pA;
-    q31_t ioffset;
-    q31_t foffset;
-
-    ioffset = ((input_offset & 0x0FFFF) << 16) | (input_offset & 0x0FFFF);
-    foffset = ((filter_offset & 0x0FFFF) << 16) | (filter_offset & 0x0FFFF);
-
-    while (batchCnt)
-    {
-        pBiasTmp = bias;
-        pB = kernel;
-        arm_q7_to_q15_reordered_no_shift(input, vec_buffer, col_dim);
-        uint16_t rowCnt = row_dim >> 1;
-        /* Unroll on the rows */
-        while (rowCnt)
-        {
-            q31_t sum = (q31_t)(*pBiasTmp++);
-            q31_t sum2 = (q31_t)(*pBiasTmp++);
-            uint16_t colCnt = col_dim >> 2;
-
-            pA = vec_buffer;
-            pB2 = pB + col_dim;
-
-            /* Vectorize on the columns */
-            while (colCnt)
-            {
-                q31_t inV, inM11, inM12, inM21, inM22;
-                pB = read_and_pad_reordered_with_offset(pB, &inM11, &inM12, foffset);
-                pB2 = read_and_pad_reordered_with_offset(pB2, &inM21, &inM22, foffset);
-
-                inV = read_q15x2_ia(&pA);
-                inV = __QADD16(inV, ioffset);
-
-                sum = __SMLAD(inV, inM11, sum);
-                sum2 = __SMLAD(inV, inM21, sum2);
-
-                inV = read_q15x2_ia(&pA);
-                inV = __QADD16(inV, ioffset);
-
-                sum = __SMLAD(inV, inM12, sum);
-                sum2 = __SMLAD(inV, inM22, sum2);
-
-                colCnt--;
-            }
-
-            /* Column vector tail */
-            colCnt = col_dim & 0x3;
-            while (colCnt)
-            {
-                q15_t inV = *pA++;
-                q7_t inM = *pB++;
-                q7_t inM2 = *pB2++;
-
-                sum += (inV + input_offset) * (inM + filter_offset);
-                sum2 += (inV + input_offset) * (inM2 + filter_offset);
-                colCnt--;
-            }
-
-            acc = arm_nn_sat_doubling_high_mult(sum * (1 << LEFT_SHIFT(out_shift)), out_mult);
-            acc = arm_nn_divide_by_power_of_two(acc, RIGHT_SHIFT(out_shift));
-            acc += output_offset;
-            acc = MAX(acc, output_activation_min);
-            acc = MIN(acc, output_activation_max);
-
-            *pO++ = (q7_t)(acc);
-
-            acc = arm_nn_sat_doubling_high_mult(sum2 * (1 << LEFT_SHIFT(out_shift)), out_mult);
-            acc = arm_nn_divide_by_power_of_two(acc, RIGHT_SHIFT(out_shift));
-            acc += output_offset;
-            acc = MAX(acc, output_activation_min);
-            acc = MIN(acc, output_activation_max);
-            *pO++ = (q7_t)(acc);
-
-            pB += col_dim;
-            rowCnt--;
-        }
-
-        /* left-over part of the rows */
-        rowCnt = row_dim & 0x1;
-
-        while (rowCnt)
-        {
-            uint16_t colCnt = col_dim >> 2;
-            q31_t sum = (q31_t)(*pBiasTmp++);
-
-            pA = vec_buffer;
-
-            /* Vectorize on the columns */
-            while (colCnt)
-            {
-                q31_t inV, inM11, inM12;
-
-                pB = read_and_pad_reordered_with_offset(pB, &inM11, &inM12, foffset);
-
-                inV = read_q15x2_ia(&pA);
-                inV = __QADD16(inV, ioffset);
-
-                sum = __SMLAD(inV, inM11, sum);
-
-                inV = read_q15x2_ia(&pA);
-                inV = __QADD16(inV, ioffset);
-
-                sum = __SMLAD(inV, inM12, sum);
-
-                colCnt--;
-            }
-
-            /* Column vector tail */
-            colCnt = col_dim & 0x3;
-
-            while (colCnt)
-            {
-                q15_t inV = *pA++;
-                q7_t inM = *pB++;
-                sum += (inV + input_offset) * (inM + filter_offset);
-                colCnt--;
-            }
-
-            acc = arm_nn_sat_doubling_high_mult(sum * (1 << LEFT_SHIFT(out_shift)), out_mult);
-            acc = arm_nn_divide_by_power_of_two(acc, RIGHT_SHIFT(out_shift));
-            acc += output_offset;
-            acc = MAX(acc, output_activation_min);
-            acc = MIN(acc, output_activation_max);
-            *pO++ = (q7_t)(acc);
-
-            rowCnt--;
-        }
-        input += col_dim;
-        batchCnt--;
-    }
-    return (ARM_MATH_SUCCESS);
-
-#else
     (void)vec_buffer;
-    const int8_t *pInputA;
-    const int32_t *pBiasTmp = bias;
-    const int8_t *pWeightTmp = kernel;
-    uint16_t batchCnt = nb_batches;
 
-    while (batchCnt)
+    uint16_t batch_cnt = nb_batches;
+
+    while (batch_cnt)
     {
-        pBiasTmp = bias;
-        pWeightTmp = kernel;
-        for (int out_c = 0; out_c < row_dim; out_c++)
-        {
-
-            int32_t acc = *pBiasTmp++;
-            pInputA = input;
-            for (int d = 0; d < col_dim; d++)
-            {
-
-                int32_t input_val = *pInputA++;
-
-                int32_t filter_val = *pWeightTmp++;
-
-                acc += (filter_val + filter_offset) * (input_val + input_offset);
-            }
-
-            acc = arm_nn_sat_doubling_high_mult(acc * (1 << LEFT_SHIFT(out_shift)), out_mult);
-            acc = arm_nn_divide_by_power_of_two(acc, RIGHT_SHIFT(out_shift));
-
-            acc += output_offset;
-
-            acc = MAX(acc, output_activation_min);
-            acc = MIN(acc, output_activation_max);
-
-            *output++ = (int8_t)(acc);
-        }
+        arm_nn_vec_mat_mult_t_s8(input,
+                                 kernel,
+                                 bias,
+                                 output,
+                                 input_offset,
+                                 filter_offset,
+                                 output_offset,
+                                 out_mult,
+                                 out_shift,
+                                 col_dim,
+                                 row_dim,
+                                 output_activation_min,
+                                 output_activation_max);
         input += col_dim;
-        batchCnt--;
+        batch_cnt--;
     }
     return (ARM_MATH_SUCCESS);
-#endif /*  defined(ARM_MATH_LOOPUNROLL) && defined (ARM_MATH_DSP) */
 }
 #endif /* ARM_MATH_HELIUM */
 
 int32_t arm_fully_connected_s8_get_buffer_size(const uint16_t col_dim)
 {
-#if defined(ARM_MATH_LOOPUNROLL) && defined(ARM_MATH_DSP)
-    return col_dim * sizeof(int16_t);
-#else
     (void)col_dim;
     return 0;
-#endif
 }
 
 /**
