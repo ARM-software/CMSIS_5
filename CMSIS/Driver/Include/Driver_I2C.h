@@ -67,22 +67,22 @@ extern "C"
 
 /****** I2C Control Codes *****/
 
-#define ARM_I2C_OWN_ADDRESS             (0x01)      ///< Set Own Slave Address; arg = address 
-#define ARM_I2C_BUS_SPEED               (0x02)      ///< Set Bus Speed; arg = speed
-#define ARM_I2C_BUS_CLEAR               (0x03)      ///< Execute Bus clear: send nine clock pulses
-#define ARM_I2C_ABORT_TRANSFER          (0x04)      ///< Abort Master/Slave Transmit/Receive
+#define ARM_I2C_OWN_ADDRESS             (0x01UL)    ///< Set Own Slave Address; arg = address 
+#define ARM_I2C_BUS_SPEED               (0x02UL)    ///< Set Bus Speed; arg = speed
+#define ARM_I2C_BUS_CLEAR               (0x03UL)    ///< Execute Bus clear: send nine clock pulses
+#define ARM_I2C_ABORT_TRANSFER          (0x04UL)    ///< Abort Master/Slave Transmit/Receive
 
 /*----- I2C Bus Speed -----*/
-#define ARM_I2C_BUS_SPEED_STANDARD      (0x01)      ///< Standard Speed (100kHz)
-#define ARM_I2C_BUS_SPEED_FAST          (0x02)      ///< Fast Speed     (400kHz)
-#define ARM_I2C_BUS_SPEED_FAST_PLUS     (0x03)      ///< Fast+ Speed    (  1MHz)
-#define ARM_I2C_BUS_SPEED_HIGH          (0x04)      ///< High Speed     (3.4MHz)
+#define ARM_I2C_BUS_SPEED_STANDARD      (0x01UL)    ///< Standard Speed (100kHz)
+#define ARM_I2C_BUS_SPEED_FAST          (0x02UL)    ///< Fast Speed     (400kHz)
+#define ARM_I2C_BUS_SPEED_FAST_PLUS     (0x03UL)    ///< Fast+ Speed    (  1MHz)
+#define ARM_I2C_BUS_SPEED_HIGH          (0x04UL)    ///< High Speed     (3.4MHz)
 
 
 /****** I2C Address Flags *****/
 
-#define ARM_I2C_ADDRESS_10BIT           (0x0400)    ///< 10-bit address flag
-#define ARM_I2C_ADDRESS_GC              (0x8000)    ///< General Call flag
+#define ARM_I2C_ADDRESS_10BIT           (0x0400UL)  ///< 10-bit address flag
+#define ARM_I2C_ADDRESS_GC              (0x8000UL)  ///< General Call flag
 
 
 /**

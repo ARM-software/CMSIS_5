@@ -43,22 +43,22 @@
 /**
 \brief Ethernet Media Interface type
 */
-#define ARM_ETH_INTERFACE_MII           (0)     ///< Media Independent Interface (MII)
-#define ARM_ETH_INTERFACE_RMII          (1)     ///< Reduced Media Independent Interface (RMII)
-#define ARM_ETH_INTERFACE_SMII          (2)     ///< Serial Media Independent Interface (SMII)
+#define ARM_ETH_INTERFACE_MII           (0U)    ///< Media Independent Interface (MII)
+#define ARM_ETH_INTERFACE_RMII          (1U)    ///< Reduced Media Independent Interface (RMII)
+#define ARM_ETH_INTERFACE_SMII          (2U)    ///< Serial Media Independent Interface (SMII)
 
 /**
 \brief Ethernet link speed
 */
-#define ARM_ETH_SPEED_10M               (0)     ///< 10 Mbps link speed
-#define ARM_ETH_SPEED_100M              (1)     ///< 100 Mbps link speed
-#define ARM_ETH_SPEED_1G                (2)     ///< 1 Gpbs link speed
+#define ARM_ETH_SPEED_10M               (0U)    ///< 10 Mbps link speed
+#define ARM_ETH_SPEED_100M              (1U)    ///< 100 Mbps link speed
+#define ARM_ETH_SPEED_1G                (2U)    ///< 1 Gpbs link speed
 
 /**
 \brief Ethernet duplex mode
 */
-#define ARM_ETH_DUPLEX_HALF             (0)     ///< Half duplex link
-#define ARM_ETH_DUPLEX_FULL             (1)     ///< Full duplex link
+#define ARM_ETH_DUPLEX_HALF             (0U)    ///< Half duplex link
+#define ARM_ETH_DUPLEX_FULL             (1U)    ///< Full duplex link
 
 /**
 \brief Ethernet link state

@@ -84,7 +84,7 @@ extern "C"
 /*----- SPI Control Codes: Mode Parameters: Data Bits -----*/
 #define ARM_SPI_DATA_BITS_Pos            12
 #define ARM_SPI_DATA_BITS_Msk           (0x3FUL << ARM_SPI_DATA_BITS_Pos)
-#define ARM_SPI_DATA_BITS(n)            (((n) & 0x3F) << ARM_SPI_DATA_BITS_Pos) ///< Number of Data bits
+#define ARM_SPI_DATA_BITS(n)            (((n) & 0x3FUL) << ARM_SPI_DATA_BITS_Pos) ///< Number of Data bits
 
 /*----- SPI Control Codes: Mode Parameters: Bit Order -----*/
 #define ARM_SPI_BIT_ORDER_Pos            18
@@ -114,8 +114,8 @@ extern "C"
 
 
 /****** SPI Slave Select Signal definitions *****/
-#define ARM_SPI_SS_INACTIVE              0                                  ///< SPI Slave Select Signal Inactive
-#define ARM_SPI_SS_ACTIVE                1                                  ///< SPI Slave Select Signal Active
+#define ARM_SPI_SS_INACTIVE              0UL                                ///< SPI Slave Select Signal Inactive
+#define ARM_SPI_SS_ACTIVE                1UL                                ///< SPI Slave Select Signal Active
 
 
 /****** SPI specific error codes *****/
