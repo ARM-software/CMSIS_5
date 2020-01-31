@@ -153,13 +153,13 @@ arm_fully_connected_mat_q7_vec_q15_opt(const q15_t * pV,
             q31_t     inM11, inM12, inM13, inM14;
             q31_t     inV;
 
-            inV = *__SIMD32(pA)++;
-            inM11 = *__SIMD32(pB)++;
+            inV = arm_nn_read_q15x2_ia(&pA);
+            inM11 = arm_nn_read_q7x4_ia(&pB);
             inM12 = __SXTB16(__ROR(inM11, 8));
             inM11 = __SXTB16(inM11);
             sum = __SMLAD(inM11, inV, sum);
             sum2 = __SMLAD(inM12, inV, sum2);
-            inM13 = *__SIMD32(pB)++;
+            inM13 = arm_nn_read_q7x4_ia(&pB);
             inM14 = __SXTB16(__ROR(inM13, 8));
             inM13 = __SXTB16(inM13);
             sum3 = __SMLAD(inM13, inV, sum3);
@@ -175,12 +175,12 @@ arm_fully_connected_mat_q7_vec_q15_opt(const q15_t * pV,
             q31_t     inV;
 
             inV = *__SIMD32(pA)++;
-            inM11 = *__SIMD32(pB)++;
+            inM11 = arm_nn_read_q7x4_ia(&pB);
             inM12 = __SXTB16(__ROR(inM11, 8));
             inM11 = __SXTB16(inM11);
             sum = __SMLAD(inM12, inV, sum);
             sum2 = __SMLAD(inM11, inV, sum2);
-            inM13 = *__SIMD32(pB)++;
+            inM13 = arm_nn_read_q7x4_ia(&pB);
             inM14 = __SXTB16(__ROR(inM13, 8));
             inM13 = __SXTB16(inM13);
             sum3 = __SMLAD(inM14, inV, sum3);
@@ -284,10 +284,10 @@ arm_fully_connected_mat_q7_vec_q15_opt(const q15_t * pV,
 
             pB = read_and_pad(pB, &inM11, &inM12);
 
-            inV1 = *__SIMD32(pA)++;
+            inV1 = arm_nn_read_q15x2_ia(&pA);
             sum = __SMLAD(inV1, inM11, sum);
 
-            inV2 = *__SIMD32(pA)++;
+            inV2 = arm_nn_read_q15x2_ia(&pA);
             sum = __SMLAD(inV2, inM12, sum);
 
             colCnt--;

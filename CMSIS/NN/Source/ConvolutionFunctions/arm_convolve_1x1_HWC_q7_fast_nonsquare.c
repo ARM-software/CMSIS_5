@@ -147,7 +147,7 @@ arm_status arm_convolve_1x1_HWC_q7_fast_nonsquare(const q7_t * Im_in,
         for (i_ch_out = 0; i_ch_out < ch_im_out; i_ch_out++)
         {
             q31_t     sum = ((q31_t)(bias[i_ch_out]) << bias_shift) + NN_ROUND(out_shift);
-            q15_t    *pB = bufferA;
+            const q15_t    *pB = bufferA;
             /* basically each time it process 4 entries */
             uint16_t  colCnt = ch_im_in * dim_kernel_x * dim_kernel_y >> 2;
 
@@ -159,9 +159,10 @@ arm_status arm_convolve_1x1_HWC_q7_fast_nonsquare(const q7_t * Im_in,
 
                 pA = read_and_pad_reordered(pA, &inA1, &inA2);
 
-                inB1 = *__SIMD32(pB)++;
+                inB1 = arm_nn_read_q15x2_ia(&pB);
                 sum = __SMLAD(inA1, inB1, sum);
-                inB2 = *__SIMD32(pB)++;
+                inB2 = arm_nn_read_q15x2_ia(&pB);
+
                 sum = __SMLAD(inA2, inB2, sum);
 
                 colCnt--;

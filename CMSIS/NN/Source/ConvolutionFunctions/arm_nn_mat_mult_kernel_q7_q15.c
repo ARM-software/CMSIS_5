@@ -73,8 +73,9 @@ q7_t     *arm_nn_mat_mult_kernel_q7_q15(const q7_t * pA,
         while (colCnt)
         {
             q31_t     inA11, inA12, inA21, inA22;
-            q31_t     inB1 = *__SIMD32(pB)++;
-            q31_t     inB2 = *__SIMD32(pB2)++;
+
+            q31_t     inB1 = arm_nn_read_q15x2_ia(&pB);
+            q31_t     inB2 = arm_nn_read_q15x2_ia(&pB2);
 
             pA = read_and_pad(pA, &inA11, &inA12);
             pA2 = read_and_pad(pA2, &inA21, &inA22);
@@ -84,8 +85,8 @@ q7_t     *arm_nn_mat_mult_kernel_q7_q15(const q7_t * pA,
             sum3 = __SMLAD(inA21, inB1, sum3);
             sum4 = __SMLAD(inA21, inB2, sum4);
 
-            inB1 = *__SIMD32(pB)++;
-            inB2 = *__SIMD32(pB2)++;
+            inB1 = arm_nn_read_q15x2_ia(&pB);
+            inB2 = arm_nn_read_q15x2_ia(&pB2);
 
             sum = __SMLAD(inA12, inB1, sum);
             sum2 = __SMLAD(inA12, inB2, sum2);
@@ -133,16 +134,18 @@ q7_t     *arm_nn_mat_mult_kernel_q7_q15(const q7_t * pA,
         while (colCnt)
         {
             q31_t     inA11, inA12;
-            q31_t     inB1 = *__SIMD32(pB)++;
-            q31_t     inB2 = *__SIMD32(pB2)++;
+
+            q31_t     inB1 = arm_nn_read_q15x2_ia(&pB);
+            q31_t     inB2 = arm_nn_read_q15x2_ia(&pB2);
 
             pA = read_and_pad(pA, &inA11, &inA12);
 
             sum = __SMLAD(inA11, inB1, sum);
             sum2 = __SMLAD(inA11, inB2, sum2);
 
-            inB1 = *__SIMD32(pB)++;
-            inB2 = *__SIMD32(pB2)++;
+            inB1 = arm_nn_read_q15x2_ia(&pB);
+            inB2 = arm_nn_read_q15x2_ia(&pB2);
+
             sum = __SMLAD(inA12, inB1, sum);
             sum2 = __SMLAD(inA12, inB2, sum2);
 

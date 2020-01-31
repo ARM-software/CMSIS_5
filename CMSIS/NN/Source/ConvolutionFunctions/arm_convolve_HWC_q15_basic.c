@@ -128,14 +128,14 @@ arm_convolve_HWC_q15_basic(const q15_t * Im_in,
             for (i = 0; i < ch_im_out; i++)
             {
                 q31_t     sum = ((q31_t)bias[i] << bias_shift) + NN_ROUND(out_shift);
-                q15_t    *pB = im_buffer;
+                const q15_t *pB = im_buffer;
                 uint16_t  colCnt = ch_im_in * dim_kernel * dim_kernel >> 2;
                 while (colCnt)
                 {
-                    q31_t     inA1 = *__SIMD32(pA)++;
-                    q31_t     inB1 = *__SIMD32(pB)++;
-                    q31_t     inA2 = *__SIMD32(pA)++;
-                    q31_t     inB2 = *__SIMD32(pB)++;
+                    q31_t     inA1 = arm_nn_read_q15x2_ia(&pA);
+                    q31_t     inB1 = arm_nn_read_q15x2_ia(&pB);
+                    q31_t     inA2 = arm_nn_read_q15x2_ia(&pA);
+                    q31_t     inB2 = arm_nn_read_q15x2_ia(&pB);
 
                     sum = __SMLAD(inA1, inB1, sum);
                     sum = __SMLAD(inA2, inB2, sum);
