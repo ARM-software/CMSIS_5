@@ -187,7 +187,6 @@ PUSHD ..\Documentation
 FOR %%A IN (Core, Core_A, DAP, Driver, DSP, General, NN, Pack, RTOS, RTOS2, SVD, Zone) DO IF EXIST %%A (RMDIR /S /Q %%A)
 POPD
 
-
 :: Checking 
 Win32\PackChk.exe %RELEASE_PATH%\ARM.CMSIS.pdsc -n %RELEASE_PATH%\PackName.txt -x M353 -x M364 -x M335
 
@@ -203,7 +202,7 @@ DEL /Q PackName.txt
 
 :: Pack files
 ECHO Creating pack file ...
-7z.exe a %PackName% -tzip > zip.log
+7z.exe a %PackName% -tzip > NUL:
 ECHO Packaging complete
 POPD
 GOTO End
@@ -217,6 +216,5 @@ ECHO Removing temporary files and folders
 RMDIR /Q /S  %RELEASE_PATH%\CMSIS
 RMDIR /Q /S  %RELEASE_PATH%\Device
 DEL %RELEASE_PATH%\LICENSE.txt
-DEL %RELEASE_PATH%\zip.log
 
 ECHO gen_pack.bat completed successfully
