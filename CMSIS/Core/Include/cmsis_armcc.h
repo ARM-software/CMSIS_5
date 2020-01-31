@@ -876,8 +876,6 @@ __attribute__((always_inline)) __STATIC_INLINE uint32_t __USAT(int32_t val, uint
                                                       ((int64_t)(ARG3) << 32U)     ) >> 32U))
 
 #define __SXTB16_RORn(ARG1, ARG2)        __SXTB16(__ROR(ARG1, ARG2))
-#endif
-}
 
 #endif /* ((defined (__ARM_ARCH_7EM__) && (__ARM_ARCH_7EM__ == 1))     ) */
 /*@} end of group CMSIS_SIMD_intrinsics */
