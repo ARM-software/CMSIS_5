@@ -107,7 +107,7 @@ void arm_q7_to_q15_with_offset(const q7_t *src,
     block_cnt = block_size;
 #endif
 
-    while (block_cnt > 0u)
+    while (block_cnt > 0)
     {
         *dst++ = (q15_t)*src++ + offset;
 

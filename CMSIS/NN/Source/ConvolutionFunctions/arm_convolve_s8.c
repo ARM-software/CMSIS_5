@@ -183,7 +183,6 @@ arm_status arm_convolve_s8(const q7_t *input,
         (void)buffer_a;
         int32_t i_out_ch, i_out_y, i_out_x, i_input_ch, i_ker_y, i_ker_x;
         int32_t conv_out;
-        int32_t in_row, in_col;
 
         for (i_out_ch = 0; i_out_ch < output_ch; i_out_ch++)
         {

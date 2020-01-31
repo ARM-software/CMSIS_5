@@ -144,7 +144,7 @@ arm_convolve_HWC_q15_fast(const q15_t * Im_in,
                 for (i = 0; i < ch_im_out; i += 2)
                 {
                     /* setup pointers for B */
-                    q15_t    *pB = im_buffer;
+                    const q15_t  *pB = im_buffer;
                     const q15_t *pB2 = pB + ch_im_in * dim_kernel * dim_kernel;
 
                     /* aling the second pointer for A */
@@ -160,10 +160,10 @@ arm_convolve_HWC_q15_fast(const q15_t * Im_in,
                     /* accumulate over the vector */
                     while (colCnt)
                     {
-                        q31_t     inA1 = *__SIMD32(pA)++;
-                        q31_t     inB1 = *__SIMD32(pB)++;
-                        q31_t     inA2 = *__SIMD32(pA2)++;
-                        q31_t     inB2 = *__SIMD32(pB2)++;
+                        q31_t     inA1 = arm_nn_read_q15x2_ia(&pA);
+                        q31_t     inB1 = arm_nn_read_q15x2_ia(&pB);
+                        q31_t     inA2 = arm_nn_read_q15x2_ia(&pA2);
+                        q31_t     inB2 = arm_nn_read_q15x2_ia(&pB2);
 
                         sum = __SMLAD(inA1, inB1, sum);
                         sum2 = __SMLAD(inA1, inB2, sum2);

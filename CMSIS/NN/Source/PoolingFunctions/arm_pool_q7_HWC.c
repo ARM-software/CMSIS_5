@@ -62,8 +62,8 @@ static void compare_and_replace_if_larger_q7(q7_t * base,   // base data
 
     while (cnt > 0u)
     {
-        in.word = *__SIMD32(pIn);
-        com.word = *__SIMD32(pCom)++;
+        in.word = arm_nn_read_q7x4((const q7_t*)pIn);
+        com.word = arm_nn_read_q7x4_ia((const q7_t**)&pCom);
 
         // if version
         if (com.bytes[0] > in.bytes[0])
@@ -103,7 +103,7 @@ static void accumulate_q7_to_q15(q15_t * base, q7_t * target, const uint16_t len
 
     while (cnt > 0u)
     {
-        q31_t     value = *__SIMD32(pV)++;
+        q31_t     value = arm_nn_read_q7x4_ia((const q7_t**)&pV);
         v1 = __SXTB16(__ROR(value, 8));
         v2 = __SXTB16(value);
 #ifndef ARM_MATH_BIG_ENDIAN
@@ -118,10 +118,10 @@ static void accumulate_q7_to_q15(q15_t * base, q7_t * target, const uint16_t len
 
 #endif
 
-        in = *__SIMD32(pCnt);
+        in = arm_nn_read_q15x2(pCnt);
         *__SIMD32(pCnt)++ = __QADD16(vo1, in);
 
-        in = *__SIMD32(pCnt);
+        in = arm_nn_read_q15x2(pCnt);
         *__SIMD32(pCnt)++ = __QADD16(vo2, in);
 
         cnt--;

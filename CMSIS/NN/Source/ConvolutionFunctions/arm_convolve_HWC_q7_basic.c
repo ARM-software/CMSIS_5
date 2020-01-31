@@ -151,7 +151,7 @@ arm_convolve_HWC_q7_basic(const q7_t * Im_in,
             q31_t     sum = ((q31_t)bias[i] << bias_shift) + NN_ROUND(out_shift);
 
             /* Point to the beging of the im2col buffer */
-            q15_t    *pB = bufferA;
+            const q15_t    *pB = bufferA;
 
             /* Each time it process 4 entries */
             uint16_t  colCnt = ch_im_in * dim_kernel * dim_kernel >> 2;
@@ -163,9 +163,10 @@ arm_convolve_HWC_q7_basic(const q7_t * Im_in,
 
                 pA = read_and_pad(pA, &inA1, &inA2);
 
-                inB1 = *__SIMD32(pB)++;
+                inB1 = arm_nn_read_q15x2_ia(&pB);
                 sum = __SMLAD(inA1, inB1, sum);
-                inB2 = *__SIMD32(pB)++;
+                inB2 = arm_nn_read_q15x2_ia(&pB);
+
                 sum = __SMLAD(inA2, inB2, sum);
 
                 colCnt--;

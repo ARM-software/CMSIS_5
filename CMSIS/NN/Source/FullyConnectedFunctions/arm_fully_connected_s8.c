@@ -179,7 +179,6 @@ arm_fully_connected_s8(const int8_t *input,
 
             int16x8_t input_val, filter_val;
             int16x8_t tmp_a, tmp_b;
-            int32x4_t vecSum;
             int32_t block_count;
 
             const int8_t *col = input_a;

@@ -130,7 +130,7 @@ arm_convolve_HWC_q7_RGB(const q7_t * Im_in,
                          */
 
                         const q7_t *pPixel = Im_in + (i_ker_y * dim_im_in + i_ker_x) * 3;
-                        q31_t     buf = *__SIMD32(pPixel);
+                        q31_t     buf = arm_nn_read_q7x4(pPixel);
 
                         union arm_nnword top;
                         union arm_nnword bottom;
@@ -206,9 +206,9 @@ arm_convolve_HWC_q7_RGB(const q7_t * Im_in,
 
                 pA = read_and_pad(pA, &inA1, &inA2);
 
-                inB1 = *__SIMD32(pB)++;
+                inB1 = arm_nn_read_q15x2_ia((const q15_t **)&pB);
                 sum = __SMLAD(inA1, inB1, sum);
-                inB2 = *__SIMD32(pB)++;
+                inB2 = arm_nn_read_q15x2_ia((const q15_t **)&pB);
                 sum = __SMLAD(inA2, inB2, sum);
 
                 colCnt--;
