@@ -29,8 +29,9 @@
 #include "arm_math.h"
 
 /**
- * @ingroup groupInterpolation
+  @ingroup groupSupport
  */
+
 
 /**
   @addtogroup SplineInterpolate
@@ -61,5 +62,6 @@ void arm_spline_init_f32(
 }
 
 /**
- *   @} end of SplineInterpolate group
+  @} end of SplineInterpolate group
  */
+

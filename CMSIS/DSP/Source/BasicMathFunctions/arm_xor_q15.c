@@ -26,8 +26,9 @@
  * limitations under the License.
  */
 
+
 /**
-  @ingroup groupSupport
+  @ingroup groupMath
  */
 
 /**

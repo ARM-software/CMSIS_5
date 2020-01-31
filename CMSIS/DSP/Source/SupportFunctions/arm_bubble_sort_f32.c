@@ -39,6 +39,7 @@
  */
 
 /**
+   * @private
    * @param[in]  S          points to an instance of the sorting structure.
    * @param[in]  pSrc       points to the block of input data.
    * @param[out] pDst       points to the block of output data

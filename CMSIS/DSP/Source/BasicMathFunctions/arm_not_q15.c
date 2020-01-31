@@ -28,9 +28,11 @@
 
 #include "arm_math.h"
 
+
 /**
-  @ingroup groupSupport
+  @ingroup groupMath
  */
+
 
 /**
   @defgroup Not Vector bitwise NOT

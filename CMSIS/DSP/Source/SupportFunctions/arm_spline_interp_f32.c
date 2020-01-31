@@ -28,9 +28,19 @@
 
 #include "arm_math.h"
 
+/* 
+
+Temporary fix because some arrays are defined on the stack.
+They should be passed as additional arguments to the function.
+
+*/
+#define MAX_DATA_POINTS 40
+
 /**
- * @ingroup groupInterpolation
+  @ingroup groupSupport
  */
+
+
 
 /**
   @defgroup SplineInterpolate Cubic Spline Interpolation
@@ -149,13 +159,7 @@
  * @param[in]  blockSize  number of samples of output data.
  */
 
-/* 
 
-Temporary fix because some arrays are defined on the stack.
-They should be passed as additional arguments to the function.
-
-*/
-#define MAX_DATA_POINTS 40
 
 void arm_spline_f32(
         arm_spline_instance_f32 * S, 
@@ -355,5 +359,5 @@ void arm_spline_f32(
 }
 
 /**
- *   @} end of SplineInterpolate group
- *    */
+  @} end of SplineInterpolate group
+ */

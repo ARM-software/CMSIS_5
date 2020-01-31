@@ -903,6 +903,7 @@ static float32x4x2_t arm_bitonic_sort_8_f32(float32x4_t a, float32x4_t b, uint8_
  */
 
 /**
+   * @private
    * @param[in]  S          points to an instance of the sorting structure.
    * @param[in]  pSrc       points to the block of input data.
    * @param[out] pDst       points to the block of output data

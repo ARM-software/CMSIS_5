@@ -34,6 +34,12 @@
  */
 
 /**
+  @addtogroup Sorting
+  @{
+ */
+
+
+/**
  * @brief Generic sorting function
  *
  * @param[in]  S          points to an instance of the sorting structure.
@@ -77,5 +83,5 @@ void arm_sort_f32(
 }
 
 /**
- * @} end of groupSupport group
+  @} end of Sorting group
  */

@@ -119,6 +119,7 @@ static void arm_quick_sort_core_f32(float32_t *pSrc, uint32_t first, uint32_t la
  */
 
 /**
+   * @private
    * @param[in]  S          points to an instance of the sorting structure.
    * @param[in]  pSrc       points to the block of input data.
    * @param[out] pDst       points to the block of output data
