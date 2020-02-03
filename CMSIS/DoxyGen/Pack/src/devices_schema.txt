@@ -22,6 +22,8 @@ A device is described by the following properties:
  - \ref element_debugvars "debugvars": global debug access variables for use in sequences.
  - \ref element_sequences "sequences": debug access sequences.
  - \ref element_debugport "debugport": debug port description of the device for the debugger to configure a debug connection.
+ - \ref element_accessportV1 "accessportV1": access port (APv1) description of the device for the debugger to configure a debug connection.
+ - \ref element_accessportV2 "accessportV2": access port (APv2) description of the device for the debugger to configure a debug connection.
  - \ref element_debug "debug": device specific information for the debugger to configure a debug connection including System View Description files.
  - \ref element_trace "trace": device specific information for the debugger to configure trace.
  - \ref element_memory "memory": memory layout of the device for internal and external RAM and ROM regions
@@ -267,6 +269,18 @@ Multiple \<family> groups can be defined.
     <td>0..*</td>
   </tr>
   <tr>
+    <td>\ref element_accessportV1 "accessportV1"</td>
+    <td>Describe an access port (APv1) relevant to all devices of the family.</td>
+    <td>AccessPortV1Type</td>
+    <td>0..*</td>
+  </tr>
+  <tr>
+    <td>\ref element_accessportV2 "accessportV2"</td>
+    <td>Describe an access port (APv2) relevant to all devices of the family.</td>
+    <td>AccessPortV2Type</td>
+    <td>0..*</td>
+  </tr>
+  <tr>
     <td>\ref element_debug "debug"</td>
     <td>Specify debug options that are relevant to all devices of the family.</td>
     <td>DebugType</td>
@@ -435,6 +449,18 @@ These properties are inherited by subgroups or elements. Multiple \<subFamily> g
     <td>\ref element_debugport "debugport"</td>
     <td>Describe a debug port relevant to all devices of the sub-family.</td>
     <td>DebugPortType</td>
+    <td>0..*</td>
+  </tr>
+  <tr>
+    <td>\ref element_accessportV1 "accessportV1"</td>
+    <td>Describe an access port (APv1) relevant to all devices of the sub-family.</td>
+    <td>AccessPortV1Type</td>
+    <td>0..*</td>
+  </tr>
+  <tr>
+    <td>\ref element_accessportV2 "accessportV2"</td>
+    <td>Describe an access port (APv2) relevant to all devices of the sub-family.</td>
+    <td>AccessPortV2Type</td>
     <td>0..*</td>
   </tr>
   <tr>
@@ -617,6 +643,18 @@ Multiple \<device> elements can be defined.
     <td>\ref element_debugport "debugport"</td>
     <td>Describe a debug port specific to this device.</td>
     <td>DebugPortType</td>
+    <td>0..*</td>
+  </tr>
+  <tr>
+    <td>\ref element_accessportV1 "accessportV1"</td>
+    <td>Describe an access port (APv1) specific to this device.</td>
+    <td>AccessPortV1Type</td>
+    <td>0..*</td>
+  </tr>
+  <tr>
+    <td>\ref element_accessportV2 "accessportV2"</td>
+    <td>Describe an access port (APv2) specific to this device.</td>
+    <td>AccessPortV2Type</td>
     <td>0..*</td>
   </tr>
   <tr>
@@ -2889,6 +2927,199 @@ allowed <b>__dp</b> ID in later references is \token{0}.
 <hr>
 
 
+\section element_accessportV1 /package/devices/family/.../accessportV1
+
+Describes a CoreSight access port (APv1) of the device and its selection parameters. The element can occur on various
+levels. Use unique ID values for the attribute <b>__apid</b> to distinguish multiple <b>accessportV1</b> and <b>\ref element_accessportV2 "accessportV2"</b>
+elements in later references.
+
+<b>accessportV1</b> elements are required for targets that mix ADIv5 and ADIv6 debug ports and hence also have \ref element_accessportV2 "APv2" access ports.
+Pairs of <b>__dp</b> and <b>__ap</b> values must not be used to reference an access port if a debug description describes access port elements.
+
+
+\b Example
+\code
+
+<family Dvendor="ARM:82" Dfamily="...">
+  ...
+  <debugport __dp="0">  <!-- ADIv5 DAP -->
+    <jtag tapindex="0"/>
+    <swd/>
+  </debugport>
+  
+  <debugport __dp="1">  <!-- ADIv6 DAP -->
+    <jtag tapindex="1"/>
+  </debugport>
+
+  <!-- ADIv5 DAP -->
+  <accessportV1 __apid="0" _dp="0" index="0"/>
+  <accessportV1 __apid="1" _dp="0" index="1"/>
+    
+  <!-- ADIv6 DAP -->
+  <accessportV2 __apid="2" _dp="1" address="0x00002000"/>
+  <accessportV2 __apid="3" _dp="1" address="0x00004000"/>
+   
+  ...
+</family>
+\endcode
+
+<p>&nbsp;</p>		
+
+<table class="cmtable" summary="Element: accessportV1">
+  <tr>
+    <th>Parents</th>
+    <th colspan="3">Element Chain</th>
+  </tr>
+  <tr>
+    <td>\ref element_family "family"</td>
+    <td colspan="3">\ref element_family</td>
+  </tr>
+  <tr>
+    <td>\ref element_subFamily "subFamily"</td>
+    <td colspan="3">\ref element_subFamily</td>
+  </tr>
+  <tr>
+    <td>\ref element_device "device"</td>
+    <td colspan="3">\ref element_device</td>
+  </tr>
+  <tr>
+    <th>Attributes</th>
+    <th>Description</th>
+    <th>Type</th>
+    <th>Use</th>
+  </tr>
+  <tr>
+    <td>__apid</td>
+    <td>
+      Unique ID of this element with respect to other \ref element_accessportV2 "access port elements".
+      It must be used consistently in references within the scope of the parent section.
+    </td>
+    <td>xs:unsignedInt</td>
+    <td>required</td>
+  </tr>
+  <tr>
+    <td>__dp</td>
+    <td>
+      Unique ID of the <b>debugport</b> used to access this access port.
+      Optional if exactly one <b>debugport</b> exists.
+    </td>
+    <td>xs:unsignedInt</td>
+    <td>optional</td>
+  </tr>
+  <tr>
+    <td>index</td>
+    <td>
+      The index to select this access port for a target access.
+    </td>
+    <td>xs:unsignedInt</td>
+    <td>required</td>
+  </tr>
+</table>
+
+<p>&nbsp;</p>		
+<hr>
+
+
+\section element_accessportV2 /package/devices/family/.../accessportV2
+
+Describes a CoreSight access port (APv2) of the device as introduced with the Arm Debug Interfaces (ADI) v6 and its selection parameters.
+The element can occur on various levels. Use unique ID values for the attribute <b>__apid</b> to distinguish multiple <b>\ref element_accessportV1 "accessportV1"</b> and <b>accessportV2</b> elements in later references.
+
+An <b>accessportV2</b> must be later selected via <b>__apid</b>. It is not possible to use a pair of <b>__dp</b> and <b>__ap</b> values.
+
+
+\b Example
+\code
+
+<family Dvendor="ARM:82" Dfamily="...">
+  ...
+  <debugport __dp="0">  <!-- ADIv5 DAP -->
+    <jtag tapindex="0"/>
+    <swd/>
+  </debugport>
+  
+  <debugport __dp="1">  <!-- ADIv6 DAP -->
+    <jtag tapindex="1"/>
+  </debugport>
+
+  <!-- ADIv5 DAP -->
+  <accessportV1 __apid="0" _dp="0" index="0"/>
+  <accessportV1 __apid="1" _dp="0" index="1"/>
+    
+  <!-- ADIv6 DAP -->
+  <accessportV2 __apid="2" _dp="1" address="0x00002000"/>
+  <accessportV2 __apid="3" _dp="1" address="0x00004000"/>
+    
+  ...
+</family>
+\endcode
+
+<p>&nbsp;</p>		
+
+<table class="cmtable" summary="Element: accessportV2">
+  <tr>
+    <th>Parents</th>
+    <th colspan="3">Element Chain</th>
+  </tr>
+  <tr>
+    <td>\ref element_family "family"</td>
+    <td colspan="3">\ref element_family</td>
+  </tr>
+  <tr>
+    <td>\ref element_subFamily "subFamily"</td>
+    <td colspan="3">\ref element_subFamily</td>
+  </tr>
+  <tr>
+    <td>\ref element_device "device"</td>
+    <td colspan="3">\ref element_device</td>
+  </tr>
+  <tr>
+    <th>Attributes</th>
+    <th>Description</th>
+    <th>Type</th>
+    <th>Use</th>
+  </tr>
+  <tr>
+    <td>__apid</td>
+    <td>
+      Unique ID of this element with respect to other \ref element_accessportV1 "access port elements".
+      It must be used consistently in references within the scope of the parent section.
+    </td>
+    <td>xs:unsignedInt</td>
+    <td>required</td>
+  </tr>
+  <tr>
+    <td>__dp</td>
+    <td>
+      Unique ID of the <b>debugport</b> used to access this access port.
+      Optional if exactly one <b>debugport</b> exists.
+    </td>
+    <td>xs:unsignedInt</td>
+    <td>optional</td>
+  </tr>
+  <tr>
+    <td>address</td>
+    <td>
+      The address to select this access port in its parent's address space for a target access.
+    </td>
+    <td>xs:unsignedInt</td>
+    <td>required</td>
+  </tr>
+  <tr>
+    <td>parent</td>
+    <td>
+      Reference to the <b>__apid</b> of the parent access port if the system contains nested APv2 access ports.<br>
+      <b>parent</b> must not be specified if the access port is directly connected to the <b>debugport</b>.
+    </td>
+    <td>xs:unsignedInt</td>
+    <td>optional</td>
+  </tr>
+</table>
+
+<p>&nbsp;</p>		
+<hr>
+
+
 \section element_dp_jtag /package/devices/family/.../debugport/jtag
 
 Indicates availability of a JTAG interface for the <b>debugport</b> parent element. Its
@@ -3543,10 +3774,12 @@ __var variable = 0;
   
 </sequence>
 \endcode
-- The debug access variables <b>__dp</b>, <b>__ap</b>, and <b>__errorcontrol</b> can be modified
+- The debug access variables <b>__dp</b>, <b>__ap</b>, <b>__apid</b>, and <b>__errorcontrol</b> can be modified
   within a debug access sequence. An assigned value is held until leaving the sequence. Calling
   another sequence by the <b>Sequence</b> debug access function will push their values on a
   sequence execution stack. The values are restored when returning from such a call.
+- Please refer to \ref DebugFunctions "Debug Access Functions" for how to use <b>__dp</b>, <b>__ap</b>,
+  and <b>__apid</b> to select access ports for target accesses.
 - The debug access variable <b>__Result</b> can be modified within a debug access sequence.
   Its value is held until the debug access sequence returns to the debugger. Hence its value is
   <b>not</b> pushed on a sequence execution stack when calling into another sequence by the <b>Sequence</b>
@@ -3647,7 +3880,9 @@ to all connections.
       allowed value is \token{0}.<br>
       The debug access variable <b>__dp</b> is initialized to this value when entering a pre-defined debug access
       sequence because of a debug event.<br>
-      This attribute defaults to \token{0} if not set.
+      This attribute defaults to \token{0} if not set.<br>
+      Must not be used if \ref element_accessportV1 "accessportV1" or \ref element_accessportV2 "accessportV2" elements are specified. Use <b>__apid</b> instead.
+    </td>
     <td>xs:unsignedInt</td>
     <td>optional</td>
   </tr>
@@ -3657,7 +3892,17 @@ to all connections.
       Default access port index to use for target accesses in this debug connection.<br>
       The debug access variable <b>__ap</b> is initialized to this value when entering a pre-defined debug access
       sequence because of a debug event.<br>
-      This attribute defaults to \token{0} if not set.
+      This attribute defaults to \token{0} if not set.<br>
+      Must not be used if \ref element_accessportV1 "accessportV1" or \ref element_accessportV2 "accessportV2" elements are specified. Use <b>__apid</b> instead.
+    </td>
+    <td>xs:unsignedInt</td>
+    <td>optional</td>
+  </tr>
+  <tr>
+    <td>__apid</td>
+    <td>
+      Default access port ID to use for target accesses in this debug connection.<br>
+      The debug access variable <b>__apid</b> is initialized to this value when entering a pre-defined debug access sequence because of a debug event. Requires \ref element_accessportV1 "accessportV1" and/or \ref element_accessportV2 "accessportV2" elements to be specified.
     </td>
     <td>xs:unsignedInt</td>
     <td>optional</td>
@@ -3666,9 +3911,9 @@ to all connections.
     <td>address</td>
     <td>
       Base "address" of the CPU debug block referenced by "Pname" (and "Punit" in an MPCore system). Use in combination
-      with attributes "_dp" and "_ap". Mandatory if multiple CPU debug blocks are accessible via a single AP. Optional
-      if an AP hosts a single CPU debug block. Then a debugger can determine its base address in by analyzing the ROM
-      table behind __dp and __ap.
+      with attributes "__dp" and "__ap", or "__apid" respectively. Mandatory if multiple CPU debug blocks are accessible via a single AP. Optional
+      if an AP hosts a single CPU debug block. Then a debugger can determine its base address by analyzing the ROM
+      table behind the selected AP.
     </td>
     <td>NonNegativeInteger</td>
     <td>optional</td>
@@ -3787,7 +4032,9 @@ Describes a patch a debugger shall apply when reading data from the device.
   </tr>
   <tr>
     <td>address</td>
-    <td>The address for which to apply the patch.</td>
+    <td>The address for which to apply the patch.<br>
+    For an \token{AP} data patch for an APv2 as referenced by <b>__apid</b>, the address is the APv2 register offset added to the APv2's base address
+    defined in the corresponding \ref element_accessportV2 "accessportV2" element. It must within the 4-KByte address range of the APv2 block.</td>
     <td>NonNegativeInteger</td>
     <td>required</td>
   </tr>
@@ -3796,7 +4043,10 @@ Describes a patch a debugger shall apply when reading data from the device.
     <td>
       The debug port ID to apply the patch for. The allowed values are defined by the <b>__dp</b> attribute of <b>debugport</b>
       elements for this device. If no debugport element exists, the only allowed value is 0. If this attribute is not set, the debug port
-      ID for the data patch is set to the default <b>__dp</b> of this <b>debug</b> section.
+      ID for the data patch is set to the default <b>__dp</b> of this <b>debug</b> section.<br>
+      If \ref element_accessportV1 "accessportV1" or \ref element_accessportV2 "accessportV2" elements are specified then this attribute is only
+      allowed for \token{DP} and \token{ACCESS_AP} accesses. Use <b>__apid</b> for all others.
+    </td>
     <td>xs:unsignedInt</td>
     <td>optional</td>
   </tr>
@@ -3804,7 +4054,19 @@ Describes a patch a debugger shall apply when reading data from the device.
     <td>__ap</td>
     <td>
       The CoreSight access port index to apply the patch for. If this attribute is not set, the access port index
-      for the data patch is set to the default <b>__ap</b> of this <b>debug</b> section.
+      for the data patch is set to the default <b>__ap</b> of this <b>debug</b> section.<br>
+      Must not be used if \ref element_accessportV1 "accessportV1" or \ref element_accessportV2 "accessportV2" elements are specified. Use <b>__apid</b> instead.
+    </td>
+    <td>xs:unsignedInt</td>
+    <td>optional</td>
+  </tr>
+  <tr>
+    <td>__apid</td>
+    <td>
+      The unique ID of a CoreSight access port to apply the patch for. Requires \ref element_accessportV1 "accessportV1" and/or
+      \ref element_accessportV2 "accessportV2" elements to be specified. If this attribute is not set, the access port ID
+      for the data patch is set to the default <b>__apid</b> of this <b>debug</b> section.
+    </td>
     <td>xs:unsignedInt</td>
     <td>optional</td>
   </tr>
@@ -3844,6 +4106,10 @@ The table lists the allowed values for data patch access types.
     <b>Note:</b> This type refers to accesses via the <b>DPACC</b> instruction for <b>CoreSight JTAG-DPs</b>. Please refer to the
     corresponding documentation for differences in the register interface between JTAG and Serial Wire debug ports.
     </td>
+  </tr>
+  <tr>
+    <td class="XML-Token">ACCESS_AP</td>
+    <td>Top-level Access Port access for a CoreSight ADIv6 DAP.</td>
   </tr>
   <tr>
     <td class="XML-Token">AP</td>
@@ -4318,6 +4584,18 @@ Defines a device variant. The element is optional. Can exist multiple times.
     <td>\ref element_debugport "debugport"</td>
     <td>Describe a debug port specific to this device.</td>
     <td>DebugPortType</td>
+    <td>0..*</td>
+  </tr>
+  <tr>
+    <td>\ref element_accessportV1 "accessportV1"</td>
+    <td>Describe an access port (APv1) specific to this device.</td>
+    <td>AccessPortV1Type</td>
+    <td>0..*</td>
+  </tr>
+  <tr>
+    <td>\ref element_accessportV2 "accessportV2"</td>
+    <td>Describe an access port (APv2) specific to this device.</td>
+    <td>AccessPortV2Type</td>
     <td>0..*</td>
   </tr>
   <tr>

@@ -49,6 +49,8 @@ A complete debug description for a device consists of the following elements:
    order to query settings from a debug access sequences.
  - \refelem{debugport} with the child elements \refelem{dp_jtag}, \refelem{dp_swd}, and \refelem{dp_cjtag} describes the
    debug port in detail.
+ - \refelem{accessportV1} describes an access port (APv1) in detail.
+ - \refelem{accessportV2} describes an access port (APv2) in detail.
  - \refelem{sequences} with the child elements \refelem{sequence}, \refelem{seq_control}, and \refelem{seq_block} creates a
    configuration for debug access sequences.
  - \refelem{trace} with the child elements \refelem{trace_serialwire}, \refelem{trace_traceport}, and
@@ -288,16 +290,16 @@ Prepare the target debug port for connection.
 \code  
   <sequence name="DebugPortSetup">
     <block>
-      __var isSWJ    = ((__protocol &amp; 0x00010000) != 0);
+      __var isSWJ      = ((__protocol &amp; 0x00010000) != 0);
       __var hasDormant = __protocol &amp; 0x00020000;
-      __var protType = __protocol &amp; 0x0000FFFF;
+      __var protType   = __protocol &amp; 0x0000FFFF;
     </block>
-  
+    
     <!-- JTAG Protocol -->
     <control if="protType == 1">
     
       <control if="isSWJ">
-      
+    
         <control if="hasDormant">
     
           <block atomic="1">
@@ -342,12 +344,13 @@ Prepare the target debug port for connection.
         </control>
     
       </control>
+    
       <block atomic="1">
         // JTAG "Soft" Reset
         DAP_JTAG_Sequence(6, 1, 0x3F);
         DAP_JTAG_Sequence(1, 0, 0x01);
       </block>
-
+    
     </control>
     
     <!-- SWD Protocol -->
@@ -355,7 +358,7 @@ Prepare the target debug port for connection.
     
       <control if="isSWJ">
         
-      <control if="hasDormant">
+        <control if="hasDormant">
     
           <block atomic="1">
             // Ensure current debug interface is in reset state
@@ -384,25 +387,27 @@ Prepare the target debug port for connection.
         </control>
     
         <control if="!hasDormant">
-        <block atomic="1">
-          // Ensure current debug interface is in reset state
-          DAP_SWJ_Sequence(51, 0x0007FFFFFFFFFFFF);
-          
-          // Execute SWJ-DP Switch Sequence JTAG to SWD (0xE79E)
-          // Change if SWJ-DP uses deprecated switch code (0xEDB6)
-          DAP_SWJ_Sequence(16, 0xE79E);
-          
-          // Enter SWD Line Reset State
-          DAP_SWJ_Sequence(51, 0x0007FFFFFFFFFFFF);  // &gt; 50 cycles SWDIO/TMS High
-          DAP_SWJ_Sequence(3,  0x00);                // At least 2 idle cycles (SWDIO/TMS Low)
-        </block>
+    
+          <block atomic="1">
+            // Ensure current debug interface is in reset state
+            DAP_SWJ_Sequence(51, 0x0007FFFFFFFFFFFF);
+            
+            // Execute SWJ-DP Switch Sequence JTAG to SWD (0xE79E)
+            // Change if SWJ-DP uses deprecated switch code (0xEDB6)
+            DAP_SWJ_Sequence(16, 0xE79E);
+            
+            // Enter SWD Line Reset State
+            DAP_SWJ_Sequence(51, 0x0007FFFFFFFFFFFF);  // &gt; 50 cycles SWDIO/TMS High
+            DAP_SWJ_Sequence(3,  0x00);                // At least 2 idle cycles (SWDIO/TMS Low)
+          </block>
       
-      </control>
+        </control>
     
       </control>
+    
       <control if="!isSWJ">
       
-     <control if="hasDormant">
+        <control if="hasDormant">
     
           <block atomic="1">
             // Ensure current debug interface is in reset state
@@ -443,7 +448,7 @@ Prepare the target debug port for connection.
         // Read DPIDR to enable SWD interface (SW-DPv1 and SW-DPv2)
         ReadDP(0x0);
       </block>
-
+    
     </control>
     
   </sequence>
@@ -985,7 +990,7 @@ __var variable = 0;
   
 </sequence>
 \endcode
-- The debug access variables <b>__dp</b>, <b>__ap</b>, and <b>__errorcontrol</b> can be modified
+- The debug access variables <b>__dp</b>, <b>__ap</b>, <b>__apid</b>, and <b>__errorcontrol</b> can be modified
   within a debug access sequence. An assigned value is held until leaving the sequence. Calling
   another sequence by the <b>Sequence</b> debug access function will push their values on a
   sequence execution stack. The values are restored when returning from such a call.
@@ -993,6 +998,10 @@ __var variable = 0;
   Its value is held until the debug access sequence returns to the debugger. Hence its value is
   <b>not</b> pushed on a sequence execution stack when calling into another sequence by the <b>Sequence</b>
   debug access function.
+- If the debug description contains \ref element_accessportV1 "access port elements"
+ - then the debug access variable <b>__ap</b> must <b>not</b> be used. Use <b>__apid</b> instead.
+ - then the debug access variable <b>__dp</b> is only used for the <b>ReadDP()</b>, <b>WriteDP()</b>, and <b>DAP_WriteABORT()</b> debug access
+   functions. All other debug access functions use the access port element that is referenced by <b>__apid</b> to determine the used debug port.
 
 
 \subsection ExpressionType Expression rules
@@ -1043,7 +1052,7 @@ debug access variables which are evaluated for the function call.
     <td>
       Execute a debug access sequence.
       Calling a sequence by this function causes the modifiable debug access variables <b>__dp</b>,
-      <b>__ap</b>, and <b>__errorcontrol</b> to be pushed on a sequence execution stack. Returning
+      <b>__ap</b>, <b>__apid</b>, and <b>__errorcontrol</b> to be pushed on a sequence execution stack. Returning
       from such a call will restore the state of these variables.<br>
       <br>
       <b>Parameters:</b><br>
@@ -1066,8 +1075,13 @@ debug access variables which are evaluated for the function call.
       - addr: Memory address to read from.
       
       <b>Debug Access Variables:</b><br>
+      
+      If <b>no</b> \ref element_accessportV1 "access port elements" exist:<br>
       - __dp: The debug port to use for this memory access.
       - __ap: The access port to use for this memory access.
+
+      If \ref element_accessportV1 "access port elements" exist:<br>
+      - __apid: The ID of the access port element to use for this memory access.
       
       <b>Return Value:</b><br>
       The 8-bit value as read from target memory.
@@ -1086,8 +1100,13 @@ debug access variables which are evaluated for the function call.
       - addr: Memory address to read from.
       
       <b>Debug Access Variables:</b><br>
+
+      If <b>no</b> \ref element_accessportV1 "access port elements" exist:<br>
       - __dp: The debug port to use for this memory access.
       - __ap: The access port to use for this memory access.
+      
+      If \ref element_accessportV1 "access port elements" exist:<br>
+      - __apid: The ID of the access port element to use for this memory access.
 
       <b>Return Value:</b><br>
       The 16-bit value as read from target memory.
@@ -1103,8 +1122,13 @@ debug access variables which are evaluated for the function call.
       - addr: Memory address to read from.
       
       <b>Debug Access Variables:</b><br>
+
+      If <b>no</b> \ref element_accessportV1 "access port elements" exist:<br>
       - __dp: The debug port to use for this memory access.
       - __ap: The access port to use for this memory access.
+
+      If \ref element_accessportV1 "access port elements" exist:<br>
+      - __apid: The ID of the access port element to use for this memory access.
 
       <b>Return Value:</b><br>
       The 32-bit value as read from target memory.
@@ -1123,9 +1147,14 @@ debug access variables which are evaluated for the function call.
       - addr: Memory address to read from.
       
       <b>Debug Access Variables:</b><br>
+
+      If <b>no</b> \ref element_accessportV1 "access port elements" exist:<br>
       - __dp: The debug port to use for this memory access.
       - __ap: The access port to use for this memory access.
       
+      If \ref element_accessportV1 "access port elements" exist:<br>
+      - __apid: The ID of the access port element to use for this memory access.
+
       <b>Return Value:</b><br>
       The 64-bit value as read from target memory.
     </td>
@@ -1140,14 +1169,37 @@ debug access variables which are evaluated for the function call.
       an AP register bank switch. 
       
       <b>Debug Access Variables:</b><br>
+
+      If <b>no</b> \ref element_accessportV1 "access port elements" exist:<br>
       - __dp: The debug port to use for this memory access.
       - __ap: The access port to use for this memory access.
       
+      If \ref element_accessportV1 "access port elements" exist:<br>
+      - __apid: The ID of the access port element to use for this memory access.
+
       <b>Return Value:</b><br>
       The 32-bit value as read from the AP register.
 
       <b>Code Example:</b><br>
       Refer to \ref userDebugDeviceUnlock
+    </td>
+  </tr>
+  <tr>
+    <td style="white-space: nowrap"><pre>ReadAccessAP(addr)</pre></td>
+    <td>
+      Read a 32-bit value from an address in the system's APv2 (ADIv6) top-level access port space.<br>
+      <br>
+      <b>Parameters:</b><br>
+      - addr: Address within the system's top-level AP address space.
+      
+      <b>Debug Access Variables:</b><br>
+      - __dp: The debug port to use for this access.
+
+      <b>Return Value:</b><br>
+      The 32-bit value as read from the top-level AP address.
+
+      <b>Code Example:</b><br>
+      Refer to \ref debugDeviceUnlock
     </td>
   </tr>
   <tr>
@@ -1179,8 +1231,13 @@ debug access variables which are evaluated for the function call.
       - val: Value to write.
       
       <b>Debug Access Variables:</b><br>
+
+      If <b>no</b> \ref element_accessportV1 "access port elements" exist:<br>
       - __dp: The debug port to use for this memory access.
       - __ap: The access port to use for this memory access.
+
+      If \ref element_accessportV1 "access port elements" exist:<br>
+      - __apid: The ID of the access port element to use for this memory access.
 
       <b>Return Value:</b><br>
       Always returns \token{0}.
@@ -1200,8 +1257,13 @@ debug access variables which are evaluated for the function call.
       - val: Value to write.
       
       <b>Debug Access Variables:</b><br>
+
+      If <b>no</b> \ref element_accessportV1 "access port elements" exist:<br>
       - __dp: The debug port to use for this memory access.
       - __ap: The access port to use for this memory access.
+
+      If \ref element_accessportV1 "access port elements" exist:<br>
+      - __apid: The ID of the access port element to use for this memory access.
 
       <b>Return Value:</b><br>
       Always returns \token{0}.
@@ -1218,8 +1280,13 @@ debug access variables which are evaluated for the function call.
       - val: Value to write.
       
       <b>Debug Access Variables:</b><br>
+
+      If <b>no</b> \ref element_accessportV1 "access port elements" exist:<br>
       - __dp: The debug port to use for this memory access.
       - __ap: The access port to use for this memory access.
+
+      If \ref element_accessportV1 "access port elements" exist:<br>
+      - __apid: The ID of the access port element to use for this memory access.
 
       <b>Return Value:</b><br>
       Always returns \token{0}.
@@ -1239,8 +1306,13 @@ debug access variables which are evaluated for the function call.
       - val: Value to write.
       
       <b>Debug Access Variables:</b><br>
+
+      If <b>no</b> \ref element_accessportV1 "access port elements" exist:<br>
       - __dp: The debug port to use for this memory access.
       - __ap: The access port to use for this memory access.
+
+      If \ref element_accessportV1 "access port elements" exist:<br>
+      - __apid: The ID of the access port element to use for this memory access.
 
       <b>Return Value:</b><br>
       Always returns \token{0}.
@@ -1257,14 +1329,37 @@ debug access variables which are evaluated for the function call.
       - val: Value to write.
       
       <b>Debug Access Variables:</b><br>
+
+      If <b>no</b> \ref element_accessportV1 "access port elements" exist:<br>
       - __dp: The debug port to use for this memory access.
       - __ap: The access port to use for this memory access.
+
+      If \ref element_accessportV1 "access port elements" exist:<br>
+      - __apid: The ID of the access port element to use for this memory access.
 
       <b>Return Value:</b><br>
       Always returns \token{0}.
 
       <b>Code Example:</b><br>
       Refer to \ref hwReset
+    </td>
+  </tr>
+  <tr>
+    <td style="white-space: nowrap"><pre>WriteAccessAP(addr)</pre></td>
+    <td>
+      Write a 32-bit value to an address in the system's APv2 (ADIv6) top-level access port space.<br>
+      <br>
+      <b>Parameters:</b><br>
+      - addr: Address within the system's top-level AP address space.
+      
+      <b>Debug Access Variables:</b><br>
+      - __dp: The debug port to use for this access.
+
+      <b>Return Value:</b><br>
+      Always returns \token{0}.
+
+      <b>Code Example:</b><br>
+      Refer to \ref debugDeviceUnlock
     </td>
   </tr>
   <tr>
@@ -1309,8 +1404,13 @@ debug access variables which are evaluated for the function call.
         - Bit 9..63: Reserved
 
       <b>Debug Access Variables:</b><br>
+
+      If <b>no</b> \ref element_accessportV1 "access port elements" exist:<br>
       - __dp: The debug port to use for this memory access.
       - __ap: The access port to use for this memory access.
+
+      If \ref element_accessportV1 "access port elements" exist:<br>
+      - __apid: The ID of the access port element to use for this memory access.
 
       <b>Return Value:</b><br>
       Always returns \token{0}.
@@ -1611,6 +1711,15 @@ debug access variables which are evaluated for the function call.
 		    specified size.
           - Bit 9..63: Reserved
                 
+        <b>Debug Access Variables:</b><br>
+  
+        If <b>no</b> \ref element_accessportV1 "access port elements" exist:<br>
+        - __dp: The debug port to use for this memory access.
+        - __ap: The access port to use for this memory access.
+  
+        If \ref element_accessportV1 "access port elements" exist:<br>
+        - __apid: The ID of the access port element to use for this memory access.
+
         <b>Return Value:</b><br>
         Always \token{0}. Function causes fatal error if not successful.
 
@@ -1639,6 +1748,15 @@ debug access variables which are evaluated for the function call.
 		    the specified size.
           - Bit 9..63: Reserved
                 
+        <b>Debug Access Variables:</b><br>
+  
+        If <b>no</b> \ref element_accessportV1 "access port elements" exist:<br>
+        - __dp: The debug port to use for this memory access.
+        - __ap: The access port to use for this memory access.
+  
+        If \ref element_accessportV1 "access port elements" exist:<br>
+        - __apid: The ID of the access port element to use for this memory access.
+
         <b>Return Value:</b><br>
         Always \token{0}. Function causes fatal error if not successful.
 
@@ -1754,10 +1872,12 @@ debug access variables which are evaluated for the function call.
   support debug accesses of this size.
 - Results of all functions are casted to 64-bit unsigned integer values.
 - Some target access functions determine the used debug and access port by the current values of the <b>__dp</b> and
-  <b>__ap</b> debug access variables. If a target access requires a different debug or access port than the default ones, it
+  <b>__ap</b>, and the <b>__apid</b> debug access variables. If a target access requires a different debug or access port than the default ones, it
   must change these values. This change is held until finishing the sequence the change has occurred in.
-- A call to WriteDP() to change the DP SELECT register does not implicitly change the value of the debug access variable
-  <b>__ap</b>. It needs to be explicitly updated to select a different AP for subsequent AP register and memory accesses.
+- If the debug description describes \ref element_accessportV1 "access port elements" then use of <b>__dp</b> is limited to the <b>ReadDP()</b>, <b>WriteDP()</b>, and <b>DAP_WriteABORT()</b> debug access functions. All other debug access functions determine the used debug port from the \ref element_accessportV1 "access port element" referenced by <b>__apid</b>.
+- If the debug description describes \ref element_accessportV1 "access port elements" then <b>__ap</b> must not be used. Use <b>__apid</b> instead.
+- A call to <b>WriteDP()</b> to change the DP SELECT register does not implicitly change the value of the debug access variables
+  <b>__ap</b> or <b>__apid</b>. Those need to be explicitly updated to select a different AP for subsequent AP register and memory accesses.
   
 \subsection DebugVars Debug access variables
 
@@ -1825,6 +1945,9 @@ A debugger needs to support a set of pre-defined debug access variables. These a
       This variable is initialized when entering a pre-defined debug access
       sequence on a debug event. The initialization value
       is the <b>__dp</b> as defined for the used <b>debug</b> element.
+      <br>
+      If \ref element_accessportV1 "access port elements" exist then use of <b>__dp</b> is limited to the <b>ReadDP()</b>,
+      <b>WriteDP()</b>, and <b>DAP_WriteABORT()</b> debug access functions.
     </td>
     <td>
       Debug port ID as specified in a <b>debugport</b> element or
@@ -1839,9 +1962,24 @@ A debugger needs to support a set of pre-defined debug access variables. These a
       This variable is initialized when entering a pre-defined debug access
       sequence on a debug event. The initialization value
       is the <b>__ap</b> as defined for the used <b>debug</b> element.
+      <br>
+      Must not be used if \ref element_accessportV1 "access port elements" exist. Use <b>__apid</b> instead.
     </td>
     <td>
       Access Port index.
+    </td>
+  </tr>
+  <tr>
+    <td style="white-space: nowrap"><pre>__apid</pre></td>
+    <td>Read/Write</td>
+    <td>
+      Access Port selected for target accesses.<br>
+      This variable is initialized when entering a pre-defined debug access
+      sequence on a debug event. The initialization value
+      is the <b>__apid</b> as defined for the used <b>debug</b> element.
+    </td>
+    <td>
+      Access Port ID as defined in an \ref element_accessportV1 "access port element".
     </td>
   </tr>
   <tr>

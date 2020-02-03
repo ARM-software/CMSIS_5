@@ -403,6 +403,10 @@ A device is described by the following properties:
  - \ref element_debugconfig "debugconfig": default settings for a debug connection
  - \ref element_debugport "debugport": debug port description of the device for the debugger to configure a debug
    connection.
+ - \ref element_accessportV1 "accessportV1": access port (APv1) description of the device for the debugger to configure a debug
+   connection.
+ - \ref element_accessportV2 "accessportV2": access port (APv2) description of the device for the debugger to configure a debug
+   connection.
  - \ref element_debug "debug": device specific information for the debugger to configure a debug connection including
    System View Description files.
  - \ref element_trace "trace": device specific information for the debugger to configure trace.
