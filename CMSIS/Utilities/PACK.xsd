@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
  
-  Copyright (c) 2013-2019 ARM Limited. All rights reserved.
+  Copyright (c) 2013-2020 ARM Limited. All rights reserved.
  
   SPDX-License-Identifier: Apache-2.0
  
@@ -17,13 +17,17 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 
-  $Date:        21. November 2019
-  $Revision:    1.6.3
+  $Date:        03. February 2020
+  $Revision:    1.6.4
 
   $Project: Schema File for Package Description File Format Specification
 
   Package file name convention <vendor>.<name>.<version>.pack
-  SchemaVersion=1.6.3
+  SchemaVersion=1.6.4
+
+  03. February 2020: v1.6.4
+  - example: added environment specific folder attribute
+  - added 'ACCESS_AP' to DataPatchAccessTypeEnum
 
   21. November 2019: v1.6.3
   - added attribute 'uninit' to <memory> element to replace deprecated 'init' attribute
@@ -388,6 +392,7 @@
     <xs:restriction base="xs:token">
       <xs:enumeration value="DP" />
       <xs:enumeration value="AP" />
+      <xs:enumeration value="ACCESS_AP" />
       <xs:enumeration value="Mem" />
     </xs:restriction>
   </xs:simpleType>
