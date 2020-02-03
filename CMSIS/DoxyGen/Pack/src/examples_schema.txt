@@ -15,8 +15,8 @@ Each example can specify attributes listing related components using Class (Ccla
       <description>This is a basic example demonstrating the development flow and letting the LED on the board blink</description>
       <board vendor="STMicroelectronics" name="32F429IDISCOVERY"/>
       <project>
-        <environment name="uv"  load="ARM/Blinky.uvproj"/>
-        <environment name="iar" load="IAR/Blinky.ewarm" />
+        <environment name="uv"  folder="./ARM" load="ARM/Blinky.uvproj"/>
+        <environment name="iar" folder="./IAR" load="IAR/Blinky.ewarm" />
       </project>
       <attributes>
         <component Cclass="CMSIS" Cgroup="Core"/>
@@ -274,8 +274,8 @@ The environment element describes the name of the environment and the project fi
 <b>Example:</b>
 \code
 <project>
-  <environment name="uv" load="ARM/Blinky.uvproj"/>
-  <environment name="iar" load="IAR/Blinky.ewarm" />
+  <environment name="uv" folder="./ARM" load="ARM/Blinky.uvproj"/>
+  <environment name="iar" folder="./IAR" load="IAR/Blinky.ewarm" />
 </project>
 \endcode
 
@@ -307,6 +307,16 @@ The environment element describes the name of the environment and the project fi
     <td>Specifies the project file with extension. A path relative to \em folder attribute of the element \ref element_example can be appended.</td>
     <td>xs:string</td>
     <td>required</td>
+  </tr>
+  <tr>
+    <td>folder</td>
+    <td>Specifies the subdirectory to be copied into the user's project folder relative to \em folder attribute of the element \ref element_example.
+	This attribute is used by example descriptions that support multiple tool-chains/IDEs, each stored in a separate folders. Note: for copying eclipse
+	projects it is required that the .project file is located in the base directory and all	project files are located in the base directory or in one of the
+	subdirectories. In this case even common files are required to be duplicated.
+	</td>
+    <td>xs:string</td>
+    <td>optional</td>
   </tr>
 </table>
 

@@ -1194,8 +1194,9 @@
     <xs:sequence>
       <xs:element name="environment" maxOccurs="unbounded">
         <xs:complexType>
-          <xs:attribute name="name" type="xs:string" use="required" />
-          <xs:attribute name="load" type="xs:string" use="required" />
+          <xs:attribute name="name"   type="xs:string" use="required" />
+          <xs:attribute name="load"   type="xs:string" use="required" />
+          <xs:attribute name="folder" type="xs:string" use="optional" />
         </xs:complexType>
       </xs:element>
     </xs:sequence>
