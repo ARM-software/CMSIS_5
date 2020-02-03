@@ -325,9 +325,9 @@ group Root {
                 test_insertion_sort_f32 nb=16 const:test_insertion_sort_const_f32 
                 test_merge_sort_f32 nb=11 outofplace:test_merge_sort_out_f32 
                 test_merge_sort_f32 nb=16 const:test_merge_sort_const_f32 
-                disabled{test_quick_sort_f32 nb=11 outofplace:test_quick_sort_out_f32}
-                disabled{test_quick_sort_f32 nb=11 inplace:test_quick_sort_in_f32} 
-                disabled{test_quick_sort_f32 nb=16 const:test_quick_sort_const_f32}
+                test_quick_sort_f32 nb=11 outofplace:test_quick_sort_out_f32
+                test_quick_sort_f32 nb=11 inplace:test_quick_sort_in_f32 
+                test_quick_sort_f32 nb=16 const:test_quick_sort_const_f32
                 test_selection_sort_f32 nb=11 outofplace:test_selection_sort_out_f32 
                 test_selection_sort_f32 nb=11 inplace:test_selection_sort_in_f32
                 test_selection_sort_f32 nb=16 const:test_selection_sort_const_f32

@@ -29,84 +29,92 @@
 #include "arm_math.h"
 #include "arm_sorting.h"
 
-
-
-static void arm_quick_sort_core_f32(float32_t *pSrc, uint32_t first, uint32_t last, uint8_t dir)
+static uint32_t arm_quick_sort_partition_f32(float32_t *pSrc, int32_t first, int32_t last, uint8_t dir)
 {
-    uint32_t i, j, pivot;
+    /* This function will be called */
+    int32_t i, j, pivot_index;
+    float32_t pivot;
     float32_t temp;
 
-    if(dir)
+    /* The first element is the pivot */
+    pivot_index = first; 
+    pivot = pSrc[pivot_index];
+
+    /* Initialize indices for do-while loops */
+    i = first - 1;
+    j = last + 1; 
+
+    while(i < j) 
     {
-        if(first<last)
-        {
-            pivot=first; // First element chosen as pivot
-            i=first;
-            j=last;
-    
-	    // Look for a pair of elements (one greater than the pivot, one 
-	    // smaller) that are in the wrong order relative to each other.
-            while(i<j)
+        /* The loop will stop as soon as the indices i and j cross each other.
+         *
+         * This event will happen surely since the values of the indices are incremented and 
+         * decrement in the do-while loops that are executed at least once. 
+         * It is impossible to loop forever inside the do-while loops since the pivot is
+         * always an element of the array and the conditions cannot be always true (at least 
+         * the i-th or the j-th element will be equal to the pivot-th element).
+         * For example, in the extreme case of an ordered array the do-while loop related to i will stop
+         * at the first iteration (because pSrc[i]=pSrc[pivot] already), and the loop related to j
+         * will stop after (last-first) iterations (when j=pivot=i=first). j is returned and
+         * j+1 is going to be used as pivot by other calls of the function, until j=pivot=last. */ 
+
+        /* Move indices to the right and to the left */
+        if(dir)
+        {    
+            /* Compare left elements with pivot */
+            do
             {
-		// Compare left elements with pivot
-                while(pSrc[i]<=pSrc[pivot] && i<last) 
-                    i++; // Move to the right
-    
-		// Compare right elements with pivot
-                while(pSrc[j]>pSrc[pivot])
-                    j--; // Move to the left
-    
-                if(i<j)
-                {
-                    // Swap i <-> j
-                    temp=pSrc[i];
-                    pSrc[i]=pSrc[j];
-                    pSrc[j]=temp;
-                }
-            }
- 
-            // Swap pivot <-> j   
-            temp=pSrc[pivot];
-            pSrc[pivot]=pSrc[j];
-            pSrc[j]=temp;
-    
-            arm_quick_sort_core_f32(pSrc, first, j-1,  dir);
-            arm_quick_sort_core_f32(pSrc, j+1,   last, dir);
+                i++; 
+            } while (pSrc[i] < pivot && i<last);
+       
+            /* Compare right elements with pivot */
+            do
+            {
+                j--; 
+            } while (pSrc[j] > pivot);
         }
-    }
-    else
-    {
-        if(first<last)
+        else
         {
-            pivot=first;
-            i=first;
-            j=last;
-    
-            while(i<j)
+            /* Compare left elements with pivot */
+            do
             {
-                while(pSrc[i]>=pSrc[pivot] && i<last)
-                    i++;
-    
-                while(pSrc[j]<pSrc[pivot])
-                    j--;
-    
-                if(i<j)
-                {
-                    temp=pSrc[i];
-                    pSrc[i]=pSrc[j];
-                    pSrc[j]=temp;
-                }
-            }
-    
-            temp=pSrc[pivot];
-            pSrc[pivot]=pSrc[j];
+                i++; 
+            } while (pSrc[i] > pivot && i<last);
+        
+            /* Compare right elements with pivot */
+            do
+            {
+                j--; 
+            } while (pSrc[j] < pivot);
+        }
+
+        /* If the indices didn't cross each other */
+        if (i < j) 
+        { 
+            /* i and j are in the wrong position -> Swap */
+            temp=pSrc[i];
+            pSrc[i]=pSrc[j];
             pSrc[j]=temp;
-    
-            arm_quick_sort_core_f32(pSrc, first, j-1,  dir);
-            arm_quick_sort_core_f32(pSrc, j+1,   last, dir);
         }
     }
 
+    return j; 
+}
+
+static void arm_quick_sort_core_f32(float32_t *pSrc, int32_t first, int32_t last, uint8_t dir)
+{
+    /* If the array [first ... last] has more than one element */
+    if(first<last)
+    {
+        int32_t pivot;
+
+        /* Compute pivot */
+        pivot = arm_quick_sort_partition_f32(pSrc, first, last, dir);
+
+        /* Iterate algorithm with two sub-arrays [first ... pivot] and [pivot+1 ... last] */
+        arm_quick_sort_core_f32(pSrc, first,   pivot, dir);
+        arm_quick_sort_core_f32(pSrc, pivot+1, last,  dir);
+    }
 }
 
 /**
@@ -120,10 +128,10 @@ static void arm_quick_sort_core_f32(float32_t *pSrc, uint32_t first, uint32_t la
 
 /**
    * @private
-   * @param[in]  S          points to an instance of the sorting structure.
-   * @param[in]  pSrc       points to the block of input data.
-   * @param[out] pDst       points to the block of output data
-   * @param[in]  blockSize  number of samples to process.
+   * @param[in]      S          points to an instance of the sorting structure.
+   * @param[in,out]  pSrc       points to the block of input data.
+   * @param[out]     pDst       points to the block of output data.
+   * @param[in]      blockSize  number of samples to process.
    *
    * @par        Algorithm
    *                The quick sort algorithm is a comparison algorithm that
@@ -134,29 +142,39 @@ static void arm_quick_sort_core_f32(float32_t *pSrc, uint32_t first, uint32_t la
    *                values greater than the pivot are moved after it (partition).
    *
    * @par
-   *       In this implementation the Hoare partition scheme has been 
-   *       used and the first element has always been chosen as the pivot.
+   *                In this implementation the Hoare partition scheme has been 
+   *                used [Hoare, C. A. R. (1 January 1962). "Quicksort". The Computer
+   *                Journal. 5 (1): 10–16.] The first element has always been chosen
+   *                as the pivot. The partition algorithm guarantees that the returned
+   *                pivot is never placed outside the vector, since it is returned only 
+   *                when the pointers crossed each other. In this way it isn't 
+   *                possible to obtain empty partitions and infinite recursion is avoided.
    *
-   * @par          It's an in-place algorithm. In order to obtain an out-of-place
-   *               function, a memcpy of the source vector is performed.
+   * @par
+   *                It's an in-place algorithm. In order to obtain an out-of-place
+   *                function, a memcpy of the source vector is performed.
    */
+
 void arm_quick_sort_f32(
   const arm_sort_instance_f32 * S, 
         float32_t * pSrc, 
         float32_t * pDst, 
         uint32_t blockSize)
 {
-   float32_t * pA;
+    float32_t * pA;
 
-   if(pSrc != pDst) // out-of-place
-   {   
-       memcpy(pDst, pSrc, blockSize*sizeof(float32_t) );
-       pA = pDst;
-   }
-   else
-       pA = pSrc;
+    /* Out-of-place */
+    if(pSrc != pDst) 
+    {   
+        memcpy(pDst, pSrc, blockSize*sizeof(float32_t) );
+        pA = pDst;
+    }
+    else
+        pA = pSrc;
 
     arm_quick_sort_core_f32(pA, 0, blockSize-1, S->dir);
+    /* The previous function could be called recursively a maximum 
+     * of (blockSize-1) times, generating a stack consumption of 4*(blockSize-1) bytes. */
 }
 
 /**
