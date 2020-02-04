@@ -1,7 +1,7 @@
 /* ----------------------------------------------------------------------
  * Project:      CMSIS DSP Library
- * Title:        arm_and_q15.c
- * Description:  Q15 bitwise AND
+ * Title:        arm_or_u16.c
+ * Description:  uint16_t bitwise inclusive OR
  *
  * $Date:        14 November 2019
  * $Revision:    V1.6.0
@@ -28,27 +28,25 @@
 
 #include "arm_math.h"
 
-
 /**
   @ingroup groupMath
  */
 
-
 /**
-  @defgroup And Vector bitwise AND
+  @defgroup Or Vector bitwise inclusive OR
 
-  Compute the logical bitwise AND.
+  Compute the logical bitwise OR.
 
-  There are separate functions for Q31, Q15, and Q7 data types.
+  There are separate functions for uint32_t, uint16_t, and uint8_t data types.
  */
 
 /**
-  @addtogroup And
+  @addtogroup Or
   @{
  */
 
 /**
-  @brief         Compute the logical bitwise AND of two fixed-point vectors.
+  @brief         Compute the logical bitwise OR of two fixed-point vectors.
   @param[in]     pSrcA      points to input vector A
   @param[in]     pSrcB      points to input vector B
   @param[out]    pDst       points to output vector
@@ -56,26 +54,58 @@
   @return        none
  */
 
-void arm_and_q15(
-    const q15_t * pSrcA,
-    const q15_t * pSrcB,
-    q15_t * pDst,
-    uint32_t blockSize)
+void arm_or_u16(
+    const uint16_t * pSrcA,
+    const uint16_t * pSrcB,
+          uint16_t * pDst,
+          uint32_t blockSize)
 {
     uint32_t blkCnt;      /* Loop counter */
 
-#if defined(ARM_MATH_NEON)
-    int16x8_t vecA, vecB;
+#if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
+    q15x8_t vecSrcA, vecSrcB;
+
+    /* Compute 8 outputs at a time */
+    blkCnt = blockSize >> 3;
+
+    while (blkCnt > 0U)
+    {
+        vecSrcA = vld1q(pSrcA);
+        vecSrcB = vld1q(pSrcB);
+
+        vst1q(pDst, vorrq_u16(vecSrcA, vecSrcB) );
+
+        pSrcA += 8;
+        pSrcB += 8;
+        pDst  += 8;
+
+        /* Decrement the loop counter */
+        blkCnt--;
+    }
+
+    /* Tail */
+    blkCnt = blockSize & 7;
+
+    if (blkCnt > 0U)
+    {
+        mve_pred16_t p0 = vctp16q(blkCnt);
+        vecSrcA = vld1q(pSrcA);
+        vecSrcB = vld1q(pSrcB);
+        vstrhq_p(pDst, vorrq_u16(vecSrcA, vecSrcB), p0);
+    }
+#else
+#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+    uint16x8_t vecA, vecB;
 
     /* Compute 8 outputs at a time */
     blkCnt = blockSize >> 3U;
 
     while (blkCnt > 0U)
     {
-        vecA = vld1q_s16(pSrcA);
-        vecB = vld1q_s16(pSrcB);
+        vecA = vld1q_u16(pSrcA);
+        vecB = vld1q_u16(pSrcB);
 
-        vst1q_s16(pDst, vandq_s16(vecA, vecB) );
+        vst1q_u16(pDst, vorrq_u16(vecA, vecB) );
 
         pSrcA += 8;
         pSrcB += 8;
@@ -94,13 +124,14 @@ void arm_and_q15(
 
     while (blkCnt > 0U)
     {
-        *pDst++ = (*pSrcA++)&(*pSrcB++);
+        *pDst++ = (*pSrcA++)|(*pSrcB++);
 
         /* Decrement the loop counter */
         blkCnt--;
     }
+#endif /* if defined(ARM_MATH_MVEI) */
 }
 
 /**
-  @} end of And group
+  @} end of Or group
  */

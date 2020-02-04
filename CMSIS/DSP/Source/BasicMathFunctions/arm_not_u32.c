@@ -1,7 +1,7 @@
 /* ----------------------------------------------------------------------
  * Project:      CMSIS DSP Library
- * Title:        arm_xor_q15.c
- * Description:  Q15 bitwise exclusive OR
+ * Title:        arm_not_u32.c
+ * Description:  uint32_t bitwise NOT
  *
  * $Date:        14 November 2019
  * $Revision:    V1.6.0
@@ -26,66 +26,82 @@
  * limitations under the License.
  */
 
+#include "arm_math.h"
 
 /**
   @ingroup groupMath
  */
 
 /**
-  @defgroup Xor Vector bitwise exclusive OR
-
-  Compute the logical bitwise XOR.
-
-  There are separate functions for Q31, Q15, and Q7 data types.
- */
-
-/**
-  @addtogroup Xor
+  @addtogroup Not
   @{
  */
 
 /**
-  @brief         Compute the logical bitwise XOR of two fixed-point vectors.
-  @param[in]     pSrcA      points to input vector A
-  @param[in]     pSrcB      points to input vector B
+  @brief         Compute the logical bitwise NOT of a fixed-point vector.
+  @param[in]     pSrc       points to input vector 
   @param[out]    pDst       points to output vector
   @param[in]     blockSize  number of samples in each vector
   @return        none
  */
 
-#include "arm_math.h"
-
-void arm_xor_q15(
-    const q15_t * pSrcA,
-    const q15_t * pSrcB,
-    q15_t * pDst,
-    uint32_t blockSize)
+void arm_not_u32(
+    const uint32_t * pSrc,
+          uint32_t * pDst,
+          uint32_t blockSize)
 {
     uint32_t blkCnt;      /* Loop counter */
 
-#if defined(ARM_MATH_NEON)
-    int16x8_t vecA, vecB;
+#if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
+    q31x4_t vecSrc;
 
     /* Compute 8 outputs at a time */
-    blkCnt = blockSize >> 3U;
+    blkCnt = blockSize >> 2;
 
     while (blkCnt > 0U)
     {
-        vecA = vld1q_s16(pSrcA);
-        vecB = vld1q_s16(pSrcB);
+        vecSrc = vld1q(pSrc);
 
-        vst1q_s16(pDst, veorq_s16(vecA, vecB) );
+        vst1q(pDst, vmvnq_u32(vecSrc) );
 
-        pSrcA += 8;
-        pSrcB += 8;
-        pDst  += 8;
+        pSrc += 4;
+        pDst += 4;
 
         /* Decrement the loop counter */
         blkCnt--;
     }
 
     /* Tail */
-    blkCnt = blockSize & 7;
+    blkCnt = blockSize & 3;
+
+    if (blkCnt > 0U)
+    {
+        mve_pred16_t p0 = vctp32q(blkCnt);
+        vecSrc = vld1q(pSrc);
+        vstrwq_p(pDst, vmvnq_u32(vecSrc), p0);
+    }
+#else
+#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+    uint32x4_t inV;
+
+    /* Compute 4 outputs at a time */
+    blkCnt = blockSize >> 2U;
+
+    while (blkCnt > 0U)
+    {
+        inV = vld1q_u32(pSrc);
+
+        vst1q_u32(pDst, vmvnq_u32(inV) );
+
+        pSrc += 4;
+        pDst += 4;
+
+        /* Decrement the loop counter */
+        blkCnt--;
+    }
+
+    /* Tail */
+    blkCnt = blockSize & 3;
 #else
     /* Initialize blkCnt with number of samples */
     blkCnt = blockSize;
@@ -93,13 +109,14 @@ void arm_xor_q15(
 
     while (blkCnt > 0U)
     {
-        *pDst++ = (*pSrcA++)^(*pSrcB++);
+        *pDst++ = ~(*pSrc++);
 
         /* Decrement the loop counter */
         blkCnt--;
     }
+#endif /* if defined(ARM_MATH_MVEI) */
 }
 
 /**
-  @} end of Xor group
+  @} end of Not group
  */

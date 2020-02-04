@@ -143,6 +143,21 @@ void assert_not_empty(unsigned long nb, AnyPattern<q7_t> &p)
   assert_not_empty_generic(nb,p);
 }
 
+void assert_not_empty(unsigned long nb, AnyPattern<uint32_t> &p)
+{
+  assert_not_empty_generic(nb,p);
+}
+
+void assert_not_empty(unsigned long nb, AnyPattern<uint16_t> &p)
+{
+  assert_not_empty_generic(nb,p);
+}
+
+void assert_not_empty(unsigned long nb, AnyPattern<uint8_t> &p)
+{
+  assert_not_empty_generic(nb,p);
+}
+
 void assert_relative_error(unsigned long nb,float64_t &a, float64_t &b, double threshold)
 {
     float64_t rel,delta,average;

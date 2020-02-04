@@ -1,7 +1,7 @@
 /* ----------------------------------------------------------------------
  * Project:      CMSIS DSP Library
- * Title:        arm_or_q7.c
- * Description:  Q7 bitwise inclusive OR
+ * Title:        arm_or_u8.c
+ * Description:  uint8_t bitwise inclusive OR
  *
  * $Date:        14 November 2019
  * $Revision:    V1.6.0
@@ -28,11 +28,9 @@
 
 #include "arm_math.h"
 
-
 /**
   @ingroup groupMath
  */
-
 
 /**
   @addtogroup Or
@@ -48,26 +46,58 @@
   @return        none
  */
 
-void arm_or_q7(
-    const q7_t * pSrcA,
-    const q7_t * pSrcB,
-    q7_t * pDst,
-    uint32_t blockSize)
+void arm_or_u8(
+    const uint8_t * pSrcA,
+    const uint8_t * pSrcB,
+          uint8_t * pDst,
+          uint32_t blockSize)
 {
     uint32_t blkCnt;      /* Loop counter */
 
-#if defined(ARM_MATH_NEON)
-    int8x16_t vecA, vecB;
+#if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
+    q7x16_t vecSrcA, vecSrcB;
+
+    /* Compute 16 outputs at a time */
+    blkCnt = blockSize >> 4;
+
+    while (blkCnt > 0U)
+    {
+        vecSrcA = vld1q(pSrcA);
+        vecSrcB = vld1q(pSrcB);
+
+        vst1q(pDst, vorrq_u8(vecSrcA, vecSrcB) );
+
+        pSrcA += 16;
+        pSrcB += 16;
+        pDst  += 16;
+
+        /* Decrement the loop counter */
+        blkCnt--;
+    }
+
+    /* Tail */
+    blkCnt = blockSize & 0xF;
+
+    if (blkCnt > 0U)
+    {
+        mve_pred16_t p0 = vctp8q(blkCnt);
+        vecSrcA = vld1q(pSrcA);
+        vecSrcB = vld1q(pSrcB);
+        vstrbq_p(pDst, vorrq_u8(vecSrcA, vecSrcB), p0);
+    }
+#else
+#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+    uint8x16_t vecA, vecB;
 
     /* Compute 16 outputs at a time */
     blkCnt = blockSize >> 4U;
 
     while (blkCnt > 0U)
     {
-        vecA = vld1q_s8(pSrcA);
-        vecB = vld1q_s8(pSrcB);
+        vecA = vld1q_u8(pSrcA);
+        vecB = vld1q_u8(pSrcB);
 
-        vst1q_s8(pDst, vorrq_s8(vecA, vecB) );
+        vst1q_u8(pDst, vorrq_u8(vecA, vecB) );
 
         pSrcA += 16;
         pSrcB += 16;
@@ -91,6 +121,7 @@ void arm_or_q7(
         /* Decrement the loop counter */
         blkCnt--;
     }
+#endif /* if defined(ARM_MATH_MVEI) */
 }
 /**
   @} end of Or group

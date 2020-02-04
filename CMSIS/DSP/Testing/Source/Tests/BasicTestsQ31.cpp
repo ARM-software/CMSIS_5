@@ -21,6 +21,13 @@ const q31_t *inp2=input2.ptr(); \
 q31_t *refp=ref.ptr(); \
 q31_t *outp=output.ptr();
 
+#define GET_LOGICAL_UINT32_PTR() \
+const uint32_t *inp1=inputLogical1.ptr(); \
+const uint32_t *inp2=inputLogical2.ptr(); \
+uint32_t *refp=refLogical.ptr(); \
+uint32_t *outp=outputLogical.ptr();
+
+
     void BasicTestsQ31::test_add_q31()
     {
         GET_Q31_PTR();
@@ -164,51 +171,51 @@ q31_t *outp=output.ptr();
        
     } 
 
-    void BasicTestsQ31::test_and_q31()
+    void BasicTestsQ31::test_and_u32()
     {
-        GET_Q31_PTR();
+        GET_LOGICAL_UINT32_PTR();
 
-        arm_and_q31(inp1,inp2,outp,input1.nbSamples());
+        arm_and_u32(inp1, inp2, outp,inputLogical1.nbSamples());
         
-        ASSERT_EMPTY_TAIL(output);
+        ASSERT_EMPTY_TAIL(outputLogical);
 
-        ASSERT_EQ(output,ref);
+        ASSERT_EQ(outputLogical,refLogical);
 
     } 
 
-    void BasicTestsQ31::test_or_q31()
+    void BasicTestsQ31::test_or_u32()
     {
-        GET_Q31_PTR();
+        GET_LOGICAL_UINT32_PTR();
 
-        arm_or_q31(inp1,inp2,outp,input1.nbSamples());
+        arm_or_u32(inp1,inp2,outp,inputLogical1.nbSamples());
         
-        ASSERT_EMPTY_TAIL(output);
+        ASSERT_EMPTY_TAIL(outputLogical);
 
-        ASSERT_EQ(output,ref);
+        ASSERT_EQ(outputLogical,refLogical);
 
     } 
 
-    void BasicTestsQ31::test_not_q31()
+    void BasicTestsQ31::test_not_u32()
     {
-        GET_Q31_PTR();
+        GET_LOGICAL_UINT32_PTR();
 
-        arm_not_q31(inp1,outp,input1.nbSamples());
+        arm_not_u32(inp1,outp,inputLogical1.nbSamples());
         
-        ASSERT_EMPTY_TAIL(output);
+        ASSERT_EMPTY_TAIL(outputLogical);
 
-        ASSERT_EQ(output,ref);
+        ASSERT_EQ(outputLogical,refLogical);
 
     } 
 
-    void BasicTestsQ31::test_xor_q31()
+    void BasicTestsQ31::test_xor_u32()
     {
-        GET_Q31_PTR();
+        GET_LOGICAL_UINT32_PTR();
 
-        arm_xor_q31(inp1,inp2,outp,input1.nbSamples());
+        arm_xor_u32(inp1,inp2,outp,inputLogical1.nbSamples());
         
-        ASSERT_EMPTY_TAIL(output);
+        ASSERT_EMPTY_TAIL(outputLogical);
 
-        ASSERT_EQ(output,ref);
+        ASSERT_EQ(outputLogical,refLogical);
 
     } 
 
@@ -225,7 +232,7 @@ q31_t *outp=output.ptr();
         case BasicTestsQ31::TEST_ADD_Q31_1:
           nb = 3;
           ref.reload(BasicTestsQ31::REF_ADD_Q31_ID,mgr,nb);
-          output.create(ref.nbSamples(),BasicTestsQ31::OUT_SAMPLES_Q31_ID,mgr);
+          output.create(ref.nbSamples(),BasicTestsQ31::OUT_SAMPLES_ID,mgr);
           input1.reload(BasicTestsQ31::INPUT1_Q31_ID,mgr,nb);
           input2.reload(BasicTestsQ31::INPUT2_Q31_ID,mgr,nb);
           break;
@@ -233,14 +240,14 @@ q31_t *outp=output.ptr();
         case BasicTestsQ31::TEST_ADD_Q31_2:
           nb = 8;
           ref.reload(BasicTestsQ31::REF_ADD_Q31_ID,mgr,nb);
-          output.create(ref.nbSamples(),BasicTestsQ31::OUT_SAMPLES_Q31_ID,mgr);
+          output.create(ref.nbSamples(),BasicTestsQ31::OUT_SAMPLES_ID,mgr);
           input1.reload(BasicTestsQ31::INPUT1_Q31_ID,mgr,nb);
           input2.reload(BasicTestsQ31::INPUT2_Q31_ID,mgr,nb);
           break;
         case BasicTestsQ31::TEST_ADD_Q31_3:
           nb = 11;
           ref.reload(BasicTestsQ31::REF_ADD_Q31_ID,mgr,nb);
-          output.create(ref.nbSamples(),BasicTestsQ31::OUT_SAMPLES_Q31_ID,mgr);
+          output.create(ref.nbSamples(),BasicTestsQ31::OUT_SAMPLES_ID,mgr);
           input1.reload(BasicTestsQ31::INPUT1_Q31_ID,mgr,nb);
           input2.reload(BasicTestsQ31::INPUT2_Q31_ID,mgr,nb);
           break;
@@ -249,21 +256,21 @@ q31_t *outp=output.ptr();
         case BasicTestsQ31::TEST_SUB_Q31_4:
           nb = 3;
           ref.reload(BasicTestsQ31::REF_SUB_Q31_ID,mgr,nb);
-          output.create(ref.nbSamples(),BasicTestsQ31::OUT_SAMPLES_Q31_ID,mgr);
+          output.create(ref.nbSamples(),BasicTestsQ31::OUT_SAMPLES_ID,mgr);
           input1.reload(BasicTestsQ31::INPUT1_Q31_ID,mgr,nb);
           input2.reload(BasicTestsQ31::INPUT2_Q31_ID,mgr,nb);
           break;
         case BasicTestsQ31::TEST_SUB_Q31_5:
           nb = 8;
           ref.reload(BasicTestsQ31::REF_SUB_Q31_ID,mgr,nb);
-          output.create(ref.nbSamples(),BasicTestsQ31::OUT_SAMPLES_Q31_ID,mgr);
+          output.create(ref.nbSamples(),BasicTestsQ31::OUT_SAMPLES_ID,mgr);
           input1.reload(BasicTestsQ31::INPUT1_Q31_ID,mgr,nb);
           input2.reload(BasicTestsQ31::INPUT2_Q31_ID,mgr,nb);
           break;
         case BasicTestsQ31::TEST_SUB_Q31_6:
           nb = 11;
           ref.reload(BasicTestsQ31::REF_SUB_Q31_ID,mgr,nb);
-          output.create(ref.nbSamples(),BasicTestsQ31::OUT_SAMPLES_Q31_ID,mgr);
+          output.create(ref.nbSamples(),BasicTestsQ31::OUT_SAMPLES_ID,mgr);
           input1.reload(BasicTestsQ31::INPUT1_Q31_ID,mgr,nb);
           input2.reload(BasicTestsQ31::INPUT2_Q31_ID,mgr,nb);
           break;
@@ -271,21 +278,21 @@ q31_t *outp=output.ptr();
         case BasicTestsQ31::TEST_MULT_Q31_7:
           nb = 3;
           ref.reload(BasicTestsQ31::REF_MULT_Q31_ID,mgr,nb);
-          output.create(ref.nbSamples(),BasicTestsQ31::OUT_SAMPLES_Q31_ID,mgr);
+          output.create(ref.nbSamples(),BasicTestsQ31::OUT_SAMPLES_ID,mgr);
           input1.reload(BasicTestsQ31::INPUT1_Q31_ID,mgr,nb);
           input2.reload(BasicTestsQ31::INPUT2_Q31_ID,mgr,nb);
           break;
         case BasicTestsQ31::TEST_MULT_Q31_8:
           nb = 8;
           ref.reload(BasicTestsQ31::REF_MULT_Q31_ID,mgr,nb);
-          output.create(ref.nbSamples(),BasicTestsQ31::OUT_SAMPLES_Q31_ID,mgr);
+          output.create(ref.nbSamples(),BasicTestsQ31::OUT_SAMPLES_ID,mgr);
           input1.reload(BasicTestsQ31::INPUT1_Q31_ID,mgr,nb);
           input2.reload(BasicTestsQ31::INPUT2_Q31_ID,mgr,nb);
           break;
         case BasicTestsQ31::TEST_MULT_Q31_9:
           nb = 11;
           ref.reload(BasicTestsQ31::REF_MULT_Q31_ID,mgr,nb);
-          output.create(ref.nbSamples(),BasicTestsQ31::OUT_SAMPLES_Q31_ID,mgr);
+          output.create(ref.nbSamples(),BasicTestsQ31::OUT_SAMPLES_ID,mgr);
           input1.reload(BasicTestsQ31::INPUT1_Q31_ID,mgr,nb);
           input2.reload(BasicTestsQ31::INPUT2_Q31_ID,mgr,nb);
           break;
@@ -293,78 +300,78 @@ q31_t *outp=output.ptr();
         case BasicTestsQ31::TEST_NEGATE_Q31_10:
           nb = 3;
           ref.reload(BasicTestsQ31::REF_NEGATE_Q31_ID,mgr,nb);
-          output.create(ref.nbSamples(),BasicTestsQ31::OUT_SAMPLES_Q31_ID,mgr);
+          output.create(ref.nbSamples(),BasicTestsQ31::OUT_SAMPLES_ID,mgr);
           input1.reload(BasicTestsQ31::INPUT1_Q31_ID,mgr,nb);
           break;
         case BasicTestsQ31::TEST_NEGATE_Q31_11:
           nb = 8;
           ref.reload(BasicTestsQ31::REF_NEGATE_Q31_ID,mgr,nb);
-          output.create(ref.nbSamples(),BasicTestsQ31::OUT_SAMPLES_Q31_ID,mgr);
+          output.create(ref.nbSamples(),BasicTestsQ31::OUT_SAMPLES_ID,mgr);
           input1.reload(BasicTestsQ31::INPUT1_Q31_ID,mgr,nb);
           break;
         case BasicTestsQ31::TEST_NEGATE_Q31_12:
           nb = 11;
           ref.reload(BasicTestsQ31::REF_NEGATE_Q31_ID,mgr,nb);
-          output.create(ref.nbSamples(),BasicTestsQ31::OUT_SAMPLES_Q31_ID,mgr);
+          output.create(ref.nbSamples(),BasicTestsQ31::OUT_SAMPLES_ID,mgr);
           input1.reload(BasicTestsQ31::INPUT1_Q31_ID,mgr,nb);
           break;
 
         case BasicTestsQ31::TEST_OFFSET_Q31_13:
           nb = 3;
           ref.reload(BasicTestsQ31::REF_OFFSET_Q31_ID,mgr,nb);
-          output.create(ref.nbSamples(),BasicTestsQ31::OUT_SAMPLES_Q31_ID,mgr);
+          output.create(ref.nbSamples(),BasicTestsQ31::OUT_SAMPLES_ID,mgr);
           input1.reload(BasicTestsQ31::INPUT1_Q31_ID,mgr,nb);
           break;
         case BasicTestsQ31::TEST_OFFSET_Q31_14:
           nb = 8;
           ref.reload(BasicTestsQ31::REF_OFFSET_Q31_ID,mgr,nb);
-          output.create(ref.nbSamples(),BasicTestsQ31::OUT_SAMPLES_Q31_ID,mgr);
+          output.create(ref.nbSamples(),BasicTestsQ31::OUT_SAMPLES_ID,mgr);
           input1.reload(BasicTestsQ31::INPUT1_Q31_ID,mgr,nb);
           break;
         case BasicTestsQ31::TEST_OFFSET_Q31_15:
           nb = 11;
           ref.reload(BasicTestsQ31::REF_OFFSET_Q31_ID,mgr,nb);
-          output.create(ref.nbSamples(),BasicTestsQ31::OUT_SAMPLES_Q31_ID,mgr);
+          output.create(ref.nbSamples(),BasicTestsQ31::OUT_SAMPLES_ID,mgr);
           input1.reload(BasicTestsQ31::INPUT1_Q31_ID,mgr,nb);
           break;
 
         case BasicTestsQ31::TEST_SCALE_Q31_16:
           nb = 3;
           ref.reload(BasicTestsQ31::REF_SCALE_Q31_ID,mgr,nb);
-          output.create(ref.nbSamples(),BasicTestsQ31::OUT_SAMPLES_Q31_ID,mgr);
+          output.create(ref.nbSamples(),BasicTestsQ31::OUT_SAMPLES_ID,mgr);
           input1.reload(BasicTestsQ31::INPUT1_Q31_ID,mgr,nb);
           break;
         case BasicTestsQ31::TEST_SCALE_Q31_17:
           nb = 8;
           ref.reload(BasicTestsQ31::REF_SCALE_Q31_ID,mgr,nb);
-          output.create(ref.nbSamples(),BasicTestsQ31::OUT_SAMPLES_Q31_ID,mgr);
+          output.create(ref.nbSamples(),BasicTestsQ31::OUT_SAMPLES_ID,mgr);
           input1.reload(BasicTestsQ31::INPUT1_Q31_ID,mgr,nb);
           break;
         case BasicTestsQ31::TEST_SCALE_Q31_18:
           nb = 11;
           ref.reload(BasicTestsQ31::REF_SCALE_Q31_ID,mgr,nb);
-          output.create(ref.nbSamples(),BasicTestsQ31::OUT_SAMPLES_Q31_ID,mgr);
+          output.create(ref.nbSamples(),BasicTestsQ31::OUT_SAMPLES_ID,mgr);
           input1.reload(BasicTestsQ31::INPUT1_Q31_ID,mgr,nb);
           break;
 
         case BasicTestsQ31::TEST_DOT_PROD_Q31_19:
           nb = 3;
           dotRef.reload(BasicTestsQ31::REF_DOT_3_Q31_ID,mgr);
-          dotOutput.create(dotRef.nbSamples(),BasicTestsQ31::OUT_SAMPLES_Q31_ID,mgr);
+          dotOutput.create(dotRef.nbSamples(),BasicTestsQ31::OUT_SAMPLES_ID,mgr);
           input1.reload(BasicTestsQ31::INPUT1_Q31_ID,mgr,nb);
           input2.reload(BasicTestsQ31::INPUT2_Q31_ID,mgr,nb);
           break;
         case BasicTestsQ31::TEST_DOT_PROD_Q31_20:
           nb = 8;
           dotRef.reload(BasicTestsQ31::REF_DOT_4N_Q31_ID,mgr);
-          dotOutput.create(dotRef.nbSamples(),BasicTestsQ31::OUT_SAMPLES_Q31_ID,mgr);
+          dotOutput.create(dotRef.nbSamples(),BasicTestsQ31::OUT_SAMPLES_ID,mgr);
           input1.reload(BasicTestsQ31::INPUT1_Q31_ID,mgr,nb);
           input2.reload(BasicTestsQ31::INPUT2_Q31_ID,mgr,nb);
           break;
         case BasicTestsQ31::TEST_DOT_PROD_Q31_21:
           nb = 11;
           dotRef.reload(BasicTestsQ31::REF_DOT_4N1_Q31_ID,mgr);
-          dotOutput.create(dotRef.nbSamples(),BasicTestsQ31::OUT_SAMPLES_Q31_ID,mgr);
+          dotOutput.create(dotRef.nbSamples(),BasicTestsQ31::OUT_SAMPLES_ID,mgr);
           input1.reload(BasicTestsQ31::INPUT1_Q31_ID,mgr,nb);
           input2.reload(BasicTestsQ31::INPUT2_Q31_ID,mgr,nb);
           break;
@@ -372,21 +379,21 @@ q31_t *outp=output.ptr();
         case BasicTestsQ31::TEST_ABS_Q31_22:
           nb = 3;
           ref.reload(BasicTestsQ31::REF_ABS_Q31_ID,mgr,nb);
-          output.create(ref.nbSamples(),BasicTestsQ31::OUT_SAMPLES_Q31_ID,mgr);
+          output.create(ref.nbSamples(),BasicTestsQ31::OUT_SAMPLES_ID,mgr);
           input1.reload(BasicTestsQ31::INPUT1_Q31_ID,mgr,nb);
           input2.reload(BasicTestsQ31::INPUT2_Q31_ID,mgr,nb);
           break;
         case BasicTestsQ31::TEST_ABS_Q31_23:
           nb = 8;
           ref.reload(BasicTestsQ31::REF_ABS_Q31_ID,mgr,nb);
-          output.create(ref.nbSamples(),BasicTestsQ31::OUT_SAMPLES_Q31_ID,mgr);
+          output.create(ref.nbSamples(),BasicTestsQ31::OUT_SAMPLES_ID,mgr);
           input1.reload(BasicTestsQ31::INPUT1_Q31_ID,mgr,nb);
           input2.reload(BasicTestsQ31::INPUT2_Q31_ID,mgr,nb);
           break;
         case BasicTestsQ31::TEST_ABS_Q31_24:
           nb = 11;
           ref.reload(BasicTestsQ31::REF_ABS_Q31_ID,mgr,nb);
-          output.create(ref.nbSamples(),BasicTestsQ31::OUT_SAMPLES_Q31_ID,mgr);
+          output.create(ref.nbSamples(),BasicTestsQ31::OUT_SAMPLES_ID,mgr);
           input1.reload(BasicTestsQ31::INPUT1_Q31_ID,mgr,nb);
           input2.reload(BasicTestsQ31::INPUT2_Q31_ID,mgr,nb);
           break;
@@ -395,46 +402,46 @@ q31_t *outp=output.ptr();
           input1.reload(BasicTestsQ31::MAXPOS_Q31_ID,mgr);
           input2.reload(BasicTestsQ31::MAXPOS_Q31_ID,mgr);
           ref.reload(BasicTestsQ31::REF_POSSAT_12_Q31_ID,mgr);
-          output.create(ref.nbSamples(),BasicTestsQ31::OUT_SAMPLES_Q31_ID,mgr);
+          output.create(ref.nbSamples(),BasicTestsQ31::OUT_SAMPLES_ID,mgr);
         break;
 
         case BasicTestsQ31::TEST_ADD_Q31_26:
           input1.reload(BasicTestsQ31::MAXNEG_Q31_ID,mgr);
           input2.reload(BasicTestsQ31::MAXNEG_Q31_ID,mgr);
           ref.reload(BasicTestsQ31::REF_NEGSAT_13_Q31_ID,mgr);
-          output.create(ref.nbSamples(),BasicTestsQ31::OUT_SAMPLES_Q31_ID,mgr);
+          output.create(ref.nbSamples(),BasicTestsQ31::OUT_SAMPLES_ID,mgr);
         break;
 
         case BasicTestsQ31::TEST_SUB_Q31_27:
           ref.reload(BasicTestsQ31::REF_POSSAT_14_Q31_ID,mgr);
-          output.create(ref.nbSamples(),BasicTestsQ31::OUT_SAMPLES_Q31_ID,mgr);
+          output.create(ref.nbSamples(),BasicTestsQ31::OUT_SAMPLES_ID,mgr);
           input1.reload(BasicTestsQ31::MAXPOS_Q31_ID,mgr);
           input2.reload(BasicTestsQ31::MAXNEG_Q31_ID,mgr);
         break;
 
         case BasicTestsQ31::TEST_SUB_Q31_28:
           ref.reload(BasicTestsQ31::REF_NEGSAT_15_Q31_ID,mgr);
-          output.create(ref.nbSamples(),BasicTestsQ31::OUT_SAMPLES_Q31_ID,mgr);
+          output.create(ref.nbSamples(),BasicTestsQ31::OUT_SAMPLES_ID,mgr);
           input1.reload(BasicTestsQ31::MAXNEG_Q31_ID,mgr);
           input2.reload(BasicTestsQ31::MAXPOS_Q31_ID,mgr);
         break;
 
         case BasicTestsQ31::TEST_MULT_Q31_29:
           ref.reload(BasicTestsQ31::REF_POSSAT_16_Q31_ID,mgr);
-          output.create(ref.nbSamples(),BasicTestsQ31::OUT_SAMPLES_Q31_ID,mgr);
+          output.create(ref.nbSamples(),BasicTestsQ31::OUT_SAMPLES_ID,mgr);
           input1.reload(BasicTestsQ31::MAXNEG2_Q31_ID,mgr);
           input2.reload(BasicTestsQ31::MAXNEG2_Q31_ID,mgr);
         break;
 
         case BasicTestsQ31::TEST_NEGATE_Q31_30:
           ref.reload(BasicTestsQ31::REF_POSSAT_17_Q31_ID,mgr);
-          output.create(ref.nbSamples(),BasicTestsQ31::OUT_SAMPLES_Q31_ID,mgr);
+          output.create(ref.nbSamples(),BasicTestsQ31::OUT_SAMPLES_ID,mgr);
           input1.reload(BasicTestsQ31::MAXNEG2_Q31_ID,mgr);
           break;
 
         case BasicTestsQ31::TEST_OFFSET_Q31_31:
           ref.reload(BasicTestsQ31::REF_POSSAT_18_Q31_ID,mgr);
-          output.create(ref.nbSamples(),BasicTestsQ31::OUT_SAMPLES_Q31_ID,mgr);
+          output.create(ref.nbSamples(),BasicTestsQ31::OUT_SAMPLES_ID,mgr);
           input1.reload(BasicTestsQ31::MAXPOS_Q31_ID,mgr);
           /* 0.9 */
           this->scalar = 0x73333333;
@@ -442,7 +449,7 @@ q31_t *outp=output.ptr();
 
         case BasicTestsQ31::TEST_OFFSET_Q31_32:
           ref.reload(BasicTestsQ31::REF_NEGSAT_19_Q31_ID,mgr);
-          output.create(ref.nbSamples(),BasicTestsQ31::OUT_SAMPLES_Q31_ID,mgr);
+          output.create(ref.nbSamples(),BasicTestsQ31::OUT_SAMPLES_ID,mgr);
           input1.reload(BasicTestsQ31::MAXNEG_Q31_ID,mgr);
           /* -0.9 */
           this->scalar = 0x8ccccccd;
@@ -450,7 +457,7 @@ q31_t *outp=output.ptr();
 
         case BasicTestsQ31::TEST_SCALE_Q31_33:
           ref.reload(BasicTestsQ31::REF_POSSAT_20_Q31_ID,mgr);
-          output.create(ref.nbSamples(),BasicTestsQ31::OUT_SAMPLES_Q31_ID,mgr);
+          output.create(ref.nbSamples(),BasicTestsQ31::OUT_SAMPLES_ID,mgr);
           input1.reload(BasicTestsQ31::MAXNEG2_Q31_ID,mgr);
           /* Minus max*/
           this->scalar = 0x80000000;
@@ -458,163 +465,163 @@ q31_t *outp=output.ptr();
 
         case BasicTestsQ31::TEST_SHIFT_Q31_34:
           ref.reload(BasicTestsQ31::REF_SHIFT_21_Q31_ID,mgr);
-          output.create(ref.nbSamples(),BasicTestsQ31::OUT_SAMPLES_Q31_ID,mgr);
+          output.create(ref.nbSamples(),BasicTestsQ31::OUT_SAMPLES_ID,mgr);
           input1.reload(BasicTestsQ31::INPUTRAND_Q31_ID,mgr);
         break;
 
         case BasicTestsQ31::TEST_SHIFT_Q31_35:
           ref.reload(BasicTestsQ31::REF_SHIFT_POSSAT_22_Q31_ID,mgr);
-          output.create(ref.nbSamples(),BasicTestsQ31::OUT_SAMPLES_Q31_ID,mgr);
+          output.create(ref.nbSamples(),BasicTestsQ31::OUT_SAMPLES_ID,mgr);
           input1.reload(BasicTestsQ31::MAXPOS_Q31_ID,mgr);
         break;
 
         case BasicTestsQ31::TEST_SHIFT_Q31_36:
           ref.reload(BasicTestsQ31::REF_SHIFT_NEGSAT_23_Q31_ID,mgr);
-          output.create(ref.nbSamples(),BasicTestsQ31::OUT_SAMPLES_Q31_ID,mgr);
+          output.create(ref.nbSamples(),BasicTestsQ31::OUT_SAMPLES_ID,mgr);
           input1.reload(BasicTestsQ31::MAXNEG_Q31_ID,mgr);
         break;
 
-        case BasicTestsQ31::TEST_AND_Q31_37:
+        case BasicTestsQ31::TEST_AND_U32_37:
           nb = 3;
-          ref.reload(BasicTestsQ31::REF_AND_Q31_ID,mgr,nb);
-          output.create(ref.nbSamples(),BasicTestsQ31::OUT_SAMPLES_Q31_ID,mgr);
-          input1.reload(BasicTestsQ31::INPUT1_BITWISE_Q31_ID,mgr,nb);
-          input2.reload(BasicTestsQ31::INPUT2_BITWISE_Q31_ID,mgr,nb);
+          refLogical.reload(BasicTestsQ31::REF_AND_Q31_ID,mgr,nb);
+          outputLogical.create(refLogical.nbSamples(),BasicTestsQ31::OUT_SAMPLES_ID,mgr);
+          inputLogical1.reload(BasicTestsQ31::INPUT1_BITWISE_Q31_ID,mgr,nb);
+          inputLogical2.reload(BasicTestsQ31::INPUT2_BITWISE_Q31_ID,mgr,nb);
           break;
 
-        case BasicTestsQ31::TEST_AND_Q31_38:
+        case BasicTestsQ31::TEST_AND_U32_38:
           nb = 8;
-          ref.reload(BasicTestsQ31::REF_AND_Q31_ID,mgr,nb);
-          output.create(ref.nbSamples(),BasicTestsQ31::OUT_SAMPLES_Q31_ID,mgr);
-          input1.reload(BasicTestsQ31::INPUT1_BITWISE_Q31_ID,mgr,nb);
-          input2.reload(BasicTestsQ31::INPUT2_BITWISE_Q31_ID,mgr,nb);
+          refLogical.reload(BasicTestsQ31::REF_AND_Q31_ID,mgr,nb);
+          outputLogical.create(refLogical.nbSamples(),BasicTestsQ31::OUT_SAMPLES_ID,mgr);
+          inputLogical1.reload(BasicTestsQ31::INPUT1_BITWISE_Q31_ID,mgr,nb);
+          inputLogical2.reload(BasicTestsQ31::INPUT2_BITWISE_Q31_ID,mgr,nb);
           break;
-        case BasicTestsQ31::TEST_AND_Q31_39:
+        case BasicTestsQ31::TEST_AND_U32_39:
           nb = 11;
-          ref.reload(BasicTestsQ31::REF_AND_Q31_ID,mgr,nb);
-          output.create(ref.nbSamples(),BasicTestsQ31::OUT_SAMPLES_Q31_ID,mgr);
-          input1.reload(BasicTestsQ31::INPUT1_BITWISE_Q31_ID,mgr,nb);
-          input2.reload(BasicTestsQ31::INPUT2_BITWISE_Q31_ID,mgr,nb);
+          refLogical.reload(BasicTestsQ31::REF_AND_Q31_ID,mgr,nb);
+          outputLogical.create(refLogical.nbSamples(),BasicTestsQ31::OUT_SAMPLES_ID,mgr);
+          inputLogical1.reload(BasicTestsQ31::INPUT1_BITWISE_Q31_ID,mgr,nb);
+          inputLogical2.reload(BasicTestsQ31::INPUT2_BITWISE_Q31_ID,mgr,nb);
           break;
 
-        case BasicTestsQ31::TEST_OR_Q31_40:
+        case BasicTestsQ31::TEST_OR_U32_40:
           nb = 3;
-          ref.reload(BasicTestsQ31::REF_OR_Q31_ID,mgr,nb);
-          output.create(ref.nbSamples(),BasicTestsQ31::OUT_SAMPLES_Q31_ID,mgr);
-          input1.reload(BasicTestsQ31::INPUT1_BITWISE_Q31_ID,mgr,nb);
-          input2.reload(BasicTestsQ31::INPUT2_BITWISE_Q31_ID,mgr,nb);
+          refLogical.reload(BasicTestsQ31::REF_OR_Q31_ID,mgr,nb);
+          outputLogical.create(refLogical.nbSamples(),BasicTestsQ31::OUT_SAMPLES_ID,mgr);
+          inputLogical1.reload(BasicTestsQ31::INPUT1_BITWISE_Q31_ID,mgr,nb);
+          inputLogical2.reload(BasicTestsQ31::INPUT2_BITWISE_Q31_ID,mgr,nb);
           break;
 
-        case BasicTestsQ31::TEST_OR_Q31_41:
+        case BasicTestsQ31::TEST_OR_U32_41:
           nb = 8;
-          ref.reload(BasicTestsQ31::REF_OR_Q31_ID,mgr,nb);
-          output.create(ref.nbSamples(),BasicTestsQ31::OUT_SAMPLES_Q31_ID,mgr);
-          input1.reload(BasicTestsQ31::INPUT1_BITWISE_Q31_ID,mgr,nb);
-          input2.reload(BasicTestsQ31::INPUT2_BITWISE_Q31_ID,mgr,nb);
+          refLogical.reload(BasicTestsQ31::REF_OR_Q31_ID,mgr,nb);
+          outputLogical.create(refLogical.nbSamples(),BasicTestsQ31::OUT_SAMPLES_ID,mgr);
+          inputLogical1.reload(BasicTestsQ31::INPUT1_BITWISE_Q31_ID,mgr,nb);
+          inputLogical2.reload(BasicTestsQ31::INPUT2_BITWISE_Q31_ID,mgr,nb);
           break;
-        case BasicTestsQ31::TEST_OR_Q31_42:
+        case BasicTestsQ31::TEST_OR_U32_42:
           nb = 11;
-          ref.reload(BasicTestsQ31::REF_OR_Q31_ID,mgr,nb);
-          output.create(ref.nbSamples(),BasicTestsQ31::OUT_SAMPLES_Q31_ID,mgr);
-          input1.reload(BasicTestsQ31::INPUT1_BITWISE_Q31_ID,mgr,nb);
-          input2.reload(BasicTestsQ31::INPUT2_BITWISE_Q31_ID,mgr,nb);
+          refLogical.reload(BasicTestsQ31::REF_OR_Q31_ID,mgr,nb);
+          outputLogical.create(refLogical.nbSamples(),BasicTestsQ31::OUT_SAMPLES_ID,mgr);
+          inputLogical1.reload(BasicTestsQ31::INPUT1_BITWISE_Q31_ID,mgr,nb);
+          inputLogical2.reload(BasicTestsQ31::INPUT2_BITWISE_Q31_ID,mgr,nb);
           break;
 
-        case BasicTestsQ31::TEST_NOT_Q31_43:
+        case BasicTestsQ31::TEST_NOT_U32_43:
           nb = 3;
-          ref.reload(BasicTestsQ31::REF_NOT_Q31_ID,mgr,nb);
-          output.create(ref.nbSamples(),BasicTestsQ31::OUT_SAMPLES_Q31_ID,mgr);
-          input1.reload(BasicTestsQ31::INPUT1_BITWISE_Q31_ID,mgr,nb);
-          input2.reload(BasicTestsQ31::INPUT2_BITWISE_Q31_ID,mgr,nb);
+          refLogical.reload(BasicTestsQ31::REF_NOT_Q31_ID,mgr,nb);
+          outputLogical.create(refLogical.nbSamples(),BasicTestsQ31::OUT_SAMPLES_ID,mgr);
+          inputLogical1.reload(BasicTestsQ31::INPUT1_BITWISE_Q31_ID,mgr,nb);
+          inputLogical2.reload(BasicTestsQ31::INPUT2_BITWISE_Q31_ID,mgr,nb);
           break;
 
-        case BasicTestsQ31::TEST_NOT_Q31_44:
+        case BasicTestsQ31::TEST_NOT_U32_44:
           nb = 8;
-          ref.reload(BasicTestsQ31::REF_NOT_Q31_ID,mgr,nb);
-          output.create(ref.nbSamples(),BasicTestsQ31::OUT_SAMPLES_Q31_ID,mgr);
-          input1.reload(BasicTestsQ31::INPUT1_BITWISE_Q31_ID,mgr,nb);
-          input2.reload(BasicTestsQ31::INPUT2_BITWISE_Q31_ID,mgr,nb);
+          refLogical.reload(BasicTestsQ31::REF_NOT_Q31_ID,mgr,nb);
+          outputLogical.create(refLogical.nbSamples(),BasicTestsQ31::OUT_SAMPLES_ID,mgr);
+          inputLogical1.reload(BasicTestsQ31::INPUT1_BITWISE_Q31_ID,mgr,nb);
+          inputLogical2.reload(BasicTestsQ31::INPUT2_BITWISE_Q31_ID,mgr,nb);
           break;
-        case BasicTestsQ31::TEST_NOT_Q31_45:
+        case BasicTestsQ31::TEST_NOT_U32_45:
           nb = 11;
-          ref.reload(BasicTestsQ31::REF_NOT_Q31_ID,mgr,nb);
-          output.create(ref.nbSamples(),BasicTestsQ31::OUT_SAMPLES_Q31_ID,mgr);
-          input1.reload(BasicTestsQ31::INPUT1_BITWISE_Q31_ID,mgr,nb);
-          input2.reload(BasicTestsQ31::INPUT2_BITWISE_Q31_ID,mgr,nb);
+          refLogical.reload(BasicTestsQ31::REF_NOT_Q31_ID,mgr,nb);
+          outputLogical.create(refLogical.nbSamples(),BasicTestsQ31::OUT_SAMPLES_ID,mgr);
+          inputLogical1.reload(BasicTestsQ31::INPUT1_BITWISE_Q31_ID,mgr,nb);
+          inputLogical2.reload(BasicTestsQ31::INPUT2_BITWISE_Q31_ID,mgr,nb);
           break;
 
-        case BasicTestsQ31::TEST_XOR_Q31_46:
+        case BasicTestsQ31::TEST_XOR_U32_46:
           nb = 3;
-          ref.reload(BasicTestsQ31::REF_XOR_Q31_ID,mgr,nb);
-          output.create(ref.nbSamples(),BasicTestsQ31::OUT_SAMPLES_Q31_ID,mgr);
-          input1.reload(BasicTestsQ31::INPUT1_BITWISE_Q31_ID,mgr,nb);
-          input2.reload(BasicTestsQ31::INPUT2_BITWISE_Q31_ID,mgr,nb);
+          refLogical.reload(BasicTestsQ31::REF_XOR_Q31_ID,mgr,nb);
+          outputLogical.create(refLogical.nbSamples(),BasicTestsQ31::OUT_SAMPLES_ID,mgr);
+          inputLogical1.reload(BasicTestsQ31::INPUT1_BITWISE_Q31_ID,mgr,nb);
+          inputLogical2.reload(BasicTestsQ31::INPUT2_BITWISE_Q31_ID,mgr,nb);
           break;
 
-        case BasicTestsQ31::TEST_XOR_Q31_47:
+        case BasicTestsQ31::TEST_XOR_U32_47:
           nb = 8;
-          ref.reload(BasicTestsQ31::REF_XOR_Q31_ID,mgr,nb);
-          output.create(ref.nbSamples(),BasicTestsQ31::OUT_SAMPLES_Q31_ID,mgr);
-          input1.reload(BasicTestsQ31::INPUT1_BITWISE_Q31_ID,mgr,nb);
-          input2.reload(BasicTestsQ31::INPUT2_BITWISE_Q31_ID,mgr,nb);
+          refLogical.reload(BasicTestsQ31::REF_XOR_Q31_ID,mgr,nb);
+          outputLogical.create(refLogical.nbSamples(),BasicTestsQ31::OUT_SAMPLES_ID,mgr);
+          inputLogical1.reload(BasicTestsQ31::INPUT1_BITWISE_Q31_ID,mgr,nb);
+          inputLogical2.reload(BasicTestsQ31::INPUT2_BITWISE_Q31_ID,mgr,nb);
           break;
-        case BasicTestsQ31::TEST_XOR_Q31_48:
+        case BasicTestsQ31::TEST_XOR_U32_48:
           nb = 11;
-          ref.reload(BasicTestsQ31::REF_XOR_Q31_ID,mgr,nb);
-          output.create(ref.nbSamples(),BasicTestsQ31::OUT_SAMPLES_Q31_ID,mgr);
-          input1.reload(BasicTestsQ31::INPUT1_BITWISE_Q31_ID,mgr,nb);
-          input2.reload(BasicTestsQ31::INPUT2_BITWISE_Q31_ID,mgr,nb);
+          refLogical.reload(BasicTestsQ31::REF_XOR_Q31_ID,mgr,nb);
+          outputLogical.create(refLogical.nbSamples(),BasicTestsQ31::OUT_SAMPLES_ID,mgr);
+          inputLogical1.reload(BasicTestsQ31::INPUT1_BITWISE_Q31_ID,mgr,nb);
+          inputLogical2.reload(BasicTestsQ31::INPUT2_BITWISE_Q31_ID,mgr,nb);
           break;
 
         case BasicTestsQ31::TEST_ADD_Q31_49:
           ref.reload(BasicTestsQ31::REF_ADD_Q31_ID,mgr,nb);
-          output.create(ref.nbSamples(),BasicTestsQ31::OUT_SAMPLES_Q31_ID,mgr);
+          output.create(ref.nbSamples(),BasicTestsQ31::OUT_SAMPLES_ID,mgr);
           input1.reload(BasicTestsQ31::INPUT1_Q31_ID,mgr,nb);
           input2.reload(BasicTestsQ31::INPUT2_Q31_ID,mgr,nb);
         break;
         
         case BasicTestsQ31::TEST_SUB_Q31_50:
           ref.reload(BasicTestsQ31::REF_SUB_Q31_ID,mgr,nb);
-          output.create(ref.nbSamples(),BasicTestsQ31::OUT_SAMPLES_Q31_ID,mgr);
+          output.create(ref.nbSamples(),BasicTestsQ31::OUT_SAMPLES_ID,mgr);
           input1.reload(BasicTestsQ31::INPUT1_Q31_ID,mgr,nb);
           input2.reload(BasicTestsQ31::INPUT2_Q31_ID,mgr,nb);
         break;
         
         case BasicTestsQ31::TEST_MULT_Q31_51:
           ref.reload(BasicTestsQ31::REF_MULT_Q31_ID,mgr,nb);
-          output.create(ref.nbSamples(),BasicTestsQ31::OUT_SAMPLES_Q31_ID,mgr);
+          output.create(ref.nbSamples(),BasicTestsQ31::OUT_SAMPLES_ID,mgr);
           input1.reload(BasicTestsQ31::INPUT1_Q31_ID,mgr,nb);
           input2.reload(BasicTestsQ31::INPUT2_Q31_ID,mgr,nb);
         break;
         
         case BasicTestsQ31::TEST_NEGATE_Q31_52:
           ref.reload(BasicTestsQ31::REF_NEGATE_Q31_ID,mgr,nb);
-          output.create(ref.nbSamples(),BasicTestsQ31::OUT_SAMPLES_Q31_ID,mgr);
+          output.create(ref.nbSamples(),BasicTestsQ31::OUT_SAMPLES_ID,mgr);
           input1.reload(BasicTestsQ31::INPUT1_Q31_ID,mgr,nb);
         break;
         
         case BasicTestsQ31::TEST_OFFSET_Q31_53:
           ref.reload(BasicTestsQ31::REF_OFFSET_Q31_ID,mgr,nb);
-          output.create(ref.nbSamples(),BasicTestsQ31::OUT_SAMPLES_Q31_ID,mgr);
+          output.create(ref.nbSamples(),BasicTestsQ31::OUT_SAMPLES_ID,mgr);
           input1.reload(BasicTestsQ31::INPUT1_Q31_ID,mgr,nb);
         break;
         
         case BasicTestsQ31::TEST_SCALE_Q31_54:
           ref.reload(BasicTestsQ31::REF_SCALE_Q31_ID,mgr,nb);
-          output.create(ref.nbSamples(),BasicTestsQ31::OUT_SAMPLES_Q31_ID,mgr);
+          output.create(ref.nbSamples(),BasicTestsQ31::OUT_SAMPLES_ID,mgr);
           input1.reload(BasicTestsQ31::INPUT1_Q31_ID,mgr,nb);
         break;
         
         case BasicTestsQ31::TEST_DOT_PROD_Q31_55:
           dotRef.reload(BasicTestsQ31::REF_DOT_LONG_Q31_ID,mgr);
-          dotOutput.create(dotRef.nbSamples(),BasicTestsQ31::OUT_SAMPLES_Q31_ID,mgr);
+          dotOutput.create(dotRef.nbSamples(),BasicTestsQ31::OUT_SAMPLES_ID,mgr);
           input1.reload(BasicTestsQ31::INPUT1_Q31_ID,mgr,nb);
           input2.reload(BasicTestsQ31::INPUT2_Q31_ID,mgr,nb);
         break;
         
         case BasicTestsQ31::TEST_ABS_Q31_56:
           ref.reload(BasicTestsQ31::REF_ABS_Q31_ID,mgr,nb);
-          output.create(ref.nbSamples(),BasicTestsQ31::OUT_SAMPLES_Q31_ID,mgr);
+          output.create(ref.nbSamples(),BasicTestsQ31::OUT_SAMPLES_ID,mgr);
           input1.reload(BasicTestsQ31::INPUT1_Q31_ID,mgr,nb);
           input2.reload(BasicTestsQ31::INPUT2_Q31_ID,mgr,nb);
         break;
@@ -637,6 +644,21 @@ q31_t *outp=output.ptr();
          case BasicTestsQ31::TEST_DOT_PROD_Q31_21:
          case BasicTestsQ31::TEST_DOT_PROD_Q31_55:
             dotOutput.dump(mgr);
+         break;
+
+         case BasicTestsQ31::TEST_AND_U32_37:
+         case BasicTestsQ31::TEST_AND_U32_38:
+         case BasicTestsQ31::TEST_AND_U32_39:
+         case BasicTestsQ31::TEST_OR_U32_40:
+         case BasicTestsQ31::TEST_OR_U32_41:
+         case BasicTestsQ31::TEST_OR_U32_42:
+         case BasicTestsQ31::TEST_NOT_U32_43:
+         case BasicTestsQ31::TEST_NOT_U32_44:
+         case BasicTestsQ31::TEST_NOT_U32_45:
+         case BasicTestsQ31::TEST_XOR_U32_46:
+         case BasicTestsQ31::TEST_XOR_U32_47:
+         case BasicTestsQ31::TEST_XOR_U32_48:
+            outputLogical.dump(mgr);
          break;
 
          default:

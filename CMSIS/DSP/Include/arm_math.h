@@ -2097,11 +2097,11 @@ __STATIC_INLINE q31_t arm_div_q63_to_q31(q63_t num, q31_t den)
    * @param[in]     blockSize  number of samples in each vector
    * @return        none
    */
-  void arm_and_q15(
-    const q15_t * pSrcA,
-    const q15_t * pSrcB,
-    q15_t * pDst,
-    uint32_t blockSize);
+  void arm_and_u16(
+    const uint16_t * pSrcA,
+    const uint16_t * pSrcB,
+          uint16_t * pDst,
+          uint32_t blockSize);
 
   /**
    * @brief         Compute the logical bitwise AND of two fixed-point vectors.
@@ -2111,11 +2111,11 @@ __STATIC_INLINE q31_t arm_div_q63_to_q31(q63_t num, q31_t den)
    * @param[in]     blockSize  number of samples in each vector
    * @return        none
    */
-  void arm_and_q31(
-    const q31_t * pSrcA,
-    const q31_t * pSrcB,
-    q31_t * pDst,
-    uint32_t blockSize);
+  void arm_and_u32(
+    const uint32_t * pSrcA,
+    const uint32_t * pSrcB,
+          uint32_t * pDst,
+          uint32_t blockSize);
 
   /**
    * @brief         Compute the logical bitwise AND of two fixed-point vectors.
@@ -2125,11 +2125,11 @@ __STATIC_INLINE q31_t arm_div_q63_to_q31(q63_t num, q31_t den)
    * @param[in]     blockSize  number of samples in each vector
    * @return        none
    */
-  void arm_and_q7(
-    const q7_t * pSrcA,
-    const q7_t * pSrcB,
-    q7_t * pDst,
-    uint32_t blockSize);
+  void arm_and_u8(
+    const uint8_t * pSrcA,
+    const uint8_t * pSrcB,
+          uint8_t * pDst,
+          uint32_t blockSize);
 
   /**
    * @brief         Compute the logical bitwise OR of two fixed-point vectors.
@@ -2139,11 +2139,11 @@ __STATIC_INLINE q31_t arm_div_q63_to_q31(q63_t num, q31_t den)
    * @param[in]     blockSize  number of samples in each vector
    * @return        none
    */
-  void arm_or_q15(
-    const q15_t * pSrcA,
-    const q15_t * pSrcB,
-    q15_t * pDst,
-    uint32_t blockSize);
+  void arm_or_u16(
+    const uint16_t * pSrcA,
+    const uint16_t * pSrcB,
+          uint16_t * pDst,
+          uint32_t blockSize);
 
   /**
    * @brief         Compute the logical bitwise OR of two fixed-point vectors.
@@ -2153,11 +2153,11 @@ __STATIC_INLINE q31_t arm_div_q63_to_q31(q63_t num, q31_t den)
    * @param[in]     blockSize  number of samples in each vector
    * @return        none
    */
-  void arm_or_q31(
-    const q31_t * pSrcA,
-    const q31_t * pSrcB,
-    q31_t * pDst,
-    uint32_t blockSize);
+  void arm_or_u32(
+    const uint32_t * pSrcA,
+    const uint32_t * pSrcB,
+          uint32_t * pDst,
+          uint32_t blockSize);
 
   /**
    * @brief         Compute the logical bitwise OR of two fixed-point vectors.
@@ -2167,11 +2167,11 @@ __STATIC_INLINE q31_t arm_div_q63_to_q31(q63_t num, q31_t den)
    * @param[in]     blockSize  number of samples in each vector
    * @return        none
    */
-  void arm_or_q7(
-    const q7_t * pSrcA,
-    const q7_t * pSrcB,
-    q7_t * pDst,
-    uint32_t blockSize);
+  void arm_or_u8(
+    const uint8_t * pSrcA,
+    const uint8_t * pSrcB,
+          uint8_t * pDst,
+          uint32_t blockSize);
 
   /**
    * @brief         Compute the logical bitwise NOT of a fixed-point vector.
@@ -2180,10 +2180,10 @@ __STATIC_INLINE q31_t arm_div_q63_to_q31(q63_t num, q31_t den)
    * @param[in]     blockSize  number of samples in each vector
    * @return        none
    */
-  void arm_not_q15(
-    const q15_t * pSrc,
-          q15_t * pDst,
-    uint32_t blockSize);
+  void arm_not_u16(
+    const uint16_t * pSrc,
+          uint16_t * pDst,
+          uint32_t blockSize);
 
   /**
    * @brief         Compute the logical bitwise NOT of a fixed-point vector.
@@ -2192,10 +2192,10 @@ __STATIC_INLINE q31_t arm_div_q63_to_q31(q63_t num, q31_t den)
    * @param[in]     blockSize  number of samples in each vector
    * @return        none
    */
-  void arm_not_q31(
-    const q31_t * pSrc,
-          q31_t * pDst,
-    uint32_t blockSize);
+  void arm_not_u32(
+    const uint32_t * pSrc,
+          uint32_t * pDst,
+          uint32_t blockSize);
 
   /**
    * @brief         Compute the logical bitwise NOT of a fixed-point vector.
@@ -2204,10 +2204,10 @@ __STATIC_INLINE q31_t arm_div_q63_to_q31(q63_t num, q31_t den)
    * @param[in]     blockSize  number of samples in each vector
    * @return        none
    */
-  void arm_not_q7(
-    const q7_t * pSrc,
-          q7_t * pDst,
-    uint32_t blockSize);
+  void arm_not_u8(
+    const uint8_t * pSrc,
+          uint8_t * pDst,
+          uint32_t blockSize);
 
 /**
    * @brief         Compute the logical bitwise XOR of two fixed-point vectors.
@@ -2217,11 +2217,11 @@ __STATIC_INLINE q31_t arm_div_q63_to_q31(q63_t num, q31_t den)
    * @param[in]     blockSize  number of samples in each vector
    * @return        none
    */
-  void arm_xor_q15(
-    const q15_t * pSrcA,
-    const q15_t * pSrcB,
-    q15_t * pDst,
-    uint32_t blockSize);
+  void arm_xor_u16(
+    const uint16_t * pSrcA,
+    const uint16_t * pSrcB,
+          uint16_t * pDst,
+          uint32_t blockSize);
 
   /**
    * @brief         Compute the logical bitwise XOR of two fixed-point vectors.
@@ -2231,11 +2231,11 @@ __STATIC_INLINE q31_t arm_div_q63_to_q31(q63_t num, q31_t den)
    * @param[in]     blockSize  number of samples in each vector
    * @return        none
    */
-  void arm_xor_q31(
-    const q31_t * pSrcA,
-    const q31_t * pSrcB,
-    q31_t * pDst,
-    uint32_t blockSize);
+  void arm_xor_u32(
+    const uint32_t * pSrcA,
+    const uint32_t * pSrcB,
+          uint32_t * pDst,
+          uint32_t blockSize);
 
   /**
    * @brief         Compute the logical bitwise XOR of two fixed-point vectors.
@@ -2245,10 +2245,10 @@ __STATIC_INLINE q31_t arm_div_q63_to_q31(q63_t num, q31_t den)
    * @param[in]     blockSize  number of samples in each vector
    * @return        none
    */
-  void arm_xor_q7(
-    const q7_t * pSrcA,
-    const q7_t * pSrcB,
-    q7_t * pDst,
+  void arm_xor_u8(
+    const uint8_t * pSrcA,
+    const uint8_t * pSrcB,
+          uint8_t * pDst,
     uint32_t blockSize);
 
   /**
