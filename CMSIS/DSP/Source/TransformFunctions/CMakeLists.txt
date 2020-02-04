@@ -28,6 +28,16 @@ target_sources(CMSISDSPTransform PRIVATE arm_cfft_f32.c)
 target_sources(CMSISDSPTransform PRIVATE arm_cfft_init_f32.c)
 endif()
 
+if (NOT ARMAC5)
+if (NOT CONFIGTABLE OR ALLFFT OR CFFT_F16_16 OR CFFT_F16_32 OR CFFT_F16_64 OR CFFT_F16_128 OR CFFT_F16_256 OR CFFT_F16_512 
+    OR CFFT_F16_1024 OR CFFT_F16_2048 OR CFFT_F16_4096)
+target_sources(CMSISDSPTransform PRIVATE arm_cfft_radix2_f16.c)
+target_sources(CMSISDSPTransform PRIVATE arm_cfft_radix4_f16.c)
+target_sources(CMSISDSPTransform PRIVATE arm_cfft_f16.c)
+target_sources(CMSISDSPTransform PRIVATE arm_cfft_init_f16.c)
+endif()
+endif()
+
 if (NOT CONFIGTABLE OR ALLFFT OR CFFT_F64_16 OR CFFT_F64_32 OR CFFT_F64_64 OR CFFT_F64_128 OR CFFT_F64_256 OR CFFT_F64_512 
     OR CFFT_F64_1024 OR CFFT_F64_2048 OR CFFT_F64_4096)
 target_sources(CMSISDSPTransform PRIVATE arm_cfft_f64.c)

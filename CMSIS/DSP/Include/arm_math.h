@@ -397,49 +397,6 @@ extern "C"
 #include <float.h>
 #include <limits.h>
 
-
-#define F64_MAX   ((float64_t)DBL_MAX)
-#define F32_MAX   ((float32_t)FLT_MAX)
-
-#if defined(ARM_MATH_FLOAT16)
-#define F16_MAX   ((float16_t)FLT_MAX)
-#endif
-
-#define F64_MIN   (-DBL_MAX)
-#define F32_MIN   (-FLT_MAX)
-
-#if defined(ARM_MATH_FLOAT16)
-#define F16_MIN   (-(float16_t)FLT_MAX)
-#endif
-
-#define F64_ABSMAX   ((float64_t)DBL_MAX)
-#define F32_ABSMAX   ((float32_t)FLT_MAX)
-
-#if defined(ARM_MATH_FLOAT16)
-#define F16_ABSMAX   ((float16_t)FLT_MAX)
-#endif
-
-#define F64_ABSMIN   ((float64_t)0.0)
-#define F32_ABSMIN   ((float32_t)0.0)
-
-#if defined(ARM_MATH_FLOAT16)
-#define F16_ABSMIN   ((float16_t)0.0)
-#endif
-
-#define Q31_MAX   ((q31_t)(0x7FFFFFFFL))
-#define Q15_MAX   ((q15_t)(0x7FFF))
-#define Q7_MAX    ((q7_t)(0x7F))
-#define Q31_MIN   ((q31_t)(0x80000000L))
-#define Q15_MIN   ((q15_t)(0x8000))
-#define Q7_MIN    ((q7_t)(0x80))
-
-#define Q31_ABSMAX   ((q31_t)(0x7FFFFFFFL))
-#define Q15_ABSMAX   ((q15_t)(0x7FFF))
-#define Q7_ABSMAX    ((q7_t)(0x7F))
-#define Q31_ABSMIN   ((q31_t)0)
-#define Q15_ABSMIN   ((q15_t)0)
-#define Q7_ABSMIN    ((q7_t)0)
-
 /* evaluate ARM DSP feature */
 #if (defined (__ARM_FEATURE_DSP) && (__ARM_FEATURE_DSP == 1))
   #define ARM_MATH_DSP                   1
@@ -451,7 +408,6 @@ extern "C"
 
 #if defined (ARM_MATH_HELIUM)
   #define ARM_MATH_MVEF
-  #define ARM_MATH_FLOAT16
 #endif
 
 #if defined (ARM_MATH_MVEF)
@@ -463,59 +419,7 @@ extern "C"
 #include <arm_mve.h>
 #endif
 
-
-  /**
-   * @brief Macros required for reciprocal calculation in Normalized LMS
-   */
-
-#define DELTA_Q31          ((q31_t)(0x100))
-#define DELTA_Q15          ((q15_t)0x5)
-#define INDEX_MASK         0x0000003F
-#ifndef PI
-  #define PI               3.14159265358979f
-#endif
-
-  /**
-   * @brief Macros required for SINE and COSINE Fast math approximations
-   */
-
-#define FAST_MATH_TABLE_SIZE  512
-#define FAST_MATH_Q31_SHIFT   (32 - 10)
-#define FAST_MATH_Q15_SHIFT   (16 - 10)
-#define CONTROLLER_Q31_SHIFT  (32 - 9)
-#define TABLE_SPACING_Q31     0x400000
-#define TABLE_SPACING_Q15     0x80
-
-  /**
-   * @brief Macros required for SINE and COSINE Controller functions
-   */
-  /* 1.31(q31) Fixed value of 2/360 */
-  /* -1 to +1 is divided into 360 values so total spacing is (2/360) */
-#define INPUT_SPACING         0xB60B61
-
-  /**
-   * @brief Macros for complex numbers
-   */
-
-  /* Dimension C vector space */
-  #define CMPLX_DIM 2
-
-  /**
-   * @brief Error status returned by some functions in the library.
-   */
-
-  typedef enum
-  {
-    ARM_MATH_SUCCESS        =  0,        /**< No error */
-    ARM_MATH_ARGUMENT_ERROR = -1,        /**< One or more arguments are incorrect */
-    ARM_MATH_LENGTH_ERROR   = -2,        /**< Length of data buffer is incorrect */
-    ARM_MATH_SIZE_MISMATCH  = -3,        /**< Size of matrices is not compatible with the operation */
-    ARM_MATH_NANINF         = -4,        /**< Not-a-number (NaN) or infinity is generated */
-    ARM_MATH_SINGULAR       = -5,        /**< Input matrix is singular and cannot be inverted */
-    ARM_MATH_TEST_FAILURE   = -6         /**< Test Failed */
-  } arm_status;
-
-  /**
+ /**
    * @brief 8-bit fractional data type in 1.7 format.
    */
   typedef int8_t q7_t;
@@ -534,6 +438,12 @@ extern "C"
    * @brief 64-bit fractional data type in 1.63 format.
    */
   typedef int64_t q63_t;
+
+  /**
+   * @brief 16-bit floating-point type definition.
+   */
+
+  typedef __fp16 float16_t;
 
   /**
    * @brief 32-bit floating-point type definition.
@@ -860,6 +770,104 @@ extern "C"
 
 
 
+
+
+#define F64_MAX   ((float64_t)DBL_MAX)
+#define F32_MAX   ((float32_t)FLT_MAX)
+
+#if defined(ARM_MATH_FLOAT16)
+#define F16_MAX   ((float16_t)FLT_MAX)
+#endif
+
+#define F64_MIN   (-DBL_MAX)
+#define F32_MIN   (-FLT_MAX)
+
+#if defined(ARM_MATH_FLOAT16)
+#define F16_MIN   (-(float16_t)FLT_MAX)
+#endif
+
+#define F64_ABSMAX   ((float64_t)DBL_MAX)
+#define F32_ABSMAX   ((float32_t)FLT_MAX)
+
+#if defined(ARM_MATH_FLOAT16)
+#define F16_ABSMAX   ((float16_t)FLT_MAX)
+#endif
+
+#define F64_ABSMIN   ((float64_t)0.0)
+#define F32_ABSMIN   ((float32_t)0.0)
+
+#if defined(ARM_MATH_FLOAT16)
+#define F16_ABSMIN   ((float16_t)0.0)
+#endif
+
+#define Q31_MAX   ((q31_t)(0x7FFFFFFFL))
+#define Q15_MAX   ((q15_t)(0x7FFF))
+#define Q7_MAX    ((q7_t)(0x7F))
+#define Q31_MIN   ((q31_t)(0x80000000L))
+#define Q15_MIN   ((q15_t)(0x8000))
+#define Q7_MIN    ((q7_t)(0x80))
+
+#define Q31_ABSMAX   ((q31_t)(0x7FFFFFFFL))
+#define Q15_ABSMAX   ((q15_t)(0x7FFF))
+#define Q7_ABSMAX    ((q7_t)(0x7F))
+#define Q31_ABSMIN   ((q31_t)0)
+#define Q15_ABSMIN   ((q15_t)0)
+#define Q7_ABSMIN    ((q7_t)0)
+
+
+
+  /**
+   * @brief Macros required for reciprocal calculation in Normalized LMS
+   */
+
+#define DELTA_Q31          ((q31_t)(0x100))
+#define DELTA_Q15          ((q15_t)0x5)
+#define INDEX_MASK         0x0000003F
+#ifndef PI
+  #define PI               3.14159265358979f
+#endif
+
+  /**
+   * @brief Macros required for SINE and COSINE Fast math approximations
+   */
+
+#define FAST_MATH_TABLE_SIZE  512
+#define FAST_MATH_Q31_SHIFT   (32 - 10)
+#define FAST_MATH_Q15_SHIFT   (16 - 10)
+#define CONTROLLER_Q31_SHIFT  (32 - 9)
+#define TABLE_SPACING_Q31     0x400000
+#define TABLE_SPACING_Q15     0x80
+
+  /**
+   * @brief Macros required for SINE and COSINE Controller functions
+   */
+  /* 1.31(q31) Fixed value of 2/360 */
+  /* -1 to +1 is divided into 360 values so total spacing is (2/360) */
+#define INPUT_SPACING         0xB60B61
+
+  /**
+   * @brief Macros for complex numbers
+   */
+
+  /* Dimension C vector space */
+  #define CMPLX_DIM 2
+
+  /**
+   * @brief Error status returned by some functions in the library.
+   */
+
+  typedef enum
+  {
+    ARM_MATH_SUCCESS        =  0,        /**< No error */
+    ARM_MATH_ARGUMENT_ERROR = -1,        /**< One or more arguments are incorrect */
+    ARM_MATH_LENGTH_ERROR   = -2,        /**< Length of data buffer is incorrect */
+    ARM_MATH_SIZE_MISMATCH  = -3,        /**< Size of matrices is not compatible with the operation */
+    ARM_MATH_NANINF         = -4,        /**< Not-a-number (NaN) or infinity is generated */
+    ARM_MATH_SINGULAR       = -5,        /**< Input matrix is singular and cannot be inverted */
+    ARM_MATH_TEST_FAILURE   = -6         /**< Test Failed */
+  } arm_status;
+
+ 
 /**
   @brief definition to read/write two 16 bit values.
   @deprecated
@@ -2945,6 +2953,18 @@ void arm_mat_init_f32(
         float32_t * pDst,
         uint32_t blockSize);
 
+  /**
+   * @brief Floating-point vector multiplication.
+   * @param[in]  pSrcA      points to the first input vector
+   * @param[in]  pSrcB      points to the second input vector
+   * @param[out] pDst       points to the output vector
+   * @param[in]  blockSize  number of samples in each vector
+   */
+  void arm_mult_f16(
+  const float16_t * pSrcA,
+  const float16_t * pSrcB,
+        float16_t * pDst,
+        uint32_t blockSize);
 
   /**
    * @brief Instance structure for the Q15 CFFT/CIFFT function.
@@ -3066,6 +3086,21 @@ void arm_mat_init_f32(
           float32_t onebyfftLen;             /**< value of 1/fftLen. */
   } arm_cfft_radix2_instance_f32;
 
+  /**
+   * @brief Instance structure for the floating-point CFFT/CIFFT function.
+   */
+  typedef struct
+  {
+          uint16_t fftLen;                   /**< length of the FFT. */
+          uint8_t ifftFlag;                  /**< flag that selects forward (ifftFlag=0) or inverse (ifftFlag=1) transform. */
+          uint8_t bitReverseFlag;            /**< flag that enables (bitReverseFlag=1) or disables (bitReverseFlag=0) bit reversal of output. */
+    const float16_t *pTwiddle;               /**< points to the Twiddle factor table. */
+    const uint16_t *pBitRevTable;            /**< points to the bit reversal table. */
+          uint16_t twidCoefModifier;         /**< twiddle coefficient modifier that supports different size FFTs with the same twiddle factor table. */
+          uint16_t bitRevFactor;             /**< bit reversal modifier that supports different size FFTs with the same bit reversal table. */
+          float16_t onebyfftLen;             /**< value of 1/fftLen. */
+  } arm_cfft_radix2_instance_f16;
+
 /* Deprecated */
   arm_status arm_cfft_radix2_init_f32(
         arm_cfft_radix2_instance_f32 * S,
@@ -3092,6 +3127,21 @@ void arm_mat_init_f32(
           uint16_t bitRevFactor;             /**< bit reversal modifier that supports different size FFTs with the same bit reversal table. */
           float32_t onebyfftLen;             /**< value of 1/fftLen. */
   } arm_cfft_radix4_instance_f32;
+
+  /**
+   * @brief Instance structure for the floating-point CFFT/CIFFT function.
+   */
+  typedef struct
+  {
+          uint16_t fftLen;                   /**< length of the FFT. */
+          uint8_t ifftFlag;                  /**< flag that selects forward (ifftFlag=0) or inverse (ifftFlag=1) transform. */
+          uint8_t bitReverseFlag;            /**< flag that enables (bitReverseFlag=1) or disables (bitReverseFlag=0) bit reversal of output. */
+    const float16_t *pTwiddle;               /**< points to the Twiddle factor table. */
+    const uint16_t *pBitRevTable;            /**< points to the bit reversal table. */
+          uint16_t twidCoefModifier;         /**< twiddle coefficient modifier that supports different size FFTs with the same twiddle factor table. */
+          uint16_t bitRevFactor;             /**< bit reversal modifier that supports different size FFTs with the same bit reversal table. */
+          float16_t onebyfftLen;             /**< value of 1/fftLen. */
+  } arm_cfft_radix4_instance_f16;
 
 /* Deprecated */
   arm_status arm_cfft_radix4_init_f32(
@@ -3182,6 +3232,24 @@ void arm_cfft_q31(
 #endif
   } arm_cfft_instance_f32;
 
+  /**
+   * @brief Instance structure for the floating-point CFFT/CIFFT function.
+   */
+  typedef struct
+  {
+          uint16_t fftLen;                   /**< length of the FFT. */
+    const float16_t *pTwiddle;         /**< points to the Twiddle factor table. */
+    const uint16_t *pBitRevTable;      /**< points to the bit reversal table. */
+          uint16_t bitRevLength;             /**< bit reversal table length. */
+#if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
+   const uint32_t *rearranged_twiddle_tab_stride1_arr;        /**< Per stage reordered twiddle pointer (offset 1) */                                                       \
+   const uint32_t *rearranged_twiddle_tab_stride2_arr;        /**< Per stage reordered twiddle pointer (offset 2) */                                                       \
+   const uint32_t *rearranged_twiddle_tab_stride3_arr;        /**< Per stage reordered twiddle pointer (offset 3) */                                                       \
+   const float16_t *rearranged_twiddle_stride1; /**< reordered twiddle offset 1 storage */                                                                   \
+   const float16_t *rearranged_twiddle_stride2; /**< reordered twiddle offset 2 storage */                                                                   \
+   const float16_t *rearranged_twiddle_stride3;
+#endif
+  } arm_cfft_instance_f16;
 
   arm_status arm_cfft_init_f32(
   arm_cfft_instance_f32 * S,
@@ -3193,6 +3261,15 @@ void arm_cfft_q31(
         uint8_t ifftFlag,
         uint8_t bitReverseFlag);
 
+  arm_status arm_cfft_init_f16(
+  arm_cfft_instance_f16 * S,
+  uint16_t fftLen);
+
+  void arm_cfft_f16(
+  const arm_cfft_instance_f16 * S,
+        float16_t * p1,
+        uint8_t ifftFlag,
+        uint8_t bitReverseFlag);
 
   /**
    * @brief Instance structure for the Double Precision Floating-point CFFT/CIFFT function.
@@ -3492,6 +3569,19 @@ arm_status arm_rfft_fast_init_f32 (
         float32_t * pDst,
         uint32_t blockSize);
 
+  /**
+   * @brief Floating-point vector addition.
+   * @param[in]  pSrcA      points to the first input vector
+   * @param[in]  pSrcB      points to the second input vector
+   * @param[out] pDst       points to the output vector
+   * @param[in]  blockSize  number of samples in each vector
+   */
+  void arm_add_f16(
+  const float16_t * pSrcA,
+  const float16_t * pSrcB,
+        float16_t * pDst,
+        uint32_t blockSize);
+
 
   /**
    * @brief Q7 vector addition.
@@ -3548,6 +3638,18 @@ arm_status arm_rfft_fast_init_f32 (
         float32_t * pDst,
         uint32_t blockSize);
 
+  /**
+   * @brief Floating-point vector subtraction.
+   * @param[in]  pSrcA      points to the first input vector
+   * @param[in]  pSrcB      points to the second input vector
+   * @param[out] pDst       points to the output vector
+   * @param[in]  blockSize  number of samples in each vector
+   */
+  void arm_sub_f16(
+  const float16_t * pSrcA,
+  const float16_t * pSrcB,
+        float16_t * pDst,
+        uint32_t blockSize);
 
   /**
    * @brief Q7 vector subtraction.
@@ -3602,6 +3704,19 @@ arm_status arm_rfft_fast_init_f32 (
   const float32_t * pSrc,
         float32_t scale,
         float32_t * pDst,
+        uint32_t blockSize);
+
+    /**
+   * @brief Multiplies a floating-point vector by a scalar.
+   * @param[in]  pSrc       points to the input vector
+   * @param[in]  scale      scale factor to be applied
+   * @param[out] pDst       points to the output vector
+   * @param[in]  blockSize  number of samples in the vector
+   */
+  void arm_scale_f16(
+  const float16_t * pSrc,
+        float16_t scale,
+        float16_t * pDst,
         uint32_t blockSize);
 
 
@@ -3676,6 +3791,17 @@ arm_status arm_rfft_fast_init_f32 (
         float32_t * pDst,
         uint32_t blockSize);
 
+    /**
+   * @brief Floating-point vector absolute value.
+   * @param[in]  pSrc       points to the input buffer
+   * @param[out] pDst       points to the output buffer
+   * @param[in]  blockSize  number of samples in each vector
+   */
+  void arm_abs_f16(
+  const float16_t * pSrc,
+        float16_t * pDst,
+        uint32_t blockSize);
+
 
   /**
    * @brief Q15 vector absolute value.
@@ -3713,6 +3839,19 @@ arm_status arm_rfft_fast_init_f32 (
   const float32_t * pSrcB,
         uint32_t blockSize,
         float32_t * result);
+
+  /**
+   * @brief Dot product of floating-point vectors.
+   * @param[in]  pSrcA      points to the first input vector
+   * @param[in]  pSrcB      points to the second input vector
+   * @param[in]  blockSize  number of samples in each vector
+   * @param[out] result     output result returned here
+   */
+  void arm_dot_prod_f16(
+  const float16_t * pSrcA,
+  const float16_t * pSrcB,
+        uint32_t blockSize,
+        float16_t * result);
 
 
   /**
@@ -3812,6 +3951,18 @@ arm_status arm_rfft_fast_init_f32 (
         float32_t * pDst,
         uint32_t blockSize);
 
+  /**
+   * @brief  Adds a constant offset to a floating-point vector.
+   * @param[in]  pSrc       points to the input vector
+   * @param[in]  offset     is the offset to be added
+   * @param[out] pDst       points to the output vector
+   * @param[in]  blockSize  number of samples in the vector
+   */
+  void arm_offset_f16(
+  const float16_t * pSrc,
+        float16_t offset,
+        float16_t * pDst,
+        uint32_t blockSize);
 
   /**
    * @brief  Adds a constant offset to a Q7 vector.
@@ -3866,6 +4017,16 @@ arm_status arm_rfft_fast_init_f32 (
         float32_t * pDst,
         uint32_t blockSize);
 
+  /**
+   * @brief  Negates the elements of a floating-point vector.
+   * @param[in]  pSrc       points to the input vector
+   * @param[out] pDst       points to the output vector
+   * @param[in]  blockSize  number of samples in the vector
+   */
+  void arm_negate_f16(
+  const float16_t * pSrc,
+        float16_t * pDst,
+        uint32_t blockSize);
 
   /**
    * @brief  Negates the elements of a Q7 vector.

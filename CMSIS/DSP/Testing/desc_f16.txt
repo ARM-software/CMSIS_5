@@ -1,0 +1,205 @@
+group Root {
+    class = Root
+
+    group DSP Tests {
+        class = DSPTests
+        folder = DSP
+
+        group Basic Tests {
+           class = BasicTests
+           folder = BasicMaths
+
+           suite Basic Tests F16 {
+              class = BasicTestsF16
+              folder = BasicMathsF16
+   
+              Pattern INPUT1_F16_ID : Input1_f16.txt 
+              Pattern INPUT2_F16_ID : Input2_f16.txt 
+   
+              Pattern REF_ADD_F16_ID : Reference1_f16.txt
+              Pattern REF_SUB_F16_ID : Reference2_f16.txt
+              Pattern REF_MULT_F16_ID : Reference3_f16.txt
+              Pattern REF_NEGATE_F16_ID : Reference4_f16.txt
+              Pattern REF_OFFSET_F16_ID : Reference5_f16.txt
+              Pattern REF_SCALE_F16_ID : Reference6_f16.txt
+              Pattern REF_DOT_3_F16_ID : Reference7_f16.txt
+              Pattern REF_DOT_4N_F16_ID : Reference8_f16.txt
+              Pattern REF_DOT_4N1_F16_ID : Reference9_f16.txt
+              Pattern REF_ABS_F16_ID : Reference10_f16.txt
+              Pattern REF_DOT_LONG_F16_ID : Reference11_f16.txt
+   
+              Output  OUT_SAMPLES_F16_ID : Output
+              Output  OUT_STATE_F16_ID : State
+   
+              Functions {
+                Test nb=3    arm_add_f16:test_add_f16
+                Test nb=4n   arm_add_f16:test_add_f16
+                Test nb=4n+1 arm_add_f16:test_add_f16
+         
+                Test nb=3    arm_sub_f16:test_sub_f16
+                Test nb=4n   arm_sub_f16:test_sub_f16
+                Test nb=4n+1 arm_sub_f16:test_sub_f16
+         
+                Test nb=3    arm_mult_f16:test_mult_f16
+                Test nb=4n   arm_mult_f16:test_mult_f16
+                Test nb=4n+1 arm_mult_f16:test_mult_f16
+         
+                Test nb=3    arm_negate_f16:test_negate_f16
+                Test nb=4n   arm_negate_f16:test_negate_f16
+                Test nb=4n+1 arm_negate_f16:test_negate_f16
+         
+                Test nb=3    arm_offset_f16:test_offset_f16
+                Test nb=4n   arm_offset_f16:test_offset_f16
+                Test nb=4n+1 arm_offset_f16:test_offset_f16
+         
+                Test nb=3    arm_scale_f16:test_scale_f16
+                Test nb=4n   arm_scale_f16:test_scale_f16
+                Test nb=4n+1 arm_scale_f16:test_scale_f16
+         
+                Test nb=3    arm_dot_prod_f16:test_dot_prod_f16
+                Test nb=4n   arm_dot_prod_f16:test_dot_prod_f16
+                Test nb=4n+1 arm_dot_prod_f16:test_dot_prod_f16
+         
+                Test nb=3    arm_abs_f16:test_abs_f16
+                Test nb=4n   arm_abs_f16:test_abs_f16
+                Test nb=4n+1 arm_abs_f16:test_abs_f16
+
+                Test long    arm_add_f16:test_add_f16
+                Test long    arm_sub_f16:test_sub_f16
+                Test long    arm_mult_f16:test_mult_f16
+                Test long    arm_negate_f16:test_negate_f16
+                Test long    arm_offset_f16:test_offset_f16
+                Test long    arm_scale_f16:test_scale_f16
+                Test long    arm_dot_prod_f16:test_dot_prod_f16
+                Test long    arm_abs_f16:test_abs_f16
+              }
+           }
+
+        }
+
+        group Transform Tests {
+           class = TransformTests
+           folder = Transform 
+
+           suite Transform Complex F16 {
+              class = TransformCF16
+              folder = TransformF16
+
+              Pattern INPUTS_CFFT_NOISY_16_F16_ID : ComplexInputSamples_Noisy_16_1_f16.txt 
+              Pattern INPUTS_CIFFT_NOISY_16_F16_ID : ComplexInputIFFTSamples_Noisy_16_1_f16.txt 
+              Pattern REF_CFFT_NOISY_16_F16_ID : ComplexFFTSamples_Noisy_16_1_f16.txt 
+
+              Pattern INPUTS_CFFT_NOISY_32_F16_ID : ComplexInputSamples_Noisy_32_2_f16.txt 
+              Pattern INPUTS_CIFFT_NOISY_32_F16_ID : ComplexInputIFFTSamples_Noisy_32_2_f16.txt 
+              Pattern REF_CFFT_NOISY_32_F16_ID : ComplexFFTSamples_Noisy_32_2_f16.txt 
+
+              Pattern INPUTS_CFFT_NOISY_64_F16_ID : ComplexInputSamples_Noisy_64_3_f16.txt
+              Pattern INPUTS_CIFFT_NOISY_64_F16_ID : ComplexInputIFFTSamples_Noisy_64_3_f16.txt 
+              Pattern REF_CFFT_NOISY_64_F16_ID : ComplexFFTSamples_Noisy_64_3_f16.txt 
+
+              Pattern INPUTS_CFFT_NOISY_128_F16_ID : ComplexInputSamples_Noisy_128_4_f16.txt 
+              Pattern INPUTS_CIFFT_NOISY_128_F16_ID : ComplexInputIFFTSamples_Noisy_128_4_f16.txt 
+              Pattern REF_CFFT_NOISY_128_F16_ID : ComplexFFTSamples_Noisy_128_4_f16.txt 
+
+              Pattern INPUTS_CFFT_NOISY_256_F16_ID : ComplexInputSamples_Noisy_256_5_f16.txt 
+              Pattern INPUTS_CIFFT_NOISY_256_F16_ID : ComplexInputIFFTSamples_Noisy_256_5_f16.txt 
+              Pattern REF_CFFT_NOISY_256_F16_ID : ComplexFFTSamples_Noisy_256_5_f16.txt 
+
+              Pattern INPUTS_CFFT_NOISY_512_F16_ID : ComplexInputSamples_Noisy_512_6_f16.txt 
+              Pattern INPUTS_CIFFT_NOISY_512_F16_ID : ComplexInputIFFTSamples_Noisy_512_6_f16.txt 
+              Pattern REF_CFFT_NOISY_512_F16_ID : ComplexFFTSamples_Noisy_512_6_f16.txt 
+
+              Pattern INPUTS_CFFT_NOISY_1024_F16_ID : ComplexInputSamples_Noisy_1024_7_f16.txt 
+              Pattern INPUTS_CIFFT_NOISY_1024_F16_ID : ComplexInputIFFTSamples_Noisy_1024_7_f16.txt 
+              Pattern REF_CFFT_NOISY_1024_F16_ID : ComplexFFTSamples_Noisy_1024_7_f16.txt 
+
+              Pattern INPUTS_CFFT_NOISY_2048_F16_ID : ComplexInputSamples_Noisy_2048_8_f16.txt 
+              Pattern INPUTS_CIFFT_NOISY_2048_F16_ID : ComplexInputIFFTSamples_Noisy_2048_8_f16.txt 
+              Pattern REF_CFFT_NOISY_2048_F16_ID : ComplexFFTSamples_Noisy_2048_8_f16.txt 
+
+              Pattern INPUTS_CFFT_NOISY_4096_F16_ID : ComplexInputSamples_Noisy_4096_9_f16.txt 
+              Pattern INPUTS_CIFFT_NOISY_4096_F16_ID : ComplexInputIFFTSamples_Noisy_4096_9_f16.txt 
+              Pattern REF_CFFT_NOISY_4096_F16_ID : ComplexFFTSamples_Noisy_4096_9_f16.txt 
+
+              Pattern INPUTS_CFFT_STEP_16_F16_ID : ComplexInputSamples_Step_16_10_f16.txt 
+              Pattern INPUTS_CIFFT_STEP_16_F16_ID : ComplexInputIFFTSamples_Step_16_10_f16.txt 
+              Pattern REF_CFFT_STEP_16_F16_ID : ComplexFFTSamples_Step_16_10_f16.txt 
+
+              Pattern INPUTS_CFFT_STEP_32_F16_ID : ComplexInputSamples_Step_32_11_f16.txt 
+              Pattern INPUTS_CIFFT_STEP_32_F16_ID : ComplexInputIFFTSamples_Step_32_11_f16.txt 
+              Pattern REF_CFFT_STEP_32_F16_ID : ComplexFFTSamples_Step_32_11_f16.txt 
+
+              Pattern INPUTS_CFFT_STEP_64_F16_ID : ComplexInputSamples_Step_64_12_f16.txt 
+              Pattern INPUTS_CIFFT_STEP_64_F16_ID : ComplexInputIFFTSamples_Step_64_12_f16.txt 
+              Pattern REF_CFFT_STEP_64_F16_ID : ComplexFFTSamples_Step_64_12_f16.txt 
+
+              Pattern INPUTS_CFFT_STEP_128_F16_ID : ComplexInputSamples_Step_128_13_f16.txt 
+              Pattern INPUTS_CIFFT_STEP_128_F16_ID : ComplexInputIFFTSamples_Step_128_13_f16.txt 
+              Pattern REF_CFFT_STEP_128_F16_ID : ComplexFFTSamples_Step_128_13_f16.txt 
+
+              Pattern INPUTS_CFFT_STEP_256_F16_ID : ComplexInputSamples_Step_256_14_f16.txt 
+              Pattern INPUTS_CIFFT_STEP_256_F16_ID : ComplexInputIFFTSamples_Step_256_14_f16.txt 
+              Pattern REF_CFFT_STEP_256_F16_ID : ComplexFFTSamples_Step_256_14_f16.txt 
+
+              Pattern INPUTS_CFFT_STEP_512_F16_ID : ComplexInputSamples_Step_512_15_f16.txt 
+              Pattern INPUTS_CIFFT_STEP_512_F16_ID : ComplexInputIFFTSamples_Step_512_15_f16.txt 
+              Pattern REF_CFFT_STEP_512_F16_ID : ComplexFFTSamples_Step_512_15_f16.txt 
+
+              Pattern INPUTS_CFFT_STEP_1024_F16_ID : ComplexInputSamples_Step_1024_16_f16.txt 
+              Pattern INPUTS_CIFFT_STEP_1024_F16_ID : ComplexInputIFFTSamples_Step_1024_16_f16.txt 
+              Pattern REF_CFFT_STEP_1024_F16_ID : ComplexFFTSamples_Step_1024_16_f16.txt 
+
+              Pattern INPUTS_CFFT_STEP_2048_F16_ID : ComplexInputSamples_Step_2048_17_f16.txt 
+              Pattern INPUTS_CIFFT_STEP_2048_F16_ID : ComplexInputIFFTSamples_Step_2048_17_f16.txt 
+              Pattern REF_CFFT_STEP_2048_F16_ID : ComplexFFTSamples_Step_2048_17_f16.txt 
+
+              Pattern INPUTS_CFFT_STEP_4096_F16_ID : ComplexInputSamples_Step_4096_18_f16.txt 
+              Pattern INPUTS_CIFFT_STEP_4096_F16_ID : ComplexInputIFFTSamples_Step_4096_18_f16.txt 
+              Pattern REF_CFFT_STEP_4096_F16_ID : ComplexFFTSamples_Step_4096_18_f16.txt 
+
+              Output  OUTPUT_CFFT_F16_ID : ComplexFFTSamples
+
+              Functions {
+                 cfft_noisy_16_f16:test_cfft_f16
+                 cfft_noisy_32_f16:test_cfft_f16
+                 cfft_noisy_64_f16:test_cfft_f16
+                 cfft_noisy_128_f16:test_cfft_f16
+                 cfft_noisy_256_f16:test_cfft_f16
+                 cfft_noisy_512_f16:test_cfft_f16
+                 cfft_noisy_1024_f16:test_cfft_f16
+                 cfft_noisy_2048_f16:test_cfft_f16
+                 cfft_noisy_4096_f16:test_cfft_f16
+                 cfft_step_16_f16:test_cfft_f16
+                 cfft_step_32_f16:test_cfft_f16
+                 cfft_step_64_f16:test_cfft_f16
+                 cfft_step_128_f16:test_cfft_f16
+                 cfft_step_256_f16:test_cfft_f16
+                 cfft_step_512_f16:test_cfft_f16
+                 cfft_step_1024_f16:test_cfft_f16
+                 cfft_step_2048_f16:test_cfft_f16
+                 cfft_step_4096_f16:test_cfft_f16
+                 cifft_noisy_16_f16:test_cfft_f16
+                 cifft_noisy_32_f16:test_cfft_f16
+                 cifft_noisy_64_f16:test_cfft_f16
+                 cifft_noisy_128_f16:test_cfft_f16
+                 cifft_noisy_256_f16:test_cfft_f16
+                 cifft_noisy_512_f16:test_cfft_f16
+                 cifft_noisy_1024_f16:test_cfft_f16
+                 cifft_noisy_2048_f16:test_cfft_f16
+                 cifft_noisy_4096_f16:test_cfft_f16
+                 cifft_step_16_f16:test_cfft_f16
+                 cifft_step_32_f16:test_cfft_f16
+                 cifft_step_64_f16:test_cfft_f16
+                 cifft_step_128_f16:test_cfft_f16
+                 cifft_step_256_f16:test_cfft_f16
+                 cifft_step_512_f16:test_cfft_f16
+                 cifft_step_1024_f16:test_cfft_f16
+                 cifft_step_2048_f16:test_cfft_f16
+                 cifft_step_4096_f16:test_cfft_f16
+
+              }
+
+            }
+        }
+    }
+}

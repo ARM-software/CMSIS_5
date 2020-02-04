@@ -5,7 +5,7 @@ D
 // 0.000000
 0x0
 // -0.900000
-0xbfeccccccccccd00
+0xbfeccccccccccc80
 // 586.708322
 0x408255aaa4bc2b9e
 // 0.000000
@@ -13,7 +13,7 @@ D
 // -0.000000
 0x8000000000000000
 // -0.900000
-0xbfecccccccccccda
+0xbfecccccccccccf6
 // 195.568213
 0x4068722ece0ccb9a
 // 0.000000
@@ -21,17 +21,17 @@ D
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccce28
+0xbfeccccccccccd7d
 // 117.339455
-0x405d55b9a3679087
+0x405d55b9a3679088
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccc9
+0xbfecccccccccccdb
 // 83.812319
-0x4054f3fd088b91af
+0x4054f3fd088b91ad
 // 0.000000
 0x0
 // -0.000000
@@ -39,13 +39,13 @@ D
 // -0.900000
 0xbfecccccccccccd2
 // 65.185723
-0x40504be2e24253f2
+0x40504be2e24253f0
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfeccccccccccc75
+0xbfeccccccccccc7f
 // 53.332100
 0x404aaa823eed92bd
 // 0.000000
@@ -53,7 +53,7 @@ D
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccc2
+0xbfecccccccccccae
 // 45.125462
 0x4046900f24647fa6
 // 0.000000
@@ -61,7 +61,7 @@ D
 // 0.000000
 0x0
 // -0.900000
-0xbfeccccccccccc7a
+0xbfeccccccccccc69
 // 39.107016
 0x40438db2b0659cb6
 // 0.000000
@@ -69,7 +69,7 @@ D
 // 0.000000
 0x0
 // -0.900000
-0xbfeccccccccccd18
+0xbfeccccccccccd2d
 // 34.504458
 0x40414092117a723e
 // 0.000000
@@ -77,47 +77,47 @@ D
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccab
+0xbfecccccccccccd1
 // 30.870665
-0x403edee3ed8e2317
-// 0.000000
-0x0
-// 0.000000
-0x0
-// -0.900000
-0xbfecccccccccccff
-// 27.928849
-0x403bedc9071f7613
-// 0.000000
-0x0
-// 0.000000
-0x0
-// -0.900000
-0xbfecccccccccccba
-// 25.498492
-0x40397f9d2e55bfe7
+0x403edee3ed8e2318
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
 0xbfecccccccccccda
-// 23.456845
-0x403774f3d05a1d2c
-// 0.000000
-0x0
-// 0.000000
-0x0
-// -0.900000
-0xbfeccccccccccc6d
-// 21.717528
-0x4035b7afee1f2421
+// 27.928849
+0x403bedc9071f7614
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
 0xbfecccccccccccdf
+// 25.498492
+0x40397f9d2e55bfe6
+// 0.000000
+0x0
+// 0.000000
+0x0
+// -0.900000
+0xbfeccccccccccd08
+// 23.456845
+0x403774f3d05a1d2a
+// 0.000000
+0x0
+// 0.000000
+0x0
+// -0.900000
+0xbfeccccccccccc7e
+// 21.717528
+0x4035b7afee1f2425
+// 0.000000
+0x0
+// 0.000000
+0x0
+// -0.900000
+0xbfeccccccccccc85
 // 20.217990
 0x403437ce3009c342
 // 0.000000
@@ -125,7 +125,7 @@ D
 // 0.000000
 0x0
 // -0.900000
-0xbfeccccccccccdbb
+0xbfeccccccccccda3
 // 18.911822
 0x4032e96d238a4da9
 // 0.000000
@@ -133,7 +133,7 @@ D
 // -0.000000
 0x8000000000000000
 // -0.900000
-0xbfeccccccccccbf1
+0xbfeccccccccccbfe
 // 17.763865
 0x4031c38ca820c8e2
 // 0.000000
@@ -141,7 +141,7 @@ D
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccaf
+0xbfeccccccccccd05
 // 16.746998
 0x4030bf3b45a19504
 // 0.000000
@@ -149,23 +149,23 @@ D
 // 0.000000
 0x0
 // -0.900000
-0xbfeccccccccccd11
+0xbfeccccccccccd00
 // 15.839963
-0x402fae0faa66c35a
+0x402fae0faa66c360
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfeccccccccccccf
+0xbfeccccccccccca9
 // 15.025863
-0x402e0d3dec9b87f2
+0x402e0d3dec9b87f0
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfeccccccccccced
+0xbfecccccccccccc9
 // 14.291097
 0x402c950ab676ab00
 // 0.000000
@@ -173,7 +173,7 @@ D
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccb0
+0xbfecccccccccccca
 // 13.624596
 0x402b3fcb12602487
 // 0.000000
@@ -181,15 +181,15 @@ D
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccd9
+0xbfecccccccccccc9
 // 13.017258
-0x402a08d5fd804bfc
+0x402a08d5fd804bff
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccad
+0xbfecccccccccccaf
 // 12.461529
 0x4028ec4d85cd611c
 // 0.000000
@@ -197,7 +197,7 @@ D
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccf8
+0xbfecccccccccccfc
 // 11.951091
 0x4027e6f558e6bf26
 // 0.000000
@@ -205,7 +205,7 @@ D
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccde
+0xbfecccccccccccc4
 // 11.480614
 0x4026f6131334f4b2
 // 0.000000
@@ -213,41 +213,41 @@ D
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccd5
+0xbfecccccccccccda
 // 11.045576
-0x40261755bbea70f8
+0x40261755bbea70f9
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccd9
+0xbfecccccccccccd0
 // 10.642110
-0x402548c29a532b98
+0x402548c29a532b96
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccaf
+0xbfecccccccccccb8
 // 10.266892
-0x402488a6142100a0
+0x402488a61421009e
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccca
+0xbfecccccccccccda
 // 9.917050
-0x4023d5879f9729bf
+0x4023d5879f9729c2
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfeccccccccccca8
+0xbfeccccccccccca2
 // 9.590089
-0x40232e2014c225b4
+0x40232e2014c225b5
 // 0.000000
 0x0
 // 0.000000
@@ -261,7 +261,7 @@ D
 // 0.000000
 0x0
 // -0.900000
-0xbfeccccccccccbc4
+0xbfeccccccccccbbe
 // 8.996356
 0x4021fe226fff928e
 // 0.000000
@@ -269,7 +269,7 @@ D
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccf1
+0xbfecccccccccccea
 // 8.725993
 0x402173b55245abf2
 // 0.000000
@@ -277,23 +277,23 @@ D
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccde
+0xbfecccccccccccb7
 // 8.471249
-0x4020f14781fb7ad7
+0x4020f14781fb7ad8
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfeccccccccccce4
+0xbfecccccccccccd1
 // 8.230804
-0x4020762bfbbe2b9a
+0x4020762bfbbe2b98
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccdc
+0xbfecccccccccccd5
 // 8.003484
 0x402001c8b20155ef
 // 0.000000
@@ -301,7 +301,7 @@ D
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccca
+0xbfecccccccccccd7
 // 7.788239
 0x401f27280bc2a8ef
 // 0.000000
@@ -309,23 +309,23 @@ D
 // 0.000000
 0x0
 // -0.900000
-0xbfeccccccccccccc
+0xbfecccccccccccd3
 // 7.584127
-0x401e562549a301df
+0x401e562549a301e1
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccb2
+0xbfecccccccccccbc
 // 7.390302
-0x401d8fab728d5087
+0x401d8fab728d5088
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfeccccccccccce5
+0xbfecccccccccccd8
 // 7.206004
 0x401cd2f2c00bbe12
 // 0.000000
@@ -333,47 +333,47 @@ D
 // 0.000000
 0x0
 // -0.900000
-0xbfeccccccccccccd
+0xbfeccccccccccccf
 // 7.030543
-0x401c1f46ad07658f
+0x401c1f46ad076592
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfeccccccccccce0
+0xbfecccccccccccd9
 // 6.863295
-0x401b7403b1db44d2
+0x401b7403b1db44d4
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccc3
+0xbfecccccccccccc5
 // 6.703695
-0x401ad095506490c7
+0x401ad095506490c5
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccd0
+0xbfecccccccccccdc
 // 6.551225
-0x401a3474637b4313
+0x401a3474637b4311
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccb3
+0xbfecccccccccccc7
 // 6.405417
-0x40199f25a77413ea
+0x40199f25a77413f0
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfeccccccccccce6
+0xbfecccccccccccb5
 // 6.265840
 0x401910387315cf60
 // 0.000000
@@ -389,31 +389,31 @@ D
 // 0.000000
 0x0
 // -0.900000
-0xbfeccccccccccc88
+0xbfeccccccccccc87
 // 6.003839
-0x401803ee719fb2f0
+0x401803ee719fb2f2
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccba
+0xbfeccccccccccce8
 // 5.880722
-0x401785dbf6794895
+0x401785dbf6794894
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccf3
+0xbfecccccccccccde
 // 5.762444
-0x40170cbe08f1fca6
+0x40170cbe08f1fcab
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccd0
+0xbfecccccccccccbd
 // 5.648723
 0x4016984ac2abdd94
 // 0.000000
@@ -421,31 +421,31 @@ D
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccde
+0xbfecccccccccccc2
 // 5.539299
-0x4016283ddeaa8694
+0x4016283ddeaa8692
+// 0.000000
+0x0
+// 0.000000
+0x0
+// -0.900000
+0xbfecccccccccccd0
+// 5.433930
+0x4015bc58329dbd43
+// 0.000000
+0x0
+// 0.000000
+0x0
+// -0.900000
+0xbfecccccccccccd5
+// 5.332394
+0x4015545f37009d76
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
 0xbfecccccccccccca
-// 5.433930
-0x4015bc58329dbd42
-// 0.000000
-0x0
-// 0.000000
-0x0
-// -0.900000
-0xbfecccccccccccdf
-// 5.332394
-0x4015545f37009d72
-// 0.000000
-0x0
-// 0.000000
-0x0
-// -0.900000
-0xbfecccccccccccb4
 // 5.234484
 0x4014f01c9c2e7b02
 // 0.000000
@@ -453,7 +453,7 @@ D
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccec
+0xbfeccccccccccce8
 // 5.140007
 0x40148f5dead26e95
 // 0.000000
@@ -461,7 +461,7 @@ D
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccd5
+0xbfecccccccccccd6
 // 5.048783
 0x401431f42e4fb21e
 // 0.000000
@@ -469,47 +469,47 @@ D
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccdc
+0xbfecccccccccccd9
 // 4.960646
-0x4013d7b3a7f15676
+0x4013d7b3a7f15674
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccd5
+0xbfeccccccccccccf
 // 4.875441
-0x4013807389d8ecf2
+0x4013807389d8ecf1
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccd1
+0xbfecccccccccccd2
 // 4.793021
-0x40132c0db8c6b661
+0x40132c0db8c6b662
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccaf
+0xbfecccccccccccdb
 // 4.713251
-0x4012da5e93f3c100
+0x4012da5e93f3c101
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfeccccccccccc9a
+0xbfecccccccccccea
 // 4.636004
-0x40128b44c24feae0
+0x40128b44c24feade
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfeccccccccccca8
+0xbfeccccccccccca4
 // 4.561161
 0x40123ea1048bab95
 // 0.000000
@@ -517,7 +517,7 @@ D
 // -0.000000
 0x8000000000000000
 // -0.900000
-0xbfecccccccccccf8
+0xbfecccccccccccfa
 // 4.488609
 0x4011f4560b6865fe
 // 0.000000
@@ -525,17 +525,17 @@ D
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccff
+0xbfecccccccccccb6
 // 4.418245
-0x4011ac4851da48ee
+0x4011ac4851da48f3
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfeccccccccccce7
+0xbfecccccccccccc2
 // 4.349968
-0x4011665dfa94d834
+0x4011665dfa94d838
 // 0.000000
 0x0
 // 0.000000
@@ -549,7 +549,7 @@ D
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccc7
+0xbfeccccccccccccd
 // 4.219313
 0x4010e0938ad977c0
 // 0.000000
@@ -557,89 +557,89 @@ D
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccbf
-// 4.156765
-0x4010a086f17feb7c
-// 0.000000
-0x0
-// 0.000000
-0x0
-// -0.900000
-0xbfecccccccccccc4
-// 4.095965
-0x40106244868c7b67
-// 0.000000
-0x0
-// 0.000000
-0x0
-// -0.900000
-0xbfecccccccccccbb
-// 4.036839
-0x401025b90f9f58d1
-// 0.000000
-0x0
-// 0.000000
-0x0
-// -0.900000
-0xbfecccccccccccdb
-// 3.979318
-0x400fd5a4c3d2fb6a
-// 0.000000
-0x0
-// 0.000000
-0x0
-// -0.900000
 0xbfecccccccccccc2
-// 3.923337
-0x400f62fe9f66ba16
+// 4.156765
+0x4010a086f17feb7b
+// 0.000000
+0x0
+// 0.000000
+0x0
+// -0.900000
+0xbfecccccccccccc0
+// 4.095965
+0x40106244868c7b66
+// 0.000000
+0x0
+// 0.000000
+0x0
+// -0.900000
+0xbfecccccccccccbd
+// 4.036839
+0x401025b90f9f58d2
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
 0xbfecccccccccccca
+// 3.979318
+0x400fd5a4c3d2fb6b
+// 0.000000
+0x0
+// 0.000000
+0x0
+// -0.900000
+0xbfeccccccccccccc
+// 3.923337
+0x400f62fe9f66ba17
+// 0.000000
+0x0
+// 0.000000
+0x0
+// -0.900000
+0xbfecccccccccccce
 // 3.868834
-0x400ef35f2ec0ea7a
+0x400ef35f2ec0ea7c
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccc2
+0xbfecccccccccccd3
 // 3.815749
-0x400e86a7a798e9ae
+0x400e86a7a798e9aa
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfeccccccccccccb
+0xbfecccccccccccd9
 // 3.764028
-0x400e1cbadbc4a426
+0x400e1cbadbc4a424
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccad
+0xbfecccccccccccc3
 // 3.713618
-0x400db57d1ea1f498
+0x400db57d1ea1f4a0
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccd5
+0xbfecccccccccccbd
 // 3.664467
-0x400d50d42c88432e
+0x400d50d42c884330
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccfa
+0xbfecccccccccccf8
 // 3.616530
-0x400ceea714149626
+0x400ceea714149627
 // 0.000000
 0x0
 // 0.000000
@@ -653,31 +653,31 @@ D
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccbe
+0xbfecccccccccccdb
 // 3.524114
-0x400c3162c96af8f6
+0x400c3162c96af8f5
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccd3
+0xbfecccccccccccd7
 // 3.479552
-0x400bd61f9a4cc192
+0x400bd61f9a4cc198
+// 0.000000
+0x0
+// 0.000000
+0x0
+// -0.900000
+0xbfecccccccccccc4
+// 3.436035
+0x400b7d0028373cf4
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
 0xbfeccccccccccccb
-// 3.436035
-0x400b7d0028373cf3
-// 0.000000
-0x0
-// 0.000000
-0x0
-// -0.900000
-0xbfeccccccccccccf
 // 3.393526
 0x400b25f0ff04f1b8
 // 0.000000
@@ -685,17 +685,17 @@ D
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccc2
+0xbfecccccccccccc6
 // 3.351989
-0x400ad0df93878dca
+0x400ad0df93878dcb
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccd2
+0xbfecccccccccccce
 // 3.311390
-0x400a7dba3610894e
+0x400a7dba36108951
 // 0.000000
 0x0
 // 0.000000
@@ -703,37 +703,37 @@ D
 // -0.900000
 0xbfecccccccccccc8
 // 3.271698
-0x400a2c7005e62d9e
+0x400a2c7005e62d9c
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccde
+0xbfecccccccccccd5
 // 3.232881
-0x4009dcf0e5924dac
+0x4009dcf0e5924dae
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccca
+0xbfecccccccccccc8
 // 3.194911
-0x40098f2d6ff9a913
+0x40098f2d6ff9a914
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfeccccccccccccb
+0xbfecccccccccccc5
 // 3.157759
-0x40094316ee2c7458
+0x40094316ee2c7459
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccca
+0xbfecccccccccccc8
 // 3.121398
 0x4008f89f4de1dc5b
 // 0.000000
@@ -741,15 +741,15 @@ D
 // 0.000000
 0x0
 // -0.900000
-0xbfeccccccccccccb
+0xbfecccccccccccce
 // 3.085802
-0x4008afb9189194a6
+0x4008afb9189194a7
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccbf
+0xbfecccccccccccce
 // 3.050948
 0x400868576b1f9b7c
 // 0.000000
@@ -757,15 +757,15 @@ D
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccc3
+0xbfecccccccccccc9
 // 3.016811
-0x4008226dee0f5f4e
+0x4008226dee0f5f50
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfeccccccccccd21
+0xbfeccccccccccd24
 // 2.983369
 0x4007ddf0ce345894
 // 0.000000
@@ -781,55 +781,55 @@ D
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccce
+0xbfecccccccccccd2
 // 2.918485
-0x4007590ec645c28e
+0x4007590ec645c290
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccca
+0xbfeccccccccccccc
 // 2.887002
-0x4007189491ca4e60
+0x4007189491ca4e62
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccd7
+0xbfecccccccccccd2
 // 2.856133
-0x4006d95c15fc1e5f
+0x4006d95c15fc1e5e
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccc9
+0xbfeccccccccccccc
 // 2.825859
-0x40069b5bb669d00e
+0x40069b5bb669d010
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccc1
+0xbfecccccccccccc7
 // 2.796162
-0x40065e8a3793415b
+0x40065e8a3793415c
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccca
+0xbfeccccccccccccf
 // 2.767026
-0x400622deba2ef42a
+0x400622deba2ef42d
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccc5
+0xbfecccccccccccc0
 // 2.738435
 0x4005e850b6b59fec
 // 0.000000
@@ -839,69 +839,69 @@ D
 // -0.900000
 0xbfecccccccccccd0
 // 2.710373
-0x4005aed7f92f3de6
+0x4005aed7f92f3de8
+// 0.000000
+0x0
+// 0.000000
+0x0
+// -0.900000
+0xbfecccccccccccd1
+// 2.682824
+0x4005766c9d3d3823
+// 0.000000
+0x0
+// 0.000000
+0x0
+// -0.900000
+0xbfecccccccccccd1
+// 2.655775
+0x40053f070a5db5b2
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
 0xbfecccccccccccce
-// 2.682824
-0x4005766c9d3d3821
+// 2.629211
+0x4005089ff0644d0d
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccd4
-// 2.655775
-0x40053f070a5db5b0
+0xbfecccccccccccd1
+// 2.603119
+0x4004d3304424a9ee
+// 0.000000
+0x0
+// 0.000000
+0x0
+// -0.900000
+0xbfecccccccccccc6
+// 2.577486
+0x40049eb13c4bf58b
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
 0xbfecccccccccccc9
-// 2.629211
-0x4005089ff0644d0e
-// 0.000000
-0x0
-// 0.000000
-0x0
-// -0.900000
-0xbfecccccccccccce
-// 2.603119
-0x4004d3304424a9f0
-// 0.000000
-0x0
-// 0.000000
-0x0
-// -0.900000
-0xbfecccccccccccba
-// 2.577486
-0x40049eb13c4bf587
-// 0.000000
-0x0
-// 0.000000
-0x0
-// -0.900000
-0xbfeccccccccccccc
 // 2.552300
-0x40046b1c4e660ab9
+0x40046b1c4e660abc
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccee
+0xbfeccccccccccce5
 // 2.527548
-0x4004386b2c0bb634
+0x4004386b2c0bb635
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfeccccccccccca9
+0xbfeccccccccccca7
 // 2.503219
 0x40040697c037751a
 // 0.000000
@@ -909,7 +909,7 @@ D
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccc6
+0xbfecccccccccccda
 // 2.479302
 0x4003d59c2cbe51cc
 // 0.000000
@@ -917,23 +917,23 @@ D
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccd4
+0xbfecccccccccccda
 // 2.455785
-0x4003a572c7eaaa48
+0x4003a572c7eaaa4c
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccd0
+0xbfecccccccccccc7
 // 2.432659
-0x400376161a36d14b
+0x400376161a36d14c
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccce
+0xbfecccccccccccd5
 // 2.409914
 0x40034780dc25a09a
 // 0.000000
@@ -941,7 +941,7 @@ D
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccc5
+0xbfecccccccccccc7
 // 2.387539
 0x400319adf43733d0
 // 0.000000
@@ -949,23 +949,23 @@ D
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccce
+0xbfecccccccccccc5
 // 2.365525
-0x4002ec9874f821b6
+0x4002ec9874f821b8
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccd0
+0xbfecccccccccccb8
 // 2.343864
-0x4002c03b9b29a6d5
+0x4002c03b9b29a6d6
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccdc
+0xbfecccccccccccdb
 // 2.322546
 0x40029492cc014e94
 // 0.000000
@@ -973,15 +973,15 @@ D
 // 0.000000
 0x0
 // -0.900000
-0xbfeccccccccccccc
+0xbfecccccccccccc8
 // 2.301562
-0x40026999937ebfeb
+0x40026999937ebfea
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccc9
+0xbfeccccccccccccc
 // 2.280906
 0x40023f4ba2d66a7b
 // 0.000000
@@ -997,23 +997,23 @@ D
 // 0.000000
 0x0
 // -0.900000
-0xbfeccccccccccce9
+0xbfeccccccccccce7
 // 2.240542
-0x4001eca10ef6dd94
+0x4001eca10ef6dd93
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccb7
+0xbfecccccccccccba
 // 2.220818
-0x4001c43c7afda045
+0x4001c43c7afda046
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccc4
+0xbfecccccccccccc1
 // 2.201392
 0x40019c734ab02438
 // 0.000000
@@ -1029,7 +1029,7 @@ D
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccb2
+0xbfecccccccccccb0
 // 2.163400
 0x40014ea48a67f7ba
 // 0.000000
@@ -1037,39 +1037,39 @@ D
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccd6
+0xbfecccccccccccd5
 // 2.144821
-0x40012897fce78efa
+0x40012897fce78efb
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccdf
+0xbfeccccccccccce0
 // 2.126512
-0x40010318d5d3dd67
+0x40010318d5d3dd68
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccb6
+0xbfecccccccccccb7
 // 2.108467
-0x4000de23d95ef0d8
+0x4000de23d95ef0d6
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfeccccccccccced
+0xbfecccccccccccee
 // 2.090679
-0x4000b9b5e4b3e1ec
+0x4000b9b5e4b3e1ea
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfeccccccccccccb
+0xbfecccccccccccce
 // 2.073143
 0x400095cbed075f1c
 // 0.000000
@@ -1077,7 +1077,7 @@ D
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccd1
+0xbfeccccccccccccc
 // 2.055853
 0x40007262feb2e766
 // 0.000000
@@ -1093,55 +1093,55 @@ D
 // 0.000000
 0x0
 // -0.900000
-0xbfeccccccccccccb
+0xbfecccccccccccdc
 // 2.021990
-0x40002d08de19e816
-// 0.000000
-0x0
-// 0.000000
-0x0
-// -0.900000
-0xbfeccccccccccccf
-// 2.005406
-0x40000b1230c037f3
+0x40002d08de19e813
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
 0xbfecccccccccccd5
-// 1.989047
-0x3fffd3232a1a3125
-// 0.000000
-0x0
-// 0.000000
-0x0
-// -0.900000
-0xbfeccccccccccccd
-// 1.972909
-0x3fff9108fdf702de
-// 0.000000
-0x0
-// 0.000000
-0x0
-// -0.900000
-0xbfecccccccccccd3
-// 1.956986
-0x3fff4fd0ea245116
-// 0.000000
-0x0
-// 0.000000
-0x0
-// -0.900000
-0xbfecccccccccccc0
-// 1.941275
-0x3fff0f761f7775e1
+// 2.005406
+0x40000b1230c037f6
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
 0xbfecccccccccccd2
+// 1.989047
+0x3fffd3232a1a312c
+// 0.000000
+0x0
+// 0.000000
+0x0
+// -0.900000
+0xbfecccccccccccc6
+// 1.972909
+0x3fff9108fdf702dc
+// 0.000000
+0x0
+// 0.000000
+0x0
+// -0.900000
+0xbfecccccccccccc9
+// 1.956986
+0x3fff4fd0ea245117
+// 0.000000
+0x0
+// 0.000000
+0x0
+// -0.900000
+0xbfecccccccccccc2
+// 1.941275
+0x3fff0f761f7775ea
+// 0.000000
+0x0
+// 0.000000
+0x0
+// -0.900000
+0xbfecccccccccccc6
 // 1.925770
 0x3ffecff3f14c4ad7
 // 0.000000
@@ -1149,47 +1149,47 @@ D
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccee
+0xbfeccccccccccceb
 // 1.910467
-0x3ffe9145d4512b4d
+0x3ffe9145d4512b4e
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccb3
+0xbfecccccccccccba
 // 1.895362
-0x3ffe53675d5fc077
+0x3ffe53675d5fc076
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccc8
+0xbfecccccccccccce
 // 1.880451
-0x3ffe16544061f948
-// 0.000000
-0x0
-// 0.000000
-0x0
-// -0.900000
-0xbfecccccccccccd4
-// 1.865731
-0x3ffdda084f429a86
+0x3ffe16544061f943
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
 0xbfeccccccccccccf
-// 1.851196
-0x3ffd9e7f78e8d8d6
+// 1.865731
+0x3ffdda084f429a89
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccd1
+0xbfeccccccccccccd
+// 1.851196
+0x3ffd9e7f78e8d8d8
+// 0.000000
+0x0
+// 0.000000
+0x0
+// -0.900000
+0xbfecccccccccccce
 // 1.836843
 0x3ffd63b5c83e7824
 // 0.000000
@@ -1197,73 +1197,73 @@ D
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccc4
-// 1.822669
-0x3ffd29a7633ff2a6
-// 0.000000
-0x0
-// 0.000000
-0x0
-// -0.900000
-0xbfeccccccccccccf
-// 1.808671
-0x3ffcf0508a162f64
-// 0.000000
-0x0
-// 0.000000
-0x0
-// -0.900000
 0xbfecccccccccccca
-// 1.794843
-0x3ffcb7ad96395779
+// 1.822669
+0x3ffd29a7633ff2a7
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccd3
-// 1.781184
-0x3ffc7fbaf99c5f06
-// 0.000000
-0x0
-// 0.000000
-0x0
-// -0.900000
-0xbfecccccccccccd0
-// 1.767690
-0x3ffc48753de0dbdc
-// 0.000000
-0x0
-// 0.000000
-0x0
-// -0.900000
-0xbfecccccccccccd3
-// 1.754357
-0x3ffc11d90392ca34
-// 0.000000
-0x0
-// 0.000000
-0x0
-// -0.900000
-0xbfecccccccccccd1
-// 1.741183
-0x3ffbdbe3016be346
+0xbfecccccccccccd5
+// 1.808671
+0x3ffcf0508a162f6a
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
 0xbfecccccccccccc6
-// 1.728165
-0x3ffba690039e2f86
+// 1.794843
+0x3ffcb7ad9639577e
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccca
+0xbfecccccccccccd8
+// 1.781184
+0x3ffc7fbaf99c5f04
+// 0.000000
+0x0
+// 0.000000
+0x0
+// -0.900000
+0xbfecccccccccccc9
+// 1.767690
+0x3ffc48753de0dbde
+// 0.000000
+0x0
+// 0.000000
+0x0
+// -0.900000
+0xbfeccccccccccccf
+// 1.754357
+0x3ffc11d90392ca36
+// 0.000000
+0x0
+// 0.000000
+0x0
+// -0.900000
+0xbfeccccccccccccf
+// 1.741183
+0x3ffbdbe3016be347
+// 0.000000
+0x0
+// 0.000000
+0x0
+// -0.900000
+0xbfecccccccccccc2
+// 1.728165
+0x3ffba690039e2f80
+// 0.000000
+0x0
+// 0.000000
+0x0
+// -0.900000
+0xbfecccccccccccce
 // 1.715299
-0x3ffb71dceb25826e
+0x3ffb71dceb258271
 // 0.000000
 0x0
 // 0.000000
@@ -1277,41 +1277,41 @@ D
 // 0.000000
 0x0
 // -0.900000
-0xbfeccccccccccd07
+0xbfeccccccccccd08
 // 1.690012
-0x3ffb0a4a522a5a6a
+0x3ffb0a4a522a5a68
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfeccccccccccc98
+0xbfeccccccccccc96
 // 1.677587
-0x3ffad764f5c89828
+0x3ffad764f5c89827
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccd6
+0xbfecccccccccccd8
 // 1.665302
-0x3ffaa513c5cbf948
+0x3ffaa513c5cbf94a
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccd0
+0xbfecccccccccccc7
 // 1.653156
-0x3ffa735401c4e2f8
+0x3ffa735401c4e2fa
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccd4
+0xbfecccccccccccd1
 // 1.641147
-0x3ffa4222fa777c8e
+0x3ffa4222fa777c90
 // 0.000000
 0x0
 // 0.000000
@@ -1325,39 +1325,39 @@ D
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccc8
+0xbfecccccccccccce
 // 1.617526
-0x3ff9e162b7feb368
+0x3ff9e162b7feb366
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccc8
+0xbfeccccccccccccf
 // 1.605910
-0x3ff9b1ce6fc184a2
+0x3ff9b1ce6fc184a4
+// 0.000000
+0x0
+// 0.000000
+0x0
+// -0.900000
+0xbfeccccccccccccb
+// 1.594420
+0x3ff982bec9261ed8
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
 0xbfecccccccccccca
-// 1.594420
-0x3ff982bec9261ed5
-// 0.000000
-0x0
-// 0.000000
-0x0
-// -0.900000
-0xbfecccccccccccd2
 // 1.583055
-0x3ff95431637940e5
+0x3ff95431637940e3
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccd0
+0xbfeccccccccccccc
 // 1.571812
 0x3ff92623ec5cfad6
 // 0.000000
@@ -1365,7 +1365,7 @@ D
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccd1
+0xbfecccccccccccce
 // 1.560688
 0x3ff8f8941f5d0a70
 // 0.000000
@@ -1373,33 +1373,33 @@ D
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccce
+0xbfeccccccccccccc
 // 1.549682
-0x3ff8cb7fc586fc66
+0x3ff8cb7fc586fc64
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccd0
+0xbfeccccccccccccf
 // 1.538792
-0x3ff89ee4b505e9da
+0x3ff89ee4b505e9d7
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccc0
+0xbfeccccccccccccb
 // 1.528016
-0x3ff872c0d0c1adc6
+0x3ff872c0d0c1adcb
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccd4
+0xbfecccccccccccc5
 // 1.517351
-0x3ff8471208016e27
+0x3ff8471208016e29
 // 0.000000
 0x0
 // 0.000000
@@ -1413,31 +1413,31 @@ D
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccb8
+0xbfecccccccccccbc
 // 1.496349
-0x3ff7f10bc1eb6727
+0x3ff7f10bc1eb6726
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccca
+0xbfecccccccccccd4
 // 1.486008
-0x3ff7c6b05de32f10
+0x3ff7c6b05de32f0d
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccd2
+0xbfecccccccccccd1
 // 1.475771
-0x3ff79cc247546540
+0x3ff79cc247546547
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfeccccccccccccb
+0xbfecccccccccccc6
 // 1.465637
 0x3ff7733fa65432e4
 // 0.000000
@@ -1445,55 +1445,55 @@ D
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccd4
+0xbfeccccccccccccd
 // 1.455603
-0x3ff74a26ad651def
+0x3ff74a26ad651df0
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccc8
+0xbfecccccccccccca
 // 1.445669
-0x3ff72175992d77a4
-// 0.000000
-0x0
-// 0.000000
-0x0
-// -0.900000
-0xbfeccccccccccccc
-// 1.435832
-0x3ff6f92ab03035ac
-// 0.000000
-0x0
-// 0.000000
-0x0
-// -0.900000
-0xbfecccccccccccc4
-// 1.426090
-0x3ff6d14442881eec
-// 0.000000
-0x0
-// 0.000000
-0x0
-// -0.900000
-0xbfecccccccccccd5
-// 1.416444
-0x3ff6a9c0a9a53540
+0x3ff72175992d77a7
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
 0xbfecccccccccccd0
-// 1.406889
-0x3ff6829e480c466d
+// 1.435832
+0x3ff6f92ab03035ae
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccd1
+0xbfecccccccccccca
+// 1.426090
+0x3ff6d14442881eea
+// 0.000000
+0x0
+// 0.000000
+0x0
+// -0.900000
+0xbfecccccccccccd4
+// 1.416444
+0x3ff6a9c0a9a53541
+// 0.000000
+0x0
+// 0.000000
+0x0
+// -0.900000
+0xbfecccccccccccd2
+// 1.406889
+0x3ff6829e480c466c
+// 0.000000
+0x0
+// 0.000000
+0x0
+// -0.900000
+0xbfeccccccccccccd
 // 1.397426
 0x3ff65bdb89188fc6
 // 0.000000
@@ -1501,15 +1501,15 @@ D
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccd0
+0xbfeccccccccccccd
 // 1.388053
-0x3ff63576e0bf6089
+0x3ff63576e0bf6088
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccce
+0xbfecccccccccccd0
 // 1.378768
 0x3ff60f6ecb55a7fe
 // 0.000000
@@ -1517,95 +1517,95 @@ D
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccc1
+0xbfecccccccccccce
 // 1.369570
-0x3ff5e9c1cd575d62
+0x3ff5e9c1cd575d60
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccbe
+0xbfecccccccccccd3
 // 1.360457
-0x3ff5c46e7330affe
+0x3ff5c46e7330aff8
+// 0.000000
+0x0
+// 0.000000
+0x0
+// -0.900000
+0xbfecccccccccccc3
+// 1.351428
+0x3ff59f735108eeb7
+// 0.000000
+0x0
+// 0.000000
+0x0
+// -0.900000
+0xbfecccccccccccdf
+// 1.342483
+0x3ff57acf028f175e
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
 0xbfecccccccccccc6
-// 1.351428
-0x3ff59f735108eeb8
-// 0.000000
-0x0
-// 0.000000
-0x0
-// -0.900000
-0xbfecccccccccccdc
-// 1.342483
-0x3ff57acf028f175d
-// 0.000000
-0x0
-// 0.000000
-0x0
-// -0.900000
-0xbfecccccccccccda
 // 1.333618
-0x3ff556802ac7fe37
+0x3ff556802ac7fe3f
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccd4
+0xbfecccccccccccc6
 // 1.324834
-0x3ff5328573ddfeec
+0x3ff5328573ddfef4
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfeccccccccccccf
+0xbfeccccccccccccc
 // 1.316129
-0x3ff50edd8ef22921
+0x3ff50edd8ef22922
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccca
+0xbfeccccccccccccb
 // 1.307502
-0x3ff4eb8733eedae2
+0x3ff4eb8733eedae0
+// 0.000000
+0x0
+// 0.000000
+0x0
+// -0.900000
+0xbfecccccccccccc5
+// 1.298951
+0x3ff4c881215bbc37
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
 0xbfecccccccccccca
-// 1.298951
-0x3ff4c881215bbc38
-// 0.000000
-0x0
-// 0.000000
-0x0
-// -0.900000
-0xbfecccccccccccce
 // 1.290476
-0x3ff4a5ca1c330f0d
+0x3ff4a5ca1c330f0c
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccc9
+0xbfecccccccccccca
 // 1.282075
-0x3ff48360efb847cb
+0x3ff48360efb847ca
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccd0
+0xbfeccccccccccccd
 // 1.273747
 0x3ff461446d4fe2f8
 // 0.000000
@@ -1623,15 +1623,15 @@ D
 // -0.900000
 0xbfecccccccccccca
 // 1.257306
-0x3ff41decca04b250
+0x3ff41decca04b253
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccc8
+0xbfecccccccccccce
 // 1.249191
-0x3ff3fcaf69370a06
+0x3ff3fcaf69370a02
 // 0.000000
 0x0
 // 0.000000
@@ -1639,31 +1639,31 @@ D
 // -0.900000
 0xbfecccccccccccce
 // 1.241144
-0x3ff3dbba325db82d
+0x3ff3dbba325db82a
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccbe
+0xbfecccccccccccce
 // 1.233166
-0x3ff3bb0c13505744
+0x3ff3bb0c13505748
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccd0
+0xbfecccccccccccc8
 // 1.225254
-0x3ff39aa3ff2e43e8
+0x3ff39aa3ff2e43ea
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccd9
+0xbfecccccccccccdb
 // 1.217408
-0x3ff37a80ee3e00ee
+0x3ff37a80ee3e00f0
 // 0.000000
 0x0
 // 0.000000
@@ -1677,9 +1677,9 @@ D
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccc6
+0xbfecccccccccccd1
 // 1.201910
-0x3ff33b05d0139853
+0x3ff33b05d0139850
 // 0.000000
 0x0
 // 0.000000
@@ -1687,7 +1687,7 @@ D
 // -0.900000
 0xbfecccccccccccce
 // 1.194256
-0x3ff31babcc11ae7d
+0x3ff31babcc11ae83
 // 0.000000
 0x0
 // 0.000000
@@ -1701,7 +1701,7 @@ D
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccd0
+0xbfecccccccccccce
 // 1.179133
 0x3ff2ddba1484ccad
 // 0.000000
@@ -1709,7 +1709,7 @@ D
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccc6
+0xbfecccccccccccc8
 // 1.171662
 0x3ff2bf2085f1bbe8
 // 0.000000
@@ -1717,79 +1717,79 @@ D
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccc8
+0xbfecccccccccccd1
 // 1.164251
-0x3ff2a0c54ad06c88
+0x3ff2a0c54ad06c8a
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccc9
+0xbfecccccccccccca
 // 1.156898
-0x3ff282a78074ed1e
+0x3ff282a78074ed1c
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccd2
+0xbfeccccccccccccf
 // 1.149603
-0x3ff264c6485ba7ce
-// 0.000000
-0x0
-// 0.000000
-0x0
-// -0.900000
-0xbfeccccccccccccb
-// 1.142365
-0x3ff24720c810e0dc
-// 0.000000
-0x0
-// 0.000000
-0x0
-// -0.900000
-0xbfecccccccccccc7
-// 1.135183
-0x3ff229b62918e13f
-// 0.000000
-0x0
-// 0.000000
-0x0
-// -0.900000
-0xbfeccccccccccccb
-// 1.128057
-0x3ff20c8598d8c80e
-// 0.000000
-0x0
-// 0.000000
-0x0
-// -0.900000
-0xbfeccccccccccccb
-// 1.120985
-0x3ff1ef8e487ffd3c
-// 0.000000
-0x0
-// 0.000000
-0x0
-// -0.900000
-0xbfecccccccccccc6
-// 1.113967
-0x3ff1d2cf6cf240ab
+0x3ff264c6485ba7d0
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
 0xbfeccccccccccccc
-// 1.107002
-0x3ff1b6483eb250be
+// 1.142365
+0x3ff24720c810e0db
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfeccccccccccce8
+0xbfecccccccccccc8
+// 1.135183
+0x3ff229b62918e140
+// 0.000000
+0x0
+// 0.000000
+0x0
+// -0.900000
+0xbfecccccccccccce
+// 1.128057
+0x3ff20c8598d8c80c
+// 0.000000
+0x0
+// 0.000000
+0x0
+// -0.900000
+0xbfecccccccccccd1
+// 1.120985
+0x3ff1ef8e487ffd38
+// 0.000000
+0x0
+// 0.000000
+0x0
+// -0.900000
+0xbfecccccccccccc8
+// 1.113967
+0x3ff1d2cf6cf240aa
+// 0.000000
+0x0
+// 0.000000
+0x0
+// -0.900000
+0xbfecccccccccccd4
+// 1.107002
+0x3ff1b6483eb250ba
+// 0.000000
+0x0
+// 0.000000
+0x0
+// -0.900000
+0xbfecccccccccccee
 // 1.100090
 0x3ff199f7f9cd231a
 // 0.000000
@@ -1805,23 +1805,23 @@ D
 // 0.000000
 0x0
 // -0.900000
-0xbfeccccccccccccd
+0xbfecccccccccccd0
 // 1.086419
-0x3ff161f92d813096
+0x3ff161f92d813097
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfeccccccccccccb
+0xbfeccccccccccccc
 // 1.079660
-0x3ff146492f341946
+0x3ff146492f34194a
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccd5
+0xbfeccccccccccccc
 // 1.072950
 0x3ff12acd2c4f4d6c
 // 0.000000
@@ -1829,31 +1829,31 @@ D
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccc6
-// 1.066288
-0x3ff10f84716e0626
-// 0.000000
-0x0
-// 0.000000
-0x0
-// -0.900000
-0xbfeccccccccccccb
-// 1.059676
-0x3ff0f46e4e441cf5
-// 0.000000
-0x0
-// 0.000000
-0x0
-// -0.900000
 0xbfeccccccccccccc
-// 1.053110
-0x3ff0d98a158cd037
+// 1.066288
+0x3ff10f84716e0620
+// 0.000000
+0x0
+// 0.000000
+0x0
+// -0.900000
+0xbfecccccccccccc9
+// 1.059676
+0x3ff0f46e4e441cf8
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
 0xbfeccccccccccccf
+// 1.053110
+0x3ff0d98a158cd038
+// 0.000000
+0x0
+// 0.000000
+0x0
+// -0.900000
+0xbfecccccccccccd0
 // 1.046592
 0x3ff0bed71cf9f95a
 // 0.000000
@@ -1861,31 +1861,31 @@ D
 // 0.000000
 0x0
 // -0.900000
-0xbfeccccccccccccf
+0xbfeccccccccccccb
 // 1.040120
-0x3ff0a454bd23b234
+0x3ff0a454bd23b237
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfeccccccccccccc
+0xbfecccccccccccca
 // 1.033694
-0x3ff08a02517865fb
-// 0.000000
-0x0
-// 0.000000
-0x0
-// -0.900000
-0xbfecccccccccccd4
-// 1.027312
-0x3ff06fdf382d4a0b
+0x3ff08a02517865ff
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
 0xbfecccccccccccce
+// 1.027312
+0x3ff06fdf382d4a0d
+// 0.000000
+0x0
+// 0.000000
+0x0
+// -0.900000
+0xbfeccccccccccccc
 // 1.020976
 0x3ff055ead22f3c60
 // 0.000000
@@ -1893,97 +1893,97 @@ D
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccd1
+0xbfeccccccccccccc
 // 1.014683
-0x3ff03c24831403d3
+0x3ff03c24831403d1
+// 0.000000
+0x0
+// 0.000000
+0x0
+// -0.900000
+0xbfeccccccccccccb
+// 1.008434
+0x3ff0228bb10bf00c
+// 0.000000
+0x0
+// 0.000000
+0x0
+// -0.900000
+0xbfecccccccccccc8
+// 1.002228
+0x3ff0091fc4d3d58f
+// 0.000000
+0x0
+// 0.000000
+0x0
+// -0.900000
+0xbfecccccccccccdd
+// 0.996063
+0x3fefdfc0534ec7a4
+// 0.000000
+0x0
+// 0.000000
+0x0
+// -0.900000
+0xbfecccccccccccc2
+// 0.989941
+0x3fefad989a67a529
+// 0.000000
+0x0
+// 0.000000
+0x0
+// -0.900000
+0xbfecccccccccccd2
+// 0.983860
+0x3fef7bc73f15c69d
+// 0.000000
+0x0
+// 0.000000
+0x0
+// -0.900000
+0xbfecccccccccccd2
+// 0.977819
+0x3fef4a4b262c6bb9
+// 0.000000
+0x0
+// 0.000000
+0x0
+// -0.900000
+0xbfecccccccccccd2
+// 0.971819
+0x3fef19233915d7a8
+// 0.000000
+0x0
+// 0.000000
+0x0
+// -0.900000
+0xbfecccccccccccd5
+// 0.965858
+0x3feee84e65bb34a7
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
 0xbfecccccccccccc4
-// 1.008434
-0x3ff0228bb10bf008
-// 0.000000
-0x0
-// 0.000000
-0x0
-// -0.900000
-0xbfecccccccccccc9
-// 1.002228
-0x3ff0091fc4d3d590
-// 0.000000
-0x0
-// 0.000000
-0x0
-// -0.900000
-0xbfeccccccccccce4
-// 0.996063
-0x3fefdfc0534ec79a
-// 0.000000
-0x0
-// 0.000000
-0x0
-// -0.900000
-0xbfecccccccccccc0
-// 0.989941
-0x3fefad989a67a527
-// 0.000000
-0x0
-// 0.000000
-0x0
-// -0.900000
-0xbfeccccccccccccd
-// 0.983860
-0x3fef7bc73f15c6a8
-// 0.000000
-0x0
-// 0.000000
-0x0
-// -0.900000
-0xbfecccccccccccc9
-// 0.977819
-0x3fef4a4b262c6bb1
-// 0.000000
-0x0
-// 0.000000
-0x0
-// -0.900000
-0xbfecccccccccccd1
-// 0.971819
-0x3fef19233915d7a6
-// 0.000000
-0x0
-// 0.000000
-0x0
-// -0.900000
-0xbfeccccccccccccc
-// 0.965858
-0x3feee84e65bb34ad
-// 0.000000
-0x0
-// 0.000000
-0x0
-// -0.900000
-0xbfecccccccccccc7
 // 0.959936
-0x3feeb7cb9e6d0d5f
+0x3feeb7cb9e6d0d6c
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccd0
+0xbfecccccccccccca
 // 0.954053
-0x3fee8799d9cc58dd
+0x3fee8799d9cc58e7
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccc9
+0xbfecccccccccccd9
 // 0.948208
-0x3fee57b812b414fc
+0x3fee57b812b414ec
 // 0.000000
 0x0
 // 0.000000
@@ -1997,55 +1997,55 @@ D
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccd8
+0xbfecccccccccccda
 // 0.936630
-0x3fedf8e07d2859bf
+0x3fedf8e07d2859c1
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccc9
+0xbfecccccccccccc6
 // 0.930897
-0x3fedc9e8b8cae4ca
+0x3fedc9e8b8cae4c8
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccc5
+0xbfeccccccccccce2
 // 0.925200
-0x3fed9b3d05f8bf1d
+0x3fed9b3d05f8befa
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccac
+0xbfeccccccccccca8
 // 0.919539
-0x3fed6cdc73717441
+0x3fed6cdc7371743d
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfeccccccccccce0
+0xbfeccccccccccc9e
 // 0.913913
-0x3fed3ec613b30773
+0x3fed3ec613b307b3
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccdc
+0xbfecccccccccccdd
 // 0.908322
-0x3fed10f8fce709f5
+0x3fed10f8fce709f6
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfeccccccccccc9c
+0xbfeccccccccccc9b
 // 0.902765
 0x3fece37448d01fa4
 // 0.000000
@@ -2053,7 +2053,7 @@ D
 // -0.000000
 0x8000000000000000
 // -0.900000
-0xbfecccccccccccfc
+0xbfecccccccccccfd
 // 0.897243
 0x3fecb63714b7f3a4
 // 0.000000
@@ -2061,49 +2061,49 @@ D
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccbc
+0xbfecccccccccccbf
 // 0.891754
-0x3fec8940815d9b75
+0x3fec8940815d9b76
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccb2
+0xbfecccccccccccf2
 // 0.886299
-0x3fec5c8fb2e45b73
+0x3fec5c8fb2e45b33
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccf0
+0xbfecccccccccccec
 // 0.880876
-0x3fec3023d0c2d841
+0x3fec3023d0c2d83d
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccd5
+0xbfecccccccccccb4
 // 0.875486
-0x3fec03fc05b2a7dd
+0x3fec03fc05b2a7fa
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfeccccccccccccf
+0xbfecccccccccccce
 // 0.870128
-0x3febd8177fa041ea
+0x3febd8177fa041e8
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccc2
+0xbfecccccccccccc4
 // 0.864802
-0x3febac756f9b509f
+0x3febac756f9b50a1
 // 0.000000
 0x0
 // 0.000000
@@ -2117,119 +2117,119 @@ D
 // 0.000000
 0x0
 // -0.900000
-0xbfeccccccccccccb
+0xbfecccccccccccbb
 // 0.854243
-0x3feb55f5854cc79c
+0x3feb55f5854cc7ac
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfeccccccccccccc
+0xbfecccccccccccd6
 // 0.849010
-0x3feb2b161c4a390d
-// 0.000000
-0x0
-// 0.000000
-0x0
-// -0.900000
-0xbfeccccccccccccd
-// 0.843806
-0x3feb00760bc6397f
-// 0.000000
-0x0
-// 0.000000
-0x0
-// -0.900000
-0xbfeccccccccccccc
-// 0.838633
-0x3fead61493a13cbd
-// 0.000000
-0x0
-// 0.000000
-0x0
-// -0.900000
-0xbfecccccccccccc7
-// 0.833489
-0x3feaabf0f687efc6
-// 0.000000
-0x0
-// 0.000000
-0x0
-// -0.900000
-0xbfecccccccccccc5
-// 0.828374
-0x3fea820a79e5d6f1
-// 0.000000
-0x0
-// 0.000000
-0x0
-// -0.900000
-0xbfeccccccccccccf
-// 0.823288
-0x3fea586065d837e8
+0x3feb2b161c4a3907
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
 0xbfecccccccccccd8
+// 0.843806
+0x3feb00760bc6397c
+// 0.000000
+0x0
+// 0.000000
+0x0
+// -0.900000
+0xbfecccccccccccc7
+// 0.838633
+0x3fead61493a13cc7
+// 0.000000
+0x0
+// 0.000000
+0x0
+// -0.900000
+0xbfecccccccccccca
+// 0.833489
+0x3feaabf0f687efc8
+// 0.000000
+0x0
+// 0.000000
+0x0
+// -0.900000
+0xbfecccccccccccce
+// 0.828374
+0x3fea820a79e5d6f9
+// 0.000000
+0x0
+// 0.000000
+0x0
+// -0.900000
+0xbfecccccccccccc6
+// 0.823288
+0x3fea586065d837ed
+// 0.000000
+0x0
+// 0.000000
+0x0
+// -0.900000
+0xbfecccccccccccda
 // 0.818231
-0x3fea2ef205214cf7
+0x3fea2ef205214cf9
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccba
+0xbfecccccccccccc3
 // 0.813201
-0x3fea05bea51bc11a
-// 0.000000
-0x0
-// 0.000000
-0x0
-// -0.900000
-0xbfecccccccccccd1
-// 0.808200
-0x3fe9dcc595ae70bf
-// 0.000000
-0x0
-// 0.000000
-0x0
-// -0.900000
-0xbfecccccccccccc8
-// 0.803226
-0x3fe9b40629407109
-// 0.000000
-0x0
-// 0.000000
-0x0
-// -0.900000
-0xbfeccccccccccccb
-// 0.798279
-0x3fe98b7fb4ad574e
+0x3fea05bea51bc114
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
 0xbfecccccccccccd0
-// 0.793359
-0x3fe963318f39c2c1
+// 0.808200
+0x3fe9dcc595ae70be
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccc4
-// 0.788465
-0x3fe93b1b1288255e
+0xbfeccccccccccccd
+// 0.803226
+0x3fe9b4062940710f
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
 0xbfecccccccccccc8
+// 0.798279
+0x3fe98b7fb4ad574a
+// 0.000000
+0x0
+// 0.000000
+0x0
+// -0.900000
+0xbfecccccccccccce
+// 0.793359
+0x3fe963318f39c2bf
+// 0.000000
+0x0
+// 0.000000
+0x0
+// -0.900000
+0xbfecccccccccccc8
+// 0.788465
+0x3fe93b1b1288255a
+// 0.000000
+0x0
+// 0.000000
+0x0
+// -0.900000
+0xbfecccccccccccd0
 // 0.783598
 0x3fe9133b9a8dc9d6
 // 0.000000
@@ -2237,65 +2237,65 @@ D
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccc5
+0xbfeccccccccccccb
 // 0.778756
-0x3fe8eb928588164f
+0x3fe8eb928588164e
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccd1
+0xbfecccccccccccd4
 // 0.773941
-0x3fe8c41f33f2090b
+0x3fe8c41f33f2090d
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccca
+0xbfeccccccccccccd
 // 0.769150
-0x3fe89ce10879eebe
+0x3fe89ce10879eec1
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccc5
+0xbfeccccccccccccb
 // 0.764385
-0x3fe875d767f75062
+0x3fe875d767f75061
+// 0.000000
+0x0
+// 0.000000
+0x0
+// -0.900000
+0xbfecccccccccccc8
+// 0.759644
+0x3fe84f01b9611761
+// 0.000000
+0x0
+// 0.000000
+0x0
+// -0.900000
+0xbfecccccccccccc8
+// 0.754928
+0x3fe8285f65c3e6c9
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
 0xbfecccccccccccd0
-// 0.759644
-0x3fe84f01b961175b
-// 0.000000
-0x0
-// 0.000000
-0x0
-// -0.900000
-0xbfecccccccccccc7
-// 0.754928
-0x3fe8285f65c3e6d0
-// 0.000000
-0x0
-// 0.000000
-0x0
-// -0.900000
-0xbfecccccccccccc9
 // 0.750236
-0x3fe801efd838a83c
+0x3fe801efd838a83d
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccc1
+0xbfecccccccccccc2
 // 0.745569
-0x3fe7dbb27ddb4b4c
+0x3fe7dbb27ddb4b4e
 // 0.000000
 0x0
 // 0.000000
@@ -2311,15 +2311,15 @@ D
 // -0.900000
 0xbfecccccccccccb2
 // 0.736303
-0x3fe78fcc20f2e564
+0x3fe78fcc20f2e56b
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccd4
+0xbfecccccccccccce
 // 0.731706
-0x3fe76a22025e3cdc
+0x3fe76a22025e3ce3
 // 0.000000
 0x0
 // 0.000000
@@ -2327,53 +2327,53 @@ D
 // -0.900000
 0xbfecccccccccccc8
 // 0.727131
-0x3fe744a7ded303b6
-// 0.000000
-0x0
-// 0.000000
-0x0
-// -0.900000
-0xbfecccccccccccd3
-// 0.722579
-0x3fe71f5d2cf80e64
-// 0.000000
-0x0
-// 0.000000
-0x0
-// -0.900000
-0xbfecccccccccccd1
-// 0.718049
-0x3fe6fa41654393fc
-// 0.000000
-0x0
-// 0.000000
-0x0
-// -0.900000
-0xbfeccccccccccccd
-// 0.713541
-0x3fe6d55401f32e1a
-// 0.000000
-0x0
-// 0.000000
-0x0
-// -0.900000
-0xbfeccccccccccccb
-// 0.709055
-0x3fe6b0947f040228
-// 0.000000
-0x0
-// 0.000000
-0x0
-// -0.900000
-0xbfecccccccccccca
-// 0.704591
-0x3fe68c025a2b1321
+0x3fe744a7ded303b8
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
 0xbfeccccccccccccf
+// 0.722579
+0x3fe71f5d2cf80e69
+// 0.000000
+0x0
+// 0.000000
+0x0
+// -0.900000
+0xbfecccccccccccce
+// 0.718049
+0x3fe6fa41654393ff
+// 0.000000
+0x0
+// 0.000000
+0x0
+// -0.900000
+0xbfecccccccccccce
+// 0.713541
+0x3fe6d55401f32e1c
+// 0.000000
+0x0
+// 0.000000
+0x0
+// -0.900000
+0xbfecccccccccccca
+// 0.709055
+0x3fe6b0947f04022a
+// 0.000000
+0x0
+// 0.000000
+0x0
+// -0.900000
+0xbfeccccccccccccd
+// 0.704591
+0x3fe68c025a2b1320
+// 0.000000
+0x0
+// 0.000000
+0x0
+// -0.900000
+0xbfeccccccccccccc
 // 0.700148
 0x3fe6679d12cdbae9
 // 0.000000
@@ -2381,9 +2381,9 @@ D
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccce
+0xbfecccccccccccd1
 // 0.695726
-0x3fe6436429fa4a79
+0x3fe6436429fa4a81
 // 0.000000
 0x0
 // 0.000000
@@ -2397,7 +2397,7 @@ D
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccc8
+0xbfecccccccccccca
 // 0.686946
 0x3fe5fb75804bfe62
 // 0.000000
@@ -2405,7 +2405,7 @@ D
 // 0.000000
 0x0
 // -0.900000
-0xbfeccccccccccccc
+0xbfecccccccccccce
 // 0.682586
 0x3fe5d7bec99a41e3
 // 0.000000
@@ -2413,7 +2413,7 @@ D
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccc4
+0xbfecccccccccccce
 // 0.678247
 0x3fe5b43285b6eba6
 // 0.000000
@@ -2421,9 +2421,9 @@ D
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccd0
+0xbfeccccccccccccd
 // 0.673927
-0x3fe590d03d93889e
+0x3fe590d03d9388a5
 // 0.000000
 0x0
 // 0.000000
@@ -2437,73 +2437,73 @@ D
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccc5
+0xbfecccccccccccc7
 // 0.665348
-0x3fe54a87cbcad9f9
+0x3fe54a87cbcad9fb
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccca
+0xbfecccccccccccce
 // 0.661087
-0x3fe527a0bb6d948d
+0x3fe527a0bb6d9488
+// 0.000000
+0x0
+// 0.000000
+0x0
+// -0.900000
+0xbfecccccccccccd0
+// 0.656846
+0x3fe504e1d953daa3
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
 0xbfecccccccccccca
-// 0.656846
-0x3fe504e1d953da98
-// 0.000000
-0x0
-// 0.000000
-0x0
-// -0.900000
-0xbfecccccccccccce
 // 0.652624
-0x3fe4e24ab5aec716
+0x3fe4e24ab5aec715
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccd4
+0xbfeccccccccccccc
 // 0.648420
-0x3fe4bfdae2104d35
-// 0.000000
-0x0
-// 0.000000
-0x0
-// -0.900000
-0xbfecccccccccccc8
-// 0.644235
-0x3fe49d91f16567dd
+0x3fe4bfdae2104d38
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
 0xbfecccccccccccce
+// 0.644235
+0x3fe49d91f16567de
+// 0.000000
+0x0
+// 0.000000
+0x0
+// -0.900000
+0xbfecccccccccccd0
 // 0.640068
-0x3fe47b6f77f064ef
+0x3fe47b6f77f064f0
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccc4
+0xbfecccccccccccc7
 // 0.635919
-0x3fe459730b434cc7
+0x3fe459730b434cc5
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccd1
+0xbfecccccccccccd0
 // 0.631788
-0x3fe4379c423a64e2
+0x3fe4379c423a64e3
 // 0.000000
 0x0
 // 0.000000
@@ -2511,79 +2511,79 @@ D
 // -0.900000
 0xbfeccccccccccccc
 // 0.627675
-0x3fe415eab4f6cd4a
+0x3fe415eab4f6cd48
+// 0.000000
+0x0
+// 0.000000
+0x0
+// -0.900000
+0xbfeccccccccccccb
+// 0.623580
+0x3fe3f45dfcd937ba
+// 0.000000
+0x0
+// 0.000000
+0x0
+// -0.900000
+0xbfeccccccccccccb
+// 0.619502
+0x3fe3d2f5b47cb8a5
+// 0.000000
+0x0
+// 0.000000
+0x0
+// -0.900000
+0xbfecccccccccccd0
+// 0.615441
+0x3fe3b1b177b1b0b2
+// 0.000000
+0x0
+// 0.000000
+0x0
+// -0.900000
+0xbfecccccccccccd2
+// 0.611397
+0x3fe39090e378cee9
+// 0.000000
+0x0
+// 0.000000
+0x0
+// -0.900000
+0xbfecccccccccccd0
+// 0.607370
+0x3fe36f9395fe2a8a
+// 0.000000
+0x0
+// 0.000000
+0x0
+// -0.900000
+0xbfecccccccccccc9
+// 0.603360
+0x3fe34eb92e947426
+// 0.000000
+0x0
+// 0.000000
+0x0
+// -0.900000
+0xbfecccccccccccd3
+// 0.599366
+0x3fe32e014db03d40
+// 0.000000
+0x0
+// 0.000000
+0x0
+// -0.900000
+0xbfeccccccccccccb
+// 0.595388
+0x3fe30d6b94e35724
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
 0xbfeccccccccccccc
-// 0.623580
-0x3fe3f45dfcd937bd
-// 0.000000
-0x0
-// 0.000000
-0x0
-// -0.900000
-0xbfecccccccccccce
-// 0.619502
-0x3fe3d2f5b47cb8a4
-// 0.000000
-0x0
-// 0.000000
-0x0
-// -0.900000
-0xbfeccccccccccccf
-// 0.615441
-0x3fe3b1b177b1b0b4
-// 0.000000
-0x0
-// 0.000000
-0x0
-// -0.900000
-0xbfecccccccccccc6
-// 0.611397
-0x3fe39090e378cef3
-// 0.000000
-0x0
-// 0.000000
-0x0
-// -0.900000
-0xbfecccccccccccc6
-// 0.607370
-0x3fe36f9395fe2a98
-// 0.000000
-0x0
-// 0.000000
-0x0
-// -0.900000
-0xbfecccccccccccc8
-// 0.603360
-0x3fe34eb92e947424
-// 0.000000
-0x0
-// 0.000000
-0x0
-// -0.900000
-0xbfecccccccccccd2
-// 0.599366
-0x3fe32e014db03d41
-// 0.000000
-0x0
-// 0.000000
-0x0
-// -0.900000
-0xbfecccccccccccd2
-// 0.595388
-0x3fe30d6b94e35715
-// 0.000000
-0x0
-// 0.000000
-0x0
-// -0.900000
-0xbfeccccccccccccd
 // 0.591427
-0x3fe2ecf7a6d845f7
+0x3fe2ecf7a6d84601
 // 0.000000
 0x0
 // 0.000000
@@ -2591,95 +2591,95 @@ D
 // -0.900000
 0xbfecccccccccccce
 // 0.587481
-0x3fe2cca5274dcacb
+0x3fe2cca5274dcacd
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfeccccccccccccc
+0xbfeccccccccccccb
 // 0.583551
-0x3fe2ac73bb12810a
+0x3fe2ac73bb128109
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccc9
+0xbfecccccccccccc7
 // 0.579637
-0x3fe28c630800916a
-// 0.000000
-0x0
-// 0.000000
-0x0
-// -0.900000
-0xbfeccccccccccccc
-// 0.575738
-0x3fe26c72b4f9782e
-// 0.000000
-0x0
-// 0.000000
-0x0
-// -0.900000
-0xbfeccccccccccccd
-// 0.571855
-0x3fe24ca269e1df34
-// 0.000000
-0x0
-// 0.000000
-0x0
-// -0.900000
-0xbfeccccccccccccc
-// 0.567986
-0x3fe22cf1cf9d8ae7
+0x3fe28c6308009169
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
 0xbfecccccccccccca
-// 0.564133
-0x3fe20d60900b5a5b
-// 0.000000
-0x0
-// 0.000000
-0x0
-// -0.900000
-0xbfeccccccccccccc
-// 0.560294
-0x3fe1edee560158f4
-// 0.000000
-0x0
-// 0.000000
-0x0
-// -0.900000
-0xbfeccccccccccccc
-// 0.556470
-0x3fe1ce9acd48e2c6
-// 0.000000
-0x0
-// 0.000000
-0x0
-// -0.900000
-0xbfeccccccccccccd
-// 0.552661
-0x3fe1af65a29ad9d4
-// 0.000000
-0x0
-// 0.000000
-0x0
-// -0.900000
-0xbfecccccccccccc2
-// 0.548866
-0x3fe1904e839bed04
+// 0.575738
+0x3fe26c72b4f97831
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
 0xbfecccccccccccce
+// 0.571855
+0x3fe24ca269e1df32
+// 0.000000
+0x0
+// 0.000000
+0x0
+// -0.900000
+0xbfecccccccccccca
+// 0.567986
+0x3fe22cf1cf9d8aeb
+// 0.000000
+0x0
+// 0.000000
+0x0
+// -0.900000
+0xbfecccccccccccce
+// 0.564133
+0x3fe20d60900b5a5e
+// 0.000000
+0x0
+// 0.000000
+0x0
+// -0.900000
+0xbfecccccccccccce
+// 0.560294
+0x3fe1edee560158f6
+// 0.000000
+0x0
+// 0.000000
+0x0
+// -0.900000
+0xbfeccccccccccccd
+// 0.556470
+0x3fe1ce9acd48e2c4
+// 0.000000
+0x0
+// 0.000000
+0x0
+// -0.900000
+0xbfecccccccccccce
+// 0.552661
+0x3fe1af65a29ad9d1
+// 0.000000
+0x0
+// 0.000000
+0x0
+// -0.900000
+0xbfeccccccccccccd
+// 0.548866
+0x3fe1904e839bed02
+// 0.000000
+0x0
+// 0.000000
+0x0
+// -0.900000
+0xbfecccccccccccca
 // 0.545085
-0x3fe171551ed8ef57
+0x3fe171551ed8ef5e
 // 0.000000
 0x0
 // 0.000000
@@ -2687,7 +2687,7 @@ D
 // -0.900000
 0xbfecccccccccccd2
 // 0.541318
-0x3fe1527923c3400e
+0x3fe1527923c34010
 // 0.000000
 0x0
 // 0.000000
@@ -2701,49 +2701,49 @@ D
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccca
+0xbfeccccccccccccd
 // 0.533825
-0x3fe115182cc6e69e
+0x3fe115182cc6e696
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccca
+0xbfecccccccccccd1
 // 0.530099
-0x3fe0f692941a3e69
+0x3fe0f692941a3e6e
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccce
+0xbfeccccccccccccb
 // 0.526387
-0x3fe0d8292b882670
-// 0.000000
-0x0
-// 0.000000
-0x0
-// -0.900000
-0xbfecccccccccccce
-// 0.522688
-0x3fe0b9dba6c4f979
-// 0.000000
-0x0
-// 0.000000
-0x0
-// -0.900000
-0xbfecccccccccccc7
-// 0.519002
-0x3fe09ba9ba5554d1
+0x3fe0d8292b88266e
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
 0xbfeccccccccccccc
+// 0.522688
+0x3fe0b9dba6c4f977
+// 0.000000
+0x0
+// 0.000000
+0x0
+// -0.900000
+0xbfecccccccccccca
+// 0.519002
+0x3fe09ba9ba5554d0
+// 0.000000
+0x0
+// 0.000000
+0x0
+// -0.900000
+0xbfecccccccccccce
 // 0.515329
-0x3fe07d931b8ae9d4
+0x3fe07d931b8ae9d0
 // 0.000000
 0x0
 // 0.000000
@@ -2751,31 +2751,31 @@ D
 // -0.900000
 0xbfecccccccccccca
 // 0.511669
-0x3fe05f9780815dbe
+0x3fe05f9780815dba
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccd0
+0xbfecccccccccccd3
 // 0.508022
-0x3fe041b6a01b36fe
+0x3fe041b6a01b36fd
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccc8
+0xbfecccccccccccc9
 // 0.504387
-0x3fe023f031fed7e3
+0x3fe023f031fed7e8
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfeccccccccccccc
+0xbfecccccccccccca
 // 0.500765
-0x3fe00643ee93865c
+0x3fe00643ee938660
 // 0.000000
 0x0
 // 0.000000
@@ -2789,17 +2789,17 @@ D
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccce
+0xbfeccccccccccccf
 // 0.493557
-0x3fdf96719a403aa6
+0x3fdf96719a403aa2
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccc6
+0xbfecccccccccccc9
 // 0.489972
-0x3fdf5bb2c721f582
+0x3fdf5bb2c721f580
 // 0.000000
 0x0
 // 0.000000
@@ -2807,23 +2807,23 @@ D
 // -0.900000
 0xbfecccccccccccce
 // 0.486398
-0x3fdf21261b3e6cf0
+0x3fdf21261b3e6cf2
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccd8
+0xbfecccccccccccd6
 // 0.482836
-0x3fdee6cb0e97660e
+0x3fdee6cb0e97660c
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccc7
+0xbfecccccccccccc6
 // 0.479286
-0x3fdeaca11a8ed2f2
+0x3fdeaca11a8ed2f0
 // 0.000000
 0x0
 // 0.000000
@@ -2837,15 +2837,15 @@ D
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccca
+0xbfeccccccccccccc
 // 0.472221
-0x3fde38de68a20998
+0x3fde38de68a2099c
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccce
+0xbfecccccccccccca
 // 0.468705
 0x3fddff44a4337748
 // 0.000000
@@ -2853,31 +2853,31 @@ D
 // 0.000000
 0x0
 // -0.900000
-0xbfeccccccccccccd
-// 0.465201
-0x3fddc5d9eb447bda
-// 0.000000
-0x0
-// 0.000000
-0x0
-// -0.900000
-0xbfecccccccccccc7
-// 0.461708
-0x3fdd8c9dbdca6060
-// 0.000000
-0x0
-// 0.000000
-0x0
-// -0.900000
-0xbfeccccccccccccc
-// 0.458225
-0x3fdd538f9cfc2e1e
-// 0.000000
-0x0
-// 0.000000
-0x0
-// -0.900000
 0xbfecccccccccccd1
+// 0.465201
+0x3fddc5d9eb447bd4
+// 0.000000
+0x0
+// 0.000000
+0x0
+// -0.900000
+0xbfecccccccccccc9
+// 0.461708
+0x3fdd8c9dbdca6058
+// 0.000000
+0x0
+// 0.000000
+0x0
+// -0.900000
+0xbfeccccccccccccd
+// 0.458225
+0x3fdd538f9cfc2e18
+// 0.000000
+0x0
+// 0.000000
+0x0
+// -0.900000
+0xbfecccccccccccd0
 // 0.454754
 0x3fdd1aaf0b4de530
 // 0.000000
@@ -2885,39 +2885,39 @@ D
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccc8
+0xbfecccccccccccce
 // 0.451293
-0x3fdce1fb8c6bc69c
+0x3fdce1fb8c6bc69a
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccc9
+0xbfecccccccccccd1
 // 0.447843
-0x3fdca974a535b280
+0x3fdca974a535b288
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccca
+0xbfeccccccccccccc
 // 0.444403
-0x3fdc7119dbba9802
+0x3fdc7119dbba980c
+// 0.000000
+0x0
+// 0.000000
+0x0
+// -0.900000
+0xbfecccccccccccce
+// 0.440974
+0x3fdc38eab733f90a
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
 0xbfeccccccccccccf
-// 0.440974
-0x3fdc38eab733f90e
-// 0.000000
-0x0
-// 0.000000
-0x0
-// -0.900000
-0xbfeccccccccccccd
 // 0.437555
 0x3fdc00e6c0017ed0
 // 0.000000
@@ -2925,33 +2925,33 @@ D
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccc6
+0xbfeccccccccccccb
 // 0.434146
-0x3fdbc90d7fa4a172
-// 0.000000
-0x0
-// 0.000000
-0x0
-// -0.900000
-0xbfecccccccccccce
-// 0.430748
-0x3fdb915e80bc6010
-// 0.000000
-0x0
-// 0.000000
-0x0
-// -0.900000
-0xbfecccccccccccd3
-// 0.427359
-0x3fdb59d94f010abc
+0x3fdbc90d7fa4a16c
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
 0xbfecccccccccccca
+// 0.430748
+0x3fdb915e80bc6014
+// 0.000000
+0x0
+// 0.000000
+0x0
+// -0.900000
+0xbfecccccccccccd4
+// 0.427359
+0x3fdb59d94f010ac2
+// 0.000000
+0x0
+// 0.000000
+0x0
+// -0.900000
+0xbfeccccccccccccb
 // 0.423980
-0x3fdb227d77401cf4
+0x3fdb227d77401cf2
 // 0.000000
 0x0
 // 0.000000
@@ -2959,55 +2959,55 @@ D
 // -0.900000
 0xbfecccccccccccce
 // 0.420611
-0x3fdaeb4a87582754
+0x3fdaeb4a87582744
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccca
+0xbfecccccccccccd4
 // 0.417252
-0x3fdab4400e34cc64
+0x3fdab4400e34cc68
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccc9
+0xbfeccccccccccccb
 // 0.413902
-0x3fda7d5d9bcaca48
+0x3fda7d5d9bcaca44
+// 0.000000
+0x0
+// 0.000000
+0x0
+// -0.900000
+0xbfecccccccccccce
+// 0.410561
+0x3fda46a2c11414f0
+// 0.000000
+0x0
+// 0.000000
+0x0
+// -0.900000
+0xbfecccccccccccd0
+// 0.407230
+0x3fda100f100c006a
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
 0xbfeccccccccccccf
-// 0.410561
-0x3fda46a2c11414f8
-// 0.000000
-0x0
-// 0.000000
-0x0
-// -0.900000
-0xbfeccccccccccccb
-// 0.407230
-0x3fda100f100c006c
-// 0.000000
-0x0
-// 0.000000
-0x0
-// -0.900000
-0xbfeccccccccccccb
 // 0.403908
-0x3fd9d9a21bab7896
+0x3fd9d9a21bab789c
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfeccccccccccccd
+0xbfecccccccccccc6
 // 0.400596
-0x3fd9a35b77e548d8
+0x3fd9a35b77e548e8
 // 0.000000
 0x0
 // 0.000000
@@ -3021,7 +3021,7 @@ D
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccc7
+0xbfecccccccccccc8
 // 0.393997
 0x3fd9373f76be8a32
 // 0.000000
@@ -3029,7 +3029,7 @@ D
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccc9
+0xbfecccccccccccca
 // 0.390711
 0x3fd90169460435c0
 // 0.000000
@@ -3037,7 +3037,7 @@ D
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccd1
+0xbfecccccccccccd0
 // 0.387434
 0x3fd8cbb7bf299eb4
 // 0.000000
@@ -3045,23 +3045,23 @@ D
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccc8
+0xbfecccccccccccc3
 // 0.384165
-0x3fd8962a7acd0424
+0x3fd8962a7acd0426
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccd7
+0xbfecccccccccccd8
 // 0.380905
-0x3fd860c112715448
+0x3fd860c112715450
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccc2
+0xbfecccccccccccc3
 // 0.377654
 0x3fd82b7b207ad058
 // 0.000000
@@ -3069,7 +3069,7 @@ D
 // 0.000000
 0x0
 // -0.900000
-0xbfeccccccccccce8
+0xbfecccccccccccea
 // 0.374411
 0x3fd7f658402bc0d0
 // 0.000000
@@ -3085,25 +3085,25 @@ D
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccd4
+0xbfecccccccccccd7
 // 0.367949
-0x3fd78c7a25cfc844
+0x3fd78c7a25cfc840
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccbf
+0xbfecccccccccccbe
 // 0.364730
-0x3fd757be268083b8
+0x3fd757be268083c0
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccd5
+0xbfecccccccccccd3
 // 0.361520
-0x3fd72323ae4db688
+0x3fd72323ae4db68a
 // 0.000000
 0x0
 // 0.000000
@@ -3117,7 +3117,7 @@ D
 // 0.000000
 0x0
 // -0.900000
-0xbfeccccccccccccb
+0xbfeccccccccccccc
 // 0.355122
 0x3fd6ba51d1aad0b8
 // 0.000000
@@ -3127,29 +3127,29 @@ D
 // -0.900000
 0xbfeccccccccccccc
 // 0.351935
-0x3fd68619ae6a5e1a
+0x3fd68619ae6a5e16
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccd2
+0xbfecccccccccccd3
 // 0.348755
-0x3fd65201949fc10a
+0x3fd65201949fc10e
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccc8
+0xbfecccccccccccca
 // 0.345583
-0x3fd61e0926ce8750
+0x3fd61e0926ce8740
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfeccccccccccccc
+0xbfeccccccccccccf
 // 0.342419
 0x3fd5ea300839bfb0
 // 0.000000
@@ -3159,13 +3159,13 @@ D
 // -0.900000
 0xbfeccccccccccccb
 // 0.339261
-0x3fd5b675dce1277c
+0x3fd5b675dce12780
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccce
+0xbfeccccccccccccf
 // 0.336112
 0x3fd582da497e62b0
 // 0.000000
@@ -3173,17 +3173,17 @@ D
 // 0.000000
 0x0
 // -0.900000
-0xbfeccccccccccccc
+0xbfeccccccccccccd
 // 0.332969
-0x3fd54f5cf3823d68
+0x3fd54f5cf3823d64
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccc6
+0xbfeccccccccccccc
 // 0.329833
-0x3fd51bfd8111f79c
+0x3fd51bfd8111f7a0
 // 0.000000
 0x0
 // 0.000000
@@ -3191,7 +3191,7 @@ D
 // -0.900000
 0xbfecccccccccccca
 // 0.326705
-0x3fd4e8bb99049978
+0x3fd4e8bb99049988
 // 0.000000
 0x0
 // 0.000000
@@ -3199,21 +3199,21 @@ D
 // -0.900000
 0xbfeccccccccccccf
 // 0.323583
-0x3fd4b596e2e051b4
+0x3fd4b596e2e051b0
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccc8
+0xbfecccccccccccc9
 // 0.320469
-0x3fd4828f06d7dce0
+0x3fd4828f06d7dcd8
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccca
+0xbfeccccccccccccf
 // 0.317361
 0x3fd44fa3adc7f448
 // 0.000000
@@ -3221,31 +3221,31 @@ D
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccc8
+0xbfeccccccccccccc
 // 0.314260
-0x3fd41cd48134c878
+0x3fd41cd48134c880
+// 0.000000
+0x0
+// 0.000000
+0x0
+// -0.900000
+0xbfeccccccccccccb
+// 0.311165
+0x3fd3ea212b47817c
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
 0xbfecccccccccccce
-// 0.311165
-0x3fd3ea212b478174
-// 0.000000
-0x0
-// 0.000000
-0x0
-// -0.900000
-0xbfeccccccccccccf
 // 0.308077
-0x3fd3b78956cbc8a4
+0x3fd3b78956cbc8a8
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccca
+0xbfeccccccccccccd
 // 0.304996
 0x3fd3850caf2d5b40
 // 0.000000
@@ -3253,7 +3253,7 @@ D
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccca
+0xbfeccccccccccccd
 // 0.301921
 0x3fd352aae075a438
 // 0.000000
@@ -3261,25 +3261,25 @@ D
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccca
+0xbfeccccccccccccc
 // 0.298852
-0x3fd3206397495e8c
+0x3fd3206397495e90
+// 0.000000
+0x0
+// 0.000000
+0x0
+// -0.900000
+0xbfecccccccccccd0
+// 0.295789
+0x3fd2ee3680e63f1c
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
 0xbfeccccccccccccf
-// 0.295789
-0x3fd2ee3680e63f24
-// 0.000000
-0x0
-// 0.000000
-0x0
-// -0.900000
-0xbfecccccccccccca
 // 0.292733
-0x3fd2bc234b20a690
+0x3fd2bc234b20a698
 // 0.000000
 0x0
 // 0.000000
@@ -3287,37 +3287,37 @@ D
 // -0.900000
 0xbfecccccccccccc9
 // 0.289683
-0x3fd28a29a4615a18
+0x3fd28a29a4615a1c
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfeccccccccccccd
+0xbfeccccccccccccc
 // 0.286639
-0x3fd258493ba34470
-// 0.000000
-0x0
-// 0.000000
-0x0
-// -0.900000
-0xbfeccccccccccccd
-// 0.283600
-0x3fd22681c0713d58
+0x3fd258493ba34474
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
 0xbfecccccccccccca
-// 0.280568
-0x3fd1f4d2e2e3d8a0
+// 0.283600
+0x3fd22681c0713d54
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccc4
+0xbfecccccccccccce
+// 0.280568
+0x3fd1f4d2e2e3d89c
+// 0.000000
+0x0
+// 0.000000
+0x0
+// -0.900000
+0xbfecccccccccccc8
 // 0.277541
 0x3fd1c33c539f3c2c
 // 0.000000
@@ -3333,39 +3333,39 @@ D
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccbf
+0xbfecccccccccccc0
 // 0.271505
-0x3fd16056e52e00b0
+0x3fd16056e52e00b4
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccd1
+0xbfecccccccccccd5
 // 0.268495
-0x3fd12f0769f06b10
+0x3fd12f0769f06b14
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccc7
+0xbfecccccccccccca
 // 0.265491
-0x3fd0fdcf04d58c20
+0x3fd0fdcf04d58c2c
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfeccccccccccccf
+0xbfecccccccccccd2
 // 0.262493
-0x3fd0ccad691bd754
+0x3fd0ccad691bd758
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfeccccccccccccc
+0xbfecccccccccccce
 // 0.259499
 0x3fd09ba24a80e108
 // 0.000000
@@ -3373,25 +3373,25 @@ D
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccc9
+0xbfeccccccccccccb
 // 0.256511
-0x3fd06aad5d3f61c4
-// 0.000000
-0x0
-// 0.000000
-0x0
-// -0.900000
-0xbfecccccccccccca
-// 0.253528
-0x3fd039ce560d3f58
+0x3fd06aad5d3f61c0
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
 0xbfeccccccccccccc
+// 0.253528
+0x3fd039ce560d3f54
+// 0.000000
+0x0
+// 0.000000
+0x0
+// -0.900000
+0xbfecccccccccccd1
 // 0.250550
-0x3fd00904ea199c14
+0x3fd00904ea199c10
 // 0.000000
 0x0
 // 0.000000
@@ -3405,7 +3405,7 @@ D
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccca
+0xbfecccccccccccd0
 // 0.244610
 0x3fcf4f6375fa1a40
 // 0.000000
@@ -3415,7 +3415,7 @@ D
 // -0.900000
 0xbfecccccccccccca
 // 0.241648
-0x3fceee4ec8fed908
+0x3fceee4ec8fed910
 // 0.000000
 0x0
 // 0.000000
@@ -3423,13 +3423,13 @@ D
 // -0.900000
 0xbfeccccccccccccd
 // 0.238690
-0x3fce8d6305264da0
+0x3fce8d6305264d98
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfeccccccccccccf
+0xbfecccccccccccce
 // 0.235737
 0x3fce2c9f99526b00
 // 0.000000
@@ -3437,7 +3437,7 @@ D
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccc7
+0xbfeccccccccccccd
 // 0.232789
 0x3fcdcc03f5413de0
 // 0.000000
@@ -3445,9 +3445,9 @@ D
 // 0.000000
 0x0
 // -0.900000
-0xbfeccccccccccccc
+0xbfeccccccccccccb
 // 0.229845
-0x3fcd6b8f89895668
+0x3fcd6b8f89895680
 // 0.000000
 0x0
 // 0.000000
@@ -3461,7 +3461,7 @@ D
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccc8
+0xbfecccccccccccca
 // 0.223972
 0x3fccab1a21a4f460
 // 0.000000
@@ -3469,65 +3469,65 @@ D
 // 0.000000
 0x0
 // -0.900000
-0xbfeccccccccccccb
-// 0.221042
-0x3fcc4b180ac07948
-// 0.000000
-0x0
-// 0.000000
-0x0
-// -0.900000
-0xbfecccccccccccc7
-// 0.218116
-0x3fcbeb3af6be5dd0
-// 0.000000
-0x0
-// 0.000000
-0x0
-// -0.900000
 0xbfeccccccccccccd
-// 0.215195
-0x3fcb8b825a3b5f90
-// 0.000000
-0x0
-// 0.000000
-0x0
-// -0.900000
-0xbfecccccccccccce
-// 0.212278
-0x3fcb2bedaa980c40
-// 0.000000
-0x0
-// 0.000000
-0x0
-// -0.900000
-0xbfecccccccccccca
-// 0.209365
-0x3fcacc7c5df57028
-// 0.000000
-0x0
-// 0.000000
-0x0
-// -0.900000
-0xbfeccccccccccccc
-// 0.206457
-0x3fca6d2deb31cb08
-// 0.000000
-0x0
-// 0.000000
-0x0
-// -0.900000
-0xbfecccccccccccc9
-// 0.203552
-0x3fca0e01c9e54fe0
+// 0.221042
+0x3fcc4b180ac07930
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
 0xbfeccccccccccccf
+// 0.218116
+0x3fcbeb3af6be5de8
+// 0.000000
+0x0
+// 0.000000
+0x0
+// -0.900000
+0xbfeccccccccccccb
+// 0.215195
+0x3fcb8b825a3b5fa0
+// 0.000000
+0x0
+// 0.000000
+0x0
+// -0.900000
+0xbfeccccccccccccb
+// 0.212278
+0x3fcb2bedaa980c58
+// 0.000000
+0x0
+// 0.000000
+0x0
+// -0.900000
+0xbfecccccccccccce
+// 0.209365
+0x3fcacc7c5df57020
+// 0.000000
+0x0
+// 0.000000
+0x0
+// -0.900000
+0xbfecccccccccccce
+// 0.206457
+0x3fca6d2deb31cb10
+// 0.000000
+0x0
+// 0.000000
+0x0
+// -0.900000
+0xbfecccccccccccca
+// 0.203552
+0x3fca0e01c9e54fd0
+// 0.000000
+0x0
+// 0.000000
+0x0
+// -0.900000
+0xbfecccccccccccd1
 // 0.200652
-0x3fc9aef7725eeaa8
+0x3fc9aef7725eeab0
 // 0.000000
 0x0
 // 0.000000
@@ -3535,13 +3535,13 @@ D
 // -0.900000
 0xbfeccccccccccccc
 // 0.197756
-0x3fc9500e5da11168
+0x3fc9500e5da11160
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfeccccccccccccb
+0xbfecccccccccccca
 // 0.194863
 0x3fc8f146055e9a00
 // 0.000000
@@ -3549,33 +3549,33 @@ D
 // 0.000000
 0x0
 // -0.900000
-0xbfeccccccccccccd
+0xbfeccccccccccccb
 // 0.191974
-0x3fc8929de3f79ac0
+0x3fc8929de3f79ad0
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfeccccccccccccf
+0xbfeccccccccccccd
 // 0.189089
-0x3fc8341574765130
+0x3fc8341574765140
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccc7
+0xbfeccccccccccccc
 // 0.186208
-0x3fc7d5ac328c1110
+0x3fc7d5ac328c10f0
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccc9
+0xbfecccccccccccd0
 // 0.183331
-0x3fc777619a8e3a50
+0x3fc777619a8e3a20
 // 0.000000
 0x0
 // 0.000000
@@ -3597,23 +3597,23 @@ D
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccce
+0xbfeccccccccccccc
 // 0.174719
-0x3fc65d34b2d2aad0
-// 0.000000
-0x0
-// 0.000000
-0x0
-// -0.900000
-0xbfeccccccccccccb
-// 0.171856
-0x3fc5ff5faa447700
+0x3fc65d34b2d2ab00
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
 0xbfeccccccccccccd
+// 0.171856
+0x3fc5ff5faa447720
+// 0.000000
+0x0
+// 0.000000
+0x0
+// -0.900000
+0xbfecccccccccccce
 // 0.168996
 0x3fc5a1a6c281ed60
 // 0.000000
@@ -3629,7 +3629,7 @@ D
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccca
+0xbfecccccccccccc7
 // 0.163285
 0x3fc4e68755ad2100
 // 0.000000
@@ -3637,7 +3637,7 @@ D
 // 0.000000
 0x0
 // -0.900000
-0xbfeccccccccccccd
+0xbfeccccccccccccc
 // 0.160435
 0x3fc4891fd22590c0
 // 0.000000
@@ -3653,15 +3653,15 @@ D
 // 0.000000
 0x0
 // -0.900000
-0xbfeccccccccccccc
+0xbfecccccccccccca
 // 0.154743
-0x3fc3ce9eb8c584b0
+0x3fc3ce9eb8c584c0
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfeccccccccccccb
+0xbfeccccccccccccf
 // 0.151902
 0x3fc3718427aaff50
 // 0.000000
@@ -3677,39 +3677,39 @@ D
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccce
+0xbfeccccccccccccc
 // 0.146228
-0x3fc2b7988c4c70e0
+0x3fc2b7988c4c70d0
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfeccccccccccccc
+0xbfeccccccccccccb
 // 0.143395
-0x3fc25ac689c83f10
-// 0.000000
-0x0
-// 0.000000
-0x0
-// -0.900000
-0xbfecccccccccccc5
-// 0.140565
-0x3fc1fe0bbf57c530
+0x3fc25ac689c83f00
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
 0xbfeccccccccccccc
-// 0.137738
-0x3fc1a167b2099aa0
+// 0.140565
+0x3fc1fe0bbf57c520
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccce
+0xbfecccccccccccca
+// 0.137738
+0x3fc1a167b2099ac0
+// 0.000000
+0x0
+// 0.000000
+0x0
+// -0.900000
+0xbfeccccccccccccf
 // 0.134914
 0x3fc144d9e760a900
 // 0.000000
@@ -3725,23 +3725,23 @@ D
 // 0.000000
 0x0
 // -0.900000
-0xbfeccccccccccccc
+0xbfeccccccccccccd
 // 0.129272
-0x3fc08bff32401060
+0x3fc08bff32401050
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccc7
+0xbfeccccccccccccd
 // 0.126455
-0x3fc02fb154fc7580
+0x3fc02fb154fc7590
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccce
+0xbfeccccccccccccc
 // 0.123641
 0x3fbfa6efa9821bc0
 // 0.000000
@@ -3749,7 +3749,7 @@ D
 // 0.000000
 0x0
 // -0.900000
-0xbfeccccccccccccd
+0xbfeccccccccccccb
 // 0.120829
 0x3fbeeea4725f3d00
 // 0.000000
@@ -3757,7 +3757,7 @@ D
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccca
+0xbfeccccccccccccb
 // 0.118019
 0x3fbe3680149dbfa0
 // 0.000000
@@ -3765,7 +3765,7 @@ D
 // 0.000000
 0x0
 // -0.900000
-0xbfeccccccccccccd
+0xbfeccccccccccccf
 // 0.115212
 0x3fbd7e81a10ffb80
 // 0.000000
@@ -3773,7 +3773,7 @@ D
 // 0.000000
 0x0
 // -0.900000
-0xbfeccccccccccccb
+0xbfecccccccccccca
 // 0.112406
 0x3fbcc6a8294836a0
 // 0.000000
@@ -3781,15 +3781,15 @@ D
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccce
+0xbfeccccccccccccc
 // 0.109603
-0x3fbc0ef2bf93b5c0
+0x3fbc0ef2bf93b5e0
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccca
+0xbfeccccccccccccb
 // 0.106802
 0x3fbb576076f5d640
 // 0.000000
@@ -3797,7 +3797,7 @@ D
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccca
+0xbfeccccccccccccb
 // 0.104003
 0x3fba9ff063232bc0
 // 0.000000
@@ -3805,15 +3805,15 @@ D
 // 0.000000
 0x0
 // -0.900000
-0xbfeccccccccccccc
+0xbfeccccccccccccb
 // 0.101206
-0x3fb9e8a1987ca880
+0x3fb9e8a1987ca8a0
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccd2
+0xbfeccccccccccccf
 // 0.098411
 0x3fb931732c0acd40
 // 0.000000
@@ -3821,7 +3821,7 @@ D
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccc8
+0xbfecccccccccccc9
 // 0.095618
 0x3fb87a643378dd00
 // 0.000000
@@ -3829,7 +3829,7 @@ D
 // 0.000000
 0x0
 // -0.900000
-0xbfeccccccccccccf
+0xbfecccccccccccd0
 // 0.092826
 0x3fb7c373c5101bc0
 // 0.000000
@@ -3853,7 +3853,7 @@ D
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccc6
+0xbfecccccccccccc8
 // 0.084462
 0x3fb59f509e883e00
 // 0.000000
@@ -3861,15 +3861,15 @@ D
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccca
+0xbfecccccccccccce
 // 0.081678
-0x3fb4e8d143538c00
+0x3fb4e8d143538c40
 // 0.000000
 0x0
 // 0.000000
 0x0
 // -0.900000
-0xbfeccccccccccccd
+0xbfeccccccccccccc
 // 0.078894
 0x3fb4326bea536500
 // 0.000000
@@ -3877,7 +3877,7 @@ D
 // 0.000000
 0x0
 // -0.900000
-0xbfeccccccccccccd
+0xbfeccccccccccccc
 // 0.076113
 0x3fb37c1fad226940
 // 0.000000
@@ -3885,7 +3885,7 @@ D
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccc7
+0xbfecccccccccccca
 // 0.073333
 0x3fb2c5eba5d88f00
 // 0.000000
@@ -3895,7 +3895,7 @@ D
 // -0.900000
 0xbfeccccccccccccc
 // 0.070554
-0x3fb20fceef068ec0
+0x3fb20fceef068e80
 // 0.000000
 0x0
 // 0.000000
@@ -3917,9 +3917,9 @@ D
 // 0.000000
 0x0
 // -0.900000
-0xbfeccccccccccccb
+0xbfecccccccccccd1
 // 0.062225
-0x3fafdbf77b754d80
+0x3fafdbf77b754d00
 // 0.000000
 0x0
 // 0.000000
@@ -3941,7 +3941,7 @@ D
 // 0.000000
 0x0
 // -0.900000
-0xbfeccccccccccccd
+0xbfeccccccccccccb
 // 0.053907
 0x3fab99b48d1ce600
 // 0.000000
@@ -3949,7 +3949,7 @@ D
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccc7
+0xbfeccccccccccccc
 // 0.051136
 0x3faa2e8f9d7d2180
 // 0.000000
@@ -3965,7 +3965,7 @@ D
 // 0.000000
 0x0
 // -0.900000
-0xbfeccccccccccccd
+0xbfecccccccccccce
 // 0.045598
 0x3fa758a531607500
 // 0.000000
@@ -3981,7 +3981,7 @@ D
 // 0.000000
 0x0
 // -0.900000
-0xbfeccccccccccccd
+0xbfeccccccccccccb
 // 0.040063
 0x3fa4832e47478500
 // 0.000000
@@ -3989,7 +3989,7 @@ D
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccc9
+0xbfecccccccccccce
 // 0.037297
 0x3fa31899bc44e200
 // 0.000000
@@ -3997,7 +3997,7 @@ D
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccce
+0xbfeccccccccccccc
 // 0.034531
 0x3fa1ae1ccab93900
 // 0.000000
@@ -4005,7 +4005,7 @@ D
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccce
+0xbfeccccccccccccd
 // 0.031767
 0x3fa043b5b14cfe00
 // 0.000000
@@ -4013,7 +4013,7 @@ D
 // 0.000000
 0x0
 // -0.900000
-0xbfeccccccccccccd
+0xbfecccccccccccce
 // 0.029002
 0x3f9db2c55e296000
 // 0.000000
@@ -4021,7 +4021,7 @@ D
 // 0.000000
 0x0
 // -0.900000
-0xbfeccccccccccccd
+0xbfeccccccccccccf
 // 0.026239
 0x3f9ade4407104400
 // 0.000000
@@ -4029,7 +4029,7 @@ D
 // 0.000000
 0x0
 // -0.900000
-0xbfeccccccccccccc
+0xbfeccccccccccccb
 // 0.023475
 0x3f9809e3dcf39400
 // 0.000000
@@ -4037,7 +4037,7 @@ D
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccce
+0xbfeccccccccccccf
 // 0.020712
 0x3f9535a1601c2400
 // 0.000000
@@ -4053,7 +4053,7 @@ D
 // 0.000000
 0x0
 // -0.900000
-0xbfeccccccccccccb
+0xbfeccccccccccccd
 // 0.015188
 0x3f8f1acee4587000
 // 0.000000
@@ -4061,7 +4061,7 @@ D
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccd0
+0xbfeccccccccccccc
 // 0.012426
 0x3f8972d2087a8000
 // 0.000000
@@ -4069,7 +4069,7 @@ D
 // 0.000000
 0x0
 // -0.900000
-0xbfeccccccccccccf
+0xbfeccccccccccccd
 // 0.009664
 0x3f83caf493882000
 // 0.000000
@@ -4077,7 +4077,7 @@ D
 // 0.000000
 0x0
 // -0.900000
-0xbfecccccccccccca
+0xbfeccccccccccccb
 // 0.006903
 0x3f7c465f14e6c000
 // 0.000000

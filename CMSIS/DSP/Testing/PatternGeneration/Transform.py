@@ -107,13 +107,15 @@ def generatePatterns():
     
     configf64=Tools.Config(PATTERNDIR,PARAMDIR,"f64")
     configf32=Tools.Config(PATTERNDIR,PARAMDIR,"f32")
+    configf16=Tools.Config(PATTERNDIR,PARAMDIR,"f16")
     configq31=Tools.Config(PATTERNDIR,PARAMDIR,"q31")
     configq15=Tools.Config(PATTERNDIR,PARAMDIR,"q15")
     
     
     scalings = [4,5,6,7,8,9,10,11,12]
     writeTests([(configf64,None),
-        (configf32,None)
+        (configf32,None),
+        (configf16,None)
         ,(configq31,scalings)
         ,(configq15,scalings)])
 

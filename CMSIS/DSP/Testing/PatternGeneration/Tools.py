@@ -9,6 +9,14 @@ TAILONLY = 1
 BODYONLY = 2
 BODYANDTAIL = 3
 
+# Datatype formats
+F64 = 64 
+F32 = 0
+F16 = 16
+Q31 = 31 
+Q15 = 15
+Q7 = 7
+
 def loopnb(format,loopkind):
     nb = 0
     if loopkind == TAILONLY:
@@ -16,7 +24,7 @@ def loopnb(format,loopkind):
             nb = 1 
         if format == 0 or format == 31:
             nb = 3 
-        if format == 15:
+        if format == 15 or format == 16:
             nb = 7
         if format == 7:
             nb = 15
@@ -25,7 +33,7 @@ def loopnb(format,loopkind):
             nb = 4 
         if format == 0 or format == 31:
             nb = 8 
-        if format == 15:
+        if format == 15 or format == 16:
             nb = 16
         if format == 7:
             nb = 32
@@ -34,7 +42,7 @@ def loopnb(format,loopkind):
             nb = 5
         if format == 0 or format == 31:
             nb = 11 # 9
-        if format == 15:
+        if format == 15 or format == 16:
             nb = 23 # 17
         if format == 7:
             nb = 47 # 33
@@ -78,6 +86,18 @@ def float_to_hex(f):
       str : representation of the hex value
     """
     return hex(struct.unpack('<I', struct.pack('<f', f))[0])
+
+def float16_to_hex(f):
+    """ Convert and x86 float to an ARM unsigned long int.
+  
+    Args:
+      f (float): value to be converted
+    Raises:
+      Nothing 
+    Returns:
+      str : representation of the hex value
+    """
+    return hex(struct.unpack('<H', struct.pack('<e', f))[0])
 
 def float64_to_hex(f):
     """ Convert and x86 float to an ARM unsigned long int.
@@ -219,6 +239,21 @@ class Config:
           return(os.path.join(self._patternDir,"%s%d_%s.txt" % (name,i,"f32")))
         else:
           return(os.path.join(self._patternDir,"Input%d_%s.txt" % (i,"f32")))
+
+    def inputF16P(self,i,name=None):
+        """ Path to a reference pattern from the ID
+      
+        Args:
+          i (int): ID to the reference pattern
+        Raises:
+          Nothing 
+        Returns:
+          str : path to the file where to generate the pattern data
+        """
+        if name:
+          return(os.path.join(self._patternDir,"%s%d_%s.txt" % (name,i,"f16")))
+        else:
+          return(os.path.join(self._patternDir,"Input%d_%s.txt" % (i,"f16")))
 
     def inputQ31P(self,i,name=None):
         """ Path to a reference pattern from the ID
@@ -385,6 +420,21 @@ class Config:
         else:
           return(os.path.join(self._patternDir,"Reference%d_%s.txt" % (i,"f32")))
 
+    def refF16P(self,i,name=None):
+        """ Path to a reference pattern from the ID
+      
+        Args:
+          i (int): ID to the reference pattern
+        Raises:
+          Nothing 
+        Returns:
+          str : path to the file where to generate the pattern data
+        """
+        if name:
+          return(os.path.join(self._patternDir,"%s%d_%s.txt" % (name,i,"f16")))
+        else:
+          return(os.path.join(self._patternDir,"Reference%d_%s.txt" % (i,"f16")))
+
     def paramP(self,i,name=None):
         """ Path to a parameters from the ID
       
@@ -449,6 +499,31 @@ class Config:
             for v in data:
                 f.write("// %f\n" % v)
                 f.write("%s\n" % float_to_hex(v))
+
+    def _writeVectorF16(self,i,data):
+        """ Write pattern data
+        
+        The format is recognized by the text framework script.
+        First line is the sample width (B,H or W for 8,16 or 32 bits)
+        Second line is number of samples
+        Other lines are hexadecimal representation of the samples in format
+        which can be read on big endian ARM.
+        
+          Args:
+            j (int): ID of pattern file
+            data (array): Vector containing the data
+          Raises:
+            Nothing 
+          Returns:
+            Nothing
+        """
+        with open(i,"w") as f:
+            # Write sample dimension nb sample header
+            #np.savetxt(i, data, newline="\n", header="W\n%d" % len(data),comments ="" )
+            f.write("H\n%d\n" % len(data))
+            for v in data:
+                f.write("// %f\n" % v)
+                f.write("%s\n" % float16_to_hex(v))
 
     def _writeVectorQ63(self,i,data):
         """ Write pattern data
@@ -655,6 +730,8 @@ class Config:
           self._writeVectorF64(self.refP(j,name),data)
         if (self._ext == "f32"):
           self._writeVectorF32(self.refP(j,name),data)
+        if (self._ext == "f16"):
+          self._writeVectorF16(self.refP(j,name),data)
         if (self._ext == "q63"):
           self._writeVectorQ63(self.refP(j,name),data)
         if (self._ext == "q31"):
@@ -686,11 +763,16 @@ class Config:
     def writeReferenceF32(self,j,data,name=None):
         self._writeVectorF32(self.refF32P(j,name),data)
 
+    def writeReferenceF16(self,j,data,name=None):
+        self._writeVectorF16(self.refF16P(j,name),data)
+
     def writeInput(self,j,data,name=None):
         if (self._ext == "f64"):
           self._writeVectorF64(self.inputP(j,name),data)
         if (self._ext == "f32"):
           self._writeVectorF32(self.inputP(j,name),data)
+        if (self._ext == "f16"):
+          self._writeVectorF16(self.inputP(j,name),data)
         if (self._ext == "q31"):
           self._writeVectorQ31(self.inputP(j,name),data)
         if (self._ext == "q15"):
@@ -704,6 +786,9 @@ class Config:
 
     def writeInputF32(self,j,data,name=None):
         self._writeVectorF32(self.inputF32P(j,name),data)
+
+    def writeInputF16(self,j,data,name=None):
+        self._writeVectorF16(self.inputF16P(j,name),data)
 
     def writeInputQ31(self,j,data,name=None):
         self._writeVectorQ31(self.inputQ31P(j,name),data)

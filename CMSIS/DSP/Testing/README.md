@@ -647,3 +647,26 @@ examples.sql : how to do simple queries and join with the configuration columns 
 diff.sql : How to compute a performance ratio (max cycle and regression) based on a reference core (which could be extended to a reference configuration if needed).
 
 ## HOW TO EXTEND IT
+
+## FLOAT16 support
+
+On Arm AC5 compiler \_\_fp16 type (float16_t in CMSIS-DSP) can't be used as argument or return value of a function.
+
+Pointer to \_fp16 arrays are allowed.
+
+In CMSIS-DSP, we want to keep the possibility of having float16_t as an argument.
+
+As consequences, 
+
+* the functions using float16_t in the API won't be supported by AC5 compiler.
+* The correspondingfloat16_t tests are put in a different test file desc_f16.txt
+* Code for those float16_t test is not built when ac5.cmake toolchain is used
+* BasicMath cmake has been modified to show hot to avoid including float16 code
+when building with ac5.cmake toolchain
+
+In current example, we assume all float16_t code and tests are not supported by AC5 just to
+show how the cmake must be modified.
+
+When more float16_t code is added to the CMSIS-DSP, this will be refined with a better
+separation.
+

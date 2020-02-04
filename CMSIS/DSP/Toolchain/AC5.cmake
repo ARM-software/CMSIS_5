@@ -15,6 +15,15 @@ endfunction()
 function(compilerSpecificCompileOptions PROJECTNAME ROOT)
   #cmake_print_properties(TARGETS ${PROJECTNAME} PROPERTIES DISABLEOPTIMIZATION)
   get_target_property(DISABLEOPTIM ${PROJECTNAME} DISABLEOPTIMIZATION)
+  get_target_property(DISABLEHALF ${PROJECTNAME} DISABLEHALFFLOATSUPPORT)
+
+  #cmake_print_variables(${PROJECTNAME} DISABLEHALF DISABLEOPTIM)
+  # Add support for the type __fp16 even if there is no HW
+  # support for it. But support disabled when building boot code
+  if (NOT DISABLEHALF)
+  target_compile_options(${PROJECTNAME} PRIVATE "--fp16_format=alternative")
+  endif()
+  
   if ((OPTIMIZED) AND (NOT DISABLEOPTIM))
     #cmake_print_variables(DISABLEOPTIM)
     target_compile_options(${PROJECTNAME} PRIVATE "-O2")

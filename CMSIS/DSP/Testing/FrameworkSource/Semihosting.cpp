@@ -668,6 +668,47 @@ namespace Client
           
       }
 
+      void Semihosting::ImportPattern_f16(Testing::PatternID_t id,char* p,Testing::nbSamples_t nb)
+      {
+          char tmp[256];
+          Testing::nbSamples_t len;
+          Testing::nbSamples_t i=0;
+
+          uint32_t val;
+          float16_t *ptr=(float16_t*)p;
+
+          std::string fileName = this->getPatternPath(id);
+          FILE *pattern=fopen(fileName.c_str(), "r");
+          // Ignore word size format
+          fgets(tmp,256,pattern);
+          // Get nb of samples
+          fgets(tmp,256,pattern);
+          len=atoi(tmp);
+
+          if ((nb != MAX_NB_SAMPLES) && (nb < len))
+          {
+             len = nb;
+          }
+
+          //printf(":::: %s\n",fileName.c_str());
+
+          if (ptr)
+          {
+             for(i=0;i<len;i++)
+             {
+                // Ignore comment
+                fgets(tmp,256,pattern);
+                fscanf(pattern,"0x%08X\n",&val);
+                //printf(":::: %08X %f\n",val, TOTYP(float32_t,val));
+                *ptr = TOTYP(float16_t,val);
+                ptr++;
+             }
+          }
+
+          fclose(pattern);
+          
+      }
+
       void Semihosting::ImportPattern_q63(Testing::PatternID_t id,char* p,Testing::nbSamples_t nb)
       {
           char tmp[256];
@@ -967,6 +1008,25 @@ namespace Client
                   v = data[i];
                   t = TOINT32(v);
                   fprintf(f,"0x%08x\n",t);
+               }
+               fclose(f);
+            }
+      }
+
+      void Semihosting::DumpPattern_f16(Testing::outputID_t id,Testing::nbSamples_t nb, float16_t* data)
+      {
+            std::string fileName = this->getOutputPath(id);
+            if (data)
+            {
+               FILE *f = fopen(fileName.c_str(),"w");
+               Testing::nbSamples_t i=0;
+               uint16_t t;
+               float16_t v;
+               for(i=0; i < nb; i++)
+               {
+                  v = data[i];
+                  t = TOINT16(v);
+                  fprintf(f,"0x0000%04x\n",t);
                }
                fclose(f);
             }

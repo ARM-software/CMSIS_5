@@ -20,6 +20,7 @@ option(MATRIXCHECK "Matrix Checks" OFF)
 option(HELIUM "Helium acceleration (MVEF and MVEI supported)" OFF)
 option(MVEF "MVEF intrinsics supported" OFF)
 option(MVEI "MVEI intrinsics supported" OFF)
+option(FLOAT16 "Float16 intrinsics supported" OFF)
 
 # Select which parts of the CMSIS-DSP must be compiled.
 # There are some dependencies between the parts but they are not tracked

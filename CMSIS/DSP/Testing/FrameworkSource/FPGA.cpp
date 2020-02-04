@@ -540,6 +540,26 @@ namespace Client
 
     }
 
+    void FPGA::ImportPattern_f16(Testing::PatternID_t id,char* p,Testing::nbSamples_t nb)
+    {
+        unsigned long offset,i;
+
+        offset=this->getPatternOffset(id);
+
+        const char *patternStart = this->m_patterns + offset;
+        const float16_t *src = (const float16_t*)patternStart;
+        float16_t *dst = (float16_t*)p;
+
+        if (dst)
+        {
+           for(i=0; i < nb; i++)
+           {
+               *dst++ = *src++;
+           }
+        }
+
+    }
+
     void FPGA::ImportPattern_q63(Testing::PatternID_t id,char* p,Testing::nbSamples_t nb)
     {
         unsigned long offset,i;
@@ -714,6 +734,25 @@ namespace Client
                v = data[i];
                t = TOINT32(v);
                printf("D: 0x%08x\n",t);
+            }
+            printf("D: END\n");
+        }
+    }
+
+    void FPGA::DumpPattern_f16(Testing::outputID_t id,Testing::nbSamples_t nb, float16_t* data)
+    {
+        std::string fileName = this->getOutputPath(id); 
+        if (data)
+        {
+            printf("D: %s\n",fileName.c_str());
+            Testing::nbSamples_t i=0;
+            uint16_t t;
+            float16_t v;
+            for(i=0; i < nb; i++)
+            {
+               v = data[i];
+               t = TOINT16(v);
+               printf("D: 0x0000%04x\n",t);
             }
             printf("D: END\n");
         }

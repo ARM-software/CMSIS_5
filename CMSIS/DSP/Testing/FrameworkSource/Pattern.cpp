@@ -46,6 +46,12 @@ float32_t *loadPattern(Testing::PatternID_t id, Client::PatternMgr *mgr,Testing:
 }
 
 template <> 
+float16_t *loadPattern(Testing::PatternID_t id, Client::PatternMgr *mgr,Testing::nbSamples_t &nb, Testing::nbSamples_t maxSamples)
+{
+    return(mgr->load_f16(id,nb,maxSamples));
+}
+
+template <> 
 q63_t *loadPattern(Testing::PatternID_t id, Client::PatternMgr *mgr,Testing::nbSamples_t &nb, Testing::nbSamples_t maxSamples)
 {
     return(mgr->load_q63(id,nb,maxSamples));
@@ -101,6 +107,12 @@ float32_t *localPattern(Testing::PatternID_t id, Client::PatternMgr *mgr)
 }
 
 template <> 
+float16_t *localPattern(Testing::PatternID_t id, Client::PatternMgr *mgr)
+{
+    return(mgr->local_f16(id));
+}
+
+template <> 
 q63_t *localPattern(Testing::PatternID_t id, Client::PatternMgr *mgr)
 {
     return(mgr->local_q63(id));
@@ -150,6 +162,11 @@ void dumpPattern(Testing::outputID_t id,Testing::nbSamples_t nbSamples,float64_t
 void dumpPattern(Testing::outputID_t id,Testing::nbSamples_t nbSamples,float32_t* data,PatternMgr *mgr)
 {
   mgr->dumpPattern_f32(id,nbSamples,data);
+}
+
+void dumpPattern(Testing::outputID_t id,Testing::nbSamples_t nbSamples,float16_t* data,PatternMgr *mgr)
+{
+  mgr->dumpPattern_f16(id,nbSamples,data);
 }
 
 void dumpPattern(Testing::outputID_t id,Testing::nbSamples_t nbSamples,q63_t* data,PatternMgr *mgr)

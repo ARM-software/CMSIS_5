@@ -168,6 +168,7 @@ set(TESTSRC
   Source/Tests/BayesF32.cpp
   Source/Tests/TransformCF64.cpp
   Source/Tests/TransformCF32.cpp
+  Source/Tests/TransformCF16.cpp
   Source/Tests/TransformRF64.cpp
   Source/Tests/TransformRF32.cpp
   Source/Tests/TransformCQ31.cpp
@@ -220,6 +221,14 @@ set(TESTSRC
   Source/Tests/ExampleCategoryQ15.cpp
   Source/Tests/ExampleCategoryQ7.cpp
   )
+
+if (NOT ARMAC5)
+set(TESTSRC16 
+  Source/Tests/BasicTestsF16.cpp
+  Source/Tests/TransformCF16.cpp
+  )
+endif()
+
 target_include_directories(TestingLib PRIVATE Include/Tests)
 
 endif()
@@ -247,9 +256,12 @@ disableOptimization(FrameworkLib)
 
 target_sources(TestingLib PRIVATE ${TESTSRC})
 
+
 if(NN)
   target_sources(TestingLib PRIVATE ${NNSRC})
 endif()
+
+target_sources(TestingLib PRIVATE ${TESTSRC16})
 
 target_sources(TestingLib PRIVATE testmain.cpp)
 target_sources(TestingLib PRIVATE GeneratedSource/TestDesc.cpp)
