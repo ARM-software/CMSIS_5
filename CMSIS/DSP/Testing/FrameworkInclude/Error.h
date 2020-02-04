@@ -118,7 +118,9 @@ extern void assert_not_empty(unsigned long nb, AnyPattern<q63_t> &p);
 extern void assert_not_empty(unsigned long nb, AnyPattern<q31_t> &p);
 extern void assert_not_empty(unsigned long nb, AnyPattern<q15_t> &p);
 extern void assert_not_empty(unsigned long nb, AnyPattern<q7_t> &p);
-
+extern void assert_not_empty(unsigned long nb, AnyPattern<uint32_t> &p);
+extern void assert_not_empty(unsigned long nb, AnyPattern<uint16_t> &p);
+extern void assert_not_empty(unsigned long nb, AnyPattern<uint8_t> &p);
 
 }
 

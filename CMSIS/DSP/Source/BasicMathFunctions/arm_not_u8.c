@@ -1,7 +1,7 @@
 /* ----------------------------------------------------------------------
  * Project:      CMSIS DSP Library
- * Title:        arm_or_q15.c
- * Description:  Q15 bitwise inclusive OR
+ * Title:        arm_not_u8.c
+ * Description:  uint8_t bitwise NOT
  *
  * $Date:        14 November 2019
  * $Revision:    V1.6.0
@@ -28,65 +28,80 @@
 
 #include "arm_math.h"
 
-
 /**
   @ingroup groupMath
  */
 
-
 /**
-  @defgroup Or Vector bitwise inclusive OR
-
-  Compute the logical bitwise OR.
-
-  There are separate functions for Q31, Q15, and Q7 data types.
- */
-
-/**
-  @addtogroup Or
+  @addtogroup Not
   @{
  */
 
 /**
-  @brief         Compute the logical bitwise OR of two fixed-point vectors.
-  @param[in]     pSrcA      points to input vector A
-  @param[in]     pSrcB      points to input vector B
+  @brief         Compute the logical bitwise NOT of a fixed-point vector.
+  @param[in]     pSrc       points to input vector 
   @param[out]    pDst       points to output vector
   @param[in]     blockSize  number of samples in each vector
   @return        none
  */
 
-void arm_or_q15(
-    const q15_t * pSrcA,
-    const q15_t * pSrcB,
-    q15_t * pDst,
-    uint32_t blockSize)
+void arm_not_u8(
+    const uint8_t * pSrc,
+          uint8_t * pDst,
+          uint32_t blockSize)
 {
     uint32_t blkCnt;      /* Loop counter */
 
-#if defined(ARM_MATH_NEON)
-    int16x8_t vecA, vecB;
+#if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
+    q7x16_t vecSrc;
 
-    /* Compute 8 outputs at a time */
-    blkCnt = blockSize >> 3U;
+    /* Compute 16 outputs at a time */
+    blkCnt = blockSize >> 4;
 
     while (blkCnt > 0U)
     {
-        vecA = vld1q_s16(pSrcA);
-        vecB = vld1q_s16(pSrcB);
+        vecSrc = vld1q(pSrc);
 
-        vst1q_s16(pDst, vorrq_s16(vecA, vecB) );
+        vst1q(pDst, vmvnq_u8(vecSrc) );
 
-        pSrcA += 8;
-        pSrcB += 8;
-        pDst  += 8;
+        pSrc += 16;
+        pDst += 16;
 
         /* Decrement the loop counter */
         blkCnt--;
     }
 
     /* Tail */
-    blkCnt = blockSize & 7;
+    blkCnt = blockSize & 0xF;
+
+    if (blkCnt > 0U)
+    {
+        mve_pred16_t p0 = vctp8q(blkCnt);
+        vecSrc = vld1q(pSrc);
+        vstrbq_p(pDst, vmvnq_u8(vecSrc), p0);
+    }
+#else
+#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+    uint8x16_t inV;
+
+    /* Compute 16 outputs at a time */
+    blkCnt = blockSize >> 4U;
+
+    while (blkCnt > 0U)
+    {
+        inV = vld1q_u8(pSrc);
+
+        vst1q_u8(pDst, vmvnq_u8(inV) );
+
+        pSrc += 16;
+        pDst += 16;
+
+        /* Decrement the loop counter */
+        blkCnt--;
+    }
+
+    /* Tail */
+    blkCnt = blockSize & 0xF;
 #else
     /* Initialize blkCnt with number of samples */
     blkCnt = blockSize;
@@ -94,13 +109,14 @@ void arm_or_q15(
 
     while (blkCnt > 0U)
     {
-        *pDst++ = (*pSrcA++)|(*pSrcB++);
+        *pDst++ = ~(*pSrc++);
 
         /* Decrement the loop counter */
         blkCnt--;
     }
+#endif /* if defined(ARM_MATH_MVEI) */
 }
 
 /**
-  @} end of Or group
+  @} end of Not group
  */

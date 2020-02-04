@@ -694,7 +694,7 @@ group Root {
               Pattern REF_NOT_Q31_ID : Not26_s32.txt
               Pattern REF_XOR_Q31_ID : Xor27_s32.txt
 
-              Output  OUT_SAMPLES_Q31_ID : Output
+              Output  OUT_SAMPLES_ID : Output
               Output  OUT_STATE_Q31_ID : State
    
               Functions {
@@ -749,21 +749,21 @@ group Root {
                 Test shift pos sat:test_shift_q31
                 Test shift neg sat:test_shift_q31
 
-                Test nb=3    arm_and_q31:test_and_q31
-                Test nb=4n   arm_and_q31:test_and_q31
-                Test nb=4n+3 arm_and_q31:test_and_q31
+                Test nb=3    arm_and_u32:test_and_u32
+                Test nb=4n   arm_and_u32:test_and_u32
+                Test nb=4n+3 arm_and_u32:test_and_u32
             
-                Test nb=3    arm_or_q31:test_or_q31
-                Test nb=4n   arm_or_q31:test_or_q31
-                Test nb=4n+3 arm_or_q31:test_or_q31
+                Test nb=3    arm_or_u32:test_or_u32
+                Test nb=4n   arm_or_u32:test_or_u32
+                Test nb=4n+3 arm_or_u32:test_or_u32
             
-                Test nb=3    arm_not_q31:test_not_q31
-                Test nb=4n   arm_not_q31:test_not_q31
-                Test nb=4n+3 arm_not_q31:test_not_q31
+                Test nb=3    arm_not_u32:test_not_u32
+                Test nb=4n   arm_not_u32:test_not_u32
+                Test nb=4n+3 arm_not_u32:test_not_u32
             
-                Test nb=3    arm_xor_q31:test_xor_q31
-                Test nb=4n   arm_xor_q31:test_xor_q31
-                Test nb=4n+3 arm_xor_q31:test_xor_q31
+                Test nb=3    arm_xor_u32:test_xor_u32
+                Test nb=4n   arm_xor_u32:test_xor_u32
+                Test nb=4n+3 arm_xor_u32:test_xor_u32
 
                 Test long    arm_add_q31:test_add_q31
                 Test long    arm_sub_q31:test_sub_q31
@@ -823,7 +823,7 @@ group Root {
               Pattern REF_NOT_Q15_ID : Not26_s16.txt
               Pattern REF_XOR_Q15_ID : Xor27_s16.txt
 
-              Output  OUT_SAMPLES_Q15_ID : Output
+              Output  OUT_SAMPLES_ID : Output
               Output  OUT_STATE_Q15_ID : State
    
               Functions {
@@ -878,21 +878,21 @@ group Root {
                 Test shift pos sat:test_shift_q15
                 Test shift neg sat:test_shift_q15
 
-                Test nb=7    arm_and_q15:test_and_q15
-                Test nb=8n   arm_and_q15:test_and_q15
-                Test nb=8n+7 arm_and_q15:test_and_q15
+                Test nb=7    arm_and_u16:test_and_u16
+                Test nb=8n   arm_and_u16:test_and_u16
+                Test nb=8n+7 arm_and_u16:test_and_u16
             
-                Test nb=7    arm_or_q15:test_or_q15
-                Test nb=8n   arm_or_q15:test_or_q15
-                Test nb=8n+7 arm_or_q15:test_or_q15
+                Test nb=7    arm_or_u16:test_or_u16
+                Test nb=8n   arm_or_u16:test_or_u16
+                Test nb=8n+7 arm_or_u16:test_or_u16
             
-                Test nb=7    arm_not_q15:test_not_q15
-                Test nb=8n   arm_not_q15:test_not_q15
-                Test nb=8n+7 arm_not_q15:test_not_q15
+                Test nb=7    arm_not_u16:test_not_u16
+                Test nb=8n   arm_not_u16:test_not_u16
+                Test nb=8n+7 arm_not_u16:test_not_u16
             
-                Test nb=7    arm_xor_q15:test_xor_q15
-                Test nb=8n   arm_xor_q15:test_xor_q15
-                Test nb=8n+7 arm_xor_q15:test_xor_q15
+                Test nb=7    arm_xor_u16:test_xor_u16
+                Test nb=8n   arm_xor_u16:test_xor_u16
+                Test nb=8n+7 arm_xor_u16:test_xor_u16
 
                 Test long    arm_add_q15:test_add_q15
                 Test long    arm_sub_q15:test_sub_q15
@@ -952,7 +952,7 @@ group Root {
               Pattern REF_NOT_Q7_ID : Not26_s8.txt
               Pattern REF_XOR_Q7_ID : Xor27_s8.txt
 
-              Output  OUT_SAMPLES_Q7_ID : Output
+              Output  OUT_SAMPLES_ID : Output
               Output  OUT_STATE_Q7_ID : State
    
               Functions {
@@ -1007,21 +1007,21 @@ group Root {
                 Test shift pos sat:test_shift_q7
                 Test shift neg sat:test_shift_q7
 
-                Test nb=15     arm_and_q7:test_and_q7
-                Test nb=16n    arm_and_q7:test_and_q7
-                Test nb=16n+15 arm_and_q7:test_and_q7
+                Test nb=15     arm_and_u8:test_and_u8
+                Test nb=16n    arm_and_u8:test_and_u8
+                Test nb=16n+15 arm_and_u8:test_and_u8
              
-                Test nb=15     arm_or_q7:test_or_q7
-                Test nb=16n    arm_or_q7:test_or_q7
-                Test nb=16n+15 arm_or_q7:test_or_q7
+                Test nb=15     arm_or_u8:test_or_u8
+                Test nb=16n    arm_or_u8:test_or_u8
+                Test nb=16n+15 arm_or_u8:test_or_u8
              
-                Test nb=15     arm_not_q7:test_not_q7
-                Test nb=16n    arm_not_q7:test_not_q7
-                Test nb=16n+15 arm_not_q7:test_not_q7
+                Test nb=15     arm_not_u8:test_not_u8
+                Test nb=16n    arm_not_u8:test_not_u8
+                Test nb=16n+15 arm_not_u8:test_not_u8
              
-                Test nb=15     arm_xor_q7:test_xor_q7
-                Test nb=16n    arm_xor_q7:test_xor_q7
-                Test nb=16n+15 arm_xor_q7:test_xor_q7
+                Test nb=15     arm_xor_u8:test_xor_u8
+                Test nb=16n    arm_xor_u8:test_xor_u8
+                Test nb=16n+15 arm_xor_u8:test_xor_u8
 
                 Test long    arm_add_q7:test_add_q7
                 Test long    arm_sub_q7:test_sub_q7

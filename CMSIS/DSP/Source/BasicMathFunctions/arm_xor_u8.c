@@ -1,7 +1,7 @@
 /* ----------------------------------------------------------------------
  * Project:      CMSIS DSP Library
- * Title:        arm_not_q7.c
- * Description:  Q7 bitwise NOT
+ * Title:        arm_xor_u8.c
+ * Description:  uint8_t bitwise exclusive OR
  *
  * $Date:        14 November 2019
  * $Revision:    V1.6.0
@@ -28,46 +28,80 @@
 
 #include "arm_math.h"
 
-
 /**
   @ingroup groupMath
  */
 
-
 /**
-  @addtogroup Not
+  @addtogroup Xor
   @{
  */
 
 /**
-  @brief         Compute the logical bitwise NOT of a fixed-point vector.
-  @param[in]     pSrc       points to input vector 
+  @brief         Compute the logical bitwise XOR of two fixed-point vectors.
+  @param[in]     pSrcA      points to input vector A
+  @param[in]     pSrcB      points to input vector B
   @param[out]    pDst       points to output vector
   @param[in]     blockSize  number of samples in each vector
   @return        none
  */
 
-void arm_not_q7(
-    const q7_t * pSrc,
-          q7_t * pDst,
-    uint32_t blockSize)
+void arm_xor_u8(
+    const uint8_t * pSrcA,
+    const uint8_t * pSrcB,
+          uint8_t * pDst,
+          uint32_t blockSize)
 {
     uint32_t blkCnt;      /* Loop counter */
 
-#if defined(ARM_MATH_NEON)
-    int8x16_t inV;
+#if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
+    q7x16_t vecSrcA, vecSrcB;
+
+    /* Compute 16 outputs at a time */
+    blkCnt = blockSize >> 4;
+
+    while (blkCnt > 0U)
+    {
+        vecSrcA = vld1q(pSrcA);
+        vecSrcB = vld1q(pSrcB);
+
+        vst1q(pDst, veorq_u8(vecSrcA, vecSrcB) );
+
+        pSrcA += 16;
+        pSrcB += 16;
+        pDst  += 16;
+
+        /* Decrement the loop counter */
+        blkCnt--;
+    }
+
+    /* Tail */
+    blkCnt = blockSize & 0xF;
+
+    if (blkCnt > 0U)
+    {
+        mve_pred16_t p0 = vctp8q(blkCnt);
+        vecSrcA = vld1q(pSrcA);
+        vecSrcB = vld1q(pSrcB);
+        vstrbq_p(pDst, veorq_u8(vecSrcA, vecSrcB), p0);
+    }
+#else
+#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+    uint8x16_t vecA, vecB;
 
     /* Compute 16 outputs at a time */
     blkCnt = blockSize >> 4U;
 
     while (blkCnt > 0U)
     {
-        inV = vld1q_s8(pSrc);
+        vecA = vld1q_u8(pSrcA);
+        vecB = vld1q_u8(pSrcB);
 
-        vst1q_s8(pDst, vmvnq_s8(inV) );
+        vst1q_u8(pDst, veorq_u8(vecA, vecB) );
 
-        pSrc += 16;
-        pDst += 16;
+        pSrcA += 16;
+        pSrcB += 16;
+        pDst  += 16;
 
         /* Decrement the loop counter */
         blkCnt--;
@@ -82,13 +116,14 @@ void arm_not_q7(
 
     while (blkCnt > 0U)
     {
-        *pDst++ = ~(*pSrc++);
+        *pDst++ = (*pSrcA++)^(*pSrcB++);
 
         /* Decrement the loop counter */
         blkCnt--;
     }
+#endif /* if defined(ARM_MATH_MVEI) */
 }
 
 /**
-  @} end of Not group
+  @} end of Xor group
  */
