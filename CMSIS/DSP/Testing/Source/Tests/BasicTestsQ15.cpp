@@ -11,7 +11,7 @@ a double precision computation.
 
 */
 #define ABS_ERROR_Q15 ((q15_t)2)
-#define ABS_ERROR_Q63 ((q63_t)(1<<16))
+#define ABS_ERROR_Q63 ((q63_t)(1<<17))
 
 #define MULT_SNR_THRESHOLD 60
 
@@ -128,7 +128,7 @@ q15_t *outp=output.ptr();
 
         outp[0] = r;
 
-        ASSERT_SNR(dotOutput,dotRef,(float32_t)SNR_THRESHOLD);
+        ASSERT_SNR(dotOutput,dotRef,(float32_t)MULT_SNR_THRESHOLD);
 
         ASSERT_NEAR_EQ(dotOutput,dotRef,ABS_ERROR_Q63);
 
