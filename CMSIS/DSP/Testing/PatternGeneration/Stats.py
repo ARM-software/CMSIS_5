@@ -123,6 +123,11 @@ def writeF32OnlyTests(config,nb):
     logSumExpDotTest(config,nb+3)
     return(nb+4)
 
+def writeF64OnlyTests(config,nb):
+    entropyTest(config,nb)
+    klTest(config,nb+2)
+    return(nb+4)
+
 # For index in min and max we need to ensure that the difference between values
 # of the input is big enough to be representable on q31, q15 or q7.
 # Otherwise python will compute an index different from the one
@@ -338,13 +343,14 @@ def generatePatterns():
     PARAMDIR = os.path.join("Parameters","DSP","Stats","Stats")
     
     configf32=Tools.Config(PATTERNDIR,PARAMDIR,"f32")
+    configf64=Tools.Config(PATTERNDIR,PARAMDIR,"f64")
     configq31=Tools.Config(PATTERNDIR,PARAMDIR,"q31")
     configq15=Tools.Config(PATTERNDIR,PARAMDIR,"q15")
     configq7 =Tools.Config(PATTERNDIR,PARAMDIR,"q7")
     
     nb=writeTests(configf32,1,0)
     nb=writeF32OnlyTests(configf32,22)
-    
+    writeF64OnlyTests(configf64,22)    
     writeTests(configq31,1,31)
     writeTests(configq15,1,15)
     writeTests(configq7,1,7)

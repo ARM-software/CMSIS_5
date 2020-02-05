@@ -95,6 +95,30 @@ group Root {
 
            }
 
+           suite Statistics Tests F64 {
+              class = StatsTestsF64
+              folder = StatsF64
+
+              Pattern INPUT22_F64_ID : Input22_f64.txt 
+              Pattern DIM22_S16_ID : Dims22_s16.txt 
+              Pattern REF22_ENTROPY_F64_ID : RefEntropy22_f64.txt
+
+              Pattern INPUTA24_F64_ID : InputA24_f64.txt 
+              Pattern INPUTB24_F64_ID : InputB24_f64.txt
+              Pattern DIM24_S16_ID : Dims24_s16.txt 
+              Pattern REF24_KL_F64_ID : RefKL24_f64.txt
+
+              Output  OUT_F64_ID : Output
+              Output  OUT_S16_ID : Index
+              Output  TMP_F64_ID : Temp
+
+              Functions {
+                arm_entropy_f64:test_entropy_f64
+                arm_kullback_leibler_f64:test_kullback_leibler_f64
+              }
+
+           }
+
            suite Statistics Tests Q31 {
               class = StatsTestsQ31
               folder = StatsQ31

@@ -156,6 +156,7 @@ set(TESTSRC
   Source/Tests/TransformCQ15.cpp
   Source/Tests/TransformRQ15.cpp
   Source/Tests/StatsTestsF32.cpp
+  Source/Tests/StatsTestsF64.cpp
   Source/Tests/StatsTestsQ31.cpp
   Source/Tests/StatsTestsQ15.cpp
   Source/Tests/StatsTestsQ7.cpp
