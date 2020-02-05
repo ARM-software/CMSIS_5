@@ -134,6 +134,7 @@ void arm_float_to_q15(
   float32x4_t mHalf = vdupq_n_f32(-0.5f / 32768.0f);
   float32x4_t r;
   uint32x4_t cmp;
+  float32_t in;
   #endif
 
   int32x4_t cvt;

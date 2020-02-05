@@ -214,7 +214,6 @@ a double precision computation.
       float32_t in[4]={4.0f, 7.0f, 13.0f, 16.0f};
       float32_t result;
       int i;
-      arm_status status;
 
       /*
 
@@ -223,7 +222,7 @@ a double precision computation.
       */
       for(i=0 ; i < 4; i++)
       {
-        in[i] += 3e4;
+        in[i] += 3.0e4f;
       }
 
       arm_std_f32(in,4,&result);
@@ -238,7 +237,7 @@ a double precision computation.
 
       */
 
-      ASSERT_TRUE(fabs(5.47723f - result) < 1.0e-4);
+      ASSERT_TRUE(fabs(5.47723f - result) < 1.0e-4f);
 
     }
 
