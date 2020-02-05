@@ -1199,7 +1199,7 @@ debug access variables which are evaluated for the function call.
       The 32-bit value as read from the top-level AP address.
 
       <b>Code Example:</b><br>
-      Refer to \ref debugDeviceUnlock
+      Refer to \ref DebugDeviceUnlock
     </td>
   </tr>
   <tr>
@@ -1359,7 +1359,7 @@ debug access variables which are evaluated for the function call.
       Always returns \token{0}.
 
       <b>Code Example:</b><br>
-      Refer to \ref debugDeviceUnlock
+      Refer to \ref DebugDeviceUnlock
     </td>
   </tr>
   <tr>
