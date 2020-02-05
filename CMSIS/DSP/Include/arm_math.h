@@ -8161,6 +8161,19 @@ float32_t arm_entropy_f32(const float32_t * pSrcA,uint32_t blockSize);
 
 
 /**
+ * @brief Entropy
+ *
+ * @param[in]  pSrcA        Array of input values.
+ * @param[in]  blockSize    Number of samples in the input array.
+ * @return     Entropy      -Sum(p ln p)
+ *
+ */
+
+
+float64_t arm_entropy_f64(const float64_t * pSrcA, uint32_t blockSize);
+
+
+/**
  * @brief Kullback-Leibler
  *
  * @param[in]  pSrcA         Pointer to an array of input values for probability distribution A.
@@ -8172,6 +8185,20 @@ float32_t arm_entropy_f32(const float32_t * pSrcA,uint32_t blockSize);
 float32_t arm_kullback_leibler_f32(const float32_t * pSrcA
   ,const float32_t * pSrcB
   ,uint32_t blockSize);
+
+
+/**
+ * @brief Kullback-Leibler
+ *
+ * @param[in]  pSrcA         Pointer to an array of input values for probability distribution A.
+ * @param[in]  pSrcB         Pointer to an array of input values for probability distribution B.
+ * @param[in]  blockSize     Number of samples in the input array.
+ * @return Kullback-Leibler  Divergence D(A || B)
+ *
+ */
+float64_t arm_kullback_leibler_f64(const float64_t * pSrcA, 
+                const float64_t * pSrcB, 
+                uint32_t blockSize);
 
 
 /**
