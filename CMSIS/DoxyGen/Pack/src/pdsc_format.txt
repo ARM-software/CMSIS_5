@@ -1212,8 +1212,7 @@ Component Groups can be used in the elements:
 - \ref element_taxonomyDescription
 - \ref element_project_component
 
-The table lists predefined values for the Component Class <b>Cclass="CMSIS"</b>.
-No other Component Groups have been defined so far.
+The following table lists predefined values for the Component Class <b>Cclass="CMSIS"</b>.
 <table class="cmtable" summary="Predefined Cgroup names for Component Class CMSIS">
   <tr>
     <th>Cgroup=</th>
@@ -1221,8 +1220,8 @@ No other Component Groups have been defined so far.
   </tr>
   <tr>
     <td class="XML-Token">CORE</td>
-	<td>A component containing device support in accordance to the <a class=el href="../../Core/html/index.html">CMSIS-Core(M)</a>
-  or <a class=el href="../../Core_A/html/index.html">CMSIS-Core(A)</a> specifications (startup, system and device files)</td>
+	<td>A component containing core support in accordance to the <a class=el href="../../Core/html/index.html">CMSIS-Core(M)</a>
+  or <a class=el href="../../Core_A/html/index.html">CMSIS-Core(A)</a> specifications.</td>
   </tr>
   <tr>
     <td class="XML-Token">DSP</td>
@@ -1239,6 +1238,19 @@ No other Component Groups have been defined so far.
   <tr>
     <td class="XML-Token">RTOS2</td>
 	<td>A component implementing the <a class=el href="../../RTOS2/html/index.html">CMSIS-RTOS v2</a> API specification.</td>
+  </tr>
+</table>
+
+The following table lists predefined values for the Component Class <b>Cclass="Device"</b>.
+<table class="cmtable" summary="Predefined Cgroup names for Component Class Device">
+  <tr>
+    <th>Cgroup=</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td class="XML-Token">Startup</td>
+	<td>A component containing the device support files system_device.c and startup_device.s/c in accordance to the <a class=el href="../../Core/html/index.html">CMSIS-Core(M)</a>
+  or <a class=el href="../../Core_A/html/index.html">CMSIS-Core(A)</a> specifications (startup, system and device files).</td>
   </tr>
 </table>
 
