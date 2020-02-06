@@ -48,7 +48,7 @@ void stage_rfft_f32(
 
         uint32x4_t     vecStridesFwd, vecStridesBkwd;
 
-        vecStridesFwd = vidupq_u32(0, 2);
+        vecStridesFwd = vidupq_u32((uint32_t)0, 2);
         vecStridesBkwd = -vecStridesFwd;
 
         int blockCnt;
@@ -205,7 +205,7 @@ void merge_rfft_f32(
         float32x4x2_t tmp1, tmp2, res;
         uint32x4_t     vecStridesFwd, vecStridesBkwd;
 
-        vecStridesFwd = vidupq_u32(0, 2);
+        vecStridesFwd = vidupq_u32((uint32_t)0, 2);
         vecStridesBkwd = -vecStridesFwd;
 
         int blockCnt;

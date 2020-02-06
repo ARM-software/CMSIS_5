@@ -66,7 +66,7 @@ void arm_min_q31(
     mve_pred16_t p0;
 
 
-    indexVec = vidupq_u32(0, 1);
+    indexVec = vidupq_u32((uint32_t)0, 1);
     curExtremIdxVec = vdupq_n_u32(0);
 
     /* Compute 4 outputs at a time */

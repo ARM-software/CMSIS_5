@@ -126,7 +126,7 @@ static arm_status arm_mat_trans_16bit_generic(
     uint16_t       *pDataDestR;
     uint16x8_t    vecIn;
 
-    vecOffs = vidupq_u16(0, 1);
+    vecOffs = vidupq_u16((uint32_t)0, 1);
     vecOffs = vecOffs * srcCols;
 
     i = srcCols;

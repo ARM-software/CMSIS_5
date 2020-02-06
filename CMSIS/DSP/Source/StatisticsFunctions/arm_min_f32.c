@@ -78,7 +78,7 @@ void arm_min_f32(
     float32_t tmp;
     mve_pred16_t p0;
 
-    indexVec = vidupq_u32(0, 1);
+    indexVec = vidupq_u32((uint32_t)0, 1);
     curExtremIdxVec = vdupq_n_u32(0);
 
     pSrcVec = (float32_t const *) pSrc;

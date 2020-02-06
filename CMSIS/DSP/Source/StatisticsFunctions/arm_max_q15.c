@@ -65,7 +65,7 @@ void arm_max_q15(
     mve_pred16_t p0;
 
 
-    indexVec = vidupq_u16(0, 1);
+    indexVec = vidupq_u16((uint32_t)0, 1);
     curExtremIdxVec = vdupq_n_u16(0);
 
     blkCnt = blockSize >> 3;

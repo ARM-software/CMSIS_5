@@ -80,7 +80,7 @@ __STATIC_INLINE arm_status arm_mat_mult_q15_2x2_mve(
     q15x8_t     vecB, vecA0, vecA1;
     mve_pred16_t p0 = vctp16q(MATRIX_DIM2);
 
-    vecColBOffs = vidupq_u16(0, 2); /* MATRIX_DIM2 */
+    vecColBOffs = vidupq_u16((uint32_t)0, 2); /* MATRIX_DIM2 */
 
     pInB = pSrcB->pData;
 
@@ -137,7 +137,7 @@ __STATIC_INLINE arm_status arm_mat_mult_q15_3x3_mve(
     q15x8_t    vecB, vecA0, vecA1, vecA2;
     mve_pred16_t p0 = vctp16q(MATRIX_DIM3);
 
-    vecColBOffs = vidupq_u16(0, 1);
+    vecColBOffs = vidupq_u16((uint32_t)0, 1);
     vecColBOffs = vecColBOffs * MATRIX_DIM3;
 
     pInB = pSrcB->pData;
@@ -219,7 +219,7 @@ __STATIC_INLINE arm_status arm_mat_mult_q15_4x4_mve(
     q15x8_t     vecB, vecA0, vecA1, vecA2, vecA3;
     mve_pred16_t p0 = vctp16q(MATRIX_DIM4);
 
-    vecColBOffs = vidupq_u16(0, 4);
+    vecColBOffs = vidupq_u16((uint32_t)0, 4);
 
     pInB = pSrcB->pData;
 
@@ -365,7 +365,7 @@ arm_status arm_mat_mult_q15(
             return arm_mat_mult_q15_4x4_mve(pSrcA, pSrcB, pDst);
     }
 
-    vecColBOffs = vidupq_u16(0, 1);
+    vecColBOffs = vidupq_u16((uint32_t)0, 1);
     vecColBOffs = vecColBOffs * (uint16_t) (numColsB);
 
     /*

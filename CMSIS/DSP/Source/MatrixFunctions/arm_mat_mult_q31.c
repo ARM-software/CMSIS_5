@@ -80,7 +80,7 @@ __STATIC_INLINE arm_status arm_mat_mult_q31_2x2_mve(
     /* enable predication to disable half of vector elements */
     mve_pred16_t p0 = vctp32q(MATRIX_DIM2);
 
-    vecColBOffs = vidupq_u32(0, 1);
+    vecColBOffs = vidupq_u32((uint32_t)0, 1);
     vecColBOffs = vecColBOffs * MATRIX_DIM2;
 
     pInB = pSrcB->pData;
@@ -140,7 +140,7 @@ __STATIC_INLINE arm_status arm_mat_mult_q31_3x3_mve(
     /* enable predication to disable last (4th) vector element */
     mve_pred16_t p0 = vctp32q(MATRIX_DIM3);
 
-    vecColBOffs = vidupq_u32(0, 1);
+    vecColBOffs = vidupq_u32((uint32_t)0, 1);
     vecColBOffs = vecColBOffs * MATRIX_DIM3;
 
     pInB = pSrcB->pData;
@@ -225,7 +225,7 @@ __STATIC_INLINE arm_status arm_mat_mult_q31_4x4_mve(
     q63_t        acc0, acc1, acc2, acc3;
     q31x4_t      vecB, vecA;
 
-    vecColBOffs = vidupq_u32(0, 4);
+    vecColBOffs = vidupq_u32((uint32_t)0, 4);
 
     pInB = pSrcB->pData;
 
@@ -380,7 +380,7 @@ arm_status arm_mat_mult_q31(
             return arm_mat_mult_q31_4x4_mve(pSrcA, pSrcB, pDst);
     }
 
-    vecColBOffs = vidupq_u32(0, 1);
+    vecColBOffs = vidupq_u32((uint32_t)0, 1);
     vecColBOffs = vecColBOffs * (uint32_t) (numColsB);
 
     /*

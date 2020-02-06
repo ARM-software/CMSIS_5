@@ -157,7 +157,7 @@ void arm_split_rfft_q31(
      * scatter / gather offsets
      * for ascending & descending addressing
      */
-    vecStridesFwd = vidupq_u32(0, 2);
+    vecStridesFwd = vidupq_u32((uint32_t)0, 2);
     vecStridesBkwd = -vecStridesFwd;
     vecStridesFwd = vecStridesFwd * modifier;
 
@@ -360,7 +360,7 @@ void arm_split_rifft_q31(
      * scatter / gather offsets
      * for ascending & descending addressing
      */
-    vecStridesFwd = vidupq_u32(0, 2);
+    vecStridesFwd = vidupq_u32((uint32_t)0, 2);
     vecStridesBkwd = -vecStridesFwd;
     vecStridesFwd = vecStridesFwd * modifier;
 

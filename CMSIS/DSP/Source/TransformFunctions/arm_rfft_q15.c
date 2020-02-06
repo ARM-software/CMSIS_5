@@ -159,7 +159,7 @@ void arm_split_rfft_q15(
      * scatter / gather offsets
      * for ascending & descending addressing
      */
-    vecStridesFwd = vidupq_u16(0, 2);    // 0, 2, 4, 6, 8, 10, 12, 14
+    vecStridesFwd = vidupq_u16((uint32_t)0, 2);    // 0, 2, 4, 6, 8, 10, 12, 14
     vecStridesBkwd = vddupq_u16(14, 2);   // 14, 12, 10, 8, 6, 4, 2, 0
     vecStridesFwd = vecStridesFwd * (uint16_t)  modifier;
 
@@ -425,7 +425,7 @@ void arm_split_rifft_q15(
      * scatter / gather offsets
      * for ascending & descending addressing
      */
-    vecStridesFwd = vidupq_u16(0, 2);    // 0, 2, 4, 6, 8, 10, 12, 14
+    vecStridesFwd = vidupq_u16((uint32_t)0, 2);    // 0, 2, 4, 6, 8, 10, 12, 14
     vecStridesBkwd = vddupq_u16(14, 2);   // 14, 12, 10, 8, 6, 4, 2, 0
     vecStridesFwd = vecStridesFwd * (uint16_t)  modifier;
 

@@ -167,7 +167,7 @@ __STATIC_INLINE arm_status arm_mat_trans_32bit_generic_mve(
     uint32_t *pDataDestR;
     uint32x4_t vecIn;
 
-    vecOffs = vidupq_u32(0, 1);
+    vecOffs = vidupq_u32((uint32_t)0, 1);
     vecOffs = vecOffs * srcCols;
 
     i = srcCols;

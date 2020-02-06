@@ -65,7 +65,7 @@ static void arm_small_blk_max_q7(
     mve_pred16_t    p0;
 
 
-    indexVec = vidupq_u8(0, 1);
+    indexVec = vidupq_u8((uint32_t)0, 1);
     curExtremIdxVec = vdupq_n_u8(0);
 
     blkCnt = blockSize >> 4;
