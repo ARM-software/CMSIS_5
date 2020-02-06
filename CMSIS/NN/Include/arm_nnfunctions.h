@@ -551,13 +551,14 @@ extern    "C"
                                         q15_t *buffer_a);
 
   /**
-   * @brief TODO
+   * @brief 1xn convolution
    * @param[in]      input                pointer to input tensor.  Format: [N, H, W, in_ch]
    * @param[in]      input_x              input tensor dimension x
    * @param[in]      input_ch             number of input tensor channels
    * @param[in]      input_batches        argument is not used.
    * @param[in]      kernel               pointer to kernel weights. Format: [out_ch, H, W, in_ch]
    * @param[in]      output_ch            number of filters, i.e., output tensor channels
+   * @param[in]      kernel_x             kernel width along x
    * @param[in]      pad_x                padding along x
    * @param[in]      stride_x             stride along x
    * @param[in]      bias                 pointer to per channel bias. Range : int32
