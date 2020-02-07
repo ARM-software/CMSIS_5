@@ -34,6 +34,11 @@ function(compilerSpecificCompileOptions PROJECTNAME ROOT)
   
   # Core specific config
 
+  if (ARM_CPU STREQUAL "cortex-m55" )
+        target_compile_options(${PROJECTNAME} PUBLIC "-fshort-enums")
+        target_compile_options(${PROJECTNAME} PUBLIC "-fshort-wchar")
+  endif()
+
   if (ARM_CPU STREQUAL "cortex-m33" )
         target_compile_options(${PROJECTNAME} PUBLIC "-mfpu=fpv5-sp-d16")
   endif()

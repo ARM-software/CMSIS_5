@@ -1,4 +1,4 @@
-#! armclang -E --target=arm-arm-none-eabi -mcpu=cortex-a5 -xc
+#! armcc -E
 ;**************************************************
 ; Copyright (c) 2017 ARM Ltd.  All rights reserved.
 ;**************************************************

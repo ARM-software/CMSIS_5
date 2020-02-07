@@ -54,9 +54,11 @@ function(configboot PROJECT_NAME ROOT PLATFORMFOLDER)
   #
   # Cortex M
   #
-  if (ARM_CPU MATCHES  "^[cC]ortex-[Mm].*$")
+  # C startup for M55 boot code
+  if (ARM_CPU MATCHES "^[cC]ortex-[mM]55([^0-9].*)?$")
+    cortexm(${CORE} ${PROJECT_NAME} ${ROOT} ${PLATFORMFOLDER} ON)    
+  elseif (ARM_CPU MATCHES  "^[cC]ortex-[Mm].*$")
     cortexm(${CORE} ${PROJECT_NAME} ${ROOT} ${PLATFORMFOLDER} OFF)    
-    
   endif()
   
   

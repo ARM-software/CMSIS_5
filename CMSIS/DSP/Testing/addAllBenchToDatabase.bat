@@ -1,26 +1,26 @@
 echo "Basic Maths"
-python addToDB.py -f bench.txt  BasicBenchmarks
+python addToDB.py BasicBenchmarks
 echo "Complex Maths"
-python addToDB.py -f bench.txt  ComplexBenchmarks
+python addToDB.py ComplexBenchmarks
 echo "FIR"
-python addToDB.py -f bench.txt  FIR
+python addToDB.py FIR
 echo "Convolution / Correlation"
-python addToDB.py -f bench.txt  MISC
+python addToDB.py MISC
 echo "Decimation / Interpolation"
-python addToDB.py -f bench.txt  DECIM
+python addToDB.py DECIM
 echo "BiQuad"
-python addToDB.py -f bench.txt  BIQUAD
+python addToDB.py BIQUAD
 echo "Controller"
-python addToDB.py -f bench.txt  Controller
+python addToDB.py Controller
 echo "Fast Math"
-python addToDB.py -f bench.txt  FastMath
+python addToDB.py FastMath
 echo "Barycenter"
-python addToDB.py -f bench.txt  SupportBarF32
+python addToDB.py SupportBarF32
 echo "Support"
-python addToDB.py -f bench.txt  Support
+python addToDB.py Support
 echo "Unary Matrix"
-python addToDB.py -f bench.txt  Unary 
+python addToDB.py Unary 
 echo "Binary Matrix"
-python addToDB.py -f bench.txt  Binary
+python addToDB.py Binary
 echo "Transform"
-python addToDB.py -f bench.txt  Transform
+python addToDB.py Transform

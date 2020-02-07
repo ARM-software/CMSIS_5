@@ -8,7 +8,7 @@ endif()
 
 
 include(Toolchain/Tools)
-option(OPTIMIZED "Compile for speed" ON)
+option(OPTIMIZED "Compile for speed" OFF)
 option(AUTOVECTORIZE "Prefer autovectorizable code to one using C intrinsics" OFF)
 
 enable_language(CXX C ASM)

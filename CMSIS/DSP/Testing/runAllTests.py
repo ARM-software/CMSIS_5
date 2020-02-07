@@ -4,126 +4,177 @@ import subprocess
 import colorama
 from colorama import init,Fore, Back, Style
 import argparse
+from TestScripts.Regression.Commands import *
+import yaml
+import sys
+import itertools
+from pathlib import Path
+
+
+# Small state machine
+def updateTestStatus(testStatusForThisBuild,newTestStatus):
+    if testStatusForThisBuild == NOTESTFAILED:
+        if newTestStatus == NOTESTFAILED:
+           return(NOTESTFAILED)
+        if newTestStatus == MAKEFAILED:
+           return(MAKEFAILED)
+        if newTestStatus == TESTFAILED:
+          return(TESTFAILED)
+    if testStatusForThisBuild == MAKEFAILED:
+        if newTestStatus == NOTESTFAILED:
+           return(MAKEFAILED)
+        if newTestStatus == MAKEFAILED:
+           return(MAKEFAILED)
+        if newTestStatus == TESTFAILED:
+          return(TESTFAILED)
+    if testStatusForThisBuild == TESTFAILED:
+        if newTestStatus == NOTESTFAILED:
+           return(TESTFAILED)
+        if newTestStatus == MAKEFAILED:
+           return(TESTFAILED)
+        if newTestStatus == TESTFAILED:
+          return(TESTFAILED)
+    if testStatusForThisBuild == FLOWFAILURE:
+       return(testStatusForThisBuild)
+    if testStatusForThisBuild == CALLFAILURE:
+       return(testStatusForThisBuild)
+
+root = Path(os.getcwd()).parent.parent.parent
+
+
+def cartesian(*somelists):
+   r=[]
+   for element in itertools.product(*somelists):
+       r.append(list(element))
+   return(r)
+
+testFailed = 0
 
 init()
 
-def msg(t):
-    print(Fore.CYAN + t + Style.RESET_ALL)
-
-def processTest(test):
-    subprocess.call(["python","processTests.py","-e",test])
-
-def build(build,fvp,test,custom=None):
-    result = "results_%s.txt" % test
-    resultPath = os.path.join(build,result)
-
-    current=os.getcwd()
-    try:
-       msg("Build %s" % test)
-       os.chdir(build)
-       subprocess.call(["make"])
-       msg("Run %s" % test)
-       with open(result,"w") as results:
-          if custom:
-            subprocess.call([fvp] + custom,stdout=results)
-          else:
-             subprocess.call([fvp,"-a","Testing"],stdout=results)
-    finally:
-       os.chdir(current)
-
-    msg("Parse result for %s" % test)
-    subprocess.call(["python","processResult.py","-e","-r",resultPath])
-
-def processAndRun(buildfolder,fvp,test,custom=None):
-    processTest(test)
-    build(buildfolder,fvp,test,custom=custom)
-
 parser = argparse.ArgumentParser(description='Parse test description')
-parser.add_argument('-f', nargs='?',type = str, default="build_m7", help="Build folder")
-parser.add_argument('-v', nargs='?',type = str, default="C:\\Program Files\\ARM\\Development Studio 2019.0\\sw\\models\\bin\\FVP_MPS2_Cortex-M7.exe", help="Fast Model")
-parser.add_argument('-c', nargs='?',type = str, help="Custom args")
+parser.add_argument('-i', nargs='?',type = str, default="testrunConfig.yaml",help="Config file")
+parser.add_argument('-r', nargs='?',type = str, default=root, help="Root folder")
+parser.add_argument('-n', nargs='?',type = int, default=0, help="ID value when launchign in parallel")
 
 args = parser.parse_args()
 
-if args.f is not None:
-   BUILDFOLDER=args.f
-else:
-   BUILDFOLDER="build_m7"
 
-if args.v is not None:
-   FVP=args.v
-else:
-   FVP="C:\\Program Files\\ARM\\Development Studio 2019.0\\sw\\models\\bin\\FVP_MPS2_Cortex-M7.exe"
+with open(args.i,"r") as f:
+     config=yaml.safe_load(f)
+
+#print(config)
+
+#print(config["IMPLIEDFLAGS"])
+
+flags = config["FLAGS"]
+onoffFlags = []
+for f in flags:
+  onoffFlags.append(["-D" + f +"=ON","-D" + f +"=OFF"])
+
+allConfigs=cartesian(*onoffFlags)
+
+if DEBUGMODE:
+   allConfigs=[allConfigs[0]]
+   
+
+failedBuild = {}
+# Test all builds
+
+folderCreated=False
+
+def logFailedBuild(root,f):
+  with open(os.path.join(fullTestFolder(root),"buildStatus_%d.txt" % args.n),"w") as status:
+       for build in f:
+            s = f[build]
+            if s == MAKEFAILED:
+               status.write("%s : Make failure\n" % build)
+            if s == TESTFAILED:
+              status.write("%s : Test failure\n" % build)
+            if s == FLOWFAILURE:
+              status.write("%s : Flow failure\n" % build)
+            if s == CALLFAILURE:
+              status.write("%s : Subprocess failure\n" % build)
 
 
-if args.c:
-    custom = args.c.split()
-else:
-    custom = None
+def buildAndTest(compiler):
+    # Run all tests for AC6
+    try:
+       for core in config['CORES']:
+         configNb = 0
+         if compiler in config['CORES'][core]:
+            for flagConfig in allConfigs:
+               folderCreated = False
+               configNb = configNb + 1
+               buildStr = "build_%s_%s_%d" % (compiler,core,configNb)
+               toUnset = None
+               if compiler in config['UNSET']:
+                  if core in config['UNSET'][compiler]:
+                     toUnset = config['UNSET'][compiler][core]
+               build = BuildConfig(toUnset,args.r,
+                  buildStr,
+                  config['COMPILERS'][core][compiler],
+                  config['TOOLCHAINS'][compiler],
+                  config['CORES'][core][compiler],
+                  config["CMAKE"]
+                  )
+               
+               flags = []
+               if core in config["IMPLIEDFLAGS"]:
+                  flags += config["IMPLIEDFLAGS"][core]
+               flags += flagConfig
+   
+               if compiler in config["IMPLIEDFLAGS"]:
+                  flags += config["IMPLIEDFLAGS"][compiler]
+       
+               build.createFolder()
+               # Run all tests for the build
+               testStatusForThisBuild = NOTESTFAILED
+               try:
+                  # This is saving the flag configuration
+                  build.createArchive(flags)
+   
+                  build.createCMake(flags)
+                  for test in config["TESTS"]:
+                      msg(test["testName"]+"\n")
+                      testClass=test["testClass"]
+                      test = build.getTest(testClass)
+                      fvp = None 
+                      if core in config['FVP']:
+                        fvp = config['FVP'][core] 
+                      newTestStatus = test.runAndProcess(compiler,fvp)
+                      testStatusForThisBuild = updateTestStatus(testStatusForThisBuild,newTestStatus)
+                      if testStatusForThisBuild != NOTESTFAILED:
+                         failedBuild[buildStr] = testStatusForThisBuild
+                         # Final script status
+                         testFailed = 1
+                  build.archiveResults()
+               finally:
+                   build.cleanFolder()
+         else:
+           msg("No toolchain %s for core %s" % (compiler,core))
+   
+    except TestFlowFailure as flow:
+         errorMsg("Error flow id %d\n" % flow.errorCode())
+         failedBuild[buildStr] = FLOWFAILURE
+         logFailedBuild(args.r,failedBuild)
+         sys.exit(1)
+    except CallFailure: 
+         errorMsg("Call failure\n")
+         failedBuild[buildStr] = CALLFAILURE
+         logFailedBuild(args.r,failedBuild)
+         sys.exit(1)
 
-msg("Process test description file")
-subprocess.call(["python", "preprocess.py","-f","desc.txt"])
+############## Builds for all toolchains
 
-msg("Generate all missing C files")
-subprocess.call(["python","processTests.py", "-e"])
+if not DEBUGMODE:
+   preprocess()
+   generateAllCCode()
 
-msg("Statistics Tests")
-processAndRun(BUILDFOLDER,FVP,"StatsTests",custom=custom)
+for t in config["TOOLCHAINS"]:
+    msg("Testing toolchain %s\n" % t)
+    buildAndTest(t)
 
-msg("Support Tests")
-processAndRun(BUILDFOLDER,FVP,"SupportTests",custom=custom)
-
-msg("Support Bar Tests F32")
-processAndRun(BUILDFOLDER,FVP,"SupportBarTestsF32",custom=custom)
-
-msg("Basic Tests")
-processAndRun(BUILDFOLDER,FVP,"BasicTests",custom=custom)
-
-msg("Interpolation Tests")
-processAndRun(BUILDFOLDER,FVP,"InterpolationTests",custom=custom)
-
-msg("Complex Tests")
-processAndRun(BUILDFOLDER,FVP,"ComplexTests",custom=custom)
-
-msg("Fast Maths Tests")
-processAndRun(BUILDFOLDER,FVP,"FastMath",custom=custom)
-
-msg("SVM Tests")
-processAndRun(BUILDFOLDER,FVP,"SVMTests",custom=custom)
-
-msg("Bayes Tests")
-processAndRun(BUILDFOLDER,FVP,"BayesTests",custom=custom)
-
-msg("Distance Tests")
-processAndRun(BUILDFOLDER,FVP,"DistanceTests",custom=custom)
-
-msg("Filtering Tests")
-processAndRun(BUILDFOLDER,FVP,"FilteringTests",custom=custom)
-
-msg("Matrix Tests")
-processAndRun(BUILDFOLDER,FVP,"MatrixTests",custom=custom)
-
-# Too many patterns to run the full transform directly
-msg("Transform Tests CF64")
-processAndRun(BUILDFOLDER,FVP,"TransformCF64",custom=custom)
-
-msg("Transform Tests RF64")
-processAndRun(BUILDFOLDER,FVP,"TransformRF64",custom=custom)
-
-msg("Transform Tests CF32")
-processAndRun(BUILDFOLDER,FVP,"TransformCF32",custom=custom)
-
-msg("Transform Tests RF32")
-processAndRun(BUILDFOLDER,FVP,"TransformRF32",custom=custom)
-
-msg("Transform Tests CQ31")
-processAndRun(BUILDFOLDER,FVP,"TransformCQ31",custom=custom)
-
-msg("Transform Tests RQ31")
-processAndRun(BUILDFOLDER,FVP,"TransformRQ31",custom=custom)
-
-msg("Transform Tests CQ15")
-processAndRun(BUILDFOLDER,FVP,"TransformCQ15",custom=custom)
-
-msg("Transform Tests RQ15")
-processAndRun(BUILDFOLDER,FVP,"TransformRQ15",custom=custom)
+logFailedBuild(args.r,failedBuild)
+sys.exit(testFailed)
+  

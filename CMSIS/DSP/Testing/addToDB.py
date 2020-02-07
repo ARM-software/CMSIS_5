@@ -267,7 +267,7 @@ def addOneBenchmark(elem,fullPath,db,group):
       else:
          tableName = elem.data["class"]
       conn = sqlite3.connect(db)
-      #createTableIfMissing(conn,elem,tableName,full)
+      createTableIfMissing(conn,elem,tableName,full)
       config = addRows(conn,elem,tableName,full)
       addConfig(conn,config,fullDate)
       conn.close()
@@ -287,7 +287,7 @@ def addToDB(benchmark,dbpath,elem,group):
 
 parser = argparse.ArgumentParser(description='Generate summary benchmarks')
 
-parser.add_argument('-f', nargs='?',type = str, default="Output.pickle", help="Test description file path")
+parser.add_argument('-f', nargs='?',type = str, default="Output.pickle", help="File path")
 parser.add_argument('-b', nargs='?',type = str, default="FullBenchmark", help="Full Benchmark dir path")
 #parser.add_argument('-e', action='store_true', help="Embedded test")
 parser.add_argument('-o', nargs='?',type = str, default="bench.db", help="Benchmark database")

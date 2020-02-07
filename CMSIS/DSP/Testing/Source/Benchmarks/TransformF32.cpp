@@ -1,5 +1,6 @@
 #include "TransformF32.h"
 #include "Error.h"
+#include "arm_math.h"
 #include "arm_const_structs.h"
 
 const arm_cfft_instance_f32 *arm_cfft_get_instance_f32(uint16_t fftLen)

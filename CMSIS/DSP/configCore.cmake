@@ -85,6 +85,16 @@ function(configcore PROJECTNAME ROOT)
   #
   # CORTEX-M
   #
+
+  if (ARM_CPU MATCHES "^[cC]ortex-[mM]55([^0-9].*)?$")
+    target_include_directories(${PROJECTNAME} PUBLIC "${ROOT}/CMSIS/Core/Include")  
+    target_compile_definitions(${PROJECTNAME} PUBLIC CORTEXM)
+    target_compile_definitions(${PROJECTNAME} PRIVATE ARMv81MML_DSP_DP_MVE_FP)
+
+    SET(HARDFP ON)
+    SET(LITTLEENDIAN ON)
+    SET(COREID ARMv81MML_DSP_DP_MVE_FP PARENT_SCOPE)    
+  endif()
   
   # CORTEX-M35
   if (ARM_CPU MATCHES "^[cC]ortex-[mM]35([^0-9].*)?$")

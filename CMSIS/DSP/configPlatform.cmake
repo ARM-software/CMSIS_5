@@ -20,6 +20,7 @@ endif()
 
 SET(CORE ARMCM7)
 
+
 include(platform)
 
 function(set_platform_core)
@@ -60,6 +61,14 @@ function(set_platform_core)
   if (ARM_CPU MATCHES "^[cC]ortex-[mM]33([^0-9].*)?$")
       SET(CORE ARMCM33 PARENT_SCOPE)
       
+  endif()
+
+  ###################
+  #
+  # Cortex cortex-m55
+  #
+  if (ARM_CPU MATCHES "^[cC]ortex-[mM]55([^0-9].*)?$")
+    SET(CORE ARMv81MML PARENT_SCOPE)    
   endif()
   
   ###################

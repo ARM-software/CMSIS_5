@@ -107,7 +107,7 @@ def extractBenchmarks(resultPath,benchmark,elem):
 
 parser = argparse.ArgumentParser(description='Generate summary benchmarks')
 
-parser.add_argument('-f', nargs='?',type = str, default="Output.pickle", help="Test description file path")
+parser.add_argument('-f', nargs='?',type = str, default="Output.pickle", help="Test description cache")
 parser.add_argument('-b', nargs='?',type = str, default="FullBenchmark", help="Full Benchmark dir path")
 # Needed to find the currentConfig.csv and know the headers
 parser.add_argument('-r', nargs='?',type = str, default=None, help="Result file path")

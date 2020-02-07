@@ -52,7 +52,8 @@ int testmain()
            // An IO runner is driven by some IO
            // In future one may have a client/server runner driven
            // by a server running on a host.
-           Client::IORunner runner(&io,&mgr,Testing::kTestAndDump);
+           //Client::IORunner runner(&io,&mgr,Testing::kTestAndDump);
+           Client::IORunner runner(&io,&mgr,Testing::kTestOnly);
 
     
            // Root object containing all the tests

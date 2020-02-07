@@ -35,8 +35,8 @@ SET(CMAKE_CXX_OUTPUT_EXTENSION .o)
 SET(CMAKE_ASM_OUTPUT_EXTENSION .o)
 # When library defined as STATIC, this line is needed to describe how the .a file must be
 # create. Some changes to the line may be needed.
-SET(CMAKE_C_CREATE_STATIC_LIBRARY "<CMAKE_AR> -r -s <TARGET> <LINK_FLAGS> <OBJECTS>" )
-SET(CMAKE_CXX_CREATE_STATIC_LIBRARY "<CMAKE_AR> -r -s <TARGET> <LINK_FLAGS> <OBJECTS>" )
+SET(CMAKE_C_CREATE_STATIC_LIBRARY "<CMAKE_AR> -crs <TARGET> <LINK_FLAGS> <OBJECTS>" )
+SET(CMAKE_CXX_CREATE_STATIC_LIBRARY "<CMAKE_AR> -crs <TARGET> <LINK_FLAGS> <OBJECTS>" )
 
 set(GCC ON)
 # default core

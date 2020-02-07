@@ -58,6 +58,8 @@ void FIQ_Handler   (void) __attribute__ ((weak, alias("Default_Handler")));
   Exception / Interrupt Vector Table
  *----------------------------------------------------------------------------*/
 void Vectors(void) {
+  volatile int i;
+#if 0
   __ASM volatile(
   "LDR    __current_pc, =Reset_Handler                        \n"
   "LDR    __current_pc, =Undef_Handler                        \n"
@@ -68,12 +70,14 @@ void Vectors(void) {
   "LDR    __current_pc, =IRQ_Handler                          \n"
   "LDR    __current_pc, =FIQ_Handler                          \n"
   );
+#endif
 }
 
 /*----------------------------------------------------------------------------
   Reset Handler called on controller reset
  *----------------------------------------------------------------------------*/
 void Reset_Handler(void) {
+#if 0
   __ASM volatile(
 
   // Mask interrupts
@@ -128,6 +132,7 @@ void Reset_Handler(void) {
   // Call __main
   "BL     __main                                   \n"
   );
+#endif
 }
 
 /*----------------------------------------------------------------------------

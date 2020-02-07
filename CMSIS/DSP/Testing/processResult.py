@@ -11,6 +11,9 @@ import csv
 import TestScripts.ParseTrace
 import colorama
 from colorama import init,Fore, Back, Style
+import sys 
+
+resultStatus=0
 
 init()
 
@@ -336,6 +339,7 @@ def getCyclesFromTrace(trace):
     return(TestScripts.ParseTrace.getCycles(trace))
 
 def analyseResult(resultPath,root,results,embedded,benchmark,trace,formatter):
+    global resultStatus
     calibration = 0
     if trace:
       # First cycle in the trace is the calibration data
@@ -510,6 +514,8 @@ def analyseResult(resultPath,root,results,embedded,benchmark,trace,formatter):
                    params=""
                    writeBenchmark(elem,benchFile,theId,theError,passed,cycles,params,config)
                    # Format the node
+                if not passed:
+                   resultStatus=1
                 formatter.printTest(elem,theId,theError,errorDetail,theLine,passed,cycles,params)
 
              
@@ -552,6 +558,8 @@ parser.add_argument('-t', nargs='?',type = str, default=None, help="External tra
 args = parser.parse_args()
 
 
+
+
 if args.f is not None:
     #p = parse.Parser()
     # Parse the test description file
@@ -568,6 +576,8 @@ if args.f is not None:
        # In FPGA mode, extract output files from stdout (result file)
        with open(args.r,"r") as results:
           extractDataFiles(results,args.o)
+
+    sys.exit(resultStatus)
     
 else:
     parser.print_help()

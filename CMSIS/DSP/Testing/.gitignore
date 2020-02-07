@@ -15,3 +15,5 @@ currentConfig.csv
 test.txt
 __pycache__
 bugcheck.py
+fulltests/
+testUNIXrunConfig.yaml

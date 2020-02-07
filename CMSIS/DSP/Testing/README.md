@@ -300,6 +300,11 @@ If you want to compute summary statistics with regression:
     pip install numpy
     pip install panda
 
+If you want to run the script which is launching all the tests on all possible configurations then
+you'll need yaml:
+
+    pip install pyyaml
+
 ### Generate the test patterns in Patterns folder
 
 We have archived lot of test patterns on github. So this step is needed only if you write new test patterns.
