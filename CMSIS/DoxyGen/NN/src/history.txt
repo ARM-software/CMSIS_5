@@ -13,6 +13,7 @@
       <ul>
         <li>arm_convolve_s8</li>
         <li>arm_convolve_1x1_s8_fast</li>
+        <li>arm_depthwise_conv_3x3_s8</li>
         <li>arm_depthwise_conv_s8</li>
         <li>arm_depthwise_conv_s8_opt</li>
         <li>arm_fully_connected_s8</li>

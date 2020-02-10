@@ -21,7 +21,7 @@
  * Title:        arm_nnfunctions.h
  * Description:  Public header file for CMSIS NN Library
  *
- * $Date:        February 24, 2020
+ * $Date:        February 26, 2020
  * $Revision:    V.1.0.3
  *
  * Target Processor:  Cortex-M cores
@@ -921,6 +921,65 @@ extern    "C"
                                      const uint16_t dilation_y,
                                      q15_t *buffer_a);
 
+/**
+   * @brief Optimized s8 depthwise convolution function for 3x3 kernel size with constraint that in_channel equals out_channel
+   * @param[in]       input      pointer to input tensor. Range: int8, format: [H,W,in_ch]
+   * @param[in]       input_x    input tensor width
+   * @param[in]       input_y    input tensor height
+   * @param[in]       input_ch   number of input tensor channels
+   * @param[in]       kernel     pointer to kernel weights. Range: int8, Format: [in_ch, H, W, out_ch]
+   * @param[in]       output_ch  Number of output channels.
+   * @param[in]       pad_x      padding along width
+   * @param[in]       pad_y      padding along height
+   * @param[in]       stride_x   convolution stride along width
+   * @param[in]       stride_y   convolution stride along height
+   * @param[in]       bias       pointer to per output channel bias. Range: int8
+   * @param[in,out]   output     pointer to output tensor. Format: [H, W, out_ch]
+   * @param[in]       output_shift pointer to per output channel requantization shift parameter.
+   * @param[in]       output_mult  pointer to per output channel requantization multiplier parameter.
+   * @param[in]       output_x     output tensor width
+   * @param[in]       output_y     output tensor height
+   * @param[in]       output_offset   offset to elements of output tensor
+   * @param[in]       input_offset    offset to elements of input tensor
+   * @param[in]       output_activation_min   Minimum value to clamp the output to. Range: int8
+   * @param[in]       output_activation_max   Minimum value to clamp the output to. Range: int8
+   * @param[in]       dilation_x   dilation along x. Not used. Dilation factor of 1 is used.
+   * @param[in]       dilation_y   dilation along y. Not used. Dilation factor of 1 is used.
+   * @param[in]       buffer_a     Buffer for partial im2col optimization. Not used.
+   *
+   * @return     The function returns one of the following
+   *                <code>ARM_MATH_SIZE_MISMATCH</code> - Unsupported dimension of tensors
+   *                <code>ARM_MATH_ARGUMENT_ERROR</code> - Unsupported pad size along the x axis
+   *                <code>ARM_MATH_SUCCESS</code> - Successful operation
+   *
+   * @details
+   *    Supported framework: TensorFlow Lite
+   *
+   */
+  arm_status arm_depthwise_conv_3x3_s8(const int8_t *input,
+                                       const int32_t input_x,
+                                       const int32_t input_y,
+                                       const int32_t input_ch,
+                                       const int8_t *kernel,
+                                       const int32_t output_ch,
+                                       const int32_t pad_x,
+                                       const int32_t pad_y,
+                                       const int32_t stride_x,
+                                       const int32_t stride_y,
+                                       const int32_t *bias,
+                                       int8_t *output,
+                                       const int32_t *output_shift,
+                                       const int32_t *output_mult,
+                                       const int32_t output_x,
+                                       const int32_t output_y,
+                                       const int32_t output_offset,
+                                       const int32_t input_offset,
+                                       const int32_t output_activation_min,
+                                       const int32_t output_activation_max,
+                                       const int32_t dilation_x,
+                                       const int32_t dilation_y,
+                                       int16_t *buffer_a);
+    
 /**
    * @brief Optimized s8 depthwise convolution function with constraint that in_channel equals out_channel
    * @param[in]       input      pointer to input tensor. Range: int8, format: [H,W,in_ch]
