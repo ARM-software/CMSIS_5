@@ -21,7 +21,7 @@
  * Title:        arm_convolve_1x1_s8_fast.c
  * Description:  Fast q7 version of 1x1 convolution (non-square shape)
  *
- * $Date:        January 20, 2020
+ * $Date:        7 February 2020
  * $Revision:    V.1.0.2
  *
  * Target Processor:  Cortex-M cores
@@ -140,92 +140,33 @@ arm_status arm_convolve_1x1_s8_fast(const q7_t *input,
         }
     }
 
+#else
+    /* Run the following code as reference implementation for Cortex-M processors with or without DSP extension */
 
-#elif defined(ARM_MATH_LOOPUNROLL) && defined(ARM_MATH_DSP)
-    int32_t i_element;
     (void)input_x;
     (void)input_y;
+    (void)output_x;
+    (void)output_y;
+    (void)buffer_a;
 
-    /* Partial(two columns) im2col buffer */
-    q15_t *two_column_buffer = buffer_a;
-    q7_t *out = output;
-    const int32_t num_elements = output_x * output_y * input_batches;
+    const int32_t lhs_rows = input_x * input_y * input_batches;
+    const int32_t rhs_rows = output_ch;
+    const int32_t rhs_cols = input_ch;
 
-    for (i_element = 0; i_element < num_elements / 2; i_element++)
-    {
-        /* Fill buffer for partial im2col - two columns at a time */
-        arm_q7_to_q15_reordered_with_offset(&input[i_element * 2 * input_ch],
-                                            two_column_buffer,
-                                            input_ch * 2,
-                                            input_offset);
+    arm_nn_mat_mult_nt_t_s8(input,
+                            kernel,
+                            bias,
+                            output,
+                            output_mult,
+                            output_shift,
+                            lhs_rows,
+                            rhs_rows,
+                            rhs_cols,
+                            input_offset,
+                            out_offset,
+                            out_activation_min,
+                            out_activation_max);
 
-        out = arm_nn_mat_mult_kernel_s8_s16_reordered(kernel,
-                                                      two_column_buffer,
-                                                      output_ch,
-                                                      output_shift,
-                                                      output_mult,
-                                                      (q7_t)out_offset,
-                                                      out_activation_min,
-                                                      out_activation_max,
-                                                      input_ch * DIM_KER_Y * DIM_KER_X,
-                                                      bias, out);
-    }
-
-    /* check if there is an odd column left-over for computation */
-    if (num_elements & 0x1)
-    {
-        int32_t i_ch_out;
-        const q7_t *ker_a = kernel;
-
-        arm_q7_to_q15_reordered_with_offset(
-            &input[(num_elements - 1) * input_ch],
-            two_column_buffer, input_ch, input_offset);
-
-        for (i_ch_out = 0; i_ch_out < output_ch; i_ch_out++)
-        {
-            q31_t sum = bias[i_ch_out];
-
-            /* Point to the beginning of the im2col buffer where the input is available as a rearranged column */
-            const q15_t *ip_as_col = buffer_a;
-            uint16_t col_count = (input_ch * DIM_KER_X * DIM_KER_Y) >> 2;
-
-            while (col_count)
-            {
-                q31_t ker_a1, ker_a2;
-                q31_t in_b1, in_b2;
-                ker_a = read_and_pad_reordered(ker_a, &ker_a1, &ker_a2);
-
-                in_b1 = arm_nn_read_q15x2_ia(&ip_as_col);
-                sum = __SMLAD(ker_a1, in_b1, sum);
-                in_b2 = arm_nn_read_q15x2_ia(&ip_as_col);
-                sum = __SMLAD(ker_a2, in_b2, sum);
-
-                col_count--;
-            }
-
-            sum = arm_nn_requantize(sum, output_mult[i_ch_out],
-                                    output_shift[i_ch_out]);
-            sum += out_offset;
-            sum = MAX(sum, out_activation_min);
-            sum = MIN(sum, out_activation_max);
-            *out++ = (q7_t)sum;
-        }
-    }
-
-#else
-    /* Run the following code as reference implementation for M cores with no DSP extension or when loop unrolling is
-       not to be done */
-    return arm_convolve_s8(input, input_x, input_y,
-                           input_ch, input_batches, kernel, output_ch,
-                           DIM_KER_X, DIM_KER_Y,
-                           pad_x, pad_y,
-                           stride_x, stride_y,
-                           bias, output,
-                           output_shift, output_mult,
-                           out_offset, input_offset,
-                           out_activation_min, out_activation_max,
-                           output_x, output_y,
-                           buffer_a);
 #endif
 
     /* Return to application */
@@ -235,12 +176,8 @@ arm_status arm_convolve_1x1_s8_fast(const q7_t *input,
 
 int32_t arm_convolve_1x1_s8_fast_get_buffer_size(const uint16_t input_ch)
 {
-#if defined(ARM_MATH_LOOPUNROLL) && defined(ARM_MATH_DSP) && !defined(ARM_MATH_MVEI)
-    return 2 * input_ch * sizeof(int16_t);
-#else
     (void)input_ch;
     return 0;
-#endif
 }
 
 /**
