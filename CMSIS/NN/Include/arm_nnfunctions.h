@@ -21,8 +21,8 @@
  * Title:        arm_nnfunctions.h
  * Description:  Public header file for CMSIS NN Library
  *
- * $Date:        January 20, 2020
- * $Revision:    V.1.0.1
+ * $Date:        February 19, 2020
+ * $Revision:    V.1.0.2
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -505,7 +505,7 @@ extern    "C"
    * @param[in]      output_shift         pointer to per output channel requantization shift parameter.
    * @param[in]      output_mult          pointer to per output channel requantization multiplier parameter.
    * @param[in]      out_offset           output tensor offset. Range: int8
-   * @param[in]      input_offset         input tensor offset. Range: int8
+   * @param[in]      input_offset         input tensor offset. Range: -127 to 128
    * @param[in]      out_activation_min   Minimum value to clamp the output to. Range: int8
    * @param[in]      out_activation_max   Minimum value to clamp the output to. Range: int8
    * @param[in]      output_x             output tensor width
@@ -566,7 +566,7 @@ extern    "C"
    * @param[in]      output_shift         pointer to per output channel requantization shift parameter.
    * @param[in]      output_mult          pointer to per output channel requantization multiplier parameter.
    * @param[in]      out_offset           output tensor offset. Range: int8
-   * @param[in]      input_offset         input tensor offset. Range: int8
+   * @param[in]      input_offset         input tensor offset. Range: -127 to 128
    * @param[in]      out_activation_min   Minimum value to clamp the output to. Range: int8
    * @param[in]      out_activation_max   Minimum value to clamp the output to. Range: int8
    * @param[in]      output_x             output tensor width
@@ -879,8 +879,8 @@ extern    "C"
    * @param[in]       output_mult  pointer to per output channel requantization multiplier parameter.
    * @param[in]       output_x     output tensor width
    * @param[in]       output_y     output tensor height
-   * @param[in]       output_offset   offset to elements of output tensor
-   * @param[in]       input_offset    offset to elements of input tensor
+   * @param[in]       output_offset   offset to elements of output tensor. Range: int8
+   * @param[in]       input_offset    offset to elements of input tensor. Range: -127 to 128
    * @param[in]       output_activation_min   Minimum value to clamp the output to. Range: int8
    * @param[in]       output_activation_max   Minimum value to clamp the output to. Range: int8
    * @param[in]       dilation_x   dilation along x. Not used. Dilation factor of 1 is used.
@@ -1051,11 +1051,11 @@ int32_t arm_depthwise_conv_s8_opt_get_buffer_size(const uint16_t input_ch,
    * @param[in]       col_dim                      dimension of the input vector
    * @param[in]       row_dim                      dimension of the output vector
    * @param[in]       nb_batches                   number of batches
-   * @param[in]       input_offset                 tensor offset for input
-   * @param[in]       filter_offset                tensor offset for filter
+   * @param[in]       input_offset                 tensor offset for input. Range: -127 to 128
+   * @param[in]       filter_offset                tensor offset for filter. Range: -127 to 128
    * @param[in]       out_mult                     requantization parameter
    * @param[in]       out_shift                    requantization parameter
-   * @param[in]       output_offset                tensor offset for output
+   * @param[in]       output_offset                tensor offset for output. Range: int8
    * @param[in]       pBias                        pointer to bias
    * @param[out]      pOut                         pointer to output vector
    * @param[in]       output_activation_min        for clamping
@@ -1373,10 +1373,10 @@ extern    "C"
    * @brief s8 element wise add of two vectors
    * @param[in]       input_1_vect            pointer to input vector 1
    * @param[in]       input_2_vect            pointer to input vector 2
-   * @param[in]       input_1_offset          offset for input 1. Range: int8
+   * @param[in]       input_1_offset          offset for input 1. Range: Range: -127 to 128
    * @param[in]       input_1_mult            multiplier for input 1
    * @param[in]       input_1_shift           shift for input 1
-   * @param[in]       input_2_offset          offset for input 2. Range: int8
+   * @param[in]       input_2_offset          offset for input 2. Range: Range: -127 to 128
    * @param[in]       input_2_mult            multiplier for input 2
    * @param[in]       input_2_shift           shift for input 2
    * @param[in]       left_shift              input left shift
@@ -1410,8 +1410,8 @@ extern    "C"
    * @brief s8 element wise multiplication
    * @param[in]       input_1_vect            pointer to input vector 1
    * @param[in]       input_2_vect            pointer to input vector 2
-   * @param[in]       input_1_offset          offset for input 1. Range: int8
-   * @param[in]       input_2_offset          offset for input 2. Range: int8
+   * @param[in]       input_1_offset          offset for input 1. Range: Range: -127 to 128
+   * @param[in]       input_2_offset          offset for input 2. Range: Range: -127 to 128
    * @param[in,out]   output                  pointer to output vector
    * @param[in]       out_offset              output offset
    * @param[in]       out_mult                output multiplier
