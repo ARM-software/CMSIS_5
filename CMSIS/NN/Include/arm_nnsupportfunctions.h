@@ -21,7 +21,7 @@
  * Title:        arm_nnsupportfunctions.h
  * Description:  Public header file of support functions for CMSIS NN Library
  *
- * $Date:        30 January 2020
+ * $Date:        7 February 2020
  * $Revision:    V.3.0.0
  *
  * Target Processor:  Cortex-M cores
@@ -286,6 +286,47 @@ arm_status arm_nn_mat_mul_core_4x_s8(const int32_t row_elements,
                                      const int8_t *col_base,
                                      int32_t *const sum_col,
                                      int32_t *const output);
+
+/**
+* @brief General Matrix-multiplication function with per-channel requantization.
+*        This function assumes:
+*        - LHS input matrix NOT transposed (nt)
+*        - RHS input matrix transposed (t)
+*
+*  @note This operation also performs the broadcast bias addition before the requantization
+*
+* @param[in]  lhs                Pointer to the LHS input matrix
+* @param[in]  rhs                Pointer to the RHS input matrix
+* @param[in]  bias               Pointer to the bias vector. The length of this vector is equal to the number of output columns (or RHS input rows)
+* @param[out] dst                Pointer to the output matrix with "m" rows and "n" columns
+* @param[in]  dst_multipliers    Pointer to the multipliers vector needed for the per-channel requantization. The length of this vector is equal to
+*                                the number of output columns (or RHS input rows)
+* @param[in]  dst_shifts         Pointer to the shifts vector needed for the per-channel requantization. The length of this vector is equal to
+*                                the number of output columns (or RHS input rows)
+* @param[in]  lhs_rows           Number of LHS input rows
+* @param[in]  rhs_rows           Number of RHS input rows
+* @param[in]  rhs_cols           Number of LHS/RHS input columns
+* @param[in]  lhs_offset         Offset to be applied to the LHS input value
+* @param[in]  dst_offset         Offset to be applied the output result
+* @param[in]  activation_min     Minimum value to clamp down the output. Range : int8
+* @param[in]  activation_max     Maximum value to clamp up the output. Range : int8
+*
+* @return     The function returns <code>ARM_MATH_SUCCESS</code>
+*
+*/
+arm_status arm_nn_mat_mult_nt_t_s8(const q7_t *lhs,
+                                   const q7_t *rhs,
+                                   const q31_t *bias,
+                                   q7_t *dst,
+                                   const int32_t *dst_multipliers,
+                                   const int32_t *dst_shifts,
+                                   const int32_t lhs_rows,
+                                   const int32_t rhs_rows,
+                                   const int32_t rhs_cols,
+                                   const int32_t lhs_offset,
+                                   const int32_t dst_offset,
+                                   const int32_t activation_min,
+                                   const int32_t activation_max);
 
 /**
  * @brief s8 Vector by Matrix (transposed) multiplication

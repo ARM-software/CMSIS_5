@@ -21,8 +21,8 @@
  * Title:        arm_nnfunctions.h
  * Description:  Public header file for CMSIS NN Library
  *
- * $Date:        February 19, 2020
- * $Revision:    V.1.0.2
+ * $Date:        February 24, 2020
+ * $Revision:    V.1.0.3
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -510,9 +510,7 @@ extern    "C"
    * @param[in]      out_activation_max   Minimum value to clamp the output to. Range: int8
    * @param[in]      output_x             output tensor width
    * @param[in]      output_y             output tensor height
-   * @param[in]      buffer_a             pointer to buffer space used for input optimization and is necessary
-   *                                      when both ARM_MATH_LOOPUNROLL and ARM_MATH_DSP are defined , but not ARM_MATH_MVEI.
-   *                                      Required space: 2 * input_ch * sizeof(q15_t) bytes
+   * @param[in]      buffer_a             pointer to buffer space used if required by the implementation
    *                                      Use arm_convolve_1x1_s8_fast_get_buffer_size() to get the size
    * @return     The function returns either
    *                  <code>ARM_MATH_SIZE_MISMATCH</code> if argument constraints fail. or,
