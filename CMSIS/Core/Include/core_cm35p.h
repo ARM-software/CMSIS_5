@@ -1,11 +1,11 @@
 /**************************************************************************//**
  * @file     core_cm35p.h
  * @brief    CMSIS Cortex-M35P Core Peripheral Access Layer Header File
- * @version  V1.0.0
- * @date     12. November 2018
+ * @version  V1.0.1
+ * @date     10. February 2020
  ******************************************************************************/
 /*
- * Copyright (c) 2018 Arm Limited. All rights reserved.
+ * Copyright (c) 2018-2020 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -1670,8 +1670,9 @@ typedef struct
   __IOM uint32_t FPCCR;                  /*!< Offset: 0x004 (R/W)  Floating-Point Context Control Register */
   __IOM uint32_t FPCAR;                  /*!< Offset: 0x008 (R/W)  Floating-Point Context Address Register */
   __IOM uint32_t FPDSCR;                 /*!< Offset: 0x00C (R/W)  Floating-Point Default Status Control Register */
-  __IM  uint32_t MVFR0;                  /*!< Offset: 0x010 (R/ )  Media and FP Feature Register 0 */
-  __IM  uint32_t MVFR1;                  /*!< Offset: 0x014 (R/ )  Media and FP Feature Register 1 */
+  __IM  uint32_t MVFR0;                  /*!< Offset: 0x010 (R/ )  Media and VFP Feature Register 0 */
+  __IM  uint32_t MVFR1;                  /*!< Offset: 0x014 (R/ )  Media and VFP Feature Register 1 */
+  __IM  uint32_t MVFR2;                  /*!< Offset: 0x018 (R/ )  Media and VFP Feature Register 2 */
 } FPU_Type;
 
 /* Floating-Point Context Control Register Definitions */
@@ -1743,7 +1744,7 @@ typedef struct
 #define FPU_FPDSCR_RMode_Pos               22U                                            /*!< FPDSCR: RMode bit Position */
 #define FPU_FPDSCR_RMode_Msk               (3UL << FPU_FPDSCR_RMode_Pos)                  /*!< FPDSCR: RMode bit Mask */
 
-/* Media and FP Feature Register 0 Definitions */
+/* Media and VFP Feature Register 0 Definitions */
 #define FPU_MVFR0_FP_rounding_modes_Pos    28U                                            /*!< MVFR0: FP rounding modes bits Position */
 #define FPU_MVFR0_FP_rounding_modes_Msk    (0xFUL << FPU_MVFR0_FP_rounding_modes_Pos)     /*!< MVFR0: FP rounding modes bits Mask */
 
@@ -1768,7 +1769,7 @@ typedef struct
 #define FPU_MVFR0_A_SIMD_registers_Pos      0U                                            /*!< MVFR0: A_SIMD registers bits Position */
 #define FPU_MVFR0_A_SIMD_registers_Msk     (0xFUL /*<< FPU_MVFR0_A_SIMD_registers_Pos*/)  /*!< MVFR0: A_SIMD registers bits Mask */
 
-/* Media and FP Feature Register 1 Definitions */
+/* Media and VFP Feature Register 1 Definitions */
 #define FPU_MVFR1_FP_fused_MAC_Pos         28U                                            /*!< MVFR1: FP fused MAC bits Position */
 #define FPU_MVFR1_FP_fused_MAC_Msk         (0xFUL << FPU_MVFR1_FP_fused_MAC_Pos)          /*!< MVFR1: FP fused MAC bits Mask */
 
@@ -1780,6 +1781,10 @@ typedef struct
 
 #define FPU_MVFR1_FtZ_mode_Pos              0U                                            /*!< MVFR1: FtZ mode bits Position */
 #define FPU_MVFR1_FtZ_mode_Msk             (0xFUL /*<< FPU_MVFR1_FtZ_mode_Pos*/)          /*!< MVFR1: FtZ mode bits Mask */
+
+/* Media and VFP Feature Register 2 Definitions */
+#define FPU_MVFR2_FPMisc_Pos                4U                                            /*!< MVFR2: FPMisc bits Position */
+#define FPU_MVFR2_FPMisc_Msk               (0xFUL << FPU_MVFR2_FPMisc_Pos)                /*!< MVFR2: FPMisc bits Mask */
 
 /*@} end of group CMSIS_FPU */
 
