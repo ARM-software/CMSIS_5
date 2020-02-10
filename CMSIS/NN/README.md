@@ -12,6 +12,7 @@ Group | API | Base Operator | Input Constraints | Additional memory required for
 ||arm_convolve_s8()|CONV|dilation = 1|4 * ker_x * ker_y * input_ch| Yes | Yes ||
 ||arm_convolve_1x1_s8_fast() | CONV | dilation = 1 <br/> ker_x = 1, ker_y = 1 <br/> pad = 0<br/> stride = 1<br/> input_ch % 4 = 0| 0 | Yes |Yes ||
 ||arm_convolve_1_n_s8() | CONV | dilation = 1 <br/> output_y % 4 = 0 | No |Yes ||
+|| arm_depthwise_conv_3x3_s8() | DEPTHWISE_CONV | dilation = 1 <br/> depth_multiplier = 1 <br/> pad_x <= 1 | No|No| Preferred function for 3x3 kernel size ||
 | | arm_depthwise_conv_s8() | DEPTHWISE_CONV | dilation = 1  | No|No|No||
 || arm_depthwise_conv_s8_opt()| DEPTHWISE_CONV | dilation = 1 <br/> depth_multiplier = 1 | DSP: 2 * ker_x * ker_y * input_ch <br/> MVE: 2 * DSP | Yes| Yes| Best case is when channels are multiple of 4 or <br/>at the least >= 4 |
 |[Fully Connected](https://arm-software.github.io/CMSIS_5/NN/html/group__FC.html)||||| |  | |
