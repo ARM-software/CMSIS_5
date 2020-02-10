@@ -1,11 +1,11 @@
 /******************************************************************************
  * @file     mpu_armv7.h
  * @brief    CMSIS MPU API for Armv7-M MPU
- * @version  V5.1.0
- * @date     08. March 2019
+ * @version  V5.1.1
+ * @date     10. February 2020
  ******************************************************************************/
 /*
- * Copyright (c) 2017-2019 Arm Limited. All rights reserved.
+ * Copyright (c) 2017-2020 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -190,6 +190,7 @@ typedef struct {
 */
 __STATIC_INLINE void ARM_MPU_Enable(uint32_t MPU_Control)
 {
+  __DMB();
   MPU->CTRL = MPU_Control | MPU_CTRL_ENABLE_Msk;
 #ifdef SCB_SHCSR_MEMFAULTENA_Msk
   SCB->SHCSR |= SCB_SHCSR_MEMFAULTENA_Msk;
@@ -207,6 +208,8 @@ __STATIC_INLINE void ARM_MPU_Disable(void)
   SCB->SHCSR &= ~SCB_SHCSR_MEMFAULTENA_Msk;
 #endif
   MPU->CTRL  &= ~MPU_CTRL_ENABLE_Msk;
+  __DSB();
+  __ISB();
 }
 
 /** Clear and disable the given MPU region.
