@@ -1,6 +1,6 @@
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
-\page packIndexFile CMSIS-Pack Index Files
+\page packIndexFile Pack Index Files
 
 CMSIS-Pack is designed as a web-based distribution network. Each provider of a CMSIS-Pack (also referred to as \a vendor) is
 responsible for hosting, maintaining and publishing unique versions of a CMSIS-Pack.
