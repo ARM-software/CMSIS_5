@@ -775,10 +775,10 @@ INPUT                  = . \
                          src/boards_schema.txt \
                          src/generators_schema.txt \
                          src/xml_types.txt \
-                         src/cpdsc_schema.txt \
                          src/sdf_schema.txt \
                          src/pack_index.txt \
-                         src/pack_dbg_setup_tutorial.txt 
+                         src/pack_dbg_setup_tutorial.txt \
+                         src/cprj_schema.txt
 
 # This tag can be used to specify the character encoding of the source files
 # that doxygen parses. Internally doxygen uses the UTF-8 encoding. Doxygen uses

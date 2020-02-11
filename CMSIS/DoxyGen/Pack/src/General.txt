@@ -45,7 +45,7 @@ The figure above shows the following use cases for Software Packs:
   - <b>Board Support Pack (BSP):</b> contains documentation, schematics, and drivers for a certain development board.
   - <b>In-house Software Packs:</b> usually contain software components that can be distributed within a
     company or engineering group.
-  
+
 \note A Software Pack can address multiple use cases at the same time!
 
 The following sections provide more information:
@@ -57,12 +57,11 @@ The following sections provide more information:
  - \ref pack_Example explains the available example pack in more detail.
  - Learn how to \ref createPackPublish.
  - \ref createPackUtil are available that are useful during the creation of a pack.
- - \ref packFormat describes all XML elements that can be used in a PDSC file.
+ - \ref packFormat describes all XML elements that can be used in a package description file.
  - \ref configWizard can be used to create GUI-like elements in development tools for configuration files.
  - \ref flashAlgorithm algorithms are used to erase or download applications to Flash devices.
- - \ref coresight_setup allows to create tool-agnostic debug and trace configurations
- - \ref cpdsc_pg is a environment/tool independent definition of a software project. This helps to create only one set of
-   example projects that can be used by many different tool vendors.
+ - \ref coresight_setup allows to create tool-agnostic debug and trace configurations.
+ - \ref cprjFormat_pg describes all XML elements that are available for project descriptions and their usage.
  - \ref packIndexFile are used to generate a catalog of available packs.
 
 <hr>

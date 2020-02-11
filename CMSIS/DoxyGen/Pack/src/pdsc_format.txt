@@ -250,7 +250,7 @@ assists searching for packages.
   </td>
   <tr>
     <td>create</td>
-    <td>Use only when creating CMSIS software projects. Refer to \ref cpdsc_pg for details.</td>
+    <td>!!! Deprecated, use cprj format instead !!! Use only when creating CMSIS software projects.</td>
     <td>CreateType</td>
     <td>0..1 </td>
   </tr>
@@ -1100,7 +1100,6 @@ These values can be used in the elements:
 - \ref element_bundle
 - \ref element_api
 - \ref element_taxonomyDescription
-- \ref element_project_component
 
 \b Example:
 \code
@@ -1210,7 +1209,6 @@ Component Groups can be used in the elements:
 - \ref element_component
 - \ref element_api
 - \ref element_taxonomyDescription
-- \ref element_project_component
 
 The following table lists predefined values for the Component Class <b>Cclass="CMSIS"</b>.
 <table class="cmtable" summary="Predefined Cgroup names for Component Class CMSIS">
@@ -1220,24 +1218,24 @@ The following table lists predefined values for the Component Class <b>Cclass="C
   </tr>
   <tr>
     <td class="XML-Token">CORE</td>
-	<td>A component containing core support in accordance to the <a class=el href="../../Core/html/index.html">CMSIS-Core(M)</a>
+    <td>A component containing core support in accordance to the <a class=el href="../../Core/html/index.html">CMSIS-Core(M)</a>
   or <a class=el href="../../Core_A/html/index.html">CMSIS-Core(A)</a> specifications.</td>
   </tr>
   <tr>
     <td class="XML-Token">DSP</td>
-	<td>A component implementing the <a class=el href="../../DSP/html/index.html">CMSIS-DSP</a> API specification.</td>
+    <td>A component implementing the <a class=el href="../../DSP/html/index.html">CMSIS-DSP</a> API specification.</td>
   </tr>
   <tr>
     <td class="XML-Token">NN Lib</td>
-	<td>A component implementing the <a class=el href="../../NN/html/index.html">CMSIS-NN</a> API specification.</td>
+    <td>A component implementing the <a class=el href="../../NN/html/index.html">CMSIS-NN</a> API specification.</td>
   </tr>
   <tr>
     <td class="XML-Token">RTOS</td>
-	<td>A component implementing the <a class=el href="../../RTOS/html/index.html">CMSIS-RTOS</a> API specification.</td>
+    <td>A component implementing the <a class=el href="../../RTOS/html/index.html">CMSIS-RTOS</a> API specification.</td>
   </tr>
   <tr>
     <td class="XML-Token">RTOS2</td>
-	<td>A component implementing the <a class=el href="../../RTOS2/html/index.html">CMSIS-RTOS v2</a> API specification.</td>
+    <td>A component implementing the <a class=el href="../../RTOS2/html/index.html">CMSIS-RTOS v2</a> API specification.</td>
   </tr>
 </table>
 
@@ -1249,7 +1247,7 @@ The following table lists predefined values for the Component Class <b>Cclass="D
   </tr>
   <tr>
     <td class="XML-Token">Startup</td>
-	<td>A component containing the device support files system_device.c and startup_device.s/c in accordance to the <a class=el href="../../Core/html/index.html">CMSIS-Core(M)</a>
+    <td>A component containing the device support files system_device.c and startup_device.s/c in accordance to the <a class=el href="../../Core/html/index.html">CMSIS-Core(M)</a>
   or <a class=el href="../../Core_A/html/index.html">CMSIS-Core(A)</a> specifications (startup, system and device files).</td>
   </tr>
 </table>
