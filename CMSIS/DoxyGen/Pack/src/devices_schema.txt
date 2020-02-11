@@ -8,8 +8,8 @@ Devices can be organized in hierarchy groups to limit redundancy. The hierarchy 
 - \ref element_subFamily "subFamily": attributes of an optional sub-family; this adds or modifies features of a family.
 
 Device characteristics can be defined in:
--	\ref element_device "device": attributes of a specific silicon device
--	\ref element_variant "variant": attributes of a device variant (for example, with different package or temperature range) or an 
+- \ref element_device "device": attributes of a specific silicon device
+- \ref element_variant "variant": attributes of a device variant (for example, with different package or temperature range) or an 
        OEM device or board that integrates the device.
        
 A device is described by the following properties:
@@ -79,7 +79,7 @@ and finalizing with the information on the device level.
       <subFamily DsubFamily="128 Flash">
         <memory name="SRAM"  access="rwx" start="0x20000000" size="0x10000" default="1"/>
         <memory name="Flash" access="rx"  start="0x08000000" size="0x20000" startup="1" default="1"/>
-	
+
         <!-- device level -->
         <device Dname="STM32F205RB">
           <feature type="IOs" n="51" name="Input and Output Ports"/>
@@ -92,7 +92,7 @@ and finalizing with the information on the device level.
             <feature type="Temp" n="-40" m="105" name="Extended Temperature Range"/>
           </variant>
         </device>
-		
+
         <device Dname="STM32F205VB">
           <feature type="IOs" n="82" name="Input and Output Ports"/>
           <variant Dvariant="STM32F205VBT6">
@@ -101,7 +101,7 @@ and finalizing with the information on the device level.
           </variant>
         </device>
       </subFamily>
-	  
+
     </family>
   </devices>
 </package>
@@ -197,7 +197,7 @@ Multiple \<family> groups can be defined.
 </devices>
 \endcode 
 
-<p>&nbsp;</p>		
+<p>&nbsp;</p>
 
 <table class="cmtable" summary="Element: family">
   <tr>
@@ -348,7 +348,7 @@ Multiple \<family> groups can be defined.
   </tr>
 </table>
 
-<p>&nbsp;</p>		
+<p>&nbsp;</p>
 <hr>
 
 \section element_subFamily /package/devices/family/subFamily
@@ -386,7 +386,7 @@ These properties are inherited by subgroups or elements. Multiple \<subFamily> g
 </family>
 \endcode 
 
-<p>&nbsp;</p>		
+<p>&nbsp;</p>
 
 <table class="cmtable" summary="Element: subFamily">
   <tr>
@@ -519,7 +519,7 @@ These properties are inherited by subgroups or elements. Multiple \<subFamily> g
   </tr>
 </table>
 
-<p>&nbsp;</p>		
+<p>&nbsp;</p>
 <hr>
 
 \section element_device /package/devices/family/../device
@@ -546,7 +546,7 @@ Multiple \<device> elements can be defined.
 </subFamily>
 \endcode
 
-<p>&nbsp;</p>		
+<p>&nbsp;</p>
 
 <table class="cmtable" summary="Element: device">
   <tr>
@@ -710,7 +710,7 @@ memory range and style are identical, the one on the lower level takes precedenc
     <algorithm name="Flash/STM32F2xx_1024.flm" start=0x08000000 size=0x20000 default="1" style="Keil"/>       
 
     <device Dname="STM32F405OE">
-	  <!-- finally, this is the default for the device -->
+      <!-- finally, this is the default for the device -->
       <algorithm name="Flash/STM32F2xx_2048.flm" start=0x08000000 size=0x40000 default="1" style="Keil"/>
     </device>
     ...
@@ -777,28 +777,28 @@ memory range and style are identical, the one on the lower level takes precedenc
   <tr>
     <td>RAMsize</td>
     <td>Maximum size of RAM available for the execution of the Flash programming algorithm. 
-	End address = start + size - 1 is used for the Stack. If specified, the \ref element_memory 
-	"memory" element does not require a \c default attribute.</td>
+    End address = start + size - 1 is used for the Stack. If specified, the \ref element_memory 
+    "memory" element does not require a \c default attribute.</td>
     <td>NonNegativeInteger</td>
     <td>optional</td>
   </tr>
   <tr>
     <td>default</td>
     <td>If \token{true}, then this is the default Flash programming algorithm that gets configured
-	in a project. If not specified or set to \token{false}, then the Flash programming algorithm can
-	be configured on a lower level. However, the Flash programming algorithm of a project can be
-	changed manually at any time during development.
-	</td>
+    in a project. If not specified or set to \token{false}, then the Flash programming algorithm can
+    be configured on a lower level. However, the Flash programming algorithm of a project can be
+    changed manually at any time during development.
+    </td>
     <td>xs:boolean</td>
     <td>optional</td>
   </tr>
     <tr>
     <td>style</td>
     <td>[Version 1.4.0] Today, different toolchains support different styles of incompatible flash
-	programming algorithms. The attribute specifies the style of the specified flash programming 
-	algorithm. For backward compatibility the default value is \token{Keil}. The aim is to converge to
-	the <em>CMSIS</em> style.
-	</td>
+    programming algorithms. The attribute specifies the style of the specified flash programming 
+    algorithm. For backward compatibility the default value is \token{Keil}. The aim is to converge to
+    the <em>CMSIS</em> style.
+    </td>
     <td>\ref AlgorithmStyleEnum "AlgorithmStyleEnum"</td>
     <td>optional</td>
   </tr>
@@ -835,7 +835,7 @@ identical, the one on the lower level takes precedence. Overlap of Flash informa
 </device>
 \endcode
 
-<p>&nbsp;</p>		
+<p>&nbsp;</p>
 
 <table class="cmtable" summary="Type: FlashInfoType">
   <tr>
@@ -1016,7 +1016,7 @@ size of all previous \<block> and \<gap> elements of this flash device.
 </table>
 
 
-<p>&nbsp;</p>		
+<p>&nbsp;</p>
 <hr>
 
 \section element_book /package/devices/family/.../book
@@ -1040,7 +1040,7 @@ The book element contains the location, filename, and extension of the file. The
 </family>
 \endcode
 
-<p>&nbsp;</p>		
+<p>&nbsp;</p>
 
 <table class="cmtable" summary="Type: BookType">
   <tr>
@@ -1196,7 +1196,7 @@ of bullet points should not exceed ten. To create a detailed feature list use th
 </package>
 \endcode
 
-<p>&nbsp;</p>		
+<p>&nbsp;</p>
 
 <table class="cmtable" summary="Element: description">
   <tr>
@@ -1232,7 +1232,7 @@ of bullet points should not exceed ten. To create a detailed feature list use th
 </table>
 
 
-<p>&nbsp;</p>		
+<p>&nbsp;</p>
 <hr>
 
 
@@ -1255,7 +1255,7 @@ full control of the \em element usage.
       <environment name="MyConfigTool">
         <file>MyConfigFile.cfg</file>
         <control>MyControlString</control>
-		...
+        ...
       </environment>
       ...
     </family>
@@ -1270,7 +1270,7 @@ full control of the \em element usage.
       ...    
       <environment name="uv" Pname="M0">
         <CMisc>--C99</CMisc>
-		...
+        ...
       </environment>
       ...
     </family>
@@ -1325,7 +1325,7 @@ full control of the \em element usage.
   <tr>
     <td>any</td>
     <td>Any element that is available for the specified development tool.<br>
-	For uVision, the following elements are available: \<CMisc>, \<AMisc\>, \<LMisc\>, \<preBuild1\>, \<preBuild2\>, \<preRun1\>, \<preRun2\>, \<postBuild1\>, \<postBuild2\>, \<postRun1\>, \<postRun\>.</td>
+    For uVision, the following elements are available: \<CMisc>, \<AMisc\>, \<LMisc\>, \<preBuild1\>, \<preBuild2\>, \<preRun1\>, \<preRun2\>, \<postBuild1\>, \<postBuild2\>, \<postRun1\>, \<postRun\>.</td>
     <td>xs:anyAttribute</td>
     <td>0..*</td>
   </tr>
@@ -1416,7 +1416,7 @@ supersede outer elements.
   <tr>
     <td>type</td>
     <td>A feature (peripheral), such as \token{CAN}, \token{DMA}, \token{I/O}, \token{LCD}, etc. Predefined values must be used
-	as listed in the table \ref DeviceFeatureTypeEnum "Device Feature Types".</td>
+    as listed in the table \ref DeviceFeatureTypeEnum "Device Feature Types".</td>
     <td>DeviceFeatureTypeEnum</td>
     <td>required</td>
   </tr>
@@ -1435,13 +1435,13 @@ supersede outer elements.
   <tr>
     <td>name</td>
     <td>Descriptive name of the feature. For example, "16-bit down counting timer". If omitted, the <b>Default Name</b> is used 
-	as described in the table \ref DeviceFeatureTypeEnum "Device Feature Types".</td>
+    as described in the table \ref DeviceFeatureTypeEnum "Device Feature Types".</td>
     <td>xs:string</td>
     <td>optional</td>
   </tr>
 </table>
 
-\n	
+\n
 
 \anchor DeviceFeatureTypeEnum <b>Table: Device Feature Types</b> 
 
@@ -1589,7 +1589,7 @@ This element can be defined on various levels. Inner memory elements supersede o
   <tr>
     <td>id (deprecated in Version 1.4.0)</td>
     <td>(deprecated Version 1.4.0) Identifier of the memory region consisting of a type indicator and an index (for example, \token{IRAM1}).
-	Predefind values can be selected as defined in \ref MemoryIDTypeEnum.</td>
+    Predefind values can be selected as defined in \ref MemoryIDTypeEnum.</td>
     <td>MemoryIDTypeEnum</td>
     <td>optional</td>
   </tr>
@@ -1623,7 +1623,7 @@ This element can be defined on various levels. Inner memory elements supersede o
     If \token{true}, then an IRAM memory region will be used by the linker for locating any data and an IROM memory region will for locating 
     any code. Every device needs at least one default IRAM region.
     If an \ref element_algorithm "algorithm" element is specified (without \c RAMstart and
-    \c RAMsize attributes),	the first listed IRAM region with default="1" will also be used for executing the flash programming algorithm.</td>
+    \c RAMsize attributes),    the first listed IRAM region with default="1" will also be used for executing the flash programming algorithm.</td>
     Default value is \token{false}.
     <td>xs:boolean</td>
     <td>optional</td>
@@ -1637,8 +1637,8 @@ This element can be defined on various levels. Inner memory elements supersede o
   <tr>
     <td>alias(new in Version 1.4.0)</td>
     <td>reference to another memory description which shares the same physical memory. Some physical
-	memory is made accessible via different addresses, for example, chached vs. non-cached accesses. This
-	avoids the impression that the device has twice as much memory available.
+    memory is made accessible via different addresses, for example, chached vs. non-cached accesses. This
+    avoids the impression that the device has twice as much memory available.
     <td>xs:string</td>
     <td>optional</td>
   </tr>
@@ -1678,7 +1678,6 @@ The table lists identifiers for memory types.
 
 The table lists the letters and their meaning for use in the access attribute string. The values can be used in:
  - \ref element_memory
- - \ref element_target_memory
 
 <table class="cmtable" summary="Memory Access Permission Attributes">
   <tr>
@@ -1755,7 +1754,7 @@ the attribute \elem{Pname}. If the information is relevant to all processors, no
 </device>
 \endcode
 
-<p>&nbsp;</p>		
+<p>&nbsp;</p>
 
 <table class="cmtable" summary="Element: processor">
   <tr>
@@ -2189,7 +2188,6 @@ Contact cmsis@arm.com to ask for an extension. These values can be used in the e
 
 The table lists the predefined Flash algorithm style. These values can be used in:
  - \ref element_algorithm
- - \ref element_target_algorithm
 
 <table class="cmtable" summary="Enumeration: AlgorithmStyleEnum">
   <tr>
@@ -2264,6 +2262,10 @@ These values can be used in the elements:
     <td class="XML-Token">Cortex-M35P</td>
     <td><a href="http://developer.arm.com/products/processors/cortex-m/cortex-m35p" target="_blank">Arm Cortex-M35P</a> processor based device</td>
   </tr>
+  <tr>
+    <td class="XML-Token">Cortex-M55</td>
+    <td><a href="http://developer.arm.com/products/processors/cortex-m/cortex-m55" target="_blank">Arm Cortex-M55</a> processor based device</td>
+  </tr>  
   <tr>
     <td class="XML-Token">SC000</td>
     <td>SecurCore <a href="http://developer.arm.com/products/processors/cortex-m/sc000-processor" target="_blank">SC000</a> based on technology of Cortex-M0.</td>
@@ -2361,8 +2363,8 @@ The tokens can be used in the elements:
 - \ref element_require 
 - \ref element_deny  
 - \ref element_processor
-- \ref cpdsc_target_pg
-	
+- \ref element_target
+
 <table class="cmtable" summary="Enumeration: DfpuEnum">
   <tr>
     <th>Dfpu=</th>
@@ -2396,7 +2398,7 @@ The values can be used in the elements:
 - \ref element_require 
 - \ref element_deny  
 - \ref element_processor
-- \ref cpdsc_target_pg
+- \ref element_target
 
 <table class="cmtable" summary="Enumeration: DmpuEnum">
   <tr>
@@ -2413,7 +2415,7 @@ The values can be used in the elements:
   </tr>
 </table>
 
-<p>&nbsp;</p>		
+<p>&nbsp;</p>
 
 \anchor DtzEnum <b>Table: Device Trust Zone </b>
 
@@ -2535,8 +2537,7 @@ The values can be used in the elements:
 - \ref element_require
 - \ref element_deny  
 - \ref element_processor
-- \ref cpdsc_target_pg
-- \ref element_target_algorithm
+- \ref element_target
 
 <table class="cmtable" summary="Enumeration: DendianEnum">
   <tr>
@@ -2651,7 +2652,6 @@ Default debugger configuration for a target connection.
 
 The table lists the values for debug protocol types. The values can be used in 
  - \ref element_debugconfig
- - \ref element_debugProbe
 
 <table class="cmtable" summary="Enumeration: DataPatchAccessTypeEnum">
   <tr>

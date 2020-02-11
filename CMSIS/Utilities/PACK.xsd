@@ -17,7 +17,7 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 
-  $Date:        03. February 2020
+  $Date:        11. February 2020
   $Revision:    1.6.4
 
   $Project: Schema File for Package Description File Format Specification
@@ -25,9 +25,10 @@
   Package file name convention <vendor>.<name>.<version>.pack
   SchemaVersion=1.6.4
 
-  03. February 2020: v1.6.4
+  11. February 2020: v1.6.4
   - example: added environment specific folder attribute
   - added 'ACCESS_AP' to DataPatchAccessTypeEnum
+  - added Cortex-M55 to DcoreEnum
 
   21. November 2019: v1.6.3
   - added attribute 'uninit' to <memory> element to replace deprecated 'init' attribute
@@ -121,7 +122,7 @@
   
 -->
 
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="qualified" version="1.4">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="qualified" version="1.6.4">
 
   <!-- NonNegativeInteger specifies the format in which numbers are represented in hexadecimal or decimal format -->
   <xs:simpleType name="NonNegativeInteger">
@@ -729,6 +730,7 @@
       <xs:enumeration value="Cortex-M3" />
       <xs:enumeration value="Cortex-M33" />
       <xs:enumeration value="Cortex-M35P"/>
+	  <xs:enumeration value="Cortex-M55"/>
       <xs:enumeration value="Cortex-M4" />
       <xs:enumeration value="Cortex-M7" />
       <xs:enumeration value="ARMV8MBL" />
@@ -1610,6 +1612,8 @@
     </xs:choice>
   </xs:complexType>
 
+
+  <!-- deprecated: project description covered by cprj -->
   <!-- Component selection section (added in 1.4.4) -->
   <xs:complexType name="ComponentSelectType">
     <xs:sequence>
@@ -1647,6 +1651,7 @@
   </xs:complexType>
 
   <!-- Project section: (added in 1.4.4) -->
+  <!-- deprecated: project description covered by cprj -->
   <xs:complexType name="ProjectType">
     <xs:all>
       <!-- target selection and configuration -->
@@ -1666,6 +1671,7 @@
   </xs:complexType>
 
   <!-- Create Section: (added in 1.4.4) -->
+  <!-- Deprecated -> project description no covered in cprj -->
   <xs:complexType name="CreateType">
     <xs:sequence>
       <!-- project section -->
