@@ -44,7 +44,7 @@ PROJECT_NUMBER         = "Version 0.1.0"
 # for a project that appears at the top of each page and should give viewer a
 # quick idea about the purpose of the project. Keep the description short.
 
-PROJECT_BRIEF          = "Build Mechanism for CMSIS Software Projects"
+PROJECT_BRIEF          = "Tools, software frameworks, and work flows for productivity with CMSIS based projects"
 
 # With the PROJECT_LOGO tag one can specify an logo or icon that is included in
 # the documentation. The maximum height of the logo should not exceed 55 pixels
@@ -756,6 +756,7 @@ WARN_LOGFILE           =
 
 INPUT                  = . \
                          src/General.txt \
+						 src/CmdLineBuild.txt \ 
 
 # This tag can be used to specify the character encoding of the source files
 # that doxygen parses. Internally doxygen uses the UTF-8 encoding. Doxygen uses
