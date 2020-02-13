@@ -1,8 +1,8 @@
 /**************************************************************************//**
  * @file     core_armv81mml.h
  * @brief    CMSIS Armv8.1-M Mainline Core Peripheral Access Layer Header File
- * @version  V1.3.0
- * @date     11. February 2020
+ * @version  V1.3.1
+ * @date     14. February 2020
  ******************************************************************************/
 /*
  * Copyright (c) 2018-2020 Arm Limited. All rights reserved.
@@ -64,14 +64,13 @@
 
 #include "cmsis_version.h"
 
-#define __ARM_ARCH_8M_MAIN__    1  // patching for now
 /*  CMSIS ARMV81MML definitions */
 #define __ARMv81MML_CMSIS_VERSION_MAIN  (__CM_CMSIS_VERSION_MAIN)                   /*!< \deprecated [31:16] CMSIS HAL main version */
 #define __ARMv81MML_CMSIS_VERSION_SUB   (__CM_CMSIS_VERSION_SUB)                    /*!< \deprecated [15:0]  CMSIS HAL sub version */
 #define __ARMv81MML_CMSIS_VERSION       ((__ARMv81MML_CMSIS_VERSION_MAIN << 16U) | \
                                          __ARMv81MML_CMSIS_VERSION_SUB           )  /*!< \deprecated CMSIS HAL version number */
 
-#define __CORTEX_M                     (81U)                                       /*!< Cortex-M Core */
+#define __CORTEX_M                      (81U)                                       /*!< Cortex-M Core */
 
 #if defined ( __CC_ARM )
   #error Legacy Arm Compiler does not support Armv8.1-M target architecture.
