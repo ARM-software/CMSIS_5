@@ -832,7 +832,6 @@ the project and processed by the build tools.
 File categories are used in the following elements:
 - \ref element_file
 - \ref element_gen_file
-- \ref element_component_file
 
 The table lists the predefined values for a file category. 
 <table class="cmtable" summary="Type: FileCategoryEnum">

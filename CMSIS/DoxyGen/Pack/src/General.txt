@@ -61,7 +61,6 @@ The following sections provide more information:
  - \ref configWizard can be used to create GUI-like elements in development tools for configuration files.
  - \ref flashAlgorithm algorithms are used to erase or download applications to Flash devices.
  - \ref coresight_setup allows to create tool-agnostic debug and trace configurations.
- - \ref cprjFormat_pg describes all XML elements that are available for project descriptions and their usage.
  - \ref packIndexFile are used to generate a catalog of available packs.
 
 <hr>

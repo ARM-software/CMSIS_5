@@ -161,7 +161,7 @@ The XML schema file <b>sdf_schema.xsd</b> defines the sections used in a <b>*.SD
 can be found under the ARM.CMSIS.*.Pack in the .\\CMSIS\\Utilities-directory.
 
 \section sdf_element_system_description /system_description
-<table class="cmtable" summary="Element: CPDSC package">
+<table class="cmtable" summary="Element: SDF format">
   <tr>
     <th>Parents</th>
     <th colspan="3">Element Chain</th>

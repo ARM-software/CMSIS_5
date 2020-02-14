@@ -2357,13 +2357,12 @@ These values can be used in the elements:
 
 \anchor DfpuEnum <b>Table: Device FPU</b>
 
-The table lists values that identicate whether a CPU has an Floating Point Unit (FPU).
+The table lists values that indicate whether a CPU has an Floating Point Unit (FPU).
 The tokens can be used in the elements:
 - \ref element_accept  
 - \ref element_require 
 - \ref element_deny  
 - \ref element_processor
-- \ref element_target
 
 <table class="cmtable" summary="Enumeration: DfpuEnum">
   <tr>
@@ -2398,7 +2397,6 @@ The values can be used in the elements:
 - \ref element_require 
 - \ref element_deny  
 - \ref element_processor
-- \ref element_target
 
 <table class="cmtable" summary="Enumeration: DmpuEnum">
   <tr>
@@ -2537,7 +2535,6 @@ The values can be used in the elements:
 - \ref element_require
 - \ref element_deny  
 - \ref element_processor
-- \ref element_target
 
 <table class="cmtable" summary="Enumeration: DendianEnum">
   <tr>

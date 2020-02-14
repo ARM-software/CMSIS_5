@@ -1665,7 +1665,109 @@ See: \ref element_asflags
   </tr>
 </table>
 
+
+\section element_packages /package/requirements/packages
+
+\b Example packages section:
+\verbatim
+  <packages>
+    <package name="STM32F4xx_DFP" vendor="Keil" version="2.8.0:2.8.0"/>
+  </packages>
+\endverbatim
+
+\b /package
+<table class="cmtable" summary="Element: package">
+  <tr>
+    <th>Parents</th>
+    <th colspan="3">Element Chain</th>
+  </tr>
+  <tr>
+    <td>\ref element_packages "packages"</td>
+    <td colspan="3">\ref element_packages</td>
+  </tr>
+  <tr>
+    <th>Attributes</th>
+    <th>Description</th>
+    <th>Type</th>
+    <th>Use</th>
+  </tr>
+  <tr>
+    <td>vendor</td>
+    <td>specify vendor of the package (e.g. "ARM")</td>
+    <td>RestrictedString</td>
+    <td>required</td>
+  </tr>
+  <tr>
+    <td>name</td>
+    <td>Name of the pack</td>
+    <td>RestrictedString</td>
+    <td>required</td>
+  </tr>
+  <tr>
+    <td>version</td>
+    <td>\ref VersionType "Version" of the required software pack which can be:
+       - Minimum version (higher versions are accepted).
+       - Version range specified with <em>min_version</em><b>:</b><em>max_version</em>. <em>min_version</em> must be lower or
+         equal than <em>max_version</em>. If <em>min_version</em> and <em>max_version</em> are equal, the version must match.
+       - If no version is specified, the latest available version is assumed.
+    </td>	 
+   <td>\ref VersionType</td>
+    <td>optional</td>
+  </tr>
+</table>
+
 \delim
+
+\section element_compilers /package/requirements/compilers
+
+\b Example compilers section:
+\code
+<package xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="PACK.xsd"/>
+  ...
+  <requirements>
+    <compilers>
+      <compiler name="ARMCC" version="5.0.0:5.99.0"/>
+    </compilers>
+  </requirements>
+  ...
+</package>
+\endcode
+
+\b /compiler
+<table class="cmtable" summary="Element: compiler">
+  <tr>
+    <th>Parents</th>
+    <th colspan="3">Element Chain</th>
+  </tr>
+  <tr>
+    <td>\ref element_requirements "requirements"</td>
+    <td colspan="3">\ref element_requirements</td>
+  </tr>
+  <tr>
+    <th>Attributes</th>
+    <th>Description</th>
+    <th>Type</th>
+    <th>Use</th>
+  </tr>
+  <tr>
+    <td>name</td>
+    <td>Name of the required \ref CompilerEnumType "compiler" (i.e. "ARMCC", "IAR")</td>
+    <td>\ref CompilerEnumType</td>
+    <td>required</td>
+  </tr>
+  <tr>
+    <td>version</td>
+    <td>\ref VersionType "Version" of the required compiler which can be:
+       - Minimum version (higher versions are accepted).
+       - Version range specified with <em>min_version</em><b>:</b><em>max_version</em>. <em>min_version</em> must be lower or
+         equal than <em>max_version</em>. If <em>min_version</em> and <em>max_version</em> are equal, the version must match.
+         <br>
+    </td>	 
+    <td>\ref VersionType</td>
+    <td>required</td>
+  </tr>
+</table>
+
 
 
 \page cprj_types cprj specific types
@@ -1720,6 +1822,8 @@ Restricted string type excludes the use of special characters including spaces i
 
 
 \delim
+
+
 
 */
 

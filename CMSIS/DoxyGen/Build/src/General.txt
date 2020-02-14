@@ -13,6 +13,7 @@
 \image html "Layer.png" "Software Layers and Virtual I/O"  
 
 \todo add link to CMSIS-pack for "generic project format"
+ - \ref cprjFormat_pg describes all XML elements that are available for project descriptions and their usage.
 
 <b>Tools</b> that support \ref CmdLineBuild with software packs and the generic project format:
 
@@ -21,11 +22,17 @@
   
 
 */
+
+
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
 \page build_revisionHistory Revision history
 
 <table class="cmtable" summary="Revision History">
+  <tr>
+    <th>Version</th>
+    <th>Description</th>
+  </tr>
   <tr>
     <td>0.10</td>
     <td>Release for beta review</td>
