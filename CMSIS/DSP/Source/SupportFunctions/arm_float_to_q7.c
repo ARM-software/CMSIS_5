@@ -70,6 +70,9 @@ void arm_float_to_q7(
     q15x8_t         evVec, oddVec;
     q7x16_t         vecDst;
     float32_t const *pSrcVec;
+#ifdef ARM_MATH_ROUNDING
+    float32_t in;
+#endif
 
     pSrcVec = (float32_t const *) pSrc;
     blkCnt = blockSize >> 4;

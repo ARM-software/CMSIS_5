@@ -72,6 +72,9 @@ void arm_float_to_q31(
     uint32_t         blkCnt;
     float32_t       maxQ = (float32_t) Q31_MAX;
     f32x4_t         vecDst;
+#ifdef ARM_MATH_ROUNDING
+    float32_t in;
+#endif
 
 
     blkCnt = blockSize >> 2U;
