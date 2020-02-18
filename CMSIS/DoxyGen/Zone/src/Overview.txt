@@ -1,4 +1,4 @@
-/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+﻿/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
 \mainpage
 
@@ -210,29 +210,37 @@ family pcks for your target device need to be installed on your computer.
 /**
 \page zTInstall Installation
 
-CMSIS-Zone is currently available as an Eclipse plug-in (we recomment to use Eclipse 64-bit 2018.1 or newer). Download the
-zipped archive from
-<a href="https://github.com/ARM-software/cmsis-pack-eclipse/releases/download/v2.5.0/CmsisPackPlugIn2.5.0.zip" target="_blank">here</a>
-and save it to your computer.
+The CMSIS-Zone utility is part of the <a href="https://github.com/ARM-software/cmsis-pack-eclipse/releases/latest" target="_blank"><b>CMSIS-Pack Eclipse Plug-ins</b></a>. 
 
-Open Eclipse and go to <b>Help - Install New Software...</b>. In the dialog, select \b Add and then \b Archive... and point
-to the ZIP file on your PC. Click \b Add. The content of the ZIP file is shown:
+The following steps explain the setup of an Eclipse enviornment with CMSIS-Zone:
 
-\image html InstallPlugIns.png
+\todo the setup of the Java Runtime Environment is unclear as the term JRE 1.8 is not used on the Oracle web pages
 
-Select <b>CMSIS Eclipse PLig Ins</b> and click \b Next twice. Accept the license agreement and click \b Finish. When
-prompted, restart Eclipse:
+  1. Get and install an <b>Java Runtime Environment (JRE) 1.8</b> or later to your machine, choose one of
+    - Oracle JRE (note the license terms for commercial usage)
+    - OpenJDK
 
-\image html EclipseRestart.png
+  2. <a href="https://github.com/ARM-software/cmsis-pack-eclipse/releases/latest" target="_blank"><b>Download</b></a> the latest <b>CmsisPackPlugIn#.#.#.zip</b> file, for example CmsisPackPlugIn2.5.0.zip
 
-Before creating the first project, you have to point the tool to your pack repository so that it can pick up relevant device
-information. Go to <b>Window - Preferences</b> and select <b>CMSIS Packs</b>:
+  3. Get <a href="https://www.eclipse.org/downloads/" target="_blank"><b>Eclipse IDE (Download 64 bit)</b></a>  and install <b>Eclipse IDE for C/C++ Developers</b>
 
-\image html CMSISPacksPreferences.png
+<b>Launch Eclipse</b> and 
+  - Open the dialog <b>Help - Install New Software...</b>.
+  - Choose \b Add and click \b Archive. The \b Open the file <b>CmsisPackPlugIn#.#.#.zip</b> and click \b Add.
+  - In the dialog <b>Available Software</b> select the <b>CMSIS Eclipse plug-ins</b> as shown below.  The click \b Next and accept the license agreement.
 
-Browse to your pack root folder, usually \c C:\\users\\username\\AppData\\Local\\Arm\\Packs. Click <b>Apply and Close</b>.
+    \image html InstallPlugIns.png
 
-This concludes the installation and setup of the Eclipse environment.
+  - \b Restart Eclipse.
+
+Setup <b>CMSIS Pack root folder</b> in Eclipse
+  - Open the dialog <b>Window - Preferences</b> and select directory for the <b>CMSIS Packs</b> repository on your computer:
+
+    \image html CMSISPacksPreferences.png
+
+    The standard setting is \c C:\\users\\username\\AppData\\Local\\Arm\\Packs, but you may use the same directory as for MDK and select: \c C:\\Keil_v5\\MDK\\ARM\\PACK.
+
+  -	Click <b>Apply and Close</b>. This concludes the setup of the Eclipse environment.
 */
 
 
