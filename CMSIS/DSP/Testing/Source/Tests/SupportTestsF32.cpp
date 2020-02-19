@@ -427,13 +427,15 @@
        const float32_t *inpY = inputY.ptr();
        const float32_t *outX = outputX.ptr();
        float32_t *outp = output.ptr();
-       float32_t *buf = buffer.ptr();
-       buf=(float32_t*)malloc((3*4-1)*sizeof(float32_t));
+       float32_t *buf = buffer.ptr();       // ((2*4-1)*sizeof(float32_t))
+       float32_t *coef = splineCoefs.ptr(); // ((3*(4-1))*sizeof(float32_t))
+
        arm_spline_instance_f32 S;
+       arm_spline_init_f32(&S, ARM_SPLINE_PARABOLIC_RUNOUT, inpX, inpY, 4, coef, buf);
+       arm_spline_f32(&S, outX, outp, 20);
 
-       arm_spline_init_f32(&S, 4, ARM_SPLINE_PARABOLIC_RUNOUT, buf);
-       arm_spline_f32(&S, inpX, inpY, outX, outp, 20);
-
+       ASSERT_EMPTY_TAIL(buffer);
+       ASSERT_EMPTY_TAIL(splineCoefs);
        ASSERT_EMPTY_TAIL(output);
        ASSERT_SNR(output,ref,(float32_t)SNR_THRESHOLD);
     } 
@@ -444,13 +446,15 @@
        const float32_t *inpY = inputY.ptr();
        const float32_t *outX = outputX.ptr();
        float32_t *outp = output.ptr();
-       float32_t *buf = buffer.ptr();
-       buf=(float32_t*)malloc((3*9-1)*sizeof(float32_t));
+       float32_t *buf = buffer.ptr(); // ((2*9-1)*sizeof(float32_t))
+       float32_t *coef = splineCoefs.ptr(); // ((3*(9-1))*sizeof(float32_t))
+
        arm_spline_instance_f32 S;
+       arm_spline_init_f32(&S, ARM_SPLINE_NATURAL, inpX, inpY, 9, coef, buf);
+       arm_spline_f32(&S, outX, outp, 33);
 
-       arm_spline_init_f32(&S, 9, ARM_SPLINE_NATURAL, buf);
-       arm_spline_f32(&S, inpX, inpY, outX, outp, 33);
-
+       ASSERT_EMPTY_TAIL(buffer);
+       ASSERT_EMPTY_TAIL(splineCoefs);
        ASSERT_EMPTY_TAIL(output);
        ASSERT_SNR(output,ref,(float32_t)SNR_THRESHOLD);
     } 
@@ -461,13 +465,15 @@
        const float32_t *inpY = inputY.ptr();
        const float32_t *outX = outputX.ptr();
        float32_t *outp = output.ptr();
-       float32_t *buf = buffer.ptr();
-       buf=(float32_t*)malloc((3*3-1)*sizeof(float32_t));
+       float32_t *buf = buffer.ptr(); // ((2*3-1)*sizeof(float32_t))
+       float32_t *coef = splineCoefs.ptr(); // ((3*(3-1))*sizeof(float32_t))
+
        arm_spline_instance_f32 S;
+       arm_spline_init_f32(&S, ARM_SPLINE_PARABOLIC_RUNOUT, inpX, inpY, 3, coef, buf);
+       arm_spline_f32(&S, outX, outp, 30);
 
-       arm_spline_init_f32(&S, 3, ARM_SPLINE_PARABOLIC_RUNOUT, buf);
-       arm_spline_f32(&S, inpX, inpY, outX, outp, 30);
-
+       ASSERT_EMPTY_TAIL(buffer);
+       ASSERT_EMPTY_TAIL(splineCoefs);
        ASSERT_EMPTY_TAIL(output);
        ASSERT_SNR(output,ref,(float32_t)SNR_THRESHOLD);
     } 
@@ -779,6 +785,8 @@
 	      inputY.reload(SupportTestsF32::INPUT_SPLINE_SQU_Y_F32_ID,mgr,4);
 	      outputX.reload(SupportTestsF32::OUTPUT_SPLINE_SQU_X_F32_ID,mgr,20);
 	      ref.reload(SupportTestsF32::REF_SPLINE_SQU_F32_ID,mgr,20);
+          splineCoefs.create(3*(4-1),SupportTestsF32::COEFS_SPLINE_F32_ID,mgr);
+          buffer.create(2*4-1,SupportTestsF32::TEMP_SPLINE_F32_ID,mgr);
 	      output.create(20,SupportTestsF32::OUT_F32_ID,mgr);
 	    break;
 
@@ -787,6 +795,8 @@
 	      inputY.reload(SupportTestsF32::INPUT_SPLINE_SIN_Y_F32_ID,mgr,9);
 	      outputX.reload(SupportTestsF32::OUTPUT_SPLINE_SIN_X_F32_ID,mgr,33);
 	      ref.reload(SupportTestsF32::REF_SPLINE_SIN_F32_ID,mgr,33);
+          splineCoefs.create(3*(9-1),SupportTestsF32::COEFS_SPLINE_F32_ID,mgr);
+          buffer.create(2*9-1,SupportTestsF32::TEMP_SPLINE_F32_ID,mgr);
 	      output.create(33,SupportTestsF32::OUT_F32_ID,mgr);
 	    break;
 
@@ -795,6 +805,8 @@
 	      inputY.reload(SupportTestsF32::INPUT_SPLINE_RAM_Y_F32_ID,mgr,3);
 	      outputX.reload(SupportTestsF32::OUTPUT_SPLINE_RAM_X_F32_ID,mgr,30);
 	      ref.reload(SupportTestsF32::REF_SPLINE_RAM_F32_ID,mgr,30);
+          splineCoefs.create(3*(3-1),SupportTestsF32::COEFS_SPLINE_F32_ID,mgr);
+          buffer.create(2*3-1,SupportTestsF32::TEMP_SPLINE_F32_ID,mgr);
 	      output.create(30,SupportTestsF32::OUT_F32_ID,mgr);
 	    break;
 

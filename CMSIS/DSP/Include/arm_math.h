@@ -2357,39 +2357,44 @@ __STATIC_INLINE q31_t arm_div_q63_to_q31(q63_t num, q31_t den)
    */
   typedef struct
   {
-    uint32_t n_x;              /**< Number of known data points */
     arm_spline_type type;      /**< Type (boundary conditions) */
-    float32_t * buffer;
+    const float32_t * x;       /**< x values */
+    const float32_t * y;       /**< y values */
+    uint32_t n_x;              /**< Number of known data points */
+    float32_t * coeffs;        /**< Coefficients buffer (b,c, and d) */
   } arm_spline_instance_f32;
 
   /**
    * @brief Processing function for the floating-point cubic spline interpolation.
    * @param[in]  S          points to an instance of the floating-point spline structure.
-   * @param[in]  x          points to the x values of the known data points.
-   * @param[in]  y          points to the y values of the known data points.
    * @param[in]  xq         points to the x values ot the interpolated data points.
    * @param[out] pDst       points to the block of output data.
    * @param[in]  blockSize  number of samples of output data.
    */
   void arm_spline_f32(
-          arm_spline_instance_f32 * S,
-    const float32_t * x,
-    const float32_t * y,
-    const float32_t * xq,
-          float32_t * pDst,
-          uint32_t blockSize);
+        arm_spline_instance_f32 * S, 
+  const float32_t * xq,
+        float32_t * pDst,
+        uint32_t blockSize);
 
   /**
    * @brief Initialization function for the floating-point cubic spline interpolation.
    * @param[in,out] S        points to an instance of the floating-point spline structure.
-   * @param[in]     n        number of known data points.
    * @param[in]     type     type of cubic spline interpolation (boundary conditions)
+   * @param[in]     x        points to the x values of the known data points.
+   * @param[in]     y        points to the y values of the known data points.
+   * @param[in]     n        number of known data points.
+   * @param[in]     coeffs   coefficients array for b, c, and d
+   * @param[in]     tempBuffer   buffer array for internal computations
    */
   void arm_spline_init_f32(
-    arm_spline_instance_f32 * S,
-    uint32_t n,
-    arm_spline_type type,
-    float32_t * buffer);
+          arm_spline_instance_f32 * S,
+          arm_spline_type type,
+    const float32_t * x,
+    const float32_t * y,
+          uint32_t n, 
+          float32_t * coeffs,
+          float32_t * tempBuffer);
 
   /**
    * @brief Instance structure for the floating-point matrix structure.

@@ -313,6 +313,8 @@ group Root {
               Pattern SAMPLES_Q7_ID : Samples5_q7.txt 
 
               Output  OUT_F32_ID : Output
+              Output  COEFS_SPLINE_F32_ID : SplineCoefs
+              Output  TEMP_SPLINE_F32_ID : SplineTemp
 
               Functions {
                 test_weighted_sum_f32 nb=3:test_weighted_sum_f32

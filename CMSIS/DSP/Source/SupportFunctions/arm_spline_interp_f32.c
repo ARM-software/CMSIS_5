@@ -28,19 +28,9 @@
 
 #include "arm_math.h"
 
-/* 
-
-Temporary fix because some arrays are defined on the stack.
-They should be passed as additional arguments to the function.
-
-*/
-#define MAX_DATA_POINTS 40
-
 /**
   @ingroup groupSupport
  */
-
-
 
 /**
   @defgroup SplineInterpolate Cubic Spline Interpolation
@@ -130,13 +120,8 @@ They should be passed as additional arguments to the function.
   - b(i) = [y(i+1)-y(i)]/h(i)-h(i)*[c(i+1)+2*c(i)]/3 
   - d(i) = [c(i+1)-c(i)]/[3*h(i)] 
   Moreover, a(i)=y(i).
-  
-  @par Usage
 
-  The x input array must be strictly sorted in ascending order and it must
-  not contain twice the same value (x(i)<x(i+1)).
- 
-  @par
+ @par Behaviour outside the given intervals
 
   It is possible to compute the interpolated vector for x values outside the 
   input range (xq<x(1); xq>x(n)). The coefficients used to compute the y values for
@@ -149,45 +134,35 @@ They should be passed as additional arguments to the function.
   @addtogroup SplineInterpolate
   @{
  */
+
 /**
  * @brief Processing function for the floating-point cubic spline interpolation.
  * @param[in]  S          points to an instance of the floating-point spline structure.
- * @param[in]  x          points to the x values of the known data points.
- * @param[in]  y          points to the y values of the known data points.
  * @param[in]  xq         points to the x values ot the interpolated data points.
  * @param[out] pDst       points to the block of output data.
  * @param[in]  blockSize  number of samples of output data.
  */
 
-
-
 void arm_spline_f32(
         arm_spline_instance_f32 * S, 
-  const float32_t * x,
-  const float32_t * y,
   const float32_t * xq,
         float32_t * pDst,
         uint32_t blockSize)
 {
+    const float32_t * x = S->x;
+    const float32_t * y = S->y;
     int32_t n = S->n_x;
-    arm_spline_type type = S->type;
 
-    float32_t hi, hm1;
-    float32_t * u = (S->buffer);     /* (n-1)-long buffer for u elements */
-    float32_t * z = (S->buffer)+(n-1);   /* n-long buffer for z elements */
-    float32_t * c = (S->buffer)+(n+n-1); /* n-long buffer for c elements */
-    float32_t Bi, li;
-    float32_t bi, di;
-    float32_t x_sc;
-
-    bi = 0.0f;
-    di = 0.0f;
+    /* Coefficients (a==y for i<=n-1) */
+    float32_t * b = (S->coeffs);
+    float32_t * c = (S->coeffs)+(n-1);
+    float32_t * d = (S->coeffs)+(2*(n-1));    
 
     const float32_t * pXq = xq;
-
     int32_t blkCnt = (int32_t)blockSize;
     int32_t blkCnt2;
-    int32_t i, j;
+    int32_t i;
+    float32_t x_sc;
 
 #ifdef ARM_MATH_NEON
     float32x4_t xiv;
@@ -203,70 +178,16 @@ void arm_spline_f32(
     float32x4_t yv;
 #endif
 
-    /* === Solve LZ=B to obtain z(i) and u(i) === */
-    /* --- Row 1 --- */
-    /* B(0) = 0, not computed */
-    /* u(1,2) = a(1,2)/a(1,1) = a(1,2) */
-    if(type == ARM_SPLINE_NATURAL)
-        u[0] = 0;  // a(1,2) = 0
-    else if(type == ARM_SPLINE_PARABOLIC_RUNOUT)
-        u[0] = -1; // a(1,2) = -1
-
-    z[0] = 0;  // z(1) = B(1)/a(1,1) = 0
-
-    /* --- Rows 2 to N-1 (N=n+1) --- */
-    hm1 = x[1] - x[0]; // x(2)-x(1)
-
-    for (i=1; i<n-1; i++)
-    {
-        /* Compute B(i) */
-        hi = x[i+1]-x[i];
-        Bi = 3*(y[i+1]-y[i])/hi - 3*(y[i]-y[i-1])/hm1;
-        /* l(i) = a(ii)-a(i,i-1)*u(i-1) = 2[h(i-1)+h(i)]-h(i-1)*u(i-1) */
-        li = 2*(hi+hm1) - hm1*u[i-1];
-        /* u(i) = a(i,i+1)/l(i) = h(i)/l(i) */
-        u[i] = hi/li;
-        /* z(i) = [B(i)-h(i-1)*z(i-1)]/l(i) */
-        z[i] = (Bi-hm1*z[i-1])/li;
-        /* Update h(i-1) */
-        hm1 = hi;
-    }
-
-    /* --- Row N --- */
-    /* l(N) = a(N,N)-a(N,N-1)u(N-1) */
-    /* z(N) = [-a(N,N-1)z(N-1)]/l(N) */
-    if(type == ARM_SPLINE_NATURAL)
-    {
-        //li = 1;   // a(N,N)=1; a(N,N-1)=0
-        z[n-1] = 0; // a(N,N-1)=0
-    }
-    else if(type == ARM_SPLINE_PARABOLIC_RUNOUT)
-    {
-        li = 1+u[n-2];      // a(N,N)=1; a(N,N-1)=-1
-        z[n-1] = z[n-2]/li; // a(N,N-1)=-1
-    }
-
-    /* === Solve UX = Z to obtain c(i) === */
-    /* c(N) = z(N) */
-    c[n-1] = z[n-1]; 
-    /* c(i) = z(i)-u(i+1)c(i+1) */
-    for (j = n-1-1; j >= 0; --j) 
-        c[j] = z[j] - u[j] * c[j + 1];
-
-    /* === Compute b(i) and d(i) from c(i) and create output for x(i)<x<x(i+1) === */
+    /* Create output for x(i)<x<x(i+1) */
     for (i=0; i<n-1; i++)
     {
-        hi = x[i+1]-x[i];
-        bi = (y[i+1]-y[i])/hi-hi*(c[i+1]+2*c[i])/3;
-        di = (c[i+1]-c[i])/(3*hi);
-
 #ifdef ARM_MATH_NEON
         xiv = vdupq_n_f32(x[i]);
 
         aiv = vdupq_n_f32(y[i]);
-        biv = vdupq_n_f32(bi);
+        biv = vdupq_n_f32(b[i]);
         civ = vdupq_n_f32(c[i]);
-        div = vdupq_n_f32(di);
+        div = vdupq_n_f32(d[i]);
 
         while( *(pXq+4) <= x[i+1] && blkCnt > 4 )
         {
@@ -300,14 +221,14 @@ void arm_spline_f32(
         {
             x_sc = *pXq++;
 
-            *pDst = y[i]+bi*(x_sc-x[i])+c[i]*(x_sc-x[i])*(x_sc-x[i])+di*(x_sc-x[i])*(x_sc-x[i])*(x_sc-x[i]);
+            *pDst = y[i]+b[i]*(x_sc-x[i])+c[i]*(x_sc-x[i])*(x_sc-x[i])+d[i]*(x_sc-x[i])*(x_sc-x[i])*(x_sc-x[i]);
 
             pDst++;
             blkCnt--;
         }
     }
 
-    /* == Create output for remaining samples (x>=x(n)) == */
+    /* Create output for remaining samples (x>=x(n)) */
 #ifdef ARM_MATH_NEON
     /* Compute 4 outputs at a time */
     blkCnt2 = blkCnt >> 2;
@@ -350,12 +271,11 @@ void arm_spline_f32(
     { 
         x_sc = *pXq++; 
   
-        *pDst = y[i-1]+bi*(x_sc-x[i-1])+c[i]*(x_sc-x[i-1])*(x_sc-x[i-1])+di*(x_sc-x[i-1])*(x_sc-x[i-1])*(x_sc-x[i-1]);
+        *pDst = y[i-1]+b[i-1]*(x_sc-x[i-1])+c[i-1]*(x_sc-x[i-1])*(x_sc-x[i-1])+d[i-1]*(x_sc-x[i-1])*(x_sc-x[i-1])*(x_sc-x[i-1]);
  
         pDst++; 
         blkCnt2--;   
     }   
-                                                       
 }
 
 /**
