@@ -116,14 +116,17 @@ related to TrustZone for Armv8-M.
 
 \section CMSIS_Files_TrustZone CMSIS Files for TrustZone
 
-The CMSIS-Core files are extended by the \ref partition_h_pg which defines the initial system configuration and 
-during \ref SystemInit in Secure state. 
+he CMSIS-Core files are extended by the header files \ref partition_h_pg and \ref partition_gen_h_pg :
 
-\image html "CMSIS_TZ_files.png" "CMSIS with extensions for TrustZone"
+ - The file \ref partition_h_pg "partition_<device>.h" defines the initial system configuration and during SystemInit in Secure state.
+ - The file \ref partition_gen_h_pg "partition_gen.h" is optional and contains SAU region and interrupt target assignments. This file may be generated using CMSIS-Zone.
 
 \note
 Refer to \ref using_pg for a general description of the CMSIS-Core (Cortex-M) files.
 
+\image html "CMSIS_TZ_files.png" "CMSIS with extensions for TrustZone"
+
+&nbsp;
 
 \subsection RTOS_TrustZone RTOS Thread Context Management
 

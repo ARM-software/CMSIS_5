@@ -91,10 +91,20 @@ The \ref templates_pg supplied by Arm have been tested and verified with the fol
 
 \page core_revisionHistory Revision History of CMSIS-Core (Cortex-M)
 
+\todo complete History for V5.x.x
+
 <table class="cmtable" summary="Revision History">
     <tr>
       <th>Version</th>
       <th>Description</th>
+    </tr>
+    <tr>
+      <td>V5.x.x</td>
+      <td>
+\if ARMv8M
+        Modified: TrustZone setup with \ref partition_h_pg and \ref partition_gen_h_pg.
+\endif
+      </td>
     </tr>
     <tr>
       <td>V5.3.0</td>
@@ -202,7 +212,9 @@ The \ref templates_pg supplied by Arm have been tested and verified with the fol
       <td>V5.00<br>Beta 2</td>
       <td>
         Changed: ARMv8M SAU regions to 8. \n
+\if ARMv8M
         Changed: moved function \ref TZ_SAU_Setup to file partition_&lt;device&gt;.h. \n
+\endif
         Changed: license under Apache-2.0. \n
         Added: check if macro is defined before use. \n
         Corrected: function \ref SCB_DisableDCache. \n
@@ -218,7 +230,7 @@ The \ref templates_pg supplied by Arm have been tested and verified with the fol
         Added: function \ref SCB_GetFPUType to all CMSIS cores.\n
         Added: ARMv8-M support.
       </td>
-    </tr>
+    </tr
     <tr>
       <td>V4.30</td>
       <td>
