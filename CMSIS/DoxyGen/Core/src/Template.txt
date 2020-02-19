@@ -165,6 +165,7 @@ The device configuration of the template files is described in detail on the fol
   - \subpage device_h_pg
 \if ARMv8M
   - \subpage partition_h_pg
+  - \subpage partition_gen_h_pg
 \endif  
 */
 
@@ -952,16 +953,30 @@ The \ref system_Device_h_sec which is provided as part of the CMSIS specificatio
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
-\if ARMv8M \page partition_h_pg System Partition Header File partition_<device>.h
+\if ARMv8M
 
-The \ref partition_h_pg contains the initial setup of the TrustZone hardware in an Armv8-M system.
-The function \ref TZ_SAU_Setup is call from \ref SystemInit and uses the settings in this file to 
-initialize the Secure Attribute Unit (SAU) and define non-secure interrupts (register NVIC_INIT_ITNS).
-The following initializations are performed:
+\page partition_h_pg TrustZone setup: partition_<device>.h
 
+The \ref partition_h_pg header file contains the initial setup of the TrustZone hardware in an Armv8-M system.
+
+This file implements the function \ref TZ_SAU_Setup that is call from \ref SystemInit. It uses settings in these files:
+
+ - \ref partition_h_pg "partition_<device>.h" that defines the initial system configuration and during SystemInit in Secure state.
+ - \ref partition_gen_h_pg "partition_gen.h" that contains SAU region and interrupt target assignments. This file may be generated using <a href="../../Zone/html/index.html"><b>CMSIS-Zone</b></a>.
+
+\note
+\ref partition_gen_h_pg "partition_gen.h" is optional and can be generated using <a href="../../Zone/html/index.html"><b>CMSIS-Zone</b></a>.  In previous versions of CMSIS-Core(M) this settings were part of \ref partition_h_pg "partition_<device>.h".
+
+&nbsp;
+
+
+The \ref partition_h_pg "partition_<device>.h" file contains the following configuration settings for:
   - \ref sau_ctrlregister_sec provides settings for the SAU CTRL register.
+  - \ref sau_sleepexception_sec provides device-specific deep-sleep and exception settings.
+  - \ref sau_fpu_sec defines the usage of the Floating Point Unit in secure and non-secure state.
+
+The \ref partition_h_pg "partition_<device>.h" file includes the \ref partition_gen_h_pg "partition_gen.h" file with configuration settings for:
   - \ref sau_regions_sect provides configuration of the SAU Address Regions.
-  - \ref sau_sleepexception_sec provides device-specific deepsleep and exception settings.
   - \ref sau_interrupttarget_sec provides device-specific interrupt target settings.
 
 \section sau_ctrlregister_sec  SAU CTRL register settings
@@ -998,7 +1013,124 @@ The following initializations are performed:
     </tr>
 </table>
 
-\section sau_regions_sect  Configuration of the SAU Address Regions
+
+\section sau_sleepexception_sec  Configuration of Sleep and Exception behaviour
+<table class="cmtable">
+    <tr>
+      <th>\#define</th>
+      <th>Value Range</th>
+      <th>Default</th>
+      <th>Description</th>
+    </tr>
+    <tr>
+      <td>SCB_CSR_AIRCR_INIT</td>
+      <td>0 .. 1</td>
+      <td>1</td>
+      <td>Setup behaviour of Sleep and Exception Handling
+           - 0: not setup of CSR and AIRCR registers; the values below are not relevant
+           - 1: setup of CSR and AIRCR registers with values below</td>
+    </tr>
+    <tr>
+      <td>CSR_INIT_DEEPSLEEPS_VAL</td>
+      <td>0 .. 1</td>
+      <td>1</td>
+      <td>value for SCB_CSR register bit DEEPSLEEPS
+           - 0: Deep Sleep can be enabled by Secure and Non-Secure state
+           - 1: Deep Sleep can be enabled by Secure state only</td>
+    </tr>
+    <tr>
+      <td>AIRCR_INIT_SYSRESETREQS_VAL</td>
+      <td>0 .. 1</td>
+      <td>1</td>
+      <td>value for SCB_AIRCR register bit SYSRESETREQS
+           - 0: System reset request accessible from Secure and Non-Secure state
+           - 1: System reset request accessible from Secure state only</td>
+    </tr>
+    <tr>
+      <td>AIRCR_INIT_PRIS_VAL</td>
+      <td>0 .. 1</td>
+      <td>1</td>
+      <td>value for SCB_AIRCR register bit PRIS
+           - 0: Priority of Non-Secure exceptions is Not altered
+           - 1: Priority of Non-Secure exceptions is Lowered to 0x80-0xFF</td>
+    </tr>
+    <tr>
+      <td>AIRCR_INIT_BFHFNMINS_VAL</td>
+      <td>0 .. 1</td>
+      <td>0</td>
+      <td>value for SCB_AIRCR register bit BFHFNMINS
+           - 0: BusFault, HardFault, and NMI target are Secure state
+           - 1: BusFault, HardFault, and NMI target are Non-Secure state</td>
+    </tr>
+</table>
+
+
+\section sau_fpu_sec  Configuration of Floating Point Unit
+<table class="cmtable">
+    <tr>
+      <th>\#define</th>
+      <th>Value Range</th>
+      <th>Default</th>
+      <th>Description</th>
+    </tr>
+    <tr>
+      <td>TZ_FPU_NS_USAGE</td>
+      <td>0 .. 1</td>
+      <td>1</td>
+      <td>Setup behaviour of Floating Point Unit
+           - 0: not setup of NSACR and FPCCR registers; the values below are not relevant
+           - 1: setup of NSACR and FPCCR registers with values below</td>
+    </tr>
+    <tr>
+      <td>SCB_NSACR_CP10_11_VAL</td>
+      <td>0 or 3</td>
+      <td>3</td>
+      <td>Floating Point Unit usage (Value for SCB->NSACR register bits CP10, CP11)
+           - 0: Secure state only
+           - 3: Secure and Non-Secure state</td>
+    </tr>
+    <tr>
+      <td>FPU_FPCCR_TS_VAL</td>
+      <td>0 .. 1</td>
+      <td>0</td>
+      <td>Treat floating-point registers as Secure (value for FPU->FPCCR register bit TS)
+           - 0: Disable
+           - 1: Enabled</td>
+    </tr>
+    <tr>
+      <td>FPU_FPCCR_CLRONRETS_VAL</td>
+      <td>0 .. 1</td>
+      <td>0</td>
+      <td>Clear on return (CLRONRET) accessibility (Value for FPU->FPCCR register bit CLRONRETS)
+           - 0: Secure and Non-Secure state
+           - 1: Secure state only</td>
+    </tr>
+    <tr>
+      <td>FPU_FPCCR_CLRONRET_VAL</td>
+      <td>0 .. 1</td>
+      <td>1</td>
+      <td>Clear floating-point caller saved registers on exception return (Value for FPU->FPCCR register bit CLRONRET)
+           - 0: Disabled
+           - 1: Enabled</td>
+    </tr>
+</table>
+
+&nbsp;
+
+----
+
+\section partition_gen_h_pg Region/ISR setup: partition_gen.h
+
+The \ref partition_gen_h_pg "partition_gen.h" header file can be generated using <a href="../../Zone/html/index.html"><b>CMSIS-Zone</b></a>.  
+
+The \ref partition_h_pg "partition_<device>.h" file includes the \ref partition_h_pg "partition_gen.h" file with configuration settings for:
+  - \ref sau_regions_sect provides configuration of the SAU Address Regions.
+  - \ref sau_interrupttarget_sec provides device-specific interrupt target settings.
+  
+\note
+In previous versions of CMSIS-Core(M) the above settings were part of \ref partition_h_pg "partition_<device>.h"
+
+\subsection sau_regions_sect  Configuration of the SAU Address Regions
 <table class="cmtable">
     <tr>
       <th>\#define</th>
@@ -1094,49 +1226,7 @@ The following example shows a set of SAU region macros.
 \endcode
 
 
-\section sau_sleepexception_sec  Configuration of Sleep and Exception behaviour
-<table class="cmtable">
-    <tr>
-      <th>\#define</th>
-      <th>Value Range</th>
-      <th>Default</th>
-      <th>Description</th>
-    </tr>
-    <tr>
-      <td>CSR_INIT_DEEPSLEEPS</td>
-      <td>0 .. 1</td>
-      <td>0</td>
-      <td>value for SCB_CSR register bit DEEPSLEEPS
-           - 0: Deep Sleep can be enabled by Secure and Non-Secure state
-           - 1: Deep Sleep can be enabled by Secure state only</td>
-    </tr>
-    <tr>
-      <td>AIRCR_INIT_SYSRESETREQS</td>
-      <td>0 .. 1</td>
-      <td>0</td>
-      <td>value for SCB_AIRCR register bit SYSRESETREQS
-           - 0: System reset request accessible from Secure and Non-Secure state
-           - 1: System reset request accessible from Secure state only</td>
-    </tr>
-    <tr>
-      <td>AIRCR_INIT_PRIS</td>
-      <td>0 .. 1</td>
-      <td>0</td>
-      <td>value for SCB_AIRCR register bit PRIS
-           - 0: Priority of Non-Secure exceptions is Not altered
-           - 1: Priority of Non-Secure exceptions is Lowered to 0x80-0xFF</td>
-    </tr>
-    <tr>
-      <td>AIRCR_INIT_BFHFNMINS</td>
-      <td>0 .. 1</td>
-      <td>0</td>
-      <td>value for SCB_AIRCR register bit BFHFNMINS
-           - 0: BusFault, HardFault, and NMI target are Secure state
-           - 1: BusFault, HardFault, and NMI target are Non-Secure state</td>
-    </tr>
-</table>
-
-\section sau_interrupttarget_sec Configuration of Interrupt Target settings
+\subsection sau_interrupttarget_sec Configuration of Interrupt Target settings
 
 Each interrupt has a configuration bit that defines the execution
 in Secure or Non-secure state. The Non-Secure interrupts have a separate
@@ -1170,7 +1260,7 @@ The following example shows the configuration for a maximum of 64 external inter
 \endcode
 
 \endif
+
 */
 
 
-*/
