@@ -92,6 +92,8 @@ typedef enum IRQn
 #define __ARMv81MML_REV           0x0001U   /* Core revision r0p1 */
 #define __SAUREGION_PRESENT       1U        /* SAU regions present */
 #define __MPU_PRESENT             1U        /* MPU present */
+#define __PMU_PRESENT             1U        /* PMU present */
+#define __PMU_NUM_EVENTCNT        31U       /* Number of PMU event counters */  
 #define __VTOR_PRESENT            1U        /* VTOR present */
 #define __NVIC_PRIO_BITS          3U        /* Number of Bits used for Priority Levels */
 #define __Vendor_SysTickConfig    0U        /* Set to 1 if different SysTick Config is used */
