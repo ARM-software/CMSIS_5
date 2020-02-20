@@ -2,7 +2,7 @@
  * @file     core_armv81mml.h
  * @brief    CMSIS Armv8.1-M Mainline Core Peripheral Access Layer Header File
  * @version  V1.3.1
- * @date     14. February 2020
+ * @date     20. February 2020
  ******************************************************************************/
 /*
  * Copyright (c) 2018-2020 Arm Limited. All rights reserved.
@@ -249,6 +249,20 @@
     #warning "__MPU_PRESENT not defined in device header file; using default!"
   #endif
 
+  #ifndef __PMU_PRESENT
+    #define __PMU_PRESENT             0U
+    #warning "__PMU_PRESENT not defined in device header file; using default!"
+  #endif
+
+  #if __PMU_PRESENT != 0
+    #ifndef __PMU_NUM_EVENTCNT
+      #define __PMU_NUM_EVENTCNT      2U
+      #warning "__PMU_NUM_EVENTCNT not defined in device header file; using default!"
+    #elif (__PMU_NUM_EVENTCNT > 31 || __PMU_NUM_EVENTCNT < 2)
+    #error "__PMU_NUM_EVENTCNT is out of range in device header file!" */
+    #endif
+  #endif
+   
   #ifndef __SAUREGION_PRESENT
     #define __SAUREGION_PRESENT       0U
     #warning "__SAUREGION_PRESENT not defined in device header file; using default!"
@@ -1565,6 +1579,70 @@ typedef struct
 #endif
 
 
+#if defined (__PMU_PRESENT) && (__PMU_PRESENT == 1U)
+/**
+  \ingroup  CMSIS_core_register
+  \defgroup CMSIS_PMU     Performance Monitoring Unit (PMU)
+  \brief    Type definitions for the Performance Monitoring Unit (PMU)
+  @{
+ */
+
+/**
+  \brief  Structure type to access the Performance Monitoring Unit (PMU).
+ */
+typedef struct
+{
+  __IOM uint32_t EVCNTR[__PMU_NUM_EVENTCNT];        /*!< Offset: 0x0 (R/W)    PMU Event Counter Registers */
+#if __PMU_NUM_EVENTCNT<31
+      uint32_t RESERVED0[31U-__PMU_NUM_EVENTCNT];
+#endif
+  __IOM uint32_t CCNTR;                             /*!< Offset: 0x7C (R/W)   PMU Cycle Counter Register */
+        uint32_t RESERVED0[224];
+  __IOM uint32_t EVTYPER[__PMU_NUM_EVENTCNT];       /*!< Offset: 0x400 (R/W)  PMU Event Type and Filter Registers */
+#if __PMU_NUM_EVENTCNT<31
+      uint32_t RESERVED1[31U-__PMU_NUM_EVENTCNT];
+#endif
+  __IOM uint32_t CCFILTR;                           /*!< Offset: 0x47C (R/W)  PMU Cycle Counter Filter Register */
+        uint32_t RESERVED2[480];
+  __IOM uint32_t CNTENSET;                          /*!< Offset: 0xC00 (R/W)  PMU Count Enable Set Register */
+        uint32_t RESERVED3[7];
+  __IOM uint32_t CNTENCLR;                          /*!< Offset: 0xC20 (R/W)  PMU Count Enable Clear Register */
+        uint32_t RESERVED4[7];
+  __IOM uint32_t INTENSET;                          /*!< Offset: 0xC40 (R/W)  PMU Interrupt Enable Set Register */
+        uint32_t RESERVED5[7];
+  __IOM uint32_t INTENCLR;                          /*!< Offset: 0xC60 (R/W)  PMU Interrupt Enable Clear Register */
+        uint32_t RESERVED6[7];
+  __IOM uint32_t OVSCLR;                            /*!< Offset: 0xC80 (R/W)  PMU Overflow Flag Status Clear Register */
+        uint32_t RESERVED7[7];
+  __IOM uint32_t SWINC;                             /*!< Offset: 0xCA0 (R/W)  PMU Software Increment Register */
+        uint32_t RESERVED8[7];
+  __IOM uint32_t OVSSET;                            /*!< Offset: 0xCC0 (R/W)  PMU Overflow Flag Status Set Register */
+        uint32_t RESERVED9[79];
+  __IOM uint32_t TYPE;                              /*!< Offset: 0xE00 (R/W)  PMU Type Register */
+  __IOM uint32_t CTRL;                              /*!< Offset: 0xE04 (R/W)  PMU Control Register */
+        uint32_t RESERVED10[108];
+  __IOM uint32_t AUTHSTATUS;                        /*!< Offset: 0xFB8 (R/W)  PMU Authentication Status Register */
+  __IOM uint32_t DEVARCH;                           /*!< Offset: 0xFBC (R/W)  PMU Device Architecture Register */
+        uint32_t RESERVED11[4];
+  __IOM uint32_t DEVTYPE;                           /*!< Offset: 0xFCC (R/W)  PMU Device Type Register */
+  __IOM uint32_t PIDR4;                             /*!< Offset: 0xFD0 (R/W)  PMU Peripheral Identification Register 4 */
+        uint32_t RESERVED12[3];
+  __IOM uint32_t PIDR0;                             /*!< Offset: 0xFE0 (R/W)  PMU Peripheral Identification Register 0 */
+  __IOM uint32_t PIDR1;                             /*!< Offset: 0xFE0 (R/W)  PMU Peripheral Identification Register 1 */
+  __IOM uint32_t PIDR2;                             /*!< Offset: 0xFE0 (R/W)  PMU Peripheral Identification Register 2 */
+  __IOM uint32_t PIDR3;                             /*!< Offset: 0xFE0 (R/W)  PMU Peripheral Identification Register 3 */
+        uint32_t RESERVED13[3];
+  __IOM uint32_t CIDR0;                             /*!< Offset: 0xFF0 (R/W)  PMU Component Identification Register 0 */
+  __IOM uint32_t CIDR1;                             /*!< Offset: 0xFF4 (R/W)  PMU Component Identification Register 1 */
+  __IOM uint32_t CIDR2;                             /*!< Offset: 0xFF8 (R/W)  PMU Component Identification Register 2 */
+  __IOM uint32_t CIDR3;                             /*!< Offset: 0xFFC (R/W)  PMU Component Identification Register 3 */
+} PMU_Type;
+
+
+/*@} end of group CMSIS_PMU */
+#endif
+   
+   
 #if defined (__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
 /**
   \ingroup  CMSIS_core_register
@@ -2300,7 +2378,12 @@ typedef struct
     #define MPU_BASE          (SCS_BASE +  0x0D90UL)                     /*!< Memory Protection Unit */
     #define MPU               ((MPU_Type       *)     MPU_BASE         ) /*!< Memory Protection Unit */
   #endif
-
+  
+  #if defined (__PMU_PRESENT) && (__PMU_PRESENT == 1U)
+    #define PMU_BASE          (0xE0003000UL)                             /*!< PMU Base Address */
+    #define PMU               ((PMU_Type       *)     PMU_BASE         ) /*!< PMU configuration struct */
+  #endif
+  
   #if defined (__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
     #define SAU_BASE          (SCS_BASE +  0x0DD0UL)                     /*!< Security Attribution Unit */
     #define SAU               ((SAU_Type       *)     SAU_BASE         ) /*!< Security Attribution Unit */
@@ -3003,6 +3086,14 @@ __STATIC_INLINE uint32_t TZ_NVIC_GetPriority_NS(IRQn_Type IRQn)
 #include "mpu_armv8.h"
 
 #endif
+   
+/* ##########################  PMU functions  #################################### */
+
+#if defined (__PMU_PRESENT) && (__PMU_PRESENT == 1U)
+
+#include "pmu_armv8.h"
+
+#endif   
 
 /* ##########################  FPU functions  #################################### */
 /**
