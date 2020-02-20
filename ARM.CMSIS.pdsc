@@ -8,6 +8,15 @@
   <url>http://www.keil.com/pack/</url>
 
   <releases>
+    <release version="5.7.0-dev2">
+      Active development...
+      CMSIS-Core(M):
+        - Cortex-M55 cpu support
+        - Cortex-M55 core header file
+        - PMU header file (place holder)
+      Devices:
+        - ARMCM55 device
+    </release>
     <release version="5.7.0-dev1">
       Active development...
       CMSIS-Core(M): 5.4.0 (see revision history for details)
@@ -591,6 +600,31 @@ class processor based on the Armv8-M mainline architecture with Arm TrustZone se
       </device>
     </family>
 
+    <!-- ******************************  Cortex-M55  ****************************** -->
+    <family Dfamily="ARM Cortex M55" Dvendor="ARM:82">
+      <!--book name="Device/ARM/Documents/Arm Cortex-M55 Processor Datasheet.pdf" title="Arm Cortex-M55 Processor Datasheet"/-->
+      <description>
+The Arm Cortex-M55 processor is a fully synthesizable, mid-range, microcontroller-class processor that implements the Armv8.1-M mainline architecture and includes support for the M-profile Vector Extension (MVE), also known as Arm Helium technology.
+It is Arm's most AI-capable Cortex-M processor, delivering enhanced, energy-efficient digital signal processing (DSP) and machine learning (ML) performance.
+The Cortex-M55 processor achieves high compute performance across scalar and vector operations, while maintaining low energy consumption.
+      </description>
+
+      <!-- debug svd="Device/ARM/SVD/ARMCM55.svd"/ SVD files do not contain any peripheral -->
+      <memory id="IROM1"                                start="0x10000000" size="0x00200000" startup="1" default="1"/>
+      <memory id="IROM2"                                start="0x00000000" size="0x00200000" startup="0" default="0"/>
+      <memory id="IRAM1"                                start="0x30000000" size="0x00020000" init   ="0" default="1"/>
+      <memory id="IRAM2"                                start="0x20000000" size="0x00020000" init   ="0" default="0"/>
+      <!--algorithm name="Device/ARM/Flash/NEW_DEVICE.FLM" start="0x00000000" size="0x00040000"             default="1"/-->
+
+      <device Dname="ARMCM55_DSP_DP_MVE_FP_TZ">
+        <processor Dcore="Cortex-M55" DcoreVersion="r0p0" Dfpu="DP_FPU" Dmpu="MPU" Dmve="FP_MVE" Ddsp="DSP" Dtz="TZ" Dendian="Configurable" Dclock="10000000"/>
+        <description>
+          Double Precision Vector Extensions, DSP Instructions, Double Precision Floating Point Unit, TrustZone
+        </description>
+        <compile header="Device/ARM/ARMCM55/Include/ARMCM55_DSP_DP_MVE_FP_TZ.h" define="ARMCM55_DSP_DP_MVE_FP_TZ"/>
+      </device>
+    </family>
+
     <!-- ******************************  ARMSC000  ****************************** -->
     <family Dfamily="ARM SC000" Dvendor="ARM:82">
       <description>
@@ -979,6 +1013,7 @@ and 8-bit Java bytecodes in Jazelle state.
       <accept Dcore="Cortex-M23"/>
       <accept Dcore="Cortex-M33"/>
       <accept Dcore="Cortex-M35P"/>
+      <accept Dcore="Cortex-M55"/>
     </condition>
     <condition id="ARMv8-M TZ Device">
       <description>Armv8-M architecture based device with TrustZone</description>
@@ -2278,6 +2313,12 @@ and 8-bit Java bytecodes in Jazelle state.
       <require Cclass="CMSIS" Cgroup="CORE"/>
     </condition>
 
+    <condition id="ARMCM55 CMSIS">
+      <description>Generic Arm Cortex-M55 device startup and depends on CMSIS Core</description>
+      <require Dvendor="ARM:82" Dname="ARMCM55*"/>
+      <require Cclass="CMSIS" Cgroup="CORE"/>
+    </condition>
+
     <condition id="ARMSC000 CMSIS">
       <description>Generic Arm SC000 device startup and depends on CMSIS Core</description>
       <require Dvendor="ARM:82" Dname="ARMSC000"/>
@@ -2691,6 +2732,22 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="sourceC"      name="Device/ARM/ARMCM35P/Source/system_ARMCM35P.c"              version="1.0.1" attr="config"/>
         <!-- SAU configuration -->
         <file category="header"       name="Device/ARM/ARMCM35P/Include/Template/partition_ARMCM35P.h" version="1.0.0" attr="config" condition="ARMv8-M TZ Device"/>
+      </files>
+    </component>
+
+    <!-- Cortex-M55 -->
+    <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cversion="2.1.0" condition="ARMCM55 CMSIS">
+      <description>System and Startup for Generic Cortex-M55 device</description>
+      <files>
+        <!-- include folder / device header file -->
+        <file category="include"      name="Device/ARM/ARMCM55/Include/"/>
+        <!-- startup / system file -->
+        <file category="sourceC"      name="Device/ARM/ARMCM55/Source/startup_ARMCM55.c"             version="2.0.2" attr="config"/>
+        <file category="linkerScript" name="Device/ARM/ARMCM55/Source/ARM/ARMCM55_ac6.sct"           version="1.0.0" attr="config" condition="ARMCC6"/>
+        <file category="linkerScript" name="Device/ARM/ARMCM55/Source/GCC/gcc_arm.ld"                version="2.0.0" attr="config" condition="GCC"/>
+        <file category="sourceC"      name="Device/ARM/ARMCM55/Source/system_ARMCM55.c"              version="1.2.0" attr="config"/>
+        <!-- SAU configuration -->
+        <file category="header"       name="Device/ARM/ARMCM55/Include/Template/partition_ARMCM55.h" version="1.0.0" attr="config" condition="ARMv8-M TZ Device"/>
       </files>
     </component>
 
