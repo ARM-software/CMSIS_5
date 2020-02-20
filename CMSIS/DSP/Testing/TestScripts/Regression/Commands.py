@@ -53,8 +53,9 @@ def fullTestFolder(rootFolder):
     return(os.path.join(rootFolder,"CMSIS","DSP","Testing","fulltests"))
 
 class BuildConfig:
-    def __init__(self,toUnset,rootFolder,buildFolder,compiler,toolchain,core,cmake):
+    def __init__(self,toUnset,toSet,rootFolder,buildFolder,compiler,toolchain,core,cmake):
         self._toUnset = toUnset
+        self._toSet = toSet
         self._buildFolder = buildFolder
         self._rootFolder = os.path.abspath(rootFolder)
         self._dspFolder = os.path.join(self._rootFolder,"CMSIS","DSP")
@@ -102,14 +103,30 @@ class BuildConfig:
     def saveEnv(self):
       if self._toUnset is not None:
          for v in self._toUnset:
-            self._savedEnv[v] = os.environ[v]
+            if v in os.environ:
+               self._savedEnv[v] = os.environ[v]
+            else:
+               self._savedEnv[v] = None
             del os.environ[v]
+
+      if self._toSet is not None:
+         for v in self._toSet:
+            for varName in v:
+                if varName in os.environ:
+                   self._savedEnv[varName] = os.environ[varName]
+                else:
+                   self._savedEnv[varName] = None
+                os.environ[varName] = v[varName]
+
 
 
     def restoreEnv(self):
-      if self._toUnset is not None:
-          for v in self._toUnset:
-             os.environ[v] = self._savedEnv[v] 
+          for v in self._savedEnv:
+            if self._savedEnv[v] is not None:
+              os.environ[v] = self._savedEnv[v]
+            else:
+              if v in os.environ:
+                del os.environ[v]
           self._savedEnv = {}
 
     # Build for a folder

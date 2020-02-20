@@ -108,10 +108,17 @@ def buildAndTest(compiler):
                configNb = configNb + 1
                buildStr = "build_%s_%s_%d" % (compiler,core,configNb)
                toUnset = None
+               toSet = None
+
                if compiler in config['UNSET']:
                   if core in config['UNSET'][compiler]:
                      toUnset = config['UNSET'][compiler][core]
-               build = BuildConfig(toUnset,args.r,
+
+               if compiler in config['SET']:
+                  if core in config['SET'][compiler]:
+                     toSet = config['SET'][compiler][core]
+
+               build = BuildConfig(toUnset,toSet,args.r,
                   buildStr,
                   config['COMPILERS'][core][compiler],
                   config['TOOLCHAINS'][compiler],
