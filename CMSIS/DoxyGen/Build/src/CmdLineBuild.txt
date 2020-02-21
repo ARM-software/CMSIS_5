@@ -1,4 +1,4 @@
-/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+﻿/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
 \page CmdLineBuild Command Line Build 
 
@@ -47,7 +47,7 @@ Below is the output that shows a successful build:
 
 \verbatim
 (cbuild.sh): Build Invocation 0.1.0 (C) 2020 ARM
-MyProject.cpdsc validates
+MyProject.cprj validates
 CMSIS Build (cbuildgen) 0.1.1 (Feb 14 2020, 15:03:45)
 Copyright (C) 2020 ARM Ltd and ARM Germany GmbH. All rights reserved.
 M654: URL 'https://www.keil.com/pack/ARM.CMSIS.5.6.0.pack' was added to the list of missing packages.
@@ -484,8 +484,8 @@ M652: Generated makefile for project build:'Simulation.mak'
 </tr>
 <tr><td>M201</td> <td>ERROR</td> <td>Too many arguments!</td>
   <td>There is more arguments passed than allowed. See usage and correct the command line.</td>
-<tr><td>M202</td> <td>ERROR</td> <td>No CPDSC input file was specified</td>
-  <td>A *.cpdsc file is not provided as an argument. </td>
+<tr><td>M202</td> <td>ERROR</td> <td>No CPRJ input file was specified</td>
+  <td>A *.cprj file is not provided as an argument. </td>
 </tr>
 <tr><td>M203</td> <td>ERROR</td> <td>Error reading file(s) ...!</td>
   <td>The listed file could not be read. Check file content.</td>
@@ -952,20 +952,20 @@ Some MDK features are not converted as not all build features of µVision are av
 \verbatim
 $ cbuild_uv.sh FTP_Server.uvprojx
 (cbuild_uv.sh): Build MDK Project 0.1.0 (C) 2020 ARM
-uVision has created CPDSC files for the following targets:
-Debug.cpdsc
-Release.cpdsc
+uVision has created CPRJ files for the following targets:
+Debug.cprj
+Release.cprj
  --------------------------------------------------------------------
- calling cbuild.sh for Debug.cpdsc
+ calling cbuild.sh for Debug.cprj
  --------------------------------------------------------------------
  ...
  --------------------------------------------------------------------
- calling cbuild.sh for Release.cpdsc
+ calling cbuild.sh for Release.cprj
  --------------------------------------------------------------------
  ...
 builds completed for:
-Debug.cpdsc
-Release.cpdsc
+Debug.cprj
+Release.cprj
 total: 2 failed: 0
 \endverbatim
 */
