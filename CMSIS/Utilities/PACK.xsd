@@ -235,7 +235,7 @@
   <!-- Component Class Name Type: specify your own Class in taxonomy -->
   <xs:simpleType name="CclassType">
     <xs:restriction base="xs:string">
-      <xs:minLength value="3" />
+      <xs:minLength value="2" />
       <xs:maxLength value="32" />
       <xs:pattern value="\S(.*\S)?"></xs:pattern>
     </xs:restriction>
@@ -244,7 +244,7 @@
   <!-- Component Group Name Type (no leading or trailing spaces allowed) -->
   <xs:simpleType name="CgroupType">
     <xs:restriction base="xs:string">
-      <xs:minLength value="3" />
+      <xs:minLength value="2" />
       <xs:maxLength value="32" />
       <xs:pattern value="\S(.*\S)?"></xs:pattern>
     </xs:restriction>
@@ -262,7 +262,7 @@
   <!-- Component Variant Name Type -->
   <xs:simpleType name="CvariantType">
     <xs:restriction base="xs:string">
-      <xs:minLength value="3" />
+      <xs:minLength value="2" />
       <xs:maxLength value="32" />
       <xs:pattern value="\S(.*\S)?"></xs:pattern>
     </xs:restriction>
