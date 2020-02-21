@@ -14,10 +14,10 @@ var arr = [];
 
 // fill array
  arr.push( new tabElement( "GEN",     "/General/html/",     "General")   );
- arr.push( new tabElement( "CORE_A",  "/Core_A/html/",      "CMSIS-Core(A)")    );
- arr.push( new tabElement( "CORE_M",  "/Core/html/",        "CMSIS-Core(M)")    );
+ arr.push( new tabElement( "CORE_A",  "/Core_A/html/",      "Core(A)")   );
+ arr.push( new tabElement( "CORE_M",  "/Core/html/",        "Core(M)")   );
  arr.push( new tabElement( "DRV",     "/Driver/html/",      "Driver")    );
- arr.push( new tabElement( "DSP&ML",  "/DSP/html/",         "DSP&ML")    );
+ arr.push( new tabElement( "DSP&ML",  "/DSP/html/",         "DSP")       );
  arr.push( new tabElement( "NN",      "/NN/html/",          "NN")        );
  arr.push( new tabElement( "RTOSv1",  "/RTOS/html/",        "RTOS v1")   );
  arr.push( new tabElement( "RTOSv2",  "/RTOS2/html/",       "RTOS v2")   );
