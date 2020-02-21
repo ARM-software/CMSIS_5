@@ -565,7 +565,21 @@ Note: The compiler referenced by the above command line flags is required to be 
         Use predefined values from the table \ref DmpuEnum "Device MPU".</td>
     <td>DmpuEnum</td>
     <td>optional</td>
-  </tr>  
+  </tr>
+  <tr>
+    <td>Dsecure</td>
+	<td>Selects the software model for code generation on arm TrustZone-M enabled devices.
+	    Use predefined values from the table \ref DsecureEnum "Dsecure"</td>
+ 	<td>DsecureEnum</td>
+	<td>optional</td> 
+  </tr>
+  <tr>
+    <td>Dmve</td>
+	<td>Selects the code generation to utilize the Corex-M Vector Extensions (MVE) on devices with this features
+	    Use predefined values from the table \ref DmveEnum "Dmve"</td>
+	<td>DmveEnum</td>
+	<td>optional</td>
+  </tr>
   <tr>
     <th>Child Elements</th>
     <th>Description</th>
@@ -618,7 +632,7 @@ Note: The compiler referenced by the above command line flags is required to be 
 
 \delim
 
-\section element_output /package/create/project/target/output
+\section element_output /cprj/target/output
 
 Specify the build output directories, output file and type (executable vs. library).
 
@@ -1830,7 +1844,6 @@ Restricted string type excludes the use of special characters including spaces i
 \delim
 
 \anchor DfpuEnum <b>Table: Device FPU</b>
-
 The table lists values that indicate whether a CPU has an Floating Point Unit (FPU).
 The tokens can be used in the elements:
 - \ref element_target
@@ -1904,6 +1917,64 @@ The values can be used in the elements:
     <td>The byte ordering of multi-byte accesses is configurable.</td>
   </tr>
 </table>
+
+<p>&nbsp;</p>
+<hr>
+
+
+\anchor DsecureEnum <b>Table: Security Model</b>
+The table lists values that indicate whether an application is running in secure or non-scure mode, or whether trust-zone got disabled.
+The tokens can be used in the elements:
+- \ref element_target
+
+<table class="cmtable" summary="Enumeration: DsecureEnum">
+  <tr>
+    <th>Dsecure=</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td class="XML-Token">TZ-disabled</td>
+    <td>The application/library built is executed by a processor which has TrustZone disabled.</td>
+  </tr>
+  <tr>
+    <td class="XML-Token">Secure</td>
+    <td>The application/library built is executed in 'secure mode'</td>
+  </tr>
+  <tr>
+    <td class="XML-Token">Non-Secure</td>
+    <td>The application/library built is executed in 'non-secure mode'</td>
+  </tr>
+</table>
+
+<p>&nbsp;</p>
+<hr>
+
+\anchor DmveEnum <b>Table: Cortex-M Vector Extensions</b>
+The table lists predefined values that selects which instruction set from the Cortex-M Vector Extensions (MVE) are used during code generation.
+The tokens can be used in the elements:
+- \ref element_target
+
+<table class="cmtable" summary="Enumeration: DmveEnum">
+  <tr>
+    <th>Dmve=</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td class="XML-Token">NO_MVE</td>
+    <td>The application/library built is not using MVE instructions.</td>
+  </tr>
+  <tr>
+    <td class="XML-Token">MVE</td>
+    <td>The application/library built is using MVE integer instructions.</td>
+  </tr>
+  <tr>
+    <td class="XML-Token">FP_MVE</td>
+    <td>The application/library built is using MVE integer and floating point instructions.</td>
+  </tr>
+</table>
+
+<p>&nbsp;</p>
+<hr>
 
 \anchor FileCategoryEnum <b>Table: File Categories</b>
 
@@ -2000,17 +2071,23 @@ Represents a C/C++ compiler toolchain. The tokens can be used in the elements:
   <tr>
     <td class="XML-Token">GCC</td>
     <td>GNU Tools for Arm Embedded Processors. 
-    Refer to <a href="https://launchpad.net/gcc-arm-embedded/4.7" target="_blank">Arm GCC</a>.</td>
+    Refer to <a href="https://developer.arm.com/tools-and-software/open-source-software/developer-tools/gnu-toolchain/gnu-rm" target="_blank">Arm GCC</a>.</td>
   </tr>
   <tr>
     <td class="XML-Token">G++</td>
     <td>Code Sourcery GCC compiler for C and C++ (is now Mentor Graphics CodeBench).</td>
   </tr>
   <tr>
-    <td class="XML-Token">ARMCC</td>
-    <td>Arm Compiler for C and C++. 
-    Refer to <a href="http://infocenter.arm.com/help/topic/com.arm.doc.subset.swdev.coretools/index.html" target="_blank">
-    Arm Compiler</a>.</td>
+    <td class="XML-Token">AC5</td>
+    <td>Arm Compiler for C and C++ Major Version 5. 
+    Refer to <a href="https://developer.arm.com/tools-and-software/embedded/arm-compiler/documentation/version-5" target="_blank">
+    Arm Compiler</a>. Due to incompatible command line syntax version 5 and 6 are listed as separate compilers.</td>
+  </tr>
+  <tr>
+    <td class="XML-Token">AC6</td>
+    <td>Arm Compiler for C and C++ Major Version 6. 
+    Refer to <a href="https://developer.arm.com/tools-and-software/embedded/arm-compiler/documentation" target="_blank">
+    Arm Compiler</a>. Note: Due to incompatible command line syntax version 5 and 6 are listed as separate compilers.</td>
   </tr>
   <tr>
     <td class="XML-Token">IAR</td>
