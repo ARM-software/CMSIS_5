@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2019 Arm Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2010-2020 Arm Limited or its affiliates. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -19,10 +19,10 @@
 /* ----------------------------------------------------------------------
  * Project:      CMSIS NN Library
  * Title:        arm_convolve_s8.c
- * Description:	 s8 version of convolution using symmetric quantization.
+ * Description:  s8 version of convolution using symmetric quantization.
  *
- * $Date:        July 2019
- * $Revision:    V.0.0.1
+ * $Date:        February 27, 2020
+ * $Revision:    V.0.0.2
  *
  * Target Processor:  Cortex-M cores
  *
@@ -78,7 +78,7 @@ arm_status arm_convolve_s8(const q7_t *input,
     {
         input += i_batch * (input_x * input_y * input_ch);
         output += i_batch * (output_x * output_y * output_ch);
-#if defined(ARM_MATH_LOOPUNROLL) && defined(ARM_MATH_DSP)
+#if defined(ARM_MATH_DSP)
         int16_t i_out_y, i_out_x, i_ker_y, i_ker_x;
 
         /* Generate two columns from the input tensor a GEMM computation */
@@ -235,7 +235,7 @@ int32_t arm_convolve_s8_get_buffer_size(const uint16_t input_ch,
                                         const uint16_t kernel_x,
                                         const uint16_t kernel_y)
 {
-#if defined(ARM_MATH_LOOPUNROLL) && defined(ARM_MATH_DSP)
+#if defined(ARM_MATH_DSP)
     return (2 * input_ch * kernel_x * kernel_y) * sizeof(int16_t);
 #else
     (void)input_ch;

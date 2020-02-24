@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2018 Arm Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2010-2020 Arm Limited or its affiliates. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -21,8 +21,8 @@
  * Title:        arm_q7_to_q15_no_shift.c
  * Description:  Converts the elements of the Q7 vector to Q15 vector without left-shift
  *
- * $Date:        17. January 2018
- * $Revision:    V.1.0.0
+ * $Date:        February 27, 2020
+ * $Revision:    V.1.0.1
  *
  * Target Processor:  Cortex-M cores
  *
@@ -60,7 +60,7 @@ void arm_q7_to_q15_no_shift(const q7_t * pSrc, q15_t * pDst, uint32_t blockSize)
     const q7_t *pIn = pSrc;
     uint32_t  blkCnt;
 
-#if defined(ARM_MATH_LOOPUNROLL) && defined(ARM_MATH_DSP)
+#if defined(ARM_MATH_DSP)
     q31_t     in;
     q31_t     in1, in2;
     q31_t     out1, out2;

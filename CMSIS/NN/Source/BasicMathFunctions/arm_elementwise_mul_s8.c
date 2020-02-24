@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2019 Arm Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2010-2020 Arm Limited or its affiliates. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -21,8 +21,8 @@
  * Title:        arm_elementwise_mul_s8
  * Description:  Element wise multiplication
  *
- * $Date:        December 16 2019
- * $Revision:    V.1.0.1
+ * $Date:        February 27, 2020
+ * $Revision:    V.1.0.2
  *
  * Target Processor:  Cortex-M cores
  *
@@ -99,7 +99,7 @@ arm_elementwise_mul_s8(const int8_t *input_1_vect,
   int32_t input_2;
   int32_t mul_res;
 
-#if defined(ARM_MATH_LOOPUNROLL) && defined(ARM_MATH_DSP)
+#if defined(ARM_MATH_DSP)
   int32_t a_1, b_1, a_2, b_2;
 
   int32_t offset_1_packed, offset_2_packed;

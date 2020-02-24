@@ -21,8 +21,8 @@
  * Title:        arm_nn_mat_mult_kernel_s8_s16_reordered.c
  * Description:  Matrix-multiplication function for convolution with reordered columns
  *
- * $Date:        January 20, 2020
- * $Revision:    V.1.0.1
+ * $Date:        February 27, 2020
+ * $Revision:    V.1.0.2
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -52,7 +52,7 @@ q7_t *arm_nn_mat_mult_kernel_s8_s16_reordered(const q7_t *input_a,
                                               const int32_t *const output_bias,
                                               q7_t *out_0)
 {
-#if defined(ARM_MATH_LOOPUNROLL) && defined(ARM_MATH_DSP)
+#if defined(ARM_MATH_DSP)
     /* set up the second output pointers */
     q7_t *out_1 = out_0 + output_ch;
     const int32_t *bias = output_bias;

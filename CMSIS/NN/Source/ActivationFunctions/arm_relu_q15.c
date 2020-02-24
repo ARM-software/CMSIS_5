@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2019 Arm Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2010-2020 Arm Limited or its affiliates. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -21,8 +21,8 @@
  * Title:        arm_relu_q15.c
  * Description:  Q15 version of ReLU
  *
- * $Date:        August 2019
- * $Revision:    V.1.0.0
+ * $Date:        February 27, 2020
+ * $Revision:    V.1.0.1
  *
  * Target Processor:  Cortex-M cores
  *
@@ -54,7 +54,7 @@
 void arm_relu_q15(q15_t *data, uint16_t size)
 {
 
-#if defined(ARM_MATH_LOOPUNROLL) && defined(ARM_MATH_DSP)
+#if defined(ARM_MATH_DSP)
     /* Run the following code for M cores with DSP extension */
 
     uint16_t i = size >> 1;

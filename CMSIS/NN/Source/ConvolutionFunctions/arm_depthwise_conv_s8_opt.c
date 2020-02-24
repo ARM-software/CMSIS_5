@@ -22,8 +22,8 @@
  * Description:  Optimized s8 depthwise separable convolution function for
  *               channel multiplier of 1.
  *
- * $Date:        January 21, 2020
- * $Revision:    V.1.0.0
+ * $Date:        February 27, 2020
+ * $Revision:    V.1.0.1
  *
  * Target Processor:  Cortex-M cores
  *
@@ -179,7 +179,7 @@ arm_status arm_depthwise_conv_s8_opt(const q7_t *input,
         }
     }
 
-#elif defined(ARM_MATH_LOOPUNROLL) && defined(ARM_MATH_DSP)
+#elif defined(ARM_MATH_DSP)
     /* Run the following code in cores using DSP extension */
     (void)dilation_x;
     (void)dilation_y;
@@ -391,7 +391,7 @@ arm_status arm_depthwise_conv_s8_opt(const q7_t *input,
                                  dilation_x,
                                  dilation_y,
                                  NULL);
-#endif /* ARM_MATH_MVEI | (ARM_MATH_DSP & ARM_MATH_LOOPUNROLL) */
+#endif /* ARM_MATH_MVEI | ARM_MATH_DSP */
 
     /* Return to application */
     return ARM_MATH_SUCCESS;
@@ -403,7 +403,7 @@ int32_t arm_depthwise_conv_s8_opt_get_buffer_size(const uint16_t input_ch,
 {
 #if defined(ARM_MATH_MVEI)
     return (2 * input_ch * kernel_x * kernel_y) * sizeof(int16_t);
-#elif defined(ARM_MATH_LOOPUNROLL) && defined (ARM_MATH_DSP)
+#elif defined (ARM_MATH_DSP)
     return (input_ch * kernel_x * kernel_y) * sizeof(int16_t);
 #else
     (void)input_ch;

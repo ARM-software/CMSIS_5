@@ -21,8 +21,8 @@
  * Title:        arm_nnfunctions.h
  * Description:  Public header file for CMSIS NN Library
  *
- * $Date:        February 26, 2020
- * $Revision:    V.1.0.3
+ * $Date:        February 27, 2020
+ * $Revision:    V.1.0.4
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -173,7 +173,7 @@ extern    "C"
    * @param[in]       output_x    output tensor width
    * @param[in]       output_y    output tensor height
    * @param[in]       buffer_a    pointer to buffer space used for input optimization(partial im2col) and is necessary
-   *                              when both ARM_MATH_LOOPUNROLL and ARM_MATH_DSP are defined.
+   *                              when ARM_MATH_DSP is defined.
    *                              Required space: (2 * input_ch * kernel_x * kernel_y) * sizeof(q15_t) bytes
    *                              Use arm_convolve_s8_get_buffer_size() to get the size.
    * @return     The function returns <code>ARM_MATH_SUCCESS</code>
@@ -569,7 +569,7 @@ extern    "C"
    * @param[in]      out_activation_max   Minimum value to clamp the output to. Range: int8
    * @param[in]      output_x             output tensor width
    * @param[in]      buffer_a             pointer to buffer space used for input optimization and is necessary
-   *                                      when both ARM_MATH_LOOPUNROLL and ARM_MATH_DSP are defined , but not ARM_MATH_MVEI.
+   *                                      when ARM_MATH_DSP is defined but not ARM_MATH_MVEI.
    *                                      Required space: 2 * input_ch * sizeof(q15_t) bytes
    *                                      Use arm_convolve_1_x_n_s8_get_buffer_size() to get the size
    * @return     The function returns either
@@ -1006,8 +1006,8 @@ extern    "C"
    * @param[in]       output_activation_max   Minimum value to clamp the output to. Range: int8
    * @param[in]       dilation_x   dilation along x. Not used. Dilation factor of 1 is used.
    * @param[in]       dilation_y   dilation along y. Not used. Dilation factor of 1 is used.
-   * @param[in]       buffer_a     Buffer for partial im2col optimization. This is mandatory when ARM_MATH_LOOPUNROLL and
-   *                               ARM_MATH_DSP are defined.
+   * @param[in]       buffer_a     Buffer for partial im2col optimization. This is mandatory when
+   *                               ARM_MATH_DSP is defined.
    *                               Required space: (2 * input_ch * kernel_x * kernel_y) * sizeof(q15_t) bytes
    *                               Use arm_depthwise_conv_s8_opt_get_buffer_size() to get the size.
    *
@@ -1118,7 +1118,7 @@ int32_t arm_depthwise_conv_s8_opt_get_buffer_size(const uint16_t input_ch,
    * @param[in]       output_activation_min        for clamping
    * @param[in]       output_activation_max        for clamping
    * @param[in]       vec_buffer                   pointer to buffer space used for optimization and is necessary
-   *                                               when both ARM_MATH_LOOPUNROLL and ARM_MATH_DSP are defined but not
+   *                                               when ARM_MATH_DSP is defined but not
    *                                               ARM_MATH_MVEI.
    *                                               Required space: col_dim * sizeof(q15_t) bytes
    *                                               Use arm_fully_connected_s8_get_buffer_size() to get the size.
@@ -1630,8 +1630,8 @@ extern    "C"
    * @param[in]       act_max            Max clamping
    * @param[in]       ch_src             number of input tensor channels
    * @param[in,out]   src                pointer to input tensor
-   * @param[in]       bufferA            temporary buffer used for optimization and is necessary  when both
-   *                                     ARM_MATH_LOOPUNROLL and ARM_MATH_DSP are defined.
+   * @param[in]       bufferA            temporary buffer used for optimization and is necessary when
+   *                                     ARM_MATH_DSP is defined.
    *                                     Required space: (ch_src * dim_dst_width) * sizeof(q15_t) bytes
    *                                     Use arm_avgpool_s8_get_buffer_size() to get the size
    * @param[in,out]   dst                pointer to output tensor
