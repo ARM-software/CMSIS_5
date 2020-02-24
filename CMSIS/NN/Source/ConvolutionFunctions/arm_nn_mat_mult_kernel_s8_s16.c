@@ -21,8 +21,8 @@
  * Title:        arm_nn_mat_mult_kernel_s8_s16.c
  * Description:  Matrix-multiplication function for convolution
  *
- * $Date:        January 26 2020
- * $Revision:    V.1.0.0
+ * $Date:        February 27, 2020
+ * $Revision:    V.1.0.1
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -216,7 +216,7 @@ q7_t *arm_nn_mat_mult_kernel_s8_s16(const q7_t *input_a,
 
     return out_1;
 
-#elif defined(ARM_MATH_LOOPUNROLL) && defined(ARM_MATH_DSP)
+#elif defined(ARM_MATH_DSP)
     /* set up the second output pointers */
     q7_t *out_1 = out_0 + output_ch;
     const int32_t *bias = output_bias;

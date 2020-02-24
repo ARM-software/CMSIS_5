@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2019 Arm Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2010-2020 Arm Limited or its affiliates. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -21,8 +21,8 @@
  * Title:        arm_avgpool_s8.c
  * Description:  Pooling function implementations
  *
- * $Date:        29. July 2019
- * $Revision:    V.1.0.0
+ * $Date:        February 27, 2020
+ * $Revision:    V.1.0.1
  *
  * Target Processor:  Cortex-M and Cortex-A cores
  *
@@ -32,7 +32,7 @@
 #include "arm_nnfunctions.h"
 
 
-#if defined(ARM_MATH_LOOPUNROLL) && defined (ARM_MATH_DSP) && !defined (ARM_MATH_MVEI)
+#if defined (ARM_MATH_DSP) && !defined (ARM_MATH_MVEI)
 
 static void buffer_scale_back_q15_to_q7(q15_t * buffer, q7_t * target, uint16_t length, uint16_t scale)
 {
@@ -260,7 +260,7 @@ arm_status arm_avgpool_s8(const int dim_src_height,
                           int8_t *dst)
 {
 
-#if defined(ARM_MATH_LOOPUNROLL) && defined (ARM_MATH_DSP)
+#if defined (ARM_MATH_DSP)
 
     /* Run the following code for Cortex-M4 and Cortex-M7 */
 
@@ -393,7 +393,7 @@ arm_status arm_avgpool_s8(const int dim_src_height,
 int32_t arm_avgpool_s8_get_buffer_size(const int dim_dst_width,
                                        const int ch_src)
 {
-#if defined(ARM_MATH_LOOPUNROLL) && defined(ARM_MATH_DSP) && !defined(ARM_MATH_MVEI)
+#if defined(ARM_MATH_DSP) && !defined(ARM_MATH_MVEI)
     return (ch_src * dim_dst_width) * sizeof(int16_t);
 #else
     (void)dim_dst_width;

@@ -21,8 +21,8 @@
  * Title:        arm_convolve_1_x_n_s8.c
  * Description:  s8 version of 1xN convolution using symmetric quantization.
  *
- * $Date:        January 20 2020
- * $Revision:    V.1.0.0
+ * $Date:        February 27, 2020
+ * $Revision:    V.1.0.1
  *
  * Target Processor:  Cortex-M cores
  *
@@ -178,7 +178,7 @@ int32_t arm_convolve_1_x_n_s8_get_buffer_size(const uint16_t input_ch,
                                               const uint16_t kernel_x,
                                               const uint16_t kernel_y)
 {
-#if defined(ARM_MATH_LOOPUNROLL) && defined(ARM_MATH_DSP) && !defined(ARM_MATH_MVEI)
+#if defined(ARM_MATH_DSP) && !defined(ARM_MATH_MVEI)
     return (2 * input_ch * kernel_x * kernel_y) * sizeof(int16_t);
 #else
     (void)input_ch;

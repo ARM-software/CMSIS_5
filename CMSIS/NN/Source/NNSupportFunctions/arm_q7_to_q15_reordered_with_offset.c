@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2019 Arm Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2010-2020 Arm Limited or its affiliates. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -22,8 +22,8 @@
  * Description:  Converts the elements of the Q7 vector to a reordered Q15 vector with an added offset. The re-ordering
  *               is a signature of sign extension intrinsic(DSP extension).
  *
- * $Date:        18 December 2019
- * $Revision:    V.2.0.0
+ * $Date:        February 27, 2020
+ * $Revision:    V.2.0.1
  *
  * Target Processor:  Cortex-M cores
  *
@@ -50,7 +50,7 @@
 void arm_q7_to_q15_reordered_with_offset(const q7_t *src, q15_t *dst, uint32_t block_size, q15_t offset)
 {
 
-#if defined(ARM_MATH_LOOPUNROLL) && defined(ARM_MATH_DSP)
+#if defined(ARM_MATH_DSP)
     uint32_t block_cnt;
     /* Run the below code for cores that support SIMD instructions  */
     q31_t in_q7x4;

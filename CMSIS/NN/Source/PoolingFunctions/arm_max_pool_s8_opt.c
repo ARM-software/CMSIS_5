@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2019 Arm Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2010-2020 Arm Limited or its affiliates. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0dim_dst_width
  *
@@ -21,8 +21,8 @@
  * Title:        arm_max_pool_s8_opt.c
  * Description:  Pooling function implementations
  *
- * $Date:        25 November 2019
- * $Revision:    V.1.0.0
+ * $Date:        February 27, 2020
+ * $Revision:    V.1.0.1
  *
  * Target Processor:  Cortex-M
  *
@@ -31,7 +31,7 @@
 #include "arm_math.h"
 #include "arm_nnfunctions.h"
 
-#if defined(ARM_MATH_LOOPUNROLL) && defined(ARM_MATH_DSP)
+#if defined(ARM_MATH_DSP)
 
 static void compare_and_replace_if_larger_q7(q7_t *base,
                                              const q7_t *target,
@@ -220,7 +220,7 @@ arm_status arm_max_pool_s8_opt(const uint16_t input_y,
                                int8_t *dst)
 {
 
-#if defined(ARM_MATH_LOOPUNROLL) && defined(ARM_MATH_DSP)
+#if defined(ARM_MATH_DSP)
 
     /* Run the following code for Cortex-M4 and Cortex-M7 */
     (void)tmp_buffer;
