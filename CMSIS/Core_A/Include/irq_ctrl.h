@@ -78,6 +78,12 @@ typedef int32_t IRQn_ID_t;
 #define IRQ_MODE_CPU_6              (0x40UL << IRQ_MODE_CPU_Pos)      ///< CPU: interrupt targets CPU 6
 #define IRQ_MODE_CPU_7              (0x80UL << IRQ_MODE_CPU_Pos)      ///< CPU: interrupt targets CPU 7
 
+// Encoding in some early GIC implementations
+#define IRQ_MODE_MODEL_Pos          (13U)
+#define IRQ_MODE_MODEL_Msk          (0x1UL << IRQ_MODE_MODEL_Pos)
+#define IRQ_MODE_MODEL_NN			(0x0UL << IRQ_MODE_MODEL_Pos)	  ///< Corresponding interrupt is handled using the N-N model.
+#define IRQ_MODE_MODEL_1N			(0x1UL << IRQ_MODE_MODEL_Pos)	  ///< Corresponding interrupt is handled using the 1-N model.
+
 #define IRQ_MODE_ERROR              (0x80000000UL)                    ///< Bit indicating mode value error
 
 /* Interrupt priority bit-masks */
