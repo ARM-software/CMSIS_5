@@ -136,6 +136,8 @@ typedef struct _ARM_USBD_STATE {
 /**
   \fn          int32_t ARM_USBD_DeviceSetAddress (uint8_t dev_addr)
   \brief       Set USB Device Address.
+  \detail      This function is called after status stage of Set Address request 
+               (after IN packet in status stage was sent with old address).
   \param[in]   dev_addr  Device Address
   \return      \ref execution_status
 */
