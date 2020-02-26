@@ -104,7 +104,7 @@ Provides the typedef for the callback function \ref ARM_SPI_SignalEvent.
 \brief Negative values indicate errors (SPI has specific codes in addition to common \ref execution_status). 
 \details 
 The SPI driver has additional status error codes that are listed below.
-Note that the SPI driver also returns the comon \ref execution_status. 
+Note that the SPI driver also returns the common \ref execution_status. 
   
 @{
 \def ARM_SPI_ERROR_MODE
@@ -469,7 +469,7 @@ The parameter \em arg provides (depending on the parameter \em control) addition
 		The line gets activated or deactivated automatically by the hardware for transfers and is not controlled by the Miscellaneous Control \ref ARM_SPI_CONTROL_SS.
 		When exactly the line is activated or deactivated is hardware dependent. Typically, the hardware will activate the line before starting the transfer 
 		and deactivate it after the transfer completes. Some hardware will leave the line activated until the SPI stays master. 
-		\note Some devices require that the SS signal is strictly defined regarding transfers. Refer to the documentaiton of your device.
+		\note Some devices require that the SS signal is strictly defined regarding transfers. Refer to the documentation of your device.
     </td></tr>
 <tr>
     <td>\ref ARM_SPI_SS_MASTER_HW_INPUT</td>
@@ -495,7 +495,7 @@ The parameter \em arg provides (depending on the parameter \em control) addition
     <td>Set the bus speed; \em arg= Bus Speed in \token{bps}
     </td></tr>
 <tr><td> \ref ARM_SPI_GET_BUS_SPEED         </td>
-    <td> Get the bus speed; Retrun values >= \token{0} reperesent the bus speed in \token{bps}. Negative values are \ref spi_execution_status.
+    <td> Get the bus speed; Return values >= \token{0} represent the bus speed in \token{bps}. Negative values are \ref spi_execution_status.
     </td></tr>
 <tr><td> \ref ARM_SPI_SET_DEFAULT_TX_VALUE  </td>
     <td> Set the default transmission value; the parameter \em arg sets the value

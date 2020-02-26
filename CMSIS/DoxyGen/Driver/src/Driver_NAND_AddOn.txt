@@ -1,5 +1,5 @@
 /*
-Purpose:    The text might be of interrest in another place.
+Purpose:    The text might be of interest in another place.
             We have to decide whether we want to use it.
             
             Until a decision is made, do not delete the file.
