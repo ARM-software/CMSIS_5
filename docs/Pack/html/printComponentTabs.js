@@ -14,14 +14,15 @@ var arr = [];
 
 // fill array
  arr.push( new tabElement( "GEN",     "/General/html/",     "General")   );
- arr.push( new tabElement( "CORE_A",  "/Core_A/html/",      "CMSIS-Core(A)")    );
- arr.push( new tabElement( "CORE_M",  "/Core/html/",        "CMSIS-Core(M)")    );
+ arr.push( new tabElement( "CORE_A",  "/Core_A/html/",      "Core(A)")   );
+ arr.push( new tabElement( "CORE_M",  "/Core/html/",        "Core(M)")   );
  arr.push( new tabElement( "DRV",     "/Driver/html/",      "Driver")    );
- arr.push( new tabElement( "DSP",     "/DSP/html/",         "DSP")       );
- arr.push( new tabElement( "NN",      "/NN/html/",          "NN")       );
+ arr.push( new tabElement( "DSP&ML",  "/DSP/html/",         "DSP")       );
+ arr.push( new tabElement( "NN",      "/NN/html/",          "NN")        );
  arr.push( new tabElement( "RTOSv1",  "/RTOS/html/",        "RTOS v1")   );
  arr.push( new tabElement( "RTOSv2",  "/RTOS2/html/",       "RTOS v2")   );
  arr.push( new tabElement( "PACK",    "/Pack/html/",        "Pack")      );
+ arr.push( new tabElement( "Build",   "/Build/html/",       "Build")     );
  arr.push( new tabElement( "SVD",     "/SVD/html/",         "SVD")       );
  arr.push( new tabElement( "DAP",     "/DAP/html/",         "DAP")       );
  arr.push( new tabElement( "ZONE",    "/Zone/html/",        "Zone")      );
