@@ -21,8 +21,8 @@
  * Title:        arm_nnsupportfunctions.h
  * Description:  Public header file of support functions for CMSIS NN Library
  *
- * $Date:        7 February 2020
- * $Revision:    V.3.0.0
+ * $Date:        March 1, 2020
+ * $Revision:    V.4.0.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -203,7 +203,7 @@ q7_t *arm_nn_depthwise_conv_s8_core(const q7_t *row,
  * @param[in]       input_row    pointer to row operand
  * @param[in]       input_col    pointer to col operand
  * @param[in]       output_ch    number of rows of input_row
- * @param[in]       input_ch     number of columns of input_col
+ * @param[in]       col_batches  number of column batches. Range: 1 to 4
  * @param[in]       output_shift  pointer to per output channel requantization shift parameter.
  * @param[in]       output_mult   pointer to per output channel requantization multiplier parameter.
  * @param[in]       out_offset    output tensor offset.
@@ -211,7 +211,7 @@ q7_t *arm_nn_depthwise_conv_s8_core(const q7_t *row,
  * @param[in]       row_offset    kernel offset(row). Not used.
  * @param[in]       out_activation_min   minimum value to clamp the output to. Range : int8
  * @param[in]       out_activation_max   maximum value to clamp the output to. Range : int8
- * @param[in]       col_len       number of elements in input_col
+ * @param[in]       row_len       number of elements in each row
  * @param[in]       bias          per output channel bias. Range : int32
  * @param[in,out]   out           pointer to output
  * @return     The function returns one of the two
@@ -223,7 +223,7 @@ q7_t *arm_nn_depthwise_conv_s8_core(const q7_t *row,
 q7_t *arm_nn_mat_mult_s8(const q7_t *input_row,
                          const q7_t *input_col,
                          const uint16_t output_ch,
-                         const uint16_t input_ch,
+                         const uint16_t col_batches,
                          const int32_t *output_shift,
                          const int32_t *output_mult,
                          const int32_t out_offset,
@@ -231,7 +231,7 @@ q7_t *arm_nn_mat_mult_s8(const q7_t *input_row,
                          const int32_t row_offset,
                          const int16_t out_activation_min,
                          const int16_t out_activation_max,
-                         const uint16_t col_len,
+                         const uint16_t row_len,
                          const int32_t *const bias,
                          q7_t *out);
 
@@ -631,6 +631,36 @@ __STATIC_FORCEINLINE q31_t arm_nn_requantize(const q31_t val, const q31_t multip
 {
   return arm_nn_divide_by_power_of_two(arm_nn_sat_doubling_high_mult(val * (1 << LEFT_SHIFT(shift)), multiplier),
                                        RIGHT_SHIFT(shift));
+}
+
+/**
+ * @brief           memcpy optimized for MVE( A tail predicated loop is expected to be generated)
+ * @param[in, out]  dst         Destination pointer
+ * @param[in]       src         Source pointer.
+ * @param[in]       block_size  Number of bytes to copy.
+ *
+ * @return          None
+ *
+ */
+__STATIC_FORCEINLINE void arm_memcpy_q7(q7_t *restrict dst,
+                                        const q7_t *restrict src,
+                                        uint32_t block_size)
+{
+#if defined(ARM_MATH_MVEI)
+    int32_t block_count = (block_size + 15) / 16;
+
+    for (int i = 0; i < block_count; i++)
+    {
+        mve_pred16_t p = vctp8q(block_size);
+        int8x16_t cpy = vld1q_z_s8(src, p);
+        vstrbq_p_s8(dst, cpy, p);
+        block_size -=16;
+        dst += 16;
+        src += 16;
+    }
+#else
+    memcpy(dst, src, block_size);
+#endif
 }
 
 #if defined(ARM_MATH_MVEI)

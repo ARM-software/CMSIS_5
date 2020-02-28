@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2019 Arm Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2010-2020 Arm Limited or its affiliates. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -21,8 +21,8 @@
  * Title:        arm_nn_mat_mult_s8.c
  * Description:  General Matrix-multiplication function
  *
- * $Date:        November 2019
- * $Revision:    V.1.0.0
+ * $Date:        March 1, 2020
+ * $Revision:    V.2.0.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -31,7 +31,7 @@
 #include "arm_nnfunctions.h"
 
 /*
-   * s8 General matrix multiplication function with per-channel requantization.
+   * s8 General matrix multiplication function with per-channel requantization for upto 4 column batches.
    *
    * Refer header file for details.
    *
@@ -40,7 +40,7 @@
 q7_t *arm_nn_mat_mult_s8(const q7_t *input_row,
                          const q7_t *input_col,
                          const uint16_t output_ch,
-                         const uint16_t input_ch,
+                         const uint16_t col_batches,
                          const int32_t *output_shift,
                          const int32_t *output_mult,
                          const int32_t out_offset,
@@ -48,101 +48,116 @@ q7_t *arm_nn_mat_mult_s8(const q7_t *input_row,
                          const int32_t row_offset,
                          const int16_t activation_min,
                          const int16_t activation_max,
-                         const uint16_t col_len,
+                         const uint16_t row_len,
                          const int32_t *const bias,
                          q7_t *out)
 {
 #if defined(ARM_MATH_MVEI)
-
     (void)row_offset;
-    for (int i_items = 0; i_items <= (col_len - 4); i_items += 4)
+    if (col_batches == 4)
     {
         for (int i_out_ch = 0; i_out_ch < output_ch; i_out_ch++)
         {
-            q31_t acc_n0 = bias[i_out_ch];
-            q31_t acc_n1 = acc_n0;
-            q31_t acc_n2 = acc_n0;
-            q31_t acc_n3 = acc_n0;
-            int col_loop = input_ch / 16;
+            int32_t row_len_tmp = row_len;
+            const int8_t *ip_r0 = input_row + (i_out_ch * row_len);
+            const int8_t *ip_c0 = input_col;
+            const int8_t *ip_c1 = input_col + row_len;
+            const int8_t *ip_c2 = input_col + (2 * row_len);
+            const int8_t *ip_c3 = input_col + (3 * row_len);
 
-            const int8_t *ip_n_0 = input_col + i_items * input_ch;
-            const int8_t *ip_n_1 = ip_n_0 + input_ch;
-            const int8_t *ip_n_2 = ip_n_1 + input_ch;
-            const int8_t *ip_n_3 = ip_n_2 + input_ch;
+            int32_t acc_0 = bias[i_out_ch];
+            int32_t acc_1 = bias[i_out_ch];
+            int32_t acc_2 = bias[i_out_ch];
+            int32_t acc_3 = bias[i_out_ch];
+            const int32_t row_loop_cnt = (row_len + 7) / 8;
 
-            const int8_t *ker_n_0 = input_row + i_out_ch * input_ch;
-            int32_t offset = 0;
-            int32_t sum_row = 0;
-
-            while (col_loop > 0)
+            for (int i_row_loop = 0; i_row_loop < row_loop_cnt; i_row_loop++)
             {
-                const int8x16_t k_0 = vldrbq_s8(ker_n_0 + offset);
-                sum_row += vaddvq_s8(k_0);
+                mve_pred16_t p = vctp16q(row_len_tmp);
+                const int16x8_t offset = vdupq_x_n_s16(col_offset, p);
+                row_len_tmp -= 8;
 
-                const int8x16_t n_0 = vldrbq_s8(ip_n_0 + offset);
-                const int8x16_t n_1 = vldrbq_s8(ip_n_1 + offset);
-                const int8x16_t n_2 = vldrbq_s8(ip_n_2 + offset);
-                const int8x16_t n_3 = vldrbq_s8(ip_n_3 + offset);
+                int16x8_t r0 = vldrbq_z_s16(ip_r0, p);
+                ip_r0 += 8;
 
-                acc_n0 += vmladavq_s8(n_0, k_0);
-                acc_n1 += vmladavq_s8(n_1, k_0);
-                acc_n2 += vmladavq_s8(n_2, k_0);
-                acc_n3 += vmladavq_s8(n_3, k_0);
+                int16x8_t c0 = vldrbq_z_s16(ip_c0, p);
+                ip_c0 += 8;
+                c0 = vaddq_x_s16(c0, offset, p);
 
-                offset += 16;
-                col_loop--;
+                int16x8_t c1 = vldrbq_z_s16(ip_c1, p);
+                ip_c1 += 8;
+                c1 = vaddq_x_s16(c1, offset, p);
+
+                int16x8_t c2 = vldrbq_z_s16(ip_c2, p);
+                ip_c2 += 8;
+                c2 = vaddq_x_s16(c2, offset, p);
+
+                int16x8_t c3 = vldrbq_z_s16(ip_c3, p);
+                ip_c3 += 8;
+                c3 = vaddq_x_s16(c3, offset, p);
+
+                acc_0 = vmladavaq_p_s16(acc_0, r0, c0, p);
+                acc_1 = vmladavaq_p_s16(acc_1, r0, c1, p);
+                acc_2 = vmladavaq_p_s16(acc_2, r0, c2, p);
+                acc_3 = vmladavaq_p_s16(acc_3, r0, c3, p);
             }
 
-            col_loop = (input_ch & 0xF);
-
-            if (col_loop != 0)
-            {
-                const mve_pred16_t p = vctp8q(col_loop);
-
-                const int8x16_t k_0 = vldrbq_z_s8(ker_n_0 + offset, p);
-                sum_row += vaddvq_p_s8(k_0, p);
-
-                const int8x16_t n_0 = vldrbq_z_s8(ip_n_0 + offset, p);
-                const int8x16_t n_1 = vldrbq_z_s8(ip_n_1 + offset, p);
-                const int8x16_t n_2 = vldrbq_z_s8(ip_n_2 + offset, p);
-                const int8x16_t n_3 = vldrbq_z_s8(ip_n_3 + offset, p);
-
-                acc_n0 += vmladavq_p_s8(n_0, k_0, p);
-                acc_n1 += vmladavq_p_s8(n_1, k_0, p);
-                acc_n2 += vmladavq_p_s8(n_2, k_0, p);
-                acc_n3 += vmladavq_p_s8(n_3, k_0, p);
-            }
-            int32x4_t res;
-            res[0] = acc_n0;
-            res[1] = acc_n1;
-            res[2] = acc_n2;
-            res[3] = acc_n3;
-
-            sum_row = sum_row * col_offset;
-            res = vaddq_n_s32(res, sum_row);
+            int32x4_t res = {acc_0, acc_1, acc_2, acc_3};
             res = arm_requantize_mve(res, output_mult[i_out_ch], output_shift[i_out_ch]);
             res = vaddq_n_s32(res, out_offset);
 
             res = vmaxq_s32(res, vdupq_n_s32(activation_min));
             res = vminq_s32(res, vdupq_n_s32(activation_max));
 
-            out[i_out_ch] = res[0];
-            out[i_out_ch + output_ch] = res[1];
-            out[i_out_ch + output_ch * 2] = res[2];
-            out[i_out_ch + output_ch * 3] = res[3];
+            const uint32x4_t scatter_offset = {0, output_ch, output_ch * 2, output_ch * 3};
+            vstrbq_scatter_offset_s32(&out[i_out_ch], scatter_offset, res);
         }
-
-        out += (4 * output_ch);
+        out += 4 * output_ch;
     }
+    else
+    {
+        for (int i_col_batch = (col_batches & ~0x3); i_col_batch < (col_batches & 0x3); i_col_batch++)
+        {
+            for (int i_out_ch = 0; i_out_ch < output_ch; i_out_ch++)
+            {
+                int32_t row_len_tmp = row_len;
 
+                const int8_t *ip_r0 = input_row + (i_out_ch * row_len);
+                const int8_t *ip_c0 = input_col + (i_col_batch * row_len);
+                int32_t acc_0 = bias[i_out_ch];
+                const int32_t row_loop_cnt = (row_len + 7) / 8;
+
+                for (int i_row_loop = 0; i_row_loop < row_loop_cnt; i_row_loop++)
+                {
+                    const mve_pred16_t p = vctp16q(row_len_tmp);
+                    const int16x8_t offset = vdupq_x_n_s16(col_offset, p);
+                    row_len_tmp -= 8;
+
+                    int16x8_t r0 = vldrbq_z_s16(ip_r0, p);
+                    ip_r0 += 8;
+                    int16x8_t c0 = vldrbq_z_s16(ip_c0, p);
+                    ip_c0 += 8;
+
+                    c0 = vaddq_x_s16(c0, offset, p);
+                    acc_0 = vmladavaq_p_s16(acc_0, r0, c0, p);
+                }
+
+                acc_0 = arm_nn_requantize(acc_0, output_mult[i_out_ch], output_shift[i_out_ch]);
+                acc_0 += out_offset;
+                acc_0 = MAX(acc_0, activation_min);
+                acc_0 = MIN(acc_0, activation_max);
+                out[i_out_ch] = (q7_t)acc_0;
+            }
+            out += output_ch;
+        }
+    }
     return out;
 
 #else
-    /* TODO: Add support for DSP extension */
     (void)input_row;
     (void)input_col;
     (void)output_ch;
-    (void)input_ch;
+    (void)col_batches;
     (void)output_shift;
     (void)output_mult;
     (void)out_offset;
@@ -150,7 +165,7 @@ q7_t *arm_nn_mat_mult_s8(const q7_t *input_row,
     (void)row_offset;
     (void)activation_min;
     (void)activation_max;
-    (void)col_len;
+    (void)row_len;
     (void)bias;
     (void)out;
     return NULL;

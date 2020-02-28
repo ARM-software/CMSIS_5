@@ -21,8 +21,8 @@
  * Title:        arm_convolve_s8.c
  * Description:  s8 version of convolution using symmetric quantization.
  *
- * $Date:        February 27, 2020
- * $Revision:    V.0.0.2
+ * $Date:        March 1, 2020
+ * $Revision:    V.1.0.0
  *
  * Target Processor:  Cortex-M cores
  *
@@ -43,7 +43,7 @@
 /*
    * Basic s8 convolution function.
    *
-   * Refer header file for details. Optimal use case for the DSP implementation is when input and output channels
+   * Refer header file for details. Optimal use case for the DSP/MVE implementation is when input and output channels
    * are multiples of 4 or atleast greater than 4.
    *
    */
@@ -78,8 +78,117 @@ arm_status arm_convolve_s8(const q7_t *input,
     {
         input += i_batch * (input_x * input_y * input_ch);
         output += i_batch * (output_x * output_y * output_ch);
-#if defined(ARM_MATH_DSP)
-        int16_t i_out_y, i_out_x, i_ker_y, i_ker_x;
+#if defined(ARM_MATH_MVEI)
+        /* Generate upto four columns from the input tensor a GEMM computation */
+        q7_t *im2col_buf = (q7_t *)buffer_a;
+        q7_t *out = output;
+        int32_t buffer_fill_cnt = 0;
+        int32_t padded = 0;
+        const int32_t num_elem = kernel_x * kernel_y * input_ch;
+
+        /* This part implements the im2col function */
+        for (int i_out_y = 0; i_out_y < output_y; i_out_y++)
+        {
+            for (int i_out_x = 0; i_out_x < output_x; i_out_x++)
+            {
+                for (int i_ker_y = i_out_y * stride_y - pad_y; i_ker_y < i_out_y * stride_y - pad_y + kernel_y; i_ker_y++)
+                {
+                    for (int i_ker_x = i_out_x * stride_x - pad_x; i_ker_x < i_out_x * stride_x - pad_x + kernel_x; i_ker_x++)
+                    {
+                        if (i_ker_y < 0 || i_ker_y >= input_y || i_ker_x < 0 || i_ker_x >= input_x)
+                        {
+                            memset(im2col_buf, (int8_t)-input_offset, sizeof(q7_t) * input_ch);
+                            padded = 1;
+                        }
+                        else
+                        {
+                            arm_memcpy_q7(im2col_buf, input + (i_ker_y * input_x + i_ker_x) * input_ch, input_ch);
+                        }
+                        im2col_buf += input_ch;
+                    }
+                }
+
+                buffer_fill_cnt++;
+
+                /* Computation is filed for every 4 columns */
+                if (buffer_fill_cnt == 4 && (padded == 0))
+                {
+                    buffer_fill_cnt = 0;
+                    for (int i_out_ch = 0; i_out_ch < output_ch; i_out_ch++)
+                    {
+                        int32_t sum_row;
+                        int32_t acc[4];
+
+                        (void)arm_nn_mat_mul_core_4x_s8(num_elem,
+                                                        num_elem,
+                                                        (q7_t *)buffer_a,
+                                                        kernel + num_elem * i_out_ch,
+                                                        &sum_row,
+                                                        acc);
+                        int32x4_t s_offset = vdupq_n_s32(sum_row);
+
+                        int32x4_t res = vldrwq_s32(acc);
+                        s_offset = vmulq_n_s32(s_offset, input_offset);
+
+                        res = vaddq_n_s32(res, bias[i_out_ch]);
+                        res = vaddq_s32(res, s_offset);
+                        res = arm_requantize_mve(res, output_mult[i_out_ch], output_shift[i_out_ch]);
+                        res = vaddq_n_s32(res, out_offset);
+
+                        res = vmaxq_s32(res, vdupq_n_s32(out_activation_min));
+                        res = vminq_s32(res, vdupq_n_s32(out_activation_max));
+
+                        const uint32x4_t scatter_offset = {0, output_ch, output_ch * 2, output_ch * 3};
+                        vstrbq_scatter_offset_s32(out, scatter_offset, res);
+                        out++;
+                    }
+                    out += (3 * output_ch);
+                    im2col_buf = (q7_t *)buffer_a;
+                }
+                else if (buffer_fill_cnt == 4 && (padded != 0))
+                {
+                    buffer_fill_cnt = 0;
+                    out = arm_nn_mat_mult_s8(kernel,
+                                             (q7_t *)buffer_a,
+                                             output_ch,
+                                             4,
+                                             output_shift,
+                                             output_mult,
+                                             out_offset,
+                                             input_offset,
+                                             0,
+                                             out_activation_min,
+                                             out_activation_max,
+                                             num_elem,
+                                             bias,
+                                             out);
+
+                    im2col_buf = (q7_t *)buffer_a;
+                    padded = 0;
+                }
+            }
+        }
+        /* Handle left over columns */
+        if (buffer_fill_cnt != 0)
+        {
+            out = arm_nn_mat_mult_s8(kernel,
+                                     (q7_t *)buffer_a,
+                                     output_ch,
+                                     buffer_fill_cnt,
+                                     output_shift,
+                                     output_mult,
+                                     out_offset,
+                                     input_offset,
+                                     0,
+                                     out_activation_min,
+                                     out_activation_max,
+                                     num_elem,
+                                     bias,
+                                     out);
+        }
+
+#elif defined(ARM_MATH_DSP)
+        int32_t i_out_y, i_out_x, i_ker_y, i_ker_x;
 
         /* Generate two columns from the input tensor a GEMM computation */
         q15_t *two_column_buf = buffer_a;
