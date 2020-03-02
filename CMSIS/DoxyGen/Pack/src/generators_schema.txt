@@ -24,17 +24,17 @@ generated and included and maintained as part of the project.
         <command host = "win">MyGen.bat</command>
         <command host = "linux">MyGen.script</command>
         <argument>$P/RTE/MyGen/myGen.gpdsc</argument>
-        <argument host="linux" switch="--device=">#D</argument>
-        <argument host="win"   switch="/device=">#D</argument>
+        <argument host="linux" switch="--device=">$D</argument>
+        <argument host="win"   switch="/device=">$D</argument>
       </exe>
        
       <eclipse plugin="com.mygen.plugin" class="com.mygen.plugin.generator.launcher" method="launch" >
-        <argument>#D</argument>
+        <argument>$D</argument>
         <argument>$P/RTE/MyGen/myGen.gpdsc</argument>
       </eclipse>
        
       <web url="http://mygen.com/mygen">
-        <argument switch="device">#D</argument>
+        <argument switch="device">$D</argument>
         <argument switch="gpdsc">$P/RTE/MyGen/myGen.gpdsc</argument>
       </web>
     </generator>
@@ -61,12 +61,12 @@ generated and included and maintained as part of the project.
       <description>STM32CubeMX Environment</description>
       <select Dname="STM32F746NGHx" Dvendor="STMicroelectronics:13"/>
       <exe>
-        <command host = "win">$SMDK/CubeMX/STM32CubeMXLauncher.exe</command>
-        <command host = "linux">$SMDK/CubeMX/STM32CubeMXLauncher</command>
+        <command host = "win">MDK/CubeMX/STM32CubeMXLauncher.exe</command>
+        <command host = "linux">MDK/CubeMX/STM32CubeMXLauncher</command>
         <argument>$P/RTE/MyGen/myGen.gpdsc</argument>
-        <argument>#D.ioc</argument>
+        <argument>$D.ioc</argument>
       </exe>
-      <workingDir>$PRTE/Device/STM32F746NGHx</workingDir>
+      <workingDir>$P/RTE/Device/STM32F746NGHx</workingDir>
       <project_files>
         <file category="source" name="STCubeGenerated/Src/main.c" />
         <file category="header" name="STCubeGenerated/Inc/stm32f7xx_it.h"/>
@@ -366,8 +366,8 @@ This element contains information about the generation binary/executable.
   <command host = "win">MyGen.bat</command>
   <command host = "linux">MyGen.script</command>
   <argument>$P/RTE/MyGen/myGen.gpdsc</argument>
-  <argument host="linux" switch="--device=">#D</argument>
-  <argument host="win"   switch="/device=">#D</argument>
+  <argument host="linux" switch="--device=">$D</argument>
+  <argument host="win"   switch="/device=">$D</argument>
 </exe>
 \endcode
 <p>&nbsp;</p>		
@@ -411,7 +411,7 @@ This element contains information about the Eclipse based generation tool.
 \b Example:
 \code
 <eclipse plugin="com.mygen.plugin" class="com.mygen.plugin.generator.launcher" method="launch" >
-  <argument>#D</argument>
+  <argument>$D</argument>
   <argument>$P/RTE/MyGen/myGen.gpdsc</argument>
 </eclipse>
 \endcode
@@ -473,7 +473,7 @@ This element contains information about the web generation application.
 \b Example:
 \code
 <web url="http://mygen.com/mygen">
-  <argument switch="device">#D</argument>
+  <argument switch="device">$D</argument>
   <argument switch="gpdsc">$P/RTE/MyGen/myGen.gpdsc</argument>
 </web>
 \endcode
@@ -527,8 +527,8 @@ This element describes a single command line for launching the generator. Argume
   <command host = "win">MyGen.bat</command>
   <command host = "linux">MyGen.script</command>
   <argument>$P/RTE/MyGen/myGen.gpdsc</argument>
-  <argument host="linux" switch="--device=">#D</argument>
-  <argument host="win"   switch="/device=">#D</argument>
+  <argument host="linux" switch="--device=">$D</argument>
+  <argument host="win"   switch="/device=">$D</argument>
 </exe>
 \endcode
 
@@ -583,17 +583,17 @@ This element describes one or multiple arguments passed along with the parent el
         <command host = "win">MyGen.bat</command>
         <command host = "linux">MyGen.script</command>
         <argument>$P/RTE/MyGen/myGen.gpdsc</argument>
-        <argument host="linux" switch="--device=">#D</argument>
-        <argument host="win"   switch="/device=">#D</argument>
+        <argument host="linux" switch="--device=">$D</argument>
+        <argument host="win"   switch="/device=">$D</argument>
       </exe>
  
       <eclipse plugin="com.mygen.plugin" class="com.mygen.plugin.generator.launcher" method="launch" >
-        <argument>#D</argument>
+        <argument>$D</argument>
         <argument>$P/RTE/MyGen/myGen.gpdsc</argument>
       </eclipse >
  
       <web url="http://mygen.com/mygen">
-        <argument switch="device">#D</argument>
+        <argument switch="device">$D</argument>
         <argument switch="gpdsc">$P/RTE/MyGen/myGen.gpdsc</argument>
       </web>
     </generator>
@@ -655,8 +655,13 @@ The group <b>project_files</b> specifies all files that are required for the pro
     <generator id="STM32CubeMX" Gvendor="STMicroelectronics" Gtool="STM32CubeMX" Gversion="4.10.0">
       <description>STM32CubeMX Environment</description>
       <select Dname="STM32F746NGHx" Dvendor="STMicroelectronics:13"/>
-      <command>$SMDK/CubeMX/STM32CubeMXLauncher</command>
-      <workingDir>$PRTE/Device/STM32F746NGHx</workingDir>
+      <exe>
+        <command host = "win">MDK/CubeMX/STM32CubeMXLauncher.exe</command>
+        <command host = "linux">MDK/CubeMX/STM32CubeMXLauncher</command>
+        <argument>$P/RTE/MyGen/myGen.gpdsc</argument>
+        <argument>$D.ioc</argument>
+      </exe>      
+      <workingDir>$P/RTE/Device/STM32F746NGHx</workingDir>
       <project_files>
         <file category="source" name="STCubeGenerated/Src/main.c" />
         <file category="header" name="STCubeGenerated/Inc/stm32f7xx_it.h"/>
