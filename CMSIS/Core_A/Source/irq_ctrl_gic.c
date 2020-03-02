@@ -150,8 +150,9 @@ __WEAK int32_t IRQ_SetMode (IRQn_ID_t irqn, uint32_t mode) {
     }
 
     valnn = (mode & IRQ_MODE_MODEL_Msk);
-    if (valnn == IRQ_MODE_MODEL_1N)
+    if (valnn == IRQ_MODE_MODEL_1N) {
     	cfg |= 1;   // 1-N model
+    }
 
     // Check interrupt type
     val = mode & IRQ_MODE_TYPE_Msk;
