@@ -130,7 +130,6 @@ __WEAK uint32_t IRQ_GetEnableState (IRQn_ID_t irqn) {
 /// Configure interrupt request mode.
 __WEAK int32_t IRQ_SetMode (IRQn_ID_t irqn, uint32_t mode) {
   uint32_t val;
-  uint32_t valnn;
   uint8_t cfg;
   uint8_t secure;
   uint8_t cpu;
@@ -149,9 +148,9 @@ __WEAK int32_t IRQ_SetMode (IRQn_ID_t irqn, uint32_t mode) {
       status = -1;
     }
 
-    valnn = (mode & IRQ_MODE_MODEL_Msk);
-    if (valnn == IRQ_MODE_MODEL_1N) {
-    	cfg |= 1;   // 1-N model
+    val = (mode & IRQ_MODE_MODEL_Msk);
+    if (val == IRQ_MODE_MODEL_1N) {
+    	 cfg |= 1;   // 1-N model
     }
 
     // Check interrupt type
