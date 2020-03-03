@@ -32,6 +32,7 @@ core_cm7.h       | for the Cortex-M7 processor
 core_cm23.h      | for the Cortex-M23 processor
 core_cm33.h      | for the Cortex-M33 processor
 core_cm35p.h     | for the Cortex-M35P processor
+core_cm55.h      | for the Cortex-M55 processor
 \endif 
 \if ARMSC
 core_sc000.h     | for the SecurCore SC000 processor
@@ -40,47 +41,50 @@ core_sc300.h     | for the SecurCore SC300 processor
 \if ARMv8M
 core_armv8mbl.h  | for the Armv8-M Baseline processor
 core_armv8mml.h  | for the Armv8-M Mainline processor
+core_armv81mml.h | for the Armv8.1-M Mainline processor
 \endif
 \section device_examples Device Examples
 
 The CMSIS Software Pack defines several devices that are based on the various processors. The device related CMSIS-Core files are in the directory .\\Device\\ARM
 and include CMSIS-Core processor file explained before. The following sample devices are defined in the CMSIS-Pack description file <b>ARM.CMSIS.pdsc</b>:
 
-Family             | Device             | Description
-:------------------|:-------------------|:---------------------------------
-ARM Cortex-M0      | ARMCM0             | Cortex-M0 based device
-ARM Cortex-M0 plus | ARMCM0P            | Cortex-M0+ based device
-ARM Cortex-M3      | ARMCM3             | Cortex-M3 based device
-ARM Cortex-M4      | ARMCM4             | Cortex-M4 based device without floating-point hardware
-ARM Cortex-M4      | ARMCM4_FP          | Cortex-M4 based device with floating-point hardware
-ARM Cortex-M7      | ARMCM7             | Cortex-M4 based device without floating-point hardware
-ARM Cortex-M7      | ARMCM7_FP          | Cortex-M7 based device with single precision floating-point unit (FPU)
-ARM Cortex-M7      | ARMCM7_DP          | Cortex-M7 based device with double precision floating-point unit
-ARM Cortex-M7      | ARMCM7             | Cortex-M7 based device without floating-point hardware
-\if ARMv8M
-ARM Cortex-M23     | ARMCM23            | Cortex-M23 based device without TrustZone
-ARM Cortex-M23     | ARMCM23_TZ         | Cortex-M23 based device with TrustZone
-ARM Cortex-M33     | ARMCM33            | Cortex-M33 based device without TrustZone, SIMD, FPU
-ARM Cortex-M33     | ARMCM33_TZ         | Cortex-M33 based device with TrustZone, no SIMD, no FPU
-ARM Cortex-M33     | ARMCM33_DSP_FP     | Cortex-M33 based device with SIMD, FPU, no TrustZone
-ARM Cortex-M33     | ARMCM33_DSP_FP_TZ  | Cortex-M33 based device with TrustZone, SIMD, FPU
-ARM Cortex-M35P    | ARMCM35P           | Cortex-M35P based device without TrustZone, SIMD, FPU
-ARM Cortex-M35P    | ARMCM35P_TZ        | Cortex-M35P based device with TrustZone, no SIMD, no FPU
-ARM Cortex-M35P    | ARMCM35P_DSP_FP    | Cortex-M35P based device with SIMD, FPU, no TrustZone
-ARM Cortex-M35P    | ARMCM35P_DSP_FP_TZ | Cortex-M35P based device with TrustZone, SIMD, FPU
-\endif
-\if ARMSC
-ARM SC000          | ARM SC000          | SC000 based device
-ARM SC300          | ARM SC300          | SC300 based device
-\endif
-\if ARMv8M
-ARMv8-M Baseline   | ARMv8MBL           | Armv8-M Baseline based device with TrustZone
-ARMv8-M Mainline   | ARMv8MML           | Armv8-M Mainline based device with TrustZone
-ARMv8-M Mainline   | ARMv8MML_DP        | Armv8-M Mainline based device with TrustZone and double precision FPU 
-ARMv8-M Mainline   | ARMv8MML_SP        | Armv8-M Mainline based device with TrustZone and single precision FPU 
-ARMv8-M Mainline   | ARMv8MML_DSP       | Armv8-M Mainline based device with TrustZone and SIMD
-ARMv8-M Mainline   | ARMv8MML_DSP_DP    | Armv8-M Mainline based device with TrustZone, SIMD, and double precision FPU 
-ARMv8-M Mainline   | ARMv8MML_DSP_SP    | Armv8-M Mainline based device with TrustZone, SIMD, and single precision FPU 
+Family             | Device                  | Description
+:------------------|:------------------------|:---------------------------------
+ARM Cortex-M0      | ARMCM0                  | Cortex-M0 based device
+ARM Cortex-M0 plus | ARMCM0P                 | Cortex-M0+ based device
+ARM Cortex-M3      | ARMCM3                  | Cortex-M3 based device
+ARM Cortex-M4      | ARMCM4                  | Cortex-M4 based device without floating-point hardware
+ARM Cortex-M4      | ARMCM4_FP               | Cortex-M4 based device with floating-point hardware
+ARM Cortex-M7      | ARMCM7                  | Cortex-M4 based device without floating-point hardware
+ARM Cortex-M7      | ARMCM7_FP               | Cortex-M7 based device with single precision floating-point unit (FPU)
+ARM Cortex-M7      | ARMCM7_DP               | Cortex-M7 based device with double precision floating-point unit
+ARM Cortex-M7      | ARMCM7                  | Cortex-M7 based device without floating-point hardware
+\if ARMv8M                                   
+ARM Cortex-M23     | ARMCM23                 | Cortex-M23 based device without TrustZone
+ARM Cortex-M23     | ARMCM23_TZ              | Cortex-M23 based device with TrustZone
+ARM Cortex-M33     | ARMCM33                 | Cortex-M33 based device without TrustZone, SIMD, FPU
+ARM Cortex-M33     | ARMCM33_TZ              | Cortex-M33 based device with TrustZone, no SIMD, no FPU
+ARM Cortex-M33     | ARMCM33_DSP_FP          | Cortex-M33 based device with SIMD, FPU, no TrustZone
+ARM Cortex-M33     | ARMCM33_DSP_FP_TZ       | Cortex-M33 based device with TrustZone, SIMD, FPU
+ARM Cortex-M35P    | ARMCM35P                | Cortex-M35P based device without TrustZone, SIMD, FPU
+ARM Cortex-M35P    | ARMCM35P_TZ             | Cortex-M35P based device with TrustZone, no SIMD, no FPU
+ARM Cortex-M35P    | ARMCM35P_DSP_FP         | Cortex-M35P based device with SIMD, FPU, no TrustZone
+ARM Cortex-M35P    | ARMCM35P_DSP_FP_TZ      | Cortex-M35P based device with TrustZone, SIMD, FPU
+ARM Cortex-M55     | ARMCM55                 | Cortex-M55 based device with TrustZone, SIMD, double precision FPU, and floating-point MVE
+\endif                                       
+\if ARMSC                                    
+ARM SC000          | ARM SC000               | SC000 based device
+ARM SC300          | ARM SC300               | SC300 based device
+\endif                                       
+\if ARMv8M                                   
+ARMv8-M Baseline   | ARMv8MBL                | Armv8-M Baseline based device with TrustZone
+ARMv8-M Mainline   | ARMv8MML                | Armv8-M Mainline based device with TrustZone
+ARMv8-M Mainline   | ARMv8MML_DP             | Armv8-M Mainline based device with TrustZone and double precision FPU 
+ARMv8-M Mainline   | ARMv8MML_SP             | Armv8-M Mainline based device with TrustZone and single precision FPU 
+ARMv8-M Mainline   | ARMv8MML_DSP            | Armv8-M Mainline based device with TrustZone and SIMD
+ARMv8-M Mainline   | ARMv8MML_DSP_DP         | Armv8-M Mainline based device with TrustZone, SIMD, and double precision FPU 
+ARMv8-M Mainline   | ARMv8MML_DSP_SP         | Armv8-M Mainline based device with TrustZone, SIMD, and single precision FPU 
+ARMv8.1-M Mainline | ARMv81MML_DSP_DP_MVE_FP | Armv8.1-M Mainline based device with TrustZone, SIMD, double precision FPU, and floating-point MVE
 \endif
 
 \section template_files_sec Template Files
