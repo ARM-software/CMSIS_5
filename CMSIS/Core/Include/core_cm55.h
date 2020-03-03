@@ -2,7 +2,7 @@
  * @file     core_cm55.h
  * @brief    CMSIS Cortex-M55 Core Peripheral Access Layer Header File
  * @version  V1.0.0
- * @date     20. February 2020
+ * @date     03. March 2020
  ******************************************************************************/
 /*
  * Copyright (c) 2018-2020 Arm Limited. All rights reserved.
@@ -3065,6 +3065,15 @@ __STATIC_INLINE uint32_t SCB_GetMVEType(void)
 
 
 /*@} end of CMSIS_Core_MveFunctions */
+
+
+/* ##########################  Cache functions  #################################### */
+
+#if ((defined (__ICACHE_PRESENT) && (__ICACHE_PRESENT == 1U)) || \
+     (defined (__DCACHE_PRESENT) && (__DCACHE_PRESENT == 1U)))
+#include "cachel1_armv7.h"
+#endif
+
 
 /* ##########################   SAU functions  #################################### */
 /**
