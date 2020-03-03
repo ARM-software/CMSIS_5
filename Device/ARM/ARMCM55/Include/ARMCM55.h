@@ -1,5 +1,5 @@
 /**************************************************************************//**
- * @file     ARMCM55_DSP_DP_MVE_FP_TZP.h
+ * @file     ARMCM55.h
  * @brief    CMSIS Core Peripheral Access Layer Header File for
  *           ARMCM55 Device Series (configured for ARMCM55 with double precision FPU,
  *                                  DSP extension, MVE, TrustZone)
@@ -24,8 +24,8 @@
  * limitations under the License.
  */
 
-#ifndef ARMCM55_DSP_DP_MVE_FP_TZ_H
-#define ARMCM55_DSP_DP_MVE_FP_TZ_H
+#ifndef ARMCM55_H
+#define ARMCM55_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -133,4 +133,4 @@ typedef enum IRQn
 }
 #endif
 
-#endif  /* ARMCM55_DSP_DP_MVE_FP_TZ_H */
+#endif  /* ARMCM55_H */

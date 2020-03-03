@@ -622,12 +622,12 @@ The Cortex-M55 processor achieves high compute performance across scalar and vec
       <memory id="IRAM2"                                start="0x20000000" size="0x00020000" init   ="0" default="0"/>
       <!--algorithm name="Device/ARM/Flash/NEW_DEVICE.FLM" start="0x00000000" size="0x00040000"             default="1"/-->
 
-      <device Dname="ARMCM55_DSP_DP_MVE_FP_TZARMCM55_DSP_DP_MVE_FP_TZ">
+      <device Dname="ARMCM55">
         <processor Dcore="Cortex-M55" DcoreVersion="r0p0" Dfpu="DP_FPU" Dmpu="MPU" Dmve="FP_MVE" Ddsp="DSP" Dtz="TZ" Dendian="Configurable" Dclock="10000000"/>
         <description>
-          Double Precision Vector Extensions, DSP Instructions, Double Precision Floating Point Unit, TrustZone
+          Floating Point Vector Extensions, DSP Instructions, Double Precision Floating Point Unit, TrustZone
         </description>
-        <compile header="Device/ARM/ARMCM55/Include/ARMCM55_DSP_DP_MVE_FP_TZ.h" define="ARMCM55_DSP_DP_MVE_FP_TZ"/>
+        <compile header="Device/ARM/ARMCM55/Include/ARMCM55.h" define="ARMCM55"/>
       </device>
     </family>
 

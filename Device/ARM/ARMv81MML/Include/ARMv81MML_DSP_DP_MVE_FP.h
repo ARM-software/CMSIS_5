@@ -1,5 +1,5 @@
 /**************************************************************************//**
- * @file     ARMv81MML_DP.h
+ * @file     ARMv81MML_DSP_DP_MVE_FP.h
  * @brief    CMSIS Core Peripheral Access Layer Header File for
  *           Armv8.1-M Mainline Device Series (configured for Armv8.1-M Mainline with double precision FPU, with DSP extension, with TrustZone)
  * @version  V1.1.0
@@ -23,8 +23,8 @@
  * limitations under the License.
  */
 
-#ifndef ARMv81MML_DSP_DP_H
-#define ARMv81MML_DSP_DP_H
+#ifndef ARMv81MML_DSP_DP_MVE_FP_H
+#define ARMv81MML_DSP_DP_MVE_FP_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -100,8 +100,6 @@ typedef enum IRQn
 #define __FPU_PRESENT             1U        /* FPU present */
 #define __FPU_DP                  1U        /* double precision FPU */
 #define __DSP_PRESENT             1U        /* DSP extension present */
-#define __MVE_PRESENT             1U        /* MVE extensions present */
-#define __MVE_FP                  1U        /* MVE floating point present */
 #define __ICACHE_PRESENT          1U
 #define __DCACHE_PRESENT          1U
 
@@ -133,4 +131,4 @@ typedef enum IRQn
 }
 #endif
 
-#endif  /* ARMv81MML_DSP_DP_H */
+#endif  /* ARMv81MML_DSP_DP_MVE_FP_H */
