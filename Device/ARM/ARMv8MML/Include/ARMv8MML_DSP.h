@@ -2,11 +2,11 @@
  * @file     ARMv8MML_DSP.h
  * @brief    CMSIS Core Peripheral Access Layer Header File for
  *           ARMv8MML Mainline Device (configured for ARMv8MML without FPU, with DSP extension, with TrustZone)
- * @version  V5.3.1
- * @date     09. July 2018
+ * @version  V5.4.0
+ * @date     03. March 2020
  ******************************************************************************/
 /*
- * Copyright (c) 2009-2018 Arm Limited. All rights reserved.
+ * Copyright (c) 2009-2020 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -98,6 +98,8 @@ typedef enum IRQn
 #define __Vendor_SysTickConfig    0U        /* Set to 1 if different SysTick Config is used */
 #define __FPU_PRESENT             0U        /* no FPU present */
 #define __DSP_PRESENT             1U        /* DSP extension present */
+#define __ICACHE_PRESENT          1U
+#define __DCACHE_PRESENT          1U
 
 #include "core_armv8mml.h"                  /* Processor and core peripherals */
 #include "system_ARMv8MML.h"                /* System Header */

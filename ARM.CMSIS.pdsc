@@ -8,8 +8,14 @@
   <url>http://www.keil.com/pack/</url>
 
   <releases>
-    <release version="5.7.0-dev2">
+    <release version="5.7.0-dev3">
       Active development...
+      CMSIS-Core(M):
+        - L1 Cache functions for Armv7-M and later
+      Devices:
+        - Include L1 Cache functions  in ARMv8MML/ARMv81MML devices
+    </release>
+    <release version="5.7.0-dev2">
       CMSIS-Core(M):
         - Cortex-M55 cpu support
         - Cortex-M55 core header file
@@ -616,7 +622,7 @@ The Cortex-M55 processor achieves high compute performance across scalar and vec
       <memory id="IRAM2"                                start="0x20000000" size="0x00020000" init   ="0" default="0"/>
       <!--algorithm name="Device/ARM/Flash/NEW_DEVICE.FLM" start="0x00000000" size="0x00040000"             default="1"/-->
 
-      <device Dname="ARMCM55_DSP_DP_MVE_FP_TZ">
+      <device Dname="ARMCM55_DSP_DP_MVE_FP_TZARMCM55_DSP_DP_MVE_FP_TZ">
         <processor Dcore="Cortex-M55" DcoreVersion="r0p0" Dfpu="DP_FPU" Dmpu="MPU" Dmve="FP_MVE" Ddsp="DSP" Dtz="TZ" Dendian="Configurable" Dclock="10000000"/>
         <description>
           Double Precision Vector Extensions, DSP Instructions, Double Precision Floating Point Unit, TrustZone

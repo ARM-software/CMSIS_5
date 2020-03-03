@@ -2,11 +2,11 @@
  * @file     ARMv81MML_DP.h
  * @brief    CMSIS Core Peripheral Access Layer Header File for
  *           Armv8.1-M Mainline Device Series (configured for Armv8.1-M Mainline with double precision FPU, with DSP extension, with TrustZone)
- * @version  V1.0.0
- * @date     25. February 2019
+ * @version  V1.1.0
+ * @date     03. March 2020
  ******************************************************************************/
 /*
- * Copyright (c) 2009-2019 Arm Limited. All rights reserved.
+ * Copyright (c) 2009-2020 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -102,6 +102,8 @@ typedef enum IRQn
 #define __DSP_PRESENT             1U        /* DSP extension present */
 #define __MVE_PRESENT             1U        /* MVE extensions present */
 #define __MVE_FP                  1U        /* MVE floating point present */
+#define __ICACHE_PRESENT          1U
+#define __DCACHE_PRESENT          1U
 
 #include "core_armv81mml.h"                 /* Processor and core peripherals */
 #include "system_ARMv81MML.h"               /* System Header */
