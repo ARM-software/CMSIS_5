@@ -21,8 +21,8 @@
  * Title:        arm_q7_to_q15_with_offset.c
  * Description:  Converts the elements of the Q7 vector to Q15 vector with an added offset
  *
- * $Date:        February 27, 2020
- * $Revision:    V.2.0.1
+ * $Date:        March 3, 2020
+ * $Revision:    V.2.0.2
  *
  * Target Processor:  Cortex-M cores
  *
@@ -76,22 +76,18 @@ void arm_q7_to_q15_with_offset(const q7_t *src,
     block_cnt = block_size >> 2;
 
     /* First part of the processing with loop unrolling.  Compute 4 outputs at a time. */
+    const q31_t offset_q15x2 = __PKHBT(offset, offset, 16);
     while (block_cnt > 0)
     {
         /* convert from q7 to q15 and then store the results in the destination buffer */
         in_q7x4 = arm_nn_read_q7x4_ia(&src);
-        q31_t offset_q15x2 = __PKHBT(offset, offset, 16);
 
         /* Extract and sign extend each of the four q7 values to q15 */
-        in_q15x2_1 = __SXTB16(__ROR(in_q7x4, 8));
-        in_q15x2_2 = __SXTB16(in_q7x4);
+        in_q15x2_1 = __SXTAB16(offset_q15x2, __ROR(in_q7x4, 8));
+        in_q15x2_2 = __SXTAB16(offset_q15x2, in_q7x4);
 
         out_q15x2_2 = __PKHTB(in_q15x2_1, in_q15x2_2, 16);
-        /* Maximum of 9 bits from the addition is expected */
-        out_q15x2_2 = __SADD16(out_q15x2_2, offset_q15x2);
-
         out_q15x2_1 = __PKHBT(in_q15x2_2, in_q15x2_1, 16);
-        out_q15x2_1 = __SADD16(out_q15x2_1, offset_q15x2);
 
         write_q15x2_ia(&dst, out_q15x2_1);
         write_q15x2_ia(&dst, out_q15x2_2);
