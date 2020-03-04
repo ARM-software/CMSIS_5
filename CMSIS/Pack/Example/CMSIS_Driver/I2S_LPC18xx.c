@@ -1313,7 +1313,7 @@ static int32_t I2S_Control (uint32_t control, uint32_t arg1, uint32_t arg2, I2S_
 
   // Frame length
   val = ((arg1 & ARM_SAI_FRAME_LENGTH_Msk) >> ARM_SAI_FRAME_LENGTH_Pos) + 1;
-  if ((val != 0U) && (val != (data_bits * 2))) { return ARM_SAI_ERROR_FRAME_LENGHT; }
+  if ((val != 0U) && (val != (data_bits * 2))) { return ARM_SAI_ERROR_FRAME_LENGTH; }
 
   // Audio Frequency
   if (master == 1U) {

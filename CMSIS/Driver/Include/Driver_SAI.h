@@ -173,7 +173,8 @@ extern "C"
 #define ARM_SAI_ERROR_AUDIO_FREQ            (ARM_DRIVER_ERROR_SPECIFIC - 8)     ///< Specified Audio frequency not supported
 #define ARM_SAI_ERROR_MCLK_PIN              (ARM_DRIVER_ERROR_SPECIFIC - 9)     ///< Specified MCLK Pin setting not supported
 #define ARM_SAI_ERROR_MCLK_PRESCALER        (ARM_DRIVER_ERROR_SPECIFIC - 10)    ///< Specified MCLK Prescaler not supported
-#define ARM_SAI_ERROR_FRAME_LENGHT          (ARM_DRIVER_ERROR_SPECIFIC - 11)    ///< Specified Frame length not supported
+#define ARM_SAI_ERROR_FRAME_LENGTH          (ARM_DRIVER_ERROR_SPECIFIC - 11)    ///< Specified Frame length not supported
+#define ARM_SAI_ERROR_FRAME_LENGHT          (ARM_DRIVER_ERROR_SPECIFIC - 11)    ///< Specified Frame length not supported @deprecated use \ref ARM_SAI_ERROR_FRAME_LENGTH instead
 #define ARM_SAI_ERROR_FRAME_SYNC_WIDTH      (ARM_DRIVER_ERROR_SPECIFIC - 12)    ///< Specified Frame Sync width not supported
 #define ARM_SAI_ERROR_FRAME_SYNC_POLARITY   (ARM_DRIVER_ERROR_SPECIFIC - 13)    ///< Specified Frame Sync polarity not supported
 #define ARM_SAI_ERROR_FRAME_SYNC_EARLY      (ARM_DRIVER_ERROR_SPECIFIC - 14)    ///< Specified Frame Sync early not supported
