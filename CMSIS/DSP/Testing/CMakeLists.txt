@@ -68,6 +68,7 @@ endfunction()
 
 option(BENCHMARK "Benchmarking compiled" OFF)
 option(EXTBENCH "Benchmarking with external traces" OFF)
+option(NN "NN Tests included" OFF)
 
 project(Testing)
 
@@ -84,12 +85,19 @@ set(TESTFRAMEWORK ON)
 include(config)
 
 add_subdirectory(../Source bin_dsp)
+if (NN)
 add_subdirectory(${ROOT}/CMSIS/NN/Source bin_nn)
+endif()
 
 add_library(TestingLib STATIC)
 add_library(FrameworkLib STATIC)
 
 if (BENCHMARK)
+set (NNSRC
+  Source/Benchmarks/FullyConnectedBench.cpp
+  Source/Benchmarks/PoolingBench.cpp
+  )
+
 set(TESTSRC 
   Source/Benchmarks/BasicMathsBenchmarksF32.cpp
   Source/Benchmarks/BasicMathsBenchmarksQ31.cpp
@@ -131,11 +139,16 @@ set(TESTSRC
   Source/Benchmarks/TransformF32.cpp
   Source/Benchmarks/TransformQ31.cpp
   Source/Benchmarks/TransformQ15.cpp
-  Source/Benchmarks/FullyConnectedBench.cpp
-  Source/Benchmarks/PoolingBench.cpp
   )
 target_include_directories(TestingLib PRIVATE Include/Benchmarks)
 else()
+
+set(NNSRC
+  Source/Tests/NNSupport.cpp
+  Source/Tests/Pooling.cpp
+  Source/Tests/Softmax.cpp
+  Source/Tests/FullyConnected.cpp
+  )
 
 set(TESTSRC 
   Source/Tests/BasicTestsF32.cpp
@@ -177,7 +190,6 @@ set(TESTSRC
   Source/Tests/BinaryTestsF32.cpp
   Source/Tests/BinaryTestsQ31.cpp
   Source/Tests/BinaryTestsQ15.cpp
-  Source/Tests/FullyConnected.cpp
   Source/Tests/DECIMF32.cpp
   Source/Tests/DECIMQ31.cpp
   Source/Tests/DECIMQ15.cpp
@@ -193,13 +205,10 @@ set(TESTSRC
   Source/Tests/BIQUADF32.cpp
   Source/Tests/BIQUADQ31.cpp
   Source/Tests/BIQUADQ15.cpp
-  Source/Tests/Pooling.cpp
-  Source/Tests/Softmax.cpp
   Source/Tests/InterpolationTestsF32.cpp
   Source/Tests/InterpolationTestsQ31.cpp
   Source/Tests/InterpolationTestsQ15.cpp
   Source/Tests/InterpolationTestsQ7.cpp
-  Source/Tests/NNSupport.cpp
   Source/Tests/ExampleCategoryF32.cpp
   Source/Tests/ExampleCategoryQ31.cpp
   Source/Tests/ExampleCategoryQ15.cpp
@@ -231,6 +240,11 @@ disableOptimization(FrameworkLib)
 
 
 target_sources(TestingLib PRIVATE ${TESTSRC})
+
+if(NN)
+  target_sources(TestingLib PRIVATE ${NNSRC})
+endif()
+
 target_sources(TestingLib PRIVATE testmain.cpp)
 target_sources(TestingLib PRIVATE GeneratedSource/TestDesc.cpp)
 
@@ -247,7 +261,9 @@ endif()
 
 ### Includes
 target_link_libraries(TestingLib PRIVATE CMSISDSP)
+if(NN)
 target_link_libraries(TestingLib PRIVATE CMSISNN)
+endif()
 target_include_directories(TestingLib PRIVATE FrameworkInclude)
 target_include_directories(TestingLib PRIVATE GeneratedInclude)
 
