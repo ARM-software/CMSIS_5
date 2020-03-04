@@ -21,8 +21,8 @@
  * Title:        arm_nnfunctions.h
  * Description:  Public header file for CMSIS NN Library
  *
- * $Date:        February 27, 2020
- * $Revision:    V.1.0.4
+ * $Date:        March 4, 2020
+ * $Revision:    V.1.1.4
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -979,7 +979,7 @@ extern    "C"
                                        const int32_t dilation_x,
                                        const int32_t dilation_y,
                                        int16_t *buffer_a);
-    
+
 /**
    * @brief Optimized s8 depthwise convolution function with constraint that in_channel equals out_channel
    * @param[in]       input      pointer to input tensor. Range: int8, format: [H,W,in_ch]
@@ -1640,10 +1640,7 @@ extern    "C"
    *                                     <code>ARM_MATH_SUCCESS</code> - Successful operation
    *                                     <code>ARM_MATH_ARGUMENT_ERROR</code> - Implementation not available
    *
-   * @note This pooling function is input-destructive. Input data is undefined after calling this function.
-   *
    * @details
-   *    - The pooling function is implemented as split x-pooling then y-pooling.
    *    - Supported Framework: TensorFlow Lite
    *
    */

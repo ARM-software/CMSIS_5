@@ -21,47 +21,16 @@
  * Title:        arm_avgpool_s8.c
  * Description:  Pooling function implementations
  *
- * $Date:        February 27, 2020
- * $Revision:    V.1.0.1
+ * $Date:        March 4,2020
+ * $Revision:    V.1.1.1
  *
- * Target Processor:  Cortex-M and Cortex-A cores
+ * Target Processor:  Cortex-M CPUs
  *
  * -------------------------------------------------------------------- */
 
 #include "arm_math.h"
 #include "arm_nnfunctions.h"
 
-
-#if defined (ARM_MATH_DSP) && !defined (ARM_MATH_MVEI)
-
-static void buffer_scale_back_q15_to_q7(q15_t * buffer, q7_t * target, uint16_t length, uint16_t scale)
-{
-    int       i;
-
-    for (i = 0; i < length; i++)
-    {
-
-        target[i] = (q7_t) (buffer[i] / scale);
-    }
-}
-
-static void buffer_scale_back_q15_to_q7_and_clamp(q15_t * buffer, q7_t * target, uint16_t length, uint16_t count,const int act_min,
-  const int act_max)
-{
-    int       i;
-    int sum;
-
-    for (i = 0; i < length; i++)
-    {
-        sum = buffer[i] > 0 ? (buffer[i] + count / 2) / count : (buffer[i] - count / 2) / count;
-
-        sum = MAX(sum, act_min);
-        sum = MIN(sum, act_max);
-
-        target[i] = (q7_t) (sum);
-    }
-}
-#endif
 /**
  *  @ingroup groupNN
  */
@@ -78,8 +47,7 @@ static void buffer_scale_back_q15_to_q7_and_clamp(q15_t * buffer, q7_t * target,
    *
    */
 
-#if defined (ARM_MATH_MVEI)
-
+#if defined(ARM_MATH_MVEI)
 
 arm_status arm_avgpool_s8(const int dim_src_height,
                           const int dim_src_width,
@@ -260,97 +228,6 @@ arm_status arm_avgpool_s8(const int dim_src_height,
                           int8_t *dst)
 {
 
-#if defined (ARM_MATH_DSP)
-
-    /* Run the following code for Cortex-M4 and Cortex-M7 */
-
-    q15_t    *buffer = (q15_t *) bufferA;
-    int16_t   i_x, i_y;
-    int16_t   count = 0;
-
-    /* first does the pooling along x axis */
-    for (i_y = 0; i_y < dim_src_height; i_y++)
-    {
-
-        for (i_x = 0; i_x < dim_dst_width; i_x++)
-        {
-            /* for each output sample */
-            q7_t     *target = src + (i_y * dim_src_width + i_x) * ch_src;
-            q7_t     *win_start;
-            q7_t     *win_stop;
-            if (i_x * stride_width - padding_width < 0)
-            {
-                win_start = target;
-            } else
-            {
-                win_start = src + (i_y * dim_src_width + i_x * stride_width - padding_width) * ch_src;
-            }
-
-            if (i_x * stride_width - padding_width + dim_kernel_width >= dim_src_width)
-            {
-                win_stop = src + (i_y * dim_src_width + dim_src_width) * ch_src;
-            } else
-            {
-                win_stop = src + (i_y * dim_src_width + i_x * stride_width - padding_width + dim_kernel_width) * ch_src;
-            }
-            /* first step is to copy over initial data */
-            arm_q7_to_q15_no_shift(win_start, buffer, ch_src);
-            count = 1;
-
-            /* start the average operation from the second part */
-            win_start += ch_src;
-            for (; win_start < win_stop; win_start += ch_src)
-            {
-                arm_nn_accumulate_q7_to_q15(buffer, win_start, ch_src);
-                count++;
-            }
-            buffer_scale_back_q15_to_q7(buffer, target, ch_src, count);
-        }
-    }
-
-
-    /* then does the pooling along y axis */
-    for (i_y = 0; i_y < dim_dst_height; i_y++)
-    {
-        /* for each output row */
-        q7_t     *target = dst + i_y * dim_dst_width * ch_src;
-        q7_t     *row_start;
-        q7_t     *row_end;
-        /* setting the starting row */
-        if (i_y * stride_height - padding_height < 0)
-        {
-            row_start = src;
-        } else
-        {
-            row_start = src + (i_y * stride_height - padding_height) * dim_src_width * ch_src;
-        }
-        /* setting the stopping row */
-        if (i_y * stride_height - padding_height + dim_kernel_height >= dim_src_height)
-        {
-            row_end = src + dim_src_height * dim_src_width * ch_src;
-        } else
-        {
-            row_end = src + (i_y * stride_height - padding_height + dim_kernel_height) * dim_src_width * ch_src;
-        }
-
-        /* copy over the first row */
-        arm_q7_to_q15_no_shift(row_start, buffer, dim_dst_width * ch_src);
-        count = 1;
-
-        /* move over to next row */
-        row_start += ch_src * dim_src_width;
-
-        for (; row_start < row_end; row_start += dim_src_width * ch_src)
-        {
-            arm_nn_accumulate_q7_to_q15(buffer, row_start, dim_dst_width * ch_src);
-
-            count++;
-        }
-        buffer_scale_back_q15_to_q7_and_clamp(buffer, target, dim_dst_width * ch_src, count,act_min,act_max);
-    }
-
-#else
-
 /* Reference C code adapted from CMSIS-NN arm_avepool_q7_HWC.
  */
     (void)bufferA;
@@ -384,22 +261,18 @@ arm_status arm_avgpool_s8(const int dim_src_height,
             }
         }
     }
-#endif
+
     return ARM_MATH_SUCCESS;
 }
 
-#endif /* ARM_MATH_HELIUM */
+#endif /* ARM_MATH_MVEI */
 
 int32_t arm_avgpool_s8_get_buffer_size(const int dim_dst_width,
                                        const int ch_src)
 {
-#if defined(ARM_MATH_DSP) && !defined(ARM_MATH_MVEI)
-    return (ch_src * dim_dst_width) * sizeof(int16_t);
-#else
     (void)dim_dst_width;
     (void)ch_src;
     return 0;
-#endif
 }
 /**
  * @} end of Pooling group
