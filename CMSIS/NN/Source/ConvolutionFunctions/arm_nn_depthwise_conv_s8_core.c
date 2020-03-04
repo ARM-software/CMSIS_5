@@ -21,8 +21,8 @@
  * Title:        arm_nn_depthwise_conv_s8_core.c
  * Description:  Depthwise convolution on im2col buffers.
  *
- * $Date:        January 27 2020
- * $Revision:    V.1.0.1
+ * $Date:        March 3, 2020
+ * $Revision:    V.1.0.2
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -166,15 +166,15 @@ q7_t *arm_nn_depthwise_conv_s8_core(const q7_t *row,
             const int16_t *col_pos_0 = col + ch_idx;
             const int16_t *col_pos_1 = col_pos_0 + single_buffer_size;
 
-            const int8_t *row_pos_0 = row + ch_idx;
-            const int8_t *row_pos_1 = row_pos_0;
+            const int8_t *row_pos = row + ch_idx;
             int32_t sum_0 = bias[i];
             int32_t sum_1 = bias[i];
 
-            for (int i = 0; i < kernel_size; i++)
+            for (int j = 0; j < kernel_size; j++)
             {
-                sum_0 += row_pos_0[i * num_ch] * col_pos_0[i * num_ch];
-                sum_1 += row_pos_1[i * num_ch] * col_pos_1[i * num_ch];
+                const int8_t row_val = row_pos[j * num_ch];
+                sum_0 += row_val * col_pos_0[j * num_ch];
+                sum_1 += row_val * col_pos_1[j * num_ch];
             }
             col_0_sum[i] = sum_0;
             col_1_sum[i] = sum_1;

@@ -21,8 +21,8 @@
  * Title:        arm_depthwise_conv_s8.c
  * Description:	 s8 version of depthwise convolution.
  *
- * $Date:        January 2019
- * $Revision:    V.1.0.0
+ * $Date:        March 4, 2020
+ * $Revision:    V.1.0.1
  *
  * Target Processor:  Cortex-M cores
  *
@@ -142,6 +142,7 @@ static void depthwise_conv_s8_generic(const q7_t *input,
                                       const int32_t output_activation_min,
                                       const int32_t output_activation_max)
 {
+    (void)output_ch;
     int i_out = 0;
     for (int i_out_y = 0; i_out_y < output_y; i_out_y++)
     {
