@@ -371,9 +371,9 @@ void DeleteMutex (osMutexId_t mutex_id)  {
 \var osMutexAttr_t::attr_bits
 \details
 The following bit masks can be used to set options:
- - \ref osMutexRecursive: a thread can consume the mutex multiple times without locking itself.
- - \ref osMutexPrioInherit: the owner thread inherits the priority of a (higher priority) waiting thread
- - \ref osMutexRobust: the mutex is automatically released when owner thread is terminated.
+ - \ref osMutexRecursive : a thread can consume the mutex multiple times without locking itself.
+ - \ref osMutexPrioInherit : the owner thread inherits the priority of a (higher priority) waiting thread.
+ - \ref osMutexRobust : the mutex is automatically released when owner thread is terminated.
 
 Use logical \em 'OR' operation to select multiple options, for example:
 \code
