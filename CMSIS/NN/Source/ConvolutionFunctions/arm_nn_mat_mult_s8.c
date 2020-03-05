@@ -21,8 +21,8 @@
  * Title:        arm_nn_mat_mult_s8.c
  * Description:  General Matrix-multiplication function
  *
- * $Date:        March 1, 2020
- * $Revision:    V.2.0.0
+ * $Date:        March 5, 2020
+ * $Revision:    V.2.0.1
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -74,7 +74,7 @@ q7_t *arm_nn_mat_mult_s8(const q7_t *input_row,
             for (int i_row_loop = 0; i_row_loop < row_loop_cnt; i_row_loop++)
             {
                 mve_pred16_t p = vctp16q(row_len_tmp);
-                const int16x8_t offset = vdupq_x_n_s16(col_offset, p);
+                const int16x8_t offset = vdupq_m_n_s16(vuninitializedq_s16(), col_offset, p);
                 row_len_tmp -= 8;
 
                 int16x8_t r0 = vldrbq_z_s16(ip_r0, p);
@@ -130,7 +130,7 @@ q7_t *arm_nn_mat_mult_s8(const q7_t *input_row,
                 for (int i_row_loop = 0; i_row_loop < row_loop_cnt; i_row_loop++)
                 {
                     const mve_pred16_t p = vctp16q(row_len_tmp);
-                    const int16x8_t offset = vdupq_x_n_s16(col_offset, p);
+                    const int16x8_t offset = vdupq_m_n_s16(vuninitializedq_s16(), col_offset, p);
                     row_len_tmp -= 8;
 
                     int16x8_t r0 = vldrbq_z_s16(ip_r0, p);
