@@ -103,6 +103,7 @@
       <td>
        - Fixed thread priority restore on mutex acquire timeout (when priority inherit is used).
        - Enhanced support for Armv8-M (specifying thread TrustZone module identifier is optional).
+       - Updated configuration default values (Global Dynamic Memory and Thread Stack).
       </td>
     </tr>
     <tr>
