@@ -21,8 +21,8 @@
  * Title:        arm_nnsupportfunctions.h
  * Description:  Public header file of support functions for CMSIS NN Library
  *
- * $Date:        March 3, 2020
- * $Revision:    V.4.0.1
+ * $Date:        March 6, 2020
+ * $Revision:    V.4.0.2
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -652,7 +652,7 @@ __STATIC_FORCEINLINE void arm_memcpy_q7(q7_t *__RESTRICT dst,
     for (int i = 0; i < block_count; i++)
     {
         mve_pred16_t p = vctp8q(block_size);
-        int8x16_t cpy = vld1q_z_s8(src, p);
+        int8x16_t cpy = vldrbq_z_s8(src, p);
         vstrbq_p_s8(dst, cpy, p);
         block_size -=16;
         dst += 16;
