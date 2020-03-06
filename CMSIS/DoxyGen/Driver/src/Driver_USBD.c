@@ -251,6 +251,8 @@ int32_t ARM_USBD_DeviceSetAddress (uint8_t dev_addr)  {
 \fn int32_t ARM_USBD_DeviceSetAddress (uint8_t dev_addr)
 \details
 Assigns an address to the device.
+\note This function is called after status stage of the Set Address request (after IN packet in status stage was sent with the old address).
+
 *****************************************************************************************************************/
 
 int32_t ARM_USBD_ReadSetupPacket (uint8_t *setup)  {
