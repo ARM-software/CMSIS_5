@@ -146,13 +146,7 @@
       <xs:enumeration value="int64_t *"/>
     </xs:restriction>
   </xs:simpleType>
-  <!-- nvicPrioBitsType specifies the integer value range for the number of bits used in NVIC to encode priority levels -->
-  <xs:simpleType name="nvicPrioBitsType">
-    <xs:restriction base="xs:integer">
-      <xs:minInclusive value="2"/>
-      <xs:maxInclusive value="8"/>
-    </xs:restriction>
-  </xs:simpleType>
+
   <!-- dimableIdentifierType specifies the subset and sequence of characters used for specifying identifiers that may contain %s from dim. -->
   <!-- this is particularly important as these are used in ANSI C Structures during the device header file generation -->
   <xs:simpleType name="dimableIdentifierType">
