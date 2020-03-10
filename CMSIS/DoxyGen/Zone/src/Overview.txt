@@ -214,11 +214,11 @@ The CMSIS-Zone utility is part of the <a href="https://github.com/ARM-software/c
 
 The following steps explain the setup of an Eclipse enviornment with CMSIS-Zone:
 
-\todo the setup of the Java Runtime Environment is unclear as the term JRE 1.8 is not used on the Oracle web pages
-
-  1. Get and install an <b>Java Runtime Environment (JRE) 1.8</b> or later to your machine, choose one of
-    - Oracle JRE (note the license terms for commercial usage)
-    - OpenJDK
+  1. Download and install Java SE version 13.0.2 or later on your machine. You can use one of the following installers:
+	- Oracle SE JDK (note the license terms for commercial usage)
+	- OpenJDK
+	.  
+     Make sure that the path to the \\bin folder in the Java installation is added to the \c PATH environment variable.
 
   2. <a href="https://github.com/ARM-software/cmsis-pack-eclipse/releases/latest" target="_blank"><b>Download</b></a> the latest <b>CmsisPackPlugIn#.#.#.zip</b> file, for example CmsisPackPlugIn2.5.0.zip
 
