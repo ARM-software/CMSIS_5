@@ -4,21 +4,47 @@
 
 <b>CMSIS-Build</b> is a set of tools, software frameworks, and work flows that improve productivity:
 
+  - \ref cprjFormat_pg "CMSIS-CPRJ Project Description File" that is generic and allows IDEs and command-line build tools to share the same projects.
+
   - Continuous Integration (CI) work flow for projects that are based on software components framed in CMSIS-Pack format.
   
   - Software Layers for code reuse across different targets. A software layer is a pre-configured software component selection and user source code. 
 
-  - Virtual I/O which is a set of generic input/output functions for example and test code.  It allows to migrate fast from evaluation boards to production hardware.
+  - \ref vio_pg "CMSIS-VIO Virtual I/O" which is a set of generic input/output functions for example and test code.  It allows to migrate fast from evaluation boards to production hardware.
+
+The figure below shows how the <b>CMSIS-Build</b> components may be used to create a IoT cloud application:
+  - The <b>Board I/O</b> layer contains the drivers and device configuration for a specific evaluation board.
+  - The <b>Cloud</b> layer implements the software components that are required to connect to a Cloud Service Provider (CSP).
+  - The <b>Application Code</b> may start with reference example and is expanded to application specific requirements that access specialized peripherals.
+
   
 \image html "Layer.png" "Software Layers and Virtual I/O"  
 
-\todo add link to CMSIS-pack for "generic project format"
+Software layers and Virtual I/O simplify these use cases:
+
+<b>Port software from evaluation board to custom hardware:</b><br>
+- Frequently the software development starts on a evaluation board for various reasons, for example because production hardware is not yet available.
+The CMSIS-VIO component allows you to use demo I/O capabilities of an evaluation kit and disconnect it when moving to production hardware.
+When production hardware uses a different device configuration or different I/O drivers, the <b>Board I/O</b> layer may be swapped.
+
+<b>Deliver reference examples for many different evaluation boards:</b><br>
+- Reference examples are a great way to demonstrate a software solution. It is however expensive to support many different evaluation boards.
+The CMSIS-VIO and CMSIS-Driver components gives reference examples a consistent interface to target hardware. When such a consistent set
+of components is available as <b>Board I/O</b> layer for many different evaluation boards it allows to run a <b>Cloud</b> layer together with
+a reference example. The tools for \ref CmdLineBuild allow to combine various different layers and allows in this way to generate several different
+reference examples on a range of evaluation boards.
+
+\section CB_Components  Components of CMSIS-Build
+
+<b>Specification</b> of a generic project file format:
  - \ref cprjFormat_pg describes all XML elements that are available for project descriptions and their usage.
 
-<b>Tools</b> that support \ref CmdLineBuild with software packs and the generic project format:
+<b>Tools</b> that support \ref CmdLineBuild with software packs and the generic project file format:
 
   - \ref cbuildgen generates a standard MAKE file and allows to manage software layers.
   - \ref ccmerge updates configuration files that are based on <a href="../../Pack/html/configWizard.html"><b>PackConfiguration Wizard Annotations</b></a>.
+
+
   
 
 */
