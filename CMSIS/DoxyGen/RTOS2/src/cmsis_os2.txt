@@ -119,6 +119,7 @@ The following sections provide further details:
 \ifnot FuSaRTS
  - \subpage creating_RTX5_LIB explains how to build your own CMSIS-RTOS RTX v5 library.
 \endif
+ - \subpage rtos2_tutorial is an introduction into the usage of Keil RTX5 based on real-life examples.
  - \subpage technicalData5 lists hardware, software, and resource requirements, supplied files, and supported tool chains.
  - \subpage misraCompliance5 describes the violations to the MISRA standard.
 */
