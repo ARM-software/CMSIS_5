@@ -22,8 +22,8 @@
  * limitations under the License.
  */
 
-#if defined (ARMCM55_DSP_DP_MVE_FP_TZ)
-  #include "ARMCM55_DSP_DP_MVE_FP_TZ.h"
+#if defined (ARMCM55)
+  #include "ARMCM55.h"
 #else
   #error device not specified!
 #endif

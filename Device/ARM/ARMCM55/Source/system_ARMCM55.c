@@ -23,8 +23,8 @@
  * limitations under the License.
  */
 
-#if defined (ARMCM55_DSP_DP_MVE_FP_TZ)
-  #include "ARMCM55_DSP_DP_MVE_FP_TZ.h"
+#if defined (ARMCM55)
+  #include "ARMCM55.h"
 
   #if defined (__ARM_FEATURE_CMSE) &&  (__ARM_FEATURE_CMSE == 3U)
     #include "partition_ARMCM55.h"
