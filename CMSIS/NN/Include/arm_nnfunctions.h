@@ -549,6 +549,15 @@ extern    "C"
                                         q15_t *buffer_a);
 
   /**
+   * @brief Get the required buffer size for the fast 1x1 convolution
+   * (non-square shape) s8 convolution function
+   * @param[in]       input_ch              number of input tensor channels
+   * @return          The function returns  required buffer size
+   *
+   */
+    int32_t arm_convolve_1x1_s8_fast_get_buffer_size(const uint16_t input_ch);
+
+  /**
    * @brief 1xn convolution
    * @param[in]      input                pointer to input tensor.  Format: [N, H, W, in_ch]
    * @param[in]      input_x              input tensor dimension x
@@ -608,14 +617,20 @@ extern    "C"
                                     const uint16_t output_x,
                                     q15_t *buffer_a);
 
+
   /**
-   * @brief Get the required buffer size for the fast 1x1 convolution
-   * (non-square shape) s8 convolution function
+   * @brief Get the required additional buffer size for 1xn convolution
+   *
    * @param[in]       input_ch              number of input tensor channels
-   * @return          The function returns  required buffer size
+   * @param[in]       kernel_x              filter/kernel width
+   * @param[in]       kernel_y              filter/kernel height
+   * @return          The function returns  required buffer size(bytes)
    *
    */
-    int32_t arm_convolve_1x1_s8_fast_get_buffer_size(const uint16_t input_ch);
+    int32_t arm_convolve_1_x_n_s8_get_buffer_size(const uint16_t input_ch,
+                                                  const uint16_t kernel_x,
+                                                  const uint16_t kernel_y);
+
 
   /**
    * @brief Q7 version of convolution for RGB image
