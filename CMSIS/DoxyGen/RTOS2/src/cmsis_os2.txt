@@ -1082,7 +1082,7 @@ component will have no effect and the debugger is unable to display any events f
 
 \subsection systemConfig_event_recording Manual event configuration
 
-To disable the generation of events for a specific RTX API call, use the following \#define settings (from <b>rtx_evrt.h</b>) and add these manually 
+To disable the generation of events for a specific RTX API call, use the following \#define settings (from <b>rtx_evr.h</b>) and add these manually 
 to the <b>RTX_Config.h</b> file:
 
 \b Memory \b events \n
