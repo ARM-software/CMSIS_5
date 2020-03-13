@@ -1,8 +1,8 @@
 /**************************************************************************//**
  * @file     cmsis_vio.h
  * @brief    CMSIS Virtual I/O header file
- * @version  V1.1.
- * @date     17. February 2020
+ * @version  V1.4.0
+ * @date     11. March 2020
  ******************************************************************************/
 /*
  * Copyright (c) 2019-2020 Arm Limited. All rights reserved.
@@ -33,67 +33,72 @@
  */
  
 // cvSetSignal: mask values 
-#define cvLED0             (0x1<<0U)   // LED 0 (for 3-color: red)
-#define cvLED1             (0x1<<1U)   // LED 1 (for 3-color: green)
-#define cvLED2             (0x1<<2U)   // LED 2 (for 3-color: blue)
-#define cvLED3             (0x1<<3U)   // LED 3
-#define cvLED4             (0x1<<4U)   // LED 4
-#define cvLED5             (0x1<<5U)   // LED 5
-#define cvLED6             (0x1<<6U)   // LED 6
-#define cvLED7             (0x1<<7U)   // LED 7
+#define cvLED0             (1U << 0)   /// cvSetSignal mask LED 0 (for 3-color: red)
+#define cvLED1             (1U << 1)   /// cvSetSignal mask LED 1 (for 3-color: green)
+#define cvLED2             (1U << 2)   /// cvSetSignal mask LED 2 (for 3-color: blue)
+#define cvLED3             (1U << 3)   /// cvSetSignal mask LED 3
+#define cvLED4             (1U << 4)   /// cvSetSignal mask LED 4
+#define cvLED5             (1U << 5)   /// cvSetSignal mask LED 5
+#define cvLED6             (1U << 6)   /// cvSetSignal mask LED 6
+#define cvLED7             (1U << 7)   /// cvSetSignal mask LED 7
 
-// cvSetSignal: signal values
+/// cvSetSignal: signal values
 #define cvLEDon            (0xFF)      // pattern to turn any LED on
 #define cvLEDoff           (0x00)      // pattern to turn any LED off
 
 
-// cvGetSignal: mask values and return values
-#define cvBUTTON0          (0x1<<0U)   // Push button 0
-#define cvBUTTON1          (0x1<<1U)   // Push button 1
-#define cvBUTTON2          (0x1<<2U)   // Push button 2
-#define cvBUTTON3          (0x1<<3U)   // Push button 3
-#define cvJOYSTICK         (0x1F0)     // Joystick
-#define cvJOYup            (0x010)     // Joystick button: up
-#define cvJOYdown          (0x020)     // Joystick button: down
-#define cvJOYleft          (0x040)     // Joystick button: left
-#define cvJOYright         (0x080)     // Joystick button: right
-#define cvJOYgo            (0x100)     // Joystick button: execute
-
-// cvSetValue / cvGetValue: id values
-#define cvAIN0             (0U)        // Analog input value 0
-#define cvAIN1             (1U)        // Analog input value 1
-#define cvAIN2             (2U)        // Analog input value 2
-#define cvAIN3             (3U)        // Analog input value 3
-#define cvAOUT0            (3U)        // Analog output value 0
-
-// cvSetXYZ / cvGetXZY: id values
-#define cvMotionGyro       (0U)
-#define cvMotionAccelero   (1U)
-#define cvMotionMagneto    (2U)
+/// cvGetSignal: mask values and return values
+#define cvBUTTON0          (1U << 0)   ///< cvGetSignal mask Push button 0
+#define cvBUTTON1          (1U << 1)   ///< cvGetSignal mask Push button 1
+#define cvBUTTON2          (1U << 2)   ///< cvGetSignal mask Push button 2
+#define cvBUTTON3          (1U << 3)   ///< cvGetSignal mask Push button 3
+#define cvJOYup            (1U << 4)   ///< cvGetSignal mask Joystick button: up
+#define cvJOYdown          (1U << 5)   ///< cvGetSignal mask Joystick button: down
+#define cvJOYleft          (1U << 6)   ///< cvGetSignal mask Joystick button: left
+#define cvJOYright         (1U << 7)   ///< cvGetSignal mask Joystick button: right
+#define cvJOYselect        (1U << 8)   ///< cvGetSignal mask Joystick button: select
+#define cvJOYall           (cvJOYup     | \
+                            cvJOYdown   | \
+                            cvJOYleft   | \
+                            cvJOYright  | \
+                            cvJOYselect | ) 
 
 
+/// cvSetValue / cvGetValue: id values
+#define cvAIN0             (0U)        ///< cvSetvalue / cvgetValue Analog input value 0
+#define cvAIN1             (1U)        ///< cvSetvalue / cvgetValue Analog input value 1
+#define cvAIN2             (2U)        ///< cvSetvalue / cvgetValue Analog input value 2
+#define cvAIN3             (3U)        ///< cvSetvalue / cvgetValue Analog input value 3
+#define cvAOUT0            (3U)        ///< cvSetvalue / cvgetValue Analog output value 0
 
-// Defines for cvPrint levels
-#define cvLevelNone             0U          ///< None.
-#define cvLevelHeading          1U          ///< Heading.
-#define cvLevelMessage          2U          ///< Message.
-#define cvLevelError            3U          ///< Error.
 
-/// 3-D vector value.
+/// cvSetXYZ / cvGetXZY: id values
+#define cvMotionGyro       (0U)        ///< cvSetXYZ / cvGetXYZ Gyroscope
+#define cvMotionAccelero   (1U)        ///< cvSetXYZ / cvGetXYZ Accelerometer
+#define cvMotionMagneto    (2U)        ///< cvSetXYZ / cvGetXYZ Magnetometer
+
+
+/// cvPrint: levels
+#define cvLevelNone        (0U)        ///< cvPrint Level None
+#define cvLevelHeading     (1U)        ///< cvPrint Level Heading
+#define cvLevelMessage     (2U)        ///< cvPrint Level Message
+#define cvLevelError       (3U)        ///< cvPrint Level Error
+
+/// 3-D vector value
 typedef struct cvValueXYZ {
-  int32_t   X;          ///< X coordinate.
-  int32_t   Y;          ///< X coordinate.
-  int32_t   Z;          ///< X coordinate.
+  int32_t   X;                         ///< X coordinate
+  int32_t   Y;                         ///< Y coordinate
+  int32_t   Z;                         ///< Z coordinate
 } cvValueXYZ_t;
 
 /// IPv4 Internet Address
 typedef struct cvAddrIPv4 {
-  uint8_t   addr[4];    ///< IPv4 address value.
+  uint8_t   addr[4];                   ///< IPv4 address value
 } cvAddrIPv4_t;
 
 /// IPv6 Internet Address
 typedef struct cvAddrIPv6 {
-  uint8_t   addr[16];   ///< IPv6 address value.
+  uint8_t   addr[16];                  ///< IPv6 address value
 } cvAddrIPv6_t;
 
 #ifdef  __cplusplus

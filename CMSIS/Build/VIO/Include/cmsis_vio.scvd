@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<component_viewer schemaVersion="0.1" xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xs:noNamespaceSchemaLocation="Component_Viewer.xsd">
+<component name="CMSIS Virtual I/O" version="1.0.0"/>
+
+  <typedefs>
+    <typedef name="cvValueXYZ_t" size="12">
+      <member name="X" type="int32_t" offset="0"/>
+      <member name="Y" type="int32_t" offset="4"/>
+      <member name="Z" type="int32_t" offset="8"/>
+    </typedef>
+
+    <typedef name="cvAddrIPv4_t" size="4">
+      <member name="addr" type="uint8_t" size="4"  offset="0"/>
+    </typedef>
+
+    <typedef name="cvAddrIPv6_t" size="16">
+      <member name="addr" type="uint8_t" size="16" offset="0"/>
+    </typedef>
+
+    <typedef name="cvPrintMem_t" size="64">
+      <member name="mem" type="uint8_t" size="64" offset="0"/>
+    </typedef>
+
+  </typedefs>
+
+  <objects>
+    <object name="Virtual I/O">
+      <var name="i" type="int32_t" value="0" />
+
+      <read     name="SignalIn"    type="uint32_t"     symbol="cvSignalIn"/>
+      <read     name="SignalOut"   type="uint32_t"     symbol="cvSignalOut"/>
+      <readlist name="PrintMem"     type="cvPrintMem_t" symbol="cvPrintMem" count="4" />
+      <read     name="Value"        type="int32_t"      symbol="cvValue"    size="3" />
+      <readlist name="ValueXYZ"     type="cvValueXYZ_t" symbol="cvValueXYZ" count="3" />
+
+      <readlist name="IPv4Address"  type="cvAddrIPv4_t" symbol="cvAddrIPv4" count="2" />
+      <readlist name="IPv6Address"  type="cvAddrIPv6_t" symbol="cvAddrIPv6" count="2" />
+
+      <out name="Test I/O">
+        <item property="Signal Bits (Input)"  value="%x[SignalIn]"/>
+        <item property="Signal Bits (Output)" value="%x[SignalOut]"/>
+
+        <item property="Print Memory Array">
+           <list name="i" start="0" limit="PrintMem._count">
+             <item property="Print Memory[%d[i]]" value="%t[PrintMem[i].mem]"/>
+           </list>
+        </item>
+
+        <item property="Value Array">
+           <list name="i" start="0" limit="Value._count">
+             <item property="Value[%d[i]]"  value="%d[Value[i]]"/>
+           </list>
+        </item>
+
+        <item property="ValueXYZ Array">
+           <list name="i" start="0" limit="ValueXYZ._count">
+             <item property="ValueXYZ[%d[i]]" value="X=%d[ValueXYZ[i].X] Y=%d[ValueXYZ[i].Y] Z=%d[ValueXYZ[i].Z]">
+               <item property="X" value="%d[ValueXYZ[i].X]"/>
+               <item property="Y" value="%d[ValueXYZ[i].Y]"/>
+               <item property="Z" value="%d[ValueXYZ[i].Z]"/>
+             </item>
+           </list>
+        </item>
+
+        <item property="IP4 Address Array">
+           <list name="i" start="0" limit="IPv4Address._count">
+             <item property="IP4 Address[%d[i]]" value="%I[IPv4Address[i].addr]"/>
+           </list>
+        </item>
+
+        <item property="IP6 Address Array">
+           <list name="i" start="0" limit="IPv6Address._count">
+             <item property="IP6 Address[%d[i]]" value="%J[IPv6Address[i].addr]"/>
+           </list>
+        </item>
+
+      </out>
+
+    </object>
+  </objects>
+</component_viewer>
