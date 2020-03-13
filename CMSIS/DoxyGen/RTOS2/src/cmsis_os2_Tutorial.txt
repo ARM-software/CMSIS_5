@@ -35,7 +35,8 @@ It is assumed that you have Keil MDK installed on your PC. For download and inst
 the <a href="https://www2.keil.com/mdk5/install/" target="_blank">Getting Started</a> page. Once you have set up the tool,
 open <a href="https://www2.keil.com/mdk5/packinstaller" target="_blank">Pack Installer</a>:
 - Use the <b>Search</b> box on the <b>Devices</b> tab to look for the <b>STM32F103</b> device.
-- On the <b>Packs</b> tab, download and install the <b>Keil:STM32F1xx_DFP</b> and the <b>Hitex:CMSIS_RTOS_Turorial</b> pack.
+- On the <b>Packs</b> tab, download and install the latest <b>Keil:STM32F1xx_DFP</b> pack and the latest
+  <b>Hitex:CMSIS_RTOS2_Turorial</b> pack.
 
 \note It is assumed that you are familiar with Arm Keil MDK and have basic 'C' programming knowledge.
 
@@ -172,8 +173,10 @@ ready to run.
 \subsection rtos2_tutorial_ex1 Exercise 1 - A First CMSIS-RTOS2 Project
 
 Open <a href="https://www2.keil.com/mdk5/packinstaller" target="_blank">Pack Installer</a>:
-- Use the <b>Search</b> box on the <b>Boards</b> tab to look for the <b>CMSIS_RTOS_Tutorial</b> "board".
-- On the <b>Examples</b> tab, copy <b>Ex 1 First Project</b> to your PC and start Keil MDK.
+- Use the <b>Search</b> box on the <b>Boards</b> tab to look for the <b>CMSIS_RTOS_Tutorial (V2.1)</b> "board".
+- On the <b>Examples</b> tab, copy <b>Ex 01 First Project</b> to your PC and start Keil MDK.
+- In the project folder, you will find a file called "Instructions.pdf" that explains the setup and the steps you need to
+  take to successfully finish the exercise.
 
 
 \section rtos2_tutorial_thread_create Creating Threads
@@ -213,6 +216,12 @@ thread1_id = osThreadNew(name_Of_C_Function, (uint32_t)startupParameter,&threadA
 
 \subsection rtos2_tutorial_ex2 Exercise 2 - Creating and Managing Threads 
 
+Open <a href="https://www2.keil.com/mdk5/packinstaller" target="_blank">Pack Installer</a>:
+- Use the <b>Search</b> box on the <b>Boards</b> tab to look for the <b>CMSIS_RTOS_Tutorial (V2.1)</b> "board".
+- On the <b>Examples</b> tab, copy <b>Ex 02 Threads</b> to your PC and start Keil MDK.
+- In the project folder, you will find a file called "Instructions.pdf" that explains the setup and the steps you need to
+  take to successfully finish the exercise.
+
 
 \section rtos2_tutorial_thread_mgmt Thread Management and Priority
 
@@ -244,9 +253,6 @@ same priority. This is used to implement a third form of scheduling called co-op
 \code
 osStatus osThreadYield();		//switch to next ready to run thread at the same priority
 \endcode
-
-
-\subsection rtos2_tutorial_ex2_cont Exercise 2 continued - Creating and Managing Threads
 
 
 \section rtos2_tutorial_ex2_mem_mgmt Memory Management
@@ -296,6 +302,13 @@ memory usage has to be rigorously defined.
 
 \subsection rtos2_tutorial_ex3 Exercise 3 - Memory Model
 
+Open <a href="https://www2.keil.com/mdk5/packinstaller" target="_blank">Pack Installer</a>:
+- Use the <b>Search</b> box on the <b>Boards</b> tab to look for the <b>CMSIS_RTOS_Tutorial (V2.1)</b> "board".
+- On the <b>Examples</b> tab, copy <b>Ex 03 Memory Model</b> to your PC and start Keil MDK.
+- In the project folder, you will find a file called "Instructions.pdf" that explains the setup and the steps you need to
+  take to successfully finish the exercise.
+
+
 
 \section rtos2_tutorial_multi_inst Multiple Instances
 
@@ -310,6 +323,15 @@ to different thread handles. A parameter is also passed to allow each instance t
 ThreadID_1_0 = osThreadNew (thread1, UART1, &ThreadAttr_Task1);
 ThreadID_1_1 = osThreadNew (thread1, UART0, &ThreadAttr_Task1);
 \endcode
+
+
+\subsection rtos2_tutorial_multi_inst_ex4 Exercise 4 - Multiple Instances
+
+Open <a href="https://www2.keil.com/mdk5/packinstaller" target="_blank">Pack Installer</a>:
+- Use the <b>Search</b> box on the <b>Boards</b> tab to look for the <b>CMSIS_RTOS_Tutorial (V2.1)</b> "board".
+- On the <b>Examples</b> tab, copy <b>Ex 04 Multiple Instances</b> to your PC and start Keil MDK.
+- In the project folder, you will find a file called "Instructions.pdf" that explains the setup and the steps you need to
+  take to successfully finish the exercise.
 
 
 \section rtos2_tutorial_thread_join Joinable Threads
@@ -334,7 +356,13 @@ Once \ref osThreadJoin() has been called, the thread will deschedule and enter a
 terminated.
 
 
-\subsection rtos2_tutorial_ex4 Exercise 4 - Joinable Threads
+\subsection rtos2_tutorial_ex4 Exercise 5 - Joinable Threads
+
+Open <a href="https://www2.keil.com/mdk5/packinstaller" target="_blank">Pack Installer</a>:
+- Use the <b>Search</b> box on the <b>Boards</b> tab to look for the <b>CMSIS_RTOS_Tutorial (V2.1)</b> "board".
+- On the <b>Examples</b> tab, copy <b>Ex 05 Join</b> to your PC and start Keil MDK.
+- In the project folder, you will find a file called "Instructions.pdf" that explains the setup and the steps you need to
+  take to successfully finish the exercise.
 
 
 \section rtos2_tutorial_time_mgmt Time Management
@@ -381,6 +409,12 @@ number of kernel functions that allow you to read both the current SysTick count
 
 \subsection rtos2_tutorial_ex6 Exercise 6 - Time Management
 
+Open <a href="https://www2.keil.com/mdk5/packinstaller" target="_blank">Pack Installer</a>:
+- Use the <b>Search</b> box on the <b>Boards</b> tab to look for the <b>CMSIS_RTOS_Tutorial (V2.1)</b> "board".
+- On the <b>Examples</b> tab, copy <b>Ex 06 Time Management</b> to your PC and start Keil MDK.
+- In the project folder, you will find a file called "Instructions.pdf" that explains the setup and the steps you need to
+  take to successfully finish the exercise.
+
 
 \subsection rtos2_tutorial_virtual_timers Virtual Timers
 
@@ -411,6 +445,12 @@ a count period in kernel ticks.
 
 
 \subsection rtos2_tutorial_ex7 Exercise 7 - Virtual Timer
+
+Open <a href="https://www2.keil.com/mdk5/packinstaller" target="_blank">Pack Installer</a>:
+- Use the <b>Search</b> box on the <b>Boards</b> tab to look for the <b>CMSIS_RTOS_Tutorial (V2.1)</b> "board".
+- On the <b>Examples</b> tab, copy <b>Ex 07 Virtual Timers</b> to your PC and start Keil MDK.
+- In the project folder, you will find a file called "Instructions.pdf" that explains the setup and the steps you need to
+  take to successfully finish the exercise.
 
 
 \subsection rtos2_tutorial_idle_thread Idle Thread
@@ -444,6 +484,12 @@ to sleep.
 
 
 \subsection rtos2_tutorial_ex8 Exercise 8 - Idle Thread
+
+Open <a href="https://www2.keil.com/mdk5/packinstaller" target="_blank">Pack Installer</a>:
+- Use the <b>Search</b> box on the <b>Boards</b> tab to look for the <b>CMSIS_RTOS_Tutorial (V2.1)</b> "board".
+- On the <b>Examples</b> tab, copy <b>Ex 08 Idle Thread</b> to your PC and start Keil MDK.
+- In the project folder, you will find a file called "Instructions.pdf" that explains the setup and the steps you need to
+  take to successfully finish the exercise.
 
 
 \section rtos2_tutorial_interthread_com Inter-thread Communication
@@ -486,7 +532,13 @@ int32_t osThreadFlagsClear (int32_t signals);
 \endcode
 
 
-\subsection rtos2_tutorial_ex9 Exercise 9 - Thread Flags
+\subsubsection rtos2_tutorial_ex9 Exercise 9 - Thread Flags
+
+Open <a href="https://www2.keil.com/mdk5/packinstaller" target="_blank">Pack Installer</a>:
+- Use the <b>Search</b> box on the <b>Boards</b> tab to look for the <b>CMSIS_RTOS_Tutorial (V2.1)</b> "board".
+- On the <b>Examples</b> tab, copy <b>Ex 09 Thread Flags</b> to your PC and start Keil MDK.
+- In the project folder, you will find a file called "Instructions.pdf" that explains the setup and the steps you need to
+  take to successfully finish the exercise.
 
 
 \subsection rtos2_tutorial_event_flags Event Flags
@@ -516,7 +568,13 @@ EventFlag_LED = osEventFlagsNew(&EventFlagAttr_LED);
 Refer to \ref CMSIS_RTOS_EventFlags for more information.
 
 
-\subsection rtos2_tutorial_ex10 Exercise 10 - Event Flags
+\subsubsection rtos2_tutorial_ex10 Exercise 10 - Event Flags
+
+Open <a href="https://www2.keil.com/mdk5/packinstaller" target="_blank">Pack Installer</a>:
+- Use the <b>Search</b> box on the <b>Boards</b> tab to look for the <b>CMSIS_RTOS_Tutorial (V2.1)</b> "board".
+- On the <b>Examples</b> tab, copy <b>Ex 10 Event Flags</b> to your PC and start Keil MDK.
+- In the project folder, you will find a file called "Instructions.pdf" that explains the setup and the steps you need to
+  take to successfully finish the exercise.
 
 
 \subsection rtos2_tutorial_semaphores Semaphores
@@ -575,9 +633,6 @@ osStatus osSemaphoreRelease(osSemaphoreId_t semaphore_id);
 All semaphore functions are listed in the \ref CMSIS_RTOS_SemaphoreMgmt "reference".
 
 
-\subsubsection rtos2_tutorial_ex11 Exercise 11 - Semaphore Signalling
-
-
 \subsubsection rtos2_tutorial_sem_usage Using Semaphores
 
 Although semaphores have a simple set of OS calls, they have a wide range of synchronizing applications. This makes them
@@ -613,6 +668,15 @@ void task2(void) {
 In this case the semaphore is used to ensure that the code in \c FuncA() is executed before the code in \c FuncB().
 
 
+\subsubsection rtos2_tutorial_ex11 Exercise 11 - Semaphore Signalling
+
+Open <a href="https://www2.keil.com/mdk5/packinstaller" target="_blank">Pack Installer</a>:
+- Use the <b>Search</b> box on the <b>Boards</b> tab to look for the <b>CMSIS_RTOS_Tutorial (V2.1)</b> "board".
+- On the <b>Examples</b> tab, copy <b>Ex 11 Semaphore Signalling</b> to your PC and start Keil MDK.
+- In the project folder, you will find a file called "Instructions.pdf" that explains the setup and the steps you need to
+  take to successfully finish the exercise.
+
+
 \subsubsection rtos2_tutorial_sem_multi Multiplex
 
 A multiplex is used to limit the number of threads that can access a critical section of code. For example, this could be a
@@ -640,6 +704,12 @@ more than five threads are attempting to call \c processBuffer(), the sixth must
 
 
 \subsubsection rtos2_tutorial_ex12 Exercise 12 - Multiplex
+
+Open <a href="https://www2.keil.com/mdk5/packinstaller" target="_blank">Pack Installer</a>:
+- Use the <b>Search</b> box on the <b>Boards</b> tab to look for the <b>CMSIS_RTOS_Tutorial (V2.1)</b> "board".
+- On the <b>Examples</b> tab, copy <b>Ex 12 Multiplex</b> to your PC and start Keil MDK.
+- In the project folder, you will find a file called "Instructions.pdf" that explains the setup and the steps you need to
+  take to successfully finish the exercise.
 
 
 \subsubsection rtos2_tutorial_sem_rend Rendezvous
@@ -678,6 +748,15 @@ void thread2(void) {
 \endcode
 In the above case, the two semaphores will ensure that both threads will rendezvous and then proceed to execute \c FuncA2()
 and \c FuncB2().
+
+\subsubsection rtos2_tutorial_sem_rend_ex13 Exercise 13 - Rendezvous
+
+Open <a href="https://www2.keil.com/mdk5/packinstaller" target="_blank">Pack Installer</a>:
+- Use the <b>Search</b> box on the <b>Boards</b> tab to look for the <b>CMSIS_RTOS_Tutorial (V2.1)</b> "board".
+- On the <b>Examples</b> tab, copy <b>Ex 13 Rendezvous</b> to your PC and start Keil MDK.
+- In the project folder, you will find a file called "Instructions.pdf" that explains the setup and the steps you need to
+  take to successfully finish the exercise.
+
 
 \subsubsection rtos2_tutorial_sem_barr_turn Barrier Turnstile
 
@@ -734,6 +813,12 @@ However, the barrier could be used to synchronise five unique threads.
 
 \subsubsection rtos2_tutorial_ex14 Exercise 14 - Semaphore Barrier
 
+Open <a href="https://www2.keil.com/mdk5/packinstaller" target="_blank">Pack Installer</a>:
+- Use the <b>Search</b> box on the <b>Boards</b> tab to look for the <b>CMSIS_RTOS_Tutorial (V2.1)</b> "board".
+- On the <b>Examples</b> tab, copy <b>Ex 14 Barrier</b> to your PC and start Keil MDK.
+- In the project folder, you will find a file called "Instructions.pdf" that explains the setup and the steps you need to
+  take to successfully finish the exercise.
+
 
 \subsubsection rtos2_tutorial_sem_caveats Semaphore Caveats
 
@@ -785,6 +870,12 @@ underlying chip registers.
 
 
 \subsubsection rtos2_tutorial_ex15 Exercise 15 - Mutex
+
+Open <a href="https://www2.keil.com/mdk5/packinstaller" target="_blank">Pack Installer</a>:
+- Use the <b>Search</b> box on the <b>Boards</b> tab to look for the <b>CMSIS_RTOS_Tutorial (V2.1)</b> "board".
+- On the <b>Examples</b> tab, copy <b>Ex 15 Mutex</b> to your PC and start Keil MDK.
+- In the project folder, you will find a file called "Instructions.pdf" that explains the setup and the steps you need to
+  take to successfully finish the exercise.
 
 
 \subsubsection rtos2_tutorial_mutex_caveats Mutex Caveats
@@ -850,6 +941,12 @@ result = osMessageQueueGet(Q_LED,&dataOut,messagePriority,osWaitForever);
 
 \subsubsection rtos2_tutorial_ex16 Exercise 16 - Message Queue
 
+Open <a href="https://www2.keil.com/mdk5/packinstaller" target="_blank">Pack Installer</a>:
+- Use the <b>Search</b> box on the <b>Boards</b> tab to look for the <b>CMSIS_RTOS_Tutorial (V2.1)</b> "board".
+- On the <b>Examples</b> tab, copy <b>Ex 16 Message Queue</b> to your PC and start Keil MDK.
+- In the project folder, you will find a file called "Instructions.pdf" that explains the setup and the steps you need to
+  take to successfully finish the exercise.
+
 
 \subsubsection rtos2_tutorial_ext_msg_queue Extended Message Queue
 
@@ -870,6 +967,12 @@ Q_LED = osMessageQueueNew(16,sizeof(message_t),&queueAttr_Q_LED );
 
 
 \subsubsection rtos2_tutorial_ex17 Exercise 17 - Message Queue
+
+Open <a href="https://www2.keil.com/mdk5/packinstaller" target="_blank">Pack Installer</a>:
+- Use the <b>Search</b> box on the <b>Boards</b> tab to look for the <b>CMSIS_RTOS_Tutorial (V2.1)</b> "board".
+- On the <b>Examples</b> tab, copy <b>Ex 17 Extended Message Queue</b> to your PC and start Keil MDK.
+- In the project folder, you will find a file called "Instructions.pdf" that explains the setup and the steps you need to
+  take to successfully finish the exercise.
 
 
 \subsubsection rtos2_tutorial_mem_pool Memory Pool
@@ -940,6 +1043,12 @@ threads.
 
 
 \subsubsection rtos2_tutorial_ex18 Exercise 18 - Zero Copy Mailbox
+
+Open <a href="https://www2.keil.com/mdk5/packinstaller" target="_blank">Pack Installer</a>:
+- Use the <b>Search</b> box on the <b>Boards</b> tab to look for the <b>CMSIS_RTOS_Tutorial (V2.1)</b> "board".
+- On the <b>Examples</b> tab, copy <b>Ex 18 Zero Copy Mailbox</b> to your PC and start Keil MDK.
+- In the project folder, you will find a file called "Instructions.pdf" that explains the setup and the steps you need to
+  take to successfully finish the exercise.
 
 
 \section rtos2_tutorial_config Configuration
