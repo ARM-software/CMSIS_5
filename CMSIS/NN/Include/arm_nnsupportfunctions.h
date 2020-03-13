@@ -363,6 +363,88 @@ arm_status arm_nn_vec_mat_mult_t_s8(const q7_t *lhs,
                                     const int32_t activation_max);
 
 /**
+ * @brief Depthwise convolution of transposed rhs matrix with 4 lhs matrices. To be used in padded cases where
+ *        the padding is -lhs_offset(Range: int8). Dimensions are the same for lhs and rhs.
+ *
+ * @param[in]      lhs             Input left-hand side matrix
+ * @param[in]      rhs             Input right-hand side matrix (transposed)
+ * @param[in]      lhs_offset      LHS matrix offset(input offset). Range: -127 to 128
+ * @param[in]      num_ch          Number of channels in LHS/RHS
+ * @param[in]      out_shift       Per channel output shift. Length of vector is equal to number of channels
+ * @param[in]      out_mult        Per channel output multiplier. Length of vector is equal to number of channels
+ * @param[in]      out_offset      Offset to be added to the output values. Range: -127 to 128
+ * @param[in]      activation_min  Minimum value to clamp the output to. Range: int8
+ * @param[in]      activation_max  Maximum value to clamp the output to. Range: int8
+ * param[in]       row_x_col       (row_dimension * col_dimension) of LHS/RHS matrix
+ * @param[in]      output_bias     Per channel output bias. Length of vector is equal to number of channels
+ * @param[in]      out             Output pointer
+ *
+ * @return         The function returns one of the two
+ *                  - Updated output pointer if an implementaiton is available
+ *                  - NULL if no implementation is available.
+ *
+ * @note           If number of channels is not a multiple of 4, upto 3 elements outside the boundary will be read out
+ *                 for the following.
+ *                  - Output shift
+ *                  - Output multiplier
+ *                  - Output bias
+ *                  - rhs
+ */
+q7_t *arm_nn_depthwise_conv_nt_t_padded_s8(const q7_t *lhs,
+                                           const q7_t *rhs,
+                                           const int32_t lhs_offset,
+                                           const uint16_t num_ch,
+                                           const int32_t *out_shift,
+                                           const int32_t *out_mult,
+                                           const int32_t out_offset,
+                                           const int32_t activation_min,
+                                           const int32_t activation_max,
+                                           const uint16_t row_x_col,
+                                           const int32_t *const output_bias,
+                                           q7_t *out);
+
+/**
+ * @brief Depthwise convolution of transposed rhs matrix with 4 lhs matrices. To be used in non-padded cases.
+ *        Dimensions are the same for lhs and rhs.
+ *
+ * @param[in]      lhs             Input left-hand side matrix
+ * @param[in]      rhs             Input right-hand side matrix (transposed)
+ * @param[in]      lhs_offset      LHS matrix offset(input offset). Range: -127 to 128
+ * @param[in]      num_ch          Number of channels in LHS/RHS
+ * @param[in]      out_shift       Per channel output shift. Length of vector is equal to number of channels.
+ * @param[in]      out_mult        Per channel output multiplier. Length of vector is equal to number of channels.
+ * @param[in]      out_offset      Offset to be added to the output values. Range: -127 to 128
+ * @param[in]      activation_min  Minimum value to clamp the output to. Range: int8
+ * @param[in]      activation_max  Maximum value to clamp the output to. Range: int8
+ * param[in]       row_x_col       (row_dimension * col_dimension) of LHS/RHS matrix
+ * @param[in]      output_bias     Per channel output bias. Length of vector is equal to number of channels.
+ * @param[in]      out             Output pointer
+ *
+ * @return         The function returns one of the two
+ *                  - Updated output pointer if an implementaiton is available
+ *                  - NULL if no implementation is available.
+ *
+ * @note           If number of channels is not a multiple of 4, upto 3 elements outside the boundary will be read out
+ *                 for the following.
+ *                  - Output shift
+ *                  - Output multiplier
+ *                  - Output bias
+ *                  - rhs
+ */
+q7_t *arm_nn_depthwise_conv_nt_t_s8(const q7_t *lhs,
+                                    const q7_t *rhs,
+                                    const int32_t lhs_offset,
+                                    const uint16_t num_ch,
+                                    const int32_t *out_shift,
+                                    const int32_t *out_mult,
+                                    const int32_t out_offset,
+                                    const int32_t activation_min,
+                                    const int32_t activation_max,
+                                    const uint16_t row_x_col,
+                                    const int32_t *const output_bias,
+                                    q7_t *out);
+
+/**
   @brief         Read 2 q15 elements and post increment pointer.
   @param[in]     in_q15   Pointer to pointer that holds address of input.
   @return        q31 value
@@ -415,6 +497,26 @@ __STATIC_FORCEINLINE q31_t arm_nn_read_q7x4(const q7_t *in_q7)
   memcpy(&val, in_q7, 4);
 
   return (val);
+}
+
+__STATIC_FORCEINLINE void arm_memset_q7(q7_t *dst,
+                                        const q7_t val,
+                                        uint32_t block_size)
+{
+#if defined(ARM_MATH_MVEI)
+     __asm volatile (
+        "   vdup.8                  q0, %[set_val]             \n"
+        "   wlstp.8                 lr, %[cnt], 1f             \n"
+        "2:                                                    \n"
+        "   vstrb.8                 q0, [%[in]], 16            \n"
+        "   letp                    lr, 2b                     \n"
+        "1:                                                    \n"
+        :[in] "+r"(dst)
+        :[cnt] "r"(block_size), [set_val] "r"(val)
+        :"q0", "memory", "r14");
+#else
+    memset(dst, val, block_size);
+#endif
 }
 
 #if defined (ARM_MATH_DSP)
@@ -634,7 +736,7 @@ __STATIC_FORCEINLINE q31_t arm_nn_requantize(const q31_t val, const q31_t multip
 }
 
 /**
- * @brief           memcpy optimized for MVE( A tail predicated loop is expected to be generated)
+ * @brief           memcpy optimized for MVE
  * @param[in, out]  dst         Destination pointer
  * @param[in]       src         Source pointer.
  * @param[in]       block_size  Number of bytes to copy.
@@ -647,17 +749,17 @@ __STATIC_FORCEINLINE void arm_memcpy_q7(q7_t *__RESTRICT dst,
                                         uint32_t block_size)
 {
 #if defined(ARM_MATH_MVEI)
-    int32_t block_count = (block_size + 15) / 16;
-
-    for (int i = 0; i < block_count; i++)
-    {
-        mve_pred16_t p = vctp8q(block_size);
-        int8x16_t cpy = vldrbq_z_s8(src, p);
-        vstrbq_p_s8(dst, cpy, p);
-        block_size -=16;
-        dst += 16;
-        src += 16;
-    }
+     __asm volatile (
+        "   wlstp.8                 lr, %[cnt], 1f             \n"
+        "2:                                                    \n"
+        "   vldrb.8                 q0, [%[in]], 16            \n"
+        "   vstrb.8                 q0, [%[out]], 16           \n"
+        "   letp                    lr, 2b                     \n"
+        "1:                                                    \n"
+        :[in] "+r"(src)
+        ,[out] "+r"(dst)
+        :[cnt] "r"(block_size)
+        :"q0", "memory", "r14");
 #else
     memcpy(dst, src, block_size);
 #endif

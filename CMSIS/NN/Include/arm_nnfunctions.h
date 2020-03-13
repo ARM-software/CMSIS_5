@@ -21,8 +21,8 @@
  * Title:        arm_nnfunctions.h
  * Description:  Public header file for CMSIS NN Library
  *
- * $Date:        March 4, 2020
- * $Revision:    V.1.1.4
+ * $Date:        March 12, 2020
+ * $Revision:    V.1.2.5
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -1029,6 +1029,13 @@ extern    "C"
    * @return     The function returns one of the following
    *                <code>ARM_MATH_SIZE_MISMATCH</code> - Unsupported dimension of tensors
    *                <code>ARM_MATH_SUCCESS</code> - Successful operation
+   *
+   * @note       If number of channels is not a multiple of 4, upto 3 elements outside the boundary will be read out
+   *             for the following if MVE optimizations(Arm Helium Technology) are used.
+   *               - Output shift
+   *               - Output multiplier
+   *               - Output bias
+   *               - kernel
    *
    * @details
    *    1. Supported framework: TensorFlow Lite
