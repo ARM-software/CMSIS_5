@@ -27,6 +27,9 @@
       New folder DistanceFunctions: 
       - Distance functions for clustering algorithms.
 
+      For the new functions in SVMFunctions, BayesFunctions and DistanceFunctions,
+      <a href="https://developer.arm.com/solutions/machine-learning-on-arm/developer-material/how-to-guides/implement-classical-ml-with-arm-cmsis-dsp-libraries">a tutorial is available</a>.
+
       New BasicMathFunctions:
       - Elementwise bit operations.
 
@@ -45,10 +48,6 @@
 
       Improvements to the cmake build:
       - It is more easy to switch toolchains. CMAKE_PREFIX_PATH can be used.
-
-      The new folders SVMFunctions, BayesFunctions and DistanceFunctions and the new functions
-      are not built by default in the MDK or ArmDS projects. You'll need to rebuild using cmake
-      if you want to use those new functions.
 
     </td>
   </tr>

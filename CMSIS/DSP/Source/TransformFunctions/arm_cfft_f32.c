@@ -87,7 +87,7 @@ static float32_t arm_inverse_fft_length_f32(uint16_t fftLen)
 }
 
 
-static void arm_bitreversal_32_inpl_mve(
+static void arm_bitreversal_f32_inpl_mve(
         uint32_t *pSrc,
   const uint16_t  bitRevLen,
   const uint16_t *pBitRevTab)
@@ -607,7 +607,7 @@ void arm_cfft_f32(
         if (bitReverseFlag) 
         {                                                            
             
-            arm_bitreversal_32_inpl_mve((uint32_t*)pSrc, S->bitRevLength, S->pBitRevTable);
+            arm_bitreversal_f32_inpl_mve((uint32_t*)pSrc, S->bitRevLength, S->pBitRevTable);
                     
         } 
 }
