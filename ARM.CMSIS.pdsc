@@ -3135,6 +3135,11 @@ and 8-bit Java bytecodes in Jazelle state.
         <!-- CPU independent -->
         <file category="doc" name="CMSIS/Documentation/DSP/html/index.html"/>
         <file category="header" name="CMSIS/DSP/Include/arm_math.h"/>
+        <file category="include"  name="CMSIS/DSP/PrivateInclude"/>
+
+        <file category="header"  condition="ARMv7-A Device" name="CMSIS/DSP/ComputeLibrary/Include/NEMath.h"/>
+
+        <file category="source"  condition="ARMv7-A Device" name="CMSIS/DSP/ComputeLibrary/Source/arm_cl_tables.c"/>
 
         <!-- DSP sources (core) -->
         <file category="source" name="CMSIS/DSP/Source/BasicMathFunctions/BasicMathFunctions.c"/>
