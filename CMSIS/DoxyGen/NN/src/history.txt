@@ -7,7 +7,7 @@
     <th>Description</th>
   </tr>
   <tr>
-    <td>vTBD</td>
+    <td>V1.3.0</td>
     <td>
       Added following functions for int8 operators with symmetric quantization.<br>
       <ul>
