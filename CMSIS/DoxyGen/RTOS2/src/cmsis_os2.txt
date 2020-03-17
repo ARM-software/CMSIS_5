@@ -701,6 +701,31 @@ To implement SVC functions in your Keil RTX5 project, you need to:
 - The SVC function \token{0} is \b reserved for the Keil RTX5 kernel.
 - Do not leave gaps when numbering SVC functions. They must occupy a \b continuous range of numbers starting from 1.
 - SVC functions can still be interrupted.
+
+
+\section cre_rtx_proj_clib_arm Arm C library multi-threading protection
+
+\ifnot FuSaRTS
+RTX5 provides an interface to the
+<a href="https://developer.arm.com/docs/dui0475/m/the-arm-c-and-c-libraries/multithreaded-support-in-arm-c-libraries" target="_blank">
+<b>Arm C libraries</b></a> to ensure static data protection in a multi-threaded application.
+
+The Arm C libraries use static data to store errno, floating-point status word for software floating-point operations, 
+a pointer to the base of the heap, and other variables. The Arm C micro-library (i.e. microlib) does not support protection
+for multi-threaded applications. See the <a href="https://developer.arm.com/docs/dui0475/m/the-arm-c-micro-library/differences-between-microlib-and-the-default-c-library" target="_blank"> 
+<b>limitations and differences</b></a> between microlib and the default C library.
+
+By default, RTX5 uses the Arm C libraries multi-thread protection for:
+- all user threads if \ref threadConfig "Object specific Memory allocation" is enabled.
+- the number of threads defined by <b>OS_THREAD_LIBSPACE_NUM</b> if \ref threadConfig "Object specific Memory allocation" is
+  disabled. The definition <b>OS_THREAD_LIBSPACE_NUM</b> defines the number of threads that can safely call Arm C library
+  functions and can be found in "RTX_Config.h" file or can be defined on the global scope.
+
+The default, Arm C libraries use mutex functions to
+<a href="https://developer.arm.com/docs/dui0475/m/the-arm-c-micro-library/differences-between-microlib-and-the-default-c-library" target="_blank">
+protect shared resources from concurrent access</a>. RTX5 implements these functions and uses resources from the
+\ref systemConfig "Global Dynamic Memory" to allocate mutex objects.
+\endif
 */
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
