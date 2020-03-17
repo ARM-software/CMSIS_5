@@ -9,12 +9,12 @@
 
   <releases>
     <release version="5.7.0-dev5">
+      Active development...
       CMSIS-NN: 1.3.0 (see revision history for details)
         - Added MVE support
         - Further optimizations for kernels using DSP extension
     </release>
     <release version="5.7.0-dev4">
-      Active development...
       CMSIS-DSP: 1.8.0 (see revision history for details)
         - Added new functions and function groups
         - Added MVE support
@@ -3097,7 +3097,7 @@ and 8-bit Java bytecodes in Jazelle state.
         <!--file category="library" condition="ARMv8MML_DP_NOFPU_LE_GCC"       name="CMSIS/DSP/Lib/GCC/libarm_ARMv8MMLlfdp_math.a"  src="CMSIS/DSP/Source/GCC"/-->
         <!--file category="library" condition="ARMv8MML_DSP_DP_LE_GCC"         name="CMSIS/DSP/Lib/GCC/libarm_ARMv8MMLldfdp_math.a" src="CMSIS/DSP/Source/GCC"/-->
 
-  <!-- IAR -->
+        <!-- IAR -->
         <file category="library" condition="CM0_LE_IAR"                     name="CMSIS/DSP/Lib/IAR/iar_cortexM0l_math.a"     src="CMSIS/DSP/Source/IAR"/>
         <file category="library" condition="CM0_BE_IAR"                     name="CMSIS/DSP/Lib/IAR/iar_cortexM0b_math.a"     src="CMSIS/DSP/Source/IAR"/>
         <file category="library" condition="CM1_LE_IAR"                     name="CMSIS/DSP/Lib/IAR/iar_cortexM0l_math.a"     src="CMSIS/DSP/Source/IAR"/>
@@ -3138,29 +3138,28 @@ and 8-bit Java bytecodes in Jazelle state.
       <description>CMSIS-DSP Library for Cortex-M, SC000, and SC300</description>
       <files>
         <!-- CPU independent -->
-        <file category="doc" name="CMSIS/Documentation/DSP/html/index.html"/>
-        <file category="header" name="CMSIS/DSP/Include/arm_math.h"/>
-        <file category="include"  name="CMSIS/DSP/PrivateInclude"/>
-
-        <file category="header"  condition="ARMv7-A Device" name="CMSIS/DSP/ComputeLibrary/Include/NEMath.h"/>
-
-        <file category="source"  condition="ARMv7-A Device" name="CMSIS/DSP/ComputeLibrary/Source/arm_cl_tables.c"/>
+        <file category="doc"      name="CMSIS/Documentation/DSP/html/index.html"/>
+        <file category="header"   name="CMSIS/DSP/Include/arm_math.h"/>
+        <file category="include"  name="CMSIS/DSP/PrivateInclude/"/>
 
         <!-- DSP sources (core) -->
-        <file category="source" name="CMSIS/DSP/Source/BasicMathFunctions/BasicMathFunctions.c"/>
-        <file category="source" name="CMSIS/DSP/Source/BayesFunctions/BayesFunctions.c"/>
-        <file category="source" name="CMSIS/DSP/Source/CommonTables/CommonTables.c"/>
-        <file category="source" name="CMSIS/DSP/Source/ComplexMathFunctions/ComplexMathFunctions.c"/>
-        <file category="source" name="CMSIS/DSP/Source/ControllerFunctions/ControllerFunctions.c"/>
-        <file category="source" name="CMSIS/DSP/Source/DistanceFunctions/DistanceFunctions.c"/>
-        <file category="source" name="CMSIS/DSP/Source/FastMathFunctions/FastMathFunctions.c"/>
-        <file category="source" name="CMSIS/DSP/Source/FilteringFunctions/FilteringFunctions.c"/>
-        <file category="source" name="CMSIS/DSP/Source/MatrixFunctions/MatrixFunctions.c"/>
-        <file category="source" name="CMSIS/DSP/Source/StatisticsFunctions/StatisticsFunctions.c"/>
-        <file category="source" name="CMSIS/DSP/Source/SupportFunctions/SupportFunctions.c"/>
-        <file category="source" name="CMSIS/DSP/Source/SVMFunctions/SVMFunctions.c"/>
-        <file category="source" name="CMSIS/DSP/Source/TransformFunctions/TransformFunctions.c"/>
-
+        <file category="source"   name="CMSIS/DSP/Source/BasicMathFunctions/BasicMathFunctions.c"/>
+        <file category="source"   name="CMSIS/DSP/Source/BayesFunctions/BayesFunctions.c"/>
+        <file category="source"   name="CMSIS/DSP/Source/CommonTables/CommonTables.c"/>
+        <file category="source"   name="CMSIS/DSP/Source/ComplexMathFunctions/ComplexMathFunctions.c"/>
+        <file category="source"   name="CMSIS/DSP/Source/ControllerFunctions/ControllerFunctions.c"/>
+        <file category="source"   name="CMSIS/DSP/Source/DistanceFunctions/DistanceFunctions.c"/>
+        <file category="source"   name="CMSIS/DSP/Source/FastMathFunctions/FastMathFunctions.c"/>
+        <file category="source"   name="CMSIS/DSP/Source/FilteringFunctions/FilteringFunctions.c"/>
+        <file category="source"   name="CMSIS/DSP/Source/MatrixFunctions/MatrixFunctions.c"/>
+        <file category="source"   name="CMSIS/DSP/Source/StatisticsFunctions/StatisticsFunctions.c"/>
+        <file category="source"   name="CMSIS/DSP/Source/SupportFunctions/SupportFunctions.c"/>
+        <file category="source"   name="CMSIS/DSP/Source/SVMFunctions/SVMFunctions.c"/>
+        <file category="source"   name="CMSIS/DSP/Source/TransformFunctions/TransformFunctions.c"/>
+        
+        <!-- Compute Library for Cortex-A -->
+        <file category="header"   name="CMSIS/DSP/ComputeLibrary/Include/NEMath.h"        condition="ARMv7-A Device"/>
+        <file category="source"   name="CMSIS/DSP/ComputeLibrary/Source/arm_cl_tables.c"  condition="ARMv7-A Device"/>
       </files>
     </component>
 

@@ -15,7 +15,6 @@ SET DOXYGENPATH=C:\Program Files\doxygen\bin
 
 :: Tool path for mscgen utility
 SET MSCGENPATH=C:\Program Files (x86)\Mscgen
-
 :: These settings should be passed on to subprocesses as well
 SET PATH=%ZIPPATH%;%DOXYGENPATH%;%MSCGENPATH%;%PATH%
 
@@ -60,8 +59,10 @@ XCOPY /Q /S /Y ..\..\CMSIS\DAP\*.* %RELEASE_PATH%\CMSIS\DAP\*.*
 XCOPY /Q /S /Y ..\..\CMSIS\Driver\*.* %RELEASE_PATH%\CMSIS\Driver\*.*
 
 :: -- DSP files 
+XCOPY /Q /S /Y ..\..\CMSIS\DSP\ComputeLibrary\*.* %RELEASE_PATH%\CMSIS\DSP\ComputeLibrary\*.*
 XCOPY /Q /S /Y ..\..\CMSIS\DSP\Include\*.* %RELEASE_PATH%\CMSIS\DSP\Include\*.*
 XCOPY /Q /S /Y ..\..\CMSIS\DSP\Include\*.* %RELEASE_PATH%\CMSIS\Include\*.*
+XCOPY /Q /S /Y ..\..\CMSIS\DSP\PrivateInclude\*.* %RELEASE_PATH%\CMSIS\DSP\PrivateInclude\*.*
 XCOPY /Q /S /Y ..\..\CMSIS\DSP\Source\*.* %RELEASE_PATH%\CMSIS\DSP\Source\*.*
 XCOPY /Q /S /Y ..\..\CMSIS\DSP\Projects\*.* %RELEASE_PATH%\CMSIS\DSP\Projects\*.*
 XCOPY /Q /S /Y ..\..\CMSIS\DSP\Examples\*.* %RELEASE_PATH%\CMSIS\DSP\Examples\*.*
@@ -108,12 +109,16 @@ ECHO.
 ECHO Delete previous generated HTML files
 
 PUSHD ..\Documentation
-FOR %%A IN (Core, Core_A, DAP, Driver, DSP, General, Pack, RTOS, RTOS2, SVD, Zone) DO IF EXIST %%A (RMDIR /S /Q %%A)
+FOR %%A IN (Build, Core, Core_A, DAP, Driver, DSP, General, Pack, RTOS, RTOS2, SVD, Zone) DO IF EXIST %%A (RMDIR /S /Q %%A)
 POPD
 
 :: -- Generate HTML Files
 ECHO.
 ECHO Generate HTML Files
+
+pushd Build
+doxygen Build.dxy
+popd
 
 pushd Core
 doxygen core.dxy
@@ -166,7 +171,9 @@ popd
 :: -- Copy search style sheet
 ECHO.
 ECHO Copy search style sheets
-copy /Y Doxygen_Templates\search.css ..\Documentation\CORE\html\search\. 
+copy /Y Doxygen_Templates\search.css ..\Documentation\Build\html\search\. 
+copy /Y Doxygen_Templates\search.css ..\Documentation\Core\html\search\. 
+copy /Y Doxygen_Templates\search.css ..\Documentation\Core_A\html\search\. 
 copy /Y Doxygen_Templates\search.css ..\Documentation\Driver\html\search\.
 REM copy /Y Doxygen_Templates\search.css ..\Documentation\General\html\search\. 
 copy /Y Doxygen_Templates\search.css ..\Documentation\Pack\html\search\.
@@ -174,7 +181,6 @@ REM copy /Y Doxygen_Templates\search.css ..\Documentation\SVD\html\search\.
 copy /Y Doxygen_Templates\search.css ..\Documentation\DSP\html\search\.
 copy /Y Doxygen_Templates\search.css ..\Documentation\DAP\html\search\.
 copy /Y Doxygen_Templates\search.css ..\Documentation\NN\html\search\.
-xcopy /E /I /Q /Y Zone\genmodel ..\Documentation\Zone\genmodel
 
 ECHO.
 POPD
@@ -184,7 +190,7 @@ XCOPY /Q /S /Y ..\Documentation\*.* %RELEASE_PATH%\CMSIS\Documentation\*.*
 
 :: -- Remove generated doxygen files
 PUSHD ..\Documentation
-FOR %%A IN (Core, Core_A, DAP, Driver, DSP, General, NN, Pack, RTOS, RTOS2, SVD, Zone) DO IF EXIST %%A (RMDIR /S /Q %%A)
+FOR %%A IN (Build, Core, Core_A, DAP, Driver, DSP, General, NN, Pack, RTOS, RTOS2, SVD, Zone) DO IF EXIST %%A (RMDIR /S /Q %%A)
 POPD
 
 :: Checking 
