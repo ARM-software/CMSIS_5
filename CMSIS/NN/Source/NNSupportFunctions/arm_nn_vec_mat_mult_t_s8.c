@@ -21,8 +21,8 @@
  * Title:        arm_nn_vec_mat_mult_t_s8
  * Description:  s8 vector by matrix (transposed) multiplication
  *
- * $Date:        30. January 2020
- * $Revision:    V.1.0.0
+ * $Date:        March 17, 2020
+ * $Revision:    V.1.0.1
  *
  * Target Processor:  Cortex-M
  *
@@ -350,3 +350,7 @@ arm_status arm_nn_vec_mat_mult_t_s8(const q7_t *lhs,
 
     return ARM_MATH_SUCCESS;
 }
+
+/**
+ * @} end of NNBasicMath group
+ */

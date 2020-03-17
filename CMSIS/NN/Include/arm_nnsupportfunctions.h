@@ -21,8 +21,8 @@
  * Title:        arm_nnsupportfunctions.h
  * Description:  Public header file of support functions for CMSIS NN Library
  *
- * $Date:        March 6, 2020
- * $Revision:    V.4.0.2
+ * $Date:        March 17, 2020
+ * $Revision:    V.4.0.3
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -375,7 +375,7 @@ arm_status arm_nn_vec_mat_mult_t_s8(const q7_t *lhs,
  * @param[in]      out_offset      Offset to be added to the output values. Range: -127 to 128
  * @param[in]      activation_min  Minimum value to clamp the output to. Range: int8
  * @param[in]      activation_max  Maximum value to clamp the output to. Range: int8
- * param[in]       row_x_col       (row_dimension * col_dimension) of LHS/RHS matrix
+ * @param[in]       row_x_col       (row_dimension * col_dimension) of LHS/RHS matrix
  * @param[in]      output_bias     Per channel output bias. Length of vector is equal to number of channels
  * @param[in]      out             Output pointer
  *
@@ -416,7 +416,7 @@ q7_t *arm_nn_depthwise_conv_nt_t_padded_s8(const q7_t *lhs,
  * @param[in]      out_offset      Offset to be added to the output values. Range: -127 to 128
  * @param[in]      activation_min  Minimum value to clamp the output to. Range: int8
  * @param[in]      activation_max  Maximum value to clamp the output to. Range: int8
- * param[in]       row_x_col       (row_dimension * col_dimension) of LHS/RHS matrix
+ * @param[in]       row_x_col       (row_dimension * col_dimension) of LHS/RHS matrix
  * @param[in]      output_bias     Per channel output bias. Length of vector is equal to number of channels.
  * @param[in]      out             Output pointer
  *
@@ -499,6 +499,13 @@ __STATIC_FORCEINLINE q31_t arm_nn_read_q7x4(const q7_t *in_q7)
   return (val);
 }
 
+/**
+ * @brief           memset optimized for MVE
+ * @param[in, out]  dst         Destination pointer
+ * @param[in]       val         Value to set
+ * @param[in]       block_size  Number of bytes to copy.
+ *
+ */
 __STATIC_FORCEINLINE void arm_memset_q7(q7_t *dst,
                                         const q7_t val,
                                         uint32_t block_size)
@@ -740,8 +747,6 @@ __STATIC_FORCEINLINE q31_t arm_nn_requantize(const q31_t val, const q31_t multip
  * @param[in, out]  dst         Destination pointer
  * @param[in]       src         Source pointer.
  * @param[in]       block_size  Number of bytes to copy.
- *
- * @return          None
  *
  */
 __STATIC_FORCEINLINE void arm_memcpy_q7(q7_t *__RESTRICT dst,
