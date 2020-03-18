@@ -109,6 +109,10 @@
 #include "arm_math.h"
 #include "math_helper.h"
 
+#if defined(SEMIHOSTING)
+#include <stdio.h>
+#endif
+
 /* ----------------------------------------------------------------------
 ** Global defines for the simulation
 * ------------------------------------------------------------------- */
@@ -116,7 +120,7 @@
 #define TEST_LENGTH_SAMPLES 1536
 #define NUMTAPS               32
 #define BLOCKSIZE             32
-#define DELTA_ERROR         0.000001f
+#define DELTA_ERROR         0.00009f
 #define DELTA_COEFF         0.0001f
 #define MU                  0.5f
 
@@ -248,12 +252,23 @@ int32_t main(void)
   * This denotes a test failure
   * ------------------------------------------------------------------- */
 
+#if !defined(SEMIHOSTING)
   if ( status != ARM_MATH_SUCCESS)
   {
     while (1);
   }
 
   while (1);                             /* main function does not return */
+#else
+  if (status == ARM_MATH_SUCCESS)
+  {
+     printf("SUCCESS\n");
+  }
+  else
+  {
+     printf("FAILURE %f\n",minValue);
+  }
+#endif                         /* main function does not return */
 }
 
  /** \endlink */

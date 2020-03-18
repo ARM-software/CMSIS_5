@@ -147,7 +147,7 @@
         <Bp>
           <Number>0</Number>
           <Type>0</Type>
-          <LineNumber>210</LineNumber>
+          <LineNumber>215</LineNumber>
           <EnabledFlag>1</EnabledFlag>
           <Address>460</Address>
           <ByteObject>0</ByteObject>
@@ -158,7 +158,7 @@
           <BreakIfRCount>1</BreakIfRCount>
           <Filename>.\arm_class_marks_example_f32.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\arm_class_marks_example\arm_class_marks_example_f32.c\210</Expression>
+          <Expression>\\arm_class_marks_example\arm_class_marks_example_f32.c\215</Expression>
         </Bp>
       </Breakpoint>
       <MemoryWindow1>
@@ -353,6 +353,22 @@
           <ExecCommand></ExecCommand>
           <Expression>\\arm_class_marks_example\arm_class_marks_example_f32.c\210</Expression>
         </Bp>
+        <Bp>
+          <Number>1</Number>
+          <Type>0</Type>
+          <LineNumber>215</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>0</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>0</BreakIfRCount>
+          <Filename>.\arm_class_marks_example_f32.c</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression></Expression>
+        </Bp>
       </Breakpoint>
       <MemoryWindow1>
         <Mm>
@@ -546,6 +562,22 @@
           <ExecCommand></ExecCommand>
           <Expression>\\arm_class_marks_example\arm_class_marks_example_f32.c\210</Expression>
         </Bp>
+        <Bp>
+          <Number>1</Number>
+          <Type>0</Type>
+          <LineNumber>215</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>0</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>0</BreakIfRCount>
+          <Filename>.\arm_class_marks_example_f32.c</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression></Expression>
+        </Bp>
       </Breakpoint>
       <MemoryWindow1>
         <Mm>
@@ -738,6 +770,22 @@
           <Filename>.\arm_class_marks_example_f32.c</Filename>
           <ExecCommand></ExecCommand>
           <Expression>\\arm_class_marks_example\arm_class_marks_example_f32.c\210</Expression>
+        </Bp>
+        <Bp>
+          <Number>1</Number>
+          <Type>0</Type>
+          <LineNumber>215</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>0</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>0</BreakIfRCount>
+          <Filename>.\arm_class_marks_example_f32.c</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression></Expression>
         </Bp>
       </Breakpoint>
       <MemoryWindow1>

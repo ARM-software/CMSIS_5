@@ -129,6 +129,10 @@
 #include "arm_math.h"
 #include "math_helper.h"
 
+#if defined(SEMIHOSTING)
+#include <stdio.h>
+#endif
+
 /* Length of the overall data in the test */
 #define TESTLENGTH 320
 
@@ -397,12 +401,23 @@ int32_t main(void)
   ** Loop here if the signal does not match the reference output.
   ** ------------------------------------------------------------------- */
 
+#if !defined(SEMIHOSTING)
   if ( status != ARM_MATH_SUCCESS)
   {
     while (1);
   }
 
   while (1);                             /* main function does not return */
+#else
+  if (status == ARM_MATH_SUCCESS)
+  {
+     printf("SUCCESS\n");
+  }
+  else
+  {
+     printf("FAILURE : SNR = %f\n",snr);
+  }
+#endif
 }
 
 /** \endlink */

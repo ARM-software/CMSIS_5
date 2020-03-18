@@ -86,6 +86,10 @@
 #include <math.h>
 #include "arm_math.h"
 
+#if defined(SEMIHOSTING)
+#include <stdio.h>
+#endif
+
 /* ----------------------------------------------------------------------
 * Defines each of the tests performed
 * ------------------------------------------------------------------- */
@@ -167,12 +171,23 @@ int32_t main(void)
     status = ARM_MATH_TEST_FAILURE;
   }
 
+#if !defined(SEMIHOSTING)
   if ( status == ARM_MATH_TEST_FAILURE)
   {
     while (1);
   }
 
   while (1);                             /* main function does not return */
+#else
+  if (status == ARM_MATH_SUCCESS)
+  {
+     printf("SUCCESS\n");
+  }
+  else
+  {
+     printf("FAILURE\n");
+  }
+#endif
 }
 
  /** \endlink */

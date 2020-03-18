@@ -94,6 +94,10 @@
 #include <math.h>
 #include "arm_math.h"
 
+#if defined(SEMIHOSTING)
+#include <stdio.h>
+#endif
+
 /* ----------------------------------------------------------------------
 * Defines each of the tests performed
 * ------------------------------------------------------------------- */

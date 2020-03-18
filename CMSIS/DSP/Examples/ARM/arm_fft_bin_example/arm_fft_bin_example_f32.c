@@ -97,6 +97,10 @@
 #include "arm_math.h"
 #include "arm_const_structs.h"
 
+#if defined(SEMIHOSTING)
+#include <stdio.h>
+#endif
+
 #define TEST_LENGTH_SAMPLES 2048
 
 /* -------------------------------------------------------------------
@@ -111,6 +115,7 @@ static float32_t testOutput[TEST_LENGTH_SAMPLES/2];
 uint32_t fftSize = 1024;
 uint32_t ifftFlag = 0;
 uint32_t doBitReverse = 1;
+arm_cfft_instance_f32 varInstCfftF32;
 
 /* Reference index at which max energy of bin ocuurs */
 uint32_t refIndex = 213, testIndex = 0;
@@ -127,8 +132,10 @@ int32_t main(void)
 
   status = ARM_MATH_SUCCESS;
 
+  status=arm_cfft_init_f32(&varInstCfftF32,fftSize);
+
   /* Process the data through the CFFT/CIFFT module */
-  arm_cfft_f32(&arm_cfft_sR_f32_len1024, testInput_f32_10khz, ifftFlag, doBitReverse);
+  arm_cfft_f32(&varInstCfftF32, testInput_f32_10khz, ifftFlag, doBitReverse);
 
   /* Process the data through the Complex Magnitude Module for
   calculating the magnitude at each bin */
@@ -147,12 +154,23 @@ int32_t main(void)
   ** This denotes a test failure
   ** ------------------------------------------------------------------- */
 
+#if !defined(SEMIHOSTING)
   if ( status != ARM_MATH_SUCCESS)
   {
     while (1);
   }
 
   while (1);                             /* main function does not return */
+#else
+  if (status == ARM_MATH_SUCCESS)
+  {
+     printf("SUCCESS\n");
+  }
+  else
+  {
+     printf("FAILURE\n");
+  }
+#endif
 }
 
  /** \endlink */

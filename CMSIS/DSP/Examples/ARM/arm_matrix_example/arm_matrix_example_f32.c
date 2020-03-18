@@ -92,6 +92,10 @@
 #include "arm_math.h"
 #include "math_helper.h"
 
+#if defined(SEMIHOSTING)
+#include <stdio.h>
+#endif
+
 #define SNR_THRESHOLD   90
 
 /* --------------------------------------------------------------------------------
@@ -221,12 +225,23 @@ int32_t main(void)
   ** Loop here if the signals fail the PASS check.
   ** This denotes a test failure
   ** ------------------------------------------------------------------- */
+#if !defined(SEMIHOSTING)
   if ( status != ARM_MATH_SUCCESS)
   {
     while (1);
   }
 
   while (1);                             /* main function does not return */
+#else
+  if (status == ARM_MATH_SUCCESS)
+  {
+     printf("SUCCESS\n");
+  }
+  else
+  {
+     printf("FAILURE : SNR = %f\n",snr);
+  }
+#endif                         /* main function does not return */
 }
 
  /** \endlink */
