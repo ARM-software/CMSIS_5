@@ -2463,7 +2463,7 @@ The values can be used in the elements:
     <td>Application is built to run in non-secure mode.</td>
   </tr>
   <tr>
-    <td class="XML-Token">TrustZone-disabled</td>
+    <td class="XML-Token">TZ-disabled</td>
     <td>Application is built with TrustZone security disabled.</td>
   </tr>
 </table>
