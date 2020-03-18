@@ -1031,11 +1031,6 @@ and 8-bit Java bytecodes in Jazelle state.
       <accept Dcore="Cortex-M35P"/>
       <accept Dcore="Cortex-M55"/>
     </condition>
-    <condition id="ARMv8-M TZ Device">
-      <description>Armv8-M architecture based device with TrustZone</description>
-      <require condition="ARMv8-M Device"/>
-      <require Dtz="TZ"/>
-    </condition>
     <condition id="ARMv6_7-M Device">
       <description>Armv6_7-M architecture based device</description>
       <accept condition="ARMv6-M Device"/>
@@ -1052,6 +1047,21 @@ and 8-bit Java bytecodes in Jazelle state.
       <accept Dcore="Cortex-A5"/>
       <accept Dcore="Cortex-A7"/>
       <accept Dcore="Cortex-A9"/>
+    </condition>
+
+    <condition id="TrustZone">
+      <description>TrustZone</description>
+      <require Dtz="TZ"/>
+    </condition>
+    <condition id="TZ Secure">
+      <description>TrustZone (Secure)</description>
+      <require Dtz="TZ"/>
+      <require Dsecure="Secure"/>
+    </condition>
+    <condition id="TZ Non-secure">
+      <description>TrustZone (Non-secure)</description>
+      <require Dtz="TZ"/>
+      <require Dsecure="Non-secure"/>
     </condition>
 
     <!-- ARM core -->
@@ -2481,7 +2491,8 @@ and 8-bit Java bytecodes in Jazelle state.
     </condition>
     <condition id="RTOS2 RTX5 NS">
       <description>Components required for RTOS2 RTX5 in Non-Secure Domain</description>
-      <require condition="ARMv8-M TZ Device"/>
+      <require condition="ARMv8-M Device"/>
+      <require condition="TZ Non-secure"/>
       <require condition="ARMCC GCC IAR"/>
       <require Cclass="CMSIS"  Cgroup="CORE"/>
       <require Cclass="Device" Cgroup="Startup"/>
@@ -2510,10 +2521,10 @@ and 8-bit Java bytecodes in Jazelle state.
         <!-- CPU independent -->
         <file category="doc"     name="CMSIS/Documentation/Core/html/index.html"/>
         <file category="include" name="CMSIS/Core/Include/"/>
-        <file category="header"  name="CMSIS/Core/Include/tz_context.h" condition="ARMv8-M TZ Device"/>
+        <file category="header"  name="CMSIS/Core/Include/tz_context.h" condition="TrustZone"/>
         <!-- Code template -->
-        <file category="sourceC" attr="template" condition="ARMv8-M TZ Device" name="CMSIS/Core/Template/ARMv8-M/main_s.c"     version="1.1.1" select="Secure mode 'main' module for ARMv8-M"/>
-        <file category="sourceC" attr="template" condition="ARMv8-M TZ Device" name="CMSIS/Core/Template/ARMv8-M/tz_context.c" version="1.1.1" select="RTOS Context Management (TrustZone for ARMv8-M)" />
+        <file category="sourceC" attr="template" condition="TZ Secure" name="CMSIS/Core/Template/ARMv8-M/main_s.c"     version="1.1.1" select="Secure mode 'main' module for ARMv8-M"/>
+        <file category="sourceC" attr="template" condition="TZ Secure" name="CMSIS/Core/Template/ARMv8-M/tz_context.c" version="1.1.1" select="RTOS Context Management (TrustZone for ARMv8-M)" />
       </files>
     </component>
 
@@ -2707,7 +2718,7 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="linkerScript" name="Device/ARM/ARMCM23/Source/GCC/gcc_arm.ld"       version="2.0.0" attr="config" condition="GCC"/>
         <file category="sourceC"      name="Device/ARM/ARMCM23/Source/system_ARMCM23.c"     version="1.0.1" attr="config"/>
         <!-- SAU configuration -->
-        <file category="header"       name="Device/ARM/ARMCM23/Include/Template/partition_ARMCM23.h" version="1.0.0" attr="config" condition="ARMv8-M TZ Device"/>
+        <file category="header"       name="Device/ARM/ARMCM23/Include/Template/partition_ARMCM23.h" version="1.0.0" attr="config" condition="TZ Secure"/>
       </files>
     </component>
     <component Cclass="Device" Cgroup="Startup"                      Cversion="1.1.2" condition="ARMCM23 CMSIS">
@@ -2722,7 +2733,7 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="sourceAsm"    name="Device/ARM/ARMCM23/Source/IAR/startup_ARMCM23.s" version="1.0.0" attr="config" condition="IAR"/>
         <file category="sourceC"      name="Device/ARM/ARMCM23/Source/system_ARMCM23.c"      version="1.0.1" attr="config"/>
         <!-- SAU configuration -->
-        <file category="header"       name="Device/ARM/ARMCM23/Include/Template/partition_ARMCM23.h" version="1.0.0" attr="config" condition="ARMv8-M TZ Device"/>
+        <file category="header"       name="Device/ARM/ARMCM23/Include/Template/partition_ARMCM23.h" version="1.0.0" attr="config" condition="TZ Secure"/>
       </files>
     </component>
 
@@ -2738,7 +2749,7 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="linkerScript" name="Device/ARM/ARMCM33/Source/GCC/gcc_arm.ld"                version="2.0.0" attr="config" condition="GCC"/>
         <file category="sourceC"      name="Device/ARM/ARMCM33/Source/system_ARMCM33.c"              version="1.0.1" attr="config"/>
         <!-- SAU configuration -->
-        <file category="header"       name="Device/ARM/ARMCM33/Include/Template/partition_ARMCM33.h" version="1.1.1" attr="config" condition="ARMv8-M TZ Device"/>
+        <file category="header"       name="Device/ARM/ARMCM33/Include/Template/partition_ARMCM33.h" version="1.1.1" attr="config" condition="TZ Secure"/>
       </files>
     </component>
     <component Cclass="Device" Cgroup="Startup"                      Cversion="1.2.2" condition="ARMCM33 CMSIS">
@@ -2753,7 +2764,7 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="sourceAsm"    name="Device/ARM/ARMCM33/Source/IAR/startup_ARMCM33.s"         version="1.0.0" attr="config" condition="IAR"/>
         <file category="sourceC"      name="Device/ARM/ARMCM33/Source/system_ARMCM33.c"              version="1.0.1" attr="config"/>
         <!-- SAU configuration -->
-        <file category="header"       name="Device/ARM/ARMCM33/Include/Template/partition_ARMCM33.h" version="1.1.1" attr="config" condition="ARMv8-M TZ Device"/>
+        <file category="header"       name="Device/ARM/ARMCM33/Include/Template/partition_ARMCM33.h" version="1.1.1" attr="config" condition="TZ Secure"/>
       </files>
     </component>
 
@@ -2769,7 +2780,7 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="linkerScript" name="Device/ARM/ARMCM35P/Source/GCC/gcc_arm.ld"                 version="2.0.0" attr="config" condition="GCC"/>
         <file category="sourceC"      name="Device/ARM/ARMCM35P/Source/system_ARMCM35P.c"              version="1.0.1" attr="config"/>
         <!-- SAU configuration -->
-        <file category="header"       name="Device/ARM/ARMCM35P/Include/Template/partition_ARMCM35P.h" version="1.0.0" attr="config" condition="ARMv8-M TZ Device"/>
+        <file category="header"       name="Device/ARM/ARMCM35P/Include/Template/partition_ARMCM35P.h" version="1.0.0" attr="config" condition="TZ Secure"/>
       </files>
     </component>
     <component Cclass="Device" Cgroup="Startup"                      Cversion="1.1.2" condition="ARMCM35P CMSIS">
@@ -2784,7 +2795,7 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="sourceAsm"    name="Device/ARM/ARMCM35P/Source/IAR/startup_ARMCM35P.s"         version="2.0.0" attr="config" condition="IAR"/>
         <file category="sourceC"      name="Device/ARM/ARMCM35P/Source/system_ARMCM35P.c"              version="1.0.1" attr="config"/>
         <!-- SAU configuration -->
-        <file category="header"       name="Device/ARM/ARMCM35P/Include/Template/partition_ARMCM35P.h" version="1.0.0" attr="config" condition="ARMv8-M TZ Device"/>
+        <file category="header"       name="Device/ARM/ARMCM35P/Include/Template/partition_ARMCM35P.h" version="1.0.0" attr="config" condition="TZ Secure"/>
       </files>
     </component>
 
@@ -2800,7 +2811,7 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="linkerScript" name="Device/ARM/ARMCM55/Source/GCC/gcc_arm.ld"                version="2.0.0" attr="config" condition="GCC"/>
         <file category="sourceC"      name="Device/ARM/ARMCM55/Source/system_ARMCM55.c"              version="1.2.0" attr="config"/>
         <!-- SAU configuration -->
-        <file category="header"       name="Device/ARM/ARMCM55/Include/Template/partition_ARMCM55.h" version="1.0.0" attr="config" condition="ARMv8-M TZ Device"/>
+        <file category="header"       name="Device/ARM/ARMCM55/Include/Template/partition_ARMCM55.h" version="1.0.0" attr="config" condition="TZ Secure"/>
       </files>
     </component>
 
@@ -2872,7 +2883,7 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="linkerScript" name="Device/ARM/ARMv8MBL/Source/GCC/gcc_arm.ld"                version="2.0.0" attr="config" condition="GCC"/>
         <file category="sourceC"      name="Device/ARM/ARMv8MBL/Source/system_ARMv8MBL.c"             version="1.0.1" attr="config"/>
         <!-- SAU configuration -->
-        <file category="header"       name="Device/ARM/ARMv8MBL/Include/Template/partition_ARMv8MBL.h" version="1.0.0" attr="config" condition="ARMv8-M TZ Device"/>
+        <file category="header"       name="Device/ARM/ARMv8MBL/Include/Template/partition_ARMv8MBL.h" version="1.0.0" attr="config" condition="TZ Secure"/>
       </files>
     </component>
     <component Cclass="Device" Cgroup="Startup"                      Cversion="1.1.2" condition="ARMv8MBL CMSIS">
@@ -2902,7 +2913,7 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="linkerScript" name="Device/ARM/ARMv8MML/Source/GCC/gcc_arm.ld"                 version="2.0.0" attr="config" condition="GCC"/>
         <file category="sourceC"      name="Device/ARM/ARMv8MML/Source/system_ARMv8MML.c"              version="1.0.1" attr="config"/>
         <!-- SAU configuration -->
-        <file category="header"       name="Device/ARM/ARMv8MML/Include/Template/partition_ARMv8MML.h" version="1.1.1" attr="config" condition="ARMv8-M TZ Device"/>
+        <file category="header"       name="Device/ARM/ARMv8MML/Include/Template/partition_ARMv8MML.h" version="1.1.1" attr="config" condition="TZ Secure"/>
       </files>
     </component>
     <component Cclass="Device" Cgroup="Startup"                      Cversion="1.2.2" condition="ARMv8MML CMSIS">
@@ -2916,7 +2927,7 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="linkerScript" name="Device/ARM/ARMv8MML/Source/GCC/gcc_arm.ld"                 version="2.0.0" attr="config" condition="GCC"/>
         <file category="sourceC"      name="Device/ARM/ARMv8MML/Source/system_ARMv8MML.c"              version="1.0.1" attr="config" condition="ARMCC GCC"/>
         <!-- SAU configuration -->
-        <file category="header"       name="Device/ARM/ARMv8MML/Include/Template/partition_ARMv8MML.h" version="1.1.1" attr="config" condition="ARMv8-M TZ Device"/>
+        <file category="header"       name="Device/ARM/ARMv8MML/Include/Template/partition_ARMv8MML.h" version="1.1.1" attr="config" condition="TZ Secure"/>
       </files>
     </component>
 
@@ -2932,7 +2943,7 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="linkerScript" name="Device/ARM/ARMv81MML/Source/GCC/gcc_arm.ld"                  version="2.0.0" attr="config" condition="GCC"/>
         <file category="sourceC"      name="Device/ARM/ARMv81MML/Source/system_ARMv81MML.c"              version="1.2.0" attr="config"/>
         <!-- SAU configuration -->
-        <file category="header"       name="Device/ARM/ARMv81MML/Include/Template/partition_ARMv81MML.h" version="1.0.0" attr="config" condition="ARMv8-M TZ Device"/>
+        <file category="header"       name="Device/ARM/ARMv81MML/Include/Template/partition_ARMv81MML.h" version="1.0.0" attr="config" condition="TZ Secure"/>
       </files>
     </component>
 
