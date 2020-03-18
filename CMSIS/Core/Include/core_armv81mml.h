@@ -2,7 +2,7 @@
  * @file     core_armv81mml.h
  * @brief    CMSIS Armv8.1-M Mainline Core Peripheral Access Layer Header File
  * @version  V1.3.1
- * @date     03. March 2020
+ * @date     18. March 2020
  ******************************************************************************/
 /*
  * Copyright (c) 2018-2020 Arm Limited. All rights reserved.
@@ -97,17 +97,6 @@
     #define __DSP_USED         0U
   #endif
 
-  #if defined(__ARM_FEATURE_MVE)
-    #if defined(__MVE_PRESENT) && (__MVE_PRESENT == 1U)
-      #define __MVE_USED       1U
-    #else
-      #error "Compiler generates MVE instructions for a devices without MVE extensions (check __MVE_PRESENT)"
-      #define __MVE_USED         0U
-    #endif
-  #else
-    #define __MVE_USED         0U
-  #endif
-
 #elif defined ( __GNUC__ )
   #if defined (__VFP_FP__) && !defined(__SOFTFP__)
     #if defined (__FPU_PRESENT) && (__FPU_PRESENT == 1U)
@@ -131,17 +120,6 @@
     #define __DSP_USED         0U
   #endif
 
-  #if defined(__ARM_FEATURE_MVE)
-    #if defined(__MVE_PRESENT) && (__MVE_PRESENT == 1U)
-      #define __MVE_USED       1U
-    #else
-      #error "Compiler generates MVE instructions for a devices without MVE extensions (check __MVE_PRESENT)"
-      #define __MVE_USED         0U
-    #endif
-  #else
-    #define __MVE_USED         0U
-  #endif
-
 #elif defined ( __ICCARM__ )
   #if defined __ARMVFP__
     #if defined (__FPU_PRESENT) && (__FPU_PRESENT == 1U)
@@ -163,17 +141,6 @@
     #endif
   #else
     #define __DSP_USED         0U
-  #endif
-
-  #if defined(__ARM_FEATURE_MVE)
-    #if defined(__MVE_PRESENT) && (__MVE_PRESENT == 1U)
-      #define __MVE_USED       1U
-    #else
-      #error "Compiler generates MVE instructions for a devices without MVE extensions (check __MVE_PRESENT)"
-      #define __MVE_USED         0U
-    #endif
-  #else
-    #define __MVE_USED         0U
   #endif
 
 #elif defined ( __TI_ARM__ )
@@ -257,11 +224,6 @@
   #ifndef __DSP_PRESENT
     #define __DSP_PRESENT             0U
     #warning "__DSP_PRESENT not defined in device header file; using default!"
-  #endif
-
-  #ifndef __MVE_PRESENT
-    #define __MVE_PRESENT             0U
-    #warning "__MVE_PRESENT not defined in device header file; using default!"
   #endif
 
   #ifndef __NVIC_PRIO_BITS

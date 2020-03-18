@@ -2,7 +2,7 @@
  * @file     core_cm55.h
  * @brief    CMSIS Cortex-M55 Core Peripheral Access Layer Header File
  * @version  V1.0.0
- * @date     03. March 2020
+ * @date     18. March 2020
  ******************************************************************************/
 /*
  * Copyright (c) 2018-2020 Arm Limited. All rights reserved.
@@ -97,12 +97,6 @@
     #define __DSP_USED         0U
   #endif
 
-  #if defined(__ARM_FEATURE_MVE)
-    #define __MVE_USED         1U
-  #else
-    #define __MVE_USED         0U
-  #endif
-
 #elif defined ( __GNUC__ )
   #if defined (__VFP_FP__) && !defined(__SOFTFP__)
     #if defined (__FPU_PRESENT) && (__FPU_PRESENT == 1U)
@@ -126,12 +120,6 @@
     #define __DSP_USED         0U
   #endif
 
-  #if defined(__ARM_FEATURE_MVE)
-    #define __MVE_USED         1U
-  #else
-    #define __MVE_USED         0U
-  #endif
-
 #elif defined ( __ICCARM__ )
   #if defined __ARMVFP__
     #if defined (__FPU_PRESENT) && (__FPU_PRESENT == 1U)
@@ -153,12 +141,6 @@
     #endif
   #else
     #define __DSP_USED         0U
-  #endif
-
-  #if defined(__ARM_FEATURE_MVE)
-    #define __MVE_USED         1U
-  #else
-    #define __MVE_USED         0U
   #endif
 
 #elif defined ( __TI_ARM__ )
