@@ -87,6 +87,10 @@
 #include "arm_math.h"
 #include "math_helper.h"
 
+#if defined(SEMIHOSTING)
+#include <stdio.h>
+#endif
+
 #define SNR_THRESHOLD           90
 #define TEST_LENGTH_SAMPLES     10
 #define XSPACING               (0.00005f)
@@ -132,7 +136,7 @@ float32_t testLinIntOutput[TEST_LENGTH_SAMPLES];
 /*------------------------------------------------------------------------------
 *  External table used for linear interpolation
 *------------------------------------------------------------------------------*/
-extern float arm_linear_interep_table[188495];
+extern const float arm_linear_interep_table[188495];
 
 /* ----------------------------------------------------------------------
 * Global Variables for caluclating SNR's for Method1 & Method 2
@@ -148,7 +152,7 @@ int32_t main(void)
   uint32_t i;
   arm_status status;
 
-  arm_linear_interp_instance_f32 S = {188495, -3.141592653589793238, XSPACING, &arm_linear_interep_table[0]};
+  arm_linear_interp_instance_f32 S = {188495, -3.141592653589793238, XSPACING, (float*)&arm_linear_interep_table[0]};
 
   /*------------------------------------------------------------------------------
   *  Method 1: Test out Calculated from Cubic Interpolation
@@ -193,12 +197,23 @@ int32_t main(void)
   ** Loop here if the signals fail the PASS check.
   ** This denotes a test failure
   ** ------------------------------------------------------------------- */
+#if !defined(SEMIHOSTING)
   if ( status != ARM_MATH_SUCCESS)
   {
     while (1);
   }
 
   while (1);                             /* main function does not return */
+#else
+  if (status == ARM_MATH_SUCCESS)
+  {
+     printf("SUCCESS\n");
+  }
+  else
+  {
+     printf("FAILURE : SNR = %f <= %f\n",snr2, snr1);
+  }
+#endif
 }
 
  /** \endlink */

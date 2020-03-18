@@ -105,6 +105,10 @@
 #include "arm_math.h"
 #include "math_helper.h"
 
+#if defined(SEMIHOSTING)
+#include <stdio.h>
+#endif
+
 /* ----------------------------------------------------------------------
 * Defines each of the tests performed
 * ------------------------------------------------------------------- */
@@ -193,6 +197,10 @@ int32_t main(void)
   arm_status status;                           /* Status of the example */
   arm_cfft_radix4_instance_f32 cfft_instance;  /* CFFT Structure instance */
 
+#if defined(SEMIHOSTING)
+  printf("START\n");
+#endif
+
   /* CFFT Structure instance pointer */
   arm_cfft_radix4_instance_f32 *cfft_instance_ptr =
       (arm_cfft_radix4_instance_f32*) &cfft_instance;
@@ -236,12 +244,23 @@ int32_t main(void)
     status = ARM_MATH_SUCCESS;
   }
 
+#if !defined(SEMIHOSTING)
   if ( status != ARM_MATH_SUCCESS)
   {
     while (1);
   }
 
   while (1);                             /* main function does not return */
+#else
+  if (status == ARM_MATH_SUCCESS)
+  {
+     printf("SUCCESS\n");
+  }
+  else
+  {
+     printf("FAILURE\n");
+  }
+#endif
 }
 
  /** \endlink */

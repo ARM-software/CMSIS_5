@@ -1,1 +1,4 @@
 build/
+*_debug/
+EventRecorderStub.scvd
+_ARMCM0/
