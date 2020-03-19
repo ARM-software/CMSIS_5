@@ -13,6 +13,8 @@
       CMSIS-NN: 1.3.0 (see revision history for details)
         - Added MVE support
         - Further optimizations for kernels using DSP extension
+      CMSIS-Driver: 2.8.0
+        - Added VIO API 0.1.0 (Preview)
     </release>
     <release version="5.7.0-dev4">
       CMSIS-DSP: 1.8.0 (see revision history for details)
@@ -36,7 +38,7 @@
     <release version="5.7.0-dev1">
       Active development...
       CMSIS-Core(M): 5.4.0 (see revision history for details)
-         - Enhanced MVE support for Armv8.1-MML
+        - Enhanced MVE support for Armv8.1-MML
       CMSIS-RTOS2:
         - RTX 5.5.2 (see revision history for details)
       CMSIS-Driver: 2.8.0
@@ -973,6 +975,13 @@ and 8-bit Java bytecodes in Jazelle state.
       <files>
         <file category="doc"  name="CMSIS/Documentation/Driver/html/group__wifi__interface__gr.html" />
         <file category="header" name="CMSIS/Driver/Include/Driver_WiFi.h" />
+      </files>
+    </api>
+    <api Cclass="CMSIS Driver" Cgroup="VIO" Capiversion="0.1.0" exclusive="1">
+      <description>Virtual I/O</description>
+      <files>
+  <!--  <file category="doc" name="CMSIS/Documentation/Driver/html/vio_pg.html"/> -->
+        <file category="header" name="CMSIS/Driver/VIO/Include/cmsis_vio.h" />
       </files>
     </api>
   </apis>
@@ -3880,6 +3889,23 @@ and 8-bit Java bytecodes in Jazelle state.
         <!-- <file category="sourceC" attr="template" name="CMSIS/Driver/DriverTemplates/Driver_WiFi.c" select="WiFi Driver"/> -->
       </files>
     </component>
+
+    <!-- VIO components -->
+    <component Cclass="CMSIS Driver" Cgroup="VIO" Csub="Custom" Cversion="1.0.0" Capiversion="0.1.0" custom="1">
+      <description>Virtual I/O custom implementation template</description>
+      <files>
+        <file category="sourceC" name="CMSIS/Driver/VIO/Source/vio.c" attr="template" select="Virtual I/O"/>
+        <file category="other"   name="CMSIS/Driver/VIO/cmsis_vio.scvd"/>
+      </files>
+    </component>
+    <component Cclass="CMSIS Driver" Cgroup="VIO" Csub="Virtual" Cversion="1.0.0" Capiversion="0.1.0">
+      <description>Virtual I/O implementation using memory only</description>
+      <files>
+        <file category="sourceC" name="CMSIS/Driver/VIO/Source/vio_memory.c"/>
+        <file category="other"   name="CMSIS/Driver/VIO/cmsis_vio.scvd"/>
+      </files>
+    </component>
+
   </components>
 
   <boards>
