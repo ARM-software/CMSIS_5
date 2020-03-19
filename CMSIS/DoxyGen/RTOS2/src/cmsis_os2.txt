@@ -722,8 +722,8 @@ By default, RTX5 uses the Arm C libraries multi-thread protection for:
   functions and can be found in "RTX_Config.h" file or can be defined on the global scope.
 
 The default, Arm C libraries use mutex functions to
-<a href="https://developer.arm.com/docs/dui0475/m/the-arm-c-micro-library/differences-between-microlib-and-the-default-c-library" target="_blank">
-protect shared resources from concurrent access</a>. RTX5 implements these functions and uses resources from the
+<a href="https://developer.arm.com/docs/dui0475/m/the-arm-c-and-c-libraries/multithreaded-support-in-arm-c-libraries/management-of-locks-in-multithreaded-applications" target="_blank">
+<b>protect shared resources from concurrent access</b></a>. RTX5 implements these functions and uses resources from the
 \ref systemConfig "Global Dynamic Memory" to allocate mutex objects.
 \endif
 */
