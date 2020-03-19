@@ -144,7 +144,7 @@ __STATIC_INLINE bool_t IsIrqMasked (void) {
 /// Setup SVC and PendSV System Service Calls
 __STATIC_INLINE void SVC_Setup (void) {
 #if   ((defined(__ARM_ARCH_8M_MAIN__)   && (__ARM_ARCH_8M_MAIN__   != 0)) || \
-       (defined(__ARM_ARCH_8_1M_MAIN__) && (__ARM_ARCH_8M_MAIN__   != 0)) || \
+       (defined(__ARM_ARCH_8_1M_MAIN__) && (__ARM_ARCH_8_1M_MAIN__ != 0)) || \
        (defined(__CORTEX_M)             && (__CORTEX_M == 7U)))
   uint32_t p, n;
 
