@@ -71,7 +71,7 @@ void arm_cmplx_mult_cmplx_q15(
       vecA = vld1q(pSrcA);
       vecB = vld1q(pSrcB);
       /* C[2 * i] = A[2 * i] * B[2 * i] - A[2 * i + 1] * B[2 * i + 1].  */
-      vecDst = vqdmlsdhq_s16(vuninitializedq_f16(), vecA, vecB);
+      vecDst = vqdmlsdhq_s16(vuninitializedq_s16(), vecA, vecB);
       /* C[2 * i + 1] = A[2 * i] * B[2 * i + 1] + A[2 * i + 1] * B[2 * i].  */
       vecDst = vqdmladhxq_s16(vecDst, vecA, vecB);
 
