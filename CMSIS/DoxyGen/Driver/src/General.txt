@@ -34,6 +34,7 @@ The following CMSIS-Driver API groups are defined:
   - \ref storage_interface_gr "Storage": Storage device interface driver.
   - \ref usart_interface_gr "USART": Universal Synchronous and Asynchronous Receiver/Transmitter interface driver.
   - \ref usb_interface_gr "USB": Interface driver for USB Host and USB Device communication.
+  - \ref vio_interface_gr "VIO": API for virtual I/Os (VIO).
   - \ref wifi_interface_gr "WiFi": Interface driver for wireless communication.
 
 <hr>
