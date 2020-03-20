@@ -71,10 +71,6 @@ void arm_spline_init_f32(
         float32_t * coeffs,
         float32_t * tempBuffer)
 {
-    S->x = x;
-    S->y = y;
-    S->n_x = n;
-
     /*** COEFFICIENTS COMPUTATION ***/
     /* Type (boundary conditions):
         - Natural spline          ( S1''(x1) = 0 ; Sn''(xn) = 0 )
@@ -94,6 +90,10 @@ void arm_spline_init_f32(
     float32_t cp1; /* Temporary value for c(i+1) */
 
     int32_t i; /* Loop counter */
+
+    S->x = x;
+    S->y = y;
+    S->n_x = n;
 
     /* == Solve LZ=B to obtain z(i) and u(i) == */
 
