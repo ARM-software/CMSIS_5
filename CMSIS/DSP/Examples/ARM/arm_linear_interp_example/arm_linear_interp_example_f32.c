@@ -184,36 +184,25 @@ int32_t main(void)
   /*------------------------------------------------------------------------------
   *            Initialise status depending on SNR calculations
   *------------------------------------------------------------------------------*/
-  if ( snr2 > snr1)
+  status = (snr2 <= snr1) ? ARM_MATH_TEST_FAILURE : ARM_MATH_SUCCESS;
+  
+  if (status != ARM_MATH_SUCCESS)
   {
-    status = ARM_MATH_SUCCESS;
-  }
-  else
-  {
-    status = ARM_MATH_TEST_FAILURE;
-  }
-
-  /* ----------------------------------------------------------------------
-  ** Loop here if the signals fail the PASS check.
-  ** This denotes a test failure
-  ** ------------------------------------------------------------------- */
-#if !defined(SEMIHOSTING)
-  if ( status != ARM_MATH_SUCCESS)
-  {
-    while (1);
-  }
-
-  while (1);                             /* main function does not return */
+#if defined (SEMIHOSTING)
+    printf("FAILURE\n");
 #else
-  if (status == ARM_MATH_SUCCESS)
-  {
-     printf("SUCCESS\n");
+    while (1);                             /* main function does not return */
+#endif
   }
   else
   {
-     printf("FAILURE : SNR = %f <= %f\n",snr2, snr1);
-  }
+#if defined (SEMIHOSTING)
+    printf("SUCCESS\n");
+#else
+    while (1);                             /* main function does not return */
 #endif
+  }
+
 }
 
  /** \endlink */

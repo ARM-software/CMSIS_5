@@ -8,8 +8,12 @@
   <url>http://www.keil.com/pack/</url>
 
   <releases>
-    <release version="5.7.0-dev5">
+    <release version="5.7.0-dev6">
       Active development...
+      CMSIS-DSP:
+        - reworked examples
+    </release>
+    <release version="5.7.0-dev5">
       CMSIS-NN: 1.3.0 (see revision history for details)
         - Added MVE support
         - Further optimizations for kernels using DSP extension

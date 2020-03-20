@@ -231,7 +231,7 @@ int32_t main(void)
   status = arm_cfft_radix4_init_f32(cfft_instance_ptr, 64, 1, 1);
 
   /* Transform the multiplication output from frequency domain to time domain,
-     that gives the convolved output  */
+     that gives the convolved output. */
   arm_cfft_radix4_f32(cfft_instance_ptr, AxB);
 
   /* SNR Calculation */
@@ -239,28 +239,25 @@ int32_t main(void)
 
   /* Compare the SNR with threshold to test whether the
      computed output is matched with the reference output values. */
-  if ( snr > SNR_THRESHOLD)
+  status = (snr <= SNR_THRESHOLD) ? ARM_MATH_TEST_FAILURE : ARM_MATH_SUCCESS;
+  
+  if (status != ARM_MATH_SUCCESS)
   {
-    status = ARM_MATH_SUCCESS;
-  }
-
-#if !defined(SEMIHOSTING)
-  if ( status != ARM_MATH_SUCCESS)
-  {
-    while (1);
-  }
-
-  while (1);                             /* main function does not return */
+#if defined (SEMIHOSTING)
+    printf("FAILURE\n");
 #else
-  if (status == ARM_MATH_SUCCESS)
-  {
-     printf("SUCCESS\n");
+    while (1);                             /* main function does not return */
+#endif
   }
   else
   {
-     printf("FAILURE\n");
-  }
+#if defined (SEMIHOSTING)
+    printf("SUCCESS\n");
+#else
+    while (1);                             /* main function does not return */
 #endif
+  }
+
 }
 
  /** \endlink */
