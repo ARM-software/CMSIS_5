@@ -1,11 +1,11 @@
 /**************************************************************************//**
  * @file     partition_ARMv81MML.h
  * @brief    CMSIS-CORE Initial Setup for Secure / Non-Secure Zones for Armv8.1-M Mainline
- * @version  V1.0.0
- * @date     18. March 2018
+ * @version  V1.0.1
+ * @date     20. March 2020
  ******************************************************************************/
 /*
- * Copyright (c) 2009-2019 Arm Limited. All rights reserved.
+ * Copyright (c) 2009-2020 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -316,12 +316,12 @@
 */
 
 /*
-// <e>Setup behaviour of Floating Point Unit
+// <e>Setup behaviour of Floating Point and Vector Unit (FPU/MVE)
 */
 #define TZ_FPU_NS_USAGE 1
 
 /*
-// <o>Floating Point Unit usage
+// <o>Floating Point and Vector Unit usage
 //     <0=> Secure state only
 //     <3=> Secure and Non-Secure state
 //   <i> Value for SCB->NSACR register bits CP10, CP11

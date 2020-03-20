@@ -2941,7 +2941,7 @@ and 8-bit Java bytecodes in Jazelle state.
     </component>
 
     <!-- ARMv81MML -->
-    <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cversion="2.1.0" condition="ARMv81MML CMSIS">
+    <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cversion="2.1.1" condition="ARMv81MML CMSIS">
       <description>System and Startup for Generic Armv8.1-M Mainline device</description>
       <files>
         <!-- include folder / device header file -->
@@ -2952,7 +2952,7 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="linkerScript" name="Device/ARM/ARMv81MML/Source/GCC/gcc_arm.ld"                  version="2.0.0" attr="config" condition="GCC"/>
         <file category="sourceC"      name="Device/ARM/ARMv81MML/Source/system_ARMv81MML.c"              version="1.2.0" attr="config"/>
         <!-- SAU configuration -->
-        <file category="header"       name="Device/ARM/ARMv81MML/Include/Template/partition_ARMv81MML.h" version="1.0.0" attr="config" condition="TZ Secure"/>
+        <file category="header"       name="Device/ARM/ARMv81MML/Include/Template/partition_ARMv81MML.h" version="1.0.1" attr="config" condition="TZ Secure"/>
       </files>
     </component>
 
