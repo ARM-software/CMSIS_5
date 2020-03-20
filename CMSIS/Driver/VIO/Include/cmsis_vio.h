@@ -149,7 +149,7 @@ void cvSetXYZ (uint32_t id, cvValueXYZ_t valueXYZ);
 
 /// Get XYZ value input.
 /// \param[in]     id           input identifier.
-/// \return  XYZ data retrieved from XYZ peripheral.
+/// \return  XYZ data retrieved from input.
 cvValueXYZ_t cvGetXYZ (uint32_t id);
 
 /// Set IPv4 address output.
