@@ -21,8 +21,8 @@
  * Title:        arm_depthwise_conv_s8.c
  * Description:	 s8 version of depthwise convolution.
  *
- * $Date:        March 4, 2020
- * $Revision:    V.1.0.1
+ * $Date:        March 20, 2020
+ * $Revision:    V.1.1.1
  *
  * Target Processor:  Cortex-M cores
  *
@@ -64,54 +64,67 @@ static void depthwise_conv_s8_mult_4(const int8_t *input,
                                      const int32_t output_activation_min,
                                      const int32_t output_activation_max)
 {
-    for(int32_t in_h = -pad_y, out_h = 0, out_idx = 0; out_h < output_y; in_h += stride_y, ++out_h)
+    for (int32_t in_h = -pad_y, out_h = 0, out_idx = 0; out_h < output_y; in_h += stride_y, ++out_h)
     {
-        for(int32_t in_w = -pad_x, out_w = 0, ker_h_start = MAX(0, -in_h); out_w < output_x; in_w += stride_x, ++out_w)
+        for (int32_t in_w = -pad_x, out_w = 0, ker_h_start = MAX(0, -in_h); out_w < output_x; in_w += stride_x, ++out_w)
         {
-            for(int32_t in_ch = 0, out_ch = 0, ker_w_start = MAX(0, -in_w); out_ch < output_ch; ++in_ch, out_ch += ch_mult)
+            for (int32_t in_ch = 0, out_ch = 0, ker_w_start = MAX(0, -in_w); out_ch < output_ch; ++in_ch, out_ch += ch_mult)
             {
-                for(int mult_tile = 0; mult_tile < ch_mult; mult_tile += 4)
+                for (int mult_tile = 0; mult_tile < ch_mult; mult_tile += 4)
                 {
-                    int32_t out_buff0 = bias[out_ch + 0 + mult_tile];
-                    int32_t out_buff1 = bias[out_ch + 1 + mult_tile];
-                    int32_t out_buff2 = bias[out_ch + 2 + mult_tile];
-                    int32_t out_buff3 = bias[out_ch + 3 + mult_tile];
+                    int32_t out_buff[4];
 
-                    for(int32_t ker_h = ker_h_start; ker_h < MIN(kernel_y, input_y - in_h); ++ker_h)
+                    out_buff[0] = bias[out_ch + 0 + mult_tile];
+                    out_buff[1] = bias[out_ch + 1 + mult_tile];
+                    out_buff[2] = bias[out_ch + 2 + mult_tile];
+                    out_buff[3] = bias[out_ch + 3 + mult_tile];
+
+                    for (int32_t ker_h = ker_h_start; ker_h < MIN(kernel_y, input_y - in_h); ++ker_h)
                     {
                         int32_t ker_idx = ker_h * (output_ch * kernel_x) + ker_w_start * output_ch + out_ch;
-                        int32_t in_idx  = (in_h + ker_h) * (input_ch * input_x) + in_w * input_ch + in_ch;
+                        int32_t in_idx = (in_h + ker_h) * (input_ch * input_x) + in_w * input_ch + in_ch;
 
-                        for(int32_t ker_w = ker_w_start; ker_w < MIN(kernel_x, input_x - in_w); ++ker_w, ker_idx += output_ch)
+                        for (int32_t ker_w = ker_w_start; ker_w < MIN(kernel_x, input_x - in_w); ++ker_w, ker_idx += output_ch)
                         {
                             int32_t in_val = input[in_idx + ker_w * input_ch] + input_offset;
-
-                            out_buff0 += in_val * kernel[ker_idx + 0 + mult_tile];
-                            out_buff1 += in_val * kernel[ker_idx + 1 + mult_tile];
-                            out_buff2 += in_val * kernel[ker_idx + 2 + mult_tile];
-                            out_buff3 += in_val * kernel[ker_idx + 3 + mult_tile];
+                            out_buff[0] += in_val * kernel[ker_idx + 0 + mult_tile];
+                            out_buff[1] += in_val * kernel[ker_idx + 1 + mult_tile];
+                            out_buff[2] += in_val * kernel[ker_idx + 2 + mult_tile];
+                            out_buff[3] += in_val * kernel[ker_idx + 3 + mult_tile];
                         }
                     }
+#if defined(ARM_MATH_MVEI)
+                    (void)out_idx;
+                    int32x4_t res = vldrwq_s32(out_buff);
+                    res = arm_requantize_mve_32x4(res, vldrwq_s32(&output_mult[out_ch + mult_tile]), vldrwq_s32(&output_shift[out_ch + mult_tile]));
+                    res = vaddq_n_s32(res, output_offset);
 
-                    out_buff0 = arm_nn_requantize(out_buff0, output_mult[out_ch + 0 + mult_tile], output_shift[out_ch + 0 + mult_tile]);
-                    out_buff1 = arm_nn_requantize(out_buff1, output_mult[out_ch + 1 + mult_tile], output_shift[out_ch + 1 + mult_tile]);
-                    out_buff2 = arm_nn_requantize(out_buff2, output_mult[out_ch + 2 + mult_tile], output_shift[out_ch + 2 + mult_tile]);
-                    out_buff3 = arm_nn_requantize(out_buff3, output_mult[out_ch + 3 + mult_tile], output_shift[out_ch + 3 + mult_tile]);
+                    res = vmaxq_s32(res, vdupq_n_s32(output_activation_min));
+                    res = vminq_s32(res, vdupq_n_s32(output_activation_max));
+                    vstrbq_s32(output, res);
+                    output += 4;
+#else
+                    out_buff[0] = arm_nn_requantize(out_buff[0], output_mult[out_ch + 0 + mult_tile], output_shift[out_ch + 0 + mult_tile]);
+                    out_buff[1] = arm_nn_requantize(out_buff[1], output_mult[out_ch + 1 + mult_tile], output_shift[out_ch + 1 + mult_tile]);
+                    out_buff[2] = arm_nn_requantize(out_buff[2], output_mult[out_ch + 2 + mult_tile], output_shift[out_ch + 2 + mult_tile]);
+                    out_buff[3] = arm_nn_requantize(out_buff[3], output_mult[out_ch + 3 + mult_tile], output_shift[out_ch + 3 + mult_tile]);
 
-                    out_buff0 += output_offset;
-                    out_buff1 += output_offset;
-                    out_buff2 += output_offset;
-                    out_buff3 += output_offset;
+                    out_buff[0] += output_offset;
+                    out_buff[1] += output_offset;
+                    out_buff[2] += output_offset;
+                    out_buff[3] += output_offset;
 
-                    out_buff0 = MIN(MAX(out_buff0, output_activation_min), output_activation_max);
-                    out_buff1 = MIN(MAX(out_buff1, output_activation_min), output_activation_max);
-                    out_buff2 = MIN(MAX(out_buff2, output_activation_min), output_activation_max);
-                    out_buff3 = MIN(MAX(out_buff3, output_activation_min), output_activation_max);
+                    out_buff[0] = MIN(MAX(out_buff[0], output_activation_min), output_activation_max);
+                    out_buff[1] = MIN(MAX(out_buff[1], output_activation_min), output_activation_max);
+                    out_buff[2] = MIN(MAX(out_buff[2], output_activation_min), output_activation_max);
+                    out_buff[3] = MIN(MAX(out_buff[3], output_activation_min), output_activation_max);
 
-                    output[out_idx++] = (int8_t)out_buff0;
-                    output[out_idx++] = (int8_t)out_buff1;
-                    output[out_idx++] = (int8_t)out_buff2;
-                    output[out_idx++] = (int8_t)out_buff3;
+                    output[out_idx++] = (int8_t)out_buff[0];
+                    output[out_idx++] = (int8_t)out_buff[1];
+                    output[out_idx++] = (int8_t)out_buff[2];
+                    output[out_idx++] = (int8_t)out_buff[3];
+
+#endif
                 }
             }
         }
