@@ -784,6 +784,8 @@ INPUT                  = . \
                          src/Driver_USBH.c \
                          ../../Driver/Include/Driver_USB.h \
                          src/Driver_USB.c \
+                         ../../Driver/VIO/Include/cmsis_vio.h \
+                         src/VIO.txt \
                          ../../Driver/Include/Driver_WiFi.h \
                          src/Driver_WiFi.c \
                          src/General.txt
