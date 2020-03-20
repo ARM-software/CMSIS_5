@@ -4369,6 +4369,34 @@ and 8-bit Java bytecodes in Jazelle state.
       </attributes>
     </example>
 
+    <example name="CMSIS-RTOS2 Blinky" doc="Abstract.txt" folder="CMSIS/RTOS2/RTX/Examples_IAR/Blinky">
+      <description>CMSIS-RTOS2 Blinky example</description>
+      <board name="EWARM Simulator" vendor="iar"/>
+      <project>
+        <environment name="iar" load="Blinky/Blinky.ewp"/>
+      </project>
+      <attributes>
+        <component Cclass="CMSIS" Cgroup="CORE"/>
+        <component Cclass="CMSIS" Cgroup="RTOS2"/>
+        <component Cclass="Device" Cgroup="Startup"/>
+        <category>Getting Started</category>
+      </attributes>
+    </example>
+
+    <example name="CMSIS-RTOS2 RTX5 Message Queue" doc="Abstract.txt" folder="CMSIS/RTOS2/RTX/Examples_IAR/MsgQueue">
+      <description>CMSIS-RTOS2 Message Queue Example</description>
+      <board name="EWARM Simulator" vendor="iar"/>
+      <project>
+        <environment name="iar" load="MsgQueue/MsgQueue.ewp"/>
+      </project>
+      <attributes>
+        <component Cclass="CMSIS" Cgroup="CORE"/>
+        <component Cclass="CMSIS" Cgroup="RTOS2"/>
+        <component Cclass="Device" Cgroup="Startup"/>
+        <category>Getting Started</category>
+      </attributes>
+    </example>
+
   </examples>
 
 </package>
