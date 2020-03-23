@@ -25,7 +25,7 @@ Both templates come with an SCVD file that is used to display the VIO signals in
 */
 
 /**
-\defgroup cvDefines_gr  Defines and Structs
+\defgroup vioDefines_gr  Defines and Structs
 \ingroup vio_interface_gr
 \brief Documents the defines and structs of the VIO API.
 \details
@@ -34,128 +34,128 @@ Both templates come with an SCVD file that is used to display the VIO signals in
 */
 
 /**
-\defgroup cvSignals_gr  Signals
-\ingroup cvDefines_gr
+\defgroup vioSignals_gr  Signals
+\ingroup vioDefines_gr
 \brief Signal related defines.
 \details
 @{
-\def cvLED0
-\def cvLED1
-\def cvLED2
-\def cvLED3
-\def cvLED4
-\def cvLED5
-\def cvLED6
-\def cvLED7
-\def cvLEDon
-\def cvLEDoff
-\def cvBUTTON0  
-\def cvBUTTON1  
-\def cvBUTTON2  
-\def cvBUTTON3  
-\def cvJOYup    
-\def cvJOYdown  
-\def cvJOYleft  
-\def cvJOYright 
-\def cvJOYselect
-\def cvJOYall   
+\def vioLED0
+\def vioLED1
+\def vioLED2
+\def vioLED3
+\def vioLED4
+\def vioLED5
+\def vioLED6
+\def vioLED7
+\def vioLEDon
+\def vioLEDoff
+\def vioBUTTON0  
+\def vioBUTTON1  
+\def vioBUTTON2  
+\def vioBUTTON3  
+\def vioJOYup    
+\def vioJOYdown  
+\def vioJOYleft  
+\def vioJOYright 
+\def vioJOYselect
+\def vioJOYall   
 @}
 */
 
 /**
-\defgroup cvValues_gr  Values
-\ingroup cvDefines_gr
+\defgroup vioValues_gr  Values
+\ingroup vioDefines_gr
 \brief Value related defines.
 \details
 @{
-\def cvAIN0 
-\def cvAIN1 
-\def cvAIN2 
-\def cvAIN3 
-\def cvAOUT0
+\def vioAIN0 
+\def vioAIN1 
+\def vioAIN2 
+\def vioAIN3 
+\def vioAOUT0
 /** 
-\struct     cvValueXYZ_t
+\struct     vioValueXYZ_t
 \details
 Structure holding three-dimensional values for gyroscopes, accelerometers, etc.
 
 <b>Parameter for:</b>
-  - \ref cvGetXYZ
-  - \ref cvSetXYZ
+  - \ref vioGetXYZ
+  - \ref vioSetXYZ
 ***************************************************************************************************************************/
 @}
 */
 
 /**
-\defgroup cvIDs_gr  IDs
-\ingroup cvDefines_gr
+\defgroup vioIDs_gr  IDs
+\ingroup vioDefines_gr
 \brief ID related defines.
 \details
 @{
-\def cvAIN0 
-\def cvAIN1 
-\def cvAIN2 
-\def cvAIN3 
-\def cvAOUT0
-\def cvMotionGyro    
-\def cvMotionAccelero
-\def cvMotionMagneto 
+\def vioAIN0 
+\def vioAIN1 
+\def vioAIN2 
+\def vioAIN3 
+\def vioAOUT0
+\def vioMotionGyro    
+\def vioMotionAccelero
+\def vioMotionMagneto 
 @}
 */
 
 /**
-\defgroup cvPrintLevels_gr  Print Levels
-\ingroup cvDefines_gr
+\defgroup vioPrintLevels_gr  Print Levels
+\ingroup vioDefines_gr
 \brief Print level related defines.
 \details
 @{
-\def cvLevelNone   
-\def cvLevelHeading
-\def cvLevelMessage
-\def cvLevelError
+\def vioLevelNone   
+\def vioLevelHeading
+\def vioLevelMessage
+\def vioLevelError
 @}
 */
 
 /**
-\defgroup cvIPAddr_gr  IP Addresses
-\ingroup cvDefines_gr
+\defgroup vioIPAddr_gr  IP Addresses
+\ingroup vioDefines_gr
 \brief IP address related structs.
 \details
 @{
-\struct     cvAddrIPv4_t
+\struct     vioAddrIPv4_t
 \details
 Structure holding IPv4 addresses.
 
 <b>Parameter for:</b>
-  - \ref cvGetIPv4
-  - \ref cvSetIPv4
+  - \ref vioGetIPv4
+  - \ref vioSetIPv4
 
-\struct     cvAddrIPv6_t
+\struct     vioAddrIPv6_t
 \details
 Structure holding IPv6 addresses.
 
 <b>Parameter for:</b>
-  - \ref cvGetIPv6
-  - \ref cvSetIPv6
+  - \ref vioGetIPv6
+  - \ref vioSetIPv6
 @}
 */
 
 /**
 @}
 */
-// end group cvDefines_gr
+// end group vioDefines_gr
 
 
 
-void cvInit (void) {};
+void vioInit (void) {};
 /**
-\fn void cvInit (void)
+\fn void vioInit (void)
 \details
-The function \b cvInit initializes the VIO interface. Use it to initialize any connected hardware that is used to
+The function \b vioInit initializes the VIO interface. Use it to initialize any connected hardware that is used to
 map VIO signals. 
 
 \b Code \b Example:
 \code
-void cvInit (void) {
+void vioInit (void) {
 
   BSP_LED_Init(LED_BLUE);
   BSP_LED_Init(LED_RED);
@@ -165,24 +165,24 @@ void cvInit (void) {
 \endcode
 ***************************************************************************************************************************/
 
-int32_t cvPrint (uint32_t level, const char *format, ...) {
+int32_t vioPrint (uint32_t level, const char *format, ...) {
   return (0);
 };
 /**
-\fn int32_t cvPrint (uint32_t level, const char *format, ...)
+\fn int32_t vioPrint (uint32_t level, const char *format, ...)
 \details
-The function \b cvPrint prints a formatted string to a test terminal. Formatting of the output follows the rulse od standard
+The function \b vioPrint prints a formatted string to a test terminal. Formatting of the output follows the rulse od standard
 C language printf().
 
-Refer to \ref cvPrintLevels_gr for information about the possible \a levels.
+Refer to \ref vioPrintLevels_gr for information about the possible \a levels.
 
 \b Code \b Example:
 \code
-int32_t cvPrint (uint32_t level, const char *format, ...) {
+int32_t vioPrint (uint32_t level, const char *format, ...) {
   va_list args;
   int32_t ret = -1;
  
-  if (level > cvLevelError) {
+  if (level > vioLevelError) {
     return (-1);
   }
  
@@ -192,28 +192,28 @@ int32_t cvPrint (uint32_t level, const char *format, ...) {
  
   va_start(args, format);
  
-  ret = vsnprintf((char *)cvPrintMem[level], sizeof(cvPrintMem[level]), format, args);
+  ret = vsnprintf((char *)vioPrintMem[level], sizeof(vioPrintMem[level]), format, args);
  
   switch (level) {
-    case cvLevelNone:
+    case vioLevelNone:
       GUI_SetFont(&Font12);
       GUI_SetTextColor(GUI_COLOR_WHITE);
-      displayString (level, (char *)cvPrintMem[level]);
+      displayString (level, (char *)vioPrintMem[level]);
       break;
-    case cvLevelHeading:
+    case vioLevelHeading:
       GUI_SetFont(&Font16);
       GUI_SetTextColor(GUI_COLOR_GREEN);
-      displayString (level, (char *)cvPrintMem[level]);
+      displayString (level, (char *)vioPrintMem[level]);
       break;
-    case cvLevelMessage:
+    case vioLevelMessage:
       GUI_SetFont(&Font12);
       GUI_SetTextColor(GUI_COLOR_BLUE);
-      displayString (level, (char *)cvPrintMem[level]);
+      displayString (level, (char *)vioPrintMem[level]);
       break;
-    case cvLevelError:
+    case vioLevelError:
       GUI_SetFont(&Font12);
       GUI_SetTextColor(GUI_COLOR_RED);
-      displayString (level, (char *)cvPrintMem[level]);
+      displayString (level, (char *)vioPrintMem[level]);
       break;
   }
       GUI_SetFont(&Font12);
@@ -226,13 +226,13 @@ int32_t cvPrint (uint32_t level, const char *format, ...) {
 \endcode
 ***************************************************************************************************************************/
 
-int32_t cvGetChar (void) {
+int32_t vioGetChar (void) {
   return (0);
 };
 /**
-\fn int32_t cvGetChar (void)
+\fn int32_t vioGetChar (void)
 \details
-The function \b cvGetChar retrieves a charater from the test terminal. Use this function to get data for further processing
+The function \b vioGetChar retrieves a charater from the test terminal. Use this function to get data for further processing
 in your application.
 
 \b Code \b Example:
@@ -241,39 +241,39 @@ in your application.
 \endcode
 ***************************************************************************************************************************/
 
-void cvSetSignal (uint32_t mask, uint32_t signal) {};
+void vioSetSignal (uint32_t mask, uint32_t signal) {};
 /**
-\fn void cvSetSignal (uint32_t mask, uint32_t signal)
+\fn void vioSetSignal (uint32_t mask, uint32_t signal)
 \details
-The function \b cvSetSignal set a \a signal to an output specified by \a mask. Use this function to map VIOs to actual
+The function \b vioSetSignal set a \a signal to an output specified by \a mask. Use this function to map VIOs to actual
 hardware for displaying signals on a target board.
 
-Refer to \ref cvSignals_gr for information about the possible \a mask and \a signal values.
+Refer to \ref vioSignals_gr for information about the possible \a mask and \a signal values.
 
 \b Code \b Example:
 \code
-void cvSetSignal (uint32_t mask, uint32_t signal) {
-  cvSignalOut &= ~mask;
-  cvSignalOut |=  mask & signal;
+void vioSetSignal (uint32_t mask, uint32_t signal) {
+  vioSignalOut &= ~mask;
+  vioSignalOut |=  mask & signal;
  
-  if (mask & cvLED0) {
-    if (signal & cvLED0) {
+  if (mask & vioLED0) {
+    if (signal & vioLED0) {
       BSP_LED_On(LED_RED);
     } else {
       BSP_LED_Off(LED_RED);
     }
   }
  
-  if (mask & cvLED1) {
-    if (signal & cvLED1) {
+  if (mask & vioLED1) {
+    if (signal & vioLED1) {
       BSP_LED_On(LED_GREEN);
     } else {
       BSP_LED_Off(LED_GREEN);
     }
   }
  
-  if (mask & cvLED2) {
-    if (signal & cvLED2) {
+  if (mask & vioLED2) {
+    if (signal & vioLED2) {
       BSP_LED_On(LED_BLUE);
     } else {
       BSP_LED_Off(LED_BLUE);
@@ -284,16 +284,16 @@ void cvSetSignal (uint32_t mask, uint32_t signal) {
 \endcode
 ***************************************************************************************************************************/
 
-uint32_t cvGetSignal (uint32_t mask) {
+uint32_t vioGetSignal (uint32_t mask) {
   return (0);
 };
 /**
-\fn uint32_t cvGetSignal (uint32_t mask)
+\fn uint32_t vioGetSignal (uint32_t mask)
 \details
-The function \b cvGetSignal retrieves a signal from an input identified by \a mask. Use this function to read data from any
+The function \b vioGetSignal retrieves a signal from an input identified by \a mask. Use this function to read data from any
 input that is provided.
 
-Refer to \ref cvSignals_gr for information about the possible \a mask values.
+Refer to \ref vioSignals_gr for information about the possible \a mask values.
 
 \b Code \b Example:
 \code
@@ -301,14 +301,14 @@ Refer to \ref cvSignals_gr for information about the possible \a mask values.
 \endcode
 ***************************************************************************************************************************/
 
-void cvSetValue (uint32_t id, int32_t value) {};
+void vioSetValue (uint32_t id, int32_t value) {};
 /**
-\fn void cvSetValue (uint32_t id, int32_t value)
+\fn void vioSetValue (uint32_t id, int32_t value)
 \details
-The function \b cvSetValue set the \a value to the output identified by \a id. Use this function to set states of I/Os for
+The function \b vioSetValue set the \a value to the output identified by \a id. Use this function to set states of I/Os for
 example.
 
-Refer to \ref cvValues_gr for information about \a value and \ref cvIDs_gr for \a id.
+Refer to \ref vioValues_gr for information about \a value and \ref vioIDs_gr for \a id.
 
 \b Code \b Example:
 \code
@@ -316,15 +316,15 @@ Refer to \ref cvValues_gr for information about \a value and \ref cvIDs_gr for \
 \endcode
 ***************************************************************************************************************************/
 
-int32_t cvGetValue (uint32_t id) {
+int32_t vioGetValue (uint32_t id) {
   return (0);
 };
 /**
-\fn int32_t cvGetValue (uint32_t id)
+\fn int32_t vioGetValue (uint32_t id)
 \details
-The function \b cvGetValue retrieves a value from the input identified by \a id. Use this function to read data from inputs.
+The function \b vioGetValue retrieves a value from the input identified by \a id. Use this function to read data from inputs.
 
-Refer to \ref cvIDs_gr for information about \a id.
+Refer to \ref vioIDs_gr for information about \a id.
 
 \b Code \b Example:
 \code
@@ -332,16 +332,16 @@ Refer to \ref cvIDs_gr for information about \a id.
 \endcode
 ***************************************************************************************************************************/
 
-void cvSetXYZ (uint32_t id, cvValueXYZ_t valueXYZ) {
+void vioSetXYZ (uint32_t id, vioValueXYZ_t valueXYZ) {
   return (0);
 };
 /**
-\fn void cvSetXYZ (uint32_t id, cvValueXYZ_t valueXYZ)
+\fn void vioSetXYZ (uint32_t id, vioValueXYZ_t valueXYZ)
 \details
-The function \b cvSetXYZ sets a three-dimensional value \a valueXYZ to the output identified by \a id. Use this function to
+The function \b vioSetXYZ sets a three-dimensional value \a valueXYZ to the output identified by \a id. Use this function to
 apply a 3d value to an output.
 
-Refer to \ref cvValues_gr for information about the \a valueXYZ and \ref cvIDs_gr for \a id.
+Refer to \ref vioValues_gr for information about the \a valueXYZ and \ref vioIDs_gr for \a id.
 
 \b Code \b Example:
 \code
@@ -349,22 +349,22 @@ Refer to \ref cvValues_gr for information about the \a valueXYZ and \ref cvIDs_g
 \endcode
 ***************************************************************************************************************************/
 
-cvValueXYZ_t cvGetXYZ (uint32_t id) {
+vioValueXYZ_t vioGetXYZ (uint32_t id) {
   return (0);
 };
 /**
-\fn cvValueXYZ_t cvGetXYZ (uint32_t id)
+\fn vioValueXYZ_t vioGetXYZ (uint32_t id)
 \details
-The function \b cvGetXYZ retrieves a three-dimensional value from the input identified by \a id. Use this function to get a
+The function \b vioGetXYZ retrieves a three-dimensional value from the input identified by \a id. Use this function to get a
 3d value.
 
-Refer to \ref cvIDs_gr for information about \a id.
+Refer to \ref vioIDs_gr for information about \a id.
 
 \b Code \b Example:
 \code
-cvValueXYZ_t cvGetXYZ (uint32_t id) {
+vioValueXYZ_t vioGetXYZ (uint32_t id) {
   uint32_t index;
-  cvValueXYZ_t valueXYZ = {0, 0, 0};
+  vioValueXYZ_t valueXYZ = {0, 0, 0};
   BSP_MOTION_SENSOR_Axes_t axes;
  
   index = id;
@@ -375,36 +375,36 @@ cvValueXYZ_t cvGetXYZ (uint32_t id) {
   if (index == 0U) {
     if (BSP_MOTION_SENSOR_GetAxes(0, MOTION_ACCELERO, &axes) == BSP_ERROR_NONE)
     {
-      cvValueXYZ[index].X = axes.x;
-      cvValueXYZ[index].Y = axes.y;
-      cvValueXYZ[index].Z = axes.z;
+      vioValueXYZ[index].X = axes.x;
+      vioValueXYZ[index].Y = axes.y;
+      vioValueXYZ[index].Z = axes.z;
     }
   }
  
   if (index == 1U) {
     if (BSP_MOTION_SENSOR_GetAxes(0, MOTION_GYRO, &axes) == BSP_ERROR_NONE)
     {
-      cvValueXYZ[index].X = axes.x;
-      cvValueXYZ[index].Y = axes.y;
-      cvValueXYZ[index].Z = axes.z;
+      vioValueXYZ[index].X = axes.x;
+      vioValueXYZ[index].Y = axes.y;
+      vioValueXYZ[index].Z = axes.z;
     }
   }
  
-  valueXYZ = cvValueXYZ[index];
+  valueXYZ = vioValueXYZ[index];
  
   return valueXYZ;
 }
 \endcode
 ***************************************************************************************************************************/
 
-void cvSetIPv4 (uint32_t id, cvAddrIPv4_t addrIPv4) {};
+void vioSetIPv4 (uint32_t id, vioAddrIPv4_t addrIPv4) {};
 /**
-\fn void cvSetIPv4 (uint32_t id, cvAddrIPv4_t addrIPv4)
+\fn void vioSetIPv4 (uint32_t id, vioAddrIPv4_t addrIPv4)
 \details
-The function \b cvSetIPv4 sets an IPv4 address specified by \a addrIPv4 to an interface identified by \a id. Use this
+The function \b vioSetIPv4 sets an IPv4 address specified by \a addrIPv4 to an interface identified by \a id. Use this
 function to assign an IPv4 address to an interface.
 
-Refer to \ref cvIDs_gr for information about \a id and \ref cvIPAddr_gr for \a addrIPv4.
+Refer to \ref vioIDs_gr for information about \a id and \ref vioIPAddr_gr for \a addrIPv4.
 
 \b Code \b Example:
 \code
@@ -412,16 +412,16 @@ Refer to \ref cvIDs_gr for information about \a id and \ref cvIPAddr_gr for \a a
 \endcode
 ***************************************************************************************************************************/
 
-cvAddrIPv4_t cvGetIPv4 (uint32_t id) {
+vioAddrIPv4_t vioGetIPv4 (uint32_t id) {
   return (0);
 };
 /**
-\fn cvAddrIPv4_t cvGetIPv4 (uint32_t id)
+\fn vioAddrIPv4_t vioGetIPv4 (uint32_t id)
 \details
-The function \b cvGetIPv4 retrieves the IPv4 addrIPv4 from an interface identified by \a id. Use this function to read an
+The function \b vioGetIPv4 retrieves the IPv4 addrIPv4 from an interface identified by \a id. Use this function to read an
 IPv4 address.
 
-Refer to \ref cvIDs_gr for information about \a id.
+Refer to \ref vioIDs_gr for information about \a id.
 
 \b Code \b Example:
 \code
@@ -429,14 +429,14 @@ Refer to \ref cvIDs_gr for information about \a id.
 \endcode
 ***************************************************************************************************************************/
 
-void cvSetIPv6 (uint32_t id, cvAddrIPv6_t addrIPv6) {};
+void vioSetIPv6 (uint32_t id, vioAddrIPv6_t addrIPv6) {};
 /**
-\fn void cvSetIPv6 (uint32_t id, cvAddrIPv6_t addrIPv6)
+\fn void vioSetIPv6 (uint32_t id, vioAddrIPv6_t addrIPv6)
 \details
-The function \b cvSetIPv6 sets an IPv6 address specified by \a addrIPv6 to an interface identified by \a id. Use this
+The function \b vioSetIPv6 sets an IPv6 address specified by \a addrIPv6 to an interface identified by \a id. Use this
 function to assign an IPv6 address to an interface.
 
-Refer to \ref cvIDs_gr for information about \a id and \ref cvIPAddr_gr for \a addrIPv6.
+Refer to \ref vioIDs_gr for information about \a id and \ref vioIPAddr_gr for \a addrIPv6.
 
 \b Code \b Example:
 \code
@@ -444,16 +444,16 @@ Refer to \ref cvIDs_gr for information about \a id and \ref cvIPAddr_gr for \a a
 \endcode
 ***************************************************************************************************************************/
 
-cvAddrIPv6_t cvGetIPv6 (uint32_t id) {
+vioAddrIPv6_t vioGetIPv6 (uint32_t id) {
   return (0);
 };
 /**
-\fn cvAddrIPv6_t cvGetIPv6 (uint32_t id)
+\fn vioAddrIPv6_t vioGetIPv6 (uint32_t id)
 \details
-The function \b cvGetIPv6 retrieves the IPv6 addrIPv6 from an interface identified by \a id. Use this function to read an
+The function \b vioGetIPv6 retrieves the IPv6 addrIPv6 from an interface identified by \a id. Use this function to read an
 IPv6 address.
 
-Refer to \ref cvIDs_gr for information about \a id.
+Refer to \ref vioIDs_gr for information about \a id.
 
 \b Code \b Example:
 \code
