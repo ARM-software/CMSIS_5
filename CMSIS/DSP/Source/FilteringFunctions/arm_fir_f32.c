@@ -314,6 +314,7 @@ static void arm_fir_f32_5_8_mve(const arm_fir_instance_f32 * S, const float32_t 
     }
 
     blkCnt = blockSize & 3;
+    if (blkCnt > 0)
     {
 
         mve_pred16_t p0 = vctp32q(blkCnt);
