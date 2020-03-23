@@ -243,12 +243,15 @@ map VIO signals.
 
 \b Code \b Example:
 \code
-void vioInit (void) {
-
-  BSP_LED_Init(LED_BLUE);
-  BSP_LED_Init(LED_RED);
-  BSP_LED_Init(LED_GREEN);
-  BSP_PB_Init(BUTTON_USER, BUTTON_MODE_GPIO);
+#include "cmsis_vio.h"                  // ::CMSIS Driver:VIO
+ 
+int main (void) {
+ 
+  // System Initialization
+  SystemCoreClockUpdate();
+  vioInit();
+  // ...
+ 
 }
 \endcode
 ***************************************************************************************************************************/
@@ -266,50 +269,16 @@ Refer to \ref vioPrintLevels_gr for information about the possible \a levels.
 
 \b Code \b Example:
 \code
-int32_t vioPrint (uint32_t level, const char *format, ...) {
-  va_list args;
-  int32_t ret = -1;
+#include "cmsis_vio.h"                  // ::CMSIS Driver:VIO
  
-  if (level > vioLevelError) {
-    return (-1);
-  }
+int main (void) {
+  int x = 3;
  
-  if (level > VIO_PRINTMEM_NUM) {
-    return (-1);
-  }
- 
-  va_start(args, format);
- 
-  ret = vsnprintf((char *)vioPrintMem[level], sizeof(vioPrintMem[level]), format, args);
- 
-  switch (level) {
-    case vioLevelNone:
-      GUI_SetFont(&Font12);
-      GUI_SetTextColor(GUI_COLOR_WHITE);
-      displayString (level, (char *)vioPrintMem[level]);
-      break;
-    case vioLevelHeading:
-      GUI_SetFont(&Font16);
-      GUI_SetTextColor(GUI_COLOR_GREEN);
-      displayString (level, (char *)vioPrintMem[level]);
-      break;
-    case vioLevelMessage:
-      GUI_SetFont(&Font12);
-      GUI_SetTextColor(GUI_COLOR_BLUE);
-      displayString (level, (char *)vioPrintMem[level]);
-      break;
-    case vioLevelError:
-      GUI_SetFont(&Font12);
-      GUI_SetTextColor(GUI_COLOR_RED);
-      displayString (level, (char *)vioPrintMem[level]);
-      break;
-  }
-  GUI_SetFont(&Font12);
-  GUI_SetTextColor(GUI_COLOR_DARKBLUE);
- 
-  va_end(args);
- 
-  return (ret);
+  vioInit();
+  vioPrint(vioLevelNone,    "Test [None]"); 
+  vioPrint(vioLevelHeading, "Test [Heading] = 1"); 
+  vioPrint(vioLevelMessage, "Test [Message] = 2"); 
+  vioPrint(vioLevelError,   "Test [Error]   = %d", x); 
 }
 \endcode
 ***************************************************************************************************************************/
@@ -325,34 +294,14 @@ Refer to \ref vioSignals_gr for information about the possible \a mask and \a si
 
 \b Code \b Example:
 \code
-void vioSetSignal (uint32_t mask, uint32_t signal) {
-  vioSignalOut &= ~mask;
-  vioSignalOut |=  mask & signal;
+#include "cmsis_vio.h"                  // ::CMSIS Driver:VIO
  
-  if (mask & vioLED0) {
-    if (signal & vioLED0) {
-      BSP_LED_On(LED_RED);
-    } else {
-      BSP_LED_Off(LED_RED);
-    }
-  }
+int main (void) {
  
-  if (mask & vioLED1) {
-    if (signal & vioLED1) {
-      BSP_LED_On(LED_GREEN);
-    } else {
-      BSP_LED_Off(LED_GREEN);
-    }
-  }
- 
-  if (mask & vioLED2) {
-    if (signal & vioLED2) {
-      BSP_LED_On(LED_BLUE);
-    } else {
-      BSP_LED_Off(LED_BLUE);
-    }
-  }
-  return;
+  vioInit();
+  vioSetSignal(vioLED0, vioLEDon);
+  // ...
+  vioSetSignal(vioLED0, vioLEDoff);
 }
 \endcode
 ***************************************************************************************************************************/
@@ -370,7 +319,23 @@ Refer to \ref vioSignals_gr for information about the possible \a mask values.
 
 \b Code \b Example:
 \code
-// todo
+#include "cmsis_vio.h"                  // ::CMSIS Driver:VIO
+ 
+int main (void) {
+  uint32_t state;
+  uint32_t last = 0U;
+ 
+  vioInit();
+  for (;;) {
+    state = (vioGetSignal (vioBUTTON0)); // Get pressed button state
+    if (state != last){
+      if (state == vioBUTTON0){
+        // do something
+      }
+    }
+    last = state;
+  }
+}
 \endcode
 ***************************************************************************************************************************/
 
@@ -385,7 +350,13 @@ Refer to \ref vioValues_gr for information about \a value and \ref vioIDs_gr for
 
 \b Code \b Example:
 \code
-// todo
+#include "cmsis_vio.h"                  // ::CMSIS Driver:VIO
+ 
+int main (void) {
+  int x = 3;
+ 
+  vioSetValue(vioAIN0, x);
+}
 \endcode
 ***************************************************************************************************************************/
 
@@ -401,7 +372,14 @@ Refer to \ref vioIDs_gr for information about \a id.
 
 \b Code \b Example:
 \code
-// todo
+#include "cmsis_vio.h"                  // ::CMSIS Driver:VIO
+ 
+int main (void) {
+  uint32_t button;
+ 
+  vioInit();
+  button = vioGetValue(vioBUTTON0);
+}
 \endcode
 ***************************************************************************************************************************/
 
@@ -418,7 +396,14 @@ Refer to \ref vioValues_gr for information about the \a valueXYZ and \ref vioIDs
 
 \b Code \b Example:
 \code
-// todo
+#include "cmsis_vio.h"                  // ::CMSIS Driver:VIO
+ 
+int main (void) {
+  vioValueXYZ_t xyz = {123, 456, 789};
+ 
+  vioInit();
+  vioSetXYZ(0, xyz);
+}
 \endcode
 ***************************************************************************************************************************/
 
@@ -435,37 +420,13 @@ Refer to \ref vioIDs_gr for information about \a id.
 
 \b Code \b Example:
 \code
-vioValueXYZ_t vioGetXYZ (uint32_t id) {
-  uint32_t index;
-  vioValueXYZ_t valueXYZ = {0, 0, 0};
-  BSP_MOTION_SENSOR_Axes_t axes;
+#include "cmsis_vio.h"                  // ::CMSIS Driver:VIO
  
-  index = id;
-  if (index >= VIO_VALUE_NUM) {
-    return valueXYZ;                   /* return default in case of out-of-range index */
-  }
+int main (void) {
+  volatile vioValueXYZ_t xyz;
  
-  if (index == 0U) {
-    if (BSP_MOTION_SENSOR_GetAxes(0, MOTION_ACCELERO, &axes) == BSP_ERROR_NONE)
-    {
-      vioValueXYZ[index].X = axes.x;
-      vioValueXYZ[index].Y = axes.y;
-      vioValueXYZ[index].Z = axes.z;
-    }
-  }
- 
-  if (index == 1U) {
-    if (BSP_MOTION_SENSOR_GetAxes(0, MOTION_GYRO, &axes) == BSP_ERROR_NONE)
-    {
-      vioValueXYZ[index].X = axes.x;
-      vioValueXYZ[index].Y = axes.y;
-      vioValueXYZ[index].Z = axes.z;
-    }
-  }
- 
-  valueXYZ = vioValueXYZ[index];
- 
-  return valueXYZ;
+  vioInit();
+  xyz = vioGetXYZ(vioMotionGyro);
 }
 \endcode
 ***************************************************************************************************************************/
@@ -481,7 +442,27 @@ Refer to \ref vioIDs_gr for information about \a id and \ref vioIPAddr_gr for \a
 
 \b Code \b Example:
 \code
-// todo
+#include "cmsis_vio.h"                  // ::CMSIS Driver:VIO
+ 
+int main (void) {
+  uint32_t ip = 4U;
+  vioAddrIPv4_t addrIPv4 = {192U, 168U, 111U, 123U};
+  vioAddrIPv6_t addrIPv6 = {1U, 2U, 3U, 4U, 5U, 6U, 7U, 8U,
+                           9U, 10U, 11U, 12U, 13U, 14U, 15U, 16U};
+ 
+  vioInit();
+  for (;;) {
+    // wait for a little while
+ 
+    if (ip == 4U ) {
+      vioSetIPv4 (0, addrIPv4);
+      ip = 6U;
+    } else {
+      vioSetIPv6 (0, addrIPv6);
+      ip = 4U;
+    }
+  }
+}
 \endcode
 ***************************************************************************************************************************/
 
@@ -498,7 +479,24 @@ Refer to \ref vioIDs_gr for information about \a id.
 
 \b Code \b Example:
 \code
-// todo
+#include "cmsis_vio.h"                  // ::CMSIS Driver:VIO
+ 
+int main (void) {
+  uint32_t ip = 4U;
+  vioAddrIPv4_t addrIPv4;
+  vioAddrIPv6_t addrIPv6;
+ 
+  vioInit();
+  for (;;) {
+    // do something
+ 
+    if (ip == 4U ) {
+      addrIPv4 = vioGetIPv4(0);
+    } else {
+      addrIPv6 = vioGetIPv6(0);
+    }
+  }
+}
 \endcode
 ***************************************************************************************************************************/
 
@@ -513,7 +511,27 @@ Refer to \ref vioIDs_gr for information about \a id and \ref vioIPAddr_gr for \a
 
 \b Code \b Example:
 \code
-// todo
+#include "cmsis_vio.h"                  // ::CMSIS Driver:VIO
+ 
+int main (void) {
+  uint32_t ip = 4U;
+  vioAddrIPv4_t addrIPv4 = {192U, 168U, 111U, 123U};
+  vioAddrIPv6_t addrIPv6 = {1U, 2U, 3U, 4U, 5U, 6U, 7U, 8U,
+                           9U, 10U, 11U, 12U, 13U, 14U, 15U, 16U};
+ 
+  vioInit();
+  for (;;) {
+    // wait for a little while
+ 
+    if (ip == 4U ) {
+      vioSetIPv4 (0, addrIPv4);
+      ip = 6U;
+    } else {
+      vioSetIPv6 (0, addrIPv6);
+      ip = 4U;
+    }
+  }
+}
 \endcode
 ***************************************************************************************************************************/
 
@@ -530,7 +548,24 @@ Refer to \ref vioIDs_gr for information about \a id.
 
 \b Code \b Example:
 \code
-// todo
+#include "cmsis_vio.h"                  // ::CMSIS Driver:VIO
+ 
+int main (void) {
+  uint32_t ip = 4U;
+  vioAddrIPv4_t addrIPv4;
+  vioAddrIPv6_t addrIPv6;
+ 
+  vioInit();
+  for (;;) {
+    // do something
+ 
+    if (ip == 4U ) {
+      addrIPv4 = vioGetIPv4(0);
+    } else {
+      addrIPv6 = vioGetIPv6(0);
+    }
+  }
+}
 \endcode
 ***************************************************************************************************************************/
 
