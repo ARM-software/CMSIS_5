@@ -1,8 +1,8 @@
-/**************************************************************************//**
+/******************************************************************************
  * @file     cmsis_vio.h
  * @brief    CMSIS Virtual I/O header file
- * @version  V1.4.0
- * @date     11. March 2020
+ * @version  V0.1.0
+ * @date     18. March 2020
  ******************************************************************************/
 /*
  * Copyright (c) 2019-2020 Arm Limited. All rights reserved.
@@ -43,8 +43,8 @@
 #define cvLED7             (1U << 7)   ///< \ref cvSetSignal \a mask parameter: LED 7
 
 // cvSetSignal: signal values
-#define cvLEDon            (0xFF)      ///< \ref cvSetSignal \a signal parameter: pattern to turn any LED on
-#define cvLEDoff           (0x00)      ///< \ref cvSetSignal \a signal parameter: pattern to turn any LED off
+#define cvLEDon            (0xFFU)     ///< \ref cvSetSignal \a signal parameter: pattern to turn any LED on
+#define cvLEDoff           (0x00U)     ///< \ref cvSetSignal \a signal parameter: pattern to turn any LED off
 
 
 // cvGetSignal: mask values and return values
@@ -87,17 +87,17 @@
 /// 3-D vector value
 typedef struct cvValueXYZ {
   int32_t   X;                         ///< X coordinate
-  int32_t   Y;                         ///< X coordinate
-  int32_t   Z;                         ///< X coordinate
+  int32_t   Y;                         ///< Y coordinate
+  int32_t   Z;                         ///< Z coordinate
 } cvValueXYZ_t;
 
 /// IPv4 Internet Address
-typedef struct cvAddrIPv4 {
+typedef struct {
   uint8_t   addr[4];                   ///< IPv4 address value used in \ref cvSetIPv4 / \ref cvGetIPv4 
 } cvAddrIPv4_t;
 
 /// IPv6 Internet Address
-typedef struct cvAddrIPv6 {
+typedef struct {
   uint8_t   addr[16];                  ///< IPv6 address value used in \ref cvSetIPv6 / \ref cvGetIPv6
 } cvAddrIPv6_t;
 
@@ -107,7 +107,7 @@ extern "C"
 #endif
 
 /// Initialize test input, output.
-/// \return none
+/// \return none.
 void cvInit (void);
 
 /// Print formated string to test terminal.
@@ -123,19 +123,19 @@ int32_t cvGetChar (void);
 
 /// Set signal output.
 /// \param[in]     mask         bit mask of signals to set.
-/// \param[in]     signal       signal value to set (LEDs bit 0..15,  Switches bit 16..31).
-/// \return none
+/// \param[in]     signal       signal value to set.
+/// \return none.
 void cvSetSignal (uint32_t mask, uint32_t signal);
 
 /// Get signal input.
 /// \param[in]     mask         bit mask of signals to read.
-/// \return signal value or highest bit set in case of error.
+/// \return signal value.
 uint32_t cvGetSignal (uint32_t mask);
 
 /// Set value output.
 /// \param[in]     id           output identifier.
 /// \param[in]     value        value to set.
-/// \return none
+/// \return none.
 void cvSetValue (uint32_t id, int32_t value);
 
 /// Get value input.
@@ -146,7 +146,7 @@ int32_t cvGetValue (uint32_t id);
 /// Set XYZ value output.
 /// \param[in]     id           output identifier.
 /// \param[in]     valueXYZ     XYZ data to set.
-/// \return none
+/// \return none.
 void cvSetXYZ (uint32_t id, cvValueXYZ_t valueXYZ);
 
 /// Get XYZ value input.
@@ -157,23 +157,23 @@ cvValueXYZ_t cvGetXYZ (uint32_t id);
 /// Set IPv4 address output.
 /// \param[in]     id           output identifier.
 /// \param[in]     addrIPv4     pointer to IPv4 address.
-/// \return none
+/// \return none.
 void cvSetIPv4 (uint32_t id, cvAddrIPv4_t addrIPv4);
 
 /// Get IPv4 address input.
 /// \param[in]     id           input identifier.
-/// \return IPv4 address retrieved from peripheral
+/// \return IPv4 address retrieved from peripheral.
 cvAddrIPv4_t cvGetIPv4 (uint32_t id);
 
 /// Set IPv6 address output.
 /// \param[in]     id           output identifier.
 /// \param[in]     addrIPv6     pointer to IPv6 address.
-/// \return none
+/// \return none.
 void cvSetIPv6 (uint32_t id, cvAddrIPv6_t addrIPv6);
 
 /// Get IPv6 address from peripheral.
 /// \param[in]     id           input identifier.
-/// \return IPv6 address retrieved from peripheral
+/// \return IPv6 address retrieved from peripheral.
 cvAddrIPv6_t cvGetIPv6 (uint32_t id);
 
 #ifdef  __cplusplus
