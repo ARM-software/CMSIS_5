@@ -757,10 +757,8 @@ WARN_LOGFILE           =
 INPUT                  = . \
                          src/General.txt \
                          src/CmdLineBuild.txt \
-                         src/cprj_schema.txt \
-                         src/vio.txt \
-                         ../../Driver/VIO/Include/cmsis_vio.h \
-
+                         src/cprj_schema.txt
+                         
 # This tag can be used to specify the character encoding of the source files
 # that doxygen parses. Internally doxygen uses the UTF-8 encoding. Doxygen uses
 # libiconv (or the iconv built into libc) for the transcoding. See the libiconv
