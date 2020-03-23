@@ -185,12 +185,12 @@ __STATIC_INLINE uint32_t ARM_PMU_Get_CCNTR(void);
 __STATIC_INLINE uint32_t ARM_PMU_Get_EVCNTR(uint32_t num);
 
 __STATIC_INLINE uint32_t ARM_PMU_CNTR_Get_OVSSET(uint32_t mask);
-__STATIC_INLINE uint32_t ARM_PMU_CNTR_Set_OVSCLR(uint32_t mask);
+__STATIC_INLINE void ARM_PMU_CNTR_Set_OVSCLR(uint32_t mask);
 
-__STATIC_INLINE uint32_t ARM_PMU_Set_INTSET(uint32_t mask);
-__STATIC_INLINE uint32_t ARM_PMU_Set_INTCLR(uint32_t mask);
+__STATIC_INLINE void ARM_PMU_Set_INTSET(uint32_t mask);
+__STATIC_INLINE void ARM_PMU_Set_INTCLR(uint32_t mask);
 
-__STATIC_INLINE uint32_t ARM_PMU_CNTR_Increment(uint32_t mask);
+__STATIC_INLINE void ARM_PMU_CNTR_Increment(uint32_t mask);
 
 /** 
   \brief   Enable the PMU
@@ -295,7 +295,7 @@ __STATIC_INLINE uint32_t ARM_PMU_Get_CNTR_OVS(void)
            - event counters (0-30)
            - cycle counter
 */
-__STATIC_INLINE uint32_t ARM_PMU_Set_CNTR_OVS(uint32_t mask)
+__STATIC_INLINE void ARM_PMU_Set_CNTR_OVS(uint32_t mask)
 {
   PMU->OVSCLR = mask;
 }
@@ -307,7 +307,7 @@ __STATIC_INLINE uint32_t ARM_PMU_Set_CNTR_OVS(uint32_t mask)
            - event counters (0-30)
            - cycle counter
 */
-__STATIC_INLINE uint32_t ARM_PMU_Set_CNTR_IRQ_Enable(uint32_t mask)
+__STATIC_INLINE void ARM_PMU_Set_CNTR_IRQ_Enable(uint32_t mask)
 {
   PMU->INTENSET = mask;
 }
@@ -319,7 +319,7 @@ __STATIC_INLINE uint32_t ARM_PMU_Set_CNTR_IRQ_Enable(uint32_t mask)
            - event counters (0-30)
            - cycle counter
 */
-__STATIC_INLINE uint32_t ARM_PMU_Set_CNTR_IRQ_Disable(uint32_t mask)
+__STATIC_INLINE void ARM_PMU_Set_CNTR_IRQ_Disable(uint32_t mask)
 {
   PMU->INTENCLR = mask;
 }
@@ -329,7 +329,7 @@ __STATIC_INLINE uint32_t ARM_PMU_Set_CNTR_IRQ_Disable(uint32_t mask)
   \param [in]     mask    Counters to increment
   \note    Software increment bits for one or more event counters (0-30)
 */
-__STATIC_INLINE uint32_t ARM_PMU_CNTR_Increment(uint32_t mask)
+__STATIC_INLINE void ARM_PMU_CNTR_Increment(uint32_t mask)
 {
   PMU->SWINC = mask;
 }
