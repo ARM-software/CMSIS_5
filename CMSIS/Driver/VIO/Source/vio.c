@@ -39,13 +39,13 @@
 #define VIO_IPV6_ADDRESS_NUM     2U     // number of IPv6 addresses
 
 // VIO input, output variables
-__USED uint32_t      vioSignalIn;
-__USED uint32_t      vioSignalOut;
-__USED char          vioPrintMem[VIO_PRINTMEM_NUM][VIO_PRINT_MAX_SIZE];
-__USED int32_t       vioValue   [VIO_VALUE_NUM];
-__USED vioValueXYZ_t vioValueXYZ[VIO_VALUEXYZ_NUM];
-__USED vioAddrIPv4_t vioAddrIPv4[VIO_IPV4_ADDRESS_NUM];
-__USED vioAddrIPv6_t vioAddrIPv6[VIO_IPV6_ADDRESS_NUM];
+__USED uint32_t      vioSignalIn;                                       // Memory for incoming signal
+__USED uint32_t      vioSignalOut;                                      // Memory for outgoing signal
+__USED char          vioPrintMem[VIO_PRINTMEM_NUM][VIO_PRINT_MAX_SIZE]; // Memory for the last value for each level
+__USED int32_t       vioValue   [VIO_VALUE_NUM];                        // Memory for value used in vioGetValue/vioSetValue
+__USED vioValueXYZ_t vioValueXYZ[VIO_VALUEXYZ_NUM];                     // Memory for XYZ value for 3-D vector
+__USED vioAddrIPv4_t vioAddrIPv4[VIO_IPV4_ADDRESS_NUM];                 // Memory for IPv4 address value used in vioSetIPv4/vioGetIPv4
+__USED vioAddrIPv6_t vioAddrIPv6[VIO_IPV6_ADDRESS_NUM];                 // Memory for IPv6 address value used in vioSetIPv6/vioGetIPv6
 
 // Initialize test input, output.
 void vioInit (void) {
