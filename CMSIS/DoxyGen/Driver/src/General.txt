@@ -67,6 +67,7 @@ The following files relevant to CMSIS-Driver are present in the <b>ARM::CMSIS</b
       <td>
         - Changed: removed volatile from status related typedefs APIs
         - Enhanced WiFi Interface API with support for polling Socket Receive/Send
+        - Added VIO API 0.1.0 (Preview)
       </td>
     </tr>
     <tr>
