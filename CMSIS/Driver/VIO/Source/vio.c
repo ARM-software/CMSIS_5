@@ -30,6 +30,11 @@
 #include "RTE_Components.h"             // Component selection
 #include CMSIS_device_header
 
+#if !defined CMSIS_VOUT || !defined CMSIS_VIN
+// Add user includes here:
+
+#endif
+
 // VIO input, output definitions
 #define VIO_PRINT_MAX_SIZE      64U     // maximum size of print memory
 #define VIO_PRINTMEM_NUM         4U     // number of print memories
@@ -46,6 +51,16 @@ __USED int32_t       vioValue   [VIO_VALUE_NUM];                        // Memor
 __USED vioValueXYZ_t vioValueXYZ[VIO_VALUEXYZ_NUM];                     // Memory for XYZ value for 3-D vector
 __USED vioAddrIPv4_t vioAddrIPv4[VIO_IPV4_ADDRESS_NUM];                 // Memory for IPv4 address value used in vioSetIPv4/vioGetIPv4
 __USED vioAddrIPv6_t vioAddrIPv6[VIO_IPV6_ADDRESS_NUM];                 // Memory for IPv6 address value used in vioSetIPv6/vioGetIPv6
+
+#if !defined CMSIS_VOUT
+// Add global user types, variables, functions here:
+
+#endif
+
+#if !defined CMSIS_VIN
+// Add global user types, variables, functions here:
+
+#endif
 
 // Initialize test input, output.
 void vioInit (void) {
