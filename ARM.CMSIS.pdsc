@@ -3028,7 +3028,7 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="sourceC"      name="Device/ARM/ARMv81MML/Source/startup_ARMv81MML.c"             version="2.0.2" attr="config"/>
         <file category="linkerScript" name="Device/ARM/ARMv81MML/Source/ARM/ARMv81MML_ac6.sct"           version="1.0.0" attr="config" condition="ARMCC6"/>
         <file category="linkerScript" name="Device/ARM/ARMv81MML/Source/GCC/gcc_arm.ld"                  version="2.0.0" attr="config" condition="GCC"/>
-        <file category="sourceC"      name="Device/ARM/ARMv81MML/Source/system_ARMv81MML.c"              version="1.2.0" attr="config"/>
+        <file category="sourceC"      name="Device/ARM/ARMv81MML/Source/system_ARMv81MML.c"              version="1.2.1" attr="config"/>
         <!-- SAU configuration -->
         <file category="header"       name="Device/ARM/ARMv81MML/Include/Template/partition_ARMv81MML.h" version="1.0.1" attr="config" condition="TZ Secure"/>
       </files>
