@@ -291,7 +291,7 @@ const arm_cfft_instance_q15 arm_cfft_sR_q15_len4096 = {
 
 #if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) || (defined(ARM_TABLE_TWIDDLECOEF_F64_32) && defined(ARM_TABLE_BITREVIDX_FLT64_32) && defined(ARM_TABLE_TWIDDLECOEF_RFFT_F64_32))
 const arm_rfft_fast_instance_f64 arm_rfft_fast_sR_f64_len32 = {
-  { 16, (const float64_t *)twiddleCoefF64_32, armBitRevIndexTableF64_32, ARMBITREVINDEXTABLEF64_16_TABLE_LENGTH },
+  { 16, (const float64_t *)twiddleCoefF64_16, armBitRevIndexTableF64_16, ARMBITREVINDEXTABLEF64_16_TABLE_LENGTH },
   32U,
   (float64_t *)twiddleCoefF64_rfft_32
 };
@@ -359,7 +359,7 @@ const arm_rfft_fast_instance_f64 arm_rfft_fast_sR_f64_len4096 = {
 
 #if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) || (defined(ARM_TABLE_TWIDDLECOEF_F32_32) && defined(ARM_TABLE_BITREVIDX_FLT_32) && defined(ARM_TABLE_TWIDDLECOEF_RFFT_F32_32))
 const arm_rfft_fast_instance_f32 arm_rfft_fast_sR_f32_len32 = {
-  { 16, twiddleCoef_32, armBitRevIndexTable32, ARMBITREVINDEXTABLE_16_TABLE_LENGTH },
+  { 16, twiddleCoef_16, armBitRevIndexTable16, ARMBITREVINDEXTABLE_16_TABLE_LENGTH },
   32U,
   (float32_t *)twiddleCoef_rfft_32
 };
