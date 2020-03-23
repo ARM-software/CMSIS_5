@@ -49,6 +49,14 @@ __USED vioAddrIPv6_t vioAddrIPv6[VIO_IPV6_ADDRESS_NUM];                 // Memor
 
 // Initialize test input, output.
 void vioInit (void) {
+#if !defined CMSIS_VOUT
+// Add user variables here:
+
+#endif
+#if !defined CMSIS_VIN
+// Add user variables here:
+
+#endif
 
   vioSignalIn  = 0U;
   vioSignalOut = 0U;
@@ -59,16 +67,29 @@ void vioInit (void) {
   memset (vioAddrIPv4, 0, sizeof(vioAddrIPv4));
   memset (vioAddrIPv6, 0, sizeof(vioAddrIPv6));
 
+#if !defined CMSIS_VOUT
 // Add user code here:
-// <code vioInit>
+// <code vioInit output>
 
 // </code>
+#endif
+
+#if !defined CMSIS_VIN
+// Add user code here:
+// <code vioInit input>
+
+// </code>
+#endif
 }
 
 // Print formated string to test terminal.
 int32_t vioPrint (uint32_t level, const char *format, ...) {
   va_list args;
   int32_t ret;
+#if !defined CMSIS_VOUT
+// Add user variables here:
+
+#endif
 
   if (level > vioLevelError) {
     return (-1);
@@ -84,35 +105,49 @@ int32_t vioPrint (uint32_t level, const char *format, ...) {
 
   va_end(args);
 
+#if !defined CMSIS_VOUT
 // Add user code here:
 // <code vioPrint>
 
 // </code>
+#endif
 
   return (ret);
 }
 
 // Set signal output.
 void vioSetSignal (uint32_t mask, uint32_t signal) {
+#if !defined CMSIS_VOUT
+// Add user variables here:
+
+#endif
 
   vioSignalOut &= ~mask;
   vioSignalOut |=  mask & signal;
 
+#if !defined CMSIS_VOUT
 // Add user code here:
 // <code vioSetSignal>
 
 // </code>
+#endif
 }
 
 // Get signal input.
 uint32_t vioGetSignal (uint32_t mask) {
   uint32_t signal;
+#if !defined CMSIS_VIN
+// Add user variables here:
 
+#endif
+
+#if !defined CMSIS_VIN
 // Add user code here:
 // <code vioGetSignal>
 
 //   vioSignalIn = ...;
 // </code>
+#endif
 
   signal = vioSignalIn;
 
@@ -122,6 +157,10 @@ uint32_t vioGetSignal (uint32_t mask) {
 // Set value output.
 void vioSetValue (uint32_t id, int32_t value) {
   uint32_t index = id;
+#if !defined CMSIS_VOUT
+// Add user variables here:
+
+#endif
 
   if (index >= VIO_VALUE_NUM) {
     return;                             /* return in case of out-of-range index */
@@ -129,26 +168,34 @@ void vioSetValue (uint32_t id, int32_t value) {
 
   vioValue[index] = value;
 
+#if !defined CMSIS_VOUT
 // Add user code here:
 // <code vioSetValue>
 
 // </code>
+#endif
 }
 
 // Get value input.
 int32_t vioGetValue (uint32_t id) {
   uint32_t index = id;
   int32_t  value = 0;
+#if !defined CMSIS_VIN
+// Add user variables here:
+
+#endif
 
   if (index >= VIO_VALUE_NUM) {
     return value;                       /* return default in case of out-of-range index */
   }
 
+#if !defined CMSIS_VIN
 // Add user code here:
 // <code vioGetValue>
 
 //   vioValue[index] = ...;
 // </code>
+#endif
 
   value = vioValue[index];
 
@@ -158,6 +205,10 @@ int32_t vioGetValue (uint32_t id) {
 // Set XYZ value output.
 void vioSetXYZ (uint32_t id, vioValueXYZ_t valueXYZ) {
   uint32_t index = id;
+#if !defined CMSIS_VOUT
+// Add user variables here:
+
+#endif
 
   if (index >= VIO_VALUEXYZ_NUM) {
     return;                             /* return in case of out-of-range index */
@@ -165,26 +216,34 @@ void vioSetXYZ (uint32_t id, vioValueXYZ_t valueXYZ) {
 
   vioValueXYZ[index] = valueXYZ;
 
+#if !defined CMSIS_VOUT
 // Add user code here:
 // <code vioSetXYZ>
 
 // </code>
+#endif
 }
 
 // Get XYZ value input.
 vioValueXYZ_t vioGetXYZ (uint32_t id) {
   uint32_t index = id;
   vioValueXYZ_t valueXYZ = {0, 0, 0};
+#if !defined CMSIS_VIN
+// Add user variables here:
+
+#endif
 
   if (index >= VIO_VALUEXYZ_NUM) {
     return valueXYZ;                    /* return default in case of out-of-range index */
   }
 
+#if !defined CMSIS_VIN
 // Add user code here:
 // <code vioGetXYZ>
 
 //   vioValueXYZ[index] = ...;
 // </code>
+#endif
 
   valueXYZ = vioValueXYZ[index];
 
@@ -194,6 +253,10 @@ vioValueXYZ_t vioGetXYZ (uint32_t id) {
 // Set IPv4 address output.
 void vioSetIPv4 (uint32_t id, vioAddrIPv4_t addrIPv4) {
   uint32_t index = id;
+#if !defined CMSIS_VOUT
+// Add user variables here:
+
+#endif
 
   if (index >= VIO_IPV4_ADDRESS_NUM) {
     return;                             /* return in case of out-of-range index */
@@ -201,26 +264,34 @@ void vioSetIPv4 (uint32_t id, vioAddrIPv4_t addrIPv4) {
 
   vioAddrIPv4[index] = addrIPv4;
 
+#if !defined CMSIS_VOUT
 // Add user code here:
 // <code vioSetIPv4>
 
 // </code>
+#endif
 }
 
 // Get IPv4 address input.
 vioAddrIPv4_t vioGetIPv4 (uint32_t id) {
   uint32_t index = id;
   vioAddrIPv4_t addrIPv4 = {0U, 0U, 0U, 0U};
+#if !defined CMSIS_VIN
+// Add user variables here:
+
+#endif
 
   if (index >= VIO_IPV4_ADDRESS_NUM) {
     return addrIPv4;                    /* return default in case of out-of-range index */
   }
 
+#if !defined CMSIS_VIN
 // Add user code here:
 // <code vioGetIPv4>
 
 //   vioAddrIPv4[index] = ...;
 // </code>
+#endif
 
   addrIPv4 = vioAddrIPv4[index];
 
@@ -230,6 +301,10 @@ vioAddrIPv4_t vioGetIPv4 (uint32_t id) {
 // Set IPv6 address output.
 void vioSetIPv6 (uint32_t id, vioAddrIPv6_t addrIPv6) {
   uint32_t index = id;
+#if !defined CMSIS_VOUT
+// Add user variables here:
+
+#endif
 
   if (index >= VIO_IPV6_ADDRESS_NUM) {
     return;                             /* return in case of out-of-range index */
@@ -237,10 +312,12 @@ void vioSetIPv6 (uint32_t id, vioAddrIPv6_t addrIPv6) {
 
   vioAddrIPv6[index] = addrIPv6;
 
+#if !defined CMSIS_VOUT
 // Add user code here:
 // <code vioSetIPv6>
 
 // </code>
+#endif
 }
 
 // Get IPv6 address input.
@@ -248,16 +325,22 @@ vioAddrIPv6_t vioGetIPv6 (uint32_t id) {
   uint32_t index = id;
   vioAddrIPv6_t addrIPv6 = {0U, 0U, 0U, 0U, 0U, 0U, 0U, 0U,
                             0U, 0U, 0U, 0U, 0U, 0U, 0U, 0U};
+#if !defined CMSIS_VIN
+// Add user variables here:
+
+#endif
 
   if (index >= VIO_IPV6_ADDRESS_NUM) {
     return addrIPv6;                    /* return default in case of out-of-range index */
   }
 
+#if !defined CMSIS_VIN
 // Add user code here:
 // <code vioGetIPv6>
 
 //   vioAddrIPv6[index] = ...;
 // </code>
+#endif
 
   addrIPv6 = vioAddrIPv6[index];
 
