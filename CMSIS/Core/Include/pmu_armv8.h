@@ -2,7 +2,7 @@
  * @file     pmu_armv8.h
  * @brief    CMSIS PMU API for Armv8.1-M PMU
  * @version  V1.0.0
- * @date     18. March 2020
+ * @date     24. March 2020
  ******************************************************************************/
 /*
  * Copyright (c) 2020 Arm Limited. All rights reserved.
@@ -36,10 +36,10 @@
  * \note  See the Armv8.1-M Architecture Reference Manual for full details on these PMU events.
  * */
 
-#define ARM_PMU_SW_INCR                              0x0000				/*!< Software update to the PMU_SWINC register, architecturally executed and condition code check pass */
+#define ARM_PMU_SW_INCR                              0x0000             /*!< Software update to the PMU_SWINC register, architecturally executed and condition code check pass */
 #define ARM_PMU_L1I_CACHE_REFILL                     0x0001             /*!< L1 I-Cache refill */
 #define ARM_PMU_L1D_CACHE_REFILL                     0x0003             /*!< L1 D-Cache refill */
-#define ARM_PMU_L1D_CACHE                            0x0004				/*!< L1 D-Cache access */
+#define ARM_PMU_L1D_CACHE                            0x0004             /*!< L1 D-Cache access */
 #define ARM_PMU_LD_RETIRED                           0x0006             /*!< Memory-reading instruction architecturally executed and condition code check pass */
 #define ARM_PMU_ST_RETIRED                           0x0007             /*!< Memory-writing instruction architecturally executed and condition code check pass */
 #define ARM_PMU_INST_RETIRED                         0x0008             /*!< Instruction architecturally executed */
@@ -52,7 +52,7 @@
 #define ARM_PMU_BR_MIS_PRED                          0x0010             /*!< Mispredicted or not predicted branch speculatively executed */
 #define ARM_PMU_CPU_CYCLES                           0x0011             /*!< Cycle */
 #define ARM_PMU_BR_PRED                              0x0012             /*!< Predictable branch speculatively executed */
-#define ARM_PMU_MEM_ACCESS                           0x0013				/*!< Data memory access */
+#define ARM_PMU_MEM_ACCESS                           0x0013             /*!< Data memory access */
 #define ARM_PMU_L1I_CACHE                            0x0014             /*!< Level 1 instruction cache access */
 #define ARM_PMU_L1D_CACHE_WB                         0x0015             /*!< Level 1 data cache write-back */
 #define ARM_PMU_L2D_CACHE                            0x0016             /*!< Level 2 data cache access */
@@ -184,11 +184,11 @@ __STATIC_INLINE void ARM_PMU_CNTR_Disable(uint32_t mask);
 __STATIC_INLINE uint32_t ARM_PMU_Get_CCNTR(void);
 __STATIC_INLINE uint32_t ARM_PMU_Get_EVCNTR(uint32_t num);
 
-__STATIC_INLINE uint32_t ARM_PMU_CNTR_Get_OVSSET(uint32_t mask);
-__STATIC_INLINE void ARM_PMU_CNTR_Set_OVSCLR(uint32_t mask);
+__STATIC_INLINE uint32_t ARM_PMU_Get_CNTR_OVS(void);
+__STATIC_INLINE void ARM_PMU_Set_CNTR_OVS(uint32_t mask);
 
-__STATIC_INLINE void ARM_PMU_Set_INTSET(uint32_t mask);
-__STATIC_INLINE void ARM_PMU_Set_INTCLR(uint32_t mask);
+__STATIC_INLINE void ARM_PMU_Set_CNTR_IRQ_Enable(uint32_t mask);
+__STATIC_INLINE void ARM_PMU_Set_CNTR_IRQ_Disable(uint32_t mask);
 
 __STATIC_INLINE void ARM_PMU_CNTR_Increment(uint32_t mask);
 
