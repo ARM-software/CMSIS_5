@@ -84,16 +84,12 @@ void vioInit (void) {
 
 #if !defined CMSIS_VOUT
 // Add user code here:
-// <code vioInit output>
 
-// </code>
 #endif
 
 #if !defined CMSIS_VIN
 // Add user code here:
-// <code vioInit input>
 
-// </code>
 #endif
 }
 
@@ -122,9 +118,7 @@ int32_t vioPrint (uint32_t level, const char *format, ...) {
 
 #if !defined CMSIS_VOUT
 // Add user code here:
-// <code vioPrint>
 
-// </code>
 #endif
 
   return (ret);
@@ -142,9 +136,7 @@ void vioSetSignal (uint32_t mask, uint32_t signal) {
 
 #if !defined CMSIS_VOUT
 // Add user code here:
-// <code vioSetSignal>
 
-// </code>
 #endif
 }
 
@@ -158,10 +150,8 @@ uint32_t vioGetSignal (uint32_t mask) {
 
 #if !defined CMSIS_VIN
 // Add user code here:
-// <code vioGetSignal>
 
 //   vioSignalIn = ...;
-// </code>
 #endif
 
   signal = vioSignalIn;
@@ -185,9 +175,7 @@ void vioSetValue (uint32_t id, int32_t value) {
 
 #if !defined CMSIS_VOUT
 // Add user code here:
-// <code vioSetValue>
 
-// </code>
 #endif
 }
 
@@ -206,10 +194,8 @@ int32_t vioGetValue (uint32_t id) {
 
 #if !defined CMSIS_VIN
 // Add user code here:
-// <code vioGetValue>
 
 //   vioValue[index] = ...;
-// </code>
 #endif
 
   value = vioValue[index];
@@ -233,9 +219,7 @@ void vioSetXYZ (uint32_t id, vioValueXYZ_t valueXYZ) {
 
 #if !defined CMSIS_VOUT
 // Add user code here:
-// <code vioSetXYZ>
 
-// </code>
 #endif
 }
 
@@ -254,10 +238,8 @@ vioValueXYZ_t vioGetXYZ (uint32_t id) {
 
 #if !defined CMSIS_VIN
 // Add user code here:
-// <code vioGetXYZ>
 
 //   vioValueXYZ[index] = ...;
-// </code>
 #endif
 
   valueXYZ = vioValueXYZ[index];
@@ -281,9 +263,7 @@ void vioSetIPv4 (uint32_t id, vioAddrIPv4_t addrIPv4) {
 
 #if !defined CMSIS_VOUT
 // Add user code here:
-// <code vioSetIPv4>
 
-// </code>
 #endif
 }
 
@@ -302,10 +282,8 @@ vioAddrIPv4_t vioGetIPv4 (uint32_t id) {
 
 #if !defined CMSIS_VIN
 // Add user code here:
-// <code vioGetIPv4>
 
 //   vioAddrIPv4[index] = ...;
-// </code>
 #endif
 
   addrIPv4 = vioAddrIPv4[index];
@@ -329,9 +307,7 @@ void vioSetIPv6 (uint32_t id, vioAddrIPv6_t addrIPv6) {
 
 #if !defined CMSIS_VOUT
 // Add user code here:
-// <code vioSetIPv6>
 
-// </code>
 #endif
 }
 
@@ -351,10 +327,8 @@ vioAddrIPv6_t vioGetIPv6 (uint32_t id) {
 
 #if !defined CMSIS_VIN
 // Add user code here:
-// <code vioGetIPv6>
 
 //   vioAddrIPv6[index] = ...;
-// </code>
 #endif
 
   addrIPv6 = vioAddrIPv6[index];
