@@ -53,11 +53,7 @@
 
         <item property="ValueXYZ Array">
            <list name="i" start="0" limit="ValueXYZ._count">
-             <item property="ValueXYZ[%d[i]]" value="X=%d[ValueXYZ[i].X] Y=%d[ValueXYZ[i].Y] Z=%d[ValueXYZ[i].Z]">
-               <item property="X" value="%d[ValueXYZ[i].X]"/>
-               <item property="Y" value="%d[ValueXYZ[i].Y]"/>
-               <item property="Z" value="%d[ValueXYZ[i].Z]"/>
-             </item>
+             <item property="ValueXYZ[%d[i]]" value="X: %d[ValueXYZ[i].X] Y: %d[ValueXYZ[i].Y] Z: %d[ValueXYZ[i].Z]"/>
            </list>
         </item>
 
