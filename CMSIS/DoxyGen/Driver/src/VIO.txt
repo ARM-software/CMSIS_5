@@ -41,10 +41,9 @@ Use these memory locations to monitor or set the variables as required in the ap
 
 Two defines are available that help to disconnect the actual peripherals and enable virtual I/Os: \c CMSIS_VIN and
 \c CMSIS_VOUT. They help to write code that can be used in testing environments without real hardware access. The following
-example shows such code:
+implementation example shows such code:
 
-\b Code \b Example
-
+<b>Code Example (VIO Implementation)</b>
 \code
 // Initialize test input, output.
 void vioInit (void) {
@@ -58,28 +57,14 @@ void vioInit (void) {
  
 #endif
  
-  vioSignalIn = 0U;
+  vioSignalIn  = 0U;
   vioSignalOut = 0U;
  
-  for (i = 0; i < VIO_PRINTMEM_NUM; i++) {
-    memset (vioPrintMem[i], 0, VIO_PRINT_MAX_SIZE);
-  }
- 
-  for (i = 0; i < VIO_VALUE_NUM; i++) {
-    vioValue[i] = 0;
-  }
- 
-  for (i = 0; i < VIO_VALUEXYZ_NUM; i++) {
-    memset (&vioValueXYZ[i], 0,  sizeof(vioValueXYZ_t));
-  }
- 
-  for (i = 0; i < VIO_IPV4_ADDRESS_NUM; i++) {
-    memset (&vioAddrIPv4[i], 0U,  sizeof(vioAddrIPv4_t));
-  }
- 
-  for (i = 0; i < VIO_IPV6_ADDRESS_NUM; i++) {
-    memset (&vioAddrIPv6[i], 0U,  sizeof(vioAddrIPv6_t));
-  }
+  memset (vioPrintMem, 0, sizeof(vioPrintMem));
+  memset (vioValue,    0, sizeof(vioValue));
+  memset (vioValueXYZ, 0, sizeof(vioValueXYZ));
+  memset (vioAddrIPv4, 0, sizeof(vioAddrIPv4));
+  memset (vioAddrIPv6, 0, sizeof(vioAddrIPv6));
  
 #if !defined CMSIS_VOUT
 // Add user code here:
@@ -276,8 +261,8 @@ int main (void) {
  
   vioInit();
   vioPrint(vioLevelNone,    "Test [None]"); 
-  vioPrint(vioLevelHeading, "Test [Heading] = 1"); 
-  vioPrint(vioLevelMessage, "Test [Message] = 2"); 
+  vioPrint(vioLevelHeading, "Test [Heading] = Network Connector Message"); 
+  vioPrint(vioLevelMessage, "Test [Message] = Connection failed"); 
   vioPrint(vioLevelError,   "Test [Error]   = %d", x); 
 }
 \endcode
@@ -353,9 +338,9 @@ Refer to \ref vioValues_gr for information about \a value and \ref vioIDs_gr for
 #include "cmsis_vio.h"                  // ::CMSIS Driver:VIO
  
 int main (void) {
-  int x = 3;
  
-  vioSetValue(vioAIN0, x);
+  vioInit();
+  vioSetValue(vioAOUT0, 1024);
 }
 \endcode
 ***************************************************************************************************************************/
@@ -445,23 +430,10 @@ Refer to \ref vioIDs_gr for information about \a id and \ref vioIPAddr_gr for \a
 #include "cmsis_vio.h"                  // ::CMSIS Driver:VIO
  
 int main (void) {
-  uint32_t ip = 4U;
   vioAddrIPv4_t addrIPv4 = {192U, 168U, 111U, 123U};
-  vioAddrIPv6_t addrIPv6 = {1U, 2U, 3U, 4U, 5U, 6U, 7U, 8U,
-                           9U, 10U, 11U, 12U, 13U, 14U, 15U, 16U};
  
   vioInit();
-  for (;;) {
-    // wait for a little while
- 
-    if (ip == 4U ) {
-      vioSetIPv4 (0, addrIPv4);
-      ip = 6U;
-    } else {
-      vioSetIPv6 (0, addrIPv6);
-      ip = 4U;
-    }
-  }
+  vioSetIPv4 (0, addrIPv4);
 }
 \endcode
 ***************************************************************************************************************************/
@@ -482,20 +454,10 @@ Refer to \ref vioIDs_gr for information about \a id.
 #include "cmsis_vio.h"                  // ::CMSIS Driver:VIO
  
 int main (void) {
-  uint32_t ip = 4U;
   vioAddrIPv4_t addrIPv4;
-  vioAddrIPv6_t addrIPv6;
  
   vioInit();
-  for (;;) {
-    // do something
- 
-    if (ip == 4U ) {
-      addrIPv4 = vioGetIPv4(0);
-    } else {
-      addrIPv6 = vioGetIPv6(0);
-    }
-  }
+  addrIPv4 = vioGetIPv4(0);
 }
 \endcode
 ***************************************************************************************************************************/
@@ -514,23 +476,11 @@ Refer to \ref vioIDs_gr for information about \a id and \ref vioIPAddr_gr for \a
 #include "cmsis_vio.h"                  // ::CMSIS Driver:VIO
  
 int main (void) {
-  uint32_t ip = 4U;
-  vioAddrIPv4_t addrIPv4 = {192U, 168U, 111U, 123U};
   vioAddrIPv6_t addrIPv6 = {1U, 2U, 3U, 4U, 5U, 6U, 7U, 8U,
                            9U, 10U, 11U, 12U, 13U, 14U, 15U, 16U};
  
   vioInit();
-  for (;;) {
-    // wait for a little while
- 
-    if (ip == 4U ) {
-      vioSetIPv4 (0, addrIPv4);
-      ip = 6U;
-    } else {
-      vioSetIPv6 (0, addrIPv6);
-      ip = 4U;
-    }
-  }
+  vioSetIPv6 (0, addrIPv6);
 }
 \endcode
 ***************************************************************************************************************************/
@@ -551,20 +501,10 @@ Refer to \ref vioIDs_gr for information about \a id.
 #include "cmsis_vio.h"                  // ::CMSIS Driver:VIO
  
 int main (void) {
-  uint32_t ip = 4U;
-  vioAddrIPv4_t addrIPv4;
   vioAddrIPv6_t addrIPv6;
  
   vioInit();
-  for (;;) {
-    // do something
- 
-    if (ip == 4U ) {
-      addrIPv4 = vioGetIPv4(0);
-    } else {
-      addrIPv6 = vioGetIPv6(0);
-    }
-  }
+  addrIPv6 = vioGetIPv6(0);
 }
 \endcode
 ***************************************************************************************************************************/
