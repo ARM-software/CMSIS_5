@@ -29,9 +29,15 @@
 #endif
 
 #ifdef __ARMVFP__
-__FPU_USED      EQU      1
+FPU_USED        EQU      1
 #else
-__FPU_USED      EQU      0
+FPU_USED        EQU      0
+#endif
+
+#if (defined(__ARM_FEATURE_MVE) && (__ARM_FEATURE_MVE > 0))
+MVE_USED        EQU      1
+#else
+MVE_USED        EQU      0
 #endif
 
 I_T_RUN_OFS     EQU      20                     ; osRtxInfo.thread.run offset
@@ -85,7 +91,7 @@ SVC_Context
                 IT       EQ
                 BXEQ     LR                     ; Exit when threads are the same
 
-                #if     (__FPU_USED == 1)
+                #if    ((FPU_USED == 1) || (MVE_USED == 1))
                 CBNZ     R1,SVC_ContextSave     ; Branch if running thread is not deleted
                 TST      LR,#0x10               ; Check if extended stack frame
                 BNE      SVC_ContextSwitch
@@ -110,7 +116,7 @@ SVC_ContextSave
 SVC_ContextSave1
                 MRS      R0,PSP                 ; Get PSP
                 STMDB    R0!,{R4-R11}           ; Save R4..R11
-                #if     (__FPU_USED == 1)
+                #if    ((FPU_USED == 1) || (MVE_USED == 1))
                 TST      LR,#0x10               ; Check if extended stack frame
                 IT       EQ
                 VSTMDBEQ R0!,{S16-S31}          ;  Save VFP S16.S31
@@ -144,7 +150,7 @@ SVC_ContextRestore1
                 BNE      SVC_ContextRestore2    ; Branch if secure
                 #endif
 
-                #if     (__FPU_USED == 1)
+                #if    ((FPU_USED == 1) || (MVE_USED == 1))
                 TST      LR,#0x10               ; Check if extended stack frame
                 IT       EQ
                 VLDMIAEQ R0!,{S16-S31}          ;  Restore VFP S16..S31
@@ -226,7 +232,7 @@ Sys_ContextSave1
 Sys_ContextSave2
                 MRS      R0,PSP                 ; Get PSP
                 STMDB    R0!,{R4-R11}           ; Save R4..R11
-                #if     (__FPU_USED == 1)
+                #if    ((FPU_USED == 1) || (MVE_USED == 1))
                 TST      LR,#0x10               ; Check if extended stack frame
                 IT       EQ
                 VSTMDBEQ R0!,{S16-S31}          ;  Save VFP S16.S31
@@ -260,7 +266,7 @@ Sys_ContextRestore1
                 BNE      Sys_ContextRestore2    ; Branch if secure
                 #endif
 
-                #if     (__FPU_USED == 1)
+                #if    ((FPU_USED == 1) || (MVE_USED == 1))
                 TST      LR,#0x10               ; Check if extended stack frame
                 IT       EQ
                 VLDMIAEQ R0!,{S16-S31}          ;  Restore VFP S16..S31

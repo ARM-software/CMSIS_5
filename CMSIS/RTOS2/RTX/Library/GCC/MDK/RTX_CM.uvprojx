@@ -3938,7 +3938,7 @@
             <interw>0</interw>
             <VariousControls>
               <MiscControls>-march=armv8-m.main -mfpu=fpv5-sp-d16 -mfloat-abi=hard</MiscControls>
-              <Define>__FPU_USED=1</Define>
+              <Define>FPU_USED=1</Define>
               <Undefine></Undefine>
               <IncludePath></IncludePath>
             </VariousControls>
@@ -4478,7 +4478,7 @@
             <interw>0</interw>
             <VariousControls>
               <MiscControls>-march=armv8-m.main -mfpu=fpv5-sp-d16 -mfloat-abi=hard</MiscControls>
-              <Define>__FPU_USED=1 DOMAIN_NS=1</Define>
+              <Define>FPU_USED=1 DOMAIN_NS=1</Define>
               <Undefine></Undefine>
               <IncludePath></IncludePath>
             </VariousControls>

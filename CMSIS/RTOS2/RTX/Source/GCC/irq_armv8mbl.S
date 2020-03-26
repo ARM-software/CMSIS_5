@@ -27,7 +27,7 @@
         .syntax  unified
 
         .ifndef  DOMAIN_NS
-        .equ     DOMAIN_NS, 0
+        .equ     DOMAIN_NS,   0
         .endif
 
         .equ     I_T_RUN_OFS, 20        // osRtxInfo.thread.run offset
