@@ -4013,6 +4013,7 @@ and 8-bit Java bytecodes in Jazelle state.
       <compatibleDevice deviceIndex="0" Dvendor="ARM:82" Dname="ARMv8MML"/>
       <compatibleDevice deviceIndex="0" Dvendor="ARM:82" Dname="ARMv8MML_SP"/>
       <compatibleDevice deviceIndex="0" Dvendor="ARM:82" Dname="ARMv8MML_DP"/>
+      <compatibleDevice deviceIndex="0" Dvendor="ARM:82" Dname="ARMv81MML_DSP_DP_MVE_FP"/>
       <compatibleDevice deviceIndex="0" Dvendor="ARM:82" Dname="ARMCM23"/>
       <compatibleDevice deviceIndex="0" Dvendor="ARM:82" Dname="ARMCM23_TZ"/>
       <compatibleDevice deviceIndex="0" Dvendor="ARM:82" Dname="ARMCM33"/>
@@ -4023,6 +4024,7 @@ and 8-bit Java bytecodes in Jazelle state.
       <compatibleDevice deviceIndex="0" Dvendor="ARM:82" Dname="ARMCM35P_TZ"/>
       <compatibleDevice deviceIndex="0" Dvendor="ARM:82" Dname="ARMCM35P_DSP_FP"/>
       <compatibleDevice deviceIndex="0" Dvendor="ARM:82" Dname="ARMCM35P_DSP_FP_TZ"/>
+      <compatibleDevice deviceIndex="0" Dvendor="ARM:82" Dname="ARMCM55"/>
     </board>
 
     <board name="EWARM Simulator" vendor="IAR">
@@ -4041,6 +4043,7 @@ and 8-bit Java bytecodes in Jazelle state.
       <compatibleDevice deviceIndex="0" Dvendor="ARM:82" Dname="ARMv8MML"/>
       <compatibleDevice deviceIndex="0" Dvendor="ARM:82" Dname="ARMv8MML_SP"/>
       <compatibleDevice deviceIndex="0" Dvendor="ARM:82" Dname="ARMv8MML_DP"/>
+      <compatibleDevice deviceIndex="0" Dvendor="ARM:82" Dname="ARMv81MML_DSP_DP_MVE_FP"/>
       <compatibleDevice deviceIndex="0" Dvendor="ARM:82" Dname="ARMCM23"/>
       <compatibleDevice deviceIndex="0" Dvendor="ARM:82" Dname="ARMCM23_TZ"/>
       <compatibleDevice deviceIndex="0" Dvendor="ARM:82" Dname="ARMCM33"/>
@@ -4051,6 +4054,7 @@ and 8-bit Java bytecodes in Jazelle state.
       <compatibleDevice deviceIndex="0" Dvendor="ARM:82" Dname="ARMCM35P_TZ"/>
       <compatibleDevice deviceIndex="0" Dvendor="ARM:82" Dname="ARMCM35P_DSP_FP"/>
       <compatibleDevice deviceIndex="0" Dvendor="ARM:82" Dname="ARMCM35P_DSP_FP_TZ"/>
+      <compatibleDevice deviceIndex="0" Dvendor="ARM:82" Dname="ARMCM55"/>
     </board>
   </boards>
 
