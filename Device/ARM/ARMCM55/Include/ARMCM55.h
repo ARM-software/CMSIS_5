@@ -4,7 +4,7 @@
  *           ARMCM55 Device Series (configured for ARMCM55 with double precision FPU,
  *                                  DSP extension, MVE, TrustZone)
  * @version  V1.0.0
- * @date     03. March 2020
+ * @date     26. March 2020
  ******************************************************************************/
 /*
  * Copyright (c) 2020 Arm Limited. All rights reserved.
@@ -101,7 +101,7 @@ typedef enum IRQn
 #define __DSP_PRESENT             1U        /* DSP extension present */
 #define __SAUREGION_PRESENT       1U        /* SAU regions present */
 #define __PMU_PRESENT             1U        /* PMU present */
-#define __PMU_NUM_EVENTCNT       12U        /* PMU Event Counters */
+#define __PMU_NUM_EVENTCNT        8U        /* PMU Event Counters */
 #define __ICACHE_PRESENT          1U
 #define __DCACHE_PRESENT          1U
 
