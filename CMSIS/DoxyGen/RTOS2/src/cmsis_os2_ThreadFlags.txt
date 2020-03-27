@@ -67,8 +67,7 @@ The function \b osThreadFlagsSet sets the thread flags for a thread specified by
 the flags stored in the thread control block, or an error code if highest bit is set (refer to \ref flags_error_codes).
 Refer to \b Usage \b Examples below to understand how the return value is computed.
 
-This function maybe used also within interrupt service routines. Threads waiting for a flag to be set will resume from
-\ref ThreadStates "BLOCKED" state.
+The target thread waiting for a flag to be set will resume from \ref ThreadStates "BLOCKED" state.
 
 Possible \ref flags_error_codes return values:
     - \em osFlagsErrorUnknown: unspecified error.

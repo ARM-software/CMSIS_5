@@ -157,15 +157,18 @@ int Init_Events (void) {
 \fn uint32_t osEventFlagsSet (osEventFlagsId_t ef_id, uint32_t flags)
 \details
 The function \b osEventFlagsSet sets the event flags specified by the parameter \a flags in an event flags object specified
-by parameter \a ef_id. All threads waiting for the flag set will be notified to resume from \ref ThreadStates "BLOCKED" state.
+by parameter \a ef_id. 
+
+The threads with highest priority waiting for the flag(s) set will be notified to resume from \ref ThreadStates "BLOCKED" state.
 The function returns the event flags stored in the event control block or an error code (highest bit is set, refer to
-\ref flags_error_codes).
+\ref flags_error_codes). Further threads may be wakened in priority order when the option \b osFlagsNoClear is given to the
+\ref osEventFlagsWait call.
 
 Possible \ref flags_error_codes return values:
     - \em osFlagsErrorUnknown: unspecified error.
     - \em osFlagsErrorParameter: parameter \a ef_id does not identify a valid event flags object or \em flags has highest bit set. 
     - \em osFlagsErrorResource: the event flags object is in an invalid state.
-
+    
 \note This function may be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 
 <b>Code Example</b>
