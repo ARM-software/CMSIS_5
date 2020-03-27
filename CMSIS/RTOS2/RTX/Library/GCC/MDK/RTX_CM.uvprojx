@@ -424,7 +424,7 @@
             </File>
             <File>
               <FileName>irq_armv8mbl.S</FileName>
-              <FileType>2</FileType>
+              <FileType>1</FileType>
               <FilePath>..\..\..\Source\GCC\irq_armv8mbl.S</FilePath>
               <FileOption>
                 <CommonProperty>
@@ -444,22 +444,29 @@
                   <ComprImg>1</ComprImg>
                 </CommonProperty>
                 <FileArm>
-                  <Aarm>
-                    <bBE>2</bBE>
+                  <Carm>
+                    <arpcs>2</arpcs>
+                    <stkchk>2</stkchk>
+                    <reentr>2</reentr>
                     <interw>2</interw>
+                    <bigend>2</bigend>
+                    <Strict>0</Strict>
+                    <Optim>0</Optim>
+                    <wLevel>0</wLevel>
+                    <uThumb>2</uThumb>
                     <VariousControls>
                       <MiscControls></MiscControls>
                       <Define></Define>
                       <Undefine></Undefine>
                       <IncludePath></IncludePath>
                     </VariousControls>
-                  </Aarm>
+                  </Carm>
                 </FileArm>
               </FileOption>
             </File>
             <File>
               <FileName>irq_armv8mml.S</FileName>
-              <FileType>2</FileType>
+              <FileType>1</FileType>
               <FilePath>..\..\..\Source\GCC\irq_armv8mml.S</FilePath>
               <FileOption>
                 <CommonProperty>
@@ -479,16 +486,23 @@
                   <ComprImg>1</ComprImg>
                 </CommonProperty>
                 <FileArm>
-                  <Aarm>
-                    <bBE>2</bBE>
+                  <Carm>
+                    <arpcs>2</arpcs>
+                    <stkchk>2</stkchk>
+                    <reentr>2</reentr>
                     <interw>2</interw>
+                    <bigend>2</bigend>
+                    <Strict>0</Strict>
+                    <Optim>0</Optim>
+                    <wLevel>0</wLevel>
+                    <uThumb>2</uThumb>
                     <VariousControls>
                       <MiscControls></MiscControls>
                       <Define></Define>
                       <Undefine></Undefine>
                       <IncludePath></IncludePath>
                     </VariousControls>
-                  </Aarm>
+                  </Carm>
                 </FileArm>
               </FileOption>
             </File>
@@ -917,7 +931,7 @@
             </File>
             <File>
               <FileName>irq_armv8mbl.S</FileName>
-              <FileType>2</FileType>
+              <FileType>1</FileType>
               <FilePath>..\..\..\Source\GCC\irq_armv8mbl.S</FilePath>
               <FileOption>
                 <CommonProperty>
@@ -937,22 +951,29 @@
                   <ComprImg>1</ComprImg>
                 </CommonProperty>
                 <FileArm>
-                  <Aarm>
-                    <bBE>2</bBE>
+                  <Carm>
+                    <arpcs>2</arpcs>
+                    <stkchk>2</stkchk>
+                    <reentr>2</reentr>
                     <interw>2</interw>
+                    <bigend>2</bigend>
+                    <Strict>0</Strict>
+                    <Optim>0</Optim>
+                    <wLevel>0</wLevel>
+                    <uThumb>2</uThumb>
                     <VariousControls>
                       <MiscControls></MiscControls>
                       <Define></Define>
                       <Undefine></Undefine>
                       <IncludePath></IncludePath>
                     </VariousControls>
-                  </Aarm>
+                  </Carm>
                 </FileArm>
               </FileOption>
             </File>
             <File>
               <FileName>irq_armv8mml.S</FileName>
-              <FileType>2</FileType>
+              <FileType>1</FileType>
               <FilePath>..\..\..\Source\GCC\irq_armv8mml.S</FilePath>
               <FileOption>
                 <CommonProperty>
@@ -972,16 +993,23 @@
                   <ComprImg>1</ComprImg>
                 </CommonProperty>
                 <FileArm>
-                  <Aarm>
-                    <bBE>2</bBE>
+                  <Carm>
+                    <arpcs>2</arpcs>
+                    <stkchk>2</stkchk>
+                    <reentr>2</reentr>
                     <interw>2</interw>
+                    <bigend>2</bigend>
+                    <Strict>0</Strict>
+                    <Optim>0</Optim>
+                    <wLevel>0</wLevel>
+                    <uThumb>2</uThumb>
                     <VariousControls>
                       <MiscControls></MiscControls>
                       <Define></Define>
                       <Undefine></Undefine>
                       <IncludePath></IncludePath>
                     </VariousControls>
-                  </Aarm>
+                  </Carm>
                 </FileArm>
               </FileOption>
             </File>
@@ -1457,7 +1485,7 @@
             </File>
             <File>
               <FileName>irq_armv8mbl.S</FileName>
-              <FileType>2</FileType>
+              <FileType>1</FileType>
               <FilePath>..\..\..\Source\GCC\irq_armv8mbl.S</FilePath>
               <FileOption>
                 <CommonProperty>
@@ -1477,22 +1505,29 @@
                   <ComprImg>1</ComprImg>
                 </CommonProperty>
                 <FileArm>
-                  <Aarm>
-                    <bBE>2</bBE>
+                  <Carm>
+                    <arpcs>2</arpcs>
+                    <stkchk>2</stkchk>
+                    <reentr>2</reentr>
                     <interw>2</interw>
+                    <bigend>2</bigend>
+                    <Strict>0</Strict>
+                    <Optim>0</Optim>
+                    <wLevel>0</wLevel>
+                    <uThumb>2</uThumb>
                     <VariousControls>
                       <MiscControls></MiscControls>
                       <Define></Define>
                       <Undefine></Undefine>
                       <IncludePath></IncludePath>
                     </VariousControls>
-                  </Aarm>
+                  </Carm>
                 </FileArm>
               </FileOption>
             </File>
             <File>
               <FileName>irq_armv8mml.S</FileName>
-              <FileType>2</FileType>
+              <FileType>1</FileType>
               <FilePath>..\..\..\Source\GCC\irq_armv8mml.S</FilePath>
               <FileOption>
                 <CommonProperty>
@@ -1512,16 +1547,23 @@
                   <ComprImg>1</ComprImg>
                 </CommonProperty>
                 <FileArm>
-                  <Aarm>
-                    <bBE>2</bBE>
+                  <Carm>
+                    <arpcs>2</arpcs>
+                    <stkchk>2</stkchk>
+                    <reentr>2</reentr>
                     <interw>2</interw>
+                    <bigend>2</bigend>
+                    <Strict>0</Strict>
+                    <Optim>0</Optim>
+                    <wLevel>0</wLevel>
+                    <uThumb>2</uThumb>
                     <VariousControls>
                       <MiscControls></MiscControls>
                       <Define></Define>
                       <Undefine></Undefine>
                       <IncludePath></IncludePath>
                     </VariousControls>
-                  </Aarm>
+                  </Carm>
                 </FileArm>
               </FileOption>
             </File>
@@ -1980,12 +2022,12 @@
             </File>
             <File>
               <FileName>irq_armv8mbl.S</FileName>
-              <FileType>2</FileType>
+              <FileType>1</FileType>
               <FilePath>..\..\..\Source\GCC\irq_armv8mbl.S</FilePath>
             </File>
             <File>
               <FileName>irq_armv8mml.S</FileName>
-              <FileType>2</FileType>
+              <FileType>1</FileType>
               <FilePath>..\..\..\Source\GCC\irq_armv8mml.S</FilePath>
               <FileOption>
                 <CommonProperty>
@@ -2005,16 +2047,23 @@
                   <ComprImg>1</ComprImg>
                 </CommonProperty>
                 <FileArm>
-                  <Aarm>
-                    <bBE>2</bBE>
+                  <Carm>
+                    <arpcs>2</arpcs>
+                    <stkchk>2</stkchk>
+                    <reentr>2</reentr>
                     <interw>2</interw>
+                    <bigend>2</bigend>
+                    <Strict>0</Strict>
+                    <Optim>0</Optim>
+                    <wLevel>0</wLevel>
+                    <uThumb>2</uThumb>
                     <VariousControls>
                       <MiscControls></MiscControls>
                       <Define></Define>
                       <Undefine></Undefine>
                       <IncludePath></IncludePath>
                     </VariousControls>
-                  </Aarm>
+                  </Carm>
                 </FileArm>
               </FileOption>
             </File>
@@ -2520,12 +2569,12 @@
             </File>
             <File>
               <FileName>irq_armv8mbl.S</FileName>
-              <FileType>2</FileType>
+              <FileType>1</FileType>
               <FilePath>..\..\..\Source\GCC\irq_armv8mbl.S</FilePath>
             </File>
             <File>
               <FileName>irq_armv8mml.S</FileName>
-              <FileType>2</FileType>
+              <FileType>1</FileType>
               <FilePath>..\..\..\Source\GCC\irq_armv8mml.S</FilePath>
               <FileOption>
                 <CommonProperty>
@@ -2545,16 +2594,23 @@
                   <ComprImg>1</ComprImg>
                 </CommonProperty>
                 <FileArm>
-                  <Aarm>
-                    <bBE>2</bBE>
+                  <Carm>
+                    <arpcs>2</arpcs>
+                    <stkchk>2</stkchk>
+                    <reentr>2</reentr>
                     <interw>2</interw>
+                    <bigend>2</bigend>
+                    <Strict>0</Strict>
+                    <Optim>0</Optim>
+                    <wLevel>0</wLevel>
+                    <uThumb>2</uThumb>
                     <VariousControls>
                       <MiscControls></MiscControls>
                       <Define></Define>
                       <Undefine></Undefine>
                       <IncludePath></IncludePath>
                     </VariousControls>
-                  </Aarm>
+                  </Carm>
                 </FileArm>
               </FileOption>
             </File>
@@ -3060,7 +3116,7 @@
             </File>
             <File>
               <FileName>irq_armv8mbl.S</FileName>
-              <FileType>2</FileType>
+              <FileType>1</FileType>
               <FilePath>..\..\..\Source\GCC\irq_armv8mbl.S</FilePath>
               <FileOption>
                 <CommonProperty>
@@ -3080,22 +3136,29 @@
                   <ComprImg>1</ComprImg>
                 </CommonProperty>
                 <FileArm>
-                  <Aarm>
-                    <bBE>2</bBE>
+                  <Carm>
+                    <arpcs>2</arpcs>
+                    <stkchk>2</stkchk>
+                    <reentr>2</reentr>
                     <interw>2</interw>
+                    <bigend>2</bigend>
+                    <Strict>0</Strict>
+                    <Optim>0</Optim>
+                    <wLevel>0</wLevel>
+                    <uThumb>2</uThumb>
                     <VariousControls>
                       <MiscControls></MiscControls>
                       <Define></Define>
                       <Undefine></Undefine>
                       <IncludePath></IncludePath>
                     </VariousControls>
-                  </Aarm>
+                  </Carm>
                 </FileArm>
               </FileOption>
             </File>
             <File>
               <FileName>irq_armv8mml.S</FileName>
-              <FileType>2</FileType>
+              <FileType>1</FileType>
               <FilePath>..\..\..\Source\GCC\irq_armv8mml.S</FilePath>
             </File>
           </Files>
@@ -3600,7 +3663,7 @@
             </File>
             <File>
               <FileName>irq_armv8mbl.S</FileName>
-              <FileType>2</FileType>
+              <FileType>1</FileType>
               <FilePath>..\..\..\Source\GCC\irq_armv8mbl.S</FilePath>
               <FileOption>
                 <CommonProperty>
@@ -3620,22 +3683,29 @@
                   <ComprImg>1</ComprImg>
                 </CommonProperty>
                 <FileArm>
-                  <Aarm>
-                    <bBE>2</bBE>
+                  <Carm>
+                    <arpcs>2</arpcs>
+                    <stkchk>2</stkchk>
+                    <reentr>2</reentr>
                     <interw>2</interw>
+                    <bigend>2</bigend>
+                    <Strict>0</Strict>
+                    <Optim>0</Optim>
+                    <wLevel>0</wLevel>
+                    <uThumb>2</uThumb>
                     <VariousControls>
                       <MiscControls></MiscControls>
                       <Define></Define>
                       <Undefine></Undefine>
                       <IncludePath></IncludePath>
                     </VariousControls>
-                  </Aarm>
+                  </Carm>
                 </FileArm>
               </FileOption>
             </File>
             <File>
               <FileName>irq_armv8mml.S</FileName>
-              <FileType>2</FileType>
+              <FileType>1</FileType>
               <FilePath>..\..\..\Source\GCC\irq_armv8mml.S</FilePath>
             </File>
           </Files>
@@ -4140,7 +4210,7 @@
             </File>
             <File>
               <FileName>irq_armv8mbl.S</FileName>
-              <FileType>2</FileType>
+              <FileType>1</FileType>
               <FilePath>..\..\..\Source\GCC\irq_armv8mbl.S</FilePath>
               <FileOption>
                 <CommonProperty>
@@ -4160,22 +4230,29 @@
                   <ComprImg>1</ComprImg>
                 </CommonProperty>
                 <FileArm>
-                  <Aarm>
-                    <bBE>2</bBE>
+                  <Carm>
+                    <arpcs>2</arpcs>
+                    <stkchk>2</stkchk>
+                    <reentr>2</reentr>
                     <interw>2</interw>
+                    <bigend>2</bigend>
+                    <Strict>0</Strict>
+                    <Optim>0</Optim>
+                    <wLevel>0</wLevel>
+                    <uThumb>2</uThumb>
                     <VariousControls>
                       <MiscControls></MiscControls>
                       <Define></Define>
                       <Undefine></Undefine>
                       <IncludePath></IncludePath>
                     </VariousControls>
-                  </Aarm>
+                  </Carm>
                 </FileArm>
               </FileOption>
             </File>
             <File>
               <FileName>irq_armv8mml.S</FileName>
-              <FileType>2</FileType>
+              <FileType>1</FileType>
               <FilePath>..\..\..\Source\GCC\irq_armv8mml.S</FilePath>
             </File>
           </Files>
@@ -4680,7 +4757,7 @@
             </File>
             <File>
               <FileName>irq_armv8mbl.S</FileName>
-              <FileType>2</FileType>
+              <FileType>1</FileType>
               <FilePath>..\..\..\Source\GCC\irq_armv8mbl.S</FilePath>
               <FileOption>
                 <CommonProperty>
@@ -4700,22 +4777,29 @@
                   <ComprImg>1</ComprImg>
                 </CommonProperty>
                 <FileArm>
-                  <Aarm>
-                    <bBE>2</bBE>
+                  <Carm>
+                    <arpcs>2</arpcs>
+                    <stkchk>2</stkchk>
+                    <reentr>2</reentr>
                     <interw>2</interw>
+                    <bigend>2</bigend>
+                    <Strict>0</Strict>
+                    <Optim>0</Optim>
+                    <wLevel>0</wLevel>
+                    <uThumb>2</uThumb>
                     <VariousControls>
                       <MiscControls></MiscControls>
                       <Define></Define>
                       <Undefine></Undefine>
                       <IncludePath></IncludePath>
                     </VariousControls>
-                  </Aarm>
+                  </Carm>
                 </FileArm>
               </FileOption>
             </File>
             <File>
               <FileName>irq_armv8mml.S</FileName>
-              <FileType>2</FileType>
+              <FileType>1</FileType>
               <FilePath>..\..\..\Source\GCC\irq_armv8mml.S</FilePath>
             </File>
           </Files>
