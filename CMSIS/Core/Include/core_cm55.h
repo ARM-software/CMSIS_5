@@ -2,7 +2,7 @@
  * @file     core_cm55.h
  * @brief    CMSIS Cortex-M55 Core Peripheral Access Layer Header File
  * @version  V1.0.0
- * @date     18. March 2020
+ * @date     27. March 2020
  ******************************************************************************/
 /*
  * Copyright (c) 2018-2020 Arm Limited. All rights reserved.
@@ -210,10 +210,32 @@
     #define __FPU_PRESENT             0U
     #warning "__FPU_PRESENT not defined in device header file; using default!"
   #endif
+  
+  #if __FPU_PRESENT != 0U
+    #ifndef __FPU_DP
+      #define __FPU_DP             0U
+      #warning "__FPU_DP not defined in device header file; using default!"
+    #endif
+  #endif
 
   #ifndef __MPU_PRESENT
     #define __MPU_PRESENT             0U
     #warning "__MPU_PRESENT not defined in device header file; using default!"
+  #endif
+
+  #ifndef __ICACHE_PRESENT
+    #define __ICACHE_PRESENT          0U
+    #warning "__ICACHE_PRESENT not defined in device header file; using default!"
+  #endif
+
+  #ifndef __DCACHE_PRESENT
+    #define __DCACHE_PRESENT          0U
+    #warning "__DCACHE_PRESENT not defined in device header file; using default!"
+  #endif
+  
+  #ifndef __VTOR_PRESENT
+    #define __VTOR_PRESENT             1U
+    #warning "__VTOR_PRESENT not defined in device header file; using default!"
   #endif
   
   #ifndef __PMU_PRESENT
@@ -221,7 +243,7 @@
     #warning "__PMU_PRESENT not defined in device header file; using default!"
   #endif
 
-  #if __PMU_PRESENT != 0
+  #if __PMU_PRESENT != 0U
     #ifndef __PMU_NUM_EVENTCNT
       #define __PMU_NUM_EVENTCNT      8U
       #warning "__PMU_NUM_EVENTCNT not defined in device header file; using default!"
