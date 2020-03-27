@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2018 Arm Limited. All rights reserved.
+ * Copyright (c) 2013-2020 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -28,7 +28,7 @@ static const ARM_DRIVER_VERSION DriverVersion = {
 
 /* Driver Capabilities */
 static const ARM_SPI_CAPABILITIES DriverCapabilities = {
-    1, /* Simplex Mode (Master and Slave) */
+    0, /* Reserved (must be zero) */
     1, /* TI Synchronous Serial Interface */
     1, /* Microwire Interface */
     0  /* Signal Mode Fault event: \ref ARM_SPI_EVENT_MODE_FAULT */
@@ -103,10 +103,6 @@ int32_t ARM_SPI_Control(uint32_t control, uint32_t arg)
 
     case ARM_SPI_MODE_SLAVE:                // SPI Slave  (Output on MISO, Input on MOSI)
         break;
-
-    case ARM_SPI_MODE_MASTER_SIMPLEX:       // SPI Master (Output/Input on MOSI); arg = Bus Speed in bps
-    case ARM_SPI_MODE_SLAVE_SIMPLEX:        // SPI Slave  (Output/Input on MISO)
-        return ARM_SPI_ERROR_MODE;
 
     case ARM_SPI_SET_BUS_SPEED:             // Set Bus Speed in bps; arg = value
         break;
