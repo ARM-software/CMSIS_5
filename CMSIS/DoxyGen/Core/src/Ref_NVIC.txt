@@ -373,7 +373,7 @@ NVIC_SetVector                 | __NVIC_SetVector
 /** \brief  Definition of IRQn numbers
 
 
-The core exception enumeration names for IRQn values are defined in the file \b device.h.
+The core exception enumeration names for IRQn values are defined in the \ref device_h_pg.
 
  - Negative IRQn values represent processor core exceptions (internal interrupts).
  - Positive IRQn values represent device-specific exceptions (external interrupts). 

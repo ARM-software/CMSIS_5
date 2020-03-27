@@ -71,14 +71,14 @@ __STATIC_FORCEINLINE void SCB_InvalidateICache (void);
   \param[in]   addr    address
   \param[in]   isize   size of memory block (in number of bytes)
 */
-__STATIC_FORCEINLINE void SCB_InvalidateICache_by_Addr (void *addr, int32_t isize)
+__STATIC_FORCEINLINE void SCB_InvalidateICache_by_Addr (void *addr, int32_t isize);
 
 /**
   @}  // close ICache functions
 */
  
 /**
-  \defgroup Dcache_functions_m7 D-Cache Functions (Level-1)
+  \defgroup Dcache_functions_m7 D-Cache Functions
   \brief Functions for the level-1 data cache.
 
   @{
