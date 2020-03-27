@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2019 Arm Limited. All rights reserved.
+ * Copyright (c) 2013-2020 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -190,9 +190,7 @@ static int32_t WiFi_Ping (const uint8_t *ip, uint32_t ip_len) {
 }
 
 /* WiFi Driver Control Block */
-extern
-ARM_DRIVER_WIFI Driver_WiFi_(WIFI_DRIVER);
-ARM_DRIVER_WIFI Driver_WiFi_(WIFI_DRIVER) = { 
+ARM_DRIVER_WIFI Driver_WiFi = { 
   WiFi_GetVersion,
   WiFi_GetCapabilities,
   WiFi_Initialize,
