@@ -3,7 +3,7 @@
  * @brief    CMSIS Device System Source File for
  *           Armv8.1-M Mainline Device Series
  * @version  V1.2.1
- * @date     23. March 2020
+ * @date     27. March 2020
  ******************************************************************************/
 /*
  * Copyright (c) 2009-2020 Arm Limited. All rights reserved.
@@ -80,6 +80,10 @@ void SystemInit (void)
 #ifdef UNALIGNED_SUPPORT_DISABLE
   SCB->CCR |= SCB_CCR_UNALIGN_TRP_Msk;
 #endif
+
+// Enable Loop and branch info cache
+SCB->CCR |= SCB_CCR_LOB_Msk;
+__ISB();
 
 #if defined (__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
   TZ_SAU_Setup();
