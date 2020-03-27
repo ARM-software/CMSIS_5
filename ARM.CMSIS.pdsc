@@ -52,7 +52,7 @@
       CMSIS-Driver: 2.8.0
         - removed volatile from status related typedefs in APIs
         - enhanced WiFi Interface API with support for polling Socket Receive/Send
-      CMSIS-Pack:
+      CMSIS-Pack: 1.6.1
         - added custom attribute to components that require custom implementation
       Devices:
         - ARMv81MML startup code recognizing __MVE_USED macro
@@ -2873,10 +2873,10 @@ and 8-bit Java bytecodes in Jazelle state.
         <!-- include folder / device header file -->
         <file category="include"      name="Device/ARM/ARMCM55/Include/"/>
         <!-- startup / system file -->
-        <file category="sourceC"      name="Device/ARM/ARMCM55/Source/startup_ARMCM55.c"             version="2.0.2" attr="config"/>
+        <file category="sourceC"      name="Device/ARM/ARMCM55/Source/startup_ARMCM55.c"             version="1.0.0" attr="config"/>
         <file category="linkerScript" name="Device/ARM/ARMCM55/Source/ARM/ARMCM55_ac6.sct"           version="1.0.0" attr="config" condition="ARMCC6"/>
-        <file category="linkerScript" name="Device/ARM/ARMCM55/Source/GCC/gcc_arm.ld"                version="2.0.0" attr="config" condition="GCC"/>
-        <file category="sourceC"      name="Device/ARM/ARMCM55/Source/system_ARMCM55.c"              version="1.2.0" attr="config"/>
+        <file category="linkerScript" name="Device/ARM/ARMCM55/Source/GCC/gcc_arm.ld"                version="2.0.1" attr="config" condition="GCC"/>
+        <file category="sourceC"      name="Device/ARM/ARMCM55/Source/system_ARMCM55.c"              version="1.0.0" attr="config"/>
         <!-- SAU configuration -->
         <file category="header"       name="Device/ARM/ARMCM55/Include/Template/partition_ARMCM55.h" version="1.0.0" attr="config" condition="TZ Secure"/>
       </files>
@@ -3007,7 +3007,7 @@ and 8-bit Java bytecodes in Jazelle state.
         <!-- startup / system file -->
         <file category="sourceC"      name="Device/ARM/ARMv81MML/Source/startup_ARMv81MML.c"             version="2.0.2" attr="config"/>
         <file category="linkerScript" name="Device/ARM/ARMv81MML/Source/ARM/ARMv81MML_ac6.sct"           version="1.0.0" attr="config" condition="ARMCC6"/>
-        <file category="linkerScript" name="Device/ARM/ARMv81MML/Source/GCC/gcc_arm.ld"                  version="2.0.0" attr="config" condition="GCC"/>
+        <file category="linkerScript" name="Device/ARM/ARMv81MML/Source/GCC/gcc_arm.ld"                  version="2.0.1" attr="config" condition="GCC"/>
         <file category="sourceC"      name="Device/ARM/ARMv81MML/Source/system_ARMv81MML.c"              version="1.2.1" attr="config"/>
         <!-- SAU configuration -->
         <file category="header"       name="Device/ARM/ARMv81MML/Include/Template/partition_ARMv81MML.h" version="1.0.1" attr="config" condition="TZ Secure"/>
