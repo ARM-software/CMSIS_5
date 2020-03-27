@@ -8,8 +8,12 @@
   <url>http://www.keil.com/pack/</url>
 
   <releases>
-    <release version="5.7.0-dev6">
+    <release version="5.7.0-dev7">
       Active development...
+      CMSIS-Core(M): 5.5.0
+        - Fixed device config define checks.      
+    </release>
+    <release version="5.7.0-dev6">
       CMSIS-DSP:
         - reworked examples
     </release>
@@ -26,7 +30,7 @@
         - Added MVE support
     </release>
     <release version="5.7.0-dev3">
-      CMSIS-Core(M):
+      CMSIS-Core(M): 5.5.0
         - L1 Cache functions for Armv7-M and later
       Devices:
         - Include L1 Cache functions in ARMv8MML/ARMv81MML devices

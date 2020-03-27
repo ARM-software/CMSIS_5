@@ -2,7 +2,7 @@
  * @file     core_armv8mml.h
  * @brief    CMSIS Armv8-M Mainline Core Peripheral Access Layer Header File
  * @version  V5.2.0
- * @date     03. March 2020
+ * @date     27. March 2020
  ******************************************************************************/
 /*
  * Copyright (c) 2009-2020 Arm Limited. All rights reserved.
@@ -70,7 +70,7 @@
 #define __ARMv8MML_CMSIS_VERSION       ((__ARMv8MML_CMSIS_VERSION_MAIN << 16U) | \
                                          __ARMv8MML_CMSIS_VERSION_SUB           )  /*!< \deprecated CMSIS HAL version number */
 
-#define __CORTEX_M                     (81U)                                       /*!< Cortex-M Core */
+#define __CORTEX_M                     (80U)                                       /*!< Cortex-M Core */
 
 /** __FPU_USED indicates whether an FPU is used or not.
     For this, __FPU_PRESENT has to be checked prior to making use of FPU specific registers and functions.
@@ -250,6 +250,11 @@
     #warning "__DSP_PRESENT not defined in device header file; using default!"
   #endif
 
+  #ifndef __VTOR_PRESENT
+    #define __VTOR_PRESENT             1U
+    #warning "__VTOR_PRESENT not defined in device header file; using default!"
+  #endif
+  
   #ifndef __NVIC_PRIO_BITS
     #define __NVIC_PRIO_BITS          3U
     #warning "__NVIC_PRIO_BITS not defined in device header file; using default!"
