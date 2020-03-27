@@ -195,24 +195,28 @@ assists searching for packages.
     <th>Type</th>
     <th>Occurrence</th>
   </tr>
+  \anchor package_name
   <tr>
     <td>name</td>
     <td>Name of the \ref cp_SWComponents "Software Pack". Could be displayed by an installer.</td>
     <td>xs:string </td>
     <td>1..1 </td>
   </tr>
+  \anchor package_vendor
   <tr>
     <td>vendor</td>
     <td>Name of the supplier or vendor of the \ref cp_SWComponents "Software Pack".</td>
     <td>xs:string </td>
     <td>1..1 </td>
   </tr>
+  \anchor package_description  
   <tr>
     <td>description</td>
     <td>Brief description of the \ref cp_SWComponents "Software Pack".</td>
     <td>xs:string </td>
     <td>1..1 </td>
   </tr>
+  \anchor package_url
   <tr>
     <td>url</td>
     <td><a href="https://en.wikipedia.org/wiki/Uniform_resource_locator" target="_blank">HTTP URL</a> 
@@ -222,12 +226,14 @@ assists searching for packages.
     <td>xs:anyURI </td>
     <td>1..1 </td>
   </tr>
+  \anchor package_supportContact
   <tr>
     <td>supportContact</td>
     <td>HTTP URL or e-mail address for users to get support for the content of the Pack</td>
     <td>xs:string</td>
     <td>0..1 </td>
   </tr>
+  \anchor package_url
   <tr>
     <td>license</td>
     <td>Path to a license document.</td>
