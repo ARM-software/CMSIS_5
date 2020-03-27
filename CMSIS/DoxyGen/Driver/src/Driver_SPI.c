@@ -395,22 +395,16 @@ The parameter \em arg provides (depending on the parameter \em control) addition
     <th> Description          
 	</th></tr>
 <tr><td> \ref ARM_SPI_MODE_INACTIVE       </td>
-    <td rowspan="5" style="text-align:right"> 0..7   </td>
-    <td rowspan="5"> \anchor spi_mode_tab Mode Controls    </td>
+    <td rowspan="3" style="text-align:right"> 0..7   </td>
+    <td rowspan="3"> \anchor spi_mode_tab Mode Controls    </td>
     <td> Set SPI to inactive. 
 	</td></tr>
 <tr><td> \ref ARM_SPI_MODE_MASTER         </td>
     <td> Set the SPI Master (Output on MOSI, and the Input on MISO); \em arg = Bus Speed in \token{bps} 
 	</td></tr>
-<tr><td> \ref ARM_SPI_MODE_MASTER_SIMPLEX </td>
-    <td> Set the SPI Master (Output and Input on MOSI); \em arg = Bus Speed in \token{bps}              
-	</td></tr>
 <tr><td> \ref ARM_SPI_MODE_SLAVE          </td>
     <td> Set the SPI Slave  (Output on MISO, and the Input on MOSI)                                     
 	</td></tr>
-<tr><td> \ref ARM_SPI_MODE_SLAVE_SIMPLEX  </td>
-    <td> Set the SPI Slave  (Output and Input on MISO)                                                  
-	</td></tr> 
 <tr><td> \ref ARM_SPI_CPOL0_CPHA0  (default)  </td>
     <td rowspan="6" style="text-align:right"> 8..11 </td>
     <td rowspan="6"> Clock Polarity <br> (Frame Format) </td><td> CPOL=\token{0} and CPHA=\token{0}: Clock Polarity 0, Clock Phase 0 </td>
@@ -605,10 +599,6 @@ Refer to the \ref ARM_SPI_Control function for further details.
 \def ARM_SPI_MODE_MASTER
 \sa ARM_SPI_Control
 \def ARM_SPI_MODE_SLAVE
-\sa ARM_SPI_Control
-\def ARM_SPI_MODE_MASTER_SIMPLEX
-\sa ARM_SPI_Control
-\def ARM_SPI_MODE_SLAVE_SIMPLEX
 \sa ARM_SPI_Control
 @}
 */

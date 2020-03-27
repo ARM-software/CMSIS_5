@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * $Date:        24. January 2020
+ * $Date:        27. March 2020
  * $Revision:    V2.3
  *
  * Project:      SPI (Serial Peripheral Interface) Driver definitions
@@ -23,6 +23,7 @@
 
 /* History:
  *  Version 2.3
+ *    Removed Simplex Mode (deprecated)
  *    Removed volatile from ARM_SPI_STATUS
  *  Version 2.2
  *    ARM_SPI_STATUS made volatile
@@ -68,8 +69,8 @@ extern "C"
 #define ARM_SPI_MODE_INACTIVE           (0x00UL << ARM_SPI_CONTROL_Pos)     ///< SPI Inactive
 #define ARM_SPI_MODE_MASTER             (0x01UL << ARM_SPI_CONTROL_Pos)     ///< SPI Master (Output on MOSI, Input on MISO); arg = Bus Speed in bps
 #define ARM_SPI_MODE_SLAVE              (0x02UL << ARM_SPI_CONTROL_Pos)     ///< SPI Slave  (Output on MISO, Input on MOSI)
-#define ARM_SPI_MODE_MASTER_SIMPLEX     (0x03UL << ARM_SPI_CONTROL_Pos)     ///< SPI Master (Output/Input on MOSI); arg = Bus Speed in bps
-#define ARM_SPI_MODE_SLAVE_SIMPLEX      (0x04UL << ARM_SPI_CONTROL_Pos)     ///< SPI Slave  (Output/Input on MISO)
+#define ARM_SPI_MODE_MASTER_SIMPLEX     (0x03UL << ARM_SPI_CONTROL_Pos)     ///< SPI Master (Output/Input on MOSI); arg = Bus Speed in bps @deprecated Simplex Mode has been removed
+#define ARM_SPI_MODE_SLAVE_SIMPLEX      (0x04UL << ARM_SPI_CONTROL_Pos)     ///< SPI Slave  (Output/Input on MISO) @deprecated Simplex Mode has been removed
 
 /*----- SPI Control Codes: Mode Parameters: Frame Format -----*/
 #define ARM_SPI_FRAME_FORMAT_Pos         8
@@ -215,7 +216,7 @@ typedef void (*ARM_SPI_SignalEvent_t) (uint32_t event);  ///< Pointer to \ref AR
 \brief SPI Driver Capabilities.
 */
 typedef struct _ARM_SPI_CAPABILITIES {
-  uint32_t simplex          : 1;        ///< supports Simplex Mode (Master and Slave)
+  uint32_t simplex          : 1;        ///< supports Simplex Mode (Master and Slave) @deprecated Reserved (must be zero)
   uint32_t ti_ssi           : 1;        ///< supports TI Synchronous Serial Interface
   uint32_t microwire        : 1;        ///< supports Microwire Interface
   uint32_t event_mode_fault : 1;        ///< Signal Mode Fault event: \ref ARM_SPI_EVENT_MODE_FAULT
