@@ -195,7 +195,7 @@ The errors in this category are issued because of an incorrect command-line inpu
   <td>The PDSC file expected has not been found. Rename or exchange the PDSC file.</td>
 </tr>
 <tr><td>M208</td> <td>ERROR</td> <td>Error calling SVDConv:  \em 'PATH'</td>
-  <td><a href="../../SVD/html/svd_SVDConv_pg">SVDConv utility</a> could not be executed. 
+  <td><a href="../../SVD/html/svd_SVDConv_pg.html">SVDConv utility</a> could not be executed. 
      <br>Verify the permissions. Correct the path name.</td>
 </tr>
 <tr><td>M209</td> <td>ERROR</td> <td>Unknown Option: \em 'OPT'</td>
@@ -205,7 +205,7 @@ The errors in this category are issued because of an incorrect command-line inpu
   <td>You can only check one PDSC file at a time.</td>
 </tr>
 <tr><td>M211</td> <td>ERROR</td> <td>Cannot find SVDConv.exe: \em 'CMDLINE'</td>
-  <td><a href="../../SVD/html/svd_SVDConv_pg">SVDConv utility</a> was not found in specified \em 'CMDLINE'.
+  <td><a href="../../SVD/html/svd_SVDConv_pg.html">SVDConv utility</a> was not found in specified \em 'CMDLINE'.
    <br>Copy the \b SVDConv.exe into the directory of \b packChk. Default is \token{CMSIS\\Utilities}.</td>
 </tr>
 </table>

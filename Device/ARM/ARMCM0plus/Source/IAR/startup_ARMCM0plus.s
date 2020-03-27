@@ -2,7 +2,7 @@
 ; * @file     startup_ARMCM0plus.s
 ; * @brief    CMSIS Core Device Startup File for
 ; *           ARMCM0plus Device
-; * @version  V5.3.1
+; * @version  V1.0.0
 ; * @date     09. July 2018
 ; ******************************************************************************/
 ;/*

@@ -2,7 +2,7 @@
  * @file     system_ARMCM1.c
  * @brief    CMSIS Device System Source File for
  *           ARMCM1 Device
- * @version  V5.3.1
+ * @version  V1.0.0
  * @date     20. July 2018
  ******************************************************************************/
 /*

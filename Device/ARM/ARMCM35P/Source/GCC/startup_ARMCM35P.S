@@ -1,7 +1,7 @@
 /**************************************************************************//**
  * @file     startup_ARMCM35P.S
  * @brief    CMSIS-Core(M) Device Startup File for Cortex-M35P Device
- * @version  V2.0.1
+ * @version  V1.0.1
  * @date     23. July 2019
  ******************************************************************************/
 /*
