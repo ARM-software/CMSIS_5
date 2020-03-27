@@ -81,7 +81,7 @@ The \ref templates_pg supplied by Arm have been tested and verified with the fol
  - Arm: Arm Compiler 5.06 update 6 (not for Cortex-M23/33/35P, Armv8-M, Armv8.1-M)
  - Arm: Arm Compiler 6.12
  - Arm: Arm Compiler 6.6.2 (not for Cortex-M0/23/33/35P, Armv8-M, Armv8.1-M)
- - GNU: GNU Tools for Arm Embedded 8.2.1 2018q4
+ - GNU: GNU Tools for Arm Embedded 9.2.1 2019q4
  - IAR: IAR ANSI C/C++ Compiler for Arm 8.20.1.14183
 
 <hr>
@@ -91,18 +91,16 @@ The \ref templates_pg supplied by Arm have been tested and verified with the fol
 
 \page core_revisionHistory Revision History of CMSIS-Core (Cortex-M)
 
-\todo complete History for V5.x.x
-
 <table class="cmtable" summary="Revision History">
     <tr>
       <th>Version</th>
       <th>Description</th>
     </tr>
     <tr>
-      <td>V5.x.x</td>
+      <td>V5.4.0</td>
       <td>
 \if ARMv8M
-        Modified: TrustZone setup with \ref partition_h_pg and \ref partition_gen_h_pg.
+        Added: Cortex-M55 support.\n
 \endif
       </td>
     </tr>

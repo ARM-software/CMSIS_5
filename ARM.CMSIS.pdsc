@@ -10,7 +10,7 @@
   <releases>
     <release version="5.7.0-dev7">
       Active development...
-      CMSIS-Core(M): 5.5.0
+      CMSIS-Core(M): 5.4.0
         - Fixed device config define checks.  
       Devices:
         - Enable loop and branch info cache for Armv8.1-MML devices.
@@ -32,16 +32,14 @@
         - Added MVE support
     </release>
     <release version="5.7.0-dev3">
-      CMSIS-Core(M): 5.5.0
+      CMSIS-Core(M): 5.4.0
         - L1 Cache functions for Armv7-M and later
       Devices:
         - Include L1 Cache functions in ARMv8MML/ARMv81MML devices
     </release>
     <release version="5.7.0-dev2">
-      CMSIS-Core(M):
+      CMSIS-Core(M): 5.4.0
         - Cortex-M55 cpu support
-        - Cortex-M55 core header file
-        - PMU header file (place holder)
       Devices:
         - ARMCM55 device
     </release>
