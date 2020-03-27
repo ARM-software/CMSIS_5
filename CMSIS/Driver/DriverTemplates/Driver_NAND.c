@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2019 Arm Limited. All rights reserved.
+ * Copyright (c) 2013-2020 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -170,6 +170,7 @@ static int32_t Control (uint32_t dev_num, uint32_t control, uint32_t arg) {
 
 static ARM_NAND_STATUS GetStatus (uint32_t dev_num) {
   (void)dev_num;
+  ARM_NAND_STATUS stat;
 
   stat.busy      = 0U;
   stat.ecc_error = 0U;
@@ -183,9 +184,7 @@ static int32_t InquireECC (int32_t index, ARM_NAND_ECC_INFO *info) {
 }
 
 /* NAND Driver Control Block */
-extern
-ARM_DRIVER_NAND Driver_NAND_(NAND_DRIVER);
-ARM_DRIVER_NAND Driver_NAND_(NAND_DRIVER) = {
+ARM_DRIVER_NAND Driver_NAND = {
   GetVersion,
   GetCapabilities,
   Initialize,
