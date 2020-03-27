@@ -11,7 +11,9 @@
     <release version="5.7.0-dev7">
       Active development...
       CMSIS-Core(M): 5.5.0
-        - Fixed device config define checks.      
+        - Fixed device config define checks.  
+      Devices:
+        - Enable loop and branch info cache for Armv8.1-MML devices.
     </release>
     <release version="5.7.0-dev6">
       CMSIS-DSP:
