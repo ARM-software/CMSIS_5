@@ -1965,7 +1965,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define>ARM_MATH_HELIUM</Define>
+              <Define>ARM_MATH_MVEF</Define>
               <Undefine></Undefine>
               <IncludePath></IncludePath>
             </VariousControls>
