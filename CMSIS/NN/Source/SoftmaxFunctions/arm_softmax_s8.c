@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2019 Arm Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2010-2020 Arm Limited or its affiliates. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -21,8 +21,8 @@
  * Title:        arm_softmax_s8.c
  * Description:  S8 softmax function
  *
- * $Date:        November 2019
- * $Revision:    V.1.5.0
+ * $Date:        March 31, 2020
+ * $Revision:    V.1.5.1
  *
  * Target Processor:  Cortex-M cores
  *
@@ -33,7 +33,7 @@
 #define ACCUM_BITS 12
 
 #ifdef ARM_MATH_MVEI
-int32x4_t arm_exp_on_negative_values_mve_32x4(int32x4_t val)
+static int32x4_t arm_exp_on_negative_values_mve_32x4(int32x4_t val)
 {
 #define SHIFT_START (24)
     int32_t shift = SHIFT_START;
@@ -100,19 +100,14 @@ void arm_softmax_s8(const int8_t *input,
     {
         int8_t max = ACT_MIN;
 
-        int32_t vec_count = row_size / 16;
-
+        int32_t vec_count = (row_size + 15) / 16;
+        uint32_t r_count = (uint32_t)row_size;
         for (int i = 0; i < vec_count; i++)
         {
-            const int8x16_t ip = vldrbq_s8(&input[i * 16]);
-            max = vmaxvq_s8(max, ip);
-        }
-
-        mve_pred16_t p = vctp8q(row_size & 0xF);
-        if (p != 0)
-        {
-            const int8x16_t ip = vldrbq_z_s8(&input[vec_count * 16], p);
+            mve_pred16_t p = vctp8q(r_count);
+            const int8x16_t ip = vldrbq_z_s8(&input[i * 16], p);
             max = vmaxvq_p_s8(max, ip, p);
+            r_count -= 16;
         }
 
         vec_count = row_size / 4;
@@ -122,16 +117,19 @@ void arm_softmax_s8(const int8_t *input,
         while (vec_count)
         {
             int32x4_t ip = vldrbq_s32(&input[idx * 4]);
-            ip = ip - vdupq_n_s32(max);
-            p = vcmpgeq_s32(ip, vdupq_n_s32(diff_min));
-            ip = vmulq_n_s32(ip, mask);
+            ip = vsubq_n_s32(ip, max);
+            mve_pred16_t p = vcmpgeq_n_s32(ip, diff_min);
+            if (p != 0)
+            {
+                ip = vmulq_n_s32(ip, mask);
 
-            int32x4_t res = MUL_SAT_MVE(ip, vdupq_n_s32(mult));
+                int32x4_t res = MUL_SAT_MVE(ip, vdupq_n_s32(mult));
 
-            res = arm_exp_on_negative_values_mve_32x4(res);
-            res = DIV_POW2_MVE(res, ACCUM_BITS);
-            res = vpselq_s32(res, vdupq_n_s32(0), p);
-            sum += vaddvq_s32(res);
+                res = arm_exp_on_negative_values_mve_32x4(res);
+                res = DIV_POW2_MVE(res, ACCUM_BITS);
+                res = vpselq_s32(res, vdupq_n_s32(0), p);
+                sum += vaddvq_s32(res);
+            }
 
             vec_count--;
             idx++;
@@ -147,7 +145,7 @@ void arm_softmax_s8(const int8_t *input,
             }
         }
 
-        const int32_t headroom = __CLZ(sum);
+        const int32_t headroom = __CLZ((uint32_t)sum);
         const int32_t bits_over_unit = ACCUM_BITS - headroom + 23;
         const int32_t shifted_scale = ONE_OVER1((sum << headroom) - (1 << 31));
 
@@ -157,21 +155,30 @@ void arm_softmax_s8(const int8_t *input,
         while (vec_count)
         {
             int32x4_t ip = vldrbq_s32(&input[idx]);
-            ip = ip - vdupq_n_s32(max);
+            ip = vsubq_n_s32(ip, max);
 
-            p = vcmpgeq_s32(ip, vdupq_n_s32(diff_min));
-            ip = vmulq_n_s32(ip, mask);
+            mve_pred16_t p = vcmpgeq_n_s32(ip, diff_min);
 
-            int32x4_t tmp_res = MUL_SAT_MVE(ip, vdupq_n_s32(mult));
-            tmp_res = arm_exp_on_negative_values_mve_32x4(tmp_res);
-            tmp_res = MUL_SAT_MVE(vdupq_n_s32(shifted_scale), tmp_res);
-            tmp_res = DIV_POW2_MVE(tmp_res, bits_over_unit);
-            tmp_res += vdupq_n_s32(ACT_MIN);
+            int32x4_t tmp_res;
 
-            tmp_res = vmaxq_s32(tmp_res, vdupq_n_s32(ACT_MIN));
-            tmp_res = vminq_s32(tmp_res, vdupq_n_s32(ACT_MAX));
-            tmp_res = vpselq_s32(tmp_res, vdupq_n_s32(ACT_MIN), p);
+            if (p != 0)
+            {
+                ip = vmulq_n_s32(ip, mask);
 
+                tmp_res = MUL_SAT_MVE(ip, vdupq_n_s32(mult));
+                tmp_res = arm_exp_on_negative_values_mve_32x4(tmp_res);
+                tmp_res = MUL_SAT_MVE(vdupq_n_s32(shifted_scale), tmp_res);
+                tmp_res = DIV_POW2_MVE(tmp_res, bits_over_unit);
+                tmp_res += vdupq_n_s32(ACT_MIN);
+
+                tmp_res = vmaxq_s32(tmp_res, vdupq_n_s32(ACT_MIN));
+                tmp_res = vminq_s32(tmp_res, vdupq_n_s32(ACT_MAX));
+                tmp_res = vpselq_s32(tmp_res, vdupq_n_s32(ACT_MIN), p);
+            }
+            else
+            {
+                tmp_res = vdupq_n_s32(ACT_MIN);
+            }
             vstrbq_s32(&output[idx], tmp_res);
             vec_count--;
             idx += 4;
