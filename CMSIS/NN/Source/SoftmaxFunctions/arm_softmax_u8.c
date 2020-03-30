@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2019 Arm Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2010-2020 Arm Limited or its affiliates. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -21,8 +21,8 @@
  * Title:        arm_softmax_u8.c
  * Description:  U8 softmax function
  *
- * $Date:        October 2019
- * $Revision:    V.0.0.1
+ * $Date:        March 31, 2020
+ * $Revision:    V.1.0.0
  *
  * Target Processor:  Cortex-M cores
  *
@@ -75,7 +75,7 @@ void arm_softmax_u8(const uint8_t *input,
             }
         }
 
-        const int32_t headroom = __CLZ(sum);
+        const int32_t headroom = __CLZ((uint32_t)sum);
         const int32_t bits_over_unit = ACCUM_BITS - headroom + 23;
         const int32_t shifted_scale = ONE_OVER1((sum << headroom) - (1 << 31));
 
