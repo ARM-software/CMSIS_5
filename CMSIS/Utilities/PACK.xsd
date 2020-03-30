@@ -17,22 +17,22 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 
-  $Date:        11. February 2020
-  $Revision:    1.6.4
+  $Date:        26. Marchy 2020
+  $Revision:    1.6.3
 
   $Project: Schema File for Package Description File Format Specification
 
   Package file name convention <vendor>.<name>.<version>.pack
-  SchemaVersion=1.6.4
+  SchemaVersion=1.6.3
 
-  11. February 2020: v1.6.4
-  - example: added environment specific folder attribute
-  - added 'ACCESS_AP' to DataPatchAccessTypeEnum
-  - added Cortex-M55 to DcoreEnum
-
-  21. November 2019: v1.6.3
-  - added attribute 'uninit' to <memory> element to replace deprecated 'init' attribute
-  - DmveEnum is changed according to specification
+  26. March 2020: v1.6.3
+  - added 'folder' attribute to example's <environment> element.
+  - added 'ACCESS_AP' to DataPatchAccessTypeEnum.
+  - added 'Cortex-M55' to DcoreEnum.
+  - added 'uninit' attribute <memory> element to replace deprecated 'init' attribute.
+  - updated 'DmveEnum' strings to align with specification.
+  - reduced minimum length of Cclass, Cgroup and Cvariant names from 3 to 2.
+  - deprecating all types specific to cpdsc format. Cpdsc is replaced by Cprj with dedicated schema.
 
   05. November 2019: v1.6.2
   - added <accessportV1> and <accessportV2> to describe CoreSight access port parameters.
@@ -122,7 +122,7 @@
   
 -->
 
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="qualified" version="1.6.4">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="qualified" version="1.6.3">
 
   <!-- NonNegativeInteger specifies the format in which numbers are represented in hexadecimal or decimal format -->
   <xs:simpleType name="NonNegativeInteger">
@@ -730,7 +730,7 @@
       <xs:enumeration value="Cortex-M3" />
       <xs:enumeration value="Cortex-M33" />
       <xs:enumeration value="Cortex-M35P"/>
-	  <xs:enumeration value="Cortex-M55"/>
+      <xs:enumeration value="Cortex-M55"/>
       <xs:enumeration value="Cortex-M4" />
       <xs:enumeration value="Cortex-M7" />
       <xs:enumeration value="ARMV8MBL" />
@@ -1612,8 +1612,7 @@
     </xs:choice>
   </xs:complexType>
 
-
-  <!-- deprecated: project description covered by cprj -->
+  <!-- Deprecated in 1.6.3 -> project description covered in cprj -->
   <!-- Component selection section (added in 1.4.4) -->
   <xs:complexType name="ComponentSelectType">
     <xs:sequence>
@@ -1650,8 +1649,8 @@
     </xs:sequence>
   </xs:complexType>
 
+  <!-- Deprecated in 1.6.3 -> project description covered in cprj -->
   <!-- Project section: (added in 1.4.4) -->
-  <!-- deprecated: project description covered by cprj -->
   <xs:complexType name="ProjectType">
     <xs:all>
       <!-- target selection and configuration -->
@@ -1670,8 +1669,8 @@
     <xs:attribute name="public" type="xs:boolean" use="optional" default="false" />
   </xs:complexType>
 
+  <!-- Deprecated in 1.6.3 -> project description covered in cprj -->
   <!-- Create Section: (added in 1.4.4) -->
-  <!-- Deprecated -> project description no covered in cprj -->
   <xs:complexType name="CreateType">
     <xs:sequence>
       <!-- project section -->

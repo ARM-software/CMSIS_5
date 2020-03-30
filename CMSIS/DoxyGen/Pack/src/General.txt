@@ -86,12 +86,37 @@ Files relevant to CMSIS-Pack are present in the following \b ARM::CMSIS director
     <th>Description</th>
   </tr>
   <tr>
+    <td>1.6.3</td>
+	<td>
+- removed CMSIS Project Description format (cpdsc) from CMSIS-Pack. Format has been superseeded by new format specification located in the CMSIS 
+  <a href="../../Build/html/cprjFormat_pg.html"><b>Build</b></a> tab.
+- added \ref dbg_setup_tutorial "debug setup tutorial" to the documentation.
+- updated documentation of PackChk \ref packChkMessages "errors and warnings".
+- updated documentation to reflect switch from 'http' to 'https'.
+- added 'folder' attribute to example's \ref element_example_project_env "\<environment>" element.
+- added 'ACCESS_AP' to \ref DataPatchAccessTypeEnum "DataPatchAccessTypeEnum".
+- added 'Cortex-M55' to \ref DcoreEnum "DcoreEnum".
+- added 'uninit' attribute to \ref element_memory "\<memory>" element to replace deprecated 'init' attribute.
+- updated \ref DmveEnum 'DmveEnum' specification.
+- updated minimum length of \<Cclass>, \<Cgroup> and \<Cvariant> attributes in \ref element_component "\<component>" from 3 to 2.
+- removed all types specific to cpdsc format. Cpdsc is replaced by Cprj with dedicated schema.
+	</td>
+  </tr>
+  <tr>
+    <td>1.6.2</td>
+	<td>Modifications compared to Version 1.6.1
+  - added \ref element_accessportV1 "\<accessportV1>" and \ref element_accessportV2 "\<accessportV2>" to describe CoreSight access port parameters.
+  - added attribute '__apid' to \ref element_debug "\<debug>" and \ref element_dbg_datapatch "\<datapatch>" to reference \<accessportV1> and \<accessportV2> elements.
+  - added attribute 'dormant' to \ref element_debugconfig "\<debugconfig>" element.	
+	</td>
+  </tr>
+  <tr>
     <td>1.6.1</td>
     <td>Modifications compared to Version 1.6.0
-- added \ref bash_script to support pack generation on Linux or Windows
-- added \b custom attribute to \ref element_component "component element"
-- added \b TrustZone-disabled value to \ref DsecureEnum "software model selection"
-- added \ref dbg_setup_tutorial in CMSIS-Pack documentation
+- added \ref bash_script to support pack generation on Linux or Windows.
+- added \b custom attribute to \ref element_component "component element".
+- added \b TrustZone-disabled value to \ref DsecureEnum "software model selection".
+- added \ref dbg_setup_tutorial in CMSIS-Pack documentation.
     </td>
   </tr>
   <tr>
