@@ -2867,7 +2867,7 @@ and 8-bit Java bytecodes in Jazelle state.
     </component>
 
     <!-- Cortex-M55 -->
-    <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cversion="2.1.0" condition="ARMCM55 CMSIS">
+    <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cversion="1.0.0" condition="ARMCM55 CMSIS">
       <description>System and Startup for Generic Cortex-M55 device</description>
       <files>
         <!-- include folder / device header file -->
@@ -2875,7 +2875,7 @@ and 8-bit Java bytecodes in Jazelle state.
         <!-- startup / system file -->
         <file category="sourceC"      name="Device/ARM/ARMCM55/Source/startup_ARMCM55.c"             version="1.0.0" attr="config"/>
         <file category="linkerScript" name="Device/ARM/ARMCM55/Source/ARM/ARMCM55_ac6.sct"           version="1.0.0" attr="config" condition="ARMCC6"/>
-        <file category="linkerScript" name="Device/ARM/ARMCM55/Source/GCC/gcc_arm.ld"                version="2.0.1" attr="config" condition="GCC"/>
+        <file category="linkerScript" name="Device/ARM/ARMCM55/Source/GCC/gcc_arm.ld"                version="1.0.0" attr="config" condition="GCC"/>
         <file category="sourceC"      name="Device/ARM/ARMCM55/Source/system_ARMCM55.c"              version="1.0.0" attr="config"/>
         <!-- SAU configuration -->
         <file category="header"       name="Device/ARM/ARMCM55/Include/Template/partition_ARMCM55.h" version="1.0.0" attr="config" condition="TZ Secure"/>
