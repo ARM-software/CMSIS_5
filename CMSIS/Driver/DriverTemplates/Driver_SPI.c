@@ -132,7 +132,7 @@ void ARM_SPI_SignalEvent(uint32_t event)
 
 // End SPI Interface
 
-ARM_DRIVER_SPI Driver_SPI = {
+ARM_DRIVER_SPI Driver_SPI0 = {
     ARM_SPI_GetVersion,
     ARM_SPI_GetCapabilities,
     ARM_SPI_Initialize,

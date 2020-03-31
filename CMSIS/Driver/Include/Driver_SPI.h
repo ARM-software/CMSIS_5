@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * $Date:        27. March 2020
+ * $Date:        31. March 2020
  * $Revision:    V2.3
  *
  * Project:      SPI (Serial Peripheral Interface) Driver definitions
@@ -58,6 +58,10 @@ extern "C"
 #include "Driver_Common.h"
 
 #define ARM_SPI_API_VERSION ARM_DRIVER_VERSION_MAJOR_MINOR(2,3)  /* API version */
+
+
+#define _ARM_Driver_SPI_(n)      Driver_SPI##n
+#define  ARM_Driver_SPI_(n) _ARM_Driver_SPI_(n)
 
 
 /****** SPI Control Codes *****/

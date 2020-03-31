@@ -325,6 +325,29 @@ ARM_DRIVER_SPI Driver_SPI3;     // access functions for SPI3 interface
 
 The access functions can be passed to middleware to specify the driver instance that the middleware should use for communication.
 
+\b Naming \b Convention
+
+The access structs need to follow this naming convention: the keyword "Driver" followed by an underscore "_", the interface
+name "IFNAME" (usually in upper case letters), and the instance number "n". Here's the full list of access struct names for
+all drivers (n to be replaced with the actual instance number):
+\code
+Driver_CANn
+Driver_ETH_MACn
+Driver_ETH_PHYn
+Driver_Flashn
+Driver_I2Cn
+Driver_MCIn
+Driver_NANDn
+Driver_SAIn
+Driver_SPIn
+Driver_Storagen
+Driver_USARTn
+Driver_USBDn
+Driver_USBHn
+Driver_WiFin
+\endcode
+
+
 \b Example:
 \code
 void init_middleware (ARM_DRIVER_SPI *Drv_spi) ...
