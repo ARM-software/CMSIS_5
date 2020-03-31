@@ -332,7 +332,6 @@ name "IFNAME" (usually in upper case letters), and the instance number "n". Here
 all drivers (n to be replaced with the actual instance number):
 \code
 Driver_CANn
-Driver_ETHn
 Driver_ETH_MACn
 Driver_ETH_PHYn
 Driver_Flashn
@@ -343,7 +342,6 @@ Driver_SAIn
 Driver_SPIn
 Driver_Storagen
 Driver_USARTn
-Driver_USBn
 Driver_USBDn
 Driver_USBHn
 Driver_WiFin

@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
   *
- * $Date:        24. January 2020
+ * $Date:        31. March 2020
  * $Revision:    V2.3
  *
  * Project:      USB Host Driver definitions
@@ -59,6 +59,10 @@ extern "C"
 #include "Driver_USB.h"
 
 #define ARM_USBH_API_VERSION ARM_DRIVER_VERSION_MAJOR_MINOR(2,3)  /* API version */
+
+
+#define _ARM_Driver_USBH_(n)      Driver_USBH##n
+#define  ARM_Driver_USBH_(n) _ARM_Driver_USBH_(n)
 
 
 /**
