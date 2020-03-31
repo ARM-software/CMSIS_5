@@ -422,7 +422,7 @@ The parameter \em arg provides (depending on the parameter \em control) addition
     <td> Specifies that the frame format corresponds to the Texas Instruments Frame Format  
 	</td></tr> 
 <tr><td> \ref ARM_SPI_MICROWIRE               </td>
-    <td> Specifies that the frame format corresponds to the National Microwire Frame Format 
+    <td> Specifies that the frame format corresponds to the National Semiconductor Microwire Frame Format 
 	</td></tr> 
 <tr><td> \ref ARM_SPI_DATA_BITS(n)       </td>
     <td style="text-align:right"> 12..17 </td>
