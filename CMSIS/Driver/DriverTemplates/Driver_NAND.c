@@ -56,24 +56,23 @@ static const ARM_NAND_CAPABILITIES DriverCapabilities = {
 
 /* Exported functions */
 
-static ARM_DRIVER_VERSION GetVersion (void) {
+static ARM_DRIVER_VERSION ARM_NAND_GetVersion (void) {
   return DriverVersion;
 }
 
-static ARM_NAND_CAPABILITIES GetCapabilities (void) {
+static ARM_NAND_CAPABILITIES ARM_NAND_GetCapabilities (void) {
   return DriverCapabilities;
 }
 
-static int32_t Initialize (ARM_NAND_SignalEvent_t cb_event) {
-  (void)cb_event;
+static int32_t ARM_NAND_Initialize (ARM_NAND_SignalEvent_t cb_event) {
   return ARM_DRIVER_ERROR_UNSUPPORTED;
 }
 
-static int32_t Uninitialize (void) {
+static int32_t ARM_NAND_Uninitialize (void) {
   return ARM_DRIVER_ERROR_UNSUPPORTED;
 }
 
-static int32_t PowerControl (ARM_POWER_STATE state) {
+static int32_t ARM_NAND_PowerControl (ARM_POWER_STATE state) {
 
   switch ((int32_t)state) {
     case ARM_POWER_OFF:
@@ -91,65 +90,50 @@ static int32_t PowerControl (ARM_POWER_STATE state) {
   return ARM_DRIVER_OK;
 }
 
-static int32_t DevicePower (uint32_t voltage) {
-  (void)voltage;
+static int32_t ARM_NAND_DevicePower (uint32_t voltage) {
   return ARM_DRIVER_ERROR_UNSUPPORTED;
 }
 
-static int32_t WriteProtect (uint32_t dev_num, bool enable) {
-  (void)dev_num; (void)enable;
+static int32_t ARM_NAND_WriteProtect (uint32_t dev_num, bool enable) {
   return ARM_DRIVER_ERROR_UNSUPPORTED;
 }
 
-static int32_t ChipEnable (uint32_t dev_num, bool enable) {
-  (void)dev_num; (void)enable;
+static int32_t ARM_NAND_ChipEnable (uint32_t dev_num, bool enable) {
   return ARM_DRIVER_ERROR_UNSUPPORTED;
 }
 
-static int32_t GetDeviceBusy (uint32_t dev_num) {
-  (void)dev_num;
+static int32_t ARM_NAND_GetDeviceBusy (uint32_t dev_num) {
   return ARM_DRIVER_ERROR_UNSUPPORTED;
 }
 
-static int32_t SendCommand (uint32_t dev_num, uint8_t cmd) {
-  (void)dev_num; (void)cmd;
+static int32_t ARM_NAND_SendCommand (uint32_t dev_num, uint8_t cmd) {
   return ARM_DRIVER_ERROR_UNSUPPORTED;
 }
 
-static int32_t SendAddress (uint32_t dev_num, uint8_t addr) {
-  (void)dev_num; (void)addr;
+static int32_t ARM_NAND_SendAddress (uint32_t dev_num, uint8_t addr) {
   return ARM_DRIVER_ERROR_UNSUPPORTED;
 }
 
-static int32_t ReadData (uint32_t dev_num, void *data, uint32_t cnt, uint32_t mode) {
-  (void)dev_num; (void)data; (void)cnt; (void)mode;
+static int32_t ARM_NAND_ReadData (uint32_t dev_num, void *data, uint32_t cnt, uint32_t mode) {
   return ARM_DRIVER_ERROR_UNSUPPORTED;
 }
 
-static int32_t WriteData (uint32_t dev_num, const void *data, uint32_t cnt, uint32_t mode) {
-  (void)dev_num; (void)data; (void)cnt; (void)mode;
+static int32_t ARM_NAND_WriteData (uint32_t dev_num, const void *data, uint32_t cnt, uint32_t mode) {
   return ARM_DRIVER_ERROR_UNSUPPORTED;
 }
 
-static int32_t ExecuteSequence (uint32_t dev_num, uint32_t code, uint32_t cmd,
-                                uint32_t addr_col, uint32_t addr_row,
-                                void *data, uint32_t data_cnt,
-                                uint8_t *status, uint32_t *count) {
-  (void)dev_num; (void)code; (void)cmd;
-  (void)addr_col; (void)addr_row;
-  (void)data; (void)data_cnt;
-  (void)status; (void)count;
-
+static int32_t ARM_NAND_ExecuteSequence (uint32_t dev_num, uint32_t code, uint32_t cmd,
+                                         uint32_t addr_col, uint32_t addr_row,
+                                         void *data, uint32_t data_cnt,
+                                         uint8_t *status, uint32_t *count) {
   return ARM_DRIVER_ERROR_UNSUPPORTED;
 }
 
-static int32_t AbortSequence (uint32_t dev_num) {
-  (void)dev_num;
-
+static int32_t ARM_NAND_AbortSequence (uint32_t dev_num) {
   return ARM_DRIVER_ERROR_UNSUPPORTED;
 }
 
-static int32_t Control (uint32_t dev_num, uint32_t control, uint32_t arg) {
+static int32_t ARM_NAND_Control (uint32_t dev_num, uint32_t control, uint32_t arg) {
 
   switch (control) {
     case ARM_NAND_BUS_MODE:
@@ -168,8 +152,7 @@ static int32_t Control (uint32_t dev_num, uint32_t control, uint32_t arg) {
   return ARM_DRIVER_ERROR;
 }
 
-static ARM_NAND_STATUS GetStatus (uint32_t dev_num) {
-  (void)dev_num;
+static ARM_NAND_STATUS ARM_NAND_GetStatus (uint32_t dev_num) {
   ARM_NAND_STATUS stat;
 
   stat.busy      = 0U;
@@ -178,29 +161,30 @@ static ARM_NAND_STATUS GetStatus (uint32_t dev_num) {
   return stat;
 }
 
-static int32_t InquireECC (int32_t index, ARM_NAND_ECC_INFO *info) {
-  (void)index; (void)info;
+static int32_t ARM_NAND_InquireECC (int32_t index, ARM_NAND_ECC_INFO *info) {
   return ARM_DRIVER_ERROR_UNSUPPORTED;
 }
 
 /* NAND Driver Control Block */
+extern \
+ARM_DRIVER_NAND Driver_NAND0;
 ARM_DRIVER_NAND Driver_NAND0 = {
-  GetVersion,
-  GetCapabilities,
-  Initialize,
-  Uninitialize,
-  PowerControl,
-  DevicePower,
-  WriteProtect,
-  ChipEnable,
-  GetDeviceBusy,
-  SendCommand,
-  SendAddress,
-  ReadData,
-  WriteData,
-  ExecuteSequence,
-  AbortSequence,
-  Control,
-  GetStatus,
-  InquireECC
+  ARM_NAND_GetVersion,
+  ARM_NAND_GetCapabilities,
+  ARM_NAND_Initialize,
+  ARM_NAND_Uninitialize,
+  ARM_NAND_PowerControl,
+  ARM_NAND_DevicePower,
+  ARM_NAND_WriteProtect,
+  ARM_NAND_ChipEnable,
+  ARM_NAND_GetDeviceBusy,
+  ARM_NAND_SendCommand,
+  ARM_NAND_SendAddress,
+  ARM_NAND_ReadData,
+  ARM_NAND_WriteData,
+  ARM_NAND_ExecuteSequence,
+  ARM_NAND_AbortSequence,
+  ARM_NAND_Control,
+  ARM_NAND_GetStatus,
+  ARM_NAND_InquireECC
 };

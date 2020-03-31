@@ -11,7 +11,7 @@
     <release version="5.7.0-dev7">
       Active development...
       CMSIS-Core(M): 5.4.0
-        - Fixed device config define checks.  
+        - Fixed device config define checks.
       Devices:
         - Enable loop and branch info cache for Armv8.1-MML devices.
     </release>
@@ -3918,7 +3918,7 @@ and 8-bit Java bytecodes in Jazelle state.
       <description>Access to #include Driver_NAND.h file and code template for custom implementation</description>
       <files>
         <file category="header" name="CMSIS/Driver/Include/Driver_NAND.h" />
-        <!-- <file category="sourceC" attr="template" name="CMSIS/Driver/DriverTemplates/Driver_NAND.c" select="NAND Flash Driver"/> -->
+        <file category="sourceC" attr="template" name="CMSIS/Driver/DriverTemplates/Driver_NAND.c" select="NAND Flash Driver"/>
       </files>
     </component>
     <component Cclass="CMSIS Driver" Cgroup="Ethernet" Csub="Custom" Cversion="1.0.0" Capiversion="2.2.0" custom="1">
@@ -3962,7 +3962,7 @@ and 8-bit Java bytecodes in Jazelle state.
       <description>Access to #include Driver_WiFi.h file</description>
       <files>
         <file category="header" name="CMSIS/Driver/Include/Driver_WiFi.h"/>
-        <!-- <file category="sourceC" attr="template" name="CMSIS/Driver/DriverTemplates/Driver_WiFi.c" select="WiFi Driver"/> -->
+        <file category="sourceC" attr="template" name="CMSIS/Driver/DriverTemplates/Driver_WiFi.c" select="WiFi Driver"/>
       </files>
     </component>
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2018 Arm Limited. All rights reserved.
+ * Copyright (c) 2013-2020 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -34,7 +34,8 @@ static const ARM_USBH_CAPABILITIES usbd_driver_capabilities = {
     0,      /* Automatic SPLIT packet handling */
     0,      /* Signal Connect event */
     0,      /* Signal Disconnect event */
-    0       /* Signal Overcurrent event */
+    0,      /* Signal Overcurrent event */
+    0       /* Reserved (must be zero) */
 };
 
 //
@@ -72,10 +73,8 @@ static int32_t ARM_USBH_PowerControl(ARM_POWER_STATE state)
 
     case ARM_POWER_FULL:
         break;
-
-    default:
-        return ARM_DRIVER_ERROR_UNSUPPORTED;
     }
+    return ARM_DRIVER_OK;
 }
 
 static int32_t ARM_USBH_PortVbusOnOff(uint8_t port, bool vbus)
@@ -157,6 +156,8 @@ static void ARM_USBH_SignalPipeEvent(ARM_USBH_PIPE_HANDLE pipe_hndl, uint32_t ev
 
 // End USBH Interface
 
+extern \
+ARM_DRIVER_USBH Driver_USBH0;
 ARM_DRIVER_USBH Driver_USBH0 = {
   ARM_USBH_GetVersion,
   ARM_USBH_GetCapabilities,
