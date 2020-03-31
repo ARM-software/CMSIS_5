@@ -114,7 +114,7 @@ ARM_ETH_LINK_INFO ARM_ETH_PHY_GetLinkInfo(void)
 {
 }
 
-ARM_DRIVER_ETH_PHY ARM_Driver_ETH_PHY_(ETH_PHY_NUM) =
+ARM_DRIVER_ETH_PHY Driver_ETH_PHY0 =
 {
     ARM_ETH_PHY_GetVersion,
     ARM_ETH_PHY_Initialize,

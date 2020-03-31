@@ -190,7 +190,7 @@ static int32_t WiFi_Ping (const uint8_t *ip, uint32_t ip_len) {
 }
 
 /* WiFi Driver Control Block */
-ARM_DRIVER_WIFI Driver_WiFi = { 
+ARM_DRIVER_WIFI Driver_WiFi0 = { 
   WiFi_GetVersion,
   WiFi_GetCapabilities,
   WiFi_Initialize,
