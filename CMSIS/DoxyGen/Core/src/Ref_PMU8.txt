@@ -8,7 +8,43 @@ The PMU is used to monitor events that occur during run-time of an application.
 
 <b>Example:</b>
 \code
-//todo
+// Initialize counter variables
+ 
+unsigned int cycle_count = 0;
+unsigned int l1_dcache_miss_count = 0;
+unsigned int instructions_retired_count = 0;
+ 
+// Enable the PMU
+ 
+ARM_PMU_Enable();
+ 
+// Configure Event Counter Register 0 to count instructions retired
+// Configure Event Counter Register 1 to count L1 D-Cache misses
+ 
+ARM_PMU_Set_EVTYPER(0, ARM_PMU_INST_RETIRED);
+ARM_PMU_Set_EVTYPER(1, ARM_PMU_L1D_CACHE_MISS_RD);
+ 
+// Reset Event Counters and Cycle Counter
+ 
+ARM_PMU_EVCNTR_ALL_Reset();
+ARM_PMU_CYCCNT_Reset();
+ 
+// Start incrementing Cycle Count Register and Event Counter Registers 0 & 1
+ 
+ARM_PMU_CNTR_Enable(PMU_CNTENSET_CCNTR_ENABLE_Msk|PMU_CNTENSET_CNT0_ENABLE_Msk|PMU_CNTENSET_CNT1_ENABLE_Msk);
+ 
+// Code you want to measure here
+ 
+// Stop incrementing Cycle Count Register and Event Counter Registers 0 & 1
+ 
+ARM_PMU_CNTR_Disable(PMU_CNTENCLR_CCNTR_ENABLE_Msk|PMU_CNTENSET_CNT0_ENABLE_Msk|PMU_CNTENSET_CNT1_ENABLE_Msk);
+ 
+// Get cycle count, number of instructions retired and number of L1 D-Cache misses (on read)
+ 
+cycle_count = cycle_count + ARM_PMU_Get_CCNTR();
+instructions_retired_count = instructions_retired_count + ARM_PMU_Get_EVCNTR(0);
+l1_dcache_miss_count = l1_dcache_miss_count + ARM_PMU_Get_EVCNTR(1);      // Note: D-Cache must be enabled using
+                                                                          // SCB_EnableDCache() for meaningful result.
 \endcode
 
 @{
