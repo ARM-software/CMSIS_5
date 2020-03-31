@@ -1,11 +1,11 @@
 /******************************************************************************
  * @file     gcc_arm.ld
- * @brief    GNU Linker Script for Cortex-M based device
- * @version  V2.0.1
- * @date     17. December 2019
+ * @brief    GNU Linker Script for Cortex-M based device (ARMC55)
+ * @version  V1.0.0
+ * @date     30. March 2020
  ******************************************************************************/
 /*
- * Copyright (c) 2009-2019 Arm Limited. All rights reserved.
+ * Copyright (c) 2009-2020 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
