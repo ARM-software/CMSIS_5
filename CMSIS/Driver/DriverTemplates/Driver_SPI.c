@@ -29,32 +29,35 @@ static const ARM_DRIVER_VERSION DriverVersion = {
 /* Driver Capabilities */
 static const ARM_SPI_CAPABILITIES DriverCapabilities = {
     0, /* Reserved (must be zero) */
-    1, /* TI Synchronous Serial Interface */
-    1, /* Microwire Interface */
-    0  /* Signal Mode Fault event: \ref ARM_SPI_EVENT_MODE_FAULT */
+    0, /* TI Synchronous Serial Interface */
+    0, /* Microwire Interface */
+    0, /* Signal Mode Fault event: \ref ARM_SPI_EVENT_MODE_FAULT */
+    0  /* Reserved (must be zero) */
 };
 
 //
 //  Functions
 //
 
-ARM_DRIVER_VERSION ARM_SPI_GetVersion(void)
+static ARM_DRIVER_VERSION ARM_SPI_GetVersion(void)
+{
+  return DriverVersion;
+}
+
+static ARM_SPI_CAPABILITIES ARM_SPI_GetCapabilities(void)
+{
+  return DriverCapabilities;
+}
+
+static int32_t ARM_SPI_Initialize(ARM_SPI_SignalEvent_t cb_event)
 {
 }
 
-ARM_SPI_CAPABILITIES ARM_SPI_GetCapabilities(void)
+static int32_t ARM_SPI_Uninitialize(void)
 {
 }
 
-int32_t ARM_SPI_Initialize(ARM_SPI_SignalEvent_t cb_event)
-{
-}
-
-int32_t ARM_SPI_Uninitialize(void)
-{
-}
-
-int32_t ARM_SPI_PowerControl(ARM_POWER_STATE state)
+static int32_t ARM_SPI_PowerControl(ARM_POWER_STATE state)
 {
     switch (state)
     {
@@ -66,29 +69,27 @@ int32_t ARM_SPI_PowerControl(ARM_POWER_STATE state)
 
     case ARM_POWER_FULL:
         break;
-
-    default:
-        return ARM_DRIVER_ERROR_UNSUPPORTED;
     }
+    return ARM_DRIVER_OK;
 }
 
-int32_t ARM_SPI_Send(const void *data, uint32_t num)
+static int32_t ARM_SPI_Send(const void *data, uint32_t num)
 {
 }
 
-int32_t ARM_SPI_Receive(void *data, uint32_t num)
+static int32_t ARM_SPI_Receive(void *data, uint32_t num)
 {
 }
 
-int32_t ARM_SPI_Transfer(const void *data_out, void *data_in, uint32_t num)
+static int32_t ARM_SPI_Transfer(const void *data_out, void *data_in, uint32_t num)
 {
 }
 
-uint32_t ARM_SPI_GetDataCount(void)
+static uint32_t ARM_SPI_GetDataCount(void)
 {
 }
 
-int32_t ARM_SPI_Control(uint32_t control, uint32_t arg)
+static int32_t ARM_SPI_Control(uint32_t control, uint32_t arg)
 {
     switch (control & ARM_SPI_CONTROL_Msk)
     {
@@ -121,17 +122,19 @@ int32_t ARM_SPI_Control(uint32_t control, uint32_t arg)
     }
 }
 
-ARM_SPI_STATUS ARM_SPI_GetStatus(void)
+static ARM_SPI_STATUS ARM_SPI_GetStatus(void)
 {
 }
 
-void ARM_SPI_SignalEvent(uint32_t event)
+static void ARM_SPI_SignalEvent(uint32_t event)
 {
     // function body
 }
 
 // End SPI Interface
 
+extern \
+ARM_DRIVER_SPI Driver_SPI0;
 ARM_DRIVER_SPI Driver_SPI0 = {
     ARM_SPI_GetVersion,
     ARM_SPI_GetCapabilities,
