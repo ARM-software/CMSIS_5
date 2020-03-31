@@ -8,6 +8,11 @@
   <url>http://www.keil.com/pack/</url>
 
   <releases>
+    <release version="5.7.0-dev8">
+      Active development...
+      Devices:
+        - Reworked ARMCM* C-StartUp files.
+    </release>
     <release version="5.7.0-dev7">
       Active development...
       CMSIS-Core(M): 5.4.0
@@ -2606,13 +2611,13 @@ and 8-bit Java bytecodes in Jazelle state.
 
     <!-- CMSIS-Startup components -->
     <!-- Cortex-M0 -->
-    <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cversion="2.0.2" condition="ARMCM0 CMSIS">
+    <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cversion="2.0.3" condition="ARMCM0 CMSIS">
       <description>System and Startup for Generic Arm Cortex-M0 device</description>
       <files>
         <!-- include folder / device header file -->
         <file category="header"  name="Device/ARM/ARMCM0/Include/ARMCM0.h"/>
         <!-- startup / system file -->
-        <file category="sourceC"      name="Device/ARM/ARMCM0/Source/startup_ARMCM0.c"     version="2.0.2" attr="config"/>
+        <file category="sourceC"      name="Device/ARM/ARMCM0/Source/startup_ARMCM0.c"     version="2.0.3" attr="config"/>
         <file category="linkerScript" name="Device/ARM/ARMCM0/Source/ARM/ARMCM0_ac5.sct"   version="1.0.0" attr="config" condition="ARMCC5"/>
         <file category="linkerScript" name="Device/ARM/ARMCM0/Source/ARM/ARMCM0_ac6.sct"   version="1.0.0" attr="config" condition="ARMCC6"/>
         <file category="linkerScript" name="Device/ARM/ARMCM0/Source/GCC/gcc_arm.ld"       version="2.0.0" attr="config" condition="GCC"/>
@@ -2634,13 +2639,13 @@ and 8-bit Java bytecodes in Jazelle state.
     </component>
 
     <!-- Cortex-M0+ -->
-    <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cversion="2.0.2" condition="ARMCM0+ CMSIS">
+    <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cversion="2.0.3" condition="ARMCM0+ CMSIS">
       <description>System and Startup for Generic Arm Cortex-M0+ device</description>
       <files>
         <!-- include folder / device header file -->
         <file category="header"  name="Device/ARM/ARMCM0plus/Include/ARMCM0plus.h"/>
         <!-- startup / system file -->
-        <file category="sourceC"      name="Device/ARM/ARMCM0plus/Source/startup_ARMCM0plus.c"     version="2.0.2" attr="config"/>
+        <file category="sourceC"      name="Device/ARM/ARMCM0plus/Source/startup_ARMCM0plus.c"     version="2.0.3" attr="config"/>
         <file category="linkerScript" name="Device/ARM/ARMCM0plus/Source/ARM/ARMCM0plus_ac5.sct"   version="1.0.0" attr="config" condition="ARMCC5"/>
         <file category="linkerScript" name="Device/ARM/ARMCM0plus/Source/ARM/ARMCM0plus_ac6.sct"   version="1.0.0" attr="config" condition="ARMCC6"/>
         <file category="linkerScript" name="Device/ARM/ARMCM0plus/Source/GCC/gcc_arm.ld"           version="2.0.0" attr="config" condition="GCC"/>
@@ -2662,13 +2667,13 @@ and 8-bit Java bytecodes in Jazelle state.
     </component>
 
     <!-- Cortex-M1 -->
-    <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cversion="2.0.2" condition="ARMCM1 CMSIS">
+    <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cversion="2.0.3" condition="ARMCM1 CMSIS">
       <description>System and Startup for Generic Arm Cortex-M1 device</description>
       <files>
         <!-- include folder / device header file -->
         <file category="header"  name="Device/ARM/ARMCM1/Include/ARMCM1.h"/>
         <!-- startup / system file -->
-        <file category="sourceC"      name="Device/ARM/ARMCM1/Source/startup_ARMCM1.c"     version="2.0.2" attr="config"/>
+        <file category="sourceC"      name="Device/ARM/ARMCM1/Source/startup_ARMCM1.c"     version="2.0.3" attr="config"/>
         <file category="linkerScript" name="Device/ARM/ARMCM1/Source/ARM/ARMCM1_ac5.sct"   version="1.0.0" attr="config" condition="ARMCC5"/>
         <file category="linkerScript" name="Device/ARM/ARMCM1/Source/ARM/ARMCM1_ac6.sct"   version="1.0.0" attr="config" condition="ARMCC6"/>
         <file category="linkerScript" name="Device/ARM/ARMCM1/Source/GCC/gcc_arm.ld"       version="2.0.0" attr="config" condition="GCC"/>
@@ -2690,13 +2695,13 @@ and 8-bit Java bytecodes in Jazelle state.
     </component>
 
     <!-- Cortex-M3 -->
-    <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cversion="2.0.2" condition="ARMCM3 CMSIS">
+    <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cversion="2.0.3" condition="ARMCM3 CMSIS">
       <description>System and Startup for Generic Arm Cortex-M3 device</description>
       <files>
         <!-- include folder / device header file -->
         <file category="header"  name="Device/ARM/ARMCM3/Include/ARMCM3.h"/>
         <!-- startup / system file -->
-        <file category="sourceC"      name="Device/ARM/ARMCM3/Source/startup_ARMCM3.c"     version="2.0.2" attr="config"/>
+        <file category="sourceC"      name="Device/ARM/ARMCM3/Source/startup_ARMCM3.c"     version="2.0.3" attr="config"/>
         <file category="linkerScript" name="Device/ARM/ARMCM3/Source/ARM/ARMCM3_ac5.sct"   version="1.0.0" attr="config" condition="ARMCC5"/>
         <file category="linkerScript" name="Device/ARM/ARMCM3/Source/ARM/ARMCM3_ac6.sct"   version="1.0.0" attr="config" condition="ARMCC6"/>
         <file category="linkerScript" name="Device/ARM/ARMCM3/Source/GCC/gcc_arm.ld"       version="2.0.0" attr="config" condition="GCC"/>
@@ -2718,13 +2723,13 @@ and 8-bit Java bytecodes in Jazelle state.
     </component>
 
     <!-- Cortex-M4 -->
-    <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cversion="2.0.2" condition="ARMCM4 CMSIS">
+    <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cversion="2.0.3" condition="ARMCM4 CMSIS">
       <description>System and Startup for Generic Arm Cortex-M4 device</description>
       <files>
         <!-- include folder / device header file -->
         <file category="include" name="Device/ARM/ARMCM4/Include/"/>
         <!-- startup / system file -->
-        <file category="sourceC"      name="Device/ARM/ARMCM4/Source/startup_ARMCM4.c"     version="2.0.2" attr="config"/>
+        <file category="sourceC"      name="Device/ARM/ARMCM4/Source/startup_ARMCM4.c"     version="2.0.3" attr="config"/>
         <file category="linkerScript" name="Device/ARM/ARMCM4/Source/ARM/ARMCM4_ac5.sct"   version="1.0.0" attr="config" condition="ARMCC5"/>
         <file category="linkerScript" name="Device/ARM/ARMCM4/Source/ARM/ARMCM4_ac6.sct"   version="1.0.0" attr="config" condition="ARMCC6"/>
         <file category="linkerScript" name="Device/ARM/ARMCM4/Source/GCC/gcc_arm.ld"       version="2.0.0" attr="config" condition="GCC"/>
@@ -2746,13 +2751,13 @@ and 8-bit Java bytecodes in Jazelle state.
     </component>
 
     <!-- Cortex-M7 -->
-    <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cversion="2.0.2" condition="ARMCM7 CMSIS">
+    <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cversion="2.0.3" condition="ARMCM7 CMSIS">
       <description>System and Startup for Generic Arm Cortex-M7 device</description>
       <files>
         <!-- include folder / device header file -->
         <file category="include"  name="Device/ARM/ARMCM7/Include/"/>
         <!-- startup / system file -->
-        <file category="sourceC"      name="Device/ARM/ARMCM7/Source/startup_ARMCM7.c"     version="2.0.2" attr="config"/>
+        <file category="sourceC"      name="Device/ARM/ARMCM7/Source/startup_ARMCM7.c"     version="2.0.3" attr="config"/>
         <file category="linkerScript" name="Device/ARM/ARMCM7/Source/ARM/ARMCM7_ac5.sct"   version="1.0.0" attr="config" condition="ARMCC5"/>
         <file category="linkerScript" name="Device/ARM/ARMCM7/Source/ARM/ARMCM7_ac6.sct"   version="1.0.0" attr="config" condition="ARMCC6"/>
         <file category="linkerScript" name="Device/ARM/ARMCM7/Source/GCC/gcc_arm.ld"       version="2.0.0" attr="config" condition="GCC"/>
@@ -2774,13 +2779,13 @@ and 8-bit Java bytecodes in Jazelle state.
     </component>
 
     <!-- Cortex-M23 -->
-    <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cversion="2.0.2" condition="ARMCM23 CMSIS">
+    <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cversion="2.0.3" condition="ARMCM23 CMSIS">
       <description>System and Startup for Generic Arm Cortex-M23 device</description>
       <files>
         <!-- include folder / device header file -->
         <file category="include"  name="Device/ARM/ARMCM23/Include/"/>
         <!-- startup / system file -->
-        <file category="sourceC"      name="Device/ARM/ARMCM23/Source/startup_ARMCM23.c"    version="2.0.2" attr="config"/>
+        <file category="sourceC"      name="Device/ARM/ARMCM23/Source/startup_ARMCM23.c"    version="2.0.3" attr="config"/>
         <file category="linkerScript" name="Device/ARM/ARMCM23/Source/ARM/ARMCM23_ac6.sct"  version="1.0.0" attr="config" condition="ARMCC6"/>
         <file category="linkerScript" name="Device/ARM/ARMCM23/Source/GCC/gcc_arm.ld"       version="2.0.0" attr="config" condition="GCC"/>
         <file category="sourceC"      name="Device/ARM/ARMCM23/Source/system_ARMCM23.c"     version="1.0.1" attr="config"/>
@@ -2805,13 +2810,13 @@ and 8-bit Java bytecodes in Jazelle state.
     </component>
 
     <!-- Cortex-M33 -->
-    <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cversion="2.0.2" condition="ARMCM33 CMSIS">
+    <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cversion="2.0.3" condition="ARMCM33 CMSIS">
       <description>System and Startup for Generic Arm Cortex-M33 device</description>
       <files>
         <!-- include folder / device header file -->
         <file category="include"  name="Device/ARM/ARMCM33/Include/"/>
         <!-- startup / system file -->
-        <file category="sourceC"      name="Device/ARM/ARMCM33/Source/startup_ARMCM33.c"             version="2.0.2" attr="config"/>
+        <file category="sourceC"      name="Device/ARM/ARMCM33/Source/startup_ARMCM33.c"             version="2.0.3" attr="config"/>
         <file category="linkerScript" name="Device/ARM/ARMCM33/Source/ARM/ARMCM33_ac6.sct"           version="1.0.0" attr="config" condition="ARMCC6"/>
         <file category="linkerScript" name="Device/ARM/ARMCM33/Source/GCC/gcc_arm.ld"                version="2.0.0" attr="config" condition="GCC"/>
         <file category="sourceC"      name="Device/ARM/ARMCM33/Source/system_ARMCM33.c"              version="1.0.1" attr="config"/>
@@ -2836,13 +2841,13 @@ and 8-bit Java bytecodes in Jazelle state.
     </component>
 
     <!-- Cortex-M35P -->
-    <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cversion="2.0.2" condition="ARMCM35P CMSIS">
+    <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cversion="2.0.3" condition="ARMCM35P CMSIS">
       <description>System and Startup for Generic Arm Cortex-M35P device</description>
       <files>
         <!-- include folder / device header file -->
         <file category="include"  name="Device/ARM/ARMCM35P/Include/"/>
         <!-- startup / system file -->
-        <file category="sourceC"      name="Device/ARM/ARMCM35P/Source/startup_ARMCM35P.c"             version="2.0.2" attr="config"/>
+        <file category="sourceC"      name="Device/ARM/ARMCM35P/Source/startup_ARMCM35P.c"             version="2.0.3" attr="config"/>
         <file category="linkerScript" name="Device/ARM/ARMCM35P/Source/ARM/ARMCM35P_ac6.sct"           version="1.0.0" attr="config" condition="ARMCC6"/>
         <file category="linkerScript" name="Device/ARM/ARMCM35P/Source/GCC/gcc_arm.ld"                 version="2.0.0" attr="config" condition="GCC"/>
         <file category="sourceC"      name="Device/ARM/ARMCM35P/Source/system_ARMCM35P.c"              version="1.0.1" attr="config"/>
@@ -2889,7 +2894,7 @@ and 8-bit Java bytecodes in Jazelle state.
         <!-- include folder / device header file -->
         <file category="header"  name="Device/ARM/ARMSC000/Include/ARMSC000.h"/>
         <!-- startup / system file -->
-        <file category="sourceC"      name="Device/ARM/ARMSC000/Source/startup_ARMSC000.c"     version="2.0.2" attr="config"/>
+        <file category="sourceC"      name="Device/ARM/ARMSC000/Source/startup_ARMSC000.c"     version="2.0.3" attr="config"/>
         <file category="linkerScript" name="Device/ARM/ARMSC000/Source/ARM/ARMSC000_ac5.sct"   version="1.0.0" attr="config" condition="ARMCC5"/>
         <file category="linkerScript" name="Device/ARM/ARMSC000/Source/ARM/ARMSC000_ac6.sct"   version="1.0.0" attr="config" condition="ARMCC6"/>
         <file category="linkerScript" name="Device/ARM/ARMSC000/Source/GCC/gcc_arm.ld"         version="2.0.0" attr="config" condition="GCC"/>
@@ -2917,7 +2922,7 @@ and 8-bit Java bytecodes in Jazelle state.
         <!-- include folder / device header file -->
         <file category="header"  name="Device/ARM/ARMSC300/Include/ARMSC300.h"/>
         <!-- startup / system file -->
-        <file category="sourceC"      name="Device/ARM/ARMSC300/Source/startup_ARMSC300.c"     version="2.0.2" attr="config"/>
+        <file category="sourceC"      name="Device/ARM/ARMSC300/Source/startup_ARMSC300.c"     version="2.0.3" attr="config"/>
         <file category="linkerScript" name="Device/ARM/ARMSC300/Source/ARM/ARMSC300_ac5.sct"   version="1.0.0" attr="config" condition="ARMCC5"/>
         <file category="linkerScript" name="Device/ARM/ARMSC300/Source/ARM/ARMSC300_ac6.sct"   version="1.0.0" attr="config" condition="ARMCC6"/>
         <file category="linkerScript" name="Device/ARM/ARMSC300/Source/GCC/gcc_arm.ld"         version="2.0.0" attr="config" condition="GCC"/>
@@ -2939,13 +2944,13 @@ and 8-bit Java bytecodes in Jazelle state.
     </component>
 
     <!-- ARMv8MBL -->
-    <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cversion="2.0.2" condition="ARMv8MBL CMSIS">
+    <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cversion="2.0.3" condition="ARMv8MBL CMSIS">
       <description>System and Startup for Generic Armv8-M Baseline device</description>
       <files>
         <!-- include folder / device header file -->
         <file category="include"  name="Device/ARM/ARMv8MBL/Include/"/>
         <!-- startup / system file -->
-        <file category="sourceC"      name="Device/ARM/ARMv8MBL/Source/startup_ARMv8MBL.c"            version="2.0.2" attr="config"/>
+        <file category="sourceC"      name="Device/ARM/ARMv8MBL/Source/startup_ARMv8MBL.c"            version="2.0.3" attr="config"/>
         <file category="linkerScript" name="Device/ARM/ARMv8MBL/Source/ARM/ARMv8MBL_ac6.sct"          version="1.0.0" attr="config" condition="ARMCC6"/>
         <file category="linkerScript" name="Device/ARM/ARMv8MBL/Source/GCC/gcc_arm.ld"                version="2.0.0" attr="config" condition="GCC"/>
         <file category="sourceC"      name="Device/ARM/ARMv8MBL/Source/system_ARMv8MBL.c"             version="1.0.1" attr="config"/>
@@ -2969,13 +2974,13 @@ and 8-bit Java bytecodes in Jazelle state.
     </component>
 
     <!-- ARMv8MML -->
-    <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cversion="2.0.2" condition="ARMv8MML CMSIS">
+    <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cversion="2.0.3" condition="ARMv8MML CMSIS">
       <description>System and Startup for Generic Armv8-M Mainline device</description>
       <files>
         <!-- include folder / device header file -->
         <file category="include"      name="Device/ARM/ARMv8MML/Include/"/>
         <!-- startup / system file -->
-        <file category="sourceC"      name="Device/ARM/ARMv8MML/Source/startup_ARMv8MML.c"             version="2.0.2" attr="config"/>
+        <file category="sourceC"      name="Device/ARM/ARMv8MML/Source/startup_ARMv8MML.c"             version="2.0.3" attr="config"/>
         <file category="linkerScript" name="Device/ARM/ARMv8MML/Source/ARM/ARMv8MML_ac6.sct"           version="1.0.0" attr="config" condition="ARMCC6"/>
         <file category="linkerScript" name="Device/ARM/ARMv8MML/Source/GCC/gcc_arm.ld"                 version="2.0.0" attr="config" condition="GCC"/>
         <file category="sourceC"      name="Device/ARM/ARMv8MML/Source/system_ARMv8MML.c"              version="1.0.1" attr="config"/>
@@ -3005,7 +3010,7 @@ and 8-bit Java bytecodes in Jazelle state.
         <!-- include folder / device header file -->
         <file category="include"      name="Device/ARM/ARMv81MML/Include/"/>
         <!-- startup / system file -->
-        <file category="sourceC"      name="Device/ARM/ARMv81MML/Source/startup_ARMv81MML.c"             version="2.0.2" attr="config"/>
+        <file category="sourceC"      name="Device/ARM/ARMv81MML/Source/startup_ARMv81MML.c"             version="2.0.3" attr="config"/>
         <file category="linkerScript" name="Device/ARM/ARMv81MML/Source/ARM/ARMv81MML_ac6.sct"           version="1.0.0" attr="config" condition="ARMCC6"/>
         <file category="linkerScript" name="Device/ARM/ARMv81MML/Source/GCC/gcc_arm.ld"                  version="2.0.1" attr="config" condition="GCC"/>
         <file category="sourceC"      name="Device/ARM/ARMv81MML/Source/system_ARMv81MML.c"              version="1.2.1" attr="config"/>
@@ -4045,6 +4050,20 @@ and 8-bit Java bytecodes in Jazelle state.
   </boards>
 
   <examples>
+    <example name="DSP_Lib Bayes example" doc="Abstract.txt" folder="CMSIS/DSP/Examples/ARM/arm_bayes_example">
+      <description>DSP_Lib Bayes example</description>
+      <board name="uVision Simulator" vendor="Keil"/>
+      <project>
+        <environment name="uv" load="arm_bayes_example.uvprojx"/>
+      </project>
+      <attributes>
+        <component Cclass="CMSIS" Cgroup="CORE"/>
+        <component Cclass="CMSIS" Cgroup="DSP"/>
+        <component Cclass="Device" Cgroup="Startup"/>
+        <category>Getting Started</category>
+      </attributes>
+    </example>
+
     <example name="DSP_Lib Class Marks example" doc="Abstract.txt" folder="CMSIS/DSP/Examples/ARM/arm_class_marks_example">
       <description>DSP_Lib Class Marks example</description>
       <board name="uVision Simulator" vendor="Keil"/>
@@ -4176,6 +4195,20 @@ and 8-bit Java bytecodes in Jazelle state.
       <board name="uVision Simulator" vendor="Keil"/>
       <project>
         <environment name="uv" load="arm_sin_cos_example.uvprojx"/>
+      </project>
+      <attributes>
+        <component Cclass="CMSIS" Cgroup="CORE"/>
+        <component Cclass="CMSIS" Cgroup="DSP"/>
+        <component Cclass="Device" Cgroup="Startup"/>
+        <category>Getting Started</category>
+      </attributes>
+    </example>
+
+    <example name="DSP_Lib SVM example" doc="Abstract.txt" folder="CMSIS/DSP/Examples/ARM/arm_svm_example">
+      <description>DSP_Lib SVM example</description>
+      <board name="uVision Simulator" vendor="Keil"/>
+      <project>
+        <environment name="uv" load="arm_svm_example.uvprojx"/>
       </project>
       <attributes>
         <component Cclass="CMSIS" Cgroup="CORE"/>
