@@ -206,7 +206,7 @@ void ARM_ETH_MAC_SignalEvent(uint32_t event)
 
 // End ETH MAC Interface
 
-ARM_DRIVER_ETH_MAC Driver_ETH_MAC =
+ARM_DRIVER_ETH_MAC Driver_ETH_MAC0 =
 {
     ARM_ETH_MAC_GetVersion,
     ARM_ETH_MAC_GetCapabilities,

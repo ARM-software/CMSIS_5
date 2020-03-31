@@ -138,7 +138,7 @@ void ARM_USBD_SignalEndpointEvent(uint8_t ep_addr, uint32_t ep_event)
 
 // End USBD Interface
 
-ARM_DRIVER_USBD Driver_USBD =
+ARM_DRIVER_USBD Driver_USBD0 =
 {
     ARM_USBD_GetVersion,
     ARM_USBD_GetCapabilities,

@@ -132,7 +132,7 @@ void ARM_USART_SignalEvent(uint32_t event)
 
 // End USART Interface
 
-ARM_DRIVER_USART Driver_USART = {
+ARM_DRIVER_USART Driver_USART0 = {
     ARM_USART_GetVersion,
     ARM_USART_GetCapabilities,
     ARM_USART_Initialize,

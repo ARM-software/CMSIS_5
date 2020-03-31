@@ -40,6 +40,7 @@ extern "C"
 
 #define ARM_WIFI_API_VERSION ARM_DRIVER_VERSION_MAJOR_MINOR(1,1)  /* API version */
 
+
 #define _ARM_Driver_WiFi_(n)      Driver_WiFi##n
 #define  ARM_Driver_WiFi_(n) _ARM_Driver_WiFi_(n)
 

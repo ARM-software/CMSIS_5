@@ -301,7 +301,7 @@ static ARM_CAN_STATUS CAN_GetStatus (void) {
 
 // CAN driver functions structure
 
-ARM_DRIVER_CAN Driver_CAN = {
+ARM_DRIVER_CAN Driver_CAN0 = {
   CAN_GetVersion,
   CAN_GetCapabilities,
   CAN_Initialize,

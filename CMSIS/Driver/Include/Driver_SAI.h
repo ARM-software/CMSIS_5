@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * $Date:        24. January 2020
+ * $Date:        31. March 2020
  * $Revision:    V1.2
  *
  * Project:      SAI (Serial Audio Interface) Driver definitions
@@ -41,6 +41,10 @@ extern "C"
 #include "Driver_Common.h"
 
 #define ARM_SAI_API_VERSION ARM_DRIVER_VERSION_MAJOR_MINOR(1,2)  /* API version */
+
+
+#define _ARM_Driver_SAI_(n)      Driver_SAI##n
+#define  ARM_Driver_SAI_(n) _ARM_Driver_SAI_(n)
 
 
 /****** SAI Control Codes *****/

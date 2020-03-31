@@ -3,7 +3,7 @@
  * @brief    CMSIS Device System Source File for
  *           ARMCM55 Device
  * @version  V1.0.0
- * @date     27. March 2020
+ * @date     30. March 2020
  ******************************************************************************/
 /*
  * Copyright (c) 2009-2020 Arm Limited. All rights reserved.
@@ -25,14 +25,13 @@
 
 #if defined (ARMCM55)
   #include "ARMCM55.h"
+#else
+  #error device not specified!
+#endif
 
   #if defined (__ARM_FEATURE_CMSE) &&  (__ARM_FEATURE_CMSE == 3U)
     #include "partition_ARMCM55.h"
   #endif
-
-#else
-  #error device not specified!
-#endif
 
 /*----------------------------------------------------------------------------
   Define clocks
@@ -83,7 +82,7 @@ void SystemInit (void)
 #endif
 
 // Enable Loop and branch info cache
-SCB->CCR |= SCB_CCR_LOB_Msk; 
+SCB->CCR |= SCB_CCR_LOB_Msk;
 __ISB();
 
 #if defined (__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)

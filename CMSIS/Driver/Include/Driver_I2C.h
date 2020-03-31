@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * $Date:        24. January 2020
+ * $Date:        31. March 2020
  * $Revision:    V2.4
  *
  * Project:      I2C (Inter-Integrated Circuit) Driver definitions
@@ -63,6 +63,10 @@ extern "C"
 #include "Driver_Common.h"
 
 #define ARM_I2C_API_VERSION ARM_DRIVER_VERSION_MAJOR_MINOR(2,4)  /* API version */
+
+
+#define _ARM_Driver_I2C_(n)      Driver_I2C##n
+#define  ARM_Driver_I2C_(n) _ARM_Driver_I2C_(n)
 
 
 /****** I2C Control Codes *****/

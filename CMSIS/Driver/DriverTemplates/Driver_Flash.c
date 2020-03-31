@@ -122,7 +122,7 @@ void ARM_Flash_SignalEvent(uint32_t event)
 }
 // End Flash Interface
 
-ARM_DRIVER_FLASH Driver_FLASH = {
+ARM_DRIVER_FLASH Driver_Flash0 = {
     ARM_Flash_GetVersion,
     ARM_Flash_GetCapabilities,
     ARM_Flash_Initialize,

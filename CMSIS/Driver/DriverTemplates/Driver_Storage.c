@@ -97,7 +97,7 @@ int32_t ARM_Storage_GetBlock(uint64_t addr, ARM_STORAGE_BLOCK *block) {
 }
 // End Storage Interface
 
-ARM_DRIVER_STORAGE Driver_STORAGE = {
+ARM_DRIVER_STORAGE Driver_Storage0 = {
     ARM_Storage_GetVersion,
     ARM_Storage_GetCapabilities,
     ARM_Storage_Initialize,
