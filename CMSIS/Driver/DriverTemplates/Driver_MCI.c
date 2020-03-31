@@ -202,7 +202,7 @@ void ARM_MCI_SignalEvent(uint32_t event)
 
 // End MCI Interface
 
-ARM_DRIVER_MCI Driver_MCI = {
+ARM_DRIVER_MCI Driver_MCI0 = {
     ARM_MCI_GetVersion,
     ARM_MCI_GetCapabilities,
     ARM_MCI_Initialize,

@@ -110,7 +110,7 @@ void ARM_SAI_SignalEvent(uint32_t event)
 
 // End SAI Interface
 
-ARM_DRIVER_SAI Driver_SAI = {
+ARM_DRIVER_SAI Driver_SAI0 = {
     ARM_SAI_GetVersion,
     ARM_SAI_GetCapabilities,
     ARM_SAI_Initialize,

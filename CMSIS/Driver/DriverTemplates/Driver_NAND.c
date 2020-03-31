@@ -184,7 +184,7 @@ static int32_t InquireECC (int32_t index, ARM_NAND_ECC_INFO *info) {
 }
 
 /* NAND Driver Control Block */
-ARM_DRIVER_NAND Driver_NAND = {
+ARM_DRIVER_NAND Driver_NAND0 = {
   GetVersion,
   GetCapabilities,
   Initialize,

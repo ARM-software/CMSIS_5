@@ -132,7 +132,7 @@ void ARM_I2C_SignalEvent(uint32_t event)
 
 // End I2C Interface
 
-ARM_DRIVER_I2C Driver_I2C = {
+ARM_DRIVER_I2C Driver_I2C0 = {
     ARM_I2C_GetVersion,
     ARM_I2C_GetCapabilities,
     ARM_I2C_Initialize,
