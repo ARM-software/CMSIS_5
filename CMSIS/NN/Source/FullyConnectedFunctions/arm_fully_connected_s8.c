@@ -21,8 +21,8 @@
  * Title:        arm_fully_connected_s8
  * Description:  Fully connected function compatible with TF Lite.
  *
- * $Date:        30. January 2020
- * $Revision:    V.1.0.0
+ * $Date:        April 1, 2020
+ * $Revision:    V.1.5.0
  *
  * Target Processor:  Cortex-M and Cortex-A cores
  *
@@ -271,6 +271,7 @@ arm_fully_connected_s8(const int8_t *input,
                                  output_activation_min,
                                  output_activation_max);
         input += col_dim;
+        output += row_dim;
         batch_cnt--;
     }
     return (ARM_MATH_SUCCESS);
