@@ -135,13 +135,13 @@ $ source ./cbuild/etc/setup
 \section cbuild_compiler_config Compiler Configuration
 
 The CMSIS \ref cbuildgen uses toolchain specific <b>.mak files</b> that map the CMSIS project
-settings to the toolchain.  For each supported toolchain a <b>.mak files</b> is provided in
-the directory <b>./cbuild/etc</b> and specifies the root directory of the toolchain (TOOLCHAIN_ROOT)
-The user should update the this setting to reflect the actual installation.
+settings to the toolchain. For each supported toolchain a <b>.mak files</b> is provided in
+the directory <b>./cbuild/etc</b> and specifies the base directory of the toolchain installation (TOOLCHAIN_ROOT).
+In addition other toolchain specific environment variables may be setup here (e.g. license file and
+product variant).
+The user is required to update the these settings after installation to reflect the actual installation.
 
 <b>Example file: ./cbuild/etc/ARMCC.6.13.1.mak</b>
-
-\todo Joachim: verify licensing
 
 \code
 # Version: 1.0.0
@@ -299,7 +299,7 @@ It replicates the build steps of CMSIS-Pack aware IDEs and also updates configur
 The script can be adopted to project specific requirements. 
 
 The build flow of the \ref cbuild script is:
- 1. Call \ref cbuildgen with command \b pack to list the URLs of missing software packs.
+ 1. Call \ref cbuildgen with command \b packlist to list the URLs of missing software packs.
  2. Call \ref cp_install to download and install missing software packs.
  3. Call \ref cbuildgen with command \b make to generate Make files.
  4. Call \ref Make to update configuration files using \ref ccmerge.
@@ -411,6 +411,33 @@ cbuildgen <command> <ProjectFile>.cprj [options]
     <td>Generate makefile(s)</td>	
     <td>Generates &lt;ProjectFile\>.mak for \ref Make "Make" to build the binary image. When used with --merge it generates also &lt;ProjectFile>_cfg.mak for \ref Make "Make" to update configuration files.</td>
   </tr>
+  <tr>
+    <td>extract</td>
+    <td>Extract layers from project</td>
+	<td>Generates a sub directory for all layers described in &lt;ProjectFile\>.cprj named \c ./Layer/\<layername>/ containing
+        a layer description file \<layername>.clayer and the project and configuration files belonging to the layer.
+    </td>		
+  </tr>
+  <tr>
+    <td>remove</td>
+	<td>Remove specified layer(s) from project</td>
+	<td>Updates the &lt;ProjectFile\>.cprj removing the layer description as well as all associated files and components for the 
+        layers specified at the command line. The command deletes the associated files from the respecctive project directory.
+	</td>
+  </tr>
+  <tr>
+    <td>compose</td>
+	<td>Create new project from layers</td>
+	<td>Create new &lt;ProjectFile\>.cprj from layer files ([...]\<layername>.clayer) as well as copying associated files.</td>
+  </tr>
+  <tr>
+    <td>add</td>
+	<td>Add specified layer(s) to the project</td>
+	<td>Updates the &lt;ProjectFile\>.cprj adding the layer description as well as all associated files and components for the 
+        layers specified at the command line. The command copies the associated files from the layer directory into the project
+		directory.
+	</td>
+  </tr>
 </table>
 
 \b Options
@@ -436,6 +463,15 @@ cbuildgen <command> <ProjectFile>.cprj [options]
     <td nowrap>Specify output directory</td>
     <td>Specifies the directory where the <b>*.mak</b> files are generated.</td>
   </tr>
+  <tr>
+    <td>\--layer=\<layername>
+	<td nowrap>Specify layer name</td>
+	<td>Specifies the name of the layer (used by commands: remove and extract).</td>
+  </tr>
+  <tr>
+    <td>\<directory>/\<layername>.clayer</td>
+	<td nowrap>Specify layer file</td>
+	<td>Specifies the directory and filename of the project layer (used by commands: add and compose).</td>
 </table>
 
 
@@ -451,8 +487,8 @@ The \<ProjectFile>.mak file includes two additional makefiles:
  - include ${CMSIS_BUILD_ROOT}/etc/Whitespace.mak for handling of white space characters in filenames.
  - include ${CMSIS_COMPILER_ROOT}/\<name>.\<version>.mak that specifies default options for the toolchain.
  
-\todo Question to Daniel: does cbuildgen update the *.cprj file or is that file read-only? How are new configuration files detected?
- - [danbro01] The *.cprj file is never written by cbuildgen. The merge tool overwrites the outdated configuration files with new merged data.
+Note: cbuildgen does not update the *.cprj for commands packlist, make and extract. The merge tool updates the outdated configuration files with new merged data, keeping a copy
+of the original file.
 
 \section cbuild_example Usage Example
 
@@ -583,7 +619,12 @@ M652: Generated makefile for project build:'Simulation.mak'
 /**
 \page ccmerge ccmerge: Config File Updater
 
-The \ref ccmerge "ccmerge" tool supports the update process for configuration files that use <a href="../../Pack/html/configWizard.html"><b>Configuration Wizard Annotations</b></a>.
+The \ref ccmerge "ccmerge" tool supports the update process for configuration files that use 
+<a href="../../Pack/html/configWizard.html"><b>Configuration Wizard Annotations</b></a>.
+The tool takes the configuration file located in the CMSIS Pack (pfile) and merges the configuration information extracted
+from the configuration file located in the current project (cfile). If the merge succeeds the result is written to 'cfile'
+after a copy of 'cfile' has been stored as 'cfile.nnnn'.
+
 It is called from the \b Bash command line with the following syntax:
 
 \b ccmerge has the following command invocation:
@@ -625,9 +666,6 @@ When \ref ccmerge "ccmerge" detects that 'cfile' and 'pfile' are incompatible th
 A filepath name can be specified without surrounding " characters as long as it does not contain any space or other special characters. It must be enclosed by " characters when the filepath name contains one or more spaces or other special characters.
 
 \section ccmerge_examples Usage Example
-
-\todo for me the complete operation of ccmerge is unclear.  Does it actually copy files?
- - [danbro01] As described above, when a merge succeeds the current 'cfile' is saved as 'cfile.nnnn' and 'cfile' is overwritten.
 
 \code
 ccmerge -pfile $CMSIS_PACK_ROOT/ARM/CMSIS/5.6.0/CMSIS/RTOS2/RTX/Config/RTX_Config.h -cfile RTE/CMSIS/RTX_Config.h -merge

@@ -57,14 +57,14 @@ relative to the base directory of the referenced CMSIS Software Pack version.
 The high level structure of a project is constructed from:
 <table class="cmtable" summary="Top level elements">
   <tr>
-	<th>Element</th>
+    <th>Element</th>
     <th>Link</th>
     <th>Description</th>
   </tr>
   <tr>
     <td>\<created></td>
     <td>\subpage element_created</td>
-	<td>Information about the tool that had produced this file.</td>
+    <td>Information about the tool that had produced this file.</td>
   </tr>
   <tr>
     <td>\<info></td>
@@ -73,8 +73,8 @@ The high level structure of a project is constructed from:
   </tr>
   <tr>
     <td>\<layers></td>
-	<td>\subpage element_layers</td>
-	<td>Definition of the layer within the project or layer.</td>
+    <td>\subpage element_layers</td>
+    <td>Definition of the layer within the project or layer.</td>
   </tr>
   <tr>
     <td>\<packages></td>
@@ -83,8 +83,8 @@ The high level structure of a project is constructed from:
   </tr>
   <tr>
     <td>\<compilers></td>
-	<td>\subpage element_compilers</td>
-	<td>Information about the toolchains/compilers and their versions that can be used to build the project.</td>
+    <td>\subpage element_compilers</td>
+    <td>Information about the toolchains/compilers and their versions that can be used to build the project.</td>
   </tr>
   <tr>
     <td>\<target></td>
@@ -93,18 +93,18 @@ The high level structure of a project is constructed from:
   </tr>
   <tr>
     <td>\<components></td>
-	<td>\subpage element_components</td>
-	<td>List of all CMSIS Software Pack components and used config file versions that need to be included for building the project.</td>
+    <td>\subpage element_components</td>
+    <td>List of all CMSIS Software Pack components and used config file versions that need to be included for building the project.</td>
   </tr>
   <tr>
     <td>\<files></td>
-	<td>\subpage element_files </td>
-	<td>List of all source files and include paths that are local to the project (project subdirectories only)</td>
+    <td>\subpage element_files </td>
+    <td>List of all source files and include paths that are local to the project (project subdirectories only)</td>
   </tr>
   <tr>
     <td>other defined types</td>
-	<td>\subpage cprj_types</td>
-	<td>Description of all locally defined schema types.</td>
+    <td>\subpage cprj_types</td>
+    <td>Description of all locally defined schema types.</td>
   </tr>
 </table>
   
