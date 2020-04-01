@@ -40,8 +40,7 @@ glob:
  - CMSIS/Utilities/PACK.xsd
  - CMSIS/Utilities/PackIndex.xsd
  - CMSIS/Utilities/Win32/**/*
- - CMSIS/Utilities/Linux-gcc-4.4.4/**/*
- - CMSIS/Utilities/Linux-gcc-4.8.3/**/*
+ - CMSIS/Utilities/Linux64/**/*
  - CMSIS/Documentation/**/*
  - CMSIS/DoxyGen/Doxygen_Templates/search.css: CMSIS/Documentation/Build/html/search/search.css
  - CMSIS/DoxyGen/Doxygen_Templates/search.css: CMSIS/Documentation/Core/html/search/search.css
