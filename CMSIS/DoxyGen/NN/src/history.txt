@@ -28,23 +28,23 @@
         <li>arm_relu6_s8</li>
         <li>arm_reshape_s8</li>
         <li>arm_fully_connected_s8</li>
-        <li>arm_concatenation_s8_w/li>
-        <li>arm_concatenation_s8_x/li>
-        <li>arm_concatenation_s8_y/li>
-        <li>arm_concatenation_s8_z/li>
+        <li>arm_concatenation_s8_w</li>
+        <li>arm_concatenation_s8_x</li>
+        <li>arm_concatenation_s8_y</li>
+        <li>arm_concatenation_s8_z</li>
       </ul>
       Added following support functions.<br>
       <ul>
         <li>arm_nn_mat_mul_kernel_s8_s16</li>
         <li>arm_nn_mat_mul_kernel_s8_s16_reordered</li>
-        <li>arm_nn_depthwise_conv_s8_core/li>
-        <li>arm_nn_mat_mul_core_4x_s8/li>
-        <li>arm_nn_mat_mul_core_1x_s8/li>
-        <li>arm_convolve_1_x_n_s8/li>
-        <li>arm_nn_vec_mat_mult_t_s8/li>
-        <li>arm_nn_mat_mult_nt_t_s8/li>
-        <li>arm_nn_depthwise_conv_nt_t_s8/li>
-        <li>arm_nn_depthwise_conv_nt_t_padded_s8/li>
+        <li>arm_nn_depthwise_conv_s8_core</li>
+        <li>arm_nn_mat_mul_core_4x_s8</li>
+        <li>arm_nn_mat_mul_core_1x_s8</li>
+        <li>arm_convolve_1_x_n_s8</li>
+        <li>arm_nn_vec_mat_mult_t_s8</li>
+        <li>arm_nn_mat_mult_nt_t_s8</li>
+        <li>arm_nn_depthwise_conv_nt_t_s8</li>
+        <li>arm_nn_depthwise_conv_nt_t_padded_s8</li>
       </ul>
     </td>
   </tr>

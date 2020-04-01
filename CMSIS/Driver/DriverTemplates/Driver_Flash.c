@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2018 Arm Limited. All rights reserved.
+ * Copyright (c) 2013-2020 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -36,7 +36,8 @@ static ARM_FLASH_INFO FlashInfo = {
     0, /* FLASH_SECTOR_SIZE  */
     0, /* FLASH_PAGE_SIZE    */
     0, /* FLASH_PROGRAM_UNIT */
-    0  /* FLASH_ERASED_VALUE */
+    0, /* FLASH_ERASED_VALUE */
+  { 0, 0, 0 }  /* Reserved (must be zero) */
 };
 
 /* Flash Status */
@@ -52,30 +53,33 @@ static const ARM_DRIVER_VERSION DriverVersion = {
 static const ARM_FLASH_CAPABILITIES DriverCapabilities = {
     0, /* event_ready */
     0, /* data_width = 0:8-bit, 1:16-bit, 2:32-bit */
-    0  /* erase_chip */
+    0, /* erase_chip */
+    0  /* reserved (must be zero) */
 };
 
 //
 // Functions
 //
 
-ARM_DRIVER_VERSION ARM_Flash_GetVersion(void)
+static ARM_DRIVER_VERSION ARM_Flash_GetVersion(void)
+{
+  return DriverVersion;
+}
+
+static ARM_FLASH_CAPABILITIES ARM_Flash_GetCapabilities(void)
+{
+  return DriverCapabilities;
+}
+
+static int32_t ARM_Flash_Initialize(ARM_Flash_SignalEvent_t cb_event)
 {
 }
 
-ARM_FLASH_CAPABILITIES ARM_Flash_GetCapabilities(void)
+static int32_t ARM_Flash_Uninitialize(void)
 {
 }
 
-int32_t ARM_Flash_Initialize(ARM_Flash_SignalEvent_t cb_event)
-{
-}
-
-int32_t ARM_Flash_Uninitialize(void)
-{
-}
-
-int32_t ARM_Flash_PowerControl(ARM_POWER_STATE state)
+static int32_t ARM_Flash_PowerControl(ARM_POWER_STATE state)
 {
     switch (state)
     {
@@ -87,42 +91,45 @@ int32_t ARM_Flash_PowerControl(ARM_POWER_STATE state)
 
     case ARM_POWER_FULL:
         break;
-
-    default:
-        return ARM_DRIVER_ERROR_UNSUPPORTED;
     }
+    return ARM_DRIVER_OK;
 }
 
-int32_t ARM_Flash_ReadData(uint32_t addr, void *data, uint32_t cnt)
+static int32_t ARM_Flash_ReadData(uint32_t addr, void *data, uint32_t cnt)
 {
 }
 
-int32_t ARM_Flash_ProgramData(uint32_t addr, const void *data, uint32_t cnt)
+static int32_t ARM_Flash_ProgramData(uint32_t addr, const void *data, uint32_t cnt)
 {
 }
 
-int32_t ARM_Flash_EraseSector(uint32_t addr)
+static int32_t ARM_Flash_EraseSector(uint32_t addr)
 {
 }
 
-int32_t ARM_Flash_EraseChip(void)
+static int32_t ARM_Flash_EraseChip(void)
 {
 }
 
-ARM_FLASH_STATUS ARM_Flash_GetStatus(void)
+static ARM_FLASH_STATUS ARM_Flash_GetStatus(void)
+{
+  return FlashStatus;
+}
+
+static ARM_FLASH_INFO * ARM_Flash_GetInfo(void)
+{
+  return &FlashInfo;
+}
+
+static void ARM_Flash_SignalEvent(uint32_t event)
 {
 }
 
-ARM_FLASH_INFO * ARM_Flash_GetInfo(void)
-{
-}
-
-void ARM_Flash_SignalEvent(uint32_t event)
-{
-}
 // End Flash Interface
 
-ARM_DRIVER_FLASH Driver_FLASH = {
+extern \
+ARM_DRIVER_FLASH Driver_Flash0;
+ARM_DRIVER_FLASH Driver_Flash0 = {
     ARM_Flash_GetVersion,
     ARM_Flash_GetCapabilities,
     ARM_Flash_Initialize,

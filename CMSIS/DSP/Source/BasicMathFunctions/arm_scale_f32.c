@@ -164,16 +164,23 @@ void arm_scale_f32(
 
   while (blkCnt > 0U)
   {
+    float32_t in1, in2, in3, in4;
+
     /* C = A * scale */
 
     /* Scale input and store result in destination buffer. */
-    *pDst++ = (*pSrc++) * scale;
+    in1 = (*pSrc++) * scale;
 
-    *pDst++ = (*pSrc++) * scale;
+    in2 = (*pSrc++) * scale;
 
-    *pDst++ = (*pSrc++) * scale;
+    in3 = (*pSrc++) * scale;
 
-    *pDst++ = (*pSrc++) * scale;
+    in4 = (*pSrc++) * scale;
+
+    *pDst++ = in1;
+    *pDst++ = in2;
+    *pDst++ = in3;
+    *pDst++ = in4;
 
     /* Decrement loop counter */
     blkCnt--;

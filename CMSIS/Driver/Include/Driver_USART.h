@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * $Date:        24. January 2020
+ * $Date:        31. March 2020
  * $Revision:    V2.4
  *
  * Project:      USART (Universal Synchronous Asynchronous Receiver Transmitter)
@@ -65,6 +65,10 @@ extern "C"
 #include "Driver_Common.h"
 
 #define ARM_USART_API_VERSION ARM_DRIVER_VERSION_MAJOR_MINOR(2,4)  /* API version */
+
+
+#define _ARM_Driver_USART_(n)      Driver_USART##n
+#define  ARM_Driver_USART_(n) _ARM_Driver_USART_(n)
 
 
 /****** USART Control Codes *****/

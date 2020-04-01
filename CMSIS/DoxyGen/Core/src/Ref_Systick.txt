@@ -51,9 +51,9 @@ int main (void)  {
     \returns          1  - failure
     
     \note
-    When <b>\#define __Vendor_SysTickConfig</b> is set to 1, the standard function <b>SysTick_Config</b>
-    is excluded. In this case, the file <b><i>device</i>.h</b> must contain a 
-    vendor specific implementation of this function. 
+    When \ref __Vendor_SysTickConfig is defined to 1, the standard function <b>SysTick_Config</b>
+    is excluded. In this case, the \ref device_h_pg must contain a vendor specific implementation
+    of this function. 
 */
 uint32_t SysTick_Config(uint32_t ticks);
 

@@ -2,7 +2,7 @@
 ; * @file     startup_ARMCM23.s
 ; * @brief    CMSIS Core Device Startup File for
 ; *           ARMCM23 Device
-; * @version  V5.4.1
+; * @version  V1.0.1
 ; * @date     23. July 2019
 ; ******************************************************************************/
 ;/*

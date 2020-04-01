@@ -131,19 +131,27 @@ class CmsisPackLinter(PackLinter):
     return self._pack.version()
     
   def cmsis_corem_component(self):
-    rte = { 'components' : set(), 'Dcore' : "Cortex-M3", 'Dvendor' : "", 'Dname' : "", 'Dtz' : "", 'Tcompiler' : "", 'Toptions' : "" }
-    comp = sorted(self._pack.component_by_name(rte, "CMSIS.CORE"), reverse=True)[0]
-    return SemanticVersion(comp.version())
+    rte = { 'components' : set(), 'Dcore' : "Cortex-M3", 'Dvendor' : "*", 'Dname' : "*", 'Dtz' : "*", 'Dsecure' : "*", 'Tcompiler' : "*", 'Toptions' : "*" }
+    cs = self._pack.component_by_name(rte, "CMSIS.CORE")
+    cvs = { SemanticVersion(c.version()) for c in cs }
+    if len(cvs) > 1:
+      self.warning("Not all CMSIS-Core(M) components have same version information: %s", str([ (c.name(), c.version()) for c in cs ]))
+    return cvs.pop()
 
   def cmsis_corea_component(self):
-    rte = { 'components' : set(), 'Dcore' : "Cortex-A9", 'Dvendor' : "", 'Dname' : "", 'Dtz' : "", 'Tcompiler' : "", 'Toptions' : "" }
-    comp = sorted(self._pack.component_by_name(rte, "CMSIS.CORE"), reverse=True)[0]
-    return SemanticVersion(comp.version())
+    rte = { 'components' : set(), 'Dcore' : "Cortex-A9", 'Dvendor' : "*", 'Dname' : "*", 'Dtz' : "*", 'Dsecure' : "*", 'Tcompiler' : "*", 'Toptions' : "*" }
+    cs = self._pack.component_by_name(rte, "CMSIS.CORE")
+    cvs = { SemanticVersion(c.version()) for c in cs }
+    if len(cvs) > 1:
+      self.warning("Not all CMSIS-Core(A) components have same version information: %s", str([ (c.name(), c.version()) for c in cs ]))
+    return cvs.pop()
 
   def cmsis_rtos2_api(self):
-    rte = { 'components' : set(), 'Dcore' : "", 'Dvendor' : "", 'Dname' : "", 'Dtz' : "", 'Tcompiler' : "", 'Toptions' : "" }
-    comp = sorted(self._pack.component_by_name(rte, "CMSIS.RTOS2"), reverse=True)[0]
-    return SemanticVersion(comp.version())
+    cs = self._pack.components_by_name("CMSIS.RTOS2")
+    cvs = { SemanticVersion(c.version()) for c in cs }
+    if len(cvs) > 1:
+      self.warning("Not all CMSIS-RTOS2 APIs have same version information: %s", str([ (c.name(), c.version()) for c in cs ]))
+    return cvs.pop()
 
   def cmsis_rtx5_component(self):
     cs = self._pack.components_by_name("CMSIS.RTOS2.Keil RTX5*")
@@ -284,7 +292,3 @@ class CmsisPackLinter(PackLinter):
               self.warning("%s: Broken relative-link to %s!", html, href.path)
           else:
             self.warning("%s: Broken relative-link to %s!", html, href.path)
-  
-  def check_schema(self):
-    """XML Schema"""
-    pass

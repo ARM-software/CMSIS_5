@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015-2018 Arm Limited. All rights reserved.
+ * Copyright (c) 2015-2020 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -26,12 +26,13 @@ static const ARM_DRIVER_VERSION can_driver_version = { ARM_CAN_API_VERSION, ARM_
 // Driver Capabilities
 static const ARM_CAN_CAPABILITIES can_driver_capabilities = {
   32U,  // Number of CAN Objects available
-  1U,   // Supports reentrant calls to ARM_CAN_MessageSend, ARM_CAN_MessageRead, ARM_CAN_ObjectConfigure and abort message sending used by ARM_CAN_Control.
+  0U,   // Does not support reentrant calls to ARM_CAN_MessageSend, ARM_CAN_MessageRead, ARM_CAN_ObjectConfigure and abort message sending used by ARM_CAN_Control.
   0U,   // Does not support CAN with Flexible Data-rate mode (CAN_FD)
   0U,   // Does not support restricted operation mode
-  1U,   // Supports bus monitoring mode
-  1U,   // Supports internal loopback mode
-  1U,   // Supports external loopback mode
+  0U,   // Does not support bus monitoring mode
+  0U,   // Does not support internal loopback mode
+  0U,   // Does not support external loopback mode
+  0U    // Reserved (must be zero)
 };
 
 // Object Capabilities
@@ -40,11 +41,12 @@ static const ARM_CAN_OBJ_CAPABILITIES can_object_capabilities = {
   1U,   // Object supports reception
   0U,   // Object does not support RTR reception and automatic Data transmission
   0U,   // Object does not support RTR transmission and automatic Data reception
-  1U,   // Object allows assignment of multiple filters to it
-  1U,   // Object supports exact identifier filtering
+  0U,   // Object does not allow assignment of multiple filters to it
+  0U,   // Object does not support exact identifier filtering
   0U,   // Object does not support range identifier filtering
-  1U,   // Object supports mask identifier filtering
-  3U    // Object can buffer 3 messages
+  0U,   // Object does not support mask identifier filtering
+  0U,   // Object can not buffer messages
+  0U    // Reserved (must be zero)
 };
 
 static uint8_t                     can_driver_powered     = 0U;
@@ -56,18 +58,18 @@ static ARM_CAN_SignalObjectEvent_t CAN_SignalObjectEvent  = NULL;
 //   Functions
 //
 
-static ARM_DRIVER_VERSION CAN_GetVersion (void) {
+static ARM_DRIVER_VERSION ARM_CAN_GetVersion (void) {
   // Return driver version
   return can_driver_version;
 }
 
-static ARM_CAN_CAPABILITIES CAN_GetCapabilities (void) {
+static ARM_CAN_CAPABILITIES ARM_CAN_GetCapabilities (void) {
   // Return driver capabilities
   return can_driver_capabilities;
 }
 
-static int32_t CAN_Initialize (ARM_CAN_SignalUnitEvent_t   cb_unit_event,
-                               ARM_CAN_SignalObjectEvent_t cb_object_event) {
+static int32_t ARM_CAN_Initialize (ARM_CAN_SignalUnitEvent_t   cb_unit_event,
+                                   ARM_CAN_SignalObjectEvent_t cb_object_event) {
 
   if (can_driver_initialized != 0U) { return ARM_DRIVER_OK; }
 
@@ -82,7 +84,7 @@ static int32_t CAN_Initialize (ARM_CAN_SignalUnitEvent_t   cb_unit_event,
   return ARM_DRIVER_OK;
 }
 
-static int32_t CAN_Uninitialize (void) {
+static int32_t ARM_CAN_Uninitialize (void) {
 
   // Add code for pin, memory, RTX objects de-initialization
   // ..
@@ -92,13 +94,15 @@ static int32_t CAN_Uninitialize (void) {
   return ARM_DRIVER_OK;
 }
 
-static int32_t CAN_PowerControl (ARM_POWER_STATE state) {
+static int32_t ARM_CAN_PowerControl (ARM_POWER_STATE state) {
   switch (state) {
     case ARM_POWER_OFF:
       can_driver_powered = 0U;
       // Add code to disable interrupts and put peripheral into reset mode,
       // and if possible disable clock
       // ..
+
+      break;
 
     case ARM_POWER_FULL:
       if (can_driver_initialized == 0U) { return ARM_DRIVER_ERROR; }
@@ -111,21 +115,20 @@ static int32_t CAN_PowerControl (ARM_POWER_STATE state) {
       can_driver_powered = 1U;
       break;
 
-    default:
-      // Other states are not supported
+    case ARM_POWER_LOW:
       return ARM_DRIVER_ERROR_UNSUPPORTED;
   }
 
   return ARM_DRIVER_OK;
 }
 
-uint32_t CAN_GetClock (void) {
+static uint32_t ARM_CAN_GetClock (void) {
 
   // Add code to return peripheral clock frequency
   // ..
 }
 
-static int32_t CAN_SetBitrate (ARM_CAN_BITRATE_SELECT select, uint32_t bitrate, uint32_t bit_segments) {
+static int32_t ARM_CAN_SetBitrate (ARM_CAN_BITRATE_SELECT select, uint32_t bitrate, uint32_t bit_segments) {
 
   if (can_driver_powered == 0U) { return ARM_DRIVER_ERROR; }
 
@@ -136,7 +139,7 @@ static int32_t CAN_SetBitrate (ARM_CAN_BITRATE_SELECT select, uint32_t bitrate, 
   return ARM_DRIVER_OK;
 }
 
-static int32_t CAN_SetMode (ARM_CAN_MODE mode) {
+static int32_t ARM_CAN_SetMode (ARM_CAN_MODE mode) {
 
   if (can_driver_powered == 0U) { return ARM_DRIVER_ERROR; }
 
@@ -165,20 +168,17 @@ static int32_t CAN_SetMode (ARM_CAN_MODE mode) {
       // Add code to put peripheral into external loopback mode
       // ..
       break;
-    default:
-      // Handle unknown mode code
-      return ARM_DRIVER_ERROR_UNSUPPORTED;
   }
 
   return ARM_DRIVER_OK;
 }
 
-ARM_CAN_OBJ_CAPABILITIES CAN_ObjectGetCapabilities (uint32_t obj_idx) {
+static ARM_CAN_OBJ_CAPABILITIES ARM_CAN_ObjectGetCapabilities (uint32_t obj_idx) {
   // Return object capabilities
   return can_object_capabilities;
 }
 
-static int32_t CAN_ObjectSetFilter (uint32_t obj_idx, ARM_CAN_FILTER_OPERATION operation, uint32_t id, uint32_t arg) {
+static int32_t ARM_CAN_ObjectSetFilter (uint32_t obj_idx, ARM_CAN_FILTER_OPERATION operation, uint32_t id, uint32_t arg) {
 
   if (can_driver_powered == 0U) { return ARM_DRIVER_ERROR; }
 
@@ -201,15 +201,12 @@ static int32_t CAN_ObjectSetFilter (uint32_t obj_idx, ARM_CAN_FILTER_OPERATION o
     case ARM_CAN_FILTER_ID_RANGE_REMOVE:
       // Add code to remove specified range of IDs from being received by peripheral
       break;
-    default:
-      // Handle unknown operation code
-      return ARM_DRIVER_ERROR_UNSUPPORTED;
   }
 
   return ARM_DRIVER_OK;
 }
 
-static int32_t CAN_ObjectConfigure (uint32_t obj_idx, ARM_CAN_OBJ_CONFIG obj_cfg) {
+static int32_t ARM_CAN_ObjectConfigure (uint32_t obj_idx, ARM_CAN_OBJ_CONFIG obj_cfg) {
 
   if (can_driver_powered == 0U) { return ARM_DRIVER_ERROR; }
 
@@ -234,15 +231,12 @@ static int32_t CAN_ObjectConfigure (uint32_t obj_idx, ARM_CAN_OBJ_CONFIG obj_cfg
       // Setup object to be used for receiving messages
       // ..
       break;
-    default:
-      // Handle unknown object configuration code
-      return ARM_DRIVER_ERROR_UNSUPPORTED;
   }
 
   return ARM_DRIVER_OK;
 }
 
-static int32_t CAN_MessageSend (uint32_t obj_idx, ARM_CAN_MSG_INFO *msg_info, const uint8_t *data, uint8_t size) {
+static int32_t ARM_CAN_MessageSend (uint32_t obj_idx, ARM_CAN_MSG_INFO *msg_info, const uint8_t *data, uint8_t size) {
 
   if (can_driver_powered == 0U) { return ARM_DRIVER_ERROR; }
 
@@ -252,7 +246,7 @@ static int32_t CAN_MessageSend (uint32_t obj_idx, ARM_CAN_MSG_INFO *msg_info, co
   return ((int32_t)size);
 }
 
-static int32_t CAN_MessageRead (uint32_t obj_idx, ARM_CAN_MSG_INFO *msg_info, uint8_t *data, uint8_t size) {
+static int32_t ARM_CAN_MessageRead (uint32_t obj_idx, ARM_CAN_MSG_INFO *msg_info, uint8_t *data, uint8_t size) {
 
   if (can_driver_powered == 0U) { return ARM_DRIVER_ERROR;  }
 
@@ -263,7 +257,7 @@ static int32_t CAN_MessageRead (uint32_t obj_idx, ARM_CAN_MSG_INFO *msg_info, ui
   return ((int32_t)size);
 }
 
-static int32_t CAN_Control (uint32_t control, uint32_t arg) {
+static int32_t ARM_CAN_Control (uint32_t control, uint32_t arg) {
 
   if (can_driver_powered == 0U) { return ARM_DRIVER_ERROR; }
 
@@ -288,7 +282,7 @@ static int32_t CAN_Control (uint32_t control, uint32_t arg) {
   return ARM_DRIVER_OK;
 }
 
-static ARM_CAN_STATUS CAN_GetStatus (void) {
+static ARM_CAN_STATUS ARM_CAN_GetStatus (void) {
 
   // Add code to return device bus and error status
   // ..
@@ -301,21 +295,23 @@ static ARM_CAN_STATUS CAN_GetStatus (void) {
 
 // CAN driver functions structure
 
-ARM_DRIVER_CAN Driver_CAN = {
-  CAN_GetVersion,
-  CAN_GetCapabilities,
-  CAN_Initialize,
-  CAN_Uninitialize,
-  CAN_PowerControl,
-  CAN_GetClock,
-  CAN_SetBitrate,
-  CAN_SetMode,
-  CAN_ObjectGetCapabilities,
-  CAN_ObjectSetFilter,
-  CAN_ObjectConfigure,
-  CAN_MessageSend,
-  CAN_MessageRead,
-  CAN_Control,
-  CAN_GetStatus
+extern \
+ARM_DRIVER_CAN Driver_CAN0;
+ARM_DRIVER_CAN Driver_CAN0 = {
+  ARM_CAN_GetVersion,
+  ARM_CAN_GetCapabilities,
+  ARM_CAN_Initialize,
+  ARM_CAN_Uninitialize,
+  ARM_CAN_PowerControl,
+  ARM_CAN_GetClock,
+  ARM_CAN_SetBitrate,
+  ARM_CAN_SetMode,
+  ARM_CAN_ObjectGetCapabilities,
+  ARM_CAN_ObjectSetFilter,
+  ARM_CAN_ObjectConfigure,
+  ARM_CAN_MessageSend,
+  ARM_CAN_MessageRead,
+  ARM_CAN_Control,
+  ARM_CAN_GetStatus
 };
 

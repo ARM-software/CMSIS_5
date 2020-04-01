@@ -10,8 +10,8 @@
     in CMSIS-Pack format.
   - Software Layers enable code reuse across different targets. A software layer is a pre-configured software component
     selection and user source code. 
-  - \ref vio_pg "CMSIS-VIO Virtual I/O" is a set of generic input/output functions for example and test code. It allows to
-    fast migration from evaluation boards to production hardware.
+  - <a href="../../Driver/html/group__vio__interface__gr.html"><b>CMSIS-Driver VIO</b></a> is a set of generic input/output
+    functions for example and test code. It allows to fast migration from evaluation boards to production hardware.
 
 The figure below shows how the <b>CMSIS-Build</b> components may be used to create a IoT cloud application:
   - The <b>Board I/O</b> layer contains the drivers and device configuration for a specific evaluation board.
@@ -25,9 +25,9 @@ Software layers and Virtual I/O simplify these use cases:
 
 <b>Port software from evaluation board to custom hardware:</b><br>
 - Frequently, the software development starts on an evaluation board, for example because production hardware is not yet
-  available. The VIO component allows you to use the I/O capabilities of an evaluation kit and disconnect it when moving to
-  production hardware. In case the production hardware uses a different device configuration or different I/O drivers, the
-  <b>Board I/O</b> layer may be swapped.
+  available. The <a href="../../Driver/html/group__vio__interface__gr.html"><b>VIO component</b></a> allows you to use the
+  I/O capabilities of an evaluation kit and disconnect it when moving to production hardware. In case the production
+  hardware uses a different device configuration or different I/O drivers, the <b>Board I/O</b> layer may be swapped.
 
 <b>Deliver reference examples for many different evaluation boards:</b><br>
 - Reference examples are a great way to demonstrate a software solution. It is however expensive to support many different

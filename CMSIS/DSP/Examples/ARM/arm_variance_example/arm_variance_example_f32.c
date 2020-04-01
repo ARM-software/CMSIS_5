@@ -198,30 +198,25 @@ int32_t main(void)
   diff = fabsf(refVarianceOut - variance);
 
   /* Comparison of variance value with reference */
-  
-  if (diff > DELTA)
+  status = (diff > DELTA) ? ARM_MATH_TEST_FAILURE : ARM_MATH_SUCCESS;
+
+  if (status != ARM_MATH_SUCCESS)
   {
-    status = ARM_MATH_TEST_FAILURE;
-  }
-
-
-#if !defined(SEMIHOSTING)
-  if ( status != ARM_MATH_SUCCESS)
-  {
-    while (1);
-  }
-
-  while (1);                            /* main function does not return */
+#if defined (SEMIHOSTING)
+    printf("FAILURE\n");
 #else
-  if (status == ARM_MATH_SUCCESS)
-  {
-     printf("SUCCESS\n");
+    while (1);                             /* main function does not return */
+#endif
   }
   else
   {
-     printf("FAILURE\n");
-  }
+#if defined (SEMIHOSTING)
+    printf("SUCCESS\n");
+#else
+    while (1);                             /* main function does not return */
 #endif
+  }
+
 }
 
  /** \endlink */

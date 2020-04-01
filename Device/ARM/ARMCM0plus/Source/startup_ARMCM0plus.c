@@ -1,11 +1,11 @@
 /******************************************************************************
  * @file     startup_ARMCM0plus.c
  * @brief    CMSIS-Core(M) Device Startup File for a Cortex-M0+ Device
- * @version  V2.0.2
- * @date     15. November 2019
+ * @version  V2.0.3
+ * @date     31. March 2020
  ******************************************************************************/
 /*
- * Copyright (c) 2009-2019 Arm Limited. All rights reserved.
+ * Copyright (c) 2009-2020 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -40,8 +40,8 @@ extern __NO_RETURN void __PROGRAM_START(void);
 /*----------------------------------------------------------------------------
   Internal References
  *----------------------------------------------------------------------------*/
-void __NO_RETURN Default_Handler(void);
-void __NO_RETURN Reset_Handler  (void);
+__NO_RETURN void Reset_Handler  (void);
+            void Default_Handler(void);
 
 /*----------------------------------------------------------------------------
   Exception / Interrupt Handler
@@ -114,16 +114,22 @@ extern const VECTOR_TABLE_Type __VECTOR_TABLE[48];
 /*----------------------------------------------------------------------------
   Reset Handler called on controller reset
  *----------------------------------------------------------------------------*/
-void Reset_Handler(void)
+__NO_RETURN void Reset_Handler(void)
 {
   SystemInit();                             /* CMSIS System Initialization */
   __PROGRAM_START();                        /* Enter PreMain (C library entry point) */
 }
 
+
+#if defined(__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050)
+  #pragma clang diagnostic push
+  #pragma clang diagnostic ignored "-Wmissing-noreturn"
+#endif
+
 /*----------------------------------------------------------------------------
   Hard Fault Handler
  *----------------------------------------------------------------------------*/
-__NO_RETURN void HardFault_Handler(void)
+void HardFault_Handler(void)
 {
   while(1);
 }
@@ -135,3 +141,8 @@ void Default_Handler(void)
 {
   while(1);
 }
+
+#if defined(__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050)
+  #pragma clang diagnostic pop
+#endif
+

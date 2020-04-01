@@ -144,33 +144,24 @@ int32_t main(void)
   /* Calculates maxValue and returns corresponding BIN value */
   arm_max_f32(testOutput, fftSize, &maxValue, &testIndex);
 
-  if (testIndex !=  refIndex)
+  status = (testIndex != refIndex) ? ARM_MATH_TEST_FAILURE : ARM_MATH_SUCCESS;
+  
+  if (status != ARM_MATH_SUCCESS)
   {
-    status = ARM_MATH_TEST_FAILURE;
-  }
-
-  /* ----------------------------------------------------------------------
-  ** Loop here if the signals fail the PASS check.
-  ** This denotes a test failure
-  ** ------------------------------------------------------------------- */
-
-#if !defined(SEMIHOSTING)
-  if ( status != ARM_MATH_SUCCESS)
-  {
-    while (1);
-  }
-
-  while (1);                             /* main function does not return */
+#if defined (SEMIHOSTING)
+    printf("FAILURE\n");
 #else
-  if (status == ARM_MATH_SUCCESS)
-  {
-     printf("SUCCESS\n");
+    while (1);                             /* main function does not return */
+#endif
   }
   else
   {
-     printf("FAILURE\n");
-  }
+#if defined (SEMIHOSTING)
+    printf("SUCCESS\n");
+#else
+    while (1);                             /* main function does not return */
 #endif
+  }
 }
 
  /** \endlink */

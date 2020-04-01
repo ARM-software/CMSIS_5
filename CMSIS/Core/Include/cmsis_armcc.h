@@ -2,7 +2,7 @@
  * @file     cmsis_armcc.h
  * @brief    CMSIS compiler ARMCC (Arm Compiler 5) header file
  * @version  V5.2.1
- * @date     14. February 2020
+ * @date     26. March 2020
  ******************************************************************************/
 /*
  * Copyright (c) 2009-2020 Arm Limited. All rights reserved.
@@ -128,7 +128,7 @@
 #endif
 
 #ifndef __VECTOR_TABLE_ATTRIBUTE
-#define __VECTOR_TABLE_ATTRIBUTE  __attribute((used, section("RESET")))
+#define __VECTOR_TABLE_ATTRIBUTE  __attribute__((used, section("RESET")))
 #endif
 
 /* ###########################  Core Function Access  ########################### */

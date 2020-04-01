@@ -2,7 +2,7 @@
 ; * @file     startup_ARMCM35P.s
 ; * @brief    CMSIS Core Device Startup File for
 ; *           ARMCM35P Device
-; * @version  V5.5.1
+; * @version  V1.0.1
 ; * @date     23. July 2019
 ; ******************************************************************************/
 ;/*

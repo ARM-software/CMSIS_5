@@ -2,7 +2,7 @@
  * @file     core_cm35p.h
  * @brief    CMSIS Cortex-M35P Core Peripheral Access Layer Header File
  * @version  V1.1.0
- * @date     11. February 2020
+ * @date     27. March 2020
  ******************************************************************************/
 /*
  * Copyright (c) 2018-2020 Arm Limited. All rights reserved.
@@ -249,7 +249,12 @@
     #define __DSP_PRESENT             0U
     #warning "__DSP_PRESENT not defined in device header file; using default!"
   #endif
-
+  
+  #ifndef __VTOR_PRESENT
+    #define __VTOR_PRESENT             1U
+    #warning "__VTOR_PRESENT not defined in device header file; using default!"
+  #endif
+  
   #ifndef __NVIC_PRIO_BITS
     #define __NVIC_PRIO_BITS          3U
     #warning "__NVIC_PRIO_BITS not defined in device header file; using default!"

@@ -3,7 +3,7 @@
  * @brief    CMSIS Core Peripheral Access Layer Header File for
  *           Armv8.1-M Mainline Device Series (configured for Armv8.1-M Mainline with double precision FPU, with DSP extension, with TrustZone)
  * @version  V1.1.0
- * @date     03. March 2020
+ * @date     27. March 2020
  ******************************************************************************/
 /*
  * Copyright (c) 2009-2020 Arm Limited. All rights reserved.
@@ -100,8 +100,8 @@ typedef enum IRQn
 #define __FPU_PRESENT             1U        /* FPU present */
 #define __FPU_DP                  1U        /* double precision FPU */
 #define __DSP_PRESENT             1U        /* DSP extension present */
-#define __ICACHE_PRESENT          1U
-#define __DCACHE_PRESENT          1U
+#define __ICACHE_PRESENT          1U        /* Instruction Cache present */
+#define __DCACHE_PRESENT          1U        /* Data Cache present */
 
 #include "core_armv81mml.h"                 /* Processor and core peripherals */
 #include "system_ARMv81MML.h"               /* System Header */

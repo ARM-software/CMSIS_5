@@ -388,36 +388,25 @@ int32_t main(void)
 
   snr = arm_snr_f32(testRefOutput_f32, testOutput, TESTLENGTH);
 
-  if (snr < SNR_THRESHOLD_F32)
+  status = (snr < SNR_THRESHOLD_F32) ? ARM_MATH_TEST_FAILURE : ARM_MATH_SUCCESS;
+  
+  if (status != ARM_MATH_SUCCESS)
   {
-    status = ARM_MATH_TEST_FAILURE;
-  }
-  else
-  {
-    status = ARM_MATH_SUCCESS;
-  }
-
-  /* ----------------------------------------------------------------------
-  ** Loop here if the signal does not match the reference output.
-  ** ------------------------------------------------------------------- */
-
-#if !defined(SEMIHOSTING)
-  if ( status != ARM_MATH_SUCCESS)
-  {
-    while (1);
-  }
-
-  while (1);                             /* main function does not return */
+#if defined (SEMIHOSTING)
+    printf("FAILURE\n");
 #else
-  if (status == ARM_MATH_SUCCESS)
-  {
-     printf("SUCCESS\n");
+    while (1);                             /* main function does not return */
+#endif
   }
   else
   {
-     printf("FAILURE : SNR = %f\n",snr);
-  }
+#if defined (SEMIHOSTING)
+    printf("SUCCESS\n");
+#else
+    while (1);                             /* main function does not return */
 #endif
+  }
+
 }
 
 /** \endlink */

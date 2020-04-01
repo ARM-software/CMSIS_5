@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2018 Arm Limited. All rights reserved.
+ * Copyright (c) 2013-2020 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -29,8 +29,8 @@ static const ARM_DRIVER_VERSION DriverVersion = {
 
 /* Driver Capabilities */
 static const ARM_STORAGE_CAPABILITIES DriverCapabilities = {
-    1,  /* Asynchronous Mode */
-    1,  /* Supports EraseAll operation */
+    0,  /* Asynchronous Mode */
+    0,  /* Supports EraseAll operation */
     0   /* Reserved */
 };
 
@@ -39,19 +39,21 @@ static const ARM_STORAGE_CAPABILITIES DriverCapabilities = {
 // Functions
 //
 
-ARM_DRIVER_VERSION ARM_Storage_GetVersion (void)  {
+static ARM_DRIVER_VERSION ARM_Storage_GetVersion (void)  {
+  return DriverVersion;
 }
 
-ARM_STORAGE_CAPABILITIES ARM_Storage_GetCapabilities (void)  {
+static ARM_STORAGE_CAPABILITIES ARM_Storage_GetCapabilities (void)  {
+  return DriverCapabilities;
 }
 
-int32_t ARM_Storage_Initialize (ARM_Storage_Callback_t callback)  {
+static int32_t ARM_Storage_Initialize (ARM_Storage_Callback_t callback)  {
 }
 
-int32_t ARM_Storage_Uninitialize (void)  {
+static int32_t ARM_Storage_Uninitialize (void)  {
 }
 
-int32_t ARM_Storage_PowerControl (ARM_POWER_STATE state)
+static int32_t ARM_Storage_PowerControl (ARM_POWER_STATE state)
 {
     switch (state)
     {
@@ -63,41 +65,42 @@ int32_t ARM_Storage_PowerControl (ARM_POWER_STATE state)
 
     case ARM_POWER_FULL:
         break;
-
-    default:
-        return ARM_DRIVER_ERROR_UNSUPPORTED;
     }
+    return ARM_DRIVER_OK;
 }
 
-int32_t ARM_Storage_ReadData (uint64_t addr, void *data, uint32_t size)  {
+static int32_t ARM_Storage_ReadData (uint64_t addr, void *data, uint32_t size)  {
 }
 
-int32_t ARM_Storage_ProgramData (uint64_t addr, const void *data, uint32_t size)  {
+static int32_t ARM_Storage_ProgramData (uint64_t addr, const void *data, uint32_t size)  {
 }
 
-int32_t ARM_Storage_Erase (uint64_t addr, uint32_t size)  {
+static int32_t ARM_Storage_Erase (uint64_t addr, uint32_t size)  {
 }
 
-int32_t ARM_Storage_EraseAll (void)  {
+static int32_t ARM_Storage_EraseAll (void)  {
 }
 
-ARM_STORAGE_STATUS ARM_Storage_GetStatus (void)  {
+static ARM_STORAGE_STATUS ARM_Storage_GetStatus (void)  {
 }
 
-int32_t ARM_Storage_GetInfo (ARM_STORAGE_INFO *info)  {
+static int32_t ARM_Storage_GetInfo (ARM_STORAGE_INFO *info)  {
 }
 
-uint32_t ARM_Storage_ResolveAddress(uint64_t addr) {
+static uint32_t ARM_Storage_ResolveAddress(uint64_t addr) {
 }
 
-int32_t ARM_Storage_GetNextBlock(const ARM_STORAGE_BLOCK* prev_block, ARM_STORAGE_BLOCK *next_block) {
+static int32_t ARM_Storage_GetNextBlock(const ARM_STORAGE_BLOCK* prev_block, ARM_STORAGE_BLOCK *next_block) {
 }
 
-int32_t ARM_Storage_GetBlock(uint64_t addr, ARM_STORAGE_BLOCK *block) {
+static int32_t ARM_Storage_GetBlock(uint64_t addr, ARM_STORAGE_BLOCK *block) {
 }
+
 // End Storage Interface
 
-ARM_DRIVER_STORAGE Driver_STORAGE = {
+extern \
+ARM_DRIVER_STORAGE Driver_Storage0;
+ARM_DRIVER_STORAGE Driver_Storage0 = {
     ARM_Storage_GetVersion,
     ARM_Storage_GetCapabilities,
     ARM_Storage_Initialize,

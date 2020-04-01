@@ -97,7 +97,8 @@ __STATIC_INLINE uint32_t xPSR_InitVal (bool_t privileged, bool_t thumb) {
 /// \param[in]  stack_frame     Stack Frame (EXC_RETURN[7..0])
 /// \return                     R0 Offset
 __STATIC_INLINE uint32_t StackOffsetR0 (uint8_t stack_frame) {
-#if (__FPU_USED == 1U)
+#if ((__FPU_USED == 1U) || \
+     (defined(__ARM_FEATURE_MVE) && (__ARM_FEATURE_MVE > 0)))
   return (((stack_frame & 0x10U) == 0U) ? ((16U+8U)*4U) : (8U*4U));
 #else
   (void)stack_frame;

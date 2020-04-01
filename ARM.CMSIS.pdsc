@@ -8,8 +8,23 @@
   <url>http://www.keil.com/pack/</url>
 
   <releases>
-    <release version="5.7.0-dev5">
+    <release version="5.7.0-dev8">
       Active development...
+      Devices:
+        - Reworked ARMCM* C-StartUp files.
+    </release>
+    <release version="5.7.0-dev7">
+      Active development...
+      CMSIS-Core(M): 5.4.0
+        - Fixed device config define checks.
+      Devices:
+        - Enable loop and branch info cache for Armv8.1-MML devices.
+    </release>
+    <release version="5.7.0-dev6">
+      CMSIS-DSP:
+        - reworked examples
+    </release>
+    <release version="5.7.0-dev5">
       CMSIS-NN: 1.3.0 (see revision history for details)
         - Added MVE support
         - Further optimizations for kernels using DSP extension
@@ -22,16 +37,14 @@
         - Added MVE support
     </release>
     <release version="5.7.0-dev3">
-      CMSIS-Core(M):
+      CMSIS-Core(M): 5.4.0
         - L1 Cache functions for Armv7-M and later
       Devices:
         - Include L1 Cache functions in ARMv8MML/ARMv81MML devices
     </release>
     <release version="5.7.0-dev2">
-      CMSIS-Core(M):
+      CMSIS-Core(M): 5.4.0
         - Cortex-M55 cpu support
-        - Cortex-M55 core header file
-        - PMU header file (place holder)
       Devices:
         - ARMCM55 device
     </release>
@@ -44,7 +57,7 @@
       CMSIS-Driver: 2.8.0
         - removed volatile from status related typedefs in APIs
         - enhanced WiFi Interface API with support for polling Socket Receive/Send
-      CMSIS-Pack: 
+      CMSIS-Pack: 1.6.1
         - added custom attribute to components that require custom implementation
       Devices:
         - ARMv81MML startup code recognizing __MVE_USED macro
@@ -973,15 +986,16 @@ and 8-bit Java bytecodes in Jazelle state.
     <api Cclass="CMSIS Driver" Cgroup="WiFi" Capiversion="1.1.0" exclusive="0">
       <description>WiFi driver</description>
       <files>
-        <file category="doc"  name="CMSIS/Documentation/Driver/html/group__wifi__interface__gr.html" />
+        <file category="doc" name="CMSIS/Documentation/Driver/html/group__wifi__interface__gr.html" />
         <file category="header" name="CMSIS/Driver/Include/Driver_WiFi.h" />
       </files>
     </api>
     <api Cclass="CMSIS Driver" Cgroup="VIO" Capiversion="0.1.0" exclusive="1">
       <description>Virtual I/O</description>
       <files>
-  <!--  <file category="doc" name="CMSIS/Documentation/Driver/html/vio_pg.html"/> -->
+        <file category="doc"    name="CMSIS/Documentation/Driver/html/group__vio__interface__gr.html" />
         <file category="header" name="CMSIS/Driver/VIO/Include/cmsis_vio.h" />
+        <file category="other"  name="CMSIS/Driver/VIO/cmsis_vio.scvd" />
       </files>
     </api>
   </apis>
@@ -1136,10 +1150,6 @@ and 8-bit Java bytecodes in Jazelle state.
       <description>Cortex-M35P processor based device using Floating Point Unit</description>
       <require Dcore="Cortex-M35P" Dfpu="SP_FPU"/>
     </condition>
-    <condition id="CM55">
-      <description>Cortex-M55 processor based device</description>
-      <require Dcore="Cortex-M55"/>
-    </condition>
     <condition id="ARMv8MBL">
       <description>Armv8-M Baseline processor based device</description>
       <require Dcore="ARMV8MBL"/>
@@ -1186,6 +1196,21 @@ and 8-bit Java bytecodes in Jazelle state.
     <condition id="CM35P_DSP_SP">
       <description>CM35P, DSP, SP FPU</description>
       <require Dcore="Cortex-M35P" Ddsp="DSP" Dfpu="SP_FPU"/>
+    </condition>
+
+    <condition id="CM55_NOFPU_NOMVE">
+      <description>Cortex-M55, no FPU, no MVE</description>
+      <require Dcore="Cortex-M55" Dfpu="NO_FPU" Dmve="NO_MVE"/>
+    </condition>
+    <condition id="CM55_NOFPU_MVE">
+      <description>Cortex-M55, no FPU, MVE</description>
+      <accept  Dcore="Cortex-M55" Dfpu="NO_FPU" Dmve="MVE"/>
+      <accept  Dcore="Cortex-M55" Dfpu="NO_FPU" Dmve="FP_MVE"/>
+    </condition>
+    <condition id="CM55_FPU">
+      <description>Cortex-M55, FPU</description>
+      <accept  Dcore="Cortex-M55" Dfpu="SP_FPU"/>
+      <accept  Dcore="Cortex-M55" Dfpu="DP_FPU"/>
     </condition>
 
     <condition id="ARMv8MML_NODSP_NOFPU">
@@ -1509,14 +1534,29 @@ and 8-bit Java bytecodes in Jazelle state.
       <require Dendian="Little-endian"/>
     </condition>
 
-    <condition id="CM55_ARMCC">
-      <description>Cortex-M55 processor based device for the Arm Compiler</description>
-      <require condition="CM55"/>
+    <condition id="CM55_NOFPU_NOMVE_ARMCC">
+      <description>Cortex-M55 processor, no FPU, no MVE, Arm Compiler</description>
+      <require condition="CM55_NOFPU_NOMVE"/>
       <require Tcompiler="ARMCC"/>
     </condition>
-    <condition id="CM55_LE_ARMCC">
-      <description>Cortex-M55 processor based device in little endian mode for the Arm Compiler</description>
-      <require condition="CM55_ARMCC"/>
+    <condition id="CM55_NOFPU_MVE_ARMCC">
+      <description>Cortex-M55 processor, no FPU, MVE, Arm Compiler</description>
+      <require condition="CM55_NOFPU_MVE"/>
+      <require Tcompiler="ARMCC"/>
+    </condition>
+    <condition id="CM55_FPU_ARMCC">
+      <description>Cortex-M55 processor, FPU, Arm Compiler</description>
+      <require condition="CM55_FPU"/>
+      <require Tcompiler="ARMCC"/>
+    </condition>
+    <condition id="CM55_NOFPU_NOMVE_LE_ARMCC">
+      <description>Cortex-M55 processor, little endian, no FPU, no MVE, Arm Compiler</description>
+      <require condition="CM55_NOFPU_NOMVE_ARMCC"/>
+      <require Dendian="Little-endian"/>
+    </condition>
+    <condition id="CM55_FPU_LE_ARMCC">
+      <description>Cortex-M55 processor, little endian, FPU, Arm Compiler</description>
+      <require condition="CM55_FPU_ARMCC"/>
       <require Dendian="Little-endian"/>
     </condition>
 
@@ -1872,14 +1912,29 @@ and 8-bit Java bytecodes in Jazelle state.
       <require Dendian="Little-endian"/>
     </condition>
 
-    <condition id="CM55_GCC">
-      <description>Cortex-M55 processor based device for the GCC Compiler</description>
-      <require condition="CM55"/>
+    <condition id="CM55_NOFPU_NOMVE_GCC">
+      <description>Cortex-M55 processor, no FPU, no MVE, GCC Compiler</description>
+      <require condition="CM55_NOFPU_NOMVE"/>
       <require Tcompiler="GCC"/>
     </condition>
-    <condition id="CM55_LE_GCC">
-      <description>Cortex-M55 processor based device in little endian mode for the GCC Compiler</description>
-      <require condition="CM55_GCC"/>
+    <condition id="CM55_NOFPU_MVE_GCC">
+      <description>Cortex-M55 processor, no FPU, MVE, GCC Compiler</description>
+      <require condition="CM55_NOFPU_MVE"/>
+      <require Tcompiler="GCC"/>
+    </condition>
+    <condition id="CM55_FPU_GCC">
+      <description>Cortex-M55 processor, FPU, GCC Compiler</description>
+      <require condition="CM55_FPU"/>
+      <require Tcompiler="GCC"/>
+    </condition>
+    <condition id="CM55_NOFPU_NOMVE_LE_GCC">
+      <description>Cortex-M55 processor, little endian, no FPU, no MVE, GCC Compiler</description>
+      <require condition="CM55_NOFPU_NOMVE_GCC"/>
+      <require Dendian="Little-endian"/>
+    </condition>
+    <condition id="CM55_FPU_LE_GCC">
+      <description>Cortex-M55 processor, little endian, FPU, GCC Compiler</description>
+      <require condition="CM55_FPU_GCC"/>
       <require Dendian="Little-endian"/>
     </condition>
 
@@ -2245,14 +2300,29 @@ and 8-bit Java bytecodes in Jazelle state.
       <require Dendian="Little-endian"/>
     </condition>
 
-    <condition id="CM55_IAR">
-      <description>Cortex-M55 processor based device for the IAR Compiler</description>
-      <require condition="CM55"/>
+    <condition id="CM55_NOFPU_NOMVE_IAR">
+      <description>Cortex-M55 processor, no FPU, no MVE, IAR Compiler</description>
+      <require condition="CM55_NOFPU_NOMVE"/>
       <require Tcompiler="IAR"/>
     </condition>
-    <condition id="CM55_LE_IAR">
-      <description>Cortex-M55 processor based device in little endian mode for the IAR Compiler</description>
-      <require condition="CM55_IAR"/>
+    <condition id="CM55_NOFPU_MVE_IAR">
+      <description>Cortex-M55 processor, no FPU, MVE, IAR Compiler</description>
+      <require condition="CM55_NOFPU_MVE"/>
+      <require Tcompiler="IAR"/>
+    </condition>
+    <condition id="CM55_FPU_IAR">
+      <description>Cortex-M55 processor, FPU, IAR Compiler</description>
+      <require condition="CM55_FPU"/>
+      <require Tcompiler="IAR"/>
+    </condition>
+    <condition id="CM55_NOFPU_NOMVE_LE_IAR">
+      <description>Cortex-M55 processor, little endian, no FPU, no MVE, IAR Compiler</description>
+      <require condition="CM55_NOFPU_NOMVE_IAR"/>
+      <require Dendian="Little-endian"/>
+    </condition>
+    <condition id="CM55_FPU_LE_IAR">
+      <description>Cortex-M55 processor, little endian, FPU, IAR Compiler</description>
+      <require condition="CM55_FPU_IAR"/>
       <require Dendian="Little-endian"/>
     </condition>
 
@@ -2491,13 +2561,6 @@ and 8-bit Java bytecodes in Jazelle state.
       <require Cclass="Device" Cgroup="OS Tick"/>
       <require Cclass="Device" Cgroup="IRQ Controller"/>
     </condition>
-    <condition id="RTOS2 RTX5 Lib">
-      <description>Components required for RTOS2 RTX5 Library</description>
-      <require condition="ARMv6_7_8-M Device"/>
-      <require condition="ARMCC GCC IAR"/>
-      <require Cclass="CMSIS"  Cgroup="CORE"/>
-      <require Cclass="Device" Cgroup="Startup"/>
-    </condition>
     <condition id="RTOS2 RTX5 NS">
       <description>Components required for RTOS2 RTX5 in Non-Secure Domain</description>
       <require condition="ARMv8-M Device"/>
@@ -2548,13 +2611,13 @@ and 8-bit Java bytecodes in Jazelle state.
 
     <!-- CMSIS-Startup components -->
     <!-- Cortex-M0 -->
-    <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cversion="2.0.2" condition="ARMCM0 CMSIS">
+    <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cversion="2.0.3" condition="ARMCM0 CMSIS">
       <description>System and Startup for Generic Arm Cortex-M0 device</description>
       <files>
         <!-- include folder / device header file -->
         <file category="header"  name="Device/ARM/ARMCM0/Include/ARMCM0.h"/>
         <!-- startup / system file -->
-        <file category="sourceC"      name="Device/ARM/ARMCM0/Source/startup_ARMCM0.c"     version="2.0.2" attr="config"/>
+        <file category="sourceC"      name="Device/ARM/ARMCM0/Source/startup_ARMCM0.c"     version="2.0.3" attr="config"/>
         <file category="linkerScript" name="Device/ARM/ARMCM0/Source/ARM/ARMCM0_ac5.sct"   version="1.0.0" attr="config" condition="ARMCC5"/>
         <file category="linkerScript" name="Device/ARM/ARMCM0/Source/ARM/ARMCM0_ac6.sct"   version="1.0.0" attr="config" condition="ARMCC6"/>
         <file category="linkerScript" name="Device/ARM/ARMCM0/Source/GCC/gcc_arm.ld"       version="2.0.0" attr="config" condition="GCC"/>
@@ -2576,13 +2639,13 @@ and 8-bit Java bytecodes in Jazelle state.
     </component>
 
     <!-- Cortex-M0+ -->
-    <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cversion="2.0.2" condition="ARMCM0+ CMSIS">
+    <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cversion="2.0.3" condition="ARMCM0+ CMSIS">
       <description>System and Startup for Generic Arm Cortex-M0+ device</description>
       <files>
         <!-- include folder / device header file -->
         <file category="header"  name="Device/ARM/ARMCM0plus/Include/ARMCM0plus.h"/>
         <!-- startup / system file -->
-        <file category="sourceC"      name="Device/ARM/ARMCM0plus/Source/startup_ARMCM0plus.c"     version="2.0.2" attr="config"/>
+        <file category="sourceC"      name="Device/ARM/ARMCM0plus/Source/startup_ARMCM0plus.c"     version="2.0.3" attr="config"/>
         <file category="linkerScript" name="Device/ARM/ARMCM0plus/Source/ARM/ARMCM0plus_ac5.sct"   version="1.0.0" attr="config" condition="ARMCC5"/>
         <file category="linkerScript" name="Device/ARM/ARMCM0plus/Source/ARM/ARMCM0plus_ac6.sct"   version="1.0.0" attr="config" condition="ARMCC6"/>
         <file category="linkerScript" name="Device/ARM/ARMCM0plus/Source/GCC/gcc_arm.ld"           version="2.0.0" attr="config" condition="GCC"/>
@@ -2604,13 +2667,13 @@ and 8-bit Java bytecodes in Jazelle state.
     </component>
 
     <!-- Cortex-M1 -->
-    <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cversion="2.0.2" condition="ARMCM1 CMSIS">
+    <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cversion="2.0.3" condition="ARMCM1 CMSIS">
       <description>System and Startup for Generic Arm Cortex-M1 device</description>
       <files>
         <!-- include folder / device header file -->
         <file category="header"  name="Device/ARM/ARMCM1/Include/ARMCM1.h"/>
         <!-- startup / system file -->
-        <file category="sourceC"      name="Device/ARM/ARMCM1/Source/startup_ARMCM1.c"     version="2.0.2" attr="config"/>
+        <file category="sourceC"      name="Device/ARM/ARMCM1/Source/startup_ARMCM1.c"     version="2.0.3" attr="config"/>
         <file category="linkerScript" name="Device/ARM/ARMCM1/Source/ARM/ARMCM1_ac5.sct"   version="1.0.0" attr="config" condition="ARMCC5"/>
         <file category="linkerScript" name="Device/ARM/ARMCM1/Source/ARM/ARMCM1_ac6.sct"   version="1.0.0" attr="config" condition="ARMCC6"/>
         <file category="linkerScript" name="Device/ARM/ARMCM1/Source/GCC/gcc_arm.ld"       version="2.0.0" attr="config" condition="GCC"/>
@@ -2632,13 +2695,13 @@ and 8-bit Java bytecodes in Jazelle state.
     </component>
 
     <!-- Cortex-M3 -->
-    <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cversion="2.0.2" condition="ARMCM3 CMSIS">
+    <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cversion="2.0.3" condition="ARMCM3 CMSIS">
       <description>System and Startup for Generic Arm Cortex-M3 device</description>
       <files>
         <!-- include folder / device header file -->
         <file category="header"  name="Device/ARM/ARMCM3/Include/ARMCM3.h"/>
         <!-- startup / system file -->
-        <file category="sourceC"      name="Device/ARM/ARMCM3/Source/startup_ARMCM3.c"     version="2.0.2" attr="config"/>
+        <file category="sourceC"      name="Device/ARM/ARMCM3/Source/startup_ARMCM3.c"     version="2.0.3" attr="config"/>
         <file category="linkerScript" name="Device/ARM/ARMCM3/Source/ARM/ARMCM3_ac5.sct"   version="1.0.0" attr="config" condition="ARMCC5"/>
         <file category="linkerScript" name="Device/ARM/ARMCM3/Source/ARM/ARMCM3_ac6.sct"   version="1.0.0" attr="config" condition="ARMCC6"/>
         <file category="linkerScript" name="Device/ARM/ARMCM3/Source/GCC/gcc_arm.ld"       version="2.0.0" attr="config" condition="GCC"/>
@@ -2660,13 +2723,13 @@ and 8-bit Java bytecodes in Jazelle state.
     </component>
 
     <!-- Cortex-M4 -->
-    <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cversion="2.0.2" condition="ARMCM4 CMSIS">
+    <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cversion="2.0.3" condition="ARMCM4 CMSIS">
       <description>System and Startup for Generic Arm Cortex-M4 device</description>
       <files>
         <!-- include folder / device header file -->
         <file category="include" name="Device/ARM/ARMCM4/Include/"/>
         <!-- startup / system file -->
-        <file category="sourceC"      name="Device/ARM/ARMCM4/Source/startup_ARMCM4.c"     version="2.0.2" attr="config"/>
+        <file category="sourceC"      name="Device/ARM/ARMCM4/Source/startup_ARMCM4.c"     version="2.0.3" attr="config"/>
         <file category="linkerScript" name="Device/ARM/ARMCM4/Source/ARM/ARMCM4_ac5.sct"   version="1.0.0" attr="config" condition="ARMCC5"/>
         <file category="linkerScript" name="Device/ARM/ARMCM4/Source/ARM/ARMCM4_ac6.sct"   version="1.0.0" attr="config" condition="ARMCC6"/>
         <file category="linkerScript" name="Device/ARM/ARMCM4/Source/GCC/gcc_arm.ld"       version="2.0.0" attr="config" condition="GCC"/>
@@ -2688,13 +2751,13 @@ and 8-bit Java bytecodes in Jazelle state.
     </component>
 
     <!-- Cortex-M7 -->
-    <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cversion="2.0.2" condition="ARMCM7 CMSIS">
+    <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cversion="2.0.3" condition="ARMCM7 CMSIS">
       <description>System and Startup for Generic Arm Cortex-M7 device</description>
       <files>
         <!-- include folder / device header file -->
         <file category="include"  name="Device/ARM/ARMCM7/Include/"/>
         <!-- startup / system file -->
-        <file category="sourceC"      name="Device/ARM/ARMCM7/Source/startup_ARMCM7.c"     version="2.0.2" attr="config"/>
+        <file category="sourceC"      name="Device/ARM/ARMCM7/Source/startup_ARMCM7.c"     version="2.0.3" attr="config"/>
         <file category="linkerScript" name="Device/ARM/ARMCM7/Source/ARM/ARMCM7_ac5.sct"   version="1.0.0" attr="config" condition="ARMCC5"/>
         <file category="linkerScript" name="Device/ARM/ARMCM7/Source/ARM/ARMCM7_ac6.sct"   version="1.0.0" attr="config" condition="ARMCC6"/>
         <file category="linkerScript" name="Device/ARM/ARMCM7/Source/GCC/gcc_arm.ld"       version="2.0.0" attr="config" condition="GCC"/>
@@ -2716,13 +2779,13 @@ and 8-bit Java bytecodes in Jazelle state.
     </component>
 
     <!-- Cortex-M23 -->
-    <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cversion="2.0.2" condition="ARMCM23 CMSIS">
+    <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cversion="2.0.3" condition="ARMCM23 CMSIS">
       <description>System and Startup for Generic Arm Cortex-M23 device</description>
       <files>
         <!-- include folder / device header file -->
         <file category="include"  name="Device/ARM/ARMCM23/Include/"/>
         <!-- startup / system file -->
-        <file category="sourceC"      name="Device/ARM/ARMCM23/Source/startup_ARMCM23.c"    version="2.0.2" attr="config"/>
+        <file category="sourceC"      name="Device/ARM/ARMCM23/Source/startup_ARMCM23.c"    version="2.0.3" attr="config"/>
         <file category="linkerScript" name="Device/ARM/ARMCM23/Source/ARM/ARMCM23_ac6.sct"  version="1.0.0" attr="config" condition="ARMCC6"/>
         <file category="linkerScript" name="Device/ARM/ARMCM23/Source/GCC/gcc_arm.ld"       version="2.0.0" attr="config" condition="GCC"/>
         <file category="sourceC"      name="Device/ARM/ARMCM23/Source/system_ARMCM23.c"     version="1.0.1" attr="config"/>
@@ -2747,13 +2810,13 @@ and 8-bit Java bytecodes in Jazelle state.
     </component>
 
     <!-- Cortex-M33 -->
-    <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cversion="2.0.2" condition="ARMCM33 CMSIS">
+    <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cversion="2.0.3" condition="ARMCM33 CMSIS">
       <description>System and Startup for Generic Arm Cortex-M33 device</description>
       <files>
         <!-- include folder / device header file -->
         <file category="include"  name="Device/ARM/ARMCM33/Include/"/>
         <!-- startup / system file -->
-        <file category="sourceC"      name="Device/ARM/ARMCM33/Source/startup_ARMCM33.c"             version="2.0.2" attr="config"/>
+        <file category="sourceC"      name="Device/ARM/ARMCM33/Source/startup_ARMCM33.c"             version="2.0.3" attr="config"/>
         <file category="linkerScript" name="Device/ARM/ARMCM33/Source/ARM/ARMCM33_ac6.sct"           version="1.0.0" attr="config" condition="ARMCC6"/>
         <file category="linkerScript" name="Device/ARM/ARMCM33/Source/GCC/gcc_arm.ld"                version="2.0.0" attr="config" condition="GCC"/>
         <file category="sourceC"      name="Device/ARM/ARMCM33/Source/system_ARMCM33.c"              version="1.0.1" attr="config"/>
@@ -2778,13 +2841,13 @@ and 8-bit Java bytecodes in Jazelle state.
     </component>
 
     <!-- Cortex-M35P -->
-    <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cversion="2.0.2" condition="ARMCM35P CMSIS">
+    <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cversion="2.0.3" condition="ARMCM35P CMSIS">
       <description>System and Startup for Generic Arm Cortex-M35P device</description>
       <files>
         <!-- include folder / device header file -->
         <file category="include"  name="Device/ARM/ARMCM35P/Include/"/>
         <!-- startup / system file -->
-        <file category="sourceC"      name="Device/ARM/ARMCM35P/Source/startup_ARMCM35P.c"             version="2.0.2" attr="config"/>
+        <file category="sourceC"      name="Device/ARM/ARMCM35P/Source/startup_ARMCM35P.c"             version="2.0.3" attr="config"/>
         <file category="linkerScript" name="Device/ARM/ARMCM35P/Source/ARM/ARMCM35P_ac6.sct"           version="1.0.0" attr="config" condition="ARMCC6"/>
         <file category="linkerScript" name="Device/ARM/ARMCM35P/Source/GCC/gcc_arm.ld"                 version="2.0.0" attr="config" condition="GCC"/>
         <file category="sourceC"      name="Device/ARM/ARMCM35P/Source/system_ARMCM35P.c"              version="1.0.1" attr="config"/>
@@ -2809,16 +2872,16 @@ and 8-bit Java bytecodes in Jazelle state.
     </component>
 
     <!-- Cortex-M55 -->
-    <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cversion="2.1.0" condition="ARMCM55 CMSIS">
+    <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cversion="1.0.0" condition="ARMCM55 CMSIS">
       <description>System and Startup for Generic Cortex-M55 device</description>
       <files>
         <!-- include folder / device header file -->
         <file category="include"      name="Device/ARM/ARMCM55/Include/"/>
         <!-- startup / system file -->
-        <file category="sourceC"      name="Device/ARM/ARMCM55/Source/startup_ARMCM55.c"             version="2.0.2" attr="config"/>
+        <file category="sourceC"      name="Device/ARM/ARMCM55/Source/startup_ARMCM55.c"             version="1.0.0" attr="config"/>
         <file category="linkerScript" name="Device/ARM/ARMCM55/Source/ARM/ARMCM55_ac6.sct"           version="1.0.0" attr="config" condition="ARMCC6"/>
-        <file category="linkerScript" name="Device/ARM/ARMCM55/Source/GCC/gcc_arm.ld"                version="2.0.0" attr="config" condition="GCC"/>
-        <file category="sourceC"      name="Device/ARM/ARMCM55/Source/system_ARMCM55.c"              version="1.2.0" attr="config"/>
+        <file category="linkerScript" name="Device/ARM/ARMCM55/Source/GCC/gcc_arm.ld"                version="1.0.0" attr="config" condition="GCC"/>
+        <file category="sourceC"      name="Device/ARM/ARMCM55/Source/system_ARMCM55.c"              version="1.0.0" attr="config"/>
         <!-- SAU configuration -->
         <file category="header"       name="Device/ARM/ARMCM55/Include/Template/partition_ARMCM55.h" version="1.0.0" attr="config" condition="TZ Secure"/>
       </files>
@@ -2831,7 +2894,7 @@ and 8-bit Java bytecodes in Jazelle state.
         <!-- include folder / device header file -->
         <file category="header"  name="Device/ARM/ARMSC000/Include/ARMSC000.h"/>
         <!-- startup / system file -->
-        <file category="sourceC"      name="Device/ARM/ARMSC000/Source/startup_ARMSC000.c"     version="2.0.2" attr="config"/>
+        <file category="sourceC"      name="Device/ARM/ARMSC000/Source/startup_ARMSC000.c"     version="2.0.3" attr="config"/>
         <file category="linkerScript" name="Device/ARM/ARMSC000/Source/ARM/ARMSC000_ac5.sct"   version="1.0.0" attr="config" condition="ARMCC5"/>
         <file category="linkerScript" name="Device/ARM/ARMSC000/Source/ARM/ARMSC000_ac6.sct"   version="1.0.0" attr="config" condition="ARMCC6"/>
         <file category="linkerScript" name="Device/ARM/ARMSC000/Source/GCC/gcc_arm.ld"         version="2.0.0" attr="config" condition="GCC"/>
@@ -2859,7 +2922,7 @@ and 8-bit Java bytecodes in Jazelle state.
         <!-- include folder / device header file -->
         <file category="header"  name="Device/ARM/ARMSC300/Include/ARMSC300.h"/>
         <!-- startup / system file -->
-        <file category="sourceC"      name="Device/ARM/ARMSC300/Source/startup_ARMSC300.c"     version="2.0.2" attr="config"/>
+        <file category="sourceC"      name="Device/ARM/ARMSC300/Source/startup_ARMSC300.c"     version="2.0.3" attr="config"/>
         <file category="linkerScript" name="Device/ARM/ARMSC300/Source/ARM/ARMSC300_ac5.sct"   version="1.0.0" attr="config" condition="ARMCC5"/>
         <file category="linkerScript" name="Device/ARM/ARMSC300/Source/ARM/ARMSC300_ac6.sct"   version="1.0.0" attr="config" condition="ARMCC6"/>
         <file category="linkerScript" name="Device/ARM/ARMSC300/Source/GCC/gcc_arm.ld"         version="2.0.0" attr="config" condition="GCC"/>
@@ -2881,13 +2944,13 @@ and 8-bit Java bytecodes in Jazelle state.
     </component>
 
     <!-- ARMv8MBL -->
-    <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cversion="2.0.2" condition="ARMv8MBL CMSIS">
+    <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cversion="2.0.3" condition="ARMv8MBL CMSIS">
       <description>System and Startup for Generic Armv8-M Baseline device</description>
       <files>
         <!-- include folder / device header file -->
         <file category="include"  name="Device/ARM/ARMv8MBL/Include/"/>
         <!-- startup / system file -->
-        <file category="sourceC"      name="Device/ARM/ARMv8MBL/Source/startup_ARMv8MBL.c"            version="2.0.2" attr="config"/>
+        <file category="sourceC"      name="Device/ARM/ARMv8MBL/Source/startup_ARMv8MBL.c"            version="2.0.3" attr="config"/>
         <file category="linkerScript" name="Device/ARM/ARMv8MBL/Source/ARM/ARMv8MBL_ac6.sct"          version="1.0.0" attr="config" condition="ARMCC6"/>
         <file category="linkerScript" name="Device/ARM/ARMv8MBL/Source/GCC/gcc_arm.ld"                version="2.0.0" attr="config" condition="GCC"/>
         <file category="sourceC"      name="Device/ARM/ARMv8MBL/Source/system_ARMv8MBL.c"             version="1.0.1" attr="config"/>
@@ -2911,13 +2974,13 @@ and 8-bit Java bytecodes in Jazelle state.
     </component>
 
     <!-- ARMv8MML -->
-    <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cversion="2.0.2" condition="ARMv8MML CMSIS">
+    <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cversion="2.0.3" condition="ARMv8MML CMSIS">
       <description>System and Startup for Generic Armv8-M Mainline device</description>
       <files>
         <!-- include folder / device header file -->
         <file category="include"      name="Device/ARM/ARMv8MML/Include/"/>
         <!-- startup / system file -->
-        <file category="sourceC"      name="Device/ARM/ARMv8MML/Source/startup_ARMv8MML.c"             version="2.0.2" attr="config"/>
+        <file category="sourceC"      name="Device/ARM/ARMv8MML/Source/startup_ARMv8MML.c"             version="2.0.3" attr="config"/>
         <file category="linkerScript" name="Device/ARM/ARMv8MML/Source/ARM/ARMv8MML_ac6.sct"           version="1.0.0" attr="config" condition="ARMCC6"/>
         <file category="linkerScript" name="Device/ARM/ARMv8MML/Source/GCC/gcc_arm.ld"                 version="2.0.0" attr="config" condition="GCC"/>
         <file category="sourceC"      name="Device/ARM/ARMv8MML/Source/system_ARMv8MML.c"              version="1.0.1" attr="config"/>
@@ -2941,18 +3004,18 @@ and 8-bit Java bytecodes in Jazelle state.
     </component>
 
     <!-- ARMv81MML -->
-    <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cversion="2.1.0" condition="ARMv81MML CMSIS">
+    <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cversion="2.1.1" condition="ARMv81MML CMSIS">
       <description>System and Startup for Generic Armv8.1-M Mainline device</description>
       <files>
         <!-- include folder / device header file -->
         <file category="include"      name="Device/ARM/ARMv81MML/Include/"/>
         <!-- startup / system file -->
-        <file category="sourceC"      name="Device/ARM/ARMv81MML/Source/startup_ARMv81MML.c"             version="2.0.2" attr="config"/>
+        <file category="sourceC"      name="Device/ARM/ARMv81MML/Source/startup_ARMv81MML.c"             version="2.0.3" attr="config"/>
         <file category="linkerScript" name="Device/ARM/ARMv81MML/Source/ARM/ARMv81MML_ac6.sct"           version="1.0.0" attr="config" condition="ARMCC6"/>
-        <file category="linkerScript" name="Device/ARM/ARMv81MML/Source/GCC/gcc_arm.ld"                  version="2.0.0" attr="config" condition="GCC"/>
-        <file category="sourceC"      name="Device/ARM/ARMv81MML/Source/system_ARMv81MML.c"              version="1.2.0" attr="config"/>
+        <file category="linkerScript" name="Device/ARM/ARMv81MML/Source/GCC/gcc_arm.ld"                  version="2.0.1" attr="config" condition="GCC"/>
+        <file category="sourceC"      name="Device/ARM/ARMv81MML/Source/system_ARMv81MML.c"              version="1.2.1" attr="config"/>
         <!-- SAU configuration -->
-        <file category="header"       name="Device/ARM/ARMv81MML/Include/Template/partition_ARMv81MML.h" version="1.0.0" attr="config" condition="TZ Secure"/>
+        <file category="header"       name="Device/ARM/ARMv81MML/Include/Template/partition_ARMv81MML.h" version="1.0.1" attr="config" condition="TZ Secure"/>
       </files>
     </component>
 
@@ -3047,7 +3110,7 @@ and 8-bit Java bytecodes in Jazelle state.
     </component>
 
     <!-- CMSIS-DSP component -->
-    <component Cclass="CMSIS" Cgroup="DSP" Cvariant="Library" Cversion="1.7.0" isDefaultVariant="true" condition="CMSIS DSP">
+    <component Cclass="CMSIS" Cgroup="DSP" Cvariant="Library" Cversion="1.8.0" isDefaultVariant="true" condition="CMSIS DSP">
       <description>CMSIS-DSP Library for Cortex-M, SC000, and SC300</description>
       <files>
         <!-- CPU independent -->
@@ -3176,7 +3239,7 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="source"   name="CMSIS/DSP/Source/SupportFunctions/SupportFunctions.c"/>
         <file category="source"   name="CMSIS/DSP/Source/SVMFunctions/SVMFunctions.c"/>
         <file category="source"   name="CMSIS/DSP/Source/TransformFunctions/TransformFunctions.c"/>
-        
+
         <!-- Compute Library for Cortex-A -->
         <file category="header"   name="CMSIS/DSP/ComputeLibrary/Include/NEMath.h"        condition="ARMv7-A Device"/>
         <file category="source"   name="CMSIS/DSP/ComputeLibrary/Source/arm_cl_tables.c"  condition="ARMv7-A Device"/>
@@ -3184,7 +3247,7 @@ and 8-bit Java bytecodes in Jazelle state.
     </component>
 
     <!-- CMSIS-NN component -->
-    <component Cclass="CMSIS" Cgroup="NN Lib" Cversion="1.2.0" condition="CMSIS NN">
+    <component Cclass="CMSIS" Cgroup="NN Lib" Cversion="1.3.0" condition="CMSIS NN">
       <description>CMSIS-NN Neural Network Library</description>
       <files>
         <file category="doc" name="CMSIS/Documentation/NN/html/index.html"/>
@@ -3394,8 +3457,8 @@ and 8-bit Java bytecodes in Jazelle state.
     </component>
 
     <!-- CMSIS-RTOS2 Keil RTX5 component -->
-    <component Cclass="CMSIS" Cgroup="RTOS2" Csub="Keil RTX5" Cvariant="Library" Cversion="5.5.2" Capiversion="2.1.3" condition="RTOS2 RTX5 Lib">
-      <description>CMSIS-RTOS2 RTX5 for Cortex-M, SC000, C300 and Armv8-M (Library)</description>
+    <component Cclass="CMSIS" Cgroup="RTOS2" Csub="Keil RTX5" Cvariant="Library" Cversion="5.5.2" Capiversion="2.1.3" condition="RTOS2 RTX5">
+      <description>CMSIS-RTOS2 RTX5 for Cortex-M, SC000, SC300, ARMv8-M, ARMv8.1-M (Library)</description>
       <RTE_Components_h>
         <!-- the following content goes into file 'RTE_Components.h' -->
         #define RTE_CMSIS_RTOS2                 /* CMSIS-RTOS2 */
@@ -3429,60 +3492,63 @@ and 8-bit Java bytecodes in Jazelle state.
 
         <!-- RTX libraries (CPU and Compiler dependent) -->
         <!-- ARMCC -->
-        <file category="library" condition="CM0_LE_ARMCC"         name="CMSIS/RTOS2/RTX/Library/ARM/RTX_CM0.lib"    src="CMSIS/RTOS2/RTX/Source"/>
-        <file category="library" condition="CM1_LE_ARMCC"         name="CMSIS/RTOS2/RTX/Library/ARM/RTX_CM0.lib"    src="CMSIS/RTOS2/RTX/Source"/>
-        <file category="library" condition="CM3_LE_ARMCC"         name="CMSIS/RTOS2/RTX/Library/ARM/RTX_CM3.lib"    src="CMSIS/RTOS2/RTX/Source"/>
-        <file category="library" condition="CM4_LE_ARMCC"         name="CMSIS/RTOS2/RTX/Library/ARM/RTX_CM3.lib"    src="CMSIS/RTOS2/RTX/Source"/>
-        <file category="library" condition="CM4_FP_LE_ARMCC"      name="CMSIS/RTOS2/RTX/Library/ARM/RTX_CM4F.lib"   src="CMSIS/RTOS2/RTX/Source"/>
-        <file category="library" condition="CM7_LE_ARMCC"         name="CMSIS/RTOS2/RTX/Library/ARM/RTX_CM3.lib"    src="CMSIS/RTOS2/RTX/Source"/>
-        <file category="library" condition="CM7_FP_LE_ARMCC"      name="CMSIS/RTOS2/RTX/Library/ARM/RTX_CM4F.lib"   src="CMSIS/RTOS2/RTX/Source"/>
-        <file category="library" condition="CM23_LE_ARMCC"        name="CMSIS/RTOS2/RTX/Library/ARM/RTX_V8MB.lib"   src="CMSIS/RTOS2/RTX/Source"/>
-        <file category="library" condition="CM33_LE_ARMCC"        name="CMSIS/RTOS2/RTX/Library/ARM/RTX_V8MM.lib"   src="CMSIS/RTOS2/RTX/Source"/>
-        <file category="library" condition="CM33_FP_LE_ARMCC"     name="CMSIS/RTOS2/RTX/Library/ARM/RTX_V8MMF.lib"  src="CMSIS/RTOS2/RTX/Source"/>
-        <file category="library" condition="CM35P_LE_ARMCC"       name="CMSIS/RTOS2/RTX/Library/ARM/RTX_V8MM.lib"   src="CMSIS/RTOS2/RTX/Source"/>
-        <file category="library" condition="CM35P_FP_LE_ARMCC"    name="CMSIS/RTOS2/RTX/Library/ARM/RTX_V8MMF.lib"  src="CMSIS/RTOS2/RTX/Source"/>
-        <file category="library" condition="CM55_LE_ARMCC"        name="CMSIS/RTOS2/RTX/Library/ARM/RTX_V8MMF.lib"  src="CMSIS/RTOS2/RTX/Source"/>
-        <file category="library" condition="ARMv8MBL_LE_ARMCC"    name="CMSIS/RTOS2/RTX/Library/ARM/RTX_V8MB.lib"   src="CMSIS/RTOS2/RTX/Source"/>
-        <file category="library" condition="ARMv8MML_LE_ARMCC"    name="CMSIS/RTOS2/RTX/Library/ARM/RTX_V8MM.lib"   src="CMSIS/RTOS2/RTX/Source"/>
-        <file category="library" condition="ARMv8MML_FP_LE_ARMCC" name="CMSIS/RTOS2/RTX/Library/ARM/RTX_V8MMF.lib"  src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="CM0_LE_ARMCC"              name="CMSIS/RTOS2/RTX/Library/ARM/RTX_CM0.lib"    src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="CM1_LE_ARMCC"              name="CMSIS/RTOS2/RTX/Library/ARM/RTX_CM0.lib"    src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="CM3_LE_ARMCC"              name="CMSIS/RTOS2/RTX/Library/ARM/RTX_CM3.lib"    src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="CM4_LE_ARMCC"              name="CMSIS/RTOS2/RTX/Library/ARM/RTX_CM3.lib"    src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="CM4_FP_LE_ARMCC"           name="CMSIS/RTOS2/RTX/Library/ARM/RTX_CM4F.lib"   src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="CM7_LE_ARMCC"              name="CMSIS/RTOS2/RTX/Library/ARM/RTX_CM3.lib"    src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="CM7_FP_LE_ARMCC"           name="CMSIS/RTOS2/RTX/Library/ARM/RTX_CM4F.lib"   src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="CM23_LE_ARMCC"             name="CMSIS/RTOS2/RTX/Library/ARM/RTX_V8MB.lib"   src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="CM33_LE_ARMCC"             name="CMSIS/RTOS2/RTX/Library/ARM/RTX_V8MM.lib"   src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="CM33_FP_LE_ARMCC"          name="CMSIS/RTOS2/RTX/Library/ARM/RTX_V8MMF.lib"  src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="CM35P_LE_ARMCC"            name="CMSIS/RTOS2/RTX/Library/ARM/RTX_V8MM.lib"   src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="CM35P_FP_LE_ARMCC"         name="CMSIS/RTOS2/RTX/Library/ARM/RTX_V8MMF.lib"  src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="CM55_NOFPU_NOMVE_LE_ARMCC" name="CMSIS/RTOS2/RTX/Library/ARM/RTX_V8MM.lib"   src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="CM55_FPU_LE_ARMCC"         name="CMSIS/RTOS2/RTX/Library/ARM/RTX_V8MMF.lib"  src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="ARMv8MBL_LE_ARMCC"         name="CMSIS/RTOS2/RTX/Library/ARM/RTX_V8MB.lib"   src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="ARMv8MML_LE_ARMCC"         name="CMSIS/RTOS2/RTX/Library/ARM/RTX_V8MM.lib"   src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="ARMv8MML_FP_LE_ARMCC"      name="CMSIS/RTOS2/RTX/Library/ARM/RTX_V8MMF.lib"  src="CMSIS/RTOS2/RTX/Source"/>
         <!-- GCC -->
-        <file category="library" condition="CM0_LE_GCC"           name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_CM0.a"   src="CMSIS/RTOS2/RTX/Source"/>
-        <file category="library" condition="CM1_LE_GCC"           name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_CM0.a"   src="CMSIS/RTOS2/RTX/Source"/>
-        <file category="library" condition="CM3_LE_GCC"           name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_CM3.a"   src="CMSIS/RTOS2/RTX/Source"/>
-        <file category="library" condition="CM4_LE_GCC"           name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_CM3.a"   src="CMSIS/RTOS2/RTX/Source"/>
-        <file category="library" condition="CM4_FP_LE_GCC"        name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_CM4F.a"  src="CMSIS/RTOS2/RTX/Source"/>
-        <file category="library" condition="CM7_LE_GCC"           name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_CM3.a"   src="CMSIS/RTOS2/RTX/Source"/>
-        <file category="library" condition="CM7_FP_LE_GCC"        name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_CM4F.a"  src="CMSIS/RTOS2/RTX/Source"/>
-        <file category="library" condition="CM23_LE_GCC"          name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_V8MB.a"  src="CMSIS/RTOS2/RTX/Source"/>
-        <file category="library" condition="CM33_LE_GCC"          name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_V8MM.a"  src="CMSIS/RTOS2/RTX/Source"/>
-        <file category="library" condition="CM33_FP_LE_GCC"       name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_V8MMF.a" src="CMSIS/RTOS2/RTX/Source"/>
-        <file category="library" condition="CM35P_LE_GCC"         name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_V8MM.a"  src="CMSIS/RTOS2/RTX/Source"/>
-        <file category="library" condition="CM35P_FP_LE_GCC"      name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_V8MMF.a" src="CMSIS/RTOS2/RTX/Source"/>
-        <file category="library" condition="CM55_LE_GCC"          name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_V8MMF.a" src="CMSIS/RTOS2/RTX/Source"/>
-        <file category="library" condition="ARMv8MBL_LE_GCC"      name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_V8MB.a"  src="CMSIS/RTOS2/RTX/Source"/>
-        <file category="library" condition="ARMv8MML_LE_GCC"      name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_V8MM.a"  src="CMSIS/RTOS2/RTX/Source"/>
-        <file category="library" condition="ARMv8MML_FP_LE_GCC"   name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_V8MMF.a" src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="CM0_LE_GCC"                name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_CM0.a"   src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="CM1_LE_GCC"                name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_CM0.a"   src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="CM3_LE_GCC"                name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_CM3.a"   src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="CM4_LE_GCC"                name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_CM3.a"   src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="CM4_FP_LE_GCC"             name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_CM4F.a"  src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="CM7_LE_GCC"                name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_CM3.a"   src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="CM7_FP_LE_GCC"             name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_CM4F.a"  src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="CM23_LE_GCC"               name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_V8MB.a"  src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="CM33_LE_GCC"               name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_V8MM.a"  src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="CM33_FP_LE_GCC"            name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_V8MMF.a" src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="CM35P_LE_GCC"              name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_V8MM.a"  src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="CM35P_FP_LE_GCC"           name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_V8MMF.a" src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="CM55_NOFPU_NOMVE_LE_GCC"   name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_V8MM.a"  src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="CM55_FPU_LE_GCC"           name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_V8MMF.a" src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="ARMv8MBL_LE_GCC"           name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_V8MB.a"  src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="ARMv8MML_LE_GCC"           name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_V8MM.a"  src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="ARMv8MML_FP_LE_GCC"        name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_V8MMF.a" src="CMSIS/RTOS2/RTX/Source"/>
         <!-- IAR -->
-        <file category="library" condition="CM0_LE_IAR"           name="CMSIS/RTOS2/RTX/Library/IAR/RTX_CM0.a"      src="CMSIS/RTOS2/RTX/Source"/>
-        <file category="library" condition="CM1_LE_IAR"           name="CMSIS/RTOS2/RTX/Library/IAR/RTX_CM0.a"      src="CMSIS/RTOS2/RTX/Source"/>
-        <file category="library" condition="CM3_LE_IAR"           name="CMSIS/RTOS2/RTX/Library/IAR/RTX_CM3.a"      src="CMSIS/RTOS2/RTX/Source"/>
-        <file category="library" condition="CM4_LE_IAR"           name="CMSIS/RTOS2/RTX/Library/IAR/RTX_CM3.a"      src="CMSIS/RTOS2/RTX/Source"/>
-        <file category="library" condition="CM4_FP_LE_IAR"        name="CMSIS/RTOS2/RTX/Library/IAR/RTX_CM4F.a"     src="CMSIS/RTOS2/RTX/Source"/>
-        <file category="library" condition="CM7_LE_IAR"           name="CMSIS/RTOS2/RTX/Library/IAR/RTX_CM3.a"      src="CMSIS/RTOS2/RTX/Source"/>
-        <file category="library" condition="CM7_FP_LE_IAR"        name="CMSIS/RTOS2/RTX/Library/IAR/RTX_CM4F.a"     src="CMSIS/RTOS2/RTX/Source"/>
-        <file category="library" condition="CM23_LE_IAR"          name="CMSIS/RTOS2/RTX/Library/IAR/RTX_V8MB.a"     src="CMSIS/RTOS2/RTX/Source"/>
-        <file category="library" condition="CM33_LE_IAR"          name="CMSIS/RTOS2/RTX/Library/IAR/RTX_V8MM.a"     src="CMSIS/RTOS2/RTX/Source"/>
-        <file category="library" condition="CM33_FP_LE_IAR"       name="CMSIS/RTOS2/RTX/Library/IAR/RTX_V8MMF.a"    src="CMSIS/RTOS2/RTX/Source"/>
-        <file category="library" condition="CM35P_LE_IAR"         name="CMSIS/RTOS2/RTX/Library/IAR/RTX_V8MM.a"     src="CMSIS/RTOS2/RTX/Source"/>
-        <file category="library" condition="CM35P_FP_LE_IAR"      name="CMSIS/RTOS2/RTX/Library/IAR/RTX_V8MMF.a"    src="CMSIS/RTOS2/RTX/Source"/>
-        <file category="library" condition="CM55_LE_IAR"          name="CMSIS/RTOS2/RTX/Library/IAR/RTX_V8MMF.a"    src="CMSIS/RTOS2/RTX/Source"/>
-        <file category="library" condition="ARMv8MBL_LE_IAR"      name="CMSIS/RTOS2/RTX/Library/IAR/RTX_V8MB.a"     src="CMSIS/RTOS2/RTX/Source"/>
-        <file category="library" condition="ARMv8MML_LE_IAR"      name="CMSIS/RTOS2/RTX/Library/IAR/RTX_V8MM.a"     src="CMSIS/RTOS2/RTX/Source"/>
-        <file category="library" condition="ARMv8MML_FP_LE_IAR"   name="CMSIS/RTOS2/RTX/Library/IAR/RTX_V8MMF.a"    src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="CM0_LE_IAR"                name="CMSIS/RTOS2/RTX/Library/IAR/RTX_CM0.a"      src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="CM1_LE_IAR"                name="CMSIS/RTOS2/RTX/Library/IAR/RTX_CM0.a"      src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="CM3_LE_IAR"                name="CMSIS/RTOS2/RTX/Library/IAR/RTX_CM3.a"      src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="CM4_LE_IAR"                name="CMSIS/RTOS2/RTX/Library/IAR/RTX_CM3.a"      src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="CM4_FP_LE_IAR"             name="CMSIS/RTOS2/RTX/Library/IAR/RTX_CM4F.a"     src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="CM7_LE_IAR"                name="CMSIS/RTOS2/RTX/Library/IAR/RTX_CM3.a"      src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="CM7_FP_LE_IAR"             name="CMSIS/RTOS2/RTX/Library/IAR/RTX_CM4F.a"     src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="CM23_LE_IAR"               name="CMSIS/RTOS2/RTX/Library/IAR/RTX_V8MB.a"     src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="CM33_LE_IAR"               name="CMSIS/RTOS2/RTX/Library/IAR/RTX_V8MM.a"     src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="CM33_FP_LE_IAR"            name="CMSIS/RTOS2/RTX/Library/IAR/RTX_V8MMF.a"    src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="CM35P_LE_IAR"              name="CMSIS/RTOS2/RTX/Library/IAR/RTX_V8MM.a"     src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="CM35P_FP_LE_IAR"           name="CMSIS/RTOS2/RTX/Library/IAR/RTX_V8MMF.a"    src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="CM55_NOFPU_NOMVE_LE_IAR"   name="CMSIS/RTOS2/RTX/Library/IAR/RTX_V8MM.a"     src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="CM55_FPU_LE_IAR"           name="CMSIS/RTOS2/RTX/Library/IAR/RTX_V8MMF.a"    src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="ARMv8MBL_LE_IAR"           name="CMSIS/RTOS2/RTX/Library/IAR/RTX_V8MB.a"     src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="ARMv8MML_LE_IAR"           name="CMSIS/RTOS2/RTX/Library/IAR/RTX_V8MM.a"     src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="ARMv8MML_FP_LE_IAR"        name="CMSIS/RTOS2/RTX/Library/IAR/RTX_V8MMF.a"    src="CMSIS/RTOS2/RTX/Source"/>
       </files>
     </component>
     <component Cclass="CMSIS" Cgroup="RTOS2" Csub="Keil RTX5" Cvariant="Library_NS" Cversion="5.5.2" Capiversion="2.1.3" condition="RTOS2 RTX5 NS">
-      <description>CMSIS-RTOS2 RTX5 for Armv8-M Non-Secure Domain (Library)</description>
+      <description>CMSIS-RTOS2 RTX5 for Armv8-M/Armv8.1-M Non-Secure Domain (Library)</description>
       <RTE_Components_h>
         <!-- the following content goes into file 'RTE_Components.h' -->
         #define RTE_CMSIS_RTOS2                 /* CMSIS-RTOS2 */
@@ -3517,39 +3583,42 @@ and 8-bit Java bytecodes in Jazelle state.
 
         <!-- RTX libraries (CPU and Compiler dependent) -->
         <!-- ARMCC -->
-        <file category="library" condition="CM23_LE_ARMCC"        name="CMSIS/RTOS2/RTX/Library/ARM/RTX_V8MBN.lib"   src="CMSIS/RTOS2/RTX/Source"/>
-        <file category="library" condition="CM33_LE_ARMCC"        name="CMSIS/RTOS2/RTX/Library/ARM/RTX_V8MMN.lib"   src="CMSIS/RTOS2/RTX/Source"/>
-        <file category="library" condition="CM33_FP_LE_ARMCC"     name="CMSIS/RTOS2/RTX/Library/ARM/RTX_V8MMFN.lib"  src="CMSIS/RTOS2/RTX/Source"/>
-        <file category="library" condition="CM35P_LE_ARMCC"       name="CMSIS/RTOS2/RTX/Library/ARM/RTX_V8MMN.lib"   src="CMSIS/RTOS2/RTX/Source"/>
-        <file category="library" condition="CM35P_FP_LE_ARMCC"    name="CMSIS/RTOS2/RTX/Library/ARM/RTX_V8MMFN.lib"  src="CMSIS/RTOS2/RTX/Source"/>
-        <file category="library" condition="CM55_LE_ARMCC"        name="CMSIS/RTOS2/RTX/Library/ARM/RTX_V8MMFN.lib"  src="CMSIS/RTOS2/RTX/Source"/>
-        <file category="library" condition="ARMv8MBL_LE_ARMCC"    name="CMSIS/RTOS2/RTX/Library/ARM/RTX_V8MBN.lib"   src="CMSIS/RTOS2/RTX/Source"/>
-        <file category="library" condition="ARMv8MML_LE_ARMCC"    name="CMSIS/RTOS2/RTX/Library/ARM/RTX_V8MMN.lib"   src="CMSIS/RTOS2/RTX/Source"/>
-        <file category="library" condition="ARMv8MML_FP_LE_ARMCC" name="CMSIS/RTOS2/RTX/Library/ARM/RTX_V8MMFN.lib"  src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="CM23_LE_ARMCC"             name="CMSIS/RTOS2/RTX/Library/ARM/RTX_V8MBN.lib"   src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="CM33_LE_ARMCC"             name="CMSIS/RTOS2/RTX/Library/ARM/RTX_V8MMN.lib"   src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="CM33_FP_LE_ARMCC"          name="CMSIS/RTOS2/RTX/Library/ARM/RTX_V8MMFN.lib"  src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="CM35P_LE_ARMCC"            name="CMSIS/RTOS2/RTX/Library/ARM/RTX_V8MMN.lib"   src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="CM35P_FP_LE_ARMCC"         name="CMSIS/RTOS2/RTX/Library/ARM/RTX_V8MMFN.lib"  src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="CM55_NOFPU_NOMVE_LE_ARMCC" name="CMSIS/RTOS2/RTX/Library/ARM/RTX_V8MMN.lib"   src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="CM55_FPU_LE_ARMCC"         name="CMSIS/RTOS2/RTX/Library/ARM/RTX_V8MMFN.lib"  src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="ARMv8MBL_LE_ARMCC"         name="CMSIS/RTOS2/RTX/Library/ARM/RTX_V8MBN.lib"   src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="ARMv8MML_LE_ARMCC"         name="CMSIS/RTOS2/RTX/Library/ARM/RTX_V8MMN.lib"   src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="ARMv8MML_FP_LE_ARMCC"      name="CMSIS/RTOS2/RTX/Library/ARM/RTX_V8MMFN.lib"  src="CMSIS/RTOS2/RTX/Source"/>
         <!-- GCC -->
-        <file category="library" condition="CM23_LE_GCC"          name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_V8MBN.a"  src="CMSIS/RTOS2/RTX/Source"/>
-        <file category="library" condition="CM33_LE_GCC"          name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_V8MMN.a"  src="CMSIS/RTOS2/RTX/Source"/>
-        <file category="library" condition="CM33_FP_LE_GCC"       name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_V8MMFN.a" src="CMSIS/RTOS2/RTX/Source"/>
-        <file category="library" condition="CM35P_LE_GCC"         name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_V8MMN.a"  src="CMSIS/RTOS2/RTX/Source"/>
-        <file category="library" condition="CM35P_FP_LE_GCC"      name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_V8MMFN.a" src="CMSIS/RTOS2/RTX/Source"/>
-        <file category="library" condition="CM55_LE_GCC"          name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_V8MMFN.a" src="CMSIS/RTOS2/RTX/Source"/>
-        <file category="library" condition="ARMv8MBL_LE_GCC"      name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_V8MBN.a"  src="CMSIS/RTOS2/RTX/Source"/>
-        <file category="library" condition="ARMv8MML_LE_GCC"      name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_V8MMN.a"  src="CMSIS/RTOS2/RTX/Source"/>
-        <file category="library" condition="ARMv8MML_FP_LE_GCC"   name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_V8MMFN.a" src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="CM23_LE_GCC"               name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_V8MBN.a"  src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="CM33_LE_GCC"               name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_V8MMN.a"  src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="CM33_FP_LE_GCC"            name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_V8MMFN.a" src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="CM35P_LE_GCC"              name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_V8MMN.a"  src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="CM35P_FP_LE_GCC"           name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_V8MMFN.a" src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="CM55_NOFPU_NOMVE_LE_GCC"   name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_V8MMN.a"  src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="CM55_FPU_LE_GCC"           name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_V8MMFN.a" src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="ARMv8MBL_LE_GCC"           name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_V8MBN.a"  src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="ARMv8MML_LE_GCC"           name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_V8MMN.a"  src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="ARMv8MML_FP_LE_GCC"        name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_V8MMFN.a" src="CMSIS/RTOS2/RTX/Source"/>
         <!-- IAR -->
-        <file category="library" condition="CM23_LE_IAR"          name="CMSIS/RTOS2/RTX/Library/IAR/RTX_V8MBN.a"     src="CMSIS/RTOS2/RTX/Source"/>
-        <file category="library" condition="CM33_LE_IAR"          name="CMSIS/RTOS2/RTX/Library/IAR/RTX_V8MMN.a"     src="CMSIS/RTOS2/RTX/Source"/>
-        <file category="library" condition="CM33_FP_LE_IAR"       name="CMSIS/RTOS2/RTX/Library/IAR/RTX_V8MMFN.a"    src="CMSIS/RTOS2/RTX/Source"/>
-        <file category="library" condition="CM35P_LE_IAR"         name="CMSIS/RTOS2/RTX/Library/IAR/RTX_V8MMN.a"     src="CMSIS/RTOS2/RTX/Source"/>
-        <file category="library" condition="CM35P_FP_LE_IAR"      name="CMSIS/RTOS2/RTX/Library/IAR/RTX_V8MMFN.a"    src="CMSIS/RTOS2/RTX/Source"/>
-        <file category="library" condition="CM55_LE_IAR"          name="CMSIS/RTOS2/RTX/Library/IAR/RTX_V8MMFN.a"    src="CMSIS/RTOS2/RTX/Source"/>
-        <file category="library" condition="ARMv8MBL_LE_IAR"      name="CMSIS/RTOS2/RTX/Library/IAR/RTX_V8MBN.a"     src="CMSIS/RTOS2/RTX/Source"/>
-        <file category="library" condition="ARMv8MML_LE_IAR"      name="CMSIS/RTOS2/RTX/Library/IAR/RTX_V8MMN.a"     src="CMSIS/RTOS2/RTX/Source"/>
-        <file category="library" condition="ARMv8MML_FP_LE_IAR"   name="CMSIS/RTOS2/RTX/Library/IAR/RTX_V8MMFN.a"    src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="CM23_LE_IAR"               name="CMSIS/RTOS2/RTX/Library/IAR/RTX_V8MBN.a"     src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="CM33_LE_IAR"               name="CMSIS/RTOS2/RTX/Library/IAR/RTX_V8MMN.a"     src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="CM33_FP_LE_IAR"            name="CMSIS/RTOS2/RTX/Library/IAR/RTX_V8MMFN.a"    src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="CM35P_LE_IAR"              name="CMSIS/RTOS2/RTX/Library/IAR/RTX_V8MMN.a"     src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="CM35P_FP_LE_IAR"           name="CMSIS/RTOS2/RTX/Library/IAR/RTX_V8MMFN.a"    src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="CM55_NOFPU_NOMVE_LE_IAR"   name="CMSIS/RTOS2/RTX/Library/IAR/RTX_V8MMN.a"     src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="CM55_FPU_LE_IAR"           name="CMSIS/RTOS2/RTX/Library/IAR/RTX_V8MMFN.a"    src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="ARMv8MBL_LE_IAR"           name="CMSIS/RTOS2/RTX/Library/IAR/RTX_V8MBN.a"     src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="ARMv8MML_LE_IAR"           name="CMSIS/RTOS2/RTX/Library/IAR/RTX_V8MMN.a"     src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="ARMv8MML_FP_LE_IAR"        name="CMSIS/RTOS2/RTX/Library/IAR/RTX_V8MMFN.a"    src="CMSIS/RTOS2/RTX/Source"/>
       </files>
     </component>
     <component Cclass="CMSIS" Cgroup="RTOS2" Csub="Keil RTX5" Cvariant="Source" Cversion="5.5.2" Capiversion="2.1.3" condition="RTOS2 RTX5">
-      <description>CMSIS-RTOS2 RTX5 for Cortex-M, SC000, C300 and Armv8-M (Source)</description>
+      <description>CMSIS-RTOS2 RTX5 for Cortex-M, SC000, SC300, ARMv8-M, ARMv8.1-M (Source)</description>
       <RTE_Components_h>
         <!-- the following content goes into file 'RTE_Components.h' -->
         #define RTE_CMSIS_RTOS2                 /* CMSIS-RTOS2 */
@@ -3595,56 +3664,62 @@ and 8-bit Java bytecodes in Jazelle state.
         <!-- RTX sources (library configuration) -->
         <file category="source" name="CMSIS/RTOS2/RTX/Source/rtx_lib.c"/>
         <!-- RTX sources (handlers ARMCC) -->
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/ARM/irq_cm0.s"         condition="CM0_ARMCC"/>
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/ARM/irq_cm0.s"         condition="CM1_ARMCC"/>
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/ARM/irq_cm3.s"         condition="CM3_ARMCC"/>
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/ARM/irq_cm3.s"         condition="CM4_ARMCC"/>
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/ARM/irq_cm4f.s"        condition="CM4_FP_ARMCC"/>
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/ARM/irq_cm3.s"         condition="CM7_ARMCC"/>
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/ARM/irq_cm4f.s"        condition="CM7_FP_ARMCC"/>
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/ARM/irq_armv8mbl.s"    condition="CM23_ARMCC"/>
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/ARM/irq_armv8mml.s"    condition="CM33_ARMCC"/>
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/ARM/irq_armv8mml.s"    condition="CM33_FP_ARMCC"/>
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/ARM/irq_armv8mml.s"    condition="CM35P_ARMCC"/>
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/ARM/irq_armv8mml.s"    condition="CM35P_FP_ARMCC"/>
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv8mml_fp.S" condition="CM55_ARMCC"/>
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/ARM/irq_armv8mbl.s"    condition="ARMv8MBL_ARMCC"/>
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/ARM/irq_armv8mml.s"    condition="ARMv8MML_ARMCC"/>
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/ARM/irq_armv8mml.s"    condition="ARMv8MML_FP_ARMCC"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/ARM/irq_cm0.s"      condition="CM0_ARMCC"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/ARM/irq_cm0.s"      condition="CM1_ARMCC"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/ARM/irq_cm3.s"      condition="CM3_ARMCC"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/ARM/irq_cm3.s"      condition="CM4_ARMCC"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/ARM/irq_cm4f.s"     condition="CM4_FP_ARMCC"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/ARM/irq_cm3.s"      condition="CM7_ARMCC"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/ARM/irq_cm4f.s"     condition="CM7_FP_ARMCC"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/ARM/irq_armv8mbl.s" condition="CM23_ARMCC"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/ARM/irq_armv8mml.s" condition="CM33_ARMCC"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/ARM/irq_armv8mml.s" condition="CM33_FP_ARMCC"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/ARM/irq_armv8mml.s" condition="CM35P_ARMCC"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/ARM/irq_armv8mml.s" condition="CM35P_FP_ARMCC"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv8mml.S" condition="CM55_NOFPU_NOMVE_ARMCC"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv8mml.S" condition="CM55_NOFPU_MVE_ARMCC"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv8mml.S" condition="CM55_FPU_ARMCC"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/ARM/irq_armv8mbl.s" condition="ARMv8MBL_ARMCC"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/ARM/irq_armv8mml.s" condition="ARMv8MML_ARMCC"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/ARM/irq_armv8mml.s" condition="ARMv8MML_FP_ARMCC"/>
         <!-- RTX sources (handlers GCC) -->
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_cm0.S"         condition="CM0_GCC"/>
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_cm0.S"         condition="CM1_GCC"/>
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_cm3.S"         condition="CM3_GCC"/>
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_cm3.S"         condition="CM4_GCC"/>
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_cm4f.S"        condition="CM4_FP_GCC"/>
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_cm3.S"         condition="CM7_GCC"/>
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_cm4f.S"        condition="CM7_FP_GCC"/>
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv8mbl.S"    condition="CM23_GCC"/>
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv8mml.S"    condition="CM33_GCC"/>
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv8mml_fp.S" condition="CM33_FP_GCC"/>
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv8mml.S"    condition="CM35P_GCC"/>
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv8mml_fp.S" condition="CM35P_FP_GCC"/>
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv8mml_fp.S" condition="CM55_GCC"/>
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv8mbl.S"    condition="ARMv8MBL_GCC"/>
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv8mml.S"    condition="ARMv8MML_GCC"/>
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv8mml_fp.S" condition="ARMv8MML_FP_GCC"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_cm0.S"      condition="CM0_GCC"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_cm0.S"      condition="CM1_GCC"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_cm3.S"      condition="CM3_GCC"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_cm3.S"      condition="CM4_GCC"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_cm4f.S"     condition="CM4_FP_GCC"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_cm3.S"      condition="CM7_GCC"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_cm4f.S"     condition="CM7_FP_GCC"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv8mbl.S" condition="CM23_GCC"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv8mml.S" condition="CM33_GCC"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv8mml.S" condition="CM33_FP_GCC"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv8mml.S" condition="CM35P_GCC"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv8mml.S" condition="CM35P_FP_GCC"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv8mml.S" condition="CM55_NOFPU_NOMVE_GCC"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv8mml.S" condition="CM55_NOFPU_MVE_GCC"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv8mml.S" condition="CM55_FPU_GCC"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv8mbl.S" condition="ARMv8MBL_GCC"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv8mml.S" condition="ARMv8MML_GCC"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv8mml.S" condition="ARMv8MML_FP_GCC"/>
         <!-- RTX sources (handlers IAR) -->
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_cm0.s"         condition="CM0_IAR"/>
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_cm0.s"         condition="CM1_IAR"/>
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_cm3.s"         condition="CM3_IAR"/>
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_cm3.s"         condition="CM4_IAR"/>
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_cm4f.s"        condition="CM4_FP_IAR"/>
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_cm3.s"         condition="CM7_IAR"/>
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_cm4f.s"        condition="CM7_FP_IAR"/>
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_armv8mbl.s"    condition="CM23_IAR"/>
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_armv8mml.s"    condition="CM33_IAR"/>
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_armv8mml.s"    condition="CM33_FP_IAR"/>
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_armv8mml.s"    condition="CM35P_IAR"/>
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_armv8mml.s"    condition="CM35P_FP_IAR"/>
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_armv8mml.s"    condition="CM55_IAR"/>
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_armv8mbl.s"    condition="ARMv8MBL_IAR"/>
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_armv8mml.s"    condition="ARMv8MML_IAR"/>
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_armv8mml.s"    condition="ARMv8MML_FP_IAR"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_cm0.s"      condition="CM0_IAR"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_cm0.s"      condition="CM1_IAR"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_cm3.s"      condition="CM3_IAR"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_cm3.s"      condition="CM4_IAR"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_cm4f.s"     condition="CM4_FP_IAR"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_cm3.s"      condition="CM7_IAR"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_cm4f.s"     condition="CM7_FP_IAR"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_armv8mbl.s" condition="CM23_IAR"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_armv8mml.s" condition="CM33_IAR"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_armv8mml.s" condition="CM33_FP_IAR"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_armv8mml.s" condition="CM35P_IAR"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_armv8mml.s" condition="CM35P_FP_IAR"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_armv8mml.s" condition="CM55_NOFPU_NOMVE_IAR"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_armv8mml.s" condition="CM55_NOFPU_MVE_IAR"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_armv8mml.s" condition="CM55_FPU_IAR"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_armv8mbl.s" condition="ARMv8MBL_IAR"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_armv8mml.s" condition="ARMv8MML_IAR"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_armv8mml.s" condition="ARMv8MML_FP_IAR"/>
         <!-- OS Tick (SysTick) -->
         <file category="source" name="CMSIS/RTOS2/Source/os_systick.c"/>
       </files>
@@ -3707,7 +3782,7 @@ and 8-bit Java bytecodes in Jazelle state.
       </files>
     </component>
     <component Cclass="CMSIS" Cgroup="RTOS2" Csub="Keil RTX5" Cvariant="Source_NS" Cversion="5.5.2" Capiversion="2.1.3" condition="RTOS2 RTX5 NS">
-      <description>CMSIS-RTOS2 RTX5 for Armv8-M Non-Secure Domain (Source)</description>
+      <description>CMSIS-RTOS2 RTX5 for Armv8-M/Armv8.1-M Non-Secure Domain (Source)</description>
       <RTE_Components_h>
         <!-- the following content goes into file 'RTE_Components.h' -->
         #define RTE_CMSIS_RTOS2                 /* CMSIS-RTOS2 */
@@ -3754,35 +3829,41 @@ and 8-bit Java bytecodes in Jazelle state.
         <!-- RTX sources (library configuration) -->
         <file category="source" name="CMSIS/RTOS2/RTX/Source/rtx_lib.c"/>
         <!-- RTX sources (ARMCC handlers) -->
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/ARM/irq_armv8mbl_ns.s"    condition="CM23_ARMCC"/>
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/ARM/irq_armv8mml_ns.s"    condition="CM33_ARMCC"/>
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/ARM/irq_armv8mml_ns.s"    condition="CM33_FP_ARMCC"/>
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/ARM/irq_armv8mml_ns.s"    condition="CM35P_ARMCC"/>
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/ARM/irq_armv8mml_ns.s"    condition="CM35P_FP_ARMCC"/>
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv8mml_fp_ns.S" condition="CM55_ARMCC"/>
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/ARM/irq_armv8mbl_ns.s"    condition="ARMv8MBL_ARMCC"/>
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/ARM/irq_armv8mml_ns.s"    condition="ARMv8MML_ARMCC"/>
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/ARM/irq_armv8mml_ns.s"    condition="ARMv8MML_FP_ARMCC"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/ARM/irq_armv8mbl_ns.s" condition="CM23_ARMCC"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/ARM/irq_armv8mml_ns.s" condition="CM33_ARMCC"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/ARM/irq_armv8mml_ns.s" condition="CM33_FP_ARMCC"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/ARM/irq_armv8mml_ns.s" condition="CM35P_ARMCC"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/ARM/irq_armv8mml_ns.s" condition="CM35P_FP_ARMCC"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv8mml.S"    condition="CM55_NOFPU_NOMVE_ARMCC"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv8mml.S"    condition="CM55_NOFPU_MVE_ARMCC"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv8mml.S"    condition="CM55_FPU_ARMCC"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/ARM/irq_armv8mbl_ns.s" condition="ARMv8MBL_ARMCC"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/ARM/irq_armv8mml_ns.s" condition="ARMv8MML_ARMCC"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/ARM/irq_armv8mml_ns.s" condition="ARMv8MML_FP_ARMCC"/>
         <!-- RTX sources (GCC handlers) -->
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv8mbl_ns.S"    condition="CM23_GCC"/>
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv8mml_ns.S"    condition="CM33_GCC"/>
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv8mml_fp_ns.S" condition="CM33_FP_GCC"/>
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv8mml_ns.S"    condition="CM35P_GCC"/>
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv8mml_fp_ns.S" condition="CM35P_FP_GCC"/>
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv8mml_fp_ns.S" condition="CM55_GCC"/>
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv8mbl_ns.S"    condition="ARMv8MBL_GCC"/>
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv8mml_ns.S"    condition="ARMv8MML_GCC"/>
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv8mml_fp_ns.S" condition="ARMv8MML_FP_GCC"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv8mbl.S"    condition="CM23_GCC"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv8mml.S"    condition="CM33_GCC"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv8mml.S"    condition="CM33_FP_GCC"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv8mml.S"    condition="CM35P_GCC"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv8mml.S"    condition="CM35P_FP_GCC"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv8mml.S"    condition="CM55_NOFPU_NOMVE_GCC"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv8mml.S"    condition="CM55_NOFPU_MVE_GCC"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv8mml.S"    condition="CM55_FPU_GCC"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv8mbl.S"    condition="ARMv8MBL_GCC"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv8mml.S"    condition="ARMv8MML_GCC"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv8mml.S"    condition="ARMv8MML_FP_GCC"/>
         <!-- RTX sources (IAR handlers) -->
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_armv8mbl_ns.s"    condition="CM23_IAR"/>
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_armv8mml_ns.s"    condition="CM33_IAR"/>
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_armv8mml_ns.s"    condition="CM33_FP_IAR"/>
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_armv8mml_ns.s"    condition="CM35P_IAR"/>
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_armv8mml_ns.s"    condition="CM35P_FP_IAR"/>
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_armv8mml_ns.s"    condition="CM55_IAR"/>
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_armv8mbl_ns.s"    condition="ARMv8MBL_IAR"/>
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_armv8mml_ns.s"    condition="ARMv8MML_IAR"/>
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_armv8mml_ns.s"    condition="ARMv8MML_FP_IAR"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_armv8mbl_ns.s" condition="CM23_IAR"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_armv8mml_ns.s" condition="CM33_IAR"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_armv8mml_ns.s" condition="CM33_FP_IAR"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_armv8mml_ns.s" condition="CM35P_IAR"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_armv8mml_ns.s" condition="CM35P_FP_IAR"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_armv8mml_ns.s" condition="CM55_NOFPU_NOMVE_IAR"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_armv8mml_ns.s" condition="CM55_NOFPU_MVE_IAR"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_armv8mml_ns.s" condition="CM55_FPU_IAR"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_armv8mbl_ns.s" condition="ARMv8MBL_IAR"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_armv8mml_ns.s" condition="ARMv8MML_IAR"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_armv8mml_ns.s" condition="ARMv8MML_FP_IAR"/>
         <!-- OS Tick (SysTick) -->
         <file category="source" name="CMSIS/RTOS2/Source/os_systick.c"/>
       </files>
@@ -3842,7 +3923,7 @@ and 8-bit Java bytecodes in Jazelle state.
       <description>Access to #include Driver_NAND.h file and code template for custom implementation</description>
       <files>
         <file category="header" name="CMSIS/Driver/Include/Driver_NAND.h" />
-        <!-- <file category="sourceC" attr="template" name="CMSIS/Driver/DriverTemplates/Driver_NAND.c" select="NAND Flash Driver"/> -->
+        <file category="sourceC" attr="template" name="CMSIS/Driver/DriverTemplates/Driver_NAND.c" select="NAND Flash Driver"/>
       </files>
     </component>
     <component Cclass="CMSIS Driver" Cgroup="Ethernet" Csub="Custom" Cversion="1.0.0" Capiversion="2.2.0" custom="1">
@@ -3886,7 +3967,7 @@ and 8-bit Java bytecodes in Jazelle state.
       <description>Access to #include Driver_WiFi.h file</description>
       <files>
         <file category="header" name="CMSIS/Driver/Include/Driver_WiFi.h"/>
-        <!-- <file category="sourceC" attr="template" name="CMSIS/Driver/DriverTemplates/Driver_WiFi.c" select="WiFi Driver"/> -->
+        <file category="sourceC" attr="template" name="CMSIS/Driver/DriverTemplates/Driver_WiFi.c" select="WiFi Driver"/>
       </files>
     </component>
 
@@ -3895,14 +3976,12 @@ and 8-bit Java bytecodes in Jazelle state.
       <description>Virtual I/O custom implementation template</description>
       <files>
         <file category="sourceC" name="CMSIS/Driver/VIO/Source/vio.c" attr="template" select="Virtual I/O"/>
-        <file category="other"   name="CMSIS/Driver/VIO/cmsis_vio.scvd"/>
       </files>
     </component>
     <component Cclass="CMSIS Driver" Cgroup="VIO" Csub="Virtual" Cversion="1.0.0" Capiversion="0.1.0">
       <description>Virtual I/O implementation using memory only</description>
       <files>
         <file category="sourceC" name="CMSIS/Driver/VIO/Source/vio_memory.c"/>
-        <file category="other"   name="CMSIS/Driver/VIO/cmsis_vio.scvd"/>
       </files>
     </component>
 
@@ -3925,6 +4004,7 @@ and 8-bit Java bytecodes in Jazelle state.
       <compatibleDevice deviceIndex="0" Dvendor="ARM:82" Dname="ARMv8MML"/>
       <compatibleDevice deviceIndex="0" Dvendor="ARM:82" Dname="ARMv8MML_SP"/>
       <compatibleDevice deviceIndex="0" Dvendor="ARM:82" Dname="ARMv8MML_DP"/>
+      <compatibleDevice deviceIndex="0" Dvendor="ARM:82" Dname="ARMv81MML_DSP_DP_MVE_FP"/>
       <compatibleDevice deviceIndex="0" Dvendor="ARM:82" Dname="ARMCM23"/>
       <compatibleDevice deviceIndex="0" Dvendor="ARM:82" Dname="ARMCM23_TZ"/>
       <compatibleDevice deviceIndex="0" Dvendor="ARM:82" Dname="ARMCM33"/>
@@ -3935,6 +4015,7 @@ and 8-bit Java bytecodes in Jazelle state.
       <compatibleDevice deviceIndex="0" Dvendor="ARM:82" Dname="ARMCM35P_TZ"/>
       <compatibleDevice deviceIndex="0" Dvendor="ARM:82" Dname="ARMCM35P_DSP_FP"/>
       <compatibleDevice deviceIndex="0" Dvendor="ARM:82" Dname="ARMCM35P_DSP_FP_TZ"/>
+      <compatibleDevice deviceIndex="0" Dvendor="ARM:82" Dname="ARMCM55"/>
     </board>
 
     <board name="EWARM Simulator" vendor="IAR">
@@ -3953,6 +4034,7 @@ and 8-bit Java bytecodes in Jazelle state.
       <compatibleDevice deviceIndex="0" Dvendor="ARM:82" Dname="ARMv8MML"/>
       <compatibleDevice deviceIndex="0" Dvendor="ARM:82" Dname="ARMv8MML_SP"/>
       <compatibleDevice deviceIndex="0" Dvendor="ARM:82" Dname="ARMv8MML_DP"/>
+      <compatibleDevice deviceIndex="0" Dvendor="ARM:82" Dname="ARMv81MML_DSP_DP_MVE_FP"/>
       <compatibleDevice deviceIndex="0" Dvendor="ARM:82" Dname="ARMCM23"/>
       <compatibleDevice deviceIndex="0" Dvendor="ARM:82" Dname="ARMCM23_TZ"/>
       <compatibleDevice deviceIndex="0" Dvendor="ARM:82" Dname="ARMCM33"/>
@@ -3963,10 +4045,25 @@ and 8-bit Java bytecodes in Jazelle state.
       <compatibleDevice deviceIndex="0" Dvendor="ARM:82" Dname="ARMCM35P_TZ"/>
       <compatibleDevice deviceIndex="0" Dvendor="ARM:82" Dname="ARMCM35P_DSP_FP"/>
       <compatibleDevice deviceIndex="0" Dvendor="ARM:82" Dname="ARMCM35P_DSP_FP_TZ"/>
+      <compatibleDevice deviceIndex="0" Dvendor="ARM:82" Dname="ARMCM55"/>
     </board>
   </boards>
 
   <examples>
+    <example name="DSP_Lib Bayes example" doc="Abstract.txt" folder="CMSIS/DSP/Examples/ARM/arm_bayes_example">
+      <description>DSP_Lib Bayes example</description>
+      <board name="uVision Simulator" vendor="Keil"/>
+      <project>
+        <environment name="uv" load="arm_bayes_example.uvprojx"/>
+      </project>
+      <attributes>
+        <component Cclass="CMSIS" Cgroup="CORE"/>
+        <component Cclass="CMSIS" Cgroup="DSP"/>
+        <component Cclass="Device" Cgroup="Startup"/>
+        <category>Getting Started</category>
+      </attributes>
+    </example>
+
     <example name="DSP_Lib Class Marks example" doc="Abstract.txt" folder="CMSIS/DSP/Examples/ARM/arm_class_marks_example">
       <description>DSP_Lib Class Marks example</description>
       <board name="uVision Simulator" vendor="Keil"/>
@@ -4098,6 +4195,20 @@ and 8-bit Java bytecodes in Jazelle state.
       <board name="uVision Simulator" vendor="Keil"/>
       <project>
         <environment name="uv" load="arm_sin_cos_example.uvprojx"/>
+      </project>
+      <attributes>
+        <component Cclass="CMSIS" Cgroup="CORE"/>
+        <component Cclass="CMSIS" Cgroup="DSP"/>
+        <component Cclass="Device" Cgroup="Startup"/>
+        <category>Getting Started</category>
+      </attributes>
+    </example>
+
+    <example name="DSP_Lib SVM example" doc="Abstract.txt" folder="CMSIS/DSP/Examples/ARM/arm_svm_example">
+      <description>DSP_Lib SVM example</description>
+      <board name="uVision Simulator" vendor="Keil"/>
+      <project>
+        <environment name="uv" load="arm_svm_example.uvprojx"/>
       </project>
       <attributes>
         <component Cclass="CMSIS" Cgroup="CORE"/>
@@ -4272,6 +4383,34 @@ and 8-bit Java bytecodes in Jazelle state.
       <board name="uVision Simulator" vendor="Keil"/>
       <project>
         <environment name="uv" load="RTOS_Faults.uvmpw"/>
+      </project>
+      <attributes>
+        <component Cclass="CMSIS" Cgroup="CORE"/>
+        <component Cclass="CMSIS" Cgroup="RTOS2"/>
+        <component Cclass="Device" Cgroup="Startup"/>
+        <category>Getting Started</category>
+      </attributes>
+    </example>
+
+    <example name="CMSIS-RTOS2 Blinky" doc="Abstract.txt" folder="CMSIS/RTOS2/RTX/Examples_IAR/Blinky">
+      <description>CMSIS-RTOS2 Blinky example</description>
+      <board name="EWARM Simulator" vendor="IAR"/>
+      <project>
+        <environment name="iar" load="Blinky/Blinky.ewp"/>
+      </project>
+      <attributes>
+        <component Cclass="CMSIS" Cgroup="CORE"/>
+        <component Cclass="CMSIS" Cgroup="RTOS2"/>
+        <component Cclass="Device" Cgroup="Startup"/>
+        <category>Getting Started</category>
+      </attributes>
+    </example>
+
+    <example name="CMSIS-RTOS2 RTX5 Message Queue" doc="Abstract.txt" folder="CMSIS/RTOS2/RTX/Examples_IAR/MsgQueue">
+      <description>CMSIS-RTOS2 Message Queue Example</description>
+      <board name="EWARM Simulator" vendor="IAR"/>
+      <project>
+        <environment name="iar" load="MsgQueue/MsgQueue.ewp"/>
       </project>
       <attributes>
         <component Cclass="CMSIS" Cgroup="CORE"/>

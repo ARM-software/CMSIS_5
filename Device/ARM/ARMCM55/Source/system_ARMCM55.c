@@ -3,10 +3,10 @@
  * @brief    CMSIS Device System Source File for
  *           ARMCM55 Device
  * @version  V1.0.0
- * @date     20. February 2020
+ * @date     30. March 2020
  ******************************************************************************/
 /*
- * Copyright (c) 2009-2019 Arm Limited. All rights reserved.
+ * Copyright (c) 2009-2020 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -25,14 +25,13 @@
 
 #if defined (ARMCM55)
   #include "ARMCM55.h"
+#else
+  #error device not specified!
+#endif
 
   #if defined (__ARM_FEATURE_CMSE) &&  (__ARM_FEATURE_CMSE == 3U)
     #include "partition_ARMCM55.h"
   #endif
-
-#else
-  #error device not specified!
-#endif
 
 /*----------------------------------------------------------------------------
   Define clocks
@@ -73,7 +72,7 @@ void SystemInit (void)
 #endif
 
 #if (defined (__FPU_USED) && (__FPU_USED == 1U)) || \
-    (defined (__MVE_USED) && (__MVE_USED == 1U))
+    (defined (__ARM_FEATURE_MVE) && (__ARM_FEATURE_MVE > 0U))
   SCB->CPACR |= ((3U << 10U*2U) |           /* enable CP10 Full Access */
                  (3U << 11U*2U)  );         /* enable CP11 Full Access */
 #endif
@@ -81,6 +80,10 @@ void SystemInit (void)
 #ifdef UNALIGNED_SUPPORT_DISABLE
   SCB->CCR |= SCB_CCR_UNALIGN_TRP_Msk;
 #endif
+
+// Enable Loop and branch info cache
+SCB->CCR |= SCB_CCR_LOB_Msk;
+__ISB();
 
 #if defined (__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
   TZ_SAU_Setup();

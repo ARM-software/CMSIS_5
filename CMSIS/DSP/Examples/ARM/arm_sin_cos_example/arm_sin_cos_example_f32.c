@@ -147,35 +147,31 @@ int32_t main(void)
     diff = fabsf(testRefOutput_f32 - testOutput);
 
     /* Comparison of sin_cos value with reference */
-    if (diff > DELTA)
-    {
-       status = ARM_MATH_TEST_FAILURE;
-    }
+    status = (diff > DELTA) ? ARM_MATH_TEST_FAILURE : ARM_MATH_SUCCESS;
 
     if ( status == ARM_MATH_TEST_FAILURE)
     {
        break;
     }
-
   }
 
-#if !defined(SEMIHOSTING)
-  if ( status != ARM_MATH_SUCCESS)
+  if (status != ARM_MATH_SUCCESS)
   {
-    while (1);
-  }
-
-  while (1);                             /* main function does not return */
+#if defined (SEMIHOSTING)
+    printf("FAILURE\n");
 #else
-  if (status == ARM_MATH_SUCCESS)
-  {
-     printf("SUCCESS\n");
+    while (1);                             /* main function does not return */
+#endif
   }
   else
   {
-     printf("FAILURE %f\n",diff);
-  }
+#if defined (SEMIHOSTING)
+    printf("SUCCESS\n");
+#else
+    while (1);                             /* main function does not return */
 #endif
+  }
+
 }
 
  /** \endlink */
