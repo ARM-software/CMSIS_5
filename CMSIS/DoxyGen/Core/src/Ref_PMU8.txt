@@ -37,7 +37,7 @@ ARM_PMU_CNTR_Enable(PMU_CNTENSET_CCNTR_ENABLE_Msk|PMU_CNTENSET_CNT0_ENABLE_Msk|P
  
 // Stop incrementing Cycle Count Register and Event Counter Registers 0 & 1
  
-ARM_PMU_CNTR_Disable(PMU_CNTENCLR_CCNTR_ENABLE_Msk|PMU_CNTENSET_CNT0_ENABLE_Msk|PMU_CNTENSET_CNT1_ENABLE_Msk);
+ARM_PMU_CNTR_Disable(PMU_CNTENCLR_CCNTR_ENABLE_Msk|PMU_CNTENCLR_CNT0_ENABLE_Msk|PMU_CNTENCLR_CNT1_ENABLE_Msk);
  
 // Get cycle count, number of instructions retired and number of L1 D-Cache misses (on read)
  
