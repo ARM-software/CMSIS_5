@@ -184,8 +184,9 @@ In addition, each CMSIS component has its own release history:
         - CMSIS-Zone 1.0.0
         - Devices
         - Utilities
-          - SVDConv 3.3.27
-          - PackChk 1.3.82
+          Attention: Linux binaries moved to Linux64 folder!
+          - SVDConv 3.3.35
+          - PackChk 1.3.89
       </td>
     </tr>
     <tr>
