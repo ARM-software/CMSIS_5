@@ -21,8 +21,8 @@
  * Title:        arm_nnfunctions.h
  * Description:  Public header file for CMSIS NN Library
  *
- * $Date:        March 12, 2020
- * $Revision:    V.1.2.5
+ * $Date:        April 1, 2020
+ * $Revision:    V.1.2.6
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -96,6 +96,47 @@
    *
    * Define macro ARM_NN_TRUNCATE to use floor instead of round-to-the-nearest-int for the computation.
    *
+   * Upcoming Interface Change
+   * --------
+   * Starting from the 1.4.0 next release, CMSIS-NN will gradually switch to a new API interface to:
+   *
+   * -# have a stable API
+   * -# avoid passing many variables by value
+   * -# improve security
+   * -# improve validation
+   * -# improve code readability
+   *
+   * The upcoming API interface change will be based on "struct" and only affect the TensorFlowLite micro compliant APIs [4] (functions with _s8 suffix)
+   *
+   * Below you can find a snapshot of how the new API interface will look like (names can change)
+   *
+   * i.e. arm_convolve_1x1_s8_fast
+   *
+   * Current API interface | New API interface proposal
+   * ------------- | -------------
+   * const q7_t *input                | const cmsis_nn_context &ctx
+   * const uint16_t input_x           | const cmsis_nn_conv_params &params
+   * const uint16_t input_y           | const cmsis_nn_dims &input_dims
+   * const uint16_t input_ch          | const q7_t *input_data
+   * const uint16_t input_batches     | const cmsis_nn_dims &filter_dims
+   * const q7_t *kernel               | const q7_t *filter_data
+   * const uint16_t output_ch         | const cmsis_nn_dims &bias_dims
+   * const uint16_t pad_x             | const q31_t *bias_data
+   * const uint16_t pad_y             | const cmsis_nn_dims &output_dims
+   * const uint16_t stride_x          | q7_t *output_data
+   * const uint16_t stride_y          | <br>
+   * const int32_t *bias              | <br>
+   * q7_t *output                     | <br>
+   * const int32_t *output_shift      | <br>
+   * const int32_t *output_mult       | <br>
+   * const int32_t out_offset         | <br>
+   * const int32_t input_offset       | <br>
+   * const int32_t out_activation_min | <br>
+   * const int32_t out_activation_max | <br>
+   * const uint16_t output_x          | <br>
+   * const uint16_t output_y          | <br>
+   * q15_t *buffer_a                  | <br>
+   *
    * Copyright Notice
    * ------------
    *
@@ -107,6 +148,7 @@
    *     https://developer.arm.com/solutions/machine-learning-on-arm/developer-material/how-to-guides/converting-a-neural-network-for-arm-cortex-m-with-cmsis-nn/single-page
    * [3] https://www.tensorflow.org/lite/microcontrollers/library
    *
+   * [4] https://github.com/ARM-software/CMSIS_5/tree/develop/CMSIS/NN#legacy-vs-tfl-micro-compliant-apis
    */
 
 /**
