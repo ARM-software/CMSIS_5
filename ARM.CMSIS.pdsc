@@ -12,6 +12,9 @@
       Active development...
       Devices:
         - Reworked ARMCM* C-StartUp files.
+      Utilities:
+        - SVDConv 3.3.35
+        - PackChk 1.3.89
     </release>
     <release version="5.7.0-dev7">
       Active development...
