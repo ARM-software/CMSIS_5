@@ -13,6 +13,7 @@
       Devices:
         - Reworked ARMCM* C-StartUp files.
       Utilities:
+        Attention: Linux binaries moved to Linux64 folder!
         - SVDConv 3.3.35
         - PackChk 1.3.89
     </release>
