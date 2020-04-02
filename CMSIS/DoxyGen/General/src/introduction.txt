@@ -170,10 +170,12 @@ In addition, each CMSIS component has its own release history:
     <tr>
       <td>5.7.0</td>
       <td>
-        - CMSIS-Build 0.1.0
+        - CMSIS-Build 0.9.0 (beta)
+          - Draft for CMSIS Project description (CPRJ)
         - CMSIS-Core (Cortex-M) 5.4.0
         - CMSIS-Core (Cortex-A) 1.1.4 (unchanged)
         - CMSIS-Driver 2.8.0
+          - Added VIO API 0.1.0 (preview)
         - CMSIS-DSP 1.8.0
         - CMSIS-NN 1.3.0
         - CMSIS-RTOS 2.1.3 (unchanged)
