@@ -90,6 +90,15 @@ class CmsisPackVersionParser(VersionParser):
   def _s(self, file):
     return self._file_version_(file)
     
+  def _xsd(self, file, rev=False, history=False):
+    if rev:
+      return self._all_(file)
+    elif history:
+      return self._regex_(file, ".*[0-9]+\. [A-Z][a-z]+ [12][0-9]+: (v)?(\d+.\d+(.\d+)?).*", 2)
+    else:
+      xsd = lxml.etree.parse(str(file)).getroot()
+      return SemanticVersion(xsd.get("version", None))
+
   def overview_txt(self, file, skip = 0):
     return self._revhistory_(file, skip)
     
@@ -129,7 +138,7 @@ class CmsisPackLinter(PackLinter):
     
   def pack_version(self):
     return self._pack.version()
-    
+  
   def cmsis_corem_component(self):
     rte = { 'components' : set(), 'Dcore' : "Cortex-M3", 'Dvendor' : "*", 'Dname' : "*", 'Dtz' : "*", 'Dsecure' : "*", 'Tcompiler' : "*", 'Toptions' : "*" }
     cs = self._pack.component_by_name(rte, "CMSIS.CORE")
@@ -168,6 +177,13 @@ class CmsisPackLinter(PackLinter):
     self.verify_version("README.md", v)
     self.verify_version("CMSIS/DoxyGen/General/general.dxy", v)
     self.verify_version("CMSIS/DoxyGen/General/src/introduction.txt", v)
+
+  def check_build(self):
+    """CMSIS-Build version"""
+    v = self._versionParser.get_version("CMSIS/DoxyGen/Build/Build.dxy")
+    self.verify_version("CMSIS/DoxyGen/Build/src/General.txt", v)
+    self.verify_version("CMSIS/DoxyGen/General/src/introduction.txt", v, component="CMSIS-Build")
+    self.verify_version(self._pack.location(), v, component="CMSIS-Build")
 
   def check_corem(self):
     """CMSIS-Core(M) version"""
@@ -215,7 +231,10 @@ class CmsisPackLinter(PackLinter):
 
   def check_pack(self):
     """CMSIS-Pack version"""
-    v = self._versionParser.get_version("CMSIS/DoxyGen/Pack/Pack.dxy")
+    v = self._versionParser.get_version("CMSIS/Utilities/PACK.xsd")
+    self.verify_version("CMSIS/Utilities/PACK.xsd:Revision", v, rev=True)
+    self.verify_version("CMSIS/Utilities/PACK.xsd:History", v, history=True)
+    self.verify_version("CMSIS/DoxyGen/Pack/Pack.dxy", v)
     self.verify_version("CMSIS/DoxyGen/Pack/src/General.txt", v)
     self.verify_version("CMSIS/DoxyGen/General/src/introduction.txt", v, component="CMSIS-Pack")
     self.verify_version(self._pack.location(), v, component="CMSIS-Pack")

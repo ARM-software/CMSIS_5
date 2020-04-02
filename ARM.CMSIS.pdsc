@@ -10,6 +10,8 @@
   <releases>
     <release version="5.7.0-dev8">
       Active development...
+      CMSIS-Build: 0.9.0 (beta)
+        - Draft for CMSIS Project description (CPRJ)
       Devices:
         - Reworked ARMCM* C-StartUp files.
       Utilities:
@@ -61,8 +63,8 @@
       CMSIS-Driver: 2.8.0
         - removed volatile from status related typedefs in APIs
         - enhanced WiFi Interface API with support for polling Socket Receive/Send
-      CMSIS-Pack: 1.6.1
-        - added custom attribute to components that require custom implementation
+      CMSIS-Pack: 1.6.3 (see revision history for details)
+        - deprecating all types specific to cpdsc format. Cpdsc is replaced by Cprj with dedicated schema.
       Devices:
         - ARMv81MML startup code recognizing __MVE_USED macro
         - Refactored vector table references for all Cortex-M devices
