@@ -24,14 +24,14 @@
 
 void kernel1x1_arm_convolve_1x1_s8_fast(void)
 {
-  arm_status expected = ARM_MATH_SUCCESS;
+  const arm_status expected = ARM_MATH_SUCCESS;
   q7_t output[KERNEL1X1_DST_SIZE] = {0};
   const int32_t buf_size = arm_convolve_1x1_s8_fast_get_buffer_size(KERNEL1X1_IN_CH);
   q15_t *bufferA = (q15_t*)malloc(buf_size);
 
   arm_status result =  arm_convolve_1x1_s8_fast(kernel1x1_input,
-                                                KERNEL1X1_CONV_W,
-                                                KERNEL1X1_CONV_H,
+                                                KERNEL1X1_INPUT_W,
+                                                KERNEL1X1_INPUT_H,
                                                 KERNEL1X1_IN_CH,
                                                 KERNEL1X1_INPUT_BATCHES,
                                                 kernel1x1_weights,
@@ -48,12 +48,10 @@ void kernel1x1_arm_convolve_1x1_s8_fast(void)
                                                 KERNEL1X1_INPUT_OFFSET,
                                                 KERNEL1X1_OUT_ACTIVATION_MIN,
                                                 KERNEL1X1_OUT_ACTIVATION_MAX,
-                                                KERNEL1X1_OUT_CONV_W,
-                                                KERNEL1X1_OUT_CONV_H,
+                                                KERNEL1X1_OUTPUT_W,
+                                                KERNEL1X1_OUTPUT_H,
                                                 bufferA);
-
+  free(bufferA);
   TEST_ASSERT_EQUAL(expected, result);
   TEST_ASSERT_TRUE(validate(output, kernel1x1_output_ref, KERNEL1X1_DST_SIZE));
-
-  free(bufferA);
 }

@@ -1694,10 +1694,8 @@ extern    "C"
    * @param[in]       act_max            Max clamping
    * @param[in]       ch_src             number of input tensor channels
    * @param[in,out]   src                pointer to input tensor
-   * @param[in]       bufferA            temporary buffer used for optimization and is necessary when
-   *                                     ARM_MATH_DSP is defined.
-   *                                     Required space: (ch_src * dim_dst_width) * sizeof(q15_t) bytes
-   *                                     Use arm_avgpool_s8_get_buffer_size() to get the size
+   * @param[in]       bufferA            Temporary buffer used for optimization. Use
+   *                                     arm_avgpool_s8_get_buffer_size() to get the size of required memory.
    * @param[in,out]   dst                pointer to output tensor
    * @return                             The function returns one of the following
    *                                     <code>ARM_MATH_SIZE_MISMATCH</code> - Unsupported dimension of tensors

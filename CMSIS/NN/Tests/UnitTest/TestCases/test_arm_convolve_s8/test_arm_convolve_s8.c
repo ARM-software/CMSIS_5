@@ -26,15 +26,15 @@
 
 void basic_arm_convolve_s8(void)
 {
-  arm_status expected = ARM_MATH_SUCCESS;
+  const arm_status expected = ARM_MATH_SUCCESS;
   q7_t output[BASIC_DST_SIZE] = {0};
 
   const int32_t buf_size = arm_convolve_s8_get_buffer_size(BASIC_IN_CH, BASIC_FILTER_X, BASIC_FILTER_Y);
   q15_t *bufferA = (q15_t*)malloc(buf_size);
 
   arm_status result = arm_convolve_s8(basic_input,
-                                      BASIC_CONV_W,
-                                      BASIC_CONV_H,
+                                      BASIC_INPUT_W,
+                                      BASIC_INPUT_H,
                                       BASIC_IN_CH,
                                       BASIC_INPUT_BATCHES,
                                       basic_weights,
@@ -53,8 +53,8 @@ void basic_arm_convolve_s8(void)
                                       BASIC_INPUT_OFFSET,
                                       BASIC_OUT_ACTIVATION_MIN,
                                       BASIC_OUT_ACTIVATION_MAX,
-                                      BASIC_OUT_CONV_W,
-                                      BASIC_OUT_CONV_H,
+                                      BASIC_OUTPUT_W,
+                                      BASIC_OUTPUT_H,
                                       bufferA);
 
   TEST_ASSERT_EQUAL(expected, result);
@@ -66,7 +66,7 @@ void basic_arm_convolve_s8(void)
 
 void stride2pad1_arm_convolve_s8(void)
 {
-  arm_status expected = ARM_MATH_SUCCESS;
+  const arm_status expected = ARM_MATH_SUCCESS;
   q7_t output[STRIDE2PAD1_DST_SIZE] = {0};
 
   const int32_t buf_size = arm_convolve_s8_get_buffer_size(STRIDE2PAD1_IN_CH,
@@ -75,8 +75,8 @@ void stride2pad1_arm_convolve_s8(void)
   q15_t *bufferA = (q15_t*)malloc(buf_size);
 
   arm_status result = arm_convolve_s8(stride2pad1_input,
-                                      STRIDE2PAD1_CONV_W,
-                                      STRIDE2PAD1_CONV_H,
+                                      STRIDE2PAD1_INPUT_W,
+                                      STRIDE2PAD1_INPUT_H,
                                       STRIDE2PAD1_IN_CH,
                                       STRIDE2PAD1_INPUT_BATCHES,
                                       stride2pad1_weights,
@@ -95,8 +95,8 @@ void stride2pad1_arm_convolve_s8(void)
                                       STRIDE2PAD1_INPUT_OFFSET,
                                       STRIDE2PAD1_OUT_ACTIVATION_MIN,
                                       STRIDE2PAD1_OUT_ACTIVATION_MAX,
-                                      STRIDE2PAD1_OUT_CONV_W,
-                                      STRIDE2PAD1_OUT_CONV_H,
+                                      STRIDE2PAD1_OUTPUT_W,
+                                      STRIDE2PAD1_OUTPUT_H,
                                       bufferA);
 
   TEST_ASSERT_EQUAL(expected, result);

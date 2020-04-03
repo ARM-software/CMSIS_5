@@ -26,7 +26,7 @@
 
 void basic_arm_depthwise_conv_s8_opt(void)
 {
-  arm_status expected = ARM_MATH_SUCCESS;
+  const arm_status expected = ARM_MATH_SUCCESS;
   q7_t output[BASIC_DST_SIZE] = {0};
 
   const int32_t buf_size = arm_depthwise_conv_s8_opt_get_buffer_size(BASIC_IN_CH, BASIC_FILTER_X, BASIC_FILTER_Y);
@@ -36,8 +36,8 @@ void basic_arm_depthwise_conv_s8_opt(void)
   const uint16_t dilation = 1;
 
   arm_status result = arm_depthwise_conv_s8_opt(basic_input,
-                                                BASIC_CONV_W,
-                                                BASIC_CONV_H,
+                                                BASIC_INPUT_W,
+                                                BASIC_INPUT_H,
                                                 BASIC_IN_CH,
                                                 basic_weights,
                                                 BASIC_OUT_CH,
@@ -51,8 +51,8 @@ void basic_arm_depthwise_conv_s8_opt(void)
                                                 output,
                                                 basic_output_shift,
                                                 basic_output_mult,
-                                                BASIC_OUT_CONV_W,
-                                                BASIC_OUT_CONV_H,
+                                                BASIC_OUTPUT_W,
+                                                BASIC_OUTPUT_H,
                                                 BASIC_OUTPUT_OFFSET,
                                                 BASIC_INPUT_OFFSET,
                                                 BASIC_OUT_ACTIVATION_MIN,
@@ -60,16 +60,14 @@ void basic_arm_depthwise_conv_s8_opt(void)
                                                 dilation,
                                                 dilation,
                                                 bufferA);
-
+  free(bufferA);
   TEST_ASSERT_EQUAL(expected, result);
   TEST_ASSERT_TRUE(validate(output, basic_output_ref, BASIC_DST_SIZE));
-
-  free(bufferA);
 }
 
 void stride2pad1_arm_depthwise_conv_s8_opt(void)
 {
-  arm_status expected = ARM_MATH_SUCCESS;
+  const arm_status expected = ARM_MATH_SUCCESS;
   q7_t output[STRIDE2PAD1_DST_SIZE] = {0};
 
   const int32_t buf_size = arm_depthwise_conv_s8_opt_get_buffer_size(BASIC_IN_CH, BASIC_FILTER_X, BASIC_FILTER_Y);
@@ -79,8 +77,8 @@ void stride2pad1_arm_depthwise_conv_s8_opt(void)
   const uint16_t dilation = 1;
 
   arm_status result = arm_depthwise_conv_s8_opt(stride2pad1_input,
-                                                STRIDE2PAD1_CONV_W,
-                                                STRIDE2PAD1_CONV_H,
+                                                STRIDE2PAD1_INPUT_W,
+                                                STRIDE2PAD1_INPUT_H,
                                                 STRIDE2PAD1_IN_CH,
                                                 stride2pad1_weights,
                                                 STRIDE2PAD1_OUT_CH,
@@ -94,8 +92,8 @@ void stride2pad1_arm_depthwise_conv_s8_opt(void)
                                                 output,
                                                 stride2pad1_output_shift,
                                                 stride2pad1_output_mult,
-                                                STRIDE2PAD1_OUT_CONV_W,
-                                                STRIDE2PAD1_OUT_CONV_H,
+                                                STRIDE2PAD1_OUTPUT_W,
+                                                STRIDE2PAD1_OUTPUT_H,
                                                 STRIDE2PAD1_OUTPUT_OFFSET,
                                                 STRIDE2PAD1_INPUT_OFFSET,
                                                 STRIDE2PAD1_OUT_ACTIVATION_MIN,
@@ -103,9 +101,7 @@ void stride2pad1_arm_depthwise_conv_s8_opt(void)
                                                 dilation,
                                                 dilation,
                                                 bufferA);
-
+  free(bufferA);
   TEST_ASSERT_EQUAL(expected, result);
   TEST_ASSERT_TRUE(validate(output, stride2pad1_output_ref, STRIDE2PAD1_DST_SIZE));
-
-  free(bufferA);
 }
