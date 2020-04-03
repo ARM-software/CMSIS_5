@@ -45,7 +45,9 @@ def parse_args():
     parser = argparse.ArgumentParser(description="Run CMSIS-NN unit tests.",
                                      epilog="Runs on all connected HW supported by Mbed.")
     parser.add_argument('--testdir', type=str, default='TESTRUN', help="prefix of output dir name")
-    parser.add_argument('--compiler', type=str, default='GCC_ARM', choices=['GCC_ARM', 'ARMC6'])
+    parser.add_argument('-s', '--specific-test', type=str, default=None, help="run a specific test, e.g."
+                        " test_arm_convolve_s8, default is to run all tests")
+    parser.add_argument('-c', '--compiler', type=str, default='GCC_ARM', choices=['GCC_ARM', 'ARMC6'])
     args = parser.parse_args()
     return args
 
@@ -157,6 +159,7 @@ def test_target(target, args, main_test):
                              ' --source ' + CMSIS_PATH + 'DSP/Include/'
                              ' --source ' + CMSIS_PATH + 'Core/Include/'
                              ' --source ' + CMSIS_PATH + 'NN/Source/ConvolutionFunctions/'
+                             ' --source ' + CMSIS_PATH + 'NN/Source/PoolingFunctions/'
                              ' --source ' + CMSIS_PATH + 'NN/Source/NNSupportFunctions/'
                              + cmsis_flags +
                              additional_options,
@@ -301,7 +304,8 @@ def test_targets(args):
         return 3
 
     download_unity()
-    if not parse_tests(targets, main_tests):
+
+    if not parse_tests(targets, main_tests, args.specific_test):
         print("No tests found?!")
         return 4
 
@@ -365,7 +369,7 @@ def download_unity(force=False):
     shutil.rmtree(download_dir)
 
 
-def parse_tests(targets, main_tests):
+def parse_tests(targets, main_tests, specific_test=None):
     """
     Generate test runners and parse it to know what to expect from the serial console
     Return True if successful
@@ -373,6 +377,8 @@ def parse_tests(targets, main_tests):
     directory = 'TestCases'
     for dir in next(os.walk(directory))[1]:
         if re.search(r'test_arm', dir):
+            if specific_test and dir != specific_test:
+                continue
             testpath = directory + '/' + dir + '/Unity/'
             main_tests.append(testpath)
             for content in os.listdir(testpath):

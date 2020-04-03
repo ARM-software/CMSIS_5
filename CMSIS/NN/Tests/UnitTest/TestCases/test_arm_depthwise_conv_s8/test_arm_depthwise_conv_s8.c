@@ -29,14 +29,14 @@ static q15_t *bufferA = NULL;
 
 void basic_arm_depthwise_conv_s8(void)
 {
-  arm_status expected = ARM_MATH_SUCCESS;
+  const arm_status expected = ARM_MATH_SUCCESS;
   q7_t output[BASIC_DST_SIZE] = {0};
 
   const uint16_t ch_mult =1;
 
   arm_status result = arm_depthwise_conv_s8(basic_input,
-                                            BASIC_CONV_W,
-                                            BASIC_CONV_H,
+                                            BASIC_INPUT_W,
+                                            BASIC_INPUT_H,
                                             BASIC_IN_CH,
                                             basic_weights,
                                             BASIC_OUT_CH,
@@ -51,8 +51,8 @@ void basic_arm_depthwise_conv_s8(void)
                                             output,
                                             basic_output_shift,
                                             basic_output_mult,
-                                            BASIC_OUT_CONV_W,
-                                            BASIC_OUT_CONV_H,
+                                            BASIC_OUTPUT_W,
+                                            BASIC_OUTPUT_H,
                                             BASIC_OUTPUT_OFFSET,
                                             BASIC_INPUT_OFFSET,
                                             BASIC_OUT_ACTIVATION_MIN,
@@ -67,14 +67,14 @@ void basic_arm_depthwise_conv_s8(void)
 
 void stride2pad1_arm_depthwise_conv_s8(void)
 {
-  arm_status expected = ARM_MATH_SUCCESS;
+  const arm_status expected = ARM_MATH_SUCCESS;
   q7_t output[STRIDE2PAD1_DST_SIZE] = {0};
 
   const uint16_t ch_mult =1;
 
   arm_status result = arm_depthwise_conv_s8(stride2pad1_input,
-                                            STRIDE2PAD1_CONV_W,
-                                            STRIDE2PAD1_CONV_H,
+                                            STRIDE2PAD1_INPUT_W,
+                                            STRIDE2PAD1_INPUT_H,
                                             STRIDE2PAD1_IN_CH,
                                             stride2pad1_weights,
                                             STRIDE2PAD1_OUT_CH,
@@ -89,8 +89,8 @@ void stride2pad1_arm_depthwise_conv_s8(void)
                                             output,
                                             stride2pad1_output_shift,
                                             stride2pad1_output_mult,
-                                            STRIDE2PAD1_OUT_CONV_W,
-                                            STRIDE2PAD1_OUT_CONV_H,
+                                            STRIDE2PAD1_OUTPUT_W,
+                                            STRIDE2PAD1_OUTPUT_H,
                                             STRIDE2PAD1_OUTPUT_OFFSET,
                                             STRIDE2PAD1_INPUT_OFFSET,
                                             STRIDE2PAD1_OUT_ACTIVATION_MIN,

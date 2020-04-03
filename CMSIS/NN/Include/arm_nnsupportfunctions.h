@@ -87,7 +87,7 @@ typedef enum
  * @param[in]       blockSize length of the input vector
  *
  */
-void      arm_q7_to_q15_no_shift(const q7_t * pSrc, q15_t * pDst, uint32_t blockSize);
+void arm_q7_to_q15_no_shift(const q7_t *pSrc, q15_t *pDst, uint32_t blockSize);
 
 /**
  * @brief Non-saturating addition of elements of a q7 vector
@@ -115,7 +115,7 @@ void arm_nn_add_q7(const q7_t *input, q31_t *output, uint32_t block_size);
  * @return none.
  *
  */
-void      arm_q7_to_q15_reordered_no_shift(const q7_t * pSrc, q15_t * pDst, uint32_t blockSize);
+void arm_q7_to_q15_reordered_no_shift(const q7_t * pSrc, q15_t * pDst, uint32_t blockSize);
 
 /**
  * @brief Converts the elements from a q7 vector to a q15 vector with an added offset
