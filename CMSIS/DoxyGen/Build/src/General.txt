@@ -59,7 +59,11 @@ Software layers and Virtual I/O simplify these use cases:
   </tr>
   <tr>
     <td>0.9.0 (beta)</td>
-    <td>Release for beta review</td>
+    <td>Release for beta review:
+    - added layer description to project format specification.
+    - added support for multiple compilers.
+    - added commands for layer operations to cbuildgen.
+	</td>
   </tr>
   <tr>
     <td>0.1.0</td>

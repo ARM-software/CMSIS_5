@@ -17,18 +17,18 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 
-  $Date:        06. February 2020
-  $Revision:    0.0.2
+  $Date:        03. April 2020
+  $Revision:    0.9.0
 
   $Project: Schema File for CMSIS Project Description File Format Specification
 
-  SchemaVersion=0.0.2
+  SchemaVersion=0.9.0
 
-0.0.2: removed unused types and added linker scripts to file type for config files.
-0.0.1: create replacement for CPDSC.
+  0.9.0: (BETA) Specification of CMSIS Project Format, replacing CPDSC based on PACK.xsd.
+
 -->
 
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="qualified" version="0.0.2">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="qualified" version="0.9.0">
 
   <xs:simpleType name="RestrictedString">
     <xs:restriction base="xs:string">
@@ -144,13 +144,11 @@
       <xs:enumeration value="sourceCpp" />
       <xs:enumeration value="sourceAsm" />
       <xs:enumeration value="linkerScript" />
-      <!--
       <xs:enumeration value="utility" />
       <xs:enumeration value="image" />
       <xs:enumeration value="other" />
       <xs:enumeration value="preIncludeGlobal"/>
       <xs:enumeration value="preIncludeLocal"/>
-      -->
     </xs:restriction>
   </xs:simpleType>
 
@@ -171,7 +169,7 @@
       <xs:enumeration value="Tasking" />
       <xs:enumeration value="GHS" />
       <xs:enumeration value="Cosmic" />
-      <xs:enumeration value="G++"/> <!-- Code Sourcery -->
+      <xs:enumeration value="G++"/>
       <xs:enumeration value="*" />
     </xs:restriction>
   </xs:simpleType>
@@ -191,12 +189,12 @@
   </xs:simpleType>
 
   <xs:complexType name="ComponentCategoryType">
-    <xs:attribute name="Cvendor"     type="xs:string" use="optional" />
-    <xs:attribute name="Cbundle"     type="xs:string" use="optional" />
-    <xs:attribute name="Cclass"      type="xs:string" use="required" />
-    <xs:attribute name="Cgroup"      type="xs:string" use="optional" />
-    <xs:attribute name="Csub"        type="xs:string" use="optional" />
-    <xs:attribute name="Cvariant"    type="xs:string" use="optional" />
+    <xs:attribute name="Cvendor"     type="xs:string"            use="optional" />
+    <xs:attribute name="Cbundle"     type="xs:string"            use="optional" />
+    <xs:attribute name="Cclass"      type="xs:string"            use="required" />
+    <xs:attribute name="Cgroup"      type="xs:string"            use="optional" />
+    <xs:attribute name="Csub"        type="xs:string"            use="optional" />
+    <xs:attribute name="Cvariant"    type="xs:string"            use="optional" />
     <xs:attribute name="Cversion"    type="ComponentVersionType" use="optional" />
     <xs:attribute name="Capiversion" type="ComponentVersionType" use="optional" />
     <xs:attribute name="instances"   type="InstancesType"        use="optional" default="1" />
@@ -470,11 +468,11 @@
     <xs:complexType>
       <xs:all>
         <!-- project info -->
-        <xs:element name="info"          type="InfoType"          minOccurs="1" />
+        <xs:element name="info"           type="InfoType"         minOccurs="1" />
         <!-- board info -->
-        <xs:element name="board"         type="BoardInfoType"     minOccurs="0" />
+        <xs:element name="board"          type="BoardInfoType"    minOccurs="0" />
         <!-- tool info -->
-        <xs:element name="created"       type="CreationInfoType"  minOccurs="0" />
+        <xs:element name="created"        type="CreationInfoType" minOccurs="0" />
         <!-- optional: project layers -->
         <xs:element name="layers"         type="LayersType"       minOccurs="0" />
         <!-- used CMSIS-Packs -->

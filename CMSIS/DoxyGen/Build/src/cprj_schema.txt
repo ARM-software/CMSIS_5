@@ -39,16 +39,19 @@ The build system needs the following pieces of information to successfully build
 Note: additional command line options for the tool-chains are tool-chain specific and are transparently passed onto the command line. Command line
 options related to the processor and it's features are automatically derived from the device information and must not be specified.
 
-Refer to CMSIS-Build (ToDo) for further information how to build software based on the CMSIS Project description at
+\delim
+
+See \subpage element_cprj "Project Description Root" for details about the description format..
+
+See \ref CmdLineBuild "CMSIS-Build" for further information how to build software based on the CMSIS Project description at
 the command line and how to create and manage projects using layers.
 
-See \subpage element_cprj "Project Description Root" for details.
-
+See \subpage projectDescriptionSchema "Project Description Schema file" for validation of project files.
 
 \page element_cprj /cprj
 CMSIS project files use the file extension *.cprj and CMSIS project layer files use the file extension *.clayer. 
 Both file types share a single file format which can be validated using the dedicate CPRJ schema file
-located in CMSIS/Utilities/CPRJ.xsd.
+located in \ref projectDescriptionSchema "CMSIS/Utilities/CPRJ.xsd".
 
 The location of a project or layer file always marks the root point and all file references are
 always relative to this root point, unless a file belongs to a component. In the latter case the files are 
@@ -2125,13 +2128,6 @@ The table lists the values available as a file attribute.
     <td>The file is used as a source code template file. It is expected to be edited and extended by the software developer.
 	The file can be copied into a user section of the project.</td>
   </tr>
-<!---
-  <tr>
-    <td class="XML-Token">interface</td>
-    <td>The file contains the source code of an interface that connects two software components. It is a working reference implementation that may need customization. 
-	The file can be copied to a user section of the project.</td>
-  </tr>
---->
 </table>
 
 <p>&nbsp;</p>
@@ -2147,6 +2143,9 @@ Version types are used in:
 
 <p>&nbsp;</p>
 <hr>
+
+\page projectDescriptionSchema Project Description Schema
+\verbinclude "CPRJ.xsd"
 
 */
 

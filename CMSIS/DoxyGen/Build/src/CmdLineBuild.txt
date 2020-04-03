@@ -2,9 +2,13 @@
 /**
 \page CmdLineBuild Command Line Build 
 
-The following scripts and tools enable command line build with projects that include software components in CMSIS-Pack format:
+The following bash scripts and command line tools can be used for managing the build of CMSIS Projects from the command line.
+These scripts can be easily adopted to specific environments and are intended as a minimal reference.
+CMSIS-Build tools are available for download as an asset of the respective 
+<a href="https://github.com/ARM-software/CMSIS_5/releases/" target="_blank"><b>CMSIS Release Version</b></a> 
+(starting 5.7.0 e/o April 2020).
 
-For command line build with software packs, the following tools are provided.
+For command line build with software packs, the following tools and utilities are provided.
 
 | Tool / Script                               | Description                                                                 |
 |:--------------------------------------------|:----------------------------------------------------------------------------|
@@ -43,35 +47,31 @@ $ cbuild.sh MyProject.cprj
 
 Below is the output that shows a successful build:
 
-\todo update below for final release
-
 \verbatim
-(cbuild.sh): Build Invocation 0.1.0 (C) 2020 ARM
+(cbuild.sh): Build Invocation 0.9.0 (C) 2020 ARM
 MyProject.cprj validates
-CMSIS Build (cbuildgen) 0.1.1 (Feb 14 2020, 15:03:45)
-Copyright (C) 2020 ARM Ltd and ARM Germany GmbH. All rights reserved.
+(cbuildgen): Build Process Manager 0.9.0 (C) 2020
 M654: URL 'https://www.keil.com/pack/ARM.CMSIS.5.6.0.pack' was added to the list of missing packages.
-M650: Setup run successfully.
-(cp_install.sh): Install Packs 0.1.0 (C) 2020 ARM
+M650: Command completed successfully.
+(cp_install.sh): Install Packs 0.9.0 (C) 2020 ARM
 info: reading file: MyProject.cp_install
 dos2unix: converting file MyProject.cp_install to Unix format...
 https://www.keil.com/pack/ARM.CMSIS.5.6.0.pack
-######################################################################## 100.0%#=#=#
-info: ARM.CMSIS.5.6.0.pack installing into /c/project/MyPackRepo/ARM/CMSIS/5.6.0
+######################################################################## 100.0%
+info: ARM.CMSIS.5.6.0.pack installing into /c/Projects/Packs/ARM/CMSIS/5.6.0
 pack installation completed successfully
-CMSIS Build (cbuildgen) 0.1.1 (Feb 14 2020, 15:03:45)
-Copyright (C) 2020 ARM Ltd and ARM Germany GmbH. All rights reserved.
+(cbuildgen): Build Process Manager 0.9.0 (C) 2020 ARM
 M653: Local config file RTE/Device/ARMCM0/ARMCM0_ac6.sct was not found. Copying default file from package.
 M653: Local config file RTE/Device/ARMCM0/startup_ARMCM0.c was not found. Copying default file from package.
 M653: Local config file RTE/Device/ARMCM0/system_ARMCM0.c was not found. Copying default file from package.
 M651: Generated makefile for merging config files: 'MyProject_cfg.mak'
 M652: Generated makefile for project building:'MyProject.mak'
-mkdir -p "Objects/RTE/Device/Startup/C Startup"
-mkdir -p "Objects/Source"
-"/C/Keil_v5/ARM/ARMCLANG/bin/armclang"  @"Objects/Source/MyMain.o._cc"
-"/C/Keil_v5/ARM/ARMCLANG/bin/armclang"  @"Objects/RTE/Device/Startup/C Startup/startup_ARMCM0.o._cc"
-"/C/Keil_v5/ARM/ARMCLANG/bin/armclang"  @"Objects/RTE/Device/Startup/C Startup/system_ARMCM0.o._cc"
-"/C/Keil_v5/ARM/ARMCLANG/bin/armlink" --via="Objects/MyBinary.axf._ld"
+mkdir -p "/c/Projects/MyProject/Objects/RTE/Device/Startup/C Startup"
+mkdir -p "/c/Projects/MyProject/Objects/Source"
+"/C/Keil_v5/ARM/ARMCLANG/bin/armclang"  @"/c/Projects/MyProject/Objects/Source/MyMain.o._cc"
+"/C/Keil_v5/ARM/ARMCLANG/bin/armclang"  @"/c/Projects/MyProject/Objects/RTE/Device/Startup/C Startup/startup_ARMCM0.o._cc"
+"/C/Keil_v5/ARM/ARMCLANG/bin/armclang"  @"/c/Projects/MyProject/Objects/RTE/Device/Startup/C Startup/system_ARMCM0.o._cc"
+"/C/Keil_v5/ARM/ARMCLANG/bin/armlink" --via="/c/Projects/MyProject/Objects/MyBinary.axf._ld"
 cbuild.sh finished successfully!
 \endverbatim
 */
@@ -88,12 +88,14 @@ The command line build environment for projects that are based on the CMSIS-Pack
 With most Linux distributions these tools are already available.  The installation for Windows is explained below.
 
 <b>Required for Windows: Bash</b>
-  -	<a href="https://gitforwindows.org/" target="_blank"><b>git for Windows</b></a> includes <b>Git Bash</b> which is easy to download and install.
+  - <a href="https://gitforwindows.org/" target="_blank"><b>git for Windows</b></a> includes <b>Git Bash</b> which is easy to download and install.
   
 
 \section cbuild_install2 cbuild_install.sh: Install Build Tools
 
-\todo Where to find cbuild_install.sh: CMSIS build tools
+CMSIS-Build tools are available for download as an asset of the respective 
+<a href="https://github.com/ARM-software/CMSIS_5/releases/" target="_blank"><b>CMSIS Release Version</b></a> 
+(starting 5.7.0 e/o April 2020).
 
 To install the command line build environment start from the Bash prompt:
 \code
@@ -129,7 +131,7 @@ $ source ./cbuild/etc/setup
 |\c $CMSIS_PACK_ROOT      | Directory that contains the software packs in CMSIS-Pack format. |
 |\c $CMSIS_COMPILER_ROOT  | Directory that contains the \ref cbuild_compiler_config.         |
 |\c $CMSIS_BUILD_ROOT     | Base directory of the CMSIS command line build tools.            |
-|\c $MDK_ROOT             | Base directory of the MDK installation.                          |
+|\c $MDK_ROOT             | Base directory of the MDK installation (optional).               |
 
 
 \section cbuild_compiler_config Compiler Configuration
@@ -215,7 +217,7 @@ and stores this catalog file in pack directory under ./Web. This file is used by
 
 \verbatim
 $ cp_init.sh ./packrepo
-(cp_init.sh): Setup Pack Directory 0.1.0 (C) 2020 ARM
+(cp_init.sh): Setup Pack Directory 0.9.0 (C) 2020 ARM
 info: reading directory: ./packrepo
 downloading package index file from
 ######################################################################## 100.0%
@@ -310,26 +312,24 @@ The build flow of the \ref cbuild script is:
 
 \verbatim
 $ cbuild.sh Simulation.cprj
-(cbuild.sh): Build Invocation 0.1.0 (C) 2020 ARM
+(cbuild.sh): Build Invocation 0.9.0 (C) 2020 ARM
 Simulation.cprj validates
-CMSIS Build (cbuildgen) 0.1.1 (Feb 14 2020, 15:03:45)
-Copyright (C) 2020 ARM Ltd and ARM Germany GmbH. All rights reserved.
+(cbuildgen): Build Process Manager 0.9.0 (C) 2020 ARM
 M650: Config command completed successfully.
-CMSIS Build (cbuildgen) 0.1.1 (Feb 14 2020, 15:03:45)
-Copyright (C) 2020 ARM Ltd and ARM Germany GmbH. All rights reserved.
+(cbuildgen): Build Process Manager 0.9.0 (C) 2020 ARM
 M651: Generated makefile for merging config files: 'Simulation_cfg.mak'
 M652: Generated makefile for project build:'Simulation.mak'
-mkdir -p "C:/Examples/Blinky/Objects/RTE/CMSIS/RTOS2/Keil RTX5/Library"
-mkdir -p "C:/Examples/Blinky/Objects/RTE/Compiler/IO/STDOUT/ITM"
-mkdir -p "C:/Examples/Blinky/Objects/RTE/Device/Startup/C Startup"
-mkdir -p "C:/Examples/Blinky/Objects/Source Files"
-"/C/Keil_v5/ARM/ARMCLANG/bin/armclang" @"C:/Examples/Blinky/Objects/RTE/CMSIS/RTOS2/Keil RTX5/Library/RTX_Config.o._cc"
-"/C/Keil_v5/ARM/ARMCLANG/bin/armclang" @"C:/Examples/Blinky/Objects/RTE/CMSIS/RTOS2/Keil RTX5/Library/rtx_lib.o._cc"
-"/C/Keil_v5/ARM/ARMCLANG/bin/armclang" @"C:/Examples/Blinky/Objects/RTE/Compiler/IO/STDOUT/ITM/retarget_io.o._cc"
-"/C/Keil_v5/ARM/ARMCLANG/bin/armclang" @"C:/Examples/Blinky/Objects/RTE/Device/Startup/C Startup/startup_ARMCM3.o._cc"
-"/C/Keil_v5/ARM/ARMCLANG/bin/armclang" @"C:/Examples/Blinky/Objects/RTE/Device/Startup/C Startup/system_ARMCM3.o._cc"
-"/C/Keil_v5/ARM/ARMCLANG/bin/armclang" @"C:/Examples/Blinky/Objects/Source Files/Blinky.o._cc"
-"/C/Keil_v5/ARM/ARMCLANG/bin/armlink" --via="C:/Examples/Blinky/Objects/Blinky.axf._ld"
+mkdir -p "/c/Examples/Blinky/Objects/RTE/CMSIS/RTOS2/Keil RTX5/Library"
+mkdir -p "/c/Examples/Blinky/Objects/RTE/Compiler/IO/STDOUT/ITM"
+mkdir -p "/c/Examples/Blinky/Objects/RTE/Device/Startup/C Startup"
+mkdir -p "/c/Examples/Blinky/Objects/Source Files"
+"/C/Keil_v5/ARM/ARMCLANG/bin/armclang" @"/c/Examples/Blinky/Objects/RTE/CMSIS/RTOS2/Keil RTX5/Library/RTX_Config.o._cc"
+"/C/Keil_v5/ARM/ARMCLANG/bin/armclang" @"/c/Examples/Blinky/Objects/RTE/CMSIS/RTOS2/Keil RTX5/Library/rtx_lib.o._cc"
+"/C/Keil_v5/ARM/ARMCLANG/bin/armclang" @"/c/Examples/Blinky/Objects/RTE/Compiler/IO/STDOUT/ITM/retarget_io.o._cc"
+"/C/Keil_v5/ARM/ARMCLANG/bin/armclang" @"/c/Examples/Blinky/Objects/RTE/Device/Startup/C Startup/startup_ARMCM3.o._cc"
+"/C/Keil_v5/ARM/ARMCLANG/bin/armclang" @"/c/Examples/Blinky/Objects/RTE/Device/Startup/C Startup/system_ARMCM3.o._cc"
+"/C/Keil_v5/ARM/ARMCLANG/bin/armclang" @"/c/Examples/Blinky/Objects/Source Files/Blinky.o._cc"
+"/C/Keil_v5/ARM/ARMCLANG/bin/armlink" --via="/c/Examples/Blinky/Objects/Blinky.axf._ld"
 Program Size: Code=7516 RO-data=1264 RW-data=168 ZI-data=9084
 cbuild.sh finished successfully!
 \endverbatim
@@ -377,9 +377,6 @@ cbuild.sh finished successfully!
 
 The \ref cbuildgen "cbuildgen" is the core tool for the build process. It is called from the \b Bash command line with the following syntax:
 
-\todo is a default extension assumed?
- - [danbro01] The .cprj extension has to be explicitly present in the <\c ProjectFile>.cprj argument.
-
 \code
 cbuildgen <command> <ProjectFile>.cprj [options]
 \endcode
@@ -388,55 +385,67 @@ cbuildgen <command> <ProjectFile>.cprj [options]
 
 \c cbuildgen is the name of tool.
 
-<\c command> specifies the operation of \c cbuildgen (see table below).
+<\c command> specifies the operation of \c cbuildgen (see table below). Only one command is permitted per invocation.
 
-<\c ProjectFile> is the name of the project file.
+<\c ProjectFile> is the name of the project file. The file extension (.cprj) is mandatory.
 
-[\c options] are optional parameters that control the operation (see table below).
+[\c options] are additional parameters that control the operation (see table below). 
+Note: available options are specific for each command.
 
 \b Commands
 <table class="cmtable" summary="cbuildgen commands">
   <tr>
     <th style="min-width:100px">&lt;command></th>
-    <th style="min-width:175px">Description</th>
+    <th style="min-width:185px">Description</th>
     <th style="min-width:175px">Details</th>
   </tr>
   <tr>
     <td>packlist</td>
-    <td>List missing packs</td>	
-    <td>Check the current list of installed packs in the directory \c $CMSIS_PACK_ROOT. Download URLs of missing packs are written to &lt;ProjectFile\>.cp_install file.</td>
+    <td nowrap>List missing packs</td>    
+    <td>Check the current list of installed packs in the directory \c $CMSIS_PACK_ROOT. The URLs of missing packs are written to &lt;ProjectFile\>.cp_install file.</td>
   </tr>
   <tr>
     <td>make</td>
-    <td>Generate makefile(s)</td>	
-    <td>Generates &lt;ProjectFile\>.mak for \ref Make "Make" to build the binary image. When used with --merge it generates also &lt;ProjectFile>_cfg.mak for \ref Make "Make" to update configuration files.</td>
+    <td nowrap>Generate makefile(s)</td>    
+    <td>Generates &lt;ProjectFile\>.mak for \ref Make "Make" required to build the project. 
+        When used with option --merge it generates also &lt;ProjectFile>_cfg.mak for \ref Make "Make" to update configuration files.
+        This command also generates a ASCII log file &lt;ProjectFile\>.clog recording location and version of the selected toolchain,
+        packs, components and config files.
+        The option --output specifies the destination folder of the generated files. The location of the &lt;ProjectFile\>.cprj is
+        used if --output is not specified.
+    </td>
   </tr>
   <tr>
     <td>extract</td>
-    <td>Extract layers from project</td>
-	<td>Generates a sub directory for all layers described in &lt;ProjectFile\>.cprj named \c ./Layer/\<layername>/ containing
-        a layer description file \<layername>.clayer and the project and configuration files belonging to the layer.
-    </td>		
+    <td nowrap>Extract layer from project</td>
+    <td>Creates a sub directory named \c ./Layer/\<layername>/ for each layer described in &lt;ProjectFile\>.cprj. These folders
+    contain a layer description file \<layername>.clayer and the project and configuration files belonging to the layer.
+    The option --layer=\<layname> selects a specific layer by name. This option can be specified multiple times to select multiple layers.
+    </td>
   </tr>
   <tr>
     <td>remove</td>
-	<td>Remove specified layer(s) from project</td>
-	<td>Updates the &lt;ProjectFile\>.cprj removing the layer description as well as all associated files and components for the 
+    <td nowrap>Remove layer from project</td>
+    <td>Updates the &lt;ProjectFile\>.cprj removing the layer description as well as all associated files and components for the 
         layers specified at the command line. The command deletes the associated files from the respecctive project directory.
-	</td>
+        The option --layer=\<layname> selects a specific layer by name and is mandatory. This option can be specified multiple
+        times to remove multiple layers.
+    </td>
   </tr>
   <tr>
     <td>compose</td>
-	<td>Create new project from layers</td>
-	<td>Create new &lt;ProjectFile\>.cprj from layer files ([...]\<layername>.clayer) as well as copying associated files.</td>
+    <td nowrap>Create new project</td>
+    <td>Create new &lt;ProjectFile\>.cprj from layer files ([...]\<layername>.clayer) as well as copying associated files.
+        One or more clayer files are required.
+    </td>
   </tr>
   <tr>
     <td>add</td>
-	<td>Add specified layer(s) to the project</td>
-	<td>Updates the &lt;ProjectFile\>.cprj adding the layer description as well as all associated files and components for the 
-        layers specified at the command line. The command copies the associated files from the layer directory into the project
-		directory.
-	</td>
+    <td nowrap>Add layer to project</td>
+    <td>Updates the &lt;ProjectFile\>.cprj adding the layer description as well as all associated files and components for the 
+        clayer files specified at the command line. The command copies the associated files from the layer directory into the project
+        directory. One or more clayer files are required.
+    </td>
   </tr>
 </table>
 
@@ -450,28 +459,30 @@ cbuildgen <command> <ProjectFile>.cprj [options]
   <tr>
     <td>\--merge</td>
     <td nowrap>Update configuration files</td>
-    <td>When used with the command \c make, it generates also &lt;ProjectFile>_cfg.mak for \ref Make "Make" to update configuration files using \ref ccmerge.
-	</td>
+    <td>When used with the command \c make, it generates also &lt;ProjectFile>_cfg.mak for \ref Make "Make" to update configuration
+        files using \ref ccmerge (used by command: make).
+    </td>
   </tr>
   <tr>
     <td>\--toolchain=&lt;compiler></td>
     <td nowrap>Specify toolchain</td>
-    <td>For projects that can be build with multiple toolchains, it defines the toolchain for \ref Make "Make".</td>
+    <td>For projects that can be build with multiple toolchains, it defines the toolchain for the build (used by command: make).</td>
   </tr>
   <tr>
     <td>\--output=&lt;directory></td>
     <td nowrap>Specify output directory</td>
-    <td>Specifies the directory where the <b>*.mak</b> files are generated.</td>
+    <td>Specifies the directory for the generated files <b>*.mak</b> files and the base directory for intermediate output from build.
+    (used by command: make).</td>
   </tr>
   <tr>
     <td>\--layer=\<layername>
-	<td nowrap>Specify layer name</td>
-	<td>Specifies the name of the layer (used by commands: remove and extract).</td>
+    <td nowrap>Specify layer name</td>
+    <td>Specifies the name of the layer (used by commands: remove and extract).</td>
   </tr>
   <tr>
     <td>\<directory>/\<layername>.clayer</td>
-	<td nowrap>Specify layer file</td>
-	<td>Specifies the directory and filename of the project layer (used by commands: add and compose).</td>
+    <td nowrap>Specify layer file</td>
+    <td>Specifies the directory and filename of the project layer (used by commands: add and compose).</td>
 </table>
 
 
@@ -494,15 +505,14 @@ of the original file.
 
 \verbatim
 $ cbuildgen packlist Simulation.cprj
-CMSIS Build (cbuildgen) 0.1.1 (Feb 14 2020, 15:03:45)
-Copyright (C) 2020 ARM Ltd and ARM Germany GmbH. All rights reserved.
+(cbuildgen): Build Process Manager 0.9.0 (C) 2020 ARM
 M654: URL 'http://www.keil.com/pack/ARM.CMSIS.5.6.0.pack' was added to the list of missing packages.
 M654: URL 'http://www.keil.com/pack/Keil.ARM_Compiler.1.6.1.pack' was added to the list of missing packages.
-M650: Config command completed successfully.
+M650: Command completed successfully.
 
 $ cbuildgen make Simulation.cprj
-CMSIS Build (cbuildgen) 0.1.1 (Feb 14 2020, 15:03:45)
-Copyright (C) 2020 ARM Ltd and ARM Germany GmbH. All rights reserved.
+(cbuildgen): Build Process Manager 0.9.0 (C) 2020 ARM
+M651: Generated makefile for merging config files: 'Simulation_cfg.mak'
 M652: Generated makefile for project build:'Simulation.mak'
 \endverbatim
 
@@ -642,11 +652,11 @@ ccmerge -pfile <name_of_pack_cfgfile> -cfile <name_of_current_cfgfile> [-merge] 
   </tr>
   <tr>
     <td>-pfile &lt;name_of_pack_cfgfile></td>
-    <td>File path of the configuration file from a pack</td>	
+    <td>File path of the configuration file from a pack</td>    
   </tr>
   <tr>
     <td>-cfile &lt;name_of_current_cfgfile></td>
-    <td>File path of the current config file in a project</td>	
+    <td>File path of the current config file in a project</td>    
   </tr>
   <tr>
     <td>-merge</td>
@@ -806,17 +816,17 @@ The following directories are used to store software pack.  The naming conventio
 
 \verbatim$
 cp_install.sh Simulation.cpinstall
-(cp_install.sh): Install Packs 0.1.0 (C) 2020 ARM
+(cp_install.sh): Install Packs 0.9.0 (C) 2020 ARM
 info: reading file: Simulation.cpinstall
 dos2unix: converting file Simulation.cpinstall to Unix format...
 http://www.keil.com/pack/ARM.CMSIS.5.6.0.pack
 ######################################################################## 100.0%#=#=#
 ######################################################################## 100.0%
-info: ARM.CMSIS.5.6.0.pack installing into C:\WORK\UV\trunk\CMSIS_Build\Installer\cbuild\bin\test\pack/ARM/CMSIS/5.6.0
+info: ARM.CMSIS.5.6.0.pack installing into /c/arm/cbuild/packs/ARM/CMSIS/5.6.0
 http://www.keil.com/pack/Keil.ARM_Compiler.1.6.1.pack
 ######################################################################## 100.0%#=#=#
 ######################################################################## 100.0%
-info: Keil.ARM_Compiler.1.6.1.pack installing into C:\WORK\UV\trunk\CMSIS_Build\Installer\cbuild\bin\test\pack/Keil/ARM_Compiler/1.6.1
+info: Keil.ARM_Compiler.1.6.1.pack installing into /c/arm/cbuild/packs/Keil/ARM_Compiler/1.6.1
 pack installation completed successfully
 \endverbatim
 
@@ -915,32 +925,32 @@ The \ref cbuild "cbuild.sh" script uses only the following subset of the \ref Ma
   </tr>
   <tr>
     <td>-f FILE</td>
-    <td>Specify makefile</td>	
+    <td>Specify makefile</td>    
     <td>Run make for the makefile specified by FILE</td>
   </tr>
   <tr>
     <td>-j [N]</td>
-    <td>Run parallel jobs.</td>	
+    <td>Run parallel jobs.</td>    
     <td>Speed up builds by allowing N jobs at once; infinite jobs with no arg.</td>
   </tr>
   <tr>
     <td>-r</td>
-    <td>Run make without built-in rules</td>	
+    <td>Run make without built-in rules</td>    
     <td>Disable the implicit rules built into make.</td>
   </tr>
   <tr>
     <td>-s</td>
-    <td>Run make in silent mode</td>	
+    <td>Run make in silent mode</td>    
     <td>Don't echo recipes.</td
   </tr>
   <tr>
     <th>[\<target>]</th>
-	<th>Short Name</th>
+    <th>Short Name</th>
     <th>Description</th>
   </tr>
   <tr>
     <td>clean</td>
-    <td nowrap>Cleanup build</td>	
+    <td nowrap>Cleanup build</td>    
     <td>Requests to remove intermediate build output files</td>
   </tr>
 </table>
@@ -963,8 +973,9 @@ $ make -f MyProject.mak clean
 /**
 \page cbuild_uv cbuild_uv.sh: Build MDK project
 
-The \c cp_install "cbuild_uv.sh" script calls uVision and exports all targets for a Keil MDK project in the CMSIS project format (*.cprj files).
-The script then invokes the \ref cbuild "cbuild.sh" script for each exported project target. It is called from the \b Bash command line with the following syntax:
+The \c cp_install "cbuild_uv.sh" script calls uVision and exports all targets for a Keil MDK project in the CMSIS project 
+format (*.cprj files). The script then invokes the \ref cbuild "cbuild.sh" script for each exported project target. It is
+called from the \b Bash command line with the following syntax:
 
 \code
 cbuild_uv.sh <project-file>.uvprojx
@@ -983,27 +994,27 @@ The environment variable \c $MDK_ROOT must refer to the base directory of the Ke
 Some MDK features are not converted as not all build features of µVision are available in command line build process.  For example:
   - User commands pre and post build
   - \c fcarm code generator
-  - Linker script generation
+  - Linker script generation. Instead the linker script generated by MDK is used by cmsis build.
 
 \section cbuild_uv_example Usage Example
 
 \verbatim
 $ cbuild_uv.sh FTP_Server.uvprojx
-(cbuild_uv.sh): Build MDK Project 0.1.0 (C) 2020 ARM
+(cbuild_uv.sh): Build MDK Project 0.9.0 (C) 2020 ARM
 uVision has created CPRJ files for the following targets:
-Debug.cprj
-Release.cprj
+FTP_Server.Debug.cprj
+FTP_Server.Release.cprj
  --------------------------------------------------------------------
- calling cbuild.sh for Debug.cprj
+ calling cbuild.sh for FTP_Server.Debug.cprj
  --------------------------------------------------------------------
  ...
  --------------------------------------------------------------------
- calling cbuild.sh for Release.cprj
+ calling cbuild.sh for FTP_Server.Release.cprj
  --------------------------------------------------------------------
  ...
 builds completed for:
-Debug.cprj
-Release.cprj
+FTP_Server.Debug.cprj
+FTP_Server.Release.cprj
 total: 2 failed: 0
 \endverbatim
 */
