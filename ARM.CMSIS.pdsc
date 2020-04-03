@@ -8,66 +8,38 @@
   <url>http://www.keil.com/pack/</url>
 
   <releases>
-    <release version="5.7.0-dev8">
-      Active development...
+    <release version="5.7.0-rc0">
       CMSIS-Build: 0.9.0 (beta)
         - Draft for CMSIS Project description (CPRJ)
-      Devices:
-        - Reworked ARMCM* C-StartUp files.
-      Utilities:
-        Attention: Linux binaries moved to Linux64 folder!
-        - SVDConv 3.3.35
-        - PackChk 1.3.89
-    </release>
-    <release version="5.7.0-dev7">
-      Active development...
-      CMSIS-Core(M): 5.4.0
+      CMSIS-Core(M): 5.4.0 (see revision history for details)
+        - Cortex-M55 cpu support
+        - Enhanced MVE support for Armv8.1-MML
         - Fixed device config define checks.
-      Devices:
-        - Enable loop and branch info cache for Armv8.1-MML devices.
-    </release>
-    <release version="5.7.0-dev6">
-      CMSIS-DSP:
-        - reworked examples
-    </release>
-    <release version="5.7.0-dev5">
-      CMSIS-NN: 1.3.0 (see revision history for details)
-        - Added MVE support
-        - Further optimizations for kernels using DSP extension
-      CMSIS-Driver: 2.8.0
-        - Added VIO API 0.1.0 (Preview)
-    </release>
-    <release version="5.7.0-dev4">
+        - L1 Cache functions for Armv7-M and later
       CMSIS-DSP: 1.8.0 (see revision history for details)
         - Added new functions and function groups
         - Added MVE support
-    </release>
-    <release version="5.7.0-dev3">
-      CMSIS-Core(M): 5.4.0
-        - L1 Cache functions for Armv7-M and later
-      Devices:
-        - Include L1 Cache functions in ARMv8MML/ARMv81MML devices
-    </release>
-    <release version="5.7.0-dev2">
-      CMSIS-Core(M): 5.4.0
-        - Cortex-M55 cpu support
-      Devices:
-        - ARMCM55 device
-    </release>
-    <release version="5.7.0-dev1">
-      Active development...
-      CMSIS-Core(M): 5.4.0 (see revision history for details)
-        - Enhanced MVE support for Armv8.1-MML
+      CMSIS-NN: 1.3.0 (see revision history for details)
+        - Added MVE support
+        - Further optimizations for kernels using DSP extension
       CMSIS-RTOS2:
         - RTX 5.5.2 (see revision history for details)
       CMSIS-Driver: 2.8.0
+        - Added VIO API 0.1.0 (Preview)
         - removed volatile from status related typedefs in APIs
         - enhanced WiFi Interface API with support for polling Socket Receive/Send
       CMSIS-Pack: 1.6.3 (see revision history for details)
         - deprecating all types specific to cpdsc format. Cpdsc is replaced by Cprj with dedicated schema.
       Devices:
+        - ARMCM55 device
         - ARMv81MML startup code recognizing __MVE_USED macro
         - Refactored vector table references for all Cortex-M devices
+        - Reworked ARMCM* C-StartUp files.
+        - Include L1 Cache functions in ARMv8MML/ARMv81MML devices
+      Utilities:
+        Attention: Linux binaries moved to Linux64 folder!
+        - SVDConv 3.3.35
+        - PackChk 1.3.89
     </release>
     <release version="5.6.0" date="2019-07-10">
       CMSIS-Core(M): 5.3.0 (see revision history for details)
