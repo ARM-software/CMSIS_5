@@ -1,8 +1,8 @@
 /**************************************************************************//**
  * @file     cmsis_armclang.h
  * @brief    CMSIS compiler specific macros, functions, instructions
- * @version  V1.1.2
- * @date     30. July 2019
+ * @version  V1.2.0
+ * @date     05. August 2019
  ******************************************************************************/
 /*
  * Copyright (c) 2009-2019 Arm Limited. All rights reserved.

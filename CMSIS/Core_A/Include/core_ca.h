@@ -1,11 +1,11 @@
 /**************************************************************************//**
  * @file     core_ca.h
  * @brief    CMSIS Cortex-A Core Peripheral Access Layer Header File
- * @version  V1.0.2
- * @date     12. November 2018
+ * @version  V1.0.3
+ * @date     28. January 2020
  ******************************************************************************/
 /*
- * Copyright (c) 2009-2018 ARM Limited. All rights reserved.
+ * Copyright (c) 2009-2020 ARM Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *

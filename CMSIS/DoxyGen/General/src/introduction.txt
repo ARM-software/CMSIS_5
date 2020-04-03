@@ -173,18 +173,35 @@ In addition, each CMSIS component has its own release history:
         - CMSIS-Build 0.9.0 (beta)
           - Draft for CMSIS Project description (CPRJ)
         - CMSIS-Core (Cortex-M) 5.4.0
-        - CMSIS-Core (Cortex-A) 1.1.4 (unchanged)
+          - Cortex-M55 cpu support
+          - Enhanced MVE support for Armv8.1-MML
+          - Fixed device config define checks.
+          - L1 Cache functions for Armv7-M and later
+        - CMSIS-Core (Cortex-A) 1.2.0
+          - Fixed GIC_SetPendingIRQ to use GICD_SGIR
+          - Added missing DSP intrinsics
+          - Reworked assembly intrinsics: volatile, barriers and clobber
         - CMSIS-Driver 2.8.0
           - Added VIO API 0.1.0 (preview)
         - CMSIS-DSP 1.8.0
+          - Added new functions and function groups
+          - Added MVE support
         - CMSIS-NN 1.3.0
+          - Added MVE support
+          - Further optimizations for kernels using DSP extension
         - CMSIS-RTOS 2.1.3 (unchanged)
-          - RTX 5.5.5 (see revision history for details)
+          - RTX 5.5.2 (see revision history for details)
         - CMSIS-Pack 1.6.3
+          - deprecating all types specific to cpdsc format. Cpdsc is replaced by Cprj with dedicated schema.
         - CMSIS-SVD 1.3.3 (unchanged)
         - CMSIS-DAP 2.0.0 (unchanged)
         - CMSIS-Zone 1.0.0
         - Devices
+          - ARMCM55 device
+          - ARMv81MML startup code recognizing __MVE_USED macro
+          - Refactored vector table references for all Cortex-M devices
+          - Reworked ARMCM* C-StartUp files.
+          - Include L1 Cache functions in ARMv8MML/ARMv81MML devices
         - Utilities
           Attention: Linux binaries moved to Linux64 folder!
           - SVDConv 3.3.35

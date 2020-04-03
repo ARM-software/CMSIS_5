@@ -16,6 +16,10 @@
         - Enhanced MVE support for Armv8.1-MML
         - Fixed device config define checks.
         - L1 Cache functions for Armv7-M and later
+      CMSIS-Core(A): 1.2.0 (see revision history for details)
+        - Fixed GIC_SetPendingIRQ to use GICD_SGIR
+        - Added missing DSP intrinsics
+        - Reworked assembly intrinsics: volatile, barriers and clobber
       CMSIS-DSP: 1.8.0 (see revision history for details)
         - Added new functions and function groups
         - Added MVE support
@@ -2578,7 +2582,7 @@ and 8-bit Java bytecodes in Jazelle state.
       </files>
     </component>
 
-    <component Cclass="CMSIS" Cgroup="CORE" Cversion="1.1.4"  condition="ARMv7-A Device" >
+    <component Cclass="CMSIS" Cgroup="CORE" Cversion="1.2.0"  condition="ARMv7-A Device" >
       <description>CMSIS-CORE for Cortex-A</description>
       <files>
         <!-- CPU independent -->
