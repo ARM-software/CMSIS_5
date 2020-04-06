@@ -21,8 +21,8 @@
  * Title:        arm_nnfunctions.h
  * Description:  Public header file for CMSIS NN Library
  *
- * $Date:        April 1, 2020
- * $Revision:    V.1.2.6
+ * $Date:        April 6, 2020
+ * $Revision:    V.2.0.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -1892,7 +1892,7 @@ void arm_softmax_s8(const int8_t *input,
                     const int32_t row_size,
                     const int32_t mult,
                     const int32_t shift,
-                    const int8_t diff_min,
+                    const int32_t diff_min,
                     int8_t *output);
 
   /**

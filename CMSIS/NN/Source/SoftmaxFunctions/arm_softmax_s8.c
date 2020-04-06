@@ -21,8 +21,8 @@
  * Title:        arm_softmax_s8.c
  * Description:  S8 softmax function
  *
- * $Date:        March 31, 2020
- * $Revision:    V.1.5.1
+ * $Date:        April 6, 2020
+ * $Revision:    V.2.0.0
  *
  * Target Processor:  Cortex-M cores
  *
@@ -86,7 +86,7 @@ void arm_softmax_s8(const int8_t *input,
                     const int32_t row_size,
                     const int32_t mult,
                     const int32_t shift,
-                    const int8_t diff_min,
+                    const int32_t diff_min,
                     int8_t *output)
 {
 #ifdef ARM_MATH_MVEI
@@ -217,7 +217,7 @@ void arm_softmax_s8(const int8_t *input,
             max = MAX(max, input[col]);
         }
 
-        int8_t diff = 0;
+        int32_t diff = 0;
         int32_t sum = 0;
 
         for (col = 0; col < row_size; ++col)
