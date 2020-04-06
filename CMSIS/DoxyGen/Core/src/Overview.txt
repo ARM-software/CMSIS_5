@@ -78,9 +78,9 @@ More information about Armv8.1-M Architecture is available under <a href="https:
 \section tested_tools_sec Tested and Verified Toolchains
 
 The \ref templates_pg supplied by Arm have been tested and verified with the following toolchains:
- - Arm: Arm Compiler 5.06 update 6 (not for Cortex-M23/33/35P, Armv8-M, Armv8.1-M)
- - Arm: Arm Compiler 6.12
- - Arm: Arm Compiler 6.6.2 (not for Cortex-M0/23/33/35P, Armv8-M, Armv8.1-M)
+ - Arm: Arm Compiler 5.06 update 6 (not for Cortex-M23/33/35P/55, Armv8-M, Armv8.1-M)
+ - Arm: Arm Compiler 6.14
+ - Arm: Arm Compiler 6.6.2 (not for Cortex-M0/23/33/35P/55, Armv8-M, Armv8.1-M)
  - GNU: GNU Tools for Arm Embedded 9.2.1 2019q4
  - IAR: IAR ANSI C/C++ Compiler for Arm 8.20.1.14183
 
@@ -100,8 +100,11 @@ The \ref templates_pg supplied by Arm have been tested and verified with the fol
       <td>V5.4.0</td>
       <td>
 \if ARMv8M
-        Added: Cortex-M55 support.
+        Added: Cortex-M55 cpu support
+        Enhanced: MVE support for Armv8.1-MML
 \endif
+        Fixed: Device config define checks
+        Added: L1 Cache functions for Armv7-M and later
       </td>
     </tr>
     <tr>
