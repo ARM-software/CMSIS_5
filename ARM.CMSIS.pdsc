@@ -8,7 +8,7 @@
   <url>http://www.keil.com/pack/</url>
 
   <releases>
-    <release version="5.7.0-rc0">
+    <release version="5.7.0-rc1">
       CMSIS-Build: 0.9.0 (beta)
         - Draft for CMSIS Project description (CPRJ)
       CMSIS-Core(M): 5.4.0 (see revision history for details)
@@ -3092,7 +3092,7 @@ and 8-bit Java bytecodes in Jazelle state.
     </component>
 
     <!-- CMSIS-DSP component -->
-    <component Cclass="CMSIS" Cgroup="DSP" Cvariant="Library" Cversion="1.7.0" condition="CMSIS DSP">
+    <component Cclass="CMSIS" Cgroup="DSP" Cvariant="Library" Cversion="1.8.0" condition="CMSIS DSP">
       <description>CMSIS-DSP Library for Cortex-M, SC000, and SC300</description>
       <files>
         <!-- CPU independent -->
