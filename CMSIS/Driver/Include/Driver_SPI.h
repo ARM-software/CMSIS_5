@@ -84,7 +84,7 @@ extern "C"
 #define ARM_SPI_CPOL1_CPHA0             (2UL << ARM_SPI_FRAME_FORMAT_Pos)   ///< Clock Polarity 1, Clock Phase 0
 #define ARM_SPI_CPOL1_CPHA1             (3UL << ARM_SPI_FRAME_FORMAT_Pos)   ///< Clock Polarity 1, Clock Phase 1
 #define ARM_SPI_TI_SSI                  (4UL << ARM_SPI_FRAME_FORMAT_Pos)   ///< Texas Instruments Frame Format
-#define ARM_SPI_MICROWIRE               (5UL << ARM_SPI_FRAME_FORMAT_Pos)   ///< National Microwire Frame Format
+#define ARM_SPI_MICROWIRE               (5UL << ARM_SPI_FRAME_FORMAT_Pos)   ///< National Semiconductor Microwire Frame Format
 
 /*----- SPI Control Codes: Mode Parameters: Data Bits -----*/
 #define ARM_SPI_DATA_BITS_Pos            12
