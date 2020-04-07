@@ -33,7 +33,7 @@ CMSIS-Pack provides the <b>\#define CMSIS_header_file</b> in <a href="../../Pack
 
 The CMSIS-Core (Cortex-M) system files are device specific. In addition, the deprecated \ref startup_s_pg is also compiler vendor specific.
 The versions provided by CMSIS are only generic templates. The adopted versions for a concrete device are typically provided by the device
-vendor through the according device familiy pack (DFP).
+vendor through the according device family pack (DFP).
 
 For example, the following files are provided by the STM32F10x device family pack:
 

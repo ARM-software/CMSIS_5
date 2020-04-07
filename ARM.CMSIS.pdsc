@@ -66,7 +66,7 @@
       CMSIS-Driver: 2.7.1
         - WiFi Interface API 1.0.0
       Devices:
-        - Generalized C startup code for all Cortex-M familiy devices.
+        - Generalized C startup code for all Cortex-M family devices.
         - Updated Cortex-A default memory regions and MMU configurations
         - Moved Cortex-A memory and system config files to avoid include path issues
     </release>
