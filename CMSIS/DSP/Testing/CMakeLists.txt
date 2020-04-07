@@ -1,5 +1,7 @@
 cmake_minimum_required (VERSION 3.6)
 cmake_policy(SET CMP0077 NEW)
+include(CMakePrintHelpers)
+
 # The tests are assuming that MATRIX_CHECK is enabled when building
 # CMSIS-DSP.
 
@@ -69,6 +71,7 @@ endfunction()
 option(BENCHMARK "Benchmarking compiled" OFF)
 option(EXTBENCH "Benchmarking with external traces" OFF)
 option(NN "NN Tests included" OFF)
+option(REFLIB "Use already built reference lib" OFF)
 
 project(Testing)
 
@@ -84,7 +87,10 @@ set(ROOT ${CMAKE_CURRENT_SOURCE_DIR}/../../..)
 set(TESTFRAMEWORK ON)
 include(config)
 
+if (NOT REFLIB)
 add_subdirectory(../Source bin_dsp)
+endif()
+
 if (NN)
 add_subdirectory(${ROOT}/CMSIS/NN/Source bin_nn)
 endif()
@@ -260,7 +266,16 @@ if (EXTBENCH)
 endif()
 
 ### Includes
+if (REFLIB)
+list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/../Source)
+include(configDsp)
+SET(DSP ${ROOT}/CMSIS/DSP)
+target_include_directories(TestingLib PUBLIC "${DSP}/Include")
+target_link_libraries(TestingLib PRIVATE "${REFLIBNAME}")
+else()
 target_link_libraries(TestingLib PRIVATE CMSISDSP)
+endif()
+
 if(NN)
 target_link_libraries(TestingLib PRIVATE CMSISNN)
 endif()
