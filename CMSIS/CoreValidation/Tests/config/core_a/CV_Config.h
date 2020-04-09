@@ -106,19 +106,19 @@
 #define TC_GENTIMER_CNTPCT                  1
 #define TC_GENTIMER_CNTP_CVAL               1
 
-// <q34> TC_L1Cache_EnDisable
-// <q35> TC_L1Cache_EnDisableBTAC
-// <q36> TC_L1Cache_log2_up
-// <q37> TC_L1Cache_InvalidateDCacheAll
-// <q38> TC_L1Cache_CleanDCacheAll
-// <q39> TC_L1Cache_CleanInvalidateDCacheAll
+// <q34> TC_CAL1Cache_EnDisable
+// <q35> TC_CAL1Cache_EnDisableBTAC
+// <q36> TC_CAL1Cache_log2_up
+// <q37> TC_CAL1Cache_InvalidateDCacheAll
+// <q38> TC_CAL1Cache_CleanDCacheAll
+// <q39> TC_CAL1Cache_CleanInvalidateDCacheAll
 
-#define TC_L1CACHE_ENDISABLE                1
-#define TC_L1CACHE_ENDISABLEBTAC            1
-#define TC_L1CACHE_LOG2_UP                  1
-#define TC_L1CACHE_INVALIDATEDCACHEALL      1
-#define TC_L1CACHE_CLEANDCACHEALL           1
-#define TC_L1CACHE_CLEANINVALIDATEDCACHEALL 1
+#define TC_CAL1CACHE_ENDISABLE                1
+#define TC_CAL1CACHE_ENDISABLEBTAC            1
+#define TC_CAL1CACHE_LOG2_UP                  1
+#define TC_CAL1CACHE_INVALIDATEDCACHEALL      1
+#define TC_CAL1CACHE_CLEANDCACHEALL           1
+#define TC_CAL1CACHE_CLEANINVALIDATEDCACHEALL 1
 // </h>
 
 #endif /* __CV_CONFIG_H */
