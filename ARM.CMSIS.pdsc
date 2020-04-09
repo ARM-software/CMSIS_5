@@ -8,7 +8,7 @@
   <url>http://www.keil.com/pack/</url>
 
   <releases>
-    <release version="5.7.0-rc1">
+    <release version="5.7.0-rc2">
       CMSIS-Build: 0.9.0 (beta)
         - Draft for CMSIS Project description (CPRJ)
       CMSIS-Core(M): 5.4.0 (see revision history for details)
