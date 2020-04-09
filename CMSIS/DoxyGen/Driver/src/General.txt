@@ -34,6 +34,7 @@ The following CMSIS-Driver API groups are defined:
   - \ref storage_interface_gr "Storage": Storage device interface driver.
   - \ref usart_interface_gr "USART": Universal Synchronous and Asynchronous Receiver/Transmitter interface driver.
   - \ref usb_interface_gr "USB": Interface driver for USB Host and USB Device communication.
+  - \ref vio_interface_gr "VIO": API for virtual I/Os (VIO).
   - \ref wifi_interface_gr "WiFi": Interface driver for wireless communication.
 
 <hr>
@@ -62,50 +63,58 @@ The following files relevant to CMSIS-Driver are present in the <b>ARM::CMSIS</b
       <th>Description</th>
     </tr>
     <tr>
+      <td>2.8.0</td>
+      <td>
+        - Changed: removed volatile from status related typedefs APIs
+        - Enhanced WiFi Interface API with support for polling Socket Receive/Send
+        - Added VIO API 0.1.0 (Preview)
+      </td>
+    </tr>
+    <tr>
       <td>2.7.1</td>
-      <td>Modifications compared to Version 2.7.0:
+      <td>
         - Finalized WiFi Interface API 1.0.0.
       </td>
     </tr>
     <tr>
       <td>2.7.0</td>
-      <td>Modifications compared to Version 2.6.0:
+      <td>
         - Added WiFi Interface API 1.0.0-beta.
         - Added custom driver selection to simplify implementation of new CMSIS-Driver.
       </td>
     </tr>
     <tr>
       <td>2.6.0</td>
-      <td>Modifications compared to Version 2.05:
-- Enhanced CAN-Driver API with explicit BUSOFF state.
-- Enhanced NAND-Driver API for ECC handling.
+      <td>
+        - Enhanced CAN-Driver API with explicit BUSOFF state.
+        - Enhanced NAND-Driver API for ECC handling.
       </td>
     </tr>
     <tr>
       <td>2.05</td>
-      <td>Modifications compared to Version 2.04:
- - Changed: All typedefs related to status have been made volatile. 
+      <td>
+        - Changed: All typedefs related to status have been made volatile. 
       </td>
     </tr>
     <tr>
       <td>2.04</td>
-      <td>Modifications compared to Version 2.03:
- - Added: template files for CAN interface driver.
+      <td>
+        - Added: template files for CAN interface driver.
       </td>
     </tr>
     <tr>
       <td>2.03</td>
-      <td>Modifications compared to Version 2.02:
- - Added: CAN API for an interface to CAN peripherals
- - Added: Overview of the \ref driverValidation "CMSIS-Driver Validation" Software Pack.
- - Enhanced: documentation and clarified behavior of the \ref CallSequence.
+      <td>
+        - Added: CAN API for an interface to CAN peripherals
+        - Added: Overview of the \ref driverValidation "CMSIS-Driver Validation" Software Pack.
+        - Enhanced: documentation and clarified behavior of the \ref CallSequence.
       </td>
     </tr>
     <tr>
       <td>2.02</td>
-      <td>Modifications compared to Version 2.00:
- - Minor API changes, for exact details refer to the header file of each driver.
- - Added: Flash Interface, NAND interface.
+      <td>
+        - Minor API changes, for exact details refer to the header file of each driver.
+        - Added: Flash Interface, NAND interface.
       </td>
     </tr>
     <tr>
@@ -316,6 +325,29 @@ ARM_DRIVER_SPI Driver_SPI3;     // access functions for SPI3 interface
 
 The access functions can be passed to middleware to specify the driver instance that the middleware should use for communication.
 
+\b Naming \b Convention
+
+The access structs need to follow this naming convention: the keyword "Driver" followed by an underscore "_", the interface
+name "IFNAME" (usually in upper case letters), and the instance number "n". Here's the full list of access struct names for
+all drivers (n to be replaced with the actual instance number):
+\code
+Driver_CANn
+Driver_ETH_MACn
+Driver_ETH_PHYn
+Driver_Flashn
+Driver_I2Cn
+Driver_MCIn
+Driver_NANDn
+Driver_SAIn
+Driver_SPIn
+Driver_Storagen
+Driver_USARTn
+Driver_USBDn
+Driver_USBHn
+Driver_WiFin
+\endcode
+
+
 \b Example:
 \code
 void init_middleware (ARM_DRIVER_SPI *Drv_spi) ...
@@ -441,7 +473,7 @@ Further driver reference implementations are available in Device Family Packs (D
 /**
 \page driverValidation Driver Validation
 
-The <a href="http://www.keil.com/pack/" target=_blank>Software Pack</a> named <b>ARM::CMSIS-Driver_Validation</b> contains the following:
+The <a href="https://www.keil.com/pack/" target=_blank>Software Pack</a> named <b>ARM::CMSIS-Driver_Validation</b> contains the following:
 
  - Source code of a CMSIS-Driver Validation Suite along with configuration file.
  - Documentation of the CMSIS-Driver Validation Suite.
@@ -463,27 +495,38 @@ The following CMSIS-Drivers can be tested with the current release:
  - \ref usart_interface_gr : with loop back test of communication.
  - \ref usbd_interface_gr : only API and setup; does not test data transfer.
  - \ref usbh_interface_gr : only API and setup; does not test data transfer.
+ - \ref wifi_interface_gr : extensive tests for WiFi Driver.
  
-The Driver Validation output can printed to a console, output via ITM printf, or output to a memory buffer.
+The Driver Validation output can be printed to a console or saved in an XML file, via standard output (usually ITM).
  
 \section test_output Sample Test Output
 \verbatim
-CMSIS-Driver Test      Aug 24 2015 15:15:14
+CMSIS-Driver USART Test Report   Dec  6 2019   11:44:30 
 
-TEST 01: SPI_GetCapabilities          PASSED
-TEST 02: SPI_Initialization
-  DV_SPI.c(142) - Failed
-TEST 03: SPI_PowerControl             NOT EXECUTED
-  :
-  :
-TEST 23: USART_Send 
-  DV_USART.c(335) - Fail to send 1024 bytes 
-  DV_USART.c(335) - Fail to send 2048 bytes 
-  DV_USART.c(341) - Fail to send without callback 2048 bytes 
-  :
-  :
-Test Summary: 52 Tests: 42 Executed, 22 Failed.
-  653 Test Cases: 56 Errors(s), 12 Warning(s).
+TEST 01: USART_GetCapabilities            PASSED
+TEST 02: USART_Initialization             PASSED
+TEST 03: USART_PowerControl               
+  DV_USART.c (301): [WARNING] Low power is not supported
+                                          PASSED
+TEST 04: USART_Config_PolarityPhase       PASSED
+TEST 05: USART_Config_DataBits            
+  DV_USART.c (387): [WARNING] Data Bits = 9 are not supported
+                                          PASSED
+TEST 06: USART_Config_StopBits            
+  DV_USART.c (425): [WARNING] Stop Bits = 1.5 are not supported
+  DV_USART.c (429): [WARNING] Stop Bits = 0.5 are not supported
+                                          PASSED
+TEST 07: USART_Config_Parity              PASSED
+TEST 08: USART_Config_Baudrate            PASSED
+TEST 09: USART_Config_CommonParams        PASSED
+TEST 10: USART_Send                       PASSED
+TEST 11: USART_AsynchronousReceive        PASSED
+TEST 12: USART_Loopback_CheckBaudrate     PASSED
+TEST 13: USART_Loopback_Transfer          PASSED
+TEST 14: USART_CheckInvalidInit           PASSED
+
+Test Summary: 14 Tests, 14 Passed, 0 Failed.
+Test Result: PASSED
 \endverbatim
 
 \section loop_back_setup Setup for Loop Back Communication

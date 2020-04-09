@@ -9,7 +9,7 @@ typical content of a DFP is:
   - \ref cp_Components "Software Components" that configure the device and basic device drivers, in particular:
     - CMSIS-compliant \ref cp_System_Startp required to setup the C run-time library, device clock, and memory interface.
     - Peripheral Driver Interfaces that provide software routines for physical device peripherals used by middleware stacks.
-      Drivers may adhere to the <a class=el href="http://www.keil.com/cmsis/driver" target="_blank">CMSIS-Driver</a> standard.
+      Drivers may adhere to the <a class=el href="https://www.keil.com/cmsis/driver" target="_blank">CMSIS-Driver</a> standard.
   - One or more \ref cp_SVD "System View Description Files" describing the programmer's view of the device's
     peripherals.
   - \ref cp_FlashProgrammingAlgorithm for erasing and downloading code into on-chip Flash.
@@ -27,7 +27,7 @@ A \ref pdsc_devices_pg "Device Family Pack (DFP)" may be provided by a Silicon V
 tools with support for new devices. In general, the DFP enables Silicon Vendors to distribute tool independent device
 support for their device families.\n
 DFPs can also be used to provide information for the display on <b>web sites</b>. One example is the new device database on
-<a class=el href="http://www.keil.com/dd2/" target="_blank">www.keil.com/dd2/</a>:
+<a class=el href="https://www.keil.com/dd2/" target="_blank">www.keil.com/dd2/</a>:
 
 \anchor DevWebSite
 \image html DeviceDatabase2.png "Device information on a web site extracted from a DFP"
@@ -214,7 +214,7 @@ We will address this problem in the next section.
 
 \section cp_SVD System View Description File
 
-<a class=el href="http://www.keil.com/cmsis/svd" target="_blank">CMSIS-SVD</a>
+<a class=el href="https://www.keil.com/cmsis/svd" target="_blank">CMSIS-SVD</a>
 formalizes the description of the programmer's view for the system contained in ARM Cortex-M processor-based
 microcontrollers, in particular the memory mapped registers of the peripherals. The level of detail contained in system view
 descriptions is comparable to what is found in device reference manuals published by silicon vendors. The information ranges
@@ -285,7 +285,7 @@ able to see the SVD file included in your project:
 \image html SVDIncluded.png "Project with SVD file"
 
 \note For more information on CMSIS-SVD, please visit
-<a class=el href="http://www.keil.com/cmsis/svd" target="_blank">www.keil.com/cmsis/svd</a>
+<a class=el href="https://www.keil.com/cmsis/svd" target="_blank">www.keil.com/cmsis/svd</a>
 </li>
 </ol>
 
@@ -309,7 +309,7 @@ name, for example MVCM3XXX_16.uvproj.
 Open the project with uVision. The selected target (Cortex-M) is fine for the device.
 
 \note Creating a Flash programming algorithm with
-      <a class=el href="http://www.keil.com/arm/selector.asp" target="_blank">MDK-Lite</a> is not supported.
+      <a class=el href="https://www.keil.com/arm/selector.asp" target="_blank">MDK-Lite</a> is not supported.
 </li>
 <li>
 Open the dialog <b>Project - Options for Target - Output</b> and change the content of the field <b>Name of Executable</b>
@@ -402,6 +402,10 @@ A device is described by the following properties:
  - \ref element_compile "compile": device specific general settings for the build tools
  - \ref element_debugconfig "debugconfig": default settings for a debug connection
  - \ref element_debugport "debugport": debug port description of the device for the debugger to configure a debug
+   connection.
+ - \ref element_accessportV1 "accessportV1": access port (APv1) description of the device for the debugger to configure a debug
+   connection.
+ - \ref element_accessportV2 "accessportV2": access port (APv2) description of the device for the debugger to configure a debug
    connection.
  - \ref element_debug "debug": device specific information for the debugger to configure a debug connection including
    System View Description files.
@@ -511,7 +515,7 @@ Add the following lines to the PDSC file in the \elem{components} section:
 \endcode
 \note The first two software components are added to <b>Device\::HAL</b> because they are specific to the device family and
 are not using a published API. The drivers for I2C and UART are adhering to the
-<a class=el href="http://www.keil.com/cmsis/driver" target="_blank">CMSIS-Driver</a> specification. Thus, they are added to
+<a class=el href="https://www.keil.com/cmsis/driver" target="_blank">CMSIS-Driver</a> specification. Thus, they are added to
 the Cclass <b>CMSIS Driver</b>.
 </li>
 <li>

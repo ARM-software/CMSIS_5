@@ -55,7 +55,166 @@
   @remark
                    Refer to \ref arm_conv_opt_q7() for a faster implementation of this function.
  */
+#if defined(ARM_MATH_MVEI)
+#include "arm_helium_utils.h"
 
+#include "arm_vec_filtering.h"
+
+void arm_conv_q7(
+  const q7_t * pSrcA,
+        uint32_t srcALen,
+  const q7_t * pSrcB,
+        uint32_t srcBLen,
+        q7_t * pDst)
+{
+    const q7_t     *pIn1 = pSrcA;     /* inputA pointer               */
+    const q7_t     *pIn2 = pSrcB;     /* inputB pointer               */
+    /*
+     * Loop to perform MAC operations according to correlation equation
+     */
+    const q7_t     *pX;
+    const q7_t     *pY;
+    const q7_t     *pA;
+    const q7_t     *pB;
+    int32_t   i = 0U, j = 0;    /* loop counters */
+    int32_t   block1, block2, block3;
+    uint8_t   vddupStartIdx = 15;
+    uint8x16_t decrIdxVec = vddupq_u8(vddupStartIdx, 1);
+
+    if (srcALen < srcBLen)
+    {
+        /*
+         * Initialization to inputB pointer
+         */
+        pIn1 = pSrcB;
+        /*
+         * Initialization to the end of inputA pointer
+         */
+        pIn2 = pSrcA;
+        /*
+         * Swapping the lengths
+         */
+        j = srcALen;
+        srcALen = srcBLen;
+        srcBLen = j;
+    }
+
+    block1 = srcBLen - 1;
+    block2 = srcALen - srcBLen + 1;
+    block3 = srcBLen - 1;
+
+    pA = pIn1;
+    pB = pIn2 - 15;
+
+    for (i = 0; i <= block1 - 2; i += 2)
+    {
+        uint32_t  count = i + 1;
+        int32_t   acc0 = 0;
+        int32_t   acc1 = 0;
+
+        pX = pA;
+        pY = pB;
+
+        MVE_INTR_CONV_DUAL_INC_Y_INC_SIZE_Q7(acc0, acc1, pX, pY, count);
+        *pDst++ = (q7_t) acc0;
+        *pDst++ = (q7_t) acc1;
+        pB += 2;
+    }
+    for (; i < block1; i++)
+    {
+        uint32_t  count = i + 1;
+        int32_t   acc = 0;
+
+        pX = pA;
+        pY = pB;
+
+        MVE_INTR_CONV_SINGLE_Q7(acc, pX, pY, count);
+        *pDst++ = (q7_t) acc;
+        pB++;
+    }
+
+    for (i = 0; i <= block2 - 4; i += 4)
+    {
+        uint32_t  count = srcBLen;
+        int32_t   acc0 = 0;
+        int32_t   acc1 = 0;
+        int32_t   acc2 = 0;
+        int32_t   acc3 = 0;
+
+        pX = pA;
+        pY = pB;
+        /*
+         * compute 4 accumulators per loop
+         * size is fixed for all accumulators
+         * X pointer is incrementing for successive accumulators
+         */
+        MVE_INTR_CONV_QUAD_INC_X_FIXED_SIZE_Q7(acc0, acc1, acc2, acc3, pX, pY, count);
+        *pDst++ = (q7_t) acc0;
+        *pDst++ = (q7_t) acc1;
+        *pDst++ = (q7_t) acc2;
+        *pDst++ = (q7_t) acc3;
+        pA += 4;
+    }
+    for (; i <= block2 - 2; i += 2)
+    {
+        uint32_t  count = srcBLen;
+        int32_t   acc0 = 0;
+        int32_t   acc1 = 0;
+
+        pX = pA;
+        pY = pB;
+        /*
+         * compute 2 accumulators per loop
+         * size is fixed for all accumulators
+         * X pointer is incrementing for successive accumulators
+         */
+        MVE_INTR_CONV_DUAL_INC_X_FIXED_SIZE_Q7(acc0, acc1, pX, pY, count);
+        *pDst++ = (q7_t) acc0;
+        *pDst++ = (q7_t) acc1;
+        pA += 2;
+    }
+    if (block2 & 1)
+    {
+        uint32_t  count = srcBLen;
+        int32_t   acc = 0;
+
+        pX = pA;
+        pY = pB;
+
+        MVE_INTR_CONV_SINGLE_Q7(acc, pX, pY, count);
+        *pDst++ = (q7_t) acc;
+        pA++;
+    }
+
+    for (i = block3; i >= 1; i -= 2)
+    {
+        uint32_t  count = i;
+        int32_t   acc0 = 0;
+        int32_t   acc1 = 0;
+
+        pX = pA;
+        pY = pB;
+
+        MVE_INTR_CONV_DUAL_INC_X_DEC_SIZE_Q7(acc0, acc1, pX, pY, count);
+        *pDst++ = (q7_t) acc0;
+        *pDst++ = (q7_t) acc1;
+        pA += 2;
+    }
+    for (; i >= 1; i--)
+    {
+        uint32_t  count = i;
+        int32_t   acc = 0;
+
+        pX = pA;
+        pY = pB;
+
+        MVE_INTR_CONV_SINGLE_Q7(acc, pX, pY, count);
+        *pDst++ = (q7_t) acc;
+        pA++;
+    }
+}
+
+#else
 void arm_conv_q7(
   const q7_t * pSrcA,
         uint32_t srcALen,
@@ -694,6 +853,7 @@ void arm_conv_q7(
 #endif /* #if !defined(ARM_MATH_CM0_FAMILY) */
 
 }
+#endif /* defined(ARM_MATH_MVEI) */
 
 /**
   @} end of Conv group

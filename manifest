@@ -1,6 +1,7 @@
 pdsc: ARM.CMSIS.pdsc
 preproc:
- - clean: CMSIS/Documentation/(Core,Core_A,DAP,Driver,DSP,NN,General,Pack,RTOS,RTOS2,SVD,Zone)
+ - clean: CMSIS/Documentation/(Build,Core,Core_A,DAP,Driver,DSP,NN,General,Pack,RTOS,RTOS2,SVD,Zone)
+ - doxygen: CMSIS/DoxyGen/Build/Build.dxy
  - doxygen: CMSIS/DoxyGen/Core/core.dxy
  - doxygen: CMSIS/DoxyGen/Core_A/core_A.dxy
  - doxygen: CMSIS/DoxyGen/DAP/dap.dxy
@@ -22,11 +23,13 @@ glob:
  - CMSIS/Core_A/**/*
  - CMSIS/DAP/**/*
  - CMSIS/Driver/**/*
+ - CMSIS/DSP/ComputeLibrary/**/*
  - CMSIS/DSP/Include/**/*
  - CMSIS/DSP/Source/**/*
  - CMSIS/DSP/Projects/**/*
  - CMSIS/DSP/Examples/**/*
  - CMSIS/DSP/Include/**/*: CMSIS/Include/
+ - CMSIS/DSP/PrivateInclude/**/*
  - CMSIS/DSP/Lib/**/*
  - CMSIS/NN/**/*
  - CMSIS/Pack/**/*
@@ -37,9 +40,9 @@ glob:
  - CMSIS/Utilities/PACK.xsd
  - CMSIS/Utilities/PackIndex.xsd
  - CMSIS/Utilities/Win32/**/*
- - CMSIS/Utilities/Linux-gcc-4.4.4/**/*
- - CMSIS/Utilities/Linux-gcc-4.8.3/**/*
+ - CMSIS/Utilities/Linux64/**/*
  - CMSIS/Documentation/**/*
+ - CMSIS/DoxyGen/Doxygen_Templates/search.css: CMSIS/Documentation/Build/html/search/search.css
  - CMSIS/DoxyGen/Doxygen_Templates/search.css: CMSIS/Documentation/Core/html/search/search.css
  - CMSIS/DoxyGen/Doxygen_Templates/search.css: CMSIS/Documentation/Core_A/html/search/search.css
  - CMSIS/DoxyGen/Doxygen_Templates/search.css: CMSIS/Documentation/Driver/html/search/search.css
@@ -47,4 +50,4 @@ glob:
  - CMSIS/DoxyGen/Doxygen_Templates/search.css: CMSIS/Documentation/DSP/html/search/search.css
  - CMSIS/DoxyGen/Doxygen_Templates/search.css: CMSIS/Documentation/DAP/html/search/search.css
  - CMSIS/DoxyGen/Doxygen_Templates/search.css: CMSIS/Documentation/NN/html/search/search.css
- - CMSIS/DoxyGen/Zone/genmodel/**/*: CMSIS/Documentation/Zone/genmodel/
+ 

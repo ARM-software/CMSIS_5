@@ -50,7 +50,53 @@
       pDst[n] = (q15_t) pSrc[n] >> 16;   0 <= n < blockSize.
   </pre>
  */
+#if defined(ARM_MATH_MVEI)
+void arm_q31_to_q15(
+  const q31_t * pSrc,
+        q15_t * pDst,
+        uint32_t blockSize)
+{
+    uint32_t  blkCnt;           /* loop counters */
+    q31x4x2_t tmp;
+    q15x8_t vecDst;
+    q31_t const *pSrcVec;
 
+
+    pSrcVec = (q31_t const *) pSrc;
+    blkCnt = blockSize >> 3;
+    while (blkCnt > 0U)
+    {
+        /* C = (q15_t) A >> 16 */
+        /* convert from q31 to q15 and then store the results in the destination buffer */
+        tmp = vld2q(pSrcVec);   
+        pSrcVec += 8;
+        vecDst = vshrnbq_n_s32(vecDst, tmp.val[0], 16);
+        vecDst = vshrntq_n_s32(vecDst, tmp.val[1], 16);
+        vst1q(pDst, vecDst);    
+        pDst += 8;
+        /*
+         * Decrement the blockSize loop counter
+         */
+        blkCnt--;
+    }
+
+    /*
+     * tail
+     */
+    blkCnt = blockSize & 7;
+    while (blkCnt > 0U)
+    {
+      /* C = (q15_t) (A >> 16) */
+  
+      /* Convert from q31 to q15 and store result in destination buffer */
+      *pDst++ = (q15_t) (*pSrcVec++ >> 16);
+  
+      /* Decrement loop counter */
+      blkCnt--;
+    }
+}
+
+#else
 void arm_q31_to_q15(
   const q31_t * pSrc,
         q15_t * pDst,
@@ -128,6 +174,7 @@ void arm_q31_to_q15(
   }
 
 }
+#endif /* defined(ARM_MATH_MVEI) */
 
 /**
   @} end of q31_to_x group

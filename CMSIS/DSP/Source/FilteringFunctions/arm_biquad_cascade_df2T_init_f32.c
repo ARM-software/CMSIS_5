@@ -107,7 +107,7 @@ void arm_biquad_cascade_df2T_compute_coefs_f32(
    float32_t *pDstCoeffs;
    float32_t b0[4],b1[4],b2[4],a1[4],a2[4];
 
-   pDstCoeffs = S->pCoeffs;
+   pDstCoeffs = (float32_t*)S->pCoeffs;
 
    cnt = numStages >> 2; 
    while(cnt > 0)

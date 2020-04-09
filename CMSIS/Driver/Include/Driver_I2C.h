@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2017 ARM Limited. All rights reserved.
+ * Copyright (c) 2013-2020 ARM Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -15,13 +15,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * $Date:        2. Feb 2017
- * $Revision:    V2.3
+ * $Date:        31. March 2020
+ * $Revision:    V2.4
  *
  * Project:      I2C (Inter-Integrated Circuit) Driver definitions
  */
 
 /* History:
+ *  Version 2.4
+ *    Removed volatile from ARM_I2C_STATUS
  *  Version 2.3
  *    ARM_I2C_STATUS made volatile
  *  Version 2.2
@@ -60,33 +62,37 @@ extern "C"
 
 #include "Driver_Common.h"
 
-#define ARM_I2C_API_VERSION ARM_DRIVER_VERSION_MAJOR_MINOR(2,3)  /* API version */
+#define ARM_I2C_API_VERSION ARM_DRIVER_VERSION_MAJOR_MINOR(2,4)  /* API version */
+
+
+#define _ARM_Driver_I2C_(n)      Driver_I2C##n
+#define  ARM_Driver_I2C_(n) _ARM_Driver_I2C_(n)
 
 
 /****** I2C Control Codes *****/
 
-#define ARM_I2C_OWN_ADDRESS             (0x01)      ///< Set Own Slave Address; arg = address 
-#define ARM_I2C_BUS_SPEED               (0x02)      ///< Set Bus Speed; arg = speed
-#define ARM_I2C_BUS_CLEAR               (0x03)      ///< Execute Bus clear: send nine clock pulses
-#define ARM_I2C_ABORT_TRANSFER          (0x04)      ///< Abort Master/Slave Transmit/Receive
+#define ARM_I2C_OWN_ADDRESS             (0x01UL)    ///< Set Own Slave Address; arg = address 
+#define ARM_I2C_BUS_SPEED               (0x02UL)    ///< Set Bus Speed; arg = speed
+#define ARM_I2C_BUS_CLEAR               (0x03UL)    ///< Execute Bus clear: send nine clock pulses
+#define ARM_I2C_ABORT_TRANSFER          (0x04UL)    ///< Abort Master/Slave Transmit/Receive
 
 /*----- I2C Bus Speed -----*/
-#define ARM_I2C_BUS_SPEED_STANDARD      (0x01)      ///< Standard Speed (100kHz)
-#define ARM_I2C_BUS_SPEED_FAST          (0x02)      ///< Fast Speed     (400kHz)
-#define ARM_I2C_BUS_SPEED_FAST_PLUS     (0x03)      ///< Fast+ Speed    (  1MHz)
-#define ARM_I2C_BUS_SPEED_HIGH          (0x04)      ///< High Speed     (3.4MHz)
+#define ARM_I2C_BUS_SPEED_STANDARD      (0x01UL)    ///< Standard Speed (100kHz)
+#define ARM_I2C_BUS_SPEED_FAST          (0x02UL)    ///< Fast Speed     (400kHz)
+#define ARM_I2C_BUS_SPEED_FAST_PLUS     (0x03UL)    ///< Fast+ Speed    (  1MHz)
+#define ARM_I2C_BUS_SPEED_HIGH          (0x04UL)    ///< High Speed     (3.4MHz)
 
 
 /****** I2C Address Flags *****/
 
-#define ARM_I2C_ADDRESS_10BIT           (0x0400)    ///< 10-bit address flag
-#define ARM_I2C_ADDRESS_GC              (0x8000)    ///< General Call flag
+#define ARM_I2C_ADDRESS_10BIT           (0x0400UL)  ///< 10-bit address flag
+#define ARM_I2C_ADDRESS_GC              (0x8000UL)  ///< General Call flag
 
 
 /**
 \brief I2C Status
 */
-typedef volatile struct _ARM_I2C_STATUS {
+typedef struct _ARM_I2C_STATUS {
   uint32_t busy             : 1;        ///< Busy flag
   uint32_t mode             : 1;        ///< Mode: 0=Slave, 1=Master
   uint32_t direction        : 1;        ///< Direction: 0=Transmitter, 1=Receiver

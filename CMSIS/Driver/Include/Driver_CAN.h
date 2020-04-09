@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015-2017 ARM Limited. All rights reserved.
+ * Copyright (c) 2015-2020 ARM Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -15,13 +15,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * $Date:        13. Sept 2017
- * $Revision:    V1.2
+ * $Date:        31. March 2020
+ * $Revision:    V1.3
  *
  * Project:      CAN (Controller Area Network) Driver definitions
  */
 
 /* History:
+ *  Version 1.3
+ *    Removed volatile from ARM_CAN_STATUS
  *  Version 1.2
  *    Added ARM_CAN_UNIT_STATE_BUS_OFF unit state and
  *    ARM_CAN_EVENT_UNIT_INACTIVE unit event
@@ -41,7 +43,11 @@ extern "C"
 
 #include "Driver_Common.h"
 
-#define ARM_CAN_API_VERSION ARM_DRIVER_VERSION_MAJOR_MINOR(1,2)  /* API version */
+#define ARM_CAN_API_VERSION ARM_DRIVER_VERSION_MAJOR_MINOR(1,3)  /* API version */
+
+
+#define _ARM_Driver_CAN_(n)      Driver_CAN##n
+#define  ARM_Driver_CAN_(n) _ARM_Driver_CAN_(n)
 
 
 /****** CAN Bitrate selection codes *****/
@@ -168,7 +174,7 @@ typedef struct _ARM_CAN_MSG_INFO {
 /**
 \brief CAN Status
 */
-typedef volatile struct _ARM_CAN_STATUS {
+typedef struct _ARM_CAN_STATUS {
   uint32_t unit_state       : 4;        ///< Unit bus state
   uint32_t last_error_code  : 4;        ///< Last error code
   uint32_t tx_error_count   : 8;        ///< Transmitter error count

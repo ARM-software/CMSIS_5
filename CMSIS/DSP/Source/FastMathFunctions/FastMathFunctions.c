@@ -3,13 +3,13 @@
  * Title:        FastMathFunctions.c
  * Description:  Combination of all fast math function source files.
  *
- * $Date:        18. March 2019
- * $Revision:    V1.0.0
+ * $Date:        16. March 2020
+ * $Revision:    V1.1.0
  *
  * Target Processor: Cortex-M cores
  * -------------------------------------------------------------------- */
 /*
- * Copyright (C) 2019 ARM Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2019-2020 ARM Limited or its affiliates. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -34,4 +34,5 @@
 #include "arm_sin_q31.c"
 #include "arm_sqrt_q15.c"
 #include "arm_sqrt_q31.c"
-
+#include "arm_vexp_f32.c"
+#include "arm_vlog_f32.c"

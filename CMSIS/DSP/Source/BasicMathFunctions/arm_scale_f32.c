@@ -73,6 +73,55 @@
   @return        none
  */
 
+#if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
+
+#include "arm_helium_utils.h"
+
+void arm_scale_f32(
+  const float32_t * pSrc,
+        float32_t scale,
+        float32_t * pDst,
+        uint32_t blockSize)
+{
+        uint32_t blkCnt;                               /* Loop counter */
+
+    f32x4_t vec1;
+    f32x4_t res;
+
+    /* Compute 4 outputs at a time */
+    blkCnt = blockSize >> 2U;
+
+    while (blkCnt > 0U)
+    {
+        /* C = A + offset */
+ 
+        /* Add offset and then store the results in the destination buffer. */
+        vec1 = vld1q(pSrc);
+        res = vmulq(vec1,scale);
+        vst1q(pDst, res);
+
+        /* Increment pointers */
+        pSrc += 4;
+        pDst += 4;
+        
+        /* Decrement the loop counter */
+        blkCnt--;
+    }
+
+    /* Tail */
+    blkCnt = blockSize & 0x3;
+
+    if (blkCnt > 0U)
+    {
+        mve_pred16_t p0 = vctp32q(blkCnt);
+        vec1 = vld1q((float32_t const *) pSrc);
+        vstrwq_p(pDst, vmulq(vec1, scale), p0);
+    }
+
+
+}
+
+#else
 void arm_scale_f32(
   const float32_t *pSrc,
         float32_t scale,
@@ -81,8 +130,8 @@ void arm_scale_f32(
 {
   uint32_t blkCnt;                               /* Loop counter */
 #if defined(ARM_MATH_NEON_EXPERIMENTAL)
-    float32x4_t vec1;
-    float32x4_t res;
+    f32x4_t vec1;
+    f32x4_t res;
 
     /* Compute 4 outputs at a time */
     blkCnt = blockSize >> 2U;
@@ -115,16 +164,23 @@ void arm_scale_f32(
 
   while (blkCnt > 0U)
   {
+    float32_t in1, in2, in3, in4;
+
     /* C = A * scale */
 
     /* Scale input and store result in destination buffer. */
-    *pDst++ = (*pSrc++) * scale;
+    in1 = (*pSrc++) * scale;
 
-    *pDst++ = (*pSrc++) * scale;
+    in2 = (*pSrc++) * scale;
 
-    *pDst++ = (*pSrc++) * scale;
+    in3 = (*pSrc++) * scale;
 
-    *pDst++ = (*pSrc++) * scale;
+    in4 = (*pSrc++) * scale;
+
+    *pDst++ = in1;
+    *pDst++ = in2;
+    *pDst++ = in3;
+    *pDst++ = in4;
 
     /* Decrement loop counter */
     blkCnt--;
@@ -153,6 +209,7 @@ void arm_scale_f32(
   }
 
 }
+#endif /* defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE) */
 
 /**
   @} end of BasicScale group

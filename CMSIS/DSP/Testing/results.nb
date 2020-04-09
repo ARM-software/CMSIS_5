@@ -1,0 +1,74 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 12.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[      2158,         66]
+NotebookOptionsPosition[      1770,         52]
+NotebookOutlinePosition[      2114,         67]
+CellTagsIndexPosition[      2071,         64]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"m", "=", 
+   RowBox[{"Dataset", "[", 
+    RowBox[{
+     RowBox[{"Get", "[", 
+      RowBox[{"FileNameJoin", "[", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"NotebookDirectory", "[", "]"}], ",", "\"\<test.txt\>\""}], 
+        "}"}], "]"}], "]"}], "[", "\"\<Root \>\"", "]"}], "]"}]}], 
+  ";"}]], "Input",
+ CellChangeTimes->{{3.7717360240194063`*^9, 3.771736045131504*^9}, {
+   3.771736686569442*^9, 3.771736690261133*^9}, {3.7717512765989704`*^9, 
+   3.7717513417302694`*^9}, {3.771751417685506*^9, 3.7717514233643456`*^9}, {
+   3.7719129941602864`*^9, 3.7719130089901433`*^9}, 3.7719133429206567`*^9},
+ CellLabel->"In[1]:=",ExpressionUUID->"a3ff6af3-d397-4a63-9a0c-239444d6be9a"],
+
+Cell[BoxData[
+ RowBox[{"Column", "[", 
+  RowBox[{"Table", "[", 
+   RowBox[{
+    RowBox[{"m", "[", 
+     RowBox[{"[", "i", "]"}], "]"}], ",", 
+    RowBox[{"{", 
+     RowBox[{"i", ",", "1", ",", 
+      RowBox[{
+       RowBox[{"Dimensions", "[", "m", "]"}], "[", 
+       RowBox[{"[", "1", "]"}], "]"}]}], "}"}]}], "]"}], "]"}]], "Input",
+ CellChangeTimes->{{3.771913348787628*^9, 3.771913473780173*^9}},
+ CellLabel->"In[14]:=",ExpressionUUID->"6cdbb696-26f9-45b5-88dc-77262be1f94d"]
+},
+WindowSize->{1063, 641},
+WindowMargins->{{Automatic, 162}, {20, Automatic}},
+FrontEndVersion->"12.0 for Microsoft Windows (64-bit) (April 8, 2019)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[558, 20, 726, 16, 28, "Input",ExpressionUUID->"a3ff6af3-d397-4a63-9a0c-239444d6be9a"],
+Cell[1287, 38, 479, 12, 28, "Input",ExpressionUUID->"6cdbb696-26f9-45b5-88dc-77262be1f94d"]
+}
+]
+*)
+

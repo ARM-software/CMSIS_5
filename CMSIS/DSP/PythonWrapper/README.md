@@ -22,9 +22,6 @@ The package is working with Python 2 and 3.
 
 ## Building
 
-The build is using a customized arm_math.h in folder cmsisdsp_pkg/src to be able to compile on windows.
-
-As a consequence, if you build on an ARM computer, you won't get the optimizations of the CMSIS library. It is possible to get them by replacing the customized arm_math.h by the official one.
 
 Since the CMSIS-DSP wrapper is using numpy, you must first install it if not already done. So, for instance to install it locally you could do:
 

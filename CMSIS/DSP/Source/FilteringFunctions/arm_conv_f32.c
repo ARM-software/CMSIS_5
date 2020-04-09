@@ -94,6 +94,11 @@
   @param[out]    pDst       points to the location where the output result is written.  Length srcALen+srcBLen-1.
   @return        none
  */
+#if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
+
+#include "arm_helium_utils.h"
+#include "arm_vec_filtering.h"
+
 
 void arm_conv_f32(
   const float32_t * pSrcA,
@@ -102,9 +107,151 @@ void arm_conv_f32(
         uint32_t srcBLen,
         float32_t * pDst)
 {
+    const float32_t *pIn1 = pSrcA;    /* inputA pointer               */
+    const float32_t *pIn2 = pSrcB;    /* inputB pointer               */
+    /*
+     * Loop to perform MAC operations according to correlation equation
+     */
+    const float32_t *pX;
+    const float32_t *pY;
+    const float32_t *pA;
+    const float32_t *pB;
+    int32_t   i = 0U, j = 0;    /* loop counters */
+    int32_t   block1, block2, block3;
+    uint32_t  vddupStartIdx = 3;
+    uint32x4_t decrIdxVec = vddupq_u32(vddupStartIdx, 1);
 
-#if (1)
-//#if !defined(ARM_MATH_CM0_FAMILY)
+    if (srcALen < srcBLen)
+    {
+        /*
+         * Initialization to inputB pointer
+         */
+        pIn1 = pSrcB;
+        /*
+         * Initialization to the end of inputA pointer
+         */
+        pIn2 = pSrcA;
+        /*
+         * Swapping the lengths
+         */
+        j = srcALen;
+        srcALen = srcBLen;
+        srcBLen = j;
+    }
+
+    block1 = srcBLen - 1;
+    block2 = srcALen - srcBLen + 1;
+    block3 = srcBLen - 1;
+
+    pA = pIn1;
+    pB = pIn2 - 3;
+
+    for (i = 0; i <= block1 - 2; i += 2)
+    {
+        uint32_t  count = i + 1;
+        float32_t acc0;
+        float32_t acc1;
+
+        pX = pA;
+        pY = pB;
+        /*
+         * compute 2 accumulators per loop
+         * size is incrementing for successive accumulators
+         * Y pointer is incrementing for successive accumulators
+         */
+        MVE_INTR_CONV_DUAL_INC_Y_INC_SIZE_F32(acc0, acc1, pX, pY, count);
+
+        *pDst++ = acc0;
+        *pDst++ = acc1;
+        pB += 2;
+    }
+
+    for (; i < block1; i++)
+    {
+        uint32_t  count = i + 1;
+        float32_t acc;
+
+        pX = pA;
+        pY = pB;
+        MVE_INTR_CONV_SINGLE_F32(acc, pX, pY, count);
+
+        *pDst++ = acc;
+        pB++;
+    }
+
+    for (i = 0; i <= block2 - 2; i += 2)
+    {
+        uint32_t  count = srcBLen;
+        float32_t acc0 = 0;
+        float32_t acc1 = 0;
+
+        pX = pA;
+        pY = pB;
+        /*
+         * compute 2 accumulators per loop
+         * size is fixed for all accumulators
+         * X pointer is incrementing for successive accumulators
+         */
+        MVE_INTR_CONV_DUAL_INC_X_FIXED_SIZE_F32(acc0, acc1, pX, pY, count);
+        *pDst++ = acc0;
+        *pDst++ = acc1;
+        pA += 2;
+    }
+    if (block2 & 1)
+    {
+        uint32_t  count = srcBLen;
+        float32_t acc = 0;
+
+        pX = pA;
+        pY = pB;
+        MVE_INTR_CONV_SINGLE_F32(acc, pX, pY, count);
+
+        *pDst++ = acc;
+        pA++;
+    }
+
+    for (i = block3; i >= 2; i -= 2)
+    {
+        int32_t   count = i;
+        float32_t acc0;
+        float32_t acc1;
+
+        pX = pA;
+        pY = pB;
+        /*
+         * compute 2 accumulators per loop
+         * size is decrementing for successive accumulators
+         * X pointer is incrementing for successive accumulators
+         */
+        MVE_INTR_CONV_DUAL_INC_X_DEC_SIZE_F32(acc0, acc1, pX, pY, count);
+
+        *pDst++ = acc0;
+        *pDst++ = acc1;
+        pA += 2;
+    }
+    for (; i >= 1; i--)
+    {
+        int32_t   count = i;
+        float32_t acc;
+
+        pX = pA;
+        pY = pB;
+        MVE_INTR_CONV_SINGLE_F32(acc, pX, pY, count);
+
+        *pDst++ = acc;
+        pA++;
+    }
+}
+#else
+void arm_conv_f32(
+  const float32_t * pSrcA,
+        uint32_t srcALen,
+  const float32_t * pSrcB,
+        uint32_t srcBLen,
+        float32_t * pDst)
+{
+
+#if defined(ARM_MATH_DSP)
 
   const float32_t *pIn1;                               /* InputA pointer */
   const float32_t *pIn2;                               /* InputB pointer */
@@ -116,9 +263,12 @@ void arm_conv_f32(
         uint32_t blockSize1, blockSize2, blockSize3;   /* Loop counters */
         uint32_t j, k, count, blkCnt;                  /* Loop counters */
 
+
 #if defined (ARM_MATH_LOOPUNROLL) || defined(ARM_MATH_NEON)
-        float32_t acc0, acc1, acc2, acc3;              /* Accumulators */
-        float32_t x0, x1, x2, x3, c0;                  /* Temporary variables to hold state and coefficient values */
+        float32_t acc0, acc1, acc2, acc3, c0;              /* Accumulators */
+#if !defined(ARM_MATH_NEON)
+        float32_t x0, x1, x2, x3;                  /* Temporary variables to hold state and coefficient values */
+#endif
 #endif
 
   /* The algorithm implementation is based on the lengths of the inputs. */
@@ -259,7 +409,7 @@ void arm_conv_f32(
 
 #endif /* #if defined(ARM_MATH_NEON) */
 
-#else
+#else /* defined (ARM_MATH_LOOPUNROLL) || defined(ARM_MATH_NEON) */
     /* Initialize k with number of samples */
     k = count;
 
@@ -322,9 +472,6 @@ void arm_conv_f32(
       float32x4_t c;
       float32x4_t x1v;
       float32x4_t x2v;
-      uint32x4_t x1v_u;
-      uint32x4_t x2v_u;
-      uint32x4_t x_u;
       float32x4_t x;
       float32x4_t res = vdupq_n_f32(0) ;
 #endif /* #if defined(ARM_MATH_NEON) */
@@ -810,6 +957,7 @@ void arm_conv_f32(
 #endif /* #if !defined(ARM_MATH_CM0_FAMILY) */
 
 }
+#endif /* defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE) */
 
 /**
   @} end of Conv group

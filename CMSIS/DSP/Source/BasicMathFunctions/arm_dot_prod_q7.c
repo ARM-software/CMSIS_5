@@ -53,6 +53,57 @@
                    The return result is in 18.14 format.
  */
 
+#if defined(ARM_MATH_MVEI)
+
+#include "arm_helium_utils.h"
+
+void arm_dot_prod_q7(
+    const q7_t * pSrcA,
+    const q7_t * pSrcB,
+    uint32_t blockSize,
+    q31_t * result)
+{
+    uint32_t  blkCnt;           /* loop counters */
+    q7x16_t vecA;
+    q7x16_t vecB;
+    q31_t     sum = 0;
+
+    /* Compute 16 outputs at a time */
+    blkCnt = blockSize >> 4;
+    while (blkCnt > 0U)
+    {
+        /*
+         * C = A[0]* B[0] + A[1]* B[1] + A[2]* B[2] + .....+ A[blockSize-1]* B[blockSize-1]
+         * Calculate dot product and then store the result in a temporary buffer.
+         */
+        vecA = vld1q(pSrcA);
+        vecB = vld1q(pSrcB);
+        sum = vmladavaq(sum, vecA, vecB);
+        /*
+         * Decrement the blockSize loop counter
+         */
+        blkCnt--;
+        /*
+         * advance vector source and destination pointers
+         */
+        pSrcA += 16;
+        pSrcB += 16;
+    }
+    /*
+     * tail
+     */
+    blkCnt = blockSize & 0xF;
+    if (blkCnt > 0U)
+    {
+        mve_pred16_t p0 = vctp8q(blkCnt);
+        vecA = vld1q(pSrcA);
+        vecB = vld1q(pSrcB);
+        sum = vmladavaq_p(sum, vecA, vecB, p0);
+    }
+
+    *result = sum;
+}
+#else
 void arm_dot_prod_q7(
   const q7_t * pSrcA,
   const q7_t * pSrcB,
@@ -133,6 +184,7 @@ void arm_dot_prod_q7(
   /* Store result in destination buffer in 18.14 format */
   *result = sum;
 }
+#endif /* defined(ARM_MATH_MVEI) */
 
 /**
   @} end of BasicDotProd group

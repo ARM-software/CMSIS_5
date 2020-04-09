@@ -68,12 +68,12 @@ arm_fully_connected_q15(const q15_t * pV,
                         const uint16_t dim_vec,
                         const uint16_t num_of_rows,
                         const uint16_t bias_shift,
-                        const uint16_t out_shift, 
-                        const q15_t * bias, 
+                        const uint16_t out_shift,
+                        const q15_t * bias,
                         q15_t * pOut,
                         q15_t * vec_buffer)
 {
-
+    (void)vec_buffer;
 #if defined (ARM_MATH_DSP)
     /* Run the following code for Cortex-M4 and Cortex-M7 */
 
@@ -97,16 +97,16 @@ arm_fully_connected_q15(const q15_t * pV,
         while (colCnt)
         {
             q31_t     inV1, inM1, inM2;
-            inV1 = *__SIMD32(pA)++;
-            inM1 = *__SIMD32(pB)++;
+            inV1 = arm_nn_read_q15x2_ia(&pA);
+            inM1 = arm_nn_read_q15x2_ia(&pB);
             sum = __SMLAD(inV1, inM1, sum);
-            inM2 = *__SIMD32(pB2)++;
+            inM2 = arm_nn_read_q15x2_ia(&pB2);
             sum2 = __SMLAD(inV1, inM2, sum2);
 
-            inV1 = *__SIMD32(pA)++;
-            inM1 = *__SIMD32(pB)++;
+            inV1 = arm_nn_read_q15x2_ia(&pA);
+            inM1 = arm_nn_read_q15x2_ia(&pB);
             sum = __SMLAD(inV1, inM1, sum);
-            inM2 = *__SIMD32(pB2)++;
+            inM2 = arm_nn_read_q15x2_ia(&pB2);
             sum2 = __SMLAD(inV1, inM2, sum2);
 
             colCnt--;
@@ -124,7 +124,7 @@ arm_fully_connected_q15(const q15_t * pV,
         }                       /* while over colCnt */
         *pO++ =  (q15_t) (__SSAT((sum >> out_shift), 16));
         *pO++ = (q15_t) (__SSAT((sum2>> out_shift), 16));
-		
+
         /* adjust the pointers and counters */
         pB = pB + dim_vec;
         rowCnt --;
@@ -138,33 +138,33 @@ arm_fully_connected_q15(const q15_t * pV,
         uint16_t  colCnt = dim_vec >> 2;
 
         pA = pV;
-      
+
         while (colCnt) {
             q31_t     inV1, inM1;
-            inV1 = *__SIMD32(pA)++;
-            inM1 = *__SIMD32(pB)++;
+            inV1 = arm_nn_read_q15x2_ia(&pA);
+            inM1 = arm_nn_read_q15x2_ia(&pB);
             sum = __SMLAD(inV1, inM1, sum);
-            
-            inV1 = *__SIMD32(pA)++;
-            inM1 = *__SIMD32(pB)++;
+
+            inV1 = arm_nn_read_q15x2_ia(&pA);
+            inM1 = arm_nn_read_q15x2_ia(&pB);
             sum = __SMLAD(inV1, inM1, sum);
-				
+
             colCnt--;
-	}
-			
-	/* left-over of the vector */
-	colCnt = dim_vec & 0x3;
-	while(colCnt) {
+        }
+
+        /* left-over of the vector */
+        colCnt = dim_vec & 0x3;
+        while(colCnt) {
             q15_t     inV = *pA++;
             q15_t     inM = *pB++;
 
             sum += inV * inM;
 
             colCnt--;
-	}
+        }
 
         *pO++ =  (q15_t) (__SSAT((sum >> out_shift), 16));
-			
+
         rowCnt --;
     }
 

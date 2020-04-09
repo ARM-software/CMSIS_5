@@ -99,6 +99,15 @@
       <th>Description</th>
     </tr>
     <tr>
+      <td>V5.5.2</td>
+      <td>
+       - Added support for Cortex-M55.
+       - Fixed thread priority restore on mutex acquire timeout (when priority inherit is used).
+       - Enhanced support for Armv8-M (specifying thread TrustZone module identifier is optional).
+       - Updated configuration default values (Global Dynamic Memory and Thread Stack).
+      </td>
+    </tr>
+    <tr>
       <td>V5.5.1</td>
       <td>
        - Fixed osMutexRelease issue (thread owning multiple mutexes).
@@ -167,7 +176,7 @@
       <td>V5.2.0</td>
       <td>
        - Based on CMSIS-RTOS API V2.1.1.
-       - Added support for for Cortex-A.
+       - Added support for Cortex-A.
        - Using OS Tick API for RTX Kernel Timer Tick.
        - Fixed potential corruption of terminated threads list.
        - Corrected MessageQueue to use actual message length (before padding).

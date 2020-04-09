@@ -50,7 +50,50 @@
       pDst[n] = (q31_t) pSrc[n] << 16;   0 <= n < blockSize.
   </pre>
  */
+#if defined(ARM_MATH_MVEI)
+void arm_q15_to_q31(
+  const q15_t * pSrc,
+        q31_t * pDst,
+        uint32_t blockSize)
+{
 
+  uint32_t blkCnt;
+
+  q31x4_t         vecDst;
+
+  blkCnt = blockSize>> 2;
+  while (blkCnt > 0U)
+  {
+
+        /* C = (q31_t)A << 16 */
+        /* convert from q15 to q31 and then store the results in the destination buffer */
+        /* load q15 + 32-bit widening */
+        vecDst = vldrhq_s32((q15_t const *) pSrc);
+        vecDst = vshlq_n(vecDst, 16);
+        vstrwq_s32(pDst, vecDst);
+
+        /*
+         * Decrement the blockSize loop counter
+         * Advance vector source and destination pointers
+         */
+        pDst += 4;
+        pSrc += 4;
+        blkCnt --;
+    }
+
+  blkCnt = blockSize & 3;
+  while (blkCnt > 0U)
+  {
+    /* C = (q31_t) A << 16 */
+
+    /* Convert from q15 to q31 and store result in destination buffer */
+    *pDst++ = (q31_t) *pSrc++ << 16;
+
+    /* Decrement loop counter */
+    blkCnt--;
+  }
+}
+#else
 void arm_q15_to_q31(
   const q15_t * pSrc,
         q31_t * pDst,
@@ -132,6 +175,7 @@ void arm_q15_to_q31(
   }
 
 }
+#endif /* defined(ARM_MATH_MVEI) */
 
 /**
   @} end of q15_to_x group

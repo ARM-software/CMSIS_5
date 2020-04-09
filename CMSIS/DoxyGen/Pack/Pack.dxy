@@ -38,7 +38,7 @@ PROJECT_NAME           = CMSIS-Pack
 # could be handy for archiving the generated documentation or if some version
 # control system is used.
 
-PROJECT_NUMBER         = "Version 1.6.0"
+PROJECT_NUMBER         = "Version 1.6.3"
 
 # Using the PROJECT_BRIEF tag one can provide an optional one line description
 # for a project that appears at the top of each page and should give viewer a
@@ -234,6 +234,7 @@ ALIASES                = "token{1}=<span class=\"XML-Token\">\1</span>" \
                          "elem{1}=\b \<\1>" \
                          "tagem{1}=<em>\<\1\></em>" \
                          "refelem{1}=\ref element_\1 \"\1\"" \
+                         "refdebugvar{1}=\ref \1 \"\__\1\"" \
                          "delim=<p>&nbsp;<p> <hr>"
 
 # This tag can be used to specify a number of word-keyword mappings (TCL only).
@@ -774,9 +775,9 @@ INPUT                  = . \
                          src/boards_schema.txt \
                          src/generators_schema.txt \
                          src/xml_types.txt \
-                         src/cpdsc_schema.txt \
                          src/sdf_schema.txt \
-                         src/pack_index.txt
+                         src/pack_index.txt \
+                         src/pack_dbg_setup_tutorial.txt
 
 # This tag can be used to specify the character encoding of the source files
 # that doxygen parses. Internally doxygen uses the UTF-8 encoding. Doxygen uses
@@ -853,7 +854,8 @@ EXCLUDE_SYMBOLS        =
 # that contain example code fragments that are included (see the \include
 # command).
 
-EXAMPLE_PATH           = ../../Utilities
+EXAMPLE_PATH           = ../../Utilities  \
+                         ../../Pack/Bash
 
 # If the value of the EXAMPLE_PATH tag contains directories, you can use the
 # EXAMPLE_PATTERNS tag to specify one or more wildcard pattern (like *.cpp and

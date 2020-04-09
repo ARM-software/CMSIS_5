@@ -1,0 +1,88 @@
+#! armclang -E --target=arm-arm-none-eabi -mcpu=cortex-m33 -xc
+; command above MUST be in first line (no comment above!)
+
+/*
+;-------- <<< Use Configuration Wizard in Context Menu >>> -------------------
+*/
+
+#include "mem_ARMv81MML.h"
+
+/*--------------------- Flash Configuration ----------------------------------
+; <h> Flash Configuration
+;   <o0> Flash Base Address <0x0-0xFFFFFFFF:8>
+;   <o1> Flash Size (in Bytes) <0x0-0xFFFFFFFF:8>
+; </h>
+ *----------------------------------------------------------------------------*/
+#define __ROM_BASE     0x10000000
+#define __ROM_SIZE     0x00400000
+
+/*--------------------- Embedded RAM Configuration ---------------------------
+; <h> RAM Configuration
+;   <o0> RAM1 Base Address    <0x0-0xFFFFFFFF:8>
+;   <o1> RAM1 Size (in Bytes) <0x0-0xFFFFFFFF:8>
+; </h>
+ *----------------------------------------------------------------------------*/
+#define __RAM1_BASE     0x20000000
+#define __RAM1_SIZE     0x00400000
+
+/*--------------------- Embedded RAM Configuration ---------------------------
+; <h> RAM Configuration
+;   <o0> RAM2 Base Address    <0x0-0xFFFFFFFF:8>
+;   <o1> RAM2 Size (in Bytes) <0x0-0xFFFFFFFF:8>
+; </h>
+ *----------------------------------------------------------------------------*/
+#define __RAM2_BASE     0x28000000
+#define __RAM2_SIZE     0x00400000
+
+
+/*--------------------- Embedded RAM Configuration ---------------------------
+; <h> RAM Configuration
+;   <o0> RAM3 Base Address    <0x0-0xFFFFFFFF:8>
+;   <o1> RAM3 Size (in Bytes) <0x0-0xFFFFFFFF:8>
+; </h>
+ *----------------------------------------------------------------------------*/
+#define __RAM3_BASE     0x80000000
+#define __RAM3_SIZE     0x01000000
+
+/*--------------------- Stack / Heap Configuration ---------------------------
+; <h> Stack / Heap Configuration
+;   <o0> Stack Size (in Bytes) <0x0-0xFFFFFFFF:8>
+;   <o1> Heap Size (in Bytes) <0x0-0xFFFFFFFF:8>
+; </h>
+ *----------------------------------------------------------------------------*/
+#define __STACK_SIZE    STACK_SIZE
+#define __HEAP_SIZE     HEAP_SIZE
+#define __RAM2_RW_SIZE  (__RAM2_SIZE - __STACK_SIZE - __HEAP_SIZE)
+
+
+
+LR_ROM __ROM_BASE __ROM_SIZE  {                             ; load region size_region
+  ER_ROM +0 {                                               ; load address = execution address
+   *.o (RESET, +First)
+   * (InRoot$$Sections)
+;   *(Veneer$$CMSE)                                         ; uncomment for secure applications
+   * (+RO-CODE)
+;   * (+XO)
+  }
+
+  RW_RAM1 __RAM1_BASE __RAM1_SIZE  {                        ; RW data
+   * (+RW +ZI)
+  }
+
+  /* make sure stack-overflow will cause bus-fault (which might be escalated to hardfault) */
+  ARM_LIB_STACK __RAM2_BASE ALIGN 8 EMPTY __STACK_SIZE {   ; Reserve empty region for stack
+  }
+  
+  RW_RAM2 +0 __RAM2_RW_SIZE {
+    * (+RO-DATA)
+    .ANY (+RW +ZI)
+  }
+
+  ARM_LIB_HEAP  +0 ALIGN 8 EMPTY __HEAP_SIZE  {             ; Reserve empty region for heap
+  }
+
+  RW_RAM3 __RAM3_BASE __RAM3_SIZE  {                        ; RW data
+   .ANY (+RW +ZI)                                           ; Just in case the RAM1 and RAM2 is not big enough.
+  }
+
+}

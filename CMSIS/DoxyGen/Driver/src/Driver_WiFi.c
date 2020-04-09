@@ -1275,6 +1275,13 @@ so the application can retrieve all data by multiple calls of \b ARM_WIFI_Socket
 
 The argument \em len specifies the size of the application data buffer.
 
+\note
+The function can also be used to check if the socket has data available to read by specifying \token{0}
+for argument \em len (argument \em buf is ignored).
+The function returns \token{0} if data is available or error code otherwise.
+In blocking mode, the function waits until data is available, in non blocking mode the function returns instantly.
+
+
 \b Example:
  - see \ref ARM_WIFI_SocketListen
 */
@@ -1312,7 +1319,13 @@ space pointed to by \em ip. On return it contains the actual length of the addre
 
 The argument \em port is a pointer to the buffer, that will receive the port number of the sender.
 If the \em port is \token{NULL}, the port number is not returned.
- 
+
+\note
+The function can also be used to check if the socket has data available to read by specifying \token{0}
+for argument \em len (arguments \em buf, \em ip, \em ip_len and \em port are ignored).
+The function returns \token{0} if data is available or error code otherwise.
+In blocking mode, the function waits until data is available, in non blocking mode the function returns instantly.
+
 \b Example:
 \code
 extern ARM_DRIVER_WIFI Driver_WiFi0;
@@ -1375,7 +1388,12 @@ will fragment the data and send it in several successive data packets:
 The argument \a len specifies the length of data in bytes.
 
 Return value, when positive, represents the number of bytes sent, which can be less than \a len.
- 
+
+\note
+The function can also be used to check if the socket is ready to send data by specifying \token{0} 
+for argument \em len (argument \em buf is ignored).
+The function returns \token{0} if the socket is writable or error code otherwise.
+
 \b Example:
  - see \ref ARM_WIFI_SocketListen
 */
@@ -1413,6 +1431,11 @@ the function returns error, because this port is reserved.
 For the stream sockets, arguments \em ip, \em ip_len and \em port are ignored.
 
 Return value, when positive, represents the number of bytes sent, which can be less than \a len.
+
+\note
+The function can also be used to check if the socket is ready to send data by specifying \token{0} 
+for argument \em len (arguments \em buf, \em ip, \em ip_len and \em port are ignored).
+The function returns \token{0} if the socket is writable or error code otherwise.
 
 \b Example:
  - see \ref ARM_WIFI_SocketRecvFrom

@@ -59,13 +59,6 @@ Directory                             | Description
 .\\CMSIS\\DAP\\Firmware\\Source       | CMSIS-DAP Firmware source code
 .\\CMSIS\\DAP\\Firmware\\Template     | Interface Templates for MDK Version 5 middleware
 
-Debug Access
-------------
-\note
-Arm plans to provide the <b>RDDI-DAP Access DLL</b> that connects a debugger to the CMSIS-DAP Firmware. 
-However as the DAP registers are standard in all Cortex devices, the debug access is well understood
-by the industry.
-
 Validation
 ----------
 CMSIS-DAP compliant Debug Units must be validated using the scripts provided in  \ref DAP_Validate_gr.

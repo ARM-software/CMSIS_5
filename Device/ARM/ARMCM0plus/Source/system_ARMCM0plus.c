@@ -2,7 +2,7 @@
  * @file     system_ARMCM0plus.c
  * @brief    CMSIS Device System Source File for
  *           ARMCM0plus Device
- * @version  V5.3.1
+ * @version  V1.0.0
  * @date     09. July 2018
  ******************************************************************************/
 /*
@@ -34,13 +34,6 @@
 
 
 /*----------------------------------------------------------------------------
-  Externals
- *----------------------------------------------------------------------------*/
-#if defined (__VTOR_PRESENT) && (__VTOR_PRESENT == 1U)
-  extern uint32_t __VECTOR_TABLE;
-#endif
-
-/*----------------------------------------------------------------------------
   System Core Clock Variable
  *----------------------------------------------------------------------------*/
 uint32_t SystemCoreClock = SYSTEM_CLOCK;  /* System Core Clock Frequency */
@@ -61,7 +54,7 @@ void SystemInit (void)
 {
 
 #if defined (__VTOR_PRESENT) && (__VTOR_PRESENT == 1U)
-  SCB->VTOR = (uint32_t) &__VECTOR_TABLE;
+  SCB->VTOR = (uint32_t) &(__VECTOR_TABLE);
 #endif
 
   SystemCoreClock = SYSTEM_CLOCK;

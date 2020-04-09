@@ -53,9 +53,8 @@ programmer.
 
 \image html software_component.png
 
-\anchor cp_CompDetails
-Technical Details
------------------
+
+\subsection cp_CompDetails Technical Details
 
 A component lists the files that belong to it and that are relevant for a project. The component itself or each individual
 file may refer to a \ref element_condition "condition" that must resolve to true; if it is false, the component or file is
@@ -101,8 +100,9 @@ Here is an example for the display of software components in a development tool:
 
 \image html ComponentDisplay.png "Display of a software component in development tools"
 
-Software Component Files
-------------------------
+
+\subsection cp_CompFiles Software Component Files
+
 Each software component consists of a certain number of files. Each file has at least the following attributes:
 - \c name: File path, file name, and file extension in the format path/name.extension. The file path is relative to the root
   directory of the Pack. 
@@ -122,6 +122,27 @@ Optionally, every file may have the following attributes:
 - \c version: File-specific version information. This is used particularly for files copied into the project workspace.
   Before a file gets copied, a version check avoids unnecessary copy actions. If a file does not have a version, then the
   component version is used.
+
+
+\subsection cp_CompFileNaming File naming
+
+It is good practice to name software component files uniquely. This is especially important for user
+configuration files that are copied into a project. The CMSIS-Pack run-time environment copies configuration files
+by \c \<Cclass> into the directory structure. For example, <tt>./RTE/BSP</tt> stores all user editable files
+of the \c \<Cclass> \b BSP. If the file name is not unique, clashes might occur with other software components of the same
+\c \<Cclass> (for example when you name the configuration file \c user_config.h).
+
+Recommended configuration file naming is as follows: <tt>\<vendor>_\<unique_component>_config</tt>
+
+\b Examples
+- MyVendor_MyBSP_config.h
+- MyVendor_MyNetworkStack_config.h
+
+\note
+Please be aware that you also need to make sure that your configuration files need to be uniquely named and versioned if
+your software component consists of \c \<Cvariants> that differ in the configuration files. Otherwise, it might happen that
+your toolchain is not able to resolve correctly and users might end up with unconfigurable components, especially when they
+change the variant while developing the application.
 
 
 \section cp_Cond References to other software components
@@ -334,8 +355,9 @@ Device            | Startup and system setup components
 Extension Board * | Drivers that support an extension boards or shield
 File System*      | File drive support and file system
 Graphics*         | Graphical libraries for user interfaces
-IoT Client *      | IoT cloud client connectors
-IoT Utility *     | IoT specific utilities, i.e. a socket interface
+IoT Client        | IoT cloud client connectors
+IoT Service       | IoT specific services, i.e. device on-boarding
+IoT Utility       | IoT specific utilities, i.e. a socket interface
 Network*          | Network stack using Internet protocols
 RTOS*             | Real-time operating systems
 Security*         | Encryption for secure communication or storage

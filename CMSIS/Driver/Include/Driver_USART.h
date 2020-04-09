@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2017 ARM Limited. All rights reserved.
+ * Copyright (c) 2013-2020 ARM Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -15,14 +15,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * $Date:        2. Feb 2017
- * $Revision:    V2.3
+ * $Date:        31. March 2020
+ * $Revision:    V2.4
  *
  * Project:      USART (Universal Synchronous Asynchronous Receiver Transmitter)
  *               Driver definitions
  */
 
 /* History:
+ *  Version 2.4
+ *    Removed volatile from ARM_USART_STATUS and ARM_USART_MODEM_STATUS
  *  Version 2.3
  *    ARM_USART_STATUS and ARM_USART_MODEM_STATUS made volatile
  *  Version 2.2
@@ -62,7 +64,11 @@ extern "C"
 
 #include "Driver_Common.h"
 
-#define ARM_USART_API_VERSION ARM_DRIVER_VERSION_MAJOR_MINOR(2,3)  /* API version */
+#define ARM_USART_API_VERSION ARM_DRIVER_VERSION_MAJOR_MINOR(2,4)  /* API version */
+
+
+#define _ARM_Driver_USART_(n)      Driver_USART##n
+#define  ARM_Driver_USART_(n) _ARM_Driver_USART_(n)
 
 
 /****** USART Control Codes *****/
@@ -152,7 +158,7 @@ extern "C"
 /**
 \brief USART Status
 */
-typedef volatile struct _ARM_USART_STATUS {
+typedef struct _ARM_USART_STATUS {
   uint32_t tx_busy          : 1;        ///< Transmitter busy flag
   uint32_t rx_busy          : 1;        ///< Receiver busy flag
   uint32_t tx_underflow     : 1;        ///< Transmit data underflow detected (cleared on start of next send operation)
@@ -176,7 +182,7 @@ typedef enum _ARM_USART_MODEM_CONTROL {
 /**
 \brief USART Modem Status
 */
-typedef volatile struct _ARM_USART_MODEM_STATUS {
+typedef struct _ARM_USART_MODEM_STATUS {
   uint32_t cts      : 1;                ///< CTS state: 1=Active, 0=Inactive
   uint32_t dsr      : 1;                ///< DSR state: 1=Active, 0=Inactive
   uint32_t dcd      : 1;                ///< DCD state: 1=Active, 0=Inactive

@@ -56,7 +56,471 @@
   @remark
                    Refer to \ref arm_fir_fast_q15() for a faster but less precise implementation of this function.
  */
+#if defined(ARM_MATH_MVEI)
 
+#define MVE_ASRL_SAT16(acc, shift)          ((sqrshrl_sat48(acc, -(32-shift)) >> 32) & 0xffffffff)
+
+static void arm_fir_q15_1_8_mve(const arm_fir_instance_q15 * S, const q15_t * pSrc, q15_t * pDst, uint32_t blockSize)
+{
+    q15_t    *pState = S->pState;   /* State pointer */
+    const q15_t    *pCoeffs = S->pCoeffs; /* Coefficient pointer */
+    q15_t    *pStateCur;        /* Points to the current sample of the state */
+    const q15_t    *pSamples;         /* Temporary pointer to the sample buffer */
+    q15_t    *pOutput;          /* Temporary pointer to the output buffer */
+    const q15_t    *pTempSrc;         /* Temporary pointer to the source data */
+    q15_t    *pTempDest;        /* Temporary pointer to the destination buffer */
+    uint32_t  numTaps = S->numTaps; /* Number of filter coefficients in the filter */
+    uint32_t  blkCnt;
+    q15x8_t vecIn0;
+    /*
+     * load 8 coefs
+     */
+    q15x8_t vecCoeffs = *(q15x8_t *) pCoeffs;
+
+    /*
+     * pState points to state array which contains previous frame (numTaps - 1) samples
+     * pStateCur points to the location where the new input data should be written
+     */
+    pStateCur = &(pState[(numTaps - 1u)]);
+    pTempSrc = pSrc;
+    pSamples = pState;
+    pOutput = pDst;
+
+    q63_t     acc0, acc1, acc2, acc3;
+
+    blkCnt = blockSize >> 2;
+
+    while (blkCnt > 0U)
+    {
+        const q15_t    *pSamplesTmp = pSamples;
+
+        /*
+         * Save 4 input samples in the history buffer
+         */
+        vst1q(pStateCur, vld1q(pTempSrc));
+        pStateCur += 8;
+        pTempSrc += 8;
+
+        vecIn0 = vld1q(pSamplesTmp);
+        acc0 = vmlaldavq(vecIn0, vecCoeffs);
+
+        vecIn0 = vld1q(&pSamplesTmp[1]);
+        acc1 = vmlaldavq(vecIn0, vecCoeffs);
+
+        vecIn0 = vld1q(&pSamplesTmp[2]);
+        acc2 = vmlaldavq(vecIn0, vecCoeffs);
+
+        vecIn0 = vld1q(&pSamplesTmp[3]);
+        acc3 = vmlaldavq(vecIn0, vecCoeffs);
+
+        *pOutput++ = (q15_t) MVE_ASRL_SAT16(acc0, 15);
+        *pOutput++ = (q15_t) MVE_ASRL_SAT16(acc1, 15);
+        *pOutput++ = (q15_t) MVE_ASRL_SAT16(acc2, 15);
+        *pOutput++ = (q15_t) MVE_ASRL_SAT16(acc3, 15);
+
+        pSamples += 4;
+        /*
+         * Decrement the sample block loop counter
+         */
+        blkCnt--;
+    }
+
+    uint32_t  residual = blockSize & 3;
+    switch (residual)
+    {
+    case 3:
+        {
+            const q15_t    *pSamplesTmp = pSamples;
+
+            acc0 = 0LL;
+            acc1 = 0LL;
+            acc2 = 0LL;
+
+            /*
+             * Save 4 input samples in the history buffer
+             */
+            *(q15x8_t *) pStateCur = *(q15x8_t *) pTempSrc;
+            pStateCur += 8;
+            pTempSrc += 8;
+
+            vecIn0 = vld1q(pSamplesTmp);
+            acc0 = vmlaldavq(vecIn0, vecCoeffs);
+
+            vecIn0 = vld1q(&pSamplesTmp[1]);
+            acc1 = vmlaldavq(vecIn0, vecCoeffs);
+
+            vecIn0 = vld1q(&pSamplesTmp[2]);
+            acc2 = vmlaldavq(vecIn0, vecCoeffs);
+
+            *pOutput++ = (q15_t) MVE_ASRL_SAT16(acc0, 15);
+            *pOutput++ = (q15_t) MVE_ASRL_SAT16(acc1, 15);
+            *pOutput++ = (q15_t) MVE_ASRL_SAT16(acc2, 15);
+        }
+        break;
+
+    case 2:
+        {
+            const q15_t    *pSamplesTmp = pSamples;
+
+            acc0 = 0LL;
+            acc1 = 0LL;
+
+            /*
+             * Save 4 input samples in the history buffer
+             */
+            vst1q(pStateCur, vld1q(pTempSrc));
+            pStateCur += 8;
+            pTempSrc += 8;
+
+            vecIn0 = vld1q(pSamplesTmp);
+            acc0 = vmlaldavq(vecIn0, vecCoeffs);
+
+            vecIn0 = vld1q(&pSamplesTmp[1]);
+            acc1 = vmlaldavq(vecIn0, vecCoeffs);
+
+            *pOutput++ = (q15_t) MVE_ASRL_SAT16(acc0, 15);
+            *pOutput++ = (q15_t) MVE_ASRL_SAT16(acc1, 15);
+        }
+        break;
+
+    case 1:
+        {
+            const q15_t    *pSamplesTmp = pSamples;
+
+            acc0 = 0LL;
+
+            /*
+             * Save 4 input samples in the history buffer
+             */
+            vst1q(pStateCur, vld1q(pTempSrc));
+            pStateCur += 8;
+            pTempSrc += 8;
+
+            vecIn0 = vld1q(pSamplesTmp);
+            acc0 = vmlaldavq(vecIn0, vecCoeffs);
+
+            pSamplesTmp += 4;
+
+            *pOutput++ = (q15_t) MVE_ASRL_SAT16(acc0, 15);
+        }
+        break;
+    }
+
+    /*
+     * Copy the samples back into the history buffer start
+     */
+    pTempSrc = &S->pState[blockSize];
+    pTempDest = S->pState;
+
+    blkCnt = numTaps >> 3;
+    while (blkCnt > 0U)
+    {
+        vst1q(pTempDest, vld1q(pTempSrc));
+        pTempSrc += 8;
+        pTempDest += 8;
+        blkCnt--;
+    }
+    blkCnt = numTaps & 7;
+    if (blkCnt > 0U)
+    {
+        mve_pred16_t p0 = vctp16q(blkCnt);
+        vstrhq_p_s16(pTempDest, vld1q(pTempSrc), p0);
+    }
+}
+
+void arm_fir_q15(
+  const arm_fir_instance_q15 * S,
+  const q15_t * pSrc,
+        q15_t * pDst,
+        uint32_t blockSize)
+{
+    q15_t    *pState = S->pState;   /* State pointer */
+    const q15_t    *pCoeffs = S->pCoeffs; /* Coefficient pointer */
+    q15_t    *pStateCur;        /* Points to the current sample of the state */
+    const q15_t    *pSamples;         /* Temporary pointer to the sample buffer */
+    q15_t    *pOutput;          /* Temporary pointer to the output buffer */
+    const q15_t    *pTempSrc;         /* Temporary pointer to the source data */
+    q15_t    *pTempDest;        /* Temporary pointer to the destination buffer */
+    uint32_t  numTaps = S->numTaps; /* Number of filter coefficients in the filter */
+    uint32_t  blkCnt;
+    q15x8_t vecIn0;
+    uint32_t  tapsBlkCnt = (numTaps + 7) / 8;
+    q63_t     acc0, acc1, acc2, acc3;
+
+    if (blockSize >= 12)
+    {
+       if(numTaps <= 8) {
+           /* [1 to 8 taps] specialized routine */
+           arm_fir_q15_1_8_mve(S,pSrc, pDst, blockSize);
+           return;
+       }
+    }
+
+    if (blockSize >= 12)
+    {
+        /*
+         * pState points to state array which contains previous frame (numTaps - 1) samples
+         * pStateCur points to the location where the new input data should be written
+         */
+        pStateCur   = &(pState[(numTaps - 1u)]);
+        pTempSrc    = pSrc;
+        pSamples    = pState;
+        pOutput     = pDst;
+        blkCnt      = blockSize >> 2;
+    
+        while (blkCnt > 0U)
+        {
+            const q15_t    *pCoeffsTmp = pCoeffs;
+            const q15_t    *pSamplesTmp = pSamples;
+    
+            acc0 = 0LL;
+            acc1 = 0LL;
+            acc2 = 0LL;
+            acc3 = 0LL;
+    
+            /*
+             * Save 8 input samples in the history buffer
+             */
+            vst1q(pStateCur, vld1q(pTempSrc));
+            pStateCur += 8;
+            pTempSrc += 8;
+    
+            uint32_t       i = tapsBlkCnt;
+            while (i > 0U)
+            {
+                /*
+                 * load 8 coefs
+                 */
+                q15x8_t vecCoeffs = *(q15x8_t *) pCoeffsTmp;
+    
+                vecIn0 = vld1q(pSamplesTmp);
+                acc0 =  vmlaldavaq(acc0, vecIn0, vecCoeffs);
+    
+                vecIn0 = vld1q(&pSamplesTmp[1]);
+                acc1 = vmlaldavaq(acc1, vecIn0, vecCoeffs);
+    
+                vecIn0 = vld1q(&pSamplesTmp[2]);
+                acc2 = vmlaldavaq(acc2, vecIn0, vecCoeffs);
+    
+                vecIn0 = vld1q(&pSamplesTmp[3]);
+                acc3 = vmlaldavaq(acc3, vecIn0, vecCoeffs);
+    
+                pSamplesTmp += 8;
+                pCoeffsTmp += 8;
+                /*
+                 * Decrement the taps block loop counter
+                 */
+                i--;
+            }
+    
+            *pOutput++ = (q15_t) MVE_ASRL_SAT16(acc0, 15);
+            *pOutput++ = (q15_t) MVE_ASRL_SAT16(acc1, 15);
+            *pOutput++ = (q15_t) MVE_ASRL_SAT16(acc2, 15);
+            *pOutput++ = (q15_t) MVE_ASRL_SAT16(acc3, 15);
+    
+            pSamples += 4;
+            /*
+             * Decrement the sample block loop counter
+             */
+            blkCnt--;
+        }
+    
+        uint32_t  residual = blockSize & 3;
+        switch (residual)
+        {
+        case 3:
+            {
+                const q15_t    *pCoeffsTmp = pCoeffs;
+                const q15_t    *pSamplesTmp = pSamples;
+    
+                acc0 = 0LL;
+                acc1 = 0LL;
+                acc2 = 0LL;
+    
+                /*
+                 * Save 8 input samples in the history buffer
+                 */
+                *(q15x8_t *) pStateCur = *(q15x8_t *) pTempSrc;
+                pStateCur += 8;
+                pTempSrc += 8;
+    
+                uint32_t       i = tapsBlkCnt;
+                while (i > 0U)
+                {
+                    /*
+                     * load 8 coefs
+                     */
+                    q15x8_t vecCoeffs = *(q15x8_t *) pCoeffsTmp;
+    
+                    vecIn0 = vld1q(pSamplesTmp);
+                    acc0 = vmlaldavaq(acc0, vecIn0, vecCoeffs);
+    
+                    vecIn0 = vld1q(&pSamplesTmp[1]);
+                    acc1 = vmlaldavaq(acc1, vecIn0, vecCoeffs);
+    
+                    vecIn0 = vld1q(&pSamplesTmp[2]);
+                    acc2 = vmlaldavaq(acc2, vecIn0, vecCoeffs);
+    
+                    pSamplesTmp += 8;
+                    pCoeffsTmp += 8;
+                    /*
+                     * Decrement the taps block loop counter
+                     */
+                    i--;
+                }
+    
+              
+                *pOutput++ = (q15_t) MVE_ASRL_SAT16(acc0, 15);
+                *pOutput++ = (q15_t) MVE_ASRL_SAT16(acc1, 15);
+                *pOutput++ = (q15_t) MVE_ASRL_SAT16(acc2, 15);
+            }
+            break;
+    
+        case 2:
+            {
+                const q15_t    *pCoeffsTmp = pCoeffs;
+                const q15_t    *pSamplesTmp = pSamples;
+    
+                acc0 = 0LL;
+                acc1 = 0LL;
+                /*
+                 * Save 8 input samples in the history buffer
+                 */
+                vst1q(pStateCur, vld1q(pTempSrc));
+                pStateCur += 8;
+                pTempSrc += 8;
+    
+                uint32_t       i = tapsBlkCnt;
+                while (i > 0U)
+                {
+                    /*
+                     * load 8 coefs
+                     */
+                    q15x8_t vecCoeffs = *(q15x8_t *) pCoeffsTmp;
+    
+                    vecIn0 = vld1q(pSamplesTmp);
+                    acc0 = vmlaldavaq(acc0, vecIn0, vecCoeffs);
+    
+                    vecIn0 = vld1q(&pSamplesTmp[1]);
+                    acc1 = vmlaldavaq(acc1, vecIn0, vecCoeffs);
+    
+                    pSamplesTmp += 8;
+                    pCoeffsTmp += 8;
+                    /*
+                     * Decrement the taps block loop counter
+                     */
+                    i--;
+                }
+    
+                *pOutput++ = (q15_t) MVE_ASRL_SAT16(acc0, 15);
+                *pOutput++ = (q15_t) MVE_ASRL_SAT16(acc1, 15);
+            }
+            break;
+    
+        case 1:
+            {
+                const q15_t    *pCoeffsTmp = pCoeffs;
+                const q15_t    *pSamplesTmp = pSamples;
+    
+                acc0 = 0LL;
+    
+                /*
+                 * Save 8 input samples in the history buffer
+                 */
+                vst1q(pStateCur, vld1q(pTempSrc));
+                pStateCur += 8;
+                pTempSrc += 8;
+    
+                uint32_t       i = tapsBlkCnt;
+                while (i > 0U)
+                {
+                    /*
+                     * load 8 coefs
+                     */
+                    q15x8_t vecCoeffs = *(q15x8_t *) pCoeffsTmp;
+    
+                    vecIn0 = vld1q(pSamplesTmp);
+                    acc0 = vmlaldavaq(acc0, vecIn0, vecCoeffs);
+    
+                    pSamplesTmp += 8;
+                    pCoeffsTmp += 8;
+                    /*
+                     * Decrement the taps block loop counter
+                     */
+                    i--;
+                }
+    
+                *pOutput++ = (q15_t) MVE_ASRL_SAT16(acc0, 15);
+            }
+            break;
+        }
+    }
+    else
+    {
+        q15_t *pStateCurnt;                            /* Points to the current sample of the state */
+            q15_t *px;                                     /* Temporary pointer for state buffer */
+      const q15_t *pb;                                     /* Temporary pointer for coefficient buffer */
+            q63_t acc0;                                    /* Accumulator */
+            uint32_t  blkCnt,tapCnt;                    /* Loop counters */
+      pStateCurnt = &(S->pState[(numTaps - 1U)]);
+      blkCnt = blockSize;
+      while (blkCnt > 0U)
+      {
+        /* Copy two samples into state buffer */
+        *pStateCurnt++ = *pSrc++;
+    
+        /* Set the accumulator to zero */
+        acc0 = 0;
+    
+        /* Use SIMD to hold states and coefficients */
+        px = pState;
+        pb = pCoeffs;
+    
+        tapCnt = numTaps >> 1U;
+    
+        while (tapCnt > 0U)
+        {
+          acc0 += (q15_t) *px++ * *pb++;
+          acc0 += (q15_t) *px++ * *pb++;
+    
+          tapCnt--;
+        }
+        
+    
+        /* The result is in 2.30 format. Convert to 1.15 with saturation.
+           Then store the output in the destination buffer. */
+        *pDst++ = (q15_t) (__SSAT((acc0 >> 15), 16));
+    
+        /* Advance state pointer by 1 for the next sample */
+        pState = pState + 1U;
+    
+        /* Decrement loop counter */
+        blkCnt--;
+      }
+    }
+    /*
+     * Copy the samples back into the history buffer start
+     */
+    pTempSrc = &S->pState[blockSize];
+    pTempDest = S->pState;
+
+    blkCnt = numTaps >> 3;
+    while (blkCnt > 0U)
+    {
+        vst1q(pTempDest, vld1q(pTempSrc));
+        pTempSrc += 8;
+        pTempDest += 8;
+        blkCnt--;
+    }
+    blkCnt = numTaps & 7;
+    if (blkCnt > 0U)
+    {
+        mve_pred16_t p0 = vctp16q(blkCnt);
+        vstrhq_p_s16(pTempDest, vld1q(pTempSrc), p0);
+    }
+}
+
+#else
 void arm_fir_q15(
   const arm_fir_instance_q15 * S,
   const q15_t * pSrc,
@@ -262,14 +726,14 @@ void arm_fir_q15(
 
     tapCnt = numTaps >> 1U;
 
-    do
+    while (tapCnt > 0U)
     {
       acc0 += (q31_t) *px++ * *pb++;
-	  acc0 += (q31_t) *px++ * *pb++;
+	    acc0 += (q31_t) *px++ * *pb++;
 
       tapCnt--;
     }
-    while (tapCnt > 0U);
+    
 
     /* The result is in 2.30 format. Convert to 1.15 with saturation.
        Then store the output in the destination buffer. */
@@ -326,6 +790,7 @@ void arm_fir_q15(
   }
 
 }
+#endif /* defined(ARM_MATH_MVEI) */
 
 /**
   @} end of FIR group

@@ -1,0 +1,73 @@
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\mainpage Overview
+
+<b>CMSIS-Build</b> is a set of tools, software frameworks, and work flows that improve productivity:
+
+  - \ref cprjFormat_pg "CPRJ" is a generic CMSIS-aware project file format that allows IDEs and command-line build tools to
+    share the same projects.
+  - A \ref CmdLineBuild "Continuous Integration (CI) work flow" for projects that are based on software components supplied
+    in CMSIS-Pack format.
+  - Software Layers enable code reuse across different targets. A software layer is a pre-configured software component
+    selection and user source code. 
+  - <a href="../../Driver/html/group__vio__interface__gr.html"><b>CMSIS-Driver VIO</b></a> is a set of generic input/output
+    functions for example and test code. It allows to fast migration from evaluation boards to production hardware.
+
+The figure below shows how the <b>CMSIS-Build</b> components may be used to create a IoT cloud application:
+  - The <b>Board I/O</b> layer contains the drivers and device configuration for a specific evaluation board.
+  - The <b>Cloud</b> layer implements the software components that are required to connect to a Cloud Service Provider (CSP).
+  - The <b>Application Code</b> may start with reference example and is expanded to application specific requirements that
+    access specialized peripherals.
+  
+\image html "Layer.png" "Software Layers and Virtual I/O"  
+
+Software layers and Virtual I/O simplify these use cases:
+
+<b>Port software from evaluation board to custom hardware:</b><br>
+- Frequently, the software development starts on an evaluation board, for example because production hardware is not yet
+  available. The <a href="../../Driver/html/group__vio__interface__gr.html"><b>VIO component</b></a> allows you to use the
+  I/O capabilities of an evaluation kit and disconnect it when moving to production hardware. In case the production
+  hardware uses a different device configuration or different I/O drivers, the <b>Board I/O</b> layer may be swapped.
+
+<b>Deliver reference examples for many different evaluation boards:</b><br>
+- Reference examples are a great way to demonstrate a software solution. It is however expensive to support many different
+  evaluation boards. The VIO and CMSIS-Driver components give reference examples for a consistent interface to target
+  hardware. When such a consistent set of components is available as a <b>Board I/O</b> layer for many different evaluation
+  boards, it allows to run a <b>Cloud</b> layer together with a reference example. The tools for \ref CmdLineBuild allow to
+  combine various different layers and allow in this way to generate several different reference examples on a range of
+  evaluation boards.
+
+\section CB_Components Components of CMSIS-Build
+
+<b>Specification</b> of a generic project file format:
+ - \ref cprjFormat_pg describes all XML elements that are available for the project description and how to use them.
+
+<b>Tools</b> that support \ref CmdLineBuild with software packs and the generic project file format:
+  - \ref cbuildgen generates a standard MAKE file and allows to manage software layers.
+  - \ref ccmerge updates configuration files that are based on <a href="../../Pack/html/configWizard.html"><b>PackConfiguration Wizard Annotations</b></a>.
+*/
+
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\page build_revisionHistory Revision history
+
+<table class="cmtable" summary="Revision History">
+  <tr>
+    <th>Version</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>0.9.0 (beta)</td>
+    <td>Release for beta review:
+    - added layer description to project format specification.
+    - added support for multiple compilers.
+    - added commands for layer operations to cbuildgen.
+	</td>
+  </tr>
+  <tr>
+    <td>0.1.0</td>
+    <td>Release for alpha review</td>
+  </tr>
+</table>
+*/

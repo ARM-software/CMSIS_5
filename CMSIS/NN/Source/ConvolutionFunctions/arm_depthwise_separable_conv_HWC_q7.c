@@ -90,12 +90,12 @@ arm_status arm_depthwise_separable_conv_HWC_q7(const q7_t * Im_in,
                                                const q7_t * bias,
                                                const uint16_t bias_shift,
                                                const uint16_t out_shift,
-                                               q7_t * Im_out, 
-                                               const uint16_t dim_im_out, 
-                                               q15_t * bufferA, 
+                                               q7_t * Im_out,
+                                               const uint16_t dim_im_out,
+                                               q15_t * bufferA,
                                                q7_t * bufferB)
 {
-
+    (void)bufferB;
 #if defined (ARM_MATH_DSP)
     /* Run the following code for Cortex-M4 and Cortex-M7 */
 
@@ -161,15 +161,15 @@ arm_status arm_depthwise_separable_conv_HWC_q7(const q7_t * Im_in,
                 {
                     q31_t     inA1, inA2, inB1, inB2, opA, opB;
 
-                    inB1 = *__SIMD32(pB);
+                    inB1 = arm_nn_read_q7x4(pB);
                     pB += ch_im_in;
-                    opB = *__SIMD32(pB);
+                    opB = arm_nn_read_q7x4(pB);
                     pB += ch_im_in;
                     inB2 = __PKHTB(opB, inB1, 16);
                     inB1 = __PKHBT(inB1, opB, 16);
-                    inA1 = *__SIMD32(pA);
+                    inA1 = arm_nn_read_q7x4(pA);
                     pA += ch_im_in;
-                    opB = *__SIMD32(pA);
+                    opB = arm_nn_read_q7x4(pA);
                     pA += ch_im_in;
                     inA2 = __PKHTB(opB, inA1, 16);
                     inA1 = __PKHBT(inA1, opB, 16);
@@ -193,15 +193,15 @@ arm_status arm_depthwise_separable_conv_HWC_q7(const q7_t * Im_in,
                 {
                     q31_t     inA1, inA2, inB1, inB2, opA, opB;
 
-                    inB1 = *__SIMD32(pB);
+                    inB1 = arm_nn_read_q7x4(pB);
                     pB += ch_im_in;
-                    opB = *__SIMD32(pB);
+                    opB = arm_nn_read_q7x4(pB);
                     pB += ch_im_in;
                     inB2 = __PKHBT(opB, inB1, 16);
                     inB1 = __PKHTB(inB1, opB, 16);
-                    inA1 = *__SIMD32(pA);
+                    inA1 = arm_nn_read_q7x4(pA);
                     pA += ch_im_in;
-                    opB = *__SIMD32(pA);
+                    opB = arm_nn_read_q7x4(pA);
                     pA += ch_im_in;
                     inA2 = __PKHBT(opB, inA1, 16);
                     inA1 = __PKHTB(inA1, opB, 16);
@@ -316,9 +316,9 @@ arm_status arm_depthwise_separable_conv_HWC_q7(const q7_t * Im_in,
                 while (colCnt)
                 {
                     union arm_nnword inA, inB;
-                    inA.word = *__SIMD32(pA);
+                    inA.word = arm_nn_read_q7x4(pA);
                     pA += ch_im_in;
-                    inB.word = *__SIMD32(pB);
+                    inB.word = arm_nn_read_q7x4(pB);
                     pB += ch_im_in;
                     sum += inA.bytes[0] * inB.bytes[0];
                     sum2 += inA.bytes[1] * inB.bytes[1];

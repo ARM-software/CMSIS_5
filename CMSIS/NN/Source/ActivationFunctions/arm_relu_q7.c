@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2018 Arm Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2010-2020 Arm Limited or its affiliates. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -21,8 +21,8 @@
  * Title:        arm_relu_q7.c
  * Description:  Q7 version of ReLU
  *
- * $Date:        17. January 2018
- * $Revision:    V.1.0.0
+ * $Date:        February 27, 2020
+ * $Revision:    V.1.0.1
  *
  * Target Processor:  Cortex-M cores
  *
@@ -44,30 +44,29 @@
    * @brief Q7 RELU function
    * @param[in,out]   data        pointer to input
    * @param[in]       size        number of elements
-   * @return none.
-   * 
+   *
    * @details
    *
    * Optimized relu with QSUB instructions.
    *
    */
 
-void arm_relu_q7(q7_t * data, uint16_t size)
+void arm_relu_q7(q7_t *data, uint16_t size)
 {
 
-#if defined (ARM_MATH_DSP)
-    /* Run the following code for Cortex-M4 and Cortex-M7 */
+#if defined(ARM_MATH_DSP)
+    /* Run the following code for M cores with DSP extension */
 
-    uint16_t  i = size >> 2;
-    q7_t     *pIn = data;
-    q7_t     *pOut = data;
-    q31_t     in;
-    q31_t     buf;
-    q31_t     mask;
+    uint16_t i = size >> 2;
+    q7_t *input = data;
+    q7_t *output = data;
+    q31_t in;
+    q31_t buf;
+    q31_t mask;
 
     while (i)
     {
-        in = *__SIMD32(pIn)++;
+        in = read_q7x4_ia(&input);
 
         /* extract the first bit */
         buf = __ROR(in & 0x80808080, 7);
@@ -75,25 +74,26 @@ void arm_relu_q7(q7_t * data, uint16_t size)
         /* if MSB=1, mask will be 0xFF, 0x0 otherwise */
         mask = __QSUB8(0x00000000, buf);
 
-        *__SIMD32(pOut)++ = in & (~mask);
+        write_q7x4_ia(&output, in & (~mask));
+
         i--;
     }
 
     i = size & 0x3;
     while (i)
     {
-        if (*pIn < 0)
+        if (*input < 0)
         {
-            *pIn = 0;
+            *input = 0;
         }
-        pIn++;
+        input++;
         i--;
     }
 
 #else
-    /* Run the following code as reference implementation for Cortex-M0 and Cortex-M3 */
+    /* Run the following code as reference implementation for cores without DSP extension */
 
-    uint16_t  i;
+    uint16_t i;
 
     for (i = 0; i < size; i++)
     {
@@ -101,8 +101,7 @@ void arm_relu_q7(q7_t * data, uint16_t size)
             data[i] = 0;
     }
 
-#endif                          /* ARM_MATH_DSP */
-
+#endif
 }
 
 /**

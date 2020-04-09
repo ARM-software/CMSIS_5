@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2017 ARM Limited. All rights reserved.
+ * Copyright (c) 2013-2020 ARM Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -15,13 +15,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * $Date:        14. Nov 2017
- * $Revision:    V2.3
+ * $Date:        31. March 2020
+ * $Revision:    V2.4
  *
  * Project:      NAND Flash Driver definitions
  */
 
 /* History:
+ *  Version 2.4
+ *    Removed volatile from ARM_NAND_STATUS
  *  Version 2.3
  *    Extended ARM_NAND_ECC_INFO structure
  *  Version 2.2
@@ -53,7 +55,11 @@ extern "C"
 
 #include "Driver_Common.h"
 
-#define ARM_NAND_API_VERSION ARM_DRIVER_VERSION_MAJOR_MINOR(2,3)  /* API version */
+#define ARM_NAND_API_VERSION ARM_DRIVER_VERSION_MAJOR_MINOR(2,4)  /* API version */
+
+
+#define _ARM_Driver_NAND_(n)      Driver_NAND##n
+#define  ARM_Driver_NAND_(n) _ARM_Driver_NAND_(n)
 
 
 /****** NAND Device Power *****/
@@ -68,15 +74,15 @@ extern "C"
 #define ARM_NAND_POWER_VCCQ_3V3         (0x02UL << ARM_NAND_POWER_VCCQ_Pos) ///< VCCQ = 3.3V
 #define ARM_NAND_POWER_VCCQ_1V8         (0x03UL << ARM_NAND_POWER_VCCQ_Pos) ///< VCCQ = 1.8V
 #define ARM_NAND_POWER_VPP_OFF          (1UL << 6)                          ///< VPP off
-#define ARM_NAND_POWER_VPP_ON           (1Ul << 7)                          ///< VPP on
+#define ARM_NAND_POWER_VPP_ON           (1UL << 7)                          ///< VPP on
 
 
 /****** NAND Control Codes *****/
-#define ARM_NAND_BUS_MODE               (0x01)      ///< Set Bus Mode as specified with arg
-#define ARM_NAND_BUS_DATA_WIDTH         (0x02)      ///< Set Bus Data Width as specified with arg
-#define ARM_NAND_DRIVER_STRENGTH        (0x03)      ///< Set Driver Strength as specified with arg
-#define ARM_NAND_DEVICE_READY_EVENT     (0x04)      ///< Generate \ref ARM_NAND_EVENT_DEVICE_READY; arg: 0=disabled (default), 1=enabled 
-#define ARM_NAND_DRIVER_READY_EVENT     (0x05)      ///< Generate \ref ARM_NAND_EVENT_DRIVER_READY; arg: 0=disabled (default), 1=enabled 
+#define ARM_NAND_BUS_MODE               (0x01UL)    ///< Set Bus Mode as specified with arg
+#define ARM_NAND_BUS_DATA_WIDTH         (0x02UL)    ///< Set Bus Data Width as specified with arg
+#define ARM_NAND_DRIVER_STRENGTH        (0x03UL)    ///< Set Driver Strength as specified with arg
+#define ARM_NAND_DEVICE_READY_EVENT     (0x04UL)    ///< Generate \ref ARM_NAND_EVENT_DEVICE_READY; arg: 0=disabled (default), 1=enabled 
+#define ARM_NAND_DRIVER_READY_EVENT     (0x05UL)    ///< Generate \ref ARM_NAND_EVENT_DRIVER_READY; arg: 0=disabled (default), 1=enabled 
 
 /*----- NAND Bus Mode (ONFI - Open NAND Flash Interface) -----*/
 #define ARM_NAND_BUS_INTERFACE_Pos       4
@@ -111,14 +117,14 @@ extern "C"
 #define ARM_NAND_BUS_DDR2_CMPR          (1UL << 18)                               ///< DDR2 Enable complementary RE_n (RE_c) signal
 
 /*----- NAND Data Bus Width -----*/
-#define ARM_NAND_BUS_DATA_WIDTH_8       (0x00)      ///< Bus Data Width:  8 bit (default)
-#define ARM_NAND_BUS_DATA_WIDTH_16      (0x01)      ///< Bus Data Width: 16 bit
+#define ARM_NAND_BUS_DATA_WIDTH_8       (0x00UL)   ///< Bus Data Width:  8 bit (default)
+#define ARM_NAND_BUS_DATA_WIDTH_16      (0x01UL)   ///< Bus Data Width: 16 bit
 
 /*----- NAND Driver Strength (ONFI - Open NAND Flash Interface) -----*/
-#define ARM_NAND_DRIVER_STRENGTH_18     (0x00)      ///< Driver Strength 2.0x = 18 Ohms
-#define ARM_NAND_DRIVER_STRENGTH_25     (0x01)      ///< Driver Strength 1.4x = 25 Ohms
-#define ARM_NAND_DRIVER_STRENGTH_35     (0x02)      ///< Driver Strength 1.0x = 35 Ohms (default)
-#define ARM_NAND_DRIVER_STRENGTH_50     (0x03)      ///< Driver Strength 0.7x = 50 Ohms
+#define ARM_NAND_DRIVER_STRENGTH_18     (0x00UL)   ///< Driver Strength 2.0x = 18 Ohms
+#define ARM_NAND_DRIVER_STRENGTH_25     (0x01UL)   ///< Driver Strength 1.4x = 25 Ohms
+#define ARM_NAND_DRIVER_STRENGTH_35     (0x02UL)   ///< Driver Strength 1.0x = 35 Ohms (default)
+#define ARM_NAND_DRIVER_STRENGTH_50     (0x03UL)   ///< Driver Strength 0.7x = 50 Ohms
 
 
 /****** NAND ECC for Read/Write Data Mode and Sequence Execution Code *****/
@@ -197,7 +203,7 @@ typedef struct _ARM_NAND_ECC_INFO {
 /**
 \brief NAND Status
 */
-typedef volatile struct _ARM_NAND_STATUS {
+typedef struct _ARM_NAND_STATUS {
   uint32_t busy      : 1;               ///< Driver busy flag
   uint32_t ecc_error : 1;               ///< ECC error detected (cleared on next Read/WriteData or ExecuteSequence)
   uint32_t reserved  : 30;

@@ -372,7 +372,7 @@ void DeleteMutex (osMutexId_t mutex_id)  {
 \details
 The following bit masks can be used to set options:
  - \ref osMutexRecursive : a thread can consume the mutex multiple times without locking itself.
- - \ref osMutexPrioInherit : priority of a waiting thread is raised (when lower) to priority of mutex owner thread.
+ - \ref osMutexPrioInherit : the owner thread inherits the priority of a (higher priority) waiting thread.
  - \ref osMutexRobust : the mutex is automatically released when owner thread is terminated.
 
 Use logical \em 'OR' operation to select multiple options, for example:
@@ -381,9 +381,9 @@ osMutexRecursive | osMutexPrioInherit;
 \endcode
 
 Default: \token{0} which specifies:
- - <i>non recursive mutex</i> : a thread cannot consume the mutex multiple times.
- - <i>non priority raising</i> : the priority of a waiting thread is not changed.
- - <i>mutex is not automatically release</i> : the mutex object must be always is automatically released when owner thread is terminated.
+ - <i>non recursive mutex</i>: a thread cannot consume the mutex multiple times.
+ - <i>non priority raising</i>: the priority of an owning thread is not changed.
+ - <i>mutex is not automatically release</i>: the mutex object must be always is automatically released when owner thread is terminated.
 
 */
 /**

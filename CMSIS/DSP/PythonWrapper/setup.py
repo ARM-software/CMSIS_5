@@ -6,7 +6,7 @@ import sys
 import os
 from config import ROOT
 
-includes = [os.path.join(ROOT,"Include"),os.path.join("cmsisdsp_pkg","src")]
+includes = [os.path.join(ROOT,"Include"),os.path.join(ROOT,"PrivateInclude"),os.path.join("cmsisdsp_pkg","src")]
 
 if sys.platform == 'win32':
   cflags = ["-DWIN",config.cflags,"-DUNALIGNED_SUPPORT_DISABLE"] 
@@ -14,7 +14,7 @@ if sys.platform == 'win32':
   # since the visual compiler and the win platform are
   # not supported by default in arm_math.h
 else:
-  cflags = ["-Wno-unused-variable","-Wno-implicit-function-declaration",config.cflags]
+  cflags = ["-Wno-unused-variable","-Wno-implicit-function-declaration",config.cflags,"-D__GNUC_PYTHON__"]
 
 transform = glob.glob(os.path.join(ROOT,"Source","TransformFunctions","*.c"))
 #transform.remove(os.path.join(ROOT,"Source","TransformFunctions","arm_dct4_init_q15.c"))
@@ -50,7 +50,6 @@ common.remove(os.path.join(ROOT,"Source","CommonTables","CommonTables.c"))
 
 #modulesrc = glob.glob(os.path.join("cmsisdsp_pkg","src","*.c"))
 modulesrc = []
-modulesrc.append(os.path.join("cmsisdsp_pkg","src","fftinit.c"))
 modulesrc.append(os.path.join("cmsisdsp_pkg","src","cmsismodule.c"))
 
 module1 = Extension(config.extensionName,

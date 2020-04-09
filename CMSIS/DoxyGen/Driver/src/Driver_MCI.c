@@ -5,7 +5,7 @@
 \details
 The <b>Memory Card Interface</b> (MCI) implements the hardware abstraction layer for Secure Digital (SD) and Multi Media Card (MMC)
 memory that is typically used as file storage. For embedded systems, SD/MMC devices are available as memory cards in several 
-forms (SD, miniSD, microSD, MMC, MMCmicro) or as non-removable devic
+forms (SD, miniSD, microSD, MMC, MMCmicro) or as non-removable device
 es that are directly soldered to the PCB (eMMC).  
 
 \b References:

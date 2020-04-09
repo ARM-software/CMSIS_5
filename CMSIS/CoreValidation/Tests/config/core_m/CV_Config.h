@@ -13,7 +13,8 @@
 #define RTE_CV_COREINSTR 1
 #define RTE_CV_COREFUNC  1
 #define RTE_CV_CORESIMD  1
-#define RTE_CV_MPUFUNC   __MPU_PRESENT
+#define RTE_CV_MPUFUNC   (__MPU_PRESENT)
+#define RTE_CV_L1CACHE   (__ICACHE_PRESENT || __DCACHE_PRESENT)
 
 //-------- <<< Use Configuration Wizard in Context Menu >>> --------------------
 
@@ -137,11 +138,17 @@
 // <q0> TC_CoreFunc_FPSCR
 #define TC_COREFUNC_FPSCR_EN                       1
 
-
 // <q0> TC_MPU_SetClear
 #define TC_MPU_SETCLEAR_EN                         1
 // <q0> TC_MPU_Load
 #define TC_MPU_LOAD_EN                             1
+
+// <q0> TC_CML1Cache_EnDisableICache
+#define TC_CML1CACHE_ENDISABLE_ICACHE              1
+// <q0> TC_CML1Cache_EnDisableDCache
+#define TC_CML1CACHE_ENDISABLE_DCACHE              1
+// <q0> TC_CML1Cache_CleanDCacheByAddrWhileDisabled
+#define TC_CML1CACHE_CLEANDCACHEBYADDRWHILEDISABLED 1
 
 // </h>
 

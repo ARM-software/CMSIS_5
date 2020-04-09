@@ -2,13 +2,16 @@ cmake_minimum_required (VERSION 3.6)
 
 project(CMSISDSPFiltering)
 
+include(configLib)
+include(configDsp)
 
 add_library(CMSISDSPFiltering STATIC)
 
 include(interpol)
 interpol(CMSISDSPFiltering)
 
-configdsp(CMSISDSPFiltering ..)
+configLib(CMSISDSPFiltering ${ROOT})
+configDsp(CMSISDSPFiltering ${ROOT})
 
 if (CONFIGTABLE AND ALLFAST)
 target_compile_definitions(CMSISDSPFiltering PUBLIC ARM_ALL_FAST_TABLES)  
@@ -122,7 +125,7 @@ target_sources(CMSISDSPFiltering PRIVATE arm_lms_q31.c)
 
 
 ### Includes
-target_include_directories(CMSISDSPFiltering PUBLIC "${DSP}/../../Include")
+target_include_directories(CMSISDSPFiltering PUBLIC "${DSP}/Include")
 
 
 

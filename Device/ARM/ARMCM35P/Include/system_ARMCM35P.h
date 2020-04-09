@@ -2,11 +2,11 @@
  * @file     system_ARMCM35P.h
  * @brief    CMSIS Device System Header File for
  *           ARMCM35P Device
- * @version  V1.0.0
- * @date     03. September 2018
+ * @version  V1.0.1
+ * @date     15. November 2019
  ******************************************************************************/
 /*
- * Copyright (c) 2009-2018 Arm Limited. All rights reserved.
+ * Copyright (c) 2009-2019 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -30,8 +30,15 @@
 extern "C" {
 #endif
 
-extern uint32_t SystemCoreClock;     /*!< System Clock Frequency (Core Clock) */
+/**
+  \brief Exception / Interrupt Handler Function Prototype
+*/
+typedef void(*VECTOR_TABLE_Type)(void);
 
+/**
+  \brief System Clock Frequency (Core Clock)
+*/
+extern uint32_t SystemCoreClock;
 
 /**
   \brief Setup the microcontroller system.

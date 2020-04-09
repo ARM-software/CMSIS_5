@@ -105,8 +105,10 @@ extern void TC_CoreSimd_MulAcc32 (void);
   extern void TC_CoreAFunc_FPU_Enable (void);
 #endif
 
+#if defined(__CORTEX_M)
 extern void TC_MPU_SetClear (void);
 extern void TC_MPU_Load (void);
+#endif
 
 #if defined(__CORTEX_A)
 extern void TC_GenTimer_CNTFRQ (void);
@@ -114,13 +116,19 @@ extern void TC_GenTimer_CNTP_TVAL (void);
 extern void TC_GenTimer_CNTP_CTL (void);
 extern void TC_GenTimer_CNTPCT(void);
 extern void TC_GenTimer_CNTP_CVAL(void);
+#endif
 
-extern void TC_L1Cache_EnDisable(void);
-extern void TC_L1Cache_EnDisableBTAC(void);
-extern void TC_L1Cache_log2_up(void);
-extern void TC_L1Cache_InvalidateDCacheAll(void);
-extern void TC_L1Cache_CleanDCacheAll(void);
-extern void TC_L1Cache_CleanInvalidateDCacheAll(void);
+#if defined(__CORTEX_M)
+extern void TC_CML1Cache_EnDisableICache(void);
+extern void TC_CML1Cache_EnDisableDCache(void);
+extern void TC_CML1Cache_CleanDCacheByAddrWhileDisabled(void);
+#elif defined(__CORTEX_A)
+extern void TC_CAL1Cache_EnDisable(void);
+extern void TC_CAL1Cache_EnDisableBTAC(void);
+extern void TC_CAL1Cache_log2_up(void);
+extern void TC_CAL1Cache_InvalidateDCacheAll(void);
+extern void TC_CAL1Cache_CleanDCacheAll(void);
+extern void TC_CAL1Cache_CleanInvalidateDCacheAll(void);
 #endif
 
 #endif /* __CMSIS_CV_H */

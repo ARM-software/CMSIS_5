@@ -47,7 +47,65 @@
   @par           Scaling and Overflow Behavior
                    The function implements 1.15 by 1.15 multiplications and finally output is converted into 2.14 format.
  */
+#if defined(ARM_MATH_MVEI)
 
+#include "arm_helium_utils.h"
+
+void arm_cmplx_mag_q15(
+  const q15_t * pSrc,
+        q15_t * pDst,
+        uint32_t numSamples)
+{
+
+    int32_t blockSize = numSamples;  /* loop counters */
+    uint32_t  blkCnt;           /* loop counters */
+    q15x8x2_t vecSrc;
+    q15x8_t sum;
+    q31_t in;
+    q31_t acc0;
+
+    blkCnt = blockSize >> 3;
+    while (blkCnt > 0U)
+    {
+        vecSrc = vld2q(pSrc);  
+        pSrc += 16;
+        sum = vqaddq(vmulhq(vecSrc.val[0], vecSrc.val[0]),
+                     vmulhq(vecSrc.val[1], vecSrc.val[1]));
+
+        sum = vshrq(sum, 1);
+
+        sum = FAST_VSQRT_Q15(sum);
+
+        vst1q(pDst, sum); 
+        pDst += 8;
+        /*
+         * Decrement the blockSize loop counter
+         */
+        blkCnt--;
+    }
+
+    /*
+     * tail
+     */
+    blkCnt = blockSize & 7;
+
+    while (blkCnt > 0U)
+    {
+      /* C[0] = sqrt(A[0] * A[0] + A[1] * A[1]) */
+  
+      in = read_q15x2_ia ((q15_t **) &pSrc);
+      acc0 = __SMUAD(in, in);
+  
+      /* store result in 2.14 format in destination buffer. */
+      arm_sqrt_q15((q15_t) (acc0 >> 17), pDst++);
+  
+  
+      /* Decrement loop counter */
+      blkCnt--;
+    }
+}
+
+#else
 void arm_cmplx_mag_q15(
   const q15_t * pSrc,
         q15_t * pDst,
@@ -156,6 +214,7 @@ void arm_cmplx_mag_q15(
   }
 
 }
+#endif /* defined(ARM_MATH_MVEI) */
 
 /**
   @} end of cmplx_mag group

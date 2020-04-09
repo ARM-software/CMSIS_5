@@ -30,10 +30,10 @@
 #include "arm_common_tables.h"
 
 /**
-  @ingroup DCT4_IDCT4
+  @ingroup groupTransforms
  */
 
-/**
+ /**
   @addtogroup DCT4_IDCT4
   @{
  */

@@ -2,11 +2,11 @@
  * @file     system_ARMv81MML.c
  * @brief    CMSIS Device System Source File for
  *           Armv8.1-M Mainline Device Series
- * @version  V1.1.0
- * @date     09. May 2019
+ * @version  V1.2.1
+ * @date     27. March 2020
  ******************************************************************************/
 /*
- * Copyright (c) 2009-2019 Arm Limited. All rights reserved.
+ * Copyright (c) 2009-2020 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -42,11 +42,10 @@
 
 
 /*----------------------------------------------------------------------------
-  Externals
+  Exception / Interrupt Vector table
  *----------------------------------------------------------------------------*/
-#if defined (__VTOR_PRESENT) && (__VTOR_PRESENT == 1U)
-  extern uint32_t __VECTOR_TABLE;
-#endif
+extern const VECTOR_TABLE_Type __VECTOR_TABLE[496];
+
 
 /*----------------------------------------------------------------------------
   System Core Clock Variable
@@ -69,10 +68,11 @@ void SystemInit (void)
 {
 
 #if defined (__VTOR_PRESENT) && (__VTOR_PRESENT == 1U)
-  SCB->VTOR = (uint32_t)(&__VECTOR_TABLE);
+  SCB->VTOR = (uint32_t)(&__VECTOR_TABLE[0]);
 #endif
 
-#if defined (__FPU_USED) && (__FPU_USED == 1U)
+#if (defined (__FPU_USED) && (__FPU_USED == 1U)) || \
+    (defined (__ARM_FEATURE_MVE) && (__ARM_FEATURE_MVE > 0U))
   SCB->CPACR |= ((3U << 10U*2U) |           /* enable CP10 Full Access */
                  (3U << 11U*2U)  );         /* enable CP11 Full Access */
 #endif
@@ -80,6 +80,10 @@ void SystemInit (void)
 #ifdef UNALIGNED_SUPPORT_DISABLE
   SCB->CCR |= SCB_CCR_UNALIGN_TRP_Msk;
 #endif
+
+// Enable Loop and branch info cache
+SCB->CCR |= SCB_CCR_LOB_Msk;
+__ISB();
 
 #if defined (__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
   TZ_SAU_Setup();

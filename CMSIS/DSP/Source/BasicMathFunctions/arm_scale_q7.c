@@ -51,6 +51,62 @@
                    These are multiplied to yield a 2.14 intermediate result and this is shifted with saturation to 1.7 format.
  */
 
+#if defined(ARM_MATH_MVEI)
+
+#include "arm_helium_utils.h"
+
+
+void arm_scale_q7(
+    const q7_t * pSrc,
+    q7_t   scaleFract,
+    int8_t  shift,
+    q7_t * pDst,
+    uint32_t blockSize)
+{
+    uint32_t  blkCnt;           /* loop counters */
+    q7x16_t vecSrc;
+    q7x16_t vecDst;
+
+
+    /* Compute 16 outputs at a time */
+    blkCnt = blockSize >> 4;
+
+    while (blkCnt > 0U)
+    {
+        /*
+         * C = A * scale
+         * Scale the input and then store the result in the destination buffer.
+         */
+        vecSrc = vld1q(pSrc);
+        vecDst = vmulhq(vecSrc, vdupq_n_s8(scaleFract));
+        vecDst = vqshlq_r(vecDst, shift + 1);
+        vst1q(pDst, vecDst);
+        /*
+         * Decrement the blockSize loop counter
+         */
+        blkCnt--;
+        /*
+         * advance vector source and destination pointers
+         */
+        pSrc += 16;
+        pDst += 16;
+    }
+    /*
+     * tail
+     */
+    blkCnt = blockSize & 0xF;
+    if (blkCnt > 0U)
+    {
+        mve_pred16_t p0 = vctp8q(blkCnt);
+        vecSrc = vld1q(pSrc);
+        vecDst = vmulhq(vecSrc, vdupq_n_s8(scaleFract));
+        vecDst = vqshlq_r(vecDst, shift + 1);
+        vstrbq_p(pDst, vecDst, p0);
+    }
+
+}
+
+#else
 void arm_scale_q7(
   const q7_t * pSrc,
         q7_t scaleFract,
@@ -123,6 +179,7 @@ void arm_scale_q7(
   }
 
 }
+#endif /* defined(ARM_MATH_MVEI) */
 
 /**
   @} end of BasicScale group

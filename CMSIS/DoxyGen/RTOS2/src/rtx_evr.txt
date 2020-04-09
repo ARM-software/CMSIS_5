@@ -3,7 +3,7 @@
 \ingroup rtx5_specific 
 \brief RTX5 Event Recorder functions
 \details
-RTX5 interfaces to the <a href="http://www.keil.com/pack/doc/compiler/EventRecorder/html/index.html" target="_blank"><b>Event Recorder</b></a> 
+RTX5 interfaces to the <a href="https://www.keil.com/pack/doc/compiler/EventRecorder/html/index.html" target="_blank"><b>Event Recorder</b></a> 
 to provide event information which helps you to understand and analyze the operation.
 
 To use the Event Recorder together with RTX5, it is required to create an image that generates event information. 

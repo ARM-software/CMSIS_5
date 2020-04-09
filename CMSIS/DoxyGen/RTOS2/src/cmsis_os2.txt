@@ -119,6 +119,7 @@ The following sections provide further details:
 \ifnot FuSaRTS
  - \subpage creating_RTX5_LIB explains how to build your own CMSIS-RTOS RTX v5 library.
 \endif
+ - \subpage rtos2_tutorial is an introduction into the usage of Keil RTX5 based on real-life examples.
  - \subpage technicalData5 lists hardware, software, and resource requirements, supplied files, and supported tool chains.
  - \subpage misraCompliance5 describes the violations to the MISRA standard.
 */
@@ -137,7 +138,7 @@ The steps to create a microcontroller application using RTX5 are:
 - Create a new project and select a microcontroller device.
 - In the Manage Run-Time Environment window, select <b>CMSIS\::CORE</b> and <b>CMSIS\::RTOS2 (API)\::Keil RTX5</b>. You can
   choose to either add RTX as a library (Variant: \b Library) or to add the full source code (Variant: \b Source - required
-  if using the <a href="http://www.keil.com/pack/doc/compiler/EventRecorder/html/index.html" target="_blank"><b>Event Recorder</b></a>):
+  if using the <a href="https://www.keil.com/pack/doc/compiler/EventRecorder/html/index.html" target="_blank"><b>Event Recorder</b></a>):
 
    \image html manage_rte_output.png
 
@@ -214,7 +215,7 @@ If you require some of the \ref rtx5_specific "RTX specific functions" in your a
 \section cre_rtx_proj_er Add Event Recorder Visibility
 
 \ifnot FuSaRTS
-RTX5 interfaces to the <a href="http://www.keil.com/pack/doc/compiler/EventRecorder/html/index.html" target="_blank"><b>Event Recorder</b></a> 
+RTX5 interfaces to the <a href="https://www.keil.com/pack/doc/compiler/EventRecorder/html/index.html" target="_blank"><b>Event Recorder</b></a> 
 to provide event information which helps you to understand and analyze the operation.
 
 - To use the Event Recorder together with RTX5, select the software component <b>Compiler:Event Recorder</b>.
@@ -576,7 +577,7 @@ void osRtxIdleThread (void) {
 
 \note
 \c __WFE() is not available in every Arm Cortex-M implementation. Check device manuals for availability. 
-The alternative using \c __WFI() has other issues, please take note of http://www.keil.com/support/docs/3591.htm as well.
+The alternative using \c __WFI() has other issues, please take note of https://www.keil.com/support/docs/3591.htm as well.
 
 \section rtx_os_h RTX5 Header File
 
@@ -700,6 +701,31 @@ To implement SVC functions in your Keil RTX5 project, you need to:
 - The SVC function \token{0} is \b reserved for the Keil RTX5 kernel.
 - Do not leave gaps when numbering SVC functions. They must occupy a \b continuous range of numbers starting from 1.
 - SVC functions can still be interrupted.
+
+
+\section cre_rtx_proj_clib_arm Arm C library multi-threading protection
+
+\ifnot FuSaRTS
+RTX5 provides an interface to the
+<a href="https://developer.arm.com/docs/dui0475/m/the-arm-c-and-c-libraries/multithreaded-support-in-arm-c-libraries" target="_blank">
+<b>Arm C libraries</b></a> to ensure static data protection in a multi-threaded application.
+
+The Arm C libraries use static data to store errno, floating-point status word for software floating-point operations, 
+a pointer to the base of the heap, and other variables. The Arm C micro-library (i.e. microlib) does not support protection
+for multi-threaded applications. See the <a href="https://developer.arm.com/docs/dui0475/m/the-arm-c-micro-library/differences-between-microlib-and-the-default-c-library" target="_blank"> 
+<b>limitations and differences</b></a> between microlib and the default C library.
+
+By default, RTX5 uses the Arm C libraries multi-thread protection for:
+- all user threads if \ref threadConfig "Object specific Memory allocation" is enabled.
+- the number of threads defined by <b>OS_THREAD_LIBSPACE_NUM</b> if \ref threadConfig "Object specific Memory allocation" is
+  disabled. The definition <b>OS_THREAD_LIBSPACE_NUM</b> defines the number of threads that can safely call Arm C library
+  functions and can be found in "RTX_Config.h" file or can be defined on the global scope.
+
+The default, Arm C libraries use mutex functions to
+<a href="https://developer.arm.com/docs/dui0475/m/the-arm-c-and-c-libraries/multithreaded-support-in-arm-c-libraries/management-of-locks-in-multithreaded-applications" target="_blank">
+<b>protect shared resources from concurrent access</b></a>. RTX5 implements these functions and uses resources from the
+\ref systemConfig "Global Dynamic Memory" to allocate mutex objects.
+\endif
 */
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
@@ -716,7 +742,7 @@ using the CMSIS-RTOS RTX kernel. The configuration options are explained in deta
 - \ref semaphoreConfig provides several parameters to configure the \ref CMSIS_RTOS_SemaphoreMgmt functions.
 - \ref memPoolConfig provides several parameters to configure the \ref CMSIS_RTOS_PoolMgmt functions.
 - \ref msgQueueConfig provides several parameters to configure the \ref CMSIS_RTOS_Message functions.
-- \ref evtrecConfig provides several parameters to configure RTX for usage with <a href="http://www.keil.com/pack/doc/compiler/EventRecorder/html/index.html" target="_blank"><b>Event Recorder</b></a>.
+- \ref evtrecConfig provides several parameters to configure RTX for usage with <a href="https://www.keil.com/pack/doc/compiler/EventRecorder/html/index.html" target="_blank"><b>Event Recorder</b></a>.
 
 The file "RTX_Config.c" contains default implementations of the functions \ref osRtxIdleThread and \ref osRtxErrorNotify. Both functions
 can simply be overwritten with a customized behavior by redefining them as part of the user code.
@@ -744,7 +770,7 @@ round-robin thread switching.
 
 Name                                   | \#define                 | Description
 ---------------------------------------|--------------------------|----------------------------------------------------------------
-Global Dynamic Memory size [bytes]     | \c OS_DYNAMIC_MEM_SIZE   | Defines the combined global dynamic memory size for the \ref GlobalMemoryPool. Default value is \token{4096}. Value range is \token{[0-1073741824]} bytes, in multiples of \token{8} bytes.
+Global Dynamic Memory size [bytes]     | \c OS_DYNAMIC_MEM_SIZE   | Defines the combined global dynamic memory size for the \ref GlobalMemoryPool. Default value is \token{32768}. Value range is \token{[0-1073741824]} bytes, in multiples of \token{8} bytes.
 Kernel Tick Frequency (Hz)             | \c OS_TICK_FREQ          | Defines base time unit for delays and timeouts in Hz. Default: 1000Hz = 1ms period.
 Round-Robin Thread switching           | \c OS_ROBIN_ENABLE       | Enables Round-Robin Thread switching.
 Round-Robin Timeout                    | \c OS_ROBIN_TIMEOUT      | Defines how long a thread will execute before a thread switch. Default value is \token{5}. Value range is \token{[1-1000]}.
@@ -810,8 +836,8 @@ Object specific Memory allocation                        | \c OS_THREAD_OBJ_MEM 
 Number of user Threads                                   | \c OS_THREAD_NUM       | Defines maximum number of user threads that can be active at the same time. Applies to user threads with system provided memory for control blocks. Default value is \token{1}. Value range is \token{[1-1000]}.
 Number of user Threads with default Stack size  | \c OS_THREAD_DEF_STACK_NUM     | Defines maximum number of user threads with default stack size and applies to user threads with \token{0} stack size specified. Value range is \token{[0-1000]}.
 Total Stack size [bytes] for user Threads with user-provided Stack size    | \c OS_THREAD_USER_STACK_SIZE | Defines the combined stack size for user threads with user-provided stack size. Default value is \token{0}. Value range is \token{[0-1073741824]} Bytes, in multiples of \token{8}. 
-Default Thread Stack size [bytes]                        | \c OS_STACK_SIZE    | Defines stack size for threads with zero stack size specified. Default value is \token{200}. Value range is \token{[96-1073741824]} Bytes, in multiples of \token{8}. 
-Idle Thread Stack size [bytes]                           | \c OS_IDLE_THREAD_STACK_SIZE              | Defines stack size for Idle thread. Default value is \token{200}. Value range is \token{[72-1073741824]} bytes, in multiples of \token{8}. 
+Default Thread Stack size [bytes]                        | \c OS_STACK_SIZE    | Defines stack size for threads with zero stack size specified. Default value is \token{3072}. Value range is \token{[96-1073741824]} Bytes, in multiples of \token{8}. 
+Idle Thread Stack size [bytes]                           | \c OS_IDLE_THREAD_STACK_SIZE              | Defines stack size for Idle thread. Default value is \token{512}. Value range is \token{[72-1073741824]} bytes, in multiples of \token{8}. 
 Idle Thread TrustZone Module ID                                            | \c OS_IDLE_THREAD_TZ_MOD_ID    | Defines the \ref osThreadAttr_t::tz_module "TrustZone Module ID" the Idle Thread shall use. This needs to be set to a non-zero value if the Idle Thread need to call secure functions. Default value is \token{0}.
 Stack overrun checking                                   | \c OS_STACK_CHECK   | Enable stack overrun checks at thread switch. 
 Stack usage watermark                                    | \c OS_STACK_WATERMARK    | Initialize thread stack with watermark pattern for analyzing stack usage. Enabling this option increases significantly the execution time of thread creation.
@@ -880,7 +906,7 @@ Name                                   | \#define                 | Description
 Object specific Memory allocation      | \c OS_TIMER_OBJ_MEM      | Enables object specific memory allocation. 
 Number of Timer objects                | \c OS_TIMER_NUM          | Defines maximum number of objects that can be active at the same time. Applies to objects with system provided memory for control blocks. Value range is \token{[1-1000]}.
 Timer Thread Priority                  | \c OS_TIMER_THREAD_PRIO        | Defines priority for timer thread. Default value is \token{40}. Value range is \token{[8-48]}, in multiples of \token{8}. The numbers have the following priority correlation: \token{8=Low}; \token{16=Below Normal}; \token{24=Normal}; \token{32=Above Normal}; \token{40=High}; \token{48=Realtime} 
-Timer Thread Stack size [bytes]        | \c OS_TIMER_THREAD_STACK_SIZE  | Defines stack size for Timer thread. May be set to 0 when timers are not used. Default value is \token{200}. Value range is \token{[0-1073741824]}, in multiples of \token{8}.
+Timer Thread Stack size [bytes]        | \c OS_TIMER_THREAD_STACK_SIZE  | Defines stack size for Timer thread. May be set to 0 when timers are not used. Default value is \token{512}. Value range is \token{[0-1073741824]}, in multiples of \token{8}.
 Timer Thread TrustZone Module ID       | \c OS_TIMER_THREAD_TZ_MOD_ID   | Defines the \ref osThreadAttr_t::tz_module "TrustZone Module ID" the Timer Thread shall use. This needs to be set to a non-zero value if any Timer Callbacks need to call secure functions. Default value is \token{0}.
 Timer Callback Queue entries           | \c OS_TIMER_CB_QUEUE           | Number of concurrent active timer callback functions. May be set to 0 when timers are not used. Default value is \token{4}. Value range is \token{[0-256]}.
 
@@ -984,7 +1010,7 @@ The total storage size reserved for all queues is configured in \c OS_MSGQUEUE_D
 
 \section evtrecConfig Event Recorder Configuration
 
-This section describes the configuration settings for the <a href="http://www.keil.com/pack/doc/compiler/EventRecorder/html/index.html" target="_blank">Event Recorder</a>
+This section describes the configuration settings for the <a href="https://www.keil.com/pack/doc/compiler/EventRecorder/html/index.html" target="_blank">Event Recorder</a>
 annotations. The usage requires the source variant of RTX5; refer to \ref cre_rtx_proj_er for more information.
 
 \subsection evtrecConfigGlobIni Global Configuration
@@ -1081,7 +1107,7 @@ component will have no effect and the debugger is unable to display any events f
 
 \subsection systemConfig_event_recording Manual event configuration
 
-To disable the generation of events for a specific RTX API call, use the following \#define settings (from <b>rtx_evrt.h</b>) and add these manually 
+To disable the generation of events for a specific RTX API call, use the following \#define settings (from <b>rtx_evr.h</b>) and add these manually 
 to the <b>RTX_Config.h</b> file:
 
 \b Memory \b events \n
@@ -1593,7 +1619,7 @@ The RTX5 C source files use <b><a class=el href="http://www.misra.org.uk/" targe
 
 For MISRA validation, <b><a class=el href="http://www.gimpel.com/" target="_blank">PC-lint</a></b> V9.00L is used with configuration for Arm Compiler V6.9.
 The PC-Lint validation setup is part of the project file <b>.\\CMSIS\\RTOS2\\RTX\\Library\\ARM\\MDK\\RTX_CM.uvprojx</b> as shown below. 
-Refer to <b><a class=el href="http://www.keil.com/support/man/docs/uv4/uv4_ut_pclint_validation.htm" target="_blank">Setup for PC-Lint</a></b> for more information.
+Refer to <b><a class=el href="https://www.keil.com/support/man/docs/uv4/uv4_ut_pclint_validation.htm" target="_blank">Setup for PC-Lint</a></b> for more information.
 
 \image html "PC-Lint.png" "Running PC-Lint within MDK - uVision"
 

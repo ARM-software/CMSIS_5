@@ -17,7 +17,7 @@
         <TargetCommonOption>
           <Device>ARMCM0</Device>
           <Vendor>ARM</Vendor>
-          <PackID>ARM.CMSIS.5.5.0</PackID>
+          <PackID>ARM.CMSIS.5.7.0</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IRAM(0x20000000,0x00020000) IROM(0x00000000,0x00040000) CPUTYPE("Cortex-M0") CLOCK(12000000) ESEL ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -424,7 +424,7 @@
             </File>
             <File>
               <FileName>irq_armv8mbl.S</FileName>
-              <FileType>2</FileType>
+              <FileType>1</FileType>
               <FilePath>..\..\..\Source\GCC\irq_armv8mbl.S</FilePath>
               <FileOption>
                 <CommonProperty>
@@ -444,22 +444,29 @@
                   <ComprImg>1</ComprImg>
                 </CommonProperty>
                 <FileArm>
-                  <Aarm>
-                    <bBE>2</bBE>
+                  <Carm>
+                    <arpcs>2</arpcs>
+                    <stkchk>2</stkchk>
+                    <reentr>2</reentr>
                     <interw>2</interw>
+                    <bigend>2</bigend>
+                    <Strict>0</Strict>
+                    <Optim>0</Optim>
+                    <wLevel>0</wLevel>
+                    <uThumb>2</uThumb>
                     <VariousControls>
                       <MiscControls></MiscControls>
                       <Define></Define>
                       <Undefine></Undefine>
                       <IncludePath></IncludePath>
                     </VariousControls>
-                  </Aarm>
+                  </Carm>
                 </FileArm>
               </FileOption>
             </File>
             <File>
               <FileName>irq_armv8mml.S</FileName>
-              <FileType>2</FileType>
+              <FileType>1</FileType>
               <FilePath>..\..\..\Source\GCC\irq_armv8mml.S</FilePath>
               <FileOption>
                 <CommonProperty>
@@ -479,16 +486,23 @@
                   <ComprImg>1</ComprImg>
                 </CommonProperty>
                 <FileArm>
-                  <Aarm>
-                    <bBE>2</bBE>
+                  <Carm>
+                    <arpcs>2</arpcs>
+                    <stkchk>2</stkchk>
+                    <reentr>2</reentr>
                     <interw>2</interw>
+                    <bigend>2</bigend>
+                    <Strict>0</Strict>
+                    <Optim>0</Optim>
+                    <wLevel>0</wLevel>
+                    <uThumb>2</uThumb>
                     <VariousControls>
                       <MiscControls></MiscControls>
                       <Define></Define>
                       <Undefine></Undefine>
                       <IncludePath></IncludePath>
                     </VariousControls>
-                  </Aarm>
+                  </Carm>
                 </FileArm>
               </FileOption>
             </File>
@@ -510,7 +524,7 @@
         <TargetCommonOption>
           <Device>ARMCM3</Device>
           <Vendor>ARM</Vendor>
-          <PackID>ARM.CMSIS.5.5.0</PackID>
+          <PackID>ARM.CMSIS.5.7.0</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IRAM(0x20000000,0x00020000) IROM(0x00000000,0x00040000) CPUTYPE("Cortex-M3") CLOCK(12000000) ESEL ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -917,7 +931,7 @@
             </File>
             <File>
               <FileName>irq_armv8mbl.S</FileName>
-              <FileType>2</FileType>
+              <FileType>1</FileType>
               <FilePath>..\..\..\Source\GCC\irq_armv8mbl.S</FilePath>
               <FileOption>
                 <CommonProperty>
@@ -937,22 +951,29 @@
                   <ComprImg>1</ComprImg>
                 </CommonProperty>
                 <FileArm>
-                  <Aarm>
-                    <bBE>2</bBE>
+                  <Carm>
+                    <arpcs>2</arpcs>
+                    <stkchk>2</stkchk>
+                    <reentr>2</reentr>
                     <interw>2</interw>
+                    <bigend>2</bigend>
+                    <Strict>0</Strict>
+                    <Optim>0</Optim>
+                    <wLevel>0</wLevel>
+                    <uThumb>2</uThumb>
                     <VariousControls>
                       <MiscControls></MiscControls>
                       <Define></Define>
                       <Undefine></Undefine>
                       <IncludePath></IncludePath>
                     </VariousControls>
-                  </Aarm>
+                  </Carm>
                 </FileArm>
               </FileOption>
             </File>
             <File>
               <FileName>irq_armv8mml.S</FileName>
-              <FileType>2</FileType>
+              <FileType>1</FileType>
               <FilePath>..\..\..\Source\GCC\irq_armv8mml.S</FilePath>
               <FileOption>
                 <CommonProperty>
@@ -972,16 +993,23 @@
                   <ComprImg>1</ComprImg>
                 </CommonProperty>
                 <FileArm>
-                  <Aarm>
-                    <bBE>2</bBE>
+                  <Carm>
+                    <arpcs>2</arpcs>
+                    <stkchk>2</stkchk>
+                    <reentr>2</reentr>
                     <interw>2</interw>
+                    <bigend>2</bigend>
+                    <Strict>0</Strict>
+                    <Optim>0</Optim>
+                    <wLevel>0</wLevel>
+                    <uThumb>2</uThumb>
                     <VariousControls>
                       <MiscControls></MiscControls>
                       <Define></Define>
                       <Undefine></Undefine>
                       <IncludePath></IncludePath>
                     </VariousControls>
-                  </Aarm>
+                  </Carm>
                 </FileArm>
               </FileOption>
             </File>
@@ -1050,7 +1078,7 @@
         <TargetCommonOption>
           <Device>ARMCM4_FP</Device>
           <Vendor>ARM</Vendor>
-          <PackID>ARM.CMSIS.5.5.0</PackID>
+          <PackID>ARM.CMSIS.5.7.0</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IRAM(0x20000000,0x00020000) IROM(0x00000000,0x00040000) CPUTYPE("Cortex-M4") FPU2 CLOCK(12000000) ESEL ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -1457,7 +1485,7 @@
             </File>
             <File>
               <FileName>irq_armv8mbl.S</FileName>
-              <FileType>2</FileType>
+              <FileType>1</FileType>
               <FilePath>..\..\..\Source\GCC\irq_armv8mbl.S</FilePath>
               <FileOption>
                 <CommonProperty>
@@ -1477,22 +1505,29 @@
                   <ComprImg>1</ComprImg>
                 </CommonProperty>
                 <FileArm>
-                  <Aarm>
-                    <bBE>2</bBE>
+                  <Carm>
+                    <arpcs>2</arpcs>
+                    <stkchk>2</stkchk>
+                    <reentr>2</reentr>
                     <interw>2</interw>
+                    <bigend>2</bigend>
+                    <Strict>0</Strict>
+                    <Optim>0</Optim>
+                    <wLevel>0</wLevel>
+                    <uThumb>2</uThumb>
                     <VariousControls>
                       <MiscControls></MiscControls>
                       <Define></Define>
                       <Undefine></Undefine>
                       <IncludePath></IncludePath>
                     </VariousControls>
-                  </Aarm>
+                  </Carm>
                 </FileArm>
               </FileOption>
             </File>
             <File>
               <FileName>irq_armv8mml.S</FileName>
-              <FileType>2</FileType>
+              <FileType>1</FileType>
               <FilePath>..\..\..\Source\GCC\irq_armv8mml.S</FilePath>
               <FileOption>
                 <CommonProperty>
@@ -1512,16 +1547,23 @@
                   <ComprImg>1</ComprImg>
                 </CommonProperty>
                 <FileArm>
-                  <Aarm>
-                    <bBE>2</bBE>
+                  <Carm>
+                    <arpcs>2</arpcs>
+                    <stkchk>2</stkchk>
+                    <reentr>2</reentr>
                     <interw>2</interw>
+                    <bigend>2</bigend>
+                    <Strict>0</Strict>
+                    <Optim>0</Optim>
+                    <wLevel>0</wLevel>
+                    <uThumb>2</uThumb>
                     <VariousControls>
                       <MiscControls></MiscControls>
                       <Define></Define>
                       <Undefine></Undefine>
                       <IncludePath></IncludePath>
                     </VariousControls>
-                  </Aarm>
+                  </Carm>
                 </FileArm>
               </FileOption>
             </File>
@@ -1543,7 +1585,7 @@
         <TargetCommonOption>
           <Device>ARMv8MBL</Device>
           <Vendor>ARM</Vendor>
-          <PackID>ARM.CMSIS.5.5.0</PackID>
+          <PackID>ARM.CMSIS.5.7.0</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IRAM(0x20000000,0x00020000) IROM(0x00000000,0x00040000) CPUTYPE("ARMV8MBL") CLOCK(12000000) ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -1980,12 +2022,12 @@
             </File>
             <File>
               <FileName>irq_armv8mbl.S</FileName>
-              <FileType>2</FileType>
+              <FileType>1</FileType>
               <FilePath>..\..\..\Source\GCC\irq_armv8mbl.S</FilePath>
             </File>
             <File>
               <FileName>irq_armv8mml.S</FileName>
-              <FileType>2</FileType>
+              <FileType>1</FileType>
               <FilePath>..\..\..\Source\GCC\irq_armv8mml.S</FilePath>
               <FileOption>
                 <CommonProperty>
@@ -2005,16 +2047,23 @@
                   <ComprImg>1</ComprImg>
                 </CommonProperty>
                 <FileArm>
-                  <Aarm>
-                    <bBE>2</bBE>
+                  <Carm>
+                    <arpcs>2</arpcs>
+                    <stkchk>2</stkchk>
+                    <reentr>2</reentr>
                     <interw>2</interw>
+                    <bigend>2</bigend>
+                    <Strict>0</Strict>
+                    <Optim>0</Optim>
+                    <wLevel>0</wLevel>
+                    <uThumb>2</uThumb>
                     <VariousControls>
                       <MiscControls></MiscControls>
                       <Define></Define>
                       <Undefine></Undefine>
                       <IncludePath></IncludePath>
                     </VariousControls>
-                  </Aarm>
+                  </Carm>
                 </FileArm>
               </FileOption>
             </File>
@@ -2083,7 +2132,7 @@
         <TargetCommonOption>
           <Device>ARMv8MBL</Device>
           <Vendor>ARM</Vendor>
-          <PackID>ARM.CMSIS.5.5.0</PackID>
+          <PackID>ARM.CMSIS.5.7.0</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IRAM(0x20000000,0x00020000) IROM(0x00000000,0x00040000) CPUTYPE("ARMV8MBL") CLOCK(12000000) ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -2520,12 +2569,12 @@
             </File>
             <File>
               <FileName>irq_armv8mbl.S</FileName>
-              <FileType>2</FileType>
+              <FileType>1</FileType>
               <FilePath>..\..\..\Source\GCC\irq_armv8mbl.S</FilePath>
             </File>
             <File>
               <FileName>irq_armv8mml.S</FileName>
-              <FileType>2</FileType>
+              <FileType>1</FileType>
               <FilePath>..\..\..\Source\GCC\irq_armv8mml.S</FilePath>
               <FileOption>
                 <CommonProperty>
@@ -2545,16 +2594,23 @@
                   <ComprImg>1</ComprImg>
                 </CommonProperty>
                 <FileArm>
-                  <Aarm>
-                    <bBE>2</bBE>
+                  <Carm>
+                    <arpcs>2</arpcs>
+                    <stkchk>2</stkchk>
+                    <reentr>2</reentr>
                     <interw>2</interw>
+                    <bigend>2</bigend>
+                    <Strict>0</Strict>
+                    <Optim>0</Optim>
+                    <wLevel>0</wLevel>
+                    <uThumb>2</uThumb>
                     <VariousControls>
                       <MiscControls></MiscControls>
                       <Define></Define>
                       <Undefine></Undefine>
                       <IncludePath></IncludePath>
                     </VariousControls>
-                  </Aarm>
+                  </Carm>
                 </FileArm>
               </FileOption>
             </File>
@@ -2623,7 +2679,7 @@
         <TargetCommonOption>
           <Device>ARMv8MML</Device>
           <Vendor>ARM</Vendor>
-          <PackID>ARM.CMSIS.5.5.0</PackID>
+          <PackID>ARM.CMSIS.5.7.0</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IRAM(0x20000000,0x00020000) IROM(0x00000000,0x00040000) CPUTYPE("ARMV8MML") CLOCK(12000000) ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -3060,7 +3116,7 @@
             </File>
             <File>
               <FileName>irq_armv8mbl.S</FileName>
-              <FileType>2</FileType>
+              <FileType>1</FileType>
               <FilePath>..\..\..\Source\GCC\irq_armv8mbl.S</FilePath>
               <FileOption>
                 <CommonProperty>
@@ -3080,22 +3136,29 @@
                   <ComprImg>1</ComprImg>
                 </CommonProperty>
                 <FileArm>
-                  <Aarm>
-                    <bBE>2</bBE>
+                  <Carm>
+                    <arpcs>2</arpcs>
+                    <stkchk>2</stkchk>
+                    <reentr>2</reentr>
                     <interw>2</interw>
+                    <bigend>2</bigend>
+                    <Strict>0</Strict>
+                    <Optim>0</Optim>
+                    <wLevel>0</wLevel>
+                    <uThumb>2</uThumb>
                     <VariousControls>
                       <MiscControls></MiscControls>
                       <Define></Define>
                       <Undefine></Undefine>
                       <IncludePath></IncludePath>
                     </VariousControls>
-                  </Aarm>
+                  </Carm>
                 </FileArm>
               </FileOption>
             </File>
             <File>
               <FileName>irq_armv8mml.S</FileName>
-              <FileType>2</FileType>
+              <FileType>1</FileType>
               <FilePath>..\..\..\Source\GCC\irq_armv8mml.S</FilePath>
             </File>
           </Files>
@@ -3163,7 +3226,7 @@
         <TargetCommonOption>
           <Device>ARMv8MML</Device>
           <Vendor>ARM</Vendor>
-          <PackID>ARM.CMSIS.5.5.0</PackID>
+          <PackID>ARM.CMSIS.5.7.0</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IRAM(0x20000000,0x00020000) IROM(0x00000000,0x00040000) CPUTYPE("ARMV8MML") CLOCK(12000000) ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -3600,7 +3663,7 @@
             </File>
             <File>
               <FileName>irq_armv8mbl.S</FileName>
-              <FileType>2</FileType>
+              <FileType>1</FileType>
               <FilePath>..\..\..\Source\GCC\irq_armv8mbl.S</FilePath>
               <FileOption>
                 <CommonProperty>
@@ -3620,22 +3683,29 @@
                   <ComprImg>1</ComprImg>
                 </CommonProperty>
                 <FileArm>
-                  <Aarm>
-                    <bBE>2</bBE>
+                  <Carm>
+                    <arpcs>2</arpcs>
+                    <stkchk>2</stkchk>
+                    <reentr>2</reentr>
                     <interw>2</interw>
+                    <bigend>2</bigend>
+                    <Strict>0</Strict>
+                    <Optim>0</Optim>
+                    <wLevel>0</wLevel>
+                    <uThumb>2</uThumb>
                     <VariousControls>
                       <MiscControls></MiscControls>
                       <Define></Define>
                       <Undefine></Undefine>
                       <IncludePath></IncludePath>
                     </VariousControls>
-                  </Aarm>
+                  </Carm>
                 </FileArm>
               </FileOption>
             </File>
             <File>
               <FileName>irq_armv8mml.S</FileName>
-              <FileType>2</FileType>
+              <FileType>1</FileType>
               <FilePath>..\..\..\Source\GCC\irq_armv8mml.S</FilePath>
             </File>
           </Files>
@@ -3703,7 +3773,7 @@
         <TargetCommonOption>
           <Device>ARMv8MML_SP</Device>
           <Vendor>ARM</Vendor>
-          <PackID>ARM.CMSIS.5.5.0</PackID>
+          <PackID>ARM.CMSIS.5.7.0</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IRAM(0x20000000,0x00020000) IROM(0x00000000,0x00040000) CPUTYPE("ARMV8MML") FPU3(SFPU) CLOCK(12000000) ESEL ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -3938,7 +4008,7 @@
             <interw>0</interw>
             <VariousControls>
               <MiscControls>-march=armv8-m.main -mfpu=fpv5-sp-d16 -mfloat-abi=hard</MiscControls>
-              <Define>__FPU_USED=1</Define>
+              <Define>FPU_USED=1</Define>
               <Undefine></Undefine>
               <IncludePath></IncludePath>
             </VariousControls>
@@ -4140,7 +4210,7 @@
             </File>
             <File>
               <FileName>irq_armv8mbl.S</FileName>
-              <FileType>2</FileType>
+              <FileType>1</FileType>
               <FilePath>..\..\..\Source\GCC\irq_armv8mbl.S</FilePath>
               <FileOption>
                 <CommonProperty>
@@ -4160,22 +4230,29 @@
                   <ComprImg>1</ComprImg>
                 </CommonProperty>
                 <FileArm>
-                  <Aarm>
-                    <bBE>2</bBE>
+                  <Carm>
+                    <arpcs>2</arpcs>
+                    <stkchk>2</stkchk>
+                    <reentr>2</reentr>
                     <interw>2</interw>
+                    <bigend>2</bigend>
+                    <Strict>0</Strict>
+                    <Optim>0</Optim>
+                    <wLevel>0</wLevel>
+                    <uThumb>2</uThumb>
                     <VariousControls>
                       <MiscControls></MiscControls>
                       <Define></Define>
                       <Undefine></Undefine>
                       <IncludePath></IncludePath>
                     </VariousControls>
-                  </Aarm>
+                  </Carm>
                 </FileArm>
               </FileOption>
             </File>
             <File>
               <FileName>irq_armv8mml.S</FileName>
-              <FileType>2</FileType>
+              <FileType>1</FileType>
               <FilePath>..\..\..\Source\GCC\irq_armv8mml.S</FilePath>
             </File>
           </Files>
@@ -4243,7 +4320,7 @@
         <TargetCommonOption>
           <Device>ARMv8MML_SP</Device>
           <Vendor>ARM</Vendor>
-          <PackID>ARM.CMSIS.5.5.0</PackID>
+          <PackID>ARM.CMSIS.5.7.0</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IRAM(0x20000000,0x00020000) IROM(0x00000000,0x00040000) CPUTYPE("ARMV8MML") FPU3(SFPU) CLOCK(12000000) ESEL ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -4478,7 +4555,7 @@
             <interw>0</interw>
             <VariousControls>
               <MiscControls>-march=armv8-m.main -mfpu=fpv5-sp-d16 -mfloat-abi=hard</MiscControls>
-              <Define>__FPU_USED=1 DOMAIN_NS=1</Define>
+              <Define>FPU_USED=1 DOMAIN_NS=1</Define>
               <Undefine></Undefine>
               <IncludePath></IncludePath>
             </VariousControls>
@@ -4680,7 +4757,7 @@
             </File>
             <File>
               <FileName>irq_armv8mbl.S</FileName>
-              <FileType>2</FileType>
+              <FileType>1</FileType>
               <FilePath>..\..\..\Source\GCC\irq_armv8mbl.S</FilePath>
               <FileOption>
                 <CommonProperty>
@@ -4700,22 +4777,29 @@
                   <ComprImg>1</ComprImg>
                 </CommonProperty>
                 <FileArm>
-                  <Aarm>
-                    <bBE>2</bBE>
+                  <Carm>
+                    <arpcs>2</arpcs>
+                    <stkchk>2</stkchk>
+                    <reentr>2</reentr>
                     <interw>2</interw>
+                    <bigend>2</bigend>
+                    <Strict>0</Strict>
+                    <Optim>0</Optim>
+                    <wLevel>0</wLevel>
+                    <uThumb>2</uThumb>
                     <VariousControls>
                       <MiscControls></MiscControls>
                       <Define></Define>
                       <Undefine></Undefine>
                       <IncludePath></IncludePath>
                     </VariousControls>
-                  </Aarm>
+                  </Carm>
                 </FileArm>
               </FileOption>
             </File>
             <File>
               <FileName>irq_armv8mml.S</FileName>
-              <FileType>2</FileType>
+              <FileType>1</FileType>
               <FilePath>..\..\..\Source\GCC\irq_armv8mml.S</FilePath>
             </File>
           </Files>

@@ -44,7 +44,7 @@ JTEST_DEFINE_GROUP(all_tests)
 
 #if !defined(CUSTOMIZE_TESTS) || defined(ENABLE_STATISTICS_TESTS)
   JTEST_GROUP_CALL(statistics_tests);
-#endif()
+#endif
 
 #if !defined(CUSTOMIZE_TESTS) || defined(ENABLE_SUPPORT_TESTS)
   JTEST_GROUP_CALL(support_tests);

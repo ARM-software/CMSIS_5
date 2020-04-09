@@ -1,11 +1,11 @@
 /**************************************************************************//**
  * @file     partition_ARMv81MML.h
  * @brief    CMSIS-CORE Initial Setup for Secure / Non-Secure Zones for Armv8.1-M Mainline
- * @version  V1.0.0
- * @date     18. March 2018
+ * @version  V1.0.1
+ * @date     26. March 2020
  ******************************************************************************/
 /*
- * Copyright (c) 2009-2019 Arm Limited. All rights reserved.
+ * Copyright (c) 2009-2020 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -316,12 +316,12 @@
 */
 
 /*
-// <e>Setup behaviour of Floating Point Unit
+// <e>Setup behaviour of Floating Point and Vector Unit (FPU/MVE)
 */
 #define TZ_FPU_NS_USAGE 1
 
 /*
-// <o>Floating Point Unit usage
+// <o>Floating Point and Vector Unit usage
 //     <0=> Secure state only
 //     <3=> Secure and Non-Secure state
 //   <i> Value for SCB->NSACR register bits CP10, CP11
@@ -1177,8 +1177,9 @@ __STATIC_INLINE void TZ_SAU_Setup (void)
                    ((SCB_AIRCR_BFHFNMINS_VAL    << SCB_AIRCR_BFHFNMINS_Pos)    & SCB_AIRCR_BFHFNMINS_Msk);
   #endif /* defined (SCB_CSR_AIRCR_INIT) && (SCB_CSR_AIRCR_INIT == 1U) */
 
-  #if defined (__FPU_USED) && (__FPU_USED == 1U) && \
-      defined (TZ_FPU_NS_USAGE) && (TZ_FPU_NS_USAGE == 1U)
+  #if (((defined (__FPU_USED) && (__FPU_USED == 1U))              || \
+        (defined (__ARM_FEATURE_MVE) && (__ARM_FEATURE_MVE > 0))) && \
+       (defined (TZ_FPU_NS_USAGE) && (TZ_FPU_NS_USAGE == 1U)))
 
     SCB->NSACR = (SCB->NSACR & ~(SCB_NSACR_CP10_Msk | SCB_NSACR_CP11_Msk)) |
                    ((SCB_NSACR_CP10_11_VAL << SCB_NSACR_CP10_Pos) & (SCB_NSACR_CP10_Msk | SCB_NSACR_CP11_Msk));

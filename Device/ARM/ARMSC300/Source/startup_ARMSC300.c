@@ -1,11 +1,11 @@
 /******************************************************************************
  * @file     startup_ARMSC300.c
  * @brief    CMSIS-Core(M) Device Startup File for a SC300 Device
- * @version  V2.0.0
- * @date     04. June 2019
+ * @version  V2.0.3
+ * @date     31. March 2020
  ******************************************************************************/
 /*
- * Copyright (c) 2009-2019 Arm Limited. All rights reserved.
+ * Copyright (c) 2009-2020 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -22,12 +22,11 @@
  * limitations under the License.
  */
 
-#include "ARMSC300.h"
-
-/*----------------------------------------------------------------------------
-  Exception / Interrupt Handler Function Prototype
- *----------------------------------------------------------------------------*/
-typedef void( *pFunc )( void );
+#if defined (ARMSC300)
+  #include "ARMSC300.h"
+#else
+  #error device not specified!
+#endif
 
 /*----------------------------------------------------------------------------
   External References
@@ -39,15 +38,15 @@ extern __NO_RETURN void __PROGRAM_START(void);
 /*----------------------------------------------------------------------------
   Internal References
  *----------------------------------------------------------------------------*/
-void __NO_RETURN Default_Handler(void);
-void __NO_RETURN Reset_Handler  (void); 
+__NO_RETURN void Reset_Handler  (void);
+            void Default_Handler(void);
 
 /*----------------------------------------------------------------------------
   Exception / Interrupt Handler
  *----------------------------------------------------------------------------*/
 /* Exceptions */
 void NMI_Handler            (void) __attribute__ ((weak, alias("Default_Handler")));
-void HardFault_Handler      (void) __attribute__ ((weak, alias("Default_Handler")));
+void HardFault_Handler      (void) __attribute__ ((weak));
 void MemManage_Handler      (void) __attribute__ ((weak, alias("Default_Handler")));
 void BusFault_Handler       (void) __attribute__ ((weak, alias("Default_Handler")));
 void UsageFault_Handler     (void) __attribute__ ((weak, alias("Default_Handler")));
@@ -77,9 +76,9 @@ void Interrupt9_Handler     (void) __attribute__ ((weak, alias("Default_Handler"
 #pragma GCC diagnostic ignored "-Wpedantic"
 #endif
 
-extern const pFunc __VECTOR_TABLE[240];
-       const pFunc __VECTOR_TABLE[240] __VECTOR_TABLE_ATTRIBUTE = {
-  (pFunc)(&__INITIAL_SP),                   /*     Initial Stack Pointer */
+extern const VECTOR_TABLE_Type __VECTOR_TABLE[240];
+       const VECTOR_TABLE_Type __VECTOR_TABLE[240] __VECTOR_TABLE_ATTRIBUTE = {
+  (VECTOR_TABLE_Type)(&__INITIAL_SP),       /*     Initial Stack Pointer */
   Reset_Handler,                            /*     Reset Handler */
   NMI_Handler,                              /* -14 NMI Handler */
   HardFault_Handler,                        /* -13 Hard Fault Handler */
@@ -117,10 +116,24 @@ extern const pFunc __VECTOR_TABLE[240];
 /*----------------------------------------------------------------------------
   Reset Handler called on controller reset
  *----------------------------------------------------------------------------*/
-void Reset_Handler(void)
+__NO_RETURN void Reset_Handler(void)
 {
   SystemInit();                             /* CMSIS System Initialization */
   __PROGRAM_START();                        /* Enter PreMain (C library entry point) */
+}
+
+
+#if defined(__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050)
+  #pragma clang diagnostic push
+  #pragma clang diagnostic ignored "-Wmissing-noreturn"
+#endif
+
+/*----------------------------------------------------------------------------
+  Hard Fault Handler
+ *----------------------------------------------------------------------------*/
+void HardFault_Handler(void)
+{
+  while(1);
 }
 
 /*----------------------------------------------------------------------------
@@ -130,3 +143,8 @@ void Default_Handler(void)
 {
   while(1);
 }
+
+#if defined(__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050)
+  #pragma clang diagnostic pop
+#endif
+

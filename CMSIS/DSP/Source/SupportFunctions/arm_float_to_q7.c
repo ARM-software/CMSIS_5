@@ -58,7 +58,84 @@
  * In order to apply rounding, the library should be rebuilt with the ROUNDING macro
  * defined in the preprocessor section of project options.
  */
+#if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
+void arm_float_to_q7(
+  const float32_t * pSrc,
+  q7_t * pDst,
+  uint32_t blockSize)
+{
+    uint32_t         blkCnt;     /* loop counters */
+    float32_t       maxQ = powf(2.0, 7);
+    f32x4x4_t       tmp;
+    q15x8_t         evVec, oddVec;
+    q7x16_t         vecDst;
+    float32_t const *pSrcVec;
+#ifdef ARM_MATH_ROUNDING
+    float32_t in;
+#endif
 
+    pSrcVec = (float32_t const *) pSrc;
+    blkCnt = blockSize >> 4;
+    while (blkCnt > 0U) {
+        tmp = vld4q(pSrcVec);
+        pSrcVec += 16;
+        /*
+         * C = A * 128.0
+         * convert from float to q7 and then store the results in the destination buffer
+         */
+        tmp.val[0] = vmulq(tmp.val[0], maxQ);
+        tmp.val[1] = vmulq(tmp.val[1], maxQ);
+        tmp.val[2] = vmulq(tmp.val[2], maxQ);
+        tmp.val[3] = vmulq(tmp.val[3], maxQ);
+
+        /*
+         * convert and pack evens
+         */
+        evVec = vqmovnbq(evVec, vcvtaq_s32_f32(tmp.val[0]));
+        evVec = vqmovntq(evVec, vcvtaq_s32_f32(tmp.val[2]));
+        /*
+         * convert and pack odds
+         */
+        oddVec = vqmovnbq(oddVec, vcvtaq_s32_f32(tmp.val[1]));
+        oddVec = vqmovntq(oddVec, vcvtaq_s32_f32(tmp.val[3]));
+        /*
+         * merge
+         */
+        vecDst = vqmovnbq(vecDst, evVec);
+        vecDst = vqmovntq(vecDst, oddVec);
+
+        vst1q(pDst, vecDst);
+        pDst += 16;
+        /*
+         * Decrement the blockSize loop counter
+         */
+        blkCnt--;
+    }
+
+  blkCnt = blockSize & 0xF;
+  while (blkCnt > 0U)
+  {
+    /* C = A * 128 */
+
+    /* Convert from float to q7 and store result in destination buffer */
+#ifdef ARM_MATH_ROUNDING
+
+    in = (*pSrcVec++ * 128);
+    in += in > 0.0f ? 0.5f : -0.5f;
+    *pDst++ = (q7_t) (__SSAT((q15_t) (in), 8));
+
+#else
+
+    *pDst++ = (q7_t) __SSAT((q31_t) (*pSrcVec++ * 128.0f), 8);
+
+#endif /* #ifdef ARM_MATH_ROUNDING */
+
+    /* Decrement loop counter */
+    blkCnt--;
+  }
+
+}
+#else
 #if defined(ARM_MATH_NEON)
 void arm_float_to_q7(
   const float32_t * pSrc,
@@ -68,9 +145,9 @@ void arm_float_to_q7(
   const float32_t *pIn = pSrc;                         /* Src pointer */
   uint32_t blkCnt;                               /* loop counter */
 
-  float32_t in;
   float32x4_t inV;
   #ifdef ARM_MATH_ROUNDING
+  float32_t in;
   float32x4_t zeroV = vdupq_n_f32(0.0f);
   float32x4_t pHalf = vdupq_n_f32(0.5f / 128.0f);
   float32x4_t mHalf = vdupq_n_f32(-0.5f / 128.0f);
@@ -78,7 +155,6 @@ void arm_float_to_q7(
   uint32x4_t cmp;
   #endif
 
-  int32x4_t cvt;
   int16x4_t cvt1,cvt2;
   int8x8_t outV;
 
@@ -247,6 +323,7 @@ void arm_float_to_q7(
 
 }
 #endif /* #if defined(ARM_MATH_NEON) */
+#endif /* defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE) */
 
 /**
   @} end of float_to_x group

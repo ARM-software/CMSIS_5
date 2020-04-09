@@ -55,7 +55,7 @@
    * @param[in]       out_shift   amount of right-shift for output
    * @param[in,out]   Im_out      pointer to output tensor
    * @param[in]       dim_im_out  output tensor dimension
-   * @param[in,out]   bufferA     pointer to buffer space for input 
+   * @param[in,out]   bufferA     pointer to buffer space for input
    * @param[in,out]   bufferB     pointer to buffer space for output
    * @return     The function returns either
    * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.
@@ -77,7 +77,7 @@
    * The im2col converts the Q7 tensor input into Q15 column, which is stored in
    * bufferA. There is reordering happenning during this im2col process with
    * arm_q7_to_q15_reordered_no_shift. For every four elements, the second and
-   * third elements are swapped. 
+   * third elements are swapped.
    *
    * The computation kernel arm_nn_mat_mult_kernel_q7_q15_reordered does the
    * GEMM computation with the reordered columns.
@@ -100,12 +100,12 @@ arm_convolve_HWC_q7_fast(const q7_t * Im_in,
                          const q7_t * bias,
                          const uint16_t bias_shift,
                          const uint16_t out_shift,
-                         q7_t * Im_out, 
-                         const uint16_t dim_im_out, 
-                         q15_t * bufferA, 
+                         q7_t * Im_out,
+                         const uint16_t dim_im_out,
+                         q15_t * bufferA,
                          q7_t * bufferB)
 {
-
+    (void)bufferB;
 #if defined (ARM_MATH_DSP)
     /* Run the following code for Cortex-M4 and Cortex-M7 */
 
@@ -320,7 +320,7 @@ arm_convolve_HWC_q7_fast(const q7_t * Im_in,
         for (i = 0; i < ch_im_out; i++)
         {
             q31_t     sum = ((q31_t)bias[i] << bias_shift) + NN_ROUND(out_shift);
-            q15_t    *pB = bufferA;
+            const q15_t *pB = bufferA;
             /* each time it process 4 entries */
             uint16_t  colCnt = ch_im_in * dim_kernel * dim_kernel >> 2;
 
@@ -330,11 +330,11 @@ arm_convolve_HWC_q7_fast(const q7_t * Im_in,
                 q31_t     inA1, inA2;
                 q31_t     inB1, inB2;
 
-                pA = (q7_t *) read_and_pad_reordered((void *)pA, &inA1, &inA2);
+                pA = read_and_pad_reordered(pA, &inA1, &inA2);
 
-                inB1 = *__SIMD32(pB)++;
+                inB1 = arm_nn_read_q15x2_ia(&pB);
                 sum = __SMLAD(inA1, inB1, sum);
-                inB2 = *__SIMD32(pB)++;
+                inB2 = arm_nn_read_q15x2_ia(&pB);
                 sum = __SMLAD(inA2, inB2, sum);
 
                 colCnt--;

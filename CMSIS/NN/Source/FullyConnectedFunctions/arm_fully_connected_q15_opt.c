@@ -99,12 +99,12 @@ arm_fully_connected_q15_opt(const q15_t * pV,
                             const uint16_t dim_vec,
                             const uint16_t num_of_rows,
                             const uint16_t bias_shift,
-                            const uint16_t out_shift, 
-                            const q15_t * bias, 
-                            q15_t * pOut, 
+                            const uint16_t out_shift,
+                            const q15_t * bias,
+                            q15_t * pOut,
                             q15_t * vec_buffer)
 {
-
+    (void)vec_buffer;
 #if defined (ARM_MATH_DSP)
     /* Run the following code for Cortex-M4 and Cortex-M7 */
 
@@ -118,9 +118,9 @@ arm_fully_connected_q15_opt(const q15_t * pV,
     while (rowCnt)
     {
         q31_t     sum =  ((q31_t)(*pBias++) << bias_shift) + NN_ROUND(out_shift);
-        q31_t     sum2 = ((q31_t)(*pBias++) << bias_shift) + NN_ROUND(out_shift); 
-        q31_t     sum3 = ((q31_t)(*pBias++) << bias_shift) + NN_ROUND(out_shift); 
-        q31_t     sum4 = ((q31_t)(*pBias++) << bias_shift) + NN_ROUND(out_shift); 
+        q31_t     sum2 = ((q31_t)(*pBias++) << bias_shift) + NN_ROUND(out_shift);
+        q31_t     sum3 = ((q31_t)(*pBias++) << bias_shift) + NN_ROUND(out_shift);
+        q31_t     sum4 = ((q31_t)(*pBias++) << bias_shift) + NN_ROUND(out_shift);
 
         uint16_t  colCnt = dim_vec >> 1;
 
@@ -133,14 +133,14 @@ arm_fully_connected_q15_opt(const q15_t * pV,
             q31_t     inM11, inM12, inM13, inM14;
             q31_t     inV;
 
-            inV = *__SIMD32(pA)++;
-            inM11 = *__SIMD32(pB)++;
+            inV = arm_nn_read_q15x2_ia(&pA);
+            inM11 = arm_nn_read_q15x2_ia(&pB);
             sum = __SMLAD(inV, inM11, sum);
-            inM12 = *__SIMD32(pB)++;
+            inM12 = arm_nn_read_q15x2_ia(&pB);
             sum2 = __SMLAD(inV, inM12, sum2);
-            inM13 = *__SIMD32(pB)++;
+            inM13 = arm_nn_read_q15x2_ia(&pB);
             sum3 = __SMLAD(inV, inM13, sum3);
-            inM14 = *__SIMD32(pB)++;
+            inM14 = arm_nn_read_q15x2_ia(&pB);
             sum4 = __SMLAD(inV, inM14, sum4);
             colCnt--;
         }
@@ -213,12 +213,12 @@ arm_fully_connected_q15_opt(const q15_t * pV,
         {
             q31_t     inV1, inV2, inM1, inM2;
 
-            inM1 = *__SIMD32(pB)++;
-            inV1 = *__SIMD32(pA)++;
+            inM1 = arm_nn_read_q15x2_ia(&pB);
+            inV1 = arm_nn_read_q15x2_ia(&pA);
             sum = __SMLAD(inV1, inM1, sum);
 
-            inM2 = *__SIMD32(pB)++;
-            inV2 = *__SIMD32(pA)++;
+            inM2 = arm_nn_read_q15x2_ia(&pB);
+            inV2 = arm_nn_read_q15x2_ia(&pA);
             sum = __SMLAD(inV2, inM2, sum);
 
             colCnt--;

@@ -128,6 +128,347 @@
   @param[in]     blockSize  number of samples to process
   @return        none
  */
+
+#if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
+
+#include "arm_helium_utils.h"
+
+static void arm_fir_interpolate2_f32_mve(
+  const arm_fir_interpolate_instance_f32 * S,
+  const float32_t * pSrc,
+  float32_t * pDst,
+  uint32_t blockSize)
+{
+    float32_t *pState = S->pState;  /* State pointer */
+    const float32_t *pCoeffs = S->pCoeffs;    /* Coefficient pointer */
+    float32_t *pStateCurnt;     /* Points to the current sample of the state */
+    const float32_t *ptr1, *ptr2;     /* Temporary pointers for state and coefficient buffers */
+    uint32_t  tapCnt;
+    uint32_t  blkCnt;           /* Loop counters */
+    uint16_t  phaseLen = S->phaseLength;    /* Length of each polyphase filter component */
+    uint32_t  strides[4] = { 0, 1 * 2, 2 * 2, 3 * 2 };
+    uint32x4_t vec_strides0 = *(uint32x4_t *) strides;
+    uint32x4_t vec_strides1 = vec_strides0 + 1;
+    f32x4_t acc0, acc1;
+
+    /*
+     * S->pState buffer contains previous frame (phaseLen - 1) samples
+     * pStateCurnt points to the location where the new input data should be written
+     */
+    pStateCurnt = S->pState + (phaseLen - 1U);
+    /*
+     * Total number of intput samples
+     */
+    blkCnt = blockSize;
+    /*
+     * Loop over the blockSize.
+     */
+    while (blkCnt > 0U)
+    {
+        /*
+         * Copy new input sample into the state buffer
+         */
+        *pStateCurnt++ = *pSrc++;
+        /*
+         * Initialize state pointer
+         */
+        ptr1 = pState;
+
+        acc0 = vdupq_n_f32(0.0f);
+        acc1 = vdupq_n_f32(0.0f);
+        /*
+         * Initialize coefficient pointer
+         */
+        ptr2 = pCoeffs;
+
+        tapCnt = phaseLen >> 2;
+        while (tapCnt > 0U)
+        {
+            f32x4_t vecCoef, vecState;
+
+            vecState = vldrwq_f32(ptr1);
+
+            vecCoef = vldrwq_gather_shifted_offset_f32(ptr2, vec_strides1);
+            acc1 = vfmaq_f32(acc1, vecState, vecCoef);
+
+            vecCoef = vldrwq_gather_shifted_offset_f32(ptr2, vec_strides0);
+            acc0 = vfmaq_f32(acc0, vecState, vecCoef);
+
+            ptr2 += 4 * 2;
+            ptr1 += 4;
+            /*
+             * Decrement the loop counter
+             */
+            tapCnt--;
+        }
+
+        tapCnt = phaseLen & 3;
+        if (tapCnt > 0U)
+        {
+            mve_pred16_t p0 = vctp32q(tapCnt);
+            f32x4_t vecCoef, vecState;
+
+            vecState = vldrwq_z_f32(ptr1, p0);
+
+            vecCoef = vldrwq_gather_shifted_offset_z_f32(ptr2, vec_strides1, p0);
+            acc1 = vfmaq_f32(acc1, vecState, vecCoef);
+            vecCoef = vldrwq_gather_shifted_offset_z_f32(ptr2, vec_strides0, p0);
+            acc0 = vfmaq_f32(acc0, vecState, vecCoef);
+
+        }
+        *pDst++ = vecAddAcrossF32Mve(acc1);
+        *pDst++ = vecAddAcrossF32Mve(acc0);
+
+        /*
+         * Advance the state pointer by 1
+         * * to process the next group of interpolation factor number samples
+         */
+        pState = pState + 1;
+        /*
+         * Decrement the loop counter
+         */
+        blkCnt--;
+    }
+
+    /*
+     * Processing is complete.
+     * ** Now copy the last phaseLen - 1 samples to the start of the state buffer.
+     * ** This prepares the state buffer for the next function call.
+     */
+
+    /*
+     * Points to the start of the state buffer
+     */
+    pStateCurnt = S->pState;
+    blkCnt = (phaseLen - 1U) >> 2;
+    while (blkCnt > 0U)
+    {
+        vst1q(pStateCurnt, vldrwq_f32(pState));
+        pState += 4;
+        pStateCurnt += 4;
+        blkCnt--;
+    }
+    blkCnt = (phaseLen - 1U) & 3;
+    if (blkCnt > 0U)
+    {
+        mve_pred16_t p0 = vctp32q(blkCnt);
+        vstrwq_p_f32(pStateCurnt, vldrwq_f32(pState), p0);
+    }
+}
+
+void arm_fir_interpolate_f32(
+  const arm_fir_interpolate_instance_f32 * S,
+  const float32_t * pSrc,
+  float32_t * pDst,
+  uint32_t blockSize)
+{
+    float32_t *pState = S->pState;  /* State pointer */
+    const float32_t *pCoeffs = S->pCoeffs;    /* Coefficient pointer */
+    float32_t *pStateCurnt;     /* Points to the current sample of the state */
+    const float32_t *ptr1, *ptr2;     /* Temporary pointers for state and coefficient buffers */
+    uint32_t  tapCnt;
+    uint32_t  i, blkCnt;        /* Loop counters */
+    uint16_t  phaseLen = S->phaseLength;    /* Length of each polyphase filter component */
+    uint32_t  strides[4] = { 0, 1 * S->L, 2 * S->L, 3 * S->L };
+    uint32_t  stridesM[4] = { 4, 3, 2, 1 };
+    uint32x4_t vec_stridesM = *(uint32x4_t *) stridesM;
+    uint32x4_t vec_strides = *(uint32x4_t *) strides;
+    f32x4_t acc;
+
+
+    if ( S->L == 2 ) {
+        arm_fir_interpolate2_f32_mve(S, pSrc, pDst, blockSize);
+        return;
+    }
+
+    /*
+     * S->pState buffer contains previous frame (phaseLen - 1) samples
+     */
+    /*
+     * pStateCurnt points to the location where the new input data should be written
+     */
+    pStateCurnt = S->pState + (phaseLen - 1U);
+    /*
+     * Total number of intput samples
+     */
+    blkCnt = blockSize;
+    /*
+     * Loop over the blockSize.
+     */
+    while (blkCnt > 0U)
+    {
+        /*
+         * Copy new input sample into the state buffer
+         */
+        *pStateCurnt++ = *pSrc++;
+        /*
+         * Loop over the Interpolation factor.
+         */
+        i = S->L;
+        while (i > 0U)
+        {
+            /*
+             * Initialize state pointer
+             */
+            ptr1 = pState;
+            if (i >= 4)
+            {
+                float32_t state0, state1, state2, state3;
+                acc = vdupq_n_f32(0.0f);
+                /*
+                 * Initialize coefficient pointer
+                 */
+                ptr2 = pCoeffs + (i - 1U) - 4;
+                tapCnt = phaseLen >> 2;
+                while (tapCnt > 0U)
+                {
+                    f32x4_t vecCoef;
+                    const float32_t *pCoef = ptr2;
+
+                    state0 = ptr1[0];
+                    state1 = ptr1[1];
+                    state2 = ptr1[2];
+                    state3 = ptr1[3];
+                    ptr1 += 4;
+
+                    vecCoef = vldrwq_gather_shifted_offset_f32(pCoef, vec_stridesM);
+                    pCoef += S->L;
+                    acc = vfmaq_n_f32(acc, vecCoef, state0);
+
+                    vecCoef = vldrwq_gather_shifted_offset_f32(pCoef, vec_stridesM);
+                    pCoef += S->L;
+                    acc = vfmaq_n_f32(acc, vecCoef, state1);
+
+                    vecCoef = vldrwq_gather_shifted_offset_f32(pCoef, vec_stridesM);
+                    pCoef += S->L;
+                    acc = vfmaq_n_f32(acc, vecCoef, state2);
+
+                    vecCoef = vldrwq_gather_shifted_offset_f32(pCoef, vec_stridesM);
+                    pCoef += S->L;
+                    acc = vfmaq_n_f32(acc, vecCoef, state3);
+
+                    ptr2 = ptr2 + 4 * S->L;
+                    /*
+                     * Decrement the loop counter
+                     */
+                    tapCnt--;
+                }
+
+                tapCnt = phaseLen & 3;
+                if (tapCnt > 0U)
+                {
+                    mve_pred16_t p0 = vctp32q(tapCnt);
+                    f32x4_t vecCoef;
+                    const float32_t *pCoef = ptr2;
+
+                    state0 = ptr1[0];
+                    state1 = ptr1[1];
+                    state2 = ptr1[2];
+                    state3 = ptr1[3];
+
+                    vecCoef = vldrwq_gather_shifted_offset_z_f32(pCoef, vec_stridesM, p0);
+                    pCoef += S->L;
+                    acc = vfmaq_n_f32(acc, vecCoef, state0);
+
+                    vecCoef = vldrwq_gather_shifted_offset_z_f32(pCoef, vec_stridesM, p0);
+                    pCoef += S->L;
+                    acc = vfmaq_n_f32(acc, vecCoef, state1);
+
+                    vecCoef = vldrwq_gather_shifted_offset_z_f32(pCoef, vec_stridesM, p0);
+                    pCoef += S->L;
+                    acc = vfmaq_n_f32(acc, vecCoef, state2);
+
+                    vecCoef = vldrwq_gather_shifted_offset_z_f32(pCoef, vec_stridesM, p0);
+                    pCoef += S->L;
+                    acc = vfmaq_n_f32(acc, vecCoef, state3);
+                }
+
+                vst1q(pDst,  acc);
+                pDst += 4;
+                i -= 4;
+            }
+            else
+            {
+                acc = vdupq_n_f32(0.0f);
+                /*
+                 * Initialize coefficient pointer
+                 */
+                ptr2 = pCoeffs + (i - 1U);
+
+                tapCnt = phaseLen >> 2;
+                while (tapCnt > 0U)
+                {
+                    f32x4_t vecCoef, vecState;
+
+                    vecState = vldrwq_f32(ptr1);
+                    ptr1 += 4;
+
+                    vecCoef = vldrwq_gather_shifted_offset_f32(ptr2, vec_strides);
+                    ptr2 += 4 * S->L;
+                    acc = vfmaq_f32(acc, vecState, vecCoef);
+                    /*
+                     * Decrement the loop counter
+                     */
+                    tapCnt--;
+                }
+
+                tapCnt = phaseLen & 3;
+                if (tapCnt > 0U)
+                {
+                    mve_pred16_t p0 = vctp32q(tapCnt);
+                    f32x4_t vecCoef, vecState;
+
+                    vecState = vldrwq_z_f32(ptr1, p0);
+
+                    vecCoef = vldrwq_gather_shifted_offset_z_f32(ptr2, vec_strides, p0);
+                    acc = vfmaq_f32(acc, vecState, vecCoef);
+                }
+                *pDst++ = vecAddAcrossF32Mve(acc);
+                /*
+                 * Decrement the loop counter
+                 */
+                i--;
+            }
+        }
+
+        /*
+         * Advance the state pointer by 1
+         * * to process the next group of interpolation factor number samples
+         */
+        pState = pState + 1;
+        /*
+         * Decrement the loop counter
+         */
+        blkCnt--;
+    }
+
+    /*
+     * Processing is complete.
+     * ** Now copy the last phaseLen - 1 samples to the start of the state buffer.
+     * ** This prepares the state buffer for the next function call.
+     */
+
+    /*
+     * Points to the start of the state buffer
+     */
+    pStateCurnt = S->pState;
+    blkCnt = (phaseLen - 1U) >> 2;
+    while (blkCnt > 0U)
+    {
+        vst1q(pStateCurnt, vldrwq_f32(pState));
+        pState += 4;
+        pStateCurnt += 4;
+        blkCnt--;
+    }
+    blkCnt = (phaseLen - 1U) & 3;
+    if (blkCnt > 0U)
+    {
+        mve_pred16_t p0 = vctp32q(blkCnt);
+        vstrwq_p_f32(pStateCurnt, vldrwq_f32(pState), p0);
+    }
+}
+
+#else
 #if defined(ARM_MATH_NEON)
 void arm_fir_interpolate_f32(
   const arm_fir_interpolate_instance_f32 * S,
@@ -141,18 +482,15 @@ void arm_fir_interpolate_f32(
   float32_t *ptr1;                               /* Temporary pointers for state buffer */
   const float32_t *ptr2;                         /* Temporary pointers for coefficient buffer */
   float32_t sum0;                                /* Accumulators */
-  float32_t x0, c0;                              /* Temporary variables to hold state and coefficient values */
+  float32_t c0;                              /* Temporary variables to hold state and coefficient values */
   uint32_t i, blkCnt, j;                         /* Loop counters */
   uint16_t phaseLen = S->phaseLength, tapCnt;    /* Length of each polyphase filter component */
-  float32_t acc0, acc1, acc2, acc3;
-  float32_t x1, x2, x3;
   uint32_t blkCntN4;
   float32_t c1, c2, c3;
 
   float32x4_t sum0v;
-  float32x4_t accV,accV0,accV1;
+  float32x4_t accV0,accV1;
   float32x4_t x0v,x1v,x2v,xa,xb;
-  uint32x4_t x0v_u,x1v_u,x2v_u,xa_u,xb_u;
   float32x2_t tempV;
 
   /* S->pState buffer contains previous frame (phaseLen - 1) samples */
@@ -201,7 +539,7 @@ void arm_fir_interpolate_f32(
      
       x0v = vld1q_f32(ptr1);
       x1v = vld1q_f32(ptr1 + 4);
-	
+  
       while (tapCnt > 0U)
       {
         /* Read the input samples */
@@ -216,7 +554,7 @@ void arm_fir_interpolate_f32(
        
         /* Read the coefficients, inputs and perform multiply-accumulate */
         c1 = *(ptr2 + S->L);
-	
+  
         xa = vextq_f32(x0v,x1v,1);
         xb = vextq_f32(x1v,x2v,1);
 
@@ -225,11 +563,11 @@ void arm_fir_interpolate_f32(
 
         /* Read the coefficients, inputs and perform multiply-accumulate */
         c2 = *(ptr2 + S->L * 2);
-	
+  
         xa = vextq_f32(x0v,x1v,2);
         xb = vextq_f32(x1v,x2v,2);
         
-	accV0 = vmlaq_n_f32(accV0,xa,c2);
+        accV0 = vmlaq_n_f32(accV0,xa,c2);
         accV1 = vmlaq_n_f32(accV1,xb,c2);
 
         /* Read the coefficients, inputs and perform multiply-accumulate */
@@ -238,7 +576,7 @@ void arm_fir_interpolate_f32(
         xa = vextq_f32(x0v,x1v,3);
         xb = vextq_f32(x1v,x2v,3);
         
-	accV0 = vmlaq_n_f32(accV0,xa,c3);
+        accV0 = vmlaq_n_f32(accV0,xa,c3);
         accV1 = vmlaq_n_f32(accV1,xb,c3);
 
         /* Upsampling is done by stuffing L-1 zeros between each sample.
@@ -280,7 +618,7 @@ void arm_fir_interpolate_f32(
              xa = vextq_f32(x0v,x1v,2);
              xb = vextq_f32(x1v,x2v,2);
              
-	     accV0 = vmlaq_n_f32(accV0,xa,c0);
+             accV0 = vmlaq_n_f32(accV0,xa,c0);
              accV1 = vmlaq_n_f32(accV1,xb,c0);
              ptr2 += S->L;
 
@@ -297,7 +635,7 @@ void arm_fir_interpolate_f32(
              xa = vextq_f32(x0v,x1v,1);
              xb = vextq_f32(x1v,x2v,1);
              
-	     accV0 = vmlaq_n_f32(accV0,xa,c0);
+             accV0 = vmlaq_n_f32(accV0,xa,c0);
              accV1 = vmlaq_n_f32(accV1,xb,c0);
              ptr2 += S->L;
 
@@ -317,15 +655,15 @@ void arm_fir_interpolate_f32(
       }
 
       /* The result is in the accumulator, store in the destination buffer. */
-      *pDst = accV0[0];
-      *(pDst + S->L) = accV0[1];
-      *(pDst + 2 * S->L) = accV0[2];
-      *(pDst + 3 * S->L) = accV0[3];
+      *pDst = vgetq_lane_f32(accV0, 0);
+      *(pDst + S->L) = vgetq_lane_f32(accV0, 1);
+      *(pDst + 2 * S->L) = vgetq_lane_f32(accV0, 2);
+      *(pDst + 3 * S->L) = vgetq_lane_f32(accV0, 3);
 
-      *(pDst + 4 * S->L) = accV1[0];
-      *(pDst + 5 * S->L) = accV1[1];
-      *(pDst + 6 * S->L) = accV1[2];
-      *(pDst + 7 * S->L) = accV1[3];
+      *(pDst + 4 * S->L) = vgetq_lane_f32(accV1, 0);
+      *(pDst + 5 * S->L) = vgetq_lane_f32(accV1, 1);
+      *(pDst + 6 * S->L) = vgetq_lane_f32(accV1, 2);
+      *(pDst + 7 * S->L) = vgetq_lane_f32(accV1, 3);
 
       pDst++;
 
@@ -378,7 +716,7 @@ void arm_fir_interpolate_f32(
       while (tapCnt > 0U)
       {
         /* Read the coefficient */
-        x1v[0] = *(ptr2);
+        x1v = vsetq_lane_f32(*(ptr2),x1v,0);
 
         /* Upsampling is done by stuffing L-1 zeros between each sample.
          * So instead of multiplying zeros with coefficients,
@@ -390,19 +728,19 @@ void arm_fir_interpolate_f32(
         ptr1 += 4;
 
         /* Read the coefficient */
-        x1v[1] = *(ptr2);
+        x1v = vsetq_lane_f32(*(ptr2),x1v,1);
 
         /* Increment the coefficient pointer by interpolation factor times. */
         ptr2 += S->L;
 
         /* Read the coefficient */
-        x1v[2] = *(ptr2);
+        x1v = vsetq_lane_f32(*(ptr2),x1v,2);
 
         /* Increment the coefficient pointer by interpolation factor times. */
         ptr2 += S->L;
 
         /* Read the coefficient */
-        x1v[3] = *(ptr2);
+        x1v = vsetq_lane_f32(*(ptr2),x1v,3);
 
         /* Increment the coefficient pointer by interpolation factor times. */
         ptr2 += S->L;
@@ -414,7 +752,7 @@ void arm_fir_interpolate_f32(
       }
 
       tempV = vpadd_f32(vget_low_f32(sum0v),vget_high_f32(sum0v));
-      sum0 = tempV[0] + tempV[1];
+      sum0 = vget_lane_f32(tempV, 0) + vget_lane_f32(tempV, 1);
 
       /* If the polyPhase length is not a multiple of 4, compute the remaining filter taps */
       tapCnt = phaseLen % 0x4U;
@@ -908,7 +1246,7 @@ void arm_fir_interpolate_f32(
 }
 
 #endif /* #if defined(ARM_MATH_NEON) */
-
+#endif /* defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE) */
 /**
   @} end of FIR_Interpolate group
  */

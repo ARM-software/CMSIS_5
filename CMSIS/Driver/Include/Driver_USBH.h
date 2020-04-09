@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2017 ARM Limited. All rights reserved.
+ * Copyright (c) 2013-2020 ARM Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -15,13 +15,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
   *
- * $Date:        2. Feb 2017
- * $Revision:    V2.2
+ * $Date:        31. March 2020
+ * $Revision:    V2.3
  *
  * Project:      USB Host Driver definitions
 */
 
 /* History:
+ *  Version 2.3
+ *    Removed volatile from ARM_USBH_PORT_STATE
  *  Version 2.2
  *    ARM_USBH_PORT_STATE made volatile
  *  Version 2.1
@@ -56,13 +58,17 @@ extern "C"
 
 #include "Driver_USB.h"
 
-#define ARM_USBH_API_VERSION ARM_DRIVER_VERSION_MAJOR_MINOR(2,2)  /* API version */
+#define ARM_USBH_API_VERSION ARM_DRIVER_VERSION_MAJOR_MINOR(2,3)  /* API version */
+
+
+#define _ARM_Driver_USBH_(n)      Driver_USBH##n
+#define  ARM_Driver_USBH_(n) _ARM_Driver_USBH_(n)
 
 
 /**
 \brief USB Host Port State
 */
-typedef volatile struct _ARM_USBH_PORT_STATE {
+typedef struct _ARM_USBH_PORT_STATE {
   uint32_t connected   : 1;             ///< USB Host Port connected flag
   uint32_t overcurrent : 1;             ///< USB Host Port overcurrent flag
   uint32_t speed       : 2;             ///< USB Host Port speed setting (ARM_USB_SPEED_xxx)

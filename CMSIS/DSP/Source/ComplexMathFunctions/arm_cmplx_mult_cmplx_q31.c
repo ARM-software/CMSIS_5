@@ -50,6 +50,62 @@
                    Input down scaling is not required.
  */
 
+#if defined(ARM_MATH_MVEI)
+void arm_cmplx_mult_cmplx_q31(
+  const q31_t * pSrcA,
+  const q31_t * pSrcB,
+        q31_t * pDst,
+        uint32_t numSamples)
+{
+
+    uint32_t blkCnt;           /* loop counters */
+    uint32_t blockSize = numSamples * CMPLX_DIM;  /* loop counters */
+    q31x4_t vecA;
+    q31x4_t vecB;
+    q31x4_t vecDst;
+    q31_t a, b, c, d;                              /* Temporary variables */
+
+    /* Compute 2 complex outputs at a time */
+    blkCnt = blockSize >> 2;
+    while (blkCnt > 0U)
+    {
+
+        vecA = vld1q(pSrcA);
+        vecB = vld1q(pSrcB);
+        /* C[2 * i] = A[2 * i] * B[2 * i] - A[2 * i + 1] * B[2 * i + 1].  */
+        vecDst = vqdmlsdhq(vuninitializedq_s32(),vecA, vecB);
+        /* C[2 * i + 1] = A[2 * i] * B[2 * i + 1] + A[2 * i + 1] * B[2 * i].  */
+        vecDst = vqdmladhxq(vecDst, vecA, vecB);
+
+        vecDst = vshrq(vecDst, 2);
+        vst1q(pDst, vecDst);
+
+        blkCnt --;
+        pSrcA += 4;
+        pSrcB += 4;
+        pDst += 4;
+    };
+
+    blkCnt = (blockSize & 3) >> 1;
+    while (blkCnt > 0U)
+    {
+      /* C[2 * i    ] = A[2 * i] * B[2 * i    ] - A[2 * i + 1] * B[2 * i + 1]. */
+      /* C[2 * i + 1] = A[2 * i] * B[2 * i + 1] + A[2 * i + 1] * B[2 * i    ]. */
+  
+      a = *pSrcA++;
+      b = *pSrcA++;
+      c = *pSrcB++;
+      d = *pSrcB++;
+  
+      /* store result in 3.29 format in destination buffer. */
+      *pDst++ = (q31_t) ( (((q63_t) a * c) >> 33) - (((q63_t) b * d) >> 33) );
+      *pDst++ = (q31_t) ( (((q63_t) a * d) >> 33) + (((q63_t) b * c) >> 33) );
+  
+      /* Decrement loop counter */
+      blkCnt--;
+    }
+}
+#else
 void arm_cmplx_mult_cmplx_q31(
   const q31_t * pSrcA,
   const q31_t * pSrcB,
@@ -131,6 +187,7 @@ void arm_cmplx_mult_cmplx_q31(
   }
 
 }
+#endif /* defined(ARM_MATH_MVEI) */
 
 /**
   @} end of CmplxByCmplxMult group

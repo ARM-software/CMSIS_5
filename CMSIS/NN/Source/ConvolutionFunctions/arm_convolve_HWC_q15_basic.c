@@ -57,7 +57,7 @@
    * @param[in]       dim_im_out  output tensor dimension
    * @param[in,out]   bufferA     pointer to buffer space for input
    * @param[in,out]   bufferB     pointer to buffer space for output
-   * @return     The function returns <code>ARM_MATH_SUCCESS</code> 
+   * @return     The function returns <code>ARM_MATH_SUCCESS</code>
    *
    * @details
    *
@@ -68,7 +68,7 @@
    * bufferB size: 0
    *
    * This basic version is designed to work for any input tensor and weight
-   * dimension. 
+   * dimension.
    */
 
 arm_status
@@ -83,12 +83,12 @@ arm_convolve_HWC_q15_basic(const q15_t * Im_in,
                            const q15_t * bias,
                            const uint16_t bias_shift,
                            const uint16_t out_shift,
-                           q15_t * Im_out, 
-                           const uint16_t dim_im_out, 
-                           q15_t * bufferA, 
+                           q15_t * Im_out,
+                           const uint16_t dim_im_out,
+                           q15_t * bufferA,
                            q7_t * bufferB)
 {
-
+    (void)bufferB;
 #if defined (ARM_MATH_DSP)
     /* Run the following code for Cortex-M4 and Cortex-M7 */
 
@@ -128,14 +128,14 @@ arm_convolve_HWC_q15_basic(const q15_t * Im_in,
             for (i = 0; i < ch_im_out; i++)
             {
                 q31_t     sum = ((q31_t)bias[i] << bias_shift) + NN_ROUND(out_shift);
-                q15_t    *pB = im_buffer;
+                const q15_t *pB = im_buffer;
                 uint16_t  colCnt = ch_im_in * dim_kernel * dim_kernel >> 2;
                 while (colCnt)
                 {
-                    q31_t     inA1 = *__SIMD32(pA)++;
-                    q31_t     inB1 = *__SIMD32(pB)++;
-                    q31_t     inA2 = *__SIMD32(pA)++;
-                    q31_t     inB2 = *__SIMD32(pB)++;
+                    q31_t     inA1 = arm_nn_read_q15x2_ia(&pA);
+                    q31_t     inB1 = arm_nn_read_q15x2_ia(&pB);
+                    q31_t     inA2 = arm_nn_read_q15x2_ia(&pA);
+                    q31_t     inB2 = arm_nn_read_q15x2_ia(&pB);
 
                     sum = __SMLAD(inA1, inB1, sum);
                     sum = __SMLAD(inA2, inB2, sum);

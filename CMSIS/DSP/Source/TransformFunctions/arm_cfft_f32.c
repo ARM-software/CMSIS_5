@@ -29,6 +29,591 @@
 #include "arm_math.h"
 #include "arm_common_tables.h"
 
+#if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
+
+#include "arm_helium_utils.h"
+#include "arm_vec_fft.h"
+#include "arm_mve_tables.h"
+
+
+static float32_t arm_inverse_fft_length_f32(uint16_t fftLen)
+{
+  float32_t retValue=1.0;
+                                                      
+  switch (fftLen)                                     
+  {                                                   
+                                                      
+  case 4096U:                                         
+    retValue = 0.000244140625;                        
+    break;                                            
+                                                      
+  case 2048U:                                         
+    retValue = 0.00048828125;                         
+    break;                                            
+                                                      
+  case 1024U:                                         
+    retValue = 0.0009765625f;                         
+    break;                                            
+                                                      
+  case 512U:                                          
+    retValue = 0.001953125;                           
+    break;                                            
+                                                      
+  case 256U:                                          
+    retValue = 0.00390625f;                           
+    break;                                            
+                                                      
+  case 128U:                                          
+    retValue = 0.0078125;                             
+    break;                                            
+                                                      
+  case 64U:                                           
+    retValue = 0.015625f;                             
+    break;                                            
+                                                      
+  case 32U:                                           
+    retValue = 0.03125;                               
+    break;                                            
+                                                      
+  case 16U:                                           
+    retValue = 0.0625f;                               
+    break;                                            
+                                                      
+                                                      
+  default:                                            
+    break;                                            
+  }                                                   
+  return(retValue); 
+}
+
+
+static void arm_bitreversal_f32_inpl_mve(
+        uint32_t *pSrc,
+  const uint16_t  bitRevLen,
+  const uint16_t *pBitRevTab)
+
+{
+    uint64_t       *src = (uint64_t *) pSrc;
+    uint32_t        blkCnt;     /* loop counters */
+    uint32x4_t      bitRevTabOff;
+    uint32x4_t      one = vdupq_n_u32(1);
+
+    blkCnt = (bitRevLen / 2) / 2;
+    while (blkCnt > 0U) {
+        bitRevTabOff = vldrhq_u32(pBitRevTab);
+        pBitRevTab += 4;
+
+        uint64x2_t      bitRevOff1 = vmullbq_int_u32(bitRevTabOff, one);
+        uint64x2_t      bitRevOff2 = vmulltq_int_u32(bitRevTabOff, one);
+
+        uint64x2_t      in1 = vldrdq_gather_offset_u64(src, bitRevOff1);
+        uint64x2_t      in2 = vldrdq_gather_offset_u64(src, bitRevOff2);
+
+        vstrdq_scatter_offset_u64(src, bitRevOff1, in2);
+        vstrdq_scatter_offset_u64(src, bitRevOff2, in1);
+
+        /*
+         * Decrement the blockSize loop counter
+         */
+        blkCnt--;
+    }
+}
+
+
+static void _arm_radix4_butterfly_f32_mve(const arm_cfft_instance_f32 * S,float32_t * pSrc, uint32_t fftLen)
+{
+    f32x4_t vecTmp0, vecTmp1;
+    f32x4_t vecSum0, vecDiff0, vecSum1, vecDiff1;
+    f32x4_t vecA, vecB, vecC, vecD;
+    uint32_t  blkCnt;
+    uint32_t  n1, n2;
+    uint32_t  stage = 0;
+    int32_t  iter = 1;
+    static const uint32_t strides[4] = {
+        (0 - 16) * sizeof(q31_t *),
+        (1 - 16) * sizeof(q31_t *),
+        (8 - 16) * sizeof(q31_t *),
+        (9 - 16) * sizeof(q31_t *)
+    };
+
+    n2 = fftLen;
+    n1 = n2;
+    n2 >>= 2u;
+    for (int k = fftLen / 4u; k > 1; k >>= 2)
+    {
+        for (int i = 0; i < iter; i++)
+        {
+            float32_t const     *p_rearranged_twiddle_tab_stride1 =
+                                &S->rearranged_twiddle_stride1[
+                                S->rearranged_twiddle_tab_stride1_arr[stage]];
+            float32_t const     *p_rearranged_twiddle_tab_stride2 =
+                                &S->rearranged_twiddle_stride2[
+                                S->rearranged_twiddle_tab_stride2_arr[stage]];
+            float32_t const     *p_rearranged_twiddle_tab_stride3 =
+                                &S->rearranged_twiddle_stride3[
+                                S->rearranged_twiddle_tab_stride3_arr[stage]];
+            float32_t const    *pW1, *pW2, *pW3;
+            float32_t           *inA = pSrc + CMPLX_DIM * i * n1;
+            float32_t           *inB = inA + n2 * CMPLX_DIM;
+            float32_t           *inC = inB + n2 * CMPLX_DIM;
+            float32_t           *inD = inC + n2 * CMPLX_DIM;
+            f32x4_t            vecW;
+
+
+            pW1 = p_rearranged_twiddle_tab_stride1;
+            pW2 = p_rearranged_twiddle_tab_stride2;
+            pW3 = p_rearranged_twiddle_tab_stride3;
+
+            blkCnt = n2 / 2;
+            /*
+             * load 2 f32 complex pair
+             */
+            vecA = vldrwq_f32(inA);
+            vecC = vldrwq_f32(inC);
+            while (blkCnt > 0U)
+            {
+                vecB = vldrwq_f32(inB);
+                vecD = vldrwq_f32(inD);
+
+                vecSum0 = vecA + vecC;  /* vecSum0 = vaddq(vecA, vecC) */
+                vecDiff0 = vecA - vecC; /* vecSum0 = vsubq(vecA, vecC) */
+
+                vecSum1 = vecB + vecD;
+                vecDiff1 = vecB - vecD;
+                /*
+                 * [ 1 1 1 1 ] * [ A B C D ]' .* 1
+                 */
+                vecTmp0 = vecSum0 + vecSum1;
+                vst1q(inA, vecTmp0);
+                inA += 4;
+
+                /*
+                 * [ 1 -1 1 -1 ] * [ A B C D ]'
+                 */
+                vecTmp0 = vecSum0 - vecSum1;
+                /*
+                 * [ 1 -1 1 -1 ] * [ A B C D ]'.* W2
+                 */
+                vecW = vld1q(pW2);
+                pW2 += 4;
+                vecTmp1 = MVE_CMPLX_MULT_FLT_Conj_AxB(vecW, vecTmp0);
+                vst1q(inB, vecTmp1);
+                inB += 4;
+
+                /*
+                 * [ 1 -i -1 +i ] * [ A B C D ]'
+                 */
+                vecTmp0 = MVE_CMPLX_SUB_A_ixB(vecDiff0, vecDiff1);
+                /*
+                 * [ 1 -i -1 +i ] * [ A B C D ]'.* W1
+                 */
+                vecW = vld1q(pW1);
+                pW1 +=4;
+                vecTmp1 = MVE_CMPLX_MULT_FLT_Conj_AxB(vecW, vecTmp0);
+                vst1q(inC, vecTmp1);
+                inC += 4;
+
+                /*
+                 * [ 1 +i -1 -i ] * [ A B C D ]'
+                 */
+                vecTmp0 = MVE_CMPLX_ADD_A_ixB(vecDiff0, vecDiff1);
+                /*
+                 * [ 1 +i -1 -i ] * [ A B C D ]'.* W3
+                 */
+                vecW = vld1q(pW3);
+                pW3 += 4;
+                vecTmp1 = MVE_CMPLX_MULT_FLT_Conj_AxB(vecW, vecTmp0);
+                vst1q(inD, vecTmp1);
+                inD += 4;
+
+                vecA = vldrwq_f32(inA);
+                vecC = vldrwq_f32(inC);
+
+                blkCnt--;
+            }
+        }
+        n1 = n2;
+        n2 >>= 2u;
+        iter = iter << 2;
+        stage++;
+    }
+
+    /*
+     * start of Last stage process
+     */
+    uint32x4_t vecScGathAddr = *(uint32x4_t *) strides;
+    vecScGathAddr = vecScGathAddr + (uint32_t) pSrc;
+
+    /* load scheduling */
+    vecA = vldrwq_gather_base_wb_f32(&vecScGathAddr, 64);
+    vecC = vldrwq_gather_base_f32(vecScGathAddr, 16);
+
+    blkCnt = (fftLen >> 3);
+    while (blkCnt > 0U)
+    {
+        vecSum0 = vecA + vecC;  /* vecSum0 = vaddq(vecA, vecC) */
+        vecDiff0 = vecA - vecC; /* vecSum0 = vsubq(vecA, vecC) */
+
+        vecB = vldrwq_gather_base_f32(vecScGathAddr, 8);
+        vecD = vldrwq_gather_base_f32(vecScGathAddr, 24);
+
+        vecSum1 = vecB + vecD;
+        vecDiff1 = vecB - vecD;
+
+        /* pre-load for next iteration */
+        vecA = vldrwq_gather_base_wb_f32(&vecScGathAddr, 64);
+        vecC = vldrwq_gather_base_f32(vecScGathAddr, 16);
+
+        vecTmp0 = vecSum0 + vecSum1;
+        vstrwq_scatter_base_f32(vecScGathAddr, -64, vecTmp0);
+
+        vecTmp0 = vecSum0 - vecSum1;
+        vstrwq_scatter_base_f32(vecScGathAddr, -64 + 8, vecTmp0);
+
+        vecTmp0 = MVE_CMPLX_SUB_A_ixB(vecDiff0, vecDiff1);
+        vstrwq_scatter_base_f32(vecScGathAddr, -64 + 16, vecTmp0);
+
+        vecTmp0 = MVE_CMPLX_ADD_A_ixB(vecDiff0, vecDiff1);
+        vstrwq_scatter_base_f32(vecScGathAddr, -64 + 24, vecTmp0);
+
+        blkCnt--;
+    }
+
+    /*
+     * End of last stage process
+     */
+}
+
+static void arm_cfft_radix4by2_f32_mve(const arm_cfft_instance_f32 * S, float32_t *pSrc, uint32_t fftLen)
+{
+    float32_t const *pCoefVec;
+    float32_t const  *pCoef = S->pTwiddle;
+    float32_t        *pIn0, *pIn1;
+    uint32_t          n2;
+    uint32_t          blkCnt;
+    f32x4_t         vecIn0, vecIn1, vecSum, vecDiff;
+    f32x4_t         vecCmplxTmp, vecTw;
+
+
+    n2 = fftLen >> 1;
+    pIn0 = pSrc;
+    pIn1 = pSrc + fftLen;
+    pCoefVec = pCoef;
+
+    blkCnt = n2 / 2;
+    while (blkCnt > 0U)
+    {
+        vecIn0 = *(f32x4_t *) pIn0;
+        vecIn1 = *(f32x4_t *) pIn1;
+        vecTw = vld1q(pCoefVec);
+        pCoefVec += 4;
+
+        vecSum = vecIn0 + vecIn1;
+        vecDiff = vecIn0 - vecIn1;
+
+        vecCmplxTmp = MVE_CMPLX_MULT_FLT_Conj_AxB(vecTw, vecDiff);
+
+        vst1q(pIn0, vecSum);
+        pIn0 += 4;
+        vst1q(pIn1, vecCmplxTmp);
+        pIn1 += 4;
+
+        blkCnt--;
+    }
+
+    _arm_radix4_butterfly_f32_mve(S, pSrc, n2);
+
+    _arm_radix4_butterfly_f32_mve(S, pSrc + fftLen, n2);
+
+    pIn0 = pSrc;
+}
+
+static void _arm_radix4_butterfly_inverse_f32_mve(const arm_cfft_instance_f32 * S,float32_t * pSrc, uint32_t fftLen, float32_t onebyfftLen)
+{
+    f32x4_t vecTmp0, vecTmp1;
+    f32x4_t vecSum0, vecDiff0, vecSum1, vecDiff1;
+    f32x4_t vecA, vecB, vecC, vecD;
+    f32x4_t vecW;
+    uint32_t  blkCnt;
+    uint32_t  n1, n2;
+    uint32_t  stage = 0;
+    int32_t  iter = 1;
+    static const uint32_t strides[4] = {
+        (0 - 16) * sizeof(q31_t *),
+        (1 - 16) * sizeof(q31_t *),
+        (8 - 16) * sizeof(q31_t *),
+        (9 - 16) * sizeof(q31_t *)
+    };
+
+    n2 = fftLen;
+    n1 = n2;
+    n2 >>= 2u;
+    for (int k = fftLen / 4; k > 1; k >>= 2)
+    {
+        for (int i = 0; i < iter; i++)
+        {
+            float32_t const *p_rearranged_twiddle_tab_stride1 =
+                    &S->rearranged_twiddle_stride1[
+                    S->rearranged_twiddle_tab_stride1_arr[stage]];
+            float32_t const *p_rearranged_twiddle_tab_stride2 =
+                    &S->rearranged_twiddle_stride2[
+                    S->rearranged_twiddle_tab_stride2_arr[stage]];
+            float32_t const *p_rearranged_twiddle_tab_stride3 =
+                    &S->rearranged_twiddle_stride3[
+                    S->rearranged_twiddle_tab_stride3_arr[stage]];
+            float32_t const *pW1, *pW2, *pW3;
+            float32_t *inA = pSrc + CMPLX_DIM * i * n1;
+            float32_t *inB = inA + n2 * CMPLX_DIM;
+            float32_t *inC = inB + n2 * CMPLX_DIM;
+            float32_t *inD = inC + n2 * CMPLX_DIM;
+
+            pW1 = p_rearranged_twiddle_tab_stride1;
+            pW2 = p_rearranged_twiddle_tab_stride2;
+            pW3 = p_rearranged_twiddle_tab_stride3;
+
+            blkCnt = n2 / 2;
+            /*
+             * load 2 f32 complex pair
+             */
+            vecA = vldrwq_f32(inA);
+            vecC = vldrwq_f32(inC);
+            while (blkCnt > 0U)
+            {
+                vecB = vldrwq_f32(inB);
+                vecD = vldrwq_f32(inD);
+
+                vecSum0 = vecA + vecC;  /* vecSum0 = vaddq(vecA, vecC) */
+                vecDiff0 = vecA - vecC; /* vecSum0 = vsubq(vecA, vecC) */
+
+                vecSum1 = vecB + vecD;
+                vecDiff1 = vecB - vecD;
+                /*
+                 * [ 1 1 1 1 ] * [ A B C D ]' .* 1
+                 */
+                vecTmp0 = vecSum0 + vecSum1;
+                vst1q(inA, vecTmp0);
+                inA += 4;
+                /*
+                 * [ 1 -1 1 -1 ] * [ A B C D ]'
+                 */
+                vecTmp0 = vecSum0 - vecSum1;
+                /*
+                 * [ 1 -1 1 -1 ] * [ A B C D ]'.* W1
+                 */
+                vecW = vld1q(pW2);
+                pW2 += 4;
+                vecTmp1 = MVE_CMPLX_MULT_FLT_AxB(vecW, vecTmp0);
+                vst1q(inB, vecTmp1);
+                inB += 4;
+
+                /*
+                 * [ 1 -i -1 +i ] * [ A B C D ]'
+                 */
+                vecTmp0 = MVE_CMPLX_ADD_A_ixB(vecDiff0, vecDiff1);
+                /*
+                 * [ 1 -i -1 +i ] * [ A B C D ]'.* W2
+                 */
+                vecW = vld1q(pW1);
+                pW1 += 4;
+                vecTmp1 = MVE_CMPLX_MULT_FLT_AxB(vecW, vecTmp0);
+                vst1q(inC, vecTmp1);
+                inC += 4;
+
+                /*
+                 * [ 1 +i -1 -i ] * [ A B C D ]'
+                 */
+                vecTmp0 = MVE_CMPLX_SUB_A_ixB(vecDiff0, vecDiff1);
+                /*
+                 * [ 1 +i -1 -i ] * [ A B C D ]'.* W3
+                 */
+                vecW = vld1q(pW3);
+                pW3 += 4;
+                vecTmp1 = MVE_CMPLX_MULT_FLT_AxB(vecW, vecTmp0);
+                vst1q(inD, vecTmp1);
+                inD += 4;
+
+                vecA = vldrwq_f32(inA);
+                vecC = vldrwq_f32(inC);
+
+                blkCnt--;
+            }
+        }
+        n1 = n2;
+        n2 >>= 2u;
+        iter = iter << 2;
+        stage++;
+    }
+
+    /*
+     * start of Last stage process
+     */
+    uint32x4_t vecScGathAddr = *(uint32x4_t *) strides;
+    vecScGathAddr = vecScGathAddr + (uint32_t) pSrc;
+
+    /*
+     * load scheduling
+     */
+    vecA = vldrwq_gather_base_wb_f32(&vecScGathAddr, 64);
+    vecC = vldrwq_gather_base_f32(vecScGathAddr, 16);
+
+    blkCnt = (fftLen >> 3);
+    while (blkCnt > 0U)
+    {
+        vecSum0 = vecA + vecC;  /* vecSum0 = vaddq(vecA, vecC) */
+        vecDiff0 = vecA - vecC; /* vecSum0 = vsubq(vecA, vecC) */
+
+        vecB = vldrwq_gather_base_f32(vecScGathAddr, 8);
+        vecD = vldrwq_gather_base_f32(vecScGathAddr, 24);
+
+        vecSum1 = vecB + vecD;
+        vecDiff1 = vecB - vecD;
+
+        vecA = vldrwq_gather_base_wb_f32(&vecScGathAddr, 64);
+        vecC = vldrwq_gather_base_f32(vecScGathAddr, 16);
+
+        vecTmp0 = vecSum0 + vecSum1;
+        vecTmp0 = vecTmp0 * onebyfftLen;
+        vstrwq_scatter_base_f32(vecScGathAddr, -64, vecTmp0);
+
+        vecTmp0 = vecSum0 - vecSum1;
+        vecTmp0 = vecTmp0 * onebyfftLen;
+        vstrwq_scatter_base_f32(vecScGathAddr, -64 + 8, vecTmp0);
+
+        vecTmp0 = MVE_CMPLX_ADD_A_ixB(vecDiff0, vecDiff1);
+        vecTmp0 = vecTmp0 * onebyfftLen;
+        vstrwq_scatter_base_f32(vecScGathAddr, -64 + 16, vecTmp0);
+
+        vecTmp0 = MVE_CMPLX_SUB_A_ixB(vecDiff0, vecDiff1);
+        vecTmp0 = vecTmp0 * onebyfftLen;
+        vstrwq_scatter_base_f32(vecScGathAddr, -64 + 24, vecTmp0);
+
+        blkCnt--;
+    }
+
+    /*
+     * End of last stage process
+     */
+}
+
+static void arm_cfft_radix4by2_inverse_f32_mve(const arm_cfft_instance_f32 * S,float32_t *pSrc, uint32_t fftLen)
+{
+    float32_t const *pCoefVec;
+    float32_t const  *pCoef = S->pTwiddle;
+    float32_t        *pIn0, *pIn1;
+    uint32_t          n2;
+    float32_t         onebyfftLen = arm_inverse_fft_length_f32(fftLen);
+    uint32_t          blkCnt;
+    f32x4_t         vecIn0, vecIn1, vecSum, vecDiff;
+    f32x4_t         vecCmplxTmp, vecTw;
+
+
+    n2 = fftLen >> 1;
+    pIn0 = pSrc;
+    pIn1 = pSrc + fftLen;
+    pCoefVec = pCoef;
+
+    blkCnt = n2 / 2;
+    while (blkCnt > 0U)
+    {
+        vecIn0 = *(f32x4_t *) pIn0;
+        vecIn1 = *(f32x4_t *) pIn1;
+        vecTw = vld1q(pCoefVec);
+        pCoefVec += 4;
+
+        vecSum = vecIn0 + vecIn1;
+        vecDiff = vecIn0 - vecIn1;
+
+        vecCmplxTmp = MVE_CMPLX_MULT_FLT_AxB(vecTw, vecDiff);
+
+        vst1q(pIn0, vecSum);
+        pIn0 += 4;
+        vst1q(pIn1, vecCmplxTmp);
+        pIn1 += 4;
+
+        blkCnt--;
+    }
+
+    _arm_radix4_butterfly_inverse_f32_mve(S, pSrc, n2, onebyfftLen);
+
+    _arm_radix4_butterfly_inverse_f32_mve(S, pSrc + fftLen, n2, onebyfftLen);
+}
+
+
+/**
+  @addtogroup ComplexFFT
+  @{
+ */
+
+/**
+  @brief         Processing function for the floating-point complex FFT.
+  @param[in]     S              points to an instance of the floating-point CFFT structure
+  @param[in,out] p1             points to the complex data buffer of size <code>2*fftLen</code>. Processing occurs in-place
+  @param[in]     ifftFlag       flag that selects transform direction
+                   - value = 0: forward transform
+                   - value = 1: inverse transform
+  @param[in]     bitReverseFlag flag that enables / disables bit reversal of output
+                   - value = 0: disables bit reversal of output
+                   - value = 1: enables bit reversal of output
+  @return        none
+ */
+
+
+void arm_cfft_f32(
+  const arm_cfft_instance_f32 * S,
+        float32_t * pSrc,
+        uint8_t ifftFlag,
+        uint8_t bitReverseFlag)
+{                                                                                
+        uint32_t fftLen = S->fftLen;     
+
+        if (ifftFlag == 1U) {                                                            
+                                                                                         
+            switch (fftLen) {                                                            
+            case 16:                                                                     
+            case 64:                                                                     
+            case 256:                                                                    
+            case 1024:                                                                   
+            case 4096:                                                                   
+                _arm_radix4_butterfly_inverse_f32_mve(S, pSrc, fftLen, arm_inverse_fft_length_f32(S->fftLen)); 
+                break;                                                                   
+                                                                                         
+            case 32:                                                                     
+            case 128:                                                                    
+            case 512:                                                                    
+            case 2048:                                                                   
+                arm_cfft_radix4by2_inverse_f32_mve(S, pSrc, fftLen);              
+                break;                                                                   
+            }  
+        } else {                                                                         
+            switch (fftLen) {                                                            
+            case 16:                                                                     
+            case 64:                                                                     
+            case 256:                                                                    
+            case 1024:                                                                   
+            case 4096:                                                                   
+                _arm_radix4_butterfly_f32_mve(S, pSrc, fftLen);         
+                break;                                                                   
+                                                                                         
+            case 32:                                                                     
+            case 128:                                                                    
+            case 512:                                                                    
+            case 2048:                                                                   
+                arm_cfft_radix4by2_f32_mve(S, pSrc, fftLen);                      
+                break;                                                                   
+            }                                                                            
+        }                                                                                
+                                                                                         
+                                                                                         
+        if (bitReverseFlag) 
+        {                                                            
+            
+            arm_bitreversal_f32_inpl_mve((uint32_t*)pSrc, S->bitRevLength, S->pBitRevTable);
+                    
+        } 
+}
+
+
+#else
 extern void arm_radix8_butterfly_f32(
         float32_t * pSrc,
         uint16_t fftLen,
@@ -76,8 +661,13 @@ extern void arm_bitreversal_32(
                    inverse transform includes a scale of <code>1/fftLen</code> as part of the
                    calculation and this matches the textbook definition of the inverse FFT.
   @par
-                   Pre-initialized data structures containing twiddle factors and bit reversal
-                   tables are provided and defined in <code>arm_const_structs.h</code>.  Include
+                   For the MVE version, the new arm_cfft_init_f32 initialization function is 
+                   <b>mandatory</b>. <b>Compilation flags are available to include only the required tables for the
+                   needed FFTs.</b> Other FFT versions can continue to be initialized as 
+                   explained below.
+  @par
+                   For not MVE versions, pre-initialized data structures containing twiddle factors 
+                   and bit reversal tables are provided and defined in <code>arm_const_structs.h</code>.  Include
                    this header in your function and then pass one of the constant structures as
                    an argument to arm_cfft_f32.  For example:
   @par
@@ -127,6 +717,8 @@ extern void arm_bitreversal_32(
                          break;
                      }
   @endcode
+  @par
+                   The new arm_cfft_init_f32 can also be used.
   @par Q15 and Q31
                    The floating-point complex FFT uses a mixed-radix algorithm.  Multiple radix-4
                    stages are performed along with a single radix-2 stage, as needed.
@@ -623,6 +1215,7 @@ void arm_cfft_f32(
     }
   }
 }
+#endif /* defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE) */
 
 /**
   @} end of ComplexFFT group

@@ -54,6 +54,301 @@
                    Lastly, the accumulator is saturated to yield a result in 1.15 format.
  */
 
+#if defined(ARM_MATH_MVEI)
+
+#include "arm_helium_utils.h"
+void arm_fir_interpolate_q15(
+  const arm_fir_interpolate_instance_q15 * S,
+  const q15_t * pSrc,
+        q15_t * pDst,
+        uint32_t blockSize)
+{
+    q15_t    *pState = S->pState;   /* State pointer */
+    const q15_t    *pCoeffs = S->pCoeffs; /* Coefficient pointer */
+    q15_t    *pStateCurnt;      /* Points to the current sample of the state */
+    const q15_t    *ptr1, *ptr2;      /* Temporary pointers for state and coefficient buffers */
+
+    uint32_t  i, blkCnt;        /* Loop counters */
+    uint16_t  phaseLen = S->phaseLength;    /* Length of each polyphase filter component */
+    uint16_t  strides[8] = {
+        0, 1 * S->L, 2 * S->L, 3 * S->L,
+        4 * S->L, 5 * S->L, 6 * S->L, 7 * S->L
+        };
+    uint16x8_t vec_strides0 = *(uint16x8_t *) strides;
+    uint16x8_t vec_strides1 = vec_strides0 + 1;
+    uint16x8_t vec_strides2 = vec_strides0 + 2;
+    uint16x8_t vec_strides3 = vec_strides0 + 3;
+    q15x8_t vecState, vecCoef;
+
+    /*
+     * S->pState buffer contains previous frame (phaseLen - 1) samples
+     * pStateCurnt points to the location where the new input data should be written
+     */
+    pStateCurnt = S->pState + ((q15_t) phaseLen - 1);
+    /*
+     * Total number of intput samples
+     */
+    blkCnt = blockSize;
+    /*
+     * Loop over the blockSize.
+     */
+    while (blkCnt > 0U)
+    {
+        /*
+         * Copy new input sample into the state buffer
+         */
+        *pStateCurnt++ = *pSrc++;
+        /*
+         * Loop over the Interpolation factor.
+         */
+        i = S->L;
+        while (i > 0U)
+        {
+            /*
+             * Initialize state pointer
+             */
+            ptr1 = pState;
+            if (i >= 4)
+            {
+                /*
+                 * Initialize coefficient pointer
+                 */
+                ptr2 = pCoeffs + (i - 1 - 3U);
+
+                q63_t     acc0 = 0LL;
+                q63_t     acc1 = 0LL;
+                q63_t     acc2 = 0LL;
+                q63_t     acc3 = 0LL;
+
+                uint32_t  tapCnt = phaseLen >> 3;
+                while (tapCnt > 0U)
+                {
+                    vecState = vldrhq_s16(ptr1);
+
+                    vecCoef = vldrhq_gather_shifted_offset_s16(ptr2, vec_strides3);
+                    acc0 = vmlaldavaq(acc0, vecState, vecCoef);
+
+                    vecCoef = vldrhq_gather_shifted_offset_s16(ptr2, vec_strides2);
+                    acc1 = vmlaldavaq(acc1, vecState, vecCoef);
+
+                    vecCoef = vldrhq_gather_shifted_offset_s16(ptr2, vec_strides1);
+                    acc2 = vmlaldavaq(acc2, vecState, vecCoef);
+
+                    vecCoef = vldrhq_gather_shifted_offset_s16(ptr2, vec_strides0);
+                    acc3 = vmlaldavaq(acc3, vecState, vecCoef);
+
+                    ptr1 += 8;
+                    ptr2 = ptr2 + S->L * 8;
+                    tapCnt--;
+                }
+                tapCnt = phaseLen & 7;
+                if (tapCnt > 0U)
+                {
+                    mve_pred16_t p0 = vctp16q(tapCnt);
+
+                    vecState = vldrhq_z_s16(ptr1, p0);
+
+                    vecCoef = vldrhq_gather_shifted_offset_z_s16(ptr2, vec_strides3, p0);
+                    acc0 = vmlaldavaq(acc0, vecState, vecCoef);
+
+                    vecCoef = vldrhq_gather_shifted_offset_z_s16(ptr2, vec_strides2, p0);
+                    acc1 = vmlaldavaq(acc1, vecState, vecCoef);
+
+                    vecCoef = vldrhq_gather_shifted_offset_z_s16(ptr2, vec_strides1, p0);
+                    acc2 = vmlaldavaq(acc2, vecState, vecCoef);
+
+                    vecCoef = vldrhq_gather_shifted_offset_z_s16(ptr2, vec_strides0, p0);
+                    acc3 = vmlaldavaq(acc3, vecState, vecCoef);
+                }
+
+                acc0 = asrl(acc0, 15);
+                acc1 = asrl(acc1, 15);
+                acc2 = asrl(acc2, 15);
+                acc3 = asrl(acc3, 15);
+
+                *pDst++ = (q15_t) __SSAT(acc0, 16);
+                *pDst++ = (q15_t) __SSAT(acc1, 16);
+                *pDst++ = (q15_t) __SSAT(acc2, 16);
+                *pDst++ = (q15_t) __SSAT(acc3, 16);
+                i -= 4;
+            }
+            else if (i >= 3)
+            {
+                /*
+                 * Initialize coefficient pointer
+                 */
+                ptr2 = pCoeffs + (i - 1U - 2);
+
+                q63_t     acc0 = 0LL;
+                q63_t     acc1 = 0LL;
+                q63_t     acc2 = 0LL;
+
+                uint32_t  tapCnt = phaseLen >> 3;
+                while (tapCnt > 0U)
+                {
+                    vecState = vldrhq_s16(ptr1);
+
+                    vecCoef = vldrhq_gather_shifted_offset_s16(ptr2, vec_strides2);
+                    acc0 = vmlaldavaq(acc0, vecState, vecCoef);
+
+                    vecCoef = vldrhq_gather_shifted_offset_s16(ptr2, vec_strides1);
+                    acc1 = vmlaldavaq(acc1, vecState, vecCoef);
+
+                    vecCoef = vldrhq_gather_shifted_offset_s16(ptr2, vec_strides0);
+                    acc2 = vmlaldavaq(acc2, vecState, vecCoef);
+
+                    ptr1 += 8;
+                    ptr2 = ptr2 + S->L * 8;
+                    tapCnt--;
+                }
+                tapCnt = phaseLen & 7;
+                if (tapCnt > 0U)
+                {
+                    mve_pred16_t p0 = vctp16q(tapCnt);
+
+                    vecState = vldrhq_z_s16(ptr1, p0);
+
+                    vecCoef = vldrhq_gather_shifted_offset_z_s16(ptr2, vec_strides2, p0);
+                    acc0 = vmlaldavaq(acc0, vecState, vecCoef);
+
+                    vecCoef = vldrhq_gather_shifted_offset_z_s16(ptr2, vec_strides1, p0);
+                    acc1 = vmlaldavaq(acc1, vecState, vecCoef);
+
+                    vecCoef = vldrhq_gather_shifted_offset_z_s16(ptr2, vec_strides0, p0);
+                    acc2 = vmlaldavaq(acc2, vecState, vecCoef);
+                }
+
+                acc0 = asrl(acc0, 15);
+                acc1 = asrl(acc1, 15);
+                acc2 = asrl(acc2, 15);
+
+                *pDst++ = (q15_t) __SSAT(acc0, 16);;
+                *pDst++ = (q15_t) __SSAT(acc1, 16);;
+                *pDst++ = (q15_t) __SSAT(acc2, 16);;
+                i -= 3;
+            }
+            else if (i >= 2)
+            {
+                /*
+                 * Initialize coefficient pointer
+                 */
+                ptr2 = pCoeffs + (i - 1U - 1);
+
+                q63_t     acc0 = 0LL;
+                q63_t     acc1 = 0LL;
+
+                uint32_t  tapCnt = phaseLen >> 3;
+                while (tapCnt > 0U)
+                {
+                    vecState = vldrhq_s16(ptr1);
+
+                    vecCoef = vldrhq_gather_shifted_offset_s16(ptr2, vec_strides1);
+                    acc0 = vmlaldavaq(acc0, vecState, vecCoef);
+
+                    vecCoef = vldrhq_gather_shifted_offset_s16(ptr2, vec_strides0);
+                    acc1 = vmlaldavaq(acc1, vecState, vecCoef);
+
+                    ptr1 += 8;
+                    ptr2 = ptr2 + S->L * 8;
+                    tapCnt--;
+                }
+                tapCnt = phaseLen & 7;
+                if (tapCnt > 0U)
+                {
+                    mve_pred16_t p0 = vctp16q(tapCnt);
+
+                    vecState = vldrhq_z_s16(ptr1, p0);
+
+                    vecCoef = vldrhq_gather_shifted_offset_z_s16(ptr2, vec_strides1, p0);
+                    acc0 = vmlaldavaq(acc0, vecState, vecCoef);
+
+                    vecCoef = vldrhq_gather_shifted_offset_z_s16(ptr2, vec_strides0, p0);
+                    acc1 = vmlaldavaq(acc1, vecState, vecCoef);
+                }
+
+                acc0 = asrl(acc0, 15);
+                acc1 = asrl(acc1, 15);
+
+                *pDst++ = (q15_t) __SSAT(acc0, 16);
+                *pDst++ = (q15_t) __SSAT(acc1, 16);
+                i -= 2;
+            }
+            else
+            {
+                /*
+                 * Initialize coefficient pointer
+                 */
+                ptr2 = pCoeffs + (i - 1U);
+
+                q63_t     acc0 = 0LL;
+
+                uint32_t  tapCnt = phaseLen >> 3;
+                while (tapCnt > 0U)
+                {
+                    vecState = vldrhq_s16(ptr1);
+                    vecCoef = vldrhq_gather_shifted_offset_s16(ptr2, vec_strides0);
+
+                    acc0 = vmlaldavaq(acc0, vecState, vecCoef);
+
+                    ptr1 += 8;
+                    ptr2 = ptr2 + S->L * 8;
+                    tapCnt--;
+                }
+                tapCnt = phaseLen & 7;
+                if (tapCnt > 0U)
+                {
+                    mve_pred16_t p0 = vctp16q(tapCnt);
+
+                    vecState = vldrhq_z_s16(ptr1, p0);
+                    vecCoef = vldrhq_gather_shifted_offset_z_s16(ptr2, vec_strides0, p0);
+                    acc0 = vmlaldavaq(acc0, vecState, vecCoef);
+                }
+
+                acc0 = asrl(acc0, 15);
+                *pDst++ = (q15_t) __SSAT(acc0, 16);
+                /*
+                 * Decrement the loop counter
+                 */
+                i--;
+            }
+        }
+        /*
+         * Advance the state pointer by 1
+         * * to process the next group of interpolation factor number samples
+         */
+        pState = pState + 1;
+        /*
+         * Decrement the loop counter
+         */
+        blkCnt--;
+    }
+
+    /*
+     * Processing is complete.
+     * Now copy the last phaseLen - 1 samples to the satrt of the state buffer.
+     * This prepares the state buffer for the next function call.
+     */
+
+    /*
+     * Points to the start of the state buffer
+     */
+    pStateCurnt = S->pState;
+    blkCnt = (phaseLen - 1U) >> 3;
+    while (blkCnt > 0U)
+    {
+        vstrhq_s16(pStateCurnt, vldrhq_s16(pState));
+        pState += 8;
+        pStateCurnt += 8;
+        blkCnt--;
+    }
+    blkCnt = (phaseLen - 1U) & 7;
+    if (blkCnt > 0U)
+    {
+        mve_pred16_t p0 = vctp16q(blkCnt);
+        vstrhq_p_s16(pStateCurnt, vldrhq_s16(pState), p0);
+    }
+}
+#else
 void arm_fir_interpolate_q15(
   const arm_fir_interpolate_instance_q15 * S,
   const q15_t * pSrc,
@@ -473,7 +768,7 @@ void arm_fir_interpolate_q15(
 #endif /* #if !defined(ARM_MATH_CM0_FAMILY) */
 
 }
-
+#endif /* defined(ARM_MATH_MVEI)*/
 /**
   @} end of FIR_Interpolate group
  */

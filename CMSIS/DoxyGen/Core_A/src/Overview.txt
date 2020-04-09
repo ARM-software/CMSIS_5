@@ -49,9 +49,9 @@ The following Technical Reference Manuals describe the various Arm Cortex-A proc
 
 The \ref templates_pg supplied by Arm have been tested and verified with the following toolchains:
  - Arm: Arm Compiler 5.06 update 6
- - Arm: Arm Compiler 6.12
+ - Arm: Arm Compiler 6.14
  - Arm: Arm Compiler 6.6.2
- - GNU: GNU Tools for Arm Embedded 8.2.1 2018q4
+ - GNU: GNU Tools for Arm Embedded 9.2.1 2019q4
  - IAR: IAR ANSI C/C++ Compiler for Arm 8.20.1.14183
  
 <hr>
@@ -65,6 +65,17 @@ The \ref templates_pg supplied by Arm have been tested and verified with the fol
     <tr>
       <th>Version</th>
       <th>Description</th>
+    </tr>
+    <tr>
+      <td>V1.2.0</td>
+      <td>
+        <ul>
+          <li>Fixed GIC_SetPendingIRQ to use GICD_SGIR instead of GICD_SPENDSGIR
+              for compliance with all GIC specification versions.</li>
+          <li>Added missing DSP intrinsics.</li>
+          <li>Reworked assembly intrinsics: volatile, barriers and clobbers.</li>
+        </ul>
+      </td>
     </tr>
     <tr>
       <td>V1.1.4</td>

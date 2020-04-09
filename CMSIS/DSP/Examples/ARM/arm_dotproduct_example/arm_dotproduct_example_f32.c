@@ -86,6 +86,10 @@
 #include <math.h>
 #include "arm_math.h"
 
+#if defined(SEMIHOSTING)
+#include <stdio.h>
+#endif
+
 /* ----------------------------------------------------------------------
 * Defines each of the tests performed
 * ------------------------------------------------------------------- */
@@ -162,17 +166,24 @@ int32_t main(void)
   diff = fabsf(refDotProdOut - testOutput);
 
   /* Comparison of dot product value with reference */
-  if (diff > DELTA)
+  status = (diff > DELTA) ? ARM_MATH_TEST_FAILURE : ARM_MATH_SUCCESS;
+  
+  if (status != ARM_MATH_SUCCESS)
   {
-    status = ARM_MATH_TEST_FAILURE;
+#if defined (SEMIHOSTING)
+    printf("FAILURE\n");
+#else
+    while (1);                             /* main function does not return */
+#endif
   }
-
-  if ( status == ARM_MATH_TEST_FAILURE)
+  else
   {
-    while (1);
+#if defined (SEMIHOSTING)
+    printf("SUCCESS\n");
+#else
+    while (1);                             /* main function does not return */
+#endif
   }
-
-  while (1);                             /* main function does not return */
 }
 
  /** \endlink */

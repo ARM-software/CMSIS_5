@@ -2,12 +2,10 @@
 
 ## How to use
 
-This document is explaining how to use cmake with CMSIS-DSP and AC6 ARM compiler.
+This document is explaining how to use cmake with CMSIS-DSP.
 
-The examples arm_variance_f32 in folder Examples/ARM/arm_variance_f32 has been modified to also
+The example arm_variance_f32 in folder Examples/ARM/arm_variance_f32 has been modified to also
 support cmake and is used as an example in this document.
-
-If you don't use AC6, you'll need to modify the cmake files as explained below.
 
 ### Generating the Makefiles
 
@@ -17,56 +15,102 @@ You can create a build folder in Examples/ARM/arm_variance_f32
 
 Once you are in the build folder, you can use cmake to generate the Makefiles.
 
-For instance, to build for m7 :
-cmake -DCMAKE_TOOLCHAIN_FILE=../../../../armcc.cmake -DARM_CPU="cortex-m7" -G "Unix Makefiles" ..
+The cmake command is requiring several arguments. For instance, to build for m7 with AC6 compiler:
 
-To build for A5
-cmake -DCMAKE_TOOLCHAIN_FILE=../../../../armcc.cmake -DARM_CPU="cortex-a5" -G "Unix Makefiles" ..
+    cmake -DCMAKE_PREFIX_PATH="path to compiler (folder containing the bin folder)" \
+    -DCMAKE_TOOLCHAIN_FILE="../../../../armac6.cmake" \
+    -DARM_CPU="cortex-m7" \
+    -DROOT="../../../../../.." \
+    -DPLATFORM="FVP" \
+    -G "Unix Makefiles" ..
+  
+DCMAKE_PREFIX_PATH is the path to the compiler toolchain. This folder should contain the bin folder where are the compiler executables.
 
-To build for A5 with Neon acceleration
-cmake -DCMAKE_TOOLCHAIN_FILE=../../../../armcc.cmake -DNEON=ON -DARM_CPU="cortex-a5" -G "Unix Makefiles" ..
+ROOT is pointing to the root CMSIS folder (the one containing CMSIS and Device).
 
-cmake will check it can find the cross compiling tools as defined in armcc.cmake
+PLATFORM is used to select the boot code for the example. In example below, Fast Model (FVP) is selected and the boot code for fast model will be used.
 
-### Toolchain 
+CMAKE_TOOLCHAIN_FILE is selecting the toolchain (ac6, ac5 or gcc). The files are in CMSIS/DSP.
 
-You may have to change the "tools" variable in armcc.make. It is pointing to your toolchain.
-The version of armcc.cmake on github is using the ARM AC6 compiler coming from the ArmDS environment.  The tools variable is thus pointing to ArmDS.
+ARM_CPU is selecting the core. The syntax must be the one recognized by the compiler.
+(So for instance different between AC5 and AC6).
 
-If you use a different clang toolchain, you can just modify the tools path.
+The final .. is the path to the directory containing the CMakeLists.txt of the variance example.
+Since the build folder is assumed to be created in arm_variance_examples then the path to CMakeLists.txt from the build folder is ..
 
-If you build with gcc, you'll need to change armcc.cmake, config.cmake and configUtils.cmake
+To build for A5, you need to change DCMAKE_TOOLCHAIN_FILE and ARM_CPU:
 
-config.make is defining options like -mfpu and the value to pass to gcc (or other compiler) may be different.
+    -DCMAKE_TOOLCHAIN_FILE=../../../../armac5.cmake 
+    -DARM_CPU="cortex-a5"
 
-configUtils.cmake is defining the use of a scatter file and it may be different with gcc.
+To build for A5 with Neon acceleration, you need to add:
+  
+    -DNEON=ON
 
 ### Building 
 
-make VERBOSE=1
+Once cmake has generated the makefiles, you can use a GNU Make to build.
+
+    make VERBOSE=1
 
 ### Running
 
-The executable can run on a FVP. 
+The generated executable can be run on a fast model. 
 For instance, if you built for m7, you could just do:
 
-FVP_MPS2_Cortex-M7.exe -a arm_variance_example
+    FVP_MPS2_Cortex-M7.exe -a arm_variance_example
 
-## Customization
+The final executable has no extension in the filename. 
 
-armcc.make is use to cross compil with AC6 coming from ArmDS.
+## Building only the CMSIS-DSP library
 
-You'll need to create a different toolchain file if you use something different.
-Then you'll need to pass this file to cmake on the command line.
+If you want to build only the CMSIS-DSP library and don't link with any boot code then you'll need to write a specific cmake.
 
-config.cmake is included by the CMSIS-DSP cmake and is defining the options and include paths
-needed to compile CMSIS-DSP.
+Create a folder BuildCMSISOnly.
 
-configBoot.cmake are definitions required to run an executable on a platform. It is using files from the Device folder of CMSIS. The result can run on FVP.
+Inside the folder, create a CMakeLists.txt with the following content:
 
-If you need to run on something different, you'll need to modfy configBoot. If you need a different scatter file you'll need to modify configBoot.
+```cmake
+cmake_minimum_required (VERSION 3.6)
 
-configBoot is relying on some functions defined in configUtils and most of the customizations should be done here.
+# Define the project
+project (testcmsisdsp VERSION 0.1)
+
+# Define the path to CMSIS-DSP (ROOT is defined on command line when using cmake)
+set(DSP ${ROOT}/CMSIS/DSP)
+
+# Add DSP folder to module path
+list(APPEND CMAKE_MODULE_PATH ${DSP})
+
+########### 
+#
+# CMSIS DSP
+#
+
+# Load CMSIS-DSP definitions. Libraries will be built in bin_dsp
+add_subdirectory(${DSP}/Source bin_dsp)
+```
+
+Create a build folder inside the BuildCMSISOnly folder.
+
+Inside the build folder, type following cmake command
+
+    cmake -DROOT="path to CMSIS Root" \
+      -DCMAKE_PREFIX_PATH="path to compiler (folder containing the bin folder)" \
+      -DCMAKE_TOOLCHAIN_FILE="../../CMSIS_ROOT/CMSIS/DSP/armac6.cmake" \
+      -DARM_CPU="cortex-m7" \
+      -G "Unix Makefiles" ..
+
+Now you can make:
+
+    make VERBOSE=1
+
+When the build has finished, you'll have a bin_dsp folder inside your build folder.
+Inside bin_dsp, you'll have a folder per CMSIS-DSP Folder : BasicMathFunctions ...
+
+Inside each of those folders, you'll  have a library : libCMSISDSPBasicMath.a ...
+
+
 
 ## Compilation symbols for tables
 
@@ -75,8 +119,9 @@ Some new compilations symbols have been introduced to avoid including all the ta
 If no new symbol is defined, everything will behave as usual. If ARM_DSP_CONFIG_TABLES is defined then the new symbols will be taken into account.
 
 Then you can select all FFT tables or all interpolation tables by defining following compilation symbols:
-ARM_ALL_FFT_TABLES : All FFT tables are included 
-ARM_ALL_FAST_TABLES : All interpolation tables are included
+
+* ARM_ALL_FFT_TABLES : All FFT tables are included 
+* ARM_ALL_FAST_TABLES : All interpolation tables are included
 
 If more control is required, there are other symbols but it is not always easy to know which ones need to be enabled for a given use case.
 
@@ -93,9 +138,7 @@ We see that following symbols need to be enabled :
 
 In addition to that, ARM_DSP_CONFIG_TABLES must be enabled and finally ARM_FFT_ALLOW_TABLES must also be defined.
 
-This last symbol is required because if you don't want to include the TransformFunctions in your build of CMSIS-DSP then all tables related to FFT must not be included. It is the purpose of this flag.
-
-
+This last symbol is required because if no transform functions are included in the build, then by default all flags related to FFT tables are ignored.
 
 
 

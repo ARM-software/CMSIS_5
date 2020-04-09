@@ -68,6 +68,67 @@
   @return        none
  */
 
+#if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
+
+void arm_cmplx_mult_cmplx_f32(
+  const float32_t * pSrcA,
+  const float32_t * pSrcB,
+        float32_t * pDst,
+        uint32_t numSamples)
+{
+    uint32_t blkCnt;           /* loop counters */
+    uint32_t blockSize = numSamples;  /* loop counters */
+    float32_t a, b, c, d;  /* Temporary variables to store real and imaginary values */
+
+    f32x4x2_t vecA;
+    f32x4x2_t vecB;
+    f32x4x2_t vecDst;
+
+    /* Compute 4 complex outputs at a time */
+    blkCnt = blockSize >> 2;
+    while (blkCnt > 0U)
+    {
+            vecA = vld2q(pSrcA);  // load & separate real/imag pSrcA (de-interleave 2)
+            vecB = vld2q(pSrcB);  // load & separate real/imag pSrcB
+            pSrcA += 8;
+            pSrcB += 8;
+
+            /* C[2 * i] = A[2 * i] * B[2 * i] - A[2 * i + 1] * B[2 * i + 1].  */
+            vecDst.val[0] = vmulq(vecA.val[0], vecB.val[0]);
+            vecDst.val[0] = vfmsq(vecDst.val[0],vecA.val[1], vecB.val[1]);
+            /* C[2 * i + 1] = A[2 * i] * B[2 * i + 1] + A[2 * i + 1] * B[2 * i].  */
+            vecDst.val[1] = vmulq(vecA.val[0], vecB.val[1]);
+            vecDst.val[1] = vfmaq(vecDst.val[1], vecA.val[1], vecB.val[0]);
+
+            vst2q(pDst, vecDst);
+            pDst += 8;
+
+            blkCnt--;
+    }
+
+    /* Tail */
+    blkCnt = blockSize & 3;
+    while (blkCnt > 0U)
+    {
+      /* C[2 * i    ] = A[2 * i] * B[2 * i    ] - A[2 * i + 1] * B[2 * i + 1]. */
+      /* C[2 * i + 1] = A[2 * i] * B[2 * i + 1] + A[2 * i + 1] * B[2 * i    ]. */
+  
+      a = *pSrcA++;
+      b = *pSrcA++;
+      c = *pSrcB++;
+      d = *pSrcB++;
+  
+      /* store result in destination buffer. */
+      *pDst++ = (a * c) - (b * d);
+      *pDst++ = (a * d) + (b * c);
+  
+      /* Decrement loop counter */
+      blkCnt--;
+    }
+
+}
+
+#else
 void arm_cmplx_mult_cmplx_f32(
   const float32_t * pSrcA,
   const float32_t * pSrcB,
@@ -77,9 +138,8 @@ void arm_cmplx_mult_cmplx_f32(
     uint32_t blkCnt;                               /* Loop counter */
     float32_t a, b, c, d;  /* Temporary variables to store real and imaginary values */
 
-#if defined(ARM_MATH_NEON)
+#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
     float32x4x2_t va, vb;
-    float32x4_t real, imag;
     float32x4x2_t outCplx;
 
     /* Compute 4 outputs at a time */
@@ -115,7 +175,7 @@ void arm_cmplx_mult_cmplx_f32(
     blkCnt = numSamples & 3;
 
 #else
-#if defined (ARM_MATH_LOOPUNROLL)
+#if defined (ARM_MATH_LOOPUNROLL) && !defined(ARM_MATH_AUTOVECTORIZE)
 
   /* Loop unrolling: Compute 4 outputs at a time */
   blkCnt = numSamples >> 2U;
@@ -188,6 +248,7 @@ void arm_cmplx_mult_cmplx_f32(
   }
 
 }
+#endif /* defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE) */
 
 /**
   @} end of CmplxByCmplxMult group

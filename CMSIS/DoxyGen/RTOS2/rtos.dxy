@@ -770,6 +770,7 @@ INPUT                  = . \
                          ./src/cmsis_os2_Migration.txt \
                          ./src/cmsis_os2_MigrationGuide.txt \
                          ./src/cmsis_os2_tick.txt \
+                         ./src/cmsis_os2_Tutorial.txt \
                          ./src/validation.txt \
                          ./src/rtx_os.txt \
                          ./src/rtx_evr.txt \

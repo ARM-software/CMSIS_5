@@ -69,6 +69,60 @@
   @return        none
  */
 
+#if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
+
+void arm_cmplx_mult_real_f32(
+  const float32_t * pSrcCmplx,
+  const float32_t * pSrcReal,
+        float32_t * pCmplxDst,
+        uint32_t numSamples)
+{
+    const static uint32_t stride_cmplx_x_real_32[4] = { 0, 0, 1, 1 };
+
+    uint32_t blockSizeC = numSamples * CMPLX_DIM;   /* loop counters */
+    uint32_t blkCnt;
+    f32x4_t rVec;
+    f32x4_t cmplxVec;
+    f32x4_t dstVec;
+    uint32x4_t strideVec;
+    float32_t in;  
+
+
+    /* stride vector for pairs of real generation */
+    strideVec = vld1q(stride_cmplx_x_real_32);
+
+    /* Compute 4 complex outputs at a time */
+    blkCnt = blockSizeC >> 2;
+    while (blkCnt > 0U) 
+    {
+        cmplxVec = vld1q(pSrcCmplx);
+        rVec = vldrwq_gather_shifted_offset_f32(pSrcReal, strideVec);
+        dstVec = vmulq(cmplxVec, rVec);
+        vst1q(pCmplxDst, dstVec);
+
+        pSrcReal += 2;
+        pSrcCmplx += 4;
+        pCmplxDst += 4;
+        blkCnt--;
+    }
+
+    blkCnt = (blockSizeC & 3) >> 1; 
+    while (blkCnt > 0U)
+    {
+      /* C[2 * i    ] = A[2 * i    ] * B[i]. */
+      /* C[2 * i + 1] = A[2 * i + 1] * B[i]. */
+  
+      in = *pSrcReal++;
+      /* store result in destination buffer. */
+      *pCmplxDst++ = *pSrcCmplx++ * in;
+      *pCmplxDst++ = *pSrcCmplx++ * in;
+  
+      /* Decrement loop counter */
+      blkCnt--;
+    }
+}
+
+#else
 void arm_cmplx_mult_real_f32(
   const float32_t * pSrcCmplx,
   const float32_t * pSrcReal,
@@ -78,7 +132,7 @@ void arm_cmplx_mult_real_f32(
         uint32_t blkCnt;                               /* Loop counter */
         float32_t in;                                  /* Temporary variable */
 
-#if defined(ARM_MATH_NEON)
+#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
     float32x4_t r;
     float32x4x2_t ab,outCplx;
 
@@ -106,7 +160,7 @@ void arm_cmplx_mult_real_f32(
     /* Tail */
     blkCnt = numSamples & 3;
 #else
-#if defined (ARM_MATH_LOOPUNROLL)
+#if defined (ARM_MATH_LOOPUNROLL) && !defined(ARM_MATH_AUTOVECTORIZE)
 
   /* Loop unrolling: Compute 4 outputs at a time */
   blkCnt = numSamples >> 2U;
@@ -163,6 +217,7 @@ void arm_cmplx_mult_real_f32(
   }
 
 }
+#endif /* defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE) */
 
 /**
   @} end of CmplxByRealMult group

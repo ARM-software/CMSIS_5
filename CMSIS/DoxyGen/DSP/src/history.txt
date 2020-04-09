@@ -7,6 +7,51 @@
     <th>Description</th>
   </tr>
   <tr>
+    <td>V1.8.0</td>
+    <td> 
+      Helium implementation of lots of functions in the CMSIS-DSP.
+      More will be added in future releases.
+      - ARM_MATH_HELIUM, ARM_MATH_MVEF or ARM_MATH_MVEI must be defined.
+
+      New folder SVMFunctions : Support vector machines.
+      - Training must be done with scikit-learn. 
+      - DSP/Examples/ARM/arm_svm_example is showing how to train with scikit-learn
+      and dump the result for use with CMSIS-DSP
+
+      New folder BayesFunctions : Functions related to Bayesian probability.
+      In this version only a naive gaussian classifier.
+      - Training must be done with scikit-learn. 
+      - DSP/Examples/ARM/arm_bayes_example is showing how to train with scikit-learn
+      and dump the result for use with CMSIS-DSP
+      
+      New folder DistanceFunctions: 
+      - Distance functions for clustering algorithms.
+
+      For the new functions in SVMFunctions, BayesFunctions and DistanceFunctions,
+      <a href="https://developer.arm.com/solutions/machine-learning-on-arm/developer-material/how-to-guides/implement-classical-ml-with-arm-cmsis-dsp-libraries">a tutorial is available</a>.
+
+      New BasicMathFunctions:
+      - Elementwise bit operations.
+
+      New support functions:
+      - arm_barycenter_f32 and arm_weighted_sum_f32.
+      - Sorting functions.
+      - Spline interpolation.
+
+      New statistics functions:
+      - arm_entropy_f32, arm_kullback_leibler_f32, arm_logsumexp_f32
+        and arm_logsumexp_dot_prod_f32
+
+      New testing framework:
+      - Developed for our internal needs. We have released it but won't give
+        support for the first few releases since it is a work in progress.
+
+      Improvements to the cmake build:
+      - It is more easy to switch toolchains. CMAKE_PREFIX_PATH can be used.
+
+    </td>
+  </tr>
+  <tr>
     <td>V1.7.0</td>
     <td>
       New Neon implementations of f32 functions

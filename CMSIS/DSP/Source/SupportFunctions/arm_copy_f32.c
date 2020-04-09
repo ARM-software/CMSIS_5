@@ -56,7 +56,45 @@
   @param[in]     blockSize  number of samples in each vector
   @return        none
  */
+#if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
 
+void arm_copy_f32(
+  const float32_t * pSrc,
+  float32_t * pDst,
+  uint32_t blockSize)
+{
+  uint32_t blkCnt;
+  blkCnt = blockSize >> 2U;
+
+  /* Compute 4 outputs at a time */
+  while (blkCnt > 0U)
+  {
+      vstrwq_f32(pDst, vldrwq_f32(pSrc));
+      /*
+       * Decrement the blockSize loop counter
+       * Advance vector source and destination pointers
+       */
+      pSrc += 4;
+      pDst += 4;
+      blkCnt --;
+  }
+
+  blkCnt = blockSize & 3;
+
+  while (blkCnt > 0U)
+  {
+    /* C = A */
+
+    /* Copy and store result in destination buffer */
+    *pDst++ = *pSrc++;
+
+    /* Decrement loop counter */
+    blkCnt--;
+  }
+    
+}
+
+#else
 #if defined(ARM_MATH_NEON_EXPERIMENTAL)
 void arm_copy_f32(
   const float32_t * pSrc,
@@ -147,6 +185,8 @@ void arm_copy_f32(
   }
 }
 #endif /* #if defined(ARM_MATH_NEON) */
+#endif /* defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE) */
+
 /**
   @} end of BasicCopy group
  */

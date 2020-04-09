@@ -2,7 +2,7 @@
 ; * @file     startup_<Device>.s
 ; * @brief    CMSIS Cortex-M# Core Device Startup File for
 ; *           Device <Device>
-; * @version  V5.3.1
+; * @version  V1.0.0
 ; * @date     09. July 2018
 ; ******************************************************************************/
 ;/*

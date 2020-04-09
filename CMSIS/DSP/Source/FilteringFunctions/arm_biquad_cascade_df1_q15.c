@@ -56,6 +56,260 @@
                    Refer to \ref arm_biquad_cascade_df1_fast_q15() for a faster but less precise implementation of this filter.
  */
 
+#if defined(ARM_MATH_MVEI)
+
+void arm_biquad_cascade_df1_q15(
+  const arm_biquad_casd_df1_inst_q15 * S,
+  const q15_t * pSrc,
+        q15_t * pDst,
+        uint32_t blockSize)
+{
+    const q15_t    *pIn = pSrc; /*  input pointer initialization  */
+    q15_t          *pOut = pDst;        /*  output pointer initialization */
+    int             shift;
+    uint32_t        sample, stages = S->numStages;      /*  loop counters                 */
+    int             postShift = S->postShift;
+    q15x8_t         bCoeffs0, bCoeffs1, bCoeffs2, bCoeffs3;     /*  Coefficients vector           */
+    q15_t          *pState = S->pState; /*  pState pointer initialization */
+    q15x8_t         inVec0;
+    int64_t         acc;
+    const q15_t     *pCoeffs = S->pCoeffs;       /*  coeff pointer initialization  */
+    q31_t           out, out1;
+
+    shift = (15 - postShift) - 32;
+
+    do {
+        q15_t           a2 = pCoeffs[5];
+        q15_t           a1 = pCoeffs[4];
+
+        bCoeffs0 = vdupq_n_s16(0);
+        bCoeffs0[0] = pCoeffs[3];       // b2
+        bCoeffs0[1] = pCoeffs[2];       // b1
+        bCoeffs0[2] = pCoeffs[0];       // b0
+
+        uint32_t        zero = 0;
+        bCoeffs1 = bCoeffs0;
+        bCoeffs1 = vshlcq_s16(bCoeffs1, &zero, 16);
+
+        bCoeffs2 = bCoeffs1;
+        bCoeffs2 = vshlcq_s16(bCoeffs2, &zero, 16);
+
+        bCoeffs3 = bCoeffs2;
+        bCoeffs3 = vshlcq_s16(bCoeffs3, &zero, 16);
+
+        bCoeffs0[6] = a2;
+        bCoeffs0[7] = a1;
+        bCoeffs1[7] = a2;
+        bCoeffs1[6] = a1;
+
+        bCoeffs2 =
+            vsetq_lane_s32(vgetq_lane_s32((q31x4_t) bCoeffs0, 3), (q31x4_t) bCoeffs2, 3);
+        bCoeffs3 =
+            vsetq_lane_s32(vgetq_lane_s32((q31x4_t) bCoeffs1, 3), (q31x4_t) bCoeffs3, 3);
+
+
+        /* 2 first elements are garbage, will be updated with history */
+        inVec0 = vld1q(pIn - 2);
+        pIn += 2;
+
+        inVec0[0] = pState[1];
+        inVec0[1] = pState[0];
+        inVec0[6] = pState[3];
+        inVec0[7] = pState[2];
+
+        acc = vmlaldavq(bCoeffs0, inVec0);
+        acc = sqrshrl_sat48(acc, shift);
+        out1 = (q31_t) ((acc >> 32) & 0xffffffff);
+
+        inVec0[6] = out1;
+        acc = vmlaldavq(bCoeffs1, inVec0);
+        acc = sqrshrl_sat48(acc, shift);
+        out = (q31_t) ((acc >> 32) & 0xffffffff);
+
+        inVec0[7] = out;
+        *pOut++ = (q15_t) out1;
+        *pOut++ = (q15_t) out;
+
+        acc = vmlaldavq(bCoeffs2, inVec0);
+        acc = sqrshrl_sat48(acc, shift);
+        out1 = (q31_t) ((acc >> 32) & 0xffffffff);
+
+
+        inVec0[6] = out1;
+        acc = vmlaldavq(bCoeffs3, inVec0);
+        acc = sqrshrl_sat48(acc, shift);
+        out = (q31_t) ((acc >> 32) & 0xffffffff);
+
+        /*
+         * main loop
+         */
+        sample = (blockSize - 4) >> 2U;
+        /* preload (efficient scheduling) */
+        inVec0 = vld1q(pIn);
+        pIn += 4;
+
+        /*
+         * Compute 4 outputs at a time.
+         */
+        while (sample > 0U) {
+
+            inVec0[6] = out1;
+            inVec0[7] = out;
+
+            /* store */
+            *pOut++ = (q15_t) out1;
+            *pOut++ = (q15_t) out;
+
+            /*
+             * in       { x0  x1  x2  x3  x4  x5  yn2  yn1 }
+             *                          x
+             * bCoeffs0 { b2  b1  b0   0   0   0   a2  a1 }
+             *
+             */
+            acc = vmlaldavq(bCoeffs0, inVec0);
+            /* shift + saturate to 16 bit */
+            acc = sqrshrl_sat48(acc, shift);
+            out1 = (q31_t) ((acc >> 32) & 0xffffffff);
+            inVec0[6] = out1;
+
+            /*
+             * in       { x0  x1  x2  x3  x4  x5  y0  yn1 }
+             *                          x
+             * bCoeffs1 {  0  b2  b1  b0   0   0  a1  a2 }
+             */
+            acc = vmlaldavq(bCoeffs1, inVec0);
+            acc = sqrshrl_sat48(acc, shift);
+            out = (q31_t) ((acc >> 32) & 0xffffffff);
+
+            *pOut++ = (q15_t) out1;
+            *pOut++ = (q15_t) out;
+
+
+            inVec0[7] = out;
+            /*
+             * in       { x0  x1  x2  x3  x4  x5  y0  yp1 }
+             *                         x
+             * bCoeffs2 { 0   0   b2  b1  b0   0  a2  a1 }
+             */
+            acc = vmlaldavq(bCoeffs2, inVec0);
+            acc = sqrshrl_sat48(acc, shift);
+            out1 = (q31_t) ((acc >> 32) & 0xffffffff);
+            inVec0[6] = out1;
+
+            /*
+             * in       { x0  x1  x2  x3  x4  x5  y0  yp1 }
+             *                         x
+             * bCoeffs2 {  0   0   0  b2  b1  b0  a1  a2  }
+             */
+            acc = vmlaldavq(bCoeffs3, inVec0);
+            acc = sqrshrl_sat48(acc, shift);
+            out = (q31_t) ((acc >> 32) & 0xffffffff);
+
+            inVec0 = vld1q(pIn);
+            pIn += 4;
+
+            /* decrement the loop counter  */
+            sample--;
+        }
+
+        *pOut++ = (q15_t) out1;
+        *pOut++ = (q15_t) out;
+
+        /*
+         * Tail handling
+         */
+        int32_t         loopRemainder = blockSize & 3;
+
+        if (loopRemainder == 3) {
+            inVec0[6] = out1;
+            inVec0[7] = out;
+
+            acc = vmlaldavq(bCoeffs0, inVec0);
+            acc = sqrshrl_sat48(acc, shift);
+            out1 = (q31_t) ((acc >> 32) & 0xffffffff);
+            inVec0[6] = out1;
+
+            acc = vmlaldavq(bCoeffs1, inVec0);
+            acc = sqrshrl_sat48(acc, shift);
+            out = (q31_t) ((acc >> 32) & 0xffffffff);
+
+            *pOut++ = (q15_t) out1;
+            *pOut++ = (q15_t) out;
+
+            inVec0[7] = out;
+            acc = vmlaldavq(bCoeffs2, inVec0);
+            acc = sqrshrl_sat48(acc, shift);
+            out1 = (q31_t) ((acc >> 32) & 0xffffffff);
+            *pOut++ = (q15_t) out1;
+
+            /* Store the updated state variables back into the pState array */
+            pState[0] = vgetq_lane_s16(inVec0, 4);
+            pState[1] = vgetq_lane_s16(inVec0, 3);
+            pState[3] = out;
+            pState[2] = out1;
+
+        } else if (loopRemainder == 2) {
+            inVec0[6] = out1;
+            inVec0[7] = out;
+
+            acc = vmlaldavq(bCoeffs0, inVec0);
+            acc = sqrshrl_sat48(acc, shift);
+            out1 = (q31_t) ((acc >> 32) & 0xffffffff);
+            inVec0[6] = out1;
+
+            acc = vmlaldavq(bCoeffs1, inVec0);
+            acc = sqrshrl_sat48(acc, shift);
+            out = (q31_t) ((acc >> 32) & 0xffffffff);
+
+            *pOut++ = (q15_t) out1;
+            *pOut++ = (q15_t) out;
+
+            /* Store the updated state variables back into the pState array */
+            pState[0] = vgetq_lane_s16(inVec0, 3);
+            pState[1] = vgetq_lane_s16(inVec0, 2);
+            pState[3] = out1;
+            pState[2] = out;
+        } else if (loopRemainder == 1) {
+
+            inVec0[6] = out1;
+            inVec0[7] = out;
+
+            acc = vmlaldavq(bCoeffs0, inVec0);
+            acc = sqrshrl_sat48(acc, shift);
+            out1 = (q31_t) ((acc >> 32) & 0xffffffff);
+            *pOut++ = (q15_t) out1;
+
+            /* Store the updated state variables back into the pState array */
+            pState[0] = vgetq_lane_s16(inVec0, 2);
+            pState[1] = vgetq_lane_s16(inVec0, 1);
+            pState[3] = out;
+            pState[2] = out1;
+
+
+        } else {
+            /* Store the updated state variables back into the pState array */
+            pState[0] = vgetq_lane_s16(inVec0, 1);
+            pState[1] = vgetq_lane_s16(inVec0, 0);
+            pState[3] = out1;
+            pState[2] = out;
+        }
+
+        pState += 4;
+        pCoeffs += 6;
+
+        /*
+         * The first stage goes from the input buffer to the output buffer.
+         * Subsequent stages occur in-place in the output buffer
+         */
+        pIn = pDst;
+        /*
+         * Reset to destination pointer
+         */
+        pOut = pDst;
+    }
+    while (--stages);
+}
+#else
 void arm_biquad_cascade_df1_q15(
   const arm_biquad_casd_df1_inst_q15 * S,
   const q15_t * pSrc,
@@ -357,6 +611,7 @@ void arm_biquad_cascade_df1_q15(
 #endif /* #if defined (ARM_MATH_DSP) */
 
 }
+#endif /* defined(ARM_MATH_MVEI) */
 
 /**
   @} end of BiquadCascadeDF1 group

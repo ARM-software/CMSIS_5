@@ -1,0 +1,2152 @@
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\page cprjFormat_pg Project Description (*.cprj) Format
+
+\section section_overview Overview
+The CMSIS Project description format is unifying the specification for the build of a software project.
+It is a public format to exchange project build information between tools that support the CMSIS-Pack based
+Run-Time Environment. In addition the format facilitates the tool driven construction of projects from partial projects, 
+named project 'layers'. The project description is targeted to generate a single executable or library file.
+
+The specification of this CMSIS Project description format (*.cprj) is replacing the previous format (*.cpdsc).
+The most significant differences are:
+- a new format specification which is independent from the CMSIS-Pack schema.
+- the scope of the description is limited to building a single application or library (no debugger setup).
+- the support of toolchain specific command line options applied to the whole project, individual components, file groups
+  or file level.
+- the ability to divide projects into layers, which can be extracted from and added to projects.
+
+\section section_layer Introduction of Layers
+One example is the separation of an existing project into files and components that are HW dependent (board, device, processor)
+and those that are application specific. The result is a HW and an application layer. Assuming that there is layers for multiple
+boards and applications sharing common interfaces between layers, any combination of HW laywer with an application layer can be
+combined to create projects and build consistent applications across a range of hardware.
+
+\section section_varieties Varieties of a build
+Due to CMSIS-Pack's software lifecycle management features, projects can be build using different combinations of compatible
+pack and component versions. as well as different versions of a tool-chain. If the project contains descriptions for multiple different tool-chains,
+also different tool-chains can be used to create additional build variants.
+
+The build system needs the following pieces of information to successfully build a project:
+- CMSIS-Packs used by project for component definitions and attributes of the targeted device.
+- Tool-chain name and version.
+- Target information including device vendor + name and enabled device features as well as additional command line options for the active tool-chain
+(C/C++ compiler, assembler, linker or librarian).
+- Component selection and configuration file information.
+- Files which are local to the project to be used by the build engine.
+- RTE folder containing preconfigured component configuration files.
+
+Note: additional command line options for the tool-chains are tool-chain specific and are transparently passed onto the command line. Command line
+options related to the processor and it's features are automatically derived from the device information and must not be specified.
+
+\delim
+
+See \subpage element_cprj "Project Description Root" for details about the description format..
+
+See \ref CmdLineBuild "CMSIS-Build" for further information how to build software based on the CMSIS Project description at
+the command line and how to create and manage projects using layers.
+
+See \subpage projectDescriptionSchema "Project Description Schema file" for validation of project files.
+
+\page element_cprj /cprj
+CMSIS project files use the file extension *.cprj and CMSIS project layer files use the file extension *.clayer. 
+Both file types share a single file format which can be validated using the dedicate CPRJ schema file
+located in \ref projectDescriptionSchema "CMSIS/Utilities/CPRJ.xsd".
+
+The location of a project or layer file always marks the root point and all file references are
+always relative to this root point, unless a file belongs to a component. In the latter case the files are 
+relative to the base directory of the referenced CMSIS Software Pack version.
+
+The high level structure of a project is constructed from:
+<table class="cmtable" summary="Top level elements">
+  <tr>
+    <th>Element</th>
+    <th>Link</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>\<created></td>
+    <td>\subpage element_created</td>
+    <td>Information about the tool that had produced this file.</td>
+  </tr>
+  <tr>
+    <td>\<info></td>
+    <td>\subpage element_info</td>
+    <td>Information about the project: description, keywords, categories, license, download.</td>
+  </tr>
+  <tr>
+    <td>\<layers></td>
+    <td>\subpage element_layers</td>
+    <td>Definition of the layer within the project or layer.</td>
+  </tr>
+  <tr>
+    <td>\<packages></td>
+    <td>\subpage element_packages</td>
+    <td>List of all CMSIS Software Packs required to construct and build the project (components and device).</td>
+  </tr>
+  <tr>
+    <td>\<compilers></td>
+    <td>\subpage element_compilers</td>
+    <td>Information about the toolchains/compilers and their versions that can be used to build the project.</td>
+  </tr>
+  <tr>
+    <td>\<target></td>
+    <td>\subpage element_target</td>
+    <td>Information about the HW targeted as well as build output and top level toolchain options.</td>
+  </tr>
+  <tr>
+    <td>\<components></td>
+    <td>\subpage element_components</td>
+    <td>List of all CMSIS Software Pack components and used config file versions that need to be included for building the project.</td>
+  </tr>
+  <tr>
+    <td>\<files></td>
+    <td>\subpage element_files </td>
+    <td>List of all source files and include paths that are local to the project (project subdirectories only)</td>
+  </tr>
+  <tr>
+    <td>other defined types</td>
+    <td>\subpage cprj_types</td>
+    <td>Description of all locally defined schema types.</td>
+  </tr>
+</table>
+  
+
+\b Example CMSIS Project File (*.cprj):
+\code
+<?xml version="1.0" encoding="UTF-8" ?>
+<cprj schemaVersion="1.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="CPRJ.xsd">
+  <created tool="µVision V5.29.0.13" timestamp="2020-01-21T11:38:01" />
+ 
+  <info isLayer="false" >
+    <description>BSD Client application on top of MCB4300 Basic I/O layer with Ethernet</description>
+    <category>Wired Network, BSD Client, Board IO</category>
+    <keywords>MCB4300, MDK-Middleware, Network</keywords>
+    <license>BSD-3-Clause</license>
+    <url></url>
+  </info>
+ 
+  <layers>
+    <layer name="IO" hasTarget="1">
+      <description>Basic I/O layer for MCB4300 for Ethernet applications</description>
+      <category>Board IO, Wired Network</category>
+      <keywords>MCB4300, Ethernet, LPC4300</keywords>
+      <license>BSD-3-Clause</license>
+    </layer>
+    <layer name="APP" hasTarget="0">
+      <description>BSD Client application for Basic I/O layers with Ethernet</description>
+      <category>Board IO, Wired Network</category>
+      <keywords>BSD_Client, Ethernet</keywords>
+      <license>BSD-3-Clause</license>
+    </layer>
+  </layers>
+ 
+  <packages>
+    <package name="CMSIS" vendor="ARM"/>
+    <package name="CMSIS-Driver" vendor="ARM"/>
+    <package name="ARM_Compiler" vendor="Keil"/>
+    <package name="LPC4300_DFP" vendor="Keil"/>
+    <package name="MDK-Middleware" vendor="Keil"/>
+  </packages>
+ 
+  <compilers>
+    <compiler name="AC5" version="5.0.0:5.99.99"/>
+  </compilers>
+ 
+  <target Ddsp="NO_DSP" Dendian="Little-endian" Dfpu="NO_FPU" Dmve="NO_MVE" Dname="LPC4357" Dtz="NO_TZ" Dvendor="NXP:11" Pname="Cortex-M4">
+    <output list="./Debug/" name="BSD_Client" obj="./Debug/" type="exe"/>
+    <ldflags compiler="AC5" add="--entry=Reset_Handler --load_addr_map_info --map --strict" file="BSD_Client.sct"/>
+    <cflags  compiler="AC5" add="--c99 --omf_browse ./debug/main.crf -D__MICROLIB -O1"/>
+    <asflags compiler="AC5" add="--pd __MICROLIB SETA 1 --xref"/>
+  </target>
+ 
+  <components>
+    <component layer="IO" Cclass="CMSIS" Cgroup="CORE" Cvendor="ARM"/>
+    <component layer="IO" Cclass="CMSIS" Cgroup="RTOS2" Csub="Keil RTX5" Cvariant="Source" Cvendor="ARM">
+      <file attr="config" category="source" name="CMSIS/RTOS2/RTX/Config/RTX_Config.c" version="5.1.0"/>
+      <file attr="config" category="header" name="CMSIS/RTOS2/RTX/Config/RTX_Config.h" version="5.5.0"/>
+    </component>
+    <component layer="IO" Cbundle="ARM Compiler" Cclass="Compiler" Cgroup="Event Recorder" Cvariant="DAP" Cvendor="Keil">
+      <cflags compiler="AC5" add="--omf_browse ./debug/eventrecorder.crf" remove="--omf_browse ./debug/main.crf"/>
+      <file attr="config" category="header" name="Config/EventRecorderConf.h" version="1.1.0"/>
+    </component>
+    <component layer="IO" Cbundle="MCB4300" Cclass="Board Support" Cgroup="Graphic LCD" Cvendor="Keil"/>
+    <component layer="IO" Cbundle="MCB4300" Cclass="Board Support" Cgroup="LED" Cvendor="Keil"/>
+    <component layer="APP" Cbundle="MDK-Pro" Cclass="Network" Cgroup="CORE" Cvariant="IPv4/IPv6 Debug" Cvendor="Keil">
+      <file attr="config" category="source" name="Network/Config/Net_Config.c" version="7.0.0"/>
+      <file attr="config" category="source" name="Network/Config/Net_Debug.c" version="7.0.0"/>
+    </component>
+    <component layer="APP" Cbundle="MDK-Pro" Cclass="Network" Cgroup="Interface" Csub="ETH" Cvendor="Keil" instances="1">
+      <file attr="config" category="header" name="Network/Config/Net_Config_ETH.h" version="7.2.0"/>
+    </component>
+    <component layer="APP" Cbundle="MDK-Pro" Cclass="Network" Cgroup="Socket" Csub="BSD" Cvendor="Keil">
+      <file attr="config" category="header" name="Network/Config/Net_Config_BSD.h" version="5.0.4"/>
+    </component>
+    <component layer="APP" Cbundle="MDK-Pro" Cclass="Network" Cgroup="Socket" Csub="TCP" Cvendor="Keil">
+      <file attr="config" category="header" name="Network/Config/Net_Config_TCP.h" version="7.1.0"/>
+    </component>
+    <component layer="APP" Cbundle="MDK-Pro" Cclass="Network" Cgroup="Socket" Csub="UDP" Cvendor="Keil">
+      <file attr="config" category="header" name="Network/Config/Net_Config_UDP.h" version="5.1.0"/>
+    </component>
+    <component layer="IO" Cclass="CMSIS Driver" Cgroup="Ethernet MAC" Cvendor="Keil"/>
+    <component layer="IO" Cclass="CMSIS Driver" Cgroup="Ethernet PHY" Csub="DP83848C" Cvendor="Keil"/>
+    <component layer="IO" Cclass="CMSIS Driver" Cgroup="SPI" Csub="SSP" Cvendor="Keil"/>
+    <component layer="IO" Cclass="Device" Cgroup="GPDMA" Cvendor="Keil"/>
+    <component layer="IO" Cclass="Device" Cgroup="GPIO" Cvendor="Keil"/>
+    <component layer="IO" Cclass="Device" Cgroup="SCU" Cvendor="Keil"/>
+    <component layer="IO" Cclass="Device" Cgroup="Startup" Cvendor="Keil">
+      <file attr="config" category="source" name="Device/Source/ARM/startup_LPC43xx.s" version="1.0.0"/>
+      <file attr="config" category="source" name="Device/Source/system_LPC43xx.c" version="1.0.3"/>
+      <file attr="config" category="header" name="RTE_Driver/Config/RTE_Device.h" version="2.2.1"/>
+    </component>
+  </components>
+   
+  <files>
+    <group layer="APP" name="Source">
+      <file category="sourceC" name="./main.c"/>
+      <file category="sourceC" name="./BSD_Client.c"/>
+    </group>
+    <group name="Documentation">
+      <file layer="APP" category="doc" name="./Abstract.txt"/>
+    </group>
+  </files>
+</cprj>
+
+\endcode
+
+\delim
+
+<table class="cmtable" summary="Element: /cprj ">
+  <tr>
+    <th>Parents</th>
+    <th colspan="3">Element Chain</th>
+  </tr>
+  <tr>
+    <td>root</td>
+    <td colspan="3">description root point of description</td>
+  </tr>
+  <tr>
+    <th>Attributes</th>
+    <th>Description</th>
+    <th>Type</th>
+    <th>Use</th>
+  </tr>
+  <tr>
+    <td>schemaVersion</td>
+    <td>Version of CPRJ.xsd the description is compatible/validate with</td>
+    <td>VersionType</td>
+    <td>required</td>  
+  </tr>
+  <tr>
+    <th>Child Elements</th>
+    <th>Description</th>
+    <th>Type</th>
+    <th>Occurrence</th>
+  </tr>
+  <tr>
+    <td>created</td>
+    <td>Element containing timestamp and tool information.</td>
+    <td>\ref element_created "CreatedType"</td>
+    <td>0..1</td>
+  </tr>
+  <tr>
+    <td>info</td>
+    <td>Section containing project information.</td>
+    <td>\ref element_info "InfoType"</td>
+    <td>1..1</td>
+  </tr>
+  <tr>
+    <td>layers</td>
+    <td>Section containing layer information.</td>
+    <td>\ref element_layers "LayersType"</td>
+    <td>1..1</td>
+  </tr>
+  <tr>
+    <td>compilers</td>
+    <td>Specify compilers that can be used to build the project.</td>
+    <td>\ref element_compilers "CompilersType"</td>
+    <td>1..1</td>
+  </tr>
+  <tr>
+    <td>packages</td>
+    <td>Specify packs required by the project.</td>
+    <td>\ref element_packages "PackagesType"</td>
+    <td>1..1</td>
+  </tr>
+  <tr>
+    <td>target</td>
+    <td>Section specifying the device and active architectural features like e.g. hardware floating point support. Sub elements
+        specify tool specific commandline options as well as output parameters. Note: Layers may not have a \<target> section.</td>
+    <td>\ref element_target "TargetType"</td>
+    <td>0..1</td>
+  </tr>  
+  <tr>
+    <td>components</td>
+    <td>Specify the software components selected for the Run-Time Environment (RTE) including complete list of configuration files.</td>
+    <td>\ref element_components "ComponentsType"</td>
+    <td>0..1</td>
+  </tr>
+  <tr>
+    <td>files</td>
+    <td>List of all project specific files required for the project build, which are not part of a component.</td>
+    <td>\ref element_files "ProjectFilesType"</td>
+    <td>0..1</td>
+  </tr>
+</table>
+
+\delim 
+
+\page element_created /cprj/created
+\b Example <em>created</em> element
+\code
+<cprj schemaVersion="1.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="CPRJ.xsd">
+  <created tool="µVision V5.29.0.13" timestamp="2020-01-21T11:38:01" />
+  ...
+</cprj>
+\endcode
+
+<table class="cmtable" summary="Element: created">
+  <tr>
+    <th>Parents</th>
+    <th colspan="3">Element Chain</th>
+  </tr>
+  <tr>
+    <td>\ref element_cprj "cprj"</td>
+    <td colspan="3">\ref element_cprj</td>
+  </tr>
+  <tr>
+    <th>Attributes</th>
+    <th>Description</th>
+    <th>Type</th>
+    <th>Use</th>
+  </tr>
+  <tr>
+    <td>tool</td>
+    <td>name of the tool that has been writing the file. The string shall include version information.</td>
+    <td>xs:string</td>
+    <td>required</td>
+  </tr>
+  <tr>
+    <td>timestamp</td>
+    <td>Date and Time information of the last update. Format: YYYY-MM-DDThh:mm:ss[+|-hh:mm]</td>
+    <td>xs:dateTeim</td>
+    <td>required</td>
+  </tr>
+</table>
+
+\delim
+
+\page element_info /cprj/info
+\b Example <em>info</em> element
+\code
+  ...
+  <info isLayer="false" >
+    <description>BSD Client application on top of MCB4300 Basic I/O layer with Ethernet</description>
+    <category>Wired Network, BSD Client, Board IO</category>
+    <keywords>MCB4300, MDK-Middleware, Network</keywords>
+    <license>BSD-3-Clause</license>
+    <url>https://github.com/ARM-software/cmsis-driver/examples/BSD_Client_MCB4300_IO/</url>
+  </info>
+  ...
+\endcode
+\delim
+
+<table class="cmtable" summary="Element: info">
+  <tr>
+    <th>Parents</th>
+    <th colspan="3">Element Chain</th>
+  </tr>
+  <tr>
+    <td>\ref element_cprj "cprj"</td>
+    <td colspan="3">\ref element_cprj</td>
+  </tr>
+  <tr>
+    <th>Attributes</th>
+    <th>Description</th>
+    <th>Type</th>
+    <th>Use</th>
+  </tr>
+  <tr>
+    <td>name</td>
+    <td>name of the layer</td>
+    <td>\ref type_restrictedStringType "RestrictedString"</td>
+    <td>required</td>
+  </tr>
+  <tr>
+    <td>isLayer</td>
+    <td>If 'true' then the project file is a layer description and not a complete project expected to create an output. Only layer descriptions can be
+    added to an existing project, or a project is constructed from using only layer descriptions. By default a description is a project (false).</td>
+    <td>xs:boolean</td>
+    <td>required (if not default)</td>
+  </tr>
+  <tr>
+    <th>Child Elements</th>
+    <th>Description</th>
+    <th>Type</th>
+    <th>Occurrence</th>
+  </tr>
+  <tr>
+    <td>description</td>
+    <td>Brief description of the layer.</td>
+    <td>xs:string</td>
+    <td>0..*</td>
+  </tr>
+  <tr>
+    <td>keywords</td>
+    <td>Comma seperated list of keywords of this layer used by search tools.</td>
+    <td>xs:string</td>
+    <td>0..*</td>
+  </tr>
+  <tr>
+    <td>category</td>
+    <td>Comma separated list of predefined categories for this layer used by search tools. Predefined list TBD.</td>
+    <td>xs:string</td>
+    <td>0..*</td>
+  </tr>
+  <tr>
+    <td>license</td>
+    <td>License ruling for using files local to the layer using SPDX license ID from https://spdx.org/licenses/. Note: components have their own licenses.</td>
+    <td>xs:string</td>
+    <td>0..*</td>
+  </tr>
+  <tr>
+    <td>\ref element_url "url"</td>
+    <td>Specifies a public download location. Repository type and tag can be specified.</td>
+    <td>UrlType</td>
+    <td>0..*</td>
+  </tr>
+</table>
+
+\delim
+
+\section element_url /cprj/info/url
+\b Example <em>url</em> element
+\code
+  ...
+  <info>
+    <url type="git" tag="Rel-1.2.0">https://github/myOrg/myProj/Examples/myExample/</url>
+  </info>
+  ...
+\endcode
+\delim
+
+<table class="cmtable" summary="Type: urlType">
+  <tr>
+    <th>Parents</th>
+    <th colspan="3">Element Chain</th>
+  </tr>
+  <tr>
+    <td>\ref element_info "info"</td>
+    <td colspan="3">\ref element_info</td>
+  </tr>
+  <tr>
+    <th>Attributes</th>
+    <th>Description</th>
+    <th>Type</th>
+    <th>Use</th>
+  </tr>
+  <tr>
+    <td>type</td>
+    <td>repository type (git, svn, other)</td>
+    <td>xs:string</td>
+    <td>optional</td>
+  </tr>
+  <tr>
+    <td>tag</td>
+    <td>specifies the repository tag.</td>
+    <td>xs:string</td>
+    <td>optional</td>
+  </tr>
+</table>
+
+\delim
+
+
+\page element_target /cprj/target
+
+This element describes the hardware target, build output and command line options for a specific compiler tool-chain.
+These settings are applied to all modules of the project. The C/C++ and assembler flags can be refined for components, files.
+The following elements are available:
+- \ref element_output "output"     : Build output options
+- \ref element_target_cflags "cflags"     : C compiler options applied to C modules (category="sourceC").
+- \ref element_target_cxxflags "cxxflags" : C++ compiler options applied to C++ modules (category="sourceCpp").
+- \ref element_target_asflags "asflags"   : Assembler options applied to Assembler modules (category="sourceAsm").
+- \ref element_ldflags "ldflags"   : Linker options applied when output attribute type="exe".
+- \ref element_arflags "arflags"   : Archiver options applied to Librarian when output attribute type="lib".
+
+Note: The compiler referenced by the above command line flags is required to be listed in the \<compilers> section.
+
+\b Example <em>target</em> section:
+
+\code
+<cprj xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="CPRJ.xsd"/>
+  ...
+  <compilers>
+    <compiler name="AC5" version="5.6.0"
+  </compilers>
+  ...
+  <target Dname="ARMCM0" Dvendor="ARM:82" Dendian="Little-endian">
+    <output name="Blinky" type="exe" obj="./Objects list="./Listings"/>
+    <cflags compiler="AC5" add="-Osize"/>
+    ...
+    <ldflags compiler="AC5" file="./RTE/Device/ARMCM0/gcc_arm.ld"/>
+  </target>
+  ...
+</cprj>
+\endcode
+\n
+<table class="cmtable" summary="Element: target">
+  <tr>
+    <th>Parents</th>
+    <th colspan="3">Element Chain</th>
+  </tr>
+  <tr>
+    <td>\ref element_cprj "cprj"</td>
+    <td colspan="3">\ref element_cprj</td>
+  </tr>
+  <tr>
+    <th>Attributes</th>
+    <th>Description</th>
+    <th>Type</th>
+    <th>Use</th>
+  </tr>
+  <tr>
+    <td>Bvendor</td>
+    <td>Board vendor name. Either a board vendor and board name with optional board revision, or a device vendor and a device name.</td>
+    <td>xs:string</td>
+    <td>optional</td>
+  </tr>  
+  <tr>
+    <td>Bname</td>
+    <td>SPecify the board name.  Either a board vendor and board name with optional board revision, or a device vendor and a device name.</td>
+    <td>xs:string</td>
+    <td>optional</td>
+  </tr>  
+    <tr>
+    <td>Bversion</td>
+    <td>Board version.  Either a board vendor and board name with optional board revision, or a device vendor and a device name.</td>
+    <td>xs:string</td>
+    <td>optional</td>
+  </tr>  
+  <tr>
+    <td>Dvendor</td>
+    <td>Device vendor name.  Either a board vendor and board name with optional board revision, or a device vendor and a device name.</td>
+    <td>xs:string</td>
+    <td>optional</td>
+  </tr>  
+  <tr>
+    <td>Dname</td>
+    <td>Device name.  Either a board vendor and board name with optional board revision, or a device vendor and a device name.</td>
+    <td>xs:string</td>
+    <td>optional</td>
+  </tr>
+  <tr>
+    <td>Pname</td>
+    <td>Processor instance name. In case of multi-processor devices, this processor ID is required.</td>
+    <td>xs:string</td>
+    <td>optional</td>
+  </tr>  
+  <tr>
+    <td>Dfpu</td>
+    <td>Selects the floating point unit option that is active for the project. \b Note, even if the
+        device implements an FPU, setting \token{Dfpu=0} here, will disable FPU code generation. 
+        Use predefined values from the table \ref DfpuEnum "Device FPU".</td>
+    <td>DfpuEnum</td>
+    <td>optional</td>
+  </tr>  
+  <tr>
+    <td>Dendian</td>
+    <td>Selects the endianness to be used for the project. Note that selecting an endianness that is
+    not supported by the device, will result in a build that will not run on the device.
+    Use predefined values from the table \ref DendianEnum "DendianEnum".</td>
+    <td>DendianEnum</td>
+    <td>optional</td>
+  </tr>
+  <tr>
+    <td>Dmpu</td>
+    <td>Selects the memory protection unit to be enabled or disabled for the project.
+        Use predefined values from the table \ref DmpuEnum "Device MPU".</td>
+    <td>DmpuEnum</td>
+    <td>optional</td>
+  </tr>
+  <tr>
+    <td>Dsecure</td>
+	<td>Selects the software model for code generation on arm TrustZone-M enabled devices.
+	    Use predefined values from the table \ref DsecureEnum "Dsecure"</td>
+ 	<td>DsecureEnum</td>
+	<td>optional</td> 
+  </tr>
+  <tr>
+    <td>Dmve</td>
+	<td>Selects the code generation to utilize the Corex-M Vector Extensions (MVE) on devices with this features
+	    Use predefined values from the table \ref DmveEnum "Dmve"</td>
+	<td>DmveEnum</td>
+	<td>optional</td>
+  </tr>
+  <tr>
+    <th>Child Elements</th>
+    <th>Description</th>
+    <th>Type</th>
+    <th>Occurrence</th>
+  </tr>
+  <tr>
+    <td>\ref element_output "output"</td>
+    <td>Configure the build output name and type, and specify whether to include debug information. Required if type="exe".</td>
+    <td>OutputType</td>
+    <td>1..1</td>
+  </tr>
+  <tr>
+    <td>\ref element_ldflags "ldflags"</td>
+    <td>Linker flags used for constructing the effective linker command line</td>
+    <td>LinkerFlagsType</td>
+    <td>0..1</td>
+  <tr>
+    <td>\ref element_arflags "arflags"</td>
+    <td>Archiver command line flags for the toolchain selected by 'compiler' attribute.</td>
+    <td>ArchiverFlagsType</td>
+    <td>0..1</td>
+  </tr>
+  </tr>
+  <tr>
+    <td>\ref type_toolOptionType "cflags"</td>
+    <td>Compiler flags for C-modules used for constructing the effective compiler command line</td>
+    <td>ToolOptionType</td>
+    <td>0..1</td>
+  </tr>
+  <tr>
+    <td>\ref type_toolOptionType "cxxflags"</td>
+    <td>Compiler flags for C++ modules used for constructing the effective compiler command line</td>
+    <td>ToolOptionType</td>
+    <td>0..1</td>
+  </tr>
+  <tr>
+    <td>\ref type_toolOptionType "asflags"</td>
+    <td>Assembler flags for assembler modules used for constructing the effective assembler command line</td>
+    <td>ToolOptionType</td>
+    <td>0..1</td>
+  </tr>
+  <tr>
+    <td>\ref type_toolOptionType "arflags"</td>
+    <td>Archiver flags for the archiver which creates library files. Constructing the effective assembler command line</td>
+    <td>ToolOptionType</td>
+    <td>0..1</td>
+  </tr>
+</table>
+
+\delim
+
+\section element_output /cprj/target/output
+
+Specify the build output directories, output file and type (executable vs. library).
+
+\b Example <em>output</em> element
+\code
+<cprj ...>
+  ...
+  <target Dname="ARMCM0" Dvendor="ARM:83">
+     <output compiler="AC5" name="MyProject" type="exe" list="Listings" obj="Objects"/>
+     ...
+  </target>
+  ...
+</cprj>
+\endcode
+
+\n
+
+<table class="cmtable" summary="Element: output">
+  <tr>
+    <th>Parents</th>
+    <th colspan="3">Element Chain</th>
+  </tr>
+  <tr>
+    <td>\ref element_target target</td>
+    <td colspan="3">\ref element_target</td>
+  </tr>
+  <tr>
+    <th>Attributes</th>
+    <th>Description</th>
+    <th>Type</th>
+    <th>Use</th>
+  </tr>
+  <tr>
+    <td>name</td>
+    <td>Name of the build output file to be generated.</td>
+    <td>xs:string</td>
+    <td>required</td>
+  </tr>
+  <tr>
+    <td>type</td>
+    <td>Select the build target to be \token{lib} - library or \token{exe} - executable</td>
+    <td>CompilerOutputType</td>
+    <td>required</td>
+  </tr>
+  <tr>
+    <td>obj</td>
+    <td>Relative path of the output folder</td>
+    <td>xs:string</td>
+    <td>optional</td>
+  </tr>
+  <tr>
+    <td>listing</td>
+    <td>Relative path of the listings folder</td>
+    <td>xs:string</td>
+    <td>optional</td>
+  </tr>
+</table>
+
+\delim
+
+\section element_ldflags /cprj/target/ldflags
+This element specifies strings of commandline options for the linker of the tool-chain selected by the attribute 'compiler'. 
+A linker script file shall be specified using the attribute 'file'. Note that this option only takes effect if the type specified
+in the output tag is set to "exe".
+
+
+\b Example <em>ldflags</em> element
+\code
+<cprj ...>
+  ...
+  <target Ddsp="NO_DSP" Dendian="Little-endian" Dfpu="NO_FPU" Dmve="NO_MVE" Dname="LPC4357" Dtz="NO_TZ" Dvendor="NXP:11" Pname="Cortex-M4">
+    <output list="./Debug/" name="BSD_Client" obj="./Debug/" type="exe"/>
+    <ldflags compiler="AC5" add="--entry=Reset_Handler --load_addr_map_info --map --strict " file="BSD_Client.sct"/>
+  </target>
+  ...
+</cprj>
+\endcode
+
+<table class="cmtable" summary="Element: ldflags">
+  <tr>
+    <th>Parents</th>
+    <th colspan="3">Element Chain</th>
+  </tr>
+  <tr>
+    <td>\ref element_target "target"</td>
+    <td colspan="3">\ref element_target</td>
+  </tr>
+  <tr>
+    <th>Attributes</th>
+    <th>Description</th>
+    <th>Type</th>
+    <th>Use</th>
+  </tr>
+  <tr>
+    <td>compiler</td>
+    <td>selects the compiler the contained information is targeted at. Choose from available list: GCC, AC5, AC6, IAR, Tasking, GHS, Cosmic, G++</td>
+    <td>CompilerEnumType</td>
+    <td>required</td>
+  </tr>
+  <tr>
+    <td>add</td>
+    <td>commandline options to be added to the command line of the respective tool.</td>
+    <td>xs:string</td>
+    <td>optional</td>
+  </tr>
+</table>
+
+\delim
+
+\section element_arflags  /cprj/target/arflags
+This element specifies a string of commandline options for the archiver of the tool-chain selected by the attribute 'compiler'.
+Note that this option only takes effect if the type specified in the output tag is set to "lib".
+
+\b Example <em>arflags</em> element
+\code
+<cprj ...>
+  ...
+  <target Ddsp="NO_DSP" Dendian="Little-endian" Dfpu="NO_FPU" Dmve="NO_MVE" Dname="LPC4357" Dtz="NO_TZ" Dvendor="NXP:11" Pname="Cortex-M4">
+    <output list="./Debug/" name="BSD_Client" obj="./Debug/" type="lib"/>
+    <arflags compiler="AC5" add="--debug_symbols "/>
+  </target>
+  ...
+</cprj>
+\endcode
+
+<table class="cmtable" summary="Element: arflags">
+  <tr>
+    <th>Parents</th>
+    <th colspan="3">Element Chain</th>
+  </tr>
+  <tr>
+    <td>\ref element_target "target"</td>
+    <td colspan="3">\ref element_target</td>
+  </tr>
+  <tr>
+    <th>Attributes</th>
+    <th>Description</th>
+    <th>Type</th>
+    <th>Use</th>
+  </tr>
+  <tr>
+    <td>compiler</td>
+    <td>selects the compiler the command line option string is targeted at. Choose from available list: GCC, AC5, AC6, IAR, Tasking, GHS, Cosmic, G++</td>
+    <td>CompilerEnumType</td>
+    <td>required</td>
+  </tr>
+  <tr>
+    <td>add</td>
+    <td>commandline string to be added to the command line of the archiver of the selected compiler tool-chain.</td>
+    <td>xs:string</td>
+    <td>required</td>
+  </tr>
+</table>
+\delim
+
+\section element_target_cflags        /cprj/target/cflags
+These additional compiler options affect all C modules contained in the project description unless particular settings
+are 'removed' on a lower level (component, group, file).
+
+\b Example <em>cflags</em> element
+\code
+<cprj ...>
+  ...
+  <target Ddsp="NO_DSP" Dendian="Little-endian" Dfpu="NO_FPU" Dmve="NO_MVE" Dname="LPC4357" Dtz="NO_TZ" Dvendor="NXP:11" Pname="Cortex-M4">
+    <output list="./Debug/" name="BSD_Client" obj="./Debug/" type="lib"/>
+    <cflags add="-O1 -fno-function-sections -fno-rtti -fshort-enums -fshort-wchar -funsigned-char"/>
+    <arflags compiler="AC5" add="--debug_symbols "/>
+  </target>
+  ...
+</cprj>
+\endcode
+
+<table class="cmtable" summary="Element: cflags">
+  <tr>
+    <th>Parents</th>
+    <th colspan="3">Element Chain</th>
+  </tr>
+  <tr>
+    <td>\ref element_target "target"</td>
+    <td colspan="3">\ref element_target</td>
+  </tr>
+  <tr>
+    <th>Attributes</th>
+    <th>Description</th>
+    <th>Type</th>
+    <th>Use</th>
+  </tr>
+  <tr>
+    <td>compiler</td>
+    <td>selects the compiler the command line option string is targeted at. Choose from available list: GCC, AC5, AC6, IAR, Tasking, GHS, Cosmic, G++</td>
+    <td>CompilerEnumType</td>
+    <td>required</td>
+  </tr>
+  <tr>
+    <td>add</td>
+    <td>commandline string to be added to the command line of the compiler invoked for C-modules specific the selected compiler tool-chain.</td>
+    <td>xs:string</td>
+    <td>required</td>
+  </tr>
+</table>
+
+\delim
+
+\section element_target_cxxflags       /cprj/target/cxxflags
+These additional compiler options affect all C++ modules contained in the project description unless particular settings
+are 'removed' on a lower level (component, group, file).
+
+\b Example <em>cxxflags</em> element
+\code
+<cprj ...>
+  ...
+  <target Ddsp="NO_DSP" Dendian="Little-endian" Dfpu="NO_FPU" Dmve="NO_MVE" Dname="LPC4357" Dtz="NO_TZ" Dvendor="NXP:11" Pname="Cortex-M4">
+    <output list="./Debug/" name="BSD_Client" obj="./Debug/" type="lib"/>
+	<cflags add="-O1 -fno-function-sections -fno-rtti -fshort-enums -fshort-wchar -funsigned-char"/>
+	<cxxflags add="-O1 -fno-function-sections -fno-rtti -fshort-enums -fshort-wchar -funsigned-char"/>
+    <arflags compiler="AC5" add="--debug_symbols "/>
+  </target>
+  ...
+</cprj>
+\endcode
+
+<table class="cmtable" summary="Element: cxxflags">
+  <tr>
+    <th>Parents</th>
+    <th colspan="3">Element Chain</th>
+  </tr>
+  <tr>
+    <td>\ref element_target "target"</td>
+    <td colspan="3">\ref element_target</td>
+  </tr>
+  <tr>
+    <th>Attributes</th>
+    <th>Description</th>
+    <th>Type</th>
+    <th>Use</th>
+  </tr>
+  <tr>
+    <td>compiler</td>
+    <td>selects the compiler the command line option string is targeted at. Choose from available list: GCC, AC5, AC6, IAR, Tasking, GHS, Cosmic, G++</td>
+    <td>CompilerEnumType</td>
+    <td>required</td>
+  </tr>
+  <tr>
+    <td>add</td>
+    <td>commandline string to be added to the command line of the compiler invoked for C++-modules specific the selected compiler tool-chain.</td>
+    <td>xs:string</td>
+    <td>required</td>
+  </tr>
+</table>
+
+\delim
+
+
+\section element_target_asflags       /cprj/target/asflags
+These additional assembler options affect all Assembler modules contained in the project description unless particular settings
+are 'removed' on a lower level (component, group, file).
+
+\b Example <em>asflags</em> element
+\code
+<cprj ...>
+  ...
+  <target Ddsp="NO_DSP" Dendian="Little-endian" Dfpu="NO_FPU" Dmve="NO_MVE" Dname="LPC4357" Dtz="NO_TZ" Dvendor="NXP:11" Pname="Cortex-M4">
+    <output list="./Debug/" name="BSD_Client" obj="./Debug/" type="lib"/>
+    <asflags add="--xref --split_ldm"/>
+    <arflags compiler="AC5" add="--debug_symbols "/>
+  </target>
+  ...
+</cprj>
+\endcode
+
+<table class="cmtable" summary="Element: asflags">
+  <tr>
+    <th>Parents</th>
+    <th colspan="3">Element Chain</th>
+  </tr>
+  <tr>
+    <td>\ref element_target "target"</td>
+    <td colspan="3">\ref element_target</td>
+  </tr>
+  <tr>
+    <th>Attributes</th>
+    <th>Description</th>
+    <th>Type</th>
+    <th>Use</th>
+  </tr>
+  <tr>
+    <td>compiler</td>
+    <td>selects the compiler the command line option string is targeted at. Choose from available list: GCC, AC5, AC6, IAR, Tasking, GHS, Cosmic, G++</td>
+    <td>CompilerEnumType</td>
+    <td>required</td>
+  </tr>
+  <tr>
+    <td>add</td>
+    <td>commandline string to be added to the command line of the assembler invoked for Assembler-modules specific the selected compiler tool-chain.</td>
+    <td>xs:string</td>
+    <td>required</td>
+  </tr>
+</table>
+
+\delim
+
+\page element_components /cprj/components
+
+This element lists all software components that are selected within the Manage Run-Time Environment.
+
+\b Example <em>components</em> section:
+\code
+<cprj xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="CPRJ.xsd"/>
+  ...
+  <components>
+    <component Cvendor="ARM" Cclass="CMSIS" Cgroup="CORE"/>
+    <component Cvendor="ARM" Cclass="Device" Cgroup="Startup" Cvariant="C Startup">
+      <file category="sourceC" name="Device/ARM/ARMCM0/Source/startup_ARMCM0.c"        attr="config" version="2.0.0"/>
+      <file category="sourceC" name="Device/ARM/ARMCM0/Source/system_ARMCM0.c"         attr="config" version="2.0.0"/>
+      <file category="linkerScript" name="Device/ARM/ARMCM0/Source/ARM/ARMCM0_ac6.sct" attr="config" version="1.0.0"/>        <component Cclass="CMSIS" Cgroup="Core" Cvendor="ARM" Cversion="5.6.0"/>
+    </component>
+  </components>
+  ...
+</cprj>
+\endcode
+\delim
+
+<table class="cmtable" summary="Element: components">
+  <tr>
+    <th>Parents</th>
+    <th colspan="3">Element Chain</th>
+  </tr>
+  <tr>
+    <td>\ref element_cprj "cprj"</td>
+    <td colspan="3">\ref element_cprj</td>
+  </tr>
+  <tr>
+    <th>Child Elements</th>
+    <th>Description</th>
+    <th>Type</th>
+    <th>Occurrence</th>
+  </tr>
+  <tr>
+    <td>\ref element_component "component"</td>
+    <td>identify a selected software component and configuration files as well as commandline options specific to this component.</td>
+    <td>ComponentType</td>
+    <td>1..*</td>
+  </tr>
+</table>
+
+\delim
+
+\section element_component /cprj/components/component
+
+Identify a software component.
+
+\b Example <em>component</em> element
+\code
+...
+  <components>
+    <component Cvendor="ARM" Cclass="CMSIS" Cgroup="CORE"/>
+    <component Cvendor="ARM" Cclass="Device" Cgroup="Startup" Cvariant="C Startup">
+      <file category="sourceC" name="Device/ARM/ARMCM0/Source/startup_ARMCM0.c"        attr="config" version="2.0.0"/>
+      <file category="sourceC" name="Device/ARM/ARMCM0/Source/system_ARMCM0.c"         attr="config" version="2.0.0"/>
+      <file category="linkerScript" name="Device/ARM/ARMCM0/Source/ARM/ARMCM0_ac6.sct" attr="config" version="1.0.0"/>        <component Cclass="CMSIS" Cgroup="Core" Cvendor="ARM" Cversion="5.6.0"/>
+    </component>
+  </components>
+...
+\endcode
+\n
+<table class="cmtable" summary="Element: component">
+  <tr>
+    <th>Parents</th>
+    <th colspan="3">Element Chain</th>
+  </tr>
+  <tr>
+    <td>\ref element_components "components"</td>
+    <td colspan="3">\ref element_components</td>
+  </tr>
+  <tr>
+    <th>Attributes</th>
+    <th>Description</th>
+    <th>Type</th>
+    <th>Use</th>
+  </tr>
+  <tr>
+    <td>Cvendor</td>
+    <td>Vendor name of the component.</td>
+    <td>xs:string</td>
+    <td>optional</td>
+  </tr>
+  <tr>
+    <td>Cbundle</td>
+    <td>Name of bundle to which the selected component belongs.</td>
+    <td>xs:string</td>
+    <td>optional</td>
+  </tr>
+  <tr>
+    <td>Cclass</td>
+    <td>Component class name.</td>
+    <td>xs:string</td>
+    <td>required</td>
+  </tr>
+  <tr>
+    <td>Cgroup</td>
+    <td>Component group name.</td>
+    <td>xs:string</td>
+    <td>required</td>
+  </tr>
+  <tr>
+    <td>Csub</td>
+    <td>Component sub group name following the taxonomy (string may be empty)</td>
+    <td>CsubType</td>
+    <td>optional</td>
+  </tr>
+  <tr>
+    <td>Cvariant</td>
+    <td>Name of the variant of the selected component.</td>
+    <td>CvariantType</td>
+    <td>optional</td>
+  </tr>
+  <tr>
+    <td>Cversion</td>
+    <td>Version of the selected component. Note, a higher version number can be entered in case 
+        the matching version is not available.</td>
+    <td>ComponentVersionType</td>
+    <td>optional</td>
+  </tr>
+  <tr>
+    <td>Capiversion</td>
+    <td>Implemented api version defined for the corresponding Cclass:Cgroup:Csub. Set the value only for 
+        components that have an  associated \tagem{api}.</td>
+    <td>ComponentVersionType</td>
+    <td>optional</td>
+  </tr>
+  <tr>
+    <td>instances</td>
+    <td>Number of instances created for the component. Set the value only for
+        components that are multi-instance capable. Defaults to \token{1} if not set.</td>
+    <td>InstancesType</td>
+    <td>optional</td>
+  </tr>
+  <tr>
+    <td>layer</td>
+    <td>Reference to a layer name as specfied by the \ref element_layers "layers section" indicating that this component belongs to the named layer.</td>
+    <td>xs:string</td>
+    <td>optional</td>
+  </tr>
+  <tr>
+    <th>Child Elements</th>
+    <th>Description</th>
+    <th>Type</th>
+    <th>Occurrence</th>
+  </tr>
+  <tr>
+    <td>\ref element_cflags "cflags"</td>
+    <td>Specify compiler flags for C-modules contained in this component</td>
+    <td>ToolOptionType</td>
+    <td>0..1</td>
+  </tr>
+  <tr>
+    <td>\ref element_cxxflags "cxxflags"</td>
+    <td>Specify compiler flags for C++-modules contained in this component</td>
+    <td>ToolOptionType</td>
+    <td>0..1</td>
+  </tr>
+  <tr>
+    <td>\ref element_asflags "asflags"</td>
+    <td>Specify assembler flags for Assembler-modules contained in this component</td>
+    <td>ToolOptionType</td>
+    <td>0..1</td>
+  </tr>
+  <tr>
+    <td>\ref element_component_file "file"</td>
+    <td>Specify configuration files from the selected component including version information. The 
+        ID for a configuration file is the relative path in the pack it originates from.</td>
+    <td>ComponentFileType</td>
+    <td>0..*</td>
+  </tr>
+</table>
+
+\delim
+
+\section element_component_file /cprj/components/component/file
+
+Specify the configuration files for the selected component. These files must already exist
+in the project folder structure (RTE/\<Cclass>[/\<Device>]/...) and contain a configuration 
+setup specifically adopted for the project. Providing the version number of the orignal file is mandatory.
+
+\b Example <em>file</em> element
+\code
+  ...
+  <components>
+    <component Cvendor="ARM" Cclass="Device" Cgroup="Startup" Cvariant="C Startup">
+      <file category="sourceC" name="Device/ARM/ARMCM0/Source/startup_ARMCM0.c"        attr="config" version="2.0.0"/>
+      <file category="sourceC" name="Device/ARM/ARMCM0/Source/system_ARMCM0.c"         attr="config" version="2.0.0"/>
+      <file category="linkerScript" name="Device/ARM/ARMCM0/Source/ARM/ARMCM0_ac6.sct" attr="config" version="1.0.0"/>
+     </component>
+     <component Cclass="CMSIS" Cgroup="Core" Cvendor="ARM" Cversion="5.6.0"/>
+	 ...
+  </components>
+  ...
+\endcode
+\delim
+<table class="cmtable" summary="Element: file">
+  <tr>
+    <th>Parents</th>
+    <th colspan="3">Element Chain</th>
+  </tr>
+  <tr>
+    <td>\ref  element_component "component"</td>
+    <td colspan="3">\ref element_component</td>
+  </tr>
+  <tr>
+    <th>Attributes</th>
+    <th>Description</th>
+    <th>Type</th>
+    <th>Use</th>
+  </tr>
+  <tr>
+    <td>category</td>
+    <td>File type, for example \token{header}. Use predefined values from the table \ref FileCategoryEnum "File Category".</td>
+    <td>FileCategoryType</td>
+    <td>required</td>
+  </tr>
+  <tr>
+    <td>attr</td>
+    <td>File action attribute, for example \token{copy}. Use predefined values from the table \ref FileAttributeEnum "File Attribute".</td>
+    <td>\ref FileAttributeEnum "FileAttributeType"</td>
+    <td>optional</td>
+  </tr>
+  <tr>
+    <td>name</td>
+    <td>File path and name within pack the file originates from (configuration file ID)</td>
+    <td>xs:string</td>
+    <td>required</td>
+  </tr>
+  <tr>
+    <td>version</td>
+    <td>Version of the configuration file being present in the example.</td>
+    <td>\ref VersionType "VersionType"</td>
+    <td>required</td>
+  </tr>
+</table>
+
+\delim
+
+\section element_cflags /cprj/components/component/cflags
+These compiler options are either added or removed from the inherited command line and affect all C modules that belong to the
+component. This flag can also be added to file groups and individual files within the description.
+
+\b Example <em>cflags</em> element for component
+\code
+<cprj ...>
+  ...
+  <components>
+    ...
+	<component Cbundle="ARM Compiler" Cclass="Compiler" Cgroup="Event Recorder" Cvariant="DAP" Cvendor="Keil">
+          <file attr="config" category="header" name="Config/EventRecorderConf.h" version="1.1.0"/>
+		  <cflags add="-D_DISABLE_EVR_"/>
+    </component>
+	...
+  </components>
+  ...
+</cprj>
+\endcode
+
+<table class="cmtable" summary="Element: cflags">
+  <tr>
+    <th>Parents</th>
+    <th colspan="3">Element Chain</th>
+  </tr>
+  <tr>
+    <td>\ref element_component "component"</td>
+    <td colspan="3">\ref element_component</td>
+  </tr>
+  <tr>
+    <th>Attributes</th>
+    <th>Description</th>
+    <th>Type</th>
+    <th>Use</th>
+  </tr>
+  <tr>
+    <td>compiler</td>
+    <td>selects the compiler the command line option string is targeted at. Choose from available list: GCC, AC5, AC6, IAR, Tasking, GHS, Cosmic, G++</td>
+    <td>CompilerEnumType</td>
+    <td>required</td>
+  </tr>
+  <tr>
+    <td>add</td>
+    <td>commandline string to be added to the inherited command line for the compiler invoked for C-modules specific to the
+        tool-chain selected by the 'compiler' attribute.</td>
+    <td>xs:string</td>
+    <td>required</td>
+  </tr>
+  <tr>
+    <td>remove</td>
+    <td>option tokens to be removed from the inherited command line for the compiler invoked for C-modules specific to the
+        tool-chain selected by the 'compiler' attribute.</td>
+    <td>xs:string</td>
+    <td>required</td>
+  </tr>
+</table>
+
+\delim
+
+\section element_cxxflags /cprj/components/component/cxxflags
+These compiler options are either added or removed from the inherited command line and affect all C++ modules that belong to the
+component. This flag can also be added to file groups and individual files within the description.
+
+\b Example <em>cxxflags</em> element for component
+\code
+<cprj ...>
+  ...
+  <components>
+    ...
+	<component Cbundle="ARM Compiler" Cclass="Compiler" Cgroup="Event Recorder" Cvariant="DAP" Cvendor="Keil">
+          <file attr="config" category="header" name="Config/EventRecorderConf.h" version="1.1.0"/>
+		  <cxxflags add="-D_DISABLE_EVR_"/>
+    </component>
+	...
+  </components>
+  ...
+</cprj>
+\endcode
+
+<table class="cmtable" summary="Element: cxxflags">
+  <tr>
+    <th>Parents</th>
+    <th colspan="3">Element Chain</th>
+  </tr>
+  <tr>
+    <td>\ref element_component "component"</td>
+    <td colspan="3">\ref element_component</td>
+  </tr>
+  <tr>
+    <th>Attributes</th>
+    <th>Description</th>
+    <th>Type</th>
+    <th>Use</th>
+  </tr>
+  <tr>
+    <td>compiler</td>
+    <td>selects the compiler the command line option string is targeted at. Choose from available list: GCC, AC5, AC6, IAR, Tasking, GHS, Cosmic, G++</td>
+    <td>CompilerEnumType</td>
+    <td>required</td>
+  </tr>
+  <tr>
+    <td>add</td>
+    <td>commandline string to be added to the inherited command line for the compiler invoked for C++-modules specific to the
+        tool-chain selected by the 'compiler' attribute.</td>
+    <td>xs:string</td>
+    <td>required</td>
+  </tr>
+  <tr>
+    <td>remove</td>
+    <td>option tokens to be removed from the inherited command line for the compiler invoked for C++-modules specific to the
+        tool-chain selected by the 'compiler' attribute.</td>
+    <td>xs:string</td>
+    <td>required</td>
+  </tr>
+</table>
+
+\delim
+
+\section element_asflags /cprj/components/component/asflags
+These assembler options are either added or removed from the inherited command line and affect all Assembler modules that belong to the
+component. This flag can also be added to file groups and individual files within the description.
+
+\b Example <em>asflags</em> element for component
+\code
+<cprj ...>
+  ...
+  <components>
+    ...
+	<component Cbundle="ARM Compiler" Cclass="Compiler" Cgroup="Event Recorder" Cvariant="DAP" Cvendor="Keil">
+          <file attr="config" category="header" name="Config/EventRecorderConf.h" version="1.1.0"/>
+		  <asflags remove="-xref"/>
+    </component>
+	...
+  </components>
+  ...
+</cprj>
+\endcode
+
+<table class="cmtable" summary="Element: asflags">
+  <tr>
+    <th>Parents</th>
+    <th colspan="3">Element Chain</th>
+  </tr>
+  <tr>
+    <td>\ref element_component "component"</td>
+    <td colspan="3">\ref element_component</td>
+  </tr>
+  <tr>
+    <th>Attributes</th>
+    <th>Description</th>
+    <th>Type</th>
+    <th>Use</th>
+  </tr>
+  <tr>
+    <td>compiler</td>
+    <td>selects the compiler the command line option string is targeted at. Choose from available list: GCC, AC5, AC6, IAR, Tasking, GHS, Cosmic, G++</td>
+    <td>CompilerEnumType</td>
+    <td>required</td>
+  </tr>
+  <tr>
+    <td>add</td>
+    <td>commandline string to be added to the inherited command line for the compiler invoked for C++-modules specific to the
+        tool-chain selected by the 'compiler' attribute.</td>
+    <td>xs:string</td>
+    <td>required</td>
+  </tr>
+  <tr>
+    <td>remove</td>
+    <td>option tokens to be removed from the inherited command line for the compiler invoked for C++-modules specific to the
+        tool-chain selected by the 'compiler' attribute.</td>
+    <td>xs:string</td>
+    <td>required</td>
+  </tr>
+</table>
+\delim
+
+\page element_files /cprj/files
+
+The files section specifies files to be included into the project build that are not managed through
+software components. Files can be associated with a named group. Grouping is mainly for better visualization in a graphical tool, however
+commandline flags can also be applied on a group level.
+
+\b Example <em>files</em> section:
+\code
+<cprj xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="CPRJ.xsd"/>
+  ...
+  <components>
+    ...
+  </components>
+  <files>
+    <group name="Source Files">
+      <file category="sourceC" name="./Blinky.c"/>
+      <file category="sourceC" name="./Thread_LED.c"/>
+    </group>
+    <group name="Documentation">
+      <file category="doc" name="./Abstract.txt"/>
+    </group>
+  </files>
+</cprj>
+\endcode
+\n
+<table class="cmtable" summary="Element: files">
+  <tr>
+    <th>Parents</th>
+    <th colspan="3">Element Chain</th>
+  </tr>
+  <tr>
+    <td>\ref element_cprj "cprj"</td>
+    <td colspan="3">\ref element_cprj</td>
+  </tr>
+  <tr>
+    <th>Child Elements</th>
+    <th>Description</th>
+    <th>Type</th>
+    <th>Occurrence</th>
+  </tr>
+  <tr>
+    <td>\ref element_project_file "file"</td>
+    <td>Specify a file.</td>
+    <td>FileType</td>
+    <td>0..*</td>
+  </tr>
+  <tr>
+    <td>\ref element_group "group"</td>
+    <td>Specify a group name and list member files in subelements.</td>
+    <td>GroupType</td>
+    <td>0..*</td>
+  </tr>
+</table>
+
+\delim
+
+\section element_group /cprj/files/.../group
+
+The description format allows the nesting of groups. It is up to the tool's implementation how grouping
+is represented in the user interface. The grouping of files only impacts the build, if the assignment of 
+command line options on a group level is supported.
+
+\b Example <em>files</em> section:
+\code
+<cprj xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="CPRJ.xsd"/>
+  ...
+  <files>
+    <group name="Source">
+      <group name="C">
+        <cflags add="-D_MY_DEFINE"/>
+        <file category="sourceC" name="./Blinky.c"/>
+        <file category="sourceC" name="./Thread_LED.c"/>
+      </group>
+      <group name="ASM">
+        <file category="sourceAsm" name="./startup_add.s"/>
+      </group>
+    </group>
+    <group name="Documentation">
+      <file category="doc" name="./Abstract.txt"/>
+    </group>
+  </files>
+</cprj>
+\endcode
+\n
+<table class="cmtable" summary="Element: group">
+  <tr>
+    <th>Parents</th>
+    <th colspan="3">Element Chain</th>
+  </tr>
+  <tr>
+    <td>\ref element_files "files"</td>
+    <td colspan="3">\ref element_files</td>
+  </tr>
+  <tr>
+    <th>Attributes</th>
+    <th>Description</th>
+    <th>Type</th>
+    <th>Use</th>
+  </tr>
+  <tr>
+    <td>name</td>
+    <td>name of the group of files</td>
+    <td>\ref type_restrictedStringType "RestrictedString"</td>
+    <td>required</td>
+  </tr>
+  <tr>
+    <th>Child Elements</th>
+    <th>Description</th>
+    <th>Type</th>
+    <th>Occurrence</th>
+  </tr>
+  <tr>
+    <td>\ref element_project_file "file"</td>
+    <td>Specify a file.</td>
+    <td>FileType</td>
+    <td>0..*</td>
+  </tr>
+  <tr>
+    <td>\ref element_group "group"</td>
+    <td>Specify a group (nesting).</td>
+    <td>GroupType</td>
+    <td>0..*</td>
+  </tr>
+</table>
+
+\delim
+
+\section element_group_cflags /cprj/files/group/.../cflags
+These compiler options are either added or removed from the inherited command line and affect all C-modules that belong to the
+file group. This flag can also be added to components and individual files within the description.
+
+See: \ref element_cflags 
+
+\delim
+
+\section element_group_cxxflags /cprj/files/group/.../cxxflags
+These compiler options are either added or removed from the inherited command line and affect all C++-modules that belong to the
+file group. This flag can also be added to components and individual files within the description.
+
+See: \ref element_cxxflags 
+
+\delim
+
+\section element_group_asflags /cprj/files/group/.../asflags
+These assembler options are either added or removed from the inherited command line and affect all Assembler modules that belong to the
+file group. This flag can also be added to components and individual files within the description.
+
+See: \ref element_asflags 
+
+\delim
+
+
+\section element_project_file /cprj/files/.../file
+
+Specify files that are not included through software components.
+
+<table class="cmtable" summary="Element: file">
+  <tr>
+    <th>Parents</th>
+    <th colspan="3">Element Chain</th>
+  </tr>
+  <tr>
+    <td>\ref element_files "files"</td>
+    <td colspan="3">\ref element_files</td>
+  </tr>
+  <tr>
+    <td>\ref element_group "group"</td>
+    <td colspan="3">\ref element_group</td>
+  </tr>
+  <tr>
+    <th>Attributes</th>
+    <th>Description</th>
+    <th>Type</th>
+    <th>Use</th>
+  </tr>
+  <tr>
+    <td>name</td>
+    <td>Path and name of the file, relative to location of the project file.</td>
+    <td>xs:string</td>
+    <td>required</td>
+  </tr>
+  <tr>
+    <td>category</td>
+    <td>Type of file, for example, whether the file is a C or assembler file. 
+        Use the predefined values from the table \ref FileCategoryEnum "File Categories".</td>
+    <td>FileCategoryType</td>
+    <td>required</td>
+  </tr>
+  <tr>
+    <td>src</td>
+    <td>Folder specifying the source code location for a library if included in a subdirectory.</td>
+    <td>xs:string</td>
+    <td>optional</td>
+  </tr>
+</table>
+
+\delim
+
+\section element_file_cflags /cprj/files/.../file/cflags
+These compiler options are either added or removed from the inherited command line and affect the C-modules that is referenced by the
+file. This flag can also be added to components and file groups within the description. Note: if the file category attribute is
+anything but 'sourceC' or 'source' and the file's extension is *.c, the element will be ignored.
+
+See: \ref element_cflags 
+
+\delim
+
+\section element_file_cxxflags /cprj/files/.../file/cxxflags
+These compiler options are either added or removed from the inherited command line and affect the C++-modules that is referenced by the
+file. This flag can also be added to components and file groups within the description. Note: if the file category attribute is
+anything but 'sourceCpp' or 'source' and the file extension is *.cpp, the flag will be ignored.
+
+See: \ref element_cxxflags 
+
+\delim
+
+\section element_file_asflags /cprj/files/.../file/asflags
+These assembler options are either added or removed from the inherited command line and affect the Assembler module that is referenced by the
+file. This flag can also be added to components and file groups within the description. Note: if the file category attribute is
+anything but 'sourceAsm' or 'source' and the file extension is *.s, the flag will be ignored.
+
+See: \ref element_asflags 
+
+\delim
+
+
+\page element_layers /cprj/layers
+
+<table class="cmtable" summary="Element: layers">
+  <tr>
+    <th>Parents</th>
+    <th colspan="3">Element Chain</th>
+  </tr>
+  <tr>
+    <td>\ref element_cprj "cprj"</td>
+    <td colspan="3">\ref element_cprj</td>
+  </tr>
+  <tr>
+    <th>Child Elements</th>
+    <th>Description</th>
+    <th>Type</th>
+    <th>Occurrence</th>
+  </tr>
+  <tr>
+    <td>\ref element_layer "layer"</td>
+    <td>Defines a layer name and additional information.</td>
+    <td>LayerType</td>
+    <td>0..*</td>
+  </tr>
+</table>
+
+\delim
+
+\section element_layer /cprj/layers/layer
+
+\b Example <em>layer</em> element
+\code
+  ...
+  <layers>
+    <layer name="IO" hasTarget="1">
+      <description>Basic I/O layer for MCB4300 for Ethernet applications</description>
+      <category>Board IO, Wired Network</category>
+      <keywords>MCB4300, Ethernet, LPC4300"</keywords>
+      <license>BSD-3-Clause</license>
+    </layer>
+    ...
+  </layers>
+  ...
+\endcode
+\delim
+
+<table class="cmtable" summary="Element: layer">
+  <tr>
+    <th>Parents</th>
+    <th colspan="3">Element Chain</th>
+  </tr>
+  <tr>
+    <td>\ref element_layers "layers"</td>
+    <td colspan="3">\ref element_layers</td>
+  </tr>
+  <tr>
+    <th>Attributes</th>
+    <th>Description</th>
+    <th>Type</th>
+    <th>Use</th>
+  </tr>
+  <tr>
+    <td>name</td>
+    <td>name of the layer</td>
+    <td>\ref type_restrictedStringType "RestrictedString"</td>
+    <td>required</td>
+  </tr>
+  <tr>
+    <td>hasTarget</td>
+    <td>If 'true' then the target element has to be used. When constructing a project form multiple layers only one can have this flag set. Default is false</td>
+    <td>xs:boolean</td>
+    <td>required (if not default)</td>
+  </tr>
+  <tr>
+    <th>Child Elements</th>
+    <th>Description</th>
+    <th>Type</th>
+    <th>Occurrence</th>
+  </tr>
+  <tr>
+    <td>description</td>
+    <td>Brief description of the layer.</td>
+    <td>xs:string</td>
+    <td>0..*</td>
+  </tr>
+  <tr>
+    <td>keywords</td>
+    <td>Comma seperated list of keywords of this layer used by search tools.</td>
+    <td>xs:string</td>
+    <td>0..*</td>
+  </tr>
+  <tr>
+    <td>category</td>
+    <td>Comma separated list of predefined categories for this layer used by search tools. Predefined list TBD.</td>
+    <td>xs:string</td>
+    <td>0..*</td>
+  </tr>
+  <tr>
+    <td>license</td>
+    <td>License ruling for using files local to the layer using spdx license names from https://spdx.org/licenses/. Note: components have their own licenses.</td>
+    <td>xs:string</td>
+    <td>0..*</td>
+  </tr>
+</table>
+
+\delim
+
+
+\page element_packages /cprj/packages
+
+\b Example packages section:
+\code
+<package xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="PACK.xsd"/>
+  ...
+  <packages>
+    <package name="STM32F4xx_DFP" vendor="Keil" version="2.8.0:2.8.0"/>
+  </packages>
+  ...
+</package>
+\endcode
+
+\b /package
+<table class="cmtable" summary="Element: package">
+  <tr>
+    <th>Parents</th>
+    <th colspan="3">Element Chain</th>
+  </tr>
+  <tr>
+    <td>\ref element_packages "packages"</td>
+    <td colspan="3">\ref element_packages</td>
+  </tr>
+  <tr>
+    <th>Attributes</th>
+    <th>Description</th>
+    <th>Type</th>
+    <th>Use</th>
+  </tr>
+  <tr>
+    <td>vendor</td>
+    <td>specify vendor of the package (e.g. "ARM")</td>
+    <td>RestrictedString</td>
+    <td>required</td>
+  </tr>
+  <tr>
+    <td>name</td>
+    <td>Name of the pack</td>
+    <td>RestrictedString</td>
+    <td>required</td>
+  </tr>
+  <tr>
+    <td>version</td>
+    <td>\ref VersionType "Version" of the required software pack which can be:
+       - Minimum version (higher versions are accepted).
+       - Version range specified with <em>min_version</em><b>:</b><em>max_version</em>. <em>min_version</em> must be lower or
+         equal than <em>max_version</em>. If <em>min_version</em> and <em>max_version</em> are equal, the version must match.
+       - If no version is specified, the latest available version is assumed.
+    </td>	 
+   <td>\ref VersionType</td>
+    <td>optional</td>
+  </tr>
+</table>
+
+
+\page element_compilers /cprj/compilers
+
+This element lists the compilers that can be used to translate the project
+
+\b Example compilers section:
+\verbatim
+  ...
+  <compilers>
+    <compiler name="ARMCC" version="5.0.0:5.99.0"/>
+  </compilers>
+  ...
+\endverbatim
+
+\section element_compiler /cprj/compilers/compiler
+
+\b /compiler
+<table class="cmtable" summary="Element: compiler">
+  <tr>
+    <th>Parents</th>
+    <th colspan="3">Element Chain</th>
+  </tr>
+  <tr>
+    <td>\ref element_compilers "compilers"</td>
+    <td colspan="3">\ref element_compilers</td>
+  </tr>
+  <tr>
+    <th>Attributes</th>
+    <th>Description</th>
+    <th>Type</th>
+    <th>Use</th>
+  </tr>
+  <tr>
+    <td>name</td>
+    <td>Name of the compiler \ref CompilerEnumType "compiler" (i.e. "ARMCC", "IAR")</td>
+    <td>\ref CompilerEnumType</td>
+    <td>required</td>
+  </tr>
+  <tr>
+    <td>version</td>
+    <td>\ref VersionType "Version" of the required compiler which can be:
+       - Minimum version (higher versions are accepted).
+       - Version range specified with <em>min_version</em><b>:</b><em>max_version</em>. <em>min_version</em> must be lower or
+         equal than <em>max_version</em>. If <em>min_version</em> and <em>max_version</em> are equal, the version must match.
+         <br>
+    </td>	 
+    <td>\ref VersionType</td>
+    <td>required</td>
+  </tr>
+</table>
+
+
+\page cprj_types cprj specific types
+
+Collection of types locally defined for the CMSIS Project format.
+
+\section type_restrictedStringType restrictedStringType
+Restricted string type excludes the use of special characters including spaces in order to allow tools to use the string in folder and/or file names.
+\code
+<xs:pattern value= "[\-_A-Za-z0-9]+" />
+\endcode
+
+\delim
+
+
+\section type_toolOptionType toolOptionType
+
+<table class="cmtable" summary="Type: ToolOptionType">
+  <tr>
+    <th>Parents</th>
+    <th colspan="3">Element Chain</th>
+  </tr>
+  <tr>
+    <td>multiple</td>
+    <td colspan="3">\ref element_asflags "asflags", \ref element_cflags "cflags", \ref element_cxxflags "cxxflags"</td>
+  </tr>
+  <tr>
+    <th>Attributes</th>
+    <th>Description</th>
+    <th>Type</th>
+    <th>Use</th>
+  </tr>
+  <tr>
+    <td>compiler</td>
+    <td>selects the compiler the contained information is targeted at. Choose from available list: GCC, AC5, AC6, IAR, Tasking, GHS, Cosmic, G++</td>
+    <td>CompilerEnumType</td>
+    <td>required</td>
+  </tr>
+  <tr>
+    <td>add</td>
+    <td>commandline options to be added to the command line of the respective tool.</td>
+    <td>xs:string</td>
+    <td>optional</td>
+  </tr>
+  <tr>
+    <td>remove</td>
+    <td>commandline options to be removed from the command line of the respective tool (not supported on target level).</td>
+    <td>xs:string</td>
+    <td>optional</td>
+  </tr>
+</table>
+
+
+\delim
+
+\anchor DfpuEnum <b>Table: Device FPU</b>
+The table lists values that indicate whether a CPU has an Floating Point Unit (FPU).
+The tokens can be used in the elements:
+- \ref element_target
+
+<table class="cmtable" summary="Enumeration: DfpuEnum">
+  <tr>
+    <th>Dfpu=</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td class="XML-Token">NO_FPU</td>
+    <td>Hardware Floating Point Unit not present</td>
+  </tr>
+  <tr>
+    <td class="XML-Token">FPU</td>
+    <td>Hardware Floating Point Unit present</td>
+  </tr>
+  <tr>
+    <td class="XML-Token">SP_FPU</td>
+    <td>Single Precision Hardware Floating Point Unit present</td>
+  </tr>
+  <tr>
+    <td class="XML-Token">DP_FPU</td>
+    <td>Double Precision Hardware Floating Point Unit present</td>
+  </tr>
+</table>
+
+
+\anchor DmpuEnum <b>Table: Device MPU</b>
+
+The table shows predefined values that identify whether a CPU has an Memory Protection Unit (MPU).
+The values can be used in the elements:
+- \ref element_target
+
+<table class="cmtable" summary="Enumeration: DmpuEnum">
+  <tr>
+    <th>Dmpu=</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td class="XML-Token">MPU</td>
+    <td>Memory Protection Unit is present</td>
+  </tr>
+  <tr>
+    <td class="XML-Token">NO_MPU</td>
+    <td>No Memory Protection Unit is present</td>
+  </tr>
+</table>
+
+\anchor DendianEnum <b>Table: Endianness</b>
+
+The table lists values representing	the endianness of a device.
+The values can be used in the elements:
+- \ref element_target
+
+<table class="cmtable" summary="Enumeration: DendianEnum">
+  <tr>
+    <th>Dendian=</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td class="XML-Token">Little-endian</td>
+    <td>The least significant byte of a multi-byte access is located at the specified address.</td>
+  </tr>
+  <tr>
+    <td class="XML-Token">Big-endian</td>
+    <td>The most significant byte of a multi-byte access is located at the specified address.</td>
+  </tr>
+  <tr>
+    <td class="XML-Token">Configurable</td>
+    <td>The byte ordering of multi-byte accesses is configurable.</td>
+  </tr>
+</table>
+
+<p>&nbsp;</p>
+<hr>
+
+
+\anchor DsecureEnum <b>Table: Security Model</b>
+The table lists values that indicate whether an application is running in secure or non-scure mode, or whether trust-zone got disabled.
+The tokens can be used in the elements:
+- \ref element_target
+
+<table class="cmtable" summary="Enumeration: DsecureEnum">
+  <tr>
+    <th>Dsecure=</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td class="XML-Token">TZ-disabled</td>
+    <td>The application/library built is executed by a processor which has TrustZone disabled.</td>
+  </tr>
+  <tr>
+    <td class="XML-Token">Secure</td>
+    <td>The application/library built is executed in 'secure mode'</td>
+  </tr>
+  <tr>
+    <td class="XML-Token">Non-Secure</td>
+    <td>The application/library built is executed in 'non-secure mode'</td>
+  </tr>
+</table>
+
+<p>&nbsp;</p>
+<hr>
+
+\anchor DmveEnum <b>Table: Cortex-M Vector Extensions</b>
+The table lists predefined values that selects which instruction set from the Cortex-M Vector Extensions (MVE) are used during code generation.
+The tokens can be used in the elements:
+- \ref element_target
+
+<table class="cmtable" summary="Enumeration: DmveEnum">
+  <tr>
+    <th>Dmve=</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td class="XML-Token">NO_MVE</td>
+    <td>The application/library built is not using MVE instructions.</td>
+  </tr>
+  <tr>
+    <td class="XML-Token">MVE</td>
+    <td>The application/library built is using MVE integer instructions.</td>
+  </tr>
+  <tr>
+    <td class="XML-Token">FP_MVE</td>
+    <td>The application/library built is using MVE integer and floating point instructions.</td>
+  </tr>
+</table>
+
+<p>&nbsp;</p>
+<hr>
+
+\anchor FileCategoryEnum <b>Table: File Categories</b>
+
+File category types define the use of component files within the application. Typically, these files are added to 
+the project and processed by the build tools.
+
+File categories are used in the following elements:
+- \ref element_component_file
+
+The table lists the predefined values for a file category. 
+<table class="cmtable" summary="Type: FileCategoryEnum">
+  <tr>
+    <th>category=</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td class="XML-Token">doc</td>
+    <td>Documentation</td>
+  </tr>
+  <tr>
+    <td class="XML-Token">header</td>
+    <td>Header file used in the component. Sets an include file path and adds the file name attribute to the list of files to be added
+    to a module using the <b>\#include</b> statement. Note: specify only those files as header files that form part of the API of the component, required to use the component</td>
+  </tr>
+  <tr>
+    <td class="XML-Token">include</td>
+    <td>Sets an include file path. Note: ensure that the name attribute specifies a directory and ends with a '/'.</td>
+  </tr>
+  <tr>
+    <td class="XML-Token">library</td>
+    <td>Library file</td>
+  </tr>
+  <tr>
+    <td class="XML-Token">object</td>
+    <td>Object file that can be added to the application</td>
+  </tr>
+  <tr>
+    <td class="XML-Token">source</td>
+    <td>Startup-, system-, and other C/C++, assembler, etc. source files</td>
+  </tr>
+  <tr>
+    <td class="XML-Token">sourceC</td>
+    <td>C source file</td>
+  </tr>
+  <tr>
+    <td class="XML-Token">sourceCpp</td>
+    <td>C++ source file</td>
+  </tr>
+  <tr>
+    <td class="XML-Token">sourceAsm</td>
+    <td>Assembly source file</td>
+  </tr>
+  <tr>
+    <td class="XML-Token">linkerScript</td>
+    <td>linker script file that can be selected by tool-chains</td>
+  </tr>
+  <tr>
+    <td class="XML-Token">utility</td>
+    <td>a command line tool that can be configured for pre- or post-processing during the build process</td>
+  </tr>
+  <tr>
+    <td class="XML-Token">image</td>
+    <td>Files of image type are marked for special processing into a File System Image embedded into the application.
+        This category requires the <em>attr</em> being set to <em>template</em><!--- or <em>interface</em> --->.
+	</td>
+  </tr>
+  <tr>
+    <td class="XML-Token">preIncludeGlobal</td>
+    <td>The specified file is added as a pre-include file to the compiler command line for all modules of the whole <b>project</b> (globally).</td>
+  </tr>
+  <tr>
+    <td class="XML-Token">preIncludeLocal</td>
+    <td>The specified file is added as a pre-include file to the compiler command line for all modules of the <b>component</b> (locally).</td>
+  </tr>
+  <tr>
+    <td class="XML-Token">other</td>
+    <td>Other file types not covered in the list above</td>
+  </tr>
+</table>
+
+<p>&nbsp;</p>
+<hr>
+
+\anchor CompilerEnumType <b>Table: Compiler Types</b>
+
+Represents a C/C++ compiler toolchain. The tokens can be used in the elements:
+- \ref element_compiler
+
+<table class="cmtable" summary="Enumeration: CompilerEnumType">
+  <tr>
+    <th>Tcompiler=</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td class="XML-Token">GCC</td>
+    <td>GNU Tools for Arm Embedded Processors. 
+    Refer to <a href="https://developer.arm.com/tools-and-software/open-source-software/developer-tools/gnu-toolchain/gnu-rm" target="_blank">Arm GCC</a>.</td>
+  </tr>
+  <tr>
+    <td class="XML-Token">G++</td>
+    <td>Code Sourcery GCC compiler for C and C++ (is now Mentor Graphics CodeBench).</td>
+  </tr>
+  <tr>
+    <td class="XML-Token">AC5</td>
+    <td>Arm Compiler for C and C++ Major Version 5. 
+    Refer to <a href="https://developer.arm.com/tools-and-software/embedded/arm-compiler/documentation/version-5" target="_blank">
+    Arm Compiler</a>. Due to incompatible command line syntax version 5 and 6 are listed as separate compilers.</td>
+  </tr>
+  <tr>
+    <td class="XML-Token">AC6</td>
+    <td>Arm Compiler for C and C++ Major Version 6. 
+    Refer to <a href="https://developer.arm.com/tools-and-software/embedded/arm-compiler/documentation" target="_blank">
+    Arm Compiler</a>. Note: Due to incompatible command line syntax version 5 and 6 are listed as separate compilers.</td>
+  </tr>
+  <tr>
+    <td class="XML-Token">IAR</td>
+    <td>IAR compiler for C and C++.</td>
+  </tr>
+  <tr>
+    <td class="XML-Token">Tasking</td>
+    <td>TASKING compiler for C and C++.</td>
+  </tr>
+  <tr>
+    <td class="XML-Token">GHS</td>
+    <td>Green Hills Software compiler for C, C++, and EC++.</td>
+  </tr>
+</table>
+
+<p>&nbsp;</p>
+<hr>
+
+\anchor FileAttributeEnum <b>Table: File Attributes</b>
+
+The file attribute defines the special handling in the project when being used as configuration, template, or interface file.
+The table lists the values available as a file attribute.
+<table class="cmtable" summary="Type: FileAttributeEnum">
+  <tr>
+    <th>attr=</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td class="XML-Token">config</td>
+    <td>The file is a configuration file of the component. It is expected that only configuration options are modified.
+	The file is managed as part of the component, as a project-specific file typically copied into the component section of the project.s</td>
+  </tr>
+  <tr>
+    <td class="XML-Token">template</td>
+    <td>The file is used as a source code template file. It is expected to be edited and extended by the software developer.
+	The file can be copied into a user section of the project.</td>
+  </tr>
+</table>
+
+<p>&nbsp;</p>
+<hr>
+\anchor VersionType <b>Version Type</b>
+
+Version specification identical to the CMSIS-Pack specification.
+
+Version types are used in:
+- \ref element_component
+- \ref element_packages
+- \ref element_compiler
+
+<p>&nbsp;</p>
+<hr>
+
+\page projectDescriptionSchema Project Description Schema
+\verbinclude "CPRJ.xsd"
+
+*/
+
+/* end of file cprj_schema.txt */

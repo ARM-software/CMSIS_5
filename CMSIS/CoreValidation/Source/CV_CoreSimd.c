@@ -83,6 +83,7 @@ void TC_CoreSimd_ParSat16 (void) {
 \details
 - Check Packing and unpacking:
   __SXTB16
+  __SXTB16_RORn
   __SXTAB16
   __UXTB16
   __UXTAB16
@@ -97,6 +98,21 @@ void TC_CoreSimd_PackUnpack (void) {
   op1_s32 = (int32_t)0x80830168;
   res_s32 = __SXTB16(op1_s32);
   ASSERT_TRUE(res_s32 == (int32_t)0xFF830068);
+
+  /* --- __SXTB16_ROR8 Test ----------------------------------------- */
+  op1_s32 = (int32_t)0x80830168;
+  res_s32 = __SXTB16_RORn(op1_s32, 8);
+  ASSERT_TRUE(res_s32 == (int32_t)0xFF800001);
+
+  /* --- __SXTB16_ROR16 Test ---------------------------------------- */
+  op1_s32 = (int32_t)0x80830168;
+  res_s32 = __SXTB16_RORn(op1_s32, 16);
+  ASSERT_TRUE(res_s32 == (int32_t)0x68FF83);
+
+  /* --- __SXTB16_ROR24 Test ---------------------------------------- */
+  op1_s32 = (int32_t)0x80830168;
+  res_s32 = __SXTB16_RORn(op1_s32, 24);
+  ASSERT_TRUE(res_s32 == (int32_t)0x1FF80);
 
   /* --- __SXTAB16 Test ---------------------------------------------- */
   op1_s32 = (int32_t)0x000D0008;

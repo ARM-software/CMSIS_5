@@ -1,18 +1,31 @@
-/*----------------------------------------------------------------------------
- * CMSIS-RTOS 'main' function template
+/* -------------------------------------------------------------------------- 
+ * Copyright (c) 2013-2019 ARM Limited. All rights reserved.
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ *
+ * Licensed under the Apache License, Version 2.0 (the License); you may
+ * not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an AS IS BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ *      Name:    main.c
+ *      Purpose: RTX example program
+ *
  *---------------------------------------------------------------------------*/
- 
+
+#include <stdio.h>
+
 #include "RTE_Components.h"
 #include  CMSIS_device_header
 #include "cmsis_os2.h"
- 
-#ifdef RTE_Compiler_EventRecorder
-#include "EventRecorder.h"
-#endif
 
-#include "stdio.h"
-
-int main (void);
 void app_main (void *argument);
 void app_msg (void *argument);
 
@@ -36,20 +49,20 @@ static const osThreadAttr_t msgAttr = {
 void app_main (void *argument) {
   (void)argument;
 
-  msg_t* msg;
-  uint32_t cnt = 0UL;
-
   osStatus_t status;
+  uint32_t cnt = 0UL;
+  msg_t* msg;
 
-  while(1) {
-    ++cnt;
-
+  while (1) {
+    // Allocate memory for the message
     msg = osMemoryPoolAlloc(memPool, osWaitForever);
     if (msg == NULL) {
       printf("app_msg: osMemoryPoolAlloc failed.\n");
       continue;
     }
 
+    // Produce a new message and put it to the queue
+    ++cnt;
     msg->cmd = 1U;
     msg->len = 4U;
     *((uint32_t*)(msg->data)) = cnt;
@@ -58,29 +71,29 @@ void app_main (void *argument) {
       printf("app_main: osMessageQueuePut failed.\n");
     }
 
-    status = osDelay(osMessageQueueGetCount(msgQueue)*100U);
-    if (status != osOK) {
-      printf("app_main: osDelay failed.\n");
-    }
+    // Defer message creation
+    osDelay(osMessageQueueGetCount(msgQueue)*100U);
   }
 }
+
+/*----------------------------------------------------------------------------
+ * Application message receiver thread
+ *---------------------------------------------------------------------------*/
 
 void app_msg (void *argument) {
   (void)argument;
 
+  osStatus_t status;
   uint32_t cnt;
   msg_t* msg;
-  osStatus_t status;
 
-  while(1) {
-    status = osDelay(osMessageQueueGetSpace(msgQueue)*100U);
-    if (status != osOK) {
-      printf("app_msg: osDelay failed.\n");
-    }
+  while (1) {
+    // Defer message processing
+    osDelay(osMessageQueueGetSpace(msgQueue)*100U);
 
-    msg = NULL;
+    // Wait forever until a message could be received
     status = osMessageQueueGet(msgQueue, &msg, NULL, osWaitForever);
-    if ((status != osOK) || (msg == NULL)) {
+    if (status != osOK) {
       printf("app_msg: osMessageQueueGet failed.\n");
     } else {
       if (msg->len == 4U) {
@@ -88,38 +101,35 @@ void app_msg (void *argument) {
       }
       printf("app_msg: received [cmd = %d, data = 0x%0X]\n", msg->cmd, cnt);
       
+      // Free memory of the message
       status = osMemoryPoolFree(memPool, msg);
       if (status != osOK) {
         printf("app_msg: osMemoryPoolFree failed.\n");
-      }      
+      }
     }
   }
 }
 
+/*----------------------------------------------------------------------------
+ * Main entry
+ *---------------------------------------------------------------------------*/
 
 int main (void) {
 
   // System Initialization
   SystemCoreClockUpdate();
 
-#ifdef RTE_Compiler_EventRecorder
-  // Initialize and start Event Recorder
-  EventRecorderInitialize(EventRecordError, 1U); 
-  EventRecorderEnable    (EventRecordAll, 0xFE, 0xFE); 
-#endif
-
   osKernelInitialize();                 // Initialize CMSIS-RTOS
 
-  osThreadNew(app_main, NULL, NULL);     // Create application main thread
-  osThreadNew(app_msg, NULL, &msgAttr);  // Create message receiver thread
+  osThreadNew(app_main, NULL, NULL);    // Create application main thread
+  osThreadNew(app_msg, NULL, &msgAttr); // Create message receiver thread
 
-  // Message queue used to pass pointers to msg_t
+  // Create message queue used to pass pointers to msg_t
   msgQueue = osMessageQueueNew(10U, sizeof(msg_t*), NULL);
   
-  // Memory pool for actual message objects
+  // Create memory pool for actual message objects
   memPool = osMemoryPoolNew(10U, sizeof(msg_t), NULL);
 
   osKernelStart();                      // Start thread execution
-
   for (;;) {}
 }

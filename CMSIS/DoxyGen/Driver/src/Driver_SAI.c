@@ -281,7 +281,7 @@ The <b>MCLK pin</b> setting requested with the function \ref ARM_SAI_Control is 
 \def ARM_SAI_ERROR_MCLK_PRESCALER       
 The <b>MCLK prescaler</b> requested with the function \ref ARM_SAI_Control is not supported.
 
-\def ARM_SAI_ERROR_FRAME_LENGHT
+\def ARM_SAI_ERROR_FRAME_LENGTH
 The <b>frame length</b> requested with the function \ref ARM_SAI_Control is not supported.
 
 \def ARM_SAI_ERROR_FRAME_SYNC_WIDTH 

@@ -46,7 +46,91 @@
   @param[out]    pIndex     index of minimum value returned here
   @return        none
  */
+#if defined(ARM_MATH_MVEI)
 
+#include "arm_helium_utils.h"
+
+void arm_min_q15(
+  const q15_t * pSrc,
+        uint32_t blockSize,
+        q15_t * pResult,
+        uint32_t * pIndex)
+{
+    uint32_t  blkCnt;           /* loop counters */
+    q15x8_t vecSrc;
+    q15x8_t curExtremValVec = vdupq_n_s16(Q15_MAX);
+    q15_t minValue = Q15_MAX,temp;
+    uint32_t  idx = blockSize;
+    uint16x8_t indexVec;
+    uint16x8_t curExtremIdxVec;
+    mve_pred16_t p0;
+
+
+    indexVec = vidupq_u16((uint32_t)0, 1);
+    curExtremIdxVec = vdupq_n_u16(0);
+
+    blkCnt = blockSize >> 3;
+    while (blkCnt > 0U)
+    {
+        vecSrc = vldrhq_s16(pSrc);  
+        pSrc += 8;
+        /*
+         * Get current min per lane and current index per lane
+         * when a min is selected
+         */
+        p0 = vcmpleq(vecSrc, curExtremValVec);
+        curExtremValVec = vpselq(vecSrc, curExtremValVec, p0);
+        curExtremIdxVec = vpselq(indexVec, curExtremIdxVec, p0);
+
+        indexVec = indexVec +  8;
+        /*
+         * Decrement the blockSize loop counter
+         */
+        blkCnt--;
+    }
+   
+    /*
+     * Get min value across the vector
+     */
+    minValue = vminvq(minValue, curExtremValVec);
+    /*
+     * set index for lower values to min possible index
+     */
+    p0 = vcmpleq(curExtremValVec, minValue);
+    indexVec = vpselq(curExtremIdxVec, vdupq_n_u16(blockSize), p0);
+    /*
+     * Get min index which is thus for a min value
+     */
+    idx = vminvq(idx, indexVec);
+
+    /*
+     * tail
+    */
+    blkCnt = blockSize & 7;
+    while (blkCnt > 0U)
+    {
+      /* Initialize minVal to the next consecutive values one by one */
+      temp = *pSrc++;
+  
+      /* compare for the minimum value */
+      if (minValue > temp)
+      {
+        /* Update the minimum value and it's index */
+        minValue = temp;
+        idx = blockSize - blkCnt;
+      }
+  
+      /* Decrement loop counter */
+      blkCnt--;
+    }
+
+    /*
+     * Save result
+     */
+    *pIndex = idx;
+    *pResult = minValue;
+}
+#else
 void arm_min_q15(
   const q15_t * pSrc,
         uint32_t blockSize,
@@ -143,6 +227,7 @@ void arm_min_q15(
   *pResult = out;
   *pIndex = outIndex;
 }
+#endif /* defined(ARM_MATH_MVEI) */
 
 /**
   @} end of Min group

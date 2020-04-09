@@ -23,7 +23,6 @@
  * limitations under the License.
  *---------------------------------------------------------------------------*/
 
-        .file   "HAL_CM0.S"
         .syntax unified
 
         .equ    TCB_TSTACK, 40

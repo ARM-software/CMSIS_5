@@ -104,7 +104,7 @@ Provides the typedef for the callback function \ref ARM_SPI_SignalEvent.
 \brief Negative values indicate errors (SPI has specific codes in addition to common \ref execution_status). 
 \details 
 The SPI driver has additional status error codes that are listed below.
-Note that the SPI driver also returns the comon \ref execution_status. 
+Note that the SPI driver also returns the common \ref execution_status. 
   
 @{
 \def ARM_SPI_ERROR_MODE
@@ -395,22 +395,16 @@ The parameter \em arg provides (depending on the parameter \em control) addition
     <th> Description          
 	</th></tr>
 <tr><td> \ref ARM_SPI_MODE_INACTIVE       </td>
-    <td rowspan="5" style="text-align:right"> 0..7   </td>
-    <td rowspan="5"> \anchor spi_mode_tab Mode Controls    </td>
+    <td rowspan="3" style="text-align:right"> 0..7   </td>
+    <td rowspan="3"> \anchor spi_mode_tab Mode Controls    </td>
     <td> Set SPI to inactive. 
 	</td></tr>
 <tr><td> \ref ARM_SPI_MODE_MASTER         </td>
     <td> Set the SPI Master (Output on MOSI, and the Input on MISO); \em arg = Bus Speed in \token{bps} 
 	</td></tr>
-<tr><td> \ref ARM_SPI_MODE_MASTER_SIMPLEX </td>
-    <td> Set the SPI Master (Output and Input on MOSI); \em arg = Bus Speed in \token{bps}              
-	</td></tr>
 <tr><td> \ref ARM_SPI_MODE_SLAVE          </td>
     <td> Set the SPI Slave  (Output on MISO, and the Input on MOSI)                                     
 	</td></tr>
-<tr><td> \ref ARM_SPI_MODE_SLAVE_SIMPLEX  </td>
-    <td> Set the SPI Slave  (Output and Input on MISO)                                                  
-	</td></tr> 
 <tr><td> \ref ARM_SPI_CPOL0_CPHA0  (default)  </td>
     <td rowspan="6" style="text-align:right"> 8..11 </td>
     <td rowspan="6"> Clock Polarity <br> (Frame Format) </td><td> CPOL=\token{0} and CPHA=\token{0}: Clock Polarity 0, Clock Phase 0 </td>
@@ -428,7 +422,7 @@ The parameter \em arg provides (depending on the parameter \em control) addition
     <td> Specifies that the frame format corresponds to the Texas Instruments Frame Format  
 	</td></tr> 
 <tr><td> \ref ARM_SPI_MICROWIRE               </td>
-    <td> Specifies that the frame format corresponds to the National Microwire Frame Format 
+    <td> Specifies that the frame format corresponds to the National Semiconductor Microwire Frame Format 
 	</td></tr> 
 <tr><td> \ref ARM_SPI_DATA_BITS(n)       </td>
     <td style="text-align:right"> 12..17 </td>
@@ -469,7 +463,7 @@ The parameter \em arg provides (depending on the parameter \em control) addition
 		The line gets activated or deactivated automatically by the hardware for transfers and is not controlled by the Miscellaneous Control \ref ARM_SPI_CONTROL_SS.
 		When exactly the line is activated or deactivated is hardware dependent. Typically, the hardware will activate the line before starting the transfer 
 		and deactivate it after the transfer completes. Some hardware will leave the line activated until the SPI stays master. 
-		\note Some devices require that the SS signal is strictly defined regarding transfers. Refer to the documentaiton of your device.
+		\note Some devices require that the SS signal is strictly defined regarding transfers. Refer to the documentation of your device.
     </td></tr>
 <tr>
     <td>\ref ARM_SPI_SS_MASTER_HW_INPUT</td>
@@ -495,7 +489,7 @@ The parameter \em arg provides (depending on the parameter \em control) addition
     <td>Set the bus speed; \em arg= Bus Speed in \token{bps}
     </td></tr>
 <tr><td> \ref ARM_SPI_GET_BUS_SPEED         </td>
-    <td> Get the bus speed; Retrun values >= \token{0} reperesent the bus speed in \token{bps}. Negative values are \ref spi_execution_status.
+    <td> Get the bus speed; Return values >= \token{0} represent the bus speed in \token{bps}. Negative values are \ref spi_execution_status.
     </td></tr>
 <tr><td> \ref ARM_SPI_SET_DEFAULT_TX_VALUE  </td>
     <td> Set the default transmission value; the parameter \em arg sets the value
@@ -605,10 +599,6 @@ Refer to the \ref ARM_SPI_Control function for further details.
 \def ARM_SPI_MODE_MASTER
 \sa ARM_SPI_Control
 \def ARM_SPI_MODE_SLAVE
-\sa ARM_SPI_Control
-\def ARM_SPI_MODE_MASTER_SIMPLEX
-\sa ARM_SPI_Control
-\def ARM_SPI_MODE_SLAVE_SIMPLEX
 \sa ARM_SPI_Control
 @}
 */

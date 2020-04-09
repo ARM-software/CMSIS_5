@@ -30,25 +30,24 @@
 
 #include "arm_nnsupportfunctions.h"
 
-/**    
- * @ingroup groupSupport    
+/**
+ * @ingroup groupSupport
  */
 
-/**    
- * @addtogroup nndata_convert    
- * @{    
+/**
+ * @addtogroup nndata_convert
+ * @{
  */
 
-/**    
+/**
  * @brief Converts the elements of the Q7 vector to reordered Q15 vector without left-shift
- * @param[in]       *pSrc points to the Q7 input vector    
- * @param[out]      *pDst points to the Q15 output vector   
- * @param[in]       blockSize length of the input vector    
- * @return none.    
- *    
+ * @param[in]       *pSrc points to the Q7 input vector
+ * @param[out]      *pDst points to the Q15 output vector
+ * @param[in]       blockSize length of the input vector
+ *
  * @details
  *
- * This function does the q7 to q15 expansion with re-ordering 
+ * This function does the q7 to q15 expansion with re-ordering
  *
  * <pre>
  *                          |   A1   |   A2   |   A3   |   A4   |
@@ -66,13 +65,13 @@
  *
  *
  * This looks strange but is natural considering how sign-extension is done at
- * assembly level. 
+ * assembly level.
  *
- * The expansion of other other oprand will follow the same rule so that the end 
+ * The expansion of other other oprand will follow the same rule so that the end
  * results are the same.
  *
  * The tail (i.e., last (N % 4) elements) will still be in original order.
- *   
+ *
  */
 
 void arm_q7_to_q15_reordered_no_shift(const q7_t * pSrc, q15_t * pDst, uint32_t blockSize)
@@ -89,13 +88,13 @@ void arm_q7_to_q15_reordered_no_shift(const q7_t * pSrc, q15_t * pDst, uint32_t 
     /*loop Unrolling */
     blkCnt = blockSize >> 2u;
 
-    /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.    
+    /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.
      ** a second loop below computes the remaining 1 to 3 samples. */
     while (blkCnt > 0u)
     {
         /* C = (q15_t) A << 8 */
         /* convert from q7 to q15 and then store the results in the destination buffer */
-        in = *__SIMD32(pIn)++;
+        in = arm_nn_read_q7x4_ia(&pIn);
 
         /* rotatate in by 8 and extend two q7_t values to q15_t values */
         in1 = __SXTB16(__ROR(in, 8));
@@ -115,7 +114,7 @@ void arm_q7_to_q15_reordered_no_shift(const q7_t * pSrc, q15_t * pDst, uint32_t 
         blkCnt--;
     }
 
-    /* If the blockSize is not a multiple of 4, compute any remaining output samples here.    
+    /* If the blockSize is not a multiple of 4, compute any remaining output samples here.
      ** No loop unrolling is used. */
     blkCnt = blockSize % 0x4u;
 
@@ -140,6 +139,6 @@ void arm_q7_to_q15_reordered_no_shift(const q7_t * pSrc, q15_t * pDst, uint32_t 
 
 }
 
-/**    
- * @} end of q7_to_x group    
+/**
+ * @} end of q7_to_x group
  */

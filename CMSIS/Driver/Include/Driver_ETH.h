@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2017 ARM Limited. All rights reserved.
+ * Copyright (c) 2013-2020 ARM Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -15,13 +15,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * $Date:        2. Feb 2017
- * $Revision:    V2.1
+ * $Date:        24. January 2020
+ * $Revision:    V2.2
  *
  * Project:      Ethernet PHY and MAC Driver common definitions
  */
 
 /* History:
+ *  Version 2.2
+ *    Removed volatile from ARM_ETH_LINK_INFO
  *  Version 2.1
  *    ARM_ETH_LINK_INFO made volatile
  *  Version 2.0
@@ -41,22 +43,22 @@
 /**
 \brief Ethernet Media Interface type
 */
-#define ARM_ETH_INTERFACE_MII           (0)     ///< Media Independent Interface (MII)
-#define ARM_ETH_INTERFACE_RMII          (1)     ///< Reduced Media Independent Interface (RMII)
-#define ARM_ETH_INTERFACE_SMII          (2)     ///< Serial Media Independent Interface (SMII)
+#define ARM_ETH_INTERFACE_MII           (0U)    ///< Media Independent Interface (MII)
+#define ARM_ETH_INTERFACE_RMII          (1U)    ///< Reduced Media Independent Interface (RMII)
+#define ARM_ETH_INTERFACE_SMII          (2U)    ///< Serial Media Independent Interface (SMII)
 
 /**
 \brief Ethernet link speed
 */
-#define ARM_ETH_SPEED_10M               (0)     ///< 10 Mbps link speed
-#define ARM_ETH_SPEED_100M              (1)     ///< 100 Mbps link speed
-#define ARM_ETH_SPEED_1G                (2)     ///< 1 Gpbs link speed
+#define ARM_ETH_SPEED_10M               (0U)    ///< 10 Mbps link speed
+#define ARM_ETH_SPEED_100M              (1U)    ///< 100 Mbps link speed
+#define ARM_ETH_SPEED_1G                (2U)    ///< 1 Gpbs link speed
 
 /**
 \brief Ethernet duplex mode
 */
-#define ARM_ETH_DUPLEX_HALF             (0)     ///< Half duplex link
-#define ARM_ETH_DUPLEX_FULL             (1)     ///< Full duplex link
+#define ARM_ETH_DUPLEX_HALF             (0U)    ///< Half duplex link
+#define ARM_ETH_DUPLEX_FULL             (1U)    ///< Full duplex link
 
 /**
 \brief Ethernet link state
@@ -69,7 +71,7 @@ typedef enum _ARM_ETH_LINK_STATE {
 /**
 \brief Ethernet link information
 */
-typedef volatile struct _ARM_ETH_LINK_INFO {
+typedef struct _ARM_ETH_LINK_INFO {
   uint32_t speed    : 2;                ///< Link speed: 0= 10 MBit, 1= 100 MBit, 2= 1 GBit
   uint32_t duplex   : 1;                ///< Duplex mode: 0= Half, 1= Full
   uint32_t reserved : 29;

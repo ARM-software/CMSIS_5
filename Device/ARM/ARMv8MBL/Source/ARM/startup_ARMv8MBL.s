@@ -2,11 +2,11 @@
 ; * @file     startup_ARMv8MBL.s
 ; * @brief    CMSIS Core Device Startup File for
 ; *           ARMv8MBL Device
-; * @version  V5.4.0
-; * @date     12. December 2018
+; * @version  V1.0.1
+; * @date     23. July 2019
 ; ******************************************************************************/
 ;/*
-; * Copyright (c) 2009-2018 Arm Limited. All rights reserved.
+; * Copyright (c) 2009-2019 Arm Limited. All rights reserved.
 ; *
 ; * SPDX-License-Identifier: Apache-2.0
 ; *
@@ -115,6 +115,12 @@ Reset_Handler   PROC
                 BX       R0
                 ENDP
 
+; The default macro is not used for HardFault_Handler
+; because this results in a poor debug illusion.
+HardFault_Handler PROC
+                EXPORT   HardFault_Handler         [WEAK]
+                B        .
+                ENDP
 
 ; Macro to define default exception/interrupt handlers.
 ; Default handler are weak symbols with an endless loop.
@@ -131,7 +137,6 @@ $Handler_Name   PROC
 ; Default exception/interrupt handler
 
                 Set_Default_Handler  NMI_Handler
-                Set_Default_Handler  HardFault_Handler
                 Set_Default_Handler  SVC_Handler
                 Set_Default_Handler  PendSV_Handler
                 Set_Default_Handler  SysTick_Handler

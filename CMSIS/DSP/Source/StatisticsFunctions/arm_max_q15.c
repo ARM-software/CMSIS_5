@@ -45,7 +45,89 @@
   @param[out]    pIndex     index of maximum value returned here
   @return        none
  */
+#if defined(ARM_MATH_MVEI)
 
+#include "arm_helium_utils.h"
+
+void arm_max_q15(
+  const q15_t * pSrc,
+        uint32_t blockSize,
+        q15_t * pResult,
+        uint32_t * pIndex)
+{
+    uint32_t blkCnt;           /* loop counters */
+    q15x8_t vecSrc;
+    q15x8_t curExtremValVec = vdupq_n_s16(Q15_MIN);
+    q15_t maxValue = Q15_MIN, temp;
+    uint32_t  idx = blockSize;
+    uint16x8_t indexVec;
+    uint16x8_t curExtremIdxVec;
+    mve_pred16_t p0;
+
+
+    indexVec = vidupq_u16((uint32_t)0, 1);
+    curExtremIdxVec = vdupq_n_u16(0);
+
+    blkCnt = blockSize >> 3;
+    while (blkCnt > 0U)
+    {
+        vecSrc = vldrhq_s16(pSrc);  
+        pSrc += 8;
+        /*
+         * Get current max per lane and current index per lane
+         * when a max is selected
+         */
+        p0 = vcmpgeq(vecSrc, curExtremValVec);
+        curExtremValVec = vpselq(vecSrc, curExtremValVec, p0);
+        curExtremIdxVec = vpselq(indexVec, curExtremIdxVec, p0);
+
+        indexVec = indexVec +  8;
+        /*
+         * Decrement the blockSize loop counter
+         */
+        blkCnt--;
+    }
+   
+    /*
+     * Get max value across the vector
+     */
+    maxValue = vmaxvq(maxValue, curExtremValVec);
+    /*
+     * set index for lower values to max possible index
+     */
+    p0 = vcmpgeq(curExtremValVec, maxValue);
+    indexVec = vpselq(curExtremIdxVec, vdupq_n_u16(blockSize), p0);
+    /*
+     * Get min index which is thus for a max value
+     */
+    idx = vminvq(idx, indexVec);
+
+    /* Tail */
+    blkCnt = blockSize & 0x7;
+    while (blkCnt > 0U)
+    {
+      /* Initialize temp to the next consecutive values one by one */
+      temp = *pSrc++;
+  
+      /* compare for the maximum value */
+      if (maxValue < temp)
+      {
+        /* Update the maximum value and it's index */
+        maxValue = temp;
+        idx = blockSize - blkCnt;
+      }
+  
+      /* Decrement loop counter */
+      blkCnt--;
+    }
+
+    /*
+     * Save result
+     */
+    *pIndex = idx;
+    *pResult = maxValue;
+}
+#else
 void arm_max_q15(
   const q15_t * pSrc,
         uint32_t blockSize,
@@ -142,7 +224,7 @@ void arm_max_q15(
   *pResult = out;
   *pIndex = outIndex;
 }
-
+#endif /* defined(ARM_MATH_MVEI) */
 /**
   @} end of Max group
  */

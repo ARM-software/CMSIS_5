@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2018 Arm Limited. All rights reserved.
+ * Copyright (c) 2013-2020 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -18,7 +18,7 @@
  
 #include "Driver_MCI.h"
 
-#define ARM_MCI_DRV_VERSION    ARM_DRIVER_VERSION_MAJOR_MINOR(2, 0) /* driver version */
+#define ARM_MCI_DRV_VERSION    ARM_DRIVER_VERSION_MAJOR_MINOR(1, 0) /* driver version */
 
 /* Driver Version */
 static const ARM_DRIVER_VERSION DriverVersion = {
@@ -30,13 +30,14 @@ static const ARM_DRIVER_VERSION DriverVersion = {
 static const ARM_MCI_CAPABILITIES DriverCapabilities = {
     0, /* cd_state          */
     0, /* cd_event          */
+    0, /* wp_state          */
     0, /* vdd               */
     0, /* vdd_1v8           */
     0, /* vccq              */
     0, /* vccq_1v8          */
     0, /* vccq_1v2          */
-    1, /* data_width_4      */
-    1, /* data_width_8      */
+    0, /* data_width_4      */
+    0, /* data_width_8      */
     0, /* data_width_4_ddr  */
     0, /* data_width_8_ddr  */
     0, /* high_speed        */
@@ -48,36 +49,40 @@ static const ARM_MCI_CAPABILITIES DriverCapabilities = {
     0, /* uhs_driver_type_a */
     0, /* uhs_driver_type_c */
     0, /* uhs_driver_type_d */
-    1, /* sdio_interrupt    */
-    1, /* read_wait         */
+    0, /* sdio_interrupt    */
+    0, /* read_wait         */
     0, /* suspend_resume    */
     0, /* mmc_interrupt     */
     0, /* mmc_boot          */
+    0, /* rst_n             */
     0, /* ccs               */
-    0  /* ccs_timeout       */
+    0, /* ccs_timeout       */
+    0  /* Reserved          */
 };
 
 //
 //   Functions
 //
 
-ARM_DRIVER_VERSION ARM_MCI_GetVersion(void)
+static ARM_DRIVER_VERSION ARM_MCI_GetVersion(void)
+{
+  return DriverVersion;
+}
+
+static ARM_MCI_CAPABILITIES ARM_MCI_GetCapabilities(void)
+{
+  return DriverCapabilities;
+}
+
+static int32_t ARM_MCI_Initialize(ARM_MCI_SignalEvent_t cb_event)
 {
 }
 
-ARM_MCI_CAPABILITIES ARM_MCI_GetCapabilities(void)
+static int32_t ARM_MCI_Uninitialize(void)
 {
 }
 
-int32_t ARM_MCI_Initialize(ARM_MCI_SignalEvent_t cb_event)
-{
-}
-
-int32_t ARM_MCI_Uninitialize(void)
-{
-}
-
-int32_t ARM_MCI_PowerControl(ARM_POWER_STATE state)
+static int32_t ARM_MCI_PowerControl(ARM_POWER_STATE state)
 {
     switch (state)
     {
@@ -89,13 +94,11 @@ int32_t ARM_MCI_PowerControl(ARM_POWER_STATE state)
 
     case ARM_POWER_FULL:
         break;
-
-    default:
-        return ARM_DRIVER_ERROR_UNSUPPORTED;
     }
+    return ARM_DRIVER_ERROR_UNSUPPORTED;
 }
 
-int32_t ARM_MCI_CardPower(uint32_t voltage)
+static int32_t ARM_MCI_CardPower(uint32_t voltage)
 {
     switch (voltage & ARM_MCI_POWER_VDD_Msk)
     {
@@ -108,29 +111,30 @@ int32_t ARM_MCI_CardPower(uint32_t voltage)
     default:
         break;
     }
+    return ARM_DRIVER_ERROR;
 }
 
-int32_t ARM_MCI_ReadCD(void)
+static int32_t ARM_MCI_ReadCD(void)
 {
 }
 
-int32_t ARM_MCI_ReadWP(void)
+static int32_t ARM_MCI_ReadWP(void)
 {
 }
 
-int32_t ARM_MCI_SendCommand(uint32_t cmd, uint32_t arg, uint32_t flags, uint32_t *response)
+static int32_t ARM_MCI_SendCommand(uint32_t cmd, uint32_t arg, uint32_t flags, uint32_t *response)
 {
 }
 
-int32_t ARM_MCI_SetupTransfer(uint8_t  *data, uint32_t block_count, uint32_t block_size, uint32_t mode)
+static int32_t ARM_MCI_SetupTransfer(uint8_t  *data, uint32_t block_count, uint32_t block_size, uint32_t mode)
 {
 }
 
-int32_t ARM_MCI_AbortTransfer(void)
+static int32_t ARM_MCI_AbortTransfer(void)
 {
 }
 
-int32_t ARM_MCI_Control(uint32_t control, uint32_t arg)
+static int32_t ARM_MCI_Control(uint32_t control, uint32_t arg)
 {
     switch (control)
     {
@@ -191,18 +195,20 @@ int32_t ARM_MCI_Control(uint32_t control, uint32_t arg)
     }
 }
 
-ARM_MCI_STATUS ARM_MCI_GetStatus(void)
+static ARM_MCI_STATUS ARM_MCI_GetStatus(void)
 {
 }
 
-void ARM_MCI_SignalEvent(uint32_t event)
+static void ARM_MCI_SignalEvent(uint32_t event)
 {
     // function body
 }
 
 // End MCI Interface
 
-ARM_DRIVER_MCI Driver_MCI = {
+extern \
+ARM_DRIVER_MCI Driver_MCI0;
+ARM_DRIVER_MCI Driver_MCI0 = {
     ARM_MCI_GetVersion,
     ARM_MCI_GetCapabilities,
     ARM_MCI_Initialize,

@@ -53,6 +53,46 @@
                    Finally, the accumulator is truncated to yield a result of 1.7 format.
  */
 
+#if defined(ARM_MATH_MVEI)
+
+void arm_mean_q7(
+  const q7_t * pSrc,
+        uint32_t blockSize,
+        q7_t * pResult)
+{
+    uint32_t  blkCnt;           /* loop counters */
+    q7x16_t vecSrc;
+    q31_t     sum = 0L;
+
+
+    blkCnt = blockSize >> 4;
+    while (blkCnt > 0U)
+    {
+        vecSrc = vldrbq_s8(pSrc);
+        /*
+         * sum lanes
+         */
+        sum = vaddvaq(sum, vecSrc);
+
+        blkCnt--;
+        pSrc += 16;
+    }
+
+    blkCnt = blockSize & 0xF;
+    while (blkCnt > 0U)
+    {
+      /* C = (A[0] + A[1] + A[2] + ... + A[blockSize-1]) */
+      sum += *pSrc++;
+  
+      /* Decrement loop counter */
+      blkCnt--;
+    }
+
+    /* C = (A[0] + A[1] + A[2] + ... + A[blockSize-1]) / blockSize  */
+    /* Store the result to the destination */
+    *pResult = (q7_t) (sum / (int32_t) blockSize);
+}
+#else
 void arm_mean_q7(
   const q7_t * pSrc,
         uint32_t blockSize,
@@ -106,6 +146,7 @@ void arm_mean_q7(
   /* Store result to destination */
   *pResult = (q7_t) (sum / (int32_t) blockSize);
 }
+#endif /* defined(ARM_MATH_MVEI) */
 
 /**
   @} end of mean group

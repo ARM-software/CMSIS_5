@@ -30,8 +30,8 @@
 
 #include "arm_nnfunctions.h"
 
-/**    
- * @ingroup groupSupport    
+/**
+ * @ingroup groupSupport
  */
 
 /**
@@ -47,7 +47,6 @@
  * @param[out]      *pDst         pointer to the output vector
  * @param[in]       out_shift     amount of right-shift for output
  * @param[in]       blockSize     number of samples in each vector
- * @return none.
  *
  * <b>Scaling and Overflow Behavior:</b>
  * \par
@@ -79,13 +78,13 @@ void arm_nn_mult_q15(
   while (blkCnt > 0U)
   {
     /* read two samples at a time from sourceA */
-    inA1 = *__SIMD32(pSrcA)++;
+    inA1 = arm_nn_read_q15x2_ia((const q15_t **)&pSrcA);
     /* read two samples at a time from sourceB */
-    inB1 = *__SIMD32(pSrcB)++;
+    inB1 = arm_nn_read_q15x2_ia((const q15_t **)&pSrcB);
     /* read two samples at a time from sourceA */
-    inA2 = *__SIMD32(pSrcA)++;
+    inA2 = arm_nn_read_q15x2_ia((const q15_t **)&pSrcA);
     /* read two samples at a time from sourceB */
-    inB2 = *__SIMD32(pSrcB)++;
+    inB2 = arm_nn_read_q15x2_ia((const q15_t **)&pSrcB);
 
     /* multiply mul = sourceA * sourceB */
     mul1 = (q31_t) ((q15_t) (inA1 >> 16) * (q15_t) (inB1 >> 16));
@@ -144,4 +143,3 @@ void arm_nn_mult_q15(
 /**
  * @} end of NNBasicMath group
  */
-

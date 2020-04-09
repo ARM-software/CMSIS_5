@@ -10,11 +10,13 @@ overview over programs that are either part of the CMSIS Pack or are available f
 	- Validation of SVD files with <a href="../../SVD/html/svd_validate_file_pg.html"><b>SVDConv.exe</b></a> is required for SVD files that are part of \ref SWPackVariants "Device Family Packs".
 	- Several \subpage cp_Editors can verify XML files using the XML schema files that are part of the CMSIS Pack.
 	- \subpage cp_ZIPTool create the actual ZIP archive of a Software Pack.
+	- \subpage bash_script that generates a CMSIS Software Pack on Linux or Windows operating systems.
+
 */
 	
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
-\page cp_Editors XML Editors
+\page cp_Editors XML Validation and Editors
 
 Some text editors are capable of verifying XML code against a schema file. This is helpful to identify syntactical or
 structural problems in a PDSC or SVD file early in the development process. Useful editors are:
@@ -24,6 +26,12 @@ structural problems in a PDSC or SVD file early in the development process. Usef
 Usually, the XML file that is to be validated and its corresponding schema file need to reside in the same directory. The
 CMSIS-Pack schema file \b Pack.xsd and the CMSIS-SVD schema file \b CMSIS-SVD.xsd are available in the directory
 <b>.\\CMSIS\\Utilities</b> of the <b>ARM::CMSIS</b> Pack.
+
+\anchor xmllint 
+<b>xmllint Schema Validation</b>
+
+The Linux utility <a href="http://xmlsoft.org/xmllint.html" target="_blank">xmllint</a> is a command line tool for XML validation against a schema file.
+It may be part of the \ref bash_script to verify the PDSC file during pack generation.
 */
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
@@ -37,4 +45,72 @@ the ZIP file and rename it to *.pack.
 The compression tool <a href="http://www.7-zip.org/" target="_blank">7-Zip</a> supports command line calls and can be
 used in batch scripts like \ref cp_GeneratePack "gen_pack.bat" for automated Pack file creation (and verification
 with \ref packChk). Installers for 7-Zip are available for 32-bit and 64-bit Windows operating systems.
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\page bash_script Bash Script gen_pack.sh
+
+The following <a href="https://en.wikipedia.org/wiki/Bash_(Unix_shell)" target="_blank">Bash</a> shell script template \ref gen_pack_sh "gen_pack.sh" allows you to generate
+a Pack file on the Linux or the Windows operating system.  Bash is available for Windows, for example, via <a href="https://gitforwindows.org/" target="_blank">git for Windows</a>.
+
+
+For using \ref gen_pack_sh "gen_pack.sh" 
+ - Install \ref cp_ZIPTool "7-Zip" (and for Linux \ref xmllint "xmllint" for schema validation).
+ - Adapt the file \ref gen_pack_sh "gen_pack.sh" that is available in the directory <b>/CMSIS/Pack/Bash</b> to the requirements of your software pack.
+
+The script is generic enough to cope with a wide range of requirements.  It uses the information from the \ref packFormat "*.PDSC file" to generate 
+the output filename according the CMSIS-Pack conventions and validates the pack consistency with \ref packChk.
+
+Below is a sample output (reduced).
+\code
+$ ./gen_pack.sh
+ 
+Starting CMSIS-Pack Generation: 19 Aug 2019 15:34:02
+7z is /C/Program Files/7-Zip/7z
+PackChk is /C/Keil_v5/ARM/PACK/ARM/CMSIS/5.6.0/CMSIS/Utilities/Win32/PackChk
+ 
+Generating Pack Version: for MyVendor.MyPack
+ 
+Adding directories to pack:
+Include/ Source/
+ 
+Adding files to pack:
+License.txt ReadMe.txt
+ 
+PackChk.exe 1.3.87
+Copyright (C) 2012-2019 ARM Ltd and ARM Germany GmbH. All rights reserved.
+ 
+M362: Also suppressing Messages M502 and M504
+ 
+Phase1: Read PDSC files
+Phase2: Static Data & Dependencies check
+*** WARNING M304: C:\W\CMSIS_5\CMSIS\Pack\Bash\build\MyVendor.MyPack.pdsc
+  No package URL (<url>-tag and/or value) found in PDSC file!
+ 
+Phase3: RTE Model based Data & Dependencies check
+Found 0 Error(s) and 1 Warning(s).
+ 
+creating pack file MyVendor.MyPack.1.0.0.pack
+ 
+Creating archive: C:/W/CMSIS_5/CMSIS/Pack/Bash/output/MyVendor.MyPack.1.0.0.pack
+Add new data to archive: 2 folders, 5 files, 1165 bytes (2 KiB)
+ 
+Everything is Ok
+Completed CMSIS-Pack Generation ...
+\endcode
+
+
+
+\anchor gen_pack_sh
+<b>gen_pack.sh Bash script template file</b>
+
+The <b>gen_pack.sh</b> script template allows to configure:
+ - Path environment variables for related utilities
+ - Directory names for temporary build and output files
+ - Directory names and files in the root directory that should be included in the pack
+ 
+
+\verbinclude gen_pack.sh
+
 */

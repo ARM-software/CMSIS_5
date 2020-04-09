@@ -429,9 +429,38 @@ The function \b osKernelGetTickFreq returns the frequency of the current RTOS ke
 /**
 \fn uint32_t osKernelGetSysTimerCount (void)
 \details
-The function \b osKernelGetSysTimerCount returns the current RTOS kernel system timer as a 32-bit value.
+The function \b osKernelGetSysTimerCount returns the current RTOS kernel system timer as a 32-bit value. 
+The value is a rolling 32-bit counter that is composed of the kernel system interrupt timer value
+and the counter that counts these interrupts (RTOS kernel ticks).
+
+This function allows the implementation of very short timeout checks below the RTOS tick granularity.
+Such checks might be required when checking for a busy status in a device or peripheral initialization
+routine, see code example below.
 
 \note This function may be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+
+<b>Code Example</b>
+\code{.c}
+#include "cmsis_os2.h"
+
+void SetupDevice (void)  {
+  uint32_t tick;
+  
+  // Calculating 100us timeout in system timer ticks
+  const uint32_t timeout = 100U * osKernelGetSysTimerFreq() / 1000000u;
+  
+  tick = osKernelGetSysTimerCount();             // get start value of the Kernel system tick
+  Device.Setup ();                               // initialize a device or peripheral
+  do {                                           // poll device busy status for 100 microseconds
+    if (!Device.Busy) break;                     // check if device is correctly initialized
+  } while ((osKernelGetSysTimerCount() - tick) < timeout));
+  if (Device.Busy)  {              
+    ;                                            // in case device still busy, signal error
+  }
+                                                 // start interacting with device
+}
+
+\endcode
 */
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/

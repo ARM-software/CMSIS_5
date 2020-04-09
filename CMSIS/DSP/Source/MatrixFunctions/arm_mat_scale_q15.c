@@ -51,7 +51,85 @@
                    The input data <code>*pSrc</code> and <code>scaleFract</code> are in 1.15 format.
                    These are multiplied to yield a 2.30 intermediate result and this is shifted with saturation to 1.15 format.
  */
+#if defined(ARM_MATH_MVEI)
+arm_status arm_mat_scale_q15(
+  const arm_matrix_instance_q15 * pSrc,
+        q15_t                     scaleFract,
+        int32_t                   shift,
+        arm_matrix_instance_q15 * pDst)
+{
+  arm_status status;                             /* Status of matrix scaling */
+  q15_t *pIn = pSrc->pData;       /* input data matrix pointer */
+  q15_t *pOut = pDst->pData;      /* output data matrix pointer */
+  uint32_t  numSamples;           /* total number of elements in the matrix */
+  uint32_t  blkCnt;               /* loop counters */
+  q15x8_t vecIn, vecOut;
+  q15_t const *pInVec;
+  int32_t totShift = shift + 1;   /* shift to apply after scaling */
+  
+  pInVec = (q15_t const *) pIn;
 
+  #ifdef ARM_MATH_MATRIX_CHECK
+
+  /* Check for matrix mismatch condition */
+  if ((pSrc->numRows != pDst->numRows) ||
+      (pSrc->numCols != pDst->numCols)   )
+  {
+    /* Set status as ARM_MATH_SIZE_MISMATCH */
+    status = ARM_MATH_SIZE_MISMATCH;
+  }
+  else
+
+#endif /* #ifdef ARM_MATH_MATRIX_CHECK */
+
+  {
+    /*
+     * Total number of samples in the input matrix
+     */
+    numSamples = (uint32_t) pSrc->numRows * pSrc->numCols;
+    blkCnt = numSamples >> 3;
+    while (blkCnt > 0U)
+    {
+        /*
+         * C(m,n) = A(m,n) * scale
+         * Scaling and results are stored in the destination buffer.
+         */
+        vecIn = vld1q(pInVec); pInVec += 8;
+
+        /* multiply input with scaler value */
+        vecOut = vmulhq(vecIn, vdupq_n_s16(scaleFract));
+         /* apply shifting */
+        vecOut = vqshlq_r(vecOut, totShift);
+
+        vst1q(pOut, vecOut); pOut += 8;
+
+        /*
+         * Decrement the blockSize loop counter
+         */
+        blkCnt--;
+    }
+    /*
+     * tail
+     * (will be merged thru tail predication)
+     */
+    blkCnt = numSamples & 7;
+    if (blkCnt > 0U)
+    {
+        mve_pred16_t p0 = vctp16q(blkCnt);
+        vecIn = vld1q(pInVec); pInVec += 8;
+        vecOut = vmulhq(vecIn, vdupq_n_s16(scaleFract));
+        vecOut = vqshlq_r(vecOut, totShift);
+        vstrhq_p(pOut, vecOut, p0);
+    }
+     /* Set status as ARM_MATH_SUCCESS */
+    status = ARM_MATH_SUCCESS;
+  }
+
+  /* Return to application */
+  return (status);
+}
+
+#else
 arm_status arm_mat_scale_q15(
   const arm_matrix_instance_q15 * pSrc,
         q15_t                     scaleFract,
@@ -164,6 +242,7 @@ arm_status arm_mat_scale_q15(
   /* Return to application */
   return (status);
 }
+#endif /* defined(ARM_MATH_MVEI) */
 
 /**
   @} end of MatrixScale group

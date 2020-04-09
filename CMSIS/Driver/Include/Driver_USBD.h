@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2017 ARM Limited. All rights reserved.
+ * Copyright (c) 2013-2020 ARM Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -15,13 +15,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * $Date:        2. Feb 2017
- * $Revision:    V2.2
+ * $Date:        31. March 2020
+ * $Revision:    V2.3
  *
  * Project:      USB Device Driver definitions
  */
 
 /* History:
+ *  Version 2.3
+ *    Removed volatile from ARM_USBD_STATE
  *  Version 2.2
  *    ARM_USBD_STATE made volatile
  *  Version 2.1
@@ -51,13 +53,17 @@ extern "C"
 
 #include "Driver_USB.h"
 
-#define ARM_USBD_API_VERSION ARM_DRIVER_VERSION_MAJOR_MINOR(2,2)  /* API version */
+#define ARM_USBD_API_VERSION ARM_DRIVER_VERSION_MAJOR_MINOR(2,3)  /* API version */
+
+
+#define _ARM_Driver_USBD_(n)      Driver_USBD##n
+#define  ARM_Driver_USBD_(n) _ARM_Driver_USBD_(n)
 
 
 /**
 \brief USB Device State
 */
-typedef volatile struct _ARM_USBD_STATE {
+typedef struct _ARM_USBD_STATE {
   uint32_t vbus     : 1;                ///< USB Device VBUS flag
   uint32_t speed    : 2;                ///< USB Device speed setting (ARM_USB_SPEED_xxx)
   uint32_t active   : 1;                ///< USB Device active flag

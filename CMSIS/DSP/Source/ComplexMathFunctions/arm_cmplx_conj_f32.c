@@ -68,7 +68,58 @@
   @return        none
  */
 
+#if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
 
+void arm_cmplx_conj_f32(
+    const float32_t * pSrc,
+    float32_t * pDst,
+    uint32_t numSamples)
+{
+    static const float32_t cmplx_conj_sign[4] = { 1.0f, -1.0f, 1.0f, -1.0f };
+    uint32_t blockSize = numSamples * CMPLX_DIM;   /* loop counters */
+    uint32_t blkCnt;
+    f32x4_t vecSrc;
+    f32x4_t vecSign;
+
+    /*
+     * load sign vector
+     */
+    vecSign = *(f32x4_t *) cmplx_conj_sign;
+
+    /* Compute 4 real samples at a time */
+    blkCnt = blockSize >> 2U;
+
+    while (blkCnt > 0U)
+    {
+        vecSrc = vld1q(pSrc);
+        vst1q(pDst,vmulq(vecSrc, vecSign));
+        /*
+         * Decrement the blkCnt loop counter
+         * Advance vector source and destination pointers
+         */
+        pSrc += 4;
+        pDst += 4;
+        blkCnt--;
+    }
+
+     /* Tail */
+    blkCnt = (blockSize & 0x3) >> 1;
+
+    while (blkCnt > 0U)
+    {
+      /* C[0] + jC[1] = A[0]+ j(-1)A[1] */
+  
+      /* Calculate Complex Conjugate and store result in destination buffer. */
+      *pDst++ =  *pSrc++;
+      *pDst++ = -*pSrc++;
+  
+      /* Decrement loop counter */
+      blkCnt--;
+    }
+
+}
+
+#else
 void arm_cmplx_conj_f32(
   const float32_t * pSrc,
         float32_t * pDst,
@@ -76,11 +127,11 @@ void arm_cmplx_conj_f32(
 {
         uint32_t blkCnt;                               /* Loop counter */
 
-#if defined(ARM_MATH_NEON)
+#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
    float32x4_t zero;
    float32x4x2_t vec;
 
-   zero = vdupq_n_f32(0.0);
+   zero = vdupq_n_f32(0.0f);
 
    /* Compute 4 outputs at a time */
    blkCnt = numSamples >> 2U;
@@ -105,7 +156,7 @@ void arm_cmplx_conj_f32(
    blkCnt = numSamples & 0x3;
 
 #else
-#if defined (ARM_MATH_LOOPUNROLL)
+#if defined (ARM_MATH_LOOPUNROLL) && !defined(ARM_MATH_AUTOVECTORIZE)
 
   /* Loop unrolling: Compute 4 outputs at a time */
   blkCnt = numSamples >> 2U;
@@ -155,6 +206,7 @@ void arm_cmplx_conj_f32(
   }
 
 }
+#endif /* defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE) */
 
 /**
   @} end of cmplx_conj group

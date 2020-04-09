@@ -1,12 +1,12 @@
 /**************************************************************************//**
- * @file     ARMv81MML_DP.h
+ * @file     ARMv81MML_DSP_DP_MVE_FP.h
  * @brief    CMSIS Core Peripheral Access Layer Header File for
  *           Armv8.1-M Mainline Device Series (configured for Armv8.1-M Mainline with double precision FPU, with DSP extension, with TrustZone)
- * @version  V1.0.0
- * @date     25. February 2019
+ * @version  V1.1.0
+ * @date     27. March 2020
  ******************************************************************************/
 /*
- * Copyright (c) 2009-2019 Arm Limited. All rights reserved.
+ * Copyright (c) 2009-2020 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -23,8 +23,8 @@
  * limitations under the License.
  */
 
-#ifndef ARMv81MML_DSP_DP_H
-#define ARMv81MML_DSP_DP_H
+#ifndef ARMv81MML_DSP_DP_MVE_FP_H
+#define ARMv81MML_DSP_DP_MVE_FP_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -92,14 +92,16 @@ typedef enum IRQn
 #define __ARMv81MML_REV           0x0001U   /* Core revision r0p1 */
 #define __SAUREGION_PRESENT       1U        /* SAU regions present */
 #define __MPU_PRESENT             1U        /* MPU present */
+#define __PMU_PRESENT             1U        /* PMU present */
+#define __PMU_NUM_EVENTCNT        31U       /* Number of PMU event counters */  
 #define __VTOR_PRESENT            1U        /* VTOR present */
 #define __NVIC_PRIO_BITS          3U        /* Number of Bits used for Priority Levels */
 #define __Vendor_SysTickConfig    0U        /* Set to 1 if different SysTick Config is used */
 #define __FPU_PRESENT             1U        /* FPU present */
 #define __FPU_DP                  1U        /* double precision FPU */
 #define __DSP_PRESENT             1U        /* DSP extension present */
-#define __MVE_PRESENT             1U        /* MVE extensions present */
-#define __MVE_FP                  1U        /* MVE floating point present */
+#define __ICACHE_PRESENT          1U        /* Instruction Cache present */
+#define __DCACHE_PRESENT          1U        /* Data Cache present */
 
 #include "core_armv81mml.h"                 /* Processor and core peripherals */
 #include "system_ARMv81MML.h"               /* System Header */
@@ -129,4 +131,4 @@ typedef enum IRQn
 }
 #endif
 
-#endif  /* ARMv81MML_DSP_DP_H */
+#endif  /* ARMv81MML_DSP_DP_MVE_FP_H */

@@ -38,7 +38,7 @@ PROJECT_NAME           = CMSIS-Driver
 # could be handy for archiving the generated documentation or if some version
 # control system is used.
 
-PROJECT_NUMBER         = "Version 2.7.1"
+PROJECT_NUMBER         = "Version 2.8.0"
 
 # Using the PROJECT_BRIEF tag one can provide an optional one line description
 # for a project that appears at the top of each page and should give viewer a
@@ -784,6 +784,8 @@ INPUT                  = . \
                          src/Driver_USBH.c \
                          ../../Driver/Include/Driver_USB.h \
                          src/Driver_USB.c \
+                         ../../Driver/VIO/Include/cmsis_vio.h \
+                         src/VIO.txt \
                          ../../Driver/Include/Driver_WiFi.h \
                          src/Driver_WiFi.c \
                          src/General.txt

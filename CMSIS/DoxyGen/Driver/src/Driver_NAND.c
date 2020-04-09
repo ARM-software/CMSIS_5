@@ -23,8 +23,8 @@ The driver implementation is a typical part of the Device Family Pack (DFP) that
 peripherals of the microcontroller family.
 
 NAND Flash is organized in pages, grouped into blocks as the smallest erasable unit. The addressing
-of data is archieved by `byte_address = block * block_size + page_in_block * page_size + offset_in_page`.
-In terms of this NAND API blocks and pages are referrd to as `row` and the byte offset within the page as `col`.
+of data is achieved by `byte_address = block * block_size + page_in_block * page_size + offset_in_page`.
+In terms of this NAND API blocks and pages are referred to as `row` and the byte offset within the page as `col`.
 Thus one can calculate the `byte_address = row * page_size + col`. The parameters `page_size` and `block_size` 
 are device specific and must be handled by the driver user appropriately.
 

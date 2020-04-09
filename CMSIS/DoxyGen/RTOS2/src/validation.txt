@@ -1,7 +1,7 @@
 /**
 \page rtosValidation RTOS Validation
 
-Arm offers a <a class=el href="http://www.keil.com/pack" target="_blank">Software Pack</a> for the CMSIS-RTOS Validation.
+Arm offers a <a class=el href="https://www.keil.com/pack" target="_blank">Software Pack</a> for the CMSIS-RTOS Validation.
 The <b>ARM::CMSIS-RTOS_Validation</b> Pack contains the following:
 
  - Source code of a CMSIS-RTOS Validation Suite along with configuration file.

@@ -1,0 +1,130 @@
+D
+64
+// 0.000000
+0x0
+// 0.000000
+0x0
+// 0.000000
+0x0
+// 0.000000
+0x0
+// 0.000000
+0x0
+// 0.000000
+0x0
+// 0.000000
+0x0
+// 0.000000
+0x0
+// 0.000000
+0x0
+// 0.000000
+0x0
+// 0.000000
+0x0
+// 0.000000
+0x0
+// 0.000000
+0x0
+// 0.000000
+0x0
+// 0.000000
+0x0
+// 0.000000
+0x0
+// 0.000000
+0x0
+// 0.000000
+0x0
+// 0.000000
+0x0
+// 0.000000
+0x0
+// 0.000000
+0x0
+// 0.000000
+0x0
+// 0.000000
+0x0
+// 0.000000
+0x0
+// 0.000000
+0x0
+// 0.000000
+0x0
+// 0.000000
+0x0
+// 0.000000
+0x0
+// 0.000000
+0x0
+// 0.000000
+0x0
+// 0.000000
+0x0
+// 0.000000
+0x0
+// 0.900000
+0x3feccccccccccccd
+// 0.900000
+0x3feccccccccccccd
+// 0.900000
+0x3feccccccccccccd
+// 0.900000
+0x3feccccccccccccd
+// 0.900000
+0x3feccccccccccccd
+// 0.900000
+0x3feccccccccccccd
+// 0.900000
+0x3feccccccccccccd
+// 0.900000
+0x3feccccccccccccd
+// 0.900000
+0x3feccccccccccccd
+// 0.900000
+0x3feccccccccccccd
+// 0.900000
+0x3feccccccccccccd
+// 0.900000
+0x3feccccccccccccd
+// 0.900000
+0x3feccccccccccccd
+// 0.900000
+0x3feccccccccccccd
+// 0.900000
+0x3feccccccccccccd
+// 0.900000
+0x3feccccccccccccd
+// 0.900000
+0x3feccccccccccccd
+// 0.900000
+0x3feccccccccccccd
+// 0.900000
+0x3feccccccccccccd
+// 0.900000
+0x3feccccccccccccd
+// 0.900000
+0x3feccccccccccccd
+// 0.900000
+0x3feccccccccccccd
+// 0.900000
+0x3feccccccccccccd
+// 0.900000
+0x3feccccccccccccd
+// 0.900000
+0x3feccccccccccccd
+// 0.900000
+0x3feccccccccccccd
+// 0.900000
+0x3feccccccccccccd
+// 0.900000
+0x3feccccccccccccd
+// 0.900000
+0x3feccccccccccccd
+// 0.900000
+0x3feccccccccccccd
+// 0.900000
+0x3feccccccccccccd
+// 0.900000
+0x3feccccccccccccd

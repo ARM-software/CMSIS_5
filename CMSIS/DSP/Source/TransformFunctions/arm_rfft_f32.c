@@ -78,6 +78,8 @@ void arm_split_rifft_f32(
 
 /**
   @brief         Processing function for the floating-point RFFT/RIFFT.
+                 Source buffer is modified by this function.
+                 
   @deprecated    Do not use this function.  It has been superceded by \ref arm_rfft_fast_f32 and will be removed in the future.
   @param[in]     S    points to an instance of the floating-point RFFT/RIFFT structure
   @param[in]     pSrc points to the input buffer

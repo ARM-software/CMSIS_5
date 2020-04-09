@@ -1,6 +1,6 @@
 # CMSIS Version 5
 
-The branch *master* of this GitHub repository contains the CMSIS Version 5.6.0.  The [documentation](http://arm-software.github.io/CMSIS_5/General/html/index.html) is available under http://arm-software.github.io/CMSIS_5/General/html/index.html
+The branch *master* of this GitHub repository contains the CMSIS Version 5.7.0.  The [documentation](http://arm-software.github.io/CMSIS_5/General/html/index.html) is available under http://arm-software.github.io/CMSIS_5/General/html/index.html
 
 Use [Issues](https://github.com/ARM-software/CMSIS_5#issues-and-labels) to provide feedback and report problems for CMSIS Version 5. 
 
@@ -24,27 +24,23 @@ The following is an list of all CMSIS components that are available.
 |[Pack](http://arm-software.github.io/CMSIS_5/Pack/html/index.html)    | All Cortex-M, SecurCore, Cortex-A5/A7/A9 | Describes a delivery mechanism for software components, device parameters, and evaluation board support. It simplifies software re-use and product life-cycle management (PLM). |
 |[SVD](http://arm-software.github.io/CMSIS_5/SVD/html/index.html)      | All Cortex-M, SecurCore | Peripheral description of a device that can be used to create peripheral awareness in debuggers or CMSIS-Core header files.|
 |[DAP](http://arm-software.github.io/CMSIS_5/DAP/html/index.html)      | All Cortex | Firmware for a debug unit that interfaces to the CoreSight Debug Access Port. |
-|[Zone](http://arm-software.github.io/CMSIS_5/Zone/html/index.html)    | All Cortex | Defines methods to describe system resources and to partition these resources into multiple projects and execution areas. |
+|[Zone](http://arm-software.github.io/CMSIS_5/Zone/html/index.html)    | All Cortex-M | Defines methods to describe system resources and to partition these resources into multiple projects and execution areas. |
 
 ## Implemented Enhancements
- - CMSIS-Core-A, RTX5: implementation for Cortex-A5/A7/A9
- - Support for Armv8-M Architecture (Mainline and Baseline) as well as devices Cortex-M23 and Cortex-M33
- - CMSIS-RTOS2: RTX 5 is now available for IAR, GCC, Arm Compiler 5, Arm Compiler 6
- - CMSIS-RTOS2: FreeRTOS adoption (release) is available https://github.com/ARM-software/CMSIS-FreeRTOS
- - CMSIS-NN: Bare metal Neural Network function library.
- - CMSIS-DAP v2: with WinUSB for faster communication and separate pipe for SWO support
- - Config Wizard extension: access enum’s for configuration information 
-
+ - CMSIS-Pack generation with [shell script template](https://arm-software.github.io/CMSIS_5/Pack/html/bash_script.html) for Windows and Linux
+ - CMSIS-Pack: [Git workflow](https://arm-software.github.io/CMSIS_5/Pack/html/element_repository.html) via Eclipse menu *Window - Preferences - CMSIS Packs - Manage Local Repositories* and [MDK](http://www.keil.com/support/man/docs/uv4/uv4_ca_packinst_repo.htm)
+ - [CMSIS-Zone release 1.0](https://arm-software.github.io/CMSIS_5/Zone/html/index.html) with support for multi-processor, TrustZone, and MPU configuration 
+ - Support for Armv8.1M Architecture and Cortex-M55 (release in March 2020)
+ - CMSIS-DSP is fully ported to SIMD for Cortex-M family (Armv8.1-M)  and Cortex-A & Cortex-R with NEON, using the same APIs.
+ 
 ## Further Planned Enhancements
- - CMSIS-Zone: management of complex system
  - CMSIS-Pack:
    - System Description SDF Format: describe more complex debug topologies than with a Debug Description in a tool agnostic way
-   - Github based workflow: allows to develop software packs using github infra-structure
-   - Flash algorithm via debugger: Some TurstZone enable devices cannot execute RAM. Commands that allow flash programming will be added to Debug Description.
    - CPDSC project file format: allows project templates that are agnostic of an IDE
    - Minimize need for IDE specific settings: CMSIS-Pack supports IDE specific parameters. Analyze and minimize 
+ - CMSIS-Build: command-line driven make system for CMSIS-Pack based projects (to support CI tests)
 
-For further details see also the [Slides of the Embedded World CMSIS Partner Meeting](https://github.com/ARM-software/CMSIS_5/blob/develop/CMSIS_EW2019.pdf).
+For further details see also the [Slides of the Embedded World CMSIS Partner Meeting](https://github.com/ARM-software/CMSIS_5/blob/develop/CMSIS_Review_Meeting_2020.pdf).
 
 ## Other related GitHub repositories
 

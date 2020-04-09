@@ -64,6 +64,75 @@
                    - \ref ARM_MATH_SUCCESS       : Operation successful
                    - \ref ARM_MATH_SIZE_MISMATCH : Matrix size check failed
  */
+#if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
+arm_status arm_mat_scale_f32(
+  const arm_matrix_instance_f32 * pSrc,
+  float32_t scale,
+  arm_matrix_instance_f32 * pDst)
+{
+  arm_status status;                             /* status of matrix scaling     */
+  #ifdef ARM_MATH_MATRIX_CHECK
+  /* Check for matrix mismatch condition */
+  if ((pSrc->numRows != pDst->numRows) || (pSrc->numCols != pDst->numCols))
+  {
+    /* Set status as ARM_MATH_SIZE_MISMATCH */
+    status = ARM_MATH_SIZE_MISMATCH;
+  }
+  else
+#endif /*    #ifdef ARM_MATH_MATRIX_CHECK    */
+  {
+    float32_t *pIn = pSrc->pData;   /* input data matrix pointer */
+    float32_t *pOut = pDst->pData;  /* output data matrix pointer */
+    uint32_t  numSamples;           /* total number of elements in the matrix */
+    uint32_t  blkCnt;               /* loop counters */
+    f32x4_t vecIn, vecOut;
+    float32_t const *pInVec;
+
+    pInVec = (float32_t const *) pIn;
+    /*
+     * Total number of samples in the input matrix
+     */
+    numSamples = (uint32_t) pSrc->numRows * pSrc->numCols;
+    blkCnt = numSamples >> 2;
+    while (blkCnt > 0U)
+    {
+        /*
+         * C(m,n) = A(m,n) * scale
+         * Scaling and results are stored in the destination buffer.
+         */
+        vecIn = vld1q(pInVec); 
+        pInVec += 4;
+
+        vecOut = vecIn * scale;
+
+        vst1q(pOut, vecOut); 
+        pOut += 4;
+        /*
+         * Decrement the blockSize loop counter
+         */
+        blkCnt--;
+    }
+    /*
+     * tail
+     */
+    blkCnt = numSamples & 3;
+    if (blkCnt > 0U)
+    {
+        mve_pred16_t p0 = vctp32q(blkCnt);
+        vecIn = vld1q(pInVec); 
+        vecOut = vecIn * scale;
+
+        vstrwq_p(pOut, vecOut, p0);
+    }
+    /* Set status as ARM_MATH_SUCCESS */
+    status = ARM_MATH_SUCCESS;
+  }
+
+  /* Return to application */
+  return (status);
+
+}
+#else
 #if defined(ARM_MATH_NEON_EXPERIMENTAL)
 arm_status arm_mat_scale_f32(
   const arm_matrix_instance_f32 * pSrc,
@@ -75,10 +144,6 @@ arm_status arm_mat_scale_f32(
   uint32_t numSamples;                           /* total number of elements in the matrix */
   uint32_t blkCnt;                               /* loop counters */
   arm_status status;                             /* status of matrix scaling     */
-
-
-  float32_t in1, in2, in3, in4;                  /* temporary variables */
-  float32_t out1, out2, out3, out4;              /* temporary variables */
 
 
 #ifdef ARM_MATH_MATRIX_CHECK
@@ -215,6 +280,7 @@ arm_status arm_mat_scale_f32(
   return (status);
 }
 #endif /* #if defined(ARM_MATH_NEON) */
+#endif /* defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE) */
 
 /**
   @} end of MatrixScale group

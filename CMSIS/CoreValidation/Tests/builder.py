@@ -142,7 +142,7 @@ def create():
   debugStep.model = lambda step, config: FVP_MODELS[config['device']]
   
   filterAC5 = Filter().addAxis(compilerAxis, Compiler.AC5).addAxis(deviceAxis, "CM[23]3*")
-  filterAC6LTM = Filter().addAxis(compilerAxis, Compiler.AC6LTM).addAxis(deviceAxis, "CM[23]3*")
+  filterAC6LTM = Filter().addAxis(compilerAxis, Compiler.AC6LTM).addAxis(deviceAxis, "CM35P*")
 
   builder = Builder()
   builder.addAxis([ compilerAxis, deviceAxis, optimizeAxis ])

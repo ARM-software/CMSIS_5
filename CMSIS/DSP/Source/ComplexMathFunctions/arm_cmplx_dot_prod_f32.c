@@ -74,6 +74,74 @@
   @return        none
  */
 
+#if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
+
+void arm_cmplx_dot_prod_f32(
+    const float32_t * pSrcA,
+    const float32_t * pSrcB,
+    uint32_t numSamples,
+    float32_t * realResult,
+    float32_t * imagResult)
+{
+    uint32_t blockSize = numSamples * CMPLX_DIM;  /* loop counters */
+    uint32_t blkCnt;
+    float32_t real_sum, imag_sum;
+    f32x4_t vecSrcA, vecSrcB;
+    f32x4_t vec_acc = vdupq_n_f32(0.0f);
+    float32_t a0,b0,c0,d0;
+
+    /* Compute 2 complex samples at a time */
+    blkCnt = blockSize >> 2U;
+
+    while (blkCnt > 0U)
+    {
+        vecSrcA = vld1q(pSrcA);
+        vecSrcB = vld1q(pSrcB);
+
+        vec_acc = vcmlaq(vec_acc, vecSrcA, vecSrcB);
+        vec_acc = vcmlaq_rot90(vec_acc, vecSrcA, vecSrcB);
+
+        /*
+         * Decrement the blkCnt loop counter
+         * Advance vector source and destination pointers
+         */
+        pSrcA += 4;
+        pSrcB += 4;
+        blkCnt--;
+    }
+
+
+    real_sum = vgetq_lane(vec_acc, 0) + vgetq_lane(vec_acc, 2);
+    imag_sum = vgetq_lane(vec_acc, 1) + vgetq_lane(vec_acc, 3);
+   
+    /* Tail */
+    blkCnt = (blockSize & 3) >> 1;
+
+    while (blkCnt > 0U)
+    {
+      a0 = *pSrcA++;
+      b0 = *pSrcA++;
+      c0 = *pSrcB++;
+      d0 = *pSrcB++;
+  
+      real_sum += a0 * c0;
+      imag_sum += a0 * d0;
+      real_sum -= b0 * d0;
+      imag_sum += b0 * c0;
+  
+      /* Decrement loop counter */
+      blkCnt--;
+    }
+
+
+    /*
+     * Store the real and imaginary results in the destination buffers
+     */
+    *realResult = real_sum;
+    *imagResult = imag_sum;
+}
+
+#else
 void arm_cmplx_dot_prod_f32(
   const float32_t * pSrcA,
   const float32_t * pSrcB,
@@ -85,13 +153,13 @@ void arm_cmplx_dot_prod_f32(
         float32_t real_sum = 0.0f, imag_sum = 0.0f;    /* Temporary result variables */
         float32_t a0,b0,c0,d0;
 
-#if defined(ARM_MATH_NEON)
+#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
     float32x4x2_t vec1,vec2,vec3,vec4;
     float32x4_t accR,accI;
     float32x2_t accum = vdup_n_f32(0);
 
-    accR = vdupq_n_f32(0.0);
-    accI = vdupq_n_f32(0.0);
+    accR = vdupq_n_f32(0.0f);
+    accI = vdupq_n_f32(0.0f);
 
     /* Loop unrolling: Compute 8 outputs at a time */
     blkCnt = numSamples >> 3U;
@@ -101,7 +169,7 @@ void arm_cmplx_dot_prod_f32(
 	/* C = (A[0]+jA[1])*(B[0]+jB[1]) + ...  */
         /* Calculate dot product and then store the result in a temporary buffer. */
 
-	vec1 = vld2q_f32(pSrcA);
+	      vec1 = vld2q_f32(pSrcA);
         vec2 = vld2q_f32(pSrcB);
 
 	/* Increment pointers */
@@ -136,16 +204,16 @@ void arm_cmplx_dot_prod_f32(
     }
 
     accum = vpadd_f32(vget_low_f32(accR), vget_high_f32(accR));
-    real_sum += accum[0] + accum[1];
+    real_sum += vget_lane_f32(accum, 0) + vget_lane_f32(accum, 1);
 
     accum = vpadd_f32(vget_low_f32(accI), vget_high_f32(accI));
-    imag_sum += accum[0] + accum[1];
+    imag_sum += vget_lane_f32(accum, 0) + vget_lane_f32(accum, 1);
 
     /* Tail */
     blkCnt = numSamples & 0x7;
 
 #else
-#if defined (ARM_MATH_LOOPUNROLL)
+#if defined (ARM_MATH_LOOPUNROLL) && !defined(ARM_MATH_AUTOVECTORIZE)
 
   /* Loop unrolling: Compute 4 outputs at a time */
   blkCnt = numSamples >> 2U;
@@ -227,6 +295,7 @@ void arm_cmplx_dot_prod_f32(
   *realResult = real_sum;
   *imagResult = imag_sum;
 }
+#endif /* defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE) */
 
 /**
   @} end of cmplx_dot_prod group

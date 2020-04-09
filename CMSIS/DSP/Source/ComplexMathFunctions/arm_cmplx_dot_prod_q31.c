@@ -55,6 +55,72 @@
                    Input down scaling is not required.
  */
 
+#if defined(ARM_MATH_MVEI)
+
+void arm_cmplx_dot_prod_q31(
+  const q31_t * pSrcA,
+  const q31_t * pSrcB,
+        uint32_t numSamples,
+        q63_t * realResult,
+        q63_t * imagResult)
+{
+    uint32_t blockSize = numSamples * CMPLX_DIM;  /* loop counters */
+    uint32_t blkCnt;
+    q31x4_t vecSrcA, vecSrcB;
+    q63_t accReal = 0LL; 
+    q63_t accImag = 0LL;
+
+    q31_t a0,b0,c0,d0;
+
+     /* Compute 2 complex samples at a time */
+    blkCnt = blockSize >> 2U;
+
+    while (blkCnt > 0U)
+    {        
+
+        vecSrcA = vld1q(pSrcA);
+        vecSrcB = vld1q(pSrcB);
+
+        accReal = vrmlsldavhaq(accReal, vecSrcA, vecSrcB);
+        accImag = vrmlaldavhaxq(accImag, vecSrcA, vecSrcB);
+
+        /*
+         * Decrement the blkCnt loop counter
+         * Advance vector source and destination pointers
+         */
+        pSrcA += 4;
+        pSrcB += 4;
+        blkCnt --;
+    }
+
+    accReal = asrl(accReal, (14 - 8));
+    accImag = asrl(accImag, (14 - 8));
+
+    /* Tail */
+    blkCnt = (blockSize & 3) >> 1;
+
+    while (blkCnt > 0U)
+    {
+      a0 = *pSrcA++;
+      b0 = *pSrcA++;
+      c0 = *pSrcB++;
+      d0 = *pSrcB++;
+  
+      accReal += ((q63_t)a0 * c0) >> 14;
+      accImag += ((q63_t)a0 * d0) >> 14;
+      accReal -= ((q63_t)b0 * d0) >> 14;
+      accImag += ((q63_t)b0 * c0) >> 14;
+  
+      /* Decrement loop counter */
+      blkCnt--;
+    }
+  
+    /* Store real and imaginary result in destination buffer. */
+    *realResult = accReal;
+    *imagResult = accImag;
+}
+
+#else
 void arm_cmplx_dot_prod_q31(
   const q31_t * pSrcA,
   const q31_t * pSrcB,
@@ -147,6 +213,7 @@ void arm_cmplx_dot_prod_q31(
   *realResult = real_sum;
   *imagResult = imag_sum;
 }
+#endif /* defined(ARM_MATH_MVEI) */
 
 /**
   @} end of cmplx_dot_prod group

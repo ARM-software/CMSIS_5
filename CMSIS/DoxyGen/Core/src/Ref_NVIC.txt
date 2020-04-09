@@ -16,103 +16,98 @@ The table below lists the core exception vectors of the various Cortex-M process
 <table class="cmtable" summary="Core Exception Name">
     <tr>
       <th>Exception Vector</th>
+      <th>Handler Function</th>
       <th>IRQn<br/>Value</th>
-      <th>M0</th>
-      <th>M0+</th>
-      <th>M3</th>
-      <th>M4</th>
-      <th>M7</th>
+      <th title="Cortex-M0/M0+
 \if ARMSC
-      <th>SC000</th>
-      <th>SC300</th>
-\endif 
+and SC000
+\endif
+      ">Armv6-M</th>
+      <th title="Cortex-M3/M4/M7
+\if ARMSC
+and SC300
+\endif
+      ">Armv7-M</th>
 \if ARMv8M
-      <th>Armv8-M<br/>Baseline</th>
-      <th>Armv8-M<br/>Mainline</th>
+      <th title="Cortex-M23">Armv8-M<br/>Baseline</th>
+      <th title="Cortex-M33/M35P">Armv8-M<br/>Mainline</th>
+      <th>Armv8.1-M<br/>Mainline</th>
 \endif
       <th>Description</th>
     </tr>
     <tr>
       <td><b>NonMaskableInt_IRQn</b></td>
+      <td>NMI_Handler</td>
       <td>-14</td>
       <td><img src="check.png" alt="available"></td>
       <td><img src="check.png" alt="available"></td>
+\if ARMv8M
       <td><img src="check.png" alt="available"></td>
       <td><img src="check.png" alt="available"></td>
       <td><img src="check.png" alt="available"></td>
-      <td><img src="check.png" alt="available"></td>
-      <td><img src="check.png" alt="available"></td>
-      <td><img src="check.png" alt="available"></td>
-      <td><img src="check.png" alt="available"></td>
+\endif
       <td>Non Maskable Interrupt</td>
     </tr>
     <tr>
       <td><b>HardFault_IRQn</b></td>
+      <td>HardFault_Handler</td>
       <td>-13</td>
       <td><img src="check.png" alt="available"></td>
       <td><img src="check.png" alt="available"></td>
+\if ARMv8M
       <td><img src="check.png" alt="available"></td>
       <td><img src="check.png" alt="available"></td>
       <td><img src="check.png" alt="available"></td>
-      <td><img src="check.png" alt="available"></td>
-      <td><img src="check.png" alt="available"></td>
-      <td><img src="check.png" alt="available"></td>
-      <td><img src="check.png" alt="available"></td>
+\endif
       <td>Hard Fault Interrupt</td>
     </tr>
     <tr>
       <td><b>MemoryManagement_IRQn</b></td>
+      <td>MemManage_Handler</td>
       <td>-12</td>
       <td>&nbsp;</td>
+      <td><img src="check.png" alt="available"></td>
+\if ARMv8M
       <td>&nbsp;</td>
       <td><img src="check.png" alt="available"></td>
       <td><img src="check.png" alt="available"></td>
-      <td><img src="check.png" alt="available"></td>
-      <td>&nbsp;</td>
-      <td><img src="check.png" alt="available"></td>
-      <td>&nbsp;</td>
-      <td><img src="check.png" alt="available"></td>
+\endif
       <td>Memory Management Interrupt</td>
     </tr>
     <tr>
       <td><b>BusFault_IRQn</b></td>
+      <td>BusFault_Handler</td>
       <td>-11</td>
       <td>&nbsp;</td>
+      <td><img src="check.png" alt="available"></td>
+\if ARMv8M
       <td>&nbsp;</td>
       <td><img src="check.png" alt="available"></td>
       <td><img src="check.png" alt="available"></td>
-      <td><img src="check.png" alt="available"></td>
-      <td>&nbsp;</td>
-      <td><img src="check.png" alt="available"></td>
-      <td>&nbsp;</td>
-      <td><img src="check.png" alt="available"></td>
+\endif
       <td>Bus Fault Interrupt</td>
     </tr>
     <tr>
       <td><b>UsageFault_IRQn</b></td>
+      <td>UsageFault_Handler</td>
       <td>-10</td>
       <td>&nbsp;</td>
+      <td><img src="check.png" alt="available"></td>
+\if ARMv8M
       <td>&nbsp;</td>
       <td><img src="check.png" alt="available"></td>
       <td><img src="check.png" alt="available"></td>
-      <td><img src="check.png" alt="available"></td>
-      <td>&nbsp;</td>
-      <td><img src="check.png" alt="available"></td>
-      <td>&nbsp;</td>
-      <td><img src="check.png" alt="available"></td>
+\endif
       <td>Usage Fault Interrupt</td>
     </tr>
 \if ARMv8M
     <tr>
       <td><b>SecureFault_IRQn</b></td>
+      <td>SecureFault_Handler</td>
       <td>-9</td>
       <td>&nbsp;</td>
       <td>&nbsp;</td>
-      <td>&nbsp;</td>
-      <td>&nbsp;</td>
-      <td>&nbsp;</td>
-      <td>&nbsp;</td>
-      <td>&nbsp;</td>
+      <td><img src="check.png" alt="available"></td>
       <td><img src="check.png" alt="available"></td>
       <td><img src="check.png" alt="available"></td>
       <td>Secure Fault Interrupt</td>
@@ -120,58 +115,54 @@ The table below lists the core exception vectors of the various Cortex-M process
 \endif
     <tr>
       <td><b>SVCall_IRQn</b></td>
+      <td>SVC_Handler</td>
       <td>-5</td>
       <td><img src="check.png" alt="available"></td>
       <td><img src="check.png" alt="available"></td>
+\if ARMv8M
       <td><img src="check.png" alt="available"></td>
       <td><img src="check.png" alt="available"></td>
       <td><img src="check.png" alt="available"></td>
-      <td><img src="check.png" alt="available"></td>
-      <td><img src="check.png" alt="available"></td>
-      <td><img src="check.png" alt="available"></td>
-      <td><img src="check.png" alt="available"></td>
+\endif
       <td>SV Call Interrupt </td>
     </tr>
     <tr>
       <td><b>DebugMonitor_IRQn</b></td>
+      <td>DebugMon_Handler</td>
       <td>-4</td>
       <td>&nbsp;</td>
+      <td><img src="check.png" alt="available"></td>
+\if ARMv8M
       <td>&nbsp;</td>
       <td><img src="check.png" alt="available"></td>
       <td><img src="check.png" alt="available"></td>
-      <td><img src="check.png" alt="available"></td>
-      <td>&nbsp;</td>
-      <td><img src="check.png" alt="available"></td>
-      <td>&nbsp;</td>
-      <td><img src="check.png" alt="available"></td>
+\endif
       <td>Debug Monitor Interrupt</td>
     </tr>
     <tr>
       <td><b>PendSV_IRQn</b></td>
+      <td>PendSV_Handler</td>
       <td>-2</td>
       <td><img src="check.png" alt="available"></td>
       <td><img src="check.png" alt="available"></td>
+\if ARMv8M
       <td><img src="check.png" alt="available"></td>
       <td><img src="check.png" alt="available"></td>
       <td><img src="check.png" alt="available"></td>
-      <td><img src="check.png" alt="available"></td>
-      <td><img src="check.png" alt="available"></td>
-      <td><img src="check.png" alt="available"></td>
-      <td><img src="check.png" alt="available"></td>
+\endif
       <td>Pend SV Interrupt</td>
     </tr>
     <tr>
       <td><b>SysTick_IRQn</b></td>
+      <td>SysTick_Handler</td>
       <td>-1</td>
       <td><img src="check.png" alt="available"></td>
       <td><img src="check.png" alt="available"></td>
+\if ARMv8M
       <td><img src="check.png" alt="available"></td>
       <td><img src="check.png" alt="available"></td>
       <td><img src="check.png" alt="available"></td>
-      <td><img src="check.png" alt="available"></td>
-      <td><img src="check.png" alt="available"></td>
-      <td><img src="check.png" alt="available"></td>
-      <td><img src="check.png" alt="available"></td>
+\endif
       <td>System Tick Interrupt</td>
     </tr>
 </table>
@@ -382,7 +373,7 @@ NVIC_SetVector                 | __NVIC_SetVector
 /** \brief  Definition of IRQn numbers
 
 
-The core exception enumeration names for IRQn values are defined in the file \b device.h.
+The core exception enumeration names for IRQn values are defined in the \ref device_h_pg.
 
  - Negative IRQn values represent processor core exceptions (internal interrupts).
  - Positive IRQn values represent device-specific exceptions (external interrupts). 

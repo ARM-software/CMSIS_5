@@ -60,7 +60,6 @@ Structure of .rzone XML file
     <package/>           // software pack that defines device
     <processor/>         // processor information
   </device>
-
   
   <resources>            // physical resources off-chip 
     <sau_init>           // fixed SAU settings required for system
@@ -75,10 +74,12 @@ Structure of .rzone XML file
     <peripherals>        // peripheral resources off-chip
       { <group> }        // peripheral group (optional)
       <peripheral>       // peripheral description
-	    { <slot> }       // slot description (optional)
+         <slot>          // optional slot description (pin or DMA channel)
+           <interrupt/>  // optional interrupts for slot
+           <setup/>      // optional register setup for slot
+		 </slot>
          <interrupt/>    // optional interrupts for peripheral
          <setup/>        // optional register setup for peripheral
-		{ <slot> }
       </peripheral>
       { </group> }       // peripheral group (optional)
     </peripherals>
@@ -251,13 +252,7 @@ The \ref xml_creator specifies how a derived .rzone file was created.
     <td>optional</td>
   </tr>
   <tr>
-    <td>zone</td>
-    <td>Name of the zone that is represented in this derived .rzone file.</td>
-    <td>xs:string</td>
-    <td>optional</td>
-  </tr>
-  <tr>
-    <td>zone_info</td>
+    <td>info</td>
     <td>Brief description of the zone.</td>
     <td>xs:string</td>
     <td>optional</td>
@@ -470,13 +465,13 @@ The information in this element is identical with CMSIS-Pack, except that it pro
     <td>DnumInterrupts</td>
     <td>Number of NVIC interrupt sources available to the processor core (excludes exception vectors).</td>
     <td>NonNegativeInteger</td>
-    <td>optional</td>
+    <td>required for Armv8-M with TrustZone</td>
   </tr>
   <tr>
     <td>DnumSauRegions</td>
     <td>Number of regions in the Security Attribution Unit (SAU) of the processor core.</td>
     <td>NonNegativeInteger</td>
-    <td>optional</td>
+    <td>required for Armv8-M with TrustZone</td>
   </tr>
   <tr>
     <td>info</td>
@@ -865,13 +860,13 @@ The \ref xml_peripherals contains a list of all peripherals available in the sys
     <peripheral name="ADC0" start="0x40080000" size="0x1000" access="rwp" info="Analog/Digital Converter 0 (12-bit)"/>
     :
     <group name="TIM" info="Timer Group">
-      <peripheral name="TIM1"      start_ns="0x40012c00" start_s="0x50012c00" size="0x400" access="rw">
+      <peripheral name="TIM1"      start="0x40012c00" start_s="0x50012c00" size="0x400" access="rw">
         <interrupt name="TIM1_BRK" irqn="41" info="Timer 1 Break"/>
         <interrupt name="TIM1_UP"  irqn="42" info="Timer 1 Update"/>
         <interrupt name="TIM1_BRK" irqn="43" info="Timer 1 Trigger and Commutation"/>
         <interrupt name="TIM1_CC"  irqn="44" info="Timer 1 Capture and Compare"/>
       </peripheral>
-      <peripheral  name="TIM2"    start_ns="0x40000000" start_s="0x50000000" size="0x400" access="rw">
+      <peripheral  name="TIM2"    start="0x40000000" start_s="0x50000000" size="0x400" access="rw">
         <interrupt name="TIM2"    irqn="45" info="Timer2 Global Interrupt"/>
       </peripheral>
     </group>
@@ -938,23 +933,17 @@ The \ref xml_group can be used to logically group peripherals according to funct
     <td>start</td>
     <td>The logical start address of the peripheral group in both secure and non-secure mode.</td>
     <td>xs:string</td>
-    <td>optional</td>
+    <td>required</td>
   </tr>
   <tr>
     <td>start_s</td>
-    <td>The logical start address of the peripheral group in secure mode.</td>
-    <td>xs:string</td>
-    <td>optional</td>
-  </tr>
-  <tr>
-    <td>start_ns</td>
-    <td>The logical start address of the peripheral group in non-secure mode.</td>
+    <td>The logical start address of the peripheral group in secure mode only.</td>
     <td>xs:string</td>
     <td>optional</td>
   </tr>
   <tr>
     <td>physical</td>
-    <td>The physical start address of the peripheral group.</td>
+    <td>The physical start address of the peripheral group (in case that peripheral is shared in multi-processor system on different address).</td>
     <td>xs:string</td>
     <td>optional</td>
   </tr>
@@ -1069,25 +1058,19 @@ The \ref xml_peripheral is used to define an address mapping for one peripheral.
   </tr>
   <tr>
     <td>start_s</td>
-    <td>The logical start address of the peripheral in secure mode.</td>
+    <td>The logical start address of the peripheral in secure mode only.</td>
     <td>xs:string</td>
     <td>optional</td>
   </tr>
   <tr>
-    <td>start_ns</td>
-    <td>The logical start address of the peripheral in non-secure mode.</td>
-    <td>xs:string</td>
-    <td>optional</td>
-  </tr>
-  <tr>
-    <td>physcial</td>
-    <td>The physical start address of the peripheral.</td>
+    <td>physical</td>
+    <td>The physical start address of the peripheral (in case that peripheral is shared in multi-processor system on different address).</td>
     <td>xs:string</td>
     <td>optional</td>
   </tr>
   <tr>
     <td>offset</td>
-    <td>Specifies an offset for the peripheral for the \ref xml_group values. The values \em start, \em start_s, \em start_ns, \em physical are taken from the \ref xml_group element if not overwritten.</td>
+    <td>Specifies an offset for the peripheral for the \ref xml_group values. The values \em start, \em start_s, \em physical are taken from the \ref xml_group element if not overwritten.</td>
     <td>xs:string</td>
     <td>optional</td>
   </tr>
@@ -1465,9 +1448,9 @@ The \ref xml_configure allows to control the operation of the CMSIS-Zone utility
 <b>Example</b>
 \code
 <configure mode="MPU">     // CMSIS-Zone utility UI behavior
-  <type name="RAM"        hide="0" select="0" />
-  <type name="ROM"        hide="1" select="1" />
-  <type name="Peripheral" hide="1" select="0" />
+  <type name="RAM"        show="1" select="0" />
+  <type name="ROM"        show="0" select="1" />
+  <type name="Peripheral" show="0" select="0" />
 </configure>
 \endcode
 &nbsp;
@@ -1535,8 +1518,8 @@ The \ref xml_ctype defines UI behavior of the CMSIS-Zone utility for a memory or
     <td>required</td>
   </tr>
   <tr>
-    <td>hide</td>
-    <td>"1" specifies that the item type is hidden during configuration in the UI of the CMSIS-Zone utility (default is "0").</td>
+    <td>show</td>
+    <td>"0" specifies that the item type is hidden during configuration in the UI of the CMSIS-Zone utility (default is "1").</td>
     <td>xs:boolean</td>
     <td>optional</td>
   </tr>
@@ -1599,8 +1582,6 @@ These memory partitions are based on parent memory definitions specified by \ref
 \section xml_amemory /azone/partition/memory element
 
 The \ref xml_amemory defines a new memory sub-region that is related to a parent region in the *.rzone file.
-
-\todo this needs verification
 
 <table class="cmtable" summary="Element: memory">
   <tr>
@@ -1690,12 +1671,6 @@ The \ref xml_amemory defines a new memory sub-region that is related to a parent
     <td>optional</td>
   </tr>
   <tr>
-    <td>Pname</td>
-    <td>The processor that can access this memory region. If omitted all processors of the system have access.</td>
-    <td>xs:string</td>
-    <td>optional</td>
-  </tr>
-  <tr>
     <td>info</td>
     <td>Brief description of the memory block.</td>
     <td>xs:string</td>
@@ -1706,8 +1681,6 @@ The \ref xml_amemory defines a new memory sub-region that is related to a parent
 \section xml_aperipheral /azone/partition/peripheral element
 
 The \ref xml_aperipheral defines settings for a peripheral in a related *.rzone file.
-
-\todo this needs verification
 
 <table class="cmtable" summary="Element: peripheral">
   <tr>
@@ -1740,17 +1713,11 @@ The \ref xml_aperipheral defines settings for a peripheral in a related *.rzone 
     <td>start</td>
     <td>The logical start address of the peripheral in both secure and non-secure mode.</td>
     <td>xs:string</td>
-    <td>optional</td>
+    <td>required</td>
   </tr>
   <tr>
     <td>start_s</td>
-    <td>The logical start address of the peripheral in secure mode.</td>
-    <td>xs:string</td>
-    <td>optional</td>
-  </tr>
-  <tr>
-    <td>start_ns</td>
-    <td>The logical start address of the peripheral in non-secure mode.</td>
+    <td>The logical start address of the peripheral in secure mode only.</td>
     <td>xs:string</td>
     <td>optional</td>
   </tr>
@@ -1807,8 +1774,6 @@ The \ref xml_aperipheral defines settings for a peripheral in a related *.rzone 
 \section xml_aslot /azone/partition/peripheral/slot element
 
 The \ref xml_aslot defines settings for a slot in a related *.rzone file.
-
-\todo this needs verification
 
 <table class="cmtable" summary="Element: slot">
   <tr>

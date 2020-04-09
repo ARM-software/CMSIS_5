@@ -80,7 +80,7 @@ arm_fully_connected_q7(const q7_t * pV,
     const q7_t *pB2;
     q7_t     *pO = pOut;
     const q7_t *pBias = bias;
-    q15_t    *pA;
+    const q15_t    *pA;
     uint16_t  rowCnt = num_of_rows >> 1;
 
     /* expand the vector into the buffer */
@@ -98,15 +98,15 @@ arm_fully_connected_q7(const q7_t * pV,
         while (colCnt)
         {
             q31_t     inV, inM11, inM12, inM21, inM22;
-            pB = (q7_t *) read_and_pad_reordered((void *)pB, &inM11, &inM12);
-            pB2 = (q7_t *) read_and_pad_reordered((void *)pB2, &inM21, &inM22);
+            pB = read_and_pad_reordered(pB, &inM11, &inM12);
+            pB2 = read_and_pad_reordered(pB2, &inM21, &inM22);
 
-            inV = *__SIMD32(pA)++;
+            inV = arm_nn_read_q15x2_ia(&pA);
 
             sum = __SMLAD(inV, inM11, sum);
             sum2 = __SMLAD(inV, inM21, sum2);
 
-            inV = *__SIMD32(pA)++;
+            inV = arm_nn_read_q15x2_ia(&pA);
 
             sum = __SMLAD(inV, inM12, sum);
             sum2 = __SMLAD(inV, inM22, sum2);
@@ -146,12 +146,12 @@ arm_fully_connected_q7(const q7_t * pV,
         {
             q31_t     inV1, inV2, inM11, inM12;
 
-            pB = (q7_t *) read_and_pad_reordered((void *)pB, &inM11, &inM12);
+            pB = read_and_pad_reordered(pB, &inM11, &inM12);
 
-            inV1 = *__SIMD32(pA)++;
+            inV1 = arm_nn_read_q15x2_ia(&pA);
             sum = __SMLAD(inV1, inM11, sum);
 
-            inV2 = *__SIMD32(pA)++;
+            inV2 = arm_nn_read_q15x2_ia(&pA);
             sum = __SMLAD(inV2, inM12, sum);
 
             colCnt--;

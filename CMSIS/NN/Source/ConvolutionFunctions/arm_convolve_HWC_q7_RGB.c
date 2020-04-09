@@ -90,7 +90,7 @@ arm_convolve_HWC_q7_RGB(const q7_t * Im_in,
                         const uint16_t out_shift,
                         q7_t * Im_out, const uint16_t dim_im_out, q15_t * bufferA, q7_t * bufferB)
 {
-
+    (void)bufferB;
 #if defined (ARM_MATH_DSP)
     /* Run the following code for Cortex-M4 and Cortex-M7 */
     int16_t   i_out_y, i_out_x, i_ker_y, i_ker_x;
@@ -124,13 +124,13 @@ arm_convolve_HWC_q7_RGB(const q7_t * Im_in,
                         pBuffer += 3;
                     } else
                     {
-                        /* 
+                        /*
                          * Equivalent to:
                          *  arm_q7_to_q15_no_shift( (q7_t*)Im_in+(i_ker_y*dim_im_in+i_ker_x)*3, pBuffer, 3);
                          */
 
                         const q7_t *pPixel = Im_in + (i_ker_y * dim_im_in + i_ker_x) * 3;
-                        q31_t     buf = *__SIMD32(pPixel);
+                        q31_t     buf = arm_nn_read_q7x4(pPixel);
 
                         union arm_nnword top;
                         union arm_nnword bottom;
@@ -154,14 +154,14 @@ arm_convolve_HWC_q7_RGB(const q7_t * Im_in,
                         *__SIMD32(pBuffer) = __PKHBT(bottom.word, top.word, 0);
 #else
                         /*
-                         *  big-endian,    | 1st  | 2nd  | 3rd  | omit | 
+                         *  big-endian,    | 1st  | 2nd  | 3rd  | omit |
                          *                MSB                         LSB
                          *  top | 2nd | omit |; bottom | 1st | 3rd |
-                         * 
+                         *
                          *  version 1, need to swap 2nd and 3rd weight
                          * *__SIMD32(pBuffer) = bottom.word;
                          * *(pBuffer+2) = top.half_words[1];
-                         * 
+                         *
                          *  version 2, no weight shuffling required
                          */
                         *pBuffer++ = bottom.half_words[0];
@@ -204,11 +204,11 @@ arm_convolve_HWC_q7_RGB(const q7_t * Im_in,
                 q31_t     inA1, inA2;
                 q31_t     inB1, inB2;
 
-                pA = (q7_t *) read_and_pad((void *)pA, &inA1, &inA2);
+                pA = read_and_pad(pA, &inA1, &inA2);
 
-                inB1 = *__SIMD32(pB)++;
+                inB1 = arm_nn_read_q15x2_ia((const q15_t **)&pB);
                 sum = __SMLAD(inA1, inB1, sum);
-                inB2 = *__SIMD32(pB)++;
+                inB2 = arm_nn_read_q15x2_ia((const q15_t **)&pB);
                 sum = __SMLAD(inA2, inB2, sum);
 
                 colCnt--;

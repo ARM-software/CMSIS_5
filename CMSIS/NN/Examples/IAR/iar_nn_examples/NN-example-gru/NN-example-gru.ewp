@@ -11,7 +11,7 @@
             <name>General</name>
             <archiveVersion>3</archiveVersion>
             <data>
-                <version>30</version>
+                <version>31</version>
                 <wantNonLocal>1</wantNonLocal>
                 <debug>1</debug>
                 <option>
@@ -66,7 +66,7 @@
                 </option>
                 <option>
                     <name>OGLastSavedByProductVersion</name>
-                    <state>8.22.2.15993</state>
+                    <state>8.40.1.21529</state>
                 </option>
                 <option>
                     <name>GeneralEnableMisra</name>
@@ -112,11 +112,11 @@
                 </option>
                 <option>
                     <name>RTConfigPath2</name>
-                    <state>$TOOLKIT_DIR$\INC\c\DLib_Config_Normal.h</state>
+                    <state>$TOOLKIT_DIR$\inc\c\DLib_Config_Normal.h</state>
                 </option>
                 <option>
                     <name>GBECoreSlave</name>
-                    <version>26</version>
+                    <version>27</version>
                     <state>34</state>
                 </option>
                 <option>
@@ -133,7 +133,7 @@
                 </option>
                 <option>
                     <name>CoreVariant</name>
-                    <version>26</version>
+                    <version>27</version>
                     <state>34</state>
                 </option>
                 <option>
@@ -156,7 +156,7 @@
                 </option>
                 <option>
                     <name>GFPUCoreSlave2</name>
-                    <version>26</version>
+                    <version>27</version>
                     <state>34</state>
                 </option>
                 <option>
@@ -204,13 +204,18 @@
                     <name>TrustZone</name>
                     <state>0</state>
                 </option>
+                <option>
+                    <name>TrustZoneModes</name>
+                    <version>0</version>
+                    <state>0</state>
+                </option>
             </data>
         </settings>
         <settings>
             <name>ICCARM</name>
             <archiveVersion>2</archiveVersion>
             <data>
-                <version>34</version>
+                <version>35</version>
                 <wantNonLocal>1</wantNonLocal>
                 <debug>1</debug>
                 <option>
@@ -461,6 +466,10 @@
                     <name>IccRTTI2</name>
                     <state>0</state>
                 </option>
+                <option>
+                    <name>OICompilerExtraOption</name>
+                    <state>1</state>
+                </option>
             </data>
         </settings>
         <settings>
@@ -683,7 +692,7 @@
             <name>ILINK</name>
             <archiveVersion>0</archiveVersion>
             <data>
-                <version>20</version>
+                <version>23</version>
                 <wantNonLocal>1</wantNonLocal>
                 <debug>1</debug>
                 <option>
@@ -995,6 +1004,30 @@
                     <name>IlinkLocaleSelect</name>
                     <state>1</state>
                 </option>
+                <option>
+                    <name>IlinkTrustzoneImportLibraryOut</name>
+                    <state>###Unitialized###</state>
+                </option>
+                <option>
+                    <name>OILinkExtraOption</name>
+                    <state>1</state>
+                </option>
+                <option>
+                    <name>IlinkRawBinaryFile2</name>
+                    <state></state>
+                </option>
+                <option>
+                    <name>IlinkRawBinarySymbol2</name>
+                    <state></state>
+                </option>
+                <option>
+                    <name>IlinkRawBinarySegment2</name>
+                    <state></state>
+                </option>
+                <option>
+                    <name>IlinkRawBinaryAlign2</name>
+                    <state></state>
+                </option>
             </data>
         </settings>
         <settings>
@@ -1039,7 +1072,7 @@
             <name>General</name>
             <archiveVersion>3</archiveVersion>
             <data>
-                <version>30</version>
+                <version>31</version>
                 <wantNonLocal>1</wantNonLocal>
                 <debug>0</debug>
                 <option>
@@ -1144,7 +1177,7 @@
                 </option>
                 <option>
                     <name>GBECoreSlave</name>
-                    <version>26</version>
+                    <version>27</version>
                     <state>38</state>
                 </option>
                 <option>
@@ -1161,7 +1194,7 @@
                 </option>
                 <option>
                     <name>CoreVariant</name>
-                    <version>26</version>
+                    <version>27</version>
                     <state>34</state>
                 </option>
                 <option>
@@ -1184,7 +1217,7 @@
                 </option>
                 <option>
                     <name>GFPUCoreSlave2</name>
-                    <version>26</version>
+                    <version>27</version>
                     <state>38</state>
                 </option>
                 <option>
@@ -1232,13 +1265,18 @@
                     <name>TrustZone</name>
                     <state>0</state>
                 </option>
+                <option>
+                    <name>TrustZoneModes</name>
+                    <version>0</version>
+                    <state>0</state>
+                </option>
             </data>
         </settings>
         <settings>
             <name>ICCARM</name>
             <archiveVersion>2</archiveVersion>
             <data>
-                <version>34</version>
+                <version>35</version>
                 <wantNonLocal>1</wantNonLocal>
                 <debug>0</debug>
                 <option>
@@ -1489,6 +1527,10 @@
                     <name>IccRTTI2</name>
                     <state>0</state>
                 </option>
+                <option>
+                    <name>OICompilerExtraOption</name>
+                    <state>1</state>
+                </option>
             </data>
         </settings>
         <settings>
@@ -1711,7 +1753,7 @@
             <name>ILINK</name>
             <archiveVersion>0</archiveVersion>
             <data>
-                <version>20</version>
+                <version>23</version>
                 <wantNonLocal>1</wantNonLocal>
                 <debug>0</debug>
                 <option>
@@ -2023,6 +2065,30 @@
                     <name>IlinkLocaleSelect</name>
                     <state>1</state>
                 </option>
+                <option>
+                    <name>IlinkTrustzoneImportLibraryOut</name>
+                    <state>###Unitialized###</state>
+                </option>
+                <option>
+                    <name>OILinkExtraOption</name>
+                    <state>1</state>
+                </option>
+                <option>
+                    <name>IlinkRawBinaryFile2</name>
+                    <state></state>
+                </option>
+                <option>
+                    <name>IlinkRawBinarySymbol2</name>
+                    <state></state>
+                </option>
+                <option>
+                    <name>IlinkRawBinarySegment2</name>
+                    <state></state>
+                </option>
+                <option>
+                    <name>IlinkRawBinaryAlign2</name>
+                    <state></state>
+                </option>
             </data>
         </settings>
         <settings>
@@ -2058,143 +2124,6 @@
         </settings>
     </configuration>
     <group>
-        <name>CMSIS-Pack</name>
-        <tag>CMSISPack.ComponentGroup</tag>
-        <file>
-            <name>$PROJ_DIR$\RTE\RTE_Components.h</name>
-        </file>
-        <group>
-            <name>Device Startup</name>
-            <tag>CMSISPack.Component</tag>
-            <file>
-                <name>${CMSIS_PACK_PATH_ARM#CMSIS#5.5.0-dev0}$\Device\ARM\ARMCM0\Include\ARMCM0.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\RTE\CMSIS\ARM\startup_ARMCM0.s</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\RTE\CMSIS\ARM\system_ARMCM0.c</name>
-            </file>
-        </group>
-        <group>
-            <name>CMSIS NN Lib</name>
-            <tag>CMSISPack.Component</tag>
-            <file>
-                <name>${CMSIS_PACK_PATH_ARM#CMSIS#5.5.0-dev0}$\CMSIS\NN\Source\ConvolutionFunctions\arm_convolve_1x1_HWC_q7_fast_nonsquare.c</name>
-            </file>
-            <file>
-                <name>${CMSIS_PACK_PATH_ARM#CMSIS#5.5.0-dev0}$\CMSIS\NN\Source\ConvolutionFunctions\arm_convolve_HWC_q15_basic.c</name>
-            </file>
-            <file>
-                <name>${CMSIS_PACK_PATH_ARM#CMSIS#5.5.0-dev0}$\CMSIS\NN\Source\ConvolutionFunctions\arm_convolve_HWC_q15_fast.c</name>
-            </file>
-            <file>
-                <name>${CMSIS_PACK_PATH_ARM#CMSIS#5.5.0-dev0}$\CMSIS\NN\Source\ConvolutionFunctions\arm_convolve_HWC_q7_basic.c</name>
-            </file>
-            <file>
-                <name>${CMSIS_PACK_PATH_ARM#CMSIS#5.5.0-dev0}$\CMSIS\NN\Source\ConvolutionFunctions\arm_convolve_HWC_q7_basic_nonsquare.c</name>
-            </file>
-            <file>
-                <name>${CMSIS_PACK_PATH_ARM#CMSIS#5.5.0-dev0}$\CMSIS\NN\Source\ConvolutionFunctions\arm_convolve_HWC_q7_fast.c</name>
-            </file>
-            <file>
-                <name>${CMSIS_PACK_PATH_ARM#CMSIS#5.5.0-dev0}$\CMSIS\NN\Source\ConvolutionFunctions\arm_convolve_HWC_q7_fast_nonsquare.c</name>
-            </file>
-            <file>
-                <name>${CMSIS_PACK_PATH_ARM#CMSIS#5.5.0-dev0}$\CMSIS\NN\Source\ConvolutionFunctions\arm_convolve_HWC_q7_RGB.c</name>
-            </file>
-            <file>
-                <name>${CMSIS_PACK_PATH_ARM#CMSIS#5.5.0-dev0}$\CMSIS\NN\Source\ConvolutionFunctions\arm_depthwise_separable_conv_HWC_q7.c</name>
-            </file>
-            <file>
-                <name>${CMSIS_PACK_PATH_ARM#CMSIS#5.5.0-dev0}$\CMSIS\NN\Source\ConvolutionFunctions\arm_depthwise_separable_conv_HWC_q7_nonsquare.c</name>
-            </file>
-            <file>
-                <name>${CMSIS_PACK_PATH_ARM#CMSIS#5.5.0-dev0}$\CMSIS\NN\Source\FullyConnectedFunctions\arm_fully_connected_mat_q7_vec_q15.c</name>
-            </file>
-            <file>
-                <name>${CMSIS_PACK_PATH_ARM#CMSIS#5.5.0-dev0}$\CMSIS\NN\Source\FullyConnectedFunctions\arm_fully_connected_mat_q7_vec_q15_opt.c</name>
-            </file>
-            <file>
-                <name>${CMSIS_PACK_PATH_ARM#CMSIS#5.5.0-dev0}$\CMSIS\NN\Source\FullyConnectedFunctions\arm_fully_connected_q15.c</name>
-            </file>
-            <file>
-                <name>${CMSIS_PACK_PATH_ARM#CMSIS#5.5.0-dev0}$\CMSIS\NN\Source\FullyConnectedFunctions\arm_fully_connected_q15_opt.c</name>
-            </file>
-            <file>
-                <name>${CMSIS_PACK_PATH_ARM#CMSIS#5.5.0-dev0}$\CMSIS\NN\Source\FullyConnectedFunctions\arm_fully_connected_q7.c</name>
-            </file>
-            <file>
-                <name>${CMSIS_PACK_PATH_ARM#CMSIS#5.5.0-dev0}$\CMSIS\NN\Source\FullyConnectedFunctions\arm_fully_connected_q7_opt.c</name>
-            </file>
-            <file>
-                <name>${CMSIS_PACK_PATH_ARM#CMSIS#5.5.0-dev0}$\CMSIS\NN\Source\ActivationFunctions\arm_nn_activations_q15.c</name>
-            </file>
-            <file>
-                <name>${CMSIS_PACK_PATH_ARM#CMSIS#5.5.0-dev0}$\CMSIS\NN\Source\ActivationFunctions\arm_nn_activations_q7.c</name>
-            </file>
-            <file>
-                <name>${CMSIS_PACK_PATH_ARM#CMSIS#5.5.0-dev0}$\CMSIS\NN\Source\ConvolutionFunctions\arm_nn_mat_mult_kernel_q7_q15.c</name>
-            </file>
-            <file>
-                <name>${CMSIS_PACK_PATH_ARM#CMSIS#5.5.0-dev0}$\CMSIS\NN\Source\ConvolutionFunctions\arm_nn_mat_mult_kernel_q7_q15_reordered.c</name>
-            </file>
-            <file>
-                <name>${CMSIS_PACK_PATH_ARM#CMSIS#5.5.0-dev0}$\CMSIS\NN\Source\NNSupportFunctions\arm_nn_mult_q15.c</name>
-            </file>
-            <file>
-                <name>${CMSIS_PACK_PATH_ARM#CMSIS#5.5.0-dev0}$\CMSIS\NN\Source\NNSupportFunctions\arm_nn_mult_q7.c</name>
-            </file>
-            <file>
-                <name>${CMSIS_PACK_PATH_ARM#CMSIS#5.5.0-dev0}$\CMSIS\NN\Include\arm_nnfunctions.h</name>
-            </file>
-            <file>
-                <name>${CMSIS_PACK_PATH_ARM#CMSIS#5.5.0-dev0}$\CMSIS\NN\Source\NNSupportFunctions\arm_nntables.c</name>
-            </file>
-            <file>
-                <name>${CMSIS_PACK_PATH_ARM#CMSIS#5.5.0-dev0}$\CMSIS\NN\Source\PoolingFunctions\arm_pool_q7_HWC.c</name>
-            </file>
-            <file>
-                <name>${CMSIS_PACK_PATH_ARM#CMSIS#5.5.0-dev0}$\CMSIS\NN\Source\NNSupportFunctions\arm_q7_to_q15_no_shift.c</name>
-            </file>
-            <file>
-                <name>${CMSIS_PACK_PATH_ARM#CMSIS#5.5.0-dev0}$\CMSIS\NN\Source\NNSupportFunctions\arm_q7_to_q15_reordered_no_shift.c</name>
-            </file>
-            <file>
-                <name>${CMSIS_PACK_PATH_ARM#CMSIS#5.5.0-dev0}$\CMSIS\NN\Source\ActivationFunctions\arm_relu_q15.c</name>
-            </file>
-            <file>
-                <name>${CMSIS_PACK_PATH_ARM#CMSIS#5.5.0-dev0}$\CMSIS\NN\Source\ActivationFunctions\arm_relu_q7.c</name>
-            </file>
-            <file>
-                <name>${CMSIS_PACK_PATH_ARM#CMSIS#5.5.0-dev0}$\CMSIS\NN\Source\SoftmaxFunctions\arm_softmax_q15.c</name>
-            </file>
-            <file>
-                <name>${CMSIS_PACK_PATH_ARM#CMSIS#5.5.0-dev0}$\CMSIS\NN\Source\SoftmaxFunctions\arm_softmax_q7.c</name>
-            </file>
-            <file>
-                <name>${CMSIS_PACK_PATH_ARM#CMSIS#5.5.0-dev0}$\CMSIS\Documentation\NN\html\index.html</name>
-            </file>
-        </group>
-        <group>
-            <name>CMSIS CORE</name>
-            <tag>CMSISPack.Component</tag>
-            <file>
-                <name>${CMSIS_PACK_PATH_ARM#CMSIS#5.5.0-dev0}$\CMSIS\Documentation\Core\html\index.html</name>
-            </file>
-        </group>
-        <group>
-            <name>CMSIS DSP</name>
-            <tag>CMSISPack.Component</tag>
-            <file>
-                <name>${CMSIS_PACK_PATH_ARM#CMSIS#5.5.0-dev0}$\CMSIS\DSP\Include\arm_math.h</name>
-            </file>
-            <file>
-                <name>${CMSIS_PACK_PATH_ARM#CMSIS#5.5.0-dev0}$\CMSIS\Documentation\DSP\html\index.html</name>
-            </file>
-        </group>
-    </group>
-    <group>
         <name>Documentation</name>
         <file>
             <name>$PROJ_DIR$\..\readme_iar.txt</name>
@@ -2206,71 +2135,189 @@
             <name>$PROJ_DIR$\arm_nnexamples_gru.cpp</name>
         </file>
     </group>
+    <group>
+        <name>CMSIS-Pack</name>
+        <tag>CMSISPack.Component</tag>
+        <group>
+            <name>CMSIS.DSP Library</name>
+            <tag>CMSISPack.Component</tag>
+            <file>
+                <name>${CMSIS_PACK_PATH_ARM#CMSIS#5.6.0-dev0}$\CMSIS/DSP/Lib/IAR/iar_cortexM0l_math.a</name>
+            </file>
+        </group>
+        <file>
+            <name>$PROJ_DIR$\RTE\RTE_Components.h</name>
+        </file>
+        <group>
+            <name>CMSIS NN Lib</name>
+            <tag>CMSISPack.Component</tag>
+            <file>
+                <name>${CMSIS_PACK_PATH_ARM#CMSIS#5.6.0-dev0}$\CMSIS/NN/Source/ConvolutionFunctions/arm_convolve_1x1_HWC_q7_fast_nonsquare.c</name>
+            </file>
+            <file>
+                <name>${CMSIS_PACK_PATH_ARM#CMSIS#5.6.0-dev0}$\CMSIS/NN/Source/ConvolutionFunctions/arm_convolve_HWC_q15_basic.c</name>
+            </file>
+            <file>
+                <name>${CMSIS_PACK_PATH_ARM#CMSIS#5.6.0-dev0}$\CMSIS/NN/Source/ConvolutionFunctions/arm_convolve_HWC_q15_fast.c</name>
+            </file>
+            <file>
+                <name>${CMSIS_PACK_PATH_ARM#CMSIS#5.6.0-dev0}$\CMSIS/NN/Source/ConvolutionFunctions/arm_convolve_HWC_q7_basic.c</name>
+            </file>
+            <file>
+                <name>${CMSIS_PACK_PATH_ARM#CMSIS#5.6.0-dev0}$\CMSIS/NN/Source/ConvolutionFunctions/arm_convolve_HWC_q7_basic_nonsquare.c</name>
+            </file>
+            <file>
+                <name>${CMSIS_PACK_PATH_ARM#CMSIS#5.6.0-dev0}$\CMSIS/NN/Source/ConvolutionFunctions/arm_convolve_HWC_q7_fast.c</name>
+            </file>
+            <file>
+                <name>${CMSIS_PACK_PATH_ARM#CMSIS#5.6.0-dev0}$\CMSIS/NN/Source/ConvolutionFunctions/arm_convolve_HWC_q7_fast_nonsquare.c</name>
+            </file>
+            <file>
+                <name>${CMSIS_PACK_PATH_ARM#CMSIS#5.6.0-dev0}$\CMSIS/NN/Source/ConvolutionFunctions/arm_convolve_HWC_q7_RGB.c</name>
+            </file>
+            <file>
+                <name>${CMSIS_PACK_PATH_ARM#CMSIS#5.6.0-dev0}$\CMSIS/NN/Source/ConvolutionFunctions/arm_depthwise_separable_conv_HWC_q7.c</name>
+            </file>
+            <file>
+                <name>${CMSIS_PACK_PATH_ARM#CMSIS#5.6.0-dev0}$\CMSIS/NN/Source/ConvolutionFunctions/arm_depthwise_separable_conv_HWC_q7_nonsquare.c</name>
+            </file>
+            <file>
+                <name>${CMSIS_PACK_PATH_ARM#CMSIS#5.6.0-dev0}$\CMSIS/NN/Source/FullyConnectedFunctions/arm_fully_connected_mat_q7_vec_q15.c</name>
+            </file>
+            <file>
+                <name>${CMSIS_PACK_PATH_ARM#CMSIS#5.6.0-dev0}$\CMSIS/NN/Source/FullyConnectedFunctions/arm_fully_connected_mat_q7_vec_q15_opt.c</name>
+            </file>
+            <file>
+                <name>${CMSIS_PACK_PATH_ARM#CMSIS#5.6.0-dev0}$\CMSIS/NN/Source/FullyConnectedFunctions/arm_fully_connected_q15.c</name>
+            </file>
+            <file>
+                <name>${CMSIS_PACK_PATH_ARM#CMSIS#5.6.0-dev0}$\CMSIS/NN/Source/FullyConnectedFunctions/arm_fully_connected_q15_opt.c</name>
+            </file>
+            <file>
+                <name>${CMSIS_PACK_PATH_ARM#CMSIS#5.6.0-dev0}$\CMSIS/NN/Source/FullyConnectedFunctions/arm_fully_connected_q7.c</name>
+            </file>
+            <file>
+                <name>${CMSIS_PACK_PATH_ARM#CMSIS#5.6.0-dev0}$\CMSIS/NN/Source/FullyConnectedFunctions/arm_fully_connected_q7_opt.c</name>
+            </file>
+            <file>
+                <name>${CMSIS_PACK_PATH_ARM#CMSIS#5.6.0-dev0}$\CMSIS/NN/Source/ActivationFunctions/arm_nn_activations_q15.c</name>
+            </file>
+            <file>
+                <name>${CMSIS_PACK_PATH_ARM#CMSIS#5.6.0-dev0}$\CMSIS/NN/Source/ActivationFunctions/arm_nn_activations_q7.c</name>
+            </file>
+            <file>
+                <name>${CMSIS_PACK_PATH_ARM#CMSIS#5.6.0-dev0}$\CMSIS/NN/Source/ConvolutionFunctions/arm_nn_mat_mult_kernel_q7_q15.c</name>
+            </file>
+            <file>
+                <name>${CMSIS_PACK_PATH_ARM#CMSIS#5.6.0-dev0}$\CMSIS/NN/Source/ConvolutionFunctions/arm_nn_mat_mult_kernel_q7_q15_reordered.c</name>
+            </file>
+            <file>
+                <name>${CMSIS_PACK_PATH_ARM#CMSIS#5.6.0-dev0}$\CMSIS/NN/Source/NNSupportFunctions/arm_nn_mult_q15.c</name>
+            </file>
+            <file>
+                <name>${CMSIS_PACK_PATH_ARM#CMSIS#5.6.0-dev0}$\CMSIS/NN/Source/NNSupportFunctions/arm_nn_mult_q7.c</name>
+            </file>
+            <file>
+                <name>${CMSIS_PACK_PATH_ARM#CMSIS#5.6.0-dev0}$\CMSIS/NN/Source/NNSupportFunctions/arm_nntables.c</name>
+            </file>
+            <file>
+                <name>${CMSIS_PACK_PATH_ARM#CMSIS#5.6.0-dev0}$\CMSIS/NN/Source/PoolingFunctions/arm_pool_q7_HWC.c</name>
+            </file>
+            <file>
+                <name>${CMSIS_PACK_PATH_ARM#CMSIS#5.6.0-dev0}$\CMSIS/NN/Source/NNSupportFunctions/arm_q7_to_q15_no_shift.c</name>
+            </file>
+            <file>
+                <name>${CMSIS_PACK_PATH_ARM#CMSIS#5.6.0-dev0}$\CMSIS/NN/Source/NNSupportFunctions/arm_q7_to_q15_reordered_no_shift.c</name>
+            </file>
+            <file>
+                <name>${CMSIS_PACK_PATH_ARM#CMSIS#5.6.0-dev0}$\CMSIS/NN/Source/ActivationFunctions/arm_relu_q15.c</name>
+            </file>
+            <file>
+                <name>${CMSIS_PACK_PATH_ARM#CMSIS#5.6.0-dev0}$\CMSIS/NN/Source/ActivationFunctions/arm_relu_q7.c</name>
+            </file>
+            <file>
+                <name>${CMSIS_PACK_PATH_ARM#CMSIS#5.6.0-dev0}$\CMSIS/NN/Source/SoftmaxFunctions/arm_softmax_q15.c</name>
+            </file>
+            <file>
+                <name>${CMSIS_PACK_PATH_ARM#CMSIS#5.6.0-dev0}$\CMSIS/NN/Source/SoftmaxFunctions/arm_softmax_q7.c</name>
+            </file>
+        </group>
+        <group>
+            <name>Device Startup</name>
+            <tag>CMSISPack.Component</tag>
+            <file>
+                <name>$PROJ_DIR$\RTE\Device\ARMCM0\startup_ARMCM0.s</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\RTE\Device\ARMCM0\system_ARMCM0.c</name>
+            </file>
+        </group>
+    </group>
     <cmsisPackSettings>
-        <rte>&lt;?xml version="1.0" encoding="UTF-8" standalone="no"?&gt;
-&lt;configuration xmlns:xs="http://www.w3.org/2001/XMLSchema-instance"&gt;
-&lt;packages/&gt;
-&lt;device Dclock="10000000" Dcore="Cortex-M0" DcoreVersion="r0p0" Dendian="Little-endian" Dfamily="ARM Cortex M0" Dfpu="NO_FPU" Dmpu="NO_MPU" Dname="ARMCM0" Dvendor="ARM:82" Pname=""&gt;
-&lt;url&gt;http://www.keil.com/dd2/arm/armcm0&lt;/url&gt;
-&lt;package name="CMSIS" url="http://www.keil.com/pack/" vendor="ARM" version="5.5.0-dev0"/&gt;
-&lt;/device&gt;
-&lt;toolchain Tcompiler="IAR" Toutput="exe"/&gt;
-&lt;components&gt;
-&lt;component Cclass="CMSIS" Cgroup="CORE" Cvendor="ARM" Cversion="5.1.2"&gt;
-&lt;package name="CMSIS" url="http://www.keil.com/pack/" vendor="ARM" version="5.5.0-dev0"/&gt;
-&lt;file category="doc" name="CMSIS/Documentation/Core/html/index.html"/&gt;
-&lt;file category="include" name="CMSIS/Core/Include/"/&gt;
-&lt;/component&gt;
-&lt;component Cclass="CMSIS" Cgroup="DSP" Cvendor="ARM" Cversion="1.5.2"&gt;
-&lt;package name="CMSIS" url="http://www.keil.com/pack/" vendor="ARM" version="5.5.0-dev0"/&gt;
-&lt;file category="doc" name="CMSIS/Documentation/DSP/html/index.html"/&gt;
-&lt;file category="header" name="CMSIS/DSP/Include/arm_math.h"/&gt;
-&lt;file category="library" condition="CM0_LE_IAR" name="CMSIS/Lib/IAR/iar_cortexM0l_math.a" src="CMSIS/DSP/Source/IAR"/&gt;
-&lt;/component&gt;
-&lt;component Cclass="CMSIS" Cgroup="NN Lib" Cvendor="ARM" Cversion="1.1.0"&gt;
-&lt;package name="CMSIS" url="http://www.keil.com/pack/" vendor="ARM" version="5.5.0-dev0"/&gt;
-&lt;file category="doc" name="CMSIS/Documentation/NN/html/index.html"/&gt;
-&lt;file category="header" name="CMSIS/NN/Include/arm_nnfunctions.h"/&gt;
-&lt;file category="source" name="CMSIS/NN/Source/ActivationFunctions/arm_nn_activations_q7.c"/&gt;
-&lt;file category="source" name="CMSIS/NN/Source/ActivationFunctions/arm_nn_activations_q15.c"/&gt;
-&lt;file category="source" name="CMSIS/NN/Source/ActivationFunctions/arm_relu_q7.c"/&gt;
-&lt;file category="source" name="CMSIS/NN/Source/ActivationFunctions/arm_relu_q15.c"/&gt;
-&lt;file category="source" name="CMSIS/NN/Source/ConvolutionFunctions/arm_convolve_HWC_q7_RGB.c"/&gt;
-&lt;file category="source" name="CMSIS/NN/Source/ConvolutionFunctions/arm_convolve_HWC_q15_basic.c"/&gt;
-&lt;file category="source" name="CMSIS/NN/Source/ConvolutionFunctions/arm_convolve_HWC_q15_fast.c"/&gt;
-&lt;file category="source" name="CMSIS/NN/Source/ConvolutionFunctions/arm_depthwise_separable_conv_HWC_q7.c"/&gt;
-&lt;file category="source" name="CMSIS/NN/Source/ConvolutionFunctions/arm_depthwise_separable_conv_HWC_q7_nonsquare.c"/&gt;
-&lt;file category="source" name="CMSIS/NN/Source/ConvolutionFunctions/arm_nn_mat_mult_kernel_q7_q15.c"/&gt;
-&lt;file category="source" name="CMSIS/NN/Source/ConvolutionFunctions/arm_nn_mat_mult_kernel_q7_q15_reordered.c"/&gt;
-&lt;file category="source" name="CMSIS/NN/Source/ConvolutionFunctions/arm_convolve_1x1_HWC_q7_fast_nonsquare.c"/&gt;
-&lt;file category="source" name="CMSIS/NN/Source/ConvolutionFunctions/arm_convolve_HWC_q7_basic.c"/&gt;
-&lt;file category="source" name="CMSIS/NN/Source/ConvolutionFunctions/arm_convolve_HWC_q7_basic_nonsquare.c"/&gt;
-&lt;file category="source" name="CMSIS/NN/Source/ConvolutionFunctions/arm_convolve_HWC_q7_fast.c"/&gt;
-&lt;file category="source" name="CMSIS/NN/Source/ConvolutionFunctions/arm_convolve_HWC_q7_fast_nonsquare.c"/&gt;
-&lt;file category="source" name="CMSIS/NN/Source/FullyConnectedFunctions/arm_fully_connected_q7.c"/&gt;
-&lt;file category="source" name="CMSIS/NN/Source/FullyConnectedFunctions/arm_fully_connected_q7_opt.c"/&gt;
-&lt;file category="source" name="CMSIS/NN/Source/FullyConnectedFunctions/arm_fully_connected_q15.c"/&gt;
-&lt;file category="source" name="CMSIS/NN/Source/FullyConnectedFunctions/arm_fully_connected_q15_opt.c"/&gt;
-&lt;file category="source" name="CMSIS/NN/Source/FullyConnectedFunctions/arm_fully_connected_mat_q7_vec_q15.c"/&gt;
-&lt;file category="source" name="CMSIS/NN/Source/FullyConnectedFunctions/arm_fully_connected_mat_q7_vec_q15_opt.c"/&gt;
-&lt;file category="source" name="CMSIS/NN/Source/NNSupportFunctions/arm_q7_to_q15_reordered_no_shift.c"/&gt;
-&lt;file category="source" name="CMSIS/NN/Source/NNSupportFunctions/arm_nntables.c"/&gt;
-&lt;file category="source" name="CMSIS/NN/Source/NNSupportFunctions/arm_q7_to_q15_no_shift.c"/&gt;
-&lt;file category="source" name="CMSIS/NN/Source/NNSupportFunctions/arm_nn_mult_q15.c"/&gt;
-&lt;file category="source" name="CMSIS/NN/Source/NNSupportFunctions/arm_nn_mult_q7.c"/&gt;
-&lt;file category="source" name="CMSIS/NN/Source/PoolingFunctions/arm_pool_q7_HWC.c"/&gt;
-&lt;file category="source" name="CMSIS/NN/Source/SoftmaxFunctions/arm_softmax_q15.c"/&gt;
-&lt;file category="source" name="CMSIS/NN/Source/SoftmaxFunctions/arm_softmax_q7.c"/&gt;
-&lt;/component&gt;
-&lt;component Cclass="Device" Cgroup="Startup" Cvendor="ARM" Cversion="1.0.1" deviceDependent="1"&gt;
-&lt;package name="CMSIS" url="http://www.keil.com/pack/" vendor="ARM" version="5.5.0-dev0"/&gt;
-&lt;file category="header" deviceDependent="1" name="Device/ARM/ARMCM0/Include/ARMCM0.h"/&gt;
-&lt;file attr="config" category="sourceAsm" condition="IAR" deviceDependent="1" name="Device/ARM/ARMCM0/Source/IAR/startup_ARMCM0.s" version="1.0.0"/&gt;
-&lt;file attr="config" category="sourceC" deviceDependent="1" name="Device/ARM/ARMCM0/Source/system_ARMCM0.c" version="1.0.0"/&gt;
-&lt;/component&gt;
-&lt;/components&gt;
-&lt;apis/&gt;
-&lt;/configuration&gt;
+        <rte>&lt;?xml version="1.0" encoding="UTF-8" standalone="no"?&gt;
+&lt;configuration xmlns:xs="http://www.w3.org/2001/XMLSchema-instance"&gt;
+  &lt;packages/&gt;
+  &lt;device Dclock="10000000" Dcore="Cortex-M0" DcoreVersion="r0p0" Dendian="Little-endian" Dfamily="ARM Cortex M0" Dfpu="NO_FPU" Dmpu="NO_MPU" Dname="ARMCM0" Dvendor="ARM:82" Pname=""&gt;
+    &lt;url&gt;http://www.keil.com/dd2/arm/armcm0&lt;/url&gt;
+    &lt;package info="CMSIS (Cortex Microcontroller Software Interface Standard)" name="CMSIS" url="http://www.keil.com/pack/" vendor="ARM" version="5.6.0-dev0"/&gt;
+  &lt;/device&gt;
+  &lt;toolchain Tcompiler="IAR" Toutput="exe"/&gt;
+  &lt;components&gt;
+    &lt;component Cclass="CMSIS" Cgroup="CORE" Cvendor="ARM" Cversion="5.2.0"&gt;
+      &lt;package name="CMSIS" url="http://www.keil.com/pack/" vendor="ARM" version="5.6.0-dev0"/&gt;
+      &lt;file category="doc" name="CMSIS/Documentation/Core/html/index.html"/&gt;
+      &lt;file category="include" name="CMSIS/Core/Include/"/&gt;
+    &lt;/component&gt;
+    &lt;component Cclass="CMSIS" Cgroup="DSP" Cvariant="Library" Cvendor="ARM" Cversion="1.6.0"&gt;
+      &lt;package name="CMSIS" url="http://www.keil.com/pack/" vendor="ARM" version="5.6.0-dev0"/&gt;
+      &lt;file category="doc" name="CMSIS/Documentation/DSP/html/index.html"/&gt;
+      &lt;file category="header" name="CMSIS/DSP/Include/arm_math.h"/&gt;
+      &lt;file category="library" condition="CM0_LE_IAR" name="CMSIS/DSP/Lib/IAR/iar_cortexM0l_math.a" src="CMSIS/DSP/Source/IAR"/&gt;
+    &lt;/component&gt;
+    &lt;component Cclass="CMSIS" Cgroup="NN Lib" Cvendor="ARM" Cversion="1.1.0"&gt;
+      &lt;package name="CMSIS" url="http://www.keil.com/pack/" vendor="ARM" version="5.6.0-dev0"/&gt;
+      &lt;file category="doc" name="CMSIS/Documentation/NN/html/index.html"/&gt;
+      &lt;file category="header" name="CMSIS/NN/Include/arm_nnfunctions.h"/&gt;
+      &lt;file category="source" name="CMSIS/NN/Source/ActivationFunctions/arm_nn_activations_q7.c"/&gt;
+      &lt;file category="source" name="CMSIS/NN/Source/ActivationFunctions/arm_nn_activations_q15.c"/&gt;
+      &lt;file category="source" name="CMSIS/NN/Source/ActivationFunctions/arm_relu_q7.c"/&gt;
+      &lt;file category="source" name="CMSIS/NN/Source/ActivationFunctions/arm_relu_q15.c"/&gt;
+      &lt;file category="source" name="CMSIS/NN/Source/ConvolutionFunctions/arm_convolve_HWC_q7_RGB.c"/&gt;
+      &lt;file category="source" name="CMSIS/NN/Source/ConvolutionFunctions/arm_convolve_HWC_q15_basic.c"/&gt;
+      &lt;file category="source" name="CMSIS/NN/Source/ConvolutionFunctions/arm_convolve_HWC_q15_fast.c"/&gt;
+      &lt;file category="source" name="CMSIS/NN/Source/ConvolutionFunctions/arm_depthwise_separable_conv_HWC_q7.c"/&gt;
+      &lt;file category="source" name="CMSIS/NN/Source/ConvolutionFunctions/arm_depthwise_separable_conv_HWC_q7_nonsquare.c"/&gt;
+      &lt;file category="source" name="CMSIS/NN/Source/ConvolutionFunctions/arm_nn_mat_mult_kernel_q7_q15.c"/&gt;
+      &lt;file category="source" name="CMSIS/NN/Source/ConvolutionFunctions/arm_nn_mat_mult_kernel_q7_q15_reordered.c"/&gt;
+      &lt;file category="source" name="CMSIS/NN/Source/ConvolutionFunctions/arm_convolve_1x1_HWC_q7_fast_nonsquare.c"/&gt;
+      &lt;file category="source" name="CMSIS/NN/Source/ConvolutionFunctions/arm_convolve_HWC_q7_basic.c"/&gt;
+      &lt;file category="source" name="CMSIS/NN/Source/ConvolutionFunctions/arm_convolve_HWC_q7_basic_nonsquare.c"/&gt;
+      &lt;file category="source" name="CMSIS/NN/Source/ConvolutionFunctions/arm_convolve_HWC_q7_fast.c"/&gt;
+      &lt;file category="source" name="CMSIS/NN/Source/ConvolutionFunctions/arm_convolve_HWC_q7_fast_nonsquare.c"/&gt;
+      &lt;file category="source" name="CMSIS/NN/Source/FullyConnectedFunctions/arm_fully_connected_q7.c"/&gt;
+      &lt;file category="source" name="CMSIS/NN/Source/FullyConnectedFunctions/arm_fully_connected_q7_opt.c"/&gt;
+      &lt;file category="source" name="CMSIS/NN/Source/FullyConnectedFunctions/arm_fully_connected_q15.c"/&gt;
+      &lt;file category="source" name="CMSIS/NN/Source/FullyConnectedFunctions/arm_fully_connected_q15_opt.c"/&gt;
+      &lt;file category="source" name="CMSIS/NN/Source/FullyConnectedFunctions/arm_fully_connected_mat_q7_vec_q15.c"/&gt;
+      &lt;file category="source" name="CMSIS/NN/Source/FullyConnectedFunctions/arm_fully_connected_mat_q7_vec_q15_opt.c"/&gt;
+      &lt;file category="source" name="CMSIS/NN/Source/NNSupportFunctions/arm_q7_to_q15_reordered_no_shift.c"/&gt;
+      &lt;file category="source" name="CMSIS/NN/Source/NNSupportFunctions/arm_nntables.c"/&gt;
+      &lt;file category="source" name="CMSIS/NN/Source/NNSupportFunctions/arm_q7_to_q15_no_shift.c"/&gt;
+      &lt;file category="source" name="CMSIS/NN/Source/NNSupportFunctions/arm_nn_mult_q15.c"/&gt;
+      &lt;file category="source" name="CMSIS/NN/Source/NNSupportFunctions/arm_nn_mult_q7.c"/&gt;
+      &lt;file category="source" name="CMSIS/NN/Source/PoolingFunctions/arm_pool_q7_HWC.c"/&gt;
+      &lt;file category="source" name="CMSIS/NN/Source/SoftmaxFunctions/arm_softmax_q15.c"/&gt;
+      &lt;file category="source" name="CMSIS/NN/Source/SoftmaxFunctions/arm_softmax_q7.c"/&gt;
+    &lt;/component&gt;
+    &lt;component Cclass="Device" Cgroup="Startup" Cvendor="ARM" Cversion="1.2.0" deviceDependent="1"&gt;
+      &lt;package name="CMSIS" url="http://www.keil.com/pack/" vendor="ARM" version="5.6.0-dev0"/&gt;
+      &lt;file category="header" deviceDependent="1" name="Device/ARM/ARMCM0/Include/ARMCM0.h"/&gt;
+      &lt;file attr="config" category="sourceAsm" condition="IAR" deviceDependent="1" name="Device/ARM/ARMCM0/Source/IAR/startup_ARMCM0.s" version="1.0.0"/&gt;
+      &lt;file attr="config" category="sourceC" deviceDependent="1" name="Device/ARM/ARMCM0/Source/system_ARMCM0.c" version="1.0.0"/&gt;
+    &lt;/component&gt;
+  &lt;/components&gt;
+  &lt;apis/&gt;
+&lt;/configuration&gt;
 </rte>
     </cmsisPackSettings>
 </project>

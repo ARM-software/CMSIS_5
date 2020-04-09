@@ -44,7 +44,40 @@
   @param[in]     blockSize  number of samples in each vector
   @return        none
  */
+#if defined(ARM_MATH_MVEI)
+void arm_copy_q15(
+  const q15_t * pSrc,
+        q15_t * pDst,
+        uint32_t blockSize)
+{
+  uint32_t blkCnt;
 
+  blkCnt = blockSize >> 3;
+  while (blkCnt > 0U)
+  {
+      vstrhq_s16(pDst,vldrhq_s16(pSrc));
+      /*
+       * Decrement the blockSize loop counter
+       * Advance vector source and destination pointers
+       */
+      pSrc += 8;
+      pDst += 8;
+      blkCnt --;
+  }
+
+  blkCnt = blockSize & 7;
+  while (blkCnt > 0U)
+  {
+    /* C = A */
+
+    /* Copy and store result in destination buffer */
+    *pDst++ = *pSrc++;
+
+    /* Decrement loop counter */
+    blkCnt--;
+  }
+}
+#else
 void arm_copy_q15(
   const q15_t * pSrc,
         q15_t * pDst,
@@ -90,6 +123,7 @@ void arm_copy_q15(
     blkCnt--;
   }
 }
+#endif /* defined(ARM_MATH_MVEI) */
 
 /**
   @} end of BasicCopy group

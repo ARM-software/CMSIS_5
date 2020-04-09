@@ -49,7 +49,55 @@
                    The function uses saturating arithmetic.
                    Results outside of the allowable Q7 range [0x80 0x7F] are saturated.
  */
+#if defined(ARM_MATH_MVEI)
 
+#include "arm_helium_utils.h"
+
+void arm_mult_q7(
+    const q7_t * pSrcA,
+    const q7_t * pSrcB,
+    q7_t * pDst,
+    uint32_t blockSize)
+{
+    uint32_t  blkCnt;           /* loop counters */
+    q7x16_t vecA, vecB;
+
+    /* Compute 16 outputs at a time */
+    blkCnt = blockSize >> 4;
+    while (blkCnt > 0U)
+    {
+        /*
+         * C = A * B
+         * Multiply the inputs and then store the results in the destination buffer.
+         */
+        vecA = vld1q(pSrcA);
+        vecB = vld1q(pSrcB);
+        vst1q(pDst, vqdmulhq(vecA, vecB));
+        /*
+         * Decrement the blockSize loop counter
+         */
+        blkCnt--;
+        /*
+         * advance vector source and destination pointers
+         */
+        pSrcA  += 16;
+        pSrcB  += 16;
+        pDst   += 16;
+    }
+    /*
+     * tail
+     */
+    blkCnt = blockSize & 0xF;
+    if (blkCnt > 0U)
+    {
+        mve_pred16_t p0 = vctp8q(blkCnt);
+        vecA = vld1q(pSrcA);
+        vecB = vld1q(pSrcB);
+        vstrbq_p(pDst, vqdmulhq(vecA, vecB), p0);
+    }
+}
+
+#else
 void arm_mult_q7(
   const q7_t * pSrcA,
   const q7_t * pSrcB,
@@ -113,6 +161,7 @@ void arm_mult_q7(
   }
 
 }
+#endif /* defined(ARM_MATH_MVEI) */
 
 /**
   @} end of BasicMult group

@@ -60,15 +60,15 @@
  * @param[in,out]   Im_out        pointer to output tensor
  * @param[in]       dim_im_out_x  output tensor dimension x
  * @param[in]       dim_im_out_y  output tensor dimension y
- * @param[in,out]   bufferA       pointer to buffer space for input 
+ * @param[in,out]   bufferA       pointer to buffer space for input
  * @param[in,out]   bufferB       pointer to buffer space for output
  * @return     The function returns either
  * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.
  *
  * This function is the version with full list of optimization tricks, but with
  * some contraints:
- *   ch_im_in is multiple of 2
- *   ch_im_out is multiple of 2
+ *   ch_im_in is equal to ch_im_out
+ *
  */
 
 arm_status arm_depthwise_separable_conv_HWC_q7_nonsquare(const q7_t * Im_in,
@@ -88,10 +88,12 @@ arm_status arm_depthwise_separable_conv_HWC_q7_nonsquare(const q7_t * Im_in,
                                                          const uint16_t out_shift,
                                                          q7_t * Im_out,
                                                          const uint16_t dim_im_out_x,
-                                                         const uint16_t dim_im_out_y, 
-                                                         q15_t * bufferA, 
+                                                         const uint16_t dim_im_out_y,
+                                                         q15_t * bufferA,
                                                          q7_t * bufferB)
 {
+
+    (void)bufferB;
 
 #if defined (ARM_MATH_DSP)
     /* Run the following code for Cortex-M4 and Cortex-M7 */
@@ -169,15 +171,15 @@ arm_status arm_depthwise_separable_conv_HWC_q7_nonsquare(const q7_t * Im_in,
                 {
                     q31_t     inA1, inA2, inB1, inB2, opA, opB;
 
-                    inB1 = *__SIMD32(pB);
+                    inB1 = arm_nn_read_q7x4(pB);
                     pB += ch_im_in;
-                    opB = *__SIMD32(pB);
+                    opB = arm_nn_read_q7x4(pB);
                     pB += ch_im_in;
                     inB2 = __PKHTB(opB, inB1, 16);
                     inB1 = __PKHBT(inB1, opB, 16);
-                    inA1 = *__SIMD32(pA);
+                    inA1 = arm_nn_read_q7x4(pA);
                     pA += ch_im_in;
-                    opB = *__SIMD32(pA);
+                    opB = arm_nn_read_q7x4(pA);
                     pA += ch_im_in;
                     inA2 = __PKHTB(opB, inA1, 16);
                     inA1 = __PKHBT(inA1, opB, 16);
@@ -201,15 +203,15 @@ arm_status arm_depthwise_separable_conv_HWC_q7_nonsquare(const q7_t * Im_in,
                 {
                     q31_t     inA1, inA2, inB1, inB2, opA, opB;
 
-                    inB1 = *__SIMD32(pB);
+                    inB1 = arm_nn_read_q7x4(pB);
                     pB += ch_im_in;
-                    opB = *__SIMD32(pB);
+                    opB = arm_nn_read_q7x4(pB);
                     pB += ch_im_in;
                     inB2 = __PKHBT(opB, inB1, 16);
                     inB1 = __PKHTB(inB1, opB, 16);
-                    inA1 = *__SIMD32(pA);
+                    inA1 = arm_nn_read_q7x4(pA);
                     pA += ch_im_in;
-                    opB = *__SIMD32(pA);
+                    opB = arm_nn_read_q7x4(pA);
                     pA += ch_im_in;
                     inA2 = __PKHBT(opB, inA1, 16);
                     inA1 = __PKHTB(inA1, opB, 16);
@@ -312,9 +314,9 @@ arm_status arm_depthwise_separable_conv_HWC_q7_nonsquare(const q7_t * Im_in,
                 while (colCnt)
                 {
                     union arm_nnword inA, inB;
-                    inA.word = *__SIMD32(pA);
+                    inA.word = arm_nn_read_q7x4(pA);
                     pA += ch_im_in;
-                    inB.word = *__SIMD32(pB);
+                    inB.word = arm_nn_read_q7x4(pB);
                     pB += ch_im_in;
                     sum += inA.bytes[0] * inB.bytes[0];
                     sum2 += inA.bytes[1] * inB.bytes[1];
@@ -363,7 +365,7 @@ arm_status arm_depthwise_separable_conv_HWC_q7_nonsquare(const q7_t * Im_in,
 #else
     /* Run the following code as reference implementation for Cortex-M0 and Cortex-M3 */
     int       i_out_y, i_out_x, i_ch_out;
-    int       i_ker_y, i_ker_x; 
+    int       i_ker_y, i_ker_x;
 
     /* do some checking here, basically ch_im_in == ch_im_out */
     if (ch_im_in != ch_im_out)
@@ -377,7 +379,7 @@ arm_status arm_depthwise_separable_conv_HWC_q7_nonsquare(const q7_t * Im_in,
         {
             for (i_ch_out = 0; i_ch_out < ch_im_out; i_ch_out++)
             {
-                // for each output 
+                // for each output
                 int       conv_out = ((q31_t)(bias[i_ch_out]) << bias_shift) + NN_ROUND(out_shift);
                 for (i_ker_y = 0; i_ker_y < dim_kernel_y; i_ker_y++)
                 {
@@ -387,7 +389,7 @@ arm_status arm_depthwise_separable_conv_HWC_q7_nonsquare(const q7_t * Im_in,
                         int       in_col = stride_x * i_out_x + i_ker_x - padding_x;
                         if (in_row >= 0 && in_col >= 0 && in_row < dim_im_in_y && in_col < dim_im_in_x)
                         {
-                            conv_out += Im_in[(in_row * dim_im_in_x + in_col) * ch_im_in + i_ch_out] *                        
+                            conv_out += Im_in[(in_row * dim_im_in_x + in_col) * ch_im_in + i_ch_out] *
                                 wt[(i_ker_y * dim_kernel_x + i_ker_x) * ch_im_out + i_ch_out];
                         }
                     }

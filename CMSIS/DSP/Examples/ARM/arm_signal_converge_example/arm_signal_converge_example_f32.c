@@ -109,6 +109,10 @@
 #include "arm_math.h"
 #include "math_helper.h"
 
+#if defined(SEMIHOSTING)
+#include <stdio.h>
+#endif
+
 /* ----------------------------------------------------------------------
 ** Global defines for the simulation
 * ------------------------------------------------------------------- */
@@ -116,7 +120,7 @@
 #define TEST_LENGTH_SAMPLES 1536
 #define NUMTAPS               32
 #define BLOCKSIZE             32
-#define DELTA_ERROR         0.000001f
+#define DELTA_ERROR         0.00009f
 #define DELTA_COEFF         0.0001f
 #define MU                  0.5f
 
@@ -238,22 +242,25 @@ int32_t main(void)
   arm_abs_f32(lmsNormCoeff_f32, lmsNormCoeff_f32, NUMTAPS);
   arm_min_f32(lmsNormCoeff_f32, NUMTAPS, &minValue, &index);
 
-  if (minValue > DELTA_COEFF)
+  status = (minValue > DELTA_COEFF) ? ARM_MATH_TEST_FAILURE : ARM_MATH_SUCCESS;
+  
+  if (status != ARM_MATH_SUCCESS)
   {
-    status = ARM_MATH_TEST_FAILURE;
+#if defined (SEMIHOSTING)
+    printf("FAILURE\n");
+#else
+    while (1);                             /* main function does not return */
+#endif
+  }
+  else
+  {
+#if defined (SEMIHOSTING)
+    printf("SUCCESS\n");
+#else
+    while (1);                             /* main function does not return */
+#endif
   }
 
-  /* ----------------------------------------------------------------------
-  * Loop here if the signals did not pass the convergence check.
-  * This denotes a test failure
-  * ------------------------------------------------------------------- */
-
-  if ( status != ARM_MATH_SUCCESS)
-  {
-    while (1);
-  }
-
-  while (1);                             /* main function does not return */
 }
 
  /** \endlink */

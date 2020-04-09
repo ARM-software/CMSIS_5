@@ -53,7 +53,51 @@
                    full precision of the intermediate multiplication is preserved.
                    Finally, the return result is in 34.30 format.
  */
+#if defined(ARM_MATH_MVEI)
 
+void arm_power_q15(
+  const q15_t * pSrc,
+        uint32_t blockSize,
+        q63_t * pResult)
+{
+    uint32_t  blkCnt;           /* loop counters */
+    q15x8_t vecSrc;
+    q63_t     sum = 0LL;
+    q15_t in;
+
+   /* Compute 8 outputs at a time */
+    blkCnt = blockSize >> 3U;
+    while (blkCnt > 0U)
+    {
+        vecSrc = vldrhq_s16(pSrc);
+        /*
+         * sum lanes
+         */
+        sum = vmlaldavaq(sum, vecSrc, vecSrc);
+
+        blkCnt --;
+        pSrc += 8;
+    }
+
+    /*
+     * tail
+     */
+    blkCnt = blockSize & 0x7;
+    while (blkCnt > 0U)
+    {
+      /* C = A[0] * A[0] + A[1] * A[1] + ... + A[blockSize-1] * A[blockSize-1] */
+  
+      /* Compute Power and store result in a temporary variable, sum. */
+      in = *pSrc++;
+      sum += ((q31_t) in * in);
+  
+      /* Decrement loop counter */
+      blkCnt--;
+    }
+
+    *pResult = sum;
+}
+#else
 void arm_power_q15(
   const q15_t * pSrc,
         uint32_t blockSize,
@@ -126,6 +170,7 @@ void arm_power_q15(
   /* Store result in 34.30 format */
   *pResult = sum;
 }
+#endif /* defined(ARM_MATH_MVEI) */
 
 /**
   @} end of power group

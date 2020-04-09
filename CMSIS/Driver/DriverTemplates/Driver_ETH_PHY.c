@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2018 Arm Limited. All rights reserved.
+ * Copyright (c) 2013-2020 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -18,7 +18,7 @@
  
 #include "Driver_ETH_PHY.h"
 
-#define ARM_ETH_PHY_DRV_VERSION    ARM_DRIVER_VERSION_MAJOR_MINOR(2, 0) /* driver version */
+#define ARM_ETH_PHY_DRV_VERSION    ARM_DRIVER_VERSION_MAJOR_MINOR(1, 0) /* driver version */
 
 /* Driver Version */
 static const ARM_DRIVER_VERSION DriverVersion = {
@@ -30,19 +30,20 @@ static const ARM_DRIVER_VERSION DriverVersion = {
 // Functions
 //
 
-ARM_DRIVER_VERSION ARM_ETH_PHY_GetVersion(void)
+static ARM_DRIVER_VERSION ARM_ETH_PHY_GetVersion(void)
+{
+  return DriverVersion;
+}
+
+static int32_t ARM_ETH_PHY_Initialize(ARM_ETH_PHY_Read_t fn_read, ARM_ETH_PHY_Write_t fn_write)
 {
 }
 
-int32_t ARM_ETH_PHY_Initialize(ARM_ETH_PHY_Read_t fn_read, ARM_ETH_PHY_Write_t fn_write)
+static int32_t ARM_ETH_PHY_Uninitialize(void)
 {
 }
 
-int32_t ARM_ETH_PHY_Uninitialize(void)
-{
-}
-
-int32_t ARM_ETH_PHY_PowerControl(ARM_POWER_STATE state)
+static int32_t ARM_ETH_PHY_PowerControl(ARM_POWER_STATE state)
 {
     switch (state)
     {
@@ -54,13 +55,11 @@ int32_t ARM_ETH_PHY_PowerControl(ARM_POWER_STATE state)
 
     case ARM_POWER_FULL:
         break;
-
-    default:
-        return ARM_DRIVER_ERROR_UNSUPPORTED;
     }
+    return ARM_DRIVER_OK;
 }
 
-int32_t ARM_ETH_PHY_SetInterface(uint32_t interface)
+static int32_t ARM_ETH_PHY_SetInterface(uint32_t interface)
 {
     switch (interface)
     {
@@ -73,7 +72,7 @@ int32_t ARM_ETH_PHY_SetInterface(uint32_t interface)
     }
 }
 
-int32_t ARM_ETH_PHY_SetMode(uint32_t mode)
+static int32_t ARM_ETH_PHY_SetMode(uint32_t mode)
 {
     switch (mode & ARM_ETH_PHY_SPEED_Msk)
     {
@@ -106,15 +105,17 @@ int32_t ARM_ETH_PHY_SetMode(uint32_t mode)
     }
 }
 
-ARM_ETH_LINK_STATE ARM_ETH_PHY_GetLinkState(void)
+static ARM_ETH_LINK_STATE ARM_ETH_PHY_GetLinkState(void)
 {
 }
 
-ARM_ETH_LINK_INFO ARM_ETH_PHY_GetLinkInfo(void)
+static ARM_ETH_LINK_INFO ARM_ETH_PHY_GetLinkInfo(void)
 {
 }
 
-ARM_DRIVER_ETH_PHY ARM_Driver_ETH_PHY_(ETH_PHY_NUM) =
+extern \
+ARM_DRIVER_ETH_PHY Driver_ETH_PHY0;
+ARM_DRIVER_ETH_PHY Driver_ETH_PHY0 =
 {
     ARM_ETH_PHY_GetVersion,
     ARM_ETH_PHY_Initialize,

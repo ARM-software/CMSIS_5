@@ -63,6 +63,67 @@
                    defined in the preprocessor section of project options.
  */
 
+#if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
+void arm_float_to_q31(
+  const float32_t * pSrc,
+  q31_t * pDst,
+  uint32_t blockSize)
+{
+    uint32_t         blkCnt;
+    float32_t       maxQ = (float32_t) Q31_MAX;
+    f32x4_t         vecDst;
+#ifdef ARM_MATH_ROUNDING
+    float32_t in;
+#endif
+
+
+    blkCnt = blockSize >> 2U;
+
+    /* Compute 4 outputs at a time. */
+    while (blkCnt > 0U)
+    {
+
+        vecDst = vldrwq_f32(pSrc);
+        /* C = A * 2147483648 */
+        /* convert from float to Q31 and then store the results in the destination buffer */
+        vecDst = vmulq(vecDst, maxQ);
+
+        vstrwq_s32(pDst, vcvtaq_s32_f32(vecDst));
+        /*
+         * Decrement the blockSize loop counter
+         * Advance vector source and destination pointers
+         */
+        pSrc += 4;
+        pDst += 4;
+        blkCnt --;
+    }
+
+    blkCnt = blockSize & 3;
+
+    while (blkCnt > 0U)
+    {
+       /* C = A * 2147483648 */
+   
+       /* convert from float to Q31 and store result in destination buffer */
+#ifdef ARM_MATH_ROUNDING
+
+       in = (*pSrc++ * 2147483648.0f);
+       in += in > 0.0f ? 0.5f : -0.5f;
+       *pDst++ = clip_q63_to_q31((q63_t) (in));
+
+#else
+
+       /* C = A * 2147483648 */
+       /* Convert from float to Q31 and then store the results in the destination buffer */
+       *pDst++ = clip_q63_to_q31((q63_t) (*pSrc++ * 2147483648.0f));
+
+#endif /* #ifdef ARM_MATH_ROUNDING */
+
+       /* Decrement loop counter */
+       blkCnt--;
+  }
+}
+#else
 #if defined(ARM_MATH_NEON)
 void arm_float_to_q31(
   const float32_t * pSrc,
@@ -72,9 +133,9 @@ void arm_float_to_q31(
   const float32_t *pIn = pSrc;                         /* Src pointer */
   uint32_t blkCnt;                               /* loop counter */
 
-  float32_t in;
   float32x4_t inV;
   #ifdef ARM_MATH_ROUNDING
+  float32_t in;
   float32x4_t zeroV = vdupq_n_f32(0.0f);
   float32x4_t pHalf = vdupq_n_f32(0.5f / 2147483648.0f);
   float32x4_t mHalf = vdupq_n_f32(-0.5f / 2147483648.0f);
@@ -246,6 +307,7 @@ void arm_float_to_q31(
 
 }
 #endif /* #if defined(ARM_MATH_NEON) */
+#endif /* defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE) */
 
 /**
   @} end of float_to_x group

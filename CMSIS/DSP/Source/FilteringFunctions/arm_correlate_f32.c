@@ -93,6 +93,211 @@
   @return        none
  */
 
+#if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
+
+#include "arm_helium_utils.h"
+#include "arm_vec_filtering.h"
+
+
+void arm_correlate_f32(
+  const float32_t * pSrcA,
+        uint32_t srcALen,
+  const float32_t * pSrcB,
+        uint32_t srcBLen,
+        float32_t * pDst)
+{
+    const float32_t *pIn1 = pSrcA;    /* inputA pointer               */
+    const float32_t *pIn2 = pSrcB + (srcBLen - 1U);   /* inputB pointer               */
+    const float32_t *pX, *pY;
+    const float32_t *pA, *pB;
+    int32_t   i = 0U, j = 0;    /* loop counters */
+    int32_t   inv = 4U;         /* Reverse order flag */
+    uint32_t  tot = 0U;         /* Length */
+    int32_t   block1, block2, block3;
+    int32_t   incr;
+
+    tot = ((srcALen + srcBLen) - 2U);
+    if (srcALen > srcBLen)
+    {
+        /*
+         * Calculating the number of zeros to be padded to the output
+         */
+        j = srcALen - srcBLen;
+        /*
+         * Initialize the pointer after zero padding
+         */
+        pDst += j;
+    }
+    else if (srcALen < srcBLen)
+    {
+        /*
+         * Initialization to inputB pointer
+         */
+        pIn1 = pSrcB;
+        /*
+         * Initialization to the end of inputA pointer
+         */
+        pIn2 = pSrcA + (srcALen - 1U);
+        /*
+         * Initialisation of the pointer after zero padding
+         */
+        pDst = pDst + tot;
+        /*
+         * Swapping the lengths
+         */
+
+        j = srcALen;
+        srcALen = srcBLen;
+        srcBLen = j;
+        /*
+         * Setting the reverse flag
+         */
+        inv = -4;
+    }
+
+    block1 = srcBLen - 1;
+    block2 = srcALen - srcBLen + 1;
+    block3 = srcBLen - 1;
+
+    pA = pIn1;
+    pB = pIn2;
+    incr = inv / 4;
+
+    for (i = 0U; i <= block1 - 2; i += 2)
+    {
+        uint32_t  count = i + 1;
+        float32_t acc0;
+        float32_t acc1;
+
+        /*
+         * compute 2 accumulators per loop
+         * size is incrementing for second accumulator
+         * Y pointer is decrementing for second accumulator
+         */
+        pX = pA;
+        pY = pB;
+        MVE_INTR_CORR_DUAL_DEC_Y_INC_SIZE_F32(acc0, acc1, pX, pY, count);
+
+        *pDst = acc0;
+        pDst += incr;
+        *pDst = acc1;
+        pDst += incr;
+        pB -= 2;
+    }
+    for (; i < block1; i++)
+    {
+        uint32_t  count = i + 1;
+        float32_t acc;
+
+        pX = pA;
+        pY = pB;
+        MVE_INTR_CORR_SINGLE_F32(acc, pX, pY, count);
+
+        *pDst = acc;
+        pDst += incr;
+        pB--;
+    }
+
+    for (i = 0U; i <= block2 - 4; i += 4)
+    {
+        float32_t acc0;
+        float32_t acc1;
+        float32_t acc2;
+        float32_t acc3;
+
+        pX = pA;
+        pY = pB;
+        /*
+         * compute 4 accumulators per loop
+         * size is fixed for all accumulators
+         * X pointer is incrementing for successive accumulators
+         */
+        MVE_INTR_CORR_QUAD_INC_X_FIXED_SIZE_F32(acc0, acc1, acc2, acc3, pX, pY, srcBLen);
+
+        *pDst = acc0;
+        pDst += incr;
+        *pDst = acc1;
+        pDst += incr;
+        *pDst = acc2;
+        pDst += incr;
+        *pDst = acc3;
+        pDst += incr;
+        pA += 4;
+    }
+
+    for (; i <= block2 - 2; i += 2)
+    {
+        float32_t acc0;
+        float32_t acc1;
+
+        pX = pA;
+        pY = pB;
+        /*
+         * compute 2 accumulators per loop
+         * size is fixed for all accumulators
+         * X pointer is incrementing for second accumulator
+         */
+        MVE_INTR_CORR_DUAL_INC_X_FIXED_SIZE_F32(acc0, acc1, pX, pY, srcBLen);
+
+        *pDst = acc0;
+        pDst += incr;
+        *pDst = acc1;
+        pDst += incr;
+        pA += 2;
+    }
+
+    if (block2 & 1)
+    {
+        float32_t acc;
+
+        pX = pA;
+        pY = pB;
+        MVE_INTR_CORR_SINGLE_F32(acc, pX, pY, srcBLen);
+
+        *pDst = acc;
+        pDst += incr;
+        pA++;
+    }
+
+    for (i = block3 - 1; i >= 0; i -= 2)
+    {
+
+        uint32_t  count = (i + 1);
+        float32_t acc0;
+        float32_t acc1;
+
+        pX = pA;
+        pY = pB;
+        /*
+         * compute 2 accumulators per loop
+         * size is decrementing for second accumulator
+         * X pointer is incrementing for second accumulator
+         */
+        MVE_INTR_CORR_DUAL_INC_X_DEC_SIZE_F32(acc0, acc1, pX, pY, count);
+
+        *pDst = acc0;
+        pDst += incr;
+        *pDst = acc1;
+        pDst += incr;
+        pA += 2;
+
+    }
+    for (; i >= 0; i--)
+    {
+        uint32_t  count = (i + 1);
+        float32_t acc;
+
+        pX = pA;
+        pY = pB;
+        MVE_INTR_CORR_SINGLE_F32(acc, pX, pY, count);
+
+        *pDst = acc;
+        pDst += incr;
+        pA++;
+    }
+}
+
+#else
 void arm_correlate_f32(
   const float32_t * pSrcA,
         uint32_t srcALen,
@@ -101,8 +306,7 @@ void arm_correlate_f32(
         float32_t * pDst)
 {
 
-#if (1)
-//#if !defined(ARM_MATH_CM0_FAMILY)
+#if defined(ARM_MATH_DSP) && !defined(ARM_MATH_AUTOVECTORIZE)
   
   const float32_t *pIn1;                               /* InputA pointer */
   const float32_t *pIn2;                               /* InputB pointer */
@@ -116,9 +320,11 @@ void arm_correlate_f32(
         uint32_t outBlockSize;                         /* Loop counter */
         int32_t inc = 1;                               /* Destination address modifier */
 
-#if defined (ARM_MATH_LOOPUNROLL) || defined (ARM_MATH_NEON)
-  float32_t acc0, acc1, acc2, acc3;                    /* Accumulators */
-  float32_t x0, x1, x2, x3, c0;                        /* temporary variables for holding input and coefficient values */
+#if defined (ARM_MATH_LOOPUNROLL) || defined(ARM_MATH_NEON)
+    float32_t acc0, acc1, acc2, acc3,c0;                    /* Accumulators */
+#if !defined(ARM_MATH_NEON)
+    float32_t x0, x1, x2, x3;                        /* temporary variables for holding input and coefficient values */
+#endif
 #endif
 
   /* The algorithm implementation is based on the lengths of the inputs. */
@@ -343,10 +549,7 @@ void arm_correlate_f32(
       float32x4_t c;
       float32x4_t x1v;
       float32x4_t x2v;
-      uint32x4_t x1v_u;
-      uint32x4_t x2v_u;
       float32x4_t x;
-      uint32x4_t x_u;
       float32x4_t res = vdupq_n_f32(0) ;
 #endif /* #if defined(ARM_MATH_NEON) */
 
@@ -390,8 +593,6 @@ void arm_correlate_f32(
 
         x1v = x2v;
         px+=4;
-        x2v = vld1q_f32(px);
-
       } while (--k);
       
       /* If the srcBLen is not a multiple of 4, compute any remaining MACs here.
@@ -887,6 +1088,7 @@ void arm_correlate_f32(
 #endif /* #if !defined(ARM_MATH_CM0_FAMILY) */
 
 }
+#endif /* defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE) */
 
 /**
   @} end of Corr group

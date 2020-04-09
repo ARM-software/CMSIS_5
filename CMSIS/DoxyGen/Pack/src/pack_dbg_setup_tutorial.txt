@@ -1,0 +1,673 @@
+/**
+\page dbg_setup_tutorial Debug Setup Tutorial
+
+\ref debug_description сhapter extensively documents the methods available in CMSIS-Pack for implementing device-specific debugger behavior.
+
+This chapter guides you through the key use cases that require implementation of debug descriptions. It is structured as follows:
+  - \subpage dbg_setup_access explains commonly used debug configuration options that can be specified in CMSIS-Pack
+  - \subpage dbg_debug_sqns demonstrates the implementation of debug sequences in typical scenarios such as trace configuration, bootloader support and multi-core system
+  - \subpage dbg_sqns_ide describes how debug descriptions work in IDE debuggers
+*/
+
+/**
+\page dbg_setup_access Configure debug access
+
+Professional IDE debuggers provide great flexibility and multiple options for configuring debug of modern microcontrollers. But for software developers it is often challenging to correctly configure debug settings for their target system. Using \ref das_elements "debug description elements" chip vendors can specify debug parameters applicable to a particular device and provide the default settings to be used by the debugger tool.
+
+This chapter explains how to use the debug description elements.
+
+\section dbg_debug Specify CPU debug connection
+
+An important item that needs to be specified for an MCU is the debug connection to the CPU. For that \refelem{debug} element shall be used. This element is most commonly used in DFPs to specify the <a href="../../SVD/html/index.html"><b>system view description file (.svd)</b></a>. But it also contains useful attributes to define the debug connection to the processor: \b __dp , \b __ap and \b Pname.
+
+An example code below defines debug connection for a dual-core device with one debug port and 2 access ports: indexed as \c 0 for Cortex-M4 and \c 1 for Cortex-M0+. 
+
+\code
+<devices>
+  <family Dfamily="LPC54114" Dvendor="NXP:11">    
+    ...
+    <device Dname="LPC54114J256">
+      <processor Pname="CM0plus" Dcore="Cortex-M0+" Dfpu="NO_FPU" Dmpu="NO_MPU" Dendian="Little-endian" Dclock="100000000"/>
+      <processor Pname="CM4" Dcore="Cortex-M4" Dfpu="SP_FPU" Dmpu="MPU" Dendian="Little-endian" Dclock="100000000"/>
+      ...
+      <debug svd="SVD/LPC54114_cm0plus.xml" Pname="CM0plus" __dp="0" __ap="1"/>
+      <debug svd="SVD/LPC54114_cm4.xml" Pname="CM4" __dp="0" __ap="0"/>
+	  ...
+    </device>
+    ...
+  </family>
+</devices>
+\endcode
+
+The same \b Pname identifier shall be used in \refelem{debug} element as defined in the corresponding \refelem{processor} element ('CM0plus' or 'CM4' in this example). 
+
+The numeric index values shall be typically specified for \b __dp attribute when multiple debug ports are available in the system and defined via \refelem{debugport} element. See \ref dbg_debug_port for details about configuring debug ports.
+
+For the \b __ap attribute the numeric index values shall be assigned based on the debug system implementation.
+
+There's no need to specify all attributes in a single line at once, it can also be split over multiple assignments if it helps to better structure the sequences code. However the same \b Pname identifier shall be used. So the code below specifies the same debug connection for M4 processor as in the example above:
+
+\code
+<debug Pname="CM4" svd="SVD/LPC54114_cm4.xml"/>
+...
+<debug Pname="CM4" __dp="0" __ap="0"/>
+...
+\endcode
+
+The attribute \ref defaultResetSequence specifies the debug sequence that will be used by default to reset the device. 
+
+The debug IDE may also allow users to specify the reset type in the project options thus overwriting this default configuration. In multi-core systems \b Pname shall be used to ensure that the default reset sequence is set for a correct core.
+
+\code
+<debug Pname="M4" defaultResetSequence="ResetProcessor"/>
+\endcode
+
+\section dbg_debug_port Specify debug port
+
+A microcontroller system can have one or more CoreSight debug ports with one or more supported debug protocols (for example JTAG and SWD). \refelem{debugport} element can be used to describe the debug ports capabilities. 
+
+For example if only Arm Serial Wire Debug (SWD) interface is supported, then \b debugport shall be defined only with \ref element_dp_swd "swd" child element and no \ref element_dp_jtag "jtag" elements. The \b swd element is really simple and can only take an \b idcode attribute that needs to be explicitly provided when you want to override the value of the SWD debug port's DPIDR register that will be read from the device.
+
+\code
+...
+  <debugport __dp="0"/>
+    <swd/>
+  </debugport>
+...
+\endcode
+
+Vice versa is true as well, if only JTAG is supported then SWD shall not be listed in the \b debugport element.
+
+The numeric value assinged to the \b __dp identifies the debug port and is for the user to choose. When describing JTAG chains it is recommended to use the \b tapindex as the \b __dp value to avoid confusion. 
+
+Debuggers can normally autodetect JTAG chains. But with some devices there is still a need to fully specify the JTAG chain to avoid potential detection issues by the debugger. Below is an example for the NXP IMX6 Solo X:
+
+\code
+<debugport __dp="0">
+  <jtag tapindex="0" idcode="0x4BA00477" irlen="4"/>
+</debugport>
+  
+<debugport __dp="1">
+  <jtag tapindex="1" idcode="0x4BA00477" irlen="4"/>
+</debugport>
+   
+<debugport __dp="2">
+  <jtag tapindex="2" idcode="0x00000000" irlen="4"/>
+</debugport>
+  
+<debugport __dp="3">
+  <jtag tapindex="3" idcode="0x0891C01D" irlen="5"/>
+</debugport>
+  
+<debug Pname="Cortex-A9" __dp="1" __ap="0"/>
+<debug Pname="Cortex-M4" __dp="0" __ap="0"/>
+
+\endcode
+
+Even though only two debug ports are used to access the processor cores, the other debug ports available in the system are specified as well. In this case it is needed to provide debugger with correct \b irlen values thus allowing it to correctly scan the JTAG chain and access the processors.
+
+The \b tapindex uniquely identifies the JTAG interface and typically its value is also used as the identifier for the debug port (\b  __dp) index.  Same as with the SWD the explicit specification of the \b idcode attribute is really necessary only when it needs to overwrite the IDCODe value read from the device. And \b irlen attribute may require explicit specification here if there're problems correctly obtaining its value from the device.
+
+\section dbg_debug_settings Default debugger configuration
+
+To simplify the debugger configuration in an IDE the \refelem{debugconfig} element can be used to specify the default working debugger configuration that should be used as a starting point until the user explicitely makes project-specific changes.
+
+For example the code below specifies SWD interface as default one with debug clock 5MHz. The debug port supports switching between SWD and JTAG debug protocols.
+
+\code
+<devices>
+  <family Dfamily="LPC54000 Series" Dvendor="NXP:11">
+    <debugconfig default="swd" clock="5000000" swj="true"/>
+    ...
+  </family>
+</devices>
+\endcode
+
+Using \refelem{debug} it is also possible to specify the default reset type to be used. See \ref dbg_debug for details.
+
+*/
+
+/**
+\page dbg_debug_sqns Implement debug sequences
+
+Most Cortex-M devices rely on Arm Debug Interface (ADI) that specifies standard interface for accessing debug functionality on the processor. However due to implementation-specific variations it can still be challenging for debug tool vendors to provide reliable debugging experience for complex devices. Device vendors can use \ref pdsc_SequenceNameEnum_pg "debug access sequences" to customize the debugger behavior for a particular device.
+
+Section \ref usage_of_sequences provides working example flows that can be implemented in a debugger. By overwriting the \ref default_sequences "predefined debug sequences" it is possible to customize the debugger operation for a specific device. The syntax and available functions are described in details in  \ref writing_sequences. This chapter explains the common cases that can be covered using debug sequences:
+ - \ref dbg_sqns_dbgconf
+ - \ref dbg_sqns_errors
+ - \ref dbg_sqns_trace
+ - \ref dbg_sqns_reset
+ - \ref dbg_sqns_boot
+ - \ref dbg_sqns_multicore
+ 
+The examples provided are quite generic demonstrating the concept to follow when addressing a specific scenario. However actual implementation shall always take device specific behavior into account.
+
+\section dbg_sqns_dbgconf Enable device-specific debug configurations
+
+The debug configuration options available in the debug IDEs mostly cover quite generic scenarios applicable to a wide set of devices and architectures, for example whether to use reset for debug connection and what type of reset, whether to stop after debug connection or not and so on. \ref dbg_setup_access describes how to use debug descriptions to specify the configuration options available for the device and how to pre-select the default values. 
+
+But often there is a need to provide developers with some debug configuration options that are very device-specific. This can vary from simple SWO pin and clock source selection for tracing to more complex bootloader configuration or secure debug provisioning and multi-core system debug.
+
+The \refelem{debugvars} element allows to define custom global debug access variables. Their values can also be made configurable via  a project-specific \ref debugvars_configfile "debug configuration file" (<b>*.dbgconf</b>). It is recommended to implement this file with \ref configWizard "Configuration Wizard annotations" to enable simple graphical configuration view. \ref default_sequences can be overwritten where needed and use the custom debug variables. If a user-defined global access variable is not specified in the *.dbgconf file, then the value provided in the variable definition in the pdsc file is applied.  
+
+Documentation for the \refelem{debugvars} provides an example for trace SWO pin selection via a *.dbgconf file. Below is also an example that uses a custom global debug variable \b Dbg_CR for specifying whether the program shall stop after bootloader execution or not:
+
+<b> Use of debugvars in a pdsc file: </b>
+
+\code
+... 
+  <debugvars configfile="Debug/LPC84x.dbgconf">>
+    __var Dbg_CR = 0x00000000;  // DBG_CR, with default value 0x00000000
+  </debugvars>
+  ...
+    // ResetCatchSet Sequence LPC84x
+    <sequence name="ResetCatchSet">
+      ... // initial setup
+	  
+      <control if="Dbg_CR == 0x00000000" info="Stop after bootloader disabled">
+        <block>
+          value = Read32(DEMCR_Addr);
+          Write32(DEMCR_Addr, (value | 0x00000001));                     // Enable Reset Vector Catch in DEMCR
+        </block>
+      </control>
+
+      <control if="Dbg_CR == 0x00000001" info="Stop after bootloader enabled">
+        <block>
+          value = Read32(DEMCR_Addr);
+          Write32(DEMCR_Addr, (value &amp; (~0x00000001)));              // Disable Reset Vector Catch in DEMCR
+        </block>
+      </control>
+      ...
+    </sequence>
+  ...
+\endcode
+
+<b>*.dbgconf file: source code</b>
+\code
+
+// <<< Use Configuration Wizard in Context Menu >>>
+
+// <h>Debug Configuration
+//   <o.0>    StopAfterBootloader       <i> Stop after Bootloader
+// </h>
+Dbg_CR = 0x00000001;
+
+// <<< end of configuration section >>>
+
+\endcode
+
+<b>*.dbgconf file: Configuration Wizard view</b>
+
+\image html dbgconf_confWizard.png 
+
+In the same way custom debug variables can be used to provide configuration for device-specific debug registers that then can be programmed via debug sequences.
+
+\section dbg_sqns_errors Ignore access errors
+
+In some cases the debug access errors need to be ignored to support device-specific implemenation. For that the predefined debug access sequence can be overwritten by duplicating the original code with the error handling disabled in required places using predefined debug access variable \ref __errorcontrol.
+
+Below is an example for an NXP IMXRT1051 family:
+
+\code
+<sequence name="ResetSystem">
+  <block>
+    // System Control Space (SCS) offset as defined in Armv6-M/Armv7-M.
+    __var SCS_Addr   = 0xE000E000;
+    __var AIRCR_Addr = SCS_Addr + 0xD0C;
+    __var DHCSR_Addr = SCS_Addr + 0xDF0;
+    
+    __errorcontrol = 0x1;     // Skip errors, write to AIRCR.SYSRESETREQ may not be able to finish with OK response
+    // Execute SYSRESETREQ via AIRCR
+    Write32(AIRCR_Addr, 0x05FA0004);
+    __errorcontrol = 0x0;     // Honor errors again
+    
+    DAP_Delay(20000);         // Delay of 20ms to let reset finish. Otherwise access to DHCSR can fail with too fast debug units.
+  </block>
+  
+  //Reset Recovery: Wait for DHCSR.S_RESET_ST bit to clear on read 
+  <control while="(Read32(DHCSR_Addr) &amp; 0x02000000)" timeout="500000"/>
+</sequence>
+
+\endcode
+
+In this implementation the standard system reset via AIRCR temporarily disables the DAP resulting in an access error. That could cause a debugger to disconnect. To overcome this the error handling is disabled before register write (<i>__errorcontrol = 0x1;</i>) and then enabled after it again. Additionally a delay is introduced (<i>DAP_Delay(20000);</i>) to allow reset to complete. The rest of the code is same as in the default \ref resetSystem implementation.
+
+\section dbg_sqns_trace Configure trace
+
+A common case that requires use of debug access sequences is trace configuration. \ref default_sequences  have two trace-related sequences: \ref TraceStart and \ref TraceStop that are being called when trace is enabled in the project. The \c TraceStart sequence is executed at the end of the initial debug connection to the target and after device reset while \c TraceStop is executed at the beginning of debug disconnect. 
+
+By default these sequences are empty and often need to be implemented in the .pdsc file to support device-specific behavior, for example to differentiate configuration for 1-pin SWO trace and 5-pin ETM trace (TPIU).
+
+For example:
+
+\code
+<sequence name="TraceStart">
+  <block>
+    // obtain project trace configuration from global variable __traceout
+    __var traceSWO  = (__traceout &amp; 0x1) != 0;
+    __var traceTPIU = (__traceout &amp; 0x2) != 0;
+  </block>
+  
+  <control if="traceSWO">
+    <block>
+      Sequence("EnableTraceSWO");
+    </block>
+  </control>
+  
+  <control if="traceTPIU">
+    <block>
+      Sequence("EnableTraceTPIU");
+    </block>
+  </control>
+</sequence>
+\endcode 
+
+Note that the code above uses following features allowed in debug access sequences:
+
+  - read access to a predefined global debug access variable \ref __traceout.
+  - implements the pre-defined debug sequence \c TraceStart
+  - calls custom debug sequences \c EnableTraceSWO ,\c EnableTraceTPIU
+  
+Implementation of custom debug access sequences \c traceEnableSWO and \c traceEnableTPIU is a means to better structure the sequence implementations. Their content is highly vendor and device-specific. Common functionality of such sequences is to trace on the device, configure trace clock and assign trace pin(s). But the complexity of the code varies significantly depending on the device functionalities.
+
+Below is a simple example of \c EnableTraceSWO for Microchip SAMS70 family, that also demonstrates the use of a user-defined global debug access variable (\c TracePCK3) configurable via a debug configuration file \c SAMx7.dbgconf. See \ref dbg_sqns_dbgconf for additional information about custom global debug variables and *.dbgconf file.
+
+\code
+...
+<family Dfamily="SAMV70" Dvendor="Microchip:3">
+  <debugvars configfile="samv70/keil/debug/SAMx7.dbgconf" version="1.0.0">
+    // Debug Access Variables
+    __var TracePCK3 = 0x00000000;                // Trace Clock Source Selection and Prescaler
+  </debugvars>
+     
+  <sequence name="EnableTraceSWO">
+    <block>
+      Write32(0x400E06E4, 0x504D4300);           // Disable PMC write protection
+      Write32(0x400E064C, TracePCK3);            // Select clock source and prescaler for PCK3
+      Write32(0x400E0600, (1 &lt;&lt; 11));      // Enable PCK3
+    </block>
+  </sequence>
+  ...
+  
+\endcode 
+
+Some devices can require that trace clock is enabled already at \ref DebugDeviceUnlock sequence to ensure that access to global trace components is available when reading the ROM table and processor features. In such cases corresponding functionality needs to be moved from \b TraceStart to \b DebugDeviceUnlock sequence and check if trace is enabled via the \b __traceout variable.
+
+\section dbg_sqns_reset Implement reset for debug access
+
+This section explains reset debug sequences for systems with a single CPU. Multi-core specifics are covered in \ref dbg_sqns_multicore.
+
+Reset is an important part of debug operation and is used to bring the device into a known state from which debug connection can be reliably established. Reset also allows users to debug their code from the very beginning. In the typical case when user initiates a debug session the debugger connects to the device, and resets the processor to ensure its fresh start, and then stops the CPU before user application is started.
+
+Sometimes it is needed to connect to a running target ("hot debug") without any resets performed when establishing a debug connection. Since there is no resets this is out of scope for the current section.
+
+The figure below shows an example reset flow in a debugger (copied from \ref usage_of_sequences): 
+
+\image html Reset.png 
+
+<b>CPU halt and ResetCatchSet</b>
+
+In the flow shown above the debugger first decides whether to halt the processor after the reset or not. This decision depends on the project configuration but also on when and how the reset is requested (automatically by debugger during or after debug connect, or manually by user through IDE, etc.).
+
+If processor halt after reset is needed then \ref resetCatchSet sequence is executed before performing the reset operation. Default implementation of \b ResetCatchSet enables and configures Cortex-M Reset Vector Catch functionality so that the core is stopped right after reset thus allowing users to debug the program from the very start. In some cases \b ResetCatchSet needs to be overwritten, for example for \ref dbg_sqns_boot.
+
+<b>Reset types</b>
+
+There are 3 predefined reset types and a custom reset type that debugger chooses from when performing a reset. The choice depends on the project configuration and \ref defaultResetSequence "defaultResetSequence" value. Corresponding reset debug sequence is executed to perform required reset type.
+
+The reset types are listed below with details described in the referenced documentation.
+
+ - \ref resetHardware_Descr "ResetHardware" is a system-wide reset without debug domain executed via the dedicated debugger reset line, e.g. nRST. 
+ - \ref resetSystem_Descr "ResetSystem" is a software-triggered system-wide reset that preserves established debug connection. 
+ - \ref resetProcessor_Descr "ResetProcessor" is a software-triggered local reset for a processor only. 
+ - \b CustomResetName sequence is used when a user-defined debug sequence is assigned to the \ref defaultResetSequence attribute. This can be implemented when very special reset type is needed that cannot be performed by modifying predefined reset types.
+
+\anchor dbg_sqns_reset_catchClear
+<b>CPU halt and ResetCatchClear</b>
+
+After reset is performed and the processor is halted (on the breakpoint enabled in \b ResetCatchSet) the \ref resetCatchClear sequence is executed. The default implementation may need to be overwritten to support bootloader as explaine in \ref dbg_sqns_boot.
+
+\section dbg_sqns_boot Support bootloader operation
+
+Systems with built-in ROM bootloader often require special handling to ensure that debug is correctly started from the user application.
+
+In particular the reset flow described in \ref dbg_sqns_reset most likely needs special adjustments for bootloader operation. After device reset the bootloader gets executed first. The debugger needs to take that into account and stop the processor with a breakpoint just before the application is started. For some devices this is also essential because debug can be disabled during bootloader execution for asset protection purposes.
+
+The default implementation of \ref resetCatchSet sequence halts the core right after reset. This however would be before the bootloader is started and hence may be not relevant for application development or even not possible to debug if bootloader code is not available. 
+
+To overcome this problem the \b ResetCatchSet sequence needs to be overwritten in the .pdsc file of the Device Family Pack (DFP). In constrast to the default implementation the Reset Vector Catch shall be disabled allowing uninterrupted bootloader execution after reset. To halt the core before the application starts the sequence additionally sets a breakpoint at the Reset Vector, where the execution jumps to after bootloader is finished.
+
+\anchor example1_resetCatchSet
+<b>Example 1: ResetCatchSet</b>
+
+The code below gives an example for an Armv8-M system with the vector table placed at address 0x00000000:
+
+\code
+<sequence name="ResetCatchSet">
+  <block>
+    __var DHCSR_Addr    = 0xE000EDF0;
+    __var DEMCR_Addr    = 0xE000EDFC;
+    __var FP_CTRL_Addr  = 0xE0002000;
+    __var FP_COMP0_Addr = 0xE0002008;
+    __var FPB_KEY       = 0x00000002;
+    __var FPB_ENABLE    = 0x00000001;
+    __var value         = 0;
+    __var resetVect     = 0x00000000;
+  
+    value = Read32(DEMCR_Addr);
+    Write32(DEMCR_Addr, (value &amp; ~0x00000001));    // Disable Reset Vector Catch
+   
+    resetVect = Read32(0x00000004);                     // Read Reset Vector
+    Write32(FP_COMP0_Addr, (resetVect | FPB_ENABLE));   // Set BP0 to Reset Vector (ARMv8M)
+    Write32(FP_CTRL_Addr,  (FPB_KEY   | FPB_ENABLE));   // Enable FPB
+  </block>
+  
+  <block>
+    Read32(DHCSR_Addr);                                 // Read DHCSR to clear potentially set DHCSR.S_RESET_ST bit
+  </block>
+</sequence>
+		  
+\endcode
+
+After reset is performed and the processor is halted (on the breakpoint enabled in \b ResetCatchSet) the \ref resetCatchClear sequence is executed. There in addition to the default functionality we need to clear the breakpoint introduced in the customized \b ResetCatchSet sequence. 
+
+\anchor example1_resetCatchClear
+<b>Example 1: ResetCatchClear </b>
+
+Below is a \b ResetCatchClear function for an Armv8-M core that corresponds to the \b ResetCatchSet sequence shown in \ref example1_resetCatchSet "Example 1: ResetCatchSet":
+
+\code
+<sequence name="ResetCatchClear">
+  <block>
+    __var DEMCR_Addr    = 0xE000EDFC;
+    __var FP_CTRL_Addr  = 0xE0002000;
+    __var FP_COMP0_Addr = 0xE0002008;
+    __var FPB_KEY       = 0x00000002;
+    __var value         = 0;
+  
+    value = Read32(DEMCR_Addr);
+    Write32(DEMCR_Addr, (value &amp; ~0x00000001));     // Disable Reset Vector Catch in DEMCR
+  
+    Write32(FP_COMP0_Addr, 0x00000000);                 // Clear BP0
+    Write32(FP_CTRL_Addr,  FPB_KEY   );                 // Disable FPB
+  </block>
+</sequence>
+\endcode
+
+
+\anchor example2_resetCatchSet
+<b>Example 2: ResetCatchSet</b>
+
+In some cases the \b ResetCatchSet sequence shall behave differently depending on where the obtained Reset Vector is located. Such differentiation can be introduced using XML <b>\<control\></b> element. For example Cortex-M0/M0+/M1/M3/M4 cores have a FBP/BPU limitations that doesn't allow to set an FPB breakpoint for code memory  above 0x20000000. For systems that have firmware located above this address (mostly in large external flash) the debugger can just rely on the Reset Vector Catch to stop right after reset and can't jump to the reset vector. Here is corresponding debug sequence:
+
+\code
+<sequence name="ResetCatchSet">
+  <block>
+    __var DHCSR_Addr = 0xE000EDF0;
+    __var DEMCR_Addr = 0xE000EDFC;
+    __var FPB_BKPT_H = 0x80000000;
+    __var FPB_BKPT_L = 0x40000000;
+    __var FPB_COMP_M = 0x1FFFFFFC;
+    __var FPB_KEY    = 0x00000002;
+    __var FPB_ENABLE = 0x00000001;
+    __var value      = 0;
+	__var resetVect  = 0x00000000;
+  
+    // Run over Bootloader
+    value = Read32(DEMCR_Addr);
+    Write32(DEMCR_Addr, (value &amp; ~0x00000001));    // Disable Reset Vector Catch
+	
+    Write32(0x40000000, 0x00000002);    // Map Flash to Vectors
+    resetVect = Read32 (0x00000004);        // Read Reset Vector
+  </block>
+  
+  <control if="resetVect &lt; 0x20000000" info="Set and enable breakpoint">
+    <block>
+	  //determine if instruction is at upper or lower half-word in an aligned 4-byte block
+      value = ((resetVect &amp; 0x02) ? FPB_BKPT_H : FPB_BKPT_L) | (resetVect &amp; FPB_COMP_M) | FPB_ENABLE ;
+      Write32(0xE0002008, value);       // Set BP0 to Reset Vector
+      value = FPB_KEY | FPB_ENABLE;
+      Write32(0xe0002000, value);       // Enable FPB
+    </block>
+  </control>
+  
+  <control if="resetVect &gt;= 0x20000000" info="Enable reset vector catch">
+    <block>
+      // Enable Reset Vector Catch in DEMCR
+      value = Read32(DEMCR_Addr);
+      Write32(DEMCR_Addr, (value | 0x00000001));
+    </block>
+  </control>
+  
+  <block>
+    Read32(DHCSR_Addr);                   // Read DHCSR to clear potentially set DHCSR.S_RESET_ST bit
+  </block>
+  
+</sequence>
+\endcode
+
+<b>Example 2: ResetCatchClear</b>
+
+The \b ResetCatchClear sequence from \ref example1_resetCatchClear "Example 1" can also be used with the \ref example2_resetCatchSet "Example 2: ResetCatchSet" as there's no special handling additionally required.
+
+<b>Other modifications</b>
+
+Additionally the reset behavior can be made configurable per project via custom global debug access variables and a *.dbgconf file. See \ref dbg_sqns_dbgconf for additional details.
+
+In some cases also the reset sequences (\b ResetSystem, \b ResetProcessor, \b ResetHardware) need to be adjusted to ensure proper bootloader handling. For example for debug authentication or bootloader configuration purposes. The actual implementation is very device and use case specific. 
+
+\section dbg_sqns_multicore Handle debug in multi-core systems
+
+To correctly debug multicore systems, first of all the debug connection shall be correctly specified using \refelem{debug}. See \ref dbg_debug for description and examples. 
+
+To achieve correct debug operation on a multi-core system often modification of the predefined debug sequences are required. The actual implementation very much depends on the particular system architecture. 
+
+The \ref usage_of_sequences provides example flows for debugger operation. These flows shall be analyzed for particular system and different implementations may be required for each available core.
+
+Recommendations described in previous sections such as \ref dbg_sqns_errors "error-handling", \ref dbg_sqns_trace "trace configuration", \ref dbg_sqns_boot "bootloader support" can be applied for individual cores in the multi-core system as well. Using the \b Pname identifier in the \refelem{sequence}  element it is possible to specify the debug access sequence for a particular core.
+
+The most multi-core Cortex-M systems have their CPUs intended for running different applications and not for load balancing. For simplicity we consider further such an assymmetric (AMP) dual-core system. In this system the CPUs can have either equal roles or master-slave dependancy. The roles can also be either predefined or configurable.
+
+Sections below explain additional use-cases specific for multi-core systems:
+
+ - \ref dbg_sqns_multicore_reset 
+ - \ref dbg_sqns_multicore_debug 
+ 
+\subsection dbg_sqns_multicore_reset Reset sequences
+
+Multi-core devices often have quite unique reset systems that a debugger shall use correctly when connecting to a target and during debug operation. For that the default reset debug sequences (see \ref dbg_sqns_reset) need to be overwritten or require processor-specific implementations. Below is an overview for different reset types: 
+
+ - \ref resetHardware is a hardware-triggered system-wide reset and should not be differentiated per individual core. However its default implementation may need to be overwritten in order to take the system configuration into account (master-slave, etc.).
+ - \ref resetSystem is a software-triggered system-wide reset. It is assumed to be applied to the whole system and shouldn't be core-specific. But same as with \b ResetHardware it may require different implementation, for example to ensure correct reset in master-slave systems.
+ - \ref resetProcessor is a software-triggered local reset for the specified CPU (or if required CPU subsystem). It needs to be differentiated for each core and is done by overwriting predefined \b ResetProcessor sequence for each CPU. Custom debug access sequences can be used to simplify code structure as shown in the example below:
+ 
+\code
+    <sequences>
+    //-- Begin: ResetProcessor Sequence for Cortex-M4
+      <sequence name="ResetProcessor" Pname="CM4">
+        <block>
+          Sequence("ResetProcessor_CM4");
+        </block>
+      </sequence>
+  
+    //-- Begin: ResetProcessor Sequence for Cortex-M0
+      <sequence name="ResetProcessor" Pname="CM0plus">
+        <block>
+          Sequence("ResetProcessor_CM0plus");
+        </block>
+      </sequence>
+      ...
+    </sequences>
+\endcode
+
+In the example above the reset functionality itself is implemented in the user-defined (custom) debug sequences \c ResetProcessor_CM0plus and \c ResetProcessor_CM4. 
+
+The same \b Pname identifier shall be used in \refelem{sequence} element as defined in the corresponding \refelem{processor} element ('CM0plus' or 'CM4' in this example). 
+
+Following the same concept the \ref resetCatchSet and \ref resetCatchClear sequences may need to be overwritten for individual cores, as reset vectors for different cores are located in different areas and hence the breakpoint for halt after reset shall be set differently. The approach is very similar to the one described in \ref dbg_sqns_boot.
+
+\subsection dbg_sqns_multicore_debug Debug sequences for different use cases
+
+When debugging an application running on a processor in a multi-core system, it is often required to have special control over the processors in the system. For example in a master-slave system it may be desired to debug only the application on the slave. For that debugger needs to ensure that the slave is running independent from the master.  Debug-related sequence \ref debugCoreStart can be used for that. Below is an example for NXP LPC4300 family, with \b ReleaseM0OnConnect is a configuration parameter specified via *.dbgconf as explained in \ref dbg_sqns_dbgconf.
+\code
+    <sequence name="DebugCoreStart" Pname="Cortex-M0">
+      <block>
+        // Default implementation
+        // Enable Core Debug via DHCSR
+        Write32(0xE000EDF0, 0xA05F0001);
+      </block>
+
+      <control if="ReleaseM0OnConnect">
+        <block>
+          // Release M0 from reset
+          Write32(0x40053104, 0x00000000);  // RESET_CTRL1: Clear M0APP_RST (Bit 24)
+        </block>
+      </control>
+    </sequence> 
+\endcode
+*/
+/**
+\page dbg_sqns_ide Use of debug descriptions in IDEs
+
+This chapter describes how debug descriptions are supported and used in various IDEs:
+  - \subpage dbg_sqns_uvision
+  - \subpage dbg_sqns_ds
+
+*/
+/**
+
+\page dbg_sqns_uvision Use of debug descriptions in &mu;Vision
+
+\ref debug_description elements and access sequences are defined as IDE-independent. However the debug IDE can use this information to provide settings and to use sequences where applicable in its debug flow.
+
+<a href="http://www2.keil.com/mdk5/debug" target="__blank"><b>Arm &mu;Vision debugger </b></a> (part of <a href="http://www2.keil.com/mdk5" target="__blank">Keil MDK</a>)  supports CMSIS debug descriptions. If any of the \ref das_elements "debug description elements" or \ref pdsc_SequenceNameEnum_pg "debug access sequences" are defined in a DFP for the target MCU the &mu;Vision automatically detects that and provides user with the configuration options described in this chapter.
+
+\section dbg_sqns_uVision_enable Enabling debug descriptions
+
+By default &mu;Vision enables the use of the debug descriptions if such are specified for the target. It is possible to manually disable the use of the debug descriptions for a specific project target in <b>Options for Target...</b> dialog - \b Debug tab - \b Settings button - \b Pack tab. If the item "Enable" is unchecked the debugger will ignore all device descriptions specified in the DFP:
+
+\image html dbg_uVision_sqns_enable.png 
+
+When the use of debug descriptions is enabled various debugger configuration options can becomed locked as specified in the DFP. Section \ref dbg_sqns_uvision_config explains the debugger parameters that can be configured with the debug descriptions.
+
+Disabling the use of debug descriptions can be useful to verify the default debugger behavior on the device.
+
+\section dbg_sqns_uvision_config Impact of debug access configuration 
+
+
+\subsection dbg_sqns_uvision_dbg_setting_debug Debug connection
+
+When \ref dbg_debug_settings are provided the &mu;Vision debugger automatically applies these settings to the new project for the MCU. This can be observed in <b> Options for Target...</b> dialog - \b Debug tab - \b Settings button. 
+
+Below is an example of the configuration code and how it is applied by &mu;Vision.
+
+\code
+<devices>
+  <family Dfamily="LPC54000 Series" Dvendor="NXP:11">
+    <debugconfig default="swd" clock="5000000" swj="true"/>
+    ...
+  </family>
+</devices>
+\endcode
+
+\image html dbg_uVision_debugconfig.png 
+
+SWD is selected as the default debug protocol with 5MHz clock and SWJ checkbox locked because this is a fixed characteristic of the device.
+
+\subsection dbg_sqns_uvision_dbg_setting_ap Access port
+
+With the \ref dbg_debug "specificaton of the debug connection" &mu;Vision debugger will automatically use the access port specified via the \b __ap attribute when debugging the processor and there's no need for user to configure it in the IDE. Corresponding option is locked as shown on the figure below.
+
+\image html uVision_AP_locked.png 
+
+&mu;Vision debugger displays the JTAG ID Code and the IR Length values (actually read or overwritten ones) in debug settings:
+
+\image html dbg_uVision_jtag_chain.png 
+
+You can test what the &mu;Vision debugger is able to detect automatically without the \b debugport configuration in the pdsc. For that the use of debug description shall be disabled in the \b Pack tab.
+
+\subsection dbg_sqns_uvision_dbg_setting_reset Reset types and default selection
+
+The default reset type can be specified in \refelem{debug} element via \ref defaultResetSequence attribute.
+
+It is also possible to disable particular reset type for selection by overwriting corresponding predefined reset sequence with \b disable attribute set to 'true'. For example reset configuration implemented for Microchip SAML11 device:
+
+\code 
+ <debug defaultResetSequence="ResetSystem"/>
+...
+
+ <!-- VECTRESET - Disabled -->
+ <sequence name="ResetProcessor" disable="true" info="VECTRESET">
+	<!-- ResetProcessor not available for CM23 -->
+ </sequence>
+
+\endcode
+
+&mu;Vision debugger applies it automatically and displays as default and selected in <b>Options for Target...</b> dialog - \b Debug tab - \b Settings button and then \b Reset: 
+
+\image html dbg_uVision_reset_configs.png
+
+You can see the VECTRESET type is absent and system reset is selected and marked as default. The user can still manually change the reset type for the project in this dialog. 
+
+Using the \b Reset dropdown menu mentioned above a user can specify the reset type to be performed by the debugger. 
+
+Figure below shows how the typically available reset options map to the corresponding reset types in the connect flow described in \ref usage_of_sequences. Note that "Custom" reset type appears only when user-defined debug sequence is assigned to the \ref defaultResetSequence attribute.
+
+\image html dbg_uVision_reset_options.png
+
+Detailed meanings for available options are explained in the documentation of corresponding debug adapter. For example for ULINKpro <a href="https://www.keil.com/support/man/docs/ulinkpro/ulinkpro_ctx_debug.htm#/connect" target="__blank"><b>Connect & Reset Options</b></a>
+
+\section dbg_uVision_dbgconf Debug configuration file (*.dbgconf)
+
+If the .pdsc file specifies for the target \refelem{debugvars} with the \c configfile attribute then &mu;Vision automatically creates an instance of debug configuration file for each target in the project by copying the *.dbgconf from the specified location in the pack to the \c DebugConfig directory in the application project. 
+
+\image html dbg_uVision_dbgconf.png 
+
+Clicking "Edit" button will open the debug configuration file in &mu;Vision for editing.  If the .dbgconf file is written with the \ref configWizard "Configuration Wizard annotations" the graphical view is available in &mu;Vision providing users with the intuitive configuration interface. For example:
+
+\image html dbg_uVision_dbgconf_wizard.png 
+
+\section dbg_uVision_sqns_logging Logging debug sequences 
+
+&mu;Vision can save information about executed debug sequences into a log file. This can be useful when implementing debug sequences or analyzing debugger behavior.
+
+The logging can be enabled via <b>Options for Target...</b> dialog - \b Debug tab - \b Settings button - \b Pack tab as shown on the figure below. The path and file name cannot be modified.
+
+\image html dbg_uVision_sqns_log.png 
+
+Note that the log file stores only debug sequences specified in the .pdsc file. The non-overwritten \ref default_sequences "predefined debug sequences" do not appear in the log but still get executed by the debugger.
+
+\subsection dbg_uVision_debug_access_log Debug access log
+
+Detailed information about the debugger operation can be obtained in the debug access log. 
+
+It can be enabled in <b>Options for Target...</b> dialog - \b Debug tab - \b Settings button as shown on figure below. The file is stored in the project root folder as <c> \<DebugAdapter>_DebugLog_\<sequenceNr>.log</c> file. For example: \c ULINKplus_DebugLog_0000.log.
+
+\image html dbg_uVision_debug_access_log.png
+
+\section dbg_uVision_reset Debug connect & reset configuration
+
+&mu;Vision debugger provides options to enable and configure debug connect and reset operations. Based on these settings decisions in the debug flow are made as shown in \ref usage_of_sequences. Available configuration options depend on the debug adapters, but the approach is similar in most cases. Examples below explain the options available for ULINK and CMSIS-DAP adapters.
+
+Use <b>Options for Target...</b> dialog - \b Debug tab - \b Settings button and then in <b>Connect:</b> dropdown menu select the option for debugger operation when establishing connection to the target. 
+
+Figure below shows how the options "with Pre-reset" and "under Reset" map to the corresponding operations in the connect flow described in \ref usage_of_sequences. 
+
+\image html dbg_uVision_connect_options.png
+
+Detailed explanation for available options are can be found in the documentation of corresponding debug adapter. For example for ULINKpro <a href="https://www.keil.com/support/man/docs/ulinkpro/ulinkpro_ctx_debug.htm#/connect" target="__blank"><b>Connect & Reset Options</b></a>
+
+\ref dbg_sqns_uvision_dbg_setting_reset explains the \b Reset dropdown menu in the same area and its mapping to the reset types used in \ref usage_of_sequences.
+
+\section dbg_sqns_uVision_flash Enable flash sequences
+
+The option is currently in experimental status. 
+
+*/
+
+/**
+\page dbg_sqns_ds Use of debug descriptions in Arm DS
+
+<a href="https://developer.arm.com/tools-and-software/embedded/arm-development-studio" target="__blank"><b>Arm Development Studio</b></a> provides support for CMSIS Device Family Packs (DFPs) including the debug descriptions. For more information <a href="https://support.developer.arm.com/my-cases/open-case/" target="__blank"><b>contact our support</b></a>.
+
+*/

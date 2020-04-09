@@ -1,18 +1,33 @@
 /*
- * Copyright (c) 2006-2017, ARM Limited, All Rights Reserved
+ * Copyright (c) 2013-2020 ARM Limited. All rights reserved.
+ *
  * SPDX-License-Identifier: Apache-2.0
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may
+ * Licensed under the Apache License, Version 2.0 (the License); you may
  * not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
  * www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * distributed under the License is distributed on an AS IS BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ *
+ * $Date:        24. January 2020
+ * $Revision:    V1.2
+ *
+ * Project:      Storage Driver definitions
+ */
+
+/* History:
+ *  Version 1.2
+ *    Removed volatile from ARM_STORAGE_STATUS
+ *  Version 1.1
+ *    ARM_STORAGE_STATUS made volatile
+ *  Version 1.00
+ *    Initial release
  */
 
 #ifndef DRIVER_STORAGE_H_
@@ -24,7 +39,7 @@ extern "C" {
 
 #include "Driver_Common.h"
 
-#define ARM_STORAGE_API_VERSION ARM_DRIVER_VERSION_MAJOR_MINOR(1,1)  /* API version */
+#define ARM_STORAGE_API_VERSION ARM_DRIVER_VERSION_MAJOR_MINOR(1,2)  /* API version */
 
 
 #define _ARM_Driver_Storage_(n)      Driver_Storage##n
@@ -90,10 +105,10 @@ typedef struct _ARM_STORAGE_BLOCK {
  * Please ensure that the maximum of the following memory types doesn't exceed 16; we
  * encode this in a 4-bit field within ARM_STORAGE_INFO::programmability.
  */
-#define ARM_STORAGE_PROGRAMMABILITY_RAM       (0x0)
-#define ARM_STORAGE_PROGRAMMABILITY_ROM       (0x1) ///< Read-only memory.
-#define ARM_STORAGE_PROGRAMMABILITY_WORM      (0x2) ///< write-once-read-only-memory (WORM).
-#define ARM_STORAGE_PROGRAMMABILITY_ERASABLE  (0x3) ///< re-programmable based on erase. Supports multiple writes.
+#define ARM_STORAGE_PROGRAMMABILITY_RAM       (0U)
+#define ARM_STORAGE_PROGRAMMABILITY_ROM       (1U)  ///< Read-only memory.
+#define ARM_STORAGE_PROGRAMMABILITY_WORM      (2U)  ///< write-once-read-only-memory (WORM).
+#define ARM_STORAGE_PROGRAMMABILITY_ERASABLE  (3U)  ///< re-programmable based on erase. Supports multiple writes.
 
 /**
  * Values for encoding data-retention levels for storage blocks.
@@ -101,11 +116,11 @@ typedef struct _ARM_STORAGE_BLOCK {
  * Please ensure that the maximum of the following retention types doesn't exceed 16; we
  * encode this in a 4-bit field within ARM_STORAGE_INFO::retention_level.
  */
-#define ARM_RETENTION_WHILE_DEVICE_ACTIVE     (0x0) ///< Data is retained only during device activity.
-#define ARM_RETENTION_ACROSS_SLEEP            (0x1) ///< Data is retained across processor sleep.
-#define ARM_RETENTION_ACROSS_DEEP_SLEEP       (0x2) ///< Data is retained across processor deep-sleep.
-#define ARM_RETENTION_BATTERY_BACKED          (0x3) ///< Data is battery-backed. Device can be powered off.
-#define ARM_RETENTION_NVM                     (0x4) ///< Data is retained in non-volatile memory.
+#define ARM_RETENTION_WHILE_DEVICE_ACTIVE     (0U)  ///< Data is retained only during device activity.
+#define ARM_RETENTION_ACROSS_SLEEP            (1U)  ///< Data is retained across processor sleep.
+#define ARM_RETENTION_ACROSS_DEEP_SLEEP       (2U)  ///< Data is retained across processor deep-sleep.
+#define ARM_RETENTION_BATTERY_BACKED          (3U)  ///< Data is battery-backed. Device can be powered off.
+#define ARM_RETENTION_NVM                     (4U)  ///< Data is retained in non-volatile memory.
 
 /**
  * Device Data Security Protection Features. Applicable mostly to EXTERNAL_NVM.
@@ -161,7 +176,7 @@ typedef struct _ARM_STORAGE_INFO {
 /**
 \brief Operating status of the storage controller.
 */
-typedef volatile struct _ARM_STORAGE_STATUS {
+typedef struct _ARM_STORAGE_STATUS {
   uint32_t busy     : 1;                ///< Controller busy flag
   uint32_t error    : 1;                ///< Read/Program/Erase error flag (cleared on start of next operation)
   uint32_t reserved : 30;

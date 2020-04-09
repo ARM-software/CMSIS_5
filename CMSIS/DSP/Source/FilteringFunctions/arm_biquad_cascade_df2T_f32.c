@@ -45,7 +45,141 @@
   @param[in]     blockSize number of samples to process
   @return        none
  */
+#if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
+#include "arm_helium_utils.h"
 
+void arm_biquad_cascade_df2T_f32(
+  const arm_biquad_cascade_df2T_instance_f32 * S,
+  const float32_t * pSrc,
+        float32_t * pDst,
+        uint32_t blockSize)
+{
+    const float32_t *pIn = pSrc;                  /*  source pointer            */
+    float32_t Xn0, Xn1;
+    float32_t acc0, acc1;
+    float32_t *pOut = pDst;                 /*  destination pointer       */
+    float32_t *pState = S->pState;          /*  State pointer             */
+    uint32_t  sample, stage = S->numStages; /*  loop counters             */
+    float32_t const *pCurCoeffs =          /*  coefficient pointer       */
+                (float32_t const *) S->pCoeffs;
+    f32x4_t b0Coeffs, a0Coeffs;           /*  Coefficients vector       */
+    f32x4_t b1Coeffs, a1Coeffs;           /*  Modified coef. vector     */
+    f32x4_t state;                        /*  State vector              */
+
+    do
+    {
+        /*
+         * temporary carry variable for feeding the 128-bit vector shifter
+         */
+        uint32_t  tmp = 0;
+        /*
+         * Reading the coefficients
+         * b0Coeffs = {b0, b1, b2, x}
+         * a0Coeffs = { x, a1, a2, x}
+         */
+        b0Coeffs = vld1q(pCurCoeffs);   pCurCoeffs+= 2;
+        a0Coeffs = vld1q(pCurCoeffs);   pCurCoeffs+= 3;
+        /*
+         * Reading the state values
+         * state = {d1, d2,  0, 0}
+         */
+        state = *(f32x4_t *) pState;
+        state = vsetq_lane(0.0f, state, 2);
+        state = vsetq_lane(0.0f, state, 3);
+
+        /* b1Coeffs = {b0, b1, b2, x} */
+        /* b1Coeffs = { x, x, a1, a2} */
+        b1Coeffs = vshlcq_s32(b0Coeffs, &tmp, 32);
+        a1Coeffs = vshlcq_s32(a0Coeffs, &tmp, 32);
+
+        sample = blockSize / 2;
+
+        /* unrolled 2 x */
+        while (sample > 0U)
+        {
+            /*
+             * Read 2 inputs
+             */
+            Xn0 = *pIn++;
+            Xn1 = *pIn++;
+
+            /*
+             * 1st half:
+             * / acc0 \   / b0 \         / d1 \   / 0  \
+             * |  d1  | = | b1 | * Xn0 + | d2 | + | a1 | x acc0
+             * |  d2  |   | b2 |         | 0  |   | a2 |
+             * \  x   /   \ x  /         \ x  /   \ x  /
+             */
+
+            state = vfmaq(state, b0Coeffs, Xn0);
+            acc0 = vgetq_lane(state, 0);
+            state = vfmaq(state, a0Coeffs, acc0);
+            state = vsetq_lane(0.0f, state, 3);
+
+            /*
+             * 2nd half:
+             * same as 1st half, but all vector elements shifted down.
+             * /  x   \   / x  \         / x  \   / x  \
+             * | acc1 | = | b0 | * Xn1 + | d1 | + | 0  | x acc1
+             * |  d1  |   | b1 |         | d2 |   | a1 |
+             * \  d2  /   \ b2 /         \ 0  /   \ a2 /
+             */
+
+            state = vfmaq(state, b1Coeffs, Xn1);
+            acc1 = vgetq_lane(state, 1);
+            state = vfmaq(state, a1Coeffs, acc1);
+
+            /* move d1, d2 up + clearing */
+            /* expect dual move or long move */
+            state = vsetq_lane(vgetq_lane(state, 2), state, 0);
+            state = vsetq_lane(vgetq_lane(state, 3), state, 1);
+            state = vsetq_lane(0.0f, state, 2);
+            /*
+             * Store the results in the destination buffer.
+             */
+            *pOut++ = acc0;
+            *pOut++ = acc1;
+            /*
+             * decrement the loop counter
+             */
+            sample--;
+        }
+
+        /*
+         * tail handling
+         */
+        if (blockSize & 1)
+        {
+            Xn0 = *pIn++;
+            state = vfmaq(state, b0Coeffs, Xn0);
+            acc0 = vgetq_lane(state, 0);
+
+            state = vfmaq(state, a0Coeffs, acc0);
+            *pOut++ = acc0;
+            *pState++ = vgetq_lane(state, 1);
+            *pState++ = vgetq_lane(state, 2);
+        }
+        else
+        {
+            *pState++ = vgetq_lane(state, 0);
+            *pState++ = vgetq_lane(state, 1);
+        }
+        /*
+         * The current stage output is given as the input to the next stage
+         */
+        pIn = pDst;
+        /*
+         * Reset the output working pointer
+         */
+        pOut = pDst;
+        /*
+         * decrement the loop counter
+         */
+        stage--;
+    }
+    while (stage > 0U);
+}
+#else
 #if defined(ARM_MATH_NEON) 
 
 void arm_biquad_cascade_df2T_f32(
@@ -64,12 +198,6 @@ void arm_biquad_cascade_df2T_f32(
    float32_t d1, d2;                              /*  state variables           */
    uint32_t sample, stageCnt,stage = S->numStages;         /*   loop counters   */
 
-
-   float32_t Xn2, Xn3, Xn4;                       /*  Input State variables     */
-   float32_t acc2, acc3, acc4;                    /*  accumulator               */
-
-
-   float32_t p0, p1, p2, p3, p4, A1;
 
    float32x4_t XnV, YnV;
    float32x4x2_t dV;
@@ -140,7 +268,7 @@ void arm_biquad_cascade_df2T_f32(
          dV.val[1] = vmulq_f32(s, b2V);
          dV.val[1] = vmlaq_f32(dV.val[1], YnV, a2V);
 
-         *pOut++ = YnV[3];
+         *pOut++ = vgetq_lane_f32(YnV, 3) ;
 
          sample--;
       }
@@ -149,7 +277,7 @@ void arm_biquad_cascade_df2T_f32(
       vst2q_f32(pState,dV);
       pState += 8;
 
-      /* The current stage input is given as the output to the next stage */
+      /* The current stage output is given as the input to the next stage */
       pIn = pDst;
 
       /*Reset the output working pointer */
@@ -204,7 +332,7 @@ void arm_biquad_cascade_df2T_f32(
       *pState++ = d1;
       *pState++ = d2;
 
-      /* The current stage input is given as the output to the next stage */
+      /* The current stage output is given as the input to the next stage */
       pIn = pDst;
 
       /*Reset the output working pointer */
@@ -503,7 +631,7 @@ void arm_biquad_cascade_df2T_f32(
 
       pState += 2U;
 
-      /* The current stage input is given as the output to the next stage */
+      /* The current stage output is given as the input to the next stage */
       pIn = pDst;
 
       /* Reset the output working pointer */
@@ -517,6 +645,7 @@ void arm_biquad_cascade_df2T_f32(
 }
 LOW_OPTIMIZATION_EXIT
 #endif /* #if defined(ARM_MATH_NEON) */
+#endif /* defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE) */
 
 /**
   @} end of BiquadCascadeDF2T group

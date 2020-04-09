@@ -56,7 +56,7 @@ void arm_split_rifft_q31(
 /**
   @brief         Processing function for the Q31 RFFT/RIFFT.
   @param[in]     S     points to an instance of the Q31 RFFT/RIFFT structure
-  @param[in]     pSrc  points to input buffer
+  @param[in]     pSrc  points to input buffer (Source buffer is modified by this function)
   @param[out]    pDst  points to output buffer
   @return        none
 
@@ -68,6 +68,9 @@ void arm_split_rifft_q31(
                    \image html RFFTQ31.gif "Input and Output Formats for Q31 RFFT"
   @par
                    \image html RIFFTQ31.gif "Input and Output Formats for Q31 RIFFT"
+  @par
+                   If the input buffer is of length N, the output buffer must have length 2*N.
+                   The input buffer is modified by this function.
  */
 
 void arm_rfft_q31(
@@ -75,7 +78,11 @@ void arm_rfft_q31(
         q31_t * pSrc,
         q31_t * pDst)
 {
+#if defined(ARM_MATH_MVEI)
+  const arm_cfft_instance_q31 *S_CFFT = &(S->cfftInst);
+#else
   const arm_cfft_instance_q31 *S_CFFT = S->pCfft;
+#endif
         uint32_t L2 = S->fftLenReal >> 1U;
         uint32_t i;
 
@@ -121,6 +128,111 @@ void arm_rfft_q31(
   @return        none
  */
 
+#if defined(ARM_MATH_MVEI)
+
+void arm_split_rfft_q31(
+    q31_t       *pSrc,
+    uint32_t     fftLen,
+    const q31_t       *pATable,
+    const q31_t       *pBTable,
+    q31_t       *pDst,
+    uint32_t     modifier)
+{
+    q31_t const     *pCoefA, *pCoefB; /* Temporary pointers for twiddle factors */
+    q31_t           *pDst1 = &pDst[2], *pDst2 = &pDst[(4U * fftLen) - 1U];    /* temp pointers for output buffer */
+    q31_t const     *pSrc1 = &pSrc[2], *pSrc2 = &pSrc[(2U * fftLen) - 1U];    /* temp pointers for input buffer */
+    q31_t const    *pVecSrc1;
+    q31_t          *pVecDst1;
+    q31x4x2_t      vecIn, vecSum;
+    uint32_t         blkCnt;
+    uint32x4_t     vecStridesFwd, vecStridesBkwd;
+    q31x4_t        vecInBkwd, vecCoefFwd0, vecCoefFwd1;
+
+    /*
+     * Init coefficient pointers
+     */
+    pCoefA = &pATable[modifier * 2U];
+    pCoefB = &pBTable[modifier * 2U];
+    /*
+     * scatter / gather offsets
+     * for ascending & descending addressing
+     */
+    vecStridesFwd = vidupq_u32((uint32_t)0, 2);
+    vecStridesBkwd = -vecStridesFwd;
+    vecStridesFwd = vecStridesFwd * modifier;
+
+    pVecSrc1 = (q31_t const *) pSrc1;
+    pVecDst1 = pDst1;
+
+    blkCnt = fftLen >> 2;
+    while (blkCnt > 0U)
+    {
+        vecCoefFwd0 = vldrwq_gather_shifted_offset(pCoefA, vecStridesFwd);
+        vecCoefFwd1 = vldrwq_gather_shifted_offset(&pCoefA[1], vecStridesFwd);
+        vecIn = vld2q(pVecSrc1);
+        pVecSrc1 += 8;
+        /*
+         * outR = *pSrc1 * CoefA1;
+         */
+        vecSum.val[0] = vmulhq(vecIn.val[0], vecCoefFwd0);
+        /*
+         * outI = *pSrc1++ * CoefA2;
+         */
+        vecSum.val[1] = vmulhq(vecIn.val[0], vecCoefFwd1);
+
+        vecInBkwd = vldrwq_gather_shifted_offset(pSrc2, vecStridesBkwd);
+        /*
+         * outR -= (*pSrc1 + *pSrc2) * CoefA2;
+         */
+        vecInBkwd = vqaddq(vecIn.val[1], vecInBkwd);
+        vecSum.val[0] = vqsubq(vecSum.val[0], vmulhq(vecInBkwd, vecCoefFwd1));
+
+        vecInBkwd = vldrwq_gather_shifted_offset(pSrc2, vecStridesBkwd);
+        /*
+         * outI += *pSrc1++ * CoefA1;
+         */
+        vecSum.val[1] = vqaddq(vecSum.val[1], vmulhq(vecIn.val[1], vecCoefFwd0));
+
+        vecCoefFwd0 = vldrwq_gather_shifted_offset(pCoefB, vecStridesFwd);
+        /*
+         * outI -= *pSrc2-- * CoefB1;
+         */
+        vecSum.val[1] = vqsubq(vecSum.val[1], vmulhq(vecInBkwd, vecCoefFwd0));
+
+        vecInBkwd = vldrwq_gather_shifted_offset(&pSrc2[-1], vecStridesBkwd);
+        /*
+         * outI -= *pSrc2 * CoefA2;
+         */
+        vecSum.val[1] = vqsubq(vecSum.val[1], vmulhq(vecInBkwd, vecCoefFwd1));
+        /*
+         * outR += *pSrc2-- * CoefB1;
+         */
+        vecSum.val[0] = vqaddq(vecSum.val[0], vmulhq(vecInBkwd, vecCoefFwd0));
+
+        vst2q(pVecDst1, vecSum);
+        pVecDst1 += 8;
+        /*
+         * write complex conjugate output
+         */
+        vecSum.val[1] = -vecSum.val[1];
+        vstrwq_scatter_shifted_offset(pDst2, vecStridesBkwd, vecSum.val[1]);
+        vstrwq_scatter_shifted_offset(&pDst2[-1], vecStridesBkwd, vecSum.val[0]);
+        /*
+         * update fwd and backwd offsets
+         */
+        vecStridesFwd = vecStridesFwd + (modifier * 8U);
+        vecStridesBkwd = vecStridesBkwd - 8;
+
+        blkCnt--;
+    }
+
+    pDst[2U * fftLen] = (pSrc[0] - pSrc[1]) >> 1;
+    pDst[(2U * fftLen) + 1U] = 0;
+
+    pDst[0] = (pSrc[0] + pSrc[1]) >> 1;
+    pDst[1] = 0;
+}
+#else
 void arm_split_rfft_q31(
         q31_t * pSrc,
         uint32_t fftLen,
@@ -206,7 +318,7 @@ void arm_split_rfft_q31(
   pDst[0] = (pSrc[0] + pSrc[1]) >> 1U;
   pDst[1] = 0;
 }
-
+#endif /* defined(ARM_MATH_MVEI) */
 
 /**
   @brief         Core Real IFFT process
@@ -219,6 +331,100 @@ void arm_split_rfft_q31(
   @return        none
  */
 
+#if defined(ARM_MATH_MVEI)
+
+void arm_split_rifft_q31(
+        q31_t * pSrc,
+        uint32_t fftLen,
+  const q31_t * pATable,
+  const q31_t * pBTable,
+        q31_t * pDst,
+        uint32_t modifier)
+{
+    q31_t const     *pCoefA, *pCoefB; /* Temporary pointers for twiddle factors */
+    q31_t const     *pSrc1 = &pSrc[0], *pSrc2 = &pSrc[(2U * fftLen) + 1U];
+    q31_t const    *pVecSrc1;
+    q31_t          *pVecDst;
+    q31x4x2_t      vecIn, vecSum;
+    uint32_t         blkCnt;
+    uint32x4_t     vecStridesFwd, vecStridesBkwd;
+    q31x4_t        vecInBkwd, vecCoefFwd0, vecCoefFwd1;
+
+
+    /*
+     * Init coefficient pointers
+     */
+    pCoefA = &pATable[0];
+    pCoefB = &pBTable[0];
+    /*
+     * scatter / gather offsets
+     * for ascending & descending addressing
+     */
+    vecStridesFwd = vidupq_u32((uint32_t)0, 2);
+    vecStridesBkwd = -vecStridesFwd;
+    vecStridesFwd = vecStridesFwd * modifier;
+
+    pVecSrc1 = (q31_t const *) pSrc1;
+    pVecDst = pDst;
+
+    blkCnt = fftLen >> 2;
+    while (blkCnt > 0U)
+    {
+        vecCoefFwd0 = vldrwq_gather_shifted_offset(pCoefA, vecStridesFwd);
+        vecCoefFwd1 = vldrwq_gather_shifted_offset(&pCoefA[1], vecStridesFwd);
+        vecIn = vld2q(pVecSrc1);
+        pVecSrc1 += 8;
+        /*
+         * outR = *pSrc1 * CoefA1;
+         */
+        vecSum.val[0] = vmulhq(vecIn.val[0], vecCoefFwd0);
+        /*
+         * outI = -(*pSrc1++) * CoefA2;
+         */
+        vecIn.val[0] =  (-vecIn.val[0]);
+        vecSum.val[1] = vmulhq(vecIn.val[0], vecCoefFwd1);
+
+        vecInBkwd = vldrwq_gather_shifted_offset(pSrc2, vecStridesBkwd);
+        /*
+         * outR += (*pSrc1 + *pSrc2) * CoefA2;
+         */
+        vecInBkwd = vqaddq(vecIn.val[1], vecInBkwd);
+        vecSum.val[0] = vqaddq(vecSum.val[0], vmulhq(vecInBkwd, vecCoefFwd1));
+
+        vecInBkwd = vldrwq_gather_shifted_offset(pSrc2, vecStridesBkwd);
+        /*
+         * outI += *pSrc1++ * CoefA1;
+         */
+        vecSum.val[1] = vqaddq(vecSum.val[1], vmulhq(vecIn.val[1], vecCoefFwd0));
+
+        vecCoefFwd0 = vldrwq_gather_shifted_offset(pCoefB, vecStridesFwd);
+        /*
+         * outI -= *pSrc2-- * CoefB1;
+         */
+        vecSum.val[1] = vqsubq(vecSum.val[1], vmulhq(vecInBkwd, vecCoefFwd0));
+
+        vecInBkwd = vldrwq_gather_shifted_offset(&pSrc2[-1], vecStridesBkwd);
+        /*
+         * outI += *pSrc2-- * CoefA2;;
+         */
+        vecSum.val[1] = vqaddq(vecSum.val[1], vmulhq(vecInBkwd, vecCoefFwd1));
+        /*
+         * outR += *pSrc2-- * CoefB1;
+         */
+        vecSum.val[0] = vqaddq(vecSum.val[0], vmulhq(vecInBkwd, vecCoefFwd0));
+
+        vst2q(pVecDst, vecSum);
+        pVecDst += 8;
+        /*
+         * update fwd and backwd offsets
+         */
+        vecStridesFwd = vecStridesFwd + (modifier * 8U);
+        vecStridesBkwd = vecStridesBkwd - 8;
+
+        blkCnt--;
+    }
+}
+#else
 void arm_split_rifft_q31(
         q31_t * pSrc,
         uint32_t fftLen,
@@ -290,3 +496,5 @@ void arm_split_rifft_q31(
   }
 
 }
+
+#endif /* defined(ARM_MATH_MVEI) */

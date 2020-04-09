@@ -162,7 +162,185 @@
   @return        none
  */
 
-#if defined(ARM_MATH_NEON) 
+#if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
+#include "arm_helium_utils.h"
+void arm_biquad_cascade_df1_f32(
+  const arm_biquad_casd_df1_inst_f32 * S,
+  const float32_t * pSrc,
+  float32_t * pDst,
+  uint32_t blockSize)
+{
+    const float32_t *pIn = pSrc;              /*  source pointer            */
+    float32_t *pOut = pDst;             /*  destination pointer       */
+    float32_t *pState = S->pState;      /*  pState pointer            */
+    const float32_t *pCoeffs = S->pCoeffs;    /*  coefficient pointer       */
+    float32_t Xn1, Xn2, Yn1, Yn2;       /*  Filter pState variables   */
+    float32_t lastX, lastY;             /*  X,Y history for tail handling */
+    float32_t X0, X1, X2, X3;           /*  temporary input           */
+    f32x4_t coeffs;
+    f32x4_t accVec;                   /* accumultor vector */
+    uint32_t  sample, stage = S->numStages; /*  loop counters             */
+
+    do
+    {
+        /*
+         * Reading the pState values
+         */
+        Xn1 = pState[0];
+        Xn2 = pState[1];
+        Yn1 = pState[2];
+        Yn2 = pState[3];
+
+        sample = blockSize >> 2U;
+
+        /*
+         * First part of the processing with loop unrolling.  Compute 4 outputs at a time.
+         * second loop below computes the remaining 1 to 3 samples.
+         */
+        while (sample > 0U)
+        {
+            X0 = *pIn++;
+            X1 = *pIn++;
+            X2 = *pIn++;
+            X3 = *pIn++;
+
+            coeffs = vld1q(pCoeffs);
+            accVec = vmulq(coeffs, X3);
+
+            coeffs = vld1q(&pCoeffs[4]);
+            accVec = vfmaq(accVec, coeffs, X2);
+
+            coeffs = vld1q(&pCoeffs[8]);
+            accVec = vfmaq(accVec, coeffs, X1);
+
+            coeffs = vld1q(&pCoeffs[12]);
+            accVec = vfmaq(accVec, coeffs, X0);
+
+            coeffs = vld1q(&pCoeffs[16]);
+            accVec = vfmaq(accVec, coeffs, Xn1);
+
+            coeffs = vld1q(&pCoeffs[20]);
+            accVec = vfmaq(accVec, coeffs, Xn2);
+
+            coeffs = vld1q(&pCoeffs[24]);
+            accVec = vfmaq(accVec, coeffs, Yn1);
+
+            coeffs = vld1q(&pCoeffs[28]);
+            accVec = vfmaq(accVec, coeffs, Yn2);
+            /*
+             * Store the result in the accumulator in the destination buffer.
+             */
+            vst1q(pOut, accVec);
+            pOut += 4;
+
+            /*
+             * update recurrence
+             */
+            Xn1 = X3;
+            Xn2 = X2;
+            Yn1 = vgetq_lane(accVec, 3);
+            Yn2 = vgetq_lane(accVec, 2);
+            /*
+             * decrement the loop counter
+             */
+            sample--;
+        }
+
+        /*
+         * If the blockSize is not a multiple of 4,
+         * compute any remaining output samples here.
+         */
+        sample = blockSize & 0x3U;
+        if (sample)
+        {
+            /* save previous X, Y for modulo 1 length case */
+            lastX = X3;
+            lastY = Yn1;
+
+            X0 = *pIn++;
+            X1 = *pIn++;
+            X2 = *pIn++;
+            X3 = *pIn++;
+
+            coeffs = vld1q(pCoeffs);
+            accVec = vmulq(coeffs, X3);
+
+            coeffs = vld1q(&pCoeffs[4]);
+            accVec = vfmaq(accVec, coeffs, X2);
+
+            coeffs = vld1q(&pCoeffs[8]);
+            accVec = vfmaq(accVec, coeffs, X1);
+
+            coeffs = vld1q(&pCoeffs[12]);
+            accVec = vfmaq(accVec, coeffs, X0);
+
+            coeffs = vld1q(&pCoeffs[16]);
+            accVec = vfmaq(accVec, coeffs, Xn1);
+
+            coeffs = vld1q(&pCoeffs[20]);
+            accVec = vfmaq(accVec, coeffs, Xn2);
+
+            coeffs = vld1q(&pCoeffs[24]);
+            accVec = vfmaq(accVec, coeffs, Yn1);
+
+            coeffs = vld1q(&pCoeffs[28]);
+            accVec = vfmaq(accVec, coeffs, Yn2);
+
+            if (sample == 1)
+            {
+                *pOut++ = vgetq_lane(accVec, 0);
+                Xn1 = X0;
+                Xn2 = lastX;
+                Yn1 = vgetq_lane(accVec, 0);
+                Yn2 = lastY;
+            }
+            else if (sample == 2)
+            {
+                *pOut++ = vgetq_lane(accVec, 0);
+                *pOut++ = vgetq_lane(accVec, 1);
+                Xn1 = X1;
+                Xn2 = X0;
+                Yn1 = vgetq_lane(accVec, 1);
+                Yn2 = vgetq_lane(accVec, 0);
+            }
+            else
+            {
+                *pOut++ = vgetq_lane(accVec, 0);
+                *pOut++ = vgetq_lane(accVec, 1);
+                *pOut++ = vgetq_lane(accVec, 2);
+                Xn1 = X2;
+                Xn2 = X1;
+                Yn1 = vgetq_lane(accVec, 2);
+                Yn2 = vgetq_lane(accVec, 1);
+            }
+        }
+        /*
+         * Store the updated state variables back into the pState array
+         */
+        *pState++ = Xn1;
+        *pState++ = Xn2;
+        *pState++ = Yn1;
+        *pState++ = Yn2;
+
+        pCoeffs += sizeof(arm_biquad_mod_coef_f32) / sizeof(float32_t);
+        /*
+         * The first stage goes from the input buffer to the output buffer.
+         * Subsequent numStages  occur in-place in the output buffer
+         */
+        pIn = pDst;
+        /*
+         * Reset the output pointer
+         */
+        pOut = pDst;
+        /*
+         * decrement the loop counter
+         */
+        stage--;
+    }
+    while (stage > 0U);
+}
+#else
+#if defined(ARM_MATH_NEON)  && !defined(ARM_MATH_AUTOVECTORIZE)
 void arm_biquad_cascade_df1_f32(
   const arm_biquad_casd_df1_inst_f32 * S,
   const float32_t * pSrc,
@@ -192,16 +370,20 @@ void arm_biquad_cascade_df1_f32(
   while (stage > 0U)
   {
     /* Reading the coefficients */
-    Xn = vld1q_f32(pState);
-    Yn = vld1_f32(pState + 2);
+    Xn = vdupq_n_f32(0.0f);
 
+    Xn = vsetq_lane_f32(pState[0],Xn,2);
+    Xn = vsetq_lane_f32(pState[1],Xn,3);
+    Yn = vset_lane_f32(pState[2],Yn,0);
+    Yn = vset_lane_f32(pState[3],Yn,1);
+  
     b = vld1q_f32(pCoeffs);
     b = vrev64q_f32(b);  
     b = vcombine_f32(vget_high_f32(b), vget_low_f32(b));
 
     a = vld1_f32(pCoeffs + 3);
     a = vrev64_f32(a);
-    b[0] = 0.0;
+    b = vsetq_lane_f32(0.0f,b,0);
     pCoeffs += 5;
     
     /* Reading the pState values */
@@ -268,6 +450,7 @@ void arm_biquad_cascade_df1_f32(
       sample--;
     }
 
+    
     /* If the block size is not a multiple of 4, compute any remaining output samples here.
      ** No loop unrolling is used. */
     sample = blockSize & 0x3U;
@@ -278,7 +461,11 @@ void arm_biquad_cascade_df1_f32(
       Xns = *pIn++;
 
       /* acc =  b0 * x[n] + b1 * x[n-1] + b2 * x[n-2] + a1 * y[n-1] + a2 * y[n-2] */
-      acc =  (b[1] * Xn[2]) + (b[2] * Xn[3]) + (b[3] * Xns) + (a[0] * Yn[0]) + (a[1] * Yn[1]);
+      acc =  (vgetq_lane_f32(b, 1) * vgetq_lane_f32(Xn, 2)) 
+      + (vgetq_lane_f32(b, 2) * vgetq_lane_f32(Xn, 3)) 
+      + (vgetq_lane_f32(b, 3) * Xns) 
+      + (vget_lane_f32(a, 0) * vget_lane_f32(Yn, 0)) 
+      + (vget_lane_f32(a, 1) * vget_lane_f32(Yn, 1));
 
       /* Store the result in the accumulator in the destination buffer. */
       *pOut++ = acc;
@@ -289,17 +476,17 @@ void arm_biquad_cascade_df1_f32(
       /* Xn1 = Xn    */
       /* Yn2 = Yn1   */
       /* Yn1 = acc   */
-      Xn[2] = Xn[3];
-      Xn[3] = Xns;
-      Yn[0] = Yn[1];
-      Yn[1] = acc;
+      Xn = vsetq_lane_f32(vgetq_lane_f32(Xn, 3),Xn,2);
+      Xn = vsetq_lane_f32(Xns,Xn,3);
+      Yn = vset_lane_f32(vget_lane_f32(Yn, 1),Yn,0);
+      Yn = vset_lane_f32(acc,Yn,1);
 
       /* Decrement the loop counter */
       sample--;
 
     }
 
-    vst1q_f32(pState,vcombine_f32(vrev64_f32(vget_high_f32(Xn)),vrev64_f32(Yn)));
+    vst1q_f32(pState,vcombine_f32((vget_high_f32(Xn)),(Yn)));
     pState += 4;
     /*  Store the updated state variables back into the pState array */
    
@@ -347,7 +534,7 @@ void arm_biquad_cascade_df1_f32(
     Yn1 = pState[2];
     Yn2 = pState[3];
 
-#if defined (ARM_MATH_LOOPUNROLL)
+#if defined (ARM_MATH_LOOPUNROLL) && !defined(ARM_MATH_AUTOVECTORIZE)
 
     /* Apply loop unrolling and compute 4 output values simultaneously. */
     /* Variable acc hold output values that are being computed:
@@ -490,6 +677,8 @@ void arm_biquad_cascade_df1_f32(
 }
 
 #endif /* #if defined(ARM_MATH_NEON) */
+#endif /* defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE) */
+
 /**
   @} end of BiquadCascadeDF1 group
  */

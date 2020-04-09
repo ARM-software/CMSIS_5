@@ -49,6 +49,65 @@
                    The function implements 1.15 by 1.15 multiplications and finally output is converted into 3.13 format.
  */
 
+#if defined(ARM_MATH_MVEI)
+
+void arm_cmplx_mult_cmplx_q15(
+  const q15_t * pSrcA,
+  const q15_t * pSrcB,
+        q15_t * pDst,
+        uint32_t numSamples)
+{
+  uint32_t blkCnt;           /* loop counters */
+  uint32_t blockSize = numSamples * CMPLX_DIM;  /* loop counters */
+  q15_t a, b, c, d;  
+
+  q15x8_t vecA;
+  q15x8_t vecB;
+  q15x8_t vecDst;
+
+  blkCnt = blockSize >> 3;
+  while (blkCnt > 0U)
+  {
+      vecA = vld1q(pSrcA);
+      vecB = vld1q(pSrcB);
+      /* C[2 * i] = A[2 * i] * B[2 * i] - A[2 * i + 1] * B[2 * i + 1].  */
+      vecDst = vqdmlsdhq_s16(vuninitializedq_s16(), vecA, vecB);
+      /* C[2 * i + 1] = A[2 * i] * B[2 * i + 1] + A[2 * i + 1] * B[2 * i].  */
+      vecDst = vqdmladhxq_s16(vecDst, vecA, vecB);
+
+      vecDst = vshrq(vecDst, 2);
+
+      vst1q(pDst, vecDst);
+
+      blkCnt --;
+      pSrcA += 8;
+      pSrcB += 8;
+      pDst += 8;
+  };
+
+  /*
+   * tail
+   */
+  blkCnt = (blockSize & 7) >> 1;
+  while (blkCnt > 0U)
+  {
+    /* C[2 * i    ] = A[2 * i] * B[2 * i    ] - A[2 * i + 1] * B[2 * i + 1]. */
+    /* C[2 * i + 1] = A[2 * i] * B[2 * i + 1] + A[2 * i + 1] * B[2 * i    ]. */
+
+    a = *pSrcA++;
+    b = *pSrcA++;
+    c = *pSrcB++;
+    d = *pSrcB++;
+
+    /* store result in 3.13 format in destination buffer. */
+    *pDst++ = (q15_t) ( (((q31_t) a * c) >> 17) - (((q31_t) b * d) >> 17) );
+    *pDst++ = (q15_t) ( (((q31_t) a * d) >> 17) + (((q31_t) b * c) >> 17) );
+
+    /* Decrement loop counter */
+    blkCnt--;
+  }
+}
+#else
 void arm_cmplx_mult_cmplx_q15(
   const q15_t * pSrcA,
   const q15_t * pSrcB,
@@ -130,6 +189,7 @@ void arm_cmplx_mult_cmplx_q15(
   }
 
 }
+#endif /* defined(ARM_MATH_MVEI) */
 
 /**
   @} end of CmplxByCmplxMult group

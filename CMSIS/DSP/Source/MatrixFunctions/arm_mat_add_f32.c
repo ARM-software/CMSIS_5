@@ -58,6 +58,78 @@
                    - \ref ARM_MATH_SUCCESS       : Operation successful
                    - \ref ARM_MATH_SIZE_MISMATCH : Matrix size check failed
  */
+
+#if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
+arm_status arm_mat_add_f32(
+  const arm_matrix_instance_f32 * pSrcA,
+  const arm_matrix_instance_f32 * pSrcB,
+  arm_matrix_instance_f32 * pDst)
+{
+    arm_status status;  
+    uint32_t  numSamples;       /* total number of elements in the matrix  */
+    float32_t *pDataA, *pDataB, *pDataDst;
+    f32x4_t vecA, vecB, vecDst;
+    float32_t const *pSrcAVec;
+    float32_t const *pSrcBVec;
+    uint32_t  blkCnt;           /* loop counters */
+
+    pDataA = pSrcA->pData;
+    pDataB = pSrcB->pData;
+    pDataDst = pDst->pData;
+    pSrcAVec = (float32_t const *) pDataA;
+    pSrcBVec = (float32_t const *) pDataB;
+
+#ifdef ARM_MATH_MATRIX_CHECK
+  /* Check for matrix mismatch condition */
+  if ((pSrcA->numRows != pSrcB->numRows) ||
+     (pSrcA->numCols != pSrcB->numCols) ||
+     (pSrcA->numRows != pDst->numRows) || (pSrcA->numCols != pDst->numCols))
+  {
+    /* Set status as ARM_MATH_SIZE_MISMATCH */
+    status = ARM_MATH_SIZE_MISMATCH;
+  }
+  else
+#endif
+ {
+    /*
+     * Total number of samples in the input matrix
+     */
+    numSamples = (uint32_t) pSrcA->numRows * pSrcA->numCols;
+    blkCnt = numSamples >> 2;
+    while (blkCnt > 0U)
+    {
+        /* C(m,n) = A(m,n) + B(m,n) */
+        /* Add and then store the results in the destination buffer. */
+        vecA = vld1q(pSrcAVec); 
+        pSrcAVec += 4;
+        vecB = vld1q(pSrcBVec); 
+        pSrcBVec += 4;
+        vecDst = vaddq(vecA, vecB);
+        vst1q(pDataDst, vecDst);  
+        pDataDst += 4;
+        /*
+         * Decrement the blockSize loop counter
+         */
+        blkCnt--;
+    }
+    /*
+     * tail
+     */
+    blkCnt = numSamples & 3;
+    if (blkCnt > 0U)
+    {
+        mve_pred16_t p0 = vctp32q(blkCnt);
+        vecA = vld1q(pSrcAVec); 
+        vecB = vld1q(pSrcBVec); 
+        vecDst = vaddq_m(vecDst, vecA, vecB, p0);
+        vstrwq_p(pDataDst, vecDst, p0);
+    }
+    /* set status as ARM_MATH_SUCCESS */
+    status = ARM_MATH_SUCCESS;
+  }
+  return (status);
+}
+#else
 #if defined(ARM_MATH_NEON)
 /*
 
@@ -75,7 +147,6 @@ arm_status arm_mat_add_f32(
   float32_t *pIn2 = pSrcB->pData;                /* input data matrix pointer B  */
   float32_t *pOut = pDst->pData;                 /* output data matrix pointer   */
 
-  float32_t inA1, inA2, inB1, inB2, out1, out2;  /* temporary variables */
 
   uint32_t numSamples;                           /* total number of elements in the matrix  */
   uint32_t blkCnt;                               /* loop counters */
@@ -226,6 +297,7 @@ arm_status arm_mat_add_f32(
   return (status);
 }
 #endif /* #if defined(ARM_MATH_NEON) */
+#endif /* defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE) */
 
 /**
   @} end of MatrixAdd group

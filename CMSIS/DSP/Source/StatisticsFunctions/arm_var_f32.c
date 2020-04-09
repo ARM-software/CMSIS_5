@@ -59,7 +59,65 @@
   @param[out]    pResult    variance value returned here
   @return        none
  */
-#if defined(ARM_MATH_NEON_EXPERIMENTAL)
+#if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
+
+#include "arm_helium_utils.h"
+
+void arm_var_f32(
+           const float32_t * pSrc,
+                 uint32_t blockSize,
+                 float32_t * pResult)
+{
+    uint32_t         blkCnt;     /* loop counters */
+    f32x4_t         vecSrc;
+    f32x4_t         sumVec = vdupq_n_f32(0.0f);
+    float32_t       fMean;
+    float32_t sum = 0.0f;                          /* accumulator */
+    float32_t in;                                  /* Temporary variable to store input value */
+
+    if (blockSize <= 1U) {
+        *pResult = 0;
+        return;
+    }
+
+    arm_mean_f32(pSrc, blockSize, &fMean);
+
+    /* Compute 4 outputs at a time */
+    blkCnt = blockSize >> 2U;
+    while (blkCnt > 0U)
+    {
+
+        vecSrc = vldrwq_f32(pSrc);
+        /*
+         * sum lanes
+         */
+        vecSrc = vsubq(vecSrc, fMean);
+        sumVec = vfmaq(sumVec, vecSrc, vecSrc);
+
+        blkCnt --;
+        pSrc += 4;
+    }
+
+    sum = vecAddAcrossF32Mve(sumVec);
+
+    /*
+     * tail
+     */
+    blkCnt = blockSize & 0x3;
+    while (blkCnt > 0U)
+    {
+       in = *pSrc++ - fMean;
+       sum += in * in;
+
+       /* Decrement loop counter */
+       blkCnt--;
+    }
+   
+    /* Variance */
+    *pResult = sum / (float32_t) (blockSize - 1);
+}
+#else
+#if defined(ARM_MATH_NEON_EXPERIMENTAL) && !defined(ARM_MATH_AUTOVECTORIZE)
 void arm_var_f32(
            const float32_t * pSrc,
                  uint32_t blockSize,
@@ -97,7 +155,7 @@ void arm_var_f32(
   }
 
   sumV2 = vpadd_f32(vget_low_f32(sumV),vget_high_f32(sumV));
-  sum = sumV2[0] + sumV2[1];
+  sum = vget_lane_f32(sumV2, 0) + vget_lane_f32(sumV2, 1);
 
   /* If the blockSize is not a multiple of 4, compute any remaining output samples here.
    ** No loop unrolling is used. */
@@ -138,7 +196,7 @@ void arm_var_f32(
     return;
   }
 
-#if defined (ARM_MATH_LOOPUNROLL)
+#if defined (ARM_MATH_LOOPUNROLL) && !defined(ARM_MATH_AUTOVECTORIZE)
 
   /* Loop unrolling: Compute 4 outputs at a time */
   blkCnt = blockSize >> 2U;
@@ -182,7 +240,7 @@ void arm_var_f32(
 
   pInput = pSrc;
 
-#if defined (ARM_MATH_LOOPUNROLL)
+#if defined (ARM_MATH_LOOPUNROLL) && !defined(ARM_MATH_AUTOVECTORIZE)
 
   /* Loop unrolling: Compute 4 outputs at a time */
   blkCnt = blockSize >> 2U;
@@ -228,6 +286,7 @@ void arm_var_f32(
   *pResult = fSum / (float32_t)(blockSize - 1.0f);
 }
 #endif /* #if defined(ARM_MATH_NEON) */
+#endif /* defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE) */
 
 /**
   @} end of variance group

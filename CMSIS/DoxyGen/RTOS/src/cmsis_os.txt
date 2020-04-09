@@ -541,7 +541,7 @@ towards the Cortex-M processors. Optional features may be for example
 /**
 \page rtosValidation RTOS Validation
 
-Arm offers a <a class=el href="http://www.keil.com/pack" target="_blank">Software Pack</a> for the CMSIS-RTOS Validation.
+Arm offers a <a class=el href="https://www.keil.com/pack" target="_blank">Software Pack</a> for the CMSIS-RTOS Validation.
 The <b>ARM::CMSIS-RTOS_Validation</b> Pack contains the following:
 
  - Source code of a CMSIS-RTOS Validation Suite along with configuration file.
@@ -671,7 +671,7 @@ CMSIS-RTOS RTX uses the following \#defines.
 \section KernelTimer RTX Kernel Timer Tick and Thread Management
 
 By default, CMSIS-RTOS RTX uses the Cortex-M
-<a href="http://www.keil.com/support/man/docs/gsac/GSAC_SYSTICKtimer.htm" target="_blank">SysTick</a> timer to generate
+<a href="https://www.keil.com/support/man/docs/gsac/GSAC_SYSTICKtimer.htm" target="_blank">SysTick</a> timer to generate
 periodic interrupts for the RTX kernel timer tick. CMSIS-RTOS provides \ref CMSIS_RTOS_TimerMgmt functions and several
 CMSIS-RTOS functions have a timeout parameter. This periodic RTX kernel timer tick interrupt is used to derive the required
 time interval. CMSIS-RTOS RTX also provides configuration options for a alternative timer and tick-less operation. Refer to
@@ -1620,7 +1620,7 @@ The tutorial is an excerpt of Trevor Martin's book
 It is accompanied by a Pack file that contains the example projects that are discussed in the tutorial.
 
 The tutorial is available as a Software Pack from
-<a href="http://www.keil.com/dd2/pack" target="_blank">http://www.keil.com/dd2/pack</a>. On the page, browse to \b Hitex and
+<a href="https://www.keil.com/dd2/pack" target="_blank">https://www.keil.com/dd2/pack</a>. On the page, browse to \b Hitex and
 select the Pack described as "An Introduction to using CMSIS RTOS for Cortex-M Microcontrollers". Download and install the
 Pack which contains all example projects referenced in the
 <a class="el" href="CMSIS_RTOS_Tutorial.pdf">CMSIS_RTOS_Tutorial.pdf</a>.

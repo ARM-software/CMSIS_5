@@ -60,7 +60,7 @@
  * @param[in,out]   Im_out       pointer to output tensor
  * @param[in]       dim_im_out_x output tensor dimension x
  * @param[in]       dim_im_out_y output tensor dimension y
- * @param[in,out]   bufferA      pointer to buffer space for input 
+ * @param[in,out]   bufferA      pointer to buffer space for input
  * @param[in,out]   bufferB      pointer to buffer space for output
  * @return     The function returns either
  * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.
@@ -88,11 +88,11 @@ arm_status arm_convolve_HWC_q7_fast_nonsquare(const q7_t * Im_in,
                                               const uint16_t out_shift,
                                               q7_t * Im_out,
                                               const uint16_t dim_im_out_x,
-                                              const uint16_t dim_im_out_y, 
-                                              q15_t * bufferA, 
+                                              const uint16_t dim_im_out_y,
+                                              q15_t * bufferA,
                                               q7_t * bufferB)
 {
-
+    (void)bufferB;
 #if defined (ARM_MATH_DSP)
     /* Run the following code for Cortex-M4 and Cortex-M7 */
 
@@ -292,7 +292,7 @@ arm_status arm_convolve_HWC_q7_fast_nonsquare(const q7_t * Im_in,
         for (i = 0; i < ch_im_out; i++)
         {
             q31_t     sum = ((q31_t)(bias[i]) << bias_shift) + NN_ROUND(out_shift);
-            q15_t    *pB = bufferA;
+            const q15_t    *pB = bufferA;
             /* basically each time it process 4 entries */
             uint16_t  colCnt = ch_im_in * dim_kernel_x * dim_kernel_y >> 2;
 
@@ -302,11 +302,11 @@ arm_status arm_convolve_HWC_q7_fast_nonsquare(const q7_t * Im_in,
                 q31_t     inA1, inA2;
                 q31_t     inB1, inB2;
 
-                pA = (const q7_t *)read_and_pad_reordered((void *)pA, &inA1, &inA2);
+                pA = read_and_pad_reordered(pA, &inA1, &inA2);
 
-                inB1 = *__SIMD32(pB)++;
+                inB1 = arm_nn_read_q15x2_ia(&pB);
                 sum = __SMLAD(inA1, inB1, sum);
-                inB2 = *__SIMD32(pB)++;
+                inB2 = arm_nn_read_q15x2_ia(&pB);
                 sum = __SMLAD(inA2, inB2, sum);
 
                 colCnt--;
@@ -357,7 +357,7 @@ arm_status arm_convolve_HWC_q7_fast_nonsquare(const q7_t * Im_in,
                             for (l = 0; l < ch_im_in; l++)
                             {
                                 conv_out += Im_in[(in_row * dim_im_in_x + in_col) * ch_im_in + l] *
-                                    wt[i * ch_im_in * dim_kernel_y * dim_kernel_x + (m * dim_kernel_x + n) * ch_im_in + l];      
+                                    wt[i * ch_im_in * dim_kernel_y * dim_kernel_x + (m * dim_kernel_x + n) * ch_im_in + l];
                             }
                         }
                     }

@@ -54,9 +54,9 @@
    * @param[in]       out_shift   amount of right-shift for output
    * @param[in,out]   Im_out      pointer to output tensor
    * @param[in]       dim_im_out  output tensor dimension
-   * @param[in,out]   bufferA     pointer to buffer space for input 
+   * @param[in,out]   bufferA     pointer to buffer space for input
    * @param[in,out]   bufferB     pointer to buffer space for output
-   * @return     The function returns <code>ARM_MATH_SUCCESS</code> 
+   * @return     The function returns <code>ARM_MATH_SUCCESS</code>
    *
    * @details
    *
@@ -67,7 +67,7 @@
    * bufferB size: 0
    *
    * This basic version is designed to work for any input tensor and weight
-   * dimension. 
+   * dimension.
    */
 
 arm_status
@@ -82,18 +82,18 @@ arm_convolve_HWC_q7_basic(const q7_t * Im_in,
                           const q7_t * bias,
                           const uint16_t bias_shift,
                           const uint16_t out_shift,
-                          q7_t * Im_out, 
-                          const uint16_t dim_im_out, 
-                          q15_t * bufferA, 
+                          q7_t * Im_out,
+                          const uint16_t dim_im_out,
+                          q15_t * bufferA,
                           q7_t * bufferB)
 {
-
+    (void)bufferB;
 #if defined (ARM_MATH_DSP)
     /* Run the following code for Cortex-M4 and Cortex-M7 */
 
     int16_t   i_out_y, i_out_x, i_ker_y, i_ker_x;
 
-    /* 
+    /*
      *  Here we use bufferA as q15_t internally as computation are done with q15_t level
      *  im2col are done to output in q15_t format from q7_t input
      */
@@ -151,7 +151,7 @@ arm_convolve_HWC_q7_basic(const q7_t * Im_in,
             q31_t     sum = ((q31_t)bias[i] << bias_shift) + NN_ROUND(out_shift);
 
             /* Point to the beging of the im2col buffer */
-            q15_t    *pB = bufferA;
+            const q15_t    *pB = bufferA;
 
             /* Each time it process 4 entries */
             uint16_t  colCnt = ch_im_in * dim_kernel * dim_kernel >> 2;
@@ -161,11 +161,12 @@ arm_convolve_HWC_q7_basic(const q7_t * Im_in,
                 q31_t     inA1, inA2;
                 q31_t     inB1, inB2;
 
-                pA = (q7_t *) read_and_pad((void *)pA, &inA1, &inA2);
+                pA = read_and_pad(pA, &inA1, &inA2);
 
-                inB1 = *__SIMD32(pB)++;
+                inB1 = arm_nn_read_q15x2_ia(&pB);
                 sum = __SMLAD(inA1, inB1, sum);
-                inB2 = *__SIMD32(pB)++;
+                inB2 = arm_nn_read_q15x2_ia(&pB);
+
                 sum = __SMLAD(inA2, inB2, sum);
 
                 colCnt--;

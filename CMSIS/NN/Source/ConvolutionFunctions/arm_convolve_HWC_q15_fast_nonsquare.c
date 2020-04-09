@@ -60,7 +60,7 @@
    * @param[in,out]   Im_out       pointer to output tensor
    * @param[in]       dim_im_out_x output tensor dimension x
    * @param[in]       dim_im_out_y output tensor dimension y
-   * @param[in,out]   bufferA      pointer to buffer space for input 
+   * @param[in,out]   bufferA      pointer to buffer space for input
    * @param[in,out]   bufferB      pointer to buffer space for output
    * @return     The function returns either
    * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.
@@ -75,7 +75,7 @@
    *
    * <b>Input dimension constraints:</b>
    *
-   * ch_im_in is multiple of 2 
+   * ch_im_in is multiple of 2
    *
    * ch_im_out is multipe of 2
    *
@@ -99,11 +99,11 @@ arm_convolve_HWC_q15_fast_nonsquare(const q15_t * Im_in,
                                     const uint16_t out_shift,
                                     q15_t * Im_out,
                                     const uint16_t dim_im_out_x,
-                                    const uint16_t dim_im_out_y, 
-                                    q15_t * bufferA, 
+                                    const uint16_t dim_im_out_y,
+                                    q15_t * bufferA,
                                     q7_t * bufferB)
 {
-
+    (void)bufferB;
 #if defined (ARM_MATH_DSP)
     int16_t   i_out_y, i_out_x, i_ker_y, i_ker_x;
 
@@ -154,7 +154,7 @@ arm_convolve_HWC_q15_fast_nonsquare(const q15_t * Im_in,
                 for (i = 0; i < ch_im_out; i += 2)
                 {
                     /* setup pointers for B */
-                    q15_t    *pB = im_buffer;
+                    const q15_t *pB = im_buffer;
                     const q15_t *pB2 = pB + ch_im_in * dim_kernel_y * dim_kernel_x;
 
                     /* aling the second pointer for A */
@@ -170,10 +170,10 @@ arm_convolve_HWC_q15_fast_nonsquare(const q15_t * Im_in,
                     /* accumulate over the vector */
                     while (colCnt)
                     {
-                        q31_t     inA1 = *__SIMD32(pA)++;
-                        q31_t     inB1 = *__SIMD32(pB)++;
-                        q31_t     inA2 = *__SIMD32(pA2)++;
-                        q31_t     inB2 = *__SIMD32(pB2)++;
+                        q31_t     inA1 = arm_nn_read_q15x2_ia(&pA);
+                        q31_t     inB1 = arm_nn_read_q15x2_ia(&pB);
+                        q31_t     inA2 = arm_nn_read_q15x2_ia(&pA2);
+                        q31_t     inB2 = arm_nn_read_q15x2_ia(&pB2);
 
                         sum = __SMLAD(inA1, inB1, sum);
                         sum2 = __SMLAD(inA1, inB2, sum2);

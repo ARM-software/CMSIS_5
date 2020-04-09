@@ -1380,6 +1380,33 @@ uint32_t __SXTB16(uint32_t val);
 
 /**************************************************************************************************/
 /** 
+    \brief      Rotate right, dual extract 8-bits and sign extend each to 16-bits
+    
+    \details    This function enables you to rotate an operand by 8/16/24 bit, extract two 8-bit values and sign-extend 
+          them to 16 bits each.
+                
+    \param      val     two 8-bit values in val[7:0] and val[23:16] to be sign-extended.
+    \param      rotate  number of bits to rotate val. Only 8,16 and 24 are accepted
+
+              
+    \returns
+        the 8-bit values sign-extended to 16-bit values.
+            \li     sign-extended value of val[7:0] in the low halfword of the return value.
+            \li     sign-extended value of val[23:16] in the high halfword of the return value.
+        
+    
+    \par Operation:
+        \code
+   val        = Rotate(val, rotate)
+   res[15:0]  = SignExtended(val[7:0])
+   res[31:16] = SignExtended(val[23:16])
+        \endcode
+*/
+uint32_t __SXTB16_RORn(uint32_t val, uint32_r rotate);
+
+
+/**************************************************************************************************/
+/** 
     \brief      Dual extracted 8-bit to 16-bit signed addition
     
     \details    This function enables you to extract two 8-bit values from the second operand (at bit 

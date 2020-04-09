@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2017 ARM Limited. All rights reserved.
+ * Copyright (c) 2013-2020 ARM Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -15,13 +15,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * $Date:        2. Feb 2017
- * $Revision:    V2.3
+ * $Date:        31. March 2020
+ * $Revision:    V2.4
  *
  * Project:      MCI (Memory Card Interface) Driver definitions
  */
 
 /* History:
+ *  Version 2.4
+ *    Removed volatile from ARM_MCI_STATUS
  *  Version 2.3
  *    ARM_MCI_STATUS made volatile
  *  Version 2.2
@@ -69,7 +71,11 @@ extern "C"
 
 #include "Driver_Common.h"
 
-#define ARM_MCI_API_VERSION ARM_DRIVER_VERSION_MAJOR_MINOR(2,3)  /* API version */
+#define ARM_MCI_API_VERSION ARM_DRIVER_VERSION_MAJOR_MINOR(2,4)  /* API version */
+
+
+#define _ARM_Driver_MCI_(n)      Driver_MCI##n
+#define  ARM_Driver_MCI_(n) _ARM_Driver_MCI_(n)
 
 
 /****** MCI Send Command Flags *****/
@@ -108,47 +114,47 @@ extern "C"
 
 
 /****** MCI Control Codes *****/
-#define ARM_MCI_BUS_SPEED               (0x01)      ///< Set Bus Speed; arg = requested speed in bits/s; returns configured speed in bits/s
-#define ARM_MCI_BUS_SPEED_MODE          (0x02)      ///< Set Bus Speed Mode as specified with arg
-#define ARM_MCI_BUS_CMD_MODE            (0x03)      ///< Set CMD Line Mode as specified with arg
-#define ARM_MCI_BUS_DATA_WIDTH          (0x04)      ///< Set Bus Data Width as specified with arg
-#define ARM_MCI_DRIVER_STRENGTH         (0x05)      ///< Set SD UHS-I Driver Strength as specified with arg 
-#define ARM_MCI_CONTROL_RESET           (0x06)      ///< Control optional RST_n Pin (eMMC); arg: 0=inactive, 1=active 
-#define ARM_MCI_CONTROL_CLOCK_IDLE      (0x07)      ///< Control Clock generation on CLK Pin when idle; arg: 0=disabled, 1=enabled
-#define ARM_MCI_UHS_TUNING_OPERATION    (0x08)      ///< Sampling clock Tuning operation (SD UHS-I); arg: 0=reset, 1=execute
-#define ARM_MCI_UHS_TUNING_RESULT       (0x09)      ///< Sampling clock Tuning result (SD UHS-I); returns: 0=done, 1=in progress, -1=error
-#define ARM_MCI_DATA_TIMEOUT            (0x0A)      ///< Set Data timeout; arg = timeout in bus cycles
-#define ARM_MCI_CSS_TIMEOUT             (0x0B)      ///< Set Command Completion Signal (CCS) timeout; arg = timeout in bus cycles
-#define ARM_MCI_MONITOR_SDIO_INTERRUPT  (0x0C)      ///< Monitor SD I/O interrupt: arg: 0=disabled, 1=enabled
-#define ARM_MCI_CONTROL_READ_WAIT       (0x0D)      ///< Control Read/Wait for SD I/O; arg: 0=disabled, 1=enabled
-#define ARM_MCI_SUSPEND_TRANSFER        (0x0E)      ///< Suspend Data transfer (SD I/O); returns number of remaining bytes to transfer
-#define ARM_MCI_RESUME_TRANSFER         (0x0F)      ///< Resume Data transfer (SD I/O)
+#define ARM_MCI_BUS_SPEED               (0x01UL)    ///< Set Bus Speed; arg = requested speed in bits/s; returns configured speed in bits/s
+#define ARM_MCI_BUS_SPEED_MODE          (0x02UL)    ///< Set Bus Speed Mode as specified with arg
+#define ARM_MCI_BUS_CMD_MODE            (0x03UL)    ///< Set CMD Line Mode as specified with arg
+#define ARM_MCI_BUS_DATA_WIDTH          (0x04UL)    ///< Set Bus Data Width as specified with arg
+#define ARM_MCI_DRIVER_STRENGTH         (0x05UL)    ///< Set SD UHS-I Driver Strength as specified with arg 
+#define ARM_MCI_CONTROL_RESET           (0x06UL)    ///< Control optional RST_n Pin (eMMC); arg: 0=inactive, 1=active 
+#define ARM_MCI_CONTROL_CLOCK_IDLE      (0x07UL)    ///< Control Clock generation on CLK Pin when idle; arg: 0=disabled, 1=enabled
+#define ARM_MCI_UHS_TUNING_OPERATION    (0x08UL)    ///< Sampling clock Tuning operation (SD UHS-I); arg: 0=reset, 1=execute
+#define ARM_MCI_UHS_TUNING_RESULT       (0x09UL)    ///< Sampling clock Tuning result (SD UHS-I); returns: 0=done, 1=in progress, -1=error
+#define ARM_MCI_DATA_TIMEOUT            (0x0AUL)    ///< Set Data timeout; arg = timeout in bus cycles
+#define ARM_MCI_CSS_TIMEOUT             (0x0BUL)    ///< Set Command Completion Signal (CCS) timeout; arg = timeout in bus cycles
+#define ARM_MCI_MONITOR_SDIO_INTERRUPT  (0x0CUL)    ///< Monitor SD I/O interrupt: arg: 0=disabled, 1=enabled
+#define ARM_MCI_CONTROL_READ_WAIT       (0x0DUL)    ///< Control Read/Wait for SD I/O; arg: 0=disabled, 1=enabled
+#define ARM_MCI_SUSPEND_TRANSFER        (0x0EUL)    ///< Suspend Data transfer (SD I/O); returns number of remaining bytes to transfer
+#define ARM_MCI_RESUME_TRANSFER         (0x0FUL)    ///< Resume Data transfer (SD I/O)
 
 /*----- MCI Bus Speed Mode -----*/
-#define ARM_MCI_BUS_DEFAULT_SPEED       (0x00)      ///< SD/MMC: Default Speed mode up to 25/26MHz
-#define ARM_MCI_BUS_HIGH_SPEED          (0x01)      ///< SD/MMC: High    Speed mode up to 50/52MHz
-#define ARM_MCI_BUS_UHS_SDR12           (0x02)      ///< SD: SDR12  (Single Data Rate) up to  25MHz,  12.5MB/s: UHS-I (Ultra High Speed) 1.8V signaling
-#define ARM_MCI_BUS_UHS_SDR25           (0x03)      ///< SD: SDR25  (Single Data Rate) up to  50MHz,  25  MB/s: UHS-I (Ultra High Speed) 1.8V signaling
-#define ARM_MCI_BUS_UHS_SDR50           (0x04)      ///< SD: SDR50  (Single Data Rate) up to 100MHz,  50  MB/s: UHS-I (Ultra High Speed) 1.8V signaling
-#define ARM_MCI_BUS_UHS_SDR104          (0x05)      ///< SD: SDR104 (Single Data Rate) up to 208MHz, 104  MB/s: UHS-I (Ultra High Speed) 1.8V signaling
-#define ARM_MCI_BUS_UHS_DDR50           (0x06)      ///< SD: DDR50  (Dual Data Rate)   up to  50MHz,  50  MB/s: UHS-I (Ultra High Speed) 1.8V signaling
+#define ARM_MCI_BUS_DEFAULT_SPEED       (0x00UL)    ///< SD/MMC: Default Speed mode up to 25/26MHz
+#define ARM_MCI_BUS_HIGH_SPEED          (0x01UL)    ///< SD/MMC: High    Speed mode up to 50/52MHz
+#define ARM_MCI_BUS_UHS_SDR12           (0x02UL)    ///< SD: SDR12  (Single Data Rate) up to  25MHz,  12.5MB/s: UHS-I (Ultra High Speed) 1.8V signaling
+#define ARM_MCI_BUS_UHS_SDR25           (0x03UL)    ///< SD: SDR25  (Single Data Rate) up to  50MHz,  25  MB/s: UHS-I (Ultra High Speed) 1.8V signaling
+#define ARM_MCI_BUS_UHS_SDR50           (0x04UL)    ///< SD: SDR50  (Single Data Rate) up to 100MHz,  50  MB/s: UHS-I (Ultra High Speed) 1.8V signaling
+#define ARM_MCI_BUS_UHS_SDR104          (0x05UL)    ///< SD: SDR104 (Single Data Rate) up to 208MHz, 104  MB/s: UHS-I (Ultra High Speed) 1.8V signaling
+#define ARM_MCI_BUS_UHS_DDR50           (0x06UL)    ///< SD: DDR50  (Dual Data Rate)   up to  50MHz,  50  MB/s: UHS-I (Ultra High Speed) 1.8V signaling
 
 /*----- MCI CMD Line Mode -----*/
-#define ARM_MCI_BUS_CMD_PUSH_PULL       (0x00)      ///< Push-Pull CMD line (default)
-#define ARM_MCI_BUS_CMD_OPEN_DRAIN      (0x01)      ///< Open Drain CMD line (MMC only)
+#define ARM_MCI_BUS_CMD_PUSH_PULL       (0x00UL)    ///< Push-Pull CMD line (default)
+#define ARM_MCI_BUS_CMD_OPEN_DRAIN      (0x01UL)    ///< Open Drain CMD line (MMC only)
 
 /*----- MCI Bus Data Width -----*/
-#define ARM_MCI_BUS_DATA_WIDTH_1        (0x00)      ///< Bus data width: 1 bit (default)
-#define ARM_MCI_BUS_DATA_WIDTH_4        (0x01)      ///< Bus data width: 4 bits
-#define ARM_MCI_BUS_DATA_WIDTH_8        (0x02)      ///< Bus data width: 8 bits
-#define ARM_MCI_BUS_DATA_WIDTH_4_DDR    (0x03)      ///< Bus data width: 4 bits, DDR (Dual Data Rate) - MMC only
-#define ARM_MCI_BUS_DATA_WIDTH_8_DDR    (0x04)      ///< Bus data width: 8 bits, DDR (Dual Data Rate) - MMC only
+#define ARM_MCI_BUS_DATA_WIDTH_1        (0x00UL)    ///< Bus data width: 1 bit (default)
+#define ARM_MCI_BUS_DATA_WIDTH_4        (0x01UL)    ///< Bus data width: 4 bits
+#define ARM_MCI_BUS_DATA_WIDTH_8        (0x02UL)    ///< Bus data width: 8 bits
+#define ARM_MCI_BUS_DATA_WIDTH_4_DDR    (0x03UL)    ///< Bus data width: 4 bits, DDR (Dual Data Rate) - MMC only
+#define ARM_MCI_BUS_DATA_WIDTH_8_DDR    (0x04UL)    ///< Bus data width: 8 bits, DDR (Dual Data Rate) - MMC only
 
 /*----- MCI Driver Strength -----*/
-#define ARM_MCI_DRIVER_TYPE_A           (0x01)      ///< SD UHS-I Driver Type A
-#define ARM_MCI_DRIVER_TYPE_B           (0x00)      ///< SD UHS-I Driver Type B (default)
-#define ARM_MCI_DRIVER_TYPE_C           (0x02)      ///< SD UHS-I Driver Type C
-#define ARM_MCI_DRIVER_TYPE_D           (0x03)      ///< SD UHS-I Driver Type D
+#define ARM_MCI_DRIVER_TYPE_A           (0x01UL)    ///< SD UHS-I Driver Type A
+#define ARM_MCI_DRIVER_TYPE_B           (0x00UL)    ///< SD UHS-I Driver Type B (default)
+#define ARM_MCI_DRIVER_TYPE_C           (0x02UL)    ///< SD UHS-I Driver Type C
+#define ARM_MCI_DRIVER_TYPE_D           (0x03UL)    ///< SD UHS-I Driver Type D
 
 
 /****** MCI Card Power *****/
@@ -168,7 +174,7 @@ extern "C"
 /**
 \brief MCI Status
 */
-typedef volatile struct _ARM_MCI_STATUS {
+typedef struct _ARM_MCI_STATUS {
   uint32_t command_active   : 1;        ///< Command active flag
   uint32_t command_timeout  : 1;        ///< Command timeout flag (cleared on start of next command)
   uint32_t command_error    : 1;        ///< Command error flag (cleared on start of next command)

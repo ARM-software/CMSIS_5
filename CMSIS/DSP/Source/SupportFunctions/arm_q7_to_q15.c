@@ -51,6 +51,50 @@
   </pre>
  */
 
+#if defined(ARM_MATH_MVEI)
+void arm_q7_to_q15(
+  const q7_t * pSrc,
+        q15_t * pDst,
+        uint32_t blockSize)
+{
+
+    uint32_t  blkCnt;           /* loop counters */
+    q15x8_t vecDst;
+    q7_t const *pSrcVec;
+
+
+    pSrcVec = (q7_t const *) pSrc;
+    blkCnt = blockSize >> 3;
+    while (blkCnt > 0U)
+    {
+        /* C = (q15_t) A << 8 */
+        /* convert from q7 to q15 and then store the results in the destination buffer */
+        /* load q7 + 32-bit widening */
+        vecDst = vldrbq_s16(pSrcVec);    
+        pSrcVec += 8;
+        vecDst = vecDst << 8;
+        vstrhq(pDst, vecDst);   
+        pDst += 8;
+        /*
+         * Decrement the blockSize loop counter
+         */
+        blkCnt--;
+    }
+
+  blkCnt = blockSize & 7;
+  while (blkCnt > 0U)
+  {
+    /* C = (q15_t) A << 8 */
+
+    /* Convert from q7 to q15 and store result in destination buffer */
+    *pDst++ = (q15_t) * pSrcVec++ << 8;
+
+    /* Decrement loop counter */
+    blkCnt--;
+  }
+
+}
+#else
 void arm_q7_to_q15(
   const q7_t * pSrc,
         q15_t * pDst,
@@ -137,6 +181,7 @@ void arm_q7_to_q15(
   }
 
 }
+#endif /* defined(ARM_MATH_MVEI) */
 
 /**
   @} end of q7_to_x group

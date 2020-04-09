@@ -49,6 +49,55 @@
                    The Q15 value -1 (0x8000) is saturated to the maximum allowable positive value 0x7FFF.
  */
 
+
+#if defined(ARM_MATH_MVEI)
+void arm_cmplx_conj_q15(
+  const q15_t * pSrc,
+        q15_t * pDst,
+        uint32_t numSamples)
+{
+    uint32_t blockSize = numSamples * CMPLX_DIM;   /* loop counters */
+    uint32_t blkCnt;
+    q31_t in1; 
+
+    q15x8x2_t vecSrc;
+    q15x8_t zero;
+
+    zero = vdupq_n_s16(0);
+
+    /* Compute 8 real samples at a time */
+    blkCnt = blockSize >> 4U;
+    while (blkCnt > 0U)
+    {
+        vecSrc = vld2q(pSrc);
+        vecSrc.val[1] = vqsubq(zero, vecSrc.val[1]);
+        vst2q(pDst,vecSrc);
+        /*
+         * Decrement the blkCnt loop counter
+         * Advance vector source and destination pointers
+         */
+        pSrc += 16;
+        pDst += 16;
+        blkCnt --;
+    }
+    
+     /* Tail */
+    blkCnt = (blockSize & 0xF) >> 1;
+
+    while (blkCnt > 0U)
+    {
+      /* C[0] + jC[1] = A[0]+ j(-1)A[1] */
+  
+      /* Calculate Complex Conjugate and store result in destination buffer. */
+      *pDst++ =  *pSrc++;
+      in1 = *pSrc++;
+      *pDst++ = __SSAT(-in1, 16);
+  
+      /* Decrement loop counter */
+      blkCnt--;
+    }
+}
+#else
 void arm_cmplx_conj_q15(
   const q15_t * pSrc,
         q15_t * pDst,
@@ -151,6 +200,7 @@ void arm_cmplx_conj_q15(
   }
 
 }
+#endif /* defined(ARM_MATH_MVEI) */
 
 /**
   @} end of cmplx_conj group

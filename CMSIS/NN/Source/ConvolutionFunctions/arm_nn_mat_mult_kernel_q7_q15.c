@@ -31,21 +31,10 @@
 #include "arm_nnfunctions.h"
 
   /**
-   * @brief Matrix-multiplication function for convolution
-   * @param[in]       pA          pointer to operand A
-   * @param[in]       pInBuffer   pointer to operand B, always conssists of 2 vectors
-   * @param[in]       ch_im_out   numRow of A
-   * @param[in]       numCol_A    numCol of A
-   * @param[in]       bias_shift  amount of left-shift for bias
-   * @param[in]       out_shift   amount of right-shift for output
-   * @param[in]       bias        the bias
-   * @param[in,out]   pOut        pointer to output
-   * @return     The function returns the incremented output pointer
+   * @brief Matrix-multiplication function for convolution.
    *
-   * @details
+   * @details Refer to header file for details.
    *
-   * This function does the matrix multiplication with weight matrix
-   * and 2 columns from im2col. 
    */
 
 q7_t     *arm_nn_mat_mult_kernel_q7_q15(const q7_t * pA,
@@ -53,8 +42,8 @@ q7_t     *arm_nn_mat_mult_kernel_q7_q15(const q7_t * pA,
                                         const uint16_t ch_im_out,
                                         const uint16_t numCol_A,
                                         const uint16_t bias_shift,
-                                        const uint16_t out_shift, 
-                                        const q7_t * bias, 
+                                        const uint16_t out_shift,
+                                        const q7_t * bias,
                                         q7_t * pOut)
 {
 #if defined (ARM_MATH_DSP)
@@ -84,19 +73,20 @@ q7_t     *arm_nn_mat_mult_kernel_q7_q15(const q7_t * pA,
         while (colCnt)
         {
             q31_t     inA11, inA12, inA21, inA22;
-            q31_t     inB1 = *__SIMD32(pB)++;
-            q31_t     inB2 = *__SIMD32(pB2)++;
 
-            pA = (q7_t *) read_and_pad((void *)pA, &inA11, &inA12);
-            pA2 = (q7_t *) read_and_pad((void *)pA2, &inA21, &inA22);
+            q31_t     inB1 = arm_nn_read_q15x2_ia(&pB);
+            q31_t     inB2 = arm_nn_read_q15x2_ia(&pB2);
+
+            pA = read_and_pad(pA, &inA11, &inA12);
+            pA2 = read_and_pad(pA2, &inA21, &inA22);
 
             sum = __SMLAD(inA11, inB1, sum);
             sum2 = __SMLAD(inA11, inB2, sum2);
             sum3 = __SMLAD(inA21, inB1, sum3);
             sum4 = __SMLAD(inA21, inB2, sum4);
 
-            inB1 = *__SIMD32(pB)++;
-            inB2 = *__SIMD32(pB2)++;
+            inB1 = arm_nn_read_q15x2_ia(&pB);
+            inB2 = arm_nn_read_q15x2_ia(&pB2);
 
             sum = __SMLAD(inA12, inB1, sum);
             sum2 = __SMLAD(inA12, inB2, sum2);
@@ -144,16 +134,18 @@ q7_t     *arm_nn_mat_mult_kernel_q7_q15(const q7_t * pA,
         while (colCnt)
         {
             q31_t     inA11, inA12;
-            q31_t     inB1 = *__SIMD32(pB)++;
-            q31_t     inB2 = *__SIMD32(pB2)++;
 
-            pA = (q7_t *) read_and_pad((void *)pA, &inA11, &inA12);
+            q31_t     inB1 = arm_nn_read_q15x2_ia(&pB);
+            q31_t     inB2 = arm_nn_read_q15x2_ia(&pB2);
+
+            pA = read_and_pad(pA, &inA11, &inA12);
 
             sum = __SMLAD(inA11, inB1, sum);
             sum2 = __SMLAD(inA11, inB2, sum2);
 
-            inB1 = *__SIMD32(pB)++;
-            inB2 = *__SIMD32(pB2)++;
+            inB1 = arm_nn_read_q15x2_ia(&pB);
+            inB2 = arm_nn_read_q15x2_ia(&pB2);
+
             sum = __SMLAD(inA12, inB1, sum);
             sum2 = __SMLAD(inA12, inB2, sum2);
 

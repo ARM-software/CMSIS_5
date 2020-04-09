@@ -13,6 +13,7 @@ targets:
       - ../../../Device/ARM/${device}/Source/system_${device}.c
       - ../Source/CV_CoreFunc.c
       - ../Source/CV_CoreSimd.c
+      - ../Source/CV_CML1Cache.c
   armcm_v7:
     extends: armcm
     source:
@@ -99,7 +100,7 @@ targets:
     source:
       - ./config/core_a/mmu.c
       - ../Source/CV_CoreAFunc.c
-      - ../Source/CV_L1Cache.c
+      - ../Source/CV_CAL1Cache.c
       - ../../Core_A/Source/irq_ctrl_gic.c
       - ../../../Device/ARM/${device}/Source/system_${device}.c
   armca5:

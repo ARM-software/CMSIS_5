@@ -49,6 +49,62 @@
                    Input down scaling is not required.
  */
 
+#if defined(ARM_MATH_MVEI)
+
+void arm_cmplx_mag_squared_q31(
+  const q31_t * pSrc,
+        q31_t * pDst,
+        uint32_t numSamples)
+{
+    int32_t blockSize = numSamples;  /* loop counters */
+    uint32_t  blkCnt;           /* loop counters */
+    q31x4x2_t vecSrc;
+    q31x4_t vReal, vImag;
+    q31x4_t vMagSq;
+    q31_t real, imag;                              /* Temporary input variables */
+    q31_t acc0, acc1;                              /* Accumulators */
+
+    /* Compute 4 complex samples at a time */
+    blkCnt = blockSize >> 2;
+    while (blkCnt > 0U)
+    {
+        vecSrc = vld2q(pSrc);
+        vReal = vmulhq(vecSrc.val[0], vecSrc.val[0]);
+        vImag = vmulhq(vecSrc.val[1], vecSrc.val[1]);
+        vMagSq = vqaddq(vReal, vImag);
+        vMagSq = vshrq(vMagSq, 1);
+
+        vst1q(pDst, vMagSq);
+
+        pSrc += 8;
+        pDst += 4;
+        /*
+         * Decrement the blkCnt loop counter
+         * Advance vector source and destination pointers
+         */
+        blkCnt --;
+    } 
+
+    /* Tail */
+    blkCnt = blockSize & 3;
+    while (blkCnt > 0U)
+    {
+      /* C[0] = (A[0] * A[0] + A[1] * A[1]) */
+  
+      real = *pSrc++;
+      imag = *pSrc++;
+      acc0 = (q31_t) (((q63_t) real * real) >> 33);
+      acc1 = (q31_t) (((q63_t) imag * imag) >> 33);
+  
+      /* store result in 3.29 format in destination buffer. */
+      *pDst++ = acc0 + acc1;
+  
+      /* Decrement loop counter */
+      blkCnt--;
+    }
+}
+
+#else
 void arm_cmplx_mag_squared_q31(
   const q31_t * pSrc,
         q31_t * pDst,
@@ -123,6 +179,8 @@ void arm_cmplx_mag_squared_q31(
   }
 
 }
+
+#endif /* defined(ARM_MATH_MVEI) */
 
 /**
   @} end of cmplx_mag_squared group
