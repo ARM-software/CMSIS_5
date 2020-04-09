@@ -66,7 +66,7 @@
                 </option>
                 <option>
                     <name>OGLastSavedByProductVersion</name>
-                    <state>8.32.3.20186</state>
+                    <state>8.50.1.24770</state>
                 </option>
                 <option>
                     <name>GeneralEnableMisra</name>
@@ -116,7 +116,7 @@
                 </option>
                 <option>
                     <name>GBECoreSlave</name>
-                    <version>27</version>
+                    <version>28</version>
                     <state>34</state>
                 </option>
                 <option>
@@ -133,7 +133,7 @@
                 </option>
                 <option>
                     <name>CoreVariant</name>
-                    <version>27</version>
+                    <version>28</version>
                     <state>34</state>
                 </option>
                 <option>
@@ -156,7 +156,7 @@
                 </option>
                 <option>
                     <name>GFPUCoreSlave2</name>
-                    <version>27</version>
+                    <version>28</version>
                     <state>34</state>
                 </option>
                 <option>
@@ -215,7 +215,7 @@
             <name>ICCARM</name>
             <archiveVersion>2</archiveVersion>
             <data>
-                <version>35</version>
+                <version>36</version>
                 <wantNonLocal>1</wantNonLocal>
                 <debug>1</debug>
                 <option>
@@ -348,6 +348,7 @@
                 <option>
                     <name>CCIncludePath2</name>
                     <state>$PROJ_DIR$/../../Include</state>
+                    <state>$PROJ_DIR$/../../PrivateInclude</state>
                     <state>$PROJ_DIR$/../../../Core/Include</state>
                     <state>$PROJ_DIR$/../../../Include</state>
                 </option>
@@ -470,6 +471,10 @@
                 <option>
                     <name>OICompilerExtraOption</name>
                     <state>1</state>
+                </option>
+                <option>
+                    <name>CCStackProtection</name>
+                    <state>0</state>
                 </option>
             </data>
         </settings>
@@ -691,7 +696,7 @@
             <name>ILINK</name>
             <archiveVersion>0</archiveVersion>
             <data>
-                <version>22</version>
+                <version>23</version>
                 <wantNonLocal>1</wantNonLocal>
                 <debug>1</debug>
                 <option>
@@ -1011,6 +1016,22 @@
                     <name>OILinkExtraOption</name>
                     <state>1</state>
                 </option>
+                <option>
+                    <name>IlinkRawBinaryFile2</name>
+                    <state></state>
+                </option>
+                <option>
+                    <name>IlinkRawBinarySymbol2</name>
+                    <state></state>
+                </option>
+                <option>
+                    <name>IlinkRawBinarySegment2</name>
+                    <state></state>
+                </option>
+                <option>
+                    <name>IlinkRawBinaryAlign2</name>
+                    <state></state>
+                </option>
             </data>
         </settings>
         <settings>
@@ -1155,7 +1176,7 @@
                 </option>
                 <option>
                     <name>GBECoreSlave</name>
-                    <version>27</version>
+                    <version>28</version>
                     <state>34</state>
                 </option>
                 <option>
@@ -1172,7 +1193,7 @@
                 </option>
                 <option>
                     <name>CoreVariant</name>
-                    <version>27</version>
+                    <version>28</version>
                     <state>34</state>
                 </option>
                 <option>
@@ -1195,7 +1216,7 @@
                 </option>
                 <option>
                     <name>GFPUCoreSlave2</name>
-                    <version>27</version>
+                    <version>28</version>
                     <state>34</state>
                 </option>
                 <option>
@@ -1254,7 +1275,7 @@
             <name>ICCARM</name>
             <archiveVersion>2</archiveVersion>
             <data>
-                <version>35</version>
+                <version>36</version>
                 <wantNonLocal>1</wantNonLocal>
                 <debug>1</debug>
                 <option>
@@ -1388,6 +1409,7 @@
                 <option>
                     <name>CCIncludePath2</name>
                     <state>$PROJ_DIR$/../../Include</state>
+                    <state>$PROJ_DIR$/../../PrivateInclude</state>
                     <state>$PROJ_DIR$/../../../Core/Include</state>
                     <state>$PROJ_DIR$/../../../Include</state>
                 </option>
@@ -1510,6 +1532,10 @@
                 <option>
                     <name>OICompilerExtraOption</name>
                     <state>1</state>
+                </option>
+                <option>
+                    <name>CCStackProtection</name>
+                    <state>0</state>
                 </option>
             </data>
         </settings>
@@ -1731,7 +1757,7 @@
             <name>ILINK</name>
             <archiveVersion>0</archiveVersion>
             <data>
-                <version>22</version>
+                <version>23</version>
                 <wantNonLocal>1</wantNonLocal>
                 <debug>1</debug>
                 <option>
@@ -2051,6 +2077,22 @@
                     <name>OILinkExtraOption</name>
                     <state>1</state>
                 </option>
+                <option>
+                    <name>IlinkRawBinaryFile2</name>
+                    <state></state>
+                </option>
+                <option>
+                    <name>IlinkRawBinarySymbol2</name>
+                    <state></state>
+                </option>
+                <option>
+                    <name>IlinkRawBinarySegment2</name>
+                    <state></state>
+                </option>
+                <option>
+                    <name>IlinkRawBinaryAlign2</name>
+                    <state></state>
+                </option>
             </data>
         </settings>
         <settings>
@@ -2195,7 +2237,7 @@
                 </option>
                 <option>
                     <name>GBECoreSlave</name>
-                    <version>27</version>
+                    <version>28</version>
                     <state>38</state>
                 </option>
                 <option>
@@ -2212,7 +2254,7 @@
                 </option>
                 <option>
                     <name>CoreVariant</name>
-                    <version>27</version>
+                    <version>28</version>
                     <state>38</state>
                 </option>
                 <option>
@@ -2235,7 +2277,7 @@
                 </option>
                 <option>
                     <name>GFPUCoreSlave2</name>
-                    <version>27</version>
+                    <version>28</version>
                     <state>38</state>
                 </option>
                 <option>
@@ -2294,7 +2336,7 @@
             <name>ICCARM</name>
             <archiveVersion>2</archiveVersion>
             <data>
-                <version>35</version>
+                <version>36</version>
                 <wantNonLocal>1</wantNonLocal>
                 <debug>1</debug>
                 <option>
@@ -2427,6 +2469,7 @@
                 <option>
                     <name>CCIncludePath2</name>
                     <state>$PROJ_DIR$/../../Include</state>
+                    <state>$PROJ_DIR$/../../PrivateInclude</state>
                     <state>$PROJ_DIR$/../../../Core/Include</state>
                     <state>$PROJ_DIR$/../../../Include</state>
                 </option>
@@ -2549,6 +2592,10 @@
                 <option>
                     <name>OICompilerExtraOption</name>
                     <state>1</state>
+                </option>
+                <option>
+                    <name>CCStackProtection</name>
+                    <state>0</state>
                 </option>
             </data>
         </settings>
@@ -2770,7 +2817,7 @@
             <name>ILINK</name>
             <archiveVersion>0</archiveVersion>
             <data>
-                <version>22</version>
+                <version>23</version>
                 <wantNonLocal>1</wantNonLocal>
                 <debug>1</debug>
                 <option>
@@ -3089,6 +3136,22 @@
                 <option>
                     <name>OILinkExtraOption</name>
                     <state>1</state>
+                </option>
+                <option>
+                    <name>IlinkRawBinaryFile2</name>
+                    <state></state>
+                </option>
+                <option>
+                    <name>IlinkRawBinarySymbol2</name>
+                    <state></state>
+                </option>
+                <option>
+                    <name>IlinkRawBinarySegment2</name>
+                    <state></state>
+                </option>
+                <option>
+                    <name>IlinkRawBinaryAlign2</name>
+                    <state></state>
                 </option>
             </data>
         </settings>
@@ -3234,7 +3297,7 @@
                 </option>
                 <option>
                     <name>GBECoreSlave</name>
-                    <version>27</version>
+                    <version>28</version>
                     <state>38</state>
                 </option>
                 <option>
@@ -3251,7 +3314,7 @@
                 </option>
                 <option>
                     <name>CoreVariant</name>
-                    <version>27</version>
+                    <version>28</version>
                     <state>38</state>
                 </option>
                 <option>
@@ -3274,7 +3337,7 @@
                 </option>
                 <option>
                     <name>GFPUCoreSlave2</name>
-                    <version>27</version>
+                    <version>28</version>
                     <state>38</state>
                 </option>
                 <option>
@@ -3333,7 +3396,7 @@
             <name>ICCARM</name>
             <archiveVersion>2</archiveVersion>
             <data>
-                <version>35</version>
+                <version>36</version>
                 <wantNonLocal>1</wantNonLocal>
                 <debug>1</debug>
                 <option>
@@ -3467,6 +3530,7 @@
                 <option>
                     <name>CCIncludePath2</name>
                     <state>$PROJ_DIR$/../../Include</state>
+                    <state>$PROJ_DIR$/../../PrivateInclude</state>
                     <state>$PROJ_DIR$/../../../Core/Include</state>
                     <state>$PROJ_DIR$/../../../Include</state>
                 </option>
@@ -3589,6 +3653,10 @@
                 <option>
                     <name>OICompilerExtraOption</name>
                     <state>1</state>
+                </option>
+                <option>
+                    <name>CCStackProtection</name>
+                    <state>0</state>
                 </option>
             </data>
         </settings>
@@ -3810,7 +3878,7 @@
             <name>ILINK</name>
             <archiveVersion>0</archiveVersion>
             <data>
-                <version>22</version>
+                <version>23</version>
                 <wantNonLocal>1</wantNonLocal>
                 <debug>1</debug>
                 <option>
@@ -4129,6 +4197,22 @@
                 <option>
                     <name>OILinkExtraOption</name>
                     <state>1</state>
+                </option>
+                <option>
+                    <name>IlinkRawBinaryFile2</name>
+                    <state></state>
+                </option>
+                <option>
+                    <name>IlinkRawBinarySymbol2</name>
+                    <state></state>
+                </option>
+                <option>
+                    <name>IlinkRawBinarySegment2</name>
+                    <state></state>
+                </option>
+                <option>
+                    <name>IlinkRawBinaryAlign2</name>
+                    <state></state>
                 </option>
             </data>
         </settings>
@@ -4274,7 +4358,7 @@
                 </option>
                 <option>
                     <name>GBECoreSlave</name>
-                    <version>27</version>
+                    <version>28</version>
                     <state>39</state>
                 </option>
                 <option>
@@ -4291,7 +4375,7 @@
                 </option>
                 <option>
                     <name>CoreVariant</name>
-                    <version>27</version>
+                    <version>28</version>
                     <state>39</state>
                 </option>
                 <option>
@@ -4314,7 +4398,7 @@
                 </option>
                 <option>
                     <name>GFPUCoreSlave2</name>
-                    <version>27</version>
+                    <version>28</version>
                     <state>39</state>
                 </option>
                 <option>
@@ -4373,7 +4457,7 @@
             <name>ICCARM</name>
             <archiveVersion>2</archiveVersion>
             <data>
-                <version>35</version>
+                <version>36</version>
                 <wantNonLocal>1</wantNonLocal>
                 <debug>1</debug>
                 <option>
@@ -4506,6 +4590,7 @@
                 <option>
                     <name>CCIncludePath2</name>
                     <state>$PROJ_DIR$/../../Include</state>
+                    <state>$PROJ_DIR$/../../PrivateInclude</state>
                     <state>$PROJ_DIR$/../../../Core/Include</state>
                     <state>$PROJ_DIR$/../../../Include</state>
                 </option>
@@ -4628,6 +4713,10 @@
                 <option>
                     <name>OICompilerExtraOption</name>
                     <state>1</state>
+                </option>
+                <option>
+                    <name>CCStackProtection</name>
+                    <state>0</state>
                 </option>
             </data>
         </settings>
@@ -4849,7 +4938,7 @@
             <name>ILINK</name>
             <archiveVersion>0</archiveVersion>
             <data>
-                <version>22</version>
+                <version>23</version>
                 <wantNonLocal>1</wantNonLocal>
                 <debug>1</debug>
                 <option>
@@ -5168,6 +5257,22 @@
                 <option>
                     <name>OILinkExtraOption</name>
                     <state>1</state>
+                </option>
+                <option>
+                    <name>IlinkRawBinaryFile2</name>
+                    <state></state>
+                </option>
+                <option>
+                    <name>IlinkRawBinarySymbol2</name>
+                    <state></state>
+                </option>
+                <option>
+                    <name>IlinkRawBinarySegment2</name>
+                    <state></state>
+                </option>
+                <option>
+                    <name>IlinkRawBinaryAlign2</name>
+                    <state></state>
                 </option>
             </data>
         </settings>
@@ -5313,7 +5418,7 @@
                 </option>
                 <option>
                     <name>GBECoreSlave</name>
-                    <version>27</version>
+                    <version>28</version>
                     <state>39</state>
                 </option>
                 <option>
@@ -5330,7 +5435,7 @@
                 </option>
                 <option>
                     <name>CoreVariant</name>
-                    <version>27</version>
+                    <version>28</version>
                     <state>39</state>
                 </option>
                 <option>
@@ -5353,7 +5458,7 @@
                 </option>
                 <option>
                     <name>GFPUCoreSlave2</name>
-                    <version>27</version>
+                    <version>28</version>
                     <state>39</state>
                 </option>
                 <option>
@@ -5412,7 +5517,7 @@
             <name>ICCARM</name>
             <archiveVersion>2</archiveVersion>
             <data>
-                <version>35</version>
+                <version>36</version>
                 <wantNonLocal>1</wantNonLocal>
                 <debug>1</debug>
                 <option>
@@ -5546,6 +5651,7 @@
                 <option>
                     <name>CCIncludePath2</name>
                     <state>$PROJ_DIR$/../../Include</state>
+                    <state>$PROJ_DIR$/../../PrivateInclude</state>
                     <state>$PROJ_DIR$/../../../Core/Include</state>
                     <state>$PROJ_DIR$/../../../Include</state>
                 </option>
@@ -5668,6 +5774,10 @@
                 <option>
                     <name>OICompilerExtraOption</name>
                     <state>1</state>
+                </option>
+                <option>
+                    <name>CCStackProtection</name>
+                    <state>0</state>
                 </option>
             </data>
         </settings>
@@ -5889,7 +5999,7 @@
             <name>ILINK</name>
             <archiveVersion>0</archiveVersion>
             <data>
-                <version>22</version>
+                <version>23</version>
                 <wantNonLocal>1</wantNonLocal>
                 <debug>1</debug>
                 <option>
@@ -6208,6 +6318,22 @@
                 <option>
                     <name>OILinkExtraOption</name>
                     <state>1</state>
+                </option>
+                <option>
+                    <name>IlinkRawBinaryFile2</name>
+                    <state></state>
+                </option>
+                <option>
+                    <name>IlinkRawBinarySymbol2</name>
+                    <state></state>
+                </option>
+                <option>
+                    <name>IlinkRawBinarySegment2</name>
+                    <state></state>
+                </option>
+                <option>
+                    <name>IlinkRawBinaryAlign2</name>
+                    <state></state>
                 </option>
             </data>
         </settings>
@@ -6353,7 +6479,7 @@
                 </option>
                 <option>
                     <name>GBECoreSlave</name>
-                    <version>27</version>
+                    <version>28</version>
                     <state>39</state>
                 </option>
                 <option>
@@ -6370,7 +6496,7 @@
                 </option>
                 <option>
                     <name>CoreVariant</name>
-                    <version>27</version>
+                    <version>28</version>
                     <state>39</state>
                 </option>
                 <option>
@@ -6393,7 +6519,7 @@
                 </option>
                 <option>
                     <name>GFPUCoreSlave2</name>
-                    <version>27</version>
+                    <version>28</version>
                     <state>39</state>
                 </option>
                 <option>
@@ -6452,7 +6578,7 @@
             <name>ICCARM</name>
             <archiveVersion>2</archiveVersion>
             <data>
-                <version>35</version>
+                <version>36</version>
                 <wantNonLocal>1</wantNonLocal>
                 <debug>1</debug>
                 <option>
@@ -6585,6 +6711,7 @@
                 <option>
                     <name>CCIncludePath2</name>
                     <state>$PROJ_DIR$/../../Include</state>
+                    <state>$PROJ_DIR$/../../PrivateInclude</state>
                     <state>$PROJ_DIR$/../../../Core/Include</state>
                     <state>$PROJ_DIR$/../../../Include</state>
                 </option>
@@ -6707,6 +6834,10 @@
                 <option>
                     <name>OICompilerExtraOption</name>
                     <state>1</state>
+                </option>
+                <option>
+                    <name>CCStackProtection</name>
+                    <state>0</state>
                 </option>
             </data>
         </settings>
@@ -6928,7 +7059,7 @@
             <name>ILINK</name>
             <archiveVersion>0</archiveVersion>
             <data>
-                <version>22</version>
+                <version>23</version>
                 <wantNonLocal>1</wantNonLocal>
                 <debug>1</debug>
                 <option>
@@ -7247,6 +7378,22 @@
                 <option>
                     <name>OILinkExtraOption</name>
                     <state>1</state>
+                </option>
+                <option>
+                    <name>IlinkRawBinaryFile2</name>
+                    <state></state>
+                </option>
+                <option>
+                    <name>IlinkRawBinarySymbol2</name>
+                    <state></state>
+                </option>
+                <option>
+                    <name>IlinkRawBinarySegment2</name>
+                    <state></state>
+                </option>
+                <option>
+                    <name>IlinkRawBinaryAlign2</name>
+                    <state></state>
                 </option>
             </data>
         </settings>
@@ -7392,7 +7539,7 @@
                 </option>
                 <option>
                     <name>GBECoreSlave</name>
-                    <version>27</version>
+                    <version>28</version>
                     <state>39</state>
                 </option>
                 <option>
@@ -7409,7 +7556,7 @@
                 </option>
                 <option>
                     <name>CoreVariant</name>
-                    <version>27</version>
+                    <version>28</version>
                     <state>39</state>
                 </option>
                 <option>
@@ -7432,7 +7579,7 @@
                 </option>
                 <option>
                     <name>GFPUCoreSlave2</name>
-                    <version>27</version>
+                    <version>28</version>
                     <state>39</state>
                 </option>
                 <option>
@@ -7491,7 +7638,7 @@
             <name>ICCARM</name>
             <archiveVersion>2</archiveVersion>
             <data>
-                <version>35</version>
+                <version>36</version>
                 <wantNonLocal>1</wantNonLocal>
                 <debug>1</debug>
                 <option>
@@ -7625,6 +7772,7 @@
                 <option>
                     <name>CCIncludePath2</name>
                     <state>$PROJ_DIR$/../../Include</state>
+                    <state>$PROJ_DIR$/../../PrivateInclude</state>
                     <state>$PROJ_DIR$/../../../Core/Include</state>
                     <state>$PROJ_DIR$/../../../Include</state>
                 </option>
@@ -7747,6 +7895,10 @@
                 <option>
                     <name>OICompilerExtraOption</name>
                     <state>1</state>
+                </option>
+                <option>
+                    <name>CCStackProtection</name>
+                    <state>0</state>
                 </option>
             </data>
         </settings>
@@ -7968,7 +8120,7 @@
             <name>ILINK</name>
             <archiveVersion>0</archiveVersion>
             <data>
-                <version>22</version>
+                <version>23</version>
                 <wantNonLocal>1</wantNonLocal>
                 <debug>1</debug>
                 <option>
@@ -8287,6 +8439,22 @@
                 <option>
                     <name>OILinkExtraOption</name>
                     <state>1</state>
+                </option>
+                <option>
+                    <name>IlinkRawBinaryFile2</name>
+                    <state></state>
+                </option>
+                <option>
+                    <name>IlinkRawBinarySymbol2</name>
+                    <state></state>
+                </option>
+                <option>
+                    <name>IlinkRawBinarySegment2</name>
+                    <state></state>
+                </option>
+                <option>
+                    <name>IlinkRawBinaryAlign2</name>
+                    <state></state>
                 </option>
             </data>
         </settings>
@@ -8432,7 +8600,7 @@
                 </option>
                 <option>
                     <name>GBECoreSlave</name>
-                    <version>27</version>
+                    <version>28</version>
                     <state>41</state>
                 </option>
                 <option>
@@ -8449,7 +8617,7 @@
                 </option>
                 <option>
                     <name>CoreVariant</name>
-                    <version>27</version>
+                    <version>28</version>
                     <state>41</state>
                 </option>
                 <option>
@@ -8472,7 +8640,7 @@
                 </option>
                 <option>
                     <name>GFPUCoreSlave2</name>
-                    <version>27</version>
+                    <version>28</version>
                     <state>41</state>
                 </option>
                 <option>
@@ -8531,7 +8699,7 @@
             <name>ICCARM</name>
             <archiveVersion>2</archiveVersion>
             <data>
-                <version>35</version>
+                <version>36</version>
                 <wantNonLocal>1</wantNonLocal>
                 <debug>1</debug>
                 <option>
@@ -8664,6 +8832,7 @@
                 <option>
                     <name>CCIncludePath2</name>
                     <state>$PROJ_DIR$/../../Include</state>
+                    <state>$PROJ_DIR$/../../PrivateInclude</state>
                     <state>$PROJ_DIR$/../../../Core/Include</state>
                     <state>$PROJ_DIR$/../../../Include</state>
                 </option>
@@ -8786,6 +8955,10 @@
                 <option>
                     <name>OICompilerExtraOption</name>
                     <state>1</state>
+                </option>
+                <option>
+                    <name>CCStackProtection</name>
+                    <state>0</state>
                 </option>
             </data>
         </settings>
@@ -9007,7 +9180,7 @@
             <name>ILINK</name>
             <archiveVersion>0</archiveVersion>
             <data>
-                <version>22</version>
+                <version>23</version>
                 <wantNonLocal>1</wantNonLocal>
                 <debug>1</debug>
                 <option>
@@ -9326,6 +9499,22 @@
                 <option>
                     <name>OILinkExtraOption</name>
                     <state>1</state>
+                </option>
+                <option>
+                    <name>IlinkRawBinaryFile2</name>
+                    <state></state>
+                </option>
+                <option>
+                    <name>IlinkRawBinarySymbol2</name>
+                    <state></state>
+                </option>
+                <option>
+                    <name>IlinkRawBinarySegment2</name>
+                    <state></state>
+                </option>
+                <option>
+                    <name>IlinkRawBinaryAlign2</name>
+                    <state></state>
                 </option>
             </data>
         </settings>
@@ -9471,7 +9660,7 @@
                 </option>
                 <option>
                     <name>GBECoreSlave</name>
-                    <version>27</version>
+                    <version>28</version>
                     <state>39</state>
                 </option>
                 <option>
@@ -9488,7 +9677,7 @@
                 </option>
                 <option>
                     <name>CoreVariant</name>
-                    <version>27</version>
+                    <version>28</version>
                     <state>39</state>
                 </option>
                 <option>
@@ -9511,7 +9700,7 @@
                 </option>
                 <option>
                     <name>GFPUCoreSlave2</name>
-                    <version>27</version>
+                    <version>28</version>
                     <state>39</state>
                 </option>
                 <option>
@@ -9570,7 +9759,7 @@
             <name>ICCARM</name>
             <archiveVersion>2</archiveVersion>
             <data>
-                <version>35</version>
+                <version>36</version>
                 <wantNonLocal>1</wantNonLocal>
                 <debug>1</debug>
                 <option>
@@ -9704,6 +9893,7 @@
                 <option>
                     <name>CCIncludePath2</name>
                     <state>$PROJ_DIR$/../../Include</state>
+                    <state>$PROJ_DIR$/../../PrivateInclude</state>
                     <state>$PROJ_DIR$/../../../Core/Include</state>
                     <state>$PROJ_DIR$/../../../Include</state>
                 </option>
@@ -9826,6 +10016,10 @@
                 <option>
                     <name>OICompilerExtraOption</name>
                     <state>1</state>
+                </option>
+                <option>
+                    <name>CCStackProtection</name>
+                    <state>0</state>
                 </option>
             </data>
         </settings>
@@ -10047,7 +10241,7 @@
             <name>ILINK</name>
             <archiveVersion>0</archiveVersion>
             <data>
-                <version>22</version>
+                <version>23</version>
                 <wantNonLocal>1</wantNonLocal>
                 <debug>1</debug>
                 <option>
@@ -10366,6 +10560,22 @@
                 <option>
                     <name>OILinkExtraOption</name>
                     <state>1</state>
+                </option>
+                <option>
+                    <name>IlinkRawBinaryFile2</name>
+                    <state></state>
+                </option>
+                <option>
+                    <name>IlinkRawBinarySymbol2</name>
+                    <state></state>
+                </option>
+                <option>
+                    <name>IlinkRawBinarySegment2</name>
+                    <state></state>
+                </option>
+                <option>
+                    <name>IlinkRawBinaryAlign2</name>
+                    <state></state>
                 </option>
             </data>
         </settings>
@@ -10511,7 +10721,7 @@
                 </option>
                 <option>
                     <name>GBECoreSlave</name>
-                    <version>27</version>
+                    <version>28</version>
                     <state>41</state>
                 </option>
                 <option>
@@ -10528,7 +10738,7 @@
                 </option>
                 <option>
                     <name>CoreVariant</name>
-                    <version>27</version>
+                    <version>28</version>
                     <state>41</state>
                 </option>
                 <option>
@@ -10551,7 +10761,7 @@
                 </option>
                 <option>
                     <name>GFPUCoreSlave2</name>
-                    <version>27</version>
+                    <version>28</version>
                     <state>41</state>
                 </option>
                 <option>
@@ -10610,7 +10820,7 @@
             <name>ICCARM</name>
             <archiveVersion>2</archiveVersion>
             <data>
-                <version>35</version>
+                <version>36</version>
                 <wantNonLocal>1</wantNonLocal>
                 <debug>1</debug>
                 <option>
@@ -10743,6 +10953,7 @@
                 <option>
                     <name>CCIncludePath2</name>
                     <state>$PROJ_DIR$/../../Include</state>
+                    <state>$PROJ_DIR$/../../PrivateInclude</state>
                     <state>$PROJ_DIR$/../../../Core/Include</state>
                     <state>$PROJ_DIR$/../../../Include</state>
                 </option>
@@ -10865,6 +11076,10 @@
                 <option>
                     <name>OICompilerExtraOption</name>
                     <state>1</state>
+                </option>
+                <option>
+                    <name>CCStackProtection</name>
+                    <state>0</state>
                 </option>
             </data>
         </settings>
@@ -11086,7 +11301,7 @@
             <name>ILINK</name>
             <archiveVersion>0</archiveVersion>
             <data>
-                <version>22</version>
+                <version>23</version>
                 <wantNonLocal>1</wantNonLocal>
                 <debug>1</debug>
                 <option>
@@ -11405,6 +11620,22 @@
                 <option>
                     <name>OILinkExtraOption</name>
                     <state>1</state>
+                </option>
+                <option>
+                    <name>IlinkRawBinaryFile2</name>
+                    <state></state>
+                </option>
+                <option>
+                    <name>IlinkRawBinarySymbol2</name>
+                    <state></state>
+                </option>
+                <option>
+                    <name>IlinkRawBinarySegment2</name>
+                    <state></state>
+                </option>
+                <option>
+                    <name>IlinkRawBinaryAlign2</name>
+                    <state></state>
                 </option>
             </data>
         </settings>
@@ -11550,7 +11781,7 @@
                 </option>
                 <option>
                     <name>GBECoreSlave</name>
-                    <version>27</version>
+                    <version>28</version>
                     <state>41</state>
                 </option>
                 <option>
@@ -11567,7 +11798,7 @@
                 </option>
                 <option>
                     <name>CoreVariant</name>
-                    <version>27</version>
+                    <version>28</version>
                     <state>41</state>
                 </option>
                 <option>
@@ -11590,7 +11821,7 @@
                 </option>
                 <option>
                     <name>GFPUCoreSlave2</name>
-                    <version>27</version>
+                    <version>28</version>
                     <state>41</state>
                 </option>
                 <option>
@@ -11649,7 +11880,7 @@
             <name>ICCARM</name>
             <archiveVersion>2</archiveVersion>
             <data>
-                <version>35</version>
+                <version>36</version>
                 <wantNonLocal>1</wantNonLocal>
                 <debug>1</debug>
                 <option>
@@ -11783,6 +12014,7 @@
                 <option>
                     <name>CCIncludePath2</name>
                     <state>$PROJ_DIR$/../../Include</state>
+                    <state>$PROJ_DIR$/../../PrivateInclude</state>
                     <state>$PROJ_DIR$/../../../Core/Include</state>
                     <state>$PROJ_DIR$/../../../Include</state>
                 </option>
@@ -11905,6 +12137,10 @@
                 <option>
                     <name>OICompilerExtraOption</name>
                     <state>1</state>
+                </option>
+                <option>
+                    <name>CCStackProtection</name>
+                    <state>0</state>
                 </option>
             </data>
         </settings>
@@ -12126,7 +12362,7 @@
             <name>ILINK</name>
             <archiveVersion>0</archiveVersion>
             <data>
-                <version>22</version>
+                <version>23</version>
                 <wantNonLocal>1</wantNonLocal>
                 <debug>1</debug>
                 <option>
@@ -12445,6 +12681,22 @@
                 <option>
                     <name>OILinkExtraOption</name>
                     <state>1</state>
+                </option>
+                <option>
+                    <name>IlinkRawBinaryFile2</name>
+                    <state></state>
+                </option>
+                <option>
+                    <name>IlinkRawBinarySymbol2</name>
+                    <state></state>
+                </option>
+                <option>
+                    <name>IlinkRawBinarySegment2</name>
+                    <state></state>
+                </option>
+                <option>
+                    <name>IlinkRawBinaryAlign2</name>
+                    <state></state>
                 </option>
             </data>
         </settings>
@@ -12590,7 +12842,7 @@
                 </option>
                 <option>
                     <name>GBECoreSlave</name>
-                    <version>27</version>
+                    <version>28</version>
                     <state>41</state>
                 </option>
                 <option>
@@ -12607,7 +12859,7 @@
                 </option>
                 <option>
                     <name>CoreVariant</name>
-                    <version>27</version>
+                    <version>28</version>
                     <state>41</state>
                 </option>
                 <option>
@@ -12630,7 +12882,7 @@
                 </option>
                 <option>
                     <name>GFPUCoreSlave2</name>
-                    <version>27</version>
+                    <version>28</version>
                     <state>41</state>
                 </option>
                 <option>
@@ -12689,7 +12941,7 @@
             <name>ICCARM</name>
             <archiveVersion>2</archiveVersion>
             <data>
-                <version>35</version>
+                <version>36</version>
                 <wantNonLocal>1</wantNonLocal>
                 <debug>1</debug>
                 <option>
@@ -12822,6 +13074,7 @@
                 <option>
                     <name>CCIncludePath2</name>
                     <state>$PROJ_DIR$/../../Include</state>
+                    <state>$PROJ_DIR$/../../PrivateInclude</state>
                     <state>$PROJ_DIR$/../../../Core/Include</state>
                     <state>$PROJ_DIR$/../../../Include</state>
                 </option>
@@ -12944,6 +13197,10 @@
                 <option>
                     <name>OICompilerExtraOption</name>
                     <state>1</state>
+                </option>
+                <option>
+                    <name>CCStackProtection</name>
+                    <state>0</state>
                 </option>
             </data>
         </settings>
@@ -13165,7 +13422,7 @@
             <name>ILINK</name>
             <archiveVersion>0</archiveVersion>
             <data>
-                <version>22</version>
+                <version>23</version>
                 <wantNonLocal>1</wantNonLocal>
                 <debug>1</debug>
                 <option>
@@ -13484,6 +13741,22 @@
                 <option>
                     <name>OILinkExtraOption</name>
                     <state>1</state>
+                </option>
+                <option>
+                    <name>IlinkRawBinaryFile2</name>
+                    <state></state>
+                </option>
+                <option>
+                    <name>IlinkRawBinarySymbol2</name>
+                    <state></state>
+                </option>
+                <option>
+                    <name>IlinkRawBinarySegment2</name>
+                    <state></state>
+                </option>
+                <option>
+                    <name>IlinkRawBinaryAlign2</name>
+                    <state></state>
                 </option>
             </data>
         </settings>
@@ -13629,7 +13902,7 @@
                 </option>
                 <option>
                     <name>GBECoreSlave</name>
-                    <version>27</version>
+                    <version>28</version>
                     <state>41</state>
                 </option>
                 <option>
@@ -13646,7 +13919,7 @@
                 </option>
                 <option>
                     <name>CoreVariant</name>
-                    <version>27</version>
+                    <version>28</version>
                     <state>41</state>
                 </option>
                 <option>
@@ -13669,7 +13942,7 @@
                 </option>
                 <option>
                     <name>GFPUCoreSlave2</name>
-                    <version>27</version>
+                    <version>28</version>
                     <state>41</state>
                 </option>
                 <option>
@@ -13728,7 +14001,7 @@
             <name>ICCARM</name>
             <archiveVersion>2</archiveVersion>
             <data>
-                <version>35</version>
+                <version>36</version>
                 <wantNonLocal>1</wantNonLocal>
                 <debug>1</debug>
                 <option>
@@ -13862,6 +14135,7 @@
                 <option>
                     <name>CCIncludePath2</name>
                     <state>$PROJ_DIR$/../../Include</state>
+                    <state>$PROJ_DIR$/../../PrivateInclude</state>
                     <state>$PROJ_DIR$/../../../Core/Include</state>
                     <state>$PROJ_DIR$/../../../Include</state>
                 </option>
@@ -13984,6 +14258,10 @@
                 <option>
                     <name>OICompilerExtraOption</name>
                     <state>1</state>
+                </option>
+                <option>
+                    <name>CCStackProtection</name>
+                    <state>0</state>
                 </option>
             </data>
         </settings>
@@ -14205,7 +14483,7 @@
             <name>ILINK</name>
             <archiveVersion>0</archiveVersion>
             <data>
-                <version>22</version>
+                <version>23</version>
                 <wantNonLocal>1</wantNonLocal>
                 <debug>1</debug>
                 <option>
@@ -14524,6 +14802,22 @@
                 <option>
                     <name>OILinkExtraOption</name>
                     <state>1</state>
+                </option>
+                <option>
+                    <name>IlinkRawBinaryFile2</name>
+                    <state></state>
+                </option>
+                <option>
+                    <name>IlinkRawBinarySymbol2</name>
+                    <state></state>
+                </option>
+                <option>
+                    <name>IlinkRawBinarySegment2</name>
+                    <state></state>
+                </option>
+                <option>
+                    <name>IlinkRawBinaryAlign2</name>
+                    <state></state>
                 </option>
             </data>
         </settings>
@@ -14669,7 +14963,7 @@
                 </option>
                 <option>
                     <name>GBECoreSlave</name>
-                    <version>27</version>
+                    <version>28</version>
                     <state>58</state>
                 </option>
                 <option>
@@ -14686,7 +14980,7 @@
                 </option>
                 <option>
                     <name>CoreVariant</name>
-                    <version>27</version>
+                    <version>28</version>
                     <state>58</state>
                 </option>
                 <option>
@@ -14709,7 +15003,7 @@
                 </option>
                 <option>
                     <name>GFPUCoreSlave2</name>
-                    <version>27</version>
+                    <version>28</version>
                     <state>58</state>
                 </option>
                 <option>
@@ -14768,7 +15062,7 @@
             <name>ICCARM</name>
             <archiveVersion>2</archiveVersion>
             <data>
-                <version>35</version>
+                <version>36</version>
                 <wantNonLocal>1</wantNonLocal>
                 <debug>1</debug>
                 <option>
@@ -14901,6 +15195,7 @@
                 <option>
                     <name>CCIncludePath2</name>
                     <state>$PROJ_DIR$/../../Include</state>
+                    <state>$PROJ_DIR$/../../PrivateInclude</state>
                     <state>$PROJ_DIR$/../../../Core/Include</state>
                     <state>$PROJ_DIR$/../../../Include</state>
                 </option>
@@ -15023,6 +15318,10 @@
                 <option>
                     <name>OICompilerExtraOption</name>
                     <state>1</state>
+                </option>
+                <option>
+                    <name>CCStackProtection</name>
+                    <state>0</state>
                 </option>
             </data>
         </settings>
@@ -15244,7 +15543,7 @@
             <name>ILINK</name>
             <archiveVersion>0</archiveVersion>
             <data>
-                <version>22</version>
+                <version>23</version>
                 <wantNonLocal>1</wantNonLocal>
                 <debug>1</debug>
                 <option>
@@ -15563,6 +15862,22 @@
                 <option>
                     <name>OILinkExtraOption</name>
                     <state>1</state>
+                </option>
+                <option>
+                    <name>IlinkRawBinaryFile2</name>
+                    <state></state>
+                </option>
+                <option>
+                    <name>IlinkRawBinarySymbol2</name>
+                    <state></state>
+                </option>
+                <option>
+                    <name>IlinkRawBinarySegment2</name>
+                    <state></state>
+                </option>
+                <option>
+                    <name>IlinkRawBinaryAlign2</name>
+                    <state></state>
                 </option>
             </data>
         </settings>
@@ -15708,7 +16023,7 @@
                 </option>
                 <option>
                     <name>GBECoreSlave</name>
-                    <version>27</version>
+                    <version>28</version>
                     <state>59</state>
                 </option>
                 <option>
@@ -15725,7 +16040,7 @@
                 </option>
                 <option>
                     <name>CoreVariant</name>
-                    <version>27</version>
+                    <version>28</version>
                     <state>59</state>
                 </option>
                 <option>
@@ -15748,7 +16063,7 @@
                 </option>
                 <option>
                     <name>GFPUCoreSlave2</name>
-                    <version>27</version>
+                    <version>28</version>
                     <state>59</state>
                 </option>
                 <option>
@@ -15807,7 +16122,7 @@
             <name>ICCARM</name>
             <archiveVersion>2</archiveVersion>
             <data>
-                <version>35</version>
+                <version>36</version>
                 <wantNonLocal>1</wantNonLocal>
                 <debug>1</debug>
                 <option>
@@ -15940,6 +16255,7 @@
                 <option>
                     <name>CCIncludePath2</name>
                     <state>$PROJ_DIR$/../../Include</state>
+                    <state>$PROJ_DIR$/../../PrivateInclude</state>
                     <state>$PROJ_DIR$/../../../Core/Include</state>
                     <state>$PROJ_DIR$/../../../Include</state>
                 </option>
@@ -16062,6 +16378,10 @@
                 <option>
                     <name>OICompilerExtraOption</name>
                     <state>1</state>
+                </option>
+                <option>
+                    <name>CCStackProtection</name>
+                    <state>0</state>
                 </option>
             </data>
         </settings>
@@ -16283,7 +16603,7 @@
             <name>ILINK</name>
             <archiveVersion>0</archiveVersion>
             <data>
-                <version>22</version>
+                <version>23</version>
                 <wantNonLocal>1</wantNonLocal>
                 <debug>1</debug>
                 <option>
@@ -16602,6 +16922,22 @@
                 <option>
                     <name>OILinkExtraOption</name>
                     <state>1</state>
+                </option>
+                <option>
+                    <name>IlinkRawBinaryFile2</name>
+                    <state></state>
+                </option>
+                <option>
+                    <name>IlinkRawBinarySymbol2</name>
+                    <state></state>
+                </option>
+                <option>
+                    <name>IlinkRawBinarySegment2</name>
+                    <state></state>
+                </option>
+                <option>
+                    <name>IlinkRawBinaryAlign2</name>
+                    <state></state>
                 </option>
             </data>
         </settings>
@@ -16747,7 +17083,7 @@
                 </option>
                 <option>
                     <name>GBECoreSlave</name>
-                    <version>27</version>
+                    <version>28</version>
                     <state>59</state>
                 </option>
                 <option>
@@ -16764,7 +17100,7 @@
                 </option>
                 <option>
                     <name>CoreVariant</name>
-                    <version>27</version>
+                    <version>28</version>
                     <state>59</state>
                 </option>
                 <option>
@@ -16787,7 +17123,7 @@
                 </option>
                 <option>
                     <name>GFPUCoreSlave2</name>
-                    <version>27</version>
+                    <version>28</version>
                     <state>59</state>
                 </option>
                 <option>
@@ -16846,7 +17182,7 @@
             <name>ICCARM</name>
             <archiveVersion>2</archiveVersion>
             <data>
-                <version>35</version>
+                <version>36</version>
                 <wantNonLocal>1</wantNonLocal>
                 <debug>1</debug>
                 <option>
@@ -16979,6 +17315,7 @@
                 <option>
                     <name>CCIncludePath2</name>
                     <state>$PROJ_DIR$/../../Include</state>
+                    <state>$PROJ_DIR$/../../PrivateInclude</state>
                     <state>$PROJ_DIR$/../../../Core/Include</state>
                     <state>$PROJ_DIR$/../../../Include</state>
                 </option>
@@ -17101,6 +17438,10 @@
                 <option>
                     <name>OICompilerExtraOption</name>
                     <state>1</state>
+                </option>
+                <option>
+                    <name>CCStackProtection</name>
+                    <state>0</state>
                 </option>
             </data>
         </settings>
@@ -17322,7 +17663,7 @@
             <name>ILINK</name>
             <archiveVersion>0</archiveVersion>
             <data>
-                <version>22</version>
+                <version>23</version>
                 <wantNonLocal>1</wantNonLocal>
                 <debug>1</debug>
                 <option>
@@ -17641,6 +17982,22 @@
                 <option>
                     <name>OILinkExtraOption</name>
                     <state>1</state>
+                </option>
+                <option>
+                    <name>IlinkRawBinaryFile2</name>
+                    <state></state>
+                </option>
+                <option>
+                    <name>IlinkRawBinarySymbol2</name>
+                    <state></state>
+                </option>
+                <option>
+                    <name>IlinkRawBinarySegment2</name>
+                    <state></state>
+                </option>
+                <option>
+                    <name>IlinkRawBinaryAlign2</name>
+                    <state></state>
                 </option>
             </data>
         </settings>
@@ -17786,7 +18143,7 @@
                 </option>
                 <option>
                     <name>GBECoreSlave</name>
-                    <version>27</version>
+                    <version>28</version>
                     <state>59</state>
                 </option>
                 <option>
@@ -17803,7 +18160,7 @@
                 </option>
                 <option>
                     <name>CoreVariant</name>
-                    <version>27</version>
+                    <version>28</version>
                     <state>59</state>
                 </option>
                 <option>
@@ -17826,7 +18183,7 @@
                 </option>
                 <option>
                     <name>GFPUCoreSlave2</name>
-                    <version>27</version>
+                    <version>28</version>
                     <state>59</state>
                 </option>
                 <option>
@@ -17885,7 +18242,7 @@
             <name>ICCARM</name>
             <archiveVersion>2</archiveVersion>
             <data>
-                <version>35</version>
+                <version>36</version>
                 <wantNonLocal>1</wantNonLocal>
                 <debug>1</debug>
                 <option>
@@ -18018,6 +18375,7 @@
                 <option>
                     <name>CCIncludePath2</name>
                     <state>$PROJ_DIR$/../../Include</state>
+                    <state>$PROJ_DIR$/../../PrivateInclude</state>
                     <state>$PROJ_DIR$/../../../Core/Include</state>
                     <state>$PROJ_DIR$/../../../Include</state>
                 </option>
@@ -18140,6 +18498,10 @@
                 <option>
                     <name>OICompilerExtraOption</name>
                     <state>1</state>
+                </option>
+                <option>
+                    <name>CCStackProtection</name>
+                    <state>0</state>
                 </option>
             </data>
         </settings>
@@ -18361,7 +18723,7 @@
             <name>ILINK</name>
             <archiveVersion>0</archiveVersion>
             <data>
-                <version>22</version>
+                <version>23</version>
                 <wantNonLocal>1</wantNonLocal>
                 <debug>1</debug>
                 <option>
@@ -18680,6 +19042,22 @@
                 <option>
                     <name>OILinkExtraOption</name>
                     <state>1</state>
+                </option>
+                <option>
+                    <name>IlinkRawBinaryFile2</name>
+                    <state></state>
+                </option>
+                <option>
+                    <name>IlinkRawBinarySymbol2</name>
+                    <state></state>
+                </option>
+                <option>
+                    <name>IlinkRawBinarySegment2</name>
+                    <state></state>
+                </option>
+                <option>
+                    <name>IlinkRawBinaryAlign2</name>
+                    <state></state>
                 </option>
             </data>
         </settings>
@@ -18825,7 +19203,7 @@
                 </option>
                 <option>
                     <name>GBECoreSlave</name>
-                    <version>27</version>
+                    <version>28</version>
                     <state>59</state>
                 </option>
                 <option>
@@ -18842,7 +19220,7 @@
                 </option>
                 <option>
                     <name>CoreVariant</name>
-                    <version>27</version>
+                    <version>28</version>
                     <state>59</state>
                 </option>
                 <option>
@@ -18865,7 +19243,7 @@
                 </option>
                 <option>
                     <name>GFPUCoreSlave2</name>
-                    <version>27</version>
+                    <version>28</version>
                     <state>59</state>
                 </option>
                 <option>
@@ -18924,7 +19302,7 @@
             <name>ICCARM</name>
             <archiveVersion>2</archiveVersion>
             <data>
-                <version>35</version>
+                <version>36</version>
                 <wantNonLocal>1</wantNonLocal>
                 <debug>1</debug>
                 <option>
@@ -19057,6 +19435,7 @@
                 <option>
                     <name>CCIncludePath2</name>
                     <state>$PROJ_DIR$/../../Include</state>
+                    <state>$PROJ_DIR$/../../PrivateInclude</state>
                     <state>$PROJ_DIR$/../../../Core/Include</state>
                     <state>$PROJ_DIR$/../../../Include</state>
                 </option>
@@ -19179,6 +19558,10 @@
                 <option>
                     <name>OICompilerExtraOption</name>
                     <state>1</state>
+                </option>
+                <option>
+                    <name>CCStackProtection</name>
+                    <state>0</state>
                 </option>
             </data>
         </settings>
@@ -19400,7 +19783,7 @@
             <name>ILINK</name>
             <archiveVersion>0</archiveVersion>
             <data>
-                <version>22</version>
+                <version>23</version>
                 <wantNonLocal>1</wantNonLocal>
                 <debug>1</debug>
                 <option>
@@ -19719,6 +20102,22 @@
                 <option>
                     <name>OILinkExtraOption</name>
                     <state>1</state>
+                </option>
+                <option>
+                    <name>IlinkRawBinaryFile2</name>
+                    <state></state>
+                </option>
+                <option>
+                    <name>IlinkRawBinarySymbol2</name>
+                    <state></state>
+                </option>
+                <option>
+                    <name>IlinkRawBinarySegment2</name>
+                    <state></state>
+                </option>
+                <option>
+                    <name>IlinkRawBinaryAlign2</name>
+                    <state></state>
                 </option>
             </data>
         </settings>
@@ -19864,7 +20263,7 @@
                 </option>
                 <option>
                     <name>GBECoreSlave</name>
-                    <version>27</version>
+                    <version>28</version>
                     <state>59</state>
                 </option>
                 <option>
@@ -19881,7 +20280,7 @@
                 </option>
                 <option>
                     <name>CoreVariant</name>
-                    <version>27</version>
+                    <version>28</version>
                     <state>59</state>
                 </option>
                 <option>
@@ -19904,7 +20303,7 @@
                 </option>
                 <option>
                     <name>GFPUCoreSlave2</name>
-                    <version>27</version>
+                    <version>28</version>
                     <state>59</state>
                 </option>
                 <option>
@@ -19963,7 +20362,7 @@
             <name>ICCARM</name>
             <archiveVersion>2</archiveVersion>
             <data>
-                <version>35</version>
+                <version>36</version>
                 <wantNonLocal>1</wantNonLocal>
                 <debug>1</debug>
                 <option>
@@ -20096,6 +20495,7 @@
                 <option>
                     <name>CCIncludePath2</name>
                     <state>$PROJ_DIR$/../../Include</state>
+                    <state>$PROJ_DIR$/../../PrivateInclude</state>
                     <state>$PROJ_DIR$/../../../Core/Include</state>
                     <state>$PROJ_DIR$/../../../Include</state>
                 </option>
@@ -20218,6 +20618,10 @@
                 <option>
                     <name>OICompilerExtraOption</name>
                     <state>1</state>
+                </option>
+                <option>
+                    <name>CCStackProtection</name>
+                    <state>0</state>
                 </option>
             </data>
         </settings>
@@ -20439,7 +20843,7 @@
             <name>ILINK</name>
             <archiveVersion>0</archiveVersion>
             <data>
-                <version>22</version>
+                <version>23</version>
                 <wantNonLocal>1</wantNonLocal>
                 <debug>1</debug>
                 <option>
@@ -20758,6 +21162,22 @@
                 <option>
                     <name>OILinkExtraOption</name>
                     <state>1</state>
+                </option>
+                <option>
+                    <name>IlinkRawBinaryFile2</name>
+                    <state></state>
+                </option>
+                <option>
+                    <name>IlinkRawBinarySymbol2</name>
+                    <state></state>
+                </option>
+                <option>
+                    <name>IlinkRawBinarySegment2</name>
+                    <state></state>
+                </option>
+                <option>
+                    <name>IlinkRawBinaryAlign2</name>
+                    <state></state>
                 </option>
             </data>
         </settings>
@@ -20903,7 +21323,7 @@
                 </option>
                 <option>
                     <name>GBECoreSlave</name>
-                    <version>27</version>
+                    <version>28</version>
                     <state>59</state>
                 </option>
                 <option>
@@ -20920,7 +21340,7 @@
                 </option>
                 <option>
                     <name>CoreVariant</name>
-                    <version>27</version>
+                    <version>28</version>
                     <state>59</state>
                 </option>
                 <option>
@@ -20943,7 +21363,7 @@
                 </option>
                 <option>
                     <name>GFPUCoreSlave2</name>
-                    <version>27</version>
+                    <version>28</version>
                     <state>59</state>
                 </option>
                 <option>
@@ -21002,7 +21422,7 @@
             <name>ICCARM</name>
             <archiveVersion>2</archiveVersion>
             <data>
-                <version>35</version>
+                <version>36</version>
                 <wantNonLocal>1</wantNonLocal>
                 <debug>1</debug>
                 <option>
@@ -21135,6 +21555,7 @@
                 <option>
                     <name>CCIncludePath2</name>
                     <state>$PROJ_DIR$/../../Include</state>
+                    <state>$PROJ_DIR$/../../PrivateInclude</state>
                     <state>$PROJ_DIR$/../../../Core/Include</state>
                     <state>$PROJ_DIR$/../../../Include</state>
                 </option>
@@ -21257,6 +21678,10 @@
                 <option>
                     <name>OICompilerExtraOption</name>
                     <state>1</state>
+                </option>
+                <option>
+                    <name>CCStackProtection</name>
+                    <state>0</state>
                 </option>
             </data>
         </settings>
@@ -21478,7 +21903,7 @@
             <name>ILINK</name>
             <archiveVersion>0</archiveVersion>
             <data>
-                <version>22</version>
+                <version>23</version>
                 <wantNonLocal>1</wantNonLocal>
                 <debug>1</debug>
                 <option>
@@ -21798,6 +22223,22 @@
                     <name>OILinkExtraOption</name>
                     <state>1</state>
                 </option>
+                <option>
+                    <name>IlinkRawBinaryFile2</name>
+                    <state></state>
+                </option>
+                <option>
+                    <name>IlinkRawBinarySymbol2</name>
+                    <state></state>
+                </option>
+                <option>
+                    <name>IlinkRawBinarySegment2</name>
+                    <state></state>
+                </option>
+                <option>
+                    <name>IlinkRawBinaryAlign2</name>
+                    <state></state>
+                </option>
             </data>
         </settings>
         <settings>
@@ -21854,6 +22295,15 @@
             <name>$PROJ_DIR$\..\..\Source\BasicMathFunctions\arm_add_q7.c</name>
         </file>
         <file>
+            <name>$PROJ_DIR$\..\..\Source\BasicMathFunctions\arm_and_u16.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\Source\BasicMathFunctions\arm_and_u32.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\Source\BasicMathFunctions\arm_and_u8.c</name>
+        </file>
+        <file>
             <name>$PROJ_DIR$\..\..\Source\BasicMathFunctions\arm_dot_prod_f32.c</name>
         </file>
         <file>
@@ -21890,6 +22340,15 @@
             <name>$PROJ_DIR$\..\..\Source\BasicMathFunctions\arm_negate_q7.c</name>
         </file>
         <file>
+            <name>$PROJ_DIR$\..\..\Source\BasicMathFunctions\arm_not_u16.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\Source\BasicMathFunctions\arm_not_u32.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\Source\BasicMathFunctions\arm_not_u8.c</name>
+        </file>
+        <file>
             <name>$PROJ_DIR$\..\..\Source\BasicMathFunctions\arm_offset_f32.c</name>
         </file>
         <file>
@@ -21900,6 +22359,15 @@
         </file>
         <file>
             <name>$PROJ_DIR$\..\..\Source\BasicMathFunctions\arm_offset_q7.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\Source\BasicMathFunctions\arm_or_u16.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\Source\BasicMathFunctions\arm_or_u32.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\Source\BasicMathFunctions\arm_or_u8.c</name>
         </file>
         <file>
             <name>$PROJ_DIR$\..\..\Source\BasicMathFunctions\arm_scale_f32.c</name>
@@ -21933,6 +22401,21 @@
         </file>
         <file>
             <name>$PROJ_DIR$\..\..\Source\BasicMathFunctions\arm_sub_q7.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\Source\BasicMathFunctions\arm_xor_u16.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\Source\BasicMathFunctions\arm_xor_u32.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\Source\BasicMathFunctions\arm_xor_u8.c</name>
+        </file>
+    </group>
+    <group>
+        <name>BayesFunctions</name>
+        <file>
+            <name>$PROJ_DIR$\..\..\Source\BayesFunctions\arm_gaussian_naive_bayes_predict_f32.c</name>
         </file>
     </group>
     <group>
@@ -22029,6 +22512,66 @@
         </file>
     </group>
     <group>
+        <name>DistanceFunctions</name>
+        <file>
+            <name>$PROJ_DIR$\..\..\Source\DistanceFunctions\arm_boolean_distance.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\Source\DistanceFunctions\arm_braycurtis_distance_f32.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\Source\DistanceFunctions\arm_canberra_distance_f32.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\Source\DistanceFunctions\arm_chebyshev_distance_f32.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\Source\DistanceFunctions\arm_cityblock_distance_f32.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\Source\DistanceFunctions\arm_correlation_distance_f32.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\Source\DistanceFunctions\arm_cosine_distance_f32.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\Source\DistanceFunctions\arm_dice_distance.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\Source\DistanceFunctions\arm_euclidean_distance_f32.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\Source\DistanceFunctions\arm_hamming_distance.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\Source\DistanceFunctions\arm_jaccard_distance.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\Source\DistanceFunctions\arm_jensenshannon_distance_f32.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\Source\DistanceFunctions\arm_kulsinski_distance.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\Source\DistanceFunctions\arm_minkowski_distance_f32.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\Source\DistanceFunctions\arm_rogerstanimoto_distance.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\Source\DistanceFunctions\arm_russellrao_distance.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\Source\DistanceFunctions\arm_sokalmichener_distance.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\Source\DistanceFunctions\arm_sokalsneath_distance.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\Source\DistanceFunctions\arm_yule_distance.c</name>
+        </file>
+    </group>
+    <group>
         <name>FastMathFunctions</name>
         <file>
             <name>$PROJ_DIR$\..\..\Source\FastMathFunctions\arm_cos_f32.c</name>
@@ -22053,6 +22596,12 @@
         </file>
         <file>
             <name>$PROJ_DIR$\..\..\Source\FastMathFunctions\arm_sqrt_q31.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\Source\FastMathFunctions\arm_vexp_f32.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\Source\FastMathFunctions\arm_vlog_f32.c</name>
         </file>
     </group>
     <group>
@@ -22436,7 +22985,28 @@
     <group>
         <name>StatisticsFunctions</name>
         <file>
+            <name>$PROJ_DIR$\..\..\Source\StatisticsFunctions\arm_entropy_f32.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\Source\StatisticsFunctions\arm_entropy_f64.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\Source\StatisticsFunctions\arm_kullback_leibler_f32.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\Source\StatisticsFunctions\arm_kullback_leibler_f64.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\Source\StatisticsFunctions\arm_logsumexp_dot_prod_f32.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\Source\StatisticsFunctions\arm_logsumexp_f32.c</name>
+        </file>
+        <file>
             <name>$PROJ_DIR$\..\..\Source\StatisticsFunctions\arm_max_f32.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\Source\StatisticsFunctions\arm_max_no_idx_f32.c</name>
         </file>
         <file>
             <name>$PROJ_DIR$\..\..\Source\StatisticsFunctions\arm_max_q15.c</name>
@@ -22514,6 +23084,15 @@
     <group>
         <name>SupportFunctions</name>
         <file>
+            <name>$PROJ_DIR$\..\..\Source\SupportFunctions\arm_barycenter_f32.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\Source\SupportFunctions\arm_bitonic_sort_f32.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\Source\SupportFunctions\arm_bubble_sort_f32.c</name>
+        </file>
+        <file>
             <name>$PROJ_DIR$\..\..\Source\SupportFunctions\arm_copy_f32.c</name>
         </file>
         <file>
@@ -22547,6 +23126,18 @@
             <name>$PROJ_DIR$\..\..\Source\SupportFunctions\arm_float_to_q7.c</name>
         </file>
         <file>
+            <name>$PROJ_DIR$\..\..\Source\SupportFunctions\arm_heap_sort_f32.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\Source\SupportFunctions\arm_insertion_sort_f32.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\Source\SupportFunctions\arm_merge_sort_f32.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\Source\SupportFunctions\arm_merge_sort_init_f32.c</name>
+        </file>
+        <file>
             <name>$PROJ_DIR$\..\..\Source\SupportFunctions\arm_q15_to_float.c</name>
         </file>
         <file>
@@ -22573,6 +23164,54 @@
         <file>
             <name>$PROJ_DIR$\..\..\Source\SupportFunctions\arm_q7_to_q31.c</name>
         </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\Source\SupportFunctions\arm_quick_sort_f32.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\Source\SupportFunctions\arm_selection_sort_f32.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\Source\SupportFunctions\arm_sort_f32.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\Source\SupportFunctions\arm_sort_init_f32.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\Source\SupportFunctions\arm_spline_interp_f32.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\Source\SupportFunctions\arm_spline_interp_init_f32.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\Source\SupportFunctions\arm_weighted_sum_f32.c</name>
+        </file>
+    </group>
+    <group>
+        <name>SVMFunctions</name>
+        <file>
+            <name>$PROJ_DIR$\..\..\Source\SVMFunctions\arm_svm_linear_init_f32.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\Source\SVMFunctions\arm_svm_linear_predict_f32.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\Source\SVMFunctions\arm_svm_polynomial_init_f32.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\Source\SVMFunctions\arm_svm_polynomial_predict_f32.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\Source\SVMFunctions\arm_svm_rbf_init_f32.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\Source\SVMFunctions\arm_svm_rbf_predict_f32.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\Source\SVMFunctions\arm_svm_sigmoid_init_f32.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\Source\SVMFunctions\arm_svm_sigmoid_predict_f32.c</name>
+        </file>
     </group>
     <group>
         <name>TransformFunctions</name>
@@ -22584,6 +23223,21 @@
         </file>
         <file>
             <name>$PROJ_DIR$\..\..\Source\TransformFunctions\arm_cfft_f32.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\Source\TransformFunctions\arm_cfft_f64.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\Source\TransformFunctions\arm_cfft_init_f32.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\Source\TransformFunctions\arm_cfft_init_f64.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\Source\TransformFunctions\arm_cfft_init_q15.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\Source\TransformFunctions\arm_cfft_init_q31.c</name>
         </file>
         <file>
             <name>$PROJ_DIR$\..\..\Source\TransformFunctions\arm_cfft_q15.c</name>
@@ -22655,7 +23309,13 @@
             <name>$PROJ_DIR$\..\..\Source\TransformFunctions\arm_rfft_fast_f32.c</name>
         </file>
         <file>
+            <name>$PROJ_DIR$\..\..\Source\TransformFunctions\arm_rfft_fast_f64.c</name>
+        </file>
+        <file>
             <name>$PROJ_DIR$\..\..\Source\TransformFunctions\arm_rfft_fast_init_f32.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\Source\TransformFunctions\arm_rfft_fast_init_f64.c</name>
         </file>
         <file>
             <name>$PROJ_DIR$\..\..\Source\TransformFunctions\arm_rfft_init_f32.c</name>
