@@ -1,5 +1,7 @@
 var searchData=
 [
+  ['nb_5fof_5fclasses',['NB_OF_CLASSES',['../arm__bayes__example__f32_8c.html#a29d34219689e613d2e2cf860c62b3061',1,'arm_bayes_example_f32.c']]],
+  ['nb_5fsupport_5fvectors',['NB_SUPPORT_VECTORS',['../arm__svm__example__f32_8c.html#a991d9a139527d1a747541de078ca21c7',1,'arm_svm_example_f32.c']]],
   ['num_5ftaps',['NUM_TAPS',['../arm__fir__example__f32_8c.html#a7579d94e0a80fb9d376ea6c7897f73b0',1,'arm_fir_example_f32.c']]],
   ['numblocks',['NUMBLOCKS',['../arm__graphic__equalizer__example__q31_8c.html#a814e34126e1b8150f4de047e1a9e7030',1,'arm_graphic_equalizer_example_q31.c']]],
   ['numframes',['NUMFRAMES',['../arm__signal__converge__example__f32_8c.html#a4b6b859e1e3f6021a360390be287ca2c',1,'arm_signal_converge_example_f32.c']]],

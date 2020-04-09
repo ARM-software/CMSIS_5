@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Pack
-   &#160;<span id="projectnumber">Version 1.6.1</span>
+   &#160;<span id="projectnumber">Version 1.6.3</span>
    </div>
    <div id="projectbrief">Delivery Mechanism for Software Packs</div>
   </td>
@@ -145,10 +145,10 @@ Create PDSC File</h1>
 <li><a class="el" href="pdsc_package_pg.html#element_package">&lt;vendor&gt;</a> states the name of the Pack's vendor and <em>must</em> <em>not</em> contain spaces. <b>Example:</b> <code>ACMECorp</code> and <code>ACME_Corp</code> are OK, <code>ACME</code> <code>Corporation</code> is not OK.</li>
 <li><a class="el" href="pdsc_package_pg.html#element_package">&lt;url&gt;</a> defines the download URL of the Pack (may be left empty) <dl class="section note"><dt>Note</dt><dd><ul>
 <li>In this tutorial, the URL is not specified. This means that the Pack will be marked in Pack Installer as <b>Offline</b> and needs to be updated manually. To resolve this issue, it is possible to specify the file "download" location using a <a href="https://en.wikipedia.org/wiki/File_URI_scheme" target="_blank">file URI</a>. For Windows users, this would look like the following: <pre class="fragment">      &lt;url&gt;file:///c:/temp/working&lt;/url&gt;</pre></li>
-<li>It is important to understand how the &lt;url&gt; element works. If you specify a URL, for example <a href="http://www.keil.com/pack/" target="_blank">http://www.keil.com/pack</a>, then you have to make the PDSC file and the corresponding Pack file(s) available for download at that exact location. The naming of the files follow the standard naming rules. For example, the ARM::CMSIS PDSC and Pack files are available here:<br/>
- <a href="http://www.keil.com/pack/ARM.CMSIS.pdsc" target="_blank">http://www.keil.com/pack/ARM.CMSIS.pdsc</a> and <br/>
- <a href="http://www.keil.com/pack/ARM.CMSIS.4.3.0.pack" target="_blank">http://www.keil.com/pack/ARM.CMSIS.4.3.0.pack</a> and <br/>
- <a href="http://www.keil.com/pack/ARM.CMSIS.4.2.0.pack" target="_blank">http://www.keil.com/pack/ARM.CMSIS.4.2.0.pack</a> and ... <br/>
+<li>It is important to understand how the &lt;url&gt; element works. If you specify a URL, for example <a href="https://www.keil.com/pack/" target="_blank">https://www.keil.com/pack</a>, then you have to make the PDSC file and the corresponding Pack file(s) available for download at that exact location. The naming of the files follow the standard naming rules. For example, the ARM::CMSIS PDSC and Pack files are available here:<br/>
+ <a href="https://www.keil.com/pack/ARM.CMSIS.pdsc" target="_blank">https://www.keil.com/pack/ARM.CMSIS.pdsc</a> and <br/>
+ <a href="https://www.keil.com/pack/ARM.CMSIS.4.3.0.pack" target="_blank">https://www.keil.com/pack/ARM.CMSIS.4.3.0.pack</a> and <br/>
+ <a href="https://www.keil.com/pack/ARM.CMSIS.4.2.0.pack" target="_blank">https://www.keil.com/pack/ARM.CMSIS.4.2.0.pack</a> and ... <br/>
  At the specified location, you need to have one (unversioned) PDSC file and can have multiple versioned Pack files, but at least the latest one.</li>
 </ul>
 </dd></dl>
@@ -526,7 +526,7 @@ Display of example projects in development tools</div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Fri Dec 13 2019 14:56:14 for CMSIS-Pack Version 1.6.1 by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Apr 9 2020 15:49:54 for CMSIS-Pack Version 1.6.3 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

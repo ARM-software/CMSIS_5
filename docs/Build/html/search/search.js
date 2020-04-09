@@ -7,8 +7,8 @@
 
 var indexSectionsWithContent =
 {
-  0: "cmoprst",
-  1: "cmoprst"
+  0: "cmoprs",
+  1: "cmoprs"
 };
 
 var indexSectionNames =

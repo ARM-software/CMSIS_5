@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Driver
-   &#160;<span id="projectnumber">Version 2.7.1</span>
+   &#160;<span id="projectnumber">Version 2.8.0</span>
    </div>
    <div id="projectbrief">Peripheral Interface for Middleware and Application Code</div>
   </td>
@@ -119,16 +119,16 @@ $(document).ready(function(){initNavTree('group__mci__driver__strength__ctrls.ht
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:ga64eb1c4847711a262f084c361b60a912"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__mci__driver__strength__ctrls.html#ga64eb1c4847711a262f084c361b60a912">ARM_MCI_DRIVER_TYPE_A</a>&#160;&#160;&#160;(0x01)</td></tr>
+<tr class="memitem:ga64eb1c4847711a262f084c361b60a912"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__mci__driver__strength__ctrls.html#ga64eb1c4847711a262f084c361b60a912">ARM_MCI_DRIVER_TYPE_A</a>&#160;&#160;&#160;(0x01UL)</td></tr>
 <tr class="memdesc:ga64eb1c4847711a262f084c361b60a912"><td class="mdescLeft">&#160;</td><td class="mdescRight">SD UHS-I Driver Type A.  <a href="#ga64eb1c4847711a262f084c361b60a912">More...</a><br/></td></tr>
 <tr class="separator:ga64eb1c4847711a262f084c361b60a912"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga078d3c3bc7c9335b92e6445a0abafc46"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__mci__driver__strength__ctrls.html#ga078d3c3bc7c9335b92e6445a0abafc46">ARM_MCI_DRIVER_TYPE_B</a>&#160;&#160;&#160;(0x00)</td></tr>
+<tr class="memitem:ga078d3c3bc7c9335b92e6445a0abafc46"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__mci__driver__strength__ctrls.html#ga078d3c3bc7c9335b92e6445a0abafc46">ARM_MCI_DRIVER_TYPE_B</a>&#160;&#160;&#160;(0x00UL)</td></tr>
 <tr class="memdesc:ga078d3c3bc7c9335b92e6445a0abafc46"><td class="mdescLeft">&#160;</td><td class="mdescRight">SD UHS-I Driver Type B (default)  <a href="#ga078d3c3bc7c9335b92e6445a0abafc46">More...</a><br/></td></tr>
 <tr class="separator:ga078d3c3bc7c9335b92e6445a0abafc46"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3da11696d1fcd3930eb7e70fe097d747"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__mci__driver__strength__ctrls.html#ga3da11696d1fcd3930eb7e70fe097d747">ARM_MCI_DRIVER_TYPE_C</a>&#160;&#160;&#160;(0x02)</td></tr>
+<tr class="memitem:ga3da11696d1fcd3930eb7e70fe097d747"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__mci__driver__strength__ctrls.html#ga3da11696d1fcd3930eb7e70fe097d747">ARM_MCI_DRIVER_TYPE_C</a>&#160;&#160;&#160;(0x02UL)</td></tr>
 <tr class="memdesc:ga3da11696d1fcd3930eb7e70fe097d747"><td class="mdescLeft">&#160;</td><td class="mdescRight">SD UHS-I Driver Type C.  <a href="#ga3da11696d1fcd3930eb7e70fe097d747">More...</a><br/></td></tr>
 <tr class="separator:ga3da11696d1fcd3930eb7e70fe097d747"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga8185f82b1d8857a3f0eb461d664f2b3d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__mci__driver__strength__ctrls.html#ga8185f82b1d8857a3f0eb461d664f2b3d">ARM_MCI_DRIVER_TYPE_D</a>&#160;&#160;&#160;(0x03)</td></tr>
+<tr class="memitem:ga8185f82b1d8857a3f0eb461d664f2b3d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__mci__driver__strength__ctrls.html#ga8185f82b1d8857a3f0eb461d664f2b3d">ARM_MCI_DRIVER_TYPE_D</a>&#160;&#160;&#160;(0x03UL)</td></tr>
 <tr class="memdesc:ga8185f82b1d8857a3f0eb461d664f2b3d"><td class="mdescLeft">&#160;</td><td class="mdescRight">SD UHS-I Driver Type D.  <a href="#ga8185f82b1d8857a3f0eb461d664f2b3d">More...</a><br/></td></tr>
 <tr class="separator:ga8185f82b1d8857a3f0eb461d664f2b3d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -146,7 +146,7 @@ Macros</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define ARM_MCI_DRIVER_TYPE_A&#160;&#160;&#160;(0x01)</td>
+          <td class="memname">#define ARM_MCI_DRIVER_TYPE_A&#160;&#160;&#160;(0x01UL)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -160,7 +160,7 @@ Macros</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define ARM_MCI_DRIVER_TYPE_B&#160;&#160;&#160;(0x00)</td>
+          <td class="memname">#define ARM_MCI_DRIVER_TYPE_B&#160;&#160;&#160;(0x00UL)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -174,7 +174,7 @@ Macros</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define ARM_MCI_DRIVER_TYPE_C&#160;&#160;&#160;(0x02)</td>
+          <td class="memname">#define ARM_MCI_DRIVER_TYPE_C&#160;&#160;&#160;(0x02UL)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -188,7 +188,7 @@ Macros</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define ARM_MCI_DRIVER_TYPE_D&#160;&#160;&#160;(0x03)</td>
+          <td class="memname">#define ARM_MCI_DRIVER_TYPE_D&#160;&#160;&#160;(0x03UL)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -202,7 +202,7 @@ Macros</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Jul 10 2019 15:20:31 for CMSIS-Driver Version 2.7.1 by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Apr 9 2020 15:49:15 for CMSIS-Driver Version 2.8.0 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

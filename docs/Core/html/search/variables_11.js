@@ -1,6 +1,9 @@
 var searchData=
 [
-  ['u16',['u16',['../structITM__Type.html#a962a970dfd286cad7f8a8577e87d4ad3',1,'ITM_Type']]],
-  ['u32',['u32',['../structITM__Type.html#a5834885903a557674f078f3b71fa8bc8',1,'ITM_Type']]],
-  ['u8',['u8',['../structITM__Type.html#ae773bf9f9dac64e6c28b14aa39f74275',1,'ITM_Type']]]
+  ['t',['T',['../unionxPSR__Type.html#a7eed9fe24ae8d354cd76ae1c1110a658',1,'xPSR_Type']]],
+  ['tcr',['TCR',['../structITM__Type.html#a04b9fbc83759cb818dfa161d39628426',1,'ITM_Type']]],
+  ['ter',['TER',['../structITM__Type.html#acd03c6858f7b678dab6a6121462e7807',1,'ITM_Type']]],
+  ['tpr',['TPR',['../structITM__Type.html#ae907229ba50538bf370fbdfd54c099a2',1,'ITM_Type']]],
+  ['trigger',['TRIGGER',['../structTPI__Type.html#a4d4cd2357f72333a82a1313228287bbd',1,'TPI_Type']]],
+  ['type',['TYPE',['../structPMU__Type.html#a1f2e763ceeeff8ff15c0bd3520b683e8',1,'PMU_Type::TYPE()'],['../structMPU__Type.html#aba02af87f77577c725cf73879cabb609',1,'MPU_Type::TYPE()']]]
 ];

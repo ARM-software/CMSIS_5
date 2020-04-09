@@ -4,5 +4,6 @@ var searchData=
   ['actlr',['ACTLR',['../structSCnSCB__Type.html#a13af9b718dde7481f1c0344f00593c23',1,'SCnSCB_Type']]],
   ['adr',['ADR',['../structSCB__Type.html#af084e1b2dad004a88668efea1dfe7fa1',1,'SCB_Type']]],
   ['afsr',['AFSR',['../structSCB__Type.html#ab65372404ce64b0f0b35e2709429404e',1,'SCB_Type']]],
-  ['aircr',['AIRCR',['../structSCB__Type.html#ad3e5b8934c647eb1b7383c1894f01380',1,'SCB_Type']]]
+  ['aircr',['AIRCR',['../structSCB__Type.html#ad3e5b8934c647eb1b7383c1894f01380',1,'SCB_Type']]],
+  ['authstatus',['AUTHSTATUS',['../structPMU__Type.html#a60a8296d51236329e79d1604080aa9c1',1,'PMU_Type']]]
 ];

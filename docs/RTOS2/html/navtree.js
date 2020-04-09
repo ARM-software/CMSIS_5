@@ -31,7 +31,7 @@ var NAVTREEINDEX =
 "CodingRules.html",
 "group__CMSIS__RTOS__ThreadMgmt.html#gad4e3e0971b41f2d17584a8c6837342ec",
 "group__rtx__evr__timer.html#gaccd59c7ae2351e0a1bf96cdb749c049f",
-"rtx__os_8h.html#structosRtxEventFlags__t"
+"rtx__os_8h.html#aaf8577e5ddcbff356a1d27310baa8a1f"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

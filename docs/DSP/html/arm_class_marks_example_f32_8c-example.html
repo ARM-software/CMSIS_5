@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-DSP
-   &#160;<span id="projectnumber">Version 1.7.0</span>
+   &#160;<span id="projectnumber">Version 1.8.0</span>
    </div>
    <div id="projectbrief">CMSIS DSP Software Library</div>
   </td>
@@ -97,7 +97,7 @@ $(document).ready(function(){initNavTree('arm_class_marks_example_f32_8c-example
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Data Structures</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Macros</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Groups</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(10)"><span class="SelectionMark">&#160;</span>Pages</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Data Structures</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Macros</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(10)"><span class="SelectionMark">&#160;</span>Groups</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(11)"><span class="SelectionMark">&#160;</span>Pages</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -154,6 +154,10 @@ $(document).ready(function(){initNavTree('arm_class_marks_example_f32_8c-example
 <div class="line"></div>
 <div class="line"><span class="preprocessor">#include &quot;<a class="code" href="arm__math_8h.html">arm_math.h</a>&quot;</span></div>
 <div class="line"></div>
+<div class="line"><span class="preprocessor">#if defined(SEMIHOSTING)</span></div>
+<div class="line"><span class="preprocessor"></span><span class="preprocessor">#include &lt;stdio.h&gt;</span></div>
+<div class="line"><span class="preprocessor">#endif</span></div>
+<div class="line"><span class="preprocessor"></span></div>
 <div class="line"><span class="preprocessor">#define USE_STATIC_INIT</span></div>
 <div class="line"><span class="preprocessor"></span></div>
 <div class="line"> <span class="comment">/* ----------------------------------------------------------------------</span></div>
@@ -202,7 +206,7 @@ $(document).ready(function(){initNavTree('arm_class_marks_example_f32_8c-example
 <div class="line"><span class="comment">/* ----------------------------------------------------------------------</span></div>
 <div class="line"><span class="comment">** f32 Output buffer</span></div>
 <div class="line"><span class="comment">** ------------------------------------------------------------------- */</span></div>
-<div class="line"><span class="keyword">static</span> <a class="code" href="arm__math_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a> <a name="a3"></a><a class="code" href="arm__class__marks__example__f32_8c.html#afd4d61aad5f35a4e42d580004e2f9a1d">testOutput</a>[<a class="code" href="arm__class__marks__example__f32_8c.html#abc004a7fade488e72310fd96c0a101dc">TEST_LENGTH_SAMPLES</a>];</div>
+<div class="line"><span class="keyword">static</span> <a class="code" href="arm__math_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a> <a class="code" href="arm__dotproduct__example__f32_8c.html#a324833b61eae796082e07d078a67c34f">testOutput</a>[<a class="code" href="arm__class__marks__example__f32_8c.html#abc004a7fade488e72310fd96c0a101dc">TEST_LENGTH_SAMPLES</a>];</div>
 <div class="line"></div>
 <div class="line"></div>
 <div class="line"><span class="comment">/* ------------------------------------------------------------------</span></div>
@@ -215,35 +219,35 @@ $(document).ready(function(){initNavTree('arm_class_marks_example_f32_8c-example
 <div class="line"><span class="comment">* Global variables</span></div>
 <div class="line"><span class="comment">*------------------------------------------------------------------- */</span></div>
 <div class="line"></div>
-<div class="line"> uint32_t    <a name="a4"></a><a class="code" href="arm__class__marks__example__f32_8c.html#ab3b66d06b4af1af4ea2740d0ccf4e7bd">numStudents</a> = 20;</div>
-<div class="line"> uint32_t    <a name="a5"></a><a class="code" href="arm__class__marks__example__f32_8c.html#a3d01884f63bcb694226ca7c24980757a">numSubjects</a> = 4;</div>
-<div class="line"><a class="code" href="arm__math_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a>    <a name="a6"></a><a class="code" href="arm__class__marks__example__f32_8c.html#aad32888fa966b3d9db9c31bcbba9d9ef">max_marks</a>, <a name="a7"></a><a class="code" href="arm__class__marks__example__f32_8c.html#abb7687fa07ec54d8e792cfcbfe2ca809">min_marks</a>, <a name="a8"></a><a class="code" href="arm__class__marks__example__f32_8c.html#acc9290716b3c97381ce52d14b4b01681">mean</a>, <a name="a9"></a><a class="code" href="arm__class__marks__example__f32_8c.html#a150b0cf729b51893379f5b5548d4f989">std</a>, <a name="a10"></a><a class="code" href="arm__class__marks__example__f32_8c.html#a3bd39c4335d84be071cc1eaa9b0a8642">var</a>;</div>
-<div class="line"> uint32_t    <a name="a11"></a><a class="code" href="arm__class__marks__example__f32_8c.html#a798cf43a3725d7df2fcaf3f328969f53">student_num</a>;</div>
+<div class="line"> uint32_t    <a name="a3"></a><a class="code" href="arm__class__marks__example__f32_8c.html#ab3b66d06b4af1af4ea2740d0ccf4e7bd">numStudents</a> = 20;</div>
+<div class="line"> uint32_t    <a name="a4"></a><a class="code" href="arm__class__marks__example__f32_8c.html#a3d01884f63bcb694226ca7c24980757a">numSubjects</a> = 4;</div>
+<div class="line"><a class="code" href="arm__math_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a>    <a name="a5"></a><a class="code" href="arm__class__marks__example__f32_8c.html#aad32888fa966b3d9db9c31bcbba9d9ef">max_marks</a>, <a name="a6"></a><a class="code" href="arm__class__marks__example__f32_8c.html#abb7687fa07ec54d8e792cfcbfe2ca809">min_marks</a>, <a name="a7"></a><a class="code" href="arm__class__marks__example__f32_8c.html#acc9290716b3c97381ce52d14b4b01681">mean</a>, <a name="a8"></a><a class="code" href="arm__class__marks__example__f32_8c.html#a150b0cf729b51893379f5b5548d4f989">std</a>, <a name="a9"></a><a class="code" href="arm__class__marks__example__f32_8c.html#a3bd39c4335d84be071cc1eaa9b0a8642">var</a>;</div>
+<div class="line"> uint32_t    <a name="a10"></a><a class="code" href="arm__class__marks__example__f32_8c.html#a798cf43a3725d7df2fcaf3f328969f53">student_num</a>;</div>
 <div class="line"></div>
 <div class="line"><span class="comment">/* ----------------------------------------------------------------------------------</span></div>
 <div class="line"><span class="comment">* Main f32 test function.  It returns maximum marks secured and student number</span></div>
 <div class="line"><span class="comment">* ------------------------------------------------------------------------------- */</span></div>
 <div class="line"></div>
-<div class="line">int32_t <a name="a12"></a><a class="code" href="arm__class__marks__example__f32_8c.html#a196718f834091385d38586a0ce4009dc">main</a>()</div>
+<div class="line">int32_t <a name="a11"></a><a class="code" href="arm__class__marks__example__f32_8c.html#a196718f834091385d38586a0ce4009dc">main</a>()</div>
 <div class="line">{</div>
 <div class="line"></div>
 <div class="line"><span class="preprocessor">#ifndef  USE_STATIC_INIT</span></div>
 <div class="line"><span class="preprocessor"></span></div>
-<div class="line">  <a name="_a13"></a><a class="code" href="structarm__matrix__instance__f32.html">arm_matrix_instance_f32</a> srcA;</div>
+<div class="line">  <a name="_a12"></a><a class="code" href="structarm__matrix__instance__f32.html">arm_matrix_instance_f32</a> srcA;</div>
 <div class="line">  <a class="code" href="structarm__matrix__instance__f32.html">arm_matrix_instance_f32</a> srcB;</div>
 <div class="line">  <a class="code" href="structarm__matrix__instance__f32.html">arm_matrix_instance_f32</a> dstC;</div>
 <div class="line"></div>
 <div class="line">  <span class="comment">/* Input and output matrices initializations */</span></div>
-<div class="line">  <a name="a14"></a><a class="code" href="group__MatrixInit.html#ga11e3dc41592a6401c13182fef9416a27">arm_mat_init_f32</a>(&amp;srcA, <a class="code" href="arm__class__marks__example__f32_8c.html#ab3b66d06b4af1af4ea2740d0ccf4e7bd">numStudents</a>, <a class="code" href="arm__class__marks__example__f32_8c.html#a3d01884f63bcb694226ca7c24980757a">numSubjects</a>, (<a class="code" href="arm__math_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a> *)<a class="code" href="arm__class__marks__example__f32_8c.html#a0153222efa82b7f1a0ea3835921bf921">testMarks_f32</a>);</div>
+<div class="line">  <a name="a13"></a><a class="code" href="group__MatrixInit.html#ga11e3dc41592a6401c13182fef9416a27">arm_mat_init_f32</a>(&amp;srcA, <a class="code" href="arm__class__marks__example__f32_8c.html#ab3b66d06b4af1af4ea2740d0ccf4e7bd">numStudents</a>, <a class="code" href="arm__class__marks__example__f32_8c.html#a3d01884f63bcb694226ca7c24980757a">numSubjects</a>, (<a class="code" href="arm__math_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a> *)<a class="code" href="arm__class__marks__example__f32_8c.html#a0153222efa82b7f1a0ea3835921bf921">testMarks_f32</a>);</div>
 <div class="line">  <a class="code" href="group__MatrixInit.html#ga11e3dc41592a6401c13182fef9416a27">arm_mat_init_f32</a>(&amp;srcB, <a class="code" href="arm__class__marks__example__f32_8c.html#a3d01884f63bcb694226ca7c24980757a">numSubjects</a>, 1, (<a class="code" href="arm__math_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a> *)<a class="code" href="arm__class__marks__example__f32_8c.html#a993b9b2a1faf43b319c1c6d58b26e7a1">testUnity_f32</a>);</div>
-<div class="line">  <a class="code" href="group__MatrixInit.html#ga11e3dc41592a6401c13182fef9416a27">arm_mat_init_f32</a>(&amp;dstC, <a class="code" href="arm__class__marks__example__f32_8c.html#ab3b66d06b4af1af4ea2740d0ccf4e7bd">numStudents</a>, 1, <a class="code" href="arm__class__marks__example__f32_8c.html#afd4d61aad5f35a4e42d580004e2f9a1d">testOutput</a>);</div>
+<div class="line">  <a class="code" href="group__MatrixInit.html#ga11e3dc41592a6401c13182fef9416a27">arm_mat_init_f32</a>(&amp;dstC, <a class="code" href="arm__class__marks__example__f32_8c.html#ab3b66d06b4af1af4ea2740d0ccf4e7bd">numStudents</a>, 1, testOutput);</div>
 <div class="line"></div>
 <div class="line"><span class="preprocessor">#else</span></div>
 <div class="line"><span class="preprocessor"></span></div>
 <div class="line">  <span class="comment">/* Static Initializations of Input and output matrix sizes and array */</span></div>
-<div class="line">  <a class="code" href="structarm__matrix__instance__f32.html">arm_matrix_instance_f32</a> srcA = {<a name="a15"></a><a class="code" href="arm__class__marks__example__f32_8c.html#a9d89ac0707e7c9363544986d47a70bd3">NUMSTUDENTS</a>, <a name="a16"></a><a class="code" href="arm__class__marks__example__f32_8c.html#a7b02f9b34bf2cd4d12633f5bf30771ec">NUMSUBJECTS</a>, (<a class="code" href="arm__math_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a> *)<a class="code" href="arm__class__marks__example__f32_8c.html#a0153222efa82b7f1a0ea3835921bf921">testMarks_f32</a>};</div>
+<div class="line">  <a class="code" href="structarm__matrix__instance__f32.html">arm_matrix_instance_f32</a> srcA = {<a name="a14"></a><a class="code" href="arm__class__marks__example__f32_8c.html#a9d89ac0707e7c9363544986d47a70bd3">NUMSTUDENTS</a>, <a name="a15"></a><a class="code" href="arm__class__marks__example__f32_8c.html#a7b02f9b34bf2cd4d12633f5bf30771ec">NUMSUBJECTS</a>, (<a class="code" href="arm__math_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a> *)<a class="code" href="arm__class__marks__example__f32_8c.html#a0153222efa82b7f1a0ea3835921bf921">testMarks_f32</a>};</div>
 <div class="line">  <a class="code" href="structarm__matrix__instance__f32.html">arm_matrix_instance_f32</a> srcB = {<a class="code" href="arm__class__marks__example__f32_8c.html#a7b02f9b34bf2cd4d12633f5bf30771ec">NUMSUBJECTS</a>, 1, (<a class="code" href="arm__math_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a> *)<a class="code" href="arm__class__marks__example__f32_8c.html#a993b9b2a1faf43b319c1c6d58b26e7a1">testUnity_f32</a>};</div>
-<div class="line">  <a class="code" href="structarm__matrix__instance__f32.html">arm_matrix_instance_f32</a> dstC = {<a class="code" href="arm__class__marks__example__f32_8c.html#a9d89ac0707e7c9363544986d47a70bd3">NUMSTUDENTS</a>, 1, <a class="code" href="arm__class__marks__example__f32_8c.html#afd4d61aad5f35a4e42d580004e2f9a1d">testOutput</a>};</div>
+<div class="line">  <a class="code" href="structarm__matrix__instance__f32.html">arm_matrix_instance_f32</a> dstC = {<a class="code" href="arm__class__marks__example__f32_8c.html#a9d89ac0707e7c9363544986d47a70bd3">NUMSTUDENTS</a>, 1, <a class="code" href="arm__dotproduct__example__f32_8c.html#a324833b61eae796082e07d078a67c34f">testOutput</a>};</div>
 <div class="line"></div>
 <div class="line"><span class="preprocessor">#endif</span></div>
 <div class="line"><span class="preprocessor"></span></div>
@@ -251,41 +255,47 @@ $(document).ready(function(){initNavTree('arm_class_marks_example_f32_8c-example
 <div class="line">  <span class="comment">/* ----------------------------------------------------------------------</span></div>
 <div class="line"><span class="comment">  *Call the Matrix multiplication process function</span></div>
 <div class="line"><span class="comment">  * ------------------------------------------------------------------- */</span></div>
-<div class="line">  <a name="a17"></a><a class="code" href="group__MatrixMult.html#ga917bf0270310c1d3f0eda1fc7c0026a0">arm_mat_mult_f32</a>(&amp;srcA, &amp;srcB, &amp;dstC);</div>
+<div class="line">  <a name="a16"></a><a class="code" href="group__MatrixMult.html#ga917bf0270310c1d3f0eda1fc7c0026a0">arm_mat_mult_f32</a>(&amp;srcA, &amp;srcB, &amp;dstC);</div>
 <div class="line"></div>
 <div class="line">  <span class="comment">/* ----------------------------------------------------------------------</span></div>
 <div class="line"><span class="comment">  ** Call the Max function to calculate max marks among numStudents</span></div>
 <div class="line"><span class="comment">  ** ------------------------------------------------------------------- */</span></div>
-<div class="line">  <a name="a18"></a><a class="code" href="group__Max.html#gad1eabd31544fe59c414d9ce5bd0cc151">arm_max_f32</a>(<a class="code" href="arm__class__marks__example__f32_8c.html#afd4d61aad5f35a4e42d580004e2f9a1d">testOutput</a>, <a class="code" href="arm__class__marks__example__f32_8c.html#ab3b66d06b4af1af4ea2740d0ccf4e7bd">numStudents</a>, &amp;<a class="code" href="arm__class__marks__example__f32_8c.html#aad32888fa966b3d9db9c31bcbba9d9ef">max_marks</a>, &amp;<a class="code" href="arm__class__marks__example__f32_8c.html#a798cf43a3725d7df2fcaf3f328969f53">student_num</a>);</div>
+<div class="line">  <a name="a17"></a><a class="code" href="group__Max.html#gad1eabd31544fe59c414d9ce5bd0cc151">arm_max_f32</a>(testOutput, <a class="code" href="arm__class__marks__example__f32_8c.html#ab3b66d06b4af1af4ea2740d0ccf4e7bd">numStudents</a>, &amp;<a class="code" href="arm__class__marks__example__f32_8c.html#aad32888fa966b3d9db9c31bcbba9d9ef">max_marks</a>, &amp;<a class="code" href="arm__class__marks__example__f32_8c.html#a798cf43a3725d7df2fcaf3f328969f53">student_num</a>);</div>
 <div class="line"></div>
 <div class="line">  <span class="comment">/* ----------------------------------------------------------------------</span></div>
 <div class="line"><span class="comment">  ** Call the Min function to calculate min marks among numStudents</span></div>
 <div class="line"><span class="comment">  ** ------------------------------------------------------------------- */</span></div>
-<div class="line">  <a name="a19"></a><a class="code" href="group__Min.html#ga514e2c920c432e1a3df2cb03f01d2797">arm_min_f32</a>(<a class="code" href="arm__class__marks__example__f32_8c.html#afd4d61aad5f35a4e42d580004e2f9a1d">testOutput</a>, <a class="code" href="arm__class__marks__example__f32_8c.html#ab3b66d06b4af1af4ea2740d0ccf4e7bd">numStudents</a>, &amp;<a class="code" href="arm__class__marks__example__f32_8c.html#abb7687fa07ec54d8e792cfcbfe2ca809">min_marks</a>, &amp;<a class="code" href="arm__class__marks__example__f32_8c.html#a798cf43a3725d7df2fcaf3f328969f53">student_num</a>);</div>
+<div class="line">  <a name="a18"></a><a class="code" href="group__Min.html#ga514e2c920c432e1a3df2cb03f01d2797">arm_min_f32</a>(testOutput, <a class="code" href="arm__class__marks__example__f32_8c.html#ab3b66d06b4af1af4ea2740d0ccf4e7bd">numStudents</a>, &amp;<a class="code" href="arm__class__marks__example__f32_8c.html#abb7687fa07ec54d8e792cfcbfe2ca809">min_marks</a>, &amp;<a class="code" href="arm__class__marks__example__f32_8c.html#a798cf43a3725d7df2fcaf3f328969f53">student_num</a>);</div>
 <div class="line"></div>
 <div class="line">  <span class="comment">/* ----------------------------------------------------------------------</span></div>
 <div class="line"><span class="comment">  ** Call the Mean function to calculate mean</span></div>
 <div class="line"><span class="comment">  ** ------------------------------------------------------------------- */</span></div>
-<div class="line">  <a name="a20"></a><a class="code" href="group__mean.html#gae4fb7698771d7c24f536ed24347c1488">arm_mean_f32</a>(<a class="code" href="arm__class__marks__example__f32_8c.html#afd4d61aad5f35a4e42d580004e2f9a1d">testOutput</a>, <a class="code" href="arm__class__marks__example__f32_8c.html#ab3b66d06b4af1af4ea2740d0ccf4e7bd">numStudents</a>, &amp;<a class="code" href="arm__class__marks__example__f32_8c.html#acc9290716b3c97381ce52d14b4b01681">mean</a>);</div>
+<div class="line">  <a name="a19"></a><a class="code" href="group__mean.html#gae4fb7698771d7c24f536ed24347c1488">arm_mean_f32</a>(testOutput, <a class="code" href="arm__class__marks__example__f32_8c.html#ab3b66d06b4af1af4ea2740d0ccf4e7bd">numStudents</a>, &amp;<a class="code" href="arm__class__marks__example__f32_8c.html#acc9290716b3c97381ce52d14b4b01681">mean</a>);</div>
 <div class="line"></div>
 <div class="line">  <span class="comment">/* ----------------------------------------------------------------------</span></div>
 <div class="line"><span class="comment">  ** Call the std function to calculate standard deviation</span></div>
 <div class="line"><span class="comment">  ** ------------------------------------------------------------------- */</span></div>
-<div class="line">  <a name="a21"></a><a class="code" href="group__STD.html#ga287b6ce703636c7e8cb9833b290ae4ce">arm_std_f32</a>(<a class="code" href="arm__class__marks__example__f32_8c.html#afd4d61aad5f35a4e42d580004e2f9a1d">testOutput</a>, <a class="code" href="arm__class__marks__example__f32_8c.html#ab3b66d06b4af1af4ea2740d0ccf4e7bd">numStudents</a>, &amp;<a class="code" href="arm__class__marks__example__f32_8c.html#a150b0cf729b51893379f5b5548d4f989">std</a>);</div>
+<div class="line">  <a name="a20"></a><a class="code" href="group__STD.html#ga287b6ce703636c7e8cb9833b290ae4ce">arm_std_f32</a>(testOutput, <a class="code" href="arm__class__marks__example__f32_8c.html#ab3b66d06b4af1af4ea2740d0ccf4e7bd">numStudents</a>, &amp;<a class="code" href="arm__class__marks__example__f32_8c.html#a150b0cf729b51893379f5b5548d4f989">std</a>);</div>
 <div class="line"></div>
 <div class="line">  <span class="comment">/* ----------------------------------------------------------------------</span></div>
 <div class="line"><span class="comment">  ** Call the var function to calculate variance</span></div>
 <div class="line"><span class="comment">  ** ------------------------------------------------------------------- */</span></div>
-<div class="line">  <a name="a22"></a><a class="code" href="group__variance.html#gaae455544f0c8ac92469a1e25d3906515">arm_var_f32</a>(<a class="code" href="arm__class__marks__example__f32_8c.html#afd4d61aad5f35a4e42d580004e2f9a1d">testOutput</a>, <a class="code" href="arm__class__marks__example__f32_8c.html#ab3b66d06b4af1af4ea2740d0ccf4e7bd">numStudents</a>, &amp;<a class="code" href="arm__class__marks__example__f32_8c.html#a3bd39c4335d84be071cc1eaa9b0a8642">var</a>);</div>
+<div class="line">  <a name="a21"></a><a class="code" href="group__variance.html#gaae455544f0c8ac92469a1e25d3906515">arm_var_f32</a>(testOutput, <a class="code" href="arm__class__marks__example__f32_8c.html#ab3b66d06b4af1af4ea2740d0ccf4e7bd">numStudents</a>, &amp;<a class="code" href="arm__class__marks__example__f32_8c.html#a3bd39c4335d84be071cc1eaa9b0a8642">var</a>);</div>
 <div class="line"></div>
-<div class="line">  <span class="keywordflow">while</span> (1);                             <span class="comment">/* main function does not return */</span></div>
-<div class="line">}</div>
+<div class="line"><span class="preprocessor">#if defined(SEMIHOSTING)</span></div>
+<div class="line"><span class="preprocessor"></span>  printf(<span class="stringliteral">&quot;mean = %f, std = %f\n&quot;</span>,<a class="code" href="arm__class__marks__example__f32_8c.html#acc9290716b3c97381ce52d14b4b01681">mean</a>,<a class="code" href="arm__class__marks__example__f32_8c.html#a150b0cf729b51893379f5b5548d4f989">std</a>);</div>
+<div class="line"><span class="preprocessor">#endif</span></div>
+<div class="line"><span class="preprocessor"></span></div>
+<div class="line"><span class="preprocessor">#if !defined(SEMIHOSTING)</span></div>
+<div class="line"><span class="preprocessor"></span>  <span class="keywordflow">while</span> (1);                             <span class="comment">/* main function does not return */</span></div>
+<div class="line"><span class="preprocessor">#endif</span></div>
+<div class="line"><span class="preprocessor"></span>}</div>
 </div><!-- fragment --> </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Jul 10 2019 15:20:38 for CMSIS-DSP Version 1.7.0 by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Apr 9 2020 15:49:21 for CMSIS-DSP Version 1.8.0 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

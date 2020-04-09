@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Build
-   &#160;<span id="projectnumber">Version 0.1.0</span>
+   &#160;<span id="projectnumber">Version 0.9.0 (beta)</span>
    </div>
    <div id="projectbrief">Tools, software frameworks, and work flows for productivity with CMSIS based projects</div>
   </td>
@@ -122,7 +122,7 @@ $(document).ready(function(){initNavTree('cbuild.html','');});
 <p>The <a class="el" href="cbuild.html">cbuild.sh: Build Invocation</a> script implements the build flow by chaining the utilities <a class="el" href="cbuildgen.html">cbuildgen</a>, <a class="el" href="ccmerge.html">ccmerge</a>, and <b>Make</b>. It replicates the build steps of CMSIS-Pack aware IDEs and also updates configuration files if necessary. The script can be adopted to project specific requirements.</p>
 <p>The build flow of the <a class="el" href="cbuild.html">cbuild.sh: Build Invocation</a> script is:</p>
 <ol type="1">
-<li>Call <a class="el" href="cbuildgen.html">cbuildgen: Build Process Manager</a> with command <b>pack</b> to list the URLs of missing software packs.</li>
+<li>Call <a class="el" href="cbuildgen.html">cbuildgen: Build Process Manager</a> with command <b>packlist</b> to list the URLs of missing software packs.</li>
 <li>Call <a class="el" href="cp_install.html">cp_install.sh: Install Packs</a> to download and install missing software packs.</li>
 <li>Call <a class="el" href="cbuildgen.html">cbuildgen: Build Process Manager</a> with command <b>make</b> to generate Make files.</li>
 <li>Call <a class="el" href="Make.html">make: GNU Make</a> to update configuration files using <a class="el" href="ccmerge.html">ccmerge: Config File Updater</a>.</li>
@@ -131,26 +131,24 @@ $(document).ready(function(){initNavTree('cbuild.html','');});
 <h1><a class="anchor" id="cbuild_example"></a>
 Usage Example</h1>
 <pre class="fragment">$ cbuild.sh Simulation.cprj
-(cbuild.sh): Build Invocation 0.1.0 (C) 2020 ARM
+(cbuild.sh): Build Invocation 0.9.0 (C) 2020 ARM
 Simulation.cprj validates
-CMSIS Build (cbuildgen) 0.1.1 (Feb 14 2020, 15:03:45)
-Copyright (C) 2020 ARM Ltd and ARM Germany GmbH. All rights reserved.
+(cbuildgen): Build Process Manager 0.9.0 (C) 2020 ARM
 M650: Config command completed successfully.
-CMSIS Build (cbuildgen) 0.1.1 (Feb 14 2020, 15:03:45)
-Copyright (C) 2020 ARM Ltd and ARM Germany GmbH. All rights reserved.
+(cbuildgen): Build Process Manager 0.9.0 (C) 2020 ARM
 M651: Generated makefile for merging config files: 'Simulation_cfg.mak'
 M652: Generated makefile for project build:'Simulation.mak'
-mkdir -p "C:/Examples/Blinky/Objects/RTE/CMSIS/RTOS2/Keil RTX5/Library"
-mkdir -p "C:/Examples/Blinky/Objects/RTE/Compiler/IO/STDOUT/ITM"
-mkdir -p "C:/Examples/Blinky/Objects/RTE/Device/Startup/C Startup"
-mkdir -p "C:/Examples/Blinky/Objects/Source Files"
-"/C/Keil_v5/ARM/ARMCLANG/bin/armclang" @"C:/Examples/Blinky/Objects/RTE/CMSIS/RTOS2/Keil RTX5/Library/RTX_Config.o._cc"
-"/C/Keil_v5/ARM/ARMCLANG/bin/armclang" @"C:/Examples/Blinky/Objects/RTE/CMSIS/RTOS2/Keil RTX5/Library/rtx_lib.o._cc"
-"/C/Keil_v5/ARM/ARMCLANG/bin/armclang" @"C:/Examples/Blinky/Objects/RTE/Compiler/IO/STDOUT/ITM/retarget_io.o._cc"
-"/C/Keil_v5/ARM/ARMCLANG/bin/armclang" @"C:/Examples/Blinky/Objects/RTE/Device/Startup/C Startup/startup_ARMCM3.o._cc"
-"/C/Keil_v5/ARM/ARMCLANG/bin/armclang" @"C:/Examples/Blinky/Objects/RTE/Device/Startup/C Startup/system_ARMCM3.o._cc"
-"/C/Keil_v5/ARM/ARMCLANG/bin/armclang" @"C:/Examples/Blinky/Objects/Source Files/Blinky.o._cc"
-"/C/Keil_v5/ARM/ARMCLANG/bin/armlink" --via="C:/Examples/Blinky/Objects/Blinky.axf._ld"
+mkdir -p "/c/Examples/Blinky/Objects/RTE/CMSIS/RTOS2/Keil RTX5/Library"
+mkdir -p "/c/Examples/Blinky/Objects/RTE/Compiler/IO/STDOUT/ITM"
+mkdir -p "/c/Examples/Blinky/Objects/RTE/Device/Startup/C Startup"
+mkdir -p "/c/Examples/Blinky/Objects/Source Files"
+"/C/Keil_v5/ARM/ARMCLANG/bin/armclang" @"/c/Examples/Blinky/Objects/RTE/CMSIS/RTOS2/Keil RTX5/Library/RTX_Config.o._cc"
+"/C/Keil_v5/ARM/ARMCLANG/bin/armclang" @"/c/Examples/Blinky/Objects/RTE/CMSIS/RTOS2/Keil RTX5/Library/rtx_lib.o._cc"
+"/C/Keil_v5/ARM/ARMCLANG/bin/armclang" @"/c/Examples/Blinky/Objects/RTE/Compiler/IO/STDOUT/ITM/retarget_io.o._cc"
+"/C/Keil_v5/ARM/ARMCLANG/bin/armclang" @"/c/Examples/Blinky/Objects/RTE/Device/Startup/C Startup/startup_ARMCM3.o._cc"
+"/C/Keil_v5/ARM/ARMCLANG/bin/armclang" @"/c/Examples/Blinky/Objects/RTE/Device/Startup/C Startup/system_ARMCM3.o._cc"
+"/C/Keil_v5/ARM/ARMCLANG/bin/armclang" @"/c/Examples/Blinky/Objects/Source Files/Blinky.o._cc"
+"/C/Keil_v5/ARM/ARMCLANG/bin/armlink" --via="/c/Examples/Blinky/Objects/Blinky.axf._ld"
 Program Size: Code=7516 RO-data=1264 RW-data=168 ZI-data=9084
 cbuild.sh finished successfully!
 </pre><h1><a class="anchor" id="cbuild_errors"></a>
@@ -175,7 +173,7 @@ Error Messages</h1>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="CmdLineBuild.html">Command Line Build</a></li>
-    <li class="footer">Generated on Wed Feb 26 2020 09:42:01 for CMSIS-Build Version 0.1.0 by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Apr 9 2020 15:49:55 for CMSIS-Build Version 0.9.0 (beta) by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

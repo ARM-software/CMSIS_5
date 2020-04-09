@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Build
-   &#160;<span id="projectnumber">Version 0.1.0</span>
+   &#160;<span id="projectnumber">Version 0.9.0 (beta)</span>
    </div>
    <div id="projectbrief">Tools, software frameworks, and work flows for productivity with CMSIS based projects</div>
   </td>
@@ -112,19 +112,39 @@ $(document).ready(function(){initNavTree('index.html','');});
 <div class="contents">
 <div class="textblock"><p><b>CMSIS-Build</b> is a set of tools, software frameworks, and work flows that improve productivity:</p>
 <ul>
-<li>Continuous Integration (CI) work flow for projects that are based on software components framed in CMSIS-Pack format.</li>
-<li>Software Layers for code reuse across different targets. A software layer is a pre-configured software component selection and user source code.</li>
-<li>Virtual I/O which is a set of generic input/output functions for example and test code. It allows to migrate fast from evaluation boards to production hardware.</li>
+<li><a class="el" href="cprjFormat_pg.html">CPRJ</a> is a generic CMSIS-aware project file format that allows IDEs and command-line build tools to share the same projects.</li>
+<li>A <a class="el" href="CmdLineBuild.html">Continuous Integration (CI) work flow</a> for projects that are based on software components supplied in CMSIS-Pack format.</li>
+<li>Software Layers enable code reuse across different targets. A software layer is a pre-configured software component selection and user source code.</li>
+<li><a href="../../Driver/html/group__vio__interface__gr.html"><b>CMSIS-Driver VIO</b></a> is a set of generic input/output functions for example and test code. It allows to fast migration from evaluation boards to production hardware.</li>
+</ul>
+<p>The figure below shows how the <b>CMSIS-Build</b> components may be used to create a IoT cloud application:</p>
+<ul>
+<li>The <b>Board I/O</b> layer contains the drivers and device configuration for a specific evaluation board.</li>
+<li>The <b>Cloud</b> layer implements the software components that are required to connect to a Cloud Service Provider (CSP).</li>
+<li>The <b>Application Code</b> may start with reference example and is expanded to application specific requirements that access specialized peripherals.</li>
 </ul>
 <div class="image">
 <img src="Layer.png" alt="Layer.png"/>
 <div class="caption">
 Software Layers and Virtual I/O</div></div>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000001">Todo:</a></b></dt><dd>add link to CMSIS-pack for "generic project format"<ul>
-<li><a class="el" href="cprjFormat_pg.html">Project Description (*.cprj) Format</a> describes all XML elements that are available for project descriptions and their usage.</li>
+<p>Software layers and Virtual I/O simplify these use cases:</p>
+<p><b>Port software from evaluation board to custom hardware:</b><br/>
+</p>
+<ul>
+<li>Frequently, the software development starts on an evaluation board, for example because production hardware is not yet available. The <a href="../../Driver/html/group__vio__interface__gr.html"><b>VIO component</b></a> allows you to use the I/O capabilities of an evaluation kit and disconnect it when moving to production hardware. In case the production hardware uses a different device configuration or different I/O drivers, the <b>Board I/O</b> layer may be swapped.</li>
 </ul>
-</dd></dl>
-<p><b>Tools</b> that support <a class="el" href="CmdLineBuild.html">Command Line Build</a> with software packs and the generic project format:</p>
+<p><b>Deliver reference examples for many different evaluation boards:</b><br/>
+</p>
+<ul>
+<li>Reference examples are a great way to demonstrate a software solution. It is however expensive to support many different evaluation boards. The VIO and CMSIS-Driver components give reference examples for a consistent interface to target hardware. When such a consistent set of components is available as a <b>Board I/O</b> layer for many different evaluation boards, it allows to run a <b>Cloud</b> layer together with a reference example. The tools for <a class="el" href="CmdLineBuild.html">Command Line Build</a> allow to combine various different layers and allow in this way to generate several different reference examples on a range of evaluation boards.</li>
+</ul>
+<h1><a class="anchor" id="CB_Components"></a>
+Components of CMSIS-Build</h1>
+<p><b>Specification</b> of a generic project file format:</p>
+<ul>
+<li><a class="el" href="cprjFormat_pg.html">Project Description (*.cprj) Format</a> describes all XML elements that are available for the project description and how to use them.</li>
+</ul>
+<p><b>Tools</b> that support <a class="el" href="CmdLineBuild.html">Command Line Build</a> with software packs and the generic project file format:</p>
 <ul>
 <li><a class="el" href="cbuildgen.html">cbuildgen: Build Process Manager</a> generates a standard MAKE file and allows to manage software layers.</li>
 <li><a class="el" href="ccmerge.html">ccmerge: Config File Updater</a> updates configuration files that are based on <a href="../../Pack/html/configWizard.html"><b>PackConfiguration Wizard Annotations</b></a>. </li>
@@ -134,7 +154,7 @@ Software Layers and Virtual I/O</div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Feb 26 2020 09:42:02 for CMSIS-Build Version 0.1.0 by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Apr 9 2020 15:49:55 for CMSIS-Build Version 0.9.0 (beta) by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

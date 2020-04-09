@@ -1,10 +1,11 @@
 var searchData=
 [
-  ['neural_20network_20activation_20functions',['Neural Network Activation Functions',['../group__Acti.html',1,'']]],
-  ['neural_20network_20functions',['Neural Network Functions',['../group__groupNN.html',1,'']]],
-  ['new_5fweight',['new_weight',['../namespacepara__gen.html#aead9af07b473ce5bbd93619e3319355c',1,'para_gen']]],
-  ['nn_5fround',['NN_ROUND',['../arm__nnsupportfunctions_8h.html#a4cbd428a2b4a4f6b2a6e4219520c7ce0',1,'arm_nnsupportfunctions.h']]],
-  ['neural_20network_20convolution_20functions',['Neural Network Convolution Functions',['../group__NNConv.html',1,'']]],
-  ['neural_20network_20data_20conversion_20functions',['Neural Network Data Conversion Functions',['../group__nndata__convert.html',1,'']]],
-  ['neural_20network_20pooling_20functions',['Neural Network Pooling Functions',['../group__Pooling.html',1,'']]]
+  ['main',['main',['../arm__nnexamples__cifar10_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4',1,'main():&#160;arm_nnexamples_cifar10.cpp'],['../arm__nnexamples__gru_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4',1,'main():&#160;arm_nnexamples_gru.cpp']]],
+  ['mask_5fif_5fnon_5fzero',['MASK_IF_NON_ZERO',['../arm__nnsupportfunctions_8h.html#a0bc8558b22558613ed3ad3eb624ec7a5',1,'arm_nnsupportfunctions.h']]],
+  ['mask_5fif_5fzero',['MASK_IF_ZERO',['../arm__nnsupportfunctions_8h.html#a76b700415a2c22cea484103b7123739b',1,'arm_nnsupportfunctions.h']]],
+  ['max',['MAX',['../arm__nnsupportfunctions_8h.html#ad935f1ff1a50822e317bdb321ce991ad',1,'arm_nnsupportfunctions.h']]],
+  ['min',['MIN',['../arm__nnsupportfunctions_8h.html#adcd021ac91d43a62b2cdecf9a5b971a7',1,'arm_nnsupportfunctions.h']]],
+  ['mul_5fpow2',['MUL_POW2',['../arm__nnsupportfunctions_8h.html#a9d7332bc4331d55ada7ea19407e2a8c3',1,'arm_nnsupportfunctions.h']]],
+  ['mul_5fsat',['MUL_SAT',['../arm__nnsupportfunctions_8h.html#a518f7e0db18bea6b61a2b88f266aef20',1,'arm_nnsupportfunctions.h']]],
+  ['mul_5fsat_5fmve',['MUL_SAT_MVE',['../arm__nnsupportfunctions_8h.html#a6349818fec8167dff87c3fb7ca81fc1c',1,'arm_nnsupportfunctions.h']]]
 ];

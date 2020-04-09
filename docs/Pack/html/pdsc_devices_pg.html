@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Pack
-   &#160;<span id="projectnumber">Version 1.6.1</span>
+   &#160;<span id="projectnumber">Version 1.6.3</span>
    </div>
    <div id="projectbrief">Delivery Mechanism for Software Packs</div>
   </td>
@@ -132,6 +132,8 @@ $(document).ready(function(){initNavTree('pdsc_devices_pg.html','');});
 <li><a class="el" href="pdsc_family_pg.html#element_debugvars">debugvars</a>: global debug access variables for use in sequences.</li>
 <li><a class="el" href="pdsc_family_pg.html#element_sequences">sequences</a>: debug access sequences.</li>
 <li><a class="el" href="pdsc_family_pg.html#element_debugport">debugport</a>: debug port description of the device for the debugger to configure a debug connection.</li>
+<li><a class="el" href="pdsc_family_pg.html#element_accessportV1">accessportV1</a>: access port (APv1) description of the device for the debugger to configure a debug connection.</li>
+<li><a class="el" href="pdsc_family_pg.html#element_accessportV2">accessportV2</a>: access port (APv2) description of the device for the debugger to configure a debug connection.</li>
 <li><a class="el" href="pdsc_family_pg.html#element_debug">debug</a>: device specific information for the debugger to configure a debug connection including System View Description files.</li>
 <li><a class="el" href="pdsc_family_pg.html#element_trace">trace</a>: device specific information for the debugger to configure trace.</li>
 <li><a class="el" href="pdsc_family_pg.html#element_memory">memory</a>: memory layout of the device for internal and external RAM and ROM regions</li>
@@ -181,7 +183,7 @@ $(document).ready(function(){initNavTree('pdsc_devices_pg.html','');});
 <div class="line">      &lt;subFamily DsubFamily=<span class="stringliteral">&quot;128 Flash&quot;</span>&gt;</div>
 <div class="line">        &lt;memory name=<span class="stringliteral">&quot;SRAM&quot;</span>  access=<span class="stringliteral">&quot;rwx&quot;</span> start=<span class="stringliteral">&quot;0x20000000&quot;</span> size=<span class="stringliteral">&quot;0x10000&quot;</span> <span class="keywordflow">default</span>=<span class="stringliteral">&quot;1&quot;</span>/&gt;</div>
 <div class="line">        &lt;memory name=<span class="stringliteral">&quot;Flash&quot;</span> access=<span class="stringliteral">&quot;rx&quot;</span>  start=<span class="stringliteral">&quot;0x08000000&quot;</span> size=<span class="stringliteral">&quot;0x20000&quot;</span> startup=<span class="stringliteral">&quot;1&quot;</span> <span class="keywordflow">default</span>=<span class="stringliteral">&quot;1&quot;</span>/&gt;</div>
-<div class="line">        </div>
+<div class="line"></div>
 <div class="line">        &lt;!-- device level --&gt;</div>
 <div class="line">        &lt;device Dname=<span class="stringliteral">&quot;STM32F205RB&quot;</span>&gt;</div>
 <div class="line">          &lt;feature type=<span class="stringliteral">&quot;IOs&quot;</span> n=<span class="stringliteral">&quot;51&quot;</span> name=<span class="stringliteral">&quot;Input and Output Ports&quot;</span>/&gt;</div>
@@ -194,7 +196,7 @@ $(document).ready(function(){initNavTree('pdsc_devices_pg.html','');});
 <div class="line">            &lt;feature type=<span class="stringliteral">&quot;Temp&quot;</span> n=<span class="stringliteral">&quot;-40&quot;</span> m=<span class="stringliteral">&quot;105&quot;</span> name=<span class="stringliteral">&quot;Extended Temperature Range&quot;</span>/&gt;</div>
 <div class="line">          &lt;/variant&gt;</div>
 <div class="line">        &lt;/device&gt;</div>
-<div class="line">                </div>
+<div class="line"></div>
 <div class="line">        &lt;device Dname=<span class="stringliteral">&quot;STM32F205VB&quot;</span>&gt;</div>
 <div class="line">          &lt;feature type=<span class="stringliteral">&quot;IOs&quot;</span> n=<span class="stringliteral">&quot;82&quot;</span> name=<span class="stringliteral">&quot;Input and Output Ports&quot;</span>/&gt;</div>
 <div class="line">          &lt;variant Dvariant=<span class="stringliteral">&quot;STM32F205VBT6&quot;</span>&gt;</div>
@@ -203,7 +205,7 @@ $(document).ready(function(){initNavTree('pdsc_devices_pg.html','');});
 <div class="line">          &lt;/variant&gt;</div>
 <div class="line">        &lt;/device&gt;</div>
 <div class="line">      &lt;/subFamily&gt;</div>
-<div class="line">          </div>
+<div class="line"></div>
 <div class="line">    &lt;/family&gt;</div>
 <div class="line">  &lt;/devices&gt;</div>
 <div class="line">&lt;/package&gt;</div>
@@ -240,7 +242,7 @@ $(document).ready(function(){initNavTree('pdsc_devices_pg.html','');});
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="packFormat.html">Pack Description (*.pdsc) Format</a></li>
-    <li class="footer">Generated on Fri Dec 13 2019 14:56:15 for CMSIS-Pack Version 1.6.1 by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Apr 9 2020 15:49:54 for CMSIS-Pack Version 1.6.3 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

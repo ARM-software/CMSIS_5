@@ -1,5 +1,6 @@
 var group__groupExamples =
 [
+    [ "Bayes Example", "group__BayesExample.html", null ],
     [ "Class Marks Example", "group__ClassMarks.html", null ],
     [ "Convolution Example", "group__ConvolutionExample.html", null ],
     [ "Dot Product Example", "group__DotproductExample.html", null ],
@@ -10,5 +11,6 @@ var group__groupExamples =
     [ "Matrix Example", "group__MatrixExample.html", null ],
     [ "Signal Convergence Example", "group__SignalConvergence.html", null ],
     [ "SineCosine Example", "group__SinCosExample.html", null ],
+    [ "SVM Example", "group__SVMExample.html", null ],
     [ "Variance Example", "group__VarianceExample.html", null ]
 ];

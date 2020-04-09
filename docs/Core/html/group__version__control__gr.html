@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Core (Cortex-M)
-   &#160;<span id="projectnumber">Version 5.3.0</span>
+   &#160;<span id="projectnumber">Version 5.4.0</span>
    </div>
    <div id="projectbrief">CMSIS-Core support for Cortex-M processor-based devices</div>
   </td>
@@ -136,6 +136,7 @@ Macros</h2></td></tr>
 <tr class="separator:gaeaaf66c86e5ae02a0e1fe542cb7f4d8c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Description</h2>
+<p>Version #define symbols for CMSIS release specific C/C++ source code. </p>
 <p>The header file <b>cmsis_version.h</b> is included by each core header so that these definitions are available.</p>
 <p><b>Code Example:</b> </p>
 <div class="fragment"><div class="line"><span class="preprocessor">#if defined(__CM_CMSIS_VERSION) &amp;&amp; \</span></div>
@@ -161,6 +162,8 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Contains the CMSIS version. </p>
 <p>The CMSIS version is a combination of the <a class="el" href="group__version__control__gr.html#ga85987c5fcc1e012d7ac01369ee6ca2b5">__CM_CMSIS_VERSION_MAIN</a> (bits 31..15) and <a class="el" href="group__version__control__gr.html#ga22083cbe7f0606cfd538ec12b2e41608">__CM_CMSIS_VERSION_SUB</a> (bits 14..0). </p>
 
 </div>
@@ -174,6 +177,8 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Contains the CMSIS major version. </p>
 <p>The CMSIS major version can be used to differentiate between CMSIS major releases. </p>
 
 </div>
@@ -187,6 +192,8 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Contains the CMSIS minor version. </p>
 <p>The CMSIS minor version can be used to query a CMSIS release update level. </p>
 
 </div>
@@ -200,6 +207,8 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Contains the core version for a Cortex-M class controller. </p>
 <p>This define can be used to differentiate between the various available Cortex-M controllers. Possible values are:</p>
 <ul>
 <li>0 for a Cortex-M0 or Cortex-M0+</li>
@@ -210,6 +219,10 @@ Macros</h2></td></tr>
 <li>23 for a Cortex-M23</li>
 <li>33 for a Cortex-M33</li>
 <li>35 for a Cortex-M35P</li>
+<li>55 for a Cortex-M55</li>
+<li>2 for a Armv8-M Base Line device</li>
+<li>80 for a Armv8-M Main Line device</li>
+<li>81 for a Armv8.1-M Main Line device</li>
 </ul>
 <p>This define is only available for Cortex-M class controllers. <b>Code Example:</b> </p>
 <div class="fragment"><div class="line"><span class="preprocessor">#if defined(__CORTEX_M) &amp;&amp; (__CORTEX_M == 4)</span></div>
@@ -229,6 +242,8 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Contains the core version for a Cortex Secure Core controller. </p>
 <p>This define can be used to differentiate between the various available Cortex Secure Core controllers. Possible values are:</p>
 <ul>
 <li>000 for a Cortex-SC000</li>
@@ -248,7 +263,7 @@ Macros</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Jul 10 2019 15:20:25 for CMSIS-Core (Cortex-M) Version 5.3.0 by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Apr 9 2020 15:49:07 for CMSIS-Core (Cortex-M) Version 5.4.0 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

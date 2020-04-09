@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Core (Cortex-M)
-   &#160;<span id="projectnumber">Version 5.3.0</span>
+   &#160;<span id="projectnumber">Version 5.4.0</span>
    </div>
    <div id="projectbrief">CMSIS-Core support for Cortex-M processor-based devices</div>
   </td>
@@ -146,6 +146,8 @@ CMSIS-Core Processor Files</h1>
 <tr>
 <td align="left">core_cm35p.h </td><td align="left">for the Cortex-M35P processor </td></tr>
 <tr>
+<td align="left">core_cm55.h </td><td align="left">for the Cortex-M55 processor </td></tr>
+<tr>
 <td align="left">core_sc000.h </td><td align="left">for the SecurCore SC000 processor </td></tr>
 <tr>
 <td align="left">core_sc300.h </td><td align="left">for the SecurCore SC300 processor </td></tr>
@@ -153,6 +155,8 @@ CMSIS-Core Processor Files</h1>
 <td align="left">core_armv8mbl.h </td><td align="left">for the Armv8-M Baseline processor </td></tr>
 <tr>
 <td align="left">core_armv8mml.h </td><td align="left">for the Armv8-M Mainline processor </td></tr>
+<tr>
+<td align="left">core_armv81mml.h </td><td align="left">for the Armv8.1-M Mainline processor </td></tr>
 </table>
 <h1><a class="anchor" id="device_examples"></a>
 Device Examples</h1>
@@ -199,6 +203,8 @@ Device Examples</h1>
 <tr>
 <td align="left">ARM Cortex-M35P </td><td align="left">ARMCM35P_DSP_FP_TZ </td><td align="left">Cortex-M35P based device with TrustZone, SIMD, FPU </td></tr>
 <tr>
+<td align="left">ARM Cortex-M55 </td><td align="left">ARMCM55 </td><td align="left">Cortex-M55 based device with TrustZone, SIMD, double precision FPU, and floating-point MVE </td></tr>
+<tr>
 <td align="left">ARM SC000 </td><td align="left">ARM SC000 </td><td align="left">SC000 based device </td></tr>
 <tr>
 <td align="left">ARM SC300 </td><td align="left">ARM SC300 </td><td align="left">SC300 based device </td></tr>
@@ -216,6 +222,8 @@ Device Examples</h1>
 <td align="left">ARMv8-M Mainline </td><td align="left">ARMv8MML_DSP_DP </td><td align="left">Armv8-M Mainline based device with TrustZone, SIMD, and double precision FPU </td></tr>
 <tr>
 <td align="left">ARMv8-M Mainline </td><td align="left">ARMv8MML_DSP_SP </td><td align="left">Armv8-M Mainline based device with TrustZone, SIMD, and single precision FPU </td></tr>
+<tr>
+<td align="left">ARMv8.1-M Mainline </td><td align="left">ARMv81MML_DSP_DP_MVE_FP </td><td align="left">Armv8.1-M Mainline based device with TrustZone, SIMD, double precision FPU, and floating-point MVE </td></tr>
 </table>
 <h1><a class="anchor" id="template_files_sec"></a>
 Template Files</h1>
@@ -267,14 +275,15 @@ Template Files</h1>
 <li><a class="el" href="startup_s_pg.html">Startup File startup_&lt;device&gt;.s (deprecated)</a> (deprecated)</li>
 <li><a class="el" href="system_c_pg.html">System Configuration Files system_&lt;device&gt;.c and system_&lt;device&gt;.h</a></li>
 <li><a class="el" href="device_h_pg.html">Device Header File &lt;device.h&gt;</a></li>
-<li><a class="el" href="partition_h_pg.html">System Partition Header File partition_&lt;device&gt;.h</a> </li>
+<li><a class="el" href="partition_h_pg.html">TrustZone setup: partition_&lt;device&gt;.h</a></li>
+<li><a class="el" href="partition_h_pg.html#partition_gen_h_pg">Region/ISR setup: partition_gen.h</a> </li>
 </ul>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Jul 10 2019 15:20:25 for CMSIS-Core (Cortex-M) Version 5.3.0 by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Apr 9 2020 15:49:07 for CMSIS-Core (Cortex-M) Version 5.4.0 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

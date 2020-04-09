@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Driver
-   &#160;<span id="projectnumber">Version 2.7.1</span>
+   &#160;<span id="projectnumber">Version 2.8.0</span>
    </div>
    <div id="projectbrief">Peripheral Interface for Middleware and Application Code</div>
   </td>
@@ -130,8 +130,12 @@ Data Structures</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:a71df406694e557f19cae5e43ff1960ba"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Driver__USBD_8h.html#a71df406694e557f19cae5e43ff1960ba">ARM_USBD_API_VERSION</a>&#160;&#160;&#160;<a class="el" href="Driver__Common_8h.html#a43c7ca1eb0786d818624246c09932a74">ARM_DRIVER_VERSION_MAJOR_MINOR</a>(2,2)  /* API version */</td></tr>
+<tr class="memitem:a71df406694e557f19cae5e43ff1960ba"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Driver__USBD_8h.html#a71df406694e557f19cae5e43ff1960ba">ARM_USBD_API_VERSION</a>&#160;&#160;&#160;<a class="el" href="Driver__Common_8h.html#a43c7ca1eb0786d818624246c09932a74">ARM_DRIVER_VERSION_MAJOR_MINOR</a>(2,3)  /* API version */</td></tr>
 <tr class="separator:a71df406694e557f19cae5e43ff1960ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8747f0011aa23918fa01e3511a908906"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Driver__USBD_8h.html#a8747f0011aa23918fa01e3511a908906">_ARM_Driver_USBD_</a>(n)&#160;&#160;&#160;Driver_USBD##n</td></tr>
+<tr class="separator:a8747f0011aa23918fa01e3511a908906"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a611e9367615ecbba7150cd961859ebce"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Driver__USBD_8h.html#a611e9367615ecbba7150cd961859ebce">ARM_Driver_USBD_</a>(n)&#160;&#160;&#160;<a class="el" href="Driver__USBD_8h.html#a8747f0011aa23918fa01e3511a908906">_ARM_Driver_USBD_</a>(n)</td></tr>
+<tr class="separator:a611e9367615ecbba7150cd961859ebce"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga32546413cfe55154351f74fb56de1045"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__USBD__dev__events.html#ga32546413cfe55154351f74fb56de1045">ARM_USBD_EVENT_VBUS_ON</a>&#160;&#160;&#160;(1UL &lt;&lt; 0)</td></tr>
 <tr class="memdesc:ga32546413cfe55154351f74fb56de1045"><td class="mdescLeft">&#160;</td><td class="mdescRight">USB Device VBUS On.  <a href="group__USBD__dev__events.html#ga32546413cfe55154351f74fb56de1045">More...</a><br/></td></tr>
 <tr class="separator:ga32546413cfe55154351f74fb56de1045"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -175,7 +179,39 @@ Typedefs</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define ARM_USBD_API_VERSION&#160;&#160;&#160;<a class="el" href="Driver__Common_8h.html#a43c7ca1eb0786d818624246c09932a74">ARM_DRIVER_VERSION_MAJOR_MINOR</a>(2,2)  /* API version */</td>
+          <td class="memname">#define ARM_USBD_API_VERSION&#160;&#160;&#160;<a class="el" href="Driver__Common_8h.html#a43c7ca1eb0786d818624246c09932a74">ARM_DRIVER_VERSION_MAJOR_MINOR</a>(2,3)  /* API version */</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a8747f0011aa23918fa01e3511a908906"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define _ARM_Driver_USBD_</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">n</td><td>)</td>
+          <td>&#160;&#160;&#160;Driver_USBD##n</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a611e9367615ecbba7150cd961859ebce"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ARM_Driver_USBD_</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">n</td><td>)</td>
+          <td>&#160;&#160;&#160;<a class="el" href="Driver__USBD_8h.html#a8747f0011aa23918fa01e3511a908906">_ARM_Driver_USBD_</a>(n)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -188,7 +224,7 @@ Typedefs</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_7151b3cc910409bb744bd274374c738d.html">Driver</a></li><li class="navelem"><a class="el" href="dir_9c39448ea46a8e15f1aabc7dec307fcf.html">Include</a></li><li class="navelem"><a class="el" href="Driver__USBD_8h.html">Driver_USBD.h</a></li>
-    <li class="footer">Generated on Wed Jul 10 2019 15:20:30 for CMSIS-Driver Version 2.7.1 by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Apr 9 2020 15:49:14 for CMSIS-Driver Version 2.8.0 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Driver
-   &#160;<span id="projectnumber">Version 2.7.1</span>
+   &#160;<span id="projectnumber">Version 2.8.0</span>
    </div>
    <div id="projectbrief">Peripheral Interface for Middleware and Application Code</div>
   </td>
@@ -130,8 +130,12 @@ Data Structures</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:acf1275c15e53a573d7db89da66839d97"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Driver__SPI_8h.html#acf1275c15e53a573d7db89da66839d97">ARM_SPI_API_VERSION</a>&#160;&#160;&#160;<a class="el" href="Driver__Common_8h.html#a43c7ca1eb0786d818624246c09932a74">ARM_DRIVER_VERSION_MAJOR_MINOR</a>(2,2)  /* API version */</td></tr>
+<tr class="memitem:acf1275c15e53a573d7db89da66839d97"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Driver__SPI_8h.html#acf1275c15e53a573d7db89da66839d97">ARM_SPI_API_VERSION</a>&#160;&#160;&#160;<a class="el" href="Driver__Common_8h.html#a43c7ca1eb0786d818624246c09932a74">ARM_DRIVER_VERSION_MAJOR_MINOR</a>(2,3)  /* API version */</td></tr>
 <tr class="separator:acf1275c15e53a573d7db89da66839d97"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a89036eeadb29e03bdb57939ea49b6520"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Driver__SPI_8h.html#a89036eeadb29e03bdb57939ea49b6520">_ARM_Driver_SPI_</a>(n)&#160;&#160;&#160;Driver_SPI##n</td></tr>
+<tr class="separator:a89036eeadb29e03bdb57939ea49b6520"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0c6a745fcc8fbe2bb37f3bf6170f2e80"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Driver__SPI_8h.html#a0c6a745fcc8fbe2bb37f3bf6170f2e80">ARM_Driver_SPI_</a>(n)&#160;&#160;&#160;<a class="el" href="Driver__SPI_8h.html#a89036eeadb29e03bdb57939ea49b6520">_ARM_Driver_SPI_</a>(n)</td></tr>
+<tr class="separator:a0c6a745fcc8fbe2bb37f3bf6170f2e80"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a129dc5d38b4ba2c776c0b90aecf12a63"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Driver__SPI_8h.html#a129dc5d38b4ba2c776c0b90aecf12a63">ARM_SPI_CONTROL_Pos</a>&#160;&#160;&#160;0</td></tr>
 <tr class="separator:a129dc5d38b4ba2c776c0b90aecf12a63"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a646c834efef12377b372ea546459315b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Driver__SPI_8h.html#a646c834efef12377b372ea546459315b">ARM_SPI_CONTROL_Msk</a>&#160;&#160;&#160;(0xFFUL &lt;&lt; ARM_SPI_CONTROL_Pos)</td></tr>
@@ -145,12 +149,12 @@ Macros</h2></td></tr>
 <tr class="memitem:ga382b394c5e68f7d1206b837843732a3e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__spi__mode__ctrls.html#ga382b394c5e68f7d1206b837843732a3e">ARM_SPI_MODE_SLAVE</a>&#160;&#160;&#160;(0x02UL &lt;&lt; ARM_SPI_CONTROL_Pos)</td></tr>
 <tr class="memdesc:ga382b394c5e68f7d1206b837843732a3e"><td class="mdescLeft">&#160;</td><td class="mdescRight">SPI Slave (Output on MISO, Input on MOSI)  <a href="group__spi__mode__ctrls.html#ga382b394c5e68f7d1206b837843732a3e">More...</a><br/></td></tr>
 <tr class="separator:ga382b394c5e68f7d1206b837843732a3e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf34d849c7cde1151a768887f154e19bd"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__spi__mode__ctrls.html#gaf34d849c7cde1151a768887f154e19bd">ARM_SPI_MODE_MASTER_SIMPLEX</a>&#160;&#160;&#160;(0x03UL &lt;&lt; ARM_SPI_CONTROL_Pos)</td></tr>
-<tr class="memdesc:gaf34d849c7cde1151a768887f154e19bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">SPI Master (Output/Input on MOSI); arg = Bus Speed in bps.  <a href="group__spi__mode__ctrls.html#gaf34d849c7cde1151a768887f154e19bd">More...</a><br/></td></tr>
-<tr class="separator:gaf34d849c7cde1151a768887f154e19bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9b113d8b336047e1c22f73ad44851fdf"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__spi__mode__ctrls.html#ga9b113d8b336047e1c22f73ad44851fdf">ARM_SPI_MODE_SLAVE_SIMPLEX</a>&#160;&#160;&#160;(0x04UL &lt;&lt; ARM_SPI_CONTROL_Pos)</td></tr>
-<tr class="memdesc:ga9b113d8b336047e1c22f73ad44851fdf"><td class="mdescLeft">&#160;</td><td class="mdescRight">SPI Slave (Output/Input on MISO)  <a href="group__spi__mode__ctrls.html#ga9b113d8b336047e1c22f73ad44851fdf">More...</a><br/></td></tr>
-<tr class="separator:ga9b113d8b336047e1c22f73ad44851fdf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af34d849c7cde1151a768887f154e19bd"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Driver__SPI_8h.html#af34d849c7cde1151a768887f154e19bd">ARM_SPI_MODE_MASTER_SIMPLEX</a>&#160;&#160;&#160;(0x03UL &lt;&lt; ARM_SPI_CONTROL_Pos)</td></tr>
+<tr class="memdesc:af34d849c7cde1151a768887f154e19bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">SPI Master (Output/Input on MOSI); arg = Bus Speed in bps.  <a href="#af34d849c7cde1151a768887f154e19bd">More...</a><br/></td></tr>
+<tr class="separator:af34d849c7cde1151a768887f154e19bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9b113d8b336047e1c22f73ad44851fdf"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Driver__SPI_8h.html#a9b113d8b336047e1c22f73ad44851fdf">ARM_SPI_MODE_SLAVE_SIMPLEX</a>&#160;&#160;&#160;(0x04UL &lt;&lt; ARM_SPI_CONTROL_Pos)</td></tr>
+<tr class="memdesc:a9b113d8b336047e1c22f73ad44851fdf"><td class="mdescLeft">&#160;</td><td class="mdescRight">SPI Slave (Output/Input on MISO)  <a href="#a9b113d8b336047e1c22f73ad44851fdf">More...</a><br/></td></tr>
+<tr class="separator:a9b113d8b336047e1c22f73ad44851fdf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac47e4ed093d8c054021121f89c64023e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Driver__SPI_8h.html#ac47e4ed093d8c054021121f89c64023e">ARM_SPI_FRAME_FORMAT_Pos</a>&#160;&#160;&#160;8</td></tr>
 <tr class="separator:ac47e4ed093d8c054021121f89c64023e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af459192fe14b4b725816fa0029149298"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Driver__SPI_8h.html#af459192fe14b4b725816fa0029149298">ARM_SPI_FRAME_FORMAT_Msk</a>&#160;&#160;&#160;(7UL &lt;&lt; ARM_SPI_FRAME_FORMAT_Pos)</td></tr>
@@ -171,13 +175,13 @@ Macros</h2></td></tr>
 <tr class="memdesc:ga225185710ba38848a489013ba4475915"><td class="mdescLeft">&#160;</td><td class="mdescRight">Texas Instruments Frame Format.  <a href="group__spi__frame__format__ctrls.html#ga225185710ba38848a489013ba4475915">More...</a><br/></td></tr>
 <tr class="separator:ga225185710ba38848a489013ba4475915"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga44f481d32b9a9ea93673f05af82ccf86"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__spi__frame__format__ctrls.html#ga44f481d32b9a9ea93673f05af82ccf86">ARM_SPI_MICROWIRE</a>&#160;&#160;&#160;(5UL &lt;&lt; ARM_SPI_FRAME_FORMAT_Pos)</td></tr>
-<tr class="memdesc:ga44f481d32b9a9ea93673f05af82ccf86"><td class="mdescLeft">&#160;</td><td class="mdescRight">National Microwire Frame Format.  <a href="group__spi__frame__format__ctrls.html#ga44f481d32b9a9ea93673f05af82ccf86">More...</a><br/></td></tr>
+<tr class="memdesc:ga44f481d32b9a9ea93673f05af82ccf86"><td class="mdescLeft">&#160;</td><td class="mdescRight">National Semiconductor Microwire Frame Format.  <a href="group__spi__frame__format__ctrls.html#ga44f481d32b9a9ea93673f05af82ccf86">More...</a><br/></td></tr>
 <tr class="separator:ga44f481d32b9a9ea93673f05af82ccf86"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a89e1140c07c9805112b6de4541c3b59a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Driver__SPI_8h.html#a89e1140c07c9805112b6de4541c3b59a">ARM_SPI_DATA_BITS_Pos</a>&#160;&#160;&#160;12</td></tr>
 <tr class="separator:a89e1140c07c9805112b6de4541c3b59a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0b6e14fe55f4d92ddab6ca230da77f46"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Driver__SPI_8h.html#a0b6e14fe55f4d92ddab6ca230da77f46">ARM_SPI_DATA_BITS_Msk</a>&#160;&#160;&#160;(0x3FUL &lt;&lt; ARM_SPI_DATA_BITS_Pos)</td></tr>
 <tr class="separator:a0b6e14fe55f4d92ddab6ca230da77f46"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf6c099a1d67256a32010120c66c55250"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__spi__data__bits__ctrls.html#gaf6c099a1d67256a32010120c66c55250">ARM_SPI_DATA_BITS</a>(n)&#160;&#160;&#160;(((n) &amp; 0x3F) &lt;&lt; ARM_SPI_DATA_BITS_Pos)</td></tr>
+<tr class="memitem:gaf6c099a1d67256a32010120c66c55250"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__spi__data__bits__ctrls.html#gaf6c099a1d67256a32010120c66c55250">ARM_SPI_DATA_BITS</a>(n)&#160;&#160;&#160;(((n) &amp; 0x3FUL) &lt;&lt; ARM_SPI_DATA_BITS_Pos)</td></tr>
 <tr class="memdesc:gaf6c099a1d67256a32010120c66c55250"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of Data bits.  <a href="group__spi__data__bits__ctrls.html#gaf6c099a1d67256a32010120c66c55250">More...</a><br/></td></tr>
 <tr class="separator:gaf6c099a1d67256a32010120c66c55250"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a84a8f90504df32ec77832a0285a47081"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Driver__SPI_8h.html#a84a8f90504df32ec77832a0285a47081">ARM_SPI_BIT_ORDER_Pos</a>&#160;&#160;&#160;18</td></tr>
@@ -231,10 +235,10 @@ Macros</h2></td></tr>
 <tr class="memitem:ga44708b80e48984be099cd6eb11780dc3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__spi__misc__ctrls.html#ga44708b80e48984be099cd6eb11780dc3">ARM_SPI_ABORT_TRANSFER</a>&#160;&#160;&#160;(0x14UL &lt;&lt; ARM_SPI_CONTROL_Pos)</td></tr>
 <tr class="memdesc:ga44708b80e48984be099cd6eb11780dc3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Abort current data transfer.  <a href="group__spi__misc__ctrls.html#ga44708b80e48984be099cd6eb11780dc3">More...</a><br/></td></tr>
 <tr class="separator:ga44708b80e48984be099cd6eb11780dc3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a335b448e07422e9c25616a693ec581cc"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Driver__SPI_8h.html#a335b448e07422e9c25616a693ec581cc">ARM_SPI_SS_INACTIVE</a>&#160;&#160;&#160;0</td></tr>
+<tr class="memitem:a335b448e07422e9c25616a693ec581cc"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Driver__SPI_8h.html#a335b448e07422e9c25616a693ec581cc">ARM_SPI_SS_INACTIVE</a>&#160;&#160;&#160;0UL</td></tr>
 <tr class="memdesc:a335b448e07422e9c25616a693ec581cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">SPI Slave Select Signal Inactive.  <a href="#a335b448e07422e9c25616a693ec581cc">More...</a><br/></td></tr>
 <tr class="separator:a335b448e07422e9c25616a693ec581cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3f465cdbd1238ddd74f78e14457076c4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Driver__SPI_8h.html#a3f465cdbd1238ddd74f78e14457076c4">ARM_SPI_SS_ACTIVE</a>&#160;&#160;&#160;1</td></tr>
+<tr class="memitem:a3f465cdbd1238ddd74f78e14457076c4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Driver__SPI_8h.html#a3f465cdbd1238ddd74f78e14457076c4">ARM_SPI_SS_ACTIVE</a>&#160;&#160;&#160;1UL</td></tr>
 <tr class="memdesc:a3f465cdbd1238ddd74f78e14457076c4"><td class="mdescLeft">&#160;</td><td class="mdescRight">SPI Slave Select Signal Active.  <a href="#a3f465cdbd1238ddd74f78e14457076c4">More...</a><br/></td></tr>
 <tr class="separator:a3f465cdbd1238ddd74f78e14457076c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga273a55c5d19491c565e5f05d03d66f3f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__spi__execution__status.html#ga273a55c5d19491c565e5f05d03d66f3f">ARM_SPI_ERROR_MODE</a>&#160;&#160;&#160;(<a class="el" href="group__execution__status.html#ga5a2b5d68f6649598d099b88c0eaee3e5">ARM_DRIVER_ERROR_SPECIFIC</a> - 1)</td></tr>
@@ -274,7 +278,39 @@ Typedefs</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define ARM_SPI_API_VERSION&#160;&#160;&#160;<a class="el" href="Driver__Common_8h.html#a43c7ca1eb0786d818624246c09932a74">ARM_DRIVER_VERSION_MAJOR_MINOR</a>(2,2)  /* API version */</td>
+          <td class="memname">#define ARM_SPI_API_VERSION&#160;&#160;&#160;<a class="el" href="Driver__Common_8h.html#a43c7ca1eb0786d818624246c09932a74">ARM_DRIVER_VERSION_MAJOR_MINOR</a>(2,3)  /* API version */</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a89036eeadb29e03bdb57939ea49b6520"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define _ARM_Driver_SPI_</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">n</td><td>)</td>
+          <td>&#160;&#160;&#160;Driver_SPI##n</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a0c6a745fcc8fbe2bb37f3bf6170f2e80"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ARM_Driver_SPI_</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">n</td><td>)</td>
+          <td>&#160;&#160;&#160;<a class="el" href="Driver__SPI_8h.html#a89036eeadb29e03bdb57939ea49b6520">_ARM_Driver_SPI_</a>(n)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -302,6 +338,36 @@ Typedefs</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="af34d849c7cde1151a768887f154e19bd"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ARM_SPI_MODE_MASTER_SIMPLEX&#160;&#160;&#160;(0x03UL &lt;&lt; ARM_SPI_CONTROL_Pos)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>SPI Master (Output/Input on MOSI); arg = Bus Speed in bps. </p>
+<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000002">Deprecated:</a></b></dt><dd>Simplex Mode has been removed </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a9b113d8b336047e1c22f73ad44851fdf"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ARM_SPI_MODE_SLAVE_SIMPLEX&#160;&#160;&#160;(0x04UL &lt;&lt; ARM_SPI_CONTROL_Pos)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>SPI Slave (Output/Input on MISO) </p>
+<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000003">Deprecated:</a></b></dt><dd>Simplex Mode has been removed </dd></dl>
 
 </div>
 </div>
@@ -430,7 +496,7 @@ Typedefs</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define ARM_SPI_SS_INACTIVE&#160;&#160;&#160;0</td>
+          <td class="memname">#define ARM_SPI_SS_INACTIVE&#160;&#160;&#160;0UL</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -444,7 +510,7 @@ Typedefs</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define ARM_SPI_SS_ACTIVE&#160;&#160;&#160;1</td>
+          <td class="memname">#define ARM_SPI_SS_ACTIVE&#160;&#160;&#160;1UL</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -459,7 +525,7 @@ Typedefs</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_7151b3cc910409bb744bd274374c738d.html">Driver</a></li><li class="navelem"><a class="el" href="dir_9c39448ea46a8e15f1aabc7dec307fcf.html">Include</a></li><li class="navelem"><a class="el" href="Driver__SPI_8h.html">Driver_SPI.h</a></li>
-    <li class="footer">Generated on Wed Jul 10 2019 15:20:30 for CMSIS-Driver Version 2.7.1 by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Apr 9 2020 15:49:14 for CMSIS-Driver Version 2.8.0 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

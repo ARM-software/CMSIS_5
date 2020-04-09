@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Core (Cortex-M)
-   &#160;<span id="projectnumber">Version 5.3.0</span>
+   &#160;<span id="projectnumber">Version 5.4.0</span>
    </div>
    <div id="projectbrief">CMSIS-Core support for Cortex-M processor-based devices</div>
   </td>
@@ -220,29 +220,23 @@ Functions</h2></td></tr>
 <tr class="separator:ga44b31316872e91bda1af7e17173de24b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Description</h2>
+<p>Functions to access the Nested Vector Interrupt Controller (NVIC). </p>
 <p>This section explains how to use interrupts and exceptions and access functions for the Nested Vector Interrupt Controller (NVIC).</p>
 <p>Arm provides a template file <b>startup_<em>device</em></b> for each supported compiler. The file must be adapted by the silicon vendor to include interrupt vectors for all device-specific interrupt handlers. Each interrupt handler is defined as a <b><em>weak</em></b> function to an dummy handler. These interrupt handlers can be used directly in application software without being adapted by the programmer.</p>
 <p>The table below lists the core exception vectors of the various Cortex-M processors.</p>
 <table  class="cmtable" summary="Core Exception Name">
 <tr>
-<th>Exception Vector </th><th>IRQn<br/>
-Value </th><th>M0 </th><th>M0+ </th><th>M3 </th><th>M4 </th><th>M7 </th><th>SC000 </th><th>SC300 </th><th>Armv8-M<br/>
-Baseline </th><th>Armv8-M<br/>
+<th>Exception Vector </th><th>Handler Function </th><th>IRQn<br/>
+Value </th><th title="Cortex-M0/M0+
+and SC000
+      ">Armv6-M </th><th title="Cortex-M3/M4/M7
+and SC300
+      ">Armv7-M </th><th title="Cortex-M23">Armv8-M<br/>
+Baseline </th><th title="Cortex-M33/M35P">Armv8-M<br/>
+Mainline </th><th>Armv8.1-M<br/>
 Mainline </th><th>Description  </th></tr>
 <tr>
-<td><b>NonMaskableInt_IRQn</b> </td><td>-14 </td><td><div class="image">
-<img src="check.png"  alt="available"/>
-</div>
- </td><td><div class="image">
-<img src="check.png"  alt="available"/>
-</div>
- </td><td><div class="image">
-<img src="check.png"  alt="available"/>
-</div>
- </td><td><div class="image">
-<img src="check.png"  alt="available"/>
-</div>
- </td><td><div class="image">
+<td><b>NonMaskableInt_IRQn</b> </td><td>NMI_Handler </td><td>-14 </td><td><div class="image">
 <img src="check.png"  alt="available"/>
 </div>
  </td><td><div class="image">
@@ -259,19 +253,7 @@ Mainline </th><th>Description  </th></tr>
 </div>
  </td><td>Non Maskable Interrupt  </td></tr>
 <tr>
-<td><b>HardFault_IRQn</b> </td><td>-13 </td><td><div class="image">
-<img src="check.png"  alt="available"/>
-</div>
- </td><td><div class="image">
-<img src="check.png"  alt="available"/>
-</div>
- </td><td><div class="image">
-<img src="check.png"  alt="available"/>
-</div>
- </td><td><div class="image">
-<img src="check.png"  alt="available"/>
-</div>
- </td><td><div class="image">
+<td><b>HardFault_IRQn</b> </td><td>HardFault_Handler </td><td>-13 </td><td><div class="image">
 <img src="check.png"  alt="available"/>
 </div>
  </td><td><div class="image">
@@ -288,58 +270,43 @@ Mainline </th><th>Description  </th></tr>
 </div>
  </td><td>Hard Fault Interrupt  </td></tr>
 <tr>
-<td><b>MemoryManagement_IRQn</b> </td><td>-12 </td><td>&#160; </td><td>&#160; </td><td><div class="image">
-<img src="check.png"  alt="available"/>
-</div>
- </td><td><div class="image">
-<img src="check.png"  alt="available"/>
-</div>
- </td><td><div class="image">
+<td><b>MemoryManagement_IRQn</b> </td><td>MemManage_Handler </td><td>-12 </td><td>&#160; </td><td><div class="image">
 <img src="check.png"  alt="available"/>
 </div>
  </td><td>&#160; </td><td><div class="image">
 <img src="check.png"  alt="available"/>
 </div>
- </td><td>&#160; </td><td><div class="image">
+ </td><td><div class="image">
 <img src="check.png"  alt="available"/>
 </div>
  </td><td>Memory Management Interrupt  </td></tr>
 <tr>
-<td><b>BusFault_IRQn</b> </td><td>-11 </td><td>&#160; </td><td>&#160; </td><td><div class="image">
-<img src="check.png"  alt="available"/>
-</div>
- </td><td><div class="image">
-<img src="check.png"  alt="available"/>
-</div>
- </td><td><div class="image">
+<td><b>BusFault_IRQn</b> </td><td>BusFault_Handler </td><td>-11 </td><td>&#160; </td><td><div class="image">
 <img src="check.png"  alt="available"/>
 </div>
  </td><td>&#160; </td><td><div class="image">
 <img src="check.png"  alt="available"/>
 </div>
- </td><td>&#160; </td><td><div class="image">
+ </td><td><div class="image">
 <img src="check.png"  alt="available"/>
 </div>
  </td><td>Bus Fault Interrupt  </td></tr>
 <tr>
-<td><b>UsageFault_IRQn</b> </td><td>-10 </td><td>&#160; </td><td>&#160; </td><td><div class="image">
-<img src="check.png"  alt="available"/>
-</div>
- </td><td><div class="image">
-<img src="check.png"  alt="available"/>
-</div>
- </td><td><div class="image">
+<td><b>UsageFault_IRQn</b> </td><td>UsageFault_Handler </td><td>-10 </td><td>&#160; </td><td><div class="image">
 <img src="check.png"  alt="available"/>
 </div>
  </td><td>&#160; </td><td><div class="image">
 <img src="check.png"  alt="available"/>
 </div>
- </td><td>&#160; </td><td><div class="image">
+ </td><td><div class="image">
 <img src="check.png"  alt="available"/>
 </div>
  </td><td>Usage Fault Interrupt  </td></tr>
 <tr>
-<td><b>SecureFault_IRQn</b> </td><td>-9 </td><td>&#160; </td><td>&#160; </td><td>&#160; </td><td>&#160; </td><td>&#160; </td><td>&#160; </td><td>&#160; </td><td><div class="image">
+<td><b>SecureFault_IRQn</b> </td><td>SecureFault_Handler </td><td>-9 </td><td>&#160; </td><td>&#160; </td><td><div class="image">
+<img src="check.png"  alt="available"/>
+</div>
+ </td><td><div class="image">
 <img src="check.png"  alt="available"/>
 </div>
  </td><td><div class="image">
@@ -347,19 +314,7 @@ Mainline </th><th>Description  </th></tr>
 </div>
  </td><td>Secure Fault Interrupt  </td></tr>
 <tr>
-<td><b>SVCall_IRQn</b> </td><td>-5 </td><td><div class="image">
-<img src="check.png"  alt="available"/>
-</div>
- </td><td><div class="image">
-<img src="check.png"  alt="available"/>
-</div>
- </td><td><div class="image">
-<img src="check.png"  alt="available"/>
-</div>
- </td><td><div class="image">
-<img src="check.png"  alt="available"/>
-</div>
- </td><td><div class="image">
+<td><b>SVCall_IRQn</b> </td><td>SVC_Handler </td><td>-5 </td><td><div class="image">
 <img src="check.png"  alt="available"/>
 </div>
  </td><td><div class="image">
@@ -376,36 +331,18 @@ Mainline </th><th>Description  </th></tr>
 </div>
  </td><td>SV Call Interrupt   </td></tr>
 <tr>
-<td><b>DebugMonitor_IRQn</b> </td><td>-4 </td><td>&#160; </td><td>&#160; </td><td><div class="image">
-<img src="check.png"  alt="available"/>
-</div>
- </td><td><div class="image">
-<img src="check.png"  alt="available"/>
-</div>
- </td><td><div class="image">
+<td><b>DebugMonitor_IRQn</b> </td><td>DebugMon_Handler </td><td>-4 </td><td>&#160; </td><td><div class="image">
 <img src="check.png"  alt="available"/>
 </div>
  </td><td>&#160; </td><td><div class="image">
 <img src="check.png"  alt="available"/>
 </div>
- </td><td>&#160; </td><td><div class="image">
+ </td><td><div class="image">
 <img src="check.png"  alt="available"/>
 </div>
  </td><td>Debug Monitor Interrupt  </td></tr>
 <tr>
-<td><b>PendSV_IRQn</b> </td><td>-2 </td><td><div class="image">
-<img src="check.png"  alt="available"/>
-</div>
- </td><td><div class="image">
-<img src="check.png"  alt="available"/>
-</div>
- </td><td><div class="image">
-<img src="check.png"  alt="available"/>
-</div>
- </td><td><div class="image">
-<img src="check.png"  alt="available"/>
-</div>
- </td><td><div class="image">
+<td><b>PendSV_IRQn</b> </td><td>PendSV_Handler </td><td>-2 </td><td><div class="image">
 <img src="check.png"  alt="available"/>
 </div>
  </td><td><div class="image">
@@ -422,19 +359,7 @@ Mainline </th><th>Description  </th></tr>
 </div>
  </td><td>Pend SV Interrupt  </td></tr>
 <tr>
-<td><b>SysTick_IRQn</b> </td><td>-1 </td><td><div class="image">
-<img src="check.png"  alt="available"/>
-</div>
- </td><td><div class="image">
-<img src="check.png"  alt="available"/>
-</div>
- </td><td><div class="image">
-<img src="check.png"  alt="available"/>
-</div>
- </td><td><div class="image">
-<img src="check.png"  alt="available"/>
-</div>
- </td><td><div class="image">
+<td><b>SysTick_IRQn</b> </td><td>SysTick_Handler </td><td>-1 </td><td><div class="image">
 <img src="check.png"  alt="available"/>
 </div>
  </td><td><div class="image">
@@ -569,6 +494,8 @@ Mainline </th><th>Description  </th></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Virtualization of the NVIC API. </p>
 <p>When <a class="el" href="group__NVIC__gr.html#gadc48b4ed09386aab48fa6b9c96d9034c">CMSIS_NVIC_VIRTUAL</a> is defined, the NVIC access functions in the table below must be implemented for virtualizing NVIC access. These functions should be implemented in a separate source module. The original CMSIS-Core __NVIC functions are always available independent of <a class="el" href="group__NVIC__gr.html#gadc48b4ed09386aab48fa6b9c96d9034c">CMSIS_NVIC_VIRTUAL</a>.</p>
 <table class="doxtable">
 <tr>
@@ -608,6 +535,8 @@ Mainline </th><th>Description  </th></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Virtualization of interrupt vector table access functions. </p>
 <p>When <a class="el" href="group__NVIC__gr.html#gadc48b4ed09386aab48fa6b9c96d9034c">CMSIS_NVIC_VIRTUAL</a> is defined, the functions in the table below must be replaced to virtualize the API access functions to the interrupt vector table. The NVIC vector table API should be implemented in a separate source module. This allows, for example, alternate implementations to relocate the vector table from flash to RAM on the first vector table update.</p>
 <p>The original CMSIS-Core functions are always available, but prefixed with __NVIC.</p>
 <table class="doxtable">
@@ -631,7 +560,9 @@ Mainline </th><th>Description  </th></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>The core exception enumeration names for IRQn values are defined in the file <b>device.h</b>.</p>
+
+<p>Definition of IRQn numbers. </p>
+<p>The core exception enumeration names for IRQn values are defined in the <a class="el" href="device_h_pg.html">Device Header File &lt;device.h&gt;</a>.</p>
 <ul>
 <li>Negative IRQn values represent processor core exceptions (internal interrupts).</li>
 <li>Positive IRQn values represent device-specific exceptions (external interrupts).</li>
@@ -693,6 +624,8 @@ Mainline </th><th>Description  </th></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Clear a device specific interrupt from pending. </p>
 <p>This function removes the pending state of the specified device specific interrupt <em>IRQn</em>. <em>IRQn</em> cannot be a negative number.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -727,6 +660,8 @@ Mainline </th><th>Description  </th></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Clear Interrupt Target State. </p>
 <p>Clears the interrupt target field in the non-secure NVIC when in secure state. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -785,6 +720,8 @@ Mainline </th><th>Description  </th></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Decode the interrupt priority [not for Cortex-M0, Cortex-M0+, or SC000]. </p>
 <p>This function decodes an interrupt priority value with the priority group <em>PriorityGroup</em> to preemptive priority value <em>pPreemptPriority</em> and subpriority value <em>pSubPriority</em>. In case of a conflict between priority grouping and available priority bits (__NVIC_PRIO_BITS) the smallest possible priority group is set.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -820,6 +757,8 @@ Mainline </th><th>Description  </th></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Disable a device specific interrupt. </p>
 <p>This function disables the specified device specific interrupt <em>IRQn</em>. <em>IRQn</em> cannot be a negative value.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -853,6 +792,8 @@ Mainline </th><th>Description  </th></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Enable a device specific interrupt. </p>
 <p>This function enables the specified device specific interrupt <em>IRQn</em>. <em>IRQn</em> cannot be a negative value.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -909,6 +850,8 @@ Mainline </th><th>Description  </th></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Encodes Priority [not for Cortex-M0, Cortex-M0+, or SC000]. </p>
 <p>This function encodes the priority for an interrupt with the priority group <em>PriorityGroup</em>, preemptive priority value <em>PreemptPriority</em>, and subpriority value <em>SubPriority</em>. In case of a conflict between priority grouping and available priority bits (__NVIC_PRIO_BITS) the smallest possible priority group is set.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -944,6 +887,8 @@ Mainline </th><th>Description  </th></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Get the device specific interrupt active status [not for Cortex-M0, Cortex-M0+, or SC000]. </p>
 <p>This function reads the Interrupt Active Register (NVIC_IABR0-NVIC_IABR7) in NVIC and returns the active bit of the interrupt <em>IRQn</em>.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -983,6 +928,8 @@ Mainline </th><th>Description  </th></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Get a device specific interrupt enable status. </p>
 <p>This function returns the interrupt enable status for the specified device specific interrupt <em>IRQn</em>. <em>IRQn</em> cannot be a negative value.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -1021,6 +968,8 @@ Mainline </th><th>Description  </th></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Get the pending device specific interrupt. </p>
 <p>This function returns the pending status of the specified device specific interrupt <em>IRQn</em>.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -1059,6 +1008,8 @@ Mainline </th><th>Description  </th></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Get the priority of an interrupt. </p>
 <p>This function reads the priority for the specified interrupt <em>IRQn</em>. <em>IRQn</em> can can specify any device specific interrupt, or processor exception.</p>
 <p>The returned priority value is automatically aligned to the implemented priority bits of the microcontroller.</p>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -1094,6 +1045,8 @@ Mainline </th><th>Description  </th></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Read the priority grouping [not for Cortex-M0, Cortex-M0+, or SC000]. </p>
 <p>This function returns the priority grouping (flag PRIGROUP in AIRCR[10:8]).</p>
 <dl class="section return"><dt>Returns</dt><dd>Priority grouping field</dd></dl>
 <dl class="section remark"><dt>Remarks</dt><dd><ul>
@@ -1122,6 +1075,8 @@ Mainline </th><th>Description  </th></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Get Interrupt Target State. </p>
 <p>Reads the interrupt target field from the non-secure NVIC when in secure state. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -1158,6 +1113,8 @@ Mainline </th><th>Description  </th></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Read Interrupt Vector [not for Cortex-M0, SC000]. </p>
 <p>This function allows to read the address of an interrupt handler function.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -1191,6 +1148,8 @@ Mainline </th><th>Description  </th></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Set a device specific interrupt to pending. </p>
 <p>This function sets the pending bit for the specified device specific interrupt <em>IRQn</em>. <em>IRQn</em> cannot be a negative value.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -1234,6 +1193,8 @@ Mainline </th><th>Description  </th></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Set the priority for an interrupt. </p>
 <p>Sets the priority for the interrupt specified by <em>IRQn</em>.<em>IRQn</em> can can specify any device specific interrupt, or processor exception. The <em>priority</em> specifies the interrupt priority value, whereby lower values indicate a higher priority. The default priority is 0 for every interrupt. This is the highest possible priority.</p>
 <p>The priority cannot be set for every core interrupt. HardFault and NMI have a fixed (negative) priority that is higher than any configurable exception or interrupt.</p>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -1281,6 +1242,8 @@ Mainline </th><th>Description  </th></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Set priority grouping [not for Cortex-M0, Cortex-M0+, or SC000]. </p>
 <p>The function sets the priority grouping <em>PriorityGroup</em> using the required unlock sequence. <em>PriorityGroup</em> is assigned to the field PRIGROUP (register AIRCR[10:8]). This field determines the split of group priority from subpriority. Only values from 0..7 are used. In case of a conflict between priority grouping and available priority bits (__NVIC_PRIO_BITS), the smallest possible priority group is set.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -1314,6 +1277,8 @@ Mainline </th><th>Description  </th></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Set Interrupt Target State. </p>
 <p>Sets the interrupt target field in the non-secure NVIC when in secure state. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -1360,6 +1325,8 @@ Mainline </th><th>Description  </th></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Modify Interrupt Vector [not for Cortex-M0, SC000]. </p>
 <p>This function allows to change the address of an interrupt handler function.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -1396,6 +1363,8 @@ Mainline </th><th>Description  </th></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Reset the system. </p>
 <p>This function requests a system reset by setting the SYSRESETREQ flag in the AIRCR register.</p>
 <dl class="section remark"><dt>Remarks</dt><dd><ul>
 <li>In most microcontroller designs, setting the SYSRESETREQ flag resets the processor and most parts of the system, but should not affect the debug system.</li>
@@ -1413,7 +1382,7 @@ Mainline </th><th>Description  </th></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Jul 10 2019 15:20:25 for CMSIS-Core (Cortex-M) Version 5.3.0 by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Apr 9 2020 15:49:08 for CMSIS-Core (Cortex-M) Version 5.4.0 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

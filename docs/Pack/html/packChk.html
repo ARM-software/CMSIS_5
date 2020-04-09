@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Pack
-   &#160;<span id="projectnumber">Version 1.6.1</span>
+   &#160;<span id="projectnumber">Version 1.6.3</span>
    </div>
    <div id="projectbrief">Delivery Mechanism for Software Packs</div>
   </td>
@@ -160,19 +160,66 @@ $(document).ready(function(){initNavTree('packChk.html','');});
 packChk MyVendor.MVCM3.pdsc -x M304 -x M331        // option repeated
 </pre><h1><a class="anchor" id="packChkMessages"></a>
 Error and Warning Messages</h1>
-<p>The following table shows the errors and warnings issued by packChk.</p>
+<p>The following table explains the categories for the output messages issued by packChk utility. Sections below list the errors and warnings and contain recommendations on how to resolve them.</p>
+<p><b>Categories</b> <br/>
+</p>
+<table class="doxtable">
+<tr>
+<th align="center">Code </th><th align="left">Category </th><th align="left">Description  </th></tr>
+<tr>
+<td align="center">M0xx </td><td align="left">Info messages </td><td align="left">Help and Progress messages.<br/>
+ No action required. </td></tr>
+<tr>
+<td align="center">M1xx </td><td align="left"><a class="el" href="packChk.html#packchk_internal_msgs">Internal errors</a> </td><td align="left">Internal execution errors </td></tr>
+<tr>
+<td align="center">M2xx </td><td align="left"><a class="el" href="packChk.html#packchk_invoc_msgs">Invocation Errors</a> </td><td align="left">Errors in the command line input. </td></tr>
+<tr>
+<td align="center">M3xx<br/>
+ M4xx </td><td align="left"><a class="el" href="packChk.html#packchk_valid_msgs">Validation Messages</a> </td><td align="left">Errors and Warnings from the pack validation. </td></tr>
+<tr>
+<td align="center">M5xx </td><td align="left"><a class="el" href="packChk.html#packchk_model_msgs">Model Errors</a> </td><td align="left">Errors in RTE model creation </td></tr>
+</table>
+<p><a class="anchor" id="packchk_internal_msgs"></a> </p>
+<h2>Internal Errors </h2>
+<p>The errors in this category are issued because of an internal error in the PackChk utility.</p>
+<table  class="cmtable" summary="packChk Internal Msgs">
+<tr>
+<th>Message Number </th><th>Type </th><th>Description </th><th>Details and Actions  </th></tr>
+<tr>
+<td>M100 </td><td>ERROR </td><td>GetModuleHandle failed </td><td>Contact Arm for clarifications  </td></tr>
+<tr>
+<td>M101 </td><td>ERROR </td><td>Unknown error! </td><td>Contact Arm for clarifications  </td></tr>
+<tr>
+<td>M102 </td><td>ERROR </td><td>MFC initialization failed </td><td>Contact Arm for clarifications  </td></tr>
+<tr>
+<td>M103 </td><td>ERROR </td><td>Internal Error: <em>'REF'</em>  </td><td>Contact Arm for clarifications  </td></tr>
+<tr>
+<td>M104 </td><td>ERROR </td><td>Path empty when searching for other PDSC files </td><td>Execute the check in verbose mode and try to identify the PDSC file intended for use. Correct the PDSC.  </td></tr>
+<tr>
+<td>M107 </td><td>WARNING </td><td><em>'FEATURE'</em> is not supported by current version of <em>'OS'</em> PackChk. </td><td>Some PackChk functionalities are available only on certain OS platforms. For example SVD check is supported only on Windows. <br/>
+Do not use listed <em>'FEATURE'</em> or change operating system.  </td></tr>
+<tr>
+<td>M108 </td><td>TEXT </td><td>Reading PDSC File failed! </td><td>XML parsing of the PDSC file failed. <br/>
+Verify syntax of the PDSC file.  </td></tr>
+<tr>
+<td>M109 </td><td>TEXT </td><td>Constructing Model failed! </td><td>Contact Arm for clarifications  </td></tr>
+<tr>
+<td>M110 </td><td>TEXT </td><td>Verifying Model failed </td><td>Contact Arm for clarifications  </td></tr>
+</table>
+<p><a class="anchor" id="packchk_invoc_msgs"></a> </p>
 <h2>Invocation Errors </h2>
+<p>The errors in this category are issued because of an incorrect command-line input that prevents the packChk execution. </p>
 <table  class="cmtable" summary="packChk Invocation Msgs">
 <tr>
-<th>Message Number </th><th>Type </th><th>Description </th><th>Action  </th></tr>
+<th>Message Number </th><th>Type </th><th>Message Text </th><th>Details and Actions  </th></tr>
 <tr>
 <td>M200 </td><td>ERROR </td><td>Invalid arguments! </td><td>At least one argument is wrong. Correct the argument.  </td></tr>
 <tr>
 <td>M201 </td><td>ERROR </td><td>Too many arguments! </td><td>The list of arguments is too long. Verify if you have used one argument twice.  </td></tr>
 <tr>
-<td>M202 </td><td>ERROR </td><td>No PDSC input file specified </td><td>Correct the command line. <b>packChk</b> expects a *.pdsc file name as input.  </td></tr>
+<td>M202 </td><td>ERROR </td><td>No PDSC input file specified </td><td>Correct the command line. <b>packChk</b> expects a <a class="el" href="packFormat.html">*.pdsc</a> file name as input.  </td></tr>
 <tr>
-<td>M203 </td><td>ERROR </td><td>Error reading PDSC file <em>'PATH/FILENAME'!</em>  </td><td>Verify the PDSC file for consistency.   </td></tr>
+<td>M203 </td><td>ERROR </td><td>Error reading PDSC file <em>'PATH/FILENAME'!</em>  </td><td>Verify the PDSC file for consistency.  </td></tr>
 <tr>
 <td>M204 </td><td>ERROR </td><td>File not found: <em>'PATH'</em>  </td><td>The specified PDSC file could not be found in the <em>PATH</em> displayed in the message. Correct the path or the filename.  </td></tr>
 <tr>
@@ -184,89 +231,116 @@ Error and Warning Messages</h1>
  Expected: <em>'PDSC1.pdsc'</em> <br/>
  Actual : <em>'PDSC2.pdsc'</em>  </td><td>The PDSC file expected has not been found. Rename or exchange the PDSC file.  </td></tr>
 <tr>
-<td>M208 </td><td>ERROR </td><td>Error calling SVDConv: <em>'PATH'</em>  </td><td>SVDConv.exe was not found. Copy the executable into the directory of <b>packChk</b> or enter the path where <b>SVDConv</b> is located. Default is <span class="XML-Token">CMSIS\Utilities</span>.  </td></tr>
+<td>M208 </td><td>ERROR </td><td>Error calling SVDConv: <em>'PATH'</em>  </td><td><a href="../../SVD/html/svd_SVDConv_pg.html">SVDConv utility</a> could not be executed. <br/>
+Verify the permissions. Correct the path name.  </td></tr>
 <tr>
-<td>M209 </td><td>ERROR </td><td>Unknown Option: <em>'OPT'</em>  </td><td>The command line option entered is not known or invalid.  </td></tr>
+<td>M209 </td><td>ERROR </td><td>Unknown Option: <em>'OPT'</em>  </td><td>The command line option <em>'OPT'</em> is not known or invalid.  </td></tr>
 <tr>
 <td>M210 </td><td>ERROR </td><td>Only one input file to be checked is allowed. </td><td>You can only check one PDSC file at a time.  </td></tr>
+<tr>
+<td>M211 </td><td>ERROR </td><td>Cannot find SVDConv.exe: <em>'CMDLINE'</em>  </td><td><a href="../../SVD/html/svd_SVDConv_pg.html">SVDConv utility</a> was not found in specified <em>'CMDLINE'</em>. <br/>
+Copy the <b>SVDConv.exe</b> into the directory of <b>packChk</b>. Default is <span class="XML-Token">CMSIS\Utilities</span>.  </td></tr>
 </table>
 <p><a class="anchor" id="packchk_valid_msgs"></a></p>
 <h2>Validation Messages </h2>
+<p>The messages in this category are issued by packChk during package validation. This can be for example incorrect use of the pack schema in the PDSC file, missing files, broken dependancies and others. <em>ERROR</em> messages must be resolved to ensure that the package is compliant to the CMSIS-format. <em>WARNING</em> messages should be checked and are strongly recommended to be resolved.</p>
 <table  class="cmtable" summary="packChk Validation Msgs">
 <tr>
-<th>Message Number </th><th>Type </th><th>Description </th><th>Action  </th></tr>
+<th>Message Number </th><th>Type </th><th>Message Text </th><th><p class="starttd">Details and Actions </p>
+<p class="endtd"></p>
+</th></tr>
 <tr>
-<td>M300 </td><td>ERROR </td><td>The following files are listed in PDSC but not part of the package: <br/>
- <em>'PATH'</em>: <br/>
- <em>'FILES'</em>  </td><td>The files listed should be part of the package. However, these files could not be added to the package. Verify whether the files exist. Verify the file permissions.  </td></tr>
-<tr>
-<td>M301 </td><td>ERROR </td><td>Checking Pack URL of PDSC file failed: <br/>
+<td>M301 </td><td>ERROR</td><td>Checking Pack URL of PDSC file failed: <br/>
  Expected URL : <em>'URL1'</em> <br/>
- Package URL : <em>'URL2'</em>  </td><td>The URL entered in the package does not match the value entered for comparison. Change the URL in the package. Check for possible misspellings of <em>URL1</em>.  </td></tr>
+ Package URL : <em>'URL2'</em>  </td><td>The URL specified in the package does not match the value entered for comparison in option <code>-u</code>. <br/>
+Check for possible misspellings in both URLs. Refer to <a class="el" href="pdsc_package_pg.html#package_url">/package/url</a>.  </td></tr>
 <tr>
-<td>M302 </td><td>ERROR</td><td>No vendor tag found in the PDSC file! Add the &lt;vendor&gt; tag and provide the vendor name. For example: <code>&lt;vendor&gt;Keil&lt;/vendor&gt;</code>. </td><td>No vendor entered in the PDSC file. Enter the tag <span class="XML-Token">&lt;vendor&gt;</span> and add the vendor name. Refer to <a class="el" href="pdsc_package_pg.html#element_package">/package</a>.  </td></tr>
+<td>M302 </td><td>ERROR</td><td>No vendor tag found in the PDSC file! Add the &lt;vendor&gt; tag and provide the vendor name. For example: <code>&lt;vendor&gt;Keil&lt;/vendor&gt;</code>. </td><td>Vendor name is mandatory required in the package description but was not found in the <a class="el" href="pdsc_package_pg.html#element_package">/package</a> element in the PDSC file. <br/>
+Within the parent <span class="XML-Token">&lt;package&gt;</span> element enter the tag <span class="XML-Token">&lt;vendor&gt;</span> and add the vendor name. For example: <code>&lt;vendor&gt;Keil&lt;/vendor&gt;</code>. Refer to <a class="el" href="pdsc_package_pg.html#package_vendor">/package/vendor</a>.  </td></tr>
 <tr>
-<td>M303 </td><td>ERROR</td><td>No package name found in the PDSC file! Add the &lt;name&gt; tag and provide the package name. For example: <code>&lt;name&gt;MCU-Name_DFP&lt;/name&gt;</code>. </td><td>No package name found in the PDSC file. Enter the tag <span class="XML-Token">&lt;name&gt;</span> and add the package name. For example <span class="XML-Token">&lt;name&gt;MCU-Name_DFP&lt;/name&gt;</span>. The package name is mandatory to create the package. Refer to <a class="el" href="pdsc_package_pg.html#element_package">/package</a>.  </td></tr>
+<td>M303 </td><td>ERROR</td><td>No package name found in the PDSC file! Add the &lt;name&gt; tag and provide the package name. For example: <code>&lt;name&gt;MCU-Name_DFP&lt;/name&gt;</code>. </td><td>Package name is mandatory required in the package description but was not found in the <a class="el" href="pdsc_package_pg.html#element_package">/package</a> element in the PDSC file. <br/>
+Within the parent <span class="XML-Token">&lt;package&gt;</span> element enter the tag <span class="XML-Token">&lt;name&gt;</span> and add the package name. For example <code>&lt;name&gt;MCU-Name_DFP&lt;/name&gt;</code>. Refer to <a class="el" href="pdsc_package_pg.html#package_name">/package/name</a>.  </td></tr>
 <tr>
-<td>M304 </td><td>ERROR </td><td>No package URL (&lt;url&gt;-tag and/or value) found in PDSC file! </td><td>Add the tag <span class="XML-Token">&lt;url&gt;</span> and enter a URL in the PDSC file. The URL points to the web page from which users can download the package. Refer to <a class="el" href="pdsc_package_pg.html#element_package">/package</a>.  </td></tr>
+<td>M304 </td><td>WARNING </td><td>No package URL (&lt;url&gt;-tag and/or value) found in PDSC file! </td><td>Package URL is mandatory required in the package description but was not found in the <a class="el" href="pdsc_package_pg.html#element_package">/package</a> element in the PDSC file. <br/>
+Within the parent <span class="XML-Token">&lt;package&gt;</span> element enter the tag <span class="XML-Token">&lt;url&gt;</span> and add the URL that should be used to download the package. Refer to <a class="el" href="pdsc_package_pg.html#package_url">/package/url</a>.  </td></tr>
 <tr>
-<td>M305 </td><td>ERROR</td><td>No package version ("version"-attribute in a &lt;release&gt;-tag) found in PDSC file! </td><td>No version or release information found in the PDSC file. Add the attribute <span class="XML-Token">version</span> to the tag <span class="XML-Token">&lt;release&gt;</span> and enter the version number. Refer to <a class="el" href="element_releases.html#element_release">/package/releases/release</a>.  </td></tr>
+<td>M305 </td><td>ERROR</td><td>No releases ("\&lt;release&gt;" elements in a &lt;releases&gt;-tag) found in PDSC file!" </td><td>At least one package release shall be specified in the PDSC file, but none was not found. <br/>
+Use <span class="XML-Token">&lt;release&gt;</span> tag to specify release information in <span class="XML-Token">&lt;releases&gt;</span> element. Refer to <a class="el" href="element_releases.html#element_release">/package/releases/release</a>.  </td></tr>
 <tr>
-<td>M306 </td><td>ERROR</td><td>No package description found in the PDSC file. Add the &lt;description&gt;-tag and provide a descriptive text. </td><td>No package description was found in the PDSC file. Enter the tag <span class="XML-Token">&lt;description&gt;</span> and briefly describe the package content. Refer to <a class="el" href="pdsc_package_pg.html#element_package">/package</a>.  </td></tr>
+<td>M306 </td><td>ERROR</td><td>No package description found in the PDSC file. Add the &lt;description&gt;-tag and provide a descriptive text. </td><td>Package description is mandatory required in the package description but was not found in the <a class="el" href="pdsc_package_pg.html#element_package">/package</a> element in the PDSC file. <br/>
+Within the parent <span class="XML-Token">&lt;package&gt;</span> element add the tag <span class="XML-Token">&lt;description&gt;</span> and briefly describe the package content. Refer to <a class="el" href="pdsc_package_pg.html#package_description">/package/description</a>.  </td></tr>
 <tr>
-<td>M307 </td><td>ERROR </td><td>Checking SVD file <em>'PATH'</em> failed! </td><td>Verify the consistency of the *.SVD file. Refer to <a href="../../SVD/html/svd_validate_file_pg.html">SVD File Validation</a>.  </td></tr>
-<tr>
-<td>M308 </td><td>ERROR </td><td>SVD file <em>'PATH'</em> not found. Add the SVD file or correct the PDSC entry. </td><td>The *.SVD file was not found in the path specified in the message. Add the SVD file or correct the entry in the *.pdsc file.  </td></tr>
-<tr>
-<td>M309 </td><td>ERROR </td><td>Cannot read file information: <em>'PATH'</em>. </td><td>Access to the file specified failed. Verify permissions and spelling.  </td></tr>
+<td>M307 </td><td>ERROR </td><td>Checking SVD file <em>'PATH'</em> failed! </td><td><p class="starttd">Verify the consistency of the *.SVD file. Refer to <a href="../../SVD/html/svd_validate_file_pg.html">SVD File Validation</a>. </p>
+<p class="endtd"></p>
+</td></tr>
 <tr>
 <td>M310 </td><td>ERROR </td><td>Filename mismatch (case sensitive):<br/>
  PDSC name : <em>'PDSC_FILENAME'</em> <br/>
  Filename : <em>'SYSTEM'</em>  </td><td>Filenames are case sensitive. Correct spelling.  </td></tr>
 <tr>
-<td>M323 </td><td>ERROR </td><td>File/Path not found: <em>'PATH'</em>  </td><td>The file or path entered in the PDSC file could not be found. Verify the path information.  </td></tr>
+<td>M315 </td><td>ERROR </td><td>Invalid URL / Paths to Drives are not allowed in Package URL: <em>'URL'</em>  </td><td>Correct package URL <em>'URL'</em>. Refer to <a class="el" href="pdsc_package_pg.html#package_url">/package/url</a>.  </td></tr>
 <tr>
-<td>M324 </td><td>ERROR </td><td>Board referenced in Example <em>'EXAMPLE'</em> is undefined: <em>'VENDOR'</em> : <em>'BOARD'</em>  </td><td>The board referenced in the example application could not be found. Define the board (<a class="el" href="pdsc_boards_pg.html#element_board">/package/boards/board</a>) or correct the reference information (<a class="el" href="pdsc_examples_pg.html#element_example_board">/package/examples/example/board</a>).  </td></tr>
+<td>M316 </td><td>WARNING </td><td>URL must end with slash '/': 'URL'  </td><td>Correct package URL <em>'URL'</em>. Refer to <a class="el" href="pdsc_package_pg.html#package_url">/package/url</a>.  </td></tr>
 <tr>
-<td>M325 </td><td>ERROR </td><td>Board <em>'NAME'</em> redefined, already defined in Line <em>'LINE'</em>: <em>'PATH'</em>  </td><td>This board has been defined already in the line <em>'LINE'</em> of the file <em>'PATH'</em>. Verify and remove one of the board definitions.  </td></tr>
+<td>M323 </td><td>ERROR </td><td>File/Path not found: <em>'PATH'</em>  </td><td>The file or path <em>'PATH'</em> entered in the PDSC file could not be found. <br/>
+Verify the path information.  </td></tr>
+<tr>
+<td>M324 </td><td>WARNING </td><td>Board referenced in Example <em>'EXAMPLE'</em> is undefined: <em>'VENDOR'</em> : <em>'BOARD'</em>  </td><td>The definition of the board referenced in the example application could not be found. <br/>
+Define the board (<a class="el" href="pdsc_boards_pg.html#element_board">/package/boards/board</a>) or correct the reference information (<a class="el" href="pdsc_examples_pg.html#element_example_board">/package/examples/example/board</a>).  </td></tr>
+<tr>
+<td>M325 </td><td>ERROR </td><td>Board <em>'NAME'</em> redefined, already defined in Line <em>'LINE'</em>: <em>'PATH'</em>  </td><td>This board has been defined already in the line <em>'LINE'</em> of the file <em>'PATH'</em>. <br/>
+Verify and remove one of the board definitions. Refer to <a class="el" href="pdsc_boards_pg.html#element_board">/package/boards/board</a>.  </td></tr>
 <tr>
 <td>M326 </td><td>ERROR </td><td>Path is not conformant: <em>'PATH'</em>: Absolute Paths or Drive references are not allowed, use Paths relative to PDSC file. </td><td>The path needs to be relative to the PDSC file so that a dependency of a certain file system does not occur.  </td></tr>
 <tr>
-<td>M327 </td><td>ERROR </td><td>Path is not conformant: <em>'PATH'</em>: Backslashes are not recommended, use forward slashes. </td><td>Paths to files should adhere to the POSIX standard using forward slashes (/).  </td></tr>
+<td>M327 </td><td>WARNING </td><td>Path is not conformant: <em>'PATH'</em>: Backslashes are not recommended, use forward slashes. </td><td>Paths to files should adhere to the POSIX standard using forward slashes (/).  </td></tr>
 <tr>
 <td>M328 </td><td>ERROR </td><td>Version not set for Release Information <em>'DESCR'</em>  </td><td>The release defined through the description <em>'DESCR'</em> requires the attribute <span class="XML-Token">&lt;version&gt;</span>. Refer to <a class="el" href="element_releases.html#element_release">/package/releases/release</a>.  </td></tr>
 <tr>
 <td>M329 </td><td>ERROR </td><td>Description not set for Release Information <em>'VER'</em>  </td><td>The release defined through the version <em>'VER'</em> needs a description. Refer to <a class="el" href="element_releases.html#element_release">/package/releases/release</a>.  </td></tr>
 <tr>
-<td>M330 </td><td>ERROR </td><td>Condition redefined: <em>'COND'</em>, already defined in Line <em>'LINE'</em>  </td><td>The condition has been defined already in a previous line. Correct the condition name, or remove the duplicate.  </td></tr>
+<td>M330 </td><td>ERROR </td><td>Condition redefined: <em>'COND'</em>, already defined in Line <em>'LINE'</em>  </td><td>The condition has been defined already in a previous line. <br/>
+Correct the condition name, or remove the duplicate. Refer to <a class="el" href="pdsc_conditions_pg.html#element_condition">/package/conditions/condition</a>.  </td></tr>
 <tr>
-<td>M331 </td><td>WARNING </td><td>Condition unused: <em>'COND'</em>  </td><td>The condition has been defined but not used further. Remove the condition or add condition rules. Refer to <a class="el" href="pdsc_conditions_pg.html#element_condition">/package/conditions/condition</a>.  </td></tr>
+<td>M331 </td><td>WARNING </td><td>Condition unused: <em>'COND'</em>  </td><td>The condition has been defined but not used further. <br/>
+Remove the condition or add condition rules. Refer to <a class="el" href="pdsc_conditions_pg.html#element_condition">/package/conditions/condition</a>.  </td></tr>
 <tr>
-<td>M332 </td><td>ERROR </td><td>Condition undefined: <em>'COND'</em>  </td><td>A condition has been used but not defined. Correct the name of the condition or define the missing condition. Refer to <a class="el" href="pdsc_conditions_pg.html#element_condition">/package/conditions/condition</a>.  </td></tr>
+<td>M332 </td><td>ERROR </td><td>Condition undefined: <em>'COND'</em>  </td><td>A condition has been used but not defined. <br/>
+Correct the name of the condition or define the missing condition. Refer to <a class="el" href="pdsc_conditions_pg.html#element_condition">/package/conditions/condition</a>.  </td></tr>
 <tr>
 <td>M333 </td><td>WARNING </td><td>Component has no condition: Cclass= <em>'CCLASS'</em>, Cgroup= <em>'CGROUP'</em>, <em>Csub='CSUB'</em>, <em>Cversion=</em> 'CVER' </td><td>The component defined has no condition. If the component has restrictions, then add a condition to the component definition. Refer to <a class="el" href="pdsc_components_pg.html#element_component">/package/components/.../component</a>.  </td></tr>
 <tr>
-<td>M334 </td><td>WARNING </td><td>Config File has no version: <em>'PATH'</em>  </td><td>Add version information to the configuration file.  </td></tr>
+<td>M334 </td><td>WARNING </td><td>Config File has no version: <em>'PATH'</em>  </td><td>Specified file 'PATH' does not contain version information. It is recommended to specify versions for configuration files. <br/>
+Add attribute <span class="XML-Token">version</span> with the file version in the <span class="XML-Token">&lt;file&gt;</span> tag that defines the <em>'PATH'</em> file in the PDSC. Refer to <a class="el" href="pdsc_components_pg.html#element_file">/package/.../files/file</a>.  </td></tr>
 <tr>
-<td>M335 </td><td>WARNING </td><td>Component declared as 'Board Support' has no ref to a device: Cclass= <em>'CCLASS'</em>, Cgroup= <em>'CGROUP'</em>, Cversion= <em>'CVER'</em>  </td><td>A component defined as 'board support' needs a reference to a device. Add a device or correct the component definition. Refer to attribute <em>Cclass</em> of <a class="el" href="pdsc_components_pg.html#element_component">/package/components/.../component</a> and <a class="el" href="pdsc_boards_pg.html#element_board_mountedDevice">/package/boards/board/mountedDevice</a>.  </td></tr>
+<td>M335 </td><td>WARNING </td><td>Component declared as 'Board Support' has no ref to a device: Cclass= <em>'CCLASS'</em>, Cgroup= <em>'CGROUP'</em>, Cversion= <em>'CVER'</em>  </td><td>A component defined as 'board support' needs a reference to a device. <br/>
+Add a device or correct the component definition. Refer to attribute <em>Cclass</em> of <a class="el" href="pdsc_components_pg.html#element_component">/package/components/.../component</a> and <a class="el" href="pdsc_boards_pg.html#element_board_mountedDevice">/package/boards/board/mountedDevice</a>.  </td></tr>
 <tr>
 <td>M336 </td><td>WARNING </td><td>No reference to a device or device not found: Cclass= <em>'CCLASS'</em>, Cgroup= <em>'CGROUP'</em>, Cversion= <em>'CVER'</em>  </td><td>Define the device <a class="el" href="pdsc_family_pg.html#element_device">/package/devices/family/../device</a> or correct the information about the device in the reference.  </td></tr>
 <tr>
-<td>M337 </td><td>WARNING </td><td>File with category <em>'CAT'</em> has wrong extension <em>'EXT'</em>: <em>'PATH'</em>  </td><td>The extension of the file does not match the file category. Verify the extension to match the category. Refer to <a class="el" href="pdsc_components_pg.html#element_file">/package/.../files/file</a>.  </td></tr>
+<td>M337 </td><td>WARNING </td><td>File with category <em>'CAT'</em> has wrong extension <em>'EXT'</em>: <em>'PATH'</em>  </td><td>The extension of the file does not match the file category <em>'CAT'</em> specified in the <span class="XML-Token">category</span> attribute. <br/>
+Verify the extension to match the category. Refer to <a class="el" href="pdsc_components_pg.html#element_file">/package/.../files/file</a>.  </td></tr>
 <tr>
-<td>M338 </td><td>WARNING </td><td>No releases found. </td><td>The PDSC file is missing release information. Add <span class="XML-Token">&lt;release&gt;</span> information to the file. Refer to <a class="el" href="element_releases.html">/package/releases element</a>.  </td></tr>
+<td>M338 </td><td>WARNING </td><td>No releases found. </td><td>The PDSC file is missing release information. <br/>
+Add <span class="XML-Token">&lt;release&gt;</span> information to the file. Refer to <a class="el" href="element_releases.html">/package/releases element</a>.  </td></tr>
 <tr>
-<td>M339 </td><td>WARNING </td><td>Include Path <em>'PATH'</em> must not be a file! </td><td>The path specified contains a filename. Correct the path infomation and remove the filename.  </td></tr>
+<td>M339 </td><td>WARNING </td><td>Include Path <em>'PATH'</em> must not be a file! </td><td>The path specified contains a filename. <br/>
+Correct the path infomation and remove the filename. Refer to <a class="el" href="pdsc_components_pg.html#element_file">/package/.../files/file</a>.  </td></tr>
 <tr>
-<td>M340 </td><td>WARNING </td><td>Include Path <em>'PATH'</em> must end with '/' or '\' </td><td>Include paths must end with a slash or backslash. Verify and correct the path name.  </td></tr>
+<td>M340 </td><td>WARNING </td><td>Include Path <em>'PATH'</em> must end with '/' or '\' </td><td>Include paths must end with a slash or backslash. <br/>
+Verify and correct the path name. Refer to <a class="el" href="pdsc_components_pg.html#element_file">/package/.../files/file</a>.  </td></tr>
 <tr>
-<td>M341 </td><td>WARNING </td><td>File with <em>'COMP'</em> dependency must have extension <em>'EXT'</em> : <em>'PATH'</em>  </td><td>A file defining component dependencies must have the extension mentioned in the message. Verify the settings and correct the file extension.  </td></tr>
+<td>M341 </td><td>WARNING </td><td>File with <em>'COMP'</em> dependency must have extension <em>'EXT'</em> : <em>'PATH'</em>  </td><td>The file <em>'PATH'</em> with dependency on component <em>'COMP'</em> must have a specific extension <em>'EXT'</em>. <br/>
+Verify the dependency and correct the file extension. Refer to <a class="el" href="pdsc_components_pg.html#element_file">/package/.../files/file</a>.  </td></tr>
 <tr>
-<td>M342 </td><td>WARNING </td><td>File with attribute <em>'ATTR'</em> must not have category <em>'CAT'</em>: <em>'PATH'</em>  </td><td>A file with the attribute mentioned in the message must not have the category specified. Correct the attribute or the category.Refer to <a class="el" href="pdsc_components_pg.html#element_file">/package/.../files/file</a>.  </td></tr>
+<td>M342 </td><td>WARNING </td><td>File with attribute <em>'ATTR'</em> must not have category <em>'CAT'</em>: <em>'PATH'</em>  </td><td>File <em>'PATH'</em> is defined with the attribute <span class="XML-Token">attr</span> set to <em>'ATTR'</em>. This conflicts with the file category <em>'CAT'</em> specified in <span class="XML-Token">category</span> attribute. For example <span class="XML-Token">attr=config</span> and <span class="XML-Token">category=include</span> are not allowed for the same file. <br/>
+Correct the file attribute or the file category. Refer to <a class="el" href="pdsc_components_pg.html#element_file">/package/.../files/file</a>.  </td></tr>
 <tr>
-<td>M343 </td><td>WARNING </td><td>File with attribute <em>'ATTR'</em> requires <em>'ATTR2'</em> attribute: <em>'PATH'</em>  </td><td>A file with the attribute <em>'ATTR'</em> requires another attribute <em>'ATTR2'</em>. Add the required attribute or correct attribute <em>'ATTR'</em>. Refer to <a class="el" href="pdsc_components_pg.html#element_file">/package/.../files/file</a>.  </td></tr>
+<td>M343 </td><td>WARNING </td><td>File with attribute <em>'ATTR'</em> requires <em>'ATTR2'</em> attribute: <em>'PATH'</em>  </td><td>File <em>'PATH'</em> is defined with the attribute <em>'ATTR'</em> that requires presense of attribute <em>'ATTR2'</em> as well, but such attribute was not found. For example, <span class="XML-Token">attr=template</span> requires that attribute <span class="XML-Token">select</span> is defined. <br/>
+ Add the required attribute <em>'ATTR2'</em> or correct the attribute <em>'ATTR'</em> in the <span class="XML-Token">&lt;file&gt;</span> element. Refer to <a class="el" href="pdsc_components_pg.html#element_file">/package/.../files/file</a>.  </td></tr>
 <tr>
-<td>M344 </td><td>WARNING </td><td>File shall have condition containing <em>'COND'</em>: <em>'PATH'</em>  </td><td>The file should have a condition. Define a condition in the file specified in the message.  </td></tr>
+<td>M344 </td><td>WARNING </td><td>File shall have condition containing <em>'COND'</em>: <em>'PATH'</em>  </td><td>File definition for <em>'PATH'</em> shall contain a condition <em>'COND'</em>. <br/>
+Add attribute <span class="XML-Token">condition</span> with the <em>'COND'</em> in the <span class="XML-Token">&lt;file&gt;</span> tag that defines the <em>'PATH'</em> file. Refer to <a class="el" href="pdsc_components_pg.html#element_file">/package/.../files/file</a>..  </td></tr>
 <tr>
 <td>M345 </td><td>WARNING </td><td>URL not found : <em>'URL'</em>  </td><td>The specified URL could not be found. Correct the URL. Refer to <a class="el" href="pdsc_package_pg.html#element_package">/package</a>.  </td></tr>
 <tr>
@@ -278,7 +352,8 @@ Error and Warning Messages</h1>
 <tr>
 <td>M349 </td><td>WARNING </td><td>Examples found, but no board description(s) found </td><td>Example projects have been found for a board that was not defined. Correct the entry for the examples (<a class="el" href="pdsc_examples_pg.html#element_example_board">/package/examples/example/board</a>) or define the board (<a class="el" href="pdsc_boards_pg.html#element_board">/package/boards/board</a>).  </td></tr>
 <tr>
-<td>M350 </td><td>WARNING </td><td>No <em>'COMP'</em> found for <em>'VENDOR'</em> : <em>'MCU'</em> (<em>'COMPILER'</em>) </td><td>The package (<a class="el" href="pdsc_package_pg.html#element_package">/package</a>) defines a Vendor-MCU combination for which no component was defined. Define a component (<a class="el" href="pdsc_components_pg.html#element_component">/package/components/.../component</a>) or verify the <em>'VENDOR'</em> - <em>'MCU'</em> settings.  </td></tr>
+<td>M350 </td><td>WARNING </td><td>No <em>'COMP'</em> found for <em>'VENDOR'</em> : <em>'MCU'</em> (<em>'COMPILER'</em>) </td><td>The package (<a class="el" href="pdsc_package_pg.html#element_package">/package</a>) defines a Vendor-MCU combination for which no component was defined. <br/>
+Define a component (<a class="el" href="pdsc_components_pg.html#element_component">/package/components/.../component</a>) or verify the <em>'VENDOR'</em> - <em>'MCU'</em> settings.  </td></tr>
 <tr>
 <td>M351 </td><td>WARNING </td><td>Component <em>'COMP'</em> (<em>'COMPID'</em>) error for <em>'VENDOR'</em>: <em>'MCU'</em> ( <em>'COMPILER'</em>): <em>'MSG'</em>  </td><td>An unspecified error was found for the component. The message might give detailed information about the error.  </td></tr>
 <tr>
@@ -288,9 +363,9 @@ Error and Warning Messages</h1>
 <tr>
 <td>M354 </td><td>WARNING </td><td>Multiple <em>'FILECAT'</em> Files found for Component <em>'COMP'</em> (<em>'COMPID'</em>) for <em>'VENDOR'</em> : <em>'MCU'</em> (<em>'COMPILER'</em>) </td><td>Multiple files with the mentioned file category were found for the specified component. Verify and rename the files, or correct the component settings (<a class="el" href="pdsc_components_pg.html#element_file">/package/.../files/file</a>).  </td></tr>
 <tr>
-<td>M355 </td><td>WARNING </td><td>No <em>'FILECAT'</em> Directory found for Component <em>'COMP'</em> (<em>'COMPID'</em>) for <em>'VENDOR'</em> : <em>'MCU'</em> (<em>'COMPILER'</em>) </td><td>The directory specified for the file category was not found. Correct the information in the component settings (<a class="el" href="pdsc_components_pg.html#element_component">/package/components/.../component</a>).  </td></tr>
-<tr>
-<td>M356 </td><td>WARNING </td><td>Multiple <em>'FILECAT'</em> Directories found for Component <em>'COMP'</em> (<em>'COMPID'</em>) for <em>'VENDOR'</em> : <em>'MCU'</em> (<em>'COMPILER'</em>) </td><td>Multiple directories were found for the same file category in the specified component. Remove obsolete information or correct the component settings.  </td></tr>
+<td>M355 </td><td>WARNING </td><td>No <em>'FILECAT'</em> Directory found for Component <em>'COMP'</em> (<em>'COMPID'</em>) for <em>'VENDOR'</em> : <em>'MCU'</em> (<em>'COMPILER'</em>) </td><td><p class="starttd">The directory specified for the file category was not found. Correct the information in the component settings (<a class="el" href="pdsc_components_pg.html#element_component">/package/components/.../component</a>). </p>
+<p class="endtd"></p>
+</td></tr>
 <tr>
 <td>M358 </td><td>WARNING </td><td>Header File <em>'HFILE'</em> for <em>'CFILE'</em> missing for Component <em>'COMP'</em> (<em>'COMPID'</em>) for <em>'VENDOR'</em> : <em>'MCU'</em> (<em>'COMPILER'</em>) </td><td>The header file defined for the component could not be found. Verify the header file settings (<a class="el" href="pdsc_components_pg.html#element_file">/package/.../files/file</a>) or whether the file exists.  </td></tr>
 <tr>
@@ -307,13 +382,16 @@ Error and Warning Messages</h1>
 <tr>
 <td>M364 </td><td>WARNING </td><td>No Devices for Condition <em>'COND'</em> available. </td><td>The specified condition refers to a device that does not exist. Define the device (<a class="el" href="pdsc_family_pg.html#element_device">/package/devices/family/../device</a>) or correct the information for the condition (<a class="el" href="pdsc_conditions_pg.html#element_condition">/package/conditions/condition</a>).  </td></tr>
 <tr>
-<td>M365 </td><td>ERROR </td><td>Redefined DEVTYPE <em>'MCU'</em> found, see Line <em>LINE</em>  </td><td>Remove duplicate device/variant entries.  </td></tr>
+<td>M365 </td><td>ERROR </td><td>Redefined <em>'DEVTYPE'</em> <em>'MCU'</em> found, see Line <em>LINE</em>  </td><td>Remove duplicate device/variant entries. Refer to <a class="el" href="pdsc_family_pg.html#element_device">/package/devices/family/../device</a>.  </td></tr>
 <tr>
-<td>M366 </td><td>ERROR </td><td>Redefined DEVTYPEEXIST as DEVTYPE <em>'MCU'</em> found, see Line <em>LINE</em>  </td><td>Device has been redefined as variant or vice versa. Remove duplicate device/variant entries.  </td></tr>
+<td>M366 </td><td>ERROR </td><td>Redefined <em>'DEVTYPEEXIST'</em> as <em>'DEVTYPE'</em> <em>'MCU'</em> found, see Line <em>LINE</em>  </td><td>Device has been redefined as variant or vice versa. <br/>
+Remove duplicate device/variant entries. Refer to <a class="el" href="pdsc_family_pg.html#element_device">/package/devices/family/../device</a>.  </td></tr>
 <tr>
-<td>M368 </td><td>INFO </td><td>Redefined TYPEEXISTING as TYPE <em>'NAME'</em> found, see Line <em>LINE</em>  </td><td>Family/subfamily/device/variant has been redefined as different type.  </td></tr>
+<td>M367 </td><td>ERROR </td><td>Redefined <em>'TYPE'</em> <em>'NAME'</em> found, see Line <em>'LINE'</em>  </td><td><p class="starttd">Remove duplicate device/variant entries. Refer to <a class="el" href="pdsc_family_pg.html#element_device">/package/devices/family/../device</a>. </p>
+<p class="endtd"></p>
+</td></tr>
 <tr>
-<td>M369 </td><td>INFO </td><td>Feature is already defined for <em>'DEVICE'</em> and will be added, see Line <em>'LINE'</em>: <em>'FEATURE'</em>. </td><td>This feature <em>'FEATURE'</em> has been defined already on a higher level and as such it gets added to this <em>'DEVICE'</em>. This is usually done when some devices have a higher number of basic features. Correct the feature (<a class="el" href="pdsc_family_pg.html#element_feature">/package/devices/family/.../feature</a>) if this is a typo.  </td></tr>
+<td>M369 </td><td>WARNING </td><td>Feature is already defined for <em>'DEVICE'</em> and will be added, see Line <em>'LINE'</em>: <em>'FEATURE'</em>. </td><td>This feature <em>'FEATURE'</em> has been defined already on a higher level and as such it gets added to this <em>'DEVICE'</em>. This is usually done when some devices have a higher number of basic features. Correct the feature (<a class="el" href="pdsc_family_pg.html#element_feature">/package/devices/family/.../feature</a>) if this is a typo.  </td></tr>
 <tr>
 <td>M370 </td><td>WARNING </td><td>URL is not conformant: <em>'URL'</em>:<br/>
  Backslashes are not allowed in URL, use forward slashes. </td><td>Use standard URL notation using forward slashes (/).  </td></tr>
@@ -328,51 +406,82 @@ Error and Warning Messages</h1>
 <tr>
 <td>M375 </td><td>ERROR </td><td><em>'path/pdsc_file'</em>: No &lt;mountedDevice&gt; for board <em>'BOARD'</em> found. </td><td>If a board element does not contain a &lt;mountedDevice&gt; element, then the examples for this board are not shown and example projects may not appear in the development tools. Refer to <a class="el" href="pdsc_boards_pg.html#element_board_mountedDevice">/package/boards/board/mountedDevice</a> of <a class="el" href="pdsc_boards_pg.html#element_boards">/package/boards</a>.  </td></tr>
 <tr>
-<td>M376 </td><td>ERROR </td><td>Schema Version not set! </td><td>Set a valid schema version in the PDSC file.  </td></tr>
+<td>M376 </td><td>ERROR </td><td>Schema Version not set! </td><td>Set a valid schema version in the PDSC file. Refer to <span class="XML-Token">schemaVersion</span> attribute in the <a class="el" href="pdsc_package_pg.html#element_package">/package</a>.  </td></tr>
 <tr>
-<td>M377 </td><td>INFO </td><td>File <em>'NAME'</em> <em>TYPE</em> must have <em>'attr="config"'</em>  </td><td>This file has to be configurable. Add the required attribute to achieve this.  </td></tr>
+<td>M377 </td><td>WARNING </td><td>File <em>'NAME'</em> <em>'TYPE'</em> must have <em>'attr="config"'</em>  </td><td>The category <em>'TYPE'</em> of the file <em>'NAME'</em> requires it to be defined as a configuration file. <br/>
+Add the attribute <span class="XML-Token">attr="config"</span> to the <span class="XML-Token">&lt;file&gt;</span> element that defines the file. Refer to <a class="el" href="pdsc_components_pg.html#element_file">/package/.../files/file</a>. </td></tr>
+<tr>
+<td>M378 </td><td>WARNING </td><td>Component Cclass=<em>'CCLASS</em>, Cgroup=<em>'CGROUP</em>, Csub=<em>'CSUB'</em>, Cversion=<em>'CVER'</em>, implements the API defined in <em>'NAME'</em> but does not attribute 'Capiversion' specifying the version it implements. </td><td>Add attribute <span class="XML-Token">Capiversion</span> specifying the API version that is implemented in the component described in the message. Refer to <a class="el" href="pdsc_components_pg.html#element_component">/package/components/.../component</a>.  </td></tr>
+<tr>
+<td>M379 </td><td>WARNING </td><td>No example(s) found for Board '[<em>'VENDOR'</em>] <em>'BOARD'</em>. </td><td><p class="starttd">There are no examples found for the board <em>'BOARD'</em>. <br/>
+Provide examples. Refer to <a class="el" href="pdsc_examples_pg.html#element_example">/package/examples/example</a>. </p>
+<p class="endtd"></p>
+</td></tr>
+<tr>
+<td>M381 </td><td>WARNING </td><td>Vendor names are not equal: '[<em>'VENDOR'</em>] <em>'MCU'</em>, MCU '[<em>'VENDOR2'</em>] <em>'MCU2'</em>, see Line <em>'LINE'</em>  </td><td>Vendor name specified in the <span class="XML-Token">Dvendor</span> attribute for the <span class="XML-Token">&lt;mountedDevice&gt;</span> tag does not match the actual device vendor name. <br/>
+Verify and correct vendor name. Refer to <a class="el" href="pdsc_boards_pg.html#element_board_mountedDevice">/package/boards/board/mountedDevice</a>.  </td></tr>
+<tr>
+<td>M382 </td><td>WARNING </td><td>Requirement &lt;<em>'TAG'&gt;</em> '[<em>'VENDOR'</em>] <em>'NAME'</em> <em>'VER'</em> could not be resolved.<em>'MSG'</em>  </td><td>The package requires a package with name <em>'NAME'</em> and version <em>'VER'</em> from vendor <em>'VENDOR'</em>. That package was not found. <br/>
+Verify the requirement. Use option <code>-i</code> to point to the required package. Refer to <a class="el" href="element_requirements_pg.html#element_packages">/package/requirements/packages</a>.  </td></tr>
+<tr>
+<td>M383 </td><td>ERROR </td><td><em>'TAG'</em> <em>'NAME'</em> is not conformant to the pattern "<em>'CHAR'"</em>  </td><td>Unsupported characters are found in the <em>'NAME'</em> for the tag/attribute <em>'TAG'</em>. <br/>
+Specify the name using only supported characters from <em>'CHAR'</em>.  </td></tr>
+<tr>
+<td>M384 </td><td>ERROR </td><td>Condition <em>'NAME'</em>: Direct or indirect recursion detected. Skipping condition while searching for <em>'NAME2'</em>  </td><td>Resolve recursion in condition <em>'NAME'</em>.  </td></tr>
+<tr>
+<td>M385 </td><td>INFO </td><td>Release date is empty. </td><td>In the <span class="XML-Token">&lt;release&gt;</span> tag add attribute <span class="XML-Token">date</span> with the release date. Refer to <a class="el" href="element_releases.html#element_release">/package/releases/release</a>.  </td></tr>
+<tr>
+<td>M386 </td><td>WARNING </td><td>Release date is in future: <em>'RELEASEDATE'</em> (today: <em>'TODAYDATE'</em>) </td><td><p class="starttd">Set the <span class="XML-Token">date</span> to the future. Refer to <a class="el" href="element_releases.html#element_release">/package/releases/release</a>. </p>
+<p class="endtd"></p>
+</td></tr>
+<tr>
+<td>M391 </td><td>WARNING </td><td>Redefined Item <em>'NAME'</em>: <em>'MSG</em>  </td><td>Multiple defitions of item <em>'NAME'</em> are found. <br/>
+Use unique names for the items listed in the message <em>'MSG'</em>.  </td></tr>
+<tr>
+<td>M392 </td><td>ERROR </td><td>Redefined Device or Variant <em>'NAME'</em>: <em>'MSG'</em>  </td><td>Multiple defitions of device or variant <em>'NAME'</em> are found. <br/>
+Use unique names for the devices listed in the message <em>'MSG'</em>. Refer to <a class="el" href="pdsc_family_pg.html#element_device">/package/devices/family/../device</a> and <a class="el" href="pdsc_family_pg.html#element_variant">/package/devices/family/.../device/variant</a>  </td></tr>
+<tr>
+<td>M393 </td><td>WARNING </td><td>Package has development version <em>'RELEASEVER'</em>  </td><td>The package has development version specified in the <span class="XML-Token">version</span> attribute. <br/>
+For release use only MAJOR, MINOR and PATCH sections as described in the <a class="el" href="pdsc_package_pg.html#VersionType">CMSIS-pack version semantics</a>. Also refer to <a class="el" href="element_releases.html#element_release">/package/releases/release</a>.  </td></tr>
+<tr>
+<td>M394 </td><td>ERROR </td><td>Not Semantic Versioning: <em>'RELEASEVER'</em>  </td><td>Package version does not follow expected <a class="el" href="pdsc_package_pg.html#VersionType">semantic versioning</a>. <br/>
+Correct the value specified for the <span class="XML-Token">version</span> attribute using correct semantic. Refer to <a class="el" href="element_releases.html#element_release">/package/releases/release</a>.  </td></tr>
+<tr>
+<td>M395 </td><td>WARNING </td><td>Release date attribute is not set for release version: <em>'RELEASEVER'</em>  </td><td>Specify release date in the attribute <span class="XML-Token">date</span> for the returned release version <em>'RELEASEVER'</em>. Refer to <a class="el" href="element_releases.html#element_release">/package/releases/release</a>.  </td></tr>
+<tr>
+<td>M396 </td><td>WARNING </td><td>Release <em>'TAG'</em> not consecutive (newest first): <em>'RELEASEVER'</em>, <em>'RELEASEDATE'</em> (prev.: <em>'LATESTVER'</em>, <em>'LATESTDATE'</em>, see Line <em>'LINE'</em>) </td><td>Package releases shall be entered in consecutive way: newest release version and latest date first. <br/>
+Rearrange the releases in the list or correct values for the returned 'TAG' attributes (<span class="XML-Token">version</span> or <span class="XML-Token">date</span>). Refer to <a class="el" href="element_releases.html#element_release">/package/releases/release</a>.  </td></tr>
+<tr>
+<td>M397 </td><td>WARNING </td><td>File extension '.pdsc' must be lowercase: <em>'PATH'</em>  </td><td>The PDSC file shall have lowercase extension .pdsc &lt;&gt;Correct extension of the PDSC file <em>'PATH'</em>.  </td></tr>
+<tr>
+<td>M398 </td><td>ERROR </td><td>Attribute 'Dname' missing in expression using 'Pname="<em>'NAME'"</em>  </td><td>When using attribute <span class="XML-Token">Pname</span> in the <span class="XML-Token">&lt;condition&gt;</span> element the <span class="XML-Token">Dname</span> attribue shall be present as well. <br/>
+Add attribute token{Dname} specifying the device name. Refer to <a class="el" href="pdsc_conditions_pg.html#element_condition">/package/conditions/condition</a>.  </td></tr>
+<tr>
+<td>M399 </td><td>WARNING </td><td>Attribute <em>'TAG'</em> is ignored, because <em>'TAG2'</em> + <em>'TAG3'</em> is specified </td><td>Deprecated attribute <em>'TAG'</em> is ignored because newer attributes are found. Triggered for <span class="XML-Token">id</span> attribute in the <a class="el" href="pdsc_family_pg.html#element_memory">/package/devices/family/.../memory</a> element when <span class="XML-Token">name</span> or <span class="XML-Token">access</span> attributes are present as well. <br/>
+remove deprecated attribute <em>'TAG'</em>  </td></tr>
+<tr>
+<td>M400 </td><td>ERROR </td><td>Either attribute <em>'TAG'</em> or <em>'TAG2'</em> + <em>'TAG3'</em> must be specified for 'memory' </td><td><span class="XML-Token">&lt;memory&gt;</span> element requires that either attribute <span class="XML-Token">id</span> or attributes <span class="XML-Token">name</span> and <span class="XML-Token">access</span> are specified, but none of those were found. <br/>
+Specify the expected attributes. Refer to <a class="el" href="pdsc_family_pg.html#element_memory">/package/devices/family/.../memory</a>.  </td></tr>
+<tr>
+<td>M401 </td><td>ERROR </td><td>Attribute <em>'TAG'</em> missing on <em>'TAG2'</em>  </td><td>Element <em>'TAG2'</em> requires attribute <em>'TAG'</em>, but it was not found. <br/>
+Add missing attribute.  </td></tr>
+<tr>
+<td>M402 </td><td>ERROR </td><td>Attribute <em>'TAG'</em> missing on <em>'TAG2'</em> (when <em>'TAG3'</em> is specified) </td><td>Add missing attribute <em>'TAG'</em> or remove the attribute <em>'TAG3'</em> in the element <em>'TAG2'</em>.  </td></tr>
+<tr>
+<td>M403 </td><td>ERROR </td><td>Redefinition of <em>'TAG'</em> : <em>'NAME'</em>, see Line <em>'LINE'</em>  </td><td>Remove the redefinition of element <em>'TAG'</em> with name <em>'NAME'</em>.  </td></tr>
+<tr>
+<td>M404 </td><td>WARNING </td><td>No <em>'TAG'</em> found for device <em>'NAME'</em>  </td><td>Element <em>'TAG'</em> is missing for device <em>'NAME'</em>. <br/>
+Add missing element.  </td></tr>
 </table>
-<h2>XML Reader Errors </h2>
-<table  class="cmtable" summary="packChk XML Reader Msgs">
-<tr>
-<th>Message Number </th><th>Type </th><th>Description </th><th>Action  </th></tr>
-<tr>
-<td>M401 </td><td>INFO </td><td>Did you mean <em>'TAG'</em>? </td><td>Specify the tag to be used.  </td></tr>
-<tr>
-<td>M410 </td><td>WARNING </td><td>Lost xml file stream. </td><td>File corrupted.  </td></tr>
-<tr>
-<td>M411 </td><td>WARNING </td><td>Preamble for <em>'UTF'</em> should not be used, specify via '&lt;?xml'  </td><td>Specify encoding as UTF-8 only, without BOM.  </td></tr>
-<tr>
-<td>M412 </td><td>WARNING </td><td>Unsupported format or extra characters found before '&lt;?xml': <em>'TEXT'</em>  </td><td>Correct the XML file.  </td></tr>
-<tr>
-<td>M413 </td><td>WARNING </td><td>UTF Format not supported: <em>'UTF'</em>  </td><td>Select another UTF format.  </td></tr>
-<tr>
-<td>M414 </td><td>ERROR </td><td>Cannot decode XML special character: <em>'SPECIALCHAR'</em>.  </td><td>Correct the XML file.  </td></tr>
-<tr>
-<td>M415 </td><td>ERROR </td><td>'&lt;&ndash;' found, should this be a comment '&lt;!&ndash;' ? </td><td>Looks like a misspelled comment.  </td></tr>
-<tr>
-<td>M416 </td><td>ERROR </td><td>Begin Tag seems to end with a Single Tag. Is this a typo? </td><td>Correct the XML file.  </td></tr>
-<tr>
-<td>M417 </td><td>ERROR </td><td>Inconsistent XML Structure  </td><td>Correct the XML file.  </td></tr>
-<tr>
-<td>M418 </td><td>ERROR </td><td>XML Stack deeper than 30 Items! Giving up. </td><td>Reduce the nested nodes.  </td></tr>
-<tr>
-<td>M419 </td><td>ERROR </td><td>Begin Tag follows Text. Missing End Tag? </td><td>Correct the XML file.  </td></tr>
-<tr>
-<td>M420 </td><td>ERROR </td><td>Missing quotes (") in Attributes: <em>'ATTRLINE'</em>  </td><td>Correct the XML file. Enclose values in <span class="XML-Token">" "</span>.  </td></tr>
-<tr>
-<td>M421 </td><td>ERROR </td><td>XML Hierarchy Error: Missing End Tags. </td><td>Correct the XML file. Verify for enclosing or nested tags.  </td></tr>
-<tr>
-<td>M422 </td><td>ERROR </td><td>Error reading file <em>'NAME'</em>  </td><td>File could not be read.  </td></tr>
-</table>
+<p><a class="anchor" id="packchk_model_msgs"></a></p>
 <h2>Model Errors </h2>
 <table  class="cmtable" summary="packChk Model Msgs">
 <tr>
-<th>Message Number </th><th>Type </th><th>Description </th><th>Action  </th></tr>
+<th>Message Number </th><th>Type </th><th>Message Text </th><th>Action  </th></tr>
 <tr>
-<td>M500 </td><td>TEXT </td><td>RTE Model reports: <em>MSG</em>  </td><td>Error while preparing data. See massage for more details.  </td></tr>
+<td>M500 </td><td>TEXT </td><td>RTE Model reports: <em>'MSG'</em>  </td><td>Error while preparing data. See massage for more details.  </td></tr>
 <tr>
-<td>M502 </td><td>TEXT </td><td>RTE Model reports: #error <em>NUM:</em> <em>NAME</em> : <em>MSG</em>  </td><td>Additional software components required.  </td></tr>
+<td>M502 </td><td>TEXT </td><td>RTE Model reports: #error <em>'NUM'</em>: <em>'NAME'</em> : <em>'MSG'</em>  </td><td>Additional software components required.  </td></tr>
 <tr>
 <td>M504 </td><td>TEXT </td><td>RTE Model reports: MISSING: &ndash; <em>SPACE</em> <em>NAME</em>  </td><td>Add the missing component.  </td></tr>
 </table>
@@ -382,7 +491,7 @@ Error and Warning Messages</h1>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="createPackUtil.html">Utilities for Creating Packs</a></li>
-    <li class="footer">Generated on Fri Dec 13 2019 14:56:15 for CMSIS-Pack Version 1.6.1 by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Apr 9 2020 15:49:54 for CMSIS-Pack Version 1.6.3 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

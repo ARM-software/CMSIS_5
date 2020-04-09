@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Core (Cortex-A)
-   &#160;<span id="projectnumber">Version 1.1.4</span>
+   &#160;<span id="projectnumber">Version 1.2.0</span>
    </div>
    <div id="projectbrief">CMSIS-Core support for Cortex-A processor-based devices</div>
   </td>
@@ -132,13 +132,13 @@ Macros</h2></td></tr>
 <tr class="memitem:gaab4f296d0022b4b10dc0976eb22052f9"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__Core__InstructionInterface.html#gaab4f296d0022b4b10dc0976eb22052f9">__SEV</a>&#160;&#160;&#160;__sev</td></tr>
 <tr class="memdesc:gaab4f296d0022b4b10dc0976eb22052f9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send Event.  <a href="#gaab4f296d0022b4b10dc0976eb22052f9">More...</a><br/></td></tr>
 <tr class="separator:gaab4f296d0022b4b10dc0976eb22052f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaad233022e850a009fc6f7602be1182f6"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__Core__InstructionInterface.html#gaad233022e850a009fc6f7602be1182f6">__ISB</a>()</td></tr>
+<tr class="memitem:gaad233022e850a009fc6f7602be1182f6"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__Core__InstructionInterface.html#gaad233022e850a009fc6f7602be1182f6">__ISB</a>()&#160;&#160;&#160;__isb(0xF)</td></tr>
 <tr class="memdesc:gaad233022e850a009fc6f7602be1182f6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Instruction Synchronization Barrier.  <a href="#gaad233022e850a009fc6f7602be1182f6">More...</a><br/></td></tr>
 <tr class="separator:gaad233022e850a009fc6f7602be1182f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga067d257a2b34565410acefb5afef2203"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__Core__InstructionInterface.html#ga067d257a2b34565410acefb5afef2203">__DSB</a>()</td></tr>
+<tr class="memitem:ga067d257a2b34565410acefb5afef2203"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__Core__InstructionInterface.html#ga067d257a2b34565410acefb5afef2203">__DSB</a>()&#160;&#160;&#160;__dsb(0xF)</td></tr>
 <tr class="memdesc:ga067d257a2b34565410acefb5afef2203"><td class="mdescLeft">&#160;</td><td class="mdescRight">Data Synchronization Barrier.  <a href="#ga067d257a2b34565410acefb5afef2203">More...</a><br/></td></tr>
 <tr class="separator:ga067d257a2b34565410acefb5afef2203"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga671101179b5943990785f36f8c1e2269"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__Core__InstructionInterface.html#ga671101179b5943990785f36f8c1e2269">__DMB</a>()</td></tr>
+<tr class="memitem:ga671101179b5943990785f36f8c1e2269"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__Core__InstructionInterface.html#ga671101179b5943990785f36f8c1e2269">__DMB</a>()&#160;&#160;&#160;__dmb(0xF)</td></tr>
 <tr class="memdesc:ga671101179b5943990785f36f8c1e2269"><td class="mdescLeft">&#160;</td><td class="mdescRight">Data Memory Barrier.  <a href="#ga671101179b5943990785f36f8c1e2269">More...</a><br/></td></tr>
 <tr class="separator:ga671101179b5943990785f36f8c1e2269"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga15ea6bd3c507d3e81c3b3a1258e46397"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__Core__InstructionInterface.html#ga15ea6bd3c507d3e81c3b3a1258e46397">__BKPT</a>(value)&#160;&#160;&#160;__breakpoint(value)</td></tr>
@@ -199,7 +199,7 @@ Functions</h2></td></tr>
           <td class="memname">#define __DMB</td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
-          <td></td>
+          <td>&#160;&#160;&#160;__dmb(0xF)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -215,7 +215,7 @@ Functions</h2></td></tr>
           <td class="memname">#define __DSB</td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
-          <td></td>
+          <td>&#160;&#160;&#160;__dsb(0xF)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -231,7 +231,7 @@ Functions</h2></td></tr>
           <td class="memname">#define __ISB</td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
-          <td></td>
+          <td>&#160;&#160;&#160;__isb(0xF)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -452,7 +452,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Jul 10 2019 15:20:27 for CMSIS-Core (Cortex-A) Version 1.1.4 by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Apr 9 2020 15:49:10 for CMSIS-Core (Cortex-A) Version 1.2.0 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

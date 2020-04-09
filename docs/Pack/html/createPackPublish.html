@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Pack
-   &#160;<span id="projectnumber">Version 1.6.1</span>
+   &#160;<span id="projectnumber">Version 1.6.3</span>
    </div>
    <div id="projectbrief">Delivery Mechanism for Software Packs</div>
   </td>
@@ -189,7 +189,7 @@ Rehost pack to different URL</h1>
 </dd></dl>
 <h1><a class="anchor" id="cp_HowWebDownloadWorks"></a>
 Web Infra-structure</h1>
-<p>Tool, software, or silicon vendors may provide a web infra-structure that lists packs that are available from multiple vendors. Companies like Arm or IAR provide a <a class="el" href="createPackPublish.html#cp_KeilComPack">Pack Index Service</a> that uses either a <b>&lt;vendor&gt;</b>.<b>&lt;name&gt;</b>.pdsc or a <b>&lt;vendor&gt;</b>.pidx file to obtain the latest pack versions. This information is used to make the packs available in the development tools (via a <b><a href="http://www.keil.com/mdk5/packinstaller/">Pack Installer</a></b>) and/or to publish information on certain web pages, for example a <b><a href="https://developer.arm.com/embedded/cmsis/cmsis-packs/devices" target="_blank">device list</a></b>.</p>
+<p>Tool, software, or silicon vendors may provide a web infra-structure that lists packs that are available from multiple vendors. Companies like Arm or IAR provide a <a class="el" href="createPackPublish.html#cp_KeilComPack">Pack Index Service</a> that uses either a <b>&lt;vendor&gt;</b>.<b>&lt;name&gt;</b>.pdsc or a <b>&lt;vendor&gt;</b>.pidx file to obtain the latest pack versions. This information is used to make the packs available in the development tools (via a <b><a href="https://www.keil.com/mdk5/packinstaller/">Pack Installer</a></b>) and/or to publish information on certain web pages, for example a <b><a href="https://developer.arm.com/embedded/cmsis/cmsis-packs/devices" target="_blank">device list</a></b>.</p>
 <p>The following diagram explains how these services are working behind the scene.</p>
 <div class="image">
 <img src="WebInstallation.png" alt="WebInstallation.png"/>
@@ -205,14 +205,14 @@ Web infra-structure for pack hosting services</div></div>
 <p>Depending on the implementation, the web infra-structure may provide index files with additional information:</p>
 <ul>
 <li><b>&lt;vendor&gt;</b>.vidx file (<a class="el" href="packIndexFile.html#vidxFile">Vendor Index File (vidx)</a>) lists pack index locations known by the service. Arm scans these locations every 24 hours to import new packs. If your location is not listed</li>
-<li><a href="http://www.keil.com/pack/index.pidx">http://www.keil.com/pack/index.pidx</a> is a list of all packs that are correctly imported. If a pack does not appear, the pack did not pass the <a class="el" href="createPackPublish.html#cp_prerequisites">validation process</a>. </li>
+<li><a href="https://www.keil.com/pack/index.pidx">https://www.keil.com/pack/index.pidx</a> is a list of all packs that are correctly imported. If a pack does not appear, the pack did not pass the <a class="el" href="createPackPublish.html#cp_prerequisites">validation process</a>. </li>
 </ul>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Fri Dec 13 2019 14:56:15 for CMSIS-Pack Version 1.6.1 by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Apr 9 2020 15:49:54 for CMSIS-Pack Version 1.6.3 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

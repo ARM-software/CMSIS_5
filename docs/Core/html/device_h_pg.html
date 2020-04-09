@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Core (Cortex-M)
-   &#160;<span id="projectnumber">Version 5.3.0</span>
+   &#160;<span id="projectnumber">Version 5.4.0</span>
    </div>
    <div id="projectbrief">CMSIS-Core support for Cortex-M processor-based devices</div>
   </td>
@@ -148,234 +148,290 @@ Interrupt Number Definition</h1>
 </div><!-- fragment --><h1><a class="anchor" id="core_config_sect"></a>
 Configuration of the Processor and Core Peripherals</h1>
 <p>The <a class="el" href="device_h_pg.html">Device Header File &lt;device.h&gt;</a> configures the Cortex-M or SecurCore processor and the core peripherals with <em>#defines</em> that are set prior to including the file <b>core_&lt;cpu&gt;.h</b>.</p>
-<p>The following tables list the <em>#defines</em> along with the possible values for each processor core. If these <em>#defines</em> are missing default values are used.</p>
-<p><b>core_cm0.h</b> </p>
+<p>The following tables list the <em>#defines</em> along with the possible values for each processor core. If these <em>#defines</em> are missing default values are used. <b>core_cm0.h</b> </p>
 <table  class="cmtable">
 <tr>
 <th>#define </th><th>Value Range </th><th>Default </th><th>Description  </th></tr>
 <tr>
-<td>__CM0_REV </td><td>0x0000 </td><td>0x0000 </td><td>Core revision number ([15:8] revision number, [7:0] patch number)  </td></tr>
+<td><a class="el" href="group__device__config.html#ga905517438930a3f13cbc632e52990534">__CM0_REV</a> </td><td>0x0000 </td><td>0x0000 </td><td>Core revision number ([15:8] revision number, [7:0] patch number)  </td></tr>
 <tr>
-<td>__NVIC_PRIO_BITS </td><td>2 </td><td>2 </td><td>Number of priority bits implemented in the NVIC (device specific)  </td></tr>
+<td><a class="el" href="group__device__config.html#gae3fe3587d5100c787e02102ce3944460">__NVIC_PRIO_BITS</a> </td><td>2 </td><td>2 </td><td>Number of priority bits implemented in the NVIC (device specific)  </td></tr>
 <tr>
-<td>__Vendor_SysTickConfig </td><td>0 .. 1 </td><td>0 </td><td>If this define is set to 1, then the default <b>SysTick_Config</b> function is excluded. In this case, the file <em><b>device.h</b></em> must contain a vendor specific implementation of this function.  </td></tr>
+<td><a class="el" href="group__device__config.html#gab58771b4ec03f9bdddc84770f7c95c68">__Vendor_SysTickConfig</a> </td><td>0 .. 1 </td><td>0 </td><td>Vendor defined <b>SysTick_Config</b> function.  </td></tr>
 </table>
 <p><b>core_cm0plus.h</b> </p>
 <table  class="cmtable">
 <tr>
 <th>#define </th><th>Value Range </th><th>Default </th><th>Description  </th></tr>
 <tr>
-<td>__CM0PLUS_REV </td><td>0x0000 </td><td>0x0000 </td><td>Core revision number ([15:8] revision number, [7:0] patch number)  </td></tr>
+<td><a class="el" href="group__device__config.html#ga2b7180ed347a0e902c5765deb46e650e">__CM0PLUS_REV</a> </td><td>0x0000 </td><td>0x0000 </td><td>Core revision number ([15:8] revision number, [7:0] patch number)  </td></tr>
 <tr>
-<td>__NVIC_PRIO_BITS </td><td>2 </td><td>2 </td><td>Number of priority bits implemented in the NVIC (device specific)  </td></tr>
+<td><a class="el" href="group__device__config.html#gaddbae1a1b57539f398eb5546a17de8f6">__VTOR_PRESENT</a> </td><td>0 .. 1 </td><td>0 </td><td>Defines if a VTOR register is present or not  </td></tr>
 <tr>
-<td>__Vendor_SysTickConfig </td><td>0 .. 1 </td><td>0 </td><td>If this define is set to 1, then the default <b>SysTick_Config</b> function is excluded. In this case, the file <em><b>device.h</b></em> must contain a vendor specific implementation of this function.  </td></tr>
+<td><a class="el" href="group__device__config.html#gae3fe3587d5100c787e02102ce3944460">__NVIC_PRIO_BITS</a> </td><td>2 </td><td>2 </td><td>Number of priority bits implemented in the NVIC (device specific)  </td></tr>
+<tr>
+<td><a class="el" href="group__device__config.html#gab58771b4ec03f9bdddc84770f7c95c68">__Vendor_SysTickConfig</a> </td><td>0 .. 1 </td><td>0 </td><td>Vendor defined <b>SysTick_Config</b> function.  </td></tr>
 </table>
 <p><b>core_cm3.h</b> </p>
 <table  class="cmtable">
 <tr>
 <th>#define </th><th>Value Range </th><th>Default </th><th>Description  </th></tr>
 <tr>
-<td>__CM3_REV </td><td>0x0101 | 0x0200 </td><td>0x0200 </td><td>Core revision number ([15:8] revision number, [7:0] patch number)  </td></tr>
+<td><a class="el" href="group__device__config.html#gac6a3f185c4640e06443c18b3c8d93f53">__CM3_REV</a> </td><td>0x0101 | 0x0200 </td><td>0x0200 </td><td>Core revision number ([15:8] revision number, [7:0] patch number)  </td></tr>
 <tr>
-<td>__NVIC_PRIO_BITS </td><td>2 .. 8 </td><td>4 </td><td>Number of priority bits implemented in the NVIC (device specific)  </td></tr>
+<td><a class="el" href="group__device__config.html#gaddbae1a1b57539f398eb5546a17de8f6">__VTOR_PRESENT</a> </td><td>0 .. 1 </td><td>1 </td><td>Defines if a VTOR register is present or not  </td></tr>
 <tr>
-<td>__MPU_PRESENT </td><td>0 .. 1 </td><td>0 </td><td>Defines if a MPU is present or not  </td></tr>
+<td><a class="el" href="group__device__config.html#gae3fe3587d5100c787e02102ce3944460">__NVIC_PRIO_BITS</a> </td><td>2 .. 8 </td><td>4 </td><td>Number of priority bits implemented in the NVIC (device specific)  </td></tr>
 <tr>
-<td>__Vendor_SysTickConfig </td><td>0 .. 1 </td><td>0 </td><td>If this define is set to 1, then the default <b>SysTick_Config</b> function is excluded. In this case, the file <em><b>device.h</b></em> must contain a vendor specific implementation of this function.  </td></tr>
+<td><a class="el" href="group__device__config.html#ga4127d1b31aaf336fab3d7329d117f448">__MPU_PRESENT</a> </td><td>0 .. 1 </td><td>0 </td><td>Defines if a MPU is present or not  </td></tr>
+<tr>
+<td><a class="el" href="group__device__config.html#gab58771b4ec03f9bdddc84770f7c95c68">__Vendor_SysTickConfig</a> </td><td>0 .. 1 </td><td>0 </td><td>Vendor defined <b>SysTick_Config</b> function.  </td></tr>
 </table>
 <p><b>core_cm4.h</b> </p>
 <table  class="cmtable">
 <tr>
 <th>#define </th><th>Value Range </th><th>Default </th><th>Description  </th></tr>
 <tr>
-<td>__CM4_REV </td><td>0x0000 </td><td>0x0000 </td><td>Core revision number ([15:8] revision number, [7:0] patch number)  </td></tr>
+<td><a class="el" href="group__device__config.html#ga45a97e4bb8b6ce7c334acc5f45ace3ba">__CM4_REV</a> </td><td>0x0000 </td><td>0x0000 </td><td>Core revision number ([15:8] revision number, [7:0] patch number)  </td></tr>
 <tr>
-<td>__NVIC_PRIO_BITS </td><td>2 .. 8 </td><td>4 </td><td>Number of priority bits implemented in the NVIC (device specific)  </td></tr>
+<td><a class="el" href="group__device__config.html#gaddbae1a1b57539f398eb5546a17de8f6">__VTOR_PRESENT</a> </td><td>0 .. 1 </td><td>1 </td><td>Defines if a VTOR register is present or not  </td></tr>
 <tr>
-<td>__MPU_PRESENT </td><td>0 .. 1 </td><td>0 </td><td>Defines if a MPU is present or not  </td></tr>
+<td><a class="el" href="group__device__config.html#gae3fe3587d5100c787e02102ce3944460">__NVIC_PRIO_BITS</a> </td><td>2 .. 8 </td><td>4 </td><td>Number of priority bits implemented in the NVIC (device specific)  </td></tr>
 <tr>
-<td>__FPU_PRESENT </td><td>0 .. 1 </td><td>0 </td><td>Defines if a FPU is present or not  </td></tr>
+<td><a class="el" href="group__device__config.html#ga4127d1b31aaf336fab3d7329d117f448">__MPU_PRESENT</a> </td><td>0 .. 1 </td><td>0 </td><td>Defines if a MPU is present or not  </td></tr>
 <tr>
-<td>__Vendor_SysTickConfig </td><td>0 .. 1 </td><td>0 </td><td>If this define is set to 1, then the default <b>SysTick_Config</b> function is excluded. In this case, the file <em><b>device.h</b></em> must contain a vendor specific implementation of this function.  </td></tr>
+<td><a class="el" href="group__device__config.html#gac1ba8a48ca926bddc88be9bfd7d42641">__FPU_PRESENT</a> </td><td>0 .. 1 </td><td>0 </td><td>Defines if a FPU is present or not  </td></tr>
+<tr>
+<td><a class="el" href="group__device__config.html#gab58771b4ec03f9bdddc84770f7c95c68">__Vendor_SysTickConfig</a> </td><td>0 .. 1 </td><td>0 </td><td>Vendor defined <b>SysTick_Config</b> function.  </td></tr>
 </table>
 <p><b>core_cm7.h</b> </p>
 <table  class="cmtable">
 <tr>
 <th>#define </th><th>Value Range </th><th>Default </th><th>Description  </th></tr>
 <tr>
-<td>__CM7_REV </td><td>0x0000 </td><td>0x0000 </td><td>Core revision number ([15:8] revision number, [7:0] patch number)  </td></tr>
+<td><a class="el" href="group__device__config.html#ga8eb40c0d30a09a0ae388e56b21d8f22c">__CM7_REV</a> </td><td>0x0000 </td><td>0x0000 </td><td>Core revision number ([15:8] revision number, [7:0] patch number)  </td></tr>
 <tr>
-<td>__MPU_PRESENT </td><td>0 .. 1 </td><td>0 </td><td>Defines if a MPU is present or not  </td></tr>
+<td><a class="el" href="group__device__config.html#ga4127d1b31aaf336fab3d7329d117f448">__MPU_PRESENT</a> </td><td>0 .. 1 </td><td>0 </td><td>Defines if a MPU is present or not  </td></tr>
 <tr>
-<td>__NVIC_PRIO_BITS </td><td>2 .. 8 </td><td>4 </td><td>Number of priority bits implemented in the NVIC (device specific)  </td></tr>
+<td><a class="el" href="group__device__config.html#gaddbae1a1b57539f398eb5546a17de8f6">__VTOR_PRESENT</a> </td><td>0 .. 1 </td><td>1 </td><td>Defines if a VTOR register is present or not  </td></tr>
 <tr>
-<td>__Vendor_SysTickConfig </td><td>0 .. 1 </td><td>0 </td><td>If this define is set to 1, then the default <b>SysTick_Config</b> function is excluded. In this case, the file <em><b>device.h</b></em> must contain a vendor specific implementation of this function.  </td></tr>
+<td><a class="el" href="group__device__config.html#gae3fe3587d5100c787e02102ce3944460">__NVIC_PRIO_BITS</a> </td><td>2 .. 8 </td><td>4 </td><td>Number of priority bits implemented in the NVIC (device specific)  </td></tr>
 <tr>
-<td>__FPU_PRESENT </td><td>0 .. 1 </td><td>0 </td><td>Defines if a FPU is present or not. See <b>__FPU_DP</b> description below.  </td></tr>
+<td><a class="el" href="group__device__config.html#gab58771b4ec03f9bdddc84770f7c95c68">__Vendor_SysTickConfig</a> </td><td>0 .. 1 </td><td>0 </td><td>If this define is set to 1, then the default <b>SysTick_Config</b> function is excluded. In this case, the file <em><b>device.h</b></em> must contain a vendor specific implementation of this function.   </td></tr>
 <tr>
-<td>__FPU_DP </td><td>0 .. 1 </td><td>0 </td><td>The combination of the defines <b>__FPU_PRESENT</b> and <b>__FPU_DP</b> determine the whether the FPU is with single or double precision as shown in the table below. <br/>
-<br/>
- <table  class="cmtable">
-<tr bgcolor="cyan">
-<td><b>__FPU_PRESENT</b> </td><td><b>__FPU_DP</b> </td><td><b>Description</b>  </td></tr>
+<td><a class="el" href="group__device__config.html#gac1ba8a48ca926bddc88be9bfd7d42641">__FPU_PRESENT</a> </td><td>0 .. 1 </td><td>0 </td><td>Defines if a FPU is present or not.  </td></tr>
 <tr>
-<td align="center">0 </td><td align="center"><em>ignored</em> </td><td>Processor has no FPU. The value set for <b>__FPU_DP</b> has no influence.   </td></tr>
+<td><a class="el" href="group__device__config.html#ga2a528de57b6217f9fc9d4487d0db6328">__FPU_DP</a> </td><td>0 .. 1 </td><td>0 </td><td>The combination of the defines <a class="el" href="group__device__config.html#gac1ba8a48ca926bddc88be9bfd7d42641">__FPU_PRESENT</a> and <a class="el" href="group__device__config.html#ga2a528de57b6217f9fc9d4487d0db6328">__FPU_DP</a> determine whether the FPU is with single or double precision.   </td></tr>
 <tr>
-<td align="center">1 </td><td align="center">0 </td><td>Processor with FPU with single precision. The file <b>ARMCM7_SP.h</b> has preconfigured settings for this combination.  </td></tr>
+<td><a class="el" href="group__device__config.html#ga3580fa1aeb7c2ed580904f8f70f8a919">__ICACHE_PRESENT</a> </td><td>0 .. 1 </td><td>1 </td><td>Instruction Chache present or not  </td></tr>
 <tr>
-<td align="center">1 </td><td align="center">1 </td><td>Processor with FPU with double precision. The file <b>ARMCM7_DP.h</b> has preconfigured settings for this combination.  </td></tr>
-</table>
-</td></tr>
+<td><a class="el" href="group__device__config.html#ga11d3ac679daeb58d0cec0a4e6ca59010">__DCACHE_PRESENT</a> </td><td>0 .. 1 </td><td>1 </td><td>Data Chache present or not  </td></tr>
 <tr>
-<td>__ICACHE_PRESENT </td><td>0 .. 1 </td><td>1 </td><td>Instruction Chache present or not  </td></tr>
-<tr>
-<td>__DCACHE_PRESENT </td><td>0 .. 1 </td><td>1 </td><td>Data Chache present or not  </td></tr>
-<tr>
-<td>__DTCM_PRESENT </td><td>0 .. 1 </td><td>1 </td><td>Data Tightly Coupled Memory is present or not  </td></tr>
+<td><a class="el" href="group__device__config.html#gacbb998663708df6626abb09378303019">__DTCM_PRESENT</a> </td><td>0 .. 1 </td><td>1 </td><td>Data Tightly Coupled Memory is present or not  </td></tr>
 </table>
 <p><b>core_sc000.h</b> </p>
 <table  class="cmtable">
 <tr>
 <th>#define </th><th>Value Range </th><th>Default </th><th>Description  </th></tr>
 <tr>
-<td>__SC000_REV </td><td>0x0000 </td><td>0x0000 </td><td>Core revision number ([15:8] revision number, [7:0] patch number)  </td></tr>
+<td><a class="el" href="group__device__config.html#gaf293b060f9c15592d18e6b0b977194bf">__SC000_REV</a> </td><td>0x0000 </td><td>0x0000 </td><td>Core revision number ([15:8] revision number, [7:0] patch number)  </td></tr>
 <tr>
-<td>__NVIC_PRIO_BITS </td><td>2 </td><td>2 </td><td>Number of priority bits implemented in the NVIC (device specific)  </td></tr>
+<td><a class="el" href="group__device__config.html#gaddbae1a1b57539f398eb5546a17de8f6">__VTOR_PRESENT</a> </td><td>0 .. 1 </td><td>0 </td><td>Defines if a VTOR register is present or not  </td></tr>
 <tr>
-<td>__MPU_PRESENT </td><td>0 .. 1 </td><td>0 </td><td>Defines if a MPU is present or not  </td></tr>
+<td><a class="el" href="group__device__config.html#gae3fe3587d5100c787e02102ce3944460">__NVIC_PRIO_BITS</a> </td><td>2 </td><td>2 </td><td>Number of priority bits implemented in the NVIC (device specific)  </td></tr>
 <tr>
-<td>__Vendor_SysTickConfig </td><td>0 .. 1 </td><td>0 </td><td>If this define is set to 1, then the default <b>SysTick_Config</b> function is excluded. In this case, the file <em><b>device.h</b></em> must contain a vendor specific implementation of this function.  </td></tr>
+<td><a class="el" href="group__device__config.html#ga4127d1b31aaf336fab3d7329d117f448">__MPU_PRESENT</a> </td><td>0 .. 1 </td><td>0 </td><td>Defines if a MPU is present or not  </td></tr>
+<tr>
+<td><a class="el" href="group__device__config.html#gab58771b4ec03f9bdddc84770f7c95c68">__Vendor_SysTickConfig</a> </td><td>0 .. 1 </td><td>0 </td><td>Vendor defined <b>SysTick_Config</b> function.  </td></tr>
 </table>
 <p><b>core_sc300.h</b> </p>
 <table  class="cmtable">
 <tr>
 <th>#define </th><th>Value Range </th><th>Default </th><th>Description  </th></tr>
 <tr>
-<td>__SC300_REV </td><td>0x0000 </td><td>0x0000 </td><td>Core revision number ([15:8] revision number, [7:0] patch number)  </td></tr>
+<td><a class="el" href="group__device__config.html#ga3029728b4fc64727b43bcfd853a7180b">__SC300_REV</a> </td><td>0x0000 </td><td>0x0000 </td><td>Core revision number ([15:8] revision number, [7:0] patch number)  </td></tr>
 <tr>
-<td>__NVIC_PRIO_BITS </td><td>2 .. 8 </td><td>4 </td><td>Number of priority bits implemented in the NVIC (device specific)  </td></tr>
+<td><a class="el" href="group__device__config.html#gaddbae1a1b57539f398eb5546a17de8f6">__VTOR_PRESENT</a> </td><td>0 .. 1 </td><td>1 </td><td>Defines if a VTOR register is present or not  </td></tr>
 <tr>
-<td>__MPU_PRESENT </td><td>0 .. 1 </td><td>0 </td><td>Defines if a MPU is present or not  </td></tr>
+<td><a class="el" href="group__device__config.html#gae3fe3587d5100c787e02102ce3944460">__NVIC_PRIO_BITS</a> </td><td>2 .. 8 </td><td>4 </td><td>Number of priority bits implemented in the NVIC (device specific)  </td></tr>
 <tr>
-<td>__Vendor_SysTickConfig </td><td>0 .. 1 </td><td>0 </td><td>If this define is set to 1, then the default <b>SysTick_Config</b> function is excluded. In this case, the file <em><b>device.h</b></em> must contain a vendor specific implementation of this function.  </td></tr>
+<td><a class="el" href="group__device__config.html#ga4127d1b31aaf336fab3d7329d117f448">__MPU_PRESENT</a> </td><td>0 .. 1 </td><td>0 </td><td>Defines if a MPU is present or not  </td></tr>
+<tr>
+<td><a class="el" href="group__device__config.html#gab58771b4ec03f9bdddc84770f7c95c68">__Vendor_SysTickConfig</a> </td><td>0 .. 1 </td><td>0 </td><td>Vendor defined <b>SysTick_Config</b> function.  </td></tr>
 </table>
 <p><b>core_CM23.h</b> or <b>core_ARMv8MBL.h</b> </p>
 <table  class="cmtable">
 <tr>
 <th>#define </th><th>Value Range </th><th>Default </th><th>Description  </th></tr>
 <tr>
-<td>__ARMv8MBL_REV </td><td>0x0000 </td><td>0x0000 </td><td>Core revision number ([15:8] revision number, [7:0] patch number)  </td></tr>
+<td><a class="el" href="group__device__config.html#ga645c9be694a2d5b5a5b772a0102c727a">__ARMv8MBL_REV</a> or <a class="el" href="group__device__config.html#ga0f6c2b504ee424a7895fd7a420acdd0e">__CM23_REV</a> </td><td>0x0000 </td><td>0x0000 </td><td>Core revision number ([15:8] revision number, [7:0] patch number)  </td></tr>
 <tr>
-<td>__MPU_PRESENT </td><td>0 .. 1 </td><td>0 </td><td>Defines if a MPU is present or not  </td></tr>
+<td><a class="el" href="group__device__config.html#ga4127d1b31aaf336fab3d7329d117f448">__MPU_PRESENT</a> </td><td>0 .. 1 </td><td>0 </td><td>Defines if a MPU is present or not  </td></tr>
 <tr>
-<td>__SAUREGION_PRESENT </td><td>0 .. 1 </td><td>0 </td><td>Defines if SAU regions are present or not  </td></tr>
+<td><a class="el" href="group__device__config.html#gadae9d54c744e525135b097c618bae3c4">__SAUREGION_PRESENT</a> </td><td>0 .. 1 </td><td>0 </td><td>Defines if SAU regions are present or not  </td></tr>
 <tr>
-<td>__VTOR_PRESENT </td><td>0 .. 1 </td><td>0 </td><td>Defines if a VTOR register is present or not  </td></tr>
+<td><a class="el" href="group__device__config.html#gaddbae1a1b57539f398eb5546a17de8f6">__VTOR_PRESENT</a> </td><td>0 .. 1 </td><td>0 </td><td>Defines if a VTOR register is present or not  </td></tr>
 <tr>
-<td>__NVIC_PRIO_BITS </td><td>2 </td><td>2 </td><td>Number of priority bits implemented in the NVIC (device specific)  </td></tr>
+<td><a class="el" href="group__device__config.html#gae3fe3587d5100c787e02102ce3944460">__NVIC_PRIO_BITS</a> </td><td>2 </td><td>2 </td><td>Number of priority bits implemented in the NVIC (device specific)  </td></tr>
 <tr>
-<td>__Vendor_SysTickConfig </td><td>0 .. 1 </td><td>0 </td><td>If this define is set to 1, then the default <b>SysTick_Config</b> function is excluded. In this case, the file <em><b>device.h</b></em> must contain a vendor specific implementation of this function.  </td></tr>
+<td><a class="el" href="group__device__config.html#gab58771b4ec03f9bdddc84770f7c95c68">__Vendor_SysTickConfig</a> </td><td>0 .. 1 </td><td>0 </td><td>Vendor defined <b>SysTick_Config</b> function.  </td></tr>
 </table>
 <p><b>core_CM33.h</b> or <b>core_cm35p.h</b> or <b>core_ARMv8MML.h</b> </p>
 <table  class="cmtable">
 <tr>
 <th>#define </th><th>Value Range </th><th>Default </th><th>Description  </th></tr>
 <tr>
-<td>__ARMv8MML_REV </td><td>0x0000 </td><td>0x0000 </td><td>Core revision number ([15:8] revision number, [7:0] patch number)  </td></tr>
+<td><a class="el" href="group__device__config.html#gadb7d425f5ad0389b0eb1c6a69f8eb214">__ARMv8MML_REV</a> or <a class="el" href="group__device__config.html#ga178e7a57b608f3e20d1c0cf18a2c2ac3">__CM33_REV</a> or <a class="el" href="group__device__config.html#gadd339c07b13a763dda6e83f4c05122f6">__CM35P_REV</a> </td><td>0x0000 </td><td>0x0000 </td><td>Core revision number ([15:8] revision number, [7:0] patch number)  </td></tr>
 <tr>
-<td>__MPU_PRESENT </td><td>0 .. 1 </td><td>0 </td><td>Defines if a MPU is present or not  </td></tr>
+<td><a class="el" href="group__device__config.html#ga4127d1b31aaf336fab3d7329d117f448">__MPU_PRESENT</a> </td><td>0 .. 1 </td><td>0 </td><td>Defines if a MPU is present or not  </td></tr>
 <tr>
-<td>__SAUREGION_PRESENT </td><td>0 .. 1 </td><td>0 </td><td>Defines if SAU regions are present or not  </td></tr>
+<td><a class="el" href="group__device__config.html#gadae9d54c744e525135b097c618bae3c4">__SAUREGION_PRESENT</a> </td><td>0 .. 1 </td><td>0 </td><td>Defines if SAU regions are present or not  </td></tr>
 <tr>
-<td>__FPU_PRESENT </td><td>0 .. 1 </td><td>0 </td><td>Defines if a FPU is present or not  </td></tr>
+<td><a class="el" href="group__device__config.html#gac1ba8a48ca926bddc88be9bfd7d42641">__FPU_PRESENT</a> </td><td>0 .. 1 </td><td>0 </td><td>Defines if a FPU is present or not  </td></tr>
 <tr>
-<td>__NVIC_PRIO_BITS </td><td>2 .. 8 </td><td>3 </td><td>Number of priority bits implemented in the NVIC (device specific)  </td></tr>
+<td><a class="el" href="group__device__config.html#gaddbae1a1b57539f398eb5546a17de8f6">__VTOR_PRESENT</a> </td><td>0 .. 1 </td><td>1 </td><td>Defines if a VTOR register is present or not  </td></tr>
 <tr>
-<td>__Vendor_SysTickConfig </td><td>0 .. 1 </td><td>0 </td><td>If this define is set to 1, then the default <b>SysTick_Config</b> function is excluded. In this case, the file <em><b>device.h</b></em> must contain a vendor specific implementation of this function.  </td></tr>
+<td><a class="el" href="group__device__config.html#gae3fe3587d5100c787e02102ce3944460">__NVIC_PRIO_BITS</a> </td><td>2 .. 8 </td><td>3 </td><td>Number of priority bits implemented in the NVIC (device specific)  </td></tr>
+<tr>
+<td><a class="el" href="group__device__config.html#gab58771b4ec03f9bdddc84770f7c95c68">__Vendor_SysTickConfig</a> </td><td>0 .. 1 </td><td>0 </td><td>Vendor defined <b>SysTick_Config</b> function.  </td></tr>
+</table>
+<p><b>core_CM55.h</b> or <b>core_ARMv81MML.h</b> </p>
+<table  class="cmtable">
+<tr>
+<th>#define </th><th>Value Range </th><th>Default </th><th>Description  </th></tr>
+<tr>
+<td><a class="el" href="group__device__config.html#ga4dd7b69d473733e59cd99fc786174cd3">__ARMv81MML_REV</a> or <a class="el" href="group__device__config.html#gaea2d16e963063038cde86cee33c4ef37">__CM55_REV</a> </td><td>0x0000 </td><td>0x0000 </td><td>Core revision number ([15:8] revision number, [7:0] patch number)  </td></tr>
+<tr>
+<td><a class="el" href="group__device__config.html#ga4127d1b31aaf336fab3d7329d117f448">__MPU_PRESENT</a> </td><td>0 .. 1 </td><td>0 </td><td>Defines if a MPU is present or not  </td></tr>
+<tr>
+<td><a class="el" href="group__device__config.html#gadae9d54c744e525135b097c618bae3c4">__SAUREGION_PRESENT</a> </td><td>0 .. 1 </td><td>0 </td><td>Defines if SAU regions are present or not  </td></tr>
+<tr>
+<td><a class="el" href="group__device__config.html#gac1ba8a48ca926bddc88be9bfd7d42641">__FPU_PRESENT</a> </td><td>0 .. 1 </td><td>0 </td><td>Defines if a FPU is present or not  </td></tr>
+<tr>
+<td><a class="el" href="group__device__config.html#ga2a528de57b6217f9fc9d4487d0db6328">__FPU_DP</a> </td><td>0 .. 1 </td><td>0 </td><td>The combination of the defines <a class="el" href="group__device__config.html#gac1ba8a48ca926bddc88be9bfd7d42641">__FPU_PRESENT</a> and <a class="el" href="group__device__config.html#ga2a528de57b6217f9fc9d4487d0db6328">__FPU_DP</a> determine whether the FPU is with single or double precision.   </td></tr>
+<tr>
+<td><a class="el" href="group__device__config.html#ga3580fa1aeb7c2ed580904f8f70f8a919">__ICACHE_PRESENT</a> </td><td>0 .. 1 </td><td>1 </td><td>Instruction Chache present or not  </td></tr>
+<tr>
+<td><a class="el" href="group__device__config.html#ga11d3ac679daeb58d0cec0a4e6ca59010">__DCACHE_PRESENT</a> </td><td>0 .. 1 </td><td>1 </td><td>Data Chache present or not  </td></tr>
+<tr>
+<td><a class="el" href="group__device__config.html#gaddbae1a1b57539f398eb5546a17de8f6">__VTOR_PRESENT</a> </td><td>0 .. 1 </td><td>1 </td><td>Defines if a VTOR register is present or not  </td></tr>
+<tr>
+<td><a class="el" href="group__device__config.html#gae3fe3587d5100c787e02102ce3944460">__NVIC_PRIO_BITS</a> </td><td>2 .. 8 </td><td>3 </td><td>Number of priority bits implemented in the NVIC (device specific)  </td></tr>
+<tr>
+<td><a class="el" href="group__device__config.html#gab58771b4ec03f9bdddc84770f7c95c68">__Vendor_SysTickConfig</a> </td><td>0 .. 1 </td><td>0 </td><td>Vendor defined <b>SysTick_Config</b> function.  </td></tr>
 </table>
 <p><b>Example</b> </p>
 <p>The following code exemplifies the configuration of the Cortex-M4 Processor and Core Peripherals.</p>
-<div class="fragment"><div class="line"><span class="preprocessor">#define __CM4_REV                 0x0001    </span><span class="comment">/* Core revision r0p1                                 */</span><span class="preprocessor"></span></div>
-<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define __MPU_PRESENT             1         </span><span class="comment">/* MPU present or not                                 */</span><span class="preprocessor"></span></div>
-<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define __NVIC_PRIO_BITS          3         </span><span class="comment">/* Number of Bits used for Priority Levels            */</span><span class="preprocessor"></span></div>
-<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define __Vendor_SysTickConfig    0         </span><span class="comment">/* Set to 1 if different SysTick Config is used       */</span><span class="preprocessor"></span></div>
-<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define __FPU_PRESENT             1         </span><span class="comment">/* FPU present or not                                 */</span><span class="preprocessor"></span></div>
+<div class="fragment"><div class="line"><span class="preprocessor">#define __CM4_REV                 0x0001U   </span><span class="comment">/* Core revision r0p1                                 */</span><span class="preprocessor"></span></div>
+<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define __MPU_PRESENT             1U        </span><span class="comment">/* MPU present or not                                 */</span><span class="preprocessor"></span></div>
+<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define __VTOR_PRESENT            1U        </span><span class="comment">/* VTOR present */</span><span class="preprocessor"></span></div>
+<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define __NVIC_PRIO_BITS          3U        </span><span class="comment">/* Number of Bits used for Priority Levels            */</span><span class="preprocessor"></span></div>
+<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define __Vendor_SysTickConfig    0U        </span><span class="comment">/* Set to 1 if different SysTick Config is used       */</span><span class="preprocessor"></span></div>
+<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define __FPU_PRESENT             1U        </span><span class="comment">/* FPU present or not                                 */</span><span class="preprocessor"></span></div>
 <div class="line"><span class="preprocessor"></span>.</div>
 <div class="line">.</div>
 <div class="line"><span class="preprocessor">#include &lt;core_cm4.h&gt;</span>                       <span class="comment">/* Cortex-M4 processor and core peripherals           */</span></div>
+<div class="line"><span class="preprocessor">#include &quot;system_&lt;device&gt;</span>.h<span class="stringliteral">&quot;                /* Device System Header                               */</span></div>
 </div><!-- fragment --><h1><a class="anchor" id="core_version_sect"></a>
 CMSIS Version and Processor Information</h1>
 <p>Defines in the core_<em>cpu</em>.h file identify the version of the CMSIS-Core (Cortex-M) and the processor used. The following shows the defines in the various core_<em>cpu</em>.h files that may be used in the <a class="el" href="device_h_pg.html">Device Header File &lt;device.h&gt;</a> to verify a minimum version or ensure that the right processor core is used.</p>
 <p><b>core_cm0.h</b> </p>
-<div class="fragment"><div class="line"><span class="preprocessor">#define __CM0_CMSIS_VERSION_MAIN  (5U)                                 </span><span class="comment">/* [31:16] CMSIS HAL main version */</span><span class="preprocessor"></span></div>
-<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define __CM0_CMSIS_VERSION_SUB   (0U)                                 </span><span class="comment">/* [15:0]  CMSIS HAL sub version */</span><span class="preprocessor"></span></div>
+<div class="fragment"><div class="line"><span class="preprocessor">#define __CM0_CMSIS_VERSION_MAIN  (__CM_CMSIS_VERSION_MAIN)                         </span><span class="comment">/* [31:16] CMSIS HAL main version */</span><span class="preprocessor"></span></div>
+<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define __CM0_CMSIS_VERSION_SUB   (__CM_CMSIS_VERSION_SUB)                          </span><span class="comment">/* [15:0]  CMSIS HAL sub version */</span><span class="preprocessor"></span></div>
 <div class="line"><span class="preprocessor"></span><span class="preprocessor">#define __CM0_CMSIS_VERSION       ((__CM0_CMSIS_VERSION_MAIN &lt;&lt; 16U) | \</span></div>
-<div class="line"><span class="preprocessor">                                    __CM0_CMSIS_VERSION_SUB          ) </span><span class="comment">/* CMSIS HAL version number */</span><span class="preprocessor"></span></div>
-<div class="line"><span class="preprocessor"></span> </div>
-<div class="line"><span class="preprocessor">#define __CORTEX_M                (0U)                                 </span><span class="comment">/* Cortex-M Core */</span><span class="preprocessor"></span></div>
+<div class="line"><span class="preprocessor">                                    __CM0_CMSIS_VERSION_SUB          )              </span><span class="comment">/* CMSIS HAL version number */</span><span class="preprocessor"></span></div>
+<div class="line"><span class="preprocessor"></span></div>
+<div class="line"><span class="preprocessor">#define __CORTEX_M                (0U)                                              </span><span class="comment">/* Cortex-M Core */</span><span class="preprocessor"></span></div>
 </div><!-- fragment --><p><b>core_cm0plus.h</b> </p>
-<div class="fragment"><div class="line"><span class="preprocessor">#define __CM0PLUS_CMSIS_VERSION_MAIN  (5U)                                  </span><span class="comment">/* [31:16] CMSIS HAL main version */</span><span class="preprocessor"></span></div>
-<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define __CM0PLUS_CMSIS_VERSION_SUB   (0U)                                  </span><span class="comment">/* [15:0]  CMSIS HAL sub version */</span><span class="preprocessor"></span></div>
+<div class="fragment"><div class="line"><span class="preprocessor">#define __CM0PLUS_CMSIS_VERSION_MAIN  (__CM_CMSIS_VERSION_MAIN)                     </span><span class="comment">/* [31:16] CMSIS HAL main version */</span><span class="preprocessor"></span></div>
+<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define __CM0PLUS_CMSIS_VERSION_SUB   (__CM_CMSIS_VERSION_SUB)                      </span><span class="comment">/* [15:0]  CMSIS HAL sub version */</span><span class="preprocessor"></span></div>
 <div class="line"><span class="preprocessor"></span><span class="preprocessor">#define __CM0PLUS_CMSIS_VERSION       ((__CM0P_CMSIS_VERSION_MAIN &lt;&lt; 16U) | \</span></div>
-<div class="line"><span class="preprocessor">                                        __CM0P_CMSIS_VERSION_SUB          ) </span><span class="comment">/* CMSIS HAL version number */</span><span class="preprocessor"></span></div>
-<div class="line"><span class="preprocessor"></span> </div>
-<div class="line"><span class="preprocessor">#define __CORTEX_M                    (0U)                                  </span><span class="comment">/* Cortex-M Core */</span><span class="preprocessor"></span></div>
+<div class="line"><span class="preprocessor">                                        __CM0P_CMSIS_VERSION_SUB          )         </span><span class="comment">/* CMSIS HAL version number */</span><span class="preprocessor"></span></div>
+<div class="line"><span class="preprocessor"></span></div>
+<div class="line"><span class="preprocessor">#define __CORTEX_M                    (0U)                                          </span><span class="comment">/* Cortex-M Core */</span><span class="preprocessor"></span></div>
 </div><!-- fragment --><p><b>core_cm1.h</b> </p>
-<div class="fragment"><div class="line"><span class="preprocessor">#define __CM1_CMSIS_VERSION_MAIN  (__CM_CMSIS_VERSION_MAIN)              </span></div>
-<div class="line"><span class="preprocessor">#define __CM1_CMSIS_VERSION_SUB   (__CM_CMSIS_VERSION_SUB)               </span></div>
+<div class="fragment"><div class="line"><span class="preprocessor">#define __CM1_CMSIS_VERSION_MAIN  (__CM_CMSIS_VERSION_MAIN)                         </span></div>
+<div class="line"><span class="preprocessor">#define __CM1_CMSIS_VERSION_SUB   (__CM_CMSIS_VERSION_SUB)                          </span></div>
 <div class="line"><span class="preprocessor">#define __CM1_CMSIS_VERSION       ((__CM1_CMSIS_VERSION_MAIN &lt;&lt; 16U) | \</span></div>
-<div class="line"><span class="preprocessor">                                    __CM1_CMSIS_VERSION_SUB           )  </span></div>
-<div class="line"><span class="preprocessor">#define __CORTEX_M                (1U)                                   </span></div>
+<div class="line"><span class="preprocessor">                                    __CM1_CMSIS_VERSION_SUB           )             </span></div>
+<div class="line"><span class="preprocessor">#define __CORTEX_M                (1U)                                              </span></div>
 </div><!-- fragment --><p><b>core_cm3.h</b> </p>
-<div class="fragment"><div class="line"><span class="preprocessor">#define __CM3_CMSIS_VERSION_MAIN  (5U)                                 </span><span class="comment">/* [31:16] CMSIS HAL main version */</span><span class="preprocessor"></span></div>
-<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define __CM3_CMSIS_VERSION_SUB   (0U)                                 </span><span class="comment">/* [15:0]  CMSIS HAL sub version */</span><span class="preprocessor"></span></div>
+<div class="fragment"><div class="line"><span class="preprocessor">#define __CM3_CMSIS_VERSION_MAIN  (__CM_CMSIS_VERSION_MAIN)                         </span><span class="comment">/* [31:16] CMSIS HAL main version */</span><span class="preprocessor"></span></div>
+<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define __CM3_CMSIS_VERSION_SUB   (__CM_CMSIS_VERSION_SUB)                          </span><span class="comment">/* [15:0]  CMSIS HAL sub version */</span><span class="preprocessor"></span></div>
 <div class="line"><span class="preprocessor"></span><span class="preprocessor">#define __CM3_CMSIS_VERSION       ((__CM3_CMSIS_VERSION_MAIN &lt;&lt; 16U) | \</span></div>
-<div class="line"><span class="preprocessor">                                    __CM3_CMSIS_VERSION_SUB          ) </span><span class="comment">/* CMSIS HAL version number */</span><span class="preprocessor"></span></div>
-<div class="line"><span class="preprocessor"></span> </div>
-<div class="line"><span class="preprocessor">#define __CORTEX_M                (3U)                                 </span><span class="comment">/* Cortex-M Core */</span><span class="preprocessor"></span></div>
+<div class="line"><span class="preprocessor">                                    __CM3_CMSIS_VERSION_SUB          )              </span><span class="comment">/* CMSIS HAL version number */</span><span class="preprocessor"></span></div>
+<div class="line"><span class="preprocessor"></span></div>
+<div class="line"><span class="preprocessor">#define __CORTEX_M                (3U)                                              </span><span class="comment">/* Cortex-M Core */</span><span class="preprocessor"></span></div>
 </div><!-- fragment --><p><b>core_cm4.h</b> </p>
-<div class="fragment"><div class="line"><span class="preprocessor">#define __CM4_CMSIS_VERSION_MAIN  (5U)                                 </span><span class="comment">/* [31:16] CMSIS HAL main version */</span><span class="preprocessor"></span></div>
-<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define __CM4_CMSIS_VERSION_SUB   (0U)                                 </span><span class="comment">/* [15:0]  CMSIS HAL sub version */</span><span class="preprocessor"></span></div>
+<div class="fragment"><div class="line"><span class="preprocessor">#define __CM4_CMSIS_VERSION_MAIN  (__CM_CMSIS_VERSION_MAIN)                         </span><span class="comment">/* [31:16] CMSIS HAL main version */</span><span class="preprocessor"></span></div>
+<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define __CM4_CMSIS_VERSION_SUB   (__CM_CMSIS_VERSION_SUB)                          </span><span class="comment">/* [15:0]  CMSIS HAL sub version */</span><span class="preprocessor"></span></div>
 <div class="line"><span class="preprocessor"></span><span class="preprocessor">#define __CM4_CMSIS_VERSION       ((__CM4_CMSIS_VERSION_MAIN &lt;&lt; 16U) | \</span></div>
-<div class="line"><span class="preprocessor">                                    __CM4_CMSIS_VERSION_SUB          ) </span><span class="comment">/* CMSIS HAL version number */</span><span class="preprocessor"></span></div>
-<div class="line"><span class="preprocessor"></span> </div>
-<div class="line"><span class="preprocessor">#define __CORTEX_M                (4U)                                 </span><span class="comment">/* Cortex-M Core */</span><span class="preprocessor"></span></div>
+<div class="line"><span class="preprocessor">                                    __CM4_CMSIS_VERSION_SUB          )              </span><span class="comment">/* CMSIS HAL version number */</span><span class="preprocessor"></span></div>
+<div class="line"><span class="preprocessor"></span></div>
+<div class="line"><span class="preprocessor">#define __CORTEX_M                (4U)                                              </span><span class="comment">/* Cortex-M Core */</span><span class="preprocessor"></span></div>
 </div><!-- fragment --><p><b>core_cm7.h</b> </p>
-<div class="fragment"><div class="line"><span class="preprocessor">#define __CM7_CMSIS_VERSION_MAIN  (5U)                                 </span><span class="comment">/* [31:16] CMSIS HAL main version */</span><span class="preprocessor"></span></div>
-<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define __CM7_CMSIS_VERSION_SUB   (0U)                                 </span><span class="comment">/* [15:0]  CMSIS HAL sub version */</span><span class="preprocessor"></span></div>
+<div class="fragment"><div class="line"><span class="preprocessor">#define __CM7_CMSIS_VERSION_MAIN  (__CM_CMSIS_VERSION_MAIN                          </span><span class="comment">/* [31:16] CMSIS HAL main version */</span><span class="preprocessor"></span></div>
+<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define __CM7_CMSIS_VERSION_SUB   (__CM_CMSIS_VERSION_SUB)                          </span><span class="comment">/* [15:0]  CMSIS HAL sub version */</span><span class="preprocessor"></span></div>
 <div class="line"><span class="preprocessor"></span><span class="preprocessor">#define __CM7_CMSIS_VERSION       ((__CM7_CMSIS_VERSION_MAIN &lt;&lt; 16U) | \</span></div>
-<div class="line"><span class="preprocessor">                                    __CM7_CMSIS_VERSION_SUB          ) </span><span class="comment">/* CMSIS HAL version number */</span><span class="preprocessor"></span></div>
-<div class="line"><span class="preprocessor"></span> </div>
-<div class="line"><span class="preprocessor">#define __CORTEX_M                (7U)                                 </span><span class="comment">/* Cortex-M Core */</span><span class="preprocessor"></span></div>
+<div class="line"><span class="preprocessor">                                    __CM7_CMSIS_VERSION_SUB          )              </span><span class="comment">/* CMSIS HAL version number */</span><span class="preprocessor"></span></div>
+<div class="line"><span class="preprocessor"></span></div>
+<div class="line"><span class="preprocessor">#define __CORTEX_M                (7U)                                              </span><span class="comment">/* Cortex-M Core */</span><span class="preprocessor"></span></div>
+</div><!-- fragment --><p><b>core_cm23.h</b> </p>
+<div class="fragment"><div class="line"><span class="preprocessor">#define __CM23_CMSIS_VERSION_MAIN  (__CM_CMSIS_VERSION_MAIN)                        </span><span class="comment">/* [31:16] CMSIS HAL main version */</span><span class="preprocessor"></span></div>
+<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define __CM23_CMSIS_VERSION_SUB   (__CM_CMSIS_VERSION_SUB)                         </span><span class="comment">/* [15:0]  CMSIS HAL sub version */</span><span class="preprocessor"></span></div>
+<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define __CM23_CMSIS_VERSION       ((__CM23_CMSIS_VERSION_MAIN &lt;&lt; 16U) | \</span></div>
+<div class="line"><span class="preprocessor">                                     __CM23_CMSIS_VERSION_SUB          )            </span><span class="comment">/* CMSIS HAL version number */</span><span class="preprocessor"></span></div>
+<div class="line"><span class="preprocessor"></span></div>
+<div class="line"><span class="preprocessor">#define __CORTEX_M                (23U)                                             </span><span class="comment">/* Cortex-M Core */</span><span class="preprocessor"></span></div>
+</div><!-- fragment --><p><b>core_cm33.h</b> </p>
+<div class="fragment"><div class="line"><span class="preprocessor">#define __CM33_CMSIS_VERSION_MAIN  (__CM_CMSIS_VERSION_MAIN)                        </span><span class="comment">/* [31:16] CMSIS HAL main version */</span><span class="preprocessor"></span></div>
+<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define __CM33_CMSIS_VERSION_SUB   (__CM_CMSIS_VERSION_SUB)                         </span><span class="comment">/* [15:0]  CMSIS HAL sub version */</span><span class="preprocessor"></span></div>
+<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define __CM33_CMSIS_VERSION       ((__CM33_CMSIS_VERSION_MAIN &lt;&lt; 16U) | \</span></div>
+<div class="line"><span class="preprocessor">                                     __CM33_CMSIS_VERSION_SUB          )            </span><span class="comment">/* CMSIS HAL version number */</span><span class="preprocessor"></span></div>
+<div class="line"><span class="preprocessor"></span></div>
+<div class="line"><span class="preprocessor">#define __CORTEX_M                (33U)                                             </span><span class="comment">/* Cortex-M Core */</span><span class="preprocessor"></span></div>
+</div><!-- fragment --><p><b>core_cm55.h</b> </p>
+<div class="fragment"><div class="line"><span class="preprocessor">#define __CM55_CMSIS_VERSION_MAIN  (__CM_CMSIS_VERSION_MAIN)                        </span><span class="comment">/* [31:16] CMSIS HAL main version */</span><span class="preprocessor"></span></div>
+<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define __CM55_CMSIS_VERSION_SUB   (__CM_CMSIS_VERSION_SUB)                         </span><span class="comment">/* [15:0]  CMSIS HAL sub version */</span><span class="preprocessor"></span></div>
+<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define __CM55_CMSIS_VERSION       ((__CM55_CMSIS_VERSION_MAIN &lt;&lt; 16U) | \</span></div>
+<div class="line"><span class="preprocessor">                                     __CM55_CMSIS_VERSION_SUB          )            </span><span class="comment">/* CMSIS HAL version number */</span><span class="preprocessor"></span></div>
+<div class="line"><span class="preprocessor"></span></div>
+<div class="line"><span class="preprocessor">#define __CORTEX_M                (7U)                                              </span><span class="comment">/* Cortex-M Core */</span><span class="preprocessor"></span></div>
 </div><!-- fragment --><p><b>core_sc000.h</b> </p>
-<div class="fragment"><div class="line"><span class="preprocessor">#define __SC000_CMSIS_VERSION_MAIN  (5U)                                   </span><span class="comment">/* [31:16] CMSIS HAL main version */</span><span class="preprocessor"></span></div>
-<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define __SC000_CMSIS_VERSION_SUB   (0U)                                   </span><span class="comment">/* [15:0]  CMSIS HAL sub version */</span><span class="preprocessor"></span></div>
+<div class="fragment"><div class="line"><span class="preprocessor">#define __SC000_CMSIS_VERSION_MAIN  (__CM_CMSIS_VERSION_MAIN)                       </span><span class="comment">/* [31:16] CMSIS HAL main version */</span><span class="preprocessor"></span></div>
+<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define __SC000_CMSIS_VERSION_SUB   (__CM_CMSIS_VERSION_SUB)                        </span><span class="comment">/* [15:0]  CMSIS HAL sub version */</span><span class="preprocessor"></span></div>
 <div class="line"><span class="preprocessor"></span><span class="preprocessor">#define __SC000_CMSIS_VERSION       ((__SC000_CMSIS_VERSION_MAIN &lt;&lt; 16U) | \</span></div>
-<div class="line"><span class="preprocessor">                                      __SC000_CMSIS_VERSION_SUB          ) </span><span class="comment">/* CMSIS HAL version number */</span><span class="preprocessor"></span></div>
+<div class="line"><span class="preprocessor">                                      __SC000_CMSIS_VERSION_SUB          )          </span><span class="comment">/* CMSIS HAL version number */</span><span class="preprocessor"></span></div>
 <div class="line"><span class="preprocessor"></span></div>
-<div class="line"><span class="preprocessor">#define __CORTEX_SC                 (0U)                                   </span><span class="comment">/* Cortex secure core */</span><span class="preprocessor"></span></div>
+<div class="line"><span class="preprocessor">#define __CORTEX_SC                 (0U)                                            </span><span class="comment">/* Cortex secure core */</span><span class="preprocessor"></span></div>
 </div><!-- fragment --><p><b>core_sc300.h</b> </p>
-<div class="fragment"><div class="line"><span class="preprocessor">#define __SC300_CMSIS_VERSION_MAIN  (5U)                                   </span><span class="comment">/* [31:16] CMSIS HAL main version */</span><span class="preprocessor"></span></div>
-<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define __SC300_CMSIS_VERSION_SUB   (0U)                                   </span><span class="comment">/* [15:0]  CMSIS HAL sub version */</span><span class="preprocessor"></span></div>
+<div class="fragment"><div class="line"><span class="preprocessor">#define __SC300_CMSIS_VERSION_MAIN  (__CM_CMSIS_VERSION_MAIN)                       </span><span class="comment">/* [31:16] CMSIS HAL main version */</span><span class="preprocessor"></span></div>
+<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define __SC300_CMSIS_VERSION_SUB   (__CM_CMSIS_VERSION_SUB)                        </span><span class="comment">/* [15:0]  CMSIS HAL sub version */</span><span class="preprocessor"></span></div>
 <div class="line"><span class="preprocessor"></span><span class="preprocessor">#define __SC300_CMSIS_VERSION       ((__SC300_CMSIS_VERSION_MAIN &lt;&lt; 16U) | \</span></div>
-<div class="line"><span class="preprocessor">                                      __SC300_CMSIS_VERSION_SUB          ) </span><span class="comment">/* CMSIS HAL version number */</span><span class="preprocessor"></span></div>
+<div class="line"><span class="preprocessor">                                      __SC300_CMSIS_VERSION_SUB          )          </span><span class="comment">/* CMSIS HAL version number */</span><span class="preprocessor"></span></div>
 <div class="line"><span class="preprocessor"></span></div>
-<div class="line"><span class="preprocessor">#define __CORTEX_SC                 (300U)                                 </span><span class="comment">/* Cortex secure core */</span><span class="preprocessor"></span></div>
+<div class="line"><span class="preprocessor">#define __CORTEX_SC                 (300U)                                          </span><span class="comment">/* Cortex secure core */</span><span class="preprocessor"></span></div>
+</div><!-- fragment --><p><b>core_cm35p.h</b> </p>
+<div class="fragment"><div class="line"><span class="preprocessor">#define __CM35P_CMSIS_VERSION_MAIN  (__CM_CMSIS_VERSION_MAIN)                       </span><span class="comment">/* [31:16] CMSIS HAL main version */</span><span class="preprocessor"></span></div>
+<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define __CM35P_CMSIS_VERSION_SUB   (__CM_CMSIS_VERSION_SUB)                        </span><span class="comment">/* [15:0]  CMSIS HAL sub version */</span><span class="preprocessor"></span></div>
+<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define __CM35P_CMSIS_VERSION       ((__CM35P_CMSIS_VERSION_MAIN &lt;&lt; 16U) | \</span></div>
+<div class="line"><span class="preprocessor">                                      __CM35P_CMSIS_VERSION_SUB          )          </span><span class="comment">/* CMSIS HAL version number */</span><span class="preprocessor"></span></div>
+<div class="line"><span class="preprocessor"></span></div>
+<div class="line"><span class="preprocessor">#define __CORTEX_M                (35U)                                             </span><span class="comment">/* Cortex-M Core */</span><span class="preprocessor"></span></div>
 </div><!-- fragment --><p><b>core_ARMv8MBL.h</b> </p>
-<div class="fragment"><div class="line"><span class="preprocessor">#define __ARMv8MBL_CMSIS_VERSION_MAIN  (5U)                                       </span><span class="comment">/* [31:16] CMSIS HAL main version */</span><span class="preprocessor"></span></div>
-<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define __ARMv8MBL_CMSIS_VERSION_SUB   (0U)                                       </span><span class="comment">/* [15:0]  CMSIS HAL sub version */</span><span class="preprocessor"></span></div>
+<div class="fragment"><div class="line"><span class="preprocessor">#define __ARMv8MBL_CMSIS_VERSION_MAIN  (__CM_CMSIS_VERSION_MAIN)                    </span><span class="comment">/* [31:16] CMSIS HAL main version */</span><span class="preprocessor"></span></div>
+<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define __ARMv8MBL_CMSIS_VERSION_SUB   (__CM_CMSIS_VERSION_SUB)                     </span><span class="comment">/* [15:0]  CMSIS HAL sub version */</span><span class="preprocessor"></span></div>
 <div class="line"><span class="preprocessor"></span><span class="preprocessor">#define __ARMv8MBL_CMSIS_VERSION       ((__ARMv8MBL_CMSIS_VERSION_MAIN &lt;&lt; 16U) | \</span></div>
-<div class="line"><span class="preprocessor">                                         __ARMv8MBL_CMSIS_VERSION_SUB           ) </span><span class="comment">/* CMSIS HAL version number */</span><span class="preprocessor"></span></div>
-<div class="line"><span class="preprocessor"></span> </div>
-<div class="line"><span class="preprocessor">#define __CORTEX_M                     (tbd)                                      </span><span class="comment">/* Cortex secure core */</span><span class="preprocessor"></span></div>
+<div class="line"><span class="preprocessor">                                         __ARMv8MBL_CMSIS_VERSION_SUB           )   </span><span class="comment">/* CMSIS HAL version number */</span><span class="preprocessor"></span></div>
+<div class="line"><span class="preprocessor"></span></div>
+<div class="line"><span class="preprocessor">#define __CORTEX_M                     (2U)                                         </span><span class="comment">/* Cortex secure core */</span><span class="preprocessor"></span></div>
 </div><!-- fragment --><p><b>core_ARMv8MML.h</b> </p>
-<div class="fragment"><div class="line"><span class="preprocessor">#define __ARMv8MML_CMSIS_VERSION_MAIN  (5U)                                       </span><span class="comment">/* [31:16] CMSIS HAL main version */</span><span class="preprocessor"></span></div>
-<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define __ARMv8MML_CMSIS_VERSION_SUB   (0U)                                       </span><span class="comment">/* [15:0]  CMSIS HAL sub version */</span><span class="preprocessor"></span></div>
+<div class="fragment"><div class="line"><span class="preprocessor">#define __ARMv8MML_CMSIS_VERSION_MAIN  (__CM_CMSIS_VERSION_MAIN)                    </span><span class="comment">/* [31:16] CMSIS HAL main version */</span><span class="preprocessor"></span></div>
+<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define __ARMv8MML_CMSIS_VERSION_SUB   (__CM_CMSIS_VERSION_SUB)                     </span><span class="comment">/* [15:0]  CMSIS HAL sub version */</span><span class="preprocessor"></span></div>
 <div class="line"><span class="preprocessor"></span><span class="preprocessor">#define __ARMv8MML_CMSIS_VERSION       ((__ARMv8MML_CMSIS_VERSION_MAIN &lt;&lt; 16U) | \</span></div>
-<div class="line"><span class="preprocessor">                                         __ARMv8MML_CMSIS_VERSION_SUB           ) </span><span class="comment">/* CMSIS HAL version number */</span><span class="preprocessor"></span></div>
-<div class="line"><span class="preprocessor"></span> </div>
-<div class="line"><span class="preprocessor">#define __CORTEX_M                     (tbd)                                      </span><span class="comment">/* Cortex secure core */</span><span class="preprocessor"></span></div>
+<div class="line"><span class="preprocessor">                                         __ARMv8MML_CMSIS_VERSION_SUB           )   </span><span class="comment">/* CMSIS HAL version number */</span><span class="preprocessor"></span></div>
+<div class="line"><span class="preprocessor"></span></div>
+<div class="line"><span class="preprocessor">#define __CORTEX_M                     (80U)                                        </span><span class="comment">/* Cortex secure core */</span><span class="preprocessor"></span></div>
 </div><!-- fragment --><h1><a class="anchor" id="device_access"></a>
 Device Peripheral Access Layer</h1>
 <p>The <a class="el" href="device_h_pg.html">Device Header File &lt;device.h&gt;</a> contains for each peripheral:</p>
@@ -649,7 +705,7 @@ typedef struct
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="templates_pg.html">CMSIS-Core Device Templates</a></li>
-    <li class="footer">Generated on Wed Jul 10 2019 15:20:25 for CMSIS-Core (Cortex-M) Version 5.3.0 by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Apr 9 2020 15:49:07 for CMSIS-Core (Cortex-M) Version 5.4.0 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

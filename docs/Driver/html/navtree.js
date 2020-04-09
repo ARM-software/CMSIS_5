@@ -28,6 +28,7 @@ var NAVTREE =
       [ "Sample Test Output", "driverValidation.html#test_output", null ],
       [ "Setup for Loop Back Communication", "driverValidation.html#loop_back_setup", null ]
     ] ],
+    [ "Deprecated List", "deprecated.html", null ],
     [ "Reference", "modules.html", "modules" ],
     [ "Data Structures", "annotated.html", "annotated" ],
     [ "Data Structure Index", "classes.html", null ],
@@ -41,12 +42,12 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "Driver__CAN_8h.html#ga11c12020b81a63a73a8b53e96a7e3deaa3b6d191c99f1eba4f01bcc5fbfaf67f3",
-"group__can__interface__gr.html#a2171ea8dff5e4b54e84728aa134854b6",
-"group__flash__interface__gr.html#a8dfb9d5160358e45293bba527762238d",
-"group__nand__bus__mode__codes.html#ga8a2d599082b9fe56cee1c6454bb3c6a1",
-"group__spi__bit__order__ctrls.html#ga41c53c3b396a89ce78018467e561aaaf",
-"group__usart__mode__control.html#gade65a1c27d9097d9ef0e86c02b55cecd",
-"group__wifi__soc__func.html"
+"group__can__interface__gr.html",
+"group__flash__interface__gr.html#a50947f9a42bbaa2d68d6e5079150d7bf",
+"group__nand__bus__mode__codes.html#ga475a339e929eca46e11bc8a7b330aa45",
+"group__sai__slot__control.html#ga8f2cf3a212ca7fe389e00b082efb5d0b",
+"group__usart__mode__control.html",
+"group__wifi__interface__gr.html#a471a1be6d9adbccb83ca1f268643031c"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

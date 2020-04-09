@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Pack
-   &#160;<span id="projectnumber">Version 1.6.1</span>
+   &#160;<span id="projectnumber">Version 1.6.3</span>
    </div>
    <div id="projectbrief">Delivery Mechanism for Software Packs</div>
   </td>
@@ -170,6 +170,10 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <tr>
 <td><a class="el" href="pdsc_family_pg.html#element_debugport">debugport</a> </td><td>Describe a debug port relevant to all devices of the family. </td><td>DebugPortType </td><td>0..*  </td></tr>
 <tr>
+<td><a class="el" href="pdsc_family_pg.html#element_accessportV1">accessportV1</a> </td><td>Describe an access port (APv1) relevant to all devices of the family. </td><td>AccessPortV1Type </td><td>0..*  </td></tr>
+<tr>
+<td><a class="el" href="pdsc_family_pg.html#element_accessportV2">accessportV2</a> </td><td>Describe an access port (APv2) relevant to all devices of the family. </td><td>AccessPortV2Type </td><td>0..*  </td></tr>
+<tr>
 <td><a class="el" href="pdsc_family_pg.html#element_debug">debug</a> </td><td>Specify debug options that are relevant to all devices of the family. </td><td>DebugType </td><td>0..*  </td></tr>
 <tr>
 <td><a class="el" href="pdsc_family_pg.html#element_trace">trace</a> </td><td>Specify trace options that are relevant to all devices of the family. </td><td>TraceType </td><td>0..*  </td></tr>
@@ -249,6 +253,10 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <tr>
 <td><a class="el" href="pdsc_family_pg.html#element_debugport">debugport</a> </td><td>Describe a debug port relevant to all devices of the sub-family. </td><td>DebugPortType </td><td>0..*  </td></tr>
 <tr>
+<td><a class="el" href="pdsc_family_pg.html#element_accessportV1">accessportV1</a> </td><td>Describe an access port (APv1) relevant to all devices of the sub-family. </td><td>AccessPortV1Type </td><td>0..*  </td></tr>
+<tr>
+<td><a class="el" href="pdsc_family_pg.html#element_accessportV2">accessportV2</a> </td><td>Describe an access port (APv2) relevant to all devices of the sub-family. </td><td>AccessPortV2Type </td><td>0..*  </td></tr>
+<tr>
 <td><a class="el" href="pdsc_family_pg.html#element_debug">debug</a> </td><td>Specify debug options that are relevant to all devices of the sub-family. </td><td>DebugType </td><td>0..*  </td></tr>
 <tr>
 <td><a class="el" href="pdsc_family_pg.html#element_trace">trace</a> </td><td>Specify trace options that are relevant to all devices of the sub-family. </td><td>TraceType </td><td>0..*  </td></tr>
@@ -325,6 +333,10 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <tr>
 <td><a class="el" href="pdsc_family_pg.html#element_debugport">debugport</a> </td><td>Describe a debug port specific to this device. </td><td>DebugPortType </td><td>0..*  </td></tr>
 <tr>
+<td><a class="el" href="pdsc_family_pg.html#element_accessportV1">accessportV1</a> </td><td>Describe an access port (APv1) specific to this device. </td><td>AccessPortV1Type </td><td>0..*  </td></tr>
+<tr>
+<td><a class="el" href="pdsc_family_pg.html#element_accessportV2">accessportV2</a> </td><td>Describe an access port (APv2) specific to this device. </td><td>AccessPortV2Type </td><td>0..*  </td></tr>
+<tr>
 <td><a class="el" href="pdsc_family_pg.html#element_debug">debug</a> </td><td>Specify debug options specific to this device. </td><td>DebugType </td><td>0..*  </td></tr>
 <tr>
 <td><a class="el" href="pdsc_family_pg.html#element_trace">trace</a> </td><td>Specify trace options specific to this device. </td><td>TraceType </td><td>0..*  </td></tr>
@@ -351,7 +363,7 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <div class="line">    &lt;algorithm name=<span class="stringliteral">&quot;Flash/STM32F2xx_1024.flm&quot;</span> start=0x08000000 size=0x20000 <span class="keywordflow">default</span>=<span class="stringliteral">&quot;1&quot;</span> style=<span class="stringliteral">&quot;Keil&quot;</span>/&gt;       </div>
 <div class="line"></div>
 <div class="line">    &lt;device Dname=<span class="stringliteral">&quot;STM32F405OE&quot;</span>&gt;</div>
-<div class="line">          &lt;!-- <span class="keywordflow">finally</span>, <span class="keyword">this</span> is the <span class="keywordflow">default</span> <span class="keywordflow">for</span> the device --&gt;</div>
+<div class="line">      &lt;!-- <span class="keywordflow">finally</span>, <span class="keyword">this</span> is the <span class="keywordflow">default</span> <span class="keywordflow">for</span> the device --&gt;</div>
 <div class="line">      &lt;algorithm name=<span class="stringliteral">&quot;Flash/STM32F2xx_2048.flm&quot;</span> start=0x08000000 size=0x40000 <span class="keywordflow">default</span>=<span class="stringliteral">&quot;1&quot;</span> style=<span class="stringliteral">&quot;Keil&quot;</span>/&gt;</div>
 <div class="line">    &lt;/device&gt;</div>
 <div class="line">    ...</div>
@@ -620,7 +632,7 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <div class="line">      &lt;environment name=<span class="stringliteral">&quot;MyConfigTool&quot;</span>&gt;</div>
 <div class="line">        &lt;file&gt;MyConfigFile.cfg&lt;/file&gt;</div>
 <div class="line">        &lt;control&gt;MyControlString&lt;/control&gt;</div>
-<div class="line">                ...</div>
+<div class="line">        ...</div>
 <div class="line">      &lt;/environment&gt;</div>
 <div class="line">      ...</div>
 <div class="line">    &lt;/family&gt;</div>
@@ -632,7 +644,7 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <div class="line">      ...    </div>
 <div class="line">      &lt;environment name=<span class="stringliteral">&quot;uv&quot;</span> Pname=<span class="stringliteral">&quot;M0&quot;</span>&gt;</div>
 <div class="line">        &lt;CMisc&gt;--C99&lt;/CMisc&gt;</div>
-<div class="line">                ...</div>
+<div class="line">        ...</div>
 <div class="line">      &lt;/environment&gt;</div>
 <div class="line">      ...</div>
 <div class="line">    &lt;/family&gt;</div>
@@ -728,8 +740,7 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <td>name </td><td>Descriptive name of the feature. For example, "16-bit down counting timer". If omitted, the <b>Default Name</b> is used as described in the table <a class="el" href="pdsc_family_pg.html#DeviceFeatureTypeEnum">Device Feature Types</a>. </td><td>xs:string </td><td>optional  </td></tr>
 </table>
 <p><br/>
-</p>
-<p><a class="anchor" id="DeviceFeatureTypeEnum"></a><b>Table: Device Feature Types</b></p>
+ <a class="anchor" id="DeviceFeatureTypeEnum"></a><b>Table: Device Feature Types</b></p>
 <p>The table lists predefined device features (peripherals). </p>
 <dl class="section note"><dt>Note</dt><dd>The attribute <em>name</em> of the element <a class="el" href="pdsc_family_pg.html#element_feature">/package/devices/family/.../feature</a> is a descriptive text for a feature. If <em>name</em> is omitted, then the <b>Default Name</b> is used.</dd></dl>
 <table class="doxtable">
@@ -959,7 +970,6 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <p>The table lists the letters and their meaning for use in the access attribute string. The values can be used in:</p>
 <ul>
 <li><a class="el" href="pdsc_family_pg.html#element_memory">/package/devices/family/.../memory</a></li>
-<li><a class="el" href="cpdsc_pg.html#element_target_memory">/package/create/project/target/memory</a></li>
 </ul>
 <table  class="cmtable" summary="Memory Access Permission Attributes">
 <tr>
@@ -1189,7 +1199,6 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <p>The table lists the predefined Flash algorithm style. These values can be used in:</p>
 <ul>
 <li><a class="el" href="pdsc_family_pg.html#element_algorithm">/package/devices/family/.../algorithm</a></li>
-<li><a class="el" href="cpdsc_pg.html#element_target_algorithm">/package/create/project/target/algorithm</a></li>
 </ul>
 <table  class="cmtable" summary="Enumeration: AlgorithmStyleEnum">
 <tr>
@@ -1233,6 +1242,8 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <td class="XML-Token">Cortex-M33 </td><td><a href="http://developer.arm.com/products/processors/cortex-m/cortex-m33" target="_blank">Arm Cortex-M33</a> processor based device  </td></tr>
 <tr>
 <td class="XML-Token">Cortex-M35P </td><td><a href="http://developer.arm.com/products/processors/cortex-m/cortex-m35p" target="_blank">Arm Cortex-M35P</a> processor based device  </td></tr>
+<tr>
+<td class="XML-Token">Cortex-M55 </td><td><a href="http://developer.arm.com/products/processors/cortex-m/cortex-m55" target="_blank">Arm Cortex-M55</a> processor based device  </td></tr>
 <tr>
 <td class="XML-Token">SC000 </td><td>SecurCore <a href="http://developer.arm.com/products/processors/cortex-m/sc000-processor" target="_blank">SC000</a> based on technology of Cortex-M0.  </td></tr>
 <tr>
@@ -1278,13 +1289,12 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 </table>
 <p>&#160;</p>
 <p><a class="anchor" id="DfpuEnum"></a><b>Table: Device FPU</b></p>
-<p>The table lists values that identicate whether a CPU has an Floating Point Unit (FPU). The tokens can be used in the elements:</p>
+<p>The table lists values that indicate whether a CPU has an Floating Point Unit (FPU). The tokens can be used in the elements:</p>
 <ul>
 <li><a class="el" href="pdsc_conditions_pg.html#element_accept">/package/conditions/condition/accept</a></li>
 <li><a class="el" href="pdsc_conditions_pg.html#element_require">/package/conditions/condition/require</a></li>
 <li><a class="el" href="pdsc_conditions_pg.html#element_deny">/package/conditions/condition/deny</a></li>
 <li><a class="el" href="pdsc_family_pg.html#element_processor">/package/devices/family/.../processor</a></li>
-<li><a class="el" href="cpdsc_pg.html#cpdsc_target_pg">/package/create/project/target</a></li>
 </ul>
 <table  class="cmtable" summary="Enumeration: DfpuEnum">
 <tr>
@@ -1306,7 +1316,6 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <li><a class="el" href="pdsc_conditions_pg.html#element_require">/package/conditions/condition/require</a></li>
 <li><a class="el" href="pdsc_conditions_pg.html#element_deny">/package/conditions/condition/deny</a></li>
 <li><a class="el" href="pdsc_family_pg.html#element_processor">/package/devices/family/.../processor</a></li>
-<li><a class="el" href="cpdsc_pg.html#cpdsc_target_pg">/package/create/project/target</a></li>
 </ul>
 <table  class="cmtable" summary="Enumeration: DmpuEnum">
 <tr>
@@ -1349,7 +1358,7 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <tr>
 <td class="XML-Token">Non-secure </td><td>Application is built to run in non-secure mode.  </td></tr>
 <tr>
-<td class="XML-Token">TrustZone-disabled </td><td>Application is built with TrustZone security disabled.  </td></tr>
+<td class="XML-Token">TZ-disabled </td><td>Application is built with TrustZone security disabled.  </td></tr>
 </table>
 <p>&#160;</p>
 <p><a class="anchor" id="DdspEnum"></a><b>Table: Device implements DSP Instructions</b></p>
@@ -1395,8 +1404,6 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <li><a class="el" href="pdsc_conditions_pg.html#element_require">/package/conditions/condition/require</a></li>
 <li><a class="el" href="pdsc_conditions_pg.html#element_deny">/package/conditions/condition/deny</a></li>
 <li><a class="el" href="pdsc_family_pg.html#element_processor">/package/devices/family/.../processor</a></li>
-<li><a class="el" href="cpdsc_pg.html#cpdsc_target_pg">/package/create/project/target</a></li>
-<li><a class="el" href="cpdsc_pg.html#element_target_algorithm">/package/create/project/target/algorithm</a></li>
 </ul>
 <table  class="cmtable" summary="Enumeration: DendianEnum">
 <tr>
@@ -1447,7 +1454,6 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <p>The table lists the values for debug protocol types. The values can be used in</p>
 <ul>
 <li><a class="el" href="pdsc_family_pg.html#element_debugconfig">/package/devices/family/.../debugconfig</a></li>
-<li><a class="el" href="cpdsc_pg.html#element_debugProbe">/package/create/project/target/debugProbe</a></li>
 </ul>
 <table  class="cmtable" summary="Enumeration: DataPatchAccessTypeEnum">
 <tr>
@@ -1595,6 +1601,103 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <td><a class="el" href="pdsc_family_pg.html#element_dp_swd">swd</a> </td><td>Describe CoreSight Serial Wire Debug Port (SW-DP) properties of this debug port. </td><td>SwdType </td><td>0..1  </td></tr>
 <tr>
 <td><a class="el" href="pdsc_family_pg.html#element_dp_cjtag">cjtag</a> </td><td>Describe CJTAG Test Access Port (TAP) properties of this debug port. </td><td>CjtagType </td><td>0..1  </td></tr>
+</table>
+<p>&#160;</p>
+<hr/>
+<h1><a class="anchor" id="element_accessportV1"></a>
+/package/devices/family/.../accessportV1</h1>
+<p>Describes a CoreSight access port (APv1) of the device and its selection parameters. The element can occur on various levels. Use unique ID values for the attribute <b>__apid</b> to distinguish multiple <b>accessportV1</b> and <b><a class="el" href="pdsc_family_pg.html#element_accessportV2">accessportV2</a></b> elements in later references.</p>
+<p><b>accessportV1</b> elements are required for targets that mix ADIv5 and ADIv6 debug ports and hence also have <a class="el" href="pdsc_family_pg.html#element_accessportV2">APv2</a> access ports. Pairs of <b>__dp</b> and <b>__ap</b> values must not be used to reference an access port if a debug description describes access port elements.</p>
+<p><b>Example</b> </p>
+<div class="fragment"><div class="line">&lt;family Dvendor=<span class="stringliteral">&quot;ARM:82&quot;</span> Dfamily=<span class="stringliteral">&quot;...&quot;</span>&gt;</div>
+<div class="line">  ...</div>
+<div class="line">  &lt;debugport __dp=<span class="stringliteral">&quot;0&quot;</span>&gt;  &lt;!-- ADIv5 DAP --&gt;</div>
+<div class="line">    &lt;jtag tapindex=<span class="stringliteral">&quot;0&quot;</span>/&gt;</div>
+<div class="line">    &lt;swd/&gt;</div>
+<div class="line">  &lt;/debugport&gt;</div>
+<div class="line">  </div>
+<div class="line">  &lt;debugport __dp=<span class="stringliteral">&quot;1&quot;</span>&gt;  &lt;!-- ADIv6 DAP --&gt;</div>
+<div class="line">    &lt;jtag tapindex=<span class="stringliteral">&quot;1&quot;</span>/&gt;</div>
+<div class="line">  &lt;/debugport&gt;</div>
+<div class="line"></div>
+<div class="line">  &lt;!-- ADIv5 DAP --&gt;</div>
+<div class="line">  &lt;accessportV1 __apid=<span class="stringliteral">&quot;0&quot;</span> _dp=<span class="stringliteral">&quot;0&quot;</span> index=<span class="stringliteral">&quot;0&quot;</span>/&gt;</div>
+<div class="line">  &lt;accessportV1 __apid=<span class="stringliteral">&quot;1&quot;</span> _dp=<span class="stringliteral">&quot;0&quot;</span> index=<span class="stringliteral">&quot;1&quot;</span>/&gt;</div>
+<div class="line">    </div>
+<div class="line">  &lt;!-- ADIv6 DAP --&gt;</div>
+<div class="line">  &lt;accessportV2 __apid=<span class="stringliteral">&quot;2&quot;</span> _dp=<span class="stringliteral">&quot;1&quot;</span> address=<span class="stringliteral">&quot;0x00002000&quot;</span>/&gt;</div>
+<div class="line">  &lt;accessportV2 __apid=<span class="stringliteral">&quot;3&quot;</span> _dp=<span class="stringliteral">&quot;1&quot;</span> address=<span class="stringliteral">&quot;0x00004000&quot;</span>/&gt;</div>
+<div class="line">   </div>
+<div class="line">  ...</div>
+<div class="line">&lt;/family&gt;</div>
+</div><!-- fragment --><p>&#160;</p>
+<table  class="cmtable" summary="Element: accessportV1">
+<tr>
+<th>Parents </th><th colspan="3">Element Chain  </th></tr>
+<tr>
+<td><a class="el" href="pdsc_family_pg.html#element_family">family</a> </td><td colspan="3"><a class="el" href="pdsc_family_pg.html#element_family">/package/devices/family</a>  </td></tr>
+<tr>
+<td><a class="el" href="pdsc_family_pg.html#element_subFamily">subFamily</a> </td><td colspan="3"><a class="el" href="pdsc_family_pg.html#element_subFamily">/package/devices/family/subFamily</a>  </td></tr>
+<tr>
+<td><a class="el" href="pdsc_family_pg.html#element_device">device</a> </td><td colspan="3"><a class="el" href="pdsc_family_pg.html#element_device">/package/devices/family/../device</a>  </td></tr>
+<tr>
+<th>Attributes </th><th>Description </th><th>Type </th><th>Use  </th></tr>
+<tr>
+<td>__apid </td><td>Unique ID of this element with respect to other <a class="el" href="pdsc_family_pg.html#element_accessportV2">access port elements</a>. It must be used consistently in references within the scope of the parent section.  </td><td>xs:unsignedInt </td><td>required  </td></tr>
+<tr>
+<td>__dp </td><td>Unique ID of the <b>debugport</b> used to access this access port. Optional if exactly one <b>debugport</b> exists.  </td><td>xs:unsignedInt </td><td>optional  </td></tr>
+<tr>
+<td>index </td><td>The index to select this access port for a target access.  </td><td>xs:unsignedInt </td><td>required  </td></tr>
+</table>
+<p>&#160;</p>
+<hr/>
+<h1><a class="anchor" id="element_accessportV2"></a>
+/package/devices/family/.../accessportV2</h1>
+<p>Describes a CoreSight access port (APv2) of the device as introduced with the Arm Debug Interfaces (ADI) v6 and its selection parameters. The element can occur on various levels. Use unique ID values for the attribute <b>__apid</b> to distinguish multiple <b><a class="el" href="pdsc_family_pg.html#element_accessportV1">accessportV1</a></b> and <b>accessportV2</b> elements in later references.</p>
+<p>An <b>accessportV2</b> must be later selected via <b>__apid</b>. It is not possible to use a pair of <b>__dp</b> and <b>__ap</b> values.</p>
+<p><b>Example</b> </p>
+<div class="fragment"><div class="line">&lt;family Dvendor=<span class="stringliteral">&quot;ARM:82&quot;</span> Dfamily=<span class="stringliteral">&quot;...&quot;</span>&gt;</div>
+<div class="line">  ...</div>
+<div class="line">  &lt;debugport __dp=<span class="stringliteral">&quot;0&quot;</span>&gt;  &lt;!-- ADIv5 DAP --&gt;</div>
+<div class="line">    &lt;jtag tapindex=<span class="stringliteral">&quot;0&quot;</span>/&gt;</div>
+<div class="line">    &lt;swd/&gt;</div>
+<div class="line">  &lt;/debugport&gt;</div>
+<div class="line">  </div>
+<div class="line">  &lt;debugport __dp=<span class="stringliteral">&quot;1&quot;</span>&gt;  &lt;!-- ADIv6 DAP --&gt;</div>
+<div class="line">    &lt;jtag tapindex=<span class="stringliteral">&quot;1&quot;</span>/&gt;</div>
+<div class="line">  &lt;/debugport&gt;</div>
+<div class="line"></div>
+<div class="line">  &lt;!-- ADIv5 DAP --&gt;</div>
+<div class="line">  &lt;accessportV1 __apid=<span class="stringliteral">&quot;0&quot;</span> _dp=<span class="stringliteral">&quot;0&quot;</span> index=<span class="stringliteral">&quot;0&quot;</span>/&gt;</div>
+<div class="line">  &lt;accessportV1 __apid=<span class="stringliteral">&quot;1&quot;</span> _dp=<span class="stringliteral">&quot;0&quot;</span> index=<span class="stringliteral">&quot;1&quot;</span>/&gt;</div>
+<div class="line">    </div>
+<div class="line">  &lt;!-- ADIv6 DAP --&gt;</div>
+<div class="line">  &lt;accessportV2 __apid=<span class="stringliteral">&quot;2&quot;</span> _dp=<span class="stringliteral">&quot;1&quot;</span> address=<span class="stringliteral">&quot;0x00002000&quot;</span>/&gt;</div>
+<div class="line">  &lt;accessportV2 __apid=<span class="stringliteral">&quot;3&quot;</span> _dp=<span class="stringliteral">&quot;1&quot;</span> address=<span class="stringliteral">&quot;0x00004000&quot;</span>/&gt;</div>
+<div class="line">    </div>
+<div class="line">  ...</div>
+<div class="line">&lt;/family&gt;</div>
+</div><!-- fragment --><p>&#160;</p>
+<table  class="cmtable" summary="Element: accessportV2">
+<tr>
+<th>Parents </th><th colspan="3">Element Chain  </th></tr>
+<tr>
+<td><a class="el" href="pdsc_family_pg.html#element_family">family</a> </td><td colspan="3"><a class="el" href="pdsc_family_pg.html#element_family">/package/devices/family</a>  </td></tr>
+<tr>
+<td><a class="el" href="pdsc_family_pg.html#element_subFamily">subFamily</a> </td><td colspan="3"><a class="el" href="pdsc_family_pg.html#element_subFamily">/package/devices/family/subFamily</a>  </td></tr>
+<tr>
+<td><a class="el" href="pdsc_family_pg.html#element_device">device</a> </td><td colspan="3"><a class="el" href="pdsc_family_pg.html#element_device">/package/devices/family/../device</a>  </td></tr>
+<tr>
+<th>Attributes </th><th>Description </th><th>Type </th><th>Use  </th></tr>
+<tr>
+<td>__apid </td><td>Unique ID of this element with respect to other <a class="el" href="pdsc_family_pg.html#element_accessportV1">access port elements</a>. It must be used consistently in references within the scope of the parent section.  </td><td>xs:unsignedInt </td><td>required  </td></tr>
+<tr>
+<td>__dp </td><td>Unique ID of the <b>debugport</b> used to access this access port. Optional if exactly one <b>debugport</b> exists.  </td><td>xs:unsignedInt </td><td>optional  </td></tr>
+<tr>
+<td>address </td><td>The address to select this access port in its parent's address space for a target access.  </td><td>xs:unsignedInt </td><td>required  </td></tr>
+<tr>
+<td>parent </td><td>Reference to the <b>__apid</b> of the parent access port if the system contains nested APv2 access ports.<br/>
+ <b>parent</b> must not be specified if the access port is directly connected to the <b>debugport</b>.  </td><td>xs:unsignedInt </td><td>optional  </td></tr>
 </table>
 <p>&#160;</p>
 <hr/>
@@ -1969,7 +2072,8 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <div class="line">  </div>
 <div class="line">&lt;/sequence&gt;</div>
 </div><!-- fragment --></li>
-<li>The debug access variables <b>__dp</b>, <b>__ap</b>, and <b>__errorcontrol</b> can be modified within a debug access sequence. An assigned value is held until leaving the sequence. Calling another sequence by the <b>Sequence</b> debug access function will push their values on a sequence execution stack. The values are restored when returning from such a call.</li>
+<li>The debug access variables <b>__dp</b>, <b>__ap</b>, <b>__apid</b>, and <b>__errorcontrol</b> can be modified within a debug access sequence. An assigned value is held until leaving the sequence. Calling another sequence by the <b>Sequence</b> debug access function will push their values on a sequence execution stack. The values are restored when returning from such a call.</li>
+<li>Please refer to <a class="el" href="debug_description.html#DebugFunctions">Debug Access Functions</a> for how to use <b>__dp</b>, <b>__ap</b>, and <b>__apid</b> to select access ports for target accesses.</li>
 <li>The debug access variable <b>__Result</b> can be modified within a debug access sequence. Its value is held until the debug access sequence returns to the debugger. Hence its value is <b>not</b> pushed on a sequence execution stack when calling into another sequence by the <b>Sequence</b> debug access function.</li>
 </ul>
 <p><a class="anchor" id="ExpressionType"></a><b>Expression Rules</b></p>
@@ -2040,13 +2144,18 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <tr>
 <td>__dp </td><td>Default debug port ID to use for target accesses in this debug connection. The allowed values are defined in <b>debugport</b> elements for this device. If no <b>debugport</b> element exists, the only allowed value is <span class="XML-Token">0</span>.<br/>
  The debug access variable <b>__dp</b> is initialized to this value when entering a pre-defined debug access sequence because of a debug event.<br/>
- This attribute defaults to <span class="XML-Token">0</span> if not set. </td><td>xs:unsignedInt </td><td>optional  </td></tr>
+ This attribute defaults to <span class="XML-Token">0</span> if not set.<br/>
+ Must not be used if <a class="el" href="pdsc_family_pg.html#element_accessportV1">accessportV1</a> or <a class="el" href="pdsc_family_pg.html#element_accessportV2">accessportV2</a> elements are specified. Use <b>__apid</b> instead.  </td><td>xs:unsignedInt </td><td>optional  </td></tr>
 <tr>
 <td>__ap </td><td>Default access port index to use for target accesses in this debug connection.<br/>
  The debug access variable <b>__ap</b> is initialized to this value when entering a pre-defined debug access sequence because of a debug event.<br/>
- This attribute defaults to <span class="XML-Token">0</span> if not set.  </td><td>xs:unsignedInt </td><td>optional  </td></tr>
+ This attribute defaults to <span class="XML-Token">0</span> if not set.<br/>
+ Must not be used if <a class="el" href="pdsc_family_pg.html#element_accessportV1">accessportV1</a> or <a class="el" href="pdsc_family_pg.html#element_accessportV2">accessportV2</a> elements are specified. Use <b>__apid</b> instead.  </td><td>xs:unsignedInt </td><td>optional  </td></tr>
 <tr>
-<td>address </td><td>Base "address" of the CPU debug block referenced by "Pname" (and "Punit" in an MPCore system). Use in combination with attributes "_dp" and "_ap". Mandatory if multiple CPU debug blocks are accessible via a single AP. Optional if an AP hosts a single CPU debug block. Then a debugger can determine its base address in by analyzing the ROM table behind __dp and __ap.  </td><td>NonNegativeInteger </td><td>optional  </td></tr>
+<td>__apid </td><td>Default access port ID to use for target accesses in this debug connection.<br/>
+ The debug access variable <b>__apid</b> is initialized to this value when entering a pre-defined debug access sequence because of a debug event. Requires <a class="el" href="pdsc_family_pg.html#element_accessportV1">accessportV1</a> and/or <a class="el" href="pdsc_family_pg.html#element_accessportV2">accessportV2</a> elements to be specified.  </td><td>xs:unsignedInt </td><td>optional  </td></tr>
+<tr>
+<td>address </td><td>Base "address" of the CPU debug block referenced by "Pname" (and "Punit" in an MPCore system). Use in combination with attributes "__dp" and "__ap", or "__apid" respectively. Mandatory if multiple CPU debug blocks are accessible via a single AP. Optional if an AP hosts a single CPU debug block. Then a debugger can determine its base address by analyzing the ROM table behind the selected AP.  </td><td>NonNegativeInteger </td><td>optional  </td></tr>
 <tr>
 <td>svd </td><td>The system viewer description (*.SVD) file to load for this debug connection. The file path is relative to the package base folder. </td><td>xs:string </td><td>optional  </td></tr>
 <tr>
@@ -2102,11 +2211,16 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <tr>
 <td>type </td><td>The type of data access to patch. Predefined tokens must be used as defined in <a class="el" href="pdsc_family_pg.html#DataPatchAccessTypeEnum">Table: Data Patch Access Type</a>. This attribute defaults to <span class="XML-Token">Mem</span> if not set.  </td><td>DataPatchAccessTypeEnum </td><td>optional  </td></tr>
 <tr>
-<td>address </td><td>The address for which to apply the patch. </td><td>NonNegativeInteger </td><td>required  </td></tr>
+<td>address </td><td>The address for which to apply the patch.<br/>
+ For an <span class="XML-Token">AP</span> data patch for an APv2 as referenced by <b>__apid</b>, the address is the APv2 register offset added to the APv2's base address defined in the corresponding <a class="el" href="pdsc_family_pg.html#element_accessportV2">accessportV2</a> element. It must within the 4-KByte address range of the APv2 block. </td><td>NonNegativeInteger </td><td>required  </td></tr>
 <tr>
-<td>__dp </td><td>The debug port ID to apply the patch for. The allowed values are defined by the <b>__dp</b> attribute of <b>debugport</b> elements for this device. If no debugport element exists, the only allowed value is 0. If this attribute is not set, the debug port ID for the data patch is set to the default <b>__dp</b> of this <b>debug</b> section. </td><td>xs:unsignedInt </td><td>optional  </td></tr>
+<td>__dp </td><td>The debug port ID to apply the patch for. The allowed values are defined by the <b>__dp</b> attribute of <b>debugport</b> elements for this device. If no debugport element exists, the only allowed value is 0. If this attribute is not set, the debug port ID for the data patch is set to the default <b>__dp</b> of this <b>debug</b> section.<br/>
+ If <a class="el" href="pdsc_family_pg.html#element_accessportV1">accessportV1</a> or <a class="el" href="pdsc_family_pg.html#element_accessportV2">accessportV2</a> elements are specified then this attribute is only allowed for <span class="XML-Token">DP</span> and <span class="XML-Token">ACCESS_AP</span> accesses. Use <b>__apid</b> for all others.  </td><td>xs:unsignedInt </td><td>optional  </td></tr>
 <tr>
-<td>__ap </td><td>The CoreSight access port index to apply the patch for. If this attribute is not set, the access port index for the data patch is set to the default <b>__ap</b> of this <b>debug</b> section. </td><td>xs:unsignedInt </td><td>optional  </td></tr>
+<td>__ap </td><td>The CoreSight access port index to apply the patch for. If this attribute is not set, the access port index for the data patch is set to the default <b>__ap</b> of this <b>debug</b> section.<br/>
+ Must not be used if <a class="el" href="pdsc_family_pg.html#element_accessportV1">accessportV1</a> or <a class="el" href="pdsc_family_pg.html#element_accessportV2">accessportV2</a> elements are specified. Use <b>__apid</b> instead.  </td><td>xs:unsignedInt </td><td>optional  </td></tr>
+<tr>
+<td>__apid </td><td>The unique ID of a CoreSight access port to apply the patch for. Requires <a class="el" href="pdsc_family_pg.html#element_accessportV1">accessportV1</a> and/or <a class="el" href="pdsc_family_pg.html#element_accessportV2">accessportV2</a> elements to be specified. If this attribute is not set, the access port ID for the data patch is set to the default <b>__apid</b> of this <b>debug</b> section.  </td><td>xs:unsignedInt </td><td>optional  </td></tr>
 <tr>
 <td>value </td><td>The value with which the debugger patches the data access. <b>value</b> is specified in little-endian format. </td><td>NonNegativeInteger </td><td>required  </td></tr>
 <tr>
@@ -2123,6 +2237,8 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <tr>
 <td class="XML-Token">DP </td><td>CoreSight Debug Port register access.<br/>
  <b>Note:</b> This type refers to accesses via the <b>DPACC</b> instruction for <b>CoreSight JTAG-DPs</b>. Please refer to the corresponding documentation for differences in the register interface between JTAG and Serial Wire debug ports.   </td></tr>
+<tr>
+<td class="XML-Token">ACCESS_AP </td><td>Top-level Access Port access for a CoreSight ADIv6 DAP.  </td></tr>
 <tr>
 <td class="XML-Token">AP </td><td>CoreSight Access Port register access.   </td></tr>
 <tr>
@@ -2311,6 +2427,10 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <tr>
 <td><a class="el" href="pdsc_family_pg.html#element_debugport">debugport</a> </td><td>Describe a debug port specific to this device. </td><td>DebugPortType </td><td>0..*  </td></tr>
 <tr>
+<td><a class="el" href="pdsc_family_pg.html#element_accessportV1">accessportV1</a> </td><td>Describe an access port (APv1) specific to this device. </td><td>AccessPortV1Type </td><td>0..*  </td></tr>
+<tr>
+<td><a class="el" href="pdsc_family_pg.html#element_accessportV2">accessportV2</a> </td><td>Describe an access port (APv2) specific to this device. </td><td>AccessPortV2Type </td><td>0..*  </td></tr>
+<tr>
 <td><a class="el" href="pdsc_family_pg.html#element_debug">debug</a> </td><td>Specify debug options specific to this device. </td><td>DebugType </td><td>0..*  </td></tr>
 <tr>
 <td><a class="el" href="pdsc_family_pg.html#element_trace">trace</a> </td><td>Specify trace options specific to this device. </td><td>TraceType </td><td>0..*  </td></tr>
@@ -2327,7 +2447,7 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="packFormat.html">Pack Description (*.pdsc) Format</a></li><li class="navelem"><a class="el" href="pdsc_devices_pg.html">/package/devices element</a></li>
-    <li class="footer">Generated on Fri Dec 13 2019 14:56:15 for CMSIS-Pack Version 1.6.1 by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Apr 9 2020 15:49:54 for CMSIS-Pack Version 1.6.3 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

@@ -4,7 +4,9 @@ var NAVTREE =
     [ "System View Description", "index.html", null ],
     [ "Revision History", "svd_revisionHistory.html", null ],
     [ "SVD File Validation and Usage", "svd_validate_file_pg.html", null ],
-    [ "SVDConv.exe", "svd_SVDConv_pg.html", null ],
+    [ "SVDConv utility", "svd_SVDConv_pg.html", [
+      [ "Error and Warning Messages", "svd_SVDConv_pg.html#svdconvMessages", null ]
+    ] ],
     [ "SVD Description (*.svd) Format", "svd_Format_pg.html", "svd_Format_pg" ],
     [ "CMSIS-SVD Schema File", "schema_1_2_gr.html", null ]
   ] ]

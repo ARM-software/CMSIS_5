@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['vector_20bitwise_20and',['Vector bitwise AND',['../group__And.html',1,'']]],
   ['vector_20absolute_20value',['Vector Absolute Value',['../group__BasicAbs.html',1,'']]],
   ['vector_20addition',['Vector Addition',['../group__BasicAdd.html',1,'']]],
   ['vector_20dot_20product',['Vector Dot Product',['../group__BasicDotProd.html',1,'']]],
@@ -14,7 +15,11 @@ var searchData=
   ['vector_20fill',['Vector Fill',['../group__Fill.html',1,'']]],
   ['vector_20inverse_20clarke_20transform',['Vector Inverse Clarke Transform',['../group__inv__clarke.html',1,'']]],
   ['vector_20inverse_20park_20transform',['Vector Inverse Park transform',['../group__inv__park.html',1,'']]],
+  ['vector_20bitwise_20not',['Vector bitwise NOT',['../group__Not.html',1,'']]],
+  ['vector_20bitwise_20inclusive_20or',['Vector bitwise inclusive OR',['../group__Or.html',1,'']]],
   ['vector_20park_20transform',['Vector Park Transform',['../group__park.html',1,'']]],
+  ['vector_20sorting_20algorithms',['Vector sorting algorithms',['../group__Sorting.html',1,'']]],
   ['variance',['Variance',['../group__variance.html',1,'']]],
-  ['variance_20example',['Variance Example',['../group__VarianceExample.html',1,'']]]
+  ['variance_20example',['Variance Example',['../group__VarianceExample.html',1,'']]],
+  ['vector_20bitwise_20exclusive_20or',['Vector bitwise exclusive OR',['../group__Xor.html',1,'']]]
 ];

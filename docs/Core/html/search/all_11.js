@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['trustzone_20setup_3a_20partition_5f_3cdevice_3e_2eh',['TrustZone setup: partition_&lt;device&gt;.h',['../partition_h_pg.html',1,'templates_pg']]],
   ['t',['T',['../unionxPSR__Type.html#a7eed9fe24ae8d354cd76ae1c1110a658',1,'xPSR_Type']]],
   ['tcr',['TCR',['../structITM__Type.html#a04b9fbc83759cb818dfa161d39628426',1,'ITM_Type']]],
   ['template_2etxt',['Template.txt',['../Template_8txt.html',1,'']]],
@@ -8,7 +9,7 @@ var searchData=
   ['tpr',['TPR',['../structITM__Type.html#ae907229ba50538bf370fbdfd54c099a2',1,'ITM_Type']]],
   ['trigger',['TRIGGER',['../structTPI__Type.html#a4d4cd2357f72333a82a1313228287bbd',1,'TPI_Type']]],
   ['trustzone_20for_20armv8_2dm_2fv8_2e1_2dm',['TrustZone for Armv8-M/v8.1-M',['../group__trustzone__functions.html',1,'']]],
-  ['type',['TYPE',['../structMPU__Type.html#aba02af87f77577c725cf73879cabb609',1,'MPU_Type']]],
+  ['type',['TYPE',['../structPMU__Type.html#a1f2e763ceeeff8ff15c0bd3520b683e8',1,'PMU_Type::TYPE()'],['../structMPU__Type.html#aba02af87f77577c725cf73879cabb609',1,'MPU_Type::TYPE()']]],
   ['tz_5fallocmodulecontext_5fs',['TZ_AllocModuleContext_S',['../group__context__trustzone__functions.html#gacd016f166bee549a0d3e970132e64a90',1,'Ref_Trustzone.txt']]],
   ['tz_5ffreemodulecontext_5fs',['TZ_FreeModuleContext_S',['../group__context__trustzone__functions.html#gac84f678fbe974f8b02c683e0b8046524',1,'Ref_Trustzone.txt']]],
   ['tz_5finitcontextsystem_5fs',['TZ_InitContextSystem_S',['../group__context__trustzone__functions.html#ga926e2ec472535a6d2b8125be1a79e3c0',1,'Ref_Trustzone.txt']]],

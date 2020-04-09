@@ -56,5 +56,8 @@ var annotated =
     [ "ARM_WIFI_CAPABILITIES", "group__wifi__control__gr.html#structARM__WIFI__CAPABILITIES", "group__wifi__control__gr_structARM__WIFI__CAPABILITIES" ],
     [ "ARM_WIFI_CONFIG_t", "group__wifi__management__gr.html#structARM__WIFI__CONFIG__t", "group__wifi__management__gr_structARM__WIFI__CONFIG__t" ],
     [ "ARM_WIFI_NET_INFO_t", "group__wifi__management__gr.html#structARM__WIFI__NET__INFO__t", "group__wifi__management__gr_structARM__WIFI__NET__INFO__t" ],
-    [ "ARM_WIFI_SCAN_INFO_t", "group__wifi__management__gr.html#structARM__WIFI__SCAN__INFO__t", "group__wifi__management__gr_structARM__WIFI__SCAN__INFO__t" ]
+    [ "ARM_WIFI_SCAN_INFO_t", "group__wifi__management__gr.html#structARM__WIFI__SCAN__INFO__t", "group__wifi__management__gr_structARM__WIFI__SCAN__INFO__t" ],
+    [ "vioAddrIPv4_t", "group__vioIPAddr__gr.html#structvioAddrIPv4__t", "group__vioIPAddr__gr_structvioAddrIPv4__t" ],
+    [ "vioAddrIPv6_t", "group__vioIPAddr__gr.html#structvioAddrIPv6__t", "group__vioIPAddr__gr_structvioAddrIPv6__t" ],
+    [ "vioValueXYZ_t", "group__vioValues__gr.html#structvioValueXYZ__t", "group__vioValues__gr_structvioValueXYZ__t" ]
 ];

@@ -121,7 +121,7 @@ $(document).ready(function(){initNavTree('config_rtx5.html','');});
 <li><a class="el" href="config_rtx5.html#semaphoreConfig">Semaphore Configuration</a> provides several parameters to configure the <a class="el" href="group__CMSIS__RTOS__SemaphoreMgmt.html">Semaphores</a> functions.</li>
 <li><a class="el" href="config_rtx5.html#memPoolConfig">Memory Pool Configuration</a> provides several parameters to configure the <a class="el" href="group__CMSIS__RTOS__PoolMgmt.html">Memory Pool</a> functions.</li>
 <li><a class="el" href="config_rtx5.html#msgQueueConfig">Message Queue Configuration</a> provides several parameters to configure the <a class="el" href="group__CMSIS__RTOS__Message.html">Message Queue</a> functions.</li>
-<li><a class="el" href="config_rtx5.html#evtrecConfig">Event Recorder Configuration</a> provides several parameters to configure RTX for usage with <a href="http://www.keil.com/pack/doc/compiler/EventRecorder/html/index.html" target="_blank"><b>Event Recorder</b></a>.</li>
+<li><a class="el" href="config_rtx5.html#evtrecConfig">Event Recorder Configuration</a> provides several parameters to configure RTX for usage with <a href="https://www.keil.com/pack/doc/compiler/EventRecorder/html/index.html" target="_blank"><b>Event Recorder</b></a>.</li>
 </ul>
 <p>The file "RTX_Config.c" contains default implementations of the functions <a class="el" href="group__rtx5__specific__functions.html#ga074068b8efa7074cee68a71481d0b072">osRtxIdleThread</a> and <a class="el" href="group__rtx5__specific__functions.html#gaf1745a88f9cc60b609ab1c8076bd346d">osRtxErrorNotify</a>. Both functions can simply be overwritten with a customized behavior by redefining them as part of the user code.</p>
 <p>The configuration file uses <b>Configuration Wizard Annotations</b>. Refer to <b>Pack - Configuration Wizard Annotations</b> for details. Depending on the development tool, the annotations might lead to a more user-friendly graphical representation of the settings. The picture below shows the µVision <b>Configuration</b> <b>Wizard</b> view in MDK:</p>
@@ -144,7 +144,7 @@ RTX_Config.h: System Configuration</div></div>
 <tr>
 <th>Name </th><th>#define </th><th>Description  </th></tr>
 <tr>
-<td>Global Dynamic Memory size [bytes] </td><td><code>OS_DYNAMIC_MEM_SIZE</code> </td><td>Defines the combined global dynamic memory size for the <a class="el" href="theory_of_operation.html#GlobalMemoryPool">Global Memory Pool</a>. Default value is <span class="XML-Token">4096</span>. Value range is <span class="XML-Token">[0-1073741824]</span> bytes, in multiples of <span class="XML-Token">8</span> bytes. </td></tr>
+<td>Global Dynamic Memory size [bytes] </td><td><code>OS_DYNAMIC_MEM_SIZE</code> </td><td>Defines the combined global dynamic memory size for the <a class="el" href="theory_of_operation.html#GlobalMemoryPool">Global Memory Pool</a>. Default value is <span class="XML-Token">32768</span>. Value range is <span class="XML-Token">[0-1073741824]</span> bytes, in multiples of <span class="XML-Token">8</span> bytes. </td></tr>
 <tr>
 <td>Kernel Tick Frequency (Hz) </td><td><code>OS_TICK_FREQ</code> </td><td>Defines base time unit for delays and timeouts in Hz. Default: 1000Hz = 1ms period. </td></tr>
 <tr>
@@ -200,9 +200,9 @@ RTX_Config.h: Thread Configuration</div></div>
 <tr>
 <td align="left">Total Stack size [bytes] for user Threads with user-provided Stack size </td><td align="left"><code>OS_THREAD_USER_STACK_SIZE</code> </td><td align="left">Defines the combined stack size for user threads with user-provided stack size. Default value is <span class="XML-Token">0</span>. Value range is <span class="XML-Token">[0-1073741824]</span> Bytes, in multiples of <span class="XML-Token">8</span>. </td></tr>
 <tr>
-<td align="left">Default Thread Stack size [bytes] </td><td align="left"><code>OS_STACK_SIZE</code> </td><td align="left">Defines stack size for threads with zero stack size specified. Default value is <span class="XML-Token">200</span>. Value range is <span class="XML-Token">[96-1073741824]</span> Bytes, in multiples of <span class="XML-Token">8</span>. </td></tr>
+<td align="left">Default Thread Stack size [bytes] </td><td align="left"><code>OS_STACK_SIZE</code> </td><td align="left">Defines stack size for threads with zero stack size specified. Default value is <span class="XML-Token">3072</span>. Value range is <span class="XML-Token">[96-1073741824]</span> Bytes, in multiples of <span class="XML-Token">8</span>. </td></tr>
 <tr>
-<td align="left">Idle Thread Stack size [bytes] </td><td align="left"><code>OS_IDLE_THREAD_STACK_SIZE</code> </td><td align="left">Defines stack size for Idle thread. Default value is <span class="XML-Token">200</span>. Value range is <span class="XML-Token">[72-1073741824]</span> bytes, in multiples of <span class="XML-Token">8</span>. </td></tr>
+<td align="left">Idle Thread Stack size [bytes] </td><td align="left"><code>OS_IDLE_THREAD_STACK_SIZE</code> </td><td align="left">Defines stack size for Idle thread. Default value is <span class="XML-Token">512</span>. Value range is <span class="XML-Token">[72-1073741824]</span> bytes, in multiples of <span class="XML-Token">8</span>. </td></tr>
 <tr>
 <td align="left">Idle Thread TrustZone Module ID </td><td align="left"><code>OS_IDLE_THREAD_TZ_MOD_ID</code> </td><td align="left">Defines the <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#a697f2aad6119d655d212ea10245ae394">TrustZone Module ID</a> the Idle Thread shall use. This needs to be set to a non-zero value if the Idle Thread need to call secure functions. Default value is <span class="XML-Token">0</span>. </td></tr>
 <tr>
@@ -268,7 +268,7 @@ RTX_Config.h: Timer Configuration</div></div>
 <tr>
 <td>Timer Thread Priority </td><td><code>OS_TIMER_THREAD_PRIO</code> </td><td>Defines priority for timer thread. Default value is <span class="XML-Token">40</span>. Value range is <span class="XML-Token">[8-48]</span>, in multiples of <span class="XML-Token">8</span>. The numbers have the following priority correlation: <span class="XML-Token">8=Low</span>; <span class="XML-Token">16=Below Normal</span>; <span class="XML-Token">24=Normal</span>; <span class="XML-Token">32=Above Normal</span>; <span class="XML-Token">40=High</span>; <span class="XML-Token">48=Realtime</span> </td></tr>
 <tr>
-<td>Timer Thread Stack size [bytes] </td><td><code>OS_TIMER_THREAD_STACK_SIZE</code> </td><td>Defines stack size for Timer thread. May be set to 0 when timers are not used. Default value is <span class="XML-Token">200</span>. Value range is <span class="XML-Token">[0-1073741824]</span>, in multiples of <span class="XML-Token">8</span>. </td></tr>
+<td>Timer Thread Stack size [bytes] </td><td><code>OS_TIMER_THREAD_STACK_SIZE</code> </td><td>Defines stack size for Timer thread. May be set to 0 when timers are not used. Default value is <span class="XML-Token">512</span>. Value range is <span class="XML-Token">[0-1073741824]</span>, in multiples of <span class="XML-Token">8</span>. </td></tr>
 <tr>
 <td>Timer Thread TrustZone Module ID </td><td><code>OS_TIMER_THREAD_TZ_MOD_ID</code> </td><td>Defines the <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#a697f2aad6119d655d212ea10245ae394">TrustZone Module ID</a> the Timer Thread shall use. This needs to be set to a non-zero value if any Timer Callbacks need to call secure functions. Default value is <span class="XML-Token">0</span>. </td></tr>
 <tr>
@@ -381,7 +381,7 @@ Object-specific memory allocation</h2>
 <p>When Object-specific Memory is used, the number of queues for all Message Queue objects is specified by <code>OS_MSGQUEUE_NUM</code>. The total storage size reserved for all queues is configured in <code>OS_MSGQUEUE_DATA_SIZE</code>. Refer to <a class="el" href="theory_of_operation.html#ObjectMemoryPool">Object-specific Memory Pools</a>.</p>
 <h1><a class="anchor" id="evtrecConfig"></a>
 Event Recorder Configuration</h1>
-<p>This section describes the configuration settings for the <a href="http://www.keil.com/pack/doc/compiler/EventRecorder/html/index.html" target="_blank">Event Recorder</a> annotations. The usage requires the source variant of RTX5; refer to <a class="el" href="cre_rtx_proj.html#cre_rtx_proj_er">Add Event Recorder Visibility</a> for more information.</p>
+<p>This section describes the configuration settings for the <a href="https://www.keil.com/pack/doc/compiler/EventRecorder/html/index.html" target="_blank">Event Recorder</a> annotations. The usage requires the source variant of RTX5; refer to <a class="el" href="cre_rtx_proj.html#cre_rtx_proj_er">Add Event Recorder Visibility</a> for more information.</p>
 <h2><a class="anchor" id="evtrecConfigGlobIni"></a>
 Global Configuration</h2>
 <p>Initialize Event Recorder during the <a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#gae818f6611d25ba3140bede410a52d659">osKernelInitialize</a> and optionally start event recording.</p>
@@ -504,7 +504,7 @@ RTX_Config.h: Event generation configuration</div></div>
 <dl class="section note"><dt>Note</dt><dd>If event generation for a component is disabled, the code that generates the related events is not included. Thus, <a class="el" href="config_rtx5.html#evtrecConfigGlobIni">filters</a> for this component will have no effect and the debugger is unable to display any events for the related component group.</dd></dl>
 <h2><a class="anchor" id="systemConfig_event_recording"></a>
 Manual event configuration</h2>
-<p>To disable the generation of events for a specific RTX API call, use the following #define settings (from <b>rtx_evrt.h</b>) and add these manually to the <b>RTX_Config.h</b> file:</p>
+<p>To disable the generation of events for a specific RTX API call, use the following #define settings (from <b><a class="el" href="rtx__evr_8h.html">rtx_evr.h</a></b>) and add these manually to the <b>RTX_Config.h</b> file:</p>
 <p><b>Memory</b> <b>events</b> <br/>
 <code>EVR_RTX_MEMORY_INIT_DISABLE</code>, <code>EVR_RTX_MEMORY_ALLOC_DISABLE</code>, <code>EVR_RTX_MEMORY_FREE_DISABLE</code>, <code>EVR_RTX_MEMORY_BLOCK_INIT_DISABLE</code>, <code>EVR_RTX_MEMORY_BLOCK_ALLOC_DISABLE</code>, <code>EVR_RTX_MEMORY_BLOCK_FREE_DISABLE</code> </p>
 <p><b>Kernel</b> <b>events</b> <br/>
@@ -533,7 +533,7 @@ Manual event configuration</h2>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="index.html">index</a></li><li class="navelem"><a class="el" href="rtx5_impl.html">RTX v5 Implementation</a></li>
-    <li class="footer">Generated on Wed Jul 10 2019 15:21:04 for CMSIS-RTOS2 Version 2.1.3 by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Apr 9 2020 15:49:59 for CMSIS-RTOS2 Version 2.1.3 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

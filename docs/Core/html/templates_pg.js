@@ -20,10 +20,13 @@ var templates_pg =
       [ "Device Peripheral Access Layer", "device_h_pg.html#device_access", null ],
       [ "Device.h Template File", "device_h_pg.html#device_h_sec", null ]
     ] ],
-    [ "System Partition Header File partition_<device>.h", "partition_h_pg.html", [
+    [ "TrustZone setup: partition_<device>.h", "partition_h_pg.html", [
       [ "SAU CTRL register settings", "partition_h_pg.html#sau_ctrlregister_sec", null ],
-      [ "Configuration of the SAU Address Regions", "partition_h_pg.html#sau_regions_sect", null ],
       [ "Configuration of Sleep and Exception behaviour", "partition_h_pg.html#sau_sleepexception_sec", null ],
-      [ "Configuration of Interrupt Target settings", "partition_h_pg.html#sau_interrupttarget_sec", null ]
+      [ "Configuration of Floating Point Unit", "partition_h_pg.html#sau_fpu_sec", null ],
+      [ "Region/ISR setup: partition_gen.h", "partition_h_pg.html#partition_gen_h_pg", [
+        [ "Configuration of the SAU Address Regions", "partition_h_pg.html#sau_regions_sect", null ],
+        [ "Configuration of Interrupt Target settings", "partition_h_pg.html#sau_interrupttarget_sec", null ]
+      ] ]
     ] ]
 ];

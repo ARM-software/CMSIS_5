@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-DSP
-   &#160;<span id="projectnumber">Version 1.7.0</span>
+   &#160;<span id="projectnumber">Version 1.8.0</span>
    </div>
    <div id="projectbrief">CMSIS DSP Software Library</div>
   </td>
@@ -97,7 +97,7 @@ $(document).ready(function(){initNavTree('Source_2CommonTables_2CMakeLists_8txt.
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Data Structures</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Macros</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Groups</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(10)"><span class="SelectionMark">&#160;</span>Pages</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Data Structures</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Macros</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(10)"><span class="SelectionMark">&#160;</span>Groups</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(11)"><span class="SelectionMark">&#160;</span>Pages</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -116,11 +116,18 @@ $(document).ready(function(){initNavTree('Source_2CommonTables_2CMakeLists_8txt.
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ab2ff652a443e047ef6441f2eeaae8048"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Source_2CommonTables_2CMakeLists_8txt.html#ab2ff652a443e047ef6441f2eeaae8048">cmake_minimum_required</a> (VERSION 3.6) project(CMSISDSPCommon) add_library(CMSISDSPCommon STATIC arm_common_tables.c) if(CONFIGTABLE AND ALLFFT) target_compile_definitions(CMSISDSPCommon PUBLIC ARM_ALL_FFT_TABLES) endif() if(CONFIGTABLE AND ALLFAST) target_compile_definitions(CMSISDSPCommon PUBLIC ARM_ALL_FAST_TABLES) endif() <a class="el" href="Examples_2ARM_2arm__variance__example_2CMakeLists_8txt.html#a20de15dc42caeb4c8d037d578fba54bc">include</a>(fft) fft(CMSISDSPCommon) <a class="el" href="Examples_2ARM_2arm__variance__example_2CMakeLists_8txt.html#a20de15dc42caeb4c8d037d578fba54bc">include</a>(interpol) interpol(CMSISDSPCommon) target_sources(CMSISDSPCommon PRIVATE arm_const_structs.c) configdsp(CMSISDSPCommon..) target_include_directories(CMSISDSPCommon PUBLIC&quot;$</td></tr>
-<tr class="separator:ab2ff652a443e047ef6441f2eeaae8048"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6b178db23253f9ce429b607d78fb3b26"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Source_2CommonTables_2CMakeLists_8txt.html#a6b178db23253f9ce429b607d78fb3b26">cmake_minimum_required</a> (VERSION 3.6) project(CMSISDSPCommon) <a class="el" href="Source_2CMakeLists_8txt.html#a8c56daa36e3b43fd0585d6865c903480">include</a>(configLib) <a class="el" href="Source_2CMakeLists_8txt.html#a8c56daa36e3b43fd0585d6865c903480">include</a>(<a class="el" href="Source_2TransformFunctions_2CMakeLists_8txt.html#a0d12612fee2f3b704bd6da89e30f86da">configDsp</a>) add_library(CMSISDSPCommon STATIC arm_common_tables.c) configLib(CMSISDSPCommon $</td></tr>
+<tr class="separator:a6b178db23253f9ce429b607d78fb3b26"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3c436f74193a11e9d98228d942e9b706"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Source_2CommonTables_2CMakeLists_8txt.html#a3c436f74193a11e9d98228d942e9b706">configDsp</a> (CMSISDSPCommon ${ROOT}) <a class="el" href="Source_2CommonTables_2CMakeLists_8txt.html#a5d12404fe73258d7cfdcd0e7ac149b70">if</a>(CONFIGTABLE AND ALLFFT) target_compile_definitions(CMSISDSPCommon PUBLIC ARM_ALL_FFT_TABLES) <a class="el" href="Source_2CommonTables_2CMakeLists_8txt.html#a9bfe5507f01ede692c9058575b1728fc">endif</a>() <a class="el" href="Source_2CommonTables_2CMakeLists_8txt.html#a5d12404fe73258d7cfdcd0e7ac149b70">if</a>(CONFIGTABLE AND ALLFAST) target_compile_definitions(CMSISDSPCommon PUBLIC ARM_ALL_FAST_TABLES) <a class="el" href="Source_2CommonTables_2CMakeLists_8txt.html#a9bfe5507f01ede692c9058575b1728fc">endif</a>() <a class="el" href="Source_2CMakeLists_8txt.html#a8c56daa36e3b43fd0585d6865c903480">include</a>(fft) fft(CMSISDSPCommon) <a class="el" href="Source_2CMakeLists_8txt.html#a8c56daa36e3b43fd0585d6865c903480">include</a>(interpol) interpol(CMSISDSPCommon) target_sources(CMSISDSPCommon PRIVATE arm_const_structs.c) target_include_directories(CMSISDSPCommon PUBLIC&quot;$</td></tr>
+<tr class="separator:a3c436f74193a11e9d98228d942e9b706"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5d12404fe73258d7cfdcd0e7ac149b70"><td class="memItemLeft" align="right" valign="top">Include&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Source_2CommonTables_2CMakeLists_8txt.html#a5d12404fe73258d7cfdcd0e7ac149b70">if</a> (NEON OR NEONEXPERIMENTAL) target_sources(CMSISDSPCommon PRIVATE&quot;$</td></tr>
+<tr class="separator:a5d12404fe73258d7cfdcd0e7ac149b70"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9bfe5507f01ede692c9058575b1728fc"><td class="memItemLeft" align="right" valign="top">ComputeLibrary Source <br class="typebreak"/>
+arm_cl_tables c&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Source_2CommonTables_2CMakeLists_8txt.html#a9bfe5507f01ede692c9058575b1728fc">endif</a> () <a class="el" href="Source_2CommonTables_2CMakeLists_8txt.html#a5d12404fe73258d7cfdcd0e7ac149b70">if</a>(HELIUM OR MVEF) target_sources(CMSISDSPCommon PRIVATE&quot;$</td></tr>
+<tr class="separator:a9bfe5507f01ede692c9058575b1728fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="ab2ff652a443e047ef6441f2eeaae8048"></a>
+<a class="anchor" id="a6b178db23253f9ce429b607d78fb3b26"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -136,13 +143,60 @@ Functions</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="a3c436f74193a11e9d98228d942e9b706"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">configDsp </td>
+          <td>(</td>
+          <td class="paramtype">CMSISDSPCommon ${ROOT}&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a9bfe5507f01ede692c9058575b1728fc"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ComputeLibrary Source arm_cl_tables c endif </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a5d12404fe73258d7cfdcd0e7ac149b70"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Include if </td>
+          <td>(</td>
+          <td class="paramtype">NEON OR&#160;</td>
+          <td class="paramname"><em>NEONEXPERIMENTAL</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="Source_2CommonTables_2CMakeLists_8txt.html">CMakeLists.txt</a></li>
-    <li class="footer">Generated on Wed Jul 10 2019 15:20:39 for CMSIS-DSP Version 1.7.0 by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Apr 9 2020 15:49:22 for CMSIS-DSP Version 1.8.0 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

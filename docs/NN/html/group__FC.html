@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-NN
-   &#160;<span id="projectnumber">Version 1.2.0</span>
+   &#160;<span id="projectnumber">Version 1.3.0</span>
    </div>
    <div id="projectbrief">CMSIS NN Software Library</div>
   </td>
@@ -134,9 +134,15 @@ Functions</h2></td></tr>
 <tr class="memitem:gaf82b71ef472a38f8fc9ac414d9d07e67"><td class="memItemLeft" align="right" valign="top">arm_status&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__FC.html#gaf82b71ef472a38f8fc9ac414d9d07e67">arm_fully_connected_q7_opt</a> (const q7_t *pV, const q7_t *pM, const uint16_t dim_vec, const uint16_t num_of_rows, const uint16_t bias_shift, const uint16_t out_shift, const q7_t *bias, q7_t *pOut, q15_t *vec_buffer)</td></tr>
 <tr class="memdesc:gaf82b71ef472a38f8fc9ac414d9d07e67"><td class="mdescLeft">&#160;</td><td class="mdescRight">Q7 opt fully-connected layer function.  <a href="#gaf82b71ef472a38f8fc9ac414d9d07e67">More...</a><br/></td></tr>
 <tr class="separator:gaf82b71ef472a38f8fc9ac414d9d07e67"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2e580c510d9dc26a2e8e422f805b9bc0"><td class="memItemLeft" align="right" valign="top">arm_status&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__FC.html#ga2e580c510d9dc26a2e8e422f805b9bc0">arm_fully_connected_s8</a> (const int8_t *input, const int8_t *kernel, const uint16_t col_dim, const uint16_t row_dim, const uint16_t nb_batches, const int32_t input_offset, const int32_t filter_offset, const int32_t out_mult, const int32_t out_shift, const int32_t output_offset, const int32_t *bias, int8_t *output, const int32_t output_activation_min, const int32_t output_activation_max, q15_t *vec_buffer)</td></tr>
+<tr class="memdesc:ga2e580c510d9dc26a2e8e422f805b9bc0"><td class="mdescLeft">&#160;</td><td class="mdescRight">S8 basic fully-connected and matrix multiplication layer function for TF Lite.  <a href="#ga2e580c510d9dc26a2e8e422f805b9bc0">More...</a><br/></td></tr>
+<tr class="separator:ga2e580c510d9dc26a2e8e422f805b9bc0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafaf11325831bf8d8a915a88f53689263"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__FC.html#gafaf11325831bf8d8a915a88f53689263">arm_fully_connected_s8_get_buffer_size</a> (const uint16_t col_dim)</td></tr>
+<tr class="memdesc:gafaf11325831bf8d8a915a88f53689263"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the required buffer size for S8 basic fully-connected and matrix multiplication layer function for TF Lite.  <a href="#gafaf11325831bf8d8a915a88f53689263">More...</a><br/></td></tr>
+<tr class="separator:gafaf11325831bf8d8a915a88f53689263"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Description</h2>
-<p>Perform fully-connected layer</p>
+<p>Collection of fully-connected and matrix multiplication functions.</p>
 <p>Fully-connected layer is basically a matrix-vector multiplication with bias. The matrix is the weights and the input/output vectors are the activation values. Supported {weight, activation} precisions include {8-bit, 8-bit}, {16-bit, 16-bit}, and {8-bit, 16-bit}.</p>
 <p>Here we have two types of kernel functions. The basic function implements the function using regular GEMV approach. The opt functions operates with weights in interleaved formats. </p>
 <h2 class="groupheader">Function Documentation</h2>
@@ -225,7 +231,7 @@ Functions</h2></td></tr>
 <p>Q7_Q15 version of the fully connected layer</p>
 <p>Weights are in q7_t and Activations are in q15_t </p>
 
-<p>References <a class="el" href="arm__nnsupportfunctions_8h.html#a4cbd428a2b4a4f6b2a6e4219520c7ce0">NN_ROUND</a>.</p>
+<p>References <a class="el" href="arm__nnsupportfunctions_8h.html#afdda94a339b76615d3161e9fc63f4d21">arm_nn_read_q15x2_ia()</a>, and <a class="el" href="arm__nnsupportfunctions_8h.html#a4cbd428a2b4a4f6b2a6e4219520c7ce0">NN_ROUND</a>.</p>
 
 <p>Referenced by <a class="el" href="arm__nnexamples__gru_8cpp.html#ac71a806472c7c0c284a2253e71a6a27b">gru_example()</a>.</p>
 
@@ -338,7 +344,7 @@ Functions</h2></td></tr>
 <p>| a53 | a54 | a55 | a56 | a57 | a61 |</p>
 <p>| a62 | a63 | a64 | a65 | a66 | a67 | </p>
 
-<p>References <a class="el" href="arm__nnsupportfunctions_8h.html#a4cbd428a2b4a4f6b2a6e4219520c7ce0">NN_ROUND</a>.</p>
+<p>References <a class="el" href="arm__nnsupportfunctions_8h.html#afdda94a339b76615d3161e9fc63f4d21">arm_nn_read_q15x2_ia()</a>, <a class="el" href="arm__nnsupportfunctions_8h.html#ac9f7be20432a6926ac07c1f44b1b02fe">arm_nn_read_q7x4_ia()</a>, and <a class="el" href="arm__nnsupportfunctions_8h.html#a4cbd428a2b4a4f6b2a6e4219520c7ce0">NN_ROUND</a>.</p>
 
 <p>Referenced by <a class="el" href="arm__nnexamples__gru_8cpp.html#ac71a806472c7c0c284a2253e71a6a27b">gru_example()</a>.</p>
 
@@ -428,7 +434,7 @@ Functions</h2></td></tr>
 <p><b>Buffer size:</b></p>
 <p>vec_buffer size: 0 </p>
 
-<p>References <a class="el" href="arm__nnsupportfunctions_8h.html#a4cbd428a2b4a4f6b2a6e4219520c7ce0">NN_ROUND</a>.</p>
+<p>References <a class="el" href="arm__nnsupportfunctions_8h.html#afdda94a339b76615d3161e9fc63f4d21">arm_nn_read_q15x2_ia()</a>, and <a class="el" href="arm__nnsupportfunctions_8h.html#a4cbd428a2b4a4f6b2a6e4219520c7ce0">NN_ROUND</a>.</p>
 
 </div>
 </div>
@@ -530,7 +536,7 @@ Functions</h2></td></tr>
 <p>| a13 | a23 | a33 | a43 | a51 | a52 | a53 | a61 |</p>
 <p>| a62 | a63 | </p>
 
-<p>References <a class="el" href="arm__nnsupportfunctions_8h.html#a4cbd428a2b4a4f6b2a6e4219520c7ce0">NN_ROUND</a>.</p>
+<p>References <a class="el" href="arm__nnsupportfunctions_8h.html#afdda94a339b76615d3161e9fc63f4d21">arm_nn_read_q15x2_ia()</a>, and <a class="el" href="arm__nnsupportfunctions_8h.html#a4cbd428a2b4a4f6b2a6e4219520c7ce0">NN_ROUND</a>.</p>
 
 </div>
 </div>
@@ -618,7 +624,7 @@ Functions</h2></td></tr>
 <p>vec_buffer size: dim_vec</p>
 <p>This basic function is designed to work with regular weight matrix without interleaving. </p>
 
-<p>References <a class="el" href="group__nndata__convert.html#gaba8fd446d5f54760b406ee63b25d1aee">arm_q7_to_q15_reordered_no_shift()</a>, and <a class="el" href="arm__nnsupportfunctions_8h.html#a4cbd428a2b4a4f6b2a6e4219520c7ce0">NN_ROUND</a>.</p>
+<p>References <a class="el" href="arm__nnsupportfunctions_8h.html#afdda94a339b76615d3161e9fc63f4d21">arm_nn_read_q15x2_ia()</a>, <a class="el" href="group__nndata__convert.html#gaba8fd446d5f54760b406ee63b25d1aee">arm_q7_to_q15_reordered_no_shift()</a>, and <a class="el" href="arm__nnsupportfunctions_8h.html#a4cbd428a2b4a4f6b2a6e4219520c7ce0">NN_ROUND</a>.</p>
 
 </div>
 </div>
@@ -732,9 +738,166 @@ Functions</h2></td></tr>
 <p>| a53 | a54 | a55 | a56 | a57 | a61 |</p>
 <p>| a62 | a63 | a64 | a65 | a66 | a67 | </p>
 
-<p>References <a class="el" href="group__nndata__convert.html#gaba8fd446d5f54760b406ee63b25d1aee">arm_q7_to_q15_reordered_no_shift()</a>, and <a class="el" href="arm__nnsupportfunctions_8h.html#a4cbd428a2b4a4f6b2a6e4219520c7ce0">NN_ROUND</a>.</p>
+<p>References <a class="el" href="arm__nnsupportfunctions_8h.html#afdda94a339b76615d3161e9fc63f4d21">arm_nn_read_q15x2_ia()</a>, <a class="el" href="arm__nnsupportfunctions_8h.html#ac9f7be20432a6926ac07c1f44b1b02fe">arm_nn_read_q7x4_ia()</a>, <a class="el" href="group__nndata__convert.html#gaba8fd446d5f54760b406ee63b25d1aee">arm_q7_to_q15_reordered_no_shift()</a>, and <a class="el" href="arm__nnsupportfunctions_8h.html#a4cbd428a2b4a4f6b2a6e4219520c7ce0">NN_ROUND</a>.</p>
 
 <p>Referenced by <a class="el" href="arm__nnexamples__cifar10_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4">main()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ga2e580c510d9dc26a2e8e422f805b9bc0"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">arm_status arm_fully_connected_s8 </td>
+          <td>(</td>
+          <td class="paramtype">const int8_t *&#160;</td>
+          <td class="paramname"><em>pInput</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int8_t *&#160;</td>
+          <td class="paramname"><em>pWeight</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint16_t&#160;</td>
+          <td class="paramname"><em>col_dim</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint16_t&#160;</td>
+          <td class="paramname"><em>row_dim</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint16_t&#160;</td>
+          <td class="paramname"><em>nb_batches</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int32_t&#160;</td>
+          <td class="paramname"><em>input_offset</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int32_t&#160;</td>
+          <td class="paramname"><em>filter_offset</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int32_t&#160;</td>
+          <td class="paramname"><em>out_mult</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int32_t&#160;</td>
+          <td class="paramname"><em>out_shift</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int32_t&#160;</td>
+          <td class="paramname"><em>output_offset</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int32_t *&#160;</td>
+          <td class="paramname"><em>pBias</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int8_t *&#160;</td>
+          <td class="paramname"><em>pOut</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int32_t&#160;</td>
+          <td class="paramname"><em>output_activation_min</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int32_t&#160;</td>
+          <td class="paramname"><em>output_activation_max</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">q15_t *&#160;</td>
+          <td class="paramname"><em>vec_buffer</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">pInput</td><td>pointer to pInput vector </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">pWeight</td><td>pointer to matrix weights </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">col_dim</td><td>dimension of the input vector </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">row_dim</td><td>dimension of the output vector </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">nb_batches</td><td>number of batches </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">input_offset</td><td>tensor offset for input. Range: -127 to 128 </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">filter_offset</td><td>tensor offset for filter. Range: -127 to 128 </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">out_mult</td><td>requantization parameter </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">out_shift</td><td>requantization parameter </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">output_offset</td><td>tensor offset for output. Range: int8 </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">pBias</td><td>pointer to bias </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">pOut</td><td>pointer to output vector </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">output_activation_min</td><td>for clamping </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">output_activation_max</td><td>for clamping </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">vec_buffer</td><td>pointer to buffer space used for optimization and is necessary when ARM_MATH_DSP is defined but not ARM_MATH_MVEI. Required space: col_dim * sizeof(q15_t) bytes Use <a class="el" href="group__FC.html#gafaf11325831bf8d8a915a88f53689263" title="Get the required buffer size for S8 basic fully-connected and matrix multiplication layer function fo...">arm_fully_connected_s8_get_buffer_size()</a> to get the size. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The function returns ARM_MATH_SUCCESS</dd></dl>
+<p><b>Buffer size:</b></p>
+<p>vec_buffer size: col_dim of word16.</p>
+<p>This basic function is designed to work with regular pWeight matrix without interleaving.</p>
+<ol type="1">
+<li>Supported framework: TensorFlow Lite</li>
+<li>q7 is used as data type eventhough it is s8 data. It is done so to be consistent with existing APIs. </li>
+</ol>
+
+<p>References <a class="el" href="group__NNBasicMath.html#gacbc28cf23c7549bcf89d1e8f1481c389">arm_nn_vec_mat_mult_t_s8()</a>, and <a class="el" href="namespacepara__gen.html#a26cc0a96186b2e6b238d783d9364f14d">para_gen::row_dim</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="gafaf11325831bf8d8a915a88f53689263"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int32_t arm_fully_connected_s8_get_buffer_size </td>
+          <td>(</td>
+          <td class="paramtype">const uint16_t&#160;</td>
+          <td class="paramname"><em>col_dim</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">col_dim</td><td>dimension of the input vector </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The function returns required buffer size </dd></dl>
 
 </div>
 </div>
@@ -743,7 +906,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Jul 10 2019 15:20:50 for CMSIS-NN Version 1.2.0 by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Apr 9 2020 15:49:34 for CMSIS-NN Version 1.3.0 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

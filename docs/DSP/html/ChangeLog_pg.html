@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-DSP
-   &#160;<span id="projectnumber">Version 1.7.0</span>
+   &#160;<span id="projectnumber">Version 1.8.0</span>
    </div>
    <div id="projectbrief">CMSIS DSP Software Library</div>
   </td>
@@ -97,7 +97,7 @@ $(document).ready(function(){initNavTree('ChangeLog_pg.html','');});
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Data Structures</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Macros</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Groups</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(10)"><span class="SelectionMark">&#160;</span>Pages</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Data Structures</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Macros</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(10)"><span class="SelectionMark">&#160;</span>Groups</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(11)"><span class="SelectionMark">&#160;</span>Pages</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -114,6 +114,50 @@ $(document).ready(function(){initNavTree('ChangeLog_pg.html','');});
 <div class="textblock"><table  class="cmtable" summary="Revision History">
 <tr>
 <th>Version </th><th>Description  </th></tr>
+<tr>
+<td>V1.8.0 </td><td><p class="starttd">Helium implementation of lots of functions in the CMSIS-DSP. More will be added in future releases.</p>
+<ul>
+<li>ARM_MATH_HELIUM, ARM_MATH_MVEF or ARM_MATH_MVEI must be defined.</li>
+</ul>
+<p>New folder SVMFunctions : Support vector machines.</p>
+<ul>
+<li>Training must be done with scikit-learn.</li>
+<li>DSP/Examples/ARM/arm_svm_example is showing how to train with scikit-learn and dump the result for use with CMSIS-DSP</li>
+</ul>
+<p>New folder BayesFunctions : Functions related to Bayesian probability. In this version only a naive gaussian classifier.</p>
+<ul>
+<li>Training must be done with scikit-learn.</li>
+<li>DSP/Examples/ARM/arm_bayes_example is showing how to train with scikit-learn and dump the result for use with CMSIS-DSP</li>
+</ul>
+<p>New folder DistanceFunctions:</p>
+<ul>
+<li>Distance functions for clustering algorithms.</li>
+</ul>
+<p>For the new functions in SVMFunctions, BayesFunctions and DistanceFunctions, <a href="https://developer.arm.com/solutions/machine-learning-on-arm/developer-material/how-to-guides/implement-classical-ml-with-arm-cmsis-dsp-libraries">a tutorial is available</a>.</p>
+<p>New BasicMathFunctions:</p>
+<ul>
+<li>Elementwise bit operations.</li>
+</ul>
+<p>New support functions:</p>
+<ul>
+<li>arm_barycenter_f32 and arm_weighted_sum_f32.</li>
+<li>Sorting functions.</li>
+<li>Spline interpolation.</li>
+</ul>
+<p>New statistics functions:</p>
+<ul>
+<li>arm_entropy_f32, arm_kullback_leibler_f32, arm_logsumexp_f32 and arm_logsumexp_dot_prod_f32</li>
+</ul>
+<p>New testing framework:</p>
+<ul>
+<li>Developed for our internal needs. We have released it but won't give support for the first few releases since it is a work in progress.</li>
+</ul>
+<p>Improvements to the cmake build:</p>
+<ul>
+<li>It is more easy to switch toolchains. CMAKE_PREFIX_PATH can be used.</li>
+</ul>
+<p class="endtd"></p>
+</td></tr>
 <tr>
 <td>V1.7.0 </td><td><p class="starttd">New Neon implementations of f32 functions</p>
 <ul>
@@ -245,7 +289,7 @@ $(document).ready(function(){initNavTree('ChangeLog_pg.html','');});
 </ul>
 <p class="endtd">Updated documentation</p>
 <ul>
-<li>function <a class="el" href="group__RealFFT.html#ga180d8b764d59cbb85d37a2d5f7cd9799">arm_rfft_fast_f32</a>.   </li>
+<li>function <a class="el" href="group__RealFFT.html#ga5d2ec62f3e35575eba467d09ddcd98b5">arm_rfft_fast_f32</a>.   </li>
 </ul>
 </td></tr>
 <tr>
@@ -491,7 +535,7 @@ Documentation
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Jul 10 2019 15:20:39 for CMSIS-DSP Version 1.7.0 by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Apr 9 2020 15:49:23 for CMSIS-DSP Version 1.8.0 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

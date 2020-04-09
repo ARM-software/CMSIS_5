@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Core (Cortex-M)
-   &#160;<span id="projectnumber">Version 5.3.0</span>
+   &#160;<span id="projectnumber">Version 5.4.0</span>
    </div>
    <div id="projectbrief">CMSIS-Core support for Cortex-M processor-based devices</div>
   </td>
@@ -114,22 +114,24 @@ $(document).ready(function(){initNavTree('using_VTOR_pg.html','');});
 <div class="textblock"><p>Most Cortex-M processors provide VTOR register for remapping interrupt vectors. The following example shows a typical use case where the interrupt vectors are copied to RAM and the SysTick_Handler is replaced.</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &quot;ARMCM3.h&quot;</span>                     <span class="comment">// Device header</span></div>
 <div class="line"> </div>
-<div class="line"><span class="comment">/* externals from startup_ARMCM3.s */</span></div>
-<div class="line"><span class="keyword">extern</span> uint32_t __Vectors[];              <span class="comment">/* vector table ROM  */</span></div>
-<div class="line"> </div>
-<div class="line"><span class="preprocessor">#define VECTORTABLE_SIZE        (256)     </span><span class="comment">/* size Cortex-M3 vector table      */</span><span class="preprocessor"></span></div>
-<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define VECTORTABLE_ALIGNMENT   (0x100ul) </span><span class="comment">/* 16 Cortex + 32 ARMCM3 = 48 words */</span><span class="preprocessor"></span></div>
-<div class="line"><span class="preprocessor"></span>                                          <span class="comment">/* next power of 2 = 256            */</span></div>
-<div class="line"> </div>
-<div class="line"><span class="comment">/* new vector table in RAM */</span></div>
+<div class="line"><span class="preprocessor">#define VECTORTABLE_SIZE        (240)    </span><span class="comment">/* size of the used vector tables    */</span><span class="preprocessor"></span></div>
+<div class="line"><span class="preprocessor"></span>                                         <span class="comment">/* see startup file startup_ARMCM3.c */</span></div>
+<div class="line"><span class="preprocessor">#define VECTORTABLE_ALIGNMENT   (0x100U) </span><span class="comment">/* 16 Cortex + 32 ARMCM3 = 48 words  */</span><span class="preprocessor"></span></div>
+<div class="line"><span class="preprocessor"></span>                                         <span class="comment">/* next power of 2 = 256             */</span></div>
+<div class="line"></div>
+<div class="line"><span class="comment">/* externals from startup_ARMCM3.c */</span></div>
+<div class="line"><span class="keyword">extern</span> uint32_t <a class="code" href="group__compiler__conntrol__gr.html#gab94ebeb20055f1848d7b707d3c7cfc5d">__VECTOR_TABLE</a>[VECTORTABLE_SIZE];        <span class="comment">/* vector table ROM  */</span></div>
+<div class="line"></div>
+<div class="line"><span class="comment">/* new vector table in RAM, same size as vector table in ROM */</span></div>
 <div class="line">uint32_t vectorTable_RAM[VECTORTABLE_SIZE] __attribute__(( aligned (VECTORTABLE_ALIGNMENT) ));</div>
+<div class="line"></div>
 <div class="line"> </div>
 <div class="line"><span class="comment">/*----------------------------------------------------------------------------</span></div>
 <div class="line"><span class="comment">  SysTick_Handler</span></div>
 <div class="line"><span class="comment"> *----------------------------------------------------------------------------*/</span></div>
 <div class="line"><span class="keyword">volatile</span> uint32_t msTicks = 0;                        <span class="comment">/* counts 1ms timeTicks */</span></div>
 <div class="line"><span class="keywordtype">void</span> SysTick_Handler(<span class="keywordtype">void</span>) {</div>
-<div class="line">  msTicks++;                                          <span class="comment">/* increment counter */</span></div>
+<div class="line">  msTicks++;                                             <span class="comment">/* increment counter */</span></div>
 <div class="line">}</div>
 <div class="line"> </div>
 <div class="line"><span class="comment">/*----------------------------------------------------------------------------</span></div>
@@ -137,7 +139,7 @@ $(document).ready(function(){initNavTree('using_VTOR_pg.html','');});
 <div class="line"><span class="comment"> *----------------------------------------------------------------------------*/</span></div>
 <div class="line"><span class="keyword">volatile</span> uint32_t msTicks_RAM = 0;                    <span class="comment">/* counts 1ms timeTicks */</span></div>
 <div class="line"><span class="keywordtype">void</span> SysTick_Handler_RAM(<span class="keywordtype">void</span>) {</div>
-<div class="line">  msTicks_RAM++;                                      <span class="comment">/* increment counter */</span></div>
+<div class="line">  msTicks_RAM++;                                         <span class="comment">/* increment counter */</span></div>
 <div class="line">}</div>
 <div class="line"> </div>
 <div class="line"><span class="comment">/*----------------------------------------------------------------------------</span></div>
@@ -147,7 +149,7 @@ $(document).ready(function(){initNavTree('using_VTOR_pg.html','');});
 <div class="line">  uint32_t i;</div>
 <div class="line">   </div>
 <div class="line">  <span class="keywordflow">for</span> (i = 0; i &lt; VECTORTABLE_SIZE; i++) {</div>
-<div class="line">    vectorTable_RAM[i] = __Vectors[i];            <span class="comment">/* copy vector table to RAM */</span></div>
+<div class="line">    vectorTable_RAM[i] = __VECTOR_TABLE[i];       <span class="comment">/* copy vector table to RAM */</span></div>
 <div class="line">  }</div>
 <div class="line">                                                   <span class="comment">/* replace SysTick Handler */</span></div>
 <div class="line">  vectorTable_RAM[<a class="code" href="group__NVIC__gr.html#gga7e1129cd8a196f4284d41db3e82ad5c8a6dbff8f8543325f3474cbae2446776e7">SysTick_IRQn</a> + 16] = (uint32_t)SysTick_Handler_RAM;</div>
@@ -169,7 +171,7 @@ $(document).ready(function(){initNavTree('using_VTOR_pg.html','');});
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="using_pg.html">Using CMSIS in Embedded Applications</a></li>
-    <li class="footer">Generated on Wed Jul 10 2019 15:20:25 for CMSIS-Core (Cortex-M) Version 5.3.0 by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Apr 9 2020 15:49:07 for CMSIS-Core (Cortex-M) Version 5.4.0 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

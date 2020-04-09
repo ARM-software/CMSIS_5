@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['weight',['weight',['../namespacepara__gen.html#af3dbe004474bc66ad55591f470ff008c',1,'para_gen']]],
-  ['word',['word',['../unionarm__nnword.html#a35c7b2ae25e35e0ddcd9ec0a1a6f8d18',1,'arm_nnword']]]
+  ['vec_5fdim',['vec_dim',['../namespacepara__gen.html#ad97bcbf0472c82d537ee41c0196e3b2a',1,'para_gen']]]
 ];

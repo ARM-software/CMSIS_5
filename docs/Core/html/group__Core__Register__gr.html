@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Core (Cortex-M)
-   &#160;<span id="projectnumber">Version 5.3.0</span>
+   &#160;<span id="projectnumber">Version 5.4.0</span>
    </div>
    <div id="projectbrief">CMSIS-Core support for Cortex-M processor-based devices</div>
   </td>
@@ -199,6 +199,7 @@ Functions</h2></td></tr>
 <tr class="separator:ga6809a07c5cb7410e361f3fba57f72172"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Description</h2>
+<p>Functions to access the Cortex-M core registers. </p>
 <p>The following functions provide access to Cortex-M core registers. </p>
 <h2 class="groupheader">Function Documentation</h2>
 <a class="anchor" id="ga9d174f979b2f76fdb3228a9b338fd939"></a>
@@ -214,6 +215,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Disables interrupts and all fault handlers [not for Cortex-M0, Cortex-M0+, or SC000]. </p>
 <p>The function disables interrupts and all fault handlers by setting FAULTMASK. The function uses the instruction <b>CPSID f</b>.</p>
 <dl class="section remark"><dt>Remarks</dt><dd><ul>
 <li>not for Cortex-M0, Cortex-M0+, or SC000.</li>
@@ -241,6 +244,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Globally disables interrupts and configurable fault handlers. </p>
 <p>The function disables interrupts and all configurable fault handlers by setting PRIMASK. The function uses the instruction <b>CPSID i</b>.</p>
 <dl class="section remark"><dt>Remarks</dt><dd><ul>
 <li>Can be executed in privileged mode only.</li>
@@ -267,6 +272,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Enables interrupts and all fault handlers [not for Cortex-M0, Cortex-M0+, or SC000]. </p>
 <p>The function enables interrupts and all fault handlers by clearing FAULTMASK. The function uses the instruction <b>CPSIE f</b>.</p>
 <dl class="section remark"><dt>Remarks</dt><dd><ul>
 <li>not for Cortex-M0, Cortex-M0+, or SC000.</li>
@@ -293,6 +300,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Globally enables interrupts and configurable fault handlers. </p>
 <p>The function enables interrupts and all configurable fault handlers by clearing PRIMASK. The function uses the instruction <b>CPSIE i</b>.</p>
 <dl class="section remark"><dt>Remarks</dt><dd><ul>
 <li>Can be executed in privileged mode only.</li>
@@ -318,6 +327,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Read the APSR register. </p>
 <p>The function reads the Application Program Status Register (APSR) using the instruction <b>MRS</b>. <br/>
 <br/>
 The APSR contains the current state of the condition flags from instructions executed previously. The APSR is essential for controlling conditional branches. The following flags are used:</p>
@@ -390,6 +401,8 @@ The APSR contains the current state of the condition flags from instructions exe
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Read the BASEPRI register [not for Cortex-M0, Cortex-M0+, or SC000]. </p>
 <p>The function returns the Base Priority Mask register (BASEPRI) using the instruction <b>MRS</b>. <br/>
 <br/>
 BASEPRI defines the minimum priority for exception processing. When BASEPRI is set to a non-zero value, it prevents the activation of all exceptions with the same or lower priority level as the BASEPRI value.</p>
@@ -419,6 +432,8 @@ BASEPRI defines the minimum priority for exception processing. When BASEPRI is s
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Read the CONTROL register. </p>
 <p>The function reads the CONTROL register value using the instruction <b>MRS</b>. <br/>
 <br/>
 The CONTROL register controls the stack used and the privilege level for software execution when the processor is in thread mode and, if implemented, indicates whether the FPU state is active. This register uses the following bits: <br/>
@@ -473,6 +488,8 @@ The CONTROL register controls the stack used and the privilege level for softwar
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Read the FAULTMASK register [not for Cortex-M0, Cortex-M0+, or SC000]. </p>
 <p>The function reads the Fault Mask register (FAULTMASK) value using the instruction <b>MRS</b>. <br/>
 <br/>
 FAULTMASK prevents activation of all exceptions except for the Non-Maskable Interrupt (NMI).</p>
@@ -503,6 +520,8 @@ FAULTMASK prevents activation of all exceptions except for the Non-Maskable Inte
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Read the FPSCR register [only Cortex-M4 and Cortex-M7]. </p>
 <p>The function reads the Floating-Point Status Control Register (FPSCR) value. <br/>
 <br/>
 FPSCR provides all necessary User level controls of the floating-point system.</p>
@@ -536,6 +555,8 @@ FPSCR provides all necessary User level controls of the floating-point system.</
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Read the IPSR register. </p>
 <p>The function reads the Interrupt Program Status Register (IPSR) using the instruction <b>MRS</b>. <br/>
 <br/>
 The ISPR contains the exception type number of the current Interrupt Service Routine (ISR). Each exception has an assocciated unique IRQn number. The following bits are used:</p>
@@ -587,7 +608,9 @@ The ISPR contains the exception type number of the current Interrupt Service Rou
         </tr>
       </table>
 </div><div class="memdoc">
-<p>The function reads the Main Status Pointer (MSP) value using the instruction <b>MRS</b>. <br/>
+
+<p>Read the MSP register. </p>
+<p>The function reads the Main Stack Pointer (MSP) value using the instruction <b>MRS</b>. <br/>
 <br/>
 Physically two different stack pointers (SP) exist:</p>
 <ul>
@@ -627,6 +650,8 @@ Physically two different stack pointers (SP) exist:</p>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Get Main Stack Pointer Limit Devices without Armv8-M Main Extensions (i.e. Cortex-M23) lack the non-secure Stack Pointer Limit register hence zero is returned always in non-secure mode. </p>
 <p>Returns the current value of the Main Stack Pointer Limit (MSPLIM). </p>
 <dl class="section return"><dt>Returns</dt><dd>MSPLIM Register value </dd></dl>
 <dl class="section note"><dt>Note</dt><dd>Only availabe for Armv8-M Architecture. </dd></dl>
@@ -646,6 +671,8 @@ Physically two different stack pointers (SP) exist:</p>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Read the PRIMASK register bit. </p>
 <p>The function reads the Priority Mask register (PRIMASK) value using the instruction <b>MRS</b>. <br/>
 <br/>
 PRIMASK is a 1-bit-wide interrupt mask register. When set, it blocks all interrupts apart from the non-maskable interrupt (NMI) and the hard fault exception. The PRIMASK prevents activation of all exceptions with configurable priority.</p>
@@ -675,7 +702,9 @@ PRIMASK is a 1-bit-wide interrupt mask register. When set, it blocks all interru
         </tr>
       </table>
 </div><div class="memdoc">
-<p>The function reads the Program Status Pointer (PSP) value using the instruction <b>MRS</b>. <br/>
+
+<p>Read the PSP register. </p>
+<p>The function reads the Process Stack Pointer (PSP) value using the instruction <b>MRS</b>. <br/>
 <br/>
 Physically two different stack pointers (SP) exist:</p>
 <ul>
@@ -715,6 +744,8 @@ Physically two different stack pointers (SP) exist:</p>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Get Process Stack Pointer Limit Devices without Armv8-M Main Extensions (i.e. Cortex-M23) lack the non-secure Stack Pointer Limit register hence zero is returned always in non-secure mode. </p>
 <p>Returns the current value of the Process Stack Pointer Limit (PSPLIM). </p>
 <dl class="section return"><dt>Returns</dt><dd>PSPLIM Register value </dd></dl>
 <dl class="section note"><dt>Note</dt><dd>Only availabe for Armv8-M Architecture. </dd></dl>
@@ -734,6 +765,8 @@ Physically two different stack pointers (SP) exist:</p>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Read the xPSR register. </p>
 <p>The function reads the combined Program Status Register (xPSR) using the instruction <b>MRS</b>. <br/>
 <br/>
 xPSR provides information about program execution and the APSR flags. It consists of the following PSRs: </p>
@@ -785,6 +818,8 @@ xPSR provides information about program execution and the APSR flags. It consist
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Set the BASEPRI register [not for Cortex-M0, Cortex-M0+, or SC000]. </p>
 <p>The function sets the Base Priority Mask register (BASEPRI) value using the instruction <b>MSR</b>. <br/>
 <br/>
 BASEPRI defines the minimum priority for exception processing. When BASEPRI is set to a non-zero value, it prevents the activation of all exceptions with the same or lower priority level as the BASEPRI value.</p>
@@ -821,6 +856,8 @@ BASEPRI defines the minimum priority for exception processing. When BASEPRI is s
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Increase the BASEPRI register [not for Cortex-M0, Cortex-M0+, or SC000]. </p>
 <p>The function only increases the Base Priority Mask register (BASEPRI) value using the instruction <b>MSR</b>. The value is set only if BASEPRI masking is disabled, or the new value increases the BASEPRI priority level. <br/>
 <br/>
 BASEPRI defines the minimum priority for exception processing.</p>
@@ -859,6 +896,8 @@ BASEPRI defines the minimum priority for exception processing.</p>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Set the CONTROL Register. </p>
 <p>The function sets the CONTROL register value using the instruction <b>MSR</b>. <br/>
 <br/>
 The CONTROL register controls the stack used and the privilege level for software execution when the processor is in thread mode and, if implemented, indicates whether the FPU state is active. This register uses the following bits: <br/>
@@ -922,6 +961,8 @@ The CONTROL register controls the stack used and the privilege level for softwar
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Set the FAULTMASK register [not for Cortex-M0, Cortex-M0+, or SC000]. </p>
 <p>The function sets the Fault Mask register (FAULTMASK) value using the instruction <b>MSR</b>. <br/>
 <br/>
 FAULTMASK prevents activation of all exceptions except for Non-Maskable Interrupt (NMI). FAULTMASK can be used to escalate a configurable fault handler (BusFault, usage fault, or memory management fault) to hard fault level without invoking a hard fault. This allows the fault handler to pretend to be the hard fault handler, whith the ability to:</p>
@@ -964,6 +1005,8 @@ FAULTMASK prevents activation of all exceptions except for Non-Maskable Interrup
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Set the FPSC register [only for Cortex-M4 and Cortex-M7]. </p>
 <p>The function sets the Floating-Point Status Control Register (FPSCR) value. <br/>
 <br/>
 FPSCR provides all necessary User level control of the floating-point system. <br/>
@@ -1103,7 +1146,9 @@ FPSCR provides all necessary User level control of the floating-point system. <b
         </tr>
       </table>
 </div><div class="memdoc">
-<p>The function sets the Main Status Pointer (MSP) value using the instruction <b>MSR</b>. <br/>
+
+<p>Set the MSP register. </p>
+<p>The function sets the Main Stack Pointer (MSP) value using the instruction <b>MSR</b>. <br/>
 <br/>
 Physically two different stack pointers (SP) exist:</p>
 <ul>
@@ -1148,6 +1193,8 @@ Physically two different stack pointers (SP) exist:</p>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Set Main Stack Pointer Limit Devices without Armv8-M Main Extensions (i.e. Cortex-M23) lack the non-secure Stack Pointer Limit register hence the write is silently ignored in non-secure mode. </p>
 <p>Assigns the given value to the Main Stack Pointer Limit (MSPLIM). </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -1172,6 +1219,8 @@ Physically two different stack pointers (SP) exist:</p>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Set the Priority Mask bit. </p>
 <p>The function sets the Priority Mask register (PRIMASK) value using the instruction <b>MSR</b>. <br/>
 <br/>
 PRIMASK is a 1-bit-wide interrupt mask register. When set, it blocks all interrupts apart from the non-maskable interrupt (NMI) and the hard fault exception. The PRIMASK prevents activation of all exceptions with configurable priority.</p>
@@ -1213,7 +1262,9 @@ PRIMASK is a 1-bit-wide interrupt mask register. When set, it blocks all interru
         </tr>
       </table>
 </div><div class="memdoc">
-<p>The function sets the Program Status Pointer (PSP) value using the instruction <b>MSR</b>. <br/>
+
+<p>Set the PSP register. </p>
+<p>The function sets the Process Stack Pointer (PSP) value using the instruction <b>MSR</b>. <br/>
 <br/>
 Physically two different stack pointers (SP) exist:</p>
 <ul>
@@ -1258,6 +1309,8 @@ Physically two different stack pointers (SP) exist:</p>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Set Process Stack Pointer Limit Devices without Armv8-M Main Extensions (i.e. Cortex-M23) lack the non-secure Stack Pointer Limit register hence the write is silently ignored in non-secure mode. </p>
 <p>Assigns the given value to the Process Stack Pointer Limit (PSPLIM). </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -1274,7 +1327,7 @@ Physically two different stack pointers (SP) exist:</p>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Jul 10 2019 15:20:25 for CMSIS-Core (Cortex-M) Version 5.3.0 by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Apr 9 2020 15:49:08 for CMSIS-Core (Cortex-M) Version 5.4.0 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

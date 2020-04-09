@@ -27,5 +27,14 @@ var group__CFFT__CIFFT =
     [ "twiddleCoef_512_q31", "group__CFFT__CIFFT.html#ga416c61b2f08542a39111e06b0378bebe", null ],
     [ "twiddleCoef_64", "group__CFFT__CIFFT.html#ga4f3c6d98c7e66393b4ef3ac63746e43d", null ],
     [ "twiddleCoef_64_q15", "group__CFFT__CIFFT.html#gaa0cc411e0b3c82078e85cfdf1b84290f", null ],
-    [ "twiddleCoef_64_q31", "group__CFFT__CIFFT.html#ga6e0a7e941a25a0d74b2e6590307de47e", null ]
+    [ "twiddleCoef_64_q31", "group__CFFT__CIFFT.html#ga6e0a7e941a25a0d74b2e6590307de47e", null ],
+    [ "twiddleCoefF64_1024", "group__CFFT__CIFFT.html#ga6626143034266d76fafe4195cd59e9ef", null ],
+    [ "twiddleCoefF64_128", "group__CFFT__CIFFT.html#ga252036ff16d9125ae72f547f4565f36f", null ],
+    [ "twiddleCoefF64_16", "group__CFFT__CIFFT.html#gabeb418730eacdce077316477b7f1e960", null ],
+    [ "twiddleCoefF64_2048", "group__CFFT__CIFFT.html#ga0d6a794c1315cceaa884e3bdc736e576", null ],
+    [ "twiddleCoefF64_256", "group__CFFT__CIFFT.html#ga10e83806d2c02cc4f5f07ce46851a673", null ],
+    [ "twiddleCoefF64_32", "group__CFFT__CIFFT.html#ga3f7d1eaff3c6910ee7d85ae1c9015fe5", null ],
+    [ "twiddleCoefF64_4096", "group__CFFT__CIFFT.html#gac0f43575fce0ab5e30d8731924dbc6d3", null ],
+    [ "twiddleCoefF64_512", "group__CFFT__CIFFT.html#gadf57a6c3f49246e356cc72615c5dc8ba", null ],
+    [ "twiddleCoefF64_64", "group__CFFT__CIFFT.html#ga6fe9e2b9200445a2313d7542c586639b", null ]
 ];

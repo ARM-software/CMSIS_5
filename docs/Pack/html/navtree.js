@@ -4,7 +4,11 @@ var NAVTREE =
     [ "Software Pack Use Cases", "index.html#SWPackVariants", null ],
     [ "Revision History of CMSIS-Pack", "pack_revisionHistory.html", null ],
     [ "Overview", "cp_Packs.html", [
-      [ "Software Components", "cp_Packs.html#cp_Components", null ],
+      [ "Software Components", "cp_Packs.html#cp_Components", [
+        [ "Technical Details", "cp_Packs.html#cp_CompDetails", null ],
+        [ "Software Component Files", "cp_Packs.html#cp_CompFiles", null ],
+        [ "File naming", "cp_Packs.html#cp_CompFileNaming", null ]
+      ] ],
       [ "References to other software components", "cp_Packs.html#cp_Cond", null ],
       [ "Requirements", "cp_Packs.html#cp_Requirements", null ],
       [ "Central API definition", "cp_Packs.html#cp_APIDef", null ],
@@ -62,24 +66,6 @@ var NAVTREE =
     ] ],
     [ "Flash Programming", "flashAlgorithm.html", "flashAlgorithm" ],
     [ "Debug Setup with CMSIS-Pack", "coresight_setup.html", "coresight_setup" ],
-    [ "Project Description (*.cpdsc) Format", "cpdsc_pg.html", [
-      [ "Definition of CMSIS project", "cpdsc_pg.html#cpdsc_definition", null ],
-      [ "CPDSC top level structure", "cpdsc_pg.html#cpdsc_structure", null ],
-      [ "/package (for CPDSC)", "cpdsc_pg.html#element_package_cpdsc", null ],
-      [ "/package/create", "cpdsc_pg.html#cpdsc_create_pg", null ],
-      [ "/package/create/project", "cpdsc_pg.html#element_project", null ],
-      [ "/package/create/project/target", "cpdsc_pg.html#cpdsc_target_pg", null ],
-      [ "/package/create/project/target/algorithm", "cpdsc_pg.html#element_target_algorithm", null ],
-      [ "/package/create/project/target/debugProbe", "cpdsc_pg.html#element_debugProbe", null ],
-      [ "/package/create/project/target/memory", "cpdsc_pg.html#element_target_memory", null ],
-      [ "/package/create/project/target/output", "cpdsc_pg.html#element_output", null ],
-      [ "/package/create/project/select", "cpdsc_pg.html#cpdsc_select_pg", null ],
-      [ "/package/create/project/select/component", "cpdsc_pg.html#element_project_component", null ],
-      [ "/package/create/project/select/component/file", "cpdsc_pg.html#element_component_file", null ],
-      [ "/package/create/project/files", "cpdsc_pg.html#cpdsc_files_pg", null ],
-      [ "/package/project/create/files/.../file", "cpdsc_pg.html#element_project_file", null ],
-      [ "/package/create/project/files/.../group", "cpdsc_pg.html#element_project_group", null ]
-    ] ],
     [ "System Description File (*.SDF) Format", "sdf_pg.html", [
       [ "SDF top level structure", "sdf_pg.html#sdf_structure", null ],
       [ "/system_description", "sdf_pg.html#sdf_element_system_description", null ],
@@ -100,7 +86,7 @@ var NAVTREE =
       [ "/system_description/platform/clusters", "sdf_pg.html#sdf_element_clusters", null ],
       [ "/system_description/platform/clusters/cluster", "sdf_pg.html#sdf_element_cluster", null ]
     ] ],
-    [ "CMSIS-Pack Index Files", "packIndexFile.html", [
+    [ "Pack Index Files", "packIndexFile.html", [
       [ "Package Index File (pidx)", "packIndexFile.html#pidxFile", null ],
       [ "Vendor Index File (vidx)", "packIndexFile.html#vidxFile", null ],
       [ "CMSIS-Pack Index Schema File", "packIndexFile.html#packIndexSchema", null ]
@@ -111,7 +97,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "algorithmFunc.html",
-"sdf_pg.html#sdf_element_cluster"
+"sdf_pg.html#sdf_element_system_description"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

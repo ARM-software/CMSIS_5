@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Driver
-   &#160;<span id="projectnumber">Version 2.7.1</span>
+   &#160;<span id="projectnumber">Version 2.8.0</span>
    </div>
    <div id="projectbrief">Peripheral Interface for Middleware and Application Code</div>
   </td>
@@ -640,7 +640,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>status information<ul>
-<li>number of bytes received (&gt;0)</li>
+<li>number of bytes received (&gt;=0)</li>
 <li><a class="el" href="group__wifi__soc__func.html#ga535e069b83aafcf70dd089e6097bceef">ARM_SOCKET_ESOCK</a> : Invalid socket</li>
 <li><a class="el" href="group__wifi__soc__func.html#ga695aa5c5329602d9465fbc6c22fc9978">ARM_SOCKET_EINVAL</a> : Invalid argument (pointer to buffer or length)</li>
 <li><a class="el" href="group__wifi__soc__func.html#ga0bde95e313d907032074583bc06b24a1">ARM_SOCKET_ENOTCONN</a> : Socket is not connected</li>
@@ -655,6 +655,7 @@ Functions</h2></td></tr>
 <p>The argument <em>socket</em> specifies a socket identification number returned from a previous call to <a class="el" href="group__wifi__socket__gr.html#ga1433b297315ab394f1544a18548ffcc6">ARM_WIFI_SocketCreate</a>.</p>
 <p>The argument <em>buf</em> is a pointer to the application data buffer for storing the data to. If the available data is too large to fit in the supplied application buffer <em>buf</em>, excess bytes are discarded in case of a datagram sockets. For stream sockets, the data is buffered internally so the application can retrieve all data by multiple calls of <b>ARM_WIFI_SocketRecv</b> function.</p>
 <p>The argument <em>len</em> specifies the size of the application data buffer.</p>
+<dl class="section note"><dt>Note</dt><dd>The function can also be used to check if the socket has data available to read by specifying <span class="XML-Token">0</span> for argument <em>len</em> (argument <em>buf</em> is ignored). The function returns <span class="XML-Token">0</span> if data is available or error code otherwise. In blocking mode, the function waits until data is available, in non blocking mode the function returns instantly.</dd></dl>
 <p><b>Example:</b> </p>
 <ul>
 <li>see <a class="el" href="group__wifi__socket__gr.html#ga4929aab257781dcaae7197f917991779">ARM_WIFI_SocketListen</a> </li>
@@ -727,7 +728,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>status information<ul>
-<li>number of bytes received (&gt;0)</li>
+<li>number of bytes received (&gt;=0)</li>
 <li><a class="el" href="group__wifi__soc__func.html#ga535e069b83aafcf70dd089e6097bceef">ARM_SOCKET_ESOCK</a> : Invalid socket</li>
 <li><a class="el" href="group__wifi__soc__func.html#ga695aa5c5329602d9465fbc6c22fc9978">ARM_SOCKET_EINVAL</a> : Invalid argument (pointer to buffer or length)</li>
 <li><a class="el" href="group__wifi__soc__func.html#ga0bde95e313d907032074583bc06b24a1">ARM_SOCKET_ENOTCONN</a> : Socket is not connected</li>
@@ -745,6 +746,7 @@ Functions</h2></td></tr>
 <p>The argument <em>ip</em> is a pointer to the buffer that will receive the IP address of the sender. If the <em>ip</em> is <span class="XML-Token">NULL</span>, the IP address is not returned.</p>
 <p>The argument <em>ip_len</em> is a pointer to the IP address length. It should initially contain the amount of space pointed to by <em>ip</em>. On return it contains the actual length of the address returned in bytes.</p>
 <p>The argument <em>port</em> is a pointer to the buffer, that will receive the port number of the sender. If the <em>port</em> is <span class="XML-Token">NULL</span>, the port number is not returned.</p>
+<dl class="section note"><dt>Note</dt><dd>The function can also be used to check if the socket has data available to read by specifying <span class="XML-Token">0</span> for argument <em>len</em> (arguments <em>buf</em>, <em>ip</em>, <em>ip_len</em> and <em>port</em> are ignored). The function returns <span class="XML-Token">0</span> if data is available or error code otherwise. In blocking mode, the function waits until data is available, in non blocking mode the function returns instantly.</dd></dl>
 <p><b>Example:</b> </p>
 <div class="fragment"><div class="line"><span class="keyword">extern</span> <a class="code" href="group__wifi__interface__gr.html#structARM__DRIVER__WIFI">ARM_DRIVER_WIFI</a> Driver_WiFi0;</div>
 <div class="line"><span class="keyword">static</span> <a class="code" href="group__wifi__interface__gr.html#structARM__DRIVER__WIFI">ARM_DRIVER_WIFI</a> *wifi;</div>
@@ -824,7 +826,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>status information<ul>
-<li>number of bytes sent (&gt;0)</li>
+<li>number of bytes sent (&gt;=0)</li>
 <li><a class="el" href="group__wifi__soc__func.html#ga535e069b83aafcf70dd089e6097bceef">ARM_SOCKET_ESOCK</a> : Invalid socket</li>
 <li><a class="el" href="group__wifi__soc__func.html#ga695aa5c5329602d9465fbc6c22fc9978">ARM_SOCKET_EINVAL</a> : Invalid argument (pointer to buffer or length)</li>
 <li><a class="el" href="group__wifi__soc__func.html#ga0bde95e313d907032074583bc06b24a1">ARM_SOCKET_ENOTCONN</a> : Socket is not connected</li>
@@ -843,6 +845,7 @@ Functions</h2></td></tr>
 </ul>
 <p>The argument <em>len</em> specifies the length of data in bytes.</p>
 <p>Return value, when positive, represents the number of bytes sent, which can be less than <em>len</em>.</p>
+<dl class="section note"><dt>Note</dt><dd>The function can also be used to check if the socket is ready to send data by specifying <span class="XML-Token">0</span> for argument <em>len</em> (argument <em>buf</em> is ignored). The function returns <span class="XML-Token">0</span> if the socket is writable or error code otherwise.</dd></dl>
 <p><b>Example:</b> </p>
 <ul>
 <li>see <a class="el" href="group__wifi__socket__gr.html#ga4929aab257781dcaae7197f917991779">ARM_WIFI_SocketListen</a> </li>
@@ -911,7 +914,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>status information<ul>
-<li>number of bytes sent (&gt;0)</li>
+<li>number of bytes sent (&gt;=0)</li>
 <li><a class="el" href="group__wifi__soc__func.html#ga535e069b83aafcf70dd089e6097bceef">ARM_SOCKET_ESOCK</a> : Invalid socket</li>
 <li><a class="el" href="group__wifi__soc__func.html#ga695aa5c5329602d9465fbc6c22fc9978">ARM_SOCKET_EINVAL</a> : Invalid argument (pointer to buffer or length)</li>
 <li><a class="el" href="group__wifi__soc__func.html#ga0bde95e313d907032074583bc06b24a1">ARM_SOCKET_ENOTCONN</a> : Socket is not connected</li>
@@ -935,6 +938,7 @@ Functions</h2></td></tr>
 <p>The argument <em>port</em> specifies the port of the endpoint node. If the argument <em>port</em> is <span class="XML-Token">0</span>, the function returns error, because this port is reserved.</p>
 <p>For the stream sockets, arguments <em>ip</em>, <em>ip_len</em> and <em>port</em> are ignored.</p>
 <p>Return value, when positive, represents the number of bytes sent, which can be less than <em>len</em>.</p>
+<dl class="section note"><dt>Note</dt><dd>The function can also be used to check if the socket is ready to send data by specifying <span class="XML-Token">0</span> for argument <em>len</em> (arguments <em>buf</em>, <em>ip</em>, <em>ip_len</em> and <em>port</em> are ignored). The function returns <span class="XML-Token">0</span> if the socket is writable or error code otherwise.</dd></dl>
 <p><b>Example:</b> </p>
 <ul>
 <li>see <a class="el" href="group__wifi__socket__gr.html#ga2b15232d69f2ae8e189512d6c68c8a81">ARM_WIFI_SocketRecvFrom</a> </li>
@@ -1463,7 +1467,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Jul 10 2019 15:20:32 for CMSIS-Driver Version 2.7.1 by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Apr 9 2020 15:49:16 for CMSIS-Driver Version 2.8.0 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

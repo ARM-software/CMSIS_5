@@ -10,5 +10,8 @@ var modules =
     [ "Statistics Functions", "group__groupStats.html", "group__groupStats" ],
     [ "Support Functions", "group__groupSupport.html", "group__groupSupport" ],
     [ "Interpolation Functions", "group__groupInterpolation.html", "group__groupInterpolation" ],
-    [ "Examples", "group__groupExamples.html", "group__groupExamples" ]
+    [ "Examples", "group__groupExamples.html", "group__groupExamples" ],
+    [ "SVM Functions", "group__groupSVM.html", "group__groupSVM" ],
+    [ "Bayesian estimators", "group__groupBayes.html", "group__groupBayes" ],
+    [ "Distance functions", "group__groupDistance.html", "group__groupDistance" ]
 ];

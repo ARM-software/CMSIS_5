@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Core (Cortex-M)
-   &#160;<span id="projectnumber">Version 5.3.0</span>
+   &#160;<span id="projectnumber">Version 5.4.0</span>
    </div>
    <div id="projectbrief">CMSIS-Core support for Cortex-M processor-based devices</div>
   </td>
@@ -165,7 +165,7 @@ Programmers Model with TrustZone</h1>
 <div class="caption">
 Secure Memory Map</div></div>
 <p> The figure <a href="#MemoryMap_NS"><b>Non-Secure Memory Map</b></a> shows the memory view for the Non-secure state. This memory view is identical to the traditional Cortex-M memory map. Access to any secure memory or peripheral space triggers the secure exception that executes a handler in <b>Secure state</b>.</p>
-<p>The <a class="el" href="partition_h_pg.html">System Partition Header File partition_&lt;device&gt;.h</a> defines the initial setup of the <a href="#MemoryMap_NS"><b>Non-Secure Memory Map</b></a> during system start in the Secure state (refer to functions <a class="el" href="group__system__init__gr.html#ga93f514700ccf00d08dbdcff7f1224eb2">SystemInit</a> and <a class="el" href="group__sau__trustzone__functions.html#ga6093bc5939ea8924fbcfdffb8f0553f1">TZ_SAU_Setup</a>).</p>
+<p>The <a class="el" href="partition_h_pg.html">TrustZone setup: partition_&lt;device&gt;.h</a> defines the initial setup of the <a href="#MemoryMap_NS"><b>Non-Secure Memory Map</b></a> during system start in the Secure state (refer to functions <a class="el" href="group__system__init__gr.html#ga93f514700ccf00d08dbdcff7f1224eb2">SystemInit</a> and <a class="el" href="group__sau__trustzone__functions.html#ga6093bc5939ea8924fbcfdffb8f0553f1">TZ_SAU_Setup</a>).</p>
 <p><a class="anchor" id="MemoryMap_NS"></a></p>
 <div class="image">
 <img src="MemoryMap_NS.png" alt="MemoryMap_NS.png"/>
@@ -182,12 +182,17 @@ Non-Secure Memory Map</div></div>
 Registers</div></div>
  <h1><a class="anchor" id="CMSIS_Files_TrustZone"></a>
 CMSIS Files for TrustZone</h1>
-<p>The CMSIS-Core files are extended by the <a class="el" href="partition_h_pg.html">System Partition Header File partition_&lt;device&gt;.h</a> which defines the initial system configuration and during <a class="el" href="group__system__init__gr.html#ga93f514700ccf00d08dbdcff7f1224eb2">SystemInit</a> in Secure state.</p>
+<p>he CMSIS-Core files are extended by the header files <a class="el" href="partition_h_pg.html">TrustZone setup: partition_&lt;device&gt;.h</a> and <a class="el" href="partition_h_pg.html#partition_gen_h_pg">Region/ISR setup: partition_gen.h</a> :</p>
+<ul>
+<li>The file <a class="el" href="partition_h_pg.html">partition_&lt;device&gt;.h</a> defines the initial system configuration and during SystemInit in Secure state.</li>
+<li>The file <a class="el" href="partition_h_pg.html#partition_gen_h_pg">partition_gen.h</a> is optional and contains SAU region and interrupt target assignments. This file may be generated using CMSIS-Zone.</li>
+</ul>
+<dl class="section note"><dt>Note</dt><dd>Refer to <a class="el" href="using_pg.html">Using CMSIS in Embedded Applications</a> for a general description of the CMSIS-Core (Cortex-M) files.</dd></dl>
 <div class="image">
 <img src="CMSIS_TZ_files.png" alt="CMSIS_TZ_files.png"/>
 <div class="caption">
 CMSIS with extensions for TrustZone</div></div>
- <dl class="section note"><dt>Note</dt><dd>Refer to <a class="el" href="using_pg.html">Using CMSIS in Embedded Applications</a> for a general description of the CMSIS-Core (Cortex-M) files.</dd></dl>
+<p> &#160;</p>
 <h2><a class="anchor" id="RTOS_TrustZone"></a>
 RTOS Thread Context Management</h2>
 <p>To provide a consistent RTOS thread context management for Armv8-M TrustZone across the various real-time operating systems (RTOS), the CMSIS-Core (Cortex-M) includes header file <b>TZ_context.h</b> with API definitions. An <em>non-secure application</em> which uses an RTOS and calls <em>secure</em> library modules requires the management of the <em>secure</em> stack space. Since <em>secure state</em> registers cannot be accessed by the RTOS that runs in <em>non-secure state</em> secure functions implement the thread context switch.</p>
@@ -204,7 +209,7 @@ RTOS Thread Context Management for Armv8-M TrustZone</div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Jul 10 2019 15:20:25 for CMSIS-Core (Cortex-M) Version 5.3.0 by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Apr 9 2020 15:49:07 for CMSIS-Core (Cortex-M) Version 5.4.0 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

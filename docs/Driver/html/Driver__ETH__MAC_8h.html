@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Driver
-   &#160;<span id="projectnumber">Version 2.7.1</span>
+   &#160;<span id="projectnumber">Version 2.8.0</span>
    </div>
    <div id="projectbrief">Peripheral Interface for Middleware and Application Code</div>
   </td>
@@ -130,28 +130,28 @@ Data Structures</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:a89ade7fd7f91b1b6e21883a8f823a8cc"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Driver__ETH__MAC_8h.html#a89ade7fd7f91b1b6e21883a8f823a8cc">ARM_ETH_MAC_API_VERSION</a>&#160;&#160;&#160;<a class="el" href="Driver__Common_8h.html#a43c7ca1eb0786d818624246c09932a74">ARM_DRIVER_VERSION_MAJOR_MINOR</a>(2,1)  /* API version */</td></tr>
+<tr class="memitem:a89ade7fd7f91b1b6e21883a8f823a8cc"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Driver__ETH__MAC_8h.html#a89ade7fd7f91b1b6e21883a8f823a8cc">ARM_ETH_MAC_API_VERSION</a>&#160;&#160;&#160;<a class="el" href="Driver__Common_8h.html#a43c7ca1eb0786d818624246c09932a74">ARM_DRIVER_VERSION_MAJOR_MINOR</a>(2,2)  /* API version */</td></tr>
 <tr class="separator:a89ade7fd7f91b1b6e21883a8f823a8cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ade64adbfd1c8076b7acf0b3994fb4df2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Driver__ETH__MAC_8h.html#ade64adbfd1c8076b7acf0b3994fb4df2">_ARM_Driver_ETH_MAC_</a>(n)&#160;&#160;&#160;Driver_ETH_MAC##n</td></tr>
 <tr class="separator:ade64adbfd1c8076b7acf0b3994fb4df2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abc6ea74fb57580e41b7321fb255da6d0"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Driver__ETH__MAC_8h.html#abc6ea74fb57580e41b7321fb255da6d0">ARM_Driver_ETH_MAC_</a>(n)&#160;&#160;&#160;<a class="el" href="Driver__ETH__MAC_8h.html#ade64adbfd1c8076b7acf0b3994fb4df2">_ARM_Driver_ETH_MAC_</a>(n)</td></tr>
 <tr class="separator:abc6ea74fb57580e41b7321fb255da6d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7819c7a1aa7bbc13dc42d0fd7e75a23c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__eth__mac__ctrls.html#ga7819c7a1aa7bbc13dc42d0fd7e75a23c">ARM_ETH_MAC_CONFIGURE</a>&#160;&#160;&#160;(0x01)</td></tr>
+<tr class="memitem:ga7819c7a1aa7bbc13dc42d0fd7e75a23c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__eth__mac__ctrls.html#ga7819c7a1aa7bbc13dc42d0fd7e75a23c">ARM_ETH_MAC_CONFIGURE</a>&#160;&#160;&#160;(0x01UL)</td></tr>
 <tr class="memdesc:ga7819c7a1aa7bbc13dc42d0fd7e75a23c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configure MAC; arg = configuration.  <a href="group__eth__mac__ctrls.html#ga7819c7a1aa7bbc13dc42d0fd7e75a23c">More...</a><br/></td></tr>
 <tr class="separator:ga7819c7a1aa7bbc13dc42d0fd7e75a23c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3a98c8a7ee5ed4b1ffd250eecaeefe5c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__eth__mac__ctrls.html#ga3a98c8a7ee5ed4b1ffd250eecaeefe5c">ARM_ETH_MAC_CONTROL_TX</a>&#160;&#160;&#160;(0x02)</td></tr>
+<tr class="memitem:ga3a98c8a7ee5ed4b1ffd250eecaeefe5c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__eth__mac__ctrls.html#ga3a98c8a7ee5ed4b1ffd250eecaeefe5c">ARM_ETH_MAC_CONTROL_TX</a>&#160;&#160;&#160;(0x02UL)</td></tr>
 <tr class="memdesc:ga3a98c8a7ee5ed4b1ffd250eecaeefe5c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transmitter; arg: 0=disabled (default), 1=enabled.  <a href="group__eth__mac__ctrls.html#ga3a98c8a7ee5ed4b1ffd250eecaeefe5c">More...</a><br/></td></tr>
 <tr class="separator:ga3a98c8a7ee5ed4b1ffd250eecaeefe5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae0964364b81b38b6e1fbf7196f3be869"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__eth__mac__ctrls.html#gae0964364b81b38b6e1fbf7196f3be869">ARM_ETH_MAC_CONTROL_RX</a>&#160;&#160;&#160;(0x03)</td></tr>
+<tr class="memitem:gae0964364b81b38b6e1fbf7196f3be869"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__eth__mac__ctrls.html#gae0964364b81b38b6e1fbf7196f3be869">ARM_ETH_MAC_CONTROL_RX</a>&#160;&#160;&#160;(0x03UL)</td></tr>
 <tr class="memdesc:gae0964364b81b38b6e1fbf7196f3be869"><td class="mdescLeft">&#160;</td><td class="mdescRight">Receiver; arg: 0=disabled (default), 1=enabled.  <a href="group__eth__mac__ctrls.html#gae0964364b81b38b6e1fbf7196f3be869">More...</a><br/></td></tr>
 <tr class="separator:gae0964364b81b38b6e1fbf7196f3be869"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga530812ef349a2e297f23de72e660fe27"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__eth__mac__ctrls.html#ga530812ef349a2e297f23de72e660fe27">ARM_ETH_MAC_FLUSH</a>&#160;&#160;&#160;(0x04)</td></tr>
+<tr class="memitem:ga530812ef349a2e297f23de72e660fe27"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__eth__mac__ctrls.html#ga530812ef349a2e297f23de72e660fe27">ARM_ETH_MAC_FLUSH</a>&#160;&#160;&#160;(0x04UL)</td></tr>
 <tr class="memdesc:ga530812ef349a2e297f23de72e660fe27"><td class="mdescLeft">&#160;</td><td class="mdescRight">Flush buffer; arg = ARM_ETH_MAC_FLUSH_...  <a href="group__eth__mac__ctrls.html#ga530812ef349a2e297f23de72e660fe27">More...</a><br/></td></tr>
 <tr class="separator:ga530812ef349a2e297f23de72e660fe27"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4afe66589216f566f529af52f9075fdf"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__eth__mac__ctrls.html#ga4afe66589216f566f529af52f9075fdf">ARM_ETH_MAC_SLEEP</a>&#160;&#160;&#160;(0x05)</td></tr>
+<tr class="memitem:ga4afe66589216f566f529af52f9075fdf"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__eth__mac__ctrls.html#ga4afe66589216f566f529af52f9075fdf">ARM_ETH_MAC_SLEEP</a>&#160;&#160;&#160;(0x05UL)</td></tr>
 <tr class="memdesc:ga4afe66589216f566f529af52f9075fdf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sleep mode; arg: 1=enter and wait for Magic packet, 0=exit.  <a href="group__eth__mac__ctrls.html#ga4afe66589216f566f529af52f9075fdf">More...</a><br/></td></tr>
 <tr class="separator:ga4afe66589216f566f529af52f9075fdf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab332b58ba320e73864830dc42ad74181"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__eth__mac__ctrls.html#gab332b58ba320e73864830dc42ad74181">ARM_ETH_MAC_VLAN_FILTER</a>&#160;&#160;&#160;(0x06)</td></tr>
+<tr class="memitem:gab332b58ba320e73864830dc42ad74181"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__eth__mac__ctrls.html#gab332b58ba320e73864830dc42ad74181">ARM_ETH_MAC_VLAN_FILTER</a>&#160;&#160;&#160;(0x06UL)</td></tr>
 <tr class="memdesc:gab332b58ba320e73864830dc42ad74181"><td class="mdescLeft">&#160;</td><td class="mdescRight">VLAN Filter for received frames; arg15..0: VLAN Tag; arg16: optional ARM_ETH_MAC_VLAN_FILTER_ID_ONLY; 0=disabled (default)  <a href="group__eth__mac__ctrls.html#gab332b58ba320e73864830dc42ad74181">More...</a><br/></td></tr>
 <tr class="separator:gab332b58ba320e73864830dc42ad74181"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad7fd5c5f4d4f39a56466c2d34cb699ef"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Driver__ETH__MAC_8h.html#ad7fd5c5f4d4f39a56466c2d34cb699ef">ARM_ETH_MAC_SPEED_Pos</a>&#160;&#160;&#160;0</td></tr>
@@ -213,22 +213,22 @@ Macros</h2></td></tr>
 <tr class="memitem:gade137f65dd345ae40e93c77d495f9b54"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__eth__mac__frame__transmit__ctrls.html#gade137f65dd345ae40e93c77d495f9b54">ARM_ETH_MAC_TX_FRAME_TIMESTAMP</a>&#160;&#160;&#160;(1UL &lt;&lt; 2)</td></tr>
 <tr class="memdesc:gade137f65dd345ae40e93c77d495f9b54"><td class="mdescLeft">&#160;</td><td class="mdescRight">Capture frame time stamp.  <a href="group__eth__mac__frame__transmit__ctrls.html#gade137f65dd345ae40e93c77d495f9b54">More...</a><br/></td></tr>
 <tr class="separator:gade137f65dd345ae40e93c77d495f9b54"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad9a439b9727c032a7d851df2a7a622c2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__eth__mac__time__control.html#gad9a439b9727c032a7d851df2a7a622c2">ARM_ETH_MAC_TIMER_GET_TIME</a>&#160;&#160;&#160;(0x01)</td></tr>
+<tr class="memitem:gad9a439b9727c032a7d851df2a7a622c2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__eth__mac__time__control.html#gad9a439b9727c032a7d851df2a7a622c2">ARM_ETH_MAC_TIMER_GET_TIME</a>&#160;&#160;&#160;(0x01UL)</td></tr>
 <tr class="memdesc:gad9a439b9727c032a7d851df2a7a622c2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get current time.  <a href="group__eth__mac__time__control.html#gad9a439b9727c032a7d851df2a7a622c2">More...</a><br/></td></tr>
 <tr class="separator:gad9a439b9727c032a7d851df2a7a622c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5e867a003c06046d7944bcb5723e6049"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__eth__mac__time__control.html#ga5e867a003c06046d7944bcb5723e6049">ARM_ETH_MAC_TIMER_SET_TIME</a>&#160;&#160;&#160;(0x02)</td></tr>
+<tr class="memitem:ga5e867a003c06046d7944bcb5723e6049"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__eth__mac__time__control.html#ga5e867a003c06046d7944bcb5723e6049">ARM_ETH_MAC_TIMER_SET_TIME</a>&#160;&#160;&#160;(0x02UL)</td></tr>
 <tr class="memdesc:ga5e867a003c06046d7944bcb5723e6049"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set new time.  <a href="group__eth__mac__time__control.html#ga5e867a003c06046d7944bcb5723e6049">More...</a><br/></td></tr>
 <tr class="separator:ga5e867a003c06046d7944bcb5723e6049"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3c57b3150717fb1a8cbbbac6a9b7ff69"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__eth__mac__time__control.html#ga3c57b3150717fb1a8cbbbac6a9b7ff69">ARM_ETH_MAC_TIMER_INC_TIME</a>&#160;&#160;&#160;(0x03)</td></tr>
+<tr class="memitem:ga3c57b3150717fb1a8cbbbac6a9b7ff69"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__eth__mac__time__control.html#ga3c57b3150717fb1a8cbbbac6a9b7ff69">ARM_ETH_MAC_TIMER_INC_TIME</a>&#160;&#160;&#160;(0x03UL)</td></tr>
 <tr class="memdesc:ga3c57b3150717fb1a8cbbbac6a9b7ff69"><td class="mdescLeft">&#160;</td><td class="mdescRight">Increment current time.  <a href="group__eth__mac__time__control.html#ga3c57b3150717fb1a8cbbbac6a9b7ff69">More...</a><br/></td></tr>
 <tr class="separator:ga3c57b3150717fb1a8cbbbac6a9b7ff69"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaca9f1c4259d0342e9717a362de1ccf41"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__eth__mac__time__control.html#gaca9f1c4259d0342e9717a362de1ccf41">ARM_ETH_MAC_TIMER_DEC_TIME</a>&#160;&#160;&#160;(0x04)</td></tr>
+<tr class="memitem:gaca9f1c4259d0342e9717a362de1ccf41"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__eth__mac__time__control.html#gaca9f1c4259d0342e9717a362de1ccf41">ARM_ETH_MAC_TIMER_DEC_TIME</a>&#160;&#160;&#160;(0x04UL)</td></tr>
 <tr class="memdesc:gaca9f1c4259d0342e9717a362de1ccf41"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decrement current time.  <a href="group__eth__mac__time__control.html#gaca9f1c4259d0342e9717a362de1ccf41">More...</a><br/></td></tr>
 <tr class="separator:gaca9f1c4259d0342e9717a362de1ccf41"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga04c2469ba027b020bc6b5baf3b51cf74"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__eth__mac__time__control.html#ga04c2469ba027b020bc6b5baf3b51cf74">ARM_ETH_MAC_TIMER_SET_ALARM</a>&#160;&#160;&#160;(0x05)</td></tr>
+<tr class="memitem:ga04c2469ba027b020bc6b5baf3b51cf74"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__eth__mac__time__control.html#ga04c2469ba027b020bc6b5baf3b51cf74">ARM_ETH_MAC_TIMER_SET_ALARM</a>&#160;&#160;&#160;(0x05UL)</td></tr>
 <tr class="memdesc:ga04c2469ba027b020bc6b5baf3b51cf74"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set alarm time.  <a href="group__eth__mac__time__control.html#ga04c2469ba027b020bc6b5baf3b51cf74">More...</a><br/></td></tr>
 <tr class="separator:ga04c2469ba027b020bc6b5baf3b51cf74"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga85cb862eba0934e958a8552022588db7"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__eth__mac__time__control.html#ga85cb862eba0934e958a8552022588db7">ARM_ETH_MAC_TIMER_ADJUST_CLOCK</a>&#160;&#160;&#160;(0x06)</td></tr>
+<tr class="memitem:ga85cb862eba0934e958a8552022588db7"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__eth__mac__time__control.html#ga85cb862eba0934e958a8552022588db7">ARM_ETH_MAC_TIMER_ADJUST_CLOCK</a>&#160;&#160;&#160;(0x06UL)</td></tr>
 <tr class="memdesc:ga85cb862eba0934e958a8552022588db7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adjust clock frequency; time-&gt;ns: correction factor * 2^31.  <a href="group__eth__mac__time__control.html#ga85cb862eba0934e958a8552022588db7">More...</a><br/></td></tr>
 <tr class="separator:ga85cb862eba0934e958a8552022588db7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga76943471a4a3e9e8c1ff9fe83e43bd47"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ETH__MAC__events.html#ga76943471a4a3e9e8c1ff9fe83e43bd47">ARM_ETH_MAC_EVENT_RX_FRAME</a>&#160;&#160;&#160;(1UL &lt;&lt; 0)</td></tr>
@@ -256,7 +256,7 @@ Typedefs</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define ARM_ETH_MAC_API_VERSION&#160;&#160;&#160;<a class="el" href="Driver__Common_8h.html#a43c7ca1eb0786d818624246c09932a74">ARM_DRIVER_VERSION_MAJOR_MINOR</a>(2,1)  /* API version */</td>
+          <td class="memname">#define ARM_ETH_MAC_API_VERSION&#160;&#160;&#160;<a class="el" href="Driver__Common_8h.html#a43c7ca1eb0786d818624246c09932a74">ARM_DRIVER_VERSION_MAJOR_MINOR</a>(2,2)  /* API version */</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -349,7 +349,7 @@ Typedefs</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_7151b3cc910409bb744bd274374c738d.html">Driver</a></li><li class="navelem"><a class="el" href="dir_9c39448ea46a8e15f1aabc7dec307fcf.html">Include</a></li><li class="navelem"><a class="el" href="Driver__ETH__MAC_8h.html">Driver_ETH_MAC.h</a></li>
-    <li class="footer">Generated on Wed Jul 10 2019 15:20:30 for CMSIS-Driver Version 2.7.1 by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Apr 9 2020 15:49:14 for CMSIS-Driver Version 2.8.0 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

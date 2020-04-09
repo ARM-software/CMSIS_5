@@ -3,8 +3,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<title>Cache Functions  (only Cortex-M7)</title>
-<title>CMSIS-Core (Cortex-M): Cache Functions  (only Cortex-M7)</title>
+<title>Cache Functions (Level-1)</title>
+<title>CMSIS-Core (Cortex-M): Cache Functions (Level-1)</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="cmsis.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="jquery.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Core (Cortex-M)
-   &#160;<span id="projectnumber">Version 5.3.0</span>
+   &#160;<span id="projectnumber">Version 5.4.0</span>
    </div>
    <div id="projectbrief">CMSIS-Core support for Cortex-M processor-based devices</div>
   </td>
@@ -110,24 +110,25 @@ $(document).ready(function(){initNavTree('group__cache__functions__m7.html','');
   <div class="summary">
 <a href="#groups">Content</a>  </div>
   <div class="headertitle">
-<div class="title">Cache Functions (only Cortex-M7)</div>  </div>
+<div class="title">Cache Functions (Level-1)</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Functions for Instruction and Data Cache.  
+<p>Functions for level-1 instruction and data cache.  
 <a href="#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="groups"></a>
 Content</h2></td></tr>
 <tr class="memitem:group__Icache__functions__m7"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Icache__functions__m7.html">I-Cache Functions</a></td></tr>
-<tr class="memdesc:group__Icache__functions__m7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Functions for the instruction cache. <br/></td></tr>
+<tr class="memdesc:group__Icache__functions__m7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Functions for the level-1 instruction cache. <br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:group__Dcache__functions__m7"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Dcache__functions__m7.html">D-Cache Functions</a></td></tr>
-<tr class="memdesc:group__Dcache__functions__m7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Functions for the data cache. <br/></td></tr>
+<tr class="memdesc:group__Dcache__functions__m7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Functions for the level-1 data cache. <br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Description</h2>
-<p>Cortex-M7 processors include a memory system, which includes an optional MPU and Harvard data and instruction cache with ECC. The optional CPU cache has an instruction and data cache with sizes of <span class="XML-Token">[0;4;8;16;32;64]KB</span>. Both instruction and data cache RAM can be configured at implementation time to have Error Correcting Code (ECC) to protect the data stored in the memory from errors.</p>
+<p>Functions for level-1 instruction and data cache. </p>
+<p>Enhanced Cortex processors (like M7 and M55) include a memory system, which includes an optional Harvard level-1 data and instruction cache with ECC. The optional CPU cache has an instruction and data cache with sizes of <span class="XML-Token">[0;4;8;16;32;64]KB</span>. Both instruction and data cache RAM can be configured at implementation time to have Error Correcting Code (ECC) to protect the data stored in the memory from errors.</p>
 <p>All cache maintenance operations are executed by writing to registers in the memory mapped System Control Space (SCS) region of the internal PPB memory space.</p>
 <dl class="section note"><dt>Note</dt><dd>After reset, you must invalidate each cache before enabling it.</dd></dl>
 <p>The functions are grouped for:</p>
@@ -140,7 +141,7 @@ Content</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Jul 10 2019 15:20:26 for CMSIS-Core (Cortex-M) Version 5.3.0 by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Apr 9 2020 15:49:08 for CMSIS-Core (Cortex-M) Version 5.4.0 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['readme_2etxt',['readme.txt',['../cifar10_2readme_8txt.html',1,'']]]
+  ['cmakelists_2etxt',['CMakeLists.txt',['../BasicMathFunctions_2CMakeLists_8txt.html',1,'']]]
 ];

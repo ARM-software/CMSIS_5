@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Core (Cortex-M)
-   &#160;<span id="projectnumber">Version 5.3.0</span>
+   &#160;<span id="projectnumber">Version 5.4.0</span>
    </div>
    <div id="projectbrief">CMSIS-Core support for Cortex-M processor-based devices</div>
   </td>
@@ -121,7 +121,7 @@ $(document).ready(function(){initNavTree('structMPU__Type.html','');});
 <div class="contents">
 
 <p>Structure type to access the Memory Protection Unit (MPU).  
-</p>
+ <a href="structMPU__Type.html#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
@@ -159,7 +159,9 @@ Data Fields</h2></td></tr>
 <tr class="memdesc:a7d15172b163797736a6c6b4dcc0fa3dd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Offset: 0x028 (R/W) MPU Alias 3 Region Attribute and Size Register.  <a href="#a7d15172b163797736a6c6b4dcc0fa3dd">More...</a><br/></td></tr>
 <tr class="separator:a7d15172b163797736a6c6b4dcc0fa3dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Field Documentation</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Description</h2>
+<div class="textblock"><p>Structure type to access the Memory Protection Unit (MPU). </p>
+</div><h2 class="groupheader">Field Documentation</h2>
 <a class="anchor" id="a769178ef949f0d5d8f18ddbd9e4e926f"></a>
 <div class="memitem">
 <div class="memproto">
@@ -169,6 +171,8 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Offset: 0x004 (R/W) MPU Control Register. </p>
 <p>Enables the MPU, and when the MPU is enabled, controls whether the default memory map is enabled as a background region for privileged accesses, and whether the MPU is enabled for HardFaults, NMIs, and exception handlers when FAULTMASK is set to 1.</p>
 <table class="doxtable">
 <tr>
@@ -194,6 +198,8 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Offset: 0x010 (R/W) MPU Region Attribute and Size Register. </p>
 <p>Defines the size and access behavior of the region identified by MPU_RNR, and enables that region.</p>
 <table class="doxtable">
 <tr>
@@ -237,6 +243,8 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Offset: 0x018 (R/W) MPU Alias 1 Region Attribute and Size Register. </p>
 <p>Alias for <a class="el" href="structMPU__Type.html#a8f00c4a5e31b0a8d103ed3b0732c17a3">MPU_Type::RASR</a>. </p>
 
 </div>
@@ -250,6 +258,8 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Offset: 0x020 (R/W) MPU Alias 2 Region Attribute and Size Register. </p>
 <p>Alias for <a class="el" href="structMPU__Type.html#a8f00c4a5e31b0a8d103ed3b0732c17a3">MPU_Type::RASR</a>. </p>
 
 </div>
@@ -263,6 +273,8 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Offset: 0x028 (R/W) MPU Alias 3 Region Attribute and Size Register. </p>
 <p>Alias for <a class="el" href="structMPU__Type.html#a8f00c4a5e31b0a8d103ed3b0732c17a3">MPU_Type::RASR</a>. </p>
 
 </div>
@@ -276,6 +288,8 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Offset: 0x00C (R/W) MPU Region Base Address Register. </p>
 <p>Holds the base address of the region identified by MPU_RNR. On a write, can also be used to update the base address of a specified region, in the range 0 to 15, updating MPU_RNR with the new region number.</p>
 <table class="doxtable">
 <tr>
@@ -299,6 +313,8 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Offset: 0x014 (R/W) MPU Alias 1 Region Base Address Register. </p>
 <p>Alias for <a class="el" href="structMPU__Type.html#a990c609b26d990b8ba832b110adfd353">MPU_Type::RBAR</a>. </p>
 
 </div>
@@ -312,6 +328,8 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Offset: 0x01C (R/W) MPU Alias 2 Region Base Address Register. </p>
 <p>Alias for <a class="el" href="structMPU__Type.html#a990c609b26d990b8ba832b110adfd353">MPU_Type::RBAR</a>. </p>
 
 </div>
@@ -325,6 +343,8 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Offset: 0x024 (R/W) MPU Alias 3 Region Base Address Register. </p>
 <p>Alias for <a class="el" href="structMPU__Type.html#a990c609b26d990b8ba832b110adfd353">MPU_Type::RBAR</a>. </p>
 
 </div>
@@ -338,6 +358,8 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Offset: 0x008 (R/W) MPU Region RNRber Register. </p>
 <p>Selects the region currently accessed by <a class="el" href="structMPU__Type.html#a990c609b26d990b8ba832b110adfd353">MPU_Type::RBAR</a> and <a class="el" href="structMPU__Type.html#a8f00c4a5e31b0a8d103ed3b0732c17a3">MPU_Type::RASR</a>.</p>
 <table class="doxtable">
 <tr>
@@ -359,6 +381,8 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Offset: 0x000 (R/ ) MPU Type Register. </p>
 <p>The MPU Type Register indicates how many regions the MPU support. Software can use it to determine if the processor implements an MPU.</p>
 <table class="doxtable">
 <tr>
@@ -383,7 +407,7 @@ Data Fields</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="structMPU__Type.html">MPU_Type</a></li>
-    <li class="footer">Generated on Wed Jul 10 2019 15:20:26 for CMSIS-Core (Cortex-M) Version 5.3.0 by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Apr 9 2020 15:49:08 for CMSIS-Core (Cortex-M) Version 5.4.0 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

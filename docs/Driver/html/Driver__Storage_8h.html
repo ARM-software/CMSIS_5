@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Driver
-   &#160;<span id="projectnumber">Version 2.7.1</span>
+   &#160;<span id="projectnumber">Version 2.8.0</span>
    </div>
    <div id="projectbrief">Peripheral Interface for Middleware and Application Code</div>
   </td>
@@ -140,7 +140,7 @@ Data Structures</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:a2ec531cd9d7d4916f2479efd4ff65b96"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Driver__Storage_8h.html#a2ec531cd9d7d4916f2479efd4ff65b96">ARM_STORAGE_API_VERSION</a>&#160;&#160;&#160;<a class="el" href="Driver__Common_8h.html#a43c7ca1eb0786d818624246c09932a74">ARM_DRIVER_VERSION_MAJOR_MINOR</a>(1,1)  /* API version */</td></tr>
+<tr class="memitem:a2ec531cd9d7d4916f2479efd4ff65b96"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Driver__Storage_8h.html#a2ec531cd9d7d4916f2479efd4ff65b96">ARM_STORAGE_API_VERSION</a>&#160;&#160;&#160;<a class="el" href="Driver__Common_8h.html#a43c7ca1eb0786d818624246c09932a74">ARM_DRIVER_VERSION_MAJOR_MINOR</a>(1,2)  /* API version */</td></tr>
 <tr class="separator:a2ec531cd9d7d4916f2479efd4ff65b96"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a21777a6487158bdc1f113996e65ff0bd"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Driver__Storage_8h.html#a21777a6487158bdc1f113996e65ff0bd">_ARM_Driver_Storage_</a>(n)&#160;&#160;&#160;Driver_Storage##n</td></tr>
 <tr class="separator:a21777a6487158bdc1f113996e65ff0bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -163,31 +163,31 @@ Macros</h2></td></tr>
 <tr class="separator:a71f6e5ed403c06a5c99c4882bacdf76e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a955b1ca2ea24cfd3a8923731b581cfd4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Driver__Storage_8h.html#a955b1ca2ea24cfd3a8923731b581cfd4">ARM_STORAGE_VALID_BLOCK</a>(BLK)&#160;&#160;&#160;(((BLK)-&gt;addr != <a class="el" href="Driver__Storage_8h.html#ab8112c1c73ba434c93d19fa1a445c6bf">ARM_STORAGE_INVALID_OFFSET</a>) &amp;&amp; ((BLK)-&gt;size != 0))</td></tr>
 <tr class="separator:a955b1ca2ea24cfd3a8923731b581cfd4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a66cd2a20f084db2d28f6a98cbc503d8a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Driver__Storage_8h.html#a66cd2a20f084db2d28f6a98cbc503d8a">ARM_STORAGE_PROGRAMMABILITY_RAM</a>&#160;&#160;&#160;(0x0)</td></tr>
+<tr class="memitem:a66cd2a20f084db2d28f6a98cbc503d8a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Driver__Storage_8h.html#a66cd2a20f084db2d28f6a98cbc503d8a">ARM_STORAGE_PROGRAMMABILITY_RAM</a>&#160;&#160;&#160;(0U)</td></tr>
 <tr class="memdesc:a66cd2a20f084db2d28f6a98cbc503d8a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Values for encoding storage memory-types with respect to programmability.  <a href="#a66cd2a20f084db2d28f6a98cbc503d8a">More...</a><br/></td></tr>
 <tr class="separator:a66cd2a20f084db2d28f6a98cbc503d8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af232495db19beb7025aebc6e3f9e7553"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Driver__Storage_8h.html#af232495db19beb7025aebc6e3f9e7553">ARM_STORAGE_PROGRAMMABILITY_ROM</a>&#160;&#160;&#160;(0x1)</td></tr>
+<tr class="memitem:af232495db19beb7025aebc6e3f9e7553"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Driver__Storage_8h.html#af232495db19beb7025aebc6e3f9e7553">ARM_STORAGE_PROGRAMMABILITY_ROM</a>&#160;&#160;&#160;(1U)</td></tr>
 <tr class="memdesc:af232495db19beb7025aebc6e3f9e7553"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read-only memory.  <a href="#af232495db19beb7025aebc6e3f9e7553">More...</a><br/></td></tr>
 <tr class="separator:af232495db19beb7025aebc6e3f9e7553"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a373cda87e59c51b2a04f46f4d31d5dd8"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Driver__Storage_8h.html#a373cda87e59c51b2a04f46f4d31d5dd8">ARM_STORAGE_PROGRAMMABILITY_WORM</a>&#160;&#160;&#160;(0x2)</td></tr>
+<tr class="memitem:a373cda87e59c51b2a04f46f4d31d5dd8"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Driver__Storage_8h.html#a373cda87e59c51b2a04f46f4d31d5dd8">ARM_STORAGE_PROGRAMMABILITY_WORM</a>&#160;&#160;&#160;(2U)</td></tr>
 <tr class="memdesc:a373cda87e59c51b2a04f46f4d31d5dd8"><td class="mdescLeft">&#160;</td><td class="mdescRight">write-once-read-only-memory (WORM).  <a href="#a373cda87e59c51b2a04f46f4d31d5dd8">More...</a><br/></td></tr>
 <tr class="separator:a373cda87e59c51b2a04f46f4d31d5dd8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a08670c9b9270eba2e030d90c4af9317c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Driver__Storage_8h.html#a08670c9b9270eba2e030d90c4af9317c">ARM_STORAGE_PROGRAMMABILITY_ERASABLE</a>&#160;&#160;&#160;(0x3)</td></tr>
+<tr class="memitem:a08670c9b9270eba2e030d90c4af9317c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Driver__Storage_8h.html#a08670c9b9270eba2e030d90c4af9317c">ARM_STORAGE_PROGRAMMABILITY_ERASABLE</a>&#160;&#160;&#160;(3U)</td></tr>
 <tr class="memdesc:a08670c9b9270eba2e030d90c4af9317c"><td class="mdescLeft">&#160;</td><td class="mdescRight">re-programmable based on erase. Supports multiple writes.  <a href="#a08670c9b9270eba2e030d90c4af9317c">More...</a><br/></td></tr>
 <tr class="separator:a08670c9b9270eba2e030d90c4af9317c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afb918a33a4b8655321c45dfb99b86339"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Driver__Storage_8h.html#afb918a33a4b8655321c45dfb99b86339">ARM_RETENTION_WHILE_DEVICE_ACTIVE</a>&#160;&#160;&#160;(0x0)</td></tr>
+<tr class="memitem:afb918a33a4b8655321c45dfb99b86339"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Driver__Storage_8h.html#afb918a33a4b8655321c45dfb99b86339">ARM_RETENTION_WHILE_DEVICE_ACTIVE</a>&#160;&#160;&#160;(0U)</td></tr>
 <tr class="memdesc:afb918a33a4b8655321c45dfb99b86339"><td class="mdescLeft">&#160;</td><td class="mdescRight">Data is retained only during device activity.  <a href="#afb918a33a4b8655321c45dfb99b86339">More...</a><br/></td></tr>
 <tr class="separator:afb918a33a4b8655321c45dfb99b86339"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a42cdcdcda35d29552ed4558542770dbe"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Driver__Storage_8h.html#a42cdcdcda35d29552ed4558542770dbe">ARM_RETENTION_ACROSS_SLEEP</a>&#160;&#160;&#160;(0x1)</td></tr>
+<tr class="memitem:a42cdcdcda35d29552ed4558542770dbe"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Driver__Storage_8h.html#a42cdcdcda35d29552ed4558542770dbe">ARM_RETENTION_ACROSS_SLEEP</a>&#160;&#160;&#160;(1U)</td></tr>
 <tr class="memdesc:a42cdcdcda35d29552ed4558542770dbe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Data is retained across processor sleep.  <a href="#a42cdcdcda35d29552ed4558542770dbe">More...</a><br/></td></tr>
 <tr class="separator:a42cdcdcda35d29552ed4558542770dbe"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acd3c172f37d0c13ac5d5c1477837c638"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Driver__Storage_8h.html#acd3c172f37d0c13ac5d5c1477837c638">ARM_RETENTION_ACROSS_DEEP_SLEEP</a>&#160;&#160;&#160;(0x2)</td></tr>
+<tr class="memitem:acd3c172f37d0c13ac5d5c1477837c638"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Driver__Storage_8h.html#acd3c172f37d0c13ac5d5c1477837c638">ARM_RETENTION_ACROSS_DEEP_SLEEP</a>&#160;&#160;&#160;(2U)</td></tr>
 <tr class="memdesc:acd3c172f37d0c13ac5d5c1477837c638"><td class="mdescLeft">&#160;</td><td class="mdescRight">Data is retained across processor deep-sleep.  <a href="#acd3c172f37d0c13ac5d5c1477837c638">More...</a><br/></td></tr>
 <tr class="separator:acd3c172f37d0c13ac5d5c1477837c638"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1b8e7fc9ce024ef2e7d2efb24793c101"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Driver__Storage_8h.html#a1b8e7fc9ce024ef2e7d2efb24793c101">ARM_RETENTION_BATTERY_BACKED</a>&#160;&#160;&#160;(0x3)</td></tr>
+<tr class="memitem:a1b8e7fc9ce024ef2e7d2efb24793c101"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Driver__Storage_8h.html#a1b8e7fc9ce024ef2e7d2efb24793c101">ARM_RETENTION_BATTERY_BACKED</a>&#160;&#160;&#160;(3U)</td></tr>
 <tr class="memdesc:a1b8e7fc9ce024ef2e7d2efb24793c101"><td class="mdescLeft">&#160;</td><td class="mdescRight">Data is battery-backed. Device can be powered off.  <a href="#a1b8e7fc9ce024ef2e7d2efb24793c101">More...</a><br/></td></tr>
 <tr class="separator:a1b8e7fc9ce024ef2e7d2efb24793c101"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aec136119f63303cf9309e1d787e02ca3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Driver__Storage_8h.html#aec136119f63303cf9309e1d787e02ca3">ARM_RETENTION_NVM</a>&#160;&#160;&#160;(0x4)</td></tr>
+<tr class="memitem:aec136119f63303cf9309e1d787e02ca3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Driver__Storage_8h.html#aec136119f63303cf9309e1d787e02ca3">ARM_RETENTION_NVM</a>&#160;&#160;&#160;(4U)</td></tr>
 <tr class="memdesc:aec136119f63303cf9309e1d787e02ca3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Data is retained in non-volatile memory.  <a href="#aec136119f63303cf9309e1d787e02ca3">More...</a><br/></td></tr>
 <tr class="separator:aec136119f63303cf9309e1d787e02ca3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab6f380932e1a8e7802be024a224faf93"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Driver__Storage_8h.html#ab6f380932e1a8e7802be024a224faf93">ARM_STORAGE_PROGRAM_CYCLES_INFINITE</a>&#160;&#160;&#160;(0UL)</td></tr>
@@ -316,7 +316,7 @@ reserved2: 12</td>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define ARM_STORAGE_API_VERSION&#160;&#160;&#160;<a class="el" href="Driver__Common_8h.html#a43c7ca1eb0786d818624246c09932a74">ARM_DRIVER_VERSION_MAJOR_MINOR</a>(1,1)  /* API version */</td>
+          <td class="memname">#define ARM_STORAGE_API_VERSION&#160;&#160;&#160;<a class="el" href="Driver__Common_8h.html#a43c7ca1eb0786d818624246c09932a74">ARM_DRIVER_VERSION_MAJOR_MINOR</a>(1,2)  /* API version */</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -447,7 +447,7 @@ reserved2: 12</td>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define ARM_STORAGE_PROGRAMMABILITY_RAM&#160;&#160;&#160;(0x0)</td>
+          <td class="memname">#define ARM_STORAGE_PROGRAMMABILITY_RAM&#160;&#160;&#160;(0U)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -462,7 +462,7 @@ reserved2: 12</td>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define ARM_STORAGE_PROGRAMMABILITY_ROM&#160;&#160;&#160;(0x1)</td>
+          <td class="memname">#define ARM_STORAGE_PROGRAMMABILITY_ROM&#160;&#160;&#160;(1U)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -476,7 +476,7 @@ reserved2: 12</td>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define ARM_STORAGE_PROGRAMMABILITY_WORM&#160;&#160;&#160;(0x2)</td>
+          <td class="memname">#define ARM_STORAGE_PROGRAMMABILITY_WORM&#160;&#160;&#160;(2U)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -490,7 +490,7 @@ reserved2: 12</td>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define ARM_STORAGE_PROGRAMMABILITY_ERASABLE&#160;&#160;&#160;(0x3)</td>
+          <td class="memname">#define ARM_STORAGE_PROGRAMMABILITY_ERASABLE&#160;&#160;&#160;(3U)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -504,7 +504,7 @@ reserved2: 12</td>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define ARM_RETENTION_WHILE_DEVICE_ACTIVE&#160;&#160;&#160;(0x0)</td>
+          <td class="memname">#define ARM_RETENTION_WHILE_DEVICE_ACTIVE&#160;&#160;&#160;(0U)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -520,7 +520,7 @@ reserved2: 12</td>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define ARM_RETENTION_ACROSS_SLEEP&#160;&#160;&#160;(0x1)</td>
+          <td class="memname">#define ARM_RETENTION_ACROSS_SLEEP&#160;&#160;&#160;(1U)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -534,7 +534,7 @@ reserved2: 12</td>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define ARM_RETENTION_ACROSS_DEEP_SLEEP&#160;&#160;&#160;(0x2)</td>
+          <td class="memname">#define ARM_RETENTION_ACROSS_DEEP_SLEEP&#160;&#160;&#160;(2U)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -548,7 +548,7 @@ reserved2: 12</td>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define ARM_RETENTION_BATTERY_BACKED&#160;&#160;&#160;(0x3)</td>
+          <td class="memname">#define ARM_RETENTION_BATTERY_BACKED&#160;&#160;&#160;(3U)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -562,7 +562,7 @@ reserved2: 12</td>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define ARM_RETENTION_NVM&#160;&#160;&#160;(0x4)</td>
+          <td class="memname">#define ARM_RETENTION_NVM&#160;&#160;&#160;(4U)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -590,7 +590,7 @@ reserved2: 12</td>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_7151b3cc910409bb744bd274374c738d.html">Driver</a></li><li class="navelem"><a class="el" href="dir_9c39448ea46a8e15f1aabc7dec307fcf.html">Include</a></li><li class="navelem"><a class="el" href="Driver__Storage_8h.html">Driver_Storage.h</a></li>
-    <li class="footer">Generated on Wed Jul 10 2019 15:20:30 for CMSIS-Driver Version 2.7.1 by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Apr 9 2020 15:49:14 for CMSIS-Driver Version 2.8.0 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

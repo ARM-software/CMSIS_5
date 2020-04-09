@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['rte_5fcomponents_2eh',['RTE_Components.h',['../RTE__Components_8h.html',1,'']]]
+  ['matrixfunctions_2ec',['MatrixFunctions.c',['../MatrixFunctions_8c.html',1,'']]]
 ];

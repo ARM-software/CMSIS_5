@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Pack
-   &#160;<span id="projectnumber">Version 1.6.1</span>
+   &#160;<span id="projectnumber">Version 1.6.3</span>
    </div>
    <div id="projectbrief">Delivery Mechanism for Software Packs</div>
   </td>
@@ -115,7 +115,7 @@ $(document).ready(function(){initNavTree('createPack_DFP.html','');});
 <li><a class="el" href="createPack_DFP.html#cp_DeviceProperties">Device Properties</a> explaining the capabilities of a device or a device family in more detail.</li>
 <li><a class="el" href="cp_SWComponents.html#cp_Components">Software Components</a> that configure the device and basic device drivers, in particular:<ul>
 <li>CMSIS-compliant <a class="el" href="createPack_DFP.html#cp_System_Startp">System and Startup Files</a> required to setup the C run-time library, device clock, and memory interface.</li>
-<li>Peripheral Driver Interfaces that provide software routines for physical device peripherals used by middleware stacks. Drivers may adhere to the <a href="http://www.keil.com/cmsis/driver" class="el" target="_blank">CMSIS-Driver</a> standard.</li>
+<li>Peripheral Driver Interfaces that provide software routines for physical device peripherals used by middleware stacks. Drivers may adhere to the <a href="https://www.keil.com/cmsis/driver" class="el" target="_blank">CMSIS-Driver</a> standard.</li>
 </ul>
 </li>
 <li>One or more <a class="el" href="createPack_DFP.html#cp_SVD">System View Description Files</a> describing the programmer's view of the device's peripherals.</li>
@@ -127,7 +127,7 @@ $(document).ready(function(){initNavTree('createPack_DFP.html','');});
 <p>This section explains how to create a DFP. Initially, the PDSC file in the DFP only describes devices. This DFP is then extended to contain also SVD files, Flash algorithms, and device related software components such as system and HAL files. Example projects and code templates may be added as described in the section <a class="el" href="cp_SWComponents.html">Pack with Software Components</a>.</p>
 <h2>DFP Use Cases </h2>
 <p>A <a class="el" href="pdsc_devices_pg.html">Device Family Pack (DFP)</a> may be provided by a Silicon Vendor and is used to extend development tools with support for new devices. In general, the DFP enables Silicon Vendors to distribute tool independent device support for their device families.<br/>
-DFPs can also be used to provide information for the display on <b>web sites</b>. One example is the new device database on <a href="http://www.keil.com/dd2/" class="el" target="_blank">www.keil.com/dd2/</a>:</p>
+DFPs can also be used to provide information for the display on <b>web sites</b>. One example is the new device database on <a href="https://www.keil.com/dd2/" class="el" target="_blank">www.keil.com/dd2/</a>:</p>
 <p><a class="anchor" id="DevWebSite"></a></p>
 <div class="image">
 <img src="DeviceDatabase2.png" alt="DeviceDatabase2.png"/>
@@ -284,7 +284,7 @@ Startup and system files added to a project</div></div>
 </pre> We will address this problem in the next section.</dd></dl>
 <h1><a class="anchor" id="cp_SVD"></a>
 System View Description File</h1>
-<p><a href="http://www.keil.com/cmsis/svd" class="el" target="_blank">CMSIS-SVD</a> formalizes the description of the programmer's view for the system contained in ARM Cortex-M processor-based microcontrollers, in particular the memory mapped registers of the peripherals. The level of detail contained in system view descriptions is comparable to what is found in device reference manuals published by silicon vendors. The information ranges from a high level functional description of a peripheral all the way down to the definition and purpose of an individual bit field in a memory mapped register. CMSIS-SVD files are developed and maintained by the silicon vendors. The XML based SVD file is the input for <a href="../../SVD/html/svd_SVDConv_pg.html"><b>SVDConv.exe</b></a> that generates the tool dependent debug view and the device header file.</p>
+<p><a href="https://www.keil.com/cmsis/svd" class="el" target="_blank">CMSIS-SVD</a> formalizes the description of the programmer's view for the system contained in ARM Cortex-M processor-based microcontrollers, in particular the memory mapped registers of the peripherals. The level of detail contained in system view descriptions is comparable to what is found in device reference manuals published by silicon vendors. The information ranges from a high level functional description of a peripheral all the way down to the definition and purpose of an individual bit field in a memory mapped register. CMSIS-SVD files are developed and maintained by the silicon vendors. The XML based SVD file is the input for <a href="../../SVD/html/svd_SVDConv_pg.html"><b>SVDConv.exe</b></a> that generates the tool dependent debug view and the device header file.</p>
 <div class="image">
 <img src="SVDFlow.png" alt="SVDFlow.png"/>
 <div class="caption">
@@ -330,7 +330,7 @@ Add a new version number: <div class="fragment"><div class="line">&lt;release ve
 <img src="SVDIncluded.png" alt="SVDIncluded.png"/>
 <div class="caption">
 Project with SVD file</div></div>
- <dl class="section note"><dt>Note</dt><dd>For more information on CMSIS-SVD, please visit <a href="http://www.keil.com/cmsis/svd" class="el" target="_blank">www.keil.com/cmsis/svd</a>  </dd></dl>
+ <dl class="section note"><dt>Note</dt><dd>For more information on CMSIS-SVD, please visit <a href="https://www.keil.com/cmsis/svd" class="el" target="_blank">www.keil.com/cmsis/svd</a>  </dd></dl>
 </li>
 </ol>
 <h1><a class="anchor" id="cp_FlashProgrammingAlgorithm"></a>
@@ -343,7 +343,7 @@ Flash Programming Algorithms</h1>
 Rename the project file <b>NewDevice.uvproj</b> (in the <b>_Template_Flash</b> directory) to represent the new Flash ROM device name, for example MVCM3XXX_16.uvproj.  </li>
 <li>
 <p class="startli">Open the project with uVision. The selected target (Cortex-M) is fine for the device.</p>
-<dl class="section note"><dt>Note</dt><dd>Creating a Flash programming algorithm with <a href="http://www.keil.com/arm/selector.asp" class="el" target="_blank">MDK-Lite</a> is not supported.  </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>Creating a Flash programming algorithm with <a href="https://www.keil.com/arm/selector.asp" class="el" target="_blank">MDK-Lite</a> is not supported.  </dd></dl>
 </li>
 <li>
 <p class="startli">Open the dialog <b>Project - Options for Target - Output</b> and change the content of the field <b>Name of Executable</b> to represent the device, here MCVM3XXX_16.</p>
@@ -417,6 +417,8 @@ Device Properties</h1>
 <li><a class="el" href="pdsc_family_pg.html#element_compile">compile</a>: device specific general settings for the build tools</li>
 <li><a class="el" href="pdsc_family_pg.html#element_debugconfig">debugconfig</a>: default settings for a debug connection</li>
 <li><a class="el" href="pdsc_family_pg.html#element_debugport">debugport</a>: debug port description of the device for the debugger to configure a debug connection.</li>
+<li><a class="el" href="pdsc_family_pg.html#element_accessportV1">accessportV1</a>: access port (APv1) description of the device for the debugger to configure a debug connection.</li>
+<li><a class="el" href="pdsc_family_pg.html#element_accessportV2">accessportV2</a>: access port (APv2) description of the device for the debugger to configure a debug connection.</li>
 <li><a class="el" href="pdsc_family_pg.html#element_debug">debug</a>: device specific information for the debugger to configure a debug connection including System View Description files.</li>
 <li><a class="el" href="pdsc_family_pg.html#element_trace">trace</a>: device specific information for the debugger to configure trace.</li>
 <li><a class="el" href="pdsc_family_pg.html#element_memory">memory</a>: memory layout of the device for internal and external RAM and ROM regions</li>
@@ -495,7 +497,7 @@ Add the following lines to the PDSC file in the <b>&lt;components&gt;</b> sectio
 <div class="line">    &lt;file category=<span class="stringliteral">&quot;header&quot;</span> name=<span class="stringliteral">&quot;Drivers/UART/UART_MVCM3.h&quot;</span>/&gt;</div>
 <div class="line">  &lt;/files&gt;</div>
 <div class="line">&lt;/component&gt;</div>
-</div><!-- fragment --> <dl class="section note"><dt>Note</dt><dd>The first two software components are added to <b>Device::HAL</b> because they are specific to the device family and are not using a published API. The drivers for I2C and UART are adhering to the <a href="http://www.keil.com/cmsis/driver" class="el" target="_blank">CMSIS-Driver</a> specification. Thus, they are added to the Cclass <b>CMSIS Driver</b>.  </dd></dl>
+</div><!-- fragment --> <dl class="section note"><dt>Note</dt><dd>The first two software components are added to <b>Device::HAL</b> because they are specific to the device family and are not using a published API. The drivers for I2C and UART are adhering to the <a href="https://www.keil.com/cmsis/driver" class="el" target="_blank">CMSIS-Driver</a> specification. Thus, they are added to the Cclass <b>CMSIS Driver</b>.  </dd></dl>
 </li>
 <li>
 An example project has also been created. Add an <b>&lt;examples&gt;</b> section with the following: <div class="fragment"><div class="line">&lt;examples&gt;</div>
@@ -524,7 +526,7 @@ Finally, save the PDSC file and regenerate the Pack file using the <a class="el"
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Fri Dec 13 2019 14:56:14 for CMSIS-Pack Version 1.6.1 by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Apr 9 2020 15:49:54 for CMSIS-Pack Version 1.6.3 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

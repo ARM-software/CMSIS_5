@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Core (Cortex-M)
-   &#160;<span id="projectnumber">Version 5.3.0</span>
+   &#160;<span id="projectnumber">Version 5.4.0</span>
    </div>
    <div id="projectbrief">CMSIS-Core support for Cortex-M processor-based devices</div>
   </td>
@@ -135,7 +135,8 @@ Data Fields</h2></td></tr>
 <tr class="separator:ab5d3a650dbffd0b272bf7df5b140e8a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Description</h2>
-<div class="textblock"><p>The typedef <a class="el" href="structARM__MPU__Region__t.html">ARM_MPU_Region_t</a> allows to define a MPU table (array of MPU regions) with pre-compiled register values. Such tables enable efficient MPU setup using the function <a class="el" href="group__mpu8__functions.html#gaca76614e3091c7324aa9d60e634621bf">ARM_MPU_Load</a>.</p>
+<div class="textblock"><p>Setup information of a single MPU Region. </p>
+<p>The typedef <a class="el" href="structARM__MPU__Region__t.html">ARM_MPU_Region_t</a> allows to define a MPU table (array of MPU regions) with pre-compiled register values. Such tables enable efficient MPU setup using the function <a class="el" href="group__mpu8__functions.html#gaca76614e3091c7324aa9d60e634621bf">ARM_MPU_Load</a>.</p>
 <p><b>Example:</b> See <a class="el" href="group__mpu8__functions.html#gaca76614e3091c7324aa9d60e634621bf">ARM_MPU_Load</a></p>
 <p>Struct for a single MPU Region </p>
 </div><h2 class="groupheader">Field Documentation</h2>
@@ -148,6 +149,8 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>The region attribute and size register value (<a class="el" href="structMPU__Type.html#a8f00c4a5e31b0a8d103ed3b0732c17a3">RASR</a>), see <a class="el" href="group__mpu__functions.html#ga96b93785c92e2dbcb3a2356c25bf2adc">ARM_MPU_RASR</a>. </p>
 <p>This value specifies region attributes and size. Use the <a class="el" href="group__mpu__functions.html#ga96b93785c92e2dbcb3a2356c25bf2adc">ARM_MPU_RASR</a> macro to compose this value. </p>
 
 </div>
@@ -161,6 +164,8 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>The region base address register value (<a class="el" href="structMPU__Type.html#a990c609b26d990b8ba832b110adfd353">RBAR</a>) </p>
 <p>Region Base Address Register value</p>
 <p>This value specifies the start address of the MPU protected memory region. The address must be a multiple of the region size (size aligned).</p>
 <p>See <a class="el" href="structMPU__Type.html#a990c609b26d990b8ba832b110adfd353">MPU_Type::RBAR</a> for details about field bit format. </p>
@@ -186,7 +191,7 @@ Data Fields</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="structARM__MPU__Region__t.html">ARM_MPU_Region_t</a></li>
-    <li class="footer">Generated on Wed Jul 10 2019 15:20:26 for CMSIS-Core (Cortex-M) Version 5.3.0 by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Apr 9 2020 15:49:08 for CMSIS-Core (Cortex-M) Version 5.4.0 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

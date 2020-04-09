@@ -6,6 +6,8 @@ var searchData=
   ['icsr',['ICSR',['../structSCB__Type.html#a0ca18ef984d132c6bf4d9b61cd00f05a',1,'SCB_Type']]],
   ['ictr',['ICTR',['../structSCnSCB__Type.html#a34ec1d771245eb9bd0e3ec9336949762',1,'SCnSCB_Type']]],
   ['imcr',['IMCR',['../structITM__Type.html#ae2ce4d3a54df2fd11a197ccac4406cd0',1,'ITM_Type']]],
+  ['intenclr',['INTENCLR',['../structPMU__Type.html#aaff7d5f3246c641d1f503d74a5adb0ee',1,'PMU_Type']]],
+  ['intenset',['INTENSET',['../structPMU__Type.html#a3f5a5872105d9056145e9095bc1c63ac',1,'PMU_Type']]],
   ['ip',['IP',['../structNVIC__Type.html#a7ff7364a4260df67a2784811e8da4efd',1,'NVIC_Type']]],
   ['irr',['IRR',['../structITM__Type.html#a66eb82a070953f09909f39b8e516fb91',1,'ITM_Type']]],
   ['isar',['ISAR',['../structSCB__Type.html#ae0136a2d2d3c45f016b2c449e92b2066',1,'SCB_Type']]],

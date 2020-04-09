@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['para_5fgen_2epy',['para_gen.py',['../para__gen_8py.html',1,'']]]
+  ['readme_2etxt',['readme.txt',['../gru_2readme_8txt.html',1,'']]]
 ];

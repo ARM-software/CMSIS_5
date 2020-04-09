@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-DSP
-   &#160;<span id="projectnumber">Version 1.7.0</span>
+   &#160;<span id="projectnumber">Version 1.8.0</span>
    </div>
    <div id="projectbrief">CMSIS DSP Software Library</div>
   </td>
@@ -97,7 +97,7 @@ $(document).ready(function(){initNavTree('arm_graphic_equalizer_example_q31_8c-e
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Data Structures</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Macros</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Groups</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(10)"><span class="SelectionMark">&#160;</span>Pages</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Data Structures</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Macros</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(10)"><span class="SelectionMark">&#160;</span>Groups</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(11)"><span class="SelectionMark">&#160;</span>Pages</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -155,6 +155,10 @@ $(document).ready(function(){initNavTree('arm_graphic_equalizer_example_q31_8c-e
 <div class="line"><span class="preprocessor">#include &quot;<a class="code" href="arm__math_8h.html">arm_math.h</a>&quot;</span></div>
 <div class="line"><span class="preprocessor">#include &quot;math_helper.h&quot;</span></div>
 <div class="line"></div>
+<div class="line"><span class="preprocessor">#if defined(SEMIHOSTING)</span></div>
+<div class="line"><span class="preprocessor"></span><span class="preprocessor">#include &lt;stdio.h&gt;</span></div>
+<div class="line"><span class="preprocessor">#endif</span></div>
+<div class="line"><span class="preprocessor"></span></div>
 <div class="line"><span class="comment">/* Length of the overall data in the test */</span></div>
 <div class="line"><span class="preprocessor">#define TESTLENGTH 320</span></div>
 <div class="line"><span class="preprocessor"></span></div>
@@ -174,26 +178,26 @@ $(document).ready(function(){initNavTree('arm_graphic_equalizer_example_q31_8c-e
 <div class="line"><span class="comment"> * ------------------------------------------------------------------- */</span></div>
 <div class="line"></div>
 <div class="line"><span class="keyword">extern</span> <a class="code" href="arm__math_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a> <a name="a0"></a><a class="code" href="arm__graphic__equalizer__example__q31_8c.html#aa4699dc6ee05353c83e0be4e69f6ad05">testInput_f32</a>[<a name="a1"></a><a class="code" href="arm__graphic__equalizer__example__q31_8c.html#a4f4a95eaace4e7b4e2f5243ed24f6b28">TESTLENGTH</a>];</div>
-<div class="line"><span class="keyword">static</span> <a class="code" href="arm__math_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a> <a name="a2"></a><a class="code" href="arm__graphic__equalizer__example__q31_8c.html#a3293e83a154108a1d398bb042e293894">testOutput</a>[<a class="code" href="arm__graphic__equalizer__example__q31_8c.html#a4f4a95eaace4e7b4e2f5243ed24f6b28">TESTLENGTH</a>];</div>
+<div class="line"><span class="keyword">static</span> <a class="code" href="arm__math_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a> <a class="code" href="arm__dotproduct__example__f32_8c.html#a324833b61eae796082e07d078a67c34f">testOutput</a>[<a class="code" href="arm__graphic__equalizer__example__q31_8c.html#a4f4a95eaace4e7b4e2f5243ed24f6b28">TESTLENGTH</a>];</div>
 <div class="line"></div>
-<div class="line"><span class="keyword">extern</span> <a class="code" href="arm__math_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a> <a name="a3"></a><a class="code" href="arm__graphic__equalizer__example__q31_8c.html#a9cbbafa975d67bc8ee8ea3260fdd5638">testRefOutput_f32</a>[<a class="code" href="arm__graphic__equalizer__example__q31_8c.html#a4f4a95eaace4e7b4e2f5243ed24f6b28">TESTLENGTH</a>];</div>
+<div class="line"><span class="keyword">extern</span> <a class="code" href="arm__math_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a> <a name="a2"></a><a class="code" href="arm__graphic__equalizer__example__q31_8c.html#a9cbbafa975d67bc8ee8ea3260fdd5638">testRefOutput_f32</a>[<a class="code" href="arm__graphic__equalizer__example__q31_8c.html#a4f4a95eaace4e7b4e2f5243ed24f6b28">TESTLENGTH</a>];</div>
 <div class="line"></div>
 <div class="line"><span class="comment">/* ----------------------------------------------------------------------</span></div>
 <div class="line"><span class="comment">** Q31 state buffers for Band1, Band2, Band3, Band4, Band5</span></div>
 <div class="line"><span class="comment">** ------------------------------------------------------------------- */</span></div>
 <div class="line"></div>
-<div class="line"><span class="keyword">static</span> <a class="code" href="arm__math_8h.html#a5aea1cb12fc02d9d44c8abf217eaa5c6">q63_t</a> <a name="a4"></a><a class="code" href="arm__graphic__equalizer__example__q31_8c.html#a8e7062fa3f8b5ed9849566d16270f4ec">biquadStateBand1Q31</a>[4 * 2];</div>
-<div class="line"><span class="keyword">static</span> <a class="code" href="arm__math_8h.html#a5aea1cb12fc02d9d44c8abf217eaa5c6">q63_t</a> <a name="a5"></a><a class="code" href="arm__graphic__equalizer__example__q31_8c.html#a4a82090b15ebd0a45048d94f16131782">biquadStateBand2Q31</a>[4 * 2];</div>
-<div class="line"><span class="keyword">static</span> <a class="code" href="arm__math_8h.html#adc89a3547f5324b7b3b95adec3806bc0">q31_t</a> <a name="a6"></a><a class="code" href="arm__graphic__equalizer__example__q31_8c.html#ad487a54340631b764952fccf599adc8a">biquadStateBand3Q31</a>[4 * 2];</div>
-<div class="line"><span class="keyword">static</span> <a class="code" href="arm__math_8h.html#adc89a3547f5324b7b3b95adec3806bc0">q31_t</a> <a name="a7"></a><a class="code" href="arm__graphic__equalizer__example__q31_8c.html#a122ed5f6d8665139fbe9424a073b3474">biquadStateBand4Q31</a>[4 * 2];</div>
-<div class="line"><span class="keyword">static</span> <a class="code" href="arm__math_8h.html#adc89a3547f5324b7b3b95adec3806bc0">q31_t</a> <a name="a8"></a><a class="code" href="arm__graphic__equalizer__example__q31_8c.html#af88658a8c5f87eeea26da30305921b59">biquadStateBand5Q31</a>[4 * 2];</div>
+<div class="line"><span class="keyword">static</span> <a class="code" href="arm__math_8h.html#a5aea1cb12fc02d9d44c8abf217eaa5c6">q63_t</a> biquadStateBand1Q31[4 * 2];</div>
+<div class="line"><span class="keyword">static</span> <a class="code" href="arm__math_8h.html#a5aea1cb12fc02d9d44c8abf217eaa5c6">q63_t</a> biquadStateBand2Q31[4 * 2];</div>
+<div class="line"><span class="keyword">static</span> <a class="code" href="arm__math_8h.html#adc89a3547f5324b7b3b95adec3806bc0">q31_t</a> biquadStateBand3Q31[4 * 2];</div>
+<div class="line"><span class="keyword">static</span> <a class="code" href="arm__math_8h.html#adc89a3547f5324b7b3b95adec3806bc0">q31_t</a> biquadStateBand4Q31[4 * 2];</div>
+<div class="line"><span class="keyword">static</span> <a class="code" href="arm__math_8h.html#adc89a3547f5324b7b3b95adec3806bc0">q31_t</a> biquadStateBand5Q31[4 * 2];</div>
 <div class="line"></div>
 <div class="line"><span class="comment">/* ----------------------------------------------------------------------</span></div>
 <div class="line"><span class="comment">** Q31 input and output buffers</span></div>
 <div class="line"><span class="comment">** ------------------------------------------------------------------- */</span></div>
 <div class="line"></div>
-<div class="line"><a class="code" href="arm__math_8h.html#adc89a3547f5324b7b3b95adec3806bc0">q31_t</a> <a name="a9"></a><a class="code" href="arm__graphic__equalizer__example__q31_8c.html#a79521a4d6a9adb144c4d999ae713413c">inputQ31</a>[<a name="a10"></a><a class="code" href="arm__graphic__equalizer__example__q31_8c.html#afcf795f5a96fd55561abe69f56224630">BLOCKSIZE</a>];</div>
-<div class="line"><a class="code" href="arm__math_8h.html#adc89a3547f5324b7b3b95adec3806bc0">q31_t</a> <a name="a11"></a><a class="code" href="arm__graphic__equalizer__example__q31_8c.html#a9862488450f2547b07aee8035d6b4d8a">outputQ31</a>[<a class="code" href="arm__graphic__equalizer__example__q31_8c.html#afcf795f5a96fd55561abe69f56224630">BLOCKSIZE</a>];</div>
+<div class="line"><a class="code" href="arm__math_8h.html#adc89a3547f5324b7b3b95adec3806bc0">q31_t</a> <a name="a3"></a><a class="code" href="arm__graphic__equalizer__example__q31_8c.html#a79521a4d6a9adb144c4d999ae713413c">inputQ31</a>[<a name="a4"></a><a class="code" href="arm__graphic__equalizer__example__q31_8c.html#afcf795f5a96fd55561abe69f56224630">BLOCKSIZE</a>];</div>
+<div class="line"><a class="code" href="arm__math_8h.html#adc89a3547f5324b7b3b95adec3806bc0">q31_t</a> <a name="a5"></a><a class="code" href="arm__graphic__equalizer__example__q31_8c.html#a9862488450f2547b07aee8035d6b4d8a">outputQ31</a>[<a class="code" href="arm__graphic__equalizer__example__q31_8c.html#afcf795f5a96fd55561abe69f56224630">BLOCKSIZE</a>];</div>
 <div class="line"></div>
 <div class="line"><span class="comment">/* ----------------------------------------------------------------------</span></div>
 <div class="line"><span class="comment">** Entire coefficient table.  There are 10 coefficients per 4th order Biquad</span></div>
@@ -206,7 +210,7 @@ $(document).ready(function(){initNavTree('arm_graphic_equalizer_example_q31_8c-e
 <div class="line"><span class="comment">** The coefficients are in Q29 format and require a postShift of 2.</span></div>
 <div class="line"><span class="comment">** ------------------------------------------------------------------- */</span></div>
 <div class="line"></div>
-<div class="line"><span class="keyword">const</span> <a class="code" href="arm__math_8h.html#adc89a3547f5324b7b3b95adec3806bc0">q31_t</a> <a name="a12"></a><a class="code" href="arm__graphic__equalizer__example__q31_8c.html#a024c59772b9603698b898721c1e8204e">coeffTable</a>[950] = {</div>
+<div class="line"><span class="keyword">const</span> <a class="code" href="arm__math_8h.html#adc89a3547f5324b7b3b95adec3806bc0">q31_t</a> <a name="a6"></a><a class="code" href="arm__graphic__equalizer__example__q31_8c.html#a024c59772b9603698b898721c1e8204e">coeffTable</a>[950] = {</div>
 <div class="line"></div>
 <div class="line">  <span class="comment">/* Band 1, -9 dB gain */</span></div>
 <div class="line">  535576962, -1071153923, 535576962, 1073741824, -536870912, 535576962, -1063501998, 527979313, 1060865294, -524146981,</div>
@@ -315,83 +319,83 @@ $(document).ready(function(){initNavTree('arm_graphic_equalizer_example_q31_8c-e
 <div class="line"><span class="comment">** Desired gains, in dB, per band</span></div>
 <div class="line"><span class="comment">** ------------------------------------------------------------------- */</span></div>
 <div class="line"></div>
-<div class="line"><span class="keywordtype">int</span> <a name="a13"></a><a class="code" href="arm__graphic__equalizer__example__q31_8c.html#a963aee85bb41a50fc943ac9048d123ab">gainDB</a>[5] = {0, -3, 6, 4, -6};</div>
+<div class="line"><span class="keywordtype">int</span> <a name="a7"></a><a class="code" href="arm__graphic__equalizer__example__q31_8c.html#a963aee85bb41a50fc943ac9048d123ab">gainDB</a>[5] = {0, -3, 6, 4, -6};</div>
 <div class="line"></div>
-<div class="line"><a class="code" href="arm__math_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a> <a name="a14"></a><a class="code" href="arm__graphic__equalizer__example__q31_8c.html#af06013f588a7003278de222913c9d819">snr</a>;</div>
+<div class="line"><a class="code" href="arm__math_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a> <a name="a8"></a><a class="code" href="arm__graphic__equalizer__example__q31_8c.html#af06013f588a7003278de222913c9d819">snr</a>;</div>
 <div class="line"></div>
 <div class="line"></div>
 <div class="line"><span class="comment">/* ----------------------------------------------------------------------</span></div>
 <div class="line"><span class="comment"> * Graphic equalizer Example</span></div>
 <div class="line"><span class="comment"> * ------------------------------------------------------------------- */</span></div>
 <div class="line"></div>
-<div class="line">int32_t <a name="a15"></a><a class="code" href="arm__graphic__equalizer__example__q31_8c.html#a52d2cba30e6946c95578be946ac12a65">main</a>(<span class="keywordtype">void</span>)</div>
+<div class="line">int32_t <a name="a9"></a><a class="code" href="arm__graphic__equalizer__example__q31_8c.html#a52d2cba30e6946c95578be946ac12a65">main</a>(<span class="keywordtype">void</span>)</div>
 <div class="line">{</div>
 <div class="line">  <a class="code" href="arm__math_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a>  *inputF32, *outputF32;</div>
-<div class="line">  <a name="_a16"></a><a class="code" href="structarm__biquad__cas__df1__32x64__ins__q31.html">arm_biquad_cas_df1_32x64_ins_q31</a> S1;</div>
+<div class="line">  <a name="_a10"></a><a class="code" href="structarm__biquad__cas__df1__32x64__ins__q31.html">arm_biquad_cas_df1_32x64_ins_q31</a> S1;</div>
 <div class="line">  <a class="code" href="structarm__biquad__cas__df1__32x64__ins__q31.html">arm_biquad_cas_df1_32x64_ins_q31</a> S2;</div>
-<div class="line">  <a name="_a17"></a><a class="code" href="structarm__biquad__casd__df1__inst__q31.html">arm_biquad_casd_df1_inst_q31</a> S3;</div>
+<div class="line">  <a name="_a11"></a><a class="code" href="structarm__biquad__casd__df1__inst__q31.html">arm_biquad_casd_df1_inst_q31</a> S3;</div>
 <div class="line">  <a class="code" href="structarm__biquad__casd__df1__inst__q31.html">arm_biquad_casd_df1_inst_q31</a> S4;</div>
 <div class="line">  <a class="code" href="structarm__biquad__casd__df1__inst__q31.html">arm_biquad_casd_df1_inst_q31</a> S5;</div>
 <div class="line">  <span class="keywordtype">int</span> i;</div>
-<div class="line">  int32_t <a name="a18"></a><a class="code" href="arm__dotproduct__example__f32_8c.html#a88ccb294236ab22b00310c47164c53c3">status</a>;</div>
+<div class="line">  int32_t <a name="a12"></a><a class="code" href="arm__dotproduct__example__f32_8c.html#a88ccb294236ab22b00310c47164c53c3">status</a>;</div>
 <div class="line"></div>
 <div class="line">  inputF32 = &amp;<a class="code" href="arm__graphic__equalizer__example__q31_8c.html#aa4699dc6ee05353c83e0be4e69f6ad05">testInput_f32</a>[0];</div>
-<div class="line">  outputF32 = &amp;<a class="code" href="arm__graphic__equalizer__example__q31_8c.html#a3293e83a154108a1d398bb042e293894">testOutput</a>[0];</div>
+<div class="line">  outputF32 = &amp;<a class="code" href="arm__dotproduct__example__f32_8c.html#a324833b61eae796082e07d078a67c34f">testOutput</a>[0];</div>
 <div class="line"></div>
 <div class="line">  <span class="comment">/* Initialize the state and coefficient buffers for all Biquad sections */</span></div>
 <div class="line"></div>
-<div class="line">  <a name="a19"></a><a class="code" href="group__BiquadCascadeDF1__32x64.html#ga426cd78591a717e87d66d1eaa9a3d074">arm_biquad_cas_df1_32x64_init_q31</a>(&amp;S1, <a name="a20"></a><a class="code" href="arm__graphic__equalizer__example__q31_8c.html#a23f8e430b510dfdb3ebe53bffca0d864">NUMSTAGES</a>,</div>
+<div class="line">  <a name="a13"></a><a class="code" href="group__BiquadCascadeDF1__32x64.html#ga426cd78591a717e87d66d1eaa9a3d074">arm_biquad_cas_df1_32x64_init_q31</a>(&amp;S1, <a name="a14"></a><a class="code" href="arm__graphic__equalizer__example__q31_8c.html#a23f8e430b510dfdb3ebe53bffca0d864">NUMSTAGES</a>,</div>
 <div class="line">            (<a class="code" href="arm__math_8h.html#adc89a3547f5324b7b3b95adec3806bc0">q31_t</a> *) &amp;<a class="code" href="arm__graphic__equalizer__example__q31_8c.html#a024c59772b9603698b898721c1e8204e">coeffTable</a>[190*0 + 10*(<a class="code" href="arm__graphic__equalizer__example__q31_8c.html#a963aee85bb41a50fc943ac9048d123ab">gainDB</a>[0] + 9)],</div>
-<div class="line">            &amp;<a class="code" href="arm__graphic__equalizer__example__q31_8c.html#a8e7062fa3f8b5ed9849566d16270f4ec">biquadStateBand1Q31</a>[0], 2);</div>
+<div class="line">            &amp;biquadStateBand1Q31[0], 2);</div>
 <div class="line"></div>
 <div class="line">  <a class="code" href="group__BiquadCascadeDF1__32x64.html#ga426cd78591a717e87d66d1eaa9a3d074">arm_biquad_cas_df1_32x64_init_q31</a>(&amp;S2, <a class="code" href="arm__graphic__equalizer__example__q31_8c.html#a23f8e430b510dfdb3ebe53bffca0d864">NUMSTAGES</a>,</div>
 <div class="line">            (<a class="code" href="arm__math_8h.html#adc89a3547f5324b7b3b95adec3806bc0">q31_t</a> *) &amp;<a class="code" href="arm__graphic__equalizer__example__q31_8c.html#a024c59772b9603698b898721c1e8204e">coeffTable</a>[190*1 + 10*(<a class="code" href="arm__graphic__equalizer__example__q31_8c.html#a963aee85bb41a50fc943ac9048d123ab">gainDB</a>[1] + 9)],</div>
-<div class="line">            &amp;<a class="code" href="arm__graphic__equalizer__example__q31_8c.html#a4a82090b15ebd0a45048d94f16131782">biquadStateBand2Q31</a>[0], 2);</div>
+<div class="line">            &amp;biquadStateBand2Q31[0], 2);</div>
 <div class="line"></div>
-<div class="line">  <a name="a21"></a><a class="code" href="group__BiquadCascadeDF1.html#ga5563b156af44d1be2a7548626988bf4e">arm_biquad_cascade_df1_init_q31</a>(&amp;S3, <a class="code" href="arm__graphic__equalizer__example__q31_8c.html#a23f8e430b510dfdb3ebe53bffca0d864">NUMSTAGES</a>,</div>
+<div class="line">  <a name="a15"></a><a class="code" href="group__BiquadCascadeDF1.html#ga5563b156af44d1be2a7548626988bf4e">arm_biquad_cascade_df1_init_q31</a>(&amp;S3, <a class="code" href="arm__graphic__equalizer__example__q31_8c.html#a23f8e430b510dfdb3ebe53bffca0d864">NUMSTAGES</a>,</div>
 <div class="line">          (<a class="code" href="arm__math_8h.html#adc89a3547f5324b7b3b95adec3806bc0">q31_t</a> *) &amp;<a class="code" href="arm__graphic__equalizer__example__q31_8c.html#a024c59772b9603698b898721c1e8204e">coeffTable</a>[190*2 + 10*(<a class="code" href="arm__graphic__equalizer__example__q31_8c.html#a963aee85bb41a50fc943ac9048d123ab">gainDB</a>[2] + 9)],</div>
-<div class="line">          &amp;<a class="code" href="arm__graphic__equalizer__example__q31_8c.html#ad487a54340631b764952fccf599adc8a">biquadStateBand3Q31</a>[0], 2);</div>
+<div class="line">          &amp;biquadStateBand3Q31[0], 2);</div>
 <div class="line"></div>
 <div class="line">  <a class="code" href="group__BiquadCascadeDF1.html#ga5563b156af44d1be2a7548626988bf4e">arm_biquad_cascade_df1_init_q31</a>(&amp;S4, <a class="code" href="arm__graphic__equalizer__example__q31_8c.html#a23f8e430b510dfdb3ebe53bffca0d864">NUMSTAGES</a>,</div>
 <div class="line">          (<a class="code" href="arm__math_8h.html#adc89a3547f5324b7b3b95adec3806bc0">q31_t</a> *) &amp;<a class="code" href="arm__graphic__equalizer__example__q31_8c.html#a024c59772b9603698b898721c1e8204e">coeffTable</a>[190*3 + 10*(<a class="code" href="arm__graphic__equalizer__example__q31_8c.html#a963aee85bb41a50fc943ac9048d123ab">gainDB</a>[3] + 9)],</div>
-<div class="line">          &amp;<a class="code" href="arm__graphic__equalizer__example__q31_8c.html#a122ed5f6d8665139fbe9424a073b3474">biquadStateBand4Q31</a>[0], 2);</div>
+<div class="line">          &amp;biquadStateBand4Q31[0], 2);</div>
 <div class="line"></div>
 <div class="line">  <a class="code" href="group__BiquadCascadeDF1.html#ga5563b156af44d1be2a7548626988bf4e">arm_biquad_cascade_df1_init_q31</a>(&amp;S5, <a class="code" href="arm__graphic__equalizer__example__q31_8c.html#a23f8e430b510dfdb3ebe53bffca0d864">NUMSTAGES</a>,</div>
 <div class="line">          (<a class="code" href="arm__math_8h.html#adc89a3547f5324b7b3b95adec3806bc0">q31_t</a> *) &amp;<a class="code" href="arm__graphic__equalizer__example__q31_8c.html#a024c59772b9603698b898721c1e8204e">coeffTable</a>[190*4 + 10*(<a class="code" href="arm__graphic__equalizer__example__q31_8c.html#a963aee85bb41a50fc943ac9048d123ab">gainDB</a>[4] + 9)],</div>
-<div class="line">          &amp;<a class="code" href="arm__graphic__equalizer__example__q31_8c.html#af88658a8c5f87eeea26da30305921b59">biquadStateBand5Q31</a>[0], 2);</div>
+<div class="line">          &amp;biquadStateBand5Q31[0], 2);</div>
 <div class="line"></div>
 <div class="line"></div>
 <div class="line">  <span class="comment">/* Call the process functions and needs to change filter coefficients</span></div>
 <div class="line"><span class="comment">     for varying the gain of each band */</span></div>
 <div class="line"></div>
-<div class="line">  <span class="keywordflow">for</span>(i=0; i &lt; <a name="a22"></a><a class="code" href="arm__graphic__equalizer__example__q31_8c.html#a814e34126e1b8150f4de047e1a9e7030">NUMBLOCKS</a>; i++)</div>
+<div class="line">  <span class="keywordflow">for</span>(i=0; i &lt; <a name="a16"></a><a class="code" href="arm__graphic__equalizer__example__q31_8c.html#a814e34126e1b8150f4de047e1a9e7030">NUMBLOCKS</a>; i++)</div>
 <div class="line">  {</div>
 <div class="line"></div>
 <div class="line">    <span class="comment">/* ----------------------------------------------------------------------</span></div>
 <div class="line"><span class="comment">    ** Convert block of input data from float to Q31</span></div>
 <div class="line"><span class="comment">    ** ------------------------------------------------------------------- */</span></div>
 <div class="line"></div>
-<div class="line">    <a name="a23"></a><a class="code" href="group__float__to__x.html#gaae21be47db707e79552f3e8221a48fb0">arm_float_to_q31</a>(inputF32 + (i*<a class="code" href="arm__graphic__equalizer__example__q31_8c.html#afcf795f5a96fd55561abe69f56224630">BLOCKSIZE</a>), <a class="code" href="arm__graphic__equalizer__example__q31_8c.html#a79521a4d6a9adb144c4d999ae713413c">inputQ31</a>, BLOCKSIZE);</div>
+<div class="line">    <a name="a17"></a><a class="code" href="group__float__to__x.html#gaae21be47db707e79552f3e8221a48fb0">arm_float_to_q31</a>(inputF32 + (i*<a class="code" href="arm__graphic__equalizer__example__q31_8c.html#afcf795f5a96fd55561abe69f56224630">BLOCKSIZE</a>), <a class="code" href="arm__graphic__equalizer__example__q31_8c.html#a79521a4d6a9adb144c4d999ae713413c">inputQ31</a>, BLOCKSIZE);</div>
 <div class="line"></div>
 <div class="line">    <span class="comment">/* ----------------------------------------------------------------------</span></div>
 <div class="line"><span class="comment">    ** Scale down by 1/8.  This provides additional headroom so that the</span></div>
 <div class="line"><span class="comment">    ** graphic EQ can apply gain.</span></div>
 <div class="line"><span class="comment">    ** ------------------------------------------------------------------- */</span></div>
 <div class="line"></div>
-<div class="line">    <a name="a24"></a><a class="code" href="group__BasicScale.html#ga8b2b6ea2e39ca464e8f2cfdd937c022b">arm_scale_q31</a>(<a class="code" href="arm__graphic__equalizer__example__q31_8c.html#a79521a4d6a9adb144c4d999ae713413c">inputQ31</a>, 0x7FFFFFFF, -3, <a class="code" href="arm__graphic__equalizer__example__q31_8c.html#a79521a4d6a9adb144c4d999ae713413c">inputQ31</a>, <a class="code" href="arm__graphic__equalizer__example__q31_8c.html#afcf795f5a96fd55561abe69f56224630">BLOCKSIZE</a>);</div>
+<div class="line">    <a name="a18"></a><a class="code" href="group__BasicScale.html#ga8b2b6ea2e39ca464e8f2cfdd937c022b">arm_scale_q31</a>(<a class="code" href="arm__graphic__equalizer__example__q31_8c.html#a79521a4d6a9adb144c4d999ae713413c">inputQ31</a>, 0x7FFFFFFF, -3, <a class="code" href="arm__graphic__equalizer__example__q31_8c.html#a79521a4d6a9adb144c4d999ae713413c">inputQ31</a>, <a class="code" href="arm__graphic__equalizer__example__q31_8c.html#afcf795f5a96fd55561abe69f56224630">BLOCKSIZE</a>);</div>
 <div class="line"></div>
 <div class="line">    <span class="comment">/* ----------------------------------------------------------------------</span></div>
 <div class="line"><span class="comment">    ** Call the Q31 Biquad Cascade DF1 32x64 process function for band1, band2</span></div>
 <div class="line"><span class="comment">    ** ------------------------------------------------------------------- */</span></div>
 <div class="line"></div>
-<div class="line">    <a name="a25"></a><a class="code" href="group__BiquadCascadeDF1__32x64.html#ga953a83e69685de6575cff37feb358a93">arm_biquad_cas_df1_32x64_q31</a>(&amp;S1, <a class="code" href="arm__graphic__equalizer__example__q31_8c.html#a79521a4d6a9adb144c4d999ae713413c">inputQ31</a>, <a class="code" href="arm__graphic__equalizer__example__q31_8c.html#a9862488450f2547b07aee8035d6b4d8a">outputQ31</a>, <a class="code" href="arm__graphic__equalizer__example__q31_8c.html#afcf795f5a96fd55561abe69f56224630">BLOCKSIZE</a>);</div>
-<div class="line">    <a class="code" href="group__BiquadCascadeDF1__32x64.html#ga953a83e69685de6575cff37feb358a93">arm_biquad_cas_df1_32x64_q31</a>(&amp;S2, <a class="code" href="arm__graphic__equalizer__example__q31_8c.html#a9862488450f2547b07aee8035d6b4d8a">outputQ31</a>, <a class="code" href="arm__graphic__equalizer__example__q31_8c.html#a9862488450f2547b07aee8035d6b4d8a">outputQ31</a>, <a class="code" href="arm__graphic__equalizer__example__q31_8c.html#afcf795f5a96fd55561abe69f56224630">BLOCKSIZE</a>);</div>
+<div class="line">    <a name="a19"></a><a class="code" href="group__BiquadCascadeDF1__32x64.html#gae71a3095b94939418618ddf83caf739a">arm_biquad_cas_df1_32x64_q31</a>(&amp;S1, <a class="code" href="arm__graphic__equalizer__example__q31_8c.html#a79521a4d6a9adb144c4d999ae713413c">inputQ31</a>, <a class="code" href="arm__graphic__equalizer__example__q31_8c.html#a9862488450f2547b07aee8035d6b4d8a">outputQ31</a>, <a class="code" href="arm__graphic__equalizer__example__q31_8c.html#afcf795f5a96fd55561abe69f56224630">BLOCKSIZE</a>);</div>
+<div class="line">    <a class="code" href="group__BiquadCascadeDF1__32x64.html#gae71a3095b94939418618ddf83caf739a">arm_biquad_cas_df1_32x64_q31</a>(&amp;S2, <a class="code" href="arm__graphic__equalizer__example__q31_8c.html#a9862488450f2547b07aee8035d6b4d8a">outputQ31</a>, <a class="code" href="arm__graphic__equalizer__example__q31_8c.html#a9862488450f2547b07aee8035d6b4d8a">outputQ31</a>, <a class="code" href="arm__graphic__equalizer__example__q31_8c.html#afcf795f5a96fd55561abe69f56224630">BLOCKSIZE</a>);</div>
 <div class="line"></div>
 <div class="line">    <span class="comment">/* ----------------------------------------------------------------------</span></div>
 <div class="line"><span class="comment">    ** Call the Q31 Biquad Cascade DF1 process function for band3, band4, band5</span></div>
 <div class="line"><span class="comment">    ** ------------------------------------------------------------------- */</span></div>
 <div class="line"></div>
-<div class="line">    <a name="a26"></a><a class="code" href="group__BiquadCascadeDF1.html#ga4e7dad0ee6949005909fd4fcf1249b79">arm_biquad_cascade_df1_q31</a>(&amp;S3, <a class="code" href="arm__graphic__equalizer__example__q31_8c.html#a9862488450f2547b07aee8035d6b4d8a">outputQ31</a>, <a class="code" href="arm__graphic__equalizer__example__q31_8c.html#a9862488450f2547b07aee8035d6b4d8a">outputQ31</a>, <a class="code" href="arm__graphic__equalizer__example__q31_8c.html#afcf795f5a96fd55561abe69f56224630">BLOCKSIZE</a>);</div>
+<div class="line">    <a name="a20"></a><a class="code" href="group__BiquadCascadeDF1.html#ga4e7dad0ee6949005909fd4fcf1249b79">arm_biquad_cascade_df1_q31</a>(&amp;S3, <a class="code" href="arm__graphic__equalizer__example__q31_8c.html#a9862488450f2547b07aee8035d6b4d8a">outputQ31</a>, <a class="code" href="arm__graphic__equalizer__example__q31_8c.html#a9862488450f2547b07aee8035d6b4d8a">outputQ31</a>, <a class="code" href="arm__graphic__equalizer__example__q31_8c.html#afcf795f5a96fd55561abe69f56224630">BLOCKSIZE</a>);</div>
 <div class="line">    <a class="code" href="group__BiquadCascadeDF1.html#ga4e7dad0ee6949005909fd4fcf1249b79">arm_biquad_cascade_df1_q31</a>(&amp;S4, <a class="code" href="arm__graphic__equalizer__example__q31_8c.html#a9862488450f2547b07aee8035d6b4d8a">outputQ31</a>, <a class="code" href="arm__graphic__equalizer__example__q31_8c.html#a9862488450f2547b07aee8035d6b4d8a">outputQ31</a>, <a class="code" href="arm__graphic__equalizer__example__q31_8c.html#afcf795f5a96fd55561abe69f56224630">BLOCKSIZE</a>);</div>
 <div class="line">    <a class="code" href="group__BiquadCascadeDF1.html#ga4e7dad0ee6949005909fd4fcf1249b79">arm_biquad_cascade_df1_q31</a>(&amp;S5, <a class="code" href="arm__graphic__equalizer__example__q31_8c.html#a9862488450f2547b07aee8035d6b4d8a">outputQ31</a>, <a class="code" href="arm__graphic__equalizer__example__q31_8c.html#a9862488450f2547b07aee8035d6b4d8a">outputQ31</a>, <a class="code" href="arm__graphic__equalizer__example__q31_8c.html#afcf795f5a96fd55561abe69f56224630">BLOCKSIZE</a>);</div>
 <div class="line"></div>
@@ -399,36 +403,36 @@ $(document).ready(function(){initNavTree('arm_graphic_equalizer_example_q31_8c-e
 <div class="line"><span class="comment">    ** Convert Q31 result back to float</span></div>
 <div class="line"><span class="comment">    ** ------------------------------------------------------------------- */</span></div>
 <div class="line"></div>
-<div class="line">    <a name="a27"></a><a class="code" href="group__q31__to__x.html#ga19a9d023aca1f99abd5da6f13a42b6cf">arm_q31_to_float</a>(<a class="code" href="arm__graphic__equalizer__example__q31_8c.html#a9862488450f2547b07aee8035d6b4d8a">outputQ31</a>, outputF32 + (i * <a class="code" href="arm__graphic__equalizer__example__q31_8c.html#afcf795f5a96fd55561abe69f56224630">BLOCKSIZE</a>), BLOCKSIZE);</div>
+<div class="line">    <a name="a21"></a><a class="code" href="group__q31__to__x.html#ga19a9d023aca1f99abd5da6f13a42b6cf">arm_q31_to_float</a>(<a class="code" href="arm__graphic__equalizer__example__q31_8c.html#a9862488450f2547b07aee8035d6b4d8a">outputQ31</a>, outputF32 + (i * <a class="code" href="arm__graphic__equalizer__example__q31_8c.html#afcf795f5a96fd55561abe69f56224630">BLOCKSIZE</a>), BLOCKSIZE);</div>
 <div class="line"></div>
 <div class="line">    <span class="comment">/* ----------------------------------------------------------------------</span></div>
 <div class="line"><span class="comment">    ** Scale back up</span></div>
 <div class="line"><span class="comment">    ** ------------------------------------------------------------------- */</span></div>
 <div class="line"></div>
-<div class="line">    <a name="a28"></a><a class="code" href="group__BasicScale.html#ga5e769c8e22da173674c6abca7291e713">arm_scale_f32</a>(outputF32 + (i * <a class="code" href="arm__graphic__equalizer__example__q31_8c.html#afcf795f5a96fd55561abe69f56224630">BLOCKSIZE</a>), 8.0f, outputF32 + (i * BLOCKSIZE), BLOCKSIZE);</div>
+<div class="line">    <a name="a22"></a><a class="code" href="group__BasicScale.html#ga5e769c8e22da173674c6abca7291e713">arm_scale_f32</a>(outputF32 + (i * <a class="code" href="arm__graphic__equalizer__example__q31_8c.html#afcf795f5a96fd55561abe69f56224630">BLOCKSIZE</a>), 8.0f, outputF32 + (i * BLOCKSIZE), BLOCKSIZE);</div>
 <div class="line">  };</div>
 <div class="line"></div>
-<div class="line">  <a class="code" href="arm__graphic__equalizer__example__q31_8c.html#af06013f588a7003278de222913c9d819">snr</a> = <a name="a29"></a><a class="code" href="arm__convolution__example_2math__helper_8c.html#aeea2952e70a1040a6efa555564bbeeab">arm_snr_f32</a>(<a class="code" href="arm__graphic__equalizer__example__q31_8c.html#a9cbbafa975d67bc8ee8ea3260fdd5638">testRefOutput_f32</a>, <a class="code" href="arm__graphic__equalizer__example__q31_8c.html#a3293e83a154108a1d398bb042e293894">testOutput</a>, <a class="code" href="arm__graphic__equalizer__example__q31_8c.html#a4f4a95eaace4e7b4e2f5243ed24f6b28">TESTLENGTH</a>);</div>
+<div class="line">  <a class="code" href="arm__graphic__equalizer__example__q31_8c.html#af06013f588a7003278de222913c9d819">snr</a> = <a name="a23"></a><a class="code" href="arm__convolution__example_2math__helper_8c.html#aeea2952e70a1040a6efa555564bbeeab">arm_snr_f32</a>(<a class="code" href="arm__graphic__equalizer__example__q31_8c.html#a9cbbafa975d67bc8ee8ea3260fdd5638">testRefOutput_f32</a>, testOutput, <a class="code" href="arm__graphic__equalizer__example__q31_8c.html#a4f4a95eaace4e7b4e2f5243ed24f6b28">TESTLENGTH</a>);</div>
 <div class="line"></div>
-<div class="line">  <span class="keywordflow">if</span> (<a class="code" href="arm__graphic__equalizer__example__q31_8c.html#af06013f588a7003278de222913c9d819">snr</a> &lt; <a name="a30"></a><a class="code" href="arm__graphic__equalizer__example__q31_8c.html#af7d1dd4deffa8e7ed6429e5dd0fe1812">SNR_THRESHOLD_F32</a>)</div>
+<div class="line">  status = (<a class="code" href="arm__graphic__equalizer__example__q31_8c.html#af06013f588a7003278de222913c9d819">snr</a> &lt; <a name="a24"></a><a class="code" href="arm__graphic__equalizer__example__q31_8c.html#af7d1dd4deffa8e7ed6429e5dd0fe1812">SNR_THRESHOLD_F32</a>) ? <a name="a25"></a><a class="code" href="arm__math_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6a09457f2be656b35015fd6d36202fa376">ARM_MATH_TEST_FAILURE</a> : <a name="a26"></a><a class="code" href="arm__math_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6a9f8b2a10bd827fb4600e77d455902eb0">ARM_MATH_SUCCESS</a>;</div>
+<div class="line">  </div>
+<div class="line">  <span class="keywordflow">if</span> (status != <a class="code" href="arm__math_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6a9f8b2a10bd827fb4600e77d455902eb0">ARM_MATH_SUCCESS</a>)</div>
 <div class="line">  {</div>
-<div class="line">    status = <a name="a31"></a><a class="code" href="arm__math_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6a09457f2be656b35015fd6d36202fa376">ARM_MATH_TEST_FAILURE</a>;</div>
-<div class="line">  }</div>
+<div class="line"><span class="preprocessor">#if defined (SEMIHOSTING)</span></div>
+<div class="line"><span class="preprocessor"></span>    printf(<span class="stringliteral">&quot;FAILURE\n&quot;</span>);</div>
+<div class="line"><span class="preprocessor">#else</span></div>
+<div class="line"><span class="preprocessor"></span>    <span class="keywordflow">while</span> (1);                             <span class="comment">/* main function does not return */</span></div>
+<div class="line"><span class="preprocessor">#endif</span></div>
+<div class="line"><span class="preprocessor"></span>  }</div>
 <div class="line">  <span class="keywordflow">else</span></div>
 <div class="line">  {</div>
-<div class="line">    status = <a name="a32"></a><a class="code" href="arm__math_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6a9f8b2a10bd827fb4600e77d455902eb0">ARM_MATH_SUCCESS</a>;</div>
-<div class="line">  }</div>
+<div class="line"><span class="preprocessor">#if defined (SEMIHOSTING)</span></div>
+<div class="line"><span class="preprocessor"></span>    printf(<span class="stringliteral">&quot;SUCCESS\n&quot;</span>);</div>
+<div class="line"><span class="preprocessor">#else</span></div>
+<div class="line"><span class="preprocessor"></span>    <span class="keywordflow">while</span> (1);                             <span class="comment">/* main function does not return */</span></div>
+<div class="line"><span class="preprocessor">#endif</span></div>
+<div class="line"><span class="preprocessor"></span>  }</div>
 <div class="line"></div>
-<div class="line">  <span class="comment">/* ----------------------------------------------------------------------</span></div>
-<div class="line"><span class="comment">  ** Loop here if the signal does not match the reference output.</span></div>
-<div class="line"><span class="comment">  ** ------------------------------------------------------------------- */</span></div>
-<div class="line"></div>
-<div class="line">  <span class="keywordflow">if</span> ( status != <a class="code" href="arm__math_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6a9f8b2a10bd827fb4600e77d455902eb0">ARM_MATH_SUCCESS</a>)</div>
-<div class="line">  {</div>
-<div class="line">    <span class="keywordflow">while</span> (1);</div>
-<div class="line">  }</div>
-<div class="line"></div>
-<div class="line">  <span class="keywordflow">while</span> (1);                             <span class="comment">/* main function does not return */</span></div>
 <div class="line">}</div>
 <div class="line"></div>
 </div><!-- fragment --> </div><!-- contents -->
@@ -436,7 +440,7 @@ $(document).ready(function(){initNavTree('arm_graphic_equalizer_example_q31_8c-e
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Jul 10 2019 15:20:38 for CMSIS-DSP Version 1.7.0 by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Apr 9 2020 15:49:21 for CMSIS-DSP Version 1.8.0 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

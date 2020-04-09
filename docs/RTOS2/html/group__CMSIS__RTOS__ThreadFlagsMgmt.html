@@ -209,7 +209,8 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>thread flags after setting or error code if highest bit set.</dd></dl>
-<p>The function <b>osThreadFlagsSet</b> sets the thread flags for a thread specified by parameter <em>thread_id</em>. It returns the flags set, or an error code if highest bit is set (refer to <a class="el" href="group__flags__error__codes.html">Flags Functions Error Codes</a>). This function may be used also within interrupt service routines. Threads waiting for a flag to be set will resume from <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ThreadStates">BLOCKED</a> state.</p>
+<p>The function <b>osThreadFlagsSet</b> sets the thread flags for a thread specified by parameter <em>thread_id</em>. The thread returns the flags stored in the thread control block, or an error code if highest bit is set (refer to <a class="el" href="group__flags__error__codes.html">Flags Functions Error Codes</a>). Refer to <b>Usage</b> <b>Examples</b> below to understand how the return value is computed.</p>
+<p>The target thread waiting for a flag to be set will resume from <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ThreadStates">BLOCKED</a> state.</p>
 <p>Possible <a class="el" href="group__flags__error__codes.html">Flags Functions Error Codes</a> return values:</p>
 <ul>
 <li><em>osFlagsErrorUnknown:</em> unspecified error.</li>
@@ -229,7 +230,19 @@ Functions</h2></td></tr>
 <div class="line">  <a class="code" href="group__CMSIS__RTOS__ThreadFlagsMgmt.html#ga6f89ef9caded1d9963c7b12b0f6412c9">osThreadFlagsSet</a>(tid, 0x0001U);           <span class="comment">/* set signal to thread &#39;thread&#39; */</span></div>
 <div class="line">  <a class="code" href="group__CMSIS__RTOS__Wait.html#gaf6055a51390ef65b6b6edc28bf47322e">osDelay</a>(500U);                            <span class="comment">/* delay 500ms                   */</span></div>
 <div class="line">}</div>
-</div><!-- fragment --> 
+</div><!-- fragment --><p><b>Usage</b> <b>Examples</b> </p>
+<p>The following diagram assumes that in the control block of Thread1 the flag 1 is already set. Thread2 now sets flag 2 and Thread1 returns the updated value immediately:</p>
+<div align="center">
+<img src="msc_inline_mscgraph_1.png" alt="msc_inline_mscgraph_1" border="0" usemap="#msc_inline_mscgraph_1.map"/>
+<map name="msc_inline_mscgraph_1.map" id="msc_inline_mscgraph_1.map"></map>
+</div>
+<p>Depending on thread scheduling, the flag status can be modified before returning:</p>
+<div align="center">
+<img src="msc_inline_mscgraph_2.png" alt="msc_inline_mscgraph_2" border="0" usemap="#msc_inline_mscgraph_2.map"/>
+<map name="msc_inline_mscgraph_2.map" id="msc_inline_mscgraph_2.map"></map>
+</div>
+ <dl class="section note"><dt>Note</dt><dd>* In this case <a class="el" href="group__CMSIS__RTOS__ThreadFlagsMgmt.html#gac11542ad6300b600f872fc96e340ec2b">osThreadFlagsWait</a> auto-clears the flag. </dd></dl>
+
 </div>
 </div>
 <a class="anchor" id="ga656abc1c862c5b9a2b13584c42cc0bfa"></a>
@@ -363,7 +376,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Jul 10 2019 15:21:04 for CMSIS-RTOS2 Version 2.1.3 by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Apr 9 2020 15:50:01 for CMSIS-RTOS2 Version 2.1.3 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

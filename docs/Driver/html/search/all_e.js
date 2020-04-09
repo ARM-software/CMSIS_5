@@ -33,5 +33,6 @@ var searchData=
   ['protocol_5fi2s',['protocol_i2s',['../group__sai__interface__gr.html#a6fcb9d68c4999860ce162c0ef44c4c97',1,'ARM_SAI_CAPABILITIES']]],
   ['protocol_5fjustified',['protocol_justified',['../group__sai__interface__gr.html#a5363ec1fc0042620cb8aeeee4f98691b',1,'ARM_SAI_CAPABILITIES']]],
   ['protocol_5fpcm',['protocol_pcm',['../group__sai__interface__gr.html#a0b2c79bd96ecb47d801fc5389819314a',1,'ARM_SAI_CAPABILITIES']]],
-  ['protocol_5fuser',['protocol_user',['../group__sai__interface__gr.html#a808b1f9e0abc3fa67945899cfc9fccc1',1,'ARM_SAI_CAPABILITIES']]]
+  ['protocol_5fuser',['protocol_user',['../group__sai__interface__gr.html#a808b1f9e0abc3fa67945899cfc9fccc1',1,'ARM_SAI_CAPABILITIES']]],
+  ['print_20levels',['Print Levels',['../group__vioPrintLevels__gr.html',1,'']]]
 ];

@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Pack
-   &#160;<span id="projectnumber">Version 1.6.1</span>
+   &#160;<span id="projectnumber">Version 1.6.3</span>
    </div>
    <div id="projectbrief">Delivery Mechanism for Software Packs</div>
   </td>
@@ -133,6 +133,8 @@ Debug description elements</h1>
 <li><a class="el" href="pdsc_family_pg.html#element_debugconfig">debugconfig</a> provides the default debugger configuration for a target connection.</li>
 <li><a class="el" href="pdsc_family_pg.html#element_debugvars">debugvars</a> specifies global debug access variables. They can be used in addition to predefined variables in order to query settings from a debug access sequences.</li>
 <li><a class="el" href="pdsc_family_pg.html#element_debugport">debugport</a> with the child elements <a class="el" href="pdsc_family_pg.html#element_dp_jtag">dp_jtag</a>, <a class="el" href="pdsc_family_pg.html#element_dp_swd">dp_swd</a>, and <a class="el" href="pdsc_family_pg.html#element_dp_cjtag">dp_cjtag</a> describes the debug port in detail.</li>
+<li><a class="el" href="pdsc_family_pg.html#element_accessportV1">accessportV1</a> describes an access port (APv1) in detail.</li>
+<li><a class="el" href="pdsc_family_pg.html#element_accessportV2">accessportV2</a> describes an access port (APv2) in detail.</li>
 <li><a class="el" href="pdsc_family_pg.html#element_sequences">sequences</a> with the child elements <a class="el" href="pdsc_family_pg.html#element_sequence">sequence</a>, <a class="el" href="pdsc_family_pg.html#element_seq_control">seq_control</a>, and <a class="el" href="pdsc_family_pg.html#element_seq_block">seq_block</a> creates a configuration for debug access sequences.</li>
 <li><a class="el" href="pdsc_family_pg.html#element_trace">trace</a> with the child elements <a class="el" href="pdsc_family_pg.html#element_trace_serialwire">trace_serialwire</a>, <a class="el" href="pdsc_family_pg.html#element_trace_traceport">trace_traceport</a>, and <a class="el" href="pdsc_family_pg.html#element_trace_tracebuffer">trace_tracebuffer</a> sets up the trace connection.</li>
 </ul>
@@ -262,16 +264,16 @@ DebugPortSetup</h2>
 <p>Prepare the target debug port for connection.</p>
 <div class="fragment"><div class="line">&lt;sequence name=<span class="stringliteral">&quot;DebugPortSetup&quot;</span>&gt;</div>
 <div class="line">  &lt;block&gt;</div>
-<div class="line">    __var isSWJ    = ((__protocol &amp;amp; 0x00010000) != 0);</div>
+<div class="line">    __var isSWJ      = ((__protocol &amp;amp; 0x00010000) != 0);</div>
 <div class="line">    __var hasDormant = __protocol &amp;amp; 0x00020000;</div>
-<div class="line">    __var protType = __protocol &amp;amp; 0x0000FFFF;</div>
+<div class="line">    __var protType   = __protocol &amp;amp; 0x0000FFFF;</div>
 <div class="line">  &lt;/block&gt;</div>
-<div class="line"></div>
+<div class="line">  </div>
 <div class="line">  &lt;!-- JTAG Protocol --&gt;</div>
 <div class="line">  &lt;control <span class="keywordflow">if</span>=<span class="stringliteral">&quot;protType == 1&quot;</span>&gt;</div>
 <div class="line">  </div>
 <div class="line">    &lt;control <span class="keywordflow">if</span>=<span class="stringliteral">&quot;isSWJ&quot;</span>&gt;</div>
-<div class="line">    </div>
+<div class="line">  </div>
 <div class="line">      &lt;control <span class="keywordflow">if</span>=<span class="stringliteral">&quot;hasDormant&quot;</span>&gt;</div>
 <div class="line">  </div>
 <div class="line">        &lt;block atomic=<span class="stringliteral">&quot;1&quot;</span>&gt;</div>
@@ -316,12 +318,13 @@ DebugPortSetup</h2>
 <div class="line">      &lt;/control&gt;</div>
 <div class="line">  </div>
 <div class="line">    &lt;/control&gt;</div>
+<div class="line">  </div>
 <div class="line">    &lt;block atomic=<span class="stringliteral">&quot;1&quot;</span>&gt;</div>
 <div class="line">      <span class="comment">// JTAG &quot;Soft&quot; Reset</span></div>
 <div class="line">      DAP_JTAG_Sequence(6, 1, 0x3F);</div>
 <div class="line">      DAP_JTAG_Sequence(1, 0, 0x01);</div>
 <div class="line">    &lt;/block&gt;</div>
-<div class="line"></div>
+<div class="line">  </div>
 <div class="line">  &lt;/control&gt;</div>
 <div class="line">  </div>
 <div class="line">  &lt;!-- SWD Protocol --&gt;</div>
@@ -329,7 +332,7 @@ DebugPortSetup</h2>
 <div class="line">  </div>
 <div class="line">    &lt;control <span class="keywordflow">if</span>=<span class="stringliteral">&quot;isSWJ&quot;</span>&gt;</div>
 <div class="line">      </div>
-<div class="line">    &lt;control <span class="keywordflow">if</span>=<span class="stringliteral">&quot;hasDormant&quot;</span>&gt;</div>
+<div class="line">      &lt;control <span class="keywordflow">if</span>=<span class="stringliteral">&quot;hasDormant&quot;</span>&gt;</div>
 <div class="line">  </div>
 <div class="line">        &lt;block atomic=<span class="stringliteral">&quot;1&quot;</span>&gt;</div>
 <div class="line">          <span class="comment">// Ensure current debug interface is in reset state</span></div>
@@ -358,25 +361,27 @@ DebugPortSetup</h2>
 <div class="line">      &lt;/control&gt;</div>
 <div class="line">  </div>
 <div class="line">      &lt;control <span class="keywordflow">if</span>=<span class="stringliteral">&quot;!hasDormant&quot;</span>&gt;</div>
-<div class="line">      &lt;block atomic=<span class="stringliteral">&quot;1&quot;</span>&gt;</div>
-<div class="line">        <span class="comment">// Ensure current debug interface is in reset state</span></div>
-<div class="line">        DAP_SWJ_Sequence(51, 0x0007FFFFFFFFFFFF);</div>
-<div class="line">        </div>
-<div class="line">        <span class="comment">// Execute SWJ-DP Switch Sequence JTAG to SWD (0xE79E)</span></div>
-<div class="line">        <span class="comment">// Change if SWJ-DP uses deprecated switch code (0xEDB6)</span></div>
-<div class="line">        DAP_SWJ_Sequence(16, 0xE79E);</div>
-<div class="line">        </div>
-<div class="line">        <span class="comment">// Enter SWD Line Reset State</span></div>
-<div class="line">        DAP_SWJ_Sequence(51, 0x0007FFFFFFFFFFFF);  <span class="comment">// &amp;gt; 50 cycles SWDIO/TMS High</span></div>
-<div class="line">        DAP_SWJ_Sequence(3,  0x00);                <span class="comment">// At least 2 idle cycles (SWDIO/TMS Low)</span></div>
-<div class="line">      &lt;/block&gt;</div>
+<div class="line">  </div>
+<div class="line">        &lt;block atomic=<span class="stringliteral">&quot;1&quot;</span>&gt;</div>
+<div class="line">          <span class="comment">// Ensure current debug interface is in reset state</span></div>
+<div class="line">          DAP_SWJ_Sequence(51, 0x0007FFFFFFFFFFFF);</div>
+<div class="line">          </div>
+<div class="line">          <span class="comment">// Execute SWJ-DP Switch Sequence JTAG to SWD (0xE79E)</span></div>
+<div class="line">          <span class="comment">// Change if SWJ-DP uses deprecated switch code (0xEDB6)</span></div>
+<div class="line">          DAP_SWJ_Sequence(16, 0xE79E);</div>
+<div class="line">          </div>
+<div class="line">          <span class="comment">// Enter SWD Line Reset State</span></div>
+<div class="line">          DAP_SWJ_Sequence(51, 0x0007FFFFFFFFFFFF);  <span class="comment">// &amp;gt; 50 cycles SWDIO/TMS High</span></div>
+<div class="line">          DAP_SWJ_Sequence(3,  0x00);                <span class="comment">// At least 2 idle cycles (SWDIO/TMS Low)</span></div>
+<div class="line">        &lt;/block&gt;</div>
 <div class="line">    </div>
-<div class="line">    &lt;/control&gt;</div>
+<div class="line">      &lt;/control&gt;</div>
 <div class="line">  </div>
 <div class="line">    &lt;/control&gt;</div>
+<div class="line">  </div>
 <div class="line">    &lt;control <span class="keywordflow">if</span>=<span class="stringliteral">&quot;!isSWJ&quot;</span>&gt;</div>
 <div class="line">    </div>
-<div class="line">   &lt;control <span class="keywordflow">if</span>=<span class="stringliteral">&quot;hasDormant&quot;</span>&gt;</div>
+<div class="line">      &lt;control <span class="keywordflow">if</span>=<span class="stringliteral">&quot;hasDormant&quot;</span>&gt;</div>
 <div class="line">  </div>
 <div class="line">        &lt;block atomic=<span class="stringliteral">&quot;1&quot;</span>&gt;</div>
 <div class="line">          <span class="comment">// Ensure current debug interface is in reset state</span></div>
@@ -417,7 +422,7 @@ DebugPortSetup</h2>
 <div class="line">      <span class="comment">// Read DPIDR to enable SWD interface (SW-DPv1 and SW-DPv2)</span></div>
 <div class="line">      ReadDP(0x0);</div>
 <div class="line">    &lt;/block&gt;</div>
-<div class="line"></div>
+<div class="line">  </div>
 <div class="line">  &lt;/control&gt;</div>
 <div class="line">  </div>
 <div class="line">&lt;/sequence&gt;</div>
@@ -863,8 +868,13 @@ Debug access syntax rules</h2>
 <div class="line">  </div>
 <div class="line">&lt;/sequence&gt;</div>
 </div><!-- fragment --></li>
-<li>The debug access variables <b>__dp</b>, <b>__ap</b>, and <b>__errorcontrol</b> can be modified within a debug access sequence. An assigned value is held until leaving the sequence. Calling another sequence by the <b>Sequence</b> debug access function will push their values on a sequence execution stack. The values are restored when returning from such a call.</li>
+<li>The debug access variables <b>__dp</b>, <b>__ap</b>, <b>__apid</b>, and <b>__errorcontrol</b> can be modified within a debug access sequence. An assigned value is held until leaving the sequence. Calling another sequence by the <b>Sequence</b> debug access function will push their values on a sequence execution stack. The values are restored when returning from such a call.</li>
 <li>The debug access variable <b>__Result</b> can be modified within a debug access sequence. Its value is held until the debug access sequence returns to the debugger. Hence its value is <b>not</b> pushed on a sequence execution stack when calling into another sequence by the <b>Sequence</b> debug access function.</li>
+<li>If the debug description contains <a class="el" href="pdsc_family_pg.html#element_accessportV1">access port elements</a><ul>
+<li>then the debug access variable <b>__ap</b> must <b>not</b> be used. Use <b>__apid</b> instead.</li>
+<li>then the debug access variable <b>__dp</b> is only used for the <b>ReadDP()</b>, <b>WriteDP()</b>, and <b>DAP_WriteABORT()</b> debug access functions. All other debug access functions use the access port element that is referenced by <b>__apid</b> to determine the used debug port.</li>
+</ul>
+</li>
 </ul>
 <h2><a class="anchor" id="ExpressionType"></a>
 Expression rules</h2>
@@ -905,7 +915,7 @@ Debug access functions</h2>
 <tr>
 <th>Function </th><th>Description  </th></tr>
 <tr>
-<td style="white-space: nowrap"><pre>Sequence("name")</pre> </td><td><p class="starttd">Execute a debug access sequence. Calling a sequence by this function causes the modifiable debug access variables <b>__dp</b>, <b>__ap</b>, and <b>__errorcontrol</b> to be pushed on a sequence execution stack. Returning from such a call will restore the state of these variables.<br/>
+<td style="white-space: nowrap"><pre>Sequence("name")</pre> </td><td><p class="starttd">Execute a debug access sequence. Calling a sequence by this function causes the modifiable debug access variables <b>__dp</b>, <b>__ap</b>, <b>__apid</b>, and <b>__errorcontrol</b> to be pushed on a sequence execution stack. Returning from such a call will restore the state of these variables.<br/>
  <br/>
  <b>Parameters:</b><br/>
 </p>
@@ -927,9 +937,16 @@ Debug access functions</h2>
 </ul>
 <p><b>Debug Access Variables:</b><br/>
 </p>
+<p>If <b>no</b> <a class="el" href="pdsc_family_pg.html#element_accessportV1">access port elements</a> exist:<br/>
+</p>
 <ul>
 <li>__dp: The debug port to use for this memory access.</li>
 <li>__ap: The access port to use for this memory access.</li>
+</ul>
+<p>If <a class="el" href="pdsc_family_pg.html#element_accessportV1">access port elements</a> exist:<br/>
+</p>
+<ul>
+<li>__apid: The ID of the access port element to use for this memory access.</li>
 </ul>
 <p><b>Return Value:</b><br/>
  The 8-bit value as read from target memory.</p>
@@ -946,9 +963,16 @@ Debug access functions</h2>
 </ul>
 <p><b>Debug Access Variables:</b><br/>
 </p>
+<p>If <b>no</b> <a class="el" href="pdsc_family_pg.html#element_accessportV1">access port elements</a> exist:<br/>
+</p>
 <ul>
 <li>__dp: The debug port to use for this memory access.</li>
 <li>__ap: The access port to use for this memory access.</li>
+</ul>
+<p>If <a class="el" href="pdsc_family_pg.html#element_accessportV1">access port elements</a> exist:<br/>
+</p>
+<ul>
+<li>__apid: The ID of the access port element to use for this memory access.</li>
 </ul>
 <p class="endtd"><b>Return Value:</b><br/>
  The 16-bit value as read from target memory.   </p>
@@ -963,9 +987,16 @@ Debug access functions</h2>
 </ul>
 <p><b>Debug Access Variables:</b><br/>
 </p>
+<p>If <b>no</b> <a class="el" href="pdsc_family_pg.html#element_accessportV1">access port elements</a> exist:<br/>
+</p>
 <ul>
 <li>__dp: The debug port to use for this memory access.</li>
 <li>__ap: The access port to use for this memory access.</li>
+</ul>
+<p>If <a class="el" href="pdsc_family_pg.html#element_accessportV1">access port elements</a> exist:<br/>
+</p>
+<ul>
+<li>__apid: The ID of the access port element to use for this memory access.</li>
 </ul>
 <p><b>Return Value:</b><br/>
  The 32-bit value as read from target memory.</p>
@@ -982,9 +1013,16 @@ Debug access functions</h2>
 </ul>
 <p><b>Debug Access Variables:</b><br/>
 </p>
+<p>If <b>no</b> <a class="el" href="pdsc_family_pg.html#element_accessportV1">access port elements</a> exist:<br/>
+</p>
 <ul>
 <li>__dp: The debug port to use for this memory access.</li>
 <li>__ap: The access port to use for this memory access.</li>
+</ul>
+<p>If <a class="el" href="pdsc_family_pg.html#element_accessportV1">access port elements</a> exist:<br/>
+</p>
+<ul>
+<li>__apid: The ID of the access port element to use for this memory access.</li>
 </ul>
 <p class="endtd"><b>Return Value:</b><br/>
  The 64-bit value as read from target memory.   </p>
@@ -999,14 +1037,39 @@ Debug access functions</h2>
 </ul>
 <p><b>Debug Access Variables:</b><br/>
 </p>
+<p>If <b>no</b> <a class="el" href="pdsc_family_pg.html#element_accessportV1">access port elements</a> exist:<br/>
+</p>
 <ul>
 <li>__dp: The debug port to use for this memory access.</li>
 <li>__ap: The access port to use for this memory access.</li>
+</ul>
+<p>If <a class="el" href="pdsc_family_pg.html#element_accessportV1">access port elements</a> exist:<br/>
+</p>
+<ul>
+<li>__apid: The ID of the access port element to use for this memory access.</li>
 </ul>
 <p><b>Return Value:</b><br/>
  The 32-bit value as read from the AP register.</p>
 <p class="endtd"><b>Code Example:</b><br/>
  Refer to <a class="el" href="debug_description.html#userDebugDeviceUnlock">User implementation of DebugDeviceUnlock sequence</a>   </p>
+</td></tr>
+<tr>
+<td style="white-space: nowrap"><pre>ReadAccessAP(addr)</pre> </td><td><p class="starttd">Read a 32-bit value from an address in the system's APv2 (ADIv6) top-level access port space.<br/>
+ <br/>
+ <b>Parameters:</b><br/>
+</p>
+<ul>
+<li>addr: Address within the system's top-level AP address space.</li>
+</ul>
+<p><b>Debug Access Variables:</b><br/>
+</p>
+<ul>
+<li>__dp: The debug port to use for this access.</li>
+</ul>
+<p><b>Return Value:</b><br/>
+ The 32-bit value as read from the top-level AP address.</p>
+<p class="endtd"><b>Code Example:</b><br/>
+ Refer to <a class="el" href="debug_description.html#DebugDeviceUnlock">DebugDeviceUnlock</a>   </p>
 </td></tr>
 <tr>
 <td style="white-space: nowrap"><pre>ReadDP(addr)</pre> </td><td><p class="starttd">Read a 32-bit value from a debug port register.<br/>
@@ -1037,9 +1100,16 @@ Debug access functions</h2>
 </ul>
 <p><b>Debug Access Variables:</b><br/>
 </p>
+<p>If <b>no</b> <a class="el" href="pdsc_family_pg.html#element_accessportV1">access port elements</a> exist:<br/>
+</p>
 <ul>
 <li>__dp: The debug port to use for this memory access.</li>
 <li>__ap: The access port to use for this memory access.</li>
+</ul>
+<p>If <a class="el" href="pdsc_family_pg.html#element_accessportV1">access port elements</a> exist:<br/>
+</p>
+<ul>
+<li>__apid: The ID of the access port element to use for this memory access.</li>
 </ul>
 <p><b>Return Value:</b><br/>
  Always returns <span class="XML-Token">0</span>.</p>
@@ -1057,9 +1127,16 @@ Debug access functions</h2>
 </ul>
 <p><b>Debug Access Variables:</b><br/>
 </p>
+<p>If <b>no</b> <a class="el" href="pdsc_family_pg.html#element_accessportV1">access port elements</a> exist:<br/>
+</p>
 <ul>
 <li>__dp: The debug port to use for this memory access.</li>
 <li>__ap: The access port to use for this memory access.</li>
+</ul>
+<p>If <a class="el" href="pdsc_family_pg.html#element_accessportV1">access port elements</a> exist:<br/>
+</p>
+<ul>
+<li>__apid: The ID of the access port element to use for this memory access.</li>
 </ul>
 <p class="endtd"><b>Return Value:</b><br/>
  Always returns <span class="XML-Token">0</span>.   </p>
@@ -1075,9 +1152,16 @@ Debug access functions</h2>
 </ul>
 <p><b>Debug Access Variables:</b><br/>
 </p>
+<p>If <b>no</b> <a class="el" href="pdsc_family_pg.html#element_accessportV1">access port elements</a> exist:<br/>
+</p>
 <ul>
 <li>__dp: The debug port to use for this memory access.</li>
 <li>__ap: The access port to use for this memory access.</li>
+</ul>
+<p>If <a class="el" href="pdsc_family_pg.html#element_accessportV1">access port elements</a> exist:<br/>
+</p>
+<ul>
+<li>__apid: The ID of the access port element to use for this memory access.</li>
 </ul>
 <p><b>Return Value:</b><br/>
  Always returns <span class="XML-Token">0</span>.</p>
@@ -1095,9 +1179,16 @@ Debug access functions</h2>
 </ul>
 <p><b>Debug Access Variables:</b><br/>
 </p>
+<p>If <b>no</b> <a class="el" href="pdsc_family_pg.html#element_accessportV1">access port elements</a> exist:<br/>
+</p>
 <ul>
 <li>__dp: The debug port to use for this memory access.</li>
 <li>__ap: The access port to use for this memory access.</li>
+</ul>
+<p>If <a class="el" href="pdsc_family_pg.html#element_accessportV1">access port elements</a> exist:<br/>
+</p>
+<ul>
+<li>__apid: The ID of the access port element to use for this memory access.</li>
 </ul>
 <p class="endtd"><b>Return Value:</b><br/>
  Always returns <span class="XML-Token">0</span>.   </p>
@@ -1113,14 +1204,39 @@ Debug access functions</h2>
 </ul>
 <p><b>Debug Access Variables:</b><br/>
 </p>
+<p>If <b>no</b> <a class="el" href="pdsc_family_pg.html#element_accessportV1">access port elements</a> exist:<br/>
+</p>
 <ul>
 <li>__dp: The debug port to use for this memory access.</li>
 <li>__ap: The access port to use for this memory access.</li>
+</ul>
+<p>If <a class="el" href="pdsc_family_pg.html#element_accessportV1">access port elements</a> exist:<br/>
+</p>
+<ul>
+<li>__apid: The ID of the access port element to use for this memory access.</li>
 </ul>
 <p><b>Return Value:</b><br/>
  Always returns <span class="XML-Token">0</span>.</p>
 <p class="endtd"><b>Code Example:</b><br/>
  Refer to <a class="el" href="debug_description.html#hwReset">User implementation of hardware reset sequence</a>   </p>
+</td></tr>
+<tr>
+<td style="white-space: nowrap"><pre>WriteAccessAP(addr)</pre> </td><td><p class="starttd">Write a 32-bit value to an address in the system's APv2 (ADIv6) top-level access port space.<br/>
+ <br/>
+ <b>Parameters:</b><br/>
+</p>
+<ul>
+<li>addr: Address within the system's top-level AP address space.</li>
+</ul>
+<p><b>Debug Access Variables:</b><br/>
+</p>
+<ul>
+<li>__dp: The debug port to use for this access.</li>
+</ul>
+<p><b>Return Value:</b><br/>
+ Always returns <span class="XML-Token">0</span>.</p>
+<p class="endtd"><b>Code Example:</b><br/>
+ Refer to <a class="el" href="debug_description.html#DebugDeviceUnlock">DebugDeviceUnlock</a>   </p>
 </td></tr>
 <tr>
 <td style="white-space: nowrap"><pre>WriteDP(addr, val)</pre> </td><td><p class="starttd">Write a 32-bit value to a debug port register.<br/>
@@ -1159,9 +1275,16 @@ Debug access functions</h2>
 </ul>
 <p><b>Debug Access Variables:</b><br/>
 </p>
+<p>If <b>no</b> <a class="el" href="pdsc_family_pg.html#element_accessportV1">access port elements</a> exist:<br/>
+</p>
 <ul>
 <li>__dp: The debug port to use for this memory access.</li>
 <li>__ap: The access port to use for this memory access.</li>
+</ul>
+<p>If <a class="el" href="pdsc_family_pg.html#element_accessportV1">access port elements</a> exist:<br/>
+</p>
+<ul>
+<li>__apid: The ID of the access port element to use for this memory access.</li>
 </ul>
 <p class="endtd"><b>Return Value:</b><br/>
  Always returns <span class="XML-Token">0</span>.   </p>
@@ -1427,6 +1550,19 @@ Debug access functions</h2>
 </ul>
 </li>
 </ul>
+<p><b>Debug Access Variables:</b><br/>
+</p>
+<p>If <b>no</b> <a class="el" href="pdsc_family_pg.html#element_accessportV1">access port elements</a> exist:<br/>
+</p>
+<ul>
+<li>__dp: The debug port to use for this memory access.</li>
+<li>__ap: The access port to use for this memory access.</li>
+</ul>
+<p>If <a class="el" href="pdsc_family_pg.html#element_accessportV1">access port elements</a> exist:<br/>
+</p>
+<ul>
+<li>__apid: The ID of the access port element to use for this memory access.</li>
+</ul>
 <p><b>Return Value:</b><br/>
  Always <span class="XML-Token">0</span>. Function causes fatal error if not successful.</p>
 <p class="endtd"><b>Code Example:</b><br/>
@@ -1448,6 +1584,19 @@ Debug access functions</h2>
 <li>Bit 9..63: Reserved</li>
 </ul>
 </li>
+</ul>
+<p><b>Debug Access Variables:</b><br/>
+</p>
+<p>If <b>no</b> <a class="el" href="pdsc_family_pg.html#element_accessportV1">access port elements</a> exist:<br/>
+</p>
+<ul>
+<li>__dp: The debug port to use for this memory access.</li>
+<li>__ap: The access port to use for this memory access.</li>
+</ul>
+<p>If <a class="el" href="pdsc_family_pg.html#element_accessportV1">access port elements</a> exist:<br/>
+</p>
+<ul>
+<li>__apid: The ID of the access port element to use for this memory access.</li>
 </ul>
 <p><b>Return Value:</b><br/>
  Always <span class="XML-Token">0</span>. Function causes fatal error if not successful.</p>
@@ -1549,8 +1698,10 @@ Debug access functions</h2>
 <dl class="section note"><dt>Note</dt><dd><ul>
 <li>Target memory access functions must perform a debug access of the size indicated by their name. The target system must support debug accesses of this size.</li>
 <li>Results of all functions are casted to 64-bit unsigned integer values.</li>
-<li>Some target access functions determine the used debug and access port by the current values of the <b>__dp</b> and <b>__ap</b> debug access variables. If a target access requires a different debug or access port than the default ones, it must change these values. This change is held until finishing the sequence the change has occurred in.</li>
-<li>A call to WriteDP() to change the DP SELECT register does not implicitly change the value of the debug access variable <b>__ap</b>. It needs to be explicitly updated to select a different AP for subsequent AP register and memory accesses.</li>
+<li>Some target access functions determine the used debug and access port by the current values of the <b>__dp</b> and <b>__ap</b>, and the <b>__apid</b> debug access variables. If a target access requires a different debug or access port than the default ones, it must change these values. This change is held until finishing the sequence the change has occurred in.</li>
+<li>If the debug description describes <a class="el" href="pdsc_family_pg.html#element_accessportV1">access port elements</a> then use of <b>__dp</b> is limited to the <b>ReadDP()</b>, <b>WriteDP()</b>, and <b>DAP_WriteABORT()</b> debug access functions. All other debug access functions determine the used debug port from the <a class="el" href="pdsc_family_pg.html#element_accessportV1">access port element</a> referenced by <b>__apid</b>.</li>
+<li>If the debug description describes <a class="el" href="pdsc_family_pg.html#element_accessportV1">access port elements</a> then <b>__ap</b> must not be used. Use <b>__apid</b> instead.</li>
+<li>A call to <b>WriteDP()</b> to change the DP SELECT register does not implicitly change the value of the debug access variables <b>__ap</b> or <b>__apid</b>. Those need to be explicitly updated to select a different AP for subsequent AP register and memory accesses.</li>
 </ul>
 </dd></dl>
 <h2><a class="anchor" id="DebugVars"></a>
@@ -1603,10 +1754,15 @@ Debug access variables</h2>
 </td></tr>
 <tr>
 <td style="white-space: nowrap"><pre>__dp</pre> </td><td>Read/Write </td><td>Debug Port selected for target accesses.<br/>
- This variable is initialized when entering a pre-defined debug access sequence on a debug event. The initialization value is the <b>__dp</b> as defined for the used <b>debug</b> element.  </td><td>Debug port ID as specified in a <b>debugport</b> element or <span class="XML-Token">0</span> if no <b>debugport</b> element exists.   </td></tr>
+ This variable is initialized when entering a pre-defined debug access sequence on a debug event. The initialization value is the <b>__dp</b> as defined for the used <b>debug</b> element. <br/>
+ If <a class="el" href="pdsc_family_pg.html#element_accessportV1">access port elements</a> exist then use of <b>__dp</b> is limited to the <b>ReadDP()</b>, <b>WriteDP()</b>, and <b>DAP_WriteABORT()</b> debug access functions.  </td><td>Debug port ID as specified in a <b>debugport</b> element or <span class="XML-Token">0</span> if no <b>debugport</b> element exists.   </td></tr>
 <tr>
 <td style="white-space: nowrap"><pre>__ap</pre> </td><td>Read/Write </td><td>Access Port selected for target accesses.<br/>
- This variable is initialized when entering a pre-defined debug access sequence on a debug event. The initialization value is the <b>__ap</b> as defined for the used <b>debug</b> element.  </td><td>Access Port index.   </td></tr>
+ This variable is initialized when entering a pre-defined debug access sequence on a debug event. The initialization value is the <b>__ap</b> as defined for the used <b>debug</b> element. <br/>
+ Must not be used if <a class="el" href="pdsc_family_pg.html#element_accessportV1">access port elements</a> exist. Use <b>__apid</b> instead.  </td><td>Access Port index.   </td></tr>
+<tr>
+<td style="white-space: nowrap"><pre>__apid</pre> </td><td>Read/Write </td><td>Access Port selected for target accesses.<br/>
+ This variable is initialized when entering a pre-defined debug access sequence on a debug event. The initialization value is the <b>__apid</b> as defined for the used <b>debug</b> element.  </td><td>Access Port ID as defined in an <a class="el" href="pdsc_family_pg.html#element_accessportV1">access port element</a>.   </td></tr>
 <tr>
 <td style="white-space: nowrap"><a class="anchor" id="__traceout"></a> <pre>__traceout</pre> </td><td>Read-Only </td><td>Activated trace outputs (sinks). Additionally holds information on the selected port width if a parallel trace port is enabled.  </td><td style="white-space: nowrap">The following bit map applies:<br/>
 <ul>
@@ -1712,7 +1868,7 @@ Using external tools</h2>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="coresight_setup.html">Debug Setup with CMSIS-Pack</a></li>
-    <li class="footer">Generated on Fri Dec 13 2019 14:56:15 for CMSIS-Pack Version 1.6.1 by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Apr 9 2020 15:49:54 for CMSIS-Pack Version 1.6.3 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-DSP
-   &#160;<span id="projectnumber">Version 1.7.0</span>
+   &#160;<span id="projectnumber">Version 1.8.0</span>
    </div>
    <div id="projectbrief">CMSIS DSP Software Library</div>
   </td>
@@ -97,7 +97,7 @@ $(document).ready(function(){initNavTree('index.html','');});
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Data Structures</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Macros</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Groups</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(10)"><span class="SelectionMark">&#160;</span>Pages</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Data Structures</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Macros</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(10)"><span class="SelectionMark">&#160;</span>Groups</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(11)"><span class="SelectionMark">&#160;</span>Pages</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -112,23 +112,27 @@ $(document).ready(function(){initNavTree('index.html','');});
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><h2>Introduction </h2>
-<p>This user manual describes the CMSIS DSP software library, a suite of common signal processing functions for use on Cortex-M processor based devices.</p>
+<p>This user manual describes the CMSIS DSP software library, a suite of common signal processing functions for use on Cortex-M and Cortex-A processor based devices.</p>
 <p>The library is divided into a number of functions each covering a specific category:</p>
 <ul>
 <li>Basic math functions</li>
 <li>Fast math functions</li>
 <li>Complex math functions</li>
-<li>Filters</li>
+<li>Filtering functions</li>
 <li>Matrix functions</li>
 <li>Transform functions</li>
 <li>Motor control functions</li>
 <li>Statistical functions</li>
 <li>Support functions</li>
 <li>Interpolation functions</li>
+<li>Support Vector Machine functions (SVM)</li>
+<li>Bayes classifier functions</li>
+<li>Distance functions</li>
 </ul>
-<p>The library has separate functions for operating on 8-bit integers, 16-bit integers, 32-bit integer and 32-bit floating-point values.</p>
+<p>The library has generally separate functions for operating on 8-bit integers, 16-bit integers, 32-bit integer and 32-bit floating-point values.</p>
 <h2>Using the Library </h2>
 <p>The library installer contains prebuilt versions of the libraries in the <code>Lib</code> folder.</p>
+<p>Here is the list of pre-built libraries :</p>
 <ul>
 <li>arm_cortexM7lfdp_math.lib (Cortex-M7, Little endian, Double Precision Floating Point Unit)</li>
 <li>arm_cortexM7bfdp_math.lib (Cortex-M7, Big endian, Double Precision Floating Point Unit)</li>
@@ -154,13 +158,14 @@ $(document).ready(function(){initNavTree('index.html','');});
 <h2>Examples </h2>
 <p>The library ships with a number of examples which demonstrate how to use the library functions.</p>
 <h2>Toolchain Support </h2>
-<p>The library has been developed and tested with MDK version 5.14.0.0 The library is being tested in GCC and IAR toolchains and updates on this activity will be made available shortly.</p>
+<p>The library is now tested on Fast Models building with cmake. Core M0, M7, A5 are tested.</p>
 <h2>Building the Library </h2>
 <p>The library installer contains a project file to rebuild libraries on MDK toolchain in the <code>CMSIS\DSP\Projects\ARM</code> folder.</p>
 <ul>
 <li>arm_cortexM_math.uvprojx</li>
 </ul>
 <p>The libraries can be built by opening the arm_cortexM_math.uvprojx project in MDK-ARM, selecting a specific target, and defining the optional preprocessor macros detailed above.</p>
+<p>There is also a work in progress cmake build. The README file is giving more details.</p>
 <h2>Preprocessor Macros </h2>
 <p>Each library project have different preprocessor macros.</p>
 <ul>
@@ -187,6 +192,22 @@ $(document).ready(function(){initNavTree('index.html','');});
 <li>ARM_MATH_NEON_EXPERIMENTAL:</li>
 </ul>
 <p>Define macro ARM_MATH_NEON_EXPERIMENTAL to enable experimental Neon versions of of some DSP functions. Experimental Neon versions currently do not have better performances than the scalar versions.</p>
+<ul>
+<li>ARM_MATH_HELIUM:</li>
+</ul>
+<p>It implies the flags ARM_MATH_MVEF and ARM_MATH_MVEI and ARM_MATH_FLOAT16.</p>
+<ul>
+<li>ARM_MATH_MVEF:</li>
+</ul>
+<p>Select Helium versions of the f32 algorithms. It implies ARM_MATH_FLOAT16 and ARM_MATH_MVEI.</p>
+<ul>
+<li>ARM_MATH_MVEI:</li>
+</ul>
+<p>Select Helium versions of the int and fixed point algorithms.</p>
+<ul>
+<li>ARM_MATH_FLOAT16:</li>
+</ul>
+<p>Float16 implementations of some algorithms (Requires MVE extension).</p>
 <hr/>
  <h2>CMSIS-DSP in ARM::CMSIS Pack </h2>
 <p>The following files relevant to CMSIS-DSP are present in the <b>ARM::CMSIS</b> Pack directories: </p>
@@ -216,7 +237,7 @@ $(document).ready(function(){initNavTree('index.html','');});
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Jul 10 2019 15:20:40 for CMSIS-DSP Version 1.7.0 by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Apr 9 2020 15:49:24 for CMSIS-DSP Version 1.8.0 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

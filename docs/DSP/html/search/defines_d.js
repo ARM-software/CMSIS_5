@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['xspacing',['XSPACING',['../arm__linear__interp__example__f32_8c.html#a0ecae49cebd837aac53411c8f877503d',1,'arm_linear_interp_example_f32.c']]]
+  ['use_5fstatic_5finit',['USE_STATIC_INIT',['../arm__class__marks__example__f32_8c.html#a821d6c5973940580f5a045e7cf64b7f2',1,'arm_class_marks_example_f32.c']]]
 ];

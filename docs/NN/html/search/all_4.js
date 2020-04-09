@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['fully_2dconnected_20layer_20functions',['Fully-connected Layer Functions',['../group__FC.html',1,'']]]
+  ['exp_5fon_5fneg',['EXP_ON_NEG',['../arm__nnsupportfunctions_8h.html#a97055bb1e8a21ead129caecdfb24cfb1',1,'arm_nnsupportfunctions.h']]]
 ];

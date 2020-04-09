@@ -2,6 +2,11 @@ var group__ComplexFFT =
 [
     [ "Complex FFT Tables", "group__CFFT__CIFFT.html", "group__CFFT__CIFFT" ],
     [ "arm_cfft_f32", "group__ComplexFFT.html#gade0f9c4ff157b6b9c72a1eafd86ebf80", null ],
+    [ "arm_cfft_f64", "group__ComplexFFT.html#gaff5f3b030cbd330f7014ba67d5df47ac", null ],
+    [ "arm_cfft_init_f32", "group__ComplexFFT.html#gae945cbeefda447a2f4b303a4ae6fa579", null ],
+    [ "arm_cfft_init_f64", "group__ComplexFFT.html#ga9d584418abdfa43bf78957cadfccf033", null ],
+    [ "arm_cfft_init_q15", "group__ComplexFFT.html#ga0b394cad029d226d10fdef55629679af", null ],
+    [ "arm_cfft_init_q31", "group__ComplexFFT.html#ga196bb4e5466c74650b6cc76bb2efdfe2", null ],
     [ "arm_cfft_q15", "group__ComplexFFT.html#ga68cdacd2267a2967955e40e6b7ec1229", null ],
     [ "arm_cfft_q31", "group__ComplexFFT.html#ga5a0008bd997ab6e2e299ef2fb272fb4b", null ],
     [ "arm_cfft_radix2_f32", "group__ComplexFFT.html#ga9fadd650b802f612ae558ddaab789a6d", null ],

@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Build
-   &#160;<span id="projectnumber">Version 0.1.0</span>
+   &#160;<span id="projectnumber">Version 0.9.0 (beta)</span>
    </div>
    <div id="projectbrief">Tools, software frameworks, and work flows for productivity with CMSIS based projects</div>
   </td>
@@ -111,35 +111,43 @@ $(document).ready(function(){initNavTree('cbuildgen.html','');});
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><p>The <a class="el" href="cbuildgen.html">cbuildgen</a> is the core tool for the build process. It is called from the <b>Bash</b> command line with the following syntax:</p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000005">Todo:</a></b></dt><dd>is a default extension assumed?<ul>
-<li>[danbro01] The .cprj extension has to be explicitly present in the &lt;<code>ProjectFile&gt;</code>.cprj argument.</li>
-</ul>
-</dd></dl>
 <div class="fragment"><div class="line">cbuildgen &lt;command&gt; &lt;ProjectFile&gt;.cprj [options]</div>
 </div><!-- fragment --><p><b>Where:</b></p>
 <p><code>cbuildgen</code> is the name of tool.</p>
-<p>&lt;<code>command&gt;</code> specifies the operation of <code>cbuildgen</code> (see table below).</p>
-<p>&lt;<code>ProjectFile&gt;</code> is the name of the project file.</p>
-<p>[<code>options</code>] are optional parameters that control the operation (see table below).</p>
+<p>&lt;<code>command&gt;</code> specifies the operation of <code>cbuildgen</code> (see table below). Only one command is permitted per invocation.</p>
+<p>&lt;<code>ProjectFile&gt;</code> is the name of the project file. The file extension (.cprj) is mandatory.</p>
+<p>[<code>options</code>] are additional parameters that control the operation (see table below). Note: available options are specific for each command.</p>
 <p><b>Commands</b> </p>
 <table  class="cmtable" summary="cbuildgen commands">
 <tr>
-<th style="min-width:100px">&lt;command&gt; </th><th style="min-width:175px">Description </th><th style="min-width:175px">Details  </th></tr>
+<th style="min-width:100px">&lt;command&gt; </th><th style="min-width:185px">Description </th><th style="min-width:175px">Details  </th></tr>
 <tr>
-<td>packlist </td><td>List missing packs </td><td>Check the current list of installed packs in the directory <code>$CMSIS_PACK_ROOT</code>. Download URLs of missing packs are written to &lt;ProjectFile&gt;.cp_install file.  </td></tr>
+<td>packlist </td><td>List missing packs </td><td>Check the current list of installed packs in the directory <code>$CMSIS_PACK_ROOT</code>. The URLs of missing packs are written to &lt;ProjectFile&gt;.cp_install file.  </td></tr>
 <tr>
-<td>make </td><td>Generate makefile(s) </td><td>Generates &lt;ProjectFile&gt;.mak for <a class="el" href="Make.html">Make</a> to build the binary image. When used with &ndash;merge it generates also &lt;ProjectFile&gt;_cfg.mak for <a class="el" href="Make.html">Make</a> to update configuration files.  </td></tr>
+<td>make </td><td>Generate makefile(s) </td><td>Generates &lt;ProjectFile&gt;.mak for <a class="el" href="Make.html">Make</a> required to build the project. When used with option &ndash;merge it generates also &lt;ProjectFile&gt;_cfg.mak for <a class="el" href="Make.html">Make</a> to update configuration files. This command also generates a ASCII log file &lt;ProjectFile&gt;.clog recording location and version of the selected toolchain, packs, components and config files. The option &ndash;output specifies the destination folder of the generated files. The location of the &lt;ProjectFile&gt;.cprj is used if &ndash;output is not specified.   </td></tr>
+<tr>
+<td>extract </td><td>Extract layer from project </td><td>Creates a sub directory named <code></code>./Layer/&lt;layername&gt;/ for each layer described in &lt;ProjectFile&gt;.cprj. These folders contain a layer description file &lt;layername&gt;.clayer and the project and configuration files belonging to the layer. The option &ndash;layer=&lt;layname&gt; selects a specific layer by name. This option can be specified multiple times to select multiple layers.   </td></tr>
+<tr>
+<td>remove </td><td>Remove layer from project </td><td>Updates the &lt;ProjectFile&gt;.cprj removing the layer description as well as all associated files and components for the layers specified at the command line. The command deletes the associated files from the respecctive project directory. The option &ndash;layer=&lt;layname&gt; selects a specific layer by name and is mandatory. This option can be specified multiple times to remove multiple layers.   </td></tr>
+<tr>
+<td>compose </td><td>Create new project </td><td>Create new &lt;ProjectFile&gt;.cprj from layer files ([...]&lt;layername&gt;.clayer) as well as copying associated files. One or more clayer files are required.   </td></tr>
+<tr>
+<td>add </td><td>Add layer to project </td><td>Updates the &lt;ProjectFile&gt;.cprj adding the layer description as well as all associated files and components for the clayer files specified at the command line. The command copies the associated files from the layer directory into the project directory. One or more clayer files are required.   </td></tr>
 </table>
 <p><b>Options</b> </p>
 <table  class="cmtable" summary="cbuildgen options">
 <tr>
 <th style="min-width:100px">[option] </th><th style="min-width:175px">Description </th><th style="min-width:175px">Details  </th></tr>
 <tr>
-<td>--merge </td><td>Update configuration files </td><td>When used with the command <code>make</code>, it generates also &lt;ProjectFile&gt;_cfg.mak for <a class="el" href="Make.html">Make</a> to update configuration files using <a class="el" href="ccmerge.html">ccmerge: Config File Updater</a>.   </td></tr>
+<td>--merge </td><td>Update configuration files </td><td>When used with the command <code>make</code>, it generates also &lt;ProjectFile&gt;_cfg.mak for <a class="el" href="Make.html">Make</a> to update configuration files using <a class="el" href="ccmerge.html">ccmerge: Config File Updater</a> (used by command: make).   </td></tr>
 <tr>
-<td>--toolchain=&lt;compiler&gt; </td><td>Specify toolchain </td><td>For projects that can be build with multiple toolchains, it defines the toolchain for <a class="el" href="Make.html">Make</a>.  </td></tr>
+<td>--toolchain=&lt;compiler&gt; </td><td>Specify toolchain </td><td>For projects that can be build with multiple toolchains, it defines the toolchain for the build (used by command: make).  </td></tr>
 <tr>
-<td>--output=&lt;directory&gt; </td><td>Specify output directory </td><td>Specifies the directory where the <b>*.mak</b> files are generated.  </td></tr>
+<td>--output=&lt;directory&gt; </td><td>Specify output directory </td><td>Specifies the directory for the generated files <b>*.mak</b> files and the base directory for intermediate output from build. (used by command: make).  </td></tr>
+<tr>
+<td>--layer=&lt;layername&gt; </td><td>Specify layer name </td><td>Specifies the name of the layer (used by commands: remove and extract).  </td></tr>
+<tr>
+<td>&lt;directory&gt;/&lt;layername&gt;.clayer </td><td>Specify layer file </td><td>Specifies the directory and filename of the project layer (used by commands: add and compose). </td></tr>
 </table>
 <p>The <a class="el" href="cbuildgen.html">cbuildgen: Build Process Manager</a> uses information from the CMSIS project file *.cprj, software packs, and environment variables.</p>
 <ul>
@@ -154,22 +162,18 @@ $(document).ready(function(){initNavTree('cbuildgen.html','');});
 <li>include ${CMSIS_BUILD_ROOT}/etc/Whitespace.mak for handling of white space characters in filenames.</li>
 <li>include ${CMSIS_COMPILER_ROOT}/&lt;name&gt;.&lt;version&gt;.mak that specifies default options for the toolchain.</li>
 </ul>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000006">Todo:</a></b></dt><dd>Question to Daniel: does cbuildgen update the *.cprj file or is that file read-only? How are new configuration files detected?<ul>
-<li>[danbro01] The *.cprj file is never written by cbuildgen. The merge tool overwrites the outdated configuration files with new merged data.</li>
-</ul>
-</dd></dl>
+<p>Note: cbuildgen does not update the *.cprj for commands packlist, make and extract. The merge tool updates the outdated configuration files with new merged data, keeping a copy of the original file.</p>
 <h1><a class="anchor" id="cbuild_example"></a>
 Usage Example</h1>
 <pre class="fragment">$ cbuildgen packlist Simulation.cprj
-CMSIS Build (cbuildgen) 0.1.1 (Feb 14 2020, 15:03:45)
-Copyright (C) 2020 ARM Ltd and ARM Germany GmbH. All rights reserved.
+(cbuildgen): Build Process Manager 0.9.0 (C) 2020 ARM
 M654: URL 'http://www.keil.com/pack/ARM.CMSIS.5.6.0.pack' was added to the list of missing packages.
 M654: URL 'http://www.keil.com/pack/Keil.ARM_Compiler.1.6.1.pack' was added to the list of missing packages.
-M650: Config command completed successfully.
+M650: Command completed successfully.
 
 $ cbuildgen make Simulation.cprj
-CMSIS Build (cbuildgen) 0.1.1 (Feb 14 2020, 15:03:45)
-Copyright (C) 2020 ARM Ltd and ARM Germany GmbH. All rights reserved.
+(cbuildgen): Build Process Manager 0.9.0 (C) 2020 ARM
+M651: Generated makefile for merging config files: 'Simulation_cfg.mak'
 M652: Generated makefile for project build:'Simulation.mak'
 </pre><h1><a class="anchor" id="cbuildgen_errors"></a>
 Error Messages</h1>
@@ -247,7 +251,7 @@ Error Messages</h1>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="CmdLineBuild.html">Command Line Build</a></li>
-    <li class="footer">Generated on Wed Feb 26 2020 09:42:01 for CMSIS-Build Version 0.1.0 by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Apr 9 2020 15:49:55 for CMSIS-Build Version 0.9.0 (beta) by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Core (Cortex-M)
-   &#160;<span id="projectnumber">Version 5.3.0</span>
+   &#160;<span id="projectnumber">Version 5.4.0</span>
    </div>
    <div id="projectbrief">CMSIS-Core support for Cortex-M processor-based devices</div>
   </td>
@@ -175,6 +175,7 @@ Functions</h2></td></tr>
 <tr class="separator:gad2013f4d4311d6db253594a12d192617"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Description</h2>
+<p>Core register Access functions related to TrustZone for Armv8-M. </p>
 <h2 class="groupheader">Function Documentation</h2>
 <a class="anchor" id="ga624509c924d2583f0d4dca6ab270f051"></a>
 <div class="memitem">
@@ -189,6 +190,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Get Base Priority (non-secure) </p>
 <p>Returns the current value of the non-secure Base Priority register when in secure state. </p>
 <dl class="section return"><dt>Returns</dt><dd>Base Priority register value </dd></dl>
 <dl class="section see"><dt>See Also</dt><dd><ul>
@@ -211,6 +214,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Get Control register (non-secure) </p>
 <p>Returns the content of the non-secure Control register when in secure mode. </p>
 <dl class="section return"><dt>Returns</dt><dd>non-secure Control register value </dd></dl>
 <dl class="section see"><dt>See Also</dt><dd><ul>
@@ -233,6 +238,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Get Fault Mask (non-secure) </p>
 <p>Returns the current value of the non-secure Fault Mask register when in secure state. </p>
 <dl class="section return"><dt>Returns</dt><dd>Fault Mask register value </dd></dl>
 <dl class="section see"><dt>See Also</dt><dd><ul>
@@ -255,6 +262,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Get Main Stack Pointer (non-secure) </p>
 <p>Returns the current value of the non-secure Main Stack Pointer (MSP) when in secure state. </p>
 <dl class="section return"><dt>Returns</dt><dd>MSP register value </dd></dl>
 <dl class="section see"><dt>See Also</dt><dd><ul>
@@ -277,6 +286,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Get Main Stack Pointer Limit (non-secure) Devices without Armv8-M Main Extensions (i.e. Cortex-M23) lack the non-secure Stack Pointer Limit register hence zero is returned always. </p>
 <p>Returns the current value of the non-secure Main Stack Pointer Limit(MSPLIM) when in secure state. </p>
 <dl class="section return"><dt>Returns</dt><dd>MSPLIM register value </dd></dl>
 
@@ -295,6 +306,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Get Priority Mask (non-secure) </p>
 <p>Returns the current state of the non-secure priority mask bit from the Priority Mask register when in secure state. </p>
 <dl class="section return"><dt>Returns</dt><dd>Priority Mask value </dd></dl>
 <dl class="section see"><dt>See Also</dt><dd><ul>
@@ -317,6 +330,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Get Process Stack Pointer (non-secure) </p>
 <p>Returns the current value of the non-secure Process Stack Pointer (PSP) when in secure state. </p>
 <dl class="section return"><dt>Returns</dt><dd>PSP register value </dd></dl>
 <dl class="section see"><dt>See Also</dt><dd><ul>
@@ -339,6 +354,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Get Process Stack Pointer Limit (non-secure) Devices without Armv8-M Main Extensions (i.e. Cortex-M23) lack the non-secure Stack Pointer Limit register hence zero is returned always. </p>
 <p>Returns the current value of the non-secure Process Stack Pointer Limit (PSPLIM) when in secure state. </p>
 <dl class="section return"><dt>Returns</dt><dd>PSPLIM register value </dd></dl>
 
@@ -357,6 +374,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Get Stack Pointer (non-secure) </p>
 <p>Returns the current value of the non-secure Stack Pointer (SP) when in secure state. </p>
 <dl class="section return"><dt>Returns</dt><dd>SP register value </dd></dl>
 
@@ -375,6 +394,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Set Base Priority (non-secure) </p>
 <p>Assigns the given value to the non-secure Base Priority register when in secure state. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -402,6 +423,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Set Control register (non-secure) </p>
 <p>Writes the given value to the non-secure Control register when in secure state. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -429,6 +452,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Set Fault Mask (non-secure) </p>
 <p>Assigns the given value to the non-secure Fault Mask register when in secure state. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -456,6 +481,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Set Main Stack Pointer (non-secure) </p>
 <p>Assigns the given value to the non-secure Main Stack Pointer (MSP) when in secure state. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -483,6 +510,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Set Main Stack Pointer Limit (non-secure) Devices without Armv8-M Main Extensions (i.e. Cortex-M23) lack the non-secure Stack Pointer Limit register hence zero is returned always. </p>
 <p>Assigns the given value to the non-secure Main Stack Pointer Limit (MSPLIM) when in secure state. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -506,6 +535,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Set Priority Mask (non-secure) </p>
 <p>Assigns the given value to the non-secure Priority Mask register when in secure state. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -533,6 +564,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Set Process Stack Pointer (non-secure) </p>
 <p>Assigns the given value to the non-secure Process Stack Pointer (PSP) when in secure state. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -560,6 +593,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Set Process Stack Pointer (non-secure) Devices without Armv8-M Main Extensions (i.e. Cortex-M23) lack the non-secure Stack Pointer Limit register hence zero is returned always. </p>
 <p>Assigns the given value to the non-secure Process Stack Pointer Limit (PSPLIM) when in secure state. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -583,6 +618,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Set Stack Pointer (non-secure) </p>
 <p>Assigns the given value to the non-secure Stack Pointer (SP) when in secure state. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -598,7 +635,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Jul 10 2019 15:20:25 for CMSIS-Core (Cortex-M) Version 5.3.0 by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Apr 9 2020 15:49:08 for CMSIS-Core (Cortex-M) Version 5.4.0 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

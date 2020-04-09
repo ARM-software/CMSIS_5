@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['include',['include',['../Examples_2ARM_2arm__variance__example_2CMakeLists_8txt.html#a20de15dc42caeb4c8d037d578fba54bc',1,'CMakeLists.txt']]]
+  ['getinput',['getinput',['../arm__signal__converge__example__f32_8c.html#afd2975c4763ec935771e6f63bfe7758b',1,'arm_signal_converge_example_f32.c']]]
 ];

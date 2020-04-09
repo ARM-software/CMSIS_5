@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Core (Cortex-M)
-   &#160;<span id="projectnumber">Version 5.3.0</span>
+   &#160;<span id="projectnumber">Version 5.4.0</span>
    </div>
    <div id="projectbrief">CMSIS-Core support for Cortex-M processor-based devices</div>
   </td>
@@ -154,6 +154,7 @@ Functions</h2></td></tr>
 <tr class="separator:gade6a8784339946fdd50575d7e65a3268"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Description</h2>
+<p>Nested Vector Interrupt Controller (NVIC) functions related to TrustZone for Armv8-M. </p>
 <h2 class="groupheader">Function Documentation</h2>
 <a class="anchor" id="ga3b30f8b602b593a806617b671a50731a"></a>
 <div class="memitem">
@@ -168,6 +169,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Clear Pending Interrupt (non-secure) </p>
 <p>Clears the pending bit of an non-secure external interrupt when in secure state. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -195,6 +198,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Disable External Interrupt (non-secure) </p>
 <p>Disables a device-specific interrupt in the non-secure NVIC when in secure state. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -222,6 +227,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Enable External Interrupt (non-secure) </p>
 <p>Enables a device-specific interrupt in the non-secure NVIC when in secure state. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -249,6 +256,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Get Active Interrupt (non-secure) </p>
 <p>Reads the active register in non-secure NVIC when in secure state and returns the active bit. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -279,6 +288,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Get Interrupt Enable status (non-secure) </p>
 <p>Returns a device specific interrupt enable status from the non-secure NVIC interrupt controller when in secure state. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -309,6 +320,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Get Pending Interrupt (non-secure) </p>
 <p>Reads the pending register in the non-secure NVIC when in secure state and returns the pending bit for the specified interrupt. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -339,6 +352,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Get Interrupt Priority (non-secure) </p>
 <p>Reads the priority of an non-secure interrupt when in secure state. The interrupt number can be positive to specify an external (device specific) interrupt, or negative to specify an internal (core) interrupt. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -367,6 +382,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Get Priority Grouping (non-secure) </p>
 <p>Reads the priority grouping field from the non-secure NVIC when in secure state. </p>
 <dl class="section return"><dt>Returns</dt><dd>Priority grouping field (SCB-&gt;AIRCR [10:8] PRIGROUP field). </dd></dl>
 <dl class="section note"><dt>Note</dt><dd>Only available for Armv8-M Mainline. </dd></dl>
@@ -390,6 +407,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Set Pending Interrupt (non-secure) </p>
 <p>Sets the pending bit of an non-secure external interrupt when in secure state. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -427,6 +446,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Set Interrupt Priority (non-secure) </p>
 <p>Sets the priority of an non-secure interrupt when in secure state. </p>
 <dl class="section note"><dt>Note</dt><dd>The priority cannot be set for every core interrupt. </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -456,6 +477,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Set Priority Grouping (non-secure) </p>
 <p>Sets the non-secure priority grouping field when in secure state using the required unlock sequence. The parameter PriorityGroup is assigned to the field SCB-&gt;AIRCR [10:8] PRIGROUP field. Only values from 0..7 are used. In case of a conflict between priority grouping and available priority bits (__NVIC_PRIO_BITS), the smallest possible priority group is set. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -476,7 +499,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Jul 10 2019 15:20:25 for CMSIS-Core (Cortex-M) Version 5.3.0 by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Apr 9 2020 15:49:08 for CMSIS-Core (Cortex-M) Version 5.4.0 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

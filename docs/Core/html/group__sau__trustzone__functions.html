@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Core (Cortex-M)
-   &#160;<span id="projectnumber">Version 5.3.0</span>
+   &#160;<span id="projectnumber">Version 5.4.0</span>
    </div>
    <div id="projectbrief">CMSIS-Core support for Cortex-M processor-based devices</div>
   </td>
@@ -130,6 +130,7 @@ Functions</h2></td></tr>
 <tr class="separator:ga42e201cea0a4b09f588a28b751f726fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Description</h2>
+<p>Secure Attribution Unit (SAU) functions related to TrustZone for Armv8-M. </p>
 <p>The Secure Attribution Unit (SAU) functions SAU</p>
 <dl class="section note"><dt>Note</dt><dd>A SAU is always present if the security extension is available. The functionality differs if the SAU contains SAU regions. If SAU regions are available is configured with the macro __SAUREGION_PRESENT (see <a class="el" href="device_h_pg.html#core_config_sect">Configuration of the Processor and Core Peripherals</a>). </dd></dl>
 <h2 class="groupheader">Function Documentation</h2>
@@ -146,6 +147,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Disable Security Attribution Unit (SAU) </p>
 <p>Disables the Security Attribution Unit (SAU). </p>
 
 </div>
@@ -163,6 +166,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Enable Security Attribution Unit (SAU) </p>
 <p>Enables the Security Attribution Unit (SAU). </p>
 
 </div>
@@ -180,7 +185,9 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>The function <a class="el" href="group__sau__trustzone__functions.html#ga6093bc5939ea8924fbcfdffb8f0553f1">TZ_SAU_Setup</a> uses the settings in the <a class="el" href="partition_h_pg.html">System Partition Header File partition_&lt;device&gt;.h</a> to initialize the Secure Attribute Unit (SAU) and define non-secure interrupts. It is called from the function <a class="el" href="group__system__init__gr.html#ga93f514700ccf00d08dbdcff7f1224eb2">SystemInit</a>. </p>
+
+<p>Setup Secure Attribute Unit (SAU) and non-secure interrupts. </p>
+<p>The function <a class="el" href="group__sau__trustzone__functions.html#ga6093bc5939ea8924fbcfdffb8f0553f1">TZ_SAU_Setup</a> uses the settings in the <a class="el" href="partition_h_pg.html">TrustZone setup: partition_&lt;device&gt;.h</a> to initialize the Secure Attribute Unit (SAU) and define non-secure interrupts. It is called from the function <a class="el" href="group__system__init__gr.html#ga93f514700ccf00d08dbdcff7f1224eb2">SystemInit</a>. </p>
 
 </div>
 </div>
@@ -189,7 +196,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Jul 10 2019 15:20:25 for CMSIS-Core (Cortex-M) Version 5.3.0 by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Apr 9 2020 15:49:08 for CMSIS-Core (Cortex-M) Version 5.4.0 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

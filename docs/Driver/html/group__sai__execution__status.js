@@ -10,7 +10,7 @@ var group__sai__execution__status =
     [ "ARM_SAI_ERROR_AUDIO_FREQ", "group__sai__execution__status.html#ga5021651816da0aa92561eed634ba7578", null ],
     [ "ARM_SAI_ERROR_MCLK_PIN", "group__sai__execution__status.html#ga0d910d4a638433e3b2326fc776da0f53", null ],
     [ "ARM_SAI_ERROR_MCLK_PRESCALER", "group__sai__execution__status.html#gabab9495d6c57e56604cb1a2ac7e75431", null ],
-    [ "ARM_SAI_ERROR_FRAME_LENGHT", "group__sai__execution__status.html#gaf0448bdd6d1ae33511d170b9ecc1e2d6", null ],
+    [ "ARM_SAI_ERROR_FRAME_LENGTH", "group__sai__execution__status.html#ga8e3c2e84cebe628eead1b6c3995a8918", null ],
     [ "ARM_SAI_ERROR_FRAME_SYNC_WIDTH", "group__sai__execution__status.html#ga993da1bc0f6745795b364d84dec24e99", null ],
     [ "ARM_SAI_ERROR_FRAME_SYNC_POLARITY", "group__sai__execution__status.html#ga0561b0cc9577d944e0d39b582612e061", null ],
     [ "ARM_SAI_ERROR_FRAME_SYNC_EARLY", "group__sai__execution__status.html#ga09fe9b65d2be54ee1441606523291011", null ],

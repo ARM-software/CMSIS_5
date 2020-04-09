@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-  Copyright (c) 2013-2016 ARM Limited. All rights reserved.
+  Copyright (c) 2013-2019 ARM Limited. All rights reserved.
 
   SPDX-License-Identifier: Apache-2.0
 
@@ -17,9 +17,12 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 
-  $Date:         04. September 2018
-  $Revision:     1.3.5
+  $Date:         05. September 2019
+  $Revision:     1.3.6
 
+  Version 1.3.6:
+  - add ARMV81MML as enumeration value for cpuNameType.
+  
   Version 1.3.5:
   - add CM35P as enumeration value for cpuNameType.
 
@@ -94,6 +97,7 @@
       <xs:enumeration value="CM7"/>
       <xs:enumeration value="ARMV8MML"/>
       <xs:enumeration value="ARMV8MBL"/>
+      <xs:enumeration value="ARMV81MML"/>
       <xs:enumeration value="CA5"/>
       <xs:enumeration value="CA7"/>
       <xs:enumeration value="CA8"/>
@@ -142,13 +146,7 @@
       <xs:enumeration value="int64_t *"/>
     </xs:restriction>
   </xs:simpleType>
-  <!-- nvicPrioBitsType specifies the integer value range for the number of bits used in NVIC to encode priority levels -->
-  <xs:simpleType name="nvicPrioBitsType">
-    <xs:restriction base="xs:integer">
-      <xs:minInclusive value="2"/>
-      <xs:maxInclusive value="8"/>
-    </xs:restriction>
-  </xs:simpleType>
+
   <!-- dimableIdentifierType specifies the subset and sequence of characters used for specifying identifiers that may contain %s from dim. -->
   <!-- this is particularly important as these are used in ANSI C Structures during the device header file generation -->
   <xs:simpleType name="dimableIdentifierType">

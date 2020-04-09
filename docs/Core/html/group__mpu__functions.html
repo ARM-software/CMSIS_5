@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Core (Cortex-M)
-   &#160;<span id="projectnumber">Version 5.3.0</span>
+   &#160;<span id="projectnumber">Version 5.4.0</span>
    </div>
    <div id="projectbrief">CMSIS-Core support for Cortex-M processor-based devices</div>
   </td>
@@ -166,6 +166,7 @@ Functions</h2></td></tr>
 <tr class="separator:gafa27b26d5847fa8e465584e376b6078a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Description</h2>
+<p>Functions that relate to the Memory Protection Unit. </p>
 <p>The following functions support the optional Memory Protection Unit (MPU) that is available on the Cortex-M0+, M3, M4 and M7 processor.</p>
 <p>The MPU is used to prevent from illegal memory accesses that are typically caused by errors in an application software.</p>
 <p><b>Example:</b> </p>
@@ -240,6 +241,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>MPU Region Attribute and Size Register Value. </p>
 <p>This macro is used to construct a valid <a class="el" href="structMPU__Type.html#a8f00c4a5e31b0a8d103ed3b0732c17a3">RASR</a> value. The ENABLE bit of the RASR value is implicitly set to 1.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -298,6 +301,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>MPU Region Attribute and Size Register Value. </p>
 <p>This macro is used to construct a valid <a class="el" href="structMPU__Type.html#a8f00c4a5e31b0a8d103ed3b0732c17a3">RASR</a> value. The ENABLE bit of the RASR value is implicitly set to 1.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -335,6 +340,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>MPU Region Base Address Register Value. </p>
 <p>This preprocessor function can be used to construct a valid <a class="el" href="structMPU__Type.html#a990c609b26d990b8ba832b110adfd353">RBAR</a> value. The VALID bit is implicitly set to 1.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -399,6 +406,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Enable the memory protection unit (MPU) and. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">MPU_CTRL</td><td>Additional control settings that configure MPU behaviour</td></tr>
@@ -607,7 +616,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Jul 10 2019 15:20:25 for CMSIS-Core (Cortex-M) Version 5.3.0 by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Apr 9 2020 15:49:08 for CMSIS-Core (Cortex-M) Version 5.4.0 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

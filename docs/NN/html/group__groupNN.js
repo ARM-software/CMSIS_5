@@ -1,8 +1,11 @@
 var group__groupNN =
 [
-    [ "Neural Network Activation Functions", "group__Acti.html", "group__Acti" ],
-    [ "Neural Network Convolution Functions", "group__NNConv.html", "group__NNConv" ],
+    [ "Activation Functions", "group__Acti.html", "group__Acti" ],
+    [ "Basic math functions", "group__BasicMath.html", "group__BasicMath" ],
+    [ "Concatenation Functions", "group__Concatenation.html", "group__Concatenation" ],
+    [ "Convolution Functions", "group__NNConv.html", "group__NNConv" ],
     [ "Fully-connected Layer Functions", "group__FC.html", "group__FC" ],
-    [ "Neural Network Pooling Functions", "group__Pooling.html", "group__Pooling" ],
+    [ "Pooling Functions", "group__Pooling.html", "group__Pooling" ],
+    [ "Reshape Functions", "group__Reshape.html", "group__Reshape" ],
     [ "Softmax Functions", "group__Softmax.html", "group__Softmax" ]
 ];

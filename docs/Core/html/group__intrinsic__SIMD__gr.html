@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Core (Cortex-M)
-   &#160;<span id="projectnumber">Version 5.3.0</span>
+   &#160;<span id="projectnumber">Version 5.4.0</span>
    </div>
    <div id="projectbrief">CMSIS-Core support for Cortex-M processor-based devices</div>
   </td>
@@ -248,6 +248,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ga38dce3dd13ba212e80ec3cff4abeb11a"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__intrinsic__SIMD__gr.html#ga38dce3dd13ba212e80ec3cff4abeb11a">__SXTB16</a> (uint32_t val)</td></tr>
 <tr class="memdesc:ga38dce3dd13ba212e80ec3cff4abeb11a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dual extract 8-bits and sign extend each to 16-bits.  <a href="#ga38dce3dd13ba212e80ec3cff4abeb11a">More...</a><br/></td></tr>
 <tr class="separator:ga38dce3dd13ba212e80ec3cff4abeb11a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaef7e08ba1dbaaae1efdb76c113155ed1"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__intrinsic__SIMD__gr.html#gaef7e08ba1dbaaae1efdb76c113155ed1">__SXTB16_RORn</a> (uint32_t val, uint32_r rotate)</td></tr>
+<tr class="memdesc:gaef7e08ba1dbaaae1efdb76c113155ed1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Rotate right, dual extract 8-bits and sign extend each to 16-bits.  <a href="#gaef7e08ba1dbaaae1efdb76c113155ed1">More...</a><br/></td></tr>
+<tr class="separator:gaef7e08ba1dbaaae1efdb76c113155ed1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gac540b4fc41d30778ba102d2a65db5589"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__intrinsic__SIMD__gr.html#gac540b4fc41d30778ba102d2a65db5589">__SXTAB16</a> (uint32_t val1, uint32_t val2)</td></tr>
 <tr class="memdesc:gac540b4fc41d30778ba102d2a65db5589"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dual extracted 8-bit to 16-bit signed addition.  <a href="#gac540b4fc41d30778ba102d2a65db5589">More...</a><br/></td></tr>
 <tr class="separator:gac540b4fc41d30778ba102d2a65db5589"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -307,6 +310,7 @@ Functions</h2></td></tr>
 <tr class="separator:gafd8fe4a6d87e947caa81a69ec36c1666"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Description</h2>
+<p>Access to dedicated SIMD instructions. </p>
 <p><b>Single Instruction Multiple Data (SIMD)</b> extensions are provided <b>only for Cortex-M4 and Cortex-M7 cores</b> to simplify development of application software. SIMD extensions increase the processing capability without materially increasing the power consumption. The SIMD extensions are completely transparent to the operating system (OS), allowing existing OS ports to be used.</p>
 <p><b>SIMD Features:</b></p>
 <ul>
@@ -364,6 +368,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Halfword packing instruction. Combines bits[15:0] of <em>val1</em> with bits[31:16] of <em>val2</em> levitated with the <em>val3</em>. </p>
 <p>Combine a halfword from one register with a halfword from another register. The second argument can be left-shifted before extraction of the halfword. The registers PC and SP are not allowed as arguments. This instruction does not change the flags.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -409,6 +415,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Halfword packing instruction. Combines bits[31:16] of <em>val1</em> with bits[15:0] of <em>val2</em> right-shifted with the <em>val3</em>. </p>
 <p>Combines a halfword from one register with a halfword from another register. The second argument can be right-shifted before extraction of the halfword. The registers PC and SP are not allowed as arguments. This instruction does not change the flags.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -448,6 +456,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Q setting saturating add. </p>
 <p>This function enables you to obtain the saturating add of two integers.<br/>
  The Q bit is set if the operation saturates.</p>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -486,6 +496,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Q setting dual 16-bit saturating addition. </p>
 <p>This function enables you to perform two 16-bit integer arithmetic additions in parallel, saturating the results to the 16-bit signed integer range -2<sup>15</sup> &lt;= x &lt;= 2<sup>15</sup> - 1.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -529,6 +541,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Q setting quad 8-bit saturating addition. </p>
 <p>This function enables you to perform four 8-bit integer additions, saturating the results to the 8-bit signed integer range -2<sup>7</sup> &lt;= x &lt;= 2<sup>7</sup> - 1. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -576,6 +590,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Q setting dual 16-bit add and subtract with exchange. </p>
 <p>This function enables you to exchange the halfwords of the one operand, then add the high halfwords and subtract the low halfwords, saturating the results to the 16-bit signed integer range -2<sup>15</sup> &lt;= x &lt;= 2<sup>15</sup> - 1.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -619,6 +635,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Q setting dual 16-bit subtract and add with exchange. </p>
 <p>This function enables you to exchange the halfwords of one operand, then subtract the high halfwords and add the low halfwords, saturating the results to the 16-bit signed integer range -2<sup>15</sup> &lt;= x &lt;= 2<sup>15</sup> - 1.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -662,6 +680,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Q setting saturating subtract. </p>
 <p>This function enables you to obtain the saturating subtraction of two integers.<br/>
  The Q bit is set if the operation saturates.</p>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -700,6 +720,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Q setting dual 16-bit saturating subtract. </p>
 <p>This function enables you to perform two 16-bit integer subtractions, saturating the results to the 16-bit signed integer range -2<sup>15</sup> &lt;= x &lt;= 2<sup>15</sup> - 1.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -743,6 +765,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Q setting quad 8-bit saturating subtract. </p>
 <p>This function enables you to perform four 8-bit integer subtractions, saturating the results to the 8-bit signed integer range -2<sup>7</sup> &lt;= x &lt;= 2<sup>7</sup> - 1.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -790,6 +814,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>GE setting dual 16-bit signed addition. </p>
 <p>This function enables you to perform two 16-bit signed integer additions.<br/>
  The GE bits in the APSR are set according to the results of the additions.</p>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -839,6 +865,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>GE setting quad 8-bit signed addition. </p>
 <p>This function performs four 8-bit signed integer additions. The GE bits of the APSR are set according to the results of the additions. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -893,6 +921,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>GE setting dual 16-bit addition and subtraction with exchange. </p>
 <p>This function inserts an SASX instruction into the instruction stream generated by the compiler. It enables you to exchange the halfwords of the second operand, add the high halfwords and subtract the low halfwords.<br/>
  The GE bits in the APRS are set according to the results.</p>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -942,6 +972,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Select bytes based on GE bits. </p>
 <p>This function inserts a SEL instruction into the instruction stream generated by the compiler. It enables you to select bytes from the input parameters, whereby the bytes that are selected depend upon the results of previous SIMD instruction function. The results of previous SIMD instruction function are represented by the Greater than or Equal flags in the Application Program Status Register (APSR). The __SEL function works equally well on both halfword and byte operand function results. This is because halfword operand operations set two (duplicate) GE bits per value.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -983,6 +1015,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Dual 16-bit signed addition with halved results. </p>
 <p>This function enables you to perform two signed 16-bit integer additions, halving the results.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -1025,6 +1059,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Quad 8-bit signed addition with halved results. </p>
 <p>This function enables you to perform four signed 8-bit integer additions, halving the results. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -1071,6 +1107,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Dual 16-bit signed addition and subtraction with halved results. </p>
 <p>This function enables you to exchange the two halfwords of one operand, perform one signed 16-bit integer addition and one signed 16-bit subtraction, and halve the results.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -1113,6 +1151,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Dual 16-bit signed subtraction and addition with halved results. </p>
 <p>This function enables you to exchange the two halfwords of one operand, perform one signed 16-bit integer subtraction and one signed 16-bit addition, and halve the results.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -1155,6 +1195,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Dual 16-bit signed subtraction with halved results. </p>
 <p>This function enables you to perform two signed 16-bit integer subtractions, halving the results.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -1197,6 +1239,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Quad 8-bit signed subtraction with halved results. </p>
 <p>This function enables you to perform four signed 8-bit integer subtractions, halving the results.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -1249,6 +1293,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Q setting dual 16-bit signed multiply with single 32-bit accumulator. </p>
 <p>This function enables you to perform two signed 16-bit multiplications, adding both results to a 32-bit accumulate operand.<br/>
  The Q bit is set if the addition overflows. Overflow cannot occur during the multiplications.</p>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -1296,6 +1342,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Q setting pre-exchanged dual 16-bit signed multiply with single 32-bit accumulator. </p>
 <p>This function enables you to perform two signed 16-bit multiplications with exchanged halfwords of the second operand, adding both results to a 32-bit accumulate operand.<br/>
  The Q bit is set if the addition overflows. Overflow cannot occur during the multiplications.</p>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -1343,6 +1391,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Dual 16-bit signed multiply with single 64-bit accumulator. </p>
 <p>This function enables you to perform two signed 16-bit multiplications, adding both results to a 64-bit accumulate operand. Overflow is only possible as a result of the 64-bit addition. This overflow is not detected if it occurs. Instead, the result wraps around modulo2<sup>64</sup>.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -1391,6 +1441,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Dual 16-bit signed multiply with exchange with single 64-bit accumulator. </p>
 <p>This function enables you to exchange the halfwords of the second operand, and perform two signed 16-bit multiplications, adding both results to a 64-bit accumulate operand. Overflow is only possible as a result of the 64-bit addition. This overflow is not detected if it occurs. Instead, the result wraps around modulo2<sup>64</sup>.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -1439,6 +1491,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Q setting dual 16-bit signed multiply subtract with 32-bit accumulate. </p>
 <p>This function enables you to perform two 16-bit signed multiplications, take the difference of the products, subtracting the high halfword product from the low halfword product, and add the difference to a 32-bit accumulate operand.<br/>
  The Q bit is set if the accumulation overflows. Overflow cannot occur during the multiplications or the subtraction.</p>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -1486,6 +1540,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Q setting dual 16-bit signed multiply with exchange subtract with 32-bit accumulate. </p>
 <p>This function enables you to exchange the halfwords in the second operand, then perform two 16-bit signed multiplications. The difference of the products is added to a 32-bit accumulate operand.<br/>
  The Q bit is set if the addition overflows. Overflow cannot occur during the multiplications or the subtraction.</p>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -1533,6 +1589,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Q setting dual 16-bit signed multiply subtract with 64-bit accumulate. </p>
 <p>This function It enables you to perform two 16-bit signed multiplications, take the difference of the products, subtracting the high halfword product from the low halfword product, and add the difference to a 64-bit accumulate operand. Overflow cannot occur during the multiplications or the subtraction. Overflow can occur as a result of the 64-bit addition, and this overflow is not detected. Instead, the result wraps round to modulo2<sup>64</sup>.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -1579,6 +1637,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Q setting dual 16-bit signed multiply with exchange subtract with 64-bit accumulate. </p>
 <p>This function enables you to exchange the halfwords of the second operand, perform two 16-bit multiplications, adding the difference of the products to a 64-bit accumulate operand. Overflow cannot occur during the multiplications or the subtraction. Overflow can occur as a result of the 64-bit addition, and this overflow is not detected. Instead, the result wraps round to modulo2<sup>64</sup>.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -1625,6 +1685,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>32-bit signed multiply with 32-bit truncated accumulator. </p>
 <p>This function enables you to perform a signed 32-bit multiplications, adding the most significant 32 bits of the 64-bit result to a 32-bit accumulate operand.<br/>
 </p>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -1665,6 +1727,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Q setting sum of dual 16-bit signed multiply. </p>
 <p>This function enables you to perform two 16-bit signed multiplications, adding the products together.<br/>
  The Q bit is set if the addition overflows.</p>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -1705,6 +1769,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Q setting sum of dual 16-bit signed multiply with exchange. </p>
 <p>This function enables you to perform two 16-bit signed multiplications with exchanged halfwords of the second operand, adding the products together.<br/>
  The Q bit is set if the addition overflows.</p>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -1745,6 +1811,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Dual 16-bit signed multiply returning difference. </p>
 <p>This function enables you to perform two 16-bit signed multiplications, taking the difference of the products by subtracting the high halfword product from the low halfword product.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -1784,6 +1852,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Dual 16-bit signed multiply with exchange returning difference. </p>
 <p>This function enables you to perform two 16-bit signed multiplications, subtracting one of the products from the other. The halfwords of the second operand are exchanged before performing the arithmetic. This produces top * bottom and bottom * top multiplication.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -1823,6 +1893,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Q setting dual 16-bit saturate. </p>
 <p>This function enables you to saturate two signed 16-bit values to a selected signed range.<br/>
  The Q bit is set if either operation saturates.</p>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -1865,6 +1937,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>GE setting dual 16-bit signed subtraction and addition with exchange. </p>
 <p>This function enables you to exchange the two halfwords of one operand and perform one 16-bit integer subtraction and one 16-bit addition.<br/>
  The GE bits in the APSR are set according to the results.</p>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -1914,6 +1988,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>GE setting dual 16-bit signed subtraction. </p>
 <p>This function enables you to perform two 16-bit signed integer subtractions.<br/>
  The GE bits in the APSR are set according to the results.</p>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -1964,6 +2040,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>GE setting quad 8-bit signed subtraction. </p>
 <p>This function enables you to perform four 8-bit signed integer subtractions.<br/>
  The GE bits in the APSR are set according to the results.</p>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -2019,6 +2097,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Dual extracted 8-bit to 16-bit signed addition. </p>
 <p>This function enables you to extract two 8-bit values from the second operand (at bit positions [7:0] and [23:16]), sign-extend them to 16-bits each, and add the results to the first operand.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -2047,6 +2127,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Dual extract 8-bits and sign extend each to 16-bits. </p>
 <p>This function enables you to extract two 8-bit values from an operand and sign-extend them to 16 bits each.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -2061,6 +2143,51 @@ Functions</h2></td></tr>
 </dd></dl>
 <dl class="section user"><dt>Operation:</dt><dd><div class="fragment"><div class="line">res[15:0]  = SignExtended(val[7:0]</div>
 <div class="line">res[31:16] = SignExtended(val[23:16]</div>
+</div><!-- fragment --> </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="gaef7e08ba1dbaaae1efdb76c113155ed1"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t __SXTB16_RORn </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>val</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_r&#160;</td>
+          <td class="paramname"><em>rotate</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Rotate right, dual extract 8-bits and sign extend each to 16-bits. </p>
+<p>This function enables you to rotate an operand by 8/16/24 bit, extract two 8-bit values and sign-extend them to 16 bits each.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">val</td><td>two 8-bit values in val[7:0] and val[23:16] to be sign-extended. </td></tr>
+    <tr><td class="paramname">rotate</td><td>number of bits to rotate val. Only 8,16 and 24 are accepted</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>the 8-bit values sign-extended to 16-bit values. <ul>
+<li>sign-extended value of val[7:0] in the low halfword of the return value. </li>
+<li>sign-extended value of val[23:16] in the high halfword of the return value.</li>
+</ul>
+</dd></dl>
+<dl class="section user"><dt>Operation:</dt><dd><div class="fragment"><div class="line">val        = Rotate(val, rotate)</div>
+<div class="line">res[15:0]  = SignExtended(val[7:0])</div>
+<div class="line">res[31:16] = SignExtended(val[23:16])</div>
 </div><!-- fragment --> </dd></dl>
 
 </div>
@@ -2088,6 +2215,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>GE setting dual 16-bit unsigned addition. </p>
 <p>This function enables you to perform two 16-bit unsigned integer additions.<br/>
  The GE bits in the APSR are set according to the results.</p>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -2137,6 +2266,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>GE setting quad 8-bit unsigned addition. </p>
 <p>This function enables you to perform four unsigned 8-bit integer additions. The GE bits of the APSR are set according to the results.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -2191,6 +2322,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>GE setting dual 16-bit unsigned addition and subtraction with exchange. </p>
 <p>This function enables you to exchange the two halfwords of the second operand, add the high halfwords and subtract the low halfwords.<br/>
  The GE bits in the APSR are set according to the results.</p>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -2240,6 +2373,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Dual 16-bit unsigned addition with halved results. </p>
 <p>This function enables you to perform two unsigned 16-bit integer additions, halving the results.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -2282,6 +2417,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Quad 8-bit unsigned addition with halved results. </p>
 <p>This function enables you to perform four unsigned 8-bit integer additions, halving the results.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -2328,6 +2465,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Dual 16-bit unsigned addition and subtraction with halved results and exchange. </p>
 <p>This function enables you to exchange the halfwords of the second operand, add the high halfwords and subtract the low halfwords, halving the results.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -2370,6 +2509,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Dual 16-bit unsigned subtraction and addition with halved results and exchange. </p>
 <p>This function enables you to exchange the halfwords of the second operand, subtract the high halfwords and add the low halfwords, halving the results.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -2412,6 +2553,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Dual 16-bit unsigned subtraction with halved results. </p>
 <p>This function enables you to perform two unsigned 16-bit integer subtractions, halving the results.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -2454,6 +2597,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Quad 8-bit unsigned subtraction with halved results. </p>
 <p>This function enables you to perform four unsigned 8-bit integer subtractions, halving the results.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -2500,6 +2645,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Dual 16-bit unsigned saturating addition. </p>
 <p>This function enables you to perform two unsigned 16-bit integer additions, saturating the results to the 16-bit unsigned integer range 0 &lt; x &lt; 2<sup>16</sup> - 1.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -2543,6 +2690,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Quad 8-bit unsigned saturating addition. </p>
 <p>This function enables you to perform four unsigned 8-bit integer additions, saturating the results to the 8-bit unsigned integer range 0 &lt; x &lt; 2<sup>8</sup> - 1.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -2590,6 +2739,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Dual 16-bit unsigned saturating addition and subtraction with exchange. </p>
 <p>This function enables you to exchange the halfwords of the second operand and perform one unsigned 16-bit integer addition and one unsigned 16-bit subtraction, saturating the results to the 16-bit unsigned integer range 0 &lt;= x &lt;= 2<sup>16</sup> - 1.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -2633,6 +2784,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Dual 16-bit unsigned saturating subtraction and addition with exchange. </p>
 <p>This function enables you to exchange the halfwords of the second operand and perform one unsigned 16-bit integer subtraction and one unsigned 16-bit addition, saturating the results to the 16-bit unsigned integer range 0 &lt;= x &lt;= 2<sup>16</sup> - 1.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -2676,6 +2829,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Dual 16-bit unsigned saturating subtraction. </p>
 <p>This function enables you to perform two unsigned 16-bit integer subtractions, saturating the results to the 16-bit unsigned integer range 0 &lt; x &lt; 2<sup>16</sup> - 1.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -2719,6 +2874,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Quad 8-bit unsigned saturating subtraction. </p>
 <p>This function enables you to perform four unsigned 8-bit integer subtractions, saturating the results to the 8-bit unsigned integer range 0 &lt; x &lt; 2<sup>8</sup> - 1.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -2766,6 +2923,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Unsigned sum of quad 8-bit unsigned absolute difference. </p>
 <p>This function enables you to perform four unsigned 8-bit subtractions, and add the absolute values of the differences together, returning the result as a single unsigned integer.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -2820,6 +2979,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Unsigned sum of quad 8-bit unsigned absolute difference with 32-bit accumulate. </p>
 <p>This function enables you to perform four unsigned 8-bit subtractions, and add the absolute values of the differences to a 32-bit accumulate operand.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -2869,6 +3030,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Q setting dual 16-bit unsigned saturate. </p>
 <p>This function enables you to saturate two signed 16-bit values to a selected unsigned range.<br/>
  The Q bit is set if either operation saturates.</p>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -2911,6 +3074,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>GE setting dual 16-bit unsigned subtract and add with exchange. </p>
 <p>This function enables you to exchange the halfwords of the second operand, subtract the high halfwords and add the low halfwords.<br/>
  The GE bits in the APSR are set according to the results.</p>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -2960,6 +3125,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>GE setting dual 16-bit unsigned subtract. </p>
 <p>This function enables you to perform two 16-bit unsigned integer subtractions.<br/>
  The GE bits in the APSR are set according to the results.</p>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -3009,6 +3176,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>GE setting quad 8-bit unsigned subtract. </p>
 <p>This function enables you to perform four 8-bit unsigned integer subtractions. The GE bits in the APSR are set according to the results.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -3063,6 +3232,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Extracted 16-bit to 32-bit unsigned addition. </p>
 <p>This function enables you to extract two 8-bit values from one operand, zero-extend them to 16 bits each, and add the results to two 16-bit values from another operand.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -3091,6 +3262,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Dual extract 8-bits and zero-extend to 16-bits. </p>
 <p>This function enables you to extract two 8-bit values from an operand and zero-extend them to 16 bits each.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -3114,7 +3287,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Jul 10 2019 15:20:25 for CMSIS-Core (Cortex-M) Version 5.3.0 by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Apr 9 2020 15:49:08 for CMSIS-Core (Cortex-M) Version 5.4.0 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

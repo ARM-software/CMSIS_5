@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Pack
-   &#160;<span id="projectnumber">Version 1.6.1</span>
+   &#160;<span id="projectnumber">Version 1.6.3</span>
    </div>
    <div id="projectbrief">Delivery Mechanism for Software Packs</div>
   </td>
@@ -117,8 +117,8 @@ $(document).ready(function(){initNavTree('pdsc_examples_pg.html','');});
 <div class="line">    &lt;description&gt;This is a basic example demonstrating the development flow and letting the LED on the board blink&lt;/description&gt;</div>
 <div class="line">    &lt;board vendor=<span class="stringliteral">&quot;STMicroelectronics&quot;</span> name=<span class="stringliteral">&quot;32F429IDISCOVERY&quot;</span>/&gt;</div>
 <div class="line">    &lt;project&gt;</div>
-<div class="line">      &lt;environment name=<span class="stringliteral">&quot;uv&quot;</span>  load=<span class="stringliteral">&quot;ARM/Blinky.uvproj&quot;</span>/&gt;</div>
-<div class="line">      &lt;environment name=<span class="stringliteral">&quot;iar&quot;</span> load=<span class="stringliteral">&quot;IAR/Blinky.ewarm&quot;</span> /&gt;</div>
+<div class="line">      &lt;environment name=<span class="stringliteral">&quot;uv&quot;</span>  folder=<span class="stringliteral">&quot;./ARM&quot;</span> load=<span class="stringliteral">&quot;ARM/Blinky.uvproj&quot;</span>/&gt;</div>
+<div class="line">      &lt;environment name=<span class="stringliteral">&quot;iar&quot;</span> folder=<span class="stringliteral">&quot;./IAR&quot;</span> load=<span class="stringliteral">&quot;IAR/Blinky.ewarm&quot;</span> /&gt;</div>
 <div class="line">    &lt;/project&gt;</div>
 <div class="line">    &lt;attributes&gt;</div>
 <div class="line">      &lt;component Cclass=<span class="stringliteral">&quot;CMSIS&quot;</span> Cgroup=<span class="stringliteral">&quot;Core&quot;</span>/&gt;</div>
@@ -238,8 +238,8 @@ $(document).ready(function(){initNavTree('pdsc_examples_pg.html','');});
 <p>The environment element describes the name of the environment and the project file to be loaded.</p>
 <p><b>Example:</b> </p>
 <div class="fragment"><div class="line">&lt;project&gt;</div>
-<div class="line">  &lt;environment name=<span class="stringliteral">&quot;uv&quot;</span> load=<span class="stringliteral">&quot;ARM/Blinky.uvproj&quot;</span>/&gt;</div>
-<div class="line">  &lt;environment name=<span class="stringliteral">&quot;iar&quot;</span> load=<span class="stringliteral">&quot;IAR/Blinky.ewarm&quot;</span> /&gt;</div>
+<div class="line">  &lt;environment name=<span class="stringliteral">&quot;uv&quot;</span> folder=<span class="stringliteral">&quot;./ARM&quot;</span> load=<span class="stringliteral">&quot;ARM/Blinky.uvproj&quot;</span>/&gt;</div>
+<div class="line">  &lt;environment name=<span class="stringliteral">&quot;iar&quot;</span> folder=<span class="stringliteral">&quot;./IAR&quot;</span> load=<span class="stringliteral">&quot;IAR/Blinky.ewarm&quot;</span> /&gt;</div>
 <div class="line">&lt;/project&gt;</div>
 </div><!-- fragment --><p>&#160;</p>
 <table  class="cmtable" summary="Element: Example Project">
@@ -253,6 +253,8 @@ $(document).ready(function(){initNavTree('pdsc_examples_pg.html','');});
 <td>name </td><td>Name of the required tool-chain (for example: <span class="XML-Token">uv</span>, <span class="XML-Token">iar</span>, etc.) </td><td>xs:string </td><td>required  </td></tr>
 <tr>
 <td>load </td><td>Specifies the project file with extension. A path relative to <em>folder</em> attribute of the element <a class="el" href="pdsc_examples_pg.html#element_example">/package/examples/example</a> can be appended. </td><td>xs:string </td><td>required  </td></tr>
+<tr>
+<td>folder </td><td>Specifies the subdirectory to be copied into the user's project folder relative to <em>folder</em> attribute of the element <a class="el" href="pdsc_examples_pg.html#element_example">/package/examples/example</a>. This attribute is used by example descriptions that support multiple tool-chains/IDEs, each stored in a separate folders. Note: for copying eclipse projects it is required that the .project file is located in the base directory and all project files are located in the base directory or in one of the subdirectories. In this case even common files are required to be duplicated.  </td><td>xs:string </td><td>optional  </td></tr>
 </table>
 <p>&#160;</p>
 <hr/>
@@ -324,7 +326,7 @@ $(document).ready(function(){initNavTree('pdsc_examples_pg.html','');});
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="packFormat.html">Pack Description (*.pdsc) Format</a></li>
-    <li class="footer">Generated on Fri Dec 13 2019 14:56:15 for CMSIS-Pack Version 1.6.1 by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Apr 9 2020 15:49:54 for CMSIS-Pack Version 1.6.3 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Driver
-   &#160;<span id="projectnumber">Version 2.7.1</span>
+   &#160;<span id="projectnumber">Version 2.8.0</span>
    </div>
    <div id="projectbrief">Peripheral Interface for Middleware and Application Code</div>
   </td>
@@ -133,8 +133,12 @@ Data Structures</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:a121ff96c31275cef4bb7e86007665e1c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Driver__NAND_8h.html#a121ff96c31275cef4bb7e86007665e1c">ARM_NAND_API_VERSION</a>&#160;&#160;&#160;<a class="el" href="Driver__Common_8h.html#a43c7ca1eb0786d818624246c09932a74">ARM_DRIVER_VERSION_MAJOR_MINOR</a>(2,3)  /* API version */</td></tr>
+<tr class="memitem:a121ff96c31275cef4bb7e86007665e1c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Driver__NAND_8h.html#a121ff96c31275cef4bb7e86007665e1c">ARM_NAND_API_VERSION</a>&#160;&#160;&#160;<a class="el" href="Driver__Common_8h.html#a43c7ca1eb0786d818624246c09932a74">ARM_DRIVER_VERSION_MAJOR_MINOR</a>(2,4)  /* API version */</td></tr>
 <tr class="separator:a121ff96c31275cef4bb7e86007665e1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a72c7c93880689c3ce6d799afe6a8dd87"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Driver__NAND_8h.html#a72c7c93880689c3ce6d799afe6a8dd87">_ARM_Driver_NAND_</a>(n)&#160;&#160;&#160;Driver_NAND##n</td></tr>
+<tr class="separator:a72c7c93880689c3ce6d799afe6a8dd87"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa0dd88065962a6e23fd82eb86fec27a7"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Driver__NAND_8h.html#aa0dd88065962a6e23fd82eb86fec27a7">ARM_Driver_NAND_</a>(n)&#160;&#160;&#160;<a class="el" href="Driver__NAND_8h.html#a72c7c93880689c3ce6d799afe6a8dd87">_ARM_Driver_NAND_</a>(n)</td></tr>
+<tr class="separator:aa0dd88065962a6e23fd82eb86fec27a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a848a27ec9ebf0a13a82a1d9760f39d90"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Driver__NAND_8h.html#a848a27ec9ebf0a13a82a1d9760f39d90">ARM_NAND_POWER_VCC_Pos</a>&#160;&#160;&#160;0</td></tr>
 <tr class="separator:a848a27ec9ebf0a13a82a1d9760f39d90"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad898ef5cd4ffe3b6b09d69e224aa0912"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Driver__NAND_8h.html#ad898ef5cd4ffe3b6b09d69e224aa0912">ARM_NAND_POWER_VCC_Msk</a>&#160;&#160;&#160;(0x07UL &lt;&lt; ARM_NAND_POWER_VCC_Pos)</td></tr>
@@ -164,22 +168,22 @@ Macros</h2></td></tr>
 <tr class="memitem:ae2d278901881ffc73d3e0b48717b22f0"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Driver__NAND_8h.html#ae2d278901881ffc73d3e0b48717b22f0">ARM_NAND_POWER_VPP_OFF</a>&#160;&#160;&#160;(1UL &lt;&lt; 6)</td></tr>
 <tr class="memdesc:ae2d278901881ffc73d3e0b48717b22f0"><td class="mdescLeft">&#160;</td><td class="mdescRight">VPP off.  <a href="#ae2d278901881ffc73d3e0b48717b22f0">More...</a><br/></td></tr>
 <tr class="separator:ae2d278901881ffc73d3e0b48717b22f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aeb0d50e30bbcd8ab59c3b78db634aad5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Driver__NAND_8h.html#aeb0d50e30bbcd8ab59c3b78db634aad5">ARM_NAND_POWER_VPP_ON</a>&#160;&#160;&#160;(1Ul &lt;&lt; 7)</td></tr>
+<tr class="memitem:aeb0d50e30bbcd8ab59c3b78db634aad5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Driver__NAND_8h.html#aeb0d50e30bbcd8ab59c3b78db634aad5">ARM_NAND_POWER_VPP_ON</a>&#160;&#160;&#160;(1UL &lt;&lt; 7)</td></tr>
 <tr class="memdesc:aeb0d50e30bbcd8ab59c3b78db634aad5"><td class="mdescLeft">&#160;</td><td class="mdescRight">VPP on.  <a href="#aeb0d50e30bbcd8ab59c3b78db634aad5">More...</a><br/></td></tr>
 <tr class="separator:aeb0d50e30bbcd8ab59c3b78db634aad5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9b063c3078e86b50d4aa892518b2e2d8"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__nand__control__codes.html#ga9b063c3078e86b50d4aa892518b2e2d8">ARM_NAND_BUS_MODE</a>&#160;&#160;&#160;(0x01)</td></tr>
+<tr class="memitem:ga9b063c3078e86b50d4aa892518b2e2d8"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__nand__control__codes.html#ga9b063c3078e86b50d4aa892518b2e2d8">ARM_NAND_BUS_MODE</a>&#160;&#160;&#160;(0x01UL)</td></tr>
 <tr class="memdesc:ga9b063c3078e86b50d4aa892518b2e2d8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set Bus Mode as specified with arg.  <a href="group__nand__control__codes.html#ga9b063c3078e86b50d4aa892518b2e2d8">More...</a><br/></td></tr>
 <tr class="separator:ga9b063c3078e86b50d4aa892518b2e2d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga2d3356f5b47871c465ae7136a2c533f4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__nand__control__codes.html#ga2d3356f5b47871c465ae7136a2c533f4">ARM_NAND_BUS_DATA_WIDTH</a>&#160;&#160;&#160;(0x02)</td></tr>
+<tr class="memitem:ga2d3356f5b47871c465ae7136a2c533f4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__nand__control__codes.html#ga2d3356f5b47871c465ae7136a2c533f4">ARM_NAND_BUS_DATA_WIDTH</a>&#160;&#160;&#160;(0x02UL)</td></tr>
 <tr class="memdesc:ga2d3356f5b47871c465ae7136a2c533f4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set Bus Data Width as specified with arg.  <a href="group__nand__control__codes.html#ga2d3356f5b47871c465ae7136a2c533f4">More...</a><br/></td></tr>
 <tr class="separator:ga2d3356f5b47871c465ae7136a2c533f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5d1d46198404fe115b013bdae7af2a2f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__nand__control__codes.html#ga5d1d46198404fe115b013bdae7af2a2f">ARM_NAND_DRIVER_STRENGTH</a>&#160;&#160;&#160;(0x03)</td></tr>
+<tr class="memitem:ga5d1d46198404fe115b013bdae7af2a2f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__nand__control__codes.html#ga5d1d46198404fe115b013bdae7af2a2f">ARM_NAND_DRIVER_STRENGTH</a>&#160;&#160;&#160;(0x03UL)</td></tr>
 <tr class="memdesc:ga5d1d46198404fe115b013bdae7af2a2f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set Driver Strength as specified with arg.  <a href="group__nand__control__codes.html#ga5d1d46198404fe115b013bdae7af2a2f">More...</a><br/></td></tr>
 <tr class="separator:ga5d1d46198404fe115b013bdae7af2a2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga1bffc9f341e704ee0e845d86a2989921"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__nand__control__codes.html#ga1bffc9f341e704ee0e845d86a2989921">ARM_NAND_DEVICE_READY_EVENT</a>&#160;&#160;&#160;(0x04)</td></tr>
+<tr class="memitem:ga1bffc9f341e704ee0e845d86a2989921"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__nand__control__codes.html#ga1bffc9f341e704ee0e845d86a2989921">ARM_NAND_DEVICE_READY_EVENT</a>&#160;&#160;&#160;(0x04UL)</td></tr>
 <tr class="memdesc:ga1bffc9f341e704ee0e845d86a2989921"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate <a class="el" href="group__NAND__events.html#gae0be7e1b41188def905de0a1568d442d">ARM_NAND_EVENT_DEVICE_READY</a>; arg: 0=disabled (default), 1=enabled.  <a href="group__nand__control__codes.html#ga1bffc9f341e704ee0e845d86a2989921">More...</a><br/></td></tr>
 <tr class="separator:ga1bffc9f341e704ee0e845d86a2989921"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaab6dea1b565aeb53e360876a4e50783c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__nand__control__codes.html#gaab6dea1b565aeb53e360876a4e50783c">ARM_NAND_DRIVER_READY_EVENT</a>&#160;&#160;&#160;(0x05)</td></tr>
+<tr class="memitem:gaab6dea1b565aeb53e360876a4e50783c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__nand__control__codes.html#gaab6dea1b565aeb53e360876a4e50783c">ARM_NAND_DRIVER_READY_EVENT</a>&#160;&#160;&#160;(0x05UL)</td></tr>
 <tr class="memdesc:gaab6dea1b565aeb53e360876a4e50783c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate <a class="el" href="group__NAND__events.html#ga7b390a906db42c5ea4db38e0e85bb9e9">ARM_NAND_EVENT_DRIVER_READY</a>; arg: 0=disabled (default), 1=enabled.  <a href="group__nand__control__codes.html#gaab6dea1b565aeb53e360876a4e50783c">More...</a><br/></td></tr>
 <tr class="separator:gaab6dea1b565aeb53e360876a4e50783c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a372fc9b9cc1315046ceaffd6fd99e12c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Driver__NAND_8h.html#a372fc9b9cc1315046ceaffd6fd99e12c">ARM_NAND_BUS_INTERFACE_Pos</a>&#160;&#160;&#160;4</td></tr>
@@ -264,22 +268,22 @@ Macros</h2></td></tr>
 <tr class="memitem:ga8a2d599082b9fe56cee1c6454bb3c6a1"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__nand__bus__mode__codes.html#ga8a2d599082b9fe56cee1c6454bb3c6a1">ARM_NAND_BUS_DDR2_CMPR</a>&#160;&#160;&#160;(1UL &lt;&lt; 18)</td></tr>
 <tr class="memdesc:ga8a2d599082b9fe56cee1c6454bb3c6a1"><td class="mdescLeft">&#160;</td><td class="mdescRight">DDR2 Enable complementary RE_n (RE_c) signal.  <a href="group__nand__bus__mode__codes.html#ga8a2d599082b9fe56cee1c6454bb3c6a1">More...</a><br/></td></tr>
 <tr class="separator:ga8a2d599082b9fe56cee1c6454bb3c6a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga578051cc193ae0b7125aec8007071d21"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__nand__data__bus__width__codes.html#ga578051cc193ae0b7125aec8007071d21">ARM_NAND_BUS_DATA_WIDTH_8</a>&#160;&#160;&#160;(0x00)</td></tr>
+<tr class="memitem:ga578051cc193ae0b7125aec8007071d21"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__nand__data__bus__width__codes.html#ga578051cc193ae0b7125aec8007071d21">ARM_NAND_BUS_DATA_WIDTH_8</a>&#160;&#160;&#160;(0x00UL)</td></tr>
 <tr class="memdesc:ga578051cc193ae0b7125aec8007071d21"><td class="mdescLeft">&#160;</td><td class="mdescRight">Bus Data Width: 8 bit (default)  <a href="group__nand__data__bus__width__codes.html#ga578051cc193ae0b7125aec8007071d21">More...</a><br/></td></tr>
 <tr class="separator:ga578051cc193ae0b7125aec8007071d21"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga49e0e3a946a4d9f26dbd5b32ccc3b2f3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__nand__data__bus__width__codes.html#ga49e0e3a946a4d9f26dbd5b32ccc3b2f3">ARM_NAND_BUS_DATA_WIDTH_16</a>&#160;&#160;&#160;(0x01)</td></tr>
+<tr class="memitem:ga49e0e3a946a4d9f26dbd5b32ccc3b2f3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__nand__data__bus__width__codes.html#ga49e0e3a946a4d9f26dbd5b32ccc3b2f3">ARM_NAND_BUS_DATA_WIDTH_16</a>&#160;&#160;&#160;(0x01UL)</td></tr>
 <tr class="memdesc:ga49e0e3a946a4d9f26dbd5b32ccc3b2f3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Bus Data Width: 16 bit.  <a href="group__nand__data__bus__width__codes.html#ga49e0e3a946a4d9f26dbd5b32ccc3b2f3">More...</a><br/></td></tr>
 <tr class="separator:ga49e0e3a946a4d9f26dbd5b32ccc3b2f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga942e20df12022f3bbd0e9a558ec1c7a0"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__nand__driver__strength__codes.html#ga942e20df12022f3bbd0e9a558ec1c7a0">ARM_NAND_DRIVER_STRENGTH_18</a>&#160;&#160;&#160;(0x00)</td></tr>
+<tr class="memitem:ga942e20df12022f3bbd0e9a558ec1c7a0"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__nand__driver__strength__codes.html#ga942e20df12022f3bbd0e9a558ec1c7a0">ARM_NAND_DRIVER_STRENGTH_18</a>&#160;&#160;&#160;(0x00UL)</td></tr>
 <tr class="memdesc:ga942e20df12022f3bbd0e9a558ec1c7a0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Driver Strength 2.0x = 18 Ohms.  <a href="group__nand__driver__strength__codes.html#ga942e20df12022f3bbd0e9a558ec1c7a0">More...</a><br/></td></tr>
 <tr class="separator:ga942e20df12022f3bbd0e9a558ec1c7a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga17188e039f5f87c581033327399a057d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__nand__driver__strength__codes.html#ga17188e039f5f87c581033327399a057d">ARM_NAND_DRIVER_STRENGTH_25</a>&#160;&#160;&#160;(0x01)</td></tr>
+<tr class="memitem:ga17188e039f5f87c581033327399a057d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__nand__driver__strength__codes.html#ga17188e039f5f87c581033327399a057d">ARM_NAND_DRIVER_STRENGTH_25</a>&#160;&#160;&#160;(0x01UL)</td></tr>
 <tr class="memdesc:ga17188e039f5f87c581033327399a057d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Driver Strength 1.4x = 25 Ohms.  <a href="group__nand__driver__strength__codes.html#ga17188e039f5f87c581033327399a057d">More...</a><br/></td></tr>
 <tr class="separator:ga17188e039f5f87c581033327399a057d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga33562a66a5bf328eea82b2f1893a7874"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__nand__driver__strength__codes.html#ga33562a66a5bf328eea82b2f1893a7874">ARM_NAND_DRIVER_STRENGTH_35</a>&#160;&#160;&#160;(0x02)</td></tr>
+<tr class="memitem:ga33562a66a5bf328eea82b2f1893a7874"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__nand__driver__strength__codes.html#ga33562a66a5bf328eea82b2f1893a7874">ARM_NAND_DRIVER_STRENGTH_35</a>&#160;&#160;&#160;(0x02UL)</td></tr>
 <tr class="memdesc:ga33562a66a5bf328eea82b2f1893a7874"><td class="mdescLeft">&#160;</td><td class="mdescRight">Driver Strength 1.0x = 35 Ohms (default)  <a href="group__nand__driver__strength__codes.html#ga33562a66a5bf328eea82b2f1893a7874">More...</a><br/></td></tr>
 <tr class="separator:ga33562a66a5bf328eea82b2f1893a7874"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa502e2c995447037d266f939faa43223"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__nand__driver__strength__codes.html#gaa502e2c995447037d266f939faa43223">ARM_NAND_DRIVER_STRENGTH_50</a>&#160;&#160;&#160;(0x03)</td></tr>
+<tr class="memitem:gaa502e2c995447037d266f939faa43223"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__nand__driver__strength__codes.html#gaa502e2c995447037d266f939faa43223">ARM_NAND_DRIVER_STRENGTH_50</a>&#160;&#160;&#160;(0x03UL)</td></tr>
 <tr class="memdesc:gaa502e2c995447037d266f939faa43223"><td class="mdescLeft">&#160;</td><td class="mdescRight">Driver Strength 0.7x = 50 Ohms.  <a href="group__nand__driver__strength__codes.html#gaa502e2c995447037d266f939faa43223">More...</a><br/></td></tr>
 <tr class="separator:gaa502e2c995447037d266f939faa43223"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7944be4f63c439d5d64053ad9476407b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Driver__NAND_8h.html#a7944be4f63c439d5d64053ad9476407b">ARM_NAND_ECC_INDEX_Pos</a>&#160;&#160;&#160;0</td></tr>
@@ -397,7 +401,39 @@ Typedefs</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define ARM_NAND_API_VERSION&#160;&#160;&#160;<a class="el" href="Driver__Common_8h.html#a43c7ca1eb0786d818624246c09932a74">ARM_DRIVER_VERSION_MAJOR_MINOR</a>(2,3)  /* API version */</td>
+          <td class="memname">#define ARM_NAND_API_VERSION&#160;&#160;&#160;<a class="el" href="Driver__Common_8h.html#a43c7ca1eb0786d818624246c09932a74">ARM_DRIVER_VERSION_MAJOR_MINOR</a>(2,4)  /* API version */</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a72c7c93880689c3ce6d799afe6a8dd87"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define _ARM_Driver_NAND_</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">n</td><td>)</td>
+          <td>&#160;&#160;&#160;Driver_NAND##n</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="aa0dd88065962a6e23fd82eb86fec27a7"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ARM_Driver_NAND_</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">n</td><td>)</td>
+          <td>&#160;&#160;&#160;<a class="el" href="Driver__NAND_8h.html#a72c7c93880689c3ce6d799afe6a8dd87">_ARM_Driver_NAND_</a>(n)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -555,7 +591,7 @@ Typedefs</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define ARM_NAND_POWER_VPP_ON&#160;&#160;&#160;(1Ul &lt;&lt; 7)</td>
+          <td class="memname">#define ARM_NAND_POWER_VPP_ON&#160;&#160;&#160;(1UL &lt;&lt; 7)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -882,7 +918,7 @@ Typedefs</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_7151b3cc910409bb744bd274374c738d.html">Driver</a></li><li class="navelem"><a class="el" href="dir_9c39448ea46a8e15f1aabc7dec307fcf.html">Include</a></li><li class="navelem"><a class="el" href="Driver__NAND_8h.html">Driver_NAND.h</a></li>
-    <li class="footer">Generated on Wed Jul 10 2019 15:20:30 for CMSIS-Driver Version 2.7.1 by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Apr 9 2020 15:49:14 for CMSIS-Driver Version 2.8.0 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

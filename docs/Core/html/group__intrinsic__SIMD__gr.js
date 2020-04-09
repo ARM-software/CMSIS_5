@@ -39,6 +39,7 @@ var group__intrinsic__SIMD__gr =
     [ "__SSUB8", "group__intrinsic__SIMD__gr.html#gaba63bb52e1e93fb527e26f3d474da12e", null ],
     [ "__SXTAB16", "group__intrinsic__SIMD__gr.html#gac540b4fc41d30778ba102d2a65db5589", null ],
     [ "__SXTB16", "group__intrinsic__SIMD__gr.html#ga38dce3dd13ba212e80ec3cff4abeb11a", null ],
+    [ "__SXTB16_RORn", "group__intrinsic__SIMD__gr.html#gaef7e08ba1dbaaae1efdb76c113155ed1", null ],
     [ "__UADD16", "group__intrinsic__SIMD__gr.html#gaa1160f0cf76d6aa292fbad54a1aa6b74", null ],
     [ "__UADD8", "group__intrinsic__SIMD__gr.html#gab3d7fd00d113b20fb3741a17394da762", null ],
     [ "__UASX", "group__intrinsic__SIMD__gr.html#ga980353d2c72ebb879282e49f592fddc0", null ],

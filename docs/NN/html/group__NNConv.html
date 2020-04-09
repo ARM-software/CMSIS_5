@@ -3,8 +3,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<title>Neural Network Convolution Functions</title>
-<title>CMSIS-NN: Neural Network Convolution Functions</title>
+<title>Convolution Functions</title>
+<title>CMSIS-NN: Convolution Functions</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="cmsis.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="jquery.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-NN
-   &#160;<span id="projectnumber">Version 1.2.0</span>
+   &#160;<span id="projectnumber">Version 1.3.0</span>
    </div>
    <div id="projectbrief">CMSIS NN Software Library</div>
   </td>
@@ -110,15 +110,27 @@ $(document).ready(function(){initNavTree('group__NNConv.html','');});
   <div class="summary">
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">Neural Network Convolution Functions<div class="ingroups"><a class="el" href="group__groupNN.html">Neural Network Functions</a></div></div>  </div>
+<div class="title">Convolution Functions<div class="ingroups"><a class="el" href="group__groupNN.html">Neural Network Functions</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
+<tr class="memitem:ga2d9c129189832572cf0bc97ff9e73e54"><td class="memItemLeft" align="right" valign="top">arm_status&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__NNConv.html#ga2d9c129189832572cf0bc97ff9e73e54">arm_convolve_1_x_n_s8</a> (const q7_t *input, const uint16_t input_x, const uint16_t input_ch, const uint16_t input_batches, const q7_t *kernel, const uint16_t output_ch, const uint16_t kernel_x, const uint16_t pad_x, const uint16_t stride_x, const int32_t *bias, q7_t *output, const int32_t *output_shift, const int32_t *output_mult, const int32_t out_offset, const int32_t input_offset, const int32_t out_activation_min, const int32_t out_activation_max, const uint16_t output_x, q15_t *buffer_a)</td></tr>
+<tr class="memdesc:ga2d9c129189832572cf0bc97ff9e73e54"><td class="mdescLeft">&#160;</td><td class="mdescRight">1xn convolution  <a href="#ga2d9c129189832572cf0bc97ff9e73e54">More...</a><br/></td></tr>
+<tr class="separator:ga2d9c129189832572cf0bc97ff9e73e54"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab34cb94c592df768774d8bcac03d7e5c"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__NNConv.html#gab34cb94c592df768774d8bcac03d7e5c">arm_convolve_1_x_n_s8_get_buffer_size</a> (const uint16_t input_ch, const uint16_t kernel_x, const uint16_t kernel_y)</td></tr>
+<tr class="memdesc:gab34cb94c592df768774d8bcac03d7e5c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the required additional buffer size for 1xn convolution.  <a href="#gab34cb94c592df768774d8bcac03d7e5c">More...</a><br/></td></tr>
+<tr class="separator:gab34cb94c592df768774d8bcac03d7e5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga110adcfdaab356c750c6270aa5e05f29"><td class="memItemLeft" align="right" valign="top">arm_status&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__NNConv.html#ga110adcfdaab356c750c6270aa5e05f29">arm_convolve_1x1_HWC_q7_fast_nonsquare</a> (const q7_t *Im_in, const uint16_t dim_im_in_x, const uint16_t dim_im_in_y, const uint16_t ch_im_in, const q7_t *wt, const uint16_t ch_im_out, const uint16_t dim_kernel_x, const uint16_t dim_kernel_y, const uint16_t padding_x, const uint16_t padding_y, const uint16_t stride_x, const uint16_t stride_y, const q7_t *bias, const uint16_t bias_shift, const uint16_t out_shift, q7_t *Im_out, const uint16_t dim_im_out_x, const uint16_t dim_im_out_y, q15_t *bufferA, q7_t *bufferB)</td></tr>
 <tr class="memdesc:ga110adcfdaab356c750c6270aa5e05f29"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fast Q7 version of 1x1 convolution (non-sqaure shape)  <a href="#ga110adcfdaab356c750c6270aa5e05f29">More...</a><br/></td></tr>
 <tr class="separator:ga110adcfdaab356c750c6270aa5e05f29"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadfcad0bae34328dc806dc88cde173faa"><td class="memItemLeft" align="right" valign="top">arm_status&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__NNConv.html#gadfcad0bae34328dc806dc88cde173faa">arm_convolve_1x1_s8_fast</a> (const q7_t *input, const uint16_t input_x, const uint16_t input_y, const uint16_t input_ch, const uint16_t input_batches, const q7_t *kernel, const uint16_t output_ch, const uint16_t pad_x, const uint16_t pad_y, const uint16_t stride_x, const uint16_t stride_y, const int32_t *bias, q7_t *output, const int32_t *output_shift, const int32_t *output_mult, const int32_t out_offset, const int32_t input_offset, const int32_t out_activation_min, const int32_t out_activation_max, const uint16_t output_x, const uint16_t output_y, q15_t *buffer_a)</td></tr>
+<tr class="memdesc:gadfcad0bae34328dc806dc88cde173faa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fast s8 version for 1x1 convolution (non-square shape)  <a href="#gadfcad0bae34328dc806dc88cde173faa">More...</a><br/></td></tr>
+<tr class="separator:gadfcad0bae34328dc806dc88cde173faa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga09ed5df0234c7eb334a7264dd9e4c833"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__NNConv.html#ga09ed5df0234c7eb334a7264dd9e4c833">arm_convolve_1x1_s8_fast_get_buffer_size</a> (const uint16_t input_ch)</td></tr>
+<tr class="memdesc:ga09ed5df0234c7eb334a7264dd9e4c833"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the required buffer size for the fast 1x1 convolution (non-square shape) s8 convolution function.  <a href="#ga09ed5df0234c7eb334a7264dd9e4c833">More...</a><br/></td></tr>
+<tr class="separator:ga09ed5df0234c7eb334a7264dd9e4c833"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga55701f213b198084b52eab53097f1f58"><td class="memItemLeft" align="right" valign="top">arm_status&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__NNConv.html#ga55701f213b198084b52eab53097f1f58">arm_convolve_HWC_q15_basic</a> (const q15_t *Im_in, const uint16_t dim_im_in, const uint16_t ch_im_in, const q15_t *wt, const uint16_t ch_im_out, const uint16_t dim_kernel, const uint16_t padding, const uint16_t stride, const q15_t *bias, const uint16_t bias_shift, const uint16_t out_shift, q15_t *Im_out, const uint16_t dim_im_out, q15_t *bufferA, q7_t *bufferB)</td></tr>
 <tr class="memdesc:ga55701f213b198084b52eab53097f1f58"><td class="mdescLeft">&#160;</td><td class="mdescRight">Basic Q15 convolution function.  <a href="#ga55701f213b198084b52eab53097f1f58">More...</a><br/></td></tr>
 <tr class="separator:ga55701f213b198084b52eab53097f1f58"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -143,6 +155,28 @@ Functions</h2></td></tr>
 <tr class="memitem:ga98f2ead67d7cbdf558b0cd8a3b8fc148"><td class="memItemLeft" align="right" valign="top">arm_status&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__NNConv.html#ga98f2ead67d7cbdf558b0cd8a3b8fc148">arm_convolve_HWC_q7_RGB</a> (const q7_t *Im_in, const uint16_t dim_im_in, const uint16_t ch_im_in, const q7_t *wt, const uint16_t ch_im_out, const uint16_t dim_kernel, const uint16_t padding, const uint16_t stride, const q7_t *bias, const uint16_t bias_shift, const uint16_t out_shift, q7_t *Im_out, const uint16_t dim_im_out, q15_t *bufferA, q7_t *bufferB)</td></tr>
 <tr class="memdesc:ga98f2ead67d7cbdf558b0cd8a3b8fc148"><td class="mdescLeft">&#160;</td><td class="mdescRight">Q7 convolution function for RGB image.  <a href="#ga98f2ead67d7cbdf558b0cd8a3b8fc148">More...</a><br/></td></tr>
 <tr class="separator:ga98f2ead67d7cbdf558b0cd8a3b8fc148"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6a0b2161ece62078228ead2d85bbcf28"><td class="memItemLeft" align="right" valign="top">arm_status&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__NNConv.html#ga6a0b2161ece62078228ead2d85bbcf28">arm_convolve_s8</a> (const q7_t *input, const uint16_t input_x, const uint16_t input_y, const uint16_t input_ch, const uint16_t input_batches, const q7_t *kernel, const uint16_t output_ch, const uint16_t kernel_x, const uint16_t kernel_y, const uint16_t pad_x, const uint16_t pad_y, const uint16_t stride_x, const uint16_t stride_y, const int32_t *bias, q7_t *output, const int32_t *output_shift, const int32_t *output_mult, const int32_t out_offset, const int32_t input_offset, const int32_t out_activation_min, const int32_t out_activation_max, const uint16_t output_x, const uint16_t output_y, q15_t *buffer_a)</td></tr>
+<tr class="memdesc:ga6a0b2161ece62078228ead2d85bbcf28"><td class="mdescLeft">&#160;</td><td class="mdescRight">Basic s8 convolution function.  <a href="#ga6a0b2161ece62078228ead2d85bbcf28">More...</a><br/></td></tr>
+<tr class="separator:ga6a0b2161ece62078228ead2d85bbcf28"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaaf83450fd2d89432d9759df99b05737b"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__NNConv.html#gaaf83450fd2d89432d9759df99b05737b">arm_convolve_s8_get_buffer_size</a> (const uint16_t input_ch, const uint16_t kernel_x, const uint16_t kernel_y)</td></tr>
+<tr class="memdesc:gaaf83450fd2d89432d9759df99b05737b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the required buffer size for s8 convolution function.  <a href="#gaaf83450fd2d89432d9759df99b05737b">More...</a><br/></td></tr>
+<tr class="separator:gaaf83450fd2d89432d9759df99b05737b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae86b03224e6edf28f54247594b6c8bf9"><td class="memItemLeft" align="right" valign="top">arm_status&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__NNConv.html#gae86b03224e6edf28f54247594b6c8bf9">arm_depthwise_conv_3x3_s8</a> (const int8_t *input, const int32_t input_x, const int32_t input_y, const int32_t input_ch, const int8_t *kernel, const int32_t output_ch, const int32_t pad_x, const int32_t pad_y, const int32_t stride_x, const int32_t stride_y, const int32_t *bias, int8_t *output, const int32_t *output_shift, const int32_t *output_mult, const int32_t output_x, const int32_t output_y, const int32_t output_offset, const int32_t input_offset, const int32_t output_activation_min, const int32_t output_activation_max, const int32_t dilation_x, const int32_t dilation_y, int16_t *buffer_a)</td></tr>
+<tr class="memdesc:gae86b03224e6edf28f54247594b6c8bf9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Optimized s8 depthwise convolution function for 3x3 kernel size with constraint that in_channel equals out_channel.  <a href="#gae86b03224e6edf28f54247594b6c8bf9">More...</a><br/></td></tr>
+<tr class="separator:gae86b03224e6edf28f54247594b6c8bf9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga06d7783f6788faad5165fd0ae583bc59"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__NNConv.html#ga06d7783f6788faad5165fd0ae583bc59">depthwise_conv_s8_mult_4</a> (const int8_t *input, const int32_t input_x, const int32_t input_y, const int32_t input_ch, const int8_t *kernel, const int32_t output_ch, const int32_t ch_mult, const int32_t kernel_x, const int32_t kernel_y, const int32_t pad_x, const int32_t pad_y, const int32_t stride_x, const int32_t stride_y, const int32_t *bias, int8_t *output, const int32_t *output_shift, const int32_t *output_mult, const int32_t output_x, const int32_t output_y, const int32_t output_offset, const int32_t input_offset, const int32_t output_activation_min, const int32_t output_activation_max)</td></tr>
+<tr class="separator:ga06d7783f6788faad5165fd0ae583bc59"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga00ec3089e06c8953b4e12582583261c9"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__NNConv.html#ga00ec3089e06c8953b4e12582583261c9">depthwise_conv_s8_generic</a> (const q7_t *input, const uint16_t input_x, const uint16_t input_y, const uint16_t input_ch, const q7_t *kernel, const uint16_t output_ch, const uint16_t ch_mult, const uint16_t kernel_x, const uint16_t kernel_y, const uint16_t pad_x, const uint16_t pad_y, const uint16_t stride_x, const uint16_t stride_y, const int32_t *bias, q7_t *output, const int32_t *output_shift, const int32_t *output_mult, const uint16_t output_x, const uint16_t output_y, const int32_t output_offset, const int32_t input_offset, const int32_t output_activation_min, const int32_t output_activation_max)</td></tr>
+<tr class="separator:ga00ec3089e06c8953b4e12582583261c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae7e0c94c970bfd59d9c5e2331ce84fe7"><td class="memItemLeft" align="right" valign="top">arm_status&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__NNConv.html#gae7e0c94c970bfd59d9c5e2331ce84fe7">arm_depthwise_conv_s8</a> (const q7_t *input, const uint16_t input_x, const uint16_t input_y, const uint16_t input_ch, const q7_t *kernel, const uint16_t output_ch, const uint16_t ch_mult, const uint16_t kernel_x, const uint16_t kernel_y, const uint16_t pad_x, const uint16_t pad_y, const uint16_t stride_x, const uint16_t stride_y, const int32_t *bias, q7_t *output, const int32_t *output_shift, const int32_t *output_mult, const uint16_t output_x, const uint16_t output_y, const int32_t output_offset, const int32_t input_offset, const int32_t output_activation_min, const int32_t output_activation_max, const uint16_t dilation_x, const uint16_t dilation_y, q15_t *buffer_a)</td></tr>
+<tr class="memdesc:gae7e0c94c970bfd59d9c5e2331ce84fe7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Basic s8 depthwise convolution function.  <a href="#gae7e0c94c970bfd59d9c5e2331ce84fe7">More...</a><br/></td></tr>
+<tr class="separator:gae7e0c94c970bfd59d9c5e2331ce84fe7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3acc8b0cd5bd5d975fdf5a615261f0b1"><td class="memItemLeft" align="right" valign="top">arm_status&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__NNConv.html#ga3acc8b0cd5bd5d975fdf5a615261f0b1">arm_depthwise_conv_s8_opt</a> (const q7_t *input, const uint16_t input_x, const uint16_t input_y, const uint16_t input_ch, const q7_t *kernel, const uint16_t output_ch, const uint16_t kernel_x, const uint16_t kernel_y, const uint16_t pad_x, const uint16_t pad_y, const uint16_t stride_x, const uint16_t stride_y, const int32_t *bias, q7_t *output, const int32_t *output_shift, const int32_t *output_mult, const uint16_t output_x, const uint16_t output_y, const int32_t output_offset, const int32_t input_offset, const int32_t output_activation_min, const int32_t output_activation_max, const uint16_t dilation_x, const uint16_t dilation_y, q15_t *buffer_a)</td></tr>
+<tr class="memdesc:ga3acc8b0cd5bd5d975fdf5a615261f0b1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Optimized s8 depthwise convolution function with constraint that in_channel equals out_channel.  <a href="#ga3acc8b0cd5bd5d975fdf5a615261f0b1">More...</a><br/></td></tr>
+<tr class="separator:ga3acc8b0cd5bd5d975fdf5a615261f0b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa53d31632c765b9b4bbd490d0ae3c0c1"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__NNConv.html#gaa53d31632c765b9b4bbd490d0ae3c0c1">arm_depthwise_conv_s8_opt_get_buffer_size</a> (const uint16_t input_ch, const uint16_t kernel_x, const uint16_t kernel_y)</td></tr>
+<tr class="memdesc:gaa53d31632c765b9b4bbd490d0ae3c0c1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the required buffer size for optimized s8 depthwise convolution function with constraint that in_channel equals out_channel.  <a href="#gaa53d31632c765b9b4bbd490d0ae3c0c1">More...</a><br/></td></tr>
+<tr class="separator:gaa53d31632c765b9b4bbd490d0ae3c0c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga02a296cb4f6361a70c3ecf1ef1238292"><td class="memItemLeft" align="right" valign="top">arm_status&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__NNConv.html#ga02a296cb4f6361a70c3ecf1ef1238292">arm_depthwise_conv_u8_basic_ver1</a> (const uint8_t *input, const uint16_t input_x, const uint16_t input_y, const uint16_t input_ch, const uint8_t *kernel, const uint16_t kernel_x, const uint16_t kernel_y, const int16_t ch_mult, const int16_t pad_x, const int16_t pad_y, const int16_t stride_x, const int16_t stride_y, const int16_t dilation_x, const int16_t dilation_y, const int32_t *bias, const int32_t input_offset, const int32_t filter_offset, const int32_t output_offset, uint8_t *output, const uint16_t output_x, const uint16_t output_y, const int32_t output_activation_min, const int32_t output_activation_max, const int32_t out_shift, const int32_t out_mult)</td></tr>
 <tr class="memdesc:ga02a296cb4f6361a70c3ecf1ef1238292"><td class="mdescLeft">&#160;</td><td class="mdescRight">uint8 depthwise convolution function with asymmetric quantization for even number of channel multiplier and input channels. Unless specified otherwise, arguments are mandatory. Both square and non-square inputs are accepted.  <a href="#ga02a296cb4f6361a70c3ecf1ef1238292">More...</a><br/></td></tr>
 <tr class="separator:ga02a296cb4f6361a70c3ecf1ef1238292"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -154,11 +188,217 @@ Functions</h2></td></tr>
 <tr class="separator:ga32ac508c5467813a84f74f96655dc697"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Description</h2>
-<p>Perform convolution layer</p>
+<p>Collection of convolution, depthwise convolution functions and their variants.</p>
 <p>The convolution is implemented in 2 steps: im2col and GEMM</p>
 <p>im2col is a process of converting each patch of image data into a column. After im2col, the convolution is computed as matrix-matrix multiplication.</p>
 <p>To reduce the memory footprint, the im2col is performed partially. Each iteration, only a few column (i.e., patches) are generated and computed with GEMM kernels similar to CMSIS-DSP arm_mat_mult functions. </p>
 <h2 class="groupheader">Function Documentation</h2>
+<a class="anchor" id="ga2d9c129189832572cf0bc97ff9e73e54"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">arm_status arm_convolve_1_x_n_s8 </td>
+          <td>(</td>
+          <td class="paramtype">const q7_t *&#160;</td>
+          <td class="paramname"><em>input</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint16_t&#160;</td>
+          <td class="paramname"><em>input_x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint16_t&#160;</td>
+          <td class="paramname"><em>input_ch</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint16_t&#160;</td>
+          <td class="paramname"><em>input_batches</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const q7_t *&#160;</td>
+          <td class="paramname"><em>kernel</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint16_t&#160;</td>
+          <td class="paramname"><em>output_ch</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint16_t&#160;</td>
+          <td class="paramname"><em>kernel_x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint16_t&#160;</td>
+          <td class="paramname"><em>pad_x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint16_t&#160;</td>
+          <td class="paramname"><em>stride_x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int32_t *&#160;</td>
+          <td class="paramname"><em>bias</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">q7_t *&#160;</td>
+          <td class="paramname"><em>output</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int32_t *&#160;</td>
+          <td class="paramname"><em>output_shift</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int32_t *&#160;</td>
+          <td class="paramname"><em>output_mult</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int32_t&#160;</td>
+          <td class="paramname"><em>out_offset</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int32_t&#160;</td>
+          <td class="paramname"><em>input_offset</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int32_t&#160;</td>
+          <td class="paramname"><em>out_activation_min</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int32_t&#160;</td>
+          <td class="paramname"><em>out_activation_max</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint16_t&#160;</td>
+          <td class="paramname"><em>output_x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">q15_t *&#160;</td>
+          <td class="paramname"><em>buffer_a</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">input</td><td>pointer to input tensor. Format: [N, H, W, in_ch] </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">input_x</td><td>input tensor dimension x </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">input_ch</td><td>number of input tensor channels </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">input_batches</td><td>argument is not used. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">kernel</td><td>pointer to kernel weights. Format: [out_ch, H, W, in_ch] </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">output_ch</td><td>number of filters, i.e., output tensor channels </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">kernel_x</td><td>kernel width along x </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">pad_x</td><td>padding along x </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">stride_x</td><td>stride along x </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">bias</td><td>pointer to per channel bias. Range : int32 </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">output</td><td>pointer to output tensor. Format: [H, W, out_ch] </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">output_shift</td><td>pointer to per output channel requantization shift parameter. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">output_mult</td><td>pointer to per output channel requantization multiplier parameter. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">out_offset</td><td>output tensor offset. Range: int8 </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">input_offset</td><td>input tensor offset. Range: -127 to 128 </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">out_activation_min</td><td>Minimum value to clamp the output to. Range: int8 </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">out_activation_max</td><td>Minimum value to clamp the output to. Range: int8 </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">output_x</td><td>output tensor width </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">buffer_a</td><td>pointer to buffer space used for input optimization and is necessary when ARM_MATH_DSP is defined but not ARM_MATH_MVEI. Required space: 2 * input_ch * sizeof(q15_t) bytes Use <a class="el" href="group__NNConv.html#gab34cb94c592df768774d8bcac03d7e5c" title="Get the required additional buffer size for 1xn convolution. ">arm_convolve_1_x_n_s8_get_buffer_size()</a> to get the size </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The function returns either <code>ARM_MATH_SIZE_MISMATCH</code> if argument constraints fail. or, <code>ARM_MATH_SUCCESS</code> on successful completion.</dd></dl>
+<ul>
+<li>Supported framework : TensorFlow Lite Micro</li>
+<li>The following constrains on the arguments apply<ol type="1">
+<li>input_batches equals 1</li>
+<li>ouput_x is a multiple of 4</li>
+<li>Explicit constraints(since it is for 1xN convolution) -## input_y equals 1 -## output_y equals 1 -## kernel_y equals 1 <dl class="todo"><dt><b><a class="el" href="todo.html#_todo000001">Todo:</a></b></dt><dd>Remove constraint on output_x to make the function generic.</dd></dl>
+</li>
+</ol>
+</li>
+</ul>
+
+<p>References <a class="el" href="group__NNConv.html#ga6a0b2161ece62078228ead2d85bbcf28">arm_convolve_s8()</a>, <a class="el" href="group__NNBasicMath.html#ga5224f2f155a59498c97f4d62ae726ea5">arm_nn_mat_mul_core_1x_s8()</a>, <a class="el" href="group__NNBasicMath.html#gae893fd2b0fadf44bcd2870ca2c2c3634">arm_nn_mat_mul_core_4x_s8()</a>, <a class="el" href="arm__convolve__1__x__n__s8_8c.html#a5fa9a687139f39c5033eb566a9e7b6e1">DIM_Y</a>, <a class="el" href="arm__nnsupportfunctions_8h.html#ad935f1ff1a50822e317bdb321ce991ad">MAX</a>, and <a class="el" href="arm__nnsupportfunctions_8h.html#adcd021ac91d43a62b2cdecf9a5b971a7">MIN</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="gab34cb94c592df768774d8bcac03d7e5c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int32_t arm_convolve_1_x_n_s8_get_buffer_size </td>
+          <td>(</td>
+          <td class="paramtype">const uint16_t&#160;</td>
+          <td class="paramname"><em>input_ch</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint16_t&#160;</td>
+          <td class="paramname"><em>kernel_x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint16_t&#160;</td>
+          <td class="paramname"><em>kernel_y</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">input_ch</td><td>number of input tensor channels </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">kernel_x</td><td>filter/kernel width </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">kernel_y</td><td>filter/kernel height </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The function returns required buffer size(bytes) </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="ga110adcfdaab356c750c6270aa5e05f29"></a>
 <div class="memitem">
 <div class="memproto">
@@ -320,7 +560,216 @@ Functions</h2></td></tr>
 <p>This function is the version with full list of optimization tricks, but with some contraints: ch_im_in is multiple of 4 ch_im_out is multiple of 2</p>
 <p>[1] MobileNets: Efficient Convolutional Neural Networks for Mobile Vision Applications <a href="https://arxiv.org/abs/1704.04861">https://arxiv.org/abs/1704.04861</a> </p>
 
-<p>References <a class="el" href="arm__nnfunctions_8h.html#aefe9c7ce9a65060a244b06dffe74c4b3">arm_nn_mat_mult_kernel_q7_q15_reordered()</a>, <a class="el" href="group__nndata__convert.html#gaba8fd446d5f54760b406ee63b25d1aee">arm_q7_to_q15_reordered_no_shift()</a>, and <a class="el" href="arm__nnsupportfunctions_8h.html#a4cbd428a2b4a4f6b2a6e4219520c7ce0">NN_ROUND</a>.</p>
+<p>References <a class="el" href="arm__nnfunctions_8h.html#aefe9c7ce9a65060a244b06dffe74c4b3">arm_nn_mat_mult_kernel_q7_q15_reordered()</a>, <a class="el" href="arm__nnsupportfunctions_8h.html#afdda94a339b76615d3161e9fc63f4d21">arm_nn_read_q15x2_ia()</a>, <a class="el" href="group__nndata__convert.html#gaba8fd446d5f54760b406ee63b25d1aee">arm_q7_to_q15_reordered_no_shift()</a>, and <a class="el" href="arm__nnsupportfunctions_8h.html#a4cbd428a2b4a4f6b2a6e4219520c7ce0">NN_ROUND</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="gadfcad0bae34328dc806dc88cde173faa"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">arm_status arm_convolve_1x1_s8_fast </td>
+          <td>(</td>
+          <td class="paramtype">const q7_t *&#160;</td>
+          <td class="paramname"><em>input</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint16_t&#160;</td>
+          <td class="paramname"><em>input_x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint16_t&#160;</td>
+          <td class="paramname"><em>input_y</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint16_t&#160;</td>
+          <td class="paramname"><em>input_ch</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint16_t&#160;</td>
+          <td class="paramname"><em>input_batches</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const q7_t *&#160;</td>
+          <td class="paramname"><em>kernel</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint16_t&#160;</td>
+          <td class="paramname"><em>output_ch</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint16_t&#160;</td>
+          <td class="paramname"><em>pad_x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint16_t&#160;</td>
+          <td class="paramname"><em>pad_y</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint16_t&#160;</td>
+          <td class="paramname"><em>stride_x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint16_t&#160;</td>
+          <td class="paramname"><em>stride_y</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int32_t *&#160;</td>
+          <td class="paramname"><em>bias</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">q7_t *&#160;</td>
+          <td class="paramname"><em>output</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int32_t *&#160;</td>
+          <td class="paramname"><em>output_shift</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int32_t *&#160;</td>
+          <td class="paramname"><em>output_mult</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int32_t&#160;</td>
+          <td class="paramname"><em>out_offset</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int32_t&#160;</td>
+          <td class="paramname"><em>input_offset</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int32_t&#160;</td>
+          <td class="paramname"><em>out_activation_min</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int32_t&#160;</td>
+          <td class="paramname"><em>out_activation_max</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint16_t&#160;</td>
+          <td class="paramname"><em>output_x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint16_t&#160;</td>
+          <td class="paramname"><em>output_y</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">q15_t *&#160;</td>
+          <td class="paramname"><em>buffer_a</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">input</td><td>pointer to input tensor. Format: [N, H, W, in_ch] </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">input_x</td><td>input tensor dimension x </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">input_y</td><td>input tensor dimension y </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">input_ch</td><td>number of input tensor channels </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">input_batches</td><td>number of input batches </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">kernel</td><td>pointer to kernel weights. Format: [out_ch, H, W, in_ch] </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">output_ch</td><td>number of filters, i.e., output tensor channels </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">pad_x</td><td>padding size x </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">pad_y</td><td>padding size y </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">stride_x</td><td>convolution stride x </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">stride_y</td><td>convolution stride y </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">bias</td><td>pointer to per channel bias. Range : int32 </td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">output</td><td>pointer to output tensor. Format: [H, W, out_ch] </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">output_shift</td><td>pointer to per output channel requantization shift parameter. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">output_mult</td><td>pointer to per output channel requantization multiplier parameter. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">out_offset</td><td>output tensor offset. Range: int8 </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">input_offset</td><td>input tensor offset. Range: -127 to 128 </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">out_activation_min</td><td>Minimum value to clamp the output to. Range: int8 </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">out_activation_max</td><td>Minimum value to clamp the output to. Range: int8 </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">output_x</td><td>output tensor width </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">output_y</td><td>output tensor height </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">buffer_a</td><td>pointer to buffer space used if required by the implementation Use <a class="el" href="group__NNConv.html#ga09ed5df0234c7eb334a7264dd9e4c833" title="Get the required buffer size for the fast 1x1 convolution (non-square shape) s8 convolution function...">arm_convolve_1x1_s8_fast_get_buffer_size()</a> to get the size </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The function returns either <code>ARM_MATH_SIZE_MISMATCH</code> if argument constraints fail. or, <code>ARM_MATH_SUCCESS</code> on successful completion.</dd></dl>
+<ul>
+<li>Supported framework : TensorFlow Lite Micro</li>
+<li>The following constrains on the arguments apply<ol type="1">
+<li>input_ch is a multiple of 4</li>
+<li>padding equals 0</li>
+<li>Stride equals 1</li>
+<li>kernel dimension is 1x1 (Not provided in the argument list) </li>
+</ol>
+</li>
+</ul>
+
+<p>References <a class="el" href="group__NNBasicMath.html#ga5224f2f155a59498c97f4d62ae726ea5">arm_nn_mat_mul_core_1x_s8()</a>, <a class="el" href="group__NNBasicMath.html#gae893fd2b0fadf44bcd2870ca2c2c3634">arm_nn_mat_mul_core_4x_s8()</a>, <a class="el" href="group__NNBasicMath.html#ga360cdaa16c399e3bfbeaaa7296c326e1">arm_nn_mat_mult_nt_t_s8()</a>, <a class="el" href="arm__nnsupportfunctions_8h.html#a6a13b7a567485da5fc7f0d311318886d">arm_nn_requantize()</a>, <a class="el" href="arm__nnsupportfunctions_8h.html#ad935f1ff1a50822e317bdb321ce991ad">MAX</a>, and <a class="el" href="arm__nnsupportfunctions_8h.html#adcd021ac91d43a62b2cdecf9a5b971a7">MIN</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ga09ed5df0234c7eb334a7264dd9e4c833"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int32_t arm_convolve_1x1_s8_fast_get_buffer_size </td>
+          <td>(</td>
+          <td class="paramtype">const uint16_t&#160;</td>
+          <td class="paramname"><em>input_ch</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">input_ch</td><td>number of input tensor channels </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The function returns required buffer size </dd></dl>
 
 </div>
 </div>
@@ -451,7 +900,7 @@ Functions</h2></td></tr>
 <p>bufferB size: 0</p>
 <p>This basic version is designed to work for any input tensor and weight dimension. </p>
 
-<p>References <a class="el" href="arm__nnsupportfunctions_8h.html#a4cbd428a2b4a4f6b2a6e4219520c7ce0">NN_ROUND</a>.</p>
+<p>References <a class="el" href="arm__nnsupportfunctions_8h.html#afdda94a339b76615d3161e9fc63f4d21">arm_nn_read_q15x2_ia()</a>, and <a class="el" href="arm__nnsupportfunctions_8h.html#a4cbd428a2b4a4f6b2a6e4219520c7ce0">NN_ROUND</a>.</p>
 
 </div>
 </div>
@@ -584,7 +1033,7 @@ Functions</h2></td></tr>
 <p>ch_im_in is multiple of 2</p>
 <p>ch_im_out is multipe of 2 </p>
 
-<p>References <a class="el" href="arm__nnsupportfunctions_8h.html#a4cbd428a2b4a4f6b2a6e4219520c7ce0">NN_ROUND</a>.</p>
+<p>References <a class="el" href="arm__nnsupportfunctions_8h.html#afdda94a339b76615d3161e9fc63f4d21">arm_nn_read_q15x2_ia()</a>, and <a class="el" href="arm__nnsupportfunctions_8h.html#a4cbd428a2b4a4f6b2a6e4219520c7ce0">NN_ROUND</a>.</p>
 
 </div>
 </div>
@@ -752,7 +1201,7 @@ Functions</h2></td></tr>
 <p>ch_im_in is multiple of 2</p>
 <p>ch_im_out is multipe of 2 </p>
 
-<p>References <a class="el" href="arm__nnsupportfunctions_8h.html#a4cbd428a2b4a4f6b2a6e4219520c7ce0">NN_ROUND</a>.</p>
+<p>References <a class="el" href="arm__nnsupportfunctions_8h.html#afdda94a339b76615d3161e9fc63f4d21">arm_nn_read_q15x2_ia()</a>, and <a class="el" href="arm__nnsupportfunctions_8h.html#a4cbd428a2b4a4f6b2a6e4219520c7ce0">NN_ROUND</a>.</p>
 
 </div>
 </div>
@@ -883,7 +1332,7 @@ Functions</h2></td></tr>
 <p>bufferB size: 0</p>
 <p>This basic version is designed to work for any input tensor and weight dimension. </p>
 
-<p>References <a class="el" href="arm__nnfunctions_8h.html#abc4fb258cfe8500ee68e812a293a80a3">arm_nn_mat_mult_kernel_q7_q15()</a>, <a class="el" href="group__nndata__convert.html#gae349de4dba8d253c89d45794ccf05680">arm_q7_to_q15_no_shift()</a>, and <a class="el" href="arm__nnsupportfunctions_8h.html#a4cbd428a2b4a4f6b2a6e4219520c7ce0">NN_ROUND</a>.</p>
+<p>References <a class="el" href="arm__nnfunctions_8h.html#abc4fb258cfe8500ee68e812a293a80a3">arm_nn_mat_mult_kernel_q7_q15()</a>, <a class="el" href="arm__nnsupportfunctions_8h.html#afdda94a339b76615d3161e9fc63f4d21">arm_nn_read_q15x2_ia()</a>, <a class="el" href="group__nndata__convert.html#gae349de4dba8d253c89d45794ccf05680">arm_q7_to_q15_no_shift()</a>, and <a class="el" href="arm__nnsupportfunctions_8h.html#a4cbd428a2b4a4f6b2a6e4219520c7ce0">NN_ROUND</a>.</p>
 
 </div>
 </div>
@@ -1018,6 +1467,7 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Basic Q7 convolution function (non-square shape)</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">Im_in</td><td>pointer to input tensor </td></tr>
@@ -1045,7 +1495,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The function returns <code>ARM_MATH_SUCCESS</code> </dd></dl>
 
-<p>References <a class="el" href="arm__nnfunctions_8h.html#abc4fb258cfe8500ee68e812a293a80a3">arm_nn_mat_mult_kernel_q7_q15()</a>, <a class="el" href="group__nndata__convert.html#gae349de4dba8d253c89d45794ccf05680">arm_q7_to_q15_no_shift()</a>, and <a class="el" href="arm__nnsupportfunctions_8h.html#a4cbd428a2b4a4f6b2a6e4219520c7ce0">NN_ROUND</a>.</p>
+<p>References <a class="el" href="arm__nnfunctions_8h.html#abc4fb258cfe8500ee68e812a293a80a3">arm_nn_mat_mult_kernel_q7_q15()</a>, <a class="el" href="arm__nnsupportfunctions_8h.html#afdda94a339b76615d3161e9fc63f4d21">arm_nn_read_q15x2_ia()</a>, <a class="el" href="group__nndata__convert.html#gae349de4dba8d253c89d45794ccf05680">arm_q7_to_q15_no_shift()</a>, and <a class="el" href="arm__nnsupportfunctions_8h.html#a4cbd428a2b4a4f6b2a6e4219520c7ce0">NN_ROUND</a>.</p>
 
 </div>
 </div>
@@ -1181,7 +1631,7 @@ Functions</h2></td></tr>
 <p>The computation kernel arm_nn_mat_mult_kernel_q7_q15_reordered does the GEMM computation with the reordered columns.</p>
 <p>To speed-up the determination of the padding condition, we split the computation into 3x3 parts, i.e., {top, mid, bottom} X {left, mid, right}. This reduces the total number of boundary condition checks and improves the data copying performance. </p>
 
-<p>References <a class="el" href="arm__nnfunctions_8h.html#aefe9c7ce9a65060a244b06dffe74c4b3">arm_nn_mat_mult_kernel_q7_q15_reordered()</a>, <a class="el" href="group__nndata__convert.html#gaba8fd446d5f54760b406ee63b25d1aee">arm_q7_to_q15_reordered_no_shift()</a>, and <a class="el" href="arm__nnsupportfunctions_8h.html#a4cbd428a2b4a4f6b2a6e4219520c7ce0">NN_ROUND</a>.</p>
+<p>References <a class="el" href="arm__nnfunctions_8h.html#aefe9c7ce9a65060a244b06dffe74c4b3">arm_nn_mat_mult_kernel_q7_q15_reordered()</a>, <a class="el" href="arm__nnsupportfunctions_8h.html#afdda94a339b76615d3161e9fc63f4d21">arm_nn_read_q15x2_ia()</a>, <a class="el" href="group__nndata__convert.html#gaba8fd446d5f54760b406ee63b25d1aee">arm_q7_to_q15_reordered_no_shift()</a>, and <a class="el" href="arm__nnsupportfunctions_8h.html#a4cbd428a2b4a4f6b2a6e4219520c7ce0">NN_ROUND</a>.</p>
 
 <p>Referenced by <a class="el" href="arm__nnexamples__cifar10_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4">main()</a>.</p>
 
@@ -1346,7 +1796,7 @@ Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>The function returns either <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.</dd></dl>
 <p>This function is the version with full list of optimization tricks, but with some contraints: ch_im_in is multiple of 4 ch_im_out is multiple of 2 </p>
 
-<p>References <a class="el" href="arm__nnfunctions_8h.html#aefe9c7ce9a65060a244b06dffe74c4b3">arm_nn_mat_mult_kernel_q7_q15_reordered()</a>, <a class="el" href="group__nndata__convert.html#gaba8fd446d5f54760b406ee63b25d1aee">arm_q7_to_q15_reordered_no_shift()</a>, and <a class="el" href="arm__nnsupportfunctions_8h.html#a4cbd428a2b4a4f6b2a6e4219520c7ce0">NN_ROUND</a>.</p>
+<p>References <a class="el" href="arm__nnfunctions_8h.html#aefe9c7ce9a65060a244b06dffe74c4b3">arm_nn_mat_mult_kernel_q7_q15_reordered()</a>, <a class="el" href="arm__nnsupportfunctions_8h.html#afdda94a339b76615d3161e9fc63f4d21">arm_nn_read_q15x2_ia()</a>, <a class="el" href="group__nndata__convert.html#gaba8fd446d5f54760b406ee63b25d1aee">arm_q7_to_q15_reordered_no_shift()</a>, and <a class="el" href="arm__nnsupportfunctions_8h.html#a4cbd428a2b4a4f6b2a6e4219520c7ce0">NN_ROUND</a>.</p>
 
 </div>
 </div>
@@ -1480,9 +1930,892 @@ Functions</h2></td></tr>
 <p>ch_im_in equals 3</p>
 <p>This kernel is written exclusively for convolution with ch_im_in equals 3. This applies on the first layer of CNNs which has input image with RGB format. </p>
 
-<p>References <a class="el" href="arm__nnfunctions_8h.html#abc4fb258cfe8500ee68e812a293a80a3">arm_nn_mat_mult_kernel_q7_q15()</a>, <a class="el" href="unionarm__nnword.html#a9b5e49e4e2c4b7203e07b305386bb2ba">arm_nnword::half_words</a>, <a class="el" href="arm__nnsupportfunctions_8h.html#a4cbd428a2b4a4f6b2a6e4219520c7ce0">NN_ROUND</a>, and <a class="el" href="unionarm__nnword.html#a35c7b2ae25e35e0ddcd9ec0a1a6f8d18">arm_nnword::word</a>.</p>
+<p>References <a class="el" href="arm__nnfunctions_8h.html#abc4fb258cfe8500ee68e812a293a80a3">arm_nn_mat_mult_kernel_q7_q15()</a>, <a class="el" href="arm__nnsupportfunctions_8h.html#afdda94a339b76615d3161e9fc63f4d21">arm_nn_read_q15x2_ia()</a>, <a class="el" href="arm__nnsupportfunctions_8h.html#a31fa46f17212fbcb65d2cdae06fc08f5">arm_nn_read_q7x4()</a>, <a class="el" href="unionarm__nnword.html#a9b5e49e4e2c4b7203e07b305386bb2ba">arm_nnword::half_words</a>, <a class="el" href="arm__nnsupportfunctions_8h.html#a4cbd428a2b4a4f6b2a6e4219520c7ce0">NN_ROUND</a>, and <a class="el" href="unionarm__nnword.html#a35c7b2ae25e35e0ddcd9ec0a1a6f8d18">arm_nnword::word</a>.</p>
 
 <p>Referenced by <a class="el" href="arm__nnexamples__cifar10_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4">main()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ga6a0b2161ece62078228ead2d85bbcf28"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">arm_status arm_convolve_s8 </td>
+          <td>(</td>
+          <td class="paramtype">const q7_t *&#160;</td>
+          <td class="paramname"><em>input</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint16_t&#160;</td>
+          <td class="paramname"><em>input_x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint16_t&#160;</td>
+          <td class="paramname"><em>input_y</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint16_t&#160;</td>
+          <td class="paramname"><em>input_ch</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint16_t&#160;</td>
+          <td class="paramname"><em>input_batches</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const q7_t *&#160;</td>
+          <td class="paramname"><em>kernel</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint16_t&#160;</td>
+          <td class="paramname"><em>output_ch</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint16_t&#160;</td>
+          <td class="paramname"><em>kernel_x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint16_t&#160;</td>
+          <td class="paramname"><em>kernel_y</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint16_t&#160;</td>
+          <td class="paramname"><em>pad_x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint16_t&#160;</td>
+          <td class="paramname"><em>pad_y</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint16_t&#160;</td>
+          <td class="paramname"><em>stride_x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint16_t&#160;</td>
+          <td class="paramname"><em>stride_y</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int32_t *&#160;</td>
+          <td class="paramname"><em>bias</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">q7_t *&#160;</td>
+          <td class="paramname"><em>output</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int32_t *&#160;</td>
+          <td class="paramname"><em>output_shift</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int32_t *&#160;</td>
+          <td class="paramname"><em>output_mult</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int32_t&#160;</td>
+          <td class="paramname"><em>out_offset</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int32_t&#160;</td>
+          <td class="paramname"><em>input_offset</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int32_t&#160;</td>
+          <td class="paramname"><em>output_activation_min</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int32_t&#160;</td>
+          <td class="paramname"><em>output_activation_max</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint16_t&#160;</td>
+          <td class="paramname"><em>output_x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint16_t&#160;</td>
+          <td class="paramname"><em>output_y</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">q15_t *&#160;</td>
+          <td class="paramname"><em>buffer_a</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">input</td><td>pointer to input tensor. Range: int8, format: [N,H,W,in_ch] </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">input_x</td><td>input tensor width </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">input_y</td><td>input tensor height </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">input_ch</td><td>number of input tensor channels </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">input_batches</td><td>number of input batches </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">kernel</td><td>pointer to kernel weights. Range: int8, format: [out_ch, H, W, in_ch] </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">output_ch</td><td>number of filters, i.e., output tensor channels </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">kernel_x</td><td>filter/kernel width </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">kernel_y</td><td>filter/kernel height </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">pad_x</td><td>padding along width </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">pad_y</td><td>padding along height </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">stride_x</td><td>convolution stride x </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">stride_y</td><td>convolution stride y </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">bias</td><td>pointer to per output channel bias. Range: int32 </td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">output</td><td>pointer to output tensor. format: [H, W, out_ch] </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">output_shift</td><td>pointer to per output channel requantization shift parameter. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">output_mult</td><td>pointer to per output channel requantization multiplier parameter. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">out_offset</td><td>output tensor offset. Range: int8 </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">input_offset</td><td>input tensor offset. Range: int8 </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">output_activation_min</td><td>Minimum value to clamp the output to. Range: int8 </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">output_activation_max</td><td>Minimum value to clamp the output to. Range: int8 </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">output_x</td><td>output tensor width </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">output_y</td><td>output tensor height </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">buffer_a</td><td>pointer to buffer space used for input optimization(partial im2col) and is necessary when ARM_MATH_DSP is defined. Required space: (2 * input_ch * kernel_x * kernel_y) * sizeof(q15_t) bytes Use <a class="el" href="group__NNConv.html#gaaf83450fd2d89432d9759df99b05737b" title="Get the required buffer size for s8 convolution function. ">arm_convolve_s8_get_buffer_size()</a> to get the size. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The function returns <code>ARM_MATH_SUCCESS</code></dd></dl>
+<ol type="1">
+<li>Supported framework: TensorFlow Lite micro</li>
+<li>q7 is used as data type eventhough it is s8 data. It is done so to be consistent with existing APIs.</li>
+<li>Additional memory is required for optimization. Refer to argument 'buffer_a' for details. </li>
+</ol>
+
+<p>References <a class="el" href="arm__nnsupportfunctions_8h.html#a085459f6280c8f586ddd64998dece532">arm_memcpy_q7()</a>, <a class="el" href="group__NNBasicMath.html#gae893fd2b0fadf44bcd2870ca2c2c3634">arm_nn_mat_mul_core_4x_s8()</a>, <a class="el" href="arm__nnfunctions_8h.html#a2da69a593037381cd149616f2fd57cce">arm_nn_mat_mult_kernel_s8_s16()</a>, <a class="el" href="arm__nnsupportfunctions_8h.html#aaf7a3da870f2c5e86cdef0d3975e3d69">arm_nn_mat_mult_s8()</a>, <a class="el" href="arm__nnsupportfunctions_8h.html#afdda94a339b76615d3161e9fc63f4d21">arm_nn_read_q15x2_ia()</a>, <a class="el" href="arm__nnsupportfunctions_8h.html#a6a13b7a567485da5fc7f0d311318886d">arm_nn_requantize()</a>, <a class="el" href="group__nndata__convert.html#gab2d48529ae05b350a015f8f1e6596a31">arm_q7_to_q15_with_offset()</a>, <a class="el" href="arm__nnsupportfunctions_8h.html#ad935f1ff1a50822e317bdb321ce991ad">MAX</a>, and <a class="el" href="arm__nnsupportfunctions_8h.html#adcd021ac91d43a62b2cdecf9a5b971a7">MIN</a>.</p>
+
+<p>Referenced by <a class="el" href="group__NNConv.html#ga2d9c129189832572cf0bc97ff9e73e54">arm_convolve_1_x_n_s8()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="gaaf83450fd2d89432d9759df99b05737b"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int32_t arm_convolve_s8_get_buffer_size </td>
+          <td>(</td>
+          <td class="paramtype">const uint16_t&#160;</td>
+          <td class="paramname"><em>input_ch</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint16_t&#160;</td>
+          <td class="paramname"><em>kernel_x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint16_t&#160;</td>
+          <td class="paramname"><em>kernel_y</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">input_ch</td><td>number of input tensor channels </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">kernel_x</td><td>filter/kernel width </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">kernel_y</td><td>filter/kernel height </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The function returns required buffer size </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="gae86b03224e6edf28f54247594b6c8bf9"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">arm_status arm_depthwise_conv_3x3_s8 </td>
+          <td>(</td>
+          <td class="paramtype">const int8_t *&#160;</td>
+          <td class="paramname"><em>input</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int32_t&#160;</td>
+          <td class="paramname"><em>input_x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int32_t&#160;</td>
+          <td class="paramname"><em>input_y</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int32_t&#160;</td>
+          <td class="paramname"><em>input_ch</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int8_t *&#160;</td>
+          <td class="paramname"><em>kernel</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int32_t&#160;</td>
+          <td class="paramname"><em>output_ch</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int32_t&#160;</td>
+          <td class="paramname"><em>pad_x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int32_t&#160;</td>
+          <td class="paramname"><em>pad_y</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int32_t&#160;</td>
+          <td class="paramname"><em>stride_x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int32_t&#160;</td>
+          <td class="paramname"><em>stride_y</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int32_t *&#160;</td>
+          <td class="paramname"><em>bias</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int8_t *&#160;</td>
+          <td class="paramname"><em>output</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int32_t *&#160;</td>
+          <td class="paramname"><em>output_shift</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int32_t *&#160;</td>
+          <td class="paramname"><em>output_mult</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int32_t&#160;</td>
+          <td class="paramname"><em>output_x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int32_t&#160;</td>
+          <td class="paramname"><em>output_y</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int32_t&#160;</td>
+          <td class="paramname"><em>output_offset</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int32_t&#160;</td>
+          <td class="paramname"><em>input_offset</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int32_t&#160;</td>
+          <td class="paramname"><em>output_activation_min</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int32_t&#160;</td>
+          <td class="paramname"><em>output_activation_max</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int32_t&#160;</td>
+          <td class="paramname"><em>dilation_x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int32_t&#160;</td>
+          <td class="paramname"><em>dilation_y</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int16_t *&#160;</td>
+          <td class="paramname"><em>buffer_a</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">input</td><td>pointer to input tensor. Range: int8, format: [H,W,in_ch] </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">input_x</td><td>input tensor width </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">input_y</td><td>input tensor height </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">input_ch</td><td>number of input tensor channels </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">kernel</td><td>pointer to kernel weights. Range: int8, Format: [in_ch, H, W, out_ch] </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">output_ch</td><td>Number of output channels. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">pad_x</td><td>padding along width </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">pad_y</td><td>padding along height </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">stride_x</td><td>convolution stride along width </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">stride_y</td><td>convolution stride along height </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">bias</td><td>pointer to per output channel bias. Range: int8 </td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">output</td><td>pointer to output tensor. Format: [H, W, out_ch] </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">output_shift</td><td>pointer to per output channel requantization shift parameter. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">output_mult</td><td>pointer to per output channel requantization multiplier parameter. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">output_x</td><td>output tensor width </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">output_y</td><td>output tensor height </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">output_offset</td><td>offset to elements of output tensor </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">input_offset</td><td>offset to elements of input tensor </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">output_activation_min</td><td>Minimum value to clamp the output to. Range: int8 </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">output_activation_max</td><td>Minimum value to clamp the output to. Range: int8 </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">dilation_x</td><td>dilation along x. Not used. Dilation factor of 1 is used. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">dilation_y</td><td>dilation along y. Not used. Dilation factor of 1 is used. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">buffer_a</td><td>Buffer for partial im2col optimization. Not used.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The function returns one of the following <code>ARM_MATH_SIZE_MISMATCH</code> - Unsupported dimension of tensors <code>ARM_MATH_ARGUMENT_ERROR</code> - Unsupported pad size along the x axis <code>ARM_MATH_SUCCESS</code> - Successful operation</dd></dl>
+<p>Supported framework: TensorFlow Lite </p>
+
+<p>References <a class="el" href="arm__nnsupportfunctions_8h.html#a31fa46f17212fbcb65d2cdae06fc08f5">arm_nn_read_q7x4()</a>, <a class="el" href="arm__nnsupportfunctions_8h.html#a6a13b7a567485da5fc7f0d311318886d">arm_nn_requantize()</a>, <a class="el" href="arm__nnsupportfunctions_8h.html#ad935f1ff1a50822e317bdb321ce991ad">MAX</a>, and <a class="el" href="arm__nnsupportfunctions_8h.html#adcd021ac91d43a62b2cdecf9a5b971a7">MIN</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="gae7e0c94c970bfd59d9c5e2331ce84fe7"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">arm_status arm_depthwise_conv_s8 </td>
+          <td>(</td>
+          <td class="paramtype">const q7_t *&#160;</td>
+          <td class="paramname"><em>input</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint16_t&#160;</td>
+          <td class="paramname"><em>input_x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint16_t&#160;</td>
+          <td class="paramname"><em>input_y</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint16_t&#160;</td>
+          <td class="paramname"><em>input_ch</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const q7_t *&#160;</td>
+          <td class="paramname"><em>kernel</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint16_t&#160;</td>
+          <td class="paramname"><em>output_ch</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint16_t&#160;</td>
+          <td class="paramname"><em>ch_mult</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint16_t&#160;</td>
+          <td class="paramname"><em>kernel_x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint16_t&#160;</td>
+          <td class="paramname"><em>kernel_y</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint16_t&#160;</td>
+          <td class="paramname"><em>pad_x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint16_t&#160;</td>
+          <td class="paramname"><em>pad_y</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint16_t&#160;</td>
+          <td class="paramname"><em>stride_x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint16_t&#160;</td>
+          <td class="paramname"><em>stride_y</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int32_t *&#160;</td>
+          <td class="paramname"><em>bias</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">q7_t *&#160;</td>
+          <td class="paramname"><em>output</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int32_t *&#160;</td>
+          <td class="paramname"><em>output_shift</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int32_t *&#160;</td>
+          <td class="paramname"><em>output_mult</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint16_t&#160;</td>
+          <td class="paramname"><em>output_x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint16_t&#160;</td>
+          <td class="paramname"><em>output_y</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int32_t&#160;</td>
+          <td class="paramname"><em>output_offset</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int32_t&#160;</td>
+          <td class="paramname"><em>input_offset</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int32_t&#160;</td>
+          <td class="paramname"><em>output_activation_min</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int32_t&#160;</td>
+          <td class="paramname"><em>output_activation_max</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint16_t&#160;</td>
+          <td class="paramname"><em>dilation_x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint16_t&#160;</td>
+          <td class="paramname"><em>dilation_y</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">q15_t *&#160;</td>
+          <td class="paramname"><em>buffer_a</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">input</td><td>pointer to input tensor. Range: int8, format: [H,W,in_ch] </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">input_x</td><td>input tensor width </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">input_y</td><td>input tensor height </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">input_ch</td><td>number of input tensor channels </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">kernel</td><td>pointer to kernel weights. Range: int8, format: [in_ch, H, W, out_ch] </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">output_ch</td><td>Number of output channels. output_ch = ch_mult * input_ch </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ch_mult</td><td>channel multiplier. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">kernel_x</td><td>filter/kernel width </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">kernel_y</td><td>filter/kernel height </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">pad_x</td><td>padding along width </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">pad_y</td><td>padding along height </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">stride_x</td><td>convolution stride along width </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">stride_y</td><td>convolution stride along height </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">bias</td><td>pointer to per output channel bias. Range: int32 </td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">output</td><td>pointer to output tensor. Format: [H, W, out_ch] </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">output_shift</td><td>pointer to per output channel requantization shift parameter. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">output_mult</td><td>pointer to per output channel requantization multiplier parameter. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">output_x</td><td>output tensor width </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">output_y</td><td>output tensor height </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">output_offset</td><td>offset to elements of output tensor. Range: int8 </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">input_offset</td><td>offset to elements of input tensor. Range: -127 to 128 </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">output_activation_min</td><td>Minimum value to clamp the output to. Range: int8 </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">output_activation_max</td><td>Minimum value to clamp the output to. Range: int8 </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">dilation_x</td><td>dilation along x. Not used. Dilation factor of 1 is used. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">dilation_y</td><td>dilation along y. Not used. Dilation factor of 1 is used. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">buffer_a</td><td>Not used.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The function returns <code>ARM_MATH_SUCCESS</code></dd></dl>
+<ol type="1">
+<li>Supported framework: TensorFlow Lite</li>
+<li>q7 is used as data type eventhough it is s8 data. It is done so to be consistent with existing APIs.</li>
+<li>Optimization using DSP extension is not available for the generic case where channel multiplier is &gt; 1. </li>
+</ol>
+
+<p>References <a class="el" href="group__NNConv.html#ga00ec3089e06c8953b4e12582583261c9">depthwise_conv_s8_generic()</a>, and <a class="el" href="group__NNConv.html#ga06d7783f6788faad5165fd0ae583bc59">depthwise_conv_s8_mult_4()</a>.</p>
+
+<p>Referenced by <a class="el" href="group__NNConv.html#ga3acc8b0cd5bd5d975fdf5a615261f0b1">arm_depthwise_conv_s8_opt()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ga3acc8b0cd5bd5d975fdf5a615261f0b1"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">arm_status arm_depthwise_conv_s8_opt </td>
+          <td>(</td>
+          <td class="paramtype">const q7_t *&#160;</td>
+          <td class="paramname"><em>input</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint16_t&#160;</td>
+          <td class="paramname"><em>input_x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint16_t&#160;</td>
+          <td class="paramname"><em>input_y</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint16_t&#160;</td>
+          <td class="paramname"><em>input_ch</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const q7_t *&#160;</td>
+          <td class="paramname"><em>kernel</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint16_t&#160;</td>
+          <td class="paramname"><em>output_ch</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint16_t&#160;</td>
+          <td class="paramname"><em>kernel_x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint16_t&#160;</td>
+          <td class="paramname"><em>kernel_y</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint16_t&#160;</td>
+          <td class="paramname"><em>pad_x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint16_t&#160;</td>
+          <td class="paramname"><em>pad_y</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint16_t&#160;</td>
+          <td class="paramname"><em>stride_x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint16_t&#160;</td>
+          <td class="paramname"><em>stride_y</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int32_t *&#160;</td>
+          <td class="paramname"><em>bias</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">q7_t *&#160;</td>
+          <td class="paramname"><em>output</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int32_t *&#160;</td>
+          <td class="paramname"><em>output_shift</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int32_t *&#160;</td>
+          <td class="paramname"><em>output_mult</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint16_t&#160;</td>
+          <td class="paramname"><em>output_x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint16_t&#160;</td>
+          <td class="paramname"><em>output_y</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int32_t&#160;</td>
+          <td class="paramname"><em>output_offset</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int32_t&#160;</td>
+          <td class="paramname"><em>input_offset</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int32_t&#160;</td>
+          <td class="paramname"><em>output_activation_min</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int32_t&#160;</td>
+          <td class="paramname"><em>output_activation_max</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint16_t&#160;</td>
+          <td class="paramname"><em>dilation_x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint16_t&#160;</td>
+          <td class="paramname"><em>dilation_y</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">q15_t *&#160;</td>
+          <td class="paramname"><em>buffer_a</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">input</td><td>pointer to input tensor. Range: int8, format: [H,W,in_ch] </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">input_x</td><td>input tensor width </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">input_y</td><td>input tensor height </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">input_ch</td><td>number of input tensor channels </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">kernel</td><td>pointer to kernel weights. Range: int8, Format: [in_ch, H, W, out_ch] </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">output_ch</td><td>Number of output channels. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">kernel_x</td><td>filter/kernel width </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">kernel_y</td><td>filter/kernel height </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">pad_x</td><td>padding along width </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">pad_y</td><td>padding along height </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">stride_x</td><td>convolution stride along width </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">stride_y</td><td>convolution stride along height </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">bias</td><td>pointer to per output channel bias. Range: int8 </td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">output</td><td>pointer to output tensor. Format: [H, W, out_ch] </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">output_shift</td><td>pointer to per output channel requantization shift parameter. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">output_mult</td><td>pointer to per output channel requantization multiplier parameter. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">output_x</td><td>output tensor width </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">output_y</td><td>output tensor height </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">output_offset</td><td>offset to elements of output tensor </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">input_offset</td><td>offset to elements of input tensor </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">output_activation_min</td><td>Minimum value to clamp the output to. Range: int8 </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">output_activation_max</td><td>Minimum value to clamp the output to. Range: int8 </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">dilation_x</td><td>dilation along x. Not used. Dilation factor of 1 is used. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">dilation_y</td><td>dilation along y. Not used. Dilation factor of 1 is used. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">buffer_a</td><td>Buffer for partial im2col optimization. This is mandatory when ARM_MATH_DSP is defined. Required space: (2 * input_ch * kernel_x * kernel_y) * sizeof(q15_t) bytes Use <a class="el" href="group__NNConv.html#gaa53d31632c765b9b4bbd490d0ae3c0c1" title="Get the required buffer size for optimized s8 depthwise convolution function with constraint that in_...">arm_depthwise_conv_s8_opt_get_buffer_size()</a> to get the size.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The function returns one of the following <code>ARM_MATH_SIZE_MISMATCH</code> - Unsupported dimension of tensors <code>ARM_MATH_SUCCESS</code> - Successful operation</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>If number of channels is not a multiple of 4, upto 3 elements outside the boundary will be read out for the following if MVE optimizations(Arm Helium Technology) are used.<ul>
+<li>Output shift</li>
+<li>Output multiplier</li>
+<li>Output bias</li>
+<li>kernel</li>
+</ul>
+</dd></dl>
+<ol type="1">
+<li>Supported framework: TensorFlow Lite</li>
+<li>q7 is used as data type eventhough it is s8 data. It is done so to be consistent with existing APIs.</li>
+<li>Reccomended when number of channels is 4 or greater. </li>
+</ol>
+
+<p>References <a class="el" href="group__NNConv.html#gae7e0c94c970bfd59d9c5e2331ce84fe7">arm_depthwise_conv_s8()</a>, <a class="el" href="arm__nnsupportfunctions_8h.html#a085459f6280c8f586ddd64998dece532">arm_memcpy_q7()</a>, <a class="el" href="arm__nnsupportfunctions_8h.html#a7018797f0abd9595cc0dc0aedbb5f17e">arm_memset_q7()</a>, <a class="el" href="group__NNBasicMath.html#gaf7e914e84c2fa6bcf9b0727b8c46c250">arm_nn_depthwise_conv_nt_t_padded_s8()</a>, <a class="el" href="group__NNBasicMath.html#ga7f74841dd08196377cc29ce98deb2c12">arm_nn_depthwise_conv_nt_t_s8()</a>, <a class="el" href="arm__nnsupportfunctions_8h.html#a9d505dfe68f4486c2327df8a857a89ad">arm_nn_read_q15x2()</a>, <a class="el" href="arm__nnsupportfunctions_8h.html#a31fa46f17212fbcb65d2cdae06fc08f5">arm_nn_read_q7x4()</a>, <a class="el" href="arm__nnsupportfunctions_8h.html#a6a13b7a567485da5fc7f0d311318886d">arm_nn_requantize()</a>, <a class="el" href="group__nndata__convert.html#gab2d48529ae05b350a015f8f1e6596a31">arm_q7_to_q15_with_offset()</a>, <a class="el" href="arm__nnexamples__cifar10_8cpp.html#a1f988afc6d7fe29ded1eafbf79a70386">col_buffer</a>, <a class="el" href="arm__nnsupportfunctions_8h.html#ad935f1ff1a50822e317bdb321ce991ad">MAX</a>, and <a class="el" href="arm__nnsupportfunctions_8h.html#adcd021ac91d43a62b2cdecf9a5b971a7">MIN</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="gaa53d31632c765b9b4bbd490d0ae3c0c1"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int32_t arm_depthwise_conv_s8_opt_get_buffer_size </td>
+          <td>(</td>
+          <td class="paramtype">const uint16_t&#160;</td>
+          <td class="paramname"><em>input_ch</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint16_t&#160;</td>
+          <td class="paramname"><em>kernel_x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint16_t&#160;</td>
+          <td class="paramname"><em>kernel_y</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">input_ch</td><td>number of input tensor channels </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">kernel_x</td><td>filter/kernel width </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">kernel_y</td><td>filter/kernel height </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The function returns required buffer size </dd></dl>
 
 </div>
 </div>
@@ -1814,7 +3147,7 @@ Functions</h2></td></tr>
 <p>ch_im_in equals ch_im_out</p>
 <p>Implementation: There are 3 nested loop here: Inner loop: calculate each output value with MAC instruction over an accumulator Mid loop: loop over different output channel Outer loop: loop over different output (x, y) </p>
 
-<p>References <a class="el" href="unionarm__nnword.html#ac7cff6480a8e29d95f29b73cb1267249">arm_nnword::bytes</a>, <a class="el" href="arm__nnsupportfunctions_8h.html#a4cbd428a2b4a4f6b2a6e4219520c7ce0">NN_ROUND</a>, and <a class="el" href="unionarm__nnword.html#a35c7b2ae25e35e0ddcd9ec0a1a6f8d18">arm_nnword::word</a>.</p>
+<p>References <a class="el" href="arm__nnsupportfunctions_8h.html#a31fa46f17212fbcb65d2cdae06fc08f5">arm_nn_read_q7x4()</a>, <a class="el" href="unionarm__nnword.html#ac7cff6480a8e29d95f29b73cb1267249">arm_nnword::bytes</a>, <a class="el" href="arm__nnsupportfunctions_8h.html#a4cbd428a2b4a4f6b2a6e4219520c7ce0">NN_ROUND</a>, and <a class="el" href="unionarm__nnword.html#a35c7b2ae25e35e0ddcd9ec0a1a6f8d18">arm_nnword::word</a>.</p>
 
 </div>
 </div>
@@ -1975,9 +3308,337 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The function returns either <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.</dd></dl>
-<p>This function is the version with full list of optimization tricks, but with some contraints: ch_im_in is multiple of 2 ch_im_out is multiple of 2 </p>
+<p>This function is the version with full list of optimization tricks, but with some contraints: ch_im_in is equal to ch_im_out </p>
 
-<p>References <a class="el" href="unionarm__nnword.html#ac7cff6480a8e29d95f29b73cb1267249">arm_nnword::bytes</a>, <a class="el" href="arm__nnsupportfunctions_8h.html#a4cbd428a2b4a4f6b2a6e4219520c7ce0">NN_ROUND</a>, and <a class="el" href="unionarm__nnword.html#a35c7b2ae25e35e0ddcd9ec0a1a6f8d18">arm_nnword::word</a>.</p>
+<p>References <a class="el" href="arm__nnsupportfunctions_8h.html#a31fa46f17212fbcb65d2cdae06fc08f5">arm_nn_read_q7x4()</a>, <a class="el" href="unionarm__nnword.html#ac7cff6480a8e29d95f29b73cb1267249">arm_nnword::bytes</a>, <a class="el" href="arm__nnsupportfunctions_8h.html#a4cbd428a2b4a4f6b2a6e4219520c7ce0">NN_ROUND</a>, and <a class="el" href="unionarm__nnword.html#a35c7b2ae25e35e0ddcd9ec0a1a6f8d18">arm_nnword::word</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ga00ec3089e06c8953b4e12582583261c9"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void depthwise_conv_s8_generic </td>
+          <td>(</td>
+          <td class="paramtype">const q7_t *&#160;</td>
+          <td class="paramname"><em>input</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint16_t&#160;</td>
+          <td class="paramname"><em>input_x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint16_t&#160;</td>
+          <td class="paramname"><em>input_y</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint16_t&#160;</td>
+          <td class="paramname"><em>input_ch</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const q7_t *&#160;</td>
+          <td class="paramname"><em>kernel</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint16_t&#160;</td>
+          <td class="paramname"><em>output_ch</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint16_t&#160;</td>
+          <td class="paramname"><em>ch_mult</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint16_t&#160;</td>
+          <td class="paramname"><em>kernel_x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint16_t&#160;</td>
+          <td class="paramname"><em>kernel_y</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint16_t&#160;</td>
+          <td class="paramname"><em>pad_x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint16_t&#160;</td>
+          <td class="paramname"><em>pad_y</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint16_t&#160;</td>
+          <td class="paramname"><em>stride_x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint16_t&#160;</td>
+          <td class="paramname"><em>stride_y</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int32_t *&#160;</td>
+          <td class="paramname"><em>bias</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">q7_t *&#160;</td>
+          <td class="paramname"><em>output</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int32_t *&#160;</td>
+          <td class="paramname"><em>output_shift</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int32_t *&#160;</td>
+          <td class="paramname"><em>output_mult</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint16_t&#160;</td>
+          <td class="paramname"><em>output_x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint16_t&#160;</td>
+          <td class="paramname"><em>output_y</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int32_t&#160;</td>
+          <td class="paramname"><em>output_offset</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int32_t&#160;</td>
+          <td class="paramname"><em>input_offset</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int32_t&#160;</td>
+          <td class="paramname"><em>output_activation_min</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int32_t&#160;</td>
+          <td class="paramname"><em>output_activation_max</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>References <a class="el" href="arm__nnsupportfunctions_8h.html#a6a13b7a567485da5fc7f0d311318886d">arm_nn_requantize()</a>, <a class="el" href="arm__nnsupportfunctions_8h.html#ad935f1ff1a50822e317bdb321ce991ad">MAX</a>, and <a class="el" href="arm__nnsupportfunctions_8h.html#adcd021ac91d43a62b2cdecf9a5b971a7">MIN</a>.</p>
+
+<p>Referenced by <a class="el" href="group__NNConv.html#gae7e0c94c970bfd59d9c5e2331ce84fe7">arm_depthwise_conv_s8()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ga06d7783f6788faad5165fd0ae583bc59"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void depthwise_conv_s8_mult_4 </td>
+          <td>(</td>
+          <td class="paramtype">const int8_t *&#160;</td>
+          <td class="paramname"><em>input</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int32_t&#160;</td>
+          <td class="paramname"><em>input_x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int32_t&#160;</td>
+          <td class="paramname"><em>input_y</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int32_t&#160;</td>
+          <td class="paramname"><em>input_ch</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int8_t *&#160;</td>
+          <td class="paramname"><em>kernel</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int32_t&#160;</td>
+          <td class="paramname"><em>output_ch</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int32_t&#160;</td>
+          <td class="paramname"><em>ch_mult</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int32_t&#160;</td>
+          <td class="paramname"><em>kernel_x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int32_t&#160;</td>
+          <td class="paramname"><em>kernel_y</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int32_t&#160;</td>
+          <td class="paramname"><em>pad_x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int32_t&#160;</td>
+          <td class="paramname"><em>pad_y</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int32_t&#160;</td>
+          <td class="paramname"><em>stride_x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int32_t&#160;</td>
+          <td class="paramname"><em>stride_y</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int32_t *&#160;</td>
+          <td class="paramname"><em>bias</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int8_t *&#160;</td>
+          <td class="paramname"><em>output</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int32_t *&#160;</td>
+          <td class="paramname"><em>output_shift</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int32_t *&#160;</td>
+          <td class="paramname"><em>output_mult</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int32_t&#160;</td>
+          <td class="paramname"><em>output_x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int32_t&#160;</td>
+          <td class="paramname"><em>output_y</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int32_t&#160;</td>
+          <td class="paramname"><em>output_offset</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int32_t&#160;</td>
+          <td class="paramname"><em>input_offset</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int32_t&#160;</td>
+          <td class="paramname"><em>output_activation_min</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int32_t&#160;</td>
+          <td class="paramname"><em>output_activation_max</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>References <a class="el" href="arm__nnsupportfunctions_8h.html#a6a13b7a567485da5fc7f0d311318886d">arm_nn_requantize()</a>, <a class="el" href="arm__nnsupportfunctions_8h.html#ad935f1ff1a50822e317bdb321ce991ad">MAX</a>, and <a class="el" href="arm__nnsupportfunctions_8h.html#adcd021ac91d43a62b2cdecf9a5b971a7">MIN</a>.</p>
+
+<p>Referenced by <a class="el" href="group__NNConv.html#gae7e0c94c970bfd59d9c5e2331ce84fe7">arm_depthwise_conv_s8()</a>.</p>
 
 </div>
 </div>
@@ -1986,7 +3647,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Jul 10 2019 15:20:50 for CMSIS-NN Version 1.2.0 by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Apr 9 2020 15:49:34 for CMSIS-NN Version 1.3.0 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

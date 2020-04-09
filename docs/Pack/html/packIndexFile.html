@@ -3,8 +3,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<title>CMSIS-Pack Index Files</title>
-<title>CMSIS-Pack: CMSIS-Pack Index Files</title>
+<title>Pack Index Files</title>
+<title>CMSIS-Pack: Pack Index Files</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="cmsis.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="jquery.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Pack
-   &#160;<span id="projectnumber">Version 1.6.1</span>
+   &#160;<span id="projectnumber">Version 1.6.3</span>
    </div>
    <div id="projectbrief">Delivery Mechanism for Software Packs</div>
   </td>
@@ -107,7 +107,7 @@ $(document).ready(function(){initNavTree('packIndexFile.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">CMSIS-Pack Index Files </div>  </div>
+<div class="title">Pack Index Files </div>  </div>
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><p>CMSIS-Pack is designed as a web-based distribution network. Each provider of a CMSIS-Pack (also referred to as <em>vendor</em>) is responsible for hosting, maintaining and publishing unique versions of a CMSIS-Pack.</p>
@@ -127,10 +127,10 @@ Package Index File (pidx)</h1>
 <div class="line"></div>
 <div class="line">&lt;index schemaVersion=<span class="stringliteral">&quot;1.0.0&quot;</span> xs:noNamespaceSchemaLocation=<span class="stringliteral">&quot;PackIndex.xsd&quot;</span> xmlns:xs=<span class="stringliteral">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>&gt;</div>
 <div class="line">  &lt;vendor&gt;MyVendor&lt;/vendor&gt;</div>
-<div class="line">  &lt;url&gt;http:<span class="comment">//www.MyVendor.com/pack/&lt;/url&gt;</span></div>
+<div class="line">  &lt;url&gt;https:<span class="comment">//www.MyVendor.com/pack/&lt;/url&gt;</span></div>
 <div class="line">  &lt;timestamp&gt;2017-01-25T15:00:10.7300074+00:00&lt;/timestamp&gt;</div>
 <div class="line">  &lt;pindex&gt;</div>
-<div class="line">    &lt;pdsc url=<span class="stringliteral">&quot;http://www.MyVendor.com/pack/mypack/&quot;</span> vendor=<span class="stringliteral">&quot;MyVendor&quot;</span> name=<span class="stringliteral">&quot;MyPack&quot;</span> version=<span class="stringliteral">&quot;1.1.0&quot;</span>/&gt;</div>
+<div class="line">    &lt;pdsc url=<span class="stringliteral">&quot;https://www.MyVendor.com/pack/mypack/&quot;</span> vendor=<span class="stringliteral">&quot;MyVendor&quot;</span> name=<span class="stringliteral">&quot;MyPack&quot;</span> version=<span class="stringliteral">&quot;1.1.0&quot;</span>/&gt;</div>
 <div class="line">    ...</div>
 <div class="line">  &lt;/pindex&gt;</div>
 <div class="line">&lt;/index&gt;</div>
@@ -141,7 +141,7 @@ Package Index File (pidx)</h1>
 <li><code>name</code> = the name of the pack.</li>
 <li><code>version</code> = the version number of the latest available release for the pack.</li>
 </ul>
-<p>The package index file for the CMSIS-Pack compliant packs, hosted on www.keil.com can be found here: <a href="http://www.keil.com/pack/Keil.pidx">www.keil.com/pack/Keil.pidx</a></p>
+<p>The package index file for the CMSIS-Pack compliant packs, hosted on www.keil.com can be found here: <a href="https://www.keil.com/pack/Keil.pidx">https://www.keil.com/pack/Keil.pidx</a>.</p>
 <p>The benefit of a single package index file is, that this file only needs to be exchanged once and can be polled for updates and additions of packs by a vendor. To add a vendor's packs to the public list maintained on www.keil.com, send an email to <a href="#" onclick="location.href='mai'+'lto:'+'CMS'+'IS'+'@ar'+'m.'+'com'; return false;">CMSIS@arm.com</a> attaching a version of the &lt;vendor&gt;.pidx file.</p>
 <h1><a class="anchor" id="vidxFile"></a>
 Vendor Index File (vidx)</h1>
@@ -163,9 +163,9 @@ Vendor Index File (vidx)</h1>
 <div class="line">    ...</div>
 <div class="line">    &lt;/pindex&gt;</div>
 <div class="line">&lt;/index&gt;</div>
-</div><!-- fragment --><p>The latest index file of CMSIS-Packs belonging to vendor="ARM" and vendor="Keil" that are hosted on www.keil.com/pack is maintained here: <a href="http://www.keil.com/pack/Keil.pidx">www.keil.com/pack/Keil.pidx</a></p>
-<p>ARM also maintains a flat list of all CMSIS-Pack compliant packs reported to ARM here: <a href="http://www.keil.com/pack/index.pidx">www.keil.com/pack/index.pidx</a></p>
-<p>The vendor index file containing references to the package index files (or optionally PDSC files) used for compiling this summary index file are listed in the Keil.vidx file and can be downloaded from here: <a href="http://www.keil.com/pack/Keil.vidx">www.keil.com/pack/Keil.vidx</a></p>
+</div><!-- fragment --><p>The latest index file of CMSIS-Packs belonging to vendor="ARM" and vendor="Keil" that are hosted on www.keil.com/pack is maintained here: <a href="https://www.keil.com/pack/Keil.pidx">https://www.keil.com/pack/Keil.pidx</a></p>
+<p>ARM also maintains a flat list of all CMSIS-Pack compliant packs reported to ARM here: <a href="https://www.keil.com/pack/index.pidx">https://www.keil.com/pack/index.pidx</a></p>
+<p>The vendor index file containing references to the package index files (or optionally PDSC files) used for compiling this summary index file are listed in the Keil.vidx file and can be downloaded from here: <a href="https://www.keil.com/pack/Keil.vidx">https://www.keil.com/pack/Keil.vidx</a></p>
 <p>Based on these publicly available index files, everyone is equally positioned to create an index of available packs and their latest versions.</p>
 <h1><a class="anchor" id="packIndexSchema"></a>
 CMSIS-Pack Index Schema File</h1>
@@ -272,7 +272,7 @@ CMSIS-Pack Index Schema File</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Fri Dec 13 2019 14:56:15 for CMSIS-Pack Version 1.6.1 by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Apr 9 2020 15:49:54 for CMSIS-Pack Version 1.6.3 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

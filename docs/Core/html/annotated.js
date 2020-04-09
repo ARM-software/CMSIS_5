@@ -10,6 +10,7 @@ var annotated =
     [ "ITM_Type", "structITM__Type.html", "structITM__Type" ],
     [ "MPU_Type", "structMPU__Type.html", "structMPU__Type" ],
     [ "NVIC_Type", "structNVIC__Type.html", "structNVIC__Type" ],
+    [ "PMU_Type", "structPMU__Type.html", "structPMU__Type" ],
     [ "SCB_Type", "structSCB__Type.html", "structSCB__Type" ],
     [ "SCnSCB_Type", "structSCnSCB__Type.html", "structSCnSCB__Type" ],
     [ "SysTick_Type", "structSysTick__Type.html", "structSysTick__Type" ],

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['gated_20recurrent_20unit_20example',['Gated Recurrent Unit Example',['../group__GRUExample.html',1,'']]]
+  ['fully_2dconnected_20layer_20functions',['Fully-connected Layer Functions',['../group__FC.html',1,'']]]
 ];

@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Build
-   &#160;<span id="projectnumber">Version 0.1.0</span>
+   &#160;<span id="projectnumber">Version 0.9.0 (beta)</span>
    </div>
    <div id="projectbrief">Tools, software frameworks, and work flows for productivity with CMSIS based projects</div>
   </td>
@@ -110,7 +110,8 @@ $(document).ready(function(){initNavTree('ccmerge.html','');});
 <div class="title">ccmerge: Config File Updater </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>The <a class="el" href="ccmerge.html">ccmerge</a> tool supports the update process for configuration files that use <a href="../../Pack/html/configWizard.html"><b>Configuration Wizard Annotations</b></a>. It is called from the <b>Bash</b> command line with the following syntax:</p>
+<div class="textblock"><p>The <a class="el" href="ccmerge.html">ccmerge</a> tool supports the update process for configuration files that use <a href="../../Pack/html/configWizard.html"><b>Configuration Wizard Annotations</b></a>. The tool takes the configuration file located in the CMSIS Pack (pfile) and merges the configuration information extracted from the configuration file located in the current project (cfile). If the merge succeeds the result is written to 'cfile' after a copy of 'cfile' has been stored as 'cfile.nnnn'.</p>
+<p>It is called from the <b>Bash</b> command line with the following syntax:</p>
 <p><b>ccmerge</b> has the following command invocation:</p>
 <div class="fragment"><div class="line">ccmerge -pfile &lt;name_of_pack_cfgfile&gt; -cfile &lt;name_of_current_cfgfile&gt; [-merge] [-details]</div>
 </div><!-- fragment --><p><a class="el" href="ccmerge.html">ccmerge</a> helps to update the setup of software components as it merges options from a previous configuration file version to a new version.</p>
@@ -131,10 +132,6 @@ $(document).ready(function(){initNavTree('ccmerge.html','');});
 <dl class="section note"><dt>Note</dt><dd>A filepath name can be specified without surrounding " characters as long as it does not contain any space or other special characters. It must be enclosed by " characters when the filepath name contains one or more spaces or other special characters.</dd></dl>
 <h1><a class="anchor" id="ccmerge_examples"></a>
 Usage Example</h1>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000007">Todo:</a></b></dt><dd>for me the complete operation of ccmerge is unclear. Does it actually copy files?<ul>
-<li>[danbro01] As described above, when a merge succeeds the current 'cfile' is saved as 'cfile.nnnn' and 'cfile' is overwritten.</li>
-</ul>
-</dd></dl>
 <div class="fragment"><div class="line">ccmerge -pfile $CMSIS_PACK_ROOT/ARM/CMSIS/5.6.0/CMSIS/RTOS2/RTX/Config/RTX_Config.h -cfile RTE/CMSIS/RTX_Config.h -merge</div>
 </div><!-- fragment --><h1><a class="anchor" id="ccmerge_errors"></a>
 Error Messages</h1>
@@ -180,7 +177,7 @@ Error Messages</h1>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="CmdLineBuild.html">Command Line Build</a></li>
-    <li class="footer">Generated on Wed Feb 26 2020 09:42:01 for CMSIS-Build Version 0.1.0 by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Apr 9 2020 15:49:55 for CMSIS-Build Version 0.9.0 (beta) by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

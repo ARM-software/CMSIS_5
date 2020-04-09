@@ -1,13 +1,15 @@
 var searchData=
 [
-  ['nand_20bus_20modes',['NAND Bus Modes',['../group__nand__bus__mode__codes.html',1,'']]],
-  ['nand_20mode_20controls',['NAND Mode Controls',['../group__nand__control__codes.html',1,'']]],
-  ['nand_20control_20codes',['NAND Control Codes',['../group__nand__control__gr.html',1,'']]],
-  ['nand_20data_20bus_20width',['NAND Data Bus Width',['../group__nand__data__bus__width__codes.html',1,'']]],
-  ['nand_20ecc_20codes',['NAND ECC Codes',['../group__nand__driver__ecc__codes.html',1,'']]],
-  ['nand_20flags',['NAND Flags',['../group__nand__driver__flag__codes.html',1,'']]],
-  ['nand_20sequence_20execution_20codes',['NAND Sequence Execution Codes',['../group__nand__driver__seq__exec__codes.html',1,'']]],
-  ['nand_20driver_20strength',['NAND Driver Strength',['../group__nand__driver__strength__codes.html',1,'']]],
-  ['nand_20events',['NAND Events',['../group__NAND__events.html',1,'']]],
-  ['nand_20interface',['NAND Interface',['../group__nand__interface__gr.html',1,'']]]
+  ['media_20interface_20types',['Media Interface Types',['../group__eth__interface__types1.html',1,'']]],
+  ['mci_20bus_20data_20width',['MCI Bus Data Width',['../group__mci__bus__data__width__ctrls.html',1,'']]],
+  ['mci_20bus_20speed_20mode',['MCI Bus Speed Mode',['../group__mci__bus__speed__ctrls.html',1,'']]],
+  ['mci_20card_20power_20controls',['MCI Card Power Controls',['../group__mci__card__power__ctrls.html',1,'']]],
+  ['mci_20cmd_20line_20mode',['MCI CMD Line Mode',['../group__mci__cmd__line__ctrls.html',1,'']]],
+  ['mci_20control_20codes',['MCI Control Codes',['../group__mci__control__gr.html',1,'']]],
+  ['mci_20driver_20strength',['MCI Driver Strength',['../group__mci__driver__strength__ctrls.html',1,'']]],
+  ['mci_20events',['MCI Events',['../group__mci__event__gr.html',1,'']]],
+  ['mci_20interface',['MCI Interface',['../group__mci__interface__gr.html',1,'']]],
+  ['mci_20controls',['MCI Controls',['../group__mci__mode__ctrls.html',1,'']]],
+  ['mci_20send_20command_20flags',['MCI Send Command Flags',['../group__mci__send__command__flags__ctrls.html',1,'']]],
+  ['mci_20transfer_20controls',['MCI Transfer Controls',['../group__mci__transfer__ctrls.html',1,'']]]
 ];

@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Driver
-   &#160;<span id="projectnumber">Version 2.7.1</span>
+   &#160;<span id="projectnumber">Version 2.8.0</span>
    </div>
    <div id="projectbrief">Peripheral Interface for Middleware and Application Code</div>
   </td>
@@ -561,7 +561,8 @@ SPI Master connected to 3 slaves</div></div>
 <td class="fieldname">
 simplex: 1</td>
 <td class="fielddoc">
-supports Simplex Mode (Master and Slave) </td></tr>
+supports Simplex Mode (Master and Slave) <dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000004">Deprecated:</a></b></dt><dd>Reserved (must be zero) </dd></dl>
+</td></tr>
 <tr><td class="fieldtype">
 <a class="anchor" id="a8053c540e5d531b692224bdc2463f36a"></a>uint32_t</td>
 <td class="fieldname">
@@ -1042,15 +1043,11 @@ The item size is defined by the data type which depends on the configured number
 <tr>
 <th>Parameter <em>control</em>  </th><th style="text-align:right">Bit  </th><th>Category  </th><th>Description  </th></tr>
 <tr>
-<td><a class="el" href="group__spi__mode__ctrls.html#ga974e3d7c178b76b0540d7644b977bff3">ARM_SPI_MODE_INACTIVE</a>  </td><td rowspan="5" style="text-align:right">0..7  </td><td rowspan="5"><a class="anchor" id="spi_mode_tab"></a>Mode Controls  </td><td>Set SPI to inactive.  </td></tr>
+<td><a class="el" href="group__spi__mode__ctrls.html#ga974e3d7c178b76b0540d7644b977bff3">ARM_SPI_MODE_INACTIVE</a>  </td><td rowspan="3" style="text-align:right">0..7  </td><td rowspan="3"><a class="anchor" id="spi_mode_tab"></a>Mode Controls  </td><td>Set SPI to inactive.  </td></tr>
 <tr>
 <td><a class="el" href="group__spi__mode__ctrls.html#ga3143ef07c1607b9bc57e29df35cf2fa8">ARM_SPI_MODE_MASTER</a>  </td><td>Set the SPI Master (Output on MOSI, and the Input on MISO); <em>arg</em> = Bus Speed in <span class="XML-Token">bps</span>  </td></tr>
 <tr>
-<td><a class="el" href="group__spi__mode__ctrls.html#gaf34d849c7cde1151a768887f154e19bd">ARM_SPI_MODE_MASTER_SIMPLEX</a>  </td><td>Set the SPI Master (Output and Input on MOSI); <em>arg</em> = Bus Speed in <span class="XML-Token">bps</span>  </td></tr>
-<tr>
 <td><a class="el" href="group__spi__mode__ctrls.html#ga382b394c5e68f7d1206b837843732a3e">ARM_SPI_MODE_SLAVE</a>  </td><td>Set the SPI Slave (Output on MISO, and the Input on MOSI)  </td></tr>
-<tr>
-<td><a class="el" href="group__spi__mode__ctrls.html#ga9b113d8b336047e1c22f73ad44851fdf">ARM_SPI_MODE_SLAVE_SIMPLEX</a>  </td><td>Set the SPI Slave (Output and Input on MISO)  </td></tr>
 <tr>
 <td><a class="el" href="group__spi__frame__format__ctrls.html#gab4ac9a609c078d1e8332cf95da34e50e">ARM_SPI_CPOL0_CPHA0</a> (default)  </td><td rowspan="6" style="text-align:right">8..11  </td><td rowspan="6">Clock Polarity <br/>
  (Frame Format) </td><td>CPOL=<span class="XML-Token">0</span> and CPHA=<span class="XML-Token">0</span>: Clock Polarity 0, Clock Phase 0   </td></tr>
@@ -1063,7 +1060,7 @@ The item size is defined by the data type which depends on the configured number
 <tr>
 <td><a class="el" href="group__spi__frame__format__ctrls.html#ga225185710ba38848a489013ba4475915">ARM_SPI_TI_SSI</a>  </td><td>Specifies that the frame format corresponds to the Texas Instruments Frame Format  </td></tr>
 <tr>
-<td><a class="el" href="group__spi__frame__format__ctrls.html#ga44f481d32b9a9ea93673f05af82ccf86">ARM_SPI_MICROWIRE</a>  </td><td>Specifies that the frame format corresponds to the National Microwire Frame Format  </td></tr>
+<td><a class="el" href="group__spi__frame__format__ctrls.html#ga44f481d32b9a9ea93673f05af82ccf86">ARM_SPI_MICROWIRE</a>  </td><td>Specifies that the frame format corresponds to the National Semiconductor Microwire Frame Format  </td></tr>
 <tr>
 <td><a class="el" href="group__spi__data__bits__ctrls.html#gaf6c099a1d67256a32010120c66c55250">ARM_SPI_DATA_BITS(n)</a>  </td><td style="text-align:right">12..17  </td><td>Data Bits  </td><td>Set the number of bits per SPI frame; range for <em>n</em> = <span class="XML-Token">1..32</span>. This is the minimum required parameter.  </td></tr>
 <tr>
@@ -1077,7 +1074,7 @@ when Slave  </td><td>Set the Slave Select mode for the master to <b>Not used</b>
 <tr>
 <td><a class="el" href="group__spi__slave__select__mode__ctrls.html#gab5e319aa3f9d4d8c9ed92f0fe865f624">ARM_SPI_SS_MASTER_SW</a> </td><td>Set the Slave Select mode for the master to <b>Software controlled</b>. Used with Mode Control ARM_SPI_MODE_MASTER. The Slave Select line is configured as output and controlled via the Miscellaneous Control <a class="el" href="group__spi__misc__ctrls.html#ga5776272b82decff92da003568540c92f">ARM_SPI_CONTROL_SS</a>. By default, the line it is not active (high), and is not affected by transfer-, send-, or receive functions.  </td></tr>
 <tr>
-<td><a class="el" href="group__spi__slave__select__mode__ctrls.html#ga07762709a40dc90aca85553f500c8761">ARM_SPI_SS_MASTER_HW_OUTPUT</a> </td><td>Set the Slave Select mode for the master to <b>Hardware controlled Output</b>. Used with Mode Control ARM_SPI_MODE_MASTER. The Slave Select line is configured as output and controlled by hardware. The line gets activated or deactivated automatically by the hardware for transfers and is not controlled by the Miscellaneous Control <a class="el" href="group__spi__misc__ctrls.html#ga5776272b82decff92da003568540c92f">ARM_SPI_CONTROL_SS</a>. When exactly the line is activated or deactivated is hardware dependent. Typically, the hardware will activate the line before starting the transfer and deactivate it after the transfer completes. Some hardware will leave the line activated until the SPI stays master. <dl class="section note"><dt>Note</dt><dd>Some devices require that the SS signal is strictly defined regarding transfers. Refer to the documentaiton of your device.  </dd></dl>
+<td><a class="el" href="group__spi__slave__select__mode__ctrls.html#ga07762709a40dc90aca85553f500c8761">ARM_SPI_SS_MASTER_HW_OUTPUT</a> </td><td>Set the Slave Select mode for the master to <b>Hardware controlled Output</b>. Used with Mode Control ARM_SPI_MODE_MASTER. The Slave Select line is configured as output and controlled by hardware. The line gets activated or deactivated automatically by the hardware for transfers and is not controlled by the Miscellaneous Control <a class="el" href="group__spi__misc__ctrls.html#ga5776272b82decff92da003568540c92f">ARM_SPI_CONTROL_SS</a>. When exactly the line is activated or deactivated is hardware dependent. Typically, the hardware will activate the line before starting the transfer and deactivate it after the transfer completes. Some hardware will leave the line activated until the SPI stays master. <dl class="section note"><dt>Note</dt><dd>Some devices require that the SS signal is strictly defined regarding transfers. Refer to the documentation of your device.  </dd></dl>
 </td></tr>
 <tr>
 <td><a class="el" href="group__spi__slave__select__mode__ctrls.html#ga8561bd0cc25ab2bb02b138c1c6a586cd">ARM_SPI_SS_MASTER_HW_INPUT</a> </td><td>Set the Slave Select mode for the master to <b>Hardware monitored Input</b>. Used with Mode Control ARM_SPI_MODE_MASTER. Used in multi-master configuration where a master does not drive the Slave Select when driving the bus, but rather monitors it. When another master activates this line, the active master backs off. This is called Mode Fault. Slave Select is configured as input and hardware only monitors the line. When the line is deactivated externally while we are master, it presents a Mode Fault (<a class="el" href="group__SPI__events.html#ga7eaa229003689aa18598273490b3e630">ARM_SPI_EVENT_MODE_FAULT</a>) and the SPI switches to inactive mode.  </td></tr>
@@ -1089,7 +1086,7 @@ when Slave  </td><td>Set the Slave Select mode for the master to <b>Not used</b>
 <td><a class="el" href="group__spi__misc__ctrls.html#ga5ef3d114979f3fd6010d0df16c2bf5c1">ARM_SPI_SET_BUS_SPEED</a>  </td><td rowspan="5" style="text-align:right">0..21  </td><td rowspan="5">Miscellaneous Controls <br/>
 (cannot be ORed) </td><td>Set the bus speed; <em>arg=</em> Bus Speed in <span class="XML-Token">bps</span>  </td></tr>
 <tr>
-<td><a class="el" href="group__spi__misc__ctrls.html#gafc00fe35bb4c89b076d014b43168b2b3">ARM_SPI_GET_BUS_SPEED</a>  </td><td>Get the bus speed; Retrun values &gt;= <span class="XML-Token">0</span> reperesent the bus speed in <span class="XML-Token">bps</span>. Negative values are <a class="el" href="group__spi__execution__status.html">Status Error Codes</a>.  </td></tr>
+<td><a class="el" href="group__spi__misc__ctrls.html#gafc00fe35bb4c89b076d014b43168b2b3">ARM_SPI_GET_BUS_SPEED</a>  </td><td>Get the bus speed; Return values &gt;= <span class="XML-Token">0</span> represent the bus speed in <span class="XML-Token">bps</span>. Negative values are <a class="el" href="group__spi__execution__status.html">Status Error Codes</a>.  </td></tr>
 <tr>
 <td><a class="el" href="group__spi__misc__ctrls.html#gae9861221dee78d52bd1522b7846535ce">ARM_SPI_SET_DEFAULT_TX_VALUE</a>  </td><td>Set the default transmission value; the parameter <em>arg</em> sets the value  </td></tr>
 <tr>
@@ -1171,7 +1168,7 @@ when Slave  </td><td>Set the Slave Select mode for the master to <b>Not used</b>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Jul 10 2019 15:20:31 for CMSIS-Driver Version 2.7.1 by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Apr 9 2020 15:49:15 for CMSIS-Driver Version 2.8.0 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

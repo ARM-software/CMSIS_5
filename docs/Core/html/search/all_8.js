@@ -7,6 +7,8 @@ var searchData=
   ['icsr',['ICSR',['../structSCB__Type.html#a0ca18ef984d132c6bf4d9b61cd00f05a',1,'SCB_Type']]],
   ['ictr',['ICTR',['../structSCnSCB__Type.html#a34ec1d771245eb9bd0e3ec9336949762',1,'SCnSCB_Type']]],
   ['imcr',['IMCR',['../structITM__Type.html#ae2ce4d3a54df2fd11a197ccac4406cd0',1,'ITM_Type']]],
+  ['intenclr',['INTENCLR',['../structPMU__Type.html#aaff7d5f3246c641d1f503d74a5adb0ee',1,'PMU_Type']]],
+  ['intenset',['INTENSET',['../structPMU__Type.html#a3f5a5872105d9056145e9095bc1c63ac',1,'PMU_Type']]],
   ['intrinsic_20functions_20for_20cpu_20instructions',['Intrinsic Functions for CPU Instructions',['../group__intrinsic__CPU__gr.html',1,'']]],
   ['intrinsic_20functions_20for_20simd_20instructions_20_5bonly_20cortex_2dm4_20and_20cortex_2dm7_5d',['Intrinsic Functions for SIMD Instructions [only Cortex-M4 and Cortex-M7]',['../group__intrinsic__SIMD__gr.html',1,'']]],
   ['ip',['IP',['../structNVIC__Type.html#a7ff7364a4260df67a2784811e8da4efd',1,'NVIC_Type']]],

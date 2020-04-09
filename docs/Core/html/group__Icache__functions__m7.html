@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Core (Cortex-M)
-   &#160;<span id="projectnumber">Version 5.3.0</span>
+   &#160;<span id="projectnumber">Version 5.4.0</span>
    </div>
    <div id="projectbrief">CMSIS-Core support for Cortex-M processor-based devices</div>
   </td>
@@ -110,33 +110,37 @@ $(document).ready(function(){initNavTree('group__Icache__functions__m7.html','')
   <div class="summary">
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">I-Cache Functions<div class="ingroups"><a class="el" href="group__cache__functions__m7.html">Cache Functions  (only Cortex-M7)</a></div></div>  </div>
+<div class="title">I-Cache Functions<div class="ingroups"><a class="el" href="group__cache__functions__m7.html">Cache Functions (Level-1)</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Functions for the instruction cache.  
+<p>Functions for the level-1 instruction cache.  
 <a href="#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:gaf9e7c6c8e16ada1f95e5bf5a03505b68"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__compiler__conntrol__gr.html#gaba87361bfad2ae52cfe2f40c1a1dbf9c">__STATIC_INLINE</a> void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Icache__functions__m7.html#gaf9e7c6c8e16ada1f95e5bf5a03505b68">SCB_EnableICache</a> (void)</td></tr>
-<tr class="memdesc:gaf9e7c6c8e16ada1f95e5bf5a03505b68"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable I-Cache.  <a href="#gaf9e7c6c8e16ada1f95e5bf5a03505b68">More...</a><br/></td></tr>
-<tr class="separator:gaf9e7c6c8e16ada1f95e5bf5a03505b68"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaba757390852f95b3ac2d8638c717d8d8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__compiler__conntrol__gr.html#gaba87361bfad2ae52cfe2f40c1a1dbf9c">__STATIC_INLINE</a> void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Icache__functions__m7.html#gaba757390852f95b3ac2d8638c717d8d8">SCB_DisableICache</a> (void)</td></tr>
-<tr class="memdesc:gaba757390852f95b3ac2d8638c717d8d8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disable I-Cache.  <a href="#gaba757390852f95b3ac2d8638c717d8d8">More...</a><br/></td></tr>
-<tr class="separator:gaba757390852f95b3ac2d8638c717d8d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga50d373a785edd782c5de5a3b55e30ff3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__compiler__conntrol__gr.html#gaba87361bfad2ae52cfe2f40c1a1dbf9c">__STATIC_INLINE</a> void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Icache__functions__m7.html#ga50d373a785edd782c5de5a3b55e30ff3">SCB_InvalidateICache</a> (void)</td></tr>
-<tr class="memdesc:ga50d373a785edd782c5de5a3b55e30ff3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Invalidate I-Cache.  <a href="#ga50d373a785edd782c5de5a3b55e30ff3">More...</a><br/></td></tr>
-<tr class="separator:ga50d373a785edd782c5de5a3b55e30ff3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga980ffe52af778f2535ccc52f25f9a7de"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__compiler__conntrol__gr.html#gab904513442afdf77d4f8c74f23cbb040">__STATIC_FORCEINLINE</a> void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Icache__functions__m7.html#ga980ffe52af778f2535ccc52f25f9a7de">SCB_EnableICache</a> (void)</td></tr>
+<tr class="memdesc:ga980ffe52af778f2535ccc52f25f9a7de"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable I-Cache.  <a href="#ga980ffe52af778f2535ccc52f25f9a7de">More...</a><br/></td></tr>
+<tr class="separator:ga980ffe52af778f2535ccc52f25f9a7de"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga56baa06298799dea5f207d4c12d9d4a6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__compiler__conntrol__gr.html#gab904513442afdf77d4f8c74f23cbb040">__STATIC_FORCEINLINE</a> void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Icache__functions__m7.html#ga56baa06298799dea5f207d4c12d9d4a6">SCB_DisableICache</a> (void)</td></tr>
+<tr class="memdesc:ga56baa06298799dea5f207d4c12d9d4a6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disable I-Cache.  <a href="#ga56baa06298799dea5f207d4c12d9d4a6">More...</a><br/></td></tr>
+<tr class="separator:ga56baa06298799dea5f207d4c12d9d4a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga62419cb7e6773e3d9236f14e458c1b05"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__compiler__conntrol__gr.html#gab904513442afdf77d4f8c74f23cbb040">__STATIC_FORCEINLINE</a> void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Icache__functions__m7.html#ga62419cb7e6773e3d9236f14e458c1b05">SCB_InvalidateICache</a> (void)</td></tr>
+<tr class="memdesc:ga62419cb7e6773e3d9236f14e458c1b05"><td class="mdescLeft">&#160;</td><td class="mdescRight">Invalidate I-Cache.  <a href="#ga62419cb7e6773e3d9236f14e458c1b05">More...</a><br/></td></tr>
+<tr class="separator:ga62419cb7e6773e3d9236f14e458c1b05"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf6bed290ff6916337b0ce6c09131f699"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__compiler__conntrol__gr.html#gab904513442afdf77d4f8c74f23cbb040">__STATIC_FORCEINLINE</a> void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Icache__functions__m7.html#gaf6bed290ff6916337b0ce6c09131f699">SCB_InvalidateICache_by_Addr</a> (void *addr, int32_t isize)</td></tr>
+<tr class="memdesc:gaf6bed290ff6916337b0ce6c09131f699"><td class="mdescLeft">&#160;</td><td class="mdescRight">I-Cache Invalidate by address.  <a href="#gaf6bed290ff6916337b0ce6c09131f699">More...</a><br/></td></tr>
+<tr class="separator:gaf6bed290ff6916337b0ce6c09131f699"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Description</h2>
+<p>Functions for the level-1 instruction cache. </p>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="gaba757390852f95b3ac2d8638c717d8d8"></a>
+<a class="anchor" id="ga56baa06298799dea5f207d4c12d9d4a6"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group__compiler__conntrol__gr.html#gaba87361bfad2ae52cfe2f40c1a1dbf9c">__STATIC_INLINE</a> void SCB_DisableICache </td>
+          <td class="memname"><a class="el" href="group__compiler__conntrol__gr.html#gab904513442afdf77d4f8c74f23cbb040">__STATIC_FORCEINLINE</a> void SCB_DisableICache </td>
           <td>(</td>
           <td class="paramtype">void&#160;</td>
           <td class="paramname"></td><td>)</td>
@@ -144,16 +148,18 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Disable I-Cache. </p>
 <p>The function turns off the instruction cache. </p>
 
 </div>
 </div>
-<a class="anchor" id="gaf9e7c6c8e16ada1f95e5bf5a03505b68"></a>
+<a class="anchor" id="ga980ffe52af778f2535ccc52f25f9a7de"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group__compiler__conntrol__gr.html#gaba87361bfad2ae52cfe2f40c1a1dbf9c">__STATIC_INLINE</a> void SCB_EnableICache </td>
+          <td class="memname"><a class="el" href="group__compiler__conntrol__gr.html#gab904513442afdf77d4f8c74f23cbb040">__STATIC_FORCEINLINE</a> void SCB_EnableICache </td>
           <td>(</td>
           <td class="paramtype">void&#160;</td>
           <td class="paramname"></td><td>)</td>
@@ -161,19 +167,21 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Enable I-Cache. </p>
 <p>The function turns on the instruction cache. </p>
-<dl class="section note"><dt>Note</dt><dd>Before enabling the instruction cache, you must invalidate (<a class="el" href="group__Icache__functions__m7.html#ga50d373a785edd782c5de5a3b55e30ff3">SCB_InvalidateICache</a>) the entire instruction cache if external memory might have changed since the cache was disabled. </dd>
+<dl class="section note"><dt>Note</dt><dd>Before enabling the instruction cache, you must invalidate (<a class="el" href="group__Icache__functions__m7.html#ga62419cb7e6773e3d9236f14e458c1b05">SCB_InvalidateICache</a>) the entire instruction cache if external memory might have changed since the cache was disabled. </dd>
 <dd>
-After reset, you must invalidate (<a class="el" href="group__Icache__functions__m7.html#ga50d373a785edd782c5de5a3b55e30ff3">SCB_InvalidateICache</a>) each cache before enabling it. </dd></dl>
+After reset, you must invalidate (<a class="el" href="group__Icache__functions__m7.html#ga62419cb7e6773e3d9236f14e458c1b05">SCB_InvalidateICache</a>) each cache before enabling it. </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="ga50d373a785edd782c5de5a3b55e30ff3"></a>
+<a class="anchor" id="ga62419cb7e6773e3d9236f14e458c1b05"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group__compiler__conntrol__gr.html#gaba87361bfad2ae52cfe2f40c1a1dbf9c">__STATIC_INLINE</a> void SCB_InvalidateICache </td>
+          <td class="memname"><a class="el" href="group__compiler__conntrol__gr.html#gab904513442afdf77d4f8c74f23cbb040">__STATIC_FORCEINLINE</a> void SCB_InvalidateICache </td>
           <td>(</td>
           <td class="paramtype">void&#160;</td>
           <td class="paramname"></td><td>)</td>
@@ -181,8 +189,46 @@ After reset, you must invalidate (<a class="el" href="group__Icache__functions__
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Invalidate I-Cache. </p>
 <p>The function invalidates the instruction cache. The instruction cache is never dirty so cache RAM errors are always recoverable by invalidating the cache and retrying the instruction. </p>
-<dl class="section note"><dt>Note</dt><dd>After reset, you must invalidate each cache before enabling (<a class="el" href="group__Icache__functions__m7.html#gaf9e7c6c8e16ada1f95e5bf5a03505b68">SCB_EnableICache</a>) it. </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>After reset, you must invalidate each cache before enabling (<a class="el" href="group__Icache__functions__m7.html#ga980ffe52af778f2535ccc52f25f9a7de">SCB_EnableICache</a>) it. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="gaf6bed290ff6916337b0ce6c09131f699"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group__compiler__conntrol__gr.html#gab904513442afdf77d4f8c74f23cbb040">__STATIC_FORCEINLINE</a> void SCB_InvalidateICache_by_Addr </td>
+          <td>(</td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>addr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int32_t&#160;</td>
+          <td class="paramname"><em>isize</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>I-Cache Invalidate by address. </p>
+<p>Invalidates I-Cache for the given address. I-Cache is invalidated starting from a 32 byte aligned address in 32 byte granularity. I-Cache memory blocks which are part of given address + given size are invalidated. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">addr</td><td>address </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">isize</td><td>size of memory block (in number of bytes) </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -191,7 +237,7 @@ After reset, you must invalidate (<a class="el" href="group__Icache__functions__
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Jul 10 2019 15:20:26 for CMSIS-Core (Cortex-M) Version 5.3.0 by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Apr 9 2020 15:49:08 for CMSIS-Core (Cortex-M) Version 5.4.0 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

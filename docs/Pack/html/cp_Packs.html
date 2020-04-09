@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Pack
-   &#160;<span id="projectnumber">Version 1.6.1</span>
+   &#160;<span id="projectnumber">Version 1.6.3</span>
    </div>
    <div id="projectbrief">Delivery Mechanism for Software Packs</div>
   </td>
@@ -149,8 +149,8 @@ Software Components</h1>
 <div class="image">
 <img src="software_component.png" alt="software_component.png"/>
 </div>
-<p><a class="anchor" id="cp_CompDetails"></a></p>
-<h2>Technical Details </h2>
+<h2><a class="anchor" id="cp_CompDetails"></a>
+Technical Details</h2>
 <p>A component lists the files that belong to it and that are relevant for a project. The component itself or each individual file may refer to a <a class="el" href="pdsc_conditions_pg.html#element_condition">condition</a> that must resolve to true; if it is false, the component or file is not applicable in the given context.</p>
 <p>Each software component must have the following attributes that are used to identify the component:</p>
 <ul>
@@ -182,7 +182,8 @@ Software Components</h1>
 <img src="ComponentDisplay.png" alt="ComponentDisplay.png"/>
 <div class="caption">
 Display of a software component in development tools</div></div>
- <h2>Software Component Files </h2>
+<h2><a class="anchor" id="cp_CompFiles"></a>
+Software Component Files</h2>
 <p>Each software component consists of a certain number of files. Each file has at least the following attributes:</p>
 <ul>
 <li><code>name:</code> File path, file name, and file extension in the format path/name.extension. The file path is relative to the root directory of the Pack.</li>
@@ -196,6 +197,16 @@ Display of a software component in development tools</div></div>
 <li><code>src:</code> Path information. The path is specified relative to the Pack Description File (PDSC).</li>
 <li><code>version:</code> File-specific version information. This is used particularly for files copied into the project workspace. Before a file gets copied, a version check avoids unnecessary copy actions. If a file does not have a version, then the component version is used.</li>
 </ul>
+<h2><a class="anchor" id="cp_CompFileNaming"></a>
+File naming</h2>
+<p>It is good practice to name software component files uniquely. This is especially important for user configuration files that are copied into a project. The CMSIS-Pack run-time environment copies configuration files by <code>&lt;Cclass&gt;</code> into the directory structure. For example, <code>./RTE/BSP</code> stores all user editable files of the <code>&lt;Cclass&gt;</code> <b>BSP</b>. If the file name is not unique, clashes might occur with other software components of the same <code>&lt;Cclass&gt;</code> (for example when you name the configuration file <code>user_config.h</code>).</p>
+<p>Recommended configuration file naming is as follows: <code>&lt;vendor&gt;_&lt;unique_component&gt;_config</code></p>
+<p><b>Examples</b> </p>
+<ul>
+<li>MyVendor_MyBSP_config.h</li>
+<li>MyVendor_MyNetworkStack_config.h</li>
+</ul>
+<dl class="section note"><dt>Note</dt><dd>Please be aware that you also need to make sure that your configuration files need to be uniquely named and versioned if your software component consists of <code>&lt;Cvariants&gt;</code> that differ in the configuration files. Otherwise, it might happen that your toolchain is not able to resolve correctly and users might end up with unconfigurable components, especially when they change the variant while developing the application.</dd></dl>
 <h1><a class="anchor" id="cp_Cond"></a>
 References to other software components</h1>
 <p>Software components can reference other software components (either within the same pack or in other packs) using conditions:</p>
@@ -389,7 +400,7 @@ Software Component Cclasses</h2>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Fri Dec 13 2019 14:56:14 for CMSIS-Pack Version 1.6.1 by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Apr 9 2020 15:49:54 for CMSIS-Pack Version 1.6.3 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

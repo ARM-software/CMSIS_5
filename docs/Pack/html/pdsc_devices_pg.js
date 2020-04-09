@@ -19,6 +19,8 @@ var pdsc_devices_pg =
       [ "/package/devices/family/.../debugconfig", "pdsc_family_pg.html#element_debugconfig", null ],
       [ "/package/devices/family/.../debugvars", "pdsc_family_pg.html#element_debugvars", null ],
       [ "/package/devices/family/.../debugport", "pdsc_family_pg.html#element_debugport", null ],
+      [ "/package/devices/family/.../accessportV1", "pdsc_family_pg.html#element_accessportV1", null ],
+      [ "/package/devices/family/.../accessportV2", "pdsc_family_pg.html#element_accessportV2", null ],
       [ "/package/devices/family/.../debugport/jtag", "pdsc_family_pg.html#element_dp_jtag", null ],
       [ "/package/devices/family/.../debugport/swd", "pdsc_family_pg.html#element_dp_swd", null ],
       [ "/package/devices/family/.../debugport/cjtag", "pdsc_family_pg.html#element_dp_cjtag", null ],

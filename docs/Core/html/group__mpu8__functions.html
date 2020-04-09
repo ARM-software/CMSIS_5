@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Core (Cortex-M)
-   &#160;<span id="projectnumber">Version 5.3.0</span>
+   &#160;<span id="projectnumber">Version 5.4.0</span>
    </div>
    <div id="projectbrief">CMSIS-Core support for Cortex-M processor-based devices</div>
   </td>
@@ -208,6 +208,7 @@ Functions</h2></td></tr>
 <tr class="separator:ga7f8c6e09be98067d613e4df1832c543d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Description</h2>
+<p>Functions that relate to the Memory Protection Unit. </p>
 <p>The following functions support the optional Memory Protection Unit (MPU) that is available on the Cortex-M23, M33, M35P processor.</p>
 <p>The MPU is used to prevent from illegal memory accesses that are typically caused by errors in an application software.</p>
 <p><b>Example:</b> </p>
@@ -254,6 +255,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Memory access permissions. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">RO</td><td>Read-Only: Set to 1 for read-only memory. </td></tr>
@@ -287,6 +290,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Memory Attribute. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">O</td><td>Outer memory attributes </td></tr>
@@ -307,6 +312,8 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Attribute for device memory (outer only) </p>
+
 </div>
 </div>
 <a class="anchor" id="ga496bcd6a2bbd038d8935049fec9d0fda"></a>
@@ -318,6 +325,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Device memory type Gathering, Re-ordering, Early Write Acknowledgement. </p>
 
 </div>
 </div>
@@ -331,6 +340,8 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Device memory type non Gathering, non Re-ordering, Early Write Acknowledgement. </p>
+
 </div>
 </div>
 <a class="anchor" id="gabfa9ae279357044cf5b74e77af22a686"></a>
@@ -343,6 +354,8 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Device memory type non Gathering, non Re-ordering, non Early Write Acknowledgement. </p>
+
 </div>
 </div>
 <a class="anchor" id="gadcc9977aabb4dc7177d30cbbac1b53d1"></a>
@@ -354,6 +367,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Device memory type non Gathering, Re-ordering, Early Write Acknowledgement. </p>
 
 </div>
 </div>
@@ -392,6 +407,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Attribute for normal memory (outer and inner) </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">NT</td><td>Non-Transient: Set to 1 for non-transient data. </td></tr>
@@ -413,6 +430,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Attribute for non-cacheable, normal memory. </p>
 
 </div>
 </div>
@@ -457,6 +476,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Region Base Address Register value. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">BASE</td><td>The base address bits [31:5] of a memory region. The value is zero extended. Effective address gets 32 byte aligned. </td></tr>
@@ -493,6 +514,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Region Limit Address Register value. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">LIMIT</td><td>The limit address bits [31:5] for this memory region. The value is one extended. </td></tr>
@@ -513,6 +536,8 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Normal memory inner shareable. </p>
+
 </div>
 </div>
 <a class="anchor" id="ga3d0f688198289f72264f73cf72a742e8"></a>
@@ -525,6 +550,8 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Normal memory non-shareable. </p>
+
 </div>
 </div>
 <a class="anchor" id="gac4fddbdb9e1350bce6906de33c1fd500"></a>
@@ -536,6 +563,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Normal memory outer shareable. </p>
 
 </div>
 </div>
@@ -1130,7 +1159,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Jul 10 2019 15:20:25 for CMSIS-Core (Cortex-M) Version 5.3.0 by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Apr 9 2020 15:49:08 for CMSIS-Core (Cortex-M) Version 5.4.0 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

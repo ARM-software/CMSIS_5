@@ -12,6 +12,7 @@ var searchData=
   ['mpu_20functions_20for_20armv8_2dm',['MPU Functions for Armv8-M',['../group__mpu8__functions.html',1,'']]],
   ['mpu_20functions_20for_20armv6_2dm_2fv7_2dm',['MPU Functions for Armv6-M/v7-M',['../group__mpu__functions.html',1,'']]],
   ['mpu_5ftype',['MPU_Type',['../structMPU__Type.html',1,'']]],
+  ['mve_20functions',['MVE Functions',['../group__mve__functions.html',1,'']]],
   ['mvfr0',['MVFR0',['../structFPU__Type.html#a4f19014defe6033d070b80af19ef627c',1,'FPU_Type']]],
   ['mvfr1',['MVFR1',['../structFPU__Type.html#a66f8cfa49a423b480001a4e101bf842d',1,'FPU_Type']]]
 ];

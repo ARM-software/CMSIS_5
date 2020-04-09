@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Build
-   &#160;<span id="projectnumber">Version 0.1.0</span>
+   &#160;<span id="projectnumber">Version 0.9.0 (beta)</span>
    </div>
    <div id="projectbrief">Tools, software frameworks, and work flows for productivity with CMSIS based projects</div>
   </td>
@@ -110,8 +110,8 @@ $(document).ready(function(){initNavTree('CmdLineBuild.html','');});
 <div class="title">Command Line Build </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>The following scripts and tools enable command line build with projects that include software components in CMSIS-Pack format:</p>
-<p>For command line build with software packs, the following tools are provided.</p>
+<div class="textblock"><p>The following bash scripts and command line tools can be used for managing the build of CMSIS Projects from the command line. These scripts can be easily adopted to specific environments and are intended as a minimal reference. CMSIS-Build tools are available for download as an asset of the respective <a href="https://github.com/ARM-software/CMSIS_5/releases/" target="_blank"><b>CMSIS Release Version</b></a> (starting 5.7.0 e/o April 2020).</p>
+<p>For command line build with software packs, the following tools and utilities are provided.</p>
 <table class="doxtable">
 <tr>
 <th align="left">Tool / Script </th><th align="left">Description  </th></tr>
@@ -142,40 +142,37 @@ $(document).ready(function(){initNavTree('CmdLineBuild.html','');});
 </div><!-- fragment --><p>Start the build process for a existing project file: </p>
 <div class="fragment"><div class="line">$ cbuild.sh MyProject.cprj</div>
 </div><!-- fragment --><p>Below is the output that shows a successful build:</p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000002">Todo:</a></b></dt><dd>update below for final release</dd></dl>
-<pre class="fragment">(cbuild.sh): Build Invocation 0.1.0 (C) 2020 ARM
+<pre class="fragment">(cbuild.sh): Build Invocation 0.9.0 (C) 2020 ARM
 MyProject.cprj validates
-CMSIS Build (cbuildgen) 0.1.1 (Feb 14 2020, 15:03:45)
-Copyright (C) 2020 ARM Ltd and ARM Germany GmbH. All rights reserved.
+(cbuildgen): Build Process Manager 0.9.0 (C) 2020
 M654: URL 'https://www.keil.com/pack/ARM.CMSIS.5.6.0.pack' was added to the list of missing packages.
-M650: Setup run successfully.
-(cp_install.sh): Install Packs 0.1.0 (C) 2020 ARM
+M650: Command completed successfully.
+(cp_install.sh): Install Packs 0.9.0 (C) 2020 ARM
 info: reading file: MyProject.cp_install
 dos2unix: converting file MyProject.cp_install to Unix format...
 https://www.keil.com/pack/ARM.CMSIS.5.6.0.pack
-######################################################################## 100.0%#=#=#
-info: ARM.CMSIS.5.6.0.pack installing into /c/project/MyPackRepo/ARM/CMSIS/5.6.0
+######################################################################## 100.0%
+info: ARM.CMSIS.5.6.0.pack installing into /c/Projects/Packs/ARM/CMSIS/5.6.0
 pack installation completed successfully
-CMSIS Build (cbuildgen) 0.1.1 (Feb 14 2020, 15:03:45)
-Copyright (C) 2020 ARM Ltd and ARM Germany GmbH. All rights reserved.
+(cbuildgen): Build Process Manager 0.9.0 (C) 2020 ARM
 M653: Local config file RTE/Device/ARMCM0/ARMCM0_ac6.sct was not found. Copying default file from package.
 M653: Local config file RTE/Device/ARMCM0/startup_ARMCM0.c was not found. Copying default file from package.
 M653: Local config file RTE/Device/ARMCM0/system_ARMCM0.c was not found. Copying default file from package.
 M651: Generated makefile for merging config files: 'MyProject_cfg.mak'
 M652: Generated makefile for project building:'MyProject.mak'
-mkdir -p "Objects/RTE/Device/Startup/C Startup"
-mkdir -p "Objects/Source"
-"/C/Keil_v5/ARM/ARMCLANG/bin/armclang"  @"Objects/Source/MyMain.o._cc"
-"/C/Keil_v5/ARM/ARMCLANG/bin/armclang"  @"Objects/RTE/Device/Startup/C Startup/startup_ARMCM0.o._cc"
-"/C/Keil_v5/ARM/ARMCLANG/bin/armclang"  @"Objects/RTE/Device/Startup/C Startup/system_ARMCM0.o._cc"
-"/C/Keil_v5/ARM/ARMCLANG/bin/armlink" --via="Objects/MyBinary.axf._ld"
+mkdir -p "/c/Projects/MyProject/Objects/RTE/Device/Startup/C Startup"
+mkdir -p "/c/Projects/MyProject/Objects/Source"
+"/C/Keil_v5/ARM/ARMCLANG/bin/armclang"  @"/c/Projects/MyProject/Objects/Source/MyMain.o._cc"
+"/C/Keil_v5/ARM/ARMCLANG/bin/armclang"  @"/c/Projects/MyProject/Objects/RTE/Device/Startup/C Startup/startup_ARMCM0.o._cc"
+"/C/Keil_v5/ARM/ARMCLANG/bin/armclang"  @"/c/Projects/MyProject/Objects/RTE/Device/Startup/C Startup/system_ARMCM0.o._cc"
+"/C/Keil_v5/ARM/ARMCLANG/bin/armlink" --via="/c/Projects/MyProject/Objects/MyBinary.axf._ld"
 cbuild.sh finished successfully!
 </pre> </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Feb 26 2020 09:42:01 for CMSIS-Build Version 0.1.0 by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Apr 9 2020 15:49:55 for CMSIS-Build Version 0.9.0 (beta) by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

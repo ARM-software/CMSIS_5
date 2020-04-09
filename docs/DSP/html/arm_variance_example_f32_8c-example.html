@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-DSP
-   &#160;<span id="projectnumber">Version 1.7.0</span>
+   &#160;<span id="projectnumber">Version 1.8.0</span>
    </div>
    <div id="projectbrief">CMSIS DSP Software Library</div>
   </td>
@@ -97,7 +97,7 @@ $(document).ready(function(){initNavTree('arm_variance_example_f32_8c-example.ht
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Data Structures</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Macros</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Groups</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(10)"><span class="SelectionMark">&#160;</span>Pages</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Data Structures</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Macros</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(10)"><span class="SelectionMark">&#160;</span>Groups</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(11)"><span class="SelectionMark">&#160;</span>Pages</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -154,6 +154,10 @@ $(document).ready(function(){initNavTree('arm_variance_example_f32_8c-example.ht
 <div class="line"><span class="preprocessor">#include &lt;math.h&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &quot;<a class="code" href="arm__math_8h.html">arm_math.h</a>&quot;</span></div>
 <div class="line"></div>
+<div class="line"><span class="preprocessor">#if defined(SEMIHOSTING)</span></div>
+<div class="line"><span class="preprocessor"></span><span class="preprocessor">#include &lt;stdio.h&gt;</span></div>
+<div class="line"><span class="preprocessor">#endif</span></div>
+<div class="line"><span class="preprocessor"></span></div>
 <div class="line"><span class="comment">/* ----------------------------------------------------------------------</span></div>
 <div class="line"><span class="comment">* Defines each of the tests performed</span></div>
 <div class="line"><span class="comment">* ------------------------------------------------------------------- */</span></div>
@@ -205,7 +209,7 @@ $(document).ready(function(){initNavTree('arm_variance_example_f32_8c-example.ht
 <div class="line"></div>
 <div class="line">  status = <a name="a10"></a><a class="code" href="arm__math_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6a9f8b2a10bd827fb4600e77d455902eb0">ARM_MATH_SUCCESS</a>;</div>
 <div class="line"></div>
-<div class="line"><span class="preprocessor">#if defined(FILEIO)</span></div>
+<div class="line"><span class="preprocessor">#if defined(SEMIHOSTING)</span></div>
 <div class="line"><span class="preprocessor"></span>  printf(<span class="stringliteral">&quot;START\n&quot;</span>);</div>
 <div class="line"><span class="preprocessor">#endif</span></div>
 <div class="line"><span class="preprocessor"></span></div>
@@ -254,38 +258,33 @@ $(document).ready(function(){initNavTree('arm_variance_example_f32_8c-example.ht
 <div class="line">  diff = fabsf(<a class="code" href="arm__variance__example__f32_8c.html#a26cbbfe2a7905669e8440159465050df">refVarianceOut</a> - variance);</div>
 <div class="line"></div>
 <div class="line">  <span class="comment">/* Comparison of variance value with reference */</span></div>
-<div class="line">  </div>
-<div class="line">  <span class="keywordflow">if</span> (diff &gt; <a name="a16"></a><a class="code" href="arm__variance__example__f32_8c.html#a3fd2b1bcd7ddcf506237987ad780f495">DELTA</a>)</div>
+<div class="line">  status = (diff &gt; <a name="a16"></a><a class="code" href="arm__variance__example__f32_8c.html#a3fd2b1bcd7ddcf506237987ad780f495">DELTA</a>) ? <a name="a17"></a><a class="code" href="arm__math_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6a09457f2be656b35015fd6d36202fa376">ARM_MATH_TEST_FAILURE</a> : <a class="code" href="arm__math_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6a9f8b2a10bd827fb4600e77d455902eb0">ARM_MATH_SUCCESS</a>;</div>
+<div class="line"></div>
+<div class="line">  <span class="keywordflow">if</span> (status != <a class="code" href="arm__math_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6a9f8b2a10bd827fb4600e77d455902eb0">ARM_MATH_SUCCESS</a>)</div>
 <div class="line">  {</div>
-<div class="line">    status = <a name="a17"></a><a class="code" href="arm__math_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6a09457f2be656b35015fd6d36202fa376">ARM_MATH_TEST_FAILURE</a>;</div>
-<div class="line">  }</div>
-<div class="line"></div>
-<div class="line"></div>
-<div class="line"><span class="preprocessor">#if !defined(FILEIO)</span></div>
-<div class="line"><span class="preprocessor"></span>  <span class="keywordflow">if</span> ( status != <a class="code" href="arm__math_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6a9f8b2a10bd827fb4600e77d455902eb0">ARM_MATH_SUCCESS</a>)</div>
-<div class="line">  {</div>
-<div class="line">    <span class="keywordflow">while</span> (1);</div>
-<div class="line">  }</div>
-<div class="line"></div>
-<div class="line">  <span class="keywordflow">while</span> (1);                            <span class="comment">/* main function does not return */</span></div>
+<div class="line"><span class="preprocessor">#if defined (SEMIHOSTING)</span></div>
+<div class="line"><span class="preprocessor"></span>    printf(<span class="stringliteral">&quot;FAILURE\n&quot;</span>);</div>
 <div class="line"><span class="preprocessor">#else</span></div>
-<div class="line"><span class="preprocessor"></span>  <span class="keywordflow">if</span> (status == <a class="code" href="arm__math_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6a9f8b2a10bd827fb4600e77d455902eb0">ARM_MATH_SUCCESS</a>)</div>
-<div class="line">  {</div>
-<div class="line">     printf(<span class="stringliteral">&quot;SUCCESS\n&quot;</span>);</div>
-<div class="line">  }</div>
+<div class="line"><span class="preprocessor"></span>    <span class="keywordflow">while</span> (1);                             <span class="comment">/* main function does not return */</span></div>
+<div class="line"><span class="preprocessor">#endif</span></div>
+<div class="line"><span class="preprocessor"></span>  }</div>
 <div class="line">  <span class="keywordflow">else</span></div>
 <div class="line">  {</div>
-<div class="line">     printf(<span class="stringliteral">&quot;FAILURE\n&quot;</span>);</div>
-<div class="line">  }</div>
+<div class="line"><span class="preprocessor">#if defined (SEMIHOSTING)</span></div>
+<div class="line"><span class="preprocessor"></span>    printf(<span class="stringliteral">&quot;SUCCESS\n&quot;</span>);</div>
+<div class="line"><span class="preprocessor">#else</span></div>
+<div class="line"><span class="preprocessor"></span>    <span class="keywordflow">while</span> (1);                             <span class="comment">/* main function does not return */</span></div>
 <div class="line"><span class="preprocessor">#endif</span></div>
-<div class="line"><span class="preprocessor"></span>}</div>
+<div class="line"><span class="preprocessor"></span>  }</div>
+<div class="line"></div>
+<div class="line">}</div>
 <div class="line"></div>
 </div><!-- fragment --> </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Jul 10 2019 15:20:38 for CMSIS-DSP Version 1.7.0 by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Apr 9 2020 15:49:21 for CMSIS-DSP Version 1.8.0 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

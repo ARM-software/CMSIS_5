@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Pack
-   &#160;<span id="projectnumber">Version 1.6.1</span>
+   &#160;<span id="projectnumber">Version 1.6.3</span>
    </div>
    <div id="projectbrief">Delivery Mechanism for Software Packs</div>
   </td>
@@ -111,7 +111,7 @@ $(document).ready(function(){initNavTree('pdsc_components_pg.html','');});
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><p>The element <a class="el" href="pdsc_components_pg.html#element_components">/package/components</a> describes software components contained in the Pack. A component lists the files that belong to a component and that are relevant for a project. The component itself or each individual file may refer to a <a class="el" href="pdsc_conditions_pg.html#element_condition">condition</a> that must resolve to true; if it is false the component or file is not applicable in the given context.</p>
-<p>Each component must have a Class (Cclass=), a Group (Cgroup=), and a Version (Cversion=) which is used to identify the component. Optionally a component may have a Sub-Group (Csub=) and Variant (Cvariant=) to add further categories. The Class, Group, Sub-Group, Variant and Version is used together with the vendor specified by the Pack, to identify a component. A component vendor must ensure that the combination Class, Group, Sub-Group and Version is unique and not used by multiple components.</p>
+<p>Each component must have a class (Cclass=) and/or bundle (Cbundle), a group (Cgroup=), and a version (Cversion=) which is used to identify the component. Optionally, a component may have a sub-group (Csub=) and variant (Cvariant=) to add further categories. A component is identified by the class/bundle, group, sub-group, variant and version information together with the vendor specified by the pack. A component vendor must ensure that the combination of class/bundle, group, sub-group, version, and variant is unique and not used by multiple components (after evaluating filter <a class="el" href="pdsc_conditions_pg.html">conditions</a>).</p>
 <p><b>Example</b> </p>
 <div class="fragment"><div class="line">&lt;package&gt;</div>
 <div class="line">  ...</div>
@@ -134,10 +134,9 @@ $(document).ready(function(){initNavTree('pdsc_components_pg.html','');});
 <div class="line">        &lt;file category=&quot;header&quot; condition=&quot;SC300&quot; name=&quot;CMSIS/Include/core_sc300.h&quot;/&gt;</div>
 <div class="line">      &lt;/files&gt;</div>
 <div class="line">    &lt;/component&gt;</div>
-<div class="line"></div>
+<div class="line"> </div>
 <div class="line">    &lt;component Cclass=&quot;CMSIS&quot; Cgroup=&quot;DSP&quot; Cversion=&quot;1.1.0&quot; condition=&quot;CMSIS DSP&quot;&gt;</div>
 <div class="line">      &lt;description&gt;CMSIS-DSP Library for Cortex-M0, Cortex-M3 and Cortex-M4 as well as SC000 and SC300 processor based devices&lt;/description&gt;</div>
-<div class="line"></div>
 <div class="line">      &lt;files&gt;</div>
 <div class="line">        &lt;!-- CPU independent --&gt;</div>
 <div class="line">        &lt;file category=&quot;doc&quot; name=&quot;CMSIS/Documentation/DSP/html/index.html&quot;/&gt;</div>
@@ -164,17 +163,34 @@ $(document).ready(function(){initNavTree('pdsc_components_pg.html','');});
 <div class="line">        &lt;file category=&quot;library&quot; condition=&quot;CM4F_LE_G++&quot;   name=&quot;CMSIS/Lib/G++/libarm_cortexM4lf_math.a&quot;/&gt;</div>
 <div class="line">      &lt;/files&gt;</div>
 <div class="line">    &lt;/component&gt;</div>
-<div class="line"></div>
-<div class="line">    &lt;component condition=&quot;ARM_CM0&quot; Cclass=&quot;Device&quot; Cgroup=&quot;Startup&quot; Cversion=&quot;3.1.1&quot;&gt;</div>
-<div class="line">      &lt;description&gt;System Startup for generic Arm Cortex-M0 device&lt;/description&gt;</div>
+<div class="line"> </div>
+<div class="line">    &lt;!-- Cortex-M0 --&gt;</div>
+<div class="line">    &lt;component Cclass=&quot;Device&quot; Cgroup=&quot;Startup&quot; Cvariant=&quot;C Startup&quot; Cversion=&quot;2.0.0&quot; condition=&quot;ARMCM0 CMSIS&quot;&gt;</div>
+<div class="line">      &lt;description&gt;System and Startup for Generic Arm Cortex-M0 device&lt;/description&gt;</div>
 <div class="line">      &lt;files&gt;</div>
-<div class="line">        &lt;file category=&quot;header&quot; name=&quot;Device/ARM/ARMCM0/Include/ARMCM0.h&quot;/&gt;</div>
-<div class="line">        &lt;file category=&quot;header&quot; name=&quot;Device/ARM/ARMCM0/Include/system_ARMCM0.h&quot;/&gt;</div>
-<div class="line">        &lt;file category=&quot;source&quot; condition=&quot;Compiler_ARM&quot; name=&quot;Device/ARM/ARMCM0/Source/ARM/startup_ARMCM0.s&quot;/&gt;</div>
-<div class="line">        &lt;file category=&quot;source&quot; condition=&quot;Compiler_GCC&quot; name=&quot;Device/ARM/ARMCM0/Source/GCC/startup_ARMCM0.S&quot;/&gt;</div>
-<div class="line">        &lt;file category=&quot;source&quot; condition=&quot;Compiler_G++&quot; name=&quot;Device/ARM/ARMCM0/Source/G++/startup_ARMCM0.S&quot;/&gt;</div>
-<div class="line">        &lt;file category=&quot;source&quot; condition=&quot;Compiler_IAR&quot; name=&quot;Device/ARM/ARMCM0/Source/IAR/startup_ARMCM0.s&quot;/&gt;</div>
-<div class="line">        &lt;file category=&quot;source&quot; name=&quot;Device/ARM/ARMCM0/Source/system_ARMCM0.c&quot; attr=&quot;template&quot;/&gt;</div>
+<div class="line">        &lt;!-- include folder / device header file --&gt;</div>
+<div class="line">        &lt;file category=&quot;header&quot;  name=&quot;Device/ARM/ARMCM0/Include/ARMCM0.h&quot;/&gt;</div>
+<div class="line">        &lt;!-- startup / system file --&gt;</div>
+<div class="line">        &lt;file category=&quot;sourceC&quot;      name=&quot;Device/ARM/ARMCM0/Source/startup_ARMCM0.c&quot;     version=&quot;2.0.0&quot; attr=&quot;config&quot;/&gt;</div>
+<div class="line">        &lt;file category=&quot;linkerScript&quot; name=&quot;Device/ARM/ARMCM0/Source/ARM/ARMCM0_ac5.sct&quot;   version=&quot;1.0.0&quot; attr=&quot;config&quot; condition=&quot;ARMCC5&quot;/&gt;</div>
+<div class="line">        &lt;file category=&quot;linkerScript&quot; name=&quot;Device/ARM/ARMCM0/Source/ARM/ARMCM0_ac6.sct&quot;   version=&quot;1.0.0&quot; attr=&quot;config&quot; condition=&quot;ARMCC6&quot;/&gt;</div>
+<div class="line">        &lt;file category=&quot;linkerScript&quot; name=&quot;Device/ARM/ARMCM0/Source/GCC/gcc_arm.ld&quot;       version=&quot;2.0.0&quot; attr=&quot;config&quot; condition=&quot;GCC&quot;/&gt;</div>
+<div class="line">        &lt;file category=&quot;sourceC&quot;      name=&quot;Device/ARM/ARMCM0/Source/system_ARMCM0.c&quot;      version=&quot;1.0.0&quot; attr=&quot;config&quot;/&gt;</div>
+<div class="line">      &lt;/files&gt;</div>
+<div class="line">    &lt;/component&gt;</div>
+<div class="line"> </div>
+<div class="line">    &lt;!-- Cortex-M0+ - the same component as above, but with different filter conditions, so each one is unique --&gt;</div>
+<div class="line">    &lt;component Cclass=&quot;Device&quot; Cgroup=&quot;Startup&quot; Cvariant=&quot;C Startup&quot; Cversion=&quot;2.0.0&quot; condition=&quot;ARMCM0+ CMSIS&quot;&gt;</div>
+<div class="line">      &lt;description&gt;System and Startup for Generic Arm Cortex-M0+ device&lt;/description&gt;</div>
+<div class="line">      &lt;files&gt;</div>
+<div class="line">        &lt;!-- include folder / device header file --&gt;</div>
+<div class="line">        &lt;file category=&quot;header&quot;  name=&quot;Device/ARM/ARMCM0plus/Include/ARMCM0plus.h&quot;/&gt;</div>
+<div class="line">        &lt;!-- startup / system file --&gt;</div>
+<div class="line">        &lt;file category=&quot;sourceC&quot;      name=&quot;Device/ARM/ARMCM0plus/Source/startup_ARMCM0plus.c&quot;     version=&quot;2.0.0&quot; attr=&quot;config&quot;/&gt;</div>
+<div class="line">        &lt;file category=&quot;linkerScript&quot; name=&quot;Device/ARM/ARMCM0plus/Source/ARM/ARMCM0plus_ac5.sct&quot;   version=&quot;1.0.0&quot; attr=&quot;config&quot; condition=&quot;ARMCC5&quot;/&gt;</div>
+<div class="line">        &lt;file category=&quot;linkerScript&quot; name=&quot;Device/ARM/ARMCM0plus/Source/ARM/ARMCM0plus_ac6.sct&quot;   version=&quot;1.0.0&quot; attr=&quot;config&quot; condition=&quot;ARMCC6&quot;/&gt;</div>
+<div class="line">        &lt;file category=&quot;linkerScript&quot; name=&quot;Device/ARM/ARMCM0plus/Source/GCC/gcc_arm.ld&quot;           version=&quot;2.0.0&quot; attr=&quot;config&quot; condition=&quot;GCC&quot;/&gt;</div>
+<div class="line">        &lt;file category=&quot;sourceC&quot;      name=&quot;Device/ARM/ARMCM0plus/Source/system_ARMCM0plus.c&quot;      version=&quot;1.0.0&quot; attr=&quot;config&quot;/&gt;</div>
 <div class="line">      &lt;/files&gt;</div>
 <div class="line">    &lt;/component&gt;</div>
 <div class="line">  &lt;/components&gt;</div>
@@ -544,7 +560,6 @@ Pre_Include_Local_Component_h</h1>
 <ul>
 <li><a class="el" href="pdsc_components_pg.html#element_file">/package/.../files/file</a></li>
 <li><a class="el" href="pdsc_generators_pg.html#element_gen_file">/package/generators/generator/files/file</a></li>
-<li><a class="el" href="cpdsc_pg.html#element_component_file">/package/create/project/select/component/file</a></li>
 </ul>
 <p>The table lists the predefined values for a file category. </p>
 <table  class="cmtable" summary="Type: FileCategoryEnum">
@@ -589,7 +604,7 @@ Pre_Include_Local_Component_h</h1>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="packFormat.html">Pack Description (*.pdsc) Format</a></li>
-    <li class="footer">Generated on Fri Dec 13 2019 14:56:15 for CMSIS-Pack Version 1.6.1 by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Apr 9 2020 15:49:54 for CMSIS-Pack Version 1.6.3 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

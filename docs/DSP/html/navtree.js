@@ -16,9 +16,9 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "ChangeLog_pg.html",
-"group__FIR__decimate.html#gac03b837d289c8bc4a86a34a89e44afdf",
-"structarm__biquad__cascade__df2T__instance__f64.html",
-"structarm__lms__norm__instance__q31.html"
+"group__DCT4__IDCT4__Table.html#gaf3a2b1f1c23720eed1c1fd380fcc43f9",
+"group__groupDistance.html",
+"structarm__fir__interpolate__instance__q15.html#a26b864363fa47954248f2590e3a82a3c"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

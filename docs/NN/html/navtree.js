@@ -3,6 +3,7 @@ var NAVTREE =
   [ "CMSIS-NN", "index.html", [
     [ "CMSIS NN Software Library", "index.html", null ],
     [ "Revision History of CMSIS-NN", "ChangeLog_pg.html", null ],
+    [ "Todo List", "todo.html", null ],
     [ "Reference", "modules.html", "modules" ],
     [ "Data Structures", "annotated.html", "annotated" ],
     [ "Data Fields", "functions.html", [

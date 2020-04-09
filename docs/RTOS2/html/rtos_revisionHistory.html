@@ -180,6 +180,14 @@ CMSIS-RTOS RTX Version 5</h1>
 <tr>
 <th>Version </th><th>Description  </th></tr>
 <tr>
+<td>V5.5.2 </td><td><ul>
+<li>Added support for Cortex-M55.</li>
+<li>Fixed thread priority restore on mutex acquire timeout (when priority inherit is used).</li>
+<li>Enhanced support for Armv8-M (specifying thread TrustZone module identifier is optional).</li>
+<li>Updated configuration default values (Global Dynamic Memory and Thread Stack).   </li>
+</ul>
+</td></tr>
+<tr>
 <td>V5.5.1 </td><td><ul>
 <li>Fixed osMutexRelease issue (thread owning multiple mutexes).</li>
 <li>Improved osThreadJoin robustness (user programing errors).   </li>
@@ -240,7 +248,7 @@ CMSIS-RTOS RTX Version 5</h1>
 <tr>
 <td>V5.2.0 </td><td><ul>
 <li>Based on CMSIS-RTOS API V2.1.1.</li>
-<li>Added support for for Cortex-A.</li>
+<li>Added support for Cortex-A.</li>
 <li>Using OS Tick API for RTX Kernel Timer Tick.</li>
 <li>Fixed potential corruption of terminated threads list.</li>
 <li>Corrected MessageQueue to use actual message length (before padding).</li>
@@ -267,7 +275,7 @@ CMSIS-RTOS RTX Version 5</h1>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="index.html">index</a></li>
-    <li class="footer">Generated on Wed Jul 10 2019 15:21:03 for CMSIS-RTOS2 Version 2.1.3 by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Apr 9 2020 15:49:59 for CMSIS-RTOS2 Version 2.1.3 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

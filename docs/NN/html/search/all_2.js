@@ -1,7 +1,13 @@
 var searchData=
 [
+  ['clamp',['CLAMP',['../arm__nnsupportfunctions_8h.html#abe05f0e80d965ae31dec16ba4063f48a',1,'arm_nnsupportfunctions.h']]],
+  ['cmake_5fminimum_5frequired',['cmake_minimum_required',['../CMakeLists_8txt.html#a0bf6971cdb889da76e1b77654131dc24',1,'CMakeLists.txt']]],
+  ['cmakelists_2etxt',['CMakeLists.txt',['../CMakeLists_8txt.html',1,'']]],
+  ['cmakelists_2etxt',['CMakeLists.txt',['../ConcatenationFunctions_2CMakeLists_8txt.html',1,'']]],
+  ['cmakelists_2etxt',['CMakeLists.txt',['../ConvolutionFunctions_2CMakeLists_8txt.html',1,'']]],
   ['convolutional_20neural_20network_20example',['Convolutional Neural Network Example',['../group__CNNExample.html',1,'']]],
   ['col_5fbuffer',['col_buffer',['../arm__nnexamples__cifar10_8cpp.html#a1f988afc6d7fe29ded1eafbf79a70386',1,'arm_nnexamples_cifar10.cpp']]],
+  ['concatenation_20functions',['Concatenation Functions',['../group__Concatenation.html',1,'']]],
   ['conv1_5fbias',['CONV1_BIAS',['../arm__nnexamples__cifar10__weights_8h.html#a4cb0cfbbb61aa122890a656646532eeb',1,'CONV1_BIAS():&#160;arm_nnexamples_cifar10_weights.h'],['../arm__nnexamples__cifar10_8cpp.html#a2dd28923edd6ae13ec6e61e1d876650c',1,'conv1_bias():&#160;arm_nnexamples_cifar10.cpp']]],
   ['conv1_5fbias_5flshift',['CONV1_BIAS_LSHIFT',['../arm__nnexamples__cifar10__weights_8h.html#a4150dd1364fd3534561c5c6e530f9bfb',1,'arm_nnexamples_cifar10_weights.h']]],
   ['conv1_5fim_5fch',['CONV1_IM_CH',['../arm__nnexamples__cifar10__parameter_8h.html#aea8b1c41a63cf63eb6e7f049e84f22f7',1,'arm_nnexamples_cifar10_parameter.h']]],
@@ -24,7 +30,7 @@ var searchData=
   ['conv2_5fpadding',['CONV2_PADDING',['../arm__nnexamples__cifar10__parameter_8h.html#a39c1c3497169012a512219446613be0c',1,'arm_nnexamples_cifar10_parameter.h']]],
   ['conv2_5fstride',['CONV2_STRIDE',['../arm__nnexamples__cifar10__parameter_8h.html#a04f3292f8c8bac6dab973fb74eab2aa1',1,'arm_nnexamples_cifar10_parameter.h']]],
   ['conv2_5fwt',['CONV2_WT',['../arm__nnexamples__cifar10__weights_8h.html#a9fd43e19e65f000a8b28d9f3505f0f6f',1,'CONV2_WT():&#160;arm_nnexamples_cifar10_weights.h'],['../arm__nnexamples__cifar10_8cpp.html#a52875a8218c39da056e6d5bfb2030230',1,'conv2_wt():&#160;arm_nnexamples_cifar10.cpp']]],
-  ['conv3_5fbias',['conv3_bias',['../arm__nnexamples__cifar10_8cpp.html#a70b571cac288e0d371eb9f5e7c3ccbdd',1,'conv3_bias():&#160;arm_nnexamples_cifar10.cpp'],['../arm__nnexamples__cifar10__weights_8h.html#a8047897a26edb638e4f8c01734eb969b',1,'CONV3_BIAS():&#160;arm_nnexamples_cifar10_weights.h']]],
+  ['conv3_5fbias',['CONV3_BIAS',['../arm__nnexamples__cifar10__weights_8h.html#a8047897a26edb638e4f8c01734eb969b',1,'CONV3_BIAS():&#160;arm_nnexamples_cifar10_weights.h'],['../arm__nnexamples__cifar10_8cpp.html#a70b571cac288e0d371eb9f5e7c3ccbdd',1,'conv3_bias():&#160;arm_nnexamples_cifar10.cpp']]],
   ['conv3_5fbias_5flshift',['CONV3_BIAS_LSHIFT',['../arm__nnexamples__cifar10__weights_8h.html#a5457926e12a9e6b0ae9754d509fb7918',1,'arm_nnexamples_cifar10_weights.h']]],
   ['conv3_5fim_5fch',['CONV3_IM_CH',['../arm__nnexamples__cifar10__parameter_8h.html#a1d0f9b2d219527c5070e20c50c0ced41',1,'arm_nnexamples_cifar10_parameter.h']]],
   ['conv3_5fim_5fdim',['CONV3_IM_DIM',['../arm__nnexamples__cifar10__parameter_8h.html#a04ab2b7e8de2668e0087448664814f87',1,'arm_nnexamples_cifar10_parameter.h']]],
@@ -34,9 +40,10 @@ var searchData=
   ['conv3_5fout_5frshift',['CONV3_OUT_RSHIFT',['../arm__nnexamples__cifar10__weights_8h.html#ae38425db927f582d7b5edfcfaa03c676',1,'arm_nnexamples_cifar10_weights.h']]],
   ['conv3_5fpadding',['CONV3_PADDING',['../arm__nnexamples__cifar10__parameter_8h.html#af7824a30efdeefbf468c24a70678131a',1,'arm_nnexamples_cifar10_parameter.h']]],
   ['conv3_5fstride',['CONV3_STRIDE',['../arm__nnexamples__cifar10__parameter_8h.html#af6ff8c82aa2d1f58a125fe71169b7cc1',1,'arm_nnexamples_cifar10_parameter.h']]],
-  ['conv3_5fwt',['conv3_wt',['../arm__nnexamples__cifar10_8cpp.html#a174a146d0ffaa32b073c84d95c489fed',1,'conv3_wt():&#160;arm_nnexamples_cifar10.cpp'],['../arm__nnexamples__cifar10__weights_8h.html#aa3605f1b1fafb1612311727d9b97b0f2',1,'CONV3_WT():&#160;arm_nnexamples_cifar10_weights.h']]],
+  ['conv3_5fwt',['CONV3_WT',['../arm__nnexamples__cifar10__weights_8h.html#aa3605f1b1fafb1612311727d9b97b0f2',1,'CONV3_WT():&#160;arm_nnexamples_cifar10_weights.h'],['../arm__nnexamples__cifar10_8cpp.html#a174a146d0ffaa32b073c84d95c489fed',1,'conv3_wt():&#160;arm_nnexamples_cifar10.cpp']]],
   ['convert_5fq7_5fq15_5fweights',['convert_q7_q15_weights',['../namespacepara__gen.html#a75db0b43a1b942aa87ff10fd3b73dc8d',1,'para_gen']]],
   ['convert_5fto_5fx4_5fweights',['convert_to_x4_weights',['../namespacepara__gen.html#ab7f5de20ae32542da9f83a8e99850722',1,'para_gen']]],
   ['cmsis_20nn_20software_20library',['CMSIS NN Software Library',['../index.html',1,'']]],
+  ['convolution_20functions',['Convolution Functions',['../group__NNConv.html',1,'']]],
   ['readme_2etxt',['readme.txt',['../cifar10_2readme_8txt.html',1,'']]]
 ];

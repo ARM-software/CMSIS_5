@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Core (Cortex-M)
-   &#160;<span id="projectnumber">Version 5.3.0</span>
+   &#160;<span id="projectnumber">Version 5.4.0</span>
    </div>
    <div id="projectbrief">CMSIS-Core support for Cortex-M processor-based devices</div>
   </td>
@@ -103,6 +103,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
       <li><a href="#index_l"><span>l</span></a></li>
       <li><a href="#index_m"><span>m</span></a></li>
       <li><a href="#index_n"><span>n</span></a></li>
+      <li><a href="#index_o"><span>o</span></a></li>
       <li><a href="#index_p"><span>p</span></a></li>
       <li><a href="#index_q"><span>q</span></a></li>
       <li><a href="#index_r"><span>r</span></a></li>
@@ -172,6 +173,9 @@ $(document).ready(function(){initNavTree('functions_vars.html','');});
 <li>AIRCR
 : <a class="el" href="structSCB__Type.html#ad3e5b8934c647eb1b7383c1894f01380">SCB_Type</a>
 </li>
+<li>AUTHSTATUS
+: <a class="el" href="structPMU__Type.html#a60a8296d51236329e79d1604080aa9c1">PMU_Type</a>
+</li>
 </ul>
 
 
@@ -196,6 +200,12 @@ $(document).ready(function(){initNavTree('functions_vars.html','');});
 <li>CALIB
 : <a class="el" href="structSysTick__Type.html#afcadb0c6d35b21cdc0018658a13942de">SysTick_Type</a>
 </li>
+<li>CCFILTR
+: <a class="el" href="structPMU__Type.html#a61fea523ea0f4e9242101cb09fc6f6a8">PMU_Type</a>
+</li>
+<li>CCNTR
+: <a class="el" href="structPMU__Type.html#ada85996bd815d9eff9552794feec6d74">PMU_Type</a>
+</li>
 <li>CCR
 : <a class="el" href="structSCB__Type.html#a2d6653b0b70faac936046a02809b577f">SCB_Type</a>
 </li>
@@ -214,11 +224,29 @@ $(document).ready(function(){initNavTree('functions_vars.html','');});
 <li>CID3
 : <a class="el" href="structITM__Type.html#a43451f43f514108d9eaed5b017f8d921">ITM_Type</a>
 </li>
+<li>CIDR0
+: <a class="el" href="structPMU__Type.html#a54117364a5e8d3af0cc45769bb9b11c7">PMU_Type</a>
+</li>
+<li>CIDR1
+: <a class="el" href="structPMU__Type.html#a0eded5a42f8b81a09df17ce0a9f90897">PMU_Type</a>
+</li>
+<li>CIDR2
+: <a class="el" href="structPMU__Type.html#a94fa4cd97b83324090d6e696f3568415">PMU_Type</a>
+</li>
+<li>CIDR3
+: <a class="el" href="structPMU__Type.html#aff7ed1b5979deb4fb0a536aa477c6830">PMU_Type</a>
+</li>
 <li>CLAIMCLR
 : <a class="el" href="structTPI__Type.html#a0e10e292cb019a832b03ddd055b2f6ac">TPI_Type</a>
 </li>
 <li>CLAIMSET
 : <a class="el" href="structTPI__Type.html#af8b7d15fa5252b733dd4b11fa1b5730a">TPI_Type</a>
+</li>
+<li>CNTENCLR
+: <a class="el" href="structPMU__Type.html#a3c24c882b1679390b1dd957dbd0f0bf6">PMU_Type</a>
+</li>
+<li>CNTENSET
+: <a class="el" href="structPMU__Type.html#a030ee86cd33b72a0c5e66fbaf418d1be">PMU_Type</a>
 </li>
 <li>COMP0
 : <a class="el" href="structDWT__Type.html#a61c2965af5bc0643f9af65620b0e67c9">DWT_Type</a>
@@ -247,6 +275,7 @@ $(document).ready(function(){initNavTree('functions_vars.html','');});
 <li>CTRL
 : <a class="el" href="structDWT__Type.html#add790c53410023b3b581919bb681fe2a">DWT_Type</a>
 , <a class="el" href="structMPU__Type.html#a769178ef949f0d5d8f18ddbd9e4e926f">MPU_Type</a>
+, <a class="el" href="structPMU__Type.html#aba9bddd6b49c88e38f4bb79d32002c3c">PMU_Type</a>
 , <a class="el" href="structSysTick__Type.html#a875e7afa5c4fd43997fb544a4ac6e37e">SysTick_Type</a>
 </li>
 <li>CYCCNT
@@ -267,12 +296,14 @@ $(document).ready(function(){initNavTree('functions_vars.html','');});
 </li>
 <li>DEVARCH
 : <a class="el" href="structITM__Type.html#a2372a4ebb63e36d1eb3fcf83a74fd537">ITM_Type</a>
+, <a class="el" href="structPMU__Type.html#a439c7a309f02c41a6581d0819e896fdc">PMU_Type</a>
 </li>
 <li>DEVID
 : <a class="el" href="structTPI__Type.html#abc0ecda8a5446bc754080276bad77514">TPI_Type</a>
 </li>
 <li>DEVTYPE
-: <a class="el" href="structTPI__Type.html#ad98855854a719bbea33061e71529a472">TPI_Type</a>
+: <a class="el" href="structPMU__Type.html#aac8b7bca579afd4969d8bfffa61afbed">PMU_Type</a>
+, <a class="el" href="structTPI__Type.html#ad98855854a719bbea33061e71529a472">TPI_Type</a>
 </li>
 <li>DFR
 : <a class="el" href="structSCB__Type.html#a85dd6fe77aab17e7ea89a52c59da6004">SCB_Type</a>
@@ -287,6 +318,12 @@ $(document).ready(function(){initNavTree('functions_vars.html','');});
 
 
 <h3><a class="anchor" id="index_e"></a>- e -</h3><ul>
+<li>EVCNTR
+: <a class="el" href="structPMU__Type.html#a08f877e8edcb1c19b81ebcf95f85e2f7">PMU_Type</a>
+</li>
+<li>EVTYPER
+: <a class="el" href="structPMU__Type.html#a27682a8d2fe09d2052a4295d5b4a243b">PMU_Type</a>
+</li>
 <li>EXCCNT
 : <a class="el" href="structDWT__Type.html#a9fe20c16c5167ca61486caf6832686d1">DWT_Type</a>
 </li>
@@ -364,6 +401,12 @@ $(document).ready(function(){initNavTree('functions_vars.html','');});
 </li>
 <li>IMCR
 : <a class="el" href="structITM__Type.html#ae2ce4d3a54df2fd11a197ccac4406cd0">ITM_Type</a>
+</li>
+<li>INTENCLR
+: <a class="el" href="structPMU__Type.html#aaff7d5f3246c641d1f503d74a5adb0ee">PMU_Type</a>
+</li>
+<li>INTENSET
+: <a class="el" href="structPMU__Type.html#a3f5a5872105d9056145e9095bc1c63ac">PMU_Type</a>
 </li>
 <li>IP
 : <a class="el" href="structNVIC__Type.html#a7ff7364a4260df67a2784811e8da4efd">NVIC_Type</a>
@@ -457,6 +500,16 @@ $(document).ready(function(){initNavTree('functions_vars.html','');});
 </ul>
 
 
+<h3><a class="anchor" id="index_o"></a>- o -</h3><ul>
+<li>OVSCLR
+: <a class="el" href="structPMU__Type.html#a2acdf96dc7f60ad5a384d1f47e0bb8e0">PMU_Type</a>
+</li>
+<li>OVSSET
+: <a class="el" href="structPMU__Type.html#a153e694a19f845e65a3d2abd4d64faa7">PMU_Type</a>
+</li>
+</ul>
+
+
 <h3><a class="anchor" id="index_p"></a>- p -</h3><ul>
 <li>PCSR
 : <a class="el" href="structDWT__Type.html#a6353ca1d1ad9bc1be05d3b5632960113">DWT_Type</a>
@@ -487,6 +540,21 @@ $(document).ready(function(){initNavTree('functions_vars.html','');});
 </li>
 <li>PID7
 : <a class="el" href="structITM__Type.html#a2bcec6803f28f30d5baf5e20e3517d3d">ITM_Type</a>
+</li>
+<li>PIDR0
+: <a class="el" href="structPMU__Type.html#afe7c3069b9a30d54e5e30166a2281bd7">PMU_Type</a>
+</li>
+<li>PIDR1
+: <a class="el" href="structPMU__Type.html#a8a764266e9b41e7c100a9853889d94ab">PMU_Type</a>
+</li>
+<li>PIDR2
+: <a class="el" href="structPMU__Type.html#a2f7053542f392f435ad51930d0504622">PMU_Type</a>
+</li>
+<li>PIDR3
+: <a class="el" href="structPMU__Type.html#a831a9b4e2e07eef0b93713beb26a6516">PMU_Type</a>
+</li>
+<li>PIDR4
+: <a class="el" href="structPMU__Type.html#abe4612a6387c5be0e56898bfa6b16902">PMU_Type</a>
 </li>
 <li>PORT
 : <a class="el" href="structITM__Type.html#af95bc1810f9ea802d628cb9dea81e02e">ITM_Type</a>
@@ -598,6 +666,9 @@ $(document).ready(function(){initNavTree('functions_vars.html','');});
 <li>STIR
 : <a class="el" href="structNVIC__Type.html#a37de89637466e007171c6b135299bc75">NVIC_Type</a>
 </li>
+<li>SWINC
+: <a class="el" href="structPMU__Type.html#a2add0abae68f27801299d6dd4bfcde66">PMU_Type</a>
+</li>
 </ul>
 
 
@@ -619,6 +690,7 @@ $(document).ready(function(){initNavTree('functions_vars.html','');});
 </li>
 <li>TYPE
 : <a class="el" href="structMPU__Type.html#aba02af87f77577c725cf73879cabb609">MPU_Type</a>
+, <a class="el" href="structPMU__Type.html#a1f2e763ceeeff8ff15c0bd3520b683e8">PMU_Type</a>
 </li>
 </ul>
 
@@ -671,7 +743,7 @@ $(document).ready(function(){initNavTree('functions_vars.html','');});
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Jul 10 2019 15:20:26 for CMSIS-Core (Cortex-M) Version 5.3.0 by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Apr 9 2020 15:49:08 for CMSIS-Core (Cortex-M) Version 5.4.0 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

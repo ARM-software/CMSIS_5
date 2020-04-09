@@ -13,6 +13,7 @@ var searchData=
   ['ddr2_5ftiming_5fmode',['ddr2_timing_mode',['../group__nand__interface__gr.html#a6d9b66da0e56d04d545e0bb6841891b2',1,'ARM_NAND_CAPABILITIES']]],
   ['ddr_5ftiming_5fmode',['ddr_timing_mode',['../group__nand__interface__gr.html#a00c1f5db7d7c4abe7556733c36da7783',1,'ARM_NAND_CAPABILITIES']]],
   ['deactivate',['Deactivate',['../group__wifi__interface__gr.html#ae9a38e69c7b7face914560e872378ed1',1,'ARM_DRIVER_WIFI']]],
+  ['deprecated_20list',['Deprecated List',['../deprecated.html',1,'']]],
   ['deviceconnect',['DeviceConnect',['../group__usbd__interface__gr.html#a71d312ce5c5335c6a035da55c25848e4',1,'ARM_DRIVER_USBD']]],
   ['devicedisconnect',['DeviceDisconnect',['../group__usbd__interface__gr.html#adff9dd8a0dc764e78b0271113ae3b0af',1,'ARM_DRIVER_USBD']]],
   ['devicegetstate',['DeviceGetState',['../group__usbd__interface__gr.html#ab906727173cbe8372bdc26ef20581baa',1,'ARM_DRIVER_USBD']]],
@@ -62,5 +63,6 @@ var searchData=
   ['drv',['drv',['../group__common__drv__gr.html#adcd153bc4507926c792e86ebe74e6455',1,'ARM_DRIVER_VERSION']]],
   ['dsr',['dsr',['../group__usart__interface__gr.html#a437895b17519a16f920ae07461dd67d2',1,'ARM_USART_MODEM_STATUS::dsr()'],['../group__usart__interface__gr.html#a437895b17519a16f920ae07461dd67d2',1,'ARM_USART_CAPABILITIES::dsr()']]],
   ['dtr',['dtr',['../group__usart__interface__gr.html#aa3cc092c82fdc3e5e6646460be6ae9fd',1,'ARM_USART_CAPABILITIES']]],
-  ['duplex',['duplex',['../group__eth__interface__gr.html#a44b6cae894d7311dcdae7e93969c3c09',1,'ARM_ETH_LINK_INFO']]]
+  ['duplex',['duplex',['../group__eth__interface__gr.html#a44b6cae894d7311dcdae7e93969c3c09',1,'ARM_ETH_LINK_INFO']]],
+  ['defines_20and_20structs',['Defines and Structs',['../group__vioDefines__gr.html',1,'']]]
 ];

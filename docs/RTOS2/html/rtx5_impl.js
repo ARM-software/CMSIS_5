@@ -22,7 +22,8 @@ var rtx5_impl =
       [ "RTX5 Header File", "theory_of_operation.html#rtx_os_h", null ],
       [ "Timeout Value", "theory_of_operation.html#CMSIS_RTOS_TimeOutValue", null ],
       [ "Calls from Interrupt Service Routines", "theory_of_operation.html#CMSIS_RTOS_ISR_Calls", null ],
-      [ "SVC Functions", "theory_of_operation.html#CMSIS_RTOS_svcFunctions", null ]
+      [ "SVC Functions", "theory_of_operation.html#CMSIS_RTOS_svcFunctions", null ],
+      [ "Arm C library multi-threading protection", "theory_of_operation.html#cre_rtx_proj_clib_arm", null ]
     ] ],
     [ "Configure RTX v5", "config_rtx5.html", [
       [ "System Configuration", "config_rtx5.html#systemConfig", [
@@ -63,6 +64,75 @@ var rtx5_impl =
       ] ]
     ] ],
     [ "Building the RTX5 Library", "creating_RTX5_LIB.html", null ],
+    [ "Tutorial", "rtos2_tutorial.html", [
+      [ "Prerequisites", "rtos2_tutorial.html#rtos2_tutorial_pre", null ],
+      [ "First Steps with Keil RTX5", "rtos2_tutorial.html#rtos2_tutorial_first_steps", null ],
+      [ "Accessing the CMSIS-RTOS2 API", "rtos2_tutorial.html#rtos2_tutorial_access", null ],
+      [ "Threads", "rtos2_tutorial.html#rtos2_tutorial_threads", null ],
+      [ "Starting the RTOS", "rtos2_tutorial.html#rtos2_tutorial_start", [
+        [ "Exercise 1 - A First CMSIS-RTOS2 Project", "rtos2_tutorial.html#rtos2_tutorial_ex1", null ]
+      ] ],
+      [ "Creating Threads", "rtos2_tutorial.html#rtos2_tutorial_thread_create", [
+        [ "Exercise 2 - Creating and Managing Threads", "rtos2_tutorial.html#rtos2_tutorial_ex2", null ]
+      ] ],
+      [ "Thread Management and Priority", "rtos2_tutorial.html#rtos2_tutorial_thread_mgmt", null ],
+      [ "Memory Management", "rtos2_tutorial.html#rtos2_tutorial_ex2_mem_mgmt", [
+        [ "Exercise 3 - Memory Model", "rtos2_tutorial.html#rtos2_tutorial_ex3", null ]
+      ] ],
+      [ "Multiple Instances", "rtos2_tutorial.html#rtos2_tutorial_multi_inst", [
+        [ "Exercise 4 - Multiple Instances", "rtos2_tutorial.html#rtos2_tutorial_multi_inst_ex4", null ]
+      ] ],
+      [ "Joinable Threads", "rtos2_tutorial.html#rtos2_tutorial_thread_join", [
+        [ "Exercise 5 - Joinable Threads", "rtos2_tutorial.html#rtos2_tutorial_ex4", null ]
+      ] ],
+      [ "Time Management", "rtos2_tutorial.html#rtos2_tutorial_time_mgmt", [
+        [ "Time Delay", "rtos2_tutorial.html#rtos2_tutorial_time_delay", null ],
+        [ "Absolute Time Delay", "rtos2_tutorial.html#rtos2_tutorial_abs_time_delay", null ],
+        [ "Exercise 6 - Time Management", "rtos2_tutorial.html#rtos2_tutorial_ex6", null ],
+        [ "Virtual Timers", "rtos2_tutorial.html#rtos2_tutorial_virtual_timers", null ],
+        [ "Exercise 7 - Virtual Timer", "rtos2_tutorial.html#rtos2_tutorial_ex7", null ],
+        [ "Idle Thread", "rtos2_tutorial.html#rtos2_tutorial_idle_thread", null ],
+        [ "Exercise 8 - Idle Thread", "rtos2_tutorial.html#rtos2_tutorial_ex8", null ]
+      ] ],
+      [ "Inter-thread Communication", "rtos2_tutorial.html#rtos2_tutorial_interthread_com", [
+        [ "Thread Flags", "rtos2_tutorial.html#rtos2_tutorial_thread_flags", [
+          [ "Exercise 9 - Thread Flags", "rtos2_tutorial.html#rtos2_tutorial_ex9", null ]
+        ] ],
+        [ "Event Flags", "rtos2_tutorial.html#rtos2_tutorial_event_flags", [
+          [ "Exercise 10 - Event Flags", "rtos2_tutorial.html#rtos2_tutorial_ex10", null ]
+        ] ],
+        [ "Semaphores", "rtos2_tutorial.html#rtos2_tutorial_semaphores", [
+          [ "Using Semaphores", "rtos2_tutorial.html#rtos2_tutorial_sem_usage", null ],
+          [ "Signalling", "rtos2_tutorial.html#rtos2_tutorial_sem_sig", null ],
+          [ "Exercise 11 - Semaphore Signalling", "rtos2_tutorial.html#rtos2_tutorial_ex11", null ],
+          [ "Multiplex", "rtos2_tutorial.html#rtos2_tutorial_sem_multi", null ],
+          [ "Exercise 12 - Multiplex", "rtos2_tutorial.html#rtos2_tutorial_ex12", null ],
+          [ "Rendezvous", "rtos2_tutorial.html#rtos2_tutorial_sem_rend", null ],
+          [ "Exercise 13 - Rendezvous", "rtos2_tutorial.html#rtos2_tutorial_sem_rend_ex13", null ],
+          [ "Barrier Turnstile", "rtos2_tutorial.html#rtos2_tutorial_sem_barr_turn", null ],
+          [ "Exercise 14 - Semaphore Barrier", "rtos2_tutorial.html#rtos2_tutorial_ex14", null ],
+          [ "Semaphore Caveats", "rtos2_tutorial.html#rtos2_tutorial_sem_caveats", null ]
+        ] ],
+        [ "Mutex", "rtos2_tutorial.html#rtos2_tutorial_mutex", [
+          [ "Exercise 15 - Mutex", "rtos2_tutorial.html#rtos2_tutorial_ex15", null ],
+          [ "Mutex Caveats", "rtos2_tutorial.html#rtos2_tutorial_mutex_caveats", null ]
+        ] ],
+        [ "Data Exchange", "rtos2_tutorial.html#rtos2_tutorial_data_exchange", [
+          [ "Message Queue", "rtos2_tutorial.html#rtos2_tutorial_msg_queue", null ],
+          [ "Exercise 16 - Message Queue", "rtos2_tutorial.html#rtos2_tutorial_ex16", null ],
+          [ "Extended Message Queue", "rtos2_tutorial.html#rtos2_tutorial_ext_msg_queue", null ],
+          [ "Exercise 17 - Message Queue", "rtos2_tutorial.html#rtos2_tutorial_ex17", null ],
+          [ "Memory Pool", "rtos2_tutorial.html#rtos2_tutorial_mem_pool", null ],
+          [ "Exercise 18 - Zero Copy Mailbox", "rtos2_tutorial.html#rtos2_tutorial_ex18", null ]
+        ] ]
+      ] ],
+      [ "Configuration", "rtos2_tutorial.html#rtos2_tutorial_config", [
+        [ "System Configuration", "rtos2_tutorial.html#rtos2_tutorial_config_sys", null ],
+        [ "Thread Configuration", "rtos2_tutorial.html#rtos2_tutorial_config_thread", null ],
+        [ "System Timer Configuration", "rtos2_tutorial.html#rtos2_tutorial_config_sys_timer", null ]
+      ] ],
+      [ "Conclusion", "rtos2_tutorial.html#rtos2_tutorial_conclusion", null ]
+    ] ],
     [ "Technical Data", "technicalData5.html", "technicalData5" ],
     [ "MISRA C:2012 Compliance", "misraCompliance5.html", [
       [ "[MISRA Note 1]: Return statements for parameter checking", "misraCompliance5.html#MISRA_1", null ],

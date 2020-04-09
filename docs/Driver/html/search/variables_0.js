@@ -5,7 +5,7 @@ var searchData=
   ['acls',['acls',['../Driver__Storage_8h.html#abbd64eb8edcf2263db5c8ac140dc0448',1,'ARM_STORAGE_SECURITY_FEATURES']]],
   ['activate',['Activate',['../group__wifi__interface__gr.html#a444ea7bda2c45eab34050d2a895baeec',1,'ARM_DRIVER_WIFI']]],
   ['active',['active',['../group__usbd__interface__gr.html#ab22b96a3efad48f5a542f46c1b224800',1,'ARM_USBD_STATE']]],
-  ['addr',['addr',['../group__storage__interface__gr.html#a0e89cf6b9f6cd3125470b1bed2b823df',1,'ARM_STORAGE_BLOCK']]],
+  ['addr',['addr',['../group__storage__interface__gr.html#a0e89cf6b9f6cd3125470b1bed2b823df',1,'ARM_STORAGE_BLOCK::addr()'],['../group__vioIPAddr__gr.html#a57d7ee30ed9ca14fc1fd213819127dfd',1,'vioAddrIPv4_t::addr()'],['../group__vioIPAddr__gr.html#a7226b06ac3577cd90f4e87b100635cf7',1,'vioAddrIPv6_t::addr()']]],
   ['address_5f10_5fbit',['address_10_bit',['../group__i2c__interface__gr.html#a4ffaaf168a9f43e98d710abff5861ed5',1,'ARM_I2C_CAPABILITIES']]],
   ['ap',['ap',['../group__wifi__control__gr.html#ae980bcb85233b9c5904072246ac71dd7',1,'ARM_WIFI_CAPABILITIES']]],
   ['api',['api',['../group__common__drv__gr.html#ad180da20fbde1d3dafc074af87c19540',1,'ARM_DRIVER_VERSION']]],

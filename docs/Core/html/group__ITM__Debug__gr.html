@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Core (Cortex-M)
-   &#160;<span id="projectnumber">Version 5.3.0</span>
+   &#160;<span id="projectnumber">Version 5.4.0</span>
    </div>
    <div id="projectbrief">CMSIS-Core support for Cortex-M processor-based devices</div>
   </td>
@@ -137,6 +137,7 @@ Variables</h2></td></tr>
 <tr class="separator:ga12e68e55a7badc271b948d6c7230b2a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Description</h2>
+<p>Debug Access to the Instrumented Trace Macrocell (ITM) </p>
 <p>CMSIS provides additional debug functions to enlarge the Debug Access. Data can be transmitted via a certain global buffer variable towards the target system.</p>
 <p>The Cortex-M3 / Cortex-M4 / Cortex-M7 incorporates the <b>Instrumented Trace Macrocell (ITM)</b> that provides together with the <b>Serial Wire Output (SWO)</b> trace capabilities for the microcontroller system. The ITM has 32 communication channels; two ITM communication channels are used by CMSIS to output the following information:</p>
 <ul>
@@ -193,6 +194,8 @@ Example:</h1>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>ITM Check Character. </p>
 <p>This function reads the external variable <a class="el" href="group__ITM__Debug__gr.html#ga12e68e55a7badc271b948d6c7230b2a8">ITM_RxBuffer</a> and checks whether a character is available or not.</p>
 <dl class="section return"><dt>Returns</dt><dd><ul>
 <li>=0 - No character available</li>
@@ -215,6 +218,8 @@ Example:</h1>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>ITM Receive Character. </p>
 <p>This function inputs a character via the external variable <a class="el" href="group__ITM__Debug__gr.html#ga12e68e55a7badc271b948d6c7230b2a8">ITM_RxBuffer</a>. It returns when no debugger is connected that has booked the output. It is blocking when a debugger is connected, but the previously sent character has not been transmitted.</p>
 <dl class="section return"><dt>Returns</dt><dd><ul>
 <li>Received character</li>
@@ -237,6 +242,8 @@ Example:</h1>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Transmits a character via channel 0. </p>
 <p>This function transmits a character via the ITM channel 0. It returns when no debugger is connected that has booked the output. It is blocking when a debugger is connected, but the previously sent character has not been transmitted.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -259,6 +266,8 @@ Example:</h1>
       </table>
 </div><div class="memdoc">
 
+<p>external variable to receive characters </p>
+
 </div>
 </div>
 </div><!-- contents -->
@@ -266,7 +275,7 @@ Example:</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Jul 10 2019 15:20:25 for CMSIS-Core (Cortex-M) Version 5.3.0 by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Apr 9 2020 15:49:08 for CMSIS-Core (Cortex-M) Version 5.4.0 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

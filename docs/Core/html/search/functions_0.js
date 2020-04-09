@@ -104,6 +104,7 @@ var searchData=
   ['_5f_5fstrt',['__STRT',['../group__intrinsic__CPU__gr.html#ga625bc4ac0b1d50de9bcd13d9f050030e',1,'Ref_cmInstr.txt']]],
   ['_5f_5fsxtab16',['__SXTAB16',['../group__intrinsic__SIMD__gr.html#gac540b4fc41d30778ba102d2a65db5589',1,'Ref_cm4_simd.txt']]],
   ['_5f_5fsxtb16',['__SXTB16',['../group__intrinsic__SIMD__gr.html#ga38dce3dd13ba212e80ec3cff4abeb11a',1,'Ref_cm4_simd.txt']]],
+  ['_5f_5fsxtb16_5frorn',['__SXTB16_RORn',['../group__intrinsic__SIMD__gr.html#gaef7e08ba1dbaaae1efdb76c113155ed1',1,'Ref_cm4_simd.txt']]],
   ['_5f_5ftz_5fget_5fbasepri_5fns',['__TZ_get_BASEPRI_NS',['../group__coreregister__trustzone__functions.html#ga624509c924d2583f0d4dca6ab270f051',1,'Ref_Trustzone.txt']]],
   ['_5f_5ftz_5fget_5fcontrol_5fns',['__TZ_get_CONTROL_NS',['../group__coreregister__trustzone__functions.html#ga27bf1f88e794c30808ee73a29d46e358',1,'Ref_Trustzone.txt']]],
   ['_5f_5ftz_5fget_5ffaultmask_5fns',['__TZ_get_FAULTMASK_NS',['../group__coreregister__trustzone__functions.html#ga578b41087f207e1a475daae6cc8a28dc',1,'Ref_Trustzone.txt']]],

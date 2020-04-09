@@ -16,5 +16,19 @@ var searchData=
   ['arm_5fmpu_5fsetmemattrex',['ARM_MPU_SetMemAttrEx',['../group__mpu8__functions.html#ga1799413f08a157d636a1491371c15ce2',1,'Ref_MPU8.txt']]],
   ['arm_5fmpu_5fsetregion',['ARM_MPU_SetRegion',['../group__mpu__functions.html#ga16931f9ad84d7289e8218e169ae6db5d',1,'ARM_MPU_SetRegion(uint32_t rbar, uint32_t rasr):&#160;Ref_MPU.txt'],['../group__mpu8__functions.html#ga6d7f220015c070c0e469948c1775ee3d',1,'ARM_MPU_SetRegion(uint32_t rnr, uint32_t rbar, uint32_t rlar):&#160;Ref_MPU8.txt']]],
   ['arm_5fmpu_5fsetregion_5fns',['ARM_MPU_SetRegion_NS',['../group__mpu8__functions.html#ga7566931ca9bb9f22d213a67ec5f8c745',1,'Ref_MPU8.txt']]],
-  ['arm_5fmpu_5fsetregionex',['ARM_MPU_SetRegionEx',['../group__mpu__functions.html#ga042ba1a6a1a58795231459ac0410b809',1,'ARM_MPU_SetRegionEx(uint32_t rnr, uint32_t rbar, uint32_t rasr):&#160;Ref_MPU.txt'],['../group__mpu8__functions.html#ga3d50ba8546252bea959e45c8fdf16993',1,'ARM_MPU_SetRegionEx(MPU_Type *mpu, uint32_t rnr, uint32_t rbar, uint32_t rlar):&#160;Ref_MPU8.txt']]]
+  ['arm_5fmpu_5fsetregionex',['ARM_MPU_SetRegionEx',['../group__mpu__functions.html#ga042ba1a6a1a58795231459ac0410b809',1,'ARM_MPU_SetRegionEx(uint32_t rnr, uint32_t rbar, uint32_t rasr):&#160;Ref_MPU.txt'],['../group__mpu8__functions.html#ga3d50ba8546252bea959e45c8fdf16993',1,'ARM_MPU_SetRegionEx(MPU_Type *mpu, uint32_t rnr, uint32_t rbar, uint32_t rlar):&#160;Ref_MPU8.txt']]],
+  ['arm_5fpmu_5fcntr_5fdisable',['ARM_PMU_CNTR_Disable',['../group__pmu8__functions.html#ga76c6f266544c53d93801cfb614155420',1,'Ref_PMU8.txt']]],
+  ['arm_5fpmu_5fcntr_5fenable',['ARM_PMU_CNTR_Enable',['../group__pmu8__functions.html#ga22e481855ab257180e24f01a38623887',1,'Ref_PMU8.txt']]],
+  ['arm_5fpmu_5fcntr_5fincrement',['ARM_PMU_CNTR_Increment',['../group__pmu8__functions.html#ga27b07d38050a16ce416bfaf151a24944',1,'Ref_PMU8.txt']]],
+  ['arm_5fpmu_5fcyccnt_5freset',['ARM_PMU_CYCCNT_Reset',['../group__pmu8__functions.html#ga4288c08039886cd24eb2dd4e743fb97e',1,'Ref_PMU8.txt']]],
+  ['arm_5fpmu_5fdisable',['ARM_PMU_Disable',['../group__pmu8__functions.html#ga74273d4a47cf1a5e99d857a3e8896f10',1,'Ref_PMU8.txt']]],
+  ['arm_5fpmu_5fenable',['ARM_PMU_Enable',['../group__pmu8__functions.html#ga618e7140a774ac2a31a59db4b7d13abc',1,'Ref_PMU8.txt']]],
+  ['arm_5fpmu_5fevcntr_5fall_5freset',['ARM_PMU_EVCNTR_ALL_Reset',['../group__pmu8__functions.html#ga90527859e6f0ef980300c86c2916ee79',1,'Ref_PMU8.txt']]],
+  ['arm_5fpmu_5fget_5fccntr',['ARM_PMU_Get_CCNTR',['../group__pmu8__functions.html#gaaa18c27d39f5a55c1b621f5296b88112',1,'Ref_PMU8.txt']]],
+  ['arm_5fpmu_5fget_5fcntr_5fovs',['ARM_PMU_Get_CNTR_OVS',['../group__pmu8__functions.html#ga70436b378b75bdfe3fcb47697d309a96',1,'Ref_PMU8.txt']]],
+  ['arm_5fpmu_5fget_5fevcntr',['ARM_PMU_Get_EVCNTR',['../group__pmu8__functions.html#ga9768cbaffcf2c0b31febe96db91a85d8',1,'Ref_PMU8.txt']]],
+  ['arm_5fpmu_5fset_5fcntr_5firq_5fdisable',['ARM_PMU_Set_CNTR_IRQ_Disable',['../group__pmu8__functions.html#ga731b6cd01c6eaa6f909164602f19d0bc',1,'Ref_PMU8.txt']]],
+  ['arm_5fpmu_5fset_5fcntr_5firq_5fenable',['ARM_PMU_Set_CNTR_IRQ_Enable',['../group__pmu8__functions.html#ga133168437a20566d319c78b751425c44',1,'Ref_PMU8.txt']]],
+  ['arm_5fpmu_5fset_5fcntr_5fovs',['ARM_PMU_Set_CNTR_OVS',['../group__pmu8__functions.html#ga18376f0e3829e93e99149847667e5864',1,'Ref_PMU8.txt']]],
+  ['arm_5fpmu_5fset_5fevtyper',['ARM_PMU_Set_EVTYPER',['../group__pmu8__functions.html#ga77ee08f0b3e77d4559cb79fde30d89e9',1,'Ref_PMU8.txt']]]
 ];

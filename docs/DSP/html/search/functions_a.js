@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['write_5fq15x2',['write_q15x2',['../arm__math_8h.html#a1c6d46f43d41c6ca1b7d6a0d8ed95036',1,'arm_math.h']]],
-  ['write_5fq15x2_5fia',['write_q15x2_ia',['../arm__math_8h.html#a576a0e2a4667277b42c478dfda753dc6',1,'arm_math.h']]],
-  ['write_5fq7x4_5fia',['write_q7x4_ia',['../arm__math_8h.html#a05bde59a4c7dd866d0a2e3e6fcac17bd',1,'arm_math.h']]]
+  ['test_5fsignal_5fconverge',['test_signal_converge',['../arm__signal__converge__example__f32_8c.html#a8f521e839d4fad24a4f12a18dfeae5d4',1,'arm_signal_converge_example_f32.c']]],
+  ['test_5fsignal_5fconverge_5fexample',['test_signal_converge_example',['../arm__signal__converge__example__f32_8c.html#ac786d43cbc17bb09738447034ff8e22e',1,'arm_signal_converge_example_f32.c']]]
 ];

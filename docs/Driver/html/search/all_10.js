@@ -87,5 +87,6 @@ var searchData=
   ['synchronous',['synchronous',['../group__sai__interface__gr.html#a9fa4f850b8ce2be2c7ffa2e3ec70ae20',1,'ARM_SAI_CAPABILITIES']]],
   ['synchronous_5fmaster',['synchronous_master',['../group__usart__interface__gr.html#afb385bfd9fb2d714bb58aa7d8d9d7d51',1,'ARM_USART_CAPABILITIES']]],
   ['synchronous_5fslave',['synchronous_slave',['../group__usart__interface__gr.html#a37dcd87df8762e2bc9af9fea368b1537',1,'ARM_USART_CAPABILITIES']]],
-  ['status_20error_20codes',['Status Error Codes',['../group__usart__execution__status.html',1,'']]]
+  ['status_20error_20codes',['Status Error Codes',['../group__usart__execution__status.html',1,'']]],
+  ['signals',['Signals',['../group__vioSignals__gr.html',1,'']]]
 ];

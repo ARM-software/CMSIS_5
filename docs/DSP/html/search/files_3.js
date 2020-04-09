@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['cmakelists_2etxt',['CMakeLists.txt',['../Examples_2ARM_2arm__variance__example_2CMakeLists_8txt.html',1,'']]]
+  ['distancefunctions_2ec',['DistanceFunctions.c',['../DistanceFunctions_8c.html',1,'']]]
 ];

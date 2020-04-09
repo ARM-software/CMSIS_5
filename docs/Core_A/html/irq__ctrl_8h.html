@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Core (Cortex-A)
-   &#160;<span id="projectnumber">Version 1.1.4</span>
+   &#160;<span id="projectnumber">Version 1.2.0</span>
    </div>
    <div id="projectbrief">CMSIS-Core support for Cortex-A processor-based devices</div>
   </td>
@@ -203,6 +203,16 @@ Macros</h2></td></tr>
 <tr class="memitem:gaa66525a1ee05c56f367540b2135e81ed"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__irq__mode__defs.html#gaa66525a1ee05c56f367540b2135e81ed">IRQ_MODE_CPU_7</a>&#160;&#160;&#160;(0x80UL &lt;&lt; IRQ_MODE_CPU_Pos)</td></tr>
 <tr class="memdesc:gaa66525a1ee05c56f367540b2135e81ed"><td class="mdescLeft">&#160;</td><td class="mdescRight">CPU: interrupt targets CPU 7.  <a href="group__irq__mode__defs.html#gaa66525a1ee05c56f367540b2135e81ed">More...</a><br/></td></tr>
 <tr class="separator:gaa66525a1ee05c56f367540b2135e81ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8762d04e7c5660e967c4a4de0bd225cf"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="irq__ctrl_8h.html#a8762d04e7c5660e967c4a4de0bd225cf">IRQ_MODE_MODEL_Pos</a>&#160;&#160;&#160;(13U)</td></tr>
+<tr class="separator:a8762d04e7c5660e967c4a4de0bd225cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a43b2d354adbc6e577504c483b93f68b2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="irq__ctrl_8h.html#a43b2d354adbc6e577504c483b93f68b2">IRQ_MODE_MODEL_Msk</a>&#160;&#160;&#160;(0x1UL &lt;&lt; IRQ_MODE_MODEL_Pos)</td></tr>
+<tr class="separator:a43b2d354adbc6e577504c483b93f68b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a945e56c21271cae944d993885cd5882d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="irq__ctrl_8h.html#a945e56c21271cae944d993885cd5882d">IRQ_MODE_MODEL_NN</a>&#160;&#160;&#160;(0x0UL &lt;&lt; IRQ_MODE_MODEL_Pos)</td></tr>
+<tr class="memdesc:a945e56c21271cae944d993885cd5882d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Corresponding interrupt is handled using the N-N model.  <a href="#a945e56c21271cae944d993885cd5882d">More...</a><br/></td></tr>
+<tr class="separator:a945e56c21271cae944d993885cd5882d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a547d14c0b2299524f2ad4bb47f65059a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="irq__ctrl_8h.html#a547d14c0b2299524f2ad4bb47f65059a">IRQ_MODE_MODEL_1N</a>&#160;&#160;&#160;(0x1UL &lt;&lt; IRQ_MODE_MODEL_Pos)</td></tr>
+<tr class="memdesc:a547d14c0b2299524f2ad4bb47f65059a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Corresponding interrupt is handled using the 1-N model.  <a href="#a547d14c0b2299524f2ad4bb47f65059a">More...</a><br/></td></tr>
+<tr class="separator:a547d14c0b2299524f2ad4bb47f65059a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaacb93ae158e548c54698a7230647804a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__irq__mode__defs.html#gaacb93ae158e548c54698a7230647804a">IRQ_MODE_ERROR</a>&#160;&#160;&#160;(0x80000000UL)</td></tr>
 <tr class="memdesc:gaacb93ae158e548c54698a7230647804a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Bit indicating mode value error.  <a href="group__irq__mode__defs.html#gaacb93ae158e548c54698a7230647804a">More...</a><br/></td></tr>
 <tr class="separator:gaacb93ae158e548c54698a7230647804a"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -286,8 +296,8 @@ Functions</h2></td></tr>
 <tr class="separator:ga061da812739bdba1e32765ed6501b83c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Description</h2>
-<div class="textblock"><dl class="section version"><dt>Version</dt><dd>V1.0.0 </dd></dl>
-<dl class="section date"><dt>Date</dt><dd>23. June 2017 </dd></dl>
+<div class="textblock"><dl class="section version"><dt>Version</dt><dd>V1.1.0 </dd></dl>
+<dl class="section date"><dt>Date</dt><dd>03. March 2020 </dd></dl>
 </div><h2 class="groupheader">Macro Definition Documentation</h2>
 <a class="anchor" id="ad98f7b2e49c628cc86ee5ad15f5b28a6"></a>
 <div class="memitem">
@@ -343,6 +353,54 @@ Functions</h2></td></tr>
       <table class="memname">
         <tr>
           <td class="memname">#define IRQ_MODE_DOMAIN_Pos&#160;&#160;&#160;(4U)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a547d14c0b2299524f2ad4bb47f65059a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define IRQ_MODE_MODEL_1N&#160;&#160;&#160;(0x1UL &lt;&lt; IRQ_MODE_MODEL_Pos)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a43b2d354adbc6e577504c483b93f68b2"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define IRQ_MODE_MODEL_Msk&#160;&#160;&#160;(0x1UL &lt;&lt; IRQ_MODE_MODEL_Pos)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a945e56c21271cae944d993885cd5882d"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define IRQ_MODE_MODEL_NN&#160;&#160;&#160;(0x0UL &lt;&lt; IRQ_MODE_MODEL_Pos)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a8762d04e7c5660e967c4a4de0bd225cf"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define IRQ_MODE_MODEL_Pos&#160;&#160;&#160;(13U)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -452,7 +510,7 @@ Functions</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_f806067e3cfd0faadc71b6fb603a0f72.html">Core_A</a></li><li class="navelem"><a class="el" href="dir_3f4b401a2ed0c5733c677abc947b6aa9.html">Include</a></li><li class="navelem"><a class="el" href="irq__ctrl_8h.html">irq_ctrl.h</a></li>
-    <li class="footer">Generated on Wed Jul 10 2019 15:20:27 for CMSIS-Core (Cortex-A) Version 1.1.4 by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Apr 9 2020 15:49:09 for CMSIS-Core (Cortex-A) Version 1.2.0 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

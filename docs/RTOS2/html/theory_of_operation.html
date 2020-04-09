@@ -380,7 +380,7 @@ Tick-less Low-Power Operation</h2>
 <div class="line">    <a class="code" href="group__CMSIS__RTOS__KernelCtrl.html#ga8c4b4d7ed34cab73c001665d9176aced">osKernelResume</a> (tc);</div>
 <div class="line">  }</div>
 <div class="line">}</div>
-</div><!-- fragment --><dl class="section note"><dt>Note</dt><dd><code>__WFE()</code> is not available in every Arm Cortex-M implementation. Check device manuals for availability. The alternative using <code>__WFI()</code> has other issues, please take note of <a href="http://www.keil.com/support/docs/3591.htm">http://www.keil.com/support/docs/3591.htm</a> as well.</dd></dl>
+</div><!-- fragment --><dl class="section note"><dt>Note</dt><dd><code>__WFE()</code> is not available in every Arm Cortex-M implementation. Check device manuals for availability. The alternative using <code>__WFI()</code> has other issues, please take note of <a href="https://www.keil.com/support/docs/3591.htm">https://www.keil.com/support/docs/3591.htm</a> as well.</dd></dl>
 <h1><a class="anchor" id="rtx_os_h"></a>
 RTX5 Header File</h1>
 <p>Every implementation of the CMSIS-RTOS2 API can bring its own additional features. RTX5 adds a couple of <a class="el" href="group__rtx5__specific.html">functions</a> for the idle more, for error notifications, and special system timer functions. It also is using macros for control block and memory sizes.</p>
@@ -425,8 +425,8 @@ RTX5 Header File</h1>
 <div class="line"> <span class="comment"></span></div>
 <div class="line"><span class="comment">/// Kernel Information</span></div>
 <div class="line"><span class="comment"></span><span class="preprocessor">#define osRtxVersionAPI      20010003   </span><span class="comment">///&lt; API version (2.1.3)</span></div>
-<div class="line"><span class="comment"></span>#define osRtxVersionKernel   50050001   <span class="comment">///&lt; Kernel version (5.5.1)</span></div>
-<div class="line"><span class="comment"></span>#define osRtxKernelId     &quot;RTX V5.5.1&quot;  <span class="comment">///&lt; Kernel identification string</span></div>
+<div class="line"><span class="comment"></span>#define osRtxVersionKernel   50050002   <span class="comment">///&lt; Kernel version (5.5.2)</span></div>
+<div class="line"><span class="comment"></span>#define osRtxKernelId     &quot;RTX V5.5.2&quot;  <span class="comment">///&lt; Kernel identification string</span></div>
 <div class="line"><span class="comment"></span> </div>
 <div class="line"> </div>
 <div class="line"><span class="comment">//  ==== Common definitions ====</span></div>
@@ -930,16 +930,26 @@ SVC Functions</h1>
 <dl class="section note"><dt>Note</dt><dd><ul>
 <li>The SVC function <span class="XML-Token">0</span> is <b>reserved</b> for the Keil RTX5 kernel.</li>
 <li>Do not leave gaps when numbering SVC functions. They must occupy a <b>continuous</b> range of numbers starting from 1.</li>
-<li>SVC functions can still be interrupted. </li>
+<li>SVC functions can still be interrupted.</li>
 </ul>
 </dd></dl>
+<h1><a class="anchor" id="cre_rtx_proj_clib_arm"></a>
+Arm C library multi-threading protection</h1>
+<p>RTX5 provides an interface to the <a href="https://developer.arm.com/docs/dui0475/m/the-arm-c-and-c-libraries/multithreaded-support-in-arm-c-libraries" target="_blank"><b>Arm C libraries</b></a> to ensure static data protection in a multi-threaded application.</p>
+<p>The Arm C libraries use static data to store errno, floating-point status word for software floating-point operations, a pointer to the base of the heap, and other variables. The Arm C micro-library (i.e. microlib) does not support protection for multi-threaded applications. See the <a href="https://developer.arm.com/docs/dui0475/m/the-arm-c-micro-library/differences-between-microlib-and-the-default-c-library" target="_blank"><b>limitations and differences</b></a> between microlib and the default C library.</p>
+<p>By default, RTX5 uses the Arm C libraries multi-thread protection for:</p>
+<ul>
+<li>all user threads if <a class="el" href="config_rtx5.html#threadConfig">Object specific Memory allocation</a> is enabled.</li>
+<li>the number of threads defined by <b>OS_THREAD_LIBSPACE_NUM</b> if <a class="el" href="config_rtx5.html#threadConfig">Object specific Memory allocation</a> is disabled. The definition <b>OS_THREAD_LIBSPACE_NUM</b> defines the number of threads that can safely call Arm C library functions and can be found in "RTX_Config.h" file or can be defined on the global scope.</li>
+</ul>
+<p>The default, Arm C libraries use mutex functions to <a href="https://developer.arm.com/docs/dui0475/m/the-arm-c-and-c-libraries/multithreaded-support-in-arm-c-libraries/management-of-locks-in-multithreaded-applications" target="_blank"><b>protect shared resources from concurrent access</b></a>. RTX5 implements these functions and uses resources from the <a class="el" href="config_rtx5.html#systemConfig">Global Dynamic Memory</a> to allocate mutex objects. </p>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="index.html">index</a></li><li class="navelem"><a class="el" href="rtx5_impl.html">RTX v5 Implementation</a></li>
-    <li class="footer">Generated on Wed Jul 10 2019 15:21:03 for CMSIS-RTOS2 Version 2.1.3 by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Apr 9 2020 15:49:59 for CMSIS-RTOS2 Version 2.1.3 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

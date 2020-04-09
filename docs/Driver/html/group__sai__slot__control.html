@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Driver
-   &#160;<span id="projectnumber">Version 2.7.1</span>
+   &#160;<span id="projectnumber">Version 2.8.0</span>
    </div>
    <div id="projectbrief">Peripheral Interface for Middleware and Application Code</div>
   </td>
@@ -119,19 +119,19 @@ $(document).ready(function(){initNavTree('group__sai__slot__control.html','');})
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:ga8f2cf3a212ca7fe389e00b082efb5d0b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sai__slot__control.html#ga8f2cf3a212ca7fe389e00b082efb5d0b">ARM_SAI_SLOT_COUNT</a>(n)&#160;&#160;&#160;((((n)-1)&amp;0x1FU) &lt;&lt; ARM_SAI_SLOT_COUNT_Pos)</td></tr>
+<tr class="memitem:ga8f2cf3a212ca7fe389e00b082efb5d0b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sai__slot__control.html#ga8f2cf3a212ca7fe389e00b082efb5d0b">ARM_SAI_SLOT_COUNT</a>(n)&#160;&#160;&#160;((((n)-1UL)&amp;0x1FUL) &lt;&lt; ARM_SAI_SLOT_COUNT_Pos)</td></tr>
 <tr class="memdesc:ga8f2cf3a212ca7fe389e00b082efb5d0b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of slots in frame (1..32); default=1; User Protocol only (ignored otherwise)  <a href="#ga8f2cf3a212ca7fe389e00b082efb5d0b">More...</a><br/></td></tr>
 <tr class="separator:ga8f2cf3a212ca7fe389e00b082efb5d0b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad77c6c0de2a4e7223a0c42e1594f0a2c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sai__slot__control.html#gad77c6c0de2a4e7223a0c42e1594f0a2c">ARM_SAI_SLOT_SIZE_DEFAULT</a>&#160;&#160;&#160;(0U &lt;&lt; ARM_SAI_SLOT_SIZE_Pos)</td></tr>
+<tr class="memitem:gad77c6c0de2a4e7223a0c42e1594f0a2c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sai__slot__control.html#gad77c6c0de2a4e7223a0c42e1594f0a2c">ARM_SAI_SLOT_SIZE_DEFAULT</a>&#160;&#160;&#160;(0UL &lt;&lt; ARM_SAI_SLOT_SIZE_Pos)</td></tr>
 <tr class="memdesc:gad77c6c0de2a4e7223a0c42e1594f0a2c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Slot size is equal to data size (default)  <a href="#gad77c6c0de2a4e7223a0c42e1594f0a2c">More...</a><br/></td></tr>
 <tr class="separator:gad77c6c0de2a4e7223a0c42e1594f0a2c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga2bb9cf53b07cac81fb0fe71de6c97c83"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sai__slot__control.html#ga2bb9cf53b07cac81fb0fe71de6c97c83">ARM_SAI_SLOT_SIZE_16</a>&#160;&#160;&#160;(1U &lt;&lt; ARM_SAI_SLOT_SIZE_Pos)</td></tr>
+<tr class="memitem:ga2bb9cf53b07cac81fb0fe71de6c97c83"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sai__slot__control.html#ga2bb9cf53b07cac81fb0fe71de6c97c83">ARM_SAI_SLOT_SIZE_16</a>&#160;&#160;&#160;(1UL &lt;&lt; ARM_SAI_SLOT_SIZE_Pos)</td></tr>
 <tr class="memdesc:ga2bb9cf53b07cac81fb0fe71de6c97c83"><td class="mdescLeft">&#160;</td><td class="mdescRight">Slot size = 16 bits; User Protocol only (ignored otherwise)  <a href="#ga2bb9cf53b07cac81fb0fe71de6c97c83">More...</a><br/></td></tr>
 <tr class="separator:ga2bb9cf53b07cac81fb0fe71de6c97c83"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaaa5c4cc18a0f5668bc9f117874cd83dd"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sai__slot__control.html#gaaa5c4cc18a0f5668bc9f117874cd83dd">ARM_SAI_SLOT_SIZE_32</a>&#160;&#160;&#160;(3U &lt;&lt; ARM_SAI_SLOT_SIZE_Pos)</td></tr>
+<tr class="memitem:gaaa5c4cc18a0f5668bc9f117874cd83dd"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sai__slot__control.html#gaaa5c4cc18a0f5668bc9f117874cd83dd">ARM_SAI_SLOT_SIZE_32</a>&#160;&#160;&#160;(3UL &lt;&lt; ARM_SAI_SLOT_SIZE_Pos)</td></tr>
 <tr class="memdesc:gaaa5c4cc18a0f5668bc9f117874cd83dd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Slot size = 32 bits; User Protocol only (ignored otherwise)  <a href="#gaaa5c4cc18a0f5668bc9f117874cd83dd">More...</a><br/></td></tr>
 <tr class="separator:gaaa5c4cc18a0f5668bc9f117874cd83dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga48d4a142f3a1bb0fa4e88c9e427932a0"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sai__slot__control.html#ga48d4a142f3a1bb0fa4e88c9e427932a0">ARM_SAI_SLOT_OFFSET</a>(n)&#160;&#160;&#160;(((n)&amp;0x1FU) &lt;&lt; ARM_SAI_SLOT_OFFSET_Pos)</td></tr>
+<tr class="memitem:ga48d4a142f3a1bb0fa4e88c9e427932a0"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sai__slot__control.html#ga48d4a142f3a1bb0fa4e88c9e427932a0">ARM_SAI_SLOT_OFFSET</a>(n)&#160;&#160;&#160;(((n)&amp;0x1FUL) &lt;&lt; ARM_SAI_SLOT_OFFSET_Pos)</td></tr>
 <tr class="memdesc:ga48d4a142f3a1bb0fa4e88c9e427932a0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Offset of first data bit in slot (0..31); default=0; User Protocol only (ignored otherwise)  <a href="#ga48d4a142f3a1bb0fa4e88c9e427932a0">More...</a><br/></td></tr>
 <tr class="separator:ga48d4a142f3a1bb0fa4e88c9e427932a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -147,7 +147,7 @@ Macros</h2></td></tr>
           <td>(</td>
           <td class="paramtype">&#160;</td>
           <td class="paramname">n</td><td>)</td>
-          <td>&#160;&#160;&#160;((((n)-1)&amp;0x1FU) &lt;&lt; ARM_SAI_SLOT_COUNT_Pos)</td>
+          <td>&#160;&#160;&#160;((((n)-1UL)&amp;0x1FUL) &lt;&lt; ARM_SAI_SLOT_COUNT_Pos)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -161,7 +161,7 @@ Macros</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define ARM_SAI_SLOT_SIZE_DEFAULT&#160;&#160;&#160;(0U &lt;&lt; ARM_SAI_SLOT_SIZE_Pos)</td>
+          <td class="memname">#define ARM_SAI_SLOT_SIZE_DEFAULT&#160;&#160;&#160;(0UL &lt;&lt; ARM_SAI_SLOT_SIZE_Pos)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -175,7 +175,7 @@ Macros</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define ARM_SAI_SLOT_SIZE_16&#160;&#160;&#160;(1U &lt;&lt; ARM_SAI_SLOT_SIZE_Pos)</td>
+          <td class="memname">#define ARM_SAI_SLOT_SIZE_16&#160;&#160;&#160;(1UL &lt;&lt; ARM_SAI_SLOT_SIZE_Pos)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -189,7 +189,7 @@ Macros</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define ARM_SAI_SLOT_SIZE_32&#160;&#160;&#160;(3U &lt;&lt; ARM_SAI_SLOT_SIZE_Pos)</td>
+          <td class="memname">#define ARM_SAI_SLOT_SIZE_32&#160;&#160;&#160;(3UL &lt;&lt; ARM_SAI_SLOT_SIZE_Pos)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -207,7 +207,7 @@ Macros</h2></td></tr>
           <td>(</td>
           <td class="paramtype">&#160;</td>
           <td class="paramname">n</td><td>)</td>
-          <td>&#160;&#160;&#160;(((n)&amp;0x1FU) &lt;&lt; ARM_SAI_SLOT_OFFSET_Pos)</td>
+          <td>&#160;&#160;&#160;(((n)&amp;0x1FUL) &lt;&lt; ARM_SAI_SLOT_OFFSET_Pos)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -221,7 +221,7 @@ Macros</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Jul 10 2019 15:20:31 for CMSIS-Driver Version 2.7.1 by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Apr 9 2020 15:49:15 for CMSIS-Driver Version 2.8.0 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

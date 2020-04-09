@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Core (Cortex-M)
-   &#160;<span id="projectnumber">Version 5.3.0</span>
+   &#160;<span id="projectnumber">Version 5.4.0</span>
    </div>
    <div id="projectbrief">CMSIS-Core support for Cortex-M processor-based devices</div>
   </td>
@@ -124,6 +124,7 @@ Functions</h2></td></tr>
 <tr class="separator:gabe47de40e9b0ad465b752297a9d9f427"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Description</h2>
+<p>Initialize and start the SysTick timer. </p>
 <p>The System Tick Time (SysTick) generates interrupt requests on a regular basis. This allows an OS to carry out context switching to support multiple tasking. For applications that do not require an OS, the SysTick can be used for time keeping, time measurement, or as an interrupt source for tasks that need to be executed regularly.</p>
 <h1><a class="anchor" id="SysTick_code_ex_sec"></a>
 Code Example</h1>
@@ -161,6 +162,8 @@ Code Example</h1>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>System Tick Timer Configuration. </p>
 <p>Initialises and starts the System Tick Timer and its interrupt. After this call, the SysTick timer creates interrupts with the specified time interval. Counter is in free running mode to generate periodical interrupts.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -171,7 +174,7 @@ Code Example</h1>
 <dl class="section return"><dt>Returns</dt><dd>0 - success </dd>
 <dd>
 1 - failure</dd></dl>
-<dl class="section note"><dt>Note</dt><dd>When <b>#define __Vendor_SysTickConfig</b> is set to 1, the standard function <b>SysTick_Config</b> is excluded. In this case, the file <b><em>device</em>.h</b> must contain a vendor specific implementation of this function. </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>When <a class="el" href="group__device__config.html#gab58771b4ec03f9bdddc84770f7c95c68">__Vendor_SysTickConfig</a> is defined to 1, the standard function <b>SysTick_Config</b> is excluded. In this case, the <a class="el" href="device_h_pg.html">Device Header File &lt;device.h&gt;</a> must contain a vendor specific implementation of this function. </dd></dl>
 
 </div>
 </div>
@@ -180,7 +183,7 @@ Code Example</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Jul 10 2019 15:20:25 for CMSIS-Core (Cortex-M) Version 5.3.0 by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Apr 9 2020 15:49:08 for CMSIS-Core (Cortex-M) Version 5.4.0 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 
