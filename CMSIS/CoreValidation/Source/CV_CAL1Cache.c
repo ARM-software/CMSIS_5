@@ -17,7 +17,7 @@
  *----------------------------------------------------------------------------*/
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
-void TC_L1Cache_EnDisable(void) {
+void TC_CAL1Cache_EnDisable(void) {
   
   uint32_t orig = __get_SCTLR();
   
@@ -39,7 +39,7 @@ void TC_L1Cache_EnDisable(void) {
 }
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
-void TC_L1Cache_EnDisableBTAC(void) {
+void TC_CAL1Cache_EnDisableBTAC(void) {
   uint32_t orig = __get_SCTLR();
   
   L1C_EnableBTAC();
@@ -62,7 +62,7 @@ void TC_L1Cache_EnDisableBTAC(void) {
 }
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
-void TC_L1Cache_log2_up(void) {
+void TC_CAL1Cache_log2_up(void) {
   uint8_t log2 = __log2_up(0U);
   ASSERT_TRUE(log2 == 0U);
   
@@ -89,7 +89,7 @@ void TC_L1Cache_log2_up(void) {
 }
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
-void TC_L1Cache_InvalidateDCacheAll(void) {
+void TC_CAL1Cache_InvalidateDCacheAll(void) {
   
   /* setup */
   uint32_t orig = __get_SCTLR();
@@ -120,7 +120,7 @@ void TC_L1Cache_InvalidateDCacheAll(void) {
 }
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
-void TC_L1Cache_CleanDCacheAll(void) {
+void TC_CAL1Cache_CleanDCacheAll(void) {
   /* setup */
   uint32_t orig = __get_SCTLR();
   uint32_t value = 0x0815U;
@@ -150,7 +150,7 @@ void TC_L1Cache_CleanDCacheAll(void) {
 }
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
-void TC_L1Cache_CleanInvalidateDCacheAll(void) {
+void TC_CAL1Cache_CleanInvalidateDCacheAll(void) {
   /* setup */
   uint32_t orig = __get_SCTLR();
   uint32_t value = 0x0815U;
