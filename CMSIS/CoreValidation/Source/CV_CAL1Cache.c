@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------------
- *      Name:         CV_L1Cache.c 
+ *      Name:         CV_CAL1Cache.c 
  *      Purpose:      CMSIS CORE validation tests implementation
  *-----------------------------------------------------------------------------
  *      Copyright (c) 2017 ARM Limited. All rights reserved.

@@ -153,12 +153,18 @@ static TEST_CASE TC_LIST[] = {
 #endif /* RTE_CV_GENTIMER */
 
 #if defined(RTE_CV_L1CACHE) && RTE_CV_L1CACHE
-    TCD ( TC_L1Cache_EnDisable,                    TC_L1CACHE_ENDISABLE                      ),
-    TCD ( TC_L1Cache_EnDisableBTAC,                TC_L1CACHE_ENDISABLEBTAC                  ),
-    TCD ( TC_L1Cache_log2_up,                      TC_L1CACHE_LOG2_UP                        ),
-    TCD ( TC_L1Cache_InvalidateDCacheAll,          TC_L1CACHE_INVALIDATEDCACHEALL            ),
-    TCD ( TC_L1Cache_CleanDCacheAll,               TC_L1CACHE_CLEANDCACHEALL                 ),
-    TCD ( TC_L1Cache_CleanInvalidateDCacheAll,     TC_L1CACHE_CLEANINVALIDATEDCACHEALL       ),
+  #if defined(__CORTEX_M)
+    TCD ( TC_CML1Cache_EnDisableICache,              TC_CML1CACHE_ENDISABLE_ICACHE          ),
+    TCD ( TC_CML1Cache_EnDisableDCache,              TC_CML1CACHE_ENDISABLE_DCACHE          ),
+    TCD ( TC_CML1Cache_CleanDCacheByAddrWhileDisabled, TC_CML1CACHE_CLEANDCACHEBYADDRWHILEDISABLED),
+  #elif defined(__CORTEX_A)
+    TCD ( TC_CAL1Cache_EnDisable,                    TC_CAL1CACHE_ENDISABLE                 ),
+    TCD ( TC_CAL1Cache_EnDisableBTAC,                TC_CAL1CACHE_ENDISABLEBTAC             ),
+    TCD ( TC_CAL1Cache_log2_up,                      TC_CAL1CACHE_LOG2_UP                   ),
+    TCD ( TC_CAL1Cache_InvalidateDCacheAll,          TC_CAL1CACHE_INVALIDATEDCACHEALL       ),
+    TCD ( TC_CAL1Cache_CleanDCacheAll,               TC_CAL1CACHE_CLEANDCACHEALL            ),
+    TCD ( TC_CAL1Cache_CleanInvalidateDCacheAll,     TC_CAL1CACHE_CLEANINVALIDATEDCACHEALL  ),
+  #endif 
 #endif /* RTE_CV_L1CACHE */
 };
 
