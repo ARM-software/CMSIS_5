@@ -468,6 +468,12 @@ The information in this element is identical with CMSIS-Pack, except that it pro
     <td>required for Armv8-M with TrustZone</td>
   </tr>
   <tr>
+    <td>DnumMpuRegions</td>
+    <td>Number of regions in the Memory Protection Unit (MPU) of the processor core. (Default: 8 when Dmpu is enabled)</td>
+    <td>NonNegativeInteger</td>
+    <td>optional</td>
+  </tr>
+  <tr>
     <td>DnumSauRegions</td>
     <td>Number of regions in the Security Attribution Unit (SAU) of the processor core.</td>
     <td>NonNegativeInteger</td>
