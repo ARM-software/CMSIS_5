@@ -1,6 +1,6 @@
 /* ----------------------------------------------------------------------
  * Project:      CMSIS DSP Library
- * Title:        arm_rfft_f64.c
+ * Title:        arm_rfft_fast_f64.c
  * Description:  RFFT & RIFFT Double precision Floating point process function
  *
  * $Date:        29. November 2019

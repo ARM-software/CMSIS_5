@@ -1,6 +1,6 @@
 /* ----------------------------------------------------------------------
  * Project:      CMSIS DSP Library
- * Title:        arm_cfft_init_f32.c
+ * Title:        arm_rfft_fast_init_f32.c
  * Description:  Split Radix Decimation in Frequency CFFT Floating point processing function
  *
  * $Date:        18. March 2019
