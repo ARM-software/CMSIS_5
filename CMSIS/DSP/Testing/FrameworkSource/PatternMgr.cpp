@@ -46,7 +46,9 @@ TYPE *PatternMgr::local_##EXT(Testing::nbSamples_t nbSamples) \
 
 LOCAL(float64_t,f64)
 LOCAL(float32_t,f32)
+#if !defined( __CC_ARM )
 LOCAL(float16_t,f16)
+#endif
 LOCAL(q63_t,q63)
 LOCAL(q31_t,q31)
 LOCAL(q15_t,q15)
@@ -92,6 +94,7 @@ float32_t *PatternMgr::load_f32(Testing::PatternID_t id,Testing::nbSamples_t& nb
    
 }
 
+#if !defined( __CC_ARM )
 float16_t *PatternMgr::load_f16(Testing::PatternID_t id,Testing::nbSamples_t& nbSamples,Testing::nbSamples_t maxSamples)
 {
     nbSamples=m_io->GetPatternSize(id);
@@ -109,6 +112,7 @@ float16_t *PatternMgr::load_f16(Testing::PatternID_t id,Testing::nbSamples_t& nb
     return((float16_t*)b);
    
 }
+#endif
 
 q63_t *PatternMgr::load_q63(Testing::PatternID_t id,Testing::nbSamples_t& nbSamples,Testing::nbSamples_t maxSamples)
 {
@@ -241,10 +245,12 @@ void PatternMgr::dumpPattern_f32(Testing::outputID_t id,Testing::nbSamples_t nbS
    m_io->DumpPattern_f32(id,nbSamples,data);
 }
 
+#if !defined( __CC_ARM )
 void PatternMgr::dumpPattern_f16(Testing::outputID_t id,Testing::nbSamples_t nbSamples,float16_t* data)
 {
    m_io->DumpPattern_f16(id,nbSamples,data);
 }
+#endif 
 
 void PatternMgr::dumpPattern_q63(Testing::outputID_t id,Testing::nbSamples_t nbSamples,q63_t* data)
 {

@@ -166,15 +166,6 @@ class BuildConfig:
                     ]
             cmd += flags 
             cmd += ["-DBENCHMARK=OFF",
-                             "-DFULLYCONNECTED=OFF",
-                             "-DCONVOLUTION=OFF",
-                             "-DACTIVATION=OFF",
-                             "-DPOOLING=OFF",
-                             "-DSOFTMAX=OFF",
-                             "-DNNSUPPORT=OFF",
-                             "-DBASICMATHSNN=OFF",
-                             "-DRESHAPE=OFF",
-                             "-DCONCATENATION=OFF",
                              "-DWRAPPER=OFF",
                              "-DCONFIGTABLE=OFF",
                              "-DROOT=%s" % self._rootFolder,

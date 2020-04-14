@@ -668,6 +668,7 @@ namespace Client
           
       }
 
+#if !defined( __CC_ARM )
       void Semihosting::ImportPattern_f16(Testing::PatternID_t id,char* p,Testing::nbSamples_t nb)
       {
           char tmp[256];
@@ -708,6 +709,7 @@ namespace Client
           fclose(pattern);
           
       }
+#endif
 
       void Semihosting::ImportPattern_q63(Testing::PatternID_t id,char* p,Testing::nbSamples_t nb)
       {
@@ -1013,6 +1015,7 @@ namespace Client
             }
       }
 
+#if !defined( __CC_ARM )
       void Semihosting::DumpPattern_f16(Testing::outputID_t id,Testing::nbSamples_t nb, float16_t* data)
       {
             std::string fileName = this->getOutputPath(id);
@@ -1031,7 +1034,8 @@ namespace Client
                fclose(f);
             }
       }
-
+#endif
+      
       void Semihosting::DumpPattern_q63(Testing::outputID_t id,Testing::nbSamples_t nb, q63_t* data)
       {
             std::string fileName = this->getOutputPath(id);

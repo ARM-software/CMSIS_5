@@ -79,9 +79,10 @@ to get the line number.
 (SNR functions to finish implementing)
 
 */
-
+#if !defined( __CC_ARM )
 extern void assert_relative_error(unsigned long nb,float16_t &a, float16_t &b, double threshold);
 extern void assert_relative_error(unsigned long nb,AnyPattern<float16_t> &pa, AnyPattern<float16_t> &pb, double threshold);
+#endif
 
 extern void assert_relative_error(unsigned long nb,float32_t &a, float32_t &b, double threshold);
 extern void assert_relative_error(unsigned long nb,AnyPattern<float32_t> &pa, AnyPattern<float32_t> &pb, double threshold);
@@ -96,12 +97,17 @@ extern void assert_close_error(unsigned long nb,AnyPattern<float64_t> &pref, Any
 extern void assert_close_error(unsigned long nb,float32_t &ref, float32_t &val, double absthreshold, double relthreshold);
 extern void assert_close_error(unsigned long nb,AnyPattern<float32_t> &pref, AnyPattern<float32_t> &pval, double absthreshold, double relthreshold);
 
+#if !defined( __CC_ARM )
 extern void assert_close_error(unsigned long nb,float16_t &ref, float16_t &val, double absthreshold, double relthreshold);
 extern void assert_close_error(unsigned long nb,AnyPattern<float16_t> &pref, AnyPattern<float16_t> &pval, double absthreshold, double relthreshold);
+#endif
 
 extern void assert_snr_error(unsigned long nb,AnyPattern<float64_t> &pa,AnyPattern<float64_t> &pb, float64_t threshold);
 extern void assert_snr_error(unsigned long nb,AnyPattern<float32_t> &pa,AnyPattern<float32_t> &pb, float32_t threshold);
+
+#if !defined( __CC_ARM )
 extern void assert_snr_error(unsigned long nb,AnyPattern<float16_t> &pa,AnyPattern<float16_t> &pb, float32_t threshold);
+#endif
 
 extern void assert_snr_error(unsigned long nb,AnyPattern<q63_t> &pa,AnyPattern<q63_t> &pb, float32_t threshold);
 extern void assert_snr_error(unsigned long nb,AnyPattern<q31_t> &pa,AnyPattern<q31_t> &pb, float32_t threshold);
@@ -125,7 +131,11 @@ extern void assert_false(unsigned long nb,bool cond);
 
 extern void assert_not_empty(unsigned long nb, AnyPattern<float64_t> &p);
 extern void assert_not_empty(unsigned long nb, AnyPattern<float32_t> &p);
+
+#if !defined( __CC_ARM )
 extern void assert_not_empty(unsigned long nb, AnyPattern<float16_t> &p);
+#endif 
+
 extern void assert_not_empty(unsigned long nb, AnyPattern<q63_t> &p);
 extern void assert_not_empty(unsigned long nb, AnyPattern<q31_t> &p);
 extern void assert_not_empty(unsigned long nb, AnyPattern<q15_t> &p);

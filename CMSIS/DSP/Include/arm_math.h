@@ -442,9 +442,11 @@ extern "C"
   /**
    * @brief 16-bit floating-point type definition.
    * This is already defined in arm_mve.h
+   *
+   * This is not fully supported on ARM AC5.
    */
 
-#if !defined (ARM_MATH_HELIUM) && !defined(ARM_MATH_MVEF) && !defined(ARM_MATH_MVEI)
+#if !defined( __CC_ARM ) && !defined (ARM_MATH_HELIUM) && !defined(ARM_MATH_MVEF) && !defined(ARM_MATH_MVEI)
   typedef __fp16 float16_t;
 #endif
 
@@ -778,28 +780,28 @@ extern "C"
 #define F64_MAX   ((float64_t)DBL_MAX)
 #define F32_MAX   ((float32_t)FLT_MAX)
 
-#if defined(ARM_MATH_FLOAT16)
+#if !defined( __CC_ARM )
 #define F16_MAX   ((float16_t)FLT_MAX)
 #endif
 
 #define F64_MIN   (-DBL_MAX)
 #define F32_MIN   (-FLT_MAX)
 
-#if defined(ARM_MATH_FLOAT16)
+#if !defined( __CC_ARM )
 #define F16_MIN   (-(float16_t)FLT_MAX)
 #endif
 
 #define F64_ABSMAX   ((float64_t)DBL_MAX)
 #define F32_ABSMAX   ((float32_t)FLT_MAX)
 
-#if defined(ARM_MATH_FLOAT16)
+#if !defined( __CC_ARM )
 #define F16_ABSMAX   ((float16_t)FLT_MAX)
 #endif
 
 #define F64_ABSMIN   ((float64_t)0.0)
 #define F32_ABSMIN   ((float32_t)0.0)
 
-#if defined(ARM_MATH_FLOAT16)
+#if !defined( __CC_ARM )
 #define F16_ABSMIN   ((float16_t)0.0)
 #endif
 
@@ -2956,6 +2958,7 @@ void arm_mat_init_f32(
         float32_t * pDst,
         uint32_t blockSize);
 
+#if !defined( __CC_ARM )
   /**
    * @brief Floating-point vector multiplication.
    * @param[in]  pSrcA      points to the first input vector
@@ -2968,6 +2971,7 @@ void arm_mat_init_f32(
   const float16_t * pSrcB,
         float16_t * pDst,
         uint32_t blockSize);
+#endif
 
   /**
    * @brief Instance structure for the Q15 CFFT/CIFFT function.
@@ -3092,6 +3096,8 @@ void arm_mat_init_f32(
   /**
    * @brief Instance structure for the floating-point CFFT/CIFFT function.
    */
+
+#if !defined( __CC_ARM )
   typedef struct
   {
           uint16_t fftLen;                   /**< length of the FFT. */
@@ -3103,6 +3109,7 @@ void arm_mat_init_f32(
           uint16_t bitRevFactor;             /**< bit reversal modifier that supports different size FFTs with the same bit reversal table. */
           float16_t onebyfftLen;             /**< value of 1/fftLen. */
   } arm_cfft_radix2_instance_f16;
+#endif
 
 /* Deprecated */
   arm_status arm_cfft_radix2_init_f32(
@@ -3134,6 +3141,7 @@ void arm_mat_init_f32(
   /**
    * @brief Instance structure for the floating-point CFFT/CIFFT function.
    */
+#if !defined( __CC_ARM )
   typedef struct
   {
           uint16_t fftLen;                   /**< length of the FFT. */
@@ -3145,6 +3153,7 @@ void arm_mat_init_f32(
           uint16_t bitRevFactor;             /**< bit reversal modifier that supports different size FFTs with the same bit reversal table. */
           float16_t onebyfftLen;             /**< value of 1/fftLen. */
   } arm_cfft_radix4_instance_f16;
+#endif
 
 /* Deprecated */
   arm_status arm_cfft_radix4_init_f32(
@@ -3238,6 +3247,7 @@ void arm_cfft_q31(
   /**
    * @brief Instance structure for the floating-point CFFT/CIFFT function.
    */
+#if !defined( __CC_ARM )
   typedef struct
   {
           uint16_t fftLen;                   /**< length of the FFT. */
@@ -3253,6 +3263,7 @@ void arm_cfft_q31(
    const float16_t *rearranged_twiddle_stride3;
 #endif
   } arm_cfft_instance_f16;
+#endif
 
   arm_status arm_cfft_init_f32(
   arm_cfft_instance_f32 * S,
@@ -3264,6 +3275,7 @@ void arm_cfft_q31(
         uint8_t ifftFlag,
         uint8_t bitReverseFlag);
 
+#if !defined( __CC_ARM )
   arm_status arm_cfft_init_f16(
   arm_cfft_instance_f16 * S,
   uint16_t fftLen);
@@ -3273,6 +3285,7 @@ void arm_cfft_q31(
         float16_t * p1,
         uint8_t ifftFlag,
         uint8_t bitReverseFlag);
+#endif
 
   /**
    * @brief Instance structure for the Double Precision Floating-point CFFT/CIFFT function.
@@ -3572,6 +3585,7 @@ arm_status arm_rfft_fast_init_f32 (
         float32_t * pDst,
         uint32_t blockSize);
 
+#if !defined( __CC_ARM )
   /**
    * @brief Floating-point vector addition.
    * @param[in]  pSrcA      points to the first input vector
@@ -3584,7 +3598,7 @@ arm_status arm_rfft_fast_init_f32 (
   const float16_t * pSrcB,
         float16_t * pDst,
         uint32_t blockSize);
-
+#endif
 
   /**
    * @brief Q7 vector addition.
@@ -3641,6 +3655,7 @@ arm_status arm_rfft_fast_init_f32 (
         float32_t * pDst,
         uint32_t blockSize);
 
+#if !defined( __CC_ARM )
   /**
    * @brief Floating-point vector subtraction.
    * @param[in]  pSrcA      points to the first input vector
@@ -3653,6 +3668,7 @@ arm_status arm_rfft_fast_init_f32 (
   const float16_t * pSrcB,
         float16_t * pDst,
         uint32_t blockSize);
+#endif
 
   /**
    * @brief Q7 vector subtraction.
@@ -3709,6 +3725,7 @@ arm_status arm_rfft_fast_init_f32 (
         float32_t * pDst,
         uint32_t blockSize);
 
+#if !defined( __CC_ARM )
     /**
    * @brief Multiplies a floating-point vector by a scalar.
    * @param[in]  pSrc       points to the input vector
@@ -3721,7 +3738,7 @@ arm_status arm_rfft_fast_init_f32 (
         float16_t scale,
         float16_t * pDst,
         uint32_t blockSize);
-
+#endif
 
   /**
    * @brief Multiplies a Q7 vector by a scalar.
@@ -3794,6 +3811,7 @@ arm_status arm_rfft_fast_init_f32 (
         float32_t * pDst,
         uint32_t blockSize);
 
+#if !defined( __CC_ARM )
     /**
    * @brief Floating-point vector absolute value.
    * @param[in]  pSrc       points to the input buffer
@@ -3804,6 +3822,7 @@ arm_status arm_rfft_fast_init_f32 (
   const float16_t * pSrc,
         float16_t * pDst,
         uint32_t blockSize);
+#endif
 
 
   /**
@@ -3843,6 +3862,7 @@ arm_status arm_rfft_fast_init_f32 (
         uint32_t blockSize,
         float32_t * result);
 
+#if !defined( __CC_ARM )
   /**
    * @brief Dot product of floating-point vectors.
    * @param[in]  pSrcA      points to the first input vector
@@ -3855,7 +3875,7 @@ arm_status arm_rfft_fast_init_f32 (
   const float16_t * pSrcB,
         uint32_t blockSize,
         float16_t * result);
-
+#endif
 
   /**
    * @brief Dot product of Q7 vectors.
@@ -3954,6 +3974,7 @@ arm_status arm_rfft_fast_init_f32 (
         float32_t * pDst,
         uint32_t blockSize);
 
+#if !defined( __CC_ARM )
   /**
    * @brief  Adds a constant offset to a floating-point vector.
    * @param[in]  pSrc       points to the input vector
@@ -3966,6 +3987,7 @@ arm_status arm_rfft_fast_init_f32 (
         float16_t offset,
         float16_t * pDst,
         uint32_t blockSize);
+#endif
 
   /**
    * @brief  Adds a constant offset to a Q7 vector.
@@ -4020,6 +4042,7 @@ arm_status arm_rfft_fast_init_f32 (
         float32_t * pDst,
         uint32_t blockSize);
 
+#if !defined( __CC_ARM )
   /**
    * @brief  Negates the elements of a floating-point vector.
    * @param[in]  pSrc       points to the input vector
@@ -4030,7 +4053,7 @@ arm_status arm_rfft_fast_init_f32 (
   const float16_t * pSrc,
         float16_t * pDst,
         uint32_t blockSize);
-
+#endif
   /**
    * @brief  Negates the elements of a Q7 vector.
    * @param[in]  pSrc       points to the input vector

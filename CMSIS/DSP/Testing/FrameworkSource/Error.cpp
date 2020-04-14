@@ -135,10 +135,12 @@ void assert_not_empty(unsigned long nb, AnyPattern<float32_t> &p)
   assert_not_empty_generic(nb,p);
 }
 
+#if !defined( __CC_ARM )
 void assert_not_empty(unsigned long nb, AnyPattern<float16_t> &p)
 {
   assert_not_empty_generic(nb,p);
 }
+#endif
 
 void assert_not_empty(unsigned long nb, AnyPattern<q63_t> &p)
 {
@@ -215,6 +217,7 @@ void assert_relative_error(unsigned long nb,float32_t &a, float32_t &b, double t
     }
 };
 
+#if !defined( __CC_ARM )
 void assert_relative_error(unsigned long nb,float16_t &a, float16_t &b, double threshold)
 {
     double rel,delta,average;
@@ -234,6 +237,7 @@ void assert_relative_error(unsigned long nb,float16_t &a, float16_t &b, double t
         }
     }
 };
+#endif 
 
 void assert_relative_error(unsigned long nb,AnyPattern<float64_t> &pa, AnyPattern<float64_t> &pb, double threshold)
 {
@@ -297,6 +301,7 @@ void assert_relative_error(unsigned long nb,AnyPattern<float32_t> &pa, AnyPatter
     }
 };
 
+#if !defined( __CC_ARM )
 void assert_relative_error(unsigned long nb,AnyPattern<float16_t> &pa, AnyPattern<float16_t> &pb, double threshold)
 {
     ASSERT_NOT_EMPTY(pa);
@@ -327,6 +332,7 @@ void assert_relative_error(unsigned long nb,AnyPattern<float16_t> &pa, AnyPatter
        }
     }
 };
+#endif
 
 void assert_close_error(unsigned long nb,float64_t &ref, float64_t &val, double absthreshold,double relthreshold)
 {
@@ -414,6 +420,7 @@ void assert_close_error(unsigned long nb,AnyPattern<float32_t> &pref, AnyPattern
     }
 };
 
+#if !defined( __CC_ARM )
 void assert_close_error(unsigned long nb,float16_t &ref, float16_t &val, double absthreshold,double relthreshold)
 {
     
@@ -456,6 +463,7 @@ void assert_close_error(unsigned long nb,AnyPattern<float16_t> &pref, AnyPattern
        
     }
 };
+#endif
 
 /**
  * @brief  Calculation of SNR
@@ -520,6 +528,7 @@ float arm_snr_f32(float *pRef, float *pTest, uint32_t buffSize)
 
 }
 
+#if !defined( __CC_ARM )
 float arm_snr_f16(float16_t *pRef, float16_t *pTest, uint32_t buffSize)
 {
   float EnergySignal = 0.0, EnergyError = 0.0;
@@ -552,6 +561,7 @@ float arm_snr_f16(float16_t *pRef, float16_t *pTest, uint32_t buffSize)
   return (SNR);
 
 }
+#endif
 
 float arm_snr_q63(q63_t *pRef, q63_t *pTest, uint32_t buffSize)
 {
@@ -751,6 +761,7 @@ void assert_snr_error(unsigned long nb,float32_t a,float32_t b, float32_t thresh
    }
 }
 
+#if !defined( __CC_ARM )
 void assert_snr_error(unsigned long nb,AnyPattern<float16_t> &pa,AnyPattern<float16_t> &pb, float32_t threshold)
 {
    float32_t snr;
@@ -777,6 +788,7 @@ void assert_snr_error(unsigned long nb,AnyPattern<float16_t> &pa,AnyPattern<floa
      throw (Error(SNR_ERROR,nb,details));
    }
 }
+#endif
 
 #if !defined (__CC_ARM)
 void assert_snr_error(unsigned long nb,float16_t a,float16_t b, float32_t threshold)
