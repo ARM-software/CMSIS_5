@@ -54,8 +54,8 @@
 #include "arm_const_structs.h"
 
 
-//#if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
-#if 0
+#if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
+
 #include "arm_vec_fft.h"
 #include "arm_mve_tables.h"
 
@@ -163,7 +163,7 @@ arm_status arm_cfft_init_f16(
             /*  Initialise the bit reversal table modifier */                   
             S->bitRevLength = ARMBITREVINDEXTABLE_FIXED_4096_TABLE_LENGTH;      
             S->pBitRevTable = (uint16_t *)armBitRevIndexTable_fixed_4096;   
-            S->pTwiddle = (float32_t *)twiddleCoef_4096;       
+            S->pTwiddle = (float16_t *)twiddleCoef_4096;       
             status=arm_cfft_radix4by2_rearrange_twiddles_f16(S, 1);               
             break;                                                              
 #endif 
@@ -174,7 +174,7 @@ arm_status arm_cfft_init_f16(
             /*  Initialise the bit reversal table modifier */                   
             S->bitRevLength = ARMBITREVINDEXTABLE_FIXED_2048_TABLE_LENGTH;      
             S->pBitRevTable = (uint16_t *)armBitRevIndexTable_fixed_2048;
-            S->pTwiddle = (float32_t *)twiddleCoef_2048;          
+            S->pTwiddle = (float16_t *)twiddleCoef_2048;          
             status=arm_cfft_radix4by2_rearrange_twiddles_f16(S, 2);           
             break;     
 #endif 
@@ -185,7 +185,7 @@ arm_status arm_cfft_init_f16(
             /*  Initialise the bit reversal table modifier */                   
             S->bitRevLength = ARMBITREVINDEXTABLE_FIXED_1024_TABLE_LENGTH;      
             S->pBitRevTable = (uint16_t *)armBitRevIndexTable_fixed_1024; 
-            S->pTwiddle = (float32_t *)twiddleCoef_1024;         
+            S->pTwiddle = (float16_t *)twiddleCoef_1024;         
             status=arm_cfft_radix4by2_rearrange_twiddles_f16(S, 1);           
             break;                                                              
 #endif 
@@ -196,7 +196,7 @@ arm_status arm_cfft_init_f16(
             /*  Initialise the bit reversal table modifier */                   
             S->bitRevLength = ARMBITREVINDEXTABLE_FIXED_512_TABLE_LENGTH;       
             S->pBitRevTable = (uint16_t *)armBitRevIndexTable_fixed_512;  
-            S->pTwiddle = (float32_t *)twiddleCoef_512;         
+            S->pTwiddle = (float16_t *)twiddleCoef_512;         
             status=arm_cfft_radix4by2_rearrange_twiddles_f16(S, 2);           
             break;                                                              
 #endif 
@@ -205,7 +205,7 @@ arm_status arm_cfft_init_f16(
         case 256U:                                                              
             S->bitRevLength = ARMBITREVINDEXTABLE_FIXED_256_TABLE_LENGTH;       
             S->pBitRevTable = (uint16_t *)armBitRevIndexTable_fixed_256; 
-            S->pTwiddle = (float32_t *)twiddleCoef_256;          
+            S->pTwiddle = (float16_t *)twiddleCoef_256;          
             status=arm_cfft_radix4by2_rearrange_twiddles_f16(S, 1);           
             break;  
 #endif                                                            
@@ -214,7 +214,7 @@ arm_status arm_cfft_init_f16(
         case 128U:                                                              
             S->bitRevLength = ARMBITREVINDEXTABLE_FIXED_128_TABLE_LENGTH;       
             S->pBitRevTable = (uint16_t *)armBitRevIndexTable_fixed_128; 
-            S->pTwiddle = (float32_t *)twiddleCoef_128;          
+            S->pTwiddle = (float16_t *)twiddleCoef_128;          
             status=arm_cfft_radix4by2_rearrange_twiddles_f16(S, 2);           
             break;                                                              
 #endif 
@@ -223,7 +223,7 @@ arm_status arm_cfft_init_f16(
         case 64U:                                                               
             S->bitRevLength = ARMBITREVINDEXTABLE_FIXED_64_TABLE_LENGTH;        
             S->pBitRevTable = (uint16_t *)armBitRevIndexTable_fixed_64;  
-            S->pTwiddle = (float32_t *)twiddleCoef_64;          
+            S->pTwiddle = (float16_t *)twiddleCoef_64;          
             status=arm_cfft_radix4by2_rearrange_twiddles_f16(S, 1);           
             break;                                                              
 #endif 
@@ -232,7 +232,7 @@ arm_status arm_cfft_init_f16(
         case 32U:                                                               
             S->bitRevLength = ARMBITREVINDEXTABLE_FIXED_32_TABLE_LENGTH;        
             S->pBitRevTable = (uint16_t *)armBitRevIndexTable_fixed_32;  
-            S->pTwiddle = (float32_t *)twiddleCoef_32;          
+            S->pTwiddle = (float16_t *)twiddleCoef_32;          
             status=arm_cfft_radix4by2_rearrange_twiddles_f16(S, 2);           
             break;                                                              
 #endif
@@ -242,7 +242,7 @@ arm_status arm_cfft_init_f16(
             /*  Initializations of structure parameters for 16 point FFT */     
             S->bitRevLength = ARMBITREVINDEXTABLE_FIXED_16_TABLE_LENGTH;        
             S->pBitRevTable = (uint16_t *)armBitRevIndexTable_fixed_16; 
-            S->pTwiddle = (float32_t *)twiddleCoef_16;           
+            S->pTwiddle = (float16_t *)twiddleCoef_16;           
             status=arm_cfft_radix4by2_rearrange_twiddles_f16(S, 1);           
             break;                                                              
 #endif                                                                             

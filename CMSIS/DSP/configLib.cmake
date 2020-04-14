@@ -24,7 +24,7 @@ include(configCore)
 
 
 function(configLib project cmsisRoot)
-  configcore(${project} ${cmsisRoot} TRUE)
+  configcore(${project} ${cmsisRoot})
   #configplatformForLib(${project} ${cmsisRoot})
   SET(COREID ${COREID} PARENT_SCOPE)
 endfunction()

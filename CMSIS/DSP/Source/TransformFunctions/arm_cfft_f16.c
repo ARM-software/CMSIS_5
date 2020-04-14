@@ -29,54 +29,54 @@
 #include "arm_math.h"
 #include "arm_common_tables.h"
 
-//#if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
-#if 0
+#if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
+
 #include "arm_helium_utils.h"
 #include "arm_vec_fft.h"
 #include "arm_mve_tables.h"
 
 
-static float32_t arm_inverse_fft_length_f32(uint16_t fftLen)
+static float16_t arm_inverse_fft_length_f16(uint16_t fftLen)
 {
-  float32_t retValue=1.0;
+  float16_t retValue=1.0;
                                                       
   switch (fftLen)                                     
   {                                                   
                                                       
   case 4096U:                                         
-    retValue = 0.000244140625;                        
+    retValue = (float16_t)0.000244140625;                        
     break;                                            
                                                       
   case 2048U:                                         
-    retValue = 0.00048828125;                         
+    retValue = (float16_t)0.00048828125;                         
     break;                                            
                                                       
   case 1024U:                                         
-    retValue = 0.0009765625f;                         
+    retValue = (float16_t)0.0009765625f;                         
     break;                                            
                                                       
   case 512U:                                          
-    retValue = 0.001953125;                           
+    retValue = (float16_t)0.001953125;                           
     break;                                            
                                                       
   case 256U:                                          
-    retValue = 0.00390625f;                           
+    retValue = (float16_t)0.00390625f;                           
     break;                                            
                                                       
   case 128U:                                          
-    retValue = 0.0078125;                             
+    retValue = (float16_t)0.0078125;                             
     break;                                            
                                                       
   case 64U:                                           
-    retValue = 0.015625f;                             
+    retValue = (float16_t)0.015625f;                             
     break;                                            
                                                       
   case 32U:                                           
-    retValue = 0.03125;                               
+    retValue = (float16_t)0.03125;                               
     break;                                            
                                                       
   case 16U:                                           
-    retValue = 0.0625f;                               
+    retValue = (float16_t)0.0625f;                               
     break;                                            
                                                       
                                                       
@@ -87,54 +87,80 @@ static float32_t arm_inverse_fft_length_f32(uint16_t fftLen)
 }
 
 
-static void arm_bitreversal_32_inpl_mve(
-        uint32_t *pSrc,
-  const uint16_t  bitRevLen,
+static void arm_bitreversal_f16_inpl_mve(
+        uint16_t *pSrc,
+  const uint16_t bitRevLen,
   const uint16_t *pBitRevTab)
 
 {
-    uint64_t       *src = (uint64_t *) pSrc;
+    uint32_t       *src = (uint32_t *)pSrc;
     uint32_t        blkCnt;     /* loop counters */
     uint32x4_t      bitRevTabOff;
-    uint32x4_t      one = vdupq_n_u32(1);
+    uint16x8_t      one = vdupq_n_u16(1);
 
-    blkCnt = (bitRevLen / 2) / 2;
+    blkCnt = (bitRevLen / 2) / 4;
     while (blkCnt > 0U) {
-        bitRevTabOff = vldrhq_u32(pBitRevTab);
-        pBitRevTab += 4;
+        bitRevTabOff = vldrhq_u16(pBitRevTab);
+        pBitRevTab += 8;
 
-        uint64x2_t      bitRevOff1 = vmullbq_int_u32(bitRevTabOff, one);
-        uint64x2_t      bitRevOff2 = vmulltq_int_u32(bitRevTabOff, one);
+        uint32x4_t      bitRevOff1 = vmullbq_int_u16(bitRevTabOff, one);
+        uint32x4_t      bitRevOff2 = vmulltq_int_u16(bitRevTabOff, one);
 
-        uint64x2_t      in1 = vldrdq_gather_offset_u64(src, bitRevOff1);
-        uint64x2_t      in2 = vldrdq_gather_offset_u64(src, bitRevOff2);
+        bitRevOff1 = bitRevOff1 >> 3;
+        bitRevOff2 = bitRevOff2 >> 3;
 
-        vstrdq_scatter_offset_u64(src, bitRevOff1, in2);
-        vstrdq_scatter_offset_u64(src, bitRevOff2, in1);
+        uint32x4_t      in1 = vldrwq_gather_shifted_offset_u32(src, bitRevOff1);
+        uint32x4_t      in2 = vldrwq_gather_shifted_offset_u32(src, bitRevOff2);
+
+        vstrwq_scatter_shifted_offset_u32(src, bitRevOff1, in2);
+        vstrwq_scatter_shifted_offset_u32(src, bitRevOff2, in1);
 
         /*
          * Decrement the blockSize loop counter
          */
         blkCnt--;
     }
+
+
+    /*
+     * tail
+     * (will be merged thru tail predication)
+     */
+    blkCnt = bitRevLen & 7;
+    if (blkCnt > 0U) {
+        mve_pred16_t    p0 = vctp16q(blkCnt);
+
+        bitRevTabOff = vldrhq_z_u16(pBitRevTab, p0);
+
+        uint32x4_t      bitRevOff1 = vmullbq_int_u16(bitRevTabOff, one);
+        uint32x4_t      bitRevOff2 = vmulltq_int_u16(bitRevTabOff, one);
+
+        bitRevOff1 = bitRevOff1 >> 3;
+        bitRevOff2 = bitRevOff2 >> 3;
+
+        uint32x4_t      in1 = vldrwq_gather_shifted_offset_z_u32(src, bitRevOff1, p0);
+        uint32x4_t      in2 = vldrwq_gather_shifted_offset_z_u32(src, bitRevOff2, p0);
+
+        vstrwq_scatter_shifted_offset_p_u32(src, bitRevOff1, in2, p0);
+        vstrwq_scatter_shifted_offset_p_u32(src, bitRevOff2, in1, p0);
+    }
 }
 
 
-static void _arm_radix4_butterfly_f32_mve(const arm_cfft_instance_f32 * S,float32_t * pSrc, uint32_t fftLen)
+static void _arm_radix4_butterfly_f16_mve(const arm_cfft_instance_f16 * S,float16_t * pSrc, uint32_t fftLen)
 {
-    f32x4_t vecTmp0, vecTmp1;
-    f32x4_t vecSum0, vecDiff0, vecSum1, vecDiff1;
-    f32x4_t vecA, vecB, vecC, vecD;
+    f16x8_t vecTmp0, vecTmp1;
+    f16x8_t vecSum0, vecDiff0, vecSum1, vecDiff1;
+    f16x8_t vecA, vecB, vecC, vecD;
     uint32_t  blkCnt;
     uint32_t  n1, n2;
     uint32_t  stage = 0;
     int32_t  iter = 1;
-    static const uint32_t strides[4] = {
-        (0 - 16) * sizeof(q31_t *),
-        (1 - 16) * sizeof(q31_t *),
-        (8 - 16) * sizeof(q31_t *),
-        (9 - 16) * sizeof(q31_t *)
-    };
+    static const uint32_t strides[4] =
+       {(0 - 16) * sizeof(float16_t *)
+       , (4 - 16) * sizeof(float16_t *)
+       , (8 - 16) * sizeof(float16_t *)
+       , (12 - 16) * sizeof(float16_t *)};
 
     n2 = fftLen;
     n1 = n2;
@@ -143,37 +169,37 @@ static void _arm_radix4_butterfly_f32_mve(const arm_cfft_instance_f32 * S,float3
     {
         for (int i = 0; i < iter; i++)
         {
-            float32_t const     *p_rearranged_twiddle_tab_stride1 =
+            float16_t const     *p_rearranged_twiddle_tab_stride1 =
                                 &S->rearranged_twiddle_stride1[
                                 S->rearranged_twiddle_tab_stride1_arr[stage]];
-            float32_t const     *p_rearranged_twiddle_tab_stride2 =
+            float16_t const     *p_rearranged_twiddle_tab_stride2 =
                                 &S->rearranged_twiddle_stride2[
                                 S->rearranged_twiddle_tab_stride2_arr[stage]];
-            float32_t const     *p_rearranged_twiddle_tab_stride3 =
+            float16_t const     *p_rearranged_twiddle_tab_stride3 =
                                 &S->rearranged_twiddle_stride3[
                                 S->rearranged_twiddle_tab_stride3_arr[stage]];
-            float32_t const    *pW1, *pW2, *pW3;
-            float32_t           *inA = pSrc + CMPLX_DIM * i * n1;
-            float32_t           *inB = inA + n2 * CMPLX_DIM;
-            float32_t           *inC = inB + n2 * CMPLX_DIM;
-            float32_t           *inD = inC + n2 * CMPLX_DIM;
-            f32x4_t            vecW;
+            float16_t const    *pW1, *pW2, *pW3;
+            float16_t           *inA = pSrc + CMPLX_DIM * i * n1;
+            float16_t           *inB = inA + n2 * CMPLX_DIM;
+            float16_t           *inC = inB + n2 * CMPLX_DIM;
+            float16_t           *inD = inC + n2 * CMPLX_DIM;
+            f16x8_t            vecW;
 
 
             pW1 = p_rearranged_twiddle_tab_stride1;
             pW2 = p_rearranged_twiddle_tab_stride2;
             pW3 = p_rearranged_twiddle_tab_stride3;
 
-            blkCnt = n2 / 2;
+            blkCnt = n2 / 4;
             /*
-             * load 2 f32 complex pair
+             * load 2 f16 complex pair
              */
-            vecA = vldrwq_f32(inA);
-            vecC = vldrwq_f32(inC);
+            vecA = vldrhq_f16(inA);
+            vecC = vldrhq_f16(inC);
             while (blkCnt > 0U)
             {
-                vecB = vldrwq_f32(inB);
-                vecD = vldrwq_f32(inD);
+                vecB = vldrhq_f16(inB);
+                vecD = vldrhq_f16(inD);
 
                 vecSum0 = vecA + vecC;  /* vecSum0 = vaddq(vecA, vecC) */
                 vecDiff0 = vecA - vecC; /* vecSum0 = vsubq(vecA, vecC) */
@@ -185,7 +211,7 @@ static void _arm_radix4_butterfly_f32_mve(const arm_cfft_instance_f32 * S,float3
                  */
                 vecTmp0 = vecSum0 + vecSum1;
                 vst1q(inA, vecTmp0);
-                inA += 4;
+                inA += 8;
 
                 /*
                  * [ 1 -1 1 -1 ] * [ A B C D ]'
@@ -195,10 +221,10 @@ static void _arm_radix4_butterfly_f32_mve(const arm_cfft_instance_f32 * S,float3
                  * [ 1 -1 1 -1 ] * [ A B C D ]'.* W2
                  */
                 vecW = vld1q(pW2);
-                pW2 += 4;
+                pW2 += 8;
                 vecTmp1 = MVE_CMPLX_MULT_FLT_Conj_AxB(vecW, vecTmp0);
                 vst1q(inB, vecTmp1);
-                inB += 4;
+                inB += 8;
 
                 /*
                  * [ 1 -i -1 +i ] * [ A B C D ]'
@@ -208,10 +234,10 @@ static void _arm_radix4_butterfly_f32_mve(const arm_cfft_instance_f32 * S,float3
                  * [ 1 -i -1 +i ] * [ A B C D ]'.* W1
                  */
                 vecW = vld1q(pW1);
-                pW1 +=4;
+                pW1 +=8;
                 vecTmp1 = MVE_CMPLX_MULT_FLT_Conj_AxB(vecW, vecTmp0);
                 vst1q(inC, vecTmp1);
-                inC += 4;
+                inC += 8;
 
                 /*
                  * [ 1 +i -1 -i ] * [ A B C D ]'
@@ -221,13 +247,13 @@ static void _arm_radix4_butterfly_f32_mve(const arm_cfft_instance_f32 * S,float3
                  * [ 1 +i -1 -i ] * [ A B C D ]'.* W3
                  */
                 vecW = vld1q(pW3);
-                pW3 += 4;
+                pW3 += 8;
                 vecTmp1 = MVE_CMPLX_MULT_FLT_Conj_AxB(vecW, vecTmp0);
                 vst1q(inD, vecTmp1);
-                inD += 4;
+                inD += 8;
 
-                vecA = vldrwq_f32(inA);
-                vecC = vldrwq_f32(inC);
+                vecA = vldrhq_f16(inA);
+                vecC = vldrhq_f16(inC);
 
                 blkCnt--;
             }
@@ -246,35 +272,35 @@ static void _arm_radix4_butterfly_f32_mve(const arm_cfft_instance_f32 * S,float3
 
     /* load scheduling */
     vecA = vldrwq_gather_base_wb_f32(&vecScGathAddr, 64);
-    vecC = vldrwq_gather_base_f32(vecScGathAddr, 16);
+    vecC = vldrwq_gather_base_f32(vecScGathAddr, 8);
 
-    blkCnt = (fftLen >> 3);
+    blkCnt = (fftLen >> 4);
     while (blkCnt > 0U)
     {
         vecSum0 = vecA + vecC;  /* vecSum0 = vaddq(vecA, vecC) */
         vecDiff0 = vecA - vecC; /* vecSum0 = vsubq(vecA, vecC) */
 
-        vecB = vldrwq_gather_base_f32(vecScGathAddr, 8);
-        vecD = vldrwq_gather_base_f32(vecScGathAddr, 24);
+        vecB = vldrwq_gather_base_f32(vecScGathAddr, 4);
+        vecD = vldrwq_gather_base_f32(vecScGathAddr, 12);
 
         vecSum1 = vecB + vecD;
         vecDiff1 = vecB - vecD;
 
         /* pre-load for next iteration */
         vecA = vldrwq_gather_base_wb_f32(&vecScGathAddr, 64);
-        vecC = vldrwq_gather_base_f32(vecScGathAddr, 16);
+        vecC = vldrwq_gather_base_f32(vecScGathAddr, 8);
 
         vecTmp0 = vecSum0 + vecSum1;
         vstrwq_scatter_base_f32(vecScGathAddr, -64, vecTmp0);
 
         vecTmp0 = vecSum0 - vecSum1;
-        vstrwq_scatter_base_f32(vecScGathAddr, -64 + 8, vecTmp0);
+        vstrwq_scatter_base_f32(vecScGathAddr, -64 + 4, vecTmp0);
 
         vecTmp0 = MVE_CMPLX_SUB_A_ixB(vecDiff0, vecDiff1);
-        vstrwq_scatter_base_f32(vecScGathAddr, -64 + 16, vecTmp0);
+        vstrwq_scatter_base_f32(vecScGathAddr, -64 + 8, vecTmp0);
 
         vecTmp0 = MVE_CMPLX_ADD_A_ixB(vecDiff0, vecDiff1);
-        vstrwq_scatter_base_f32(vecScGathAddr, -64 + 24, vecTmp0);
+        vstrwq_scatter_base_f32(vecScGathAddr, -64 + 12, vecTmp0);
 
         blkCnt--;
     }
@@ -284,15 +310,15 @@ static void _arm_radix4_butterfly_f32_mve(const arm_cfft_instance_f32 * S,float3
      */
 }
 
-static void arm_cfft_radix4by2_f32_mve(const arm_cfft_instance_f32 * S, float32_t *pSrc, uint32_t fftLen)
+static void arm_cfft_radix4by2_f16_mve(const arm_cfft_instance_f16 * S, float16_t *pSrc, uint32_t fftLen)
 {
-    float32_t const *pCoefVec;
-    float32_t const  *pCoef = S->pTwiddle;
-    float32_t        *pIn0, *pIn1;
+    float16_t const *pCoefVec;
+    float16_t const  *pCoef = S->pTwiddle;
+    float16_t        *pIn0, *pIn1;
     uint32_t          n2;
     uint32_t          blkCnt;
-    f32x4_t         vecIn0, vecIn1, vecSum, vecDiff;
-    f32x4_t         vecCmplxTmp, vecTw;
+    f16x8_t         vecIn0, vecIn1, vecSum, vecDiff;
+    f16x8_t         vecCmplxTmp, vecTw;
 
 
     n2 = fftLen >> 1;
@@ -300,49 +326,49 @@ static void arm_cfft_radix4by2_f32_mve(const arm_cfft_instance_f32 * S, float32_
     pIn1 = pSrc + fftLen;
     pCoefVec = pCoef;
 
-    blkCnt = n2 / 2;
+    blkCnt = n2 / 4;
     while (blkCnt > 0U)
     {
-        vecIn0 = *(f32x4_t *) pIn0;
-        vecIn1 = *(f32x4_t *) pIn1;
+        vecIn0 = *(f16x8_t *) pIn0;
+        vecIn1 = *(f16x8_t *) pIn1;
         vecTw = vld1q(pCoefVec);
-        pCoefVec += 4;
+        pCoefVec += 8;
 
-        vecSum = vecIn0 + vecIn1;
-        vecDiff = vecIn0 - vecIn1;
+        vecSum = vaddq(vecIn0, vecIn1);
+        vecDiff = vsubq(vecIn0, vecIn1);
 
         vecCmplxTmp = MVE_CMPLX_MULT_FLT_Conj_AxB(vecTw, vecDiff);
 
         vst1q(pIn0, vecSum);
-        pIn0 += 4;
+        pIn0 += 8;
         vst1q(pIn1, vecCmplxTmp);
-        pIn1 += 4;
+        pIn1 += 8;
 
         blkCnt--;
     }
 
-    _arm_radix4_butterfly_f32_mve(S, pSrc, n2);
+    _arm_radix4_butterfly_f16_mve(S, pSrc, n2);
 
-    _arm_radix4_butterfly_f32_mve(S, pSrc + fftLen, n2);
+    _arm_radix4_butterfly_f16_mve(S, pSrc + fftLen, n2);
 
     pIn0 = pSrc;
 }
 
-static void _arm_radix4_butterfly_inverse_f32_mve(const arm_cfft_instance_f32 * S,float32_t * pSrc, uint32_t fftLen, float32_t onebyfftLen)
+static void _arm_radix4_butterfly_inverse_f16_mve(const arm_cfft_instance_f16 * S,float16_t * pSrc, uint32_t fftLen, float16_t onebyfftLen)
 {
-    f32x4_t vecTmp0, vecTmp1;
-    f32x4_t vecSum0, vecDiff0, vecSum1, vecDiff1;
-    f32x4_t vecA, vecB, vecC, vecD;
-    f32x4_t vecW;
+    f16x8_t vecTmp0, vecTmp1;
+    f16x8_t vecSum0, vecDiff0, vecSum1, vecDiff1;
+    f16x8_t vecA, vecB, vecC, vecD;
+    f16x8_t vecW;
     uint32_t  blkCnt;
     uint32_t  n1, n2;
     uint32_t  stage = 0;
     int32_t  iter = 1;
     static const uint32_t strides[4] = {
         (0 - 16) * sizeof(q31_t *),
-        (1 - 16) * sizeof(q31_t *),
+        (4 - 16) * sizeof(q31_t *),
         (8 - 16) * sizeof(q31_t *),
-        (9 - 16) * sizeof(q31_t *)
+        (12 - 16) * sizeof(q31_t *)
     };
 
     n2 = fftLen;
@@ -352,35 +378,35 @@ static void _arm_radix4_butterfly_inverse_f32_mve(const arm_cfft_instance_f32 * 
     {
         for (int i = 0; i < iter; i++)
         {
-            float32_t const *p_rearranged_twiddle_tab_stride1 =
+            float16_t const *p_rearranged_twiddle_tab_stride1 =
                     &S->rearranged_twiddle_stride1[
                     S->rearranged_twiddle_tab_stride1_arr[stage]];
-            float32_t const *p_rearranged_twiddle_tab_stride2 =
+            float16_t const *p_rearranged_twiddle_tab_stride2 =
                     &S->rearranged_twiddle_stride2[
                     S->rearranged_twiddle_tab_stride2_arr[stage]];
-            float32_t const *p_rearranged_twiddle_tab_stride3 =
+            float16_t const *p_rearranged_twiddle_tab_stride3 =
                     &S->rearranged_twiddle_stride3[
                     S->rearranged_twiddle_tab_stride3_arr[stage]];
-            float32_t const *pW1, *pW2, *pW3;
-            float32_t *inA = pSrc + CMPLX_DIM * i * n1;
-            float32_t *inB = inA + n2 * CMPLX_DIM;
-            float32_t *inC = inB + n2 * CMPLX_DIM;
-            float32_t *inD = inC + n2 * CMPLX_DIM;
+            float16_t const *pW1, *pW2, *pW3;
+            float16_t *inA = pSrc + CMPLX_DIM * i * n1;
+            float16_t *inB = inA + n2 * CMPLX_DIM;
+            float16_t *inC = inB + n2 * CMPLX_DIM;
+            float16_t *inD = inC + n2 * CMPLX_DIM;
 
             pW1 = p_rearranged_twiddle_tab_stride1;
             pW2 = p_rearranged_twiddle_tab_stride2;
             pW3 = p_rearranged_twiddle_tab_stride3;
 
-            blkCnt = n2 / 2;
+            blkCnt = n2 / 4;
             /*
              * load 2 f32 complex pair
              */
-            vecA = vldrwq_f32(inA);
-            vecC = vldrwq_f32(inC);
+            vecA = vldrhq_f16(inA);
+            vecC = vldrhq_f16(inC);
             while (blkCnt > 0U)
             {
-                vecB = vldrwq_f32(inB);
-                vecD = vldrwq_f32(inD);
+                vecB = vldrhq_f16(inB);
+                vecD = vldrhq_f16(inD);
 
                 vecSum0 = vecA + vecC;  /* vecSum0 = vaddq(vecA, vecC) */
                 vecDiff0 = vecA - vecC; /* vecSum0 = vsubq(vecA, vecC) */
@@ -392,7 +418,7 @@ static void _arm_radix4_butterfly_inverse_f32_mve(const arm_cfft_instance_f32 * 
                  */
                 vecTmp0 = vecSum0 + vecSum1;
                 vst1q(inA, vecTmp0);
-                inA += 4;
+                inA += 8;
                 /*
                  * [ 1 -1 1 -1 ] * [ A B C D ]'
                  */
@@ -401,10 +427,10 @@ static void _arm_radix4_butterfly_inverse_f32_mve(const arm_cfft_instance_f32 * 
                  * [ 1 -1 1 -1 ] * [ A B C D ]'.* W1
                  */
                 vecW = vld1q(pW2);
-                pW2 += 4;
+                pW2 += 8;
                 vecTmp1 = MVE_CMPLX_MULT_FLT_AxB(vecW, vecTmp0);
                 vst1q(inB, vecTmp1);
-                inB += 4;
+                inB += 8;
 
                 /*
                  * [ 1 -i -1 +i ] * [ A B C D ]'
@@ -414,10 +440,10 @@ static void _arm_radix4_butterfly_inverse_f32_mve(const arm_cfft_instance_f32 * 
                  * [ 1 -i -1 +i ] * [ A B C D ]'.* W2
                  */
                 vecW = vld1q(pW1);
-                pW1 += 4;
+                pW1 += 8;
                 vecTmp1 = MVE_CMPLX_MULT_FLT_AxB(vecW, vecTmp0);
                 vst1q(inC, vecTmp1);
-                inC += 4;
+                inC += 8;
 
                 /*
                  * [ 1 +i -1 -i ] * [ A B C D ]'
@@ -427,13 +453,13 @@ static void _arm_radix4_butterfly_inverse_f32_mve(const arm_cfft_instance_f32 * 
                  * [ 1 +i -1 -i ] * [ A B C D ]'.* W3
                  */
                 vecW = vld1q(pW3);
-                pW3 += 4;
+                pW3 += 8;
                 vecTmp1 = MVE_CMPLX_MULT_FLT_AxB(vecW, vecTmp0);
                 vst1q(inD, vecTmp1);
-                inD += 4;
+                inD += 8;
 
-                vecA = vldrwq_f32(inA);
-                vecC = vldrwq_f32(inC);
+                vecA = vldrhq_f16(inA);
+                vecC = vldrhq_f16(inC);
 
                 blkCnt--;
             }
@@ -454,7 +480,7 @@ static void _arm_radix4_butterfly_inverse_f32_mve(const arm_cfft_instance_f32 * 
      * load scheduling
      */
     vecA = vldrwq_gather_base_wb_f32(&vecScGathAddr, 64);
-    vecC = vldrwq_gather_base_f32(vecScGathAddr, 16);
+    vecC = vldrwq_gather_base_f32(vecScGathAddr, 8);
 
     blkCnt = (fftLen >> 3);
     while (blkCnt > 0U)
@@ -462,14 +488,14 @@ static void _arm_radix4_butterfly_inverse_f32_mve(const arm_cfft_instance_f32 * 
         vecSum0 = vecA + vecC;  /* vecSum0 = vaddq(vecA, vecC) */
         vecDiff0 = vecA - vecC; /* vecSum0 = vsubq(vecA, vecC) */
 
-        vecB = vldrwq_gather_base_f32(vecScGathAddr, 8);
-        vecD = vldrwq_gather_base_f32(vecScGathAddr, 24);
+        vecB = vldrwq_gather_base_f32(vecScGathAddr, 4);
+        vecD = vldrwq_gather_base_f32(vecScGathAddr, 12);
 
         vecSum1 = vecB + vecD;
         vecDiff1 = vecB - vecD;
 
         vecA = vldrwq_gather_base_wb_f32(&vecScGathAddr, 64);
-        vecC = vldrwq_gather_base_f32(vecScGathAddr, 16);
+        vecC = vldrwq_gather_base_f32(vecScGathAddr, 8);
 
         vecTmp0 = vecSum0 + vecSum1;
         vecTmp0 = vecTmp0 * onebyfftLen;
@@ -477,15 +503,15 @@ static void _arm_radix4_butterfly_inverse_f32_mve(const arm_cfft_instance_f32 * 
 
         vecTmp0 = vecSum0 - vecSum1;
         vecTmp0 = vecTmp0 * onebyfftLen;
-        vstrwq_scatter_base_f32(vecScGathAddr, -64 + 8, vecTmp0);
+        vstrwq_scatter_base_f32(vecScGathAddr, -64 + 4, vecTmp0);
 
         vecTmp0 = MVE_CMPLX_ADD_A_ixB(vecDiff0, vecDiff1);
         vecTmp0 = vecTmp0 * onebyfftLen;
-        vstrwq_scatter_base_f32(vecScGathAddr, -64 + 16, vecTmp0);
+        vstrwq_scatter_base_f32(vecScGathAddr, -64 + 8, vecTmp0);
 
         vecTmp0 = MVE_CMPLX_SUB_A_ixB(vecDiff0, vecDiff1);
         vecTmp0 = vecTmp0 * onebyfftLen;
-        vstrwq_scatter_base_f32(vecScGathAddr, -64 + 24, vecTmp0);
+        vstrwq_scatter_base_f32(vecScGathAddr, -64 + 12, vecTmp0);
 
         blkCnt--;
     }
@@ -495,16 +521,16 @@ static void _arm_radix4_butterfly_inverse_f32_mve(const arm_cfft_instance_f32 * 
      */
 }
 
-static void arm_cfft_radix4by2_inverse_f32_mve(const arm_cfft_instance_f32 * S,float32_t *pSrc, uint32_t fftLen)
+static void arm_cfft_radix4by2_inverse_f16_mve(const arm_cfft_instance_f16 * S,float16_t *pSrc, uint32_t fftLen)
 {
-    float32_t const *pCoefVec;
-    float32_t const  *pCoef = S->pTwiddle;
-    float32_t        *pIn0, *pIn1;
+    float16_t const *pCoefVec;
+    float16_t const  *pCoef = S->pTwiddle;
+    float16_t        *pIn0, *pIn1;
     uint32_t          n2;
-    float32_t         onebyfftLen = arm_inverse_fft_length_f32(fftLen);
+    float16_t         onebyfftLen = arm_inverse_fft_length_f16(fftLen);
     uint32_t          blkCnt;
-    f32x4_t         vecIn0, vecIn1, vecSum, vecDiff;
-    f32x4_t         vecCmplxTmp, vecTw;
+    f16x8_t         vecIn0, vecIn1, vecSum, vecDiff;
+    f16x8_t         vecCmplxTmp, vecTw;
 
 
     n2 = fftLen >> 1;
@@ -512,13 +538,13 @@ static void arm_cfft_radix4by2_inverse_f32_mve(const arm_cfft_instance_f32 * S,f
     pIn1 = pSrc + fftLen;
     pCoefVec = pCoef;
 
-    blkCnt = n2 / 2;
+    blkCnt = n2 / 4;
     while (blkCnt > 0U)
     {
-        vecIn0 = *(f32x4_t *) pIn0;
-        vecIn1 = *(f32x4_t *) pIn1;
+        vecIn0 = *(f16x8_t *) pIn0;
+        vecIn1 = *(f16x8_t *) pIn1;
         vecTw = vld1q(pCoefVec);
-        pCoefVec += 4;
+        pCoefVec += 8;
 
         vecSum = vecIn0 + vecIn1;
         vecDiff = vecIn0 - vecIn1;
@@ -526,16 +552,16 @@ static void arm_cfft_radix4by2_inverse_f32_mve(const arm_cfft_instance_f32 * S,f
         vecCmplxTmp = MVE_CMPLX_MULT_FLT_AxB(vecTw, vecDiff);
 
         vst1q(pIn0, vecSum);
-        pIn0 += 4;
+        pIn0 += 8;
         vst1q(pIn1, vecCmplxTmp);
-        pIn1 += 4;
+        pIn1 += 8;
 
         blkCnt--;
     }
 
-    _arm_radix4_butterfly_inverse_f32_mve(S, pSrc, n2, onebyfftLen);
+    _arm_radix4_butterfly_inverse_f16_mve(S, pSrc, n2, onebyfftLen);
 
-    _arm_radix4_butterfly_inverse_f32_mve(S, pSrc + fftLen, n2, onebyfftLen);
+    _arm_radix4_butterfly_inverse_f16_mve(S, pSrc + fftLen, n2, onebyfftLen);
 }
 
 
@@ -558,9 +584,9 @@ static void arm_cfft_radix4by2_inverse_f32_mve(const arm_cfft_instance_f32 * S,f
  */
 
 
-void arm_cfft_f32(
-  const arm_cfft_instance_f32 * S,
-        float32_t * pSrc,
+void arm_cfft_f16(
+  const arm_cfft_instance_f16 * S,
+        float16_t * pSrc,
         uint8_t ifftFlag,
         uint8_t bitReverseFlag)
 {                                                                                
@@ -574,14 +600,14 @@ void arm_cfft_f32(
             case 256:                                                                    
             case 1024:                                                                   
             case 4096:                                                                   
-                _arm_radix4_butterfly_inverse_f32_mve(S, pSrc, fftLen, arm_inverse_fft_length_f32(S->fftLen)); 
+                _arm_radix4_butterfly_inverse_f16_mve(S, pSrc, fftLen, arm_inverse_fft_length_f16(S->fftLen)); 
                 break;                                                                   
                                                                                          
             case 32:                                                                     
             case 128:                                                                    
             case 512:                                                                    
             case 2048:                                                                   
-                arm_cfft_radix4by2_inverse_f32_mve(S, pSrc, fftLen);              
+                arm_cfft_radix4by2_inverse_f16_mve(S, pSrc, fftLen);              
                 break;                                                                   
             }  
         } else {                                                                         
@@ -591,14 +617,14 @@ void arm_cfft_f32(
             case 256:                                                                    
             case 1024:                                                                   
             case 4096:                                                                   
-                _arm_radix4_butterfly_f32_mve(S, pSrc, fftLen);         
+                _arm_radix4_butterfly_f16_mve(S, pSrc, fftLen);         
                 break;                                                                   
                                                                                          
             case 32:                                                                     
             case 128:                                                                    
             case 512:                                                                    
             case 2048:                                                                   
-                arm_cfft_radix4by2_f32_mve(S, pSrc, fftLen);                      
+                arm_cfft_radix4by2_f16_mve(S, pSrc, fftLen);                      
                 break;                                                                   
             }                                                                            
         }                                                                                
@@ -607,11 +633,10 @@ void arm_cfft_f32(
         if (bitReverseFlag) 
         {                                                            
             
-            arm_bitreversal_32_inpl_mve((uint32_t*)pSrc, S->bitRevLength, S->pBitRevTable);
+            arm_bitreversal_f16_inpl_mve((uint16_t*)pSrc, S->bitRevLength, S->pBitRevTable);
                     
         } 
 }
-
 
 #else
 

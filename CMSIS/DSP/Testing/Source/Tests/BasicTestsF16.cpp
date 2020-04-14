@@ -3,7 +3,7 @@
 #include "Error.h"
 
 #define SNR_THRESHOLD 62
-#define SNR_DOTPROD_THRESHOLD 50
+#define SNR_DOTPROD_THRESHOLD 40
 
 /* 
 

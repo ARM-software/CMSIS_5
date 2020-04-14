@@ -441,9 +441,12 @@ extern "C"
 
   /**
    * @brief 16-bit floating-point type definition.
+   * This is already defined in arm_mve.h
    */
 
+#if !defined (ARM_MATH_HELIUM) && !defined(ARM_MATH_MVEF) && !defined(ARM_MATH_MVEI)
   typedef __fp16 float16_t;
+#endif
 
   /**
    * @brief 32-bit floating-point type definition.

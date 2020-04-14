@@ -19,9 +19,10 @@ condition="""#if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) 
 """
 
 F32 = 1
-Q31 = 2
-Q15 = 3
-Q7  = 4
+F16 = 2
+Q31 = 3
+Q15 = 4
+Q7  = 5
 
 def printCUInt32Array(f,name,arr):
     nb = 0
@@ -43,6 +44,20 @@ def printCFloat32Array(f,name,arr):
 
     for d in arr:
         val = "%.20ff," % d
+        nb = nb + len(val)
+        if nb > COLLIM:
+            print("",file=f)
+            nb = len(val)
+        print(val,end="",file=f)
+
+    print("};\n",file=f)
+
+def printCFloat16Array(f,name,arr):
+    nb = 0
+    print("float16_t %s[%d]={" % (name,len(arr)),file=f)
+
+    for d in arr:
+        val = "(float16_t)%.20ff," % d
         nb = nb + len(val)
         if nb > COLLIM:
             print("",file=f)
@@ -98,6 +113,9 @@ def printHUInt32Array(f,name,arr):
 
 def printHFloat32Array(f,name,arr):
  print("extern float32_t %s[%d];" % (name,len(arr)),file=f)
+
+def printHFloat16Array(f,name,arr):
+ print("extern float16_t %s[%d];" % (name,len(arr)),file=f)
 
 def printHQ31Array(f,name,arr):
  print("extern q31_t %s[%d];" % (name,len(arr)),file=f)
@@ -225,6 +243,30 @@ def reorderTwiddle(theType,conjugate,f,h,n):
        print("#endif\n",file=f)
        print("#endif\n",file=h)
 
+    # F16 SECTION FOR THIS FFT LENGTH
+    if theType == F16:
+       print(condition % ("F16",n, "F16",n << 1),file=f)
+       print(condition % ("F16",n, "F16",n << 1),file=h)
+       printCUInt32Array(f,"rearranged_twiddle_tab_stride1_arr_%d_f16" % n,list(tab1Offset))
+       printHUInt32Array(h,"rearranged_twiddle_tab_stride1_arr_%d_f16" % n,list(tab1Offset)) 
+   
+       printCUInt32Array(f,"rearranged_twiddle_tab_stride2_arr_%d_f16" % n,list(tab2Offset))
+       printHUInt32Array(h,"rearranged_twiddle_tab_stride2_arr_%d_f16" % n,list(tab2Offset))
+      
+       printCUInt32Array(f,"rearranged_twiddle_tab_stride3_arr_%d_f16" % n,list(tab3Offset))
+       printHUInt32Array(h,"rearranged_twiddle_tab_stride3_arr_%d_f16" % n,list(tab3Offset))
+   
+       printCFloat16Array(f,"rearranged_twiddle_stride1_%d_f16" % n,list(tab1))
+       printHFloat16Array(h,"rearranged_twiddle_stride1_%d_f16" % n,list(tab1))
+   
+       printCFloat16Array(f,"rearranged_twiddle_stride2_%d_f16" % n,list(tab2))
+       printHFloat16Array(h,"rearranged_twiddle_stride2_%d_f16" % n,list(tab2))
+   
+       printCFloat16Array(f,"rearranged_twiddle_stride3_%d_f16" % n,list(tab3))
+       printHFloat16Array(h,"rearranged_twiddle_stride3_%d_f16" % n,list(tab3))
+       print("#endif\n",file=f)
+       print("#endif\n",file=h)
+
     # Q31 SECTION FOR THIS FFT LENGTH
     if theType == Q31:
        print(condition % ("Q31",n, "Q31",n << 1),file=f)
@@ -285,8 +327,7 @@ cheader="""/* ------------------------------------------------------------------
  * Description:  common tables like fft twiddle factors, Bitreverse, reciprocal etc
  *               used for MVE implementation only
  *
- * $Date:        08. January 2020
- * $Revision:    V1.7.0
+ * $Date:        14. April 2020
  *
  * Target Processor: Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -342,8 +383,7 @@ hheader="""/* ------------------------------------------------------------------
  * Description:  common tables like fft twiddle factors, Bitreverse, reciprocal etc
  *               used for MVE implementation only
  *
- * $Date:        08. January 2020
- * $Revision:    V1.7.0
+ * $Date:        14. April 2020
  *
  * Target Processor: Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -420,6 +460,16 @@ with open(args.f,'w') as f:
      reorderTwiddle(F32,False,f,h,256)
      reorderTwiddle(F32,False,f,h,1024)
      reorderTwiddle(F32,False,f,h,4096)
+     print(cfooterMVEF,file=f)
+     print(hfooterMVEF,file=h)
+
+     print(cifdeMVEF,file=f)
+     print(hifdefMVEF,file=h)
+     reorderTwiddle(F16,False,f,h,16)
+     reorderTwiddle(F16,False,f,h,64)
+     reorderTwiddle(F16,False,f,h,256)
+     reorderTwiddle(F16,False,f,h,1024)
+     reorderTwiddle(F16,False,f,h,4096)
      print(cfooterMVEF,file=f)
      print(hfooterMVEF,file=h)
 
