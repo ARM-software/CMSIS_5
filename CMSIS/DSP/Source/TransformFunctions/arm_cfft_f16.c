@@ -29,6 +29,7 @@
 #include "arm_math.h"
 #include "arm_common_tables.h"
 
+
 #if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
 
 #include "arm_helium_utils.h"
@@ -44,11 +45,11 @@ static float16_t arm_inverse_fft_length_f16(uint16_t fftLen)
   {                                                   
                                                       
   case 4096U:                                         
-    retValue = (float16_t)0.000244140625;                        
+    retValue = (float16_t)0.000244140625f;                        
     break;                                            
                                                       
   case 2048U:                                         
-    retValue = (float16_t)0.00048828125;                         
+    retValue = (float16_t)0.00048828125f;                         
     break;                                            
                                                       
   case 1024U:                                         
@@ -56,7 +57,7 @@ static float16_t arm_inverse_fft_length_f16(uint16_t fftLen)
     break;                                            
                                                       
   case 512U:                                          
-    retValue = (float16_t)0.001953125;                           
+    retValue = (float16_t)0.001953125f;                           
     break;                                            
                                                       
   case 256U:                                          
@@ -64,7 +65,7 @@ static float16_t arm_inverse_fft_length_f16(uint16_t fftLen)
     break;                                            
                                                       
   case 128U:                                          
-    retValue = (float16_t)0.0078125;                             
+    retValue = (float16_t)0.0078125f;                             
     break;                                            
                                                       
   case 64U:                                           
@@ -72,7 +73,7 @@ static float16_t arm_inverse_fft_length_f16(uint16_t fftLen)
     break;                                            
                                                       
   case 32U:                                           
-    retValue = (float16_t)0.03125;                               
+    retValue = (float16_t)0.03125f;                               
     break;                                            
                                                       
   case 16U:                                           
@@ -482,7 +483,7 @@ static void _arm_radix4_butterfly_inverse_f16_mve(const arm_cfft_instance_f16 * 
     vecA = vldrwq_gather_base_wb_f32(&vecScGathAddr, 64);
     vecC = vldrwq_gather_base_f32(vecScGathAddr, 8);
 
-    blkCnt = (fftLen >> 3);
+    blkCnt = (fftLen >> 4);
     while (blkCnt > 0U)
     {
         vecSum0 = vecA + vecC;  /* vecSum0 = vaddq(vecA, vecC) */
@@ -546,8 +547,8 @@ static void arm_cfft_radix4by2_inverse_f16_mve(const arm_cfft_instance_f16 * S,f
         vecTw = vld1q(pCoefVec);
         pCoefVec += 8;
 
-        vecSum = vecIn0 + vecIn1;
-        vecDiff = vecIn0 - vecIn1;
+        vecSum = vaddq(vecIn0, vecIn1);
+        vecDiff = vsubq(vecIn0, vecIn1);
 
         vecCmplxTmp = MVE_CMPLX_MULT_FLT_AxB(vecTw, vecDiff);
 

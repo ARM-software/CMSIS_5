@@ -5,7 +5,7 @@
 #include "arm_const_structs.h"
 #include "Test.h"
 
-#define SNR_THRESHOLD 60
+#define SNR_THRESHOLD 58
 
     void TransformCF16::test_cfft_f16()
     {
