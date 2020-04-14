@@ -54,7 +54,6 @@ The following sections provide more information:
  - \ref cp_SWComponents shows how to start a pack from scratch.
  - \ref createPack_DFP describes how to enable device support in a DFP.
  - \ref createPackBoard covers the creation of Board Support Packs (BSPs).
- - \ref pack_Example explains the available example pack in more detail.
  - Learn how to \ref createPackPublish.
  - \ref createPackUtil are available that are useful during the creation of a pack.
  - \ref packFormat describes all XML elements that can be used in a package description file.
@@ -71,7 +70,6 @@ Files relevant to CMSIS-Pack are present in the following \b ARM::CMSIS director
 |Folder          |Content                                       | 
 |----------------|----------------------------------------------|
 |Utilities       | \ref createPackUtil                          |
-|Pack\\Example   | \ref pack_Example "Reference Software Pack"  |
 |Pack\\Tutorials | Tutorials for \ref cp_Packs "Creating Packs" |
 <hr>
 */
