@@ -133,11 +133,11 @@ Directory                 |Content
 \b NN                     |<a href="../../NN/html/index.html"><b>CMSIS-NN</b></a> software library source code
 \b Include                |Include files for <a href="../../Core/html/index.html"><b>CMSIS-Core (Cortex-M)</b></a> and <a href="../../DSP/html/index.html"><b>CMSIS-DSP</b></a>
 \b Lib                    |<a href="../../DSP/html/index.html"><b>CMSIS-DSP</b></a> generated libraries for ARMCC and GCC
-\b Pack                   |<a href="../../Pack/html/pack_Example.html"><b>CMSIS-Pack</b></a> example
+\b Pack                   |<a href="../../Pack/html/index.html"><b>CMSIS-Pack</b></a>
 \b RTOS                   |<a href="../../RTOS/html/index.html"><b>CMSIS-RTOS Version 1</b></a> along with RTX4 reference implementation
 \b RTOS2                  |<a href="../../RTOS/html/index.html"><b>CMSIS-RTOS Version 2</b></a> along with RTX5 reference implementation
-\b SVD                    |<a href="../../SVD/html/index.html"><b>CMSIS-SVD</b></a> example
-\b Utilities              |PACK.xsd (<a href="../../Pack/html/pack_Example.html"><b>CMSIS-Pack</b></a> schema file), PackChk.exe (checking tool for software packs), \n CMSIS-SVD.xsd (<a href="../../SVD/html/index.html"><b>CMSIS-SVD</b></a> schema file), SVDConv.exe (conversion tool for SVD files)
+\b SVD                    |<a href="../../SVD/html/index.html"><b>CMSIS-SVD</b></a>
+\b Utilities              |PACK.xsd (<a href="../../Pack/html/packFormat.html#PackSchema"><b>CMSIS-Pack</b> schema file</a>), PackChk.exe (checking tool for software packs), \n CMSIS-SVD.xsd (<a href="../../SVD/html/schema_1_2_gr.html"><b>CMSIS-SVD</b> schema file</a>), SVDConv.exe (conversion tool for SVD files), \n CPRJ.xsd (<a href="../../Build/html/projectDescriptionSchema.html"><b>CMSIS-Build</b> schema file</a>)
 
 <hr>
 */
