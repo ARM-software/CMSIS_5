@@ -25,8 +25,7 @@
 /**
    \mainpage CMSIS DSP Software Library
    *
-   * Introduction
-   * ------------
+   * \section intro Introduction
    *
    * This user manual describes the CMSIS DSP software library,
    * a suite of common signal processing functions for use on Cortex-M and Cortex-A processor 
@@ -50,8 +49,7 @@
    * The library has generally separate functions for operating on 8-bit integers, 16-bit integers,
    * 32-bit integer and 32-bit floating-point values.
    *
-   * Using the Library
-   * ------------
+   * \section using Using the Library
    *
    * The library installer contains prebuilt versions of the libraries in the <code>Lib</code> folder.
    *
@@ -81,21 +79,18 @@
    * public header file <code> arm_math.h</code> for Cortex-M cores with little endian and big endian. Same header file will be used for floating point unit(FPU) variants.
    *
    *
-   * Examples
-   * --------
+   * \section example Examples
    *
    * The library ships with a number of examples which demonstrate how to use the library functions.
    *
-   * Toolchain Support
-   * ------------
+   * \section toolchain Toolchain Support
    *
    * The library is now tested on Fast Models building with cmake.
    * Core M0, M7, A5 are tested.
    * 
    * 
    *
-   * Building the Library
-   * ------------
+   * \section building Building the Library
    *
    * The library installer contains a project file to rebuild libraries on MDK toolchain in the <code>CMSIS\\DSP\\Projects\\ARM</code> folder.
    * - arm_cortexM_math.uvprojx
@@ -105,8 +100,7 @@
    *
    * There is also a work in progress cmake build. The README file is giving more details.
    *
-   * Preprocessor Macros
-   * ------------
+   * \section preprocessor Preprocessor Macros
    *
    * Each library project have different preprocessor macros.
    *
@@ -156,8 +150,7 @@
    * Float16 implementations of some algorithms (Requires MVE extension).
    *
    * <hr>
-   * CMSIS-DSP in ARM::CMSIS Pack
-   * -----------------------------
+   * \section pack CMSIS-DSP in ARM::CMSIS Pack
    *
    * The following files relevant to CMSIS-DSP are present in the <b>ARM::CMSIS</b> Pack directories:
    * |File/Folder                      |Content                                                                 |
@@ -171,8 +164,7 @@
    * |\b CMSIS\\DSP\\Source            | DSP_Lib source files                                                   |
    *
    * <hr>
-   * Revision History of CMSIS-DSP
-   * ------------
+   * \section rev Revision History of CMSIS-DSP
    * Please refer to \ref ChangeLog_pg.
    */
 
