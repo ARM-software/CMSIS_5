@@ -29,7 +29,7 @@
  * -------------------------------------------------------------------- */
 
 #include "arm_nnfunctions.h"
-#include <arm_math.h>
+#include "arm_math.h"
 
 /**
  *  @ingroup groupNN
