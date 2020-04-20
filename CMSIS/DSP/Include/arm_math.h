@@ -431,7 +431,7 @@ extern "C"
   #endif
 #endif
 
-#if defined (ARM_MATH_HELIUM) || defined(ARM_MATH_MVEF) || defined(ARM_MATH_MVEI)
+#if __ARM_FEATURE_MVE
 #include <arm_mve.h>
 #endif
 
