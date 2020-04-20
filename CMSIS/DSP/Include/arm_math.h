@@ -398,6 +398,8 @@ extern "C"
 #include <arm_neon.h>
 #endif
 
+#if !defined(ARM_MATH_AUTOVECTORIZE)
+
 #if __ARM_FEATURE_MVE
   #if !defined(ARM_MATH_MVEI)
     #define ARM_MATH_MVEI
@@ -412,6 +414,8 @@ extern "C"
     #define ARM_MATH_FLOAT16
   #endif
 #endif
+  
+#endif /*!defined(ARM_MATH_AUTOVECTORIZE)*/
 
 #if defined (ARM_MATH_HELIUM)
   #if !defined(ARM_MATH_MVEF)
