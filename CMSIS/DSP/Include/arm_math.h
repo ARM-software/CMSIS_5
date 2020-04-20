@@ -398,13 +398,33 @@ extern "C"
 #include <arm_neon.h>
 #endif
 
-#if defined (ARM_MATH_HELIUM)
-  #define ARM_MATH_MVEF
+#if __ARM_FEATURE_MVE
+  #if !defined(ARM_MATH_MVEI)
+    #define ARM_MATH_MVEI
+  #endif
 #endif
 
-#if defined (ARM_MATH_MVEF)
-  #define ARM_MATH_MVEI
-  #define ARM_MATH_FLOAT16
+#if (__ARM_FEATURE_MVE & 2)
+  #if !defined(ARM_MATH_MVEF)
+    #define ARM_MATH_MVEF
+  #endif
+  #if !defined(ARM_MATH_FLOAT16)
+    #define ARM_MATH_FLOAT16
+  #endif
+#endif
+
+#if defined (ARM_MATH_HELIUM)
+  #if !defined(ARM_MATH_MVEF)
+    #define ARM_MATH_MVEF
+  #endif
+
+  #if !defined(ARM_MATH_MVEI)
+    #define ARM_MATH_MVEI
+  #endif
+
+  #if !defined(ARM_MATH_FLOAT16)
+    #define ARM_MATH_FLOAT16
+  #endif
 #endif
 
 #if defined (ARM_MATH_HELIUM) || defined(ARM_MATH_MVEF) || defined(ARM_MATH_MVEI)
@@ -438,7 +458,7 @@ extern "C"
    * This is not fully supported on ARM AC5.
    */
 
-#if !defined( __CC_ARM ) && !defined (ARM_MATH_HELIUM) && !defined(ARM_MATH_MVEF) && !defined(ARM_MATH_MVEI)
+#if !defined( __CC_ARM ) && !(__ARM_FEATURE_MVE & 2)
   typedef __fp16 float16_t;
 #endif
 
