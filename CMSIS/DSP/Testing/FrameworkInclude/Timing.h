@@ -3,6 +3,8 @@
 
 #include "Test.h"
 #include "arm_math.h"
+#include "arm_math_f16.h"
+
 void initCycleMeasurement();
 void cycleMeasurementStart();
 void cycleMeasurementStop();

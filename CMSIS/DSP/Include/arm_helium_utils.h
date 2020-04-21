@@ -29,6 +29,11 @@
 #ifndef _ARM_UTILS_HELIUM_H_
 #define _ARM_UTILS_HELIUM_H_
 
+
+#ifdef   __cplusplus
+extern "C"
+{
+#endif
 /***************************************
 
 Definitions available for MVEF and MVEI
@@ -359,5 +364,9 @@ __STATIC_INLINE q15x8_t FAST_VSQRT_Q15(q15x8_t vecIn)
 #endif
 
 #endif /* defined (ARM_MATH_HELIUM) || defined(ARM_MATH_MVEI) */
+
+#ifdef   __cplusplus
+}
+#endif
 
 #endif

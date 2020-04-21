@@ -26,15 +26,15 @@
  * limitations under the License.
  */
 
-#include "arm_math.h"
-#include "arm_common_tables.h"
+#include "arm_math_f16.h"
+#include "arm_common_tables_f16.h"
 
 
 #if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
 
 #include "arm_helium_utils.h"
 #include "arm_vec_fft.h"
-#include "arm_mve_tables.h"
+#include "arm_mve_tables_f16.h"
 
 
 static float16_t arm_inverse_fft_length_f16(uint16_t fftLen)
@@ -641,6 +641,8 @@ void arm_cfft_f16(
 
 #else
 
+#if defined(ARM_FLOAT16_SUPPORTED)
+
 extern void arm_bitreversal_16(
         uint16_t * pSrc,
   const uint16_t bitRevLen,
@@ -892,6 +894,7 @@ void arm_cfft_f16(
         }
     }
 }
+#endif /* if defined(ARM_FLOAT16_SUPPORTED) */
 #endif /* defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE) */
 
 /**

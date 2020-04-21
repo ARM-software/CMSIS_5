@@ -31,7 +31,10 @@
 
  #include "arm_math.h"
 
- 
+#ifdef   __cplusplus
+extern "C"
+{
+#endif
 
 
  
@@ -88,67 +91,6 @@ extern uint32_t rearranged_twiddle_tab_stride3_arr_4096_f32[6];
 extern float32_t rearranged_twiddle_stride1_4096_f32[2728];
 extern float32_t rearranged_twiddle_stride2_4096_f32[2728];
 extern float32_t rearranged_twiddle_stride3_4096_f32[2728];
-#endif
-
-
-#endif /* !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_FFT_ALLOW_TABLES) */
-
-#endif /* defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE) */
-
-
-
-#if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
-
-#if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_FFT_ALLOW_TABLES)
-
-#if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) || defined(ARM_TABLE_TWIDDLECOEF_F16_16) || defined(ARM_TABLE_TWIDDLECOEF_F16_32)
-
-extern uint32_t rearranged_twiddle_tab_stride1_arr_16_f16[2];
-extern uint32_t rearranged_twiddle_tab_stride2_arr_16_f16[2];
-extern uint32_t rearranged_twiddle_tab_stride3_arr_16_f16[2];
-extern float16_t rearranged_twiddle_stride1_16_f16[8];
-extern float16_t rearranged_twiddle_stride2_16_f16[8];
-extern float16_t rearranged_twiddle_stride3_16_f16[8];
-#endif
-
-#if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) || defined(ARM_TABLE_TWIDDLECOEF_F16_64) || defined(ARM_TABLE_TWIDDLECOEF_F16_128)
-
-extern uint32_t rearranged_twiddle_tab_stride1_arr_64_f16[3];
-extern uint32_t rearranged_twiddle_tab_stride2_arr_64_f16[3];
-extern uint32_t rearranged_twiddle_tab_stride3_arr_64_f16[3];
-extern float16_t rearranged_twiddle_stride1_64_f16[40];
-extern float16_t rearranged_twiddle_stride2_64_f16[40];
-extern float16_t rearranged_twiddle_stride3_64_f16[40];
-#endif
-
-#if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) || defined(ARM_TABLE_TWIDDLECOEF_F16_256) || defined(ARM_TABLE_TWIDDLECOEF_F16_512)
-
-extern uint32_t rearranged_twiddle_tab_stride1_arr_256_f16[4];
-extern uint32_t rearranged_twiddle_tab_stride2_arr_256_f16[4];
-extern uint32_t rearranged_twiddle_tab_stride3_arr_256_f16[4];
-extern float16_t rearranged_twiddle_stride1_256_f16[168];
-extern float16_t rearranged_twiddle_stride2_256_f16[168];
-extern float16_t rearranged_twiddle_stride3_256_f16[168];
-#endif
-
-#if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) || defined(ARM_TABLE_TWIDDLECOEF_F16_1024) || defined(ARM_TABLE_TWIDDLECOEF_F16_2048)
-
-extern uint32_t rearranged_twiddle_tab_stride1_arr_1024_f16[5];
-extern uint32_t rearranged_twiddle_tab_stride2_arr_1024_f16[5];
-extern uint32_t rearranged_twiddle_tab_stride3_arr_1024_f16[5];
-extern float16_t rearranged_twiddle_stride1_1024_f16[680];
-extern float16_t rearranged_twiddle_stride2_1024_f16[680];
-extern float16_t rearranged_twiddle_stride3_1024_f16[680];
-#endif
-
-#if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) || defined(ARM_TABLE_TWIDDLECOEF_F16_4096) || defined(ARM_TABLE_TWIDDLECOEF_F16_8192)
-
-extern uint32_t rearranged_twiddle_tab_stride1_arr_4096_f16[6];
-extern uint32_t rearranged_twiddle_tab_stride2_arr_4096_f16[6];
-extern uint32_t rearranged_twiddle_tab_stride3_arr_4096_f16[6];
-extern float16_t rearranged_twiddle_stride1_4096_f16[2728];
-extern float16_t rearranged_twiddle_stride2_4096_f16[2728];
-extern float16_t rearranged_twiddle_stride3_4096_f16[2728];
 #endif
 
 
@@ -280,16 +222,9 @@ extern q15_t rearranged_twiddle_stride3_4096_q15[2728];
 
 
 
-#if defined(ARM_MATH_MVEI) 
-
-#if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_FFT_ALLOW_TABLES)
-
-
-#endif /* !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_FFT_ALLOW_TABLES) */
-
-#endif /* defined(ARM_MATH_MVEI) */
-
-
+#ifdef   __cplusplus
+}
+#endif
 
 #endif /*_ARM_MVE_TABLES_H*/
 

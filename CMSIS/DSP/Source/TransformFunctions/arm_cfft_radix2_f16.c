@@ -26,7 +26,9 @@
  * limitations under the License.
  */
 
-#include "arm_math.h"
+#include "arm_math_f16.h"
+
+#if defined(ARM_FLOAT16_SUPPORTED)
 
 void arm_radix2_butterfly_f16(
         float16_t * pSrc,
@@ -470,3 +472,4 @@ float16_t onebyfftLen)
 }
 
 
+#endif /* #if defined(ARM_FLOAT16_SUPPORTED) */

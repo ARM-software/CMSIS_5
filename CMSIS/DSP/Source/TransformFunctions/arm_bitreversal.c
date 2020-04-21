@@ -27,6 +27,7 @@
  */
 
 #include "arm_math.h"
+#include "arm_math_f16.h"
 #include "arm_common_tables.h"
 
 /*
@@ -38,7 +39,7 @@
 * @return none.
 */
 
-#if !defined(__CC_ARM)
+#if !defined(__CC_ARM) && defined(ARM_FLOAT16_SUPPORTED)
 void arm_bitreversal_f16(
 float16_t * pSrc,
 uint16_t fftSize,

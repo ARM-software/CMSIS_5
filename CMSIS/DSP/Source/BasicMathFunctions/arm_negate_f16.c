@@ -24,7 +24,7 @@
  * limitations under the License.
  */
 
-#include "arm_math.h"
+#include "arm_math_f16.h"
 
 /**
   @ingroup groupMath
@@ -103,6 +103,7 @@ void arm_negate_f16(
 }
 
 #else
+#if defined(ARM_FLOAT16_SUPPORTED)
 void arm_negate_f16(
   const float16_t * pSrc,
         float16_t * pDst,
@@ -155,6 +156,7 @@ void arm_negate_f16(
   }
 
 }
+#endif
 #endif /* defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE) */
 
 /**

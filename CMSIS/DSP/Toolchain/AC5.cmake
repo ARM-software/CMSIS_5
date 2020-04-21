@@ -20,7 +20,7 @@ function(compilerSpecificCompileOptions PROJECTNAME ROOT)
   #cmake_print_variables(${PROJECTNAME} DISABLEHALF DISABLEOPTIM)
   # Add support for the type __fp16 even if there is no HW
   # support for it. But support disabled when building boot code
-  if (NOT DISABLEHALF)
+  if ((NOT DISABLEHALF) AND (FLOAT16))
   target_compile_options(${PROJECTNAME} PRIVATE "--fp16_format=alternative")
   endif()
   

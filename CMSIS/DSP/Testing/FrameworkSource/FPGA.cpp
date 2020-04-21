@@ -37,6 +37,8 @@
 #include <stdio.h>
 #include <string.h>
 #include "Generators.h"
+#include "arm_math.h"
+#include "arm_math_f16.h"
 
 namespace Client
 {
@@ -540,7 +542,7 @@ namespace Client
 
     }
 
-#if !defined( __CC_ARM )
+#if !defined( __CC_ARM ) && defined(ARM_FLOAT16_SUPPORTED)
     void FPGA::ImportPattern_f16(Testing::PatternID_t id,char* p,Testing::nbSamples_t nb)
     {
         unsigned long offset,i;
@@ -741,7 +743,7 @@ namespace Client
         }
     }
 
-#if !defined( __CC_ARM )
+#if !defined( __CC_ARM ) && defined(ARM_FLOAT16_SUPPORTED)
     void FPGA::DumpPattern_f16(Testing::outputID_t id,Testing::nbSamples_t nb, float16_t* data)
     {
         std::string fileName = this->getOutputPath(id); 

@@ -24,7 +24,7 @@
  * limitations under the License.
  */
 
-#include "arm_math.h"
+#include "arm_math_f16.h"
 #include <math.h>
 
 /**
@@ -108,6 +108,7 @@ void arm_abs_f16(
 }
 
 #else
+#if defined(ARM_FLOAT16_SUPPORTED)
 void arm_abs_f16(
   const float16_t * pSrc,
         float16_t * pDst,
@@ -115,7 +116,7 @@ void arm_abs_f16(
 {
         uint32_t blkCnt;                               /* Loop counter */
 
-#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+#if defined(ARM_MATH_NEON_FLOAT16) && !defined(ARM_MATH_AUTOVECTORIZE)
     f16x8_t vec1;
     f16x8_t res;
 
@@ -188,6 +189,7 @@ void arm_abs_f16(
   }
 
 }
+#endif /* defined(ARM_FLOAT16_SUPPORTED */
 #endif /* defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE) */
 /**
   @} end of BasicAbs group

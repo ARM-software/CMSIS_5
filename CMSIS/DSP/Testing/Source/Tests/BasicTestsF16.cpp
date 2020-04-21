@@ -2,6 +2,8 @@
 #include <stdio.h>
 #include "Error.h"
 
+#include "arm_math_f16.h"
+
 #define SNR_THRESHOLD 62
 #define SNR_DOTPROD_THRESHOLD 40
 

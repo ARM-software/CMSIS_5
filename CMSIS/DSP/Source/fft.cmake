@@ -86,6 +86,92 @@ else()
 endif()
 endif()
 
+#######################################
+#
+# CFFT F16
+#
+
+
+if (CONFIGTABLE AND CFFT_F16_16)
+    target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_TWIDDLECOEF_F16_16)
+if (HELIUM OR MVEF)
+    target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_BITREVIDX_FXT_16)
+else()
+    target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_BITREVIDX_FLT_16)
+endif()
+endif()
+
+if (CONFIGTABLE AND CFFT_F16_32)
+    target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_TWIDDLECOEF_F16_32)
+if (HELIUM OR MVEF)
+    target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_BITREVIDX_FXT_32)
+else()
+    target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_BITREVIDX_FLT_32)
+endif()
+endif()
+
+if (CONFIGTABLE AND CFFT_F16_64)
+    target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_TWIDDLECOEF_F16_64)
+if (HELIUM OR MVEF)
+    target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_BITREVIDX_FXT_64)
+else()
+    target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_BITREVIDX_FLT_64)
+endif()
+endif()
+
+if (CONFIGTABLE AND CFFT_F16_128)
+    target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_TWIDDLECOEF_F16_128)
+if (HELIUM OR MVEF)
+    target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_BITREVIDX_FXT_128)
+else()
+    target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_BITREVIDX_FLT_128)
+endif()
+endif()
+
+if (CONFIGTABLE AND CFFT_F16_256)
+    target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_TWIDDLECOEF_F16_256)
+if (HELIUM OR MVEF)
+    target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_BITREVIDX_FXT_256)
+else()
+    target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_BITREVIDX_FLT_256)
+endif()
+endif()
+
+if (CONFIGTABLE AND CFFT_F16_512)
+    target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_TWIDDLECOEF_F16_512)
+if (HELIUM OR MVEF)
+    target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_BITREVIDX_FXT_512)
+else()
+    target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_BITREVIDX_FLT_512)
+endif()
+endif()
+
+if (CONFIGTABLE AND CFFT_F16_1024)
+    target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_TWIDDLECOEF_F16_1024)
+if (HELIUM OR MVEF)
+    target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_BITREVIDX_FXT_1024)
+else()
+    target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_BITREVIDX_FLT_1024)
+endif()
+endif()
+
+if (CONFIGTABLE AND CFFT_F16_2048)
+    target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_TWIDDLECOEF_F16_2048)
+if (HELIUM OR MVEF)
+    target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_BITREVIDX_FXT_2048)
+else()
+    target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_BITREVIDX_FLT_2048)
+endif()
+endif()
+
+if (CONFIGTABLE AND CFFT_F16_4096)
+    target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_TWIDDLECOEF_F16_4096)
+if (HELIUM OR MVEF)
+    target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_BITREVIDX_FXT_4096)
+else()
+    target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_BITREVIDX_FLT_4096)
+endif()
+endif()
 
 #######################################
 #

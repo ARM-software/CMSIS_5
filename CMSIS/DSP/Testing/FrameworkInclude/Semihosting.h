@@ -30,6 +30,9 @@
 #include <string>
 #include <memory>
 #include <stdio.h>
+#include "arm_math.h"
+#include "arm_math_f16.h"
+
 
 namespace Client
 {
@@ -64,7 +67,7 @@ Semihosting driver. Used to read a text file describing how to drive the test.
       
       virtual void ImportPattern_f64(Testing::PatternID_t,char*,Testing::nbSamples_t nb=0);
       virtual void ImportPattern_f32(Testing::PatternID_t,char*,Testing::nbSamples_t nb=0);
-#if !defined( __CC_ARM )
+#if !defined( __CC_ARM ) && defined(ARM_FLOAT16_SUPPORTED)
       virtual void ImportPattern_f16(Testing::PatternID_t,char*,Testing::nbSamples_t nb=0);
 #endif
       virtual void ImportPattern_q63(Testing::PatternID_t,char*,Testing::nbSamples_t nb=0);
@@ -83,7 +86,7 @@ Semihosting driver. Used to read a text file describing how to drive the test.
 
       virtual void DumpPattern_f64(Testing::outputID_t,Testing::nbSamples_t nb, float64_t*);
       virtual void DumpPattern_f32(Testing::outputID_t,Testing::nbSamples_t nb, float32_t*);
-#if !defined( __CC_ARM )
+#if !defined( __CC_ARM ) && defined(ARM_FLOAT16_SUPPORTED)
       virtual void DumpPattern_f16(Testing::outputID_t,Testing::nbSamples_t nb, float16_t*);
 #endif
       virtual void DumpPattern_q63(Testing::outputID_t,Testing::nbSamples_t nb, q63_t*);

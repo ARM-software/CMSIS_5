@@ -26,7 +26,7 @@
  * limitations under the License.
  */
 
-#include "arm_math.h"
+#include "arm_math_f16.h"
 
 /**
   @ingroup groupMath
@@ -118,7 +118,7 @@ void arm_dot_prod_f16(
 }
 
 #else
-
+#if defined(ARM_FLOAT16_SUPPORTED)
 void arm_dot_prod_f16(
   const float16_t * pSrcA,
   const float16_t * pSrcB,
@@ -177,7 +177,7 @@ void arm_dot_prod_f16(
   /* Store result in destination buffer */
   *result = sum;
 }
-
+#endif
 #endif /* defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE) */
 /**
   @} end of BasicDotProd group
