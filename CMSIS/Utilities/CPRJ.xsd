@@ -482,7 +482,7 @@
         <!-- project build target settings -->
         <xs:element name="target"         type="TargetType"       minOccurs="0" />
         <!-- components used by project -->
-        <xs:element name="components"     type="ComponentsType"   minOccurs="1" />
+        <xs:element name="components"     type="ComponentsType"   minOccurs="0" />
         <!-- project modules/source files not contained in components -->
         <xs:element name="files"          type="FilesType"        minOccurs="0"/>
       </xs:all>
