@@ -267,7 +267,7 @@
       <!-- C++ Compiler command-line -->
       <xs:element name="cxxflags"  type="ToolOptionType" />
       <!-- Assembler command-line -->
-      <xs:element name="asflags"   type="ToolOptionType" />
+      <xs:element name="asflags"   type="AsmOptionType" />
     </xs:choice>
     <!-- Board Vendor -->
     <xs:attribute name="Bvendor"  type="xs:string"   use="optional" />
@@ -303,16 +303,23 @@
   </xs:complexType>
 
   <xs:complexType name="LinkerFlagsType">
-    <xs:attribute name="compiler"  type="CompilerEnumType" use="required"/>
-    <xs:attribute name="file"      type="xs:string"/>
-    <xs:attribute name="add"       type="xs:string"/>
-    <xs:attribute name="remove"    type="xs:string"/>
+    <xs:attribute name="compiler" type="CompilerEnumType" use="required" />
+    <xs:attribute name="file"     type="xs:string" />
+    <xs:attribute name="add"      type="xs:string" />
+    <xs:attribute name="remove"   type="xs:string" />
+  </xs:complexType>
+
+  <xs:complexType name="AsmOptionType">
+    <xs:attribute name="compiler" type="CompilerEnumType" use="required" />
+    <xs:attribute name="add"      type="xs:string" />
+    <xs:attribute name="remove"   type="xs:string" />
+	<xs:attribute name="use"      type="xs:string" />
   </xs:complexType>
 
   <xs:complexType name="ToolOptionType">
-    <xs:attribute name="compiler"  type="CompilerEnumType" use="required"/>
-    <xs:attribute name="add"    type="xs:string" />
-    <xs:attribute name="remove" type="xs:string" />
+    <xs:attribute name="compiler" type="CompilerEnumType" use="required"/>
+    <xs:attribute name="add"      type="xs:string" />
+    <xs:attribute name="remove"   type="xs:string" />
   </xs:complexType>
 
   <xs:complexType name="UsedType">
