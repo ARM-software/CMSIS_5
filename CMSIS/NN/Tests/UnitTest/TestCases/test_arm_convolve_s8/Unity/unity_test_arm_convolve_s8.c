@@ -50,3 +50,33 @@ void test_stride2pad1_arm_convolve_s8(void)
 {
   stride2pad1_arm_convolve_s8();
 }
+
+void test_conv_2_arm_convolve_s8(void)
+{
+  conv_2_arm_convolve_s8();
+}
+
+void test_conv_3_arm_convolve_s8(void)
+{
+  conv_3_arm_convolve_s8();
+}
+
+void test_conv_1_x_n_1_arm_convolve_s8(void)
+{
+  conv_1_x_n_1_arm_convolve_s8();
+}
+
+void test_conv_1_x_n_1_1_arm_convolve_s8(void)
+{
+  conv_1_x_n_1_1_arm_convolve_s8();
+}
+
+void test_conv_1_x_n_2_arm_convolve_s8(void)
+{
+  conv_1_x_n_2_arm_convolve_s8();
+}
+
+void test_conv_1_x_n_3_arm_convolve_s8(void)
+{
+  conv_1_x_n_3_arm_convolve_s8();
+}

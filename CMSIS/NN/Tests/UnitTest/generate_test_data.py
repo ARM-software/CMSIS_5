@@ -410,7 +410,7 @@ class ConvSettings(TestSettings):
         weights = tf.cast(weights, dtype=tf.dtypes.float32)
         bias = tf.cast(bias, dtype=tf.dtypes.float32)
 
-        out = tf.nn.conv2d(indata, weights, strides=[1, self.stride_x, self.stride_y, 1], padding=self.padding)
+        out = tf.nn.conv2d(indata, weights, strides=[1, self.stride_y, self.stride_x, 1], padding=self.padding)
 
         if tf.TensorShape([self.batches, self.y_output, self.x_output, self.output_ch]).as_list() != \
            out.shape.as_list():
@@ -516,7 +516,32 @@ if __name__ == '__main__':
     if args.type == 'conv':
         generator = ConvSettings(args, in_ch=4, out_ch=17, x_in=15, y_in=15, w_x=1, w_y=1, stride_x=1, stride_y=1,
                                  pad=False, randmin=1, randmax=4, outminrange=-126, outmaxrange=127)
+        #conv_3
+        # generator = ConvSettings(args, in_ch=3, out_ch=1, x_in=10, y_in=49, w_x=4, w_y=10, stride_x=1, stride_y=2,
+        #                          pad=True, randmin=-2, randmax=2, outminrange=-127, outmaxrange=127)
+
+        #conv_1_x_n_1
+        # generator = ConvSettings(args, in_ch=3, out_ch=3, x_in=5, y_in=5, w_x=2, w_y=1, stride_x=2, stride_y=1,
+        #                          pad=False, randmin=-2, randmax=2, outminrange=-127, outmaxrange=127, batches=2)
+
+        #conv_1_x_n_2
+        # generator = ConvSettings(args, in_ch=3, out_ch=1, x_in=11, y_in=11, w_x=11, w_y=1, stride_x=1, stride_y=1,
+        #                          pad=True, randmin=-2, randmax=2, outminrange=-127, outmaxrange=127)
+
+        #conv_1_x_n_3
+        # generator = ConvSettings(args, in_ch=1, out_ch=3, x_in=11, y_in=11, w_x=1, w_y=11, stride_x=1, stride_y=1,
+        #                          pad=True, randmin=-2, randmax=2, outminrange=-127, outmaxrange=127)
+
+        # conv_2
+        # generator = ConvSettings(args, in_ch=2, out_ch=4, x_in=6, y_in=3, w_x=3, w_y=3, stride_x=1, stride_y=1,
+        #                        pad=True, randmin=-2, randmax=2, outminrange=-126, outmaxrange=127)
+
+
     elif args.type == 'avgpool' or args.type == 'maxpool':
         generator = PoolingSettings(args, channels=8, x_in=22, y_in=12, stride_x=9, stride_y=5, w_x=6, w_y=5, pad=True)
 
     generator.generate_data()
+
+
+
+
