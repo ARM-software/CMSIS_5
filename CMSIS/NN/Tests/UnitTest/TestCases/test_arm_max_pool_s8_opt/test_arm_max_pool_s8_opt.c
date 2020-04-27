@@ -19,7 +19,6 @@
 #include <arm_nnfunctions.h>
 
 #include "../Utils/validate.h"
-#include "../Utils/profile.h"
 #include "../TestData/maxpooling/test_data.h"
 
 
