@@ -359,7 +359,7 @@ def analyseResult(resultPath,root,results,embedded,benchmark,trace,formatter):
     benchFile = None
     config=""
     if embedded:
-       prefix = ".*S:[ ]"
+       prefix = ".*[S]+:[ ]"
 
     # Parse the result file.
     # NORMAL mode is when we are parsing suite or group.

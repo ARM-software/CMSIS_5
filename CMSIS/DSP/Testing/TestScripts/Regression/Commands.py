@@ -153,7 +153,7 @@ class BuildConfig:
     
 
     # Launch cmake command.
-    def createCMake(self,flags):
+    def createCMake(self,flags,benchMode,platform):
         with self.buildFolder() as b:
             self.saveEnv()
             msg("Create cmake for %s\n" % self.buildFolderName())
@@ -162,12 +162,18 @@ class BuildConfig:
             cmd += ["-DCMAKE_PREFIX_PATH=%s" % self.compiler(),
                              "-DCMAKE_TOOLCHAIN_FILE=%s" % toolchainCmake,
                              "-DARM_CPU=%s" % self.core(),
-                             "-DPLATFORM=FVP"
+                             "-DPLATFORM=%s" % platform
                     ]
             cmd += flags 
-            cmd += ["-DBENCHMARK=OFF",
-                             "-DWRAPPER=OFF",
-                             "-DCONFIGTABLE=OFF",
+            if benchMode:
+              msg("Benchmark mode\n")
+              cmd += ["-DBENCHMARK=ON"]
+              cmd += ["-DWRAPPER=ON"]
+            else: 
+              cmd += ["-DBENCHMARK=OFF"]
+              cmd += ["-DWRAPPER=OFF"]
+
+            cmd += ["-DCONFIGTABLE=OFF",
                              "-DROOT=%s" % self._rootFolder,
                              "-DCMAKE_BUILD_TYPE=Release",
                              "-G", "Unix Makefiles" ,"%s" % self.cmakeFilePath()]
@@ -310,7 +316,7 @@ class Test:
         else:
            return(TESTFAILED)
 
-    def runAndProcess(self,compiler,fvp):
+    def runAndProcess(self,compiler,fvp,sim):
         # If we can't parse test description we fail all tests
         self.processTest()
         # Otherwise if only building or those tests are failing, we continue
@@ -323,7 +329,7 @@ class Test:
         # For other compilers only build is tests
         # Since full build is no more possible because of huge pattersn,
         # build is done per test suite.
-        if compiler == "AC6":
+        if sim:
            if fvp is not None:
               self.run(fvp)
               return(self.processResult())
@@ -336,9 +342,9 @@ class Test:
 
 
 # Preprocess the test description
-def preprocess():
-    msg("Process test description file\n")
-    completed = subprocess.run(["python", "preprocess.py","-f","desc.txt"],timeout=3600)
+def preprocess(desc):
+    msg("Process test description file %s\n" % desc)
+    completed = subprocess.run(["python", "preprocess.py","-f",desc],timeout=3600)
     check(completed)
 
 # Generate all missing C code by using all classes in the

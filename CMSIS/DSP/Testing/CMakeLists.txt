@@ -72,6 +72,7 @@ option(BENCHMARK "Benchmarking compiled" OFF)
 option(EXTBENCH "Benchmarking with external traces" OFF)
 option(NN "NN Tests included" OFF)
 option(REFLIB "Use already built reference lib" OFF)
+option(FLOAT16TESTS "Float16 tests" OFF)
 
 project(Testing)
 
@@ -221,7 +222,7 @@ set(TESTSRC
   Source/Tests/ExampleCategoryQ7.cpp
   )
 
-if ((NOT ARMAC5) AND ((FLOAT16) OR (MVEF) OR (HELIUM) OR (NEON) OR (NEONEXPERIMENTAL)))
+if ((NOT ARMAC5) AND (FLOAT16TESTS) AND ((FLOAT16) OR (MVEF) OR (HELIUM) OR (NEON) OR (NEONEXPERIMENTAL)))
 set(TESTSRC16 
   Source/Tests/BasicTestsF16.cpp
   Source/Tests/TransformCF16.cpp
