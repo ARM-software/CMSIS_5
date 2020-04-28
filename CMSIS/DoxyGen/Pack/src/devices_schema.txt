@@ -1911,6 +1911,11 @@ Contact cmsis@arm.com to ask for an extension. These values can be used in the e
     <td>http://www.arm.com</td>
   </tr>
   <tr>
+    <td class="XML-Token">ArmChina:160</td>
+    <td>Arm China</td>
+    <td>http://www.armchina.com</td>
+  </tr>
+  <tr>
     <td class="XML-Token">ArteryTek:143</td>
     <td>ArteryTek</td>
     <td>http://www.arterytek.com</td>
