@@ -145,6 +145,7 @@
       <xs:enumeration value="APEXMIC:153" />
       <xs:enumeration value="ARM:82" />
       <xs:enumeration value="ARM CMSIS:109" />
+      <xs:enumeration value="ArmChina:160" />
       <xs:enumeration value="ArteryTek:143" />
       <xs:enumeration value="Atmel:3" />
       <xs:enumeration value="AutoChips:150" />
