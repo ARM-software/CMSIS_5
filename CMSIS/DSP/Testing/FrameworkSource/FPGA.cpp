@@ -204,7 +204,7 @@ namespace Client
         switch(kind)
         {
           case 1:
-             printf("S: t \n");
+             printf("S: t %s\n","");
              break;
           case 2:
              printf("S: s %ld\n",this->currentId);
@@ -213,7 +213,7 @@ namespace Client
              printf("S: g %ld\n",this->currentId);
              break;
           default:
-             printf("S: u\n");
+             printf("S: u%s\n","");
         }
 
         
@@ -281,7 +281,7 @@ namespace Client
 
     void FPGA::EndGroup()
     {
-       printf("S: p\n");
+       printf("S: p%s\n","");
        this->path->pop_back();
     }
 
