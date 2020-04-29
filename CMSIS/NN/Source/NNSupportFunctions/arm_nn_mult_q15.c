@@ -21,8 +21,8 @@
  * Title:        arm_nn_mult_q15.c
  * Description:  Q15 vector multiplication with variable output shifts
  *
- * $Date:        13. July 2018
- * $Revision:    V.1.0.0
+ * $Date:        29. April 2020
+ * $Revision:    V.1.0.1
  *
  * Target Processor:  Cortex-M cores
  *
@@ -93,10 +93,10 @@ void arm_nn_mult_q15(
     mul4 = (q31_t) ((q15_t) inA2 * (q15_t) inB2);
 
     /* saturate result to 16 bit */
-    out1 = (q15_t) __SSAT((mul1 + NN_ROUND(out_shift)) >> out_shift, 16);
-    out2 = (q15_t) __SSAT((mul2 + NN_ROUND(out_shift)) >> out_shift, 16);
-    out3 = (q15_t) __SSAT((mul3 + NN_ROUND(out_shift)) >> out_shift, 16);
-    out4 = (q15_t) __SSAT((mul4 + NN_ROUND(out_shift)) >> out_shift, 16);
+    out1 = (q15_t) __SSAT((q31_t) (mul1 + NN_ROUND(out_shift)) >> out_shift, 16);
+    out2 = (q15_t) __SSAT((q31_t) (mul2 + NN_ROUND(out_shift)) >> out_shift, 16);
+    out3 = (q15_t) __SSAT((q31_t) (mul3 + NN_ROUND(out_shift)) >> out_shift, 16);
+    out4 = (q15_t) __SSAT((q31_t) (mul4 + NN_ROUND(out_shift)) >> out_shift, 16);
 
     /* store the result */
 #ifndef ARM_MATH_BIG_ENDIAN
@@ -133,7 +133,7 @@ void arm_nn_mult_q15(
   {
     /* C = A * B */
     /* Multiply the inputs and store the result in the destination buffer */
-    *pDst++ = (q15_t) __SSAT((((q31_t) (*pSrcA++) * (*pSrcB++) + NN_ROUND(out_shift)) >> out_shift), 16);
+    *pDst++ = (q15_t) __SSAT(((q31_t) ((q31_t) (*pSrcA++) * (*pSrcB++) + NN_ROUND(out_shift)) >> out_shift), 16);
 
     /* Decrement the blockSize loop counter */
     blkCnt--;

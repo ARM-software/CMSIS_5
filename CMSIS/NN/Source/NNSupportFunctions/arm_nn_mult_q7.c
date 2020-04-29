@@ -21,8 +21,8 @@
  * Title:        arm_nn_mult_q7.c
  * Description:  Q7 vector multiplication with variable output shifts
  *
- * $Date:        13. July 2018
- * $Revision:    V.1.0.0
+ * $Date:        29. April 2020
+ * $Revision:    V.1.0.1
  *
  * Target Processor:  Cortex-M cores
  *
@@ -76,10 +76,10 @@ void arm_nn_mult_q7(
   {
     /* C = A * B */
     /* Multiply the inputs and store the results in temporary variables */
-    out1 = (q7_t) __SSAT((((q15_t) (*pSrcA++) * (*pSrcB++) + NN_ROUND(out_shift)) >> out_shift), 8);
-    out2 = (q7_t) __SSAT((((q15_t) (*pSrcA++) * (*pSrcB++) + NN_ROUND(out_shift)) >> out_shift), 8);
-    out3 = (q7_t) __SSAT((((q15_t) (*pSrcA++) * (*pSrcB++) + NN_ROUND(out_shift)) >> out_shift), 8);
-    out4 = (q7_t) __SSAT((((q15_t) (*pSrcA++) * (*pSrcB++) + NN_ROUND(out_shift)) >> out_shift), 8);
+    out1 = (q7_t) __SSAT(((q15_t) ((q15_t) (*pSrcA++) * (*pSrcB++) + NN_ROUND(out_shift)) >> out_shift), 8);
+    out2 = (q7_t) __SSAT(((q15_t) ((q15_t) (*pSrcA++) * (*pSrcB++) + NN_ROUND(out_shift)) >> out_shift), 8);
+    out3 = (q7_t) __SSAT(((q15_t) ((q15_t) (*pSrcA++) * (*pSrcB++) + NN_ROUND(out_shift)) >> out_shift), 8);
+    out4 = (q7_t) __SSAT(((q15_t) ((q15_t) (*pSrcA++) * (*pSrcB++) + NN_ROUND(out_shift)) >> out_shift), 8);
 
     /* Store the results of 4 inputs in the destination buffer in single cycle by packing */
     *__SIMD32(pDst)++ = __PACKq7(out1, out2, out3, out4);
@@ -106,7 +106,7 @@ void arm_nn_mult_q7(
   {
     /* C = A * B */
     /* Multiply the inputs and store the result in the destination buffer */
-    *pDst++ = (q7_t) __SSAT((((q15_t) (*pSrcA++) * (*pSrcB++) + NN_ROUND(out_shift)) >> out_shift), 8);
+    *pDst++ = (q7_t) __SSAT(((q15_t) ((q15_t) (*pSrcA++) * (*pSrcB++) + NN_ROUND(out_shift)) >> out_shift), 8);
 
     /* Decrement the blockSize loop counter */
     blkCnt--;
