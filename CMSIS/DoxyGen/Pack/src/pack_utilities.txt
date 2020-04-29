@@ -20,18 +20,52 @@ overview over programs that are either part of the CMSIS Pack or are available f
 
 Some text editors are capable of verifying XML code against a schema file. This is helpful to identify syntactical or
 structural problems in a PDSC or SVD file early in the development process. Useful editors are:
-- <a href="http://notepad-plus-plus.org/" target="_blank">Notepad++</a>
-- <a href="http://www.visualstudio.com/" target="_blank">Visual Studio (Express)</a>
+- <a href="https://notepad-plus-plus.org/" target="_blank">Notepad++</a>
+- <a href="https://code.visualstudio.com/" target="_blank">Visual Studio Code</a>
 
 Usually, the XML file that is to be validated and its corresponding schema file need to reside in the same directory. The
 CMSIS-Pack schema file \b Pack.xsd and the CMSIS-SVD schema file \b CMSIS-SVD.xsd are available in the directory
 <b>.\\CMSIS\\Utilities</b> of the <b>ARM::CMSIS</b> Pack.
 
-\anchor xmllint 
-<b>xmllint Schema Validation</b>
+\section cp_Editors_xmllint Schema Validation with xmllint
 
-The Linux utility <a href="http://xmlsoft.org/xmllint.html" target="_blank">xmllint</a> is a command line tool for XML validation against a schema file.
-It may be part of the \ref bash_script to verify the PDSC file during pack generation.
+The utility <a href="http://xmlsoft.org/xmllint.html" target="_blank">xmllint</a> is a command line tool for XML validation
+against a schema file. It may be part of the \ref bash_script to verify the PDSC file during pack generation.
+
+<b>Installing on Linux</b>
+
+Use your package manager to install the \c libxml2-utils (which contain xmllint). On a Ubuntu machine, use:
+\code
+$ sudo apt-get install libxml2-utils
+\endcode
+
+<b>Installing on Windows</b>
+
+Pre-built binaries of the libxml2-utils (which contain xmllint) are available through
+<a href="https://www.zlatkovic.com/projects/libxml/index.html" target="_blank">Libxml</a>. On the
+<a href="https://www.zlatkovic.com/pub/libxml/" target="_blank">download page</a>, retrieve the latest versions of \c iconv,
+\c libxml2, and \c zlib. Unzip the compressed files and copy the content of the \c /bin subdirectories onto your computer,
+for example to \c C:\\xmllint (this directory is set in \ref bash_script "gen_pack.sh"). In the end, the content of this
+directory should look like the following:
+\code
+C:\xmllint>dir
+ Volume in drive C is Harddisk
+ Volume Serial Number is ABBA-AFFE
+ 
+ Directory of C:\xmllint
+ 
+29/02/2020  13:14    <DIR>          .
+29/02/2020  13:14    <DIR>          ..
+03/05/2006  21:57           888,832 iconv.dll
+03/05/2006  21:57             7,680 iconv.exe
+19/06/2011  21:52           987,136 libxml2.dll
+02/10/2010  13:21            57,344 minigzip.exe
+19/06/2011  21:53            10,240 xmlcatalog.exe
+19/06/2011  21:53            38,912 xmllint.exe
+02/10/2010  13:21            77,824 zlib1.dll
+               7 File(s)      2,067,968 bytes
+               2 Dir(s)  212,703,227,904 bytes free
+\endcode
 */
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
@@ -42,25 +76,46 @@ Any ZIP software utility supporting the compression method
 <a href="http://en.wikipedia.org/wiki/DEFLATE" target="_blank">DEFLATE</a> can be used to create a Pack file. Simply, create
 the ZIP file and rename it to *.pack.
 
+\section cp_ZIPTool_7z 7-Zip
+
 The compression tool <a href="http://www.7-zip.org/" target="_blank">7-Zip</a> supports command line calls and can be
-used in batch scripts like \ref cp_GeneratePack "gen_pack.bat" for automated Pack file creation (and verification
-with \ref packChk). Installers for 7-Zip are available for 32-bit and 64-bit Windows operating systems.
+used in generation scripts like \ref bash_script "gen_pack.sh" for automated Pack file creation (and verification
+with \ref packChk).
+
+<b>Installing on Linux</b>
+
+Use your package manager to install <a href="http://www.7-zip.org/" target="_blank">7-Zip</a>. On a Ubuntu machine, use:
+\code
+$ sudo apt-get install p7zip-full
+\endcode
+
+<b>Installing on Windows</b>
+
+In the download section of <a href="http://www.7-zip.org/" target="_blank">7-Zip</a>, download the appropriate installer
+for your Windows system. Use defaults for your installation.
+
+\ref bash_script "gen_pack.sh" assumes that your installation path is \c "C:\Program Files\7-Zip". If you choose to use
+another location, please adapt the path in the Bash script.
 */
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
 \page bash_script Bash Script gen_pack.sh
 
-The following <a href="https://en.wikipedia.org/wiki/Bash_(Unix_shell)" target="_blank">Bash</a> shell script template \ref gen_pack_sh "gen_pack.sh" allows you to generate
-a Pack file on the Linux or the Windows operating system.  Bash is available for Windows, for example, via <a href="https://gitforwindows.org/" target="_blank">git for Windows</a>.
+The following <a href="https://en.wikipedia.org/wiki/Bash_(Unix_shell)" target="_blank">Bash</a> shell script template
+\ref gen_pack_sh "gen_pack.sh" allows you to generate a pack file under Linux or Windows. On Windows, Bash is available via
+<a href="https://gitforwindows.org/" target="_blank">git for Windows</a> for example.
 
 
 For using \ref gen_pack_sh "gen_pack.sh" 
- - Install \ref cp_ZIPTool "7-Zip" (and for Linux \ref xmllint "xmllint" for schema validation).
- - Adapt the file \ref gen_pack_sh "gen_pack.sh" that is available in the directory <b>/CMSIS/Pack/Bash</b> to the requirements of your software pack.
+ - Install \ref cp_ZIPTool "7-Zip".
+ - Install \ref cp_Editors_xmllint "xmllint".
+ - Adapt the file \ref gen_pack_sh "gen_pack.sh" that is available in the directory <b>/CMSIS/Pack/Bash</b> to the
+   requirements of your software pack and .
 
-The script is generic enough to cope with a wide range of requirements.  It uses the information from the \ref packFormat "*.PDSC file" to generate 
-the output filename according the CMSIS-Pack conventions and validates the pack consistency with \ref packChk.
+The script is generic enough to cope with a wide range of requirements. It uses the information from the
+\ref packFormat "*.PDSC file" to generate the output filename according the CMSIS-Pack conventions and validates the pack
+consistency with \ref packChk.
 
 Below is a sample output (reduced).
 \code
@@ -105,10 +160,10 @@ Completed CMSIS-Pack Generation ...
 \anchor gen_pack_sh
 <b>gen_pack.sh Bash script template file</b>
 
-The <b>gen_pack.sh</b> script template allows to configure:
- - Path environment variables for related utilities
- - Directory names for temporary build and output files
- - Directory names and files in the root directory that should be included in the pack
+The <b>gen_pack.sh</b> script template allows you to configure:
+ - Path environment variables for related utilities (\c CMSIS_PACK_PATH, \c PATH_TO_ADD)
+ - Directory names for temporary build and output files (\c PACK_WAREHOUSE, \c PACK_BUILD)
+ - Directory names and files in the root directory that should be included in the pack (\c PACK_DIRS, \c PACK_BASE_FILES)
  
 
 \verbinclude gen_pack.sh
