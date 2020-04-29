@@ -1469,4 +1469,118 @@ group Root {
          }
        }
     }
+
+    group Compiler Benchmarks {
+      class = CompilerBenchmarks
+      folder = DSP 
+
+      group Micro Benchmarks {
+        class = MicroBenchmarks
+        folder = BasicMaths 
+
+        suite MicroBenchmarksF32 {
+          class = MicroBenchmarksF32
+          folder = BasicMathsF32
+  
+          ParamList {
+                    NB
+                    Summary NB
+                    Names "NB Samples"
+                    Formula "NB"
+          }
+  
+          Pattern INPUT1_F32_ID : Input1_f32.txt 
+          Pattern INPUT2_F32_ID : Input2_f32.txt 
+          Output  OUT_SAMPLES_F32_ID : Output
+  
+          Params PARAM1_ID = {
+                    A = [16,32,64,128,256]
+          }
+  
+          Functions {
+                  While loop:test_while_f32
+                  For loop:test_for_f32
+                  For loop and array:test_array_f32
+          } -> PARAM1_ID
+        }
+
+        suite MicroBenchmarksQ31 {
+          class = MicroBenchmarksQ31
+          folder = BasicMathsQ31
+  
+          ParamList {
+                    NB
+                    Summary NB
+                    Names "NB Samples"
+                    Formula "NB"
+          }
+  
+          Pattern INPUT1_Q31_ID : Input1_q31.txt 
+          Pattern INPUT2_Q31_ID : Input2_q31.txt 
+          Output  OUT_SAMPLES_Q31_ID : Output
+  
+          Params PARAM1_ID = {
+                    A = [16,32,64,128,256]
+          }
+  
+          Functions {
+                  While loop:test_while_q31
+                  For loop:test_for_q31
+                  For loop and array:test_array_q31
+          } -> PARAM1_ID
+        }
+
+        suite MicroBenchmarksQ15 {
+          class = MicroBenchmarksQ15
+          folder = BasicMathsQ15
+  
+          ParamList {
+                    NB
+                    Summary NB
+                    Names "NB Samples"
+                    Formula "NB"
+          }
+  
+          Pattern INPUT1_Q15_ID : Input1_q15.txt 
+          Pattern INPUT2_Q15_ID : Input2_q15.txt 
+          Output  OUT_SAMPLES_Q15_ID : Output
+  
+          Params PARAM1_ID = {
+                    A = [16,32,64,128,256]
+          }
+  
+          Functions {
+                  While loop:test_while_q15
+                  For loop:test_for_q15
+                  For loop and array:test_array_q15
+          } -> PARAM1_ID
+        }
+
+        suite MicroBenchmarksQ7 {
+          class = MicroBenchmarksQ7
+          folder = BasicMathsQ7
+  
+          ParamList {
+                    NB
+                    Summary NB
+                    Names "NB Samples"
+                    Formula "NB"
+          }
+  
+          Pattern INPUT1_Q7_ID : Input1_q7.txt 
+          Pattern INPUT2_Q7_ID : Input2_q7.txt 
+          Output  OUT_SAMPLES_Q7_ID : Output
+  
+          Params PARAM1_ID = {
+                    A = [16,32,64,128,256]
+          }
+  
+          Functions {
+                  While loop:test_while_q7
+                  For loop:test_for_q7
+                  For loop and array:test_array_q7
+          } -> PARAM1_ID
+        }
+      }
+    }
 }

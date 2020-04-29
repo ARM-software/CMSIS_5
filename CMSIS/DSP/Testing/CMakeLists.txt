@@ -72,7 +72,9 @@ option(BENCHMARK "Benchmarking compiled" OFF)
 option(EXTBENCH "Benchmarking with external traces" OFF)
 option(NN "NN Tests included" OFF)
 option(REFLIB "Use already built reference lib" OFF)
+
 option(FLOAT16TESTS "Float16 tests" OFF)
+option(MICROBENCH "Micro benchmarks" OFF)
 
 project(Testing)
 
@@ -100,6 +102,16 @@ add_library(TestingLib STATIC)
 add_library(FrameworkLib STATIC)
 
 if (BENCHMARK)
+
+if (MICROBENCH)
+  set (MICROSRC
+  Source/Benchmarks/MicroBenchmarksF32.cpp
+  Source/Benchmarks/MicroBenchmarksQ31.cpp
+  Source/Benchmarks/MicroBenchmarksQ15.cpp
+  Source/Benchmarks/MicroBenchmarksQ7.cpp
+  )
+endif()
+
 set (NNSRC
   Source/Benchmarks/FullyConnectedBench.cpp
   Source/Benchmarks/PoolingBench.cpp
@@ -268,6 +280,9 @@ target_sources(TestingLib PRIVATE GeneratedSource/TestDesc.cpp)
 
 if (BENCHMARK)
   target_compile_definitions(TestingLib PUBLIC BENCHMARK)
+  if (MICROBENCH)
+    target_sources(TestingLib PRIVATE ${MICROSRC})
+  endif()
 endif()
   
 
