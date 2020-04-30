@@ -234,7 +234,6 @@ for t in config["TOOLCHAINS"]:
     msg("Testing toolchain %s\n" % cmake)
     buildAndTest(t,localConfig,cmake,sim)
 
-exit(1)
 
 logFailedBuild(args.r,failedBuild)
 sys.exit(testFailed)

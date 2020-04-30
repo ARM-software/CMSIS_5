@@ -10,6 +10,7 @@ import glob
 from pathlib import Path
 
 DEBUGMODE = False
+KEEPBUILDFOLDER = False
 
 NOTESTFAILED = 0
 MAKEFAILED = 1 
@@ -207,7 +208,7 @@ class BuildConfig:
     def cleanFolder(self):
         print("Delete %s\n" % self.path())
         #DEBUG
-        if not DEBUGMODE:
+        if not DEBUGMODE and not KEEPBUILDFOLDER:
            shutil.rmtree(self.path())
 
     # Archive results and currentConfig.csv to another folder
