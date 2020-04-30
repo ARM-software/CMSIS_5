@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2018 Arm Limited. All rights reserved.
+ * Copyright (c) 2013-2020 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -17,7 +17,7 @@
  *
  * ----------------------------------------------------------------------
  *
- * $Date:        18. June 2018
+ * $Date:        30. April 2020
  * $Revision:    V2.1.3
  *
  * Project:      CMSIS-RTOS2 API
@@ -86,7 +86,7 @@ typedef enum {
   osKernelLocked          =  3,         ///< Locked.
   osKernelSuspended       =  4,         ///< Suspended.
   osKernelError           = -1,         ///< Error.
-  osKernelReserved        = 0x7FFFFFFFU ///< Prevents enum down-size compiler optimization.
+  osKernelReserved        = 0x7FFFFFFF  ///< Prevents enum down-size compiler optimization.
 } osKernelState_t;
  
 /// Thread state.
