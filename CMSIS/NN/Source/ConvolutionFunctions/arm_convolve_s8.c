@@ -76,8 +76,6 @@ arm_status arm_convolve_s8(const q7_t *input,
     int i_batch;
     for (i_batch = 0; i_batch < input_batches; i_batch++)
     {
-        input += i_batch * (input_x * input_y * input_ch);
-        output += i_batch * (output_x * output_y * output_ch);
 #if defined(ARM_MATH_MVEI)
         /* Generate upto four columns from the input tensor a GEMM computation */
         q7_t *im2col_buf = (q7_t *)buffer_a;
@@ -334,6 +332,9 @@ arm_status arm_convolve_s8(const q7_t *input,
             }
         }
 #endif
+        /* Advance to the next batch */
+        input += (input_x * input_y * input_ch);
+        output += (output_x * output_y * output_ch);
     }
 
     /* Return to application */
