@@ -13,11 +13,32 @@ import sys
 DEBUGMODE = False
 KEEPBUILDFOLDER = False
 
+DEBUGLIST=[
+"-DBASICMATH=ON",
+"-DCOMPLEXMATH=OFF",
+"-DCONTROLLER=OFF",
+"-DFASTMATH=OFF",
+"-DFILTERING=OFF",
+"-DMATRIX=OFF",
+"-DSTATISTICS=OFF",
+"-DSUPPORT=OFF",
+"-DTRANSFORM=OFF",
+"-DSVM=OFF",
+"-DBAYES=OFF",
+"-DDISTANCE=OFF"]
+
 NOTESTFAILED = 0
 MAKEFAILED = 1 
 TESTFAILED = 2
 FLOWFAILURE = 3 
 CALLFAILURE = 4
+
+def setDebugMode():
+  global DEBUGMODE
+  DEBUGMODE=True
+
+def isDebugMode():
+  return(DEBUGMODE)
 
 
 def joinit(iterable, delimiter):
@@ -26,6 +47,17 @@ def joinit(iterable, delimiter):
     for x in it:
         yield delimiter
         yield x
+
+def addToDb(db,desc):
+    msg("Add %s to summary database\n" % desc)
+    completed = subprocess.run([sys.executable, "addToDB.py","-o",db,desc], timeout=3600)
+    check(completed)
+
+def addToRegDb(db,desc):
+    msg("Add %s to regression database\n" % desc)
+    completed = subprocess.run([sys.executable, "addToRegDB.py","-o",db,desc], timeout=3600)
+    check(completed)
+
 
 class TestFlowFailure(Exception):
     def __init__(self,completed):
@@ -158,6 +190,8 @@ class BuildConfig:
     def createCMake(self,flags,benchMode,platform):
         with self.buildFolder() as b:
             self.saveEnv()
+            if benchMode:
+              msg("Benchmark mode\n")
             msg("Create cmake for %s\n" % self.buildFolderName())
             toolchainCmake = os.path.join(self.toolChainPath(),self.toolChainFile())
             cmd = [self._cmake]
@@ -167,8 +201,11 @@ class BuildConfig:
                              "-DPLATFORM=%s" % platform
                     ]
             cmd += flags 
+
+            if DEBUGMODE:
+              cmd += DEBUGLIST
+
             if benchMode:
-              msg("Benchmark mode\n")
               cmd += ["-DBENCHMARK=ON"]
               cmd += ["-DWRAPPER=ON"]
             else: 
@@ -179,6 +216,9 @@ class BuildConfig:
                              "-DROOT=%s" % self._rootFolder,
                              "-DCMAKE_BUILD_TYPE=Release",
                              "-G", "Unix Makefiles" ,"%s" % self.cmakeFilePath()]
+
+            if DEBUGMODE:
+               print(cmd)
 
             with open(os.path.join(self.archiveLogPath(),"cmakecmd.txt"),"w") as cmakecmd:
                  cmakecmd.write("".join(joinit(cmd," ")))
@@ -296,12 +336,15 @@ class Test:
     # the build folder for this test
     #
     # We need a timeout and detect failed run
-    def run(self,fvp):
+    def run(self,fvp,benchmode):
+        timeoutVal=3600
+        if benchmode:
+          timeoutVal = 3600 * 4
         completed = None
         with self.buildConfig().buildFolder() as b:
            msg("  Run %s\n" % self.testName() )
            with open(self.resultName(),"w") as results:
-              completed=subprocess.run(fvp.split(),stdout=results,timeout=3600)
+              completed=subprocess.run(fvp.split(),stdout=results,timeout=timeoutVal)
         check(completed)
 
     # Process results of the given tests
@@ -318,7 +361,19 @@ class Test:
         else:
            return(TESTFAILED)
 
-    def runAndProcess(self,compiler,fvp,sim):
+    # Compute the regression data
+    def computeSummaryStat(self):
+        msg("  Compute regressions for %s\n" % self.testName())
+        with open(os.path.join(self.buildConfig().archiveResultPath(),"processedResult_%s.txt" % self.testName()),"w") as presult:
+             completed=subprocess.run([sys.executable,"summaryBench.py","-r",self.getResultPath()],stdout=presult,timeout=3600)
+        # When a test fail, the regression is continuing but we
+        # track that a test has failed
+        if completed.returncode==0:
+           return(NOTESTFAILED)
+        else:
+           return(TESTFAILED)
+
+    def runAndProcess(self,compiler,fvp,sim,benchmode,db,regdb):
         # If we can't parse test description we fail all tests
         self.processTest()
         # Otherwise if only building or those tests are failing, we continue
@@ -333,8 +388,15 @@ class Test:
         # build is done per test suite.
         if sim:
            if fvp is not None:
-              self.run(fvp)
-              return(self.processResult())
+              self.run(fvp,benchmode)
+              error=self.processResult()
+              if benchmode and (error == NOTESTFAILED):
+                 error = self.computeSummaryStat()
+                 if db is not None:
+                    addToDb(db,self.testName())
+                 if regdb is not None:
+                    addToRegDb(regdb,self.testName())
+              return(error)
            else:
               msg("No FVP available")
               return(NOTESTFAILED)
@@ -356,6 +418,12 @@ def generateAllCCode():
     completed = subprocess.run([sys.executable,"processTests.py", "-e"],timeout=3600)
     check(completed)
 
+# Create db
+def createDb(sqlite,desc):
+    msg("Create database %s\n" % desc)
+    with open("createDb.sql") as db:
+        completed = subprocess.run([sqlite, desc],stdin=db, timeout=3600)
+    check(completed)
 
 
 

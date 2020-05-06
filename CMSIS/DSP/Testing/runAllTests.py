@@ -103,7 +103,27 @@ parser.add_argument('-b', action='store_true', help="Benchmark mode")
 parser.add_argument('-f', nargs='?',type = str, default="desc.txt",help="Test description file")
 parser.add_argument('-p', nargs='?',type = str, default="FVP",help="Platform for running")
 
+parser.add_argument('-db', nargs='?',type = str,help="Benchmark database")
+parser.add_argument('-regdb', nargs='?',type = str,help="Regression database")
+parser.add_argument('-sqlite', nargs='?',default="/usr/bin/sqlite3",type = str,help="Regression database")
+
+parser.add_argument('-debug', action='store_true', help="Debug mode")
+
 args = parser.parse_args()
+
+if args.debug:
+   setDebugMode()
+
+# Create missing database files
+# if the db arguments are specified
+if args.db is not None:
+   if not os.path.exists(args.db):
+      createDb(args.sqlite,args.db)
+
+if args.regdb is not None:
+   if not os.path.exists(args.regdb):
+      createDb(args.sqlite,args.regdb)
+
 
 with open(args.i,"r") as f:
      config=yaml.safe_load(f)
@@ -118,7 +138,7 @@ with open(args.i,"r") as f:
 flags = config["FLAGS"]
 allConfigs = analyzeFlags(flags)
 
-if DEBUGMODE:
+if isDebugMode():
    allConfigs=[allConfigs[0]]
 
 failedBuild = {}
@@ -200,7 +220,7 @@ def buildAndTest(compiler,theConfig,cmake,sim):
                       if 'SIM' in config:
                         if core in config['SIM']:
                            fvp = config['SIM'][core] 
-                      newTestStatus = test.runAndProcess(compiler,fvp,sim)
+                      newTestStatus = test.runAndProcess(compiler,fvp,sim,args.b,args.db,args.regdb)
                       testStatusForThisBuild = updateTestStatus(testStatusForThisBuild,newTestStatus)
                       if testStatusForThisBuild != NOTESTFAILED:
                          failedBuild[buildStr] = testStatusForThisBuild
@@ -225,9 +245,11 @@ def buildAndTest(compiler,theConfig,cmake,sim):
 
 ############## Builds for all toolchains
 
-if not DEBUGMODE:
+if not isDebugMode():
    preprocess(args.f)
    generateAllCCode()
+else:
+   msg("Debug Mode\n")
 
 for t in config["TOOLCHAINS"]:
     cmake,localConfig,sim = analyzeToolchain(config["TOOLCHAINS"][t],allConfigs)
