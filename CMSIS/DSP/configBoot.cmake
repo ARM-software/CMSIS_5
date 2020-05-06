@@ -55,10 +55,18 @@ function(configboot PROJECT_NAME ROOT PLATFORMFOLDER)
   # Cortex M
   #
   # C startup for M55 boot code
-  if (ARM_CPU MATCHES "^[cC]ortex-[mM]55([^0-9].*)?$")
-    cortexm(${CORE} ${PROJECT_NAME} ${ROOT} ${PLATFORMFOLDER} ON)    
-  elseif (ARM_CPU MATCHES  "^[cC]ortex-[Mm].*$")
-    cortexm(${CORE} ${PROJECT_NAME} ${ROOT} ${PLATFORMFOLDER} OFF)    
+  if (${PLATFORMID} STREQUAL "IPSS")
+    if (GCC)
+      cortexm(${CORE} ${PROJECT_NAME} ${ROOT} ${PLATFORMFOLDER} OFF)    
+    else()
+      cortexm(${CORE} ${PROJECT_NAME} ${ROOT} ${PLATFORMFOLDER} ON)    
+    endif()
+  else()
+     if (ARM_CPU MATCHES "^[cC]ortex-[mM]55([^0-9].*)?$")
+       cortexm(${CORE} ${PROJECT_NAME} ${ROOT} ${PLATFORMFOLDER} ON)  
+     elseif (ARM_CPU MATCHES  "^[cC]ortex-[Mm].*$")
+       cortexm(${CORE} ${PROJECT_NAME} ${ROOT} ${PLATFORMFOLDER} OFF)  
+     endif()  
   endif()
   
   

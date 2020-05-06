@@ -3,6 +3,7 @@ option(SEMIHOSTING "Test trace using printf" ON)
 if (PLATFORM STREQUAL "FVP")
 SET(PLATFORMFOLDER ${ROOT}/CMSIS/DSP/Platforms/FVP)
 SET(PLATFORMID "FVP")
+SET(PLATFORMOPT "-DFVP")
 list(APPEND CMAKE_MODULE_PATH ${ROOT}/CMSIS/DSP/Platforms/FVP)
 endif()
 
@@ -142,6 +143,7 @@ endfunction()
 
 function(core_includes PROJECTNAME)
     target_include_directories(${PROJECTNAME} PRIVATE ${PLATFORMFOLDER}/${CORE}/Include)
+    target_compile_options(${PROJECTNAME} PRIVATE ${PLATFORMOPT})
 endfunction()
 
 function (configplatformForLib PROJECTNAME ROOT)

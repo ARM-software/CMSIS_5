@@ -25,7 +25,7 @@
 
 ;//-------- <<< Use Configuration Wizard in Context Menu >>> ------------------
 
-#include "mem_ARMCM7.h"
+#include "mem_ARMCM0.h"
 
 ;<h> Stack Configuration
 ;  <o> Stack Size (in Bytes) <0x0-0xFFFFFFFF:8>

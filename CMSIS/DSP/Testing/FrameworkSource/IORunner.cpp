@@ -206,7 +206,17 @@ Otherwise, the calibration is measured below.
                 // and do specific initialization for the tests
                 s->setUp(m_io->CurrentTestID(),params,m_mgr);
                 
-                   // Run the test
+                // Run the test once to force the code to be in cache.
+                // By default it is disabled in the suite.
+                if (s->isForcedInCache())
+                {
+                   if (!m_mgr->HasMemError())
+                   {
+                      (s->*t)();
+                   }
+                }
+
+                // Run the test
                 cycleMeasurementStart();
 #ifdef EXTBENCH
                 startSection();

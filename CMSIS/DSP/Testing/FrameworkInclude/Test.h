@@ -570,7 +570,15 @@ private:
          return(v->run(this));
       }
 
+      // Check if, for benchmark, we want to run the code once
+      // before benchmarking it, to force it to be in the I-cache.
+      bool isForcedInCache();
+
+      // Change the status of the forceInCache mode.
+      void setForceInCache(bool);
+
     private:
+        bool m_forcedInCache=false;
         // List of tests
         std::vector<test> m_tests;
         // List of tests IDs (since they are not contiguous

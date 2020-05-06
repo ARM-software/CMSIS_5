@@ -8,6 +8,7 @@ from contextlib import contextmanager
 import shutil
 import glob
 from pathlib import Path
+import sys
 
 DEBUGMODE = False
 KEEPBUILDFOLDER = False
@@ -141,9 +142,9 @@ class BuildConfig:
            with open(os.path.join(self.archiveLogPath(),"makelog_%s.txt" % test),"w") as makelog:
                with open(os.path.join(self.archiveErrorPath(),"makeerror_%s.txt" % test),"w") as makeerr:
                     if DEBUGMODE:
-                       completed=subprocess.run(["make","-j8","VERBOSE=1"],timeout=3600)
+                       completed=subprocess.run(["make","-j4","VERBOSE=1"],timeout=3600)
                     else:
-                       completed=subprocess.run(["make","-j8","VERBOSE=1"],stdout=makelog,stderr=makeerr,timeout=3600)
+                       completed=subprocess.run(["make","-j4","VERBOSE=1"],stdout=makelog,stderr=makeerr,timeout=3600)
         # Restore environment variables
         self.restoreEnv()
         check(completed)
@@ -281,7 +282,7 @@ class Test:
 
     # Process a test from the test description file
     def processTest(self):
-        completed=subprocess.run(["python","processTests.py","-e",self.testName()],timeout=3600)
+        completed=subprocess.run([sys.executable,"processTests.py","-e",self.testName()],timeout=3600)
         check(completed)
 
     def getResultPath(self):
@@ -309,7 +310,7 @@ class Test:
     def processResult(self):
         msg("  Parse result for %s\n" % self.testName())
         with open(os.path.join(self.buildConfig().archiveResultPath(),"processedResult_%s.txt" % self.testName()),"w") as presult:
-             completed=subprocess.run(["python","processResult.py","-e","-r",self.getResultPath()],stdout=presult,timeout=3600)
+             completed=subprocess.run([sys.executable,"processResult.py","-e","-r",self.getResultPath()],stdout=presult,timeout=3600)
         # When a test fail, the regression is continuing but we
         # track that a test has failed
         if completed.returncode==0:
@@ -345,14 +346,14 @@ class Test:
 # Preprocess the test description
 def preprocess(desc):
     msg("Process test description file %s\n" % desc)
-    completed = subprocess.run(["python", "preprocess.py","-f",desc],timeout=3600)
+    completed = subprocess.run([sys.executable, "preprocess.py","-f",desc],timeout=3600)
     check(completed)
 
 # Generate all missing C code by using all classes in the
 # test description file
 def generateAllCCode():
     msg("Generate all missing C files\n")
-    completed = subprocess.run(["python","processTests.py", "-e"],timeout=3600)
+    completed = subprocess.run([sys.executable,"processTests.py", "-e"],timeout=3600)
     check(completed)
 
 

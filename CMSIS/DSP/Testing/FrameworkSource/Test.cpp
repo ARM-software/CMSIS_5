@@ -70,6 +70,15 @@ namespace Client
     return(m_tests.size());
   }
 
+  bool Suite::isForcedInCache()
+  {
+      return(m_forcedInCache);
+  }
+      
+  void Suite::setForceInCache(bool status)
+  {
+      m_forcedInCache = status;
+  }
  
 
 

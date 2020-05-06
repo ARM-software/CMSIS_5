@@ -27,9 +27,6 @@ int testmain()
 {
     char *memoryBuf=NULL;
 
-
-
-  
     memoryBuf = (char*)malloc(MEMSIZE);
     if (memoryBuf !=NULL)
     {
