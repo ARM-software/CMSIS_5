@@ -240,8 +240,6 @@ typedef struct
 #define SERIAL_DATA  *((volatile unsigned *) SERIAL_BASE_ADDRESS)
 
 
- 
-
 
 int stdout_putchar(char txchar)
 {
@@ -257,6 +255,8 @@ void ttywrch (int ch)
 {
 	stdout_putchar(ch);
 }
+
+
 
 /*----------------------------------------------------------------------------
   System initialization function
@@ -289,7 +289,7 @@ void SystemInit (void)
 
   // enable DL branch cache
   CCR |= CCR_DL;
-
+  __ISB();
   
 
 }

@@ -69,8 +69,9 @@ unsigned long sectionCounter=0;
 void initCycleMeasurement()
 {
 #ifdef CORTEXM
-    SysTick->CTRL = 0;
     SysTick->LOAD = SYSTICK_INITIAL_VALUE;
+    SysTick->VAL = 0;
+    SysTick->CTRL = 0;
 #endif 
 
 #ifdef CORTEXA
