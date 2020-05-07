@@ -24,6 +24,7 @@
 #include "../TestData/stride2pad1/test_data.h"
 #include "../TestData/conv_2/test_data.h"
 #include "../TestData/conv_3/test_data.h"
+#include "../TestData/conv_4/test_data.h"
 #include "../TestData/conv_1_x_n_1/test_data.h"
 #include "../TestData/conv_1_x_n_2/test_data.h"
 #include "../TestData/conv_1_x_n_3/test_data.h"
@@ -187,6 +188,50 @@ void conv_3_arm_convolve_s8(void)
 
   TEST_ASSERT_EQUAL(expected, result);
   TEST_ASSERT_TRUE(validate(output, conv_3_output_ref, CONV_3_DST_SIZE));
+
+  free(bufferA);
+}
+
+void conv_4_arm_convolve_s8(void)
+{
+  arm_status expected = ARM_MATH_SUCCESS;
+  q7_t output[CONV_4_DST_SIZE] = {0};
+
+  const int32_t buf_size = arm_convolve_s8_get_buffer_size(CONV_4_IN_CH,
+                                                           CONV_4_FILTER_X,
+                                                           CONV_4_FILTER_Y);
+
+
+  q15_t *bufferA = (q15_t*)malloc(buf_size);
+
+
+  arm_status result = arm_convolve_s8(conv_4_input,
+                                      CONV_4_INPUT_W,
+                                      CONV_4_INPUT_H,
+                                      CONV_4_IN_CH,
+                                      CONV_4_INPUT_BATCHES,
+                                      conv_4_weights,
+                                      CONV_4_OUT_CH,
+                                      CONV_4_FILTER_X,
+                                      CONV_4_FILTER_Y,
+                                      CONV_4_PAD_X,
+                                      CONV_4_PAD_Y,
+                                      CONV_4_STRIDE_X,
+                                      CONV_4_STRIDE_Y,
+                                      conv_4_biases,
+                                      output,
+                                      conv_4_output_shift,
+                                      conv_4_output_mult,
+                                      CONV_4_OUTPUT_OFFSET,
+                                      CONV_4_INPUT_OFFSET,
+                                      CONV_4_OUT_ACTIVATION_MIN,
+                                      CONV_4_OUT_ACTIVATION_MAX,
+                                      CONV_4_OUTPUT_W,
+                                      CONV_4_OUTPUT_H,
+                                      bufferA);
+
+  TEST_ASSERT_EQUAL(expected, result);
+  TEST_ASSERT_TRUE(validate(output, conv_4_output_ref, CONV_4_DST_SIZE));
 
   free(bufferA);
 }

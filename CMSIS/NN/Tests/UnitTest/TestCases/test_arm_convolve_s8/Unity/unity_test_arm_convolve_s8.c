@@ -61,6 +61,11 @@ void test_conv_3_arm_convolve_s8(void)
   conv_3_arm_convolve_s8();
 }
 
+void test_conv_4_arm_convolve_s8(void)
+{
+  conv_4_arm_convolve_s8();
+}
+
 void test_conv_1_x_n_1_arm_convolve_s8(void)
 {
   conv_1_x_n_1_arm_convolve_s8();

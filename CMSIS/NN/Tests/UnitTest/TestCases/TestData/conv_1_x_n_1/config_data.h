@@ -31,7 +31,7 @@
 #define CONV_1_X_N_1_PAD_Y 0
 #define CONV_1_X_N_1_OUTPUT_W 2
 #define CONV_1_X_N_1_OUTPUT_H 5
-#define CONV_1_X_N_1_DST_SIZE 30
+#define CONV_1_X_N_1_DST_SIZE 60
 #define CONV_1_X_N_1_INPUT_SIZE 75
 #define CONV_1_X_N_1_INPUT_OFFSET 0
 #define CONV_1_X_N_1_OUTPUT_OFFSET 0

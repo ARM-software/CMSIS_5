@@ -257,7 +257,7 @@ class TestSettings(ABC):
             f.write("#define {}_PAD_Y {}\n".format(prefix, self.pad_y))
             f.write("#define {}_OUTPUT_W {}\n".format(prefix, self.x_output))
             f.write("#define {}_OUTPUT_H {}\n".format(prefix, self.y_output))
-            f.write("#define {}_DST_SIZE {}\n".format(prefix, self.x_output * self.y_output * self.output_ch))
+            f.write("#define {}_DST_SIZE {}\n".format(prefix, self.x_output * self.y_output * self.output_ch * self.batches))
             f.write("#define {}_INPUT_SIZE {}\n".format(prefix, self.x_input * self.y_input * self.input_ch))
             f.write("#define {}_INPUT_OFFSET {}\n".format(prefix, -self.input_zero_point))
             f.write("#define {}_OUTPUT_OFFSET {}\n".format(prefix, self.output_zero_point))
@@ -535,6 +535,10 @@ if __name__ == '__main__':
         # conv_2
         # generator = ConvSettings(args, in_ch=2, out_ch=4, x_in=6, y_in=3, w_x=3, w_y=3, stride_x=1, stride_y=1,
         #                        pad=True, randmin=-2, randmax=2, outminrange=-126, outmaxrange=127)
+
+        #conv_4 batches > 2
+        # generator = ConvSettings(args, in_ch=3, out_ch=3, x_in=5, y_in=5, w_x=2, w_y=3, stride_x=2, stride_y=2,
+        #                         pad=False, randmin=-2, randmax=2, outminrange=-127, outmaxrange=127, batches=3)
 
 
     elif args.type == 'avgpool' or args.type == 'maxpool':
