@@ -38,7 +38,7 @@ inline int validate(int8_t *act, const int8_t *ref, int size)
       }
       else
       {
-        //printf("PASS at pos %d: %d\r\n", i, act[i]);
+        // printf("PASS at pos %d: %d\r\n", i, act[i]);
       }
     }
 
