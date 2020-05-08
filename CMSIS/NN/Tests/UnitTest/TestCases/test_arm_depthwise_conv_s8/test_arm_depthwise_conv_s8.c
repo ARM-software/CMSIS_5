@@ -21,6 +21,7 @@
 #include "../Utils/validate.h"
 #include "../TestData/basic/test_data.h"
 #include "../TestData/stride2pad1/test_data.h"
+#include "../TestData/depthwise_2/test_data.h"
 
 
 // Not used
@@ -101,4 +102,40 @@ void stride2pad1_arm_depthwise_conv_s8(void)
 
   TEST_ASSERT_EQUAL(expected, result);
   TEST_ASSERT_TRUE(validate(output, stride2pad1_output_ref, STRIDE2PAD1_DST_SIZE));
+}
+
+void depthwise_2_arm_depthwise_conv_s8(void)
+{
+  const arm_status expected = ARM_MATH_SUCCESS;
+  q7_t output[DEPTHWISE_2_DST_SIZE] = {0};
+
+  arm_status result = arm_depthwise_conv_s8(depthwise_2_input,
+                                            DEPTHWISE_2_INPUT_W,
+                                            DEPTHWISE_2_INPUT_H,
+                                            DEPTHWISE_2_IN_CH,
+                                            depthwise_2_weights,
+                                            DEPTHWISE_2_OUT_CH,
+                                            DEPTHWISE_2_CH_MULT,
+                                            DEPTHWISE_2_FILTER_X,
+                                            DEPTHWISE_2_FILTER_Y,
+                                            DEPTHWISE_2_PAD_X,
+                                            DEPTHWISE_2_PAD_Y,
+                                            DEPTHWISE_2_STRIDE_X,
+                                            DEPTHWISE_2_STRIDE_Y,
+                                            depthwise_2_biases,
+                                            output,
+                                            depthwise_2_output_shift,
+                                            depthwise_2_output_mult,
+                                            DEPTHWISE_2_OUTPUT_W,
+                                            DEPTHWISE_2_OUTPUT_H,
+                                            DEPTHWISE_2_OUTPUT_OFFSET,
+                                            DEPTHWISE_2_INPUT_OFFSET,
+                                            DEPTHWISE_2_OUT_ACTIVATION_MIN,
+                                            DEPTHWISE_2_OUT_ACTIVATION_MAX,
+                                            dilation,
+                                            dilation,
+                                            bufferA);
+
+  TEST_ASSERT_EQUAL(expected, result);
+  TEST_ASSERT_TRUE(validate(output, depthwise_2_output_ref, DEPTHWISE_2_DST_SIZE));
 }
