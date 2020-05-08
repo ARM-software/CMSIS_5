@@ -21,8 +21,8 @@
  * Title:        arm_nnfunctions.h
  * Description:  Public header file for CMSIS NN Library
  *
- * $Date:        April 6, 2020
- * $Revision:    V.2.0.0
+ * $Date:        May 8, 2020
+ * $Revision:    V.2.1.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -1917,8 +1917,8 @@ void arm_softmax_u8(const uint8_t *input,
                     uint8_t *output);
 
   /**
-   * @brief uint8 depthwise convolution function with asymmetric quantization for even number of channel multiplier
-   *        and input channels. Unless specified otherwise, arguments are mandatory.
+   * @brief uint8 depthwise convolution function with asymmetric quantization
+   *        Unless specified otherwise, arguments are mandatory.
    *
    * @param[in]     input     Pointer to input tensor
    * @param[in]     input_x   Width of input tensor
@@ -1930,8 +1930,8 @@ void arm_softmax_u8(const uint8_t *input,
    * @param[in]     ch_mult   Number of channel multiplier
    * @param[in]     pad_x     Padding sizes x
    * @param[in]     pad_y     Padding sizes y
-   * @param[in]     stride_x  Convolution stride along the width
-   * @param[in]     stride_y  Convolution stride along the height
+   * @param[in]     stride_x  stride along the width
+   * @param[in]     stride_y  stride along the height
    * @param[in]     dilation_x Dilation along width. Not used and intended for future enhancement.
    * @param[in]     dilation_y Dilation along height. Not used and intended for future enhancement.
    * @param[in]     bias       Pointer to optional bias values. If no bias is
@@ -1946,14 +1946,8 @@ void arm_softmax_u8(const uint8_t *input,
    * @param[in]     output_activation_max   Minimum value to clamp the output to. Range : {0, 255}
    * @param[in]     out_shift  Amount of right-shift for output
    * @param[in]     out_mult   Output multiplier for requantization
-   * @return        The function returns one of the following
-   *                <code>ARM_MATH_SIZE_MISMATCH</code> - Unsupported dimension of tensors
+   * @return        The function returns the following
    *                <code>ARM_MATH_SUCCESS</code> - Successful operation
-   *                <code>ARM_MATH_ARGUMENT_ERROR</code> - Implementation not available
-   *
-   * <b> Input constraints</b>
-   * ch_mult  is multiple of 2
-   * kernel_x is multiple of 2
    *
    */
     arm_status arm_depthwise_conv_u8_basic_ver1(const uint8_t *input,
