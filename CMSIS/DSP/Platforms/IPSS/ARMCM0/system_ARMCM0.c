@@ -70,7 +70,8 @@ void SystemInit (void)
 
 int stdout_putchar(char txchar)
 {
-    SERIAL_DATA = txchar;                     
+    SERIAL_DATA = txchar;   
+    return(txchar);                  
 }
 
 int stderr_putchar(char txchar)

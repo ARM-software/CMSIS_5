@@ -70,7 +70,8 @@ uint32_t SystemCoreClock = SYSTEM_CLOCK;  /* System Core Clock Frequency */
 
 int stdout_putchar(char txchar)
 {
-    SERIAL_DATA = txchar;                     
+    SERIAL_DATA = txchar;   
+    return(txchar);                  
 }
 
 int stderr_putchar(char txchar)
