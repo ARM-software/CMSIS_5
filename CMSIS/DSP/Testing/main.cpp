@@ -1,8 +1,10 @@
 #include <stdio.h>
-extern int testmain();
+#include "arm_math.h"
+extern int testmain(const char *);
 
+extern "C" const char *patternData;
 
 int main()
 {
-    return(testmain());
+    return(testmain(patternData));
 }

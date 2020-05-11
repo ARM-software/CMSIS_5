@@ -9,16 +9,15 @@
 
 LOAD_REGION 0x0
 {
-    CODE +0 0x30000
+    CODE +0 0x100000
     {
         *.o (RESET, +First)
-	* (InRoot$$$Sections)
-        * (+RO-CODE)                             
+	    * (InRoot$$$Sections)
+        * (+RO)                             
     }
 
-    DATA 0x20000000 0xF0000
+    DATA 0x20000000 NOCOMPRESS 0xF0000
     {
-	* (+RO-DATA)
 	* (+RW,+ZI)                         
     }
 
@@ -26,4 +25,9 @@ LOAD_REGION 0x0
     {}
     ARM_LIB_HEAP 0x20100000 ALIGN 64 EMPTY 0x00100000 
     {}
+
+    PATTERNS 0x60000000 0x100000
+    {
+       patterndata.c.o (+RO-DATA)  
+    }
 }

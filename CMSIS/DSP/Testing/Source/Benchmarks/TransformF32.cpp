@@ -3,34 +3,10 @@
 #include "arm_math.h"
 #include "arm_const_structs.h"
 
-const arm_cfft_instance_f32 *arm_cfft_get_instance_f32(uint16_t fftLen)
-{
-switch (fftLen) {
-     case 16:
-       return(&arm_cfft_sR_f32_len16);
-     case 32:
-       return(&arm_cfft_sR_f32_len32);
-     case 64:
-       return(&arm_cfft_sR_f32_len64);
-     case 128:
-       return(&arm_cfft_sR_f32_len128);
-     case 256:
-       return(&arm_cfft_sR_f32_len256);
-     case 512:
-       return(&arm_cfft_sR_f32_len512);
-     case 1024:
-       return(&arm_cfft_sR_f32_len1024);
-     case 2048:
-       return(&arm_cfft_sR_f32_len2048);
-     case 4096:
-       return(&arm_cfft_sR_f32_len4096);
-   }
-   return(NULL);
-}
    
     void TransformF32::test_cfft_f32()
     { 
-       arm_cfft_f32(this->cfftInstance, this->pDst, this->ifft,this->bitRev);
+       arm_cfft_f32(&(this->cfftInstance), this->pDst, this->ifft,this->bitRev);
     } 
 
     void TransformF32::test_rfft_f32()
@@ -76,7 +52,7 @@ switch (fftLen) {
             this->pSrc=samples.ptr();
             this->pDst=output.ptr();
 
-            this->cfftInstance=arm_cfft_get_instance_f32(this->nbSamples);
+            status=arm_cfft_init_f32(&cfftInstance,this->nbSamples);
             memcpy(this->pDst,this->pSrc,2*sizeof(float32_t)*this->nbSamples);
           break;
 

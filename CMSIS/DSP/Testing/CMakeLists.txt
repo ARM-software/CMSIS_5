@@ -330,6 +330,10 @@ set_platform_core()
 core_includes(FrameworkLib)
 
 add_executable(Testing main.cpp)
+# To see the file in the scatter load, it must not because
+# linked in a .a archive
+target_include_directories(Testing PRIVATE GeneratedInclude)
+target_sources(Testing PRIVATE patterndata.c)
 
 # With -O2, generated code is crashing on some cycle accurate models.
 # (cpp part)

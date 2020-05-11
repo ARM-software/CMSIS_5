@@ -21,8 +21,10 @@ class TransformF32:public Client::Suite
             float32_t *pDst;
             float32_t *pState;
 
-            const arm_cfft_instance_f32 *cfftInstance;
+            arm_cfft_instance_f32 cfftInstance;
             arm_rfft_fast_instance_f32 rfftFastInstance;
+
+            arm_status status;
 
             arm_dct4_instance_f32 dct4Instance;
             arm_rfft_instance_f32 rfftInstance;

@@ -19,11 +19,10 @@ using namespace std;
 // char* array describing the tests and the input patterns.
 // Reference patterns are ignored in this case.
 #include "TestDrive.h"
-#include "Patterns.h"
 
 
 
-int testmain()
+int testmain(const char *patterns)
 {
     char *memoryBuf=NULL;
 
