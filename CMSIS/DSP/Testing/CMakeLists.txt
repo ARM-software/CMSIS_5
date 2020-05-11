@@ -287,6 +287,9 @@ endif()
   
 
 target_sources(FrameworkLib PRIVATE ${FRAMEWORKSRC})
+if (BENCHMARK)
+    target_compile_definitions(FrameworkLib PUBLIC BENCHMARK)
+endif()
 
 if (EXTBENCH)
   target_compile_definitions(FrameworkLib PUBLIC EXTBENCH)

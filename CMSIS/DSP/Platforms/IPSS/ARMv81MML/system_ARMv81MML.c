@@ -243,7 +243,8 @@ typedef struct
 
 int stdout_putchar(char txchar)
 {
-    SERIAL_DATA = txchar;                     
+    SERIAL_DATA = txchar; 
+    return(txchar);                    
 }
 
 int stderr_putchar(char txchar)
@@ -278,26 +279,17 @@ void SystemInit (void)
   SCB->CCR |= SCB_CCR_UNALIGN_TRP_Msk;
 #endif
 
-#if defined (__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
-  //  TZ_SAU_Setup();
-#endif
-
-  //   SystemCoreClock = SYSTEM_CLOCK;
-
-  //Disable debug
-  // DEBUG_DEMCR &=~ DEBUG_TRCENA;
 
   // enable DL branch cache
   CCR |= CCR_DL;
   __ISB();
-  
+
 
 }
 
 __attribute__((constructor(255)))
 void platform_init(void)
 {
-    printf("\nMPS3 ARMv81MML Generic Template...\n");
     printf("\n_[TEST START]____________________________________________________\n");
 }
 

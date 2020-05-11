@@ -40,11 +40,15 @@
 #include "arm_math.h"
 #include "Calibrate.h"
 
+#define CALIBNB 20
+
 namespace Client
 {
   
       IORunner::IORunner(IO *io,PatternMgr *mgr,  Testing::RunningMode runningMode):m_io(io), m_mgr(mgr)
       {
+        Testing::cycles_t current;
+
         this->m_runningMode = runningMode;
         // Set running mode on PatternMgr.
         if (runningMode == Testing::kDumpOnly)
@@ -70,8 +74,8 @@ a C++ function pointer from the cycle measurements.
         Calibrate c((Testing::testID_t)0);
         Client::Suite *s=(Client::Suite *)&c;
         Client::test t = (Client::test)&Calibrate::empty;
-
-        cycleMeasurementStart();
+        calibration = 0;
+        
 /* 
 
 EXTBENCH is set when benchmarking is done through external traces
@@ -99,20 +103,26 @@ Indeed, in that case the calibration value can only be measured by parsing the t
 Otherwise, the calibration is measured below.
 
 */
-        for(int i=0;i < 20;i++)
+        for(int i=0;i < CALIBNB;i++)
         {
+          cycleMeasurementStart();
           if (!m_mgr->HasMemError())
           {
              (s->*t)();
           }
+          #ifndef EXTBENCH
+             current = getCycles();
+          #endif
+          calibration += current;
+          cycleMeasurementStop();
         }
 #ifdef EXTBENCH
         stopSection();
 #endif
+
 #ifndef EXTBENCH
-        calibration=getCycles() / 20;
+        calibration=calibration / CALIBNB;
 #endif
-        cycleMeasurementStop();
 
       }
 
@@ -229,7 +239,8 @@ Otherwise, the calibration is measured below.
                 stopSection();
 #endif
 #ifndef EXTBENCH
-                cycles=getCycles()-calibration;
+                cycles=getCycles();
+                cycles=cycles-calibration;
 #endif
                 cycleMeasurementStop();
               } 
