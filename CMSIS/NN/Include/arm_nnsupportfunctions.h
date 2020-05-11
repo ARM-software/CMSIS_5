@@ -21,10 +21,10 @@
  * Title:        arm_nnsupportfunctions.h
  * Description:  Public header file of support functions for CMSIS NN Library
  *
- * $Date:        March 17, 2020
- * $Revision:    V.4.0.3
+ * $Date:        May 11, 2020
+ * $Revision:    V.4.0.4
  *
- * Target Processor:  Cortex-M cores
+ * Target Processor:  Cortex-M CPUs
  * -------------------------------------------------------------------- */
 
 #ifndef _ARM_NNSUPPORTFUNCTIONS_H_
@@ -535,15 +535,15 @@ __STATIC_FORCEINLINE void arm_memset_q7(q7_t *dst,
 __STATIC_FORCEINLINE const q7_t *read_and_pad(const q7_t *source, q31_t * out1, q31_t * out2)
 {
         q31_t     inA = arm_nn_read_q7x4_ia(&source);
-        q31_t     inAbuf1 = __SXTB16(__ROR(inA, 8));
+        q31_t     inAbuf1 = __SXTB16(__ROR((uint32_t)inA, 8));
         q31_t     inAbuf2 = __SXTB16(inA);
 
 #ifndef ARM_MATH_BIG_ENDIAN
-        *out2 = __PKHTB(inAbuf1, inAbuf2, 16);
-        *out1 = __PKHBT(inAbuf2, inAbuf1, 16);
+  *out2 = (int32_t) (__PKHTB (inAbuf1, inAbuf2, 16));
+  *out1 = (int32_t) (__PKHBT (inAbuf2, inAbuf1, 16));
 #else
-        *out1 = __PKHTB(inAbuf1, inAbuf2, 16);
-        *out2 = __PKHBT(inAbuf2, inAbuf1, 16);
+  *out1 = (int32_t) (__PKHTB(inAbuf1, inAbuf2, 16));
+  *out2 = (int32_t) (__PKHBT(inAbuf2, inAbuf1, 16));
 #endif
 
         return source;
@@ -557,10 +557,10 @@ __STATIC_FORCEINLINE const q7_t *read_and_pad_reordered(const q7_t *source, q31_
 {
         q31_t     inA = arm_nn_read_q7x4_ia(&source);
 #ifndef ARM_MATH_BIG_ENDIAN
-        *out2 = __SXTB16(__ROR(inA, 8));
+        *out2 = __SXTB16(__ROR((uint32_t)inA, 8));
         *out1 = __SXTB16(inA);
 #else
-        *out1 = __SXTB16(__ROR(inA, 8));
+        *out1 = __SXTB16(__ROR((uint32_t)inA, 8));
         *out2 = __SXTB16(inA);
 #endif
 
@@ -575,10 +575,10 @@ __STATIC_FORCEINLINE const q7_t *read_and_pad_reordered_with_offset(const q7_t *
         q31_t     inA = arm_nn_read_q7x4_ia(&source);
 
 #ifndef ARM_MATH_BIG_ENDIAN
-        *out2 = __SXTB16(__ROR(inA, 8));
+        *out2 = __SXTB16(__ROR((uint32_t)inA, 8));
         *out1 = __SXTB16(inA);
 #else
-        *out1 = __SXTB16(__ROR(inA, 8));
+        *out1 = __SXTB16(__ROR((uint32_t)inA, 8));
         *out2 = __SXTB16(inA);
 #endif
         *out1 = __QADD16(*out1,offset);
@@ -687,7 +687,7 @@ __STATIC_FORCEINLINE q31_t arm_nn_sat_doubling_high_mult(const q31_t m1, const q
 
     // Utilize all of the upper 32 bits. This is the doubling step
     // as well.
-    result = mult / (1UL << 31);
+    result = (int32_t) (mult / (1ll << 31));
 
     if ((m1 == m2) && (m1 == (int32_t)Q31_MIN))
     {
@@ -707,7 +707,7 @@ __STATIC_FORCEINLINE q31_t arm_nn_sat_doubling_high_mult(const q31_t m1, const q
 __STATIC_FORCEINLINE q31_t arm_nn_divide_by_power_of_two(const q31_t dividend, const q31_t exponent)
 {
     q31_t result = 0;
-    const q31_t remainder_mask = (1l << exponent) - 1;
+    const q31_t remainder_mask = (1 << exponent) - 1;
     int32_t remainder = remainder_mask & dividend;
 
     // Basic division
