@@ -26,8 +26,4 @@ LOAD_REGION 0x0
     ARM_LIB_HEAP 0x20100000 ALIGN 64 EMPTY 0x00100000 
     {}
 
-    PATTERNS 0x60000000 0x100000
-    {
-       patterndata.c.o (+RO-DATA)  
-    }
 }
