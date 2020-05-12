@@ -1,9 +1,7 @@
 #include "TransformF32.h"
 #include "Error.h"
 #include "arm_math.h"
-#include "arm_const_structs.h"
 
-   
     void TransformF32::test_cfft_f32()
     { 
        arm_cfft_f32(&(this->cfftInstance), this->pDst, this->ifft,this->bitRev);

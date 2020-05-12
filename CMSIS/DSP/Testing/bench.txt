@@ -1297,6 +1297,12 @@ group Root {
                   REV = [0,1]
                 }
 
+                Params CFFT4_PARAM_ID = {
+                  NB = [16,64,256]
+                  IFFT = [0,1]
+                  REV = [0,1]
+                }
+
                 Params RFFT_PARAM_ID = {
                   NB = [32,64,128,256]
                   IFFT = [0,1]
@@ -1313,7 +1319,7 @@ group Root {
                    test_cfft_f32:test_cfft_f32 -> CFFT_PARAM_ID
                    test_rfft_f32:test_rfft_f32 -> RFFT_PARAM_ID
                    test_dct4_f32:test_dct4_f32 -> DCT_PARAM_ID
-                   test_cfft_radix4_f32:test_cfft_radix4_f32 -> CFFT_PARAM_ID
+                   test_cfft_radix4_f32:test_cfft_radix4_f32 -> CFFT4_PARAM_ID
                    test_cfft_radix2_f32:test_cfft_radix2_f32 -> CFFT_PARAM_ID
                 }
            }
@@ -1341,6 +1347,12 @@ group Root {
                   REV = [0,1]
                 }
 
+                Params CFFT4_PARAM_ID = {
+                  NB = [16,64,256]
+                  IFFT = [0,1]
+                  REV = [0,1]
+                }
+
                 Params RFFT_PARAM_ID = {
                   NB = [32,64,128,256]
                   IFFT = [0,1]
@@ -1357,7 +1369,7 @@ group Root {
                    test_cfft_q31:test_cfft_q31 -> CFFT_PARAM_ID
                    test_rfft_q31:test_rfft_q31 -> RFFT_PARAM_ID
                    test_dct4_q31:test_dct4_q31 -> DCT_PARAM_ID
-                   test_cfft_radix4_q31:test_cfft_radix4_q31 -> CFFT_PARAM_ID
+                   test_cfft_radix4_q31:test_cfft_radix4_q31 -> CFFT4_PARAM_ID
                    test_cfft_radix2_q31:test_cfft_radix2_q31 -> CFFT_PARAM_ID
                 }
            }
@@ -1385,6 +1397,12 @@ group Root {
                   REV = [0,1]
                 }
 
+                Params CFFT4_PARAM_ID = {
+                  NB = [16,64,256]
+                  IFFT = [0,1]
+                  REV = [0,1]
+                }
+
                 Params RFFT_PARAM_ID = {
                   NB = [32,64,128,256]
                   IFFT = [0,1]
@@ -1401,7 +1419,7 @@ group Root {
                    test_cfft_q15:test_cfft_q15 -> CFFT_PARAM_ID
                    test_rfft_q15:test_rfft_q15 -> RFFT_PARAM_ID
                    test_dct4_q15:test_dct4_q15 -> DCT_PARAM_ID
-                   test_cfft_radix4_q15:test_cfft_radix4_q15 -> CFFT_PARAM_ID
+                   test_cfft_radix4_q15:test_cfft_radix4_q15 -> CFFT4_PARAM_ID
                    test_cfft_radix2_q15:test_cfft_radix2_q15 -> CFFT_PARAM_ID
                 }
            }

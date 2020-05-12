@@ -215,7 +215,11 @@ def addRows(conn,elem,tableName,full):
        for field in common:
         if field in VALKEYFIELD:
             if field == "CATEGORY":
-              val = findInTable(conn,"CATEGORY","category",row[field],"categoryid")
+              # Remove type extension to get category name so that
+              # all types are maped to same category which will
+              # help for post processing.
+              testField=re.sub(r'^(.*)[:]([^:]+)(F16|F32|F64|Q31|Q15|Q7)$',r'\1',row[field])
+              val = findInTable(conn,"CATEGORY","category",testField,"categoryid")
               keys[field]=val
             if field == "CORE":
               val = findInTable(conn,"CORE","coredef",row[field],"coreid")

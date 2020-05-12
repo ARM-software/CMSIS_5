@@ -8,6 +8,7 @@ option(HARDFP "Hard floating point" ON)
 option(LITTLEENDIAN "Little endian" ON)
 option(FASTMATHCOMPUTATIONS "Fast Math enabled" OFF)
 option(FLOAT16 "Scalar float16 supported" OFF)
+option(HYBRID "Hybrid instrinsics" ON)
 
 # More detailed identification for benchmark results
 SET(COREID ARMCM7)
@@ -95,6 +96,9 @@ function(configcore PROJECTNAME ROOT)
     SET(HARDFP ON)
     SET(LITTLEENDIAN ON)
     SET(COREID ARMv81MML_DSP_DP_MVE_FP PARENT_SCOPE)    
+    if (HYBRID)
+      target_compile_definitions(${PROJECTNAME} PRIVATE  __ARM_MVE_HYBRID_INTRINSICS)
+    endif()
   endif()
   
   # CORTEX-M35
