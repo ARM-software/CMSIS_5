@@ -93,6 +93,18 @@ benchCmd="""select %s from %s
   WHERE compiler=? AND VERSION=? AND typeid = ? AND runid = ?
   """
 
+# Command to get data for specific compiler 
+# and type
+nbElemsCmd="""select count(*) from %s
+  INNER JOIN CATEGORY USING(categoryid)
+  INNER JOIN PLATFORM USING(platformid)
+  INNER JOIN CORE USING(coreid)
+  INNER JOIN COMPILER USING(compilerid)
+  INNER JOIN COMPILERKIND USING(compilerkindid)
+  INNER JOIN TYPE USING(typeid)
+  WHERE compiler=? AND VERSION=? AND typeid = ? AND runid = ?
+  """
+
 # Command to get test names for specific compiler 
 # and type
 benchNames="""select distinct NAME from %s
@@ -133,6 +145,12 @@ def getTestNames(benchTable,comp,typeid):
     vals=(comp[0],comp[1],typeid,runid)
     result=c.execute(benchNames % benchTable,vals).fetchall()
     return([x[0] for x in list(result)])
+
+# Get nb elems in a table
+def getNbElems(benchTable,comp,typeid):
+    vals=(comp[0],comp[1],typeid,runid)
+    result=c.execute(nbElemsCmd % benchTable,vals).fetchone()
+    return(result[0])
 
 # Get names of columns and data for a table
 # for specific typeid and compiler (for the data)
@@ -263,10 +281,13 @@ def addReportFor(output,benchName):
         allCompilers = getExistingCompiler(benchName,aTypeID)
         for compiler in allCompilers:
             #print(compiler)
-            output.write("### %s (%s)\n" % compiler)
-            cols,vals=getColNamesAndData(benchName,compiler,aTypeID)
-            names=getTestNames(benchName,compiler,aTypeID)
-            formatTableByCore(output,names,cols,vals)
+            nbElems = getNbElems(benchName,compiler,aTypeID)
+            # Print test results for table, type, compiler
+            if nbElems > 0:
+               output.write("### %s (%s)\n" % compiler)
+               cols,vals=getColNamesAndData(benchName,compiler,aTypeID)
+               names=getTestNames(benchName,compiler,aTypeID)
+               formatTableByCore(output,names,cols,vals)
            
 
 
