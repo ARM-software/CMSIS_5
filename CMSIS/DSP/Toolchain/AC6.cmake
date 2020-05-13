@@ -17,7 +17,7 @@ function(compilerSpecificCompileOptions PROJECTNAME ROOT)
   get_target_property(DISABLEOPTIM ${PROJECTNAME} DISABLEOPTIMIZATION)
   if ((OPTIMIZED) AND (NOT DISABLEOPTIM))
     #cmake_print_variables(DISABLEOPTIM)
-    target_compile_options(${PROJECTNAME} PRIVATE "-O3")
+    target_compile_options(${PROJECTNAME} PRIVATE "-Ofast")
   endif()
 
   if (FASTMATHCOMPUTATIONS)

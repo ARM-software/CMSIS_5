@@ -9,7 +9,29 @@ import yaml
 import sys
 import itertools
 from pathlib import Path
+import sqlite3
 
+# Command to get last runid 
+lastID="""SELECT runid FROM RUN ORDER BY runid DESC LIMIT 1
+"""
+
+addNewIDCmd="""INSERT INTO RUN VALUES(?,date('now'))
+"""
+
+benchID = 0
+regID = 0
+
+def getLastRunID(c):
+  r=c.execute(lastID)
+  result=r.fetchone()
+  if result is None:
+     return(0)
+  else:
+     return(int(result[0]))
+
+def addNewID(c,newid):
+  c.execute(addNewIDCmd,(newid,))
+  c.commit()
 
 # Small state machine
 def updateTestStatus(testStatusForThisBuild,newTestStatus):
@@ -120,9 +142,25 @@ if args.db is not None:
    if not os.path.exists(args.db):
       createDb(args.sqlite,args.db)
 
+   conn = sqlite3.connect(args.db)
+   try:
+      currentID = getLastRunID(conn)
+      benchID = currentID + 1 
+      addNewID(conn,benchID)
+   finally:
+     conn.close()
+
 if args.regdb is not None:
    if not os.path.exists(args.regdb):
       createDb(args.sqlite,args.regdb)
+
+   conn = sqlite3.connect(args.regdb)
+   try:
+      currentID = getLastRunID(conn)
+      regID = currentID + 1 
+      addNewID(conn,regID)
+   finally:
+     conn.close()
 
 
 with open(args.i,"r") as f:
@@ -208,7 +246,7 @@ def buildAndTest(compiler,theConfig,cmake,sim):
                   build.createArchive(flags)
                   msg("Config " + str(flagConfig) + "\n")
 
-                  build.createCMake(flags,args.b,args.p)
+                  build.createCMake(core,flags,args.b,args.p)
                   for test in config["TESTS"]:
                       msg(test["testName"]+"\n")
                       testClass=test["testClass"]
@@ -220,7 +258,7 @@ def buildAndTest(compiler,theConfig,cmake,sim):
                       if 'SIM' in config:
                         if core in config['SIM']:
                            fvp = config['SIM'][core] 
-                      newTestStatus = test.runAndProcess(compiler,fvp,sim,args.b,args.db,args.regdb)
+                      newTestStatus = test.runAndProcess(compiler,fvp,sim,args.b,args.db,args.regdb,benchID,regID)
                       testStatusForThisBuild = updateTestStatus(testStatusForThisBuild,newTestStatus)
                       if testStatusForThisBuild != NOTESTFAILED:
                          failedBuild[buildStr] = testStatusForThisBuild

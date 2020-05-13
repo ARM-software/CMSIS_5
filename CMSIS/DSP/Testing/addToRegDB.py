@@ -23,12 +23,13 @@ MKBOOLFIELD=['HARDFP', 'FASTMATH', 'NEON', 'HELIUM','UNROLL', 'ROUNDING','OPTIMI
 MKINTFIELD=['ID','MAX']
 MKREALFIELD=['MAXREGCOEF']
 MKDATEFIELD=['DATE']
-MKKEYFIELD=['CATEGORY', 'PLATFORM', 'CORE', 'COMPILER','TYPE']
+MKKEYFIELD=['CATEGORY', 'PLATFORM', 'CORE', 'COMPILER','TYPE','RUN']
 MKKEYFIELDID={'CATEGORY':'categoryid', 
    'PLATFORM':'platformid', 
    'CORE':'coreid', 
    'COMPILER':'compilerid',
-   'TYPE':'typeid'}
+   'TYPE':'typeid',
+   'RUN':'runid'}
 
 # For table value extraction
 VALSTRFIELD=['NAME','VERSION','Regression']
@@ -58,7 +59,7 @@ def getColumns(elem,full):
   colsToKeep=[]
   cols = list(full.columns)
   params=diff(elem.params.full , elem.params.summary)
-  common = diff(cols + ["TYPE"] , ['OLDID'] + params)  
+  common = diff(cols + ["TYPE","RUN"] , ['OLDID'] + params)  
  
   for field in common:
        if field in MKSTRFIELD:
@@ -80,7 +81,7 @@ def createTableIfMissing(conn,elem,tableName,full):
      sql = "CREATE TABLE %s (" % tableName
      cols = list(full.columns)
      params=diff(elem.params.full , elem.params.summary)
-     common = diff(cols + ["TYPE"] , ['OLDID'] + params)
+     common = diff(cols + ["TYPE","RUN"] , ['OLDID'] + params)
 
      sql += "%sid INTEGER PRIMARY KEY"  % (tableName)
      start = ","   
@@ -109,6 +110,7 @@ def createTableIfMissing(conn,elem,tableName,full):
      sql += "FOREIGN KEY(platformid) REFERENCES PLATFORM(platformid),"
      sql += "FOREIGN KEY(coreid) REFERENCES CORE(coreid),"
      sql += "FOREIGN KEY(compilerid) REFERENCES COMPILER(compilerid)"
+     sql += "FOREIGN KEY(runid) REFERENCES RUN(runid)"
      sql += "  )"
      conn.execute(sql)
 
@@ -149,7 +151,7 @@ def findInCompilerTable(conn,kind,version):
          return(None)
 
 
-def addRows(conn,elem,tableName,full):
+def addRows(conn,elem,tableName,full,runid=0):
    # List of columns we have in DB which is
    # different from the columns in the table
    compilerid = 0
@@ -218,7 +220,7 @@ def addRows(conn,elem,tableName,full):
         if field in VALBOOLFIELD:
             keys[field]=row[field]
         
-         
+       keys['RUN']=runid
        # Get foreign keys and create missing data
        for field in common:
         if field in VALKEYFIELD:
@@ -272,31 +274,34 @@ def addConfig(conn,config,fullDate):
   conn.execute("INSERT INTO CONFIG(compilerid,platformid,coreid,date) VALUES(?,?,?,?)" ,(config['compilerid'],config['platformid'],config['coreid'],fullDate))
   conn.commit()
 
-def addOneBenchmark(elem,fullPath,db,group):
+def getGroup(a):
+    return(re.sub(r'^(.+)(F64|F32|F16|Q31|Q15|Q7|U32|U16|U8|S32|S16|S8)$',r'\1',a))
+
+def addOneBenchmark(elem,fullPath,db,group,runid):
    if os.path.isfile(fullPath):
       full=pd.read_csv(fullPath,dtype={'OLDID': str} ,keep_default_na = False)
       fullDate = datetime.datetime.now()
       full['DATE'] = fullDate
       if group:
-         tableName = group
+         tableName = getGroup(group)
       else:
-         tableName = elem.data["class"]
+         tableName = getGroup(elem.data["class"])
       conn = sqlite3.connect(db)
       createTableIfMissing(conn,elem,tableName,full)
-      config = addRows(conn,elem,tableName,full)
+      config = addRows(conn,elem,tableName,full,runid)
       addConfig(conn,config,fullDate)
       conn.close()
 
 
-def addToDB(benchmark,dbpath,elem,group):
+def addToDB(benchmark,dbpath,elem,group,runid):
   if not elem.data["deprecated"]:
      if elem.params:
          benchPath = os.path.join(benchmark,elem.fullPath(),"regression.csv")
          print("Processing %s" % benchPath)
-         addOneBenchmark(elem,benchPath,dbpath,group)
+         addOneBenchmark(elem,benchPath,dbpath,group,runid)
          
      for c in elem.children:
-       addToDB(benchmark,dbpath,c,group)
+       addToDB(benchmark,dbpath,c,group,runid)
 
 
 
@@ -306,6 +311,7 @@ parser.add_argument('-f', nargs='?',type = str, default="Output.pickle", help="F
 parser.add_argument('-b', nargs='?',type = str, default="FullBenchmark", help="Full Benchmark dir path")
 #parser.add_argument('-e', action='store_true', help="Embedded test")
 parser.add_argument('-o', nargs='?',type = str, default="reg.db", help="Regression benchmark database")
+parser.add_argument('-r', nargs='?',type = int, default=0, help="Run ID")
 
 parser.add_argument('others', nargs=argparse.REMAINDER)
 
@@ -321,7 +327,7 @@ if args.f is not None:
       group=args.others[0] 
     else:
       group=None
-    addToDB(args.b,args.o,root,group)
+    addToDB(args.b,args.o,root,group,args.r)
     
 else:
     parser.print_help()

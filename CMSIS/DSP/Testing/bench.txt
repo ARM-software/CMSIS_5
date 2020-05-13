@@ -351,8 +351,8 @@ group Root {
                 Output  ERR_F32_ID : Err
 
                 Params PARAM1_ID = {
-                  NumTaps = [4,8,16,32,64]
-                  NB = [16,64,128,256]
+                  NumTaps = [16,32,64]
+                  NB = [64,128,256]
                 }
 
                 Functions {
@@ -388,8 +388,8 @@ group Root {
                 Output  ERR_Q31_ID : Err
 
                 Params PARAM1_ID = {
-                  NumTaps = [4,8,16,32,64]
-                  NB = [16,64,128,256]
+                  NumTaps = [16,32,64]
+                  NB = [64,128,256]
                 }
 
                 Functions {
@@ -425,8 +425,8 @@ group Root {
                 Output  ERR_Q15_ID : Err
 
                 Params PARAM1_ID = {
-                  NumTaps = [4,8,16,32,64]
-                  NB = [16,64,128,256]
+                  NumTaps = [16,32,64]
+                  NB = [64,128,256]
                 }
 
                 Functions {
@@ -464,8 +464,8 @@ group Root {
                 Output  OUT_SAMPLES_F32_ID : Output
 
                 Params PARAM1_ID = {
-                  NBA = [4,5,9,16,64]
-                  NBB = [5,9,16,128]
+                  NBA = [9,16,64]
+                  NBB = [9,16,128]
                 }
 
                 Functions {
@@ -495,8 +495,8 @@ group Root {
                 Output  OUT_SAMPLES_Q31_ID : Output
 
                 Params PARAM1_ID = {
-                  NBA = [4,5,9,16,64]
-                  NBB = [5,9,16,128]
+                  NBA = [9,16,64]
+                  NBB = [9,16,128]
                 }
 
                 Functions {
@@ -526,8 +526,8 @@ group Root {
                 Output  OUT_SAMPLES_Q15_ID : Output
 
                 Params PARAM1_ID = {
-                  NBA = [4,5,9,16,64]
-                  NBB = [5,9,16,128]
+                  NBA = [9,16,64]
+                  NBB = [9,16,128]
                 }
 
                 Functions {
@@ -557,8 +557,8 @@ group Root {
                 Output  OUT_SAMPLES_Q7_ID : Output
 
                 Params PARAM1_ID = {
-                  NBA = [4,5,9,16,64]
-                  NBB = [5,9,16,128]
+                  NBA = [9,16,64]
+                  NBB = [9,16,128]
                 }
 
                 Functions {
@@ -762,7 +762,7 @@ group Root {
                 Output  OUT_SAMPLES_F32_ID : Output
 
                 Params PARAM1_ID = {
-                  NB = [16,64,128,256]
+                  NB = [64,128,256]
                 }
 
                 Functions {
@@ -792,7 +792,7 @@ group Root {
                 Output  OUT_SAMPLES_Q31_ID : Output
 
                 Params PARAM1_ID = {
-                  NB = [16,64,128,256]
+                  NB = [64,128,256]
                 }
 
                 Functions {
@@ -820,7 +820,7 @@ group Root {
                 Output  OUT_SAMPLES_Q15_ID : Output
 
                 Params PARAM1_ID = {
-                  NB = [16,64,128,256]
+                  NB = [64,128,256]
                 }
 
                 Functions {
@@ -848,7 +848,7 @@ group Root {
                 Output  OUT_SAMPLES_F32_ID : Output
 
                 Params PARAM1_ID = {
-                  NB = [16,64,128,256]
+                  NB = [64,128,256]
                 }
 
                 Functions {
@@ -873,7 +873,7 @@ group Root {
                 Output  OUT_SAMPLES_Q31_ID : Output
 
                 Params PARAM1_ID = {
-                  NB = [16,64,128,256]
+                  NB = [64,128,256]
                 }
 
                 Functions {
@@ -898,7 +898,7 @@ group Root {
                 Output  OUT_SAMPLES_Q15_ID : Output
 
                 Params PARAM1_ID = {
-                  NB = [16,64,128,256]
+                  NB = [64,128,256]
                 }
 
                 Functions {
@@ -962,7 +962,7 @@ group Root {
                 Output  OUT_SAMPLES_F32_ID : Output
 
                 Params PARAM1_ID = {
-                  NB = [16,64,128,256]
+                  NB = [64,128,256]
                 }
 
                 Functions {
@@ -992,7 +992,7 @@ group Root {
                 Output  OUT_SAMPLES_Q31_ID : Output
 
                 Params PARAM1_ID = {
-                  NB = [16,64,128,256]
+                  NB = [64,128,256]
                 }
 
                 Functions {
@@ -1020,7 +1020,7 @@ group Root {
                 Output  OUT_SAMPLES_Q15_ID : Output
 
                 Params PARAM1_ID = {
-                  NB = [16,64,128,256]
+                  NB = [64,128,256]
                 }
 
                 Functions {
@@ -1048,7 +1048,7 @@ group Root {
                 Output  OUT_SAMPLES_Q7_ID : Output
 
                 Params PARAM1_ID = {
-                  NB = [16,64,128,256]
+                  NB = [64,128,256]
                 }
 
                 Functions {
@@ -1292,7 +1292,7 @@ group Root {
 
                 
                 Params CFFT_PARAM_ID = {
-                  NB = [16,64,128,256]
+                  NB = [64,128,256]
                   IFFT = [0,1]
                   REV = [0,1]
                 }
@@ -1304,7 +1304,7 @@ group Root {
                 }
 
                 Params RFFT_PARAM_ID = {
-                  NB = [32,64,128,256]
+                  NB = [64,128,256]
                   IFFT = [0,1]
                   REV = [1]
                 }
@@ -1342,7 +1342,7 @@ group Root {
 
                 
                 Params CFFT_PARAM_ID = {
-                  NB = [16,64,128,256]
+                  NB = [64,128,256]
                   IFFT = [0,1]
                   REV = [0,1]
                 }
@@ -1354,7 +1354,7 @@ group Root {
                 }
 
                 Params RFFT_PARAM_ID = {
-                  NB = [32,64,128,256]
+                  NB = [64,128,256]
                   IFFT = [0,1]
                   REV = [0,1]
                 }
@@ -1392,7 +1392,7 @@ group Root {
 
                 
                 Params CFFT_PARAM_ID = {
-                  NB = [16,64,128,256]
+                  NB = [64,128,256]
                   IFFT = [0,1]
                   REV = [0,1]
                 }
@@ -1404,7 +1404,7 @@ group Root {
                 }
 
                 Params RFFT_PARAM_ID = {
-                  NB = [32,64,128,256]
+                  NB = [64,128,256]
                   IFFT = [0,1]
                   REV = [1]
                 }

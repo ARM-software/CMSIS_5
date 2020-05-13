@@ -48,14 +48,14 @@ def joinit(iterable, delimiter):
         yield delimiter
         yield x
 
-def addToDb(db,desc):
+def addToDb(db,desc,runid):
     msg("Add %s to summary database\n" % desc)
-    completed = subprocess.run([sys.executable, "addToDB.py","-o",db,desc], timeout=3600)
+    completed = subprocess.run([sys.executable, "addToDB.py","-o",db,"-r",str(runid),desc], timeout=3600)
     check(completed)
 
-def addToRegDb(db,desc):
+def addToRegDb(db,desc,runid):
     msg("Add %s to regression database\n" % desc)
-    completed = subprocess.run([sys.executable, "addToRegDB.py","-o",db,desc], timeout=3600)
+    completed = subprocess.run([sys.executable, "addToRegDB.py","-o",db,"-r",str(runid),desc], timeout=3600)
     check(completed)
 
 
@@ -187,7 +187,7 @@ class BuildConfig:
     
 
     # Launch cmake command.
-    def createCMake(self,flags,benchMode,platform):
+    def createCMake(self,configid,flags,benchMode,platform):
         with self.buildFolder() as b:
             self.saveEnv()
             if benchMode:
@@ -198,7 +198,8 @@ class BuildConfig:
             cmd += ["-DCMAKE_PREFIX_PATH=%s" % self.compiler(),
                              "-DCMAKE_TOOLCHAIN_FILE=%s" % toolchainCmake,
                              "-DARM_CPU=%s" % self.core(),
-                             "-DPLATFORM=%s" % platform
+                             "-DPLATFORM=%s" % platform,
+                             "-DCONFIGID=%s" % configid
                     ]
             cmd += flags 
 
@@ -373,7 +374,7 @@ class Test:
         else:
            return(TESTFAILED)
 
-    def runAndProcess(self,compiler,fvp,sim,benchmode,db,regdb):
+    def runAndProcess(self,compiler,fvp,sim,benchmode,db,regdb,benchid,regid):
         # If we can't parse test description we fail all tests
         self.processTest()
         # Otherwise if only building or those tests are failing, we continue
@@ -393,9 +394,9 @@ class Test:
               if benchmode and (error == NOTESTFAILED):
                  error = self.computeSummaryStat()
                  if db is not None:
-                    addToDb(db,self.testName())
+                    addToDb(db,self.testName(),benchid)
                  if regdb is not None:
-                    addToRegDb(regdb,self.testName())
+                    addToRegDb(regdb,self.testName(),regid)
               return(error)
            else:
               msg("No FVP available")
