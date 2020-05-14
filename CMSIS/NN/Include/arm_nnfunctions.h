@@ -21,8 +21,9 @@
  * Title:        arm_nnfunctions.h
  * Description:  Public header file for CMSIS NN Library
  *
- * $Date:        May 18, 2020
- * $Revision:    V.3.0.0
+
+ * $Date:        May 20, 2020
+ * $Revision:    V.4.0.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -193,7 +194,7 @@ extern    "C"
   /**
    * @brief s8 convolution layer wrapper function with the main purpose to call the optimal kernel available in cmsis-nn to perform the convolution.
    *
-   * @param[in, out] ctx            Function context that contains the additional buffer if required by the implementation. 
+   * @param[in, out] ctx            Function context that contains the additional buffer if required by the implementation.
                                     arm_convolve_wrapper_s8_get_buffer_size will return the buffer_size if required
    * @param[in]      conv_params    Convolution parameters (e.g. strides, dilations, pads,...).
    *                                Range of conv_params->input_offset  : [-127, 128]
@@ -246,7 +247,7 @@ extern    "C"
 
   /**
    * @brief Basic s8 convolution function
-   * @param[in, out] ctx            Function context that contains the additional buffer if required by the implementation. 
+   * @param[in, out] ctx            Function context that contains the additional buffer if required by the implementation.
                                     arm_convolve_s8_get_buffer_size will return the buffer_size if required
    * @param[in]      conv_params    Convolution parameters (e.g. strides, dilations, pads,...).
    *                                Range of conv_params->input_offset  : [-127, 128]
@@ -562,7 +563,7 @@ extern    "C"
   /**
    * @brief Fast s8 version for 1x1 convolution (non-square shape)
    *
-   * @param[in, out] ctx            Function context that contains the additional buffer if required by the implementation. 
+   * @param[in, out] ctx            Function context that contains the additional buffer if required by the implementation.
                                     arm_convolve_1x1_s8_fast_get_buffer_size will return the buffer_size if required
    * @param[in]      conv_params    Convolution parameters (e.g. strides, dilations, pads,...).
    *                                Range of conv_params->input_offset  : [-127, 128]
@@ -614,7 +615,7 @@ extern    "C"
   /**
    * @brief 1xn convolution
    *
-   * @param[in, out] ctx            Function context that contains the additional buffer if required by the implementation. 
+   * @param[in, out] ctx            Function context that contains the additional buffer if required by the implementation.
                                     arm_convolve_1_x_n_s8_get_buffer_size will return the buffer_size if required
    * @param[in]      conv_params    Convolution parameters (e.g. strides, dilations, pads,...).
    *                                Range of conv_params->input_offset  : [-127, 128]
@@ -908,96 +909,118 @@ extern    "C"
                                                              q15_t * bufferA,
                                                              q7_t * bufferB);
 
-/**
-   * @brief Basic s8 depthwise convolution function
-   * @param[in]       input      pointer to input tensor. Range: int8, format: [H,W,in_ch]
-   * @param[in]       input_x    input tensor width
-   * @param[in]       input_y    input tensor height
-   * @param[in]       input_ch   number of input tensor channels
-   * @param[in]       kernel     pointer to kernel weights. Range: int8, format: [in_ch, H, W, out_ch]
-   * @param[in]       output_ch  Number of output channels. output_ch = ch_mult * input_ch
-   * @param[in]       ch_mult    channel multiplier.
-   * @param[in]       kernel_x   filter/kernel width
-   * @param[in]       kernel_y   filter/kernel height
-   * @param[in]       pad_x      padding along width
-   * @param[in]       pad_y      padding along height
-   * @param[in]       stride_x   convolution stride along width
-   * @param[in]       stride_y   convolution stride along height
-   * @param[in]       bias       pointer to per output channel bias. Range: int32
-   * @param[in,out]   output     pointer to output tensor. Format: [H, W, out_ch]
-   * @param[in]       output_shift pointer to per output channel requantization shift parameter.
-   * @param[in]       output_mult  pointer to per output channel requantization multiplier parameter.
-   * @param[in]       output_x     output tensor width
-   * @param[in]       output_y     output tensor height
-   * @param[in]       output_offset   offset to elements of output tensor. Range: int8
-   * @param[in]       input_offset    offset to elements of input tensor. Range: -127 to 128
-   * @param[in]       output_activation_min   Minimum value to clamp the output to. Range: int8
-   * @param[in]       output_activation_max   Minimum value to clamp the output to. Range: int8
-   * @param[in]       dilation_x   dilation along x. Not used. Dilation factor of 1 is used.
-   * @param[in]       dilation_y   dilation along y. Not used. Dilation factor of 1 is used.
-   * @param[in]       buffer_a     Not used.
+   /**
+   * @brief Wrapper function to pick the right optimized s8 depthwise convolution function
    *
+   * @param[in, out] ctx            Function context (e.g. temporary buffer). Check the function
+   *                                definition file to see if an additional buffer is required.
+   *                                Optional function <API>_get_buffer_size() provides the buffer
+   *                                size if required.
+   * @param[in]      dw_conv_params Depthwise convolution parameters (e.g. strides, dilations, pads,...)
+   *                                dw_conv_params->dilation is not used.
+   *                                Range of dw_conv_params->input_offset : [-127, 128]
+   *                                Range of dw_conv_params->output_offset : [-128, 127]
+   * @param[in]      quant_params   Per-channel quantization info.
+    *                               It contains the multiplier and shift values to be applied to each
+    *                               output channel
+   * @param[in]      input_dims     Input (activation) tensor dimensions. Format: [H, W, C_IN]
+   *                                Batch argument N is not used and assumed to be 1.
+   * @param[in]      input_data     Input (activation) data pointer. Data type: int8
+   * @param[in]      filter_dims    Filter tensor dimensions. Format: [1, H, W, C_OUT]
+   * @param[in]      filter_data    Filter data pointer. Data type: int8
+   * @param[in]      bias_dims      Bias tensor dimensions. Format: [C_OUT]
+   * @param[in]      bias_data      Bias data pointer. Data type: int32
+   * @param[in]      output_dims    Output tensor dimensions. Format: [1, H, W, C_OUT]
+   * @param[in, out] output_data    Output data pointer. Data type: int8
+   * @return     The function returns
+   *                <code>ARM_MATH_SUCCESS</code>   -  Successful completion.
+   *
+   * @details
+   *    - Supported framework: TensorFlow Lite
+   *    - Picks one of the the following functions
+   *        -# arm_depthwise_conv_s8()
+   *        -# arm_depthwise_conv_3x3_s8() - Cortex-M CPUs with DSP extension only
+   *        -# arm_depthwise_conv_s8_opt()
+   *    - q7 is used as data type eventhough it is s8 data. It is done so to be consistent with existing APIs.
+   *    - Check details of arm_depthwise_conv_s8_opt() for potential data that can be accessed outside of the boundary.
+   */
+   arm_status arm_depthwise_conv_wrapper_s8(const cmsis_nn_context *ctx,
+                                            const cmsis_nn_dw_conv_params *dw_conv_params,
+                                            const cmsis_nn_per_channel_quant_params *quant_params,
+                                            const cmsis_nn_dims *input_dims,
+                                            const q7_t *input,
+                                            const cmsis_nn_dims *filter_dims,
+                                            const q7_t *kernel,
+                                            const cmsis_nn_dims *bias_dims,
+                                            const int32_t *bias,
+                                            const cmsis_nn_dims *output_dims,
+                                            q7_t *output);
+
+   /**
+   * @brief Get size of additional buffer required by arm_depthwise_conv_wrapper_s8()
+   *
+   * @param[in]      dw_conv_params Depthwise convolution parameters (e.g. strides, dilations, pads,...)
+   *                                dw_conv_params->dilation is not used.
+   *                                Range of dw_conv_params->input_offset : [-127, 128]
+   *                                Range of dw_conv_params->input_offset : [-128, 127]
+   * @param[in]      input_dims     Input (activation) tensor dimensions. Format: [H, W, C_IN]
+   *                                Batch argument N is not used and assumed to be 1.
+   * @param[in]      filter_dims    Filter tensor dimensions. Format: [1, H, W, C_OUT]
+   * @param[in]      output_dims    Output tensor dimensions. Format: [1, H, W, C_OUT]
+   * @return                        Size of additional memory required for optimizations in bytes.
+   *
+   */
+   int32_t arm_depthwise_conv_wrapper_s8_get_buffer_size(const cmsis_nn_dw_conv_params *dw_conv_params,
+                                                         const cmsis_nn_dims *input_dims,
+                                                         const cmsis_nn_dims *filter_dims,
+                                                         const cmsis_nn_dims *output_dims);
+
+   /**
+   * @brief Basic s8 depthwise convolution function that doesn't have any constraints on the input dimensions.
+   *
+   * @param[in, out] ctx            Function context (e.g. temporary buffer). Check the function
+   *                                definition file to see if an additional buffer is required.
+   *                                Optional function <API>_get_buffer_size() provides the buffer
+   *                                size if an additional buffer is required.
+   *                                exists if additional memory is.
+   * @param[in]      dw_conv_params Depthwise convolution parameters (e.g. strides, dilations, pads,...)
+   *                                dw_conv_params->dilation is not used.
+   *                                Range of dw_conv_params->input_offset : [-127, 128]
+   *                                Range of dw_conv_params->input_offset : [-128, 127]
+   * @param[in]      quant_params   Per-channel quantization info.
+    *                               It contains the multiplier and shift values to be applied to each
+    *                               output channel
+   * @param[in]      input_dims     Input (activation) tensor dimensions. Format: [1, H, W, C_IN]
+   *                                Batch argument N is not used.
+   * @param[in]      input_data     Input (activation) data pointer. Data type: int8
+   * @param[in]      filter_dims    Filter tensor dimensions. Format: [1, H, W, C_OUT]
+   * @param[in]      filter_data    Filter data pointer. Data type: int8
+   * @param[in]      bias_dims      Bias tensor dimensions. Format: [C_OUT]
+   * @param[in]      bias_data      Bias data pointer. Data type: int32
+   * @param[in]      output_dims    Output tensor dimensions. Format: [1, H, W, C_OUT]
+   * @param[in, out] output_data    Output data pointer. Data type: int8
    * @return     The function returns <code>ARM_MATH_SUCCESS</code>
    *
    * @details
-   *    1. Supported framework: TensorFlow Lite
-   *    2. q7 is used as data type eventhough it is s8 data. It is done so to be consistent with existing APIs.
-   *    3. Optimization using DSP extension is not available for the generic case where channel multiplier is > 1.
-   *
+   *    - Supported framework: TensorFlow Lite
+   *    - q7 is used as data type eventhough it is s8 data. It is done so to be consistent with existing APIs.
    */
+   arm_status arm_depthwise_conv_s8(const cmsis_nn_context *ctx,
+                                    const cmsis_nn_dw_conv_params *dw_conv_params,
+                                    const cmsis_nn_per_channel_quant_params *quant_params,
+                                    const cmsis_nn_dims *input_dims,
+                                    const q7_t *input_data,
+                                    const cmsis_nn_dims *filter_dims,
+                                    const q7_t *filter_data,
+                                    const cmsis_nn_dims *bias_dims,
+                                    const int32_t *bias_data,
+                                    const cmsis_nn_dims *output_dims,
+                                    q7_t *output_data);
 
-    arm_status arm_depthwise_conv_s8(const q7_t *input,
-                                     const uint16_t input_x,
-                                     const uint16_t input_y,
-                                     const uint16_t input_ch,
-                                     const q7_t *kernel,
-                                     const uint16_t output_ch,
-                                     const uint16_t ch_mult,
-                                     const uint16_t kernel_x,
-                                     const uint16_t kernel_y,
-                                     const uint16_t pad_x,
-                                     const uint16_t pad_y,
-                                     const uint16_t stride_x,
-                                     const uint16_t stride_y,
-                                     const int32_t *bias,
-                                     q7_t *output,
-                                     const int32_t *output_shift,
-                                     const int32_t *output_mult,
-                                     const uint16_t output_x,
-                                     const uint16_t output_y,
-                                     const int32_t output_offset,
-                                     const int32_t input_offset,
-                                     const int32_t output_activation_min,
-                                     const int32_t output_activation_max,
-                                     const uint16_t dilation_x,
-                                     const uint16_t dilation_y,
-                                     q15_t *buffer_a);
-
-/**
-   * @brief Optimized s8 depthwise convolution function for 3x3 kernel size with constraint that in_channel equals out_channel
-   * @param[in]       input      pointer to input tensor. Range: int8, format: [H,W,in_ch]
-   * @param[in]       input_x    input tensor width
-   * @param[in]       input_y    input tensor height
-   * @param[in]       input_ch   number of input tensor channels
-   * @param[in]       kernel     pointer to kernel weights. Range: int8, Format: [in_ch, H, W, out_ch]
-   * @param[in]       output_ch  Number of output channels.
-   * @param[in]       pad_x      padding along width
-   * @param[in]       pad_y      padding along height
-   * @param[in]       stride_x   convolution stride along width
-   * @param[in]       stride_y   convolution stride along height
-   * @param[in]       bias       pointer to per output channel bias. Range: int8
-   * @param[in,out]   output     pointer to output tensor. Format: [H, W, out_ch]
-   * @param[in]       output_shift pointer to per output channel requantization shift parameter.
-   * @param[in]       output_mult  pointer to per output channel requantization multiplier parameter.
-   * @param[in]       output_x     output tensor width
-   * @param[in]       output_y     output tensor height
-   * @param[in]       output_offset   offset to elements of output tensor
-   * @param[in]       input_offset    offset to elements of input tensor
-   * @param[in]       output_activation_min   Minimum value to clamp the output to. Range: int8
-   * @param[in]       output_activation_max   Minimum value to clamp the output to. Range: int8
-   * @param[in]       dilation_x   dilation along x. Not used. Dilation factor of 1 is used.
-   * @param[in]       dilation_y   dilation along y. Not used. Dilation factor of 1 is used.
-   * @param[in]       buffer_a     Buffer for partial im2col optimization. Not used.
+   /**
+   * @brief Optimized s8 depthwise convolution function for 3x3 kernel size with some constraints on
+   *        the input arguments(documented below). Refer arm_depthwise_conv_s8() for function
+   *        argument details.
    *
    * @return     The function returns one of the following
    *                <code>ARM_MATH_SIZE_MISMATCH</code> - Unsupported dimension of tensors
@@ -1005,66 +1028,32 @@ extern    "C"
    *                <code>ARM_MATH_SUCCESS</code> - Successful operation
    *
    * @details
-   *    Supported framework: TensorFlow Lite
+   *   - Supported framework : TensorFlow Lite Micro
+   *   - The following constrains on the arguments apply
+   *      -# Number of input channel equals number of output channels
+   *      -# Filter height and width equals 3
+   *      -# Padding along x is either 0 or 1.
    *
    */
-  arm_status arm_depthwise_conv_3x3_s8(const int8_t *input,
-                                       const int32_t input_x,
-                                       const int32_t input_y,
-                                       const int32_t input_ch,
-                                       const int8_t *kernel,
-                                       const int32_t output_ch,
-                                       const int32_t pad_x,
-                                       const int32_t pad_y,
-                                       const int32_t stride_x,
-                                       const int32_t stride_y,
-                                       const int32_t *bias,
-                                       int8_t *output,
-                                       const int32_t *output_shift,
-                                       const int32_t *output_mult,
-                                       const int32_t output_x,
-                                       const int32_t output_y,
-                                       const int32_t output_offset,
-                                       const int32_t input_offset,
-                                       const int32_t output_activation_min,
-                                       const int32_t output_activation_max,
-                                       const int32_t dilation_x,
-                                       const int32_t dilation_y,
-                                       int16_t *buffer_a);
+   arm_status arm_depthwise_conv_3x3_s8(const cmsis_nn_context *ctx,
+                                        const cmsis_nn_dw_conv_params *dw_conv_params,
+                                        const cmsis_nn_per_channel_quant_params *quant_params,
+                                        const cmsis_nn_dims *input_dims,
+                                        const q7_t *input_data,
+                                        const cmsis_nn_dims *filter_dims,
+                                        const q7_t *filter_data,
+                                        const cmsis_nn_dims *bias_dims,
+                                        const int32_t *bias_data,
+                                        const cmsis_nn_dims *output_dims,
+                                        q7_t *output_data);
 
-/**
-   * @brief Optimized s8 depthwise convolution function with constraint that in_channel equals out_channel
-   * @param[in]       input      pointer to input tensor. Range: int8, format: [H,W,in_ch]
-   * @param[in]       input_x    input tensor width
-   * @param[in]       input_y    input tensor height
-   * @param[in]       input_ch   number of input tensor channels
-   * @param[in]       kernel     pointer to kernel weights. Range: int8, Format: [in_ch, H, W, out_ch]
-   * @param[in]       output_ch  Number of output channels.
-   * @param[in]       kernel_x   filter/kernel width
-   * @param[in]       kernel_y   filter/kernel height
-   * @param[in]       pad_x      padding along width
-   * @param[in]       pad_y      padding along height
-   * @param[in]       stride_x   convolution stride along width
-   * @param[in]       stride_y   convolution stride along height
-   * @param[in]       bias       pointer to per output channel bias. Range: int8
-   * @param[in,out]   output     pointer to output tensor. Format: [H, W, out_ch]
-   * @param[in]       output_shift pointer to per output channel requantization shift parameter.
-   * @param[in]       output_mult  pointer to per output channel requantization multiplier parameter.
-   * @param[in]       output_x     output tensor width
-   * @param[in]       output_y     output tensor height
-   * @param[in]       output_offset   offset to elements of output tensor
-   * @param[in]       input_offset    offset to elements of input tensor
-   * @param[in]       output_activation_min   Minimum value to clamp the output to. Range: int8
-   * @param[in]       output_activation_max   Minimum value to clamp the output to. Range: int8
-   * @param[in]       dilation_x   dilation along x. Not used. Dilation factor of 1 is used.
-   * @param[in]       dilation_y   dilation along y. Not used. Dilation factor of 1 is used.
-   * @param[in]       buffer_a     Buffer for partial im2col optimization. This is mandatory when
-   *                               ARM_MATH_DSP is defined.
-   *                               Required space: (2 * input_ch * kernel_x * kernel_y) * sizeof(q15_t) bytes
-   *                               Use arm_depthwise_conv_s8_opt_get_buffer_size() to get the size.
+   /**
+   * @brief Optimized s8 depthwise convolution function with constraint that in_channel equals out_channel.
+   *        Refer arm_depthwise_conv_s8() for function argument details.
    *
    * @return     The function returns one of the following
-   *                <code>ARM_MATH_SIZE_MISMATCH</code> - Unsupported dimension of tensors
+   *                <code>ARM_MATH_SIZE_MISMATCH</code> - input channel != output channel or
+   *                                                      ch_mult != 1
    *                <code>ARM_MATH_SUCCESS</code> - Successful operation
    *
    * @note       If number of channels is not a multiple of 4, upto 3 elements outside the boundary will be read out
@@ -1073,53 +1062,39 @@ extern    "C"
    *               - Output multiplier
    *               - Output bias
    *               - kernel
-   *
    * @details
-   *    1. Supported framework: TensorFlow Lite
-   *    2. q7 is used as data type eventhough it is s8 data. It is done so to be consistent with existing APIs.
-   *    3. Reccomended when number of channels is 4 or greater.
+   *    - Supported framework: TensorFlow Lite
+   *    - The following constrains on the arguments apply
+   *        -# Number of input channel equals number of output channels or ch_mult equals 1
+   *    - q7 is used as data type eventhough it is s8 data. It is done so to be consistent with existing APIs.
+   *    - Reccomended when number of channels is 4 or greater.
    *
    */
-  arm_status arm_depthwise_conv_s8_opt(const q7_t *input,
-                                       const uint16_t input_x,
-                                       const uint16_t input_y,
-                                       const uint16_t input_ch,
-                                       const q7_t *kernel,
-                                       const uint16_t output_ch,
-                                       const uint16_t kernel_x,
-                                       const uint16_t kernel_y,
-                                       const uint16_t pad_x,
-                                       const uint16_t pad_y,
-                                       const uint16_t stride_x,
-                                       const uint16_t stride_y,
-                                       const int32_t *bias,
-                                       q7_t *output,
-                                       const int32_t *output_shift,
-                                       const int32_t *output_mult,
-                                       const uint16_t output_x,
-                                       const uint16_t output_y,
-                                       const int32_t output_offset,
-                                       const int32_t input_offset,
-                                       const int32_t output_activation_min,
-                                       const int32_t output_activation_max,
-                                       const uint16_t dilation_x,
-                                       const uint16_t dilation_y,
-                                       q15_t *buffer_a);
+   arm_status arm_depthwise_conv_s8_opt(const cmsis_nn_context *ctx,
+                                        const cmsis_nn_dw_conv_params *dw_conv_params,
+                                        const cmsis_nn_per_channel_quant_params *quant_params,
+                                        const cmsis_nn_dims *input_dims,
+                                        const q7_t *input_data,
+                                        const cmsis_nn_dims *filter_dims,
+                                        const q7_t *filter_data,
+                                        const cmsis_nn_dims *bias_dims,
+                                        const int32_t *bias_data,
+                                        const cmsis_nn_dims *output_dims,
+                                        q7_t *output_data);
 
-  /**
+   /**
    * @brief Get the required buffer size for optimized s8 depthwise convolution
    * function with constraint that in_channel equals out_channel.
-   * @param[in]       input_ch              number of input tensor channels
-   * @param[in]       kernel_x              filter/kernel width
-   * @param[in]       kernel_y              filter/kernel height
-   * @return          The function returns  required buffer size
+   * @param[in]       input_dims     Input (activation) tensor dimensions. Format: [1, H, W, C_IN]
+   *                                 Batch argument N is not used.
+   * @param[in]       filter_dims    Filter tensor dimensions. Format: [1, H, W, C_OUT]
+   * @return          The function returns  required buffer size in bytes
    *
    */
-int32_t arm_depthwise_conv_s8_opt_get_buffer_size(const uint16_t input_ch,
-                                                  const uint16_t kernel_x,
-                                                  const uint16_t kernel_y);
+   int32_t arm_depthwise_conv_s8_opt_get_buffer_size(const cmsis_nn_dims* input_dims,
+                                                     const cmsis_nn_dims* filter_dims);
 
-/**
+ /**
  * @defgroup FC Fully-connected Layer Functions
  *
  * Collection of fully-connected and matrix multiplication functions.
@@ -1135,7 +1110,7 @@ int32_t arm_depthwise_conv_s8_opt_get_buffer_size(const uint16_t input_ch,
  *
  */
 
-  /**
+    /**
    * @brief Q7 basic fully-connected layer function
    * @param[in]       pV          pointer to input vector
    * @param[in]       pM          pointer to matrix weights
@@ -1723,7 +1698,7 @@ extern    "C"
    * @brief Get the required buffer size for S8 average pooling function
    * @param[in]       dim_dst_width         output tensor dimension
    * @param[in]       ch_src                number of input tensor channels
-   * @return          The function returns  required buffer size
+   * @return          The function returns  required buffer size in bytes
    *
    */
     int32_t arm_avgpool_s8_get_buffer_size(const int dim_dst_width,

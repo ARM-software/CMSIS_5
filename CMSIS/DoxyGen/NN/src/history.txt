@@ -6,6 +6,16 @@
     <th>Version</th>
     <th>Description</th>
   </tr>
+    <tr>
+    <td>V1.x.0</td>
+    <td>
+      Added wrapper functions for convolution related APIs
+      <ul>
+        <li>arm_depthwise_conv_wrapper_s8</li>
+        <li>arm_convolve_wrapper_s8</li>
+      </ul>
+    </td>
+  </tr>
   <tr>
     <td>V1.3.0</td>
     <td>
