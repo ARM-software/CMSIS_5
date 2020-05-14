@@ -52,8 +52,8 @@ def joinit(iterable, delimiter):
 
 def formatProd(a,b):
   if a == "Intercept":
-     return(str(b))
-  return("%s * %s" % (a,b))
+     return("%.3f" % b)
+  return("%s * %.3f" % (a,b))
 
 def summaryBenchmark(resultPath,elem,path):
    regressionPath=os.path.join(os.path.dirname(path),"regression.csv")
