@@ -21,9 +21,8 @@
  * Title:        arm_nnfunctions.h
  * Description:  Public header file for CMSIS NN Library
  *
-
- * $Date:        May 20, 2020
- * $Revision:    V.4.0.0
+ * $Date:        May 25, 2020
+ * $Revision:    V.5.0.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -1135,68 +1134,61 @@ extern    "C"
                                       q7_t * pOut,
                                       q15_t * vec_buffer);
 
-  /**
-   * @brief S8 basic fully-connected and matrix multiplication layer function for TF Lite
-   * @param[in]       pInput                       pointer to pInput vector
-   * @param[in]       pWeight                      pointer to matrix weights
-   * @param[in]       col_dim                      dimension of the input vector
-   * @param[in]       row_dim                      dimension of the output vector
-   * @param[in]       nb_batches                   number of batches
-   * @param[in]       input_offset                 tensor offset for input. Range: -127 to 128
-   * @param[in]       filter_offset                tensor offset for filter. Range: -127 to 128
-   * @param[in]       out_mult                     requantization parameter
-   * @param[in]       out_shift                    requantization parameter
-   * @param[in]       output_offset                tensor offset for output. Range: int8
-   * @param[in]       pBias                        pointer to bias
-   * @param[out]      pOut                         pointer to output vector
-   * @param[in]       output_activation_min        for clamping
-   * @param[in]       output_activation_max        for clamping
-   * @param[in]       vec_buffer                   pointer to buffer space used for optimization and is necessary
-   *                                               when ARM_MATH_DSP is defined but not
-   *                                               ARM_MATH_MVEI.
-   *                                               Required space: col_dim * sizeof(q15_t) bytes
-   *                                               Use arm_fully_connected_s8_get_buffer_size() to get the size.
-   * @return          The function returns         ARM_MATH_SUCCESS
+   /**
+   * @brief Basic s8 Fully Connected function.
+   *
+   * @param[in, out] ctx            Function context (e.g. temporary buffer). Check the function
+   *                                definition file to see if an additional buffer is required.
+   *                                Optional function <API>_get_buffer_size() provides the buffer
+   *                                size if an additional buffer is required.
+   * @param[in]      fc_params      Fully Connected layer parameters (e.g. strides, dilations, pads,...)
+   *                                Range of fc_params->input_offset  : [-127, 128]
+   *                                Range of fc_params->filter_offset : [-127, 128]
+   *                                Range of fc_params->output_offset : [-128, 127]
+   * @param[in]      quant_params   Per-tensor quantization info.
+   *                                It contains the multiplier and shift values to be applied to the output tensor.
+   * @param[in]      input_dims     Input (activation) tensor dimensions. Format: [N, H, W, C_IN]
+   *                                Input dimension is taken as Nx(H * W * C_IN)
+   * @param[in]      input_data     Input (activation) data pointer. Data type: int8
+   * @param[in]      filter_dims    Two dimensional filter dimensions. Format: [N, C]
+   *                                N : accumulation depth and equals (H * W * C_IN) from input_dims
+   *                                C : output depth and equals C_OUT in output_dims
+   *                                H & W : Not used
+   * @param[in]      filter_data    Filter data pointer. Data type: int8
+   * @param[in]      bias_dims      Bias tensor dimensions. Format: [C_OUT]
+   * @param[in]      bias_data      Bias data pointer. Data type: int32
+   * @param[in]      output_dims    Output tensor dimensions. Format: [N, C_OUT]
+   *                                N : Batches
+   *                                C_OUT : Output depth
+   *                                H & W : Not used.
+   * @param[in, out] output_data    Output data pointer. Data type: int8
+   * @return     The function returns <code>ARM_MATH_SUCCESS</code>
    *
    * @details
-   *
-   * <b>Buffer size:</b>
-   *
-   * vec_buffer size: col_dim of word16.
-   *
-   *  This basic function is designed to work with regular pWeight
-   *  matrix without interleaving.
-   *
-   *    1. Supported framework: TensorFlow Lite
-   *    2. q7 is used as data type eventhough it is s8 data. It is done so to be consistent with existing APIs.
-   *
+   *    - Supported framework: TensorFlow Lite
+   *    - q7 is used as data type eventhough it is s8 data. It is done so to be consistent with existing APIs.
    */
-
     arm_status
-    arm_fully_connected_s8(const int8_t *pInput,
-                           const int8_t *pWeight,
-                           const uint16_t col_dim,
-                           const uint16_t row_dim,
-                           const uint16_t nb_batches,
-                           const int32_t input_offset,
-                           const int32_t filter_offset,
-                           const int32_t out_mult,
-                           const int32_t out_shift,
-                           const int32_t output_offset,
-                           const int32_t *pBias,
-                           int8_t *pOut,
-                           const int32_t output_activation_min,
-                           const int32_t output_activation_max,
-                           q15_t *vec_buffer);
+    arm_fully_connected_s8(const cmsis_nn_context *ctx,
+                           const cmsis_nn_fc_params *fc_params,
+                           const cmsis_nn_per_tensor_quant_params *quant_params,
+                           const cmsis_nn_dims *input_dims,
+                           const q7_t *input_data,
+                           const cmsis_nn_dims *filter_dims,
+                           const q7_t *filter_data,
+                           const cmsis_nn_dims *bias_dims,
+                           const int32_t *bias_data,
+                           const cmsis_nn_dims *output_dims,
+                           q7_t *output_data);
 
   /**
    * @brief Get the required buffer size for S8 basic fully-connected and
    * matrix multiplication layer function for TF Lite
-   * @param[in]       col_dim                      dimension of the input vector
-   * @return          The function returns         required buffer size
+   * @param[in]      filter_dims             dimension of filter
+   * @return         The function returns    required buffer size in bytes
    *
    */
-    int32_t arm_fully_connected_s8_get_buffer_size(const uint16_t col_dim);
+    int32_t arm_fully_connected_s8_get_buffer_size(const cmsis_nn_dims *filter_dims);
 
   /**
    * @brief Q7 opt fully-connected layer function
@@ -1648,51 +1640,37 @@ extern    "C"
                                  q7_t * bufferA,
                                  q7_t * Im_out);
 
-  /**
-   * @brief s8 average pooling function
-   * @param[in]       dim_src_height     input tensor dimension
-   * @param[in]       dim_src_width      input tensor dimension
-   * @param[in]       dim_dst_height     output tensor dimension
-   * @param[in]       dim_dst_width      output tensor dimension
-   * @param[in]       stride_height      stride along y
-   * @param[in]       stride_width       stride along x
-   * @param[in]       dim_kernel_height  filter kernel size along y
-   * @param[in]       dim_kernel_width   filter kernel size along x
-   * @param[in]       padding_height     padding size along y
-   * @param[in]       padding_width      padding size along x
-   * @param[in]       act_min            Min clamping
-   * @param[in]       act_max            Max clamping
-   * @param[in]       ch_src             number of input tensor channels
-   * @param[in,out]   src                pointer to input tensor
-   * @param[in]       bufferA            Temporary buffer used for optimization. Use
-   *                                     arm_avgpool_s8_get_buffer_size() to get the size of required memory.
-   * @param[in,out]   dst                pointer to output tensor
-   * @return                             The function returns one of the following
-   *                                     <code>ARM_MATH_SIZE_MISMATCH</code> - Unsupported dimension of tensors
-   *                                     <code>ARM_MATH_SUCCESS</code> - Successful operation
-   *                                     <code>ARM_MATH_ARGUMENT_ERROR</code> - Implementation not available
+   /**
+   * @brief s8 average pooling function.
+   *
+   * @param[in, out] ctx            Function context (e.g. temporary buffer). Check the function
+   *                                definition file to see if an additional buffer is required.
+   *                                Optional function <API>_get_buffer_size() provides the buffer
+   *                                size if an additional buffer is required.
+   * @param[in]      pool_params    Pooling parameters
+   * @param[in]      input_dims     Input (activation) tensor dimensions. Format: [H, W, C_IN]
+   *                                Argument 'N' is not used.
+   * @param[in]      input_data     Input (activation) data pointer. Data type: int8
+   * @param[in]      filter_dims    Filter tensor dimensions. Format: [H, W]
+   *                                Argument N and C are not used.
+   * @param[in]      output_dims    Output tensor dimensions. Format: [H, W, C_OUT]
+   *                                Argument N is not used.
+   *                                C_OUT equals C_IN.
+   * @param[in, out] output_data    Output data pointer. Data type: int8
+   * @return                        The function returns
+   *                                    <code>ARM_MATH_SUCCESS</code> - Successful operation
    *
    * @details
    *    - Supported Framework: TensorFlow Lite
    *
    */
-
-    arm_status arm_avgpool_s8(const int dim_src_height,
-                              const int dim_src_width,
-                              const int dim_dst_height,
-                              const int dim_dst_width,
-                              const int stride_height,
-                              const int stride_width,
-                              const int dim_kernel_height,
-                              const int dim_kernel_width,
-                              const int padding_height,
-                              const int padding_width,
-                              const int act_min,
-                              const int act_max,
-                              const int ch_src,
-                              int8_t *src,
-                              int16_t *bufferA,
-                              int8_t *dst);
+   arm_status arm_avgpool_s8(const cmsis_nn_context *ctx,
+                             const cmsis_nn_pool_params *pool_params,
+                             const cmsis_nn_dims *input_dims,
+                             const q7_t *input_data,
+                             const cmsis_nn_dims *filter_dims,
+                             const cmsis_nn_dims *output_dims,
+                             q7_t *output_data);
 
   /**
    * @brief Get the required buffer size for S8 average pooling function

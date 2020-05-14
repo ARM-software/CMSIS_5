@@ -85,7 +85,6 @@ typedef struct
     cmsis_nn_tile       padding;
     cmsis_nn_tile       dilation;
     cmsis_nn_activation activation;
-
 } cmsis_nn_conv_params;
 
 /** CMSIS-NN object for Depthwise convolution layer parameters */
@@ -98,8 +97,23 @@ typedef struct
     cmsis_nn_tile       padding;
     cmsis_nn_tile       dilation;
     cmsis_nn_activation activation;
-
 } cmsis_nn_dw_conv_params;
+/** CMSIS-NN object for pooling layer parameters */
+typedef struct
+{
+    cmsis_nn_tile       stride;
+    cmsis_nn_tile       padding;
+    cmsis_nn_activation activation;
+} cmsis_nn_pool_params;
+
+/** CMSIS-NN object for Fully Connected layer parameters */
+typedef struct
+{
+    int32_t             input_offset;   /**< Zero value for the input tensor */
+    int32_t             filter_offset;   /**< Zero value for the filter tensor */
+    int32_t             output_offset;  /**< Zero value for the output tensor */
+    cmsis_nn_activation activation;
+} cmsis_nn_fc_params;
 
 #endif // _ARM_NN_TYPES_H
 

@@ -21,8 +21,8 @@
  * Title:        arm_avgpool_s8.c
  * Description:  Pooling function implementations
  *
- * $Date:        April 23,2020
- * $Revision:    V.1.1.2
+ * $Date:        May 19,2020
+ * $Revision:    V.2.0.0
  *
  * Target Processor:  Cortex-M CPUs
  *
@@ -70,24 +70,29 @@ static void buffer_scale_back_q15_to_q7_and_clamp(q15_t *buffer, q7_t *target, u
 
 #if defined(ARM_MATH_MVEI)
 
-arm_status arm_avgpool_s8(const int dim_src_height,
-                          const int dim_src_width,
-                          const int dim_dst_height,
-                          const int dim_dst_width,
-                          const int stride_height,
-                          const int stride_width,
-                          const int dim_kernel_height,
-                          const int dim_kernel_width,
-                          const int padding_height,
-                          const int padding_width,
-                          const int act_min,
-                          const int act_max,
-                          const int ch_src,
-                          int8_t *src,
-                          int16_t *bufferA,
-                          int8_t *dst)
+arm_status arm_avgpool_s8(const cmsis_nn_context *ctx,
+                          const cmsis_nn_pool_params *pool_params,
+                          const cmsis_nn_dims *input_dims,
+                          const q7_t *src,
+                          const cmsis_nn_dims *filter_dims,
+                          const cmsis_nn_dims *output_dims,
+                          q7_t *dst)
 {
-  (void)bufferA;
+  (void)ctx;
+  const int32_t dim_src_height = input_dims->h;
+  const int32_t dim_src_width = input_dims->w;
+  const int32_t dim_dst_height = output_dims->h;
+  const int32_t dim_dst_width = output_dims->w;
+  const int32_t stride_height = pool_params->stride.h;
+  const int32_t stride_width = pool_params->stride.w;
+  const int32_t dim_kernel_height = filter_dims->h;
+  const int32_t dim_kernel_width = filter_dims->w;
+  const int32_t padding_height = pool_params->padding.h;
+  const int32_t padding_width = pool_params->padding.w;
+  const int32_t act_min = pool_params->activation.min;
+  const int32_t act_max = pool_params->activation.max;
+  const int32_t ch_src = input_dims->c;
+
   int32_t   i_x, i_y;
   int32_t   k_x, k_y;
 
@@ -231,23 +236,28 @@ arm_status arm_avgpool_s8(const int dim_src_height,
 }
 
 #else
-arm_status arm_avgpool_s8(const int dim_src_height,
-                          const int dim_src_width,
-                          const int dim_dst_height,
-                          const int dim_dst_width,
-                          const int stride_height,
-                          const int stride_width,
-                          const int dim_kernel_height,
-                          const int dim_kernel_width,
-                          const int padding_height,
-                          const int padding_width,
-                          const int act_min,
-                          const int act_max,
-                          const int ch_src,
-                          int8_t *src,
-                          int16_t *bufferA,
-                          int8_t *dst)
+arm_status arm_avgpool_s8(const cmsis_nn_context *ctx,
+                          const cmsis_nn_pool_params *pool_params,
+                          const cmsis_nn_dims *input_dims,
+                          const q7_t *src,
+                          const cmsis_nn_dims *filter_dims,
+                          const cmsis_nn_dims *output_dims,
+                          q7_t *dst)
 {
+  const int32_t dim_src_height = input_dims->h;
+  const int32_t dim_src_width = input_dims->w;
+  const int32_t dim_dst_height = output_dims->h;
+  const int32_t dim_dst_width = output_dims->w;
+  const int32_t stride_height = pool_params->stride.h;
+  const int32_t stride_width = pool_params->stride.w;
+  const int32_t dim_kernel_height = filter_dims->h;
+  const int32_t dim_kernel_width = filter_dims->w;
+  const int32_t padding_height = pool_params->padding.h;
+  const int32_t padding_width = pool_params->padding.w;
+  const int32_t act_min = pool_params->activation.min;
+  const int32_t act_max = pool_params->activation.max;
+  const int32_t ch_src = input_dims->c;
+  q15_t *bufferA = (q15_t *)ctx->buf;
 
 #if defined (ARM_MATH_DSP)
 
@@ -275,7 +285,7 @@ arm_status arm_avgpool_s8(const int dim_src_height,
       {
         for (k_x = kernel_x_start; k_x < kernel_x_end; k_x++)
         {
-          q7_t *start = src + ch_src * (k_x + base_idx_x + (k_y + base_idx_y) * dim_src_width);
+          const q7_t *start = src + ch_src * (k_x + base_idx_x + (k_y + base_idx_y) * dim_src_width);
 
           if (count == 0)
           {
