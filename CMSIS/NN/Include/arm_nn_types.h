@@ -88,6 +88,19 @@ typedef struct
 
 } cmsis_nn_conv_params;
 
+/** CMSIS-NN object for Depthwise convolution layer parameters */
+typedef struct
+{
+    int32_t             input_offset;   /**< Zero value for the input tensor */
+    int32_t             output_offset;  /**< Zero value for the output tensor */
+    int32_t             ch_mult;        /**< Channel Multiplier. ch_mult * in_ch = out_ch */
+    cmsis_nn_tile       stride;
+    cmsis_nn_tile       padding;
+    cmsis_nn_tile       dilation;
+    cmsis_nn_activation activation;
+
+} cmsis_nn_dw_conv_params;
+
 #endif // _ARM_NN_TYPES_H
 
 
