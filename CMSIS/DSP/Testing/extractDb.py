@@ -4,6 +4,27 @@ import re
 import pandas as pd
 import numpy as np
 
+remapNames={
+  "BasicMathsBenchmarks": "Basic Maths",
+  "ComplexMathsBenchmarks": "Complex Maths",
+  "FIR": "FIR",
+  "MISC": "Convolutions / Correlations",
+  "DECIM": "Decimations / Interpolations",
+  "BIQUAD": "BiQuad",
+  "FastMath": "Fast Maths",
+  "SupportBar": "Barycenter",
+  "Support": "Support Functions",
+  "Unary": "Matrix Unary Operations",
+  "Binary": "Matrix Binary Operations",
+  "Transform": "Vector Transform"
+}
+
+def convertSectionName(s):
+  if s in remapNames:
+    return(remapNames[s])
+  else:
+    return(s)
+
 class Document:
     def __init__(self,runid,date):
         self._runid = runid 
@@ -33,7 +54,7 @@ class Document:
 
 class Section:
   def __init__(self,name):
-      self._name=name 
+      self._name=convertSectionName(name)
       self._subsections = []
       self._tables = []
 
@@ -60,8 +81,9 @@ class Section:
       visitor.leaveSection(self)   
 
 class Table:
-    def __init__(self,columns):
-       self._columns=columns
+    def __init__(self,params,cores):
+       self._params=params
+       self._cores=cores
        self._rows=[] 
 
     def addRow(self,row):
@@ -69,7 +91,15 @@ class Table:
 
     @property
     def columns(self):
-       return(self._columns)
+       return(self._params + self._cores)
+
+    @property
+    def params(self):
+       return(self._params)
+
+    @property
+    def cores(self):
+       return(self._cores)
 
     @property
     def rows(self):
@@ -133,6 +163,7 @@ styleSheet="""
   width: 250px;
   height: 100%;
   overflow:auto;
+  margin-top:5px;
 }
 
 html {
@@ -144,16 +175,13 @@ html, body {
   font-family: "PT Serif", 'Times New Roman', Times, serif;
   color: #1f0909;
   line-height: 1.5em;
-
-  margin: auto;
-  margin-left:220px;
 }
 
+body {
+  margin: auto;
+  margin-top:0px;
+  margin-left:250px;
 
-table {
-  border-collapse: collapse;
-  border-spacing: 0;
-  width: 100%; 
 }
 
 h1,
@@ -166,31 +194,37 @@ h6 {
 }
 h1 {
   font-size: 1.875em;
-  line-height: 1.6em;
-  margin-top: 1em;
+  margin-top:5px;
 }
-h2,
+h2 {
+  font-size: 1.3125em;
+}
 h3 {
   font-size: 1.3125em;
-  line-height: 1.15;
-  margin-top: 2.285714em;
-  margin-bottom: 1.15em;
+  margin-left:1em;
 }
 h4 {
   font-size: 1.125em;
-  margin-top: 2.67em;
+  margin-left:1em;
 }
 h5,
 h6 {
   font-size: 1em;
 }
 
+#TOC h1 {
+  margin-top:0em;
+  margin-left:0.5em;
+}
 
 table {
   margin-bottom: 1.5em;
-  /*24 / 16*/
   font-size: 1em;
-  /* width: 100%; */
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%; 
+  margin-left:1em;
 }
 thead th,
 tfoot th {
@@ -348,6 +382,7 @@ class HTML:
 <head>
 <meta charset='UTF-8'><meta name='viewport' content='width=device-width initial-scale=1'>
 <title>Benchmarks</title>%s</head><body>\n""" % styleSheet)
+      self._output.write("<h1>ECPS Benchmark Summary</h1>\n")
       self._output.write("<p>Run number %d on %s</p>\n" % (document.runid, str(document.date)))
 
   def leaveDocument(self,document):
@@ -570,9 +605,9 @@ def regressionTableFor(name,section,ref,toSort,indexCols,field):
     data=data.sort_values(toSort)
        
     cores = [c[1] for c in list(data.columns)]
-    columns = diff(indexCols,['NAME']) + cores
+    columns = diff(indexCols,['NAME'])
 
-    dataTable=Table(columns)
+    dataTable=Table(columns,cores)
     section.addTable(dataTable)
 
     dataForFunc=data.loc[name]
@@ -635,12 +670,12 @@ def formatTableByCore(typeSection,testNames,cols,vals):
               data=data.sort_values(toSort)
        
               cores = [c[1] for c in list(data.columns)]
-              columns = diff(indexCols,['NAME']) + cores
+              columns = diff(indexCols,['NAME'])
 
               testSection = Section(name)
               typeSection.addSection(testSection)
 
-              dataTable=Table(columns)
+              dataTable=Table(columns,cores)
               testSection.addTable(dataTable)
 
               dataForFunc=data.loc[name]
