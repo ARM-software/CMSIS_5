@@ -21,13 +21,14 @@ CREATE TABLE COMPILER (
     compilerid INTEGER PRIMARY KEY,
     compilerkindid INTEGER ,
     version text,
-    date text,
-    FOREIGN KEY(compilerkindid) REFERENCES COMPILERKIND(compilerkindid)
+    testdateid INTEGER,
+    FOREIGN KEY(compilerkindid) REFERENCES COMPILERKIND(compilerkindid),
+    FOREIGN KEY(testdateid) REFERENCES TESTDATE(testdateid)
     );
 
 CREATE INDEX compiler_index ON COMPILER(compilerkindid,version);
-CREATE INDEX compiler_date_index ON COMPILER(date);
-CREATE INDEX compiler_all_index ON COMPILER(compilerkindid,version,date);
+CREATE INDEX compiler_date_index ON COMPILER(testdateid);
+CREATE INDEX compiler_all_index ON COMPILER(compilerkindid,version,testdateid);
 
 CREATE TABLE RUN (
     runid INTEGER PRIMARY KEY,
@@ -46,15 +47,28 @@ CREATE TABLE CATEGORY (
 
 CREATE INDEX category_index ON CATEGORY(category);
 
+CREATE TABLE TESTNAME (
+    testnameid INTEGER PRIMARY KEY,
+    name text);
+
+CREATE INDEX testname_index ON TESTNAME(name);
+
+CREATE TABLE TESTDATE (
+    testdateid INTEGER PRIMARY KEY,
+    date text);
+
+CREATE INDEX testdate_index ON TESTDATE(date);
+
 CREATE TABLE CONFIG (
     configid INTEGER PRIMARY KEY,
     compilerid INTEGER,
     platformid INTEGER,
     coreid INTEGER,
-    date text,
+    testdateid INTEGER,
     FOREIGN KEY(compilerid) REFERENCES COMPILER(compilerid),
     FOREIGN KEY(platformid) REFERENCES PLATFORM(platformid),
     FOREIGN KEY(coreid) REFERENCES CORE(coreid)
+    FOREIGN KEY(testdateid) REFERENCES TESTDATE(testdateid)
 );
 
 INSERT INTO TYPE VALUES(1, "q7");

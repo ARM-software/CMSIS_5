@@ -17,25 +17,28 @@ import sqlite3
 import datetime, time
 import re 
 
-# For table creation
-MKSTRFIELD=['NAME']
+# For sql table creation
+MKSTRFIELD=[]
 MKBOOLFIELD=['HARDFP', 'FASTMATH', 'NEON', 'HELIUM','UNROLL', 'ROUNDING','OPTIMIZED']
 MKINTFIELD=['ID', 'CYCLES']
-MKDATEFIELD=['DATE']
-MKKEYFIELD=['CATEGORY', 'PLATFORM', 'CORE', 'COMPILER','TYPE',"RUN"]
+MKDATEFIELD=[]
+MKKEYFIELD=['DATE','NAME','CATEGORY', 'PLATFORM', 'CORE', 'COMPILER','TYPE',"RUN"]
 MKKEYFIELDID={'CATEGORY':'categoryid', 
+   'NAME':'testnameid',
+   'DATE':'testdateid',
    'PLATFORM':'platformid', 
    'CORE':'coreid', 
    'COMPILER':'compilerid',
    'TYPE':'typeid',
    'RUN':'runid'}
 
-# For table value extraction
-VALSTRFIELD=['NAME','VERSION']
+# For csv table value extraction
+VALSTRFIELD=['TESTNAME','VERSION']
 VALBOOLFIELD=['HARDFP', 'FASTMATH', 'NEON', 'HELIUM','UNROLL', 'ROUNDING','OPTIMIZED']
 VALINTFIELD=['ID', 'CYCLES']
-VALDATEFIELD=['DATE']
-VALKEYFIELD=['CATEGORY', 'PLATFORM', 'CORE', 'COMPILER','TYPE']
+VALDATEFIELD=[]
+# Some of those fields may be created by the parsing of other fields
+VALKEYFIELD=['DATE','NAME','CATEGORY', 'PLATFORM', 'CORE', 'COMPILER','TYPE']
 
 def joinit(iterable, delimiter):
     it = iter(iterable)
@@ -101,6 +104,8 @@ def createTableIfMissing(conn,elem,tableName,full):
      # Create foreign keys
      sql += "%sFOREIGN KEY(typeid) REFERENCES TYPE(typeid)," % start
      sql += "FOREIGN KEY(categoryid) REFERENCES CATEGORY(categoryid),"
+     sql += "FOREIGN KEY(testnameid) REFERENCES TESTNAME(testnameid),"
+     sql += "FOREIGN KEY(testdateid) REFERENCES TESTDATE(testdateid),"
      sql += "FOREIGN KEY(platformid) REFERENCES PLATFORM(platformid),"
      sql += "FOREIGN KEY(coreid) REFERENCES CORE(coreid),"
      sql += "FOREIGN KEY(compilerid) REFERENCES COMPILER(compilerid)"
@@ -134,9 +139,10 @@ def findInCompilerTable(conn,kind,version):
       return(result[0])
     else:
       fullDate = datetime.datetime.now()
-      conn.execute("INSERT INTO COMPILER(compilerkindid,version,date) VALUES(?,?,?)" ,(kind,version,fullDate))
+      dateid = findInTable(conn,"TESTDATE","date",str(fullDate),"testdateid")
+      conn.execute("INSERT INTO COMPILER(compilerkindid,version,testdateid) VALUES(?,?,?)" ,(kind,version,dateid))
       conn.commit()
-      r = conn.execute("select compilerid from COMPILER where compilerkindid=? AND version=? AND date=?"  , (kind,version,fullDate))
+      r = conn.execute("select compilerid from COMPILER where compilerkindid=? AND version=? AND testdateid=?"  , (kind,version,dateid))
       result=r.fetchone()
       if result != None:
          #print(result)
@@ -175,34 +181,36 @@ def addRows(conn,elem,tableName,full,runid=0):
             keys[field]=row[field]
             if field == "NAME":
                 name = row[field]
-                if re.match(r'^.*_f64',name):
+            if field == "TESTNAME":
+                testname = row[field]
+                if re.match(r'^.*_f64',testname):
                   keys["TYPE"] = "f64"
-                if re.match(r'^.*_f32',name):
+                if re.match(r'^.*_f32',testname):
                   keys["TYPE"] = "f32"
-                if re.match(r'^.*_f16',name):
+                if re.match(r'^.*_f16',testname):
                   keys["TYPE"] = "f16"
-                if re.match(r'^.*_q31',name):
+                if re.match(r'^.*_q31',testname):
                   keys["TYPE"] = "q31"
-                if re.match(r'^.*_q15',name):
+                if re.match(r'^.*_q15',testname):
                   keys["TYPE"] = "q15"
-                if re.match(r'^.*_q7',name):
+                if re.match(r'^.*_q7',testname):
                   keys["TYPE"] = "q7"
 
-                if re.match(r'^.*_s8',name):
+                if re.match(r'^.*_s8',testname):
                   keys["TYPE"] = "s8"
-                if re.match(r'^.*_u8',name):
+                if re.match(r'^.*_u8',testname):
                   keys["TYPE"] = "u8"
-                if re.match(r'^.*_s16',name):
+                if re.match(r'^.*_s16',testname):
                   keys["TYPE"] = "s16"
-                if re.match(r'^.*_u16',name):
+                if re.match(r'^.*_u16',testname):
                   keys["TYPE"] = "u16"
-                if re.match(r'^.*_s32',name):
+                if re.match(r'^.*_s32',testname):
                   keys["TYPE"] = "s32"
-                if re.match(r'^.*_u32',name):
+                if re.match(r'^.*_u32',testname):
                   keys["TYPE"] = "u32"
-                if re.match(r'^.*_s64',name):
+                if re.match(r'^.*_s64',testname):
                   keys["TYPE"] = "s64"
-                if re.match(r'^.*_u64',name):
+                if re.match(r'^.*_u64',testname):
                   keys["TYPE"] = "u64"
             
         if field in VALINTFIELD:
@@ -223,6 +231,12 @@ def addRows(conn,elem,tableName,full,runid=0):
               # help for post processing.
               testField=re.sub(r'^(.*)[:]([^:]+)(F16|F32|F64|Q31|Q15|Q7)$',r'\1',row[field])
               val = findInTable(conn,"CATEGORY","category",testField,"categoryid")
+              keys[field]=val
+            if field == "NAME":
+              val = findInTable(conn,"TESTNAME","name",row[field],"testnameid")
+              keys[field]=val
+            if field == "DATE":
+              val = findInTable(conn,"TESTDATE","date",str(row[field]),"testdateid")
               keys[field]=val
             if field == "CORE":
               val = findInTable(conn,"CORE","coredef",row[field],"coreid")
@@ -261,7 +275,8 @@ def addRows(conn,elem,tableName,full,runid=0):
    return({'compilerid':compilerid,'platformid':platformid,'coreid':coreid})
 
 def addConfig(conn,config,fullDate):
-  conn.execute("INSERT INTO CONFIG(compilerid,platformid,coreid,date) VALUES(?,?,?,?)" ,(config['compilerid'],config['platformid'],config['coreid'],fullDate))
+  dateid = findInTable(conn,"TESTDATE","date",str(fullDate),"testdateid")
+  conn.execute("INSERT INTO CONFIG(compilerid,platformid,coreid,testdateid) VALUES(?,?,?,?)" ,(config['compilerid'],config['platformid'],config['coreid'],dateid))
   conn.commit()
 
 def getGroup(a):
@@ -297,13 +312,13 @@ def addToDB(benchmark,dbpath,elem,group,runid):
 
 parser = argparse.ArgumentParser(description='Generate summary benchmarks')
 
-parser.add_argument('-f', nargs='?',type = str, default="Output.pickle", help="File path")
+parser.add_argument('-f', nargs='?',type = str, default="Output.pickle", help="Pickle")
 parser.add_argument('-b', nargs='?',type = str, default="FullBenchmark", help="Full Benchmark dir path")
 #parser.add_argument('-e', action='store_true', help="Embedded test")
 parser.add_argument('-o', nargs='?',type = str, default="bench.db", help="Benchmark database")
 parser.add_argument('-r', nargs='?',type = int, default=0, help="Run ID")
 
-parser.add_argument('others', nargs=argparse.REMAINDER)
+parser.add_argument('others', nargs=argparse.REMAINDER, help="Suite class")
 
 args = parser.parse_args()
 

@@ -182,7 +182,8 @@ class Parser:
 
         paramValue = Literal("->") + ident("PARAMID")
 
-        message = string("message")
+        messFormat = Word(alphanums + " _/")
+        message = messFormat("message")
 
         testField = ((Keyword("oldID") + "=" + integer("INT")) | (Keyword("truc") + "=" + integer("INT"))).setParseAction(parseField)
         testData = (Literal("{") + OneOrMore(testField)("fields") + Literal("}")).setParseAction(parseTestFields)

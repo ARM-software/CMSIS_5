@@ -84,7 +84,7 @@ def summaryBenchmark(resultPath,elem,path):
        #print(results.summary())
        return(pd.Series({'Regression':"%s" % f,'MAX' : m,'MAXREGCOEF' : results.params.values[-1]}))
    
-      regList = ['ID','OLDID','CATEGORY','NAME'] + csvheaders + groupList 
+      regList = ['ID','OLDID','CATEGORY','TESTNAME','NAME'] + csvheaders + groupList 
       
       regression=full.groupby(regList).apply(reg)
       regression.reset_index(level=regression.index.names, inplace=True)

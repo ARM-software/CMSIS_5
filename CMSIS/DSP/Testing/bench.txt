@@ -9,7 +9,7 @@ group Root {
            class = BasicBenchmarks
            folder = BasicMaths
 
-           suite BasicMaths Benchmarks F32 {
+           suite Basic Maths Benchmarks F32 {
               class = BasicMathsBenchmarksF32
               folder = BasicMathsF32
   
@@ -28,34 +28,18 @@ group Root {
               }
   
               Functions {
-                 vec_mult_f32:vec_mult_f32 {
-                   oldID = 0
-                 }
-                 vec_add_f32:vec_add_f32 {
-                   oldID = 5
-                 }
-                 vec_sub_f32:vec_sub_f32 {
-                   oldID = 10
-                 }
-                 vec_abs_f32:vec_abs_f32 {
-                   oldID = 15
-                 }
-                 vec_negate_f32:vec_negate_f32 {
-                   oldID = 20
-                 }
-                 vec_offset_f32:vec_offset_f32 {
-                   oldID = 25
-                 }
-                 vec_scale_f32:vec_scale_f32 {
-                   oldID = 30
-                 }
-                 vec_dot_f32:vec_dot_f32 {
-                   oldID = 38
-                 }
+                 Elementwise multiplication:vec_mult_f32
+                 Vector addition:vec_add_f32
+                 Vector substraction:vec_sub_f32
+                 Elementwise absolute value:vec_abs_f32
+                 Elementwise negation:vec_negate_f32
+                 Elementwise offset:vec_offset_f32
+                 Vector scaling:vec_scale_f32
+                 Dot product:vec_dot_f32
               } -> PARAM1_ID
            }
 
-           suite BasicMaths Benchmarks Q31 {
+           suite Basic Maths Benchmarks Q31 {
               class = BasicMathsBenchmarksQ31
               folder = BasicMathsQ31
   
@@ -74,35 +58,18 @@ group Root {
               }
   
               Functions {
-                 vec_mult_q31:vec_mult_q31 {
-                   oldID = 2
-                 }
-                 vec_add_q31:vec_add_q31 {
-                   oldID = 7
-                 }
-                 vec_sub_q31:vec_sub_q31
-                  {
-                   oldID = 12
-                 }
-                 vec_abs_q31:vec_abs_q31 {
-                   oldID = 17
-                 }
-                 vec_negate_q31:vec_negate_q31 {
-                   oldID = 22
-                 }
-                 vec_offset_q31:vec_offset_q31 {
-                   oldID = 27
-                 }
-                 vec_scale_q31:vec_scale_q31 {
-                   oldID = 32
-                 }
-                 vec_dot_q31:vec_dot_q31 {
-                   oldID = 40
-                 }
+                 Elementwise multiplication:vec_mult_q31
+                 Vector addition:vec_add_q31
+                 Vector substraction:vec_sub_q31
+                 Elementwise absolute value:vec_abs_q31
+                 Elementwise negation:vec_negate_q31
+                 Elementwise offset:vec_offset_q31
+                 Vector scaling:vec_scale_q31
+                 Dot product:vec_dot_q31
               } -> PARAM1_ID
            }
 
-           suite BasicMaths Benchmarks Q15 {
+           suite Basic Maths Benchmarks Q15 {
               class = BasicMathsBenchmarksQ15
               folder = BasicMathsQ15
   
@@ -121,34 +88,18 @@ group Root {
               }
   
               Functions {
-                 vec_mult_q15:vec_mult_q15 {
-                   oldID = 3
-                 }
-                 vec_add_q15:vec_add_q15 {
-                   oldID = 8
-                 }
-                 vec_sub_q15:vec_sub_q15 {
-                   oldID = 13
-                 }
-                 vec_abs_q15:vec_abs_q15 {
-                   oldID = 18
-                 }
-                 vec_negate_q15:vec_negate_q15 {
-                   oldID = 23
-                 }
-                 vec_offset_q15:vec_offset_q15 {
-                   oldID = 28
-                 }
-                 vec_scale_q15:vec_scale_q15 {
-                   oldID = 33
-                 }
-                 vec_dot_q15:vec_dot_q15 {
-                   oldID = 41
-                 }
+                 Elementwise multiplication:vec_mult_q15
+                 Vector addition:vec_add_q15
+                 Vector substraction:vec_sub_q15
+                 Elementwise absolute value:vec_abs_q15
+                 Elementwise negation:vec_negate_q15
+                 Elementwise offset:vec_offset_q15
+                 Vector scaling:vec_scale_q15
+                 Dot product:vec_dot_q15
               } -> PARAM1_ID
            }
 
-           suite BasicMaths Benchmarks Q7 {
+           suite Basic Maths Benchmarks Q7 {
               class = BasicMathsBenchmarksQ7
               folder = BasicMathsQ7
   
@@ -167,35 +118,19 @@ group Root {
               }
   
               Functions {
-                 vec_mult_q7:vec_mult_q7 {
-                   oldID = 4
-                 }
-                 vec_add_q7:vec_add_q7 {
-                   oldID = 9
-                 }
-                 vec_sub_q7:vec_sub_q7 {
-                   oldID = 14
-                 }
-                 vec_abs_q7:vec_abs_q7 {
-                   oldID = 19
-                 }
-                 vec_negate_q7:vec_negate_q7 {
-                   oldID = 24
-                 }
-                 vec_offset_q7:vec_offset_q7 {
-                   oldID = 29
-                 }
-                 vec_scale_q7:vec_scale_q7 {
-                   oldID = 34
-                 }
-                 vec_dot_q7:vec_dot_q7 {
-                   oldID = 42
-                 }
+                 Elementwise multiplication:vec_mult_q7
+                 Vector addition:vec_add_q7
+                 Vector substraction:vec_sub_q7
+                 Elementwise absolute value:vec_abs_q7
+                 Elementwise negation:vec_negate_q7
+                 Elementwise offset:vec_offset_q7
+                 Vector scaling:vec_scale_q7
+                 Dot product:vec_dot_q7
               } -> PARAM1_ID
            }
         }
 
-        group Complex Maths Benchmarks {
+        group Complex Maths {
            class = ComplexBenchmarks
            folder = ComplexMaths
 
@@ -219,24 +154,12 @@ group Root {
               }
   
               Functions {
-                 vec_conj_f32:vec_conj_f32 {
-                   oldID = 0
-                 }
-                 vec_dot_prod_f32:vec_dot_prod_f32 {
-                   oldID = 4
-                 }
-                 vec_mag_f32:vec_mag_f32 {
-                   oldID = 8
-                 }
-                 vec_mag_squared_f32:vec_mag_squared_f32 {
-                   oldID = 12
-                 }
-                 vec_mult_cmplx_f32:vec_mult_cmplx_f32 {
-                   oldID = 16
-                 }
-                 vec_mult_real_f32:vec_mult_real_f32 {
-                   oldID = 20
-                 }
+                 Elementwise conjugate:vec_conj_f32
+                 Complex dot product:vec_dot_prod_f32
+                 Elementwise modulus:vec_mag_f32
+                 Elementwise modulus squared:vec_mag_squared_f32
+                 Elementwise complex multiplication:vec_mult_cmplx_f32
+                 Vector scaling by real number:vec_mult_real_f32
               } -> PARAM1_ID
            }
 
@@ -260,24 +183,12 @@ group Root {
               }
   
               Functions {
-                 vec_conj_q31:vec_conj_q31 {
-                   oldID = 3
-                 }
-                 vec_dot_prod_q31:vec_dot_prod_q31 {
-                   oldID = 7
-                 }
-                 vec_mag_q31:vec_mag_q31 {
-                   oldID = 11
-                 }
-                 vec_mag_squared_q31:vec_mag_squared_q31 {
-                   oldID = 15
-                 }
-                 vec_mult_cmplx_q31:vec_mult_cmplx_q31 {
-                   oldID = 19
-                 }
-                 vec_mult_real_q31:vec_mult_real_q31 {
-                   oldID = 23
-                 }
+                 Elementwise conjugate:vec_conj_q31
+                 Complex dot product:vec_dot_prod_q31
+                 Elementwise modulus:vec_mag_q31
+                 Elementwise modulus squared:vec_mag_squared_q31
+                 Elementwise complex multiplication:vec_mult_cmplx_q31
+                 Vector scaling by real number:vec_mult_real_q31
               } -> PARAM1_ID
            }
 
@@ -301,24 +212,12 @@ group Root {
               }
   
               Functions {
-                 vec_conj_q15:vec_conj_q15 {
-                   oldID = 2
-                 }
-                 vec_dot_prod_q15:vec_dot_prod_q15 {
-                   oldID = 6
-                 }
-                 vec_mag_q15:vec_mag_q15 {
-                   oldID = 10
-                 }
-                 vec_mag_squared_q15:vec_mag_squared_q15 {
-                   oldID = 14
-                 }
-                 vec_mult_cmplx_q15:vec_mult_cmplx_q15 {
-                   oldID = 18
-                 }
-                 vec_mult_real_q15:vec_mult_real_q15 {
-                   oldID = 22
-                 }
+                 Elementwise conjugate:vec_conj_q15
+                 Complex dot product:vec_dot_prod_q15
+                 Elementwise modulus:vec_mag_q15
+                 Elementwise modulus squared:vec_mag_squared_q15
+                 Elementwise complex multiplication:vec_mult_cmplx_q15
+                 Vector scaling by real number:vec_mult_real_q15
               } -> PARAM1_ID
            }
         }
@@ -356,15 +255,9 @@ group Root {
                 }
 
                 Functions {
-                   test_fir_f32:test_fir_f32 {
-                     oldID = 41
-                   }
-                   test_lms_f32:test_lms_f32 {
-                     oldID = 60
-                   }
-                   test_lms_norm_f32:test_lms_norm_f32 {
-                     oldID = 61
-                   }
+                   FIR Filter:test_fir_f32
+                   LMS Filter:test_lms_f32
+                   Normalized LMS Filter:test_lms_norm_f32
                 } -> PARAM1_ID
              }
 
@@ -393,15 +286,9 @@ group Root {
                 }
 
                 Functions {
-                   test_fir_q31:test_fir_q31 {
-                     oldID = 51
-                   }
-                   test_lms_q31:test_lms_q31 {
-                     oldID = 65
-                   }
-                   test_lms_norm_q31:test_lms_norm_q31 {
-                     oldID = 62
-                   }
+                   FIR Filter:test_fir_q31
+                   LMS Filter:test_lms_q31
+                   Normalized LMS Filter:test_lms_norm_q31
                 } -> PARAM1_ID
              }
 
@@ -430,24 +317,18 @@ group Root {
                 }
 
                 Functions {
-                   test_fir_q15:test_fir_q15 {
-                     oldID = 50
-                   }
-                   test_lms_q15:test_lms_q15 {
-                     oldID = 64
-                   }
-                   test_lms_norm_q15:test_lms_norm_q15 {
-                     oldID = 63
-                   }
+                   FIR Filter:test_fir_q15
+                   LMS Filter:test_lms_q15
+                   Normalized LMS Filter:test_lms_norm_q15
                 } -> PARAM1_ID
              }
            }
 
-           group MISC {
+           group Convolutions / Correlations {
              class = MISC 
              folder = MISC
 
-             suite MISC F32 {
+             suite Convolutions / Correlations F32 {
                 class = MISCF32 
                 folder = MISCF32
 
@@ -469,16 +350,12 @@ group Root {
                 }
 
                 Functions {
-                   test_conv_f32:test_conv_f32 {
-                     oldID = 9
-                   }
-                   test_correlate_f32:test_correlate_f32 {
-                     oldID = 27
-                   }
+                   Convolution:test_conv_f32
+                   Correlation:test_correlate_f32
                 } -> PARAM1_ID
               }
 
-             suite MISC Q31 {
+             suite Convolutions / Correlations Q31 {
                 class = MISCQ31 
                 folder = MISCQ31
 
@@ -500,16 +377,12 @@ group Root {
                 }
 
                 Functions {
-                   test_conv_q31:test_conv_q31 {
-                     oldID = 9
-                   }
-                   test_correlate_q31:test_correlate_q31 {
-                     oldID = 27
-                   }
+                   Convolution:test_conv_q31
+                   Correlation:test_correlate_q31
                 } -> PARAM1_ID
               }
 
-             suite MISC Q15 {
+             suite Convolutions / Correlations Q15 {
                 class = MISCQ15 
                 folder = MISCQ15
 
@@ -531,16 +404,12 @@ group Root {
                 }
 
                 Functions {
-                   test_conv_q15:test_conv_q15 {
-                     oldID = 9
-                   }
-                   test_correlate_q15:test_correlate_q15 {
-                     oldID = 27
-                   }
+                   Convolution:test_conv_q15
+                   Correlation:test_correlate_q15
                 } -> PARAM1_ID
               }
 
-             suite MISC Q7 {
+             suite Convolutions / Correlations Q7 {
                 class = MISCQ7 
                 folder = MISCQ7
 
@@ -562,21 +431,17 @@ group Root {
                 }
 
                 Functions {
-                   test_conv_q7:test_conv_q7 {
-                     oldID = 9
-                   }
-                   test_correlate_q7:test_correlate_q7 {
-                     oldID = 27
-                   }
+                   Convolution:test_conv_q7
+                   Correlation:test_correlate_q7
                 } -> PARAM1_ID
               }
            }
 
-           group DECIM {
+           group Decimations / Interpolations {
              class = DECIM 
              folder = DECIM
 
-             suite DECIM F32 {
+             suite Decimations / Interpolations F32 {
                 class = DECIMF32 
                 folder = DECIMF32
 
@@ -597,17 +462,12 @@ group Root {
                 Params PARAM_INTERPOL_ID : Params2.txt
 
                 Functions {
-                   test_fir_decimate_f32:test_fir_decimate_f32 {
-                     oldID = 36
-                   } -> PARAM_DECIM_ID
-
-                   test_fir_interpolate_f32:test_fir_interpolate_f32 {
-                     oldID = 44
-                   } -> PARAM_INTERPOL_ID
+                   Decimation:test_fir_decimate_f32 -> PARAM_DECIM_ID
+                   Interpolation:test_fir_interpolate_f32 -> PARAM_INTERPOL_ID
                 }
               }
 
-             suite DECIM Q31 {
+             suite Decimations / Interpolations Q31 {
                 class = DECIMQ31
                 folder = DECIMQ31
 
@@ -628,17 +488,12 @@ group Root {
                 Params PARAM_INTERPOL_ID : Params2.txt
 
                 Functions {
-                   test_fir_decimate_q31:test_fir_decimate_q31 {
-                     oldID = 40
-                   } -> PARAM_DECIM_ID
-
-                   test_fir_interpolate_q31:test_fir_interpolate_q31 {
-                     oldID = 46
-                   } -> PARAM_INTERPOL_ID
+                   Decimation:test_fir_decimate_q31 -> PARAM_DECIM_ID
+                   Interpolation:test_fir_interpolate_q31 -> PARAM_INTERPOL_ID
                 }
               }
 
-             suite DECIM Q15 {
+             suite Decimations / Interpolations Q15 {
                 class = DECIMQ15
                 folder = DECIMQ15
 
@@ -659,22 +514,17 @@ group Root {
                 Params PARAM_INTERPOL_ID : Params2.txt
 
                 Functions {
-                   test_fir_decimate_q15:test_fir_decimate_q15 {
-                     oldID = 39
-                   } -> PARAM_DECIM_ID
-
-                   test_fir_interpolate_q15:test_fir_interpolate_q15 {
-                     oldID = 45
-                   } -> PARAM_INTERPOL_ID
+                   Decimation:test_fir_decimate_q15 -> PARAM_DECIM_ID
+                   Interpolation:test_fir_interpolate_q15 -> PARAM_INTERPOL_ID
                 }
               }
            }
 
-           group BIQUAD {
+           group BiQuads {
              class = BIQUAD 
              folder = BIQUAD
 
-             suite BIQUAD F32 {
+             suite BiQuads F32 {
                 class = BIQUADF32 
                 folder = BIQUADF32
 
@@ -698,21 +548,13 @@ group Root {
                 }
 
                 Functions {
-                   test_biquad_cascade_df1_f32:test_biquad_cascade_df1_f32 {
-                     oldID = 1
-                   }
-
-                   test_biquad_cascade_df2T_f32:test_biquad_cascade_df2T_f32 {
-                     oldID = 6
-                   }
-
-                   test_biquad_cascade_stereo_df2T_f32:test_biquad_cascade_stereo_df2T_f32 {
-                     oldID = 8
-                   }
+                   Cascaded BiQuad Filter DF1:test_biquad_cascade_df1_f32
+                   Cascaded BiQuad Filter DF2T:test_biquad_cascade_df2T_f32
+                   Cascaded BiQuad Filter Stereo DF2T:test_biquad_cascade_stereo_df2T_f32
                 } -> PARAM1_ID
               }
 
-             suite BIQUAD F64 {
+             suite BiQuads F64 {
                 class = BIQUADF64 
                 folder = BIQUADF64
 
@@ -735,9 +577,7 @@ group Root {
                 }
 
                 Functions {
-                   test_biquad_cascade_df2T_f64:test_biquad_cascade_df2T_f64 {
-                     oldID = 7
-                   }
+                   Cascaded BiQuad Filter DF2T_f64:test_biquad_cascade_df2T_f64
                 } -> PARAM1_ID
               }
            }
@@ -766,14 +606,12 @@ group Root {
                 }
 
                 Functions {
-                   test_pid_f32:test_pid_f32 {
-                     oldID = 0
-                   }
-                   test_clarke_f32:test_clarke_f32
-                   test_inv_clarke_f32:test_inv_clarke_f32
-                   test_park_f32:test_park_f32
-                   test_inv_park_f32:test_inv_park_f32
-                   test_sin_cos_f32:test_sin_cos_f32
+                   PID:test_pid_f32
+                   Clarke Transform:test_clarke_f32
+                   Inverse Clarke Transform:test_inv_clarke_f32
+                   Park Transform:test_park_f32
+                   Inverse Park Transform:test_inv_park_f32
+                   Sin Cos:test_sin_cos_f32
                 } -> PARAM1_ID
              }
 
@@ -796,12 +634,12 @@ group Root {
                 }
 
                 Functions {
-                   test_pid_q31:test_pid_q31
-                   test_clarke_q31:test_clarke_q31
-                   test_inv_clarke_q31:test_inv_clarke_q31
-                   test_park_q31:test_park_q31
-                   test_inv_park_q31:test_inv_park_q31
-                   test_sin_cos_q31:test_sin_cos_q31
+                   PID:test_pid_q31
+                   Clarke Transform:test_clarke_q31
+                   Inverse Clarke Transform:test_inv_clarke_q31
+                   Park Transform:test_park_q31
+                   Inverse Park Transform:test_inv_park_q31
+                   Sin Cos:test_sin_cos_q31
                 } -> PARAM1_ID
              }
 
@@ -824,16 +662,16 @@ group Root {
                 }
 
                 Functions {
-                   test_pid_q15:test_pid_q15
+                   PID:test_pid_q15
                 } -> PARAM1_ID
              }
         }
 
-        group FastMath {
+        group Fast Maths {
            class = FastMath 
            folder = FastMath 
 
-           suite FastMath F32 {
+           suite Fast Maths F32 {
                 class = FastMathF32 
                 folder = FastMathF32
 
@@ -852,13 +690,13 @@ group Root {
                 }
 
                 Functions {
-                   test_cos_f32:test_cos_f32
-                   test_sin_f32:test_sin_f32
-                   test_sqrt_f32:test_sqrt_f32
+                   Cosine:test_cos_f32
+                   Sine:test_sin_f32
+                   Square Root:test_sqrt_f32
                 } -> PARAM1_ID
              }
 
-           suite FastMath Q31 {
+           suite Fast Maths Q31 {
                 class = FastMathQ31 
                 folder = FastMathQ31
 
@@ -877,13 +715,13 @@ group Root {
                 }
 
                 Functions {
-                   test_cos_q31:test_cos_q31
-                   test_sin_q31:test_sin_q31
-                   test_sqrt_q31:test_sqrt_q31
+                   Cosine:test_cos_q31
+                   Sine:test_sin_q31
+                   Square Root:test_sqrt_q31
                 } -> PARAM1_ID
              }
 
-           suite FastMath Q15 {
+           suite Fast Maths Q15 {
                 class = FastMathQ15
                 folder = FastMathQ15
 
@@ -902,14 +740,14 @@ group Root {
                 }
 
                 Functions {
-                   test_cos_q15:test_cos_q15
-                   test_sin_q15:test_sin_q15
-                   test_sqrt_q15:test_sqrt_q15
+                   Cosine:test_cos_q15
+                   Sine:test_sin_q15
+                   Square Root:test_sqrt_q15
                 } -> PARAM1_ID
              }
         }
 
-        suite SupportBar F32 {
+        suite Barycenter {
                 class = SupportBarF32 
                 folder = SupportBarF32
 
@@ -930,16 +768,16 @@ group Root {
                 }
 
                 Functions {
-                   test_barycenter_f32:test_barycenter_f32
+                   Barycenter:test_barycenter_f32
                 } -> PARAM1_ID
 
         }
 
-        group Support {
+        group Support Functions {
            class = Support 
            folder = Support 
 
-           suite Support F32 {
+           suite Support Functions F32 {
                 class = SupportF32 
                 folder = SupportF32
 
@@ -975,7 +813,7 @@ group Root {
                 } -> PARAM1_ID
              }
 
-           suite Support Q31 {
+           suite Support Functions Q31 {
                 class = SupportQ31 
                 folder = SupportQ31
 
@@ -996,14 +834,14 @@ group Root {
                 }
 
                 Functions {
-                   test_copy_q31:test_copy_q31
-                   test_fill_q31:test_fill_q31
-                   test_q15_to_q31:test_q15_to_q31
-                   test_q7_to_q31:test_q7_to_q31
+                   Vector Copy:test_copy_q31
+                   Vector Filling:test_fill_q31
+                   Elementwise q15 to q31:test_q15_to_q31
+                   Elementwise q7 to q31:test_q7_to_q31
                 } -> PARAM1_ID
              }
 
-           suite Support Q15 {
+           suite Support Functions Q15 {
                 class = SupportQ15
                 folder = SupportQ15
 
@@ -1024,14 +862,14 @@ group Root {
                 }
 
                 Functions {
-                   test_copy_q15:test_copy_q15
-                   test_fill_q15:test_fill_q15
-                   test_q31_to_q15:test_q31_to_q15
-                   test_q7_to_q15:test_q7_to_q15
+                   Vector Copy:test_copy_q15
+                   Vector Filling:test_fill_q15
+                   Elementwise q31 to q15:test_q31_to_q15
+                   Elementwise q7 to q15:test_q7_to_q15
                 } -> PARAM1_ID
              }
 
-           suite Support Q7 {
+           suite Support Functions Q7 {
                 class = SupportQ7
                 folder = SupportQ7
 
@@ -1052,10 +890,10 @@ group Root {
                 }
 
                 Functions {
-                   test_copy_q7:test_copy_q7
-                   test_fill_q7:test_fill_q7
-                   test_q31_to_q7:test_q31_to_q7
-                   test_q15_to_q7:test_q15_to_q7
+                   Vector Copy:test_copy_q7
+                   Vector Filling:test_fill_q7
+                   Elementwise q31 to q7:test_q31_to_q7
+                   Elementwise q15 to q7:test_q15_to_q7
                 } -> PARAM1_ID
              }
         }
@@ -1064,11 +902,11 @@ group Root {
            class = Matrix 
            folder = Matrix 
 
-           group Unary {
+           group Matrix Operators with one matrix size {
               class = Unary 
               folder = Unary 
 
-              suite Unary F32 {
+              suite Unary Matrix Operators F32 {
                 class = UnaryF32 
                 folder = UnaryF32
 
@@ -1088,15 +926,15 @@ group Root {
                 }
 
                 Functions {
-                   test_mat_scale_f32:test_mat_scale_f32
-                   test_mat_inverse_f32:test_mat_inverse_f32
-                   test_mat_trans_f32:test_mat_trans_f32
-                   test_mat_add_f32:test_mat_add_f32
-                   test_mat_sub_f32:test_mat_sub_f32
+                   Matrix Scaling:test_mat_scale_f32
+                   Matrix Inversion:test_mat_inverse_f32
+                   Matrix Transpose:test_mat_trans_f32
+                   Matrix Addition:test_mat_add_f32
+                   Matrix Substraction:test_mat_sub_f32
                 } -> PARAM1_ID
               }
 
-              suite Unary Q31 {
+              suite Unary Matrix Operators Q31 {
                 class = UnaryQ31 
                 folder = UnaryQ31
 
@@ -1116,14 +954,14 @@ group Root {
                 }
 
                 Functions {
-                   test_mat_scale_q31:test_mat_scale_q31
-                   test_mat_trans_q31:test_mat_trans_q31
-                   test_mat_add_q31:test_mat_add_q31
-                   test_mat_sub_q31:test_mat_sub_q31
+                   Matrix Scaling:test_mat_scale_q31
+                   Matrix Transpose:test_mat_trans_q31
+                   Matrix Addition:test_mat_add_q31
+                   Matrix Substraction:test_mat_sub_q31
                 } -> PARAM1_ID
               }
 
-              suite Unary Q15 {
+              suite Unary Matrix Operators Q15 {
                 class = UnaryQ15 
                 folder = UnaryQ15
 
@@ -1143,14 +981,14 @@ group Root {
                 }
 
                 Functions {
-                   test_mat_scale_q15:test_mat_scale_q15
-                   test_mat_trans_q15:test_mat_trans_q15
-                   test_mat_add_q15:test_mat_add_q15
-                   test_mat_sub_q15:test_mat_sub_q15
+                   Matrix Scaling:test_mat_scale_q15
+                   Matrix Transpose:test_mat_trans_q15
+                   Matrix Addition:test_mat_add_q15
+                   Matrix Substraction:test_mat_sub_q15
                 } -> PARAM1_ID
               }
 
-              suite Unary F64 {
+              suite Unary Matrix Operators F64 {
                 class = UnaryF64 
                 folder = UnaryF64
 
@@ -1170,16 +1008,16 @@ group Root {
                 }
 
                 Functions {
-                   test_mat_inverse_f64:test_mat_inverse_f64
+                   Matrix Inversion:test_mat_inverse_f64
                 } -> PARAM1_ID
               }
            }
 
-           group Binary {
+           group Matrix Operators with two matrix sizes {
               class = Binary 
               folder = Binary 
 
-             suite Binary F32 {
+             suite Binary Matrix Operators F32 {
                 class = BinaryF32 
                 folder = BinaryF32
 
@@ -1203,12 +1041,12 @@ group Root {
                 }
 
                 Functions {
-                   test_mat_mult_f32:test_mat_mult_f32
-                   test_mat_cmplx_mult_f32:test_mat_cmplx_mult_f32
+                   Matrix Multiplication:test_mat_mult_f32
+                   Complex Matrix Multiplication:test_mat_cmplx_mult_f32
                 } -> PARAM1_ID
              }
 
-             suite Binary Q31 {
+             suite Binary Matrix Operators Q31 {
                 class = BinaryQ31 
                 folder = BinaryQ31
 
@@ -1232,13 +1070,13 @@ group Root {
                 }
 
                 Functions {
-                   test_mat_mult_q31:test_mat_mult_q31
-                   test_mat_cmplx_mult_q31:test_mat_cmplx_mult_q31
-                   test_mat_mult_fast_q31:test_mat_mult_fast_q31
+                   Matrix Multiplication:test_mat_mult_q31
+                   Complex Matrix Multiplication:test_mat_cmplx_mult_q31
+                   Fast Matrix Multiplication:test_mat_mult_fast_q31
                 } -> PARAM1_ID
              }
 
-             suite Binary Q15 {
+             suite Binary Matrix Operators Q15 {
                 class = BinaryQ15 
                 folder = BinaryQ15
 
@@ -1262,19 +1100,19 @@ group Root {
                 }
 
                 Functions {
-                   test_mat_mult_q15:test_mat_mult_q15
-                   test_mat_cmplx_mult_q15:test_mat_cmplx_mult_q15
-                   test_mat_mult_fast_q15:test_mat_mult_fast_q15
+                   Matrix Multiplication:test_mat_mult_q15
+                   Complex Matrix Multiplication:test_mat_cmplx_mult_q15
+                   Fast Matrix Multiplication:test_mat_mult_fast_q15
                 } -> PARAM1_ID
              }
            }
         }
 
-        group Transform {
+        group Spectral Transformations {
            class = Transform 
            folder = Transform 
 
-           suite Transform F32 {
+           suite Spectral Transformations F32 {
                 class = TransformF32 
                 folder = TransformF32
 
@@ -1316,15 +1154,15 @@ group Root {
                 }
 
                 Functions {
-                   test_cfft_f32:test_cfft_f32 -> CFFT_PARAM_ID
-                   test_rfft_f32:test_rfft_f32 -> RFFT_PARAM_ID
-                   test_dct4_f32:test_dct4_f32 -> DCT_PARAM_ID
-                   test_cfft_radix4_f32:test_cfft_radix4_f32 -> CFFT4_PARAM_ID
-                   test_cfft_radix2_f32:test_cfft_radix2_f32 -> CFFT_PARAM_ID
+                   Complex FFT:test_cfft_f32 -> CFFT_PARAM_ID
+                   Real FFT:test_rfft_f32 -> RFFT_PARAM_ID
+                   DCT4:test_dct4_f32 -> DCT_PARAM_ID
+                   Radix 4 Complex FFT:test_cfft_radix4_f32 -> CFFT4_PARAM_ID
+                   Radix 2 Complex FFT:test_cfft_radix2_f32 -> CFFT_PARAM_ID
                 }
            }
 
-           suite Transform Q31 {
+           suite Spectral Transformations Q31 {
                 class = TransformQ31 
                 folder = TransformQ31
 
@@ -1366,15 +1204,15 @@ group Root {
                 }
 
                 Functions {
-                   test_cfft_q31:test_cfft_q31 -> CFFT_PARAM_ID
-                   test_rfft_q31:test_rfft_q31 -> RFFT_PARAM_ID
-                   test_dct4_q31:test_dct4_q31 -> DCT_PARAM_ID
-                   test_cfft_radix4_q31:test_cfft_radix4_q31 -> CFFT4_PARAM_ID
-                   test_cfft_radix2_q31:test_cfft_radix2_q31 -> CFFT_PARAM_ID
+                   Complex FFT:test_cfft_q31 -> CFFT_PARAM_ID
+                   Real FFT:test_rfft_q31 -> RFFT_PARAM_ID
+                   DCT4:test_dct4_q31 -> DCT_PARAM_ID
+                   Radix 4 Complex FFT:test_cfft_radix4_q31 -> CFFT4_PARAM_ID
+                   Radix 2 Complex FFT:test_cfft_radix2_q31 -> CFFT_PARAM_ID
                 }
            }
 
-           suite Transform Q15 {
+           suite Spectral Transformations Q15 {
                 class = TransformQ15 
                 folder = TransformQ15
 
@@ -1416,11 +1254,11 @@ group Root {
                 }
 
                 Functions {
-                   test_cfft_q15:test_cfft_q15 -> CFFT_PARAM_ID
-                   test_rfft_q15:test_rfft_q15 -> RFFT_PARAM_ID
-                   test_dct4_q15:test_dct4_q15 -> DCT_PARAM_ID
-                   test_cfft_radix4_q15:test_cfft_radix4_q15 -> CFFT4_PARAM_ID
-                   test_cfft_radix2_q15:test_cfft_radix2_q15 -> CFFT_PARAM_ID
+                   Complex FFT:test_cfft_q15 -> CFFT_PARAM_ID
+                   Real FFT:test_rfft_q15 -> RFFT_PARAM_ID
+                   DCT4:test_dct4_q15 -> DCT_PARAM_ID
+                   Radix 4 Complex FFT:test_cfft_radix4_q15 -> CFFT4_PARAM_ID
+                   Radix 2 Complex FFT:test_cfft_radix2_q15 -> CFFT_PARAM_ID
                 }
            }
         }

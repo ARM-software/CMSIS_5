@@ -365,8 +365,7 @@ class Test:
     # Compute the regression data
     def computeSummaryStat(self):
         msg("  Compute regressions for %s\n" % self.testName())
-        with open(os.path.join(self.buildConfig().archiveResultPath(),"processedResult_%s.txt" % self.testName()),"w") as presult:
-             completed=subprocess.run([sys.executable,"summaryBench.py","-r",self.getResultPath()],stdout=presult,timeout=3600)
+        completed=subprocess.run([sys.executable,"summaryBench.py","-r",self.getResultPath(),self.testName()],timeout=3600)
         # When a test fail, the regression is continuing but we
         # track that a test has failed
         if completed.returncode==0:
