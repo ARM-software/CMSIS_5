@@ -21,8 +21,8 @@
  * Title:        arm_nnfunctions.h
  * Description:  Public header file for CMSIS NN Library
  *
- * $Date:        May 8, 2020
- * $Revision:    V.2.1.0
+ * $Date:        May 18, 2020
+ * $Revision:    V.3.0.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -162,6 +162,7 @@
 
 #include "arm_nnsupportfunctions.h"
 #include "arm_nn_tables.h"
+#include "arm_nn_types.h"
 
 #define USE_INTRINSIC
 
@@ -189,79 +190,108 @@ extern    "C"
  *
  */
 
-/**
+  /**
+   * @brief s8 convolution layer wrapper function with the main purpose to call the optimal kernel available in cmsis-nn to perform the convolution.
+   *
+   * @param[in, out] ctx            Function context that contains the additional buffer if required by the implementation. 
+                                    arm_convolve_wrapper_s8_get_buffer_size will return the buffer_size if required
+   * @param[in]      conv_params    Convolution parameters (e.g. strides, dilations, pads,...).
+   *                                Range of conv_params->input_offset  : [-127, 128]
+   *                                Range of conv_params->output_offset : [-128, 127]
+   * @param[in]      quant_params   Per-channel quantization info.
+   *                                It contains the multiplier and shift values to be applied to each output channel
+   * @param[in]      input_dims     Input (activation) tensor dimensions. Format: [N, H, W, C_IN]
+   * @param[in]      input_data     Input (activation) data pointer. Data type: int8
+   * @param[in]      filter_dims    Filter tensor dimensions. Format: [C_OUT, HK, WK, C_IN] where HK and WK are the spatial filter dimensions
+   * @param[in]      filter_data    Filter data pointer. Data type: int8
+   * @param[in]      bias_dims      Bias tensor dimensions. Format: [C_OUT]
+   * @param[in]      bias_data      Bias data pointer. Data type: int32
+   * @param[in]      output_dims    Output tensor dimensions. Format: [N, H, W, C_OUT]
+   * @param[out]     output_data    Output data pointer. Data type: int8
+   *
+   * @return     The function returns either
+   *                  <code>ARM_MATH_SIZE_MISMATCH</code> if argument constraints fail. or,
+   *                  <code>ARM_MATH_SUCCESS</code> on successful completion.
+   *
+   */
+    arm_status arm_convolve_wrapper_s8(const cmsis_nn_context* ctx,
+                                       const cmsis_nn_conv_params* conv_params,
+                                       const cmsis_nn_per_channel_quant_params* quant_params,
+                                       const cmsis_nn_dims* input_dims,
+                                       const q7_t *input_data,
+                                       const cmsis_nn_dims* filter_dims,
+                                       const q7_t *filter_data,
+                                       const cmsis_nn_dims* bias_dims,
+                                       const int32_t *bias_data,
+                                       const cmsis_nn_dims* output_dims,
+                                       q7_t *output_data);
+
+  /**
+   * @brief Get the required buffer size for arm_convolve_wrapper_s8
+   *
+   * @param[in]      conv_params    Convolution parameters (e.g. strides, dilations, pads,...).
+   *                                Range of conv_params->input_offset  : [-127, 128]
+   *                                Range of conv_params->output_offset : [-128, 127]
+   * @param[in]      input_dims     Input (activation) dimensions. Format: [N, H, W, C_IN]
+   * @param[in]      filter_dims    Filter dimensions. Format: [C_OUT, HK, WK, C_IN] where HK and WK are the spatial filter dimensions
+   * @param[in]      output_dims    Output tensor dimensions. Format: [N, H, W, C_OUT]
+   *
+   * @return         The function returns  required buffer size(bytes)
+   *
+   */
+    int32_t arm_convolve_wrapper_s8_get_buffer_size(const cmsis_nn_conv_params* conv_params,
+                                                    const cmsis_nn_dims* input_dims,
+                                                    const cmsis_nn_dims* filter_dims,
+                                                    const cmsis_nn_dims* output_dims);
+
+  /**
    * @brief Basic s8 convolution function
-   * @param[in]       input           pointer to input tensor. Range: int8, format: [N,H,W,in_ch]
-   * @param[in]       input_x         input tensor width
-   * @param[in]       input_y         input tensor height
-   * @param[in]       input_ch        number of input tensor channels
-   * @param[in]       input_batches   number of input batches
-   * @param[in]       kernel          pointer to kernel weights. Range: int8, format: [out_ch, H, W, in_ch]
-   * @param[in]       output_ch       number of filters, i.e., output tensor channels
-   * @param[in]       kernel_x        filter/kernel width
-   * @param[in]       kernel_y        filter/kernel height
-   * @param[in]       pad_x           padding along width
-   * @param[in]       pad_y           padding along height
-   * @param[in]       stride_x        convolution stride x
-   * @param[in]       stride_y        convolution stride y
-   * @param[in]       bias            pointer to per output channel bias. Range: int32
-   * @param[in,out]   output          pointer to output tensor. format: [H, W, out_ch]
-   * @param[in]       output_shift    pointer to per output channel requantization shift parameter.
-   * @param[in]       output_mult     pointer to per output channel requantization multiplier parameter.
-   * @param[in]       out_offset      output tensor offset. Range: int8
-   * @param[in]       input_offset    input tensor offset. Range: int8
-   * @param[in]       output_activation_min   Minimum value to clamp the output to. Range: int8
-   * @param[in]       output_activation_max   Minimum value to clamp the output to. Range: int8
-   * @param[in]       output_x    output tensor width
-   * @param[in]       output_y    output tensor height
-   * @param[in]       buffer_a    pointer to buffer space used for input optimization(partial im2col) and is necessary
-   *                              when ARM_MATH_DSP is defined.
-   *                              Required space: (2 * input_ch * kernel_x * kernel_y) * sizeof(q15_t) bytes
-   *                              Use arm_convolve_s8_get_buffer_size() to get the size.
+   * @param[in, out] ctx            Function context that contains the additional buffer if required by the implementation. 
+                                    arm_convolve_s8_get_buffer_size will return the buffer_size if required
+   * @param[in]      conv_params    Convolution parameters (e.g. strides, dilations, pads,...).
+   *                                Range of conv_params->input_offset  : [-127, 128]
+   *                                Range of conv_params->output_offset : [-128, 127]
+   * @param[in]      quant_params   Per-channel quantization info.
+   *                                It contains the multiplier and shift values to be applied to each output channel
+   * @param[in]      input_dims     Input (activation) tensor dimensions. Format: [N, H, W, C_IN]
+   * @param[in]      input_data     Input (activation) data pointer. Data type: int8
+   * @param[in]      filter_dims    Filter tensor dimensions. Format: [C_OUT, HK, WK, C_IN] where HK and WK are the spatial filter dimensions
+   * @param[in]      filter_data    Filter data pointer. Data type: int8
+   * @param[in]      bias_dims      Bias tensor dimensions. Format: [C_OUT]
+   * @param[in]      bias_data      Bias data pointer. Data type: int32
+   * @param[in]      output_dims    Output tensor dimensions. Format: [N, H, W, C_OUT]
+   * @param[out]     output_data    Output data pointer. Data type: int8
+
    * @return     The function returns <code>ARM_MATH_SUCCESS</code>
    *
    * @details
    *    1. Supported framework: TensorFlow Lite micro
    *    2. q7 is used as data type eventhough it is s8 data. It is done so to be consistent with existing APIs.
-   *    3. Additional memory is required for optimization. Refer to argument 'buffer_a' for details.
+   *    3. Additional memory is required for optimization. Refer to argument 'ctx' for details.
    *
    */
-    arm_status arm_convolve_s8(const q7_t *input,
-                               const uint16_t input_x,
-                               const uint16_t input_y,
-                               const uint16_t input_ch,
-                               const uint16_t input_batches,
-                               const q7_t *kernel,
-                               const uint16_t output_ch,
-                               const uint16_t kernel_x,
-                               const uint16_t kernel_y,
-                               const uint16_t pad_x,
-                               const uint16_t pad_y,
-                               const uint16_t stride_x,
-                               const uint16_t stride_y,
-                               const int32_t *bias,
-                               q7_t *output,
-                               const int32_t *output_shift,
-                               const int32_t *output_mult,
-                               const int32_t out_offset,
-                               const int32_t input_offset,
-                               const int32_t output_activation_min,
-                               const int32_t output_activation_max,
-                               const uint16_t output_x,
-                               const uint16_t output_y,
-                               q15_t *buffer_a);
+    arm_status arm_convolve_s8(const cmsis_nn_context* ctx,
+                               const cmsis_nn_conv_params* conv_params,
+                               const cmsis_nn_per_channel_quant_params* quant_params,
+                               const cmsis_nn_dims* input_dims,
+                               const q7_t *input_data,
+                               const cmsis_nn_dims* filter_dims,
+                               const q7_t *filter_data,
+                               const cmsis_nn_dims* bias_dims,
+                               const int32_t *bias_data,
+                               const cmsis_nn_dims* output_dims,
+                               q7_t *output_data);
 
   /**
    * @brief Get the required buffer size for s8 convolution function
-   * @param[in]       input_ch              number of input tensor channels
-   * @param[in]       kernel_x              filter/kernel width
-   * @param[in]       kernel_y              filter/kernel height
-   * @return          The function returns  required buffer size
+   *
+   * @param[in]       input_dims            Input (activation) tensor dimensions. Format: [N, H, W, C_IN]
+   * @param[in]       filter_dims           Filter tensor dimensions. Format: [C_OUT, HK, WK, C_IN] where HK and WK are the spatial filter dimensions
+   * @return          The function returns  required buffer size(bytes)
    *
    */
-    int32_t arm_convolve_s8_get_buffer_size(const uint16_t input_ch,
-                                            const uint16_t kernel_x,
-                                            const uint16_t kernel_y);
+    int32_t arm_convolve_s8_get_buffer_size(const cmsis_nn_dims* input_dims,
+                                            const cmsis_nn_dims* filter_dims);
 
   /**
    * @brief Basic Q7 convolution function
@@ -531,29 +561,23 @@ extern    "C"
 
   /**
    * @brief Fast s8 version for 1x1 convolution (non-square shape)
-   * @param[in]      input                pointer to input tensor.  Format: [N, H, W, in_ch]
-   * @param[in]      input_x              input tensor dimension x
-   * @param[in]      input_y              input tensor dimension y
-   * @param[in]      input_ch             number of input tensor channels
-   * @param[in]      input_batches        number of input batches
-   * @param[in]      kernel               pointer to kernel weights. Format: [out_ch, H, W, in_ch]
-   * @param[in]      output_ch            number of filters, i.e., output tensor channels
-   * @param[in]      pad_x                padding size x
-   * @param[in]      pad_y                padding size y
-   * @param[in]      stride_x             convolution stride x
-   * @param[in]      stride_y             convolution stride y
-   * @param[in]      bias                 pointer to per channel bias. Range : int32
-   * @param[in,out]  output               pointer to output tensor.  Format: [H, W, out_ch]
-   * @param[in]      output_shift         pointer to per output channel requantization shift parameter.
-   * @param[in]      output_mult          pointer to per output channel requantization multiplier parameter.
-   * @param[in]      out_offset           output tensor offset. Range: int8
-   * @param[in]      input_offset         input tensor offset. Range: -127 to 128
-   * @param[in]      out_activation_min   Minimum value to clamp the output to. Range: int8
-   * @param[in]      out_activation_max   Minimum value to clamp the output to. Range: int8
-   * @param[in]      output_x             output tensor width
-   * @param[in]      output_y             output tensor height
-   * @param[in]      buffer_a             pointer to buffer space used if required by the implementation
-   *                                      Use arm_convolve_1x1_s8_fast_get_buffer_size() to get the size
+   *
+   * @param[in, out] ctx            Function context that contains the additional buffer if required by the implementation. 
+                                    arm_convolve_1x1_s8_fast_get_buffer_size will return the buffer_size if required
+   * @param[in]      conv_params    Convolution parameters (e.g. strides, dilations, pads,...).
+   *                                Range of conv_params->input_offset  : [-127, 128]
+   *                                Range of conv_params->output_offset : [-128, 127]
+   * @param[in]      quant_params   Per-channel quantization info.
+   *                                It contains the multiplier and shift values to be applied to each output channel
+   * @param[in]      input_dims     Input (activation) tensor dimensions. Format: [N, H, W, C_IN]
+   * @param[in]      input_data     Input (activation) data pointer. Data type: int8
+   * @param[in]      filter_dims    Filter tensor dimensions. Format: [C_OUT, 1, 1, C_IN]
+   * @param[in]      filter_data    Filter data pointer. Data type: int8
+   * @param[in]      bias_dims      Bias tensor dimensions. Format: [C_OUT]
+   * @param[in]      bias_data      Bias data pointer. Data type: int32
+   * @param[in]      output_dims    Output tensor dimensions. Format: [N, H, W, C_OUT]
+   * @param[out]     output_data    Output data pointer. Data type: int8
+   *
    * @return     The function returns either
    *                  <code>ARM_MATH_SIZE_MISMATCH</code> if argument constraints fail. or,
    *                  <code>ARM_MATH_SUCCESS</code> on successful completion.
@@ -561,68 +585,51 @@ extern    "C"
    * @details
    *   - Supported framework : TensorFlow Lite Micro
    *   - The following constrains on the arguments apply
-   *      -# input_ch is a multiple of 4
-   *      -# padding equals 0
-   *      -# Stride equals 1
-   *      -# kernel dimension is 1x1 (Not provided in the argument list)
+   *      -# input_dims->c is a multiple of 4
+   *      -# conv_params->padding.w = conv_params->padding.h = 0
+   *      -# conv_params->stride.w = conv_params->stride.h = 1
    *
    */
-    arm_status arm_convolve_1x1_s8_fast(const q7_t *input,
-                                        const uint16_t input_x,
-                                        const uint16_t input_y,
-                                        const uint16_t input_ch,
-                                        const uint16_t input_batches,
-                                        const q7_t *kernel,
-                                        const uint16_t output_ch,
-                                        const uint16_t pad_x,
-                                        const uint16_t pad_y,
-                                        const uint16_t stride_x,
-                                        const uint16_t stride_y,
-                                        const int32_t *bias,
-                                        q7_t *output,
-                                        const int32_t *output_shift,
-                                        const int32_t *output_mult,
-                                        const int32_t out_offset,
-                                        const int32_t input_offset,
-                                        const int32_t out_activation_min,
-                                        const int32_t out_activation_max,
-                                        const uint16_t output_x,
-                                        const uint16_t output_y,
-                                        q15_t *buffer_a);
+    arm_status arm_convolve_1x1_s8_fast(const cmsis_nn_context* ctx,
+                                        const cmsis_nn_conv_params* conv_params,
+                                        const cmsis_nn_per_channel_quant_params* quant_params,
+                                        const cmsis_nn_dims* input_dims,
+                                        const q7_t *input_data,
+                                        const cmsis_nn_dims* filter_dims,
+                                        const q7_t *filter_data,
+                                        const cmsis_nn_dims* bias_dims,
+                                        const int32_t *bias_data,
+                                        const cmsis_nn_dims* output_dims,
+                                        q7_t *output_data);
 
   /**
-   * @brief Get the required buffer size for the fast 1x1 convolution
-   * (non-square shape) s8 convolution function
-   * @param[in]       input_ch              number of input tensor channels
-   * @return          The function returns  required buffer size
+   * @brief Get the required buffer size for arm_convolve_1x1_s8_fast
+   *
+   * @param[in]       input_dims            Input (activation) dimensions
+   * @return          The function returns the required buffer size in bytes
    *
    */
-    int32_t arm_convolve_1x1_s8_fast_get_buffer_size(const uint16_t input_ch);
+    int32_t arm_convolve_1x1_s8_fast_get_buffer_size(const cmsis_nn_dims* input_dims);
 
   /**
    * @brief 1xn convolution
-   * @param[in]      input                pointer to input tensor.  Format: [N, H, W, in_ch]
-   * @param[in]      input_x              input tensor dimension x
-   * @param[in]      input_ch             number of input tensor channels
-   * @param[in]      input_batches        argument is not used.
-   * @param[in]      kernel               pointer to kernel weights. Format: [out_ch, H, W, in_ch]
-   * @param[in]      output_ch            number of filters, i.e., output tensor channels
-   * @param[in]      kernel_x             kernel width along x
-   * @param[in]      pad_x                padding along x
-   * @param[in]      stride_x             stride along x
-   * @param[in]      bias                 pointer to per channel bias. Range : int32
-   * @param[out]     output               pointer to output tensor.  Format: [H, W, out_ch]
-   * @param[in]      output_shift         pointer to per output channel requantization shift parameter.
-   * @param[in]      output_mult          pointer to per output channel requantization multiplier parameter.
-   * @param[in]      out_offset           output tensor offset. Range: int8
-   * @param[in]      input_offset         input tensor offset. Range: -127 to 128
-   * @param[in]      out_activation_min   Minimum value to clamp the output to. Range: int8
-   * @param[in]      out_activation_max   Minimum value to clamp the output to. Range: int8
-   * @param[in]      output_x             output tensor width
-   * @param[in]      buffer_a             pointer to buffer space used for input optimization and is necessary
-   *                                      when ARM_MATH_DSP is defined but not ARM_MATH_MVEI.
-   *                                      Required space: 2 * input_ch * sizeof(q15_t) bytes
-   *                                      Use arm_convolve_1_x_n_s8_get_buffer_size() to get the size
+   *
+   * @param[in, out] ctx            Function context that contains the additional buffer if required by the implementation. 
+                                    arm_convolve_1_x_n_s8_get_buffer_size will return the buffer_size if required
+   * @param[in]      conv_params    Convolution parameters (e.g. strides, dilations, pads,...).
+   *                                Range of conv_params->input_offset  : [-127, 128]
+   *                                Range of conv_params->output_offset : [-128, 127]
+   * @param[in]      quant_params   Per-channel quantization info.
+   *                                It contains the multiplier and shift values to be applied to each output channel
+   * @param[in]      input_dims     Input (activation) tensor dimensions. Format: [N, H, W, C_IN]
+   * @param[in]      input_data     Input (activation) data pointer. Data type: int8
+   * @param[in]      filter_dims    Filter tensor dimensions. Format: [C_OUT, 1, WK, C_IN] where WK is the horizontal spatial filter dimension
+   * @param[in]      filter_data    Filter data pointer. Data type: int8
+   * @param[in]      bias_dims      Bias tensor dimensions. Format: [C_OUT]
+   * @param[in]      bias_data      Bias data pointer. Data type: int32
+   * @param[in]      output_dims    Output tensor dimensions. Format: [N, H, W, C_OUT]
+   * @param[out]     output_data    Output data pointer. Data type: int8
+   *
    * @return     The function returns either
    *                  <code>ARM_MATH_SIZE_MISMATCH</code> if argument constraints fail. or,
    *                  <code>ARM_MATH_SUCCESS</code> on successful completion.
@@ -630,49 +637,37 @@ extern    "C"
    * @details
    *   - Supported framework : TensorFlow Lite Micro
    *   - The following constrains on the arguments apply
-   *      -# input_batches equals 1
-   *      -# ouput_x is a multiple of 4
+   *      -# input_dims->n equals 1
+   *      -# ouput_dims->w is a multiple of 4
    *      -# Explicit constraints(since it is for 1xN convolution)
-   *      -## input_y equals 1
-   *      -## output_y equals 1
-   *      -## kernel_y equals 1
-   *@todo  Remove constraint on output_x to make the function generic.
+   *      -## input_dims->h equals 1
+   *      -## output_dims->h equals 1
+   *      -## filter_dims->h equals 1
+   *@todo  Remove constraint on output_dims->w to make the function generic.
    *
    */
-   arm_status arm_convolve_1_x_n_s8(const q7_t *input,
-                                    const uint16_t input_x,
-                                    const uint16_t input_ch,
-                                    const uint16_t input_batches,
-                                    const q7_t *kernel,
-                                    const uint16_t output_ch,
-                                    const uint16_t kernel_x,
-                                    const uint16_t pad_x,
-                                    const uint16_t stride_x,
-                                    const int32_t *bias,
-                                    q7_t *output,
-                                    const int32_t *output_shift,
-                                    const int32_t *output_mult,
-                                    const int32_t out_offset,
-                                    const int32_t input_offset,
-                                    const int32_t out_activation_min,
-                                    const int32_t out_activation_max,
-                                    const uint16_t output_x,
-                                    q15_t *buffer_a);
-
+   arm_status arm_convolve_1_x_n_s8(const cmsis_nn_context* ctx,
+                                    const cmsis_nn_conv_params* conv_params,
+                                    const cmsis_nn_per_channel_quant_params* quant_params,
+                                    const cmsis_nn_dims* input_dims,
+                                    const q7_t *input_data,
+                                    const cmsis_nn_dims* filter_dims,
+                                    const q7_t *filter_data,
+                                    const cmsis_nn_dims* bias_dims,
+                                    const int32_t *bias_data,
+                                    const cmsis_nn_dims* output_dims,
+                                    q7_t *output_data);
 
   /**
    * @brief Get the required additional buffer size for 1xn convolution
    *
-   * @param[in]       input_ch              number of input tensor channels
-   * @param[in]       kernel_x              filter/kernel width
-   * @param[in]       kernel_y              filter/kernel height
+   * @param[in]       input_dims            Input (activation) tensor dimensions. Format: [N, H, W, C_IN]
+   * @param[in]       filter_dims           Filter tensor dimensions. Format: [C_OUT, 1, WK, C_IN] where WK is the horizontal spatial filter dimension
    * @return          The function returns  required buffer size(bytes)
    *
    */
-    int32_t arm_convolve_1_x_n_s8_get_buffer_size(const uint16_t input_ch,
-                                                  const uint16_t kernel_x,
-                                                  const uint16_t kernel_y);
-
+    int32_t arm_convolve_1_x_n_s8_get_buffer_size(const cmsis_nn_dims* input_dims,
+                                                  const cmsis_nn_dims* filter_dims);
 
   /**
    * @brief Q7 version of convolution for RGB image
