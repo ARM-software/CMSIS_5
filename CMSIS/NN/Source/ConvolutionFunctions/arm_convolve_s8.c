@@ -21,13 +21,14 @@
  * Title:        arm_convolve_s8.c
  * Description:  s8 version of convolution using symmetric quantization.
  *
- * $Date:        March 1, 2020
- * $Revision:    V.1.0.0
+ * $Date:        May 18, 2020
+ * $Revision:    V.2.0.0
  *
  * Target Processor:  Cortex-M cores
  *
  * -------------------------------------------------------------------- */
 #include "arm_math.h"
+#include "arm_nn_types.h"
 #include "arm_nnfunctions.h"
 #include "arm_nnsupportfunctions.h"
 
@@ -48,38 +49,49 @@
    *
    */
 
-arm_status arm_convolve_s8(const q7_t *input,
-                           const uint16_t input_x,
-                           const uint16_t input_y,
-                           const uint16_t input_ch,
-                           const uint16_t input_batches,
-                           const q7_t *kernel,
-                           const uint16_t output_ch,
-                           const uint16_t kernel_x,
-                           const uint16_t kernel_y,
-                           const uint16_t pad_x,
-                           const uint16_t pad_y,
-                           const uint16_t stride_x,
-                           const uint16_t stride_y,
-                           const int32_t *bias,
-                           q7_t *output,
-                           const int32_t *output_shift,
-                           const int32_t *output_mult,
-                           const int32_t out_offset,
-                           const int32_t input_offset,
-                           const int32_t out_activation_min,
-                           const int32_t out_activation_max,
-                           const uint16_t output_x,
-                           const uint16_t output_y,
-                           q15_t *buffer_a)
+arm_status arm_convolve_s8(const cmsis_nn_context* ctx,
+                           const cmsis_nn_conv_params* conv_params,
+                           const cmsis_nn_per_channel_quant_params* quant_params,
+                           const cmsis_nn_dims* input_dims,
+                           const q7_t *input_data,
+                           const cmsis_nn_dims* filter_dims,
+                           const q7_t *filter_data,
+                           const cmsis_nn_dims* bias_dims,
+                           const int32_t *bias_data,
+                           const cmsis_nn_dims* output_dims,
+                           q7_t *output_data)
 {
+    q15_t *buffer_a = (q15_t *)ctx->buf;
+
+    const uint16_t input_batches = input_dims->n;
+    const uint16_t input_x       = input_dims->w;
+    const uint16_t input_y       = input_dims->h;
+    const uint16_t input_ch      = input_dims->c;
+    const uint16_t kernel_x      = filter_dims->w;
+    const uint16_t kernel_y      = filter_dims->h;
+    const uint16_t output_x      = output_dims->w;
+    const uint16_t output_y      = output_dims->h;
+    const uint16_t output_ch     = output_dims->c;
+
+    const uint16_t pad_x         = conv_params->padding.w;
+    const uint16_t pad_y         = conv_params->padding.h;
+    const uint16_t stride_x      = conv_params->stride.w;
+    const uint16_t stride_y      = conv_params->stride.h;
+
+    const int32_t input_offset       = conv_params->input_offset;
+    const int32_t out_offset         = conv_params->output_offset;
+    const int32_t out_activation_min = conv_params->activation.min;
+    const int32_t out_activation_max = conv_params->activation.max;
+    int32_t *output_mult             = quant_params->multiplier;
+    int32_t *output_shift            = quant_params->shift;
+
     int i_batch;
     for (i_batch = 0; i_batch < input_batches; i_batch++)
     {
 #if defined(ARM_MATH_MVEI)
         /* Generate upto four columns from the input tensor a GEMM computation */
         q7_t *im2col_buf = (q7_t *)buffer_a;
-        q7_t *out = output;
+        q7_t *out = output_data;
         int32_t buffer_fill_cnt = 0;
         int32_t padded = 0;
         const int32_t num_elem = kernel_x * kernel_y * input_ch;
@@ -100,7 +112,7 @@ arm_status arm_convolve_s8(const q7_t *input,
                         }
                         else
                         {
-                            arm_memcpy_q7(im2col_buf, input + (i_ker_y * input_x + i_ker_x) * input_ch, input_ch);
+                            arm_memcpy_q7(im2col_buf, input_data + (i_ker_y * input_x + i_ker_x) * input_ch, input_ch);
                         }
                         im2col_buf += input_ch;
                     }
@@ -120,7 +132,7 @@ arm_status arm_convolve_s8(const q7_t *input,
                         (void)arm_nn_mat_mul_core_4x_s8(num_elem,
                                                         num_elem,
                                                         (q7_t *)buffer_a,
-                                                        kernel + num_elem * i_out_ch,
+                                                        filter_data + num_elem * i_out_ch,
                                                         &sum_row,
                                                         acc);
                         int32x4_t s_offset = vdupq_n_s32(sum_row);
@@ -128,7 +140,7 @@ arm_status arm_convolve_s8(const q7_t *input,
                         int32x4_t res = vldrwq_s32(acc);
                         s_offset = vmulq_n_s32(s_offset, input_offset);
 
-                        res = vaddq_n_s32(res, bias[i_out_ch]);
+                        res = vaddq_n_s32(res, bias_data[i_out_ch]);
                         res = vaddq_s32(res, s_offset);
                         res = arm_requantize_mve(res, output_mult[i_out_ch], output_shift[i_out_ch]);
                         res = vaddq_n_s32(res, out_offset);
@@ -146,7 +158,7 @@ arm_status arm_convolve_s8(const q7_t *input,
                 else if (buffer_fill_cnt == 4 && (padded != 0))
                 {
                     buffer_fill_cnt = 0;
-                    out = arm_nn_mat_mult_s8(kernel,
+                    out = arm_nn_mat_mult_s8(filter_data,
                                              (q7_t *)buffer_a,
                                              output_ch,
                                              4,
@@ -158,7 +170,7 @@ arm_status arm_convolve_s8(const q7_t *input,
                                              out_activation_min,
                                              out_activation_max,
                                              num_elem,
-                                             bias,
+                                             bias_data,
                                              out);
 
                     im2col_buf = (q7_t *)buffer_a;
@@ -169,7 +181,7 @@ arm_status arm_convolve_s8(const q7_t *input,
         /* Handle left over columns */
         if (buffer_fill_cnt != 0)
         {
-            out = arm_nn_mat_mult_s8(kernel,
+            out = arm_nn_mat_mult_s8(filter_data,
                                      (q7_t *)buffer_a,
                                      output_ch,
                                      buffer_fill_cnt,
@@ -181,7 +193,7 @@ arm_status arm_convolve_s8(const q7_t *input,
                                      out_activation_min,
                                      out_activation_max,
                                      num_elem,
-                                     bias,
+                                     bias_data,
                                      out);
         }
 
@@ -190,7 +202,7 @@ arm_status arm_convolve_s8(const q7_t *input,
 
         /* Generate two columns from the input tensor a GEMM computation */
         q15_t *two_column_buf = buffer_a;
-        q7_t *out = output;
+        q7_t *out = output_data;
 
         /* This part implements the im2col function */
         for (i_out_y = 0; i_out_y < output_y; i_out_y++)
@@ -209,7 +221,7 @@ arm_status arm_convolve_s8(const q7_t *input,
                         else
                         {
                             /* Copying the pixel data to column */
-                            arm_q7_to_q15_with_offset(input + (i_ker_y * input_x + i_ker_x) * input_ch, two_column_buf, input_ch, input_offset);
+                            arm_q7_to_q15_with_offset(input_data + (i_ker_y * input_x + i_ker_x) * input_ch, two_column_buf, input_ch, input_offset);
                         }
                         two_column_buf += input_ch;
                     }
@@ -219,7 +231,7 @@ arm_status arm_convolve_s8(const q7_t *input,
                 if (two_column_buf == buffer_a + 2 * input_ch * kernel_y * kernel_x)
                 {
                     out =
-                        arm_nn_mat_mult_kernel_s8_s16(kernel,
+                        arm_nn_mat_mult_kernel_s8_s16(filter_data,
                                                       buffer_a,
                                                       output_ch,
                                                       output_shift,
@@ -228,7 +240,7 @@ arm_status arm_convolve_s8(const q7_t *input,
                                                       out_activation_min,
                                                       out_activation_max,
                                                       input_ch * kernel_y * kernel_x,
-                                                      bias,
+                                                      bias_data,
                                                       out);
 
                     /* counter reset */
@@ -240,13 +252,13 @@ arm_status arm_convolve_s8(const q7_t *input,
         /* left-over because odd number of output pixels */
         if (two_column_buf != buffer_a)
         {
-            const q7_t *ker_a = kernel;
+            const q7_t *ker_a = filter_data;
             int i;
 
             for (i = 0; i < output_ch; i++)
             {
                 /* Load the accumulator with bias first */
-                q31_t sum = bias[i];
+                q31_t sum = bias_data[i];
 
                 /* Point to the beginning of the im2col buffer where the input is available as a rearranged column */
                 const q15_t *ip_as_col = buffer_a;
@@ -297,7 +309,7 @@ arm_status arm_convolve_s8(const q7_t *input,
             {
                 for (i_out_x = 0; i_out_x < output_x; i_out_x++)
                 {
-                    conv_out = bias[i_out_ch];
+                    conv_out = bias_data[i_out_ch];
 
                     const int32_t base_idx_y = stride_y * i_out_y - pad_y;
                     const int32_t base_idx_x = stride_x * i_out_x - pad_x;
@@ -317,8 +329,8 @@ arm_status arm_convolve_s8(const q7_t *input,
                             for (i_input_ch = 0; i_input_ch < input_ch; i_input_ch++)
                             {
                                 conv_out +=
-                                    (input[(in_row * input_x + in_col) * input_ch + i_input_ch] + input_offset) *
-                                    kernel[i_out_ch * input_ch * kernel_y * kernel_x +
+                                    (input_data[(in_row * input_x + in_col) * input_ch + i_input_ch] + input_offset) *
+                                    filter_data[i_out_ch * input_ch * kernel_y * kernel_x +
                                            (i_ker_y * kernel_x + i_ker_x) * input_ch + i_input_ch];
                             }
                         }
@@ -327,30 +339,28 @@ arm_status arm_convolve_s8(const q7_t *input,
                     conv_out += out_offset;
                     conv_out = MAX(conv_out, out_activation_min);
                     conv_out = MIN(conv_out, out_activation_max);
-                    output[i_out_ch + (i_out_y * output_x + i_out_x) * output_ch] = (int8_t)conv_out;
+                    output_data[i_out_ch + (i_out_y * output_x + i_out_x) * output_ch] = (int8_t)conv_out;
                 }
             }
         }
 #endif
         /* Advance to the next batch */
-        input += (input_x * input_y * input_ch);
-        output += (output_x * output_y * output_ch);
+        input_data += (input_x * input_y * input_ch);
+        output_data += (output_x * output_y * output_ch);
     }
 
     /* Return to application */
     return ARM_MATH_SUCCESS;
 }
 
-int32_t arm_convolve_s8_get_buffer_size(const uint16_t input_ch,
-                                        const uint16_t kernel_x,
-                                        const uint16_t kernel_y)
+int32_t arm_convolve_s8_get_buffer_size(const cmsis_nn_dims* input_dims,
+                                        const cmsis_nn_dims* filter_dims)
 {
 #if defined(ARM_MATH_DSP)
-    return (2 * input_ch * kernel_x * kernel_y) * sizeof(int16_t);
+    return (2 * input_dims->c * filter_dims->w * filter_dims->h) * sizeof(int16_t);
 #else
-    (void)input_ch;
-    (void)kernel_x;
-    (void)kernel_y;
+    (void)input_dims;
+    (void)filter_dims;
     return 0;
 #endif
 }
