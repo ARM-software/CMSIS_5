@@ -5,7 +5,7 @@ group Root {
         class = DSPBenchmarks
         folder = DSP
 
-        group Basic Maths Benchmarks {
+        group Basic Maths {
            class = BasicBenchmarks
            folder = BasicMaths
 
@@ -747,7 +747,10 @@ group Root {
              }
         }
 
-        suite Barycenter {
+        group Barycenter {
+           class = Barycenter 
+           
+           suite Barycenter {
                 class = SupportBarF32 
                 folder = SupportBarF32
 
@@ -770,6 +773,8 @@ group Root {
                 Functions {
                    Barycenter:test_barycenter_f32
                 } -> PARAM1_ID
+   
+           }
 
         }
 

@@ -3,385 +3,9 @@ import sqlite3
 import re
 import pandas as pd
 import numpy as np
+from TestScripts.doc.Structure import *
+from TestScripts.doc.Format import *
 
-remapNames={
-}
-
-def convertSectionName(s):
-  if s in remapNames:
-    return(remapNames[s])
-  else:
-    return(s)
-
-class Document:
-    def __init__(self,runid,date):
-        self._runid = runid 
-        self._date = date 
-        self._sections = []
-
-    @property
-    def runid(self):
-        return(self._runid)
-
-    @property
-    def date(self):
-        return(self._date)
-
-    @property
-    def sections(self):
-        return(self._sections)
-
-    def addSection(self,section):
-        self._sections.append(section)
-
-    def accept(self, visitor):
-      visitor.visitDocument(self)
-      for element in self._sections:
-          element.accept(visitor)   
-      visitor.leaveDocument(self)
-
-class Section:
-  def __init__(self,name):
-      self._name=convertSectionName(name)
-      self._subsections = []
-      self._tables = []
-
-  def addSection(self,section):
-      self._subsections.append(section)
-
-  def addTable(self,table):
-      self._tables.append(table)
-
-  @property
-  def hasChildren(self):
-      return(len(self._subsections)>0)
-
-  @property
-  def name(self):
-     return(self._name)
-
-  def accept(self, visitor):
-      visitor.visitSection(self)
-      for element in self._subsections:
-          element.accept(visitor) 
-      for element in self._tables:
-          element.accept(visitor)    
-      visitor.leaveSection(self)   
-
-class Table:
-    def __init__(self,params,cores):
-       self._params=params
-       self._cores=cores
-       self._rows=[] 
-
-    def addRow(self,row):
-       self._rows.append(row)
-
-    @property
-    def columns(self):
-       return(self._params + self._cores)
-
-    @property
-    def params(self):
-       return(self._params)
-
-    @property
-    def cores(self):
-       return(self._cores)
-
-    @property
-    def rows(self):
-       return(self._rows)
-
-    def accept(self, visitor):
-      visitor.visitTable(self)
-
-
-
-class Markdown:
-  def __init__(self,output):
-    self._id=0
-    self._output = output
-
-    # Write columns in markdown format
-  def writeColumns(self,cols):
-        colStr = "".join(joinit(cols,"|"))
-        self._output.write("|")
-        self._output.write(colStr)
-        self._output.write("|\n")
-        sepStr="".join(joinit([":-:" for x in cols],"|"))
-        self._output.write("|")
-        self._output.write(sepStr)
-        self._output.write("|\n")
-    
-    # Write row in markdown format
-  def writeRow(self,row):
-        row=[str(x) for x in row]
-        rowStr = "".join(joinit(row,"|"))
-        self._output.write("|")
-        self._output.write(rowStr)
-        self._output.write("|\n")
-
-  def visitTable(self,table):
-      self.writeColumns(table.columns)
-      for row in table.rows:
-        self.writeRow(row)
-
-  def visitSection(self,section):
-     self._id = self._id + 1 
-     header = "".join(["#" for i in range(self._id)])
-     output.write("%s %s\n" % (header,section.name))
-
-  def leaveSection(self,section):
-     self._id = self._id - 1 
-
-  def visitDocument(self,document):
-      self._output.write("Run number %d on %s\n" % (document.runid, str(document.date)))
-
-  def leaveDocument(self,document):
-      pass
-
-styleSheet="""
-<style type='text/css'>
-
-#TOC {
-  position: fixed;
-  left: 0;
-  top: 0;
-  width: 280px;
-  height: 100%;
-  overflow:auto;
-  margin-top:5px;
-  margin-bottom:10px;
-}
-
-html {
-  font-size: 16px;
-}
-
-html, body {
-  background-color: #f3f2ee;
-  font-family: "PT Serif", 'Times New Roman', Times, serif;
-  color: #1f0909;
-  line-height: 1.5em;
-}
-
-body {
-  margin: auto;
-  margin-top:0px;
-  margin-left:280px;
-
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-weight: bold;
-}
-h1 {
-  font-size: 1.875em;
-  margin-top:5px;
-}
-h2 {
-  font-size: 1.3125em;
-}
-h3 {
-  font-size: 1.3125em;
-  margin-left:1em;
-}
-h4 {
-  font-size: 1.125em;
-  margin-left:1em;
-}
-h5,
-h6 {
-  font-size: 1em;
-}
-
-#TOC h1 {
-  margin-top:0em;
-  margin-left:0.5em;
-}
-
-table {
-  margin-bottom: 1.5em;
-  font-size: 1em;
-  width: 100%;
-  border-collapse: collapse;
-  border-spacing: 0;
-  width: 100%; 
-  margin-left:1em;
-}
-thead th,
-tfoot th {
-  padding: .25em .25em .25em .4em;
-  text-transform: uppercase;
-}
-th {
-  text-align: left;
-}
-td {
-  vertical-align: top;
-  padding: .25em .25em .25em .4em;
-}
-
-.ty-table-edit {
-  background-color: transparent;
-}
-thead {
-  background-color: #dadada;
-}
-tr:nth-child(even) {
-  background: #e8e7e7;
-}
-
-ul, #myUL {
-  list-style-type: none;
-  padding-inline-start:10px;
-}
-
-
-
-/* Remove margins and padding from the parent ul */
-#myUL {
-  margin: 0;
-  padding: 0;
-}
-
-/* Style the caret/arrow */
-.caret {
-  cursor: pointer;
-  user-select: none; /* Prevent text selection */
-}
-
-/* Create the caret/arrow with a unicode, and style it */
-.caret::before {
-  content: "\\25B6";
-  color: black;
-  display: inline-block;
-  margin-right: 6px;
-}
-
-/* Rotate the caret/arrow icon when clicked on (using JavaScript) */
-.caret-down::before {
-  transform: rotate(90deg);
-}
-
-/* Hide the nested list */
-.nested {
-  display: none;
-}
-
-/* Show the nested list when the user clicks on the caret/arrow (with JavaScript) */
-.active {
-  display: block;
-}
-
-</style>
-"""
-
-script="""<script type="text/javascript">
-var toggler = document.getElementsByClassName("caret");
-var i;
-for (i = 0; i < toggler.length; i++) {
-  toggler[i].addEventListener("click", function() {
-    this.parentElement.querySelector(".nested").classList.toggle("active");
-    this.classList.toggle("caret-down");
-  });
-}</script>"""
-
-
-class HTMLToc:
-  def __init__(self,output):
-    self._id=0
-    self._sectionID = 0
-    self._output = output
-
-  
-
-  def visitTable(self,table):
-      pass
-
-
-  def visitSection(self,section):
-     self._id = self._id + 1 
-     self._sectionID = self._sectionID + 1
-     if section.hasChildren:
-        self._output.write("<li><span class=\"caret\"><a href=\"#section%d\">%s</a></span>\n" % (self._sectionID,section.name))
-        self._output.write("<ul class=\"nested\">\n")
-     else:
-        self._output.write("<li><span><a href=\"#section%d\">%s</a></span>\n" % (self._sectionID,section.name))
-
-  def leaveSection(self,section):
-    if section.hasChildren:
-       self._output.write("</ul></li>\n")
-
-    self._id = self._id - 1 
-
-  def visitDocument(self,document):
-      self._output.write("<div id=\"TOC\"><h1>Table of content</h1><ul id=\"myUL\">\n")
-
-
-  def leaveDocument(self,document):
-      self._output.write("</ul></div>%s\n" % script)
-
-
-class HTML:
-  def __init__(self,output,regMode):
-    self._id=0
-    self._sectionID = 0
-    self._output = output
-    self._regMode = regMode
-
-  
-
-  def visitTable(self,table):
-      output.write("<table>\n")
-      output.write("<thead>\n")
-      output.write("<tr>\n")
-      for col in table.columns:
-        output.write("<th>")
-        output.write(str(col))
-        output.write("</th>\n")
-      output.write("</tr>\n")
-      output.write("</thead>\n")
-      for row in table.rows:
-        output.write("<tr>\n")
-        for elem in row:
-            output.write("<td>")
-            output.write(str(elem))
-            output.write("</td>\n")
-        output.write("</tr>\n")
-      output.write("</table>\n")
-
-
-  def visitSection(self,section):
-     self._id = self._id + 1 
-     self._sectionID = self._sectionID + 1
-     output.write("<h%d id=\"section%d\">%s</h%d>\n" % (self._id,self._sectionID,section.name,self._id))
-
-  def leaveSection(self,section):
-     self._id = self._id - 1 
-
-  def visitDocument(self,document):
-      self._output.write("""<!doctype html>
-<html>
-<head>
-<meta charset='UTF-8'><meta name='viewport' content='width=device-width initial-scale=1'>
-<title>Benchmarks</title>%s</head><body>\n""" % styleSheet)
-      if self._regMode:
-         self._output.write("<h1>ECPS Benchmark Regressions</h1>\n")
-      else:
-         self._output.write("<h1>ECPS Benchmark Summary</h1>\n")
-      self._output.write("<p>Run number %d on %s</p>\n" % (document.runid, str(document.date)))
-
-  def leaveDocument(self,document):
-    document.accept(HTMLToc(self._output))
-
-    self._output.write("</body></html>\n")
 
 
 
@@ -610,8 +234,12 @@ def regressionTableFor(name,section,ref,toSort,indexCols,field):
               row=[row[0]] + row[1:]
            else: 
               row=list(row[0]) + row[1:]
+           if field=="MAXREGCOEF":
+              row=[("%.3f" % x) for x in row]
            dataTable.addRow(row)
     else:
+       if field=="MAXREGCOEF":
+              dataForFunc=[("%.3f" % x) for x in dataForFunc]
        dataTable.addRow(dataForFunc)
 
 def formatTableByCore(typeSection,testNames,cols,vals):
@@ -683,10 +311,10 @@ def formatTableByCore(typeSection,testNames,cols,vals):
                  dataTable.addRow(dataForFunc)
 
 # Add a report for each table
-def addReportFor(document,benchName):
+def addReportFor(document,runid,benchName):
     nbElems = getNbElemsInBenchCmd(benchName)
     if nbElems > 0:
-       categoryName = getCategoryName(benchName,document.runid)
+       categoryName = getCategoryName(benchName,runid)
        benchSection = Section(categoryName)
        document.addSection(benchSection)
        print("Process %s\n" % benchName)
@@ -715,13 +343,52 @@ def addReportFor(document,benchName):
 
 
 
+toc=[Hierarchy("BasicMathsBenchmarks"),    
+Hierarchy("ComplexMathsBenchmarks"),
+Hierarchy("FastMath"),
+Hierarchy("Filters",
+  [Hierarchy("FIR"),
+   Hierarchy("BIQUAD"),
+   Hierarchy("DECIM"), 
+   Hierarchy("MISC")]),
+
+Hierarchy("Support Functions",
+  [Hierarchy("Support"),
+   Hierarchy("SupportBar")]),
+        
+Hierarchy("Matrix Operations"    ,  
+  [Hierarchy("Binary"),
+   Hierarchy("Unary")]),
+Hierarchy("Transform"),
+
+]
+
+processed=[]
+
+def createDoc(document,sections,benchtables):
+    global processed
+    for s in sections:
+        if s.name in benchtables:
+           addReportFor(document,runid,s.name)
+           processed.append(s.name)
+        else:
+           section=Section(s.name)
+           document.addSection(section)
+           createDoc(section,s.sections,benchtables)
 
 try:
       benchtables=getBenchTables()
       theDate = getrunIDDate(runid)
       document = Document(runid,theDate)
-      for bench in benchtables:
-          addReportFor(document,bench)
+      createDoc(document,toc,benchtables)
+      misc=Section("Miscellaneous")
+      document.addSection(misc)
+      remaining=diff(benchtables,processed)
+      for bench in remaining:
+          addReportFor(misc,runid,bench)
+
+      #for bench in benchtables:
+      #    addReportFor(document,bench)
       with open(args.o,"w") as output:
           if args.t=="md":
              document.accept(Markdown(output))
