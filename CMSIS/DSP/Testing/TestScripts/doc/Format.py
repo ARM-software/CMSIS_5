@@ -1,7 +1,24 @@
+def joinit(iterable, delimiter):
+    it = iter(iterable)
+    yield next(it)
+    for x in it:
+        yield delimiter
+        yield x
+
+
 class Markdown:
   def __init__(self,output):
     self._id=0
     self._output = output
+
+  def visitBarChart(self,data):
+      pass
+
+  def visitHistory(self,data):
+      pass
+
+  def visitText(self,text):
+      self._output.write(text)
 
     # Write columns in markdown format
   def writeColumns(self,cols):
@@ -201,6 +218,183 @@ for (i = 0; i < toggler.length; i++) {
   });
 }</script>"""
 
+barscript="""    <script src="https://d3js.org/d3.v5.js"></script>
+
+
+
+<script type="text/javascript">
+
+histwidth=400;
+histheight=200;
+histmargin={left:40,right:100,bottom:40,top:10};
+
+function legend(color,svg)
+{
+    const g = svg
+      .attr("transform", `translate(${histwidth},0)`)
+      .attr("text-anchor", "end")
+      .attr("font-family", "sans-serif")
+      .attr("font-size", 9)
+    .selectAll("g")
+    .data(color.domain().slice().reverse())
+    .join("g")
+      .attr("transform", (d, i) => `translate(0,${i * 20})`);
+
+  g.append("rect")
+      .attr("x", -19)
+      .attr("width", 19)
+      .attr("height", 19)
+      .attr("fill", color);
+
+  g.append("text")
+      .attr("x", -24)
+      .attr("y", 9.5)
+      .attr("dy", "0.35em")
+      .text(d => d);
+
+}
+  
+function myhist(data,theid)
+{
+    var x,y,xAxis,yAxis,svg,color;
+
+    
+
+color = d3.scaleOrdinal()
+    .domain(data.series.map(d => d['name']))
+    .range(["#FF6B00",
+"#FFC700",
+"#95D600",
+"#00C1DE",
+"#0091BD",
+"#002B49",
+"#333E48",
+"#7D868C",
+"#E5ECEB"]);
+    
+    svg = d3.select(theid).insert("svg")
+      .attr("viewBox", [0, 0, histwidth, histheight]);
+
+
+sx = d3.scaleLinear()
+    .domain(d3.extent(data.dates))
+    .range([histmargin.left,histwidth - histmargin.right]);
+
+sy = d3.scaleLinear()
+    .domain([0, d3.max(data.series, d => d3.max(d.values,q => q[1]))]).nice()
+    .range([histheight - histmargin.bottom, histmargin.top]);
+
+xAxis = g => g
+    .attr("transform", `translate(0,${histheight - histmargin.bottom})`)
+    .call(d3.axisBottom(sx).tickValues(data.dates).ticks(histwidth / 80,"d").
+        tickSizeOuter(0));
+
+svg.append("text")
+    .attr("class", "x label")
+    .attr("text-anchor", "end")
+    .attr("x", histwidth/2.0)
+    .attr("y", histheight - 6)
+    .text("RUN ID");
+
+yAxis = g => g
+    .attr("transform", `translate(${histmargin.left},0)`)
+    .call(d3.axisLeft(sy))
+    .call(g => g.select(".domain").remove());
+
+
+
+line = d3.line()
+    .x(d => sx(data.dates[d[0]])
+    )
+    .y(d => sy(d[1]));
+
+svg.append("g")
+      .call(xAxis);
+
+  svg.append("g")
+      .call(yAxis);
+
+  const path = svg.append("g")
+      .attr("fill", "none")
+      .attr("stroke", "steelblue")
+      .attr("stroke-width", 1.5)
+      .attr("stroke-linejoin", "round")
+      .attr("stroke-linecap", "round")
+    .selectAll("path")
+    .data(data.series)
+    .join("path")
+      .style("mix-blend-mode", "multiply")
+      .attr("stroke", d => color(d.name))
+      .attr("d", d => line(d.values));
+
+// Legend
+
+ 
+
+svg.append("g")
+      .call(d => legend(color,d)); 
+  //svg.call(hover, path);
+
+
+}
+
+function mybar(data,theid)
+{
+    var width,height,margin,x,y,xAxis,yAxis,svg,color;
+
+    width=400;
+    height=100;
+    margin={left:40,right:10,bottom:40,top:10};
+
+    
+    svg = d3.select(theid).insert("svg")
+      .attr("viewBox", [0, 0, width, height]);;
+
+x = d3.scaleBand()
+    .domain(d3.range(data.length))
+    .range([margin.left, width - margin.right])
+    .padding(0.1);
+
+y = d3.scaleLinear()
+    .domain([0, d3.max(data, d => d.value)]).nice()
+    .range([height - margin.bottom, margin.top]);
+
+xAxis = g => g
+    .attr("transform", `translate(0,${height - margin.bottom})`)
+    .call(d3.axisBottom(x).tickFormat(i => data[i].name).tickSizeOuter(0));
+
+yAxis = g => g
+    .attr("transform", `translate(${margin.left},0)`)
+    .call(d3.axisLeft(y).ticks(4, data.format))
+    .call(g => g.select(".domain").remove())
+    .call(g => g.append("text")
+        .attr("x", -margin.left)
+        .attr("y", 10)
+        .attr("fill", "currentColor")
+        .attr("text-anchor", "start")
+        .text(data.y));
+
+color = "steelblue"
+   
+  svg.append("g")
+      .attr("fill", color)
+    .selectAll("rect")
+    .data(data)
+    .join("rect")
+      .attr("x", (d, i) => x(i))
+      .attr("y", d => y(d.value))
+      .attr("height", d => y(0) - y(d.value))
+      .attr("width", x.bandwidth());
+
+  svg.append("g")
+      .call(xAxis);
+
+  svg.append("g")
+      .call(yAxis);
+
+}
+</script>"""
+
 
 class HTMLToc:
   def __init__(self,output):
@@ -213,6 +407,14 @@ class HTMLToc:
   def visitTable(self,table):
       pass
 
+  def visitBarChart(self,data):
+      pass
+
+  def visitHistory(self,data):
+      pass
+
+  def visitText(self,text):
+      pass
 
   def visitSection(self,section):
      self._id = self._id + 1 
@@ -241,10 +443,49 @@ class HTML:
   def __init__(self,output,regMode):
     self._id=0
     self._sectionID = 0
+    self._barID = 0
+    self._histID = 0
     self._output = output
     self._regMode = regMode
 
-  
+  def visitBarChart(self,bar):
+      data=bar.data
+      datastr = "".join(joinit(["{name:'%s',value:%s}" % x for x in data],","))
+      #print(datastr)
+      self._output.write("<p id=\"g%d\"></p>\n" % self._barID)
+      self._output.write("""<script type="text/javascript">
+thedata%d=[%s];
+mybar(thedata%d,"#g%d");
+</script>""" % (self._barID,datastr,self._barID,self._barID))
+
+      self._barID = self._barID + 1
+
+  def _getIndex(self,runids,data):
+    return([[runids.index(x[0]),x[1]] for x in data])
+
+  def visitHistory(self,hist):
+      data=hist.data
+      runidstr = "".join(joinit([str(x) for x in hist.runids],","))
+      serieelems=[]
+      for core in data:
+        serieelems.append("{name: '%s',values: %s}" % (core,self._getIndex(hist.runids,data[core])))
+
+      seriestr = "".join(joinit(serieelems,","))
+      datastr="""{
+series: [%s],
+ dates: [%s]
+};""" %(seriestr,runidstr);
+      #print(datastr)
+      self._output.write("<p id=\"hi%d\"></p>\n" % self._histID)
+      self._output.write("""<script type="text/javascript">
+thehdata%d=%s
+myhist(thehdata%d,"#hi%d");
+</script>""" % (self._histID,datastr,self._histID,self._histID))
+
+      self._histID = self._histID + 1
+
+  def visitText(self,text):
+      pass
 
   def visitTable(self,table):
       self._output.write("<table>\n")
@@ -308,6 +549,7 @@ class HTML:
       else:
          self._output.write("<h1>ECPS Benchmark Summary</h1>\n")
       self._output.write("<p>Run number %d on %s</p>\n" % (document.runid, str(document.date)))
+      self._output.write(barscript)
 
   def leaveDocument(self,document):
     document.accept(HTMLToc(self._output))

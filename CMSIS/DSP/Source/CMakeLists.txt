@@ -274,6 +274,7 @@ if (DISTANCE)
   target_link_libraries(CMSISDSP INTERFACE CMSISDSPDistance)
 endif()
 
+
 ### Includes
 target_include_directories(CMSISDSP INTERFACE "${DSP}/Include")
 

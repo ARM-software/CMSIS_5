@@ -88,13 +88,13 @@ void SystemInit (void)
 #endif
 
 #if defined (__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
-  TZ_SAU_Setup();
+  //TZ_SAU_Setup();
 #endif
 
   SystemCoreClock = SYSTEM_CLOCK;
 
   //Disable debug
-  DEBUG_DEMCR &=~ DEBUG_TRCENA;
+  //DEBUG_DEMCR &=~ DEBUG_TRCENA;
 
   // enable DL branch cache
   CCR |= CCR_DL;

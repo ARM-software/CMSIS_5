@@ -323,6 +323,10 @@ class Test:
 
     # Process a test from the test description file
     def processTest(self):
+      if isDebugMode():
+        completed=subprocess.run([sys.executable,"processTests.py","-e",self.testName(),"1"],timeout=3600)
+        check(completed)
+      else:
         completed=subprocess.run([sys.executable,"processTests.py","-e",self.testName()],timeout=3600)
         check(completed)
 
@@ -345,7 +349,12 @@ class Test:
         with self.buildConfig().buildFolder() as b:
            msg("  Run %s\n" % self.testName() )
            with open(self.resultName(),"w") as results:
-              completed=subprocess.run(fvp.split(),stdout=results,timeout=timeoutVal)
+              if isDebugMode():
+                 print(os.getcwd())
+                 print(fvp.split())
+                 completed=subprocess.run(fvp.split(),timeout=timeoutVal)
+              else:
+                 completed=subprocess.run(fvp.split(),stdout=results,timeout=timeoutVal)
         check(completed)
 
     # Process results of the given tests
@@ -388,6 +397,8 @@ class Test:
         # build is done per test suite.
         if sim:
            if fvp is not None:
+              if isDebugMode():
+                 print(fvp)
               self.run(fvp,benchmode)
               error=self.processResult()
               if benchmode and (error == NOTESTFAILED):

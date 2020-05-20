@@ -22,77 +22,16 @@
  * limitations under the License.
  */
 #include "mem_ARMCM0.h" 
-/*
- *-------- <<< Use Configuration Wizard in Context Menu >>> -------------------
- */
 
-/*---------------------- Flash Configuration ----------------------------------
-  <h> Flash Configuration
-    <o0> Flash Base Address <0x0-0xFFFFFFFF:8>
-    <o1> Flash Size (in Bytes) <0x0-0xFFFFFFFF:8>
-  </h>
-  -----------------------------------------------------------------------------*/
-__ROM_BASE = 0x00000000;
-__ROM_SIZE = 0x00400000;
-
-/*--------------------- Embedded RAM Configuration ----------------------------
-  <h> RAM Configuration
-    <o0> RAM Base Address    <0x0-0xFFFFFFFF:8>
-    <o1> RAM Size (in Bytes) <0x0-0xFFFFFFFF:8>
-  </h>
- -----------------------------------------------------------------------------*/
-__RAM_BASE = 0x20000000;
-__RAM_SIZE = 0x00300000;
-
-/*--------------------- Stack / Heap Configuration ----------------------------
-  <h> Stack / Heap Configuration
-    <o0> Stack Size (in Bytes) <0x0-0xFFFFFFFF:8>
-    <o1> Heap Size (in Bytes) <0x0-0xFFFFFFFF:8>
-  </h>
-  -----------------------------------------------------------------------------*/
-__STACK_SIZE = STACK_SIZE;
-__HEAP_SIZE  = HEAP_SIZE;
-
-/*
- *-------------------- <<< end of configuration section >>> -------------------
- */
+__STACK_SIZE = 0x2000;
+__HEAP_SIZE  = 0x50000;
 
 MEMORY
 {
-  FLASH (rx)  : ORIGIN = __ROM_BASE, LENGTH = __ROM_SIZE
-  RAM   (rwx) : ORIGIN = __RAM_BASE, LENGTH = __RAM_SIZE
+  ITCM (rx)     : ORIGIN = 0x00000000, LENGTH = 512K
+  DTCM (xrw)    : ORIGIN = 0x20000000, LENGTH = 128K
+  DTCM2 (xrw)     : ORIGIN = 0x20020000, LENGTH = 384K
 }
-
-/* Linker script to place sections and symbol values. Should be used together
- * with other linker script that defines memory regions FLASH and RAM.
- * It references following symbols, which must be defined in code:
- *   Reset_Handler : Entry of reset handler
- *
- * It defines following symbols, which code can use without definition:
- *   __exidx_start
- *   __exidx_end
- *   __copy_table_start__
- *   __copy_table_end__
- *   __zero_table_start__
- *   __zero_table_end__
- *   __etext
- *   __data_start__
- *   __preinit_array_start
- *   __preinit_array_end
- *   __init_array_start
- *   __init_array_end
- *   __fini_array_start
- *   __fini_array_end
- *   __data_end__
- *   __bss_start__
- *   __bss_end__
- *   __end__
- *   end
- *   __HeapLimit
- *   __StackLimit
- *   __StackTop
- *   __stack
- */
 ENTRY(Reset_Handler)
 
 SECTIONS
@@ -122,12 +61,12 @@ SECTIONS
     *(.rodata*)
 
     KEEP(*(.eh_frame*))
-  } > FLASH
+  } > ITCM
 
   /*
    * SG veneers:
    * All SG veneers are placed in the special output section .gnu.sgstubs. Its start address
-   * must be set, either with the command line option ‘--section-start’ or in a linker script,
+   * must be set, either with the command line option â€˜--section-startâ€™ or in a linker script,
    * to indicate where to place these veneers in memory.
    */
 /*
@@ -139,13 +78,13 @@ SECTIONS
   .ARM.extab :
   {
     *(.ARM.extab* .gnu.linkonce.armextab.*)
-  } > FLASH
+  } > ITCM
 
   __exidx_start = .;
   .ARM.exidx :
   {
     *(.ARM.exidx* .gnu.linkonce.armexidx.*)
-  } > FLASH
+  } > ITCM
   __exidx_end = .;
 
   .copy.table :
@@ -162,7 +101,7 @@ SECTIONS
     LONG (__data2_end__ - __data2_start__)
 */
     __copy_table_end__ = .;
-  } > FLASH
+  } > ITCM
 
   .zero.table :
   {
@@ -174,16 +113,15 @@ SECTIONS
     LONG (__bss2_end__ - __bss2_start__)
 */
     __zero_table_end__ = .;
-  } > FLASH
+  } > DTCM
 
   /**
    * Location counter can end up 2byte aligned with narrow Thumb code but
    * __etext is assumed by startup code to be the LMA of a section in RAM
    * which must be 4byte aligned 
    */
-  __etext = ALIGN (4);
-
-  .data : AT (__etext)
+  
+  .data : 
   {
     __data_start__ = .;
     *(vtable)
@@ -216,7 +154,9 @@ SECTIONS
     /* All data end */
     __data_end__ = .;
 
-  } > RAM
+  } > ITCM AT > DTCM
+
+  __etext = ADDR(.data);
 
   /*
    * Secondary data section, optional
@@ -249,7 +189,7 @@ SECTIONS
     *(COMMON)
     . = ALIGN(4);
     __bss_end__ = .;
-  } > RAM AT > RAM
+  } > DTCM2
 
   /*
    * Secondary bss section, optional
@@ -274,23 +214,25 @@ SECTIONS
   {
     . = ALIGN(8);
     __end__ = .;
-    __HeapBase = .;
     PROVIDE(end = .);
     . = . + __HEAP_SIZE;
     . = ALIGN(8);
     __HeapLimit = .;
-  } > RAM
+  } > DTCM2
 
-  .stack (ORIGIN(RAM) + LENGTH(RAM) - __STACK_SIZE) (COPY) :
+  .stack (ORIGIN(DTCM2) + LENGTH(DTCM2) - __STACK_SIZE) (COPY) :
   {
     . = ALIGN(8);
     __StackLimit = .;
     . = . + __STACK_SIZE;
     . = ALIGN(8);
     __StackTop = .;
-  } > RAM
+  } > DTCM2
   PROVIDE(__stack = __StackTop);
 
-  /* Check if data + heap + stack exceeds RAM limit */
-  ASSERT(__StackLimit >= __HeapLimit, "region RAM overflowed with stack")
+  /* Check if data + heap + stack exceeds DTCM2 limit */
+  ASSERT(__StackLimit >= __HeapLimit, "region DTCM2 overflowed with stack")
 }
+
+
+

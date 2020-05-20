@@ -1,4 +1,4 @@
-option(SEMIHOSTING "Test trace using printf" ON)
+option(SEMIHOSTING "Test trace using printf" OFF)
 
 if (PLATFORM STREQUAL "FVP")
 SET(PLATFORMFOLDER ${ROOT}/CMSIS/DSP/Platforms/FVP)

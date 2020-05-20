@@ -28,7 +28,16 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
+
+#if defined (__ARMCC_VERSION) && (__ARMCC_VERSION >= 6100100)
 #include <rt_sys.h>
+#else
+#define GCCCOMPILER
+struct __FILE {int handle;};
+FILE __stdout;
+FILE __stdin;
+FILE __stderr;
+#endif
 
 #if defined (ARMCM33)
   #include "ARMCM33.h"
@@ -276,11 +285,10 @@ void SystemInit (void)
 {
 
 #if defined (__VTOR_PRESENT) && (__VTOR_PRESENT == 1U)
-  SCB->VTOR = (uint32_t)(&__VECTOR_TABLE);
+  SCB->VTOR = (uint32_t) &__VECTOR_TABLE;
 #endif
 
-#if (defined (__FPU_USED) && (__FPU_USED == 1U)) || \
-    (defined (__MVE_USED) && (__MVE_USED == 1U))
+#if defined (__FPU_USED) && (__FPU_USED == 1U)
   SCB->CPACR |= ((3U << 10U*2U) |           /* enable CP10 Full Access */
                  (3U << 11U*2U)  );         /* enable CP11 Full Access */
 #endif
@@ -290,16 +298,10 @@ void SystemInit (void)
 #endif
 
 #if defined (__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
-    TZ_SAU_Setup();
+  TZ_SAU_Setup();
 #endif
 
-  //   SystemCoreClock = SYSTEM_CLOCK;
-
-  //Disable debug
-  // DEBUG_DEMCR &=~ DEBUG_TRCENA;
-
-  // enable DL branch cache
- 
+  SystemCoreClock = SYSTEM_CLOCK;
 }
 
 __attribute__((constructor(255)))
@@ -343,6 +345,7 @@ int fputc (int c, FILE * stream)
     return (-1);
 }
 
+#ifndef GCCCOMPILER
 /* IO device file handles. */
 #define FH_STDIN    0x8001
 #define FH_STDOUT   0x8002
@@ -689,6 +692,23 @@ long _sys_flen (FILEHANDLE fh) {
 }
 #endif
  
+#else /* gcc compiler */
+int _write(int   file,
+        char *ptr,
+        int   len)
+{
+  int i;
+  (void)file;
+  
+  for(i=0; i < len;i++)
+  {
+     stdout_putchar(*ptr++);
+  }
+  return len;
+}
+
+#endif
+
 #define log_str(...)                                \
     do {                                                \
         const char *pchSrc = __VA_ARGS__;               \
@@ -699,6 +719,17 @@ long _sys_flen (FILEHANDLE fh) {
     } while(0)
 
 
+#ifdef GCCCOMPILER
+void _exit(int return_code)
+{
+    (void)return_code;
+    log_str("\n");
+    log_str("_[TEST COMPLETE]_________________________________________________\n");
+    log_str("\n\n");
+    *((volatile unsigned *) (SERIAL_BASE_ADDRESS-0x10000)) = 0xa;
+    while(1);
+}
+#else
 void _sys_exit(int n)
 {
     (void)n;
@@ -708,6 +739,7 @@ void _sys_exit(int n)
   *((volatile unsigned *) (SERIAL_BASE_ADDRESS-0x10000)) = 0xa;
   while(1);
 }
+#endif
 
 extern void ttywrch (int ch);
 __attribute__((weak))

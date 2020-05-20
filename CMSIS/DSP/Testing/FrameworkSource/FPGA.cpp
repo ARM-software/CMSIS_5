@@ -34,8 +34,8 @@
 #include <string>
 #include <cstddef>
 #include "FPGA.h"
-#include <stdio.h>
-#include <string.h>
+#include <cstdio>
+
 #include "Generators.h"
 #include "arm_math.h"
 #include "arm_math_f16.h"

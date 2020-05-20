@@ -30,7 +30,6 @@
 
 #include <cstdlib>
 #include <vector>
-#include <queue>
 #include <cstdio>
 #include "arm_math.h"
 #include "arm_math_f16.h"

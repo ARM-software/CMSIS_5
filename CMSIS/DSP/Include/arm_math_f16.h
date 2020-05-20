@@ -54,7 +54,10 @@ won't be built.
   #define ARM_FLOAT16_SUPPORTED
   #endif
 #else
-  #define ARM_FLOAT16_SUPPORTED
+  /* HW Float16 not yet well supported on gcc for M55 */
+  #if !defined(__CMSIS_GCC_H)
+    #define ARM_FLOAT16_SUPPORTED
+  #endif
 #endif
 
 #if defined(ARM_MATH_NEON) || defined(ARM_MATH_MVEF) /* floating point vector*/

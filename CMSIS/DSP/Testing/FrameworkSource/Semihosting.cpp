@@ -32,9 +32,9 @@
 
 #include <string>
 #include <cstddef>
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
+#include <cstdio>
+#include <cstring>
+#include <stdlib>
 #include "Generators.h"
 #include "Semihosting.h"
 #include "arm_math.h"

@@ -28,7 +28,7 @@
 #ifndef _FPGA_H_
 #define _FPGA_H_
 #include <string>
-#include "stdlib.h"
+#include <cstdlib>
 #include "arm_math.h"
 #include "arm_math_f16.h"
 

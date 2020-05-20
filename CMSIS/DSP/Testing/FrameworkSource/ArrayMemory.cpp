@@ -26,8 +26,8 @@
  * limitations under the License.
  */
 #include "ArrayMemory.h"
-#include <stdlib.h>
-#include <string.h>
+#include <cstdlib>
+#include <cstring>
 #include <math.h>
 
 namespace Client {

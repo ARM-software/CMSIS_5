@@ -16,9 +16,17 @@ configDsp(CMSISDSPComplexMath ${ROOT})
 include(interpol)
 interpol(CMSISDSPFastMath)
 
+
 if (CONFIGTABLE AND ALLFAST)
     target_compile_definitions(CMSISDSPComplexMath PUBLIC ARM_ALL_FAST_TABLES)  
 endif()
+
+# Vectorized code is defining sqrt
+# so fast tables required even if Fast Math not built.
+if (CONFIGTABLE AND (HELIUM OR MVEF OR MVEI))
+    target_compile_definitions(CMSISDSPComplexMath PUBLIC ARM_FAST_ALLOW_TABLES)  
+endif()
+
 
 # MVE code is using a table for computing the fast sqrt arm_cmplx_mag_q31
 # There is the possibility of not compiling this function and not including

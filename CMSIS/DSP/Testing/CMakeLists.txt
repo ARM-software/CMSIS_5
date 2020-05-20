@@ -78,6 +78,7 @@ option(BENCHMARK "Benchmarking compiled" OFF)
 option(EXTBENCH "Benchmarking with external traces" OFF)
 option(NN "NN Tests included" OFF)
 option(REFLIB "Use already built reference lib" OFF)
+option(EMBEDDED "Embedded Mode" ON)
 
 option(FLOAT16TESTS "Float16 tests" OFF)
 option(MICROBENCH "Micro benchmarks" OFF)
@@ -253,17 +254,21 @@ endif()
 
 set(FRAMEWORKSRC
   FrameworkSource/Test.cpp
-  FrameworkSource/Semihosting.cpp
   FrameworkSource/IORunner.cpp
   FrameworkSource/ArrayMemory.cpp
   FrameworkSource/Pattern.cpp
   FrameworkSource/PatternMgr.cpp
   FrameworkSource/Error.cpp
-  FrameworkSource/FPGA.cpp
   FrameworkSource/Timing.cpp
   FrameworkSource/Generators.cpp
   FrameworkSource/Calibrate.cpp
   )
+
+if (EMBEDDED)
+  set(FRAMEWORKMODESRC FrameworkSource/FPGA.cpp)
+else()
+  set(FRAMEWORKMODESRC FrameworkSource/Semihosting.cpp)
+endif()
 
 
 # With -O2, generated code is crashing on some cycle accurate models.
@@ -284,6 +289,10 @@ target_sources(TestingLib PRIVATE ${TESTSRC16})
 target_sources(TestingLib PRIVATE testmain.cpp)
 target_sources(TestingLib PRIVATE GeneratedSource/TestDesc.cpp)
 
+if (EMBEDDED)
+    target_compile_definitions(TestingLib PUBLIC EMBEDDED)
+endif()
+
 if (BENCHMARK)
   target_compile_definitions(TestingLib PUBLIC BENCHMARK)
   if (MICROBENCH)
@@ -293,6 +302,8 @@ endif()
   
 
 target_sources(FrameworkLib PRIVATE ${FRAMEWORKSRC})
+target_sources(FrameworkLib PRIVATE ${FRAMEWORKMODESRC})
+
 if (BENCHMARK)
     target_compile_definitions(FrameworkLib PUBLIC BENCHMARK)
 endif()

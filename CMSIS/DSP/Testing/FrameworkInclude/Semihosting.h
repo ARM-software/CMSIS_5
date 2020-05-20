@@ -29,7 +29,7 @@
 #define _SEMIHOSTING_H_
 #include <string>
 #include <memory>
-#include <stdio.h>
+#include <cstdio>
 #include "arm_math.h"
 #include "arm_math_f16.h"
 

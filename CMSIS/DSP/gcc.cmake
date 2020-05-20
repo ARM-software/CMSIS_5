@@ -48,10 +48,10 @@ if(NOT ARM_CPU)
     )
 endif(NOT ARM_CPU)
 
-SET(CMAKE_C_FLAGS "-g -ffunction-sections -fdata-sections -mcpu=${ARM_CPU}" CACHE INTERNAL "C compiler common flags")
-SET(CMAKE_CXX_FLAGS "-g -ffunction-sections -fdata-sections -mcpu=${ARM_CPU}" CACHE INTERNAL "C compiler common flags")
+SET(CMAKE_C_FLAGS "-ffunction-sections -fdata-sections -mcpu=${ARM_CPU}" CACHE INTERNAL "C compiler common flags")
+SET(CMAKE_CXX_FLAGS "-ffunction-sections -fdata-sections -mcpu=${ARM_CPU}" CACHE INTERNAL "C compiler common flags")
 SET(CMAKE_ASM_FLAGS "-mcpu=${ARM_CPU}" CACHE INTERNAL "ASM compiler common flags")
-#SET(CMAKE_EXE_LINKER_FLAGS "--specs=nosys.specs"  CACHE INTERNAL "linker flags")
+SET(CMAKE_EXE_LINKER_FLAGS "-mcpu=${ARM_CPU}"  CACHE INTERNAL "linker flags")
 
 get_property(IS_IN_TRY_COMPILE GLOBAL PROPERTY IN_TRY_COMPILE)
 if(IS_IN_TRY_COMPILE)

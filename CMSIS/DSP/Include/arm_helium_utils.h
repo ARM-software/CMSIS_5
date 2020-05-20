@@ -102,7 +102,6 @@ Definitions available for MVEI only
 ***************************************/
 #if defined (ARM_MATH_HELIUM) || defined(ARM_MATH_MVEI)
 
-
 #include "arm_common_tables.h"
 
 /* Following functions are used to transpose matrix in f32 and q31 cases */
@@ -250,11 +249,11 @@ __STATIC_INLINE q31x4_t FAST_VSQRT_Q31(q31x4_t vecIn)
     vecIdx = vecNrm >> 24;
     vecIdx = vecIdx << 1;
 
-    vecTmp0 = vldrwq_gather_shifted_offset_s32(sqrtTable_Q31, vecIdx);
+    vecTmp0 = vldrwq_gather_shifted_offset_s32(sqrtTable_Q31, (uint32x4_t)vecIdx);
 
     vecIdx = vecIdx + 1;
 
-    vecTmp1 = vldrwq_gather_shifted_offset_s32(sqrtTable_Q31, vecIdx);
+    vecTmp1 = vldrwq_gather_shifted_offset_s32(sqrtTable_Q31, (uint32x4_t)vecIdx);
 
     vecTmp1 = vqrdmulhq(vecTmp1, vecNrm);
     vecTmp0 = vecTmp0 - vecTmp1;
@@ -315,11 +314,11 @@ __STATIC_INLINE q15x8_t FAST_VSQRT_Q15(q15x8_t vecIn)
     vecIdx = vecNrm >> 8;
     vecIdx = vecIdx << 1;
 
-    vecTmp0 = vldrhq_gather_shifted_offset_s16(sqrtTable_Q15, vecIdx);
+    vecTmp0 = vldrhq_gather_shifted_offset_s16(sqrtTable_Q15, (uint16x8_t)vecIdx);
 
     vecIdx = vecIdx + 1;
 
-    vecTmp1 = vldrhq_gather_shifted_offset_s16(sqrtTable_Q15, vecIdx);
+    vecTmp1 = vldrhq_gather_shifted_offset_s16(sqrtTable_Q15, (uint16x8_t)vecIdx);
 
     vecTmp1 = vqrdmulhq(vecTmp1, vecNrm);
     vecTmp0 = vecTmp0 - vecTmp1;

@@ -31,10 +31,11 @@ runid = 1
 
 parser = argparse.ArgumentParser(description='Generate summary benchmarks')
 
-parser.add_argument('-b', nargs='?',type = str, default="bench.db", help="Benchmark database")
+parser.add_argument('-b', nargs='?',type = str, default="bench.db", help="Database")
 parser.add_argument('-o', nargs='?',type = str, default="full.md", help="Full summary")
 parser.add_argument('-r', action='store_true', help="Regression database")
 parser.add_argument('-t', nargs='?',type = str, default="md", help="md,html")
+parser.add_argument('-byc', action='store_true', help="By Compiler")
 
 # For runid or runid range
 parser.add_argument('others', nargs=argparse.REMAINDER,help="Run ID")
@@ -59,6 +60,8 @@ REMOVETABLES=['TESTNAME','TESTDATE','RUN','CORE', 'PLATFORM', 'COMPILERKIND', 'C
 # Name is removed here because it is added at the beginning
 REMOVECOLUMNS=['runid','name','type','platform','category','coredef','OPTIMIZED','HARDFP','FASTMATH','NEON','HELIUM','UNROLL','ROUNDING','DATE','compilerkindid','date','categoryid', 'ID', 'platformid', 'coreid', 'compilerid', 'typeid']
 
+REMOVECOLUMNSFORHISTORY=['Regression','MAXREGCOEF','name','type','platform','category','coredef','OPTIMIZED','HARDFP','FASTMATH','NEON','HELIUM','UNROLL','ROUNDING','DATE','compilerkindid','date','categoryid', 'ID', 'platformid', 'coreid', 'compilerid', 'typeid']
+
 # Get existing benchmark tables
 def getBenchTables():
     r=c.execute("SELECT name FROM sqlite_master WHERE type='table'")
@@ -77,14 +80,30 @@ def getExistingTypes(benchTable):
 # Get compilers from specific type and table
 allCompilers="""select distinct compilerid from %s WHERE typeid=?"""
 
+# Get compilers from specific type and table
+allCores="""select distinct coreid from %s WHERE typeid=?"""
+
+
 compilerDesc="""select compiler,version from COMPILER 
   INNER JOIN COMPILERKIND USING(compilerkindid) WHERE compilerid=?"""
+
+coreDesc="""select core from CORE WHERE coreid=?"""
 
 # Get existing compiler in a table for a specific type
 # (In case report is structured by types)
 def getExistingCompiler(benchTable,typeid):
     r=c.execute(allCompilers % benchTable,(typeid,)).fetchall()
     return([x[0] for x in r])
+
+def getExistingCores(benchTable,typeid):
+    r=c.execute(allCores % benchTable,(typeid,)).fetchall()
+    return([x[0] for x in r])
+
+
+
+def getCoreDesc(compilerid):
+    r=c.execute(coreDesc,(compilerid,)).fetchone()
+    return(r)
 
 def getCompilerDesc(compilerid):
     r=c.execute(compilerDesc,(compilerid,)).fetchone()
@@ -101,9 +120,46 @@ def diff(first, second):
         return [item for item in first if item not in second]
 
 
+# Command to get data for specific core 
+# and type
+historyCmd="""select %s from %s
+  INNER JOIN CATEGORY USING(categoryid)
+  INNER JOIN PLATFORM USING(platformid)
+  INNER JOIN CORE USING(coreid)
+  INNER JOIN COMPILER USING(compilerid)
+  INNER JOIN COMPILERKIND USING(compilerkindid)
+  INNER JOIN TYPE USING(typeid)
+  INNER JOIN TESTNAME USING(testnameid)
+  WHERE compilerid=? AND coreid=? AND typeid = ? AND ID = ? AND runid > (? - 10)
+  """
+
+compilersForHistory="""select distinct compilerid,compiler,version  from %s
+  INNER JOIN COMPILER USING(compilerid)
+  INNER JOIN COMPILERKIND USING(compilerkindid)
+  WHERE coreid=? AND typeid = ? AND ID = ? AND runid > (? - 10)
+  """
+
+# Command to get data for specific core 
+# and type
+benchCmdForCore="""select %s from %s
+  INNER JOIN CATEGORY USING(categoryid)
+  INNER JOIN PLATFORM USING(platformid)
+  INNER JOIN CORE USING(coreid)
+  INNER JOIN COMPILER USING(compilerid)
+  INNER JOIN COMPILERKIND USING(compilerkindid)
+  INNER JOIN TYPE USING(typeid)
+  INNER JOIN TESTNAME USING(testnameid)
+  WHERE coreid=? AND typeid = ? AND runid = ?
+  """
+
+coresForHistory="""select distinct coreid,core from %s
+  INNER JOIN CORE USING(coreid)
+  WHERE compilerid=? AND typeid = ? AND ID = ? AND runid > (? - 10)
+  """
+
 # Command to get data for specific compiler 
 # and type
-benchCmd="""select %s from %s
+benchCmdForCompiler="""select %s from %s
   INNER JOIN CATEGORY USING(categoryid)
   INNER JOIN PLATFORM USING(platformid)
   INNER JOIN CORE USING(coreid)
@@ -114,10 +170,18 @@ benchCmd="""select %s from %s
   WHERE compilerid=? AND typeid = ? AND runid = ?
   """
 
-
 # Command to get test names for specific compiler 
 # and type
-benchNames="""select distinct name from %s
+benchNamesForCore="""select distinct ID,name from %s
+  INNER JOIN COMPILER USING(compilerid)
+  INNER JOIN COMPILERKIND USING(compilerkindid)
+  INNER JOIN TYPE USING(typeid)
+  INNER JOIN TESTNAME USING(testnameid)
+  WHERE coreid=? AND typeid = ? AND runid = ?
+  """
+# Command to get test names for specific compiler 
+# and type
+benchNamesForCompiler="""select distinct ID,name from %s
   INNER JOIN COMPILER USING(compilerid)
   INNER JOIN COMPILERKIND USING(compilerkindid)
   INNER JOIN TYPE USING(typeid)
@@ -150,13 +214,28 @@ def isNotIDColumn(col):
         return(False)
     else:
         return(True)
-    
+
+# Get test names
+# for specific typeid and core (for the data)
+def getTestNamesForCore(benchTable,core,typeid):
+    vals=(core,typeid,runid)
+    result=c.execute(benchNamesForCore % benchTable,vals).fetchall()
+    names=[(x[0],x[1]) for x in list(result)]
+    return(names)
+
 # Get test names
 # for specific typeid and compiler (for the data)
-def getTestNames(benchTable,comp,typeid):
+def getTestNamesForCompiler(benchTable,comp,typeid):
     vals=(comp,typeid,runid)
-    result=c.execute(benchNames % benchTable,vals).fetchall()
-    return([x[0] for x in list(result)])
+    result=c.execute(benchNamesForCompiler % benchTable,vals).fetchall()
+    names=[(x[0],x[1]) for x in list(result)]
+    return(names)
+
+# Command to get data for specific core 
+# and type
+nbElemsInBenchAndTypeAndCoreCmd="""select count(*) from %s
+  WHERE coreid=? AND typeid = ? AND runid = ?
+  """
 
 # Command to get data for specific compiler 
 # and type
@@ -182,6 +261,12 @@ def getCategoryName(benchTable,runid):
   return(result[0])
 
 # Get nb elems in a table
+def getNbElemsInBenchAndTypeAndCoreCmd(benchTable,coreid,typeid):
+    vals=(coreid,typeid,runid)
+    result=c.execute(nbElemsInBenchAndTypeAndCoreCmd % benchTable,vals).fetchone()
+    return(result[0])
+
+# Get nb elems in a table
 def getNbElemsInBenchAndTypeAndCompilerCmd(benchTable,comp,typeid):
     vals=(comp,typeid,runid)
     result=c.execute(nbElemsInBenchAndTypeAndCompilerCmd % benchTable,vals).fetchone()
@@ -198,15 +283,42 @@ def getNbElemsInBenchCmd(benchTable):
     return(result[0])
 
 # Get names of columns and data for a table
+# for specific typeid and coreid (for the data)
+def getColNamesAndHistory(benchTable,compiler,core,typeid,testid):
+    cursor=c.cursor()
+    result=cursor.execute(benchCmdColumns % (benchTable))
+    cols= [member[0] for member in cursor.description]
+    keepCols = ['name','runid'] + [c for c in diff(cols , REMOVECOLUMNSFORHISTORY) if isNotIDColumn(c)]
+    keepColsStr = "".join(joinit(keepCols,","))
+    vals=(compiler,core,typeid,testid,runid)
+    result=cursor.execute(historyCmd % (keepColsStr,benchTable),vals)
+    vals =np.array([list(x) for x in list(result)])
+    return(keepCols,vals)
+
+# Get names of columns and data for a table
+# for specific typeid and coreid (for the data)
+def getColNamesAndDataForCore(benchTable,core,typeid):
+    cursor=c.cursor()
+    result=cursor.execute(benchCmdColumns % (benchTable))
+    cols= [member[0] for member in cursor.description]
+    keepCols = ['name'] + [c for c in diff(cols , REMOVECOLUMNS) if isNotIDColumn(c)]
+    keepColsStr = "".join(joinit(keepCols,","))
+    vals=(core,typeid,runid)
+    result=cursor.execute(benchCmdForCore % (keepColsStr,benchTable),vals)
+    vals =np.array([list(x) for x in list(result)])
+    return(keepCols,vals)
+
+
+# Get names of columns and data for a table
 # for specific typeid and compiler (for the data)
-def getColNamesAndData(benchTable,comp,typeid):
+def getColNamesAndDataForCompiler(benchTable,comp,typeid):
     cursor=c.cursor()
     result=cursor.execute(benchCmdColumns % (benchTable))
     cols= [member[0] for member in cursor.description]
     keepCols = ['name'] + [c for c in diff(cols , REMOVECOLUMNS) if isNotIDColumn(c)]
     keepColsStr = "".join(joinit(keepCols,","))
     vals=(comp,typeid,runid)
-    result=cursor.execute(benchCmd % (keepColsStr,benchTable),vals)
+    result=cursor.execute(benchCmdForCompiler % (keepColsStr,benchTable),vals)
     vals =np.array([list(x) for x in list(result)])
     return(keepCols,vals)
 
@@ -214,8 +326,8 @@ def getColNamesAndData(benchTable,comp,typeid):
 
 PARAMS=["NB","NumTaps", "NBA", "NBB", "Factor", "NumStages","VECDIM","NBR","NBC","NBI","IFFT", "BITREV"]
 
-def regressionTableFor(name,section,ref,toSort,indexCols,field):
-    data=ref.pivot_table(index=indexCols, columns='core', 
+def regressionTableFor(byname,name,section,ref,toSort,indexCols,field):
+    data=ref.pivot_table(index=indexCols, columns=byname, 
     values=[field], aggfunc='first')
        
     data=data.sort_values(toSort)
@@ -224,7 +336,7 @@ def regressionTableFor(name,section,ref,toSort,indexCols,field):
     columns = diff(indexCols,['name'])
 
     dataTable=Table(columns,cores)
-    section.addTable(dataTable)
+    section.addContent(dataTable)
 
     dataForFunc=data.loc[name]
     if type(dataForFunc) is pd.DataFrame:
@@ -237,12 +349,66 @@ def regressionTableFor(name,section,ref,toSort,indexCols,field):
            if field=="MAXREGCOEF":
               row=[("%.3f" % x) for x in row]
            dataTable.addRow(row)
+       return(None)
     else:
        if field=="MAXREGCOEF":
               dataForFunc=[("%.3f" % x) for x in dataForFunc]
        dataTable.addRow(dataForFunc)
+       return(list(zip(cores,dataForFunc)))
 
-def formatTableByCore(typeSection,testNames,cols,vals):
+def formatColumnName(c):
+  return("".join(joinit(c,":")))
+
+def getCoresForHistory(benchTable,compilerid,typeid,testid,runid):
+    vals=(compilerid,typeid,testid,runid)
+    result=c.execute(coresForHistory % benchTable,vals).fetchall()
+    ids=[(x[0],x[1]) for x in list(result)]
+    return(ids)
+
+def getCompilerForHistory(benchTable,coreid,typeid,testid,runid):
+    vals=(coreid,typeid,testid,runid)
+    result=c.execute(compilersForHistory % benchTable,vals).fetchall()
+    ids=[(x[0],x[1],x[2]) for x in list(result)]
+    return(ids)
+
+def getHistory(desc,testid,indexCols):
+    benchName,sectionID,typeid,runid = desc
+
+    #print(benchName)
+    #print(sectionID)
+    #print(typeid)
+    #print(testid)
+    columns = diff(indexCols,['name'])
+    #print(columns)
+    if args.byc:
+       coreid=sectionID
+       compilerids=getCompilerForHistory(benchName,coreid,typeid,testid,runid)
+       series={}
+       for compilerid,compilername,version in compilerids:
+          result=getColNamesAndHistory(benchName,compilerid,coreid,typeid,testid)
+          #print("%s:%s" % (compilername,version))
+          maxpos = result[0].index('MAX')
+          lrunid = result[0].index('runid')
+          r=[[int(x[lrunid]),int(x[maxpos])] for x in result[1:][0]]
+          series[corename]=r
+       hist=History(series,runid)
+       return(hist)
+    else:
+       compilerid=sectionID
+       coreids = getCoresForHistory(benchName,compilerid,typeid,testid,runid)
+       series={}
+       for coreid,corename in coreids:
+          result=getColNamesAndHistory(benchName,compilerid,coreid,typeid,testid)
+          #print(corename)
+          maxpos = result[0].index('MAX')
+          corepos = result[0].index('core')
+          lrunid = result[0].index('runid')
+          r=[[int(x[lrunid]),int(x[maxpos])] for x in result[1:][0]]
+          series[corename]=r
+       hist=History(series,runid)
+       return(hist)
+
+def formatTableBy(desc,byname,section,typeSection,testNames,cols,vals):
     if vals.size != 0:
        ref=pd.DataFrame(vals,columns=cols)
        toSort=["name"]
@@ -256,47 +422,56 @@ def formatTableByCore(typeSection,testNames,cols,vals):
          ref['MAX']=pd.to_numeric(ref['MAX'])
          ref['MAXREGCOEF']=pd.to_numeric(ref['MAXREGCOEF'])
        
-         indexCols=diff(cols,['core','Regression','MAXREGCOEF','MAX','version','compiler'])
+         indexCols=diff(cols,byname + ['Regression','MAXREGCOEF','MAX'] + section)
          valList = ['Regression']
        else:
          ref['CYCLES']=pd.to_numeric(ref['CYCLES'])
        
-         indexCols=diff(cols,['core','CYCLES','version','compiler'])
+         indexCols=diff(cols,byname + ['CYCLES'] + section)
          valList = ['CYCLES']
       
        
 
-       for name in testNames:
+       for testid,name in testNames:
            if args.r:
               testSection = Section(name)
               typeSection.addSection(testSection)
 
-              regressionSection = Section("Regression")
-              testSection.addSection(regressionSection)
-              regressionTableFor(name,regressionSection,ref,toSort,indexCols,'Regression')
-              
               maxCyclesSection = Section("Max cycles")
               testSection.addSection(maxCyclesSection)
-              regressionTableFor(name,maxCyclesSection,ref,toSort,indexCols,'MAX')
+              theCycles=regressionTableFor(byname,name,maxCyclesSection,ref,toSort,indexCols,'MAX')
+              if theCycles is not None:
+                 #print(theCycles)
+                 barChart=BarChart(theCycles)
+                 maxCyclesSection.addContent(barChart)
+
+              #history=getHistory(desc,testid,indexCols)
+              #testSection.addContent(history)
+
+              regressionSection = Section("Regression")
+              testSection.addSection(regressionSection)
+              regressionTableFor(byname,name,regressionSection,ref,toSort,indexCols,'Regression')
+              
               
               maxRegCoefSection = Section("Max Reg Coef")
               testSection.addSection(maxRegCoefSection)
-              regressionTableFor(name,maxRegCoefSection,ref,toSort,indexCols,'MAXREGCOEF')
+              regressionTableFor(byname,name,maxRegCoefSection,ref,toSort,indexCols,'MAXREGCOEF')
 
            else:
-              data=ref.pivot_table(index=indexCols, columns='core', 
+              data=ref.pivot_table(index=indexCols, columns=byname, 
               values=valList, aggfunc='first')
        
               data=data.sort_values(toSort)
        
-              cores = [c[1] for c in list(data.columns)]
+              #print(list(data.columns))
+              columnsID = [formatColumnName(c[1:]) for c in list(data.columns)]
               columns = diff(indexCols,['name'])
 
               testSection = Section(name)
               typeSection.addSection(testSection)
 
-              dataTable=Table(columns,cores)
-              testSection.addTable(dataTable)
+              dataTable=Table(columns,columnsID)
+              testSection.addContent(dataTable)
 
               dataForFunc=data.loc[name]
               if type(dataForFunc) is pd.DataFrame:
@@ -326,20 +501,37 @@ def addReportFor(document,runid,benchName):
               typeName = getTypeName(aTypeID)
               typeSection = Section(typeName)
               benchSection.addSection(typeSection)
-              ## Add report for each compiler
-              allCompilers = getExistingCompiler(benchName,aTypeID)
-              for compiler in allCompilers:
-                  #print(compiler)
-                  nbElems = getNbElemsInBenchAndTypeAndCompilerCmd(benchName,compiler,aTypeID)
-                  # Print test results for table, type, compiler
-                  if nbElems > 0:
-                     compilerName,version=getCompilerDesc(compiler)
-                     compilerSection = Section("%s (%s)" % (compilerName,version))
-                     typeSection.addSection(compilerSection)
-                     cols,vals=getColNamesAndData(benchName,compiler,aTypeID)
-                     names=getTestNames(benchName,compiler,aTypeID)
-                     formatTableByCore(compilerSection,names,cols,vals)
-           
+              if args.byc:
+                ## Add report for each core
+                allCores = getExistingCores(benchName,aTypeID)
+                for core in allCores:
+                    #print(core)
+                    nbElems = getNbElemsInBenchAndTypeAndCoreCmd(benchName,core,aTypeID)
+                    # Print test results for table, type, compiler
+                    if nbElems > 0:
+                       coreName=getCoreDesc(core)
+                       coreSection = Section("%s" % coreName)
+                       typeSection.addSection(coreSection)
+                       cols,vals=getColNamesAndDataForCore(benchName,core,aTypeID)
+                       desc=(benchName,core,aTypeID,runid)
+                       names=getTestNamesForCore(benchName,core,aTypeID)
+                       formatTableBy(desc,['compiler','version'],['core'],coreSection,names,cols,vals)
+              else:
+                ## Add report for each compiler
+                allCompilers = getExistingCompiler(benchName,aTypeID)
+                for compiler in allCompilers:
+                    #print(compiler)
+                    nbElems = getNbElemsInBenchAndTypeAndCompilerCmd(benchName,compiler,aTypeID)
+                    # Print test results for table, type, compiler
+                    if nbElems > 0:
+                       compilerName,version=getCompilerDesc(compiler)
+                       compilerSection = Section("%s (%s)" % (compilerName,version))
+                       typeSection.addSection(compilerSection)
+                       cols,vals=getColNamesAndDataForCompiler(benchName,compiler,aTypeID)
+                       desc=(benchName,compiler,aTypeID,runid)
+                       names=getTestNamesForCompiler(benchName,compiler,aTypeID)
+                       formatTableBy(desc,['core'],['version','compiler'],compilerSection,names,cols,vals)
+                       
 
 
 

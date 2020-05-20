@@ -1125,7 +1125,7 @@ group Root {
                   NB,IFFT,BITREV
                   Summary NB
                   Names "Number of samples,Inverse FFT, Bit Reversal"
-                  Formula "NB"
+                  Formula "I(NB*log2(NB))"
                 }
 
                 Pattern INPUTR_F32_ID : RealInputSamples19_f32.txt 
@@ -1175,7 +1175,7 @@ group Root {
                   NB,IFFT,BITREV
                   Summary NB
                   Names "Number of samples,Inverse FFT, Bit Reversal"
-                  Formula "NB"
+                  Formula "I(NB*log2(NB))"
                 }
 
                 Pattern INPUTR_Q31_ID : RealInputSamples19_q31.txt 
@@ -1225,7 +1225,7 @@ group Root {
                   NB,IFFT,BITREV
                   Summary NB
                   Names "Number of samples,Inverse FFT, Bit Reversal"
-                  Formula "NB"
+                  Formula "I(NB*log2(NB))"
                 }
 
                 Pattern INPUTR_Q15_ID : RealInputSamples19_q15.txt 
