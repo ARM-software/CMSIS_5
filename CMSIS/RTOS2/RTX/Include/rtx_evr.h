@@ -872,9 +872,9 @@ extern void EvrRtxDelayUntil (uint32_t ticks);
   \param[in]  ticks         \ref CMSIS_RTOS_TimeOutValue "time ticks" value.
 */
 #if (!defined(EVR_RTX_DISABLE) && (OS_EVR_WAIT != 0) && !defined(EVR_RTX_DELAY_STARTED_DISABLE))
-extern void EvrRtxDelayStarted (uint32_t ticks);
+extern void EvrRtxDelayStarted (uint32_t ticks, osThreadId_t thread_id);
 #else
-#define EvrRtxDelayStarted(ticks)
+#define EvrRtxDelayStarted(ticks, thread_id)
 #endif
 
 /**
@@ -882,9 +882,9 @@ extern void EvrRtxDelayStarted (uint32_t ticks);
   \param[in]  ticks         \ref CMSIS_RTOS_TimeOutValue "time ticks" value.
 */
 #if (!defined(EVR_RTX_DISABLE) && (OS_EVR_WAIT != 0) && !defined(EVR_RTX_DELAY_UNTIL_STARTED_DISABLE))
-extern void EvrRtxDelayUntilStarted (uint32_t ticks);
+extern void EvrRtxDelayUntilStarted (uint32_t ticks, osThreadId_t thread_id);
 #else
-#define EvrRtxDelayUntilStarted(ticks)
+#define EvrRtxDelayUntilStarted(ticks, thread_id)
 #endif
 
 /**
