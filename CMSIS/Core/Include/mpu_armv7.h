@@ -223,7 +223,7 @@ __STATIC_INLINE void ARM_MPU_ClrRegion(uint32_t rnr)
 
 /** Configure an MPU region.
 * \param rbar Value for RBAR register.
-* \param rsar Value for RSAR register.
+* \param rsar Value for RASR register.
 */   
 __STATIC_INLINE void ARM_MPU_SetRegion(uint32_t rbar, uint32_t rasr)
 {
@@ -234,7 +234,7 @@ __STATIC_INLINE void ARM_MPU_SetRegion(uint32_t rbar, uint32_t rasr)
 /** Configure the given MPU region.
 * \param rnr Region number to be configured.
 * \param rbar Value for RBAR register.
-* \param rsar Value for RSAR register.
+* \param rsar Value for RASR register.
 */   
 __STATIC_INLINE void ARM_MPU_SetRegionEx(uint32_t rnr, uint32_t rbar, uint32_t rasr)
 {
