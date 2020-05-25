@@ -45,3 +45,23 @@ void test_avgpooling_arm_avgpool_s8(void)
 {
   avgpooling_arm_avgpool_s8();
 }
+
+void test_avgpooling_1_arm_avgpool_s8(void)
+{
+  avgpooling_1_arm_avgpool_s8();
+}
+
+void test_avgpooling_2_arm_avgpool_s8(void)
+{
+  avgpooling_2_arm_avgpool_s8();
+}
+
+void test_avgpooling_3_arm_avgpool_s8(void)
+{
+  avgpooling_3_arm_avgpool_s8();
+}
+
+void test_avgpooling_4_arm_avgpool_s8(void)
+{
+  avgpooling_4_arm_avgpool_s8();
+}

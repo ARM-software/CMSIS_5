@@ -630,5 +630,15 @@ if __name__ == '__main__':
 
         # depthwise_eq_in_out_ch
     elif args.type == 'avgpool' or args.type == 'maxpool':
-        generator = PoolingSettings(args, channels=8, x_in=22, y_in=12, stride_x=9, stride_y=5, w_x=6, w_y=5, pad=True)
+        # avgpooling
+        # generator = PoolingSettings(args, channels=8, x_in=22, y_in=12, stride_x=9, stride_y=5, w_x=6, w_y=5, pad=True)
+        # avgpooling_1
+        # generator = PoolingSettings(args, channels=3, x_in= 9, y_in=5, stride_x=1, stride_y=2, w_x=9, w_y=5, pad=False)
+        # avgpooling_2
+        # generator = PoolingSettings(args, channels=5, x_in= 12, y_in=1, stride_x=1, stride_y=2, w_x=3, w_y=1, pad=True)
+        # avgpooling_3
+        # generator = PoolingSettings(args, channels=2, x_in= 9, y_in=1, stride_x=2, stride_y=1, w_x=1, w_y=1, pad=False)
+        # avgpooling_4
+        generator = PoolingSettings(args, channels=2, x_in= 1, y_in=20, stride_x=1, stride_y=3, w_x=1, w_y=3, pad=True)
+
     generator.generate_data()
