@@ -45,3 +45,13 @@ void test_depthwise_kernel_3x3_arm_depthwise_conv_3x3_s8(void)
 {
   depthwise_kernel_3x3_arm_depthwise_conv_3x3_s8();
 }
+
+void test_depthwise_kernel_3x3_arm_depthwise_conv_3x3_1_s8(void)
+{
+  depthwise_kernel_3x3_arm_depthwise_conv_3x3_1_s8();
+}
+
+void test_depthwise_kernel_3x3_arm_depthwise_conv_3x3_2_s8(void)
+{
+  depthwise_kernel_3x3_arm_depthwise_conv_3x3_2_s8();
+}
