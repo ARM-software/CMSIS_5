@@ -464,8 +464,8 @@ used in Technical Reference Manuals.
       <td>MPU alias Register</td>
   </tr>
   <tr>
-      <td>MPU->RSAR_A1..3</td>
-      <td>MPU_RSAR_A1..3</td>
+      <td>MPU->RASR_A1..3</td>
+      <td>MPU_RASR_A1..3</td>
       <td>-</td>
       <td>MPU alias Register</td>
   </tr>
