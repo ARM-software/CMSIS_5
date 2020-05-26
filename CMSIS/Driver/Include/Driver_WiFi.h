@@ -68,6 +68,7 @@ extern "C"
 #define ARM_WIFI_IP6_DNS1                   20U         ///< Station/AP Set/Get IPv6 primary   DNS address;             data = &ip6,      len = 16, uint8_t[16]
 #define ARM_WIFI_IP6_DNS2                   21U         ///< Station/AP Set/Get IPv6 secondary DNS address;             data = &ip6,      len = 16, uint8_t[16]
 #define ARM_WIFI_IP6_DHCP_MODE              22U         ///< Station/AP Set/Get IPv6 DHCPv6 client mode;                data = &mode,     len =  4, uint32_t: ARM_WIFI_IP6_DHCP_xxx (default Off)
+#define ARM_WIFI_HOSTNAME                   23U	        ///< Station    Set/Get HostName;                               data = &hostname, len = 32, char[32]
 
 /****** WiFi Security Type *****/
 #define ARM_WIFI_SECURITY_OPEN              0U          ///< Open
