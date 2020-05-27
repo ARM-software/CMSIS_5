@@ -340,6 +340,7 @@ def regressionTableFor(byname,name,section,ref,toSort,indexCols,field):
 
     dataForFunc=data.loc[name]
     if type(dataForFunc) is pd.DataFrame:
+       bars={'cols':columns,'cores':cores,'data':[]}
        for row in dataForFunc.itertuples():
            row=list(row)
            if type(row[0]) is int:
@@ -349,7 +350,8 @@ def regressionTableFor(byname,name,section,ref,toSort,indexCols,field):
            if field=="MAXREGCOEF":
               row=[("%.3f" % x) for x in row]
            dataTable.addRow(row)
-       return(None)
+           bars['data'].append(row)
+       return(bars)
     else:
        if field=="MAXREGCOEF":
               dataForFunc=[("%.3f" % x) for x in dataForFunc]
@@ -440,10 +442,24 @@ def formatTableBy(desc,byname,section,typeSection,testNames,cols,vals):
               maxCyclesSection = Section("Max cycles")
               testSection.addSection(maxCyclesSection)
               theCycles=regressionTableFor(byname,name,maxCyclesSection,ref,toSort,indexCols,'MAX')
-              if theCycles is not None:
+              if type(theCycles) is dict:
+                nbParams=len(theCycles['cols'])
+                for bar in theCycles['data']:
+                    params=bar[0:nbParams]
+                    values=bar[nbParams:]
+                    title=[("%s=%s" % x) for x in list(zip(theCycles['cols'],params))]
+                    title="".join(joinit(title," "))
+                    sec=Section(title)
+                    maxCyclesSection.addSection(sec)
+                    values=list(zip(theCycles['cores'],values))
+                    barChart=BarChart(values)
+                    sec.addContent(barChart)
+              else:
                  #print(theCycles)
+                 sec=Section("Graph")
+                 maxCyclesSection.addSection(sec)
                  barChart=BarChart(theCycles)
-                 maxCyclesSection.addContent(barChart)
+                 sec.addContent(barChart)
 
               #history=getHistory(desc,testid,indexCols)
               #testSection.addContent(history)

@@ -213,10 +213,9 @@ class BuildConfig:
               cmd += ["-DBENCHMARK=OFF"]
               cmd += ["-DWRAPPER=OFF"]
 
-            cmd += ["-DCONFIGTABLE=OFF",
-                             "-DROOT=%s" % self._rootFolder,
-                             "-DCMAKE_BUILD_TYPE=Release",
-                             "-G", "Unix Makefiles" ,"%s" % self.cmakeFilePath()]
+            cmd += ["-DROOT=%s" % self._rootFolder,
+                    "-DCMAKE_BUILD_TYPE=Release",
+                    "-G", "Unix Makefiles" ,"%s" % self.cmakeFilePath()]
 
             if DEBUGMODE:
                print(cmd)
