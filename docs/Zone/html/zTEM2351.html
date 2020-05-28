@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Zone
-   &#160;<span id="projectnumber">Version 1.0.0</span>
+   &#160;<span id="projectnumber">Version 1.1.0</span>
    </div>
    <div id="projectbrief">System Resource Management</div>
   </td>
@@ -204,7 +204,7 @@ scatter_s.sct</h2>
 <div class="line">; *-------------- &lt;&lt;&lt; end of configuration section &gt;&gt;&gt; -----------------------</div>
 <div class="line">LR_CODE_S REGION_CODE_S_START REGION_CODE_S_SIZE {</div>
 <div class="line">  ER_CODE_S REGION_CODE_S_START REGION_CODE_S_SIZE {</div>
-<div class="line">          (RESET,+FIRST)</div>
+<div class="line">      (RESET,+FIRST)</div>
 <div class="line">      (InRoot$$Sections)</div>
 <div class="line">    .ANY (+RO +XO)</div>
 <div class="line">  }</div>
@@ -218,11 +218,11 @@ scatter_s.sct</h2>
 <div class="line"><span class="preprocessor"></span><span class="preprocessor">#if STACK_SIZE&gt;0</span></div>
 <div class="line"><span class="preprocessor"></span>  ARM_LIB_STACK REGION_DATA_S_START+REGION_DATA_S_SIZE-STACK_SIZE EMPTY STACK_SIZE {</div>
 <div class="line">  }</div>
-<div class="line"><span class="preprocessor">#endif  </span></div>
+<div class="line"><span class="preprocessor">#endif</span></div>
 <div class="line"><span class="preprocessor"></span>}</div>
 <div class="line">LR_VENEER REGION_VENEER_START REGION_VENEER_SIZE {</div>
 <div class="line">  ER_VENEER REGION_VENEER_START REGION_VENEER_SIZE {</div>
-<div class="line">         (Veneer$$CMSE)</div>
+<div class="line">     (Veneer$$CMSE)</div>
 <div class="line">  }</div>
 <div class="line">}</div>
 </div><!-- fragment --> </div></div><!-- contents -->
@@ -231,7 +231,7 @@ scatter_s.sct</h2>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="zoneToolUsage.html">CMSIS-Zone Utility</a></li><li class="navelem"><a class="el" href="zTExamples.html">Examples</a></li>
-    <li class="footer">Generated on Thu Apr 9 2020 15:50:03 for CMSIS-Zone Version 1.0.0 by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Thu May 28 2020 14:04:04 for CMSIS-Zone Version 1.1.0 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

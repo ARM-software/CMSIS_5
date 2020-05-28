@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Zone
-   &#160;<span id="projectnumber">Version 1.0.0</span>
+   &#160;<span id="projectnumber">Version 1.1.0</span>
    </div>
    <div id="projectbrief">System Resource Management</div>
   </td>
@@ -199,26 +199,26 @@ hello_world_s.sct</h2>
 <p>As explained previously, the #defines in <code>mem_layout.h</code> can be used to create generic scatter files that are easy to update once changes in the CMSIS-Zone project happen. Using the <b>mem_layout.h</b> file from CMSIS-Zone, the following scatter file is used in the secure <code>hello_world</code> project:</p>
 <div class="fragment"><div class="line">; Use Arm compiler 6 to pre-process the scatter file and pull in the defines from the mem_layout.h file:</div>
 <div class="line"><span class="preprocessor">#! armclang -E --target=arm-arm-none-eabi -mcpu=cortex-m33 -I../ -xc</span></div>
-<div class="line"><span class="preprocessor"></span> </div>
+<div class="line"><span class="preprocessor"></span></div>
 <div class="line"><span class="preprocessor">#include &quot;mem_layout.h&quot;</span></div>
-<div class="line"> </div>
+<div class="line"></div>
 <div class="line">; *------- &lt;&lt;&lt; Use Configuration Wizard in Context Menu &gt;&gt;&gt; ------------------</div>
-<div class="line"> </div>
+<div class="line"></div>
 <div class="line">;&lt;h&gt; Stack Configuration</div>
 <div class="line">;  &lt;o&gt; Stack Size (in Bytes) &lt;0x0-0xFFFFFFFF:8&gt;</div>
 <div class="line">;&lt;/h&gt;</div>
 <div class="line"><span class="preprocessor">#define STACK_SIZE 0x400</span></div>
-<div class="line"><span class="preprocessor"></span> </div>
+<div class="line"><span class="preprocessor"></span></div>
 <div class="line">;&lt;h&gt; Heap Configuration</div>
 <div class="line">;  &lt;o&gt; Heap Size (in Bytes) &lt;0x0-0xFFFFFFFF:8&gt;</div>
 <div class="line">;&lt;/h&gt;</div>
 <div class="line"><span class="preprocessor">#define HEAP_SIZE 0xC00</span></div>
-<div class="line"><span class="preprocessor"></span> </div>
+<div class="line"><span class="preprocessor"></span></div>
 <div class="line">; *-------------- &lt;&lt;&lt; end of configuration section &gt;&gt;&gt; -----------------------</div>
 <div class="line"></div>
 <div class="line">LR_CODE_S REGION_CODE_S_START REGION_CODE_S_SIZE {</div>
 <div class="line">  ER_CODE_S REGION_CODE_S_START REGION_CODE_S_SIZE {</div>
-<div class="line">          (RESET,+FIRST)</div>
+<div class="line">      (RESET,+FIRST)</div>
 <div class="line">      (InRoot$$Sections)</div>
 <div class="line">    .ANY (+RO, +XO)</div>
 <div class="line">  }</div>
@@ -236,7 +236,7 @@ hello_world_s.sct</h2>
 <div class="line"><span class="preprocessor"></span>}</div>
 <div class="line">LR_VENEER REGION_VENEER_START REGION_VENEER_SIZE {</div>
 <div class="line">  ER_VENEER REGION_VENEER_START REGION_VENEER_SIZE {</div>
-<div class="line">         (Veneer$$CMSE)</div>
+<div class="line">     (Veneer$$CMSE)</div>
 <div class="line">  }</div>
 <div class="line">}</div>
 </div><!-- fragment --><h2><a class="anchor" id="zTELPC55_TZSetup"></a>
@@ -251,7 +251,7 @@ TrustZone Setup at Startup</h2>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="zoneToolUsage.html">CMSIS-Zone Utility</a></li><li class="navelem"><a class="el" href="zTExamples.html">Examples</a></li>
-    <li class="footer">Generated on Thu Apr 9 2020 15:50:03 for CMSIS-Zone Version 1.0.0 by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Thu May 28 2020 14:04:04 for CMSIS-Zone Version 1.1.0 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 
