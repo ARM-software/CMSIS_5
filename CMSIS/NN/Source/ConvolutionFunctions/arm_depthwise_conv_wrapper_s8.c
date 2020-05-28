@@ -22,8 +22,8 @@
  * Description:  Wrapper API to select appropriate depthwise conv API based
  *               on dimensions.
  *
- * $Date:        May 14, 2020
- * $Revision:    V.1.0.0
+ * $Date:        May 29, 2020
+ * $Revision:    V.1.0.1
  *
  * Target Processor:  Cortex-M CPUs
  *
@@ -53,7 +53,7 @@ arm_status arm_depthwise_conv_wrapper_s8(const cmsis_nn_context *ctx,
                                          const cmsis_nn_dims *input_dims,
                                          const q7_t *input,
                                          const cmsis_nn_dims *filter_dims,
-                                         const q7_t *kernel,
+                                         const q7_t *filter,
                                          const cmsis_nn_dims *bias_dims,
                                          const int32_t *bias,
                                          const cmsis_nn_dims *output_dims,
@@ -71,7 +71,7 @@ arm_status arm_depthwise_conv_wrapper_s8(const cmsis_nn_context *ctx,
                                                input_dims,
                                                input,
                                                filter_dims,
-                                               kernel,
+                                               filter,
                                                bias_dims,
                                                bias,
                                                output_dims,
@@ -86,7 +86,7 @@ arm_status arm_depthwise_conv_wrapper_s8(const cmsis_nn_context *ctx,
                                                input_dims,
                                                input,
                                                filter_dims,
-                                               kernel,
+                                               filter,
                                                bias_dims,
                                                bias,
                                                output_dims,
@@ -101,7 +101,7 @@ arm_status arm_depthwise_conv_wrapper_s8(const cmsis_nn_context *ctx,
                                        input_dims,
                                        input,
                                        filter_dims,
-                                       kernel,
+                                       filter,
                                        bias_dims,
                                        bias,
                                        output_dims,

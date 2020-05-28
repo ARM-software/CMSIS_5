@@ -21,8 +21,8 @@
  * Title:        arm_elementwise_mul_s8
  * Description:  Element wise multiplication
  *
- * $Date:        February 27, 2020
- * $Revision:    V.1.0.2
+ * $Date:        May 29, 2020
+ * $Revision:    V.1.0.3
  *
  * Target Processor:  Cortex-M cores
  *
@@ -62,7 +62,7 @@ arm_elementwise_mul_s8(const int8_t *input_1_vect,
                        const uint32_t block_size)
 {
 
-  uint32_t loop_count;
+  int32_t loop_count;
 #if defined(ARM_MATH_MVEI)
 
   loop_count = (block_size + 3) / 4;

@@ -21,8 +21,8 @@
  * Title:        arm_avgpool_s8.c
  * Description:  Pooling function implementations
  *
- * $Date:        May 19,2020
- * $Revision:    V.2.0.0
+ * $Date:        May 29,2020
+ * $Revision:    V.2.0.1
  *
  * Target Processor:  Cortex-M CPUs
  *
@@ -104,7 +104,7 @@ arm_status arm_avgpool_s8(const cmsis_nn_context *ctx,
       int32_t   k_y_start,k_y_end;
       int32_t   k_x_start,k_x_end;
       int32_t   chCnt;
-      int8_t    *pTmp,*pTmpInner;
+      const int8_t    *pTmp, *pTmpInner;
       int8_t    *pDst;
 
       k_y_start = MAX(0, i_y * stride_height - padding_height);

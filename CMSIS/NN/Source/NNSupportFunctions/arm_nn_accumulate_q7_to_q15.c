@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2019 Arm Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2010-2020 Arm Limited or its affiliates. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -21,10 +21,10 @@
  * Title:        arm_nn_accumulate_q7_to_q15.c
  * Description:  Accumulate q7 vector into q15 one.
  *
- * $Date:        July 2019
- * $Revision:    V.1.0.0
+ * $Date:        May 29, 2020
+ * $Revision:    V.1.0.1
  *
- * pSrc Processor:  Cortex-M cores
+ * pSrc Processor:  Cortex-M CPUs
  *
  * -------------------------------------------------------------------- */
 #include "arm_math.h"
@@ -50,18 +50,14 @@ void arm_nn_accumulate_q7_to_q15(q15_t *pDst, const q7_t *pSrc, uint32_t length)
     while (cnt > 0l)
     {
         q31_t value = arm_nn_read_q7x4_ia(&pV);
-        v1 = __SXTB16(__ROR(value, 8));
+        v1 = __SXTB16(__ROR((uint32_t)value, 8));
         v2 = __SXTB16(value);
 #ifndef ARM_MATH_BIG_ENDIAN
-
-        vo2 = __PKHTB(v1, v2, 16);
-        vo1 = __PKHBT(v2, v1, 16);
-
+        vo2 = (q31_t)__PKHTB(v1, v2, 16);
+        vo1 = (q31_t)__PKHBT(v2, v1, 16);
 #else
-
-        vo1 = __PKHTB(v1, v2, 16);
-        vo2 = __PKHBT(v2, v1, 16);
-
+        vo1 = (q31_t)__PKHTB(v1, v2, 16);
+        vo2 = (q31_t)__PKHBT(v2, v1, 16);
 #endif
 
         in = arm_nn_read_q15x2(pCnt);

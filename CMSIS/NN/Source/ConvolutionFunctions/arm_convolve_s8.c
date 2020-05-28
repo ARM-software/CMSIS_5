@@ -21,8 +21,8 @@
  * Title:        arm_convolve_s8.c
  * Description:  s8 version of convolution using symmetric quantization.
  *
- * $Date:        May 18, 2020
- * $Revision:    V.2.0.0
+ * $Date:        May 29, 2020
+ * $Revision:    V.2.0.1
  *
  * Target Processor:  Cortex-M cores
  *
@@ -89,6 +89,7 @@ arm_status arm_convolve_s8(const cmsis_nn_context* ctx,
     for (i_batch = 0; i_batch < input_batches; i_batch++)
     {
 #if defined(ARM_MATH_MVEI)
+        (void)bias_dims;
         /* Generate upto four columns from the input tensor a GEMM computation */
         q7_t *im2col_buf = (q7_t *)buffer_a;
         q7_t *out = output_data;
@@ -198,6 +199,7 @@ arm_status arm_convolve_s8(const cmsis_nn_context* ctx,
         }
 
 #elif defined(ARM_MATH_DSP)
+        (void)bias_dims;
         int32_t i_out_y, i_out_x, i_ker_y, i_ker_x;
 
         /* Generate two columns from the input tensor a GEMM computation */
@@ -357,7 +359,7 @@ int32_t arm_convolve_s8_get_buffer_size(const cmsis_nn_dims* input_dims,
                                         const cmsis_nn_dims* filter_dims)
 {
 #if defined(ARM_MATH_DSP)
-    return (2 * input_dims->c * filter_dims->w * filter_dims->h) * sizeof(int16_t);
+    return (2 * input_dims->c * filter_dims->w * filter_dims->h) * (int32_t)sizeof(int16_t);
 #else
     (void)input_dims;
     (void)filter_dims;
