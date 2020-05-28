@@ -146,6 +146,8 @@ endif()
 # For scipy or wrappers or benchmarks
 if (WRAPPER)
 target_sources(CMSISDSPTransform PRIVATE arm_cfft_radix2_init_f32.c)
+target_sources(CMSISDSPTransform PRIVATE arm_cfft_radix2_init_q31.c)
+target_sources(CMSISDSPTransform PRIVATE arm_cfft_radix2_init_q15.c)
 endif()
 
 ### Includes

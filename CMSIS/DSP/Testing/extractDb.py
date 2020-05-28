@@ -7,9 +7,7 @@ from TestScripts.doc.Structure import *
 from TestScripts.doc.Format import *
 
 
-
-
-
+runidCMD = "runid = ?"
 
 # Command to get last runid 
 lastID="""SELECT runid FROM RUN ORDER BY runid DESC LIMIT 1
@@ -36,6 +34,7 @@ parser.add_argument('-o', nargs='?',type = str, default="full.md", help="Full su
 parser.add_argument('-r', action='store_true', help="Regression database")
 parser.add_argument('-t', nargs='?',type = str, default="md", help="md,html")
 parser.add_argument('-byc', action='store_true', help="By Compiler")
+parser.add_argument('-g', action='store_true', help="Include graphs in regression report")
 
 # For runid or runid range
 parser.add_argument('others', nargs=argparse.REMAINDER,help="Run ID")
@@ -45,9 +44,18 @@ args = parser.parse_args()
 c = sqlite3.connect(args.b)
 
 if args.others:
-   runid=int(args.others[0])
+   if len(args.others) == 1:
+      runid=int(args.others[0])
+      runidval = (runid,)
+   else:
+      runidCMD = "runid >= ? AND runid <= ?"
+      runid=int(args.others[1])
+      runidLOW=int(args.others[0])
+      runidval = (runidLOW,runid)
 else:
    runid=getLastRunID()
+   print("Last run ID = %d\n" % runid)
+   runidval=(runid,)
 
 # We extract data only from data tables
 # Those tables below are used for descriptions
@@ -149,7 +157,7 @@ benchCmdForCore="""select %s from %s
   INNER JOIN COMPILERKIND USING(compilerkindid)
   INNER JOIN TYPE USING(typeid)
   INNER JOIN TESTNAME USING(testnameid)
-  WHERE coreid=? AND typeid = ? AND runid = ?
+  WHERE coreid=? AND typeid = ? AND %s
   """
 
 coresForHistory="""select distinct coreid,core from %s
@@ -167,7 +175,7 @@ benchCmdForCompiler="""select %s from %s
   INNER JOIN COMPILERKIND USING(compilerkindid)
   INNER JOIN TYPE USING(typeid)
   INNER JOIN TESTNAME USING(testnameid)
-  WHERE compilerid=? AND typeid = ? AND runid = ?
+  WHERE compilerid=? AND typeid = ? AND %s
   """
 
 # Command to get test names for specific compiler 
@@ -177,7 +185,7 @@ benchNamesForCore="""select distinct ID,name from %s
   INNER JOIN COMPILERKIND USING(compilerkindid)
   INNER JOIN TYPE USING(typeid)
   INNER JOIN TESTNAME USING(testnameid)
-  WHERE coreid=? AND typeid = ? AND runid = ?
+  WHERE coreid=? AND typeid = ? AND %s
   """
 # Command to get test names for specific compiler 
 # and type
@@ -186,7 +194,7 @@ benchNamesForCompiler="""select distinct ID,name from %s
   INNER JOIN COMPILERKIND USING(compilerkindid)
   INNER JOIN TYPE USING(typeid)
   INNER JOIN TESTNAME USING(testnameid)
-  WHERE compilerid=? AND typeid = ? AND runid = ?
+  WHERE compilerid=? AND typeid = ? AND %s
   """
 
 # Command to get columns for specific table
@@ -218,68 +226,67 @@ def isNotIDColumn(col):
 # Get test names
 # for specific typeid and core (for the data)
 def getTestNamesForCore(benchTable,core,typeid):
-    vals=(core,typeid,runid)
-    result=c.execute(benchNamesForCore % benchTable,vals).fetchall()
+    vals=(core,typeid) + runidval
+    result=c.execute(benchNamesForCore % (benchTable,runidCMD),vals).fetchall()
     names=[(x[0],x[1]) for x in list(result)]
     return(names)
 
 # Get test names
 # for specific typeid and compiler (for the data)
 def getTestNamesForCompiler(benchTable,comp,typeid):
-    vals=(comp,typeid,runid)
-    result=c.execute(benchNamesForCompiler % benchTable,vals).fetchall()
+    vals=(comp,typeid) + runidval
+    result=c.execute(benchNamesForCompiler % (benchTable,runidCMD),vals).fetchall()
     names=[(x[0],x[1]) for x in list(result)]
     return(names)
 
 # Command to get data for specific core 
 # and type
 nbElemsInBenchAndTypeAndCoreCmd="""select count(*) from %s
-  WHERE coreid=? AND typeid = ? AND runid = ?
+  WHERE coreid=? AND typeid = ? AND %s
   """
 
 # Command to get data for specific compiler 
 # and type
 nbElemsInBenchAndTypeAndCompilerCmd="""select count(*) from %s
-  WHERE compilerid=? AND typeid = ? AND runid = ?
+  WHERE compilerid=? AND typeid = ? AND %s
   """
 
 nbElemsInBenchAndTypeCmd="""select count(*) from %s
-  WHERE typeid = ? AND runid = ?
+  WHERE typeid = ? AND %s
   """
 
 nbElemsInBenchCmd="""select count(*) from %s
-  WHERE runid = ?
+  WHERE %s
   """
 
 categoryName="""select distinct category from %s
   INNER JOIN CATEGORY USING(categoryid)
-  WHERE runid = ?
+  WHERE %s
   """
 
 def getCategoryName(benchTable,runid):
-  result=c.execute(categoryName % benchTable,(runid,)).fetchone()
+  result=c.execute(categoryName % (benchTable,runidCMD),runidval).fetchone()
   return(result[0])
 
 # Get nb elems in a table
 def getNbElemsInBenchAndTypeAndCoreCmd(benchTable,coreid,typeid):
-    vals=(coreid,typeid,runid)
-    result=c.execute(nbElemsInBenchAndTypeAndCoreCmd % benchTable,vals).fetchone()
+    vals=(coreid,typeid) + runidval
+    result=c.execute(nbElemsInBenchAndTypeAndCoreCmd % (benchTable,runidCMD),vals).fetchone()
     return(result[0])
 
 # Get nb elems in a table
 def getNbElemsInBenchAndTypeAndCompilerCmd(benchTable,comp,typeid):
-    vals=(comp,typeid,runid)
-    result=c.execute(nbElemsInBenchAndTypeAndCompilerCmd % benchTable,vals).fetchone()
+    vals=(comp,typeid) + runidval
+    result=c.execute(nbElemsInBenchAndTypeAndCompilerCmd % (benchTable,runidCMD),vals).fetchone()
     return(result[0])
 
 def getNbElemsInBenchAndTypeCmd(benchTable,typeid):
-    vals=(typeid,runid)
-    result=c.execute(nbElemsInBenchAndTypeCmd % benchTable,vals).fetchone()
+    vals=(typeid,) + runidval
+    result=c.execute(nbElemsInBenchAndTypeCmd % (benchTable,runidCMD),vals).fetchone()
     return(result[0])
 
 def getNbElemsInBenchCmd(benchTable):
-    vals=(runid,)
-    result=c.execute(nbElemsInBenchCmd % benchTable,vals).fetchone()
+    result=c.execute(nbElemsInBenchCmd % (benchTable,runidCMD),runidval).fetchone()
     return(result[0])
 
 # Get names of columns and data for a table
@@ -303,8 +310,8 @@ def getColNamesAndDataForCore(benchTable,core,typeid):
     cols= [member[0] for member in cursor.description]
     keepCols = ['name'] + [c for c in diff(cols , REMOVECOLUMNS) if isNotIDColumn(c)]
     keepColsStr = "".join(joinit(keepCols,","))
-    vals=(core,typeid,runid)
-    result=cursor.execute(benchCmdForCore % (keepColsStr,benchTable),vals)
+    vals=(core,typeid) + runidval
+    result=cursor.execute(benchCmdForCore % (keepColsStr,benchTable,runidCMD),vals)
     vals =np.array([list(x) for x in list(result)])
     return(keepCols,vals)
 
@@ -317,8 +324,8 @@ def getColNamesAndDataForCompiler(benchTable,comp,typeid):
     cols= [member[0] for member in cursor.description]
     keepCols = ['name'] + [c for c in diff(cols , REMOVECOLUMNS) if isNotIDColumn(c)]
     keepColsStr = "".join(joinit(keepCols,","))
-    vals=(comp,typeid,runid)
-    result=cursor.execute(benchCmdForCompiler % (keepColsStr,benchTable),vals)
+    vals=(comp,typeid) + runidval
+    result=cursor.execute(benchCmdForCompiler % (keepColsStr,benchTable,runidCMD),vals)
     vals =np.array([list(x) for x in list(result)])
     return(keepCols,vals)
 
@@ -348,7 +355,9 @@ def regressionTableFor(byname,name,section,ref,toSort,indexCols,field):
            else: 
               row=list(row[0]) + row[1:]
            if field=="MAXREGCOEF":
-              row=[("%.3f" % x) for x in row]
+              newrow = row
+              newrow[len(columns):] = [("%.3f" % x) for x in row[len(columns):]]
+              row=newrow
            dataTable.addRow(row)
            bars['data'].append(row)
        return(bars)
@@ -442,27 +451,28 @@ def formatTableBy(desc,byname,section,typeSection,testNames,cols,vals):
               maxCyclesSection = Section("Max cycles")
               testSection.addSection(maxCyclesSection)
               theCycles=regressionTableFor(byname,name,maxCyclesSection,ref,toSort,indexCols,'MAX')
-              if type(theCycles) is dict:
-                nbParams=len(theCycles['cols'])
-                for bar in theCycles['data']:
-                    params=bar[0:nbParams]
-                    values=bar[nbParams:]
-                    title=[("%s=%s" % x) for x in list(zip(theCycles['cols'],params))]
-                    title="".join(joinit(title," "))
-                    sec=Section(title)
+              if args.g:
+                 if type(theCycles) is dict:
+                   nbParams=len(theCycles['cols'])
+                   for bar in theCycles['data']:
+                       params=bar[0:nbParams]
+                       values=bar[nbParams:]
+                       title=[("%s=%s" % x) for x in list(zip(theCycles['cols'],params))]
+                       title="".join(joinit(title," "))
+                       sec=Section(title)
+                       maxCyclesSection.addSection(sec)
+                       values=list(zip(theCycles['cores'],values))
+                       barChart=BarChart(values)
+                       sec.addContent(barChart)
+                 else:
+                    #print(theCycles)
+                    sec=Section("Graph")
                     maxCyclesSection.addSection(sec)
-                    values=list(zip(theCycles['cores'],values))
-                    barChart=BarChart(values)
+                    barChart=BarChart(theCycles)
                     sec.addContent(barChart)
-              else:
-                 #print(theCycles)
-                 sec=Section("Graph")
-                 maxCyclesSection.addSection(sec)
-                 barChart=BarChart(theCycles)
-                 sec.addContent(barChart)
 
-              #history=getHistory(desc,testid,indexCols)
-              #testSection.addContent(history)
+                 #history=getHistory(desc,testid,indexCols)
+                 #testSection.addContent(history)
 
               regressionSection = Section("Regression")
               testSection.addSection(regressionSection)
