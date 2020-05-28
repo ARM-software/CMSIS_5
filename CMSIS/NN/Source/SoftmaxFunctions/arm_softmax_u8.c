@@ -21,10 +21,10 @@
  * Title:        arm_softmax_u8.c
  * Description:  U8 softmax function
  *
- * $Date:        March 31, 2020
- * $Revision:    V.1.0.0
+ * $Date:        May 29, 2020
+ * $Revision:    V.1.0.1
  *
- * Target Processor:  Cortex-M cores
+ * Target Processor:  Cortex-M CPUs
  *
  * -------------------------------------------------------------------- */
 
@@ -85,7 +85,7 @@ void arm_softmax_u8(const uint8_t *input,
             if (diff >= diff_min)
             {
                 const int32_t res = DIV_POW2(MUL_SAT(shifted_scale, EXP_ON_NEG(MUL_SAT(diff * mask, mult))), bits_over_unit);
-                output[col] = (int8_t) CLAMP(res, (int32_t)255, (int32_t)0);
+                output[col] = (uint8_t) CLAMP(res, (int32_t)255, (int32_t)0);
             }
             else
             {

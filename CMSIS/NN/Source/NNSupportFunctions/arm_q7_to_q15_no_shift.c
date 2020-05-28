@@ -21,8 +21,8 @@
  * Title:        arm_q7_to_q15_no_shift.c
  * Description:  Converts the elements of the Q7 vector to Q15 vector without left-shift
  *
- * $Date:        February 27, 2020
- * $Revision:    V.1.0.1
+ * $Date:        May 29, 2020
+ * $Revision:    V.1.0.2
  *
  * Target Processor:  Cortex-M cores
  *
@@ -74,17 +74,17 @@ void arm_q7_to_q15_no_shift(const q7_t * pSrc, q15_t * pDst, uint32_t blockSize)
         in = arm_nn_read_q7x4_ia(&pIn);
 
         /* rotatate in by 8 and extend two q7_t values to q15_t values */
-        in1 = __SXTB16(__ROR(in, 8));
+        in1 = __SXTB16(__ROR((uint32_t)in, 8));
 
         /* extend remaining two q7_t values to q15_t values */
         in2 = __SXTB16(in);
 
 #ifndef ARM_MATH_BIG_ENDIAN
-        out2 = __PKHTB(in1, in2, 16);
-        out1 = __PKHBT(in2, in1, 16);
+        out2 = (int32_t)__PKHTB(in1, in2, 16);
+        out1 = (int32_t)__PKHBT(in2, in1, 16);
 #else
-        out1 = __PKHTB(in1, in2, 16);
-        out2 = __PKHBT(in2, in1, 16);
+        out1 = (int32_t)__PKHTB(in1, in2, 16);
+        out2 = (int32_t)__PKHBT(in2, in1, 16);
 #endif
         write_q15x2_ia(&pDst, out1);
         write_q15x2_ia(&pDst, out2);

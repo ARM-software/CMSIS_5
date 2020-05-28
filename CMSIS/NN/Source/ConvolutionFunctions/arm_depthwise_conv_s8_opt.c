@@ -22,8 +22,8 @@
  * Description:  Optimized s8 depthwise separable convolution function for
  *               channel multiplier of 1.
  *
- * $Date:        May 14, 2020
- * $Revision:    V.2.0.0
+ * $Date:        May 29, 2020
+ * $Revision:    V.2.0.1
  *
  * Target Processor:  Cortex-M CPUs
  *
@@ -87,6 +87,7 @@ arm_status arm_depthwise_conv_s8_opt(const cmsis_nn_context *ctx,
         return ARM_MATH_SIZE_MISMATCH;
     }
 #ifdef ARM_MATH_MVEI
+    (void)bias_dims;
     /* Generate two columns from the input tensor */
     q7_t *lhs_buffer = (q7_t *)buffer_a;
     q7_t *out = output;
@@ -105,12 +106,12 @@ arm_status arm_depthwise_conv_s8_opt(const cmsis_nn_context *ctx,
                 {
                     if (i_ker_y < 0 || i_ker_y >= input_y || i_ker_x < 0 || i_ker_x >= input_x)
                     {
-                        arm_memset_q7(lhs_buffer, (int8_t)-input_offset, input_ch);
+                        arm_memset_q7(lhs_buffer, (int8_t)-input_offset, (uint32_t)input_ch);
                         padded = 1;
                     }
                     else
                     {
-                        arm_memcpy_q7(lhs_buffer, input + (i_ker_y * input_x + i_ker_x) * input_ch, input_ch);
+                        arm_memcpy_q7(lhs_buffer, input + (i_ker_y * input_x + i_ker_x) * input_ch, (uint32_t)input_ch);
                     }
                     lhs_buffer += input_ch;
                 }
@@ -163,7 +164,7 @@ arm_status arm_depthwise_conv_s8_opt(const cmsis_nn_context *ctx,
     {
         int32_t loop_count = (input_ch + 3) / 4;
 
-        uint32_t num_ch_to_process = input_ch;
+        int32_t num_ch_to_process = input_ch;
         for (int i_loop_cnt = 0, offset = 0; i_loop_cnt < loop_count;
              num_ch_to_process -= 4, offset += 4, i_loop_cnt++)
         {
@@ -190,7 +191,7 @@ arm_status arm_depthwise_conv_s8_opt(const cmsis_nn_context *ctx,
             out_0 = vaddq_n_s32(out_0, output_offset);
             out_0 = vmaxq_s32(out_0, vdupq_n_s32(output_activation_min));
             out_0 = vminq_s32(out_0, vdupq_n_s32(output_activation_max));
-            mve_pred16_t p = vctp32q(num_ch_to_process);
+            mve_pred16_t p = vctp32q((uint32_t)num_ch_to_process);
             vstrbq_p_s32(out, out_0, p);
 
             out += 4;
@@ -204,6 +205,7 @@ arm_status arm_depthwise_conv_s8_opt(const cmsis_nn_context *ctx,
     }
 
 #elif defined(ARM_MATH_DSP)
+    (void)bias_dims;
     /* Run the following code in cores using DSP extension */
     q15_t *const col_buffer_start = buffer_a;
     q15_t *col_buffer = col_buffer_start;
@@ -408,7 +410,7 @@ int32_t arm_depthwise_conv_s8_opt_get_buffer_size(const cmsis_nn_dims *input_dim
 {
 #if defined(ARM_MATH_MVEI)
     /* The + 4 accounts for out of bounds read of the lhs buffers in the *_nt_t_* functions.  */
-    return (2 * input_dims->c * filter_dims->w * filter_dims->h) * sizeof(int16_t) + 4;
+    return (2 * input_dims->c * filter_dims->w * filter_dims->h) * (int32_t)sizeof(int16_t) + 4;
 #elif defined(ARM_MATH_DSP)
     return (input_dims->c * filter_dims->w * filter_dims->h) * sizeof(int16_t);
 #else

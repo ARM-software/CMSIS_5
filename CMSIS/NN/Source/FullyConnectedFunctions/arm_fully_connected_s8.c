@@ -60,7 +60,7 @@ arm_fully_connected_s8(const cmsis_nn_context *ctx,
                        const cmsis_nn_dims *output_dims,
                        q7_t *output)
 {
-
+    (void)bias_dims;
     (void)ctx;
     int32_t batch_cnt = input_dims->n;
 

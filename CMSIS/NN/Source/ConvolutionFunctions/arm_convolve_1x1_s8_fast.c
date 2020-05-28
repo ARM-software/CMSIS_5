@@ -21,8 +21,8 @@
  * Title:        arm_convolve_1x1_s8_fast.c
  * Description:  Fast q7 version of 1x1 convolution (non-square shape)
  *
- * $Date:        May 18 2020
- * $Revision:    V.2.0.0
+ * $Date:        May 29, 2020
+ * $Revision:    V.2.0.1
  *
  * Target Processor:  Cortex-M cores
  *
@@ -50,16 +50,16 @@
    *
    */
 
-arm_status arm_convolve_1x1_s8_fast(const cmsis_nn_context* ctx,
-                                    const cmsis_nn_conv_params* conv_params,
-                                    const cmsis_nn_per_channel_quant_params* quant_params,
-                                    const cmsis_nn_dims* input_dims,
+arm_status arm_convolve_1x1_s8_fast(const cmsis_nn_context *ctx,
+                                    const cmsis_nn_conv_params *conv_params,
+                                    const cmsis_nn_per_channel_quant_params *quant_params,
+                                    const cmsis_nn_dims *input_dims,
                                     const q7_t *input_data,
-                                    const cmsis_nn_dims* filter_dims,
+                                    const cmsis_nn_dims *filter_dims,
                                     const q7_t *filter_data,
-                                    const cmsis_nn_dims* bias_dims,
+                                    const cmsis_nn_dims *bias_dims,
                                     const int32_t *bias_data,
-                                    const cmsis_nn_dims* output_dims,
+                                    const cmsis_nn_dims *output_dims,
                                     q7_t *output_data)
 {
     if (input_dims->c % 4 != 0 ||
@@ -75,15 +75,15 @@ arm_status arm_convolve_1x1_s8_fast(const cmsis_nn_context* ctx,
 
 #if defined(ARM_MATH_MVEI)
 
-    const int32_t col_len            = input_dims->w * input_dims->h * input_dims->n;
-    const int32_t output_ch          = output_dims->c;
-    const int32_t input_ch           = input_dims->c;
-    const int32_t input_offset       = conv_params->input_offset;
-    const int32_t out_offset         = conv_params->output_offset;
+    const int32_t col_len       = input_dims->w * input_dims->h * input_dims->n;
+    const int32_t output_ch     = output_dims->c;
+    const int32_t input_ch      = input_dims->c;
+    const int32_t input_offset  = conv_params->input_offset;
+    const int32_t out_offset    = conv_params->output_offset;
     const int32_t out_activation_min = conv_params->activation.min;
     const int32_t out_activation_max = conv_params->activation.max;
-    int32_t *output_mult             = quant_params->multiplier;
-    int32_t *output_shift            = quant_params->shift;
+    int32_t *output_mult        = quant_params->multiplier;
+    int32_t *output_shift       = quant_params->shift;
 
     for (int i_items = 0; i_items <= (col_len - 4); i_items += 4)
     {
@@ -109,7 +109,9 @@ arm_status arm_convolve_1x1_s8_fast(const cmsis_nn_context* ctx,
             res = vmaxq_s32(res, vdupq_n_s32(out_activation_min));
             res = vminq_s32(res, vdupq_n_s32(out_activation_max));
 
-            const uint32x4_t scatter_offset = {0, output_ch, output_ch * 2, output_ch * 3};
+            const uint32x4_t scatter_offset = {0, (uint32_t)output_ch,
+                                               (uint32_t)output_ch * 2,
+                                               (uint32_t)output_ch * 3};
             vstrbq_scatter_offset_s32(output_data, scatter_offset, res);
             output_data++;
         }
@@ -169,7 +171,7 @@ arm_status arm_convolve_1x1_s8_fast(const cmsis_nn_context* ctx,
     return ARM_MATH_SUCCESS;
 }
 
-int32_t arm_convolve_1x1_s8_fast_get_buffer_size(const cmsis_nn_dims* input_dims)
+int32_t arm_convolve_1x1_s8_fast_get_buffer_size(const cmsis_nn_dims *input_dims)
 {
     (void)input_dims;
     return 0;

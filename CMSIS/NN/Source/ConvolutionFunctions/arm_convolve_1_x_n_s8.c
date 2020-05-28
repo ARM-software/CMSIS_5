@@ -60,6 +60,7 @@ arm_status arm_convolve_1_x_n_s8(const cmsis_nn_context* ctx,
                                  const cmsis_nn_dims* output_dims,
                                  q7_t *output_data)
 {
+    (void)bias_dims;
     arm_status status = ARM_MATH_SUCCESS;
     if (output_dims->w % 4 != 0)
     {

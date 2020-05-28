@@ -21,10 +21,10 @@
  * Title:        arm_nnfunctions.h
  * Description:  Public header file for CMSIS NN Library
  *
- * $Date:        May 25, 2020
- * $Revision:    V.5.0.0
+ * $Date:        May 29, 2020
+ * $Revision:    V.5.0.1
  *
- * Target Processor:  Cortex-M cores
+ * Target Processor:  Cortex-M CPUs
  * -------------------------------------------------------------------- */
 
 /**
@@ -913,7 +913,7 @@ extern    "C"
    *
    * @param[in, out] ctx            Function context (e.g. temporary buffer). Check the function
    *                                definition file to see if an additional buffer is required.
-   *                                Optional function <API>_get_buffer_size() provides the buffer
+   *                                Optional function {API}_get_buffer_size() provides the buffer
    *                                size if required.
    * @param[in]      dw_conv_params Depthwise convolution parameters (e.g. strides, dilations, pads,...)
    *                                dw_conv_params->dilation is not used.
@@ -947,13 +947,13 @@ extern    "C"
                                             const cmsis_nn_dw_conv_params *dw_conv_params,
                                             const cmsis_nn_per_channel_quant_params *quant_params,
                                             const cmsis_nn_dims *input_dims,
-                                            const q7_t *input,
+                                            const q7_t *input_data,
                                             const cmsis_nn_dims *filter_dims,
-                                            const q7_t *kernel,
+                                            const q7_t *filter_data,
                                             const cmsis_nn_dims *bias_dims,
-                                            const int32_t *bias,
+                                            const int32_t *bias_data,
                                             const cmsis_nn_dims *output_dims,
-                                            q7_t *output);
+                                            q7_t *output_data);
 
    /**
    * @brief Get size of additional buffer required by arm_depthwise_conv_wrapper_s8()
@@ -979,7 +979,7 @@ extern    "C"
    *
    * @param[in, out] ctx            Function context (e.g. temporary buffer). Check the function
    *                                definition file to see if an additional buffer is required.
-   *                                Optional function <API>_get_buffer_size() provides the buffer
+   *                                Optional function {API}_get_buffer_size() provides the buffer
    *                                size if an additional buffer is required.
    *                                exists if additional memory is.
    * @param[in]      dw_conv_params Depthwise convolution parameters (e.g. strides, dilations, pads,...)
@@ -1139,7 +1139,7 @@ extern    "C"
    *
    * @param[in, out] ctx            Function context (e.g. temporary buffer). Check the function
    *                                definition file to see if an additional buffer is required.
-   *                                Optional function <API>_get_buffer_size() provides the buffer
+   *                                Optional function {API}_get_buffer_size() provides the buffer
    *                                size if an additional buffer is required.
    * @param[in]      fc_params      Fully Connected layer parameters (e.g. strides, dilations, pads,...)
    *                                Range of fc_params->input_offset  : [-127, 128]
@@ -1156,6 +1156,7 @@ extern    "C"
    *                                H & W : Not used
    * @param[in]      filter_data    Filter data pointer. Data type: int8
    * @param[in]      bias_dims      Bias tensor dimensions. Format: [C_OUT]
+   *                                N, H, W : Not used
    * @param[in]      bias_data      Bias data pointer. Data type: int32
    * @param[in]      output_dims    Output tensor dimensions. Format: [N, C_OUT]
    *                                N : Batches
@@ -1645,7 +1646,7 @@ extern    "C"
    *
    * @param[in, out] ctx            Function context (e.g. temporary buffer). Check the function
    *                                definition file to see if an additional buffer is required.
-   *                                Optional function <API>_get_buffer_size() provides the buffer
+   *                                Optional function {API}_get_buffer_size() provides the buffer
    *                                size if an additional buffer is required.
    * @param[in]      pool_params    Pooling parameters
    * @param[in]      input_dims     Input (activation) tensor dimensions. Format: [H, W, C_IN]

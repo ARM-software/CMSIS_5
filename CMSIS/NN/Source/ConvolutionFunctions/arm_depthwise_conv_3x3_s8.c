@@ -63,6 +63,7 @@ arm_status arm_depthwise_conv_3x3_s8(const cmsis_nn_context *ctx,
                                      q7_t *output)
 {
     (void)ctx;
+    (void)bias_dims;
 
     const int32_t input_x = input_dims->w;
     const int32_t input_y = input_dims->h;
