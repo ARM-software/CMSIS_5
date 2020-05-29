@@ -59,6 +59,7 @@ if(IS_IN_TRY_COMPILE)
 endif()
 
 add_link_options("-Wl,--start-group")
+#add_link_options("-mcpu=${ARM_CPU}")
 
 # Where is the target environment
 #SET(CMAKE_FIND_ROOT_PATH "${tools}")

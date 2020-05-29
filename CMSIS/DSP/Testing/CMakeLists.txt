@@ -82,6 +82,7 @@ option(EMBEDDED "Embedded Mode" ON)
 
 option(FLOAT16TESTS "Float16 tests" OFF)
 option(MICROBENCH "Micro benchmarks" OFF)
+option(EIGEIN "Eigen benchmarks" OFF)
 
 project(Testing)
 
@@ -110,6 +111,8 @@ add_library(FrameworkLib STATIC)
 
 if (BENCHMARK)
 
+set(STANDARDBENCH ON)
+
 if (MICROBENCH)
   set (MICROSRC
   Source/Benchmarks/MicroBenchmarksF32.cpp
@@ -117,6 +120,15 @@ if (MICROBENCH)
   Source/Benchmarks/MicroBenchmarksQ15.cpp
   Source/Benchmarks/MicroBenchmarksQ7.cpp
   )
+  set(STANDARDBENCH OFF)
+
+endif()
+
+if (EIGEN)
+  set (EIGENSRC
+    ${EIGENBENCH}/VectorBenchmarksF32.cpp
+  )
+  set(STANDARDBENCH OFF)
 endif()
 
 set (NNSRC
@@ -124,49 +136,52 @@ set (NNSRC
   Source/Benchmarks/PoolingBench.cpp
   )
 
-set(TESTSRC 
-  Source/Benchmarks/BasicMathsBenchmarksF32.cpp
-  Source/Benchmarks/BasicMathsBenchmarksQ31.cpp
-  Source/Benchmarks/BasicMathsBenchmarksQ15.cpp
-  Source/Benchmarks/BasicMathsBenchmarksQ7.cpp
-  Source/Benchmarks/ComplexMathsBenchmarksF32.cpp
-  Source/Benchmarks/ComplexMathsBenchmarksQ31.cpp
-  Source/Benchmarks/ComplexMathsBenchmarksQ15.cpp
-  Source/Benchmarks/FIRF32.cpp
-  Source/Benchmarks/FIRQ31.cpp
-  Source/Benchmarks/FIRQ15.cpp
-  Source/Benchmarks/MISCF32.cpp
-  Source/Benchmarks/MISCQ31.cpp
-  Source/Benchmarks/MISCQ15.cpp
-  Source/Benchmarks/MISCQ7.cpp
-  Source/Benchmarks/DECIMF32.cpp
-  Source/Benchmarks/DECIMQ31.cpp
-  Source/Benchmarks/DECIMQ15.cpp
-  Source/Benchmarks/BIQUADF32.cpp
-  Source/Benchmarks/BIQUADF64.cpp
-  Source/Benchmarks/ControllerF32.cpp
-  Source/Benchmarks/ControllerQ31.cpp
-  Source/Benchmarks/ControllerQ15.cpp
-  Source/Benchmarks/FastMathF32.cpp
-  Source/Benchmarks/FastMathQ31.cpp
-  Source/Benchmarks/FastMathQ15.cpp
-  Source/Benchmarks/SupportF32.cpp
-  Source/Benchmarks/SupportBarF32.cpp
-  Source/Benchmarks/SupportQ31.cpp
-  Source/Benchmarks/SupportQ15.cpp
-  Source/Benchmarks/SupportQ7.cpp
-  Source/Benchmarks/UnaryF32.cpp
-  Source/Benchmarks/UnaryF64.cpp
-  Source/Benchmarks/UnaryQ31.cpp
-  Source/Benchmarks/UnaryQ15.cpp
-  Source/Benchmarks/BinaryF32.cpp
-  Source/Benchmarks/BinaryQ31.cpp
-  Source/Benchmarks/BinaryQ15.cpp
-  Source/Benchmarks/TransformF32.cpp
-  Source/Benchmarks/TransformQ31.cpp
-  Source/Benchmarks/TransformQ15.cpp
-  )
-target_include_directories(TestingLib PRIVATE Include/Benchmarks)
+ if (STANDARDBENCH)
+ set(TESTSRC 
+   Source/Benchmarks/BasicMathsBenchmarksF32.cpp
+   Source/Benchmarks/BasicMathsBenchmarksQ31.cpp
+   Source/Benchmarks/BasicMathsBenchmarksQ15.cpp
+   Source/Benchmarks/BasicMathsBenchmarksQ7.cpp
+   Source/Benchmarks/ComplexMathsBenchmarksF32.cpp
+   Source/Benchmarks/ComplexMathsBenchmarksQ31.cpp
+   Source/Benchmarks/ComplexMathsBenchmarksQ15.cpp
+   Source/Benchmarks/FIRF32.cpp
+   Source/Benchmarks/FIRQ31.cpp
+   Source/Benchmarks/FIRQ15.cpp
+   Source/Benchmarks/MISCF32.cpp
+   Source/Benchmarks/MISCQ31.cpp
+   Source/Benchmarks/MISCQ15.cpp
+   Source/Benchmarks/MISCQ7.cpp
+   Source/Benchmarks/DECIMF32.cpp
+   Source/Benchmarks/DECIMQ31.cpp
+   Source/Benchmarks/DECIMQ15.cpp
+   Source/Benchmarks/BIQUADF32.cpp
+   Source/Benchmarks/BIQUADF64.cpp
+   Source/Benchmarks/ControllerF32.cpp
+   Source/Benchmarks/ControllerQ31.cpp
+   Source/Benchmarks/ControllerQ15.cpp
+   Source/Benchmarks/FastMathF32.cpp
+   Source/Benchmarks/FastMathQ31.cpp
+   Source/Benchmarks/FastMathQ15.cpp
+   Source/Benchmarks/SupportF32.cpp
+   Source/Benchmarks/SupportBarF32.cpp
+   Source/Benchmarks/SupportQ31.cpp
+   Source/Benchmarks/SupportQ15.cpp
+   Source/Benchmarks/SupportQ7.cpp
+   Source/Benchmarks/UnaryF32.cpp
+   Source/Benchmarks/UnaryF64.cpp
+   Source/Benchmarks/UnaryQ31.cpp
+   Source/Benchmarks/UnaryQ15.cpp
+   Source/Benchmarks/BinaryF32.cpp
+   Source/Benchmarks/BinaryQ31.cpp
+   Source/Benchmarks/BinaryQ15.cpp
+   Source/Benchmarks/TransformF32.cpp
+   Source/Benchmarks/TransformQ31.cpp
+   Source/Benchmarks/TransformQ15.cpp
+   )
+ target_include_directories(TestingLib PRIVATE Include/Benchmarks)
+ endif()
+
 else()
 
 set(NNSRC
@@ -298,6 +313,13 @@ if (BENCHMARK)
   if (MICROBENCH)
     target_sources(TestingLib PRIVATE ${MICROSRC})
   endif()
+
+  if (EIGEN)
+    target_sources(TestingLib PRIVATE ${EIGENSRC})
+    target_include_directories(TestingLib PUBLIC "${EIGENBENCH}/Include")
+    target_include_directories(TestingLib PUBLIC "${EIGENDIR}")
+  endif()
+
 endif()
   
 

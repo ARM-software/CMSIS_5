@@ -39,8 +39,14 @@ function(compilerSpecificCompileOptions PROJECTNAME ROOT)
     target_compile_options(${PROJECTNAME} PUBLIC "-mthumb")
   endif()
 
+  target_link_options(${PROJECTNAME} PUBLIC "-mcpu=${ARM_CPU}")
+
   # Need to add other gcc config for other cortex-m cores
-  
+  if (ARM_CPU STREQUAL "cortex-m55" )
+     target_compile_options(${PROJECTNAME} PUBLIC "-mfpu=fpv5-d16")
+     target_link_options(${PROJECTNAME} PUBLIC "-mfpu=fpv5-d16")
+  endif()
+
   if (ARM_CPU STREQUAL "cortex-m33" )
      target_compile_options(${PROJECTNAME} PUBLIC "-mfpu=fpv5-sp-d16")
      target_link_options(${PROJECTNAME} PUBLIC "-mfpu=fpv5-sp-d16")

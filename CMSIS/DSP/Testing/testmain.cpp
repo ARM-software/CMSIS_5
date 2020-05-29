@@ -55,6 +55,7 @@ int testmain(const char *patterns)
            // by a server running on a host.
            #if defined(EMBEDDED)
            Client::IORunner runner(&io,&mgr,Testing::kTestOnly);
+           //Client::IORunner runner(&io,&mgr,Testing::kTestAndDump);
            #else
            // Works also in embedded but slower since data is dumped
            Client::IORunner runner(&io,&mgr,Testing::kTestAndDump);
