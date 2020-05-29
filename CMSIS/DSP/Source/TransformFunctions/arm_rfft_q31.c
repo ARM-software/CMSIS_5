@@ -71,6 +71,13 @@ void arm_split_rifft_q31(
   @par
                    If the input buffer is of length N, the output buffer must have length 2*N.
                    The input buffer is modified by this function.
+  @par
+                   For the RIFFT, the source buffer must at least have length 
+                   fftLenReal + 2.
+                   The last two elements must be equal to what would be generated
+                   by the RFFT:
+                     (pSrc[0] - pSrc[1]) >> 1 and 0
+
  */
 
 void arm_rfft_q31(
