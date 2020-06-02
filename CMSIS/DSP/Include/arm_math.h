@@ -6061,7 +6061,7 @@ __STATIC_FORCEINLINE q15_t arm_pid_q15(
     *pIalpha = Ia;
 
     /* Calculate pIbeta using the equation, pIbeta = (1/sqrt(3)) * Ia + (2/sqrt(3)) * Ib */
-    *pIbeta = ((float32_t) 0.57735026919 * Ia + (float32_t) 1.15470053838 * Ib);
+    *pIbeta = (0.57735026919f * Ia + 1.15470053838f * Ib);
   }
 
 
