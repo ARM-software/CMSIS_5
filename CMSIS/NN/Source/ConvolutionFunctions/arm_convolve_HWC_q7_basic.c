@@ -185,9 +185,9 @@ arm_convolve_HWC_q7_basic(const q7_t * Im_in,
 #else
     /* Run the following code as reference implementation for Cortex-M0 and Cortex-M3 */
 
-    uint16_t  i, j, k, l, m, n;
+    int  i, j, k, l, m, n;
     int       conv_out;
-    signed char in_row, in_col;
+    int in_row, in_col;
 
     for (i = 0; i < ch_im_out; i++)
     {
