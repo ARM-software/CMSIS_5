@@ -21,8 +21,8 @@
  * Title:        arm_nnfunctions.h
  * Description:  Public header file for CMSIS NN Library
  *
- * $Date:        May 29, 2020
- * $Revision:    V.5.0.1
+ * $Date:        June 11, 2020
+ * $Revision:    V.6.0.1
  *
  * Target Processor:  Cortex-M CPUs
  * -------------------------------------------------------------------- */
@@ -1684,93 +1684,36 @@ extern    "C"
                                            const int ch_src);
 
    /**
-   * @brief s8 DSP optimized max pooling function
-   * @param[in]       input_y     input tensor dimension along y
-   * @param[in]       input_x     input tensor dimension along x
-   * @param[in]       output_y    output tensor dimension along y
-   * @param[in]       output_x    output tensor dimension along x
-   * @param[in]       stride_y    stride along y
-   * @param[in]       stride_x    stride along x
-   * @param[in]       kernel_y    filter kernel size along y
-   * @param[in]       kernel_x    filter kernel size along x
-   * @param[in]       pad_y       padding size along y
-   * @param[in]       pad_x       padding size along x
-   * @param[in]       act_min     Activation min. Lower limit to clamp output to. Range: int8
-   * @param[in]       act_max     Activation max. Upper limit to clamp output to. Range: int8
-   * @param[in]       depth       number of input channels
-   * @param[in]       input       pointer to input tensor
-   * @param[in]       tmp_buffer  Not used.
-   * @param[in,out]   output      pointer to output tensor
-   * @return                      The function returns one of the following
-   *                              <code>ARM_MATH_SIZE_MISMATCH</code> - Unsupported dimension of tensors
-   *                              <code>ARM_MATH_SUCCESS</code> - Successful operation
-   *                              <code>ARM_MATH_ARGUMENT_ERROR</code> - Implementation not available
-   * @note The input data is corrupted by this function.
-   * @details This optimized implementation is recommended when depth is >=  4 and dimensions are large.
+   * @brief s8 max pooling function.
    *
-   */
-
-    arm_status arm_max_pool_s8_opt(const uint16_t input_y,
-                                   const uint16_t input_x,
-                                   const uint16_t output_y,
-                                   const uint16_t output_x,
-                                   const uint16_t stride_y,
-                                   const uint16_t stride_x,
-                                   const uint16_t kernel_y,
-                                   const uint16_t kernel_x,
-                                   const uint16_t pad_y,
-                                   const uint16_t pad_x,
-                                   const int8_t act_min,
-                                   const int8_t act_max,
-                                   const uint16_t depth,
-                                   int8_t *input,
-                                   int16_t *tmp_buffer,
-                                   int8_t *output);
-
-  /**
-   * @brief s8 pure C max pooling function
-   * @param[in]       input_y     input tensor dimension along y
-   * @param[in]       input_x     input tensor dimension along x
-   * @param[in]       output_y    output tensor dimension along y
-   * @param[in]       output_x    output tensor dimension along x
-   * @param[in]       stride_y    stride along y
-   * @param[in]       stride_x    stride along x
-   * @param[in]       kernel_y    filter kernel size along y
-   * @param[in]       kernel_x    filter kernel size along x
-   * @param[in]       pad_y       padding size along y
-   * @param[in]       pad_x       padding size along x
-   * @param[in]       act_min     Activation min. Lower limit to clamp output to. Range: int8
-   * @param[in]       act_max     Activation max. Upper limit to clamp output to. Range: int8
-   * @param[in]       channel_in  number of input channels
-   * @param[in]       input       pointer to input tensor
-   * @param[in]       tmp_buffer  Not used.
-   * @param[in,out]   output      pointer to output tensor
-   * @return                      The function returns one of the following
-   *                              <code>ARM_MATH_SIZE_MISMATCH</code> - Unsupported dimension of tensors
-   *                              <code>ARM_MATH_SUCCESS</code> - Successful operation
-   *                              <code>ARM_MATH_ARGUMENT_ERROR</code> - Implementation not available
+   * @param[in, out] ctx            Function context (e.g. temporary buffer). Check the function
+   *                                definition file to see if an additional buffer is required.
+   *                                Optional function {API}_get_buffer_size() provides the buffer
+   *                                size if an additional buffer is required.
+   * @param[in]      pool_params    Pooling parameters
+   * @param[in]      input_dims     Input (activation) tensor dimensions. Format: [H, W, C_IN]
+   *                                Argument 'N' is not used.
+   * @param[in]      input_data     Input (activation) data pointer. Data type: int8
+   * @param[in]      filter_dims    Filter tensor dimensions. Format: [H, W]
+   *                                Argument N and C are not used.
+   * @param[in]      output_dims    Output tensor dimensions. Format: [H, W, C_OUT]
+   *                                Argument N is not used.
+   *                                C_OUT equals C_IN.
+   * @param[in, out] output_data    Output data pointer. Data type: int8
+   * @return                        The function returns
+   *                                    <code>ARM_MATH_SUCCESS</code> - Successful operation
    *
    * @details
-   *    - This basic implementation is recommended when number of channels is less than 4 and/or
-   *      dimensions are small.
+   *    - Supported Framework: TensorFlow Lite
    *
    */
-    arm_status arm_max_pool_s8(const uint16_t input_y,
-                               const uint16_t input_x,
-                               const uint16_t output_y,
-                               const uint16_t output_x,
-                               const uint16_t stride_y,
-                               const uint16_t stride_x,
-                               const uint16_t kernel_y,
-                               const uint16_t kernel_x,
-                               const uint16_t pad_y,
-                               const uint16_t pad_x,
-                               const int8_t act_min,
-                               const int8_t act_max,
-                               const uint16_t channel_in,
-                               int8_t *input,
-                               int16_t *tmp_buffer,
-                               int8_t *output);
+    arm_status arm_max_pool_s8(const cmsis_nn_context *ctx,
+                               const cmsis_nn_pool_params *pool_params,
+                               const cmsis_nn_dims *input_dims,
+                               const q7_t *input_data,
+                               const cmsis_nn_dims *filter_dims,
+                               const cmsis_nn_dims *output_dims,
+                               q7_t *output_data);
 /**
  * @defgroup Softmax Softmax Functions
  *

@@ -639,6 +639,11 @@ if __name__ == '__main__':
         # avgpooling_3
         # generator = PoolingSettings(args, channels=2, x_in= 9, y_in=1, stride_x=2, stride_y=1, w_x=1, w_y=1, pad=False)
         # avgpooling_4
-        generator = PoolingSettings(args, channels=2, x_in= 1, y_in=20, stride_x=1, stride_y=3, w_x=1, w_y=3, pad=True)
+        # generator = PoolingSettings(args, channels=2, x_in= 1, y_in=20, stride_x=1, stride_y=3, w_x=1, w_y=3, pad=True)
+        # avgpooling_5
+        # generator = PoolingSettings(args, channels=20, x_in= 1, y_in=1, stride_x=1, stride_y=1, w_x=1, w_y=1, pad=True)
+        # avgpooling_6
+        generator = PoolingSettings(args, channels=17, x_in= 1, y_in=5, stride_x=1, stride_y=3, w_x=3, w_y=4, pad=True)
+
 
     generator.generate_data()
