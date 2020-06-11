@@ -14,6 +14,11 @@
         <li>arm_depthwise_conv_wrapper_s8</li>
         <li>arm_convolve_wrapper_s8</li>
       </ul>
+      Deleted functions
+      <ul>
+        <li>arm_max_pool_s8_opt</li>
+      </ul>
+
     </td>
   </tr>
   <tr>
