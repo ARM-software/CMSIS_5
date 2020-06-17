@@ -1763,6 +1763,9 @@ __STATIC_INLINE q31_t arm_div_q63_to_q31(q63_t num, q31_t den)
    * @param[in]     pCoeffs    points to the filter coefficients.
    * @param[in]     pState     points to the state buffer.
    * @param[in]     blockSize  number of samples that are processed.
+   *
+   * For the MVE version, the coefficient length must be a multiple of 16.
+   * You can pad with zeros if you have less coefficients.
    */
   void arm_fir_init_q7(
         arm_fir_instance_q7 * S,
@@ -1807,6 +1810,10 @@ __STATIC_INLINE q31_t arm_div_q63_to_q31(q63_t num, q31_t den)
    * @return     The function returns either
    * <code>ARM_MATH_SUCCESS</code> if initialization was successful or
    * <code>ARM_MATH_ARGUMENT_ERROR</code> if <code>numTaps</code> is not a supported value.
+   *
+   * For the MVE version, the coefficient length must be a multiple of 8.
+   * You can pad with zeros if you have less coefficients.
+   *
    */
   arm_status arm_fir_init_q15(
         arm_fir_instance_q15 * S,
@@ -1848,6 +1855,9 @@ __STATIC_INLINE q31_t arm_div_q63_to_q31(q63_t num, q31_t den)
    * @param[in]     pCoeffs    points to the filter coefficients.
    * @param[in]     pState     points to the state buffer.
    * @param[in]     blockSize  number of samples that are processed at a time.
+   *
+   * For the MVE version, the coefficient length must be a multiple of 4.
+   * You can pad with zeros if you have less coefficients.
    */
   void arm_fir_init_q31(
         arm_fir_instance_q31 * S,

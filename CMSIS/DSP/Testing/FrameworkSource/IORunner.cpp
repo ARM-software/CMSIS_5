@@ -179,7 +179,7 @@ Otherwise, the calibration is measured below.
             Testing::nbParameterEntries_t entries=0;
             std::vector<Testing::param_t> params(nbParams);
             bool canExecute=true;
-            int  dataIndex=0;
+            unsigned long  dataIndex=0;
             Testing::ParameterKind paramKind;
 
             // Read test identification (test ID)
@@ -201,7 +201,7 @@ Otherwise, the calibration is measured below.
               if (m_io->hasParam() && paramData)
               {
                 // Load new params
-                for(int j=0; j < nbParams ; j++)
+                for(unsigned long j=0; j < nbParams ; j++)
                 {
                   params[j] = paramData[nbParams*dataIndex+j];
                 }

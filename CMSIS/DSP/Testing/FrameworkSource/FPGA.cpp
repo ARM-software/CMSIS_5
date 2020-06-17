@@ -303,7 +303,7 @@ namespace Client
         this->patternSizes->clear();
         std::string tmpstr;
 
-        for(int i=0;i<nbPatterns;i++)
+        for(unsigned long i=0;i<nbPatterns;i++)
         {
            this->read32(&offset);
            this->read32(&nb);
@@ -334,7 +334,7 @@ namespace Client
         this->parameterSizes->clear();
         std::string tmpstr;
 
-        for(int i=0;i<nbValues;i++)
+        for(unsigned long i=0;i<nbValues;i++)
         {
            this->readChar(&paramKind);
            struct offsetOrGen gen;
@@ -363,7 +363,7 @@ namespace Client
 
               p=(Testing::param_t*)malloc(sizeof(Testing::param_t)*(nbInputSamples));
               current=p;
-              for(int i=0;i < nbInputSamples; i ++)
+              for(unsigned long i=0;i < nbInputSamples; i ++)
               {
                 
                 this->read32(&sample);
@@ -392,7 +392,7 @@ namespace Client
         this->outputNames->clear();
         std::string tmpstr;
 
-        for(int i=0;i<nbOutputs;i++)
+        for(unsigned long i=0;i<nbOutputs;i++)
         {
            this->readStr(tmp);
            tmpstr.assign(tmp);

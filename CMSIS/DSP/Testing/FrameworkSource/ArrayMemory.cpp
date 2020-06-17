@@ -127,7 +127,7 @@ namespace Client {
             char *p=ptr + length;
             bool isEmpty=true;
     
-            for(int i=0; i < this->getTailSize() ; i++)
+            for(unsigned long i=0; i < this->getTailSize() ; i++)
             {
                 //printf("%d\n",p[i]);
                 if (p[i] != 0)

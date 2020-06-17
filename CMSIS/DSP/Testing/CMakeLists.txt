@@ -82,7 +82,7 @@ option(EMBEDDED "Embedded Mode" ON)
 
 option(FLOAT16TESTS "Float16 tests" OFF)
 option(MICROBENCH "Micro benchmarks" OFF)
-option(EIGEIN "Eigen benchmarks" OFF)
+option(EXTERNALBENCH "External benchmarks" OFF)
 
 project(Testing)
 
@@ -124,10 +124,8 @@ if (MICROBENCH)
 
 endif()
 
-if (EIGEN)
-  set (EIGENSRC
-    ${EIGENBENCH}/VectorBenchmarksF32.cpp
-  )
+if (EXTERNALBENCH)
+  add_subdirectory(${EXTERNALDIR} bin_external)
   set(STANDARDBENCH OFF)
 endif()
 
@@ -263,7 +261,7 @@ set(TESTSRC16
   )
 endif()
 
-target_include_directories(TestingLib PRIVATE Include/Tests)
+target_include_directories(TestingLib PUBLIC Include/Tests)
 
 endif()
 
@@ -299,6 +297,7 @@ if(NN)
   target_sources(TestingLib PRIVATE ${NNSRC})
 endif()
 
+
 target_sources(TestingLib PRIVATE ${TESTSRC16})
 
 target_sources(TestingLib PRIVATE testmain.cpp)
@@ -313,13 +312,6 @@ if (BENCHMARK)
   if (MICROBENCH)
     target_sources(TestingLib PRIVATE ${MICROSRC})
   endif()
-
-  if (EIGEN)
-    target_sources(TestingLib PRIVATE ${EIGENSRC})
-    target_include_directories(TestingLib PUBLIC "${EIGENBENCH}/Include")
-    target_include_directories(TestingLib PUBLIC "${EIGENDIR}")
-  endif()
-
 endif()
   
 
@@ -382,6 +374,12 @@ configApp(Testing ${ROOT})
 
 target_link_libraries(Testing PRIVATE TestingLib)
 target_link_libraries(Testing PRIVATE FrameworkLib)
+
+if (EXTERNALBENCH)
+  target_include_directories(${EXTERNALPROJECT} PRIVATE FrameworkInclude)
+  target_include_directories(${EXTERNALPROJECT} PRIVATE GeneratedInclude)
+  target_link_libraries(TestingLib PRIVATE ${EXTERNALPROJECT})
+endif()
 
 writeConfig(${CMAKE_CURRENT_BINARY_DIR}/currentConfig.csv)
 

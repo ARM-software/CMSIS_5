@@ -34,7 +34,7 @@
 #include <cstddef>
 #include <cstdio>
 #include <cstring>
-#include <stdlib>
+#include <cstdlib>
 #include "Generators.h"
 #include "Semihosting.h"
 #include "arm_math.h"

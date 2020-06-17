@@ -114,7 +114,7 @@ FPGA driver. Used to read a C array describing how to drive the test.
       const char *m_patterns;
 
       // Parameter array
-      char *m_parameters;
+      //char *m_parameters;
 
       // Current position in the driver array
       const char *currentDesc;
