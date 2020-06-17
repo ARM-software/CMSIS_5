@@ -47,7 +47,8 @@ def parse_args():
                                      epilog="Runs on all connected HW supported by Mbed.")
     parser.add_argument('--testdir', type=str, default='TESTRUN', help="prefix of output dir name")
     parser.add_argument('-s', '--specific-test', type=str, default=None, help="run a specific test, e.g."
-                        " test_arm_convolve_s8, default is to run all tests")
+                        " -s test_arm_convolve_s8. So basically the different options can be listed with:"
+                        " ls -d TestCases/test_* -1")
     parser.add_argument('-c', '--compiler', type=str, default='GCC_ARM', choices=['GCC_ARM', 'ARMC6'])
     args = parser.parse_args()
     return args
@@ -162,6 +163,7 @@ def test_target(target, args, main_test):
                              ' --source ' + CMSIS_PATH + 'NN/Source/ConvolutionFunctions/'
                              ' --source ' + CMSIS_PATH + 'NN/Source/PoolingFunctions/'
                              ' --source ' + CMSIS_PATH + 'NN/Source/NNSupportFunctions/'
+                             ' --source ' + CMSIS_PATH + 'NN/Source/FullyConnectedFunctions/'
                              + cmsis_flags +
                              additional_options,
                              flash_error_msg, die=die)
