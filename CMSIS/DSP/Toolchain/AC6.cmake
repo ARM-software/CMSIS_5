@@ -62,6 +62,7 @@ function(compilerSpecificCompileOptions PROJECTNAME ROOT)
           target_compile_options(${PROJECTNAME} PUBLIC "-mfpu=vfpv4-d16")
       endif()
   endif()
+
   
   if (ARM_CPU STREQUAL "cortex-a5" )
       if ((NEON OR NEONEXPERIMENTAL))
@@ -70,6 +71,7 @@ function(compilerSpecificCompileOptions PROJECTNAME ROOT)
         target_compile_options(${PROJECTNAME} PUBLIC "-mfpu=vfpv4-d16")
       endif()
   endif()
+
 
   if(EXPERIMENTAL)
     experimentalCompilerSpecificCompileOptions(${PROJECTNAME} ${ROOT})

@@ -49,7 +49,7 @@
     void BasicMathsBenchmarksF32::setUp(Testing::testID_t id,std::vector<Testing::param_t>& params,Client::PatternMgr *mgr)
     {
 
-
+       this->setForceInCache(true);
        std::vector<Testing::param_t>::iterator it = params.begin();
        this->nb = *it;
 

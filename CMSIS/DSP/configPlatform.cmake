@@ -104,6 +104,15 @@ function(set_platform_core)
       SET(CORE ARMCM0 PARENT_SCOPE)
       
   endif()
+
+  ###################
+  #
+  # Cortex cortex-a32
+  #
+  if (ARM_CPU MATCHES "^[cC]ortex-[aA]32([^0-9].*)?$")
+    SET(CORE ARMCA32 PARENT_SCOPE)
+    
+  endif()
   
   ###################
   #

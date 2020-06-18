@@ -145,9 +145,9 @@
    *
    * Select Helium versions of the int and fixed point algorithms.
    *
-   * - ARM_MATH_FLOAT16:
+   * - ARM_MATH_MVE_FLOAT16:
    *
-   * Float16 implementations of some algorithms (Requires MVE extension).
+   * MVE Float16 implementations of some algorithms (Requires MVE extension).
    *
    * <hr>
    * \section pack CMSIS-DSP in ARM::CMSIS Pack

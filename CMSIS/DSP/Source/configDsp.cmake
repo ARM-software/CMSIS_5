@@ -34,4 +34,9 @@ if (HELIUM OR MVEF OR SUPPORT)
    target_include_directories(${project} PRIVATE "${root}/CMSIS/DSP/PrivateInclude")
 endif()
 
+if (DISABLEFLOAT16)
+    target_compile_definitions(${project} PRIVATE DISABLEFLOAT16) 
+endif()
+
+
 endfunction()

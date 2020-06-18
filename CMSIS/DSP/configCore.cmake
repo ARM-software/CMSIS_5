@@ -30,6 +30,18 @@ function(configcore PROJECTNAME ROOT)
   # CORTEX-A
   #
 
+  # CORTEX-A32
+  if (ARM_CPU  MATCHES  "^[cC]ortex-[aA]32([^0-9].*)?$" )
+    target_include_directories(${PROJECTNAME} PUBLIC "${ROOT}/CMSIS/Core_A/Include")
+    SET(CORTEXM OFF)
+    target_compile_definitions(${PROJECTNAME} PRIVATE ARMv8A) 
+  
+    target_compile_definitions(${PROJECTNAME} PUBLIC CORTEXA)
+    SET(HARDFP ON)
+    SET(LITTLEENDIAN ON)
+    SET(COREID ARMCA32 PARENT_SCOPE)
+  endif()
+
   # CORTEX-A15
   if (ARM_CPU  MATCHES  "^[cC]ortex-[aA]15([^0-9].*)?$" )
     target_include_directories(${PROJECTNAME} PUBLIC "${ROOT}/CMSIS/Core_A/Include")

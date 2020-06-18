@@ -54,8 +54,8 @@ won't be built.
   #define ARM_FLOAT16_SUPPORTED
   #endif
 #else
-  /* HW Float16 not yet well supported on gcc for M55 */
-  #if !defined(__CMSIS_GCC_H)
+  /* HW Float16 not yet well supported on some configs */
+  #if !defined(__CMSIS_GCC_H) && !defined(DISABLEFLOAT16)
     #define ARM_FLOAT16_SUPPORTED
   #endif
 #endif

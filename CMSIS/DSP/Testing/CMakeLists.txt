@@ -318,6 +318,10 @@ endif()
 target_sources(FrameworkLib PRIVATE ${FRAMEWORKSRC})
 target_sources(FrameworkLib PRIVATE ${FRAMEWORKMODESRC})
 
+if (DISABLEFLOAT16)
+    target_compile_definitions(FrameworkLib PRIVATE DISABLEFLOAT16) 
+endif()
+
 if (BENCHMARK)
     target_compile_definitions(FrameworkLib PUBLIC BENCHMARK)
 endif()

@@ -68,7 +68,7 @@ function(configboot PROJECT_NAME ROOT PLATFORMFOLDER)
   
   ###################
   #
-  # Cortex cortex-a5
+  # Cortex cortex-a
   #
   if (ARM_CPU MATCHES "^[cC]ortex-[Aa].*")
     cortexa(${CORE} ${PROJECT_NAME} ${ROOT} ${PLATFORMFOLDER})
