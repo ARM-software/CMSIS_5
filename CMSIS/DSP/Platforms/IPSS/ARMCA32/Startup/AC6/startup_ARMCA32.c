@@ -105,69 +105,34 @@ void Reset_Handler(void) {
   "LDR    R0, =Vectors                             \n"
   "MCR    p15, 0, R0, c12, c0, 0                   \n"
 
-  "LDR     r0,=Image$$TTB$$ZI$$Base                \n"
-  "MCR     p15, 0, r0, c2, c0, 0                   \n"
-
-  "LDR     r0, =0xFFFFFFFF                         \n"            
-  "MCR     p15, 0, r0, c3, c0, 0                   \n"      // Write Domain Access Control Register
-
-);
-
-  #if defined(__ARM_NEON) || defined(__ARM_FP)
-//----------------------------------------------------------------
-// Enable access to NEON/VFP by enabling access to Coprocessors 10 and 11.
-// Enables Full Access i.e. in both privileged and non privileged modes
-//----------------------------------------------------------------
-__ASM volatile(
-        "MRC     p15, 0, r0, c1, c0, 2 \n"      // Read Coprocessor Access Control Register (CPACR)
-        "ORR     r0, r0, #(0xF << 20) \n"       // Enable access to CP 10 & 11
-        "MCR     p15, 0, r0, c1, c0, 2 \n"      // Write Coprocessor Access Control Register (CPACR)
-        "ISB \n"
-
-//----------------------------------------------------------------
-// Switch on the VFP and NEON hardware
-//----------------------------------------------------------------
-
-        "MOV     r0, #0x40000000 \n"
-        "VMSR    FPEXC, r0 \n"                   // Write FPEXC register, EN bit set
-);
-#endif
-
-__ASM volatile(
-  "LDR     SP, =Image$$ARM_LIB_STACK$$ZI$$Limit      \n"
-
-  "MRC     p15, 0, R0, c1, c0, 0                   \n"  // Read CP15 System Control register
-  "BIC     R0, R0, #(0x1 << 12)                    \n"  
-  "BIC     R0, R0, #(0x1 <<  2)                    \n"  
-  "BIC     R0, R0, #0x2                            \n"   // Clear A bit  1 to disable strict alignment fault checking
-  "ORR     R0, R0, #(0x1 << 11)                    \n"  // Set Z bit 11 to enable branch prediction
-  //"BIC     R0, R0, #(0x1 << 13)
-  "MCR     p15, 0, R0, c1, c0, 0                   \n"  // Write value back to CP15 System Control register
-  "ISB                                             \n"
+  // Setup Stack for each exceptional mode
+  "CPS    #0x11                                    \n"
+  "LDR    SP, =Image$$FIQ_STACK$$ZI$$Limit         \n"
+  "CPS    #0x12                                    \n"
+  "LDR    SP, =Image$$IRQ_STACK$$ZI$$Limit         \n"
+  "CPS    #0x13                                    \n"
+  "LDR    SP, =Image$$SVC_STACK$$ZI$$Limit         \n"
+  "CPS    #0x17                                    \n"
+  "LDR    SP, =Image$$ABT_STACK$$ZI$$Limit         \n"
+  "CPS    #0x1B                                    \n"
+  "LDR    SP, =Image$$UND_STACK$$ZI$$Limit         \n"
+  "CPS    #0x1F                                    \n"
+  "LDR    SP, =Image$$ARM_LIB_STACK$$ZI$$Limit     \n"
 
   // Call SystemInit
   "BL     SystemInit                               \n"
 
   // Unmask interrupts
-  //"CPSIE  if                                       \n"
+  "CPSIE  if                                       \n"
 
   // Call __main
   "BL     __main                                   \n"
   );
 }
 
-void enable_caches(void)
-{
-__ASM volatile(
 
-  "MRC     p15, 0, R0, c1, c0, 0                   \n"  // Read CP15 System Control register
-  "ORR     R0, R0, #(0x1 << 12)                    \n"  // Set I bit 12 to enable I Cache
-  "ORR     R0, R0, #(0x1 <<  2)                    \n"  // Set C bit  2 to enable D Cache
-  "MCR     p15, 0, R0, c1, c0, 0                   \n"  // Write value back to CP15 System Control register
-  "ISB                                             \n"
 
-  );
-}
+
 /*----------------------------------------------------------------------------
   Default Handler for Exceptions / Interrupts
  *----------------------------------------------------------------------------*/

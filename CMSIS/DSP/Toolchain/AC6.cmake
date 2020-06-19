@@ -57,6 +57,14 @@ function(compilerSpecificCompileOptions PROJECTNAME ROOT)
       endif()
   endif()
   
+
+  if (ARM_CPU STREQUAL "cortex-a32" )
+      if (NEON OR NEONEXPERIMENTAL)
+          target_compile_options(${PROJECTNAME} PUBLIC "-mfpu=neon-fp-armv8")
+      endif()
+  endif()
+
+  
   if (ARM_CPU STREQUAL "cortex-a7" )
       if (NOT (NEON OR NEONEXPERIMENTAL))
           target_compile_options(${PROJECTNAME} PUBLIC "-mfpu=vfpv4-d16")

@@ -89,7 +89,7 @@ void initCycleMeasurement()
     if (ENABLE_DIVIDER)
         value |= 8;             // enable "by 64" divider for CCNT.
 
-    value |= 16;
+    //value |= 16;
 
     // program the performance-counter control-register:
     __set_CP(15, 0, value, 9, 12, 0);

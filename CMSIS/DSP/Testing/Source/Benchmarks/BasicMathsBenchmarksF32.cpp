@@ -75,6 +75,7 @@
            this->inp1=input1.ptr();
            this->inp2=input2.ptr();
            this->outp=output.ptr();
+
          break;
         
          case BasicMathsBenchmarksF32::VEC_NEGATE_F32_5:

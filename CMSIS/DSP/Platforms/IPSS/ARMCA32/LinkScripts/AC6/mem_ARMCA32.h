@@ -69,14 +69,14 @@
 // </h>
  *----------------------------------------------------------------------------*/
 //#define __RAM_BASE       0x80200000#
-#define __RAM_BASE       0x0500000
-#define __RAM_SIZE       0x00700000
+#define __RAM_BASE       0x00100000
+#define __RAM_SIZE       0x00200000
 
 #define __RW_DATA_SIZE   0xF0000
 #define __ZI_DATA_SIZE   0x00200000
 
 #define __STACK_SIZE     0x00007000
-#define __HEAP_SIZE      0x00200000
+#define __HEAP_SIZE      0x00100000
 
 #define __UND_STACK_SIZE 0x00000100
 #define __ABT_STACK_SIZE 0x00000100
@@ -95,7 +95,7 @@
 //   <o1> TTB Size (in Bytes) <0x0-0xFFFFFFFF:8>
 // </h>
  *----------------------------------------------------------------------------*/
-#define __TTB_BASE       0x80500000
+#define __TTB_BASE       0x00300000
 #define __TTB_SIZE       0x00005000
 
 
