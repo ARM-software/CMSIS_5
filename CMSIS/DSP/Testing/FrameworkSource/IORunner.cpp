@@ -40,14 +40,19 @@
 #include "arm_math.h"
 #include "Calibrate.h"
 
+#ifdef CORTEXA
+#define CALIBNB 1
+#else
 #define CALIBNB 20
+#endif
+
 
 namespace Client
 {
   
       IORunner::IORunner(IO *io,PatternMgr *mgr,  Testing::RunningMode runningMode):m_io(io), m_mgr(mgr)
       {
-        Testing::cycles_t current;
+        volatile Testing::cycles_t current;
 
         this->m_runningMode = runningMode;
         // Set running mode on PatternMgr.
@@ -103,6 +108,49 @@ Indeed, in that case the calibration value can only be measured by parsing the t
 Otherwise, the calibration is measured below.
 
 */
+
+/*
+
+We want to ensure that the calibration of the overhead of the
+measurement is the same here and when we do the measurement later.
+
+So to ensure the conditions are always the same, the instruction cache
+and branch predictor are flushed.
+
+*/
+#ifdef CORTEXA
+  __set_BPIALL(0);
+  __DSB();
+  __ISB();
+
+  __set_ICIALLU(0);
+  __DSB();
+  __ISB();
+#endif
+
+/*
+
+We always call the empty function once to ensure it is in the cache
+because it is how the measurement is done.
+
+*/
+        if (!m_mgr->HasMemError())
+        {
+             (s->*t)();
+        }
+
+/*
+
+We measure the cycles required for a measurement,
+The cycleMeasurement starts, getCycles and cycleMeasurementStop
+should not be in the cache.
+
+So, for the overhead we always have the value corresponding to
+the code not in cache.
+
+While for the code itself we have the value for the code in cache.
+
+*/
         for(int i=0;i < CALIBNB;i++)
         {
           cycleMeasurementStart();
@@ -123,7 +171,6 @@ Otherwise, the calibration is measured below.
 #ifndef EXTBENCH
         calibration=calibration / CALIBNB;
 #endif
-
       }
 
       // Testing.
@@ -151,7 +198,7 @@ Otherwise, the calibration is measured below.
         Testing::errorID_t error=0;
         unsigned long line = 0;
         char details[200];
-        Testing::cycles_t cycles=0;
+        volatile Testing::cycles_t cycles=0;
         Testing::nbParameters_t nbParams;
 
         // Read node identification (suite)
@@ -218,6 +265,15 @@ Otherwise, the calibration is measured below.
                 
                 // Run the test once to force the code to be in cache.
                 // By default it is disabled in the suite.
+#ifdef CORTEXA
+  __set_BPIALL(0);
+  __DSB();
+  __ISB();
+
+  __set_ICIALLU(0);
+  __DSB();
+  __ISB();
+#endif
                 if (s->isForcedInCache())
                 {
                    if (!m_mgr->HasMemError())
