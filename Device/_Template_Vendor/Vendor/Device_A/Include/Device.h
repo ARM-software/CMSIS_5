@@ -1,11 +1,11 @@
 /**************************************************************************//**
  * @file     <Device>.h
  * @brief    CMSIS Cortex-A Core Peripheral Access Layer Header File
- * @version  V1.00
- * @date     10. January 2018
+ * @version  V1.01
+ * @date     23. June 2020
  ******************************************************************************/
 /*
- * Copyright (c) 2009-2018 Arm Limited. All rights reserved.
+ * Copyright (c) 2009-2020 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -77,8 +77,8 @@ typedef enum IRQn
   HypervisorTimer_IRQn               = 26,      /*!< Hypervisor Timer Interrupt                                                */
   VirtualTimer_IRQn                  = 27,      /*!< Virtual Timer Interrupt                                                   */ 
   Legacy_nFIQ_IRQn                   = 28,      /*!< Legacy nFIQ Interrupt                                                     */
-  SecurePhysicalTimer_IRQn           = 29,      /*!< Secure Physical Timer Interrupt                                           */
-  NonSecurePhysicalTimer_IRQn        = 30,      /*!< Non-Secure Physical Timer Interrupt                                       */
+  SecurePhyTimer_IRQn                = 29,      /*!< Secure Physical Timer Interrupt                                           */
+  NonSecurePhyTimer_IRQn             = 30,      /*!< Non-Secure Physical Timer Interrupt                                       */
   Legacy_nIRQ_IRQn                   = 31,      /*!< Legacy nIRQ Interrupt                                                     */ 
 
  /* Shared Peripheral Interrupts */
