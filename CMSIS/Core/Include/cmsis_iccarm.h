@@ -238,6 +238,7 @@ __packed struct  __iar_u32 { uint32_t v; };
   #endif
 #endif
 
+#undef __WEAK                           /* undo the definition from DLib_Defaults.h */
 #ifndef   __WEAK
   #if __ICCARM_V8
     #define __WEAK __attribute__((weak))
