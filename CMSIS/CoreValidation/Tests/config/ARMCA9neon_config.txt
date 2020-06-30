@@ -1,7 +1,9 @@
 # Parameters:
 # instance.parameter=value       #(type, mode) default = 'def value' : description : [min..max]
 #----------------------------------------------------------------------------------------------
-motherboard.vis.disable_visualisation=0               # (bool  , init-time) default = '0'      : Enable/disable visualisation
+motherboard.vis.disable_visualisation=1               # (bool  , init-time) default = '0'      : Enable/disable visualisation
+cluster.cpu0.vfp-present=1                            # (bool  , init-time) default = '1'      : Set whether the model has VFP support
+cluster.cpu0.ase-present=1                            # (bool  , init-time) default = '1'      : Set whether model has NEON support
 cluster.cpu0.semihosting-enable=1                     # (bool  , init-time) default = '1'      : Enable semihosting SVC traps. Applications that do not use semihosting must set this parameter to false
 cluster.cpu0.semihosting-hlt-enable=0                 # (bool  , init-time) default = '0'      : Enable semihosting HLT traps. Applications that use HLT semihosting must set this parameter to true and the semihosting-enable parameter to true
 cluster.cpu0.semihosting-ARM_SVC=0x123456             # (int   , init-time) default = '0x123456' : ARM SVC number for semihosting : [0x0..0xFFFFFF]
