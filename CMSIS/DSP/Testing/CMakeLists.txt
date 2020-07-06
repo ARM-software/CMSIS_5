@@ -1,4 +1,4 @@
-cmake_minimum_required (VERSION 3.6)
+cmake_minimum_required (VERSION 3.14)
 cmake_policy(SET CMP0077 NEW)
 include(CMakePrintHelpers)
 
@@ -82,7 +82,7 @@ option(EMBEDDED "Embedded Mode" ON)
 
 option(FLOAT16TESTS "Float16 tests" OFF)
 option(MICROBENCH "Micro benchmarks" OFF)
-option(EXTERNALBENCH "External benchmarks" OFF)
+option(EXTERNAL "External benchmarks or tests" OFF)
 
 project(Testing)
 
@@ -98,7 +98,7 @@ set(ROOT ${CMAKE_CURRENT_SOURCE_DIR}/../../..)
 set(TESTFRAMEWORK ON)
 include(config)
 
-if (NOT REFLIB)
+if ((NOT REFLIB) AND (NOT NOCMSIS))
 add_subdirectory(../Source bin_dsp)
 endif()
 
@@ -124,7 +124,7 @@ if (MICROBENCH)
 
 endif()
 
-if (EXTERNALBENCH)
+if (EXTERNAL)
   add_subdirectory(${EXTERNALDIR} bin_external)
   set(STANDARDBENCH OFF)
 endif()
@@ -182,6 +182,8 @@ set (NNSRC
 
 else()
 
+set(STANDARDTEST ON)
+
 set(NNSRC
   Source/Tests/NNSupport.cpp
   Source/Tests/Pooling.cpp
@@ -189,6 +191,12 @@ set(NNSRC
   Source/Tests/FullyConnected.cpp
   )
 
+if (EXTERNAL)
+  add_subdirectory(${EXTERNALDIR} bin_external)
+  set(STANDARDTEST OFF)
+endif()
+
+if (STANDARDTEST)
 set(TESTSRC 
   Source/Tests/BasicTestsF32.cpp
   Source/Tests/BasicTestsQ31.cpp
@@ -254,12 +262,14 @@ set(TESTSRC
   Source/Tests/ExampleCategoryQ7.cpp
   )
 
+
 if ((NOT ARMAC5) AND (FLOAT16TESTS) AND ((FLOAT16) OR (MVEF) OR (HELIUM) OR (NEON) OR (NEONEXPERIMENTAL)))
 set(TESTSRC16 
   Source/Tests/BasicTestsF16.cpp
   Source/Tests/TransformCF16.cpp
   )
 endif()
+endif() 
 
 target_include_directories(TestingLib PUBLIC Include/Tests)
 
@@ -338,7 +348,9 @@ SET(DSP ${ROOT}/CMSIS/DSP)
 target_include_directories(TestingLib PUBLIC "${DSP}/Include")
 target_link_libraries(TestingLib PRIVATE "${REFLIBNAME}")
 else()
+if (NOT NOCMSIS)
 target_link_libraries(TestingLib PRIVATE CMSISDSP)
+endif()
 endif()
 
 if(NN)
@@ -348,7 +360,7 @@ target_include_directories(TestingLib PRIVATE FrameworkInclude)
 target_include_directories(TestingLib PRIVATE GeneratedInclude)
 
 configLib(TestingLib ${ROOT})
-configDsp(TestingLib ${ROOT})
+#configDsp(TestingLib ${ROOT})
 
 configLib(FrameworkLib ${ROOT})
 target_include_directories(FrameworkLib PRIVATE FrameworkInclude)
@@ -379,7 +391,7 @@ configApp(Testing ${ROOT})
 target_link_libraries(Testing PRIVATE TestingLib)
 target_link_libraries(Testing PRIVATE FrameworkLib)
 
-if (EXTERNALBENCH)
+if (EXTERNAL)
   target_include_directories(${EXTERNALPROJECT} PRIVATE FrameworkInclude)
   target_include_directories(${EXTERNALPROJECT} PRIVATE GeneratedInclude)
   target_link_libraries(TestingLib PRIVATE ${EXTERNALPROJECT})

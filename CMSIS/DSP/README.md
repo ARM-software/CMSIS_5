@@ -71,7 +71,7 @@ Create a folder BuildCMSISOnly.
 Inside the folder, create a CMakeLists.txt with the following content:
 
 ```cmake
-cmake_minimum_required (VERSION 3.6)
+cmake_minimum_required (VERSION 3.14)
 
 # Define the project
 project (testcmsisdsp VERSION 0.1)
