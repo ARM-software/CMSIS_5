@@ -769,7 +769,7 @@
       <baseAddress>0x40010100</baseAddress>
       <interrupt>
         <name>TIMER1</name>
-        <description>Timer 2 interrupt</description>
+        <description>Timer 1 interrupt</description>
         <value>4</value>
       </interrupt>
     </peripheral>
