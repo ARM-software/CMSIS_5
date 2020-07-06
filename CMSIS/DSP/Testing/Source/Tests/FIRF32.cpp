@@ -16,6 +16,14 @@ a double precision computation.
 static __ALIGNED(8) float32_t coeffArray[32];
 #endif 
 
+void checkInnerTail(float32_t *b)
+{
+    ASSERT_TRUE(b[0] == 0.0f);
+    ASSERT_TRUE(b[1] == 0.0f);
+    ASSERT_TRUE(b[2] == 0.0f);
+    ASSERT_TRUE(b[3] == 0.0f);
+}
+
     void FIRF32::test_fir_f32()
     {
         
@@ -88,10 +96,12 @@ static __ALIGNED(8) float32_t coeffArray[32];
 
            arm_fir_f32(&this->S,inputp,outp,blockSize);
            outp += blockSize;
+           checkInnerTail(outp);
            
            inputp += blockSize;
            arm_fir_f32(&this->S,inputp,outp,blockSize);
            outp += blockSize;
+           checkInnerTail(outp);
 
            configp += 2;
            orgcoefsp += numTaps;

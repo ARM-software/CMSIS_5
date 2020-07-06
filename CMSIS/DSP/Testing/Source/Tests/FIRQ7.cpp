@@ -10,6 +10,14 @@
 static __ALIGNED(8) q7_t coeffArray[32];
 #endif 
 
+void checkInnerTail(q7_t *b)
+{
+    ASSERT_TRUE(b[0] == 0);
+    ASSERT_TRUE(b[1] == 0);
+    ASSERT_TRUE(b[2] == 0);
+    ASSERT_TRUE(b[3] == 0);
+}
+
     void FIRQ7::test_fir_q7()
     {
         
@@ -79,10 +87,12 @@ static __ALIGNED(8) q7_t coeffArray[32];
            */
            arm_fir_q7(&this->S,inputp,outp,blockSize);
            outp += blockSize;
+           checkInnerTail(outp);
 
            inputp += blockSize;
            arm_fir_q7(&this->S,inputp,outp,blockSize);
            outp += blockSize;
+           checkInnerTail(outp);
 
            configp += 2;
            orgcoefsp += numTaps;

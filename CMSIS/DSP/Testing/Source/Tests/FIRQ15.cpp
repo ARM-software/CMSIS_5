@@ -10,6 +10,14 @@
 static __ALIGNED(8) q15_t coeffArray[32];
 #endif 
 
+void checkInnerTail(q15_t *b)
+{
+    ASSERT_TRUE(b[0] == 0);
+    ASSERT_TRUE(b[1] == 0);
+    ASSERT_TRUE(b[2] == 0);
+    ASSERT_TRUE(b[3] == 0);
+}
+
     void FIRQ15::test_fir_q15()
     {
         
@@ -81,10 +89,12 @@ static __ALIGNED(8) q15_t coeffArray[32];
            */
            arm_fir_q15(&this->S,inputp,outp,blockSize);
            outp += blockSize;
+           checkInnerTail(outp);
 
            inputp += blockSize;
            arm_fir_q15(&this->S,inputp,outp,blockSize);
            outp += blockSize;
+           checkInnerTail(outp);
 
            configp += 2;
            orgcoefsp += numTaps;
