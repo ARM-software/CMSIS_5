@@ -2284,6 +2284,8 @@ group Root {
                 folder = UnaryF32
 
                 Pattern INPUTS1_F32_ID : InputA1_f32.txt 
+                Pattern INPUTSC1_F32_ID : InputAC1_f32.txt 
+
                 Pattern INPUTS2_F32_ID : InputB1_f32.txt 
                 Pattern INPUTVEC1_F32_ID : InputVec1_f32.txt 
 
@@ -2295,6 +2297,7 @@ group Root {
                 Pattern REFSUB1_F32_ID : RefSub1_f32.txt
                 Pattern REFSCALE1_F32_ID : RefScale1_f32.txt
                 Pattern REFTRANS1_F32_ID : RefTranspose1_f32.txt
+                Pattern REFTRANSC1_F32_ID : RefTransposeC1_f32.txt
                 Pattern REFINV1_F32_ID : RefInvert1_f32.txt
                 Pattern REFVECMUL1_F32_ID : RefVecMul1_f32.txt
 
@@ -2310,6 +2313,7 @@ group Root {
                  test matrix transpose:test_mat_trans_f32
                  test matrix inverse:test_mat_inverse_f32
                  test mat mult vec:test_mat_vec_mult_f32
+                 test matrix complex transpose:test_mat_cmplx_trans_f32
                 }
 
               }
@@ -2319,6 +2323,7 @@ group Root {
                 folder = UnaryQ31
 
                 Pattern INPUTS1_Q31_ID : InputA1_q31.txt 
+                Pattern INPUTSC1_Q31_ID : InputAC1_q31.txt 
                 Pattern INPUTS2_Q31_ID : InputB1_q31.txt 
                 Pattern INPUTVEC1_Q31_ID : InputVec1_q31.txt 
 
@@ -2330,6 +2335,7 @@ group Root {
                 Pattern REFSUB1_Q31_ID : RefSub1_q31.txt
                 Pattern REFSCALE1_Q31_ID : RefScale1_q31.txt
                 Pattern REFTRANS1_Q31_ID : RefTranspose1_q31.txt
+                Pattern REFTRANSC1_Q31_ID : RefTransposeC1_q31.txt
                 Pattern REFINV1_Q31_ID : RefInvert1_q31.txt
                 Pattern REFVECMUL1_Q31_ID : RefVecMul1_q31.txt
 
@@ -2343,6 +2349,7 @@ group Root {
                  test matrix scale:test_mat_scale_q31
                  test matrix transpose:test_mat_trans_q31
                  test mat mult vec:test_mat_vec_mult_q31
+                 test matrix complex transpose:test_mat_cmplx_trans_q31
                 }
 
               }
@@ -2352,6 +2359,7 @@ group Root {
                 folder = UnaryQ15
 
                 Pattern INPUTS1_Q15_ID : InputA1_q15.txt 
+                Pattern INPUTSC1_Q15_ID : InputAC1_q15.txt 
                 Pattern INPUTS2_Q15_ID : InputB1_q15.txt 
                 Pattern INPUTVEC1_Q15_ID : InputVec1_q15.txt 
 
@@ -2363,6 +2371,7 @@ group Root {
                 Pattern REFSUB1_Q15_ID : RefSub1_q15.txt
                 Pattern REFSCALE1_Q15_ID : RefScale1_q15.txt
                 Pattern REFTRANS1_Q15_ID : RefTranspose1_q15.txt
+                Pattern REFTRANSC1_Q15_ID : RefTransposeC1_q15.txt
                 Pattern REFINV1_Q15_ID : RefInvert1_q15.txt
                 Pattern REFVECMUL1_Q15_ID : RefVecMul1_q15.txt
 
@@ -2376,6 +2385,7 @@ group Root {
                  test matrix scale:test_mat_scale_q15
                  test matrix transpose:test_mat_trans_q15
                  test mat mult vec:test_mat_vec_mult_q15
+                 test matrix complex transpose:test_mat_cmplx_trans_q15
                 }
 
               }
@@ -2385,6 +2395,7 @@ group Root {
                 folder = UnaryQ7
 
                 Pattern INPUTS1_Q7_ID : InputA1_q7.txt 
+                Pattern INPUTSC1_Q7_ID : InputAC1_q7.txt 
                 Pattern INPUTS2_Q7_ID : InputB1_q7.txt 
                 Pattern INPUTVEC1_Q7_ID : InputVec1_q7.txt 
 
@@ -2396,6 +2407,7 @@ group Root {
                 Pattern REFSUB1_Q7_ID : RefSub1_q7.txt
                 Pattern REFSCALE1_Q7_ID : RefScale1_q7.txt
                 Pattern REFTRANS1_Q7_ID : RefTranspose1_q7.txt
+                Pattern REFTRANSC1_Q7_ID : RefTransposeC1_q7.txt
                 Pattern REFINV1_Q7_ID : RefInvert1_q7.txt
                 Pattern REFVECMUL1_Q7_ID : RefVecMul1_q7.txt
 

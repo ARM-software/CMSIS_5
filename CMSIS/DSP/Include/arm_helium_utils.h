@@ -231,6 +231,172 @@ __STATIC_INLINE arm_status arm_mat_trans_32bit_generic_mve(
     return (ARM_MATH_SUCCESS);
 }
 
+__STATIC_INLINE arm_status arm_mat_cmplx_trans_32bit(
+    uint16_t    srcRows,
+    uint16_t    srcCols,
+    uint32_t   *pDataSrc,
+    uint16_t    dstRows,
+    uint16_t    dstCols,
+    uint32_t   *pDataDest)
+{
+    uint32_t        i;
+    uint32_t const *pDataC;
+    uint32_t       *pDataRow;
+    uint32_t       *pDataDestR, *pDataDestRow;
+    uint32x4_t      vecOffsRef, vecOffsCur;
+    uint32_t        blkCnt;
+    uint32x4_t      vecIn;
+
+#ifdef ARM_MATH_MATRIX_CHECK
+    /*
+     * Check for matrix mismatch condition
+     */
+    if ((srcRows != dstCols) || (srcCols != dstRows))
+    {
+        /*
+         * Set status as ARM_MATH_SIZE_MISMATCH
+         */
+        return = ARM_MATH_SIZE_MISMATCH;
+    }
+#else
+    (void)dstRows;
+    (void)dstCols;
+#endif
+
+    /* 2x2, 3x3 and 4x4 specialization to be added */
+
+    vecOffsRef[0] = 0;
+    vecOffsRef[1] = 1;
+    vecOffsRef[2] = srcCols << 1;
+    vecOffsRef[3] = (srcCols << 1) + 1;
+
+    pDataRow = pDataSrc;
+    pDataDestRow = pDataDest;
+    i = srcCols;
+    do
+    {
+        pDataC = (uint32_t const *) pDataRow;
+        pDataDestR = pDataDestRow;
+        vecOffsCur = vecOffsRef;
+
+        blkCnt = (srcRows * CMPLX_DIM) >> 2;
+        while (blkCnt > 0U)
+        {
+            vecIn = vldrwq_gather_shifted_offset(pDataC, vecOffsCur);
+            vstrwq(pDataDestR, vecIn); 
+            pDataDestR += 4;
+            vecOffsCur = vaddq(vecOffsCur, (srcCols << 2));
+            /*
+             * Decrement the blockSize loop counter
+             */
+             blkCnt--;
+        }
+        /*
+         * tail
+         * (will be merged thru tail predication)
+         */
+        blkCnt = (srcRows * CMPLX_DIM) & 3;
+        if (blkCnt > 0U)
+        {
+            mve_pred16_t p0 = vctp32q(blkCnt);
+            vecIn = vldrwq_gather_shifted_offset(pDataC, vecOffsCur);
+            vstrwq_p(pDataDestR, vecIn, p0);
+        }
+
+        pDataRow += CMPLX_DIM;
+        pDataDestRow += (srcRows * CMPLX_DIM);
+    }
+    while (--i);
+
+    return (ARM_MATH_SUCCESS);
+}
+
+__STATIC_INLINE arm_status arm_mat_cmplx_trans_16bit(
+    uint16_t    srcRows,
+    uint16_t    srcCols,
+    uint16_t   *pDataSrc,
+    uint16_t    dstRows,
+    uint16_t    dstCols,
+    uint16_t   *pDataDest)
+{
+    static const uint16_t loadCmplxCol[8] = { 0, 0, 1, 1, 2, 2, 3, 3 };
+    int             i;
+    uint16x8_t    vecOffsRef, vecOffsCur;
+    uint16_t const *pDataC;
+    uint16_t       *pDataRow;
+    uint16_t       *pDataDestR, *pDataDestRow;
+    uint32_t        blkCnt;
+    uint16x8_t    vecIn;
+
+#ifdef ARM_MATH_MATRIX_CHECK
+    /*
+     * Check for matrix mismatch condition
+     */
+    if ((srcRows != dstCols) || (srcCols != dstRows))
+    {
+        /*
+         * Set status as ARM_MATH_SIZE_MISMATCH
+         */
+        return = ARM_MATH_SIZE_MISMATCH;
+    }
+#else
+    (void)dstRows;
+    (void)dstCols;
+#endif
+
+    /*
+     * 2x2, 3x3 and 4x4 specialization to be added
+     */
+
+
+    /*
+     * build  [0, 1, 2xcol, 2xcol+1, 4xcol, 4xcol+1, 6xcol, 6xcol+1]
+     */
+    vecOffsRef = vldrhq_u16((uint16_t const *) loadCmplxCol);
+    vecOffsRef = vmulq(vecOffsRef, (uint16_t) (srcCols * CMPLX_DIM))
+                    + viwdupq_u16((uint32_t)0, (uint16_t) 2, 1);
+
+    pDataRow = pDataSrc;
+    pDataDestRow = pDataDest;
+    i = srcCols;
+    do
+    {
+        pDataC = (uint16_t const *) pDataRow;
+        pDataDestR = pDataDestRow;
+        vecOffsCur = vecOffsRef;
+
+        blkCnt = (srcRows * CMPLX_DIM) >> 3;
+        while (blkCnt > 0U)
+        {
+            vecIn = vldrhq_gather_shifted_offset(pDataC, vecOffsCur);
+            vstrhq(pDataDestR, vecIn);  
+            pDataDestR+= 8; // VEC_LANES_U16
+            vecOffsCur = vaddq(vecOffsCur, (srcCols << 3));
+            /*
+             * Decrement the blockSize loop counter
+             */
+            blkCnt--;
+        }
+        /*
+         * tail
+         * (will be merged thru tail predication)
+         */
+        blkCnt = (srcRows * CMPLX_DIM) & 0x7;
+        if (blkCnt > 0U)
+        {
+            mve_pred16_t p0 = vctp16q(blkCnt);
+            vecIn = vldrhq_gather_shifted_offset(pDataC, vecOffsCur);
+            vstrhq_p(pDataDestR, vecIn, p0);
+        }
+
+        pDataRow += CMPLX_DIM;
+        pDataDestRow += (srcRows * CMPLX_DIM);
+    }
+    while (--i);
+
+    return (ARM_MATH_SUCCESS);
+}
+
 #if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FAST_TABLES) || defined(ARM_TABLE_FAST_SQRT_Q31_MVE)
 __STATIC_INLINE q31x4_t FAST_VSQRT_Q31(q31x4_t vecIn)
 {

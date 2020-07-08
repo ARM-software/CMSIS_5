@@ -2503,6 +2503,18 @@ arm_status arm_mat_trans_f32(
         arm_matrix_instance_f32 * pDst);
 
   /**
+   * @brief Floating-point complex matrix transpose.
+   * @param[in]  pSrc  points to the input matrix
+   * @param[out] pDst  points to the output matrix
+   * @return    The function returns either  <code>ARM_MATH_SIZE_MISMATCH</code>
+   * or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.
+   */
+arm_status arm_mat_cmplx_trans_f32(
+  const arm_matrix_instance_f32 * pSrc,
+  arm_matrix_instance_f32 * pDst);
+
+
+  /**
    * @brief Q15 matrix transpose.
    * @param[in]  pSrc  points to the input matrix
    * @param[out] pDst  points to the output matrix
@@ -2512,6 +2524,17 @@ arm_status arm_mat_trans_f32(
 arm_status arm_mat_trans_q15(
   const arm_matrix_instance_q15 * pSrc,
         arm_matrix_instance_q15 * pDst);
+
+  /**
+   * @brief Q15 complex matrix transpose.
+   * @param[in]  pSrc  points to the input matrix
+   * @param[out] pDst  points to the output matrix
+   * @return    The function returns either  <code>ARM_MATH_SIZE_MISMATCH</code>
+   * or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.
+   */
+arm_status arm_mat_cmplx_trans_q15(
+  const arm_matrix_instance_q15 * pSrc,
+  arm_matrix_instance_q15 * pDst);
 
   /**
    * @brief Q7 matrix transpose.
@@ -2534,6 +2557,17 @@ arm_status arm_mat_trans_q7(
 arm_status arm_mat_trans_q31(
   const arm_matrix_instance_q31 * pSrc,
         arm_matrix_instance_q31 * pDst);
+
+  /**
+   * @brief Q31 complex matrix transpose.
+   * @param[in]  pSrc  points to the input matrix
+   * @param[out] pDst  points to the output matrix
+   * @return    The function returns either  <code>ARM_MATH_SIZE_MISMATCH</code>
+   * or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.
+   */
+arm_status arm_mat_cmplx_trans_q31(
+  const arm_matrix_instance_q31 * pSrc,
+  arm_matrix_instance_q31 * pDst);
 
   /**
    * @brief Floating-point matrix multiplication

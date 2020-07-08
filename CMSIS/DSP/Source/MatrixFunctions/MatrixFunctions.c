@@ -57,3 +57,7 @@
 #include "arm_mat_vec_mult_q31.c"
 #include "arm_mat_vec_mult_q15.c"
 #include "arm_mat_vec_mult_q7.c"
+#include "arm_mat_cmplx_trans_f32.c"
+#include "arm_mat_cmplx_trans_q31.c"
+#include "arm_mat_cmplx_trans_q15.c"
+

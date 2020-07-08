@@ -923,6 +923,7 @@ group Root {
                 }
 
                 Pattern INPUTA_F32_ID : InputA1_f32.txt 
+                Pattern INPUTAC_F32_ID : InputAC1_f32.txt 
                 Pattern INPUTVEC1_F32_ID : InputVec1_f32.txt 
 
                 Output  OUT_F32_ID : Output
@@ -939,6 +940,7 @@ group Root {
                    Matrix Addition:test_mat_add_f32
                    Matrix Substraction:test_mat_sub_f32
                    Matrix Vector Multiplication:test_mat_vec_mult_f32
+                   Matrix Complex Transpose:test_mat_cmplx_trans_f32
                 } -> PARAM1_ID
               }
 
@@ -954,6 +956,7 @@ group Root {
                 }
 
                 Pattern INPUTA_Q31_ID : InputA1_q31.txt 
+                Pattern INPUTAC_Q31_ID : InputAC1_q31.txt 
                 Pattern INPUTVEC1_Q31_ID : InputVec1_q31.txt 
 
                 Output  OUT_Q31_ID : Output
@@ -969,6 +972,7 @@ group Root {
                    Matrix Addition:test_mat_add_q31
                    Matrix Substraction:test_mat_sub_q31
                    Matrix Vector Multiplication:test_mat_vec_mult_q31
+                   Matrix Complex Transpose:test_mat_cmplx_trans_q31
                 } -> PARAM1_ID
               }
 
@@ -984,6 +988,7 @@ group Root {
                 }
 
                 Pattern INPUTA_Q15_ID : InputA1_q15.txt 
+                Pattern INPUTAC_Q15_ID : InputAC1_q15.txt 
                 Pattern INPUTVEC1_Q15_ID : InputVec1_q15.txt 
                 Output  OUT_Q15_ID : Output
 
@@ -998,6 +1003,7 @@ group Root {
                    Matrix Addition:test_mat_add_q15
                    Matrix Substraction:test_mat_sub_q15
                    Matrix Vector Multiplication:test_mat_vec_mult_q15
+                   Matrix Complex Transpose:test_mat_cmplx_trans_q15
                 } -> PARAM1_ID
               }
 

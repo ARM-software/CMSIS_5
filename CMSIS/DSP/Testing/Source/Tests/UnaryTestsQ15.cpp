@@ -75,6 +75,24 @@ a double precision computation.
       }                                                                  \
       out.pData = outp;
 
+#define PREPAREDATA1C(TRANSPOSED)                                         \
+      in1.numRows=rows;                                                  \
+      in1.numCols=columns;                                               \
+      memcpy((void*)ap,(const void*)inp1,2*sizeof(q15_t)*rows*columns);\
+      in1.pData = ap;                                                    \
+                                                                         \
+      if (TRANSPOSED)                                                    \
+      {                                                                  \
+         out.numRows=columns;                                            \
+         out.numCols=rows;                                               \
+      }                                                                  \
+      else                                                               \
+      {                                                                  \
+      out.numRows=rows;                                                  \
+      out.numCols=columns;                                               \
+      }                                                                  \
+      out.pData = outp;
+
 #define LOADVECDATA2()                          \
       const q15_t *inp1=input1.ptr();    \
       const q15_t *inp2=input2.ptr();    \
@@ -222,6 +240,31 @@ void UnaryTestsQ15::test_mat_trans_q15()
 
     } 
 
+void UnaryTestsQ15::test_mat_cmplx_trans_q15()
+    {     
+      LOADDATA1();
+
+      for(i=0;i < nbMatrixes ; i ++)
+      {
+          rows = *dimsp++;
+          columns = *dimsp++;
+
+          PREPAREDATA1C(true);
+
+          arm_mat_cmplx_trans_q15(&this->in1,&this->out);
+
+          outp += 2*(rows * columns);
+
+      }
+
+      ASSERT_EMPTY_TAIL(output);
+
+      ASSERT_SNR(output,ref,(q15_t)SNR_THRESHOLD);
+
+      ASSERT_NEAR_EQ(output,ref,ABS_ERROR_Q15);
+
+    }
+
 
     void UnaryTestsQ15::setUp(Testing::testID_t id,std::vector<Testing::param_t>& params,Client::PatternMgr *mgr)
     {
@@ -284,6 +327,16 @@ void UnaryTestsQ15::test_mat_trans_q15()
             output.create(ref.nbSamples(),UnaryTestsQ15::OUT_Q15_ID,mgr);
             a.create(MAXMATRIXDIM*MAXMATRIXDIM,UnaryTestsQ15::TMPA_Q15_ID,mgr);
             b.create(MAXMATRIXDIM,UnaryTestsQ15::TMPB_Q15_ID,mgr);
+         break;
+
+         case TEST_MAT_CMPLX_TRANS_Q15_6:
+            input1.reload(UnaryTestsQ15::INPUTSC1_Q15_ID,mgr);
+            dims.reload(UnaryTestsQ15::DIMSUNARY1_S16_ID,mgr);
+
+            ref.reload(UnaryTestsQ15::REFTRANSC1_Q15_ID,mgr);
+
+            output.create(ref.nbSamples(),UnaryTestsQ15::OUT_Q15_ID,mgr);
+            a.create(MAXMATRIXDIM*MAXMATRIXDIM,UnaryTestsQ15::TMPA_Q15_ID,mgr);
          break;
 
         

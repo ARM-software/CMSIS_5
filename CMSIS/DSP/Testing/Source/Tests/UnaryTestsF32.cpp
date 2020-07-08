@@ -86,6 +86,24 @@ But big matrix needed for checking the vectorized code */
       }                                                                  \
       out.pData = outp;
 
+#define PREPAREDATA1C(TRANSPOSED)                                         \
+      in1.numRows=rows;                                                  \
+      in1.numCols=columns;                                               \
+      memcpy((void*)ap,(const void*)inp1,2*sizeof(float32_t)*rows*columns);\
+      in1.pData = ap;                                                    \
+                                                                         \
+      if (TRANSPOSED)                                                    \
+      {                                                                  \
+         out.numRows=columns;                                            \
+         out.numCols=rows;                                               \
+      }                                                                  \
+      else                                                               \
+      {                                                                  \
+      out.numRows=rows;                                                  \
+      out.numCols=columns;                                               \
+      }                                                                  \
+      out.pData = outp;
+
 #define LOADVECDATA2()                          \
       const float32_t *inp1=input1.ptr();    \
       const float32_t *inp2=input2.ptr();    \
@@ -234,6 +252,31 @@ void UnaryTestsF32::test_mat_trans_f32()
 
     } 
 
+void UnaryTestsF32::test_mat_cmplx_trans_f32()
+    {     
+      LOADDATA1();
+
+      for(i=0;i < nbMatrixes ; i ++)
+      {
+          rows = *dimsp++;
+          columns = *dimsp++;
+
+          PREPAREDATA1C(true);
+
+          arm_mat_cmplx_trans_f32(&this->in1,&this->out);
+
+          outp += 2*(rows * columns);
+
+      }
+
+      ASSERT_EMPTY_TAIL(output);
+
+      ASSERT_SNR(output,ref,(float32_t)SNR_THRESHOLD);
+
+      ASSERT_CLOSE_ERROR(output,ref,ABS_ERROR,REL_ERROR);
+
+    }
+
 void UnaryTestsF32::test_mat_inverse_f32()
     {     
       const float32_t *inp1=input1.ptr();    
@@ -341,6 +384,16 @@ void UnaryTestsF32::test_mat_inverse_f32()
             output.create(ref.nbSamples(),UnaryTestsF32::OUT_F32_ID,mgr);
             a.create(MAXMATRIXDIM*MAXMATRIXDIM,UnaryTestsF32::TMPA_F32_ID,mgr);
             b.create(MAXMATRIXDIM,UnaryTestsF32::TMPB_F32_ID,mgr);
+         break;
+
+          case TEST_MAT_CMPLX_TRANS_F32_7:
+            input1.reload(UnaryTestsF32::INPUTSC1_F32_ID,mgr);
+            dims.reload(UnaryTestsF32::DIMSUNARY1_S16_ID,mgr);
+
+            ref.reload(UnaryTestsF32::REFTRANSC1_F32_ID,mgr);
+
+            output.create(ref.nbSamples(),UnaryTestsF32::OUT_F32_ID,mgr);
+            a.create(MAXMATRIXDIM*MAXMATRIXDIM,UnaryTestsF32::TMPA_F32_ID,mgr);
          break;
       }
        

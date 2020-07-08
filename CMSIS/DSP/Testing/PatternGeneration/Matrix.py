@@ -602,6 +602,11 @@ def writeUnaryTests(config,format):
     if format == Tools.Q7:
        data1 = data1 / 4.0
 
+    data1C=randComplex(NBSAMPLES)
+
+    if format == Tools.Q7:
+       data1C = data1C / 4.0
+
     data2=np.random.randn(NBSAMPLES)
     data2 = Tools.normalize(data2) 
 
@@ -612,6 +617,8 @@ def writeUnaryTests(config,format):
 
 
     config.writeInput(1, data1,"InputA")
+    config.writeInput(1, asReal(data1C),"InputAC")
+
     config.writeInput(1, data2,"InputB")
     config.writeInput(1, vecdata,"InputVec")
 
@@ -663,6 +670,14 @@ def writeUnaryTests(config,format):
        r = list(r.reshape(a*b))
        vals = vals + r
     config.writeReference(1, vals,"RefTranspose")
+
+    vals = []
+    for (a,b) in unarySizes:
+       ma = np.copy(data1C[0:a*b]).reshape(a,b)
+       r = np.transpose(ma)
+       r = list(asReal(r.reshape(a*b)))
+       vals = vals + r
+    config.writeReference(1, vals,"RefTransposeC")
 
     vals = []
     for (a,b) in unarySizes:
