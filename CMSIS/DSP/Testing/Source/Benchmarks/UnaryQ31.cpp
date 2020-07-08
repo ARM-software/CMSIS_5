@@ -22,6 +22,11 @@
        arm_mat_sub_q31(&this->in1,&this->in1,&this->out);
     } 
     
+    void UnaryQ31::test_mat_vec_mult_q31()
+    {     
+       arm_mat_vec_mult_q31(&this->in1, vecp, outp);
+    } 
+
     void UnaryQ31::setUp(Testing::testID_t id,std::vector<Testing::param_t>& params,Client::PatternMgr *mgr)
     {
 
@@ -30,18 +35,30 @@
        this->nbr = *it++;
        this->nbc = *it;
 
+       switch(id)
+       {
+          case TEST_MAT_VEC_MULT_Q31_5:
+             vec.reload(UnaryQ31::INPUTVEC1_Q31_ID,mgr,this->nbc);
+             output.create(this->nbr,UnaryQ31::OUT_Q31_ID,mgr);
+             vecp=vec.ptr();
+             outp=output.ptr();
+          break;
+          default:
+              output.create(this->nbr*this->nbc,UnaryQ31::OUT_Q31_ID,mgr);
+              
+              this->out.numRows = this->nbr;
+              this->out.numCols = this->nbc;
+              this->out.pData = output.ptr(); 
+          break;
+       }
+
        input1.reload(UnaryQ31::INPUTA_Q31_ID,mgr,this->nbr*this->nbc);
 
-       
-       output.create(this->nbr*this->nbc,UnaryQ31::OUT_Q31_ID,mgr);
-
+      
        this->in1.numRows = this->nbr;
        this->in1.numCols = this->nbc;
        this->in1.pData = input1.ptr();   
 
-       this->out.numRows = this->nbr;
-       this->out.numCols = this->nbc;
-       this->out.pData = output.ptr(); 
     }
 
     void UnaryQ31::tearDown(Testing::testID_t id,Client::PatternMgr *mgr)

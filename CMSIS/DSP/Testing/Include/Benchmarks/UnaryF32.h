@@ -9,11 +9,15 @@ class UnaryF32:public Client::Suite
         private:
             #include "UnaryF32_decl.h"
             Client::Pattern<float32_t> input1;
+            Client::Pattern<float32_t> vec;
+
             Client::LocalPattern<float32_t> output;
 
             int nbr;
             int nbc;
 
+            float32_t *vecp;
+            float32_t *outp;
             arm_matrix_instance_f32 in1;
             arm_matrix_instance_f32 out;
     };

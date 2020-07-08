@@ -104,6 +104,10 @@ Definitions available for MVEI only
 
 #include "arm_common_tables.h"
 
+#define MVE_ASRL_SAT16(acc, shift)          ((sqrshrl_sat48(acc, -(32-shift)) >> 32) & 0xffffffff)
+#define MVE_ASRL_SAT32(acc, shift)          ((sqrshrl(acc, -(32-shift)) >> 32) & 0xffffffff)
+
+
 /* Following functions are used to transpose matrix in f32 and q31 cases */
 __STATIC_INLINE arm_status arm_mat_trans_32bit_2x2_mve(
     uint32_t * pDataSrc,

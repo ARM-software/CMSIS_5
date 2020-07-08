@@ -2,6 +2,7 @@ cmake_minimum_required (VERSION 3.14)
 cmake_policy(SET CMP0077 NEW)
 include(CMakePrintHelpers)
 
+
 # The tests are assuming that MATRIX_CHECK is enabled when building
 # CMSIS-DSP.
 
@@ -170,9 +171,11 @@ set (NNSRC
    Source/Benchmarks/UnaryF64.cpp
    Source/Benchmarks/UnaryQ31.cpp
    Source/Benchmarks/UnaryQ15.cpp
+   Source/Benchmarks/UnaryQ7.cpp
    Source/Benchmarks/BinaryF32.cpp
    Source/Benchmarks/BinaryQ31.cpp
    Source/Benchmarks/BinaryQ15.cpp
+   Source/Benchmarks/BinaryQ7.cpp
    Source/Benchmarks/TransformF32.cpp
    Source/Benchmarks/TransformQ31.cpp
    Source/Benchmarks/TransformQ15.cpp
@@ -197,47 +200,32 @@ if (EXTERNAL)
 endif()
 
 if (STANDARDTEST)
-set(TESTSRC 
-  Source/Tests/BasicTestsF32.cpp
+
+if (BASICMATH)
+  set(BASICMATHSRC Source/Tests/BasicTestsF32.cpp
   Source/Tests/BasicTestsQ31.cpp
   Source/Tests/BasicTestsQ15.cpp
-  Source/Tests/BasicTestsQ7.cpp
-  Source/Tests/ComplexTestsF32.cpp
+  Source/Tests/BasicTestsQ7.cpp)
+endif()
+
+if (COMPLEXMATH)
+  set(COMPLEXMATHSRC Source/Tests/ComplexTestsF32.cpp
   Source/Tests/ComplexTestsQ31.cpp
-  Source/Tests/ComplexTestsQ15.cpp
-  Source/Tests/SVMF32.cpp
-  Source/Tests/BayesF32.cpp
-  Source/Tests/TransformCF64.cpp
-  Source/Tests/TransformCF32.cpp
-  Source/Tests/TransformRF64.cpp
-  Source/Tests/TransformRF32.cpp
-  Source/Tests/TransformCQ31.cpp
-  Source/Tests/TransformRQ31.cpp
-  Source/Tests/TransformCQ15.cpp
-  Source/Tests/TransformRQ15.cpp
-  Source/Tests/StatsTestsF32.cpp
-  Source/Tests/StatsTestsF64.cpp
-  Source/Tests/StatsTestsQ31.cpp
-  Source/Tests/StatsTestsQ15.cpp
-  Source/Tests/StatsTestsQ7.cpp
-  Source/Tests/FastMathF32.cpp
+  Source/Tests/ComplexTestsQ15.cpp)
+endif()
+
+if (CONTROLLER)
+  set(CONTROLLERSRC )
+endif()
+
+if (FASTMATH)
+  set(FASTMATHSRC Source/Tests/FastMathF32.cpp
   Source/Tests/FastMathQ31.cpp
-  Source/Tests/FastMathQ15.cpp
-  Source/Tests/SupportTestsF32.cpp
-  Source/Tests/SupportTestsQ31.cpp
-  Source/Tests/SupportTestsQ15.cpp
-  Source/Tests/SupportTestsQ7.cpp
-  Source/Tests/SupportBarTestsF32.cpp
-  Source/Tests/DistanceTestsF32.cpp
-  Source/Tests/DistanceTestsU32.cpp
-  Source/Tests/UnaryTestsQ31.cpp
-  Source/Tests/UnaryTestsQ15.cpp
-  Source/Tests/UnaryTestsF32.cpp
-  Source/Tests/UnaryTestsF64.cpp
-  Source/Tests/BinaryTestsF32.cpp
-  Source/Tests/BinaryTestsQ31.cpp
-  Source/Tests/BinaryTestsQ15.cpp
-  Source/Tests/DECIMF32.cpp
+  Source/Tests/FastMathQ15.cpp)
+endif()
+
+if (FILTERING)
+  set(FILTERINGSRC Source/Tests/DECIMF32.cpp
   Source/Tests/DECIMQ31.cpp
   Source/Tests/DECIMQ15.cpp
   Source/Tests/MISCF32.cpp
@@ -251,15 +239,82 @@ set(TESTSRC
   Source/Tests/BIQUADF64.cpp
   Source/Tests/BIQUADF32.cpp
   Source/Tests/BIQUADQ31.cpp
-  Source/Tests/BIQUADQ15.cpp
-  Source/Tests/InterpolationTestsF32.cpp
-  Source/Tests/InterpolationTestsQ31.cpp
-  Source/Tests/InterpolationTestsQ15.cpp
-  Source/Tests/InterpolationTestsQ7.cpp
-  Source/Tests/ExampleCategoryF32.cpp
-  Source/Tests/ExampleCategoryQ31.cpp
-  Source/Tests/ExampleCategoryQ15.cpp
-  Source/Tests/ExampleCategoryQ7.cpp
+  Source/Tests/BIQUADQ15.cpp)
+endif()
+
+if (MATRIX)
+  set(MATRIXSRC  Source/Tests/UnaryTestsQ31.cpp
+  Source/Tests/UnaryTestsQ15.cpp
+  Source/Tests/UnaryTestsQ7.cpp
+  Source/Tests/UnaryTestsF32.cpp
+  Source/Tests/UnaryTestsF64.cpp
+  Source/Tests/BinaryTestsF32.cpp
+  Source/Tests/BinaryTestsQ31.cpp
+  Source/Tests/BinaryTestsQ15.cpp
+  Source/Tests/BinaryTestsQ7.cpp)
+endif()
+
+if (STATISTICS)
+  set(STATISTICSSRC Source/Tests/StatsTestsF32.cpp
+  Source/Tests/StatsTestsF64.cpp
+  Source/Tests/StatsTestsQ31.cpp
+  Source/Tests/StatsTestsQ15.cpp
+  Source/Tests/StatsTestsQ7.cpp)
+endif()
+
+if (SUPPORT)
+  set(SUPPORTSRC Source/Tests/SupportTestsF32.cpp
+  Source/Tests/SupportTestsQ31.cpp
+  Source/Tests/SupportTestsQ15.cpp
+  Source/Tests/SupportTestsQ7.cpp
+  Source/Tests/SupportBarTestsF32.cpp)
+endif()
+
+if (TRANSFORM)
+  set(TRANSFORMSRC Source/Tests/TransformCF64.cpp
+  Source/Tests/TransformCF32.cpp
+  Source/Tests/TransformRF64.cpp
+  Source/Tests/TransformRF32.cpp
+  Source/Tests/TransformCQ31.cpp
+  Source/Tests/TransformRQ31.cpp
+  Source/Tests/TransformCQ15.cpp
+  Source/Tests/TransformRQ15.cpp)
+endif()
+
+if (SVM)
+  set(SVMSRC Source/Tests/SVMF32.cpp)
+endif()
+
+if (BAYES)
+  set(BAYESSRC Source/Tests/BayesF32.cpp)
+endif()
+
+if (DISTANCE)
+  set(DISTANCESRC Source/Tests/DistanceTestsF32.cpp
+  Source/Tests/DistanceTestsU32.cpp)
+endif()
+
+set(TESTSRC 
+     ${BASICMATHSRC}
+     ${COMPLEXMATHSRC}
+     ${CONTROLLERSRC}
+     ${FASTMATHSRC}
+     ${FILTERINGSRC}
+     ${MATRIXSRC}
+     ${STATISTICSSRC}
+     ${SUPPORTSRC}
+     ${TRANSFORMSRC}
+     ${SVMSRC}
+     ${BAYESSRC}
+     ${DISTANCESRC}
+     Source/Tests/InterpolationTestsF32.cpp
+     Source/Tests/InterpolationTestsQ31.cpp
+     Source/Tests/InterpolationTestsQ15.cpp
+     Source/Tests/InterpolationTestsQ7.cpp
+     Source/Tests/ExampleCategoryF32.cpp
+     Source/Tests/ExampleCategoryQ31.cpp
+     Source/Tests/ExampleCategoryQ15.cpp
+     Source/Tests/ExampleCategoryQ7.cpp
   )
 
 

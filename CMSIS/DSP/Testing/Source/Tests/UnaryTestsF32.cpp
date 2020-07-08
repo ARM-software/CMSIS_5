@@ -86,6 +86,53 @@ But big matrix needed for checking the vectorized code */
       }                                                                  \
       out.pData = outp;
 
+#define LOADVECDATA2()                          \
+      const float32_t *inp1=input1.ptr();    \
+      const float32_t *inp2=input2.ptr();    \
+                                             \
+      float32_t *ap=a.ptr();                 \
+      float32_t *bp=b.ptr();                 \
+                                             \
+      float32_t *outp=output.ptr();          \
+      int16_t *dimsp = dims.ptr();           \
+      int nbMatrixes = dims.nbSamples() / 2;\
+      int rows,internal;                      \
+      int i;
+
+#define PREPAREVECDATA2()                                                   \
+      in1.numRows=rows;                                                  \
+      in1.numCols=internal;                                               \
+      memcpy((void*)ap,(const void*)inp1,2*sizeof(float32_t)*rows*internal);\
+      in1.pData = ap;                                                    \
+                                                                         \
+      memcpy((void*)bp,(const void*)inp2,2*sizeof(float32_t)*internal);
+                            
+
+
+void UnaryTestsF32::test_mat_vec_mult_f32()
+    {     
+      LOADVECDATA2();
+
+      for(i=0;i < nbMatrixes ; i ++)
+      {
+          rows = *dimsp++;
+          internal = *dimsp++;
+
+          PREPAREVECDATA2();
+
+          arm_mat_vec_mult_f32(&this->in1, bp, outp);
+
+          outp += rows ;
+
+      }
+
+      ASSERT_EMPTY_TAIL(output);
+
+      ASSERT_SNR(output,ref,(float32_t)SNR_THRESHOLD);
+
+      ASSERT_CLOSE_ERROR(output,ref,ABS_ERROR,REL_ERROR);
+
+    } 
 
     void UnaryTestsF32::test_mat_add_f32()
     {     
@@ -282,6 +329,18 @@ void UnaryTestsF32::test_mat_inverse_f32()
 
             output.create(ref.nbSamples(),UnaryTestsF32::OUT_F32_ID,mgr);
             a.create(MAXMATRIXDIM*MAXMATRIXDIM,UnaryTestsF32::TMPA_F32_ID,mgr);
+         break;
+
+         case TEST_MAT_VEC_MULT_F32_6:
+            input1.reload(UnaryTestsF32::INPUTS1_F32_ID,mgr);
+            input2.reload(UnaryTestsF32::INPUTVEC1_F32_ID,mgr);
+            dims.reload(UnaryTestsF32::DIMSUNARY1_S16_ID,mgr);
+
+            ref.reload(UnaryTestsF32::REFVECMUL1_F32_ID,mgr);
+
+            output.create(ref.nbSamples(),UnaryTestsF32::OUT_F32_ID,mgr);
+            a.create(MAXMATRIXDIM*MAXMATRIXDIM,UnaryTestsF32::TMPA_F32_ID,mgr);
+            b.create(MAXMATRIXDIM,UnaryTestsF32::TMPB_F32_ID,mgr);
          break;
       }
        

@@ -26,6 +26,11 @@
     {     
        arm_mat_sub_f32(&this->in1,&this->in1,&this->out);
     } 
+
+    void UnaryF32::test_mat_vec_mult_f32()
+    {     
+       arm_mat_vec_mult_f32(&this->in1, vecp, outp);
+    } 
     
     void UnaryF32::setUp(Testing::testID_t id,std::vector<Testing::param_t>& params,Client::PatternMgr *mgr)
     {
@@ -35,18 +40,32 @@
        this->nbr = *it++;
        this->nbc = *it;
 
+       switch(id)
+       {
+          case TEST_MAT_VEC_MULT_F32_6:
+             vec.reload(UnaryF32::INPUTVEC1_F32_ID,mgr,this->nbc);
+             output.create(this->nbr,UnaryF32::OUT_F32_ID,mgr);
+             vecp=vec.ptr();
+             outp=output.ptr();
+          break;
+          default:
+              output.create(this->nbr*this->nbc,UnaryF32::OUT_F32_ID,mgr);
+              
+              this->out.numRows = this->nbr;
+              this->out.numCols = this->nbc;
+              this->out.pData = output.ptr(); 
+          break;
+       }
+
        input1.reload(UnaryF32::INPUTA_F32_ID,mgr,this->nbr*this->nbc);
 
        
-       output.create(this->nbr*this->nbc,UnaryF32::OUT_F32_ID,mgr);
 
        this->in1.numRows = this->nbr;
        this->in1.numCols = this->nbc;
        this->in1.pData = input1.ptr();   
 
-       this->out.numRows = this->nbr;
-       this->out.numCols = this->nbc;
-       this->out.pData = output.ptr(); 
+      
     }
 
     void UnaryF32::tearDown(Testing::testID_t id,Client::PatternMgr *mgr)

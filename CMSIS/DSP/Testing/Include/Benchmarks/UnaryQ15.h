@@ -9,11 +9,14 @@ class UnaryQ15:public Client::Suite
         private:
             #include "UnaryQ15_decl.h"
             Client::Pattern<q15_t> input1;
+            Client::Pattern<q15_t> vec;
             Client::LocalPattern<q15_t> output;
 
             int nbr;
             int nbc;
 
+            q15_t *vecp;
+            q15_t *outp;
             arm_matrix_instance_q15 in1;
             arm_matrix_instance_q15 out;
     };

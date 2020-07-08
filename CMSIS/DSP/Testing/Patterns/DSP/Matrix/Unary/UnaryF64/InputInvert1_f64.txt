@@ -5,9 +5,9 @@ D
 // 0.707107
 0x3fe6a09e667f3bcd
 // 0.707107
-0x3fe6a09e667f3bcd
+0x3fe6a09e667f3bcc
 // -0.707107
-0xbfe6a09e667f3bcd
+0xbfe6a09e667f3bcc
 // 0.707107
 0x3fe6a09e667f3bcd
 // 0.804738

@@ -38,7 +38,16 @@ def setDebugMode():
   DEBUGMODE=True
 
 def isDebugMode():
+  global DEBUGMODE
   return(DEBUGMODE)
+
+def setKeepBuildFolder():
+  global KEEPBUILDFOLDER
+  KEEPBUILDFOLDER=True
+
+def isKeepMode():
+  global KEEPBUILDFOLDER
+  return(KEEPBUILDFOLDER)
 
 
 def joinit(iterable, delimiter):
@@ -249,7 +258,7 @@ class BuildConfig:
     def cleanFolder(self):
         print("Delete %s\n" % self.path())
         #DEBUG
-        if not DEBUGMODE and not KEEPBUILDFOLDER:
+        if not isDebugMode() and not isKeepMode():
            shutil.rmtree(self.path())
 
     # Archive results and currentConfig.csv to another folder

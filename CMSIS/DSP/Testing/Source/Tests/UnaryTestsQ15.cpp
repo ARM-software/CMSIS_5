@@ -10,7 +10,7 @@ Reference patterns are generated with
 a double precision computation.
 
 */
-#define ABS_ERROR_Q15 ((q15_t)2)
+#define ABS_ERROR_Q15 ((q15_t)4)
 #define ABS_ERROR_Q63 ((q63_t)(1<<16))
 
 #define ONEHALF 0x4000
@@ -75,6 +75,52 @@ a double precision computation.
       }                                                                  \
       out.pData = outp;
 
+#define LOADVECDATA2()                          \
+      const q15_t *inp1=input1.ptr();    \
+      const q15_t *inp2=input2.ptr();    \
+                                             \
+      q15_t *ap=a.ptr();                 \
+      q15_t *bp=b.ptr();                 \
+                                             \
+      q15_t *outp=output.ptr();          \
+      int16_t *dimsp = dims.ptr();           \
+      int nbMatrixes = dims.nbSamples() / 2;\
+      int rows,internal;                      \
+      int i;
+
+#define PREPAREVECDATA2()                                                   \
+      in1.numRows=rows;                                                  \
+      in1.numCols=internal;                                               \
+      memcpy((void*)ap,(const void*)inp1,2*sizeof(q15_t)*rows*internal);\
+      in1.pData = ap;                                                    \
+                                                                         \
+      memcpy((void*)bp,(const void*)inp2,2*sizeof(q15_t)*internal);
+
+
+    void UnaryTestsQ15::test_mat_vec_mult_q15()
+    {     
+      LOADVECDATA2();
+
+      for(i=0;i < nbMatrixes ; i ++)
+      {
+          rows = *dimsp++;
+          internal = *dimsp++;
+
+          PREPAREVECDATA2();
+
+          arm_mat_vec_mult_q15(&this->in1, bp, outp);
+
+          outp += rows ;
+
+      }
+
+      ASSERT_EMPTY_TAIL(output);
+
+      ASSERT_SNR(output,ref,(q15_t)SNR_THRESHOLD);
+
+      ASSERT_NEAR_EQ(output,ref,ABS_ERROR_Q15);
+
+    } 
 
     void UnaryTestsQ15::test_mat_add_q15()
     {     
@@ -226,6 +272,18 @@ void UnaryTestsQ15::test_mat_trans_q15()
 
             output.create(ref.nbSamples(),UnaryTestsQ15::OUT_Q15_ID,mgr);
             a.create(MAXMATRIXDIM*MAXMATRIXDIM,UnaryTestsQ15::TMPA_Q15_ID,mgr);
+         break;
+
+         case TEST_MAT_VEC_MULT_Q15_5:
+            input1.reload(UnaryTestsQ15::INPUTS1_Q15_ID,mgr);
+            input2.reload(UnaryTestsQ15::INPUTVEC1_Q15_ID,mgr);
+            dims.reload(UnaryTestsQ15::DIMSUNARY1_S16_ID,mgr);
+
+            ref.reload(UnaryTestsQ15::REFVECMUL1_Q15_ID,mgr);
+
+            output.create(ref.nbSamples(),UnaryTestsQ15::OUT_Q15_ID,mgr);
+            a.create(MAXMATRIXDIM*MAXMATRIXDIM,UnaryTestsQ15::TMPA_Q15_ID,mgr);
+            b.create(MAXMATRIXDIM,UnaryTestsQ15::TMPB_Q15_ID,mgr);
          break;
 
         

@@ -55,6 +55,7 @@ a double precision computation.
       out.pData = outp;
 
 
+      
     void BinaryTestsQ15::test_mat_mult_q15()
     {     
       LOADDATA2();
@@ -80,6 +81,9 @@ a double precision computation.
       ASSERT_NEAR_EQ(output,ref,ABS_HIGH_ERROR_Q15);
 
     } 
+
+
+
 
     void BinaryTestsQ15::test_mat_cmplx_mult_q15()
     {     
@@ -141,6 +145,8 @@ a double precision computation.
             b.create(2*MAXMATRIXDIM*MAXMATRIXDIM,BinaryTestsQ15::TMPB_Q15_ID,mgr);
             tmp.create(2*MAXMATRIXDIM*MAXMATRIXDIM,BinaryTestsQ15::TMP_Q15_ID,mgr);
          break;
+
+
 
     
       }

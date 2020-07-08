@@ -923,6 +923,8 @@ group Root {
                 }
 
                 Pattern INPUTA_F32_ID : InputA1_f32.txt 
+                Pattern INPUTVEC1_F32_ID : InputVec1_f32.txt 
+
                 Output  OUT_F32_ID : Output
 
                 Params PARAM1_ID = {
@@ -936,6 +938,7 @@ group Root {
                    Matrix Transpose:test_mat_trans_f32
                    Matrix Addition:test_mat_add_f32
                    Matrix Substraction:test_mat_sub_f32
+                   Matrix Vector Multiplication:test_mat_vec_mult_f32
                 } -> PARAM1_ID
               }
 
@@ -951,6 +954,8 @@ group Root {
                 }
 
                 Pattern INPUTA_Q31_ID : InputA1_q31.txt 
+                Pattern INPUTVEC1_Q31_ID : InputVec1_q31.txt 
+
                 Output  OUT_Q31_ID : Output
 
                 Params PARAM1_ID = {
@@ -963,6 +968,7 @@ group Root {
                    Matrix Transpose:test_mat_trans_q31
                    Matrix Addition:test_mat_add_q31
                    Matrix Substraction:test_mat_sub_q31
+                   Matrix Vector Multiplication:test_mat_vec_mult_q31
                 } -> PARAM1_ID
               }
 
@@ -978,6 +984,7 @@ group Root {
                 }
 
                 Pattern INPUTA_Q15_ID : InputA1_q15.txt 
+                Pattern INPUTVEC1_Q15_ID : InputVec1_q15.txt 
                 Output  OUT_Q15_ID : Output
 
                 Params PARAM1_ID = {
@@ -990,8 +997,36 @@ group Root {
                    Matrix Transpose:test_mat_trans_q15
                    Matrix Addition:test_mat_add_q15
                    Matrix Substraction:test_mat_sub_q15
+                   Matrix Vector Multiplication:test_mat_vec_mult_q15
                 } -> PARAM1_ID
               }
+
+              suite Unary Matrix Operators Q7 {
+                class = UnaryQ7 
+                folder = UnaryQ7
+
+                ParamList {
+                  NBR,NBC
+                  Summary NBR,NBC
+                  Names "Number of rows","Number of columns"
+                  Formula "NBR*NBC"
+                }
+
+                Pattern INPUTA_Q7_ID : InputA1_q7.txt 
+                Pattern INPUTVEC1_Q7_ID : InputVec1_q7.txt 
+                Output  OUT_Q7_ID : Output
+
+                Params PARAM1_ID = {
+                  NBR = [5,10,40]
+                  NBC = [5,10,40]
+                }
+
+                Functions {
+                   Matrix Transpose:test_mat_trans_q7
+                   Matrix Vector Multiplication:test_mat_vec_mult_q7
+                } -> PARAM1_ID
+              }
+
 
               suite Unary Matrix Operators F64 {
                 class = UnaryF64 
@@ -1035,6 +1070,7 @@ group Root {
 
                 Pattern INPUTA_F32_ID : InputA1_f32.txt 
                 Pattern INPUTB_F32_ID : InputB1_f32.txt 
+
                 Pattern INPUTAC_F32_ID : InputAC1_f32.txt 
                 Pattern INPUTBC_F32_ID : InputBC1_f32.txt 
                 Output  OUT_F32_ID : Output
@@ -1044,6 +1080,7 @@ group Root {
                   NBI = [5,10,40]
                   NBC = [5,10,40]
                 }
+
 
                 Functions {
                    Matrix Multiplication:test_mat_mult_f32
@@ -1073,6 +1110,7 @@ group Root {
                   NBI = [5,10,40]
                   NBC = [5,10,40]
                 }
+
 
                 Functions {
                    Matrix Multiplication:test_mat_mult_q31
@@ -1108,6 +1146,35 @@ group Root {
                    Matrix Multiplication:test_mat_mult_q15
                    Complex Matrix Multiplication:test_mat_cmplx_mult_q15
                    Fast Matrix Multiplication:test_mat_mult_fast_q15
+                } -> PARAM1_ID
+             }
+
+             suite Binary Matrix Operators Q7 {
+                class = BinaryQ7 
+                folder = BinaryQ7
+
+                ParamList {
+                  NBR,NBI,NBC
+                  Summary NBR,NBI,NBC
+                  Names "Number of rows","Inner dimensions","Number of columns"
+                  Formula "NBR*NBI*NBC"
+                }
+
+                Pattern INPUTA_Q7_ID : InputA1_q7.txt 
+                Pattern INPUTB_Q7_ID : InputB1_q7.txt 
+                Pattern INPUTAC_Q7_ID : InputAC1_q7.txt 
+                Pattern INPUTBC_Q7_ID : InputBC1_q7.txt 
+                Output  OUT_Q7_ID : Output
+
+                Params PARAM1_ID = {
+                  NBR = [5,10,40]
+                  NBI = [5,10,40]
+                  NBC = [5,10,40]
+                }
+
+
+                Functions {
+                   Matrix Multiplication:test_mat_mult_q7
                 } -> PARAM1_ID
              }
            }

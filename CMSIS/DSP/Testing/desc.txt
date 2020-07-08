@@ -2285,6 +2285,8 @@ group Root {
 
                 Pattern INPUTS1_F32_ID : InputA1_f32.txt 
                 Pattern INPUTS2_F32_ID : InputB1_f32.txt 
+                Pattern INPUTVEC1_F32_ID : InputVec1_f32.txt 
+
                 Pattern INPUTSINV_F32_ID : InputInvert1_f32.txt 
                 Pattern DIMSUNARY1_S16_ID : DimsUnary1_s16.txt 
                 Pattern DIMSINVERT1_S16_ID : DimsInvert1_s16.txt 
@@ -2294,6 +2296,8 @@ group Root {
                 Pattern REFSCALE1_F32_ID : RefScale1_f32.txt
                 Pattern REFTRANS1_F32_ID : RefTranspose1_f32.txt
                 Pattern REFINV1_F32_ID : RefInvert1_f32.txt
+                Pattern REFVECMUL1_F32_ID : RefVecMul1_f32.txt
+
 
                 Output  OUT_F32_ID : Output
                 Output  TMPA_F32_ID : TmpA
@@ -2305,6 +2309,7 @@ group Root {
                  test matrix scale:test_mat_scale_f32
                  test matrix transpose:test_mat_trans_f32
                  test matrix inverse:test_mat_inverse_f32
+                 test mat mult vec:test_mat_vec_mult_f32
                 }
 
               }
@@ -2315,6 +2320,8 @@ group Root {
 
                 Pattern INPUTS1_Q31_ID : InputA1_q31.txt 
                 Pattern INPUTS2_Q31_ID : InputB1_q31.txt 
+                Pattern INPUTVEC1_Q31_ID : InputVec1_q31.txt 
+
                 Pattern INPUTSINV_Q31_ID : InputInvert1_q31.txt 
                 Pattern DIMSUNARY1_S16_ID : DimsUnary1_s16.txt 
                 Pattern DIMSINVERT1_S16_ID : DimsInvert1_s16.txt 
@@ -2324,6 +2331,7 @@ group Root {
                 Pattern REFSCALE1_Q31_ID : RefScale1_q31.txt
                 Pattern REFTRANS1_Q31_ID : RefTranspose1_q31.txt
                 Pattern REFINV1_Q31_ID : RefInvert1_q31.txt
+                Pattern REFVECMUL1_Q31_ID : RefVecMul1_q31.txt
 
                 Output  OUT_Q31_ID : Output
                 Output  TMPA_Q31_ID : TmpA
@@ -2334,6 +2342,7 @@ group Root {
                  test matrix sub:test_mat_sub_q31
                  test matrix scale:test_mat_scale_q31
                  test matrix transpose:test_mat_trans_q31
+                 test mat mult vec:test_mat_vec_mult_q31
                 }
 
               }
@@ -2344,6 +2353,8 @@ group Root {
 
                 Pattern INPUTS1_Q15_ID : InputA1_q15.txt 
                 Pattern INPUTS2_Q15_ID : InputB1_q15.txt 
+                Pattern INPUTVEC1_Q15_ID : InputVec1_q15.txt 
+
                 Pattern INPUTSINV_Q15_ID : InputInvert1_q15.txt 
                 Pattern DIMSUNARY1_S16_ID : DimsUnary1_s16.txt 
                 Pattern DIMSINVERT1_S16_ID : DimsInvert1_s16.txt 
@@ -2353,6 +2364,7 @@ group Root {
                 Pattern REFSCALE1_Q15_ID : RefScale1_q15.txt
                 Pattern REFTRANS1_Q15_ID : RefTranspose1_q15.txt
                 Pattern REFINV1_Q15_ID : RefInvert1_q15.txt
+                Pattern REFVECMUL1_Q15_ID : RefVecMul1_q15.txt
 
                 Output  OUT_Q15_ID : Output
                 Output  TMPA_Q15_ID : TmpA
@@ -2363,6 +2375,37 @@ group Root {
                  test matrix sub:test_mat_sub_q15
                  test matrix scale:test_mat_scale_q15
                  test matrix transpose:test_mat_trans_q15
+                 test mat mult vec:test_mat_vec_mult_q15
+                }
+
+              }
+
+              suite Unary Tests Q7 {
+                class = UnaryTestsQ7 
+                folder = UnaryQ7
+
+                Pattern INPUTS1_Q7_ID : InputA1_q7.txt 
+                Pattern INPUTS2_Q7_ID : InputB1_q7.txt 
+                Pattern INPUTVEC1_Q7_ID : InputVec1_q7.txt 
+
+                Pattern INPUTSINV_Q7_ID : InputInvert1_q7.txt 
+                Pattern DIMSUNARY1_S16_ID : DimsUnary1_s16.txt 
+                Pattern DIMSINVERT1_S16_ID : DimsInvert1_s16.txt 
+                
+                Pattern REFADD1_Q7_ID : RefAdd1_q7.txt
+                Pattern REFSUB1_Q7_ID : RefSub1_q7.txt
+                Pattern REFSCALE1_Q7_ID : RefScale1_q7.txt
+                Pattern REFTRANS1_Q7_ID : RefTranspose1_q7.txt
+                Pattern REFINV1_Q7_ID : RefInvert1_q7.txt
+                Pattern REFVECMUL1_Q7_ID : RefVecMul1_q7.txt
+
+                Output  OUT_Q7_ID : Output
+                Output  TMPA_Q7_ID : TmpA
+                Output  TMPB_Q7_ID : TmpB
+
+                Functions {
+                 test matrix transpose:test_mat_trans_q7
+                 test mat mult vec:test_mat_vec_mult_q7
                 }
 
               }
@@ -2416,6 +2459,7 @@ group Root {
                 Pattern REFCMPLXMUL1_F32_ID : RefCmplxMul1_f32.txt
                 Pattern DIMSBINARY1_S16_ID : DimsBinary1_s16.txt 
 
+
                 Output  OUT_F32_ID : Output
                 Output  TMPA_F32_ID : TmpA
                 Output  TMPB_F32_ID : TmpB
@@ -2440,6 +2484,8 @@ group Root {
                 Pattern REFMUL1_Q31_ID : RefMul1_q31.txt
                 Pattern REFCMPLXMUL1_Q31_ID : RefCmplxMul1_q31.txt
                 Pattern DIMSBINARY1_S16_ID : DimsBinary1_s16.txt 
+
+                
 
                 Output  OUT_Q31_ID : Output
                 Output  TMPA_Q31_ID : TmpA
@@ -2474,6 +2520,31 @@ group Root {
                 Functions {
                   test mult:test_mat_mult_q15
                   test complex mult:test_mat_cmplx_mult_q15
+                }
+
+             }
+
+             suite Binary Q7 {
+                class = BinaryTestsQ7 
+                folder = BinaryQ7
+
+                Pattern INPUTS1_Q7_ID : InputA1_q7.txt 
+                Pattern INPUTS2_Q7_ID : InputB1_q7.txt 
+
+                Pattern INPUTSC1_Q7_ID : InputAC1_q7.txt 
+                Pattern INPUTSC2_Q7_ID : InputBC1_q7.txt 
+
+                Pattern REFMUL1_Q7_ID : RefMul1_q7.txt
+                Pattern REFCMPLXMUL1_Q7_ID : RefCmplxMul1_q7.txt
+                Pattern DIMSBINARY1_S16_ID : DimsBinary1_s16.txt 
+
+                Output  OUT_Q7_ID : Output
+                Output  TMPA_Q7_ID : TmpA
+                Output  TMPB_Q7_ID : TmpB
+                Output  TMP_Q7_ID : Tmp
+
+                Functions {
+                  test mult:test_mat_mult_q7
                 }
 
              }

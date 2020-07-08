@@ -2382,6 +2382,16 @@ __STATIC_INLINE q31_t arm_div_q63_to_q31(q63_t num, q31_t den)
     float64_t *pData;     /**< points to the data of the matrix. */
   } arm_matrix_instance_f64;
 
+ /**
+   * @brief Instance structure for the Q7 matrix structure.
+   */
+  typedef struct
+  {
+    uint16_t numRows;     /**< number of rows of the matrix.     */
+    uint16_t numCols;     /**< number of columns of the matrix.  */
+    q7_t *pData;         /**< points to the data of the matrix. */
+  } arm_matrix_instance_q7;
+
   /**
    * @brief Instance structure for the Q15 matrix structure.
    */
@@ -2504,6 +2514,17 @@ arm_status arm_mat_trans_q15(
         arm_matrix_instance_q15 * pDst);
 
   /**
+   * @brief Q7 matrix transpose.
+   * @param[in]  pSrc  points to the input matrix
+   * @param[out] pDst  points to the output matrix
+   * @return    The function returns either  <code>ARM_MATH_SIZE_MISMATCH</code>
+   * or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.
+   */
+arm_status arm_mat_trans_q7(
+  const arm_matrix_instance_q7 * pSrc,
+        arm_matrix_instance_q7 * pDst);
+
+  /**
    * @brief Q31 matrix transpose.
    * @param[in]  pSrc  points to the input matrix
    * @param[out] pDst  points to the output matrix
@@ -2528,6 +2549,43 @@ arm_status arm_mat_mult_f32(
         arm_matrix_instance_f32 * pDst);
 
   /**
+   * @brief Floating-point matrix and vector multiplication
+   * @param[in]  pSrcMat  points to the input matrix structure
+   * @param[in]  pVec     points to vector
+   * @param[out] pDst     points to output vector
+   */
+void arm_mat_vec_mult_f32(
+  const arm_matrix_instance_f32 *pSrcMat, 
+  const float32_t *pVec, 
+  float32_t *pDst);
+
+  /**
+   * @brief Q7 matrix multiplication
+   * @param[in]  pSrcA   points to the first input matrix structure
+   * @param[in]  pSrcB   points to the second input matrix structure
+   * @param[out] pDst    points to output matrix structure
+   * @param[in]  pState  points to the array for storing intermediate results
+   * @return     The function returns either
+   * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.
+   */
+arm_status arm_mat_mult_q7(
+  const arm_matrix_instance_q7 * pSrcA,
+  const arm_matrix_instance_q7 * pSrcB,
+        arm_matrix_instance_q7 * pDst,
+        q7_t * pState);
+
+  /**
+   * @brief Q7 matrix and vector multiplication
+   * @param[in]  pSrcMat  points to the input matrix structure
+   * @param[in]  pVec     points to vector
+   * @param[out] pDst     points to output vector
+   */
+void arm_mat_vec_mult_q7(
+  const arm_matrix_instance_q7 *pSrcMat, 
+  const q7_t *pVec, 
+  q7_t *pDst);
+
+  /**
    * @brief Q15 matrix multiplication
    * @param[in]  pSrcA   points to the first input matrix structure
    * @param[in]  pSrcB   points to the second input matrix structure
@@ -2541,6 +2599,17 @@ arm_status arm_mat_mult_q15(
   const arm_matrix_instance_q15 * pSrcB,
         arm_matrix_instance_q15 * pDst,
         q15_t * pState);
+
+  /**
+   * @brief Q15 matrix and vector multiplication
+   * @param[in]  pSrcMat  points to the input matrix structure
+   * @param[in]  pVec     points to vector
+   * @param[out] pDst     points to output vector
+   */
+void arm_mat_vec_mult_q15(
+  const arm_matrix_instance_q15 *pSrcMat, 
+  const q15_t *pVec, 
+  q15_t *pDst);
 
   /**
    * @brief Q15 matrix multiplication (fast variant) for Cortex-M3 and Cortex-M4
@@ -2569,6 +2638,17 @@ arm_status arm_mat_mult_q31(
   const arm_matrix_instance_q31 * pSrcA,
   const arm_matrix_instance_q31 * pSrcB,
         arm_matrix_instance_q31 * pDst);
+
+  /**
+   * @brief Q31 matrix and vector multiplication
+   * @param[in]  pSrcMat  points to the input matrix structure
+   * @param[in]  pVec     points to vector
+   * @param[out] pDst     points to output vector
+   */
+void arm_mat_vec_mult_q31(
+  const arm_matrix_instance_q31 *pSrcMat, 
+  const q31_t *pVec, 
+  q31_t *pDst);
 
   /**
    * @brief Q31 matrix multiplication (fast variant) for Cortex-M3 and Cortex-M4
