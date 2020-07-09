@@ -455,6 +455,37 @@ endif()
 writeConfig(${CMAKE_CURRENT_BINARY_DIR}/currentConfig.csv)
 
 
+find_package(Doxygen)
 
+if(DOXYGEN_FOUND)
+
+  # exclude sqlite code
+  set(DOXYGEN_EXCLUDE_PATTERNS
+        */sqlite3/*
+  )
+  # doxygen settings can be set here, prefixed with "DOXYGEN_"
+  set(DOXYGEN_SOURCE_BROWSER NO)
+  set(DOXYGEN_EXTRACT_ALL YES)
+  set(DOXYGEN_EXTRACT_PRIVATE YES)
+  set(DOXYGEN_GENERATE_XML NO)
+  set(DOXYGEN_OPTIMIZE_OUTPUT_FOR_C YES)
+  set(DOXYGEN_EXTRACT_LOCAL_CLASSES NO)
+  set(DOXYGEN_TYPEDEF_HIDES_STRUCT YES)
+  set(DOXYGEN_PREDEFINED "__ALIGNED(x)=")
+  set(DOXYGEN_EXAMPLE_PATH "${ROOT}/CMSIS/DSP/Examples/ARM")
+  set(DOXYGEN_IMAGE_PATH "${ROOT}/CMSIS/DoxyGen/DSP/src/images")
+  set(DOXYGEN_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}/docs")
+  # this target will only be built if specifically asked to.
+  # run "make api-docs" to create the doxygen documentation
+  doxygen_add_docs(
+    docs
+    ${ROOT}/CMSIS/DSP/Source
+    ${ROOT}/CMSIS/DSP/Examples/ARM
+    ${ROOT}/CMSIS/DSP/Include
+    ${ROOT}/CMSIS/DoxyGen/DSP/src/history.txt
+    COMMENT "Generate API-documents"
+  )
+
+endif(DOXYGEN_FOUND)
 
 

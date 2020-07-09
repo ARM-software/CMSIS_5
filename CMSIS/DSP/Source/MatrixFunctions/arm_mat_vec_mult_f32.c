@@ -40,9 +40,9 @@
 
 /**
  * @brief Floating-point matrix and vector multiplication.
- * @param[in]       *pSrcMat points to the first input matrix structure
- * @param[in]       *pVec points to the second input matrix structure
- * @param[out]      *pDst points to output matrix structure
+ * @param[in]       *pSrcMat points to the input matrix structure
+ * @param[in]       *pVec points to input vector
+ * @param[out]      *pDst points to output vector
  */
 #if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
 

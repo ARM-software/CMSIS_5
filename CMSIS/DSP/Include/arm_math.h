@@ -2846,8 +2846,8 @@ void arm_mat_init_f32(
   {
           q15_t A0;           /**< The derived gain, A0 = Kp + Ki + Kd . */
 #if !defined (ARM_MATH_DSP)
-          q15_t A1;
-          q15_t A2;
+          q15_t A1;           /**< The derived gain A1 = -Kp - 2Kd */
+          q15_t A2;           /**< The derived gain A1 = Kd. */
 #else
           q31_t A1;           /**< The derived gain A1 = -Kp - 2Kd | Kd.*/
 #endif

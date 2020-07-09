@@ -44,6 +44,12 @@
  */
 
 
+
+
+#define _FUNC(A,B) A##B 
+
+#define FUNC(EXT) _FUNC(arm_boolean_distance, EXT)
+
 /**
  * @brief        Elements of boolean distances
  *
@@ -52,16 +58,9 @@
  * @param[in]    pA              First vector of packed booleans
  * @param[in]    pB              Second vector of packed booleans
  * @param[in]    numberOfBools   Number of booleans
- * @param[out]   cTT             cTT value
- * @param[out]   cTF             cTF value
- * @param[out]   cFT             cFT value
  * @return None
  *
  */
-
-#define _FUNC(A,B) A##B 
-
-#define FUNC(EXT) _FUNC(arm_boolean_distance, EXT)
 
 #if defined(ARM_MATH_MVEI)
 

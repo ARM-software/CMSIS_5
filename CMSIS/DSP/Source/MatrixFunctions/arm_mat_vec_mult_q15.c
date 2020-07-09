@@ -40,9 +40,9 @@
 
 /**
  * @brief Q15 matrix and vector multiplication.
- * @param[in]       *pSrcA points to the first input matrix structure
- * @param[in]       *pSrcB points to the second input matrix structure
- * @param[out]      *pDst points to output matrix structure
+ * @param[in]       *pSrcMat points to the input matrix structure
+ * @param[in]       *pVec points to input vector
+ * @param[out]      *pDst points to output vector
  */
 #if defined(ARM_MATH_MVEI)
 
