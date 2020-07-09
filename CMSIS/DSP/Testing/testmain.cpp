@@ -23,7 +23,6 @@ using namespace std;
 #include "TestDrive.h"
 
 
-
 int testmain(const char *patterns)
 {
     char *memoryBuf=NULL;

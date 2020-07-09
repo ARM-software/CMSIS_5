@@ -249,6 +249,17 @@ typedef struct
 #define SERIAL_DATA  *((volatile unsigned *) SERIAL_BASE_ADDRESS)
 
 
+#define SOFTWARE_MARK  *((volatile unsigned *) (SERIAL_BASE_ADDRESS+4))
+
+void start_ipss_measurement()
+{
+  SOFTWARE_MARK = 1;
+}
+
+void stop_ipss_measurement()
+{
+  SOFTWARE_MARK = 0;
+}
 
 int stdout_putchar(char txchar)
 {

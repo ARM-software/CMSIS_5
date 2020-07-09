@@ -53,6 +53,7 @@ extern "C" const char *patternData;
 extern "C" void _exit(int return_code);
 #endif
 
+
 int main()
 {
     int r;
