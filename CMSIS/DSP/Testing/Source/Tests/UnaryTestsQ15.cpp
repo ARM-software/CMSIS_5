@@ -117,6 +117,8 @@ a double precision computation.
 
     void UnaryTestsQ15::test_mat_vec_mult_q15()
     {     
+
+
       LOADVECDATA2();
 
       for(i=0;i < nbMatrixes ; i ++)

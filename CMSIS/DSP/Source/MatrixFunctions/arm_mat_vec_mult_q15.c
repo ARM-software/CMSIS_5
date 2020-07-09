@@ -363,8 +363,8 @@ void arm_mat_vec_mult_q15(const arm_matrix_instance_q15 *pSrcMat, const q15_t *p
             vecData2 = read_q15x2_ia ((q15_t **) &pInVec);
             matData = read_q15x2_ia ((q15_t **) &pInA1);
             matData2 = read_q15x2_ia ((q15_t **) &pInA1);
-            sum = __SMLAD(matData, vecData, sum);
-            sum = __SMLAD(matData2, vecData2, sum);
+            sum = __SMLALD(matData, vecData, sum);
+            sum = __SMLALD(matData2, vecData2, sum);
             colCnt--;
         }
 

@@ -1083,6 +1083,25 @@ compiler file in Core or Core_A would not make sense.
     }
     return (uint32_t)val;
   }
+
+ /**
+  \brief   Rotate Right in unsigned value (32 bit)
+  \details Rotate Right (immediate) provides the value of the contents of a register rotated by a variable number of bits.
+  \param [in]    op1  Value to rotate
+  \param [in]    op2  Number of Bits to rotate
+  \return               Rotated value
+ */
+__STATIC_FORCEINLINE uint32_t __ROR(uint32_t op1, uint32_t op2)
+{
+  op2 %= 32U;
+  if (op2 == 0U)
+  {
+    return op1;
+  }
+  return (op1 >> op2) | (op1 << (32U - op2));
+}
+
+
 #endif
 
 #ifndef ARM_MATH_DSP
@@ -1372,6 +1391,7 @@ __STATIC_INLINE q31_t arm_div_q63_to_q31(q63_t num, q31_t den)
  * @brief C custom defined intrinsic functions
  */
 #if !defined (ARM_MATH_DSP)
+
 
   /*
    * @brief C custom defined QADD8

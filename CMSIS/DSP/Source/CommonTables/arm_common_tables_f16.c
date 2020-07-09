@@ -8427,4 +8427,6 @@ const float16_t twiddleCoefF16_4096[8192] = {
 #endif /* Not ARM AC5 */
 
 
-
+/**
+  @} end of CFFT_CIFFT group
+*/
