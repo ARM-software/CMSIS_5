@@ -1174,7 +1174,7 @@ Multiple elements are allowed. The last occurrence in the hierarchy determines t
 
 \section element_description /package/devices/family/.../description
 
-Brief description of the element. Can occur on various levels. Should only contain the unique features of the device. Number
+Brief description of the element. Can occur on various levels and gets inherited from upper level if not defined in the element. Should only contain the unique features of the element. Number
 of bullet points should not exceed ten. To create a detailed feature list use the \ref element_feature instead.
 
 \b Example
