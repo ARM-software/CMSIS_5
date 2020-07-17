@@ -23,7 +23,8 @@ if (AUTOVECTORIZE)
 endif()
 
 if (NEON OR NEONEXPERIMENTAL)
-    target_include_directories(${project} PRIVATE "${root}/CMSIS/DSP/ComputeLibrary/Include")
+    # Used in arm_vec_math.h
+    target_include_directories(${project} PUBLIC "${root}/CMSIS/DSP/ComputeLibrary/Include")
 endif()
 
 if (MVEFLOAT16)
