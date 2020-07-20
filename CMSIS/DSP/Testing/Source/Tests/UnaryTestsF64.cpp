@@ -111,6 +111,7 @@ void UnaryTestsF64::test_mat_inverse_f64()
     void UnaryTestsF64::setUp(Testing::testID_t id,std::vector<Testing::param_t>& params,Client::PatternMgr *mgr)
     {
     
+      (void)params;
       switch(id)
       {
          case TEST_MAT_INVERSE_F64_5:
@@ -130,5 +131,6 @@ void UnaryTestsF64::test_mat_inverse_f64()
 
     void UnaryTestsF64::tearDown(Testing::testID_t id,Client::PatternMgr *mgr)
     {
+       (void)id;
        output.dump(mgr);
     }

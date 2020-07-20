@@ -200,6 +200,7 @@ But the tests are kept for when they will be available.
   
     void StatsTestsQ7::setUp(Testing::testID_t id,std::vector<Testing::param_t>& paramsArgs,Client::PatternMgr *mgr)
     {
+        (void)paramsArgs;
         switch(id)
         {
             case StatsTestsQ7::TEST_MAX_Q7_1:
@@ -516,6 +517,7 @@ But the tests are kept for when they will be available.
 
     void StatsTestsQ7::tearDown(Testing::testID_t id,Client::PatternMgr *mgr)
     {
+      (void)id;
       switch(id)
       {
             case StatsTestsQ7::TEST_MAX_Q7_1:

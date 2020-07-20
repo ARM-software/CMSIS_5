@@ -35,7 +35,7 @@
     {
 
 
-
+       (void)paramsArgs;
 
        switch(id)
        {
@@ -469,5 +469,6 @@
 
     void TransformRF64::tearDown(Testing::testID_t id,Client::PatternMgr *mgr)
     {
+        (void)id;
         outputfft.dump(mgr);
     }

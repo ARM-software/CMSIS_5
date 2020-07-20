@@ -270,7 +270,7 @@ void UnaryTestsQ31::test_mat_cmplx_trans_q31()
     {
 
 
-    
+      (void)params;
       switch(id)
       {
          case TEST_MAT_ADD_Q31_1:
@@ -348,5 +348,6 @@ void UnaryTestsQ31::test_mat_cmplx_trans_q31()
 
     void UnaryTestsQ31::tearDown(Testing::testID_t id,Client::PatternMgr *mgr)
     {
+       (void)id;
        output.dump(mgr);
     }

@@ -117,7 +117,7 @@ a double precision computation.
     {
 
 
-    
+      (void)params;
       switch(id)
       {
          case TEST_MAT_MULT_Q15_1:
@@ -157,5 +157,6 @@ a double precision computation.
 
     void BinaryTestsQ15::tearDown(Testing::testID_t id,Client::PatternMgr *mgr)
     {
+       (void)id;
        output.dump(mgr);
     }

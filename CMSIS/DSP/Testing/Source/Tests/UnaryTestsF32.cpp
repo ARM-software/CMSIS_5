@@ -317,7 +317,7 @@ void UnaryTestsF32::test_mat_inverse_f32()
     {
 
 
-    
+      (void)params;
       switch(id)
       {
          case TEST_MAT_ADD_F32_1:
@@ -403,5 +403,6 @@ void UnaryTestsF32::test_mat_inverse_f32()
 
     void UnaryTestsF32::tearDown(Testing::testID_t id,Client::PatternMgr *mgr)
     {
+       (void)id;
        output.dump(mgr);
     }

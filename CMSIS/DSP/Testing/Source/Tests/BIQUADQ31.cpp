@@ -11,9 +11,6 @@
 
 #define ABS_32x64_ERROR_Q31 ((q31_t)25)
 
-#if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
-static __ALIGNED(8) q31_t coeffArray[32];
-#endif 
 
     void BIQUADQ31::test_biquad_cascade_df1()
     {
@@ -138,7 +135,7 @@ static __ALIGNED(8) q31_t coeffArray[32];
     void BIQUADQ31::setUp(Testing::testID_t id,std::vector<Testing::param_t>& params,Client::PatternMgr *mgr)
     {
       
-       
+       (void)params;
        switch(id)
        {
         case BIQUADQ31::TEST_BIQUAD_CASCADE_DF1_1:
@@ -166,5 +163,6 @@ static __ALIGNED(8) q31_t coeffArray[32];
 
     void BIQUADQ31::tearDown(Testing::testID_t id,Client::PatternMgr *mgr)
     {
+        (void)id;
         output.dump(mgr);
     }

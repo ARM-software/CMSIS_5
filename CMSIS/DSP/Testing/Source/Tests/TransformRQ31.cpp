@@ -28,7 +28,7 @@
 
        if (this->ifft)
        {
-          for(int i = 0;i < overheadoutputfft.nbSamples(); i++)
+          for(unsigned long i = 0;i < overheadoutputfft.nbSamples(); i++)
           {
               overoutp[i] = overoutp[i] << this->scaling;
           }
@@ -48,7 +48,7 @@
     {
 
 
-       
+       (void)paramsArgs;
 
        switch(id)
        {
@@ -504,6 +504,7 @@
 
     void TransformRQ31::tearDown(Testing::testID_t id,Client::PatternMgr *mgr)
     {
+        (void)id;
         outputfft.dump(mgr);
         overheadoutputfft.dump(mgr);
     }

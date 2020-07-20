@@ -182,6 +182,7 @@ a double precision computation.
   
     void StatsTestsQ15::setUp(Testing::testID_t id,std::vector<Testing::param_t>& paramsArgs,Client::PatternMgr *mgr)
     {
+        (void)paramsArgs;
         switch(id)
         {
             case StatsTestsQ15::TEST_MAX_Q15_1:
@@ -455,6 +456,7 @@ a double precision computation.
 
     void StatsTestsQ15::tearDown(Testing::testID_t id,Client::PatternMgr *mgr)
     {
+      (void)id;
       switch(id)
       {
             case StatsTestsQ15::TEST_MAX_Q15_1:

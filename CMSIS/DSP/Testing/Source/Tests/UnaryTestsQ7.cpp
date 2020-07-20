@@ -153,7 +153,7 @@ void UnaryTestsQ7::test_mat_trans_q7()
     {
 
 
-    
+      (void)params;
       switch(id)
       {
         
@@ -188,5 +188,6 @@ void UnaryTestsQ7::test_mat_trans_q7()
 
     void UnaryTestsQ7::tearDown(Testing::testID_t id,Client::PatternMgr *mgr)
     {
+       (void)id;
        output.dump(mgr);
     }

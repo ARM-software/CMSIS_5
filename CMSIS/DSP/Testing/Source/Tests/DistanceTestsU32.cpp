@@ -183,6 +183,7 @@
     void DistanceTestsU32::setUp(Testing::testID_t id,std::vector<Testing::param_t>& paramsArgs,Client::PatternMgr *mgr)
     {
 
+        (void)paramsArgs;
         inputA.reload(DistanceTestsU32::INPUTA_U32_ID,mgr);
         inputB.reload(DistanceTestsU32::INPUTB_U32_ID,mgr);
         dims.reload(DistanceTestsU32::DIMS_S16_ID,mgr);
@@ -258,5 +259,6 @@
 
     void DistanceTestsU32::tearDown(Testing::testID_t id,Client::PatternMgr *mgr)
     {
+       (void)id;
        output.dump(mgr);
     }

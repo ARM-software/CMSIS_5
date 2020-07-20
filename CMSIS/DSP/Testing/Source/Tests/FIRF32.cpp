@@ -36,7 +36,7 @@ void checkInnerTail(float32_t *b)
         const float32_t *inputp = inputs.ptr();
         float32_t *outp = output.ptr();
 
-        int i;
+        unsigned long i;
 #if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
         int j;
 #endif
@@ -121,7 +121,7 @@ void checkInnerTail(float32_t *b)
     void FIRF32::setUp(Testing::testID_t id,std::vector<Testing::param_t>& params,Client::PatternMgr *mgr)
     {
       
-
+       (void)params;
        
        switch(id)
        {
@@ -143,5 +143,6 @@ void checkInnerTail(float32_t *b)
 
     void FIRF32::tearDown(Testing::testID_t id,Client::PatternMgr *mgr)
     {
+        (void)id;
         output.dump(mgr);
     }

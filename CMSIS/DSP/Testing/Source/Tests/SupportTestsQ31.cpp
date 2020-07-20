@@ -45,7 +45,6 @@
     void SupportTestsQ31::test_q31_float()
     {
        const q31_t *inp = inputQ31.ptr();
-       float32_t *refp = refF32.ptr();
        float32_t *outp = outputF32.ptr();
        
       
@@ -60,7 +59,6 @@
     void SupportTestsQ31::test_q31_q15()
     {
        const q31_t *inp = inputQ31.ptr();
-       q15_t *refp = refQ15.ptr();
        q15_t *outp = outputQ15.ptr();
        
       
@@ -75,7 +73,6 @@
     void SupportTestsQ31::test_q31_q7()
     {
        const q31_t *inp = inputQ31.ptr();
-       q7_t *refp = refQ7.ptr();
        q7_t *outp = outputQ7.ptr();
        
       
@@ -91,6 +88,7 @@
     void SupportTestsQ31::setUp(Testing::testID_t id,std::vector<Testing::param_t>& paramsArgs,Client::PatternMgr *mgr)
     {
 
+        (void)paramsArgs;
         switch(id)
         {
  
@@ -219,6 +217,7 @@
 
     void SupportTestsQ31::tearDown(Testing::testID_t id,Client::PatternMgr *mgr)
     {
+      (void)id;
       switch(id)
       {
  

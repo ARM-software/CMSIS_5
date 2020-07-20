@@ -20,7 +20,6 @@ a double precision computation.
     {
         const q31_t *inp1=input1.ptr();
         const q31_t *inp2=input2.ptr();
-        q31_t *refp=ref.ptr();
         q31_t *outp=output.ptr();
 
         arm_add_q31(inp1,inp2,outp,input1.nbSamples());
@@ -39,7 +38,7 @@ a double precision computation.
     {
       
        Testing::nbSamples_t nb=MAX_NB_SAMPLES; 
-
+       (void)params;
        
        switch(id)
        {
@@ -60,5 +59,6 @@ a double precision computation.
 
     void ExampleCategoryQ31::tearDown(Testing::testID_t id,Client::PatternMgr *mgr)
     {
+        (void)id;
         output.dump(mgr);
     }

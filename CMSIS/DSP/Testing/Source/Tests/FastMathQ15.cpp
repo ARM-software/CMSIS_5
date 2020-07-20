@@ -17,9 +17,8 @@ a double precision computation.
     void FastMathQ15::test_cos_q15()
     {
         const q15_t *inp  = input.ptr();
-        q15_t *refp  = ref.ptr();
         q15_t *outp  = output.ptr();
-        int i;
+        unsigned long i;
 
         for(i=0; i < ref.nbSamples(); i++)
         {
@@ -34,9 +33,8 @@ a double precision computation.
     void FastMathQ15::test_sin_q15()
     {
         const q15_t *inp  = input.ptr();
-        q15_t *refp  = ref.ptr();
         q15_t *outp  = output.ptr();
-        int i;
+        unsigned long i;
 
         for(i=0; i < ref.nbSamples(); i++)
         {
@@ -51,10 +49,9 @@ a double precision computation.
     void FastMathQ15::test_sqrt_q15()
     {
         const q15_t *inp  = input.ptr();
-        q15_t *refp  = ref.ptr();
         q15_t *outp  = output.ptr();
         arm_status status;
-        int i;
+        unsigned long i;
 
         for(i=0; i < ref.nbSamples(); i++)
         {
@@ -70,6 +67,7 @@ a double precision computation.
   
     void FastMathQ15::setUp(Testing::testID_t id,std::vector<Testing::param_t>& paramsArgs,Client::PatternMgr *mgr)
     {
+        (void)paramsArgs;
         switch(id)
         {
             case FastMathQ15::TEST_COS_Q15_1:
@@ -104,6 +102,7 @@ a double precision computation.
 
     void FastMathQ15::tearDown(Testing::testID_t id,Client::PatternMgr *mgr)
     {
+      (void)id;
       output.dump(mgr);
       
     }

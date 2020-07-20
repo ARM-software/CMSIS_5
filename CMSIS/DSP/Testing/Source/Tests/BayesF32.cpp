@@ -34,7 +34,7 @@
     {
 
 
-       
+       (void)paramsArgs;
 
        switch(id)
        {
@@ -82,6 +82,7 @@
 
     void BayesF32::tearDown(Testing::testID_t id,Client::PatternMgr *mgr)
     {
+        (void)id;
         outputProbas.dump(mgr);
         outputPredicts.dump(mgr);
     }

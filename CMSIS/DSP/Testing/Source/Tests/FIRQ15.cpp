@@ -30,7 +30,7 @@ void checkInnerTail(q15_t *b)
         const q15_t *inputp = inputs.ptr();
         q15_t *outp = output.ptr();
 
-        int i;
+        unsigned long i;
 #if defined(ARM_MATH_MVEI)
         int j;
 #endif
@@ -114,7 +114,7 @@ void checkInnerTail(q15_t *b)
     void FIRQ15::setUp(Testing::testID_t id,std::vector<Testing::param_t>& params,Client::PatternMgr *mgr)
     {
       
-       
+       (void)params;
        switch(id)
        {
         case FIRQ15::TEST_FIR_Q15_1:
@@ -138,5 +138,6 @@ void checkInnerTail(q15_t *b)
 
     void FIRQ15::tearDown(Testing::testID_t id,Client::PatternMgr *mgr)
     {
+        (void)id;
         output.dump(mgr);
     }

@@ -58,7 +58,7 @@ With thie threshold, the test will fail
     {
       
        Testing::nbSamples_t nb=MAX_NB_SAMPLES; 
-
+       (void)params;
        
        /*
          
@@ -97,6 +97,7 @@ With thie threshold, the test will fail
 
     void ExampleCategoryF32::tearDown(Testing::testID_t id,Client::PatternMgr *mgr)
     {
+       (void)id;
         /* 
            Dump output buffer into a file.
 

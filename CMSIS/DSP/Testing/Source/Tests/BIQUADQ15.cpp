@@ -13,10 +13,6 @@ It will have to be reworked
 
 #define ABS_ERROR_Q15 ((q15_t)500)
 
-#if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
-static __ALIGNED(8) q15_t coeffArray[32];
-#endif 
-
     void BIQUADQ15::test_biquad_cascade_df1()
     {
 
@@ -83,7 +79,7 @@ static __ALIGNED(8) q15_t coeffArray[32];
     {
       
 
-       
+       (void)params;
        switch(id)
        {
         case BIQUADQ15::TEST_BIQUAD_CASCADE_DF1_1:
@@ -106,5 +102,6 @@ static __ALIGNED(8) q15_t coeffArray[32];
 
     void BIQUADQ15::tearDown(Testing::testID_t id,Client::PatternMgr *mgr)
     {
+        (void)id;
         output.dump(mgr);
     }

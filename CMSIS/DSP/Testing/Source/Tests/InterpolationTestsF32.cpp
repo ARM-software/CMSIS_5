@@ -19,7 +19,7 @@ a double precision computation.
        const float32_t *inp = input.ptr();
        float32_t *outp = output.ptr();
 
-       int nb;
+       unsigned long nb;
        for(nb = 0; nb < input.nbSamples(); nb++)
        {
           outp[nb] = arm_linear_interp_f32(&S,inp[nb]);
@@ -39,7 +39,7 @@ a double precision computation.
        const float32_t *inp = input.ptr();
        float32_t *outp = output.ptr();
        float32_t x,y;
-       int nb;
+       unsigned long nb;
        for(nb = 0; nb < input.nbSamples(); nb += 2)
        {
           x = inp[nb];
@@ -61,6 +61,7 @@ a double precision computation.
       
        const int16_t *pConfig;
        Testing::nbSamples_t nb=MAX_NB_SAMPLES; 
+       (void)params;
 
        
        switch(id)
@@ -102,5 +103,6 @@ a double precision computation.
 
     void InterpolationTestsF32::tearDown(Testing::testID_t id,Client::PatternMgr *mgr)
     {
+        (void)id;
         output.dump(mgr);
     }

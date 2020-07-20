@@ -64,7 +64,6 @@
     void SupportTestsF32::test_float_to_q15()
     {
        const float32_t *inp = input.ptr();
-       q15_t *refp = refQ15.ptr();
        q15_t *outp = outputQ15.ptr();
        
       
@@ -79,7 +78,6 @@
     void SupportTestsF32::test_float_to_q31()
     {
        const float32_t *inp = input.ptr();
-       q31_t *refp = refQ31.ptr();
        q31_t *outp = outputQ31.ptr();
        
       
@@ -94,7 +92,6 @@
     void SupportTestsF32::test_float_to_q7()
     {
        const float32_t *inp = input.ptr();
-       q7_t *refp = refQ7.ptr();
        q7_t *outp = outputQ7.ptr();
        
       
@@ -172,7 +169,6 @@
     void SupportTestsF32::test_bubble_sort_in_f32()
     {
        float32_t *inp = input.ptr();
-       float32_t *outp = output.ptr();
        arm_sort_instance_f32 S;
 
        arm_sort_init_f32(&S, ARM_SORT_BUBBLE, ARM_SORT_ASCENDING);
@@ -481,6 +477,7 @@
     void SupportTestsF32::setUp(Testing::testID_t id,std::vector<Testing::param_t>& paramsArgs,Client::PatternMgr *mgr)
     {
 
+        (void)paramsArgs;
         switch(id)
         {    
             case TEST_WEIGHTED_SUM_F32_1:
@@ -816,5 +813,6 @@
 
     void SupportTestsF32::tearDown(Testing::testID_t id,Client::PatternMgr *mgr)
     {
+      (void)id;
        output.dump(mgr);
     }

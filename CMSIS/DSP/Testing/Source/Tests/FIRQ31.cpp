@@ -31,7 +31,7 @@ void checkInnerTail(q31_t *b)
         const q31_t *inputp = inputs.ptr();
         q31_t *outp = output.ptr();
 
-        int i;
+        unsigned long i;
 #if defined(ARM_MATH_MVEI)
         int j;
 #endif
@@ -113,7 +113,7 @@ void checkInnerTail(q31_t *b)
     void FIRQ31::setUp(Testing::testID_t id,std::vector<Testing::param_t>& params,Client::PatternMgr *mgr)
     {
       
-       
+       (void)params;
        switch(id)
        {
         case FIRQ31::TEST_FIR_Q31_1:
@@ -135,5 +135,6 @@ void checkInnerTail(q31_t *b)
 
     void FIRQ31::tearDown(Testing::testID_t id,Client::PatternMgr *mgr)
     {
+        (void)id;
         output.dump(mgr);
     }

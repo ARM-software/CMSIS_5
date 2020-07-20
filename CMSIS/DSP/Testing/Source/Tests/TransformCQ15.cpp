@@ -41,7 +41,7 @@
              this->ifft,
              1);
 
-        for(int i=0; i < outputfft.nbSamples();i++)
+        for(unsigned long i=0; i < outputfft.nbSamples();i++)
         {
           refp[i] >>= this->scaling;
         }
@@ -58,7 +58,7 @@
     {
 
 
-       
+       (void)paramsArgs;
 
        switch(id)
        {
@@ -490,5 +490,6 @@
 
     void TransformCQ15::tearDown(Testing::testID_t id,Client::PatternMgr *mgr)
     {
+        (void)id;
         outputfft.dump(mgr);
     }

@@ -48,6 +48,7 @@ a double precision computation.
   
     void MISCQ31::setUp(Testing::testID_t id,std::vector<Testing::param_t>& paramsArgs,Client::PatternMgr *mgr)
     {
+        (void)paramsArgs;
         switch(id)
         {
 
@@ -703,6 +704,7 @@ a double precision computation.
 
     void MISCQ31::tearDown(Testing::testID_t id,Client::PatternMgr *mgr)
     {
+      (void)id;
       output.dump(mgr);
       
     }

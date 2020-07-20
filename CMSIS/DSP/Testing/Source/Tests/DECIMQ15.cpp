@@ -129,6 +129,7 @@ a double precision computation.
     void DECIMQ15::setUp(Testing::testID_t id,std::vector<Testing::param_t>& params,Client::PatternMgr *mgr)
     {
       
+       (void)params;
        config.reload(DECIMQ15::CONFIGSDECIMQ15_ID,mgr);
        
        
@@ -165,5 +166,6 @@ a double precision computation.
 
     void DECIMQ15::tearDown(Testing::testID_t id,Client::PatternMgr *mgr)
     {
+        (void)id;
         output.dump(mgr);
     }
