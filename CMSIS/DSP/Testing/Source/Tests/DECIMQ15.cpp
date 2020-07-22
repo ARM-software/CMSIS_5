@@ -36,7 +36,6 @@ a double precision computation.
             this->blocksize = pConfig[2];
             this->refsize = pConfig[3];
 
-
             pConfig += 4;
 
             this->status=arm_fir_decimate_init_q15(&(this->S),
@@ -45,8 +44,6 @@ a double precision computation.
                pCoefs,
                state.ptr(),
                this->blocksize);
-
-
 
             ASSERT_TRUE(this->status == ARM_MATH_SUCCESS);
 

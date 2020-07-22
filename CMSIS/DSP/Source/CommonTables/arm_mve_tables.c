@@ -27,7 +27,7 @@
  */
 
  
-#include "arm_math.h"
+#include "arm_math_types.h"
 
 #if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
 

@@ -289,33 +289,20 @@ group Root {
               Pattern INPUT_BITONIC_SORT_16_F32_ID : Input8_f32.txt
               Pattern INPUT_BITONIC_SORT_32_F32_ID : Input9_f32.txt
               Pattern INPUT_SORT_CONST_F32_ID : Input10_f32.txt
-              Pattern INPUT_SPLINE_SQU_X_F32_ID : InputX11_f32.txt
-              Pattern INPUT_SPLINE_SQU_Y_F32_ID : InputY11_f32.txt
-              Pattern OUTPUT_SPLINE_SQU_X_F32_ID : OutputX11_f32.txt
-              Pattern INPUT_SPLINE_SIN_X_F32_ID : InputX12_f32.txt 
-              Pattern INPUT_SPLINE_SIN_Y_F32_ID : InputY12_f32.txt
-              Pattern OUTPUT_SPLINE_SIN_X_F32_ID : OutputX12_f32.txt 
-              Pattern INPUT_SPLINE_RAM_X_F32_ID : InputX13_f32.txt
-              Pattern INPUT_SPLINE_RAM_Y_F32_ID : InputY13_f32.txt
-              Pattern OUTPUT_SPLINE_RAM_X_F32_ID : OutputX13_f32.txt
               Pattern WEIGHTS_F32_ID : Weights6_f32.txt 
               Pattern REF_F32_ID : Ref6_f32.txt
               Pattern REF_SORT_F32_ID : Reference7_f32.txt 
               Pattern REF_BITONIC_SORT_16_F32_ID : Reference8_f32.txt
               Pattern REF_BITONIC_SORT_32_F32_ID : Reference9_f32.txt
               Pattern REF_SORT_CONST_F32_ID : Reference10_f32.txt
-              Pattern REF_SPLINE_SQU_F32_ID : Reference11_f32.txt
-              Pattern REF_SPLINE_SIN_F32_ID : Reference12_f32.txt
-              Pattern REF_SPLINE_RAM_F32_ID : Reference13_f32.txt
+
               Pattern SAMPLES_F32_ID : Samples1_f32.txt 
               Pattern SAMPLES_Q15_ID : Samples3_q15.txt 
               Pattern SAMPLES_Q31_ID : Samples4_q31.txt 
               Pattern SAMPLES_Q7_ID : Samples5_q7.txt 
 
               Output  OUT_F32_ID : Output
-              Output  COEFS_SPLINE_F32_ID : SplineCoefs
-              Output  TEMP_SPLINE_F32_ID : SplineTemp
-
+             
               Functions {
                 test_weighted_sum_f32 nb=3:test_weighted_sum_f32
                 test_weighted_sum_f32 nb=4n:test_weighted_sum_f32
@@ -358,9 +345,7 @@ group Root {
                 test_selection_sort_f32 nb=11 inplace:test_selection_sort_in_f32
                 test_selection_sort_f32 nb=16 const:test_selection_sort_const_f32
 
-                test_spline_f32 square:test_spline_square_f32
-                test_spline_f32 sin:test_spline_sine_f32
-                test_spline_f32 ramp:test_spline_ramp_f32
+                
               }
 
            }
@@ -504,12 +489,32 @@ group Root {
               Pattern REF_LINEAR_F32_ID : Reference1_f32.txt
               Pattern REF_BILINEAR_F32_ID : Reference2_f32.txt
 
+              Pattern REF_SPLINE_SQU_F32_ID : Reference3_f32.txt
+              Pattern REF_SPLINE_SIN_F32_ID : Reference4_f32.txt
+              Pattern REF_SPLINE_RAM_F32_ID : Reference5_f32.txt
+
+              Pattern INPUT_SPLINE_SQU_X_F32_ID : InputX3_f32.txt
+              Pattern INPUT_SPLINE_SQU_Y_F32_ID : InputY3_f32.txt
+              Pattern OUTPUT_SPLINE_SQU_X_F32_ID : OutputX3_f32.txt
+              Pattern INPUT_SPLINE_SIN_X_F32_ID : InputX4_f32.txt 
+              Pattern INPUT_SPLINE_SIN_Y_F32_ID : InputY4_f32.txt
+              Pattern OUTPUT_SPLINE_SIN_X_F32_ID : OutputX4_f32.txt 
+              Pattern INPUT_SPLINE_RAM_X_F32_ID : InputX5_f32.txt
+              Pattern INPUT_SPLINE_RAM_Y_F32_ID : InputY5_f32.txt
+              Pattern OUTPUT_SPLINE_RAM_X_F32_ID : OutputX5_f32.txt
+
 
               Output  OUT_SAMPLES_F32_ID : Output
+              Output  COEFS_SPLINE_F32_ID : SplineCoefs
+              Output  TEMP_SPLINE_F32_ID : SplineTemp
 
               Functions {
                 Test arm_linear_interp_f32:test_linear_interp_f32
                 Test arm_bilinear_interp_f32:test_bilinear_interp_f32
+
+                test_spline_f32 square:test_spline_square_f32
+                test_spline_f32 sin:test_spline_sine_f32
+                test_spline_f32 ramp:test_spline_ramp_f32
               }
           }
 

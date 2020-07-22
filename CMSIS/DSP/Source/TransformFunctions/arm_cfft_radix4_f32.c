@@ -26,7 +26,7 @@
  * limitations under the License.
  */
 
-#include "arm_math.h"
+#include "dsp/transform_functions.h"
 
 extern void arm_bitreversal_f32(
         float32_t * pSrc,

@@ -29,7 +29,8 @@
 #ifndef _ARM_COMMON_TABLES_H
 #define _ARM_COMMON_TABLES_H
 
-#include "arm_math.h"
+#include "arm_math_types.h"
+#include "dsp/fast_math_functions.h"
 
 #ifdef   __cplusplus
 extern "C"

@@ -40,6 +40,8 @@
 #include "arm_math.h"
 #include "arm_math_f16.h"
 
+using namespace std;
+
 namespace Client
 {
     struct offsetOrGen

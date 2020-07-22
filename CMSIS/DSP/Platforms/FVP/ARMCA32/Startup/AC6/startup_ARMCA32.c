@@ -105,33 +105,33 @@ void Reset_Handler(void) {
   "LDR    R0, =Vectors                             \n"
   "MCR    p15, 0, R0, c12, c0, 0                   \n"
 
-  "LDR     r0,=Image$$TTB$$ZI$$Base                \n"
-  "MCR     p15, 0, r0, c2, c0, 0                   \n"
-
-  "LDR     r0, =0xFFFFFFFF                         \n"            
-  "MCR     p15, 0, r0, c3, c0, 0                   \n"      // Write Domain Access Control Register
-
-
-
-  "LDR     SP, =Image$$ARM_LIB_STACK$$ZI$$Limit      \n"
-
-  "MRC     p15, 0, R0, c1, c0, 0                   \n"  // Read CP15 System Control register
-  "BIC     R0, R0, #(0x1 << 12)                    \n"  // Clear I bit 12 to disable I Cache
-  "BIC     R0, R0, #(0x1 <<  2)                    \n"  // Clear C bit  2 to disable D Cache
-  "BIC     R0, R0, #0x2                            \n"   // Clear A bit  1 to disable strict alignment fault checking
-  "MCR     p15, 0, R0, c1, c0, 0                   \n"  // Write value back to CP15 System Control register
-  "ISB                                             \n"
+  // Setup Stack for each exceptional mode
+  "CPS    #0x11                                    \n"
+  "LDR    SP, =Image$$FIQ_STACK$$ZI$$Limit         \n"
+  "CPS    #0x12                                    \n"
+  "LDR    SP, =Image$$IRQ_STACK$$ZI$$Limit         \n"
+  "CPS    #0x13                                    \n"
+  "LDR    SP, =Image$$SVC_STACK$$ZI$$Limit         \n"
+  "CPS    #0x17                                    \n"
+  "LDR    SP, =Image$$ABT_STACK$$ZI$$Limit         \n"
+  "CPS    #0x1B                                    \n"
+  "LDR    SP, =Image$$UND_STACK$$ZI$$Limit         \n"
+  "CPS    #0x1F                                    \n"
+  "LDR    SP, =Image$$ARM_LIB_STACK$$ZI$$Limit     \n"
 
   // Call SystemInit
   "BL     SystemInit                               \n"
 
   // Unmask interrupts
-  //"CPSIE  if                                       \n"
+  "CPSIE  if                                       \n"
 
   // Call __main
   "BL     __main                                   \n"
   );
 }
+
+
+
 
 /*----------------------------------------------------------------------------
   Default Handler for Exceptions / Interrupts

@@ -1,6 +1,6 @@
 /******************************************************************************
- * @file     ARMCA5.h
- * @brief    CMSIS Cortex-A5 Core Peripheral Access Layer Header File 
+ * @file     ARMCA32.h
+ * @brief    CMSIS Cortex-A32 Core Peripheral Access Layer Header File 
  * @version  V1.1.0
  * @date     15. May 2019
  *

@@ -26,7 +26,7 @@
  * limitations under the License.
  */
 
-#include "arm_math_f16.h"
+#include "dsp/transform_functions_f16.h"
 
 #if defined(ARM_FLOAT16_SUPPORTED)
 

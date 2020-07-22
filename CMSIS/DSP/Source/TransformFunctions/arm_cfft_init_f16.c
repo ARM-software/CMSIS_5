@@ -49,7 +49,7 @@
                 variables declared in arm_const_structs.h
  */
 
-#include "arm_math_f16.h"
+#include "dsp/transform_functions_f16.h"
 #include "arm_common_tables_f16.h"
 #include "arm_const_structs_f16.h"
 

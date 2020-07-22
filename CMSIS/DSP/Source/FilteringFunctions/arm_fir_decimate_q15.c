@@ -26,7 +26,7 @@
  * limitations under the License.
  */
 
-#include "arm_math.h"
+#include "dsp/filtering_functions.h"
 
 /**
   @ingroup groupFilters
@@ -534,9 +534,8 @@ void arm_fir_decimate_q15(
 
   /* Points to the start of the state buffer */
   pStateCur = S->pState;
-
   i = (numTaps - 1U) >> 2U;
-
+ 
   /* copy data */
   while (i > 0U)
   {

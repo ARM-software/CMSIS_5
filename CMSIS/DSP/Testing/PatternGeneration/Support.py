@@ -3,7 +3,6 @@ import itertools
 import Tools
 import random
 import numpy as np
-from scipy import interpolate
 
 NBTESTSAMPLES = 10
 
@@ -166,32 +165,6 @@ def writeTests2(config, format):
     ref = np.sort(data)
     config.writeReference(10, ref)
 
-    x = [0,3,10,20]
-    config.writeInput(11,x,"InputX")
-    y = [0,9,100,400]
-    config.writeInput(11,y,"InputY")
-    xnew = np.arange(0,20,1)
-    config.writeInput(11,xnew,"OutputX")
-    ynew = interpolate.CubicSpline(x,y)
-    config.writeReference(11, ynew(xnew))
-
-    x = np.arange(0, 2*np.pi+np.pi/4, np.pi/4)
-    config.writeInput(12,x,"InputX")
-    y = np.sin(x)
-    config.writeInput(12,y,"InputY")
-    xnew = np.arange(0, 2*np.pi+np.pi/16, np.pi/16)
-    config.writeInput(12,xnew,"OutputX")
-    ynew = interpolate.CubicSpline(x,y,bc_type="natural")
-    config.writeReference(12, ynew(xnew))
-
-    x = [0,3,10]
-    config.writeInput(13,x,"InputX")
-    y = x
-    config.writeInput(13,y,"InputY")
-    xnew = np.arange(-10,20,1)
-    config.writeInput(13,xnew,"OutputX")
-    ynew = interpolate.CubicSpline(x,y)
-    config.writeReference(13, ynew(xnew))
 
 def generatePatterns():
     PATTERNDIR = os.path.join("Patterns","DSP","Support","Support")

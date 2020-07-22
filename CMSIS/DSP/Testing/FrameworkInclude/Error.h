@@ -164,7 +164,10 @@ Macros to use to implement tests.
 #define ASSERT_EMPTY_TAIL(A) if (!A.isTailEmpty()) throw (Client::Error(TAIL_NOT_EMPTY_ERROR,__LINE__))
 
 namespace Client {
-    template <typename T> 
+
+using namespace std;
+
+template <typename T> 
 void assert_equal(unsigned long nb,T pa, T pb)
 {
     if (pa != pb)

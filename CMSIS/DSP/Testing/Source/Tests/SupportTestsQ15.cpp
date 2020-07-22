@@ -97,8 +97,6 @@
 
         result = read_q15x2((q15_t*)testReadQ15);
 
-        printf("%08X\n",result);
-
         ASSERT_TRUE(result == 0x0001FFFE);
 
     }

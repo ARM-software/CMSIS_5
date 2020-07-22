@@ -39,6 +39,7 @@ option(TRANSFORM            "Transform Functions"               ON)
 option(SVM                  "Support Vector Machine Functions"  ON)
 option(BAYES                "Bayesian Estimators"               ON)
 option(DISTANCE             "Distance Functions"                ON)
+option(INTERPOLATION        "Interpolation Functions"                ON)
 
 # When OFF it is the default behavior : all tables are included.
 option(CONFIGTABLE          "Configuration of table allowed"    OFF)
@@ -275,6 +276,10 @@ if (DISTANCE)
   target_link_libraries(CMSISDSP INTERFACE CMSISDSPDistance)
 endif()
 
+if (INTERPOLATION)
+  add_subdirectory(InterpolationFunctions)
+  target_link_libraries(CMSISDSP INTERFACE CMSISDSPInterpolation)
+endif()
 
 ### Includes
 target_include_directories(CMSISDSP INTERFACE "${DSP}/Include")

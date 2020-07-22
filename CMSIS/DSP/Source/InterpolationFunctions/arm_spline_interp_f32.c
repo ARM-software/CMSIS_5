@@ -26,10 +26,10 @@
  * limitations under the License.
  */
 
-#include "arm_math.h"
+#include "dsp/interpolation_functions.h"
 
 /**
-  @ingroup groupSupport
+  @ingroup groupInterpolation
  */
 
 /**

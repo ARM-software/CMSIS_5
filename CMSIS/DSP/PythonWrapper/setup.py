@@ -20,6 +20,7 @@ transform = glob.glob(os.path.join(ROOT,"Source","TransformFunctions","*.c"))
 #transform.remove(os.path.join(ROOT,"Source","TransformFunctions","arm_dct4_init_q15.c"))
 #transform.remove(os.path.join(ROOT,"Source","TransformFunctions","arm_rfft_init_q15.c"))
 transform.remove(os.path.join(ROOT,"Source","TransformFunctions","TransformFunctions.c"))
+transform.remove(os.path.join(ROOT,"Source","TransformFunctions","TransformFunctionsF16.c"))
 
 support = glob.glob(os.path.join(ROOT,"Source","SupportFunctions","*.c"))
 support.remove(os.path.join(ROOT,"Source","SupportFunctions","SupportFunctions.c"))
@@ -41,12 +42,17 @@ complexf.remove(os.path.join(ROOT,"Source","ComplexMathFunctions","ComplexMathFu
 
 basic = glob.glob(os.path.join(ROOT,"Source","BasicMathFunctions","*.c"))
 basic.remove(os.path.join(ROOT,"Source","BasicMathFunctions","BasicMathFunctions.c"))
+basic.remove(os.path.join(ROOT,"Source","BasicMathFunctions","BasicMathFunctionsF16.c"))
 
 controller = glob.glob(os.path.join(ROOT,"Source","ControllerFunctions","*.c"))
 controller.remove(os.path.join(ROOT,"Source","ControllerFunctions","ControllerFunctions.c"))
 
 common = glob.glob(os.path.join(ROOT,"Source","CommonTables","*.c"))
 common.remove(os.path.join(ROOT,"Source","CommonTables","CommonTables.c"))
+
+interpolation = glob.glob(os.path.join(ROOT,"Source","InterpolationFunctions","*.c"))
+interpolation.remove(os.path.join(ROOT,"Source","InterpolationFunctions","InterpolationFunctions.c"))
+
 
 #modulesrc = glob.glob(os.path.join("cmsisdsp_pkg","src","*.c"))
 modulesrc = []
@@ -64,6 +70,7 @@ module1 = Extension(config.extensionName,
                               + transform
                               + modulesrc
                               + common
+                              + interpolation
                               )
                               ,
                     include_dirs =  includes + [numpy.get_include()],

@@ -26,7 +26,7 @@
  * limitations under the License.
  */
 
-#include "arm_math.h"
+#include "dsp/controller_functions.h"
 
 /**
   @addtogroup PID

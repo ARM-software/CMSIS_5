@@ -7,6 +7,24 @@
     <th>Description</th>
   </tr>
   <tr>
+    <td>V1.9.0</td>
+    <td> 
+      Re-organization of arm_math.h
+      Re-organization of interpolation functions:
+      - New Interpolation folder
+
+      New q7 functions:
+      - arm_mat_mult_q7.c
+      - arm_mat_trans_q7.c
+
+      Matrix x vector multiply
+
+      Complex Matrix Transpose
+
+      More support for f16 datatype
+    </td>
+  </tr>
+  <tr>
     <td>V1.8.0</td>
     <td> 
       Helium implementation of lots of functions in the CMSIS-DSP.

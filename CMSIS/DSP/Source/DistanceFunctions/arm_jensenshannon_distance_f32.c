@@ -25,7 +25,7 @@
  * limitations under the License.
  */
 
-#include "arm_math.h"
+#include "dsp/distance_functions.h"
 #include <limits.h>
 #include <math.h>
 
@@ -36,6 +36,7 @@
  */
 
 #if !defined(ARM_MATH_MVEF) || defined(ARM_MATH_AUTOVECTORIZE)
+/// @private
 __STATIC_INLINE float32_t rel_entr(float32_t x, float32_t y)
 {
     return (x * logf(x / y));

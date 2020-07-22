@@ -99,7 +99,6 @@
         q7_t *p = (q7_t*)testReadQ7;
 
         result = read_q7x4_ia(&p);
-        printf("%08X\n",result);
 
         ASSERT_TRUE(result == 0x01FEFDFC);
         ASSERT_TRUE(p == testReadQ7 + 4);

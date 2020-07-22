@@ -46,6 +46,7 @@
 #define CALIBNB 20
 #endif
 
+using namespace std;
 
 namespace Client
 {

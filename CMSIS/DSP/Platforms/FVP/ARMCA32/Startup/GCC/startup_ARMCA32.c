@@ -25,7 +25,7 @@
  * limitations under the License.
  */
 
-#include <ARMCA5.h>
+#include <ARMCA32.h>
 
 /*----------------------------------------------------------------------------
   Definitions

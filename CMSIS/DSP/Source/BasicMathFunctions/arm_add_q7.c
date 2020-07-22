@@ -27,7 +27,7 @@
  * Target Processor: Cortex-M cores
  * -------------------------------------------------------------------- */
 
-#include "arm_math.h"
+#include "dsp/basic_math_functions.h"
 
 /**
   @ingroup groupMath

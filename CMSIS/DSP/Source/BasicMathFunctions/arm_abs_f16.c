@@ -24,7 +24,7 @@
  * limitations under the License.
  */
 
-#include "arm_math_f16.h"
+#include "dsp/basic_math_functions_f16.h"
 #include <math.h>
 
 /**

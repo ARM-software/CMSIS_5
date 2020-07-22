@@ -25,8 +25,8 @@
  * limitations under the License.
  */
 
-#ifndef __MEM_ARMCA5_H
-#define __MEM_ARMCA5_H
+#ifndef __MEM_ARMCA32_H
+#define __MEM_ARMCA32_H
 
 /*----------------------------------------------------------------------------
   User Stack & Heap size definition

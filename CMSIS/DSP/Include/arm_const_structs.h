@@ -30,8 +30,9 @@
 #ifndef _ARM_CONST_STRUCTS_H
 #define _ARM_CONST_STRUCTS_H
 
-#include "arm_math.h"
+#include "arm_math_types.h"
 #include "arm_common_tables.h"
+#include "dsp/transform_functions.h"
 
 #ifdef   __cplusplus
 extern "C"

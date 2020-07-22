@@ -60,14 +60,15 @@ void SystemInit (void)
 #endif
 
   // Create Translation Table
-  //MMU_CreateTranslationTable();
+  MMU_CreateTranslationTable();
 
   // Enable MMU
-  //MMU_Enable();
+  MMU_Enable();
 
   // Enable Caches
   L1C_EnableCaches();
   L1C_EnableBTAC();
+
 
 #if (__L2C_PRESENT == 1) 
   // Enable GIC

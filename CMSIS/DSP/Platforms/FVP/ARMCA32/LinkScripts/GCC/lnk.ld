@@ -1,4 +1,4 @@
-#include "mem_ARMCA5.h" 
+#include "mem_ARMCA32.h" 
 
 MEMORY
 {

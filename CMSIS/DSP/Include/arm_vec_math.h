@@ -25,7 +25,7 @@
 #ifndef _ARM_VEC_MATH_H
 #define _ARM_VEC_MATH_H
 
-#include "arm_math.h"
+#include "arm_math_types.h"
 #include "arm_common_tables.h"
 #include "arm_helium_utils.h"
 

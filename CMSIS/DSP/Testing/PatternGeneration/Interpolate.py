@@ -2,7 +2,7 @@ import os.path
 import numpy as np
 import itertools
 import Tools
-from scipy.interpolate import interp1d,interp2d
+from scipy.interpolate import interp1d,interp2d,CubicSpline
 
 # Those patterns are used for tests and benchmarks.
 # For tests, there is the need to add tests for saturation
@@ -95,7 +95,32 @@ def writeTests(config,format):
 
 
     
- 
+    x = [0,3,10,20]
+    config.writeInput(3,x,"InputX")
+    y = [0,9,100,400]
+    config.writeInput(3,y,"InputY")
+    xnew = np.arange(0,20,1)
+    config.writeInput(3,xnew,"OutputX")
+    ynew = CubicSpline(x,y)
+    config.writeReference(3, ynew(xnew))
+
+    x = np.arange(0, 2*np.pi+np.pi/4, np.pi/4)
+    config.writeInput(4,x,"InputX")
+    y = np.sin(x)
+    config.writeInput(4,y,"InputY")
+    xnew = np.arange(0, 2*np.pi+np.pi/16, np.pi/16)
+    config.writeInput(4,xnew,"OutputX")
+    ynew = CubicSpline(x,y,bc_type="natural")
+    config.writeReference(4, ynew(xnew))
+
+    x = [0,3,10]
+    config.writeInput(5,x,"InputX")
+    y = x
+    config.writeInput(5,y,"InputY")
+    xnew = np.arange(-10,20,1)
+    config.writeInput(5,xnew,"OutputX")
+    ynew = CubicSpline(x,y)
+    config.writeReference(5, ynew(xnew))
 
 
 

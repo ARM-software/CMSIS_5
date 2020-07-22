@@ -19,4 +19,12 @@ class InterpolationTestsF32:public Client::Suite
             arm_linear_interp_instance_f32 S;
             arm_bilinear_interp_instance_f32 SBI;
 
+
+            Client::Pattern<float32_t> inputX;
+            Client::Pattern<float32_t> inputY;
+            Client::Pattern<float32_t> outputX;
+
+            Client::LocalPattern<float32_t> buffer;
+            Client::LocalPattern<float32_t> splineCoefs;
+
     };

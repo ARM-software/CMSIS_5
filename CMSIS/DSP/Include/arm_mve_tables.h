@@ -29,7 +29,7 @@
  #ifndef _ARM_MVE_TABLES_H
  #define _ARM_MVE_TABLES_H
 
- #include "arm_math.h"
+#include "arm_math_types.h"
 
 #ifdef   __cplusplus
 extern "C"

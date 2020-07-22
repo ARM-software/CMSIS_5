@@ -29,7 +29,7 @@
 #include "arm_math.h"
 
 /**
-  @ingroup groupSupport
+  @ingroup groupInterpolation
  */
 
 /**

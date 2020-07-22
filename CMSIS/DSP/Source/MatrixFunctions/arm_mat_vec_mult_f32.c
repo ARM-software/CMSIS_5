@@ -25,16 +25,21 @@
  * limitations under the License.
  */
 
-#include "arm_math.h"
+#include "dsp/matrix_functions.h"
 
 /**
  * @ingroup groupMatrix
  */
 
-
+/**
+ * @defgroup MatrixVectMult Matrix Vector Multiplication
+ *
+ * Multiplies a matrix and a vector.
+ *
+ */
 
 /**
- * @addtogroup MatrixMult
+ * @addtogroup MatrixVectMult
  * @{
  */
 
