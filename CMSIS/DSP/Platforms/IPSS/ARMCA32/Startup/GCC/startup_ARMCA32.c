@@ -25,7 +25,7 @@
  * limitations under the License.
  */
 
-#include <ARMCA5.h>
+#include <ARMCA32.h>
 
 /*----------------------------------------------------------------------------
   Definitions
@@ -95,14 +95,14 @@ void Reset_Handler(void) {
   "BIC     R0, R0, #(0x1 << 12)                    \n"  // Clear I bit 12 to disable I Cache
   "BIC     R0, R0, #(0x1 <<  2)                    \n"  // Clear C bit  2 to disable D Cache
   "BIC     R0, R0, #0x1                            \n"  // Clear M bit  0 to disable MMU
-  "BIC     R0, R0, #(0x1 << 11)                    \n"  // Clear Z bit 11 to disable branch prediction
-  "BIC     R0, R0, #(0x1 << 13)                    \n"  // Clear V bit 13 to disable hivecs
+  //"BIC     R0, R0, #(0x1 << 11)                    \n"  // Clear Z bit 11 to disable branch prediction
+  //"BIC     R0, R0, #(0x1 << 13)                    \n"  // Clear V bit 13 to disable hivecs
   "MCR     p15, 0, R0, c1, c0, 0                   \n"  // Write value back to CP15 System Control register
   "ISB                                             \n"
 
   // Configure ACTLR
   "MRC     p15, 0, r0, c1, c0, 1                   \n"  // Read CP15 Auxiliary Control Register
-  "ORR     r0, r0, #(1 <<  1)                      \n"  // Enable L2 prefetch hint (UNK/WI since r4p1)
+  "ORR     r0, r0, #(1 <<  6)                      \n"  // Enable L2 prefetch hint (UNK/WI since r4p1)
   "MCR     p15, 0, r0, c1, c0, 1                   \n"  // Write CP15 Auxiliary Control Register
 
   // Set Vector Base Address Register (VBAR) to point to this application's vector table

@@ -1,7 +1,6 @@
 #include "TransformCQ15.h"
 #include <stdio.h>
 #include "Error.h"
-#include "arm_math.h"
 #include "Test.h"
 
 #define SNR_THRESHOLD 30

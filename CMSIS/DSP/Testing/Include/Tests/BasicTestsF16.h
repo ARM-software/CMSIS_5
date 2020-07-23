@@ -1,5 +1,8 @@
 #include "Test.h"
 #include "Pattern.h"
+
+#include "dsp/basic_math_functions_f16.h"
+
 class BasicTestsF16:public Client::Suite
     {
         public:

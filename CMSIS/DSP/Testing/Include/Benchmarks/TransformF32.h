@@ -1,5 +1,8 @@
 #include "Test.h"
 #include "Pattern.h"
+
+#include "dsp/transform_functions.h"
+
 class TransformF32:public Client::Suite
     {
         public:

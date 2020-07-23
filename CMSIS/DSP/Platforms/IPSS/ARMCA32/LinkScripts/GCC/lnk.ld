@@ -1,10 +1,10 @@
-#include "mem_ARMCA5.h" 
+#include "mem_ARMCA32.h" 
 
 MEMORY
 {
   ROM (rx)   : ORIGIN = __ROM_BASE, LENGTH = __ROM_SIZE
-  L_TTB (rw) : ORIGIN = __TTB_BASE, LENGTH = __TTB_SIZE 
   RAM (rwx)  : ORIGIN = __RAM_BASE, LENGTH = __RAM_SIZE
+  L_TTB (rw) : ORIGIN = __TTB_BASE, LENGTH = __TTB_SIZE 
 }
 
 ENTRY(Reset_Handler)
@@ -78,16 +78,10 @@ SECTIONS
         __zero_table_end__ = .;
     } > ROM
 
-    __etext = .;
         
-    .ttb :
-    {
-        Image$$TTB$$ZI$$Base = .;
-        . += __TTB_SIZE;
-        Image$$TTB$$ZI$$Limit = .;
-    } > L_TTB
 
-    .data : AT (__etext)
+
+    .data : 
     {
         Image$$RW_DATA$$Base = .;
         __data_start__ = .;
@@ -120,11 +114,13 @@ SECTIONS
         /* All data end */
         __data_end__ = .;
 
-    } > RAM
+    } > ROM AT > RAM
 
+    __etext = ADDR(.data);
     
-    .bss ALIGN(0x400):
+    .bss :
     {
+        . = ALIGN(0x400);
         Image$$ZI_DATA$$Base = .;
         __bss_start__ = .;
         *(.bss)
@@ -134,7 +130,7 @@ SECTIONS
         Image$$ZI_DATA$$Limit = .;
         __end__ = .;
         end = __end__;
-    } > RAM
+    } > RAM AT > RAM
 
 #if defined(__HEAP_SIZE) && (__HEAP_SIZE > 0)    
     .heap (NOLOAD):
@@ -180,4 +176,11 @@ SECTIONS
         Image$$UND_STACK$$ZI$$Limit = .;
         
     } > RAM
+
+    .ttb :
+    {
+        Image$$TTB$$ZI$$Base = .;
+        . += __TTB_SIZE;
+        Image$$TTB$$ZI$$Limit = .;
+    } > L_TTB
 }

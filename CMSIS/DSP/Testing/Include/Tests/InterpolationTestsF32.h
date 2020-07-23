@@ -1,5 +1,8 @@
 #include "Test.h"
 #include "Pattern.h"
+
+#include "dsp/interpolation_functions.h"
+
 class InterpolationTestsF32:public Client::Suite
     {
         public:

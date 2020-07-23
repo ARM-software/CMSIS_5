@@ -1,4 +1,3 @@
-#include "arm_math.h"
 #include "UnaryTestsF64.h"
 #include <stdio.h>
 #include "Error.h"

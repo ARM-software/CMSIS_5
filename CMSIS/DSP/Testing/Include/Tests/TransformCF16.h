@@ -1,6 +1,8 @@
 #include "Test.h"
 #include "Pattern.h"
-#include "arm_math_f16.h"
+
+#include "dsp/transform_functions_f16.h"
+
 class TransformCF16:public Client::Suite
     {
         public:

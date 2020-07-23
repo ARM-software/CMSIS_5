@@ -1,7 +1,6 @@
 #include "StatsTestsF32.h"
 #include <stdio.h>
 #include "Error.h"
-#include "arm_math.h"
 #include "Test.h"
 
 

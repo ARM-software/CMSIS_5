@@ -152,7 +152,7 @@ endfunction()
 
 function(core_includes PROJECTNAME)
     target_include_directories(${PROJECTNAME} PRIVATE ${PLATFORMFOLDER}/${CORE}/Include)
-    target_compile_options(${PROJECTNAME} PRIVATE ${PLATFORMOPT})
+    #target_compile_options(${PROJECTNAME} PRIVATE ${PLATFORMOPT})
 endfunction()
 
 function (configplatformForLib PROJECTNAME ROOT)

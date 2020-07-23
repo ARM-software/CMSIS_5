@@ -25,8 +25,8 @@
  * limitations under the License.
  */
 
-#ifndef __MEM_ARMCA5_H
-#define __MEM_ARMCA5_H
+#ifndef __MEM_ARMCA32_H
+#define __MEM_ARMCA32_H
 
 /*----------------------------------------------------------------------------
   User Stack & Heap size definition
@@ -68,8 +68,8 @@
 //   </h>
 // </h>
  *----------------------------------------------------------------------------*/
-#define __RAM_BASE       0x80400000
-#define __RAM_SIZE       0x00300000
+#define __RAM_BASE       0x80500000
+#define __RAM_SIZE       0x00400000
 
 #define __RW_DATA_SIZE   0x00100000
 #define __ZI_DATA_SIZE   0x000F0000
@@ -94,7 +94,7 @@
 //   <o1> TTB Size (in Bytes) <0x0-0xFFFFFFFF:8>
 // </h>
  *----------------------------------------------------------------------------*/
-#define __TTB_BASE       0x80800000
+#define __TTB_BASE       0x80A00000
 #define __TTB_SIZE       0x00005000
 
 #endif /* __MEM_ARMCA5_H */

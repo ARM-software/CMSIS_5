@@ -1,6 +1,5 @@
 #include "TransformF32.h"
 #include "Error.h"
-#include "arm_math.h"
 
     void TransformF32::test_cfft_f32()
     { 

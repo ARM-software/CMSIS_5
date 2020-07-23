@@ -29,8 +29,6 @@
   #error device not specified!
 #endif
 
-#include <stdio.h>
-
 /*----------------------------------------------------------------------------
   Exception / Interrupt Handler Function Prototype
  *----------------------------------------------------------------------------*/
@@ -128,42 +126,8 @@ extern const pFunc __VECTOR_TABLE[240];
 
 
 
-int stdout_putchar(char txchar)
-{
-    SERIAL_DATA = txchar; 
-    return(txchar);                    
-}
-
-int stderr_putchar(char txchar)
-{
-    return stdout_putchar(txchar);
-}
 
 
-__attribute__((constructor(255)))
-void platform_init(void)
-{
-    printf("\n_[TEST START]____________________________________________________\n");
-}
-
-#define log_str(...)                                \
-    do {                                                \
-        const char *pchSrc = __VA_ARGS__;               \
-        uint_fast16_t hwSize = sizeof(__VA_ARGS__);     \
-        do {                                            \
-            stdout_putchar(*pchSrc++);                  \
-        } while(--hwSize);                              \
-    } while(0)
-
-void _exit(int return_code)
-{
-    (void)return_code;
-    log_str("\n");
-    log_str("_[TEST COMPLETE]_________________________________________________\n");
-    log_str("\n\n");
-    stdout_putchar(4);
-    while(1);
-}
 
 
 /*----------------------------------------------------------------------------
@@ -172,9 +136,10 @@ void _exit(int return_code)
 __NO_RETURN void Reset_Handler(void)
 {
    __set_MSPLIM((uint32_t)(&__STACK_LIMIT));
-   
+
    SystemInit();                             /* CMSIS System Initialization */
 
+  
   __PROGRAM_START();    
 }
 
@@ -197,16 +162,3 @@ void Default_Handler(void)
 }
 
 
-int _write(int   file,
-        char *ptr,
-        int   len)
-{
-  int i;
-  (void)file;
-  
-  for(i=0; i < len;i++)
-  {
-     stdout_putchar(*ptr++);
-  }
-  return len;
-}

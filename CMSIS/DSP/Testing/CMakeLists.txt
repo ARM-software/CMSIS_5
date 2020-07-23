@@ -110,6 +110,12 @@ endif()
 add_library(TestingLib STATIC)
 add_library(FrameworkLib STATIC)
 
+if (DISABLEFLOAT16)
+    target_compile_definitions(TestingLib PRIVATE DISABLEFLOAT16) 
+    target_compile_definitions(FrameworkLib PRIVATE DISABLEFLOAT16) 
+endif()
+
+
 if (BENCHMARK)
 
 set(STANDARDBENCH ON)

@@ -1,4 +1,3 @@
-#include "arm_math.h"
 #include "StatsTestsQ31.h"
 #include <stdio.h>
 #include "Error.h"

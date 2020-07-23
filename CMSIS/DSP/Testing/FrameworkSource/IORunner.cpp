@@ -37,7 +37,7 @@
 #include "IORunner.h"
 #include "Error.h"
 #include "Timing.h"
-#include "arm_math.h"
+#include "arm_math_types.h"
 #include "Calibrate.h"
 
 #ifdef CORTEXA

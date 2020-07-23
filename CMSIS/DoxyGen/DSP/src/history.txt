@@ -10,6 +10,7 @@
     <td>V1.9.0</td>
     <td> 
       Re-organization of arm_math.h
+      
       Re-organization of interpolation functions:
       - New Interpolation folder
 

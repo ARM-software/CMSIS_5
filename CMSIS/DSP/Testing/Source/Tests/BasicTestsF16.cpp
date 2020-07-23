@@ -2,7 +2,6 @@
 #include <stdio.h>
 #include "Error.h"
 
-#include "arm_math_f16.h"
 
 #define SNR_THRESHOLD 62
 #define SNR_DOTPROD_THRESHOLD 40
@@ -19,7 +18,6 @@ a double precision computation.
 #define GET_F16_PTR() \
 const float16_t *inp1=input1.ptr(); \
 const float16_t *inp2=input2.ptr(); \
-float16_t *refp=ref.ptr(); \
 float16_t *outp=output.ptr();
 
     void BasicTestsF16::test_add_f16()
@@ -71,6 +69,8 @@ float16_t *outp=output.ptr();
 
         GET_F16_PTR();
 
+        (void)inp2;
+
         arm_negate_f16(inp1,outp,input1.nbSamples());
 
         ASSERT_EMPTY_TAIL(output);
@@ -86,6 +86,8 @@ float16_t *outp=output.ptr();
 
         GET_F16_PTR();
 
+        (void)inp2;
+
         arm_offset_f16(inp1,0.5,outp,input1.nbSamples());
 
         ASSERT_EMPTY_TAIL(output);
@@ -100,6 +102,8 @@ float16_t *outp=output.ptr();
     {
 
         GET_F16_PTR();
+
+        (void)inp2;
 
         arm_scale_f16(inp1,0.5,outp,input1.nbSamples());
 
@@ -136,6 +140,8 @@ float16_t *outp=output.ptr();
 
         GET_F16_PTR();
 
+        (void)inp2;
+
         arm_abs_f16(inp1,outp,input1.nbSamples());
 
         ASSERT_EMPTY_TAIL(output);
@@ -152,7 +158,8 @@ float16_t *outp=output.ptr();
       
        Testing::nbSamples_t nb=MAX_NB_SAMPLES; 
 
-       
+       (void)params;
+
        switch(id)
        {
         case BasicTestsF16::TEST_ADD_F16_1:
@@ -304,5 +311,6 @@ float16_t *outp=output.ptr();
 
     void BasicTestsF16::tearDown(Testing::testID_t id,Client::PatternMgr *mgr)
     {
+        (void)id;
         output.dump(mgr);
     }

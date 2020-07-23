@@ -30,7 +30,7 @@ function(compilerSpecificCompileOptions PROJECTNAME ROOT)
   endif()
 
   if (FASTMATHCOMPUTATIONS)
-      target_compile_options(${PROJECTNAME} PUBLIC "-ffast-math")
+      target_compile_options(${PROJECTNAME} PUBLIC "--fpmode=fast")
   endif()
   
   #if (HARDFP)

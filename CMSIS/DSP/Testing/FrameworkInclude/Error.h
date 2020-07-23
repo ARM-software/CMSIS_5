@@ -27,8 +27,8 @@
  */
 #ifndef _ASSERT_H_
 #define _ASSERT_H_
-#include "arm_math.h"
-#include "arm_math_f16.h"
+#include "arm_math_types.h"
+#include "arm_math_types_f16.h"
 #include <exception>
 #include "Test.h"
 #include "Pattern.h"
