@@ -21,8 +21,8 @@
  * Title:        arm_nn_mat_mult_s8.c
  * Description:  General Matrix-multiplication function
  *
- * $Date:        May 29, 2020
- * $Revision:    V.2.0.3
+ * $Date:        July 27, 2020
+ * $Revision:    V.2.0.4
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -65,10 +65,10 @@ q7_t *arm_nn_mat_mult_s8(const q7_t *input_row,
             const int8_t *ip_c2 = input_col + (2 * row_len);
             const int8_t *ip_c3 = input_col + (3 * row_len);
 
-            int32_t acc_0 = bias[i_out_ch];
-            int32_t acc_1 = bias[i_out_ch];
-            int32_t acc_2 = bias[i_out_ch];
-            int32_t acc_3 = bias[i_out_ch];
+            int32_t acc_0 = 0;
+            int32_t acc_1 = 0;
+            int32_t acc_2 = 0;
+            int32_t acc_3 = 0;
             const int32_t row_loop_cnt = (row_len + 7) / 8;
 
             for (int i_row_loop = 0; i_row_loop < row_loop_cnt; i_row_loop++)
@@ -103,6 +103,10 @@ q7_t *arm_nn_mat_mult_s8(const q7_t *input_row,
             }
 
             int32x4_t res = {acc_0, acc_1, acc_2, acc_3};
+            if (bias)
+            {
+                res = vaddq_n_s32(res, bias[i_out_ch]);
+            }
             res = arm_requantize_mve(res, output_mult[i_out_ch], output_shift[i_out_ch]);
             res = vaddq_n_s32(res, out_offset);
 
@@ -124,7 +128,7 @@ q7_t *arm_nn_mat_mult_s8(const q7_t *input_row,
 
                 const int8_t *ip_r0 = input_row + (i_out_ch * row_len);
                 const int8_t *ip_c0 = input_col + (i_col_batch * row_len);
-                int32_t acc_0 = bias[i_out_ch];
+                int32_t acc_0 = 0;
                 const int32_t row_loop_cnt = (row_len + 7) / 8;
 
                 for (int i_row_loop = 0; i_row_loop < row_loop_cnt; i_row_loop++)
@@ -142,6 +146,10 @@ q7_t *arm_nn_mat_mult_s8(const q7_t *input_row,
                     acc_0 = vmladavaq_p_s16(acc_0, r0, c0, p);
                 }
 
+                if (bias)
+                {
+                    acc_0 += bias[i_out_ch];
+                }
                 acc_0 = arm_nn_requantize(acc_0, output_mult[i_out_ch], output_shift[i_out_ch]);
                 acc_0 += out_offset;
                 acc_0 = MAX(acc_0, activation_min);

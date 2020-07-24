@@ -21,8 +21,8 @@
  * Title:        arm_convolve_1x1_s8_fast.c
  * Description:  Fast q7 version of 1x1 convolution (non-square shape)
  *
- * $Date:        May 29, 2020
- * $Revision:    V.2.0.1
+ * $Date:        July 27, 2020
+ * $Revision:    V.2.0.2
  *
  * Target Processor:  Cortex-M cores
  *
@@ -99,8 +99,10 @@ arm_status arm_convolve_1x1_s8_fast(const cmsis_nn_context *ctx,
                                             &sum_row,
                                             temp_out);
             int32x4_t res = vldrwq_s32(temp_out);
-
-            res = vaddq_n_s32(res, bias_data[i_out_ch]);
+            if (bias_data)
+            {
+                res = vaddq_n_s32(res, bias_data[i_out_ch]);
+            }
             sum_row = sum_row * input_offset;
             res = vaddq_n_s32(res, sum_row);
             res = arm_requantize_mve(res, output_mult[i_out_ch], output_shift[i_out_ch]);
@@ -131,8 +133,10 @@ arm_status arm_convolve_1x1_s8_fast(const cmsis_nn_context *ctx,
                                             filter_data + i_out_ch * input_ch,
                                             &sum_row,
                                             &acc);
-
-            acc += bias_data[i_out_ch];
+            if (bias_data)
+            {
+                acc += bias_data[i_out_ch];
+            }
             sum_row = (sum_row * input_offset);
             acc += sum_row;
             acc = arm_nn_requantize(acc, output_mult[i_out_ch], output_shift[i_out_ch]);
