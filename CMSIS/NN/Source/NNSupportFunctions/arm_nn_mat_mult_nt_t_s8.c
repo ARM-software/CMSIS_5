@@ -21,8 +21,8 @@
  * Title:        arm_nn_mat_mult_s8_nt_t_s8
  * Description:  Matrix multiplication support function with the right-hand-side (rhs) matrix transposed
  *
- * $Date:        March 17 2020
- * $Revision:    V.1.0.1
+ * $Date:        July 27 2020
+ * $Revision:    V.1.0.2
  *
  * Target Processor:  Cortex-M
  *
@@ -80,9 +80,11 @@ arm_status arm_nn_mat_mult_nt_t_s8(const q7_t *lhs,
 
         lhs_offset_contribution0 *= lhs_offset;
         lhs_offset_contribution1 *= lhs_offset;
-
-        lhs_offset_contribution0 += bias[rhs_rows_idx];
-        lhs_offset_contribution1 += bias[rhs_rows_idx + 1];
+        if (bias)
+        {
+            lhs_offset_contribution0 += bias[rhs_rows_idx];
+            lhs_offset_contribution1 += bias[rhs_rows_idx + 1];
+        }
 
         int32_t lhs_rows_idx = lhs_rows >> 1;
 
@@ -375,7 +377,11 @@ arm_status arm_nn_mat_mult_nt_t_s8(const q7_t *lhs,
         for (int32_t lhs_rows_idx = 0; lhs_rows_idx < lhs_rows; ++lhs_rows_idx)
         {
             const q7_t *rhs_ptr = &rhs[0];
-            q31_t res00 = bias[rhs_rows - 1];
+            q31_t res00 = 0;
+            if (bias)
+            {
+                res00 = bias[rhs_rows - 1];
+            }
 
             for (int32_t rhs_cols_idx = 0; rhs_cols_idx < rhs_cols; ++rhs_cols_idx)
             {
@@ -419,9 +425,11 @@ arm_status arm_nn_mat_mult_nt_t_s8(const q7_t *lhs,
 
         lhs_offset_contribution0 *= lhs_offset;
         lhs_offset_contribution1 *= lhs_offset;
-
-        lhs_offset_contribution0 += bias[rhs_rows_idx];
-        lhs_offset_contribution1 += bias[rhs_rows_idx + 1];
+        if (bias)
+        {
+            lhs_offset_contribution0 += bias[rhs_rows_idx];
+            lhs_offset_contribution1 += bias[rhs_rows_idx + 1];
+        }
 
         int32_t lhs_rows_idx = lhs_rows >> 1;
 
@@ -536,7 +544,11 @@ arm_status arm_nn_mat_mult_nt_t_s8(const q7_t *lhs,
         for (int32_t lhs_rows_idx = 0; lhs_rows_idx < lhs_rows; ++lhs_rows_idx)
         {
             const q7_t *rhs_ptr = &rhs[0];
-            q31_t res00 = bias[rhs_rows - 1];
+            q31_t res00 = 0;
+            if (bias)
+            {
+                res00 = bias[rhs_rows - 1];
+            }
 
             for (int32_t rhs_cols_idx = 0; rhs_cols_idx < rhs_cols; ++rhs_cols_idx)
             {

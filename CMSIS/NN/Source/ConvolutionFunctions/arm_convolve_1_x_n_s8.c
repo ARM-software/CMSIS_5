@@ -21,8 +21,8 @@
  * Title:        arm_convolve_1_x_n_s8.c
  * Description:  s8 version of 1xN convolution using symmetric quantization.
  *
- * $Date:        May 18, 2020
- * $Revision:    V.2.0.0
+ * $Date:        July 27, 2020
+ * $Revision:    V.2.0.1
  *
  * Target Processor:  Cortex-M cores
  *
@@ -147,9 +147,11 @@ arm_status arm_convolve_1_x_n_s8(const cmsis_nn_context* ctx,
             }
             int32x4_t res = vldrwq_s32(acc);
             s_offset = vmulq_n_s32(s_offset, input_offset);
-
-            res = vaddq_n_s32(res, bias_data[i_out_ch]);
             res = vaddq_s32(res, s_offset);
+            if (bias_data)
+            {
+                res = vaddq_n_s32(res, bias_data[i_out_ch]);
+            }
             res = arm_requantize_mve(res, output_mult[i_out_ch], output_shift[i_out_ch]);
             res = vaddq_n_s32(res, out_offset);
 

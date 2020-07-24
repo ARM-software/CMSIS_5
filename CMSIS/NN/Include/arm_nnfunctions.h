@@ -21,8 +21,8 @@
  * Title:        arm_nnfunctions.h
  * Description:  Public header file for CMSIS NN Library
  *
- * $Date:        June 11, 2020
- * $Revision:    V.6.0.1
+ * $Date:        July 27, 2020
+ * $Revision:    V.6.0.2
  *
  * Target Processor:  Cortex-M CPUs
  * -------------------------------------------------------------------- */
@@ -258,7 +258,7 @@ extern    "C"
    * @param[in]      filter_dims    Filter tensor dimensions. Format: [C_OUT, HK, WK, C_IN] where HK and WK are the spatial filter dimensions
    * @param[in]      filter_data    Filter data pointer. Data type: int8
    * @param[in]      bias_dims      Bias tensor dimensions. Format: [C_OUT]
-   * @param[in]      bias_data      Bias data pointer. Data type: int32
+   * @param[in]      bias_data      Optional bias data pointer. Data type: int32
    * @param[in]      output_dims    Output tensor dimensions. Format: [N, H, W, C_OUT]
    * @param[out]     output_data    Output data pointer. Data type: int8
 
@@ -574,7 +574,7 @@ extern    "C"
    * @param[in]      filter_dims    Filter tensor dimensions. Format: [C_OUT, 1, 1, C_IN]
    * @param[in]      filter_data    Filter data pointer. Data type: int8
    * @param[in]      bias_dims      Bias tensor dimensions. Format: [C_OUT]
-   * @param[in]      bias_data      Bias data pointer. Data type: int32
+   * @param[in]      bias_data      Optional bias data pointer. Data type: int32
    * @param[in]      output_dims    Output tensor dimensions. Format: [N, H, W, C_OUT]
    * @param[out]     output_data    Output data pointer. Data type: int8
    *
@@ -626,7 +626,7 @@ extern    "C"
    * @param[in]      filter_dims    Filter tensor dimensions. Format: [C_OUT, 1, WK, C_IN] where WK is the horizontal spatial filter dimension
    * @param[in]      filter_data    Filter data pointer. Data type: int8
    * @param[in]      bias_dims      Bias tensor dimensions. Format: [C_OUT]
-   * @param[in]      bias_data      Bias data pointer. Data type: int32
+   * @param[in]      bias_data      Optional bias data pointer. Data type: int32
    * @param[in]      output_dims    Output tensor dimensions. Format: [N, H, W, C_OUT]
    * @param[out]     output_data    Output data pointer. Data type: int8
    *
