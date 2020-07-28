@@ -17,6 +17,15 @@ lastID="""SELECT runid FROM RUN ORDER BY runid DESC LIMIT 1
 lastIDAndDate="""SELECT date FROM RUN WHERE runid=?
 """
 
+def joinit(iterable, delimiter):
+    # Intersperse a delimiter between element of a list
+    it = iter(iterable)
+    yield next(it)
+    for x in it:
+        yield delimiter
+        yield x
+
+
 def getLastRunID():
   r=c.execute(lastID)
   return(int(r.fetchone()[0]))
@@ -45,8 +54,14 @@ c = sqlite3.connect(args.b)
 
 if args.others:
    if len(args.others) == 1:
-      runid=int(args.others[0])
-      runidval = (runid,)
+      if re.search(r'[,]',args.others[0]):
+         runidval=tuple([int(x) for x in args.others[0].split(",")])
+         runidCMD=["runid == ?" for x in runidval]
+         runidCMD = "".join(joinit(runidCMD," OR "))
+         runidCMD = "(" + runidCMD + ")"
+      else:
+         runid=int(args.others[0])
+         runidval = (runid,)
    else:
       runidCMD = "runid >= ? AND runid <= ?"
       runid=int(args.others[1])

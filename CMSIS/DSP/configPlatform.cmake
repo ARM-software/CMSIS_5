@@ -148,11 +148,31 @@ function(set_platform_core)
   if (ARM_CPU MATCHES "^[cC]ortex-[aA]15([^0-9].*)?$")
     SET(CORE ARMCA15 PARENT_SCOPE)
   endif()
+
+  ###################
+  #
+  # Cortex cortex-r5
+  #
+  if (ARM_CPU MATCHES "^[cC]ortex-[rR]5([^0-9].*)?$")
+    SET(CORE ARMCR5 PARENT_SCOPE)
+  endif()
+
+  ###################
+  #
+  # Cortex cortex-r8
+  #
+  if (ARM_CPU MATCHES "^[cC]ortex-[rR]8([^0-9].*)?$")
+    SET(CORE ARMCR8 PARENT_SCOPE)
+  endif()
 endfunction()
 
 function(core_includes PROJECTNAME)
-    target_include_directories(${PROJECTNAME} PRIVATE ${PLATFORMFOLDER}/${CORE}/Include)
+    if (CORTEXR)
+      target_include_directories(${PROJECTNAME} PRIVATE ${CORER}/Include)
+    else()
+      target_include_directories(${PROJECTNAME} PRIVATE ${PLATFORMFOLDER}/${CORE}/Include)
     #target_compile_options(${PROJECTNAME} PRIVATE ${PLATFORMOPT})
+  endif()
 endfunction()
 
 function (configplatformForLib PROJECTNAME ROOT)
@@ -161,8 +181,10 @@ function (configplatformForLib PROJECTNAME ROOT)
   endif()
   if (CORTEXM)
     compilerSpecificPlatformConfigLibForM(${PROJECTNAME} ${ROOT} )
-  else()
+  elseif(CORTEXA)
     compilerSpecificPlatformConfigLibForA(${PROJECTNAME} ${ROOT} )
+  else()
+    compilerSpecificPlatformConfigLibForR(${PROJECTNAME} ${ROOT} )
   endif()
 
 endfunction()
@@ -177,8 +199,10 @@ function (configplatformForApp PROJECTNAME ROOT CORE PLATFORMFOLDER)
   
   if (CORTEXM)
     compilerSpecificPlatformConfigAppForM(${PROJECTNAME} ${ROOT} )
-  else()
+  elseif(CORTEXA)
     compilerSpecificPlatformConfigAppForA(${PROJECTNAME} ${ROOT} )
+  else()
+    compilerSpecificPlatformConfigAppForR(${PROJECTNAME} ${ROOT} )
   endif()
 
 endfunction()

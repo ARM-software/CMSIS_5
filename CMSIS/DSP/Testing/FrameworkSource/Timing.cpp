@@ -52,9 +52,9 @@ static uint32_t startCycles=0;
 #else
   #warning "no appropriate header file found!"
 #endif
-#endif
+#endif /* CORTEXM*/
 
-#ifdef CORTEXA
+#if defined(CORTEXA) || defined(CORTEXR)
 #include "cmsis_cp15.h"
 unsigned int startCycles;
 
@@ -74,7 +74,7 @@ void initCycleMeasurement()
     SysTick->CTRL = 0;
 #endif 
 
-#ifdef CORTEXA
+#if defined(CORTEXA) || defined(CORTEXR)
 
     // in general enable all counters (including cycle counter)
     int32_t   value = 1;
@@ -123,7 +123,7 @@ void cycleMeasurementStart()
     
 #endif
 
-#ifdef CORTEXA
+#if defined(CORTEXA) || defined(CORTEXR)
     unsigned int value;
     // Read CCNT Register
     __get_CP(15, 0, value, 9, 13, 0);
@@ -159,7 +159,7 @@ Testing::cycles_t getCycles()
     return(result);
 #endif 
 
-#ifdef CORTEXA
+#if defined(CORTEXA) || defined(CORTEXR)
     unsigned int value;
     // Read CCNT Register
     __get_CP(15, 0, value, 9, 13, 0);

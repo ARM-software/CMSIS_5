@@ -3,6 +3,8 @@ cmake_policy(SET CMP0077 NEW)
 
 # Config core
 SET(CORTEXM ON)
+SET(CORTEXA OFF)
+SET(CORTEXR OFF)
 
 option(HARDFP "Hard floating point" ON)
 option(LITTLEENDIAN "Little endian" ON)
@@ -34,6 +36,8 @@ function(configcore PROJECTNAME ROOT)
   if (ARM_CPU  MATCHES  "^[cC]ortex-[aA]32([^0-9].*)?$" )
     target_include_directories(${PROJECTNAME} PUBLIC "${ROOT}/CMSIS/Core_A/Include")
     SET(CORTEXM OFF)
+    SET(CORTEXA ON)
+    SET(CORTEXR OFF)
     target_compile_definitions(${PROJECTNAME} PRIVATE ARMv8A) 
   
     target_compile_definitions(${PROJECTNAME} PUBLIC CORTEXA)
@@ -46,6 +50,8 @@ function(configcore PROJECTNAME ROOT)
   if (ARM_CPU  MATCHES  "^[cC]ortex-[aA]15([^0-9].*)?$" )
     target_include_directories(${PROJECTNAME} PUBLIC "${ROOT}/CMSIS/Core_A/Include")
     SET(CORTEXM OFF)
+    SET(CORTEXA ON)
+    SET(CORTEXR OFF)
     target_compile_definitions(${PROJECTNAME} PRIVATE ARMv7A) 
   
     target_compile_definitions(${PROJECTNAME} PUBLIC CORTEXA)
@@ -58,6 +64,8 @@ function(configcore PROJECTNAME ROOT)
   if (ARM_CPU MATCHES "^[cC]ortex-[aA]9([^0-9].*)?$" )
     target_include_directories(${PROJECTNAME} PUBLIC "${ROOT}/CMSIS/Core_A/Include")
     SET(CORTEXM OFF)
+    SET(CORTEXA ON)
+    SET(CORTEXR OFF)
     target_compile_definitions(${PROJECTNAME} PRIVATE ARMv7A) 
   
     target_compile_definitions(${PROJECTNAME} PUBLIC CORTEXA)
@@ -71,6 +79,8 @@ function(configcore PROJECTNAME ROOT)
   if (ARM_CPU MATCHES "^[cC]ortex-[aA]7([^0-9].*)?$" )
     target_include_directories(${PROJECTNAME} PUBLIC "${ROOT}/CMSIS/Core_A/Include")
     SET(CORTEXM OFF)
+    SET(CORTEXA ON)
+    SET(CORTEXR OFF)
   
     target_compile_definitions(${PROJECTNAME} PUBLIC CORTEXA)
     target_compile_definitions(${PROJECTNAME} PRIVATE ARMv7A) 
@@ -85,6 +95,8 @@ function(configcore PROJECTNAME ROOT)
   if (ARM_CPU MATCHES "^[cC]ortex-[aA]5([^0-9].*)?$" )
     target_include_directories(${PROJECTNAME} PUBLIC "${ROOT}/CMSIS/Core_A/Include")
     SET(CORTEXM OFF)
+    SET(CORTEXA ON)
+    SET(CORTEXR OFF)
     
     target_compile_definitions(${PROJECTNAME} PUBLIC CORTEXA)
     target_compile_definitions(${PROJECTNAME} PRIVATE ARMv7A) 
@@ -92,6 +104,43 @@ function(configcore PROJECTNAME ROOT)
     SET(HARDFP ON)
     SET(LITTLEENDIAN ON)
     SET(COREID ARMCA5 PARENT_SCOPE)
+  endif()
+
+  ###################
+  #
+  # CORTEX-R
+  #
+
+  # CORTEX-R8
+  if (ARM_CPU  MATCHES  "^[cC]ortex-[rR]8([^0-9].*)?$" )
+    target_include_directories(${PROJECTNAME} PUBLIC "${CORER}/Include")
+    target_compile_definitions(${PROJECTNAME} PRIVATE ARMCR8)
+
+    SET(CORTEXM OFF)
+    SET(CORTEXA OFF)
+    SET(CORTEXR ON)
+    target_compile_definitions(${PROJECTNAME} PRIVATE ARMv7R) 
+  
+    target_compile_definitions(${PROJECTNAME} PUBLIC CORTEXR)
+    SET(HARDFP ON)
+    SET(LITTLEENDIAN ON)
+    SET(COREID ARMCR8 PARENT_SCOPE)
+  endif()
+
+  # CORTEX-R5
+  if (ARM_CPU  MATCHES  "^[cC]ortex-[rR]5([^0-9].*)?$" )
+    target_include_directories(${PROJECTNAME} PUBLIC "${CORER}/Include")
+    target_compile_definitions(${PROJECTNAME} PRIVATE ARMCR5)
+
+    SET(CORTEXM OFF)
+    SET(CORTEXA OFF)
+    SET(CORTEXR ON)
+    target_compile_definitions(${PROJECTNAME} PRIVATE ARMv7R) 
+  
+    target_compile_definitions(${PROJECTNAME} PUBLIC CORTEXR)
+    SET(HARDFP ON)
+    SET(LITTLEENDIAN ON)
+    SET(COREID ARMCR5 PARENT_SCOPE)
   endif()
 
   

@@ -158,6 +158,24 @@ function(toolchainSpecificLinkForCortexA  PROJECTNAME ROOT CORE PLATFORMFOLDER)
     target_link_options(${PROJECTNAME} PRIVATE "--entry=Reset_Handler;-T${SCATTERFILE}")
 endfunction()
 
+function(toolchainSpecificLinkForCortexR  PROJECTNAME ROOT CORE PLATFORMFOLDER)
+    target_sources(${PROJECTNAME} PRIVATE ${PLATFORMFOLDER}/${CORE}/Startup/GCC/startup_${CORE}.c)
+    target_sources(${PROJECTNAME} PRIVATE  ${PLATFORMFOLDER}/${CORE}/Startup/GCC/support.c)
+
+    # RTE Components
+    target_include_directories(${PROJECTNAME} PRIVATE ${ROOT}/CMSIS/DSP/Testing)
+    target_include_directories(${PROJECTNAME} PRIVATE ${PLATFORMFOLDER}/${CORE}/LinkScripts/GCC)
+
+    file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/tempLink)
+    set(SCATTERFILE ${CMAKE_CURRENT_BINARY_DIR}/tempLink/lnk.ld)
+    preprocessScatter(${CORE} ${PLATFORMFOLDER} ${SCATTERFILE})
+
+
+    set_target_properties(${PROJECTNAME} PROPERTIES LINK_DEPENDS "${SCATTERFILE}")
+
+    target_link_options(${PROJECTNAME} PRIVATE "--entry=Reset_Handler;-T${SCATTERFILE}")
+endfunction()
+
 function(compilerSpecificPlatformConfigLibForM PROJECTNAME ROOT)
   if (SEMIHOSTING)
     target_link_options(${PROJECTNAME} PRIVATE "--specs=rdimon.specs")
@@ -169,6 +187,16 @@ function(compilerSpecificPlatformConfigLibForM PROJECTNAME ROOT)
 endfunction()
 
 function(compilerSpecificPlatformConfigLibForA PROJECTNAME ROOT)
+  if (SEMIHOSTING)
+    target_link_options(${PROJECTNAME} PRIVATE "--specs=rdimon.specs")
+    target_compile_options(${PROJECTNAME} PRIVATE "--specs=rdimon.specs")
+  else()
+    target_link_options(${PROJECTNAME} PRIVATE "--specs=nosys.specs")
+    target_compile_options(${PROJECTNAME} PRIVATE "--specs=nosys.specs")
+  endif()
+endfunction()
+
+function(compilerSpecificPlatformConfigLibForR PROJECTNAME ROOT)
   if (SEMIHOSTING)
     target_link_options(${PROJECTNAME} PRIVATE "--specs=rdimon.specs")
     target_compile_options(${PROJECTNAME} PRIVATE "--specs=rdimon.specs")
@@ -200,5 +228,15 @@ function(compilerSpecificPlatformConfigAppForA PROJECTNAME ROOT)
     target_compile_options(${PROJECTNAME} PRIVATE "--specs=nosys.specs")
   endif()
 
-  
+endfunction()
+
+function(compilerSpecificPlatformConfigAppForR PROJECTNAME ROOT)
+  if (SEMIHOSTING)
+    target_link_options(${PROJECTNAME} PRIVATE "--specs=rdimon.specs")
+    target_compile_options(${PROJECTNAME} PRIVATE "--specs=rdimon.specs")
+  else()
+    target_link_options(${PROJECTNAME} PRIVATE "--specs=nosys.specs")
+    target_compile_options(${PROJECTNAME} PRIVATE "--specs=nosys.specs")
+  endif()
+
 endfunction()
