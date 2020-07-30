@@ -21,8 +21,8 @@
  * Title:        arm_nnsupportfunctions.h
  * Description:  Public header file of support functions for CMSIS NN Library
  *
- * $Date:        May 11, 2020
- * $Revision:    V.4.0.4
+ * $Date:        July 31, 2020
+ * $Revision:    V.4.5.4
  *
  * Target Processor:  Cortex-M CPUs
  * -------------------------------------------------------------------- */
@@ -59,6 +59,21 @@ union arm_nnword
                /**< q15 type */
     q7_t      bytes[4];
                /**< q7 type */
+};
+
+/**
+ * @brief Union for data type long long
+ */
+struct arm_nn_double
+{
+  uint32_t low;
+  int32_t high;
+};
+
+union arm_nn_long_long
+{
+  int64_t long_long;
+  struct arm_nn_double word;
 };
 
 /**
@@ -652,8 +667,8 @@ void arm_nn_mult_q7(
 #endif
 
 // Macros for shortening quantization functions' names and avoid long lines
-#define MUL_SAT(a, b)  arm_nn_sat_doubling_high_mult((a), (b))
-#define MUL_SAT_MVE(a, b) arm_sat_doubling_high_mult_mve_32x4((a), (b))
+#define MUL_SAT(a, b)  arm_nn_doubling_high_mult((a), (b))
+#define MUL_SAT_MVE(a, b) arm_doubling_high_mult_mve_32x4((a), (b))
 #define MUL_POW2(a, b) arm_nn_mult_by_power_of_two((a), (b))
 
 
@@ -667,12 +682,12 @@ void arm_nn_mult_q7(
 /**
  * @brief           Saturating doubling high multiply. Result matches
  *                  NEON instruction VQRDMULH.
- * @param[in]       m1        Multiplicand
- * @param[in]       m2        Multiplier
+ * @param[in]       m1        Multiplicand. Range: {Q31_MIN, Q31_MAX}
+ * @param[in]       m2        Multiplier. Range: {Q31_MIN, Q31_MAX}
  * @return          Result of multiplication.
  *
  */
-__STATIC_FORCEINLINE q31_t arm_nn_sat_doubling_high_mult(const q31_t m1, const q31_t m2)
+__STATIC_FORCEINLINE q31_t arm_nn_doubling_high_mult(const q31_t m1, const q31_t m2)
 {
     q31_t result = 0;
     // Rounding offset to add for a right shift of 31
@@ -693,6 +708,39 @@ __STATIC_FORCEINLINE q31_t arm_nn_sat_doubling_high_mult(const q31_t m1, const q
     {
         result = Q31_MAX;
     }
+    return result;
+}
+
+/**
+ * @brief           Doubling high multiply without saturation. This is intended
+ *                  for requantization where the scale is a positive integer
+ *
+ * @param[in]       m1        Multiplicand. Range: {Q31_MIN, Q31_MAX}
+ * @param[in]       m2        Multiplier Range: {Q31_MIN, Q31_MAX}
+ * @return          Result of multiplication.
+ * @note            The result of this matches that of neon instruction
+ *                  VQRDMULH for m1 in range {Q31_MIN, Q31_MAX} and m2 in
+ *                  range {Q31_MIN + 1, Q31_MAX}. Saturation occurs when
+ *                  m1 equals m2 equals Q31_MIN and that is not handled by
+ *                  this function.
+ *
+ */
+__STATIC_FORCEINLINE q31_t arm_nn_doubling_high_mult_no_sat(const q31_t m1, const q31_t m2)
+{
+    q31_t result = 0;
+    union arm_nn_long_long mult;
+
+    // Rounding offset to add for a right shift of 31
+    mult.word.low = 1 << 30;
+    mult.word.high = 0;
+
+    // Gets resolved as a SMLAL instruction
+    mult.long_long = mult.long_long + (q63_t)m1 * m2;
+
+    // Utilize all of the upper 32 bits. This is the doubling step
+    // as well.
+    result = (int32_t)(mult.long_long >> 31);
+
     return result;
 }
 
@@ -730,7 +778,7 @@ __STATIC_FORCEINLINE q31_t arm_nn_divide_by_power_of_two(const q31_t dividend, c
 /**
  * @brief           Requantize a given value.
  * @param[in]       val         Value to be requantized
- * @param[in]       multiplier  multiplier
+ * @param[in]       multiplier  multiplier. Range {Q31_MIN + 1, Q32_MAX}
  * @param[in]       shift       left or right shift for 'val * multiplier'
  *
  * @return          Returns (val * multiplier)/(2 ^ shift)
@@ -738,8 +786,9 @@ __STATIC_FORCEINLINE q31_t arm_nn_divide_by_power_of_two(const q31_t dividend, c
  */
 __STATIC_FORCEINLINE q31_t arm_nn_requantize(const q31_t val, const q31_t multiplier, const q31_t shift)
 {
-  return arm_nn_divide_by_power_of_two(arm_nn_sat_doubling_high_mult(val * (1 << LEFT_SHIFT(shift)), multiplier),
-                                       RIGHT_SHIFT(shift));
+  return arm_nn_divide_by_power_of_two(
+      arm_nn_doubling_high_mult_no_sat(val * (1 << LEFT_SHIFT(shift)), multiplier),
+      RIGHT_SHIFT(shift));
 }
 
 /**
@@ -778,7 +827,7 @@ __STATIC_FORCEINLINE void arm_memcpy_q7(q7_t *__RESTRICT dst,
  * @return          Result of multiplication.
  *
  */
-__STATIC_FORCEINLINE int32x4_t arm_sat_doubling_high_mult_mve(const int32x4_t m1, const q31_t m2)
+__STATIC_FORCEINLINE int32x4_t arm_doubling_high_mult_mve(const int32x4_t m1, const q31_t m2)
 {
     return vqrdmulhq_n_s32(m1, m2);
 }
@@ -811,11 +860,11 @@ __STATIC_FORCEINLINE int32x4_t arm_divide_by_power_of_two_mve(const int32x4_t di
 __STATIC_FORCEINLINE int32x4_t arm_requantize_mve(const int32x4_t val, const q31_t multiplier, const q31_t shift)
 {
   return arm_divide_by_power_of_two_mve(
-          arm_sat_doubling_high_mult_mve(vshlq_s32(val, vdupq_n_s32(LEFT_SHIFT(shift))), multiplier),
+          arm_doubling_high_mult_mve(vshlq_s32(val, vdupq_n_s32(LEFT_SHIFT(shift))), multiplier),
           RIGHT_SHIFT(shift));
 }
 
-__STATIC_FORCEINLINE int32x4_t arm_sat_doubling_high_mult_mve_32x4(const int32x4_t m1, const int32x4_t m2)
+__STATIC_FORCEINLINE int32x4_t arm_doubling_high_mult_mve_32x4(const int32x4_t m1, const int32x4_t m2)
 {
   return vqrdmulhq_s32(m1, m2);
 }
@@ -836,7 +885,7 @@ __STATIC_FORCEINLINE int32x4_t arm_requantize_mve_32x4(const int32x4_t val, cons
   const int32x4_t left_shift = vpselq_s32(shift, zz, p);
   const int32x4_t right_shift = -vpselq_s32(zz, shift, p);
 
-  return arm_divide_by_power_of_two_mve_32x4(arm_sat_doubling_high_mult_mve_32x4(vshlq_s32(val, left_shift), multiplier), right_shift);
+  return arm_divide_by_power_of_two_mve_32x4(arm_doubling_high_mult_mve_32x4(vshlq_s32(val, left_shift), multiplier), right_shift);
 }
 #endif
 
