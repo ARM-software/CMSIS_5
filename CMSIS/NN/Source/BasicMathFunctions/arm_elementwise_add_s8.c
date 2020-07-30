@@ -21,10 +21,10 @@
  * Title:        arm_elementwise_add_s8
  * Description:  Element wise add
  *
- * $Date:        February 27, 2020
- * $Revision:    V.2.0.1
+ * $Date:        July 31, 2020
+ * $Revision:    V.2.5.1
  *
- * Target Processor:  Cortex-M cores
+ * Target Processor:  Cortex-M CPUs
  *
  * -------------------------------------------------------------------- */
 
@@ -37,12 +37,18 @@
 
 #if defined(ARM_MATH_MVEI)
 #define SAT_INPUT_VECT(__INPUT_V, __MULT, __SHIFT)               \
-  __INPUT_V = arm_sat_doubling_high_mult_mve(__INPUT_V, __MULT); \
+  __INPUT_V = arm_doubling_high_mult_mve(__INPUT_V, __MULT); \
   __INPUT_V = arm_divide_by_power_of_two_mve(__INPUT_V, -__SHIFT);
 #endif
 
+
+/**
+ * @note The *_no_sat API does not mean that the input not saturated, Since
+ *       __MULT is a positive integer, it is saturated. The API definition
+ *       has more info about it.
+ */
 #define SAT_INPUT(__INPUT, __MULT, __SHIFT)                 \
-  __INPUT = arm_nn_sat_doubling_high_mult(__INPUT, __MULT); \
+  __INPUT = arm_nn_doubling_high_mult_no_sat(__INPUT, __MULT); \
   __INPUT = arm_nn_divide_by_power_of_two(__INPUT, -__SHIFT);
 
 /**
@@ -223,10 +229,10 @@ arm_elementwise_add_s8(const int8_t *input_1_vect,
     input_1 = (*input_1_vect++ + input_1_offset) << left_shift;
     input_2 = (*input_2_vect++ + input_2_offset) << left_shift;
 
-    input_1 = arm_nn_sat_doubling_high_mult(input_1, input_1_mult);
+    input_1 = arm_nn_doubling_high_mult(input_1, input_1_mult);
     input_1 = arm_nn_divide_by_power_of_two(input_1, -input_1_shift);
 
-    input_2 = arm_nn_sat_doubling_high_mult(input_2, input_2_mult);
+    input_2 = arm_nn_doubling_high_mult(input_2, input_2_mult);
     input_2 = arm_nn_divide_by_power_of_two(input_2, -input_2_shift);
 
     sum = input_1 + input_2;
