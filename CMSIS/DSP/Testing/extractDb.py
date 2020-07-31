@@ -5,7 +5,7 @@ import pandas as pd
 import numpy as np
 from TestScripts.doc.Structure import *
 from TestScripts.doc.Format import *
-
+import os.path
 
 runidCMD = "runid = ?"
 
@@ -55,6 +55,7 @@ parser.add_argument('-g', action='store_true', help="Include graphs in regressio
 
 parser.add_argument('-details', action='store_true', help="Details about runids")
 parser.add_argument('-lastid', action='store_true', help="Get last ID")
+parser.add_argument('-comments', nargs='?',type = str, default="comments.txt", help="Comment section")
 
 # For runid or runid range
 parser.add_argument('others', nargs=argparse.REMAINDER,help="Run ID")
@@ -69,19 +70,23 @@ if args.others:
          runidval=tuple([int(x) for x in args.others[0].split(",")])
          runidCMD=["runid == ?" for x in runidval]
          runidCMD = "".join(joinit(runidCMD," OR "))
+         runidHeader="".join(joinit([str(x) for x in runidval]," , "))
          runidCMD = "(" + runidCMD + ")"
       else:
          runid=int(args.others[0])
+         runidHeader="%d" % runid
          runidval = (runid,)
    else:
       runidCMD = "runid >= ? AND runid <= ?"
       runid=int(args.others[1])
       runidLOW=int(args.others[0])
       runidval = (runidLOW,runid)
+      runidHeader="%d <= runid <= %d" % runidval
 else:
    runid=getLastRunID()
    print("Last run ID = %d\n" % runid)
    runidval=(runid,)
+   runidHeader="%d" % runid
 
 
 # We extract data only from data tables
@@ -626,6 +631,22 @@ Hierarchy("Transform"),
 
 processed=[]
 
+def addComments(document):
+  if os.path.exists(args.comments):
+     section=Section("Measurement Context")
+
+     document.addSection(section)
+     para=""
+     with open(args.comments,"r") as r:
+         for l in r:
+             if l.strip():
+               para += l
+             else:
+               section.addContent(Text(para))
+               para=""
+     if para:
+        section.addContent(Text(para))
+
 def createDoc(document,sections,benchtables):
     global processed
     for s in sections:
@@ -640,8 +661,12 @@ def createDoc(document,sections,benchtables):
 try:
       benchtables=getBenchTables()
       theDate = getrunIDDate(runid)
-      document = Document(runid,theDate)
+      document = Document(runidHeader)
+
+      addComments(document)
+
       createDoc(document,toc,benchtables)
+      
       misc=Section("Miscellaneous")
       document.addSection(misc)
       remaining=diff(benchtables,processed)

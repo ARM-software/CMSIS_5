@@ -1,4 +1,8 @@
 import math
+from datetime import date
+
+
+
 def joinit(iterable, delimiter):
     it = iter(iterable)
     yield next(it)
@@ -6,6 +10,28 @@ def joinit(iterable, delimiter):
         yield delimiter
         yield x
 
+# To format, in HTML, the cores in the right order.
+# First we order tje categories
+# Then we order the cores in each category
+# The final ORDEREDCORES is what is used
+# to order tjhe values
+# Since some cores may be missing, each atble display
+# is computing a rstricted ordered core list with only the available cores.
+CORTEXCATEGORIES=["Cortex-M","Cortex-R","Cortex-A"]
+CORECATEGORIES={"Cortex-M":["m0","m4", "m7", "m33" , "m55 scalar", "m55 mve"],
+"Cortex-R":["r8","r52"],
+"Cortex-A":["a32"]
+}
+ORDEREDCORES=[]
+for cat in CORTEXCATEGORIES:
+  cores=[] 
+  if cat in CORECATEGORIES:
+     for core in CORECATEGORIES[cat]:
+       cores.append(core)
+  else:
+    print("Error core %s not found" % cat)
+    quit()
+  ORDEREDCORES += cores
 
 class Markdown:
   def __init__(self,output):
@@ -54,7 +80,7 @@ class Markdown:
      self._id = self._id - 1 
 
   def visitDocument(self,document):
-      self._output.write("Run number %d on %s\n" % (document.runid, str(document.date)))
+      self._output.write("Document generated frun run ids : %s\n" % document.runidHeader)
 
   def leaveDocument(self,document):
       pass
@@ -439,6 +465,24 @@ class HTMLToc:
   def leaveDocument(self,document):
       self._output.write("</ul></div>%s\n" % script)
 
+def permutation(ordered,unordered):
+    result=[] 
+    restricted=[] 
+    for c in ORDEREDCORES:
+      if c in unordered: 
+         restricted.append(c)
+
+    for c in unordered:
+      result.append(restricted.index(c))
+
+    return(result,restricted)
+
+def reorder(p,v):
+    result=[0 for x in v]
+    for val,i in zip(v,p):
+        result[i]=val 
+
+    return(result)
 
 class HTML:
   def __init__(self,output,regMode):
@@ -486,7 +530,9 @@ myhist(thehdata%d,"#hi%d");
       self._histID = self._histID + 1
 
   def visitText(self,text):
-      pass
+      self._output.write("<p>\n")
+      self._output.write(text.text)
+      self._output.write("</p>\n")
 
   def visitTable(self,table):
       self._output.write("<table>\n")
@@ -498,7 +544,10 @@ myhist(thehdata%d,"#hi%d");
         self._output.write("<th class=\"param\">")
         self._output.write(str(col))
         self._output.write("</th>\n")
-      for col in table.cores:
+
+      perm,restricted=permutation(ORDEREDCORES,table.cores)
+
+      for col in restricted:
         if firstCore:
            self._output.write("<th class=\"firstcore\">")
         else:
@@ -513,6 +562,16 @@ myhist(thehdata%d,"#hi%d");
       for row in table.rows:
         self._output.write("<tr>\n")
         i = 0
+
+        row=list(row)
+
+        #print(row)
+
+        params=row[0:nbParams]
+        values=row[nbParams:]
+
+        row = params + reorder(perm,values)
+
         for elem in row:
             if i < nbParams:
                self._output.write("<td class=\"param\">")
@@ -549,7 +608,12 @@ myhist(thehdata%d,"#hi%d");
          self._output.write("<h1>ECPS Benchmark Regressions</h1>\n")
       else:
          self._output.write("<h1>ECPS Benchmark Summary</h1>\n")
-      self._output.write("<p>Run number %d on %s</p>\n" % (document.runid, str(document.date)))
+      
+      self._output.write("<p>Document generated for run ids : %s</p>\n" % document.runidHeader)
+      today = date.today()
+      d2 = today.strftime("%B %d, %Y")
+      self._output.write("<p>Document generated on  %s</p>\n" % d2)
+
       self._output.write(barscript)
 
   def leaveDocument(self,document):

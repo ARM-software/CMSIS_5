@@ -31,14 +31,13 @@ class Hierarchy:
 
 
 class Document:
-    def __init__(self,runid,date):
-        self._runid = runid 
-        self._date = date 
+    def __init__(self,runidHeader):
+        self._runidHeader = runidHeader 
         self._sections = []
 
     @property
-    def runid(self):
-        return(self._runid)
+    def runidHeader(self):
+        return(self._runidHeader)
 
     @property
     def date(self):
