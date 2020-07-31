@@ -111,6 +111,22 @@ function(configcore PROJECTNAME ROOT)
   # CORTEX-R
   #
 
+  # CORTEX-R52
+  if (ARM_CPU  MATCHES  "^[cC]ortex-[rR]52([^0-9].*)?$" )
+    target_include_directories(${PROJECTNAME} PUBLIC "${CORER}/Include")
+    target_compile_definitions(${PROJECTNAME} PRIVATE ARMCR52)
+
+    SET(CORTEXM OFF)
+    SET(CORTEXA OFF)
+    SET(CORTEXR ON)
+    target_compile_definitions(${PROJECTNAME} PRIVATE ARMv8R) 
+  
+    target_compile_definitions(${PROJECTNAME} PUBLIC CORTEXR)
+    SET(HARDFP ON)
+    SET(LITTLEENDIAN ON)
+    SET(COREID ARMCR52 PARENT_SCOPE)
+  endif()
+
   # CORTEX-R8
   if (ARM_CPU  MATCHES  "^[cC]ortex-[rR]8([^0-9].*)?$" )
     target_include_directories(${PROJECTNAME} PUBLIC "${CORER}/Include")

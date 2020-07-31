@@ -164,6 +164,15 @@ function(set_platform_core)
   if (ARM_CPU MATCHES "^[cC]ortex-[rR]8([^0-9].*)?$")
     SET(CORE ARMCR8 PARENT_SCOPE)
   endif()
+
+  ###################
+  #
+  # Cortex cortex-r52
+  #
+  if (ARM_CPU MATCHES "^[cC]ortex-[rR]52([^0-9].*)?$")
+    SET(CORE ARMCR52 PARENT_SCOPE)
+  endif()
+
 endfunction()
 
 function(core_includes PROJECTNAME)

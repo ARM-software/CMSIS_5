@@ -35,7 +35,7 @@ function(compilerSpecificCompileOptions PROJECTNAME ROOT)
     target_compile_options(${PROJECTNAME} PUBLIC "-mlittle-endian")
   endif()
 
-  if (CORTEXM)
+  if (CORTEXM OR CORTEXR)
     target_compile_options(${PROJECTNAME} PUBLIC "-mthumb")
   endif()
 

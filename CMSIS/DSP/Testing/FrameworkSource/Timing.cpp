@@ -99,6 +99,12 @@ void initCycleMeasurement()
 
     // clear overflows:
     __set_CP(15, 0, 0x8000000f, 9, 12, 3);
+
+    #if defined(ARMCR52)
+      __get_CP(15, 0, value, 14, 15, 7);
+      value = value | (0x8000 << 12);
+      __set_CP(15, 0, value, 14, 15, 7);
+    #endif
 #endif
 
 }

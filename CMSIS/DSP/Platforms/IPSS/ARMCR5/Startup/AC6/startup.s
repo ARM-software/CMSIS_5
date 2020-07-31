@@ -232,7 +232,7 @@ Reset_Handler:
         ISB                                 // Ensure subsequent insts execute wrt this region
         LDR     r2, =Image$$CODE$$Base
         MCR     p15, 0, r2, c6, c1, 0       // Set region base address register
-        LDR     r2, =0x1  |  (Region_1M << 1)  |  Region_Enable
+        LDR     r2, =0x1  |  (Region_512K << 1)  |  Region_Enable
         MCR     p15, 0, r2, c6, c1, 2       // Set region size & enable register
         LDR     r2, =0x0  | (Full_Access  << 8)  |  Normal_nShared
         BIC     r2, r2, #Execute_Never 
@@ -244,7 +244,7 @@ Reset_Handler:
         ISB                                 // Ensure subsequent insts execute wrt this region
         LDR     r2, =Image$$DATA$$Base
         MCR     p15, 0, r2, c6, c1, 0       // Set region base address register
-        LDR     r2, =0x1  |  (Region_1M << 1)  |  Region_Enable
+        LDR     r2, =0x1  |  (Region_512K << 1)  |  Region_Enable
         MCR     p15, 0, r2, c6, c1, 2       // Set region size & enable register
         LDR     r2, =0x0   | (Full_Access << 8)  |  Normal_nShared  |  Execute_Never
         MCR     p15, 0, r2, c6, c1, 4       // Set region access control register
@@ -255,7 +255,7 @@ Reset_Handler:
         ISB                                 // Ensure subsequent insts execute wrt this region
         LDR     r2, =Image$$ARM_LIB_STACKHEAP$$Base
         MCR     p15, 0, r2, c6, c1, 0       // Set region base address register
-        LDR     r2, =0x1  |  (Region_1M << 1)  |  Region_Enable
+        LDR     r2, =0x1  |  (Region_512K << 1)  |  Region_Enable
         MCR     p15, 0, r2, c6, c1, 2       // Set region size & enable register
         LDR     r2, =0x0  |  (Full_Access << 8)  |  Normal_nShared  |  Execute_Never
         MCR     p15, 0, r2, c6, c1, 4       // Set region access control register
@@ -333,30 +333,13 @@ regions_done:
 
         MRC     p15, 0, r0, c1, c0, 0       // Read System Control Register
         ORR     r0, r0, #0x01               // Set M bit to enable MPU
-        //ORR     r0, r0, #(0x1  <<11)              // Set Z bit to enable branch prediction
+        ORR     r0, r0, #(0x1  <<11)              // Set Z bit to enable branch prediction
         DSB                                 // Ensure all previous loads/stores have completed
         MCR     p15, 0, r0, c1, c0, 0       // Write System Control Register
         ISB                                 // Ensure subsequent insts execute wrt new MPU settings
 
-        //MRC     p15, 0, r0, c1, c0, 0       // Read System Control Register
-        //ORR     r0, r0, #(0x1 << 12)        // enable I Cache
-        //ORR     r0, r0, #(0x1 << 2)         // enable D Cache
-        //MCR     p15, 0, r0, c1, c0, 0       // Write System Control Register
-        //ISB
-
-        ldr     r0, =0xB0000000
-        ldr     r1, =49
-        strb    r1, [r0]
-        ldr     r1, =10
-        strb    r1, [r0]
-
-        ldr     r0, =0xB0000000
-        ldr     r1, =50
-        strb    r1, [r0]
-        ldr     r1, =10
-        strb    r1, [r0]
-
-
+      
+      
     .global     __main
         B       __main
 

@@ -17,6 +17,12 @@ lastID="""SELECT runid FROM RUN ORDER BY runid DESC LIMIT 1
 lastIDAndDate="""SELECT date FROM RUN WHERE runid=?
 """
 
+# Command to get last runid 
+runIDDetails="""SELECT distinct core FROM %s 
+INNER JOIN CORE USING(coreid)
+WHERE %s
+"""
+
 def joinit(iterable, delimiter):
     # Intersperse a delimiter between element of a list
     it = iter(iterable)
@@ -34,6 +40,8 @@ def getrunIDDate(forID):
   r=c.execute(lastIDAndDate,(forID,))
   return(r.fetchone()[0])
 
+
+
 runid = 1
 
 parser = argparse.ArgumentParser(description='Generate summary benchmarks')
@@ -41,9 +49,12 @@ parser = argparse.ArgumentParser(description='Generate summary benchmarks')
 parser.add_argument('-b', nargs='?',type = str, default="bench.db", help="Database")
 parser.add_argument('-o', nargs='?',type = str, default="full.md", help="Full summary")
 parser.add_argument('-r', action='store_true', help="Regression database")
-parser.add_argument('-t', nargs='?',type = str, default="md", help="md,html")
-parser.add_argument('-byc', action='store_true', help="By Compiler")
+parser.add_argument('-t', nargs='?',type = str, default="md", help="type md or html")
+parser.add_argument('-byc', action='store_true', help="Result oganized by Compiler")
 parser.add_argument('-g', action='store_true', help="Include graphs in regression report")
+
+parser.add_argument('-details', action='store_true', help="Details about runids")
+parser.add_argument('-lastid', action='store_true', help="Get last ID")
 
 # For runid or runid range
 parser.add_argument('others', nargs=argparse.REMAINDER,help="Run ID")
@@ -72,6 +83,7 @@ else:
    print("Last run ID = %d\n" % runid)
    runidval=(runid,)
 
+
 # We extract data only from data tables
 # Those tables below are used for descriptions
 REMOVETABLES=['TESTNAME','TESTDATE','RUN','CORE', 'PLATFORM', 'COMPILERKIND', 'COMPILER', 'TYPE', 'CATEGORY', 'CONFIG']
@@ -99,6 +111,22 @@ def getExistingTypes(benchTable):
     r=c.execute("select distinct typeid from %s order by typeid desc" % benchTable).fetchall()
     result=[x[0] for x in r]
     return(result)
+
+def getrunIDDetails():
+  tables=getBenchTables()
+  r=[]
+  for table in tables:
+      r += [x[0] for x in c.execute(runIDDetails % (table,runidCMD),runidval).fetchall()]
+  r=list(set(r)) 
+  print(r)
+
+if args.lastid:
+   quit()
+   
+if args.details:
+   getrunIDDetails()
+   quit()
+
 
 # Get compilers from specific type and table
 allCompilers="""select distinct compilerid from %s WHERE typeid=?"""

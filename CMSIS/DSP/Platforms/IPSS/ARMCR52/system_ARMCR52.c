@@ -40,8 +40,8 @@ FILE __stderr;
 #endif
 
 
-#if defined (ARMCR5)
-  #include "ARMCR5.h"
+#if defined (ARMCR52)
+  #include "ARMCR52.h"
 #else
   #error device not specified!
 #endif
@@ -143,7 +143,6 @@ __asm(".global __ARM_use_no_argv\n\t");
 #   endif
 #endif
 
-
 extern void $Super$$main(void);
 extern void enable_caches();
 
@@ -154,9 +153,9 @@ void simulation_exit()
 
 void $Sub$$main(void)
 {
-    //enable_caches();   // Initalize caches right away. Implmentation varies by core
+    enable_caches();   // Initalize caches right away. Implmentation varies by core
 
-    //$Super$$main();             // calls original main()
+    $Super$$main();             // calls original main()
 
     simulation_exit();   // Stops simulation by writing a char of '4' to the trickbox
 }

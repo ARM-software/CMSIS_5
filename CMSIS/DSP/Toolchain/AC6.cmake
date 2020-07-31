@@ -31,6 +31,10 @@ function(compilerSpecificCompileOptions PROJECTNAME ROOT)
   if (LITTLEENDIAN)
     target_compile_options(${PROJECTNAME} PUBLIC "-mlittle-endian")
   endif()
+
+  if (CORTEXM OR CORTEXR)
+    target_compile_options(${PROJECTNAME} PUBLIC "-mthumb")
+  endif()
   
   # Core specific config
 
@@ -78,6 +82,10 @@ function(compilerSpecificCompileOptions PROJECTNAME ROOT)
       else()
         target_compile_options(${PROJECTNAME} PUBLIC "-mfpu=vfpv4-d16")
       endif()
+  endif()
+
+  if (ARM_CPU STREQUAL "cortex-r52" )
+      target_compile_options(${PROJECTNAME} PUBLIC "-mfpu=neon-fp-armv8")
   endif()
 
   if (ARM_CPU STREQUAL "cortex-r8" )
@@ -149,7 +157,6 @@ function(toolchainSpecificLinkForCortexR PROJECTNAME ROOT CORE PLATFORMFOLDER)
 
     #target_link_options(${PROJECTNAME} PRIVATE "--info=sizes")
     target_link_options(${PROJECTNAME} PRIVATE "--entry=Reset_Handler;--scatter=${SCATTERFILE}")
-
 endfunction()
 
 function(compilerSpecificPlatformConfigLibForM PROJECTNAME ROOT)
