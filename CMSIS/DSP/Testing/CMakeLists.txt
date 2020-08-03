@@ -327,6 +327,7 @@ set(TESTSRC
 if ((NOT ARMAC5) AND (FLOAT16TESTS) AND ((FLOAT16) OR (MVEF) OR (HELIUM) OR (NEON) OR (NEONEXPERIMENTAL)))
 set(TESTSRC16 
   Source/Tests/BasicTestsF16.cpp
+  Source/Tests/ComplexTestsF16.cpp
   Source/Tests/TransformCF16.cpp
   Source/Tests/TransformRF16.cpp
   )

@@ -26,12 +26,46 @@
 #ifndef _FAST_MATH_FUNCTIONS_F16_H_
 #define _FAST_MATH_FUNCTIONS_F16_H_
 
+#include "arm_math_types_f16.h"
+#include "arm_math_memory.h"
+
+#include "dsp/none.h"
+#include "dsp/utils.h"
+#include "dsp/fast_math_functions.h"
+
 #ifdef   __cplusplus
 extern "C"
 {
 #endif
 
 #if defined(ARM_FLOAT16_SUPPORTED)
+
+ /**
+   * @addtogroup SQRT
+   * @{
+   */
+
+/**
+  @brief         Floating-point square root function.
+  @param[in]     in    input value
+  @param[out]    pOut  square root of input value
+  @return        execution status
+                   - \ref ARM_MATH_SUCCESS        : input value is positive
+                   - \ref ARM_MATH_ARGUMENT_ERROR : input value is negative; *pOut is set to 0
+ */
+__STATIC_FORCEINLINE arm_status arm_sqrt_f16(
+  float16_t in,
+  float16_t * pOut)
+  {
+    float32_t r;
+    arm_status status;
+    status=arm_sqrt_f32((float32_t)in,&r);
+    *pOut=(float16_t)r;
+    return(status);
+  }
+
+
+
 #endif /*defined(ARM_FLOAT16_SUPPORTED)*/
 #ifdef   __cplusplus
 }

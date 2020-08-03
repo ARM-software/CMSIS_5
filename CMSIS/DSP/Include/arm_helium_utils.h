@@ -80,6 +80,8 @@ __STATIC_FORCEINLINE float16_t vecAddAcrossF16Mve(float16x8_t in)
 
 /* newton initial guess */
 #define INVSQRT_MAGIC_F32           0x5f3759df
+#define INV_NEWTON_INIT_F32         0x7EF127EA
+
 
 #define INVSQRT_NEWTON_MVE_F32(invSqrt, xHalf, xStart)\
 {                                                     \
@@ -94,6 +96,74 @@ __STATIC_FORCEINLINE float16_t vecAddAcrossF16Mve(float16x8_t in)
     invSqrt = vmulq(tmp, xStart);                     \
 }
 #endif /* defined (ARM_MATH_HELIUM) || defined(ARM_MATH_MVEF) */
+
+
+/***************************************
+
+Definitions available for f16 datatype with HW acceleration only
+
+***************************************/
+#if defined (ARM_MATH_MVE_FLOAT16)
+__STATIC_FORCEINLINE float16x8_t __mve_cmplx_sum_intra_vec_f16(
+    float16x8_t   vecIn)
+{
+    float16x8_t   vecTmp, vecOut;
+    uint32_t    tmp;
+
+    vecTmp = (float16x8_t) vrev64q_s32((int32x4_t) vecIn);
+    // TO TRACK : using canonical addition leads to unefficient code generation for f16
+    // vecTmp = vecTmp + vecAccCpx0;
+    /*
+     * Compute
+     *  re0+re1 | im0+im1 | re0+re1 | im0+im1
+     *  re2+re3 | im2+im3 | re2+re3 | im2+im3
+     */
+    vecTmp = vaddq(vecTmp, vecIn);
+    vecOut = vecTmp;
+    /*
+     * shift left, random tmp insertion in bottom
+     */
+    vecOut = vreinterpretq_f16_s32(vshlcq_s32(vreinterpretq_s32_f16(vecOut)   , &tmp, 32));
+    /*
+     * Compute:
+     *    DONTCARE     |    DONTCARE     | re0+re1+re0+re1 |im0+im1+im0+im1
+     * re0+re1+re2+re3 | im0+im1+im2+im3 | re2+re3+re2+re3 |im2+im3+im2+im3
+     */
+    vecOut = vaddq(vecOut, vecTmp);
+    /*
+     * Cmplx sum is in 4rd & 5th f16 elt
+     * return full vector
+     */
+    return vecOut;
+}
+
+
+#define mve_cmplx_sum_intra_r_i_f16(vec, Re, Im)                \
+{                                                               \
+    float16x8_t   vecOut = __mve_cmplx_sum_intra_vec_f16(vec);    \
+    Re = vgetq_lane(vecOut, 4);                                 \
+    Im = vgetq_lane(vecOut, 5);                                 \
+}
+
+
+#define INVSQRT_MAGIC_F16           0x59ba      /*  ( 0x1ba = 0x3759df >> 13) */
+#define INV_NEWTON_INIT_F16         0x7773
+
+/* canonical version of INVSQRT_NEWTON_MVE_F16 leads to bad performance */
+#define INVSQRT_NEWTON_MVE_F16(invSqrt, xHalf, xStart)                  \
+{                                                                       \
+    float16x8_t tmp;                                                      \
+                                                                        \
+    /* tmp = xhalf * x * x */                                           \
+    tmp = vmulq(xStart, xStart);                                        \
+    tmp = vmulq(tmp, xHalf);                                            \
+    /* (1.5f - xhalf * x * x) */                                        \
+    tmp = vsubq(vdupq_n_f16((float16_t)1.5), tmp);                      \
+    /* x = x*(1.5f-xhalf*x*x); */                                       \
+    invSqrt = vmulq(tmp, xStart);                                       \
+}
+
+#endif
 
 /***************************************
 

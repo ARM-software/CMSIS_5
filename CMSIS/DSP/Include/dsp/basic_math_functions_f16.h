@@ -36,6 +36,7 @@ extern "C"
 
 #include "dsp/none.h"
 #include "dsp/utils.h"
+#include "dsp/fast_math_functions_f16.h"
 
 
 #if defined(ARM_FLOAT16_SUPPORTED)

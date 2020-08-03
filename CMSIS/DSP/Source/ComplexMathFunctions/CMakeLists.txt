@@ -5,8 +5,6 @@ project(CMSISDSPComplexMath)
 include(configLib)
 include(configDsp)
 
-file(GLOB SRC "./*_*.c")
-
 add_library(CMSISDSPComplexMath STATIC)
 
 configLib(CMSISDSPComplexMath ${ROOT})
@@ -56,6 +54,14 @@ target_sources(CMSISDSPComplexMath PRIVATE arm_cmplx_mult_real_f32.c)
 target_sources(CMSISDSPComplexMath PRIVATE arm_cmplx_mult_real_q15.c)
 target_sources(CMSISDSPComplexMath PRIVATE arm_cmplx_mult_real_q31.c)
 
+if ((NOT ARMAC5) AND (NOT DISABLEFLOAT16))
+target_sources(CMSISDSPComplexMath PRIVATE arm_cmplx_conj_f16.c)
+target_sources(CMSISDSPComplexMath PRIVATE arm_cmplx_dot_prod_f16.c)
+target_sources(CMSISDSPComplexMath PRIVATE arm_cmplx_mag_f16.c)
+target_sources(CMSISDSPComplexMath PRIVATE arm_cmplx_mag_squared_f16.c)
+target_sources(CMSISDSPComplexMath PRIVATE arm_cmplx_mult_cmplx_f16.c)
+target_sources(CMSISDSPComplexMath PRIVATE arm_cmplx_mult_real_f16.c)
+endif()
 
 ### Includes
 target_include_directories(CMSISDSPComplexMath PUBLIC "${DSP}/Include")

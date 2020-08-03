@@ -26,6 +26,7 @@
       - arm_cfft_f16
       - arm_rfft_fast_f16 
       - f16 Basic Maths
+      - f16 Complex Maths
 
     </td>
   </tr>
