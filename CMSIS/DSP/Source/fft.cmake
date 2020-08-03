@@ -440,6 +440,59 @@ endif()
 
 #######################################
 #
+# RFFT FAST F16
+#
+
+if (CONFIGTABLE AND RFFT_FAST_F16_32)
+    target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_TWIDDLECOEF_F16_16)
+    target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_BITREVIDX_FLT_16)
+    target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_TWIDDLECOEF_RFFT_F16_32)
+endif()
+
+if (CONFIGTABLE AND RFFT_FAST_F16_64)
+    target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_TWIDDLECOEF_F16_32)
+    target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_BITREVIDX_FLT_32)
+    target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_TWIDDLECOEF_RFFT_F16_64)
+endif()
+
+if (CONFIGTABLE AND RFFT_FAST_F16_128)
+    target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_TWIDDLECOEF_F16_64)
+    target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_BITREVIDX_FLT_64)
+    target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_TWIDDLECOEF_RFFT_F16_128)
+endif()
+
+if (CONFIGTABLE AND RFFT_FAST_F16_256)
+    target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_TWIDDLECOEF_F16_128)
+    target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_BITREVIDX_FLT_128)
+    target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_TWIDDLECOEF_RFFT_F16_256)
+endif()
+
+if (CONFIGTABLE AND RFFT_FAST_F16_512)
+    target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_TWIDDLECOEF_F16_256)
+    target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_BITREVIDX_FLT_256)
+    target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_TWIDDLECOEF_RFFT_F16_512)
+endif()
+
+if (CONFIGTABLE AND RFFT_FAST_F16_1024)
+    target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_TWIDDLECOEF_F16_512)
+    target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_BITREVIDX_FLT_512)
+    target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_TWIDDLECOEF_RFFT_F16_1024)
+endif()
+
+if (CONFIGTABLE AND RFFT_FAST_F16_2048)
+    target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_TWIDDLECOEF_F16_1024)
+    target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_BITREVIDX_FLT_1024)
+    target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_TWIDDLECOEF_RFFT_F16_2048)
+endif()
+
+if (CONFIGTABLE AND RFFT_FAST_F16_4096)
+    target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_TWIDDLECOEF_F16_2048)
+    target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_BITREVIDX_FLT_2048)
+    target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_TWIDDLECOEF_RFFT_F16_4096)
+endif()
+
+#######################################
+#
 # RFFT F32
 #
 

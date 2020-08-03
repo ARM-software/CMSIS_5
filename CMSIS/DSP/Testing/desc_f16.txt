@@ -200,6 +200,118 @@ group Root {
               }
 
             }
+
+           suite Transform Real F16 {
+              class = TransformRF16
+              folder = TransformF16
+
+              Pattern INPUTS_RFFT_NOISY_32_F16_ID : RealInputSamples_Noisy_32_2_f16.txt 
+              Pattern INPUTS_RIFFT_NOISY_32_F16_ID : RealInputIFFTSamples_Noisy_32_2_f16.txt 
+              Pattern REF_RFFT_NOISY_32_F16_ID : RealFFTSamples_Noisy_32_2_f16.txt 
+
+              Pattern INPUTS_RFFT_NOISY_64_F16_ID : RealInputSamples_Noisy_64_3_f16.txt
+              Pattern INPUTS_RIFFT_NOISY_64_F16_ID : RealInputIFFTSamples_Noisy_64_3_f16.txt 
+              Pattern REF_RFFT_NOISY_64_F16_ID : RealFFTSamples_Noisy_64_3_f16.txt 
+
+              Pattern INPUTS_RFFT_NOISY_128_F16_ID : RealInputSamples_Noisy_128_4_f16.txt 
+              Pattern INPUTS_RIFFT_NOISY_128_F16_ID : RealInputIFFTSamples_Noisy_128_4_f16.txt 
+              Pattern REF_RFFT_NOISY_128_F16_ID : RealFFTSamples_Noisy_128_4_f16.txt 
+
+              Pattern INPUTS_RFFT_NOISY_256_F16_ID : RealInputSamples_Noisy_256_5_f16.txt 
+              Pattern INPUTS_RIFFT_NOISY_256_F16_ID : RealInputIFFTSamples_Noisy_256_5_f16.txt 
+              Pattern REF_RFFT_NOISY_256_F16_ID : RealFFTSamples_Noisy_256_5_f16.txt 
+
+              Pattern INPUTS_RFFT_NOISY_512_F16_ID : RealInputSamples_Noisy_512_6_f16.txt 
+              Pattern INPUTS_RIFFT_NOISY_512_F16_ID : RealInputIFFTSamples_Noisy_512_6_f16.txt 
+              Pattern REF_RFFT_NOISY_512_F16_ID : RealFFTSamples_Noisy_512_6_f16.txt 
+
+              Pattern INPUTS_RFFT_NOISY_1024_F16_ID : RealInputSamples_Noisy_1024_7_f16.txt 
+              Pattern INPUTS_RIFFT_NOISY_1024_F16_ID : RealInputIFFTSamples_Noisy_1024_7_f16.txt 
+              Pattern REF_RFFT_NOISY_1024_F16_ID : RealFFTSamples_Noisy_1024_7_f16.txt 
+
+              Pattern INPUTS_RFFT_NOISY_2048_F16_ID : RealInputSamples_Noisy_2048_8_f16.txt 
+              Pattern INPUTS_RIFFT_NOISY_2048_F16_ID : RealInputIFFTSamples_Noisy_2048_8_f16.txt 
+              Pattern REF_RFFT_NOISY_2048_F16_ID : RealFFTSamples_Noisy_2048_8_f16.txt 
+
+              Pattern INPUTS_RFFT_NOISY_4096_F16_ID : RealInputSamples_Noisy_4096_9_f16.txt 
+              Pattern INPUTS_RIFFT_NOISY_4096_F16_ID : RealInputIFFTSamples_Noisy_4096_9_f16.txt 
+              Pattern REF_RFFT_NOISY_4096_F16_ID : RealFFTSamples_Noisy_4096_9_f16.txt 
+
+              Pattern INPUTS_RFFT_STEP_16_F16_ID : RealInputSamples_Step_16_10_f16.txt 
+              Pattern INPUTS_RIFFT_STEP_16_F16_ID : RealInputIFFTSamples_Step_16_10_f16.txt 
+              Pattern REF_RFFT_STEP_16_F16_ID : RealFFTSamples_Step_16_10_f16.txt 
+
+              Pattern INPUTS_RFFT_STEP_32_F16_ID : RealInputSamples_Step_32_11_f16.txt 
+              Pattern INPUTS_RIFFT_STEP_32_F16_ID : RealInputIFFTSamples_Step_32_11_f16.txt 
+              Pattern REF_RFFT_STEP_32_F16_ID : RealFFTSamples_Step_32_11_f16.txt 
+
+              Pattern INPUTS_RFFT_STEP_64_F16_ID : RealInputSamples_Step_64_12_f16.txt 
+              Pattern INPUTS_RIFFT_STEP_64_F16_ID : RealInputIFFTSamples_Step_64_12_f16.txt 
+              Pattern REF_RFFT_STEP_64_F16_ID : RealFFTSamples_Step_64_12_f16.txt 
+
+              Pattern INPUTS_RFFT_STEP_128_F16_ID : RealInputSamples_Step_128_13_f16.txt 
+              Pattern INPUTS_RIFFT_STEP_128_F16_ID : RealInputIFFTSamples_Step_128_13_f16.txt 
+              Pattern REF_RFFT_STEP_128_F16_ID : RealFFTSamples_Step_128_13_f16.txt 
+
+              Pattern INPUTS_RFFT_STEP_256_F16_ID : RealInputSamples_Step_256_14_f16.txt 
+              Pattern INPUTS_RIFFT_STEP_256_F16_ID : RealInputIFFTSamples_Step_256_14_f16.txt 
+              Pattern REF_RFFT_STEP_256_F16_ID : RealFFTSamples_Step_256_14_f16.txt 
+
+              Pattern INPUTS_RFFT_STEP_512_F16_ID : RealInputSamples_Step_512_15_f16.txt 
+              Pattern INPUTS_RIFFT_STEP_512_F16_ID : RealInputIFFTSamples_Step_512_15_f16.txt 
+              Pattern REF_RFFT_STEP_512_F16_ID : RealFFTSamples_Step_512_15_f16.txt 
+
+              Pattern INPUTS_RFFT_STEP_1024_F16_ID : RealInputSamples_Step_1024_16_f16.txt 
+              Pattern INPUTS_RIFFT_STEP_1024_F16_ID : RealInputIFFTSamples_Step_1024_16_f16.txt 
+              Pattern REF_RFFT_STEP_1024_F16_ID : RealFFTSamples_Step_1024_16_f16.txt 
+
+              Pattern INPUTS_RFFT_STEP_2048_F16_ID : RealInputSamples_Step_2048_17_f16.txt 
+              Pattern INPUTS_RIFFT_STEP_2048_F16_ID : RealInputIFFTSamples_Step_2048_17_f16.txt 
+              Pattern REF_RFFT_STEP_2048_F16_ID : RealFFTSamples_Step_2048_17_f16.txt 
+
+              Pattern INPUTS_RFFT_STEP_4096_F16_ID : RealInputSamples_Step_4096_18_f16.txt 
+              Pattern INPUTS_RIFFT_STEP_4096_F16_ID : RealInputIFFTSamples_Step_4096_18_f16.txt 
+              Pattern REF_RFFT_STEP_4096_F16_ID : RealFFTSamples_Step_4096_18_f16.txt 
+              
+              Output  OUTPUT_RFFT_F16_ID : RealFFTSamples
+              Output  TEMP_F16_ID : Temp
+
+              Functions {
+                 rfft_noisy_32_f16:test_rfft_f16
+                 rfft_noisy_64_f16:test_rfft_f16
+                 rfft_noisy_128_f16:test_rfft_f16
+                 rfft_noisy_256_f16:test_rfft_f16
+                 rfft_noisy_512_f16:test_rfft_f16
+                 rfft_noisy_1024_f16:test_rfft_f16
+                 rfft_noisy_2048_f16:test_rfft_f16
+                 rfft_noisy_4096_f16:test_rfft_f16
+                 rfft_step_32_f16:test_rfft_f16
+                 rfft_step_64_f16:test_rfft_f16
+                 rfft_step_128_f16:test_rfft_f16
+                 rfft_step_256_f16:test_rfft_f16
+                 rfft_step_512_f16:test_rfft_f16
+                 rfft_step_1024_f16:test_rfft_f16
+                 rfft_step_2048_f16:test_rfft_f16
+                 rfft_step_4096_f16:test_rfft_f16
+                 rifft_noisy_32_f16:test_rfft_f16
+                 rifft_noisy_64_f16:test_rfft_f16
+                 rifft_noisy_128_f16:test_rfft_f16
+                 rifft_noisy_256_f16:test_rfft_f16
+                 rifft_noisy_512_f16:test_rfft_f16
+                 rifft_noisy_1024_f16:test_rfft_f16
+                 rifft_noisy_2048_f16:test_rfft_f16
+                 rifft_noisy_4096_f16:test_rfft_f16
+                 rifft_step_32_f16:test_rfft_f16
+                 rifft_step_64_f16:test_rfft_f16
+                 rifft_step_128_f16:test_rfft_f16
+                 rifft_step_256_f16:test_rfft_f16
+                 rifft_step_512_f16:test_rfft_f16
+                 rifft_step_1024_f16:test_rfft_f16
+                 rifft_step_2048_f16:test_rfft_f16
+                 rifft_step_4096_f16:test_rfft_f16
+              }
+
+            }
         }
     }
 }

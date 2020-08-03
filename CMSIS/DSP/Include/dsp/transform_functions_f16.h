@@ -99,6 +99,27 @@ extern "C"
         float16_t * p1,
         uint8_t ifftFlag,
         uint8_t bitReverseFlag);
+
+  /**
+   * @brief Instance structure for the floating-point RFFT/RIFFT function.
+   */
+typedef struct
+  {
+          arm_cfft_instance_f16 Sint;      /**< Internal CFFT structure. */
+          uint16_t fftLenRFFT;             /**< length of the real sequence */
+    const float16_t * pTwiddleRFFT;        /**< Twiddle factors real stage  */
+  } arm_rfft_fast_instance_f16 ;
+
+arm_status arm_rfft_fast_init_f16 (
+         arm_rfft_fast_instance_f16 * S,
+         uint16_t fftLen);
+
+
+  void arm_rfft_fast_f16(
+        const arm_rfft_fast_instance_f16 * S,
+        float16_t * p, float16_t * pOut,
+        uint8_t ifftFlag);
+  
 #endif /* defined(ARM_FLOAT16_SUPPORTED)*/
 
 #ifdef   __cplusplus

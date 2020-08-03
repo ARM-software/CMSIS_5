@@ -22,7 +22,11 @@
 
       Complex Matrix Transpose
 
-      More support for f16 datatype
+      More support for f16 datatype:
+      - arm_cfft_f16
+      - arm_rfft_fast_f16 
+      - f16 Basic Maths
+
     </td>
   </tr>
   <tr>

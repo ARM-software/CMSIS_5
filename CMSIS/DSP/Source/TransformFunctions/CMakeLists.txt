@@ -112,7 +112,15 @@ target_sources(CMSISDSPTransform PRIVATE arm_rfft_fast_f64.c)
 target_sources(CMSISDSPTransform PRIVATE arm_rfft_fast_init_f64.c)
 endif()
 
-
+if (NOT CONFIGTABLE OR ALLFFT OR RFFT_FAST_F32_32 OR RFFT_FAST_F32_64 OR RFFT_FAST_F32_128
+   OR RFFT_FAST_F32_256 OR RFFT_FAST_F32_512 OR RFFT_FAST_F32_1024 OR RFFT_FAST_F32_2048
+   OR RFFT_FAST_F32_4096 )
+target_sources(CMSISDSPTransform PRIVATE arm_rfft_fast_f16.c)
+target_sources(CMSISDSPTransform PRIVATE arm_rfft_fast_init_f16.c)
+target_sources(CMSISDSPTransform PRIVATE arm_cfft_f16.c)
+target_sources(CMSISDSPTransform PRIVATE arm_cfft_init_f16.c)
+target_sources(CMSISDSPTransform PRIVATE arm_cfft_radix8_f16.c)
+endif()
 
 if (NOT CONFIGTABLE OR ALLFFT OR RFFT_F32_128 OR RFFT_F32_512 OR RFFT_F32_2048 OR RFFT_F32_8192)
 target_sources(CMSISDSPTransform PRIVATE arm_rfft_init_f32.c)

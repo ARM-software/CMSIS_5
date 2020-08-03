@@ -75,6 +75,40 @@ extern "C"
   #if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) || defined(ARM_TABLE_TWIDDLECOEF_F16_4096)
     extern const float16_t twiddleCoefF16_4096[8192];
   #endif /* !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) */
+  
+ 
+  #if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) || defined(ARM_TABLE_TWIDDLECOEF_RFFT_F16_32)
+  extern const float16_t twiddleCoefF16_rfft_32[32];
+  #endif
+
+  #if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) || defined(ARM_TABLE_TWIDDLECOEF_RFFT_F16_64)
+  extern const float16_t twiddleCoefF16_rfft_64[64];
+  #endif
+
+  #if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) || defined(ARM_TABLE_TWIDDLECOEF_RFFT_F16_128)
+  extern const float16_t twiddleCoefF16_rfft_128[128];
+  #endif
+
+  #if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) || defined(ARM_TABLE_TWIDDLECOEF_RFFT_F16_256)
+  extern const float16_t twiddleCoefF16_rfft_256[256];
+  #endif
+
+  #if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) || defined(ARM_TABLE_TWIDDLECOEF_RFFT_F16_512)
+  extern const float16_t twiddleCoefF16_rfft_512[512];
+  #endif
+
+  #if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) || defined(ARM_TABLE_TWIDDLECOEF_RFFT_F16_1024)
+  extern const float16_t twiddleCoefF16_rfft_1024[1024];
+  #endif
+
+  #if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) || defined(ARM_TABLE_TWIDDLECOEF_RFFT_F16_2048)
+  extern const float16_t twiddleCoefF16_rfft_2048[2048];
+  #endif
+
+  #if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) || defined(ARM_TABLE_TWIDDLECOEF_RFFT_F16_4096)
+  extern const float16_t twiddleCoefF16_rfft_4096[4096];
+  #endif
+
   #endif /* ARMAC5 */
     
 #endif /* !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_FFT_ALLOW_TABLES) */
