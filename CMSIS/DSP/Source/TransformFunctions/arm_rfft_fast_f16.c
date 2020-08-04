@@ -497,8 +497,7 @@ void merge_rfft_f16(
                    and we describe each algorithm in turn.
   @par           Floating-point
                    The main functions are \ref arm_rfft_fast_f16() and \ref arm_rfft_fast_init_f16().
-                   The older functions \ref arm_rfft_f16() and \ref arm_rfft_init_f16() have been deprecated
-                   but are still documented.
+                   
   @par
                    The FFT of a real N-point sequence has even symmetry in the frequency domain. 
                    The second half of the data equals the conjugate of the first half flipped in frequency. 

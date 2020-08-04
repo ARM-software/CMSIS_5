@@ -27,6 +27,7 @@
       - arm_rfft_fast_f16 
       - f16 Basic Maths
       - f16 Complex Maths
+      - f16 filtering (FIR and BiQuad)
 
     </td>
   </tr>

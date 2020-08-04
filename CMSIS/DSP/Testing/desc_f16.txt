@@ -166,6 +166,39 @@ group Root {
 
              }
            }
+
+           group BIQUAD {
+             class = BIQUAD 
+             folder = BIQUAD
+
+             suite BIQUAD F16 {
+                class = BIQUADF16 
+                folder = BIQUADF16
+
+                Pattern BIQUADINPUTS_F16_ID : BiquadInput1_f16.txt
+                Pattern BIQUADCOEFS_F16_ID : BiquadCoefs1_f16.txt
+                Pattern BIQUADREFS_F16_ID : BiquadOutput1_f16.txt
+
+                Pattern ALLBIQUADINPUTS_F16_ID : AllBiquadInputs2_f16.txt
+                Pattern ALLBIQUADSTEREOINPUTS_F16_ID : AllBiquadStereoInputs2_f16.txt
+                Pattern ALLBIQUADCOEFS_F16_ID : AllBiquadCoefs2_f16.txt
+                Pattern ALLBIQUADREFS_F16_ID : AllBiquadRefs2_f16.txt
+                Pattern ALLBIQUADSTEREOREFS_F16_ID : AllBiquadStereoRefs2_f16.txt
+                Pattern ALLBIQUADCONFIGS_S16_ID : AllBiquadConfigs2_s16.txt
+
+                Output  OUT_F16_ID : Output
+                Output  STATE_F16_ID : State
+
+                Functions {
+                  arm_biquad_cascade_df1 ref pattern:test_biquad_cascade_df1_ref
+                  arm_biquad_cascade_df2T ref pattern:test_biquad_cascade_df2T_ref
+                  arm_biquad_cascade_df1 random pattern:test_biquad_cascade_df1_rand
+                  arm_biquad_cascade_df2T random pattern:test_biquad_cascade_df2T_rand
+                  arm_biquad_cascade_stereo_df2T random pattern:test_biquad_cascade_stereo_df2T_rand
+                }
+
+             }
+           }
         }
 
         group Transform Tests {

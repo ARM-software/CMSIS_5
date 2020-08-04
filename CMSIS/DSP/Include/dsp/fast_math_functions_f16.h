@@ -65,7 +65,10 @@ __STATIC_FORCEINLINE arm_status arm_sqrt_f16(
   }
 
 
-
+/**
+  @} end of SQRT group
+ */
+  
 #endif /*defined(ARM_FLOAT16_SUPPORTED)*/
 #ifdef   __cplusplus
 }

@@ -126,6 +126,12 @@ target_sources(CMSISDSPFiltering PRIVATE arm_lms_q31.c)
 if ((NOT ARMAC5) AND (NOT DISABLEFLOAT16))
 target_sources(CMSISDSPFiltering PRIVATE arm_fir_f16.c)
 target_sources(CMSISDSPFiltering PRIVATE arm_fir_init_f16.c)
+target_sources(CMSISDSPFiltering PRIVATE arm_biquad_cascade_df1_f16.c)
+target_sources(CMSISDSPFiltering PRIVATE arm_biquad_cascade_df1_init_f16.c)
+target_sources(CMSISDSPFiltering PRIVATE arm_biquad_cascade_df2T_f16.c)
+target_sources(CMSISDSPFiltering PRIVATE arm_biquad_cascade_df2T_init_f16.c)
+target_sources(CMSISDSPFiltering PRIVATE arm_biquad_cascade_stereo_df2T_f16.c)
+target_sources(CMSISDSPFiltering PRIVATE arm_biquad_cascade_stereo_df2T_init_f16.c)
 endif()
 
 ### Includes
