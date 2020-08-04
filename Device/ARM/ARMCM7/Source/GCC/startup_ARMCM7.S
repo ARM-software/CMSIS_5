@@ -1,11 +1,11 @@
 /**************************************************************************//**
  * @file     startup_ARMCM7.S
  * @brief    CMSIS-Core(M) Device Startup File for Cortex-M7 Device
- * @version  V2.0.1
- * @date     23. July 2019
+ * @version  V2.1.0
+ * @date     04. August 2020
  ******************************************************************************/
 /*
- * Copyright (c) 2009-2019 Arm Limited. All rights reserved.
+ * Copyright (c) 2009-2020 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -83,12 +83,13 @@ Reset_Handler:
 .L_loop0:
                 cmp      r4, r5
                 bge      .L_loop0_done
-                ldr      r1, [r4]
-                ldr      r2, [r4, #4]
-                ldr      r3, [r4, #8]
+                ldr      r1, [r4]                /* source address */   
+                ldr      r2, [r4, #4]            /* destination address */
+                ldr      r3, [r4, #8]            /* word count */
+                lsl      r3, r3, #2              /* byte count */
 
 .L_loop0_0:
-                subs     r3, #4
+                subs     r3, #4                  /* decrement byte count */
                 ittt     ge
                 ldrge    r0, [r1, r3]
                 strge    r0, [r2, r3]
@@ -104,12 +105,13 @@ Reset_Handler:
 .L_loop2:
                 cmp      r3, r4
                 bge      .L_loop2_done
-                ldr      r1, [r3]
-                ldr      r2, [r3, #4]
+                ldr      r1, [r3]                /* destination address */
+                ldr      r2, [r3, #4]            /* word count */
+                lsl      r2, r2, #2              /* byte count */
                 movs     r0, 0
 
 .L_loop2_0:
-                subs     r2, #4
+                subs     r2, #4                  /* decrement byte count */
                 itt      ge
                 strge    r0, [r1, r2]
                 bge      .L_loop2_0

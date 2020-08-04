@@ -1,8 +1,8 @@
 /******************************************************************************
  * @file     gcc_arm.ld
- * @brief    GNU Linker Script for Cortex-M based device (ARMC55)
- * @version  V1.0.0
- * @date     30. March 2020
+ * @brief    GNU Linker Script for Cortex-M based device
+ * @version  V1.1.0
+ * @date     04. August 2020
  ******************************************************************************/
 /*
  * Copyright (c) 2009-2020 Arm Limited. All rights reserved.
@@ -160,14 +160,16 @@ SECTIONS
   {
     . = ALIGN(4);
     __copy_table_start__ = .;
+
     LONG (__etext)
     LONG (__data_start__)
-    LONG (__data_end__ - __data_start__)
+    LONG ((__data_end__ - __data_start__) / 4)
+
     /* Add each additional data section here */
 /*
     LONG (__etext2)
     LONG (__data2_start__)
-    LONG (__data2_end__ - __data2_start__)
+    LONG ((__data2_end__ - __data2_start__) / 4)
 */
     __copy_table_end__ = .;
   } > FLASH
@@ -179,7 +181,7 @@ SECTIONS
     /* Add each additional bss section here */
 /*
     LONG (__bss2_start__)
-    LONG (__bss2_end__ - __bss2_start__)
+    LONG ((__bss2_end__ - __bss2_start__) / 4)
 */
     __zero_table_end__ = .;
   } > FLASH
@@ -210,7 +212,6 @@ SECTIONS
     KEEP(*(SORT(.init_array.*)))
     KEEP(*(.init_array))
     PROVIDE_HIDDEN (__init_array_end = .);
-
 
     . = ALIGN(4);
     /* finit data */
