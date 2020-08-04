@@ -115,6 +115,16 @@ typedef struct
     cmsis_nn_activation activation;
 } cmsis_nn_fc_params;
 
+/** CMSIS-NN object for SVDF layer parameters */
+typedef struct
+{
+    int32_t rank;
+    int32_t input_offset; /**< Zero value for the input tensor */
+    int32_t output_offset; /**< Zero value for the output tensor */
+    cmsis_nn_activation input_activation;
+    cmsis_nn_activation output_activation;
+} cmsis_nn_svdf_params;
+
 #endif // _ARM_NN_TYPES_H
 
 
