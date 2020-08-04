@@ -9,6 +9,10 @@
     <tr>
     <td>V1.x.0</td>
     <td>
+      Added the following function for int8 SVDF operator.<br>
+      <ul>
+        <li>arm_svdf_s8</li>
+      </ul>
       <ul>
         <li>arm_depthwise_conv_wrapper_s8</li>
         <li>arm_convolve_wrapper_s8</li>

@@ -36,6 +36,8 @@ Group | API | Base Operator | Input Constraints | Additional memory required for
 ||arm_softmax_q7()| SOFTMAX | None | None | Yes | No | Not bit exact to TFLu but can be up to 70x faster |
 ||arm_softmax_s8()| SOFTMAX | None | None | No | Yes | Bit exact to TFLu |
 ||arm_softmax_u8()| SOFTMAX | None | None | No | No | Bit exact to TFLu |
+|[SVDF](https://arm-software.github.io/CMSIS_5/NN/html/group__SVDF.html)||||| |  ||
+||arm_svdf_s8()| SVDF | None | None | Yes | No | Bit exact to TFLu |
 |[Misc](https://arm-software.github.io/CMSIS_5/NN/html/group__groupNN.html)||||| |  ||
 ||arm_reshape_s8()| SOFTMAX | None | None | No | No | |
 ||arm_elementwise_add_s8()| ELEMENTWISE ADD | None | None | Yes| Yes| Reshape is not done in this function <br/> Only minor improvements are expected |
