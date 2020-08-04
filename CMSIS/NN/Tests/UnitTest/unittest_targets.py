@@ -46,8 +46,9 @@ def parse_args():
     parser = argparse.ArgumentParser(description="Run CMSIS-NN unit tests.",
                                      epilog="Runs on all connected HW supported by Mbed.")
     parser.add_argument('--testdir', type=str, default='TESTRUN', help="prefix of output dir name")
-    parser.add_argument('-s', '--specific-test', type=str, default=None, help="run a specific test, e.g."
-                        " -s test_arm_convolve_s8. So basically the different options can be listed with:"
+    parser.add_argument('-s', '--specific-test', type=str, default=None, help="Run a specific test, e.g."
+                        " -s TestCases/test_arm_avgpool_s8 (also this form will work: -s test_arm_avgpool_s8)."
+                        " So basically the different options can be listed with:"
                         " ls -d TestCases/test_* -1")
     parser.add_argument('-c', '--compiler', type=str, default='GCC_ARM', choices=['GCC_ARM', 'ARMC6'])
     args = parser.parse_args()
@@ -384,6 +385,10 @@ def parse_tests(targets, main_tests, specific_test=None):
     """
     test_found = False
     directory = 'TestCases'
+
+    if specific_test and '/' in specific_test:
+        specific_test = specific_test.strip(directory).replace('/', '')
+
     for dir in next(os.walk(directory))[1]:
         if re.search(r'test_arm', dir):
             if specific_test and dir != specific_test:

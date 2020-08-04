@@ -60,9 +60,7 @@ void fully_connected_arm_fully_connected_s8(void)
   quant_params.shift = FULLY_CONNECTED_OUTPUT_SHIFT;
 
   int32_t buf_size = arm_fully_connected_s8_get_buffer_size(&filter_dims);
-  if (buf_size > 0) {
-    ctx.buf = malloc(buf_size);
-  }
+  ctx.buf = malloc(buf_size);
   ctx.size = buf_size;
 
   arm_status result = arm_fully_connected_s8(&ctx,
