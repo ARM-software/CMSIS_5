@@ -1587,21 +1587,26 @@ This element can be defined on various levels. Inner memory elements supersede o
     <td>optional</td>
   </tr>
   <tr>
-    <td>id (deprecated in Version 1.4.0)</td>
-    <td>(deprecated Version 1.4.0) Identifier of the memory region consisting of a type indicator and an index (for example, \token{IRAM1}).
-    Predefind values can be selected as defined in \ref MemoryIDTypeEnum.</td>
-    <td>MemoryIDTypeEnum</td>
+    <td>id (deprecated since version 1.4.0)</td>
+    <td>Identifier of the memory region consisting of a type indicator and an index (for example, \token{IRAM1}).</td>
+    Predefined values can be selected as defined in \ref MemoryIDTypeEnum.</td>
+    <td>\ref MemoryIDTypeEnum</td>
     <td>optional</td>
   </tr>
   <tr>
-    <td>name (new in Version 1.4.0)</td>
-    <td>unique name of the memory (new in Version 1.4.0) to be used in conjunction with <em>access</em>
+    <td>name (new since version 1.4.0)</td>
+    <td>
+      <p>Unique name of the memory to be used in conjunction with <em>access</em>.</p>
+      <p>If a memory with the same name is already defined in a parent scope, the parent one is extended/overwritten.</p>
+      <p>Backward compatibility: If no 'name' attribute is given but 'id' attribute
+      is still present, the given 'id' attribute is used as the 'name'.</p>
+    </td>
     <td>xs:string</td>
     <td>optional</td>
   </tr>
   <tr>
-    <td>access (new in Version 1.4.0)</td>
-    <td>access permission of the memory. See MemoryAccessTypeString for details (new in Version 1.4.0).
+    <td>access (new since version 1.4.0)</td>
+    <td>Access permission of the memory. See \ref MemoryAccessTypeString for details.</td>
     <td>\ref MemoryAccessTypeString "MemoryAccessTypeString"</td>
     <td>optional</td>
   </tr>
@@ -1619,12 +1624,14 @@ This element can be defined on various levels. Inner memory elements supersede o
   </tr>
   <tr>
     <td>default</td>
-    <td>Indicates a general purpose memory region, that does not require any special considerations (access speed, remapping, protection, etc.).
-    If \token{true}, then an IRAM memory region will be used by the linker for locating any data and an IROM memory region will for locating 
-    any code. Every device needs at least one default IRAM region.
-    If an \ref element_algorithm "algorithm" element is specified (without \c RAMstart and
-    \c RAMsize attributes),    the first listed IRAM region with default="1" will also be used for executing the flash programming algorithm.</td>
-    Default value is \token{false}.
+    <td>
+      <p>Indicates a general purpose memory region, that does not require any special considerations (access speed, remapping, protection, etc.).</p>
+      <p>If \token{true}, then an IRAM memory region will be used by the linker for locating any data and an IROM memory region will for locating 
+      any code. Every device needs at least one default IRAM region.</p>
+      <p>If an \ref element_algorithm "algorithm" element is specified (without \c RAMstart and
+      \c RAMsize attributes), the first listed IRAM region with default="1" will also be used for executing the flash programming algorithm.</p>
+      <p>Default value is \token{false}.</p>
+    </td>
     <td>xs:boolean</td>
     <td>optional</td>
   </tr>
@@ -1635,10 +1642,30 @@ This element can be defined on various levels. Inner memory elements supersede o
     <td>optional</td>
   </tr>
   <tr>
-    <td>alias(new in Version 1.4.0)</td>
-    <td>reference to another memory description which shares the same physical memory. Some physical
-    memory is made accessible via different addresses, for example, chached vs. non-cached accesses. This
-    avoids the impression that the device has twice as much memory available.
+    <td>init (deprecated since version 1.6.3)</td>
+    <td>
+      <p>If \token{true}, the memory region shall not be zero initialized.</p>
+      <p>Default value is \token{false}.</p>
+    </td>
+    <td>xs:boolean</td>
+    <td>optional</td>
+  </tr>
+  <tr>
+    <td>uninit (new since version 1.6.3)</td>
+    <td>
+      <p>If \token{true}, the memory region shall be kept uninitialized (i.e. keep the memory state as is).</p>
+      <p>Default value is \token{false}.</p>
+    </td>
+    <td>xs:boolean</td>
+    <td>optional</td>
+  </tr>
+  <tr>
+    <td>alias (new since Version 1.4.0)</td>
+    <td>
+      Reference to another memory (by it's 'name' attribute) which shares the same physical memory. Some physical
+      memory is made accessible via different addresses, for example, cached vs. non-cached accesses. This
+      avoids the impression that the device has twice as much memory available.
+    </td>
     <td>xs:string</td>
     <td>optional</td>
   </tr>
