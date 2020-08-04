@@ -64,7 +64,8 @@ arm_status arm_cfft_radix4by2_rearrange_twiddles_f16(arm_cfft_instance_f16 *S, i
                                                                   
         switch (S->fftLen >> (twidCoefModifier - 1)) {  
 
-#if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) || defined(ARM_TABLE_BITREVIDX_FXT_4096)
+#if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) \
+            || defined(ARM_TABLE_TWIDDLECOEF_F16_4096)
         case 4096U:                                                                                
             S->rearranged_twiddle_tab_stride1_arr = rearranged_twiddle_tab_stride1_arr_4096_f16;
             S->rearranged_twiddle_stride1  =  rearranged_twiddle_stride1_4096_f16;     
@@ -77,7 +78,8 @@ arm_status arm_cfft_radix4by2_rearrange_twiddles_f16(arm_cfft_instance_f16 *S, i
             break; 
 #endif                                  
 
-#if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) || defined(ARM_TABLE_BITREVIDX_FXT_1024) || defined(ARM_TABLE_BITREVIDX_FXT_2048)                                                                                                   
+#if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) \
+            || defined(ARM_TABLE_TWIDDLECOEF_F16_1024) || defined(ARM_TABLE_TWIDDLECOEF_F16_2048)                                                                                                  
         case 1024U:                                                                                
             S->rearranged_twiddle_tab_stride1_arr = rearranged_twiddle_tab_stride1_arr_1024_f16;
             S->rearranged_twiddle_stride1  =  rearranged_twiddle_stride1_1024_f16;     
@@ -90,7 +92,8 @@ arm_status arm_cfft_radix4by2_rearrange_twiddles_f16(arm_cfft_instance_f16 *S, i
             break;                                                                                 
  #endif 
 
- #if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) || defined(ARM_TABLE_BITREVIDX_FXT_256) || defined(ARM_TABLE_BITREVIDX_FXT_512)                                                                                                  
+ #if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) \
+    || defined(ARM_TABLE_TWIDDLECOEF_F16_256) || defined(ARM_TABLE_TWIDDLECOEF_F16_512)                                                                                              
         case 256U:                                                                                 
             S->rearranged_twiddle_tab_stride1_arr = rearranged_twiddle_tab_stride1_arr_256_f16;
             S->rearranged_twiddle_stride1  =  rearranged_twiddle_stride1_256_f16;     
@@ -104,7 +107,8 @@ arm_status arm_cfft_radix4by2_rearrange_twiddles_f16(arm_cfft_instance_f16 *S, i
             break;                     
 #endif 
 
-#if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) || defined(ARM_TABLE_BITREVIDX_FXT_64) || defined(ARM_TABLE_BITREVIDX_FXT_128)
+#if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) \
+            || defined(ARM_TABLE_TWIDDLECOEF_F16_64) || defined(ARM_TABLE_TWIDDLECOEF_F16_128)
         case 64U:                                                                                  
             S->rearranged_twiddle_tab_stride1_arr = rearranged_twiddle_tab_stride1_arr_64_f16;
             S->rearranged_twiddle_stride1  =  rearranged_twiddle_stride1_64_f16;     
@@ -117,7 +121,8 @@ arm_status arm_cfft_radix4by2_rearrange_twiddles_f16(arm_cfft_instance_f16 *S, i
             break;  
 #endif                                                                               
               
-#if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) || defined(ARM_TABLE_BITREVIDX_FXT_16) || defined(ARM_TABLE_BITREVIDX_FXT_32)                                                                                                                                                                                                                
+#if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) \
+            || defined(ARM_TABLE_TWIDDLECOEF_F16_16) || defined(ARM_TABLE_TWIDDLECOEF_F16_32)                                                                                                                                                                                                             
         case 16U:                                                                                  
             S->rearranged_twiddle_tab_stride1_arr = rearranged_twiddle_tab_stride1_arr_16_f16;
             S->rearranged_twiddle_stride1  =  rearranged_twiddle_stride1_16_f16;     

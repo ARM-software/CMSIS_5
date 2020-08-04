@@ -299,6 +299,9 @@ void SystemInit (void)
   SCB->CCR |= SCB_CCR_UNALIGN_TRP_Msk;
 #endif
 
+  unsigned int  fpscr =__get_FPSCR();
+  fpscr = fpscr & (~FPU_FPDSCR_AHP_Msk);
+  __set_FPSCR(fpscr);
 
   // enable DL branch cache
   CCR |= CCR_DL;

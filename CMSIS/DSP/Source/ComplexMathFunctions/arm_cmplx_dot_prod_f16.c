@@ -143,8 +143,8 @@ void arm_cmplx_dot_prod_f16(
         float16_t * imagResult)
 {
         uint32_t blkCnt;                               /* Loop counter */
-        float16_t real_sum = 0.0f, imag_sum = 0.0f;    /* Temporary result variables */
-        float16_t a0,b0,c0,d0;
+        _Float16 real_sum = 0.0f, imag_sum = 0.0f;    /* Temporary result variables */
+        _Float16 a0,b0,c0,d0;
 
 #if defined (ARM_MATH_LOOPUNROLL) && !defined(ARM_MATH_AUTOVECTORIZE)
 

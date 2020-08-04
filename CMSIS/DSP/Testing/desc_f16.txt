@@ -140,6 +140,34 @@ group Root {
 
         }
 
+        group Filtering Tests {
+           class = FilteringTests
+           folder = Filtering
+
+           group FIR {
+             class = FIR 
+             folder = FIR
+
+             suite FIR F16 {
+                class = FIRF16 
+                folder = FIRF16
+
+                Pattern FIRINPUTS_F16_ID : FirInput1_f16.txt
+                Pattern FIRCOEFS_F16_ID : FirCoefs1_f16.txt
+                Pattern FIRCONFIGS_S16_ID : FirConfigs1_s16.txt 
+
+                Pattern FIRREFS_F16_ID : FirRefs1_f16.txt
+
+                Output  OUT_F16_ID : Output
+
+                Functions {
+                  arm_fir_f16:test_fir_f16
+                }
+
+             }
+           }
+        }
+
         group Transform Tests {
            class = TransformTests
            folder = Transform 

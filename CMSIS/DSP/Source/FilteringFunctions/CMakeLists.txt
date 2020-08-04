@@ -123,6 +123,10 @@ target_sources(CMSISDSPFiltering PRIVATE arm_lms_norm_q31.c)
 target_sources(CMSISDSPFiltering PRIVATE arm_lms_q15.c)
 target_sources(CMSISDSPFiltering PRIVATE arm_lms_q31.c)
 
+if ((NOT ARMAC5) AND (NOT DISABLEFLOAT16))
+target_sources(CMSISDSPFiltering PRIVATE arm_fir_f16.c)
+target_sources(CMSISDSPFiltering PRIVATE arm_fir_init_f16.c)
+endif()
 
 ### Includes
 target_include_directories(CMSISDSPFiltering PUBLIC "${DSP}/Include")

@@ -15,7 +15,7 @@ function(compilerSpecificCompileOptions PROJECTNAME ROOT)
   # Add support for the type __fp16 even if there is no HW
   # support for it.
   if (FLOAT16)
-  target_compile_options(${PROJECTNAME} PUBLIC "-mfp16-format=alternative")
+  target_compile_options(${PROJECTNAME} PUBLIC "-mfp16-format=ieee")
   endif()
 
   if ((OPTIMIZED) AND (NOT DISABLEOPTIM))

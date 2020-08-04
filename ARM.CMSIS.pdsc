@@ -3243,7 +3243,8 @@ and 8-bit Java bytecodes in Jazelle state.
 
         <!-- DSP sources F16 versions -->
         <file category="source"   name="CMSIS/DSP/Source/BasicMathFunctions/BasicMathFunctionsF16.c"/>
-        <file category="source"   name="CMSIS/DSP/Source/BasicMathFunctions/ComplexMathFunctionsF16.c"/>
+        <file category="source"   name="CMSIS/DSP/Source/ComplexMathFunctions/ComplexMathFunctionsF16.c"/>
+        <file category="source"   name="CMSIS/DSP/Source/FilteringFunctions/FilteringFunctionsF16.c"/>
         <file category="source"   name="CMSIS/DSP/Source/CommonTables/CommonTablesF16.c"/>
         <file category="source"   name="CMSIS/DSP/Source/TransformFunctions/TransformFunctionsF16.c"/>
 

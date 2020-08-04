@@ -26,12 +26,59 @@
 #ifndef _FILTERING_FUNCTIONS_F16_H_
 #define _FILTERING_FUNCTIONS_F16_H_
 
+#include "arm_math_types_f16.h"
+#include "arm_math_memory.h"
+
+#include "dsp/none.h"
+#include "dsp/utils.h"
+
+
 #ifdef   __cplusplus
 extern "C"
 {
 #endif
 
 #if defined(ARM_FLOAT16_SUPPORTED)
+
+ /**
+   * @brief Instance structure for the floating-point FIR filter.
+   */
+  typedef struct
+  {
+          uint16_t numTaps;     /**< number of filter coefficients in the filter. */
+          float16_t *pState;    /**< points to the state variable array. The array is of length numTaps+blockSize-1. */
+    const float16_t *pCoeffs;   /**< points to the coefficient array. The array is of length numTaps. */
+  } arm_fir_instance_f16;
+
+  /**
+   * @brief  Initialization function for the floating-point FIR filter.
+   * @param[in,out] S          points to an instance of the floating-point FIR filter structure.
+   * @param[in]     numTaps    Number of filter coefficients in the filter.
+   * @param[in]     pCoeffs    points to the filter coefficients.
+   * @param[in]     pState     points to the state buffer.
+   * @param[in]     blockSize  number of samples that are processed at a time.
+   */
+  void arm_fir_init_f16(
+        arm_fir_instance_f16 * S,
+        uint16_t numTaps,
+  const float16_t * pCoeffs,
+        float16_t * pState,
+        uint32_t blockSize);
+
+  /**
+   * @brief Processing function for the floating-point FIR filter.
+   * @param[in]  S          points to an instance of the floating-point FIR structure.
+   * @param[in]  pSrc       points to the block of input data.
+   * @param[out] pDst       points to the block of output data.
+   * @param[in]  blockSize  number of samples to process.
+   */
+  void arm_fir_f16(
+  const arm_fir_instance_f16 * S,
+  const float16_t * pSrc,
+        float16_t * pDst,
+        uint32_t blockSize);
+
+
 #endif /*defined(ARM_FLOAT16_SUPPORTED)*/
 #ifdef   __cplusplus
 }
