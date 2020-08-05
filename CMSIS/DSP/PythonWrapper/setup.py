@@ -30,6 +30,7 @@ fastmath.remove(os.path.join(ROOT,"Source","FastMathFunctions","FastMathFunction
 
 filtering = glob.glob(os.path.join(ROOT,"Source","FilteringFunctions","*.c"))
 filtering.remove(os.path.join(ROOT,"Source","FilteringFunctions","FilteringFunctions.c"))
+filtering.remove(os.path.join(ROOT,"Source","FilteringFunctions","FilteringFunctionsF16.c"))
 
 matrix = glob.glob(os.path.join(ROOT,"Source","MatrixFunctions","*.c"))
 matrix.remove(os.path.join(ROOT,"Source","MatrixFunctions","MatrixFunctions.c"))
@@ -39,6 +40,7 @@ statistics.remove(os.path.join(ROOT,"Source","StatisticsFunctions","StatisticsFu
 
 complexf = glob.glob(os.path.join(ROOT,"Source","ComplexMathFunctions","*.c"))
 complexf.remove(os.path.join(ROOT,"Source","ComplexMathFunctions","ComplexMathFunctions.c"))
+complexf.remove(os.path.join(ROOT,"Source","ComplexMathFunctions","ComplexMathFunctionsF16.c"))
 
 basic = glob.glob(os.path.join(ROOT,"Source","BasicMathFunctions","*.c"))
 basic.remove(os.path.join(ROOT,"Source","BasicMathFunctions","BasicMathFunctions.c"))

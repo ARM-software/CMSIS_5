@@ -132,6 +132,7 @@ target_sources(CMSISDSPFiltering PRIVATE arm_biquad_cascade_df2T_f16.c)
 target_sources(CMSISDSPFiltering PRIVATE arm_biquad_cascade_df2T_init_f16.c)
 target_sources(CMSISDSPFiltering PRIVATE arm_biquad_cascade_stereo_df2T_f16.c)
 target_sources(CMSISDSPFiltering PRIVATE arm_biquad_cascade_stereo_df2T_init_f16.c)
+target_sources(CMSISDSPFiltering PRIVATE arm_correlate_f16.c)
 endif()
 
 ### Includes

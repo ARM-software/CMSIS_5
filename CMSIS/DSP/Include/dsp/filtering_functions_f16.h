@@ -199,6 +199,21 @@ extern "C"
   const float16_t * pCoeffs,
         float16_t * pState);
 
+  /**
+   * @brief Correlation of floating-point sequences.
+   * @param[in]  pSrcA    points to the first input sequence.
+   * @param[in]  srcALen  length of the first input sequence.
+   * @param[in]  pSrcB    points to the second input sequence.
+   * @param[in]  srcBLen  length of the second input sequence.
+   * @param[out] pDst     points to the block of output data  Length 2 * max(srcALen, srcBLen) - 1.
+   */
+  void arm_correlate_f16(
+  const float16_t * pSrcA,
+        uint32_t srcALen,
+  const float16_t * pSrcB,
+        uint32_t srcBLen,
+        float16_t * pDst);
+
 #endif /*defined(ARM_FLOAT16_SUPPORTED)*/
 #ifdef   __cplusplus
 }

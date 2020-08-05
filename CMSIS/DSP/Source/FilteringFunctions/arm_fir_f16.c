@@ -25,6 +25,7 @@
 
 #include "dsp/filtering_functions_f16.h"
 
+#if defined(ARM_FLOAT16_SUPPORTED)
 /**
   @ingroup groupFilters
  */
@@ -850,3 +851,5 @@ void arm_fir_f16(
 /**
 * @} end of FIR group
 */
+
+#endif /* #if defined(ARM_FLOAT16_SUPPORTED) */

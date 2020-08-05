@@ -330,6 +330,7 @@ set(TESTSRC16
   Source/Tests/ComplexTestsF16.cpp
   Source/Tests/FIRF16.cpp
   Source/Tests/BIQUADF16.cpp
+  Source/Tests/MISCF16.cpp
   Source/Tests/TransformCF16.cpp
   Source/Tests/TransformRF16.cpp
   )

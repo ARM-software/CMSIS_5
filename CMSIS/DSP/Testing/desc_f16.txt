@@ -144,6 +144,147 @@ group Root {
            class = FilteringTests
            folder = Filtering
 
+           group MISC {
+             class = MISC 
+             folder = MISC
+
+             suite MISC F16 {
+                class = MISCF16 
+                folder = MISCF16
+
+                Pattern INPUTA_F16_ID : InputsA1_f16.txt
+                Pattern INPUTB_F16_ID : InputsB1_f16.txt
+
+                Pattern REF1_F16_ID : Reference1_f16.txt
+                Pattern REF2_F16_ID : Reference2_f16.txt
+                Pattern REF3_F16_ID : Reference3_f16.txt
+                Pattern REF4_F16_ID : Reference4_f16.txt
+                Pattern REF5_F16_ID : Reference5_f16.txt
+                Pattern REF6_F16_ID : Reference6_f16.txt
+                Pattern REF7_F16_ID : Reference7_f16.txt
+                Pattern REF8_F16_ID : Reference8_f16.txt
+                Pattern REF9_F16_ID : Reference9_f16.txt
+                Pattern REF10_F16_ID : Reference10_f16.txt
+                Pattern REF11_F16_ID : Reference11_f16.txt
+                Pattern REF12_F16_ID : Reference12_f16.txt
+                Pattern REF13_F16_ID : Reference13_f16.txt
+                Pattern REF14_F16_ID : Reference14_f16.txt
+                Pattern REF15_F16_ID : Reference15_f16.txt
+                Pattern REF16_F16_ID : Reference16_f16.txt
+                Pattern REF17_F16_ID : Reference17_f16.txt
+                Pattern REF18_F16_ID : Reference18_f16.txt
+                Pattern REF19_F16_ID : Reference19_f16.txt
+                Pattern REF20_F16_ID : Reference20_f16.txt
+                Pattern REF21_F16_ID : Reference21_f16.txt
+                Pattern REF22_F16_ID : Reference22_f16.txt
+                Pattern REF23_F16_ID : Reference23_f16.txt
+                Pattern REF24_F16_ID : Reference24_f16.txt
+                Pattern REF25_F16_ID : Reference25_f16.txt
+                Pattern REF26_F16_ID : Reference26_f16.txt
+                Pattern REF27_F16_ID : Reference27_f16.txt
+                Pattern REF28_F16_ID : Reference28_f16.txt
+                Pattern REF29_F16_ID : Reference29_f16.txt
+                Pattern REF30_F16_ID : Reference30_f16.txt
+                Pattern REF31_F16_ID : Reference31_f16.txt
+                Pattern REF32_F16_ID : Reference32_f16.txt
+                Pattern REF33_F16_ID : Reference33_f16.txt
+                Pattern REF34_F16_ID : Reference34_f16.txt
+                Pattern REF35_F16_ID : Reference35_f16.txt
+                Pattern REF36_F16_ID : Reference36_f16.txt
+                Pattern REF37_F16_ID : Reference37_f16.txt
+                Pattern REF38_F16_ID : Reference38_f16.txt
+                Pattern REF39_F16_ID : Reference39_f16.txt
+                Pattern REF40_F16_ID : Reference40_f16.txt
+                Pattern REF41_F16_ID : Reference41_f16.txt
+                Pattern REF42_F16_ID : Reference42_f16.txt
+                Pattern REF43_F16_ID : Reference43_f16.txt
+                Pattern REF44_F16_ID : Reference44_f16.txt
+                Pattern REF45_F16_ID : Reference45_f16.txt
+                Pattern REF46_F16_ID : Reference46_f16.txt
+                Pattern REF47_F16_ID : Reference47_f16.txt
+                Pattern REF48_F16_ID : Reference48_f16.txt
+                Pattern REF49_F16_ID : Reference49_f16.txt
+                Pattern REF50_F16_ID : Reference50_f16.txt
+                Pattern REF51_F16_ID : Reference51_f16.txt
+                Pattern REF52_F16_ID : Reference52_f16.txt
+                Pattern REF53_F16_ID : Reference53_f16.txt
+                Pattern REF54_F16_ID : Reference54_f16.txt
+                Pattern REF55_F16_ID : Reference55_f16.txt
+                Pattern REF56_F16_ID : Reference56_f16.txt
+                Pattern REF57_F16_ID : Reference57_f16.txt
+                Pattern REF58_F16_ID : Reference58_f16.txt
+                Pattern REF59_F16_ID : Reference59_f16.txt
+                Pattern REF60_F16_ID : Reference60_f16.txt
+                Pattern REF61_F16_ID : Reference61_f16.txt
+                Pattern REF62_F16_ID : Reference62_f16.txt
+                Pattern REF63_F16_ID : Reference63_f16.txt
+                Pattern REF64_F16_ID : Reference64_f16.txt
+                Pattern REF65_F16_ID : Reference65_f16.txt
+                Pattern REF66_F16_ID : Reference66_f16.txt
+                Pattern REF67_F16_ID : Reference67_f16.txt
+                Pattern REF68_F16_ID : Reference68_f16.txt
+                Pattern REF69_F16_ID : Reference69_f16.txt
+                Pattern REF70_F16_ID : Reference70_f16.txt
+                Pattern REF71_F16_ID : Reference71_f16.txt
+                Pattern REF72_F16_ID : Reference72_f16.txt
+                Pattern REF73_F16_ID : Reference73_f16.txt
+                Pattern REF74_F16_ID : Reference74_f16.txt
+                Pattern REF75_F16_ID : Reference75_f16.txt
+                Pattern REF76_F16_ID : Reference76_f16.txt
+                Pattern REF77_F16_ID : Reference77_f16.txt
+                Pattern REF78_F16_ID : Reference78_f16.txt
+                Pattern REF79_F16_ID : Reference79_f16.txt
+                Pattern REF80_F16_ID : Reference80_f16.txt
+
+
+                Output  OUT_F16_ID : Output
+
+                Functions {
+                  arm_correlate_f16 nba=4 nbb=1:test_correlate_f16
+                  arm_correlate_f16 nba=4 nbb=2:test_correlate_f16
+                  arm_correlate_f16 nba=4 nbb=3:test_correlate_f16
+                  arm_correlate_f16 nba=4 nbb=8:test_correlate_f16
+                  arm_correlate_f16 nba=4 nbb=11:test_correlate_f16
+                  arm_correlate_f16 nba=5 nbb=1:test_correlate_f16
+                  arm_correlate_f16 nba=5 nbb=2:test_correlate_f16
+                  arm_correlate_f16 nba=5 nbb=3:test_correlate_f16
+                  arm_correlate_f16 nba=5 nbb=8:test_correlate_f16
+                  arm_correlate_f16 nba=5 nbb=11:test_correlate_f16
+                  arm_correlate_f16 nba=6 nbb=1:test_correlate_f16
+                  arm_correlate_f16 nba=6 nbb=2:test_correlate_f16
+                  arm_correlate_f16 nba=6 nbb=3:test_correlate_f16
+                  arm_correlate_f16 nba=6 nbb=8:test_correlate_f16
+                  arm_correlate_f16 nba=6 nbb=11:test_correlate_f16
+                  arm_correlate_f16 nba=9 nbb=1:test_correlate_f16
+                  arm_correlate_f16 nba=9 nbb=2:test_correlate_f16
+                  arm_correlate_f16 nba=9 nbb=3:test_correlate_f16
+                  arm_correlate_f16 nba=9 nbb=8:test_correlate_f16
+                  arm_correlate_f16 nba=9 nbb=11:test_correlate_f16
+                  arm_correlate_f16 nba=10 nbb=1:test_correlate_f16
+                  arm_correlate_f16 nba=10 nbb=2:test_correlate_f16
+                  arm_correlate_f16 nba=10 nbb=3:test_correlate_f16
+                  arm_correlate_f16 nba=10 nbb=8:test_correlate_f16
+                  arm_correlate_f16 nba=10 nbb=11:test_correlate_f16
+                  arm_correlate_f16 nba=11 nbb=1:test_correlate_f16
+                  arm_correlate_f16 nba=11 nbb=2:test_correlate_f16
+                  arm_correlate_f16 nba=11 nbb=3:test_correlate_f16
+                  arm_correlate_f16 nba=11 nbb=8:test_correlate_f16
+                  arm_correlate_f16 nba=11 nbb=11:test_correlate_f16
+                  arm_correlate_f16 nba=12 nbb=1:test_correlate_f16
+                  arm_correlate_f16 nba=12 nbb=2:test_correlate_f16
+                  arm_correlate_f16 nba=12 nbb=3:test_correlate_f16
+                  arm_correlate_f16 nba=12 nbb=8:test_correlate_f16
+                  arm_correlate_f16 nba=12 nbb=11:test_correlate_f16
+                  arm_correlate_f16 nba=13 nbb=1:test_correlate_f16
+                  arm_correlate_f16 nba=13 nbb=2:test_correlate_f16
+                  arm_correlate_f16 nba=13 nbb=3:test_correlate_f16
+                  arm_correlate_f16 nba=13 nbb=8:test_correlate_f16
+                  arm_correlate_f16 nba=13 nbb=11:test_correlate_f16
+                }
+
+             }
+           }
+
            group FIR {
              class = FIR 
              folder = FIR
@@ -199,6 +340,8 @@ group Root {
 
              }
            }
+
+
         }
 
         group Transform Tests {

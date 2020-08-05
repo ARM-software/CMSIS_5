@@ -28,6 +28,7 @@
 
 #include "dsp/filtering_functions_f16.h"
 
+#if defined(ARM_FLOAT16_SUPPORTED)
 /**
   @ingroup groupFilters
  */
@@ -109,3 +110,5 @@ void arm_biquad_cascade_df2T_init_f16(
 /**
   @} end of BiquadCascadeDF2T group
  */
+
+#endif /* #if defined(ARM_FLOAT16_SUPPORTED) */

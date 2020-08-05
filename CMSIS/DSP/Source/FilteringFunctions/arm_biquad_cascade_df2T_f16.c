@@ -28,6 +28,7 @@
 
 #include "dsp/filtering_functions_f16.h"
 
+#if defined(ARM_FLOAT16_SUPPORTED)
 /**
   @ingroup groupFilters
 */
@@ -490,3 +491,5 @@ LOW_OPTIMIZATION_EXIT
 /**
   @} end of BiquadCascadeDF2T group
  */
+
+#endif /* #if defined(ARM_FLOAT16_SUPPORTED) */
