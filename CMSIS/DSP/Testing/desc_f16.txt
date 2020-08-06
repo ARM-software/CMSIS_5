@@ -5,6 +5,50 @@ group Root {
         class = DSPTests
         folder = DSP
 
+        group Interpolation Tests{
+          class = InterpolationTests
+          folder = Interpolation
+
+          suite Interpolation Tests F16{
+              class = InterpolationTestsF16
+              folder = InterpolationF16
+
+              Pattern INPUT_F16_ID : Input1_f16.txt 
+              Pattern INPUTBI_F16_ID : Input2_f16.txt 
+              Pattern CONFIGBI_S16_ID : Config2_s16.txt 
+
+              Pattern YVAL_F16_ID : YVals1_f16.txt 
+              Pattern YVALBI_F16_ID : YVals2_f16.txt 
+
+              Pattern REF_LINEAR_F16_ID : Reference1_f16.txt
+              Pattern REF_BILINEAR_F16_ID : Reference2_f16.txt
+
+              Pattern REF_SPLINE_SQU_F16_ID : Reference3_f16.txt
+              Pattern REF_SPLINE_SIN_F16_ID : Reference4_f16.txt
+              Pattern REF_SPLINE_RAM_F16_ID : Reference5_f16.txt
+
+              Pattern INPUT_SPLINE_SQU_X_F16_ID : InputX3_f16.txt
+              Pattern INPUT_SPLINE_SQU_Y_F16_ID : InputY3_f16.txt
+              Pattern OUTPUT_SPLINE_SQU_X_F16_ID : OutputX3_f16.txt
+              Pattern INPUT_SPLINE_SIN_X_F16_ID : InputX4_f16.txt 
+              Pattern INPUT_SPLINE_SIN_Y_F16_ID : InputY4_f16.txt
+              Pattern OUTPUT_SPLINE_SIN_X_F16_ID : OutputX4_f16.txt 
+              Pattern INPUT_SPLINE_RAM_X_F16_ID : InputX5_f16.txt
+              Pattern INPUT_SPLINE_RAM_Y_F16_ID : InputY5_f16.txt
+              Pattern OUTPUT_SPLINE_RAM_X_F16_ID : OutputX5_f16.txt
+
+
+              Output  OUT_SAMPLES_F16_ID : Output
+              Output  COEFS_SPLINE_F16_ID : SplineCoefs
+              Output  TEMP_SPLINE_F16_ID : SplineTemp
+
+              Functions {
+                Test arm_linear_interp_f16:test_linear_interp_f16
+                Test arm_bilinear_interp_f16:test_bilinear_interp_f16
+              }
+          }
+        }
+
         group Basic Tests {
            class = BasicTests
            folder = BasicMaths

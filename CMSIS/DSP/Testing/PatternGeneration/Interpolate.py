@@ -22,9 +22,9 @@ def writeTests(config,format):
     data=data[:-1]
     z = f(data)
 
-    if format != 0:
+    if format != 0 and format != 16:
        data = data / 2.0**11
-    if format != 0:
+    if format != 0 and format != 16:
        config.writeInputQ31(1, data,"Input")
     else:
        config.writeInput(1, data)
@@ -81,10 +81,10 @@ def writeTests(config,format):
     ref=np.array([f(i[0],i[1]) for i in inputVals])
 
 
-    if format != 0:
+    if format != 0 and format != 16:
        inputSamples = inputSamples / 2.0**11
     data = inputSamples.reshape(np.size(inputSamples))
-    if format != 0:
+    if format != 0 and format != 16:
        config.writeInputQ31(2, data,"Input")
     else:
        config.writeInput(2, data)
@@ -130,11 +130,13 @@ def generatePatterns():
     PARAMDIR = os.path.join("Parameters","DSP","Interpolation","Interpolation")
     
     configf32=Tools.Config(PATTERNDIR,PARAMDIR,"f32")
+    configf16=Tools.Config(PATTERNDIR,PARAMDIR,"f16")
     configq31=Tools.Config(PATTERNDIR,PARAMDIR,"q31")
     configq15=Tools.Config(PATTERNDIR,PARAMDIR,"q15")
     configq7=Tools.Config(PATTERNDIR,PARAMDIR,"q7")
     
     writeTests(configf32,0)
+    writeTests(configf16,16)
     writeTests(configq31,31)
     writeTests(configq15,15)
     writeTests(configq7,7)

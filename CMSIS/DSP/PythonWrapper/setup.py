@@ -55,7 +55,7 @@ common.remove(os.path.join(ROOT,"Source","CommonTables","CommonTables.c"))
 
 interpolation = glob.glob(os.path.join(ROOT,"Source","InterpolationFunctions","*.c"))
 interpolation.remove(os.path.join(ROOT,"Source","InterpolationFunctions","InterpolationFunctions.c"))
-
+interpolation.remove(os.path.join(ROOT,"Source","InterpolationFunctions","InterpolationFunctionsF16.c"))
 
 #modulesrc = glob.glob(os.path.join("cmsisdsp_pkg","src","*.c"))
 modulesrc = []

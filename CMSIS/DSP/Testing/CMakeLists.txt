@@ -328,6 +328,7 @@ if ((NOT ARMAC5) AND (FLOAT16TESTS) AND ((FLOAT16) OR (MVEF) OR (HELIUM) OR (NEO
 set(TESTSRC16 
   Source/Tests/BasicTestsF16.cpp
   Source/Tests/ComplexTestsF16.cpp
+  Source/Tests/InterpolationTestsF16.cpp
   Source/Tests/FIRF16.cpp
   Source/Tests/BIQUADF16.cpp
   Source/Tests/MISCF16.cpp
