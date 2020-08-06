@@ -344,6 +344,88 @@ group Root {
 
         }
 
+        group Matrix Tests {
+           class = MatrixTests
+           folder = Matrix
+
+           group Unary Tests {
+              class = UnaryTests
+              folder = Unary
+
+              suite Unary Tests F16 {
+                class = UnaryTestsF16 
+                folder = UnaryF16
+
+                Pattern INPUTS1_F16_ID : InputA1_f16.txt 
+                Pattern INPUTSC1_F16_ID : InputAC1_f16.txt 
+
+                Pattern INPUTS2_F16_ID : InputB1_f16.txt 
+                Pattern INPUTVEC1_F16_ID : InputVec1_f16.txt 
+
+                Pattern INPUTSINV_F16_ID : InputInvert1_f16.txt 
+                Pattern DIMSUNARY1_S16_ID : DimsUnary1_s16.txt 
+                Pattern DIMSINVERT1_S16_ID : DimsInvert1_s16.txt 
+                
+                Pattern REFADD1_F16_ID : RefAdd1_f16.txt
+                Pattern REFSUB1_F16_ID : RefSub1_f16.txt
+                Pattern REFSCALE1_F16_ID : RefScale1_f16.txt
+                Pattern REFTRANS1_F16_ID : RefTranspose1_f16.txt
+                Pattern REFTRANSC1_F16_ID : RefTransposeC1_f16.txt
+                Pattern REFINV1_F16_ID : RefInvert1_f16.txt
+                Pattern REFVECMUL1_F16_ID : RefVecMul1_f16.txt
+
+
+                Output  OUT_F16_ID : Output
+                Output  TMPA_F16_ID : TmpA
+                Output  TMPB_F16_ID : TmpB
+
+                Functions {
+                 test matrix add:test_mat_add_f16
+                 test matrix sub:test_mat_sub_f16
+                 test matrix scale:test_mat_scale_f16
+                 test matrix transpose:test_mat_trans_f16
+                 test matrix inverse:test_mat_inverse_f16
+                 test mat mult vec:test_mat_vec_mult_f16
+                 test matrix complex transpose:test_mat_cmplx_trans_f16
+                }
+
+              }
+
+           }
+
+           group Binary Tests{
+              class = BinaryTests 
+              folder = Binary
+
+              suite Binary F16 {
+                class = BinaryTestsF16 
+                folder = BinaryF16
+
+                Pattern INPUTS1_F16_ID : InputA1_f16.txt 
+                Pattern INPUTS2_F16_ID : InputB1_f16.txt 
+
+                Pattern INPUTSC1_F16_ID : InputAC1_f16.txt 
+                Pattern INPUTSC2_F16_ID : InputBC1_f16.txt 
+
+                Pattern REFMUL1_F16_ID : RefMul1_f16.txt
+                Pattern REFCMPLXMUL1_F16_ID : RefCmplxMul1_f16.txt
+                Pattern DIMSBINARY1_S16_ID : DimsBinary1_s16.txt 
+
+
+                Output  OUT_F16_ID : Output
+                Output  TMPA_F16_ID : TmpA
+                Output  TMPB_F16_ID : TmpB
+
+                Functions {
+                  test mult:test_mat_mult_f16
+                  test complex mult:test_mat_cmplx_mult_f16
+                }
+
+             }
+           }
+
+        }
+
         group Transform Tests {
            class = TransformTests
            folder = Transform 

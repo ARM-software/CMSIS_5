@@ -28,6 +28,7 @@
       - f16 Basic Maths
       - f16 Complex Maths
       - f16 filtering (FIR and BiQuad ad correlate)
+      - f16 matrix
 
     </td>
   </tr>

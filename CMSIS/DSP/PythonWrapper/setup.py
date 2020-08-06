@@ -34,6 +34,7 @@ filtering.remove(os.path.join(ROOT,"Source","FilteringFunctions","FilteringFunct
 
 matrix = glob.glob(os.path.join(ROOT,"Source","MatrixFunctions","*.c"))
 matrix.remove(os.path.join(ROOT,"Source","MatrixFunctions","MatrixFunctions.c"))
+matrix.remove(os.path.join(ROOT,"Source","MatrixFunctions","MatrixFunctionsF16.c"))
 
 statistics = glob.glob(os.path.join(ROOT,"Source","StatisticsFunctions","*.c"))
 statistics.remove(os.path.join(ROOT,"Source","StatisticsFunctions","StatisticsFunctions.c"))

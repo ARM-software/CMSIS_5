@@ -331,6 +331,8 @@ set(TESTSRC16
   Source/Tests/FIRF16.cpp
   Source/Tests/BIQUADF16.cpp
   Source/Tests/MISCF16.cpp
+  Source/Tests/BinaryTestsF16.cpp
+  Source/Tests/UnaryTestsF16.cpp
   Source/Tests/TransformCF16.cpp
   Source/Tests/TransformRF16.cpp
   )

@@ -38,4 +38,18 @@ configDsp(CMSISDSPMatrix ${ROOT})
 target_include_directories(CMSISDSPMatrix PUBLIC "${DSP}/Include")
 
 
+if ((NOT ARMAC5) AND (NOT DISABLEFLOAT16))
+target_sources(CMSISDSPMatrix PRIVATE arm_mat_add_f16.c)
+target_sources(CMSISDSPMatrix PRIVATE arm_mat_sub_f16.c)
+target_sources(CMSISDSPMatrix PRIVATE arm_mat_trans_f16.c)
+target_sources(CMSISDSPMatrix PRIVATE arm_mat_scale_f16.c)
+target_sources(CMSISDSPMatrix PRIVATE arm_mat_mult_f16.c)
+target_sources(CMSISDSPMatrix PRIVATE arm_mat_vec_mult_f16.c)
+target_sources(CMSISDSPMatrix PRIVATE arm_mat_cmplx_trans_f16.c)
+target_sources(CMSISDSPMatrix PRIVATE arm_mat_cmplx_mult_f16.c)
+target_sources(CMSISDSPMatrix PRIVATE arm_mat_inverse_f16.c)
+target_sources(CMSISDSPMatrix PRIVATE arm_mat_init_f16.c)
 
+
+
+endif()

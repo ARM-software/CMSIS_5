@@ -145,6 +145,18 @@ __STATIC_FORCEINLINE float16x8_t __mve_cmplx_sum_intra_vec_f16(
     Im = vgetq_lane(vecOut, 5);                                 \
 }
 
+__STATIC_FORCEINLINE void mve_cmplx_sum_intra_vec_f16(
+    float16x8_t   vecIn,
+    float16_t  *pOut)
+{
+    float16x8_t   vecOut = __mve_cmplx_sum_intra_vec_f16(vecIn);
+    /*
+     * Cmplx sum is in 4rd & 5th f16 elt
+     * use 32-bit extraction
+     */
+    *(float32_t *) pOut = ((float32x4_t) vecOut)[2];
+}
+
 
 #define INVSQRT_MAGIC_F16           0x59ba      /*  ( 0x1ba = 0x3759df >> 13) */
 #define INV_NEWTON_INIT_F16         0x7773
@@ -167,17 +179,10 @@ __STATIC_FORCEINLINE float16x8_t __mve_cmplx_sum_intra_vec_f16(
 
 /***************************************
 
-Definitions available for MVEI only
+Definitions available for MVEI and MVEF only
 
 ***************************************/
-#if defined (ARM_MATH_HELIUM) || defined(ARM_MATH_MVEI)
-
-#include "arm_common_tables.h"
-
-#define MVE_ASRL_SAT16(acc, shift)          ((sqrshrl_sat48(acc, -(32-shift)) >> 32) & 0xffffffff)
-#define MVE_ASRL_SAT32(acc, shift)          ((sqrshrl(acc, -(32-shift)) >> 32) & 0xffffffff)
-
-
+#if defined (ARM_MATH_HELIUM) || defined(ARM_MATH_MVEF) || defined(ARM_MATH_MVEI)
 /* Following functions are used to transpose matrix in f32 and q31 cases */
 __STATIC_INLINE arm_status arm_mat_trans_32bit_2x2_mve(
     uint32_t * pDataSrc,
@@ -381,6 +386,125 @@ __STATIC_INLINE arm_status arm_mat_cmplx_trans_32bit(
     return (ARM_MATH_SUCCESS);
 }
 
+__STATIC_INLINE arm_status arm_mat_trans_16bit_2x2(uint16_t * pDataSrc, uint16_t * pDataDest)
+{
+    pDataDest[0] = pDataSrc[0];
+    pDataDest[3] = pDataSrc[3];
+    pDataDest[2] = pDataSrc[1];
+    pDataDest[1] = pDataSrc[2];
+
+    return (ARM_MATH_SUCCESS);
+}
+
+__STATIC_INLINE arm_status arm_mat_trans_16bit_3x3_mve(uint16_t * pDataSrc, uint16_t * pDataDest)
+{
+    static const uint16_t stridesTr33[8] = { 0, 3, 6, 1, 4, 7, 2, 5 };
+    uint16x8_t    vecOffs1;
+    uint16x8_t    vecIn1;
+    /*
+     *
+     *  | 0   1   2 |       | 0   3   6 |  8 x 16 flattened version | 0   3   6   1   4   7   2   5 |
+     *  | 3   4   5 | =>    | 1   4   7 |            =>             | 8   .   .   .   .   .   .   . |
+     *  | 6   7   8 |       | 2   5   8 |       (row major)
+     *
+     */
+    vecOffs1 = vldrhq_u16((uint16_t const *) stridesTr33);
+    vecIn1 = vldrhq_u16((uint16_t const *) pDataSrc);
+
+    vstrhq_scatter_shifted_offset_u16(pDataDest, vecOffs1, vecIn1);
+
+    pDataDest[8] = pDataSrc[8];
+
+    return (ARM_MATH_SUCCESS);
+}
+
+
+__STATIC_INLINE arm_status arm_mat_trans_16bit_4x4_mve(uint16_t * pDataSrc, uint16_t * pDataDest)
+{
+    static const uint16_t stridesTr44_1[8] = { 0, 4, 8, 12, 1, 5, 9, 13 };
+    static const uint16_t stridesTr44_2[8] = { 2, 6, 10, 14, 3, 7, 11, 15 };
+    uint16x8_t    vecOffs1, vecOffs2;
+    uint16x8_t    vecIn1, vecIn2;
+    uint16_t const * pDataSrcVec = (uint16_t const *) pDataSrc;
+
+    /*
+     * 4x4 Matrix transposition
+     *
+     * | 0   1   2   3  |       | 0   4   8   12 |   8 x 16 flattened version
+     * | 4   5   6   7  |  =>   | 1   5   9   13 |   =>      [0   4   8   12  1   5   9   13]
+     * | 8   9   10  11 |       | 2   6   10  14 |           [2   6   10  14  3   7   11  15]
+     * | 12  13  14  15 |       | 3   7   11  15 |
+     */
+
+    vecOffs1 = vldrhq_u16((uint16_t const *) stridesTr44_1);
+    vecOffs2 = vldrhq_u16((uint16_t const *) stridesTr44_2);
+    vecIn1 = vldrhq_u16(pDataSrcVec);
+    pDataSrcVec += 8;
+    vecIn2 = vldrhq_u16(pDataSrcVec);
+
+    vstrhq_scatter_shifted_offset_u16(pDataDest, vecOffs1, vecIn1);
+    vstrhq_scatter_shifted_offset_u16(pDataDest, vecOffs2, vecIn2);
+
+
+    return (ARM_MATH_SUCCESS);
+}
+
+
+
+__STATIC_INLINE arm_status arm_mat_trans_16bit_generic(
+    uint16_t    srcRows,
+    uint16_t    srcCols,
+    uint16_t  * pDataSrc,
+    uint16_t  * pDataDest)
+{
+    uint16x8_t    vecOffs;
+    uint32_t        i;
+    uint32_t        blkCnt;
+    uint16_t const *pDataC;
+    uint16_t       *pDataDestR;
+    uint16x8_t    vecIn;
+
+    vecOffs = vidupq_u16((uint32_t)0, 1);
+    vecOffs = vecOffs * srcCols;
+
+    i = srcCols;
+    while(i > 0U)
+    {
+        pDataC = (uint16_t const *) pDataSrc;
+        pDataDestR = pDataDest;
+
+        blkCnt = srcRows >> 3;
+        while (blkCnt > 0U)
+        {
+            vecIn = vldrhq_gather_shifted_offset_u16(pDataC, vecOffs);
+            vstrhq_u16(pDataDestR, vecIn); 
+            pDataDestR += 8;
+            pDataC = pDataC + srcCols * 8;
+            /*
+             * Decrement the blockSize loop counter
+             */
+            blkCnt--;
+        }
+
+        /*
+         * tail
+         */
+        blkCnt = srcRows & 7;
+        if (blkCnt > 0U)
+        {
+            mve_pred16_t p0 = vctp16q(blkCnt);
+            vecIn = vldrhq_gather_shifted_offset_u16(pDataC, vecOffs);
+            vstrhq_p_u16(pDataDestR, vecIn, p0);
+        }
+        pDataSrc += 1;
+        pDataDest += srcRows;
+        i--;
+    }
+
+    return (ARM_MATH_SUCCESS);
+}
+
+
 __STATIC_INLINE arm_status arm_mat_cmplx_trans_16bit(
     uint16_t    srcRows,
     uint16_t    srcCols,
@@ -466,6 +590,20 @@ __STATIC_INLINE arm_status arm_mat_cmplx_trans_16bit(
 
     return (ARM_MATH_SUCCESS);
 }
+#endif /* MVEF and MVEI */
+
+/***************************************
+
+Definitions available for MVEI only
+
+***************************************/
+#if defined (ARM_MATH_HELIUM) || defined(ARM_MATH_MVEI)
+
+#include "arm_common_tables.h"
+
+#define MVE_ASRL_SAT16(acc, shift)          ((sqrshrl_sat48(acc, -(32-shift)) >> 32) & 0xffffffff)
+#define MVE_ASRL_SAT32(acc, shift)          ((sqrshrl(acc, -(32-shift)) >> 32) & 0xffffffff)
+
 
 #if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FAST_TABLES) || defined(ARM_TABLE_FAST_SQRT_Q31_MVE)
 __STATIC_INLINE q31x4_t FAST_VSQRT_Q31(q31x4_t vecIn)

@@ -1,15 +1,15 @@
 /* ----------------------------------------------------------------------
  * Project:      CMSIS DSP Library
- * Title:        arm_mat_trans_q15.c
- * Description:  Q15 matrix transpose
+ * Title:        arm_mat_trans_f16.c
+ * Description:  Floating-point matrix transpose
  *
- * $Date:        18. March 2019
+ * $Date:        18. March 2020
  * $Revision:    V1.6.0
  *
  * Target Processor: Cortex-M cores
  * -------------------------------------------------------------------- */
 /*
- * Copyright (C) 2010-2019 ARM Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2010-2017 ARM Limited or its affiliates. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -26,7 +26,10 @@
  * limitations under the License.
  */
 
-#include "dsp/matrix_functions.h"
+#include "dsp/matrix_functions_f16.h"
+
+#if defined(ARM_FLOAT16_SUPPORTED)
+
 
 /**
   @ingroup groupMatrix
@@ -38,23 +41,20 @@
  */
 
 /**
-  @brief         Q15 matrix transpose.
+  @brief         Floating-point matrix transpose.
   @param[in]     pSrc      points to input matrix
   @param[out]    pDst      points to output matrix
   @return        execution status
                    - \ref ARM_MATH_SUCCESS       : Operation successful
                    - \ref ARM_MATH_SIZE_MISMATCH : Matrix size check failed
  */
- 
-#if defined(ARM_MATH_MVEI)
+#if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
 
 #include "arm_helium_utils.h"
 
-
-
-arm_status arm_mat_trans_q15(
-  const arm_matrix_instance_q15 * pSrc,
-        arm_matrix_instance_q15 * pDst)
+arm_status arm_mat_trans_f16(
+  const arm_matrix_instance_f16 * pSrc,
+  arm_matrix_instance_f16 * pDst)
 {
   arm_status status;                             /* status of matrix transpose */
 
@@ -95,21 +95,20 @@ arm_status arm_mat_trans_q15(
   /* Return to application */
   return (status);
 }
-#else
-arm_status arm_mat_trans_q15(
-  const arm_matrix_instance_q15 * pSrc,
-        arm_matrix_instance_q15 * pDst)
-{
-        q15_t *pIn = pSrc->pData;                      /* input data matrix pointer */
-        q15_t *pOut = pDst->pData;                     /* output data matrix pointer */
-        uint16_t nRows = pSrc->numRows;                /* number of rows */
-        uint16_t nCols = pSrc->numCols;                /* number of columns */
-        uint32_t col, row = nRows, i = 0U;             /* Loop counters */
-        arm_status status;                             /* status of matrix transpose */
 
-#if defined (ARM_MATH_LOOPUNROLL)
-        q31_t in;                                      /* variable to hold temporary output  */
-#endif
+#else
+
+arm_status arm_mat_trans_f16(
+  const arm_matrix_instance_f16 * pSrc,
+        arm_matrix_instance_f16 * pDst)
+{
+  float16_t *pIn = pSrc->pData;                  /* input data matrix pointer */
+  float16_t *pOut = pDst->pData;                 /* output data matrix pointer */
+  float16_t *px;                                 /* Temporary output data matrix pointer */
+  uint16_t nRows = pSrc->numRows;                /* number of rows */
+  uint16_t nCols = pSrc->numCols;                /* number of columns */
+  uint32_t col, row = nRows, i = 0U;             /* Loop counters */
+  arm_status status;                             /* status of matrix transpose */
 
 #ifdef ARM_MATH_MATRIX_CHECK
 
@@ -129,8 +128,8 @@ arm_status arm_mat_trans_q15(
     /* row loop */
     do
     {
-      /* Pointer pOut is set to starting address of column being processed */
-      pOut = pDst->pData + i;
+      /* Pointer px is set to starting address of column being processed */
+      px = pOut + i;
 
 #if defined (ARM_MATH_LOOPUNROLL)
 
@@ -139,52 +138,19 @@ arm_status arm_mat_trans_q15(
 
       while (col > 0U)        /* column loop */
       {
-        /* Read two elements from row */
-        in = read_q15x2_ia ((q15_t **) &pIn);
+        /* Read and store input element in destination */
+        *px = *pIn++;
+        /* Update pointer px to point to next row of transposed matrix */
+        px += nRows;
 
-        /* Unpack and store one element in  destination */
-#ifndef ARM_MATH_BIG_ENDIAN
-        *pOut = (q15_t) in;
-#else
-        *pOut = (q15_t) ((in & (q31_t) 0xffff0000) >> 16);
-#endif /* #ifndef ARM_MATH_BIG_ENDIAN */
+        *px = *pIn++;
+        px += nRows;
 
-        /* Update pointer pOut to point to next row of transposed matrix */
-        pOut += nRows;
+        *px = *pIn++;
+        px += nRows;
 
-        /* Unpack and store second element in destination */
-#ifndef ARM_MATH_BIG_ENDIAN
-        *pOut = (q15_t) ((in & (q31_t) 0xffff0000) >> 16);
-#else
-        *pOut = (q15_t) in;
-#endif /* #ifndef ARM_MATH_BIG_ENDIAN */
-
-        /* Update  pointer pOut to point to next row of transposed matrix */
-        pOut += nRows;
-
-        /* Read two elements from row */
-        in = read_q15x2_ia ((q15_t **) &pIn);
-
-        /* Unpack and store one element in destination */
-#ifndef ARM_MATH_BIG_ENDIAN
-        *pOut = (q15_t) in;
-#else
-        *pOut = (q15_t) ((in & (q31_t) 0xffff0000) >> 16);
-
-#endif /* #ifndef ARM_MATH_BIG_ENDIAN */
-
-        /* Update pointer pOut to point to next row of transposed matrix */
-        pOut += nRows;
-
-        /* Unpack and store second element in destination */
-#ifndef ARM_MATH_BIG_ENDIAN
-        *pOut = (q15_t) ((in & (q31_t) 0xffff0000) >> 16);
-#else
-        *pOut = (q15_t) in;
-#endif /* #ifndef ARM_MATH_BIG_ENDIAN */
-
-        /* Update pointer pOut to point to next row of transposed matrix */
-        pOut += nRows;
+        *px = *pIn++;
+        px += nRows;
 
         /* Decrement column loop counter */
         col--;
@@ -203,10 +169,10 @@ arm_status arm_mat_trans_q15(
       while (col > 0U)
       {
         /* Read and store input element in destination */
-        *pOut = *pIn++;
+        *px = *pIn++;
 
-        /* Update pointer pOut to point to next row of transposed matrix */
-        pOut += nRows;
+        /* Update pointer px to point to next row of transposed matrix */
+        px += nRows;
 
         /* Decrement column loop counter */
         col--;
@@ -226,8 +192,11 @@ arm_status arm_mat_trans_q15(
   /* Return to application */
   return (status);
 }
-#endif /* defined(ARM_MATH_MVEI) */
+#endif /* defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE) */
 
 /**
-  @} end of MatrixTrans group
+ * @} end of MatrixTrans group
  */
+
+#endif /* #if defined(ARM_FLOAT16_SUPPORTED) */ 
+

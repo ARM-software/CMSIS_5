@@ -689,7 +689,12 @@ def writeUnaryTests(config,format):
 
     # Current algo is not very accurate for big matrix.
     # But big matrix required to check the vectorized code.
-    dims=[1,2,3,4,7,8,9,15,16,17,32,33]
+    if format==Tools.F16:
+       # Size limited for f16 because accuracy is
+       # not good at all for bigger matrices
+       dims=[1,2,3,4,7,8,9,15,16]
+    else:
+       dims=[1,2,3,4,7,8,9,15,16,17,32,33]
 
     vals = []
     inp=[]
@@ -716,6 +721,7 @@ def generatePatterns():
     PARAMBINDIR = os.path.join("Parameters","DSP","Matrix","Binary","Binary")
     
     configBinaryf32=Tools.Config(PATTERNBINDIR,PARAMBINDIR,"f32")
+    configBinaryf16=Tools.Config(PATTERNBINDIR,PARAMBINDIR,"f16")
     configBinaryq31=Tools.Config(PATTERNBINDIR,PARAMBINDIR,"q31")
     configBinaryq15=Tools.Config(PATTERNBINDIR,PARAMBINDIR,"q15")
     configBinaryq7=Tools.Config(PATTERNBINDIR,PARAMBINDIR,"q7")
@@ -723,6 +729,7 @@ def generatePatterns():
     
     
     writeBinaryTests(configBinaryf32,Tools.F32)
+    writeBinaryTests(configBinaryf16,Tools.F16)
     writeBinaryTests(configBinaryq31,Tools.Q31)
     writeBinaryTests(configBinaryq15,Tools.Q15)
     writeBinaryTests(configBinaryq7,Tools.Q7)
@@ -732,6 +739,7 @@ def generatePatterns():
     
     configUnaryf64=Tools.Config(PATTERNUNDIR,PARAMUNDIR,"f64")
     configUnaryf32=Tools.Config(PATTERNUNDIR,PARAMUNDIR,"f32")
+    configUnaryf16=Tools.Config(PATTERNUNDIR,PARAMUNDIR,"f16")
     configUnaryq31=Tools.Config(PATTERNUNDIR,PARAMUNDIR,"q31")
     configUnaryq15=Tools.Config(PATTERNUNDIR,PARAMUNDIR,"q15")
     configUnaryq7=Tools.Config(PATTERNUNDIR,PARAMUNDIR,"q7")
@@ -739,6 +747,8 @@ def generatePatterns():
     
     writeUnaryTests(configUnaryf64,Tools.F64)
     writeUnaryTests(configUnaryf32,Tools.F32)
+    writeUnaryTests(configUnaryf16,Tools.F16)
+    writeUnaryTests(configUnaryq31,Tools.Q31)
     writeUnaryTests(configUnaryq31,Tools.Q31)
     writeUnaryTests(configUnaryq15,Tools.Q15)
     writeUnaryTests(configUnaryq7,Tools.Q7)
