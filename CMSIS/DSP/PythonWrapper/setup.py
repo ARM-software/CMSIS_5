@@ -5,6 +5,7 @@ import config
 import sys
 import os
 from config import ROOT
+import re
 
 includes = [os.path.join(ROOT,"Include"),os.path.join(ROOT,"PrivateInclude"),os.path.join("cmsisdsp_pkg","src")]
 
@@ -53,6 +54,7 @@ controller.remove(os.path.join(ROOT,"Source","ControllerFunctions","ControllerFu
 
 common = glob.glob(os.path.join(ROOT,"Source","CommonTables","*.c"))
 common.remove(os.path.join(ROOT,"Source","CommonTables","CommonTables.c"))
+common.remove(os.path.join(ROOT,"Source","CommonTables","CommonTablesF16.c"))
 
 interpolation = glob.glob(os.path.join(ROOT,"Source","InterpolationFunctions","*.c"))
 interpolation.remove(os.path.join(ROOT,"Source","InterpolationFunctions","InterpolationFunctions.c"))
@@ -62,19 +64,24 @@ interpolation.remove(os.path.join(ROOT,"Source","InterpolationFunctions","Interp
 modulesrc = []
 modulesrc.append(os.path.join("cmsisdsp_pkg","src","cmsismodule.c"))
 
+allsrcs = support + fastmath + filtering + matrix + statistics + complexf + basic
+allsrcs = allsrcs + controller + transform + modulesrc + common+ interpolation
+
+def notf16(number):
+  if re.match(r'^.*_f16.c$',number):
+     return(False)
+  else:
+     return(True)
+
+# If there are too many files, the linker command in failing on Windows.
+# So f16 functions are removed since they are not currently available in the wrapper.
+# A next version will have to structure this wrapper more cleanly so that the
+# build can work even with more functions
+srcs = list(filter(notf16, allsrcs))
+
+
 module1 = Extension(config.extensionName,
-                    sources = (support
-                              + fastmath
-                              + filtering
-                              + matrix
-                              + statistics
-                              + complexf
-                              + basic
-                              + controller
-                              + transform
-                              + modulesrc
-                              + common
-                              + interpolation
+                    sources = (srcs
                               )
                               ,
                     include_dirs =  includes + [numpy.get_include()],
@@ -86,7 +93,7 @@ setup (name = config.setupName,
        version = '0.0.1',
        description = config.setupDescription,
        ext_modules = [module1],
-       author = 'Copyright (C) 2010-2019 ARM Limited or its affiliates. All rights reserved.',
+       author = 'Copyright (C) 2010-2020 ARM Limited or its affiliates. All rights reserved.',
        url="https://github.com/ARM-software/CMSIS_5",
        classifiers=[
         "Programming Language :: Python",
