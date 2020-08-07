@@ -52,7 +52,6 @@
  */
 #if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
 
-#include <stdio.h>
 #include "arm_helium_utils.h"
 
 #define DONTCARE            0 /* inactive lane content */

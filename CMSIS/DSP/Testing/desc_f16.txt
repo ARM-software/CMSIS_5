@@ -5,6 +5,97 @@ group Root {
         class = DSPTests
         folder = DSP
 
+        group Statistics Tests {
+           class = StatsTests
+           folder = Stats
+
+           suite Statistics Tests F16 {
+              class = StatsTestsF16
+              folder = StatsF16
+
+              Pattern INPUT1_F16_ID : Input1_f16.txt 
+              Pattern INPUT2_F16_ID : Input2_f16.txt 
+              Pattern MAXINDEXES_S16_ID : MaxIndexes1_s16.txt
+              Pattern MAXVALS_F16_ID : MaxVals1_f16.txt
+              Pattern MEANVALS_F16_ID : MeanVals2_f16.txt
+              Pattern MININDEXES_S16_ID : MinIndexes3_s16.txt
+              Pattern MINVALS_F16_ID : MinVals3_f16.txt
+              Pattern POWERVALS_F16_ID : PowerVals4_f16.txt
+              Pattern RMSVALS_F16_ID : RmsVals5_f16.txt
+              Pattern STDVALS_F16_ID : StdVals6_f16.txt
+              Pattern VARVALS_F16_ID : VarVals7_f16.txt
+
+              //Pattern INPUT22_F16_ID : Input22_f16.txt 
+              //Pattern DIM22_S16_ID : Dims22_s16.txt 
+              //Pattern REF22_ENTROPY_F16_ID : RefEntropy22_f16.txt
+//
+              //Pattern INPUT23_F16_ID : Input23_f16.txt 
+              //Pattern DIM23_S16_ID : Dims23_s16.txt 
+              //Pattern REF23_LOGSUMEXP_F16_ID : RefLogSumExp23_f16.txt
+//
+              //Pattern INPUTA24_F16_ID : InputA24_f16.txt 
+              //Pattern INPUTB24_F16_ID : InputB24_f16.txt
+              //Pattern DIM24_S16_ID : Dims24_s16.txt 
+              //Pattern REF24_KL_F16_ID : RefKL24_f16.txt
+//
+              //Pattern INPUTA25_F16_ID : InputA25_f16.txt 
+              //Pattern INPUTB25_F16_ID : InputB25_f16.txt
+              //Pattern DIM25_S16_ID : Dims25_s16.txt 
+              //Pattern REF25_LOGSUMEXP_DOT_F16_ID : RefLogSumExpDot25_f16.txt
+
+              Output  OUT_F16_ID : Output
+              Output  OUT_S16_ID : Index
+              Output  TMP_F16_ID : Temp
+
+              Functions {
+                Test nb=7    arm_max_f16:test_max_f16
+                Test nb=8n   arm_max_f16:test_max_f16
+                Test nb=8n+1 arm_max_f16:test_max_f16
+
+                Test nb=7    arm_mean_f16:test_mean_f16
+                Test nb=8n   arm_mean_f16:test_mean_f16
+                Test nb=8n+1 arm_mean_f16:test_mean_f16
+
+                Test nb=7    arm_min_f16:test_min_f16
+                Test nb=8n   arm_min_f16:test_min_f16
+                Test nb=8n+1 arm_min_f16:test_min_f16
+
+                Test nb=7    arm_power_f16:test_power_f16
+                Test nb=8n   arm_power_f16:test_power_f16
+                Test nb=8n+1 arm_power_f16:test_power_f16
+
+                Test nb=7    arm_rms_f16:test_rms_f16
+                Test nb=8n   arm_rms_f16:test_rms_f16
+                Test nb=8n+1 arm_rms_f16:test_rms_f16
+
+                Test nb=7    arm_std_f16:test_std_f16
+                Test nb=8n   arm_std_f16:test_std_f16
+                Test nb=8n+1 arm_std_f16:test_std_f16
+
+                Test nb=7    arm_var_f16:test_var_f16
+                Test nb=8n   arm_var_f16:test_var_f16
+                Test nb=8n+1 arm_var_f16:test_var_f16
+
+                disabled{arm_entropy_f16:test_entropy_f16}
+                disabled{arm_logsumexp_f16:test_logsumexp_f16}
+                disabled{arm_kullback_leibler_f16:test_kullback_leibler_f16}
+                disabled{arm_logsumexp_dot_prod_f16:test_logsumexp_dot_prod_f16}
+
+                disabled{Test nb=7    arm_max_no_idx_f16:test_max_no_idx_f16}
+                disabled{Test nb=8n   arm_max_no_idx_f16:test_max_no_idx_f16}
+                disabled{Test nb=8n+1 arm_max_no_idx_f16:test_max_no_idx_f16}
+
+                Test long  arm_mean_f16:test_mean_f16
+                Test long  arm_rms_f16:test_rms_f16
+                Test long  arm_std_f16:test_std_f16
+                Test long  arm_var_f16:test_var_f16
+
+                Test stability  arm_std_f16:test_std_stability_f16
+              }
+           }
+        }
+
+
         group Interpolation Tests{
           class = InterpolationTests
           folder = Interpolation

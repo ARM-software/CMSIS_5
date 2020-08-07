@@ -343,6 +343,7 @@ def generatePatterns():
     PARAMDIR = os.path.join("Parameters","DSP","Stats","Stats")
     
     configf32=Tools.Config(PATTERNDIR,PARAMDIR,"f32")
+    configf16=Tools.Config(PATTERNDIR,PARAMDIR,"f16")
     configf64=Tools.Config(PATTERNDIR,PARAMDIR,"f64")
     configq31=Tools.Config(PATTERNDIR,PARAMDIR,"q31")
     configq15=Tools.Config(PATTERNDIR,PARAMDIR,"q15")
@@ -354,6 +355,8 @@ def generatePatterns():
     writeTests(configq31,1,31)
     writeTests(configq15,1,15)
     writeTests(configq7,1,7)
+
+    nb=writeTests(configf16,1,16)
 
 if __name__ == '__main__':
   generatePatterns()

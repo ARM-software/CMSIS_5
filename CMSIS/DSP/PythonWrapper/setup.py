@@ -38,6 +38,7 @@ matrix.remove(os.path.join(ROOT,"Source","MatrixFunctions","MatrixFunctionsF16.c
 
 statistics = glob.glob(os.path.join(ROOT,"Source","StatisticsFunctions","*.c"))
 statistics.remove(os.path.join(ROOT,"Source","StatisticsFunctions","StatisticsFunctions.c"))
+statistics.remove(os.path.join(ROOT,"Source","StatisticsFunctions","StatisticsFunctionsF16.c"))
 
 complexf = glob.glob(os.path.join(ROOT,"Source","ComplexMathFunctions","*.c"))
 complexf.remove(os.path.join(ROOT,"Source","ComplexMathFunctions","ComplexMathFunctions.c"))

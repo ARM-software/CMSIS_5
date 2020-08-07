@@ -26,12 +26,104 @@
 #ifndef _STATISTICS_FUNCTIONS_F16_H_
 #define _STATISTICS_FUNCTIONS_F16_H_
 
+#include "arm_math_types_f16.h"
+#include "arm_math_memory.h"
+
+#include "dsp/none.h"
+#include "dsp/utils.h"
+
+#include "dsp/basic_math_functions_f16.h"
+#include "dsp/fast_math_functions_f16.h"
+
 #ifdef   __cplusplus
 extern "C"
 {
 #endif
 
 #if defined(ARM_FLOAT16_SUPPORTED)
+
+ /**
+   * @brief  Sum of the squares of the elements of a floating-point vector.
+   * @param[in]  pSrc       is input pointer
+   * @param[in]  blockSize  is the number of samples to process
+   * @param[out] pResult    is output value.
+   */
+  void arm_power_f16(
+  const float16_t * pSrc,
+        uint32_t blockSize,
+        float16_t * pResult);
+
+ /**
+   * @brief  Mean value of a floating-point vector.
+   * @param[in]  pSrc       is input pointer
+   * @param[in]  blockSize  is the number of samples to process
+   * @param[out] pResult    is output value.
+   */
+  void arm_mean_f16(
+  const float16_t * pSrc,
+        uint32_t blockSize,
+        float16_t * pResult);
+
+  /**
+   * @brief  Variance of the elements of a floating-point vector.
+   * @param[in]  pSrc       is input pointer
+   * @param[in]  blockSize  is the number of samples to process
+   * @param[out] pResult    is output value.
+   */
+  void arm_var_f16(
+  const float16_t * pSrc,
+        uint32_t blockSize,
+        float16_t * pResult);
+
+ /**
+   * @brief  Root Mean Square of the elements of a floating-point vector.
+   * @param[in]  pSrc       is input pointer
+   * @param[in]  blockSize  is the number of samples to process
+   * @param[out] pResult    is output value.
+   */
+  void arm_rms_f16(
+  const float16_t * pSrc,
+        uint32_t blockSize,
+        float16_t * pResult);
+
+ /**
+   * @brief  Standard deviation of the elements of a floating-point vector.
+   * @param[in]  pSrc       is input pointer
+   * @param[in]  blockSize  is the number of samples to process
+   * @param[out] pResult    is output value.
+   */
+  void arm_std_f16(
+  const float16_t * pSrc,
+        uint32_t blockSize,
+        float16_t * pResult);
+
+ /**
+   * @brief  Minimum value of a floating-point vector.
+   * @param[in]  pSrc       is input pointer
+   * @param[in]  blockSize  is the number of samples to process
+   * @param[out] pResult    is output pointer
+   * @param[out] pIndex     is the array index of the minimum value in the input buffer.
+   */
+  void arm_min_f16(
+  const float16_t * pSrc,
+        uint32_t blockSize,
+        float16_t * pResult,
+        uint32_t * pIndex);
+
+/**
+ * @brief Maximum value of a floating-point vector.
+ * @param[in]  pSrc       points to the input buffer
+ * @param[in]  blockSize  length of the input vector
+ * @param[out] pResult    maximum value returned here
+ * @param[out] pIndex     index of maximum value returned here
+ */
+  void arm_max_f16(
+  const float16_t * pSrc,
+        uint32_t blockSize,
+        float16_t * pResult,
+        uint32_t * pIndex);
+
+
 #endif /*defined(ARM_FLOAT16_SUPPORTED)*/
 #ifdef   __cplusplus
 }

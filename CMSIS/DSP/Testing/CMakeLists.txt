@@ -329,6 +329,7 @@ set(TESTSRC16
   Source/Tests/BasicTestsF16.cpp
   Source/Tests/ComplexTestsF16.cpp
   Source/Tests/InterpolationTestsF16.cpp
+  Source/Tests/StatsTestsF16.cpp
   Source/Tests/FIRF16.cpp
   Source/Tests/BIQUADF16.cpp
   Source/Tests/MISCF16.cpp
