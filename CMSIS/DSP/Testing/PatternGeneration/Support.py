@@ -85,15 +85,27 @@ def writeTestsF32(config):
     va = np.random.rand(NBSAMPLES)
     va = Tools.normalize(va)
     config.writeInput(1,va,"Samples")
-
     config.writeInputQ15(3,va,"Samples")
     config.writeInputQ31(4,va,"Samples")
     config.writeInputQ7(5,va,"Samples")
+    config.writeInputF16(11,va,"Samples")
+
 
     # This is for benchmarking the weighted sum and we use only one test pattern
     genWsum(config,6)
     
 
+def writeTestsF16(config):
+    NBSAMPLES=256
+
+    va = np.random.rand(NBSAMPLES)
+    va = Tools.normalize(va)
+    config.writeInputF32(1,va,"Samples")
+    config.writeInputQ15(3,va,"Samples")
+    config.writeInput(11,va,"Samples")
+
+    # This is for benchmarking the weighted sum and we use only one test pattern
+    genWsum(config,6)
 
 def writeTestsQ31(config):
     NBSAMPLES=256
@@ -115,6 +127,7 @@ def writeTestsQ15(config):
     config.writeInput(3,va,"Samples")
     config.writeInputQ31(4,va,"Samples")
     config.writeInputQ7(5,va,"Samples")
+    config.writeInputF16(11,va,"Samples")
 
 def writeTestsQ7(config):
     NBSAMPLES=256
@@ -171,16 +184,19 @@ def generatePatterns():
     PARAMDIR = os.path.join("Parameters","DSP","Support","Support")
     
     configf32=Tools.Config(PATTERNDIR,PARAMDIR,"f32")
+    configf16=Tools.Config(PATTERNDIR,PARAMDIR,"f16")
     configq31=Tools.Config(PATTERNDIR,PARAMDIR,"q31")
     configq15=Tools.Config(PATTERNDIR,PARAMDIR,"q15")
     configq7=Tools.Config(PATTERNDIR,PARAMDIR,"q7")
     
     writeTestsF32(configf32)
+    writeTestsF16(configf16)
     writeTestsQ31(configq31)
     writeTestsQ15(configq15)
     writeTestsQ7(configq7)
 
     writeTests2(configf32,0)
+    
 
     
     # For benchmarking we need to vary number of vectors and vector dimension separately
@@ -188,8 +204,10 @@ def generatePatterns():
     PARAMBARDIR = os.path.join("Parameters","DSP","SupportBar")
     
     configBarf32=Tools.Config(PATTERNBARDIR,PARAMBARDIR,"f32")
+    configBarf16=Tools.Config(PATTERNBARDIR,PARAMBARDIR,"f16")
     
     writeBarTests(configBarf32)
+    writeBarTests(configBarf16)
 
 if __name__ == '__main__':
   generatePatterns()

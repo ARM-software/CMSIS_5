@@ -25,11 +25,13 @@
       More support for f16 datatype:
       - arm_cfft_f16
       - arm_rfft_fast_f16 
-      - f16 Basic Maths
-      - f16 Complex Maths
-      - f16 filtering (FIR and BiQuad ad correlate)
+      - f16 basic Maths
+      - f16 complex Maths
+      - f16 filtering (FIR and BiQuad and correlate)
       - f16 matrix
       - f16 interpolation
+      - f16 statistics
+      - f16 support functions
 
     </td>
   </tr>

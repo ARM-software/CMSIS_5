@@ -28,16 +28,16 @@ group Root {
               //Pattern INPUT22_F16_ID : Input22_f16.txt 
               //Pattern DIM22_S16_ID : Dims22_s16.txt 
               //Pattern REF22_ENTROPY_F16_ID : RefEntropy22_f16.txt
-//
+              //
               //Pattern INPUT23_F16_ID : Input23_f16.txt 
               //Pattern DIM23_S16_ID : Dims23_s16.txt 
               //Pattern REF23_LOGSUMEXP_F16_ID : RefLogSumExp23_f16.txt
-//
+              //
               //Pattern INPUTA24_F16_ID : InputA24_f16.txt 
               //Pattern INPUTB24_F16_ID : InputB24_f16.txt
               //Pattern DIM24_S16_ID : Dims24_s16.txt 
               //Pattern REF24_KL_F16_ID : RefKL24_f16.txt
-//
+              //
               //Pattern INPUTA25_F16_ID : InputA25_f16.txt 
               //Pattern INPUTB25_F16_ID : InputB25_f16.txt
               //Pattern DIM25_S16_ID : Dims25_s16.txt 
@@ -93,6 +93,73 @@ group Root {
                 Test stability  arm_std_f16:test_std_stability_f16
               }
            }
+        }
+
+        group Support Tests {
+           class = SupportTests
+           folder = Support
+
+           suite Support Tests F16 {
+              class = SupportTestsF16
+              folder = SupportF16
+
+              Pattern INPUTS_F16_ID : Inputs6_f16.txt 
+              Pattern WEIGHTS_F16_ID : Weights6_f16.txt 
+              Pattern REF_F16_ID : Ref6_f16.txt
+
+              Pattern SAMPLES_F32_ID : Samples1_f32.txt 
+              Pattern SAMPLES_Q15_ID : Samples3_q15.txt 
+              Pattern SAMPLES_F16_ID : Samples11_f16.txt 
+
+              Output  OUT_F16_ID : Output
+              Output  OUT_Q15_ID : OutputQ15
+              Output  OUT_F32_ID : OutputF32
+             
+              Functions {
+                test_weighted_sum_f16 nb=3:test_weighted_sum_f16
+                test_weighted_sum_f16 nb=4n:test_weighted_sum_f16
+                test_weighted_sum_f16 nb=4n+1:test_weighted_sum_f16
+                test_copy_f16 nb=7:test_copy_f16
+                test_copy_f16 nb=8n:test_copy_f16
+                test_copy_f16 nb=8n+1:test_copy_f16
+                test_fill_f16 nb=7:test_fill_f16
+                test_fill_f16 nb=8n:test_fill_f16
+                test_fill_f16 nb=8n+1:test_fill_f16
+                test_f16_q15 nb=7:test_f16_q15
+                test_f16_q15 nb=8n:test_f16_q15
+                test_f16_q15 nb=8n+1:test_f16_q15
+                test_f16_f32 nb=7:test_f16_f32
+                test_f16_f32 nb=8n:test_f16_f32
+                test_f16_f32 nb=8n+1:test_f16_f32
+                test_q15_f16 nb=7:test_q15_f16
+                test_q15_f16 nb=8n:test_q15_f16
+                test_q15_f16 nb=8n+1:test_q15_f16
+                test_f32_f16 nb=3:test_f32_f16
+                test_f32_f16 nb=4n:test_f32_f16
+                test_f32_f16 nb=4n+1:test_f32_f16
+              }
+
+           }
+
+        }
+
+        suite Support Bar Tests F16 {
+              class = SupportBarTestsF16
+              folder = SupportBarF16
+
+              Pattern SAMPLES_F16_ID : Inputs1_f16.txt 
+              Pattern COEFS_F16_ID : Weights1_f16.txt 
+              Pattern REF_F16_ID : Ref1_f16.txt
+              Pattern DIM_S16_ID : Dims1_s16.txt
+
+
+              Output  OUT_SAMPLES_F16_ID : Output
+
+
+              Functions {
+                test_barycenter_f16:test_barycenter_f16
+              }
+
         }
 
 

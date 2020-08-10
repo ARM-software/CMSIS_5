@@ -25,6 +25,7 @@ transform.remove(os.path.join(ROOT,"Source","TransformFunctions","TransformFunct
 
 support = glob.glob(os.path.join(ROOT,"Source","SupportFunctions","*.c"))
 support.remove(os.path.join(ROOT,"Source","SupportFunctions","SupportFunctions.c"))
+support.remove(os.path.join(ROOT,"Source","SupportFunctions","SupportFunctionsF16.c"))
 
 fastmath = glob.glob(os.path.join(ROOT,"Source","FastMathFunctions","*.c"))
 fastmath.remove(os.path.join(ROOT,"Source","FastMathFunctions","FastMathFunctions.c"))

@@ -337,6 +337,8 @@ set(TESTSRC16
   Source/Tests/UnaryTestsF16.cpp
   Source/Tests/TransformCF16.cpp
   Source/Tests/TransformRF16.cpp
+  Source/Tests/SupportTestsF16.cpp
+  Source/Tests/SupportBarTestsF16.cpp
   )
 endif()
 endif() 
