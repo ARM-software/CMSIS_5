@@ -31,7 +31,7 @@
 #include "dsp/support_functions.h"
 
 /**
- * @addtogroup groupSupport
+ * @addtogroup weightedsum
  * @{
  */
 
@@ -182,5 +182,5 @@ float32_t arm_weighted_sum_f32(const float32_t *in, const float32_t *weigths, ui
 #endif /* defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE) */
 
 /**
- * @} end of groupSupport group
+ * @} end of weightedsum group
  */

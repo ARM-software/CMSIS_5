@@ -30,7 +30,7 @@
 
 
 /**
- * @addtogroup groupSVM
+ * @addtogroup rbfsvm
  * @{
  */
 
@@ -517,5 +517,5 @@ void arm_svm_rbf_predict_f32(
 #endif /* defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE) */
 
 /**
- * @} end of groupSVM group
+ * @} end of rbfsvm group
  */

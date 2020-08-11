@@ -31,9 +31,19 @@
 #include <limits.h>
 #include <math.h>
 
-
 /**
   @ingroup groupSupport
+ */
+
+/**
+  @defgroup barycenter Barycenter
+
+  Barycenter of weighted vectors
+ */
+
+/**
+  @addtogroup barycenter
+  @{
  */
 
 
@@ -255,7 +265,7 @@ void arm_barycenter_f16(const float16_t *in, const float16_t *weights, float16_t
 #endif /* defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE) */
 
 /**
- * @} end of groupSupport group
+ * @} end of barycenter group
  */
 
 #endif /* #if defined(ARM_FLOAT16_SUPPORTED) */ 

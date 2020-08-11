@@ -31,6 +31,8 @@
 
 #include "dsp/none.h"
 #include "dsp/utils.h"
+
+/* For sqrt_f32 */
 #include "dsp/fast_math_functions.h"
 
 #ifdef   __cplusplus
@@ -69,6 +71,42 @@ __STATIC_FORCEINLINE arm_status arm_sqrt_f16(
   @} end of SQRT group
  */
   
+/**
+  @brief         Floating-point vector of log values.
+  @param[in]     pSrc       points to the input vector
+  @param[out]    pDst       points to the output vector
+  @param[in]     blockSize  number of samples in each vector
+  @return        none
+ */
+  void arm_vlog_f16(
+  const float16_t * pSrc,
+        float16_t * pDst,
+        uint32_t blockSize);
+
+/**
+  @brief         Floating-point vector of exp values.
+  @param[in]     pSrc       points to the input vector
+  @param[out]    pDst       points to the output vector
+  @param[in]     blockSize  number of samples in each vector
+  @return        none
+ */
+  void arm_vexp_f16(
+  const float16_t * pSrc,
+        float16_t * pDst,
+        uint32_t blockSize);
+
+  /**
+  @brief         Floating-point vector of inverse values.
+  @param[in]     pSrc       points to the input vector
+  @param[out]    pDst       points to the output vector
+  @param[in]     blockSize  number of samples in each vector
+  @return        none
+ */
+  void arm_vinverse_f16(
+  const float16_t * pSrc,
+        float16_t * pDst,
+        uint32_t blockSize);
+
 #endif /*defined(ARM_FLOAT16_SUPPORTED)*/
 #ifdef   __cplusplus
 }

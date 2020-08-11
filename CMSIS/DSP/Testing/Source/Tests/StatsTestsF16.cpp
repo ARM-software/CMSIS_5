@@ -4,14 +4,18 @@
 #include "Test.h"
 
 
-#define SNR_THRESHOLD 50
+#define SNR_THRESHOLD 48
+#define SNR_KULLBACK_THRESHOLD 40
 /* 
 
 Reference patterns are generated with
 a double precision computation.
 
 */
-#define REL_ERROR (3.0e-3)
+#define REL_ERROR (6.0e-3)
+
+#define REL_KULLBACK_ERROR (5.0e-3)
+#define ABS_KULLBACK_ERROR (5.0e-3)
 
     void StatsTestsF16::test_max_f16()
     {
@@ -39,7 +43,7 @@ a double precision computation.
 
     }
 
-#if 0
+
     void StatsTestsF16::test_max_no_idx_f16()
     {
         const float16_t *inp  = inputA.ptr();
@@ -59,7 +63,7 @@ a double precision computation.
         ASSERT_EQ(result,refp[this->refOffset]);
 
     }
-#endif 
+
 
     void StatsTestsF16::test_min_f16()
     {
@@ -241,7 +245,7 @@ a double precision computation.
 
     }
 
-#if 0
+
     void StatsTestsF16::test_entropy_f16()
     {
       const float16_t *inp  = inputA.ptr();
@@ -298,9 +302,9 @@ a double precision computation.
          inpB += dimsp[i+1];
       }
 
-      ASSERT_SNR(ref,output,(float16_t)SNR_THRESHOLD);
+      ASSERT_SNR(ref,output,(float16_t)SNR_KULLBACK_THRESHOLD);
 
-      ASSERT_REL_ERROR(ref,output,REL_ERROR);
+      ASSERT_CLOSE_ERROR(ref,output,ABS_KULLBACK_ERROR,REL_KULLBACK_ERROR);
     } 
 
     void StatsTestsF16::test_logsumexp_dot_prod_f16()
@@ -325,7 +329,7 @@ a double precision computation.
       ASSERT_REL_ERROR(ref,output,REL_ERROR);
     } 
 
-  #endif
+
   
     void StatsTestsF16::setUp(Testing::testID_t id,std::vector<Testing::param_t>& paramsArgs,Client::PatternMgr *mgr)
     {
@@ -595,7 +599,7 @@ a double precision computation.
                refOffset = 2;
             }
             break;
-#if 0
+
             case StatsTestsF16::TEST_ENTROPY_F16_22:
             {
                inputA.reload(StatsTestsF16::INPUT22_F16_ID,mgr);
@@ -651,7 +655,7 @@ a double precision computation.
 
             case StatsTestsF16::TEST_MAX_NO_IDX_F16_26:
             {
-               inputA.reload(StatsTestsF16::INPUT1_F16_ID,mgr,3);
+               inputA.reload(StatsTestsF16::INPUT1_F16_ID,mgr,7);
               
                ref.reload(StatsTestsF16::MAXVALS_F16_ID,mgr);
                
@@ -684,7 +688,7 @@ a double precision computation.
                refOffset = 2;
             }
             break;
-#endif
+
             case TEST_MEAN_F16_29:
                inputA.reload(StatsTestsF16::INPUT2_F16_ID,mgr,100);
               

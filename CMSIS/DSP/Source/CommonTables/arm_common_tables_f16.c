@@ -12550,6 +12550,32 @@ const float16_t twiddleCoefF16_rfft_4096[4096] = {
 
 #endif /*!defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_FFT_ALLOW_TABLES)*/
 
+#if (defined(ARM_MATH_MVEF) || defined(ARM_MATH_HELIUM)) && !defined(ARM_MATH_AUTOVECTORIZE)
+const float16_t exp_tab_f16[8] = {
+    (1.f16),
+    (0.0416598916054f16),
+    (0.500000596046f16),
+    (0.00138889f16),
+    (1.00000011921f16),
+    (0.00833693705499f16),
+    (0.166665703058f16),
+    (0.000195780929062f16),
+};
+
+const float16_t __logf_lut_f16[8] = {
+    -2.295614848256274f16,         /*p0*/
+    -2.470711633419806f16,         /*p4*/
+    -5.686926051100417f16,         /*p2*/
+    -0.165253547131978f16,         /*p6*/
+    +5.175912446351073f16,         /*p1*/
+    +0.844006986174912f16,         /*p5*/
+    +4.584458825456749f16,         /*p3*/
+    +0.014127821926000f16          /*p7*/
+};
+
+#endif /* (defined(ARM_MATH_MVEF) || defined(ARM_MATH_HELIUM)) && !defined(ARM_MATH_AUTOVECTORIZE) */
+
+
 #endif /* #if defined(ARM_FLOAT16_SUPPORTED) */
 
 #endif /* Not ARM AC5 */

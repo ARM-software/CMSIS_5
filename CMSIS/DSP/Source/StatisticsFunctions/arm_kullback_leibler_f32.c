@@ -30,7 +30,7 @@
 
 
 /**
- * @addtogroup groupStats
+ * @addtogroup Kullback-Leibler
  * @{
  */
 
@@ -187,5 +187,5 @@ float32_t arm_kullback_leibler_f32(const float32_t * pSrcA,const float32_t * pSr
 #endif /* defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE) */
 
 /**
- * @} end of groupStats group
+ * @} end of Kullback-Leibler group
  */

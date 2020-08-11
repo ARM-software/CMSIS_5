@@ -74,14 +74,12 @@ void arm_var_f16(
     arm_mean_f16(pSrc, blockSize, &fMean);
 
 /* 6.14 bug */
-#if defined(SDCOMP_xxx)
-#if defined (__ARMCC_VERSION) && (__ARMCC_VERSION >= 6100100)
+#if defined (__ARMCC_VERSION) && (__ARMCC_VERSION >= 6100100) && (__ARMCC_VERSION < 6150001)
     __asm volatile(
         "   vmov.i32                     %[acc], #0 \n"
         : [acc] "+t"(sumVec)
         : 
         : );
-#endif
 #endif
 
     blkCnt = blockSize;

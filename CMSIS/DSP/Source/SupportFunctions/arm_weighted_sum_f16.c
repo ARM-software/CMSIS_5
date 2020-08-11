@@ -32,9 +32,19 @@
 
 #if defined(ARM_FLOAT16_SUPPORTED)
 
+/**
+  @ingroup groupSupport
+ */
 
 /**
- * @addtogroup groupSupport
+  @defgroup weightedsum Weighted Sum
+
+  Weighted sum of values
+ */
+
+
+/**
+ * @addtogroup weightedsum
  * @{
  */
 
@@ -128,7 +138,7 @@ float16_t arm_weighted_sum_f16(const float16_t *in, const float16_t *weigths, ui
 #endif /* defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE) */
 
 /**
- * @} end of groupSupport group
+ * @} end of weightedsum group
  */
 
 #endif /* #if defined(ARM_FLOAT16_SUPPORTED) */ 

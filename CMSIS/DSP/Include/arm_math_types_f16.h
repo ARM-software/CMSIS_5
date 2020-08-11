@@ -140,7 +140,7 @@ won't be built.
 #define F16_ABSMAX   ((float16_t)FLT_MAX)
 #define F16_ABSMIN   ((float16_t)0.0)
 
-
+#define F16INFINITY ((float16_t)0x07c00)
   
 #endif /* ARM_FLOAT16_SUPPORTED*/
 #endif /* !defined( __CC_ARM ) */

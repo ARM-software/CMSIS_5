@@ -30,7 +30,7 @@
 
 
 /**
- * @addtogroup groupSVM
+ * @addtogroup linearsvm
  * @{
  */
 
@@ -449,5 +449,5 @@ void arm_svm_linear_predict_f32(
 #endif /* defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE) */
 
 /**
- * @} end of groupSVM group
+ * @} end of linearsvm group
  */

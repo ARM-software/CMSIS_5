@@ -30,7 +30,7 @@
 
 
 /**
- * @addtogroup groupStats
+ * @addtogroup LogSumExp
  * @{
  */
 
@@ -62,5 +62,5 @@ float32_t arm_logsumexp_dot_prod_f32(const float32_t * pSrcA,
 }
 
 /**
- * @} end of groupStats group
+ * @} end of LogSumExp group
  */

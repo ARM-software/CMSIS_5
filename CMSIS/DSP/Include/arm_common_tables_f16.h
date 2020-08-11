@@ -113,6 +113,14 @@ extern "C"
     
 #endif /* !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_FFT_ALLOW_TABLES) */
 
+#if !defined(__CC_ARM) && defined(ARM_FLOAT16_SUPPORTED)
+
+#if (defined(ARM_MATH_MVEF) || defined(ARM_MATH_HELIUM)) && !defined(ARM_MATH_AUTOVECTORIZE)
+       extern const float16_t exp_tab_f16[8];
+       extern const float16_t __logf_lut_f16[8];
+#endif /* (defined(ARM_MATH_MVEF) || defined(ARM_MATH_HELIUM)) && !defined(ARM_MATH_AUTOVECTORIZE) */
+#endif 
+       
 
 #ifdef   __cplusplus
 }

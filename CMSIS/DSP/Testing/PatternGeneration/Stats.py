@@ -116,6 +116,13 @@ def logSumExpDotTest(config,nb):
     config.writeInputS16(nb, dims,"Dims")
     config.writeReference(nb, outputs,"RefLogSumExpDot")
 
+def writeF16OnlyTests(config,nb):
+    entropyTest(config,nb)
+    logsumexpTest(config,nb+1)
+    klTest(config,nb+2)
+    logSumExpDotTest(config,nb+3)
+    return(nb+4)
+
 def writeF32OnlyTests(config,nb):
     entropyTest(config,nb)
     logsumexpTest(config,nb+1)
@@ -357,6 +364,7 @@ def generatePatterns():
     writeTests(configq7,1,7)
 
     nb=writeTests(configf16,1,16)
+    nb=writeF16OnlyTests(configf16,22)
 
 if __name__ == '__main__':
   generatePatterns()
