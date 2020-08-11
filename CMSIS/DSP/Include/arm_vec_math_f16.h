@@ -40,6 +40,39 @@ extern "C"
 
 static const float16_t __logf_rng_f16=0.693147180f16;
 
+/* fast inverse approximation (3x newton) */
+__STATIC_INLINE f16x8_t vrecip_medprec_f16(
+    f16x8_t x)
+{
+    q15x8_t         m;
+    f16x8_t         b;
+    any16x8_t       xinv;
+    f16x8_t         ax = vabsq(x);
+
+    xinv.f = ax;
+
+    m = 0x03c00 - (xinv.i & 0x07c00);
+    xinv.i = xinv.i + m;
+    xinv.f = 1.41176471f16 - 0.47058824f16 * xinv.f;
+    xinv.i = xinv.i + m;
+
+    b = 2.0f16 - xinv.f * ax;
+    xinv.f = xinv.f * b;
+
+    b = 2.0f16 - xinv.f * ax;
+    xinv.f = xinv.f * b;
+
+    b = 2.0f16 - xinv.f * ax;
+    xinv.f = xinv.f * b;
+
+    xinv.f = vdupq_m(xinv.f, F16INFINITY, vcmpeqq(x, 0.0f));
+    /*
+     * restore sign
+     */
+    xinv.f = vnegq_m(xinv.f, xinv.f, vcmpltq(x, 0.0f));
+
+    return xinv.f;
+}
 
 /* fast inverse approximation (4x newton) */
 __STATIC_INLINE f16x8_t vrecip_hiprec_f16(
@@ -212,6 +245,12 @@ __STATIC_INLINE float16x8_t arm_vec_exponent_f16(float16x8_t x, int16_t nb)
     return (r);
 }
 
+__STATIC_INLINE f16x8_t vpowq_f16(
+    f16x8_t val,
+    f16x8_t n)
+{
+    return vexpq_f16(vmulq_f16(n, vlogq_f16(val)));
+}
 
 
 #endif /* (defined(ARM_MATH_MVEF) || defined(ARM_MATH_HELIUM)) && !defined(ARM_MATH_AUTOVECTORIZE)*/

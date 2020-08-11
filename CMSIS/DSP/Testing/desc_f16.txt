@@ -382,6 +382,51 @@ group Root {
           }
         }
 
+        group Distance Tests {
+           class = DistanceTests
+           folder = Distance
+
+           suite Distance Tests F16 {
+              class = DistanceTestsF16
+              folder = DistanceF16
+
+              Pattern DIMS_S16_ID : Dims1_s16.txt 
+              Pattern DIMS_MINKOWSKI_S16_ID : Dims9_s16.txt 
+
+              Pattern INPUTA_F16_ID : InputA1_f16.txt
+              Pattern INPUTB_F16_ID : InputB1_f16.txt
+
+              Pattern INPUTA_JEN_F16_ID : InputA8_f16.txt
+              Pattern INPUTB_JEN_F16_ID : InputB8_f16.txt
+
+              Pattern REF1_F16_ID : Ref1_f16.txt
+              Pattern REF2_F16_ID : Ref2_f16.txt
+              Pattern REF3_F16_ID : Ref3_f16.txt
+              Pattern REF4_F16_ID : Ref4_f16.txt
+              Pattern REF5_F16_ID : Ref5_f16.txt
+              Pattern REF6_F16_ID : Ref6_f16.txt
+              Pattern REF7_F16_ID : Ref7_f16.txt
+              Pattern REF8_F16_ID : Ref8_f16.txt
+              Pattern REF9_F16_ID : Ref9_f16.txt
+
+              Output  OUT_F16_ID : Output
+              Output  TMPA_F16_ID : TmpA
+              Output  TMPB_F16_ID : TmpB
+
+              Functions {
+                 arm_braycurtis_distance_f16:test_braycurtis_distance_f16
+                 arm_canberra_distance_f16:test_canberra_distance_f16
+                 arm_chebyshev_distance_f16:test_chebyshev_distance_f16
+                 arm_cityblock_distance_f16:test_cityblock_distance_f16
+                 arm_correlation_distance_f16:test_correlation_distance_f16
+                 arm_cosine_distance_f16:test_cosine_distance_f16
+                 arm_euclidean_distance_f16:test_euclidean_distance_f16
+                 arm_jensenshannon_distance_f16:test_jensenshannon_distance_f16
+                 arm_minkowski_distance_f16:test_minkowski_distance_f16
+              }
+           }
+        }
+
         group Filtering Tests {
            class = FilteringTests
            folder = Filtering

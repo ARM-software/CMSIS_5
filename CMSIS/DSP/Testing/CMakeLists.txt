@@ -340,6 +340,7 @@ set(TESTSRC16
   Source/Tests/SupportTestsF16.cpp
   Source/Tests/SupportBarTestsF16.cpp
   Source/Tests/FastMathF16.cpp
+  Source/Tests/DistanceTestsF16.cpp
   )
 endif()
 endif() 
