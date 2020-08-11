@@ -3252,6 +3252,7 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="source"   name="CMSIS/DSP/Source/StatisticsFunctions/StatisticsFunctionsF16.c"/>
         <file category="source"   name="CMSIS/DSP/Source/SupportFunctions/SupportFunctionsF16.c"/>
         <file category="source"   name="CMSIS/DSP/Source/FastMathFunctions/FastMathFunctionsF16.c"/>
+        <file category="source"   name="CMSIS/DSP/Source/DistanceFunctions/DistanceFunctionsF16.c"/>
 
         <!-- Compute Library for Cortex-A -->
         <file category="header"   name="CMSIS/DSP/ComputeLibrary/Include/NEMath.h"        condition="ARMv7-A Device"/>
