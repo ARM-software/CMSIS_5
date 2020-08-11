@@ -146,8 +146,10 @@ def generatePatterns():
     PARAMDIR = os.path.join("Parameters","DSP","SVM","SVM")
     
     configf32=Tools.Config(PATTERNDIR,PARAMDIR,"f32")
+    configf16=Tools.Config(PATTERNDIR,PARAMDIR,"f16")
     
     writeTests(configf32)
+    writeTests(configf16)
 
 if __name__ == '__main__':
   generatePatterns()
