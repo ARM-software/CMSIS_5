@@ -198,9 +198,11 @@ def  generatePatterns():
      PARAMDIR = os.path.join("Parameters","DSP","Distance","Distance")
      
      configf32=Tools.Config(PATTERNDIR,PARAMDIR,"f32")
+     configf16=Tools.Config(PATTERNDIR,PARAMDIR,"f16")
      configu32=Tools.Config(PATTERNDIR,PARAMDIR,"u32")
      
      writeFTests(configf32)
+     writeFTests(configf16)
      writeBTests(configu32)
 
 if __name__ == '__main__':
