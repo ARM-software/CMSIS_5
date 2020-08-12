@@ -134,13 +134,13 @@ won't be built.
 
 
 #if defined(ARM_FLOAT16_SUPPORTED)
-#define F16_MAX   ((float16_t)FLT_MAX)
-#define F16_MIN   (-(float16_t)FLT_MAX)
+#define F16_MAX   ((float16_t)__FLT16_MAX__)
+#define F16_MIN   (-(float16_t)__FLT16_MAX__)
 
-#define F16_ABSMAX   ((float16_t)FLT_MAX)
-#define F16_ABSMIN   ((float16_t)0.0)
+#define F16_ABSMAX   ((float16_t)__FLT16_MAX__)
+#define F16_ABSMIN   ((float16_t)0.0f16)
 
-#define F16INFINITY ((float16_t)0x07c00)
+#define F16INFINITY ((float16_t)__builtin_inf())
   
 #endif /* ARM_FLOAT16_SUPPORTED*/
 #endif /* !defined( __CC_ARM ) */

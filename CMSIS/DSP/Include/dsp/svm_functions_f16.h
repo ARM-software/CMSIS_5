@@ -31,6 +31,7 @@
 
 #include "dsp/none.h"
 #include "dsp/utils.h"
+#include "dsp/svm_defines.h"
 
 #ifdef   __cplusplus
 extern "C"
@@ -73,22 +74,6 @@ __STATIC_INLINE float16_t arm_exponent_f16(float16_t x, int32_t nb)
     }
     return(r);
 }
-
-
-/**
- * @brief Struct for specifying SVM Kernel
- */
-typedef enum
-{
-    ARM_ML_KERNEL_LINEAR = 0,
-             /**< Linear kernel */
-    ARM_ML_KERNEL_POLYNOMIAL = 1,
-             /**< Polynomial kernel */
-    ARM_ML_KERNEL_RBF = 2,
-             /**< Radial Basis Function kernel */
-    ARM_ML_KERNEL_SIGMOID = 3
-             /**< Sigmoid kernel */
-} arm_ml_kernel_type;
 
 
 /**
