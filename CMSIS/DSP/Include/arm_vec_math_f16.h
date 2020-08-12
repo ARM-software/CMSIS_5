@@ -252,6 +252,49 @@ __STATIC_INLINE f16x8_t vpowq_f16(
     return vexpq_f16(vmulq_f16(n, vlogq_f16(val)));
 }
 
+#define INV_NEWTON_INIT_F16  0x7773
+
+__STATIC_INLINE f16x8_t vrecip_f16(f16x8_t vecIn)
+{
+    f16x8_t     vecSx, vecW, vecTmp;
+    any16x8_t   v;
+
+    vecSx = vabsq(vecIn);
+
+    v.f = vecIn;
+    v.i = vsubq(vdupq_n_s16(INV_NEWTON_INIT_F16), v.i);
+
+    vecW = vmulq(vecSx, v.f);
+
+    // v.f = v.f * (8 + w * (-28 + w * (56 + w * (-70 + w *(56 + w * (-28 + w * (8 - w)))))));
+    vecTmp = vsubq(vdupq_n_f16(8.0f), vecW);
+    vecTmp = vfmasq(vecW, vecTmp, -28.0f);
+    vecTmp = vfmasq(vecW, vecTmp, 56.0f);
+    vecTmp = vfmasq(vecW, vecTmp, -70.0f);
+    vecTmp = vfmasq(vecW, vecTmp, 56.0f);
+    vecTmp = vfmasq(vecW, vecTmp, -28.0f);
+    vecTmp = vfmasq(vecW, vecTmp, 8.0f);
+    v.f = vmulq(v.f,  vecTmp);
+
+    v.f = vdupq_m(v.f, F16INFINITY, vcmpeqq(vecIn, 0.0f));
+    /*
+     * restore sign
+     */
+    v.f = vnegq_m(v.f, v.f, vcmpltq(vecIn, 0.0f));
+    return v.f;
+}
+
+__STATIC_INLINE f16x8_t vtanhq_f16(
+    f16x8_t val)
+{
+    f16x8_t         x =
+        vminnmq_f16(vmaxnmq_f16(val, vdupq_n_f16(-10.f)), vdupq_n_f16(10.0f));
+    f16x8_t         exp2x = vexpq_f16(vmulq_n_f16(x, 2.f));
+    f16x8_t         num = vsubq_n_f16(exp2x, 1.f);
+    f16x8_t         den = vaddq_n_f16(exp2x, 1.f);
+    f16x8_t         tanh = vmulq_f16(num, vrecip_f16(den));
+    return tanh;
+}
 
 #endif /* (defined(ARM_MATH_MVEF) || defined(ARM_MATH_HELIUM)) && !defined(ARM_MATH_AUTOVECTORIZE)*/
 

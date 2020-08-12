@@ -32,9 +32,19 @@
 #include <limits.h>
 #include <math.h>
 
+/**
+  @ingroup FloatDist
+ */
 
 /**
-  @addtogroup FloatDist
+  @defgroup JensenShannon Jensen-Shannon distance
+
+  Jensen-Shannon distance
+ */
+
+
+/**
+  @addtogroup JensenShannon
   @{
  */
 
@@ -157,7 +167,7 @@ float16_t arm_jensenshannon_distance_f16(const float16_t *pA,const float16_t *pB
 #endif /* defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE) */
 
 /**
- * @} end of FloatDist group
+ * @} end of JensenShannon group
  */
 
 #endif /* #if defined(ARM_FLOAT16_SUPPORTED) */ 

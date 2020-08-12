@@ -135,7 +135,7 @@ def writeTests(config):
     clf.fit(X, y)
     newSVMTest(config,SIGMOID,[class1,class2],clf,4)
 
-    clf = svm.OneClassSVM(nu=0.1, kernel="rbf", gamma=0.1)
+    clf = svm.OneClassSVM(kernel="linear")
     clf.fit(X)
     newSVMTest(config,RBF,[-1,1],clf,5)
 

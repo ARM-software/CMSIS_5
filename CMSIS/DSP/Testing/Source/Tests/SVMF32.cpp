@@ -129,6 +129,7 @@ void SVMF32::setUp(Testing::testID_t id,std::vector<Testing::param_t>& testparam
           }
           break;
 
+#if 0
           case SVMF32::TEST_SVM_RBF_PREDICT_F32_5:
           {
              
@@ -138,6 +139,7 @@ void SVMF32::setUp(Testing::testID_t id,std::vector<Testing::param_t>& testparam
              ref.reload(SVMF32::REF5_S32_ID,mgr,nb);
           }
           break;
+#endif
       }
 
 
@@ -181,6 +183,7 @@ void SVMF32::setUp(Testing::testID_t id,std::vector<Testing::param_t>& testparam
        switch(id)
        {
           case SVMF32::TEST_SVM_LINEAR_PREDICT_F32_1:
+          //case SVMF32::TEST_SVM_RBF_PREDICT_F32_5:
           {
              
              arm_svm_linear_init_f32(&linear, 
@@ -211,7 +214,6 @@ void SVMF32::setUp(Testing::testID_t id,std::vector<Testing::param_t>& testparam
           break;
 
           case SVMF32::TEST_SVM_RBF_PREDICT_F32_3:
-          case SVMF32::TEST_SVM_RBF_PREDICT_F32_5:
           {
              
              arm_svm_rbf_init_f32(&rbf, 

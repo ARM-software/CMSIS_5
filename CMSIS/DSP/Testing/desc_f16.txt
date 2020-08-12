@@ -111,9 +111,9 @@ group Root {
               Pattern SAMPLES_Q15_ID : Samples3_q15.txt 
               Pattern SAMPLES_F16_ID : Samples11_f16.txt 
 
-              Output  OUT_F16_ID : Output
+              Output  OUT_F32_ID : Output
               Output  OUT_Q15_ID : OutputQ15
-              Output  OUT_F32_ID : OutputF32
+              Output  OUT_F16_ID : OutputF16
              
               Functions {
                 test_weighted_sum_f16 nb=3:test_weighted_sum_f16
@@ -380,6 +380,74 @@ group Root {
                 test_inverse_f16:test_inverse_f16
               }
           }
+        }
+
+        group SVM Tests {
+           class = SVMTests
+           folder = SVM 
+
+           suite SVM F16 {
+              class = SVMF16
+              folder = SVMF16
+
+              Pattern SAMPLES1_F16_ID : Samples1_f16.txt 
+              Pattern PARAMS1_F16_ID : Params1_f16.txt 
+              Pattern DIMS1_S16_ID : Dims1_s16.txt 
+              Pattern REF1_S32_ID : Reference1_s32.txt
+
+              Pattern SAMPLES2_F16_ID : Samples2_f16.txt 
+              Pattern PARAMS2_F16_ID : Params2_f16.txt 
+              Pattern DIMS2_S16_ID : Dims2_s16.txt 
+              Pattern REF2_S32_ID : Reference2_s32.txt
+
+              Pattern SAMPLES3_F16_ID : Samples3_f16.txt 
+              Pattern PARAMS3_F16_ID : Params3_f16.txt 
+              Pattern DIMS3_S16_ID : Dims3_s16.txt 
+              Pattern REF3_S32_ID : Reference3_s32.txt
+
+              Pattern SAMPLES4_F16_ID : Samples4_f16.txt 
+              Pattern PARAMS4_F16_ID : Params4_f16.txt 
+              Pattern DIMS4_S16_ID : Dims4_s16.txt 
+              Pattern REF4_S32_ID : Reference4_s32.txt
+
+              Pattern SAMPLES5_F16_ID : Samples5_f16.txt 
+              Pattern PARAMS5_F16_ID : Params5_f16.txt 
+              Pattern DIMS5_S16_ID : Dims5_s16.txt 
+              Pattern REF5_S32_ID : Reference5_s32.txt
+              
+              Output  OUT_S32_ID : Output
+
+              Functions {
+                 arm_svm_linear_predict_f16:test_svm_linear_predict_f16
+                 arm_svm_polynomial_predict_f16:test_svm_polynomial_predict_f16
+                 arm_svm_rbf_predict_f16:test_svm_rbf_predict_f16
+                 arm_svm_sigmoid_predict_f16:test_svm_sigmoid_predict_f16
+                 disabled{arm_svm_oneclass_predict_f16:test_svm_linear_predict_f16}
+              }
+           }
+        }
+
+        group Bayes Tests {
+           class = BayesTests
+           folder = Bayes 
+
+           suite Bayes F16 {
+              class = BayesF16
+              folder = BayesF16
+
+              Pattern DIMS1_S16_ID : Dims1_s16.txt 
+              Pattern INPUTS1_F16_ID : Inputs1_f16.txt 
+              Pattern PARAMS1_F16_ID : Params1_f16.txt 
+              Pattern PROBAS1_F16_ID : Probas1_f16.txt
+              Pattern PREDICTS1_S16_ID : Predicts1_s16.txt
+
+              Output  OUT_PROBA_F16_ID : Probas
+              Output  OUT_PREDICT_S16_ID : Predicts
+
+              Functions {
+                 arm_gaussian_naive_bayes_predict_f16:test_gaussian_naive_bayes_predict_f16
+              }
+           }
         }
 
         group Distance Tests {

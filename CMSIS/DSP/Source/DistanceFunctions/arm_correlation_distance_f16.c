@@ -33,9 +33,18 @@
 #include <math.h>
 
 
+/**
+  @ingroup FloatDist
+ */
 
 /**
-  @addtogroup FloatDist
+  @defgroup Correlation Correlation distance
+
+  Correlation distance
+ */
+
+/**
+  @addtogroup Correlation
   @{
  */
 
@@ -81,7 +90,7 @@ float16_t arm_correlation_distance_f16(float16_t *pA,float16_t *pB, uint32_t blo
 
 
 /**
- * @} end of FloatDist group
+ * @} end of Correlation group
  */
 
 #endif /* #if defined(ARM_FLOAT16_SUPPORTED) */ 

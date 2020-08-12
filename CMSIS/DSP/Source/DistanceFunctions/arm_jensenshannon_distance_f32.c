@@ -31,7 +31,7 @@
 
 
 /**
-  @addtogroup FloatDist
+  @addtogroup JensenShannon
   @{
  */
 
@@ -241,5 +241,5 @@ float32_t arm_jensenshannon_distance_f32(const float32_t *pA,const float32_t *pB
 #endif /* defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE) */
 
 /**
- * @} end of FloatDist group
+ * @} end of JensenShannon group
  */

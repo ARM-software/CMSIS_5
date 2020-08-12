@@ -1328,7 +1328,7 @@ group Root {
                  arm_svm_polynomial_predict_f32:test_svm_polynomial_predict_f32
                  arm_svm_rbf_predict_f32:test_svm_rbf_predict_f32
                  arm_svm_sigmoid_predict_f32:test_svm_sigmoid_predict_f32
-                 arm_svm_oneclass_predict_f32:test_svm_rbf_predict_f32
+                 disabled{arm_svm_oneclass_predict_f32:test_svm_linear_predict_f32}
               }
            }
         }

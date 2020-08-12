@@ -295,7 +295,7 @@ else:
 
 for t in config["TOOLCHAINS"]:
     cmake,localConfig,sim = analyzeToolchain(config["TOOLCHAINS"][t],allConfigs)
-    msg("Testing toolchain %s\n" % cmake)
+    msg("Testing toolchain %s\n" % t)
     buildAndTest(t,localConfig,cmake,sim)
 
 

@@ -341,6 +341,8 @@ set(TESTSRC16
   Source/Tests/SupportBarTestsF16.cpp
   Source/Tests/FastMathF16.cpp
   Source/Tests/DistanceTestsF16.cpp
+  Source/Tests/SVMF16.cpp
+  Source/Tests/BayesF16.cpp
   )
 endif()
 endif() 
@@ -493,12 +495,22 @@ if(DOXYGEN_FOUND)
   set(DOXYGEN_ENABLE_PREPROCESSING YES)
   set(DOXYGEN_MACRO_EXPANSION YES)
   set(DOXYGEN_EXPAND_ONLY_PREDEF YES)
+  set(DOXYGEN_MARKDOWN_SUPPORT YES)
+  set(DOXYGEN_AUTOLINK_SUPPORT YES)
   set(DOXYGEN_QUIET YES)
+  set(DOXYGEN_SHOW_USED_FILES NO)
+  set(DOXYGENEXTRACT_LOCAL_CLASSES NO)
+  set(DOXYGENSHOW_INCLUDE_FILES NO)
+  set(DOXYGEN_TYPEDEF_HIDES_STRUCT YES)
+  set(DOXYGEN_FULL_PATH_NAMES NO)
+  set(DOXYGEN_RECURSIVE YES)
+  set(DOXYGEN_REFERENCES_LINK_SOURCE NO)
   set(DOXYGEN_EXCLUDE_PATTERNS "*/RTE/*")
-  set(DOXYGEN_PREDEFINED "ARM_FLOAT16_SUPPORTED=1;__ALIGNED(x)=")
+  set(DOXYGEN_PREDEFINED "__ARM_FP16_FORMAT_IEEE=1;ARM_FLOAT16_SUPPORTED=1;__ALIGNED(x)=")
   set(DOXYGEN_EXAMPLE_PATH "${ROOT}/CMSIS/DSP/Examples/ARM")
   set(DOXYGEN_IMAGE_PATH "${ROOT}/CMSIS/DoxyGen/DSP/src/images")
   set(DOXYGEN_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}/docs")
+  set(DOXYGEN_LAYOUT_FILE "${ROOT}/CMSIS/DoxyGen/Doxygen_Templates/DoxygenLayout_forUser.xml")
   # this target will only be built if specifically asked to.
   # run "make api-docs" to create the doxygen documentation
   doxygen_add_docs(

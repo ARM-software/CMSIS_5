@@ -145,24 +145,6 @@ extern "C"
     return (signBits + 1);
   }
 
-/**
- * @brief Integer exponentiation
- * @param[in]    x           value
- * @param[in]    nb          integer exponent >= 1
- * @return x^nb
- *
- */
-__STATIC_INLINE float32_t arm_exponent_f32(float32_t x, int32_t nb)
-{
-    float32_t r = x;
-    nb --;
-    while(nb > 0)
-    {
-        r = r * x;
-        nb--;
-    }
-    return(r);
-}
 
 /**
  * @brief  64-bit to 32-bit unsigned normalization

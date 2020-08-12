@@ -32,11 +32,28 @@
 #include <limits.h>
 #include <math.h>
 
-
-
+/**
+ * @ingroup groupDistance
+ */
 
 /**
-  @addtogroup FloatDist
+ * @defgroup FloatDist Float Distances
+ *
+ * Distances between two vectors of float values.
+ */
+
+/**
+  @ingroup FloatDist
+ */
+
+/**
+  @defgroup braycurtis Bray-Curtis distance
+
+  Bray-Curtis distance between two vectors
+ */
+
+/**
+  @addtogroup braycurtis
   @{
  */
 
@@ -130,12 +147,10 @@ float16_t arm_braycurtis_distance_f16(const float16_t *pA,const float16_t *pB, u
 
 
 /**
- * @} end of FloatDist group
+ * @} end of braycurtis group
  */
 
-/**
- * @} end of groupDistance group
- */
+
 
 #endif /* #if defined(ARM_FLOAT16_SUPPORTED) */ 
 

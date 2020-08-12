@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include "Error.h"
 
-#define SNR_THRESHOLD 40
+#define SNR_THRESHOLD 39
 
 #define REL_ERROR (6.0e-2)
 

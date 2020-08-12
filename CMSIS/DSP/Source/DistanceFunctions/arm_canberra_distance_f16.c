@@ -32,9 +32,19 @@
 #include <limits.h>
 #include <math.h>
 
+/**
+  @ingroup FloatDist
+ */
 
 /**
-  @addtogroup FloatDist
+  @defgroup Canberra Canberra distance
+
+  Canberra distance
+ */
+
+
+/**
+  @addtogroup Canberra
   @{
  */
 
@@ -152,7 +162,7 @@ float16_t arm_canberra_distance_f16(const float16_t *pA,const float16_t *pB, uin
 
 
 /**
- * @} end of FloatDist group
+ * @} end of Canberra group
  */
 
 #endif /* #if defined(ARM_FLOAT16_SUPPORTED) */ 

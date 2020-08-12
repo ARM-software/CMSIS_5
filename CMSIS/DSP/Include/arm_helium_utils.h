@@ -159,7 +159,6 @@ __STATIC_FORCEINLINE void mve_cmplx_sum_intra_vec_f16(
 
 
 #define INVSQRT_MAGIC_F16           0x59ba      /*  ( 0x1ba = 0x3759df >> 13) */
-#define INV_NEWTON_INIT_F16         0x7773
 
 /* canonical version of INVSQRT_NEWTON_MVE_F16 leads to bad performance */
 #define INVSQRT_NEWTON_MVE_F16(invSqrt, xHalf, xStart)                  \

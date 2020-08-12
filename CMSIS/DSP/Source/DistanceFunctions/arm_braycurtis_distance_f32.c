@@ -32,18 +32,7 @@
 
 
 /**
- * @ingroup groupDistance
- * @{
- */
-
-/**
- * @defgroup FloatDist Float Distances
- *
- * Distances between two vectors of float values.
- */
-
-/**
-  @addtogroup FloatDist
+  @addtogroup braycurtis
   @{
  */
 
@@ -191,9 +180,6 @@ float32_t arm_braycurtis_distance_f32(const float32_t *pA,const float32_t *pB, u
 
 
 /**
- * @} end of FloatDist group
+ * @} end of braycurtis group
  */
 
-/**
- * @} end of groupDistance group
- */

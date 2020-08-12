@@ -32,9 +32,19 @@
 #include <limits.h>
 #include <math.h>
 
+/**
+  @ingroup FloatDist
+ */
 
 /**
-  @addtogroup FloatDist
+  @defgroup CosineDist Cosine distance
+
+  Cosine distance
+ */
+
+
+/**
+  @addtogroup CosineDist
   @{
  */
 
@@ -67,7 +77,7 @@ float16_t arm_cosine_distance_f16(const float16_t *pA,const float16_t *pB, uint3
 
 
 /**
- * @} end of FloatDist group
+ * @} end of CosineDist group
  */
 
 #endif /* #if defined(ARM_FLOAT16_SUPPORTED) */ 

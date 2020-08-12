@@ -33,7 +33,17 @@
 #include <math.h>
 
 /**
-  @addtogroup FloatDist
+  @ingroup FloatDist
+ */
+
+/**
+  @defgroup Manhattan Cityblock (Manhattan) distance
+
+  Cityblock (Manhattan) distance
+ */
+
+/**
+  @addtogroup Manhattan
   @{
  */
 
@@ -109,7 +119,7 @@ float16_t arm_cityblock_distance_f16(const float16_t *pA,const float16_t *pB, ui
 #endif
 
 /**
- * @} end of FloatDist group
+ * @} end of Manhattan group
  */
 
 #endif /* #if defined(ARM_FLOAT16_SUPPORTED) */ 

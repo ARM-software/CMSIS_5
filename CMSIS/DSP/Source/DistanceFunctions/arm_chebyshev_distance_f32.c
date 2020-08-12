@@ -31,7 +31,7 @@
 
 
 /**
-  @addtogroup FloatDist
+  @addtogroup Chebyshev
   @{
  */
 
@@ -207,5 +207,5 @@ float32_t arm_chebyshev_distance_f32(const float32_t *pA,const float32_t *pB, ui
 
 
 /**
- * @} end of FloatDist group
+ * @} end of Chebyshev group
  */
