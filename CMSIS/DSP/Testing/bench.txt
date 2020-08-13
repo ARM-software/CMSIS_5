@@ -5,6 +5,183 @@ group Root {
         class = DSPBenchmarks
         folder = DSP
 
+        group Statistics {
+           class = Stats
+           folder = Stats
+
+           suite Statistics F32 {
+              class = StatsF32
+              folder = StatsF32
+
+              ParamList {
+                  NB
+                  Summary NB
+                  Names "NB Samples"
+                  Formula "NB"
+              }
+
+              Pattern INPUT1_F32_ID : InputBench1_f32.txt 
+              Pattern INPUT2_F32_ID : InputBench2_f32.txt 
+              
+              Output  OUT_F32_ID : Output
+              Output  OUT_S16_ID : Index
+              Output  TMP_F32_ID : Temp
+
+              Params PARAM1_ID = {
+                  A = [16,32,64,128,256]
+              }
+
+              Functions {
+                arm_max_f32:test_max_f32
+                arm_mean_f32:test_mean_f32
+                arm_min_f32:test_min_f32
+                arm_power_f32:test_power_f32
+                arm_rms_f32:test_rms_f32
+                arm_std_f32:test_std_f32
+                arm_var_f32:test_var_f32
+                arm_entropy_f32:test_entropy_f32
+                arm_logsumexp_f32:test_logsumexp_f32
+                arm_kullback_leibler_f32:test_kullback_leibler_f32
+                arm_logsumexp_dot_prod_f32:test_logsumexp_dot_prod_f32
+                arm_max_no_idx_f32:test_max_no_idx_f32
+              } -> PARAM1_ID
+
+           }
+
+           suite Statistics F64 {
+              class = StatsF64
+              folder = StatsF64
+
+              ParamList {
+                  NB
+                  Summary NB
+                  Names "NB Samples"
+                  Formula "NB"
+              }
+
+              Pattern INPUT1_F64_ID : InputBench1_f64.txt 
+              Pattern INPUT2_F64_ID : InputBench2_f64.txt 
+
+              Output  OUT_F64_ID : Output
+              Output  OUT_S16_ID : Index
+              Output  TMP_F64_ID : Temp
+
+              Params PARAM1_ID = {
+                  A = [16,32,64,128,256]
+              }
+
+              Functions {
+                arm_entropy_f64:test_entropy_f64
+                arm_kullback_leibler_f64:test_kullback_leibler_f64
+              } -> PARAM1_ID
+
+           }
+
+           suite Statistics Q31 {
+              class = StatsQ31
+              folder = StatsQ31
+
+              ParamList {
+                  NB
+                  Summary NB
+                  Names "NB Samples"
+                  Formula "NB"
+              }
+
+              Pattern INPUT1_Q31_ID : InputBench1_q31.txt 
+              Pattern INPUT2_Q31_ID : InputBench2_q31.txt 
+              
+              Output  OUT_Q31_ID : Output
+              Output  OUT_Q63_ID : Output
+              Output  OUT_S16_ID : Index
+              Output  TMP_Q31_ID : Temp
+
+              Params PARAM1_ID = {
+                  A = [16,32,64,128,256]
+              }
+
+              Functions {
+                arm_max_q31:test_max_q31
+                arm_mean_q31:test_mean_q31
+                arm_min_q31:test_min_q31
+                arm_power_q31:test_power_q31
+                arm_rms_q31:test_rms_q31
+                arm_std_q31:test_std_q31
+                arm_var_q31:test_var_q31
+              } -> PARAM1_ID
+
+           }
+
+           suite Statistics Q15 {
+              class = StatsQ15
+              folder = StatsQ15
+
+              ParamList {
+                  NB
+                  Summary NB
+                  Names "NB Samples"
+                  Formula "NB"
+              }
+
+              Pattern INPUT1_Q15_ID : InputBench1_q15.txt 
+              Pattern INPUT2_Q15_ID : InputBench2_q15.txt 
+              
+
+              Output  OUT_Q15_ID : Output
+              Output  OUT_Q63_ID : Output
+              Output  OUT_S16_ID : Index
+              Output  TMP_Q15_ID : Temp
+
+              Params PARAM1_ID = {
+                  A = [16,32,64,128,256]
+              }
+
+              Functions {
+                arm_max_q15:test_max_q15
+                arm_mean_q15:test_mean_q15
+                arm_min_q15:test_min_q15
+                arm_power_q15:test_power_q15
+                arm_rms_q15:test_rms_q15
+                arm_std_q15:test_std_q15
+                arm_var_q15:test_var_q15
+              } -> PARAM1_ID
+
+           }
+
+           suite Statistics Q7 {
+              class = StatsQ7
+              folder = StatsQ7
+
+              ParamList {
+                  NB
+                  Summary NB
+                  Names "NB Samples"
+                  Formula "NB"
+              }
+
+              Pattern INPUT1_Q7_ID : InputBench1_q7.txt 
+              Pattern INPUT2_Q7_ID : InputBench2_q7.txt 
+              
+
+              Output  OUT_Q7_ID : Output
+              Output  OUT_Q31_ID : Output
+              Output  OUT_S16_ID : Index
+              Output  TMP_Q7_ID : Temp
+
+              Params PARAM1_ID = {
+                  A = [16,32,64,128,256]
+              }
+
+              Functions {
+                arm_max_q7:test_max_q7
+                arm_mean_q7:test_mean_q7
+                arm_min_q7:test_min_q7
+                arm_power_q7:test_power_q7
+              } -> PARAM1_ID
+
+           }
+        }
+
         group Basic Maths {
            class = BasicBenchmarks
            folder = BasicMaths
@@ -770,7 +947,7 @@ group Root {
               Output  OUT_PROBA_F32_ID : Probas
               Output  OUT_PREDICT_S16_ID : Predicts
 
-              // Must be consisten with the Python script
+              // Must be consistent with the Python script
               Params PARAM1_ID = {
                   VECDIM = [12,14,20]
                   NBCLASSES = [3,5,4]
@@ -778,6 +955,52 @@ group Root {
 
               Functions {
                  arm_gaussian_naive_bayes_predict_f32:test_gaussian_naive_bayes_predict_f32
+              } -> PARAM1_ID
+           }
+        }
+
+        group SVM  {
+           class = SVM
+           folder = SVM 
+
+           suite SVM F32 {
+              class = SVMF32
+              folder = SVMF32
+
+              ParamList {
+                  VECDIM,NBVECS
+                  Summary VECDIM,NBVECS
+                  Names "Vector dimension","Number of suppot vectors"
+                  Formula "VECDIM*NBVECS"
+              }
+
+              Pattern INPUT_F32_ID : InputsBench6_f32.txt 
+              
+              Pattern DIMS_LINEAR_S16_ID : DimsLinear6_s16.txt 
+              Pattern PARAMS_LINEAR_F32_ID : ParamsLinear6_f32.txt
+
+              Pattern DIMS_POLY_S16_ID : DimsPoly6_s16.txt 
+              Pattern PARAMS_POLY_F32_ID : ParamsPoly6_f32.txt
+
+              Pattern DIMS_RBF_S16_ID : DimsRBF6_s16.txt 
+              Pattern PARAMS_RBF_F32_ID : ParamsRBF6_f32.txt
+
+              Pattern DIMS_SIGMOID_S16_ID : DimsSigmoid6_s16.txt 
+              Pattern PARAMS_SIGMOID_F32_ID : ParamsSigmoid6_f32.txt
+
+              Output  OUT_S32_ID : Output
+
+              // Must be consistent with the Python script
+              Params PARAM1_ID = {
+                  VECDIM = [16,32,64]
+                  NBVECS = [8,16,32]
+                }
+
+              Functions {
+                 arm_svm_linear_predict_f32:test_svm_linear_predict_f32
+                 arm_svm_polynomial_predict_f32:test_svm_polynomial_predict_f32
+                 arm_svm_rbf_predict_f32:test_svm_rbf_predict_f32
+                 arm_svm_sigmoid_predict_f32:test_svm_sigmoid_predict_f32
               } -> PARAM1_ID
            }
         }

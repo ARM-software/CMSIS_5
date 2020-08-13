@@ -344,6 +344,26 @@ def writeTests(config,nb,format):
     nb=generateFuncTests(config,nb,format,data1,varTest,"VarVals")
     return(nb)
 
+def generateBenchmark(config,format):
+    NBSAMPLES = 256
+    data1=np.random.randn(NBSAMPLES)
+    data2=np.random.randn(NBSAMPLES)
+    
+    data1 = Tools.normalize(data1)
+    data2 = np.abs(data1)
+
+    if format==31:
+       data1=floatRound(data1,31)
+
+    if format==15:
+       data1=floatRound(data1,15)
+
+    if format==7:
+       data1=floatRound(data1,7)
+
+    config.writeInput(1, data1,"InputBench")
+    config.writeInput(2, data2,"InputBench")
+
 
 def generatePatterns():
     PATTERNDIR = os.path.join("Patterns","DSP","Stats","Stats")
@@ -365,6 +385,13 @@ def generatePatterns():
 
     nb=writeTests(configf16,1,16)
     nb=writeF16OnlyTests(configf16,22)
+
+    generateBenchmark(configf64, Tools.F64)
+    generateBenchmark(configf32, Tools.F32)
+    generateBenchmark(configf16, Tools.F16)
+    generateBenchmark(configq31, Tools.Q31)
+    generateBenchmark(configq15, Tools.Q15)
+    generateBenchmark(configq7, Tools.Q7)
 
 if __name__ == '__main__':
   generatePatterns()
