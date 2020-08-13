@@ -150,6 +150,7 @@ set (NNSRC
    Source/Benchmarks/ComplexMathsBenchmarksF32.cpp
    Source/Benchmarks/ComplexMathsBenchmarksQ31.cpp
    Source/Benchmarks/ComplexMathsBenchmarksQ15.cpp
+   Source/Benchmarks/BayesF32.cpp
    Source/Benchmarks/FIRF32.cpp
    Source/Benchmarks/FIRQ31.cpp
    Source/Benchmarks/FIRQ15.cpp

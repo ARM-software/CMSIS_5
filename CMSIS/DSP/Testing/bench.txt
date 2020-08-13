@@ -747,6 +747,41 @@ group Root {
              }
         }
 
+        group Bayes{
+           class = Bayes
+           folder = Bayes 
+
+           suite Bayes F32 {
+              class = BayesF32
+              folder = BayesF32
+
+              ParamList {
+                  VECDIM,NBCLASSES
+                  Summary VECDIM,NBCLASSES
+                  Names "Vector dimension","Number of classes"
+                  Formula "VECDIM*NBCLASSES"
+                }
+
+              Pattern DIMS2_S16_ID : DimsBench2_s16.txt 
+              Pattern INPUTS2_F32_ID : Inputs2_f32.txt 
+              Pattern PARAMS2_F32_ID : Params2_f32.txt 
+              Pattern PREDICTS2_S16_ID : Predicts2_s16.txt
+
+              Output  OUT_PROBA_F32_ID : Probas
+              Output  OUT_PREDICT_S16_ID : Predicts
+
+              // Must be consisten with the Python script
+              Params PARAM1_ID = {
+                  VECDIM = [12,14,20]
+                  NBCLASSES = [3,5,4]
+                }
+
+              Functions {
+                 arm_gaussian_naive_bayes_predict_f32:test_gaussian_naive_bayes_predict_f32
+              } -> PARAM1_ID
+           }
+        }
+
         group Barycenter {
            class = Barycenter 
            
