@@ -959,6 +959,48 @@ group Root {
            }
         }
 
+        group Distance  {
+           class = Distance
+           folder = Distance
+
+           suite Distance F32 {
+              class = DistanceF32
+              folder = DistanceF32
+
+              ParamList {
+                  NB
+                  Summary NB
+                  Names "NB Samples"
+                  Formula "NB"
+              }
+              
+              Pattern INPUTA_F32_ID : InputBenchA1_f32.txt
+              Pattern INPUTB_F32_ID : InputBenchB1_f32.txt
+
+              Pattern INPUTA_PROBA_F32_ID : InputBenchProbaA1_f32.txt
+              Pattern INPUTB_PROBA_F32_ID : InputBenchProbaB1_f32.txt
+
+              Output  TMPA_F32_ID : TmpA
+              Output  TMPB_F32_ID : TmpB
+
+              Params PARAM1_ID = {
+                  A = [16,32,64,128,256]
+              }
+
+              Functions {
+                 arm_braycurtis_distance_f32:test_braycurtis_distance_f32
+                 arm_canberra_distance_f32:test_canberra_distance_f32
+                 arm_chebyshev_distance_f32:test_chebyshev_distance_f32
+                 arm_cityblock_distance_f32:test_cityblock_distance_f32
+                 arm_correlation_distance_f32:test_correlation_distance_f32
+                 arm_cosine_distance_f32:test_cosine_distance_f32
+                 arm_euclidean_distance_f32:test_euclidean_distance_f32
+                 arm_jensenshannon_distance_f32:test_jensenshannon_distance_f32
+                 arm_minkowski_distance_f32:test_minkowski_distance_f32
+              } -> PARAM1_ID
+           }
+        }
+
         group SVM  {
            class = SVM
            folder = SVM 
