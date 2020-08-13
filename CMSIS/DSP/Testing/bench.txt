@@ -984,7 +984,7 @@ group Root {
               Output  TMPB_F32_ID : TmpB
 
               Params PARAM1_ID = {
-                  A = [16,32,64,128,256]
+                  NB = [16,32,64,128,256]
               }
 
               Functions {
@@ -997,6 +997,39 @@ group Root {
                  arm_euclidean_distance_f32:test_euclidean_distance_f32
                  arm_jensenshannon_distance_f32:test_jensenshannon_distance_f32
                  arm_minkowski_distance_f32:test_minkowski_distance_f32
+              } -> PARAM1_ID
+           }
+
+           suite Distance  U32 {
+              class = DistanceU32
+              folder = DistanceU32
+
+              ParamList {
+                  NB
+                  Summary NB
+                  Names "NB Bits"
+                  Formula "NB"
+              }
+              
+              Pattern INPUTA_U32_ID : InputBenchA1_u32.txt
+              Pattern INPUTB_U32_ID : InputBenchB1_u32.txt
+
+        
+              Params PARAM1_ID = {
+                  NB = [512, 1024, 2048, 4096, 8192]
+              }
+
+
+              Functions {
+                 arm_dice_distance:test_dice_distance_u32
+                 arm_hamming_distance:test_hamming_distance_u32
+                 arm_jaccard_distance:test_jaccard_distance_u32
+                 arm_kulsinski_distance:test_kulsinski_distance_u32
+                 arm_rogerstanimoto_distance:test_rogerstanimoto_distance_u32
+                 arm_russellrao_distance:test_russellrao_distance_u32
+                 arm_sokalmichener_distance:test_sokalmichener_distance_u32
+                 arm_sokalsneath_distance:test_sokalsneath_distance_u32
+                 arm_yule_distance:test_yule_distance_u32
               } -> PARAM1_ID
            }
         }
