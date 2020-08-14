@@ -1536,6 +1536,8 @@ group Root {
 
                 Pattern INPUTR_F32_ID : RealInputSamples19_f32.txt 
                 Pattern INPUTC_F32_ID : ComplexInputSamples_Noisy_512_6_f32.txt 
+                
+                Output  TMP_F32_ID : Temp
                 Output  OUT_F32_ID : Output
                 Output  STATE_F32_ID : Output
 

@@ -316,7 +316,7 @@ void stage_rfft_f16(
         float16_t * p,
         float16_t * pOut)
 {
-        uint32_t  k;                                /* Loop Counter */
+        int32_t  k;                                /* Loop Counter */
         float16_t twR, twI;                         /* RFFT Twiddle coefficients */
   const float16_t * pCoeff = S->pTwiddleRFFT;       /* Points to RFFT Twiddle factors */
         float16_t *pA = p;                          /* increasing pointer */
@@ -396,7 +396,7 @@ void stage_rfft_f16(
       pA += 2;
       pB -= 2;
       k--;
-   } while (k > 0U);
+   } while (k > 0);
 }
 
 /* Prepares data for inverse cfft */
@@ -405,7 +405,7 @@ void merge_rfft_f16(
         float16_t * p,
         float16_t * pOut)
 {
-        uint32_t  k;                                /* Loop Counter */
+        int32_t  k;                                /* Loop Counter */
         float16_t twR, twI;                         /* RFFT Twiddle coefficients */
   const float16_t *pCoeff = S->pTwiddleRFFT;        /* Points to RFFT Twiddle factors */
         float16_t *pA = p;                          /* increasing pointer */
@@ -426,7 +426,7 @@ void merge_rfft_f16(
    pB  =  p + 2*k ;
    pA +=  2	   ;
 
-   while (k > 0U)
+   while (k > 0)
    {
       /* G is half of the frequency complex spectrum */
       //for k = 2:N
@@ -583,6 +583,7 @@ void arm_rfft_fast_f16(
 {
    const arm_cfft_instance_f16 * Sint = &(S->Sint);
 
+
    /* Calculation of Real FFT */
    if (ifftFlag)
    {
@@ -593,6 +594,7 @@ void arm_rfft_fast_f16(
    }
    else
    {
+
       /* Calculation of RFFT of input */
       arm_cfft_f16( Sint, p, ifftFlag, 1);
 

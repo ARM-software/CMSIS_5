@@ -14,6 +14,7 @@ class TransformF16:public Client::Suite
             Client::Pattern<float16_t> samples;
 
             Client::LocalPattern<float16_t> output;
+            Client::LocalPattern<float16_t> tmp;
             Client::LocalPattern<float16_t> state;
             
             int nbSamples;
@@ -23,6 +24,7 @@ class TransformF16:public Client::Suite
             float16_t *pSrc;
             float16_t *pDst;
             float16_t *pState;
+            float16_t *pTmp;
 
             arm_cfft_instance_f16 cfftInstance;
             arm_rfft_fast_instance_f16 rfftFastInstance;

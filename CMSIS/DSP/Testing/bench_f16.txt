@@ -555,7 +555,9 @@ group Root {
 
                 Pattern INPUTR_F16_ID : RealInputSamples19_f16.txt 
                 Pattern INPUTC_F16_ID : ComplexInputSamples_Noisy_512_6_f16.txt 
-                Output  OUT_F16_ID : Output
+                
+                Output  OUT_F16_ID : Temp
+                Output  TMP_F16_ID : Output
                 Output  STATE_F16_ID : Output
 
                 
@@ -577,6 +579,7 @@ group Root {
                   REV = [1]
                 }
 
+   
 
                 Functions {
                    Complex FFT:test_cfft_f16 -> CFFT_PARAM_ID

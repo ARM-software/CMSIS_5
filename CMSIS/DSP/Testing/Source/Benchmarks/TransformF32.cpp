@@ -8,7 +8,7 @@
 
     void TransformF32::test_rfft_f32()
     { 
-       arm_rfft_fast_f32(&this->rfftFastInstance, this->pSrc, this->pDst, this->ifft);
+       arm_rfft_fast_f32(&this->rfftFastInstance, this->pTmp, this->pDst, this->ifft);
     } 
 
     void TransformF32::test_dct4_f32()
@@ -54,11 +54,16 @@
           break;
 
           case TEST_RFFT_F32_2:
-            samples.reload(TransformF32::INPUTR_F32_ID,mgr,this->nbSamples);
+            // Factor 2 for rifft
+            samples.reload(TransformF32::INPUTR_F32_ID,mgr,2*this->nbSamples);
             output.create(this->nbSamples,TransformF32::OUT_F32_ID,mgr);
+            tmp.create(this->nbSamples,TransformF32::TMP_F32_ID,mgr);
 
             this->pSrc=samples.ptr();
             this->pDst=output.ptr();
+            this->pTmp=tmp.ptr();
+
+            memcpy(this->pTmp,this->pSrc,sizeof(float32_t)*this->nbSamples); 
 
             arm_rfft_fast_init_f32(&this->rfftFastInstance, this->nbSamples);
           break;
@@ -67,7 +72,6 @@
             samples.reload(TransformF32::INPUTR_F32_ID,mgr,this->nbSamples);
             output.create(this->nbSamples,TransformF32::OUT_F32_ID,mgr);
             state.create(2*this->nbSamples,TransformF32::STATE_F32_ID,mgr);
-            
 
             this->pSrc=samples.ptr();
             this->pDst=output.ptr();

@@ -26,16 +26,18 @@
 #ifndef _TRANSFORM_FUNCTIONS_F16_H_
 #define _TRANSFORM_FUNCTIONS_F16_H_
 
-#ifdef   __cplusplus
-extern "C"
-{
-#endif
-
 #include "arm_math_types_f16.h"
 #include "arm_math_memory.h"
 
 #include "dsp/none.h"
 #include "dsp/utils.h"
+
+#ifdef   __cplusplus
+extern "C"
+{
+#endif
+
+
 
 #if defined(ARM_FLOAT16_SUPPORTED)
 
