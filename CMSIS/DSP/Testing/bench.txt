@@ -5,11 +5,11 @@ group Root {
         class = DSPBenchmarks
         folder = DSP
 
-        group Statistics {
+        group Statistics Benchmarks {
            class = Stats
            folder = Stats
 
-           suite Statistics F32 {
+           suite Statistics Benchmarks F32 {
               class = StatsF32
               folder = StatsF32
 
@@ -32,23 +32,23 @@ group Root {
               }
 
               Functions {
-                arm_max_f32:test_max_f32
-                arm_mean_f32:test_mean_f32
-                arm_min_f32:test_min_f32
-                arm_power_f32:test_power_f32
-                arm_rms_f32:test_rms_f32
-                arm_std_f32:test_std_f32
-                arm_var_f32:test_var_f32
-                arm_entropy_f32:test_entropy_f32
-                arm_logsumexp_f32:test_logsumexp_f32
-                arm_kullback_leibler_f32:test_kullback_leibler_f32
-                arm_logsumexp_dot_prod_f32:test_logsumexp_dot_prod_f32
-                arm_max_no_idx_f32:test_max_no_idx_f32
+                Vector maximum:test_max_f32
+                Vector average:test_mean_f32
+                Vector minimum:test_min_f32
+                Vector energy:test_power_f32
+                Vector root mean square:test_rms_f32
+                Vector standard deviation:test_std_f32
+                Vector variance:test_var_f32
+                Entropy:test_entropy_f32
+                Vector logsumexp:test_logsumexp_f32
+                Kullback Leibler divergence:test_kullback_leibler_f32
+                Vector logsumexp dot product:test_logsumexp_dot_prod_f32
+                Vector max with no index:test_max_no_idx_f32
               } -> PARAM1_ID
 
            }
 
-           suite Statistics F64 {
+           suite Statistics Benchmarks F64 {
               class = StatsF64
               folder = StatsF64
 
@@ -71,13 +71,13 @@ group Root {
               }
 
               Functions {
-                arm_entropy_f64:test_entropy_f64
-                arm_kullback_leibler_f64:test_kullback_leibler_f64
+                Entropy:test_entropy_f64
+                Kullback Leibler divergence:test_kullback_leibler_f64
               } -> PARAM1_ID
 
            }
 
-           suite Statistics Q31 {
+           suite Statistics Benchmarks Q31 {
               class = StatsQ31
               folder = StatsQ31
 
@@ -101,18 +101,18 @@ group Root {
               }
 
               Functions {
-                arm_max_q31:test_max_q31
-                arm_mean_q31:test_mean_q31
-                arm_min_q31:test_min_q31
-                arm_power_q31:test_power_q31
-                arm_rms_q31:test_rms_q31
-                arm_std_q31:test_std_q31
-                arm_var_q31:test_var_q31
+                Vector maximum:test_max_q31
+                Vector average:test_mean_q31
+                Vector minimum:test_min_q31
+                Vector energy:test_power_q31
+                Vector root mean square:test_rms_q31
+                Vector standard deviation:test_std_q31
+                Vector variance:test_var_q31
               } -> PARAM1_ID
 
            }
 
-           suite Statistics Q15 {
+           suite Statistics Benchmarks Q15 {
               class = StatsQ15
               folder = StatsQ15
 
@@ -137,18 +137,18 @@ group Root {
               }
 
               Functions {
-                arm_max_q15:test_max_q15
-                arm_mean_q15:test_mean_q15
-                arm_min_q15:test_min_q15
-                arm_power_q15:test_power_q15
-                arm_rms_q15:test_rms_q15
-                arm_std_q15:test_std_q15
-                arm_var_q15:test_var_q15
+                Vector maximum:test_max_q15
+                Vector average:test_mean_q15
+                Vector minimum:test_min_q15
+                Vector energy:test_power_q15
+                Vector root mean square:test_rms_q15
+                Vector standard deviation:test_std_q15
+                Vector variance:test_var_q15
               } -> PARAM1_ID
 
            }
 
-           suite Statistics Q7 {
+           suite Statistics Benchmarks Q7 {
               class = StatsQ7
               folder = StatsQ7
 
@@ -173,10 +173,10 @@ group Root {
               }
 
               Functions {
-                arm_max_q7:test_max_q7
-                arm_mean_q7:test_mean_q7
-                arm_min_q7:test_min_q7
-                arm_power_q7:test_power_q7
+                Vector maximum:test_max_q7
+                Vector average:test_mean_q7
+                Vector minimum:test_min_q7
+                Vector energy:test_power_q7
               } -> PARAM1_ID
 
            }
@@ -954,7 +954,7 @@ group Root {
                 }
 
               Functions {
-                 arm_gaussian_naive_bayes_predict_f32:test_gaussian_naive_bayes_predict_f32
+                 Naive Gaussian Bayes Predictor:test_gaussian_naive_bayes_predict_f32
               } -> PARAM1_ID
            }
         }
@@ -988,15 +988,15 @@ group Root {
               }
 
               Functions {
-                 arm_braycurtis_distance_f32:test_braycurtis_distance_f32
-                 arm_canberra_distance_f32:test_canberra_distance_f32
-                 arm_chebyshev_distance_f32:test_chebyshev_distance_f32
-                 arm_cityblock_distance_f32:test_cityblock_distance_f32
-                 arm_correlation_distance_f32:test_correlation_distance_f32
-                 arm_cosine_distance_f32:test_cosine_distance_f32
-                 arm_euclidean_distance_f32:test_euclidean_distance_f32
-                 arm_jensenshannon_distance_f32:test_jensenshannon_distance_f32
-                 arm_minkowski_distance_f32:test_minkowski_distance_f32
+                 Bray Curtis distance:test_braycurtis_distance_f32
+                 Canberra distance:test_canberra_distance_f32
+                 Chebyshev distance:test_chebyshev_distance_f32
+                 Cityblock distance:test_cityblock_distance_f32
+                 Correlation distance:test_correlation_distance_f32
+                 Cosine distance:test_cosine_distance_f32
+                 Euclidean distance:test_euclidean_distance_f32
+                 Jensen Shannon distance:test_jensenshannon_distance_f32
+                 Minkowski distance:test_minkowski_distance_f32
               } -> PARAM1_ID
            }
 
@@ -1021,15 +1021,15 @@ group Root {
 
 
               Functions {
-                 arm_dice_distance:test_dice_distance_u32
-                 arm_hamming_distance:test_hamming_distance_u32
-                 arm_jaccard_distance:test_jaccard_distance_u32
-                 arm_kulsinski_distance:test_kulsinski_distance_u32
-                 arm_rogerstanimoto_distance:test_rogerstanimoto_distance_u32
-                 arm_russellrao_distance:test_russellrao_distance_u32
-                 arm_sokalmichener_distance:test_sokalmichener_distance_u32
-                 arm_sokalsneath_distance:test_sokalsneath_distance_u32
-                 arm_yule_distance:test_yule_distance_u32
+                 Dice distance:test_dice_distance_u32
+                 Hamming distance:test_hamming_distance_u32
+                 Jaccard distance:test_jaccard_distance_u32
+                 Kulsinski distance:test_kulsinski_distance_u32
+                 Roger Stanimoto distance:test_rogerstanimoto_distance_u32
+                 Russell Rao distance:test_russellrao_distance_u32
+                 Sokal Michener distance:test_sokalmichener_distance_u32
+                 Sokal Sneath distance:test_sokalsneath_distance_u32
+                 Yule distance:test_yule_distance_u32
               } -> PARAM1_ID
            }
         }
@@ -1072,10 +1072,10 @@ group Root {
                 }
 
               Functions {
-                 arm_svm_linear_predict_f32:test_svm_linear_predict_f32
-                 arm_svm_polynomial_predict_f32:test_svm_polynomial_predict_f32
-                 arm_svm_rbf_predict_f32:test_svm_rbf_predict_f32
-                 arm_svm_sigmoid_predict_f32:test_svm_sigmoid_predict_f32
+                 Linear SVM:test_svm_linear_predict_f32
+                 Polynomial SVM:test_svm_polynomial_predict_f32
+                 RBF SVM:test_svm_rbf_predict_f32
+                 Sigmoid SVM:test_svm_sigmoid_predict_f32
               } -> PARAM1_ID
            }
         }
@@ -1142,12 +1142,12 @@ group Root {
                 }
 
                 Functions {
-                   test_copy_f32:test_copy_f32
-                   test_fill_f32:test_fill_f32
-                   test_q15_to_f32:test_q15_to_f32
-                   test_q31_to_f32:test_q31_to_f32
-                   test_q7_to_f32:test_q7_to_f32
-                   test_weighted_sum_f32:test_weighted_sum_f32
+                   Vector Copy:test_copy_f32
+                   Vector Filling:test_fill_f32
+                   Elementwise q15 to f32:test_q15_to_f32
+                   Elementwise q31 to f32:test_q31_to_f32
+                   Elementwise q7 to f32:test_q7_to_f32
+                   Weighted sum:test_weighted_sum_f32
                 } -> PARAM1_ID
              }
 

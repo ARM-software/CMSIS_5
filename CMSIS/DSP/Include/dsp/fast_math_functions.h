@@ -63,6 +63,7 @@ extern "C"
    * @ingroup groupFastMath
    */
 
+
 /**
   @addtogroup sin
   @{

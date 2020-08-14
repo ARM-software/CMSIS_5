@@ -38,6 +38,13 @@ target_sources(CMSISDSPTransform PRIVATE arm_cfft_init_f16.c)
 endif()
 endif()
 
+if ((NOT ARMAC5) AND (NOT DISABLEFLOAT16))
+if (NOT CONFIGTABLE OR ALLFFT OR RFFT_F16_128 OR RFFT_F16_512 OR RFFT_F16_2048 OR RFFT_F16_8192)
+target_sources(CMSISDSPTransform PRIVATE arm_cfft_radix4_init_f16.c)
+target_sources(CMSISDSPTransform PRIVATE arm_cfft_radix4_f16.c)
+endif()
+endif()
+
 if (NOT CONFIGTABLE OR ALLFFT OR CFFT_F64_16 OR CFFT_F64_32 OR CFFT_F64_64 OR CFFT_F64_128 OR CFFT_F64_256 OR CFFT_F64_512 
     OR CFFT_F64_1024 OR CFFT_F64_2048 OR CFFT_F64_4096)
 target_sources(CMSISDSPTransform PRIVATE arm_cfft_f64.c)
@@ -112,9 +119,9 @@ target_sources(CMSISDSPTransform PRIVATE arm_rfft_fast_f64.c)
 target_sources(CMSISDSPTransform PRIVATE arm_rfft_fast_init_f64.c)
 endif()
 
-if (NOT CONFIGTABLE OR ALLFFT OR RFFT_FAST_F32_32 OR RFFT_FAST_F32_64 OR RFFT_FAST_F32_128
-   OR RFFT_FAST_F32_256 OR RFFT_FAST_F32_512 OR RFFT_FAST_F32_1024 OR RFFT_FAST_F32_2048
-   OR RFFT_FAST_F32_4096 )
+if (NOT CONFIGTABLE OR ALLFFT OR RFFT_FAST_F16_32 OR RFFT_FAST_F16_64 OR RFFT_FAST_F16_128
+   OR RFFT_FAST_F16_256 OR RFFT_FAST_F16_512 OR RFFT_FAST_F16_1024 OR RFFT_FAST_F16_2048
+   OR RFFT_FAST_F16_4096 )
 target_sources(CMSISDSPTransform PRIVATE arm_rfft_fast_f16.c)
 target_sources(CMSISDSPTransform PRIVATE arm_rfft_fast_init_f16.c)
 target_sources(CMSISDSPTransform PRIVATE arm_cfft_f16.c)
@@ -152,6 +159,17 @@ if (WRAPPER)
 target_sources(CMSISDSPTransform PRIVATE arm_cfft_radix2_init_f32.c)
 target_sources(CMSISDSPTransform PRIVATE arm_cfft_radix2_init_q31.c)
 target_sources(CMSISDSPTransform PRIVATE arm_cfft_radix2_init_q15.c)
+if ((NOT ARMAC5) AND (NOT DISABLEFLOAT16))
+target_sources(CMSISDSPTransform PRIVATE arm_cfft_radix2_init_f16.c)
+endif()
+
+    target_compile_definitions(CMSISDSPTransform PUBLIC ARM_TABLE_BITREV_1024)
+    target_compile_definitions(CMSISDSPTransform PUBLIC ARM_TABLE_TWIDDLECOEF_F32_4096)
+    target_compile_definitions(CMSISDSPTransform PUBLIC ARM_TABLE_TWIDDLECOEF_Q31_4096)
+    target_compile_definitions(CMSISDSPTransform PUBLIC ARM_TABLE_TWIDDLECOEF_Q15_4096)
+if ((NOT ARMAC5) AND (NOT DISABLEFLOAT16))
+    target_compile_definitions(CMSISDSPTransform PUBLIC ARM_TABLE_TWIDDLECOEF_F16_4096)
+endif()
 endif()
 
 ### Includes

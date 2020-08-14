@@ -32,6 +32,9 @@
       - f16 interpolation
       - f16 statistics
       - f16 support functions
+      - f16 svm
+      - f16 distances
+      - f16 bayes
 
     </td>
   </tr>

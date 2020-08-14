@@ -94,83 +94,47 @@ endif()
 
 if (CONFIGTABLE AND CFFT_F16_16)
     target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_TWIDDLECOEF_F16_16)
-if (HELIUM OR MVEF)
     target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_BITREVIDX_FXT_16)
-else()
-    target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_BITREVIDX_FLT_16)
-endif()
 endif()
 
 if (CONFIGTABLE AND CFFT_F16_32)
     target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_TWIDDLECOEF_F16_32)
-if (HELIUM OR MVEF)
     target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_BITREVIDX_FXT_32)
-else()
-    target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_BITREVIDX_FLT_32)
-endif()
 endif()
 
 if (CONFIGTABLE AND CFFT_F16_64)
     target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_TWIDDLECOEF_F16_64)
-if (HELIUM OR MVEF)
     target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_BITREVIDX_FXT_64)
-else()
-    target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_BITREVIDX_FLT_64)
-endif()
 endif()
 
 if (CONFIGTABLE AND CFFT_F16_128)
     target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_TWIDDLECOEF_F16_128)
-if (HELIUM OR MVEF)
     target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_BITREVIDX_FXT_128)
-else()
-    target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_BITREVIDX_FLT_128)
-endif()
 endif()
 
 if (CONFIGTABLE AND CFFT_F16_256)
     target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_TWIDDLECOEF_F16_256)
-if (HELIUM OR MVEF)
     target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_BITREVIDX_FXT_256)
-else()
-    target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_BITREVIDX_FLT_256)
-endif()
 endif()
 
 if (CONFIGTABLE AND CFFT_F16_512)
     target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_TWIDDLECOEF_F16_512)
-if (HELIUM OR MVEF)
     target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_BITREVIDX_FXT_512)
-else()
-    target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_BITREVIDX_FLT_512)
-endif()
 endif()
 
 if (CONFIGTABLE AND CFFT_F16_1024)
     target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_TWIDDLECOEF_F16_1024)
-if (HELIUM OR MVEF)
     target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_BITREVIDX_FXT_1024)
-else()
-    target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_BITREVIDX_FLT_1024)
-endif()
 endif()
 
 if (CONFIGTABLE AND CFFT_F16_2048)
     target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_TWIDDLECOEF_F16_2048)
-if (HELIUM OR MVEF)
     target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_BITREVIDX_FXT_2048)
-else()
-    target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_BITREVIDX_FLT_2048)
-endif()
 endif()
 
 if (CONFIGTABLE AND CFFT_F16_4096)
     target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_TWIDDLECOEF_F16_4096)
-if (HELIUM OR MVEF)
     target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_BITREVIDX_FXT_4096)
-else()
-    target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_BITREVIDX_FLT_4096)
-endif()
 endif()
 
 #######################################
@@ -445,49 +409,49 @@ endif()
 
 if (CONFIGTABLE AND RFFT_FAST_F16_32)
     target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_TWIDDLECOEF_F16_16)
-    target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_BITREVIDX_FLT_16)
+    target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_BITREVIDX_FXT_16)
     target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_TWIDDLECOEF_RFFT_F16_32)
 endif()
 
 if (CONFIGTABLE AND RFFT_FAST_F16_64)
     target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_TWIDDLECOEF_F16_32)
-    target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_BITREVIDX_FLT_32)
+    target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_BITREVIDX_FXT_32)
     target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_TWIDDLECOEF_RFFT_F16_64)
 endif()
 
 if (CONFIGTABLE AND RFFT_FAST_F16_128)
     target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_TWIDDLECOEF_F16_64)
-    target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_BITREVIDX_FLT_64)
+    target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_BITREVIDX_FXT_64)
     target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_TWIDDLECOEF_RFFT_F16_128)
 endif()
 
 if (CONFIGTABLE AND RFFT_FAST_F16_256)
     target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_TWIDDLECOEF_F16_128)
-    target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_BITREVIDX_FLT_128)
+    target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_BITREVIDX_FXT_128)
     target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_TWIDDLECOEF_RFFT_F16_256)
 endif()
 
 if (CONFIGTABLE AND RFFT_FAST_F16_512)
     target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_TWIDDLECOEF_F16_256)
-    target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_BITREVIDX_FLT_256)
+    target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_BITREVIDX_FXT_256)
     target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_TWIDDLECOEF_RFFT_F16_512)
 endif()
 
 if (CONFIGTABLE AND RFFT_FAST_F16_1024)
     target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_TWIDDLECOEF_F16_512)
-    target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_BITREVIDX_FLT_512)
+    target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_BITREVIDX_FXT_512)
     target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_TWIDDLECOEF_RFFT_F16_1024)
 endif()
 
 if (CONFIGTABLE AND RFFT_FAST_F16_2048)
     target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_TWIDDLECOEF_F16_1024)
-    target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_BITREVIDX_FLT_1024)
+    target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_BITREVIDX_FXT_1024)
     target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_TWIDDLECOEF_RFFT_F16_2048)
 endif()
 
 if (CONFIGTABLE AND RFFT_FAST_F16_4096)
     target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_TWIDDLECOEF_F16_2048)
-    target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_BITREVIDX_FLT_2048)
+    target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_BITREVIDX_FXT_2048)
     target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_TWIDDLECOEF_RFFT_F16_4096)
 endif()
 
@@ -557,6 +521,66 @@ if (CONFIGTABLE AND RFFT_F32_8192)
     # For cfft_radix4_init
     target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_BITREV_1024)
     target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_TWIDDLECOEF_F32_4096)
+endif()
+
+
+#######################################
+#
+# RFFT F16 (for radix4 and radix2)
+#
+
+if (CONFIGTABLE AND RFFT_F16_32)
+    # For cfft_radix4_init
+    target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_BITREV_1024)
+    target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_TWIDDLECOEF_F16_4096)
+endif()
+
+if (CONFIGTABLE AND RFFT_F16_64)
+    # For cfft_radix4_init
+    target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_BITREV_1024)
+    target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_TWIDDLECOEF_F16_4096)
+endif()
+
+if (CONFIGTABLE AND RFFT_F16_128)
+    # For cfft_radix4_init
+    target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_BITREV_1024)
+    target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_TWIDDLECOEF_F16_4096)
+endif()
+
+if (CONFIGTABLE AND RFFT_F16_256)
+    # For cfft_radix4_init
+    target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_BITREV_1024)
+    target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_TWIDDLECOEF_F16_4096)
+endif()
+
+if (CONFIGTABLE AND RFFT_F16_512)
+    # For cfft_radix4_init
+    target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_BITREV_1024)
+    target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_TWIDDLECOEF_F16_4096)
+endif()
+
+if (CONFIGTABLE AND RFFT_F16_1024)
+    # For cfft_radix4_init
+    target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_BITREV_1024)
+    target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_TWIDDLECOEF_F16_4096)
+endif()
+
+if (CONFIGTABLE AND RFFT_F16_2048)
+    # For cfft_radix4_init
+    target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_BITREV_1024)
+    target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_TWIDDLECOEF_F16_4096)
+endif()
+
+if (CONFIGTABLE AND RFFT_F16_4096)
+    # For cfft_radix4_init
+    target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_BITREV_1024)
+    target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_TWIDDLECOEF_F16_4096)
+endif()
+
+if (CONFIGTABLE AND RFFT_F16_8192)
+    # For cfft_radix4_init
+    target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_BITREV_1024)
+    target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_TWIDDLECOEF_F16_4096)
 endif()
 
 #######################################
@@ -799,5 +823,7 @@ if (CONFIGTABLE AND DCT4_Q15_8192)
     target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_BITREV_1024)
     target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_TWIDDLECOEF_Q15_4096)
 endif()
+
+
 
 endfunction()

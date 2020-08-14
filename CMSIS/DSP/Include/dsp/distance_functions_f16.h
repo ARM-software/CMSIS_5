@@ -32,8 +32,15 @@
 #include "dsp/none.h"
 #include "dsp/utils.h"
 
+/* 6.14 bug */
+#if defined (__ARMCC_VERSION) && (__ARMCC_VERSION >= 6100100) && (__ARMCC_VERSION < 6150001)
+/* Defined in minkowski_f32 */
+__attribute__((weak)) float __powisf2(float a, int b);
+#endif 
+
 #include "dsp/statistics_functions_f16.h"
 #include "dsp/basic_math_functions_f16.h"
+
 #include "dsp/fast_math_functions_f16.h"
 
 #ifdef   __cplusplus

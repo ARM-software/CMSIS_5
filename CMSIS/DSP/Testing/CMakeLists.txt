@@ -198,6 +198,25 @@ set (NNSRC
  target_include_directories(TestingLib PRIVATE Include/Benchmarks)
  endif()
 
+ if ((NOT ARMAC5) AND (FLOAT16TESTS) AND ((FLOAT16) OR (MVEF) OR (HELIUM) OR (NEON) OR (NEONEXPERIMENTAL)))
+ set(TESTSRC16 Source/Benchmarks/BasicMathsBenchmarksF16.cpp
+   Source/Benchmarks/ComplexMathsBenchmarksF16.cpp
+   Source/Benchmarks/BayesF16.cpp
+   Source/Benchmarks/SVMF16.cpp
+   Source/Benchmarks/DistanceF16.cpp
+   Source/Benchmarks/StatsF16.cpp
+   Source/Benchmarks/FIRF16.cpp
+   Source/Benchmarks/MISCF16.cpp
+   Source/Benchmarks/BIQUADF16.cpp
+   Source/Benchmarks/FastMathF16.cpp
+   Source/Benchmarks/SupportF16.cpp
+   Source/Benchmarks/SupportBarF16.cpp
+   Source/Benchmarks/UnaryF16.cpp
+   Source/Benchmarks/BinaryF16.cpp
+   Source/Benchmarks/TransformF16.cpp
+  )
+endif()
+
 else()
 
 set(STANDARDTEST ON)

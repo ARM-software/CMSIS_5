@@ -30,6 +30,7 @@ def getLastRunID(c):
      return(int(result[0]))
 
 def addNewID(c,newid):
+  print("  New run ID = %d" % newid)
   c.execute(addNewIDCmd,(newid,))
   c.commit()
 
@@ -127,7 +128,7 @@ parser.add_argument('-p', nargs='?',type = str, default="FVP",help="Platform for
 
 parser.add_argument('-db', nargs='?',type = str,help="Benchmark database")
 parser.add_argument('-regdb', nargs='?',type = str,help="Regression database")
-parser.add_argument('-sqlite', nargs='?',default="/usr/bin/sqlite3",type = str,help="Regression database")
+parser.add_argument('-sqlite', nargs='?',default="/usr/bin/sqlite3",type = str,help="sqlite executable")
 
 parser.add_argument('-debug', action='store_true', help="Debug mode")
 parser.add_argument('-keep', action='store_true', help="Keep build folder")
@@ -150,6 +151,7 @@ if args.db is not None:
    try:
       currentID = getLastRunID(conn)
       benchID = currentID + 1 
+      print("Bench db")
       addNewID(conn,benchID)
    finally:
      conn.close()
@@ -162,6 +164,7 @@ if args.regdb is not None:
    try:
       currentID = getLastRunID(conn)
       regID = currentID + 1 
+      print("Regression db")
       addNewID(conn,regID)
    finally:
      conn.close()

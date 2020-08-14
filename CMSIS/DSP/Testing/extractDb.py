@@ -42,7 +42,6 @@ def getrunIDDate(forID):
 
 
 
-runid = 1
 
 parser = argparse.ArgumentParser(description='Generate summary benchmarks')
 
@@ -65,28 +64,29 @@ args = parser.parse_args()
 c = sqlite3.connect(args.b)
 
 if args.others:
-   if len(args.others) == 1:
-      if re.search(r'[,]',args.others[0]):
-         runidval=tuple([int(x) for x in args.others[0].split(",")])
-         runidCMD=["runid == ?" for x in runidval]
-         runidCMD = "".join(joinit(runidCMD," OR "))
-         runidHeader="".join(joinit([str(x) for x in runidval]," , "))
-         runidCMD = "(" + runidCMD + ")"
-      else:
-         runid=int(args.others[0])
-         runidHeader="%d" % runid
-         runidval = (runid,)
-   else:
-      runidCMD = "runid >= ? AND runid <= ?"
-      runid=int(args.others[1])
-      runidLOW=int(args.others[0])
-      runidval = (runidLOW,runid)
-      runidHeader="%d <= runid <= %d" % runidval
+   vals=[]
+   runidCMD=[]
+   runidHeader=[]
+   for t in args.others:
+     if re.search(r'-',t):
+       bounds=[int(x) for x in t.split("-")]
+       vals += bounds
+       runidHeader += ["%d <= runid <= %d" % tuple(bounds)]
+       runidCMD += ["(runid >= ? AND runid <= ?)"]
+     else:
+      theid=int(t)
+      runidHeader += ["runid == %d" % theid]
+      runidCMD += ["runid == ?"]
+      vals.append(theid)
+
+   runidval = tuple(vals)
+   runidHeader = "".join(joinit(runidHeader," OR "))
+   runidCMD = "".join(joinit(runidCMD," OR "))
 else:
-   runid=getLastRunID()
-   print("Last run ID = %d\n" % runid)
-   runidval=(runid,)
-   runidHeader="%d" % runid
+   theid=getLastRunID()
+   print("Last run ID = %d\n" % theid)
+   runidval=(theid,)
+   runidHeader="%d" % theid
 
 
 # We extract data only from data tables
@@ -113,7 +113,7 @@ def getBenchTables():
 
 # get existing types in a table
 def getExistingTypes(benchTable):
-    r=c.execute("select distinct typeid from %s order by typeid desc" % benchTable).fetchall()
+    r=c.execute("select distinct typeid from %s WHERE %s order by typeid desc " % (benchTable,runidCMD),runidval).fetchall()
     result=[x[0] for x in r]
     return(result)
 
@@ -137,7 +137,7 @@ if args.details:
 allCompilers="""select distinct compilerid from %s WHERE typeid=?"""
 
 # Get compilers from specific type and table
-allCores="""select distinct coreid from %s WHERE typeid=?"""
+allCores="""select distinct coreid from %s WHERE typeid=? AND (%s)"""
 
 
 compilerDesc="""select compiler,version from COMPILER 
@@ -152,7 +152,8 @@ def getExistingCompiler(benchTable,typeid):
     return([x[0] for x in r])
 
 def getExistingCores(benchTable,typeid):
-    r=c.execute(allCores % benchTable,(typeid,)).fetchall()
+    vals = (typeid,) + runidval
+    r=c.execute(allCores % (benchTable,runidCMD),vals).fetchall()
     return([x[0] for x in r])
 
 
@@ -205,7 +206,7 @@ benchCmdForCore="""select %s from %s
   INNER JOIN COMPILERKIND USING(compilerkindid)
   INNER JOIN TYPE USING(typeid)
   INNER JOIN TESTNAME USING(testnameid)
-  WHERE coreid=? AND typeid = ? AND %s
+  WHERE coreid=? AND typeid = ? AND (%s)
   """
 
 coresForHistory="""select distinct coreid,core from %s
@@ -223,7 +224,7 @@ benchCmdForCompiler="""select %s from %s
   INNER JOIN COMPILERKIND USING(compilerkindid)
   INNER JOIN TYPE USING(typeid)
   INNER JOIN TESTNAME USING(testnameid)
-  WHERE compilerid=? AND typeid = ? AND %s
+  WHERE compilerid=? AND typeid = ? AND (%s)
   """
 
 # Command to get test names for specific compiler 
@@ -233,7 +234,7 @@ benchNamesForCore="""select distinct ID,name from %s
   INNER JOIN COMPILERKIND USING(compilerkindid)
   INNER JOIN TYPE USING(typeid)
   INNER JOIN TESTNAME USING(testnameid)
-  WHERE coreid=? AND typeid = ? AND %s
+  WHERE coreid=? AND typeid = ? AND (%s)
   """
 # Command to get test names for specific compiler 
 # and type
@@ -242,7 +243,7 @@ benchNamesForCompiler="""select distinct ID,name from %s
   INNER JOIN COMPILERKIND USING(compilerkindid)
   INNER JOIN TYPE USING(typeid)
   INNER JOIN TESTNAME USING(testnameid)
-  WHERE compilerid=? AND typeid = ? AND %s
+  WHERE compilerid=? AND typeid = ? AND (%s)
   """
 
 # Command to get columns for specific table
@@ -290,17 +291,17 @@ def getTestNamesForCompiler(benchTable,comp,typeid):
 # Command to get data for specific core 
 # and type
 nbElemsInBenchAndTypeAndCoreCmd="""select count(*) from %s
-  WHERE coreid=? AND typeid = ? AND %s
+  WHERE coreid=? AND typeid = ? AND (%s)
   """
 
 # Command to get data for specific compiler 
 # and type
 nbElemsInBenchAndTypeAndCompilerCmd="""select count(*) from %s
-  WHERE compilerid=? AND typeid = ? AND %s
+  WHERE compilerid=? AND typeid = ? AND (%s)
   """
 
 nbElemsInBenchAndTypeCmd="""select count(*) from %s
-  WHERE typeid = ? AND %s
+  WHERE typeid = ? AND (%s)
   """
 
 nbElemsInBenchCmd="""select count(*) from %s
@@ -312,7 +313,7 @@ categoryName="""select distinct category from %s
   WHERE %s
   """
 
-def getCategoryName(benchTable,runid):
+def getCategoryName(benchTable):
   result=c.execute(categoryName % (benchTable,runidCMD),runidval).fetchone()
   return(result[0])
 
@@ -560,10 +561,10 @@ def formatTableBy(desc,byname,section,typeSection,testNames,cols,vals):
                  dataTable.addRow(dataForFunc)
 
 # Add a report for each table
-def addReportFor(document,runid,benchName):
+def addReportFor(document,benchName):
     nbElems = getNbElemsInBenchCmd(benchName)
     if nbElems > 0:
-       categoryName = getCategoryName(benchName,runid)
+       categoryName = getCategoryName(benchName)
        benchSection = Section(categoryName)
        document.addSection(benchSection)
        print("Process %s\n" % benchName)
@@ -587,7 +588,7 @@ def addReportFor(document,runid,benchName):
                        coreSection = Section("%s" % coreName)
                        typeSection.addSection(coreSection)
                        cols,vals=getColNamesAndDataForCore(benchName,core,aTypeID)
-                       desc=(benchName,core,aTypeID,runid)
+                       desc=(benchName,core,aTypeID)
                        names=getTestNamesForCore(benchName,core,aTypeID)
                        formatTableBy(desc,['compiler','version'],['core'],coreSection,names,cols,vals)
               else:
@@ -602,7 +603,7 @@ def addReportFor(document,runid,benchName):
                        compilerSection = Section("%s (%s)" % (compilerName,version))
                        typeSection.addSection(compilerSection)
                        cols,vals=getColNamesAndDataForCompiler(benchName,compiler,aTypeID)
-                       desc=(benchName,compiler,aTypeID,runid)
+                       desc=(benchName,compiler,aTypeID)
                        names=getTestNamesForCompiler(benchName,compiler,aTypeID)
                        formatTableBy(desc,['core'],['version','compiler'],compilerSection,names,cols,vals)
                        
@@ -626,6 +627,12 @@ Hierarchy("Matrix Operations"    ,
   [Hierarchy("Binary"),
    Hierarchy("Unary")]),
 Hierarchy("Transform"),
+Hierarchy("Stats"),
+Hierarchy("Classical ML",[
+  Hierarchy("Bayes"),
+  Hierarchy("SVM"),
+  Hierarchy("Distance"),
+  ]),
 
 ]
 
@@ -651,7 +658,7 @@ def createDoc(document,sections,benchtables):
     global processed
     for s in sections:
         if s.name in benchtables:
-           addReportFor(document,runid,s.name)
+           addReportFor(document,s.name)
            processed.append(s.name)
         else:
            section=Section(s.name)
@@ -660,7 +667,6 @@ def createDoc(document,sections,benchtables):
 
 try:
       benchtables=getBenchTables()
-      theDate = getrunIDDate(runid)
       document = Document(runidHeader)
 
       addComments(document)
@@ -671,7 +677,7 @@ try:
       document.addSection(misc)
       remaining=diff(benchtables,processed)
       for bench in remaining:
-          addReportFor(misc,runid,bench)
+          addReportFor(misc,bench)
 
       #for bench in benchtables:
       #    addReportFor(document,bench)

@@ -119,6 +119,31 @@ arm_status arm_rfft_fast_init_f16 (
         const arm_rfft_fast_instance_f16 * S,
         float16_t * p, float16_t * pOut,
         uint8_t ifftFlag);
+
+/* Deprecated */
+  arm_status arm_cfft_radix4_init_f16(
+        arm_cfft_radix4_instance_f16 * S,
+        uint16_t fftLen,
+        uint8_t ifftFlag,
+        uint8_t bitReverseFlag);
+
+/* Deprecated */
+  void arm_cfft_radix4_f16(
+  const arm_cfft_radix4_instance_f16 * S,
+        float16_t * pSrc);
+
+
+/* Deprecated */
+  arm_status arm_cfft_radix2_init_f16(
+        arm_cfft_radix2_instance_f16 * S,
+        uint16_t fftLen,
+        uint8_t ifftFlag,
+        uint8_t bitReverseFlag);
+
+/* Deprecated */
+  void arm_cfft_radix2_f16(
+  const arm_cfft_radix2_instance_f16 * S,
+        float16_t * pSrc);
   
 #endif /* defined(ARM_FLOAT16_SUPPORTED)*/
 
