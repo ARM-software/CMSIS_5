@@ -1,7 +1,9 @@
 import math
 from datetime import date
 
-
+NORMALFORMAT=0
+BYCFORMAT=1
+BYDFORMAT=2
 
 def joinit(iterable, delimiter):
     it = iter(iterable)
@@ -467,10 +469,13 @@ class HTMLToc:
   def leaveDocument(self,document):
       self._output.write("</ul></div>%s\n" % script)
 
-def permutation(ordered,unordered):
+def permutation(ordered,unordered,mode):
     result=[] 
     restricted=[] 
-    for c in ORDEREDCORES:
+    order = ORDEREDCORES 
+    if mode == BYDFORMAT:
+      order = ORDEREDTYPES
+    for c in order:
       if c in unordered: 
          restricted.append(c)
 
@@ -548,8 +553,10 @@ myhist(thehdata%d,"#hi%d");
         self._output.write(str(col))
         self._output.write("</th>\n")
 
-      if self._reorder:
-         perm,restricted=permutation(ORDEREDCORES,table.cores)
+      if self._reorder == NORMALFORMAT:
+         perm,restricted=permutation(ORDEREDCORES,table.cores,self._reorder)
+      elif self._reorder == BYDFORMAT:
+         perm,restricted=permutation(ORDEREDTYPES,table.cores,self._reorder)
       else:
          restricted = table.cores
 
@@ -576,7 +583,9 @@ myhist(thehdata%d,"#hi%d");
         params=row[0:nbParams]
         values=row[nbParams:]
 
-        if self._reorder:
+        if self._reorder == NORMALFORMAT:
+          row = params + reorder(perm,values)
+        elif self._reorder == BYDFORMAT:
           row = params + reorder(perm,values)
         else:
           row = params + values

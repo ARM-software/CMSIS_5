@@ -118,6 +118,12 @@ def getExistingTypes(benchTable):
     result=[x[0] for x in r]
     return(result)
 
+# Get existing cores in a table
+def getAllExistingCores(benchTable):
+    r=c.execute("select distinct coreid from %s WHERE %s order by coreid desc " % (benchTable,runidCMD),runidval).fetchall()
+    result=[x[0] for x in r]
+    return(result)
+
 def getrunIDDetails():
   tables=getBenchTables()
   r=[]
@@ -138,6 +144,9 @@ if args.details:
 allCompilers="""select distinct compilerid from %s WHERE typeid=?"""
 
 # Get compilers from specific type and table
+allCompilerForCore="""select distinct compilerid from %s WHERE coreid=?"""
+
+# Get compilers from specific type and table
 allCores="""select distinct coreid from %s WHERE typeid=? AND (%s)"""
 
 
@@ -150,6 +159,13 @@ coreDesc="""select core from CORE WHERE coreid=?"""
 # (In case report is structured by types)
 def getExistingCompiler(benchTable,typeid):
     r=c.execute(allCompilers % benchTable,(typeid,)).fetchall()
+    return([x[0] for x in r])
+
+
+# Get existing compiler in a table for a specific core
+# (In case report is structured by core)
+def getExistingCompilerForCore(benchTable,coreid):
+    r=c.execute(allCompilerForCore % benchTable,(coreid,)).fetchall()
     return([x[0] for x in r])
 
 def getExistingCores(benchTable,typeid):
@@ -177,6 +193,19 @@ def diff(first, second):
         second = set(second)
         return [item for item in first if item not in second]
 
+
+# Command to get data for specific compiler 
+# and type
+benchCmdForCoreCompiler="""select %s from %s
+  INNER JOIN CATEGORY USING(categoryid)
+  INNER JOIN PLATFORM USING(platformid)
+  INNER JOIN CORE USING(coreid)
+  INNER JOIN COMPILER USING(compilerid)
+  INNER JOIN COMPILERKIND USING(compilerkindid)
+  INNER JOIN TYPE USING(typeid)
+  INNER JOIN TESTNAME USING(testnameid)
+  WHERE coreid=? AND compilerid = ? AND (%s)
+  """
 
 # Command to get data for specific core 
 # and type
@@ -230,16 +259,27 @@ benchCmdForCompiler="""select %s from %s
 
 # Command to get test names for specific compiler 
 # and type
-benchNamesForCore="""select distinct ID,name from %s
+benchNamesForCore="""select distinct name from %s
   INNER JOIN COMPILER USING(compilerid)
   INNER JOIN COMPILERKIND USING(compilerkindid)
   INNER JOIN TYPE USING(typeid)
   INNER JOIN TESTNAME USING(testnameid)
   WHERE coreid=? AND typeid = ? AND (%s)
   """
+
+# Command to get test names for specific core 
+# and compiler
+benchNamesForCoreCompiler="""select distinct name from %s
+  INNER JOIN COMPILER USING(compilerid)
+  INNER JOIN COMPILERKIND USING(compilerkindid)
+  INNER JOIN TYPE USING(typeid)
+  INNER JOIN TESTNAME USING(testnameid)
+  WHERE coreid=? AND compilerid = ? AND (%s)
+  """
+
 # Command to get test names for specific compiler 
 # and type
-benchNamesForCompiler="""select distinct ID,name from %s
+benchNamesForCompiler="""select distinct name from %s
   INNER JOIN COMPILER USING(compilerid)
   INNER JOIN COMPILERKIND USING(compilerkindid)
   INNER JOIN TYPE USING(typeid)
@@ -274,11 +314,19 @@ def isNotIDColumn(col):
         return(True)
 
 # Get test names
+# for specific core and compiler (for the data)
+def getTestNamesForCoreCompiler(benchTable,compilerid,core):
+    vals=(core,compilerid) + runidval
+    result=c.execute(benchNamesForCoreCompiler % (benchTable,runidCMD),vals).fetchall()
+    names=[x[0] for x in list(result)]
+    return(names)
+
+# Get test names
 # for specific typeid and core (for the data)
 def getTestNamesForCore(benchTable,core,typeid):
     vals=(core,typeid) + runidval
     result=c.execute(benchNamesForCore % (benchTable,runidCMD),vals).fetchall()
-    names=[(x[0],x[1]) for x in list(result)]
+    names=[x[0] for x in list(result)]
     return(names)
 
 # Get test names
@@ -286,7 +334,7 @@ def getTestNamesForCore(benchTable,core,typeid):
 def getTestNamesForCompiler(benchTable,comp,typeid):
     vals=(comp,typeid) + runidval
     result=c.execute(benchNamesForCompiler % (benchTable,runidCMD),vals).fetchall()
-    names=[(x[0],x[1]) for x in list(result)]
+    names=[x[0] for x in list(result)]
     return(names)
 
 # Command to get data for specific core 
@@ -301,8 +349,17 @@ nbElemsInBenchAndTypeAndCompilerCmd="""select count(*) from %s
   WHERE compilerid=? AND typeid = ? AND (%s)
   """
 
+# Command to get data for specific compiler 
+# and type
+nbElemsInBenchAndCoreAndCompilerCmd="""select count(*) from %s
+  WHERE compilerid=? AND coreid = ? AND (%s)
+  """
+
 nbElemsInBenchAndTypeCmd="""select count(*) from %s
   WHERE typeid = ? AND (%s)
+  """
+nbElemsInBenchAndCoreCmd="""select count(*) from %s
+  WHERE coreid = ? AND (%s)
   """
 
 nbElemsInBenchCmd="""select count(*) from %s
@@ -330,9 +387,20 @@ def getNbElemsInBenchAndTypeAndCompilerCmd(benchTable,comp,typeid):
     result=c.execute(nbElemsInBenchAndTypeAndCompilerCmd % (benchTable,runidCMD),vals).fetchone()
     return(result[0])
 
+# Get nb elems in a table
+def getNbElemsInBenchAndCoreAndCompilerCmd(benchTable,comp,coreid):
+    vals=(comp,coreid) + runidval
+    result=c.execute(nbElemsInBenchAndCoreAndCompilerCmd % (benchTable,runidCMD),vals).fetchone()
+    return(result[0])
+
 def getNbElemsInBenchAndTypeCmd(benchTable,typeid):
     vals=(typeid,) + runidval
     result=c.execute(nbElemsInBenchAndTypeCmd % (benchTable,runidCMD),vals).fetchone()
+    return(result[0])
+
+def getNbElemsInBenchAndCoreCmd(benchTable,coreid):
+    vals=(coreid,) + runidval
+    result=c.execute(nbElemsInBenchAndCoreCmd % (benchTable,runidCMD),vals).fetchone()
     return(result[0])
 
 def getNbElemsInBenchCmd(benchTable):
@@ -345,7 +413,7 @@ def getColNamesAndHistory(benchTable,compiler,core,typeid,testid):
     cursor=c.cursor()
     result=cursor.execute(benchCmdColumns % (benchTable))
     cols= [member[0] for member in cursor.description]
-    keepCols = ['name','runid'] + [c for c in diff(cols , REMOVECOLUMNSFORHISTORY) if isNotIDColumn(c)]
+    keepCols = ['name'] + [c for c in diff(cols , REMOVECOLUMNSFORHISTORY) if isNotIDColumn(c)]
     keepColsStr = "".join(joinit(keepCols,","))
     vals=(compiler,core,typeid,testid,runid)
     result=cursor.execute(historyCmd % (keepColsStr,benchTable),vals)
@@ -365,6 +433,18 @@ def getColNamesAndDataForCore(benchTable,core,typeid):
     vals =np.array([list(x) for x in list(result)])
     return(keepCols,vals)
 
+# Get names of columns and data for a table
+# for specific coreid and compilerid (for the data)
+def getColNamesAndDataForCoreCompiler(benchTable,compilerid,core):
+    cursor=c.cursor()
+    result=cursor.execute(benchCmdColumns % (benchTable))
+    cols= [member[0] for member in cursor.description]
+    keepCols = ['name','type'] + [c for c in diff(cols , REMOVECOLUMNS) if isNotIDColumn(c)]
+    keepColsStr = "".join(joinit(keepCols,","))
+    vals=(core,compilerid) + runidval
+    result=cursor.execute(benchCmdForCoreCompiler % (keepColsStr,benchTable,runidCMD),vals)
+    vals =np.array([list(x) for x in list(result)])
+    return(keepCols,vals)
 
 # Get names of columns and data for a table
 # for specific typeid and compiler (for the data)
@@ -469,6 +549,16 @@ def getHistory(desc,testid,indexCols):
        hist=History(series,runid)
        return(hist)
 
+def convertRowToInt(r):
+  result=[]
+  for e in r:
+    if type(e) is float:
+      result.append(int(e))
+    else:
+      result.append(e)
+
+  return(result)
+
 def formatTableBy(desc,byname,section,typeSection,testNames,cols,vals):
     if vals.size != 0:
        ref=pd.DataFrame(vals,columns=cols)
@@ -486,14 +576,13 @@ def formatTableBy(desc,byname,section,typeSection,testNames,cols,vals):
          indexCols=diff(cols,byname + ['Regression','MAXREGCOEF','MAX'] + section)
          valList = ['Regression']
        else:
-         ref['CYCLES']=pd.to_numeric(ref['CYCLES'])
-       
+         ref['CYCLES']=pd.to_numeric(ref['CYCLES']).round(decimals=0)
+
          indexCols=diff(cols,byname + ['CYCLES'] + section)
          valList = ['CYCLES']
       
        
-
-       for testid,name in testNames:
+       for name in testNames:
            if args.r:
               testSection = Section(name)
               typeSection.addSection(testSection)
@@ -536,30 +625,33 @@ def formatTableBy(desc,byname,section,typeSection,testNames,cols,vals):
            else:
               data=ref.pivot_table(index=indexCols, columns=byname, 
               values=valList, aggfunc='first')
-       
+
               data=data.sort_values(toSort)
-       
+
               #print(list(data.columns))
-              columnsID = [formatColumnName(c[1:]) for c in list(data.columns)]
-              columns = diff(indexCols,['name'])
 
               testSection = Section(name)
               typeSection.addSection(testSection)
 
+              dataForFunc=data.loc[name]
+              dataForFunc = dataForFunc.dropna(axis=1)
+
+              columnsID = [formatColumnName(c[1:]) for c in list(dataForFunc.columns)]
+              columns = diff(indexCols,['name'])
+
               dataTable=Table(columns,columnsID)
               testSection.addContent(dataTable)
 
-              dataForFunc=data.loc[name]
+
               if type(dataForFunc) is pd.DataFrame:
                  for row in dataForFunc.itertuples():
-                     row=list(row)
                      if type(row[0]) is int:
-                        row=[row[0]] + row[1:]
+                        row=list([row[0]] + list(row[1:]))
                      else: 
-                        row=list(row[0]) + row[1:]
-                     dataTable.addRow(row)
+                        row=list(row[0]) + list(row[1:])
+                     dataTable.addRow(convertRowToInt(row))
               else:
-                 dataTable.addRow(dataForFunc)
+                 dataTable.addRow(convertRowToInt(dataForFunc))
 
 # Add a report for each table
 def addReportFor(document,benchName):
@@ -569,44 +661,69 @@ def addReportFor(document,benchName):
        benchSection = Section(categoryName)
        document.addSection(benchSection)
        print("Process %s\n" % benchName)
-       allTypes = getExistingTypes(benchName)
-       # Add report for each type
-       for aTypeID in allTypes:
-           nbElems = getNbElemsInBenchAndTypeCmd(benchName,aTypeID)
-           if nbElems > 0:
-              typeName = getTypeName(aTypeID)
-              typeSection = Section(typeName)
-              benchSection.addSection(typeSection)
-              if args.byc:
-                ## Add report for each core
-                allCores = getExistingCores(benchName,aTypeID)
-                for core in allCores:
-                    #print(core)
-                    nbElems = getNbElemsInBenchAndTypeAndCoreCmd(benchName,core,aTypeID)
-                    # Print test results for table, type, compiler
-                    if nbElems > 0:
-                       coreName=getCoreDesc(core)
-                       coreSection = Section("%s" % coreName)
-                       typeSection.addSection(coreSection)
-                       cols,vals=getColNamesAndDataForCore(benchName,core,aTypeID)
-                       desc=(benchName,core,aTypeID)
-                       names=getTestNamesForCore(benchName,core,aTypeID)
-                       formatTableBy(desc,['compiler','version'],['core'],coreSection,names,cols,vals)
-              else:
-                ## Add report for each compiler
-                allCompilers = getExistingCompiler(benchName,aTypeID)
-                for compiler in allCompilers:
-                    #print(compiler)
-                    nbElems = getNbElemsInBenchAndTypeAndCompilerCmd(benchName,compiler,aTypeID)
-                    # Print test results for table, type, compiler
-                    if nbElems > 0:
-                       compilerName,version=getCompilerDesc(compiler)
-                       compilerSection = Section("%s (%s)" % (compilerName,version))
-                       typeSection.addSection(compilerSection)
-                       cols,vals=getColNamesAndDataForCompiler(benchName,compiler,aTypeID)
-                       desc=(benchName,compiler,aTypeID)
-                       names=getTestNamesForCompiler(benchName,compiler,aTypeID)
-                       formatTableBy(desc,['core'],['version','compiler'],compilerSection,names,cols,vals)
+       if args.byd:
+          allCores=getAllExistingCores(benchName)
+          for aCoreID in allCores:
+            nbElems = getNbElemsInBenchAndCoreCmd(benchName,aCoreID)
+            if nbElems > 0:
+               coreName=getCoreDesc(aCoreID)
+               coreSection = Section("%s" % coreName)
+               benchSection.addSection(coreSection)
+               allCompilers = getExistingCompilerForCore(benchName,aCoreID)
+               for compiler in allCompilers:
+                 #print(compiler)
+                 nbElems = getNbElemsInBenchAndCoreAndCompilerCmd(benchName,compiler,aCoreID)
+                 
+                 # Print test results for table, type, compiler
+                 if nbElems > 0:
+                    compilerName,version=getCompilerDesc(compiler)
+                    compilerSection = Section("%s (%s)" % (compilerName,version))
+                    coreSection.addSection(compilerSection)
+                    cols,vals=getColNamesAndDataForCoreCompiler(benchName,compiler,aCoreID)
+                    desc=(benchName,compiler,aCoreID)
+                    names=getTestNamesForCoreCompiler(benchName,compiler,aCoreID)
+                   
+                    formatTableBy(desc,['type'],['core','version','compiler'],compilerSection,names,cols,vals)
+                       
+       else:
+          allTypes = getExistingTypes(benchName)
+          # Add report for each type
+          for aTypeID in allTypes:
+              nbElems = getNbElemsInBenchAndTypeCmd(benchName,aTypeID)
+              if nbElems > 0:
+                 typeName = getTypeName(aTypeID)
+                 typeSection = Section(typeName)
+                 benchSection.addSection(typeSection)
+                 if args.byc:
+                   ## Add report for each core
+                   allCores = getExistingCores(benchName,aTypeID)
+                   for core in allCores:
+                       #print(core)
+                       nbElems = getNbElemsInBenchAndTypeAndCoreCmd(benchName,core,aTypeID)
+                       # Print test results for table, type, compiler
+                       if nbElems > 0:
+                          coreName=getCoreDesc(core)
+                          coreSection = Section("%s" % coreName)
+                          typeSection.addSection(coreSection)
+                          cols,vals=getColNamesAndDataForCore(benchName,core,aTypeID)
+                          desc=(benchName,core,aTypeID)
+                          names=getTestNamesForCore(benchName,core,aTypeID)
+                          formatTableBy(desc,['compiler','version'],['core'],coreSection,names,cols,vals)
+                 else:
+                   ## Add report for each compiler
+                   allCompilers = getExistingCompiler(benchName,aTypeID)
+                   for compiler in allCompilers:
+                       #print(compiler)
+                       nbElems = getNbElemsInBenchAndTypeAndCompilerCmd(benchName,compiler,aTypeID)
+                       # Print test results for table, type, compiler
+                       if nbElems > 0:
+                          compilerName,version=getCompilerDesc(compiler)
+                          compilerSection = Section("%s (%s)" % (compilerName,version))
+                          typeSection.addSection(compilerSection)
+                          cols,vals=getColNamesAndDataForCompiler(benchName,compiler,aTypeID)
+                          desc=(benchName,compiler,aTypeID)
+                          names=getTestNamesForCompiler(benchName,compiler,aTypeID)
+                          formatTableBy(desc,['core'],['version','compiler'],compilerSection,names,cols,vals)
                        
 
 
@@ -686,9 +803,11 @@ try:
           if args.t=="md":
              document.accept(Markdown(output))
           if args.t=="html":
-             reorder=True
+             reorder=NORMALFORMAT
              if args.byc:
-               reorder=False
+               reorder=BYCFORMAT
+             if args.byd:
+               reorder=BYDFORMAT
              document.accept(HTML(output,args.r,reorder))
 
 finally:
