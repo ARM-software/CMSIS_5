@@ -126,7 +126,7 @@ void arm_dot_prod_f16(
         float16_t * result)
 {
         uint32_t blkCnt;                               /* Loop counter */
-        float16_t sum = 0.0f;                          /* Temporary return variable */
+        _Float16 sum = 0.0f;                          /* Temporary return variable */
 
 
 #if defined (ARM_MATH_LOOPUNROLL) && !defined(ARM_MATH_AUTOVECTORIZE)
@@ -141,13 +141,13 @@ void arm_dot_prod_f16(
     /* C = A[0]* B[0] + A[1]* B[1] + A[2]* B[2] + .....+ A[blockSize-1]* B[blockSize-1] */
 
     /* Calculate dot product and store result in a temporary buffer. */
-    sum += (*pSrcA++) * (*pSrcB++);
+    sum += (_Float16)(*pSrcA++) * (_Float16)(*pSrcB++);
 
-    sum += (*pSrcA++) * (*pSrcB++);
+    sum += (_Float16)(*pSrcA++) * (_Float16)(*pSrcB++);
 
-    sum += (*pSrcA++) * (*pSrcB++);
+    sum += (_Float16)(*pSrcA++) * (_Float16)(*pSrcB++);
 
-    sum += (*pSrcA++) * (*pSrcB++);
+    sum += (_Float16)(*pSrcA++) * (_Float16)(*pSrcB++);
 
     /* Decrement loop counter */
     blkCnt--;
@@ -168,7 +168,7 @@ void arm_dot_prod_f16(
     /* C = A[0]* B[0] + A[1]* B[1] + A[2]* B[2] + .....+ A[blockSize-1]* B[blockSize-1] */
 
     /* Calculate dot product and store result in a temporary buffer. */
-    sum += (*pSrcA++) * (*pSrcB++);
+    sum += (_Float16)(*pSrcA++) * (_Float16)(*pSrcB++);
 
     /* Decrement loop counter */
     blkCnt--;

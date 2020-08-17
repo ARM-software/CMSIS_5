@@ -50,6 +50,7 @@
 
 #include "arm_helium_utils.h"
 
+#include <stdio.h>
 void arm_svm_linear_predict_f16(
     const arm_svm_linear_instance_f16 *S,
     const float16_t * in,
@@ -65,7 +66,7 @@ void arm_svm_linear_predict_f16(
     uint32_t         row;
     uint32_t         blkCnt;     /* loop counters */
     const float16_t *pDualCoef = S->dualCoefficients;
-    float16_t       sum = S->intercept;
+    _Float16       sum = S->intercept;
     row = numRows;
 
     /*
@@ -145,10 +146,10 @@ void arm_svm_linear_predict_f16(
         /*
          * Sum the partial parts
          */
-        sum += *pDualCoef++ * vecAddAcrossF16Mve(acc0);
-        sum += *pDualCoef++ * vecAddAcrossF16Mve(acc1);
-        sum += *pDualCoef++ * vecAddAcrossF16Mve(acc2);
-        sum += *pDualCoef++ * vecAddAcrossF16Mve(acc3);
+        sum += (_Float16)*pDualCoef++ * vecAddAcrossF16Mve(acc0);
+        sum += (_Float16)*pDualCoef++ * vecAddAcrossF16Mve(acc1);
+        sum += (_Float16)*pDualCoef++ * vecAddAcrossF16Mve(acc2);
+        sum += (_Float16)*pDualCoef++ * vecAddAcrossF16Mve(acc3);
 
         pSrcA += numCols * 4;
         /*
@@ -215,8 +216,8 @@ void arm_svm_linear_predict_f16(
         /*
          * Sum the partial parts
          */
-        sum += *pDualCoef++ * vecAddAcrossF16Mve(acc0);
-        sum += *pDualCoef++ * vecAddAcrossF16Mve(acc1);
+        sum += (_Float16)*pDualCoef++ * vecAddAcrossF16Mve(acc0);
+        sum += (_Float16)*pDualCoef++ * vecAddAcrossF16Mve(acc1);
 
         pSrcA += numCols * 2;
         row -= 2;
@@ -269,7 +270,7 @@ void arm_svm_linear_predict_f16(
         /*
          * Sum the partial parts
          */
-        sum += *pDualCoef++ * vecAddAcrossF16Mve(acc0);
+        sum += (_Float16)*pDualCoef++ * vecAddAcrossF16Mve(acc0);
 
     }
 

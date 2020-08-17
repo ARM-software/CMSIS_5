@@ -63,10 +63,10 @@ __STATIC_FORCEINLINE float32_t vecAddAcrossF32Mve(float32x4_t in)
     return acc;
 }
 
-__STATIC_FORCEINLINE float16_t vecAddAcrossF16Mve(float16x8_t in)
+__STATIC_FORCEINLINE _Float16 vecAddAcrossF16Mve(float16x8_t in)
 {
     float16x8_t tmpVec;
-    float16_t acc;
+    _Float16 acc;
 
     tmpVec = (float16x8_t) vrev32q_s16((int16x8_t) in);
     in = vaddq_f16(tmpVec, in);

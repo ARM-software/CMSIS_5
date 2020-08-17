@@ -55,6 +55,7 @@ parser.add_argument('-g', action='store_true', help="Include graphs in regressio
 parser.add_argument('-details', action='store_true', help="Details about runids")
 parser.add_argument('-lastid', action='store_true', help="Get last ID")
 parser.add_argument('-comments', nargs='?',type = str, default="comments.txt", help="Comment section")
+parser.add_argument('-byd', action='store_true', help="Result oganized by datatype")
 
 # For runid or runid range
 parser.add_argument('others', nargs=argparse.REMAINDER,help="Run ID")
@@ -685,7 +686,10 @@ try:
           if args.t=="md":
              document.accept(Markdown(output))
           if args.t=="html":
-             document.accept(HTML(output,args.r))
+             reorder=True
+             if args.byc:
+               reorder=False
+             document.accept(HTML(output,args.r,reorder))
 
 finally:
      c.close()

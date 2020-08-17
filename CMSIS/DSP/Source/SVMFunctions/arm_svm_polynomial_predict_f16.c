@@ -67,7 +67,7 @@ void arm_svm_polynomial_predict_f16(
     uint32_t         row;
     uint32_t         blkCnt;     /* loop counters */
     const float16_t *pDualCoef = S->dualCoefficients;
-    float16_t       sum = S->intercept;
+    _Float16       sum = S->intercept;
     f16x8_t         vSum = vdupq_n_f16(0.0f);
 
     row = numRows;

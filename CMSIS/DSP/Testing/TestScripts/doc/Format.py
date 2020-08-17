@@ -11,7 +11,7 @@ def joinit(iterable, delimiter):
         yield x
 
 # To format, in HTML, the cores in the right order.
-# First we order tje categories
+# First we order the categories
 # Then we order the cores in each category
 # The final ORDEREDCORES is what is used
 # to order tjhe values
@@ -32,6 +32,8 @@ for cat in CORTEXCATEGORIES:
     print("Error core %s not found" % cat)
     quit()
   ORDEREDCORES += cores
+
+ORDEREDTYPES=["q7","q15","q31","u32","f16","f32","f64"]
 
 class Markdown:
   def __init__(self,output):
@@ -485,13 +487,14 @@ def reorder(p,v):
     return(result)
 
 class HTML:
-  def __init__(self,output,regMode):
+  def __init__(self,output,regMode,reorder):
     self._id=0
     self._sectionID = 0
     self._barID = 0
     self._histID = 0
     self._output = output
     self._regMode = regMode
+    self._reorder = reorder
 
   def visitBarChart(self,bar):
       data=bar.data
@@ -545,7 +548,10 @@ myhist(thehdata%d,"#hi%d");
         self._output.write(str(col))
         self._output.write("</th>\n")
 
-      perm,restricted=permutation(ORDEREDCORES,table.cores)
+      if self._reorder:
+         perm,restricted=permutation(ORDEREDCORES,table.cores)
+      else:
+         restricted = table.cores
 
       for col in restricted:
         if firstCore:
@@ -570,7 +576,10 @@ myhist(thehdata%d,"#hi%d");
         params=row[0:nbParams]
         values=row[nbParams:]
 
-        row = params + reorder(perm,values)
+        if self._reorder:
+          row = params + reorder(perm,values)
+        else:
+          row = params + values
 
         for elem in row:
             if i < nbParams:
