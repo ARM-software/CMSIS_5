@@ -7,6 +7,8 @@ from TestScripts.doc.Structure import *
 from TestScripts.doc.Format import *
 import os.path
 
+refCoreName=""
+
 runidCMD = "runid = ?"
 
 # Command to get last runid 
@@ -56,6 +58,11 @@ parser.add_argument('-details', action='store_true', help="Details about runids"
 parser.add_argument('-lastid', action='store_true', help="Get last ID")
 parser.add_argument('-comments', nargs='?',type = str, default="comments.txt", help="Comment section")
 parser.add_argument('-byd', action='store_true', help="Result oganized by datatype")
+parser.add_argument('-ratio', action='store_true', help="Compute ratios for regression by core instead of cycles")
+parser.add_argument('-ref', nargs='?',type = str, default="M55", help="Reference COREDEF for ratio in db")
+parser.add_argument('-clampval', nargs='?',type = float, default=8.0, help="Clamp for ratio")
+parser.add_argument('-clamp', action='store_true', help="Clamp enabled for ratio")
+parser.add_argument('-keep', nargs='?',type = str, help="Core to keep for ratio")
 
 # For runid or runid range
 parser.add_argument('others', nargs=argparse.REMAINDER,help="Run ID")
@@ -68,26 +75,31 @@ if args.others:
    vals=[]
    runidCMD=[]
    runidHeader=[]
+   runidVIEWcmd=[]
    for t in args.others:
      if re.search(r'-',t):
        bounds=[int(x) for x in t.split("-")]
        vals += bounds
        runidHeader += ["%d <= runid <= %d" % tuple(bounds)]
        runidCMD += ["(runid >= ? AND runid <= ?)"]
+       runidVIEWcmd += ["(runid >= %d AND runid <= %d) " % tuple(bounds)]
      else:
       theid=int(t)
       runidHeader += ["runid == %d" % theid]
       runidCMD += ["runid == ?"]
+      runidVIEWcmd += ["runid == %d" % theid]
       vals.append(theid)
 
    runidval = tuple(vals)
-   runidHeader = "".join(joinit(runidHeader," OR "))
-   runidCMD = "".join(joinit(runidCMD," OR "))
+   runidHeader = "(" + "".join(joinit(runidHeader," OR ")) + ")"
+   runidCMD = "(" + "".join(joinit(runidCMD," OR ")) + ")"
+   runidVIEWcmd = "(" + "".join(joinit(runidVIEWcmd," OR ")) + ")"
 else:
    theid=getLastRunID()
    print("Last run ID = %d\n" % theid)
    runidval=(theid,)
    runidHeader="%d" % theid
+   runidVIEWcmd="(runid = %d)" % theid
 
 
 # We extract data only from data tables
@@ -175,8 +187,8 @@ def getExistingCores(benchTable,typeid):
 
 
 
-def getCoreDesc(compilerid):
-    r=c.execute(coreDesc,(compilerid,)).fetchone()
+def getCoreDesc(coreid):
+    r=c.execute(coreDesc,(coreid,)).fetchone()
     return(r)
 
 def getCompilerDesc(compilerid):
@@ -476,6 +488,7 @@ def regressionTableFor(byname,name,section,ref,toSort,indexCols,field):
     section.addContent(dataTable)
 
     dataForFunc=data.loc[name]
+
     if type(dataForFunc) is pd.DataFrame:
        bars={'cols':columns,'cores':cores,'data':[]}
        for row in dataForFunc.itertuples():
@@ -575,6 +588,7 @@ def formatTableBy(desc,byname,section,typeSection,testNames,cols,vals):
        
          indexCols=diff(cols,byname + ['Regression','MAXREGCOEF','MAX'] + section)
          valList = ['Regression']
+
        else:
          ref['CYCLES']=pd.to_numeric(ref['CYCLES']).round(decimals=0)
 
@@ -653,6 +667,228 @@ def formatTableBy(desc,byname,section,typeSection,testNames,cols,vals):
               else:
                  dataTable.addRow(convertRowToInt(dataForFunc))
 
+referenceCoreID = None 
+
+
+
+coreidSQL="select distinct coreid from CORE where coredef==?"
+
+def getCoreID(corename):
+  r=c.execute(coreidSQL,(corename,))
+  t=r.fetchone()
+  if t is None:
+    print("Unrecognized reference core")
+    quit()
+  return(t[0])
+
+refCore="""CREATE TEMP VIEW if not exists refCore AS
+select * from %s where (coreid = %s) and (typeid =  %s)
+ and %s
+ and compilerid = %s"""
+
+allOtherCores="""CREATE TEMP VIEW if not exists otherCore AS
+select * from %s where (coreid != %s) and (typeid =  %s)
+ and %s
+ and compilerid = %s"""
+
+otherCore="""CREATE TEMP VIEW if not exists otherCore AS
+select * from %s where (coreid = %s) and (typeid =  %s)
+ and %s
+ and compilerid = %s"""
+
+refCoreAllTypes="""CREATE TEMP VIEW if not exists refCore AS
+select * from %s where (coreid = %s) 
+ and %s
+ and compilerid = %s"""
+
+otherCoreAllTypes="""CREATE TEMP VIEW if not exists otherCore AS
+select * from %s where (coreid = %s) 
+ and %s
+ and compilerid = %s"""
+
+
+ratioSQL="""select name,otherCore.compilerid as compilerid,CORE.core as core,%s(CAST(otherCore.MAX as FLOAT) / CAST(refCore.MAX AS FLOAT)) AS RATIO
+ from otherCore
+ INNER JOIN refCore ON (refCore.categoryid = otherCore.categoryid 
+ AND refCore.testnameid = otherCore.testnameid
+ AND refCore.typeid = otherCore.typeid
+ AND refCore.runid = otherCore.runid
+ AND refCore.compilerid = otherCore.compilerid
+ )
+ INNER JOIN TESTNAME ON TESTNAME.testnameid = refCore.testnameid
+ INNER JOIN CORE USING(coreid)
+ %s"""
+
+ratioSQLAllTypes="""select name,otherCore.compilerid as compilerid,TYPE.type as type,%s(CAST(otherCore.MAX as FLOAT) / CAST(refCore.MAX AS FLOAT)) AS RATIO
+ from otherCore
+ INNER JOIN refCore ON (refCore.categoryid = otherCore.categoryid 
+ AND refCore.testnameid = otherCore.testnameid
+ AND refCore.typeid = otherCore.typeid
+ AND refCore.runid = otherCore.runid
+ AND refCore.compilerid = otherCore.compilerid
+ )
+ INNER JOIN TESTNAME ON TESTNAME.testnameid = refCore.testnameid
+ INNER JOIN TYPE USING(typeid)
+ %s"""
+
+ratioTestNamesSQL="""select distinct TESTNAME.name
+ from otherCore
+ INNER JOIN refCore ON (refCore.categoryid = otherCore.categoryid 
+ AND refCore.testnameid = otherCore.testnameid
+ AND refCore.typeid = otherCore.typeid
+ AND refCore.runid = otherCore.runid
+ AND refCore.compilerid = otherCore.compilerid
+ )
+ INNER JOIN TESTNAME ON TESTNAME.testnameid = refCore.testnameid
+ INNER JOIN CORE USING(coreid)
+ %s"""
+
+
+dropViewsRef="""drop view refCore"""
+
+dropViewsOther="""drop view otherCore"""
+
+def getTableParams(benchTable):
+  cursor=c.cursor()
+  result=cursor.execute("select * from %s limit 1" % (benchTable))
+  cols= [member[0] for member in cursor.description]
+  params=[]
+  for x in cols:
+    if x in PARAMS:
+      params.append(x)
+  return(params)
+
+def computeRatio(benchName,viewParams,refMkViewCmd,otherMkViewCmd,byd):
+  params = getTableParams(benchName)
+  cols=["ratio"]
+  paramscmd=""
+  paramscols=""
+  paramsnames = ["refCore.%s as %s" % (x,x) for x in params]
+  paramseq = ["refCore.%s = otherCore.%s" % (x,x) for x in params]
+  if len(params) > 0:
+     cols = ["%s" % x for x in params]
+     cols.append("ratio")
+     paramscols= ("".join(joinit(paramsnames," , ")) + ",")
+     paramscmd = "WHERE " + "".join(joinit(paramseq," AND "))
+  if byd:
+    ratioCmd = ratioSQLAllTypes  % (paramscols,paramscmd)
+  else:
+    ratioCmd = ratioSQL  % (paramscols,paramscmd)
+  ratioTestNames = ratioTestNamesSQL  % (paramscmd)
+
+  #print(refMkViewCmd)
+  #print(otherMkViewCmd)
+  #
+  #print(ratioCmd)
+  #
+  #print(dropViewsRef)
+  #print(dropViewsOther)
+  #quit()
+  
+  c.execute(refMkViewCmd)
+  c.execute(otherMkViewCmd)
+  
+  ratio=c.execute(ratioCmd).fetchall()
+  testNames=c.execute(ratioTestNames).fetchall()
+  testNames=[x[0] for x in testNames]
+
+  c.execute(dropViewsRef)
+  c.execute(dropViewsOther)
+
+  #print(ratio)
+  #quit()
+  if byd:
+     return(['name','compilerid','type'] + cols,params,ratio,testNames)
+  else:
+     return(['name','compilerid','core'] + cols,params,ratio,testNames)
+
+# Compute for all core for a given type
+def computeRatioTable(benchName,referenceCore,typeID,compiler):
+  viewParams = (benchName,referenceCore,typeID,runidVIEWcmd,compiler)
+  refMkViewCmd = refCore % viewParams
+  otherMkViewCmd = allOtherCores % viewParams
+  if args.keep:
+    keepCoreID = getCoreID(args.keep)
+    otherParams = (benchName,keepCoreID,typeID,runidVIEWcmd,compiler)
+    otherMkViewCmd = otherCore % otherParams
+  return(computeRatio(benchName,viewParams,refMkViewCmd,otherMkViewCmd,False))
+  
+
+def computeRatioTableForCore(benchName,referenceCore,otherCoreID,compiler):
+  viewParams = (benchName,referenceCore,runidVIEWcmd,compiler)
+  refMkViewCmd = refCoreAllTypes % viewParams
+  otherParams = (benchName,otherCoreID,runidVIEWcmd,compiler)
+  otherMkViewCmd = otherCoreAllTypes % otherParams
+  return(computeRatio(benchName,viewParams,refMkViewCmd,otherMkViewCmd,True))
+
+def formatPerfRatio(s):
+  result=[]
+  for t in s:
+    if type(t) is float:
+      if args.clamp:
+         if t > args.clampval:
+            t = args.clampval
+      result.append(("%.3f" % t))
+    else:
+      result.append(s)
+
+  return(result)
+
+def addRatioTable(cols,params,data,section,testNames,byd):
+  ref=pd.DataFrame(data,columns=cols)
+  toSort=["name"] + params
+  for param in PARAMS:
+    if param in ref.columns:
+        ref[param]=pd.to_numeric(ref[param])
+
+  #print(testNames)
+  for name in testNames:
+      testSection = Section(name)
+      section.addSection(testSection)
+
+      ratioSection = Section("Ratios")
+      testSection.addSection(ratioSection)
+      
+      #print(toSort)
+      #print(ref)
+
+      if byd:
+        data=ref.pivot_table(index=toSort, columns=['type'], 
+           values=["ratio"], aggfunc='first')
+      else:
+         data=ref.pivot_table(index=toSort, columns=['core'], 
+           values=["ratio"], aggfunc='first')
+       
+      data=data.sort_values(toSort)
+
+      #print(data)
+      dataForFunc=data.loc[name]
+
+      cores = [c[1] for c in list(data.columns)]
+
+      dataTable=Table(params,cores)
+
+      ratioSection.addContent(Text("A bigger ratio means the reference core \"%s\" is better" % refCoreName))
+
+      ratioSection.addContent(dataTable)
+
+      if type(dataForFunc) is pd.DataFrame:
+         for row in dataForFunc.itertuples():
+           row=list(row)
+           if type(row[0]) is int:
+              row=[row[0]] + formatPerfRatio(row[1:])
+           else: 
+              row=list(row[0]) + formatPerfRatio(row[1:])
+           dataTable.addRow(row)
+      else:
+         row=list(dataForFunc) 
+         dataTable.addRow(formatPerfRatio(row))
+     
+      
+      
+      
+  
+
 # Add a report for each table
 def addReportFor(document,benchName):
     nbElems = getNbElemsInBenchCmd(benchName)
@@ -663,6 +899,10 @@ def addReportFor(document,benchName):
        print("Process %s\n" % benchName)
        if args.byd:
           allCores=getAllExistingCores(benchName)
+          if args.ratio:
+             allCores.remove(referenceCoreID)
+             if args.keep:
+              allCores=[getCoreID(args.keep)]
           for aCoreID in allCores:
             nbElems = getNbElemsInBenchAndCoreCmd(benchName,aCoreID)
             if nbElems > 0:
@@ -672,18 +912,30 @@ def addReportFor(document,benchName):
                allCompilers = getExistingCompilerForCore(benchName,aCoreID)
                for compiler in allCompilers:
                  #print(compiler)
-                 nbElems = getNbElemsInBenchAndCoreAndCompilerCmd(benchName,compiler,aCoreID)
-                 
-                 # Print test results for table, type, compiler
-                 if nbElems > 0:
-                    compilerName,version=getCompilerDesc(compiler)
-                    compilerSection = Section("%s (%s)" % (compilerName,version))
-                    coreSection.addSection(compilerSection)
-                    cols,vals=getColNamesAndDataForCoreCompiler(benchName,compiler,aCoreID)
-                    desc=(benchName,compiler,aCoreID)
-                    names=getTestNamesForCoreCompiler(benchName,compiler,aCoreID)
-                   
-                    formatTableBy(desc,['type'],['core','version','compiler'],compilerSection,names,cols,vals)
+                 if args.ratio:
+                    cols,params,ratios,testNames=computeRatioTableForCore(benchName,referenceCoreID,aCoreID,compiler)
+                    #print(cols)
+                    #print(ratios)
+                    #print(" ")
+                    if len(ratios)>0:
+                       compilerName,version=getCompilerDesc(compiler)
+                       compilerSection = Section("%s (%s)" % (compilerName,version))
+                       coreSection.addSection(compilerSection)
+                       addRatioTable(cols,params,ratios,compilerSection,testNames,True)
+
+                 else:
+                    nbElems = getNbElemsInBenchAndCoreAndCompilerCmd(benchName,compiler,aCoreID)
+                    
+                    # Print test results for table, type, compiler
+                    if nbElems > 0:
+                       compilerName,version=getCompilerDesc(compiler)
+                       compilerSection = Section("%s (%s)" % (compilerName,version))
+                       coreSection.addSection(compilerSection)
+                       cols,vals=getColNamesAndDataForCoreCompiler(benchName,compiler,aCoreID)
+                       desc=(benchName,compiler,aCoreID)
+                       names=getTestNamesForCoreCompiler(benchName,compiler,aCoreID)
+                      
+                       formatTableBy(desc,['type'],['core','version','compiler'],compilerSection,names,cols,vals)
                        
        else:
           allTypes = getExistingTypes(benchName)
@@ -709,6 +961,19 @@ def addReportFor(document,benchName):
                           desc=(benchName,core,aTypeID)
                           names=getTestNamesForCore(benchName,core,aTypeID)
                           formatTableBy(desc,['compiler','version'],['core'],coreSection,names,cols,vals)
+                 elif args.ratio:
+                    allCompilers = getExistingCompiler(benchName,aTypeID)
+                    for compiler in allCompilers:
+                       cols,params,ratios,testNames=computeRatioTable(benchName,referenceCoreID,aTypeID,compiler)
+                       #print(cols)
+                       #print(ratios)
+                       #print(" ")
+                       if len(ratios)>0:
+                          compilerName,version=getCompilerDesc(compiler)
+                          compilerSection = Section("%s (%s)" % (compilerName,version))
+                          typeSection.addSection(compilerSection)
+                          addRatioTable(cols,params,ratios,compilerSection,testNames,False)
+
                  else:
                    ## Add report for each compiler
                    allCompilers = getExistingCompiler(benchName,aTypeID)
@@ -772,8 +1037,15 @@ def addComments(document):
      if para:
         section.addContent(Text(para))
 
+     if args.ratio:
+        section.addContent(Text("Reference core for the ratio is %s" % refCoreName))
+        section.addContent(Text("A bigger ratio means the reference code is better"))
+
+
+
 def createDoc(document,sections,benchtables):
-    global processed
+    global processed,referenceCoreID
+   
     for s in sections:
         if s.name in benchtables:
            addReportFor(document,s.name)
@@ -787,7 +1059,13 @@ try:
       benchtables=getBenchTables()
       document = Document(runidHeader)
 
+      if args.ratio:
+         referenceCoreID= getCoreID(args.ref)
+         refCoreName=getCoreDesc(referenceCoreID)
+
       addComments(document)
+
+
 
       createDoc(document,toc,benchtables)
       
@@ -808,7 +1086,7 @@ try:
                reorder=BYCFORMAT
              if args.byd:
                reorder=BYDFORMAT
-             document.accept(HTML(output,args.r,reorder))
+             document.accept(HTML(output,args.r,args.ratio,reorder))
 
 finally:
      c.close()

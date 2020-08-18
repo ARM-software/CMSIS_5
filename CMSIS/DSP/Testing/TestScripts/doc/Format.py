@@ -492,7 +492,7 @@ def reorder(p,v):
     return(result)
 
 class HTML:
-  def __init__(self,output,regMode,reorder):
+  def __init__(self,output,regMode,ratio,reorder):
     self._id=0
     self._sectionID = 0
     self._barID = 0
@@ -500,6 +500,7 @@ class HTML:
     self._output = output
     self._regMode = regMode
     self._reorder = reorder
+    self._ratioMode = ratio and regMode
 
   def visitBarChart(self,bar):
       data=bar.data
@@ -622,8 +623,10 @@ myhist(thehdata%d,"#hi%d");
 <head>
 <meta charset='UTF-8'><meta name='viewport' content='width=device-width initial-scale=1'>
 <title>Benchmarks</title>%s</head><body>\n""" % styleSheet)
-      if self._regMode:
+      if self._regMode and not self._ratioMode:
          self._output.write("<h1>ECPS Benchmark Regressions</h1>\n")
+      elif self._ratioMode:
+         self._output.write("<h1>ECPS Benchmark Ratios</h1>\n")
       else:
          self._output.write("<h1>ECPS Benchmark Summary</h1>\n")
       
