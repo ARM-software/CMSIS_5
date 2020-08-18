@@ -34,7 +34,7 @@ void stage_rfft_f32(
         float32_t * p,
         float32_t * pOut)
 {
-        uint32_t  k;                                /* Loop Counter */
+        int32_t  k;                                /* Loop Counter */
         float32_t twR, twI;                         /* RFFT Twiddle coefficients */
   const float32_t * pCoeff = S->pTwiddleRFFT;       /* Points to RFFT Twiddle factors */
         float32_t *pA = p;                          /* increasing pointer */
@@ -193,7 +193,7 @@ void merge_rfft_f32(
         float32_t * p,
         float32_t * pOut)
 {
-        uint32_t  k;                                /* Loop Counter */
+        int32_t  k;                                /* Loop Counter */
         float32_t twR, twI;                         /* RFFT Twiddle coefficients */
   const float32_t *pCoeff = S->pTwiddleRFFT;        /* Points to RFFT Twiddle factors */
         float32_t *pA = p;                          /* increasing pointer */
@@ -312,7 +312,7 @@ void stage_rfft_f32(
         float32_t * p,
         float32_t * pOut)
 {
-        uint32_t  k;                                /* Loop Counter */
+        int32_t  k;                                /* Loop Counter */
         float32_t twR, twI;                         /* RFFT Twiddle coefficients */
   const float32_t * pCoeff = S->pTwiddleRFFT;       /* Points to RFFT Twiddle factors */
         float32_t *pA = p;                          /* increasing pointer */
@@ -401,7 +401,7 @@ void merge_rfft_f32(
         float32_t * p,
         float32_t * pOut)
 {
-        uint32_t  k;                                /* Loop Counter */
+        int32_t  k;                                /* Loop Counter */
         float32_t twR, twI;                         /* RFFT Twiddle coefficients */
   const float32_t *pCoeff = S->pTwiddleRFFT;        /* Points to RFFT Twiddle factors */
         float32_t *pA = p;                          /* increasing pointer */

@@ -37,7 +37,7 @@ void stage_rfft_f16(
         float16_t * p,
         float16_t * pOut)
 {
-        uint32_t  k;                                /* Loop Counter */
+        int32_t  k;                                /* Loop Counter */
         float16_t twR, twI;                         /* RFFT Twiddle coefficients */
   const float16_t * pCoeff = S->pTwiddleRFFT;       /* Points to RFFT Twiddle factors */
         float16_t *pA = p;                          /* increasing pointer */
@@ -197,7 +197,7 @@ void merge_rfft_f16(
         float16_t * p,
         float16_t * pOut)
 {
-        uint32_t  k;                                /* Loop Counter */
+        int32_t  k;                                /* Loop Counter */
         float16_t twR, twI;                         /* RFFT Twiddle coefficients */
   const float16_t *pCoeff = S->pTwiddleRFFT;        /* Points to RFFT Twiddle factors */
         float16_t *pA = p;                          /* increasing pointer */

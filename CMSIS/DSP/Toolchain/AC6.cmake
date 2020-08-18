@@ -53,7 +53,7 @@ function(compilerSpecificCompileOptions PROJECTNAME ROOT)
   endif()
 
   if (ARM_CPU STREQUAL "cortex-m7" )
-        target_compile_options(${PROJECTNAME} PUBLIC "-mfpu=fpv5-sp-d16")
+        target_compile_options(${PROJECTNAME} PUBLIC "-mfpu=fpv5-d16")
   endif()
 
   if (ARM_CPU STREQUAL "cortex-m4" )
