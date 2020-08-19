@@ -828,7 +828,10 @@ def formatPerfRatio(s):
       if args.clamp:
          if t > args.clampval:
             t = args.clampval
-      result.append(("%.3f" % t))
+      if t < 0.0:
+        result.append("NA")
+      else:
+        result.append(("%.3f" % t))
     else:
       result.append(s)
 
@@ -854,7 +857,7 @@ def addRatioTable(cols,params,data,section,testNames,byd):
 
       if byd:
         data=ref.pivot_table(index=toSort, columns=['type'], 
-           values=["ratio"], aggfunc='first')
+           values=["ratio"], aggfunc='first',fill_value=-1.0)
       else:
          data=ref.pivot_table(index=toSort, columns=['core'], 
            values=["ratio"], aggfunc='first')
@@ -867,6 +870,14 @@ def addRatioTable(cols,params,data,section,testNames,byd):
       cores = [c[1] for c in list(data.columns)]
 
       dataTable=Table(params,cores)
+
+      if args.g:
+         if type(dataForFunc) is not pd.DataFrame:
+            sec=Section("Graph")
+            testSection.addSection(sec)
+
+            barChart=BarChart(zip(cores,dataForFunc))
+            sec.addContent(barChart)
 
       ratioSection.addContent(Text("A bigger ratio means the reference core \"%s\" is better" % refCoreName))
 
