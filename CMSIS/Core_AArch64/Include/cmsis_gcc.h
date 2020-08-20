@@ -1,8 +1,8 @@
 /**************************************************************************//**
  * @file     cmsis_gcc.h
  * @brief    CMSIS compiler GCC header file
- * @version  V1.0.0
- * @date     15. June 2020
+ * @version  V1.0.1
+ * @date     20. August 2020
  ******************************************************************************/
 /*
  * Copyright (c) 2020 Arm Limited. All rights reserved.
@@ -253,7 +253,7 @@ __STATIC_FORCEINLINE __NO_RETURN void __cmsis_start(void)
  */
 __STATIC_FORCEINLINE void __ISB(void)
 {
-  __ASM volatile ("isb 0xF":::"memory");
+  __ASM volatile ("isb":::"memory");
 }
 
 
@@ -264,7 +264,7 @@ __STATIC_FORCEINLINE void __ISB(void)
  */
 __STATIC_FORCEINLINE void __DSB(void)
 {
-  __ASM volatile ("dsb 0xF":::"memory");
+  __ASM volatile ("dsb sy":::"memory");
 }
 
 

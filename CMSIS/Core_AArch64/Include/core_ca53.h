@@ -1,8 +1,8 @@
 /**************************************************************************//**
  * @file     core_ca53.h
  * @brief    CMSIS Cortex-A53 Core Peripheral Access Layer Header File
- * @version  V1.0.0
- * @date     15. June 2020
+ * @version  V1.0.1
+ * @date     20. August 2020
  ******************************************************************************/
 /*
  * Copyright (c) 2020 Arm Limited. All rights reserved.
@@ -371,37 +371,48 @@ typedef union
 #define CPSR_M_UND                       0x1BU                                  /*!< \brief CPSR: M Undefined mode (PL1) */
 #define CPSR_M_SYS                       0x1FU                                  /*!< \brief CPSR: M System mode (PL1) */
 
-/* CP15 Register SCTLR */
+/* Register SCTLR */
 typedef union
 {
   struct
   {
-    uint32_t M:1;                        /*!< \brief bit:     0  MMU enable */
-    uint32_t A:1;                        /*!< \brief bit:     1  Alignment check enable */
-    uint32_t C:1;                        /*!< \brief bit:     2  Cache enable */
-    RESERVED(0:2, uint32_t)              
-    uint32_t CP15BEN:1;                  /*!< \brief bit:     5  CP15 barrier enable */
-    uint32_t THEE:1;                     /*!< \brief bit:     6   */
-    uint32_t ITD:1;                      /*!< \brief bit:     7  IT disable */
-    uint32_t SED:1;                      /*!< \brief bit:     8  SETEBD disable */
-    RESERVED(1:3, uint32_t)              
-    uint32_t I:1;                        /*!< \brief bit:    12  Instruction cache enable */
-    uint32_t V:1;                        /*!< \brief bit:    13  Vectors bit */
-    RESERVED(2:2, uint32_t)              
-    uint32_t nTWI:1;                     /*!< \brief bit:    16  Not trap WFI */
-    RESERVED(3:1, uint32_t)              
-    uint32_t nTWE:1;                     /*!< \brief bit:    18  Not trap WFE */
-    uint32_t WXN:1;                      /*!< \brief bit:    19  Write permission implies XN */
-    uint32_t UWXN:1;                     /*!< \brief bit:    20  Unprivileged write permission implies PL1 XN */
-    RESERVED(4:4, uint32_t)              
-    uint32_t EE:1;                       /*!< \brief bit:    25  Exception Endianness */
-    RESERVED(5:2, uint32_t)              
-    uint32_t TRE:1;                      /*!< \brief bit:    28  TEX remap enable. */
-    uint32_t AFE:1;                      /*!< \brief bit:    29  Access flag enable */
-    uint32_t TE:1;                       /*!< \brief bit:    30  Thumb Exception enable */
-    RESERVED(6:1, uint32_t)              
+    uint64_t M:1;                        /*!< \brief bit:     0  MMU enable */
+    uint64_t A:1;                        /*!< \brief bit:     1  Alignment check enable */
+    uint64_t C:1;                        /*!< \brief bit:     2  Cache enable */
+    uint64_t SA:1;                       /*!< \brief bit:     3  SP Alignment check enable */
+    RESERVED(1:2, uint64_t)              //[5:4]
+    uint64_t nAA:1;                      /*!< \brief bit:     6  Non-aligned access */
+    RESERVED(2:4, uint64_t)              //[10:7]
+    uint64_t EOS:1;                      /*!< \brief bit:    11  Exception Exit is Context Synchronizing */
+    uint64_t I:1;                        /*!< \brief bit:    12  Instruction cache enable */
+    uint64_t EnDB:1;                     //13
+    RESERVED(3:2, uint64_t)              //[15:14]
+    RESERVED(4:1, uint64_t)              //[16]
+    RESERVED(5:1, uint64_t)              //[17]
+    RESERVED(6:1, uint64_t)              //[18]
+    uint64_t WXN:1;                      /*!< \brief bit:    19  Write permission implies XN */
+    RESERVED(7:1, uint64_t)              //[20]
+    uint64_t IESB:1;                     //21
+    uint64_t EIS:1;                      //22
+    RESERVED(8:1, uint64_t)              //[23]
+    RESERVED(9:1, uint64_t)              //[24]
+    uint64_t EE:1;                       /*!< \brief bit:    25  Exception Endianness */
+    RESERVED(10:1, uint64_t)             //[26]
+    uint64_t EnDA:1;                     //27
+    RESERVED(11:2, uint64_t)             //[29:28]
+    uint64_t EnIB:1;                     //30
+    uint64_t EnIA:1;                     //31
+    RESERVED(12:4, uint64_t)             //[35:32]
+    uint64_t BT:1;                       //36
+    uint64_t ITFSB:1;                    //37
+    RESERVED(13:2, uint64_t)             //[39:38]
+    uint64_t TCF:2;                      //[41:40]
+    RESERVED(14:1, uint64_t)             //[42]
+    uint64_t ATA:1;                      //43
+    uint64_t DSSBS:1;                    //44
+    RESERVED(15:19, uint64_t)            //[63:45]
   } b;                                   /*!< \brief Structure used for bit  access */
-  uint32_t w;                            /*!< \brief Type      used for word access */
+  uint64_t w;                            /*!< \brief Type      used for word access */
 } SCTLR_Type;
 
 #define SCTLR_TE_Pos                     30U                                    /*!< \brief SCTLR: TE Position */
@@ -455,6 +466,55 @@ typedef union
 #define SCTLR_M_Pos                      0U                                     /*!< \brief SCTLR: M Position */
 #define SCTLR_M_Msk                      (1UL << SCTLR_M_Pos)                   /*!< \brief SCTLR: M Mask */
 
+
+/* Register TCR_EL3 */
+typedef union
+{
+  struct
+  {
+    uint64_t T0SZ:6;                     //[5:0]
+    RESERVED(1:2, uint64_t)              //[7:6]
+    uint64_t IRGN0:2;                    //[9:8]
+    uint64_t ORGN0:2;                    //[11:10]
+    uint64_t SH0:2;                      //[13:12]
+    uint64_t TG0:2;                      //[15:14]
+    uint64_t PS:3;                       //[18:16]
+    RESERVED(2:1, uint64_t)              //[19]
+    uint64_t TBI:1;                      //[20]
+    uint64_t HA:1;                       //[21]
+    uint64_t HD:1;                       //[22]
+    RESERVED(3:1, uint64_t)              //[23]
+    uint64_t HPD:1;                      //[24]
+    uint64_t HWU59:1;                    //[25]
+    uint64_t HWU60:1;                    //[26]
+    uint64_t HWU61:1;                    //[27]
+    uint64_t HWU62:1;                    //[28]
+    uint64_t TBID:1;                     //[29]
+    uint64_t TCMA:1;                     //[30]
+    RESERVED(4:1, uint64_t)              //[31]
+    RESERVED(5:32, uint64_t)             //[63:32]
+  } b;
+  uint64_t w;                            /*!< \brief Type      used for word access */
+} TCR_EL3_Type;
+
+
+/* Register MPIDR_EL1 */
+typedef union
+{
+  struct
+  {
+    uint64_t Aff0:8;
+    uint64_t Aff1:8;
+    uint64_t Aff2:8;
+    uint64_t MT:1;
+    RESERVED(0:5, uint64_t)
+    uint64_t U:1;
+    RESERVED(1:1, uint64_t)
+    uint64_t Aff3:8;
+    RESERVED(2:24, uint64_t)
+  } b;                                   /*!< \brief Structure used for bit  access */
+  uint64_t w;                            /*!< \brief Type      used for word access */
+} MPIDR_EL1_Type;
 
 
  /*******************************************************************************
@@ -546,14 +606,16 @@ __STATIC_INLINE void L2C_Enable(void)
 */
 __STATIC_INLINE void MMU_Enable(void)
 {
-
+  __set_SCTLR_EL3( __get_SCTLR_EL3() | SCTLR_M_Msk);
+  __ISB();
 }
 
 /** \brief  Disable MMU
 */
 __STATIC_INLINE void MMU_Disable(void)
 {
-
+  __set_SCTLR_EL3( __get_SCTLR_EL3() & (~SCTLR_M_Msk));
+  __ISB();
 }
 
 /** \brief  Invalidate entire unified TLB
@@ -561,7 +623,10 @@ __STATIC_INLINE void MMU_Disable(void)
 
 __STATIC_INLINE void MMU_InvalidateTLB(void)
 {
-
+  __DSB();
+  __ASM volatile("tlbi vmalle1is");
+  __DSB();
+  __ISB();
 }
 
 

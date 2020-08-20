@@ -2,8 +2,8 @@
  * @file     system_ARMCA53.c
  * @brief    CMSIS Device System Source File for
  *           ARMCA53 Device
- * @version  V1.0.0
- * @date     15. June 2020
+ * @version  V1.0.1
+ * @date     20. August 2020
  ******************************************************************************/
 /*
  * Copyright (c) 2020 Arm Limited. All rights reserved.
@@ -88,10 +88,10 @@ void SystemInit (void)
 #endif
 
   // Create Translation Table
-  //MMU_CreateTranslationTable();
+  MMU_CreateTranslationTable();
 
   // Enable MMU
-  //MMU_Enable();
+  MMU_Enable();
 
   // Enable Caches
   L1C_EnableCaches();

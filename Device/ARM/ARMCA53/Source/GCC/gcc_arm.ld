@@ -1,8 +1,8 @@
 /******************************************************************************
  * @file     gcc_arm.ld
  * @brief    GNU Linker Script for Cortex-A based device
- * @version  V1.0.0
- * @date     15. June 2020
+ * @version  V1.0.1
+ * @date     20. August 2020
  ******************************************************************************/
 /*
  * Copyright (c) 2020 Arm Limited. All rights reserved.
@@ -50,8 +50,22 @@ __RAM_SIZE = 0x00020000;
     <o1> Heap Size (in Bytes) <0x0-0xFFFFFFFF:8>
   </h>
   -----------------------------------------------------------------------------*/
-__STACK_SIZE = 0x00000400;
-__HEAP_SIZE  = 0x00000C00;
+__STACK_SIZE = 0x00004000;
+__HEAP_SIZE  = 0x0000C000;
+
+/*--------------------- EL2 Stack Configuration -------------------------------
+  <h> EL2 Stack Configuration
+    <o0> Stack Size (in Bytes) <0x0-0xFFFFFFFF:8>
+  </h>
+ -----------------------------------------------------------------------------*/
+__EL2_STACK_SIZE = 0x00004000;
+
+/*--------------------- EL3 Stack Configuration -------------------------------
+  <h> EL3 Stack Configuration
+    <o0> Stack Size (in Bytes) <0x0-0xFFFFFFFF:8>
+  </h>
+  -----------------------------------------------------------------------------*/
+__EL3_STACK_SIZE = 0x00004000;
 
 /*
  *-------------------- <<< end of configuration section >>> -------------------
@@ -99,6 +113,8 @@ SECTIONS
 {
   .text :
   {
+    KEEP(*(.startup))
+
     KEEP(*(.vectors))
     *(.text*)
 
@@ -128,7 +144,7 @@ SECTIONS
   /*
    * SG veneers:
    * All SG veneers are placed in the special output section .gnu.sgstubs. Its start address
-   * must be set, either with the command line option �--section-start� or in a linker script,
+   * must be set, either with the command line option ?--section-start? or in a linker script,
    * to indicate where to place these veneers in memory.
    */
 /*
@@ -137,6 +153,7 @@ SECTIONS
     . = ALIGN(32);
   } > FLASH
 */
+
   .ARM.extab :
   {
     *(.ARM.extab* .gnu.linkonce.armextab.*)
@@ -177,6 +194,12 @@ SECTIONS
     __zero_table_end__ = .;
   } > FLASH
 
+  .xlat_tables :
+  {
+    . = ALIGN(4096);
+    *(.xlat_tables)
+ } > RAM
+
   __etext = ALIGN (8);
 
   .data : AT (__etext)
@@ -198,7 +221,6 @@ SECTIONS
     KEEP(*(SORT(.init_array.*)))
     KEEP(*(.init_array))
     PROVIDE_HIDDEN (__init_array_end = .);
-
 
     . = ALIGN(8);
     /* finit data */
@@ -232,12 +254,9 @@ SECTIONS
     *(.data2.*)
     . = ALIGN(8);
     __data2_end__ = .;
-
   } > RAM2
 */
 
-  /* ECC initialization is done by 64-bit writes thus __bss_start__
-   * and __bss_end__ must be 8byte aligned */
   .bss :
   {
     . = ALIGN(8);
@@ -271,8 +290,8 @@ SECTIONS
   .heap (COPY) :
   {
     . = ALIGN(8);
-    __end__ = .;
     __HeapTop = .;
+    __end__ = .;
     PROVIDE(end = .);
     . = . + __HEAP_SIZE;
     . = ALIGN(8);

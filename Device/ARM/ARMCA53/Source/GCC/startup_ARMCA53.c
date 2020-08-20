@@ -1,8 +1,8 @@
 /******************************************************************************
  * @file     startup_ARMCA53.c
  * @brief    CMSIS Core Device Startup File for Cortex-A53 Device
- * @version  V1.0.0
- * @date     15. June 2020
+ * @version  V1.0.1
+ * @date     20. August 2020
  ******************************************************************************/
 /*
  * Copyright (c) 2020 Arm Limited. All rights reserved.
@@ -33,13 +33,20 @@
 #endif
 
 /*----------------------------------------------------------------------------
+  External References
+ *----------------------------------------------------------------------------*/
+extern uint32_t __INITIAL_SP;
+
+extern __NO_RETURN void __PROGRAM_START(void);
+
+/*----------------------------------------------------------------------------
   Internal References
  *----------------------------------------------------------------------------*/
 void __NO_RETURN EL3_Default_Handler(void);
 void __NO_RETURN EL2_Default_Handler(void);
 void __NO_RETURN EL1_Default_Handler(void);
-void __NO_RETURN EL3_Reset_Handler(void);
-void __NO_RETURN EL3_Reset_Handler_C(void);
+void __NO_RETURN Reset_Handler(void);
+void __NO_RETURN Reset_Handler_C(void);
 
 
 /*----------------------------------------------------------------------------
@@ -187,23 +194,26 @@ void __VECTOR_TABLE_ATTRIBUTE __VECTOR_TABLE_EL1(void)
   Reset Handler called on controller reset
  *----------------------------------------------------------------------------*/
 __ASM(
-  ".section .startup \n"
-  ".globl Reset_Handler \n"
-  ".type Reset_Handler, %function \n"
+  "\t.section	.startup,\"ax\",@progbits \n"
+  "\t.align	2 \n"
+  "\t.globl Reset_Handler \n"
+  "\t.type Reset_Handler, %function \n"
   "Reset_Handler: \n"
 
   __EARLY_INIT
 
-  "adrp	x0, :pg_hi21:__EL3StackTop \n"
-  "add	x0, x0, :lo12:__EL3StackTop \n"
-  "mov	sp, x0 \n"
-  "b Reset_Handler_C \n"
+  "#__set_SP((uint64)&__INITIAL_SP) \n" \
+  "\tadrp x0, :pg_hi21:__EL3StackTop \n"
+  "\tadd	x0, x0, :lo12:__EL3StackTop \n"
+  "\tmov	sp, x0 \n"
+  "\tb Reset_Handler_C \n"
+  "\t.size	Reset_Handler, .-Reset_Handler \n"
 );
 
 /*----------------------------------------------------------------------------
   Reset Handler C version called by "naked" Reset Handler
  *----------------------------------------------------------------------------*/
-void __NO_RETURN Reset_Handler_C(void)
+void __NO_RETURN __attribute__((section(".startup"))) Reset_Handler_C(void)
 {
   SystemInit();                      /* CMSIS System Initialization */
 
