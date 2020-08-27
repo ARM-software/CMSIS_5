@@ -90,7 +90,7 @@ arm_svdf_s8(const cmsis_nn_context *input_ctx,
   const int32_t input_height = input_dims->h;
   const int32_t feature_batches = weights_feature_dims->n;
   const int32_t time_batches = weights_time_dims->h;
-  const int32_t unit_cnt = feature_batches / rank;
+  const int32_t unit_count = feature_batches / rank;
 
   q31_t *buffer_a = (q31_t *)input_ctx->buf;
   q31_t *buffer_b = (q31_t *)output_ctx->buf;
@@ -182,7 +182,6 @@ arm_svdf_s8(const cmsis_nn_context *input_ctx,
         v2++;
       }
 #else
-      int32_t sum = 0;
       for (int j = 0; j < time_batches; j++)
       {
         sum += *v1 * *v2;
@@ -198,10 +197,10 @@ arm_svdf_s8(const cmsis_nn_context *input_ctx,
 
   for (int i_batch = 0; i_batch < input_batches; i_batch++)
   {
-    q31_t *output_data_temp = buffer_b + i_batch * unit_cnt;
+    q31_t *output_data_temp = buffer_b + i_batch * unit_count;
     q31_t *ptr_a = buffer_a + i_batch * feature_batches;
 
-    for (int i = 0; i < unit_cnt; i++)
+    for (int i = 0; i < unit_count; i++)
     {
       output_data_temp[i] = bias_data[i];
       for (int j = 0; j < rank; j++)
@@ -212,7 +211,7 @@ arm_svdf_s8(const cmsis_nn_context *input_ctx,
     }
   }
 
-  for (int i = 0; i < input_batches * unit_cnt; i++)
+  for (int i = 0; i < input_batches * unit_count; i++)
   {
     output_data[i] = (q7_t)CLAMP(arm_nn_requantize(buffer_b[i], multiplier_out, shift_2) + zp_out,
                           out_activation_max, out_activation_min);
