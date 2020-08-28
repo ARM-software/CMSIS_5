@@ -41,10 +41,10 @@
 
 /*
  * s8 vector(lhs) by matrix (transposed) multiplication
-   *
-   * Refer header file for details.
-   *
-   */
+ *
+ * Refer header file for details.
+ *
+ */
 arm_status arm_nn_vec_mat_mult_t_s8(const q7_t *lhs,
                                     const q7_t *rhs,
                                     const q31_t *bias,
@@ -60,109 +60,131 @@ arm_status arm_nn_vec_mat_mult_t_s8(const q7_t *lhs,
                                     const int32_t activation_max)
 {
 #if defined(ARM_MATH_MVEI)
+    int32_t row_loop_cnt = rhs_rows / 3;
 
-    const int16x8_t rhs_offset_vec = vdupq_n_s16((int16_t)rhs_offset);
-    const int16x8_t lhs_offset_vec = vdupq_n_s16((int16_t)lhs_offset);
+    int32_t lhs_sum = 0;
+    {
+        const int32_t col_loop_cnt = (rhs_cols + 15) / 16;
+        uint32_t col_cnt = (uint32_t)rhs_cols;
+        const int8_t *lhs_vec = lhs;
+        for (int i = 0; i < col_loop_cnt; i++)
+        {
+            mve_pred16_t p = vctp8q(col_cnt);
+            col_cnt -= 16;
 
-    int32_t row_loop_cnt = rhs_rows / 4;
+            const int8x16_t input = vldrbq_z_s8(lhs_vec, p);
+            lhs_sum = vaddvaq_p_s8(lhs_sum, input, p);
+            lhs_vec += 16;
+        }
+    }
 
     for (int i_row_loop_cnt = 0; i_row_loop_cnt < row_loop_cnt; i_row_loop_cnt++)
     {
-        int32_t acc1 = bias[0];
-        int32_t acc2 = bias[1];
-        int32_t acc3 = bias[2];
-        int32_t acc4 = bias[3];
-        bias += 4;
+        int32_t acc_0 = 0;
+        int32_t acc_1 = 0;
+        int32_t acc_2 = 0;
 
-        int32x4_t acc;
-        const int32_t col_loop_cnt = (rhs_cols + 7) / 8;
+        const int32_t col_loop_cnt = (rhs_cols + 15) / 16;
 
-        const int8_t *vec = lhs;
+        const int8_t *lhs_vec = lhs;
         const int8_t *rhs_0 = rhs;
         const int8_t *rhs_1 = rhs + rhs_cols;
         const int8_t *rhs_2 = rhs + 2 * rhs_cols;
-        const int8_t *rhs_3 = rhs + 3 * rhs_cols;
+
+        int32_t rhs_sum_0 = 0;
+        int32_t rhs_sum_1 = 0;
+        int32_t rhs_sum_2 = 0;
 
         uint32_t col_cnt = (uint32_t)rhs_cols;
 
         for (int i = 0; i < col_loop_cnt; i++)
         {
-            mve_pred16_t p = vctp16q(col_cnt);
-            col_cnt -= 8;
-            const int16x8_t tmp_b = vaddq_m_s16(vuninitializedq_s16(),
-                                                vldrbq_z_s16(vec, p), lhs_offset_vec, p);
+            mve_pred16_t p = vctp8q(col_cnt);
+            col_cnt -= 16;
 
-            const int16x8_t tmp_a0 = vaddq_m_s16(vuninitializedq_s16(),
-                                                 vldrbq_z_s16(rhs_0, p), rhs_offset_vec, p);
-            acc1 = vmladavaq_p_s16(acc1, tmp_a0, tmp_b, p);
+            const int8x16_t input = vldrbq_z_s8(lhs_vec, p);
 
-            const int16x8_t tmp_a1 = vaddq_m_s16(vuninitializedq_s16(),
-                                                 vldrbq_z_s16(rhs_1, p), rhs_offset_vec, p);
-            acc2 = vmladavaq_p_s16(acc2, tmp_a1, tmp_b, p);
+            const int8x16_t ker_0 = vldrbq_z_s8(rhs_0, p);
+            rhs_sum_0 = vaddvaq_p_s8(rhs_sum_0, ker_0, p);
+            acc_0 = vmladavaq_p_s8(acc_0, ker_0, input, p);
 
-            const int16x8_t tmp_a2 = vaddq_m_s16(vuninitializedq_s16(),
-                                                 vldrbq_z_s16(rhs_2, p), rhs_offset_vec, p);
-            acc3 = vmladavaq_p_s16(acc3, tmp_a2, tmp_b, p);
+            const int8x16_t ker_1 = vldrbq_z_s8(rhs_1, p);
+            rhs_sum_1 = vaddvaq_p_s8(rhs_sum_1, ker_1, p);
+            acc_1 = vmladavaq_p_s8(acc_1, ker_1, input, p);
 
-            const int16x8_t tmp_a3 = vaddq_m_s16(vuninitializedq_s16(),
-                                                 vldrbq_z_s16(rhs_3, p), rhs_offset_vec, p);
-            acc4 = vmladavaq_p_s16(acc4, tmp_a3, tmp_b, p);
+            const int8x16_t ker_2 = vldrbq_z_s8(rhs_2, p);
+            rhs_sum_2 = vaddvaq_p_s8(rhs_sum_2, ker_2, p);
+            acc_2 = vmladavaq_p_s8(acc_2, ker_2, input, p);
 
-            vec += 8;
-            rhs_0 += 8;
-            rhs_1 += 8;
-            rhs_2 += 8;
-            rhs_3 += 8;
+            lhs_vec += 16;
+            rhs_0 += 16;
+            rhs_1 += 16;
+            rhs_2 += 16;
         }
-        rhs += 4 * rhs_cols;
+        rhs += 3 * rhs_cols;
 
-        acc[0] = acc1;
-        acc[1] = acc2;
-        acc[2] = acc3;
-        acc[3] = acc4;
+        int32x4_t acc = {acc_0, acc_1, acc_2, 0};
+        mve_pred16_t p = vctp32q(3);
+        if (bias)
+        {
+            int32x4_t b = vldrwq_z_s32(bias, p);
+            acc = vaddq_m_s32(vuninitializedq_s32(), acc, b, p);
+            bias += 3;
+        }
+        const int32x4_t rhs_sum = {rhs_sum_0, rhs_sum_1, rhs_sum_2, 0};
+
+        acc += vdupq_n_s32(lhs_offset) * rhs_sum;
+        acc += vdupq_n_s32(rhs_offset * lhs_sum);
+        acc += vdupq_n_s32(lhs_offset * rhs_offset * rhs_cols);
 
         acc = arm_requantize_mve(acc, dst_multiplier, dst_shift);
         acc = vaddq_s32(acc, vdupq_n_s32(dst_offset));
         acc = vmaxq_s32(acc, vdupq_n_s32(activation_min));
         acc = vminq_s32(acc, vdupq_n_s32(activation_max));
-
-        vstrbq_s32(dst, acc);
-        dst += 4;
+        vstrbq_p_s32(dst, acc, p);
+        dst += 3;
     }
 
-    row_loop_cnt = rhs_rows & 3;
-
-    for (int i_row_loop_cnt = 0; i_row_loop_cnt < row_loop_cnt;
-         i_row_loop_cnt++)
+    const int loop_cnt = rhs_rows % 3;
+    for (int i_row_loop_cnt = 0; i_row_loop_cnt < loop_cnt; i_row_loop_cnt++)
     {
-        int32_t acc = *bias++;
-        const int32_t col_loop_cnt = (rhs_cols + 7) / 8;
-        const int8_t *vec = lhs;
-        const int8_t *kernel_cur = rhs;
-
+        int32_t acc_0 = 0;
+        const int32_t col_loop_cnt = (rhs_cols + 15) / 16;
+        const int8_t *lhs_vec = lhs;
+        const int8_t *rhs_0 = rhs;
+        int32_t rhs_sum_0 = 0;
         uint32_t col_cnt = (uint32_t)rhs_cols;
 
         for (int i = 0; i < col_loop_cnt; i++)
         {
-            mve_pred16_t p = vctp16q(col_cnt);
-            col_cnt -= 8;
-            const int16x8_t tmp_b = vaddq_m_s16(vuninitializedq_s16(),
-                                                vldrbq_z_s16(vec, p), lhs_offset_vec, p);
+            mve_pred16_t p = vctp8q(col_cnt);
+            col_cnt -= 16;
+            const int8x16_t input = vldrbq_z_s8(lhs_vec, p);
 
-            const int16x8_t tmp_a = vaddq_m_s16(vuninitializedq_s16(),
-                                                vldrbq_z_s16(kernel_cur, p), rhs_offset_vec, p);
-            acc = vmladavaq_p_s16(acc, tmp_a, tmp_b, p);
-            vec += 8;
-            kernel_cur += 8;
+            const int8x16_t ker_0 = vldrbq_z_s8(rhs_0, p);
+            rhs_sum_0 = vaddvaq_p_s8(rhs_sum_0, ker_0, p);
+            acc_0 = vmladavaq_p_s8(acc_0, ker_0, input, p);
+
+            lhs_vec += 16;
+            rhs_0 += 16;
         }
         rhs += rhs_cols;
 
-        acc = arm_nn_requantize(acc, dst_multiplier, dst_shift);
-        acc += dst_offset;
+        if (bias)
+        {
+            acc_0 += *bias;
+            bias++;
+        }
+        const int32_t offsets =
+            (rhs_sum_0 * lhs_offset) + (lhs_sum * rhs_offset) + (lhs_offset * rhs_offset * rhs_cols);
+        acc_0 += offsets;
+        acc_0 = arm_nn_requantize(acc_0, dst_multiplier, dst_shift);
+        acc_0 += dst_offset;
 
-        acc = MAX(acc, activation_min);
-        acc = MIN(acc, activation_max);
-        *dst++ = (int8_t)(acc);
+        // Clamp the result
+        acc_0 = MAX(acc_0, activation_min);
+        *dst = MIN(acc_0, activation_max);
+        dst++;
     }
 
 #elif defined(ARM_MATH_DSP)
@@ -199,9 +221,9 @@ arm_status arm_nn_vec_mat_mult_t_s8(const q7_t *lhs,
 
             // Perform the accumulations
             res00 = __SMLAD(val3, val2, res00);
-            val5  = __SXTAB16(rhs_offset_s16x2, val4);
+            val5 = __SXTAB16(rhs_offset_s16x2, val4);
             res00 = __SMLAD(val1, val0, res00);
-            val4  = __SXTAB16(rhs_offset_s16x2, __ROR(val4, 8));
+            val4 = __SXTAB16(rhs_offset_s16x2, __ROR(val4, 8));
             // Read 4 x int8 values from the RHS matrix
             val0 = arm_nn_read_q7x4_ia((const q7_t **)&rhs_ptr);
             res01 = __SMLAD(val3, val5, res01);
@@ -218,9 +240,9 @@ arm_status arm_nn_vec_mat_mult_t_s8(const q7_t *lhs,
 
             // Perform the accumulations
             res00 = __SMLAD(val3, val2, res00);
-            val5  = __SXTAB16(rhs_offset_s16x2, val4);
+            val5 = __SXTAB16(rhs_offset_s16x2, val4);
             res00 = __SMLAD(val1, val0, res00);
-            val4  = __SXTAB16(rhs_offset_s16x2, __ROR(val4, 8));
+            val4 = __SXTAB16(rhs_offset_s16x2, __ROR(val4, 8));
             // Read 4 x int8 values from the RHS matrix
             val0 = arm_nn_read_q7x4_ia((const q7_t **)&rhs_ptr);
             res01 = __SMLAD(val3, val5, res01);
@@ -237,9 +259,9 @@ arm_status arm_nn_vec_mat_mult_t_s8(const q7_t *lhs,
 
             // Perform the accumulations
             res00 = __SMLAD(val3, val2, res00);
-            val5  = __SXTAB16(rhs_offset_s16x2, val4);
+            val5 = __SXTAB16(rhs_offset_s16x2, val4);
             res00 = __SMLAD(val1, val0, res00);
-            val4  = __SXTAB16(rhs_offset_s16x2, __ROR(val4, 8));
+            val4 = __SXTAB16(rhs_offset_s16x2, __ROR(val4, 8));
             // Read 4 x int8 values from the RHS matrix
             val0 = arm_nn_read_q7x4_ia((const q7_t **)&rhs_ptr);
             res01 = __SMLAD(val3, val5, res01);
@@ -256,9 +278,9 @@ arm_status arm_nn_vec_mat_mult_t_s8(const q7_t *lhs,
 
             // Perform the accumulations
             res00 = __SMLAD(val3, val2, res00);
-            val5  = __SXTAB16(rhs_offset_s16x2, val4);
+            val5 = __SXTAB16(rhs_offset_s16x2, val4);
             res00 = __SMLAD(val1, val0, res00);
-            val4  = __SXTAB16(rhs_offset_s16x2, __ROR(val4, 8));
+            val4 = __SXTAB16(rhs_offset_s16x2, __ROR(val4, 8));
             res01 = __SMLAD(val3, val5, res01);
             res01 = __SMLAD(val1, val4, res01);
         }
@@ -267,7 +289,7 @@ arm_status arm_nn_vec_mat_mult_t_s8(const q7_t *lhs,
         {
             q31_t rhs_value0 = rhs_ptr[0] + rhs_offset;
             q31_t rhs_value1 = rhs_ptr[rhs_cols] + rhs_offset;
-            q31_t lhs_value  = lhs_ptr[0] + lhs_offset;
+            q31_t lhs_value = lhs_ptr[0] + lhs_offset;
 
             res00 += lhs_value * rhs_value0;
             res01 += lhs_value * rhs_value1;
@@ -356,7 +378,7 @@ arm_status arm_nn_vec_mat_mult_t_s8(const q7_t *lhs,
         for (; rhs_cols_idx < rhs_cols; ++rhs_cols_idx)
         {
             q31_t rhs_value0 = rhs_ptr[0] + rhs_offset;
-            q31_t lhs_value  = lhs_ptr[0] + lhs_offset;
+            q31_t lhs_value = lhs_ptr[0] + lhs_offset;
 
             res00 += lhs_value * rhs_value0;
 
@@ -391,7 +413,7 @@ arm_status arm_nn_vec_mat_mult_t_s8(const q7_t *lhs,
         {
             q31_t rhs_value0 = rhs_ptr[0] + rhs_offset;
             q31_t rhs_value1 = rhs_ptr[rhs_cols] + rhs_offset;
-            q31_t lhs_value  = lhs_ptr[0] + lhs_offset;
+            q31_t lhs_value = lhs_ptr[0] + lhs_offset;
 
             res00 += lhs_value * rhs_value0;
             res01 += lhs_value * rhs_value1;
@@ -430,7 +452,7 @@ arm_status arm_nn_vec_mat_mult_t_s8(const q7_t *lhs,
         for (int32_t rhs_cols_idx = 0; rhs_cols_idx < rhs_cols; ++rhs_cols_idx)
         {
             q31_t rhs_value0 = rhs_ptr[0] + rhs_offset;
-            q31_t lhs_value  = lhs_ptr[0] + lhs_offset;
+            q31_t lhs_value = lhs_ptr[0] + lhs_offset;
 
             res00 += lhs_value * rhs_value0;
 
