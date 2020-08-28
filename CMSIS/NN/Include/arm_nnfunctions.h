@@ -2073,8 +2073,8 @@ void arm_softmax_u8(const uint8_t *input,
      * @param[in]   input_ctx Temporary scratch buffer
      * @param[in]   output_ctx Temporary output scratch buffer
      * @param[in]   svdf_params SVDF Parameters
-                    Range of svdf_params->input_offset  : [-128, 127]
-                    Range of svdf_params->output_offset  : [-128, 127]
+     *              Range of svdf_params->input_offset  : [-128, 127]
+     *              Range of svdf_params->output_offset  : [-128, 127]
      * @param[in]   input_quant_params Input quantization parameters
      * @param[in]   output_quant_params Output quantization parameters
      * @param[in]   input_dims Input tensor dimensions
