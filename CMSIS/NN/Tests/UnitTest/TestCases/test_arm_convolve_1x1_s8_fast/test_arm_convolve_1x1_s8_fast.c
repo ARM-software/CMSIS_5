@@ -36,7 +36,6 @@ void kernel1x1_arm_convolve_1x1_s8_fast(void)
   cmsis_nn_dims output_dims;
 
   const q31_t *bias_data = kernel1x1_biases;
-  const q7_t *kernel_data = kernel1x1_weights;
   const q7_t *input_data = kernel1x1_input;
 
   input_dims.n  = KERNEL1X1_INPUT_BATCHES;

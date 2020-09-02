@@ -37,7 +37,6 @@ void basic_arm_depthwise_conv_s8(void)
   cmsis_nn_dims output_dims;
 
   const q31_t *bias_data = basic_biases;
-  const q7_t *kernel_data = basic_weights;
   const q7_t *input_data = basic_input;
 
   input_dims.n = BASIC_INPUT_BATCHES;
