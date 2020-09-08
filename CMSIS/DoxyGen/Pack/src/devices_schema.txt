@@ -1978,6 +1978,11 @@ Contact cmsis@arm.com to ask for an extension. These values can be used in the e
     <td>http://www.dialog-semiconductor.com</td>
   </tr>
   <tr>
+    <td class="XML-Token">ELAN:162</td>
+    <td>ELAN</td>
+    <td>http://www.emc.com.tw</td>
+  </tr>
+  <tr>
     <td class="XML-Token">Elmos Semiconductor AG:138</td>
     <td>Elmos Semiconductor AG</td>
     <td>http://www.elmos.com</td>
