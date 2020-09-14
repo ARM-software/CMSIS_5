@@ -1858,6 +1858,12 @@ the attribute \elem{Pname}. If the information is relevant to all processors, no
     <td>required for ARMv8.1-M based devices</td>
   </tr>
   <tr>
+    <td>Dcdecp</td>
+    <td>Specifies whether a device supports Custom Datapath Extensions (<a href="https://developer.arm.com/documentation/ddi0607/ab/" target="_blank"><strong>CDE</strong></a>). Possible values are explained in \ref DcdecpEnum "Custom Datapath Extensions".</td>
+    <td>xs:Hex8BitType</td>
+    <td>required for ARMv8.1-M based devices with CDE support</td>
+  </tr>
+  <tr>
     <td>Dendian</td>
     <td>Specifies the endianess of the processor. Use predefined values as listed in the table \ref DendianEnum "Endinaness".</td>
     <td>DendianEnum</td>
@@ -2568,6 +2574,37 @@ The values can be used in the elements:
 </table>
 
 <p>&nbsp;</p>		
+
+\anchor DcdecpEnum <b>Table: Custom Datapath Extensions</b>
+
+The table lists values representing	Custom Datapath Extensions in a device.
+The values can be used in the elements:
+- \ref element_accept 
+- \ref element_require
+- \ref element_deny  
+- \ref element_processor
+
+<table class="cmtable" summary="Enumeration: DcdecpEnum">
+  <tr>
+    <th>Dcdecp=</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td class="XML-Token">BitN = 0</td>
+    <td>CDE co-processor not available at BitN.</td>
+  </tr>
+  <tr>
+    <td class="XML-Token">BitN = 1</td>
+    <td>CDE co-processor available at BitN.</td>
+  </tr>
+</table>
+
+\b Examples:
+
+- Dcdecp=”0xff” declares all 8 CDE co-processors being available.
+- Dcdecp="0x00010010" declares CDE co-processors 1 and 4 being available.
+
+<p>&nbsp;</p>
 
 \anchor DendianEnum <b>Table: Endianness</b>
 
