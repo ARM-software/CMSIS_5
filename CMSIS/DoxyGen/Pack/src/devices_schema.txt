@@ -2591,18 +2591,18 @@ The values can be used in the elements:
   </tr>
   <tr>
     <td class="XML-Token">BitN = 0</td>
-    <td>CDE co-processor not available at BitN.</td>
+    <td>CDE co-processor interface disabled at BitN.</td>
   </tr>
   <tr>
     <td class="XML-Token">BitN = 1</td>
-    <td>CDE co-processor available at BitN.</td>
+    <td>CDE co-processor interface enabled at BitN.</td>
   </tr>
 </table>
 
 \b Examples:
 
-- Dcdecp=”0xff” declares all 8 CDE co-processors being available.
-- Dcdecp="0x00010010" declares CDE co-processors 1 and 4 being available.
+- Dcdecp=”0xff” enables CDE on all eight co-processor interfaces.
+- Dcdecp="0x00010010" enables CDE only on co-processor interfaces 1 and 4.
 
 <p>&nbsp;</p>
 
