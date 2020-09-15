@@ -74,6 +74,7 @@ extern "C"
 
   #if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) || defined(ARM_TABLE_TWIDDLECOEF_F16_4096)
     extern const float16_t twiddleCoefF16_4096[8192];
+    #define twiddleCoefF16 twiddleCoefF16_4096
   #endif /* !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) */
   
  

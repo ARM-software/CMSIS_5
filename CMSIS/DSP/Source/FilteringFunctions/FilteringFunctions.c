@@ -119,8 +119,14 @@
 #include "arm_lms_init_q31.c"
 #include "arm_lms_norm_f32.c"
 #include "arm_lms_norm_init_f32.c"
+#if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_FAST_ALLOW_TABLES)
+#if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FAST_TABLES) || defined(ARM_TABLE_RECIP_Q15)
 #include "arm_lms_norm_init_q15.c"
+#endif
+#if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FAST_TABLES) || defined(ARM_TABLE_RECIP_Q31)
 #include "arm_lms_norm_init_q31.c"
+#endif
+#endif
 #include "arm_lms_norm_q15.c"
 #include "arm_lms_norm_q31.c"
 #include "arm_lms_q15.c"
