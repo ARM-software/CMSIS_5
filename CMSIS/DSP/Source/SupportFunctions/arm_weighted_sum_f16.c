@@ -79,7 +79,7 @@ float16_t arm_weighted_sum_f16(const float16_t *in,const float16_t *weigths, uin
     accum1V = vdupq_n_f16(0.0f16);
     accum2V = vdupq_n_f16(0.0f16);
 
-    blkCnt = blockSize >> 2;
+    blkCnt = blockSize >> 3;
     while (blkCnt > 0) 
     {
         inV = vld1q(pIn);
@@ -96,7 +96,7 @@ float16_t arm_weighted_sum_f16(const float16_t *in,const float16_t *weigths, uin
     accum1 = vecAddAcrossF16Mve(accum1V);
     accum2 = vecAddAcrossF16Mve(accum2V);
 
-    blkCnt = blockSize & 3;
+    blkCnt = blockSize & 7;
     while(blkCnt > 0)
     {
         accum1 += (_Float16)*pIn++ * (_Float16)*pW;

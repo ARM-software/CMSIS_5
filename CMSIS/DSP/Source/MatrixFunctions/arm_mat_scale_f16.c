@@ -72,10 +72,12 @@ arm_status arm_mat_scale_f16(
     float16_t *pOut = pDst->pData;  /* output data matrix pointer */
     uint32_t  numSamples;           /* total number of elements in the matrix */
     uint32_t  blkCnt;               /* loop counters */
-    f16x8_t vecIn, vecOut;
+    f16x8_t vecIn, vecOut, vecScale;
     float16_t const *pInVec;
 
     pInVec = (float16_t const *) pIn;
+
+    vecScale = vdupq_n_f16(scale);
     /*
      * Total number of samples in the input matrix
      */
@@ -90,7 +92,7 @@ arm_status arm_mat_scale_f16(
         vecIn = vld1q(pInVec); 
         pInVec += 8;
 
-        vecOut = vmulq(vecIn, scale);
+        vecOut = vmulq_f16(vecIn, vecScale);
 
         vst1q(pOut, vecOut); 
         pOut += 8;

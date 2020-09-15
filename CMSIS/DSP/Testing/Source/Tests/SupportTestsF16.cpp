@@ -7,9 +7,12 @@
 #define SNR_THRESHOLD 120
 #define REL_ERROR (1.0e-5)
 
-#define REL_WEIGHTEDSUM_ERROR (2.0e-2)
+#define ABS_WEIGHTEDSUM_ERROR (5.0e-2)
+#define REL_WEIGHTEDSUM_ERROR (1.0e-2)
 
+#define ABS_ERROR_F32 (1.0e-3)
 #define REL_ERROR_F32 (1.0e-3)
+
 #define ABS_Q15_ERROR ((q15_t)10)
 #define ABS_Q31_ERROR ((q31_t)80)
 #define ABS_Q7_ERROR ((q7_t)10)
@@ -26,8 +29,7 @@ void SupportTestsF16::test_weighted_sum_f16()
  
  *outp=arm_weighted_sum_f16(inp, coefsp,this->nbSamples);
  
- 
- ASSERT_REL_ERROR(*outp,refp[this->offset],REL_WEIGHTEDSUM_ERROR);
+ ASSERT_CLOSE_ERROR(*outp,refp[this->offset],ABS_WEIGHTEDSUM_ERROR,REL_WEIGHTEDSUM_ERROR);
  ASSERT_EMPTY_TAIL(output);
 
 } 
@@ -130,7 +132,7 @@ void SupportTestsF16::setUp(Testing::testID_t id,std::vector<Testing::param_t>& 
   {    
 
     case TEST_WEIGHTED_SUM_F16_1:
-    this->nbSamples = 3;
+    this->nbSamples = 7;
     input.reload(SupportTestsF16::INPUTS_F16_ID,mgr,this->nbSamples);
     coefs.reload(SupportTestsF16::WEIGHTS_F16_ID,mgr,this->nbSamples);
     ref.reload(SupportTestsF16::REF_F16_ID,mgr);
@@ -141,7 +143,7 @@ void SupportTestsF16::setUp(Testing::testID_t id,std::vector<Testing::param_t>& 
     break;
 
     case TEST_WEIGHTED_SUM_F16_2:
-    this->nbSamples = 8;
+    this->nbSamples = 16;
     input.reload(SupportTestsF16::INPUTS_F16_ID,mgr,this->nbSamples);
     coefs.reload(SupportTestsF16::WEIGHTS_F16_ID,mgr,this->nbSamples);
     ref.reload(SupportTestsF16::REF_F16_ID,mgr);
@@ -152,7 +154,7 @@ void SupportTestsF16::setUp(Testing::testID_t id,std::vector<Testing::param_t>& 
     break;
 
     case TEST_WEIGHTED_SUM_F16_3:
-    this->nbSamples = 11;
+    this->nbSamples = 23;
     input.reload(SupportTestsF16::INPUTS_F16_ID,mgr,this->nbSamples);
     coefs.reload(SupportTestsF16::WEIGHTS_F16_ID,mgr,this->nbSamples);
     ref.reload(SupportTestsF16::REF_F16_ID,mgr);
@@ -280,7 +282,7 @@ void SupportTestsF16::setUp(Testing::testID_t id,std::vector<Testing::param_t>& 
     break;
 
     case TEST_F32_F16_19:
-    this->nbSamples = 3;
+    this->nbSamples = 7;
     inputF32.reload(SupportTestsF16::SAMPLES_F32_ID,mgr,this->nbSamples);
     ref.reload(SupportTestsF16::SAMPLES_F16_ID,mgr,this->nbSamples);
     output.create(this->nbSamples,SupportTestsF16::OUT_F16_ID,mgr);
@@ -288,7 +290,7 @@ void SupportTestsF16::setUp(Testing::testID_t id,std::vector<Testing::param_t>& 
     break;
 
     case TEST_F32_F16_20:
-    this->nbSamples = 8;
+    this->nbSamples = 16;
     inputF32.reload(SupportTestsF16::SAMPLES_F32_ID,mgr,this->nbSamples);
     ref.reload(SupportTestsF16::SAMPLES_F16_ID,mgr,this->nbSamples);
     output.create(this->nbSamples,SupportTestsF16::OUT_F16_ID,mgr);
@@ -296,7 +298,7 @@ void SupportTestsF16::setUp(Testing::testID_t id,std::vector<Testing::param_t>& 
     break;
 
     case TEST_F32_F16_21:
-    this->nbSamples = 11;
+    this->nbSamples = 23;
     inputF32.reload(SupportTestsF16::SAMPLES_F32_ID,mgr,this->nbSamples);
     ref.reload(SupportTestsF16::SAMPLES_F16_ID,mgr,this->nbSamples);
     output.create(this->nbSamples,SupportTestsF16::OUT_F16_ID,mgr);
