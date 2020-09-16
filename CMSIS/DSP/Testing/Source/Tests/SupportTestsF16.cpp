@@ -8,7 +8,7 @@
 #define REL_ERROR (1.0e-5)
 
 #define ABS_WEIGHTEDSUM_ERROR (5.0e-2)
-#define REL_WEIGHTEDSUM_ERROR (1.0e-2)
+#define REL_WEIGHTEDSUM_ERROR (5.0e-2)
 
 #define ABS_ERROR_F32 (1.0e-3)
 #define REL_ERROR_F32 (1.0e-3)

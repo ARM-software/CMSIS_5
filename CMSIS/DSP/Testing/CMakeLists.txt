@@ -403,16 +403,18 @@ endif()
 disableOptimization(TestingLib)
 disableOptimization(FrameworkLib)
 
-
+## Only build f16 version when running float16tests
+if ((NOT ARMAC5) AND (FLOAT16TESTS) AND ((FLOAT16) OR (MVEF) OR (HELIUM) OR (NEON) OR (NEONEXPERIMENTAL)))
+target_sources(TestingLib PRIVATE ${TESTSRC16})
+else()
 target_sources(TestingLib PRIVATE ${TESTSRC})
-
+endif()
 
 if(NN)
   target_sources(TestingLib PRIVATE ${NNSRC})
 endif()
 
 
-target_sources(TestingLib PRIVATE ${TESTSRC16})
 
 target_sources(TestingLib PRIVATE testmain.cpp)
 target_sources(TestingLib PRIVATE GeneratedSource/TestDesc.cpp)

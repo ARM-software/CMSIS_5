@@ -146,10 +146,12 @@ void arm_svm_linear_predict_f16(
         /*
          * Sum the partial parts
          */
-        sum += (_Float16)*pDualCoef++ * vecAddAcrossF16Mve(acc0);
-        sum += (_Float16)*pDualCoef++ * vecAddAcrossF16Mve(acc1);
-        sum += (_Float16)*pDualCoef++ * vecAddAcrossF16Mve(acc2);
-        sum += (_Float16)*pDualCoef++ * vecAddAcrossF16Mve(acc3);
+        acc0 = vmulq_n_f16(acc0,*pDualCoef++);
+        acc0 = vfmaq_n_f16(acc0,acc1,*pDualCoef++);
+        acc0 = vfmaq_n_f16(acc0,acc2,*pDualCoef++);
+        acc0 = vfmaq_n_f16(acc0,acc3,*pDualCoef++);
+
+        sum += vecAddAcrossF16Mve(acc0);
 
         pSrcA += numCols * 4;
         /*
@@ -216,8 +218,10 @@ void arm_svm_linear_predict_f16(
         /*
          * Sum the partial parts
          */
-        sum += (_Float16)*pDualCoef++ * vecAddAcrossF16Mve(acc0);
-        sum += (_Float16)*pDualCoef++ * vecAddAcrossF16Mve(acc1);
+        acc0 = vmulq_n_f16(acc0,*pDualCoef++);
+        acc0 = vfmaq_n_f16(acc0,acc1,*pDualCoef++);
+
+        sum += vecAddAcrossF16Mve(acc0);
 
         pSrcA += numCols * 2;
         row -= 2;
