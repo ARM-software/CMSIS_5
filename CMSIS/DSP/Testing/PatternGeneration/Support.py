@@ -11,7 +11,7 @@ NBVECTORS = [4,10,16]
 
 VECDIM = [12,14,20]
 
-def genWsum(config,nb):
+def genWsum(config,f,nb):
     DIM=50
     inputs=[] 
     weights=[]
@@ -23,15 +23,15 @@ def genWsum(config,nb):
     inputs += list(va)
     weights += list(vb)
 
-    nbiters = Tools.loopnb(0,Tools.TAILONLY)
+    nbiters = Tools.loopnb(f,Tools.TAILONLY)
     e = np.sum(va[0:nbiters].T * vb[0:nbiters]) / np.sum(vb[0:nbiters]) 
     output.append(e)
 
-    nbiters = Tools.loopnb(0,Tools.BODYONLY)
+    nbiters = Tools.loopnb(f,Tools.BODYONLY)
     e = np.sum(va[0:nbiters].T * vb[0:nbiters]) / np.sum(vb[0:nbiters]) 
     output.append(e)
 
-    nbiters = Tools.loopnb(0,Tools.BODYANDTAIL)
+    nbiters = Tools.loopnb(f,Tools.BODYANDTAIL)
     e = np.sum(va[0:nbiters].T * vb[0:nbiters]) / np.sum(vb[0:nbiters]) 
     output.append(e)
 
@@ -92,7 +92,7 @@ def writeTestsF32(config):
 
 
     # This is for benchmarking the weighted sum and we use only one test pattern
-    genWsum(config,6)
+    genWsum(config,Tools.F32,6)
     
 
 def writeTestsF16(config):
@@ -105,7 +105,7 @@ def writeTestsF16(config):
     config.writeInput(11,va,"Samples")
 
     # This is for benchmarking the weighted sum and we use only one test pattern
-    genWsum(config,6)
+    genWsum(config,Tools.F16,6)
 
 def writeTestsQ31(config):
     NBSAMPLES=256

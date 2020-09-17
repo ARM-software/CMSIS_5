@@ -172,7 +172,7 @@ void arm_cmplx_mag_f16(
         uint32_t numSamples)
 {
   uint32_t blkCnt;                               /* loop counter */
-  float16_t real, imag;                      /* Temporary variables to hold input values */
+  _Float16 real, imag;                      /* Temporary variables to hold input values */
 
 #if defined (ARM_MATH_LOOPUNROLL) && !defined(ARM_MATH_AUTOVECTORIZE)
 

@@ -107,7 +107,7 @@ void arm_cmplx_mag_squared_f16(
         uint32_t numSamples)
 {
         uint32_t blkCnt;                               /* Loop counter */
-        float16_t real, imag;                          /* Temporary input variables */
+        _Float16 real, imag;                          /* Temporary input variables */
 
 #if defined (ARM_MATH_LOOPUNROLL) && !defined(ARM_MATH_AUTOVECTORIZE)
 

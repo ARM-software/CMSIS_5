@@ -70,7 +70,7 @@
 
 float16_t arm_canberra_distance_f16(const float16_t *pA,const float16_t *pB, uint32_t blockSize)
 {
-    float16_t       accum = 0.0f;
+    _Float16       accum = 0.0f16;
     uint32_t         blkCnt;
     f16x8_t         a, b, c, accumV;
 
@@ -141,7 +141,7 @@ float16_t arm_canberra_distance_f16(const float16_t *pA,const float16_t *pB, uin
 #else
 float16_t arm_canberra_distance_f16(const float16_t *pA,const float16_t *pB, uint32_t blockSize)
 {
-   float16_t accum=0.0f, tmpA, tmpB,diff,sum;
+   _Float16 accum=0.0f, tmpA, tmpB,diff,sum;
 
    while(blockSize > 0)
    {
@@ -150,7 +150,7 @@ float16_t arm_canberra_distance_f16(const float16_t *pA,const float16_t *pB, uin
 
       diff = fabsf(tmpA - tmpB);
       sum = fabsf(tmpA) + fabsf(tmpB);
-      if ((tmpA != 0.0f) || (tmpB != 0.0f))
+      if ((tmpA != 0.0f16) || (tmpB != 0.0f16))
       {
          accum += (diff / sum);
       }

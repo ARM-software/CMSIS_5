@@ -370,8 +370,8 @@ void arm_correlate_f16(
     for (i = 0U; i <= block1 - 2; i += 2)
     {
         uint32_t  count = i + 1;
-        float16_t acc0;
-        float16_t acc1;
+        _Float16 acc0;
+        _Float16 acc1;
         /*
          * compute 2 accumulators per loop
          * size is incrementing for second accumulator
@@ -390,7 +390,7 @@ void arm_correlate_f16(
     for (; i < block1; i++)
     {
         uint32_t  count = i + 1;
-        float16_t acc;
+        _Float16 acc;
 
         pX = pA;
         pY = pB;
@@ -403,10 +403,10 @@ void arm_correlate_f16(
 
     for (i = 0U; i <= block2 - 4; i += 4)
     {
-        float16_t acc0;
-        float16_t acc1;
-        float16_t acc2;
-        float16_t acc3;
+        _Float16 acc0;
+        _Float16 acc1;
+        _Float16 acc2;
+        _Float16 acc3;
 
         pX = pA;
         pY = pB;
@@ -430,8 +430,8 @@ void arm_correlate_f16(
 
     for (; i <= block2 - 2; i += 2)
     {
-        float16_t acc0;
-        float16_t acc1;
+        _Float16 acc0;
+        _Float16 acc1;
 
         pX = pA;
         pY = pB;
@@ -451,7 +451,7 @@ void arm_correlate_f16(
 
     if (block2 & 1)
     {
-        float16_t acc;
+        _Float16 acc;
 
         pX = pA;
         pY = pB;
@@ -466,8 +466,8 @@ void arm_correlate_f16(
     {
 
         uint32_t  count = (i + 1);
-        float16_t acc0;
-        float16_t acc1;
+        _Float16 acc0;
+        _Float16 acc1;
 
         pX = pA;
         pY = pB;
@@ -488,7 +488,7 @@ void arm_correlate_f16(
     for (; i >= 0; i--)
     {
         uint32_t  count = (i + 1);
-        float16_t acc;
+        _Float16 acc;
 
         pX = pA;
         pY = pB;
@@ -517,15 +517,15 @@ void arm_correlate_f16(
   const float16_t *px;                                 /* Intermediate inputA pointer */
   const float16_t *py;                                 /* Intermediate inputB pointer */
   const float16_t *pSrc1;
-        float16_t sum;
+        _Float16 sum;
         uint32_t blockSize1, blockSize2, blockSize3;   /* Loop counters */
         uint32_t j, k, count, blkCnt;                  /* Loop counters */
         uint32_t outBlockSize;                         /* Loop counter */
         int32_t inc = 1;                               /* Destination address modifier */
 
 #if defined (ARM_MATH_LOOPUNROLL) 
-    float16_t acc0, acc1, acc2, acc3,c0;                    /* Accumulators */
-    float16_t x0, x1, x2, x3;                        /* temporary variables for holding input and coefficient values */
+    _Float16 acc0, acc1, acc2, acc3,c0;                    /* Accumulators */
+    _Float16 x0, x1, x2, x3;                        /* temporary variables for holding input and coefficient values */
 #endif
 
   /* The algorithm implementation is based on the lengths of the inputs. */
@@ -625,7 +625,7 @@ void arm_correlate_f16(
   while (blockSize1 > 0U)
   {
     /* Accumulator is made zero for every iteration */
-    sum = 0.0f;
+    sum = 0.0f16;
 
 #if defined (ARM_MATH_LOOPUNROLL) 
 
@@ -725,10 +725,10 @@ void arm_correlate_f16(
     while (blkCnt > 0U)
     {
       /* Set all accumulators to zero */
-      acc0 = 0.0f;
-      acc1 = 0.0f;
-      acc2 = 0.0f;
-      acc3 = 0.0f;
+      acc0 = 0.0f16;
+      acc1 = 0.0f16;
+      acc2 = 0.0f16;
+      acc3 = 0.0f16;
 
 
       /* read x[0], x[1], x[2] samples */
@@ -873,7 +873,7 @@ void arm_correlate_f16(
     while (blkCnt > 0U)
     {
       /* Accumulator is made zero for every iteration */
-      sum = 0.0f;
+      sum = 0.0f16;
 
 #if defined (ARM_MATH_LOOPUNROLL) 
 
@@ -939,7 +939,7 @@ void arm_correlate_f16(
     while (blkCnt > 0U)
     {
       /* Accumulator is made zero for every iteration */
-      sum = 0.0f;
+      sum = 0.0f16;
 
       /* Loop over srcBLen */
       k = srcBLen;
@@ -1000,7 +1000,7 @@ void arm_correlate_f16(
   while (blockSize3 > 0U)
   {
     /* Accumulator is made zero for every iteration */
-    sum = 0.0f;
+    sum = 0.0f16;
 
 #if defined (ARM_MATH_LOOPUNROLL) 
 
@@ -1069,7 +1069,7 @@ void arm_correlate_f16(
 
   const float16_t *pIn1 = pSrcA;                       /* inputA pointer */
   const float16_t *pIn2 = pSrcB + (srcBLen - 1U);      /* inputB pointer */
-        float16_t sum;                                 /* Accumulator */
+        _Float16 sum;                                 /* Accumulator */
         uint32_t i = 0U, j;                            /* Loop counters */
         uint32_t inv = 0U;                             /* Reverse order flag */
         uint32_t tot = 0U;                             /* Length */
@@ -1127,7 +1127,7 @@ void arm_correlate_f16(
   for (i = 0U; i <= tot; i++)
   {
     /* Initialize sum with zero to carry out MAC operations */
-    sum = 0.0f;
+    sum = 0.0f16;
 
     /* Loop to perform MAC operations according to convolution equation */
     for (j = 0U; j <= i; j++)

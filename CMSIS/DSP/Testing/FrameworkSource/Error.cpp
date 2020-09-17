@@ -342,7 +342,7 @@ void assert_close_error(unsigned long nb,float64_t &ref, float64_t &val, double 
     if (abs(val - ref) > (absthreshold + relthreshold * abs(ref)))
     {
         char details[200];
-        sprintf(details,"close %g : abs=%g, rel=%g",abs(val - ref) , absthreshold,relthreshold);
+        sprintf(details,"close error %g > %g: (val = %g, ref = %g)",abs(val - ref) , absthreshold + relthreshold * abs(ref),val,ref);
         throw (Error(CLOSE_ERROR,nb,details));
     }
 };
@@ -385,7 +385,7 @@ void assert_close_error(unsigned long nb,float32_t &ref, float32_t &val, double 
     if (abs(val - ref) > (absthreshold + relthreshold * abs(ref)))
     {
         char details[200];
-        sprintf(details,"close %g : abs=%g, rel=%g",abs(val - ref) , absthreshold,relthreshold);
+        sprintf(details,"close error %g > %g: (val = %g, ref = %g)",abs(val - ref) , absthreshold + relthreshold * abs(ref),val,ref);
         throw (Error(CLOSE_ERROR,nb,details));
     }
 };
@@ -429,7 +429,7 @@ void assert_close_error(unsigned long nb,float16_t &ref, float16_t &val, double 
     if (abs((float)val - (float)ref) > (absthreshold + relthreshold * abs((float)ref)))
     {
         char details[200];
-        sprintf(details,"close %g : abs=%g, rel=%g",abs(val - ref) , absthreshold,relthreshold);
+        sprintf(details,"close error %g > %g: (val = %g, ref = %g)",abs(val - ref) , absthreshold + relthreshold * abs(ref),val,ref);
         throw (Error(CLOSE_ERROR,nb,details));
     }
 };

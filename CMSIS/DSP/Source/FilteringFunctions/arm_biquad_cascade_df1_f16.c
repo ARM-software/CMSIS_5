@@ -64,7 +64,7 @@ void arm_biquad_cascade_df1_f16(
     float16_t Xn1, Xn2, Yn1, Yn2;   /*  Filter pState variables   */
     float16_t X0, X1, X2, X3;   /*  temporary input           */
     float16_t X4, X5, X6, X7;   /*  temporary input           */
-    float16_t lastX, lastY;             /*  X,Y history for tail handling */
+    _Float16 lastX, lastY;             /*  X,Y history for tail handling */
     f16x8_t coeffs;
     f16x8_t accVec;           /* accumultor vector */
     uint32_t  sample, stage = S->numStages; /*  loop counters             */
@@ -320,10 +320,10 @@ void arm_biquad_cascade_df1_f16(
         float16_t *pOut = pDst;                        /* Destination pointer */
         float16_t *pState = S->pState;                 /* pState pointer */
   const float16_t *pCoeffs = S->pCoeffs;               /* Coefficient pointer */
-        float16_t acc;                                 /* Accumulator */
-        float16_t b0, b1, b2, a1, a2;                  /* Filter coefficients */
-        float16_t Xn1, Xn2, Yn1, Yn2;                  /* Filter pState variables */
-        float16_t Xn;                                  /* Temporary input */
+        _Float16 acc;                                 /* Accumulator */
+        _Float16 b0, b1, b2, a1, a2;                  /* Filter coefficients */
+        _Float16 Xn1, Xn2, Yn1, Yn2;                  /* Filter pState variables */
+        _Float16 Xn;                                  /* Temporary input */
         uint32_t sample, stage = S->numStages;         /* Loop counters */
 
   do

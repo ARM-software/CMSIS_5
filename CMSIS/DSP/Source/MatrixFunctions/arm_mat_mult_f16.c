@@ -632,7 +632,7 @@ arm_status arm_mat_mult_f16(
   float16_t *pInB = pSrcB->pData;                /* Input data matrix pointer B */
   float16_t *pOut = pDst->pData;                 /* Output data matrix pointer */
   float16_t *px;                                 /* Temporary output data matrix pointer */
-  float16_t sum;                                 /* Accumulator */
+  _Float16 sum;                                 /* Accumulator */
   uint16_t numRowsA = pSrcA->numRows;            /* Number of rows of input matrix A */
   uint16_t numColsB = pSrcB->numCols;            /* Number of columns of input matrix B */
   uint16_t numColsA = pSrcA->numCols;            /* Number of columns of input matrix A */
@@ -671,7 +671,7 @@ arm_status arm_mat_mult_f16(
       do
       {
         /* Set the variable sum, that acts as accumulator, to zero */
-        sum = 0.0f;
+        sum = 0.0f16;
 
         /* Initialize pointer pIn1 to point to starting address of column being processed */
         pIn1 = pInA;

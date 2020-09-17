@@ -65,7 +65,7 @@
 float16_t arm_entropy_f16(const float16_t * pSrcA,uint32_t blockSize)
 {
     uint32_t        blkCnt;
-    float16_t       accum=0.0f,p;
+    _Float16       accum=0.0f16,p;
 
 
     blkCnt = blockSize;
@@ -110,7 +110,7 @@ float16_t arm_entropy_f16(const float16_t * pSrcA,uint32_t blockSize)
 {
     const float16_t *pIn;
     uint32_t blkCnt;
-    float16_t accum, p;
+    _Float16 accum, p;
  
     pIn = pSrcA;
     blkCnt = blockSize;

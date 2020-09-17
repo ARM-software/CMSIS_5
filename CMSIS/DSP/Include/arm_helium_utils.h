@@ -72,7 +72,7 @@ __STATIC_FORCEINLINE float16_t vecAddAcrossF16Mve(float16x8_t in)
     in = vaddq_f16(tmpVec, in);
     tmpVec = (float16x8_t) vrev64q_s32((int32x4_t) in);
     in = vaddq_f16(tmpVec, in);
-    acc = vgetq_lane_f16(in, 0) + vgetq_lane_f16(in, 4);
+    acc = (_Float16)vgetq_lane_f16(in, 0) + (_Float16)vgetq_lane_f16(in, 4);
 
     return acc;
 }

@@ -72,8 +72,8 @@ float16_t arm_logsumexp_f16(const float16_t *in, uint32_t blockSize)
     float16_t       maxVal;
     const float16_t *pIn;
     int32_t         blkCnt;
-    float16_t       accum=0.0f16;
-    float16_t       tmp;
+    _Float16       accum=0.0f16;
+    _Float16       tmp;
 
 
     arm_max_no_idx_f16((float16_t *) in, blockSize, &maxVal);
@@ -122,11 +122,11 @@ float16_t arm_logsumexp_f16(const float16_t *in, uint32_t blockSize)
 #else
 float16_t arm_logsumexp_f16(const float16_t *in, uint32_t blockSize)
 {
-    float16_t maxVal;
-    float16_t tmp;
+    _Float16 maxVal;
+    _Float16 tmp;
     const float16_t *pIn;
     uint32_t blkCnt;
-    float16_t accum;
+    _Float16 accum;
  
     pIn = in;
     blkCnt = blockSize;

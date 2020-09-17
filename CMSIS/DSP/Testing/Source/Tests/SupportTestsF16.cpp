@@ -7,8 +7,8 @@
 #define SNR_THRESHOLD 120
 #define REL_ERROR (1.0e-5)
 
-#define ABS_WEIGHTEDSUM_ERROR (5.0e-2)
-#define REL_WEIGHTEDSUM_ERROR (5.0e-2)
+#define ABS_WEIGHTEDSUM_ERROR (1.0e-1)
+#define REL_WEIGHTEDSUM_ERROR (5.0e-3)
 
 #define ABS_ERROR_F32 (1.0e-3)
 #define REL_ERROR_F32 (1.0e-3)
@@ -28,7 +28,7 @@ void SupportTestsF16::test_weighted_sum_f16()
  
  
  *outp=arm_weighted_sum_f16(inp, coefsp,this->nbSamples);
- 
+
  ASSERT_CLOSE_ERROR(*outp,refp[this->offset],ABS_WEIGHTEDSUM_ERROR,REL_WEIGHTEDSUM_ERROR);
  ASSERT_EMPTY_TAIL(output);
 

@@ -88,8 +88,8 @@ void arm_power_f16(
         float16_t * pResult)
 {
         uint32_t blkCnt;                               /* Loop counter */
-        float16_t sum = 0.0f;                          /* Temporary result storage */
-        float16_t in;                                  /* Temporary variable to store input value */
+        _Float16 sum = 0.0f16;                          /* Temporary result storage */
+        _Float16 in;                                  /* Temporary variable to store input value */
 
 #if defined (ARM_MATH_LOOPUNROLL) && !defined(ARM_MATH_AUTOVECTORIZE)
 

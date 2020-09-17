@@ -145,16 +145,17 @@ float16_t arm_jensenshannon_distance_f16(const float16_t *pA,const float16_t *pB
 
 float16_t arm_jensenshannon_distance_f16(const float16_t *pA,const float16_t *pB, uint32_t blockSize)
 {
-    float16_t left, right,sum, result, tmp;
+    _Float16 left, right,sum, tmp;
+    float16_t result;
     uint32_t i;
 
-    left = 0.0f; 
-    right = 0.0f;
+    left = 0.0f16; 
+    right = 0.0f16;
     for(i=0; i < blockSize; i++)
     {
-      tmp = (pA[i] + pB[i]) / 2.0f;
-      left  += rel_entr(pA[i], tmp);
-      right += rel_entr(pB[i], tmp);
+      tmp = ((_Float16)pA[i] + (_Float16)pB[i]) / 2.0f16;
+      left  += (_Float16)rel_entr(pA[i], tmp);
+      right += (_Float16)rel_entr(pB[i], tmp);
     }
 
 

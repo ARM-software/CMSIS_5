@@ -198,10 +198,10 @@ void arm_biquad_cascade_stereo_df2T_f16(
         float16_t *pOut = pDst;                        /* Destination pointer */
         float16_t *pState = S->pState;                 /* State pointer */
   const float16_t *pCoeffs = S->pCoeffs;               /* Coefficient pointer */
-        float16_t acc1a, acc1b;                        /* Accumulator */
-        float16_t b0, b1, b2, a1, a2;                  /* Filter coefficients */
-        float16_t Xn1a, Xn1b;                          /* Temporary input */
-        float16_t d1a, d2a, d1b, d2b;                  /* State variables */
+        _Float16 acc1a, acc1b;                        /* Accumulator */
+        _Float16 b0, b1, b2, a1, a2;                  /* Filter coefficients */
+        _Float16 Xn1a, Xn1b;                          /* Temporary input */
+        _Float16 d1a, d2a, d1b, d2b;                  /* State variables */
         uint32_t sample, stage = S->numStages;         /* Loop counters */
 
     do

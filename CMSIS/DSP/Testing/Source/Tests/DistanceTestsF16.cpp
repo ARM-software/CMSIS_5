@@ -3,7 +3,7 @@
 #include "Error.h"
 #include "Test.h"
 
-#define REL_ERROR (2e-3)
+#define REL_ERROR (5e-3)
 
 #define REL_JS_ERROR (3e-2)
 

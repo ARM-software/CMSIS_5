@@ -72,7 +72,7 @@
 
 float16_t arm_braycurtis_distance_f16(const float16_t *pA,const float16_t *pB, uint32_t blockSize)
 {
-    float16_t       accumDiff = 0.0f, accumSum = 0.0f;
+    _Float16        accumDiff = 0.0f, accumSum = 0.0f;
     uint32_t        blkCnt;
     f16x8_t         a, b, c, accumDiffV, accumSumV;
 
@@ -125,14 +125,14 @@ float16_t arm_braycurtis_distance_f16(const float16_t *pA,const float16_t *pB, u
 
 float16_t arm_braycurtis_distance_f16(const float16_t *pA,const float16_t *pB, uint32_t blockSize)
 {
-   float16_t accumDiff=0.0f, accumSum=0.0f, tmpA, tmpB;
+   _Float16 accumDiff=0.0f16, accumSum=0.0f16, tmpA, tmpB;
 
    while(blockSize > 0)
    {
       tmpA = *pA++;
       tmpB = *pB++;
-      accumDiff += fabsf(tmpA - tmpB);
-      accumSum += fabsf(tmpA + tmpB);
+      accumDiff += (_Float16)fabsf(tmpA - tmpB);
+      accumSum += (_Float16)fabsf(tmpA + tmpB);
       blockSize --;
    }
    /*

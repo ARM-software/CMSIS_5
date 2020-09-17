@@ -294,7 +294,7 @@ void arm_svm_polynomial_predict_f16(
                              (vaddq_n_f16(vmulq_n_f16(vtmp, S->gamma), S->coef0), S->degree), 
                              vctp16q(1));
     }
-    sum += vecAddAcrossF16Mve(vSum);
+    sum += (_Float16)vecAddAcrossF16Mve(vSum);
 
     
     *pResult = S->classes[STEP(sum)];
@@ -316,9 +316,9 @@ void arm_svm_polynomial_predict_f16(
         dot=0;
         for(j=0; j < S->vectorDimension; j++)
         {
-            dot = dot + in[j]* *pSupport++;
+            dot = dot + (_Float16)in[j]* (_Float16)*pSupport++;
         }
-        sum += S->dualCoefficients[i] * arm_exponent_f16(S->gamma * dot + S->coef0, S->degree);
+        sum += S->dualCoefficients[i] * (_Float16)arm_exponent_f16(S->gamma * dot + S->coef0, S->degree);
     }
 
     *pResult=S->classes[STEP(sum)];

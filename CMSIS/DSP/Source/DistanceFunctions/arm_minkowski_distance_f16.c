@@ -111,13 +111,13 @@ float16_t arm_minkowski_distance_f16(const float16_t *pA,const float16_t *pB, in
 
 float16_t arm_minkowski_distance_f16(const float16_t *pA,const float16_t *pB, int32_t order, uint32_t blockSize)
 {
-    float16_t sum;
+    _Float16 sum;
     uint32_t i;
 
     sum = 0.0f; 
     for(i=0; i < blockSize; i++)
     {
-       sum += powf(fabsf(pA[i] - pB[i]),order);
+       sum += (_Float16)powf(fabsf(pA[i] - pB[i]),order);
     }
 
 

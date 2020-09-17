@@ -103,7 +103,7 @@ void arm_cmplx_mult_cmplx_f16(
         pDst += 8;
     }
 
-    float16_t a, b, c, d;  /* Temporary variables to store real and imaginary values */
+    _Float16 a, b, c, d;  /* Temporary variables to store real and imaginary values */
         /* Tail */
     blkCnt = (blockSize & 7) >> 1;
     while (blkCnt > 0)
@@ -134,7 +134,7 @@ void arm_cmplx_mult_cmplx_f16(
         uint32_t numSamples)
 {
     uint32_t blkCnt;                               /* Loop counter */
-    float16_t a, b, c, d;  /* Temporary variables to store real and imaginary values */
+    _Float16 a, b, c, d;  /* Temporary variables to store real and imaginary values */
 
 #if defined (ARM_MATH_LOOPUNROLL) && !defined(ARM_MATH_AUTOVECTORIZE)
 

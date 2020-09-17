@@ -67,7 +67,7 @@ void arm_svm_rbf_predict_f16(
     uint32_t         row;
     uint32_t         blkCnt;     /* loop counters */
     const float16_t *pDualCoef = S->dualCoefficients;
-    float16_t       sum = S->intercept;
+    _Float16       sum = S->intercept;
     f16x8_t         vSum = vdupq_n_f16(0);
 
     row = numRows;
@@ -323,19 +323,19 @@ void arm_svm_rbf_predict_f16(
     int32_t * pResult)
 {
     _Float16 sum=S->intercept;
-    _Float16 dot=0;
+    _Float16 dot=00.f16;
     uint32_t i,j;
     const float16_t *pSupport = S->supportVectors;
 
     for(i=0; i < S->nbOfSupportVectors; i++)
     {
-        dot=0;
+        dot=0.0f16;
         for(j=0; j < S->vectorDimension; j++)
         {
-            dot = dot + SQ(in[j] - *pSupport);
+            dot = dot + SQ((_Float16)in[j] - (_Float16) *pSupport);
             pSupport++;
         }
-        sum += S->dualCoefficients[i] * expf(-S->gamma * dot);
+        sum += (_Float16)S->dualCoefficients[i] * (_Float16)expf(-(_Float16)S->gamma * dot);
     }
     *pResult=S->classes[STEP(sum)];
 }

@@ -67,7 +67,7 @@ float16_t arm_chebyshev_distance_f16(const float16_t *pA,const float16_t *pB, ui
     uint32_t        blkCnt;     /* loop counters */
     f16x8_t         vecA, vecB;
     f16x8_t         vecDiff = vdupq_n_f16(0.0);
-    float16_t       maxValue = 0.0;
+    float16_t       maxValue = 0.0f16;
 
 
     blkCnt = blockSize >> 3;
@@ -111,7 +111,7 @@ float16_t arm_chebyshev_distance_f16(const float16_t *pA,const float16_t *pB, ui
 #else
 float16_t arm_chebyshev_distance_f16(const float16_t *pA,const float16_t *pB, uint32_t blockSize)
 {
-   float16_t diff=0.0f,  maxVal,tmpA, tmpB;
+   _Float16 diff=0.0f,  maxVal,tmpA, tmpB;
 
    tmpA = *pA++;
    tmpB = *pB++;

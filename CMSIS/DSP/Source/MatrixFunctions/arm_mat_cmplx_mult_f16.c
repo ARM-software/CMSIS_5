@@ -711,13 +711,13 @@ arm_status arm_mat_cmplx_mult_f16(
   uint16_t numRowsA = pSrcA->numRows;            /* Number of rows of input matrix A */
   uint16_t numColsB = pSrcB->numCols;            /* Number of columns of input matrix B */
   uint16_t numColsA = pSrcA->numCols;            /* Number of columns of input matrix A */
-  float16_t sumReal, sumImag;                    /* Accumulator */
-  float16_t a1, b1, c1, d1;
+  _Float16 sumReal, sumImag;                    /* Accumulator */
+  _Float16 a1, b1, c1, d1;
   uint32_t col, i = 0U, j, row = numRowsA, colCnt; /* loop counters */
   arm_status status;                             /* status of matrix multiplication */
 
 #if defined (ARM_MATH_LOOPUNROLL)
-  float16_t a0, b0, c0, d0;
+  _Float16 a0, b0, c0, d0;
 #endif
 
 #ifdef ARM_MATH_MATRIX_CHECK
@@ -755,8 +755,8 @@ arm_status arm_mat_cmplx_mult_f16(
       do
       {
         /* Set the variable sum, that acts as accumulator, to zero */
-        sumReal = 0.0f;
-        sumImag = 0.0f;
+        sumReal = 0.0f16;
+        sumImag = 0.0f16;
 
         /* Initiate pointer pIn1 to point to starting address of column being processed */
         pIn1 = pInA;

@@ -105,16 +105,17 @@ float16_t arm_euclidean_distance_f16(const float16_t *pA,const float16_t *pB, ui
 #else
 float16_t arm_euclidean_distance_f16(const float16_t *pA,const float16_t *pB, uint32_t blockSize)
 {
-   float16_t accum=0.0f,tmp;
+   _Float16 accum=0.0f,tmp;
+   float16_t result;
 
    while(blockSize > 0)
    {
-      tmp = *pA++ - *pB++;
+      tmp = (_Float16)*pA++ - (_Float16)*pB++;
       accum += SQ(tmp);
       blockSize --;
    }
-   arm_sqrt_f16(accum,&tmp);
-   return(tmp);
+   arm_sqrt_f16(accum,&result);
+   return(result);
 }
 
 #endif /* defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE) */

@@ -584,8 +584,8 @@ group Root {
                 Functions {
                    Complex FFT:test_cfft_f16 -> CFFT_PARAM_ID
                    Real FFT:test_rfft_f16 -> RFFT_PARAM_ID
-                   Radix 4 Complex FFT:test_cfft_radix4_f16 -> CFFT4_PARAM_ID
-                   Radix 2 Complex FFT:test_cfft_radix2_f16 -> CFFT_PARAM_ID
+                   Scalar Radix 4 Complex FFT:test_cfft_radix4_f16 -> CFFT4_PARAM_ID
+                   Scalar Radix 2 Complex FFT:test_cfft_radix2_f16 -> CFFT_PARAM_ID
                 }
            }
 

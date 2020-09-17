@@ -67,7 +67,7 @@ uint32_t arm_gaussian_naive_bayes_predict_f16(const arm_gaussian_naive_bayes_ins
     const float16_t *pIn = in;
     float16_t       result;
     f16x8_t         vsigma;
-    float16_t       tmp;
+    _Float16       tmp;
     f16x8_t         vacc1, vacc2;
     uint32_t        index;
     float16_t       logclassPriors[S->numberOfClasses];
@@ -81,15 +81,15 @@ uint32_t arm_gaussian_naive_bayes_predict_f16(const arm_gaussian_naive_bayes_ins
     for (nbClass = 0; nbClass < S->numberOfClasses; nbClass++) {
         pIn = in;
 
-        vacc1 = vdupq_n_f16(0);
-        vacc2 = vdupq_n_f16(0);
+        vacc1 = vdupq_n_f16(0.0f16);
+        vacc2 = vdupq_n_f16(0.0f16);
 
         uint32_t         blkCnt =S->vectorDimension >> 3;
         while (blkCnt > 0U) {
             f16x8_t         vinvSigma, vtmp;
 
             vsigma = vaddq_n_f16(vld1q(pSigma), S->epsilon);
-            vacc1 = vaddq(vacc1, vlogq_f16(vmulq_n_f16(vsigma, 2.0f * PI)));
+            vacc1 = vaddq(vacc1, vlogq_f16(vmulq_n_f16(vsigma, 2.0f16 * (_Float16)PI)));
 
             vinvSigma = vrecip_medprec_f16(vsigma);
 
@@ -112,7 +112,7 @@ uint32_t arm_gaussian_naive_bayes_predict_f16(const arm_gaussian_naive_bayes_ins
 
             vsigma = vaddq_n_f16(vld1q(pSigma), S->epsilon);
             vacc1 =
-                vaddq_m_f16(vacc1, vacc1, vlogq_f16(vmulq_n_f16(vsigma, 2.0f * PI)), p0);
+                vaddq_m_f16(vacc1, vacc1, vlogq_f16(vmulq_n_f16(vsigma, 2.0f16 * (_Float16)PI)), p0);
 
             vinvSigma = vrecip_medprec_f16(vsigma);
 
@@ -126,8 +126,8 @@ uint32_t arm_gaussian_naive_bayes_predict_f16(const arm_gaussian_naive_bayes_ins
             pSigma += blkCnt;
         }
 
-        tmp = -0.5f * vecAddAcrossF16Mve(vacc1);
-        tmp -= 0.5f * vecAddAcrossF16Mve(vacc2);
+        tmp = -0.5f16 * (_Float16)vecAddAcrossF16Mve(vacc1);
+        tmp -= 0.5f16 * (_Float16)vecAddAcrossF16Mve(vacc2);
 
         *buffer = tmp + *pLogPrior++;
         buffer++;
@@ -175,13 +175,13 @@ uint32_t arm_gaussian_naive_bayes_predict_f16(const arm_gaussian_naive_bayes_ins
         
         pIn = in;
 
-        tmp = 0.0;
-        acc1 = 0.0f;
-        acc2 = 0.0f;
+        tmp = 0.0f16;
+        acc1 = 0.0f16;
+        acc2 = 0.0f16;
         for(nbDim = 0; nbDim < S->vectorDimension; nbDim++)
         {
            sigma = *pSigma + S->epsilon;
-           acc1 += logf(2.0f * PI_F * sigma);
+           acc1 += logf(2.0f16 * (_Float16)PI_F * sigma);
            acc2 += (*pIn - *pTheta) * (*pIn - *pTheta) / sigma;
 
            pIn++;
@@ -189,8 +189,8 @@ uint32_t arm_gaussian_naive_bayes_predict_f16(const arm_gaussian_naive_bayes_ins
            pSigma++;
         }
 
-        tmp = -0.5f * acc1;
-        tmp -= 0.5f * acc2;
+        tmp = -0.5f16 * acc1;
+        tmp -= 0.5f16 * acc2;
 
 
         *buffer = tmp + logf(*pPrior++);

@@ -197,10 +197,10 @@ void arm_biquad_cascade_df2T_f16(
         float16_t *pOut = pDst;                        /* Destination pointer */
         float16_t *pState = S->pState;                 /* State pointer */
   const float16_t *pCoeffs = S->pCoeffs;               /* Coefficient pointer */
-        float16_t acc1;                                /* Accumulator */
-        float16_t b0, b1, b2, a1, a2;                  /* Filter coefficients */
-        float16_t Xn1;                                 /* Temporary input */
-        float16_t d1, d2;                              /* State variables */
+        _Float16 acc1;                                /* Accumulator */
+        _Float16 b0, b1, b2, a1, a2;                  /* Filter coefficients */
+        _Float16 Xn1;                                 /* Temporary input */
+        _Float16 d1, d2;                              /* State variables */
         uint32_t sample, stage = S->numStages;         /* Loop counters */
 
   do

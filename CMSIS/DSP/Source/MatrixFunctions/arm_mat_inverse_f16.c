@@ -66,7 +66,7 @@ arm_status arm_mat_inverse_f16(
     uint32_t  numCols = pSrc->numCols;  /* Number of Cols in the matrix  */
     float16_t *pTmpA, *pTmpB;
 
-    float16_t in = 0.0f;        /* Temporary input values  */
+    _Float16 in = 0.0f16;        /* Temporary input values  */
     uint32_t  i, rowCnt, flag = 0U, j, loopCnt, k, l;   /* loop counters */
     arm_status status;          /* status of matrix inverse */
     uint32_t  blkCnt;
@@ -137,20 +137,20 @@ arm_status arm_mat_inverse_f16(
             j = numRows - rowCnt;
             while (j > 0U)
             {
-                *pOutT1++ = 0.0f;
+                *pOutT1++ = 0.0f16;
                 j--;
             }
             /*
              * Writing all ones in the diagonal of the destination matrix
              */
-            *pOutT1++ = 1.0f;
+            *pOutT1++ = 1.0f16;
             /*
              * Writing all zeroes in upper triangle of the destination matrix
              */
             j = rowCnt - 1U;
             while (j > 0U)
             {
-                *pOutT1++ = 0.0f;
+                *pOutT1++ = 0.0f16;
                 j--;
             }
             /*
@@ -199,7 +199,7 @@ arm_status arm_mat_inverse_f16(
             /*
              * Check if the pivot element is zero
              */
-            if (*pInT1 == 0.0f)
+            if (*pInT1 == 0.0f16)
             {
                 /*
                  * Loop over the number rows present below
@@ -215,7 +215,7 @@ arm_status arm_mat_inverse_f16(
                      * Check if there is a non zero pivot element to
                      * * replace in the rows below
                      */
-                    if (*pInT2 != 0.0f)
+                    if (*pInT2 != 0.0f16)
                     {
                         f16x8_t vecA, vecB;
                         /*
@@ -310,7 +310,7 @@ arm_status arm_mat_inverse_f16(
             /*
              * Update the status if the matrix is singular
              */
-            if ((flag != 1U) && (in == 0.0f))
+            if ((flag != 1U) && (in == 0.0f16))
             {
                 return ARM_MATH_SINGULAR;
             }
@@ -334,7 +334,7 @@ arm_status arm_mat_inverse_f16(
 
             pTmpA = pInT1;
 
-            f16x8_t invIn = vdupq_n_f16(1.0f / in);
+            f16x8_t invIn = vdupq_n_f16(1.0f16 / in);
 
             blkCnt = (numCols - l) >> 3;
             f16x8_t vecA;
@@ -537,12 +537,12 @@ arm_status arm_mat_inverse_f16(
          */
         status = ARM_MATH_SUCCESS;
 
-        if ((flag != 1U) && (in == 0.0f))
+        if ((flag != 1U) && (in == 0.0f16))
         {
             pIn = pSrc->pData;
             for (i = 0; i < numRows * numCols; i++)
             {
-                if (pIn[i] != 0.0f)
+                if (pIn[i] != 0.0f16)
                     break;
             }
 
@@ -568,7 +568,7 @@ arm_status arm_mat_inverse_f16(
   uint32_t numRows = pSrc->numRows;              /* Number of rows in the matrix  */
   uint32_t numCols = pSrc->numCols;              /* Number of Cols in the matrix  */
 
-  float16_t Xchg, in = 0.0f, in1;                /* Temporary input values  */
+  _Float16 Xchg, in = 0.0f16, in1;                /* Temporary input values  */
   uint32_t i, rowCnt, flag = 0U, j, loopCnt, k, l;      /* loop counters */
   arm_status status;                             /* status of matrix inverse */
 
@@ -636,18 +636,18 @@ arm_status arm_mat_inverse_f16(
       j = numRows - rowCnt;
       while (j > 0U)
       {
-        *pOutT1++ = 0.0f;
+        *pOutT1++ = 0.0f16;
         j--;
       }
 
       /* Writing all ones in the diagonal of the destination matrix */
-      *pOutT1++ = 1.0f;
+      *pOutT1++ = 1.0f16;
 
       /* Writing all zeroes in upper triangle of the destination matrix */
       j = rowCnt - 1U;
       while (j > 0U)
       {
-        *pOutT1++ = 0.0f;
+        *pOutT1++ = 0.0f16;
         j--;
       }
 
@@ -685,7 +685,7 @@ arm_status arm_mat_inverse_f16(
       k = 1U;
 
       /* Check if the pivot element is zero */
-      if (*pInT1 == 0.0f)
+      if (*pInT1 == 0.0f16)
       {
         /* Loop over the number rows present below */
 
@@ -697,7 +697,7 @@ arm_status arm_mat_inverse_f16(
 
           /* Check if there is a non zero pivot element to
            * replace in the rows below */
-          if (*pInT2 != 0.0f)
+          if (*pInT2 != 0.0f16)
           {
             /* Loop over number of columns
              * to the right of the pilot element */
@@ -743,7 +743,7 @@ arm_status arm_mat_inverse_f16(
       }
 
       /* Update the status if the matrix is singular */
-      if ((flag != 1U) && (in == 0.0f))
+      if ((flag != 1U) && (in == 0.0f16))
       {
         return ARM_MATH_SINGULAR;
       }
@@ -877,12 +877,12 @@ arm_status arm_mat_inverse_f16(
     /* Set status as ARM_MATH_SUCCESS */
     status = ARM_MATH_SUCCESS;
 
-    if ((flag != 1U) && (in == 0.0f))
+    if ((flag != 1U) && (in == 0.0f16))
     {
       pIn = pSrc->pData;
       for (i = 0; i < numRows * numCols; i++)
       {
-        if (pIn[i] != 0.0f)
+        if (pIn[i] != 0.0f16)
             break;
       }
 

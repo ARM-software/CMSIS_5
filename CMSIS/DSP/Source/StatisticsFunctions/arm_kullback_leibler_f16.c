@@ -72,12 +72,12 @@
 float16_t arm_kullback_leibler_f16(const float16_t * pSrcA,const float16_t * pSrcB,uint32_t blockSize)
 {
     uint32_t blkCnt;
-    float16_t accum, pA,pB;
+    _Float16 accum, pA,pB;
  
     
     blkCnt = blockSize;
 
-    accum = 0.0f;
+    accum = 0.0f16;
 
     f16x8_t         vSum = vdupq_n_f16(0.0f);
     blkCnt = blockSize >> 3;
@@ -120,7 +120,7 @@ float16_t arm_kullback_leibler_f16(const float16_t * pSrcA,const float16_t * pSr
 {
     const float16_t *pInA, *pInB;
     uint32_t blkCnt;
-    float16_t accum, pA,pB;
+    _Float16 accum, pA,pB;
  
     pInA = pSrcA;
     pInB = pSrcB;
