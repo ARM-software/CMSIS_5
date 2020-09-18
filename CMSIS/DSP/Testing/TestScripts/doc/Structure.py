@@ -60,9 +60,17 @@ class Section(Hierarchy):
   def __init__(self,name):
       super(Section, self).__init__(name)
       self._content = []
+      self._testname=False
 
   def addContent(self,content):
       self._content.append(content)
+
+  @property
+  def isTest(self):
+    return(self._testname)
+
+  def setTest(self):
+    self._testname = True
 
   @property
   def hasContent(self):

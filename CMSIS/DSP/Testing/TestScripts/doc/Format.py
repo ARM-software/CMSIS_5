@@ -108,9 +108,10 @@ html {
 }
 
 html, body {
-  background-color: #f3f2ee;
-  font-family: "PT Serif", 'Times New Roman', Times, serif;
-  color: #1f0909;
+  background-color: #E5ECEB;
+  font-family: "Lato";
+  font-style: normal; font-variant: normal;
+  color: #002B49;
   line-height: 1.5em;
 }
 
@@ -119,6 +120,15 @@ body {
   margin-top:0px;
   margin-left:290px;
 
+}
+
+.NA {
+  color: #999999;
+}
+
+.testname {
+  color: #0091BD;
+  font-size: 1.125em;
 }
 
 h1,
@@ -181,10 +191,10 @@ td {
   background-color: transparent;
 }
 thead {
-  background-color: #dadada;
+  background-color: #979ea3;
 }
 tr:nth-child(even) {
-  background: #e8e7e7;
+  background: #d7dadc;
 }
 
 ul, #myUL {
@@ -232,7 +242,7 @@ ul, #myUL {
 .firstcore {
   border-left-color: black;
   border-left-style: solid;
-  border-left-width: 1px;
+  border-left-width: 2px;
 }
 
 
@@ -592,17 +602,20 @@ myhist(thehdata%d,"#hi%d");
           row = params + values
 
         for elem in row:
+            txt=str(elem)
+            if txt == 'NA':
+               txt = "<span class=\"NA\">" + txt + "</span>"
             if i < nbParams:
                self._output.write("<td class=\"param\">")
-               self._output.write(str(elem))
+               self._output.write(txt)
                self._output.write("</td>\n")
             elif i == nbParams and nbParams != 0:
                self._output.write("<td class=\"firstcore\">")
-               self._output.write(str(elem))
+               self._output.write(txt)
                self._output.write("</td>\n")
             else:
                self._output.write("<td class=\"core\">")
-               self._output.write(str(elem))
+               self._output.write(txt)
                self._output.write("</td>\n")
             i = i + 1
         self._output.write("</tr>\n")
@@ -612,7 +625,10 @@ myhist(thehdata%d,"#hi%d");
   def visitSection(self,section):
      self._id = self._id + 1 
      self._sectionID = self._sectionID + 1
-     self._output.write("<h%d id=\"section%d\">%s</h%d>\n" % (self._id,self._sectionID,section.name,self._id))
+     name = section.name 
+     if section.isTest:
+        name = "<span class=\"testname\">" + name + "</span>"
+     self._output.write("<h%d id=\"section%d\">%s</h%d>\n" % (self._id,self._sectionID,name,self._id))
 
   def leaveSection(self,section):
      self._id = self._id - 1 
@@ -622,6 +638,7 @@ myhist(thehdata%d,"#hi%d");
 <html>
 <head>
 <meta charset='UTF-8'><meta name='viewport' content='width=device-width initial-scale=1'>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
 <title>Benchmarks</title>%s</head><body>\n""" % styleSheet)
       if self._regMode and not self._ratioMode:
          self._output.write("<h1>ECPS Benchmark Regressions</h1>\n")

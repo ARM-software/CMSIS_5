@@ -471,14 +471,21 @@ def getColNamesAndDataForCompiler(benchTable,comp,typeid):
     vals =np.array([list(x) for x in list(result)])
     return(keepCols,vals)
 
-
+def formatFloat(s):
+  result=[]
+  for t in s:
+    if type(t) is float:
+      result.append(("%.3f" % t))
+    else:
+      result.append(t)
+  return(result)
 
 PARAMS=["NB","NumTaps", "NBA", "NBB", "Factor", "NumStages","VECDIM","NBR","NBC","NBI","IFFT", "BITREV"]
 
 def regressionTableFor(byname,name,section,ref,toSort,indexCols,field):
     data=ref.pivot_table(index=indexCols, columns=byname, 
-    values=[field], aggfunc='first')
-       
+    values=[field], aggfunc='first',fill_value="NA")
+
     data=data.sort_values(toSort)
        
     cores = [c[1] for c in list(data.columns)]
@@ -499,14 +506,14 @@ def regressionTableFor(byname,name,section,ref,toSort,indexCols,field):
               row=list(row[0]) + row[1:]
            if field=="MAXREGCOEF":
               newrow = row
-              newrow[len(columns):] = [("%.3f" % x) for x in row[len(columns):]]
+              newrow[len(columns):] = formatFloat(row[len(columns):]) 
               row=newrow
            dataTable.addRow(row)
            bars['data'].append(row)
        return(bars)
     else:
        if field=="MAXREGCOEF":
-              dataForFunc=[("%.3f" % x) for x in dataForFunc]
+              dataForFunc=formatFloat(dataForFunc)
        dataTable.addRow(dataForFunc)
        return(list(zip(cores,dataForFunc)))
 
@@ -599,6 +606,7 @@ def formatTableBy(desc,byname,section,typeSection,testNames,cols,vals):
        for name in testNames:
            if args.r:
               testSection = Section(name)
+              testSection.setTest()
               typeSection.addSection(testSection)
 
               maxCyclesSection = Section("Max cycles")
@@ -638,13 +646,14 @@ def formatTableBy(desc,byname,section,typeSection,testNames,cols,vals):
 
            else:
               data=ref.pivot_table(index=indexCols, columns=byname, 
-              values=valList, aggfunc='first')
+              values=valList, aggfunc='first',fill_value="NA")
 
               data=data.sort_values(toSort)
 
               #print(list(data.columns))
 
               testSection = Section(name)
+              testSection.setTest()
               typeSection.addSection(testSection)
 
               dataForFunc=data.loc[name]
@@ -837,6 +846,8 @@ def formatPerfRatio(s):
 
   return(result)
 
+
+
 def addRatioTable(cols,params,data,section,testNames,byd):
   ref=pd.DataFrame(data,columns=cols)
   toSort=["name"] + params
@@ -847,6 +858,7 @@ def addRatioTable(cols,params,data,section,testNames,byd):
   #print(testNames)
   for name in testNames:
       testSection = Section(name)
+      testSection.setTest()
       section.addSection(testSection)
 
       ratioSection = Section("Ratios")

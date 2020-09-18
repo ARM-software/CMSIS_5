@@ -1607,7 +1607,7 @@ group Root {
                 Params RFFT_PARAM_ID = {
                   NB = [64,128,256]
                   IFFT = [0,1]
-                  REV = [0,1]
+                  REV = [1]
                 }
 
                 Params DCT_PARAM_ID = {

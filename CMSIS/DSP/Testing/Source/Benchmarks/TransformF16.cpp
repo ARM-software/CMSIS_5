@@ -45,6 +45,7 @@
           break;
 
           case TEST_RFFT_F16_2:
+          {
             // Factor 2 for irfft
             samples.reload(TransformF16::INPUTR_F16_ID,mgr,2*this->nbSamples);
             output.create(2*this->nbSamples,TransformF16::OUT_F16_ID,mgr);
@@ -56,7 +57,9 @@
 
             memcpy(this->pTmp,this->pSrc,sizeof(float16_t)*this->nbSamples); 
 
+
             arm_rfft_fast_init_f16(&this->rfftFastInstance, this->nbSamples);
+          }
           break;
 
           case TEST_CFFT_RADIX4_F16_3:
