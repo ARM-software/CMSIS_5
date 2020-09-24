@@ -50,7 +50,7 @@
                    The function uses saturating arithmetic.
                    Results outside of the allowable Q15 range [0x8000 0x7FFF] are saturated.
  */
-#if defined(ARM_MATH_MVEI)
+#if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
 
 arm_status arm_mat_add_q15(
   const arm_matrix_instance_q15 * pSrcA,

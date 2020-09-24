@@ -39,7 +39,7 @@ extern "C"
 Definitions available for MVEF and MVEI
 
 ***************************************/
-#if defined (ARM_MATH_HELIUM) || defined(ARM_MATH_MVEF) || defined(ARM_MATH_MVEI)
+#if (defined (ARM_MATH_HELIUM) || defined(ARM_MATH_MVEF) || defined(ARM_MATH_MVEI))  && !defined(ARM_MATH_AUTOVECTORIZE)
 
 #define INACTIVELANE            0 /* inactive lane content */
 
@@ -51,7 +51,7 @@ Definitions available for MVEF and MVEI
 Definitions available for MVEF only
 
 ***************************************/
-#if defined (ARM_MATH_HELIUM) || defined(ARM_MATH_MVEF)
+#if (defined (ARM_MATH_HELIUM) || defined(ARM_MATH_MVEF))  && !defined(ARM_MATH_AUTOVECTORIZE)
 
 __STATIC_FORCEINLINE float32_t vecAddAcrossF32Mve(float32x4_t in)
 {
@@ -103,7 +103,7 @@ __STATIC_FORCEINLINE float16_t vecAddAcrossF16Mve(float16x8_t in)
 Definitions available for f16 datatype with HW acceleration only
 
 ***************************************/
-#if defined (ARM_MATH_MVE_FLOAT16)
+#if defined (ARM_MATH_MVE_FLOAT16) && !defined(ARM_MATH_AUTOVECTORIZE)
 __STATIC_FORCEINLINE float16x8_t __mve_cmplx_sum_intra_vec_f16(
     float16x8_t   vecIn)
 {
@@ -181,7 +181,7 @@ __STATIC_FORCEINLINE void mve_cmplx_sum_intra_vec_f16(
 Definitions available for MVEI and MVEF only
 
 ***************************************/
-#if defined (ARM_MATH_HELIUM) || defined(ARM_MATH_MVEF) || defined(ARM_MATH_MVEI)
+#if (defined (ARM_MATH_HELIUM) || defined(ARM_MATH_MVEF) || defined(ARM_MATH_MVEI))  && !defined(ARM_MATH_AUTOVECTORIZE)
 /* Following functions are used to transpose matrix in f32 and q31 cases */
 __STATIC_INLINE arm_status arm_mat_trans_32bit_2x2_mve(
     uint32_t * pDataSrc,
@@ -596,7 +596,7 @@ __STATIC_INLINE arm_status arm_mat_cmplx_trans_16bit(
 Definitions available for MVEI only
 
 ***************************************/
-#if defined (ARM_MATH_HELIUM) || defined(ARM_MATH_MVEI)
+#if (defined (ARM_MATH_HELIUM) || defined(ARM_MATH_MVEI))  && !defined(ARM_MATH_AUTOVECTORIZE)
 
 #include "arm_common_tables.h"
 

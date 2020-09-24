@@ -47,7 +47,7 @@
   @par           Scaling and Overflow Behavior
                    The function implements 1.15 by 1.15 multiplications and finally output is converted into 2.14 format.
  */
-#if defined(ARM_MATH_MVEI)
+#if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
 
 #include "arm_helium_utils.h"
 

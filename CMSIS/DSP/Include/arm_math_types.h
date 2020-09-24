@@ -294,7 +294,7 @@ extern "C"
   /**
    * @brief vector types
    */
-#if defined(ARM_MATH_NEON) || defined (ARM_MATH_MVEI)
+#if defined(ARM_MATH_NEON) || (defined (ARM_MATH_MVEI)  && !defined(ARM_MATH_AUTOVECTORIZE))
   /**
    * @brief 64-bit fractional 128-bit vector data type in 1.63 format
    */
@@ -378,7 +378,7 @@ extern "C"
 
 #endif
 
-#if defined(ARM_MATH_NEON) || defined(ARM_MATH_MVEF) /* floating point vector*/
+#if defined(ARM_MATH_NEON) || (defined(ARM_MATH_MVEF)  && !defined(ARM_MATH_AUTOVECTORIZE)) /* floating point vector*/
   /**
    * @brief 32-bit floating-point 128-bit vector type
    */

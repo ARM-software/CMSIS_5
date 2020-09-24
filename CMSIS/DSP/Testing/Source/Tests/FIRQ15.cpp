@@ -6,7 +6,7 @@
 
 #define ABS_ERROR_Q15 ((q15_t)2)
 
-#if defined(ARM_MATH_MVEI)
+#if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
 static __ALIGNED(8) q15_t coeffArray[32];
 #endif 
 
@@ -31,7 +31,7 @@ void checkInnerTail(q15_t *b)
         q15_t *outp = output.ptr();
 
         unsigned long i;
-#if defined(ARM_MATH_MVEI)
+#if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
         int j;
 #endif
         int blockSize;
@@ -50,7 +50,7 @@ void checkInnerTail(q15_t *b)
            blockSize = configp[0];
            numTaps = configp[1];
 
-#if defined(ARM_MATH_MVEI)
+#if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
            /* Copy coefficients and pad to zero 
            */
            memset(coeffArray,0,32);

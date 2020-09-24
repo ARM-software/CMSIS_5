@@ -53,7 +53,7 @@
                    full precision of the intermediate multiplication is preserved.
                    Finally, the return result is in 18.14 format.
  */
-#if defined(ARM_MATH_MVEI)
+#if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
 void arm_power_q7(
   const q7_t * pSrc,
         uint32_t blockSize,

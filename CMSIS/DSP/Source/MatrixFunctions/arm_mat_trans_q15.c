@@ -46,7 +46,7 @@
                    - \ref ARM_MATH_SIZE_MISMATCH : Matrix size check failed
  */
  
-#if defined(ARM_MATH_MVEI)
+#if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
 
 #include "arm_helium_utils.h"
 

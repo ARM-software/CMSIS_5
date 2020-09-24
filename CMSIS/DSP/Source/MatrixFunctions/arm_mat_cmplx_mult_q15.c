@@ -57,7 +57,7 @@
                    This approach provides 33 guard bits and there is no risk of overflow. The 34.30 result is then
                    truncated to 34.15 format by discarding the low 15 bits and then saturated to 1.15 format.
  */
-#if defined(ARM_MATH_MVEI)
+#if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
 
 #define MVE_ASRL_SAT16(acc, shift)          ((sqrshrl_sat48(acc, -(32-shift)) >> 32) & 0xffffffff)
 

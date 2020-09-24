@@ -172,7 +172,7 @@
                    - \ref arm_biquad_cascade_df1_fast_q31() implements a Biquad cascade with 32-bit coefficients and state variables with a Q31 accumulator.
  */
 
-#if defined(ARM_MATH_MVEI)
+#if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
 
 #include "arm_helium_utils.h"
 void arm_biquad_cas_df1_32x64_q31(

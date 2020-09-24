@@ -28,7 +28,7 @@
 
 #include "dsp/transform_functions.h"
 
-#if defined(ARM_MATH_MVEI)
+#if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
 
 #include "arm_vec_fft.h"
 

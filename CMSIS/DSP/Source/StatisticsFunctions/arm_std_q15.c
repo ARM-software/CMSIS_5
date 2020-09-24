@@ -54,7 +54,7 @@
                    Finally, the 34.30 result is truncated to 34.15 format by discarding the lower
                    15 bits, and then saturated to yield a result in 1.15 format.
  */
-#if defined(ARM_MATH_MVEI)
+#if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
 void arm_std_q15(
   const q15_t * pSrc,
         uint32_t blockSize,

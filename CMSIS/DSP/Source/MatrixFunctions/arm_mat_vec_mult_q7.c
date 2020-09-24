@@ -44,7 +44,7 @@
  * @param[in]       *pVec points to the input vector
  * @param[out]      *pDst points to the output vector
  */
-#if defined(ARM_MATH_MVEI)
+#if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
 
 #include "arm_helium_utils.h"
 
@@ -295,6 +295,8 @@ void arm_mat_vec_mult_q7(const arm_matrix_instance_q7 *pSrcMat, const q7_t *pVec
     i = 0u;
     px = pDst;
 
+
+
     /* The following loop performs the dot-product of each row in pSrcA with the vector */
     while (row > 0) {
         /* For every row wise process, the pInVec pointer is set
@@ -318,6 +320,7 @@ void arm_mat_vec_mult_q7(const arm_matrix_instance_q7 *pSrcMat, const q7_t *pVec
 
 
         // Inner loop: matrix-vector multiplication
+
         while (colCnt > 0u) {
             // Read 4 values from vector
             vecData = read_q7x4_ia ((q7_t **) &pInVec);
@@ -350,7 +353,11 @@ void arm_mat_vec_mult_q7(const arm_matrix_instance_q7 *pSrcMat, const q7_t *pVec
         }
 
         /* process any remaining columns */
+
         colCnt = numCols & 3u;
+#if defined(ARM_MATH_MVEI) && defined(ARM_MATH_AUTOVECTORIZE)
+        #pragma clang loop vectorize(disable)
+#endif
         while (colCnt > 0) {
             vecData = *pInVec++;
             sum1 += *pInA1++ * vecData;

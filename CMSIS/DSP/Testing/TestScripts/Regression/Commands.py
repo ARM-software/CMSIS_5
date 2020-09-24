@@ -11,7 +11,7 @@ from pathlib import Path
 import sys
 
 DEBUGMODE = False
-KEEPBUILDFOLDER = False
+KEEPBUILDFOLDER = True
 
 DEBUGLIST=[
 "-DBASICMATH=ON",
@@ -41,9 +41,9 @@ def isDebugMode():
   global DEBUGMODE
   return(DEBUGMODE)
 
-def setKeepBuildFolder():
+def setNokeepBuildFolder():
   global KEEPBUILDFOLDER
-  KEEPBUILDFOLDER=True
+  KEEPBUILDFOLDER=False
 
 def isKeepMode():
   global KEEPBUILDFOLDER

@@ -44,7 +44,7 @@
   @param[in]     blockSize  number of samples in each vector
   @return        none
  */
-#if defined(ARM_MATH_MVEI)
+#if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
 void arm_copy_q7(
   const q7_t * pSrc,
         q7_t * pDst,

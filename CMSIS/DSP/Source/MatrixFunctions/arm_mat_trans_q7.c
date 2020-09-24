@@ -45,7 +45,7 @@
                    - \ref ARM_MATH_SUCCESS       : Operation successful
                    - \ref ARM_MATH_SIZE_MISMATCH : Matrix size check failed
  */
-#if defined(ARM_MATH_MVEI)
+#if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
 arm_status arm_mat_trans_q7(const arm_matrix_instance_q7 *pSrc, arm_matrix_instance_q7 *pDst)
 {
 

@@ -53,7 +53,7 @@
  *
  *
  */
-#if defined(ARM_MATH_MVEI)
+#if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
 __STATIC_FORCEINLINE arm_status arm_mat_mult_q7_2x2_mve(
     const arm_matrix_instance_q7 * pSrcA,
     const arm_matrix_instance_q7 * pSrcB,

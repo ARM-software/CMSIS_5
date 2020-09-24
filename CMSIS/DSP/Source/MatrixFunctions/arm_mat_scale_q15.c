@@ -51,7 +51,7 @@
                    The input data <code>*pSrc</code> and <code>scaleFract</code> are in 1.15 format.
                    These are multiplied to yield a 2.30 intermediate result and this is shifted with saturation to 1.15 format.
  */
-#if defined(ARM_MATH_MVEI)
+#if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
 arm_status arm_mat_scale_q15(
   const arm_matrix_instance_q15 * pSrc,
         q15_t                     scaleFract,

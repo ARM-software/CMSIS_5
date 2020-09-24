@@ -56,7 +56,7 @@
   @remark
                    Refer to \ref arm_fir_fast_q15() for a faster but less precise implementation of this function.
  */
-#if defined(ARM_MATH_MVEI)
+#if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
 
 #define MVE_ASRL_SAT16(acc, shift)          ((sqrshrl_sat48(acc, -(32-shift)) >> 32) & 0xffffffff)
 

@@ -54,7 +54,7 @@
                    The return results <code>realResult</code> and <code>imagResult</code> are in 8.24 format.
  */
 
-#if defined(ARM_MATH_MVEI)
+#if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
 void arm_cmplx_dot_prod_q15(
   const q15_t * pSrcA,
   const q15_t * pSrcB,

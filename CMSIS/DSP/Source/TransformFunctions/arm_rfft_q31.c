@@ -85,7 +85,7 @@ void arm_rfft_q31(
         q31_t * pSrc,
         q31_t * pDst)
 {
-#if defined(ARM_MATH_MVEI)
+#if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
   const arm_cfft_instance_q31 *S_CFFT = &(S->cfftInst);
 #else
   const arm_cfft_instance_q31 *S_CFFT = S->pCfft;
@@ -135,7 +135,7 @@ void arm_rfft_q31(
   @return        none
  */
 
-#if defined(ARM_MATH_MVEI)
+#if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
 
 void arm_split_rfft_q31(
     q31_t       *pSrc,
@@ -338,7 +338,7 @@ void arm_split_rfft_q31(
   @return        none
  */
 
-#if defined(ARM_MATH_MVEI)
+#if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
 
 void arm_split_rifft_q31(
         q31_t * pSrc,

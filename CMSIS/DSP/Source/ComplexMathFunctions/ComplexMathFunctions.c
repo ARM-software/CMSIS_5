@@ -34,7 +34,7 @@
 #include "arm_cmplx_dot_prod_q31.c"
 #include "arm_cmplx_mag_f32.c"
 
-#if defined (ARM_MATH_HELIUM) || defined(ARM_MATH_MVEI)
+#if (defined (ARM_MATH_HELIUM) || defined(ARM_MATH_MVEI))  && !defined(ARM_MATH_AUTOVECTORIZE)
   #if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FAST_TABLES) || defined(ARM_TABLE_FAST_SQRT_Q15_MVE)
   #include "arm_cmplx_mag_q15.c"
   #endif 

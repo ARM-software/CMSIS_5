@@ -20,7 +20,7 @@ def joinit(iterable, delimiter):
 # Since some cores may be missing, each atble display
 # is computing a rstricted ordered core list with only the available cores.
 CORTEXCATEGORIES=["Cortex-M","Cortex-R","Cortex-A"]
-CORECATEGORIES={"Cortex-M":["m0","m4", "m7", "m33" , "m55 scalar", "m55 mve"],
+CORECATEGORIES={"Cortex-M":["m0","m4", "m7", "m33" , "m55 scalar", "m55 mve","m55 autovec"],
 "Cortex-R":["r8","r52"],
 "Cortex-A":["a32"]
 }

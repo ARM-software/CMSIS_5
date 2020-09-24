@@ -100,7 +100,7 @@ arm_status arm_rfft_init_q15(
     case 8192U:
         S->twidCoefRModifier = 1U;
 
-        #if defined(ARM_MATH_MVEI)
+        #if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
            status=arm_cfft_init_q15(&(S->cfftInst),4096);
            if (status != ARM_MATH_SUCCESS)
            {
@@ -115,7 +115,7 @@ arm_status arm_rfft_init_q15(
     case 4096U:
         S->twidCoefRModifier = 2U;
 
-        #if defined(ARM_MATH_MVEI)
+        #if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
            status=arm_cfft_init_q15(&(S->cfftInst),2048);
            if (status != ARM_MATH_SUCCESS)
            {
@@ -130,7 +130,7 @@ arm_status arm_rfft_init_q15(
     case 2048U:
         S->twidCoefRModifier = 4U;
 
-        #if defined(ARM_MATH_MVEI)
+        #if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
            status=arm_cfft_init_q15(&(S->cfftInst),1024);
            if (status != ARM_MATH_SUCCESS)
            {
@@ -145,7 +145,7 @@ arm_status arm_rfft_init_q15(
     case 1024U:
         S->twidCoefRModifier = 8U;
 
-        #if defined(ARM_MATH_MVEI)
+        #if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
            status=arm_cfft_init_q15(&(S->cfftInst),512);
            if (status != ARM_MATH_SUCCESS)
            {
@@ -160,7 +160,7 @@ arm_status arm_rfft_init_q15(
     case 512U:
         S->twidCoefRModifier = 16U;
 
-        #if defined(ARM_MATH_MVEI)
+        #if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
            status=arm_cfft_init_q15(&(S->cfftInst),256);
            if (status != ARM_MATH_SUCCESS)
            {
@@ -175,7 +175,7 @@ arm_status arm_rfft_init_q15(
     case 256U:
         S->twidCoefRModifier = 32U;
 
-        #if defined(ARM_MATH_MVEI)
+        #if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
            status=arm_cfft_init_q15(&(S->cfftInst),128);
            if (status != ARM_MATH_SUCCESS)
            {
@@ -190,7 +190,7 @@ arm_status arm_rfft_init_q15(
     case 128U:
         S->twidCoefRModifier = 64U;
 
-        #if defined(ARM_MATH_MVEI)
+        #if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
            status=arm_cfft_init_q15(&(S->cfftInst),64);
            if (status != ARM_MATH_SUCCESS)
            {
@@ -205,7 +205,7 @@ arm_status arm_rfft_init_q15(
     case 64U:
         S->twidCoefRModifier = 128U;
 
-        #if defined(ARM_MATH_MVEI)
+        #if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
            status=arm_cfft_init_q15(&(S->cfftInst),32);
            if (status != ARM_MATH_SUCCESS)
            {
@@ -220,7 +220,7 @@ arm_status arm_rfft_init_q15(
     case 32U:
         S->twidCoefRModifier = 256U;
 
-        #if defined(ARM_MATH_MVEI)
+        #if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
            status=arm_cfft_init_q15(&(S->cfftInst),16);
            if (status != ARM_MATH_SUCCESS)
            {

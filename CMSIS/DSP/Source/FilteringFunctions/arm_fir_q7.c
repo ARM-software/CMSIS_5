@@ -54,7 +54,7 @@
                    Finally, the result is truncated to 1.7 format.
  */
 
-#if defined(ARM_MATH_MVEI)
+#if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
 
 void arm_fir_q7_1_16_mve(const arm_fir_instance_q7 * S, const q7_t * pSrc, q7_t * pDst, uint32_t blockSize)
 {

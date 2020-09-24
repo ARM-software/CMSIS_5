@@ -56,7 +56,7 @@
                    Refer to \ref arm_biquad_cascade_df1_fast_q15() for a faster but less precise implementation of this filter.
  */
 
-#if defined(ARM_MATH_MVEI)
+#if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
 
 void arm_biquad_cascade_df1_q15(
   const arm_biquad_casd_df1_inst_q15 * S,

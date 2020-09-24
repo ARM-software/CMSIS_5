@@ -44,7 +44,7 @@
   @param[in]     blockSize  number of samples in each vector
   @return        none
  */
-#if defined(ARM_MATH_MVEI)
+#if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
 void arm_fill_q31(
         q31_t value,
         q31_t * pDst,

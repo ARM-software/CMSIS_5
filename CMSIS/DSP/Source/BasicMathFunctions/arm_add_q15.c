@@ -50,7 +50,7 @@
                    Results outside of the allowable Q15 range [0x8000 0x7FFF] are saturated.
  */
 
-#if defined(ARM_MATH_MVEI)
+#if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
 
 #include "arm_helium_utils.h"
 

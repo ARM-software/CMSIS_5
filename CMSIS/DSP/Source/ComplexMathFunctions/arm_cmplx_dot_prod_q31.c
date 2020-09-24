@@ -55,7 +55,7 @@
                    Input down scaling is not required.
  */
 
-#if defined(ARM_MATH_MVEI)
+#if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
 
 void arm_cmplx_dot_prod_q31(
   const q31_t * pSrcA,

@@ -50,7 +50,7 @@
  */
 
 
-#if defined(ARM_MATH_MVEI)
+#if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
 void arm_cmplx_conj_q15(
   const q15_t * pSrc,
         q15_t * pDst,

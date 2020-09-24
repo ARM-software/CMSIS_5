@@ -57,7 +57,7 @@
                    Refer to \ref arm_fir_decimate_fast_q15() for a faster but less precise implementation of this function.
  */
 
-#if defined(ARM_MATH_MVEI)
+#if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
 
 #include "arm_helium_utils.h"
 

@@ -84,7 +84,7 @@ void arm_rfft_q15(
         q15_t * pSrc,
         q15_t * pDst)
 {
-#if defined(ARM_MATH_MVEI)
+#if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
   const arm_cfft_instance_q15 *S_CFFT = &(S->cfftInst);
 #else
   const arm_cfft_instance_q15 *S_CFFT = S->pCfft;
@@ -137,7 +137,7 @@ void arm_rfft_q15(
                    The function implements a Real FFT
  */
 
-#if defined(ARM_MATH_MVEI)
+#if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
 void arm_split_rfft_q15(
         q15_t * pSrc,
         uint32_t fftLen,
@@ -402,7 +402,7 @@ void arm_split_rfft_q15(
                    The function implements a Real IFFT
  */
 
-#if defined(ARM_MATH_MVEI)
+#if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
 
 void arm_split_rifft_q15(
         q15_t * pSrc,

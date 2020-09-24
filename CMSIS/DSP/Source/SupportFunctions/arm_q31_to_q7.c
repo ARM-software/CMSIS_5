@@ -50,7 +50,7 @@
       pDst[n] = (q7_t) pSrc[n] >> 24;   0 <= n < blockSize.
   </pre>
  */
-#if defined(ARM_MATH_MVEI)
+#if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
 void arm_q31_to_q7(
   const q31_t * pSrc,
         q7_t * pDst,

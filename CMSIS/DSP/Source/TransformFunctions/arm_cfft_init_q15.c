@@ -53,7 +53,7 @@
 #include "arm_common_tables.h"
 #include "arm_const_structs.h"
 
-#if defined(ARM_MATH_MVEI) 
+#if defined(ARM_MATH_MVEI)  && !defined(ARM_MATH_AUTOVECTORIZE)
 
 #include "arm_vec_fft.h"
 #include "arm_mve_tables.h"

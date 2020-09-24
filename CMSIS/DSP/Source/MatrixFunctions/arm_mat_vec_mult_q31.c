@@ -44,7 +44,7 @@
  * @param[in]       *pVec points to the input vector
  * @param[out]      *pDst points to the output vector
  */
-#if defined(ARM_MATH_MVEI)
+#if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
 void arm_mat_vec_mult_q31(
     const arm_matrix_instance_q31 * pSrcMat,
     const q31_t     *pSrcVec,

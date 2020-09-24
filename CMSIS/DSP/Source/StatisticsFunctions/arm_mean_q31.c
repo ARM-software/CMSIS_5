@@ -52,7 +52,7 @@
                    full precision of intermediate result is preserved.
                    Finally, the accumulator is truncated to yield a result of 1.31 format.
  */
-#if defined(ARM_MATH_MVEI)
+#if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
 void arm_mean_q31(
   const q31_t * pSrc,
         uint32_t blockSize,

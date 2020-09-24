@@ -50,7 +50,7 @@
                    The function uses saturating arithmetic.
                    The Q15 value -1 (0x8000) is saturated to the maximum allowable positive value 0x7FFF.
  */
-#if defined(ARM_MATH_MVEI)
+#if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
 
 #include "arm_helium_utils.h"
 

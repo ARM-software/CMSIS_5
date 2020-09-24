@@ -115,6 +115,10 @@ if (DISABLEFLOAT16)
     target_compile_definitions(FrameworkLib PRIVATE DISABLEFLOAT16) 
 endif()
 
+if (AUTOVECTORIZE)
+    target_compile_definitions(TestingLib PRIVATE ARM_MATH_AUTOVECTORIZE) 
+endif()
+
 
 if (BENCHMARK)
 

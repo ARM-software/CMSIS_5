@@ -56,7 +56,7 @@
  @remark
                    Refer to \ref arm_correlate_opt_q7() for a faster implementation of this function.
  */
-#if defined(ARM_MATH_MVEI)
+#if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
 #include "arm_helium_utils.h"
 
 #include "arm_vec_filtering.h"
@@ -884,7 +884,10 @@ void arm_correlate_q7(
     k = count;
 
 #endif /* #if defined (ARM_MATH_LOOPUNROLL) */
-
+/* Temporary fix for bug in clang */
+#if defined(ARM_MATH_MVEF) && defined(ARM_MATH_AUTOVECTORIZE)
+        #pragma clang loop vectorize(disable)
+#endif
     while (k > 0U)
     {
       /* Perform the multiply-accumulate */

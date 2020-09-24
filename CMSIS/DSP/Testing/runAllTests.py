@@ -131,15 +131,15 @@ parser.add_argument('-regdb', nargs='?',type = str,help="Regression database")
 parser.add_argument('-sqlite', nargs='?',default="/usr/bin/sqlite3",type = str,help="sqlite executable")
 
 parser.add_argument('-debug', action='store_true', help="Debug mode")
-parser.add_argument('-keep', action='store_true', help="Keep build folder")
+parser.add_argument('-nokeep', action='store_true', help="Do not keep build folder")
 
 args = parser.parse_args()
 
 if args.debug:
    setDebugMode()
 
-if args.keep:
-   setKeepBuildFolder()
+if args.nokeep:
+   setNokeepBuildFolder()
 
 # Create missing database files
 # if the db arguments are specified
