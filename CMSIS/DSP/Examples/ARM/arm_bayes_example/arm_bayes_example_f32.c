@@ -104,9 +104,9 @@ int32_t main(void)
   in[0] = 1.5f;
   in[1] = 1.0f;
 
-  arm_gaussian_naive_bayes_predict_f32(&S, in, result);
+  index = arm_gaussian_naive_bayes_predict_f32(&S, in, result);
 
-  arm_max_f32(result, NB_OF_CLASSES, &maxProba, &index);
+  maxProba = result[index];
 
 #if defined(SEMIHOSTING)
   printf("Class = %d\n", index);
@@ -115,9 +115,9 @@ int32_t main(void)
   in[0] = -1.5f;
   in[1] = 1.0f;
 
-  arm_gaussian_naive_bayes_predict_f32(&S, in, result);
+  index = arm_gaussian_naive_bayes_predict_f32(&S, in, result);
 
-  arm_max_f32(result, NB_OF_CLASSES, &maxProba, &index);
+  maxProba = result[index];
 
 #if defined(SEMIHOSTING)
   printf("Class = %d\n", index);
@@ -126,9 +126,9 @@ int32_t main(void)
   in[0] = 0.0f;
   in[1] = -3.0f;
 
-  arm_gaussian_naive_bayes_predict_f32(&S, in, result);
+  index = arm_gaussian_naive_bayes_predict_f32(&S, in, result);
 
-  arm_max_f32(result, NB_OF_CLASSES, &maxProba, &index);
+  maxProba = result[index];
 
 #if defined(SEMIHOSTING)
   printf("Class = %d\n", index);
