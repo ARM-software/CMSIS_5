@@ -929,17 +929,17 @@ pack installation completed successfully
   <tr>
     <td>ERROR</td>
     <td>error: missing command line argument</td>
-    <td>See usage and corret argument.</td>
+    <td>See usage and correct argument.</td>
   </tr>
   <tr>
     <td>ERROR</td>
     <td>error: too many command line arguments</td>
-    <td>See usage and corret argument.</td>
+    <td>See usage and correct argument.</td>
   </tr>
   <tr>
     <td>ERROR</td>
     <td>error: $filename does not exist</td>
-    <td>See usage and corret argument.</td>
+    <td>See usage and correct argument.</td>
   </tr>
   <tr>
     <td>ERROR</td>
