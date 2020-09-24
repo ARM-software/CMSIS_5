@@ -19,7 +19,7 @@ The most significant differences are:
 \section section_layer Introduction of Layers
 One example is the separation of an existing project into files and components that are HW dependent (board, device, processor)
 and those that are application specific. The result is a HW and an application layer. Assuming that there is layers for multiple
-boards and applications sharing common interfaces between layers, any combination of HW laywer with an application layer can be
+boards and applications sharing common interfaces between layers, any combination of HW layer with an application layer can be
 combined to create projects and build consistent applications across a range of hardware.
 
 \section section_varieties Varieties of a build
@@ -393,7 +393,7 @@ The high level structure of a project is constructed from:
   </tr>
   <tr>
     <td>keywords</td>
-    <td>Comma seperated list of keywords of this layer used by search tools.</td>
+    <td>Comma separated list of keywords of this layer used by search tools.</td>
     <td>xs:string</td>
     <td>0..*</td>
   </tr>
@@ -644,7 +644,7 @@ Specify the build output directories, output file and type (executable vs. libra
 <cprj ...>
   ...
   <target Dname="ARMCM0" Dvendor="ARM:83">
-     <output compiler="AC5" name="MyProject" type="exe" list="Listings" obj="Objects"/>
+     <output compiler="AC5" name="MyProject" type="exe" intdir="Listings" outdir="Objects"/>
      ...
   </target>
   ...
@@ -681,14 +681,14 @@ Specify the build output directories, output file and type (executable vs. libra
     <td>required</td>
   </tr>
   <tr>
-    <td>obj</td>
-    <td>Relative path of the output folder</td>
+    <td>intdir</td>
+    <td>Relative path of the folder containing intermediate files (such as object files).</td>
     <td>xs:string</td>
     <td>optional</td>
   </tr>
   <tr>
-    <td>listing</td>
-    <td>Relative path of the listings folder</td>
+    <td>outdir</td>
+    <td>Relative path of the output folder containing the executable binaries.</td>
     <td>xs:string</td>
     <td>optional</td>
   </tr>
