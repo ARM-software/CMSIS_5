@@ -290,6 +290,9 @@ a blocking RTOS-call execution is switched back to thread 3 immediately during t
 At time index 5 thread 3 uses a blocking RTOS-call as well. Thus the scheduler switches back to thread 2 for time index 6.
 At time index 7 the scheduler uses the round-robin mechanism to switch to thread 1 and so on.
 
+\note Refer to limitations this type of scheduling in the \ref systemConfig_rr configuration section.
+
+
 \section MemoryAllocation Memory Allocation 
 
 RTX5 objects (thread, mutex, semaphore, timer, message queue, thread and event flags, as well as memory pool) require
@@ -798,7 +801,10 @@ In other words, threads execute for the duration of their time slice (unless a t
 switches to the next thread that is in \b READY state and has the same priority. If no other thread with the same priority is
 ready to run, the current running thread resumes it execution.
 
-\note When switching to higher priority threads, the round-robin timeout value is reset.
+\note
+When switching to higher priority threads, the round-robin timeout value is reset. This might lead to conditions where
+threads with the same priority as the interrupted thread are blocked for a longer period of time or even never called
+again. You can avoid this by using \ref osThreadYield to pass control to the next thread in the \b READY state. 
 
 Round-Robin multitasking is controlled with the <b>\#define OS_ROBIN_ENABLE</b>. The time slice period is configured (in RTX
 timer ticks) with the <b>\#define OS_ROBIN_TIMEOUT</b>.
