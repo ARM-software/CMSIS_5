@@ -391,6 +391,28 @@ The following table lists the Configuration Wizard Annotations:
       See \ref configWizard_display.
       </td>
     </tr>
+    <tr>
+      <td>\<f.<em>format-specifier</em>></td>
+      <td>no</td>
+      <td>Format specifier for graphical display of integer value. The <em>format-specifier</em> must be one of
+        <dl>
+        <dt>d</dt><dd>Decimal</dd>
+        <dt>h</dt><dd>Hexadecimal</dd>
+        <dt>o</dt><dd>Octal</dd>
+        <dt>b</dt><dd>Binary</dd>
+        </dl>
+        \code
+        // <o MY_DECIMAL_1> A decimal option <f.d>
+        #define MY_DECIMAL_1    13         -- displayed as decimal "13" in the tool
+
+        // <o MY_DECIMAL_2> Another decimal option <f.d>
+        #define MY_DECIMAL_2    0x10       -- displayed as decimal "16" in the tool
+
+        // <o MY_HEX> A hexadecimal option <f.h>
+        #define MY_HEX          52         -- displayed as hexadecimal "0x34" in the tool
+        \endcode
+      </td>
+    </tr>
 </table>
 
 <sup>1</sup> Tools are expected to continue support of deprecated features but annotated files shall be updated to the new version.
