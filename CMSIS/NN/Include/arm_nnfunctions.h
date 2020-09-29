@@ -21,8 +21,8 @@
  * Title:        arm_nnfunctions.h
  * Description:  Public header file for CMSIS NN Library
  *
- * $Date:        August 21, 2020
- * $Revision:    V.6.5.2
+ * $Date:        09. October 2020
+ * $Revision:    V.6.5.3
  *
  * Target Processor:  Cortex-M CPUs
  * -------------------------------------------------------------------- */
@@ -161,9 +161,8 @@
 #ifndef _ARM_NNFUNCTIONS_H
 #define _ARM_NNFUNCTIONS_H
 
-#include "arm_nnsupportfunctions.h"
-#include "arm_nn_tables.h"
 #include "arm_nn_types.h"
+#include "arm_math_types.h"
 
 #define USE_INTRINSIC
 
@@ -173,6 +172,19 @@
 extern    "C"
 {
 #endif
+
+/**
+ * @brief Struct for specifying activation function types
+ *
+ */
+typedef enum
+{
+    ARM_SIGMOID = 0,
+                /**< Sigmoid activation function */
+    ARM_TANH = 1,
+             /**< Tanh activation function */
+} arm_nn_activation_type;
+
 
 /**
  * @defgroup NNConv Convolution Functions

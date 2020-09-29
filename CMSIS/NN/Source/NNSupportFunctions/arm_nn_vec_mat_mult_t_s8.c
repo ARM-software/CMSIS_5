@@ -21,15 +21,13 @@
  * Title:        arm_nn_vec_mat_mult_t_s8
  * Description:  s8 vector by matrix (transposed) multiplication
  *
- * $Date:        April 2, 2020
- * $Revision:    V.1.5.0
+ * $Date:        09. October 2020
+ * $Revision:    V.1.5.1
  *
  * Target Processor:  Cortex-M
  *
  * -------------------------------------------------------------------- */
 
-#include "arm_math.h"
-#include "arm_nnfunctions.h"
 #include "arm_nnsupportfunctions.h"
 
 /**

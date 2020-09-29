@@ -21,14 +21,13 @@
  * Title:        arm_elementwise_add_s8
  * Description:  Element wise add
  *
- * $Date:        July 31, 2020
- * $Revision:    V.2.5.1
+ * $Date:        09. October 2020
+ * $Revision:    V.2.5.2
  *
  * Target Processor:  Cortex-M CPUs
  *
  * -------------------------------------------------------------------- */
 
-#include "arm_math.h"
 #include "arm_nnfunctions.h"
 #include "arm_nnsupportfunctions.h"
 #if defined(ARM_MATH_MVEI)

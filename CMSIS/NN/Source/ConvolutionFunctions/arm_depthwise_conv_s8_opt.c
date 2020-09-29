@@ -22,16 +22,15 @@
  * Description:  Optimized s8 depthwise separable convolution function for
  *               channel multiplier of 1.
  *
- * $Date:        May 29, 2020
- * $Revision:    V.2.0.1
+ * $Date:        09. October 2020
+ * $Revision:    V.2.0.2
  *
  * Target Processor:  Cortex-M CPUs
  *
  * -------------------------------------------------------------------- */
 
-#include "arm_math.h"
-#include "arm_nnsupportfunctions.h"
 #include "arm_nnfunctions.h"
+#include "arm_nnsupportfunctions.h"
 
 /**
  *  @ingroup groupNN

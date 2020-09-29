@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2019 Arm Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2010-2020 Arm Limited or its affiliates. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -21,15 +21,15 @@
  * Title:        arm_depthwise_conv_u8_basic_ver1.c
  * Description:  u8 depthwise convolution function
  *
- * $Date:        May 29, 2020
- * $Revision:    V.1.1.0
+ * $Date:        09. October 2020
+ * $Revision:    V.1.1.1
  *
  * Target :  Cortex-M CPUs
  *
  * -------------------------------------------------------------------- */
 
-#include "arm_math.h"
 #include "arm_nnfunctions.h"
+#include "arm_nnsupportfunctions.h"
 
 /**
  *  @ingroup groupNN

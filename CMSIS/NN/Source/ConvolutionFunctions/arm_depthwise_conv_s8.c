@@ -21,13 +21,13 @@
  * Title:        arm_depthwise_conv_s8.c
  * Description:	 s8 version of depthwise convolution.
  *
- * $Date:        May 14, 2020
- * $Revision:    V.2.0.0
+ * $Date:        09. October 2020
+ * $Revision:    V.2.0.1
  *
  * Target Processor:  Cortex-M CPUs
  *
  * -------------------------------------------------------------------- */
-#include "arm_math.h"
+
 #include "arm_nnfunctions.h"
 #include "arm_nnsupportfunctions.h"
 

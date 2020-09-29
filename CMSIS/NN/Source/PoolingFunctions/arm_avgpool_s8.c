@@ -21,15 +21,15 @@
  * Title:        arm_avgpool_s8.c
  * Description:  Pooling function implementations
  *
- * $Date:        September 3,2020
- * $Revision:    V.2.0.2
+ * $Date:        09. October 2020
+ * $Revision:    V.2.0.3
  *
  * Target Processor:  Cortex-M CPUs
  *
  * -------------------------------------------------------------------- */
 
-#include "arm_math.h"
 #include "arm_nnfunctions.h"
+#include "arm_nnsupportfunctions.h"
 
 #if defined(ARM_MATH_DSP) && !defined(ARM_MATH_MVEI)
 

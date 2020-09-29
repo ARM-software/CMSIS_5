@@ -21,14 +21,13 @@
  * Title:        arm_convolve_1_x_n_s8.c
  * Description:  s8 version of 1xN convolution using symmetric quantization.
  *
- * $Date:        July 27, 2020
- * $Revision:    V.2.0.1
+ * $Date:        09. October 2020
+ * $Revision:    V.2.0.2
  *
  * Target Processor:  Cortex-M cores
  *
  * -------------------------------------------------------------------- */
-#include "arm_math.h"
-#include "arm_nn_types.h"
+
 #include "arm_nnfunctions.h"
 #include "arm_nnsupportfunctions.h"
 

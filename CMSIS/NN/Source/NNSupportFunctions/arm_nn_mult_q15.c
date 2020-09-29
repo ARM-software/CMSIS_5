@@ -21,14 +21,14 @@
  * Title:        arm_nn_mult_q15.c
  * Description:  Q15 vector multiplication with variable output shifts
  *
- * $Date:        29. April 2020
- * $Revision:    V.1.0.1
+ * $Date:        09. October 2020
+ * $Revision:    V.1.0.2
  *
  * Target Processor:  Cortex-M cores
  *
  * -------------------------------------------------------------------- */
 
-#include "arm_nnfunctions.h"
+#include "arm_nnsupportfunctions.h"
 
 /**
  * @ingroup groupSupport

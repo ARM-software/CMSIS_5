@@ -21,14 +21,15 @@
  * Title:        arm_nn_add_q7.c
  * Description:  Non saturating addition of elements of a q7 vector.
  *
- * $Date:        July 2019
- * $Revision:    V.1.0.0
+ * $Date:        09. October 2020
+ * $Revision:    V.1.0.1
  *
  * Target Processor:  Cortex-M cores
  *
  * -------------------------------------------------------------------- */
-#include "arm_math.h"
-#include "arm_nnfunctions.h"
+
+#include "arm_nnsupportfunctions.h"
+#include "arm_nn_tables.h"
 
 /**
  * @ingroup groupSupport
