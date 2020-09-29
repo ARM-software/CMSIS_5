@@ -19,6 +19,9 @@ line:
 - By default, the next code symbol that follows the annotation is modified. 
 - Items marked with * in the table below can be followed by a skip-value. A skip-value omits a number of code symbols (see
   <i>skip example</i> in table). This overwrites the previous rule.
+- Items marked with <code>+</code> in the table below can be followed by an identifier. When an identifier is present, the 
+  next code symbol following the symbol that matches the identifier is modified. See <i>identifier example</i> in the table.
+  An identifier can not be used together with a skip-value.
 - A descriptive text can be added to items. This text is displayed on screen (see table).
 - Whitespace characters are ignored in annotation items or annotation modifiers (text excluded).
 - You must not use \< or \> within configuration wizard lines other than for enclosing annotation items.
@@ -46,7 +49,7 @@ The following table lists the Configuration Wizard Annotations:
       </td>
     </tr>
     <tr>
-      <td>\<e><sup>*</sup></td>
+      <td>\<e><sup>*+</sup></td>
       <td>yes</td>
       <td>Heading with enable. Creates a header section with a checkbox to enabled or disabled all items and options enclosed by \<e> and \</e>.
       Excerpt from the \ref configWizard_codeExample.
@@ -71,7 +74,7 @@ The following table lists the Configuration Wizard Annotations:
       </td>
     </tr>
     <tr>
-      <td>\<e.<i>i</i>><sup>*</sup></td>
+      <td>\<e.<i>i</i>><sup>*+</sup></td>
       <td>yes</td>
       <td>Heading with Enable: modifies a specific bit (<i>i</i>) (example: \<e.4> - changes bit 4 of a value).
       \code
@@ -144,7 +147,7 @@ The following table lists the Configuration Wizard Annotations:
       </td>
     </tr>
     <tr>
-      <td>\<q><sup>*</sup></td>
+      <td>\<q><sup>*+</sup></td>
       <td>yes</td>
       <td>Option for bit values which can be set via a
       checkbox.
@@ -158,7 +161,7 @@ The following table lists the Configuration Wizard Annotations:
       </td>
     </tr>
     <tr>
-      <td>\<o><sup>*</sup></td>
+      <td>\<o><sup>*+</sup></td>
       <td>yes</td>
       <td>Option with selection or number entry.
       \code
@@ -174,34 +177,7 @@ The following table lists the Configuration Wizard Annotations:
       </td>
     </tr>
     <tr>
-      <td>\<o <em>key-identifier</em>><sup>*  (new!)</sup></td>
-      <td>yes</td>
-      <td>Option with identifier selection replacing the identifier after the specified key-identifier:
-      \code
-      //   <o TIMESTAMP_SRC>Time Stamp Source
-      //      <dwt=>     DWT Cycle Counter
-      //      <systick=> SysTick
-      //      <user=>    User Timer 
-      //   <i>Selects source for 32-bit time stamp
-      #define TIMESTAMP_SRC  dwt
-      \endcode
-      The example creates an option with the text \token{Time Stamp Source} and a drop down-list showing the text items 
-      \token{DWT Cycle Counter}, \token{SysTick} and \token{User Timer}. The corresponding identifier within the tag \<...=> will be used for replacement.
-      
-      Use case for an assignment of an enumeration to a variable:
-      \code
-      //   <o redPortMode> Red port mode 
-      //     <OutPushPull_GPIO=>  PushPull
-      //     <OutOpenDrain_GPIO=> OpenDrain
-      //   <i>Selects GPIO output
-      ledConf.redPortMode = OutOpenDrain_GPIO;
-      \endcode
-      The example creates an option with the text \token{Red port mode} and a drop down-list showing the text items
-      \token{PushPull} and \token{OpenDrain}. The corresponding identifier \token{OutPushPull_GPIO} or \token{OutOpenDrain_GPIO} will be used to replace the 
-      identifier after the key-identifier \token{redPortMode}.
-    </tr>
-    <tr>
-      <td>\<o.<i>i</i>><sup>*</sup></td>
+      <td>\<o.<i>i</i>><sup>*+</sup></td>
       <td>yes</td>
       <td>Modify a single bit (example: \<e.4> - modifies bit 4).
       \code
@@ -213,7 +189,7 @@ The following table lists the Configuration Wizard Annotations:
       </td>
     </tr>
     <tr>
-      <td>\<o.<i>x</i>..<i>y</i>><sup>*</sup>
+      <td>\<o.<i>x</i>..<i>y</i>><sup>*+</sup>
       </td>
       <td>yes</td>
       <td>Modify a range of bits. (example: \<o.4..5> - bit 4 to 5).
@@ -230,7 +206,7 @@ The following table lists the Configuration Wizard Annotations:
       </td>
     </tr>
     <tr>
-      <td>\<s><sup>*</sup></td>
+      <td>\<s><sup>*+</sup></td>
       <td>yes</td>
       <td>Option with ASCII string entry.
       \code
@@ -243,7 +219,7 @@ The following table lists the Configuration Wizard Annotations:
       </td>
     </tr>
     <tr>
-      <td>\<s.<i>i</i>><sup>*</sup></td>
+      <td>\<s.<i>i</i>><sup>*+</sup></td>
       <td>yes</td>
       <td>Option with ASCII string entry and a size limit of <i>i</i> characters. 
       \code
@@ -255,13 +231,13 @@ The following table lists the Configuration Wizard Annotations:
       </td>
     </tr>
     <tr>
-      <td><i>skip example</i>
-      <br> \<q\em i>; 
-      <br> \<o\em i>;  \<o\em i.\em x>; 
-      <br> \<s\em i>;  \<s\em i.\em x>
+      <td><i><b>skip example</b></i>
+      <br> \<q\em n>; 
+      <br> \<o\em n>;  \<o\em n.\em i>; 
+      <br> \<s\em n>;  \<s\em n.\em i>
       </td>
-      <td>yes</td>
-      <td>Skip \em i items.  Can be applied to all annotation items marked with a * in this table.
+      <td>n/a</td>
+      <td>Skip \em n items.  Can be applied to all annotation items marked with a <code>*</code> in this table.
       \code
       // <o2>Skip 2 and modify the third item after this entry <1-9>
       #define VALUE1       1000
@@ -269,6 +245,27 @@ The following table lists the Configuration Wizard Annotations:
       #define MODIFY_THIS  3000
       \endcode 
       The example skips 2 items and modifies the third.
+      </td>
+    </tr>
+    <tr>
+      <td><i><b>identifier example</b></i>
+      <br> \<q \em identifier> 
+      <br> \<e \em identifier> 
+      <br> \<o \em identifier> 
+      <br> \<s \em identifier> 
+      <br> \<e.\em i \em identifier> 
+      <br> \<o.\em i \em identifier> 
+      <br> \<s.\em i \em identifier> 
+      </td>
+      <td>n/a</td>
+      <td>Modify the item given by the identifier. Can be applied to all annotation items marked with a <code>+</code> in this table.
+      \code
+      // <o MODIFY_THIS>Modify the item after "MODIFY_THIS" <1-9>
+      #define VALUE1       1000
+      #define VALUE2       2000
+      #define MODIFY_THIS  3000
+      \endcode 
+      The example modifies the third item, as it follows the given identifier.
       </td>
     </tr>
     <tr>
@@ -317,7 +314,7 @@ The following table lists the Configuration Wizard Annotations:
       <td>\<<i>identifier</i>=></td>
       <td>yes</td>
       <td>Creates a drop down-list and displays the \em <b>text</b> following the definition of the identifiers \token{dwt}, \token{systick} and \token{user}.
-      Note that this must only be used in the context of \<o key-identifier>!
+      Note that this can only be used with options taking a key identifier (\<o \em identifier>).
       The \em <b>identifier</b> corresponding to the selected text replaces the identifier following the key-identifier specified by the \<o ...> tag.
       \code
       //   <o TIMESTAMP_SRC>Time Stamp Source
@@ -329,6 +326,18 @@ The following table lists the Configuration Wizard Annotations:
       \endcode
       In this example, the screen would show the option \token{Time Stamp Source}. The field value would display the text \token{DWT Cycle Counter}. 
       TIMESTAMP_SRC is set to \token{dwt}. When clicking on the field, a drop-down would show all options. See \ref configWizard_display.
+
+      Use case for an assignment of an enumeration to a variable:
+      \code
+      //   <o redPortMode> Red port mode
+      //     <OutPushPull_GPIO=>  PushPull
+      //     <OutOpenDrain_GPIO=> OpenDrain
+      //   <i>Selects GPIO output
+      ledConf.redPortMode = OutOpenDrain_GPIO;
+      \endcode
+      The example creates an option with the text \token{Red port mode} and a drop down-list showing the text items
+      \token{PushPull} and \token{OpenDrain}. The corresponding identifier \token{OutPushPull_GPIO} or \token{OutOpenDrain_GPIO} will be used to replace the
+      identifier after the key-identifier \token{redPortMode}.
     </tr>  
     <tr>
       <td>\<#+1>&nbsp;&nbsp; \<#-1><br>
