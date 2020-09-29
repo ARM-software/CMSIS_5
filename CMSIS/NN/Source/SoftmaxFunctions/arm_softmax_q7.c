@@ -21,14 +21,13 @@
  * Title:        arm_softmax_q7.c
  * Description:  Q7 softmax function
  *
- * $Date:        June 8, 2020
- * $Revision:    V.1.0.1
+ * $Date:        09. October 2020
+ * $Revision:    V.1.0.2
  *
  * Target Processor:  Cortex-M cores
  *
  * -------------------------------------------------------------------- */
 
-#include "arm_math.h"
 #include "arm_nnfunctions.h"
 
 /**

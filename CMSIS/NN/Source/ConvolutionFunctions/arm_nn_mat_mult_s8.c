@@ -21,14 +21,13 @@
  * Title:        arm_nn_mat_mult_s8.c
  * Description:  General Matrix-multiplication function
  *
- * $Date:        July 27, 2020
- * $Revision:    V.2.0.4
+ * $Date:        09. October 2020
+ * $Revision:    V.2.0.5
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
 
-#include "arm_math.h"
-#include "arm_nnfunctions.h"
+#include "arm_nnsupportfunctions.h"
 
 /*
    * s8 General matrix multiplication function with per-channel requantization for upto 4 column batches.

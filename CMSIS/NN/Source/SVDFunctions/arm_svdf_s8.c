@@ -21,15 +21,14 @@
  * Title:        arm_svdf_s8.c
  * Description:  S8 basic SVDF layer function
  *
- * $Date:        17. August 2020
- * $Revision:    V.1.0.0
+ * $Date:        09. October 2020
+ * $Revision:    V.1.0.1
  *
  * Target Processor:  Cortex-M processors
  *
  * -------------------------------------------------------------------- */
 
-#include "arm_math.h"
-#include "arm_nn_types.h"
+#include "arm_nnfunctions.h"
 #include "arm_nnsupportfunctions.h"
 
 /**

@@ -21,15 +21,15 @@
  * Title:        arm_max_pool_s8.c
  * Description:  Pooling function implementations
  *
- * $Date:        June 11, 2020
- * $Revision:    V.2.0.0
+ * $Date:        09. October 2020
+ * $Revision:    V.2.0.1
  *
  * Target Processor:  Cortex-M CPUs
  *
  * -------------------------------------------------------------------- */
 
-#include "arm_math.h"
 #include "arm_nnfunctions.h"
+#include "arm_nnsupportfunctions.h"
 
 static void compare_and_replace_if_larger_q7(q7_t *base,
                                              const q7_t *target,

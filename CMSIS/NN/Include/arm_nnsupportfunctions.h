@@ -21,8 +21,8 @@
  * Title:        arm_nnsupportfunctions.h
  * Description:  Public header file of support functions for CMSIS NN Library
  *
- * $Date:        July 31, 2020
- * $Revision:    V.4.5.4
+ * $Date:        09. October 2020
+ * $Revision:    V.4.5.5
  *
  * Target Processor:  Cortex-M CPUs
  * -------------------------------------------------------------------- */
@@ -30,7 +30,7 @@
 #ifndef _ARM_NNSUPPORTFUNCTIONS_H_
 #define _ARM_NNSUPPORTFUNCTIONS_H_
 
-#include "arm_math.h"
+#include "arm_math_types.h"
 #include "arm_common_tables.h"
 
 #ifdef __cplusplus
@@ -75,18 +75,6 @@ union arm_nn_long_long
   int64_t long_long;
   struct arm_nn_double word;
 };
-
-/**
- * @brief Struct for specifying activation function types
- *
- */
-typedef enum
-{
-    ARM_SIGMOID = 0,
-                /**< Sigmoid activation function */
-    ARM_TANH = 1,
-             /**< Tanh activation function */
-} arm_nn_activation_type;
 
 /**
  * @defgroup nndata_convert Neural Network Data Conversion Functions

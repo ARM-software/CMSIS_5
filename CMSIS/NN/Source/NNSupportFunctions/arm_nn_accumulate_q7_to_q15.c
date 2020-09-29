@@ -21,14 +21,16 @@
  * Title:        arm_nn_accumulate_q7_to_q15.c
  * Description:  Accumulate q7 vector into q15 one.
  *
- * $Date:        May 29, 2020
- * $Revision:    V.1.0.1
+ * $Date:        09. October 2020
+ * $Revision:    V.1.0.2
  *
  * pSrc Processor:  Cortex-M CPUs
  *
  * -------------------------------------------------------------------- */
-#include "arm_math.h"
+
 #include "arm_nnfunctions.h"
+#include "arm_nnsupportfunctions.h"
+#include "arm_math_memory.h"
 
 /**
  * @ingroup groupSupport

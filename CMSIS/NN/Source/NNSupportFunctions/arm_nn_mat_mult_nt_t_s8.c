@@ -21,15 +21,13 @@
  * Title:        arm_nn_mat_mult_s8_nt_t_s8
  * Description:  Matrix multiplication support function with the right-hand-side (rhs) matrix transposed
  *
- * $Date:        July 27 2020
- * $Revision:    V.1.0.2
+ * $Date:        09. October 2020
+ * $Revision:    V.1.0.3
  *
  * Target Processor:  Cortex-M
  *
  * -------------------------------------------------------------------- */
 
-#include "arm_math.h"
-#include "arm_nnfunctions.h"
 #include "arm_nnsupportfunctions.h"
 
 /**

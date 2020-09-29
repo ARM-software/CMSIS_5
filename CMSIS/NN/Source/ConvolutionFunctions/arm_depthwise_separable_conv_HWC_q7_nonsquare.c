@@ -21,15 +21,15 @@
  * Title:        arm_depthwise_separable_conv_HWC_q7_nonsquare.c
  * Description:  Q7 depthwise separable convolution function (non-square shape)
  *
- * $Date:        17. January 2018
- * $Revision:    V.1.0.0
+ * $Date:        09. October 2020
+ * $Revision:    V.1.0.1
  *
  * Target Processor:  Cortex-M cores
  *
  * -------------------------------------------------------------------- */
 
-#include "arm_math.h"
 #include "arm_nnfunctions.h"
+#include "arm_nnsupportfunctions.h"
 
 /**
  *  @ingroup groupNN
@@ -43,8 +43,8 @@
 /**
  * @brief Q7 depthwise separable convolution function (non-square shape)
  * @param[in]       Im_in         pointer to input tensor
- * @param[in]       dim_im_in_x   input tensor dimention x
- * @param[in]       dim_im_in_y   input tensor dimention y
+ * @param[in]       dim_im_in_x   input tensor dimension x
+ * @param[in]       dim_im_in_y   input tensor dimension y
  * @param[in]       ch_im_in      number of input tensor channels
  * @param[in]       wt            pointer to kernel weights
  * @param[in]       ch_im_out     number of filters, i.e., output tensor channels

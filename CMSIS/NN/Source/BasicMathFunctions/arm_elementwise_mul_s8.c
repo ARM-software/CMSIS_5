@@ -21,14 +21,13 @@
  * Title:        arm_elementwise_mul_s8
  * Description:  Element wise multiplication
  *
- * $Date:        May 29, 2020
- * $Revision:    V.1.0.3
+ * $Date:        09. October 2020
+ * $Revision:    V.1.0.4
  *
  * Target Processor:  Cortex-M cores
  *
  * -------------------------------------------------------------------- */
 
-#include "arm_math.h"
 #include "arm_nnfunctions.h"
 #include "arm_nnsupportfunctions.h"
 

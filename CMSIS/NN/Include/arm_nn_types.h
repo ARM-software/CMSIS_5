@@ -22,8 +22,8 @@
  * Description:  Public header file to contain the CMSIS-NN structs for the
  *               TensorFlowLite micro compliant functions
  *
- * $Date:        April 23, 2020
- * $Revision:    V.0.5.0
+ * $Date:        09. October 2020
+ * $Revision:    V.1.0.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -31,6 +31,8 @@
 
 #ifndef _ARM_NN_TYPES_H
 #define _ARM_NN_TYPES_H
+
+#include <stdint.h>
 
 /** CMSIS-NN object to contain the width and height of a tile */
 typedef struct

@@ -21,15 +21,15 @@
  * Title:        arm_relu_q7.c
  * Description:  Q7 version of ReLU
  *
- * $Date:        May 29, 2020
- * $Revision:    V.1.0.2
+ * $Date:        09. October 2020
+ * $Revision:    V.1.0.3
  *
  * Target Processor:  Cortex-M cores
  *
  * -------------------------------------------------------------------- */
 
-#include "arm_math.h"
 #include "arm_nnfunctions.h"
+#include "arm_nnsupportfunctions.h"
 
 /**
  *  @ingroup groupNN

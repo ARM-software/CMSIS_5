@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2018 Arm Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2010-2020 Arm Limited or its affiliates. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -21,16 +21,15 @@
  * Title:        arm_nn_activations_q15.c
  * Description:  Q15 neural network activation function using direct table look-up
  *
- * $Date:        17. January 2018
- * $Revision:    V.1.0.0
+ * $Date:        09. October 2020
+ * $Revision:    V.1.0.1
  *
  * Target Processor:  Cortex-M cores
  *
  * -------------------------------------------------------------------- */
 
-#include "arm_math.h"
-#include "arm_common_tables.h"
 #include "arm_nnfunctions.h"
+#include "arm_nn_tables.h"
 
 /**
  *  @ingroup groupNN

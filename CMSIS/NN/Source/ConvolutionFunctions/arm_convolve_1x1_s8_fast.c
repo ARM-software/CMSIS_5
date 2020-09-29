@@ -21,15 +21,15 @@
  * Title:        arm_convolve_1x1_s8_fast.c
  * Description:  Fast q7 version of 1x1 convolution (non-square shape)
  *
- * $Date:        July 27, 2020
- * $Revision:    V.2.0.2
+ * $Date:        09. October 2020
+ * $Revision:    V.2.0.3
  *
  * Target Processor:  Cortex-M cores
  *
  * -------------------------------------------------------------------- */
 
 #include "arm_nnfunctions.h"
-#include "arm_nn_types.h"
+#include "arm_nnsupportfunctions.h"
 
 #define DIM_KER_X (1U)
 #define DIM_KER_Y (1U)

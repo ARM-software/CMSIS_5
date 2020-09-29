@@ -21,14 +21,15 @@
  * Title:        arm_softmax_u8.c
  * Description:  U8 softmax function
  *
- * $Date:        May 29, 2020
- * $Revision:    V.1.0.1
+ * $Date:        09. October 2020
+ * $Revision:    V.1.0.2
  *
  * Target Processor:  Cortex-M CPUs
  *
  * -------------------------------------------------------------------- */
 
 #include "arm_nnfunctions.h"
+#include "arm_nnsupportfunctions.h"
 
 #define ACCUM_BITS 12
 

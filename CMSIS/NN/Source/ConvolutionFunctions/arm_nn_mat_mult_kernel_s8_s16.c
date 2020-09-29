@@ -21,14 +21,14 @@
  * Title:        arm_nn_mat_mult_kernel_s8_s16.c
  * Description:  Matrix-multiplication function for convolution
  *
- * $Date:        May 29, 2020
- * $Revision:    V.1.0.2
+ * $Date:        09. October 2020
+ * $Revision:    V.1.0.3
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
 
-#include "arm_math.h"
 #include "arm_nnfunctions.h"
+#include "arm_nnsupportfunctions.h"
 
 /*
    * Matrix-multiplication function for convolution with per-channel requantization.
