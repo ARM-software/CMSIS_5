@@ -173,7 +173,7 @@ The following table lists the Configuration Wizard Annotations:
       #endif
       // </e>
       \endcode
-      The example creates an option with the text \token{Round-Robin Timeout [ticks]} and a field to enter values that can range between {1..1000].
+      The example creates an option with the text \token{Round-Robin Timeout [ticks]} and a field to enter values that can range between [1..1000].
       </td>
     </tr>
     <tr>
@@ -276,17 +276,32 @@ The following table lists the Configuration Wizard Annotations:
     <tr>
       <td>\<0-31></td>
       <td>no</td>
-      <td>Value range for option fields.</td>
+      <td><b>(deprecated<sup>1</sup>, see new range modifier below)</b><br>Value range for option fields. Both endpoints are inclusive.</td>
     </tr>
     <tr>
       <td>\<0-100:10></td>
       <td>no</td>
-      <td>Value range for option fields with step 10.</td>
+      <td><b>(deprecated<sup>1</sup>, see new range modifier below)</b><br>Value range for option fields with step 10. Both endpoints are inclusive.</td>
     </tr>
     <tr>
       <td>\<0x40-0x1000:0x10></td>
       <td>no</td>
-      <td>Value range in hex format and step 10.</td>
+      <td><b>(deprecated<sup>1</sup>, see new range modifier below)</b><br>Value range in hex format and step 16. Both endpoints are inclusive.</td>
+    </tr>
+    <tr>
+      <td>\<-32..31></td>
+      <td>no</td>
+      <td>Value range for option fields supporting negative numbers. Both endpoints are inclusive.</td>
+    </tr>
+    <tr>
+      <td>\<-50..100:10></td>
+      <td>no</td>
+      <td>Value range for option fields with step 10 supporting negative numbers. Both endpoints are inclusive.</td>
+    </tr>
+    <tr>
+      <td>\<-0x40..0x1000:0x10></td>
+      <td>no</td>
+      <td>Value range in hex format and step 16 supporting negative numbers. Both endpoints are inclusive.</td>
     </tr>
     <tr>
       <td>\<<i>value</i>=></td>
@@ -359,6 +374,8 @@ The following table lists the Configuration Wizard Annotations:
       </td>
     </tr>
 </table>
+
+<sup>1</sup> Tools are expected to continue support of deprecated features but annotated files shall be updated to the new version.
 
 \section configWizard_codeExample Code Example
 
