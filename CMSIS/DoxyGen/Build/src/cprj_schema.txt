@@ -154,7 +154,7 @@ The high level structure of a project is constructed from:
   </compilers>
  
   <target Ddsp="NO_DSP" Dendian="Little-endian" Dfpu="NO_FPU" Dmve="NO_MVE" Dname="LPC4357" Dtz="NO_TZ" Dvendor="NXP:11" Pname="Cortex-M4">
-    <output list="./Debug/" name="BSD_Client" obj="./Debug/" type="exe"/>
+    <output intdir="./Debug/" name="BSD_Client" outdir="./Debug/" type="exe"/>
     <ldflags compiler="AC5" add="--entry=Reset_Handler --load_addr_map_info --map --strict" file="BSD_Client.sct"/>
     <cflags  compiler="AC5" add="--c99 --omf_browse ./debug/main.crf -D__MICROLIB -O1"/>
     <asflags compiler="AC5" add="--pd __MICROLIB SETA 1 --xref"/>
@@ -486,7 +486,7 @@ Note: The compiler referenced by the above command line flags is required to be 
   </compilers>
   ...
   <target Dname="ARMCM0" Dvendor="ARM:82" Dendian="Little-endian">
-    <output name="Blinky" type="exe" obj="./Objects list="./Listings"/>
+    <output name="Blinky" type="exe" outdir="./Objects intdir="./Listings"/>
     <cflags compiler="AC5" add="-Osize"/>
     ...
     <ldflags compiler="AC5" file="./RTE/Device/ARMCM0/gcc_arm.ld"/>
@@ -707,7 +707,7 @@ in the output tag is set to "exe".
 <cprj ...>
   ...
   <target Ddsp="NO_DSP" Dendian="Little-endian" Dfpu="NO_FPU" Dmve="NO_MVE" Dname="LPC4357" Dtz="NO_TZ" Dvendor="NXP:11" Pname="Cortex-M4">
-    <output list="./Debug/" name="BSD_Client" obj="./Debug/" type="exe"/>
+    <output intdir="./Debug/" name="BSD_Client" outdir="./Debug/" type="exe"/>
     <ldflags compiler="AC5" add="--entry=Reset_Handler --load_addr_map_info --map --strict " file="BSD_Client.sct"/>
   </target>
   ...
@@ -754,7 +754,7 @@ Note that this option only takes effect if the type specified in the output tag 
 <cprj ...>
   ...
   <target Ddsp="NO_DSP" Dendian="Little-endian" Dfpu="NO_FPU" Dmve="NO_MVE" Dname="LPC4357" Dtz="NO_TZ" Dvendor="NXP:11" Pname="Cortex-M4">
-    <output list="./Debug/" name="BSD_Client" obj="./Debug/" type="lib"/>
+    <output intdir="./Debug/" name="BSD_Client" outdir="./Debug/" type="lib"/>
     <arflags compiler="AC5" add="--debug_symbols "/>
   </target>
   ...
@@ -800,7 +800,7 @@ are 'removed' on a lower level (component, group, file).
 <cprj ...>
   ...
   <target Ddsp="NO_DSP" Dendian="Little-endian" Dfpu="NO_FPU" Dmve="NO_MVE" Dname="LPC4357" Dtz="NO_TZ" Dvendor="NXP:11" Pname="Cortex-M4">
-    <output list="./Debug/" name="BSD_Client" obj="./Debug/" type="lib"/>
+    <output intdir="./Debug/" name="BSD_Client" outdir="./Debug/" type="lib"/>
     <cflags add="-O1 -fno-function-sections -fno-rtti -fshort-enums -fshort-wchar -funsigned-char"/>
     <arflags compiler="AC5" add="--debug_symbols "/>
   </target>
@@ -848,7 +848,7 @@ are 'removed' on a lower level (component, group, file).
 <cprj ...>
   ...
   <target Ddsp="NO_DSP" Dendian="Little-endian" Dfpu="NO_FPU" Dmve="NO_MVE" Dname="LPC4357" Dtz="NO_TZ" Dvendor="NXP:11" Pname="Cortex-M4">
-    <output list="./Debug/" name="BSD_Client" obj="./Debug/" type="lib"/>
+    <output intdir="./Debug/" name="BSD_Client" outdir="./Debug/" type="lib"/>
 	<cflags add="-O1 -fno-function-sections -fno-rtti -fshort-enums -fshort-wchar -funsigned-char"/>
 	<cxxflags add="-O1 -fno-function-sections -fno-rtti -fshort-enums -fshort-wchar -funsigned-char"/>
     <arflags compiler="AC5" add="--debug_symbols "/>
@@ -898,7 +898,7 @@ are 'removed' on a lower level (component, group, file).
 <cprj ...>
   ...
   <target Ddsp="NO_DSP" Dendian="Little-endian" Dfpu="NO_FPU" Dmve="NO_MVE" Dname="LPC4357" Dtz="NO_TZ" Dvendor="NXP:11" Pname="Cortex-M4">
-    <output list="./Debug/" name="BSD_Client" obj="./Debug/" type="lib"/>
+    <output intdir="./Debug/" name="BSD_Client" outdir="./Debug/" type="lib"/>
     <asflags add="--xref --split_ldm"/>
     <arflags compiler="AC5" add="--debug_symbols "/>
   </target>
