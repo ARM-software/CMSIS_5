@@ -103,20 +103,16 @@ product variant). The user is required to update the these settings after instal
 <b>Example file: ./cbuild/etc/ARMCC.6.13.1.mak</b>
 
 \code
-# Version: 1.0.0
-# Date: 2020-02-11
+# Version: 0.10.0
+# Date: 2020-09-30
 # This file maps the CMSIS project options to toolchain settings.
 #
-#   - Applies to toolchain: ARMCC 6.13.1 
+#   - Applies to toolchain: ARMCC 6.14.0
 #
 ############### EDIT BELOW ###############
 # Set base directory of toolchain
-TOOLCHAIN_ROOT:=/C/Keil_v5/ARM/ARMCLANG
- 
-# Licensing
-#export ARMLMD_LICENSE_FILE=todo
-#export ARM_PRODUCT_DEF=$(TOOLCHAIN_ROOT)/../../mappings/gold.elmap
- 
+TOOLCHAIN_ROOT:=C:/Keil_v5/ARM/ARMCLANG
+
 ############ DO NOT EDIT BELOW ###########
 \endcode
 
@@ -179,7 +175,7 @@ directory is used.
 
 \verbatim
 $ cp_init.sh ./packrepo
-(cp_init.sh): Setup Pack Directory 0.9.0 (C) 2020 ARM
+(cp_init.sh): Setup Pack Directory 0.10.0 (C) 2020 ARM
 info: reading directory: ./packrepo
 downloading package index file from
 ######################################################################## 100.0%
@@ -254,7 +250,7 @@ The build flow of the \b cbuild.sh script is:
 It is called from the \b Bash command line with the following syntax:
 
 \code
-$ cbuild.sh <ProjectFile>.cprj [--toolchain=<Toolchain> --outdir=<OutDir> --intdir=<IntDir> <MakefileTarget>]
+$ cbuild.sh <ProjectFile>.cprj [--toolchain=<Toolchain> --outdir=<OutDir> --intdir=<IntDir> --update=<CprjFile> --jobs=<N> --log=<LogFile> --quiet --merge <MakefileTarget>]
 \endcode
 
 \b Where:
@@ -284,6 +280,26 @@ $ cbuild.sh <ProjectFile>.cprj [--toolchain=<Toolchain> --outdir=<OutDir> --intd
   (\c cpinstall), command files, object files, and dependency files).</td>
   </tr>
   <tr>
+    <td>\--update=\<CprjFile></td>
+    <td>Generates <tt>\<CprjFile></tt> with fixed versions for reproducing the current build.</td>
+  </tr>
+  <tr>
+    <td>\--jobs=\<N></td>
+    <td>Specifies the number of job slots for \ref make "Make" parallel execution. Minimum 1.</td>
+  </tr>
+  <tr>
+    <td>\--log=\<LogFile></td>
+    <td>Saves output messages in a log file.</td>
+  </tr>
+  <tr>
+    <td>\--quiet</td>
+    <td>Suppresses output messages except build invocations.</td>
+  </tr>
+  <tr>
+    <td>\--merge</td>
+    <td>Updates configuration files with the \ref ccmerge utility.</td>
+  </tr>
+  <tr>
     <td>\<MakefileTarget></td>
     <td>Specifies the <\c target> option for \ref make "Make".</td>
   </tr>
@@ -294,25 +310,20 @@ $ cbuild.sh <ProjectFile>.cprj [--toolchain=<Toolchain> --outdir=<OutDir> --intd
 
 \verbatim
 $ cbuild.sh Simulation.cprj
-(cbuild.sh): Build Invocation 0.9.0 (C) 2020 ARM
+(cbuild.sh): Build Invocation 0.10.0 (C) 2020 ARM
 Simulation.cprj validates
-(cbuildgen): Build Process Manager 0.9.0 (C) 2020 ARM
-M650: Config command completed successfully.
-(cbuildgen): Build Process Manager 0.9.0 (C) 2020 ARM
-M651: Generated makefile for merging config files: 'Simulation_cfg.mak'
-M652: Generated makefile for project build:'Simulation.mak'
-mkdir -p "/c/Examples/Blinky/Objects/RTE/CMSIS/RTOS2/Keil RTX5/Library"
-mkdir -p "/c/Examples/Blinky/Objects/RTE/Compiler/IO/STDOUT/ITM"
-mkdir -p "/c/Examples/Blinky/Objects/RTE/Device/Startup/C Startup"
-mkdir -p "/c/Examples/Blinky/Objects/Source Files"
-"/C/Keil_v5/ARM/ARMCLANG/bin/armclang" @"/c/Examples/Blinky/Objects/RTE/CMSIS/RTOS2/Keil RTX5/Library/RTX_Config.o._cc"
-"/C/Keil_v5/ARM/ARMCLANG/bin/armclang" @"/c/Examples/Blinky/Objects/RTE/CMSIS/RTOS2/Keil RTX5/Library/rtx_lib.o._cc"
-"/C/Keil_v5/ARM/ARMCLANG/bin/armclang" @"/c/Examples/Blinky/Objects/RTE/Compiler/IO/STDOUT/ITM/retarget_io.o._cc"
-"/C/Keil_v5/ARM/ARMCLANG/bin/armclang" @"/c/Examples/Blinky/Objects/RTE/Device/Startup/C Startup/startup_ARMCM3.o._cc"
-"/C/Keil_v5/ARM/ARMCLANG/bin/armclang" @"/c/Examples/Blinky/Objects/RTE/Device/Startup/C Startup/system_ARMCM3.o._cc"
-"/C/Keil_v5/ARM/ARMCLANG/bin/armclang" @"/c/Examples/Blinky/Objects/Source Files/Blinky.o._cc"
-"/C/Keil_v5/ARM/ARMCLANG/bin/armlink" --via="/c/Examples/Blinky/Objects/Blinky.axf._ld"
-Program Size: Code=7516 RO-data=1264 RW-data=168 ZI-data=9084
+(cbuildgen): Build Process Manager 0.10.0 (C) 2020 ARM
+M650: Command completed successfully.
+(cbuildgen): Build Process Manager 0.10.0 (C) 2020 ARM
+M652: Generated makefile for project build: 'C:/Examples/Blinky/IntDir/Simulation.mak'
+[1/7] Compiling C:/Examples/Blinky/RTE/CMSIS/RTX_Config.c
+[2/7] Compiling C:/Users/danbro01/AppData/Local/Arm/Packs/ARM/CMSIS/5.7.0/CMSIS/RTOS2/RTX/Source/rtx_lib.c
+[3/7] Compiling C:/Users/danbro01/AppData/Local/Arm/Packs/Keil/ARM_Compiler/1.6.3/Source/retarget_io.c
+[4/7] Compiling C:/Examples/Blinky/Blinky.c
+[5/7] Compiling C:/Examples/Blinky/RTE/Device/ARMCM3/startup_ARMCM3.c
+[6/7] Compiling C:/Examples/Blinky/RTE/Device/ARMCM3/system_ARMCM3.c
+[7/7] Linking to C:/Examples/Blinky/OutDir/Blinky_AC6.axf
+Program Size: Code=7468 RO-data=1264 RW-data=168 ZI-data=9084
 cbuild.sh finished successfully!
 \endverbatim
 
@@ -328,6 +339,11 @@ cbuild.sh finished successfully!
     <td>ERROR</td>
     <td>error: missing required argument <\c project>.cprj</td>
     <td>See usage and correct the argument.</td>
+  </tr>
+  <tr>
+    <td>ERROR</td>
+    <td>error: project file <\c project>.cprj does not exist</td>
+    <td>Check project file.</td>
   </tr>
   <tr>
     <td>ERROR</td>
@@ -904,7 +920,7 @@ The following directories are used to store software pack.  The naming conventio
 
 \verbatim$
 cp_install.sh Simulation.cpinstall
-(cp_install.sh): Install Packs 0.9.0 (C) 2020 ARM
+(cp_install.sh): Install Packs 0.10.0 (C) 2020 ARM
 info: reading file: Simulation.cpinstall
 dos2unix: converting file Simulation.cpinstall to Unix format...
 http://www.keil.com/pack/ARM.CMSIS.5.6.0.pack
@@ -1095,7 +1111,7 @@ cbuild_uv.sh <project-file>.uvprojx
 
 \verbatim
 $ cbuild_uv.sh FTP_Server.uvprojx
-(cbuild_uv.sh): Build MDK Project 0.9.0 (C) 2020 ARM
+(cbuild_uv.sh): Build MDK Project 0.10.0 (C) 2020 ARM
 uVision has created CPRJ files for the following targets:
 FTP_Server.Debug.cprj
 FTP_Server.Release.cprj
