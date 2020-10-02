@@ -28,6 +28,7 @@
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
 
+
 #ifndef _ARM_NN_TYPES_H
 #define _ARM_NN_TYPES_H
 
