@@ -355,9 +355,7 @@ void arm_mat_vec_mult_q7(const arm_matrix_instance_q7 *pSrcMat, const q7_t *pVec
         /* process any remaining columns */
 
         colCnt = numCols & 3u;
-#if defined(ARM_MATH_MVEI) && defined(ARM_MATH_AUTOVECTORIZE)
-        #pragma clang loop vectorize(disable)
-#endif
+
         while (colCnt > 0) {
             vecData = *pInVec++;
             sum1 += *pInA1++ * vecData;

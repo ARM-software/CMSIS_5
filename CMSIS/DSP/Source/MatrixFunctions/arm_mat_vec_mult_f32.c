@@ -379,10 +379,7 @@ void arm_mat_vec_mult_f32(const arm_matrix_instance_f32 *pSrcMat, const float32_
         // process remainder of row
         colCnt = numCols & 1u;
 
-/* Temporary fix for bug in clang */
-#if defined(ARM_MATH_MVEF) && defined(ARM_MATH_AUTOVECTORIZE)
-        #pragma clang loop vectorize(disable)
-#endif
+
         while (colCnt > 0) {
             sum += *pInA1++ * *pInVec++;
             colCnt--;

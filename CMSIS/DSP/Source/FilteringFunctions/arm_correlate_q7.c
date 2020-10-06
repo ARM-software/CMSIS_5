@@ -884,10 +884,7 @@ void arm_correlate_q7(
     k = count;
 
 #endif /* #if defined (ARM_MATH_LOOPUNROLL) */
-/* Temporary fix for bug in clang */
-#if defined(ARM_MATH_MVEF) && defined(ARM_MATH_AUTOVECTORIZE)
-        #pragma clang loop vectorize(disable)
-#endif
+
     while (k > 0U)
     {
       /* Perform the multiply-accumulate */
