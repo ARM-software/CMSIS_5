@@ -178,6 +178,16 @@ with open(args.i,"r") as f:
 #print(config["IMPLIEDFLAGS"])
 
 
+patternConfig={}
+
+
+
+if "PATTERNS" in config:
+   patternConfig={
+    "patterns":os.path.join(config["PATTERNS"],"Patterns")
+   ,"parameters":os.path.join(config["PATTERNS"],"Parameters")
+   }
+
 
 
 flags = config["FLAGS"]
@@ -265,7 +275,7 @@ def buildAndTest(compiler,theConfig,cmake,sim):
                       if 'SIM' in config:
                         if core in config['SIM']:
                            fvp = config['SIM'][core] 
-                      newTestStatus = test.runAndProcess(compiler,fvp,sim,args.b,args.db,args.regdb,benchID,regID)
+                      newTestStatus = test.runAndProcess(patternConfig,compiler,fvp,sim,args.b,args.db,args.regdb,benchID,regID)
                       testStatusForThisBuild = updateTestStatus(testStatusForThisBuild,newTestStatus)
                       if testStatusForThisBuild != NOTESTFAILED:
                          failedBuild[buildStr] = testStatusForThisBuild
@@ -292,7 +302,7 @@ def buildAndTest(compiler,theConfig,cmake,sim):
 
 if not isDebugMode():
    preprocess(args.f)
-   generateAllCCode()
+   generateAllCCode(patternConfig)
 else:
    msg("Debug Mode\n")
 

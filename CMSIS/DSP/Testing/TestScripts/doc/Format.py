@@ -84,7 +84,8 @@ class Markdown:
      self._id = self._id - 1 
 
   def visitDocument(self,document):
-      self._output.write("Document generated frun run ids : %s\n" % document.runidHeader)
+      if document.runidHeader:
+         self._output.write("Document generated for run ids : %s\n" % document.runidHeader)
 
   def leaveDocument(self,document):
       pass
@@ -647,7 +648,8 @@ myhist(thehdata%d,"#hi%d");
       else:
          self._output.write("<h1>ECPS Benchmark Summary</h1>\n")
       
-      self._output.write("<p>Document generated for run ids : %s</p>\n" % document.runidHeader)
+      if document.runidHeader:
+         self._output.write("<p>Document generated for run ids : %s</p>\n" % document.runidHeader)
       today = date.today()
       d2 = today.strftime("%B %d, %Y")
       self._output.write("<p>Document generated on  %s</p>\n" % d2)

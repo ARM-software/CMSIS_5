@@ -56,13 +56,14 @@ parser.add_argument('-g', action='store_true', help="Include graphs in regressio
 
 parser.add_argument('-details', action='store_true', help="Details about runids")
 parser.add_argument('-lastid', action='store_true', help="Get last ID")
-parser.add_argument('-comments', nargs='?',type = str, default="comments.txt", help="Comment section")
+parser.add_argument('-comments', nargs='?',type = str, default="comments", help="Comment folder")
 parser.add_argument('-byd', action='store_true', help="Result oganized by datatype")
 parser.add_argument('-ratio', action='store_true', help="Compute ratios for regression by core instead of cycles")
 parser.add_argument('-ref', nargs='?',type = str, default="M55", help="Reference COREDEF for ratio in db")
 parser.add_argument('-clampval', nargs='?',type = float, default=8.0, help="Clamp for ratio")
 parser.add_argument('-clamp', action='store_true', help="Clamp enabled for ratio")
 parser.add_argument('-keep', nargs='?',type = str, help="Core to keep for ratio")
+parser.add_argument('-disprunid', action='store_true', help="Include runid in html")
 
 # For runid or runid range
 parser.add_argument('others', nargs=argparse.REMAINDER,help="Run ID")
@@ -579,6 +580,26 @@ def convertRowToInt(r):
 
   return(result)
 
+      
+def addSectionComment(section):
+  if os.path.exists(args.comments):
+     fileName=re.sub(r'[() :]','',section.name)
+     path=os.path.join(args.comments,fileName+".html")
+     para=""
+     if os.path.exists(path):
+        commentSection = Section("Comments")
+        section.addSection(commentSection)
+        with open(path,"r") as r:
+            for l in r:
+                if l.strip():
+                  para += l
+                else:
+                  commentSection.addContent(Text(para))
+                  para=""
+        if para:
+           commentSection.addContent(Text(para))
+        
+
 def formatTableBy(desc,byname,section,typeSection,testNames,cols,vals):
     if vals.size != 0:
        ref=pd.DataFrame(vals,columns=cols)
@@ -608,6 +629,7 @@ def formatTableBy(desc,byname,section,typeSection,testNames,cols,vals):
               testSection = Section(name)
               testSection.setTest()
               typeSection.addSection(testSection)
+              addSectionComment(testSection)
 
               maxCyclesSection = Section("Max cycles")
               testSection.addSection(maxCyclesSection)
@@ -655,6 +677,7 @@ def formatTableBy(desc,byname,section,typeSection,testNames,cols,vals):
               testSection = Section(name)
               testSection.setTest()
               typeSection.addSection(testSection)
+              addSectionComment(testSection)
 
               dataForFunc=data.loc[name]
               dataForFunc = dataForFunc.dropna(axis=1)
@@ -860,6 +883,8 @@ def addRatioTable(cols,params,data,section,testNames,byd):
       testSection = Section(name)
       testSection.setTest()
       section.addSection(testSection)
+      addSectionComment(testSection)
+
 
       ratioSection = Section("Ratios")
       testSection.addSection(ratioSection)
@@ -909,9 +934,6 @@ def addRatioTable(cols,params,data,section,testNames,byd):
      
       
       
-      
-  
-
 # Add a report for each table
 def addReportFor(document,benchName):
     nbElems = getNbElemsInBenchCmd(benchName)
@@ -1038,19 +1060,23 @@ Hierarchy("Classical ML",[
   Hierarchy("Bayes"),
   Hierarchy("SVM"),
   Hierarchy("Distance"),
+  Hierarchy("KalmanBenchmarks")
   ]),
 
 ]
 
 processed=[]
 
+
+
 def addComments(document):
   if os.path.exists(args.comments):
      section=Section("Measurement Context")
+     path=os.path.join(args.comments,"comments.txt")
 
      document.addSection(section)
      para=""
-     with open(args.comments,"r") as r:
+     with open(path,"r") as r:
          for l in r:
              if l.strip():
                para += l
@@ -1080,7 +1106,10 @@ def createDoc(document,sections,benchtables):
 
 try:
       benchtables=getBenchTables()
-      document = Document(runidHeader)
+      if args.disprunid:
+         document = Document(runidHeader)
+      else:
+         document = Document(None)
 
       if args.ratio:
          referenceCoreID= getCoreID(args.ref)

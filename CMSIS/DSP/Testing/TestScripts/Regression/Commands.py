@@ -330,12 +330,18 @@ class Test:
         return(self._test)
 
     # Process a test from the test description file
-    def processTest(self):
+    def processTest(self,patternConfig):
       if isDebugMode():
-        completed=subprocess.run([sys.executable,"processTests.py","-e",self.testName(),"1"],timeout=3600)
+        if patternConfig:
+           completed=subprocess.run([sys.executable,"processTests.py","-p",patternConfig["patterns"],"-d",patternConfig["parameters"],"-e",self.testName(),"1"],timeout=3600)
+        else:
+           completed=subprocess.run([sys.executable,"processTests.py","-e",self.testName(),"1"],timeout=3600)
         check(completed)
       else:
-        completed=subprocess.run([sys.executable,"processTests.py","-e",self.testName()],timeout=3600)
+        if patternConfig:
+           completed=subprocess.run([sys.executable,"processTests.py","-p",patternConfig["patterns"],"-d",patternConfig["parameters"],"-e",self.testName()],timeout=3600)
+        else:
+           completed=subprocess.run([sys.executable,"processTests.py","-e",self.testName()],timeout=3600)
         check(completed)
 
     def getResultPath(self):
@@ -390,9 +396,9 @@ class Test:
         else:
            return(TESTFAILED)
 
-    def runAndProcess(self,compiler,fvp,sim,benchmode,db,regdb,benchid,regid):
+    def runAndProcess(self,patternConfig,compiler,fvp,sim,benchmode,db,regdb,benchid,regid):
         # If we can't parse test description we fail all tests
-        self.processTest()
+        self.processTest(patternConfig)
         # Otherwise if only building or those tests are failing, we continue
         # with other tests
         try:
@@ -432,9 +438,13 @@ def preprocess(desc):
 
 # Generate all missing C code by using all classes in the
 # test description file
-def generateAllCCode():
+def generateAllCCode(patternConfig):
     msg("Generate all missing C files\n")
-    completed = subprocess.run([sys.executable,"processTests.py", "-e"],timeout=3600)
+    if patternConfig:
+       completed = subprocess.run([sys.executable,"processTests.py",
+        "-p",patternConfig["patterns"],"-d",patternConfig["parameters"],"-e"],timeout=3600)
+    else:
+       completed = subprocess.run([sys.executable,"processTests.py", "-e"],timeout=3600)
     check(completed)
 
 # Create db
