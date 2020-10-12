@@ -703,7 +703,7 @@ class FullyConnectedSettings(TestSettings):
 
     def derive_filter_scale_and_zeropoint_from_min_max(self, mini, maxi):
         scale = self.derive_scale_from_min_max(mini, maxi)
-        zero = self.INT8_MIN + (-mini/scale + 0.5)
+        zero = int(self.INT8_MIN + (-mini/scale + 0.5))
         return (scale, zero)
 
     def quantize2int8(self, value, params):
@@ -773,7 +773,7 @@ def load_all_testdatasets():
                                               w_y=11, stride_x=1, stride_y=1, pad=True, randmin=-2, randmax=2,
                                               outminrange=-127, outmaxrange=127)
     dataset = 'conv_2'
-    ALL_TESTDATA_SETS[dataset] = ConvSettings(dataset, test_type, args, in_ch=2, out_ch=4, x_in=6, y_in=3, w_x=3,
+    ALL_TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=2, out_ch=4, x_in=6, y_in=3, w_x=3,
                                               w_y=3, stride_x=1, stride_y=1, pad=True, randmin=1, randmax=4,
                                               outminrange=-126, outmaxrange=127)
     dataset = 'conv_4'  # batches > 2
