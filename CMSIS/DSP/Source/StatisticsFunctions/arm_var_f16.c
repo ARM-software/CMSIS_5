@@ -28,7 +28,6 @@
 
 #include "dsp/statistics_functions_f16.h"
 
-#include <stdio.h>
 
 #if defined(ARM_FLOAT16_SUPPORTED)
 

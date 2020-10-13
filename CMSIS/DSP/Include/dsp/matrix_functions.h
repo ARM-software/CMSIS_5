@@ -248,6 +248,17 @@ arm_status arm_mat_trans_f32(
   const arm_matrix_instance_f32 * pSrc,
         arm_matrix_instance_f32 * pDst);
 
+/**
+   * @brief Floating-point matrix transpose.
+   * @param[in]  pSrc  points to the input matrix
+   * @param[out] pDst  points to the output matrix
+   * @return    The function returns either  <code>ARM_MATH_SIZE_MISMATCH</code>
+   * or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.
+   */
+arm_status arm_mat_trans_f64(
+  const arm_matrix_instance_f64 * pSrc,
+        arm_matrix_instance_f64 * pDst);
+
   /**
    * @brief Floating-point complex matrix transpose.
    * @param[in]  pSrc  points to the input matrix
@@ -327,6 +338,19 @@ arm_status arm_mat_mult_f32(
   const arm_matrix_instance_f32 * pSrcA,
   const arm_matrix_instance_f32 * pSrcB,
         arm_matrix_instance_f32 * pDst);
+
+  /**
+   * @brief Floating-point matrix multiplication
+   * @param[in]  pSrcA  points to the first input matrix structure
+   * @param[in]  pSrcB  points to the second input matrix structure
+   * @param[out] pDst   points to output matrix structure
+   * @return     The function returns either
+   * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.
+   */
+arm_status arm_mat_mult_f64(
+  const arm_matrix_instance_f64 * pSrcA,
+  const arm_matrix_instance_f64 * pSrcB,
+        arm_matrix_instance_f64 * pDst);
 
   /**
    * @brief Floating-point matrix and vector multiplication
@@ -455,6 +479,19 @@ arm_status arm_mat_sub_f32(
   const arm_matrix_instance_f32 * pSrcA,
   const arm_matrix_instance_f32 * pSrcB,
         arm_matrix_instance_f32 * pDst);
+
+  /**
+   * @brief Floating-point matrix subtraction
+   * @param[in]  pSrcA  points to the first input matrix structure
+   * @param[in]  pSrcB  points to the second input matrix structure
+   * @param[out] pDst   points to output matrix structure
+   * @return     The function returns either
+   * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.
+   */
+arm_status arm_mat_sub_f64(
+  const arm_matrix_instance_f64 * pSrcA,
+  const arm_matrix_instance_f64 * pSrcB,
+        arm_matrix_instance_f64 * pDst);
 
   /**
    * @brief Q15 matrix subtraction
@@ -589,6 +626,113 @@ void arm_mat_init_f32(
   const arm_matrix_instance_f64 * src,
   arm_matrix_instance_f64 * dst);
 
+ /**
+   * @brief Floating-point Cholesky decomposition of Symmetric Positive Definite Matrix.
+   * @param[in]  src   points to the instance of the input floating-point matrix structure.
+   * @param[out] dst   points to the instance of the output floating-point matrix structure.
+   * @return The function returns ARM_MATH_SIZE_MISMATCH, if the dimensions do not match.
+   * If the input matrix does not have a decomposition, then the algorithm terminates and returns error status ARM_MATH_DECOMPOSITION_FAILURE.
+   * If the matrix is ill conditioned or only semi-definite, then it is better using the LDL^t decomposition.
+   * The decomposition is returning a lower triangular matrix.
+   */
+  arm_status arm_mat_cholesky_f64(
+  const arm_matrix_instance_f64 * src,
+  arm_matrix_instance_f64 * dst);
+
+ /**
+   * @brief Floating-point Cholesky decomposition of Symmetric Positive Definite Matrix.
+   * @param[in]  src   points to the instance of the input floating-point matrix structure.
+   * @param[out] dst   points to the instance of the output floating-point matrix structure.
+   * @return The function returns ARM_MATH_SIZE_MISMATCH, if the dimensions do not match.
+   * If the input matrix does not have a decomposition, then the algorithm terminates and returns error status ARM_MATH_DECOMPOSITION_FAILURE.
+   * If the matrix is ill conditioned or only semi-definite, then it is better using the LDL^t decomposition.
+   * The decomposition is returning a lower triangular matrix.
+   */
+  arm_status arm_mat_cholesky_f32(
+  const arm_matrix_instance_f32 * src,
+  arm_matrix_instance_f32 * dst);
+
+  /**
+   * @brief Solve UT . X = A where UT is an upper triangular matrix
+   * @param[in]  ut  The upper triangular matrix
+   * @param[in]  a  The matrix a
+   * @param[out] dst The solution X of UT . X = A
+   * @return The function returns ARM_MATH_SINGULAR, if the system can't be solved.
+  */
+  arm_status arm_mat_solve_upper_triangular_f32(
+  const arm_matrix_instance_f32 * ut,
+  const arm_matrix_instance_f32 * a,
+  arm_matrix_instance_f32 * dst);
+
+ /**
+   * @brief Solve LT . X = A where LT is a lower triangular matrix
+   * @param[in]  lt  The lower triangular matrix
+   * @param[in]  a  The matrix a
+   * @param[out] dst The solution X of LT . X = A
+   * @return The function returns ARM_MATH_SINGULAR, if the system can't be solved.
+   */
+  arm_status arm_mat_solve_lower_triangular_f32(
+  const arm_matrix_instance_f32 * lt,
+  const arm_matrix_instance_f32 * a,
+  arm_matrix_instance_f32 * dst);
+
+
+  /**
+   * @brief Solve UT . X = A where UT is an upper triangular matrix
+   * @param[in]  ut  The upper triangular matrix
+   * @param[in]  a  The matrix a
+   * @param[out] dst The solution X of UT . X = A
+   * @return The function returns ARM_MATH_SINGULAR, if the system can't be solved.
+  */
+  arm_status arm_mat_solve_upper_triangular_f64(
+  const arm_matrix_instance_f64 * ut,
+  const arm_matrix_instance_f64 * a,
+  arm_matrix_instance_f64 * dst);
+
+ /**
+   * @brief Solve LT . X = A where LT is a lower triangular matrix
+   * @param[in]  lt  The lower triangular matrix
+   * @param[in]  a  The matrix a
+   * @param[out] dst The solution X of LT . X = A
+   * @return The function returns ARM_MATH_SINGULAR, if the system can't be solved.
+   */
+  arm_status arm_mat_solve_lower_triangular_f64(
+  const arm_matrix_instance_f64 * lt,
+  const arm_matrix_instance_f64 * a,
+  arm_matrix_instance_f64 * dst);
+
+
+  /**
+   * @brief Floating-point LDL decomposition of Symmetric Positive Semi-Definite Matrix.
+   * @param[in]  src   points to the instance of the input floating-point matrix structure.
+   * @param[out] l   points to the instance of the output floating-point triangular matrix structure.
+   * @param[out] d   points to the instance of the output floating-point diagonal matrix structure.
+   * @param[out] p   points to the instance of the output floating-point permutation vector.
+   * @return The function returns ARM_MATH_SIZE_MISMATCH, if the dimensions do not match.
+   * If the input matrix does not have a decomposition, then the algorithm terminates and returns error status ARM_MATH_DECOMPOSITION_FAILURE.
+   * The decomposition is returning a lower triangular matrix.
+   */
+  arm_status arm_mat_ldlt_f32(
+  const arm_matrix_instance_f32 * src,
+  arm_matrix_instance_f32 * l,
+  arm_matrix_instance_f32 * d,
+  uint16_t * pp);
+
+ /**
+   * @brief Floating-point LDL decomposition of Symmetric Positive Semi-Definite Matrix.
+   * @param[in]  src   points to the instance of the input floating-point matrix structure.
+   * @param[out] l   points to the instance of the output floating-point triangular matrix structure.
+   * @param[out] d   points to the instance of the output floating-point diagonal matrix structure.
+   * @param[out] p   points to the instance of the output floating-point permutation vector.
+   * @return The function returns ARM_MATH_SIZE_MISMATCH, if the dimensions do not match.
+   * If the input matrix does not have a decomposition, then the algorithm terminates and returns error status ARM_MATH_DECOMPOSITION_FAILURE.
+   * The decomposition is returning a lower triangular matrix.
+   */
+  arm_status arm_mat_ldlt_f64(
+  const arm_matrix_instance_f64 * src,
+  arm_matrix_instance_f64 * l,
+  arm_matrix_instance_f64 * d,
+  uint16_t * pp);
 
 #ifdef   __cplusplus
 }

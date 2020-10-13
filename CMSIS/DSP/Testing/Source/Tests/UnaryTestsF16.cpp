@@ -26,6 +26,18 @@ But big matrix needed for checking the vectorized code */
 #define REL_ERROR_INV (3.0e-2)
 #define ABS_ERROR_INV (3.0e-2)
 
+#define REL_ERROR_SOLVE (6.0e-3)
+#define ABS_ERROR_SOLVE (6.0e-2)
+
+/*
+
+Comparison for Cholesky
+
+*/
+#define SNR_THRESHOLD_CHOL 45
+#define REL_ERROR_CHOL (3.0e-3)
+#define ABS_ERROR_CHOL (3.0e-2)
+
 /* Upper bound of maximum matrix dimension used by Python */
 #define MAXMATRIXDIM 40
 
@@ -313,6 +325,122 @@ void UnaryTestsF16::test_mat_inverse_f16()
 
     }
 
+    void UnaryTestsF16::test_mat_cholesky_dpo_f16()
+    {
+      float16_t *ap=a.ptr();                 
+      const float16_t *inp1=input1.ptr();    
+                                             
+                                             
+      float16_t *outp=output.ptr();     
+      int16_t *dimsp = dims.ptr();           
+      int nbMatrixes = dims.nbSamples();
+
+      int rows,columns;                      
+      int i;
+      arm_status status;
+
+      for(i=0;i < nbMatrixes ; i ++)
+      {
+          rows = *dimsp++;
+          columns = rows;
+
+          PREPAREDATA1(false);
+
+          status=arm_mat_cholesky_f16(&this->in1,&this->out);
+          ASSERT_TRUE(status==ARM_MATH_SUCCESS);
+
+          outp += (rows * columns);
+          inp1 += (rows * columns);
+
+      }
+
+      ASSERT_EMPTY_TAIL(output);
+
+      ASSERT_SNR(output,ref,(float16_t)SNR_THRESHOLD_CHOL);
+
+      ASSERT_CLOSE_ERROR(ref,output,ABS_ERROR_CHOL,REL_ERROR_CHOL);
+    }
+
+    void UnaryTestsF16::test_solve_upper_triangular_f16()
+    {
+      float16_t *ap=a.ptr();                 
+      const float16_t *inp1=input1.ptr();    
+
+      float16_t *bp=b.ptr();                 
+      const float16_t *inp2=input2.ptr();    
+                                             
+                                             
+      float16_t *outp=output.ptr();     
+      int16_t *dimsp = dims.ptr();           
+      int nbMatrixes = dims.nbSamples();
+
+      int rows,columns;                      
+      int i;
+      arm_status status;
+
+      for(i=0;i < nbMatrixes ; i ++)
+      {
+          rows = *dimsp++;
+          columns = rows;
+
+          PREPAREDATA2();
+
+          status=arm_mat_solve_upper_triangular_f16(&this->in1,&this->in2,&this->out);
+          ASSERT_TRUE(status==ARM_MATH_SUCCESS);
+
+          outp += (rows * columns);
+          inp1 += (rows * columns);
+          inp2 += (rows * columns);
+
+      }
+
+      ASSERT_EMPTY_TAIL(output);
+
+      ASSERT_SNR(output,ref,(float16_t)SNR_THRESHOLD);
+
+      ASSERT_CLOSE_ERROR(ref,output,ABS_ERROR_SOLVE,REL_ERROR_SOLVE);
+    }
+
+    void UnaryTestsF16::test_solve_lower_triangular_f16()
+    {
+      float16_t *ap=a.ptr();                 
+      const float16_t *inp1=input1.ptr();    
+
+      float16_t *bp=b.ptr();                 
+      const float16_t *inp2=input2.ptr();    
+                                             
+                                             
+      float16_t *outp=output.ptr();     
+      int16_t *dimsp = dims.ptr();           
+      int nbMatrixes = dims.nbSamples();
+
+      int rows,columns;                      
+      int i;
+      arm_status status;
+
+      for(i=0;i < nbMatrixes ; i ++)
+      {
+          rows = *dimsp++;
+          columns = rows;
+
+          PREPAREDATA2();
+
+          status=arm_mat_solve_lower_triangular_f16(&this->in1,&this->in2,&this->out);
+          ASSERT_TRUE(status==ARM_MATH_SUCCESS);
+
+          outp += (rows * columns);
+          inp1 += (rows * columns);
+          inp2 += (rows * columns);
+
+      }
+
+      ASSERT_EMPTY_TAIL(output);
+
+      ASSERT_SNR(output,ref,(float16_t)SNR_THRESHOLD);
+
+      ASSERT_CLOSE_ERROR(ref,output,ABS_ERROR_SOLVE,REL_ERROR_SOLVE);
+    }
+
     void UnaryTestsF16::setUp(Testing::testID_t id,std::vector<Testing::param_t>& params,Client::PatternMgr *mgr)
     {
 
@@ -395,6 +523,40 @@ void UnaryTestsF16::test_mat_inverse_f16()
             output.create(ref.nbSamples(),UnaryTestsF16::OUT_F16_ID,mgr);
             a.create(MAXMATRIXDIM*MAXMATRIXDIM,UnaryTestsF16::TMPA_F16_ID,mgr);
          break;
+
+         case TEST_MAT_CHOLESKY_DPO_F16_8:
+            input1.reload(UnaryTestsF16::INPUTSCHOLESKY1_DPO_F16_ID,mgr);
+            dims.reload(UnaryTestsF16::DIMSCHOLESKY1_DPO_S16_ID,mgr);
+
+            ref.reload(UnaryTestsF16::REFCHOLESKY1_DPO_F16_ID,mgr);
+
+            output.create(ref.nbSamples(),UnaryTestsF16::OUT_F16_ID,mgr);
+            a.create(MAXMATRIXDIM*MAXMATRIXDIM,UnaryTestsF16::TMPA_F16_ID,mgr);
+         break;
+
+         case TEST_SOLVE_UPPER_TRIANGULAR_F16_9:
+            input1.reload(UnaryTestsF16::INPUT_UT_DPO_F16_ID,mgr);
+            dims.reload(UnaryTestsF16::DIMSCHOLESKY1_DPO_S16_ID,mgr);
+            input2.reload(UnaryTestsF16::INPUT_RNDA_DPO_F16_ID,mgr);
+
+            ref.reload(UnaryTestsF16::REF_UTINV_DPO_F16_ID,mgr);
+
+            output.create(ref.nbSamples(),UnaryTestsF16::OUT_F16_ID,mgr);
+            a.create(MAXMATRIXDIM*MAXMATRIXDIM,UnaryTestsF16::TMPA_F16_ID,mgr);
+            b.create(MAXMATRIXDIM*MAXMATRIXDIM,UnaryTestsF16::TMPB_F16_ID,mgr);
+         break;
+
+         case TEST_SOLVE_LOWER_TRIANGULAR_F16_10:
+            input1.reload(UnaryTestsF16::INPUT_LT_DPO_F16_ID,mgr);
+            dims.reload(UnaryTestsF16::DIMSCHOLESKY1_DPO_S16_ID,mgr);
+            input2.reload(UnaryTestsF16::INPUT_RNDA_DPO_F16_ID,mgr);
+
+            ref.reload(UnaryTestsF16::REF_LTINV_DPO_F16_ID,mgr);
+
+            output.create(ref.nbSamples(),UnaryTestsF16::OUT_F16_ID,mgr);
+            a.create(MAXMATRIXDIM*MAXMATRIXDIM,UnaryTestsF16::TMPA_F16_ID,mgr);
+            b.create(MAXMATRIXDIM*MAXMATRIXDIM,UnaryTestsF16::TMPB_F16_ID,mgr);
+         break;
       }
        
 
@@ -404,5 +566,6 @@ void UnaryTestsF16::test_mat_inverse_f16()
     void UnaryTestsF16::tearDown(Testing::testID_t id,Client::PatternMgr *mgr)
     {
        (void)id;
-       output.dump(mgr);
+       //output.dump(mgr);
+       (void)mgr;
     }

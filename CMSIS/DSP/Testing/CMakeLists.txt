@@ -287,6 +287,7 @@ if (MATRIX)
   Source/Tests/UnaryTestsF32.cpp
   Source/Tests/UnaryTestsF64.cpp
   Source/Tests/BinaryTestsF32.cpp
+  Source/Tests/BinaryTestsF64.cpp
   Source/Tests/BinaryTestsQ31.cpp
   Source/Tests/BinaryTestsQ15.cpp
   Source/Tests/BinaryTestsQ7.cpp)

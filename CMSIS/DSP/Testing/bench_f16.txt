@@ -481,12 +481,39 @@ group Root {
                 Pattern INPUTAC_F16_ID : InputAC1_f16.txt 
                 Pattern INPUTVEC1_F16_ID : InputVec1_f16.txt 
 
+                Pattern DIMSCHOLESKY1_DPO_S16_ID : DimsCholeskyDPO1_s16.txt 
+                Pattern DIMSCHOLESKY1_SDPO_S16_ID : DimsCholeskySDPO1_s16.txt 
+                Pattern INPUTSCHOLESKY1_DPO_F16_ID : InputCholeskyDPO1_f16.txt 
+                Pattern INPUTSCHOLESKY1_SDPO_F16_ID : InputCholeskySDPO1_f16.txt 
+
+                Pattern REFCHOLESKY1_DPO_F16_ID : RefCholeskyDPO1_f16.txt
+
+                Pattern REFLDLT_D_DPO1_F16_ID : RefLDLT_D_DPO1_f16.txt
+                Pattern REFLDLT_LL_DPO1_F16_ID : RefLDLT_LL_DPO1_f16.txt
+                Pattern REFLDLT_PERM_DPO1_F16_ID : RefLDLT_PERM_DPO1_f16.txt
+
+                Pattern REFLDLT_D_SDPO1_F16_ID : RefLDLT_D_SDPO1_f16.txt
+                Pattern REFLDLT_LL_SDPO1_F16_ID : RefLDLT_LL_SDPO1_f16.txt
+                Pattern REFLDLT_PERM_SDPO1_F16_ID : RefLDLT_PERM_SDPO1_f16.txt
+
+                Pattern INPUT_UT_DPO_F16_ID : InputUTDPO1_f16.txt
+                Pattern INPUT_LT_DPO_F16_ID : InputLTDPO1_f16.txt
+                Pattern INPUT_RNDA_DPO_F16_ID : InputRNDA1_f16.txt
+            
+                Pattern REF_UTINV_DPO_F16_ID : Ref_UTINV_DPO1_f16.txt
+                Pattern REF_LTINV_DPO_F16_ID : Ref_LTINV_DPO1_f16.txt
+                Pattern REF_CHOLINV_DPO_F16_ID : Ref_CHOLINV_DPO1_f16.txt
+
+                Output  TMPA_F16_ID : TempA
+                Output  TMPB_F16_ID : TempB
                 Output  OUT_F16_ID : Output
 
                 Params PARAM1_ID = {
                   NBR = [5,10,40]
                   NBC = [5,10,40]
                 }
+
+                Params PARAM_CHOLESKY_ID : ParamsCholesky1.txt
 
                 Functions {
                    Matrix Scaling:test_mat_scale_f16
@@ -496,6 +523,9 @@ group Root {
                    Matrix Substraction:test_mat_sub_f16
                    Matrix Vector Multiplication:test_mat_vec_mult_f16
                    Matrix Complex Transpose:test_mat_cmplx_trans_f16
+                   Cholesky decomposition:test_mat_cholesky_dpo_f16 -> PARAM_CHOLESKY_ID
+                   Backward substitution:test_solve_upper_triangular_f16 -> PARAM_CHOLESKY_ID
+                   Foward substitution:test_solve_lower_triangular_f16 -> PARAM_CHOLESKY_ID
                 } -> PARAM1_ID
               }
 

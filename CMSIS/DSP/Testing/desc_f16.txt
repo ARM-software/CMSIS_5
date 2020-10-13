@@ -729,6 +729,32 @@ group Root {
                 Pattern REFINV1_F16_ID : RefInvert1_f16.txt
                 Pattern REFVECMUL1_F16_ID : RefVecMul1_f16.txt
 
+                Pattern DIMSCHOLESKY1_DPO_S16_ID : DimsCholeskyDPO1_s16.txt 
+                Pattern DIMSCHOLESKY1_SDPO_S16_ID : DimsCholeskySDPO1_s16.txt 
+                Pattern INPUTSCHOLESKY1_DPO_F16_ID : InputCholeskyDPO1_f16.txt 
+                Pattern INPUTSCHOLESKY1_SDPO_F16_ID : InputCholeskySDPO1_f16.txt 
+
+                Pattern REFCHOLESKY1_DPO_F16_ID : RefCholeskyDPO1_f16.txt
+
+                Pattern REFLDLT_D_DPO1_F16_ID : RefLDLT_D_DPO1_f16.txt
+                Pattern REFLDLT_LL_DPO1_F16_ID : RefLDLT_LL_DPO1_f16.txt
+                Pattern REFLDLT_PERM_DPO1_S16_ID : RefLDLT_PERM_DPO1_s16.txt
+
+                Pattern REFLDLT_D_SDPO1_F16_ID : RefLDLT_D_SDPO1_f16.txt
+                Pattern REFLDLT_LL_SDPO1_F16_ID : RefLDLT_LL_SDPO1_f16.txt
+                Pattern REFLDLT_PERM_SDPO1_S16_ID : RefLDLT_PERM_SDPO1_s16.txt
+
+                Pattern INPUT_UT_DPO_F16_ID : InputUTDPO1_f16.txt
+                Pattern INPUT_LT_DPO_F16_ID : InputLTDPO1_f16.txt
+                Pattern INPUT_RNDA_DPO_F16_ID : InputRNDA1_f16.txt
+            
+                Pattern REF_UTINV_DPO_F16_ID : Ref_UTINV_DPO1_f16.txt
+                Pattern REF_LTINV_DPO_F16_ID : Ref_LTINV_DPO1_f16.txt
+                Pattern REF_CHOLINV_DPO_F16_ID : Ref_CHOLINV_DPO1_f16.txt
+
+                Output  D_F16_ID : Output
+                Output  LL_F16_ID : Output
+                Output  PERM_S16_ID : Output
 
                 Output  OUT_F16_ID : Output
                 Output  TMPA_F16_ID : TmpA
@@ -742,6 +768,9 @@ group Root {
                  test matrix inverse:test_mat_inverse_f16
                  test mat mult vec:test_mat_vec_mult_f16
                  test matrix complex transpose:test_mat_cmplx_trans_f16
+                 test matrix cholesky decomposition:test_mat_cholesky_dpo_f16
+                 test solve upper triangular:test_solve_upper_triangular_f16
+                 test solve lower triangular:test_solve_lower_triangular_f16
                 }
 
               }

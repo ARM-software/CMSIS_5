@@ -2284,6 +2284,7 @@ group Root {
               class = UnaryTests
               folder = Unary
 
+
               suite Unary Tests F32 {
                 class = UnaryTestsF32 
                 folder = UnaryF32
@@ -2306,10 +2307,45 @@ group Root {
                 Pattern REFINV1_F32_ID : RefInvert1_f32.txt
                 Pattern REFVECMUL1_F32_ID : RefVecMul1_f32.txt
 
+                Pattern DIMSCHOLESKY1_DPO_S16_ID : DimsCholeskyDPO1_s16.txt 
+                Pattern DIMSCHOLESKY1_SDPO_S16_ID : DimsCholeskySDPO1_s16.txt 
+                Pattern INPUTSCHOLESKY1_DPO_F32_ID : InputCholeskyDPO1_f32.txt 
+                Pattern INPUTSCHOLESKY1_SDPO_F32_ID : InputCholeskySDPO1_f32.txt 
+
+                Pattern REFCHOLESKY1_DPO_F32_ID : RefCholeskyDPO1_f32.txt
+
+                Pattern REFLDLT_D_DPO1_F32_ID : RefLDLT_D_DPO1_f32.txt
+                Pattern REFLDLT_LL_DPO1_F32_ID : RefLDLT_LL_DPO1_f32.txt
+                Pattern REFLDLT_PERM_DPO1_S16_ID : RefLDLT_PERM_DPO1_s16.txt
+
+                Pattern REFLDLT_D_SDPO1_F32_ID : RefLDLT_D_SDPO1_f32.txt
+                Pattern REFLDLT_LL_SDPO1_F32_ID : RefLDLT_LL_SDPO1_f32.txt
+                Pattern REFLDLT_PERM_SDPO1_S16_ID : RefLDLT_PERM_SDPO1_s16.txt
+
+                Pattern INPUT_UT_DPO_F32_ID : InputUTDPO1_f32.txt
+                Pattern INPUT_LT_DPO_F32_ID : InputLTDPO1_f32.txt
+                Pattern INPUT_RNDA_DPO_F32_ID : InputRNDA1_f32.txt
+            
+                Pattern REF_UTINV_DPO_F32_ID : Ref_UTINV_DPO1_f32.txt
+                Pattern REF_LTINV_DPO_F32_ID : Ref_LTINV_DPO1_f32.txt
+                Pattern REF_CHOLINV_DPO_F32_ID : Ref_CHOLINV_DPO1_f32.txt
+
+
+                Output  D_F32_ID : Output
+                Output  LL_F32_ID : Output
+                Output  PERM_S16_ID : Output
 
                 Output  OUT_F32_ID : Output
                 Output  TMPA_F32_ID : TmpA
                 Output  TMPB_F32_ID : TmpB
+                Output  TMPC_F32_ID : TmpC
+                Output  TMPD_F32_ID : TmpD
+
+                Output  TMPB_F64_ID : TmpDB
+                Output  TMPC_F64_ID : TmpDC
+                Output  TMPD_F64_ID : TmpDD
+                Output  OUTA_F64_ID : OutputAD
+                Output  OUTB_F64_ID : OutputBD
 
                 Functions {
                  test matrix add:test_mat_add_f32
@@ -2319,6 +2355,11 @@ group Root {
                  test matrix inverse:test_mat_inverse_f32
                  test mat mult vec:test_mat_vec_mult_f32
                  test matrix complex transpose:test_mat_cmplx_trans_f32
+                 test matrix cholesky decomposition:test_mat_cholesky_dpo_f32
+                 test solve upper triangular:test_solve_upper_triangular_f32
+                 test solve lower triangular:test_solve_lower_triangular_f32
+                 test matrix LDL decomposition DPO:test_mat_ldl_f32
+                 test matrix LDL decomposition SDPO:test_mat_ldl_f32
                 }
 
               }
@@ -2443,16 +2484,57 @@ group Root {
                 Pattern REFTRANS1_F64_ID : RefTranspose1_f64.txt
                 Pattern REFINV1_F64_ID : RefInvert1_f64.txt
 
+                Pattern DIMSCHOLESKY1_DPO_S16_ID : DimsCholeskyDPO1_s16.txt 
+                Pattern DIMSCHOLESKY1_SDPO_S16_ID : DimsCholeskySDPO1_s16.txt 
+                Pattern INPUTSCHOLESKY1_DPO_F64_ID : InputCholeskyDPO1_f64.txt 
+                Pattern INPUTSCHOLESKY1_SDPO_F64_ID : InputCholeskySDPO1_f64.txt 
+
+                Pattern REFCHOLESKY1_DPO_F64_ID : RefCholeskyDPO1_f64.txt
+
+                Pattern REFLDLT_D_DPO1_F64_ID : RefLDLT_D_DPO1_f64.txt
+                Pattern REFLDLT_LL_DPO1_F64_ID : RefLDLT_LL_DPO1_f64.txt
+                Pattern REFLDLT_PERM_DPO1_S16_ID : RefLDLT_PERM_DPO1_s16.txt
+
+                Pattern REFLDLT_D_SDPO1_F64_ID : RefLDLT_D_SDPO1_f64.txt
+                Pattern REFLDLT_LL_SDPO1_F64_ID : RefLDLT_LL_SDPO1_f64.txt
+                Pattern REFLDLT_PERM_SDPO1_S16_ID : RefLDLT_PERM_SDPO1_s16.txt
+
+                Pattern INPUT_UT_DPO_F64_ID : InputUTDPO1_f64.txt
+                Pattern INPUT_LT_DPO_F64_ID : InputLTDPO1_f64.txt
+                Pattern INPUT_RNDA_DPO_F64_ID : InputRNDA1_f64.txt
+            
+                Pattern REF_UTINV_DPO_F64_ID : Ref_UTINV_DPO1_f64.txt
+                Pattern REF_LTINV_DPO_F64_ID : Ref_LTINV_DPO1_f64.txt
+                Pattern REF_CHOLINV_DPO_F64_ID : Ref_CHOLINV_DPO1_f64.txt
+
+                Output  D_F64_ID : Output
+                Output  LL_F64_ID : Output
+                Output  PERM_S16_ID : Output
+
+
                 Output  OUT_F64_ID : Output
                 Output  TMPA_F64_ID : TmpA
                 Output  TMPB_F64_ID : TmpB
+                Output  TMPC_F64_ID : TmpC
+                Output  TMPD_F64_ID : TmpD
+
+                Output  TMPDB_F64_ID : TmpDB
+                Output  TMPDC_F64_ID : TmpDC
+                Output  TMPDD_F64_ID : TmpDD
+                Output  OUTA_F64_ID : OutputAD
+                Output  OUTB_F64_ID : OutputBD
 
                 Functions {
                  disabled {test matrix add:test_mat_add_f64}
-                 disabled {test matrix sub:test_mat_sub_f64}
+                 test matrix sub:test_mat_sub_f64
                  disabled {test matrix scale:test_mat_scale_f64}
-                 disabled {test matrix transpose:test_mat_trans_f64}
+                 test matrix transpose:test_mat_trans_f64
                  test matrix inverse:test_mat_inverse_f64
+                 test matrix cholesky decomposition:test_mat_cholesky_dpo_f64
+                 test solve upper triangular:test_solve_upper_triangular_f64
+                 test solve lower triangular:test_solve_lower_triangular_f64
+                 test matrix LDL decomposition DPO:test_mat_ldl_f64
+                 test matrix LDL decomposition SDPO:test_mat_ldl_f64
                 }
 
               }
@@ -2484,6 +2566,31 @@ group Root {
                 Functions {
                   test mult:test_mat_mult_f32
                   test complex mult:test_mat_cmplx_mult_f32
+                }
+
+             }
+
+             suite Binary F64 {
+                class = BinaryTestsF64 
+                folder = BinaryF64
+
+                Pattern INPUTS1_F64_ID : InputA1_f64.txt 
+                Pattern INPUTS2_F64_ID : InputB1_f64.txt 
+
+                Pattern INPUTSC1_F64_ID : InputAC1_f64.txt 
+                Pattern INPUTSC2_F64_ID : InputBC1_f64.txt 
+
+                Pattern REFMUL1_F64_ID : RefMul1_f64.txt
+                Pattern REFCMPLXMUL1_F64_ID : RefCmplxMul1_f64.txt
+                Pattern DIMSBINARY1_S16_ID : DimsBinary1_s16.txt 
+
+
+                Output  OUT_F64_ID : Output
+                Output  TMPA_F64_ID : TmpA
+                Output  TMPB_F64_ID : TmpB
+
+                Functions {
+                  test mult:test_mat_mult_f64
                 }
 
              }

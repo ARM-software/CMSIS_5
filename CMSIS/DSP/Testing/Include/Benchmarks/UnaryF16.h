@@ -12,8 +12,11 @@ class UnaryF16:public Client::Suite
         private:
             #include "UnaryF16_decl.h"
             Client::Pattern<float16_t> input1;
+            Client::Pattern<float16_t> input2;
             Client::Pattern<float16_t> vec;
 
+            Client::LocalPattern<float16_t> a;
+            Client::LocalPattern<float16_t> b;
             Client::LocalPattern<float16_t> output;
 
             int nbr;
@@ -22,5 +25,6 @@ class UnaryF16:public Client::Suite
             float16_t *vecp;
             float16_t *outp;
             arm_matrix_instance_f16 in1;
+            arm_matrix_instance_f16 in2;
             arm_matrix_instance_f16 out;
     };

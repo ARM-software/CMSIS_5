@@ -50,7 +50,6 @@
 
 #include "arm_helium_utils.h"
 
-#include <stdio.h>
 void arm_svm_linear_predict_f16(
     const arm_svm_linear_instance_f16 *S,
     const float16_t * in,

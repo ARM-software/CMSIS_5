@@ -22,6 +22,8 @@
 
       Complex Matrix Transpose
 
+      Cholesky (LL^t and LDL^t decompositions)
+
       More support for f16 datatype:
       - arm_cfft_f16
       - arm_rfft_fast_f16 

@@ -4,12 +4,86 @@ import itertools
 import Tools
 import numpy.linalg
 import math
+import scipy.linalg
 
 def cartesian(*somelists):
    r=[]
    for element in itertools.product(*somelists):
        r.append(element)
    return(r)
+
+def swaprow(a,k,j):
+    tmp = np.copy(a[j,:])
+    a[j,:] = np.copy(a[k,:])
+    a[k,:] = tmp 
+    return(a)
+
+def swapcol(a,k,j):
+    tmp = np.copy(a[:,j])
+    a[:,j] = np.copy(a[:,k])
+    a[:,k] = tmp 
+    return(a)
+
+def ldlt(src):
+    # Algorithm 4.2.2 in Golub and Van Loan
+    ma = np.copy(src)
+    fullRank = True
+
+
+    piv=np.zeros(len(ma),dtype=int)
+
+    n = len(ma)
+
+    for k in range(0,n):
+        piv[k] = k
+    
+    for k in range(0,n):
+        d=np.diagonal(ma)
+        j = np.argmax(d[k:]) + k
+        piv[k] = j
+        
+        ma = swaprow(ma,k,j)
+        ma = swapcol(ma,k,j)
+        
+        alpha = ma[k,k]
+        v = np.copy(ma[k+1:,k])
+
+        if abs(alpha) < 1.0e-18:
+            fullRank = False
+            break
+    
+        ma[k+1:,k] = v / alpha
+    
+        v = v.reshape((n-k-1,1))
+    
+        ma[k+1:,k+1:] = ma[k+1:,k+1:] - np.matmul(v , np.transpose(v)) / alpha
+    
+    
+    if not fullRank:
+       ma[:,k:] = 0.0
+       diags=(np.array(range(0,k),dtype=int),np.array(range(0,k),dtype=int))
+    else:
+       diags=(np.array(range(0,k+1),dtype=int),np.array(range(0,k+1),dtype=int))
+
+    ll=np.tril(ma)
+       
+    ll[diags] = 1.0
+    d=np.diag(np.diagonal(ma))
+
+    return(ll,d,piv)
+
+# Validate the Python implementation of LDLT
+def valid(src,ll,d,piv):
+    n = len(src)
+    p=np.identity(n)
+    for k in range(0,n):
+        p = swaprow(p,k,piv[k])
+    
+    a = np.matmul(p,np.matmul(src,np.transpose(p)))
+    t = np.matmul(ll,np.matmul(d,np.transpose(ll)))
+    r = a - t
+    r[abs(r)<1e-10]=0.0
+    return(np.all(r == 0.0))
 
 # Those patterns are used for tests and benchmarks.
 # For tests, there is the need to add tests for saturation
@@ -83,6 +157,8 @@ def writeBinaryTests(config,format):
        r = r.reshape(a*c)
        vals = vals + list(asReal(r))
     config.writeReference(1, vals,"RefCmplxMul")
+
+
 
 def getInvertibleMatrix(d):
   m = list(np.identity(d))
@@ -590,52 +666,63 @@ def getInvertibleMatrix(d):
           0.881759, 0.391551]]
   return(np.array(m))
 
+def getDefinitePositiveMatrix(d):
+    a = 1.0 * np.diag(np.array(range(1,d+1)))/d
+    p = getInvertibleMatrix(d)
+    return(np.matmul(p,np.matmul(a,np.transpose(p))))
 
+def getSemidefinitePositiveMatrix(d,k=3):
+   if d >= k + 1 :
+     a = np.diag(np.hstack([np.array(range(1,d+1-k)),np.zeros(k)])) / d
+   else:
+     a = 1.0 * np.diag(np.array(range(1,d+1)))/d
+   p = getInvertibleMatrix(d)
+   return(np.matmul(p,np.matmul(a,np.transpose(p))))
 
 def writeUnaryTests(config,format):
     # For benchmarks
     NBSAMPLES=NBA*NBB
     NBVECSAMPLES = NBB
-
+    #
     data1=np.random.randn(NBSAMPLES)
     data1 = Tools.normalize(data1)
     if format == Tools.Q7:
        data1 = data1 / 4.0
-
+    #
     data1C=randComplex(NBSAMPLES)
-
+    #
     if format == Tools.Q7:
        data1C = data1C / 4.0
-
+    #
     data2=np.random.randn(NBSAMPLES)
     data2 = Tools.normalize(data2) 
-
+    #
     vecdata=np.random.randn(NBVECSAMPLES)
     vecdata = Tools.normalize(vecdata)
     if format == Tools.Q7:
        vecdata = vecdata / 4.0
-
-
+    #
+    #
     config.writeInput(1, data1,"InputA")
     config.writeInput(1, asReal(data1C),"InputAC")
-
+    #
     config.writeInput(1, data2,"InputB")
     config.writeInput(1, vecdata,"InputVec")
-
+    #
     # For tests
     NA=[1,2,3,4,Tools.loopnb(format,Tools.TAILONLY),
     Tools.loopnb(format,Tools.BODYONLY),
     Tools.loopnb(format,Tools.BODYANDTAIL)
     ]
     unarySizes = cartesian(NA,NA)
-
+    #
     dims=[] 
     for (a,b) in unarySizes:
        dims.append(a)
        dims.append(b)
     # One kind of matrix shape
     config.writeInputS16(1, dims,"DimsUnary")
-
+    #
     vals = []
     for (a,b) in unarySizes:
        ma = np.copy(data1[0:a*b]).reshape(a,b)
@@ -644,7 +731,7 @@ def writeUnaryTests(config,format):
        r = list(r.reshape(a*b))
        vals = vals + r
     config.writeReference(1, vals,"RefAdd")
-
+    #
     vals=[] 
     for (a,b) in unarySizes:
        ma = np.copy(data1[0:a*b]).reshape(a,b)
@@ -653,7 +740,7 @@ def writeUnaryTests(config,format):
        r = list(r.reshape(a))
        vals = vals + r
     config.writeReference(1, vals,"RefVecMul")
-
+    #
     vals = []
     for (a,b) in unarySizes:
        ma = np.copy(data1[0:a*b]).reshape(a,b)
@@ -662,7 +749,7 @@ def writeUnaryTests(config,format):
        r = list(r.reshape(a*b))
        vals = vals + r
     config.writeReference(1, vals,"RefSub")
-
+    #
     vals = []
     for (a,b) in unarySizes:
        ma = np.copy(data1[0:a*b]).reshape(a,b)
@@ -670,7 +757,7 @@ def writeUnaryTests(config,format):
        r = list(r.reshape(a*b))
        vals = vals + r
     config.writeReference(1, vals,"RefTranspose")
-
+    #
     vals = []
     for (a,b) in unarySizes:
        ma = np.copy(data1C[0:a*b]).reshape(a,b)
@@ -678,7 +765,7 @@ def writeUnaryTests(config,format):
        r = list(asReal(r.reshape(a*b)))
        vals = vals + r
     config.writeReference(1, vals,"RefTransposeC")
-
+    #
     vals = []
     for (a,b) in unarySizes:
        ma = np.copy(data1[0:a*b]).reshape(a,b)
@@ -686,7 +773,7 @@ def writeUnaryTests(config,format):
        r = list(r.reshape(a*b))
        vals = vals + r
     config.writeReference(1, vals,"RefScale")
-
+    #
     # Current algo is not very accurate for big matrix.
     # But big matrix required to check the vectorized code.
     if format==Tools.F16:
@@ -695,7 +782,7 @@ def writeUnaryTests(config,format):
        dims=[1,2,3,4,7,8,9,15,16]
     else:
        dims=[1,2,3,4,7,8,9,15,16,17,32,33]
-
+    #
     vals = []
     inp=[]
     for d in dims:
@@ -703,23 +790,126 @@ def writeUnaryTests(config,format):
         inp = inp + list(ma.reshape(d*d))
         r = numpy.linalg.inv(ma)
         vals = vals + list(r.reshape(d*d))
-
+    #
     # Add matrix for testing null pivot condition
     ma = np.array([[0., 3.], [4., 5.]])
     inp = inp + list(ma.reshape(4))
     r = np.linalg.inv(ma)
     vals = vals + list(r.reshape(4))
     dims.append(2)
-
+    #
     config.writeInputS16(1, dims,"DimsInvert")
     config.writeInput(1, inp,"InputInvert")
     config.writeReference(1, vals,"RefInvert")
     # One kind of matrix shape
 
+    # Cholesky and LDLT definite positive (DPO)
+    inp=[]
+    vals = []
+    dvals=[] 
+    llvals=[] 
+    permvals=[]
+    uts=[] # U
+    lts=[] # L
+    rndas=[] # A
+    utinvs=[] # X such that UX=A
+    ltinvs=[] # X such that LX=A
+    cholinvs=[] # X such that MA X  = A where A positive definite
+    for d in dims:
+       ma = getDefinitePositiveMatrix(d)
+       inp = inp + list(ma.reshape(d*d))
+       # Lower triangular 
+       l = scipy.linalg.cholesky(ma,lower=True)
+
+       vals = vals + list(l.reshape(d*d))
+
+       ll, di, perm = ldlt(ma)
+
+       if not valid(ma,ll,di,perm):
+          print("Error LDLT with positive definite !")
+          sys.exit(1)
+
+       llvals = llvals + list(ll.reshape(d*d))
+       dvals = dvals + list(di.reshape(d*d))
+       permvals = permvals + list(perm.reshape(d))
+
+       a = np.random.randn(d*d)
+       a = Tools.normalize(a)
+       a = a.reshape(d,d)
+
+       lt = l 
+       ut = l.transpose()
+
+       utinv = np.linalg.solve(ut,a)
+       ltinv = np.linalg.solve(lt,a)
+       cholinv = np.linalg.solve(ma,a)
+
+       uts += list(ut.reshape(d*d)) 
+       lts += list(lt.reshape(d*d)) 
+       rndas += list(a.reshape(d*d))
+
+       utinvs += list(utinv.reshape(d*d)) 
+       ltinvs += list(ltinv.reshape(d*d))
+       cholinvs += list(cholinv.reshape(d*d))
+
+
+
+
+    config.writeInputS16(1, dims,"DimsCholeskyDPO")
+    config.writeInput(1, inp,"InputCholeskyDPO")
+    config.writeReference(1, vals,"RefCholeskyDPO")
+
+    config.writeReference(1, llvals,"RefLDLT_LL_DPO")
+    config.writeReference(1, dvals,"RefLDLT_D_DPO")
+    config.writeReferenceS16(1, permvals,"RefLDLT_PERM_DPO")
+
+    config.writeInput(1, uts,"InputUTDPO")
+    config.writeInput(1, lts,"InputLTDPO")
+    config.writeInput(1, rndas,"InputRNDA")
+
+    config.writeReference(1, utinvs,"Ref_UTINV_DPO")
+    config.writeReference(1, ltinvs,"Ref_LTINV_DPO")
+    config.writeReference(1, cholinvs,"Ref_CHOLINV_DPO")
+
+    r=np.array([(4,4),(8,8),(9,9),(15,15),(16,16)])
+    r=r.reshape(2*5)
+    config.writeParam(1, r,"ParamsCholesky")
+
+
+    # Cholesky and LDLT semi definite positive (SDPO)
+    dims=[1,2,3,4,7]
+    inp=[]
+    vals = []
+    dvals=[] 
+    llvals=[] 
+    permvals=[]
+    for d in dims:
+       ma = getSemidefinitePositiveMatrix(d)
+       inp = inp + list(ma.reshape(d*d))
+
+       ll, di, perm = ldlt(ma)
+       if not valid(ma,ll,di,perm):
+          print("Error LDLT with positive semi definite !")
+          sys.exit(1)
+
+       llvals = llvals + list(ll.reshape(d*d))
+       dvals = dvals + list(di.reshape(d*d))
+       permvals = permvals + list(perm.reshape(d))
+
+
+    config.writeInputS16(1, dims,"DimsCholeskySDPO")
+    config.writeInput(1, inp,"InputCholeskySDPO")
+
+    config.writeReference(1, llvals,"RefLDLT_LL_SDPO")
+    config.writeReference(1, dvals,"RefLDLT_D_SDPO")
+    config.writeReferenceS16(1, permvals,"RefLDLT_PERM_SDPO")
+
+
 def generatePatterns():
     PATTERNBINDIR = os.path.join("Patterns","DSP","Matrix","Binary","Binary")
     PARAMBINDIR = os.path.join("Parameters","DSP","Matrix","Binary","Binary")
     
+    configBinaryf64=Tools.Config(PATTERNBINDIR,PARAMBINDIR,"f64")
     configBinaryf32=Tools.Config(PATTERNBINDIR,PARAMBINDIR,"f32")
     configBinaryf16=Tools.Config(PATTERNBINDIR,PARAMBINDIR,"f16")
     configBinaryq31=Tools.Config(PATTERNBINDIR,PARAMBINDIR,"q31")
@@ -727,7 +917,7 @@ def generatePatterns():
     configBinaryq7=Tools.Config(PATTERNBINDIR,PARAMBINDIR,"q7")
 
     
-    
+    writeBinaryTests(configBinaryf64,Tools.F32)
     writeBinaryTests(configBinaryf32,Tools.F32)
     writeBinaryTests(configBinaryf16,Tools.F16)
     writeBinaryTests(configBinaryq31,Tools.Q31)

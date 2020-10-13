@@ -1,5 +1,9 @@
 function(configDsp project root)
 
+if (HOST)
+      target_compile_definitions(${project} PUBLIC __GNUC_PYTHON__)
+endif()
+
 if (CONFIGTABLE)
     # Public because initialization for FFT may be defined in client code 
     # and needs access to the table.

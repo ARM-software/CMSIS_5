@@ -49,7 +49,6 @@ target_sources(CMSISDSPMatrix PRIVATE arm_mat_cmplx_trans_f16.c)
 target_sources(CMSISDSPMatrix PRIVATE arm_mat_cmplx_mult_f16.c)
 target_sources(CMSISDSPMatrix PRIVATE arm_mat_inverse_f16.c)
 target_sources(CMSISDSPMatrix PRIVATE arm_mat_init_f16.c)
-
-
+target_sources(CMSISDSPMatrix PRIVATE arm_mat_cholesky_f16.c)
 
 endif()
