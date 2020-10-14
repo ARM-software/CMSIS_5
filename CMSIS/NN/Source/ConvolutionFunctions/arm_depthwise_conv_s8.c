@@ -223,6 +223,7 @@ arm_status arm_depthwise_conv_s8(const cmsis_nn_context *ctx,
                                  q7_t *output)
 {
     (void)dw_conv_params->dilation;
+    (void)bias_dims;
     (void)ctx;
 
     if (dw_conv_params->ch_mult % 4 == 0)

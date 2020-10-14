@@ -62,7 +62,7 @@ Once you are happy with the new test data set, it should be added in the load_al
 ## Overview of the Folders
 
 - `Output` - This will be created when building.
-- `Profiles` - These are the Mbed settings that are used.
+- `Mbed` - These are the Mbed settings that are used. See Mbed/README.md.
 - `PregeneratedData` - These are tests sets of data that have been previously been generated and are used in the unit tests.
 - `TestCases` - Here are the actual unit tests. For each function under test there is a folder under here.
 - `TestCases/<cmsis-nn function name>` - For each function under test there is a folder with the same name with test_ prepended to the name and it contains a c-file with the actual unit tests. For example for arm_convolve_s8() the file is called test_arm_convolve_s8.c

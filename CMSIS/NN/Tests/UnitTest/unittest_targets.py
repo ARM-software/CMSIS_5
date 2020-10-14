@@ -36,7 +36,7 @@ from termcolor import colored
 OUTPUT = "Output/"
 BASE_PATH = "../../"
 CMSIS_PATH = "../../../../../"
-UNITY_PATH = "../Unity/"
+UNITY_PATH = "Unity/"
 UNITY_BASE = BASE_PATH + UNITY_PATH
 UNITY_SRC = UNITY_BASE + "src/"
 CMSIS_FLAGS = " -DARM_MATH_DSP -DARM_MATH_LOOPUNROLL"
@@ -51,6 +51,9 @@ def parse_args():
                         " So basically the different options can be listed with:"
                         " ls -d TestCases/test_* -1")
     parser.add_argument('-c', '--compiler', type=str, default='GCC_ARM', choices=['GCC_ARM', 'ARMC6'])
+    parser.add_argument('--download-and-generate-test-runners', dest='download_and_generate', action='store_true',
+                        help="Just download Unity and generate test runners if needed")
+
     args = parser.parse_args()
     return args
 
@@ -103,14 +106,22 @@ def detect_architecture(target_name, target_json):
         with open(target_json, "r") as read_file:
             data = json.load(read_file)
 
-            if data[target_name]['core']:
-                arch = data[target_name]['core'][:9]
-                if data[target_name]['core'][:8] == 'Cortex-M':
+            if 'core' in data[target_name]:
+                core = data[target_name]['core']
+            elif 'inherits' in data[target_name]:
+                target_inherits = data[target_name]['inherits'][0]
+                core = data[target_inherits]['core']
+            else:
+                raise Exception("Cannot detect architecture")
+
+            if core:
+                arch = core[:9]
+                if core[:8] == 'Cortex-M':
                     return arch
-            error_handler(668, 'Unsupported target: {} with architecture: {}'.format(
+            error_handler(168, 'Unsupported target: {} with architecture: {}'.format(
                 target_name, arch))
     except Exception as e:
-        error_handler(667, e)
+        error_handler(167, e)
 
     return arch
 
@@ -131,11 +142,14 @@ def test_target(target, args, main_test):
 
     try:
         target_json = 'mbed-os/targets/targets.json'
+        mbed_path = BASE_PATH + 'Mbed/'
 
         if not path.exists("mbed-os.lib"):
             print("Initializing mbed in {}".format(os.getcwd()))
-            run_command('mbed new .')
-            shutil.copyfile(BASE_PATH + 'Profiles/mbed_app.json', 'mbed_app.json')
+            shutil.copyfile(mbed_path + 'mbed-os.lib', 'mbed-os.lib')
+            shutil.copyfile(mbed_path + 'mbed_app.json', 'mbed_app.json')
+            run_command('mbed config root .')
+            run_command('mbed deploy')
 
         arch = detect_architecture(target_model, target_json)
         if arch == 'Cortex-M4' or arch == 'Cortex-M7':
@@ -151,7 +165,7 @@ def test_target(target, args, main_test):
         test = ''
         additional_options = ' --source ' + BASE_PATH + main_test + \
                              ' --source ' + UNITY_SRC + \
-                             ' --profile ' + BASE_PATH + 'Profiles/release.json' + \
+                             ' --profile ' + mbed_path + 'release.json' + \
                              ' -f'
 
         result = run_command("mbed {} -v -m ".format(mbed_command) + target_model + ' -t ' + compiler +
@@ -170,7 +184,7 @@ def test_target(target, args, main_test):
                              flash_error_msg, die=die)
 
     except Exception as e:
-        error_handler(666, e)
+        error_handler(166, e)
 
     os.chdir(start_dir)
     return result
@@ -195,7 +209,7 @@ def test_target_with_unity(target, args, main_test):
     try:
         ser = serial.Serial(port, baudrate, timeout=timeout)
     except Exception as e:
-        error_handler(669, "serial exception: {}".format(e))
+        error_handler(169, "serial exception: {}".format(e))
 
     # Clear read buffer
     time.sleep(0.1)  # Workaround in response to: open() returns before port is ready
@@ -306,17 +320,20 @@ def test_targets(args):
     targets = []
     main_tests = []
 
-    detect_targets(targets)
-
-    if len(targets) == 0:
-        print("No targets detected!")
-        return 3
+    if not args.download_and_generate:
+        detect_targets(targets)
+        if len(targets) == 0:
+            print("No targets detected!")
+            return 3
 
     download_unity()
 
     if not parse_tests(targets, main_tests, args.specific_test):
         print("No tests found?!")
         return 4
+
+    if args.download_and_generate:
+        return result
 
     for target in targets:
         for tst in main_tests:
@@ -358,19 +375,19 @@ def download_unity(force=False):
     for line in process.stdout:
         pass
     if not line:
-        error_handler(671)
+        error_handler(171)
     try:
         m = re.search('\'(.+?)\'', line.strip())
     except AttributeError as e:
-        error_handler(673, e)
+        error_handler(173, e)
     downloaded_file = download_dir + m.group(1)
     os.chdir(current_dir)
     try:
         filename_base = downloaded_file.split('-')[0]
     except IndexError as e:
-        error_handler(674, e)
+        error_handler(174, e)
     if not filename_base:
-        error_handler(675)
+        error_handler(175)
     run_command("tar xzf "+downloaded_file+" -C "+unity_dir+" --strip-components=1")
     os.chdir(current_dir)
 
@@ -430,7 +447,7 @@ def parse_test(test_runner, targets):
     try:
         read_file = open(test_runner, "r")
     except IOError as e:
-        error_handler(670, e)
+        error_handler(170, e)
     else:
         with read_file:
             for line in read_file:

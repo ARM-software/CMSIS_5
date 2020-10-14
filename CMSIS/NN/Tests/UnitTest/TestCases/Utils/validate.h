@@ -21,7 +21,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 
-inline int validate(int8_t *act, const int8_t *ref, int size)
+static inline int validate(int8_t *act, const int8_t *ref, int size)
 {
     int test_passed = true;
     int count = 0;

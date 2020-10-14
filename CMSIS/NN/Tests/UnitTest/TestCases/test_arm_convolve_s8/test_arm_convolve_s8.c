@@ -18,7 +18,8 @@
 
 #include <stdlib.h>
 
-#include "arm_nnfunctions.h"
+#include <arm_nnfunctions.h>
+#include <unity.h>
 
 #include "../Utils/validate.h"
 #include "../TestData/basic/test_data.h"

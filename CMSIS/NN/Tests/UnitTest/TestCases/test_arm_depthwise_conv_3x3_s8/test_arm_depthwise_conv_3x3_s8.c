@@ -17,7 +17,8 @@
  */
 
 #include <stdlib.h>
-#include "arm_nnfunctions.h"
+#include <arm_nnfunctions.h>
+#include <unity.h>
 
 #include "../Utils/validate.h"
 #include "../TestData/depthwise_kernel_3x3/test_data.h"

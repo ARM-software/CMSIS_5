@@ -17,8 +17,9 @@
  */
 
 #include <stdlib.h>
+#include <arm_nnfunctions.h>
+#include <unity.h>
 
-#include "arm_nnfunctions.h"
 #include "../Utils/validate.h"
 #include "../TestData/kernel1x1/test_data.h"
 
