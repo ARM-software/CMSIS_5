@@ -17,6 +17,7 @@
  */
 
 #include "arm_nnfunctions.h"
+#include "unity.h"
 
 #include "../Utils/validate.h"
 #include "../TestData/avgpooling/test_data.h"
