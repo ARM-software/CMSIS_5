@@ -2044,9 +2044,9 @@ Contact cmsis@arm.com to ask for an extension. These values can be used in the e
     <td>http://www.infineon.com</td>
   </tr>
   <tr>
-    <td class="XML-Token">Lapis Semiconductor:10</td>
-    <td>Lapis Semiconductor</td>
-    <td>http://www.lapis-semi.com</td>
+    <td class="XML-Token">Lapis Technology:10</td>
+    <td>Lapis Technology</td>
+    <td>http://www.lapis-tech.com</td>
   </tr>
   <tr>
     <td class="XML-Token">Linear Technolgy:136</td>
