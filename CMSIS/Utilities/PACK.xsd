@@ -179,7 +179,7 @@
       <xs:enumeration value="Hyundai:35" />
       <xs:enumeration value="Infineon:7" />
       <xs:enumeration value="Kionix:127" />
-      <xs:enumeration value="Lapis Semiconductor:10" />
+      <xs:enumeration value="Lapis Technology:10" />
       <xs:enumeration value="Linear Technology:136" />
       <xs:enumeration value="Luminary Micro:76" />
       <xs:enumeration value="Maxim:23" />
