@@ -355,7 +355,7 @@
       <xs:element name="file"      type="FileType" />
       <xs:element name="group"     type="GroupType" />
     </xs:choice>
-    <xs:attribute name="name" use="required" />
+    <xs:attribute name="name"  type="xs:string" use="required" />
     <!-- layer reference -->
     <xs:attribute name="layer" type="RestrictedString" use="optional" />
   </xs:complexType>
@@ -389,8 +389,8 @@
       <xs:element name="cxxflags"  type="ToolOptionType" />
       <!-- Assembler command-line -->
       <xs:element name="asflags"   type="AsmOptionType" />
-      <xs:element name="file" type="FileType" />
-      <xs:element name="group" type="GroupType" />
+      <xs:element name="file"      type="FileType" />
+      <xs:element name="group"     type="GroupType" />
     </xs:choice>
   </xs:complexType>
 
