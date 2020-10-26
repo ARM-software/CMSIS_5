@@ -11,6 +11,13 @@
 
 #define ABS_32x64_ERROR_Q31 ((q31_t)25)
 
+void checkInnerTail(q31_t *b)
+{
+    ASSERT_TRUE(b[0] == 0);
+    ASSERT_TRUE(b[1] == 0);
+    ASSERT_TRUE(b[2] == 0);
+    ASSERT_TRUE(b[3] == 0);
+}
 
     void BIQUADQ31::test_biquad_cascade_df1()
     {
@@ -112,7 +119,7 @@
            the state management of the fir is working.)
 
            */
-
+#if 0
            arm_biquad_cas_df1_32x64_q31(&this->S32x64,inputp,outp,blockSize);
            outp += blockSize;
            
@@ -120,7 +127,27 @@
            arm_biquad_cas_df1_32x64_q31(&this->S32x64,inputp,outp,blockSize);
            outp += blockSize;
 
-
+#else
+           int delta=1;
+           int k;
+           for(k=0;k + delta <2*blockSize ; k+=delta)
+           {
+             arm_biquad_cas_df1_32x64_q31(&this->S32x64,inputp,outp,delta);
+             outp += delta;
+             checkInnerTail(outp);
+           
+             inputp += delta;
+           }
+           if (k < 2*blockSize)
+           {
+             delta = 2*blockSize - k;
+             arm_biquad_cas_df1_32x64_q31(&this->S32x64,inputp,outp,delta);
+             outp += delta;
+             checkInnerTail(outp);
+           
+             inputp += delta;
+           }
+#endif
 
 
            ASSERT_EMPTY_TAIL(output);

@@ -9,7 +9,6 @@ import os.path
 
 refCoreName=""
 
-runidCMD = "runid = ?"
 
 # Command to get last runid 
 lastID="""SELECT runid FROM RUN ORDER BY runid DESC LIMIT 1
@@ -62,8 +61,7 @@ parser.add_argument('-ratio', action='store_true', help="Compute ratios for regr
 parser.add_argument('-ref', nargs='?',type = str, default="M55", help="Reference COREDEF for ratio in db")
 parser.add_argument('-clampval', nargs='?',type = float, default=8.0, help="Clamp for ratio")
 parser.add_argument('-clamp', action='store_true', help="Clamp enabled for ratio")
-parser.add_argument('-keep', nargs='?',type = str, help="Core to keep for ratio")
-parser.add_argument('-disprunid', action='store_true', help="Include runid in html")
+parser.add_argument('-cores', nargs='?',type = str, help="Cores to keep")
 
 # For runid or runid range
 parser.add_argument('others', nargs=argparse.REMAINDER,help="Run ID")
@@ -72,35 +70,65 @@ args = parser.parse_args()
 
 c = sqlite3.connect(args.b)
 
-if args.others:
-   vals=[]
-   runidCMD=[]
-   runidHeader=[]
-   runidVIEWcmd=[]
-   for t in args.others:
+coreidSQL="select distinct coreid from CORE where coredef==?"
+
+def getCoreID(corename):
+  r=c.execute(coreidSQL,(corename,))
+  t=r.fetchone()
+  if t is None:
+    print("Unrecognized reference core \"%s\"" % corename)
+    quit()
+  return(t[0])
+
+def parseSelector(o,field="runid"):
+  vals=[]
+  runidCMD=[]
+  # parameters are not allowed in VIEWs
+  runidVIEWcmd=[]
+  for t in o:
      if re.search(r'-',t):
        bounds=[int(x) for x in t.split("-")]
        vals += bounds
-       runidHeader += ["%d <= runid <= %d" % tuple(bounds)]
-       runidCMD += ["(runid >= ? AND runid <= ?)"]
-       runidVIEWcmd += ["(runid >= %d AND runid <= %d) " % tuple(bounds)]
+       runidCMD += ["(%s >= ? AND %s <= ?)" % (field,field)]
+       x=(field,bounds[0],field,bounds[1])
+       runidVIEWcmd += ["(%s >= %d AND %s <= %d)" % x]
      else:
       theid=int(t)
-      runidHeader += ["runid == %d" % theid]
-      runidCMD += ["runid == ?"]
-      runidVIEWcmd += ["runid == %d" % theid]
+      runidCMD += ["%s == ?" % field]
+      runidVIEWcmd += ["%s == %d" % (field,theid)]
       vals.append(theid)
 
-   runidval = tuple(vals)
-   runidHeader = "(" + "".join(joinit(runidHeader," OR ")) + ")"
-   runidCMD = "(" + "".join(joinit(runidCMD," OR ")) + ")"
-   runidVIEWcmd = "(" + "".join(joinit(runidVIEWcmd," OR ")) + ")"
+  runidval = tuple(vals)
+  runidCMD = "(" + "".join(joinit(runidCMD," OR ")) + ")"
+  runidVIEWcmd = "(" + "".join(joinit(runidVIEWcmd," OR ")) + ")"
+  return(runidval,runidCMD,runidVIEWcmd)
+
+if args.others:
+
+   runidval,runidCMD,runidVIEWcmd = parseSelector(args.others)
+
 else:
    theid=getLastRunID()
    print("Last run ID = %d\n" % theid)
    runidval=(theid,)
-   runidHeader="%d" % theid
+   runidCMD = "runid = ?"
    runidVIEWcmd="(runid = %d)" % theid
+
+# None means all
+coreidval = []
+coreidCMD = []
+keepCoreIds=None
+if args.cores:
+   cores=args.cores.split(",")
+   coreids = [str(getCoreID(x.strip())) for x in cores]
+   keepCoreIds = coreids.copy()
+   if args.ref:
+      coreids.append(str(getCoreID(args.ref.strip())))
+   #print(coreids)
+   coreidval,coreidCMD, coreidVIEWcmd = parseSelector(coreids,field="coreid")
+   runidval += coreidval
+   runidCMD += " AND %s" % coreidCMD
+   runidVIEWcmd += " AND %s" % coreidVIEWcmd
 
 
 # We extract data only from data tables
@@ -703,28 +731,16 @@ referenceCoreID = None
 
 
 
-coreidSQL="select distinct coreid from CORE where coredef==?"
 
-def getCoreID(corename):
-  r=c.execute(coreidSQL,(corename,))
-  t=r.fetchone()
-  if t is None:
-    print("Unrecognized reference core")
-    quit()
-  return(t[0])
 
 refCore="""CREATE TEMP VIEW if not exists refCore AS
 select * from %s where (coreid = %s) and (typeid =  %s)
  and %s
  and compilerid = %s"""
 
-allOtherCores="""CREATE TEMP VIEW if not exists otherCore AS
-select * from %s where (coreid != %s) and (typeid =  %s)
- and %s
- and compilerid = %s"""
 
 otherCore="""CREATE TEMP VIEW if not exists otherCore AS
-select * from %s where (coreid = %s) and (typeid =  %s)
+select * from %s where (typeid =  %s)
  and %s
  and compilerid = %s"""
 
@@ -734,7 +750,7 @@ select * from %s where (coreid = %s)
  and compilerid = %s"""
 
 otherCoreAllTypes="""CREATE TEMP VIEW if not exists otherCore AS
-select * from %s where (coreid = %s) 
+select * from %s where (coreid = %s)
  and %s
  and compilerid = %s"""
 
@@ -838,11 +854,10 @@ def computeRatio(benchName,viewParams,refMkViewCmd,otherMkViewCmd,byd):
 def computeRatioTable(benchName,referenceCore,typeID,compiler):
   viewParams = (benchName,referenceCore,typeID,runidVIEWcmd,compiler)
   refMkViewCmd = refCore % viewParams
-  otherMkViewCmd = allOtherCores % viewParams
-  if args.keep:
-    keepCoreID = getCoreID(args.keep)
-    otherParams = (benchName,keepCoreID,typeID,runidVIEWcmd,compiler)
-    otherMkViewCmd = otherCore % otherParams
+  otherParams = (benchName,typeID,runidVIEWcmd,compiler)
+  otherMkViewCmd = otherCore % otherParams
+  #print(refMkViewCmd)
+  #print(otherMkViewCmd)
   return(computeRatio(benchName,viewParams,refMkViewCmd,otherMkViewCmd,False))
   
 
@@ -851,6 +866,8 @@ def computeRatioTableForCore(benchName,referenceCore,otherCoreID,compiler):
   refMkViewCmd = refCoreAllTypes % viewParams
   otherParams = (benchName,otherCoreID,runidVIEWcmd,compiler)
   otherMkViewCmd = otherCoreAllTypes % otherParams
+  #print(refMkViewCmd)
+  #print(otherMkViewCmd)
   return(computeRatio(benchName,viewParams,refMkViewCmd,otherMkViewCmd,True))
 
 def formatPerfRatio(s):
@@ -945,9 +962,10 @@ def addReportFor(document,benchName):
        if args.byd:
           allCores=getAllExistingCores(benchName)
           if args.ratio:
-             allCores.remove(referenceCoreID)
-             if args.keep:
-              allCores=[getCoreID(args.keep)]
+             if keepCoreIds:
+                allCores=keepCoreIds
+             if ("%d" % referenceCoreID) in allCores:
+                allCores.remove("%d" % referenceCoreID)
           for aCoreID in allCores:
             nbElems = getNbElemsInBenchAndCoreCmd(benchName,aCoreID)
             if nbElems > 0:
@@ -1106,10 +1124,7 @@ def createDoc(document,sections,benchtables):
 
 try:
       benchtables=getBenchTables()
-      if args.disprunid:
-         document = Document(runidHeader)
-      else:
-         document = Document(None)
+      document = Document(None)
 
       if args.ratio:
          referenceCoreID= getCoreID(args.ref)
