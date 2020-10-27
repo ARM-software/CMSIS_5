@@ -79,11 +79,11 @@ information is added to the index server.
 
 Sometimes, it is necessary to rehost a pack (moving a pack from one URL to another). This implies that you need to change the \<url\> element in the PDSC file. To
 ensure that the pack is found by a \ref cp_KeilComPack "Pack Index Service", follow this procedure:
-- Create a new version of the pack: update the \elem{vendor}.\elem{name}.pdsc file with the new URL ("url_B") and make sure to increment the version
-- Place a copy of this latest \elem{vendor}.\elem{name}.pdsc at url_B and url_A (the original URL).
-- Place a copy of the new \elem{vendor}.\elem{name}.\elem{version}.pack in url_B (only)
-- Copy all packs from url_A to url_B
-- Inform Arm about the new URL by either
+- Create a new version of the pack: update the \elem{vendor}.\elem{name}.pdsc file with the new URL ("url_B") and make sure to increment the version.
+- Place a copy of this latest \elem{vendor}.\elem{name}.pdsc at url_B and url_A (the original URL) and add the "deprecated" and "replacement" tag to the last \ref element_release "release" entry.
+- Place a copy of the new \elem{vendor}.\elem{name}.\elem{version}.pack in url_B (only).
+- Copy all packs from url_A to url_B.
+- Inform Arm about the new URL by either:
   - update the \elem{vendor}.pidx with url_B for this pack \em or
   - email a link to the PDSC file if your company does not maintain a \elem{vendor}.pidx 
 
