@@ -89,7 +89,7 @@ static int cholesky_offset(int d)
         arm_mat_solve_lower_triangular_f32(&this->in1,&this->in2,&this->out);
     }
 
-    void UnaryF32::test_ldlt_decomposition()
+    void UnaryF32::test_ldlt_decomposition_f32()
     {
         arm_mat_ldlt_f32(&this->in1,&this->outll,&this->outd,(uint16_t*)outp);
     }
@@ -257,7 +257,7 @@ static int cholesky_offset(int d)
           }
           break;
 
-          case TEST_LDLT_DECOMPOSITION_11:
+          case TEST_LDLT_DECOMPOSITION_F32_11:
           {
              float32_t *p, *aPtr;
              

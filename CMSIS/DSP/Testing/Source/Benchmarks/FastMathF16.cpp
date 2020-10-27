@@ -31,7 +31,7 @@
     void FastMathF16::setUp(Testing::testID_t id,std::vector<Testing::param_t>& params,Client::PatternMgr *mgr)
     {
 
-
+       (void)id;
        std::vector<Testing::param_t>::iterator it = params.begin();
        this->nbSamples = *it;
 
@@ -46,4 +46,6 @@
 
     void FastMathF16::tearDown(Testing::testID_t id,Client::PatternMgr *mgr)
     {
+       (void)id;
+       (void)mgr;
     }

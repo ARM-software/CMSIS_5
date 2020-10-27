@@ -1308,7 +1308,7 @@ group Root {
                    Cholesky decomposition:test_mat_cholesky_dpo_f32 -> PARAM_CHOLESKY_ID
                    Backward substitution:test_solve_upper_triangular_f32 -> PARAM_CHOLESKY_ID
                    Foward substitution:test_solve_lower_triangular_f32 -> PARAM_CHOLESKY_ID
-                   LDLT decomposition:test_ldlt_decomposition -> PARAM_CHOLESKY_ID
+                   LDLT decomposition:test_ldlt_decomposition_f32 -> PARAM_CHOLESKY_ID
                 } -> PARAM1_ID
               }
 

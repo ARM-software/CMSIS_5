@@ -75,5 +75,6 @@
     void BayesF16::tearDown(Testing::testID_t id,Client::PatternMgr *mgr)
     {
         (void)id;
+        (void)mgr;
         this->nb++;
     }

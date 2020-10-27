@@ -490,11 +490,11 @@ group Root {
 
                 Pattern REFLDLT_D_DPO1_F16_ID : RefLDLT_D_DPO1_f16.txt
                 Pattern REFLDLT_LL_DPO1_F16_ID : RefLDLT_LL_DPO1_f16.txt
-                Pattern REFLDLT_PERM_DPO1_F16_ID : RefLDLT_PERM_DPO1_f16.txt
+                Pattern REFLDLT_PERM_DPO1_F16_ID : RefLDLT_PERM_DPO1_s16.txt
 
                 Pattern REFLDLT_D_SDPO1_F16_ID : RefLDLT_D_SDPO1_f16.txt
                 Pattern REFLDLT_LL_SDPO1_F16_ID : RefLDLT_LL_SDPO1_f16.txt
-                Pattern REFLDLT_PERM_SDPO1_F16_ID : RefLDLT_PERM_SDPO1_f16.txt
+                Pattern REFLDLT_PERM_SDPO1_F16_ID : RefLDLT_PERM_SDPO1_s16.txt
 
                 Pattern INPUT_UT_DPO_F16_ID : InputUTDPO1_f16.txt
                 Pattern INPUT_LT_DPO_F16_ID : InputLTDPO1_f16.txt

@@ -238,6 +238,7 @@ void SVMF16::setUp(Testing::testID_t id,std::vector<Testing::param_t>& testparam
 
 void SVMF16::tearDown(Testing::testID_t id,Client::PatternMgr *mgr)
 {
+        (void)mgr;
         switch(id)
         {
              case SVMF16::TEST_SVM_LINEAR_PREDICT_F16_1:

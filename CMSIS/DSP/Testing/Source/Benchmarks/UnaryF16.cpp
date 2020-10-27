@@ -272,4 +272,6 @@ static int cholesky_offset(int d)
 
     void UnaryF16::tearDown(Testing::testID_t id,Client::PatternMgr *mgr)
     {
+      (void)id;
+      (void)mgr;
     }
