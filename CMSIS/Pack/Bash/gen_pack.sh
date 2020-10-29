@@ -50,7 +50,7 @@ PACK_DIRS=${PACK_DIRS//$PACK_WAREHOUSE/}
 # Specify file names to be added to pack base directory
 PACK_BASE_FILES="
   License.txt
-  ReadMe.txt
+  README.md
 "
 
 ############ DO NOT EDIT BELOW ###########
