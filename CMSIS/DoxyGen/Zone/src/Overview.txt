@@ -8,7 +8,7 @@ Embedded systems frequently integrate specify hardware for access protection or 
  - SAU (Secure Attribute Unit) to create a secure execution partition with controlled access from a non-secure execution partition.
  - MPC (Memory Protection Controller) to control the system-wide access permissions to memory.
  - PPC (Peripheral Protection Controller) to control the system-wide access permissions to peripherals.
- - MPU (Memory Protection Controller) to create execution compartments and protect other system parts from illegal access.
+ - MPU (Memory Protection Unit) to create execution compartments and protect other system parts from illegal access.
 
 Embedded systems may also integrate multiple processors that share system resources (memory and peripherals). In an AMP
 (Asymmetric Multiprocessor System) it is required to assign or partition the available resources to various processors
@@ -156,7 +156,7 @@ multiple processors and/or memory protection hardware. It helps to split the emb
 creates the need to partition system resources. And it simplifies the consistent configuration of access rights across the
 system, for example when using an MPU (memory protection unit).
 
-The following section describes several uses cases that benefit from \b CMSIS-Zone.
+The following section describes several use cases that benefit from \b CMSIS-Zone.
 
 
 \section UseCase_MPU MPU Protection
