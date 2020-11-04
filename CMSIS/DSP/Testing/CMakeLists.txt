@@ -85,6 +85,8 @@ option(FLOAT16TESTS "Float16 tests" OFF)
 option(MICROBENCH "Micro benchmarks" OFF)
 option(EXTERNAL "External benchmarks or tests" OFF)
 
+option(DISTINCT "Different generated folder for benchmarking and tests" OFF)
+
 project(Testing)
 
 # Needed to find the config modules
@@ -422,7 +424,12 @@ endif()
 
 
 target_sources(TestingLib PRIVATE testmain.cpp)
+
+if ((DISTINCT) AND (BENCHMARK))
+target_sources(TestingLib PRIVATE GeneratedSourceBench/TestDesc.cpp)
+else()
 target_sources(TestingLib PRIVATE GeneratedSource/TestDesc.cpp)
+endif()
 
 if (EMBEDDED)
     target_compile_definitions(TestingLib PUBLIC EMBEDDED)
@@ -468,7 +475,12 @@ if(NN)
 target_link_libraries(TestingLib PRIVATE CMSISNN)
 endif()
 target_include_directories(TestingLib PRIVATE FrameworkInclude)
+
+if ((DISTINCT) AND (BENCHMARK))
+target_include_directories(TestingLib PRIVATE GeneratedIncludeBench)
+else()
 target_include_directories(TestingLib PRIVATE GeneratedInclude)
+endif()
 
 configLib(TestingLib ${ROOT})
 #configDsp(TestingLib ${ROOT})
@@ -490,7 +502,12 @@ core_includes(FrameworkLib)
 add_executable(Testing main.cpp)
 # To see the file in the scatter load, it must not because
 # linked in a .a archive
+if ((DISTINCT) AND (BENCHMARK))
+target_include_directories(Testing PRIVATE GeneratedIncludeBench)
+else()
 target_include_directories(Testing PRIVATE GeneratedInclude)
+endif()
+
 target_sources(Testing PRIVATE patterndata.c)
 
 # With -O2, generated code is crashing on some cycle accurate models.
@@ -504,7 +521,11 @@ target_link_libraries(Testing PRIVATE FrameworkLib)
 
 if (EXTERNAL)
   target_include_directories(${EXTERNALPROJECT} PRIVATE FrameworkInclude)
-  target_include_directories(${EXTERNALPROJECT} PRIVATE GeneratedInclude)
+  if ((DISTINCT) AND (BENCHMARK))
+    target_include_directories(${EXTERNALPROJECT} PRIVATE GeneratedIncludeBench)
+  else()
+    target_include_directories(${EXTERNALPROJECT} PRIVATE GeneratedInclude)
+  endif()
   target_link_libraries(TestingLib PRIVATE ${EXTERNALPROJECT})
 endif()
 

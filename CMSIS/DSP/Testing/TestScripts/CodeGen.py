@@ -832,7 +832,7 @@ class CodeGen:
         self._currentPaths = oldPath.copy()
         self._currentParamPaths = oldParamPath.copy()
 
-    def genCodeForTree(self,root):
+    def genCodeForTree(self,root,benchMode):
       """ Generate all files from the trees of tests
       
       Args:
@@ -845,17 +845,21 @@ class CodeGen:
       # Get a list of all suites contained in the tree
       suites = self.getSuites(root,[])
 
-      
+      src = "GeneratedSource"
+      header = "GeneratedInclude"
+      if benchMode:
+        src += "Bench"
+        header += "Bench"
       # Generate .cpp and .h files neded to run the tests
-      with open("GeneratedSource/TestDesc.cpp","w") as sourceFile:
-       with open("GeneratedInclude/TestDesc.h","w") as headerFile:
+      with open("%s/TestDesc.cpp" % src,"w") as sourceFile:
+       with open("%s/TestDesc.h" % header,"w") as headerFile:
          headerFile.write("#include \"Test.h\"\n")
          headerFile.write("#include \"Pattern.h\"\n")
 
          sourceFile.write("#include \"Test.h\"\n")
          for s in suites:
           headerFile.write("#include \"%s.h\"\n" % s)
-         self._genCode(root,"GeneratedInclude",sourceFile,headerFile)
+         self._genCode(root,"%s" % header,sourceFile,headerFile)
        
       # Generate a driver file for semihosting
       # (always generated for debug purpose since it is the reference format)
@@ -868,17 +872,17 @@ class CodeGen:
       # Driver file is similar in this case but different from semihosting
       # one.
       if not self._fpga:
-         with open("GeneratedInclude/TestDrive.h","w") as driverFile:
+         with open("%s/TestDrive.h" % header,"w") as driverFile:
             driverFile.write("// Empty driver include in semihosting mode")
-         with open("GeneratedInclude/Patterns.h","w") as includeFile:
+         with open("%s/Patterns.h" % header,"w") as includeFile:
             includeFile.write("// Empty pattern include in semihosting mode")
       else:
-        with open("GeneratedInclude/TestDrive.h","w") as driverFile:
+        with open("%s/TestDrive.h" % header,"w") as driverFile:
           driverFile.write("#ifndef _DRIVER_H_\n")
           driverFile.write("#define _DRIVER_H_\n")
           driverFile.write("__ALIGNED(8) const char testDesc[]={\n")
           self._offset=0
-          with open("GeneratedInclude/Patterns.h","w") as includeFile:
+          with open("%s/Patterns.h" % header,"w") as includeFile:
             includeFile.write("#ifndef _PATTERNS_H_\n")
             includeFile.write("#define _PATTERNS_H_\n")
             includeFile.write("__ALIGNED(8) const char patterns[]={\n")

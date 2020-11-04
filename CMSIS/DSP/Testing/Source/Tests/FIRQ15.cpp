@@ -53,7 +53,7 @@ void checkInnerTail(q15_t *b)
 #if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
            /* Copy coefficients and pad to zero 
            */
-           memset(coeffArray,0,32);
+           memset(coeffArray,0,32*sizeof(q15_t));
            for(j=0;j < numTaps; j++)
            {
               coeffArray[j] = orgcoefsp[j];

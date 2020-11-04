@@ -61,7 +61,7 @@ void checkInnerTail(float16_t *b)
 #if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
            /* Copy coefficients and pad to zero 
            */
-           memset(coeffArray,0,32);
+           memset(coeffArray,0,32*sizeof(float16_t));
            for(j=0;j < numTaps; j++)
            {
               coeffArray[j] = orgcoefsp[j];
