@@ -449,9 +449,7 @@ uint32_t blockSize)
         vecAcc0 = vfmaq(vecAcc0, vecIn0, c6);
         vecIn0 = vld1q(&pSamples[7]);
         vecAcc0 = vfmaq(vecAcc0, vecIn0, c7);
-        pSamples += cnt;
         vstrwq_p_f32(partial_accu_ptr, vecAcc0,p0);
-        partial_accu_ptr += cnt;
     }
 
     int localTaps = numTaps - FIR_F32_MAX_COEF_BLK;
@@ -519,10 +517,8 @@ uint32_t blockSize)
             vecAcc0 = vfmaq(vecAcc0, vecIn0, c6);
             vecIn0 = vld1q(&pSamples[7]);
             vecAcc0 = vfmaq(vecAcc0, vecIn0, c7);
-            pSamples += cnt;
             vecAcc0 += vld1q_f32(partial_accu_ptr);
             vstrwq_p_f32(partial_accu_ptr, vecAcc0,p0);
-            partial_accu_ptr += cnt;
         }
 
         localTaps -= FIR_F32_MAX_COEF_BLK;
@@ -595,10 +591,8 @@ uint32_t blockSize)
             vecAcc0 = vfmaq(vecAcc0, vecIn0, c6);
             vecIn0 = vld1q(&pSamples[7]);
             vecAcc0 = vfmaq(vecAcc0, vecIn0, c7);
-            pSamples += cnt;
             float32x4_t pap = vld1q_f32(partial_accu_ptr);
             vstrwq_p_f32(pOutput, vecAcc0+pap,p0);
-            partial_accu_ptr += cnt;
             pOutput += cnt;
         }
     }
@@ -646,10 +640,8 @@ uint32_t blockSize)
             vecAcc0 = vfmaq(vecAcc0, vecIn0, c2);
             vecIn0 = vld1q(&pSamples[3]);
             vecAcc0 = vfmaq(vecAcc0, vecIn0, c3);
-            pSamples += cnt;
             float32x4_t pap = vld1q_f32(partial_accu_ptr);
             vstrwq_p_f32(pOutput, vecAcc0+pap,p0);
-            partial_accu_ptr += cnt;
             pOutput += cnt;
         }
     }
