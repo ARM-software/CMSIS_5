@@ -47,6 +47,8 @@
 
 #if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
 
+#define FIR_F32_MAX_COEF_BLK        8
+
 #define FIR_F16_CORE(pSamples, c, NB_TAPS)                                 \
         vecAcc0 = vdupq_n_f16(0.0f16);                                     \
         for (int i = 0; i < NB_TAPS; i++) {                                \
@@ -54,7 +56,9 @@
             vecAcc0 = vfmaq(vecAcc0, vecIn0, c[i]);                        \
         }
 
-static void arm_fir_f16_1_4_mve(const arm_fir_instance_f16 * S, const float16_t * pSrc, float16_t * pDst, uint32_t blockSize)
+__STATIC_INLINE void arm_fir_f16_1_4_mve(const arm_fir_instance_f16 * S, 
+    const float16_t * __restrict pSrc, 
+    float16_t * __restrict pDst, uint32_t blockSize)
 {
     float16_t      *pState = S->pState;     /* State pointer */
     const float16_t *pCoeffs = S->pCoeffs;  /* Coefficient pointer */
@@ -65,8 +69,8 @@ static void arm_fir_f16_1_4_mve(const arm_fir_instance_f16 * S, const float16_t 
     float16_t      *pTempDest;              /* Temporary pointer to the destination buffer */
     uint32_t        numTaps = S->numTaps;   /* Number of filter coefficients in the filter */
     int32_t         blkCnt;
-    f16x8_t         vecIn0;
-    f16x8_t         vecAcc0;
+    float16x8_t         vecIn0;
+    float16x8_t         vecAcc0;
     const int       NB_TAPS=4;
     float16_t       c[NB_TAPS];
 
@@ -107,6 +111,7 @@ static void arm_fir_f16_1_4_mve(const arm_fir_instance_f16 * S, const float16_t 
     }
 
     blkCnt = blockSize & 7;
+    if (blkCnt)
     {
         mve_pred16_t    p0 = vctp16q(blkCnt);
 
@@ -141,7 +146,9 @@ static void arm_fir_f16_1_4_mve(const arm_fir_instance_f16 * S, const float16_t 
 }
 
 
-static void arm_fir_f16_5_8_mve(const arm_fir_instance_f16 * S, const float16_t * pSrc, float16_t * pDst, uint32_t blockSize)
+__STATIC_INLINE void arm_fir_f16_5_8_mve(const arm_fir_instance_f16 * S, 
+    const float16_t * __restrict pSrc, 
+    float16_t * __restrict pDst, uint32_t blockSize)
 {
     float16_t      *pState = S->pState;     /* State pointer */
     const float16_t *pCoeffs = S->pCoeffs;  /* Coefficient pointer */
@@ -152,8 +159,8 @@ static void arm_fir_f16_5_8_mve(const arm_fir_instance_f16 * S, const float16_t 
     float16_t      *pTempDest;              /* Temporary pointer to the destination buffer */
     uint32_t        numTaps = S->numTaps;   /* Number of filter coefficients in the filter */
     int32_t         blkCnt;
-    f16x8_t         vecIn0;
-    f16x8_t         vecAcc0;
+    float16x8_t         vecIn0;
+    float16x8_t         vecAcc0;
     const int       NB_TAPS=8;
     float16_t       c[NB_TAPS];
 
@@ -194,6 +201,7 @@ static void arm_fir_f16_5_8_mve(const arm_fir_instance_f16 * S, const float16_t 
     }
 
     blkCnt = blockSize & 7;
+    if (blkCnt)
     {
         mve_pred16_t    p0 = vctp16q(blkCnt);
 
@@ -224,6 +232,7 @@ static void arm_fir_f16_5_8_mve(const arm_fir_instance_f16 * S, const float16_t 
         mve_pred16_t    p0 = vctp16q(blkCnt);
         vstrhq_p_f16(pTempDest, vld1q(pTempSrc), p0);
     }
+
 }
 
 
@@ -232,224 +241,299 @@ void arm_fir_f16(const arm_fir_instance_f16 * S,
   float16_t * pDst, 
   uint32_t blockSize)
 {
-    float16_t *pState = S->pState;  /* State pointer */
-    const float16_t *pCoeffs = S->pCoeffs;    /* Coefficient pointer */
-    float16_t *pStateCur;       /* Points to the current sample of the state */
-    const float16_t *pSamples;        /* Temporary pointer to the sample buffer */
-    float16_t *pOutput;         /* Temporary pointer to the output buffer */
-    const float16_t *pTempSrc;        /* Temporary pointer to the source data */
-    float16_t *pTempDest;       /* Temporary pointer to the destination buffer */
-    int32_t  numTaps = S->numTaps; /* Number of filter coefficients in the filter */
-    uint32_t  blkCnt;
-    f16x8_t vecIn0;
-    f16x8_t vecAcc0;
-    float16_t c0, c1, c2, c3;
-    float16_t c4, c5, c6, c7;
+    float16_t *pRefStatePtr = S->pState + ROUND_UP(blockSize, 8);
+    float16_t *pState = pRefStatePtr ;      /* State pointer */
+    const float16_t *pCoeffs = S->pCoeffs;      /* Coefficient pointer */
+    const float16_t *pSamples;  /* Temporary pointer to the sample buffer */
+    float16_t      *pOutput;    /* Temporary pointer to the output buffer */
+    const float16_t *pTempSrc;  /* Temporary pointer to the source data */
+    float16_t      *pTempDest;  /* Temporary pointer to the destination buffer */
+    uint32_t        numTaps = S->numTaps;       /* Number of filter coefficients in the filter */
+    uint32_t        blkCnt;
+    float16_t       c0, c1, c2, c3;
+    float16_t       c4, c5, c6, c7;
 
     /*
      * [1 to 8 taps] specialized routines
      */
-    if (numTaps <= 4)
-    {
+    if (numTaps <= 4) {
         arm_fir_f16_1_4_mve(S, pSrc, pDst, blockSize);
         return;
-    }
-    else if (numTaps <= 8)
-    {
+    } else if (numTaps <= 8) {
         arm_fir_f16_5_8_mve(S, pSrc, pDst, blockSize);
         return;
     }
 
-    /*
-     * pState points to state array which contains previous frame (numTaps - 1) samples
-     * pStateCur points to the location where the new input data should be written
-     */
-    pStateCur = &(pState[(numTaps - 1u)]);
-    /*
-     * Copy new data into state so that we obtain a continuous sample buffer
-     * containing both the tail end of the old data and the new data.
-     */
-    pSamples = pState;
     pTempSrc = pSrc;
-    pOutput = pDst;
-
-    blkCnt = blockSize >> 3;
-    while (blkCnt > 0U)
-    {
-        int       i;
-        const float16_t *pCoeffsCur = pCoeffs;
-
-        /*
-         * Save 8 input samples in the history buffer
-         */
-        vst1q(pStateCur, vld1q(pTempSrc));
-        pStateCur += 8;
+    pTempDest = &(pState[(numTaps - 1u)]);
+    int             cnt = blockSize;
+    do {
+        mve_pred16_t    p0 = vctp16q(cnt);
+        vstrhq_p_f16(pTempDest, vld1q(pTempSrc), p0);
+        pTempDest += 8;
         pTempSrc += 8;
+        cnt -= 8;
+    } while (cnt > 0);
 
-        c0 = *pCoeffsCur++;
-        c1 = *pCoeffsCur++;
-        c2 = *pCoeffsCur++;
-        c3 = *pCoeffsCur++;
-        c4 = *pCoeffsCur++;
-        c5 = *pCoeffsCur++;
-        c6 = *pCoeffsCur++;
-        c7 = *pCoeffsCur++;
+    float16_t      *partial_accu_ptr = S->pState;
+
+    pSamples = pState;
+    c0 = *pCoeffs++;
+    c1 = *pCoeffs++;
+    c2 = *pCoeffs++;
+    c3 = *pCoeffs++;
+    c4 = *pCoeffs++;
+    c5 = *pCoeffs++;
+    c6 = *pCoeffs++;
+    c7 = *pCoeffs++;
+
+    cnt = blockSize >> 3;
+    while (cnt > 0) {
+        float16x8_t     vecAcc0;
+        float16x8_t     vecIn0;
 
         vecIn0 = vld1q(pSamples);
         vecAcc0 = vmulq(vecIn0, c0);
-
         vecIn0 = vld1q(&pSamples[1]);
         vecAcc0 = vfmaq(vecAcc0, vecIn0, c1);
-
         vecIn0 = vld1q(&pSamples[2]);
         vecAcc0 = vfmaq(vecAcc0, vecIn0, c2);
-
         vecIn0 = vld1q(&pSamples[3]);
         vecAcc0 = vfmaq(vecAcc0, vecIn0, c3);
-
         vecIn0 = vld1q(&pSamples[4]);
         vecAcc0 = vfmaq(vecAcc0, vecIn0, c4);
-
         vecIn0 = vld1q(&pSamples[5]);
         vecAcc0 = vfmaq(vecAcc0, vecIn0, c5);
-
         vecIn0 = vld1q(&pSamples[6]);
         vecAcc0 = vfmaq(vecAcc0, vecIn0, c6);
-
         vecIn0 = vld1q(&pSamples[7]);
         vecAcc0 = vfmaq(vecAcc0, vecIn0, c7);
-
         pSamples += 8;
-
-        for (i = 0; i <= ((numTaps - 9) / 8); i++)
-        {
-            c0 = *pCoeffsCur++;
-            c1 = *pCoeffsCur++;
-            c2 = *pCoeffsCur++;
-            c3 = *pCoeffsCur++;
-            c4 = *pCoeffsCur++;
-            c5 = *pCoeffsCur++;
-            c6 = *pCoeffsCur++;
-            c7 = *pCoeffsCur++;
-
-            vecIn0 = vld1q(pSamples);
-            vecAcc0 = vfmaq(vecAcc0, vecIn0, c0);
-
-            vecIn0 = vld1q(&pSamples[1]);
-            vecAcc0 = vfmaq(vecAcc0, vecIn0, c1);
-
-            vecIn0 = vld1q(&pSamples[2]);
-            vecAcc0 = vfmaq(vecAcc0, vecIn0, c2);
-
-            vecIn0 = vld1q(&pSamples[3]);
-            vecAcc0 = vfmaq(vecAcc0, vecIn0, c3);
-
-            vecIn0 = vld1q(&pSamples[4]);
-            vecAcc0 = vfmaq(vecAcc0, vecIn0, c4);
-
-            vecIn0 = vld1q(&pSamples[5]);
-            vecAcc0 = vfmaq(vecAcc0, vecIn0, c5);
-
-            vecIn0 = vld1q(&pSamples[6]);
-            vecAcc0 = vfmaq(vecAcc0, vecIn0, c6);
-
-            vecIn0 = vld1q(&pSamples[7]);
-            vecAcc0 = vfmaq(vecAcc0, vecIn0, c7);
-
-            pSamples += 8;
-        }
-
-        vst1q(pOutput, vecAcc0);
-        pOutput += 8;
-        pSamples = pSamples - (i + 1) * 8 + 8;
-
-        blkCnt--;
+        vst1q(partial_accu_ptr, vecAcc0);
+        cnt--;
+        partial_accu_ptr += 8;
     }
 
-    blkCnt = blockSize & 7;
-    {
-        mve_pred16_t p0 = vctp16q(blkCnt);
-        int       i;
-        const float16_t *pCoeffsCur = pCoeffs;
+    cnt = blockSize & 7;
+    if (cnt > 0) {
+        float16x8_t     vecAcc0;
+        float16x8_t     vecIn0;
 
-        vst1q(pStateCur, vld1q(pTempSrc));
-        pStateCur += 8;
-        pTempSrc += 8;
+        mve_pred16_t p0 = vctp16q(cnt);
 
-        c0 = *pCoeffsCur++;
-        c1 = *pCoeffsCur++;
-        c2 = *pCoeffsCur++;
-        c3 = *pCoeffsCur++;
-        c4 = *pCoeffsCur++;
-        c5 = *pCoeffsCur++;
-        c6 = *pCoeffsCur++;
-        c7 = *pCoeffsCur++;
 
         vecIn0 = vld1q(pSamples);
         vecAcc0 = vmulq(vecIn0, c0);
-
         vecIn0 = vld1q(&pSamples[1]);
         vecAcc0 = vfmaq(vecAcc0, vecIn0, c1);
-
         vecIn0 = vld1q(&pSamples[2]);
         vecAcc0 = vfmaq(vecAcc0, vecIn0, c2);
-
         vecIn0 = vld1q(&pSamples[3]);
         vecAcc0 = vfmaq(vecAcc0, vecIn0, c3);
-
         vecIn0 = vld1q(&pSamples[4]);
         vecAcc0 = vfmaq(vecAcc0, vecIn0, c4);
-
         vecIn0 = vld1q(&pSamples[5]);
         vecAcc0 = vfmaq(vecAcc0, vecIn0, c5);
-
         vecIn0 = vld1q(&pSamples[6]);
         vecAcc0 = vfmaq(vecAcc0, vecIn0, c6);
-
         vecIn0 = vld1q(&pSamples[7]);
         vecAcc0 = vfmaq(vecAcc0, vecIn0, c7);
+        vstrhq_p_f16(partial_accu_ptr, vecAcc0,p0);
+    }
 
-        pSamples += 8;
+    int             localTaps = numTaps - FIR_F32_MAX_COEF_BLK;
+    int             sample_offset = FIR_F32_MAX_COEF_BLK;
+    while (localTaps > FIR_F32_MAX_COEF_BLK) {
+        c0 = *pCoeffs++;
+        c1 = *pCoeffs++;
+        c2 = *pCoeffs++;
+        c3 = *pCoeffs++;
+        c4 = *pCoeffs++;
+        c5 = *pCoeffs++;
+        c6 = *pCoeffs++;
+        c7 = *pCoeffs++;
 
-        for (i = 0; i <= ((numTaps - 9) / 8); i++)
-        {
-            c0 = *pCoeffsCur++;
-            c1 = *pCoeffsCur++;
-            c2 = *pCoeffsCur++;
-            c3 = *pCoeffsCur++;
-            c4 = *pCoeffsCur++;
-            c5 = *pCoeffsCur++;
-            c6 = *pCoeffsCur++;
-            c7 = *pCoeffsCur++;
+        partial_accu_ptr = S->pState;
+        pSamples = pState + sample_offset;
+        int  cnt = blockSize >> 3;
+        while (cnt > 0) {
+            float16x8_t     vecAcc0;
+            float16x8_t     vecIn0;
+
 
             vecIn0 = vld1q(pSamples);
-            vecAcc0 = vfmaq(vecAcc0, vecIn0, c0);
-
+            vecAcc0 = vmulq(vecIn0, c0);
             vecIn0 = vld1q(&pSamples[1]);
             vecAcc0 = vfmaq(vecAcc0, vecIn0, c1);
-
             vecIn0 = vld1q(&pSamples[2]);
             vecAcc0 = vfmaq(vecAcc0, vecIn0, c2);
-
             vecIn0 = vld1q(&pSamples[3]);
             vecAcc0 = vfmaq(vecAcc0, vecIn0, c3);
-
             vecIn0 = vld1q(&pSamples[4]);
             vecAcc0 = vfmaq(vecAcc0, vecIn0, c4);
-
             vecIn0 = vld1q(&pSamples[5]);
             vecAcc0 = vfmaq(vecAcc0, vecIn0, c5);
-
             vecIn0 = vld1q(&pSamples[6]);
             vecAcc0 = vfmaq(vecAcc0, vecIn0, c6);
-
             vecIn0 = vld1q(&pSamples[7]);
             vecAcc0 = vfmaq(vecAcc0, vecIn0, c7);
-
             pSamples += 8;
+            vecAcc0 += vld1q_f16(partial_accu_ptr);
+            vst1q(partial_accu_ptr, vecAcc0);
+            cnt--;
+            partial_accu_ptr += 8;
         }
 
-        vstrhq_p_f16(pOutput, vecAcc0, p0);
+        cnt = blockSize & 7;
+        if (cnt > 0) {
+            float16x8_t     vecAcc0;
+            float16x8_t     vecIn0;
+
+            mve_pred16_t p0 = vctp16q(cnt);
+
+            vecIn0 = vld1q(pSamples);
+            vecAcc0 = vmulq(vecIn0, c0);
+            vecIn0 = vld1q(&pSamples[1]);
+            vecAcc0 = vfmaq(vecAcc0, vecIn0, c1);
+            vecIn0 = vld1q(&pSamples[2]);
+            vecAcc0 = vfmaq(vecAcc0, vecIn0, c2);
+            vecIn0 = vld1q(&pSamples[3]);
+            vecAcc0 = vfmaq(vecAcc0, vecIn0, c3);
+            vecIn0 = vld1q(&pSamples[4]);
+            vecAcc0 = vfmaq(vecAcc0, vecIn0, c4);
+            vecIn0 = vld1q(&pSamples[5]);
+            vecAcc0 = vfmaq(vecAcc0, vecIn0, c5);
+            vecIn0 = vld1q(&pSamples[6]);
+            vecAcc0 = vfmaq(vecAcc0, vecIn0, c6);
+            vecIn0 = vld1q(&pSamples[7]);
+            vecAcc0 = vfmaq(vecAcc0, vecIn0, c7);
+            vecAcc0 += vld1q_f16(partial_accu_ptr);
+            vstrhq_p_f16(partial_accu_ptr, vecAcc0,p0);
+        }
+
+        localTaps -= FIR_F32_MAX_COEF_BLK;
+        sample_offset += FIR_F32_MAX_COEF_BLK;
+    }
+
+    pSamples = pState + sample_offset;
+
+    if (localTaps > 4) {
+        c0 = *pCoeffs++;
+        c1 = *pCoeffs++;
+        c2 = *pCoeffs++;
+        c3 = *pCoeffs++;
+        c4 = *pCoeffs++;
+        c5 = *pCoeffs++;
+        c6 = *pCoeffs++;
+        c7 = *pCoeffs++;
+        pOutput = pDst;
+
+        partial_accu_ptr = S->pState;
+        cnt = blockSize >> 3;
+        while (cnt > 0) {
+            float16x8_t     vecAcc0;
+            float16x8_t     vecIn0;
+
+            vecIn0 = vld1q(pSamples);
+            vecAcc0 = vmulq(vecIn0, c0);
+            vecIn0 = vld1q(&pSamples[1]);
+            vecAcc0 = vfmaq(vecAcc0, vecIn0, c1);
+            vecIn0 = vld1q(&pSamples[2]);
+            vecAcc0 = vfmaq(vecAcc0, vecIn0, c2);
+            vecIn0 = vld1q(&pSamples[3]);
+            vecAcc0 = vfmaq(vecAcc0, vecIn0, c3);
+            vecIn0 = vld1q(&pSamples[4]);
+            vecAcc0 = vfmaq(vecAcc0, vecIn0, c4);
+            vecIn0 = vld1q(&pSamples[5]);
+            vecAcc0 = vfmaq(vecAcc0, vecIn0, c5);
+            vecIn0 = vld1q(&pSamples[6]);
+            vecAcc0 = vfmaq(vecAcc0, vecIn0, c6);
+            vecIn0 = vld1q(&pSamples[7]);
+            vecAcc0 = vfmaq(vecAcc0, vecIn0, c7);
+            pSamples += 8;
+            float16x8_t     pap = vld1q_f16(partial_accu_ptr);
+            vst1q(pOutput, vecAcc0 + pap);
+            cnt--;
+            partial_accu_ptr += 8;
+            pOutput += 8;
+        }
+
+        cnt = blockSize & 7;
+        if (cnt > 0) {
+            float16x8_t     vecAcc0;
+            float16x8_t     vecIn0;
+
+            mve_pred16_t p0 = vctp16q(cnt);
+
+            vecIn0 = vld1q(pSamples);
+            vecAcc0 = vmulq(vecIn0, c0);
+            vecIn0 = vld1q(&pSamples[1]);
+            vecAcc0 = vfmaq(vecAcc0, vecIn0, c1);
+            vecIn0 = vld1q(&pSamples[2]);
+            vecAcc0 = vfmaq(vecAcc0, vecIn0, c2);
+            vecIn0 = vld1q(&pSamples[3]);
+            vecAcc0 = vfmaq(vecAcc0, vecIn0, c3);
+            vecIn0 = vld1q(&pSamples[4]);
+            vecAcc0 = vfmaq(vecAcc0, vecIn0, c4);
+            vecIn0 = vld1q(&pSamples[5]);
+            vecAcc0 = vfmaq(vecAcc0, vecIn0, c5);
+            vecIn0 = vld1q(&pSamples[6]);
+            vecAcc0 = vfmaq(vecAcc0, vecIn0, c6);
+            vecIn0 = vld1q(&pSamples[7]);
+            vecAcc0 = vfmaq(vecAcc0, vecIn0, c7);
+            float16x8_t     pap = vld1q_f16(partial_accu_ptr);
+            vstrhq_p_f16(pOutput, vecAcc0 + pap, p0);
+            pOutput += cnt;
+        }
+
+    } else {
+        c0 = *pCoeffs++;
+        c1 = *pCoeffs++;
+        c2 = *pCoeffs++;
+        c3 = *pCoeffs++;
+        pOutput = pDst;
+
+        partial_accu_ptr = S->pState;
+        cnt = blockSize >> 3;
+        while (cnt > 0) {
+            float16x8_t     vecAcc0;
+            float16x8_t     vecIn0;
+
+            vecIn0 = vld1q(pSamples);
+            vecAcc0 = vmulq(vecIn0, c0);
+            vecIn0 = vld1q(&pSamples[1]);
+            vecAcc0 = vfmaq(vecAcc0, vecIn0, c1);
+            vecIn0 = vld1q(&pSamples[2]);
+            vecAcc0 = vfmaq(vecAcc0, vecIn0, c2);
+            vecIn0 = vld1q(&pSamples[3]);
+            vecAcc0 = vfmaq(vecAcc0, vecIn0, c3);
+            pSamples += 8;
+            float16x8_t     pap = vld1q_f16(partial_accu_ptr);
+            vst1q(pOutput, vecAcc0 + pap);
+            cnt--;
+            partial_accu_ptr += 8;
+            pOutput += 8;
+        }
+
+        cnt = blockSize & 7;
+        if (cnt > 0) {
+            float16x8_t     vecAcc0;
+            float16x8_t     vecIn0;
+
+            mve_pred16_t p0 = vctp16q(cnt);
+
+            vecIn0 = vld1q(pSamples);
+            vecAcc0 = vmulq(vecIn0, c0);
+            vecIn0 = vld1q(&pSamples[1]);
+            vecAcc0 = vfmaq(vecAcc0, vecIn0, c1);
+            vecIn0 = vld1q(&pSamples[2]);
+            vecAcc0 = vfmaq(vecAcc0, vecIn0, c2);
+            vecIn0 = vld1q(&pSamples[3]);
+            vecAcc0 = vfmaq(vecAcc0, vecIn0, c3);
+            float16x8_t     pap = vld1q_f16(partial_accu_ptr);
+            vstrhq_p_f16(pOutput, vecAcc0 + pap, p0);
+            pOutput += cnt;
+        }
     }
 
     /*
@@ -459,17 +543,15 @@ void arm_fir_f16(const arm_fir_instance_f16 * S,
     pTempDest = pState;
 
     blkCnt = numTaps >> 3;
-    while (blkCnt > 0U)
-    {
+    while (blkCnt > 0U) {
         vst1q(pTempDest, vld1q(pTempSrc));
         pTempSrc += 8;
         pTempDest += 8;
         blkCnt--;
     }
     blkCnt = numTaps & 7;
-    if (blkCnt > 0U)
-    {
-        mve_pred16_t p0 = vctp16q(blkCnt);
+    if (blkCnt > 0U) {
+        mve_pred16_t    p0 = vctp16q(blkCnt);
         vstrhq_p_f16(pTempDest, vld1q(pTempSrc), p0);
     }
 }

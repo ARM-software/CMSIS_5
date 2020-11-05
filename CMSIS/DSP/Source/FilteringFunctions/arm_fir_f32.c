@@ -107,9 +107,12 @@
   @par          Helium state buffer
                  The state buffer must contain some additional temporary data
                  used during the computation but which is not the state of the FIR.
-                 The first blockSize samples are temporary data.
+                 The first A samples are temporary data.
                  The remaining samples are the state of the FIR filter.
-                 So the state buffer has size <code> numTaps + 2 * blockSize - 1 </code>
+  @par                 
+                 So the state buffer has size <code> numTaps + A * blockSize - 1 </code> :
+                 - A is blockSize for f32
+                 - A is 8*ceil(blockSize/8) for f16
 
   @par           Fixed-Point Behavior
                    Care must be taken when using the fixed-point versions of the FIR filter functions.
@@ -144,7 +147,7 @@
         }
 
 
-static void arm_fir_f32_1_4_mve(const arm_fir_instance_f32 * S, 
+__STATIC_INLINE void arm_fir_f32_1_4_mve(const arm_fir_instance_f32 * S, 
   const float32_t * __restrict pSrc, 
   float32_t * __restrict pDst, uint32_t blockSize)
 {
@@ -229,7 +232,7 @@ static void arm_fir_f32_1_4_mve(const arm_fir_instance_f32 * S,
 
 
 
-static void arm_fir_f32_5_8_mve(const arm_fir_instance_f32 * S, 
+__STATIC_INLINE void arm_fir_f32_5_8_mve(const arm_fir_instance_f32 * S, 
   const float32_t * __restrict pSrc, 
   float32_t * __restrict pDst, uint32_t blockSize)
 {

@@ -52,7 +52,7 @@
   </pre>
   @par
                    <code>pState</code> points to the array of state variables.
-                   <code>pState</code> is of length <code>numTaps+blockSize-1</code> samples, where <code>blockSize</code> is the number of input samples processed by each call to <code>arm_fir_f16()</code>.
+                   <code>pState</code> is of length <code>numTaps+blockSize-1</code> samples (except for Helium - see below), where <code>blockSize</code> is the number of input samples processed by each call to <code>arm_fir_f16()</code>.
   @par          Initialization of Helium version
                  For Helium version the array of coefficients must be a multiple of 16 even if less
                  then 16 coefficients are used. The additional coefficients must be set to 0.
@@ -60,6 +60,13 @@
                  is still set to its right value in the init function.) It just means that
                  the implementation may require to read more coefficients due to the vectorization and
                  to avoid having to manage too many different cases in the code.
+
+  @par          Helium state buffer
+                 The state buffer must contain some additional temporary data
+                 used during the computation but which is not the state of the FIR.
+                 The first 8*ceil(blockSize/8) samples are temporary data.
+                 The remaining samples are the state of the FIR filter.
+                 So the state buffer has size <code> numTaps + 8*ceil(blockSize/8) + blockSize - 1 </code>
 
  */
 
@@ -77,7 +84,11 @@ void arm_fir_init_f16(
   S->pCoeffs = pCoeffs;
 
   /* Clear state buffer. The size is always (blockSize + numTaps - 1) */
+#if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
+  memset(pState, 0, (numTaps + (blockSize - 1U) + ROUND_UP(blockSize, 8)) * sizeof(float16_t));
+#else
   memset(pState, 0, (numTaps + (blockSize - 1U)) * sizeof(float16_t));
+#endif 
 
   /* Assign state pointer */
   S->pState = pState;

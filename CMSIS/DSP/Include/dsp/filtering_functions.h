@@ -39,6 +39,8 @@ extern "C"
 {
 #endif
 
+
+
 #define DELTA_Q31          ((q31_t)(0x100))
 #define DELTA_Q15          ((q15_t)0x5)
 

@@ -39,7 +39,6 @@ static __ALIGNED(8) float32_t coeffArray[64];
        switch(id)
        {
            case TEST_FIR_F32_1:
-              arm_fir_init_f32(&instFir,this->nbTaps,coefs.ptr(),state.ptr(),this->nbSamples);
 
 #if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
               /* Copy coefficients and pad to zero 
@@ -57,6 +56,8 @@ static __ALIGNED(8) float32_t coeffArray[64];
               this->pSrc=samples.ptr();
               
               this->pDst=output.ptr();
+
+              arm_fir_init_f32(&instFir,this->nbTaps,this->pCoefs,state.ptr(),this->nbSamples);
            break;
 
            case TEST_LMS_F32_2:
