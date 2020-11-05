@@ -40,8 +40,6 @@ extern "C"
 
 #if defined(ARM_FLOAT16_SUPPORTED)
 
-#define ROUND_UP(N, S) ((((N) + (S) - 1) / (S)) * (S))
-
  /**
    * @brief Instance structure for the floating-point FIR filter.
    */

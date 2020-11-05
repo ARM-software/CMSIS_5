@@ -110,9 +110,11 @@
                  The first A samples are temporary data.
                  The remaining samples are the state of the FIR filter.
   @par                 
-                 So the state buffer has size <code> numTaps + A * blockSize - 1 </code> :
+                 So the state buffer has size <code> numTaps + A + blockSize - 1 </code> :
                  - A is blockSize for f32
                  - A is 8*ceil(blockSize/8) for f16
+                 - A is 8*ceil(blockSize/4) for q31
+
 
   @par           Fixed-Point Behavior
                    Care must be taken when using the fixed-point versions of the FIR filter functions.
@@ -200,6 +202,7 @@ __STATIC_INLINE void arm_fir_f32_1_4_mve(const arm_fir_instance_f32 * S,
     }
 
     blkCnt = blockSize & 3;
+    if (blkCnt)
     {
         mve_pred16_t    p0 = vctp32q(blkCnt);
 
