@@ -78,51 +78,105 @@ void arm_cmplx_mult_cmplx_f16(
         float16_t * pDst,
         uint32_t numSamples)
 {
-    int32_t  blkCnt;           /* loop counters */
-    int32_t  blockSize = numSamples;
-    f16x8_t vecA;
-    f16x8_t vecB;
-    f16x8_t vecDst;
+     int32_t         blkCnt;
+    f16x8_t         vecSrcA, vecSrcB;
+    f16x8_t         vecSrcC, vecSrcD;
+    f16x8_t         vec_acc;
 
-    blkCnt = blockSize * CMPLX_DIM;
-    blkCnt = blkCnt >> 3;
-
-    while (blkCnt > 0) 
-    {
-        vecA = vldrhq_f16(pSrcA);
-        vecB = vldrhq_f16(pSrcB);
-        /* C[2 * i] = A[2 * i] * B[2 * i] - A[2 * i + 1] * B[2 * i + 1].  */
-        vecDst = vcmulq(vecA, vecB);
-        /* C[2 * i + 1] = A[2 * i] * B[2 * i + 1] + A[2 * i + 1] * B[2 * i].  */
-        vecDst = vcmlaq_rot90(vecDst, vecA, vecB);
-        vstrhq_f16(pDst, vecDst);
-
-        blkCnt--;
+    blkCnt = (numSamples >> 3);
+    blkCnt -= 1;
+    if (blkCnt > 0) {
+        /* should give more freedom to generate stall free code */
+        vecSrcA = vld1q(pSrcA);
+        vecSrcB = vld1q(pSrcB);
         pSrcA += 8;
         pSrcB += 8;
+
+        while (blkCnt > 0) {
+            vec_acc = vcmulq(vecSrcA, vecSrcB);
+            vecSrcC = vld1q(pSrcA);
+            pSrcA += 8;
+
+            vec_acc = vcmlaq_rot90(vec_acc, vecSrcA, vecSrcB);
+            vecSrcD = vld1q(pSrcB);
+            pSrcB += 8;
+            vst1q(pDst, vec_acc);
+            pDst += 8;
+
+            vec_acc = vcmulq(vecSrcC, vecSrcD);
+            vecSrcA = vld1q(pSrcA);
+            pSrcA += 8;
+
+            vec_acc = vcmlaq_rot90(vec_acc, vecSrcC, vecSrcD);
+            vecSrcB = vld1q(pSrcB);
+            pSrcB += 8;
+            vst1q(pDst, vec_acc);
+            pDst += 8;
+            /*
+             * Decrement the blockSize loop counter
+             */
+            blkCnt--;
+        }
+
+        /* process last elements out of the loop avoid the armclang breaking the SW pipeline */
+        vec_acc = vcmulq(vecSrcA, vecSrcB);
+        vecSrcC = vld1q(pSrcA);
+
+        vec_acc = vcmlaq_rot90(vec_acc, vecSrcA, vecSrcB);
+        vecSrcD = vld1q(pSrcB);
+        vst1q(pDst, vec_acc);
         pDst += 8;
+
+        vec_acc = vcmulq(vecSrcC, vecSrcD);
+        vec_acc = vcmlaq_rot90(vec_acc, vecSrcC, vecSrcD);
+        vst1q(pDst, vec_acc);
+        pDst += 8;
+
+        /*
+         * tail
+         */
+        blkCnt = CMPLX_DIM * (numSamples & 7);
+        while (blkCnt > 0) {
+            mve_pred16_t    p = vctp16q(blkCnt);
+            pSrcA += 8;
+            pSrcB += 8;
+
+            vecSrcA = vldrhq_z_f16(pSrcA, p);
+            vecSrcB = vldrhq_z_f16(pSrcB, p);
+            vec_acc = vcmulq_m(vuninitializedq_f16(),vecSrcA, vecSrcB, p);
+            vec_acc = vcmlaq_rot90_m(vec_acc, vecSrcA, vecSrcB, p);
+
+            vstrhq_p_f16(pDst, vec_acc, p);
+            pDst += 8;
+
+            blkCnt -= 8;
+        }
+    } else {
+        /* small vector */
+        blkCnt = numSamples * CMPLX_DIM;
+
+        do {
+            mve_pred16_t    p = vctp16q(blkCnt);
+
+            vecSrcA = vldrhq_z_f16(pSrcA, p);
+            vecSrcB = vldrhq_z_f16(pSrcB, p);
+
+            vec_acc = vcmulq_m(vuninitializedq_f16(),vecSrcA, vecSrcB, p);
+            vec_acc = vcmlaq_rot90_m(vec_acc, vecSrcA, vecSrcB, p);
+            vstrhq_p_f16(pDst, vec_acc, p);
+            pDst += 8;
+
+            /*
+             * Decrement the blkCnt loop counter
+             * Advance vector source and destination pointers
+             */
+            pSrcA += 8;
+            pSrcB += 8;
+            blkCnt -= 8;
+        }
+        while (blkCnt > 0);
     }
 
-    _Float16 a, b, c, d;  /* Temporary variables to store real and imaginary values */
-        /* Tail */
-    blkCnt = (blockSize & 7) >> 1;
-    while (blkCnt > 0)
-    {
-      /* C[2 * i    ] = A[2 * i] * B[2 * i    ] - A[2 * i + 1] * B[2 * i + 1]. */
-      /* C[2 * i + 1] = A[2 * i] * B[2 * i + 1] + A[2 * i + 1] * B[2 * i    ]. */
-
-      a = *pSrcA++;
-      b = *pSrcA++;
-      c = *pSrcB++;
-      d = *pSrcB++;
-
-      /* store result in destination buffer. */
-      *pDst++ = (a * c) - (b * d);
-      *pDst++ = (a * d) + (b * c);
-
-      /* Decrement loop counter */
-      blkCnt--;
-    }
 }
 
 

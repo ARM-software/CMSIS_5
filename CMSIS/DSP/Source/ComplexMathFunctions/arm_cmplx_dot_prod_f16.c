@@ -86,42 +86,92 @@ void arm_cmplx_dot_prod_f16(
     float16_t * realResult,
     float16_t * imagResult)
 {
-    uint32_t blockSize = numSamples * CMPLX_DIM;  /* loop counters */
-    uint32_t blkCnt;
-    float16_t real_sum, imag_sum;
-    f16x8_t vecSrcA, vecSrcB;
-    f16x8_t vec_acc = vdupq_n_f16(0.0f);
+    int32_t         blkCnt;
+    float16_t       real_sum, imag_sum;
+    f16x8_t         vecSrcA, vecSrcB;
+    f16x8_t         vec_acc = vdupq_n_f16(0.0f16);
+    f16x8_t         vecSrcC, vecSrcD;
 
-    /* Compute 2 complex samples at a time */
-    blkCnt = blockSize >> 3U;
-
-    while (blkCnt > 0U)
-    {
-        vecSrcA = vld1q(pSrcA);
-        vecSrcB = vld1q(pSrcB);
-
-        vec_acc = vcmlaq(vec_acc, vecSrcA, vecSrcB);
-        vec_acc = vcmlaq_rot90(vec_acc, vecSrcA, vecSrcB);
-
-        /*
-         * Decrement the blkCnt loop counter
-         * Advance vector source and destination pointers
-         */
+    blkCnt = (numSamples >> 3);
+    blkCnt -= 1;
+    if (blkCnt > 0) {
+        /* should give more freedom to generate stall free code */
+        vecSrcA = vld1q( pSrcA);
+        vecSrcB = vld1q( pSrcB);
         pSrcA += 8;
         pSrcB += 8;
-        blkCnt--;
-    }
-   
-    /* Tail */
-    blkCnt = (blockSize & 7);
 
-    if (blkCnt > 0U)
-    {
-        mve_pred16_t p0 = vctp16q(blkCnt);
-        vecSrcA = vld1q(pSrcA);
-        vecSrcB = vld1q(pSrcB);
-        vec_acc = vcmlaq_m(vec_acc, vecSrcA, vecSrcB, p0);
-        vec_acc = vcmlaq_rot90_m(vec_acc, vecSrcA, vecSrcB, p0);
+        while (blkCnt > 0) {
+            vec_acc = vcmlaq(vec_acc, vecSrcA, vecSrcB);
+            vecSrcC = vld1q(pSrcA);
+            pSrcA += 8;
+
+            vec_acc = vcmlaq_rot90(vec_acc, vecSrcA, vecSrcB);
+            vecSrcD = vld1q(pSrcB);
+            pSrcB += 8;
+
+            vec_acc = vcmlaq(vec_acc, vecSrcC, vecSrcD);
+            vecSrcA = vld1q(pSrcA);
+            pSrcA += 8;
+
+            vec_acc = vcmlaq_rot90(vec_acc, vecSrcC, vecSrcD);
+            vecSrcB = vld1q(pSrcB);
+            pSrcB += 8;
+            /*
+             * Decrement the blockSize loop counter
+             */
+            blkCnt--;
+        }
+
+        /* process last elements out of the loop avoid the armclang breaking the SW pipeline */
+        vec_acc = vcmlaq(vec_acc, vecSrcA, vecSrcB);
+        vecSrcC = vld1q(pSrcA);
+
+        vec_acc = vcmlaq_rot90(vec_acc, vecSrcA, vecSrcB);
+        vecSrcD = vld1q(pSrcB);
+
+        vec_acc = vcmlaq(vec_acc, vecSrcC, vecSrcD);
+        vec_acc = vcmlaq_rot90(vec_acc, vecSrcC, vecSrcD);
+
+        /*
+         * tail
+         */
+        blkCnt = CMPLX_DIM * (numSamples & 7);
+        while (blkCnt > 0) {
+            mve_pred16_t    p = vctp16q(blkCnt);
+            pSrcA += 8;
+            pSrcB += 8;
+
+            vecSrcA = vldrhq_z_f16(pSrcA, p);
+            vecSrcB = vldrhq_z_f16(pSrcB, p);
+            vec_acc = vcmlaq_m(vec_acc, vecSrcA, vecSrcB, p);
+            vec_acc = vcmlaq_rot90_m(vec_acc, vecSrcA, vecSrcB, p);
+
+            blkCnt -= 8;
+        }
+    } else {
+        /* small vector */
+        blkCnt = numSamples * CMPLX_DIM;
+        vec_acc = vdupq_n_f16(0.0f16);
+
+        do {
+            mve_pred16_t    p = vctp16q(blkCnt);
+
+            vecSrcA = vldrhq_z_f16(pSrcA, p);
+            vecSrcB = vldrhq_z_f16(pSrcB, p);
+
+            vec_acc = vcmlaq_m(vec_acc, vecSrcA, vecSrcB, p);
+            vec_acc = vcmlaq_rot90_m(vec_acc, vecSrcA, vecSrcB, p);
+
+            /*
+             * Decrement the blkCnt loop counter
+             * Advance vector source and destination pointers
+             */
+            pSrcA += 8;
+            pSrcB += 8;
+            blkCnt -= 8;
+        }
+        while (blkCnt > 0);
     }
 
     /* Sum the partial parts */

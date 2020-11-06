@@ -62,76 +62,98 @@ void arm_cmplx_dot_prod_q15(
         q31_t * realResult,
         q31_t * imagResult)
 {
+    int32_t         blkCnt;
+    q63_t           accReal = 0LL;
+    q63_t           accImag = 0LL;
+    q15x8_t         vecSrcA, vecSrcB;
+    q15x8_t         vecSrcC, vecSrcD;
 
-  uint32_t blockSize = numSamples * CMPLX_DIM;  /* loop counters */
-  uint32_t blkCnt;
-  q15_t a0,b0,c0,d0;
+    blkCnt = (numSamples >> 3);
+    blkCnt -= 1;
+    if (blkCnt > 0) {
+        /* should give more freedom to generate stall free code */
+        vecSrcA = vld1q(pSrcA);
+        vecSrcB = vld1q(pSrcB);
+        pSrcA += 8;
+        pSrcB += 8;
 
-  q63_t accReal = 0LL; q63_t accImag = 0LL;
-  q15x8_t vecSrcA, vecSrcB;
+        while (blkCnt > 0) {
 
+            accReal = vmlsldavaq(accReal, vecSrcA, vecSrcB);
+            vecSrcC = vld1q(pSrcA);
+            pSrcA += 8;
 
+            accImag = vmlaldavaxq(accImag, vecSrcA, vecSrcB);
+            vecSrcD = vld1q(pSrcB);
+            pSrcB += 8;
 
-  /* should give more freedom to generate stall free code */
-  vecSrcA = vld1q(pSrcA);
-  vecSrcB = vld1q(pSrcB);
-  pSrcA += 8;
-  pSrcB += 8;
+            accReal = vmlsldavaq(accReal, vecSrcC, vecSrcD);
+            vecSrcA = vld1q(pSrcA);
+            pSrcA += 8;
 
-  /* Compute 4 complex samples at a time */
-  blkCnt = blockSize >> 3;
-  while (blkCnt > 0U) 
-  {
-      q15x8_t vecSrcC, vecSrcD;
+            accImag = vmlaldavaxq(accImag, vecSrcC, vecSrcD);
+            vecSrcB = vld1q(pSrcB);
+            pSrcB += 8;
+            /*
+             * Decrement the blockSize loop counter
+             */
+            blkCnt--;
+        }
 
-      accReal = vmlsldavaq(accReal, vecSrcA, vecSrcB);
-      vecSrcC = vld1q(pSrcA);
-      pSrcA += 8;
+        /* process last elements out of the loop avoid the armclang breaking the SW pipeline */
+        accReal = vmlsldavaq(accReal, vecSrcA, vecSrcB);
+        vecSrcC = vld1q(pSrcA);
 
-      accImag = vmlaldavaxq(accImag, vecSrcA, vecSrcB);
-      vecSrcD = vld1q(pSrcB);
-      pSrcB += 8;
+        accImag = vmlaldavaxq(accImag, vecSrcA, vecSrcB);
+        vecSrcD = vld1q(pSrcB);
 
-      accReal = vmlsldavaq(accReal, vecSrcC, vecSrcD);
-      vecSrcA = vld1q(pSrcA);
-      pSrcA += 8;
+        accReal = vmlsldavaq(accReal, vecSrcC, vecSrcD);
+        vecSrcA = vld1q(pSrcA);
 
-      accImag = vmlaldavaxq(accImag, vecSrcC, vecSrcD);
-      vecSrcB = vld1q(pSrcB);
-      pSrcB += 8;
-      /*
-       * Decrement the blockSize loop counter
-       */
-      blkCnt--;
-  }
+        accImag = vmlaldavaxq(accImag, vecSrcC, vecSrcD);
+        vecSrcB = vld1q(pSrcB);
 
-  /* Tail */
-  pSrcA -= 8;
-  pSrcB -= 8; 
+        /*
+         * tail
+         */
+        blkCnt = CMPLX_DIM * (numSamples & 7);
+        do {
+            mve_pred16_t    p = vctp16q(blkCnt);
 
-  blkCnt = (blockSize & 7) >> 1;
-  
-  while (blkCnt > 0U)
-  {
-    a0 = *pSrcA++;
-    b0 = *pSrcA++;
-    c0 = *pSrcB++;
-    d0 = *pSrcB++;
+            pSrcA += 8;
+            pSrcB += 8;
 
-    accReal += (q31_t)a0 * c0;
-    accImag += (q31_t)a0 * d0;
-    accReal -= (q31_t)b0 * d0;
-    accImag += (q31_t)b0 * c0;
+            vecSrcA = vldrhq_z_s16(pSrcA, p);
+            vecSrcB = vldrhq_z_s16(pSrcB, p);
 
-    /* Decrement loop counter */
-    blkCnt--;
-  }
+            accReal = vmlsldavaq_p(accReal, vecSrcA, vecSrcB, p);
+            accImag = vmlaldavaxq_p(accImag, vecSrcA, vecSrcB, p);
 
-  /* Store real and imaginary result in 8.24 format  */
-  /* Convert real data in 34.30 to 8.24 by 6 right shifts */
-  *realResult = (q31_t) (accReal >> 6);
-  /* Convert imaginary data in 34.30 to 8.24 by 6 right shifts */
-  *imagResult = (q31_t) (accImag >> 6);
+            blkCnt -= 8;
+        }
+        while ((int32_t) blkCnt > 0);
+    } else {
+        blkCnt = numSamples * CMPLX_DIM;
+        while (blkCnt > 0) {
+            mve_pred16_t    p = vctp16q(blkCnt);
+
+            vecSrcA = vldrhq_z_s16(pSrcA, p);
+            vecSrcB = vldrhq_z_s16(pSrcB, p);
+
+            accReal = vmlsldavaq_p(accReal, vecSrcA, vecSrcB, p);
+            accImag = vmlaldavaxq_p(accImag, vecSrcA, vecSrcB, p);
+
+            /*
+             * Decrement the blkCnt loop counter
+             * Advance vector source and destination pointers
+             */
+            pSrcA += 8;
+            pSrcB += 8;
+            blkCnt -= 8;
+        }
+    }
+    *realResult = asrl(accReal, (14 - 8));
+    *imagResult = asrl(accImag, (14 - 8));
 }
 #else
 void arm_cmplx_dot_prod_q15(

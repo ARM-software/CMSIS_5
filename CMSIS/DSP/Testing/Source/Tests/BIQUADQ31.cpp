@@ -11,7 +11,7 @@
 
 #define ABS_32x64_ERROR_Q31 ((q31_t)25)
 
-void checkInnerTail(q31_t *b)
+static void checkInnerTail(q31_t *b)
 {
     ASSERT_TRUE(b[0] == 0);
     ASSERT_TRUE(b[1] == 0);

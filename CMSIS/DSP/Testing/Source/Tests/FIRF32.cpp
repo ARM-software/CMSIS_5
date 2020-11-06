@@ -16,7 +16,7 @@ a double precision computation.
 static __ALIGNED(8) float32_t coeffArray[32];
 #endif 
 
-void checkInnerTail(float32_t *b)
+static void checkInnerTail(float32_t *b)
 {
     ASSERT_TRUE(b[0] == 0.0f);
     ASSERT_TRUE(b[1] == 0.0f);

@@ -10,7 +10,7 @@
 static __ALIGNED(8) q31_t coeffArray[32];
 #endif
 
-void checkInnerTail(q31_t *b)
+static void checkInnerTail(q31_t *b)
 {
     ASSERT_TRUE(b[0] == 0);
     ASSERT_TRUE(b[1] == 0);
