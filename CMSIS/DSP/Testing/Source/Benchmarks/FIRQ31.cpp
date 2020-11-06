@@ -1,7 +1,7 @@
 #include "FIRQ31.h"
 #include "Error.h"
 
-#if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
+#if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
 static __ALIGNED(8) q31_t coeffArray[64];
 #endif 
    
@@ -39,7 +39,7 @@ static __ALIGNED(8) q31_t coeffArray[64];
        switch(id)
        {
            case TEST_FIR_Q31_1:
-#if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
+#if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
               /* Copy coefficients and pad to zero 
               */
               memset(coeffArray,0,32*sizeof(q31_t));

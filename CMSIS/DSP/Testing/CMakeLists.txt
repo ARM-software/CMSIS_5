@@ -168,6 +168,7 @@ set (NNSRC
    Source/Benchmarks/FIRF32.cpp
    Source/Benchmarks/FIRQ31.cpp
    Source/Benchmarks/FIRQ15.cpp
+   Source/Benchmarks/FIRQ7.cpp
    Source/Benchmarks/MISCF32.cpp
    Source/Benchmarks/MISCQ31.cpp
    Source/Benchmarks/MISCQ15.cpp

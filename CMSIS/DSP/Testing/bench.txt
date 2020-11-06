@@ -499,6 +499,35 @@ group Root {
                    Normalized LMS Filter:test_lms_norm_q15
                 } -> PARAM1_ID
              }
+
+             suite FIR Q7 {
+                class = FIRQ7
+                folder = FIRQ7
+
+                ParamList {
+                  NumTaps, NB
+                  Summary NumTaps, NB
+                  Names "Number of taps","Number of samples"
+                  Formula "NumTaps * NB"
+                }
+
+                Pattern SAMPLES1_Q7_ID : Samples1_q7.txt 
+                Pattern REFS1_Q7_ID : Refs1_q7.txt 
+                Pattern COEFS1_Q7_ID : Coefs1_q7.txt 
+
+                Output  OUT_SAMPLES_Q7_ID : Output
+                Output  STATE_Q7_ID : State
+                Output  ERR_Q7_ID : Err
+
+                Params PARAM1_ID = {
+                  NumTaps = [16,32,64]
+                  NB = [64,128,256]
+                }
+
+                Functions {
+                   FIR Filter:test_fir_q7
+                } -> PARAM1_ID
+             }
            }
 
            group Convolutions / Correlations {

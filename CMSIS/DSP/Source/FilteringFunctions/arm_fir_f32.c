@@ -114,6 +114,7 @@
                  - A is blockSize for f32
                  - A is 8*ceil(blockSize/8) for f16
                  - A is 8*ceil(blockSize/4) for q31
+                 - A is 0 for other datatypes (q15 and q7)
 
 
   @par           Fixed-Point Behavior
