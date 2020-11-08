@@ -23,7 +23,11 @@
   $Project: Schema File for Package Description File Format Specification
 
   Package file name convention <vendor>.<name>.<version>.pack
-  SchemaVersion=1.7.0
+  SchemaVersion=1.7.1
+
+  08. November 2020: v1.7.1
+  - undo removing deprecated attributes as they are still used in latest pdsc file versions:
+    DeviceVendorEnum: Lapis Semiconductor, DeviceVendorEnum: Pname, BoardReferenceType: Dvendor, Dname
 
   14. September 2020: v1.7.0
   - added processor attribute Dcdecp for implemented Custom Datapath Extension Coprocessors (Cortex-M33)
@@ -180,6 +184,7 @@
       <xs:enumeration value="Infineon:7" />
       <xs:enumeration value="Kionix:127" />
       <xs:enumeration value="LAPIS Technology:10" />
+      <xs:enumeration value="Lapis Semiconductor:10" />
       <xs:enumeration value="Linear Technology:136" />
       <xs:enumeration value="Luminary Micro:76" />
       <xs:enumeration value="Maxim:23" />
@@ -1118,6 +1123,7 @@
     <xs:attribute name="Dmve" type="DmveEnum" />
     <xs:attribute name="Dsecure" type="DsecureEnum" />
     <xs:attribute name="Dendian" type="DendianEnum" />
+    <xs:attribute name="Pname" type="RestrictedString" />
     <xs:attribute name="Cvendor" type="xs:string" />
     <xs:attribute name="Cbundle" type="xs:string" />
     <xs:attribute name="Cclass" type="CclassType" />
@@ -1230,6 +1236,8 @@
     <xs:attribute name="name"     type="xs:string" use="required" /> <!-- refers to Board Description by name   -->
     <xs:attribute name="vendor"   type="xs:string" use="required" /> <!-- refers to Board Description by vendor -->
     <xs:attribute name="revision" type="xs:string" use="optional" /> <!-- refers to Board Description by board revision -->
+    <xs:attribute name="Dvendor"     type="DeviceVendorEnum" use="optional"/> <!-- deprecated in 1.2 -->
+    <xs:attribute name="Dname"       type="xs:string"        use="optional"/> <!-- deprecated in 1.2 -->
   </xs:complexType>
 
   <xs:complexType name="CompatibleDeviceType">
