@@ -16,7 +16,7 @@
 # limitations under the License.
 #
 
-add_executable(test_arm_fully_connected_s8)
+add_cmsis_nn_unit_test_executable(test_arm_fully_connected_s8)
 
 target_sources(test_arm_fully_connected_s8 PRIVATE
     Unity/unity_test_arm_fully_connected_s8.c

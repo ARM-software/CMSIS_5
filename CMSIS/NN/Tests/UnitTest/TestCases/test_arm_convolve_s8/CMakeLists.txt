@@ -16,7 +16,7 @@
 # limitations under the License.
 #
 
-add_executable(test_arm_convolve_s8)
+add_cmsis_nn_unit_test_executable(test_arm_convolve_s8)
 
 target_sources(test_arm_convolve_s8 PRIVATE
     Unity/unity_test_arm_convolve_s8.c
@@ -36,5 +36,3 @@ target_include_directories(test_arm_convolve_s8 PRIVATE ${CMSIS_PATH}/CMSIS/Core
 
 target_link_libraries(test_arm_convolve_s8 LINK_PUBLIC arm_nn_mat_mult_core)
 target_link_libraries(test_arm_convolve_s8 LINK_PUBLIC unity)
-
-add_dependencies(test_arm_convolve_s8 arm_nn_mat_mult_core unity)
