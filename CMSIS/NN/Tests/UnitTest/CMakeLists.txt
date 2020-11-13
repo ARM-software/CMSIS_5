@@ -20,6 +20,20 @@ cmake_minimum_required(VERSION 3.15.6)
 
 project(cmsis_nn_unit_tests VERSION 0.0.1)
 
+set(CMSIS_PATH "${CMAKE_CURRENT_SOURCE_DIR}/../../../.." CACHE PATH "Path to CMSIS.")
+
+set_property(GLOBAL PROPERTY cmsis_nn_unit_test_executables)
+
+# This function should be used instead of add_executable.
+function(add_cmsis_nn_unit_test_executable)
+    get_property(tmp GLOBAL PROPERTY cmsis_nn_unit_test_executables)
+    foreach(arg ${ARGV})
+        set(tmp "${tmp} ${arg}")
+        add_executable(${arg})
+    endforeach()
+    set_property(GLOBAL PROPERTY cmsis_nn_unit_test_executables "${tmp}")
+endfunction(add_cmsis_nn_unit_test_executable)
+
 add_library(arm_nn_mat_mult_core)
 target_include_directories(arm_nn_mat_mult_core PRIVATE ${CMSIS_PATH}/CMSIS/NN/Include)
 target_include_directories(arm_nn_mat_mult_core PRIVATE ${CMSIS_PATH}/CMSIS/DSP/Include)
@@ -52,8 +66,4 @@ MESSAGE(STATUS "Downloading Unity and generating test runners for CMSIS-NN unit 
 execute_process(COMMAND ${MAKE_CMD} ${MAKE_CMD_SCRIPT} ${MAKE_CMD_SCRIPT_OPTION}
                         WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
 add_subdirectory(Unity)
-
-
-
-
 

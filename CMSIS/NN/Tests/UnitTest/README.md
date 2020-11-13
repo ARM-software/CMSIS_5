@@ -45,6 +45,18 @@ Connect any HW (e.g. NUCLEO_F746ZG) that is supported by mbed. Multiple boards a
 
 Use the -h flag to get more info.
 
+It is also possible to build the unit test with Cmake. The binaries can then be used with another test platform, e.g. Fastmodel.
+For example:
+
+```
+    ```mkdir build```
+    ```cd build```
+    ```cmake .. -DANY_TOOL_CHAIN_OPTIONS=/path/to/that -DCPU=XX etc..```
+    ```make```
+
+```
+
+
 ## Generating new test data
 Generating new test data is done with the following script. Use the -h flag to get more info.
 

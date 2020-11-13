@@ -16,7 +16,7 @@
 # limitations under the License.
 #
 
-add_executable(test_arm_depthwise_conv_s8_opt)
+add_cmsis_nn_unit_test_executable(test_arm_depthwise_conv_s8_opt)
 
 target_sources(test_arm_depthwise_conv_s8_opt PRIVATE
     Unity/unity_test_arm_depthwise_conv_s8_opt.c
@@ -30,5 +30,3 @@ target_include_directories(test_arm_depthwise_conv_s8_opt PRIVATE ${CMSIS_PATH}/
 
 target_link_libraries(test_arm_depthwise_conv_s8_opt LINK_PUBLIC arm_nn_depthwise_conv_nt)
 target_link_libraries(test_arm_depthwise_conv_s8_opt LINK_PUBLIC unity)
-
-add_dependencies(test_arm_depthwise_conv_s8_opt unity arm_nn_depthwise_conv_nt)
