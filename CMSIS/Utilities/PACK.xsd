@@ -17,17 +17,18 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 
-  $Date:        14. Sep 2020
-  $Revision:    1.7.0
+  $Date:        13. Nov 2020
+  $Revision:    1.7.1
 
   $Project: Schema File for Package Description File Format Specification
 
   Package file name convention <vendor>.<name>.<version>.pack
   SchemaVersion=1.7.1
 
-  08. November 2020: v1.7.1
+  13. November 2020: v1.7.1
   - undo removing deprecated attributes as they are still used in latest pdsc file versions:
     DeviceVendorEnum: Lapis Semiconductor, DeviceVendorEnum: Pname, BoardReferenceType: Dvendor, Dname
+  - added condition attribute to TaxonomyDescriptionType supporting context specific taxonomies (e.g. vendor or device specific)
 
   14. September 2020: v1.7.0
   - added processor attribute Dcdecp for implemented Custom Datapath Extension Coprocessors (Cortex-M33)
@@ -1144,16 +1145,18 @@
     <xs:simpleContent>
       <xs:extension base="xs:string">
         <!-- Class the description is associated with -->
-        <xs:attribute name="Cclass" type="CclassType" use="required" />
+        <xs:attribute name="Cclass"    type="CclassType" use="required" />
          <!-- Group the description is associated with -->
-        <xs:attribute name="Cgroup" type="CgroupType" use="optional" /> 
+        <xs:attribute name="Cgroup"    type="CgroupType" use="optional" />
         <!-- link to documentation for the :Class:[Group] -->
-        <xs:attribute name="doc" type="xs:string" use="optional" /> 
+        <xs:attribute name="doc"       type="xs:string"  use="optional" />
         <!-- link a generator to a taxonomy -->
-        <xs:attribute name="generator" type="xs:string" use="optional" /> 
+        <xs:attribute name="generator" type="xs:string"  use="optional" />
+        <!-- allow to filter the taxonomy e.g. for a device vendor -->
+        <xs:attribute name="condition" type="xs:string"  use="optional" />
         <!-- if true, the vendor gives permission for the doc file above being extracted from the pack and displayed on a web-page -->
         <!-- links to web pages are assumed public -->
-        <xs:attribute name="public" type="xs:boolean" use="optional" default="false" />
+        <xs:attribute name="public" type="xs:boolean"    use="optional" default="false" />
       </xs:extension>
     </xs:simpleContent>
   </xs:complexType>
