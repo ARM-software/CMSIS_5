@@ -110,11 +110,11 @@ is set for all registers unless redefined at a lower level.
     <td>xmlns:xs</td>
     <td>Specify the underlying XML schema to which the CMSIS-SVD schema is compliant. 
     Has to be set to: \token{"http://www.w3.org/2001/XMLSchema-instance"}.</td>
-    <td>xs:decimal</td>
+    <td>xs:string</td>
     <td>required</td>
   </tr>
   <tr>
-    <td>xmlns:xs</td>
+    <td>xs:noNamespaceSchemaLocation</td>
     <td>Specify the file path and file name of the CMSIS-SVD Schema. For example, \token{CMSIS-SVD.xsd}.</td>
     <td>xs:string</td>
     <td>required</td>
