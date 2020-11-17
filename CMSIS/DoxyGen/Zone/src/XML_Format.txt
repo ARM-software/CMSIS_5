@@ -175,7 +175,7 @@ The \ref xml_rzone_pg element is the root element of the .rzone file which descr
   <tr>
     <td>xmlns:xs</td>
     <td>Is set to: \token{"http://www.w3.org/2001/XMLSchema-instance"} to indicate compliance to the XML format.</td>
-    <td>xs:decimal</td>
+    <td>xs:string</td>
     <td>required</td>
   </tr>
   <tr>
@@ -1367,7 +1367,7 @@ The \ref xml_azone_pg element is the root element of the .azone file which store
   <tr>
     <td>xmlns:xs</td>
     <td>Is set to: \token{"http://www.w3.org/2001/XMLSchema-instance"} to indicate compliance to the XML format.</td>
-    <td>xs:decimal</td>
+    <td>xs:string</td>
     <td>required</td>
   </tr>
   <tr>
