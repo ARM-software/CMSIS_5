@@ -468,7 +468,7 @@
 
 
        }
-        outputfft.create(ref.nbSamples(),TransformCF32::OUTPUT_CFFT_F32_ID,mgr);
+       outputfft.create(ref.nbSamples(),TransformCF32::OUTPUT_CFFT_F32_ID,mgr);
        
 
     }

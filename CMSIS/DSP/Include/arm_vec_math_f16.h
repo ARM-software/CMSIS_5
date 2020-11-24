@@ -20,8 +20,8 @@
  * limitations under the License.
  */
 
-#ifndef _ARM_VEC_MATH_H
-#define _ARM_VEC_MATH_H
+#ifndef _ARM_VEC_MATH_F16_H
+#define _ARM_VEC_MATH_F16_H
 
 #include "arm_math_types_f16.h"
 #include "arm_common_tables_f16.h"
@@ -306,7 +306,7 @@ __STATIC_INLINE f16x8_t vtanhq_f16(
 
 #endif /* ARM FLOAT16 SUPPORTED */
 
-#endif /* _ARM_VEC_MATH_H */
+#endif /* _ARM_VEC_MATH_F16_H */
 
 /**
  *
