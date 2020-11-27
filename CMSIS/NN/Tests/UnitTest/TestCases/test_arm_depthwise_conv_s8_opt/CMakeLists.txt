@@ -22,7 +22,8 @@ target_sources(test_arm_depthwise_conv_s8_opt PRIVATE
     Unity/unity_test_arm_depthwise_conv_s8_opt.c
     Unity/TestRunner/unity_test_arm_depthwise_conv_s8_opt_runner.c
     ${CMSIS_PATH}/CMSIS/NN/Source/NNSupportFunctions/arm_q7_to_q15_with_offset.c
-    ${CMSIS_PATH}/CMSIS/NN/Source/ConvolutionFunctions/arm_depthwise_conv_s8_opt.c)
+    ${CMSIS_PATH}/CMSIS/NN/Source/ConvolutionFunctions/arm_depthwise_conv_s8_opt.c
+    ${CMSIS_PATH}/CMSIS/NN/Source/ConvolutionFunctions/arm_depthwise_conv_s8.c)
 
 target_include_directories(test_arm_depthwise_conv_s8_opt PRIVATE ${CMSIS_PATH}/CMSIS/NN/Include)
 target_include_directories(test_arm_depthwise_conv_s8_opt PRIVATE ${CMSIS_PATH}/CMSIS/DSP/Include)
