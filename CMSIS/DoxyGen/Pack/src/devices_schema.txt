@@ -2149,6 +2149,11 @@ Contact cmsis@arm.com to ask for an extension. These values can be used in the e
     <td>http://www.samsung.com</td>
   </tr>
   <tr>
+    <td class="XML-Token">SILAN:164</td>
+    <td>Hangzhou Silan Microelectronics Co., Ltd.</td>
+    <td>http://www.silan.com.cn/</td>
+  </tr>
+  <tr>
     <td class="XML-Token">Silergy Corp:139</td>
     <td>Silergy Corporation</td>
     <td>http://silergy.com/</td>
