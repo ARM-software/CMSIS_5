@@ -56,7 +56,7 @@ arm_status arm_nn_mat_mul_core_1x_s8(int32_t row_elements,
 
 #if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
 
-        __asm volatile (
+        __ASM volatile (
            "   vldrb.8         q0, [%[col]], 16     \n"
            "   wlstp.8         lr, %[cnt], 1f       \n"
            "2:                                      \n"
