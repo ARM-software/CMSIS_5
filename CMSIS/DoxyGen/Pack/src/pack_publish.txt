@@ -5,21 +5,13 @@ There are multiple ways to distribute a software pack:
 
 \section cp_prerequisites Prerequisites
 
-Before you start to distribute a software pack, you need to make sure that it does not contain errors.  A good start is an error and warning free run of:
-  - \c gen_pack.bat script from the \ref PackTutorials
-  - or \ref bash_script that does not show any \ref packChk errors.
+Before you start to distribute a software pack, you need to make sure that it does not contain errors. A good start is an
+error and warning free run of \ref bash_script "gen_pack.sh" that does not show any \ref packChk errors and
+\ref cp_Editors_xmllint "validates the XML" of the PDSC file.
   
-Also you should perform an XML schema check, for example using the MDK Pack Installer.
-
-- Right-click on the pack version number and select <b>Schema Check</b>: \n
-  \image html schema_check.png
-
-- The \b Output window shows the result. If errors are reported, please make sure to fix them before continuing.\n
-  \image html schema_check_output.png
-
-\note This is important when the pack should published using a \ref cp_KeilComPack "pack index service". The pack
-  importer will ignore all \elem{vendor}.\elem{name}.pdsc files that do fail when checking against the current PACK.xsd schema file
-  and thus your pack will cannot be downloaded.
+\note XML validation is important when the pack should published using a \ref cp_KeilComPack "pack index service". The pack
+  importer will ignore all \elem{vendor}.\elem{name}.pdsc files that do fail when checking against the current PACK.xsd
+  schema file and thus your pack will cannot be downloaded.
 
 
 \section cp_LocalInstallation Local Installation

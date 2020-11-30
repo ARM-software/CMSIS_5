@@ -33,27 +33,27 @@ The \subpage pack_revisionHistory lists the main changes between versions.
 
 \section SWPackVariants Software Pack Use Cases
 
-A pack can be used for multiple purposes:
+A pack can be used to deliver:
  
-\image html SPVariants_small.png  "Software Pack Use Cases"
+- \b Device \b support: a so called <i>Device Family Pack (DFP)</i> contains CMSIS system/startup files, drivers, and flash
+  algorithms for a microcontroller device family.
+- \b Board \b support: a <i>Board Support Pack (BSP)</i> contains documentation, schematics, and drivers for a certain
+  development board.
+- \b Middleware: distribute software components belonging to a middleware stack (such as source code or libraries) in
+  CMSIS-Pack format.
+- \b In-house \b software: distribute software components within a company or engineering group.
 
-The figure above shows the following use cases for Software Packs:
-  - <b>Device Family Pack (DFP):</b> contains CMSIS system/startup files, drivers, and flash algorithms for a microcontroller
-    device family.
-  - <b>CMSIS Software Pack:</b> contains the generic CMSIS components (CORE, DSP Library, and RTOS implementation) supplied by Arm.
-  - <b>Middleware Pack:</b> contains software components belonging to a middleware (such as source code or libraries).
-  - <b>Board Support Pack (BSP):</b> contains documentation, schematics, and drivers for a certain development board.
-  - <b>In-house Software Packs:</b> usually contain software components that can be distributed within a
-    company or engineering group.
-
-\note A Software Pack can address multiple use cases at the same time!
+\note
+- A Software Pack can address multiple use cases at the same time!
+- CMSIS itself is distributed as a software pack (containing the generic CMSIS components (CORE, DSP Library, and RTOS
+  implementation)) and is supplied by Arm.
 
 The following sections provide more information:
 
  - In the \ref cp_Packs, learn the basics and the required steps for creating a pack.
- - \ref cp_SWComponents shows how to start a pack from scratch.
- - \ref createPack_DFP describes how to enable device support in a DFP.
- - \ref createPackBoard covers the creation of Board Support Packs (BSPs).
+ - \ref cp_PackTutorial are available that show how to start a \ref cp_SWComponents "software pack" from scratch, how to
+   enable device support in a \ref createPack_DFP "Device Support Pack (DFP)", and how to describe development boards in a
+   \ref createPackBoard "Board Support Pack (BSP)".
  - Learn how to \ref createPackPublish.
  - \ref createPackUtil are available that are useful during the creation of a pack.
  - \ref packFormat describes all XML elements that can be used in a package description file.

@@ -1,0 +1,1306 @@
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\page cp_PackTutorial Pack Tutorials
+
+The <b>ARM::CMSIS</b> Pack contains tutorials that are explained on the following pages. In the \b \\CMSIS\\Pack\\Tutorials
+directory the following three ZIP files are available:
+|ZIP File                           |Documentation        
+|-----------------------------------|---------------------
+|Pack_with_Software_Components.zip  | \ref cp_SWComponents
+|Pack_with_Device_Support.zip       | \ref createPack_DFP
+|Pack_with_Board_Support.zip        | \ref createPackBoard
+
+\note To work with these tutorials, make sure that you have installed the environment that is required for the
+\ref bash_script as this will be used to verify and create the tutorial packs.
+
+
+\section cp_PackSteps Steps to Create a Pack
+
+The following image shows the basic steps that are required to create a Software Pack:
+
+-# <b>Produce input:</b> Create the files that will be delivered with the Pack (source code, header and library files,
+   documentation).
+-# <b>Organize files:</b> For better maintainability, use directories to separate the content of the Pack.
+-# <b>Create PDSC file:</b> The XML based PDSC file can be created using any text editor. Editors that can
+   \ref cp_Editors "validate XML" code against a schema file help to find bugs early in the Pack development stage.
+-# <b>Generate Pack:</b> Any compression tool supporting the ZIP format can be used to create a Pack file. \ref packChk is
+   helpful for the validation of the contents of a Pack.
+
+\note Steps 3 and 4 are covered automatically if you are using the \ref bash_script "gen_pack.sh" script to generate the pack.
+
+The following sections show how to create a Software Pack from scratch:
+- \ref cp_SWComponents starts with a simple Pack containing only the PDSC file and a single software component and then
+  explains further elements of a Pack in more detail.
+- \ref createPack_DFP adds information on the specific requirements that a DFP has.
+- \ref createPackBoard elaborates on the content specific to a BSP.
+
+
+\section cp_SWComponents Pack with Software Components
+
+This tutorial explains how to create a Software Pack. First, a simple Software Pack is created that contains only one
+software component. Then, it is extended to show the various features for describing software components.
+
+<b>Preparations</b>
+-# Create a working directory on you PC, for example <b>C:\\temp\\working</b>.
+-# Go to the directory <b>\\CMSIS\\Pack\\Tutorials</b> available in the \b ARM::CMSIS Pack installation. Please
+   consult your development tool's documentation for more information on the Pack installation directory structure. In a
+   standard µVision installation, you will find it below <b>\%localappdata\%\\Arm\\Packs\\ARM\\CMSIS\\<i>version</i></b>.
+-# Unzip the file \b Pack_with_Software_Components.zip.
+-# Copy the <i>content</i> of the ZIP file's \b 01_Create_PDSC directory into your working directory.
+-# Copy the \ref bash_script "gen_pack.sh" script from your CMSIS-Pack installation's <b>\\CMSIS\\Pack\\Bash</b> directory
+   to the working directory.
+-# Make sure that files/directories are not write protected (remove read-only flag).
+
+
+\subsection cp_CreatePDSC Create PDSC File
+
+<ol>
+<li>
+Open the file <b>vendor.pack_name.pdsc</b> in an editor and change it like this:
+\code{.xml}
+<?xml version="1.0" encoding="UTF-8"?>
+<package schemaVersion="1.6.3" xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xs:noNamespaceSchemaLocation="PACK.xsd">
+  <vendor>MyVendor</vendor>
+  <name>MyPack</name>
+  <description>Internal Software Pack</description>
+  <url></url>
+  <supportContact></supportContact>
+  <license>Docs/license.txt</license>
+\endcode
+
+\note All code examples in this and the following sections can be found in the \c snippets.xml file in the <b>01_Create_PDSC</b>
+      directory.
+
+A PDSC file starts with information on the XML version and the encoding. The \ref pdsc_package_pg "<package>" element
+declares the version of the schema file and the XSD file that is used to validate the PDSC file:
+
+- \ref element_package "<name>" specifies the name of the Pack and \em must \em not contain spaces. \b Example: \c MyPack and
+  \c My_Pack are ok, \c My \c Pack is not ok.
+- \ref element_package "<description>" describes the Pack in a few words.
+- \ref element_package "<vendor>" states the name of the Pack's vendor and \em must \em not contain spaces. \b Example:
+  \c ACMECorp and \c ACME_Corp are OK, \c ACME \c Corporation is not OK.
+- \ref element_package "<url>" defines the download URL of the Pack (may be left empty)
+  \note
+    - In this tutorial, the URL is not specified. This means that the Pack will be marked in Pack Installer as \b Offline and
+      needs to be updated manually. To resolve this issue, it is possible to specify the file "download" location using a
+      <a href="https://en.wikipedia.org/wiki/File_URI_scheme" target="_blank">file URI</a>. For Windows users, this would
+      look like the following:
+      \verbatim
+      <url>file:///c:/temp/working</url>
+      \endverbatim
+    - It is important to understand how the \<url\> element works. If you specify a URL, for example
+      <a href="https://www.keil.com/pack/" target="_blank">https://www.keil.com/pack</a>,
+      then you have to make the PDSC file and the corresponding Pack file(s) available for download at that exact location.
+      The naming of the files follow the standard naming rules. For example, the ARM::CMSIS PDSC and Pack files are available
+      here:\n
+      <a href="https://www.keil.com/pack/ARM.CMSIS.pdsc" target="_blank">https://www.keil.com/pack/ARM.CMSIS.pdsc</a> and \n
+      <a href="https://www.keil.com/pack/ARM.CMSIS.5.7.0.pack" target="_blank">https://www.keil.com/pack/ARM.CMSIS.5.7.0.pack</a> and \n
+      <a href="https://www.keil.com/pack/ARM.CMSIS.5.6.0.pack" target="_blank">https://www.keil.com/pack/ARM.CMSIS.5.6.0.pack</a> and ... \n
+      At the specified location, you need to have one (unversioned) PDSC file and can have multiple versioned Pack files,
+      but at least the latest one.
+- \ref element_package "<supportContact>" may provide an email address or web page URL for Pack specific questions/problems.
+- \ref element_package "<license>" links to an optional license file that will be shown during the installation of the Pack.
+  The installation in development tools will abort if the license agreement is not accepted.
+</li>
+<li>
+Add release information and keywords:
+\code
+  <releases>
+    <release version="1.0.0">
+      Initial version
+    </release>
+  </releases>
+      
+  <keywords>
+    <keyword>MyVendor</keyword>
+    <keyword>My Software Component</keyword>
+  </keywords>
+\endcode
+The information from the \ref element_releases "<releases>" section will be used for:
+- Determining the Pack version (required for the file name of the Pack file)
+- Display of release information
+
+\note Usually, you need to add a \c \<date\> tag to a \c \<release \c version\>. If you omit this, \ref packChk will issue a
+warning. To keep the tutorial simple, the \c \<date\> tag is not used here (as it requires consecutive dates for different
+versions).
+
+\ref element_keywords "<keywords>" may be used for better visibility for search engines.
+</li>
+<li>
+Add a \ref pdsc_components_pg "<components>" section with the following:
+\code
+  <components>
+      <component Cclass="MyClass" Cgroup="MyGroup" Csub="MySubGroup" Cversion="1.0.0">
+        <description>MySWComp</description>
+        <files>
+          <file category="doc"    name="Docs/MySWComp.htm"/>
+          <file category="header" name="MySWComp/header_mylib.h"/>
+          <file category="header" name="MySWComp/config/config_mylib.h" attr="config" version="1.0.0"/>
+          <file category="source" name="MySWComp/mylib_one.c"/>
+          <file category="source" name="MySWComp/mylib_two.c"/>
+        </files>
+      </component>
+  </components>
+\endcode
+\note 
+If you are using a header file with the attribute <span class="XML-Token">config</span>, save it in a separate directory
+from all other header files as in this example. Configuration files are copied into the project folder and are adopted
+specifically for that project. But due to the include path search order of the compiler, it might happen that the unmodified
+header file in the pack repository is found first and used which might end up in unexpected results.
+
+More information on <b>\<components\></b> will be given in section \ref cp_Components. Save the file and close your editor.
+In the next section, the generation of a Pack will be explained in detail.
+</li>
+</ol>
+
+
+\subsection cp_GeneratePack Generate a Pack
+<ol>
+<li>
+Rename the file <b>vendor.pack_name.pdsc</b> to <b>MyVendor.MyPack.pdsc</b> (according to the \<vendor\> and \<name\>
+elements in the PDSC file).
+</li>
+<li>
+Open \ref bash_script "gen_pack.sh" from your working directory in an editor. Modify the variables \c CMSIS_PACK_PATH and
+\c PATH_TO_ADD reflect your setup. The following is an example for a Git Bash on Windows:
+\code
+  CMSIS_PACK_PATH="$LOCALAPPDATA/Arm/Packs/ARM/CMSIS/5.7.0"
+  PATH_TO_ADD="/C/Program Files/7-Zip/:$CMSIS_PACK_PATH/CMSIS/Utilities/Win32/:/C/xmllint/"
+\endcode
+\note Refer to section  \ref createPackUtil for hints on how to install the required tools.
+</li>
+<li>
+Having saved <b>gen_pack.sh</b>, open a Bash console in the current directory and run the script.
+The shell script will:
+- Run a schema check on the PDSC file using \ref cp_Editors "xmllint".
+- Run \ref packChk
+- Create the <b>MyVendor.MyPack.1.0.0.pack</b> Pack file in the ./output sub-directory.
+</li>
+<li>
+Install the Pack by double-clicking it. Depending on the development software that is used, the display of the Pack contents
+may differ:
+
+\image html simplepack_rte.png "MyClass:MyGroup:MySubGroup shown in development tool"
+</li>
+</ol>
+
+
+\subsection cp_Components Software Components
+
+A component lists the files that belong to it and that are relevant for a project. The component itself or each individual
+file may refer to a \ref element_condition "condition" that must resolve to true; if it is false, the component or file is
+not applicable in the given context.
+
+Each software component must have the following attributes that are used to identify the component:
+  - Component Class (\c Cclass): examples are \b CMSIS, \b Device, \b File \b System
+  - Component Group (\c Cgroup): examples are \b CMSIS:RTOS, \b Device:Startup, \b File \b System:CORE
+  - Component Version (\c Cversion): the version number of the software component.
+
+Optionally, a software component may have additional attributes:
+  - Component Sub-Group (\c Csub): examples are \b CMSIS:RTOS:MyRTOS, \b Device:Driver \b USBD:Full-speed
+  - Component Variant (\c Cvariant): a variant of the software component.
+  - Component Vendor (\c Cvendor): the supplier of the software component.
+
+The \c Cclass, \c Cgroup, \c Csub, \c Cvariant and \c Cversion attributes are used together with the vendor specified by the
+Pack to identify a component. A component vendor must ensure that the combination \c Cclass, \c Cgroup, \c Csub and
+\c Cversion is unique and not used by multiple components within the same Pack.
+
+For a list of established \c Cclass identifiers, refer to \ref pack_Cclass.
+
+In case multiple interdependent components (belonging to the same \c Cclass) form part of a solution, these can be grouped
+in a so called \ref cp_Bundles "bundle". 
+
+Use the following syntax to reference to software components and APIs:\n
+<b>\<Vendor\>::\<Cclass\>:\<Cgroup\>:\<Csub\></b>
+  
+\b Examples:
+  - <b>\::CMSIS:RTOS (API)</b> - the CMSIS-RTOS API.
+  - <b>ARM::CMSIS:DSP</b> - the CMSIS-DSP Library.
+  - <b>\::File System:Drive:NOR</b> - the NOR Flash Drive of a file system.
+
+Here is an example for the display of software components in a development tool:
+
+\image html ComponentDisplay.png "Display of a software component in development tools"
+
+Software Component Files
+------------------------
+Each software component consists of a certain number of files. Each file has at least the following attributes:
+- \c name: File path, file name, and file extension in the format path/name.extension. The file path is relative to the root
+  directory of the Pack. 
+- \c path: For the category="header", the path attribute can be used explicitly to specify the include path to be added to
+  the commandline of the build tools, specifying an incomplete path. 
+- \c category: Defines the purpose of the file. Select the predefined value as listed in the table
+  \ref FileCategoryEnum "File Categories".
+
+Optionally, every file may have the following attributes:
+- \c attr: Defines the special use and handling of a file. Select a predefined value as defined in the table
+  \ref FileAttributeEnum "File Attributes".
+- \c condition: Enter the identifier (attribute \em <b>id</b>) of a \ref element_condition "condition". The element is used
+  if the condition resolves to \token{true}.
+- \c select: Brief description and purpose of the file. The \b <em>select</em> attribute is \b required when \b <em>attr</em>
+  is set to \token{template} or \token{interface}. When multiple template files of a component have the same
+  \b <em>select</em> string, they are treated as a single selectable template. This way, multiple template or interface files
+  can be bundled.
+- \c src: Path information. The path is specified relative to the Pack Description File (PDSC).
+- \c version: File-specific version information. This is used particularly for files copied into the project workspace.
+  Before a file gets copied, a version check avoids unnecessary copy actions. If a file does not have a version, then the
+  component version is used.
+- \c public: Set publishing permissions for the documentation. If \em <b>true</b>, the documentation can be extracted and
+  published on a web page.
+
+
+\subsection cp_Conditions Conditions
+
+A condition describes dependencies on:
+- a specific device
+- a certain processor
+- tool attributes
+- the presence of other components
+
+Conditions are used to define <b>AND/OR</b> rules that make components conditional and therefore only available under
+certain circumstances, for example for specific devices or processors. Conditions are also used to express dependencies
+between software components.
+
+Each condition has an <b>id</b> that is unique within the scope of a the PDSC file. An id can be referenced in the
+\c condition attribute of components, APIs, examples, files and other conditions.
+All attributes set in a <b>accept</b>, <b>require</b>, or <b>deny</b> element must resolve to true for the element to become
+true. A condition becomes true when:
+- At least one <b>accept</b> element is true, \a AND
+- all <b>require</b> elements are true, \a AND
+- no <b>deny</b> element is true.
+
+If a condition resolves to false during processing, the respective element will be ignored.
+
+Modify the example from the \ref cp_CreatePDSC section by adding the requirement for a CMSIS-RTOS v2 and libraries that
+are specific to a certain Cortex-M class core:
+- \c mylib_cm0.lib for use with a Cortex-M0 and Cortex-M0+ processor
+- \c mylib_cm3.lib for use with a Cortex-M3 processor
+- \c mylib_cm4.lib for use with a Cortex-M4 or Cortex-M7 processor
+
+Copy the \em content of the <b>02_Conditions/MySWComp</b> directory of the \b Pack_with_Software_Components.zip file to the
+current working directory:
+<ol>
+<li>
+Add a \ref pdsc_conditions_pg "<conditions>" section with the following:
+\code
+  <conditions> 
+    <condition id="Arm Compiler">
+      <require Tcompiler="ARMCC" Toptions="AC6"/>
+    </condition>
+    <condition id="CM0">
+      <description>Cortex-M0 based device</description>
+      <require condition="Arm Compiler"/>
+      <accept  Dcore="Cortex-M0"/>
+      <accept  Dcore="Cortex-M0+"/>
+    </condition>
+    <condition id="CM3">
+      <description>Cortex-M3 based device</description>
+      <require condition="Arm Compiler"/>
+      <accept  Dcore="Cortex-M3"/>
+    </condition>
+    <condition id="CM4_CM7">
+      <description>Cortex-M4 based device</description>
+      <require condition="Arm Compiler"/>
+      <accept  Dcore="Cortex-M4"/>
+      <accept  Dcore="Cortex-M7"/>
+    </condition>
+    <condition id="CMSIS Core with RTOS2">
+      <description>CMSIS Core with RTOS2 for Cortex-M processor</description>
+      <accept  condition="CM0"/>
+      <accept  condition="CM3"/>
+      <accept  condition="CM4_CM7"/>
+      <require Cclass="CMSIS" Cgroup="CORE"/>
+      <require Cclass="CMSIS" Cgroup="RTOS2"/>
+    </condition>
+  </conditions>
+  \endcode
+</li>
+<li>
+Change the first line of the already existing <b>component</b> by adding the condition and increasing the version number of
+the component:
+\code{.xml}
+      <component Cclass="MyClass" Cgroup="MyGroup" Csub="MySubGroup" Cversion="1.0.1" condition="CMSIS Core with RTOS2">
+\endcode
+</li>
+<li>
+Add the following code to the already existing <b>component</b>:
+\code
+          <file category="library" condition="CM0"     name="MySWComp/Lib/mylib_cm0.lib"/>
+          <file category="library" condition="CM3"     name="MySWComp/Lib/mylib_cm3.lib"/>
+          <file category="library" condition="CM4_CM7" name="MySWComp/Lib/mylib_cm4.lib"/>
+\endcode
+Note that library files should always have a condition with regards to a specific C/C++ compiler. To accomplish this, each
+processor condition has the additional requirement for the Arm Compiler (version 6).
+</li>
+<li>
+Add a new version number to the header of the PDSC file so that a Pack with a new version number will be created:
+\code{.xml}
+    <release version="1.0.1">
+      Conditions added
+    </release>
+\endcode
+</li>
+<li>
+Finally, save the PDSC file and regenerate the Pack file using the <b>gen_pack.sh</b> script. See \ref cp_GeneratePack for
+further details. Afterwards, install the Pack in your development tool and observe the differences to version 1.0.0.
+
+\image html ConditionsDisplay.png "Display of conditionally added files for a Cortex-M3 device in development tools"
+</li>
+</ol>
+
+
+\subsection cp_Variants Variants
+
+Software components may have <b>variants</b>, for example: 
+- Debug version with or release version without diagnostic output
+- Long/short file names in a File System component
+- Fast/slow modes
+
+Variants are mutually exclusive (only one variant can be chosen at a time). \c Cvariant is an optional part of the component
+ID. The variant specifier is a brief string (e.g. \c release, \c debug).
+
+\note Version management relies on variants to <b>remain unchanged between versions</b>. 
+
+The following example introduces a new component to the Pack in two variants: \c debug and \c release. Copy the \e content of
+the <b>03_Variants</b> directory of the \b Pack_with_Software_Components.zip file to the current working directory.
+<ol>
+<li>
+Add the following lines to the <b>components</b> section in your PDSC file:
+\code
+      <component Cclass="MyVariant" Cgroup="MyGroup" Cvariant="Release" Cversion="1.0.2" condition="CMSIS Core with RTOS2">
+        <description>Release version of MyVariant</description>
+        <RTE_Components_h>
+          <!-- the following content goes into file 'RTE_Components.h' -->
+          #define RTE_MyVariant_Release               /* MyVariant Release Version */
+        </RTE_Components_h>
+        <files>
+          <file category="doc" name="Docs/MySWComp.htm"/>
+          <file category="header" name="MySWComp/header_mylib.h"/>
+          <file category="header" name="MySWComp/config/config_mylib.h" attr="config" version="1.0.0"/>
+          <file category="source" name="MySWComp/mylib_one.c"/>
+          <file category="source" name="MySWComp/mylib_two.c"/>
+          <file category="library" condition="CM0" name="MySWComp/Lib/mylib_cm0.lib"/>
+          <file category="library" condition="CM3" name="MySWComp/Lib/mylib_cm3.lib"/>
+          <file category="library" condition="CM4_CM7" name="MySWComp/Lib/mylib_cm4.lib"/>
+        </files>
+      </component>
+      <component Cclass="MyVariant" Cgroup="MyGroup" Cvariant="Debug" Cversion="1.0.2" condition="CMSIS Core with RTOS2">
+        <description>Debug version of MyVariant</description>
+        <RTE_Components_h>
+          <!-- the following content goes into file 'RTE_Components.h' -->
+          #define RTE_MyVariant_Debug               /* MyVariant Debug Version */
+        </RTE_Components_h>
+        <files>
+          <file category="doc" name="Docs/MySWComp.htm"/>
+          <file category="header" name="MySWComp/header_mylib.h"/>
+          <file category="header" name="MySWComp/config/debug_config_mylib.h" attr="config" version="1.0.0"/>
+          <file category="source" name="MySWComp/debug_mylib_one.c"/>
+          <file category="source" name="MySWComp/debug_mylib_two.c"/>
+          <file category="library" condition="CM0" name="MySWComp/Lib/debug_mylib_cm0.lib"/>
+          <file category="library" condition="CM3" name="MySWComp/Lib/debug_mylib_cm3.lib"/>
+          <file category="library" condition="CM4_CM7" name="MySWComp/Lib/debug_mylib_cm4.lib"/>
+        </files>
+      </component>
+\endcode
+</li>
+<li>
+Add a new revision to reflect the changes in a newly generated Pack:
+\code{.xml}
+    <release version="1.0.2">
+      Variants introduced
+    </release>
+\endcode
+</li>
+<li>
+Finally, save the PDSC file and regenerate the Pack file using the <b>gen_pack.sh</b> script. See \ref cp_GeneratePack for
+further details. Afterwards, install the Pack in your development tool and observe the differences to version 1.0.1.
+
+\image html VariantDisplay.png "Display of MyVariant in development tools"
+</li>
+</ol>
+
+
+\subsection cp_RTEComponents_h RTE_Components.h
+Sometimes, software components need to know of other components. Depending on the availability or configuration of another
+component, certain settings may be required. A distinct header file is available to make components aware of each other:
+<b>RTE_Components.h</b>. To add a line of C code to this header file, simply add this to your component:
+
+\verbatim
+<RTE_Components_h>
+  #define RTE_MyVariant_Debug               /* MyVariant Debug Version */
+</RTE_Components_h>
+\endverbatim
+The \c \#define can be checked by other components in a project.
+
+\note The RTE_components.h file needs to be included somewhere in your source files.  Refer to \ref RTE_Components_h for
+more information.
+
+
+\subsection cp_Bundles Bundles
+A bundle is basically a variant on the \c Cclass level. It specifies the attributes \c Cclass, \c Cversion and optionally
+\c Cgroup and \c Cvendor for a collection of interdependent components. Components within a bundle inherit the attributes
+set by the bundle and must not set these attributes again. Bundles ensure consistency of attributes across multiple
+interworking components and restrict the mix and match of components within a \c Cclass from different solutions.
+In addition to components, a bundle has the mandatory elements \c description and \c doc (for documentation).
+
+An example of a <b>bundle</b> is shown in the \ref cp_BundleExample section where the bundle is used to deliver board
+support files for a certain development platform.
+
+
+\subsection cp_Instances Instances
+
+Some \ref pdsc_components_pg "software components" allow several instances. For example, this is useful if more than one
+peripheral can be connected.
+
+<ol>
+<li>
+Adding the information about a maximum number of instances is easy. Change the first component (\::MyClass:MyGroup:MySub) as
+follows:
+\code{.xml}
+      <component Cclass="MyClass" Cgroup="MyGroup" Csub="MySubGroup" Cversion="1.0.3" condition="CMSIS Core with RTOS2" maxInstances="3">
+\endcode
+</li>
+<li>
+Add a new version number:
+\code{.xml}
+    <release version="1.0.3">
+      Maximum number of instances specified
+    </release>
+\endcode
+</li>
+<li>
+Finally, save the PDSC file and regenerate the Pack file using the <b>gen_pack.sh</b> script. See \ref cp_GeneratePack for
+further details. Afterwards, install the Pack in your development tool and observe the differences to version 1.0.2. When
+selecting a certain number of instances of the component, causes the development tool to copy the required configuration
+files multiple times into the project. This ensures that each component instance can be configured separately.
+
+\image html maxInstancesDisplay.png  "Display of component instances in development tools"
+</li>
+</ol>
+
+
+\subsection cp_API API Interface
+
+An \ref pdsc_apis_pg "API" is a special form of a software component that only defines a C/C++ Application Programming
+Interface (API). An API does not contain the actual implementation (usually provided by source code or library files) and
+cannot be selected in a development tool. An example is the CMSIS-RTOS v2 API, which is specified as part of CMSIS. However,
+the actual RTOS implementation is provided by different vendors. An API consists of a name, a brief description as well as
+one or more header files, and a document containing a detailed specification of the API.
+
+Copy the \e content of the <b>05_APIs</b> directory of the \b Pack_with_Software_Components.zip file to the current working
+directory:
+<ol>
+<li>
+Add a \ref pdsc_apis_pg "<apis>" section with the following:
+\code{.xml}
+    <api Cclass="Device" Cgroup="MyAPI" exclusive="0">
+	  <description>API for MyAPI</description>
+	  <files>
+	    <file category="doc"    name="Docs/API/MyAPI.htm"/>
+	    <file category="header" name="API/Include/MyAPI.h"/>
+	  </files>
+	</api>
+\endcode
+</li>
+<li>
+Add a new version number:
+\code{.xml}
+    <release version="1.0.4">
+      MyAPI added
+    </release>
+\endcode
+</li>
+<li>
+Finally, save the PDSC file and regenerate the Pack file using the <b>gen_pack.sh</b> script. See \ref cp_GeneratePack for
+further details. Afterwards, install the Pack in your development tool and observe the differences to version 1.0.3. Most
+likely, you will see none as APIs are not selectable and are thus not displayed in the tools.
+</li>
+</ol>
+
+
+\subsection cp_CodeTemplates User Code Templates
+User code templates provide a quick start for implementing an application. To add user code templates, add source files with
+the attribute <code>attr=“template”</code> in a \c \<component\>. The \c select attribute is used to identify template files.
+Template files with the same \c select attribute will be added to a project simultaneously.
+
+Copy the \e content of the <b>06_User_Code_Templates</b> directory of the \b Pack_with_Software_Components.zip file to the
+current working directory:
+<ol>
+<li>
+Add the following code to both variants (\c debug and \c release) of the \::MyVariant:MyGroup component:
+\code{.xml}
+          <file category="source" name="MySWComp/Templates/mylib_template1.c" attr="template" select="Easy Template"/>
+          <file category="source" name="MySWComp/Templates/mylib_template2.c" attr="template" select="Complex Template"/>
+          <file category="source" name="MySWComp/Templates/mylib_template3.c" attr="template" select="Complex Template"/>
+\endcode
+</li>
+<li>
+Add a new version number:
+\code{.xml}
+    <release version="1.0.5">
+      User Code Templates added
+    </release>
+\endcode
+</li>
+<li>
+Finally, save the PDSC file and regenerate the Pack file using the <b>gen_pack.sh</b> script. See \ref cp_GeneratePack for
+further details. Afterwards, install the Pack in your development tool and observe the differences to version 1.0.4.
+
+\image html UserCodeTemplatesDisplay.png  "Display of user code templates in development tools"
+</li>
+</ol>
+
+
+\subsection cp_Examples Example Projects 
+Example projects help to understand a certain MCU or development board better. An example and each individual file of it may
+refer to a condition that must resolve to true; if it is false, the example or file will be ignored. The board element is
+used to reference to one or more board descriptions using the board vendor and name an example is targeted for. Each example
+can specify attributes listing related components using \c Cclass, \c Cgroup, \c Csub and \c Cversion. The \elem{project}
+element contains the names of the supported development tools and the project files to be loaded.
+
+Adding example projects is an iterative process. First, you need to create the pack, so that you can create a project that
+is using the software components from the pack. Once this project is ready to be shipped, you can add it to the pack and
+publish it.
+
+Copy the \e content of the <b>07_Example_Projects</b> directory of the \b Pack_with_Software_Components.zip file to the
+current working directory:
+<ol>
+<li>
+Add an \ref pdsc_examples_pg "<examples>" section with the following:
+\code{.xml}
+  <examples>
+    <example name="MyDevBoard Example" doc="Abstract.txt" folder="MyPackExample">
+      <description>CMSIS-RTOS based example</description>
+      <board name="MyDevBoard" vendor="MyVendor"/>
+      <project>
+        <environment name="uv" load="MyPackExample.uvprojx"/>
+      </project>
+      <attributes>
+        <component Cclass="CMSIS"     Cgroup="Core"/>
+        <component Cclass="Device"    Cgroup="Startup"/>
+        <component Cclass="CMSIS"     Cgroup="RTOS"/>
+        <component Cclass="MyVariant" Cgroup="MyGroup"/>
+      </attributes>
+    </example>
+  </examples>
+\endcode
+</li>
+<li>
+Add a new version number:
+\code{.xml}
+    <release version="1.0.6">
+      Example project added
+    </release>
+\endcode
+</li>
+<li>
+Finally, save the PDSC file and regenerate the Pack file using the <b>gen_pack.sh</b> script. See \ref cp_GeneratePack for
+further details. Afterwards, install the Pack in your development tool and observe the differences to version 1.0.5.
+
+\note \ref packChk will issue a warning as the board described above is not known:
+\verbatim
+*** WARNING M324: C:\03_work\Packs\Arm\Tutorial\01_Create_PDSC\build\MyVendor.MyPack.pdsc (Line 116)
+  Board referenced in Example 'MyDevBoard Example' not found: '[MyVendor] MyDevBoard'
+\endverbatim
+
+\image html ExampleDisplay.png  "Display of example projects in development tools"
+</li>
+</ol>
+Example projects rely on a development board to be present (as the code needs to run on real hardware). In the code above
+you will notice that a development board called "MyDevBoard" was specified. \ref createPackBoard explains how to integrate
+boards into a Pack.
+
+
+\section createPack_DFP Pack with Device Support
+
+A \ref cp_SWComponents "Software Pack" that contains a \ref pdsc_devices_pg "<devices>" element is called Device Family Pack
+(DFP). A DFP may contain additional <b>Software Components</b>, <b>Board</b>, <b>Example Projects</b>, or any combination of
+those. The typical content of a DFP is:
+  - \ref cp_DeviceProperties explaining the capabilities of a device or a device family in more detail.
+  - \ref cp_Components "Software Components" that configure the device and basic device drivers, in particular:
+    - CMSIS-compliant \ref cp_System_Startup required to setup the C run-time library, device clock, and memory interface.
+    - Peripheral driver interfaces that provide software routines for physical device peripherals used by middleware stacks.
+      Drivers may adhere to the
+      <a class=el href="https://arm-software.github.io/CMSIS_5/Driver/html/index.html" target="_blank">CMSIS-Driver</a> standard.
+  - One or more \ref cp_SVD "System View Description (SVD)" files describing the programmer's view of the device's peripherals.
+  - \ref cp_FlashProgrammingAlgorithm for erasing and downloading code into on-chip flash.
+  - \ref cp_debugdescription enable tool-agnostic debug and trace configurations.
+  - \ref cp_Examples "Example Projects" that show the usage of the device and its peripherals.
+  - \ref cp_CodeTemplates "User Code Templates" that can be used as a starting point for application development.
+
+This section explains how to create a DFP. Initially, the PDSC file in the DFP only describes devices. This DFP is then
+extended to contain also SVD files, flash algorithms, and device related software components such as system and HAL files.
+Example projects and code templates may be added as described in the section \ref cp_SWComponents.
+
+DFP Use Cases
+-------------
+A \ref pdsc_devices_pg "Device Family Pack (DFP)" may be provided by a silicon vendor and is used to extend development
+tools with support for new devices. In general, the DFP enables silicon vendors to distribute tool independent device
+support for their device families.\n
+DFPs can also be used to provide information for the display on web sites. One example is the new device database on
+<a class=el href="https://developer.arm.com/embedded/cmsis/cmsis-packs/devices" target="_blank">developer.arm.com</a>:
+
+\anchor DevWebSite
+\image html DeviceDatabase2.png "Device information on a web site extracted from a DFP"
+
+Steps to Create a DFP
+---------------------
+
+\image html DFPFlow.png
+
+\subsection cp_BasicDFP Basic Device Family Pack
+
+In the following sections, a DFP will be created for a fictional device family called <b>MVCM3</b> from the device vendor
+<b>MyVendor</b>. The device family consists of four member that are separated into two sub-families. The specification of
+the MVCM3 family is as follows:
+
+\image html MVCM3SpecTable.png "MVCM3 Device Family Specification"
+
+<b>Preparations</b>
+-# Create a working directory on you PC, for example <b>C:\\temp\\working_dfp</b>.
+-# Go to the directory <b>\\CMSIS\\Pack\\Tutorials</b> available in the \b ARM::CMSIS Pack installation. Please
+   consult your development tool's documentation for more information on the Pack installation directory structure. In a
+   standard µVision installation, you will find it below <b>\%localappdata\%\\Arm\\Packs\\ARM\\CMSIS\\<i>version</i></b>.
+-# Open the file \b Pack_with_Device_Support.zip.
+-# Copy the file \b MyVendor.MVCM3.pdsc of the ZIP file's \b 01_Basic_Pack directory into your working directory.
+-# Make sure that file are not write protected (remove read-only flag).
+-# Copy the \ref bash_script "gen_pack.sh" script from your CMSIS-Pack installation's <b>\\CMSIS\\Pack\\Bash</b> directory
+   to the working directory.
+-# Open the \b MyVendor.MVCM3.pdsc file in an editor.
+
+<b>Code Example</b>
+<ol>
+<li>
+Add a \ref element_device "<devices>" section in the PDSC file with the following:
+\code{.xml}
+  <devices>
+    <family Dfamily="MVCM3 Series" Dvendor="Generic:5">
+      <processor Dcore="Cortex-M3" DcoreVersion="r2p1" Dfpu="0" Dmpu="0" Dendian="Little-endian"/>
+      <description>
+        The MVCM3 device family contains an Arm Cortex-M3 processor, running up to 100 MHz with a versatile set of on-chip peripherals.
+      </description>
+      <!-- ************************  Sub-family 'MVCM3100'  **************************** -->
+      <subFamily DsubFamily="MVCM3100">
+        <processor  Dclock="50000000"/>
+        <!-- *************************  Device 'MVCM3110'  ***************************** -->
+        <device Dname="MVCM3110">
+          <memory     name="IROM1"  access="rx"       start="0x00000000"  size="0x4000"     startup="1"   default="1"/>
+          <memory     name="IRAM1"  access="rw"       start="0x20000000"  size="0x0800"     init   ="0"   default="1"/>
+        </device>
+        <!-- *************************  Device 'MVCM3120'  ***************************** -->
+        <device Dname="MVCM3120">
+          <memory     name="IROM1"  access="rx"        start="0x00000000"  size="0x8000"     startup="1"   default="1"/>
+          <memory     name="IRAM1"  access="rx"        start="0x20000000"  size="0x1000"     init   ="0"   default="1"/>
+        </device>
+      </subFamily>
+      <!-- ************************  Sub Family 'MVCM3200'  **************************** -->
+      <subFamily DsubFamily="MVCM3200">
+        <processor  Dclock="100000000"/>
+        <!-- *************************  Device 'MVCM3250'  ***************************** -->
+        <device Dname="MVCM3250">
+          <memory     name="IROM1"  access="rx"         start="0x00000000"  size="0x4000"     startup="1"   default="1"/>
+          <memory     name="IRAM1"  access="rw"         start="0x20000000"  size="0x0800"     init   ="0"   default="1"/>
+        </device>
+        <!-- *************************  Device 'MVCM3260'  ***************************** -->
+        <device Dname="MVCM3260">
+          <memory     name="IROM1"  access="rx"         start="0x00000000"  size="0x8000"     startup="1"   default="1"/>
+          <memory     name="IRAM1"  access="rw"         start="0x20000000"  size="0x1000"     init   ="0"   default="1"/>
+        </device>
+      </subFamily>
+    </family>
+  </devices>
+\endcode
+\note
+- \c Dvendor IDs are not freely selectable. The very latest set of IDs can be found in the
+  <a href="https://github.com/ARM-software/CMSIS_5/blob/develop/CMSIS/Utilities/PACK.xsd" target="_blank">PACK.xsd</a>
+  file on GitHub. If you are a new device vendor, please contact
+  <a href="mailto:cmsis@arm.com?subject=Dvendor%20ID%20Assignment">cmsis@arm.com</a> to get a \c Dvendor ID assigned.
+- This section's code examples can be found in the \c snippets.xml file in the ZIP file's <b>01_Basic_Pack</b> directory.
+- Usually, you need to add a \c \<date\> tag to a \c \<release \c version\>. If you omit this, \ref packChk will issue a
+  warning. To keep the tutorial simple, the \c \<date\> tag is not used here (as it requires consecutive dates for different
+  versions).
+
+</li>
+<li>
+Open \ref bash_script "gen_pack.sh" from your working directory in an editor. Modify the variables \c CMSIS_PACK_PATH and
+\c PATH_TO_ADD reflect your setup. The following is an example for a Git Bash on Windows:
+\code
+  CMSIS_PACK_PATH="$LOCALAPPDATA/Arm/Packs/ARM/CMSIS/5.7.0"
+  PATH_TO_ADD="/C/Program Files/7-Zip/:$CMSIS_PACK_PATH/CMSIS/Utilities/Win32/:/C/xmllint/"
+\endcode
+\note Refer to section  \ref createPackUtil for hints on how to install the required tools.
+</li>
+<li>
+From the \c PACK_BASE_FILES variable, delete \c License.txt and \c README.md. We don't use them in this tutorial.
+</li>
+<li>
+Having saved <b>gen_pack.sh</b>, open a Bash console in the current directory and run the script.
+The shell script will:
+- Run a schema check on the PDSC file using \ref cp_Editors "xmllint".
+- Run \ref packChk
+- Create the <b>MyVendor.MVCM3.1.0.0.pack</b> Pack file in the ./output sub-directory.
+</li>
+<li>\ref packChk will issue a couple of warnings that we will take care of later:
+\verbatim
+*** WARNING M350: C:\03_work\Packs\Arm\Tutorial\DFP\working\build\MyVendor.MVCM3.pdsc (Line 35)
+  No 'Startup' component found for [Generic:5] 'MVCM3110' (Compiler:  [])
+
+*** WARNING M350: C:\03_work\Packs\Arm\Tutorial\DFP\working\build\MyVendor.MVCM3.pdsc (Line 35)
+  No 'Startup' component found for [Generic:5] 'MVCM3120' (Compiler:  [])
+
+*** WARNING M350: C:\03_work\Packs\Arm\Tutorial\DFP\working\build\MyVendor.MVCM3.pdsc (Line 49)
+  No 'Startup' component found for [Generic:5] 'MVCM3250' (Compiler:  [])
+
+*** WARNING M350: C:\03_work\Packs\Arm\Tutorial\DFP\working\build\MyVendor.MVCM3.pdsc (Line 49)
+  No 'Startup' component found for [Generic:5] 'MVCM3260' (Compiler:  [])
+\endverbatim
+</li>
+<li>Install the Pack in your development tool by double-clicking it. Your pack management tool should show something similar to this:
+
+\image html BasicDFPDisplay.png  "Display of microcontroller devices in development tools"
+</li>
+</ol>
+
+
+\subsection cp_System_Startup System and Startup Files
+<a href="../../Core/html/index.html">CMSIS-Core (Cortex-M)</a> defines the following files to be used by
+an embedded application:
+- \c startup_<device>.c with reset handler and exception vectors. It is executed after reset and calls \c SystemInit and may
+  contain stack and heap configurations for the user application.
+- \c system_<device>.c and \c system_<device>.h with general system configuration information (i.e. for clock and bus setup).
+- \c <device.h> gives access to processor core and all peripherals. This file should be generated out of the
+  \ref cp_SVD "SVD" file using <a href="../../SVD/html/svd_SVDConv_pg.html"><b>SVDConv.exe</b></a> to ensure consistency
+  between the header file and what is being displayed by the debugger.
+
+\image html SystemStartupFiles.png  "System and startup files in relation to user code"
+
+\note <a href="../../Core/html/templates_pg.html"><b>CMSIS-Core(M)</b></a>
+    explains the structure of the system and startup files and how to create them.
+
+Copy the \e content of the <b>02_System_and_Startup</b> directory of the \b Pack_with_Device_Support.zip file to the
+current working directory:
+<ol>
+<li>
+Add a \c \<conditions\> section in your PDSC with the following (the \ref cp_Conditions "conditions" section
+provides more information on this step):
+\code{.xml}
+  <conditions>
+    <condition id="MVCM3 CMSIS-CORE">
+      <!-- conditions selecting Devices -->
+      <description>MyVendor MVCM3 Series devices and CMSIS-CORE</description>
+      <require Cclass="CMSIS" Cgroup="CORE"/>
+      <require Dvendor="Generic:5" Dname="MVCM3*"/>
+    </condition>
+    <condition id="Startup Arm">
+      <description>Startup assembler file for Arm Compiler 6</description>
+      <require Tcompiler="ARMCC" Toptions="AC6"/>
+    </condition>
+    <condition id="Startup GCC">
+      <description>Startup assembler file for GCC</description>
+      <require Tcompiler="GCC"/>
+    </condition>
+    <condition id="Startup IAR">
+      <description>Startup assembler file for IAR</description>
+      <require Tcompiler="IAR"/>
+    </condition>
+  </conditions>
+\endcode
+\note The assembler based \c startup_<device>.s file is tool dependent. Therefore, separate conditions for the various tool
+      vendors are required.
+</li>
+<li>
+Add a \c \<components\> section in your PDSC with the following (the \ref cp_Components "components" section
+provides more information on this step):
+\code
+  <components>
+    <component Cclass="Device" Cgroup="Startup" Cversion="1.0.0" condition="MVCM3 CMSIS-CORE">
+      <description>System Startup for MyVendor MVCM3 Series</description>
+      <files>
+        <!--  include folder -->
+        <file category="include" name="Device/Include/"/>
+
+        <file category="linkerScript"  name="Device/Source/Arm/MVCM3xxx_ac6.sct" attr="config" condition="Startup Arm" version="1.0.0"/>
+        <file category="linkerScript"  name="Device/Source/GCC/MVCM3xxx_gcc.ld"  attr="config" condition="Startup GCC" version="1.0.0"/>
+
+        <file category="source" name="Device/Source/startup_MVCM3xxx.c" attr="config" version="1.0.0"/>
+        <file category="source" name="Device/Source/system_MVCM3xxx.c"  attr="config" version="1.0.0"/>
+      </files>
+    </component>
+  </components>
+\endcode
+</li>
+<li>
+Add a new version number:
+\code{.xml}
+    <release version="1.0.1">
+      Startup files included
+    </release>
+\endcode
+</li>
+<li>
+Finally, save the PDSC file and regenerate the Pack file using the \ref cp_GeneratePack "gen_pack.sh" script. Afterwards,
+install the Pack in your development tool and create a new project. Select the software components <b>\::CMSIS:CORE</b>
+and <b>\::Device:Startup</b> for the project:
+ 
+\image html StartupSystemFilesAdded.png "Startup and system files added to a project"
+</li>
+</ol>
+
+\note \ref packChk will show lots of \c INFO messages. This is expected at this point and we will address this problem in
+the next section.
+
+
+\subsection cp_SVD System View Description File
+
+<a class=el href="https://www.keil.com/cmsis/svd" target="_blank">CMSIS-SVD</a>
+formalizes the description of the programmer's view for the system contained in ARM Cortex-M processor-based
+microcontrollers, in particular the memory mapped registers of the peripherals. The level of detail contained in system view
+descriptions is comparable to what is found in device reference manuals published by silicon vendors. The information ranges
+from a high level functional description of a peripheral all the way down to the definition and purpose of an individual bit
+field in a memory mapped register. CMSIS-SVD files are developed and maintained by the silicon vendors. 
+The XML based SVD file is the input for <a href="../../SVD/html/svd_SVDConv_pg.html"><b>SVDConv.exe</b></a> that
+generates the tool dependent debug view and the device header file.
+
+\image html SVDFlow.png "SVD file conversion flow"
+
+Copy the \e content of the <b>03_SVD_File</b> directory of the \b Pack_with_Device_Support.zip file to the current working
+directory:
+<ol>
+<li>
+In your currently open Bash shell, run the following commands:
+\verbatim
+$ cd SVD
+$ /c/Users/username/AppData/Local/Arm/Packs/ARM/CMSIS/5.7.0/CMSIS/Utilities/Win32/SVDConv.exe MVCM3xxx.svd --generate=header --fields=macro
+\endverbatim
+</li>
+<li>
+You should see some output of SVDConv similar to this:
+\verbatim
+CMSIS-SVD SVD Consistency Checker / Header File Generator V3.3.35
+Copyright (C) 2010 - 2020 ARM Ltd and ARM Germany GmbH. All rights reserved.
+
+Arguments: "MVCM3xxx.svd" --generate=header --fields=macro
+
+Found 0 Error(s) and 0 Warning(s).
+\endverbatim
+</li>
+<li>
+Move the generated header file <b>MVCM3xxx.h</b> to the <b>Device\\Include</b> directory.
+</li>
+<li>
+Add the following two lines at the family level in the PDSC file:
+\code{.xml}
+    <compile    header="Device/Include/MVCM3xxx.h"/>
+    <debug      svd="SVD/MVCM3xxx.svd"/>
+\endcode
+</li>
+<li>
+Add a new version number:
+\code{.xml}
+    <release version="1.0.2">
+      SVD and header file included
+    </release>
+\endcode
+</li>
+<li>
+Finally, save the PDSC file and regenerate the Pack file using the \ref cp_GeneratePack "gen_pack.sh" script. Afterwards,
+install the Pack in your development tool and create a new project. Depending on your development environment, you will be
+able to see the SVD file included in your project:
+
+\image html SVDIncluded.png "Project with SVD file"
+
+\note For more information on SVD, please visit <a class=el href="../../SVD/html/index.html">CMSIS-SVD</a>.
+</li>
+</ol>
+
+
+\subsection cp_FlashProgrammingAlgorithm Flash Programming Algorithms
+\ref flashAlgorithm are used to erase or download applications to Flash devices. A DFP usually contains
+predefined Flash algorithms for programming its supported devices. The page \ref algorithmFunc explains the mechanisms in
+more detail.
+
+For the MVCM3 device family, two flash algorithms have to be created. MVCM3110/250 have 16 kB of Flash, whereas MVCM3120/260
+have 32 kB of Flash memory.
+
+Copy the \e content of the <b>04_Flash_Programming</b> directory of the \b Pack_with_Device_Support.zip file to the
+current working directory:
+<ol>
+<li>
+In the PDSC file, add these lines to the MVCM3110/250 device sections:
+\code{.xml}
+<algorithm name="Flash/MVCM3XXX_16.FLM" start="0x00000000" size="0x4000" default="1"/>
+\endcode
+</li>
+<li>
+Add these lines to the MVCM3120/260 device sections:
+\code{.xml}
+<algorithm name="Flash/MVCM3XXX_32.FLM" start="0x00000000" size="0x8000" default="1"/>
+\endcode
+</li>
+<li>
+Add a new version number:
+\code{.xml}
+    <release version="1.0.3">
+      Flash Programming Algorithms added
+    </release>
+\endcode
+</li>
+<li>
+Finally, save the PDSC file and regenerate the Pack file using the \ref cp_GeneratePack "gen_pack.sh" script. Afterwards,
+install the Pack in your development tool. Depending on your development environment, you will be able to see the Flash
+Programming Algorithms included in your project (either for a new project or by adding it manually to an existing project):
+
+\image html FPADisplay.png "Display of Flash Programming Algorithm"
+
+\note The page \ref flashAlgorithm gives more information on the subject.
+</li>
+</ol>
+
+
+\subsection cp_debugdescription Debug Descriptions
+
+Please refer to \ref dbg_setup_tutorial for more information. In this tutorial, we will skip the creation of debug
+descriptions.
+
+
+\subsection cp_DeviceProperties Device Properties
+
+To limit redundancy, devices can be organized in two hierarchy groups:
+- \ref element_family "family": the attributes of a device family which includes also the processor.
+- \ref element_subFamily "subFamily": attributes of an optional sub-family; this adds or modifies features of a family.
+
+Parameters of each single device are defined in:
+- \ref element_device "device": attributes of a specific silicon device
+- \ref element_variant "variant": attributes of a device variant (for example, with different package or temperature
+  range) or an OEM device or board that integrates the device.
+       
+A device is described by the following properties:
+ - \ref element_description "description": textual device description
+ - \ref element_feature "feature": categorized list of device peripherals and features. This list is used on
+   \ref DevWebSite "web sites" for the display of device features.
+ - \ref element_book "book": documentation about the device and its processor(s)
+ - \ref element_processor "processor": processor and processor features embedded in the device
+ - \ref element_compile "compile": device specific general settings for the build tools
+ - \ref element_debugconfig "debugconfig": default settings for a debug connection
+ - \ref element_debugport "debugport": debug port description of the device for the debugger to configure a debug
+   connection.
+ - \ref element_accessportV1 "accessportV1": access port (APv1) description of the device for the debugger to configure a debug
+   connection.
+ - \ref element_accessportV2 "accessportV2": access port (APv2) description of the device for the debugger to configure a debug
+   connection.
+ - \ref element_debug "debug": device specific information for the debugger to configure a debug connection including
+   System View Description files.
+ - \ref element_trace "trace": device specific information for the debugger to configure trace.
+ - \ref element_memory "memory": memory layout of the device for internal and external RAM and ROM regions
+ - \ref element_algorithm "algorithm": device specific Flash programming algorithms
+
+A device inherits all specifications from both the family and sub-family levels. Some properties are required to be unique.
+For example, the name of the SVD file attribute of the \elem{debug} property. Therefore, the SVD file specified on the family
+level can be redefined by the attribute on the sub-family or device level. Other information like the \<description\> and
+\<feature\> entries are adding up, starting with the information from the family and sub-family level and finalizing with the
+information on the device level.
+
+The following shows how to specify the device properties for the MVCM3110 device (refer to the specification shown in
+\ref cp_BasicDFP). The other members of the family are specified accordingly.
+
+Copy the \e content of the <b>05_Device_Properties</b> directory of the \b Pack_with_Device_Support.zip file to the
+current working directory:
+<ol>
+<li>
+The <b>MVCM3 Series</b> family properties \ref element_processor "processor", \ref element_compile "compile",
+\ref element_description "description", and \ref element_debug "debug" are already specified. There are additional common
+properties that can be specified on the family level: \ref element_book "book" and \ref element_feature "feature".
+Add the following lines to the PDSC file in the \elem{family} section:
+\code{.xml}
+      <book      name="Docs/dui0552a_cortex_m3_dgug.pdf"   title="Cortex-M3 Generic User Guide"/>
+      <book      name="Docs/MVCM3XXX_Datasheet.pdf"        title="MVCM3 Series Datasheet"/>
+      <book      name="Docs/MVCM3XXX_Product_Brief.pdf"    title="MVCM3 Product Brief"/>
+      <feature type="ExtInt"        n="16"/>
+      <feature type="Temp"          n="-40"     m="105"   name="Extended Temperature Range"/>
+      <feature type="VCC"           n="2.5"     m="3.6"/>
+      <feature type="RTC"           n="32768"/>
+      <feature type="WDT"           n="1"/>
+\endcode
+</li>
+<li>
+The \b MVCM31xx sub-family has some features that are common for the two member devices. Please add the following code to the
+MVCM31100 \elem{subFamily} section:
+\code{.xml}
+<feature type="IOs"           n="26"/>
+<feature type="I2C"           n="1"/>
+<feature type="UART"          n="4"/>
+<feature type="Timer"         n="6"       m="32"/>
+<feature type="QFP"           n="32"/>
+\endcode
+</li>
+<li>
+The \b MVCM3110 device has some features that are unique to that device. Please add the following code to the MVCM3110
+\elem{device} section:
+\code{.xml}
+          <feature    type="PWM"           n="2" m="16"/>
+\endcode
+</li>
+</ol>
+
+
+\subsection cp_DeviceSWComp Device Specific Software Components
+
+Finally, \ref cp_Components "software components" and \ref cp_Examples "example projects" need to be added to the DFP.
+<ol>
+<li>
+Add the following lines to the PDSC file in the \elem{components} section:
+\code
+<component Cclass="Device" Cgroup="HAL" Csub="GPIO" Cversion="1.0.0" condition="MVCM3 CMSIS-Core">
+  <description>GPIO HAL for MyVendor MVCM3 Series</description>
+  <files>
+    <file category="header" name="Device/Include/GPIO.h"/>
+    <file category="source" name="Device/Source/GPIO.c"/>
+  </files>
+</component>
+
+<component Cclass="Device" Cgroup="HAL" Csub="ADC" Cversion="1.0.0" condition="MVCM3 CMSIS-Core">
+  <description>ADC HAL for MyVendor MVCM3 Series</description>
+  <files>
+    <file category="header" name="Device/Include/ADC.h"/>
+    <file category="source" name="Device/Source/ADC.c"/>
+  </files>
+</component>
+
+<component Cclass="CMSIS Driver" Cgroup="I2C" Cversion="1.0.0" condition="MVCM3 CMSIS-Core" maxInstances="3">
+  <description>I2C Driver for MVCM3 Series</description>
+  <RTE_Components_h>
+    #define RTE_Drivers_I2C0                /* Driver I2C0 */
+    #define RTE_Drivers_I2C1                /* Driver I2C1 */
+    #define RTE_Drivers_I2C2                /* Driver I2C2 */
+  </RTE_Components_h>
+  <files>
+    <file category="source" name="Drivers/I2C/I2C_MVCM3.c"/>
+    <file category="header" name="Drivers/I2C/I2C_MVCM3.h"/>
+  </files>
+</component>
+
+<component Cclass="CMSIS Driver" Cgroup="UART" Cversion="1.0.0" condition="MVCM3 CMSIS-Core" maxInstances="5">
+  <description>UART Driver for MVCM3 Series</description>
+  <RTE_Components_h>
+    #define RTE_Drivers_UART0               /* Driver UART0 */
+    #define RTE_Drivers_UART1               /* Driver UART1 */
+    #define RTE_Drivers_UART2               /* Driver UART2 */
+    #define RTE_Drivers_UART3               /* Driver UART3 */
+    #define RTE_Drivers_UART4               /* Driver UART4 */
+  </RTE_Components_h>
+  <files>
+    <file category="source" name="Drivers/UART/UART_MVCM3.c"/>
+    <file category="header" name="Drivers/UART/UART_MVCM3.h"/>
+  </files>
+</component>
+\endcode
+\note The first two software components are added to <b>Device\::HAL</b> because they are specific to the device family and
+are not using a published API. The drivers for I2C and UART are adhering to the
+<a class=el href="https://www.keil.com/cmsis/driver" target="_blank">CMSIS-Driver</a> specification. Thus, they are added to
+the Cclass <b>CMSIS Driver</b>.
+</li>
+<li>
+An example project has also been created. Add an \b \<examples\> section with the following:
+\code{.xml}
+  <examples>
+    <example name="Dummy" doc="Abstract.txt" folder="Examples/dummy">
+      <description>Dummy project</description>
+      <board name="MVCM3 Starter Kit" vendor="MyVendor"/>
+      <project>
+        <environment name="uv" load="dummy.uvprojx"/>
+      </project>
+      <attributes>
+        <category>Getting Started</category>
+      </attributes>
+    </example>
+  </examples>
+\endcode
+</li>
+<li>
+Add a new version number:
+\code{.xml}
+    <release version="1.0.4">
+      DFP finalized
+    </release>
+\endcode
+</li>
+<li>
+Finally, save the PDSC file and regenerate the Pack file using the \ref cp_GeneratePack "gen_pack.sh" script. Afterwards,
+install the Pack in your development tool.
+</li>
+</ol>
+
+This concludes the DFP tutorial. If you have a development board for your device, check out the next section that explains
+how to add boards to a pack to supply board support.
+
+
+\section createPackBoard Pack with Board Support
+
+A \ref cp_SWComponents "Software Pack" that contains a \ref pdsc_boards_pg "<board>" element is called Board Support Pack (BSP).
+A BSP may contain additional <b>Software Components</b>, <b>Example Projects</b>, as well as <b>Code Templates</b>. The typical
+content of a BSP is:
+- Source code, libraries, header/configuration files for the underlying hardware and documentation
+  (for example user manuals, getting started guides, and schematics).
+- \ref cp_Examples "Example Projects" that show the usage of the development board and its peripherals.
+- \ref cp_CodeTemplates "User Code Templates" that can be used as a starting point for using the development board or the
+  mounted device.
+
+This section is a tutorial that explains how to create a BSP. 
+Initially the PDSC file in the BSP only describes an evaluation board.
+This BSP is then extended to contain also software components that interface with the hardware of the board.
+Example projects and code templates may be added as described in the section \ref cp_SWComponents.
+  
+  
+BSP Use Cases
+-------------
+A BSP is typically provided by a Board Vendor and is used to
+<b>extend development tools</b> with support for development boards. In general, the BSP enables Board Vendors to
+distribute tool independent board support for their development platforms.\n
+BSPs can also be used to provide information for the display on <b>web sites</b>. One example is the new boards page on
+<a class=el href="https://developer.arm.com/embedded/cmsis/cmsis-packs/boards" target="_blank">developer.arm.com</a>:
+
+\image html BoardsSectionMusca-S1.png "Board information on a web site extracted from a BSP"
+
+
+\subsection cp_SpecDevBoard Specify a Development Board
+
+<b>Preparations</b>
+-# Install the Software Pack
+   <a class=el href="https://www.keil.com/dd2/arm/armcm3/" target="_blank">Keil::ARMCortex_DFP</a> as this
+   will be required for the BSP to function properly.
+-# Create a working directory on your PC, for example <b>C:\\temp\\working_bsp</b>.
+-# Go to the directory <b>\\CMSIS\\Pack\\Tutorials</b> available in the \b ARM::CMSIS Pack installation. Please
+   consult your development tool's documentation for more information on the Pack installation directory structure. In a
+   standard µVision installation, you will find it below <b>\%localappdata\%\\Arm\\Packs\\ARM\\CMSIS\\<i>version</i></b>.
+-# Unzip the file \b Pack_with_Board_Support.zip.
+-# Copy the \e content of the ZIP file's \b 01_Specify_Dev_Board directory into your working directory.
+-# Copy the \ref bash_script "gen_pack.sh" script from your CMSIS-Pack installation's <b>\\CMSIS\\Pack\\Bash</b> directory
+   to the working directory.
+-# Make sure that files/directories are not write protected (remove read-only flag).
+-# Open the \b MyVendor.MyBSP.pdsc file in an editor.
+
+<b>Code Example</b>
+<ol>
+<li>
+Add a \ref element_boards "<boards>" section in the PDSC file with the following:
+\code{.xml}
+<boards>
+  <board vendor="MyVendor" name="MyDevBoard" revision="V1" salesContact="sales@keil.com" orderForm="http://www.keil.com">
+    <description>MyVendor MyDevBoard Board Description</description>
+    <image small="Images/MyDevBoard_small.png" large="Images/MyDevBoard_large.png"/>
+    <book category="setup"     name="Docs/MyDevBoard/MyDevBoard_setup.pdf"      title="Getting Started"/>
+    <book category="schematic" name="Docs/MyDevBoard/MyDevBoard_schematics.pdf" title="Schematics"/>
+    <book category="manual"    name="Docs/MyDevBoard/MyDevBoard_um.pdf"         title="User Manual"/>
+    <mountedDevice             deviceIndex="0" Dvendor="ARM:82" Dname="ARMCM3"/>
+    <compatibleDevice          deviceIndex="0" Dvendor="ARM:82" Dfamily="ARM Cortex M3"/>
+    <feature type="ODbg"       n="1"           name="On-board J-LINK Lite"/>
+    <feature type="PWR"        n="5"           name="USB Powered"/>
+    <feature type="DIO"        n="8"/>
+    <feature type="SPI"        n="1"/>
+    <feature type="LED"        n="6"           name="User LEDs"/>
+    <feature type="ArduinoFF"  n="1"/>
+    <debugInterface adapter="J-Link Lite"      connector="Mini-USB"/>
+  </board>
+</boards>
+\endcode
+\note All code examples in this and the following sections can be found in the \c snippets.xml file in the
+      <b>01_Specify_Dev_Board</b> directory.
+</li>
+<li>
+Finally, save the PDSC file and generate the Pack file using the <b>gen_pack.sh</b> script. See \ref cp_GeneratePack for
+further details. Afterwards, install the Pack in your development tool.
+
+\image html DevBoardDisplay.png  "Display of development boards in development tools"
+</li>
+</ol>
+
+\note packChk.exe will display these warnings:
+\verbatim
+*** WARNING M304: C:\03_work\Packs\Arm\Tutorial\BSP\working\build\MyVendor.MyBSP.pdsc
+  No package URL (<url>-tag and/or value) found in PDSC file!
+
+*** WARNING M379: C:\03_work\Packs\Arm\Tutorial\BSP\working\build\MyVendor.MyBSP.pdsc (Line 28)
+  No example(s) found for Board '[MyVendor] MyDevBoard'.
+\endverbatim
+This is because this BSP does neither contain a download URL nor an example project for the board that has been specified.
+
+
+\subsection cp_BundleExample Create a BSP Bundle
+
+A bundle is basically a variant on the \c Cclass level. It specifies the attributes \c Cclass, \c Cversion and optionally
+\c Cgroup and \c Cvendor for a collection of interdependent components. Components within a bundle inherit the attributes
+set by the bundle and must not set these attributes again. Bundles ensure consistency of attributes across multiple
+interworking components and restrict the mix and match of components within a \c Cclass from different solutions.
+In addition to components, a bundle has the mandatory elements \c description and \c doc (for documentation).
+
+Copy the \e content of the <b>02_BSP_Bundle</b> directory of the \b Pack_with_Board_Support.zip file to the current working
+directory:
+<ol>
+<li>
+Add a \c \<conditions\> section in your PDSC with the following (the \ref cp_Conditions "conditions" section
+provides more information on this step):
+\code{.xml}
+    <condition id="ARM Cortex M3 Series">
+      <description>ARM Cortex M3 device required</description>
+      <require Dfamily="ARM Cortex M3" Dvendor="ARM:82"/>
+    </condition>
+    <condition id="MyDevBoard Board Setup">
+      <description>Board Setup Code required</description>
+      <require condition="ARM Cortex M3 Series"/>
+      <require Cclass="Board Support" Cgroup="Board Setup"/>
+    </condition>
+\endcode
+</li>
+<li>
+Add a \c \<components\> section in your PDSC with the following (the \ref cp_Components "components" section
+provides more information on this step):
+\code{.xml}
+    <bundle Cbundle="MyDevBoardSupport" Cclass="Board Support" Cversion="1.0.1">
+      <description>MyDevBoard custom board support package</description>
+      <doc>Docs/BSP/MyBSP.htm</doc>
+      <component Cgroup="Board Setup" condition="ARM Cortex M3 Series">
+        <description>Custom board setup code</description>
+        <files>
+          <file category="doc" name="Docs/BSP/Setup.htm"/>
+          <file category="header" name="MySWComp/Include/setup.h"/>
+          <file category="source" name="MySWComp/Source/setup.c"/>
+        </files>
+      </component>
+      <component Cgroup="I/O" Csub="LED" condition="MyDevBoard Board Setup">
+        <description>LED code for custom board</description>
+        <files>
+          <file category="doc" name="Docs/BSP/LED.htm"/>
+          <file category="header" name="MySWComp/Include/led.h"/>
+          <file category="header" name="MySWComp/Include/config_led.h" attr="config" version="1.0.0"/>
+          <file category="source" name="MySWComp/Source/led.c"/>
+        </files>
+      </component>
+      <component Cgroup="I/O" Csub="GPIO" condition="MyDevBoard Board Setup">
+        <description>GPIO code for custom board</description>
+        <files>
+          <file category="doc" name="Docs/BSP/GPIO.htm"/>
+          <file category="header" name="MySWComp/Include/gpio.h"/>
+          <file category="header" name="MySWComp/Include/config_gpio.h" attr="config" version="1.0.0"/>
+          <file category="source" name="MySWComp/Source/gpio.c"/>
+        </files>
+      </component>
+    </bundle>
+\endcode
+</li>
+<li>
+Add a new version number:
+\code{.xml}
+    <release version="1.0.1" date="2020-12-01">
+      Board support bundle added
+    </release>
+\endcode
+</li>
+<li>
+Finally, save the PDSC file and regenerate the Pack file using the \ref cp_GeneratePack "gen_pack.sh" script. Afterwards,
+install the Pack in your development tool and observe the differences to version 1.0.0.
+
+\image html BSPBundleDisplay.png "BSP bundle display in development tools"
+</li>
+</ol>
+*/
+
