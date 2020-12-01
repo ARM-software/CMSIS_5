@@ -397,6 +397,10 @@ The tokens can be used in the elements:
     <td class="XML-Token">GHS</td>
     <td>Green Hills Software compiler for C, C++, and EC++.</td>
   </tr>
+  <tr>
+    <td class="XML-Token">XC</td>
+    <td>Microchip MPLAB XC32 Compiler.</td>
+  </tr>
 </table>
 
 <p>&nbsp;</p>

@@ -17,13 +17,16 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 
-  $Date:        13. Nov 2020
-  $Revision:    1.7.1
+  $Date:        1. Dec 2020
+  $Revision:    1.7.2
 
   $Project: Schema File for Package Description File Format Specification
 
   Package file name convention <vendor>.<name>.<version>.pack
-  SchemaVersion=1.7.1
+  SchemaVersion=1.7.2
+  
+  1. December 2020: v1.7.2
+   - added 'XC' to CompilerEnumType to enable use of Microchip XC32 compiler 
 
   13. November 2020: v1.7.1
   - undo removing deprecated attributes as they are still used in latest pdsc file versions:
@@ -1089,6 +1092,7 @@
       <xs:enumeration value="GHS" />
       <xs:enumeration value="Cosmic" />
       <xs:enumeration value="G++"/> <!-- Code Sourcery -->
+      <xs:enumeration value="XC"/> <!-- Microchip MPLAB XC32 -->
       <xs:enumeration value="*" />
     </xs:restriction>
   </xs:simpleType>
