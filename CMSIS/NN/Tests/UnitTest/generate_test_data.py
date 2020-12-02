@@ -738,8 +738,8 @@ class FullyConnectedSettings(TestSettings):
         self.generate_c_array("weights", self.convert_tensor(weights, self.quantize2int8,
                                                              [self.weights_min, self.weights_max]))
         self.generate_c_array("biases", self.convert_tensor(biases, self.quantize_bias), "int32_t")
-        self.generate_c_array("output_ref", self.convert_tensor(conv, self.quantize2int8,
-                                                                [self.output_min, self.output_max]))
+        self.generate_c_array("output_ref", self.convert_tensor(conv, self.quantize_output))
+
         self.quantize_multiplier()
 
         self.write_c_config_header()
