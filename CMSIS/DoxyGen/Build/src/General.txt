@@ -43,7 +43,7 @@ Software layers and Virtual I/O simplify these use cases:
  - \ref cprjFormat_pg describes all XML elements that are available for the project description and how to use them.
 
 <b>Tools</b> that support \ref CmdLineBuild with software packs and the generic project file format:
-  - \ref cbuildgen generates a standard MAKE file and allows to manage software layers.
+  - \ref cbuildgen generates a standard MAKE or CMakeLists.txt file and allows to manage software layers.
   - \ref ccmerge updates configuration files that are based on <a href="../../Pack/html/configWizard.html"><b>Configuration Wizard Annotations</b></a>.
 */
 

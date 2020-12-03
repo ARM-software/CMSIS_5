@@ -15,8 +15,9 @@ For command line build with software packs, the following tools and utilities ar
 | \subpage cbuild_install "cbuild_install.sh" | Setup of the CMSIS command line build environment                         |
 | \subpage cp_init "cp_init.sh"               | Create an empty directory for storing software packs in CMSIS-Pack format |
 | \subpage cbuild "cbuild.sh"                 | Start the overall command line build process                              |
-| \subpage cbuildgen "cbuildgen"              | Create Make files and manage software layers                              |
+| \subpage cbuildgen "cbuildgen"              | Create Make or CMakeLists.txt file and manage software layers             |
 | \subpage make "Make"                        | GNU Make utility to generate binary images and update configuration files |
+| \subpage cmake "CMake"                      | CMake utility to generate binary images                                   |
 | \subpage cp_install "cp_install.sh"         | Download and install software packs                                       |
 | \subpage ccmerge "ccmerge"                  | Merge project specific setup to a new version of a configuration file     |
 | \subpage cbuild_uv "cbuild_uv.sh"           | Export MDK project targets and run a command line build process           |
@@ -238,12 +239,14 @@ Please setup environment variable CMSIS_PACK_ROOT to:
 script can be adopted to project specific requirements or replaced by a custom implementation (for example a Python script).
 
 The build flow of the \b cbuild.sh script is:
- 1. Call \ref cbuildgen "cbuildgen" with command \c packlist to list the URLs of missing software packs.
- 2. Call \ref cp_install "cp_install.sh" to download and install missing software packs.
- 3. Call \ref cbuildgen "cbuildgen" with command \c make to generate make files.
- 4. Call \ref make "Make" to update configuration files using \ref ccmerge "ccmerge".
- 5. Call \ref make "Make" to compile the project source code into the binary image.
-
+ - Call \ref cbuildgen "cbuildgen" with command \c packlist to list the URLs of missing software packs.
+ - Call \ref cp_install "cp_install.sh" to download and install missing software packs.
+ - Call \ref cbuildgen "cbuildgen" with command \c make to generate make files \a or
+ - Call \ref cbuildgen "cbuildgen" with command \c cmake to generate a CMakeLists.txt file (if \c \--cmake is specified).
+ - Call \ref make "Make" to update configuration files using \ref ccmerge "ccmerge" (not supported for \c \--cmake).
+ - Call \ref make "Make" to compile the project source code into the binary image \a or
+ - Call \ref cmake "cmake" to compile the project source code into the binary image using the specified \c \<BuildSystem>.
+ 
 
 \section cbuild_invocation Invocation
 
@@ -280,16 +283,8 @@ $ cbuild.sh <ProjectFile>.cprj [--toolchain=<Toolchain> --outdir=<OutDir> --intd
   (\c cpinstall), command files, object files, and dependency files).</td>
   </tr>
   <tr>
-    <td>\--update=\<CprjFile></td>
-    <td>Generates <tt>\<CprjFile></tt> with fixed versions for reproducing the current build.</td>
-  </tr>
-  <tr>
-    <td>\--jobs=\<N></td>
-    <td>Specifies the number of job slots for \ref make "Make" parallel execution. Minimum 1.</td>
-  </tr>
-  <tr>
-    <td>\--log=\<LogFile></td>
-    <td>Saves output messages in a log file.</td>
+    <td>\<MakefileTarget></td>
+    <td>Specifies the <\c target> option for \ref make "Make".</td>
   </tr>
   <tr>
     <td>\--quiet</td>
@@ -297,16 +292,34 @@ $ cbuild.sh <ProjectFile>.cprj [--toolchain=<Toolchain> --outdir=<OutDir> --intd
   </tr>
   <tr>
     <td>\--merge</td>
-    <td>Updates configuration files with the \ref ccmerge utility.</td>
+    <td>Updates configuration files with the \ref ccmerge utility. \b Note: not supported when used with \c \--cmake.</td>
   </tr>
   <tr>
-    <td>\<MakefileTarget></td>
-    <td>Specifies the <\c target> option for \ref make "Make".</td>
+    <td>\--update=\<CprjFile></td>
+    <td>Generates <tt>\<CprjFile></tt> with fixed versions for reproducing the current build.</td>
+  </tr>
+  <tr>
+    <td>\--help</td>
+    <td>Opens this documentation.</td>
+  </tr>
+  <tr>
+    <td>\--log=\<LogFile></td>
+    <td>Saves output messages in a log file.</td>
+  </tr>
+  <tr>
+    <td>\--jobs=\<N></td>
+    <td>Specifies the number of job slots for \ref make "Make" parallel execution. Minimum 1.</td>
+  </tr>
+  <tr>
+    <td>\--cmake[=\<BuildSystem>]</td>
+    <td>Generates CMakeLists.txt file [and invokes \ref cmake with the specified \c \<BuildSystem>].</td>
   </tr>
 </table>
 
 
 \section cbuild_example Usage Example
+
+<b>Make based build</b>
 
 \verbatim
 $ cbuild.sh Simulation.cprj
@@ -324,6 +337,31 @@ M652: Generated makefile for project build: 'C:/Examples/Blinky/IntDir/Simulatio
 [6/7] Compiling C:/Examples/Blinky/RTE/Device/ARMCM3/system_ARMCM3.c
 [7/7] Linking to C:/Examples/Blinky/OutDir/Blinky_AC6.axf
 Program Size: Code=7468 RO-data=1264 RW-data=168 ZI-data=9084
+cbuild.sh finished successfully!
+\endverbatim
+
+<b>CMake based build</b>
+
+\verbatim
+$ cbuild.sh Blinky.B-L475E-IOT01A.cprj --cmake
+(cbuild.sh): Build Invocation 0.10.0 (C) 2020 ARM
+Blinky.B-L475E-IOT01A.cprj validates
+(cbuildgen): Build Process Manager 0.10.1-nightly+343 (C) 2020 ARM
+M650: Command completed successfully.
+(cbuildgen): Build Process Manager 0.10.1-nightly+343 (C) 2020 ARM
+M652: Generated makefile for project build: 'C:/Blinky/B-L475E-IOT01A/Objects/CMakeLists.txt'
+-- The C compiler identification is ARMClang 6.15.2
+-- Configuring done
+-- Generating done
+-- Build files have been written to: C:/Blinky/B-L475E-IOT01A/Objects
+[1/49] Building C object CMakeFiles\image.dir\C_\Users\user\AppData\Local\Arm\Packs\Keil\B-L475E-IOT01A_BSP\1.0.0\Drivers\B-L475E-IOT01\stm32l475e_iot01.o
+[2/49] Building C object CMakeFiles\image.dir\C_\Users\user\AppData\Local\Arm\Packs\Keil\B-L475E-IOT01A_BSP\1.0.0\Drivers\Components\lsm6dsl\lsm6dsl.o
+[3/49] Building C object CMakeFiles\image.dir\C_\Users\user\AppData\Local\Arm\Packs\Keil\B-L475E-IOT01A_BSP\1.0.0\Drivers\B-L475E-IOT01\stm32l475e_iot01_gyro.o
+...
+[47/49] Building C object CMakeFiles\image.dir\C_\Blinky\B-L475E-IOT01A\RTE\Device\STM32L475VGTx\system_stm32l4xx.o
+[48/49] Building C object CMakeFiles\image.dir\C_\Blinky\B-L475E-IOT01A\RTE\Device\STM32L475VGTx\STCubeGenerated\Src\stm32l4xx_it.o
+[49/49] Linking C executable image.axf
+Program Size: Code=20968 RO-data=784 RW-data=328 ZI-data=37412
 cbuild.sh finished successfully!
 \endverbatim
 
@@ -459,6 +497,41 @@ cbuildgen <ProjectFile>.cprj <command> [<args>]
     <td>Update configuration files.</td>    
     <td>When used with the command \c make, it generates also <tt>\<ProjectFile>_cfg.mak</tt> for \ref make "Make" to update configuration
         files using \ref ccmerge.</td>
+  </tr>
+  <tr>
+    <td>\--update=&lt;CprjFile></td>
+    <td>Create fixed version CPRJ file.</td>    
+    <td>Generate <tt>\<CprjFile></tt> with fixed versions for reproducing the current build.</td>
+  </tr>
+  <tr>
+    <td>\--outdir=&lt;OutDir></td>
+    <td>Build output directory.</td>    
+    <td>Set output directory for binary executables, as well as log and map files.</td>
+  </tr>
+  <tr>
+    <td>\--intdir=&lt;IntDir></td>
+    <td>Intermediate files output directory.</td>
+    <td>Output directory for generated make files, list of missing packs (cpinstall), command files, object files, and dependency files.</td>    
+  </tr>
+  <tr>
+    <td>\--quiet</td>
+    <td>Suppress messages.</td>    
+    <td>Suppresses all tool messages except build progress and result information.</td>
+  </tr>
+  <tr>
+    <td>cmake</td>
+    <td></td>
+    <td>Generate CMakeLists.txt file.</td>    
+    <td>Generates <tt>CMakeLists.txt</tt> file for \ref cmake "CMake" required to build the project. 
+        This command also generates a ASCII log file <tt>\<ProjectFile\>.clog</tt> recording location and version of the selected toolchain,
+        packs, components and config files.
+    </td>
+  </tr>
+  <tr>
+    <td rowspan="5"></td>
+    <td>\--toolchain=&lt;Toolchain></td>
+    <td>Select the toolchain.</td>    
+    <td>For projects that can be built with multiple toolchains, it defines the toolchain for the build.</td>
   </tr>
   <tr>
     <td>\--update=&lt;CprjFile></td>
@@ -728,6 +801,7 @@ file located in the CMSIS-Pack (\c pfile) and merges the configuration informati
 located in the current project (\c cfile). If the merge succeeds, the result is written to 'cfile' after a copy of 'cfile'
 has been stored as 'cfile.nnnn'.
 
+\note \b ccmerge currently only works with \ref make "Make".
 
 \section ccmerge_invocation Invocation
 
@@ -1018,7 +1092,7 @@ visit: https://www.gnu.org/software/make/manual/make.html#Options-Summary.
 make [<options>] [<target>] ...
 \endcode 
 
-The \ref cbuild "cbuild.sh" script uses only the following subset of the \ref make "Make" options.
+The \ref cbuild "cbuild.sh" script uses only the following subset of the \ref make "Make" options:
 
 \b Operation
 
@@ -1078,9 +1152,80 @@ $ make -f MyProject.mak clean
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
-\page cbuild_uv cbuild_uv.sh: Build MDK project
+\page cmake CMake
 
-The \b cbuild_uv.sh script calls µVision and exports all targets for a Keil MDK project in the \ref cprjFormat_pg "CPRJ"
+\b CMake is an open-source, cross-platform family of tools designed to build, test and package software. As it is not
+automatically installed by \ref cp_install "cp_install.sh" script, you need to
+<a href="https://cmake.org/download/" target="_blank"><b>get the software</b></a> and install it on your machine separately.
+
+\note CMSIS-Build requires CMake 3.15 or above.
+
+
+\section cmake_invocation Invocation
+
+\b CMake is called from the \b Bash command line with the following syntax:
+
+\code
+cmake [options] <path-to-source>
+\endcode 
+
+The \ref cbuild "cbuild.sh" script calls \ref cmake "CMake" twice with these options:
+
+<b>1. Step: Configuration</b>
+
+<table class="cmtable" summary="cmake config options">
+  <tr>
+    <th>\[options]</th>
+    <th>Short Name</th>
+  </tr>
+  <tr>
+    <td>-G \<generator-name></td>
+    <td>Specify a build system generator.</td>    
+  </tr>
+  <tr>
+    <td>-S \<path-to-source></td>
+    <td>Explicitly specify a source directory.</td>    
+  </tr>
+  <tr>
+    <td>-B \<path-to-build></td>
+    <td>Explicitly specify a build directory.</td>    
+  </tr>
+</table>
+
+<b>2. Step: Build</b>
+
+<table class="cmtable" summary="cmake build options">
+  <tr>
+    <th>\[options]</th>
+    <th>Short Name</th>
+  </tr>
+  <tr>
+    <td>\--build</td>
+    <td>Build a CMake-generated project binary tree.</td>    
+  </tr>
+  <tr>
+    <td>-j</td>
+    <td>Number of parallel build jobs.</td>
+  </tr>
+  <tr>
+    <td>\<target></td>
+    <td>Target to be built.</td>
+  </tr>
+</table>
+
+\note
+- \b CMake supports different build systems. By default,
+  <a href="https://github.com/ninja-build/ninja" target="_blank">Ninja</a> is used. As a Windows user, copy the Ninja binary
+  available from <a href="https://github.com/ninja-build/ninja/releases" target="_blank">Releases</a> to the installation
+  directory of CMSIS-Build: <tt>./cbuild/bin</tt> where it is invoked automatically.
+*/
+
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\page cbuild_uv cbuild_uv.sh: Export MDK projects to CMSIS-Build
+
+The \b cbuild_uv.sh script calls µVision and exports all targets of a Keil MDK project to the \ref cprjFormat_pg "CPRJ"
 format. The script then invokes the \ref cbuild "cbuild.sh" script for each exported project target.
 
 
@@ -1103,7 +1248,7 @@ cbuild_uv.sh <project-file>.uvprojx
 - Some MDK features are not converted as not all build features of µVision are available in command line build process. For
   example:
   - User commands pre and post build
-  - \c fcarm code generator
+  - <a href="https://www.keil.com/support/man/docs/uv4/uv4_ut_fcarmuv.htm" target="_blank">fcarm</a> code generator
   - Linker script generation. Instead, the linker script generated by MDK is used by CMSIS-Build.
 
 
