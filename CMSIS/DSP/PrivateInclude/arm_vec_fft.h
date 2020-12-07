@@ -40,8 +40,8 @@ extern "C"
 #define MVE_CMPLX_MULT_FLT_AxB(A,B)         vcmlaq_rot90(vcmulq(A, B), A, B)
 #define MVE_CMPLX_MULT_FLT_Conj_AxB(A,B)    vcmlaq_rot270(vcmulq(A, B), A, B)
 
-#define MVE_CMPLX_MULT_FX_AxB(A,B)          vqdmladhxq(vqdmlsdhq((__typeof(A))vuninitializedq_s32(), A, B), A, B);
-#define MVE_CMPLX_MULT_FX_AxConjB(A,B)      vqdmladhq(vqdmlsdhxq((__typeof(A))vuninitializedq_s32(), A, B), A, B);
+#define MVE_CMPLX_MULT_FX_AxB(A,B)          vqdmladhxq(vqdmlsdhq((__typeof(A))vuninitializedq_s32(), A, B), A, B)
+#define MVE_CMPLX_MULT_FX_AxConjB(A,B)      vqdmladhq(vqdmlsdhxq((__typeof(A))vuninitializedq_s32(), A, B), A, B)
 
 #define MVE_CMPLX_ADD_FX_A_ixB(A, B)        vhcaddq_rot90(A,B)
 #define MVE_CMPLX_SUB_FX_A_ixB(A,B)         vhcaddq_rot270(A,B)
