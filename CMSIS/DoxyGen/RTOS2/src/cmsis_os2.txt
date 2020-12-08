@@ -630,6 +630,12 @@ Functions that cannot be called from an ISR are verifying the interrupt status a
 case they are called from an ISR context. In some implementations, this condition might be caught using the HARD_FAULT
 vector.
 
+\note
+- RTX does not disable interrupts during critical sections for Armv7-M and Armv8-M architecture based devices, but rather
+  uses atomic operations.
+- Therefore, there is no need to configure interrupt priorities of interrupt service routines that use RTOS functions.
+
+
 \section CMSIS_RTOS_svcFunctions SVC Functions
 
 Supervisor Calls (SVC) are exceptions targeted at software and operating systems for generating system function calls. They
