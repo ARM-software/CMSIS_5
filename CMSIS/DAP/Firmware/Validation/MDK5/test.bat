@@ -3,7 +3,7 @@
 REM Usage: test.bat [PATH TO UV4.exe] 
 
 IF "%1"=="" (
-  SET UV4_EXE=C:\Keil\UV4\UV4.exe
+  SET UV4_EXE=C:\Keil_v5\UV4\UV4.exe
 ) ELSE (
   SET UV4_EXE=%1
 )
