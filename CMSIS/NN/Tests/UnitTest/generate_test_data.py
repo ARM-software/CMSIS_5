@@ -654,9 +654,9 @@ class PoolingSettings(TestSettings):
 class FullyConnectedSettings(TestSettings):
 
     def __init__(self, dataset, testtype, args, in_ch=1, out_ch=1, x_in=1, y_in=1, w_x=1, w_y=1, stride_x=1, stride_y=1,
-                 pad=False, randmin=-7, randmax=7, outminrange=-128, outmaxrange=127, batches=1,
-                 input_min=-128.0, input_max=127.0, weights_min=-128.0, weights_max=127.0,
-                 bias_min=-128.0, bias_max=127.0):
+                 pad=False, randmin=-7, randmax=7, outminrange=-128, outmaxrange=127, batches=1, input_scale=1.0,
+                 input_zero_point=0, weights_scale=1.0, weights_zero_point=0, bias_scale=1.0, output_scale=1.0,
+                 output_zero_point=0):
         super().__init__(dataset, testtype, args, in_ch, out_ch, x_in, y_in, w_x, w_y, stride_x, stride_y, pad, randmin,
                          randmax, outminrange, outmaxrange, batches)
 
@@ -665,20 +665,13 @@ class FullyConnectedSettings(TestSettings):
         if x_in != w_x or y_in != w_y:
             raise RuntimeError("Mismatching input and filter dimensions")
 
-        self.input_min = input_min
-        self.input_max = input_max
-        self.weights_min = weights_min
-        self.weights_max = weights_max
-        self.output_min = outminrange
-        self.output_max = outmaxrange
-
-        # Calculate scales and zero_points
-        (self.input_scale, self.input_zero_point) = self.derive_scale_and_zeropoint_from_min_max(self.input_min,
-                                                                                                 self.input_max)
-        (self.bias_scale, bias_zero_point) = self.derive_scale_and_zeropoint_from_min_max(bias_min, bias_max)
-        (self.weights_scale, self.weights_zero_point) = self.derive_filter_scale_and_zeropoint_from_min_max(
-            self.weights_min,
-            self.weights_max)
+        self.input_scale = input_scale
+        self.input_zero_point = input_zero_point
+        self.weights_scale = weights_scale
+        self.weights_zero_point = weights_zero_point
+        self.bias_scale = bias_scale
+        self.output_scale = output_scale
+        self.output_zero_point = output_zero_point
 
     def write_c_config_header(self):
         super().write_c_config_header()
@@ -699,25 +692,19 @@ class FullyConnectedSettings(TestSettings):
             raise RuntimeError("negative input product scale")
         real_multipler = input_product_scale / self.output_scale
         (self.quantized_multiplier, self.quantized_shift) = self.quantize_scale(real_multipler)
-        return (self.quantized_multiplier, self.quantized_shift)
 
     def derive_filter_scale_and_zeropoint_from_min_max(self, mini, maxi):
         scale = self.derive_scale_from_min_max(mini, maxi)
         zero = int(self.INT8_MIN + (-mini/scale + 0.5))
         return (scale, zero)
 
-    def quantize2int8(self, value, params):
-        min_val = params[0]
-        max_val = params[1]
-        scale = ((max_val - min_val) / (self.UINT8_MAX - self.UINT8_MIN))
-        zero_point = self.UINT8_MIN + int(-min_val / scale + 0.5)
-        result = int(zero_point + (value/scale) + 0.5)
-        result += self.INT8_MIN
-        return self.clamp_int8(result)
-
     def quantize_bias(self, value):
         result = int(value / self.bias_scale)
         return self.clamp_int32(result)
+
+    def quantize_weights(self, value):
+        result = round(value / self.weights_scale) + self.weights_zero_point
+        return self.clamp_int8(result)
 
     def generate_data(self, input_data=None, weights=None, biases=None):
         input_data = self.get_randomized_input_data(input_data)
@@ -733,10 +720,8 @@ class FullyConnectedSettings(TestSettings):
 
         conv = self.conv2d(input_data, self.reshape_conv_kernel(weights), biases)
 
-        self.generate_c_array("input", self.convert_tensor(input_data, self.quantize2int8,
-                                                           [self.input_min, self.input_max]))
-        self.generate_c_array("weights", self.convert_tensor(weights, self.quantize2int8,
-                                                             [self.weights_min, self.weights_max]))
+        self.generate_c_array("input", self.convert_tensor(input_data, self.quantize_input))
+        self.generate_c_array("weights", self.convert_tensor(weights, self.quantize_weights))
         self.generate_c_array("biases", self.convert_tensor(biases, self.quantize_bias), "int32_t")
         self.generate_c_array("output_ref", self.convert_tensor(conv, self.quantize_output))
 
@@ -799,7 +784,9 @@ def load_all_testdatasets():
     dataset = 'fully_connected'
     ALL_TESTDATA_SETS[dataset] = FullyConnectedSettings(dataset, type_of_test, args, in_ch=10, out_ch=6, x_in=2, y_in=1,
                                                         w_x=2, w_y=1, randmin=-4, randmax=4, batches=3,
-                                                        outminrange=-125.0, outmaxrange=127.0)
+                                                        input_zero_point=-50, weights_zero_point=-22,
+                                                        output_zero_point=-2)
+
     type_of_test = 'avgpool'
     dataset = 'avgpooling'
     ALL_TESTDATA_SETS[dataset] = PoolingSettings(dataset, type_of_test, args, channels=8, x_in=22, y_in=12, stride_x=9,
