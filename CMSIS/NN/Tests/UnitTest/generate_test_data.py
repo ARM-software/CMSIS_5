@@ -786,7 +786,14 @@ def load_all_testdatasets():
                                                         w_x=2, w_y=1, randmin=-4, randmax=4, batches=3,
                                                         input_zero_point=-50, weights_zero_point=-22,
                                                         output_zero_point=-2)
-
+    dataset = 'fully_connected_mve_0'
+    ALL_TESTDATA_SETS[dataset] = FullyConnectedSettings(dataset, type_of_test, args, in_ch=16, out_ch=9, x_in=1, y_in=1,
+                                                        input_zero_point=-3, w_x=1, w_y=1, randmin=-4, randmax=4, batches=1,
+                                                        output_zero_point=-2)
+    dataset = 'fully_connected_mve_1'
+    ALL_TESTDATA_SETS[dataset] = FullyConnectedSettings(dataset, type_of_test, args, in_ch=20, out_ch=4, x_in=1, y_in=1,
+                                                        input_zero_point=-1, weights_zero_point=3, w_x=1, w_y=1,
+                                                        randmin=-4, randmax=4, batches=1, output_zero_point=3)
     type_of_test = 'avgpool'
     dataset = 'avgpooling'
     ALL_TESTDATA_SETS[dataset] = PoolingSettings(dataset, type_of_test, args, channels=8, x_in=22, y_in=12, stride_x=9,
