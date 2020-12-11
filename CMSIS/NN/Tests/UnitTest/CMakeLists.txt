@@ -21,6 +21,12 @@ cmake_minimum_required(VERSION 3.15.6)
 project(cmsis_nn_unit_tests VERSION 0.0.1)
 
 set(CMSIS_PATH "${CMAKE_CURRENT_SOURCE_DIR}/../../../.." CACHE PATH "Path to CMSIS.")
+set(CMAKE_EXECUTABLE_SUFFIX ".elf")
+
+# External dependencies.
+set(TARGET model CACHE PATH "May be needed for Uart")
+set(UART_PATH "${CMAKE_CURRENT_SOURCE_DIR}/../../../../../../platform/drivers/uart" CACHE PATH "Path to UART.")
+set(LINK_FILE "${CMAKE_CURRENT_SOURCE_DIR}/../../../../../../platform/fastmodels/model" CACHE PATH "Linker file.")
 
 set_property(GLOBAL PROPERTY cmsis_nn_unit_test_executables)
 
@@ -69,4 +75,35 @@ MESSAGE(STATUS "Downloading Unity and generating test runners for CMSIS-NN unit 
 execute_process(COMMAND ${MAKE_CMD} ${MAKE_CMD_SCRIPT} ${MAKE_CMD_SCRIPT_OPTION}
                         WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
 add_subdirectory(Unity)
+add_subdirectory(${UART_PATH} uart)
 
+include(Platform/cmsis_device.cmake)
+
+add_library(retarget STATIC
+                     Platform/Retarget.c)
+target_link_libraries(retarget INTERFACE uart)
+
+# Linker file settings.
+if (CMAKE_CXX_COMPILER_ID STREQUAL "ARMClang")
+    set(LINK_FILE_EXT "scatter")
+    set(LINK_FILE_OPTION "--scatter")
+    set(LINK_ENTRY_OPTION "--entry")
+    set(LINK_ENTRY "Reset_Handler")
+elseif (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+    set(LINK_FILE_EXT "ld")
+    set(LINK_FILE_OPTION "-T")
+    set(LINK_ENTRY_OPTION "")
+    set(LINK_ENTRY "")
+endif()
+set(LINK_FILE_OUT ${LINK_FILE}.${LINK_FILE_EXT})
+
+# Link in dependecies to every unit test.
+get_property(executables GLOBAL PROPERTY cmsis_nn_unit_test_executables)
+string(REPLACE " " ";" cmsis_nn_unit_test_list_of_executables ${executables})
+foreach(target ${cmsis_nn_unit_test_list_of_executables})
+    target_link_libraries(${target} PRIVATE $<TARGET_OBJECTS:retarget> retarget)
+    target_link_libraries(${target} PRIVATE $<TARGET_OBJECTS:cmsis_startup> cmsis_startup)
+    add_dependencies(${target} retarget cmsis_startup)
+    target_link_options(${target} PRIVATE ${LINK_FILE_OPTION} ${LINK_FILE_OUT} ${LINK_ENTRY_OPTION} ${LINK_ENTRY})
+    set_target_properties(${target} PROPERTIES LINK_DEPENDS ${LINK_FILE_OUT})
+endforeach()
