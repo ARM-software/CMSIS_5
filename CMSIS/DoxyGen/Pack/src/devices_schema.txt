@@ -1919,6 +1919,11 @@ Contact cmsis@arm.com to ask for an extension. These values can be used in the e
     <td>http://www.active-semi.com</td>
   </tr>
   <tr>
+    <td class="XML-Token">Alif Semiconductor:165</td>
+    <td>Alif Semiconductor</td>
+    <td>http://www.alifsemi.com</td>
+  </tr>
+  <tr>
     <td class="XML-Token">Ambiq Micro:120</td>
     <td>Ambiq Micro</td>
     <td>http://www.ambiqmicro.com</td>
