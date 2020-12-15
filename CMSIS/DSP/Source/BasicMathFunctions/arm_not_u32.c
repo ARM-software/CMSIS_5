@@ -53,7 +53,7 @@ void arm_not_u32(
     uint32_t blkCnt;      /* Loop counter */
 
 #if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
-    q31x4_t vecSrc;
+    uint32x4_t vecSrc;
 
     /* Compute 8 outputs at a time */
     blkCnt = blockSize >> 2;

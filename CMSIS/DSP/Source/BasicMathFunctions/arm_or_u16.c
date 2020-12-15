@@ -63,7 +63,7 @@ void arm_or_u16(
     uint32_t blkCnt;      /* Loop counter */
 
 #if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
-    q15x8_t vecSrcA, vecSrcB;
+    uint16x8_t vecSrcA, vecSrcB;
 
     /* Compute 8 outputs at a time */
     blkCnt = blockSize >> 3;

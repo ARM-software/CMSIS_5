@@ -55,7 +55,7 @@ void arm_xor_u8(
     uint32_t blkCnt;      /* Loop counter */
 
 #if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
-    q7x16_t vecSrcA, vecSrcB;
+    uint8x16_t vecSrcA, vecSrcB;
 
     /* Compute 16 outputs at a time */
     blkCnt = blockSize >> 4;
