@@ -171,16 +171,16 @@ arm_status arm_mat_cmplx_mult_q15(
                 pSrcAVec += 8;
                 vecB = vldrhq_gather_shifted_offset(pInB, vecOffs);
 
-                acc0 = vmlsldavaq(acc0, vecA, vecB);
-                acc1 = vmlaldavaxq(acc1, vecA, vecB);
+                acc0 = vmlsldavaq_s16(acc0, vecA, vecB);
+                acc1 = vmlaldavaxq_s16(acc1, vecA, vecB);
                 vecB2 = vldrhq_gather_shifted_offset(pInB2, vecOffs);
                 /*
                  * move Matrix B read offsets, 4 rows down
                  */
-                vecOffs = vaddq(vecOffs, (uint16_t) (numColsB * 4 * CMPLX_DIM));
+                vecOffs = vaddq_n_u16(vecOffs, (uint16_t) (numColsB * 4 * CMPLX_DIM));
 
-                acc2 = vmlsldavaq(acc2, vecA, vecB2);
-                acc3 = vmlaldavaxq(acc3, vecA, vecB2);
+                acc2 = vmlsldavaq_s16(acc2, vecA, vecB2);
+                acc3 = vmlaldavaxq_s16(acc3, vecA, vecB2);
 
                 blkCnt--;
             }
@@ -196,17 +196,17 @@ arm_status arm_mat_cmplx_mult_q15(
 
                 vecA = vldrhq_z_s16(pSrcAVec, p0);
 
-                acc0 = vmlsldavaq(acc0, vecA, vecB);
-                acc1 = vmlaldavaxq(acc1, vecA, vecB);
+                acc0 = vmlsldavaq_s16(acc0, vecA, vecB);
+                acc1 = vmlaldavaxq_s16(acc1, vecA, vecB);
                 vecB2 = vldrhq_gather_shifted_offset(pInB2, vecOffs);
 
                 /*
                  * move Matrix B read offsets, 4 rows down
                  */
-                vecOffs = vaddq(vecOffs, (uint16_t) (numColsB * 4 * CMPLX_DIM));
+                vecOffs = vaddq_n_u16(vecOffs, (uint16_t) (numColsB * 4 * CMPLX_DIM));
 
-                acc2 = vmlsldavaq(acc2, vecA, vecB2);
-                acc3 = vmlaldavaxq(acc3, vecA, vecB2);
+                acc2 = vmlsldavaq_s16(acc2, vecA, vecB2);
+                acc3 = vmlaldavaxq_s16(acc3, vecA, vecB2);
 
             }
             /*
@@ -264,12 +264,12 @@ arm_status arm_mat_cmplx_mult_q15(
                 pSrcAVec += 8;
                 vecB = vldrhq_gather_shifted_offset(pInB, vecOffs);
 
-                acc0 = vmlsldavaq(acc0, vecA, vecB);
-                acc1 = vmlaldavaxq(acc1, vecA, vecB);
+                acc0 = vmlsldavaq_s16(acc0, vecA, vecB);
+                acc1 = vmlaldavaxq_s16(acc1, vecA, vecB);
                 /*
                  * move Matrix B read offsets, 4 rows down
                  */
-                vecOffs = vaddq(vecOffs, (uint16_t) (numColsB * 4 * CMPLX_DIM));
+                vecOffs = vaddq_n_u16(vecOffs, (uint16_t) (numColsB * 4 * CMPLX_DIM));
 
                 blkCnt--;
             }
@@ -284,8 +284,8 @@ arm_status arm_mat_cmplx_mult_q15(
                 vecB = vldrhq_gather_shifted_offset(pInB, vecOffs);
                 vecA = vldrhq_z_s16(pSrcAVec, p0);
 
-                acc0 = vmlsldavaq(acc0, vecA, vecB);
-                acc1 = vmlaldavaxq(acc1, vecA, vecB);
+                acc0 = vmlsldavaq_s16(acc0, vecA, vecB);
+                acc1 = vmlaldavaxq_s16(acc1, vecA, vecB);
                
             }
             /*

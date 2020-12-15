@@ -81,8 +81,8 @@ void arm_var_q15(
         /* Compute Sum of squares of the input samples
          * and then store the result in a temporary variable, sumOfSquares. */
 
-        sumOfSquares = vmlaldavaq(sumOfSquares, vecSrc, vecSrc);
-        sum = vaddvaq(sum, vecSrc);
+        sumOfSquares = vmlaldavaq_s16(sumOfSquares, vecSrc, vecSrc);
+        sum = vaddvaq_s16(sum, vecSrc);
 
         blkCnt --;
         pSrc += 8;

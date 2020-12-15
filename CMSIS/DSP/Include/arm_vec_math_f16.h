@@ -35,7 +35,7 @@ extern "C"
 #if defined(ARM_FLOAT16_SUPPORTED)
 
 
-#if (defined(ARM_MATH_MVEF) || defined(ARM_MATH_HELIUM)) && !defined(ARM_MATH_AUTOVECTORIZE)
+#if defined(ARM_MATH_MVE_FLOAT16) && !defined(ARM_MATH_AUTOVECTORIZE)
 
 
 static const float16_t __logf_rng_f16=0.693147180f16;
@@ -296,7 +296,7 @@ __STATIC_INLINE f16x8_t vtanhq_f16(
     return tanh;
 }
 
-#endif /* (defined(ARM_MATH_MVEF) || defined(ARM_MATH_HELIUM)) && !defined(ARM_MATH_AUTOVECTORIZE)*/
+#endif /* defined(ARM_MATH_MVE_FLOAT16)  && !defined(ARM_MATH_AUTOVECTORIZE)*/
 
 
 

@@ -58,7 +58,7 @@
   </pre>
  */
 
-#if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
+#if defined(ARM_MATH_MVE_FLOAT16) && !defined(ARM_MATH_AUTOVECTORIZE)
 
 void arm_q15_to_f16(
   const q15_t * pSrc,

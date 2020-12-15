@@ -94,7 +94,7 @@ void arm_biquad_cascade_df1_init_f16(
   S->pState = pState;
 }
 
-#if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
+#if defined(ARM_MATH_MVE_FLOAT16) && !defined(ARM_MATH_AUTOVECTORIZE)
 
 static void generateCoefsFastBiquadF16(float16_t b0, float16_t b1, float16_t b2, float16_t a1, float16_t a2,
                                 arm_biquad_mod_coef_f16 * newCoef)

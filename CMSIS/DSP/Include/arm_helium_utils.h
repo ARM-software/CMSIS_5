@@ -63,19 +63,7 @@ __STATIC_FORCEINLINE float32_t vecAddAcrossF32Mve(float32x4_t in)
     return acc;
 }
 
-__STATIC_FORCEINLINE float16_t vecAddAcrossF16Mve(float16x8_t in)
-{
-    float16x8_t tmpVec;
-    _Float16 acc;
 
-    tmpVec = (float16x8_t) vrev32q_s16((int16x8_t) in);
-    in = vaddq_f16(tmpVec, in);
-    tmpVec = (float16x8_t) vrev64q_s32((int32x4_t) in);
-    in = vaddq_f16(tmpVec, in);
-    acc = (_Float16)vgetq_lane_f16(in, 0) + (_Float16)vgetq_lane_f16(in, 4);
-
-    return acc;
-}
 
 
 /* newton initial guess */
@@ -103,7 +91,23 @@ __STATIC_FORCEINLINE float16_t vecAddAcrossF16Mve(float16x8_t in)
 Definitions available for f16 datatype with HW acceleration only
 
 ***************************************/
+#if defined(ARM_FLOAT16_SUPPORTED)
 #if defined (ARM_MATH_MVE_FLOAT16) && !defined(ARM_MATH_AUTOVECTORIZE)
+
+__STATIC_FORCEINLINE float16_t vecAddAcrossF16Mve(float16x8_t in)
+{
+    float16x8_t tmpVec;
+    _Float16 acc;
+
+    tmpVec = (float16x8_t) vrev32q_s16((int16x8_t) in);
+    in = vaddq_f16(tmpVec, in);
+    tmpVec = (float16x8_t) vrev64q_s32((int32x4_t) in);
+    in = vaddq_f16(tmpVec, in);
+    acc = (_Float16)vgetq_lane_f16(in, 0) + (_Float16)vgetq_lane_f16(in, 4);
+
+    return acc;
+}
+
 __STATIC_FORCEINLINE float16x8_t __mve_cmplx_sum_intra_vec_f16(
     float16x8_t   vecIn)
 {
@@ -175,6 +179,7 @@ __STATIC_FORCEINLINE void mve_cmplx_sum_intra_vec_f16(
 }
 
 #endif
+#endif 
 
 /***************************************
 

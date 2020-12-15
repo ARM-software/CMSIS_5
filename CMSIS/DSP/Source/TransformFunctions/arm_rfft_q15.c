@@ -138,6 +138,12 @@ void arm_rfft_q15(
 #include "arm_helium_utils.h"
 #include "arm_vec_fft.h"
 
+#if defined(__CMSIS_GCC_H)
+#define MVE_CMPLX_MULT_FX_AxB_S16(A,B)          vqdmladhxq_s16(vqdmlsdhq_s16((__typeof(A))vuninitializedq_s16(), A, B), A, B)
+#define MVE_CMPLX_MULT_FX_AxConjB_S16(A,B)      vqdmladhq_s16(vqdmlsdhxq_s16((__typeof(A))vuninitializedq_s16(), A, B), A, B)
+
+#endif 
+
 void arm_split_rfft_q15(
         q15_t * pSrc,
         uint32_t fftLen,
@@ -157,7 +163,7 @@ void arm_split_rfft_q15(
         0, 1, 0, 1, 0, 1, 0, 1
     };
 
-    offsetCoef = vmulq(vld1q(offsetCoefArr), modifier) + vld1q(offsetCoefArr + 8);
+    offsetCoef = vmulq_n_u16(vld1q_u16(offsetCoefArr), modifier) + vld1q_u16(offsetCoefArr + 8);
     offsetIn = vaddq_n_u16(offsetIn, (2 * fftLen - 8));
 
     /* Init coefficient pointers */
@@ -173,15 +179,19 @@ void arm_split_rfft_q15(
     i = fftLen - 1U;
     i = i / 4 + 1;
     while (i > 0U) {
-        q15x8_t         in1 = vld1q(pIn1);
+        q15x8_t         in1 = vld1q_s16(pIn1);
         q15x8_t         in2 = vldrhq_gather_shifted_offset_s16(pSrc, offsetIn);
         q15x8_t         coefA = vldrhq_gather_shifted_offset_s16(pCoefAb, offsetCoef);
         q15x8_t         coefB = vldrhq_gather_shifted_offset_s16(pCoefBb, offsetCoef);
 
-        q15x8_t         out = vhaddq(MVE_CMPLX_MULT_FX_AxB(in1, coefA),
+#if defined(__CMSIS_GCC_H)
+        q15x8_t         out = vhaddq_s16(MVE_CMPLX_MULT_FX_AxB_S16(in1, coefA),
+                                     MVE_CMPLX_MULT_FX_AxConjB_S16(coefB, in2));
+#else
+        q15x8_t         out = vhaddq_s16(MVE_CMPLX_MULT_FX_AxB(in1, coefA),
                                      MVE_CMPLX_MULT_FX_AxConjB(coefB, in2));
-
-        vst1q(pOut1, out);
+#endif
+        vst1q_s16(pOut1, out);
         pOut1 += 8;
 
         offsetCoef = vaddq_n_u16(offsetCoef, modifier * 8);
@@ -379,7 +389,7 @@ void arm_split_rifft_q15(
         0, 1, 0, 1, 0, 1, 0, 1
     };
 
-    offsetCoef = vmulq(vld1q(offsetCoefArr), modifier) + vld1q(offsetCoefArr + 8);
+    offsetCoef = vmulq_n_u16(vld1q_u16(offsetCoefArr), modifier) + vld1q_u16(offsetCoefArr + 8);
 
     offset = vaddq_n_u16(offset, (2 * fftLen - 6));
 
@@ -397,16 +407,16 @@ void arm_split_rifft_q15(
     i = i / 4;
 
     while (i > 0U) {
-        q15x8_t         in1 = vld1q(pIn1);
+        q15x8_t         in1 = vld1q_s16(pIn1);
         q15x8_t         in2 = vldrhq_gather_shifted_offset_s16(pSrc, offset);
         q15x8_t         coefA = vldrhq_gather_shifted_offset_s16(pCoefAb, offsetCoef);
         q15x8_t         coefB = vldrhq_gather_shifted_offset_s16(pCoefBb, offsetCoef);
 
         /* can we avoid the conjugate here ? */
-        q15x8_t         out = vhaddq(MVE_CMPLX_MULT_FX_AxConjB(in1, coefA),
+        q15x8_t         out = vhaddq_s16(MVE_CMPLX_MULT_FX_AxConjB(in1, coefA),
                                      vmulq(conj, MVE_CMPLX_MULT_FX_AxB(in2, coefB)));
 
-        vst1q(pDst, out);
+        vst1q_s16(pDst, out);
         pDst += 8;
 
         offsetCoef = vaddq_n_u16(offsetCoef, modifier * 8);

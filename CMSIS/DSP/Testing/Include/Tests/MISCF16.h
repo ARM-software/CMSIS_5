@@ -1,7 +1,7 @@
+#include "dsp/filtering_functions_f16.h"
+
 #include "Test.h"
 #include "Pattern.h"
-
-#include "dsp/filtering_functions_f16.h"
 
 class MISCF16:public Client::Suite
     {

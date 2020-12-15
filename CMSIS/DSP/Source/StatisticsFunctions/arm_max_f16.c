@@ -53,7 +53,7 @@
   @return        none
  */
 
-#if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
+#if defined(ARM_MATH_MVE_FLOAT16) && !defined(ARM_MATH_AUTOVECTORIZE)
 
 void arm_max_f16(
   const float16_t * pSrc,

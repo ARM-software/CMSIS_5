@@ -46,7 +46,7 @@
  * @param[in]       *pVec points to input vector
  * @param[out]      *pDst points to output vector
  */
-#if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
+#if defined(ARM_MATH_MVE_FLOAT16) && !defined(ARM_MATH_AUTOVECTORIZE)
 
 #include "arm_helium_utils.h"
 

@@ -1,7 +1,6 @@
 #include "FastMathF16.h"
 #include <stdio.h>
 #include "Error.h"
-#include "arm_vec_math_f16.h"
 #include "Test.h"
 
 

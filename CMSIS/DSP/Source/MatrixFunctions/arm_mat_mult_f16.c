@@ -50,7 +50,7 @@
  * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.
  */
 
-#if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
+#if defined(ARM_MATH_MVE_FLOAT16) && !defined(ARM_MATH_AUTOVECTORIZE)
 
 __STATIC_FORCEINLINE arm_status arm_mat_mult_f16_2x2_mve(
     const arm_matrix_instance_f16 *pSrcA,

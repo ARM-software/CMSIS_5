@@ -1,7 +1,8 @@
+#include "arm_vec_math.h"
+
 #include "MISCQ31.h"
 #include <stdio.h>
 #include "Error.h"
-#include "arm_vec_math.h"
 #include "Test.h"
 
 #define SNR_THRESHOLD 100

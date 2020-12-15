@@ -30,7 +30,7 @@
 
 #if defined(ARM_FLOAT16_SUPPORTED)
 
-#if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
+#if defined(ARM_MATH_MVE_FLOAT16) && !defined(ARM_MATH_AUTOVECTORIZE)
 
 #if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_FFT_ALLOW_TABLES)
 
@@ -5568,6 +5568,6 @@ float16_t rearranged_twiddle_stride3_4096_f16[2728]={
 
 
 #endif /* !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_FFT_ALLOW_TABLES) */
-#endif /* defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE) */
+#endif /* defined(ARM_MATH_MVE_FLOAT16) && !defined(ARM_MATH_AUTOVECTORIZE) */
 
 #endif /* if defined(ARM_FLOAT16_SUPPORTED) */

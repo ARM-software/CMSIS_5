@@ -31,10 +31,7 @@
 #if defined(ARM_FLOAT16_SUPPORTED)
 
 #include "arm_common_tables.h"
-
-#if (defined(ARM_MATH_MVEF) || defined(ARM_MATH_HELIUM) || defined(ARM_MATH_NEON) || defined(ARM_MATH_NEON_EXPERIMENTAL)) && !defined(ARM_MATH_AUTOVECTORIZE)
 #include "arm_vec_math_f16.h"
-#endif
 
 void arm_vlog_f16(
   const float16_t * pSrc,
@@ -43,7 +40,7 @@ void arm_vlog_f16(
 {
    uint32_t blkCnt; 
 
-#if (defined(ARM_MATH_MVEF) || defined(ARM_MATH_HELIUM)) && !defined(ARM_MATH_AUTOVECTORIZE)
+#if defined(ARM_MATH_MVE_FLOAT16) && !defined(ARM_MATH_AUTOVECTORIZE)
 
    f16x8_t src;
    f16x8_t dst;

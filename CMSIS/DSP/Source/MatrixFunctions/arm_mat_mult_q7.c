@@ -79,8 +79,8 @@ __STATIC_FORCEINLINE arm_status arm_mat_mult_q7_2x2_mve(
     vecA0 = vldrbq_s8(pInA0);
     vecA1 = vldrbq_s8(pInA1);
 
-    acc0 = vmladavq(vecA0, vecB);
-    acc1 = vmladavq(vecA1, vecB);
+    acc0 = vmladavq_s8(vecA0, vecB);
+    acc1 = vmladavq_s8(vecA1, vecB);
 
     pOut[0 * MATRIX_DIM] = (q7_t) __SSAT(acc0 >> 7, 8);
     pOut[1 * MATRIX_DIM] = (q7_t) __SSAT(acc1 >> 7, 8);
@@ -91,8 +91,8 @@ __STATIC_FORCEINLINE arm_status arm_mat_mult_q7_2x2_mve(
 
     vecB = vldrbq_gather_offset_z(pInB, vecColBOffs, p0);
 
-    acc0 = vmladavq(vecA0, vecB);
-    acc1 = vmladavq(vecA1, vecB);
+    acc0 = vmladavq_s8(vecA0, vecB);
+    acc1 = vmladavq_s8(vecA1, vecB);
 
     pOut[0 * MATRIX_DIM] = (q7_t) __SSAT(acc0 >> 7, 8);
     pOut[1 * MATRIX_DIM] = (q7_t) __SSAT(acc1 >> 7, 8);
@@ -108,7 +108,7 @@ __STATIC_FORCEINLINE arm_status arm_mat_mult_q7_3x3_mve(
     const arm_matrix_instance_q7 * pSrcB,
     arm_matrix_instance_q7 * pDst)
 {
-    const uint32_t  MATRIX_DIM = 3;
+    const uint8_t  MATRIX_DIM = 3;
     q7_t const     *pInB = (q7_t const *)pSrcB->pData;  /* input data matrix pointer B */
     q7_t           *pInA = pSrcA->pData;  /* input data matrix pointer A */
     q7_t           *pOut = pDst->pData;   /* output data matrix pointer */
@@ -131,9 +131,9 @@ __STATIC_FORCEINLINE arm_status arm_mat_mult_q7_3x3_mve(
     vecA1 = vldrbq_s8(pInA1);
     vecA2 = vldrbq_s8(pInA2);
 
-    acc0 = vmladavq(vecA0, vecB);
-    acc1 = vmladavq(vecA1, vecB);
-    acc2 = vmladavq(vecA2, vecB);
+    acc0 = vmladavq_s8(vecA0, vecB);
+    acc1 = vmladavq_s8(vecA1, vecB);
+    acc2 = vmladavq_s8(vecA2, vecB);
 
     pOut[0 * MATRIX_DIM] = (q7_t) __SSAT(acc0 >> 7, 8);
     pOut[1 * MATRIX_DIM] = (q7_t) __SSAT(acc1 >> 7, 8);
@@ -145,9 +145,9 @@ __STATIC_FORCEINLINE arm_status arm_mat_mult_q7_3x3_mve(
 
     vecB = vldrbq_gather_offset_z(pInB, vecColBOffs, p0);
 
-    acc0 = vmladavq(vecA0, vecB);
-    acc1 = vmladavq(vecA1, vecB);
-    acc2 = vmladavq(vecA2, vecB);
+    acc0 = vmladavq_s8(vecA0, vecB);
+    acc1 = vmladavq_s8(vecA1, vecB);
+    acc2 = vmladavq_s8(vecA2, vecB);
 
     pOut[0 * MATRIX_DIM] = (q7_t) __SSAT(acc0 >> 7, 8);
     pOut[1 * MATRIX_DIM] = (q7_t) __SSAT(acc1 >> 7, 8);
@@ -159,9 +159,9 @@ __STATIC_FORCEINLINE arm_status arm_mat_mult_q7_3x3_mve(
 
     vecB = vldrbq_gather_offset_z(pInB, vecColBOffs, p0);
 
-    acc0 = vmladavq(vecA0, vecB);
-    acc1 = vmladavq(vecA1, vecB);
-    acc2 = vmladavq(vecA2, vecB);
+    acc0 = vmladavq_s8(vecA0, vecB);
+    acc1 = vmladavq_s8(vecA1, vecB);
+    acc2 = vmladavq_s8(vecA2, vecB);
 
     pOut[0 * MATRIX_DIM] = (q7_t) __SSAT(acc0 >> 7, 8);
     pOut[1 * MATRIX_DIM] = (q7_t) __SSAT(acc1 >> 7, 8);
@@ -202,10 +202,10 @@ __STATIC_FORCEINLINE arm_status arm_mat_mult_q7_4x4_mve(
     vecA2 = vldrbq_s8(pInA2);
     vecA3 = vldrbq_s8(pInA3);
 
-    acc0 = vmladavq(vecA0, vecB);
-    acc1 = vmladavq(vecA1, vecB);
-    acc2 = vmladavq(vecA2, vecB);
-    acc3 = vmladavq(vecA3, vecB);
+    acc0 = vmladavq_s8(vecA0, vecB);
+    acc1 = vmladavq_s8(vecA1, vecB);
+    acc2 = vmladavq_s8(vecA2, vecB);
+    acc3 = vmladavq_s8(vecA3, vecB);
 
     pOut[0 * MATRIX_DIM] = (q7_t) __SSAT(acc0 >> 7, 8);
     pOut[1 * MATRIX_DIM] = (q7_t) __SSAT(acc1 >> 7, 8);
@@ -218,10 +218,10 @@ __STATIC_FORCEINLINE arm_status arm_mat_mult_q7_4x4_mve(
 
     vecB = vldrbq_gather_offset_z(pInB, vecColBOffs, p0);
 
-    acc0 = vmladavq(vecA0, vecB);
-    acc1 = vmladavq(vecA1, vecB);
-    acc2 = vmladavq(vecA2, vecB);
-    acc3 = vmladavq(vecA3, vecB);
+    acc0 = vmladavq_s8(vecA0, vecB);
+    acc1 = vmladavq_s8(vecA1, vecB);
+    acc2 = vmladavq_s8(vecA2, vecB);
+    acc3 = vmladavq_s8(vecA3, vecB);
 
     pOut[0 * MATRIX_DIM] = (q7_t) __SSAT(acc0 >> 7, 8);
     pOut[1 * MATRIX_DIM] = (q7_t) __SSAT(acc1 >> 7, 8);
@@ -234,10 +234,10 @@ __STATIC_FORCEINLINE arm_status arm_mat_mult_q7_4x4_mve(
 
     vecB = vldrbq_gather_offset_z(pInB, vecColBOffs, p0);
 
-    acc0 = vmladavq(vecA0, vecB);
-    acc1 = vmladavq(vecA1, vecB);
-    acc2 = vmladavq(vecA2, vecB);
-    acc3 = vmladavq(vecA3, vecB);
+    acc0 = vmladavq_s8(vecA0, vecB);
+    acc1 = vmladavq_s8(vecA1, vecB);
+    acc2 = vmladavq_s8(vecA2, vecB);
+    acc3 = vmladavq_s8(vecA3, vecB);
 
     pOut[0 * MATRIX_DIM] = (q7_t) __SSAT(acc0 >> 7, 8);
     pOut[1 * MATRIX_DIM] = (q7_t) __SSAT(acc1 >> 7, 8);
@@ -250,10 +250,10 @@ __STATIC_FORCEINLINE arm_status arm_mat_mult_q7_4x4_mve(
 
     vecB = vldrbq_gather_offset_z(pInB, vecColBOffs, p0);
 
-    acc0 = vmladavq(vecA0, vecB);
-    acc1 = vmladavq(vecA1, vecB);
-    acc2 = vmladavq(vecA2, vecB);
-    acc3 = vmladavq(vecA3, vecB);
+    acc0 = vmladavq_s8(vecA0, vecB);
+    acc1 = vmladavq_s8(vecA1, vecB);
+    acc2 = vmladavq_s8(vecA2, vecB);
+    acc3 = vmladavq_s8(vecA3, vecB);
 
     pOut[0 * MATRIX_DIM] = (q7_t) __SSAT(acc0 >> 7, 8);
     pOut[1 * MATRIX_DIM] = (q7_t) __SSAT(acc1 >> 7, 8);
@@ -385,16 +385,16 @@ arm_status arm_mat_mult_q7(
             {
                 vecB = vld1q(pSrcBVec);  
                 pSrcBVec += 16;
-                acc0 = vmladavaq(acc0, vecA, vecB);
+                acc0 = vmladavaq_s8(acc0, vecA, vecB);
                 vecA2 = vld1q(pSrcA2Vec);  
                 pSrcA2Vec += 16;
-                acc1 = vmladavaq(acc1, vecA2, vecB);
+                acc1 = vmladavaq_s8(acc1, vecA2, vecB);
                 vecB2 = vld1q(pSrcB2Vec);  
                 pSrcB2Vec += 16;
-                acc2 = vmladavaq(acc2, vecA, vecB2);
+                acc2 = vmladavaq_s8(acc2, vecA, vecB2);
                 vecA = vld1q(pSrcAVec);  
                 pSrcAVec += 16;
-                acc3 = vmladavaq(acc3, vecA2, vecB2);
+                acc3 = vmladavaq_s8(acc3, vecA2, vecB2);
 
                 blkCnt--;
             }
@@ -407,13 +407,13 @@ arm_status arm_mat_mult_q7(
             {
                 mve_pred16_t p0 = vctp8q(blkCnt);
                 vecB = vld1q(pSrcBVec);
-                acc0 = vmladavaq_p(acc0, vecA, vecB, p0);
+                acc0 = vmladavaq_p_s8(acc0, vecA, vecB, p0);
                 vecA2 = vld1q(pSrcA2Vec);
-                acc1 = vmladavaq_p(acc1, vecA2, vecB, p0);
+                acc1 = vmladavaq_p_s8(acc1, vecA2, vecB, p0);
                 vecB2 = vld1q(pSrcB2Vec);
-                acc2 = vmladavaq_p(acc2, vecA, vecB2, p0);
+                acc2 = vmladavaq_p_s8(acc2, vecA, vecB2, p0);
                 vecA = vld1q(pSrcAVec);
-                acc3 = vmladavaq_p(acc3, vecA2, vecB2, p0);
+                acc3 = vmladavaq_p_s8(acc3, vecA2, vecB2, p0);
             }
 
             *px++ = (q7_t) __SSAT(acc0 >> 7, 8);
@@ -473,7 +473,7 @@ arm_status arm_mat_mult_q7(
                 pSrcAVec += 16;
                 vecB = vld1q(pSrcBVec);  
                 pSrcBVec += 16;
-                acc0 = vmladavaq(acc0, vecA, vecB);
+                acc0 = vmladavaq_s8(acc0, vecA, vecB);
 
                 blkCnt--;
             }
@@ -487,7 +487,7 @@ arm_status arm_mat_mult_q7(
                 mve_pred16_t p0 = vctp8q(blkCnt);
                 vecA = vld1q(pSrcAVec);
                 vecB = vld1q(pSrcBVec);
-                acc0 = vmladavaq_p(acc0, vecA, vecB, p0);
+                acc0 = vmladavaq_p_s8(acc0, vecA, vecB, p0);
             }
 
             *px = (q7_t) __SSAT(acc0 >> 7, 8);
@@ -539,7 +539,7 @@ arm_status arm_mat_mult_q7(
                 pSrcAVec += 16;
                 vecB = vld1q(pSrcBVec); 
                 pSrcBVec += 16;
-                acc0 = vmladavaq(acc0, vecA, vecB);
+                acc0 = vmladavaq_s8(acc0, vecA, vecB);
 
                 blkCnt--;
             }
@@ -553,7 +553,7 @@ arm_status arm_mat_mult_q7(
                 mve_pred16_t p0 = vctp8q(blkCnt);
                 vecA = vld1q(pSrcAVec);
                 vecB = vld1q(pSrcBVec);
-                acc0 = vmladavaq_p(acc0, vecA, vecB, p0);
+                acc0 = vmladavaq_p_s8(acc0, vecA, vecB, p0);
             }
 
             *px++ = (q7_t) __SSAT(acc0 >> 7, 8);

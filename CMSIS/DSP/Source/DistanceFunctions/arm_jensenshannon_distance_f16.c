@@ -48,7 +48,7 @@
   @{
  */
 
-#if !defined(ARM_MATH_MVEF) || defined(ARM_MATH_AUTOVECTORIZE)
+#if !defined(ARM_MATH_MVE_FLOAT16) || defined(ARM_MATH_AUTOVECTORIZE)
 /// @private
 __STATIC_INLINE float16_t rel_entr(float16_t x, float16_t y)
 {
@@ -57,7 +57,7 @@ __STATIC_INLINE float16_t rel_entr(float16_t x, float16_t y)
 #endif
 
 
-#if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
+#if defined(ARM_MATH_MVE_FLOAT16) && !defined(ARM_MATH_AUTOVECTORIZE)
 
 #include "arm_helium_utils.h"
 #include "arm_vec_math_f16.h"
