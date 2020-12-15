@@ -69,7 +69,8 @@ static void depthwise_conv_u8_mult_4(const uint8_t *input,
     {
         for (int32_t in_w = -pad_x, out_w = 0, ker_h_start = MAX(0, -in_h); out_w < output_x; in_w += stride_x, ++out_w)
         {
-            for (int32_t in_ch = 0, out_ch = 0, ker_w_start = MAX(0, -in_w); out_ch < output_ch; ++in_ch, out_ch += ch_mult)
+            for (int32_t in_ch = 0, out_ch = 0, ker_w_start = MAX(0, -in_w); out_ch < output_ch;
+                 ++in_ch, out_ch += ch_mult)
             {
                 for (int mult_tile = 0; mult_tile < ch_mult; mult_tile += 4)
                 {
@@ -85,7 +86,8 @@ static void depthwise_conv_u8_mult_4(const uint8_t *input,
                         int32_t ker_idx = ker_h * (output_ch * kernel_x) + ker_w_start * output_ch + out_ch;
                         int32_t in_idx = (in_h + ker_h) * (input_ch * input_x) + in_w * input_ch + in_ch;
 
-                        for (int32_t ker_w = ker_w_start; ker_w < MIN(kernel_x, input_x - in_w); ++ker_w, ker_idx += output_ch)
+                        for (int32_t ker_w = ker_w_start; ker_w < MIN(kernel_x, input_x - in_w);
+                             ++ker_w, ker_idx += output_ch)
                         {
                             int32_t in_val = input[in_idx + ker_w * input_ch] + input_offset;
                             out_buff[0] += in_val * (kernel[ker_idx + 0 + mult_tile] + filter_offset);
@@ -272,17 +274,57 @@ arm_status arm_depthwise_conv_u8_basic_ver1(const uint8_t *input,
 
     if (ch_mult % 4 == 0)
     {
-        depthwise_conv_u8_mult_4(input, input_x, input_y, input_ch, kernel, ch_mult * input_ch, ch_mult,
-                                 kernel_x, kernel_y, pad_x, pad_y, stride_x, stride_y, bias, output,
-                                 output_shift, output_mult, output_x, output_y, output_offset, input_offset,
-                                 filter_offset, output_activation_min, output_activation_max);
+        depthwise_conv_u8_mult_4(input,
+                                 input_x,
+                                 input_y,
+                                 input_ch,
+                                 kernel,
+                                 ch_mult * input_ch,
+                                 ch_mult,
+                                 kernel_x,
+                                 kernel_y,
+                                 pad_x,
+                                 pad_y,
+                                 stride_x,
+                                 stride_y,
+                                 bias,
+                                 output,
+                                 output_shift,
+                                 output_mult,
+                                 output_x,
+                                 output_y,
+                                 output_offset,
+                                 input_offset,
+                                 filter_offset,
+                                 output_activation_min,
+                                 output_activation_max);
     }
     else
     {
-        depthwise_conv_u8_generic(input, input_x, input_y, input_ch, kernel, ch_mult * input_ch, ch_mult,
-                                  kernel_x, kernel_y, pad_x, pad_y, stride_x, stride_y, bias,
-                                  output, output_shift, output_mult, output_x, output_y, output_offset,
-                                  input_offset, filter_offset, output_activation_min, output_activation_max);
+        depthwise_conv_u8_generic(input,
+                                  input_x,
+                                  input_y,
+                                  input_ch,
+                                  kernel,
+                                  ch_mult * input_ch,
+                                  ch_mult,
+                                  kernel_x,
+                                  kernel_y,
+                                  pad_x,
+                                  pad_y,
+                                  stride_x,
+                                  stride_y,
+                                  bias,
+                                  output,
+                                  output_shift,
+                                  output_mult,
+                                  output_x,
+                                  output_y,
+                                  output_offset,
+                                  input_offset,
+                                  filter_offset,
+                                  output_activation_min,
+                                  output_activation_max);
     }
 
     /* Return to application */

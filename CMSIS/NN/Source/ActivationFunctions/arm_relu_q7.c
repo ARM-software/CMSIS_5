@@ -40,16 +40,16 @@
  * @{
  */
 
-  /**
-   * @brief Q7 RELU function
-   * @param[in,out]   data        pointer to input
-   * @param[in]       size        number of elements
-   *
-   * @details
-   *
-   * Optimized relu with QSUB instructions.
-   *
-   */
+/**
+ * @brief Q7 RELU function
+ * @param[in,out]   data        pointer to input
+ * @param[in]       size        number of elements
+ *
+ * @details
+ *
+ * Optimized relu with QSUB instructions.
+ *
+ */
 
 void arm_relu_q7(q7_t *data, uint16_t size)
 {

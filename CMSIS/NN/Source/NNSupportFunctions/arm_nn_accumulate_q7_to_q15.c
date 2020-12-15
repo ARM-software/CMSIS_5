@@ -28,9 +28,9 @@
  *
  * -------------------------------------------------------------------- */
 
+#include "arm_math_memory.h"
 #include "arm_nnfunctions.h"
 #include "arm_nnsupportfunctions.h"
-#include "arm_math_memory.h"
 
 /**
  * @ingroup groupSupport

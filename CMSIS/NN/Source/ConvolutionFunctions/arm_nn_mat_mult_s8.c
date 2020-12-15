@@ -30,11 +30,11 @@
 #include "arm_nnsupportfunctions.h"
 
 /*
-   * s8 General matrix multiplication function with per-channel requantization for upto 4 column batches.
-   *
-   * Refer header file for details.
-   *
-   */
+ * s8 General matrix multiplication function with per-channel requantization for upto 4 column batches.
+ *
+ * Refer header file for details.
+ *
+ */
 
 q7_t *arm_nn_mat_mult_s8(const q7_t *input_row,
                          const q7_t *input_col,

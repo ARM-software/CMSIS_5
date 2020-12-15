@@ -39,31 +39,31 @@
  * @{
  */
 
-  /**
-   * @brief Q7 softmax function
-   * @param[in]       vec_in      pointer to input vector
-   * @param[in]       dim_vec     input vector dimention
-   * @param[out]      p_out       pointer to output vector
-   *
-   * @details
-   *
-   *  Here, instead of typical natural logarithm e based softmax, we use
-   *  2-based softmax here, i.e.,:
-   *
-   *  y_i = 2^(x_i) / sum(2^x_j)
-   *
-   *  The relative output will be different here.
-   *  But mathematically, the gradient will be the same
-   *  with a log(2) scaling factor.
-   *
-   */
+/**
+ * @brief Q7 softmax function
+ * @param[in]       vec_in      pointer to input vector
+ * @param[in]       dim_vec     input vector dimention
+ * @param[out]      p_out       pointer to output vector
+ *
+ * @details
+ *
+ *  Here, instead of typical natural logarithm e based softmax, we use
+ *  2-based softmax here, i.e.,:
+ *
+ *  y_i = 2^(x_i) / sum(2^x_j)
+ *
+ *  The relative output will be different here.
+ *  But mathematically, the gradient will be the same
+ *  with a log(2) scaling factor.
+ *
+ */
 
-void arm_softmax_q7(const q7_t * vec_in, const uint16_t dim_vec, q7_t * p_out )
+void arm_softmax_q7(const q7_t* vec_in, const uint16_t dim_vec, q7_t* p_out)
 {
-    q31_t     sum;
-    int16_t   i;
-    uint8_t   shift;
-    q15_t     base;
+    q31_t sum;
+    int16_t i;
+    uint8_t shift;
+    q15_t base;
     base = -128;
 
     /* We first search for the maximum */

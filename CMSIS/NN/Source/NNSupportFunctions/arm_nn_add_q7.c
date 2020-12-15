@@ -28,8 +28,8 @@
  *
  * -------------------------------------------------------------------- */
 
-#include "arm_nnsupportfunctions.h"
 #include "arm_nn_tables.h"
+#include "arm_nnsupportfunctions.h"
 
 /**
  * @ingroup groupSupport
@@ -52,8 +52,7 @@ void arm_nn_add_q7(const q7_t *input, q31_t *output, uint32_t block_size)
     {
         const int32_t mult_q15x2 = (1UL << 16) | 1UL;
         q31_t in_q7x4 = arm_nn_read_q7x4_ia(&input);
-        q31_t temp_q15x2 = __SXTAB16(__SXTB16(in_q7x4),
-                                     __ROR((uint32_t)in_q7x4, 8));
+        q31_t temp_q15x2 = __SXTAB16(__SXTB16(in_q7x4), __ROR((uint32_t)in_q7x4, 8));
 
         result = __SMLAD(temp_q15x2, mult_q15x2, result);
 

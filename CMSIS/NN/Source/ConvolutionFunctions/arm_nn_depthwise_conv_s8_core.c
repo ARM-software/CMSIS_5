@@ -30,12 +30,12 @@
 #include "arm_nnsupportfunctions.h"
 
 /*
-   * Depthwise conv on an im2col buffer where the input channel equals
-   * output channel.
-   *
-   * Refer header file for details.
-   *
-   */
+ * Depthwise conv on an im2col buffer where the input channel equals
+ * output channel.
+ *
+ * Refer header file for details.
+ *
+ */
 
 q7_t *arm_nn_depthwise_conv_s8_core(const q7_t *row,
                                     const q15_t *col,

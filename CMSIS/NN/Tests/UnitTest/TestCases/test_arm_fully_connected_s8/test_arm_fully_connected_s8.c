@@ -16,14 +16,14 @@
  * limitations under the License.
  */
 
-#include <stdlib.h>
 #include <arm_nnfunctions.h>
+#include <stdlib.h>
 #include <unity.h>
 
-#include "../Utils/validate.h"
 #include "../TestData/fully_connected/test_data.h"
 #include "../TestData/fully_connected_mve_0/test_data.h"
 #include "../TestData/fully_connected_mve_1/test_data.h"
+#include "../Utils/validate.h"
 
 void fully_connected_arm_fully_connected_s8(void)
 {

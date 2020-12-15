@@ -17,9 +17,9 @@
  */
 
 #pragma once
+#include <stdbool.h>
 #include <stdint.h>
 #include <stdio.h>
-#include <stdbool.h>
 
 static inline int validate(int8_t *act, const int8_t *ref, int size)
 {
@@ -27,24 +27,24 @@ static inline int validate(int8_t *act, const int8_t *ref, int size)
     int count = 0;
     int total = 0;
 
-    for(int i = 0; i < size; ++i)
+    for (int i = 0; i < size; ++i)
     {
-      total++;
-      if(act[i] != ref[i])
-      {
-        count++;
-        printf("ERROR at pos %d: Act: %d Ref: %d\r\n", i, act[i], ref[i]);
-        test_passed = false;
-      }
-      else
-      {
-        // printf("PASS at pos %d: %d\r\n", i, act[i]);
-      }
+        total++;
+        if (act[i] != ref[i])
+        {
+            count++;
+            printf("ERROR at pos %d: Act: %d Ref: %d\r\n", i, act[i], ref[i]);
+            test_passed = false;
+        }
+        else
+        {
+            // printf("PASS at pos %d: %d\r\n", i, act[i]);
+        }
     }
 
     if (!test_passed)
     {
-      printf("%d of %d failed\r\n", count, total);
+        printf("%d of %d failed\r\n", count, total);
     }
 
     return test_passed;

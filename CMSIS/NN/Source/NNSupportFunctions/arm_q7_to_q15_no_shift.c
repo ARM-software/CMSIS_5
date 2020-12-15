@@ -55,15 +55,15 @@
  *
  */
 
-void arm_q7_to_q15_no_shift(const q7_t * pSrc, q15_t * pDst, uint32_t blockSize)
+void arm_q7_to_q15_no_shift(const q7_t *pSrc, q15_t *pDst, uint32_t blockSize)
 {
     const q7_t *pIn = pSrc;
-    uint32_t  blkCnt;
+    uint32_t blkCnt;
 
 #if defined(ARM_MATH_DSP)
-    q31_t     in;
-    q31_t     in1, in2;
-    q31_t     out1, out2;
+    q31_t in;
+    q31_t in1, in2;
+    q31_t out1, out2;
 
     /*loop Unrolling */
     blkCnt = blockSize >> 2u;
@@ -104,7 +104,7 @@ void arm_q7_to_q15_no_shift(const q7_t * pSrc, q15_t * pDst, uint32_t blockSize)
     /* Loop over blockSize number of values */
     blkCnt = blockSize;
 
-#endif                          /* #ifndef ARM_MATH_CM0_FAMILY */
+#endif /* #ifndef ARM_MATH_CM0_FAMILY */
 
     while (blkCnt > 0u)
     {
@@ -114,7 +114,6 @@ void arm_q7_to_q15_no_shift(const q7_t * pSrc, q15_t * pDst, uint32_t blockSize)
         /* Decrement the loop counter */
         blkCnt--;
     }
-
 }
 
 /**

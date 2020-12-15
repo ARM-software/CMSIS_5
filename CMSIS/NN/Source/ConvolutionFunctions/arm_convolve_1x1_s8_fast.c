@@ -44,11 +44,11 @@
  */
 
 /*
-   * Fast s8 version for 1x1 convolution (non-square shape)
-   *
-   * Refer header file for details.
-   *
-   */
+ * Fast s8 version for 1x1 convolution (non-square shape)
+ *
+ * Refer header file for details.
+ *
+ */
 
 arm_status arm_convolve_1x1_s8_fast(const cmsis_nn_context *ctx,
                                     const cmsis_nn_conv_params *conv_params,
@@ -62,8 +62,7 @@ arm_status arm_convolve_1x1_s8_fast(const cmsis_nn_context *ctx,
                                     const cmsis_nn_dims *output_dims,
                                     q7_t *output_data)
 {
-    if (input_dims->c % 4 != 0 ||
-        conv_params->padding.w != 0 || conv_params->padding.h != 0 ||
+    if (input_dims->c % 4 != 0 || conv_params->padding.w != 0 || conv_params->padding.h != 0 ||
         conv_params->stride.w != 1 || conv_params->stride.h != 1)
     {
         return ARM_MATH_SIZE_MISMATCH;
@@ -75,15 +74,15 @@ arm_status arm_convolve_1x1_s8_fast(const cmsis_nn_context *ctx,
 
 #if defined(ARM_MATH_MVEI)
 
-    const int32_t col_len       = input_dims->w * input_dims->h * input_dims->n;
-    const int32_t output_ch     = output_dims->c;
-    const int32_t input_ch      = input_dims->c;
-    const int32_t input_offset  = conv_params->input_offset;
-    const int32_t out_offset    = conv_params->output_offset;
+    const int32_t col_len = input_dims->w * input_dims->h * input_dims->n;
+    const int32_t output_ch = output_dims->c;
+    const int32_t input_ch = input_dims->c;
+    const int32_t input_offset = conv_params->input_offset;
+    const int32_t out_offset = conv_params->output_offset;
     const int32_t out_activation_min = conv_params->activation.min;
     const int32_t out_activation_max = conv_params->activation.max;
-    int32_t *output_mult        = quant_params->multiplier;
-    int32_t *output_shift       = quant_params->shift;
+    int32_t *output_mult = quant_params->multiplier;
+    int32_t *output_shift = quant_params->shift;
 
     for (int i_items = 0; i_items <= (col_len - 4); i_items += 4)
     {
@@ -111,9 +110,8 @@ arm_status arm_convolve_1x1_s8_fast(const cmsis_nn_context *ctx,
             res = vmaxq_s32(res, vdupq_n_s32(out_activation_min));
             res = vminq_s32(res, vdupq_n_s32(out_activation_max));
 
-            const uint32x4_t scatter_offset = {0, (uint32_t)output_ch,
-                                               (uint32_t)output_ch * 2,
-                                               (uint32_t)output_ch * 3};
+            const uint32x4_t scatter_offset = {
+                0, (uint32_t)output_ch, (uint32_t)output_ch * 2, (uint32_t)output_ch * 3};
             vstrbq_scatter_offset_s32(output_data, scatter_offset, res);
             output_data++;
         }
@@ -128,11 +126,8 @@ arm_status arm_convolve_1x1_s8_fast(const cmsis_nn_context *ctx,
             int32_t sum_row = 0;
 
             int32_t acc;
-            (void)arm_nn_mat_mul_core_1x_s8(input_ch,
-                                            input_data + i_items * input_ch,
-                                            filter_data + i_out_ch * input_ch,
-                                            &sum_row,
-                                            &acc);
+            (void)arm_nn_mat_mul_core_1x_s8(
+                input_ch, input_data + i_items * input_ch, filter_data + i_out_ch * input_ch, &sum_row, &acc);
             if (bias_data)
             {
                 acc += bias_data[i_out_ch];

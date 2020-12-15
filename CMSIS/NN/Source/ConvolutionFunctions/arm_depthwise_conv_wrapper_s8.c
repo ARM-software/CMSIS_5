@@ -41,11 +41,11 @@
  */
 
 /*
-   *  s8 Depthwise conv wrapper function
-   *
-   *  Refer header file for details.
-   *
-   */
+ *  s8 Depthwise conv wrapper function
+ *
+ *  Refer header file for details.
+ *
+ */
 arm_status arm_depthwise_conv_wrapper_s8(const cmsis_nn_context *ctx,
                                          const cmsis_nn_dw_conv_params *dw_conv_params,
                                          const cmsis_nn_per_channel_quant_params *quant_params,
