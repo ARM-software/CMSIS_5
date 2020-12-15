@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include "Error.h"
 
-#define SNR_THRESHOLD 30
+#define SNR_THRESHOLD 27
 
 /* 
 
@@ -25,7 +25,7 @@ a double precision computation.
         const float16_t *inputp = inputs.ptr();
         float16_t *outp = output.ptr();
 
-        #if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
+        #if defined(ARM_MATH_MVE_FLOAT16) && !defined(ARM_MATH_AUTOVECTORIZE)
         arm_biquad_mod_coef_f16 *coefsmodp = (arm_biquad_mod_coef_f16*)vecCoefs.ptr();
         #endif
 
@@ -50,7 +50,7 @@ a double precision computation.
            The filter is initialized with the coefs, blockSize and numTaps.
 
            */
-#if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
+#if defined(ARM_MATH_MVE_FLOAT16) && !defined(ARM_MATH_AUTOVECTORIZE)
            arm_biquad_cascade_df1_mve_init_f16(&this->Sdf1,3,coefsp,coefsmodp,statep);
 #else
            arm_biquad_cascade_df1_init_f16(&this->Sdf1,3,coefsp,statep);
@@ -162,7 +162,7 @@ a double precision computation.
         const float16_t *inputp = inputs.ptr();
         float16_t *outp = output.ptr();
 
-        #if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
+        #if defined(ARM_MATH_MVE_FLOAT16) && !defined(ARM_MATH_AUTOVECTORIZE)
         arm_biquad_mod_coef_f16 *coefsmodp = (arm_biquad_mod_coef_f16*)vecCoefs.ptr();
         #endif
 
@@ -194,7 +194,7 @@ a double precision computation.
            The filter is initialized with the coefs, blockSize and numTaps.
 
            */
-#if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
+#if defined(ARM_MATH_MVE_FLOAT16) && !defined(ARM_MATH_AUTOVECTORIZE)
            arm_biquad_cascade_df1_mve_init_f16(&this->Sdf1,numStages,coefsp,coefsmodp,statep);
 #else
            arm_biquad_cascade_df1_init_f16(&this->Sdf1,numStages,coefsp,statep);
@@ -381,7 +381,7 @@ a double precision computation.
             inputs.reload(BIQUADF16::BIQUADINPUTS_F16_ID,mgr);
             coefs.reload(BIQUADF16::BIQUADCOEFS_F16_ID,mgr);
             ref.reload(BIQUADF16::BIQUADREFS_F16_ID,mgr);
-            #if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
+            #if defined(ARM_MATH_MVE_FLOAT16) && !defined(ARM_MATH_AUTOVECTORIZE)
             /* Max num stages is 47 in Python script */
             vecCoefs.create(96*47,BIQUADF16::OUT_F16_ID,mgr);
             #endif
@@ -401,7 +401,7 @@ a double precision computation.
             coefs.reload(BIQUADF16::ALLBIQUADCOEFS_F16_ID,mgr);
             ref.reload(BIQUADF16::ALLBIQUADREFS_F16_ID,mgr);
             configs.reload(BIQUADF16::ALLBIQUADCONFIGS_S16_ID,mgr);
-            #if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
+            #if defined(ARM_MATH_MVE_FLOAT16) && !defined(ARM_MATH_AUTOVECTORIZE)
             /* Max num stages is 47 in Python script */
             vecCoefs.create(96*47,BIQUADF16::OUT_F16_ID,mgr);
             #endif

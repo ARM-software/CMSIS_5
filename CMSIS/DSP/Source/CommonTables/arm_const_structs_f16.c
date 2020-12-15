@@ -42,7 +42,7 @@ for compilation.
 
 
 /* Floating-point structs */
-#if !defined(ARM_MATH_MVEF) || defined(ARM_MATH_AUTOVECTORIZE)
+#if !defined(ARM_MATH_MVE_FLOAT16) || defined(ARM_MATH_AUTOVECTORIZE)
 
 
 /* 
@@ -50,7 +50,7 @@ for compilation.
 Those structures cannot be used to initialize the MVE version of the FFT F32 instances.
 So they are not compiled when MVE is defined.
 
-For the MVE version, the new arm_cfft_init_f32 must be used.
+For the MVE version, the new arm_cfft_init_f16 must be used.
 
 
 */

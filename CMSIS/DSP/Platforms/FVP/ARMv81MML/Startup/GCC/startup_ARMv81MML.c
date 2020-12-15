@@ -22,7 +22,6 @@
  * limitations under the License.
  */
 
-
 #if defined (ARMv81MML_DSP_DP_MVE_FP)
   #include "ARMv81MML_DSP_DP_MVE_FP.h"
 #else
@@ -125,10 +124,7 @@ extern const pFunc __VECTOR_TABLE[240];
 #define SERIAL_DATA  *((volatile unsigned *) SERIAL_BASE_ADDRESS)
 
 
-
-
-
-
+  extern void _start(void) __NO_RETURN;
 
 /*----------------------------------------------------------------------------
   Reset Handler called on controller reset
@@ -140,7 +136,9 @@ __NO_RETURN void Reset_Handler(void)
    SystemInit();                             /* CMSIS System Initialization */
 
   
-  __PROGRAM_START();    
+   __PROGRAM_START();    
+
+   //_start();
 }
 
 
@@ -150,6 +148,9 @@ __NO_RETURN void Reset_Handler(void)
  *----------------------------------------------------------------------------*/
 void HardFault_Handler(void)
 {
+  SERIAL_DATA = 'H';
+  SERIAL_DATA = '\n';
+
   while(1);
 }
 
@@ -158,6 +159,8 @@ void HardFault_Handler(void)
  *----------------------------------------------------------------------------*/
 void Default_Handler(void)
 {
+  SERIAL_DATA = 'D';
+  SERIAL_DATA = '\n';
   while(1);
 }
 
