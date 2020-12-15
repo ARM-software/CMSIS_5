@@ -41,24 +41,23 @@
  */
 
 /*
-   * S8 basic fully-connected and matrix multiplication layer function for TensorFlow Lite
-   *
-   * Refer header file for details.
-   *
-   */
+ * S8 basic fully-connected and matrix multiplication layer function for TensorFlow Lite
+ *
+ * Refer header file for details.
+ *
+ */
 
-arm_status
-arm_fully_connected_s8(const cmsis_nn_context *ctx,
-                       const cmsis_nn_fc_params *fc_params,
-                       const cmsis_nn_per_tensor_quant_params *quant_params,
-                       const cmsis_nn_dims *input_dims,
-                       const q7_t *input,
-                       const cmsis_nn_dims *filter_dims,
-                       const q7_t *kernel,
-                       const cmsis_nn_dims *bias_dims,
-                       const int32_t *bias,
-                       const cmsis_nn_dims *output_dims,
-                       q7_t *output)
+arm_status arm_fully_connected_s8(const cmsis_nn_context *ctx,
+                                  const cmsis_nn_fc_params *fc_params,
+                                  const cmsis_nn_per_tensor_quant_params *quant_params,
+                                  const cmsis_nn_dims *input_dims,
+                                  const q7_t *input,
+                                  const cmsis_nn_dims *filter_dims,
+                                  const q7_t *kernel,
+                                  const cmsis_nn_dims *bias_dims,
+                                  const int32_t *bias,
+                                  const cmsis_nn_dims *output_dims,
+                                  q7_t *output)
 {
     (void)bias_dims;
     (void)ctx;

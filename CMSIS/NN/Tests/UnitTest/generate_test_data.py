@@ -20,6 +20,7 @@ import os
 import sys
 import math
 import argparse
+import subprocess
 import numpy as np
 
 from packaging import version
@@ -34,6 +35,7 @@ except Exception as e:
 REQUIRED_MINIMUM_TENSORFLOW_VERSION = version.parse("2.1.0")
 DEFAULT_TESTDATA_SET = 'basic'
 ALL_TESTDATA_SETS = {}
+CLANG_FORMAT = 'clang-format-9 -i'
 LICENSE = """/*
  * Copyright (C) 2010-2020 Arm Limited or its affiliates. All rights reserved.
  *
@@ -275,6 +277,14 @@ class TestSettings(ABC):
                                               regenerate=self.regenerate_new_bias)
         return biases
 
+    def format_output_file(self, file):
+        command_list = CLANG_FORMAT.split(' ')
+        command_list.append(file)
+        process = subprocess.run(command_list)
+        if process.returncode != 0:
+            print("ERROR: {} failed".format(command_list))
+            sys.exit(1)
+
     def write_c_header_wrapper(self):
         filename = "test_data.h"
         filepath = self.headers_dir + filename
@@ -285,6 +295,7 @@ class TestSettings(ABC):
             f.write(self.tensor_flow_reference_version)
             while len(self.generated_header_files) > 0:
                 f.write('#include "{}"\n'.format(self.generated_header_files.pop()))
+        self.format_output_file(filepath)
 
     def write_common_config(self, f, prefix):
         """
@@ -324,6 +335,7 @@ class TestSettings(ABC):
             f.write("#define {}_OUT_ACTIVATION_MIN {}\n".format(prefix, self.INT8_MIN))
             f.write("#define {}_OUT_ACTIVATION_MAX {}\n".format(prefix, self.INT8_MAX))
             f.write("#define {}_INPUT_BATCHES {}\n".format(prefix, self.batches))
+        self.format_output_file(filepath)
 
     def generate_c_array(self, name, array, datatype="q7_t", const="const "):
         if not os.path.exists(self.headers_dir):
@@ -353,6 +365,7 @@ class TestSettings(ABC):
                 f.write("  %d,\n" % w[i])
             f.write("  %d\n" % w[size - 1])
             f.write("};\n")
+        self.format_output_file(filepath)
 
     def quantize_output(self, value):
         result = round(value / self.output_scale) + self.output_zero_point

@@ -29,7 +29,6 @@
  *
  * -------------------------------------------------------------------- */
 
-
 #include "arm_nnfunctions.h"
 #include "arm_nnsupportfunctions.h"
 
@@ -43,12 +42,12 @@
  */
 
 /*
-   * Optimized s8 depthwise convolution function with constraint that
-   * in_channel == out_channel and kernel_x == kernel_y == 3 with pads at most 1
-   *
-   *  Refer prototype header file for details.
-   *
-   */
+ * Optimized s8 depthwise convolution function with constraint that
+ * in_channel == out_channel and kernel_x == kernel_y == 3 with pads at most 1
+ *
+ *  Refer prototype header file for details.
+ *
+ */
 
 arm_status arm_depthwise_conv_3x3_s8(const cmsis_nn_context *ctx,
                                      const cmsis_nn_dw_conv_params *dw_conv_params,

@@ -40,66 +40,65 @@
  * @{
  */
 
-  /**
-   * @brief Mixed Q15-Q7 fully-connected layer function
-   * @param[in]       pV          pointer to input vector
-   * @param[in]       pM          pointer to matrix weights
-   * @param[in]       dim_vec     length of the vector
-   * @param[in]       num_of_rows number of rows in weight matrix
-   * @param[in]       bias_shift  amount of left-shift for bias
-   * @param[in]       out_shift   amount of right-shift for output
-   * @param[in]       bias        pointer to bias
-   * @param[in,out]   pOut        pointer to output vector
-   * @param[in,out]   vec_buffer  pointer to buffer space for input
-   * @return     The function returns <code>ARM_MATH_SUCCESS</code>
-   *
-   * @details
-   *
-   * <b>Buffer size:</b>
-   *
-   * vec_buffer size: 0
-   *
-   *  Q7_Q15 version of the fully connected layer
-   *
-   *  Weights are in q7_t and Activations are in q15_t
-   *
-   */
+/**
+ * @brief Mixed Q15-Q7 fully-connected layer function
+ * @param[in]       pV          pointer to input vector
+ * @param[in]       pM          pointer to matrix weights
+ * @param[in]       dim_vec     length of the vector
+ * @param[in]       num_of_rows number of rows in weight matrix
+ * @param[in]       bias_shift  amount of left-shift for bias
+ * @param[in]       out_shift   amount of right-shift for output
+ * @param[in]       bias        pointer to bias
+ * @param[in,out]   pOut        pointer to output vector
+ * @param[in,out]   vec_buffer  pointer to buffer space for input
+ * @return     The function returns <code>ARM_MATH_SUCCESS</code>
+ *
+ * @details
+ *
+ * <b>Buffer size:</b>
+ *
+ * vec_buffer size: 0
+ *
+ *  Q7_Q15 version of the fully connected layer
+ *
+ *  Weights are in q7_t and Activations are in q15_t
+ *
+ */
 
-arm_status
-arm_fully_connected_mat_q7_vec_q15(const q15_t * pV,
-                                   const q7_t * pM,
-                                   const uint16_t dim_vec,
-                                   const uint16_t num_of_rows,
-                                   const uint16_t bias_shift,
-                                   const uint16_t out_shift,
-                                   const q7_t * bias,
-                                   q15_t * pOut,
-                                   q15_t * vec_buffer)
+arm_status arm_fully_connected_mat_q7_vec_q15(const q15_t *pV,
+                                              const q7_t *pM,
+                                              const uint16_t dim_vec,
+                                              const uint16_t num_of_rows,
+                                              const uint16_t bias_shift,
+                                              const uint16_t out_shift,
+                                              const q7_t *bias,
+                                              q15_t *pOut,
+                                              q15_t *vec_buffer)
 {
     (void)vec_buffer;
-#if defined (ARM_MATH_DSP)
+#if defined(ARM_MATH_DSP)
     /* Run the following code for Cortex-M4 and Cortex-M7 */
 
     const q7_t *pB = pM;
     const q7_t *pB2;
-    q15_t    *pO = pOut;
+    q15_t *pO = pOut;
     const q7_t *pBias = bias;
     const q15_t *pA = pV;
 
-    uint16_t  rowCnt = num_of_rows >> 1;
+    uint16_t rowCnt = num_of_rows >> 1;
 
     while (rowCnt)
     {
-        q31_t     sum =  ((q31_t)(*pBias++) << bias_shift) + NN_ROUND(out_shift);
-        q31_t     sum2 = ((q31_t)(*pBias++) << bias_shift) + NN_ROUND(out_shift);
-        uint16_t  colCnt = dim_vec >> 2;
+        q31_t sum = ((q31_t)(*pBias++) << bias_shift) + NN_ROUND(out_shift);
+        q31_t sum2 = ((q31_t)(*pBias++) << bias_shift) + NN_ROUND(out_shift);
+        uint16_t colCnt = dim_vec >> 2;
 
         pA = pV;
         pB2 = pB + dim_vec;
 
         while (colCnt)
         {
-            q31_t     inV, inM11, inM12, inM21, inM22;
+            q31_t inV, inM11, inM12, inM21, inM22;
             pB = read_and_pad(pB, &inM11, &inM12);
             pB2 = read_and_pad(pB2, &inM21, &inM22);
 
@@ -118,16 +117,16 @@ arm_fully_connected_mat_q7_vec_q15(const q15_t * pV,
         colCnt = dim_vec & 0x3;
         while (colCnt)
         {
-            q15_t     inV = *pA++;
-            q7_t      inM = *pB++;
-            q7_t      inM2 = *pB2++;
+            q15_t inV = *pA++;
+            q7_t inM = *pB++;
+            q7_t inM2 = *pB2++;
 
             sum += inV * inM;
             sum2 += inV * inM2;
             colCnt--;
-        }                       /* while over colCnt */
-        *pO++ = (q15_t) (__SSAT((sum >> out_shift), 16));
-        *pO++ = (q15_t) (__SSAT((sum2 >> out_shift), 16));
+        } /* while over colCnt */
+        *pO++ = (q15_t)(__SSAT((sum >> out_shift), 16));
+        *pO++ = (q15_t)(__SSAT((sum2 >> out_shift), 16));
 
         /*adjust the pointers and counters */
         pB += dim_vec;
@@ -139,14 +138,14 @@ arm_fully_connected_mat_q7_vec_q15(const q15_t * pV,
 
     while (rowCnt)
     {
-        q31_t     sum = ((q31_t)(*pBias++) << bias_shift) + NN_ROUND(out_shift);
-        uint16_t  colCnt = dim_vec >> 2;
+        q31_t sum = ((q31_t)(*pBias++) << bias_shift) + NN_ROUND(out_shift);
+        uint16_t colCnt = dim_vec >> 2;
 
         pA = pV;
 
         while (colCnt)
         {
-            q31_t     inV1, inV2, inM11, inM12;
+            q31_t inV1, inV2, inM11, inM12;
 
             pB = read_and_pad(pB, &inM11, &inM12);
 
@@ -163,35 +162,34 @@ arm_fully_connected_mat_q7_vec_q15(const q15_t * pV,
         colCnt = dim_vec & 0x3;
         while (colCnt)
         {
-            q15_t     inV = *pA++;
-            q7_t      inM = *pB++;
+            q15_t inV = *pA++;
+            q7_t inM = *pB++;
             sum += inV * inM;
             colCnt--;
         }
 
-        *pO++ = (q15_t) (__SSAT((sum >> out_shift), 16));
+        *pO++ = (q15_t)(__SSAT((sum >> out_shift), 16));
 
         rowCnt--;
     }
 
 #else
-    int       i, j;
+    int i, j;
     /* Run the following code as reference implementation for Cortex-M0 and Cortex-M3 */
     for (i = 0; i < num_of_rows; i++)
     {
-        int       ip_out = ((q31_t)(bias[i]) << bias_shift) + NN_ROUND(out_shift);
+        int ip_out = ((q31_t)(bias[i]) << bias_shift) + NN_ROUND(out_shift);
         for (j = 0; j < dim_vec; j++)
         {
             ip_out += pV[j] * pM[i * dim_vec + j];
         }
-        pOut[i] = (q15_t) __SSAT((ip_out >> out_shift), 16);
+        pOut[i] = (q15_t)__SSAT((ip_out >> out_shift), 16);
     }
 
-#endif                          /* ARM_MATH_DSP */
+#endif /* ARM_MATH_DSP */
 
     /* Return to ARM_MATH_SUCCESS */
     return (ARM_MATH_SUCCESS);
-
 }
 
 /**

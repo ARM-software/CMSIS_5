@@ -39,11 +39,11 @@
  */
 
 /*
-   * Depthwise convolution of rhs matrix with 4 lhs matrices with no padding. Dimensions are the same for lhs and rhs.
-   *
-   * Refer header file for details.
-   *
-   */
+ * Depthwise convolution of rhs matrix with 4 lhs matrices with no padding. Dimensions are the same for lhs and rhs.
+ *
+ * Refer header file for details.
+ *
+ */
 
 q7_t *arm_nn_depthwise_conv_nt_t_s8(const q7_t *lhs,
                                     const q7_t *rhs,

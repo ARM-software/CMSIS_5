@@ -40,12 +40,12 @@
  * @{
  */
 
-  /*
-   *  Basic ReLU6 function
-   *
-   * Refer to header file for details.
-   *
-   */
+/*
+ *  Basic ReLU6 function
+ *
+ * Refer to header file for details.
+ *
+ */
 
 void arm_relu6_s8(q7_t *data, uint16_t size)
 {

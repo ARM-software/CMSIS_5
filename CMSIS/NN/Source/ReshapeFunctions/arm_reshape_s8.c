@@ -46,9 +46,7 @@
  *
  */
 
-void arm_reshape_s8(const int8_t *input,
-                    int8_t *output,
-                    const uint32_t total_size)
+void arm_reshape_s8(const int8_t *input, int8_t *output, const uint32_t total_size)
 {
     memcpy(output, input, total_size);
 }

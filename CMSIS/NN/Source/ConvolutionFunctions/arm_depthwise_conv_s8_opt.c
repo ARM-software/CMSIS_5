@@ -42,11 +42,11 @@
  */
 
 /*
-   * Optimized s8 depthwise convolution function with constraint that in_channel equals out_channel
-   *
-   *  Refer prototype header file for details.
-   *
-   */
+ * Optimized s8 depthwise convolution function with constraint that in_channel equals out_channel
+ *
+ *  Refer prototype header file for details.
+ *
+ */
 
 arm_status arm_depthwise_conv_s8_opt(const cmsis_nn_context *ctx,
                                      const cmsis_nn_dw_conv_params *dw_conv_params,
@@ -164,8 +164,7 @@ arm_status arm_depthwise_conv_s8_opt(const cmsis_nn_context *ctx,
         int32_t loop_count = (input_ch + 3) / 4;
 
         int32_t num_ch_to_process = input_ch;
-        for (int i_loop_cnt = 0, offset = 0; i_loop_cnt < loop_count;
-             num_ch_to_process -= 4, offset += 4, i_loop_cnt++)
+        for (int i_loop_cnt = 0, offset = 0; i_loop_cnt < loop_count; num_ch_to_process -= 4, offset += 4, i_loop_cnt++)
         {
             const int8_t *col_0 = lhs_buffer + (kernel_size * input_ch * i_buf) + offset;
             const int8_t *row_0 = kernel + offset;
@@ -221,8 +220,8 @@ arm_status arm_depthwise_conv_s8_opt(const cmsis_nn_context *ctx,
         {
             const int16_t base_idx_x = (i_out_x * stride_x) - pad_x;
 
-            /* Out of bounds is only considered for the y axis as it provides a contiguous zero'ing opportunity than along
-               the x axis */
+            /* Out of bounds is only considered for the y axis as it provides a contiguous zero'ing opportunity than
+               along the x axis */
             const int ker_y_start = MAX(0, -base_idx_y);
             /* Condition for kernel end dimension: (base_idx_y + ker_y_end) < input_y */
             const int ker_y_end = MIN(kernel_y, input_y - base_idx_y);
@@ -247,7 +246,10 @@ arm_status arm_depthwise_conv_s8_opt(const cmsis_nn_context *ctx,
                     }
                     else
                     {
-                        arm_q7_to_q15_with_offset((q7_t *)input + (idx_y * input_x + idx_x) * input_ch, &col_buffer[index], input_ch, input_offset);
+                        arm_q7_to_q15_with_offset((q7_t *)input + (idx_y * input_x + idx_x) * input_ch,
+                                                  &col_buffer[index],
+                                                  input_ch,
+                                                  input_offset);
                     }
                     index += input_ch;
                 }
@@ -404,8 +406,7 @@ arm_status arm_depthwise_conv_s8_opt(const cmsis_nn_context *ctx,
     return ARM_MATH_SUCCESS;
 }
 
-int32_t arm_depthwise_conv_s8_opt_get_buffer_size(const cmsis_nn_dims *input_dims,
-                                                  const cmsis_nn_dims *filter_dims)
+int32_t arm_depthwise_conv_s8_opt_get_buffer_size(const cmsis_nn_dims *input_dims, const cmsis_nn_dims *filter_dims)
 {
 #if defined(ARM_MATH_MVEI)
     /* The + 4 accounts for out of bounds read of the lhs buffers in the *_nt_t_* functions.  */
