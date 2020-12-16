@@ -10,7 +10,7 @@
     <aExt>*.s*; *.src; *.a*</aExt>
     <oExt>*.obj</oExt>
     <lExt>*.lib</lExt>
-    <tExt>*.txt; *.h; *.inc</tExt>
+    <tExt>*.txt; *.h; *.inc; *.md</tExt>
     <pExt>*.plm</pExt>
     <CppX>*.cpp</CppX>
     <nMigrate>0</nMigrate>
@@ -130,7 +130,7 @@
         <SetRegEntry>
           <Number>0</Number>
           <Key>DbgFM</Key>
-          <Name>-I -S"System Generator:FVP_MPS2_Cortex_M0_MDK" -L"armcortexm0ct" -O12294 -C0 -MC".\FVP\MPS2_Cortex-M\FVP_MPS2_Cortex-M0_MDK.exe" -MF".\ARMCM0_config.txt" -MA -PF".\MTICoverageOut.cov"</Name>
+          <Name>-I -S"System Generator:FVP_MPS2_Cortex_M0_MDK" -L"armcortexm0ct" -O12294 -C0 -MC".\FVP\MPS2_Cortex-M\FVP_MPS2_Cortex-M0_MDK.exe" -MF".\ARMCM0_config.txt" -PF".\MTICoverageOut.cov" -MA</Name>
         </SetRegEntry>
         <SetRegEntry>
           <Number>0</Number>
@@ -164,7 +164,7 @@
           <Type>0</Type>
           <LineNumber>229</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>5364</Address>
+          <Address>5360</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -180,7 +180,7 @@
           <Type>0</Type>
           <LineNumber>221</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>5362</Address>
+          <Address>5358</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -354,7 +354,7 @@
         <SetRegEntry>
           <Number>0</Number>
           <Key>DbgFM</Key>
-          <Name>-I -S -L"armcortexm3ct" -O12294 -C0 -MC".\FVP\MPS2_Cortex-M\FVP_MPS2_Cortex-M3_MDK.exe" -MF".\ARMCM3_config.txt" -MA -PF".\MTICoverageOut.cov"</Name>
+          <Name>-I -S -L"armcortexm3ct" -O12294 -C0 -MC".\FVP\MPS2_Cortex-M\FVP_MPS2_Cortex-M3_MDK.exe" -MF".\ARMCM3_config.txt" -PF".\MTICoverageOut.cov" -MA</Name>
         </SetRegEntry>
         <SetRegEntry>
           <Number>0</Number>
@@ -388,7 +388,7 @@
           <Type>0</Type>
           <LineNumber>229</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>2616</Address>
+          <Address>2604</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -404,7 +404,7 @@
           <Type>0</Type>
           <LineNumber>221</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>2612</Address>
+          <Address>2600</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -416,6 +416,14 @@
           <Expression>\\arm_matrix_example\arm_matrix_example_f32.c\221</Expression>
         </Bp>
       </Breakpoint>
+      <MemoryWindow1>
+        <Mm>
+          <WinNumber>1</WinNumber>
+          <SubType>2</SubType>
+          <ItemText>0x20001190</ItemText>
+          <AccSizeX>0</AccSizeX>
+        </Mm>
+      </MemoryWindow1>
       <Tracepoint>
         <THDelay>0</THDelay>
       </Tracepoint>
@@ -560,7 +568,7 @@
         <SetRegEntry>
           <Number>0</Number>
           <Key>DLGTARM</Key>
-          <Name>(1010=-1,-1,-1,-1,0)(1007=-1,-1,-1,-1,0)(1008=-1,-1,-1,-1,0)(1009=-1,-1,-1,-1,0)(1012=-1,-1,-1,-1,0)</Name>
+          <Name>(1010=-1,-1,-1,-1,0)(1007=-1,-1,-1,-1,0)(1008=-1,-1,-1,-1,0)(1009=-1,-1,-1,-1,0)</Name>
         </SetRegEntry>
         <SetRegEntry>
           <Number>0</Number>
@@ -570,7 +578,7 @@
         <SetRegEntry>
           <Number>0</Number>
           <Key>DbgFM</Key>
-          <Name>-I -S"System Generator:FVP_MPS2_Cortex_M4_MDK" -L"armcortexm4ct" -O12294 -C0 -MC".\FVP\MPS2_Cortex-M\FVP_MPS2_Cortex-M4_MDK.exe" -MF".\ARMCM4_FP_config.txt" -MA -PF".\MTICoverageOut.cov"</Name>
+          <Name>-I -S"System Generator:FVP_MPS2_Cortex_M4_MDK" -L"armcortexm4ct" -O12294 -C0 -MC".\FVP\MPS2_Cortex-M\FVP_MPS2_Cortex-M4_MDK.exe" -MF".\ARMCM4_FP_config.txt" -PF".\MTICoverageOut.cov" -MA</Name>
         </SetRegEntry>
         <SetRegEntry>
           <Number>0</Number>
@@ -604,7 +612,7 @@
           <Type>0</Type>
           <LineNumber>229</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>2676</Address>
+          <Address>2652</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -620,7 +628,7 @@
           <Type>0</Type>
           <LineNumber>221</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>2672</Address>
+          <Address>2648</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -632,6 +640,14 @@
           <Expression>\\arm_matrix_example\arm_matrix_example_f32.c\221</Expression>
         </Bp>
       </Breakpoint>
+      <MemoryWindow1>
+        <Mm>
+          <WinNumber>1</WinNumber>
+          <SubType>2</SubType>
+          <ItemText>0x20001190</ItemText>
+          <AccSizeX>0</AccSizeX>
+        </Mm>
+      </MemoryWindow1>
       <Tracepoint>
         <THDelay>0</THDelay>
       </Tracepoint>
@@ -776,7 +792,7 @@
         <SetRegEntry>
           <Number>0</Number>
           <Key>DLGTARM</Key>
-          <Name>(1010=-1,-1,-1,-1,0)(6017=-1,-1,-1,-1,0)(1008=-1,-1,-1,-1,0)(6016=-1,-1,-1,-1,0)(1012=-1,-1,-1,-1,0)</Name>
+          <Name>(1010=-1,-1,-1,-1,0)(6017=-1,-1,-1,-1,0)(1008=-1,-1,-1,-1,0)(6016=-1,-1,-1,-1,0)</Name>
         </SetRegEntry>
         <SetRegEntry>
           <Number>0</Number>
@@ -786,7 +802,7 @@
         <SetRegEntry>
           <Number>0</Number>
           <Key>DbgFM</Key>
-          <Name>-I -S"System Generator:FVP_MPS2_Cortex_M7_MDK" -L"armcortexm7ct" -O12294 -C0 -MC".\FVP\MPS2_Cortex-M\FVP_MPS2_Cortex-M7_MDK.exe" -MF".\ARMCM7_SP_config.txt" -MA -PF".\MTICoverageOut.cov"</Name>
+          <Name>-I -S"System Generator:FVP_MPS2_Cortex_M7_MDK" -L"armcortexm7ct" -O12294 -C0 -MC".\FVP\MPS2_Cortex-M\FVP_MPS2_Cortex-M7_MDK.exe" -MF".\ARMCM7_SP_config.txt" -PF".\MTICoverageOut.cov" -MA</Name>
         </SetRegEntry>
         <SetRegEntry>
           <Number>0</Number>
@@ -820,7 +836,7 @@
           <Type>0</Type>
           <LineNumber>229</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>2648</Address>
+          <Address>2632</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -836,7 +852,7 @@
           <Type>0</Type>
           <LineNumber>221</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>2644</Address>
+          <Address>2628</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -848,6 +864,14 @@
           <Expression>\\arm_matrix_example\arm_matrix_example_f32.c\221</Expression>
         </Bp>
       </Breakpoint>
+      <MemoryWindow1>
+        <Mm>
+          <WinNumber>1</WinNumber>
+          <SubType>2</SubType>
+          <ItemText>0x20001190</ItemText>
+          <AccSizeX>0</AccSizeX>
+        </Mm>
+      </MemoryWindow1>
       <Tracepoint>
         <THDelay>0</THDelay>
       </Tracepoint>
@@ -1002,7 +1026,7 @@
         <SetRegEntry>
           <Number>0</Number>
           <Key>DbgFMv8M</Key>
-          <Name>-I -S -L"cpu0" -O12294 -C0 -MC".\FVP\MPS2_Cortex-M\FVP_MPS2_Cortex-M55_MDK.exe" -MF".\ARMCM55_FP_MVE_config.txt" -MA -PF".\MTICoverageOut.cov"</Name>
+          <Name>-I -S -L"cpu0" -O12294 -C0 -MC".\FVP\MPS2_Cortex-M\FVP_MPS2_Cortex-M55_MDK.exe" -MF".\ARMCM55_FP_MVE_config.txt" -PF".\MTICoverageOut.cov" -MA</Name>
         </SetRegEntry>
         <SetRegEntry>
           <Number>0</Number>
@@ -1041,7 +1065,7 @@
           <Type>0</Type>
           <LineNumber>229</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>5456</Address>
+          <Address>5108</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -1057,7 +1081,7 @@
           <Type>0</Type>
           <LineNumber>221</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>5452</Address>
+          <Address>5104</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -1069,6 +1093,14 @@
           <Expression>\\arm_matrix_example\arm_matrix_example_f32.c\221</Expression>
         </Bp>
       </Breakpoint>
+      <MemoryWindow1>
+        <Mm>
+          <WinNumber>1</WinNumber>
+          <SubType>2</SubType>
+          <ItemText>0x20001190</ItemText>
+          <AccSizeX>0</AccSizeX>
+        </Mm>
+      </MemoryWindow1>
       <Tracepoint>
         <THDelay>0</THDelay>
       </Tracepoint>

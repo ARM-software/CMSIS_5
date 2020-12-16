@@ -10,7 +10,7 @@
     <aExt>*.s*; *.src; *.a*</aExt>
     <oExt>*.obj; *.o</oExt>
     <lExt>*.lib</lExt>
-    <tExt>*.txt; *.h; *.inc</tExt>
+    <tExt>*.txt; *.h; *.inc; *.md</tExt>
     <pExt>*.plm</pExt>
     <CppX>*.cpp</CppX>
     <nMigrate>0</nMigrate>
@@ -130,7 +130,7 @@
         <SetRegEntry>
           <Number>0</Number>
           <Key>DbgFM</Key>
-          <Name>-I -S"System Generator:FVP_MPS2_Cortex_M0_MDK" -L"armcortexm0ct" -O12294 -C0 -MC".\FVP\MPS2_Cortex-M\FVP_MPS2_Cortex-M0_MDK.exe" -MF".\ARMCM0_config.txt" -MA -PF".\MTICoverageOut.cov"</Name>
+          <Name>-I -S"System Generator:FVP_MPS2_Cortex_M0_MDK" -L"armcortexm0ct" -O12294 -C0 -MC".\FVP\MPS2_Cortex-M\FVP_MPS2_Cortex-M0_MDK.exe" -MF".\ARMCM0_config.txt" -PF".\MTICoverageOut.cov" -MA</Name>
         </SetRegEntry>
         <SetRegEntry>
           <Number>0</Number>
@@ -164,7 +164,7 @@
           <Type>0</Type>
           <LineNumber>138</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>1676</Address>
+          <Address>1628</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -176,13 +176,6 @@
           <Expression>\\arm_bayes_example\arm_bayes_example_f32.c\138</Expression>
         </Bp>
       </Breakpoint>
-      <WatchWindow1>
-        <Ww>
-          <count>0</count>
-          <WinNumber>1</WinNumber>
-          <ItemText>Dbg_Index</ItemText>
-        </Ww>
-      </WatchWindow1>
       <Tracepoint>
         <THDelay>0</THDelay>
       </Tracepoint>
@@ -337,7 +330,7 @@
         <SetRegEntry>
           <Number>0</Number>
           <Key>DbgFM</Key>
-          <Name>-I -S"System Generator:FVP_MPS2_Cortex_M3_MDK" -L"armcortexm3ct" -O12294 -C0 -MC".\FVP\MPS2_Cortex-M\FVP_MPS2_Cortex-M3_MDK.exe" -MF".\ARMCM3_config.txt" -MA -PF".\MTICoverageOut.cov"</Name>
+          <Name>-I -S"System Generator:FVP_MPS2_Cortex_M3_MDK" -L"armcortexm3ct" -O12294 -C0 -MC".\FVP\MPS2_Cortex-M\FVP_MPS2_Cortex-M3_MDK.exe" -MF".\ARMCM3_config.txt" -PF".\MTICoverageOut.cov" -MA</Name>
         </SetRegEntry>
         <SetRegEntry>
           <Number>0</Number>
@@ -371,7 +364,7 @@
           <Type>0</Type>
           <LineNumber>138</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>1760</Address>
+          <Address>1716</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -383,13 +376,6 @@
           <Expression>\\arm_bayes_example\arm_bayes_example_f32.c\138</Expression>
         </Bp>
       </Breakpoint>
-      <WatchWindow1>
-        <Ww>
-          <count>0</count>
-          <WinNumber>1</WinNumber>
-          <ItemText>Dbg_Index</ItemText>
-        </Ww>
-      </WatchWindow1>
       <Tracepoint>
         <THDelay>0</THDelay>
       </Tracepoint>
@@ -534,7 +520,7 @@
         <SetRegEntry>
           <Number>0</Number>
           <Key>DLGTARM</Key>
-          <Name>(1010=-1,-1,-1,-1,0)(1007=-1,-1,-1,-1,0)(1008=-1,-1,-1,-1,0)(1009=-1,-1,-1,-1,0)(1012=-1,-1,-1,-1,0)</Name>
+          <Name>(1010=-1,-1,-1,-1,0)(1007=-1,-1,-1,-1,0)(1008=-1,-1,-1,-1,0)(1009=-1,-1,-1,-1,0)</Name>
         </SetRegEntry>
         <SetRegEntry>
           <Number>0</Number>
@@ -544,7 +530,7 @@
         <SetRegEntry>
           <Number>0</Number>
           <Key>DbgFM</Key>
-          <Name>-I -S -L"armcortexm4ct" -O12294 -C0 -MC".\FVP\MPS2_Cortex-M\FVP_MPS2_Cortex-M4_MDK.exe" -MF".\ARMCM4_FP_config.txt" -MA -PF".\MTICoverageOut.cov"</Name>
+          <Name>-I -S -L"armcortexm4ct" -O12294 -C0 -MC".\FVP\MPS2_Cortex-M\FVP_MPS2_Cortex-M4_MDK.exe" -MF".\ARMCM4_FP_config.txt" -PF".\MTICoverageOut.cov" -MA</Name>
         </SetRegEntry>
         <SetRegEntry>
           <Number>0</Number>
@@ -578,7 +564,7 @@
           <Type>0</Type>
           <LineNumber>138</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>1622</Address>
+          <Address>1584</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -590,13 +576,6 @@
           <Expression>\\arm_bayes_example\arm_bayes_example_f32.c\138</Expression>
         </Bp>
       </Breakpoint>
-      <WatchWindow1>
-        <Ww>
-          <count>0</count>
-          <WinNumber>1</WinNumber>
-          <ItemText>Dbg_Index</ItemText>
-        </Ww>
-      </WatchWindow1>
       <Tracepoint>
         <THDelay>0</THDelay>
       </Tracepoint>
@@ -741,7 +720,7 @@
         <SetRegEntry>
           <Number>0</Number>
           <Key>DLGTARM</Key>
-          <Name>(1010=-1,-1,-1,-1,0)(6017=-1,-1,-1,-1,0)(1008=-1,-1,-1,-1,0)(6016=-1,-1,-1,-1,0)(1012=-1,-1,-1,-1,0)</Name>
+          <Name>(1010=-1,-1,-1,-1,0)(6017=-1,-1,-1,-1,0)(1008=-1,-1,-1,-1,0)(6016=-1,-1,-1,-1,0)</Name>
         </SetRegEntry>
         <SetRegEntry>
           <Number>0</Number>
@@ -751,7 +730,7 @@
         <SetRegEntry>
           <Number>0</Number>
           <Key>DbgFM</Key>
-          <Name>-I -S"System Generator:FVP_MPS2_Cortex_M7_MDK" -L"armcortexm7ct" -O12294 -C0 -MC".\FVP\MPS2_Cortex-M\FVP_MPS2_Cortex-M7_MDK.exe" -MF".\ARMCM7_SP_config.txt" -MA -PF".\MTICoverageOut.cov"</Name>
+          <Name>-I -S"System Generator:FVP_MPS2_Cortex_M7_MDK" -L"armcortexm7ct" -O12294 -C0 -MC".\FVP\MPS2_Cortex-M\FVP_MPS2_Cortex-M7_MDK.exe" -MF".\ARMCM7_SP_config.txt" -PF".\MTICoverageOut.cov" -MA</Name>
         </SetRegEntry>
         <SetRegEntry>
           <Number>0</Number>
@@ -785,7 +764,7 @@
           <Type>0</Type>
           <LineNumber>138</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>1772</Address>
+          <Address>1728</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -797,13 +776,6 @@
           <Expression>\\arm_bayes_example\arm_bayes_example_f32.c\138</Expression>
         </Bp>
       </Breakpoint>
-      <WatchWindow1>
-        <Ww>
-          <count>0</count>
-          <WinNumber>1</WinNumber>
-          <ItemText>Dbg_Index</ItemText>
-        </Ww>
-      </WatchWindow1>
       <Tracepoint>
         <THDelay>0</THDelay>
       </Tracepoint>
@@ -958,7 +930,7 @@
         <SetRegEntry>
           <Number>0</Number>
           <Key>DbgFMv8M</Key>
-          <Name>-I -S -L"cpu0" -O12294 -C0 -MC".\FVP\MPS2_Cortex-M\FVP_MPS2_Cortex-M55_MDK.exe" -MF".\ARMCM55_FP_MVE_config.txt" -MA -PF".\MTICoverageOut.cov"</Name>
+          <Name>-I -S -L"cpu0" -O12294 -C0 -MC".\FVP\MPS2_Cortex-M\FVP_MPS2_Cortex-M55_MDK.exe" -MF".\ARMCM55_FP_MVE_config.txt" -PF".\MTICoverageOut.cov" -MA</Name>
         </SetRegEntry>
         <SetRegEntry>
           <Number>0</Number>
@@ -997,7 +969,7 @@
           <Type>0</Type>
           <LineNumber>138</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>3196</Address>
+          <Address>3128</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -1009,13 +981,6 @@
           <Expression>\\arm_bayes_example\arm_bayes_example_f32.c\138</Expression>
         </Bp>
       </Breakpoint>
-      <WatchWindow1>
-        <Ww>
-          <count>0</count>
-          <WinNumber>1</WinNumber>
-          <ItemText>Dbg_Index</ItemText>
-        </Ww>
-      </WatchWindow1>
       <Tracepoint>
         <THDelay>0</THDelay>
       </Tracepoint>

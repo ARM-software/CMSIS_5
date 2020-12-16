@@ -16,7 +16,7 @@
  */
 #define CMSIS_device_header "ARMCM33_DSP_FP_TZ.h"
 
-/*  ARM::CMSIS:RTOS2:Keil RTX5:Source_NS:5.5.2 */
+/* ARM::CMSIS:RTOS2:Keil RTX5:Source_NS:5.5.2 */
 #define RTE_CMSIS_RTOS2                 /* CMSIS-RTOS2 */
         #define RTE_CMSIS_RTOS2_RTX5            /* CMSIS-RTOS2 Keil RTX5 */
         #define RTE_CMSIS_RTOS2_RTX5_SOURCE     /* CMSIS-RTOS2 Keil RTX5 Source */

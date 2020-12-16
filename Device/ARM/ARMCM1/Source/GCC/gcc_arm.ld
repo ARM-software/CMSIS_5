@@ -1,8 +1,8 @@
 /******************************************************************************
- * @file     gcc_arm.ld
- * @brief    GNU Linker Script for Cortex-M based device
- * @version  V2.1.0
- * @date     04. August 2020
+ * file     gcc_arm.ld
+ * brief    GNU Linker Script for Cortex-M based device
+ * version  V2.1.0
+ * date     04. August 2020
  ******************************************************************************/
 /*
  * Copyright (c) 2009-2020 Arm Limited. All rights reserved.
@@ -22,40 +22,18 @@
  * limitations under the License.
  */
 
-/*
- *-------- <<< Use Configuration Wizard in Context Menu >>> -------------------
- */
-
-/*---------------------- Flash Configuration ----------------------------------
-  <h> Flash Configuration
-    <o0> Flash Base Address <0x0-0xFFFFFFFF:8>
-    <o1> Flash Size (in Bytes) <0x0-0xFFFFFFFF:8>
-  </h>
-  -----------------------------------------------------------------------------*/
+/*---------------------- Flash Configuration ----------------------------------*/
 __ROM_BASE = 0x00000000;
 __ROM_SIZE = 0x00040000;
 
-/*--------------------- Embedded RAM Configuration ----------------------------
-  <h> RAM Configuration
-    <o0> RAM Base Address    <0x0-0xFFFFFFFF:8>
-    <o1> RAM Size (in Bytes) <0x0-0xFFFFFFFF:8>
-  </h>
- -----------------------------------------------------------------------------*/
+/*--------------------- Embedded RAM Configuration ----------------------------*/
 __RAM_BASE = 0x20000000;
 __RAM_SIZE = 0x00020000;
 
-/*--------------------- Stack / Heap Configuration ----------------------------
-  <h> Stack / Heap Configuration
-    <o0> Stack Size (in Bytes) <0x0-0xFFFFFFFF:8>
-    <o1> Heap Size (in Bytes) <0x0-0xFFFFFFFF:8>
-  </h>
-  -----------------------------------------------------------------------------*/
+/*--------------------- Stack / Heap Configuration ----------------------------*/
 __STACK_SIZE = 0x00000400;
 __HEAP_SIZE  = 0x00000C00;
 
-/*
- *-------------------- <<< end of configuration section >>> -------------------
- */
 
 MEMORY
 {
@@ -181,7 +159,7 @@ SECTIONS
   /**
    * Location counter can end up 2byte aligned with narrow Thumb code but
    * __etext is assumed by startup code to be the LMA of a section in RAM
-   * which must be 4byte aligned 
+   * which must be 4byte aligned
    */
   __etext = ALIGN (4);
 

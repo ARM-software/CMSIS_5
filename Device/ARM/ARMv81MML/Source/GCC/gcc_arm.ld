@@ -1,8 +1,8 @@
 /******************************************************************************
- * @file     gcc_arm.ld
- * @brief    GNU Linker Script for Cortex-M based device
- * @version  V2.1.0
- * @date     04. August 2020
+ * file     gcc_arm.ld
+ * brief    GNU Linker Script for Cortex-M based device
+ * version  V2.2.0
+ * date     07. December 2020
  ******************************************************************************/
 /*
  * Copyright (c) 2009-2020 Arm Limited. All rights reserved.
@@ -22,48 +22,24 @@
  * limitations under the License.
  */
 
-/*
- *-------- <<< Use Configuration Wizard in Context Menu >>> -------------------
- */
-
-/* memory regions are:
-       secure ROM: 0x10000000
-   non-secure ROM: 0x00000000
-
-       secure RAM: 0x30000000
-   non-secure RAM: 0x20000000
- */
-
-/*---------------------- Flash Configuration ----------------------------------
-  <h> Flash Configuration
-    <o0> Flash Base Address <0x0-0xFFFFFFFF:8>
-    <o1> Flash Size (in Bytes) <0x0-0xFFFFFFFF:8>
-  </h>
-  -----------------------------------------------------------------------------*/
+/*---------------------- Flash Configuration ----------------------------------*/
 __ROM_BASE = 0x00000000;
 __ROM_SIZE = 0x00040000;
 
-/*--------------------- Embedded RAM Configuration ----------------------------
-  <h> RAM Configuration
-    <o0> RAM Base Address    <0x0-0xFFFFFFFF:8>
-    <o1> RAM Size (in Bytes) <0x0-0xFFFFFFFF:8>
-  </h>
- -----------------------------------------------------------------------------*/
+/*--------------------- Embedded RAM Configuration ----------------------------*/
 __RAM_BASE = 0x20000000;
 __RAM_SIZE = 0x00020000;
 
-/*--------------------- Stack / Heap Configuration ----------------------------
-  <h> Stack / Heap Configuration
-    <o0> Stack Size (in Bytes) <0x0-0xFFFFFFFF:8>
-    <o1> Heap Size (in Bytes) <0x0-0xFFFFFFFF:8>
-  </h>
-  -----------------------------------------------------------------------------*/
+/*--------------------- Stack / Heap Configuration ----------------------------*/
 __STACK_SIZE = 0x00000400;
 __HEAP_SIZE  = 0x00000C00;
 
-/*
- *-------------------- <<< end of configuration section >>> -------------------
+
+/* ARMv8-M stack sealing:
+   to use ARMv8-M stack sealing set __STACKSEAL_SIZE to 8 otherwise keep 0
  */
+__STACKSEAL_SIZE = 0;
+
 
 MEMORY
 {
@@ -100,6 +76,7 @@ MEMORY
  *   __StackLimit
  *   __StackTop
  *   __stack
+ *   __StackSeal      (only if ARMv8-M stack sealing is used)
  */
 ENTRY(Reset_Handler)
 
@@ -289,7 +266,7 @@ SECTIONS
     __HeapLimit = .;
   } > RAM
 
-  .stack (ORIGIN(RAM) + LENGTH(RAM) - __STACK_SIZE) (COPY) :
+  .stack (ORIGIN(RAM) + LENGTH(RAM) - __STACK_SIZE - __STACKSEAL_SIZE) (COPY) :
   {
     . = ALIGN(8);
     __StackLimit = .;
@@ -298,6 +275,19 @@ SECTIONS
     __StackTop = .;
   } > RAM
   PROVIDE(__stack = __StackTop);
+  
+  /* ARMv8-M stack sealing:
+     to use ARMv8-M stack sealing uncomment '.stackseal' section
+   */
+/*
+  .stackseal (ORIGIN(RAM) + LENGTH(RAM) - __STACKSEAL_SIZE) (COPY) :
+  {
+    . = ALIGN(8);
+    __StackSeal = .;
+    . = . + 8;
+    . = ALIGN(8);
+  } > RAM
+*/
 
   /* Check if data + heap + stack exceeds RAM limit */
   ASSERT(__StackLimit >= __HeapLimit, "region RAM overflowed with stack")

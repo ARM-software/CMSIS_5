@@ -71,7 +71,7 @@
 /*
 //     <o>Start Address <0-0xFFFFFFE0>
 */
-#define SAU_INIT_START0     0x00000000      /* start address of SAU region 0 */
+#define SAU_INIT_START0     0x001FFE00      /* start address of SAU region 0 */
 
 /*
 //     <o>End Address <0x1F-0xFFFFFFFF>
