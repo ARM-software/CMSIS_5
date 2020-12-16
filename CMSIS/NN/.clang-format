@@ -40,8 +40,9 @@ BraceWrapping:
 BreakBeforeBinaryOperators: None
 BreakBeforeBraces: Allman
 ColumnLimit:     120
-DerivePointerAlignment: true
+DerivePointerAlignment: false
 IndentWidth:     4
 IndentWrappedFunctionNames: false
+PointerAlignment: Right
 ...
 
