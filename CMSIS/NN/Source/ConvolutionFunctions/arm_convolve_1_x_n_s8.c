@@ -47,17 +47,17 @@
  *
  */
 
-arm_status arm_convolve_1_x_n_s8(const cmsis_nn_context* ctx,
-                                 const cmsis_nn_conv_params* conv_params,
-                                 const cmsis_nn_per_channel_quant_params* quant_params,
-                                 const cmsis_nn_dims* input_dims,
-                                 const q7_t* input_data,
-                                 const cmsis_nn_dims* filter_dims,
-                                 const q7_t* filter_data,
-                                 const cmsis_nn_dims* bias_dims,
-                                 const int32_t* bias_data,
-                                 const cmsis_nn_dims* output_dims,
-                                 q7_t* output_data)
+arm_status arm_convolve_1_x_n_s8(const cmsis_nn_context *ctx,
+                                 const cmsis_nn_conv_params *conv_params,
+                                 const cmsis_nn_per_channel_quant_params *quant_params,
+                                 const cmsis_nn_dims *input_dims,
+                                 const q7_t *input_data,
+                                 const cmsis_nn_dims *filter_dims,
+                                 const q7_t *filter_data,
+                                 const cmsis_nn_dims *bias_dims,
+                                 const int32_t *bias_data,
+                                 const cmsis_nn_dims *output_dims,
+                                 q7_t *output_data)
 {
     (void)bias_dims;
     arm_status status = ARM_MATH_SUCCESS;
@@ -68,7 +68,7 @@ arm_status arm_convolve_1_x_n_s8(const cmsis_nn_context* ctx,
     }
 
 #if defined(ARM_MATH_MVEI)
-    q15_t* buffer_a = (q15_t*)ctx->buf;
+    q15_t *buffer_a = (q15_t *)ctx->buf;
 
     const uint16_t input_x = input_dims->w;
     const uint16_t kernel_x = filter_dims->w;
@@ -82,8 +82,8 @@ arm_status arm_convolve_1_x_n_s8(const cmsis_nn_context* ctx,
     const int32_t out_offset = conv_params->output_offset;
     const int32_t out_activation_min = conv_params->activation.min;
     const int32_t out_activation_max = conv_params->activation.max;
-    int32_t* output_mult = quant_params->multiplier;
-    int32_t* output_shift = quant_params->shift;
+    int32_t *output_mult = quant_params->multiplier;
+    int32_t *output_shift = quant_params->shift;
 
     for (int i_out_x = 0; i_out_x <= (output_x - 4); i_out_x += 4)
     {
@@ -187,7 +187,7 @@ out:
     return status;
 }
 
-int32_t arm_convolve_1_x_n_s8_get_buffer_size(const cmsis_nn_dims* input_dims, const cmsis_nn_dims* filter_dims)
+int32_t arm_convolve_1_x_n_s8_get_buffer_size(const cmsis_nn_dims *input_dims, const cmsis_nn_dims *filter_dims)
 {
 #if defined(ARM_MATH_DSP) && !defined(ARM_MATH_MVEI)
     return (2 * input_dims->c * filter_dims->w * filter_dims->h) * sizeof(int16_t);

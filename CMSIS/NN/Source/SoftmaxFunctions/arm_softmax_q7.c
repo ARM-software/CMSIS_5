@@ -58,7 +58,7 @@
  *
  */
 
-void arm_softmax_q7(const q7_t* vec_in, const uint16_t dim_vec, q7_t* p_out)
+void arm_softmax_q7(const q7_t *vec_in, const uint16_t dim_vec, q7_t *p_out)
 {
     q31_t sum;
     int16_t i;

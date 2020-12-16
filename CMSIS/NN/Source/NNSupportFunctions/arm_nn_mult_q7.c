@@ -53,7 +53,7 @@
  * Results outside of the allowable Q7 range [0x80 0x7F] will be saturated.
  */
 
-void arm_nn_mult_q7(q7_t* pSrcA, q7_t* pSrcB, q7_t* pDst, const uint16_t out_shift, uint32_t blockSize)
+void arm_nn_mult_q7(q7_t *pSrcA, q7_t *pSrcB, q7_t *pDst, const uint16_t out_shift, uint32_t blockSize)
 {
     uint32_t blkCnt; /* loop counters */
 
