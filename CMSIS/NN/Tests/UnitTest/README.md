@@ -47,17 +47,22 @@ Use the -h flag to get more info.
 
 It is also possible to build the unit test with Cmake. The binaries can then be used with another test platform, e.g. Fastmodel.
 In this case note that toolchain, linker file and Uart code need to be provided. See externs in Retarget.c for specific Uart functions.
-
-Example:
+UART and LINK_FILE have default values but you most probably need to replace them unless you place your code relatively to the default paths.
 
 ```
     ```mkdir build```
     ```cd build```
-    ```cmake .. -DCMAKE_TOOLCHAIN_FILE==/path/to/toolchain.cmake -DCPU=cortex-m55 -DUART=/path/to/uart -DLINK_FILE=linkfile etc..```
+    ```cmake .. -DCMAKE_TOOLCHAIN_FILE==/path/to/toolchain.cmake -DCPU=cortex-m55 -DUART=/path/to/uart -DLINK_FILE=linkfile```
     ```make```
-
 ```
 
+Some examples using toolchain in Ethos-u-core_software project. See : https://review.mlplatform.org/admin/repos/ml/ethos-u/ethos-u-core-software
+
+
+```
+    ```cmake .. -DCMAKE_TOOLCHAIN_FILE=~/ethos-u-core-software/cmake/toolchain/arm-none-eabi-gcc.cmake -DCMAKE_SYSTEM_PROCESSOR=cortex-m7 -DUART_PATH=~/platform/drivers/uart -DLINK_FILE=~/platform/fastmodels/model```
+    ```cmake .. -DCMAKE_TOOLCHAIN_FILE=~/ethos-u-core-software/cmake/toolchain/arm-none-eabi-gcc.cmake -DCMAKE_SYSTEM_PROCESSOR=cortex-m55 -DUART_PATH=~/platform/drivers/uart -DLINK_FILE=~/platform/fastmodels/model```
+```
 
 ## Generating new test data
 Generating new test data is done with the following script. Use the -h flag to get more info.
