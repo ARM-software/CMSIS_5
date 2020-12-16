@@ -2,6 +2,14 @@ cmake_minimum_required (VERSION 3.6)
 cmake_policy(SET CMP0077 NEW)
 project(CMSISNN)
 
+set(EXTERNAL_TOOLCHAIN "YES" CACHE STRING "Use toolchain in ${ROOT}/CMSIS/DSP/Toolchain/ or not. (YES, NO)")
+
+if(EXTERNAL_TOOLCHAIN STREQUAL "YES")
+    function(compilerSpecificCompileOptions PROJECTNAME ROOT)
+        # Override compilerSpecificCompileOptions defined in ${ROOT}/CMSIS/DSP/Toolchain
+    endfunction()
+endif()
+
 # Needed to find the config modules
 list(APPEND CMAKE_MODULE_PATH ${ROOT}/CMSIS/DSP)
 # CMSIS-NN is dependent on features in the CMSIS-DSP
