@@ -56,12 +56,12 @@ UART and LINK_FILE have default values but you most probably need to replace the
     ```make```
 ```
 
-Some examples using toolchain in Ethos-u-core_software project. See : https://review.mlplatform.org/admin/repos/ml/ethos-u/ethos-u-core-software
+Some examples using Uart and toolchain in Ethos-u-core_software project. See : https://review.mlplatform.org/admin/repos/ml/ethos-u/ethos-u-core-software
 
 
 ```
-    ```cmake .. -DCMAKE_TOOLCHAIN_FILE=~/ethos-u-core-software/cmake/toolchain/arm-none-eabi-gcc.cmake -DCMAKE_SYSTEM_PROCESSOR=cortex-m7 -DUART_PATH=~/platform/drivers/uart -DLINK_FILE=~/platform/fastmodels/model```
-    ```cmake .. -DCMAKE_TOOLCHAIN_FILE=~/ethos-u-core-software/cmake/toolchain/arm-none-eabi-gcc.cmake -DCMAKE_SYSTEM_PROCESSOR=cortex-m55 -DUART_PATH=~/platform/drivers/uart -DLINK_FILE=~/platform/fastmodels/model```
+    ```cmake .. -DCMAKE_TOOLCHAIN_FILE=~/ethos-u-core-software/cmake/toolchain/arm-none-eabi-gcc.cmake -DCMAKE_SYSTEM_PROCESSOR=cortex-m7 -DUART_PATH=~/ethos-u-core-software/drivers/uart -DLINK_FILE=~/platform/fastmodels/model```
+    ```cmake .. -DCMAKE_TOOLCHAIN_FILE=~/ethos-u-core-software/cmake/toolchain/arm-none-eabi-gcc.cmake -DCMAKE_SYSTEM_PROCESSOR=cortex-m55 -DUART_PATH=~/ethos-u-core-software/drivers/uart -DLINK_FILE=~/platform/fastmodels/model```
 ```
 
 ## Generating new test data
