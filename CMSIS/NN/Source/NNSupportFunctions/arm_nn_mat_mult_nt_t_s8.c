@@ -440,7 +440,7 @@ arm_status arm_nn_mat_mult_nt_t_s8(const q7_t *lhs,
             q31_t res10 = lhs_offset_contribution0;
             q31_t res11 = lhs_offset_contribution1;
 
-            for (int32_t rhs_cols_idx = 0; rhs_cols_idx < rhs_cols; ++rhs_cols_idx)
+            for (int32_t rhs_cols_idx = rhs_cols; rhs_cols_idx != 0; rhs_cols_idx--)
             {
                 q7_t rhs_value0 = rhs_ptr[0];
                 q7_t rhs_value1 = rhs_ptr[rhs_cols];
@@ -499,7 +499,7 @@ arm_status arm_nn_mat_mult_nt_t_s8(const q7_t *lhs,
             q31_t res00 = lhs_offset_contribution0;
             q31_t res01 = lhs_offset_contribution1;
 
-            for (int32_t rhs_cols_idx = 0; rhs_cols_idx < rhs_cols; ++rhs_cols_idx)
+            for (int32_t rhs_cols_idx = rhs_cols; rhs_cols_idx != 0; rhs_cols_idx--)
             {
                 q7_t rhs_value0 = rhs_ptr[0];
                 q7_t rhs_value1 = rhs_ptr[rhs_cols];
@@ -548,7 +548,7 @@ arm_status arm_nn_mat_mult_nt_t_s8(const q7_t *lhs,
                 res00 = bias[rhs_rows - 1];
             }
 
-            for (int32_t rhs_cols_idx = 0; rhs_cols_idx < rhs_cols; ++rhs_cols_idx)
+            for (int32_t rhs_cols_idx = rhs_cols; rhs_cols_idx != 0; rhs_cols_idx--)
             {
                 q31_t rhs_value = rhs_ptr[0];
                 q31_t lhs_value = lhs_ptr[0] + lhs_offset;
