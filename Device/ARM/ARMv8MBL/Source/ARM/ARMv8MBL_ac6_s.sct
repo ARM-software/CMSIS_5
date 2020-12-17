@@ -1,8 +1,8 @@
-#! armclang -E --target=arm-arm-none-eabi -mcpu=cortex-m33 -xc
+#! armclang -E --target=arm-arm-none-eabi -march=armv8-m.base -xc -mcmse
 ; command above MUST be in first line (no comment above!)
 
 ;Note: Add '-mcmse' to first line if your software model is "Secure Mode".
-;      #! armclang -E --target=arm-arm-none-eabi -mcpu=cortex-m33 -xc -mcmse
+;      #! armclang -E --target=arm-arm-none-eabi -march=armv8-m.base -xc -mcmse
 
 
 /*

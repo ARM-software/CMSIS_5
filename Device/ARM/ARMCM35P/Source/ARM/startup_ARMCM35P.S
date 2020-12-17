@@ -1,7 +1,7 @@
 /******************************************************************************
- * @file     startup_ARMv8MML.S
- * @brief    CMSIS-Core Device Startup File for ARMv8MML evice
- * @version  V2.2.0
+ * @file     startup_ARMCM33.S
+ * @brief    CMSIS Core Device Startup File for Cortex-M33 Device
+ * @version  V1.1.0
  * @date     16. December 2020
  ******************************************************************************/
 /*
@@ -25,13 +25,13 @@
                 .syntax  unified
                 .arch    armv8-m.main
 
-                #define __INITIAL_SP     __StackTop
-                #define __STACK_LIMIT    __StackLimit
+                #define __INITIAL_SP     Image$$ARM_LIB_STACK$$ZI$$Limit
+                #define __STACK_LIMIT    Image$$ARM_LIB_STACK$$ZI$$Base
                 #if defined (__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
-                #define __STACK_SEAL     __StackSeal
+                #define __STACK_SEAL     Image$$STACKSEAL$$ZI$$Base
                 #endif
 
-                .section .vectors
+                .section RESET
                 .align   2
                 .globl   __Vectors
                 .globl   __Vectors_End
@@ -96,50 +96,7 @@ Reset_Handler:
 
                 bl       SystemInit
 
-                ldr      r4, =__copy_table_start__
-                ldr      r5, =__copy_table_end__
-
-.L_loop0:
-                cmp      r4, r5
-                bge      .L_loop0_done
-                ldr      r1, [r4]                /* source address */   
-                ldr      r2, [r4, #4]            /* destination address */
-                ldr      r3, [r4, #8]            /* word count */
-                lsl      r3, r3, #2              /* byte count */
-
-.L_loop0_0:
-                subs     r3, #4                  /* decrement byte count */
-                ittt     ge
-                ldrge    r0, [r1, r3]
-                strge    r0, [r2, r3]
-                bge      .L_loop0_0
-
-                adds     r4, #12
-                b        .L_loop0
-.L_loop0_done:
-
-                ldr      r3, =__zero_table_start__
-                ldr      r4, =__zero_table_end__
-
-.L_loop2:
-                cmp      r3, r4
-                bge      .L_loop2_done
-                ldr      r1, [r3]                /* destination address */
-                ldr      r2, [r3, #4]            /* word count */
-                lsl      r2, r2, #2              /* byte count */
-                movs     r0, 0
-
-.L_loop2_0:
-                subs     r2, #4                  /* decrement byte count */
-                itt      ge
-                strge    r0, [r1, r2]
-                bge      .L_loop2_0
-
-                adds     r3, #8
-                b        .L_loop2
-.L_loop2_done:
-
-                bl       _start
+                bl       __main
 
                 .fnend
                 .size    Reset_Handler, . - Reset_Handler

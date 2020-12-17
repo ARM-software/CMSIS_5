@@ -1,7 +1,7 @@
 /******************************************************************************
- * @file     startup_ARMv8MML.S
- * @brief    CMSIS-Core Device Startup File for ARMv8MML evice
- * @version  V2.2.0
+ * @file     startup_ARMCM23.S
+ * @brief    CMSIS-Core Device Startup File for Cortex-M23 Device
+ * @version  V1.1.0
  * @date     16. December 2020
  ******************************************************************************/
 /*
@@ -23,15 +23,15 @@
  */
 
                 .syntax  unified
-                .arch    armv8-m.main
+                .arch    armv8-m.base
 
-                #define __INITIAL_SP     __StackTop
-                #define __STACK_LIMIT    __StackLimit
+                #define __INITIAL_SP     Image$$ARM_LIB_STACK$$ZI$$Limit
+                #define __STACK_LIMIT    Image$$ARM_LIB_STACK$$ZI$$Base
                 #if defined (__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
-                #define __STACK_SEAL     __StackSeal
+                #define __STACK_SEAL     Image$$STACKSEAL$$ZI$$Base
                 #endif
 
-                .section .vectors
+                .section RESET
                 .align   2
                 .globl   __Vectors
                 .globl   __Vectors_End
@@ -41,15 +41,15 @@ __Vectors:
                 .long    Reset_Handler                      /*     Reset Handler */
                 .long    NMI_Handler                        /* -14 NMI Handler */
                 .long    HardFault_Handler                  /* -13 Hard Fault Handler */
-                .long    MemManage_Handler                  /* -12 MPU Fault Handler */
-                .long    BusFault_Handler                   /* -11 Bus Fault Handler */
-                .long    UsageFault_Handler                 /* -10 Usage Fault Handler */
-                .long    SecureFault_Handler                /*  -9 Secure Fault Handler */
+                .long    0                                  /*     Reserved */
+                .long    0                                  /*     Reserved */
+                .long    0                                  /*     Reserved */
+                .long    0                                  /*     Reserved */
                 .long    0                                  /*     Reserved */
                 .long    0                                  /*     Reserved */
                 .long    0                                  /*     Reserved */
                 .long    SVC_Handler                        /*  -5 SVCall Handler */
-                .long    DebugMon_Handler                   /*  -4 Debug Monitor Handler */
+                .long    0                                  /*     Reserved */
                 .long    0                                  /*     Reserved */
                 .long    PendSV_Handler                     /*  -2 PendSV Handler */
                 .long    SysTick_Handler                    /*  -1 SysTick Handler */
@@ -66,7 +66,7 @@ __Vectors:
                 .long    Interrupt8_Handler                 /*   8 Interrupt 8 */
                 .long    Interrupt9_Handler                 /*   9 Interrupt 9 */
 
-                .space   (470 * 4)                          /* Interrupts 10 .. 480 are left out */
+                .space   (214 * 4)                          /* Interrupts 10 .. 224 are left out */
 __Vectors_End:
                 .equ     __Vectors_Size, __Vectors_End - __Vectors
                 .size    __Vectors, . - __Vectors
@@ -83,63 +83,21 @@ __Vectors_End:
 Reset_Handler:
                 ldr      r0, =__INITIAL_SP
                 msr      psp, r0
-              
+
+                #if defined (__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
                 ldr      r0, =__STACK_LIMIT
                 msr      msplim, r0
                 msr      psplim, r0
 
-                #if defined (__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
                 ldr      r0, =__STACK_SEAL
                 ldr      r1, =0xFEF5EDA5U
-                strd     r1,r1,[r0,#0]
+                str      r1,[r0,#0]
+                str      r1,[r0,#4]
                 #endif
 
                 bl       SystemInit
 
-                ldr      r4, =__copy_table_start__
-                ldr      r5, =__copy_table_end__
-
-.L_loop0:
-                cmp      r4, r5
-                bge      .L_loop0_done
-                ldr      r1, [r4]                /* source address */   
-                ldr      r2, [r4, #4]            /* destination address */
-                ldr      r3, [r4, #8]            /* word count */
-                lsl      r3, r3, #2              /* byte count */
-
-.L_loop0_0:
-                subs     r3, #4                  /* decrement byte count */
-                ittt     ge
-                ldrge    r0, [r1, r3]
-                strge    r0, [r2, r3]
-                bge      .L_loop0_0
-
-                adds     r4, #12
-                b        .L_loop0
-.L_loop0_done:
-
-                ldr      r3, =__zero_table_start__
-                ldr      r4, =__zero_table_end__
-
-.L_loop2:
-                cmp      r3, r4
-                bge      .L_loop2_done
-                ldr      r1, [r3]                /* destination address */
-                ldr      r2, [r3, #4]            /* word count */
-                lsl      r2, r2, #2              /* byte count */
-                movs     r0, 0
-
-.L_loop2_0:
-                subs     r2, #4                  /* decrement byte count */
-                itt      ge
-                strge    r0, [r1, r2]
-                bge      .L_loop2_0
-
-                adds     r3, #8
-                b        .L_loop2
-.L_loop2_done:
-
-                bl       _start
+                bl       __main
 
                 .fnend
                 .size    Reset_Handler, . - Reset_Handler
@@ -179,12 +137,7 @@ Default_Handler:
 /* Default exception/interrupt handler */
 
                 Set_Default_Handler  NMI_Handler
-                Set_Default_Handler  MemManage_Handler
-                Set_Default_Handler  BusFault_Handler
-                Set_Default_Handler  UsageFault_Handler
-                Set_Default_Handler  SecureFault_Handler
                 Set_Default_Handler  SVC_Handler
-                Set_Default_Handler  DebugMon_Handler
                 Set_Default_Handler  PendSV_Handler
                 Set_Default_Handler  SysTick_Handler
 

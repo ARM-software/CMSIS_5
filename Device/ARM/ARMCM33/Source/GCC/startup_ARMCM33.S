@@ -1,8 +1,8 @@
-/**************************************************************************//**
+/******************************************************************************
  * @file     startup_ARMCM33.S
- * @brief    CMSIS-Core(M) Device Startup File for Cortex-M33 Device
- * @version  V2.1.0
- * @date     04. August 2020
+ * @brief    CMSIS-Core Device Startup File for Cortex-M33 Device
+ * @version  V2.2.0
+ * @date     16. December 2020
  ******************************************************************************/
 /*
  * Copyright (c) 2009-2020 Arm Limited. All rights reserved.
@@ -25,13 +25,19 @@
                 .syntax  unified
                 .arch    armv8-m.main
 
+                #define __INITIAL_SP     __StackTop
+                #define __STACK_LIMIT    __StackLimit
+                #if defined (__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
+                #define __STACK_SEAL     __StackSeal
+                #endif
+
                 .section .vectors
                 .align   2
                 .globl   __Vectors
                 .globl   __Vectors_End
                 .globl   __Vectors_Size
 __Vectors:
-                .long    __StackTop                         /*     Top of Stack */
+                .long    __INITIAL_SP                       /*     Initial Stack Pointer */
                 .long    Reset_Handler                      /*     Reset Handler */
                 .long    NMI_Handler                        /* -14 NMI Handler */
                 .long    HardFault_Handler                  /* -13 Hard Fault Handler */
@@ -75,10 +81,19 @@ __Vectors_End:
                 .globl   Reset_Handler
                 .fnstart
 Reset_Handler:
-                ldr      r0, =__StackLimit
+                ldr      r0, =__INITIAL_SP
+                msr      psp, r0
+              
+                ldr      r0, =__STACK_LIMIT
                 msr      msplim, r0
+                msr      psplim, r0
 
-/* CMSIS System Initialization */
+                #if defined (__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
+                ldr      r0, =__STACK_SEAL
+                ldr      r1, =0xFEF5EDA5U
+                strd     r1,r1,[r0,#0]
+                #endif
+
                 bl       SystemInit
 
                 ldr      r4, =__copy_table_start__
@@ -128,6 +143,7 @@ Reset_Handler:
 
                 .fnend
                 .size    Reset_Handler, . - Reset_Handler
+
 
 /* The default macro is not used for HardFault_Handler
  * because this results in a poor debug illusion.
@@ -182,6 +198,5 @@ Default_Handler:
                 Set_Default_Handler  Interrupt7_Handler
                 Set_Default_Handler  Interrupt8_Handler
                 Set_Default_Handler  Interrupt9_Handler
-
 
                 .end
