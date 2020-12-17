@@ -1,8 +1,8 @@
 /**************************************************************************//**
  * @file     cmsis_armclang.h
  * @brief    CMSIS compiler armclang (Arm Compiler 6) header file
- * @version  V5.3.1
- * @date     26. March 2020
+ * @version  V5.3.2
+ * @date     16. December 2020
  ******************************************************************************/
 /*
  * Copyright (c) 2009-2020 Arm Limited. All rights reserved.
@@ -135,6 +135,18 @@
 #ifndef __VECTOR_TABLE_ATTRIBUTE
 #define __VECTOR_TABLE_ATTRIBUTE  __attribute__((used, section("RESET")))
 #endif
+
+#if defined (__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
+#ifndef __STACK_SEAL
+#define __STACK_SEAL              Image$$STACKSEAL$$ZI$$Base
+#endif
+
+__STATIC_FORCEINLINE void __TZ_set_STACKSEAL_S (uint32_t* stackTop) {
+  *(stackTop    ) = 0xFEF5EDA5U;
+  *(stackTop + 1) = 0xFEF5EDA5U;
+}
+#endif
+
 
 /* ###########################  Core Function Access  ########################### */
 /** \ingroup  CMSIS_Core_FunctionInterface

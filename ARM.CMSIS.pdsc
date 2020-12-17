@@ -8,10 +8,16 @@
   <url>http://www.keil.com/pack/</url>
 
   <releases>
+    <release version="5.7.1-dev1">
+      Active development ...
+      CMSIS-Core(M):
+       - Added ARMv8-M Stack Sealing (to linker, startup) for toolcahin ARM, GCC
+       - Changed C-Startup to default Startup.
+    </release>
     <release version="5.7.1-dev0">
       Active development ...
       CMSIS-Core(M):
-       - updated GCC LinkerDescription, GCC Assembler startup
+       - Updated GCC LinkerDescription, GCC Assembler startup
       CMSIS-DSP:
        - Purged pre-built libs from Git
       CMSIS-RTOS:
@@ -1077,7 +1083,12 @@ and 8-bit Java bytecodes in Jazelle state.
     <condition id="TZ Non-secure">
       <description>TrustZone (Non-secure)</description>
       <require Dtz="TZ"/>
-      <require Dsecure="Non-secure"/>
+      <accept Dsecure="Non-secure"/>
+      <accept Dsecure="TZ-disabled"/>
+    </condition>
+    <condition id="TZ Unavailable">
+      <description>TrustZone not available</description>
+      <deny Dtz="TZ"/>
     </condition>
 
     <!-- ARM core -->
@@ -1625,6 +1636,22 @@ and 8-bit Java bytecodes in Jazelle state.
       <description>Armv8-M Mainline, little endian, DSP, SP FPU, Arm Compiler</description>
       <require condition="ARMv8MML_DSP_SP_ARMCC"/>
       <require Dendian="Little-endian"/>
+    </condition>
+
+    <condition id="TZ Secure ARMCC6">
+      <description>TrustZone (Secure), Arm Compiler</description>
+      <require condition="TZ Secure"/>
+      <require condition="ARMCC6"/>
+    </condition>
+    <condition id="TZ Non-secure ARMCC6">
+      <description>TrustZone (Non-secure), Arm Compiler</description>
+      <require condition="TZ Non-secure"/>
+      <require condition="ARMCC6"/>
+    </condition>
+    <condition id="TZ Unavailable ARMCC6">
+      <description>TrustZone not available, Arm Compiler</description>
+      <require condition="TZ Unavailable"/>
+      <require condition="ARMCC6"/>
     </condition>
 
     <!-- GCC compiler -->
@@ -2604,7 +2631,7 @@ and 8-bit Java bytecodes in Jazelle state.
 
     <!-- CMSIS-Startup components -->
     <!-- Cortex-M0 -->
-    <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cversion="2.0.3" condition="ARMCM0 CMSIS">
+    <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cversion="2.0.3" condition="ARMCM0 CMSIS" isDefaultVariant="true">
       <description>System and Startup for Generic Arm Cortex-M0 device</description>
       <files>
         <!-- include folder / device header file -->
@@ -2632,7 +2659,7 @@ and 8-bit Java bytecodes in Jazelle state.
     </component>
 
     <!-- Cortex-M0+ -->
-    <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cversion="2.0.3" condition="ARMCM0+ CMSIS">
+    <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cversion="2.0.3" condition="ARMCM0+ CMSIS" isDefaultVariant="true">
       <description>System and Startup for Generic Arm Cortex-M0+ device</description>
       <files>
         <!-- include folder / device header file -->
@@ -2660,7 +2687,7 @@ and 8-bit Java bytecodes in Jazelle state.
     </component>
 
     <!-- Cortex-M1 -->
-    <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cversion="2.0.3" condition="ARMCM1 CMSIS">
+    <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cversion="2.0.3" condition="ARMCM1 CMSIS" isDefaultVariant="true">
       <description>System and Startup for Generic Arm Cortex-M1 device</description>
       <files>
         <!-- include folder / device header file -->
@@ -2688,7 +2715,7 @@ and 8-bit Java bytecodes in Jazelle state.
     </component>
 
     <!-- Cortex-M3 -->
-    <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cversion="2.0.3" condition="ARMCM3 CMSIS">
+    <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cversion="2.0.3" condition="ARMCM3 CMSIS" isDefaultVariant="true">
       <description>System and Startup for Generic Arm Cortex-M3 device</description>
       <files>
         <!-- include folder / device header file -->
@@ -2716,7 +2743,7 @@ and 8-bit Java bytecodes in Jazelle state.
     </component>
 
     <!-- Cortex-M4 -->
-    <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cversion="2.0.3" condition="ARMCM4 CMSIS">
+    <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cversion="2.0.3" condition="ARMCM4 CMSIS" isDefaultVariant="true">
       <description>System and Startup for Generic Arm Cortex-M4 device</description>
       <files>
         <!-- include folder / device header file -->
@@ -2744,7 +2771,7 @@ and 8-bit Java bytecodes in Jazelle state.
     </component>
 
     <!-- Cortex-M7 -->
-    <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cversion="2.0.3" condition="ARMCM7 CMSIS">
+    <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cversion="2.0.3" condition="ARMCM7 CMSIS" isDefaultVariant="true">
       <description>System and Startup for Generic Arm Cortex-M7 device</description>
       <files>
         <!-- include folder / device header file -->
@@ -2772,29 +2799,34 @@ and 8-bit Java bytecodes in Jazelle state.
     </component>
 
     <!-- Cortex-M23 -->
-    <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cversion="2.0.3" condition="ARMCM23 CMSIS">
+    <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cversion="2.1.0" condition="ARMCM23 CMSIS" isDefaultVariant="true">
       <description>System and Startup for Generic Arm Cortex-M23 device</description>
       <files>
         <!-- include folder / device header file -->
         <file category="include"  name="Device/ARM/ARMCM23/Include/"/>
         <!-- startup / system file -->
-        <file category="sourceC"      name="Device/ARM/ARMCM23/Source/startup_ARMCM23.c"    version="2.0.3" attr="config"/>
-        <file category="linkerScript" name="Device/ARM/ARMCM23/Source/ARM/ARMCM23_ac6.sct"  version="1.0.0" attr="config" condition="ARMCC6"/>
-        <file category="linkerScript" name="Device/ARM/ARMCM23/Source/GCC/gcc_arm.ld"       version="2.1.0" attr="config" condition="GCC"/>
+        <file category="sourceC"      name="Device/ARM/ARMCM23/Source/startup_ARMCM23.c"             version="2.1.0" attr="config"/>
+        <file category="linkerScript" name="Device/ARM/ARMCM23/Source/ARM/ARMCM23_ac6_s.sct"         version="1.1.0" attr="config" condition="TZ Secure ARMCC6"/>
+        <file category="linkerScript" name="Device/ARM/ARMCM23/Source/ARM/ARMCM23_ac6.sct"           version="1.1.0" attr="config" condition="TZ Non-secure ARMCC6"/>
+        <file category="linkerScript" name="Device/ARM/ARMCM23/Source/ARM/ARMCM23_ac6.sct"           version="1.1.0" attr="config" condition="TZ Unavailable ARMCC6"/>
+        <file category="linkerScript" name="Device/ARM/ARMCM23/Source/GCC/gcc_arm.ld"                version="2.2.0" attr="config" condition="GCC"/>
         <file category="sourceC"      name="Device/ARM/ARMCM23/Source/system_ARMCM23.c"     version="1.0.1" attr="config"/>
         <!-- SAU configuration -->
         <file category="header"       name="Device/ARM/ARMCM23/Include/Template/partition_ARMCM23.h" version="1.0.0" attr="config" condition="TZ Secure"/>
       </files>
     </component>
-    <component Cclass="Device" Cgroup="Startup"                      Cversion="1.1.2" condition="ARMCM23 CMSIS">
+    <component Cclass="Device" Cgroup="Startup"                      Cversion="1.2.0" condition="ARMCM23 CMSIS">
       <description>DEPRECATED: System and Startup for Generic Arm Cortex-M23 device</description>
       <files>
         <!-- include folder / device header file -->
         <file category="include"      name="Device/ARM/ARMCM23/Include/"/>
         <!-- startup / system file -->
-        <file category="sourceAsm"    name="Device/ARM/ARMCM23/Source/ARM/startup_ARMCM23.s" version="1.0.1" attr="config" condition="ARMCC"/>
-        <file category="sourceAsm"    name="Device/ARM/ARMCM23/Source/GCC/startup_ARMCM23.S" version="2.1.0" attr="config" condition="GCC"/>
-        <file category="linkerScript" name="Device/ARM/ARMCM23/Source/GCC/gcc_arm.ld"        version="2.1.0" attr="config" condition="GCC"/>
+        <file category="sourceAsm"    name="Device/ARM/ARMCM23/Source/ARM/startup_ARMCM23.S"         version="1.1.0" attr="config" condition="ARMCC6"/>
+        <file category="linkerScript" name="Device/ARM/ARMCM23/Source/ARM/ARMCM23_ac6_s.sct"         version="1.1.0" attr="config" condition="TZ Secure ARMCC6"/>
+        <file category="linkerScript" name="Device/ARM/ARMCM23/Source/ARM/ARMCM23_ac6.sct"           version="1.1.0" attr="config" condition="TZ Non-secure ARMCC6"/>
+        <file category="linkerScript" name="Device/ARM/ARMCM23/Source/ARM/ARMCM23_ac6.sct"           version="1.1.0" attr="config" condition="TZ Unavailable ARMCC6"/>
+        <file category="sourceAsm"    name="Device/ARM/ARMCM23/Source/GCC/startup_ARMCM23.S"         version="2.2.0" attr="config" condition="GCC"/>
+        <file category="linkerScript" name="Device/ARM/ARMCM23/Source/GCC/gcc_arm.ld"                version="2.2.0" attr="config" condition="GCC"/>
         <file category="sourceAsm"    name="Device/ARM/ARMCM23/Source/IAR/startup_ARMCM23.s" version="1.0.0" attr="config" condition="IAR"/>
         <file category="sourceC"      name="Device/ARM/ARMCM23/Source/system_ARMCM23.c"      version="1.0.1" attr="config"/>
         <!-- SAU configuration -->
@@ -2803,29 +2835,34 @@ and 8-bit Java bytecodes in Jazelle state.
     </component>
 
     <!-- Cortex-M33 -->
-    <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cversion="2.0.3" condition="ARMCM33 CMSIS">
+    <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cversion="2.1.0" condition="ARMCM33 CMSIS" isDefaultVariant="true">
       <description>System and Startup for Generic Arm Cortex-M33 device</description>
       <files>
         <!-- include folder / device header file -->
         <file category="include"  name="Device/ARM/ARMCM33/Include/"/>
         <!-- startup / system file -->
-        <file category="sourceC"      name="Device/ARM/ARMCM33/Source/startup_ARMCM33.c"             version="2.0.3" attr="config"/>
-        <file category="linkerScript" name="Device/ARM/ARMCM33/Source/ARM/ARMCM33_ac6.sct"           version="1.0.0" attr="config" condition="ARMCC6"/>
-        <file category="linkerScript" name="Device/ARM/ARMCM33/Source/GCC/gcc_arm.ld"                version="2.1.0" attr="config" condition="GCC"/>
+        <file category="sourceC"      name="Device/ARM/ARMCM33/Source/startup_ARMCM33.c"             version="2.1.0" attr="config"/>
+        <file category="linkerScript" name="Device/ARM/ARMCM33/Source/ARM/ARMCM33_ac6_s.sct"         version="1.1.0" attr="config" condition="TZ Secure ARMCC6"/>
+        <file category="linkerScript" name="Device/ARM/ARMCM33/Source/ARM/ARMCM33_ac6.sct"           version="1.1.0" attr="config" condition="TZ Non-secure ARMCC6"/>
+        <file category="linkerScript" name="Device/ARM/ARMCM33/Source/ARM/ARMCM33_ac6.sct"           version="1.1.0" attr="config" condition="TZ Unavailable ARMCC6"/>
+        <file category="linkerScript" name="Device/ARM/ARMCM33/Source/GCC/gcc_arm.ld"                version="2.2.0" attr="config" condition="GCC"/>
         <file category="sourceC"      name="Device/ARM/ARMCM33/Source/system_ARMCM33.c"              version="1.0.1" attr="config"/>
         <!-- SAU configuration -->
         <file category="header"       name="Device/ARM/ARMCM33/Include/Template/partition_ARMCM33.h" version="1.1.1" attr="config" condition="TZ Secure"/>
       </files>
     </component>
-    <component Cclass="Device" Cgroup="Startup"                      Cversion="1.2.2" condition="ARMCM33 CMSIS">
+    <component Cclass="Device" Cgroup="Startup"                      Cversion="1.3.0" condition="ARMCM33 CMSIS">
       <description>DEPRECATED: System and Startup for Generic Arm Cortex-M33 device</description>
       <files>
         <!-- include folder / device header file -->
         <file category="include"      name="Device/ARM/ARMCM33/Include/"/>
         <!-- startup / system file -->
-        <file category="sourceAsm"    name="Device/ARM/ARMCM33/Source/ARM/startup_ARMCM33.s"         version="1.0.1" attr="config" condition="ARMCC"/>
-        <file category="sourceAsm"    name="Device/ARM/ARMCM33/Source/GCC/startup_ARMCM33.S"         version="2.1.0" attr="config" condition="GCC"/>
-        <file category="linkerScript" name="Device/ARM/ARMCM33/Source/GCC/gcc_arm.ld"                version="2.1.0" attr="config" condition="GCC"/>
+        <file category="sourceAsm"    name="Device/ARM/ARMCM33/Source/ARM/startup_ARMCM33.S"         version="1.1.0" attr="config" condition="ARMCC6"/>
+        <file category="linkerScript" name="Device/ARM/ARMCM33/Source/ARM/ARMCM33_ac6_s.sct"         version="1.1.0" attr="config" condition="TZ Secure ARMCC6"/>
+        <file category="linkerScript" name="Device/ARM/ARMCM33/Source/ARM/ARMCM33_ac6.sct"           version="1.1.0" attr="config" condition="TZ Non-secure ARMCC6"/>
+        <file category="linkerScript" name="Device/ARM/ARMCM33/Source/ARM/ARMCM33_ac6.sct"           version="1.1.0" attr="config" condition="TZ Unavailable ARMCC6"/>
+        <file category="sourceAsm"    name="Device/ARM/ARMCM33/Source/GCC/startup_ARMCM33.S"         version="2.2.0" attr="config" condition="GCC"/>
+        <file category="linkerScript" name="Device/ARM/ARMCM33/Source/GCC/gcc_arm.ld"                version="2.2.0" attr="config" condition="GCC"/>
         <file category="sourceAsm"    name="Device/ARM/ARMCM33/Source/IAR/startup_ARMCM33.s"         version="1.0.0" attr="config" condition="IAR"/>
         <file category="sourceC"      name="Device/ARM/ARMCM33/Source/system_ARMCM33.c"              version="1.0.1" attr="config"/>
         <!-- SAU configuration -->
@@ -2834,29 +2871,34 @@ and 8-bit Java bytecodes in Jazelle state.
     </component>
 
     <!-- Cortex-M35P -->
-    <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cversion="2.0.3" condition="ARMCM35P CMSIS">
+    <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cversion="2.1.0" condition="ARMCM35P CMSIS" isDefaultVariant="true">
       <description>System and Startup for Generic Arm Cortex-M35P device</description>
       <files>
         <!-- include folder / device header file -->
         <file category="include"  name="Device/ARM/ARMCM35P/Include/"/>
         <!-- startup / system file -->
-        <file category="sourceC"      name="Device/ARM/ARMCM35P/Source/startup_ARMCM35P.c"             version="2.0.3" attr="config"/>
-        <file category="linkerScript" name="Device/ARM/ARMCM35P/Source/ARM/ARMCM35P_ac6.sct"           version="1.0.0" attr="config" condition="ARMCC6"/>
-        <file category="linkerScript" name="Device/ARM/ARMCM35P/Source/GCC/gcc_arm.ld"                 version="2.1.0" attr="config" condition="GCC"/>
+        <file category="sourceC"      name="Device/ARM/ARMCM35P/Source/startup_ARMCM35P.c"             version="2.1.0" attr="config"/>
+        <file category="linkerScript" name="Device/ARM/ARMCM35P/Source/ARM/ARMCM35P_ac6_s.sct"         version="1.1.0" attr="config" condition="TZ Secure ARMCC6"/>
+        <file category="linkerScript" name="Device/ARM/ARMCM35P/Source/ARM/ARMCM35P_ac6.sct"           version="1.1.0" attr="config" condition="TZ Non-secure ARMCC6"/>
+        <file category="linkerScript" name="Device/ARM/ARMCM35P/Source/ARM/ARMCM35P_ac6.sct"           version="1.1.0" attr="config" condition="TZ Unavailable ARMCC6"/>
+        <file category="linkerScript" name="Device/ARM/ARMCM35P/Source/GCC/gcc_arm.ld"                 version="2.2.0" attr="config" condition="GCC"/>
         <file category="sourceC"      name="Device/ARM/ARMCM35P/Source/system_ARMCM35P.c"              version="1.0.1" attr="config"/>
         <!-- SAU configuration -->
         <file category="header"       name="Device/ARM/ARMCM35P/Include/Template/partition_ARMCM35P.h" version="1.0.0" attr="config" condition="TZ Secure"/>
       </files>
     </component>
-    <component Cclass="Device" Cgroup="Startup"                      Cversion="1.1.2" condition="ARMCM35P CMSIS">
+    <component Cclass="Device" Cgroup="Startup"                      Cversion="1.2.0" condition="ARMCM35P CMSIS">
       <description>DEPRECATED: System and Startup for Generic Arm Cortex-M35P device</description>
       <files>
         <!-- include folder / device header file -->
         <file category="include"      name="Device/ARM/ARMCM35P/Include/"/>
         <!-- startup / system file -->
-        <file category="sourceAsm"    name="Device/ARM/ARMCM35P/Source/ARM/startup_ARMCM35P.s"         version="1.0.1" attr="config" condition="ARMCC"/>
-        <file category="sourceAsm"    name="Device/ARM/ARMCM35P/Source/GCC/startup_ARMCM35P.S"         version="1.1.0" attr="config" condition="GCC"/>
-        <file category="linkerScript" name="Device/ARM/ARMCM35P/Source/GCC/gcc_arm.ld"                 version="2.1.0" attr="config" condition="GCC"/>
+        <file category="sourceAsm"    name="Device/ARM/ARMCM35P/Source/ARM/startup_ARMCM35P.S"         version="1.1.0" attr="config" condition="ARMCC6"/>
+        <file category="linkerScript" name="Device/ARM/ARMCM35P/Source/ARM/ARMCM35P_ac6_s.sct"         version="1.1.0" attr="config" condition="TZ Secure ARMCC6"/>
+        <file category="linkerScript" name="Device/ARM/ARMCM35P/Source/ARM/ARMCM35P_ac6.sct"           version="1.1.0" attr="config" condition="TZ Non-secure ARMCC6"/>
+        <file category="linkerScript" name="Device/ARM/ARMCM35P/Source/ARM/ARMCM35P_ac6.sct"           version="1.1.0" attr="config" condition="TZ Unavailable ARMCC6"/>
+        <file category="sourceAsm"    name="Device/ARM/ARMCM35P/Source/GCC/startup_ARMCM35P.S"         version="1.2.0" attr="config" condition="GCC"/>
+        <file category="linkerScript" name="Device/ARM/ARMCM35P/Source/GCC/gcc_arm.ld"                 version="2.2.0" attr="config" condition="GCC"/>
         <file category="sourceAsm"    name="Device/ARM/ARMCM35P/Source/IAR/startup_ARMCM35P.s"         version="2.0.0" attr="config" condition="IAR"/>
         <file category="sourceC"      name="Device/ARM/ARMCM35P/Source/system_ARMCM35P.c"              version="1.0.1" attr="config"/>
         <!-- SAU configuration -->
@@ -2865,15 +2907,17 @@ and 8-bit Java bytecodes in Jazelle state.
     </component>
 
     <!-- Cortex-M55 -->
-    <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cversion="1.0.0" condition="ARMCM55 CMSIS">
+    <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cversion="1.1.0" condition="ARMCM55 CMSIS" isDefaultVariant="true">
       <description>System and Startup for Generic Cortex-M55 device</description>
       <files>
         <!-- include folder / device header file -->
         <file category="include"      name="Device/ARM/ARMCM55/Include/"/>
         <!-- startup / system file -->
-        <file category="sourceC"      name="Device/ARM/ARMCM55/Source/startup_ARMCM55.c"             version="1.0.0" attr="config"/>
-        <file category="linkerScript" name="Device/ARM/ARMCM55/Source/ARM/ARMCM55_ac6.sct"           version="1.0.0" attr="config" condition="ARMCC6"/>
-        <file category="linkerScript" name="Device/ARM/ARMCM55/Source/GCC/gcc_arm.ld"                version="2.1.0" attr="config" condition="GCC"/>
+        <file category="sourceC"      name="Device/ARM/ARMCM55/Source/startup_ARMCM55.c"             version="1.1.0" attr="config"/>
+        <file category="linkerScript" name="Device/ARM/ARMCM55/Source/ARM/ARMCM55_ac6_s.sct"         version="1.1.0" attr="config" condition="TZ Secure ARMCC6"/>
+        <file category="linkerScript" name="Device/ARM/ARMCM55/Source/ARM/ARMCM55_ac6.sct"           version="1.1.0" attr="config" condition="TZ Non-secure ARMCC6"/>
+        <file category="linkerScript" name="Device/ARM/ARMCM55/Source/ARM/ARMCM55_ac6.sct"           version="1.1.0" attr="config" condition="TZ Unavailable ARMCC6"/>
+        <file category="linkerScript" name="Device/ARM/ARMCM55/Source/GCC/gcc_arm.ld"                version="2.2.0" attr="config" condition="GCC"/>
         <file category="sourceC"      name="Device/ARM/ARMCM55/Source/system_ARMCM55.c"              version="1.0.0" attr="config"/>
         <!-- SAU configuration -->
         <file category="header"       name="Device/ARM/ARMCM55/Include/Template/partition_ARMCM55.h" version="1.0.0" attr="config" condition="TZ Secure"/>
@@ -2881,7 +2925,7 @@ and 8-bit Java bytecodes in Jazelle state.
     </component>
 
     <!-- Cortex-SC000 -->
-    <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cversion="2.0.3" condition="ARMSC000 CMSIS">
+    <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cversion="2.0.3" condition="ARMSC000 CMSIS" isDefaultVariant="true">
       <description>System and Startup for Generic Arm SC000 device</description>
       <files>
         <!-- include folder / device header file -->
@@ -2909,7 +2953,7 @@ and 8-bit Java bytecodes in Jazelle state.
     </component>
 
     <!-- Cortex-SC300 -->
-    <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cversion="2.0.3" condition="ARMSC300 CMSIS">
+    <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cversion="2.0.3" condition="ARMSC300 CMSIS" isDefaultVariant="true">
       <description>System and Startup for Generic Arm SC300 device</description>
       <files>
         <!-- include folder / device header file -->
@@ -2937,29 +2981,34 @@ and 8-bit Java bytecodes in Jazelle state.
     </component>
 
     <!-- ARMv8MBL -->
-    <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cversion="2.0.3" condition="ARMv8MBL CMSIS">
+    <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cversion="2.1.0" condition="ARMv8MBL CMSIS" isDefaultVariant="true">
       <description>System and Startup for Generic Armv8-M Baseline device</description>
       <files>
         <!-- include folder / device header file -->
         <file category="include"  name="Device/ARM/ARMv8MBL/Include/"/>
         <!-- startup / system file -->
-        <file category="sourceC"      name="Device/ARM/ARMv8MBL/Source/startup_ARMv8MBL.c"            version="2.0.3" attr="config"/>
-        <file category="linkerScript" name="Device/ARM/ARMv8MBL/Source/ARM/ARMv8MBL_ac6.sct"          version="1.0.0" attr="config" condition="ARMCC6"/>
-        <file category="linkerScript" name="Device/ARM/ARMv8MBL/Source/GCC/gcc_arm.ld"                version="2.1.0" attr="config" condition="GCC"/>
+        <file category="sourceC"      name="Device/ARM/ARMv8MBL/Source/startup_ARMv8MBL.c"             version="2.1.0" attr="config"/>
+        <file category="linkerScript" name="Device/ARM/ARMv8MBL/Source/ARM/ARMv8MBL_ac6_s.sct"         version="1.1.0" attr="config" condition="TZ Secure ARMCC6"/>
+        <file category="linkerScript" name="Device/ARM/ARMv8MBL/Source/ARM/ARMv8MBL_ac6.sct"           version="1.1.0" attr="config" condition="TZ Non-secure ARMCC6"/>
+        <file category="linkerScript" name="Device/ARM/ARMv8MBL/Source/ARM/ARMv8MBL_ac6.sct"           version="1.1.0" attr="config" condition="TZ Unavailable ARMCC6"/>
+        <file category="linkerScript" name="Device/ARM/ARMv8MBL/Source/GCC/gcc_arm.ld"                 version="2.2.0" attr="config" condition="GCC"/>
         <file category="sourceC"      name="Device/ARM/ARMv8MBL/Source/system_ARMv8MBL.c"             version="1.0.1" attr="config"/>
         <!-- SAU configuration -->
         <file category="header"       name="Device/ARM/ARMv8MBL/Include/Template/partition_ARMv8MBL.h" version="1.0.0" attr="config" condition="TZ Secure"/>
       </files>
     </component>
-    <component Cclass="Device" Cgroup="Startup"                      Cversion="1.1.2" condition="ARMv8MBL CMSIS">
+    <component Cclass="Device" Cgroup="Startup"                      Cversion="1.2.0" condition="ARMv8MBL CMSIS">
       <description>DEPRECATED: System and Startup for Generic Armv8-M Baseline device</description>
       <files>
         <!-- include folder / device header file -->
         <file category="include"      name="Device/ARM/ARMv8MBL/Include/"/>
         <!-- startup / system file -->
-        <file category="sourceAsm"    name="Device/ARM/ARMv8MBL/Source/ARM/startup_ARMv8MBL.s" version="1.0.1" attr="config" condition="ARMCC"/>
-        <file category="sourceAsm"    name="Device/ARM/ARMv8MBL/Source/GCC/startup_ARMv8MBL.S" version="2.1.0" attr="config" condition="GCC"/>
-        <file category="linkerScript" name="Device/ARM/ARMv8MBL/Source/GCC/gcc_arm.ld"         version="2.1.0" attr="config" condition="GCC"/>
+        <file category="sourceAsm"    name="Device/ARM/ARMv8MBL/Source/ARM/startup_ARMv8MBL.S"         version="1.1.0" attr="config" condition="ARMCC6"/>
+        <file category="linkerScript" name="Device/ARM/ARMv8MBL/Source/ARM/ARMv8MBL_ac6_s.sct"         version="1.1.0" attr="config" condition="TZ Secure ARMCC6"/>
+        <file category="linkerScript" name="Device/ARM/ARMv8MBL/Source/ARM/ARMv8MBL_ac6.sct"           version="1.1.0" attr="config" condition="TZ Non-secure ARMCC6"/>
+        <file category="linkerScript" name="Device/ARM/ARMv8MBL/Source/ARM/ARMv8MBL_ac6.sct"           version="1.1.0" attr="config" condition="TZ Unavailable ARMCC6"/>
+        <file category="sourceAsm"    name="Device/ARM/ARMv8MBL/Source/GCC/startup_ARMv8MBL.S"         version="2.2.0" attr="config" condition="GCC"/>
+        <file category="linkerScript" name="Device/ARM/ARMv8MBL/Source/GCC/gcc_arm.ld"                 version="2.2.0" attr="config" condition="GCC"/>
         <file category="sourceC"      name="Device/ARM/ARMv8MBL/Source/system_ARMv8MBL.c"      version="1.0.1" attr="config" condition="ARMCC GCC"/>
         <!-- SAU configuration -->
         <file category="header"       name="Device/ARM/ARMv8MBL/Include/Template/partition_ARMv8MBL.h" version="1.0.0" attr="config"/>
@@ -2967,29 +3016,34 @@ and 8-bit Java bytecodes in Jazelle state.
     </component>
 
     <!-- ARMv8MML -->
-    <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cversion="2.0.3" condition="ARMv8MML CMSIS">
+    <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cversion="2.1.0" condition="ARMv8MML CMSIS" isDefaultVariant="true">
       <description>System and Startup for Generic Armv8-M Mainline device</description>
       <files>
         <!-- include folder / device header file -->
         <file category="include"      name="Device/ARM/ARMv8MML/Include/"/>
         <!-- startup / system file -->
-        <file category="sourceC"      name="Device/ARM/ARMv8MML/Source/startup_ARMv8MML.c"             version="2.0.3" attr="config"/>
-        <file category="linkerScript" name="Device/ARM/ARMv8MML/Source/ARM/ARMv8MML_ac6.sct"           version="1.0.0" attr="config" condition="ARMCC6"/>
-        <file category="linkerScript" name="Device/ARM/ARMv8MML/Source/GCC/gcc_arm.ld"                 version="2.1.0" attr="config" condition="GCC"/>
+        <file category="sourceC"      name="Device/ARM/ARMv8MML/Source/startup_ARMv8MML.c"             version="2.1.0" attr="config"/>
+        <file category="linkerScript" name="Device/ARM/ARMv8MML/Source/ARM/ARMv8MML_ac6_s.sct"         version="1.1.0" attr="config" condition="TZ Secure ARMCC6"/>
+        <file category="linkerScript" name="Device/ARM/ARMv8MML/Source/ARM/ARMv8MML_ac6.sct"           version="1.1.0" attr="config" condition="TZ Non-secure ARMCC6"/>
+        <file category="linkerScript" name="Device/ARM/ARMv8MML/Source/ARM/ARMv8MML_ac6.sct"           version="1.1.0" attr="config" condition="TZ Unavailable ARMCC6"/>
+        <file category="linkerScript" name="Device/ARM/ARMv8MML/Source/GCC/gcc_arm.ld"                 version="2.2.0" attr="config" condition="GCC"/>
         <file category="sourceC"      name="Device/ARM/ARMv8MML/Source/system_ARMv8MML.c"              version="1.0.1" attr="config"/>
         <!-- SAU configuration -->
         <file category="header"       name="Device/ARM/ARMv8MML/Include/Template/partition_ARMv8MML.h" version="1.1.1" attr="config" condition="TZ Secure"/>
       </files>
     </component>
-    <component Cclass="Device" Cgroup="Startup"                      Cversion="1.2.2" condition="ARMv8MML CMSIS">
+    <component Cclass="Device" Cgroup="Startup"                      Cversion="1.3.0" condition="ARMv8MML CMSIS">
       <description>DEPRECATED: System and Startup for Generic Armv8-M Mainline device</description>
       <files>
         <!-- include folder / device header file -->
         <file category="include"      name="Device/ARM/ARMv8MML/Include/"/>
         <!-- startup / system file -->
-        <file category="sourceAsm"    name="Device/ARM/ARMv8MML/Source/ARM/startup_ARMv8MML.s"         version="1.0.1" attr="config" condition="ARMCC"/>
-        <file category="sourceAsm"    name="Device/ARM/ARMv8MML/Source/GCC/startup_ARMv8MML.S"         version="2.1.0" attr="config" condition="GCC"/>
-        <file category="linkerScript" name="Device/ARM/ARMv8MML/Source/GCC/gcc_arm.ld"                 version="2.1.0" attr="config" condition="GCC"/>
+        <file category="sourceAsm"    name="Device/ARM/ARMv8MML/Source/ARM/startup_ARMv8MML.S"         version="1.1.0" attr="config" condition="ARMCC6"/>
+        <file category="linkerScript" name="Device/ARM/ARMv8MML/Source/ARM/ARMv8MML_ac6_s.sct"         version="1.1.0" attr="config" condition="TZ Secure ARMCC6"/>
+        <file category="linkerScript" name="Device/ARM/ARMv8MML/Source/ARM/ARMv8MML_ac6.sct"           version="1.1.0" attr="config" condition="TZ Non-secure ARMCC6"/>
+        <file category="linkerScript" name="Device/ARM/ARMv8MML/Source/ARM/ARMv8MML_ac6.sct"           version="1.1.0" attr="config" condition="TZ Unavailable ARMCC6"/>
+        <file category="sourceAsm"    name="Device/ARM/ARMv8MML/Source/GCC/startup_ARMv8MML.S"         version="2.2.0" attr="config" condition="GCC"/>
+        <file category="linkerScript" name="Device/ARM/ARMv8MML/Source/GCC/gcc_arm.ld"                 version="2.2.0" attr="config" condition="GCC"/>
         <file category="sourceC"      name="Device/ARM/ARMv8MML/Source/system_ARMv8MML.c"              version="1.0.1" attr="config" condition="ARMCC GCC"/>
         <!-- SAU configuration -->
         <file category="header"       name="Device/ARM/ARMv8MML/Include/Template/partition_ARMv8MML.h" version="1.1.1" attr="config" condition="TZ Secure"/>
@@ -2997,15 +3051,17 @@ and 8-bit Java bytecodes in Jazelle state.
     </component>
 
     <!-- ARMv81MML -->
-    <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cversion="2.1.1" condition="ARMv81MML CMSIS">
+    <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cversion="2.2.0" condition="ARMv81MML CMSIS" isDefaultVariant="true">
       <description>System and Startup for Generic Armv8.1-M Mainline device</description>
       <files>
         <!-- include folder / device header file -->
         <file category="include"      name="Device/ARM/ARMv81MML/Include/"/>
         <!-- startup / system file -->
-        <file category="sourceC"      name="Device/ARM/ARMv81MML/Source/startup_ARMv81MML.c"             version="2.0.3" attr="config"/>
-        <file category="linkerScript" name="Device/ARM/ARMv81MML/Source/ARM/ARMv81MML_ac6.sct"           version="1.0.0" attr="config" condition="ARMCC6"/>
-        <file category="linkerScript" name="Device/ARM/ARMv81MML/Source/GCC/gcc_arm.ld"                  version="2.1.0" attr="config" condition="GCC"/>
+        <file category="sourceC"      name="Device/ARM/ARMv81MML/Source/startup_ARMv81MML.c"             version="2.1.0" attr="config"/>
+        <file category="linkerScript" name="Device/ARM/ARMv81MML/Source/ARM/ARMv81MML_ac6_s.sct"         version="1.1.0" attr="config" condition="TZ Secure ARMCC6"/>
+        <file category="linkerScript" name="Device/ARM/ARMv81MML/Source/ARM/ARMv81MML_ac6.sct"           version="1.1.0" attr="config" condition="TZ Non-secure ARMCC6"/>
+        <file category="linkerScript" name="Device/ARM/ARMv81MML/Source/ARM/ARMv81MML_ac6.sct"           version="1.1.0" attr="config" condition="TZ Unavailable ARMCC6"/>
+        <file category="linkerScript" name="Device/ARM/ARMv81MML/Source/GCC/gcc_arm.ld"                  version="2.2.0" attr="config" condition="GCC"/>
         <file category="sourceC"      name="Device/ARM/ARMv81MML/Source/system_ARMv81MML.c"              version="1.2.1" attr="config"/>
         <!-- SAU configuration -->
         <file category="header"       name="Device/ARM/ARMv81MML/Include/Template/partition_ARMv81MML.h" version="1.0.1" attr="config" condition="TZ Secure"/>

@@ -1,8 +1,8 @@
-/**************************************************************************//**
+/******************************************************************************
  * @file     startup_ARMv8MBL.S
- * @brief    CMSIS-Core(M) Device Startup File for ARMv8MBL Device
- * @version  V2.1.0
- * @date     04. August 2020
+ * @brief    CMSIS-Core Device Startup File for ARMv8MBL Device
+ * @version  V2.2.0
+ * @date     16. December 2020
  ******************************************************************************/
 /*
  * Copyright (c) 2009-2020 Arm Limited. All rights reserved.
@@ -25,13 +25,19 @@
                 .syntax  unified
                 .arch    armv8-m.base
 
+                #define __INITIAL_SP     __StackTop
+                #define __STACK_LIMIT    __StackLimit
+                #if defined (__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
+                #define __STACK_SEAL     __StackSeal
+                #endif
+
                 .section .vectors
                 .align   2
                 .globl   __Vectors
                 .globl   __Vectors_End
                 .globl   __Vectors_Size
 __Vectors:
-                .long    __StackTop                         /*     Top of Stack */
+                .long    __INITIAL_SP                       /*     Initial Stack Pointer */
                 .long    Reset_Handler                      /*     Reset Handler */
                 .long    NMI_Handler                        /* -14 NMI Handler */
                 .long    HardFault_Handler                  /* -13 Hard Fault Handler */
@@ -60,7 +66,7 @@ __Vectors:
                 .long    Interrupt8_Handler                 /*   8 Interrupt 8 */
                 .long    Interrupt9_Handler                 /*   9 Interrupt 9 */
 
-                .space   (470 * 4)                          /* Interrupts 10 .. 480 are left out */
+                .space   (214 * 4)                          /* Interrupts 10 .. 224 are left out */
 __Vectors_End:
                 .equ     __Vectors_Size, __Vectors_End - __Vectors
                 .size    __Vectors, . - __Vectors
@@ -75,8 +81,19 @@ __Vectors_End:
                 .globl   Reset_Handler
                 .fnstart
 Reset_Handler:
-                ldr      r0, =__StackLimit
+                ldr      r0, =__INITIAL_SP
+                msr      psp, r0
+
+                #if defined (__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
+                ldr      r0, =__STACK_LIMIT
                 msr      msplim, r0
+                msr      psplim, r0
+
+                ldr      r0, =__STACK_SEAL
+                ldr      r1, =0xFEF5EDA5U
+                str      r1,[r0,#0]
+                str      r1,[r0,#4]
+                #endif
 
                 bl       SystemInit
 
@@ -89,7 +106,7 @@ Reset_Handler:
                 ldr      r1, [r4]                /* source address */   
                 ldr      r2, [r4, #4]            /* destination address */
                 ldr      r3, [r4, #8]            /* word count */
-                lsl      r3, r3, #2              /* byte count */
+                lsls     r3, r3, #2              /* byte count */
 
 .L_loop0_0:
                 subs     r3, #4                  /* decrement byte count */
@@ -101,7 +118,6 @@ Reset_Handler:
 .L_loop0_0_done:
                 adds     r4, #12
                 b        .L_loop0
-
 .L_loop0_done:
 
                 ldr      r3, =__zero_table_start__
@@ -112,7 +128,7 @@ Reset_Handler:
                 bge      .L_loop2_done
                 ldr      r1, [r3]                /* destination address */
                 ldr      r2, [r3, #4]            /* word count */
-                lsl      r2, r2, #2              /* byte count */
+                lsls     r2, r2, #2              /* byte count */
                 movs     r0, 0
 
 .L_loop2_0:
@@ -130,6 +146,7 @@ Reset_Handler:
 
                 .fnend
                 .size    Reset_Handler, . - Reset_Handler
+
 
 /* The default macro is not used for HardFault_Handler
  * because this results in a poor debug illusion.
@@ -179,6 +196,5 @@ Default_Handler:
                 Set_Default_Handler  Interrupt7_Handler
                 Set_Default_Handler  Interrupt8_Handler
                 Set_Default_Handler  Interrupt9_Handler
-
 
                 .end

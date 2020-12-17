@@ -1,8 +1,8 @@
 /******************************************************************************
  * @file     gcc_arm.ld
  * @brief    GNU Linker Script for Cortex-M based device
- * @version  V2.1.0
- * @date     04. August 2020
+ * @version  V2.2.0
+ * @date     16. December 2020
  ******************************************************************************/
 /*
  * Copyright (c) 2009-2020 Arm Limited. All rights reserved.
@@ -57,6 +57,12 @@ __HEAP_SIZE  = 0x00000C00;
  *-------------------- <<< end of configuration section >>> -------------------
  */
 
+/* ARMv8-M stack sealing:
+   to use ARMv8-M stack sealing set __STACKSEAL_SIZE to 8 otherwise keep 0
+ */
+__STACKSEAL_SIZE = 0;
+
+
 MEMORY
 {
   FLASH (rx)  : ORIGIN = __ROM_BASE, LENGTH = __ROM_SIZE
@@ -92,6 +98,7 @@ MEMORY
  *   __StackLimit
  *   __StackTop
  *   __stack
+ *   __StackSeal      (only if ARMv8-M stack sealing is used)
  */
 ENTRY(Reset_Handler)
 
@@ -181,7 +188,7 @@ SECTIONS
   /**
    * Location counter can end up 2byte aligned with narrow Thumb code but
    * __etext is assumed by startup code to be the LMA of a section in RAM
-   * which must be 4byte aligned 
+   * which must be 4byte aligned
    */
   __etext = ALIGN (4);
 
@@ -281,7 +288,7 @@ SECTIONS
     __HeapLimit = .;
   } > RAM
 
-  .stack (ORIGIN(RAM) + LENGTH(RAM) - __STACK_SIZE) (COPY) :
+  .stack (ORIGIN(RAM) + LENGTH(RAM) - __STACK_SIZE - __STACKSEAL_SIZE) (COPY) :
   {
     . = ALIGN(8);
     __StackLimit = .;
@@ -290,6 +297,19 @@ SECTIONS
     __StackTop = .;
   } > RAM
   PROVIDE(__stack = __StackTop);
+  
+  /* ARMv8-M stack sealing:
+     to use ARMv8-M stack sealing uncomment '.stackseal' section
+   */
+/*
+  .stackseal (ORIGIN(RAM) + LENGTH(RAM) - __STACKSEAL_SIZE) (COPY) :
+  {
+    . = ALIGN(8);
+    __StackSeal = .;
+    . = . + 8;
+    . = ALIGN(8);
+  } > RAM
+*/
 
   /* Check if data + heap + stack exceeds RAM limit */
   ASSERT(__StackLimit >= __HeapLimit, "region RAM overflowed with stack")
