@@ -24,8 +24,8 @@ set(CMSIS_PATH "${CMAKE_CURRENT_SOURCE_DIR}/../../../.." CACHE PATH "Path to CMS
 set(CMAKE_EXECUTABLE_SUFFIX ".elf")
 
 # External dependencies.
-set(TARGET model CACHE PATH "May be needed for Uart")
-set(UART_PATH "${CMAKE_CURRENT_SOURCE_DIR}/../../../../../../platform/drivers/uart" CACHE PATH "Path to UART.")
+set(UART0_BASE "0x49303000" CACHE STRING "UART base address.")
+set(UART_PATH "${CMAKE_CURRENT_SOURCE_DIR}/../../../../../drivers/uart" CACHE PATH "Path to UART.")
 set(LINK_FILE "${CMAKE_CURRENT_SOURCE_DIR}/../../../../../../platform/fastmodels/model" CACHE PATH "Linker file.")
 
 set_property(GLOBAL PROPERTY cmsis_nn_unit_test_executables)
@@ -81,7 +81,7 @@ include(Platform/cmsis_device.cmake)
 
 add_library(retarget STATIC
                      Platform/Retarget.c)
-target_link_libraries(retarget INTERFACE uart)
+target_link_libraries(retarget INTERFACE ethosu_uart_pl011)
 
 # Linker file settings.
 if (CMAKE_CXX_COMPILER_ID STREQUAL "ARMClang")
