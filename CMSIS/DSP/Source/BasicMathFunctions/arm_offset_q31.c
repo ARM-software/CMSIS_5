@@ -114,29 +114,13 @@ void arm_offset_q31(
     /* C = A + offset */
 
     /* Add offset and store result in destination buffer. */
-#if defined (ARM_MATH_DSP)
     *pDst++ = __QADD(*pSrc++, offset);
-#else
-    *pDst++ = (q31_t) clip_q63_to_q31((q63_t) * pSrc++ + offset);
-#endif
-
-#if defined (ARM_MATH_DSP)
+    
     *pDst++ = __QADD(*pSrc++, offset);
-#else
-    *pDst++ = (q31_t) clip_q63_to_q31((q63_t) * pSrc++ + offset);
-#endif
-
-#if defined (ARM_MATH_DSP)
+    
     *pDst++ = __QADD(*pSrc++, offset);
-#else
-    *pDst++ = (q31_t) clip_q63_to_q31((q63_t) * pSrc++ + offset);
-#endif
-
-#if defined (ARM_MATH_DSP)
+    
     *pDst++ = __QADD(*pSrc++, offset);
-#else
-    *pDst++ = (q31_t) clip_q63_to_q31((q63_t) * pSrc++ + offset);
-#endif
 
     /* Decrement loop counter */
     blkCnt--;
