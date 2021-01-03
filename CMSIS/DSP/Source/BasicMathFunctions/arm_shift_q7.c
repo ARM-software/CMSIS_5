@@ -134,10 +134,10 @@ void arm_shift_q7(
       in4 = *pSrc++;
 
     /* Pack and store result in destination buffer (in single write) */
-      write_q7x4_ia (&pDst, __PACKq7(__SSAT((in1 << shiftBits), 8),
-                                     __SSAT((in2 << shiftBits), 8),
-                                     __SSAT((in3 << shiftBits), 8),
-                                     __SSAT((in4 << shiftBits), 8) ));
+      write_q7x4_ia (&pDst, __PACKq7(__SSAT(((q15_t) in1 << shiftBits), 8),
+                                     __SSAT(((q15_t) in2 << shiftBits), 8),
+                                     __SSAT(((q15_t) in3 << shiftBits), 8),
+                                     __SSAT(((q15_t) in4 << shiftBits), 8) ));
 #else
       *pDst++ = (q7_t) __SSAT(((q15_t) *pSrc++ << shiftBits), 8);
       *pDst++ = (q7_t) __SSAT(((q15_t) *pSrc++ << shiftBits), 8);
