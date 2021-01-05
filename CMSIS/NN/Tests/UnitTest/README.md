@@ -56,12 +56,43 @@ UART and LINK_FILE have default values but you most probably need to replace the
     ```make```
 ```
 
-Some examples using Uart and toolchain in Ethos-u-core_software project. See : https://review.mlplatform.org/admin/repos/ml/ethos-u/ethos-u-core-software
-
+Some examples using Uart and toolchain in Arm Ethos-U Core Software project. See : https://review.mlplatform.org/admin/repos/ml/ethos-u/ethos-u-core-software
 
 ```
     ```cmake .. -DCMAKE_TOOLCHAIN_FILE=~/ethos-u-core-software/cmake/toolchain/arm-none-eabi-gcc.cmake -DCMAKE_SYSTEM_PROCESSOR=cortex-m7 -DUART_PATH=~/ethos-u-core-software/drivers/uart -DLINK_FILE=~/platform/fastmodels/model```
     ```cmake .. -DCMAKE_TOOLCHAIN_FILE=~/ethos-u-core-software/cmake/toolchain/arm-none-eabi-gcc.cmake -DCMAKE_SYSTEM_PROCESSOR=cortex-m55 -DUART_PATH=~/ethos-u-core-software/drivers/uart -DLINK_FILE=~/platform/fastmodels/model```
+```
+
+If using Cmake it is recommended to use Arm Ethos-U Core Platform project (https://review.mlplatform.org/admin/repos/ml/ethos-u/ethos-u-core-platform) and a fixed virtual platform (FVP) based on Arm Corstone-300 software (https://developer.arm.com/ip-products/subsystem/corstone/corstone-300). First clone Arm Ethos-U Core Software and Arm Ethos-U Core Platform into same directory. Then build:
+
+```
+    ```mkdir build```
+    ```cd build```
+    ```cmake .. -DCMAKE_TOOLCHAIN_FILE=</path/to/Ethos-u-core-platform>/cmake/toolchain/.cmake -DETHOSU_CORE_PLATFORM_PATH=</path/to/Ethos-u-core-platform> -DUSE_ETHOSU_CORE_PLATFORM=ON -DTARGET_CPU=cortex-m55```
+    ```make test_arm_depthwise_conv_s8_opt```
+```
+Note that here you may want to specifiy the unit test targets to build otherwise it will build external targets as well. Some more examples, assuming Ethos-u-core-platform and Ethos-u-core_software are cloned into your home directory:
+
+```
+    ```cmake .. -DCMAKE_TOOLCHAIN_FILE=~/core_platform/cmake/toolchain/arm-none-eabi-gcc.cmake -DETHOSU_CORE_PLATFORM_PATH=~/core_platform -DUSE_ETHOSU_CORE_PLATFORM=ON -DTARGET_CPU=cortex-m55```
+    ```cmake .. -DCMAKE_TOOLCHAIN_FILE=~/core_platform/cmake/toolchain/arm-none-eabi-gcc.cmake -DETHOSU_CORE_PLATFORM_PATH=~/core_platform -DUSE_ETHOSU_CORE_PLATFORM=ON -DTARGET_CPU=cortex-m7```
+    ```cmake .. -DCMAKE_TOOLCHAIN_FILE=~/core_platform/cmake/toolchain/armclang.cmake -DETHOSU_CORE_PLATFORM_PATH=~/core_platform -DUSE_ETHOSU_CORE_PLATFORM=ON -DTARGET_CPU=cortex-m3```
+```
+
+Then you need to download and install the FVP based Arm Corstone-300 software, for example:
+
+```
+mkdir -p /home/$user/FVP
+wget https://developer.arm.com/-/media/Arm%20Developer%20Community/Downloads/OSS/FVP/Corstone-300/FVP_Corstone_SSE-300_Ethos-U55_11.12_57.tgz
+tar -xvzf FVP_Corstone_SSE-300_Ethos-U55_11.12_57.tgz
+./FVP_Corstone_SSE-300_Ethos-U55.sh --i-agree-to-the-contained-eula --no-interactive -d /home/$user/FVP
+export PATH="/home/$user/FVP/models/Linux64_GCC-6.4:$PATH"
+```
+
+Finally you can run the unit tests. For example:
+
+```
+FVP_Corstone_SSE-300_Ethos-U55 --cpulimit 2 -C mps3_board.visualisation.disable-visualisation=1 -C mps3_board.telnetterminal0.start_telnet=0 -C mps3_board.uart0.out_file="-" -C mps3_board.uart0.unbuffered_output=1 ./TestCases/test_arm_depthwise_conv_s8_opt/test_arm_depthwise_conv_s8_opt.elf
 ```
 
 ## Generating new test data
