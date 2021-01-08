@@ -13,6 +13,7 @@ To access Arm TrustZone extensions for Armv8-M additional CMSIS functions are pr
  - \ref nvic_trustzone_functions
  - \ref systick_trustzone_functions
  - \ref sau_trustzone_functions
+ - \ref stacksealing_support_trustzone_functions
  - \ref context_trustzone_functions
 */
 
@@ -382,7 +383,36 @@ void TZ_SAU_Disable(void);
 */
 
 
+/**
+  \defgroup stacksealing_support_trustzone_functions Stack Sealing Support Functions
+  \brief Stack sealing macros and helper functions.
+  @{
+\details
+See \ref RTOS_TrustZone_stacksealing for details on stack sealing technique.
 
+ */
+
+/**
+  \brief   Set stack seal at given address (secure)
+  \details Writes the stack seal values (2 x 0xFEF5EDA5U) to the given address when in secure state.
+  \param [in]    stackTop  address to write stackseal
+ */
+void __TZ_set_STACKSEAL_S (uint32_t *stackTop);
+
+/**
+\def __STACK_SEAL
+\brief Compiler/linker symbol specifiying the location of the stack seal.
+\details
+The address of the specified symbol is used to set the stack seal during low level init.
+This is compiler/linker specific. CMSIS specifies common default for supported compilers. 
+
+\note This define is only intended to be used by the \ref startup_c_pg.
+*/
+#define __STACK_SEAL
+
+/** close stacksealing_support_trustzone_functions
+  @}
+*/
 
 
 /**
