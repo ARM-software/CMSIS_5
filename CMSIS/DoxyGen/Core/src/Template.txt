@@ -255,6 +255,38 @@ The C startup file relys on certain compiler specific preprocessor defines speci
  - \ref __VECTOR_TABLE_ATTRIBUTE
 
 \verbinclude "Source\startup_Device.c"
+\section startup_c_sec_v8 startup_Device.c Template File (Armv8-M/v8.1-M)
+
+The C-startup file for an Armv8-M/v8.1-M processor is similar to the one for an Armv7-M processor 
+except that it offers the possibility of stack sealing for the Main Stack Pointer (MSP).
+The following preprocessor defines and CMSIS functions are used:
+ - \ref __STACK_SEAL
+ - \ref __TZ_set_STACKSEAL_S
+
+The stack sealing and the initialization fof the Stack Limit register is done in function <b>void Reset_Handler(void)</b>:
+
+\code
+/*----------------------------------------------------------------------------
+  Reset Handler called on controller reset
+ *----------------------------------------------------------------------------*/
+__NO_RETURN void Reset_Handler(void)
+{
+  __set_PSP((uint32_t)(&__INITIAL_SP));
+
+  __set_MSPLIM((uint32_t)(&__STACK_LIMIT));
+  __set_PSPLIM((uint32_t)(&__STACK_LIMIT));
+
+#if defined (__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
+  __TZ_set_STACKSEAL_S((uint32_t *)(&__STACK_SEAL));
+#endif
+
+  SystemInit();                             /* CMSIS System Initialization */
+  __PROGRAM_START();                        /* Enter PreMain (C library entry point) */
+}
+\endcode
+
+\note Stack Sealing also requires the application project to use a scatter file (or a linker script) as explained in \ref RTOS_TrustZone_stacksealing section.
+
 */
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/

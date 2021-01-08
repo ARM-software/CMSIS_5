@@ -187,9 +187,17 @@ __STATIC_FORCEINLINE __NO_RETURN void __cmsis_start(void)
 #define __STACK_SEAL              __StackSeal
 #endif
 
+#ifndef __TZ_STACK_SEAL_SIZE
+#define __TZ_STACK_SEAL_SIZE      8U
+#endif
+
+#ifndef __TZ_STACK_SEAL_VALUE
+#define __TZ_STACK_SEAL_VALUE     0xFEF5EDA5FEF5EDA5ULL
+#endif
+
+
 __STATIC_FORCEINLINE void __TZ_set_STACKSEAL_S (uint32_t* stackTop) {
-  *(stackTop    ) = 0xFEF5EDA5U;
-  *(stackTop + 1) = 0xFEF5EDA5U;
+  *((uint64_t *)stackTop) = __TZ_STACK_SEAL_VALUE;
 }
 #endif
 
