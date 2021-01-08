@@ -49,7 +49,7 @@
 
 
 /*----------------------------------------------------------------------------
-  User Stack & Heap boundery definition
+  User Stack & Heap boundary definition
  *----------------------------------------------------------------------------*/
 #define __STACK_TOP    (__RAM_BASE + __RAM_SIZE - __STACKSEAL_SIZE) /* starts at end of RAM - 8 byte stack seal */
 #define __HEAP_BASE    (AlignExpr(+0, 8))                           /* starts after RW_RAM section, 8 byte aligned */
@@ -78,7 +78,7 @@
 #define __RO_SIZE          ( __ROM_SIZE - __CV_SIZE )
 
 #define __RW_BASE          ( __RAM_BASE )
-#define __RW_SIZE      (__RAM_SIZE - __STACK_SIZE - __HEAP_SIZE)
+#define __RW_SIZE          ( __RAM_SIZE - __STACK_SIZE - __HEAP_SIZE )
 
 
 /*----------------------------------------------------------------------------

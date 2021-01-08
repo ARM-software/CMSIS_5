@@ -83,7 +83,7 @@ __Vectors_End:
 Reset_Handler:
                 ldr      r0, =__INITIAL_SP
                 msr      psp, r0
-              
+
                 ldr      r0, =__STACK_LIMIT
                 msr      msplim, r0
                 msr      psplim, r0
