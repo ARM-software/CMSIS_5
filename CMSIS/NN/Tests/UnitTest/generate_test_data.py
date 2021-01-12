@@ -337,7 +337,7 @@ class TestSettings(ABC):
             f.write("#define {}_INPUT_BATCHES {}\n".format(prefix, self.batches))
         self.format_output_file(filepath)
 
-    def generate_c_array(self, name, array, datatype="q7_t", const="const "):
+    def generate_c_array(self, name, array, datatype="q7_t"):
         if not os.path.exists(self.headers_dir):
             os.makedirs(self.headers_dir)
 
@@ -360,7 +360,7 @@ class TestSettings(ABC):
             f.write(self.tensor_flow_reference_version)
             f.write("#pragma once\n")
             f.write("#include <stdint.h>\n\n")
-            f.write(const + datatype + " " + self.testdataset + '_' + name + "[%d] =\n{\n" % size)
+            f.write("const " + datatype + " " + self.testdataset + '_' + name + "[%d] =\n{\n" % size)
             for i in range(size - 1):
                 f.write("  %d,\n" % w[i])
             f.write("  %d\n" % w[size - 1])
@@ -622,7 +622,7 @@ class PoolingSettings(TestSettings):
     def generate_data(self, input_data=None):
         input_data = self.get_randomized_input_data(input_data)
         input_data = self.convert_tensor(input_data, self.quantize_input)
-        self.generate_c_array("input", input_data, datatype="int8_t", const="")
+        self.generate_c_array("input", input_data, datatype="int8_t")
 
         input_data = tf.cast(input_data, tf.float32)
 
