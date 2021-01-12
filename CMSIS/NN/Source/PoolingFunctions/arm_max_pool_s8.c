@@ -37,7 +37,7 @@ static void compare_and_replace_if_larger_q7(q7_t *base, const q7_t *target, int
     int32_t loop_count = (length + 15) / 16;
     for (int i = 0; i < loop_count; i++)
     {
-        mve_pred16_t p = vctp16q((uint32_t)length);
+        mve_pred16_t p = vctp8q((uint32_t)length);
         const int8x16_t op_1 = vldrbq_z_s8(base, p);
         const int8x16_t op_2 = vldrbq_z_s8(target, p);
         const int8x16_t max = vmaxq_m_s8(vuninitializedq_s8(), op_1, op_2, p);
