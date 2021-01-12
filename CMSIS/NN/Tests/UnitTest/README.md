@@ -63,20 +63,20 @@ Some examples using Uart and toolchain in Arm Ethos-U Core Software project. See
     ```cmake .. -DCMAKE_TOOLCHAIN_FILE=~/ethos-u-core-software/cmake/toolchain/arm-none-eabi-gcc.cmake -DCMAKE_SYSTEM_PROCESSOR=cortex-m55 -DUART_PATH=~/ethos-u-core-software/drivers/uart -DLINK_FILE=~/platform/fastmodels/model```
 ```
 
-If using Cmake it is recommended to use Arm Ethos-U Core Platform project (https://review.mlplatform.org/admin/repos/ml/ethos-u/ethos-u-core-platform) and a fixed virtual platform (FVP) based on Arm Corstone-300 software (https://developer.arm.com/ip-products/subsystem/corstone/corstone-300). First clone Arm Ethos-U Core Software and Arm Ethos-U Core Platform into same directory. Then build:
+If using Cmake it is recommended to use Arm Ethos-U Core Platform project (https://review.mlplatform.org/admin/repos/ml/ethos-u/ethos-u-core-platform) and a fixed virtual platform (FVP) based on Arm Corstone-300 software (https://developer.arm.com/ip-products/subsystem/corstone/corstone-300). First clone the Arm Ethos-U Core Software and Arm Ethos-U Core Platform projects. Also Tensorflow (https://github.com/tensorflow/tensorflow) is needed. It is not used but expected by Arm Ethos-U Core Software. It should be cloned into Arm Ethos-U Core Software. Then build:
 
 ```
     ```mkdir build```
     ```cd build```
-    ```cmake .. -DCMAKE_TOOLCHAIN_FILE=</path/to/Ethos-u-core-platform>/cmake/toolchain/.cmake -DETHOSU_CORE_PLATFORM_PATH=</path/to/Ethos-u-core-platform> -DUSE_ETHOSU_CORE_PLATFORM=ON -DTARGET_CPU=cortex-m55```
+    ```cmake .. -DCMAKE_TOOLCHAIN_FILE=</path/to/Ethos-u-core-platform>/cmake/toolchain/arm-none-eabi-gcc.cmake -DETHOSU_CORE_PLATFORM_PATH=</path/to/Ethos-u-core-platform> -DUSE_ETHOSU_CORE_PLATFORM=ON -DTARGET_CPU=cortex-m55 -DETHOS_U_CORE_SOFTWARE_PATH=</path/to/Ethos-u-core-software> -DCORE_SOFTWARE_ACCELERATOR=CMSIS-NN -DCORE_SOFTWARE_RTOS=None```
     ```make test_arm_depthwise_conv_s8_opt```
 ```
 Note that here you may want to specifiy the unit test targets to build otherwise it will build external targets as well. Some more examples, assuming Ethos-u-core-platform and Ethos-u-core_software are cloned into your home directory:
 
 ```
-    ```cmake .. -DCMAKE_TOOLCHAIN_FILE=~/core_platform/cmake/toolchain/arm-none-eabi-gcc.cmake -DETHOSU_CORE_PLATFORM_PATH=~/core_platform -DUSE_ETHOSU_CORE_PLATFORM=ON -DTARGET_CPU=cortex-m55```
-    ```cmake .. -DCMAKE_TOOLCHAIN_FILE=~/core_platform/cmake/toolchain/arm-none-eabi-gcc.cmake -DETHOSU_CORE_PLATFORM_PATH=~/core_platform -DUSE_ETHOSU_CORE_PLATFORM=ON -DTARGET_CPU=cortex-m7```
-    ```cmake .. -DCMAKE_TOOLCHAIN_FILE=~/core_platform/cmake/toolchain/armclang.cmake -DETHOSU_CORE_PLATFORM_PATH=~/core_platform -DUSE_ETHOSU_CORE_PLATFORM=ON -DTARGET_CPU=cortex-m3```
+    ```cmake .. -DCMAKE_TOOLCHAIN_FILE=~/ethos-u-core-platform/cmake/toolchain/arm-none-eabi-gcc.cmake -DETHOSU_CORE_PLATFORM_PATH=~/ethos-u-core-platform -DUSE_ETHOSU_CORE_PLATFORM=ON -DTARGET_CPU=cortex-m55 -DETHOS_U_CORE_SOFTWARE_PATH=~/ethos-u-core-software -DCORE_SOFTWARE_ACCELERATOR=CMSIS-NN -DCORE_SOFTWARE_RTOS=None```
+    ```cmake .. -DCMAKE_TOOLCHAIN_FILE=~/ethos-u-core-platform/cmake/toolchain/arm-none-eabi-gcc.cmake -DETHOSU_CORE_PLATFORM_PATH=~/ethos-u-core-platform -DUSE_ETHOSU_CORE_PLATFORM=ON -DTARGET_CPU=cortex-m7 -DETHOS_U_CORE_SOFTWARE_PATH=~/ethos-u-core-software -DCORE_SOFTWARE_ACCELERATOR=CMSIS-NN -DCORE_SOFTWARE_RTOS=None```
+    ```cmake .. -DCMAKE_TOOLCHAIN_FILE=~/ethos-u-core-platform/cmake/toolchain/armclang.cmake -DETHOSU_CORE_PLATFORM_PATH=~/ethos-u-core-platform -DUSE_ETHOSU_CORE_PLATFORM=ON -DTARGET_CPU=cortex-m3 -DETHOS_U_CORE_SOFTWARE_PATH=~/ethos-u-core-software -DCORE_SOFTWARE_ACCELERATOR=CMSIS-NN -DCORE_SOFTWARE_RTOS=None```
 ```
 
 Then you need to download and install the FVP based Arm Corstone-300 software, for example:
