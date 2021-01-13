@@ -63,7 +63,7 @@ Some examples using Uart and toolchain in Arm Ethos-U Core Software project. See
     ```cmake .. -DCMAKE_TOOLCHAIN_FILE=~/ethos-u-core-software/cmake/toolchain/arm-none-eabi-gcc.cmake -DCMAKE_SYSTEM_PROCESSOR=cortex-m55 -DUART_PATH=~/ethos-u-core-software/drivers/uart -DLINK_FILE=~/platform/fastmodels/model```
 ```
 
-If using Cmake it is recommended to use Arm Ethos-U Core Platform project (https://review.mlplatform.org/admin/repos/ml/ethos-u/ethos-u-core-platform) and a fixed virtual platform (FVP) based on Arm Corstone-300 software (https://developer.arm.com/ip-products/subsystem/corstone/corstone-300). First clone the Arm Ethos-U Core Software and Arm Ethos-U Core Platform projects. Also Tensorflow (https://github.com/tensorflow/tensorflow) is needed. It is not used but expected by Arm Ethos-U Core Software. It should be cloned into Arm Ethos-U Core Software. Then build:
+If using Cmake it is recommended to use Arm Ethos-U Core Platform project (https://review.mlplatform.org/admin/repos/ml/ethos-u/ethos-u-core-platform) and a fixed virtual platform (FVP) based on Arm Corstone-300 software (https://developer.arm.com/ip-products/subsystem/corstone/corstone-300). First clone the Arm Ethos-U Core Software and Arm Ethos-U Core Platform projects. Arm Ethos-U Core Software is expecting to have Tensorflow cloned but in this case it is enough to create a directory ```tensorflow``` into Arm Ethos-U Core Software. Then build:
 
 ```
     ```mkdir build```
