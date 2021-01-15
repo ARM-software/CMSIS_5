@@ -21,15 +21,17 @@ cmake_minimum_required(VERSION 3.15.6)
 project(cmsis_nn_unit_tests VERSION 0.0.1)
 
 set(CMSIS_PATH "${CMAKE_CURRENT_SOURCE_DIR}/../../../.." CACHE PATH "Path to CMSIS.")
-set(CMAKE_EXECUTABLE_SUFFIX ".elf")
 
 # External dependencies.
-set(UART0_BASE "0x49303000" CACHE STRING "UART base address.")
-set(UART_PATH "${CMAKE_CURRENT_SOURCE_DIR}/../../../../../drivers/uart" CACHE PATH "Path to UART.")
-set(LINK_FILE "${CMAKE_CURRENT_SOURCE_DIR}/../../../../../../platform/fastmodels/model" CACHE PATH "Linker file.")
 set(USE_ETHOSU_CORE_PLATFORM_DEFAULT OFF)
 set(ETHOSU_CORE_PLATFORM_PATH "${CMAKE_CURRENT_SOURCE_DIR}/../../../../../../core_platform" CACHE PATH "Path to Arm Ethos-U Core Platform project.")
 set(FVP_CORSTONE_300_PATH "${ETHOSU_CORE_PLATFORM_PATH}/targets/corstone-300")
+
+option(USE_ETHOSU_CORE_PLATFORM "Use Arm Ethos-U Core Platform project." ${USE_ETHOSU_CORE_PLATFORM_DEFAULT})
+
+if(USE_ETHOSU_CORE_PLATFORM)
+    set(CMAKE_EXECUTABLE_SUFFIX ".elf")
+endif()
 
 set_property(GLOBAL PROPERTY cmsis_nn_unit_test_executables)
 
@@ -79,39 +81,12 @@ execute_process(COMMAND ${MAKE_CMD} ${MAKE_CMD_SCRIPT} ${MAKE_CMD_SCRIPT_OPTION}
                         WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
 add_subdirectory(Unity)
 
-option(USE_ETHOSU_CORE_PLATFORM "Use Arm Ethos-U Core Platform project." ${USE_ETHOSU_CORE_PLATFORM_DEFAULT})
-
 if(USE_ETHOSU_CORE_PLATFORM)
 add_subdirectory(${FVP_CORSTONE_300_PATH} fvp_corstone_300)
 
 add_library(retarget STATIC
                      ${FVP_CORSTONE_300_PATH}/retarget.c
                      ${FVP_CORSTONE_300_PATH}/uart.c)
-
-else()
-add_subdirectory(${UART_PATH} uart)
-
-include(Platform/cmsis_device.cmake)
-
-add_library(retarget STATIC
-                     Platform/Retarget.c)
-target_link_libraries(retarget INTERFACE ethosu_uart_pl011)
-
-# Linker file settings.
-if (CMAKE_CXX_COMPILER_ID STREQUAL "ARMClang")
-    set(LINK_FILE_EXT "scatter")
-    set(LINK_FILE_OPTION "--scatter")
-    set(LINK_ENTRY_OPTION "--entry")
-    set(LINK_ENTRY "Reset_Handler")
-elseif (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
-    set(LINK_FILE_EXT "ld")
-    set(LINK_FILE_OPTION "-T")
-    set(LINK_ENTRY_OPTION "")
-    set(LINK_ENTRY "")
-endif()
-set(LINK_FILE_OUT ${LINK_FILE}.${LINK_FILE_EXT})
-
-endif()
 
 # Link in dependencies to every unit test.
 get_property(executables GLOBAL PROPERTY cmsis_nn_unit_test_executables)
@@ -120,23 +95,19 @@ foreach(target ${cmsis_nn_unit_test_list_of_executables})
     target_link_libraries(${target} PRIVATE $<TARGET_OBJECTS:retarget> retarget)
     target_link_libraries(${target} PRIVATE $<TARGET_OBJECTS:cmsis_startup> cmsis_device)
     add_dependencies(${target} retarget cmsis_startup)
-    if(USE_ETHOSU_CORE_PLATFORM)
 
-        target_compile_definitions(${target} PUBLIC USING_FVP_CORSTONE_300)
-        target_link_options(${target} PRIVATE --entry Reset_Handler)
+    target_compile_definitions(${target} PUBLIC USING_FVP_CORSTONE_300)
+    target_link_options(${target} PRIVATE --entry Reset_Handler)
 
-        # Copy linker files.
-        if (CMAKE_CXX_COMPILER_ID STREQUAL "ARMClang")
-            configure_file(${FVP_CORSTONE_300_PATH}/platform.scatter
-            ${CMAKE_CURRENT_SOURCE_DIR}/platform_${target}.scatter COPYONLY)
-        elseif (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
-            configure_file(${FVP_CORSTONE_300_PATH}/platform.ld
-            ${CMAKE_CURRENT_SOURCE_DIR}/platform_${target}.ld COPYONLY)
-        endif()
-
-        ethosu_link_options(${target} PRIVATE LINK_FILE platform_${target})
-     else()
-        target_link_options(${target} PRIVATE ${LINK_FILE_OPTION} ${LINK_FILE_OUT} ${LINK_ENTRY_OPTION} ${LINK_ENTRY})
-        set_target_properties(${target} PROPERTIES LINK_DEPENDS ${LINK_FILE_OUT})
+    # Copy linker files.
+    if (CMAKE_CXX_COMPILER_ID STREQUAL "ARMClang")
+        configure_file(${FVP_CORSTONE_300_PATH}/platform.scatter
+        ${CMAKE_CURRENT_SOURCE_DIR}/platform_${target}.scatter COPYONLY)
+    elseif (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+        configure_file(${FVP_CORSTONE_300_PATH}/platform.ld
+        ${CMAKE_CURRENT_SOURCE_DIR}/platform_${target}.ld COPYONLY)
     endif()
+
+    ethosu_link_options(${target} PRIVATE LINK_FILE platform_${target})
 endforeach()
+endif()
