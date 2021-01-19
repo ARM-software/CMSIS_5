@@ -7,7 +7,7 @@
     <th>Description</th>
   </tr>
     <tr>
-    <td>V1.x.0</td>
+    <td>V1.4.0</td>
     <td>
       Added the following function for int8 SVDF operator.<br>
       <ul>
