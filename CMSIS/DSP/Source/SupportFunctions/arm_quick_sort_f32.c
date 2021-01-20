@@ -26,7 +26,6 @@
  * limitations under the License.
  */
 
-#include "dsp/support_functions_f16.h"
 #include "arm_sorting.h"
 
 static uint32_t arm_quick_sort_partition_f32(float32_t *pSrc, int32_t first, int32_t last, uint8_t dir)

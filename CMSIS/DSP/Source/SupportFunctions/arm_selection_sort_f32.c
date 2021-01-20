@@ -26,7 +26,6 @@
  * limitations under the License.
  */
 
-#include "dsp/support_functions_f16.h"
 #include "arm_sorting.h"
 
 /**
