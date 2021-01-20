@@ -43,6 +43,7 @@ function(compilerSpecificCompileOptions PROJECTNAME ROOT)
 
   # Need to add other gcc config for other cortex-m cores
   if (ARM_CPU STREQUAL "cortex-m55" )
+     target_compile_options(${PROJECTNAME} PUBLIC "-march=armv8.1-m.main+mve.fp+fp.dp")
      target_compile_options(${PROJECTNAME} PUBLIC "-mfpu=fpv5-d16")
      target_link_options(${PROJECTNAME} PUBLIC "-mfpu=fpv5-d16")
   endif()

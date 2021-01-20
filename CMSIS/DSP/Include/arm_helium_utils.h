@@ -122,7 +122,7 @@ __STATIC_FORCEINLINE float16x8_t __mve_cmplx_sum_intra_vec_f16(
      *  re0+re1 | im0+im1 | re0+re1 | im0+im1
      *  re2+re3 | im2+im3 | re2+re3 | im2+im3
      */
-    vecTmp = vaddq(vecTmp, vecIn);
+    vecTmp = vaddq_f16(vecTmp, vecIn);
     vecOut = vecTmp;
     /*
      * shift left, random tmp insertion in bottom
@@ -133,7 +133,7 @@ __STATIC_FORCEINLINE float16x8_t __mve_cmplx_sum_intra_vec_f16(
      *    DONTCARE     |    DONTCARE     | re0+re1+re0+re1 |im0+im1+im0+im1
      * re0+re1+re2+re3 | im0+im1+im2+im3 | re2+re3+re2+re3 |im2+im3+im2+im3
      */
-    vecOut = vaddq(vecOut, vecTmp);
+    vecOut = vaddq_f16(vecOut, vecTmp);
     /*
      * Cmplx sum is in 4rd & 5th f16 elt
      * return full vector

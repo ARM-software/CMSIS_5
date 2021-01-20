@@ -87,7 +87,7 @@ __STATIC_FORCEINLINE arm_status arm_mat_mult_f16_2x2_mve(
     /*
      * move to 2nd column of matrix A
      */
-    vecOffsA = vaddq(vecOffsA, (uint16_t) 1);
+    vecOffsA = vaddq_n_u16(vecOffsA, (uint16_t) 1);
     /*
      * load {a01 a01 a11 a11 x x x x}
      */
@@ -95,7 +95,7 @@ __STATIC_FORCEINLINE arm_status arm_mat_mult_f16_2x2_mve(
     /*
      * move to next B row
      */
-    vecOffsB = vaddq(vecOffsB, (uint16_t) 2);
+    vecOffsB = vaddq_n_u16(vecOffsB, (uint16_t) 2);
     /*
      * load {b10, b11, b10, b11, x x x x }
      */
@@ -157,7 +157,7 @@ __STATIC_FORCEINLINE arm_status arm_mat_mult_f16_3x3_mve(
     /*
      * move to 2nd column of matrix A
      */
-    vecOffsA = vaddq(vecOffsA, (uint16_t) 1);
+    vecOffsA = vaddq_n_u16(vecOffsA, (uint16_t) 1);
     /*
      * load {a01 a01 a01 a11 a11 a11 a21 a21}
      */
@@ -165,7 +165,7 @@ __STATIC_FORCEINLINE arm_status arm_mat_mult_f16_3x3_mve(
     /*
      * move to next B row
      */
-    vecOffsB = vaddq(vecOffsB, (uint16_t) 3);
+    vecOffsB = vaddq_n_u16(vecOffsB, (uint16_t) 3);
     /*
      * load {b10, b11, b12, b10, b11, b12, b10, b11}
      */
@@ -179,7 +179,7 @@ __STATIC_FORCEINLINE arm_status arm_mat_mult_f16_3x3_mve(
     /*
      * move to 3rd column of matrix A
      */
-    vecOffsA = vaddq(vecOffsA, (uint16_t) 1);
+    vecOffsA = vaddq_n_u16(vecOffsA, (uint16_t) 1);
     /*
      * load {a02 a02 a02 a12 a12 a12 a22 a22}
      */
@@ -187,7 +187,7 @@ __STATIC_FORCEINLINE arm_status arm_mat_mult_f16_3x3_mve(
     /*
      * move to next B row
      */
-    vecOffsB = vaddq(vecOffsB, (uint16_t) 3);
+    vecOffsB = vaddq_n_u16(vecOffsB, (uint16_t) 3);
     /*
      * load {b20, b21, b22, b20, b21, b22, b20, b21}
      */
@@ -253,7 +253,7 @@ __STATIC_FORCEINLINE arm_status arm_mat_mult_f16_4x4_mve(
     /*
      * jump 2 x A rows (2nd half of matrix)
      */
-    vecOffsA = vaddq(vecOffsA, (uint16_t) 8);
+    vecOffsA = vaddq_n_u16(vecOffsA, (uint16_t) 8);
     /*
      * load {a20 a20 a20 a20 a30 a30 a30 a30}
      */
@@ -274,7 +274,7 @@ __STATIC_FORCEINLINE arm_status arm_mat_mult_f16_4x4_mve(
     /*
      * move to next B row
      */
-    vecOffsB = vaddq(vecOffsB, (uint16_t) 4);
+    vecOffsB = vaddq_n_u16(vecOffsB, (uint16_t) 4);
     /*
      * load {b10, b11, b12, b13, b10, b11, b12, b13}
      */
@@ -287,7 +287,7 @@ __STATIC_FORCEINLINE arm_status arm_mat_mult_f16_4x4_mve(
     /*
      * jump 2 x A rows (2nd half of matrix)
      */
-    vecOffsA = vaddq(vecOffsA, (uint16_t) 8);
+    vecOffsA = vaddq_n_u16(vecOffsA, (uint16_t) 8);
     /*
      * load {a21 a21 a21 a21 a31 a31 a31 a31}
      */
@@ -309,7 +309,7 @@ __STATIC_FORCEINLINE arm_status arm_mat_mult_f16_4x4_mve(
     /*
      * move to next B row
      */
-    vecOffsB = vaddq(vecOffsB, (uint16_t) 4);
+    vecOffsB = vaddq_n_u16(vecOffsB, (uint16_t) 4);
     /*
      * load {b20, b21, b22, b23, b20, b21, b22, b23}
      */
@@ -322,7 +322,7 @@ __STATIC_FORCEINLINE arm_status arm_mat_mult_f16_4x4_mve(
     /*
      * jump 2 x A rows
      */
-    vecOffsA = vaddq(vecOffsA, (uint16_t) 8);
+    vecOffsA = vaddq_n_u16(vecOffsA, (uint16_t) 8);
 
     /*
      * load {a22 a22 a22 a22 a32 a32 a32 a32}
@@ -345,7 +345,7 @@ __STATIC_FORCEINLINE arm_status arm_mat_mult_f16_4x4_mve(
     /*
      * move to next B row
      */
-    vecOffsB = vaddq(vecOffsB, (uint16_t) 4);
+    vecOffsB = vaddq_n_u16(vecOffsB, (uint16_t) 4);
     /*
      * load {b30, b31, b32, b33, b30, b31, b32, b33}
      */
@@ -358,7 +358,7 @@ __STATIC_FORCEINLINE arm_status arm_mat_mult_f16_4x4_mve(
     /*
      * jump 2 x A rows
      */
-    vecOffsA = vaddq(vecOffsA, (uint16_t) 8);
+    vecOffsA = vaddq_n_u16(vecOffsA, (uint16_t) 8);
     /*
      * load {a23 a23 a23 a23 a33 a33 a33 a33}
      */

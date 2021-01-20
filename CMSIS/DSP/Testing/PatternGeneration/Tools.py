@@ -3,7 +3,7 @@ import struct
 import numpy as np
 
 def normalize(a):
-  return(a/max(np.abs(a)))
+  return(a/np.max(np.abs(a)))
 
 TAILONLY = 1
 BODYONLY = 2

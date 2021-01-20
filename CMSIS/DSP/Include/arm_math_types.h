@@ -110,10 +110,7 @@ extern "C"
     #define ARM_MATH_MVEF
   #endif
   #if !defined(ARM_MATH_MVE_FLOAT16)
-  /* HW Float16 not yet well supported on gcc for M55 */
-    #if !defined(__CMSIS_GCC_H)
        #define ARM_MATH_MVE_FLOAT16
-    #endif
   #endif
 #endif
 
@@ -130,10 +127,7 @@ extern "C"
   #endif
 
   #if !defined(ARM_MATH_MVE_FLOAT16)
-    /* HW Float16 not yet well supported on gcc for M55 */
-    #if !defined(__CMSIS_GCC_H)
        #define ARM_MATH_MVE_FLOAT16
-    #endif
   #endif
 #endif
 

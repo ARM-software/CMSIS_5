@@ -11,11 +11,8 @@ includes = [os.path.join(ROOT,"Include"),os.path.join(ROOT,"PrivateInclude"),os.
 
 if sys.platform == 'win32':
   cflags = ["-DWIN",config.cflags,"-DUNALIGNED_SUPPORT_DISABLE"] 
-  # Custom because a customized arm_math.h is required to build on windows
-  # since the visual compiler and the win platform are
-  # not supported by default in arm_math.h
 else:
-  cflags = ["-Wno-unused-variable","-Wno-implicit-function-declaration",config.cflags,"-D__GNUC_PYTHON__"]
+  cflags = ["-Wno-attributes","-Wno-unused-function","-Wno-unused-variable","-Wno-implicit-function-declaration",config.cflags,"-D__GNUC_PYTHON__"]
 
 transform = glob.glob(os.path.join(ROOT,"Source","TransformFunctions","*.c"))
 #transform.remove(os.path.join(ROOT,"Source","TransformFunctions","arm_dct4_init_q15.c"))
@@ -69,17 +66,17 @@ allsrcs = support + fastmath + filtering + matrix + statistics + complexf + basi
 allsrcs = allsrcs + controller + transform + modulesrc + common+ interpolation
 
 def notf16(number):
-  if re.match(r'^.*_f16.c$',number):
+  if re.search(r'f16',number):
      return(False)
-  else:
-     return(True)
+  if re.search(r'F16',number):
+     return(False)
+  return(True)
 
-# If there are too many files, the linker command in failing on Windows.
+# If there are too many files, the linker command is failing on Windows.
 # So f16 functions are removed since they are not currently available in the wrapper.
 # A next version will have to structure this wrapper more cleanly so that the
 # build can work even with more functions
 srcs = list(filter(notf16, allsrcs))
-
 
 module1 = Extension(config.extensionName,
                     sources = (srcs

@@ -38,6 +38,10 @@
       - f16 distances
       - f16 bayes
 
+      GCC issues:
+      - Scalar version of arm_mat_cmplx_mult_f16 built with Helium
+      - Scalar version of arm_biquad_cascade_stereo_df2T_f16 built with Helium.
+
     </td>
   </tr>
   <tr>

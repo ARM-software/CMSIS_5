@@ -50,7 +50,12 @@
                    - \ref ARM_MATH_SUCCESS       : Operation successful
                    - \ref ARM_MATH_SIZE_MISMATCH : Matrix size check failed
  */
-#if defined(ARM_MATH_MVE_FLOAT16) && !defined(ARM_MATH_AUTOVECTORIZE)
+
+#if defined(ARM_MATH_MVE_FLOAT16) && !defined(ARM_MATH_AUTOVECTORIZE) && defined(__CMSIS_GCC_H)
+#pragma GCC warning "Scalar version of arm_mat_cmplx_mult_f16 built. Helium version has build issues with gcc."
+#endif 
+
+#if defined(ARM_MATH_MVE_FLOAT16) && !defined(ARM_MATH_AUTOVECTORIZE) &&  !defined(__CMSIS_GCC_H)
 
 #include "arm_helium_utils.h"
 
@@ -382,7 +387,7 @@ arm_status arm_mat_cmplx_mult_f16(
     uint16_t  numRowsA = pSrcA->numRows;    /* number of rows of input matrix A    */
     uint16_t  numColsB = pSrcB->numCols;    /* number of columns of input matrix B */
     uint16_t  numColsA = pSrcA->numCols;    /* number of columns of input matrix A */
-    uint16_t  col, i = 0U, row = numRowsA, colCnt;  /* loop counters */
+    uint16_t  col, i = 0U, row = numRowsA;  /* loop counters */
     arm_status status;          /* status of matrix multiplication */
     uint16x8_t vecOffs, vecColBOffs;
     uint32_t  blkCnt,rowCnt;           /* loop counters */
@@ -466,7 +471,6 @@ if ((pSrcA->numCols != pSrcB->numRows) ||
             /*
              * Matrix A columns number of MAC operations are to be performed
              */
-            colCnt = numColsA;
 
             float16_t const *pSrcA0Vec, *pSrcA1Vec, *pSrcA2Vec, *pSrcA3Vec;
             float16_t const *pInA0 = pInA;
@@ -612,7 +616,6 @@ if ((pSrcA->numCols != pSrcB->numRows) ||
             /*
              * Matrix A columns number of MAC operations are to be performed
              */
-            colCnt = numColsA;
 
             float16_t const *pSrcA0Vec;
             float16_t const *pInA0 = pInA;
