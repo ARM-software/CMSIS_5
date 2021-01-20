@@ -35,6 +35,9 @@ endif()
 
 set_property(GLOBAL PROPERTY cmsis_nn_unit_test_executables)
 
+# Target for all unit tests.
+add_custom_target(cmsis_nn_unit_tests)
+
 # This function should be used instead of add_executable.
 function(add_cmsis_nn_unit_test_executable)
     get_property(tmp GLOBAL PROPERTY cmsis_nn_unit_test_executables)
@@ -44,6 +47,7 @@ function(add_cmsis_nn_unit_test_executable)
         if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
             target_link_options(${target} PRIVATE "--specs=nosys.specs")
         endif()
+        add_dependencies(cmsis_nn_unit_tests ${target})
     endforeach()
     set_property(GLOBAL PROPERTY cmsis_nn_unit_test_executables "${tmp}")
 endfunction(add_cmsis_nn_unit_test_executable)
