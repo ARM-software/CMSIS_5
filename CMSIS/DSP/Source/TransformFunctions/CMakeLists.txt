@@ -19,6 +19,10 @@ endif()
 target_sources(CMSISDSPTransform PRIVATE arm_bitreversal.c)
 target_sources(CMSISDSPTransform PRIVATE arm_bitreversal2.c)
 
+if ((NOT ARMAC5) AND (NOT DISABLEFLOAT16))
+target_sources(CMSISDSPTransform PRIVATE arm_bitreversal_f16.c)
+endif()
+
 if (NOT CONFIGTABLE OR ALLFFT OR CFFT_F32_16 OR CFFT_F32_32 OR CFFT_F32_64 OR CFFT_F32_128 OR CFFT_F32_256 OR CFFT_F32_512 
     OR CFFT_F32_1024 OR CFFT_F32_2048 OR CFFT_F32_4096)
 target_sources(CMSISDSPTransform PRIVATE arm_cfft_radix2_f32.c)
