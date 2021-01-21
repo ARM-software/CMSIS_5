@@ -27,7 +27,6 @@
  */
 
 #include "dsp/transform_functions.h"
-#include "dsp/transform_functions_f16.h"
 #include "arm_common_tables.h"
 
 /*
@@ -40,6 +39,10 @@
 */
 
 #if !defined(__CC_ARM) && defined(ARM_FLOAT16_SUPPORTED)
+
+#include "dsp/transform_functions_f16.h"
+
+
 void arm_bitreversal_f16(
 float16_t * pSrc,
 uint16_t fftSize,
