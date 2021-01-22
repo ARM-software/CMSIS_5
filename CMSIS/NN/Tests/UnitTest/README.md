@@ -55,6 +55,13 @@ First clone the Arm Ethos-U Core Software and Arm Ethos-U Core Platform projects
     ```cmake .. -DCMAKE_TOOLCHAIN_FILE=</path/to/Ethos-u-core-platform>/cmake/toolchain/arm-none-eabi-gcc.cmake -DETHOSU_CORE_PLATFORM_PATH=</path/to/Ethos-u-core-platform> -DUSE_ETHOSU_CORE_PLATFORM=ON -DTARGET_CPU=cortex-m55 -DETHOS_U_CORE_SOFTWARE_PATH=</path/to/Ethos-u-core-software> -DCORE_SOFTWARE_ACCELERATOR=CMSIS-NN -DCORE_SOFTWARE_RTOS=None```
     ```make cmsis_nn_unit_tests```
 ```
+
+This will build all unit tests. You can also just build a specific unit test only, for example:
+
+```
+    ```make test_arm_depthwise_conv_s8_opt```
+```
+
 Some more examples, assuming Ethos-u-core-platform and Ethos-u-core_software are cloned into your home directory:
 
 ```
