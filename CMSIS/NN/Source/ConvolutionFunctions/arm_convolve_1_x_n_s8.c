@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2020 Arm Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2010-2021 Arm Limited or its affiliates. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -21,8 +21,8 @@
  * Title:        arm_convolve_1_x_n_s8.c
  * Description:  s8 version of 1xN convolution using symmetric quantization.
  *
- * $Date:        09. October 2020
- * $Revision:    V.2.0.2
+ * $Date:        January 26, 2021
+ * $Revision:    V.2.0.3
  *
  * Target Processor:  Cortex-M cores
  *
@@ -68,7 +68,7 @@ arm_status arm_convolve_1_x_n_s8(const cmsis_nn_context *ctx,
     }
 
 #if defined(ARM_MATH_MVEI)
-    q15_t *buffer_a = (q15_t *)ctx->buf;
+    (void)ctx;
 
     const uint16_t input_x = input_dims->w;
     const uint16_t kernel_x = filter_dims->w;

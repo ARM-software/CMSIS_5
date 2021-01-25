@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2020 Arm Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2010-2021 Arm Limited or its affiliates. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -21,8 +21,8 @@
  * Title:        arm_convolve_HWC_q7_RGB.c
  * Description:  Q7 version of convolution for RGB image
  *
- * $Date:        09. October 2020
- * $Revision:    V.1.0.1
+ * $Date:        January 26, 2021
+ * $Revision:    V.1.0.2
  *
  * Target Processor:  Cortex-M cores
  *
@@ -227,8 +227,8 @@ arm_status arm_convolve_HWC_q7_RGB(const q7_t *Im_in,
         }
     }
 #else
+    (void)bufferA;
     /* Run the following code as reference implementation for Cortex-M0 and Cortex-M3 */
-
     int i, j, k, l, m, n;
     int conv_out;
     int in_row, in_col;

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2020 Arm Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2010-2021 Arm Limited or its affiliates. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -21,8 +21,8 @@
  * Title:        arm_elementwise_mul_s8
  * Description:  Element wise multiplication
  *
- * $Date:        09. October 2020
- * $Revision:    V.1.0.4
+ * $Date:        January 26, 2021
+ * $Revision:    V.1.0.5
  *
  * Target Processor:  Cortex-M cores
  *
@@ -109,7 +109,7 @@ arm_status arm_elementwise_mul_s8(const int8_t *input_1_vect,
 
     loop_count = block_size >> 2;
 
-    while (loop_count > 0U)
+    while (loop_count > 0)
     {
         /* 4 outputs are calculated in one loop. The order of calculation is follows the order of output sign extension
            intrinsic */
@@ -173,7 +173,7 @@ arm_status arm_elementwise_mul_s8(const int8_t *input_1_vect,
     loop_count = block_size;
 #endif
 
-    while (loop_count > 0U)
+    while (loop_count > 0)
     {
         /* C = A * B */
 

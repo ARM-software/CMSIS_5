@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2018 Arm Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2010-2021 Arm Limited or its affiliates. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -21,8 +21,8 @@
  * Title:        arm_nn_mat_mult_kernel_q7_q15.c
  * Description:  Matrix-multiplication function for convolution
  *
- * $Date:        09. October 2020
- * $Revision:    V.1.0.1
+ * $Date:        January 26, 2021
+ * $Revision:    V.1.0.2
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -172,6 +172,14 @@ q7_t *arm_nn_mat_mult_kernel_q7_q15(const q7_t *pA,
     /* return the new output pointer with offset */
     return pOut;
 #else
+    (void)pA;
+    (void)pInBuffer;
+    (void)ch_im_out;
+    (void)numCol_A;
+    (void)bias_shift;
+    (void)out_shift;
+    (void)bias;
+    (void)pOut;
     /* To be completed */
     return NULL;
 #endif /* ARM_MATH_DSP */
