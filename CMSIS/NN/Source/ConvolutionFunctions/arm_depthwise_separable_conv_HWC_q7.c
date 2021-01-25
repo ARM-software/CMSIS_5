@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2018 Arm Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2010-2021 Arm Limited or its affiliates. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -21,8 +21,8 @@
  * Title:        arm_depthwise_separable_conv_HWC_q7.c
  * Description:  Q7 depthwise separable convolution function
  *
- * $Date:        09. October 2020
- * $Revision:    V.1.0.1
+ * $Date:        January 26, 2021
+ * $Revision:    V.1.0.2
  *
  * Target Processor:  Cortex-M cores
  *
@@ -373,6 +373,7 @@ arm_status arm_depthwise_separable_conv_HWC_q7(const q7_t *Im_in,
     }
 
 #else
+    (void)bufferA;
     /* Run the following code as reference implementation for Cortex-M0 and Cortex-M3 */
     int i_out_y, i_out_x, i_ch_out, i_ker_x, i_ker_y;
     int conv_out;

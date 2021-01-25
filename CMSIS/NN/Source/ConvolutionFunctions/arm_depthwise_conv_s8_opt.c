@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2020 Arm Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2010-2021 Arm Limited or its affiliates. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -22,8 +22,8 @@
  * Description:  Optimized s8 depthwise separable convolution function for
  *               channel multiplier of 1.
  *
- * $Date:        09. October 2020
- * $Revision:    V.2.0.2
+ * $Date:        January 26, 2021
+ * $Revision:    V.2.0.3
  *
  * Target Processor:  Cortex-M CPUs
  *
@@ -60,10 +60,18 @@ arm_status arm_depthwise_conv_s8_opt(const cmsis_nn_context *ctx,
                                      const cmsis_nn_dims *output_dims,
                                      q7_t *output)
 {
-    const int32_t input_x = input_dims->w;
-    const int32_t input_y = input_dims->h;
+
     const int32_t input_ch = input_dims->c;
     const int32_t output_ch = output_dims->c;
+
+    /* Check input constraints input_ch == output_ch */
+    if (input_ch != output_ch)
+    {
+        return ARM_MATH_SIZE_MISMATCH;
+    }
+#ifdef ARM_MATH_DSP
+    const int32_t input_x = input_dims->w;
+    const int32_t input_y = input_dims->h;
     const int32_t kernel_x = filter_dims->w;
     const int32_t kernel_y = filter_dims->h;
     const int32_t pad_x = dw_conv_params->padding.w;
@@ -80,11 +88,6 @@ arm_status arm_depthwise_conv_s8_opt(const cmsis_nn_context *ctx,
     const int32_t output_activation_max = dw_conv_params->activation.max;
     q15_t *buffer_a = (q15_t *)ctx->buf;
 
-    /* Check input constraints input_ch == output_ch */
-    if (input_ch != output_ch)
-    {
-        return ARM_MATH_SIZE_MISMATCH;
-    }
 #ifdef ARM_MATH_MVEI
     (void)bias_dims;
     /* Generate two columns from the input tensor */
@@ -202,7 +205,7 @@ arm_status arm_depthwise_conv_s8_opt(const cmsis_nn_context *ctx,
         }
     }
 
-#elif defined(ARM_MATH_DSP)
+#else // ARM_MATH_DSP
     (void)bias_dims;
     /* Run the following code in cores using DSP extension */
     q15_t *const col_buffer_start = buffer_a;
@@ -386,7 +389,7 @@ arm_status arm_depthwise_conv_s8_opt(const cmsis_nn_context *ctx,
             col_buffer = col_buffer_start;
         }
     }
-
+#endif
 #else
     /* Run the following code as reference implementation for Cortex-M0 and Cortex-M3 */
     return arm_depthwise_conv_s8(ctx,

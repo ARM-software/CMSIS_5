@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2020 Arm Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2010-2021 Arm Limited or its affiliates. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -21,8 +21,8 @@
  * Title:        arm_convolve_s8.c
  * Description:  s8 version of convolution using symmetric quantization.
  *
- * $Date:        09. October 2020
- * $Revision:    V.2.0.3
+ * $Date:        January 26, 2021
+ * $Revision:    V.2.0.4
  *
  * Target Processor:  Cortex-M cores
  *
@@ -60,6 +60,7 @@ arm_status arm_convolve_s8(const cmsis_nn_context *ctx,
                            const cmsis_nn_dims *output_dims,
                            q7_t *output_data)
 {
+    (void)bias_dims;
     q15_t *buffer_a = (q15_t *)ctx->buf;
 
     const uint16_t input_batches = input_dims->n;
@@ -88,7 +89,6 @@ arm_status arm_convolve_s8(const cmsis_nn_context *ctx,
     for (i_batch = 0; i_batch < input_batches; i_batch++)
     {
 #if defined(ARM_MATH_MVEI)
-        (void)bias_dims;
         /* Generate upto four columns from the input tensor a GEMM computation */
         q7_t *im2col_buf = (q7_t *)buffer_a;
         q7_t *out = output_data;
@@ -198,7 +198,6 @@ arm_status arm_convolve_s8(const cmsis_nn_context *ctx,
         }
 
 #elif defined(ARM_MATH_DSP)
-        (void)bias_dims;
         int32_t i_out_y, i_out_x, i_ker_y, i_ker_x;
 
         /* Generate two columns from the input tensor a GEMM computation */
