@@ -200,8 +200,13 @@ arm_status arm_nn_vec_mat_mult_t_s8(const q7_t *lhs,
         const q7_t *lhs_ptr = &lhs[0];
         const q7_t *rhs_ptr = &rhs[0];
 
-        q31_t res00 = *bias++;
-        q31_t res01 = *bias++;
+        q31_t res00 = 0;
+        q31_t res01 = 0;
+        if (bias)
+        {
+            res00 = *bias++;
+            res01 = *bias++;
+        }
 
         int32_t rhs_cols_idx = 0;
 
@@ -323,7 +328,11 @@ arm_status arm_nn_vec_mat_mult_t_s8(const q7_t *lhs,
         const q7_t *lhs_ptr = &lhs[0];
         const q7_t *rhs_ptr = &rhs[0];
 
-        q31_t res00 = *bias++;
+        q31_t res00 = 0;
+        if (bias)
+        {
+            res00 = *bias++;
+        }
 
         int32_t rhs_cols_idx = 0;
 
@@ -406,8 +415,13 @@ arm_status arm_nn_vec_mat_mult_t_s8(const q7_t *lhs,
         const q7_t *lhs_ptr = &lhs[0];
         const q7_t *rhs_ptr = &rhs[0];
 
-        q31_t res00 = *bias++;
-        q31_t res01 = *bias++;
+        q31_t res00 = 0;
+        q31_t res01 = 0;
+        if (bias)
+        {
+            res00 = *bias++;
+            res01 = *bias++;
+        }
 
         for (int32_t rhs_cols_idx = 0; rhs_cols_idx < rhs_cols; ++rhs_cols_idx)
         {
@@ -447,7 +461,11 @@ arm_status arm_nn_vec_mat_mult_t_s8(const q7_t *lhs,
         const q7_t *lhs_ptr = &lhs[0];
         const q7_t *rhs_ptr = &rhs[0];
 
-        q31_t res00 = *bias++;
+        q31_t res00 = 0;
+        if (bias)
+        {
+            res00 = *bias++;
+        }
 
         for (int32_t rhs_cols_idx = 0; rhs_cols_idx < rhs_cols; ++rhs_cols_idx)
         {
