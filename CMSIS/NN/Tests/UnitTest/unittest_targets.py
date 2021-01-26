@@ -395,10 +395,32 @@ def download_unity(force=False):
     shutil.rmtree(download_dir)
 
 
+def parse_generated_test_runner(test_runner):
+    parsed_functions = ['setUp', 'tearDown', 'resetTest', 'verifyTest']
+
+    def is_func_to_parse(func):
+        for f in parsed_functions:
+            if f in func:
+                return True
+        return False
+
+    with open(test_runner, "r") as f:
+        lines = f.readlines()
+    with open(test_runner, "w") as f:
+        for line in lines:
+            sline = line.strip('\n')
+            if not re.search(r"\(void\);", sline):
+                f.write(line)
+            else:
+                if not is_func_to_parse(sline):
+                    f.write(line)
+
+
 def parse_tests(targets, main_tests, specific_test=None):
     """
-    Generate test runners and parse it to know what to expect from the serial console
-    Return True if successful
+    Generate test runners, extract and return path to unit test(s).
+    Also parse generated test runners to avoid warning: redundant redeclaration.
+    Return True if successful.
     """
     test_found = False
     directory = 'TestCases'
@@ -435,6 +457,9 @@ def parse_tests(targets, main_tests, specific_test=None):
             test_found = parse_test(test_runner, targets)
             if not test_found:
                 return False
+
+            parse_generated_test_runner(test_runner)
+
     if not test_found:
         return False
     return True
