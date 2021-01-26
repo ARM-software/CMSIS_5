@@ -91,6 +91,18 @@ targets:
     extends: armcm_v8
     device : ARMCM35P
     dsuffix: "_DSP_FP_TZ"
+  armcm55:
+    extends: armcm_v8
+    device : ARMCM55
+    dsuffix: ""
+  armcm55s:
+    extends: armcm_v8
+    device : ARMCM55
+    dsuffix: ""
+  armcm55ns:
+    extends: armcm_v8
+    device : ARMCM55
+    dsuffix: ""
   armca:
     extends    : arm
     include:

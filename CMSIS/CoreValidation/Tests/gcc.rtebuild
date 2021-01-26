@@ -5,7 +5,7 @@ import:
 targets:
   arm:
     toolchain: GCC
-    csettings   : [ -mlittle-endian, -gdwarf-3, "-%{optimize}", -fmessage-length=0, -fsigned-char, -ffunction-sections, -fdata-sections ]
+    csettings   : [ -mlittle-endian, -gdwarf-3, "-%{optimize}", -fmessage-length=0, -ffunction-sections, -fdata-sections ]
     cwarnings   : [ -Wall, -Wextra, -Wshadow, -Wundef, -Wstrict-prototypes, -Wpedantic ]
   armcm:
     features    : ""
@@ -15,133 +15,110 @@ targets:
     linkscript  : "config/core_m/rtebuild.ld"
   armcm0:
     cpu       : cortex-m0
-    fpu       : none
     float     : soft
   armcm0plus:
     cpu       : cortex-m0plus
-    fpu       : none
     float     : soft
   armcm3:
     cpu       : cortex-m3
-    fpu       : none
     float     : soft
   armcm4:
     cpu       : cortex-m4
-    fpu       : none
+    features  : "+nofp"
     float     : soft
   armcm4fp:
     cpu       : cortex-m4
-    fpu       : fpv4-sp-d16
     float     : hard
-    cflags    : [ "-mfpu=${fpu}"]
-    asmflags  : [ "-mfpu=${fpu}"]
-    linkflags : [ "-mfpu=${fpu}"]
   armcm7:
     cpu       : cortex-m7
-    fpu       : none
+    features  : "+nofp"
     float     : soft
   armcm7sp:
     cpu       : cortex-m7
-    fpu       : fpv5-sp-d16
+    features  : "+nofp.dp"
     float     : hard
-    cflags    : [ "-mfpu=${fpu}"]
-    asmflags  : [ "-mfpu=${fpu}"]
-    linkflags : [ "-mfpu=${fpu}"]
   armcm7dp:
     cpu       : cortex-m7
-    fpu       : fpv5-d16
     float     : hard
-    cflags    : [ "-mfpu=${fpu}"]
-    asmflags  : [ "-mfpu=${fpu}"]
-    linkflags : [ "-mfpu=${fpu}"]
   armcm23:
     cpu       : cortex-m23
-    fpu       : none
     float     : soft
   armcm23s:
     cpu       : cortex-m23
-    fpu       : none
     float     : soft
     cflags    : [ -mcmse ]
     linkscript: "config/core_m/rtebuild_s.ld"
   armcm23ns:
     cpu       : cortex-m23
-    fpu       : none
     float     : soft
     linkscript: "config/core_m/rtebuild_ns.ld"
   armcm33:
     cpu       : cortex-m33
-    features  : "+nodsp"
-    fpu       : none
+    features  : "+nofp+nodsp"
     float     : soft
   armcm33s:
     cpu       : cortex-m33
-    fpu       : fpv5-sp-d16
     float     : hard
-    cflags    : [ "-mfpu=${fpu}", -mcmse ]
-    asmflags  : [ "-mfpu=${fpu}" ]
-    linkflags : [ "-mfpu=${fpu}" ]
     linkscript: "config/core_m/rtebuild_s.ld"
   armcm33ns:
     cpu       : cortex-m33
-    fpu       : fpv5-sp-d16
     float     : hard
-    cflags    : [ "-mfpu=${fpu}" ]
-    asmflags  : [ "-mfpu=${fpu}" ]
-    linkflags : [ "-mfpu=${fpu}" ]
     linkscript: "config/core_m/rtebuild_ns.ld"
   armcm35p:
     cpu       : cortex-m35p
-    features  : "+nodsp"
-    fpu       : none
+    features  : "+nofp+nodsp"
     float     : soft
   armcm35ps:
     cpu       : cortex-m35p
-    fpu       : fpv5-sp-d16
     float     : hard
-    cflags    : [ "-mfpu=${fpu}", -mcmse ]
-    asmflags  : [ "-mfpu=${fpu}" ]
-    linkflags : [ "-mfpu=${fpu}" ]
     linkscript: "config/core_m/rtebuild_s.ld"
   armcm35pns:
     cpu       : cortex-m35p
-    fpu       : fpv5-sp-d16
     float     : hard
-    cflags    : [ "-mfpu=${fpu}" ]
-    asmflags  : [ "-mfpu=${fpu}" ]
-    linkflags : [ "-mfpu=${fpu}" ]
+    linkscript: "config/core_m/rtebuild_ns.ld"
+  armcm55:
+    cpu       : cortex-m55
+    features  : "+nomve+nofp"
+    float     : soft
+  armcm55s:
+    cpu       : cortex-m55
+    features  : "+nomve.fp+nofp"
+    float     : softfp
+    cflags    : [ -mcmse ]
+    linkscript: "config/core_m/rtebuild_s.ld"
+  armcm55ns:
+    cpu       : cortex-m55
+    float     : hard
     linkscript: "config/core_m/rtebuild_ns.ld"
   armca:
+    features  : ""
     csettings : [ -marm ]
-    cflags    : [ -xc, -std=gnu99, -c, "-mcpu=${cpu}", "-mfpu=${fpu}", "-mfloat-abi=${float}", "${csettings}", "${cwarnings}" ]
-    asmflags  : [ -c, "-mcpu=${cpu}", "-mfpu=${fpu}", "-mfloat-abi=${float}", "${csettings}", "${cwarnings}" ]
-    linkflags : [ "-mcpu=${cpu}", "-mfpu=${fpu}", "-mfloat-abi=${float}", "${csettings}", "${cwarnings}", "-Xlinker -Map=${builddir}/${targetName}.map", --specs=nano.specs, --specs=rdimon.specs ]
+    cflags    : [ -xc, -std=gnu99, -c, "-mcpu=${cpu}${features}", "-mfloat-abi=${float}", "${csettings}", "${cwarnings}" ]
+    asmflags  : [ -c, "-mcpu=${cpu}${features}", "-mfloat-abi=${float}", "${csettings}", "${cwarnings}" ]
+    linkflags : [ "-mcpu=${cpu}${features}", "-mfloat-abi=${float}", "${csettings}", "${cwarnings}", "-Xlinker -Map=${builddir}/${targetName}.map", --specs=nano.specs, --specs=rdimon.specs ]
     linkscript: "${builddir}/rtebuild.ld"
     source:
       - ../../../Device/ARM/${device}/Source/GCC/startup_${device}.c
     prebuild:
      - [ arm-none-eabi-gcc, "-xc", "-I\"${basedir}/config/core_a\"", "-E \"${basedir}/config/core_a/rtebuild.ld\"", -P, "-o \"${builddir}/rtebuild.ld\"" ]
   armca5:
-    cpu    : cortex-a5
-    fpu    : vfpv3-d16-fp16
-    float  : hard
+    cpu     : cortex-a5
+    features: "+nosimd"
+    float   : hard
   armca5neon:
-    cpu    : cortex-a5
-    fpu    : neon-fp16
-    float  : hard
+    cpu     : cortex-a5
+    float   : hard
   armca7:
-    cpu    : cortex-a7
-    fpu    : vfpv4-d16
-    float  : hard
+    cpu     : cortex-a7
+    features: "+nosimd"
+    float   : hard
   armca7neon:
-    cpu    : cortex-a7
-    fpu    : neon-vfpv4
-    float  : hard
+    cpu     : cortex-a7
+    float   : hard
   armca9:
-    cpu    : cortex-a9
-    fpu    : vfpv3-d16-fp16
-    float  : hard
+    cpu     : cortex-a9
+    features: "+nosimd"
+    float   : hard
   armca9neon:
-    cpu    : cortex-a9
-    fpu    : neon-fp16
-    float  : hard
+    cpu     : cortex-a9
+    float   : hard
