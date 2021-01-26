@@ -182,7 +182,7 @@ CMSIS-SVD files can be used to generate:
   to use the latest versions of the CMSIS-SVD files.
   \n \n
   <b>Generated Debug Dialog:</b>
-  \image html "SystemViewer_Generated.png" "uVision Debug Window generated from ARM_Example.svd"
+  \image html "SystemViewer_Generated.PNG" "uVision Debug Window generated from ARM_Example.svd"
 \n 
 
 */

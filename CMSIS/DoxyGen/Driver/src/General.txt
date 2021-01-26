@@ -20,7 +20,7 @@ instances reflecting the multiple physical interfaces of the same type in a devi
 interfaces are reflected with a separate \ref AccessStruct for SPI1 and SPI2. The \ref AccessStruct is the interface of a
 driver to the middleware component or the user application.
 
-\image html Driver.png  "Peripheral Driver Interfaces and Middleware"
+\image html driver.png  "Peripheral Driver Interfaces and Middleware"
 
 The following CMSIS-Driver API groups are defined:
   - \ref can_interface_gr "CAN": Interface to CAN bus peripheral.

@@ -6,11 +6,11 @@ CMSIS-DAP is designed for Debug Units with Cortex-M microcontroller.
 
 The CMSIS-DAP firmware can be deployed to a Debug Unit that is based on Cortex-M processor-based microcontroller.
 
-\image html "CMSIS_DAP_DEBUG_UNIT.png" "CMSIS-DAP Debug Unit Hardware"
+\image html "CMSIS_DAP_Debug_Unit.png" "CMSIS-DAP Debug Unit Hardware"
 
 The picture below shows the setup with an isolation adapter.
 
-\image html "CMSIS_DAP_DEBUG_UNIT_ISO.png" "CMSIS-DAP Debug Unit with Isolation adapter"
+\image html "CMSIS_DAP_Debug_Unit_ISO.png" "CMSIS-DAP Debug Unit with Isolation adapter"
 
 Hardware Requirements
 ---------------------
