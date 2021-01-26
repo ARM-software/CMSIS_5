@@ -23,6 +23,10 @@ targets:
     extends: armcm
     device : ARMCM35P
     dsuffix: "_DSP_FP_TZ"
+  armcm55ns:
+    extends: armcm
+    device : ARMCM55
+    dsuffix: ""
 include: 
   - ./
   - ../../../../Device/ARM/${device}/Include
