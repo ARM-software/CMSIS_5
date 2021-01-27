@@ -10,7 +10,7 @@ targets:
     asmflags    : [ "--cpu ${cpu}", "--fpu=${fpu}", --li, -g, --apcs=interwork ]
     info        : [ --info summarysizes, --map, --load_addr_map_info, --xref, --callgraph, --symbols, --info sizes, --info totals, --info unused, --info veneers, "--list ${builddir}/${targetName}.map" ]
     linkflags   : [ "--cpu ${cpu}", "--fpu=${fpu}", --strict, --no_remove, --entry Reset_Handler, --diag_suppress=L6314, --diag_suppress=L6092w, "${info}" ]
-    linkscript  : "config/core_m/rtebuild.sct"
+    linkscript  : "config/core_m/rtebuild_ac5.sct"
   armcm0:
     cpu    : Cortex-M0
     fpu    : none 
