@@ -48,7 +48,7 @@ If it is not available, f16 version of the kernels
 won't be built.
 
 */
-#if !(__ARM_FEATURE_MVE & 2) && !(__ARM_NEON)
+#if !(__ARM_FEATURE_MVE & 2)
   #if defined(__ARM_FP16_FORMAT_IEEE) || defined(__ARM_FP16_FORMAT_ALTERNATIVE)
   typedef __fp16 float16_t;
   #define ARM_FLOAT16_SUPPORTED

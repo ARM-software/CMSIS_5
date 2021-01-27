@@ -516,10 +516,14 @@ def regressionTableFor(byname,name,section,ref,toSort,indexCols,field):
     values=[field], aggfunc='first',fill_value="NA")
 
     data=data.sort_values(toSort)
-       
-    cores = [c[1] for c in list(data.columns)]
+
+    if args.byc:
+      cores = [(c[1] + ":" + c[2]) for c in list(data.columns)]
+    else:
+      cores = [c[1] for c in list(data.columns)]
     columns = diff(indexCols,['name'])
 
+    
     dataTable=Table(columns,cores)
     section.addContent(dataTable)
 
