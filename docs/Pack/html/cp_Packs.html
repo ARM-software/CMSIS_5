@@ -112,7 +112,7 @@ $(document).ready(function(){initNavTree('cp_Packs.html','');});
 <div class="contents">
 <div class="textblock"><p>The <b>CMSIS-Pack</b> format is used to deliver a software package and is aimed to be scalable for future requirements. It provides a management process and supports a tool independent distribution for:</p>
 <ul>
-<li><a class="el" href="createPack_DFP.html">Device Support</a> for tool chains and software applications to target a specific device:<ul>
+<li><a class="el" href="cp_PackTutorial.html#createPack_DFP">Device Support</a> for tool chains and software applications to target a specific device:<ul>
 <li>Information about the processor and it's features.</li>
 <li>C and assembly files for the device startup and access to the memory mapped peripheral registers.</li>
 <li>Parameters, technical information, and data sheets about the device family and the specific devices.</li>
@@ -122,28 +122,28 @@ $(document).ready(function(){initNavTree('cp_Packs.html','');});
 <li>Debug and trace configurations as well as System View Description files for device specific display of the memory mapped peripheral registers.</li>
 </ul>
 </li>
-<li><a class="el" href="createPackBoard.html">Board Support</a> for rapid development in the prototyping stage:<ul>
+<li><a class="el" href="cp_PackTutorial.html#createPackBoard">Board Support</a> for rapid development in the prototyping stage:<ul>
 <li>Information about the development board and it's features.</li>
 <li>Parameters, technical information, and data sheets about the board, the mounted microcontroller and peripheral devices.</li>
 <li>Drivers for on-board peripheral devices</li>
 </ul>
 </li>
-<li><a class="el" href="cp_SWComponents.html">Software Components</a> simplify the re-use of software and the management of 3rd party software. They contain:<ul>
+<li><a class="el" href="cp_PackTutorial.html#cp_SWComponents">Software Components</a> simplify the re-use of software and the management of 3rd party software. They contain:<ul>
 <li>A collection of source modules, header and <a class="el" href="configWizard.html">configuration files</a> as well as libraries.</li>
 <li>Documentation of the software, including features and APIs.</li>
 </ul>
 </li>
-<li><a class="el" href="cp_SWComponents.html#cp_API">Application Programming Interfaces</a> specify one or more APIs for <a class="el" href="cp_SWComponents.html#cp_Components">software components</a> that are part of another <a class="el" href="cp_SWComponents.html">Software Pack</a>.</li>
-<li><a class="el" href="cp_SWComponents.html#cp_Examples">Example Projects</a> can be used as a reference and starting point for similar applications. They contain:<ul>
+<li><a class="el" href="cp_PackTutorial.html#cp_API">Application Programming Interfaces</a> specify one or more APIs for <a class="el" href="cp_PackTutorial.html#cp_Components">software components</a> that are part of another <a class="el" href="cp_PackTutorial.html#cp_SWComponents">Software Pack</a>.</li>
+<li><a class="el" href="cp_PackTutorial.html#cp_Examples">Example Projects</a> can be used as a reference and starting point for similar applications. They contain:<ul>
 <li>Fully defined application projects that work out of the box in the specified build and debug environments.</li>
 <li>Documentation about the purpose of the example, how to build, configure and execute the application.</li>
 </ul>
 </li>
-<li><a class="el" href="cp_SWComponents.html#cp_CodeTemplates">User Code Templates</a> help to understand the basic concepts of a software component better and to give the user a good starting point for implementing his application.</li>
+<li><a class="el" href="cp_PackTutorial.html#cp_CodeTemplates">User Code Templates</a> help to understand the basic concepts of a software component better and to give the user a good starting point for implementing his application.</li>
 </ul>
 <h1><a class="anchor" id="cp_Components"></a>
 Software Components</h1>
-<p>A software component encapsulates a set of related functions. Software components can contain C/C++ source files, object code, assembler files, header files, or libraries. The interfaces of software components should be defined with <a class="el" href="cp_SWComponents.html#cp_API">API</a>headers" to make them substitutable by other compatible components at design time. In addition, CMSIS software components should contain documentation for the software component. They may provide user code templates that give a starting point for the application developer, and can have optional debug view descriptions for debuggers.</p>
+<p>A software component encapsulates a set of related functions. Software components can contain C/C++ source files, object code, assembler files, header files, or libraries. The interfaces of software components should be defined with <a class="el" href="cp_PackTutorial.html#cp_API">API</a>headers" to make them substitutable by other compatible components at design time. In addition, CMSIS software components should contain documentation for the software component. They may provide user code templates that give a starting point for the application developer, and can have optional debug view descriptions for debuggers.</p>
 <p>CMSIS software components can also refer to multiple interfaces of other software components. This could be also a hardware abstraction layer for a device peripheral.</p>
 <p>Configuration files contain application specific parameters for a software component. These files are typically copied to the user project workspace; all other files are not modified by the user and can remain in a separate location which avoids that a project workspace is polluted by many source files that should be considered as “black-box” elements by the application programmer.</p>
 <div class="image">
@@ -168,7 +168,7 @@ Technical Details</h2>
 </ul>
 <p>The <code>Cclass</code>, <code>Cgroup</code>, <code>Csub</code>, <code>Cvariant</code> and <code>Cversion</code> attributes are used together with the vendor specified by the pack to identify a component. A component vendor must ensure that the combination <code>Cclass</code>, <code>Cgroup</code>, <code>Csub</code> and <code>Cversion</code> is unique and not used by multiple components within the same Pack. Advertise a set of attributes to be used by other software components using the <a class="el" href="element_taxonomy.html">/package/taxonomy element</a>.</p>
 <p>For a list of established Cclasses, refer to <a class="el" href="cp_Packs.html#pack_Cclass">Software Component Cclasses</a>.</p>
-<p>In case multiple interdependent components (belonging to the same <code>Cclass</code>) form part of a solution, these can be grouped in a so called <a class="el" href="cp_SWComponents.html#cp_Bundles">bundle</a>.</p>
+<p>In case multiple interdependent components (belonging to the same <code>Cclass</code>) form part of a solution, these can be grouped in a so called <a class="el" href="cp_PackTutorial.html#cp_Bundles">bundle</a>.</p>
 <p>Use the following syntax to reference to software components and APIs:<br/>
 <b>&lt;Vendor&gt;::&lt;Cclass&gt;:&lt;Cgroup&gt;:&lt;Csub&gt;</b></p>
 <p><b>Examples:</b> </p>
@@ -291,55 +291,29 @@ Example with internal MAC</div></div>
 <div class="caption">
 Example with external MAC and PHY</div></div>
 <p> This reduces the development time drastically, as the developer does not need to care for the correct dependency between software components, but can concentrate on the implementation of his own application code.</p>
-<h1><a class="anchor" id="cp_PackSteps"></a>
-Steps to Create a Pack</h1>
-<p>The following image shows the basic steps that are required to create a Software Pack:</p>
-<div class="image">
-<img src="PackCreateSteps.png" alt="PackCreateSteps.png"/>
-</div>
-<ol type="1">
-<li><b>Produce input:</b> Create the files that will be delivered with the Pack.</li>
-<li><b>Organize files:</b> Use directories to separate the content of the Pack.</li>
-<li><b>Create PDSC file:</b> The XML based PDSC file can be created using any text editor. Editors that can validate XML code against a schema file help to find bugs early in the Pack development stage.</li>
-<li><b>Generate Pack:</b> Any compression tool supporting the ZIP format can be used to create a Pack file. <a class="el" href="packChk.html">packChk</a> is helpful for the validation of the contents of a Pack.</li>
-</ol>
-<p>The following pages will show how to create a Software Pack from scratch. The page <a class="el" href="cp_SWComponents.html">Pack with Software Components</a> will start with a simple Pack containing only the PDSC file and a single software component and will then explain further elements of a Pack in more detail. The page <a class="el" href="createPack_DFP.html">Pack with Device Support</a> adds information on the additional requirements that a DFP has, while <a class="el" href="createPackBoard.html">Pack with Board Support</a> will elaborate on the content specific to a BSP.</p>
-<h1><a class="anchor" id="PackTutorials"></a>
-Pack Tutorial</h1>
-<p>The <b>ARM::CMSIS</b> Pack contains tutorials that are explained on the following pages. In the <b>\CMSIS\Pack\Tutorials</b> directory the following three ZIP files are available: </p>
-<table class="doxtable">
-<tr>
-<th>ZIP File </th><th>Documentation  </th></tr>
-<tr>
-<td>Pack_with_Software_Components.zip </td><td><a class="el" href="cp_SWComponents.html">Pack with Software Components</a> </td></tr>
-<tr>
-<td>Pack_with_Device_Support.zip </td><td><a class="el" href="createPack_DFP.html">Pack with Device Support</a> </td></tr>
-<tr>
-<td>Pack_with_Board_Support.zip </td><td><a class="el" href="createPackBoard.html">Pack with Board Support</a> </td></tr>
-</table>
 <h1><a class="anchor" id="PackFilenames"></a>
 Pack Conventions</h1>
-<p>A <a class="el" href="cp_SWComponents.html">Software Pack</a> is a collection of files located in directories that are archived in a file with the extension *.pack using the standard <a href="http://en.wikipedia.org/wiki/Zip_%28file_format%29" target="_blank">ZIP file format</a>. The Pack Description file (PDSC) with the file extension *.pdsc contains the <a class="el" href="packFormat.html">meta information</a>, describing the content of a pack based on <a href="https://en.wikipedia.org/wiki/XML" target="_blank">XML</a>. The PDSC file must be:</p>
+<p>A <a class="el" href="cp_PackTutorial.html#cp_SWComponents">Software Pack</a> is a collection of files located in directories that are archived in a file with the extension *.pack using the standard <a href="http://en.wikipedia.org/wiki/Zip_%28file_format%29" target="_blank">ZIP file format</a>. The Pack Description file (PDSC) with the file extension *.pdsc contains the <a class="el" href="packFormat.html">meta information</a>, describing the content of a pack based on <a href="https://en.wikipedia.org/wiki/XML" target="_blank">XML</a>. The PDSC file must be:</p>
 <ul>
-<li>included in the <a class="el" href="cp_SWComponents.html">Software Pack</a></li>
+<li>included in the <a class="el" href="cp_PackTutorial.html#cp_SWComponents">Software Pack</a></li>
 <li>located in the base folder of the archive</li>
-<li>compliant with the <a class="el" href="cp_SWComponents.html">Software Pack</a> file <a class="el" href="cp_Packs.html#pack_filename">naming convention</a></li>
+<li>compliant with the <a class="el" href="cp_PackTutorial.html#cp_SWComponents">Software Pack</a> file <a class="el" href="cp_Packs.html#pack_filename">naming convention</a></li>
 </ul>
 <dl class="section note"><dt>Note</dt><dd><ul>
-<li>The <em>base folder</em> is defined to be the root folder './' of a zip archive and it is imperative that the whole <a class="el" href="cp_SWComponents.html">Software Pack</a> only contains a single PDSC file.</li>
-<li>Future tools shall support this case: if the PDSC file is located in an immediate subdirectory, then the subdirectory becomes the base folder. The <a class="el" href="cp_SWComponents.html">Software Pack</a> is installed as if the subdirectory does not exist. All files and directories located in the root folder are ignored and do not get installed.</li>
+<li>The <em>base folder</em> is defined to be the root folder './' of a zip archive and it is imperative that the whole <a class="el" href="cp_PackTutorial.html#cp_SWComponents">Software Pack</a> only contains a single PDSC file.</li>
+<li>Future tools shall support this case: if the PDSC file is located in an immediate subdirectory, then the subdirectory becomes the base folder. The <a class="el" href="cp_PackTutorial.html#cp_SWComponents">Software Pack</a> is installed as if the subdirectory does not exist. All files and directories located in the root folder are ignored and do not get installed.</li>
 </ul>
 </dd></dl>
 <h2><a class="anchor" id="pack_filename"></a>
 Pack File Name</h2>
-<p>A <a class="el" href="cp_SWComponents.html">Software Pack</a> must have a unique filename. Therefore it is constructed from vendor, packname and version and the file extension *.pack.</p>
+<p>A <a class="el" href="cp_PackTutorial.html#cp_SWComponents">Software Pack</a> must have a unique filename. Therefore it is constructed from vendor, packname and version and the file extension *.pack.</p>
 <p><b>&lt;vendor&gt;.&lt;name&gt;.&lt;version&gt;.pack</b>.</p>
 <p>Where:</p>
 <ul>
-<li><b>&lt;vendor&gt;</b> is the name of the supplier or vendor of the <a class="el" href="cp_SWComponents.html">Software Pack</a>.</li>
-<li><b>&lt;name&gt;</b> is the name of the <a class="el" href="cp_SWComponents.html">Software Pack</a>. All packs that are published by a vendor must have a unique pack name.</li>
-<li><b>&lt;release version="X.Y.Z"&gt;</b>specifies the <a class="el" href="pdsc_package_pg.html#VersionType">version number</a> of the release for the <a class="el" href="cp_SWComponents.html">Software Pack</a>.</li>
-<li><b>.pack</b> is the file extension identifying a <a class="el" href="cp_SWComponents.html">Software Pack</a>.</li>
+<li><b>&lt;vendor&gt;</b> is the name of the supplier or vendor of the <a class="el" href="cp_PackTutorial.html#cp_SWComponents">Software Pack</a>.</li>
+<li><b>&lt;name&gt;</b> is the name of the <a class="el" href="cp_PackTutorial.html#cp_SWComponents">Software Pack</a>. All packs that are published by a vendor must have a unique pack name.</li>
+<li><b>&lt;release version="X.Y.Z"&gt;</b>specifies the <a class="el" href="pdsc_package_pg.html#VersionType">version number</a> of the release for the <a class="el" href="cp_PackTutorial.html#cp_SWComponents">Software Pack</a>.</li>
+<li><b>.pack</b> is the file extension identifying a <a class="el" href="cp_PackTutorial.html#cp_SWComponents">Software Pack</a>.</li>
 </ul>
 <dl class="section note"><dt>Note</dt><dd><ul>
 <li>The XML elements <b>&lt;vendor&gt;</b>, <b>&lt;name&gt;</b>, and the version attribute of the <b>&lt;release&gt;</b> are specified in the <a class="el" href="packFormat.html#Filenames">PDSC</a> file. PDSC, Pack filenames are case sensitive and need to match exactly.</li>
@@ -349,7 +323,7 @@ Pack File Name</h2>
 </dd></dl>
 <h2><a class="anchor" id="pack_Cclass"></a>
 Software Component Cclasses</h2>
-<p>If you add a software component in the PDSC file, you have to specify a component class (CClass), component group (Cgroup), and the component's version number (Cversion). For more information refer to <a class="el" href="cp_SWComponents.html#cp_Components">Software Components</a>.</p>
+<p>If you add a software component in the PDSC file, you have to specify a component class (CClass), component group (Cgroup), and the component's version number (Cversion). For more information refer to <a class="el" href="cp_PackTutorial.html#cp_Components">Software Components</a>.</p>
 <p>If applicable, try to map the <b>Cclass</b> of your software component to one of the following predefined or already well established classes listed below. These <b>Cclass</b> names are pre-defined in the CMSIS pack using the <a class="el" href="element_taxonomy.html">taxonomy</a> element.</p>
 <table class="doxtable">
 <tr>
@@ -400,7 +374,7 @@ Software Component Cclasses</h2>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Apr 9 2020 15:49:54 for CMSIS-Pack Version 1.6.3 by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Mon Feb 1 2021 16:48:05 for CMSIS-Pack Version 1.6.3 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

@@ -383,7 +383,7 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <tr>
 <td>Pname </td><td>Processor identifier. This attribute <b>is mandatory for devices that embed multiple processors that require different algorithms</b>. Only alphabetical characters, decimal digits, '-' and '_' are allowed.  </td><td>RestrictedString </td><td>optional  </td></tr>
 <tr>
-<td>name </td><td>Flash Programming Algorithm file including the path, which is relative to the root folder of the <a class="el" href="cp_SWComponents.html">Software Pack</a>. </td><td>xs:string </td><td>required  </td></tr>
+<td>name </td><td>Flash Programming Algorithm file including the path, which is relative to the root folder of the <a class="el" href="cp_PackTutorial.html#cp_SWComponents">Software Pack</a>. </td><td>xs:string </td><td>required  </td></tr>
 <tr>
 <td>start </td><td>Base address for the Flash programming algorithm. </td><td>NonNegativeInteger </td><td>required  </td></tr>
 <tr>
@@ -585,7 +585,7 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <hr/>
 <h1><a class="anchor" id="element_description"></a>
 /package/devices/family/.../description</h1>
-<p>Brief description of the element. Can occur on various levels. Should only contain the unique features of the device. Number of bullet points should not exceed ten. To create a detailed feature list use the <a class="el" href="pdsc_family_pg.html#element_feature">/package/devices/family/.../feature</a> instead.</p>
+<p>Brief description of the element. Can occur on various levels and gets inherited from upper level if not defined in the element. Should only contain the unique features of the element. Number of bullet points should not exceed ten. To create a detailed feature list use the <a class="el" href="pdsc_family_pg.html#element_feature">/package/devices/family/.../feature</a> instead.</p>
 <p><b>Example</b> </p>
 <div class="fragment"><div class="line">&lt;package&gt;</div>
 <div class="line">  &lt;devices&gt;</div>
@@ -933,21 +933,51 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <tr>
 <td>Pname </td><td>Processor identifier. This attribute <b>is mandatory for devices that embed multiple processors</b>. Only alphabetical characters, decimal digits, '-' and '_' are allowed.  </td><td>RestrictedString </td><td>optional  </td></tr>
 <tr>
-<td>id (deprecated in Version 1.4.0) </td><td>(deprecated Version 1.4.0) Identifier of the memory region consisting of a type indicator and an index (for example, <span class="XML-Token">IRAM1</span>). Predefind values can be selected as defined in <a class="el" href="pdsc_family_pg.html#MemoryIDTypeEnum">MemoryIDTypeEnum</a>. </td><td>MemoryIDTypeEnum </td><td>optional  </td></tr>
+<td>id (deprecated since version 1.4.0) </td><td>Identifier of the memory region consisting of a type indicator and an index (for example, <span class="XML-Token">IRAM1</span>). Predefined values can be selected as defined in <a class="el" href="pdsc_family_pg.html#MemoryIDTypeEnum">MemoryIDTypeEnum</a>. </td><td><a class="el" href="pdsc_family_pg.html#MemoryIDTypeEnum">MemoryIDTypeEnum</a> </td><td>optional  </td></tr>
 <tr>
-<td>name (new in Version 1.4.0) </td><td>unique name of the memory (new in Version 1.4.0) to be used in conjunction with <em>access</em> </td><td>xs:string </td><td>optional  </td></tr>
+<td>name (new since version 1.4.0) </td><td><p class="starttd"></p>
+<p>Unique name of the memory to be used in conjunction with <em>access</em>.</p>
+<p></p>
+<p>If a memory with the same name is already defined in a parent scope, the parent one is extended/overwritten.</p>
+<p></p>
+<p>Backward compatibility: If no 'name' attribute is given but 'id' attribute is still present, the given 'id' attribute is used as the 'name'.</p>
+<p class="endtd"></p>
+</td><td>xs:string </td><td>optional  </td></tr>
 <tr>
-<td>access (new in Version 1.4.0) </td><td>access permission of the memory. See MemoryAccessTypeString for details (new in Version 1.4.0). </td><td><a class="el" href="pdsc_family_pg.html#MemoryAccessTypeString">MemoryAccessTypeString</a> </td><td>optional  </td></tr>
+<td>access (new since version 1.4.0) </td><td>Access permission of the memory. See <a class="el" href="pdsc_family_pg.html#MemoryAccessTypeString">MemoryAccessTypeString</a> for details. </td><td><a class="el" href="pdsc_family_pg.html#MemoryAccessTypeString">MemoryAccessTypeString</a> </td><td>optional  </td></tr>
 <tr>
 <td>start </td><td>Base address of the memory using a hexadecimal value. </td><td>NonNegativeInteger </td><td>required  </td></tr>
 <tr>
 <td>size </td><td>Size of the memory in bytes using a hexadecimal value. </td><td>NonNegativeInteger </td><td>required  </td></tr>
 <tr>
-<td>default </td><td>Indicates a general purpose memory region, that does not require any special considerations (access speed, remapping, protection, etc.). If <span class="XML-Token">true</span>, then an IRAM memory region will be used by the linker for locating any data and an IROM memory region will for locating any code. Every device needs at least one default IRAM region. If an <a class="el" href="pdsc_family_pg.html#element_algorithm">algorithm</a> element is specified (without <code>RAMstart</code> and <code>RAMsize</code> attributes), the first listed IRAM region with default="1" will also be used for executing the flash programming algorithm. Default value is <span class="XML-Token">false</span>. </td><td>xs:boolean </td><td>optional  </td></tr>
+<td>default </td><td><p class="starttd"></p>
+<p>Indicates a general purpose memory region, that does not require any special considerations (access speed, remapping, protection, etc.).</p>
+<p></p>
+<p>If <span class="XML-Token">true</span>, then an IRAM memory region will be used by the linker for locating any data and an IROM memory region will for locating any code. Every device needs at least one default IRAM region.</p>
+<p></p>
+<p>If an <a class="el" href="pdsc_family_pg.html#element_algorithm">algorithm</a> element is specified (without <code>RAMstart</code> and <code>RAMsize</code> attributes), the first listed IRAM region with default="1" will also be used for executing the flash programming algorithm.</p>
+<p></p>
+<p>Default value is <span class="XML-Token">false</span>.</p>
+<p class="endtd"></p>
+</td><td>xs:boolean </td><td>optional  </td></tr>
 <tr>
 <td>startup </td><td>If <span class="XML-Token">true</span>, the startup code of the application will be placed into this memory region. Default value is <span class="XML-Token">false</span>. </td><td>xs:boolean </td><td>optional  </td></tr>
 <tr>
-<td>alias(new in Version 1.4.0) </td><td>reference to another memory description which shares the same physical memory. Some physical memory is made accessible via different addresses, for example, chached vs. non-cached accesses. This avoids the impression that the device has twice as much memory available. </td><td>xs:string </td><td>optional  </td></tr>
+<td>init (deprecated since version 1.6.3) </td><td><p class="starttd"></p>
+<p>If <span class="XML-Token">true</span>, the memory region shall not be zero initialized.</p>
+<p></p>
+<p>Default value is <span class="XML-Token">false</span>.</p>
+<p class="endtd"></p>
+</td><td>xs:boolean </td><td>optional  </td></tr>
+<tr>
+<td>uninit (new since version 1.6.3) </td><td><p class="starttd"></p>
+<p>If <span class="XML-Token">true</span>, the memory region shall be kept uninitialized (i.e. keep the memory state as is).</p>
+<p></p>
+<p>Default value is <span class="XML-Token">false</span>.</p>
+<p class="endtd"></p>
+</td><td>xs:boolean </td><td>optional  </td></tr>
+<tr>
+<td>alias (new since Version 1.4.0) </td><td>Reference to another memory (by it's 'name' attribute) which shares the same physical memory. Some physical memory is made accessible via different addresses, for example, cached vs. non-cached accesses. This avoids the impression that the device has twice as much memory available.  </td><td>xs:string </td><td>optional  </td></tr>
 </table>
 <p><br/>
  <a class="anchor" id="MemoryIDTypeEnum"></a><b>Table: Memory ID Types</b></p>
@@ -1049,6 +1079,8 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <tr>
 <td>Dmve </td><td>Specifies whether a device supports the M-Profile Vector instruction set extension. Use predefined values as listed in the table <a class="el" href="pdsc_family_pg.html#DmveEnum">Device MVE</a>. </td><td><a class="el" href="pdsc_family_pg.html#DmveEnum">DmveEnum</a> DmveEnum </td><td>required for ARMv8.1-M based devices  </td></tr>
 <tr>
+<td>Dcdecp </td><td>Specifies whether a device supports Custom Datapath Extensions (<a href="https://developer.arm.com/documentation/ddi0607/ab/" target="_blank"><b>CDE</b></a>). Possible values are explained in <a class="el" href="pdsc_family_pg.html#DcdecpEnum">Custom Datapath Extensions</a>. </td><td>xs:Hex8BitType </td><td>required for ARMv8.1-M based devices with CDE support  </td></tr>
+<tr>
 <td>Dendian </td><td>Specifies the endianess of the processor. Use predefined values as listed in the table <a class="el" href="pdsc_family_pg.html#DendianEnum">Endinaness</a>. </td><td>DendianEnum </td><td>required  </td></tr>
 <tr>
 <td>Dclock </td><td>Specifies the max clock frequency of the processor subsystem </td><td>xs:unsignedInt </td><td>required  </td></tr>
@@ -1076,6 +1108,8 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <tr>
 <td class="XML-Token">Active-Semi:140 </td><td>Active-Semi </td><td><a href="http://www.active-semi.com">http://www.active-semi.com</a>  </td></tr>
 <tr>
+<td class="XML-Token">Alif Semiconductor:165 </td><td>Alif Semiconductor </td><td><a href="http://www.alifsemi.com">http://www.alifsemi.com</a>  </td></tr>
+<tr>
 <td class="XML-Token">Ambiq Micro:120 </td><td>Ambiq Micro </td><td><a href="http://www.ambiqmicro.com">http://www.ambiqmicro.com</a>  </td></tr>
 <tr>
 <td class="XML-Token">Amiccom:147 </td><td>Amiccom </td><td><a href="http://www.amiccom.com.tw">http://www.amiccom.com.tw</a>  </td></tr>
@@ -1086,11 +1120,15 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <tr>
 <td class="XML-Token">ARM:82 </td><td>ARM Ltd. </td><td><a href="http://www.arm.com">http://www.arm.com</a>  </td></tr>
 <tr>
+<td class="XML-Token">ArmChina:160 </td><td>Arm China </td><td><a href="http://www.armchina.com">http://www.armchina.com</a>  </td></tr>
+<tr>
 <td class="XML-Token">ArteryTek:143 </td><td>ArteryTek </td><td><a href="http://www.arterytek.com">http://www.arterytek.com</a>  </td></tr>
 <tr>
 <td class="XML-Token">Atmel:3 </td><td>Atmel Corporation (now Microchip) </td><td><a href="http://www.microchip.com">http://www.microchip.com</a>  </td></tr>
 <tr>
 <td class="XML-Token">Autochips:150 </td><td>Autochips Inc. </td><td><a href="http://www.autochips.com/index_en.aspx">http://www.autochips.com/index_en.aspx</a>  </td></tr>
+<tr>
+<td class="XML-Token">Cmsemicon:161 </td><td>Cmsemicon </td><td><a href="http://www.mcu.com.cn">http://www.mcu.com.cn</a>  </td></tr>
 <tr>
 <td class="XML-Token">CSR:118 </td><td>CSR </td><td><a href="http://www.csr.com">http://www.csr.com</a>  </td></tr>
 <tr>
@@ -1098,9 +1136,13 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <tr>
 <td class="XML-Token">Dialog Semiconductor:113 </td><td>Dialog Semiconductor </td><td><a href="http://www.dialog-semiconductor.com">http://www.dialog-semiconductor.com</a>  </td></tr>
 <tr>
+<td class="XML-Token">ELAN:162 </td><td>ELAN </td><td><a href="http://www.emc.com.tw">http://www.emc.com.tw</a>  </td></tr>
+<tr>
 <td class="XML-Token">Elmos Semiconductor AG:138 </td><td>Elmos Semiconductor AG </td><td><a href="http://www.elmos.com">http://www.elmos.com</a>  </td></tr>
 <tr>
 <td class="XML-Token">EtaCompute:157 </td><td>Eta Compute Inc. </td><td><a href="https://www.etacompute.com">https://www.etacompute.com</a>  </td></tr>
+<tr>
+<td class="XML-Token">Geehy:163 </td><td>Geehy </td><td><a href="https://www.geehy.com/">https://www.geehy.com/</a>  </td></tr>
 <tr>
 <td class="XML-Token">Generic:5 </td><td>Generic: Not a vendor specific device </td><td></td></tr>
 <tr>
@@ -1118,7 +1160,7 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <tr>
 <td class="XML-Token">Infineon:7 </td><td>Infineon Technologies </td><td><a href="http://www.infineon.com">http://www.infineon.com</a>  </td></tr>
 <tr>
-<td class="XML-Token">Lapis Semiconductor:10 </td><td>Lapis Semiconductor </td><td><a href="http://www.lapis-semi.com">http://www.lapis-semi.com</a>  </td></tr>
+<td class="XML-Token">LAPIS Technology:10 </td><td>LAPIS Technology </td><td><a href="http://www.lapis-tech.com">http://www.lapis-tech.com</a>  </td></tr>
 <tr>
 <td class="XML-Token">Linear Technolgy:136 </td><td>Linear Technolgy </td><td><a href="http://www.linear.com/">http://www.linear.com/</a>  </td></tr>
 <tr>
@@ -1148,7 +1190,7 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <tr>
 <td class="XML-Token">Panasonic:131 </td><td>Panasonic </td><td><a href="http://www.panasonic.com/industrial">http://www.panasonic.com/industrial</a>  </td></tr>
 <tr>
-<td class="XML-Token">Realtek Semiconductor:124 </td><td>Realtek Semiconductor </td><td><a href="http://www.realtek.com.tw">http://www.realtek.com.tw</a>  </td></tr>
+<td class="XML-Token">Realtek Semiconductor:124 </td><td>Realtek Semiconductor </td><td><a href="http://www.realtek.com">http://www.realtek.com</a>  </td></tr>
 <tr>
 <td class="XML-Token">Redpine Signals:125 </td><td>Repine Signals </td><td><a href="http://www.redpinesignals.com">http://www.redpinesignals.com</a>  </td></tr>
 <tr>
@@ -1159,6 +1201,8 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <td class="XML-Token">ROHM:103 </td><td>ROHM </td><td><a href="http://www.rohm.com">http://www.rohm.com</a>  </td></tr>
 <tr>
 <td class="XML-Token">Samsung:47 </td><td>Samsung Semiconductor </td><td><a href="http://www.samsung.com">http://www.samsung.com</a>  </td></tr>
+<tr>
+<td class="XML-Token">SILAN:164 </td><td>Hangzhou Silan Microelectronics Co., Ltd. </td><td><a href="http://www.silan.com.cn/">http://www.silan.com.cn/</a>  </td></tr>
 <tr>
 <td class="XML-Token">Silergy Corp:139 </td><td>Silergy Corporation </td><td><a href="http://silergy.com/">http://silergy.com/</a>  </td></tr>
 <tr>
@@ -1396,6 +1440,28 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <tr>
 <td class="XML-Token">FP_MVE </td><td>Floating point and Integer MVE instructions supported  </td></tr>
 </table>
+<p>&#160;</p>
+<p><a class="anchor" id="DcdecpEnum"></a><b>Table: Custom Datapath Extensions</b></p>
+<p>The table lists values representing Custom Datapath Extensions in a device. The values can be used in the elements:</p>
+<ul>
+<li><a class="el" href="pdsc_conditions_pg.html#element_accept">/package/conditions/condition/accept</a></li>
+<li><a class="el" href="pdsc_conditions_pg.html#element_require">/package/conditions/condition/require</a></li>
+<li><a class="el" href="pdsc_conditions_pg.html#element_deny">/package/conditions/condition/deny</a></li>
+<li><a class="el" href="pdsc_family_pg.html#element_processor">/package/devices/family/.../processor</a></li>
+</ul>
+<table  class="cmtable" summary="Enumeration: DcdecpEnum">
+<tr>
+<th>Dcdecp= </th><th>Description  </th></tr>
+<tr>
+<td class="XML-Token">BitN = 0 </td><td>CDE co-processor interface disabled at BitN.  </td></tr>
+<tr>
+<td class="XML-Token">BitN = 1 </td><td>CDE co-processor interface enabled at BitN.  </td></tr>
+</table>
+<p><b>Examples:</b> </p>
+<ul>
+<li>Dcdecp=”0xff” enables CDE on all eight co-processor interfaces.</li>
+<li>Dcdecp="0x00010010" enables CDE only on co-processor interfaces 1 and 4.</li>
+</ul>
 <p>&#160;</p>
 <p><a class="anchor" id="DendianEnum"></a><b>Table: Endianness</b></p>
 <p>The table lists values representing the endianness of a device. The values can be used in the elements:</p>
@@ -2447,7 +2513,7 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="packFormat.html">Pack Description (*.pdsc) Format</a></li><li class="navelem"><a class="el" href="pdsc_devices_pg.html">/package/devices element</a></li>
-    <li class="footer">Generated on Thu Apr 9 2020 15:49:54 for CMSIS-Pack Version 1.6.3 by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Mon Feb 1 2021 16:48:06 for CMSIS-Pack Version 1.6.3 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 
