@@ -110,7 +110,7 @@ $(document).ready(function(){initNavTree('pdsc_conditions_pg.html','');});
 <div class="title">/package/conditions element </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>The grouping element <a class="el" href="pdsc_conditions_pg.html#element_conditions">/package/conditions</a> contains all conditions defined for the <a class="el" href="cp_SWComponents.html">Software Pack</a>.</p>
+<div class="textblock"><p>The grouping element <a class="el" href="pdsc_conditions_pg.html#element_conditions">/package/conditions</a> contains all conditions defined for the <a class="el" href="cp_PackTutorial.html#cp_SWComponents">Software Pack</a>.</p>
 <p>A condition describes dependencies on device, processor, and tool attributes as well as the presence of other components. The <b>conditions</b> are used to define AND and OR rules used to make components conditional and therefore only available under certain circumstances, e.g. for specific devices or processors. The conditions are also used to express dependencies between components.</p>
 <p>Each condition has an <b>id</b> that is unique within the scope of a the description. An <b>id</b> can be referenced in the condition attribute of components, apis, examples, files and other conditions to become conditional. If a condition resolves to false during the processing of the description, the respective element will be ignored.</p>
 <p><b>Example:</b> </p>
@@ -155,7 +155,7 @@ $(document).ready(function(){initNavTree('pdsc_conditions_pg.html','');});
 <hr/>
 <h1><a class="anchor" id="element_conditions"></a>
 /package/conditions</h1>
-<p>This element groups all conditions used in the <a class="el" href="cp_SWComponents.html">Software Pack</a>.</p>
+<p>This element groups all conditions used in the <a class="el" href="cp_PackTutorial.html#cp_SWComponents">Software Pack</a>.</p>
 <table  class="cmtable" summary="Element: Conditions">
 <tr>
 <th>Parent </th><th colspan="3">Chain  </th></tr>
@@ -179,7 +179,7 @@ $(document).ready(function(){initNavTree('pdsc_conditions_pg.html','');});
 <tr>
 <th>Attributes </th><th>Description </th><th>Type </th><th>Use  </th></tr>
 <tr>
-<td>id </td><td>Condition identifier which is unique within a <a class="el" href="cp_SWComponents.html">Software Pack</a>. The condition identifier is referenced by other elements with the attribute <b>condition</b>. </td><td>xs:string </td><td>required  </td></tr>
+<td>id </td><td>Condition identifier which is unique within a <a class="el" href="cp_PackTutorial.html#cp_SWComponents">Software Pack</a>. The condition identifier is referenced by other elements with the attribute <b>condition</b>. </td><td>xs:string </td><td>required  </td></tr>
 <tr>
 <th>Child&#160;Elements </th><th>Description </th><th>Type </th><th>Occurrence  </th></tr>
 <tr>
@@ -317,6 +317,8 @@ $(document).ready(function(){initNavTree('pdsc_conditions_pg.html','');});
 <td class="XML-Token">Tasking </td><td>TASKING compiler for C and C++.  </td></tr>
 <tr>
 <td class="XML-Token">GHS </td><td>Green Hills Software compiler for C, C++, and EC++.  </td></tr>
+<tr>
+<td class="XML-Token">XC </td><td>Microchip MPLAB XC32 Compiler.  </td></tr>
 </table>
 <p>&#160;</p>
 <hr/>
@@ -326,7 +328,7 @@ $(document).ready(function(){initNavTree('pdsc_conditions_pg.html','');});
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="packFormat.html">Pack Description (*.pdsc) Format</a></li>
-    <li class="footer">Generated on Thu Apr 9 2020 15:49:54 for CMSIS-Pack Version 1.6.3 by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Mon Feb 1 2021 16:48:06 for CMSIS-Pack Version 1.6.3 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

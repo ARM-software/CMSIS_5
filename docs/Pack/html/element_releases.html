@@ -137,11 +137,11 @@ $(document).ready(function(){initNavTree('element_releases.html','');});
 <p>Contains brief information of the main changes in each release version of a Pack. The content is a string written between the opening and closing <em>release</em> tags. The latest release version is always listed on top.</p>
 <p><b>Example:</b> </p>
 <div class="fragment"><div class="line">&lt;releases&gt;</div>
-<div class="line">  &lt;release version=<span class="stringliteral">&quot;1.1.1&quot;</span>&gt;Fixed a problem with the feature xyz.</div>
+<div class="line">  &lt;release version=<span class="stringliteral">&quot;1.1.1&quot;</span> date=<span class="stringliteral">&quot;2020-05-12&quot;</span>&gt;Fixed a problem with the feature xyz.</div>
 <div class="line">  &lt;/release&gt;     </div>
-<div class="line">  &lt;release version=<span class="stringliteral">&quot;1.1.0&quot;</span>&gt;Introduces a <span class="keyword">new</span> feature xyz.</div>
+<div class="line">  &lt;release version=<span class="stringliteral">&quot;1.1.0&quot;</span> date=<span class="stringliteral">&quot;2020-03-13&quot;</span>&gt;Introduces a <span class="keyword">new</span> feature xyz.</div>
 <div class="line">  &lt;/release&gt;     </div>
-<div class="line">  &lt;release version=<span class="stringliteral">&quot;1.0.0&quot;</span>&gt;First published version.</div>
+<div class="line">  &lt;release version=<span class="stringliteral">&quot;1.0.0&quot;</span> date=<span class="stringliteral">&quot;2020-02-23&quot;</span>&gt;First published version.</div>
 <div class="line">  &lt;/release&gt;     </div>
 <div class="line">&lt;/releases&gt;</div>
 </div><!-- fragment --><p><b>Example</b> for a public repository: </p>
@@ -158,6 +158,13 @@ $(document).ready(function(){initNavTree('element_releases.html','');});
 <div class="line">  &lt;/releases&gt;</div>
 <div class="line">  ...</div>
 <div class="line">&lt;/package&gt; </div>
+</div><!-- fragment --><p><b>Example</b> for a deprecated pack with a replacement: </p>
+<div class="fragment"><div class="line">&lt;releases&gt;</div>
+<div class="line">  &lt;release version=<span class="stringliteral">&quot;1.0.1&quot;</span> date=<span class="stringliteral">&quot;2020-04-18&quot;</span> deprecated=<span class="stringliteral">&quot;2020-04-18&quot;</span> replacement=<span class="stringliteral">&quot;Vendor.pack_name&quot;</span>&gt;Deprecated: use Vendor.pack_name instead.</div>
+<div class="line">  &lt;/release&gt;     </div>
+<div class="line">  &lt;release version=<span class="stringliteral">&quot;1.0.0&quot;</span> date=<span class="stringliteral">&quot;2020-03-24&quot;</span>&gt;Initial version.</div>
+<div class="line">  &lt;/release&gt;     </div>
+<div class="line">&lt;/releases&gt;</div>
 </div><!-- fragment --><p>&#160;</p>
 <table  class="cmtable" summary="Element: Release">
 <tr>
@@ -187,7 +194,7 @@ $(document).ready(function(){initNavTree('element_releases.html','');});
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="packFormat.html">Pack Description (*.pdsc) Format</a></li>
-    <li class="footer">Generated on Thu Apr 9 2020 15:49:54 for CMSIS-Pack Version 1.6.3 by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Mon Feb 1 2021 16:48:05 for CMSIS-Pack Version 1.6.3 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

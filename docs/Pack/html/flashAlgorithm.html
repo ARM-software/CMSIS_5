@@ -110,7 +110,7 @@ $(document).ready(function(){initNavTree('flashAlgorithm.html','');});
 <div class="title">Flash Programming </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><b>Flash Programming Algorithms</b> are a piece of software to erase or download applications to Flash devices. A <a class="el" href="createPack_DFP.html">Pack with Device Support</a> usually contains predefined Flash algorithms for programming the devices that are supported by the DFP. A template for creating new algorithms are available in the <b>ARM:CMSIS</b> Pack. The following section describes the process in more detail.</p>
+<div class="textblock"><p><b>Flash Programming Algorithms</b> are a piece of software to erase or download applications to Flash devices. A <a class="el" href="cp_PackTutorial.html#createPack_DFP">Pack with Device Support</a> usually contains predefined Flash algorithms for programming the devices that are supported by the DFP. A template for creating new algorithms are available in the <b>ARM:CMSIS</b> Pack. The following section describes the process in more detail.</p>
 <h1><a class="anchor" id="CreateFPA"></a>
 Creating a new Algorithm</h1>
 <p>Flash programming algorithms are defined with functions to erase and program the Flash device. Special compiler and linker settings are required. Follow these steps to create and configure a new Flash programming algorithm:</p>
@@ -163,7 +163,7 @@ Creating a new Algorithm</h1>
 The <b>Programming Page Size</b> specifies the block size for programming using the function <a class="el" href="algorithmFunc.html#ProgramPage">ProgramPage</a>. For devices with small block sizes it might be better to specify a multiple of the physical block size as this reduces the communication overhead to the target. An optimal block size for fast programming is 1024 bytes, however the system itself does not restrict this size value.</dd></dl>
 <h1><a class="anchor" id="AddFPA"></a>
 Adding an Algorithm to a Pack</h1>
-<p>The generated <b>*.FLM</b> file needs to be added to the <a class="el" href="createPack_DFP.html">Pack with Device Support</a>, so that it is available to the tool user for programming his device. Usually, a directory <b>Flash</b> is created and the algorithm is saved in this directory.</p>
+<p>The generated <b>*.FLM</b> file needs to be added to the <a class="el" href="cp_PackTutorial.html#createPack_DFP">Pack with Device Support</a>, so that it is available to the tool user for programming his device. Usually, a directory <b>Flash</b> is created and the algorithm is saved in this directory.</p>
 <p>The algorithm is specified within the the <a class="el" href="pdsc_family_pg.html#element_family">/package/devices/family</a> level: </p>
 <div class="fragment"><div class="line">&lt;family Dfamily=<span class="stringliteral">&quot;STM32F4&quot;</span> Dvendor=<span class="stringliteral">&quot;STMicroelectronics:13&quot;</span>&gt;</div>
 <div class="line">  ...</div>
@@ -185,7 +185,7 @@ Adding an Algorithm to a Pack</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Apr 9 2020 15:49:54 for CMSIS-Pack Version 1.6.3 by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Mon Feb 1 2021 16:48:06 for CMSIS-Pack Version 1.6.3 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

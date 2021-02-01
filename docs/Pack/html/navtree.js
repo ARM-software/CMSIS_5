@@ -4,51 +4,49 @@ var NAVTREE =
     [ "Software Pack Use Cases", "index.html#SWPackVariants", null ],
     [ "Revision History of CMSIS-Pack", "pack_revisionHistory.html", null ],
     [ "Overview", "cp_Packs.html", [
-      [ "Software Components", "cp_Packs.html#cp_Components", [
-        [ "Technical Details", "cp_Packs.html#cp_CompDetails", null ],
-        [ "Software Component Files", "cp_Packs.html#cp_CompFiles", null ],
-        [ "File naming", "cp_Packs.html#cp_CompFileNaming", null ]
-      ] ],
       [ "References to other software components", "cp_Packs.html#cp_Cond", null ],
       [ "Requirements", "cp_Packs.html#cp_Requirements", null ],
       [ "Central API definition", "cp_Packs.html#cp_APIDef", null ],
       [ "Inventory header file: RTE_Components.h", "cp_Packs.html#cp_RTECompH", null ],
       [ "Combining software components", "cp_Packs.html#cp_Combine", null ],
-      [ "Steps to Create a Pack", "cp_Packs.html#cp_PackSteps", null ],
-      [ "Pack Tutorial", "cp_Packs.html#PackTutorials", null ],
       [ "Pack Conventions", "cp_Packs.html#PackFilenames", [
+        [ "Software Components", "cp_Packs.html#cp_Components", null ],
+        [ "Technical Details", "cp_Packs.html#cp_CompDetails", null ],
+        [ "Software Component Files", "cp_Packs.html#cp_CompFiles", null ],
+        [ "File naming", "cp_Packs.html#cp_CompFileNaming", null ],
         [ "Pack File Name", "cp_Packs.html#pack_filename", null ],
         [ "Software Component Cclasses", "cp_Packs.html#pack_Cclass", null ]
       ] ]
     ] ],
-    [ "Pack with Software Components", "cp_SWComponents.html", [
-      [ "Create PDSC File", "cp_SWComponents.html#cp_CreatePDSC", null ],
-      [ "Generate a Pack", "cp_SWComponents.html#cp_GeneratePack", null ],
-      [ "Software Components", "cp_SWComponents.html#cp_Components", null ],
-      [ "Conditions", "cp_SWComponents.html#cp_Conditions", null ],
-      [ "Variants", "cp_SWComponents.html#cp_Variants", null ],
-      [ "RTE_Components.h", "cp_SWComponents.html#cp_RTEComponents_h", null ],
-      [ "Bundles", "cp_SWComponents.html#cp_Bundles", null ],
-      [ "Instances", "cp_SWComponents.html#cp_Instances", null ],
-      [ "API Interface", "cp_SWComponents.html#cp_API", null ],
-      [ "User Code Templates", "cp_SWComponents.html#cp_CodeTemplates", null ],
-      [ "Example Projects", "cp_SWComponents.html#cp_Examples", null ]
-    ] ],
-    [ "Pack with Device Support", "createPack_DFP.html", [
-      [ "Basic Device Family Pack", "createPack_DFP.html#cp_BasicDFP", null ],
-      [ "System and Startup Files", "createPack_DFP.html#cp_System_Startp", null ],
-      [ "System View Description File", "createPack_DFP.html#cp_SVD", null ],
-      [ "Flash Programming Algorithms", "createPack_DFP.html#cp_FlashProgrammingAlgorithm", null ],
-      [ "Debug Descriptions", "createPack_DFP.html#cp_debugdescription", null ],
-      [ "Device Properties", "createPack_DFP.html#cp_DeviceProperties", [
-        [ "Device Specific Software Components", "createPack_DFP.html#cp_DeviceSWComp", null ]
+    [ "Pack Tutorials", "cp_PackTutorial.html", [
+      [ "Steps to Create a Pack", "cp_PackTutorial.html#cp_PackSteps", null ],
+      [ "Pack with Software Components", "cp_PackTutorial.html#cp_SWComponents", [
+        [ "Create PDSC File", "cp_PackTutorial.html#cp_CreatePDSC", null ],
+        [ "Generate a Pack", "cp_PackTutorial.html#cp_GeneratePack", null ],
+        [ "Software Components", "cp_PackTutorial.html#cp_Components", null ],
+        [ "Conditions", "cp_PackTutorial.html#cp_Conditions", null ],
+        [ "Variants", "cp_PackTutorial.html#cp_Variants", null ],
+        [ "RTE_Components.h", "cp_PackTutorial.html#cp_RTEComponents_h", null ],
+        [ "Bundles", "cp_PackTutorial.html#cp_Bundles", null ],
+        [ "Instances", "cp_PackTutorial.html#cp_Instances", null ],
+        [ "API Interface", "cp_PackTutorial.html#cp_API", null ],
+        [ "User Code Templates", "cp_PackTutorial.html#cp_CodeTemplates", null ],
+        [ "Example Projects", "cp_PackTutorial.html#cp_Examples", null ]
+      ] ],
+      [ "Pack with Device Support", "cp_PackTutorial.html#createPack_DFP", [
+        [ "Basic Device Family Pack", "cp_PackTutorial.html#cp_BasicDFP", null ],
+        [ "System and Startup Files", "cp_PackTutorial.html#cp_System_Startup", null ],
+        [ "System View Description File", "cp_PackTutorial.html#cp_SVD", null ],
+        [ "Flash Programming Algorithms", "cp_PackTutorial.html#cp_FlashProgrammingAlgorithm", null ],
+        [ "Debug Descriptions", "cp_PackTutorial.html#cp_debugdescription", null ],
+        [ "Device Properties", "cp_PackTutorial.html#cp_DeviceProperties", null ],
+        [ "Device Specific Software Components", "cp_PackTutorial.html#cp_DeviceSWComp", null ]
+      ] ],
+      [ "Pack with Board Support", "cp_PackTutorial.html#createPackBoard", [
+        [ "Specify a Development Board", "cp_PackTutorial.html#cp_SpecDevBoard", null ],
+        [ "Create a BSP Bundle", "cp_PackTutorial.html#cp_BundleExample", null ]
       ] ]
     ] ],
-    [ "Pack with Board Support", "createPackBoard.html", [
-      [ "Specify a Development Board", "createPackBoard.html#cp_SpecDevBoard", null ],
-      [ "Create a BSP Bundle", "createPackBoard.html#cp_BundleExample", null ]
-    ] ],
-    [ "Pack Example", "pack_Example.html", null ],
     [ "Utilities for Creating Packs", "createPackUtil.html", "createPackUtil" ],
     [ "Publish a Pack", "createPackPublish.html", [
       [ "Prerequisites", "createPackPublish.html#cp_prerequisites", null ],
@@ -97,7 +95,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "algorithmFunc.html",
-"sdf_pg.html#sdf_element_system_description"
+"sdf_pg.html#sdf_element_device_info_items"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

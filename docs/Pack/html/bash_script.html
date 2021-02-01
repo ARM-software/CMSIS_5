@@ -110,13 +110,14 @@ $(document).ready(function(){initNavTree('bash_script.html','');});
 <div class="title">Bash Script gen_pack.sh </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>The following <a href="https://en.wikipedia.org/wiki/Bash_(Unix_shell)" target="_blank">Bash</a> shell script template <a class="el" href="bash_script.html#gen_pack_sh">gen_pack.sh</a> allows you to generate a Pack file on the Linux or the Windows operating system. Bash is available for Windows, for example, via <a href="https://gitforwindows.org/" target="_blank">git for Windows</a>.</p>
+<div class="textblock"><p>The following <a href="https://en.wikipedia.org/wiki/Bash_(Unix_shell)" target="_blank">Bash</a> shell script template <a class="el" href="bash_script.html#gen_pack_sh">gen_pack.sh</a> allows you to generate a pack file under Linux or Windows. On Windows, Bash is available via <a href="https://gitforwindows.org/" target="_blank">git for Windows</a> for example.</p>
 <p>For using <a class="el" href="bash_script.html#gen_pack_sh">gen_pack.sh</a></p>
 <ul>
-<li>Install <a class="el" href="cp_ZIPTool.html">7-Zip</a> (and for Linux <a class="el" href="cp_Editors.html#xmllint">xmllint</a> for schema validation).</li>
-<li>Adapt the file <a class="el" href="bash_script.html#gen_pack_sh">gen_pack.sh</a> that is available in the directory <b>/CMSIS/Pack/Bash</b> to the requirements of your software pack.</li>
+<li>Install <a class="el" href="cp_ZIPTool.html">7-Zip</a>.</li>
+<li>Install <a class="el" href="cp_Editors.html#cp_Editors_xmllint">xmllint</a>.</li>
+<li>Adapt the file <a class="el" href="bash_script.html#gen_pack_sh">gen_pack.sh</a> that is available in the directory <b>/CMSIS/Pack/Bash</b> to the requirements of your software pack and .</li>
 </ul>
-<p>The script is generic enough to cope with a wide range of requirements. It uses the information from the <a class="el" href="packFormat.html">*.PDSC file</a> to generate the output filename according the CMSIS-Pack conventions and validates the pack consistency with <a class="el" href="packChk.html">packChk</a>.</p>
+<p>The script is generic enough to cope with a wide range of requirements. It uses the information from the <a class="el" href="packFormat.html">*.PDSC file</a> to generate the output filename according the CMSIS-Pack conventions and validates the pack consistency with <a class="el" href="packChk.html">PackChk</a>.</p>
 <p>Below is a sample output (reduced). </p>
 <div class="fragment"><div class="line">$ ./gen_pack.sh</div>
 <div class="line"> </div>
@@ -153,15 +154,15 @@ $(document).ready(function(){initNavTree('bash_script.html','');});
 <div class="line">Everything is Ok</div>
 <div class="line">Completed CMSIS-Pack Generation ...</div>
 </div><!-- fragment --><p><a class="anchor" id="gen_pack_sh"></a><b>gen_pack.sh Bash script template file</b></p>
-<p>The <b>gen_pack.sh</b> script template allows to configure:</p>
+<p>The <b>gen_pack.sh</b> script template allows you to configure:</p>
 <ul>
-<li>Path environment variables for related utilities</li>
-<li>Directory names for temporary build and output files</li>
-<li>Directory names and files in the root directory that should be included in the pack</li>
+<li>Path environment variables for related utilities (<code>CMSIS_PACK_PATH</code>, <code>PATH_TO_ADD</code>)</li>
+<li>Directory names for temporary build and output files (<code>PACK_WAREHOUSE</code>, <code>PACK_BUILD</code>)</li>
+<li>Directory names and files in the root directory that should be included in the pack (<code>PACK_DIRS</code>, <code>PACK_BASE_FILES</code>)</li>
 </ul>
 <pre class="fragment">#!/bin/bash
-# Version: 1.0 
-# Date: 2019-08-16
+# Version: 1.1 
+# Date: 2020-04-29
 # This bash script generates a CMSIS Software Pack:
 #
 # Pre-requisites:
@@ -170,18 +171,20 @@ $(document).ready(function(){initNavTree('bash_script.html','');});
 #   e.g. Ubuntu: sudo apt-get install p7zip-full p7zip-rar) 
 # - PackChk in path with execute permission
 #   (see CMSIS-Pack: CMSIS/Utilities/&lt;os&gt;/PackChk)
-# - xmllint in path (XML schema validation; available only for Linux)
+# - xmllint in path (XML schema validation)
+#   e.g. Ubuntu: sudo apt-get install libxml2-utils
+#   Windows: download from https://www.zlatkovic.com/pub/libxml/
 
 ############### EDIT BELOW ###############
 # Extend Path environment variable locally
 #
 if [ `uname -s` = "Linux" ]
   then
-  CMSIS_PACK_PATH="/home/$USER/.arm/Packs/ARM/CMSIS/5.6.0/"
-  PATH_TO_ADD="$CMSIS_PACK_PATH/CMSIS/Utilities/Linux-gcc-4.8.3/"
+  CMSIS_PACK_PATH="/home/$USER/.arm/Packs/ARM/CMSIS/5.7.0/"
+  PATH_TO_ADD="$CMSIS_PACK_PATH/CMSIS/Utilities/Linux64/"
 else
-  CMSIS_PACK_PATH="/C/Keil_v5/ARM/PACK/ARM/CMSIS/5.6.0"
-  PATH_TO_ADD="/C/Program Files/7-Zip/:$CMSIS_PACK_PATH/CMSIS/Utilities/Win32/"
+  CMSIS_PACK_PATH="$LOCALAPPDATA/Arm/Packs/ARM/CMSIS/5.7.0"
+  PATH_TO_ADD="/C/Program Files/7-Zip/:$CMSIS_PACK_PATH/CMSIS/Utilities/Win32/:/C/xmllint/"
 fi
 [[ ":$PATH:" != *":$PATH_TO_ADD}:"* ]] &amp;&amp; PATH="${PATH}:${PATH_TO_ADD}"
 echo $PATH_TO_ADD appended to PATH
@@ -209,7 +212,7 @@ PACK_DIRS=${PACK_DIRS//$PACK_WAREHOUSE/}
 # Specify file names to be added to pack base directory
 PACK_BASE_FILES="
   License.txt
-  ReadMe.txt
+  README.md
 "
 
 ############ DO NOT EDIT BELOW ###########
@@ -236,6 +239,19 @@ if [ $errorlevel != 0 ]
   echo "Action: Add PackChk to your path"
   echo "Hint: Included in CMSIS Pack:"
   echo "&lt;pack_root_dir&gt;/ARM/CMSIS/&lt;version&gt;/CMSIS/Utilities/&lt;os&gt;/"
+  echo " "
+  exit
+fi
+echo " "
+
+# XML syntax checking utility check
+XMLLINT=xmllint
+type -a $XMLLINT
+errorlevel=$?
+if [ $errorlevel != 0 ]
+  then
+  echo "Error: No xmllint found"
+  echo "Action: Add xmllint to your path"
   echo " "
   exit
 fi
@@ -300,18 +316,13 @@ done
 # Run Schema Check (for Linux only):
 # sudo apt-get install libxml2-utils
 
-if [ `uname -s` = "Linux" ]
-  then
-  echo Running schema check for $PACK_VENDOR.$PACK_NAME.pdsc
-  xmllint --noout --schema ${CMSIS_PACK_PATH}/CMSIS/Utilities/PACK.xsd $PACK_BUILD/$PACK_VENDOR.$PACK_NAME.pdsc
-  errorlevel=$?
-  if [ $errorlevel -ne 0 ]; then
-    echo "build aborted: Schema check of $PACK_VENDOR.$PACK_NAME.pdsc against PACK.xsd failed"
-    echo " "
-    exit
-  fi
-else
-  echo "Use MDK PackInstaller to run schema validation for $PACK_VENDOR.$PACK_NAME.pdsc"
+echo Running schema check for $PACK_VENDOR.$PACK_NAME.pdsc
+$XMLLINT --noout --schema ${CMSIS_PACK_PATH}/CMSIS/Utilities/PACK.xsd $PACK_BUILD/$PACK_VENDOR.$PACK_NAME.pdsc
+errorlevel=$?
+if [ $errorlevel -ne 0 ]; then
+  echo "build aborted: Schema check of $PACK_VENDOR.$PACK_NAME.pdsc against PACK.xsd failed"
+  echo " "
+  exit
 fi
 
 # Run Pack Check and generate PackName file with version
@@ -359,7 +370,7 @@ echo Completed CMSIS-Pack Generation: `date`
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="createPackUtil.html">Utilities for Creating Packs</a></li>
-    <li class="footer">Generated on Thu Apr 9 2020 15:49:54 for CMSIS-Pack Version 1.6.3 by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Mon Feb 1 2021 16:48:05 for CMSIS-Pack Version 1.6.3 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 
