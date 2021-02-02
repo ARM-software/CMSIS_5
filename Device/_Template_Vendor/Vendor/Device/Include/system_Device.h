@@ -1,12 +1,12 @@
-/**************************************************************************//**
+/*************************************************************************//**
  * @file     system_<Device>.h
- * @brief    CMSIS Cortex-M# Device Peripheral Access Layer Header File for
+ * @brief    CMSIS-Core(M) Device Peripheral Access Layer Header File for
  *           Device <Device>
- * @version  V5.00
- * @date     10. January 2018
- ******************************************************************************/
+ * @version  V1.0.0
+ * @date     20. January 2021
+ *****************************************************************************/
 /*
- * Copyright (c) 2009-2018 Arm Limited. All rights reserved.
+ * Copyright (c) 2009-2021 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -30,10 +30,15 @@
 extern "C" {
 #endif
 
-#include <stdint.h>
+/**
+  \brief Exception / Interrupt Handler Function Prototype
+*/
+typedef void(*VECTOR_TABLE_Type)(void);
 
-extern uint32_t SystemCoreClock;     /*!< System Clock Frequency (Core Clock)  */
-
+/**
+  \brief System Clock Frequency (Core Clock)
+*/
+extern uint32_t SystemCoreClock;
 
 /**
   \brief Setup the microcontroller system.
@@ -49,7 +54,6 @@ extern void SystemInit (void);
    Updates the SystemCoreClock with current core Clock retrieved from cpu registers.
  */
 extern void SystemCoreClockUpdate (void);
-
 
 #ifdef __cplusplus
 }
