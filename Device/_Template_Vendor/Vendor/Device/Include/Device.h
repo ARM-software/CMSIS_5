@@ -1,12 +1,12 @@
-/**************************************************************************//**
+/*************************************************************************//**
  * @file     <Device>.h
- * @brief    CMSIS Cortex-M# Core Peripheral Access Layer Header File for
+ * @brief    CMSIS-Core(M) Device Peripheral Access Layer Header File for
  *           Device <Device>
- * @version  V5.00
- * @date     10. January 2018
- ******************************************************************************/
+ * @version  V1.0.0
+ * @date     20. January 2021
+ *****************************************************************************/
 /*
- * Copyright (c) 2009-2018 Arm Limited. All rights reserved.
+ * Copyright (c) 2009-2021 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -23,109 +23,56 @@
  * limitations under the License.
  */
 
-#ifndef <Device>_H      /* ToDo: replace '<Device>' with your device name */
+#ifndef <Device>_H      /* ToDo: Replace '<Device>' with your device name */
 #define <Device>_H
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-/* ToDo: replace '<Vendor>' with vendor name; add your doxyGen comment   */
-/** @addtogroup <Vendor>
-  * @{
-  */
 
-
-/* ToDo: replace '<Device>' with device name; add your doxyGen comment   */
-/** @addtogroup <Device>
-  * @{
-  */
-
-
-/** @addtogroup Configuration_of_CMSIS
-  * @{
-  */
-
-
-
-/* =========================================================================================================================== */
-/* ================                                Interrupt Number Definition                                ================ */
-/* =========================================================================================================================== */
+/* ========================================================================= */
+/* ============           Interrupt Number Definition           ============ */
+/* ========================================================================= */
 
 typedef enum IRQn
 {
-/* =======================================  ARM Cortex-M# Specific Interrupt Numbers  ======================================== */
+/* ================     Cortex-M Core Exception Numbers     ================ */
 
-/* ToDo: use this Cortex interrupt numbers if your device is a Cortex-M0 / Cortex-M0+ device */
-  Reset_IRQn                = -15,              /*!< -15  Reset Vector, invoked on Power up and warm reset                     */
-  NonMaskableInt_IRQn       = -14,              /*!< -14  Non maskable Interrupt, cannot be stopped or preempted               */
-  HardFault_IRQn            = -13,              /*!< -13  Hard Fault, all classes of Fault                                     */
-  SVCall_IRQn               =  -5,              /*!< -5 System Service Call via SVC instruction                                */
-  PendSV_IRQn               =  -2,              /*!< -2 Pendable request for system service                                    */
-  SysTick_IRQn              =  -1,              /*!< -1 System Tick Timer                                                      */
+/* ToDo: Add Cortex exception numbers according the used Cortex-Core */
+  Reset_IRQn             = -15,  /*  1 Reset Vector
+                                       invoked on Power up and warm reset */
+  NonMaskableInt_IRQn    = -14,  /*  2 Non maskable Interrupt
+                                       cannot be stopped or preempted */
+  HardFault_IRQn         = -13,  /*  3 Hard Fault
+                                       all classes of Fault */
+  MemoryManagement_IRQn  = -12,  /*  4 Memory Management
+                                       MPU mismatch, including Access Violation and No Match */
+  BusFault_IRQn          = -11,  /*  5 Bus Fault
+                                       Pre-Fetch-, Memory Access, other address/memory Fault */
+  UsageFault_IRQn        = -10,  /*  6 Usage Fault
+                                       i.e. Undef Instruction, Illegal State Transition */
+  SecureFault_IRQn       =  -9,  /*  7 Secure Fault Interrupt */
+  SVCall_IRQn            =  -5,  /* 11 System Service Call via SVC instruction */
+  DebugMonitor_IRQn      =  -4,  /* 12 Debug Monitor */
+  PendSV_IRQn            =  -2,  /* 14 Pendable request for system service */
+  SysTick_IRQn           =  -1,  /* 15 System Tick Timer */
 
-/* ToDo: use this Cortex interrupt numbers if your device is a Cortex-M3 / Cortex-M4 / Cortex-M7 device */
-  Reset_IRQn                = -15,              /*!< -15  Reset Vector, invoked on Power up and warm reset                     */
-  NonMaskableInt_IRQn       = -14,              /*!< -14  Non maskable Interrupt, cannot be stopped or preempted               */
-  HardFault_IRQn            = -13,              /*!< -13  Hard Fault, all classes of Fault                                     */
-  MemoryManagement_IRQn     = -12,              /*!< -12  Memory Management, MPU mismatch, including Access Violation
-                                                          and No Match                                                         */
-  BusFault_IRQn             = -11,              /*!< -11  Bus Fault, Pre-Fetch-, Memory Access Fault, other address/memory
-                                                          related Fault                                                        */
-  UsageFault_IRQn           = -10,              /*!< -10  Usage Fault, i.e. Undef Instruction, Illegal State Transition        */
-  SVCall_IRQn               =  -5,              /*!< -5 System Service Call via SVC instruction                                */
-  DebugMonitor_IRQn         =  -4,              /*!< -4 Debug Monitor                                                          */
-  PendSV_IRQn               =  -2,              /*!< -2 Pendable request for system service                                    */
-  SysTick_IRQn              =  -1,              /*!< -1 System Tick Timer                                                      */
-
-/* ===========================================  <Device> Specific Interrupt Numbers  ========================================= */
-/* ToDo: add here your device specific external interrupt numbers
+/* ================        <Device> Interrupt Numbers       ================ */
+/* ToDo: Add here your device specific interrupt numbers
          according the interrupt handlers defined in startup_Device.s
          eg.: Interrupt for Timer#1       TIM1_IRQHandler   ->   TIM1_IRQn */
-  <DeviceInterrupt>_IRQn    = 0,                /*!< Device Interrupt                                                          */
+  <DeviceInterrupt first>_IRQn = 0,    /* first Device Interrupt*/
+  ...
+  <DeviceInterrupt last>_IRQn  = n     /* last Device Interrupt */
 } IRQn_Type;
 
 
+/* ========================================================================= */
+/* ============      Processor and Core Peripheral Section      ============ */
+/* ========================================================================= */
 
-/* =========================================================================================================================== */
-/* ================                           Processor and Core Peripheral Section                           ================ */
-/* =========================================================================================================================== */
-
-/* ===========================  Configuration of the Arm Cortex-M4 Processor and Core Peripherals  =========================== */
-/* ToDo: set the defines according your Device */
-/* ToDo: define the correct core revision
-         __CM0_REV if your device is a Cortex-M0 device
-         __CM3_REV if your device is a Cortex-M3 device
-         __CM4_REV if your device is a Cortex-M4 device
-         __CM7_REV if your device is a Cortex-M7 device */
-#define __CM#_REV                 0x0201    /*!< Core Revision r2p1 */
-/* ToDo: define the correct core features for the <Device> */
-#define __MPU_PRESENT             1         /*!< Set to 1 if MPU is present */
-#define __VTOR_PRESENT            1         /*!< Set to 1 if VTOR is present */
-#define __NVIC_PRIO_BITS          3         /*!< Number of Bits used for Priority Levels */
-#define __Vendor_SysTickConfig    0         /*!< Set to 1 if different SysTick Config is used */
-#define __FPU_PRESENT             0         /*!< Set to 1 if FPU is present */
-#define __FPU_DP                  0         /*!< Set to 1 if FPU is double precision FPU (default is single precision FPU) */
-#define __ICACHE_PRESENT          0         /*!< Set to 1 if I-Cache is present */
-#define __DCACHE_PRESENT          0         /*!< Set to 1 if D-Cache is present */
-#define __DTCM_PRESENT            0         /*!< Set to 1 if DTCM is present */
-
-
-/** @} */ /* End of group Configuration_of_CMSIS */
-
-
-/* ToDo: include the correct core_cm#.h file
-         core_cm0.h if your device is a CORTEX-M0 device
-         core_cm3.h if your device is a CORTEX-M3 device
-         core_cm4.h if your device is a CORTEX-M4 device
-         core_cm7.h if your device is a CORTEX-M4 device */
-#include <core_cm#.h>                           /*!< Arm Cortex-M# processor and core peripherals */
-/* ToDo: include your system_<Device>.h file
-         replace '<Device>' with your device name */
-#include "system_<Device>.h"                    /*!< <Device> System */
-
-
-/* ========================================  Start of section using anonymous unions  ======================================== */
+/* ================ Start of section using anonymous unions ================ */
 #if   defined (__CC_ARM)
   #pragma push
   #pragma anon_unions
@@ -148,48 +95,89 @@ typedef enum IRQn
 #endif
 
 
-/* =========================================================================================================================== */
-/* ================                            Device Specific Peripheral Section                             ================ */
-/* =========================================================================================================================== */
+/* ================    Configuration of Core Peripherals    ================ */
+/* ToDo: Set the defines according your Device */
+/* ToDo: Define the correct core revision
+         valid CMSIS core revision macro names are:
+           __CM0_REV, __CM0PLUS_REV, __CM1_REV, __CM3_REV, __CM4_REV, __CM7_REV
+           __CM23_REV, __CM33_REV, __CM35P_REV, __CM55_REV
+           __SC000_REV, __SC300_REV */
+#define __CM#_REV               0x0201U  /* Core Revision r2p1 */
+/* ToDo: define the correct core features for the <Device> */
+#define __Vendor_SysTickConfig  0U       /* Set to 1 if different SysTick Config is used */
+#define __NVIC_PRIO_BITS        3U       /* Number of Bits used for Priority Levels */
+#define __VTOR_PRESENT          1U       /* Set to 1 if VTOR is present */
+#define __MPU_PRESENT           1U       /* Set to 1 if MPU is present */
+#define __FPU_PRESENT           0U       /* Set to 1 if FPU is present */
+#define __FPU_DP                0U       /* Set to 1 if FPU is double precision FPU (default is single precision FPU) */
+#define __DSP_PRESENT           1U       /* Set to 1 if DSP extension are present */
+#define __SAUREGION_PRESENT     1U       /* Set to 1 if SAU regions are present */
+#define __PMU_PRESENT           1U       /* Set to 1 if PMU is present */
+#define __PMU_NUM_EVENTCNT      8U       /* Set number of PMU Event Counters */
+#define __ICACHE_PRESENT        0U       /* Set to 1 if I-Cache is present */
+#define __DCACHE_PRESENT        0U       /* Set to 1 if D-Cache is present */
+#define __DTCM_PRESENT          0U       /* Set to 1 if DTCM is present */
 
 
-/** @addtogroup Device_Peripheral_peripherals
-  * @{
-  */
+/* ToDo: Include the CMSIS core header file according your device.
+         valid CMSIS core header files are:
+           core_cm0.h, core_cm0plus.h, core_cm1.h, core_cm3.h, core_cm4.h, core_cm7.h
+           core_cm23.h, core_cm33.h, core_cm35p.h, core_cm55.h
+           core_sc000.h, core_sc300.h */
+#include <core_cm#.h>                           /* Processor and core peripherals */
+/* ToDo: Include your system_<Device>.h file
+         replace '<Device>' with your device name */
+#include "system_<Device>.h"                    /* System Header */
 
-/* ToDo: add here your device specific peripheral access structure typedefs
+
+
+/* ========================================================================= */
+/* ============       Device Specific Peripheral Section        ============ */
+/* ========================================================================= */
+
+
+/* ToDo: Add here your device specific peripheral access structure typedefs
+         including bit definitions for Pos/Msk macros
          following is an example for a timer */
 
-/* =========================================================================================================================== */
-/* ================                                            TMR                                            ================ */
-/* =========================================================================================================================== */
-
-
-/**
-  * @brief Timer (TMR)
-  */
+/* ========================================================================= */
+/* ============                       TMR                       ============ */
+/* ========================================================================= */
 
 typedef struct
-{                                               /*!< (@ 0x40000000) TIM Structure                                              */
-  __IOM uint32_t   TimerLoad;                   /*!< (@ 0x00000004) Timer Load                                                 */
-  __IM  uint32_t   TimerValue;                  /*!< (@ 0x00000008) Timer Counter Current Value                                */
-  __IOM uint32_t   TimerControl;                /*!< (@ 0x0000000C) Timer Control                                              */
-  __OM  uint32_t   TimerIntClr;                 /*!< (@ 0x00000010) Timer Interrupt Clear                                      */
-  __IM  uint32_t   TimerRIS;                    /*!< (@ 0x00000014) Timer Raw Interrupt Status                                 */
-  __IM  uint32_t   TimerMIS;                    /*!< (@ 0x00000018) Timer Masked Interrupt Status                              */
-  __IM  uint32_t   RESERVED[1];
-  __IOM uint32_t   TimerBGLoad;                 /*!< (@ 0x00000020) Background Load Register                                   */
+{
+  __IOM  uint32_t  LOAD;                 /* Offset: 0x000 (R/W) Load Register */
+  __IM   uint32_t  VALUE;                /* Offset: 0x004 (R/ ) Value Register */
+  __IOM  uint32_t  CONTROL;              /* Offset: 0x008 (R/W) Control Register */
+  __OM   uint32_t  INTCLR;               /* Offset: 0x00C ( /W) Clear Interrupt Register */
+  __IM   uint32_t  RIS;                  /* Offset: 0x010 (R/ ) Raw Interrupt Status Register */
+  __IM   uint32_t  MIS;                  /* Offset: 0x014 (R/ ) Interrupt Status Register */
+  __IOM  uint32_t  BGLOAD;               /* Offset: 0x018 (R/W) Background Load Register */
 } <DeviceAbbreviation>_TMR_TypeDef;
 
-/*@}*/ /* end of group <Device>_Peripherals */
+/* <DeviceAbbreviation>_TMR LOAD Register Definitions */
+#define <DeviceAbbreviation>_TMR_LOAD_Pos              0
+#define <DeviceAbbreviation>_TMR_LOAD_Msk             (0xFFFFFFFFUL /*<< <DeviceAbbreviation>_TMR_LOAD_Pos*/)
+
+/* <DeviceAbbreviation>_TMR VALUE Register Definitions */
+#define <DeviceAbbreviation>_TMR_VALUE_Pos             0
+#define <DeviceAbbreviation>_TMR_VALUE_Msk            (0xFFFFFFFFUL /*<< <DeviceAbbreviation>_TMR_VALUE_Pos*/)
+
+/* <DeviceAbbreviation>_TMR CONTROL Register Definitions */
+#define <DeviceAbbreviation>_TMR_CONTROL_SIZE_Pos      1
+#define <DeviceAbbreviation>_TMR_CONTROL_SIZE_Msk     (1UL << <DeviceAbbreviation>_TMR_CONTROL_SIZE_Pos)
+
+#define <DeviceAbbreviation>_TMR_CONTROL_ONESHOT_Pos   0
+#define <DeviceAbbreviation>_TMR_CONTROL_ONESHOT_Msk  (1UL /*<< <DeviceAbbreviation>_TMR_CONTROL_ONESHOT_Pos*/)
 
 
-/* =========================================  End of section using anonymous unions  ========================================= */
+
+/* ================  End of section using anonymous unions  ================ */
 #if   defined (__CC_ARM)
   #pragma pop
 #elif defined (__ICCARM__)
   /* leave anonymous unions enabled */
-#elif (__ARMCC_VERSION >= 6010050)
+#elif (defined(__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050))
   #pragma clang diagnostic pop
 #elif defined (__GNUC__)
   /* anonymous unions are enabled by default */
@@ -204,49 +192,36 @@ typedef struct
 #endif
 
 
-/* =========================================================================================================================== */
-/* ================                          Device Specific Peripheral Address Map                           ================ */
-/* =========================================================================================================================== */
+/* ========================================================================= */
+/* ============     Device Specific Peripheral Address Map      ============ */
+/* ========================================================================= */
 
 
-/* ToDo: add here your device peripherals base addresses
+/* ToDo: Add here your device peripherals base addresses
          following is an example for timer */
-/** @addtogroup Device_Peripheral_peripheralAddr
-  * @{
-  */
 
 /* Peripheral and SRAM base address */
-#define <DeviceAbbreviation>_FLASH_BASE       (0x00000000UL)                              /*!< (FLASH     ) Base Address */
-#define <DeviceAbbreviation>_SRAM_BASE        (0x20000000UL)                              /*!< (SRAM      ) Base Address */
-#define <DeviceAbbreviation>_PERIPH_BASE      (0x40000000UL)                              /*!< (Peripheral) Base Address */
+#define <DeviceAbbreviation>_FLASH_BASE       (0x00000000UL)                              /* (FLASH     ) Base Address */
+#define <DeviceAbbreviation>_SRAM_BASE        (0x20000000UL)                              /* (SRAM      ) Base Address */
+#define <DeviceAbbreviation>_PERIPH_BASE      (0x40000000UL)                              /* (Peripheral) Base Address */
 
 /* Peripheral memory map */
-#define <DeviceAbbreviation>TIM0_BASE         (<DeviceAbbreviation>_PERIPH_BASE)          /*!< (Timer0    ) Base Address */
-#define <DeviceAbbreviation>TIM1_BASE         (<DeviceAbbreviation>_PERIPH_BASE + 0x0800) /*!< (Timer1    ) Base Address */
-#define <DeviceAbbreviation>TIM2_BASE         (<DeviceAbbreviation>_PERIPH_BASE + 0x1000) /*!< (Timer2    ) Base Address */
-
-/** @} */ /* End of group Device_Peripheral_peripheralAddr */
+#define <DeviceAbbreviation>TIM0_BASE         (<DeviceAbbreviation>_PERIPH_BASE)          /* (Timer0    ) Base Address */
+#define <DeviceAbbreviation>TIM1_BASE         (<DeviceAbbreviation>_PERIPH_BASE + 0x0800) /* (Timer1    ) Base Address */
+#define <DeviceAbbreviation>TIM2_BASE         (<DeviceAbbreviation>_PERIPH_BASE + 0x1000) /* (Timer2    ) Base Address */
 
 
-/* =========================================================================================================================== */
-/* ================                                  Peripheral declaration                                   ================ */
-/* =========================================================================================================================== */
+/* ========================================================================= */
+/* ============             Peripheral declaration              ============ */
+/* ========================================================================= */
 
 
-/* ToDo: add here your device peripherals pointer definitions
+/* ToDo: Add here your device peripherals pointer definitions
          following is an example for timer */
-/** @addtogroup Device_Peripheral_declaration
-  * @{
-  */
 
 #define <DeviceAbbreviation>_TIM0        ((<DeviceAbbreviation>_TMR_TypeDef *) <DeviceAbbreviation>TIM0_BASE)
 #define <DeviceAbbreviation>_TIM1        ((<DeviceAbbreviation>_TMR_TypeDef *) <DeviceAbbreviation>TIM0_BASE)
 #define <DeviceAbbreviation>_TIM2        ((<DeviceAbbreviation>_TMR_TypeDef *) <DeviceAbbreviation>TIM0_BASE)
-
-
-/** @} */ /* End of group <Device> */
-
-/** @} */ /* End of group <Vendor> */
 
 #ifdef __cplusplus
 }

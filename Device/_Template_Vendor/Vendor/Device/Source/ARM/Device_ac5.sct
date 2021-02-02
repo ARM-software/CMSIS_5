@@ -40,20 +40,23 @@
 /*----------------------------------------------------------------------------
   User Stack & Heap boundary definition
  *----------------------------------------------------------------------------*/
-#define __STACK_TOP    (__RAM_BASE + __RAM_SIZE)    /* starts at end of RAM */
-#define __HEAP_BASE    (AlignExpr(+0, 8))           /* starts after RW_RAM section, 8 byte aligned */
+#define __STACK_TOP    (__RAM_BASE + __RAM_SIZE)                    /* starts at end of RAM */
+#define __HEAP_BASE    (AlignExpr(+0, 8))                           /* starts after RW_RAM section, 8 byte aligned */
 
 
 /*----------------------------------------------------------------------------
-  Scatter File Definitions definition
+  Region base & size definition
  *----------------------------------------------------------------------------*/
-#define __RO_BASE       __ROM_BASE
-#define __RO_SIZE       __ROM_SIZE
+#define __RO_BASE          ( __ROM_BASE )
+#define __RO_SIZE          ( __ROM_SIZE )
 
-#define __RW_BASE       __RAM_BASE
-#define __RW_SIZE      (__RAM_SIZE - __STACK_SIZE - __HEAP_SIZE)
+#define __RW_BASE          ( __RAM_BASE )
+#define __RW_SIZE          ( __RAM_SIZE - __STACK_SIZE - __HEAP_SIZE )
 
 
+/*----------------------------------------------------------------------------
+  Scatter Region definition
+ *----------------------------------------------------------------------------*/
 LR_ROM __RO_BASE __RO_SIZE  {                       ; load region size_region
   ER_ROM __RO_BASE __RO_SIZE  {                     ; load address = execution address
    *.o (RESET, +First)
