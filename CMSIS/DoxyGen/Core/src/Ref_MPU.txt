@@ -138,7 +138,7 @@ __STATIC_INLINE void ARM_MPU_SetRegion(uint32_t rbar, uint32_t rasr);
 */
 __STATIC_INLINE void ARM_MPU_SetRegionEx(uint32_t rnr, uint32_t rbar, uint32_t rasr);
 
-/** Memcpy with strictly ordered memory access, e.g. for accessing MPU alias regiseters.
+/** Memcpy with strictly ordered memory access, e.g. used by code in \ref ARM_MPU_Load.
 * \param dst Destination data is copied to.
 * \param src Source data is copied from.
 * \param len Amount of data words to be copied.
