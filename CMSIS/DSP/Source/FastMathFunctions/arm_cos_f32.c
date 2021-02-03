@@ -26,7 +26,7 @@
  * limitations under the License.
  */
 
-#include "arm_math.h"
+#include "dsp/fast_math_functions.h"
 #include "arm_common_tables.h"
 
 /**
@@ -44,7 +44,7 @@
   [0 +0.9999] mapping to [0 2*pi).  The fixed-point range is chosen so that a
   value of 2*pi wraps around to 0.
 
-  The implementation is based on table lookup using 256 values together with linear interpolation.
+  The implementation is based on table lookup using 512 values together with linear interpolation.
   The steps used are:
    -# Calculation of the nearest integer table index
    -# Compute the fractional portion (fract) of the table index.

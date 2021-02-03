@@ -1,0 +1,35 @@
+#! armclang -E --target=arm-arm-none-eabi -mcpu=cortex-m7 -xc
+; command above MUST be in first line (no comment above!)
+
+/*
+;-------- <<< Use Configuration Wizard in Context Menu >>> -------------------
+*/
+
+#include "mem_ARMCR5.h"
+
+LOAD_REGION 0x0
+{
+    CODE +0 0x80000
+    {
+        *.o (VECTORS, +First)
+        * (InRoot$$$Sections)
+        * (+RO-CODE)                             
+    }
+
+    DATA 0x100000 NOCOMPRESS 0x60000
+    {
+    * (+RO-DATA)
+	* (+RW,+ZI)                         
+    }
+
+    ARM_LIB_STACKHEAP 0x180000 ALIGN 64 EMPTY 0x000052000
+    {}
+
+
+}
+
+
+
+
+
+

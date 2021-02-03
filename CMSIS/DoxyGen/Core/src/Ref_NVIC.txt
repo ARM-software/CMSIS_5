@@ -482,7 +482,7 @@ void NVIC_EnableIRQ(IRQn_Type IRQn);
     
     \returns    
             - 0  Interrupt is not enabled
-            - 1  Interrupt is pending
+            - 1  Interrupt is enabled
 
     \remarks
         - IRQn must not be negative.

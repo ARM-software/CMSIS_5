@@ -1,4 +1,4 @@
-cmake_minimum_required (VERSION 3.6)
+cmake_minimum_required (VERSION 3.14)
 
 project(CMSISDSPBasicMath)
 
@@ -19,7 +19,7 @@ file(GLOB SRCU8  "./*_u8.c")
 add_library(CMSISDSPBasicMath STATIC ${SRCF64})
 target_sources(CMSISDSPBasicMath PRIVATE ${SRCF32})
 
-if (NOT ARMAC5)
+if ((NOT ARMAC5) AND (NOT DISABLEFLOAT16))
 target_sources(CMSISDSPBasicMath PRIVATE ${SRCF16})
 endif()
 

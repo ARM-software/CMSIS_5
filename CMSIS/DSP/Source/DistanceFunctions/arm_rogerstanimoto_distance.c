@@ -25,7 +25,7 @@
  * limitations under the License.
  */
 
-#include "arm_math.h"
+#include "dsp/distance_functions.h"
 #include <limits.h>
 #include <math.h>
 
@@ -47,7 +47,7 @@ extern void arm_boolean_distance_TT_FF_TF_FT(const uint32_t *pA
  */
 
 /**
- * @brief        Roger Stanimoto distance between two vectors
+ * @brief        Rogers Tanimoto distance between two vectors
  *
  * @param[in]    pA              First vector of packed booleans
  * @param[in]    pB              Second vector of packed booleans

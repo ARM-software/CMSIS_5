@@ -757,9 +757,7 @@ WARN_LOGFILE           =
 INPUT                  = . \
                          src/General.txt \
                          src/pack_creation.txt \
-                         src/pack_swcomponents.txt \
-                         src/pack_dfp.txt \
-                         src/pack_boards.txt \
+                         src/pack_tutorial.txt \
                          src/pack_check.txt \
                          src/pack_utilities.txt \
                          src/pack_publish.txt \

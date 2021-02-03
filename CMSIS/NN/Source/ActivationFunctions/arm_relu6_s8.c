@@ -21,15 +21,15 @@
  * Title:        arm_relu6_s8.c
  * Description:  Basic s8 version of ReLU6
  *
- * $Date:        Spetember 2019
- * $Revision:    V.1.0.0
+ * $Date:        09. October 2020
+ * $Revision:    V.1.0.1
  *
  * Target Processor:  Cortex-M cores
  *
  * -------------------------------------------------------------------- */
 
-#include "arm_math.h"
 #include "arm_nnfunctions.h"
+#include "arm_nnsupportfunctions.h"
 
 /**
  *  @ingroup groupNN
@@ -40,12 +40,12 @@
  * @{
  */
 
-  /*
-   *  Basic ReLU6 function
-   *
-   * Refer to header file for details.
-   *
-   */
+/*
+ *  Basic ReLU6 function
+ *
+ * Refer to header file for details.
+ *
+ */
 
 void arm_relu6_s8(q7_t *data, uint16_t size)
 {

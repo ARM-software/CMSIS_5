@@ -1,7 +1,6 @@
 #include "StatsTestsF64.h"
 #include <stdio.h>
 #include "Error.h"
-#include "arm_math.h"
 #include "Test.h"
 
 
@@ -19,7 +18,6 @@ a double precision computation.
       const float64_t *inp  = inputA.ptr();
       const int16_t *dimsp  = dims.ptr();
 
-      float64_t *refp         = ref.ptr();
       float64_t *outp         = output.ptr();
 
       for(int i=0;i < this->nbPatterns; i++)
@@ -41,7 +39,6 @@ a double precision computation.
       const float64_t *inpB  = inputB.ptr();
       const int16_t *dimsp  = dims.ptr();
 
-      float64_t *refp         = ref.ptr();
       float64_t *outp         = output.ptr();
 
       for(int i=0;i < this->nbPatterns; i++)
@@ -60,6 +57,7 @@ a double precision computation.
   
     void StatsTestsF64::setUp(Testing::testID_t id,std::vector<Testing::param_t>& paramsArgs,Client::PatternMgr *mgr)
     {
+        (void)paramsArgs;
         switch(id)
         {
             case StatsTestsF64::TEST_ENTROPY_F64_1:
@@ -92,5 +90,6 @@ a double precision computation.
 
     void StatsTestsF64::tearDown(Testing::testID_t id,Client::PatternMgr *mgr)
     {
+        (void)id;
         output.dump(mgr);
     }

@@ -1,6 +1,6 @@
 #!/bin/bash
-# Version: 1.0 
-# Date: 2019-08-16
+# Version: 1.1 
+# Date: 2020-04-29
 # This bash script generates a CMSIS Software Pack:
 #
 # Pre-requisites:
@@ -9,18 +9,20 @@
 #   e.g. Ubuntu: sudo apt-get install p7zip-full p7zip-rar) 
 # - PackChk in path with execute permission
 #   (see CMSIS-Pack: CMSIS/Utilities/<os>/PackChk)
-# - xmllint in path (XML schema validation; available only for Linux)
+# - xmllint in path (XML schema validation)
+#   e.g. Ubuntu: sudo apt-get install libxml2-utils
+#   Windows: download from https://www.zlatkovic.com/pub/libxml/
 
 ############### EDIT BELOW ###############
 # Extend Path environment variable locally
 #
 if [ `uname -s` = "Linux" ]
   then
-  CMSIS_PACK_PATH="/home/$USER/.arm/Packs/ARM/CMSIS/5.6.0/"
-  PATH_TO_ADD="$CMSIS_PACK_PATH/CMSIS/Utilities/Linux-gcc-4.8.3/"
+  CMSIS_PACK_PATH="/home/$USER/.arm/Packs/ARM/CMSIS/5.7.0/"
+  PATH_TO_ADD="$CMSIS_PACK_PATH/CMSIS/Utilities/Linux64/"
 else
-  CMSIS_PACK_PATH="/C/Keil_v5/ARM/PACK/ARM/CMSIS/5.6.0"
-  PATH_TO_ADD="/C/Program Files/7-Zip/:$CMSIS_PACK_PATH/CMSIS/Utilities/Win32/"
+  CMSIS_PACK_PATH="$LOCALAPPDATA/Arm/Packs/ARM/CMSIS/5.7.0"
+  PATH_TO_ADD="/C/Program Files/7-Zip/:$CMSIS_PACK_PATH/CMSIS/Utilities/Win32/:/C/xmllint/"
 fi
 [[ ":$PATH:" != *":$PATH_TO_ADD}:"* ]] && PATH="${PATH}:${PATH_TO_ADD}"
 echo $PATH_TO_ADD appended to PATH
@@ -48,7 +50,7 @@ PACK_DIRS=${PACK_DIRS//$PACK_WAREHOUSE/}
 # Specify file names to be added to pack base directory
 PACK_BASE_FILES="
   License.txt
-  ReadMe.txt
+  README.md
 "
 
 ############ DO NOT EDIT BELOW ###########
@@ -75,6 +77,19 @@ if [ $errorlevel != 0 ]
   echo "Action: Add PackChk to your path"
   echo "Hint: Included in CMSIS Pack:"
   echo "<pack_root_dir>/ARM/CMSIS/<version>/CMSIS/Utilities/<os>/"
+  echo " "
+  exit
+fi
+echo " "
+
+# XML syntax checking utility check
+XMLLINT=xmllint
+type -a $XMLLINT
+errorlevel=$?
+if [ $errorlevel != 0 ]
+  then
+  echo "Error: No xmllint found"
+  echo "Action: Add xmllint to your path"
   echo " "
   exit
 fi
@@ -139,18 +154,13 @@ done
 # Run Schema Check (for Linux only):
 # sudo apt-get install libxml2-utils
 
-if [ `uname -s` = "Linux" ]
-  then
-  echo Running schema check for $PACK_VENDOR.$PACK_NAME.pdsc
-  xmllint --noout --schema ${CMSIS_PACK_PATH}/CMSIS/Utilities/PACK.xsd $PACK_BUILD/$PACK_VENDOR.$PACK_NAME.pdsc
-  errorlevel=$?
-  if [ $errorlevel -ne 0 ]; then
-    echo "build aborted: Schema check of $PACK_VENDOR.$PACK_NAME.pdsc against PACK.xsd failed"
-    echo " "
-    exit
-  fi
-else
-  echo "Use MDK PackInstaller to run schema validation for $PACK_VENDOR.$PACK_NAME.pdsc"
+echo Running schema check for $PACK_VENDOR.$PACK_NAME.pdsc
+$XMLLINT --noout --schema ${CMSIS_PACK_PATH}/CMSIS/Utilities/PACK.xsd $PACK_BUILD/$PACK_VENDOR.$PACK_NAME.pdsc
+errorlevel=$?
+if [ $errorlevel -ne 0 ]; then
+  echo "build aborted: Schema check of $PACK_VENDOR.$PACK_NAME.pdsc against PACK.xsd failed"
+  echo " "
+  exit
 fi
 
 # Run Pack Check and generate PackName file with version

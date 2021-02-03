@@ -9,7 +9,9 @@ import Tools
 
 parser = argparse.ArgumentParser(description='Generate C arrays')
 parser.add_argument('-f', nargs='?',type = str, default="../Source/CommonTables/arm_mve_tables.c", help="C File path")
+parser.add_argument('-f16', nargs='?',type = str, default="../Source/CommonTables/arm_mve_tables_f16.c", help="C File path")
 parser.add_argument('-he', nargs='?',type = str, default="../Include/arm_mve_tables.h", help="H File path")
+parser.add_argument('-he16', nargs='?',type = str, default="../Include/arm_mve_tables_f16.h", help="H File path")
 
 args = parser.parse_args()
 
@@ -323,7 +325,7 @@ def reorderTwiddle(theType,conjugate,f,h,n):
 
 cheader="""/* ----------------------------------------------------------------------
  * Project:      CMSIS DSP Library
- * Title:        arm_mve_tables.c
+ * Title:        arm_mve_tables%s.c
  * Description:  common tables like fft twiddle factors, Bitreverse, reciprocal etc
  *               used for MVE implementation only
  *
@@ -351,7 +353,7 @@ cheader="""/* ------------------------------------------------------------------
 
  """ 
 
-cifdeMVEF="""#include "arm_math.h"
+cifdeMVEF="""#include "arm_math%s.h"
 
 #if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
 
@@ -379,7 +381,7 @@ cfooterMVEI="""
 
 hheader="""/* ----------------------------------------------------------------------
  * Project:      CMSIS DSP Library
- * Title:        arm_mve_tables.h
+ * Title:        arm_mve_tables%s.h
  * Description:  common tables like fft twiddle factors, Bitreverse, reciprocal etc
  *               used for MVE implementation only
  *
@@ -405,12 +407,15 @@ hheader="""/* ------------------------------------------------------------------
  * limitations under the License.
  */
 
- #ifndef _ARM_MVE_TABLES_H
- #define _ARM_MVE_TABLES_H
+ #ifndef _ARM_MVE_TABLES_%sH
+ #define _ARM_MVE_TABLES_%sH
 
- #include "arm_math.h"
+ #include "arm_math%s.h"
 
- 
+#ifdef   __cplusplus
+extern "C"
+{
+#endif
 
 
  """ 
@@ -442,34 +447,47 @@ hfooterMVEI="""
 """
 
 hfooter="""
-#endif /*_ARM_MVE_TABLES_H*/
+#ifdef   __cplusplus
+}
+#endif
+
+#endif /*_ARM_MVE_TABLES_%sH*/
 """
 
+with open(args.f16,'w') as f:
+  with open(args.he16,'w') as h:
+     print(cheader % "_f16",file=f)
+     print(hheader % ("_f16","F16_","F16_","_f16"),file=h)
 
+     print("#if defined(ARM_FLOAT16_SUPPORTED)",file=f)
 
-with open(args.f,'w') as f:
-  with open(args.he,'w') as h:
-     print(cheader,file=f)
-     print(hheader,file=h)
-
-    
-     print(cifdeMVEF,file=f)
-     print(hifdefMVEF,file=h)
-     reorderTwiddle(F32,False,f,h,16)
-     reorderTwiddle(F32,False,f,h,64)
-     reorderTwiddle(F32,False,f,h,256)
-     reorderTwiddle(F32,False,f,h,1024)
-     reorderTwiddle(F32,False,f,h,4096)
-     print(cfooterMVEF,file=f)
-     print(hfooterMVEF,file=h)
-
-     print(cifdeMVEF,file=f)
+     print(cifdeMVEF % "_f16",file=f)
      print(hifdefMVEF,file=h)
      reorderTwiddle(F16,False,f,h,16)
      reorderTwiddle(F16,False,f,h,64)
      reorderTwiddle(F16,False,f,h,256)
      reorderTwiddle(F16,False,f,h,1024)
      reorderTwiddle(F16,False,f,h,4096)
+     print(cfooterMVEF,file=f)
+     print(hfooterMVEF,file=h)
+
+     print("#endif /* if defined(ARM_FLOAT16_SUPPORTED) */",file=f)
+
+     print(hfooter % "F16_",file=h)
+
+with open(args.f,'w') as f:
+  with open(args.he,'w') as h:
+     print(cheader % "",file=f)
+     print(hheader % ("","","",""),file=h)
+
+    
+     print(cifdeMVEF % "",file=f)
+     print(hifdefMVEF,file=h)
+     reorderTwiddle(F32,False,f,h,16)
+     reorderTwiddle(F32,False,f,h,64)
+     reorderTwiddle(F32,False,f,h,256)
+     reorderTwiddle(F32,False,f,h,1024)
+     reorderTwiddle(F32,False,f,h,4096)
      print(cfooterMVEF,file=f)
      print(hfooterMVEF,file=h)
 
@@ -493,14 +511,14 @@ with open(args.f,'w') as f:
      print(cfooterMVEI,file=f)
      print(hfooterMVEI,file=h)
 
-     print(cifdeMVEI,file=f)
-     print(hifdefMVEI,file=h)
-     reorderTwiddle(Q7,True,f,h,16)
-     reorderTwiddle(Q7,True,f,h,64)
-     reorderTwiddle(Q7,True,f,h,256)
-     reorderTwiddle(Q7,True,f,h,1024)
-     reorderTwiddle(Q7,True,f,h,4096)
-     print(cfooterMVEI,file=f)
-     print(hfooterMVEI,file=h)
+     #print(cifdeMVEI,file=f)
+     #print(hifdefMVEI,file=h)
+     #reorderTwiddle(Q7,True,f,h,16)
+     #reorderTwiddle(Q7,True,f,h,64)
+     #reorderTwiddle(Q7,True,f,h,256)
+     #reorderTwiddle(Q7,True,f,h,1024)
+     #reorderTwiddle(Q7,True,f,h,4096)
+     #print(cfooterMVEI,file=f)
+     #print(hfooterMVEI,file=h)
 
-     print(hfooter,file=h)
+     print(hfooter % "",file=h)

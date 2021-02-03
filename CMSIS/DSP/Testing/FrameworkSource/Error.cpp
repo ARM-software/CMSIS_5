@@ -25,10 +25,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#include <stdlib.h> 
-#include <stdio.h>
+#include <cstdlib> 
+#include <cstdio>
+#include "arm_math_types.h"
+#include "arm_math_types_f16.h"
 #include "Error.h"
-#include "arm_math.h"
+
 
 namespace Client {
 
@@ -68,7 +70,7 @@ void assert_near_equal(unsigned long nb,float32_t pa, float32_t pb, float32_t th
     }
 };
 
-#if !defined (__CC_ARM)
+#if !defined (__CC_ARM) && defined(ARM_FLOAT16_SUPPORTED)
 template <> 
 void assert_near_equal(unsigned long nb,float16_t pa, float16_t pb, float16_t threshold)
 {
@@ -135,7 +137,7 @@ void assert_not_empty(unsigned long nb, AnyPattern<float32_t> &p)
   assert_not_empty_generic(nb,p);
 }
 
-#if !defined( __CC_ARM )
+#if !defined( __CC_ARM ) && defined(ARM_FLOAT16_SUPPORTED)
 void assert_not_empty(unsigned long nb, AnyPattern<float16_t> &p)
 {
   assert_not_empty_generic(nb,p);
@@ -217,7 +219,7 @@ void assert_relative_error(unsigned long nb,float32_t &a, float32_t &b, double t
     }
 };
 
-#if !defined( __CC_ARM )
+#if !defined( __CC_ARM ) && defined(ARM_FLOAT16_SUPPORTED)
 void assert_relative_error(unsigned long nb,float16_t &a, float16_t &b, double threshold)
 {
     double rel,delta,average;
@@ -301,7 +303,7 @@ void assert_relative_error(unsigned long nb,AnyPattern<float32_t> &pa, AnyPatter
     }
 };
 
-#if !defined( __CC_ARM )
+#if !defined( __CC_ARM ) && defined(ARM_FLOAT16_SUPPORTED)
 void assert_relative_error(unsigned long nb,AnyPattern<float16_t> &pa, AnyPattern<float16_t> &pb, double threshold)
 {
     ASSERT_NOT_EMPTY(pa);
@@ -340,7 +342,7 @@ void assert_close_error(unsigned long nb,float64_t &ref, float64_t &val, double 
     if (abs(val - ref) > (absthreshold + relthreshold * abs(ref)))
     {
         char details[200];
-        sprintf(details,"close %g : abs=%g, rel=%g",abs(val - ref) , absthreshold,relthreshold);
+        sprintf(details,"close error %g > %g: (val = %g, ref = %g)",abs(val - ref) , absthreshold + relthreshold * abs(ref),val,ref);
         throw (Error(CLOSE_ERROR,nb,details));
     }
 };
@@ -383,7 +385,7 @@ void assert_close_error(unsigned long nb,float32_t &ref, float32_t &val, double 
     if (abs(val - ref) > (absthreshold + relthreshold * abs(ref)))
     {
         char details[200];
-        sprintf(details,"close %g : abs=%g, rel=%g",abs(val - ref) , absthreshold,relthreshold);
+        sprintf(details,"close error %g > %g: (val = %g, ref = %g)",abs(val - ref) , absthreshold + relthreshold * abs(ref),val,ref);
         throw (Error(CLOSE_ERROR,nb,details));
     }
 };
@@ -420,14 +422,14 @@ void assert_close_error(unsigned long nb,AnyPattern<float32_t> &pref, AnyPattern
     }
 };
 
-#if !defined( __CC_ARM )
+#if !defined( __CC_ARM ) && defined(ARM_FLOAT16_SUPPORTED)
 void assert_close_error(unsigned long nb,float16_t &ref, float16_t &val, double absthreshold,double relthreshold)
 {
     
     if (abs((float)val - (float)ref) > (absthreshold + relthreshold * abs((float)ref)))
     {
         char details[200];
-        sprintf(details,"close %g : abs=%g, rel=%g",abs(val - ref) , absthreshold,relthreshold);
+        sprintf(details,"close error %g > %g: (val = %g, ref = %g)",abs(val - ref) , absthreshold + relthreshold * abs(ref),val,ref);
         throw (Error(CLOSE_ERROR,nb,details));
     }
 };
@@ -528,7 +530,7 @@ float arm_snr_f32(float *pRef, float *pTest, uint32_t buffSize)
 
 }
 
-#if !defined( __CC_ARM )
+#if !defined( __CC_ARM ) && defined(ARM_FLOAT16_SUPPORTED)
 float arm_snr_f16(float16_t *pRef, float16_t *pTest, uint32_t buffSize)
 {
   float EnergySignal = 0.0, EnergyError = 0.0;
@@ -761,7 +763,7 @@ void assert_snr_error(unsigned long nb,float32_t a,float32_t b, float32_t thresh
    }
 }
 
-#if !defined( __CC_ARM )
+#if !defined( __CC_ARM ) && defined(ARM_FLOAT16_SUPPORTED)
 void assert_snr_error(unsigned long nb,AnyPattern<float16_t> &pa,AnyPattern<float16_t> &pb, float32_t threshold)
 {
    float32_t snr;
@@ -790,7 +792,7 @@ void assert_snr_error(unsigned long nb,AnyPattern<float16_t> &pa,AnyPattern<floa
 }
 #endif
 
-#if !defined (__CC_ARM)
+#if !defined (__CC_ARM) && defined(ARM_FLOAT16_SUPPORTED)
 void assert_snr_error(unsigned long nb,float16_t a,float16_t b, float32_t threshold)
 {
    float32_t snr;

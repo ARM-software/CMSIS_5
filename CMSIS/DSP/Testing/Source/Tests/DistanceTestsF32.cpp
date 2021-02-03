@@ -1,7 +1,6 @@
 #include "DistanceTestsF32.h"
 #include <stdio.h>
 #include "Error.h"
-#include "arm_math.h"
 #include "Test.h"
 
 
@@ -192,6 +191,7 @@
     void DistanceTestsF32::setUp(Testing::testID_t id,std::vector<Testing::param_t>& paramsArgs,Client::PatternMgr *mgr)
     {
 
+        (void)paramsArgs;
         if ((id != DistanceTestsF32::TEST_MINKOWSKI_DISTANCE_F32_9) && (id != DistanceTestsF32::TEST_JENSENSHANNON_DISTANCE_F32_8))
         {
             inputA.reload(DistanceTestsF32::INPUTA_F32_ID,mgr);
@@ -293,5 +293,6 @@
 
     void DistanceTestsF32::tearDown(Testing::testID_t id,Client::PatternMgr *mgr)
     {
+       (void)id;
        output.dump(mgr);
     }

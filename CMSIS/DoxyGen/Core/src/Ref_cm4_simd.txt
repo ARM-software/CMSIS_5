@@ -881,13 +881,13 @@ uint32_t __QASX(uint32_t val1, uint32_t val2);
     \returns
             \li the halved subtraction of the high halfword in the second operand from the low 
                 halfword in the first operand, in the low halfword of the return value.
-            \li the halved subtraction of the low halfword in the second operand from the high 
+            \li the halved addition of the low halfword in the second operand and the high 
                 halfword in the first operand, in the high halfword of the return value.
         
     \par Operation:
         \code
    res[15:0]  = (val1[15:0]  - val2[31:16]) >> 1  
-   res[31:16] = (val1[31:16] - val2[15:0] ) >> 1
+   res[31:16] = (val1[31:16] + val2[15:0] ) >> 1
         \endcode
 */
 uint32_t __SHASX(uint32_t val1, uint32_t val2);

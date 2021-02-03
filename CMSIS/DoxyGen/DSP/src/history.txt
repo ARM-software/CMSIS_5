@@ -7,6 +7,44 @@
     <th>Description</th>
   </tr>
   <tr>
+    <td>V1.9.0</td>
+    <td> 
+      Re-organization of arm_math.h
+      
+      Re-organization of interpolation functions:
+      - New Interpolation folder
+
+      New q7 functions:
+      - arm_mat_mult_q7.c
+      - arm_mat_trans_q7.c
+
+      Matrix x vector multiply
+
+      Complex Matrix Transpose
+
+      Cholesky (LL^t and LDL^t decompositions)
+
+      More support for f16 datatype:
+      - arm_cfft_f16
+      - arm_rfft_fast_f16 
+      - f16 basic Maths
+      - f16 complex Maths
+      - f16 filtering (FIR and BiQuad and correlate)
+      - f16 matrix
+      - f16 interpolation
+      - f16 statistics
+      - f16 support functions
+      - f16 svm
+      - f16 distances
+      - f16 bayes
+
+      GCC issues:
+      - Scalar version of arm_mat_cmplx_mult_f16 built with Helium
+      - Scalar version of arm_biquad_cascade_stereo_df2T_f16 built with Helium.
+
+    </td>
+  </tr>
+  <tr>
     <td>V1.8.0</td>
     <td> 
       Helium implementation of lots of functions in the CMSIS-DSP.

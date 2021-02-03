@@ -25,13 +25,13 @@
  * limitations under the License.
  */
 
-#include "arm_math.h"
+#include "dsp/distance_functions.h"
 #include <limits.h>
 #include <math.h>
 
 
 /**
-  @addtogroup FloatDist
+  @addtogroup Canberra
   @{
  */
 
@@ -216,5 +216,5 @@ float32_t arm_canberra_distance_f32(const float32_t *pA,const float32_t *pB, uin
 
 
 /**
- * @} end of FloatDist group
+ * @} end of Canberra group
  */

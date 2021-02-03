@@ -24,7 +24,7 @@
  * limitations under the License.
  */
 
-#include "arm_math.h"
+#include "dsp/svm_functions.h"
 #include <limits.h>
 #include <math.h>
 
@@ -33,9 +33,18 @@
  *
  */
 
+/**
+  @ingroup groupSVM
+ */
 
 /**
- * @addtogroup groupSVM
+  @defgroup linearsvm Linear SVM
+
+  Linear SVM classifier
+ */
+
+/**
+ * @addtogroup linearsvm
  * @{
  */
 
@@ -77,5 +86,5 @@ void arm_svm_linear_init_f32(arm_svm_linear_instance_f32 *S,
 
 
 /**
- * @} end of groupSVM group
+ * @} end of linearsvm group
  */

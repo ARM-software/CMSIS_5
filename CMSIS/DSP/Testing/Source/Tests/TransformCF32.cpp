@@ -1,8 +1,6 @@
 #include "TransformCF32.h"
 #include <stdio.h>
 #include "Error.h"
-#include "arm_math.h"
-#include "arm_const_structs.h"
 #include "Test.h"
 
 #define SNR_THRESHOLD 120
@@ -35,7 +33,7 @@
     void TransformCF32::setUp(Testing::testID_t id,std::vector<Testing::param_t>& paramsArgs,Client::PatternMgr *mgr)
     {
 
-
+       (void)paramsArgs;
        switch(id)
        {
           case TransformCF32::TEST_CFFT_F32_1:
@@ -470,12 +468,13 @@
 
 
        }
-        outputfft.create(ref.nbSamples(),TransformCF32::OUTPUT_CFFT_F32_ID,mgr);
+       outputfft.create(ref.nbSamples(),TransformCF32::OUTPUT_CFFT_F32_ID,mgr);
        
 
     }
 
     void TransformCF32::tearDown(Testing::testID_t id,Client::PatternMgr *mgr)
     {
+        (void)id;
         outputfft.dump(mgr);
     }

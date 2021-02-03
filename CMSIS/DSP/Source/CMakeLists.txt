@@ -1,4 +1,4 @@
-cmake_minimum_required (VERSION 3.6)
+cmake_minimum_required (VERSION 3.14)
 cmake_policy(SET CMP0077 NEW)
 project(CMSISDSP)
 
@@ -20,7 +20,9 @@ option(MATRIXCHECK "Matrix Checks" OFF)
 option(HELIUM "Helium acceleration (MVEF and MVEI supported)" OFF)
 option(MVEF "MVEF intrinsics supported" OFF)
 option(MVEI "MVEI intrinsics supported" OFF)
-option(FLOAT16 "Float16 intrinsics supported" OFF)
+option(MVEFLOAT16 "Float16 MVE intrinsics supported" OFF)
+option(DISABLEFLOAT16 "Disable building float16 kernels" OFF)
+option(HOST "Build for host" OFF)
 
 # Select which parts of the CMSIS-DSP must be compiled.
 # There are some dependencies between the parts but they are not tracked
@@ -38,6 +40,7 @@ option(TRANSFORM            "Transform Functions"               ON)
 option(SVM                  "Support Vector Machine Functions"  ON)
 option(BAYES                "Bayesian Estimators"               ON)
 option(DISTANCE             "Distance Functions"                ON)
+option(INTERPOLATION        "Interpolation Functions"                ON)
 
 # When OFF it is the default behavior : all tables are included.
 option(CONFIGTABLE          "Configuration of table allowed"    OFF)
@@ -132,6 +135,15 @@ option(RFFT_F64_128         "rfft f64 128"                      OFF)
 option(RFFT_F64_512         "rfft f64 512"                      OFF)
 option(RFFT_F64_2048        "rfft f64 2048"                     OFF)
 option(RFFT_F64_8192        "rfft f64 8192"                     OFF)
+
+option(RFFT_FAST_F16_32     "rfft fast f16 32"                  OFF)
+option(RFFT_FAST_F16_64     "rfft fast f16 64"                  OFF)
+option(RFFT_FAST_F16_128    "rfft fast f16 128"                 OFF)
+option(RFFT_FAST_F16_256    "rfft fast f16 256"                 OFF)
+option(RFFT_FAST_F16_512    "rfft fast f16 512"                 OFF)
+option(RFFT_FAST_F16_1024   "rfft fast f16 1024"                OFF)
+option(RFFT_FAST_F16_2048   "rfft fast f16 2048"                OFF)
+option(RFFT_FAST_F16_4096   "rfft fast f16 4096"                OFF)
 
 option(RFFT_Q31_32          "rfft q31 32"                       OFF)
 option(RFFT_Q31_64          "rfft q31 64"                       OFF)
@@ -272,6 +284,11 @@ endif()
 if (DISTANCE)
   add_subdirectory(DistanceFunctions)
   target_link_libraries(CMSISDSP INTERFACE CMSISDSPDistance)
+endif()
+
+if (INTERPOLATION)
+  add_subdirectory(InterpolationFunctions)
+  target_link_libraries(CMSISDSP INTERFACE CMSISDSPInterpolation)
 endif()
 
 ### Includes

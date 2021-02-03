@@ -30,9 +30,14 @@
 #ifndef _ARM_CONST_STRUCTS_H
 #define _ARM_CONST_STRUCTS_H
 
-#include "arm_math.h"
+#include "arm_math_types.h"
 #include "arm_common_tables.h"
+#include "dsp/transform_functions.h"
 
+#ifdef   __cplusplus
+extern "C"
+{
+#endif
    extern const arm_cfft_instance_f64 arm_cfft_sR_f64_len16;
    extern const arm_cfft_instance_f64 arm_cfft_sR_f64_len32;
    extern const arm_cfft_instance_f64 arm_cfft_sR_f64_len64;
@@ -52,18 +57,6 @@
    extern const arm_cfft_instance_f32 arm_cfft_sR_f32_len1024;
    extern const arm_cfft_instance_f32 arm_cfft_sR_f32_len2048;
    extern const arm_cfft_instance_f32 arm_cfft_sR_f32_len4096;
-
-   #if !defined(__CC_ARM)
-   extern const arm_cfft_instance_f16 arm_cfft_sR_f16_len16;
-   extern const arm_cfft_instance_f16 arm_cfft_sR_f16_len32;
-   extern const arm_cfft_instance_f16 arm_cfft_sR_f16_len64;
-   extern const arm_cfft_instance_f16 arm_cfft_sR_f16_len128;
-   extern const arm_cfft_instance_f16 arm_cfft_sR_f16_len256;
-   extern const arm_cfft_instance_f16 arm_cfft_sR_f16_len512;
-   extern const arm_cfft_instance_f16 arm_cfft_sR_f16_len1024;
-   extern const arm_cfft_instance_f16 arm_cfft_sR_f16_len2048;
-   extern const arm_cfft_instance_f16 arm_cfft_sR_f16_len4096;
-   #endif
 
    extern const arm_cfft_instance_q31 arm_cfft_sR_q31_len16;
    extern const arm_cfft_instance_q31 arm_cfft_sR_q31_len32;
@@ -85,4 +78,9 @@
    extern const arm_cfft_instance_q15 arm_cfft_sR_q15_len2048;
    extern const arm_cfft_instance_q15 arm_cfft_sR_q15_len4096;
 
+#ifdef   __cplusplus
+}
 #endif
+
+#endif
+

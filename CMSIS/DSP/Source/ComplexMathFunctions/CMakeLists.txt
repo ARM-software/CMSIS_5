@@ -1,11 +1,9 @@
-cmake_minimum_required (VERSION 3.6)
+cmake_minimum_required (VERSION 3.14)
 
 project(CMSISDSPComplexMath)
 
 include(configLib)
 include(configDsp)
-
-file(GLOB SRC "./*_*.c")
 
 add_library(CMSISDSPComplexMath STATIC)
 
@@ -16,9 +14,17 @@ configDsp(CMSISDSPComplexMath ${ROOT})
 include(interpol)
 interpol(CMSISDSPFastMath)
 
+
 if (CONFIGTABLE AND ALLFAST)
     target_compile_definitions(CMSISDSPComplexMath PUBLIC ARM_ALL_FAST_TABLES)  
 endif()
+
+# Vectorized code is defining sqrt
+# so fast tables required even if Fast Math not built.
+if (CONFIGTABLE AND (HELIUM OR MVEF OR MVEI))
+    target_compile_definitions(CMSISDSPComplexMath PUBLIC ARM_FAST_ALLOW_TABLES)  
+endif()
+
 
 # MVE code is using a table for computing the fast sqrt arm_cmplx_mag_q31
 # There is the possibility of not compiling this function and not including
@@ -48,6 +54,14 @@ target_sources(CMSISDSPComplexMath PRIVATE arm_cmplx_mult_real_f32.c)
 target_sources(CMSISDSPComplexMath PRIVATE arm_cmplx_mult_real_q15.c)
 target_sources(CMSISDSPComplexMath PRIVATE arm_cmplx_mult_real_q31.c)
 
+if ((NOT ARMAC5) AND (NOT DISABLEFLOAT16))
+target_sources(CMSISDSPComplexMath PRIVATE arm_cmplx_conj_f16.c)
+target_sources(CMSISDSPComplexMath PRIVATE arm_cmplx_dot_prod_f16.c)
+target_sources(CMSISDSPComplexMath PRIVATE arm_cmplx_mag_f16.c)
+target_sources(CMSISDSPComplexMath PRIVATE arm_cmplx_mag_squared_f16.c)
+target_sources(CMSISDSPComplexMath PRIVATE arm_cmplx_mult_cmplx_f16.c)
+target_sources(CMSISDSPComplexMath PRIVATE arm_cmplx_mult_real_f16.c)
+endif()
 
 ### Includes
 target_include_directories(CMSISDSPComplexMath PUBLIC "${DSP}/Include")

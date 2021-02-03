@@ -1,5 +1,8 @@
 #include "Test.h"
 #include "Pattern.h"
+
+#include "dsp/filtering_functions.h"
+
 class FIRF32:public Client::Suite
     {
         public:
@@ -12,8 +15,10 @@ class FIRF32:public Client::Suite
             Client::Pattern<float32_t> coefs;
             Client::Pattern<float32_t> inputs;
             Client::RefPattern<int16_t> configs;
+
             Client::LocalPattern<float32_t> output;
             Client::LocalPattern<float32_t> state;
+            Client::LocalPattern<float32_t> tmp;
             // Reference patterns are not loaded when we are in dump mode
             Client::RefPattern<float32_t> ref;
 

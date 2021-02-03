@@ -26,7 +26,7 @@
  * limitations under the License.
  */
 
-#include "arm_math.h"
+#include "dsp/matrix_functions.h"
 
 /**
   @ingroup groupMatrix
@@ -58,7 +58,7 @@
   @remark
                    Refer to \ref arm_mat_mult_fast_q31() for a faster but less precise implementation of this function.
  */
-#if defined(ARM_MATH_MVEI)
+#if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
 
 #define MATRIX_DIM2 2
 #define MATRIX_DIM3 3

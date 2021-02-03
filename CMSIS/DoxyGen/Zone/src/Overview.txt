@@ -2,31 +2,31 @@
 /**
 \mainpage
 
-\section Overview Overview 
+\section Overview Overview
 
 Embedded systems frequently integrate specify hardware for access protection or system isolation. For example, a Cortex-M33 processor based system may incorporate:
  - SAU (Secure Attribute Unit) to create a secure execution partition with controlled access from a non-secure execution partition.
  - MPC (Memory Protection Controller) to control the system-wide access permissions to memory.
  - PPC (Peripheral Protection Controller) to control the system-wide access permissions to peripherals.
- - MPU (Memory Protection Controller) to create execution compartments and protect other system parts from illegal access.
+ - MPU (Memory Protection Unit) to create execution compartments and protect other system parts from illegal access.
 
-Embedded systems may also integrate multiple processors that share system resources (memory and peripherals). In an AMP 
+Embedded systems may also integrate multiple processors that share system resources (memory and peripherals). In an AMP
 (Asymmetric Multiprocessor System) it is required to assign or partition the available resources to various processors
 that execute independent parts of the application software.
 
-\b CMSIS-Zone helps you to manage this complexity and allows to partition an embedded system into <b>project zones</b> 
+\b CMSIS-Zone helps you to manage this complexity and allows to partition an embedded system into <b>project zones</b>
 and/or <b>execution zones</b>.
 
-A <b>project zone</b> defines the memory resources and peripherals for a sub-project that execute on the system. 
-Typical examples are boot-loader and user application, however also the secure and non-secure parts of a Cortex-M TrustZone 
-system is defined using project zones. 
+A <b>project zone</b> defines the memory resources and peripherals for a sub-project that execute on the system.
+Typical examples are boot-loader and user application, however also the secure and non-secure parts of a Cortex-M TrustZone
+system is defined using project zones.
 
 An <b>execution zone</b> is a software compartment that is protected using a MPU.
-It defines the access rights to memory and peripherals for a isolated part of the system. This ensures that for example a 
+It defines the access rights to memory and peripherals for a isolated part of the system. This ensures that for example a
 communication stack (with design flaws) cannot tamper the data or peripherals of other critical parts in a system.
 
-\b CMSIS-Zone includes a utility that allows you to manage these zones. The input to this utility is a resource (*.rzone) file the defines the system resources 
-including memory and peripherals.  
+\b CMSIS-Zone includes a utility that allows you to manage these zones. The input to this utility is a resource (*.rzone) file the defines the system resources
+including memory and peripherals.
 
 For these resources the user interface of the CMSIS-Zone utility allows:
   - to setup of overall system-wide access permissions to memory and peripherals.
@@ -35,28 +35,28 @@ For these resources the user interface of the CMSIS-Zone utility allows:
 
 This system configuration is stored in an assignment (*.azone) file.  With the \b Generate function of
 the CMSIS-Zone utility, the resource and configuration data can be used to generate:
-  - source code for the setup of protection hardware such as SAU, MPC, PPC, MPU. 
+  - source code for the setup of protection hardware such as SAU, MPC, PPC, MPU.
   - configuration files for software development tools (i.e. linker scatter file).
   - sub-system resource (*.rzone) files that list <b>project zone</b> resources available for sub-projects.
- 
-The following diagram shows the development work flow when using the \b CMSIS-Zone management tool. 
+
+The following diagram shows the development work flow when using the \b CMSIS-Zone management tool.
 
 \image html Partitioning_Workflow.png  "CMSIS-Zone development workflow"
 
 
-It is possible to uses these steps multiple times which allows to split a complex SoC design with multiple processors into 
+It is possible to uses these steps multiple times which allows to split a complex SoC design with multiple processors into
 smaller sub-systems. For example a multi-core device can be partitioned in steps:
   - Step 1: split the multi-processor system into single processor sub-systems.
   - Step 2: create the partitions for secure and non-secure execution.
   - Step 3: configure MPU protected execution zones.
 
-The following SoC diagram exemplifies step 1 and step 2 of this workflow. 
-  
+The following SoC diagram exemplifies step 1 and step 2 of this workflow.
+
 \image html Partitioning_Hardware.png  "Hardware partitioning in multiple steps"
 
 \section ManualSections Manual Sections
 
-The following sections explain: 
+The following sections explain:
 - \ref zoneToolUsage describes the tool features and explains the usage on several examples.
 - \ref zoneFormat (XML based) that stores resource (*.rzone) and assignment (*.azone) information.
 - \ref GenDataModel which is used to create tool set-up files and hardware configuration files.
@@ -67,9 +67,9 @@ This video show how to use the \ref zoneToolUsage :
 
 \htmlonly
 <video preload="none" controls="" poster="https://community.arm.com/cfs-file/__key/telligent-evolution-videotranscoding-securefilestorage/communityserver-blogs-components-weblogfiles-00-00-00-21-12/Nuvoton_5F00_Zone.mp4.jpg" width="880" height="495">
-			<source type="video/mp4" src="https://community.arm.com/cfs-file/__key/telligent-evolution-videotranscoding-securefilestorage/communityserver-blogs-components-weblogfiles-00-00-00-21-12/Nuvoton_5F00_Zone.mp4.mp4">
-			<source type="video/webm" src="https://community.arm.com/cfs-file/__key/telligent-evolution-videotranscoding-securefilestorage/communityserver-blogs-components-weblogfiles-00-00-00-21-12/Nuvoton_5F00_Zone.mp4.webm">
-	</video>
+      <source type="video/mp4" src="https://community.arm.com/cfs-file/__key/telligent-evolution-videotranscoding-securefilestorage/communityserver-blogs-components-weblogfiles-00-00-00-21-12/Nuvoton_5F00_Zone.mp4.mp4">
+      <source type="video/webm" src="https://community.arm.com/cfs-file/__key/telligent-evolution-videotranscoding-securefilestorage/communityserver-blogs-components-weblogfiles-00-00-00-21-12/Nuvoton_5F00_Zone.mp4.webm">
+  </video>
 \endhtmlonly
 
 */
@@ -85,6 +85,14 @@ This video show how to use the \ref zoneToolUsage :
       <th>Description</th>
     </tr>
     <tr>
+      <td>1.1.0</td>
+      <td>
+        <ul>
+          <li>MPU support for Arm V7 architecture</li>
+          <li>upgrade handling of data in .azone, .rzone and .fzone files according to changes in CMSIS-Zone specification</li>
+        </ul>
+      </td>
+    </tr>    <tr>
       <td>1.0.0</td>
       <td>
         <ul>
@@ -148,7 +156,7 @@ multiple processors and/or memory protection hardware. It helps to split the emb
 creates the need to partition system resources. And it simplifies the consistent configuration of access rights across the
 system, for example when using an MPU (memory protection unit).
 
-The following section describes several uses cases that benefit from \b CMSIS-Zone.
+The following section describes several use cases that benefit from \b CMSIS-Zone.
 
 
 \section UseCase_MPU MPU Protection
@@ -185,13 +193,13 @@ The section describes the CMSIS-Zone Utility which is currently a stand-alone Ec
   - \ref zTUIMemView "View the memory and peripheral resources" of a complete system or sub-system.
   - \ref zTUIMemAdd "Partition memory blocks" into smaller regions and define access permissions for these regions.
   - \ref zTUIPerProp "Define access permissions" for peripherals.
-  - \ref zTUIPerSlotConf "Configure access rights of peripheral slots" (for example for DMA channels or I/O pins). 
+  - \ref zTUIPerSlotConf "Configure access rights of peripheral slots" (for example for DMA channels or I/O pins).
   - \ref zTUIZonePart "Split memory and peripheral resources into zones" (used for sub-projects or process separation in RTOS
     systems).
-  - \ref zTUIGenerate "Generate" configuration files for tool and hardware setup, as well as 
+  - \ref zTUIGenerate "Generate" configuration files for tool and hardware setup, as well as
   - \ref zTUIGenerate "Generate" resource files for sub-systems that allow further partitioning.
-  
-This section describes: 
+
+This section describes:
  - \subpage zTInstall shows how to install the utility.
  - \subpage zTUI introduces the GUI of the CMSIS-Zone Utility.
  - \subpage zTInteractiveMode explains how to create projects and zones using the GUI.
@@ -210,21 +218,21 @@ family pcks for your target device need to be installed on your computer.
 /**
 \page zTInstall Installation
 
-The CMSIS-Zone utility is part of the <a href="https://github.com/ARM-software/cmsis-pack-eclipse/releases/latest" target="_blank"><b>CMSIS-Pack Eclipse Plug-ins</b></a>. 
+The CMSIS-Zone utility is part of the <a href="https://github.com/ARM-software/cmsis-pack-eclipse/releases/latest" target="_blank"><b>CMSIS-Pack Eclipse Plug-ins</b></a>.
 
 The following steps explain the setup of an Eclipse enviornment with CMSIS-Zone:
 
   1. Download and install Java SE version 13.0.2 or later on your machine. You can use one of the following installers:
-	- Oracle SE JDK (note the license terms for commercial usage)
-	- OpenJDK
-	.  
+  - Oracle SE JDK (note the license terms for commercial usage)
+  - OpenJDK
+  .
      Make sure that the path to the \\bin folder in the Java installation is added to the \c PATH environment variable.
 
   2. <a href="https://github.com/ARM-software/cmsis-pack-eclipse/releases/latest" target="_blank"><b>Download</b></a> the latest <b>CmsisPackPlugIn#.#.#.zip</b> file, for example CmsisPackPlugIn2.5.0.zip
 
   3. Get <a href="https://www.eclipse.org/downloads/" target="_blank"><b>Eclipse IDE (Download 64 bit)</b></a>  and install <b>Eclipse IDE for C/C++ Developers</b>
 
-<b>Launch Eclipse</b> and 
+<b>Launch Eclipse</b> and
   - Open the dialog <b>Help - Install New Software...</b>.
   - Choose \b Add and click \b Archive. The \b Open the file <b>CmsisPackPlugIn#.#.#.zip</b> and click \b Add.
   - In the dialog <b>Available Software</b> select the <b>CMSIS Eclipse plug-ins</b> as shown below.  The click \b Next and accept the license agreement.
@@ -240,7 +248,7 @@ Setup <b>CMSIS Pack root folder</b> in Eclipse
 
     The standard setting is \c C:\\users\\username\\AppData\\Local\\Arm\\Packs, but you may use the same directory as for MDK and select: \c C:\\Keil_v5\\MDK\\ARM\\PACK.
 
-  -	Click <b>Apply and Close</b>. This concludes the setup of the Eclipse environment.
+  - Click <b>Apply and Close</b>. This concludes the setup of the Eclipse environment.
 */
 
 
@@ -366,7 +374,7 @@ Next, select your device from the list of installed device family packs:
 
 Click \b Finish. The new project and the *.rzone file are created and an empty *.azone file is added.
 
-\note 
+\note
 
 Make sure that you have set the path to your pack installation directory correctly. Go to <b> Window -> Preferences </b> and
 check the entry for the <b>CMSIS Pack root folder</b> (usually set to \c \%localappdata%\\Arm\\Packs):
@@ -379,7 +387,7 @@ check the entry for the <b>CMSIS Pack root folder</b> (usually set to \c \%local
 /**
 \page zTUIMemPerRes Memory and Peripheral Resources
 
-The available memory can be further divided into \ref zTUIMemAdd "smaller regions" that are later assigned to zones, 
+The available memory can be further divided into \ref zTUIMemAdd "smaller regions" that are later assigned to zones,
 for example a zone for loader and zone for application.
 
 For memory and peripherals \ref zTUIPerProp "properties" such as access permission, privilege, and security level can be configured.
@@ -531,7 +539,7 @@ other toolchains for further development. The generator process creates:
   directory.
 - Files that represent \ref  zTUICreate "sub-systems" (\ref rzone ".rzone" and \ref azone ".azone") that can be partitioned
   further (restart the process).
-   
+
 To start the generation, press the <b>Generate</b> button or use the menu item <b>CMSIS Zone - Generate</b>:
 
 \image html GenCodeButton.png
@@ -627,7 +635,7 @@ CMSIS-Zone, it generates:
   - \ref zTExImport "Import" the project "Examples\Musca-A1\Zone" into the CMSIS-Zone utility
   - \ref zTProjEx "Open" the Musca-A1.azone file
   - \ref zTUIGenerate "Generate" the related output files
-  
+
 The Musca-A1.azone file of that project has the following configuration settings:
   - \ref zTUICreate "Added the zones" \c SecureFW and \c NonsecureFW
   - \ref zTUIMemAdd "Created the memory regions" \c SecureRAM, \c NonsecureRAM, \c ScureCode, \c Veneer, and \c NonsecureCode
@@ -668,7 +676,7 @@ CMSIS-Zone, it generates:
   - \ref zTExImport "Import" the project "Examples\Musca-AS\Zone" into the CMSIS-Zone utility
   - \ref zTProjEx "Open" the Musca-AS.azone file
   - \ref zTUIGenerate "Generate" the related output files
-  
+
 The Musca-AS.azone file of that project has the following configuration settings:
   - \ref zTUICreate "Added the zones" \c SecureFW and \c NonsecureFW
   - \ref zTUIMemAdd "Created the memory regions" \c SecureRAM, \c NonsecureRAM, \c ScureCode, \c Veneer, and \c NonsecureCode
@@ -711,7 +719,7 @@ LED.
   - \ref zTExImport "Import" the project "Examples\M2351\Zone" into the CMSIS-Zone utility
   - \ref zTProjEx "Open" the M2351.azone file
   - \ref zTUIGenerate "Generate" the related output files
-  
+
 The M2351.azone file of that project has the following configuration settings:
   - \ref zTUICreate "Added the zones" \c Secure and \c NonSecure
   - \ref zTUIMemAdd "Created the memory regions" \c CODE_NS, \c CODE_S, \c Veneer, \c DATA_NS, and \c DATA_S
@@ -761,7 +769,7 @@ The projects use the files generated in CMSIS-Zone as follows:
 | mem_layout.h       | Secure, NonSecure | Input for the scatter files. |
 | partition_gen.h    | Secure            | Configuration of the secure attribution unit (SAU) and the NVIC interrupt assignment. |
 | scatter_ns.sct     | NonSecure         | Scatter file for non-secure zone (initally based on generated file). |
-| scatter_s.sct	     | Secure            | Scatter file for secure zone (initally based on generated file). |
+| scatter_s.sct      | Secure            | Scatter file for secure zone (initally based on generated file). |
 
 The scatter files \c scatter_s.sct and \c scatter_ns.sct are using a preinclude to mem_layout.h to get the information about
 the different memory regions.
@@ -796,7 +804,7 @@ scatter file is used in the \c Sections project:
 ; *-------------- <<< end of configuration section >>> -----------------------
 LR_CODE_S REGION_CODE_S_START REGION_CODE_S_SIZE {
   ER_CODE_S REGION_CODE_S_START REGION_CODE_S_SIZE {
-  	* (RESET,+FIRST)
+    * (RESET,+FIRST)
     * (InRoot$$Sections)
     .ANY (+RO +XO)
   }
@@ -810,11 +818,11 @@ LR_CODE_S REGION_CODE_S_START REGION_CODE_S_SIZE {
 #if STACK_SIZE>0
   ARM_LIB_STACK REGION_DATA_S_START+REGION_DATA_S_SIZE-STACK_SIZE EMPTY STACK_SIZE {
   }
-#endif  
+#endif
 }
 LR_VENEER REGION_VENEER_START REGION_VENEER_SIZE {
   ER_VENEER REGION_VENEER_START REGION_VENEER_SIZE {
-  	*(Veneer$$CMSE)
+    *(Veneer$$CMSE)
   }
 }
 \endcode
@@ -841,7 +849,7 @@ The application itself shows how to implement calls between the secure and the n
   - \ref zTExImport "Import" the project "Examples\LPC55S69\Zone" into the CMSIS-Zone utility
   - \ref zTProjEx "Open" the LPC55S69.azone file
   - \ref zTUIGenerate "Generate" the related output files
-  
+
 The LPC55S69.azone file of that project has the following configuration settings:
   - \ref zTUICreate "Added the zones" \c hello_world_s and \c hello_worls_ns
   - \ref zTUIMemAdd "Created the memory regions" \c CODE_NS, \c Config, \c CODE_S, \c Veneer, \c DATA_NS, and \c DATA_S
@@ -916,26 +924,26 @@ scatter file is used in the secure \c hello_world project:
 \code
 ; Use Arm compiler 6 to pre-process the scatter file and pull in the defines from the mem_layout.h file:
 #! armclang -E --target=arm-arm-none-eabi -mcpu=cortex-m33 -I../ -xc
- 
+
 #include "mem_layout.h"
- 
+
 ; *------- <<< Use Configuration Wizard in Context Menu >>> ------------------
- 
+
 ;<h> Stack Configuration
 ;  <o> Stack Size (in Bytes) <0x0-0xFFFFFFFF:8>
 ;</h>
 #define STACK_SIZE 0x400
- 
+
 ;<h> Heap Configuration
 ;  <o> Heap Size (in Bytes) <0x0-0xFFFFFFFF:8>
 ;</h>
 #define HEAP_SIZE 0xC00
- 
+
 ; *-------------- <<< end of configuration section >>> -----------------------
 
 LR_CODE_S REGION_CODE_S_START REGION_CODE_S_SIZE {
   ER_CODE_S REGION_CODE_S_START REGION_CODE_S_SIZE {
-  	* (RESET,+FIRST)
+    * (RESET,+FIRST)
     * (InRoot$$Sections)
     .ANY (+RO, +XO)
   }
@@ -953,7 +961,7 @@ LR_CODE_S REGION_CODE_S_START REGION_CODE_S_SIZE {
 }
 LR_VENEER REGION_VENEER_START REGION_VENEER_SIZE {
   ER_VENEER REGION_VENEER_START REGION_VENEER_SIZE {
-  	*(Veneer$$CMSE)
+    *(Veneer$$CMSE)
   }
 }
 \endcode
@@ -988,7 +996,7 @@ The application itself shows how to implement calls between the secure and the n
   - \ref zTExImport "Import" the project "Examples\STM32L5\Zone" into the CMSIS-Zone utility
   - \ref zTProjEx "Open" the STM32L5.azone file
   - \ref zTUIGenerate "Generate" the related output files
-  
+
 The STM32L5.azone file of that project has the following configuration settings:
   - \ref zTUICreate "Added the zones" \c blinky_s and \c blinky_ns
   - \ref zTUIMemAdd "Created the memory regions" \c CODE_NS, \c CODE_S, \c Veneer, \c DATA_NS, and \c DATA_S
@@ -1008,7 +1016,7 @@ directory:
 | partition_gen.h.ftl  | partition_gen.h  | Configuration of the secure attribution unit (SAU) and the NVIC interrupt assignment. |
 | SystemIsolation_Config.c.ftl | SystemIsolation_Config.c | Setup of the MPC and PPC. |
 | scatter_ns.sct.ftl   | scatter_ns.sct   | Example scatter file for non-secure zone. |
-| scatter_s.sct.ftl    | scatter_s.sct	  | Example scatter file for secure zone. |
+| scatter_s.sct.ftl    | scatter_s.sct    | Example scatter file for secure zone. |
 
 These files can be used in any IDE to create the final application. In the following, the usage in Arm Keil MDK is described.
 
@@ -1038,7 +1046,7 @@ The projects use the files generated in CMSIS-Zone as follows:
 | partition_gen.h            | blinky_s    | Configuration of the secure attribution unit (SAU) and the NVIC interrupt assignment. This file is included in the partition_stm32l5xx.h header file. |
 | SystemIsolation_Config.c   | blinky_s    | Setup of the MPC and PPC. |
 | blinky_ns.sct              | blinky_ns   | Scatter file for non-secure zone (initally based on generated file). |
-| blinky_s.sct	             | blinky_s    | Scatter file for secure zone (initally based on generated file). |
+| blinky_s.sct               | blinky_s    | Scatter file for secure zone (initally based on generated file). |
 \note
 If you want to learn more about the general project layout for an Armv8-M project using TrustZone, refer to
 <a href="https://www.keil.com/appnotes/docs/apnt_291.asp" target="_blank">Application Note 291</a>.
@@ -1070,7 +1078,7 @@ scatter file is used in the secure \c blinky project, which is based on the gene
 ; *-------------- <<< end of configuration section >>> -----------------------
 LR_CODE_S REGION_CODE_S_START REGION_CODE_S_SIZE {
   ER_CODE_S REGION_CODE_S_START REGION_CODE_S_SIZE {
-  	* (RESET,+FIRST)
+    * (RESET,+FIRST)
     * (InRoot$$Sections)
     .ANY (+RO +XO)
   }
@@ -1084,11 +1092,11 @@ LR_CODE_S REGION_CODE_S_START REGION_CODE_S_SIZE {
 #if STACK_SIZE>0
   ARM_LIB_STACK REGION_DATA_S_START+REGION_DATA_S_SIZE-STACK_SIZE EMPTY STACK_SIZE {
   }
-#endif  
+#endif
 }
 LR_Veneer REGION_VENEER_START REGION_VENEER_SIZE {
   ER_Veneer REGION_VENEER_START REGION_VENEER_SIZE {
-  	*(Veneer$$CMSE)
+    *(Veneer$$CMSE)
   }
 }
 \endcode
@@ -1118,7 +1126,7 @@ The application itself shows how to implement calls between the secure and the n
   - \ref zTExImport "Import" the project "Examples\SAML11\Zone" into the CMSIS-Zone utility
   - \ref zTProjEx "Open" the SAML11.azone file
   - \ref zTUIGenerate "Generate" the related output files
-  
+
 The SAML11.azone file of that project has the following configuration settings:
   - \ref zTUICreate "Added the zones" \c sApp and \c nsApp
   - \ref zTUIMemAdd "Created the memory regions" \c APP_NS, \c APP_S, \c APP_NSC, \c DATA_NS, \c DATA_S, \c RAM_NS, and \c RAM_NS
@@ -1136,7 +1144,7 @@ directory:
 | flash.dbgconf.lst.ftl| flash.dbgconf.lst| Flash algorithm configuration for security settings |
 | helper.ftlinc        | N/A              | Helper template file with FTL functions. |
 | scatter_ns.sct.ftl   | scatter_ns.sct   | Example scatter file for non-secure zone. |
-| scatter_s.sct.ftl    | scatter_s.sct	  | Example scatter file for secure zone. |
+| scatter_s.sct.ftl    | scatter_s.sct    | Example scatter file for secure zone. |
 
 These files can be used in any IDE to create the final application. In the following, the usage in Arm Keil MDK is described.
 
@@ -1168,7 +1176,7 @@ The application itself shows how to isolate network stack threads from the user 
   - \ref zTExImport "Import" the project "Examples\MCBSTM32F400\Zone" into the CMSIS-Zone utility
   - \ref zTProjEx "Open" the MCBSTM32F400.azone file
   - \ref zTUIGenerate "Generate" the related output files
-  
+
 The MCBSTM32F400.azone file of that project has the following configuration settings:
   - Project mode is set to \c Execution.
   - \ref zTUICreate "Added the zones" \c Net, \c Main, \c RTX, \c Blinky, \c Timer, \c Idle
@@ -1227,7 +1235,7 @@ scatter file is used in the \c Blinky_Net project, which is based on the generat
 
 LR_CODE REGION_CODE_START REGION_CODE_SIZE {
   ER_CODE REGION_CODE_START REGION_CODE_SIZE {
-  	*.o (RESET,+FIRST)
+    *.o (RESET,+FIRST)
     * (InRoot$$Sections)
     .ANY (+RO, +XO)
   }

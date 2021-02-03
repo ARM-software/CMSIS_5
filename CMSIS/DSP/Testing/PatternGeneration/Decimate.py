@@ -42,16 +42,16 @@ def generateBenchmarkPatterns():
     PARAMDIR = os.path.join("Parameters","DSP","Filtering","DECIM","DECIM")
     
     configf32=Tools.Config(PATTERNDIR,PARAMDIR,"f32")
+    configf16=Tools.Config(PATTERNDIR,PARAMDIR,"f16")
     configq31=Tools.Config(PATTERNDIR,PARAMDIR,"q31")
     configq15=Tools.Config(PATTERNDIR,PARAMDIR,"q15")
-    #configq7=Tools.Config(PATTERNDIR,PARAMDIR,"q7")
     
     
     
     writeBenchmarks(configf32)
+    writeBenchmarks(configf16)
     writeBenchmarks(configq31)
     writeBenchmarks(configq15)
-    #writeBenchmarks(configq7)
     
     
     # For decimation, number of samples must be a multiple of decimation factor.
@@ -67,6 +67,7 @@ def generateBenchmarkPatterns():
     r = r.reshape(finalLength)
     
     configf32.writeParam(1, r)
+    configf16.writeParam(1, r)
     configq31.writeParam(1, r)
     configq15.writeParam(1, r)
     
@@ -83,6 +84,7 @@ def generateBenchmarkPatterns():
     r = r.reshape(finalLength)
     
     configf32.writeParam(2, r)
+    configf16.writeParam(2, r)
     configq31.writeParam(2, r)
     configq15.writeParam(2, r)
 
@@ -223,10 +225,12 @@ def generateTestPatterns():
     PARAMDIR = os.path.join("Parameters","DSP","Filtering","DECIM","DECIM")
     
     configf32=Tools.Config(PATTERNDIR,PARAMDIR,"f32")
+    configf16=Tools.Config(PATTERNDIR,PARAMDIR,"f16")
     configq31=Tools.Config(PATTERNDIR,PARAMDIR,"q31")
     configq15=Tools.Config(PATTERNDIR,PARAMDIR,"q15")
 
     writeTests(configf32,0)
+    writeTests(configf16,16)
     writeTests(configq31,31)
     writeTests(configq15,15)
 

@@ -9,7 +9,6 @@
     void ComplexTestsF32::test_cmplx_conj_f32()
     {
         const float32_t *inp1=input1.ptr();
-        float32_t *refp=ref.ptr();
         float32_t *outp=output.ptr();
 
 
@@ -31,7 +30,6 @@
 
         const float32_t *inp1=input1.ptr();
         const float32_t *inp2=input2.ptr();
-        float32_t *refp=ref.ptr();
         float32_t *outp=output.ptr();
 
         arm_cmplx_dot_prod_f32(inp1,inp2,input1.nbSamples() >> 1,&re,&im);
@@ -49,7 +47,6 @@
     void ComplexTestsF32::test_cmplx_mag_f32()
     {
         const float32_t *inp1=input1.ptr();
-        float32_t *refp=ref.ptr();
         float32_t *outp=output.ptr();
 
         arm_cmplx_mag_f32(inp1,outp,input1.nbSamples() >> 1 );
@@ -64,7 +61,6 @@
     void ComplexTestsF32::test_cmplx_mag_squared_f32()
     {
         const float32_t *inp1=input1.ptr();
-        float32_t *refp=ref.ptr();
         float32_t *outp=output.ptr();
 
         arm_cmplx_mag_squared_f32(inp1,outp,input1.nbSamples() >> 1 );
@@ -81,7 +77,6 @@
     {
         const float32_t *inp1=input1.ptr();
         const float32_t *inp2=input2.ptr();
-        float32_t *refp=ref.ptr();
         float32_t *outp=output.ptr();
 
         arm_cmplx_mult_cmplx_f32(inp1,inp2,outp,input1.nbSamples() >> 1 );
@@ -98,7 +93,6 @@
     {
         const float32_t *inp1=input1.ptr();
         const float32_t *inp2=input2.ptr();
-        float32_t *refp=ref.ptr();
         float32_t *outp=output.ptr();
 
         arm_cmplx_mult_real_f32(inp1,inp2,outp,input1.nbSamples() >> 1 );
@@ -115,6 +109,7 @@
     {
       
        Testing::nbSamples_t nb=MAX_NB_SAMPLES; 
+       (void)params;
 
        
        switch(id)
@@ -308,5 +303,6 @@
 
     void ComplexTestsF32::tearDown(Testing::testID_t id,Client::PatternMgr *mgr)
     {
+        (void)id;
         output.dump(mgr);
     }

@@ -22,7 +22,7 @@ until the next timer tick occurs. The actual time delay may be up to one timer t
 
 The delayed thread is put into the \ref ThreadStates "BLOCKED" state and a context switch occurs immediately. The thread
 is automatically put back to the \ref ThreadStates "READY" state after the given amount of ticks has elapsed. If the thread
-will have the highest priority in \ref ThreadStates "READY" state it will being scheduled immediately.
+will have the highest priority in \ref ThreadStates "READY" state it will be scheduled immediately.
 
 Possible \ref osStatus_t return values:
  - \em osOK: the time delay is executed.
@@ -57,7 +57,7 @@ maximum delay is limited to (2<sup>31</sup>)-1 ticks.
 
 The delayed thread is put into the \ref ThreadStates "BLOCKED" state and a context switch occurs immediately. The thread
 is automatically put back to the \ref ThreadStates "READY" state when the given time is reached. If the thread will
-have the highest priority in \ref ThreadStates "READY" state it will being scheduled immediately.
+have the highest priority in \ref ThreadStates "READY" state it will be scheduled immediately.
 
 Possible \ref osStatus_t return values:
  - \em osOK: the time delay is executed.

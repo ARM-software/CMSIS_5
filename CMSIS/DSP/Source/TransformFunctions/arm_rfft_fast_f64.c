@@ -26,7 +26,7 @@
  * limitations under the License.
  */
 
-#include "arm_math.h"
+#include "dsp/transform_functions.h"
 
 void stage_rfft_f64(
   const arm_rfft_fast_instance_f64 * S,

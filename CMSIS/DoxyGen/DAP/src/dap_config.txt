@@ -6,11 +6,11 @@ CMSIS-DAP is designed for Debug Units with Cortex-M microcontroller.
 
 The CMSIS-DAP firmware can be deployed to a Debug Unit that is based on Cortex-M processor-based microcontroller.
 
-\image html "CMSIS_DAP_DEBUG_UNIT.png" "CMSIS-DAP Debug Unit Hardware"
+\image html "CMSIS_DAP_Debug_Unit.png" "CMSIS-DAP Debug Unit Hardware"
 
 The picture below shows the setup with an isolation adapter.
 
-\image html "CMSIS_DAP_DEBUG_UNIT_ISO.png" "CMSIS-DAP Debug Unit with Isolation adapter"
+\image html "CMSIS_DAP_Debug_Unit_ISO.png" "CMSIS-DAP Debug Unit with Isolation adapter"
 
 Hardware Requirements
 ---------------------
@@ -214,16 +214,16 @@ You may change this define with a compiler option.
 /**
 \defgroup DAP_Validate_gr Validate Debug Unit
 @{
-A CMSIS-DAP conforming Debug Unit must be validated.
+A CMSIS-DAP conforming debug unit must be validated.
 
-A CMSIS-DAP Debug Unit must be validate using the Keil MDK Debugger. 
-A validation project for MDK is provided in the folder <b>.\\Validation\\MDK</b>.
-The project <b>Blinky.uvproj</b> is a "Blinky" application and needs to be adapted for the target hardware
-that is connected to the Debug Unit. Once the adaptation is complete, you may open a Command Prompt and
-call the batch file <b>TestAll.bat</b> optionally with the path to UV4.EXE.  This should generate the
-following output.
+A validation project for Arm Keil MDK is provided in the folder <b>.\\Validation\\MDK5</b>.
+The <b>Validation.uvprojx</b> project contains a simple application that needs to be adapted to the target hardware
+connected to the debug unit. Once the adaptation is complete, you may open a Command Window and
+call the batch file <b>test.bat</b> (optionally with the path to the µVision executable):
 
-\image html "MDK_Validation.png" "Validate Debug Unit using a target hardware and MDK"
+\image html "MDK_Validation.png" "Validate debug unit using target hardware and Arm Keil MDK"
+
+The batch file will create a \c test_results.txt and \c test.log file in the project directory.
 @}
 **************************************************************************************************/
 

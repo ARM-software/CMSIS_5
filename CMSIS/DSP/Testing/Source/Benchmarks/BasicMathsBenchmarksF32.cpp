@@ -49,7 +49,7 @@
     void BasicMathsBenchmarksF32::setUp(Testing::testID_t id,std::vector<Testing::param_t>& params,Client::PatternMgr *mgr)
     {
 
-
+       this->setForceInCache(true);
        std::vector<Testing::param_t>::iterator it = params.begin();
        this->nb = *it;
 
@@ -75,6 +75,7 @@
            this->inp1=input1.ptr();
            this->inp2=input2.ptr();
            this->outp=output.ptr();
+
          break;
         
          case BasicMathsBenchmarksF32::VEC_NEGATE_F32_5:

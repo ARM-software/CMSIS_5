@@ -92,6 +92,7 @@ XCOPY /Q /S /Y ..\..\CMSIS\Utilities\ARM_Example.* %RELEASE_PATH%\CMSIS\SVD\*.*
 XCOPY /Q /S /Y ..\..\CMSIS\Utilities\CMSIS-SVD.xsd       %RELEASE_PATH%\CMSIS\Utilities\*.*
 XCOPY /Q /S /Y ..\..\CMSIS\Utilities\PACK.xsd            %RELEASE_PATH%\CMSIS\Utilities\*.*
 XCOPY /Q /S /Y ..\..\CMSIS\Utilities\PackIndex.xsd       %RELEASE_PATH%\CMSIS\Utilities\*.*
+XCOPY /Q /S /Y ..\..\CMSIS\Utilities\CPRJ.xsd            %RELEASE_PATH%\CMSIS\Utilities\*.*
 
 XCOPY /Q /S /Y ..\..\CMSIS\Utilities\Win32\*.*           %RELEASE_PATH%\CMSIS\Utilities\Win32\*.*
 XCOPY /Q /S /Y ..\..\CMSIS\Utilities\Linux64\*.*         %RELEASE_PATH%\CMSIS\Utilities\Linux64\*.*

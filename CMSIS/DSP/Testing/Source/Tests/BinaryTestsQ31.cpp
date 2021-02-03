@@ -49,6 +49,8 @@ a double precision computation.
       out.pData = outp;
 
 
+
+
     void BinaryTestsQ31::test_mat_mult_q31()
     {     
       LOADDATA2();
@@ -74,6 +76,8 @@ a double precision computation.
       ASSERT_NEAR_EQ(output,ref,ABS_ERROR_Q31);
 
     } 
+
+
 
     void BinaryTestsQ31::test_mat_cmplx_mult_q31()
     {     
@@ -106,7 +110,7 @@ a double precision computation.
     {
 
 
-    
+      (void)params;
       switch(id)
       {
          case TEST_MAT_MULT_Q31_1:
@@ -133,6 +137,8 @@ a double precision computation.
             b.create(2*MAXMATRIXDIM*MAXMATRIXDIM,BinaryTestsQ31::TMPB_Q31_ID,mgr);
          break;
 
+
+
     
       }
        
@@ -142,5 +148,6 @@ a double precision computation.
 
     void BinaryTestsQ31::tearDown(Testing::testID_t id,Client::PatternMgr *mgr)
     {
+       (void)id;
        output.dump(mgr);
     }

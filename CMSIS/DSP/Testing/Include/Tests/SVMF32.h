@@ -1,5 +1,9 @@
 #include "Test.h"
 #include "Pattern.h"
+
+#include "dsp/svm_functions.h"
+
+
 class SVMF32:public Client::Suite
     {
         public:

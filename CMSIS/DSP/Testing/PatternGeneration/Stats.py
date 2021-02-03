@@ -116,6 +116,13 @@ def logSumExpDotTest(config,nb):
     config.writeInputS16(nb, dims,"Dims")
     config.writeReference(nb, outputs,"RefLogSumExpDot")
 
+def writeF16OnlyTests(config,nb):
+    entropyTest(config,nb)
+    logsumexpTest(config,nb+1)
+    klTest(config,nb+2)
+    logSumExpDotTest(config,nb+3)
+    return(nb+4)
+
 def writeF32OnlyTests(config,nb):
     entropyTest(config,nb)
     logsumexpTest(config,nb+1)
@@ -337,12 +344,33 @@ def writeTests(config,nb,format):
     nb=generateFuncTests(config,nb,format,data1,varTest,"VarVals")
     return(nb)
 
+def generateBenchmark(config,format):
+    NBSAMPLES = 256
+    data1=np.random.randn(NBSAMPLES)
+    data2=np.random.randn(NBSAMPLES)
+    
+    data1 = Tools.normalize(data1)
+    data2 = np.abs(data1)
+
+    if format==31:
+       data1=floatRound(data1,31)
+
+    if format==15:
+       data1=floatRound(data1,15)
+
+    if format==7:
+       data1=floatRound(data1,7)
+
+    config.writeInput(1, data1,"InputBench")
+    config.writeInput(2, data2,"InputBench")
+
 
 def generatePatterns():
     PATTERNDIR = os.path.join("Patterns","DSP","Stats","Stats")
     PARAMDIR = os.path.join("Parameters","DSP","Stats","Stats")
     
     configf32=Tools.Config(PATTERNDIR,PARAMDIR,"f32")
+    configf16=Tools.Config(PATTERNDIR,PARAMDIR,"f16")
     configf64=Tools.Config(PATTERNDIR,PARAMDIR,"f64")
     configq31=Tools.Config(PATTERNDIR,PARAMDIR,"q31")
     configq15=Tools.Config(PATTERNDIR,PARAMDIR,"q15")
@@ -354,6 +382,16 @@ def generatePatterns():
     writeTests(configq31,1,31)
     writeTests(configq15,1,15)
     writeTests(configq7,1,7)
+
+    nb=writeTests(configf16,1,16)
+    nb=writeF16OnlyTests(configf16,22)
+
+    generateBenchmark(configf64, Tools.F64)
+    generateBenchmark(configf32, Tools.F32)
+    generateBenchmark(configf16, Tools.F16)
+    generateBenchmark(configq31, Tools.Q31)
+    generateBenchmark(configq15, Tools.Q15)
+    generateBenchmark(configq7, Tools.Q7)
 
 if __name__ == '__main__':
   generatePatterns()

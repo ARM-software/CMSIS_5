@@ -7,6 +7,7 @@
       arm_mat_mult_f32(&this->in1,&this->in2,&this->out);
     } 
 
+  
     void BinaryF32::test_mat_cmplx_mult_f32()
     {     
       arm_mat_cmplx_mult_f32(&this->in1,&this->in2,&this->out);

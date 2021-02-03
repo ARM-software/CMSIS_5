@@ -31,6 +31,9 @@ a double precision computation.
       int i;
 
 
+
+
+
 #define PREPAREDATA2()                                                   \
       in1.numRows=rows;                                                  \
       in1.numCols=internal;                                               \
@@ -46,6 +49,7 @@ a double precision computation.
       out.numCols=columns;                                               \
       out.pData = outp;
 
+                                             
 
     void BinaryTestsF32::test_mat_mult_f32()
     {     
@@ -72,6 +76,8 @@ a double precision computation.
       ASSERT_CLOSE_ERROR(output,ref,ABS_ERROR,REL_ERROR);
 
     } 
+
+    
 
     void BinaryTestsF32::test_mat_cmplx_mult_f32()
     {     
@@ -105,7 +111,7 @@ a double precision computation.
     {
 
 
-    
+      (void)params;
       switch(id)
       {
          case TEST_MAT_MULT_F32_1:
@@ -132,6 +138,8 @@ a double precision computation.
             b.create(2*MAXMATRIXDIM*MAXMATRIXDIM,BinaryTestsF32::TMPB_F32_ID,mgr);
          break;
 
+         
+
     
       }
        
@@ -141,5 +149,6 @@ a double precision computation.
 
     void BinaryTestsF32::tearDown(Testing::testID_t id,Client::PatternMgr *mgr)
     {
+       (void)id;
        output.dump(mgr);
     }

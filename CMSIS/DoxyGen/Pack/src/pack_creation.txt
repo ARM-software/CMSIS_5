@@ -269,36 +269,6 @@ This reduces the development time drastically, as the developer does not need to
 software components, but can concentrate on the implementation of his own application code.
 
 
-\section cp_PackSteps Steps to Create a Pack
-
-The following image shows the basic steps that are required to create a Software Pack:
-
-\image html PackCreateSteps.png
-
--# <b>Produce input:</b> Create the files that will be delivered with the Pack.
--# <b>Organize files:</b> Use directories to separate the content of the Pack.
--# <b>Create PDSC file:</b> The XML based PDSC file can be created using any text editor. Editors that can
-   validate XML code against a schema file help to find bugs early in the Pack development stage.
--# <b>Generate Pack:</b> Any compression tool supporting the ZIP format can be used to create a Pack file. \ref packChk is
-   helpful for the validation of the contents of a Pack.
-
-The following pages will show how to create a Software Pack from scratch. The page \ref cp_SWComponents will start with a simple
-Pack containing only the PDSC file and a single software component and will then explain further elements of a Pack in more detail.
-The page \ref createPack_DFP adds information on the additional requirements that a DFP has, while \ref createPackBoard will
-elaborate on the content specific to a BSP.
-
-
-\section PackTutorials Pack Tutorial
-
-The <b>ARM::CMSIS</b> Pack contains tutorials that are explained on the following pages. In the \b \\CMSIS\\Pack\\Tutorials
-directory the following three ZIP files are available:
-|ZIP File                           |Documentation        
-|-----------------------------------|---------------------
-|Pack_with_Software_Components.zip  | \ref cp_SWComponents
-|Pack_with_Device_Support.zip       | \ref createPack_DFP
-|Pack_with_Board_Support.zip        | \ref createPackBoard
-
-
 \section PackFilenames Pack Conventions
 
 A \ref cp_SWComponents "Software Pack" is a collection of files located in directories that are archived in a file with the extension *.pack using the standard

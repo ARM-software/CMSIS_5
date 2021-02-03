@@ -34,9 +34,13 @@
 #include <string>
 #include <cstddef>
 #include "FPGA.h"
-#include <stdio.h>
-#include <string.h>
+#include <cstdio>
+
 #include "Generators.h"
+#include "arm_math_types.h"
+#include "arm_math_types_f16.h"
+
+using namespace std;
 
 namespace Client
 {
@@ -202,7 +206,7 @@ namespace Client
         switch(kind)
         {
           case 1:
-             printf("S: t \n");
+             printf("S: t %s\n","");
              break;
           case 2:
              printf("S: s %ld\n",this->currentId);
@@ -211,7 +215,7 @@ namespace Client
              printf("S: g %ld\n",this->currentId);
              break;
           default:
-             printf("S: u\n");
+             printf("S: u%s\n","");
         }
 
         
@@ -279,7 +283,7 @@ namespace Client
 
     void FPGA::EndGroup()
     {
-       printf("S: p\n");
+       printf("S: p%s\n","");
        this->path->pop_back();
     }
 
@@ -301,7 +305,7 @@ namespace Client
         this->patternSizes->clear();
         std::string tmpstr;
 
-        for(int i=0;i<nbPatterns;i++)
+        for(unsigned long i=0;i<nbPatterns;i++)
         {
            this->read32(&offset);
            this->read32(&nb);
@@ -332,7 +336,7 @@ namespace Client
         this->parameterSizes->clear();
         std::string tmpstr;
 
-        for(int i=0;i<nbValues;i++)
+        for(unsigned long i=0;i<nbValues;i++)
         {
            this->readChar(&paramKind);
            struct offsetOrGen gen;
@@ -361,7 +365,7 @@ namespace Client
 
               p=(Testing::param_t*)malloc(sizeof(Testing::param_t)*(nbInputSamples));
               current=p;
-              for(int i=0;i < nbInputSamples; i ++)
+              for(unsigned long i=0;i < nbInputSamples; i ++)
               {
                 
                 this->read32(&sample);
@@ -390,7 +394,7 @@ namespace Client
         this->outputNames->clear();
         std::string tmpstr;
 
-        for(int i=0;i<nbOutputs;i++)
+        for(unsigned long i=0;i<nbOutputs;i++)
         {
            this->readStr(tmp);
            tmpstr.assign(tmp);
@@ -540,7 +544,7 @@ namespace Client
 
     }
 
-#if !defined( __CC_ARM )
+#if !defined( __CC_ARM ) && defined(ARM_FLOAT16_SUPPORTED)
     void FPGA::ImportPattern_f16(Testing::PatternID_t id,char* p,Testing::nbSamples_t nb)
     {
         unsigned long offset,i;
@@ -741,7 +745,7 @@ namespace Client
         }
     }
 
-#if !defined( __CC_ARM )
+#if !defined( __CC_ARM ) && defined(ARM_FLOAT16_SUPPORTED)
     void FPGA::DumpPattern_f16(Testing::outputID_t id,Testing::nbSamples_t nb, float16_t* data)
     {
         std::string fileName = this->getOutputPath(id); 

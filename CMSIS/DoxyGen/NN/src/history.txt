@@ -6,6 +6,25 @@
     <th>Version</th>
     <th>Description</th>
   </tr>
+    <tr>
+    <td>V1.4.0</td>
+    <td>
+      Added the following function for int8 SVDF operator.<br>
+      <ul>
+        <li>arm_svdf_s8</li>
+      </ul>
+      <ul>
+        <li>arm_depthwise_conv_wrapper_s8</li>
+        <li>arm_convolve_wrapper_s8</li>
+        <li>arm_nn_doubling_high_mult_no_sat</li>
+      </ul>
+      Deleted functions
+      <ul>
+        <li>arm_max_pool_s8_opt</li>
+      </ul>
+
+    </td>
+  </tr>
   <tr>
     <td>V1.3.0</td>
     <td>

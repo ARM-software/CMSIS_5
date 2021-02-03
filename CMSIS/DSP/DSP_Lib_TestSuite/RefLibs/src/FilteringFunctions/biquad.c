@@ -155,15 +155,15 @@ void ref_biquad_cascade_df2T_f64(
 	float64_t * pDst,
 	uint32_t blockSize)
 {
-   float64_t *pIn = pSrc;                         /*  source pointer            */
-   float64_t *pOut = pDst;                        /*  destination pointer       */
-   float64_t *pState = S->pState;                 /*  State pointer             */
-   float64_t *pCoeffs = S->pCoeffs;               /*  coefficient pointer       */
-   float64_t acc;                                 /*  accumulator               */
-   float64_t b0, b1, b2, a1, a2;                  /*  Filter coefficients       */
-   float64_t Xn;                                  /*  temporary input           */
-   float64_t d1, d2;                              /*  state variables           */
-   uint32_t sample, stage = S->numStages;         /*  loop counters             */
+        float64_t *pIn = pSrc;                         /*  source pointer            */
+        float64_t *pOut = pDst;                        /*  destination pointer       */
+        float64_t *pState = S->pState;                 /*  State pointer             */
+  const float64_t *pCoeffs = S->pCoeffs;               /*  coefficient pointer       */
+        float64_t acc;                                 /*  accumulator               */
+        float64_t b0, b1, b2, a1, a2;                  /*  Filter coefficients       */
+        float64_t Xn;                                  /*  temporary input           */
+        float64_t d1, d2;                              /*  state variables           */
+        uint32_t sample, stage = S->numStages;         /*  loop counters             */
 
    do
    {

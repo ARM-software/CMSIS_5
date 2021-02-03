@@ -16,23 +16,76 @@ overview over programs that are either part of the CMSIS Pack or are available f
 	
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
-\page cp_Editors XML Validation and Editors
+\page cp_Editors XML Validation
+
+XML validation is especially important when a pack should published using a \ref cp_KeilComPack "pack index service". The
+pack importer will ignore all \elem{vendor}.\elem{name}.pdsc files that do fail when checking against the current PACK.xsd
+schema file and thus your pack will not be available for download.
+
+
+\section cp_valEditor Using an editor
 
 Some text editors are capable of verifying XML code against a schema file. This is helpful to identify syntactical or
 structural problems in a PDSC or SVD file early in the development process. Useful editors are:
-- <a href="http://notepad-plus-plus.org/" target="_blank">Notepad++</a>
-- <a href="http://www.visualstudio.com/" target="_blank">Visual Studio (Express)</a>
+- <a href="https://notepad-plus-plus.org/" target="_blank">Notepad++</a>
+- <a href="https://code.visualstudio.com/" target="_blank">Visual Studio Code</a>
 
 Usually, the XML file that is to be validated and its corresponding schema file need to reside in the same directory. The
 CMSIS-Pack schema file \b Pack.xsd and the CMSIS-SVD schema file \b CMSIS-SVD.xsd are available in the directory
 <b>.\\CMSIS\\Utilities</b> of the <b>ARM::CMSIS</b> Pack.
 
-\anchor xmllint 
-<b>xmllint Schema Validation</b>
 
-The Linux utility <a href="http://xmlsoft.org/xmllint.html" target="_blank">xmllint</a> is a command line tool for XML validation against a schema file.
-It may be part of the \ref bash_script to verify the PDSC file during pack generation.
+\section cp_Editors_xmllint Using xmllint
+
+The utility <a href="http://xmlsoft.org/xmllint.html" target="_blank">xmllint</a> is a command line tool for XML validation
+against a schema file. It may be part of the \ref bash_script to verify the PDSC file during pack generation.
+
+<b>Installing on Linux</b>
+
+Use your package manager to install the \c libxml2-utils (which contain xmllint). On a Ubuntu machine, use:
+\code
+$ sudo apt-get install libxml2-utils
+\endcode
+
+<b>Installing on Windows</b>
+
+For Windows <a href="https://www.zlatkovic.com/pub/libxml/" target="_blank"><b>libxml</b></a> provides an XML processor
+that provides the functionality of <b>xmllint</b>.  
+
+\note The installation is optional but strongly recommended to be able to validate the XML file using \c gen_pack.sh.
+
+Download the following ZIP files:
+  - <b>iconv-1.9.2.win32.zip</b>
+  - <b>libxml2-2.7.8.win32.zip</b>
+  - <b>libxmlsec-1.2.18.win32.zip</b>
+  - <b>zlib-1.2.5.win32.zip</b>
+
+Extract the \b /bin directory of each ZIP file to a directory, for example \b C:\\xmllint and add this directory to the
+Windows <a href="https://answers.microsoft.com/en-us/windows/forum/windows_10-other_settings/adding-path-variable/97300613-20cb-4d85-8d0e-cc9d3549ba23" target="_blank"><b>PATH</b></a>
+environment variable.
+
+\note
+- Restart the <b>Git Bash</b> after changing the <b>PATH</b> environment variable.
+- When <b>xmllint</b> is not installed, the XML schema verification is skipped by the \ref bash_script "gen_pack.sh" script.
+
+xmllint is also provided by the xsltproc package that can be installed via
+<a href="https://chocolatey.org/packages/xsltproc" target="_blank"><b>Chocolatey</b></a>: 
+\code
+> choco install xsltproc
+\endcode
+
+
+\section cp_validationPI Using Pack Installer
+
+Arm Keil MDK includes \b Pack \b Installer which tou can use to validate the schema of your PDSC file.
+
+- Right-click on the pack version number and select <b>Schema Check</b>: \n
+  \image html schema_check.png
+
+- The \b Output window shows the result. If errors are reported, please make sure to fix them before continuing.\n
+  \image html schema_check_output.png
 */
+
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
@@ -42,25 +95,46 @@ Any ZIP software utility supporting the compression method
 <a href="http://en.wikipedia.org/wiki/DEFLATE" target="_blank">DEFLATE</a> can be used to create a Pack file. Simply, create
 the ZIP file and rename it to *.pack.
 
+\section cp_ZIPTool_7z 7-Zip
+
 The compression tool <a href="http://www.7-zip.org/" target="_blank">7-Zip</a> supports command line calls and can be
-used in batch scripts like \ref cp_GeneratePack "gen_pack.bat" for automated Pack file creation (and verification
-with \ref packChk). Installers for 7-Zip are available for 32-bit and 64-bit Windows operating systems.
+used in generation scripts like \ref bash_script "gen_pack.sh" for automated Pack file creation (and verification
+with \ref packChk).
+
+<b>Installing on Linux</b>
+
+Use your package manager to install <a href="http://www.7-zip.org/" target="_blank">7-Zip</a>. On a Ubuntu machine, use:
+\code
+$ sudo apt-get install p7zip-full
+\endcode
+
+<b>Installing on Windows</b>
+
+In the download section of <a href="http://www.7-zip.org/" target="_blank">7-Zip</a>, download the appropriate installer
+for your Windows system. Use defaults for your installation.
+
+\ref bash_script "gen_pack.sh" assumes that your installation path is \c "C:\Program Files\7-Zip". If you choose to use
+another location, please adapt the path in the Bash script.
 */
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
 \page bash_script Bash Script gen_pack.sh
 
-The following <a href="https://en.wikipedia.org/wiki/Bash_(Unix_shell)" target="_blank">Bash</a> shell script template \ref gen_pack_sh "gen_pack.sh" allows you to generate
-a Pack file on the Linux or the Windows operating system.  Bash is available for Windows, for example, via <a href="https://gitforwindows.org/" target="_blank">git for Windows</a>.
+The following <a href="https://en.wikipedia.org/wiki/Bash_(Unix_shell)" target="_blank">Bash</a> shell script template
+\ref gen_pack_sh "gen_pack.sh" allows you to generate a pack file under Linux or Windows. On Windows, Bash is available via
+<a href="https://gitforwindows.org/" target="_blank">git for Windows</a> for example.
 
 
 For using \ref gen_pack_sh "gen_pack.sh" 
- - Install \ref cp_ZIPTool "7-Zip" (and for Linux \ref xmllint "xmllint" for schema validation).
- - Adapt the file \ref gen_pack_sh "gen_pack.sh" that is available in the directory <b>/CMSIS/Pack/Bash</b> to the requirements of your software pack.
+ - Install \ref cp_ZIPTool "7-Zip".
+ - Install \ref cp_Editors_xmllint "xmllint".
+ - Adapt the file \ref gen_pack_sh "gen_pack.sh" that is available in the directory <b>/CMSIS/Pack/Bash</b> to the
+   requirements of your software pack and .
 
-The script is generic enough to cope with a wide range of requirements.  It uses the information from the \ref packFormat "*.PDSC file" to generate 
-the output filename according the CMSIS-Pack conventions and validates the pack consistency with \ref packChk.
+The script is generic enough to cope with a wide range of requirements. It uses the information from the
+\ref packFormat "*.PDSC file" to generate the output filename according the CMSIS-Pack conventions and validates the pack
+consistency with \ref packChk.
 
 Below is a sample output (reduced).
 \code
@@ -105,10 +179,10 @@ Completed CMSIS-Pack Generation ...
 \anchor gen_pack_sh
 <b>gen_pack.sh Bash script template file</b>
 
-The <b>gen_pack.sh</b> script template allows to configure:
- - Path environment variables for related utilities
- - Directory names for temporary build and output files
- - Directory names and files in the root directory that should be included in the pack
+The <b>gen_pack.sh</b> script template allows you to configure:
+ - Path environment variables for related utilities (\c CMSIS_PACK_PATH, \c PATH_TO_ADD)
+ - Directory names for temporary build and output files (\c PACK_WAREHOUSE, \c PACK_BUILD)
+ - Directory names and files in the root directory that should be included in the pack (\c PACK_DIRS, \c PACK_BASE_FILES)
  
 
 \verbinclude gen_pack.sh

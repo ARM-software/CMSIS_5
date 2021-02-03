@@ -133,7 +133,7 @@ SECTIONS
         Image$$ZI_DATA$$Limit = .;
         __end__ = .;
         end = __end__;
-    } > RAM
+    } > RAM AT > RAM
 
 #if defined(__HEAP_SIZE) && (__HEAP_SIZE > 0)    
     .heap (NOLOAD):

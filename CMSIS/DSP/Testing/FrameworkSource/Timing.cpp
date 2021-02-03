@@ -52,9 +52,9 @@ static uint32_t startCycles=0;
 #else
   #warning "no appropriate header file found!"
 #endif
-#endif
+#endif /* CORTEXM*/
 
-#ifdef CORTEXA
+#if defined(CORTEXA) || defined(CORTEXR)
 #include "cmsis_cp15.h"
 unsigned int startCycles;
 
@@ -69,11 +69,12 @@ unsigned long sectionCounter=0;
 void initCycleMeasurement()
 {
 #ifdef CORTEXM
-    SysTick->CTRL = SysTick_CTRL_CLKSOURCE_Msk;
     SysTick->LOAD = SYSTICK_INITIAL_VALUE;
+    SysTick->VAL = 0;
+    SysTick->CTRL = 0;
 #endif 
 
-#ifdef CORTEXA
+#if defined(CORTEXA) || defined(CORTEXR)
 
     // in general enable all counters (including cycle counter)
     int32_t   value = 1;
@@ -88,7 +89,7 @@ void initCycleMeasurement()
     if (ENABLE_DIVIDER)
         value |= 8;             // enable "by 64" divider for CCNT.
 
-    value |= 16;
+    //value |= 16;
 
     // program the performance-counter control-register:
     __set_CP(15, 0, value, 9, 12, 0);
@@ -98,6 +99,12 @@ void initCycleMeasurement()
 
     // clear overflows:
     __set_CP(15, 0, 0x8000000f, 9, 12, 3);
+
+    #if defined(ARMCR52)
+      __get_CP(15, 0, value, 14, 15, 7);
+      value = value | (0x8000 << 12);
+      __set_CP(15, 0, value, 14, 15, 7);
+    #endif
 #endif
 
 }
@@ -106,17 +113,15 @@ void cycleMeasurementStart()
 {
 #ifndef EXTBENCH
 #ifdef CORTEXM
-    /* 
-    TODO:
-    This code is likely to be wrong. Don't rely on it for benchmarks.
-
-    */
-    SysTick->CTRL = SysTick_CTRL_CLKSOURCE_Msk;
+   
+    SysTick->CTRL = 0;
     SysTick->LOAD = SYSTICK_INITIAL_VALUE;
+    SysTick->VAL = 0;
 
     SysTick->CTRL = SysTick_CTRL_ENABLE_Msk | SysTick_CTRL_CLKSOURCE_Msk;  
 
     while(SysTick->VAL == 0);
+    
 
     startCycles = SysTick->VAL;
 
@@ -124,7 +129,7 @@ void cycleMeasurementStart()
     
 #endif
 
-#ifdef CORTEXA
+#if defined(CORTEXA) || defined(CORTEXR)
     unsigned int value;
     // Read CCNT Register
     __get_CP(15, 0, value, 9, 13, 0);
@@ -138,7 +143,7 @@ void cycleMeasurementStop()
 {
 #ifndef EXTBENCH
 #ifdef CORTEXM
-    SysTick->CTRL = SysTick_CTRL_CLKSOURCE_Msk;
+    SysTick->CTRL = 0;
     SysTick->LOAD = SYSTICK_INITIAL_VALUE;
 #endif
 #endif
@@ -148,10 +153,19 @@ Testing::cycles_t getCycles()
 {
 #ifdef CORTEXM
     uint32_t v = SysTick->VAL;
-    return(startCycles - v);
+    Testing::cycles_t result;
+    if (v < startCycles)
+    {
+      result = startCycles - v;
+    }
+    else
+    {
+      result = SYSTICK_INITIAL_VALUE - (v - startCycles);
+    }
+    return(result);
 #endif 
 
-#ifdef CORTEXA
+#if defined(CORTEXA) || defined(CORTEXR)
     unsigned int value;
     // Read CCNT Register
     __get_CP(15, 0, value, 9, 13, 0);

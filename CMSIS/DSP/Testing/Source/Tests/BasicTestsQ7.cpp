@@ -12,13 +12,11 @@
 #define GET_Q7_PTR() \
 const q7_t *inp1=input1.ptr(); \
 const q7_t *inp2=input2.ptr(); \
-q7_t *refp=ref.ptr(); \
 q7_t *outp=output.ptr();
 
 #define GET_LOGICAL_UINT8_PTR() \
 const uint8_t *inp1=inputLogical1.ptr(); \
 const uint8_t *inp2=inputLogical2.ptr(); \
-uint8_t *refp=refLogical.ptr(); \
 uint8_t *outp=outputLogical.ptr();
 
     void BasicTestsQ7::test_add_q7()
@@ -87,7 +85,6 @@ uint8_t *outp=outputLogical.ptr();
     void BasicTestsQ7::test_negate_q7()
     {
         const q7_t *inp1=input1.ptr();
-        q7_t *refp=ref.ptr();
         q7_t *outp=output.ptr();
 
         arm_negate_q7(inp1,outp,input1.nbSamples());
@@ -103,7 +100,6 @@ uint8_t *outp=outputLogical.ptr();
     void BasicTestsQ7::test_offset_q7()
     {
         const q7_t *inp1=input1.ptr();
-        q7_t *refp=ref.ptr();
         q7_t *outp=output.ptr();
 
         arm_offset_q7(inp1,this->scalar,outp,input1.nbSamples());
@@ -119,7 +115,6 @@ uint8_t *outp=outputLogical.ptr();
     void BasicTestsQ7::test_scale_q7()
     {
         const q7_t *inp1=input1.ptr();
-        q7_t *refp=ref.ptr();
         q7_t *outp=output.ptr();
 
         arm_scale_q7(inp1,this->scalar,0,outp,input1.nbSamples());
@@ -138,7 +133,6 @@ uint8_t *outp=outputLogical.ptr();
 
         const q7_t *inp1=input1.ptr();
         const q7_t *inp2=input2.ptr();
-        q31_t *refp=dotRef.ptr(); 
         q31_t *outp=dotOutput.ptr();
 
         arm_dot_prod_q7(inp1,inp2,input1.nbSamples(),&r);
@@ -158,6 +152,8 @@ uint8_t *outp=outputLogical.ptr();
     {
         GET_Q7_PTR();
 
+        (void)inp2;
+
         arm_abs_q7(inp1,outp,input1.nbSamples());
 
         ASSERT_EMPTY_TAIL(output);
@@ -171,7 +167,6 @@ uint8_t *outp=outputLogical.ptr();
     void BasicTestsQ7::test_shift_q7()
     {
         const q7_t *inp1=input1.ptr();
-        q7_t *refp=ref.ptr();
         q7_t *outp=output.ptr();
 
         arm_shift_q7(inp1,1,outp,input1.nbSamples());
@@ -187,7 +182,7 @@ uint8_t *outp=outputLogical.ptr();
     void BasicTestsQ7::test_and_u8()
     {
 
-            GET_LOGICAL_UINT8_PTR();
+        GET_LOGICAL_UINT8_PTR();
 
 
         arm_and_u8(inp1,inp2,outp,inputLogical1.nbSamples());
@@ -215,6 +210,8 @@ uint8_t *outp=outputLogical.ptr();
     {
         GET_LOGICAL_UINT8_PTR();
 
+        (void)inp2;
+
         arm_not_u8(inp1,outp,inputLogical1.nbSamples());
         
         ASSERT_EMPTY_TAIL(outputLogical);
@@ -241,6 +238,8 @@ uint8_t *outp=outputLogical.ptr();
        Testing::nbSamples_t nb=MAX_NB_SAMPLES; 
 
        this->scalar = ONEHALF;
+
+       (void)params;
 
        
        switch(id)

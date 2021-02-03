@@ -95,13 +95,14 @@ class TextFormatter:
 
       def printTest(self,elem, theId, theError,errorDetail,theLine,passed,cycles,params):
           message=elem.data["message"]
+          func=elem.data["class"]
           if not elem.data["deprecated"]:
              kind = "Test"
              ident = " " * elem.ident
              p=Fore.RED + "FAILED" + Style.RESET_ALL
              if passed == 1:
                 p= Fore.GREEN + "PASSED" + Style.RESET_ALL
-             print("%s%s %s(%d)%s : %s (cycles = %d)" % (ident,message,Style.BRIGHT,theId,Style.RESET_ALL,p,cycles))
+             print("%s%s %s(%s - %d)%s : %s (cycles = %d)" % (ident,message,Style.BRIGHT,func,theId,Style.RESET_ALL,p,cycles))
              if params:
                 print("%s %s" % (ident,params))
              if passed != 1:
@@ -157,7 +158,7 @@ class HTMLFormatter:
              if passed == 1:
                 p= "<font color=\"green\">PASSED</font>"
              print("<tr>")
-             print("<td><pre>%s</pre></td>" % message)
+             print("<td><pre>%s</pre></td>" % (message,))
              print("<td>%d</td>" % theId)
              print("<td>%s</td>" % p)
              if params:
@@ -324,13 +325,15 @@ def extractDataFiles(results,outputDir):
 
 def writeBenchmark(elem,benchFile,theId,theError,passed,cycles,params,config):
   if benchFile:
-    name=elem.data["class"] 
-    category= elem.categoryDesc()
+    testname=elem.data["class"] 
+    #category= elem.categoryDesc()
+    name=elem.data["message"] 
+    category=elem.getSuiteMessage()
     old=""
     if "testData" in elem.data:
       if "oldID" in elem.data["testData"]:
          old=elem.data["testData"]["oldID"]
-    benchFile.write("\"%s\",\"%s\",%d,\"%s\",%s,%d,%s\n" % (category,name,theId,old,params,cycles,config))
+    benchFile.write("\"%s\",\"%s\",\"%s\",%d,\"%s\",%s,%d,%s\n" % (category,testname,name,theId,old,params,cycles,config))
 
 def getCyclesFromTrace(trace):
   if not trace:
@@ -359,7 +362,7 @@ def analyseResult(resultPath,root,results,embedded,benchmark,trace,formatter):
     benchFile = None
     config=""
     if embedded:
-       prefix = ".*S:[ ]"
+       prefix = ".*[S]+:[ ]"
 
     # Parse the result file.
     # NORMAL mode is when we are parsing suite or group.
@@ -418,7 +421,7 @@ def analyseResult(resultPath,root,results,embedded,benchmark,trace,formatter):
                           #print(configList)
                           config = "".join(list(joinit(configList[0],",")))
                           configHeaders = "".join(list(joinit(csvheaders,",")))
-                       benchFile.write("CATEGORY,NAME,ID,OLDID,%s,CYCLES,%s\n" % (header,configHeaders))
+                       benchFile.write("CATEGORY,TESTNAME,NAME,ID,OLDID,%s,CYCLES,%s\n" % (header,configHeaders))
    
                     formatter.printGroup(elem,theId)
       

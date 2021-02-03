@@ -21,14 +21,15 @@
  * Title:        arm_softmax_u8.c
  * Description:  U8 softmax function
  *
- * $Date:        March 31, 2020
- * $Revision:    V.1.0.0
+ * $Date:        09. October 2020
+ * $Revision:    V.1.0.2
  *
- * Target Processor:  Cortex-M cores
+ * Target Processor:  Cortex-M CPUs
  *
  * -------------------------------------------------------------------- */
 
 #include "arm_nnfunctions.h"
+#include "arm_nnsupportfunctions.h"
 
 #define ACCUM_BITS 12
 
@@ -53,7 +54,7 @@ void arm_softmax_u8(const uint8_t *input,
     int32_t col = 0;
     int32_t row_idx;
 
-    for(row_idx = 0; row_idx < num_rows; ++row_idx)
+    for (row_idx = 0; row_idx < num_rows; ++row_idx)
     {
         // Find the maximum value in order to ensure numerical stability
         uint8_t max = *input;
@@ -69,7 +70,7 @@ void arm_softmax_u8(const uint8_t *input,
         for (col = 0; col < row_size; ++col)
         {
             diff = input[col] - max;
-            if(diff >= diff_min)
+            if (diff >= diff_min)
             {
                 sum += DIV_POW2(EXP_ON_NEG(MUL_SAT(diff * mask, mult)), ACCUM_BITS);
             }
@@ -84,15 +85,16 @@ void arm_softmax_u8(const uint8_t *input,
             diff = input[col] - max;
             if (diff >= diff_min)
             {
-                const int32_t res = DIV_POW2(MUL_SAT(shifted_scale, EXP_ON_NEG(MUL_SAT(diff * mask, mult))), bits_over_unit);
-                output[col] = (int8_t) CLAMP(res, (int32_t)255, (int32_t)0);
+                const int32_t res =
+                    DIV_POW2(MUL_SAT(shifted_scale, EXP_ON_NEG(MUL_SAT(diff * mask, mult))), bits_over_unit);
+                output[col] = (uint8_t)CLAMP(res, (int32_t)255, (int32_t)0);
             }
             else
             {
                 output[col] = 0;
             }
         }
-        input  += row_size;
+        input += row_size;
         output += row_size;
     }
 }

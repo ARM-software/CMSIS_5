@@ -21,57 +21,57 @@
  * Title:        arm_nnsupportfunctions.h
  * Description:  Public header file of support functions for CMSIS NN Library
  *
- * $Date:        March 17, 2020
- * $Revision:    V.4.0.3
+ * $Date:        09. October 2020
+ * $Revision:    V.4.5.5
  *
- * Target Processor:  Cortex-M cores
+ * Target Processor:  Cortex-M CPUs
  * -------------------------------------------------------------------- */
 
 #ifndef _ARM_NNSUPPORTFUNCTIONS_H_
 #define _ARM_NNSUPPORTFUNCTIONS_H_
 
-#include "arm_math.h"
 #include "arm_common_tables.h"
+#include "arm_math_types.h"
 
 #ifdef __cplusplus
-extern    "C"
-{
+extern "C" {
 #endif
 
-#define LEFT_SHIFT(_shift)  (_shift > 0 ? _shift : 0)
+#define LEFT_SHIFT(_shift) (_shift > 0 ? _shift : 0)
 #define RIGHT_SHIFT(_shift) (_shift > 0 ? 0 : -_shift)
-#define MASK_IF_ZERO(x)     (x) == 0 ? ~0 : 0
+#define MASK_IF_ZERO(x) (x) == 0 ? ~0 : 0
 #define MASK_IF_NON_ZERO(x) (x) != 0 ? ~0 : 0
 #define SELECT_USING_MASK(mask, a, b) ((mask) & (a)) ^ (~(mask) & (b))
 
-#define MAX(A,B) ((A) > (B) ? (A) : (B))
-#define MIN(A,B) ((A) < (B) ? (A) : (B))
+#define MAX(A, B) ((A) > (B) ? (A) : (B))
+#define MIN(A, B) ((A) < (B) ? (A) : (B))
 #define CLAMP(x, h, l) MAX(MIN((x), (h)), (l))
 
 /**
  * @brief Union for SIMD access of q31/q15/q7 types
  */
-union arm_nnword
-{
-    q31_t     word;
-               /**< q31 type */
-    q15_t     half_words[2];
-               /**< q15 type */
-    q7_t      bytes[4];
-               /**< q7 type */
+union arm_nnword {
+    q31_t word;
+    /**< q31 type */
+    q15_t half_words[2];
+    /**< q15 type */
+    q7_t bytes[4];
+    /**< q7 type */
 };
 
 /**
- * @brief Struct for specifying activation function types
- *
+ * @brief Union for data type long long
  */
-typedef enum
+struct arm_nn_double
 {
-    ARM_SIGMOID = 0,
-                /**< Sigmoid activation function */
-    ARM_TANH = 1,
-             /**< Tanh activation function */
-} arm_nn_activation_type;
+    uint32_t low;
+    int32_t high;
+};
+
+union arm_nn_long_long {
+    int64_t long_long;
+    struct arm_nn_double word;
+};
 
 /**
  * @defgroup nndata_convert Neural Network Data Conversion Functions
@@ -87,7 +87,7 @@ typedef enum
  * @param[in]       blockSize length of the input vector
  *
  */
-void      arm_q7_to_q15_no_shift(const q7_t * pSrc, q15_t * pDst, uint32_t blockSize);
+void arm_q7_to_q15_no_shift(const q7_t *pSrc, q15_t *pDst, uint32_t blockSize);
 
 /**
  * @brief Non-saturating addition of elements of a q7 vector
@@ -115,7 +115,7 @@ void arm_nn_add_q7(const q7_t *input, q31_t *output, uint32_t block_size);
  * @return none.
  *
  */
-void      arm_q7_to_q15_reordered_no_shift(const q7_t * pSrc, q15_t * pDst, uint32_t blockSize);
+void arm_q7_to_q15_reordered_no_shift(const q7_t *pSrc, q15_t *pDst, uint32_t blockSize);
 
 /**
  * @brief Converts the elements from a q7 vector to a q15 vector with an added offset
@@ -297,11 +297,13 @@ arm_status arm_nn_mat_mul_core_4x_s8(const int32_t row_elements,
 *
 * @param[in]  lhs                Pointer to the LHS input matrix
 * @param[in]  rhs                Pointer to the RHS input matrix
-* @param[in]  bias               Pointer to the bias vector. The length of this vector is equal to the number of output columns (or RHS input rows)
+* @param[in]  bias               Pointer to the bias vector. The length of this vector is equal to the number of output
+*                                columns (or RHS input rows)
 * @param[out] dst                Pointer to the output matrix with "m" rows and "n" columns
-* @param[in]  dst_multipliers    Pointer to the multipliers vector needed for the per-channel requantization. The length of this vector is equal to
-*                                the number of output columns (or RHS input rows)
-* @param[in]  dst_shifts         Pointer to the shifts vector needed for the per-channel requantization. The length of this vector is equal to
+* @param[in]  dst_multipliers    Pointer to the multipliers vector needed for the per-channel requantization.
+*                                The length of this vector is equal to the number of output columns (or RHS input rows)
+* @param[in]  dst_shifts         Pointer to the shifts vector needed for the per-channel requantization. The length of
+*                                this vector is equal to
 *                                the number of output columns (or RHS input rows)
 * @param[in]  lhs_rows           Number of LHS input rows
 * @param[in]  rhs_rows           Number of RHS input rows
@@ -335,8 +337,10 @@ arm_status arm_nn_mat_mult_nt_t_s8(const q7_t *lhs,
  * @param[in]      rhs             Input right-hand side matrix (transposed)
  * @param[in]      bias            Input bias
  * @param[out]     dst             Output vector
- * @param[in]      lhs_offset      Offset to be added to the input values of the left-hand side vector. Range: -127 to 128
- * @param[in]      rhs_offset      Offset to be added to the input values of the right-hand side matrix. Range: -127 to 128
+ * @param[in]      lhs_offset      Offset to be added to the input values of the left-hand side vector.
+ *                                 Range: -127 to 128
+ * @param[in]      rhs_offset      Offset to be added to the input values of the right-hand side matrix.
+ *                                 Range: -127 to 128
  * @param[in]      dst_offset      Offset to be added to the output values. Range: -127 to 128
  * @param[in]      dst_multiplier  Output multiplier
  * @param[in]      dst_shift       Output shift
@@ -451,12 +455,12 @@ q7_t *arm_nn_depthwise_conv_nt_t_s8(const q7_t *lhs,
  */
 __STATIC_FORCEINLINE q31_t arm_nn_read_q15x2_ia(const q15_t **in_q15)
 {
-  q31_t val;
+    q31_t val;
 
-  memcpy(&val, *in_q15, 4);
-  *in_q15 += 2;
+    memcpy(&val, *in_q15, 4);
+    *in_q15 += 2;
 
-  return (val);
+    return (val);
 }
 
 /**
@@ -466,11 +470,11 @@ __STATIC_FORCEINLINE q31_t arm_nn_read_q15x2_ia(const q15_t **in_q15)
  */
 __STATIC_FORCEINLINE q31_t arm_nn_read_q7x4_ia(const q7_t **in_q7)
 {
-  q31_t val;
-  memcpy(&val, *in_q7, 4);
-  *in_q7 += 4;
+    q31_t val;
+    memcpy(&val, *in_q7, 4);
+    *in_q7 += 4;
 
-  return (val);
+    return (val);
 }
 
 /**
@@ -480,10 +484,10 @@ __STATIC_FORCEINLINE q31_t arm_nn_read_q7x4_ia(const q7_t **in_q7)
  */
 __STATIC_FORCEINLINE q31_t arm_nn_read_q15x2(const q15_t *in_q15)
 {
-  q31_t val;
-  memcpy(&val, in_q15, 4);
+    q31_t val;
+    memcpy(&val, in_q15, 4);
 
-  return (val);
+    return (val);
 }
 
 /**
@@ -493,10 +497,10 @@ __STATIC_FORCEINLINE q31_t arm_nn_read_q15x2(const q15_t *in_q15)
  */
 __STATIC_FORCEINLINE q31_t arm_nn_read_q7x4(const q7_t *in_q7)
 {
-  q31_t val;
-  memcpy(&val, in_q7, 4);
+    q31_t val;
+    memcpy(&val, in_q7, 4);
 
-  return (val);
+    return (val);
 }
 
 /**
@@ -506,90 +510,86 @@ __STATIC_FORCEINLINE q31_t arm_nn_read_q7x4(const q7_t *in_q7)
  * @param[in]       block_size  Number of bytes to copy.
  *
  */
-__STATIC_FORCEINLINE void arm_memset_q7(q7_t *dst,
-                                        const q7_t val,
-                                        uint32_t block_size)
+__STATIC_FORCEINLINE void arm_memset_q7(q7_t *dst, const q7_t val, uint32_t block_size)
 {
 #if defined(ARM_MATH_MVEI)
-     __asm volatile (
-        "   vdup.8                  q0, %[set_val]             \n"
-        "   wlstp.8                 lr, %[cnt], 1f             \n"
-        "2:                                                    \n"
-        "   vstrb.8                 q0, [%[in]], 16            \n"
-        "   letp                    lr, 2b                     \n"
-        "1:                                                    \n"
-        :[in] "+r"(dst)
-        :[cnt] "r"(block_size), [set_val] "r"(val)
-        :"q0", "memory", "r14");
+    __asm volatile("   vdup.8                  q0, %[set_val]             \n"
+                   "   wlstp.8                 lr, %[cnt], 1f             \n"
+                   "2:                                                    \n"
+                   "   vstrb.8                 q0, [%[in]], 16            \n"
+                   "   letp                    lr, 2b                     \n"
+                   "1:                                                    \n"
+                   : [in] "+r"(dst)
+                   : [cnt] "r"(block_size), [set_val] "r"(val)
+                   : "q0", "memory", "r14");
 #else
     memset(dst, val, block_size);
 #endif
 }
 
-#if defined (ARM_MATH_DSP)
+#if defined(ARM_MATH_DSP)
 
 /**
  * @brief read and expand one q7 word into two q15 words
  */
 
-__STATIC_FORCEINLINE const q7_t *read_and_pad(const q7_t *source, q31_t * out1, q31_t * out2)
+__STATIC_FORCEINLINE const q7_t *read_and_pad(const q7_t *source, q31_t *out1, q31_t *out2)
 {
-        q31_t     inA = arm_nn_read_q7x4_ia(&source);
-        q31_t     inAbuf1 = __SXTB16(__ROR(inA, 8));
-        q31_t     inAbuf2 = __SXTB16(inA);
+    q31_t inA = arm_nn_read_q7x4_ia(&source);
+    q31_t inAbuf1 = __SXTB16(__ROR((uint32_t)inA, 8));
+    q31_t inAbuf2 = __SXTB16(inA);
 
 #ifndef ARM_MATH_BIG_ENDIAN
-        *out2 = __PKHTB(inAbuf1, inAbuf2, 16);
-        *out1 = __PKHBT(inAbuf2, inAbuf1, 16);
+    *out2 = (int32_t)(__PKHTB(inAbuf1, inAbuf2, 16));
+    *out1 = (int32_t)(__PKHBT(inAbuf2, inAbuf1, 16));
 #else
-        *out1 = __PKHTB(inAbuf1, inAbuf2, 16);
-        *out2 = __PKHBT(inAbuf2, inAbuf1, 16);
+    *out1 = (int32_t)(__PKHTB(inAbuf1, inAbuf2, 16));
+    *out2 = (int32_t)(__PKHBT(inAbuf2, inAbuf1, 16));
 #endif
 
-        return source;
+    return source;
 }
 
 /**
  * @brief read and expand one q7 word into two q15 words with reordering
  */
 
-__STATIC_FORCEINLINE const q7_t *read_and_pad_reordered(const q7_t *source, q31_t * out1, q31_t * out2)
+__STATIC_FORCEINLINE const q7_t *read_and_pad_reordered(const q7_t *source, q31_t *out1, q31_t *out2)
 {
-        q31_t     inA = arm_nn_read_q7x4_ia(&source);
+    q31_t inA = arm_nn_read_q7x4_ia(&source);
 #ifndef ARM_MATH_BIG_ENDIAN
-        *out2 = __SXTB16(__ROR(inA, 8));
-        *out1 = __SXTB16(inA);
+    *out2 = __SXTB16(__ROR((uint32_t)inA, 8));
+    *out1 = __SXTB16(inA);
 #else
-        *out1 = __SXTB16(__ROR(inA, 8));
-        *out2 = __SXTB16(inA);
+    *out1 = __SXTB16(__ROR((uint32_t)inA, 8));
+    *out2 = __SXTB16(inA);
 #endif
 
-        return source;
+    return source;
 }
 
 /**
  * @brief read and expand one q7 word into two q15 words with reordering and add an offset
  */
-__STATIC_FORCEINLINE const q7_t *read_and_pad_reordered_with_offset(const q7_t *source, q31_t * out1, q31_t * out2, q31_t offset)
+__STATIC_FORCEINLINE const q7_t *
+read_and_pad_reordered_with_offset(const q7_t *source, q31_t *out1, q31_t *out2, q31_t offset)
 {
-        q31_t     inA = arm_nn_read_q7x4_ia(&source);
+    q31_t inA = arm_nn_read_q7x4_ia(&source);
 
 #ifndef ARM_MATH_BIG_ENDIAN
-        *out2 = __SXTB16(__ROR(inA, 8));
-        *out1 = __SXTB16(inA);
+    *out2 = __SXTB16(__ROR((uint32_t)inA, 8));
+    *out1 = __SXTB16(inA);
 #else
-        *out1 = __SXTB16(__ROR(inA, 8));
-        *out2 = __SXTB16(inA);
+    *out1 = __SXTB16(__ROR((uint32_t)inA, 8));
+    *out2 = __SXTB16(inA);
 #endif
-        *out1 = __QADD16(*out1,offset);
-        *out2 = __QADD16(*out2,offset);
+    *out1 = __QADD16(*out1, offset);
+    *out2 = __QADD16(*out2, offset);
 
-        return source;
+    return source;
 }
 
 #endif
-
-
 
 /**
  * @defgroup NNBasicMath Basic Math Functions for Neural Network Computation
@@ -613,12 +613,7 @@ __STATIC_FORCEINLINE const q7_t *read_and_pad_reordered_with_offset(const q7_t *
  * Results outside of the allowable q15 range [0x8000 0x7FFF] will be saturated.
  */
 
-void arm_nn_mult_q15(
-  q15_t * pSrcA,
-  q15_t * pSrcB,
-  q15_t * pDst,
-  const uint16_t out_shift,
-  uint32_t blockSize);
+void arm_nn_mult_q15(q15_t *pSrcA, q15_t *pSrcB, q15_t *pDst, const uint16_t out_shift, uint32_t blockSize);
 
 /**
  * @brief           q7 vector multiplication with variable output shifts
@@ -635,44 +630,37 @@ void arm_nn_mult_q15(
  * Results outside of the allowable q7 range [0x80 0x7F] will be saturated.
  */
 
-void arm_nn_mult_q7(
-  q7_t * pSrcA,
-  q7_t * pSrcB,
-  q7_t * pDst,
-  const uint16_t out_shift,
-  uint32_t blockSize);
+void arm_nn_mult_q7(q7_t *pSrcA, q7_t *pSrcB, q7_t *pDst, const uint16_t out_shift, uint32_t blockSize);
 
 /**
  * @brief macro for adding rounding offset
  */
 #ifndef ARM_NN_TRUNCATE
-    #define NN_ROUND(out_shift) ( (0x1u << out_shift) >> 1 )
+#define NN_ROUND(out_shift) ((0x1u << out_shift) >> 1)
 #else
-    #define NN_ROUND(out_shift) 0
+#define NN_ROUND(out_shift) 0
 #endif
 
 // Macros for shortening quantization functions' names and avoid long lines
-#define MUL_SAT(a, b)  arm_nn_sat_doubling_high_mult((a), (b))
-#define MUL_SAT_MVE(a, b) arm_sat_doubling_high_mult_mve_32x4((a), (b))
+#define MUL_SAT(a, b) arm_nn_doubling_high_mult((a), (b))
+#define MUL_SAT_MVE(a, b) arm_doubling_high_mult_mve_32x4((a), (b))
 #define MUL_POW2(a, b) arm_nn_mult_by_power_of_two((a), (b))
-
 
 #define DIV_POW2(a, b) arm_nn_divide_by_power_of_two((a), (b))
 #define DIV_POW2_MVE(a, b) arm_divide_by_power_of_two_mve((a), (b))
 
-
-#define EXP_ON_NEG(x)  arm_nn_exp_on_negative_values((x))
-#define ONE_OVER1(x)   arm_nn_one_over_one_plus_x_for_x_in_0_1((x))
+#define EXP_ON_NEG(x) arm_nn_exp_on_negative_values((x))
+#define ONE_OVER1(x) arm_nn_one_over_one_plus_x_for_x_in_0_1((x))
 
 /**
  * @brief           Saturating doubling high multiply. Result matches
  *                  NEON instruction VQRDMULH.
- * @param[in]       m1        Multiplicand
- * @param[in]       m2        Multiplier
+ * @param[in]       m1        Multiplicand. Range: {Q31_MIN, Q31_MAX}
+ * @param[in]       m2        Multiplier. Range: {Q31_MIN, Q31_MAX}
  * @return          Result of multiplication.
  *
  */
-__STATIC_FORCEINLINE q31_t arm_nn_sat_doubling_high_mult(const q31_t m1, const q31_t m2)
+__STATIC_FORCEINLINE q31_t arm_nn_doubling_high_mult(const q31_t m1, const q31_t m2)
 {
     q31_t result = 0;
     // Rounding offset to add for a right shift of 31
@@ -687,12 +675,45 @@ __STATIC_FORCEINLINE q31_t arm_nn_sat_doubling_high_mult(const q31_t m1, const q
 
     // Utilize all of the upper 32 bits. This is the doubling step
     // as well.
-    result = mult / (1UL << 31);
+    result = (int32_t)(mult / (1ll << 31));
 
     if ((m1 == m2) && (m1 == (int32_t)Q31_MIN))
     {
         result = Q31_MAX;
     }
+    return result;
+}
+
+/**
+ * @brief           Doubling high multiply without saturation. This is intended
+ *                  for requantization where the scale is a positive integer
+ *
+ * @param[in]       m1        Multiplicand. Range: {Q31_MIN, Q31_MAX}
+ * @param[in]       m2        Multiplier Range: {Q31_MIN, Q31_MAX}
+ * @return          Result of multiplication.
+ * @note            The result of this matches that of neon instruction
+ *                  VQRDMULH for m1 in range {Q31_MIN, Q31_MAX} and m2 in
+ *                  range {Q31_MIN + 1, Q31_MAX}. Saturation occurs when
+ *                  m1 equals m2 equals Q31_MIN and that is not handled by
+ *                  this function.
+ *
+ */
+__STATIC_FORCEINLINE q31_t arm_nn_doubling_high_mult_no_sat(const q31_t m1, const q31_t m2)
+{
+    q31_t result = 0;
+    union arm_nn_long_long mult;
+
+    // Rounding offset to add for a right shift of 31
+    mult.word.low = 1 << 30;
+    mult.word.high = 0;
+
+    // Gets resolved as a SMLAL instruction
+    mult.long_long = mult.long_long + (q63_t)m1 * m2;
+
+    // Utilize all of the upper 32 bits. This is the doubling step
+    // as well.
+    result = (int32_t)(mult.long_long >> 31);
+
     return result;
 }
 
@@ -707,7 +728,7 @@ __STATIC_FORCEINLINE q31_t arm_nn_sat_doubling_high_mult(const q31_t m1, const q
 __STATIC_FORCEINLINE q31_t arm_nn_divide_by_power_of_two(const q31_t dividend, const q31_t exponent)
 {
     q31_t result = 0;
-    const q31_t remainder_mask = (1l << exponent) - 1;
+    const q31_t remainder_mask = (1 << exponent) - 1;
     int32_t remainder = remainder_mask & dividend;
 
     // Basic division
@@ -730,7 +751,7 @@ __STATIC_FORCEINLINE q31_t arm_nn_divide_by_power_of_two(const q31_t dividend, c
 /**
  * @brief           Requantize a given value.
  * @param[in]       val         Value to be requantized
- * @param[in]       multiplier  multiplier
+ * @param[in]       multiplier  multiplier. Range {Q31_MIN + 1, Q32_MAX}
  * @param[in]       shift       left or right shift for 'val * multiplier'
  *
  * @return          Returns (val * multiplier)/(2 ^ shift)
@@ -738,8 +759,8 @@ __STATIC_FORCEINLINE q31_t arm_nn_divide_by_power_of_two(const q31_t dividend, c
  */
 __STATIC_FORCEINLINE q31_t arm_nn_requantize(const q31_t val, const q31_t multiplier, const q31_t shift)
 {
-  return arm_nn_divide_by_power_of_two(arm_nn_sat_doubling_high_mult(val * (1 << LEFT_SHIFT(shift)), multiplier),
-                                       RIGHT_SHIFT(shift));
+    return arm_nn_divide_by_power_of_two(arm_nn_doubling_high_mult_no_sat(val * (1 << LEFT_SHIFT(shift)), multiplier),
+                                         RIGHT_SHIFT(shift));
 }
 
 /**
@@ -749,22 +770,18 @@ __STATIC_FORCEINLINE q31_t arm_nn_requantize(const q31_t val, const q31_t multip
  * @param[in]       block_size  Number of bytes to copy.
  *
  */
-__STATIC_FORCEINLINE void arm_memcpy_q7(q7_t *__RESTRICT dst,
-                                        const q7_t *__RESTRICT src,
-                                        uint32_t block_size)
+__STATIC_FORCEINLINE void arm_memcpy_q7(q7_t *__RESTRICT dst, const q7_t *__RESTRICT src, uint32_t block_size)
 {
 #if defined(ARM_MATH_MVEI)
-     __asm volatile (
-        "   wlstp.8                 lr, %[cnt], 1f             \n"
-        "2:                                                    \n"
-        "   vldrb.8                 q0, [%[in]], 16            \n"
-        "   vstrb.8                 q0, [%[out]], 16           \n"
-        "   letp                    lr, 2b                     \n"
-        "1:                                                    \n"
-        :[in] "+r"(src)
-        ,[out] "+r"(dst)
-        :[cnt] "r"(block_size)
-        :"q0", "memory", "r14");
+    __asm volatile("   wlstp.8                 lr, %[cnt], 1f             \n"
+                   "2:                                                    \n"
+                   "   vldrb.8                 q0, [%[in]], 16            \n"
+                   "   vstrb.8                 q0, [%[out]], 16           \n"
+                   "   letp                    lr, 2b                     \n"
+                   "1:                                                    \n"
+                   : [in] "+r"(src), [out] "+r"(dst)
+                   : [cnt] "r"(block_size)
+                   : "q0", "memory", "r14");
 #else
     memcpy(dst, src, block_size);
 #endif
@@ -778,7 +795,7 @@ __STATIC_FORCEINLINE void arm_memcpy_q7(q7_t *__RESTRICT dst,
  * @return          Result of multiplication.
  *
  */
-__STATIC_FORCEINLINE int32x4_t arm_sat_doubling_high_mult_mve(const int32x4_t m1, const q31_t m2)
+__STATIC_FORCEINLINE int32x4_t arm_doubling_high_mult_mve(const int32x4_t m1, const q31_t m2)
 {
     return vqrdmulhq_n_s32(m1, m2);
 }
@@ -793,10 +810,10 @@ __STATIC_FORCEINLINE int32x4_t arm_sat_doubling_high_mult_mve(const int32x4_t m1
  */
 __STATIC_FORCEINLINE int32x4_t arm_divide_by_power_of_two_mve(const int32x4_t dividend, const q31_t exponent)
 {
-  const int32x4_t shift = vdupq_n_s32(-exponent);
-  const int32x4_t fixup = vshrq_n_s32(vandq_s32(dividend, shift), 31);
-  const int32x4_t fixed_up_dividend = vqaddq_s32(dividend, fixup);
-  return vrshlq_s32(fixed_up_dividend, shift);
+    const int32x4_t shift = vdupq_n_s32(-exponent);
+    const int32x4_t fixup = vshrq_n_s32(vandq_s32(dividend, shift), 31);
+    const int32x4_t fixed_up_dividend = vqaddq_s32(dividend, fixup);
+    return vrshlq_s32(fixed_up_dividend, shift);
 }
 
 /**
@@ -810,33 +827,35 @@ __STATIC_FORCEINLINE int32x4_t arm_divide_by_power_of_two_mve(const int32x4_t di
  */
 __STATIC_FORCEINLINE int32x4_t arm_requantize_mve(const int32x4_t val, const q31_t multiplier, const q31_t shift)
 {
-  return arm_divide_by_power_of_two_mve(
-          arm_sat_doubling_high_mult_mve(vshlq_s32(val, vdupq_n_s32(LEFT_SHIFT(shift))), multiplier),
-          RIGHT_SHIFT(shift));
+    return arm_divide_by_power_of_two_mve(
+        arm_doubling_high_mult_mve(vshlq_s32(val, vdupq_n_s32(LEFT_SHIFT(shift))), multiplier), RIGHT_SHIFT(shift));
 }
 
-__STATIC_FORCEINLINE int32x4_t arm_sat_doubling_high_mult_mve_32x4(const int32x4_t m1, const int32x4_t m2)
+__STATIC_FORCEINLINE int32x4_t arm_doubling_high_mult_mve_32x4(const int32x4_t m1, const int32x4_t m2)
 {
-  return vqrdmulhq_s32(m1, m2);
+    return vqrdmulhq_s32(m1, m2);
 }
 
 __STATIC_FORCEINLINE int32x4_t arm_divide_by_power_of_two_mve_32x4(const int32x4_t dividend, const int32x4_t exponent)
 {
-  const int32x4_t shift = -exponent;
-  const int32x4_t fixup = vshrq_n_s32(vandq_s32(dividend, shift), 31);
-  const int32x4_t fixed_up_dividend = vqaddq_s32(dividend, fixup);
-  return vrshlq_s32(fixed_up_dividend, shift);
+    const int32x4_t shift = -exponent;
+    const int32x4_t fixup = vshrq_n_s32(vandq_s32(dividend, shift), 31);
+    const int32x4_t fixed_up_dividend = vqaddq_s32(dividend, fixup);
+    return vrshlq_s32(fixed_up_dividend, shift);
 }
 
-__STATIC_FORCEINLINE int32x4_t arm_requantize_mve_32x4(const int32x4_t val, const int32x4_t multiplier, const int32x4_t shift)
+__STATIC_FORCEINLINE int32x4_t arm_requantize_mve_32x4(const int32x4_t val,
+                                                       const int32x4_t multiplier,
+                                                       const int32x4_t shift)
 {
-  const int32x4_t zz = vdupq_n_s32(0);
-  const mve_pred16_t p = vcmpgtq_n_s32(shift, 0);
+    const int32x4_t zz = vdupq_n_s32(0);
+    const mve_pred16_t p = vcmpgtq_n_s32(shift, 0);
 
-  const int32x4_t left_shift = vpselq_s32(shift, zz, p);
-  const int32x4_t right_shift = -vpselq_s32(zz, shift, p);
+    const int32x4_t left_shift = vpselq_s32(shift, zz, p);
+    const int32x4_t right_shift = -vpselq_s32(zz, shift, p);
 
-  return arm_divide_by_power_of_two_mve_32x4(arm_sat_doubling_high_mult_mve_32x4(vshlq_s32(val, left_shift), multiplier), right_shift);
+    return arm_divide_by_power_of_two_mve_32x4(arm_doubling_high_mult_mve_32x4(vshlq_s32(val, left_shift), multiplier),
+                                               right_shift);
 }
 #endif
 
@@ -844,22 +863,22 @@ __STATIC_FORCEINLINE int32x4_t arm_requantize_mve_32x4(const int32x4_t val, cons
 
 __STATIC_FORCEINLINE int32_t arm_nn_exp_on_negative_values(int32_t val)
 {
-    int32_t mask  = 0;
+    int32_t mask = 0;
     int32_t shift = 24;
 
     const int32_t val_mod_minus_quarter = (val & ((1 << shift) - 1)) - (1 << shift);
-    const int32_t remainder             = val_mod_minus_quarter - val;
-    const int32_t x                     = (val_mod_minus_quarter << 5) + (1 << 28);
-    const int32_t x2                    = MUL_SAT(x, x);
+    const int32_t remainder = val_mod_minus_quarter - val;
+    const int32_t x = (val_mod_minus_quarter << 5) + (1 << 28);
+    const int32_t x2 = MUL_SAT(x, x);
 
-    int32_t result = 1895147668 + MUL_SAT(1895147668, x +
-        DIV_POW2(MUL_SAT(DIV_POW2(MUL_SAT(x2, x2), 2) + MUL_SAT(x2, x), 715827883) + x2, 1));
+    int32_t result = 1895147668 +
+        MUL_SAT(1895147668, x + DIV_POW2(MUL_SAT(DIV_POW2(MUL_SAT(x2, x2), 2) + MUL_SAT(x2, x), 715827883) + x2, 1));
 
-#define SELECT_IF_NON_ZERO(x)                                     \
-{                                                                 \
-    mask   = MASK_IF_NON_ZERO(remainder & (1 << shift++));        \
-    result = SELECT_USING_MASK(mask, MUL_SAT(result, x), result); \
-}
+#define SELECT_IF_NON_ZERO(x)                                                                                          \
+    {                                                                                                                  \
+        mask = MASK_IF_NON_ZERO(remainder & (1 << shift++));                                                           \
+        result = SELECT_USING_MASK(mask, MUL_SAT(result, x), result);                                                  \
+    }
 
     SELECT_IF_NON_ZERO(1672461947)
     SELECT_IF_NON_ZERO(1302514674)

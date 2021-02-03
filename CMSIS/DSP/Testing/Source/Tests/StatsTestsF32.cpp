@@ -1,7 +1,6 @@
 #include "StatsTestsF32.h"
 #include <stdio.h>
 #include "Error.h"
-#include "arm_math.h"
 #include "Test.h"
 
 
@@ -246,7 +245,6 @@ a double precision computation.
       const float32_t *inp  = inputA.ptr();
       const int16_t *dimsp  = dims.ptr();
 
-      float32_t *refp         = ref.ptr();
       float32_t *outp         = output.ptr();
 
       for(int i=0;i < this->nbPatterns; i++)
@@ -267,7 +265,6 @@ a double precision computation.
       const float32_t *inp  = inputA.ptr();
       const int16_t *dimsp  = dims.ptr();
 
-      float32_t *refp         = ref.ptr();
       float32_t *outp         = output.ptr();
 
       for(int i=0;i < this->nbPatterns; i++)
@@ -289,7 +286,6 @@ a double precision computation.
       const float32_t *inpB  = inputB.ptr();
       const int16_t *dimsp  = dims.ptr();
 
-      float32_t *refp         = ref.ptr();
       float32_t *outp         = output.ptr();
 
       for(int i=0;i < this->nbPatterns; i++)
@@ -311,7 +307,6 @@ a double precision computation.
       const float32_t *inpB  = inputB.ptr();
       const int16_t *dimsp  = dims.ptr();
 
-      float32_t *refp         = ref.ptr();
       float32_t *outp         = output.ptr();
       float32_t *tmpp         = tmp.ptr();
 
@@ -332,6 +327,7 @@ a double precision computation.
   
     void StatsTestsF32::setUp(Testing::testID_t id,std::vector<Testing::param_t>& paramsArgs,Client::PatternMgr *mgr)
     {
+        (void)paramsArgs;
         switch(id)
         {
             case StatsTestsF32::TEST_MAX_F32_1:
@@ -732,6 +728,7 @@ a double precision computation.
 
     void StatsTestsF32::tearDown(Testing::testID_t id,Client::PatternMgr *mgr)
     {
+      (void)id;
       switch(id)
       {
             case StatsTestsF32::TEST_MAX_F32_1:

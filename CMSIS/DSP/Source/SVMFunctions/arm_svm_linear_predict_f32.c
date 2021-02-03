@@ -24,13 +24,13 @@
  * limitations under the License.
  */
 
-#include "arm_math.h"
+#include "dsp/svm_functions.h"
 #include <limits.h>
 #include <math.h>
 
 
 /**
- * @addtogroup groupSVM
+ * @addtogroup linearsvm
  * @{
  */
 
@@ -142,10 +142,13 @@ void arm_svm_linear_predict_f32(
         /*
          * Sum the partial parts
          */
-        sum += *pDualCoef++ * vecAddAcrossF32Mve(acc0);
-        sum += *pDualCoef++ * vecAddAcrossF32Mve(acc1);
-        sum += *pDualCoef++ * vecAddAcrossF32Mve(acc2);
-        sum += *pDualCoef++ * vecAddAcrossF32Mve(acc3);
+
+        acc0 = vmulq_n_f32(acc0,*pDualCoef++);
+        acc0 = vfmaq_n_f32(acc0,acc1,*pDualCoef++);
+        acc0 = vfmaq_n_f32(acc0,acc2,*pDualCoef++);
+        acc0 = vfmaq_n_f32(acc0,acc3,*pDualCoef++);
+
+        sum += vecAddAcrossF32Mve(acc0);
 
         pSrcA += numCols * 4;
         /*
@@ -212,8 +215,11 @@ void arm_svm_linear_predict_f32(
         /*
          * Sum the partial parts
          */
-        sum += *pDualCoef++ * vecAddAcrossF32Mve(acc0);
-        sum += *pDualCoef++ * vecAddAcrossF32Mve(acc1);
+        acc0 = vmulq_n_f32(acc0,*pDualCoef++);
+        acc0 = vfmaq_n_f32(acc0,acc1,*pDualCoef++);
+
+        sum += vecAddAcrossF32Mve(acc0);
+
 
         pSrcA += numCols * 2;
         row -= 2;
@@ -449,5 +455,5 @@ void arm_svm_linear_predict_f32(
 #endif /* defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE) */
 
 /**
- * @} end of groupSVM group
+ * @} end of linearsvm group
  */

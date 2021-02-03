@@ -131,7 +131,7 @@ a double precision computation.
     {
       
        
-       
+       (void)params;
        switch(id)
        {
         case DECIMQ31::TEST_FIR_DECIMATE_Q31_1:
@@ -166,5 +166,6 @@ a double precision computation.
 
     void DECIMQ31::tearDown(Testing::testID_t id,Client::PatternMgr *mgr)
     {
+        (void)id;
         output.dump(mgr);
     }

@@ -180,6 +180,23 @@ The \ref DAP_atomic_gr are only available when \ref DAP_Info with ID=0xF0 (Capab
 
 /**************************************************************************************************/
 /** 
+\defgroup DAP_uart_gr UART Commands
+\ingroup DAP_Commands_gr
+\brief Target communication via extra UART.
+
+CMSIS-DAP debug unit can be extended to support a separate UART port that connects to the target.  Such a UART communication
+is typically used for printf-style debugging, but the usage is not limited to that.  CMSIS-DAP supports UART communication via:
+  - dedicated CMSIS-DAP commands: connects seamless to (Cloud) IDEs that integrate a printf viewer.
+  - via standard USB COM port: for any data communication, i.e. to transmit training data sets for machine learning.
+
+The following CMSIS-DAP commands are added to support UART communication:
+ - \ref DAP_UART_Control : \copybrief DAP_UART_Control
+ - \ref DAP_UART_Transfer : \copybrief DAP_UART_Transfer
+ 
+*/
+
+/**************************************************************************************************/
+/** 
 \defgroup DAP_Response_Status Response Status
 \ingroup DAP_Commands_gr
 \brief Status Information in Response Data
@@ -1367,4 +1384,95 @@ Send \ref DAP_SWJ_Pins in fourth packet which executes queued commands and comma
  |******|***********|
    DAP_SWJ_Pins     |
 \endcode   
+*/
+
+
+
+/**************************************************************************************************/
+/** 
+\defgroup DAP_UART_Control DAP_UART_Control
+\ingroup DAP_uart_gr
+\brief Control and configure UART interface.
+
+Query the current UART settings or configure the UART parameters.
+
+<b>DAP_UART_Control Request:</b>
+
+\code
+ | BYTE | BYTE          | WORD         | WORD          |
+ > 0x1D | UART setup    | UART control | UART baudrate |
+ |******|***************|**************|***************|
+\endcode
+
+- <b>UART setup</b>: Query or configure UART parameters.
+  - Bit 0: setup: 0 = query parameters (UART control and UART baudrate not used), 1 = setup parameters (UART control and UART baudrate contain setup data)
+  - Bit 1: data via CMSIS-DAP: 0 = no change, 1 = data communication via CMSIS-DAP interface
+  - Bit 2: data via USB COM:   0 = no change, 1 = data communication via USB COM interface
+\note UART setup value 0 does not change any setting, but queries the current settings
+  
+- <b>UART control</b>: Parameter values identical with CMSIS-Driver - USART Interface, function ARM_USART_Control. But only the following is supported:
+  - ARM_USART_MODE_ASYNCHRONOUS
+  - ARM_USART_DATA_BITS_5 .. ARM_USART_DATA_BITS_8
+  - ARM_USART_STOP_BITS_1, ARM_USART_STOP_BITS_2
+  - ARM_USART_FLOW_CONTROL_NONE
+
+- <b>UART baudrate</b>: baudrate value to configure
+
+
+<b>DAP_UART_Control Response:</b>
+\code
+ | BYTE | BYTE          | WORD         | WORD          |
+ < 0x1D | UART status   | UART control | UART baudrate |
+ |******|***************|**************|***************|
+\endcode
+
+- <b>UART status</b>: Status information.
+  - Bit 0: 0 = reserved
+  - Bit 1: 1 = data communication via CMSIS-DAP interface
+  - Bit 2: 1 = data communication via USB COM interface
+\note when Bit 1 and Bit 2 are both 0, UART support is disabled in the CMSIS-DAP firmware
+
+- <b>UART control</b>: current parameter values identical with CMSIS-Driver (see above).
+
+- <b>UART baudrate</b>: current baudrate value
+*/
+
+/**************************************************************************************************/
+/** 
+\defgroup DAP_UART_Transfer DAP_UART_Transfer
+\ingroup DAP_uart_gr
+\brief Write (output) and Read (input) data via target UART interface.
+
+Exchange data via the UART interface.
+
+<b>DAP_UART_Transfer Request:</b>
+
+\code
+ | BYTE | SHORT         | BYTE          |
+ > 0x1E | Output length | Transfer data |
+ |******|***************|+++++++++++++++|
+\endcode
+
+- <b>Output length</b>: Number of bytes to send to the target device via UART or special commands.
+  - Bit 0..9: length: number of bytes in <b>Transfer data</b>.
+  - Bit 15: 1 = issue ARM_USART_ABORT_TRANSFER as an attempt to terminate transfer via UART.
+  
+- <b>Transfer data</b>: bytes to send to the target device via UART.
+
+<b>DAP_UART_Transfer Response:</b>
+
+\code
+ | BYTE | SHORT        | BYTE          |
+ < 0x1E | Input length | Transfer data |
+ |******|**************|+++++++++++++++|
+\endcode
+
+- <b>Input length</b>: Number of bytes received  from to the target device via UART.
+  - Bit 0..9: length: number of bytes in <b>Transfer data</b>.
+  - Bit 13: 1 = set when data is lost during receive/transfer operation.
+  - Bit 14: 1 = set when parity error is detected during receive.
+  - Bit 15: 1 = set when break is detected during receive. This should stop further data transfer.
+  
+- <b>Transfer data</b>: bytes received from the target device via UART.
+
 */

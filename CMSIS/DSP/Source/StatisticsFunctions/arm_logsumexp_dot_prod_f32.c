@@ -24,13 +24,13 @@
  * limitations under the License.
  */
 
-#include "arm_math.h"
+#include "dsp/statistics_functions.h"
 #include <limits.h>
 #include <math.h>
 
 
 /**
- * @addtogroup groupStats
+ * @addtogroup LogSumExp
  * @{
  */
 
@@ -62,5 +62,5 @@ float32_t arm_logsumexp_dot_prod_f32(const float32_t * pSrcA,
 }
 
 /**
- * @} end of groupStats group
+ * @} end of LogSumExp group
  */

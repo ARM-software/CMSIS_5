@@ -71,7 +71,7 @@ Create a folder BuildCMSISOnly.
 Inside the folder, create a CMakeLists.txt with the following content:
 
 ```cmake
-cmake_minimum_required (VERSION 3.6)
+cmake_minimum_required (VERSION 3.14)
 
 # Define the project
 project (testcmsisdsp VERSION 0.1)
@@ -141,4 +141,10 @@ In addition to that, ARM_DSP_CONFIG_TABLES must be enabled and finally ARM_FFT_A
 This last symbol is required because if no transform functions are included in the build, then by default all flags related to FFT tables are ignored.
 
 
+## Bit Reverse Tables CMSIS DSP
 
+It is a question coming often.
+
+It is now detailed [in this github issue](https://github.com/ARM-software/CMSIS_5/issues/858)
+
+Someone from the community has written a [Python script to help](https://gist.github.com/rosek86/d0d709852fddf36193071d7f61987bae)

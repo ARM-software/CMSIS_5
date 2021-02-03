@@ -15,7 +15,7 @@ sys.path.insert(0, parent_dir)
 
 import PatternGeneration.DebugTools as d
 
-f = "f32"
+f = "f16"
 
 inputPath = os.path.join(parent_dir,"Patterns","DSP","Filtering","BIQUAD","BIQUAD%s" % f.upper(),"BiquadInput1_%s.txt" % f )
 refPath = os.path.join(parent_dir,"Patterns","DSP","Filtering","BIQUAD","BIQUAD%s" % f.upper(),"BiquadOutput1_%s.txt" % f)
@@ -24,11 +24,11 @@ outputPath= os.path.join(parent_dir,"Output","DSP","Filtering","BIQUAD","BIQUAD%
 
 
 
-inSig = d.readF32Pattern(inputPath)
+inSig = d.readF16Pattern(inputPath)
      
-refSig = d.readF32Pattern(refPath)
+refSig = d.readF16Pattern(refPath)
      
-sig = d.readF32Output(outputPath)
+sig = d.readF16Output(outputPath)
 
 
 figure()
