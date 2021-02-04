@@ -1302,7 +1302,7 @@
             <wLevel>2</wLevel>
             <uThumb>1</uThumb>
             <VariousControls>
-              <MiscControls>-mfpu=fpv4-sp-d16 -mfloat-abi=hard -ffunction-sections</MiscControls>
+              <MiscControls>-mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -ffunction-sections</MiscControls>
               <Define>EVR_RTX_DISABLE</Define>
               <Undefine></Undefine>
               <IncludePath>..\..\..\Config;..\..\..\Include;..\..\..\..\Include</IncludePath>
@@ -1312,7 +1312,7 @@
             <bBE>0</bBE>
             <interw>0</interw>
             <VariousControls>
-              <MiscControls>-mfpu=fpv4-sp-d16 -mfloat-abi=hard</MiscControls>
+              <MiscControls>-mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard</MiscControls>
               <Define></Define>
               <Undefine></Undefine>
               <IncludePath></IncludePath>
