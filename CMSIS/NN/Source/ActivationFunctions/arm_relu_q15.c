@@ -84,7 +84,6 @@ void arm_relu_q15(q15_t *data, uint16_t size)
         {
             *input = 0;
         }
-        input++;
     }
 #else
     /* Run the following code as reference implementation for M cores without DSP extension */
