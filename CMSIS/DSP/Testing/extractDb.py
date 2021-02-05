@@ -6,6 +6,7 @@ import numpy as np
 from TestScripts.doc.Structure import *
 from TestScripts.doc.Format import *
 import os.path
+import yaml
 
 refCoreName=""
 
@@ -62,6 +63,7 @@ parser.add_argument('-ref', nargs='?',type = str, default="M55", help="Reference
 parser.add_argument('-clampval', nargs='?',type = float, default=8.0, help="Clamp for ratio")
 parser.add_argument('-clamp', action='store_true', help="Clamp enabled for ratio")
 parser.add_argument('-cores', nargs='?',type = str, help="Cores to keep")
+parser.add_argument('-toc', nargs='?',type = str, help="Yaml for the table of contents")
 
 # For runid or runid range
 parser.add_argument('others', nargs=argparse.REMAINDER,help="Run ID")
@@ -1113,6 +1115,16 @@ def addComments(document):
         section.addContent(Text("A bigger ratio means the reference code is better"))
 
 
+def processToc(d):
+    result=[] 
+    for k in d:
+      if d[k] is not None:
+         result.append(Hierarchy(k,processToc(d[k])))
+      else:
+         result.append(Hierarchy(k))
+    return(result)
+
+  
 
 def createDoc(document,sections,benchtables):
     global processed,referenceCoreID
@@ -1136,7 +1148,12 @@ try:
 
       addComments(document)
 
-
+      if args.toc:
+        with open(args.toc,"r") as f:
+             config=yaml.safe_load(f)
+             toc = processToc(config['root'])
+             #print(toc)
+             #quit()
 
       createDoc(document,toc,benchtables)
       
