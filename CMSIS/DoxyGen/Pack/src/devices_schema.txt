@@ -2229,6 +2229,11 @@ Contact cmsis@arm.com to ask for an extension. These values can be used in the e
     <td>http://www.wiznet.co.kr</td>
   </tr>
   <tr>
+    <td class="XML-Token">Xiamen PengPai Microelectronics Co. Ltd:166</td>
+    <td>Pai IC</td>
+    <td>https://www.pai-ic.com</td>
+  </tr>
+  <tr>
     <td class="XML-Token">Xinnova:135</td>
     <td>Xinnova Technology</td>
     <td>(n/a)</td>
