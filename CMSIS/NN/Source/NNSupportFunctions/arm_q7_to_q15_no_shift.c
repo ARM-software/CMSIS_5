@@ -86,8 +86,8 @@ void arm_q7_to_q15_no_shift(const q7_t *pSrc, q15_t *pDst, uint32_t blockSize)
         out1 = (int32_t)__PKHTB(in1, in2, 16);
         out2 = (int32_t)__PKHBT(in2, in1, 16);
 #endif
-        write_q15x2_ia(&pDst, out1);
-        write_q15x2_ia(&pDst, out2);
+        arm_nn_write_q15x2_ia(&pDst, out1);
+        arm_nn_write_q15x2_ia(&pDst, out2);
 
         /* Decrement the loop counter */
         blkCnt--;

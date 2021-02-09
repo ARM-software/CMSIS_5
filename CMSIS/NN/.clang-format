@@ -32,13 +32,14 @@ BraceWrapping:
   AfterClass:      false
   AfterControlStatement: true
   AfterEnum:       true
+  AfterExternBlock: false
   AfterFunction:   true
   AfterStruct:     true
   AfterUnion:      true
   BeforeElse:      true
-  IndentBraces:    true
+  IndentBraces:    false
 BreakBeforeBinaryOperators: None
-BreakBeforeBraces: Allman
+BreakBeforeBraces: Custom
 ColumnLimit:     120
 DerivePointerAlignment: false
 IndentWidth:     4

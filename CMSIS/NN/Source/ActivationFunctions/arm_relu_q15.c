@@ -74,7 +74,7 @@ void arm_relu_q15(q15_t *data, uint16_t size)
         /* if MSB=1, mask will be 0xFF, 0x0 otherwise */
         mask = __QSUB16(0x00000000, buf);
 
-        write_q15x2_ia(&output, in & (~mask));
+        arm_nn_write_q15x2_ia(&output, in & (~mask));
         i--;
     }
 
