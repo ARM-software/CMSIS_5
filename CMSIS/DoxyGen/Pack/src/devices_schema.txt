@@ -1999,6 +1999,11 @@ Contact cmsis@arm.com to ask for an extension. These values can be used in the e
     <td>http://www.elmos.com</td>
   </tr>
   <tr>
+    <td class="XML-Token">e-peas semiconductors:167</td>
+	<td>e-peas semicondcutors</td>
+	<td>https://e-peas.com</td>
+  </tr>
+  <tr>
     <td class="XML-Token">EtaCompute:157</td>
 	<td>Eta Compute Inc.</td>
 	<td>https://www.etacompute.com</td>
