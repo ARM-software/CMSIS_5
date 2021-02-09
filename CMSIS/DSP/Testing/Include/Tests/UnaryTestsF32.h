@@ -57,4 +57,6 @@ class UnaryTestsF32:public Client::Suite
             float64_t *outa;   
             float64_t *outb;
 
+            float32_t snrRel,snrAbs;
+
     };

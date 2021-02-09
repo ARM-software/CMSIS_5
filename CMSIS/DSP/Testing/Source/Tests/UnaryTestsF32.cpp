@@ -22,7 +22,7 @@ Comparisons for inverse
 /* Not very accurate for big matrix.
 But big matrix needed for checking the vectorized code */
 
-#define SNR_THRESHOLD_INV 70
+#define SNR_THRESHOLD_INV 67
 #define REL_ERROR_INV (1.0e-3)
 #define ABS_ERROR_INV (1.0e-3)
 
@@ -39,6 +39,9 @@ Comparison for Cholesky
 
 #define REL_ERROR_LDLT (1e-5)
 #define ABS_ERROR_LDLT (1e-5)
+
+#define REL_ERROR_LDLT_SPDO (1e-5)
+#define ABS_ERROR_LDLT_SDPO (2e-1)
 
 /* Upper bound of maximum matrix dimension used by Python */
 #define MAXMATRIXDIM 40
@@ -631,7 +634,7 @@ void UnaryTestsF32::test_mat_inverse_f32()
       ASSERT_EMPTY_TAIL(outputb);
 
 
-      ASSERT_CLOSE_ERROR(outputa,outputb,ABS_ERROR_LDLT,REL_ERROR_LDLT);
+      ASSERT_CLOSE_ERROR(outputa,outputb,snrAbs,snrRel);
 
 
   
@@ -728,6 +731,8 @@ void UnaryTestsF32::test_mat_inverse_f32()
 
             output.create(ref.nbSamples(),UnaryTestsF32::OUT_F32_ID,mgr);
             a.create(MAXMATRIXDIM*MAXMATRIXDIM,UnaryTestsF32::TMPA_F32_ID,mgr);
+
+            
          break;
 
          case TEST_SOLVE_UPPER_TRIANGULAR_F32_9:
@@ -772,6 +777,9 @@ void UnaryTestsF32::test_mat_inverse_f32()
             tmpbpat.create(MAXMATRIXDIM*MAXMATRIXDIM,UnaryTestsF32::TMPC_F64_ID,mgr);
             tmpcpat.create(MAXMATRIXDIM*MAXMATRIXDIM,UnaryTestsF32::TMPD_F64_ID,mgr);
 
+            this->snrRel=REL_ERROR_LDLT;
+            this->snrAbs=ABS_ERROR_LDLT;
+
          break;
 
          case TEST_MAT_LDL_F32_12:
@@ -791,6 +799,9 @@ void UnaryTestsF32::test_mat_inverse_f32()
             tmpapat.create(MAXMATRIXDIM*MAXMATRIXDIM,UnaryTestsF32::TMPB_F64_ID,mgr);
             tmpbpat.create(MAXMATRIXDIM*MAXMATRIXDIM,UnaryTestsF32::TMPC_F64_ID,mgr);
             tmpcpat.create(MAXMATRIXDIM*MAXMATRIXDIM,UnaryTestsF32::TMPD_F64_ID,mgr);
+
+            this->snrRel=REL_ERROR_LDLT_SPDO;
+            this->snrAbs=ABS_ERROR_LDLT_SDPO;
 
 
          break;
