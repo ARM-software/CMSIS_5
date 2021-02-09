@@ -71,8 +71,8 @@ void arm_q7_to_q15_reordered_with_offset(const q7_t *src, q15_t *dst, uint32_t b
         out_q15x2_1 = __SXTAB16(offset_q15x2, __ROR((uint32_t)in_q7x4, 8));
         out_q15x2_2 = __SXTAB16(offset_q15x2, in_q7x4);
 
-        write_q15x2_ia(&dst, out_q15x2_2);
-        write_q15x2_ia(&dst, out_q15x2_1);
+        arm_nn_write_q15x2_ia(&dst, out_q15x2_2);
+        arm_nn_write_q15x2_ia(&dst, out_q15x2_1);
 
         block_cnt--;
     }

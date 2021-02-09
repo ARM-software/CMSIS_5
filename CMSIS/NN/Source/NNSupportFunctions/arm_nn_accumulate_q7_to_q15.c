@@ -28,7 +28,6 @@
  *
  * -------------------------------------------------------------------- */
 
-#include "arm_math_memory.h"
 #include "arm_nnfunctions.h"
 #include "arm_nnsupportfunctions.h"
 
@@ -63,10 +62,10 @@ void arm_nn_accumulate_q7_to_q15(q15_t *pDst, const q7_t *pSrc, uint32_t length)
 #endif
 
         in = arm_nn_read_q15x2(pCnt);
-        write_q15x2_ia(&pCnt, __QADD16(vo1, in));
+        arm_nn_write_q15x2_ia(&pCnt, __QADD16(vo1, in));
 
         in = arm_nn_read_q15x2(pCnt);
-        write_q15x2_ia(&pCnt, __QADD16(vo2, in));
+        arm_nn_write_q15x2_ia(&pCnt, __QADD16(vo2, in));
 
         cnt--;
     }
