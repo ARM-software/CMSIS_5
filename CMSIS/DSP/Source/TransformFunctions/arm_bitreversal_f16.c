@@ -41,7 +41,7 @@ void arm_bitreversal_f16(
 float16_t * pSrc,
 uint16_t fftSize,
 uint16_t bitRevFactor,
-uint16_t * pBitRevTab)
+const uint16_t * pBitRevTab)
 {
    uint16_t fftLenBy2, fftLenBy2p1;
    uint16_t i, j;
