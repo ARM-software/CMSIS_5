@@ -22,14 +22,18 @@ project(cmsis_nn_unit_tests VERSION 0.0.1)
 
 set(CMSIS_PATH "${CMAKE_CURRENT_SOURCE_DIR}/../../../.." CACHE PATH "Path to CMSIS.")
 
-# External dependencies.
-set(USE_ETHOSU_CORE_PLATFORM_DEFAULT OFF)
-set(ETHOSU_CORE_PLATFORM_PATH "${CMAKE_CURRENT_SOURCE_DIR}/../../../../../../core_platform" CACHE PATH "Path to Arm Ethos-U Core Platform project.")
-set(FVP_CORSTONE_300_PATH "${ETHOSU_CORE_PLATFORM_PATH}/targets/corstone-300")
+set(BUILD_CMSIS_NN_UNIT_DEFAULT OFF)
+option(BUILD_CMSIS_NN_UNIT "If building the unit tests from another project." ${BUILD_CMSIS_NN_UNIT_DEFAULT})
 
-option(USE_ETHOSU_CORE_PLATFORM "Use Arm Ethos-U Core Platform project." ${USE_ETHOSU_CORE_PLATFORM_DEFAULT})
+if(NOT BUILD_CMSIS_NN_UNIT)
+    set(BUILD_CMSIS_NN_UNIT_TESTS_FOR_FVP_BASED_CORSTONE_300 ON)
+else()
+    set(BUILD_CMSIS_NN_UNIT_TESTS_FOR_FVP_BASED_CORSTONE_300 OFF)
+endif()
 
-if(USE_ETHOSU_CORE_PLATFORM)
+if(BUILD_CMSIS_NN_UNIT_TESTS_FOR_FVP_BASED_CORSTONE_300)
+    set(FVP_CORSTONE_300_PATH "${CMAKE_CURRENT_SOURCE_DIR}/Corstone-300" CACHE PATH
+        "Dependencies for using FVP based on Arm Corstone-300 software.")
     set(CMAKE_EXECUTABLE_SUFFIX ".elf")
 endif()
 
@@ -85,33 +89,58 @@ execute_process(COMMAND ${MAKE_CMD} ${MAKE_CMD_SCRIPT} ${MAKE_CMD_SCRIPT_OPTION}
                         WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
 add_subdirectory(Unity)
 
-if(USE_ETHOSU_CORE_PLATFORM)
-add_subdirectory(${FVP_CORSTONE_300_PATH} fvp_corstone_300)
+if(BUILD_CMSIS_NN_UNIT_TESTS_FOR_FVP_BASED_CORSTONE_300)
+    add_library(retarget STATIC
+        ${FVP_CORSTONE_300_PATH}/retarget.c
+        ${FVP_CORSTONE_300_PATH}/uart.c)
 
-add_library(retarget STATIC
-                     ${FVP_CORSTONE_300_PATH}/retarget.c
-                     ${FVP_CORSTONE_300_PATH}/uart.c)
-
-# Link in dependencies to every unit test.
-get_property(executables GLOBAL PROPERTY cmsis_nn_unit_test_executables)
-string(REPLACE " " ";" cmsis_nn_unit_test_list_of_executables ${executables})
-foreach(target ${cmsis_nn_unit_test_list_of_executables})
-    target_link_libraries(${target} PRIVATE $<TARGET_OBJECTS:retarget> retarget)
-    target_link_libraries(${target} PRIVATE $<TARGET_OBJECTS:cmsis_startup> cmsis_device)
-    add_dependencies(${target} retarget cmsis_startup)
-
-    target_compile_definitions(${target} PUBLIC USING_FVP_CORSTONE_300)
-    target_link_options(${target} PRIVATE --entry Reset_Handler)
-
-    # Copy linker files.
-    if (CMAKE_CXX_COMPILER_ID STREQUAL "ARMClang")
-        configure_file(${FVP_CORSTONE_300_PATH}/platform.scatter
-        ${CMAKE_CURRENT_SOURCE_DIR}/platform_${target}.scatter COPYONLY)
-    elseif (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
-        configure_file(${FVP_CORSTONE_300_PATH}/platform.ld
-        ${CMAKE_CURRENT_SOURCE_DIR}/platform_${target}.ld COPYONLY)
+    # Build CMSIS startup dependencies based on TARGET_CPU.
+    string(REGEX REPLACE "^cortex-m([0-9]+)$" "ARMCM\\1" ARM_CPU ${CMAKE_SYSTEM_PROCESSOR})
+    if(${CMAKE_SYSTEM_PROCESSOR} STREQUAL "cortex-m33")
+        set(ARM_FEATURES "_DSP_FP")
+    elseif(${CMAKE_SYSTEM_PROCESSOR} STREQUAL "cortex-m4")
+        set(ARM_FEATURES "_FP")
+    elseif(${CMAKE_SYSTEM_PROCESSOR} STREQUAL "cortex-m7")
+        set(ARM_FEATURES "_DP")
+    else()
+        set(ARM_FEATURES "")
     endif()
+    add_library(cmsis_startup STATIC)
+    target_sources(cmsis_startup PRIVATE
+        ${CMSIS_PATH}/Device/ARM/${ARM_CPU}/Source/startup_${ARM_CPU}.c
+        ${CMSIS_PATH}/Device/ARM/${ARM_CPU}/Source/system_${ARM_CPU}.c)
+    target_include_directories(cmsis_startup PUBLIC
+        ${CMSIS_PATH}/Device/ARM/${ARM_CPU}/Include
+        ${CMSIS_PATH}/CMSIS/Core/Include)
+    target_compile_options(cmsis_startup INTERFACE -include${ARM_CPU}${ARM_FEATURES}.h)
+    target_compile_definitions(cmsis_startup PRIVATE ${ARM_CPU}${ARM_FEATURES})
 
-    ethosu_link_options(${target} PRIVATE LINK_FILE platform_${target})
-endforeach()
+    # Linker file settings.
+    set(LINK_FILE "${FVP_CORSTONE_300_PATH}/linker" CACHE PATH "Linker file.")
+    if (CMAKE_CXX_COMPILER_ID STREQUAL "ARMClang")
+        set(LINK_FILE "${FVP_CORSTONE_300_PATH}/linker.scatter")
+        set(LINK_FILE_OPTION "--scatter")
+        set(LINK_ENTRY_OPTION "--entry")
+        set(LINK_ENTRY "Reset_Handler")
+    elseif (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+        set(LINK_FILE "${FVP_CORSTONE_300_PATH}/linker.ld")
+        set(LINK_FILE_OPTION "-T")
+        set(LINK_ENTRY_OPTION "")
+        set(LINK_ENTRY "")
+    endif()
+ 
+    # Link in FVP dependencies to every unit test.
+    get_property(executables GLOBAL PROPERTY cmsis_nn_unit_test_executables)
+    string(REPLACE " " ";" cmsis_nn_unit_test_list_of_executables ${executables})
+    foreach(target ${cmsis_nn_unit_test_list_of_executables})
+        target_link_libraries(${target} PRIVATE retarget)
+        target_link_libraries(${target} PRIVATE $<TARGET_OBJECTS:cmsis_startup> cmsis_startup)
+
+        add_dependencies(${target} retarget cmsis_startup)
+
+        target_compile_definitions(${target} PUBLIC USING_FVP_CORSTONE_300)
+
+        target_link_options(${target} PRIVATE ${LINK_FILE_OPTION} ${LINK_FILE} ${LINK_ENTRY_OPTION} ${LINK_ENTRY})
+        set_target_properties(${target} PROPERTIES LINK_DEPENDS ${LINK_FILE})
+    endforeach()
 endif()

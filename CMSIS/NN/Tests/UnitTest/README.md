@@ -1,8 +1,8 @@
 # Unit tests for CMSIS-NN
-Unit test CMSIS-NN functions on any Arm Mbed OS supported HW.
 
-Arm Mbed OS is used for building and flashing.
-The Unity test framework is used for running the actual unit tests.
+Unit test CMSIS-NN functions on any [Arm Mbed OS](https://os.mbed.com/mbed-os/) supported HW or using a fixed virtual platform (FVP) based on [Arm Corstone-300 software](https://developer.arm.com/ip-products/subsystem/corstone/corstone-300).
+
+The [Unity test framework](http://www.throwtheswitch.org/unity) is used for running the actual unit tests.
 
 ## Requirements
 
@@ -12,8 +12,7 @@ It has been tested with Python 3.6 and it has been tested on Ubuntu 16 and 18.
 There is a requirement file that can be used to install the dependencies.
 
 ```
-    ``` pip3 install -r requirements.txt```
-
+pip3 install -r requirements.txt
 ```
 
 Note that the exact versions are not required, and there are not a lot of packages to install manually.
@@ -25,8 +24,7 @@ To manually install packages, see below.
 For executing unit tests, the python3 package pyserial is required. Version 3.4 of pyserial has been tested ok.
 
 ```
-    ``` pip3 install pyserial```
-
+pip3 install pyserial
 ```
 
 Other required python packages are mbed-cli and and mbed-ls. It should not matter if those are installed under python2 or python3 as they are command-line tools. These packages have been tested for Python2, with the following versions: mbed-ls(1.7.9) and mbed-cli(1.10.1).
@@ -36,38 +34,41 @@ Other required python packages are mbed-cli and and mbed-ls. It should not matte
 For generating new data, the python3 packages tensorflow, numpy and packaging are required. Tensorflow version 2 is required as a minimum.
 
 ## Getting started
+
+### Using Arm Mbed OS supported hardware
+
 Connect any HW (e.g. NUCLEO_F746ZG) that is supported by Arm Mbed OS. Multiple boards are supported. If all requirements are satisfied you can just run:
 
 ```
-    ```./unittest_targets.py```
-
+./unittest_targets.py
 ```
 
 Use the -h flag to get more info.
 
-It is also possible to build the unit test with Cmake. The binaries can then be used with another test platform, e.g. Fastmodel.
-If using Cmake it is recommended to use Arm Ethos-U Core Platform (https://review.mlplatform.org/admin/repos/ml/ethos-u/ethos-u-core-platform) and Arm Ethos-U Core Software (https://review.mlplatform.org/admin/repos/ml/ethos-u/ethos-u-core-software) projects and a fixed virtual platform (FVP) based on Arm Corstone-300 software (https://developer.arm.com/ip-products/subsystem/corstone/corstone-300).
-First clone the Arm Ethos-U Core Software and Arm Ethos-U Core Platform projects. Arm Ethos-U Core Software is expecting to have Tensorflow cloned but in this case it is enough to create a directory ```tensorflow``` into Arm Ethos-U Core Software. Then build:
+### Using FVP based on Arm Corstone-300 software
+
+It is recommended to use toolchain files from [Arm Ethos-U Core Platform](https://review.mlplatform.org/admin/repos/ml/ethos-u/ethos-u-core-platform) project. These are supporting TARGET_CPU, which is a required argument. Note that if not specifying TARGET_CPU, these toolchains will set some default. The format must be TARGET_CPU=cortex-mXX, see examples below.
+Clone Arm Ethos-U Core Platform project and build:
 
 ```
-    ```mkdir build```
-    ```cd build```
-    ```cmake .. -DCMAKE_TOOLCHAIN_FILE=</path/to/Ethos-u-core-platform>/cmake/toolchain/arm-none-eabi-gcc.cmake -DETHOSU_CORE_PLATFORM_PATH=</path/to/Ethos-u-core-platform> -DUSE_ETHOSU_CORE_PLATFORM=ON -DTARGET_CPU=cortex-m55 -DETHOS_U_CORE_SOFTWARE_PATH=</path/to/Ethos-u-core-software> -DCORE_SOFTWARE_ACCELERATOR=CMSIS-NN -DCORE_SOFTWARE_RTOS=None```
-    ```make cmsis_nn_unit_tests```
+mkdir build
+cd build
+cmake .. -DCMAKE_TOOLCHAIN_FILE=</path/to/Ethos-u-core-platform>/cmake/toolchain/arm-none-eabi-gcc.cmake -DTARGET_CPU=cortex-m55
+make
 ```
 
 This will build all unit tests. You can also just build a specific unit test only, for example:
 
 ```
-    ```make test_arm_depthwise_conv_s8_opt```
+make test_arm_depthwise_conv_s8_opt
 ```
 
-Some more examples, assuming Ethos-u-core-platform and Ethos-u-core_software are cloned into your home directory:
+Some more examples, assuming Ethos-u-core-platform is cloned into your home directory:
 
 ```
-    ```cmake .. -DCMAKE_TOOLCHAIN_FILE=~/ethos-u-core-platform/cmake/toolchain/arm-none-eabi-gcc.cmake -DETHOSU_CORE_PLATFORM_PATH=~/ethos-u-core-platform -DUSE_ETHOSU_CORE_PLATFORM=ON -DTARGET_CPU=cortex-m55 -DETHOS_U_CORE_SOFTWARE_PATH=~/ethos-u-core-software -DCORE_SOFTWARE_ACCELERATOR=CMSIS-NN -DCORE_SOFTWARE_RTOS=None```
-    ```cmake .. -DCMAKE_TOOLCHAIN_FILE=~/ethos-u-core-platform/cmake/toolchain/arm-none-eabi-gcc.cmake -DETHOSU_CORE_PLATFORM_PATH=~/ethos-u-core-platform -DUSE_ETHOSU_CORE_PLATFORM=ON -DTARGET_CPU=cortex-m7 -DETHOS_U_CORE_SOFTWARE_PATH=~/ethos-u-core-software -DCORE_SOFTWARE_ACCELERATOR=CMSIS-NN -DCORE_SOFTWARE_RTOS=None```
-    ```cmake .. -DCMAKE_TOOLCHAIN_FILE=~/ethos-u-core-platform/cmake/toolchain/armclang.cmake -DETHOSU_CORE_PLATFORM_PATH=~/ethos-u-core-platform -DUSE_ETHOSU_CORE_PLATFORM=ON -DTARGET_CPU=cortex-m3 -DETHOS_U_CORE_SOFTWARE_PATH=~/ethos-u-core-software -DCORE_SOFTWARE_ACCELERATOR=CMSIS-NN -DCORE_SOFTWARE_RTOS=None```
+cmake .. -DCMAKE_TOOLCHAIN_FILE=~/ethos-u-core-platform/cmake/toolchain/arm-none-eabi-gcc.cmake -DTARGET_CPU=cortex-m55
+cmake .. -DCMAKE_TOOLCHAIN_FILE=~/ethos-u-core-platform/cmake/toolchain/arm-none-eabi-gcc.cmake -DTARGET_CPU=cortex-m7
+cmake .. -DCMAKE_TOOLCHAIN_FILE=~/ethos-u-core-platform/cmake/toolchain/armclang.cmake -DTARGET_CPU=cortex-m3
 ```
 
 Then you need to download and install the FVP based Arm Corstone-300 software, for example:
@@ -87,10 +88,11 @@ FVP_Corstone_SSE-300_Ethos-U55 --cpulimit 2 -C mps3_board.visualisation.disable-
 ```
 
 ## Generating new test data
+
 Generating new test data is done with the following script. Use the -h flag to get more info.
 
 ```
-    ```./generate_test_data.py -h```
+./generate_test_data.py -h
 
 ```
 
@@ -102,8 +104,9 @@ Once you are happy with the new test data set, it should be added in the load_al
 
 ## Overview of the Folders
 
-- `Output` - This will be created when building.
+- `Corstone-300` - These are dependencies, like linker files etc, needed when building binaries targetting the FVP based on Arm Corstone-300 software. This is mostly taken from Arm Ethos-U Core Platform project.
 - `Mbed` - These are the Arm Mbed OS settings that are used. See Mbed/README.md.
+- `Output` - This will be created when building.
 - `PregeneratedData` - These are tests sets of data that have been previously been generated and are used in the unit tests.
 - `TestCases` - Here are the actual unit tests. For each function under test there is a folder under here.
 - `TestCases/<cmsis-nn function name>` - For each function under test there is a folder with the same name with test_ prepended to the name and it contains a c-file with the actual unit tests. For example for arm_convolve_s8() the file is called test_arm_convolve_s8.c
