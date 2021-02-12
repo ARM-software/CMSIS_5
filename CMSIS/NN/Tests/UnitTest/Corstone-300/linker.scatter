@@ -1,0 +1,90 @@
+#! cpp
+
+/*
+ * Copyright (c) 2019-2021 Arm Limited. All rights reserved.
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ *
+ * Licensed under the Apache License, Version 2.0 (the License); you may
+ * not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an AS IS BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+#ifndef STACK_SIZE
+#define STACK_SIZE 0x8000
+#endif
+
+#ifndef HEAP_SIZE
+#define HEAP_SIZE 0x8000
+#endif
+
+#define LR_START   0x10000000
+#define LR_SIZE    0x01000000
+
+#define ITCM_START 0x10000000
+#define ITCM_SIZE  0x00080000
+
+#define BRAM_START 0x11000000
+#define BRAM_SIZE  0x00200000
+
+#define DTCM_START 0x30000000
+#define DTCM_SIZE  0x00080000
+
+#define SRAM_START 0x31000000
+#define SRAM_SIZE  0x00200000
+
+#define DDR_START  0x70000000
+#define DDR_SIZE   0x02000000
+
+#define STACK_HEAP 0x30080000
+
+APP_IMAGE LR_START LR_SIZE
+{
+    ; ITCM 512kB
+    rom_exec ITCM_START ITCM_SIZE
+    {
+        *.o (RESET, +First)
+        *(InRoot$$Sections)
+        ; Make sure reset_handler ends up in root segment, when split across
+        ; ITCM and DTCM
+        startup_ARMCM55.o
+        .ANY (+RO)
+    }
+
+    ; MPS3 BRAM
+    BRAM BRAM_START UNINIT BRAM_SIZE
+    {
+    }
+
+    ; DTCM 512kB
+    ; Only accessible from the Cortex-M
+    DTCM DTCM_START (DTCM_SIZE - STACK_SIZE - HEAP_SIZE)
+    {
+        .ANY1 (+RW +ZI)
+    }
+
+    ; SSE-300 SRAM (3 cycles read latency) from M55/U55
+    ; 2x2MB - only first part mapped
+    SRAM SRAM_START UNINIT SRAM_SIZE
+    {
+    }
+
+    ARM_LIB_HEAP  (STACK_HEAP - STACK_SIZE - HEAP_SIZE) EMPTY ALIGN 8 HEAP_SIZE {}
+    ARM_LIB_STACK (STACK_HEAP - STACK_SIZE) EMPTY ALIGN 8 STACK_SIZE {}
+}
+
+LOAD_REGION_1 DDR_START DDR_SIZE
+{
+    ; 2GB DDR4 available
+    rom_dram DDR_START
+    {
+    }
+}
