@@ -56,6 +56,7 @@ config["SVM"]=True
 config["BAYES"]=True        
 config["DISTANCE"]=True     
 config["INTERPOLATION"]=True
+config["QUATERNIONMATH"]=True
 
 config["LOOPUNROLL"]=True
 config["ROUNDING"]=False
@@ -91,6 +92,8 @@ defaulton["SVM"]=True
 defaulton["BAYES"]=True        
 defaulton["DISTANCE"]=True     
 defaulton["INTERPOLATION"]=True
+defaulton["QUATERNIONMATH"]=True
+
 
 CFFTSIZE=[16,32,64,128,256,512,1024,2048,4096]
 CFFTDATATYPE=['F64','F32','F16','Q31','Q15']
@@ -479,7 +482,7 @@ def configCMake(config):
                        "SVM",           
                        "BAYES",         
                        "DISTANCE",      
-                       "INTERPOLATION"])  
+                       "INTERPOLATION","QUATERNIONMATH"])  
     configMake(config)
 
 genconfig(config,"CFFT",CFFTSIZE,CFFTDATATYPE)

@@ -585,6 +585,42 @@ group Root {
           }
         }
 
+        group Quaternion Tests {
+           class = QuaternionTests
+           folder = QuaternionMaths
+
+           suite Quaternion Tests F32{
+              class = QuaternionTestsF32
+              folder = QuaternionMathsF32
+   
+              Pattern INPUT1_F32_ID : Input1_f32.txt 
+              Pattern INPUT2_F32_ID : Input2_f32.txt 
+              Pattern INPUT7_F32_ID : Input7_f32.txt 
+   
+              Pattern REF_NORM_F32_ID : Reference1_f32.txt
+              Pattern REF_INVERSE_F32_ID : Reference2_f32.txt
+              Pattern REF_CONJUGATE_F32_ID : Reference3_f32.txt
+              Pattern REF_NORMALIZE_F32_ID : Reference4_f32.txt
+              Pattern REF_MULT_F32_ID : Reference5_f32.txt
+              Pattern REF_QUAT2ROT_F32_ID : Reference6_f32.txt
+              Pattern REF_ROT2QUAT_F32_ID : Reference7_f32.txt
+            
+   
+              Output  OUT_SAMPLES_F32_ID : Output
+   
+              Functions {
+                Test arm_quaternion_norm_f32:test_quaternion_norm_f32
+                Test arm_quaternion_inverse_f32:test_quaternion_inverse_f32
+                Test arm_quaternion_conjugate_f32:test_quaternion_conjugate_f32
+                Test arm_quaternion_normalize_f32:test_quaternion_normalize_f32
+                Test arm_quaternion_prod_single_f32:test_quaternion_prod_single_f32
+                Test arm_quaternion_product_f32:test_quaternion_product_f32
+                Test arm_quaternion2rotation_f32:test_quaternion2rotation_f32
+                Test arm_rotation2quaternion_f32:test_rotation2quaternion_f32
+              }
+           }
+        }
+
         group Basic Tests {
            class = BasicTests
            folder = BasicMaths

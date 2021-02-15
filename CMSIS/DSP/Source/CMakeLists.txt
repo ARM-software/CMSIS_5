@@ -41,6 +41,7 @@ option(SVM                  "Support Vector Machine Functions"  ON)
 option(BAYES                "Bayesian Estimators"               ON)
 option(DISTANCE             "Distance Functions"                ON)
 option(INTERPOLATION        "Interpolation Functions"                ON)
+option(QUATERNIONMATH       "Quaternion Math Functions"                ON)
 
 # When OFF it is the default behavior : all tables are included.
 option(CONFIGTABLE          "Configuration of table allowed"    OFF)
@@ -199,6 +200,11 @@ endif()
 if (COMPLEXMATH)
   add_subdirectory(ComplexMathFunctions)
   target_link_libraries(CMSISDSP INTERFACE CMSISDSPComplexMath)
+endif()
+
+if (QUATERNIONMATH)
+  add_subdirectory(QuaternionMathFunctions)
+  target_link_libraries(CMSISDSP INTERFACE CMSISDSPQuaternionMath)
 endif()
 
 if (CONTROLLER)

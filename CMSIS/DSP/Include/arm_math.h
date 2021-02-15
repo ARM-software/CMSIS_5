@@ -45,6 +45,7 @@
    * - Support Vector Machine functions (SVM)
    * - Bayes classifier functions
    * - Distance functions
+   * - Quaternion functions
    *
    * The library has generally separate functions for operating on 8-bit integers, 16-bit integers,
    * 32-bit integer and 32-bit floating-point values.
@@ -223,6 +224,7 @@
 #include "dsp/fast_math_functions.h"
 #include "dsp/transform_functions.h"
 #include "dsp/filtering_functions.h"
+#include "dsp/quaternion_math_functions.h"
 
 
 

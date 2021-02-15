@@ -3289,6 +3289,8 @@ and 8-bit Java bytecodes in Jazelle state.
         <!-- DSP sources (core) -->
         <file category="source"   name="CMSIS/DSP/Source/BasicMathFunctions/BasicMathFunctions.c"/>
 
+        <file category="source"   name="CMSIS/DSP/Source/QuaternionMathFunctions/QuaternionMathFunctions.c"/>
+
         <file category="source"   name="CMSIS/DSP/Source/BayesFunctions/BayesFunctions.c"/>
         <file category="source"   name="CMSIS/DSP/Source/CommonTables/CommonTables.c"/>
         <file category="source"   name="CMSIS/DSP/Source/ComplexMathFunctions/ComplexMathFunctions.c"/>
