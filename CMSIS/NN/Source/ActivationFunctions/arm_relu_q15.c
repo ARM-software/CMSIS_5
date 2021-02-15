@@ -21,8 +21,8 @@
  * Title:        arm_relu_q15.c
  * Description:  Q15 version of ReLU
  *
- * $Date:        09. October 2020
- * $Revision:    V.1.0.2
+ * $Date:        15. February 2021
+ * $Revision:    V.1.0.3
  *
  * Target Processor:  Cortex-M cores
  *
