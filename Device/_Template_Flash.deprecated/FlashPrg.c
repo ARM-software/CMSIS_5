@@ -1,11 +1,11 @@
 /**************************************************************************//**
  * @file     FlashPrg.c
- * @brief    Flash Programming Functions for New Device Flash
+ * @brief    Flash Programming Functions adapted for New Device Flash
  * @version  V1.0.0
- * @date     10. February 2021
+ * @date     10. January 2018
  ******************************************************************************/
 /*
- * Copyright (c) 2010-2021 Arm Limited. All rights reserved.
+ * Copyright (c) 2010-2018 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -21,10 +21,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-#include "FlashOS.h"            /* FlashOS Structures */
-
-#define UNUSED(x) (void)(x)     /* macro to get rid of 'unused parameter' warning */
+ 
+#include "FlashOS.h"        // FlashOS Structures
 
 /* 
    Mandatory Flash Programming Functions (Called by FlashOS):
@@ -52,7 +50,6 @@
 */
 
 
-
 /*
  *  Initialize Flash Programming Functions
  *    Parameter:      adr:  Device Base Address
@@ -60,14 +57,11 @@
  *                    fnc:  Function Code (1 - Erase, 2 - Program, 3 - Verify)
  *    Return Value:   0 - OK,  1 - Failed
  */
+
 int Init (unsigned long adr, unsigned long clk, unsigned long fnc) {
 
   /* Add your Code */
-  UNUSED(adr);
-  UNUSED(clk);
-  UNUSED(fnc);
-  
-  return 0;                                              /* Finished without Errors */
+  return (0);                                  // Finished without Errors
 }
 
 
@@ -76,12 +70,11 @@ int Init (unsigned long adr, unsigned long clk, unsigned long fnc) {
  *    Parameter:      fnc:  Function Code (1 - Erase, 2 - Program, 3 - Verify)
  *    Return Value:   0 - OK,  1 - Failed
  */
+
 int UnInit (unsigned long fnc) {
 
   /* Add your Code */
-  UNUSED(fnc);
-
-  return 0;                                              /* Finished without Errors */
+  return (0);                                  // Finished without Errors
 }
 
 
@@ -89,11 +82,11 @@ int UnInit (unsigned long fnc) {
  *  Erase complete Flash Memory
  *    Return Value:   0 - OK,  1 - Failed
  */
+
 int EraseChip (void) {
 
   /* Add your Code */
-
-  return 0;                                              /* Finished without Errors */
+  return (0);                                  // Finished without Errors
 }
 
 
@@ -102,12 +95,11 @@ int EraseChip (void) {
  *    Parameter:      adr:  Sector Address
  *    Return Value:   0 - OK,  1 - Failed
  */
+
 int EraseSector (unsigned long adr) {
 
   /* Add your Code */
-  UNUSED(adr);
-
-  return 0;                                              /* Finished without Errors */
+  return (0);                                  // Finished without Errors
 }
 
 
@@ -118,12 +110,9 @@ int EraseSector (unsigned long adr) {
  *                    buf:  Page Data
  *    Return Value:   0 - OK,  1 - Failed
  */
+
 int ProgramPage (unsigned long adr, unsigned long sz, unsigned char *buf) {
 
   /* Add your Code */
-  UNUSED(adr);
-  UNUSED(sz);
-  UNUSED(buf);
-
-  return 0;                                              /* Finished without Errors */
+  return (0);                                  // Finished without Errors
 }

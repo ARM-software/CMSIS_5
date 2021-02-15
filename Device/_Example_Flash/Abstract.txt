@@ -1,0 +1,1 @@
+Flash Programming Algorithm for STMicroelectronics STM32G4xx 512 KB Flash
