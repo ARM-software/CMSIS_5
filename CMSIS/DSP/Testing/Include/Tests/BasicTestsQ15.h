@@ -28,4 +28,6 @@ class BasicTestsQ15:public Client::Suite
 
             /* Offset or scale value */
             q15_t scalar;
+
+            q15_t min,max;
     };

@@ -631,7 +631,9 @@ group Root {
    
               Pattern INPUT1_F32_ID : Input1_f32.txt 
               Pattern INPUT2_F32_ID : Input2_f32.txt 
-   
+
+              Pattern INPUT_CLIP_F32_ID : Input12_f32.txt 
+              
               Pattern REF_ADD_F32_ID : Reference1_f32.txt
               Pattern REF_SUB_F32_ID : Reference2_f32.txt
               Pattern REF_MULT_F32_ID : Reference3_f32.txt
@@ -643,6 +645,10 @@ group Root {
               Pattern REF_DOT_4N1_F32_ID : Reference9_f32.txt
               Pattern REF_ABS_F32_ID : Reference10_f32.txt
               Pattern REF_DOT_LONG_F32_ID : Reference11_f32.txt
+
+              Pattern REF_CLIP1_F32_ID : Reference12_f32.txt
+              Pattern REF_CLIP2_F32_ID : Reference13_f32.txt
+              Pattern REF_CLIP3_F32_ID : Reference14_f32.txt
    
               Output  OUT_SAMPLES_F32_ID : Output
               Output  OUT_STATE_F32_ID : State
@@ -688,6 +694,9 @@ group Root {
                 Test long    arm_scale_f32:test_scale_f32
                 Test long    arm_dot_prod_f32:test_dot_prod_f32
                 Test long    arm_abs_f32:test_abs_f32
+                Test 1       arm_clip_f32:test_clip_f32
+                Test 2       arm_clip_f32:test_clip_f32
+                Test 3       arm_clip_f32:test_clip_f32
               }
            }
 
@@ -705,7 +714,9 @@ group Root {
  
               Pattern INPUT1_BITWISE_Q31_ID : BitwiseInput24_s32.txt
               Pattern INPUT2_BITWISE_Q31_ID : BitwiseInput25_s32.txt
-  
+
+              Pattern INPUT_CLIP_Q31_ID : Input28_q31.txt 
+              
               Pattern REF_ADD_Q31_ID : Reference1_q31.txt
               Pattern REF_SUB_Q31_ID : Reference2_q31.txt
               Pattern REF_MULT_Q31_ID : Reference3_q31.txt
@@ -736,6 +747,10 @@ group Root {
               Pattern REF_OR_Q31_ID  : Or25_s32.txt
               Pattern REF_NOT_Q31_ID : Not26_s32.txt
               Pattern REF_XOR_Q31_ID : Xor27_s32.txt
+
+              Pattern REF_CLIP1_Q31_ID : Reference28_q31.txt
+              Pattern REF_CLIP2_Q31_ID : Reference29_q31.txt
+              Pattern REF_CLIP3_Q31_ID : Reference30_q31.txt
 
               Output  OUT_SAMPLES_ID : Output
               Output  OUT_STATE_Q31_ID : State
@@ -816,6 +831,9 @@ group Root {
                 Test long    arm_scale_q31:test_scale_q31
                 Test long    arm_dot_prod_q31:test_dot_prod_q31
                 Test long    arm_abs_q31:test_abs_q31
+                Test 1       arm_clip_q31:test_clip_q31
+                Test 2       arm_clip_q31:test_clip_q31
+                Test 3       arm_clip_q31:test_clip_q31
 
               }
            }
@@ -835,6 +853,8 @@ group Root {
               Pattern INPUT1_BITWISE_Q15_ID : BitwiseInput24_s16.txt
               Pattern INPUT2_BITWISE_Q15_ID : BitwiseInput25_s16.txt 
 
+              Pattern INPUT_CLIP_Q15_ID : Input28_q15.txt 
+              
               Pattern REF_ADD_Q15_ID : Reference1_q15.txt
               Pattern REF_SUB_Q15_ID : Reference2_q15.txt
               Pattern REF_MULT_Q15_ID : Reference3_q15.txt
@@ -865,6 +885,10 @@ group Root {
               Pattern REF_OR_Q15_ID  : Or25_s16.txt
               Pattern REF_NOT_Q15_ID : Not26_s16.txt
               Pattern REF_XOR_Q15_ID : Xor27_s16.txt
+
+              Pattern REF_CLIP1_Q15_ID : Reference28_q15.txt
+              Pattern REF_CLIP2_Q15_ID : Reference29_q15.txt
+              Pattern REF_CLIP3_Q15_ID : Reference30_q15.txt
 
               Output  OUT_SAMPLES_ID : Output
               Output  OUT_STATE_Q15_ID : State
@@ -945,7 +969,9 @@ group Root {
                 Test long    arm_scale_q15:test_scale_q15
                 Test long    arm_dot_prod_q15:test_dot_prod_q15
                 Test long    arm_abs_q15:test_abs_q15
-
+                Test 1       arm_clip_q15:test_clip_q15
+                Test 2       arm_clip_q15:test_clip_q15
+                Test 3       arm_clip_q15:test_clip_q15
               }
            }
 
@@ -963,7 +989,9 @@ group Root {
 
               Pattern INPUT1_BITWISE_Q7_ID : BitwiseInput24_s8.txt
               Pattern INPUT2_BITWISE_Q7_ID : BitwiseInput25_s8.txt 
-  
+
+              Pattern INPUT_CLIP_Q7_ID : Input28_q7.txt 
+             
               Pattern REF_ADD_Q7_ID : Reference1_q7.txt
               Pattern REF_SUB_Q7_ID : Reference2_q7.txt
               Pattern REF_MULT_Q7_ID : Reference3_q7.txt
@@ -994,6 +1022,10 @@ group Root {
               Pattern REF_OR_Q7_ID  : Or25_s8.txt
               Pattern REF_NOT_Q7_ID : Not26_s8.txt
               Pattern REF_XOR_Q7_ID : Xor27_s8.txt
+
+              Pattern REF_CLIP1_Q7_ID : Reference28_q7.txt
+              Pattern REF_CLIP2_Q7_ID : Reference29_q7.txt
+              Pattern REF_CLIP3_Q7_ID : Reference30_q7.txt
 
               Output  OUT_SAMPLES_ID : Output
               Output  OUT_STATE_Q7_ID : State
@@ -1074,6 +1106,9 @@ group Root {
                 Test long    arm_scale_q7:test_scale_q7
                 Test long    arm_dot_prod_q7:test_dot_prod_q7
                 Test long    arm_abs_q7:test_abs_q7
+                Test 1       arm_clip_q7:test_clip_q7
+                Test 2       arm_clip_q7:test_clip_q7
+                Test 3       arm_clip_q7:test_clip_q7
               }
            }
         }

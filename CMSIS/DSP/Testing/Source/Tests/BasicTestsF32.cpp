@@ -31,6 +31,21 @@ float32_t *outp=output.ptr();
 
     } 
 
+    void BasicTestsF32::test_clip_f32()
+    {
+        const float32_t *inp=input1.ptr();
+        float32_t *outp=output.ptr();
+
+        arm_clip_f32(inp,outp,this->min, this->max,input1.nbSamples());
+
+        ASSERT_EMPTY_TAIL(output);
+
+        ASSERT_SNR(output,ref,(float32_t)SNR_THRESHOLD);
+
+        ASSERT_REL_ERROR(output,ref,REL_ERROR);
+
+    } 
+
     void BasicTestsF32::test_sub_f32()
     {
         GET_F32_PTR();
@@ -291,11 +306,38 @@ float32_t *outp=output.ptr();
           ref.reload(BasicTestsF32::REF_ABS_F32_ID,mgr,nb);
         break;
 
+        case BasicTestsF32::TEST_CLIP_F32_33:
+          input1.reload(BasicTestsF32::INPUT_CLIP_F32_ID,mgr);
+          ref.reload(BasicTestsF32::REF_CLIP1_F32_ID,mgr);
+          // Must be coherent with Python script used to generate test patterns
+          this->min=-0.5f;
+          this->max=-0.1f;
+        break;
+
+        case BasicTestsF32::TEST_CLIP_F32_34:
+          input1.reload(BasicTestsF32::INPUT_CLIP_F32_ID,mgr);
+          ref.reload(BasicTestsF32::REF_CLIP2_F32_ID,mgr);
+          // Must be coherent with Python script used to generate test patterns
+          this->min=-0.5f;
+          this->max=0.5f;
+        break;
+
+        case BasicTestsF32::TEST_CLIP_F32_35:
+          input1.reload(BasicTestsF32::INPUT_CLIP_F32_ID,mgr);
+          ref.reload(BasicTestsF32::REF_CLIP3_F32_ID,mgr);
+          // Must be coherent with Python script used to generate test patterns
+          this->min=0.1f;
+          this->max=0.5f;
+        break;
+
        }
       
 
-       input1.reload(BasicTestsF32::INPUT1_F32_ID,mgr,nb);
-       input2.reload(BasicTestsF32::INPUT2_F32_ID,mgr,nb);
+       if (id < TEST_CLIP_F32_33)
+       {
+         input1.reload(BasicTestsF32::INPUT1_F32_ID,mgr,nb);
+         input2.reload(BasicTestsF32::INPUT2_F32_ID,mgr,nb);
+       }
 
        output.create(ref.nbSamples(),BasicTestsF32::OUT_SAMPLES_F32_ID,mgr);
     }

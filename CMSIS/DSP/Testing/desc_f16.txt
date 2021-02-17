@@ -217,7 +217,9 @@ group Root {
    
               Pattern INPUT1_F16_ID : Input1_f16.txt 
               Pattern INPUT2_F16_ID : Input2_f16.txt 
-   
+
+              Pattern INPUT_CLIP_F16_ID : Input12_f16.txt 
+              
               Pattern REF_ADD_F16_ID : Reference1_f16.txt
               Pattern REF_SUB_F16_ID : Reference2_f16.txt
               Pattern REF_MULT_F16_ID : Reference3_f16.txt
@@ -229,6 +231,10 @@ group Root {
               Pattern REF_DOT_4N1_F16_ID : Reference9_f16.txt
               Pattern REF_ABS_F16_ID : Reference10_f16.txt
               Pattern REF_DOT_LONG_F16_ID : Reference11_f16.txt
+
+              Pattern REF_CLIP1_F16_ID : Reference12_f16.txt
+              Pattern REF_CLIP2_F16_ID : Reference13_f16.txt
+              Pattern REF_CLIP3_F16_ID : Reference14_f16.txt
    
               Output  OUT_SAMPLES_F16_ID : Output
               Output  OUT_STATE_F16_ID : State
@@ -274,6 +280,9 @@ group Root {
                 Test long    arm_scale_f16:test_scale_f16
                 Test long    arm_dot_prod_f16:test_dot_prod_f16
                 Test long    arm_abs_f16:test_abs_f16
+                Test 1       arm_clip_f16:test_clip_f16
+                Test 2       arm_clip_f16:test_clip_f16
+                Test 3       arm_clip_f16:test_clip_f16
               }
            }
 

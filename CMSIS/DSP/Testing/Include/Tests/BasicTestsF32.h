@@ -17,4 +17,6 @@ class BasicTestsF32:public Client::Suite
             Client::LocalPattern<float32_t> output;
             // Reference patterns are not loaded when we are in dump mode
             Client::RefPattern<float32_t> ref;
+
+            float32_t min,max;
     };

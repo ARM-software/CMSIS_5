@@ -6,7 +6,24 @@ import Tools
 
 # Those patterns are used for tests and benchmarks.
 # For tests, there is the need to add tests for saturation
+def clipTest(config,format,nb):
+    config.setOverwrite(True)
+    minValues=[-0.5,-0.5,0.1]
+    maxValues=[-0.1, 0.5,0.5]
+    testSamples=np.arange(-0.9,0.9,0.1) 
+    config.writeInput(nb, testSamples)
 
+    i=0
+    for (mi,ma) in zip(minValues,maxValues):
+      ref = list(np.clip(testSamples,mi,ma))
+      config.writeReference(nb+i, ref)
+      i = i + 1
+    
+    
+    
+    config.setOverwrite(False)
+
+    return(i)
 
 def writeTests(config,format):
     NBSAMPLES=256
@@ -102,6 +119,13 @@ def writeTests(config,format):
        config.writeReferenceQ31(11, ref)
     else:
        config.writeReference(11, ref)
+
+    # This function is used in other test functions for q31 and q15
+    # So we can't add tests here for q15 and q31.
+    # But we can for f32:
+    if format == Tools.F32 or format==Tools.F16:
+       clipTest(config,format,12)
+       return(13)
 
     return(11)
 
@@ -261,6 +285,8 @@ def writeTests2(config,format):
     if format == 7:
       config.writeReferenceS8(nb+3, ref, "Xor")
 
+    clipTest(config,format,nb+4)
+
 
 def generatePatterns():
     PATTERNDIR = os.path.join("Patterns","DSP","BasicMaths","BasicMaths")
@@ -271,6 +297,12 @@ def generatePatterns():
     configq31=Tools.Config(PATTERNDIR,PARAMDIR,"q31")
     configq15=Tools.Config(PATTERNDIR,PARAMDIR,"q15")
     configq7=Tools.Config(PATTERNDIR,PARAMDIR,"q7")
+
+    configf32.setOverwrite(False)
+    configf16.setOverwrite(False)
+    configq31.setOverwrite(False)
+    configq15.setOverwrite(False)
+    configq7.setOverwrite(False)
     
     writeTests(configf32,0)
     writeTests(configf16,16)

@@ -28,4 +28,6 @@ class BasicTestsQ7:public Client::Suite
 
             /* Offset or scale value */
             q7_t scalar;
+
+            q7_t min,max;
     };
