@@ -46,9 +46,48 @@
   @brief         Floating-point product of two quaternions.
   @param[in]     qa       first quaternion
   @param[in]     qb       second quaternion
-  @param[out]    r        product of two quaternions
+  @param[out]    qr       product of two quaternions
   @return        none
  */
+
+#if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
+
+#include "arm_helium_utils.h"
+void arm_quaternion_product_single_f32(const float32_t *qa, 
+    const float32_t *qb, 
+    float32_t *qr)
+{
+    static uint32_t patternA[4] = { 0, 1, 0, 1 };
+    static uint32_t patternB[4] = { 3, 2, 3, 2 };
+    static uint32_t patternC[4] = { 3, 2, 1, 0 };
+    static float32_t signA[4] = { -1, -1, 1, 1 };
+
+    uint32x4_t vecA = vld1q_u32(patternA);
+    uint32x4_t vecB = vld1q_u32(patternB);
+    uint32x4_t vecC = vld1q_u32(patternC);
+    f32x4_t vecSignA = vld1q_f32(signA);
+
+
+    f32x4_t vecTmpA, vecTmpB, vecAcc;
+
+    vecTmpA = vldrwq_gather_shifted_offset_f32(qa, vecA);
+    vecTmpB = vld1q_f32(qb);
+
+    vecAcc = vcmulq_f32(vecTmpA, vecTmpB);
+    vecAcc = vcmlaq_rot90_f32(vecAcc, vecTmpA, vecTmpB);
+
+    vecTmpA = vldrwq_gather_shifted_offset_f32(qa, vecB);
+    vecTmpB = vldrwq_gather_shifted_offset_f32(qb, vecC);
+
+    vecTmpB = vecTmpB * vecSignA;
+
+    vecAcc = vcmlaq_rot270_f32(vecAcc, vecTmpA, vecTmpB);
+    vecAcc = vcmlaq_f32(vecAcc, vecTmpA, vecTmpB);
+
+    vst1q_f32(qr, vecAcc);
+}
+
+#else
 void arm_quaternion_product_single_f32(const float32_t *qa, 
     const float32_t *qb, 
     float32_t *r)
@@ -58,6 +97,7 @@ void arm_quaternion_product_single_f32(const float32_t *qa,
     r[2] = qa[0] * qb[2] + qa[2] * qb[0] + qa[3] * qb[1] - qa[1] * qb[3];
     r[3] = qa[0] * qb[3] + qa[3] * qb[0] + qa[1] * qb[2] - qa[2] * qb[1];
 }
+#endif /* defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE) */
 
 /**
   @} end of QuatProdSingle group

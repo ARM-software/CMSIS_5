@@ -399,6 +399,43 @@ group Root {
            }
         }
 
+        group Quaternion Maths {
+           class = QuaternionBenchmarks
+           folder = QuaternionMaths
+
+           suite Quaternion Maths Benchmarks F32 {
+              class = QuaternionMathsBenchmarksF32
+              folder = QuaternionMathsF32
+  
+              ParamList {
+                  NB
+                  Summary NB
+                  Names "NB Samples"
+                  Formula "NB"
+              }
+  
+              Pattern INPUT1_F32_ID : Input1_f32.txt 
+              Pattern INPUT2_F32_ID : Input2_f32.txt 
+              Pattern INPUT_ROT_F32_ID : Input7_f32.txt 
+
+              Output  OUT_SAMPLES_F32_ID : Output
+              Params PARAM1_ID = {
+                  A = [16,32,64,128]
+              }
+  
+              Functions {
+                Quaternion Norm:test_quaternion_norm_f32
+                Quaternion inverse:test_quaternion_inverse_f32
+                Quaternion conjugate:test_quaternion_conjugate_f32
+                Quaternion normalization:test_quaternion_normalize_f32
+                Quaternion product:test_quaternion_prod_single_f32
+                Quaternion Elementwise product:test_quaternion_product_f32
+                Quaternion to rotation:test_quaternion2rotation_f32
+                Rotation to quaternion:test_rotation2quaternion_f32
+              } -> PARAM1_ID
+           }
+        }
+
         group Filtering {
            class = DSPFiltering 
            folder = Filtering 

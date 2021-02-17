@@ -49,6 +49,34 @@
   @param[in]     nbQuaternions                number of quaternions in each vector
   @return        none
  */
+
+#if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
+
+#include "arm_helium_utils.h"
+
+void arm_quaternion_normalize_f32(const float32_t *pInputQuaternions, 
+    float32_t *pNormalizedQuaternions, 
+    uint32_t nbQuaternions)
+{
+   f32x4_t vec1,vec2;
+   float32_t squaredSum,norm;
+
+   for(uint32_t i=0; i < nbQuaternions; i++)
+   {
+      vec1 = vld1q(pInputQuaternions);
+      vec2 = vmulq(vec1,vec1);
+      squaredSum = vecAddAcrossF32Mve(vec2);
+      arm_sqrt_f32(squaredSum,&norm);
+      vec1 = vmulq_n_f32(vec1, 1.0f / norm);
+      vst1q(pNormalizedQuaternions, vec1);
+
+      pInputQuaternions += 4;
+      pNormalizedQuaternions += 4;
+
+   }
+}
+
+#else
 void arm_quaternion_normalize_f32(const float32_t *pInputQuaternions, 
     float32_t *pNormalizedQuaternions, 
     uint32_t nbQuaternions)
@@ -69,6 +97,7 @@ void arm_quaternion_normalize_f32(const float32_t *pInputQuaternions,
       pNormalizedQuaternions[4 * i + 3] = pInputQuaternions[4 * i + 3] / temp;
    }
 }
+#endif /* defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE) */
 
 /**
   @} end of QuatNormalized group

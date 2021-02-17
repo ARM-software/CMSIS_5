@@ -51,6 +51,31 @@
  */
 
 
+#if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
+
+#include "arm_helium_utils.h"
+
+void arm_quaternion_norm_f32(const float32_t *pInputQuaternions, 
+  float32_t *pNorms,
+  uint32_t nbQuaternions)
+{
+  f32x4_t vec1;
+  float32_t squaredSum;
+
+  for(uint32_t i=0; i < nbQuaternions; i++)
+  {
+       vec1 = vld1q(pInputQuaternions);
+       vec1 = vmulq(vec1,vec1);
+       squaredSum = vecAddAcrossF32Mve(vec1);
+       arm_sqrt_f32(squaredSum,pNorms);
+
+       pInputQuaternions+= 4;
+       pNorms ++;
+  }
+
+}
+
+#else
 
 void arm_quaternion_norm_f32(const float32_t *pInputQuaternions, 
   float32_t *pNorms,
@@ -67,6 +92,7 @@ void arm_quaternion_norm_f32(const float32_t *pInputQuaternions,
       pNorms[i] = sqrtf(temp);
    }
 }
+#endif /* defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE) */
 
 /**
   @} end of QuatNorm group

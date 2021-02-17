@@ -56,6 +56,110 @@
  * account when using the output of this function.
  * 
  */
+
+#if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
+
+#include "arm_helium_utils.h"
+
+#define R00  vgetq_lane(q1,0)
+#define R01  vgetq_lane(q1,1)
+#define R02  vgetq_lane(q1,2)
+#define R10  vgetq_lane(q1,3)
+#define R11  vgetq_lane(q2,0)
+#define R12  vgetq_lane(q2,1)
+#define R20  vgetq_lane(q2,2)
+#define R21  vgetq_lane(q2,3)
+#define R22  ro22
+
+void arm_rotation2quaternion_f32(const float32_t *pInputRotations, 
+    float32_t *pOutputQuaternions,  
+    uint32_t nbQuaternions)
+{
+   float32_t ro22, trace;
+   f32x4_t q1,q2, q; 
+
+   float32_t doubler;
+   float32_t s;
+
+   q = vdupq_n_f32(0.0f);
+
+   for(uint32_t nb=0; nb < nbQuaternions; nb++)
+   {
+      q1 = vld1q(pInputRotations);
+      pInputRotations += 4;
+
+      q2 = vld1q(pInputRotations);
+      pInputRotations += 4;
+
+      ro22 = *pInputRotations++;
+
+      trace = R00 + R11 + R22;
+
+
+      if (trace > 0)
+      {
+        (void)arm_sqrt_f32(trace + 1.0, &doubler) ; // invs=4*qw
+        doubler = 2*doubler;
+        s = 1.0 / doubler;
+
+        q1 = vmulq_n_f32(q1,s);
+        q2 = vmulq_n_f32(q2,s);
+
+        q[0] = 0.25 * doubler;
+        q[1] = R21 - R12;
+        q[2] = R02 - R20;
+        q[3] = R10 - R01;
+      }
+      else if ((R00 > R11) && (R00 > R22) )
+      {
+        (void)arm_sqrt_f32(1.0 + R00 - R11 - R22,&doubler); // invs=4*qx
+        doubler = 2*doubler;
+        s = 1.0 / doubler;
+
+        q1 = vmulq_n_f32(q1,s);
+        q2 = vmulq_n_f32(q2,s);
+
+        q[0] = R21 - R12;
+        q[1] = 0.25 * doubler;
+        q[2] = R01 + R10;
+        q[3] = R02 + R20;
+      }
+      else if (R11 > R22)
+      {
+        (void)arm_sqrt_f32(1.0 + R11 - R00 - R22,&doubler); // invs=4*qy
+        doubler = 2*doubler;
+        s = 1.0 / doubler;
+
+        q1 = vmulq_n_f32(q1,s);
+        q2 = vmulq_n_f32(q2,s);
+
+        q[0] = R02 - R20;
+        q[1] = R01 + R10;
+        q[2] = 0.25 * doubler;
+        q[3] = R12 + R21;
+      }
+      else
+      {
+        (void)arm_sqrt_f32(1.0 + R22 - R00 - R11,&doubler); // invs=4*qz
+        doubler = 2*doubler;
+        s = 1.0 / doubler;
+
+        q1 = vmulq_n_f32(q1,s);
+        q2 = vmulq_n_f32(q2,s);
+
+        q[0] = R10 - R01;
+        q[1] = R02 + R20;
+        q[2] = R12 + R21;
+        q[3] = 0.25 * doubler;
+      }
+
+      vst1q(pOutputQuaternions, q);
+      pOutputQuaternions += 4;
+
+   }
+}
+
+#else
 void arm_rotation2quaternion_f32(const float32_t *pInputRotations, 
     float32_t *pOutputQuaternions,  
     uint32_t nbQuaternions)
@@ -111,6 +215,7 @@ void arm_rotation2quaternion_f32(const float32_t *pInputRotations,
 
     }
 }
+#endif /* defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE) */
 
 /**
   @} end of RotQuat group

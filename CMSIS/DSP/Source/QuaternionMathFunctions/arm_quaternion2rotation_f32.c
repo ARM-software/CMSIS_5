@@ -71,6 +71,74 @@
    </pre>
    Rotation matrix is saved in row order : R00 R01 R02 R10 R11 R12 R20 R21 R22
  */
+
+#if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
+
+#include "arm_helium_utils.h"
+
+void arm_quaternion2rotation_f32(const float32_t *pInputQuaternions, 
+    float32_t *pOutputRotations, 
+    uint32_t nbQuaternions)
+{
+  f32x4_t vec0,vec1, vec2 ,vec3;
+  float32_t q2q3, tmp1, tmp2 ;
+
+  for(uint32_t nb=0; nb < nbQuaternions; nb++)
+  {
+
+    // q0 q1 q2 q3
+    vec0 = vld1q(pInputQuaternions);
+
+    // q0^2 q1^2 q2^2 q3^2
+    vec1 = vmulq(vec0,vec0);
+
+    // q0^2 q1q0 q2q0 q3q0
+    vec2 = vmulq_n_f32(vec0, vgetq_lane(vec0,0));
+
+    // 2 (q0^2 q1q0 q2q0 q3q0)
+    vec2 = vmulq_n_f32(vec2, 2.0f);
+    
+
+    // 2 q2q3
+    q2q3 = vgetq_lane(vec0,2) * vgetq_lane(vec0,3);
+    q2q3 = q2q3 * 2.0f;
+
+    // 2 (q0q1 q1^2 q2q1 q3q1)
+    vec3 = vmulq_n_f32(vec0, vgetq_lane(vec0,1));
+    vec3 = vmulq_n_f32(vec3, 2.0f);
+   
+
+    
+    vec0 = vsetq_lane(vgetq_lane(vec1,0) + vgetq_lane(vec1,1),vec0,0);
+    vec0 = vsetq_lane(vgetq_lane(vec0,0) - vgetq_lane(vec1,2),vec0,0);
+    vec0 = vsetq_lane(vgetq_lane(vec0,0) - vgetq_lane(vec1,3),vec0,0);
+    vec0 = vsetq_lane(vgetq_lane(vec3,2) - vgetq_lane(vec2,3),vec0,1);
+    vec0 = vsetq_lane(vgetq_lane(vec3,3) + vgetq_lane(vec2,2),vec0,2);
+    vec0 = vsetq_lane(vgetq_lane(vec3,2) + vgetq_lane(vec2,3),vec0,3);
+
+    vst1q(pOutputRotations, vec0);
+    pOutputRotations += 4;
+
+    tmp1 = vgetq_lane(vec1,0) - vgetq_lane(vec1,1);
+    tmp2 = vgetq_lane(vec1,2) - vgetq_lane(vec1,3);
+
+  
+    vec0 = vsetq_lane(tmp1 + tmp2,vec0,0);
+    vec0 = vsetq_lane(q2q3 - vgetq_lane(vec2,1) ,vec0,1);
+    vec0 = vsetq_lane(vgetq_lane(vec3,3) - vgetq_lane(vec2,2),vec0,2);
+    vec0 = vsetq_lane(q2q3 + vgetq_lane(vec2,1) ,vec0,3);
+
+    vst1q(pOutputRotations, vec0);
+    pOutputRotations += 4;
+
+    *pOutputRotations = tmp1 - tmp2;
+    pOutputRotations ++;
+
+    pInputQuaternions += 4;
+  }
+}
+
+#else
 void arm_quaternion2rotation_f32(const float32_t *pInputQuaternions, 
     float32_t *pOutputRotations, 
     uint32_t nbQuaternions)
@@ -103,6 +171,7 @@ void arm_quaternion2rotation_f32(const float32_t *pInputQuaternions,
         pOutputRotations[6 + nb * 9] = zx; pOutputRotations[7 + nb * 9] = zy; pOutputRotations[8 + nb * 9] = zz;
    }
 }
+#endif /* defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE) */
 
 /**
   @} end of QuatRot group

@@ -49,6 +49,32 @@
   @param[in]     nbQuaternions                number of quaternions in each vector
   @return        none
  */
+
+#if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
+
+#include "arm_helium_utils.h"
+void arm_quaternion_conjugate_f32(const float32_t *pInputQuaternions, 
+    float32_t *pConjugateQuaternions, 
+    uint32_t nbQuaternions)
+{
+   f32x4_t vec1;
+
+   for(uint32_t i=0; i < nbQuaternions; i++)
+   {
+      vec1 = vld1q(pInputQuaternions);
+      
+
+      vec1 = vsetq_lane_f32(-vgetq_lane(vec1, 0),vec1,0);
+      vec1 = vnegq_f32(vec1);
+
+      vst1q(pConjugateQuaternions, vec1);
+
+
+      pInputQuaternions   += 4;
+      pConjugateQuaternions += 4;
+   }
+}
+#else
 void arm_quaternion_conjugate_f32(const float32_t *pInputQuaternions, 
     float32_t *pConjugateQuaternions, 
     uint32_t nbQuaternions)
@@ -62,6 +88,7 @@ void arm_quaternion_conjugate_f32(const float32_t *pInputQuaternions,
       pConjugateQuaternions[4 * i + 3] = -pInputQuaternions[4 * i + 3];
    }
 }
+#endif /* defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE) */
 
 /**
   @} end of QuatConjugate group
