@@ -27,14 +27,15 @@
 #include "dsp/quaternion_math_functions.h"
 #include <math.h>
 
+
 /**
-  @ingroup groupQuaternionMath
+  @ingroup QuatProd
  */
 
 /**
-  @defgroup QuatProd Quaternion Product
+  @defgroup QuatProdSingle Quaternion Product
 
-  Compute the product of quaternions.
+  Compute the  product of two quaternions.
  */
 
 /**
@@ -90,12 +91,12 @@ void arm_quaternion_product_single_f32(const float32_t *qa,
 #else
 void arm_quaternion_product_single_f32(const float32_t *qa, 
     const float32_t *qb, 
-    float32_t *r)
+    float32_t *qr)
 {
-    r[0] = qa[0] * qb[0] - qa[1] * qb[1] - qa[2] * qb[2] - qa[3] * qb[3];
-    r[1] = qa[0] * qb[1] + qa[1] * qb[0] + qa[2] * qb[3] - qa[3] * qb[2];
-    r[2] = qa[0] * qb[2] + qa[2] * qb[0] + qa[3] * qb[1] - qa[1] * qb[3];
-    r[3] = qa[0] * qb[3] + qa[3] * qb[0] + qa[1] * qb[2] - qa[2] * qb[1];
+    qr[0] = qa[0] * qb[0] - qa[1] * qb[1] - qa[2] * qb[2] - qa[3] * qb[3];
+    qr[1] = qa[0] * qb[1] + qa[1] * qb[0] + qa[2] * qb[3] - qa[3] * qb[2];
+    qr[2] = qa[0] * qb[2] + qa[2] * qb[0] + qa[3] * qb[1] - qa[1] * qb[3];
+    qr[3] = qa[0] * qb[3] + qa[3] * qb[0] + qa[1] * qb[2] - qa[2] * qb[1];
 }
 #endif /* defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE) */
 
