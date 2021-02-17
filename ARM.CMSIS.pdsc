@@ -24,10 +24,11 @@
        - RTX4: Purged pre-built libs from Git
       CMSIS-RTOS2:
        - RTX5: Purged pre-built libs from Git
-      CMSIS-NN: 1.4.0 (see revision history for details)
+      CMSIS-NN: 2.0.0 (see revision history for details)
        - Major interface change for functions compatible with TensorFlow Lite for Microcontroller
        - Added optimization for SVDF kernel - DSP extension only
        - Improved MVE performance for fully Connected and max pool operator
+       - NULL bias support for fully connected operator in non-MVE case(Can affect performance)
        - Expanded unit test suite along with support for FVP
     </release>
     <release version="5.7.0" date="2020-04-09">
