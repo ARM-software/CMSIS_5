@@ -645,8 +645,9 @@ uint16_t *outp=outputLogical.ptr();
         break;
 
         case BasicTestsQ15::TEST_CLIP_Q15_57:
-          input1.reload(BasicTestsQ15::INPUT_CLIP_Q15_ID,mgr);
           ref.reload(BasicTestsQ15::REF_CLIP1_Q15_ID,mgr);
+          input1.reload(BasicTestsQ15::INPUT_CLIP_Q15_ID,mgr,ref.nbSamples());
+          
           output.create(ref.nbSamples(),BasicTestsQ15::OUT_SAMPLES_ID,mgr);
           // Must be coherent with Python script used to generate test patterns
           this->min=0xC000;
@@ -654,8 +655,9 @@ uint16_t *outp=outputLogical.ptr();
         break;
 
         case BasicTestsQ15::TEST_CLIP_Q15_58:
-          input1.reload(BasicTestsQ15::INPUT_CLIP_Q15_ID,mgr);
           ref.reload(BasicTestsQ15::REF_CLIP2_Q15_ID,mgr);
+          input1.reload(BasicTestsQ15::INPUT_CLIP_Q15_ID,mgr,ref.nbSamples());
+          
           output.create(ref.nbSamples(),BasicTestsQ15::OUT_SAMPLES_ID,mgr);
           // Must be coherent with Python script used to generate test patterns
           this->min=0xC000;
@@ -663,8 +665,9 @@ uint16_t *outp=outputLogical.ptr();
         break;
 
         case BasicTestsQ15::TEST_CLIP_Q15_59:
-          input1.reload(BasicTestsQ15::INPUT_CLIP_Q15_ID,mgr);
           ref.reload(BasicTestsQ15::REF_CLIP3_Q15_ID,mgr);
+          input1.reload(BasicTestsQ15::INPUT_CLIP_Q15_ID,mgr,ref.nbSamples());
+          
           output.create(ref.nbSamples(),BasicTestsQ15::OUT_SAMPLES_ID,mgr);
           // Must be coherent with Python script used to generate test patterns
           this->min=0x0CCD;

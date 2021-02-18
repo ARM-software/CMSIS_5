@@ -307,24 +307,25 @@ float32_t *outp=output.ptr();
         break;
 
         case BasicTestsF32::TEST_CLIP_F32_33:
-          input1.reload(BasicTestsF32::INPUT_CLIP_F32_ID,mgr);
           ref.reload(BasicTestsF32::REF_CLIP1_F32_ID,mgr);
+          input1.reload(BasicTestsF32::INPUT_CLIP_F32_ID,mgr,ref.nbSamples());
+
           // Must be coherent with Python script used to generate test patterns
           this->min=-0.5f;
           this->max=-0.1f;
         break;
 
         case BasicTestsF32::TEST_CLIP_F32_34:
-          input1.reload(BasicTestsF32::INPUT_CLIP_F32_ID,mgr);
           ref.reload(BasicTestsF32::REF_CLIP2_F32_ID,mgr);
+          input1.reload(BasicTestsF32::INPUT_CLIP_F32_ID,mgr,ref.nbSamples());
           // Must be coherent with Python script used to generate test patterns
           this->min=-0.5f;
           this->max=0.5f;
         break;
 
         case BasicTestsF32::TEST_CLIP_F32_35:
-          input1.reload(BasicTestsF32::INPUT_CLIP_F32_ID,mgr);
           ref.reload(BasicTestsF32::REF_CLIP3_F32_ID,mgr);
+          input1.reload(BasicTestsF32::INPUT_CLIP_F32_ID,mgr,ref.nbSamples());
           // Must be coherent with Python script used to generate test patterns
           this->min=0.1f;
           this->max=0.5f;

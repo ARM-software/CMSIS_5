@@ -657,8 +657,9 @@ uint8_t *outp=outputLogical.ptr();
         break;
 
         case BasicTestsQ7::TEST_CLIP_Q7_57:
-          input1.reload(BasicTestsQ7::INPUT_CLIP_Q7_ID,mgr);
           ref.reload(BasicTestsQ7::REF_CLIP1_Q7_ID,mgr);
+          input1.reload(BasicTestsQ7::INPUT_CLIP_Q7_ID,mgr,ref.nbSamples());
+          
           output.create(ref.nbSamples(),BasicTestsQ7::OUT_SAMPLES_ID,mgr);
           // Must be coherent with Python script used to generate test patterns
           this->min=0xC0;
@@ -666,8 +667,9 @@ uint8_t *outp=outputLogical.ptr();
         break;
 
         case BasicTestsQ7::TEST_CLIP_Q7_58:
-          input1.reload(BasicTestsQ7::INPUT_CLIP_Q7_ID,mgr);
           ref.reload(BasicTestsQ7::REF_CLIP2_Q7_ID,mgr);
+          input1.reload(BasicTestsQ7::INPUT_CLIP_Q7_ID,mgr,ref.nbSamples());
+          
           output.create(ref.nbSamples(),BasicTestsQ7::OUT_SAMPLES_ID,mgr);
           // Must be coherent with Python script used to generate test patterns
           this->min=0xC0;
@@ -675,8 +677,9 @@ uint8_t *outp=outputLogical.ptr();
         break;
 
         case BasicTestsQ7::TEST_CLIP_Q7_59:
-          input1.reload(BasicTestsQ7::INPUT_CLIP_Q7_ID,mgr);
           ref.reload(BasicTestsQ7::REF_CLIP3_Q7_ID,mgr);
+          input1.reload(BasicTestsQ7::INPUT_CLIP_Q7_ID,mgr,ref.nbSamples());
+          
           output.create(ref.nbSamples(),BasicTestsQ7::OUT_SAMPLES_ID,mgr);
           // Must be coherent with Python script used to generate test patterns
           this->min=0x0D;

@@ -45,7 +45,69 @@
   @param[in]     numSamples    number of samples to clip
   @return        none
  */
+#if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
 
+#include "arm_helium_utils.h"
+void arm_clip_q31(const q31_t * pSrc, 
+  q31_t * pDst, 
+  q31_t low, 
+  q31_t high, 
+  uint32_t numSamples)
+{
+    uint32_t  blkCnt;
+    q31x4_t curVec0, curVec1;
+    q31x4_t vecLow, vecHigh;
+
+    vecLow = vdupq_n_s32(low);
+    vecHigh = vdupq_n_s32(high);
+
+    curVec0 = vld1q(pSrc);
+    pSrc += 4;
+    /*
+     * unrolled x 2 to allow
+     * vldr/vstr/vmin/vmax
+     * stall free interleaving
+     */
+    blkCnt = numSamples >> 3;
+    while (blkCnt--)
+    {
+        curVec0 = vmaxq(curVec0, vecLow);
+        curVec1 = vld1q(pSrc);
+        pSrc += 4;
+        curVec0 = vminq(curVec0, vecHigh);
+        vst1q(pDst, curVec0);
+        pDst += 4;
+        curVec1 = vmaxq(curVec1, vecLow);
+        curVec0 = vld1q(pSrc);
+        pSrc += 4;
+        curVec1 = vminq(curVec1, vecHigh);
+        vst1q(pDst, curVec1);
+        pDst += 4;
+    }
+    /*
+     * Tail handling
+     */
+    blkCnt = numSamples - ((numSamples >> 3) << 3);
+    if (blkCnt >= 4)
+    {
+        curVec0 = vmaxq(curVec0, vecLow);
+        curVec0 = vminq(curVec0, vecHigh);
+        vst1q(pDst, curVec0);
+        pDst += 4;
+        curVec0 = vld1q(pSrc);
+        pSrc += 4;
+    }
+
+    if (blkCnt > 0)
+    {
+        mve_pred16_t p0 = vctp32q(blkCnt & 3);
+        curVec0 = vmaxq(curVec0, vecLow);
+        curVec0 = vminq(curVec0, vecHigh);
+        vstrwq_p(pDst, curVec0, p0);
+    }
+}
+
+#else
 void arm_clip_q31(const q31_t * pSrc, 
   q31_t * pDst, 
   q31_t low, 
@@ -62,6 +124,7 @@ void arm_clip_q31(const q31_t * pSrc,
             pDst[i] = pSrc[i];               
     }
 }
+#endif /* defined(ARM_MATH_MVEI) */
 
 /**
   @} end of BasicClip group

@@ -7,21 +7,30 @@ import Tools
 # Those patterns are used for tests and benchmarks.
 # For tests, there is the need to add tests for saturation
 def clipTest(config,format,nb):
-    config.setOverwrite(True)
+    NBSAMPLESBASE=256
+    #config.setOverwrite(True)
     minValues=[-0.5,-0.5,0.1]
     maxValues=[-0.1, 0.5,0.5]
-    testSamples=np.arange(-0.9,0.9,0.1) 
+    nbSamples=[NBSAMPLESBASE+Tools.loopnb(format,Tools.TAILONLY)
+              ,NBSAMPLESBASE+Tools.loopnb(format,Tools.BODYONLY)
+              ,NBSAMPLESBASE+Tools.loopnb(format,Tools.BODYANDTAIL)
+              ]
+
+    maxLength = max(nbSamples)
+    minBound=-0.9 
+    maxBound=0.9
+    testSamples=np.linspace(minBound,maxBound,maxLength) 
     config.writeInput(nb, testSamples)
 
     i=0
-    for (mi,ma) in zip(minValues,maxValues):
-      ref = list(np.clip(testSamples,mi,ma))
+    for (mi,ma,nbForTest) in zip(minValues,maxValues,nbSamples):
+      ref = list(np.clip(testSamples[0:nbForTest],mi,ma))
       config.writeReference(nb+i, ref)
       i = i + 1
     
     
     
-    config.setOverwrite(False)
+    #config.setOverwrite(False)
 
     return(i)
 

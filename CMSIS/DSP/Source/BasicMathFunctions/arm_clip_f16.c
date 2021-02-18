@@ -46,6 +46,71 @@
   @return        none
  */
 
+#if defined(ARM_MATH_MVE_FLOAT16) && !defined(ARM_MATH_AUTOVECTORIZE)
+
+#include "arm_helium_utils.h"
+
+void arm_clip_f16(const float16_t * pSrc, 
+  float16_t * pDst, 
+  float16_t low, 
+  float16_t high, 
+  uint32_t numSamples)
+{
+    uint32_t  blkCnt;
+    f16x8_t curVec0, curVec1;
+    f16x8_t vecLow, vecHigh;
+
+    vecLow = vdupq_n_f16(low);
+    vecHigh = vdupq_n_f16(high);
+
+    curVec0 = vld1q(pSrc);
+    pSrc += 8;
+    /*
+     * unrolled x 2 to allow
+     * vldr/vstr/vmin/vmax
+     * stall free interleaving
+     */
+    blkCnt = numSamples >> 4;
+    while (blkCnt--)
+    {
+        curVec0 = vmaxnmq(curVec0, vecLow);
+        curVec1 = vld1q(pSrc);
+        pSrc += 8;
+        curVec0 = vminnmq(curVec0, vecHigh);
+        vst1q(pDst, curVec0);
+        pDst += 8;
+        curVec1 = vmaxnmq(curVec1, vecLow);
+        curVec0 = vld1q(pSrc);
+        pSrc += 8;
+        curVec1 = vminnmq(curVec1, vecHigh);
+        vst1q(pDst, curVec1);
+        pDst += 8;
+    }
+    /*
+     * Tail handling
+     */
+    blkCnt = numSamples - ((numSamples >> 4) << 4);
+    if (blkCnt >= 8)
+    {
+        curVec0 = vmaxnmq(curVec0, vecLow);
+        curVec0 = vminnmq(curVec0, vecHigh);
+        vst1q(pDst, curVec0);
+        pDst += 8;
+        curVec0 = vld1q(pSrc);
+        pSrc += 8;
+    }
+
+    if (blkCnt > 0)
+    {
+        mve_pred16_t p0 = vctp16q(blkCnt & 7);
+        curVec0 = vmaxnmq(curVec0, vecLow);
+        curVec0 = vminnmq(curVec0, vecHigh);
+        vstrhq_p(pDst, curVec0, p0);
+    }
+}
+
+#else
+
 #if defined(ARM_FLOAT16_SUPPORTED)
 
 void arm_clip_f16(const float16_t * pSrc, 
@@ -65,6 +130,9 @@ void arm_clip_f16(const float16_t * pSrc,
     }
 }
 #endif /* defined(ARM_FLOAT16_SUPPORTED */
+
+#endif /* defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE) */
+
 
 /**
   @} end of BasicClip group

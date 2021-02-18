@@ -316,27 +316,30 @@ float16_t *outp=output.ptr();
         break;
 
         case BasicTestsF16::TEST_CLIP_F16_33:
-          input1.reload(BasicTestsF16::INPUT_CLIP_F16_ID,mgr);
           ref.reload(BasicTestsF16::REF_CLIP1_F16_ID,mgr);
+          input1.reload(BasicTestsF16::INPUT_CLIP_F16_ID,mgr,ref.nbSamples());
+          
           // Must be coherent with Python script used to generate test patterns
-          this->min=-0.5f16;
-          this->max=-0.1f16;
+          this->min=(float16_t)(-0.5f);
+          this->max=(float16_t)(-0.1f);
         break;
 
         case BasicTestsF16::TEST_CLIP_F16_34:
-          input1.reload(BasicTestsF16::INPUT_CLIP_F16_ID,mgr);
           ref.reload(BasicTestsF16::REF_CLIP2_F16_ID,mgr);
+          input1.reload(BasicTestsF16::INPUT_CLIP_F16_ID,mgr,ref.nbSamples());
+          
           // Must be coherent with Python script used to generate test patterns
-          this->min=-0.5f16;
-          this->max=0.5f16;
+          this->min=(float16_t)(-0.5f);
+          this->max=(float16_t)(0.5f);
         break;
 
         case BasicTestsF16::TEST_CLIP_F16_35:
-          input1.reload(BasicTestsF16::INPUT_CLIP_F16_ID,mgr);
           ref.reload(BasicTestsF16::REF_CLIP3_F16_ID,mgr);
+          input1.reload(BasicTestsF16::INPUT_CLIP_F16_ID,mgr,ref.nbSamples());
+          
           // Must be coherent with Python script used to generate test patterns
-          this->min=0.1f16;
-          this->max=0.5f16;
+          this->min=(float16_t)(0.1f);
+          this->max=(float16_t)(0.5f);
         break;
 
        }
