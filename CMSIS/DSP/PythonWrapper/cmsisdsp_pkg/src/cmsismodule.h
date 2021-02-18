@@ -3922,11 +3922,17 @@ if (PyArg_ParseTupleAndKeywords(args, kwds, "|i", kwlist,&self->instance->numSta
 
 GETFIELD(arm_biquad_cascade_df2T_instance_f32,numStages,"i");
 
+static PyObject *                                                             
+Method_arm_biquad_cascade_df2T_instance_f32_state(ml_arm_biquad_cascade_df2T_instance_f32Object *self, PyObject *ignored)
+{                
+    float32_t *state=self->instance->pState;
+    return(NumpyVectorFromf32Buffer(state,self->instance->numStages * 2));                                                  
+} 
 
 static PyMethodDef arm_biquad_cascade_df2T_instance_f32_methods[] = {
 
     {"numStages", (PyCFunction) Method_arm_biquad_cascade_df2T_instance_f32_numStages,METH_NOARGS,"numStages"},
-
+    {"state", (PyCFunction) Method_arm_biquad_cascade_df2T_instance_f32_state,METH_NOARGS,"state"},
     {NULL}  /* Sentinel */
 };
 

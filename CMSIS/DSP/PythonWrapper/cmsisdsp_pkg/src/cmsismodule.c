@@ -275,6 +275,26 @@ CREATEMATRIX(f64,float64_t);
 CREATEMATRIX(q31,q31_t);
 CREATEMATRIX(q15,q15_t);
 
+#define NUMPYVECTORFROMBUFFER(EXT,CTYPE,NUMPYTYPE_FROMC)                     \
+PyObject *NumpyVectorFrom##EXT##Buffer(CTYPE *ptr,int nb)                    \
+{                                                                            \
+    npy_intp dims[1];                                                        \
+    const int ND=1;                                                          \
+    dims[0]=nb;                                                              \
+                                                                             \
+    void *pDst=PyMem_Malloc(sizeof(CTYPE) *nb);                              \
+    memcpy((void*)pDst,(void*)ptr,sizeof(CTYPE)*nb);                         \
+                                                                             \
+    PyObject *OBJ=PyArray_SimpleNewFromData(ND, dims, NUMPYTYPE_FROMC, pDst);\
+    PyObject *pythonResult = Py_BuildValue("O",OBJ);                         \
+    Py_DECREF(OBJ);                                                          \
+    return(pythonResult);                                                    \
+}
+
+NUMPYVECTORFROMBUFFER(f32,float32_t,NPY_FLOAT);
+
+
+
 #define NUMPYARRAYFROMMATRIX(EXT,NUMPYTYPE_FROMC)                                  \
 PyObject *NumpyArrayFrom##EXT##Matrix(arm_matrix_instance_##EXT *mat)              \
 {                                                                                  \
