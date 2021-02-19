@@ -85,6 +85,7 @@ void TC_CoreSimd_ParSat16 (void) {
   __SXTB16
   __SXTB16_RORn
   __SXTAB16
+  __SXTAB16__RORn
   __UXTB16
   __UXTAB16
 */
@@ -114,18 +115,42 @@ void TC_CoreSimd_PackUnpack (void) {
   res_s32 = __SXTB16_RORn(op1_s32, 24);
   ASSERT_TRUE(res_s32 == (int32_t)0x1FF80);
 
-  /* --- __SXTAB16 Test ---------------------------------------------- */
+  /* --- __SXTAB16 Test --------------------------------------------- */
   op1_s32 = (int32_t)0x000D0008;
   op2_s32 = (int32_t)0x80830168;
   res_s32 = __SXTAB16(op1_s32, op2_s32);
   ASSERT_TRUE(res_s32 == (int32_t)0xFF900070);
+
+  /* --- __SXTAB16__ROR8 Test --------------------------------------- */
+  op1_s32 = (int32_t)0x000A000A;
+  op2_s32 = (int32_t)0x80830168;
+  res_s32 = __SXTAB16_RORn(op1_s32, op2_s32, 8);
+  ASSERT_TRUE(res_s32 == (int32_t)0xFF8A000B);
+
+  /* --- __SXTAB16__ROR8 Test --------------------------------------- */
+  op1_s32 = (int32_t)0xFFF6FFF6;
+  op2_s32 = (int32_t)0x80830168;
+  res_s32 = __SXTAB16_RORn(op1_s32, op2_s32, 8);
+  ASSERT_TRUE(res_s32 == (int32_t)0xFF76FFF7);
+
+  /* --- __SXTAB16__ROR16 Test -------------------------------------- */
+  op1_s32 = (int32_t)0xFFF60015;
+  op2_s32 = (int32_t)0x70880168;
+  res_s32 = __SXTAB16_RORn(op1_s32, op2_s32, 16);
+  ASSERT_TRUE(res_s32 == (int32_t)0x5EFF9D);
+
+  /* --- __SXTAB16__ROR24 Test -------------------------------------- */
+  op1_s32 = (int32_t)0xFFF60015;
+  op2_s32 = (int32_t)0x70880168;
+  res_s32 = __SXTAB16_RORn(op1_s32, op2_s32, 24);
+  ASSERT_TRUE(res_s32 == (int32_t)0xFFF70085);
 
   /* --- __UXTB16 Test ---------------------------------------------- */
   op1_s32 = (int32_t)0x80830168;
   res_s32 = __UXTB16(op1_s32);
   ASSERT_TRUE(res_s32 == 0x00830068);
 
-  /* --- __UXTAB16 Test ---------------------------------------------- */
+  /* --- __UXTAB16 Test --------------------------------------------- */
   op1_s32 =          0x000D0008;
   op2_s32 = (int32_t)0x80830168;
   res_s32 = __UXTAB16(op1_s32, op2_s32);

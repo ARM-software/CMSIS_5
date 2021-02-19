@@ -1,11 +1,11 @@
 /**************************************************************************//**
  * @file     cmsis_armcc.h
  * @brief    CMSIS compiler ARMCC (Arm Compiler 5) header file
- * @version  V5.2.1
- * @date     26. March 2020
+ * @version  V5.3.0
+ * @date     19. February 2021
  ******************************************************************************/
 /*
- * Copyright (c) 2009-2020 Arm Limited. All rights reserved.
+ * Copyright (c) 2009-2021 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -63,9 +63,9 @@
 #ifndef   __STATIC_INLINE
   #define __STATIC_INLINE                        static __inline
 #endif
-#ifndef   __STATIC_FORCEINLINE                 
+#ifndef   __STATIC_FORCEINLINE
   #define __STATIC_FORCEINLINE                   static __forceinline
-#endif           
+#endif
 #ifndef   __NO_RETURN
   #define __NO_RETURN                            __declspec(noreturn)
 #endif
@@ -461,7 +461,7 @@ __STATIC_INLINE void __set_FPSCR(uint32_t fpscr)
  */
 #define __DMB()                           __dmb(0xF)
 
-                  
+
 /**
   \brief   Reverse byte order (32 bit)
   \details Reverses the byte order in unsigned integer value. For example, 0x12345678 becomes 0x78563412.
@@ -877,6 +877,8 @@ __attribute__((always_inline)) __STATIC_INLINE uint32_t __USAT(int32_t val, uint
                                                       ((int64_t)(ARG3) << 32U)     ) >> 32U))
 
 #define __SXTB16_RORn(ARG1, ARG2)        __SXTB16(__ROR(ARG1, ARG2))
+
+#define __SXTAB16_RORn(ARG1, ARG2, ARG3) __SXTAB16(ARG1, __ROR(ARG2, ARG3))
 
 #endif /* ((defined (__ARM_ARCH_7EM__) && (__ARM_ARCH_7EM__ == 1))     ) */
 /*@} end of group CMSIS_SIMD_intrinsics */

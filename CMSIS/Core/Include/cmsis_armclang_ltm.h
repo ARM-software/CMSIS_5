@@ -1,8 +1,8 @@
 /**************************************************************************//**
  * @file     cmsis_armclang_ltm.h
  * @brief    CMSIS compiler armclang (Arm Compiler 6) header file
- * @version  V1.4.0
- * @date     29. January 2021
+ * @version  V1.5.0
+ * @date     19. February 2021
  ******************************************************************************/
 /*
  * Copyright (c) 2018-2021 Arm Limited. All rights reserved.
@@ -614,7 +614,7 @@ __STATIC_FORCEINLINE void __TZ_set_FAULTMASK_NS(uint32_t faultMask)
   Devices without ARMv8-M Main Extensions (i.e. Cortex-M23) lack the non-secure
   Stack Pointer Limit register hence zero is returned always in non-secure
   mode.
-  
+
   \details Returns the current value of the Process Stack Pointer Limit (PSPLIM).
   \return               PSPLIM Register value
  */
@@ -660,7 +660,7 @@ __STATIC_FORCEINLINE uint32_t __TZ_get_PSPLIM_NS(void)
   Devices without ARMv8-M Main Extensions (i.e. Cortex-M23) lack the non-secure
   Stack Pointer Limit register hence the write is silently ignored in non-secure
   mode.
-  
+
   \details Assigns the given value to the Process Stack Pointer Limit (PSPLIM).
   \param [in]    ProcStackPtrLimit  Process Stack Pointer Limit value to set
  */
@@ -1896,6 +1896,8 @@ __STATIC_FORCEINLINE  int32_t __QSUB( int32_t op1,  int32_t op2)
                                            ((((uint32_t)(ARG2)) >> (ARG3)) & 0x0000FFFFUL)  )
 
 #define __SXTB16_RORn(ARG1, ARG2)        __SXTB16(__ROR(ARG1, ARG2))
+
+#define __SXTAB16_RORn(ARG1, ARG2, ARG3) __SXTAB16(ARG1, __ROR(ARG2, ARG3))
 
 __STATIC_FORCEINLINE int32_t __SMMLA (int32_t op1, int32_t op2, int32_t op3)
 {

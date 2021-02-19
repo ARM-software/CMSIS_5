@@ -966,4 +966,6 @@ __packed struct  __iar_u32 { uint32_t v; };
 
 #define __SXTB16_RORn(ARG1, ARG2) __SXTB16(__ROR(ARG1, ARG2))
 
+#define __SXTAB16_RORn(ARG1, ARG2, ARG3) __SXTAB16(ARG1, __ROR(ARG2, ARG3))
+
 #endif /* __CMSIS_ICCARM_H__ */
