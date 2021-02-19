@@ -161,7 +161,9 @@
    * - DISABLEFLOAT16:
    *
    * Disable float16 algorithms when __fp16 is not supported for a
-   * specific compiler / core configuration
+   * specific compiler / core configuration.
+   * This is only valid for scalar. When vector architecture is
+   * supporting f16 then it can't be disabled.
    *
    * <hr>
    * \section pack CMSIS-DSP in ARM::CMSIS Pack

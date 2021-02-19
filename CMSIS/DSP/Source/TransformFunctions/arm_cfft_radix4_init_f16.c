@@ -66,6 +66,8 @@
                    This Function also initializes Twiddle factor table pointer and Bit reversal table pointer.
  */
 
+#if defined(ARM_FLOAT16_SUPPORTED)
+
 arm_status arm_cfft_radix4_init_f16(
   arm_cfft_radix4_instance_f16 * S,
   uint16_t fftLen,
@@ -163,7 +165,7 @@ arm_status arm_cfft_radix4_init_f16(
 #endif
   return (status);
 }
-
+#endif /* #if defined(ARM_FLOAT16_SUPPORTED) */
 /**
   @} end of ComplexFFT group
  */
