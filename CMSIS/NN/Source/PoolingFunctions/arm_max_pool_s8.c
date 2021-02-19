@@ -100,13 +100,13 @@ static void clamp_output(q7_t *source, int32_t length, const int32_t act_min, co
     int32_t loop_count = (length + 15) / 16;
     for (int i = 0; i < loop_count; i++)
     {
-        mve_pred16_t p = vctp16q((uint32_t)length);
+        mve_pred16_t p = vctp8q((uint32_t)length);
         length -= 16;
         const int8x16_t src = vldrbq_z_s8(source, p);
         const int8x16_t predicated_min = vdupq_m_n_s8(vuninitializedq_s8(), (int8_t)act_min, p);
         const int8x16_t predicated_max = vdupq_m_n_s8(vuninitializedq_s8(), (int8_t)act_max, p);
         int8x16_t res = vmaxq_m_s8(vuninitializedq_s8(), src, predicated_min, p);
-        res = vminq_m_s8(vuninitializedq_s8(), src, predicated_max, p);
+        res = vminq_m_s8(vuninitializedq_s8(), res, predicated_max, p);
         vstrbq_p_s8(source, res, p);
         source += 16;
     }
