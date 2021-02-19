@@ -1,11 +1,11 @@
 /**************************************************************************//**
  * @file     cmsis_armclang.h
  * @brief    CMSIS compiler armclang (Arm Compiler 6) header file
- * @version  V5.3.2
- * @date     16. December 2020
+ * @version  V5.4.0
+ * @date     19. February 2020
  ******************************************************************************/
 /*
- * Copyright (c) 2009-2020 Arm Limited. All rights reserved.
+ * Copyright (c) 2009-2021 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -617,7 +617,7 @@ __STATIC_FORCEINLINE void __TZ_set_FAULTMASK_NS(uint32_t faultMask)
   Devices without ARMv8-M Main Extensions (i.e. Cortex-M23) lack the non-secure
   Stack Pointer Limit register hence zero is returned always in non-secure
   mode.
-  
+
   \details Returns the current value of the Process Stack Pointer Limit (PSPLIM).
   \return               PSPLIM Register value
  */
@@ -665,7 +665,7 @@ __STATIC_FORCEINLINE uint32_t __TZ_get_PSPLIM_NS(void)
   Devices without ARMv8-M Main Extensions (i.e. Cortex-M23) lack the non-secure
   Stack Pointer Limit register hence the write is silently ignored in non-secure
   mode.
-  
+
   \details Assigns the given value to the Process Stack Pointer Limit (PSPLIM).
   \param [in]    ProcStackPtrLimit  Process Stack Pointer Limit value to set
  */
@@ -1248,7 +1248,7 @@ __STATIC_FORCEINLINE uint32_t __USAT(int32_t val, uint32_t sat)
 #if ((defined (__ARM_ARCH_8M_MAIN__  ) && (__ARM_ARCH_8M_MAIN__   == 1)) || \
      (defined (__ARM_ARCH_8M_BASE__  ) && (__ARM_ARCH_8M_BASE__   == 1)) || \
      (defined (__ARM_ARCH_8_1M_MAIN__) && (__ARM_ARCH_8_1M_MAIN__ == 1))     )
-           
+
 /**
   \brief   Load-Acquire (8 bit)
   \details Executes a LDAB instruction for 8 bit value.
@@ -1471,6 +1471,8 @@ __STATIC_FORCEINLINE void __STL(uint32_t value, volatile uint32_t *ptr)
                                            ((((uint32_t)(ARG2)) >> (ARG3)) & 0x0000FFFFUL)  )
 
 #define __SXTB16_RORn(ARG1, ARG2)        __SXTB16(__ROR(ARG1, ARG2))
+
+#define __SXTAB16_RORn(ARG1, ARG2, ARG3) __SXTAB16(ARG1, __ROR(ARG2, ARG3))
 
 __STATIC_FORCEINLINE int32_t __SMMLA (int32_t op1, int32_t op2, int32_t op3)
 {
