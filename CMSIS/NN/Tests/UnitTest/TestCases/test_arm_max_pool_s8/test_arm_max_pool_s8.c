@@ -26,6 +26,7 @@
 #include "../TestData/maxpooling_4/test_data.h"
 #include "../TestData/maxpooling_5/test_data.h"
 #include "../TestData/maxpooling_6/test_data.h"
+#include "../TestData/maxpooling_7/test_data.h"
 #include "../Utils/validate.h"
 
 #define REPEAT_NUM (2)
@@ -314,5 +315,46 @@ void maxpooling_6_arm_max_pool_s8(void)
 
         TEST_ASSERT_EQUAL(expected, result);
         TEST_ASSERT_TRUE(validate(output, maxpooling_6_output_ref, MAXPOOLING_6_DST_SIZE));
+    }
+}
+
+void maxpooling_7_arm_max_pool_s8(void)
+{
+    const arm_status expected = ARM_MATH_SUCCESS;
+    q7_t output[MAXPOOLING_7_DST_SIZE] = {0};
+
+    cmsis_nn_context ctx;
+    cmsis_nn_pool_params pool_params;
+    cmsis_nn_dims input_dims;
+    cmsis_nn_dims filter_dims;
+    cmsis_nn_dims output_dims;
+
+    const q7_t *input_data = maxpooling_7_input;
+
+    input_dims.n = MAXPOOLING_7_INPUT_BATCHES;
+    input_dims.w = MAXPOOLING_7_INPUT_W;
+    input_dims.h = MAXPOOLING_7_INPUT_H;
+    input_dims.c = MAXPOOLING_7_IN_CH;
+    filter_dims.w = MAXPOOLING_7_FILTER_X;
+    filter_dims.h = MAXPOOLING_7_FILTER_Y;
+    output_dims.w = MAXPOOLING_7_OUTPUT_W;
+    output_dims.h = MAXPOOLING_7_OUTPUT_H;
+    output_dims.c = MAXPOOLING_7_OUT_CH;
+
+    pool_params.padding.w = MAXPOOLING_7_PAD_X;
+    pool_params.padding.h = MAXPOOLING_7_PAD_Y;
+    pool_params.stride.w = MAXPOOLING_7_STRIDE_X;
+    pool_params.stride.h = MAXPOOLING_7_STRIDE_Y;
+
+    pool_params.activation.min = MAXPOOLING_7_OUT_ACTIVATION_MIN;
+    pool_params.activation.max = MAXPOOLING_7_OUT_ACTIVATION_MAX;
+
+    for (int i = 0; i < REPEAT_NUM; i++)
+    {
+        arm_status result =
+            arm_max_pool_s8(&ctx, &pool_params, &input_dims, input_data, &filter_dims, &output_dims, output);
+
+        TEST_ASSERT_EQUAL(expected, result);
+        TEST_ASSERT_TRUE(validate(output, maxpooling_7_output_ref, MAXPOOLING_7_DST_SIZE));
     }
 }
