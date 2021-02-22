@@ -21,8 +21,8 @@
  * Title:        arm_max_pool_s8.c
  * Description:  Pooling function implementations
  *
- * $Date:        09. October 2020
- * $Revision:    V.2.0.1
+ * $Date:        19. Februari 2021
+ * $Revision:    V.2.0.2
  *
  * Target Processor:  Cortex-M CPUs
  *

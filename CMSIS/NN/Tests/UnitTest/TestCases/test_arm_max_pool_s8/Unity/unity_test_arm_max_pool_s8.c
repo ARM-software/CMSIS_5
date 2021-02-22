@@ -57,3 +57,5 @@ void test_maxpooling_4_arm_max_pool_s8(void) { maxpooling_4_arm_max_pool_s8(); }
 void test_maxpooling_5_arm_max_pool_s8(void) { maxpooling_5_arm_max_pool_s8(); }
 
 void test_maxpooling_6_arm_max_pool_s8(void) { maxpooling_6_arm_max_pool_s8(); }
+
+void test_maxpooling_7_arm_max_pool_s8(void) { maxpooling_7_arm_max_pool_s8(); }
