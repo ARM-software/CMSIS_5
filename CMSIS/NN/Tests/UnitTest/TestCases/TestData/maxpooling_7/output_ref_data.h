@@ -20,4 +20,4 @@
 #pragma once
 #include <stdint.h>
 
-const int8_t maxpooling_7_output_ref[2] = {0, 23};
+const int8_t maxpooling_7_output_ref[2] = {0, 6};
