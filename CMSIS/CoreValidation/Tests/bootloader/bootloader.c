@@ -41,7 +41,7 @@
  
 /* typedef for non-secure callback functions */
 typedef void (*funcptr_void) (void) __attribute__((cmse_nonsecure_call));
- 
+
 /* Secure main() */
 int main(void) {
   funcptr_void NonSecure_ResetHandler;

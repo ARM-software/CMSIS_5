@@ -4,28 +4,28 @@ import:
  - bootloader.rtebuild
 targets:
   arm:
-    toolchain: GCC
-    csettings   : [ -mlittle-endian, -gdwarf-3, "-%{optimize}", -fmessage-length=0, -ffunction-sections, -fdata-sections ]
-    cwarnings   : [ -Wall, -Wextra, -Wshadow, -Wundef, -Wstrict-prototypes ]
+    csettings   : [ -gdwarf-2, "-%{optimize}", -ffunction-sections, -fdata-sections ]
+    cwarnings   : [ -Wall, -Wextra, -Wshadow, -Wundef, -Wstrict-prototypes, -Wpedantic ]
   armcm:
+    toolchain   : GCC
     features    : ""
-    cflags      : [ -xc, -std=gnu99, -c, "-mcpu=${cpu}${features}", "-mfloat-abi=${float}", "${csettings}", "${cwarnings}" ]
-    asmflags    : [ -c, "-mcpu=${cpu}${features}", "-mfloat-abi=${float}", "${csettings}", "${cwarnings}" ]
-    linkflags   : [ "-mcpu=${cpu}${features}", "-mfloat-abi=${float}", "${csettings}", "${cwarnings}", "-Xlinker -Map=${builddir}/${targetName}.map", --specs=nano.specs, --specs=rdimon.specs ]
+    cflags      : [ "-mcpu=${cpu}${features}", "-mfloat-abi=${float}", "-mfpu=auto", "${csettings}", "${cwarnings}", -c, -mapcs-frame, -std=gnu99 ]
+    asmflags    : [ "-mcpu=${cpu}${features}", "-mfloat-abi=${float}", "-mfpu=auto", "${csettings}", "${cwarnings}", -c ]
+    linkflags   : [ "-mcpu=${cpu}${features}", "-mfloat-abi=${float}",               "${csettings}", "${cwarnings}", "-Xlinker -Map=${builddir}/${targetName}.map", --specs=nano.specs, --specs=rdimon.specs ]
     linkscript  : "config/core_m/rtebuild.ld"
   armcm23ns:
-    cpu      : cortex-m23
-    float    : soft
-    cflags   : [ -mcmse ]
+    cpu       : cortex-m23
+    float     : soft
+    cflags    : [ -mcmse ]
   armcm33ns:
-    cpu      : cortex-m33
-    float    : hard
-    cflags   : [ -mcmse ]
+    cpu       : cortex-m33
+    float     : hard
+    cflags    : [ -mcmse ]
   armcm35pns:
-    cpu      : cortex-m35p
-    float    : hard
-    cflags   : [ -mcmse ]
+    cpu       : cortex-m35p
+    float     : hard
+    cflags    : [ -mcmse ]
   armcm55ns:
-    cpu      : cortex-m55
-    float    : hard
-    cflags   : [ -mcmse ]
+    cpu       : cortex-m55
+    float     : hard
+    cflags    : [ -mcmse ]

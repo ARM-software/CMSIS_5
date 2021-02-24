@@ -4,14 +4,14 @@ import:
  - tests.rtebuild
 targets:
   arm:
-    toolchain: GCC
-    csettings   : [ -mlittle-endian, -gdwarf-3, "-%{optimize}", -fmessage-length=0, -ffunction-sections, -fdata-sections ]
+    csettings   : [ -gdwarf-2, "-%{optimize}", -ffunction-sections, -fdata-sections ]
     cwarnings   : [ -Wall, -Wextra, -Wshadow, -Wundef, -Wstrict-prototypes, -Wpedantic ]
   armcm:
+    toolchain   : GCC
     features    : ""
-    cflags      : [ -xc, -std=gnu99, -c, "-mcpu=${cpu}${features}", "-mfloat-abi=${float}", "${csettings}", "${cwarnings}" ]
-    asmflags    : [ -c, "-mcpu=${cpu}${features}", "-mfloat-abi=${float}", "${csettings}", "${cwarnings}" ]
-    linkflags   : [ "-mcpu=${cpu}${features}", "-mfloat-abi=${float}", "${csettings}", "${cwarnings}", "-Xlinker -Map=${builddir}/${targetName}.map", --specs=nano.specs, --specs=rdimon.specs ]
+    cflags      : [ "-mcpu=${cpu}${features}", "-mfloat-abi=${float}", "-mfpu=auto", "${csettings}", "${cwarnings}", -c, -mapcs-frame, -std=gnu99 ]
+    asmflags    : [ "-mcpu=${cpu}${features}", "-mfloat-abi=${float}", "-mfpu=auto", "${csettings}", "${cwarnings}", -c ]
+    linkflags   : [ "-mcpu=${cpu}${features}", "-mfloat-abi=${float}",               "${csettings}", "${cwarnings}", "-Xlinker -Map=${builddir}/${targetName}.map", --specs=nano.specs, --specs=rdimon.specs ]
     linkscript  : "config/core_m/rtebuild.ld"
   armcm0:
     cpu       : cortex-m0
@@ -59,6 +59,7 @@ targets:
   armcm33s:
     cpu       : cortex-m33
     float     : hard
+    cflags    : [ -mcmse ]
     linkscript: "config/core_m/rtebuild_s.ld"
   armcm33ns:
     cpu       : cortex-m33
@@ -71,6 +72,7 @@ targets:
   armcm35ps:
     cpu       : cortex-m35p
     float     : hard
+    cflags    : [ -mcmse ]
     linkscript: "config/core_m/rtebuild_s.ld"
   armcm35pns:
     cpu       : cortex-m35p
@@ -91,10 +93,11 @@ targets:
     float     : hard
     linkscript: "config/core_m/rtebuild_ns.ld"
   armca:
+    toolchain : GCC
     features  : ""
     csettings : [ -marm ]
-    cflags    : [ -xc, -std=gnu99, -c, "-mcpu=${cpu}${features}", "-mfloat-abi=${float}", "${csettings}", "${cwarnings}" ]
-    asmflags  : [ -c, "-mcpu=${cpu}${features}", "-mfloat-abi=${float}", "${csettings}", "${cwarnings}" ]
+    cflags    : [ "-mcpu=${cpu}${features}", "-mfloat-abi=${float}", "${csettings}", "${cwarnings}", -c, -xc, -std=gnu99 ]
+    asmflags  : [ "-mcpu=${cpu}${features}", "-mfloat-abi=${float}", "${csettings}", "${cwarnings}", -c ]
     linkflags : [ "-mcpu=${cpu}${features}", "-mfloat-abi=${float}", "${csettings}", "${cwarnings}", "-Xlinker -Map=${builddir}/${targetName}.map", --specs=nano.specs, --specs=rdimon.specs ]
     linkscript: "${builddir}/rtebuild.ld"
     source:
