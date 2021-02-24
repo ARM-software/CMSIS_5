@@ -1,5 +1,32 @@
+options:
+  optimize : [ O1, O2, Oz, Ofast, Os ]
 import:
- - armclang.rtebuild
+ - bootloader.rtebuild
 targets:
+  arm:
+    csettings   : [ -fno-rtti, -funsigned-char, -fshort-enums, -fshort-wchar, -mlittle-endian, -gdwarf-3, "-%{optimize}", -ffunction-sections ]
+    cwarnings   : [ -Weverything, -Wno-undef, -Wno-packed, -Wno-reserved-id-macro, -Wno-unused-macros, -Wno-documentation-unknown-command, -Wno-documentation, -Wno-license-management ]
   armcm:
-    toolchain: ARMCC6_MDK
+    toolchain   : ARMCC6_MDK
+    features    : ""
+    cflags      : [ -xc, -std=gnu99, --target=arm-arm-none-eabi, "-mcpu=${cpu}${features}", "-mfloat-abi=${float}", -c, "${csettings}", "${cwarnings}" ]
+    asmflags    : [ "--cpu ${cpu}", --li, -g ]
+    info        : [ --info summarysizes, --map, --load_addr_map_info, --xref, --callgraph, --symbols, --info sizes, --info totals, --info unused, --info veneers, "--list ${builddir}/${targetName}.map" ]
+    linkflags   : [ "--cpu ${cpu}", --strict, --no_remove, --entry Reset_Handler, "--import-cmse-lib-out ${builddir}/cmse.lib", --diag_suppress=L6314, --diag_suppress=L6092w, "${info}" ]
+    linkscript  : "config/core_m/rtebuild.sct"
+  armcm23ns:
+    cpu    : cortex-m23
+    float  : soft
+    cflags : [ -mcmse ]
+  armcm33ns:
+    cpu    : cortex-m33
+    float  : hard
+    cflags : [ -mcmse ]
+  armcm35pns:
+    cpu    : cortex-m35p
+    float  : hard
+    cflags : [ -mcmse ]
+  armcm55ns:
+    cpu      : cortex-m55
+    float    : hard
+    cflags : [ -mcmse ]
