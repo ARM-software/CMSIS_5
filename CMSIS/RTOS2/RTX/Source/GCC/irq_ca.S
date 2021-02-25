@@ -372,12 +372,12 @@ osRtxContextSave:
                 STMDB   R1!, {R2,R12}               // Push FPSCR, maintain 8-byte alignment
 
                 VSTMDB  R1!, {D0-D15}               // Save D0-D15
-                #if     __ARM_NEON == 1
+                #if defined(__ARM_NEON) && (__ARM_NEON == 1)
                 VSTMDB  R1!, {D16-D31}              // Save D16-D31
                 #endif
 
                 LDRB    R2, [LR, #TCB_SP_FRAME]     // Load osRtxInfo.thread.run.curr frame info
-                #if     __ARM_NEON == 1
+                #if defined(__ARM_NEON) && (__ARM_NEON == 1)
                 ORR     R2, R2, #4                  // NEON state
                 #else
                 ORR     R2, R2, #2                  // VFP state
@@ -433,7 +433,7 @@ osRtxContextRestore:
                 MCR     p15, 0, R2, c1, c0, 2       // Write CPACR
                 BEQ     osRtxContextRestore1        // No VFP
                 ISB                                 // Sync if VFP was enabled
-                #if     __ARM_NEON == 1
+                #if defined(__ARM_NEON) && (__ARM_NEON == 1)
                 VLDMIA  LR!, {D16-D31}              // Restore D16-D31
                 #endif
                 VLDMIA  LR!, {D0-D15}               // Restore D0-D15
