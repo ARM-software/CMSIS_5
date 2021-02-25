@@ -92,12 +92,12 @@ targets:
     cpu       : cortex-m55
     float     : hard
     linkscript: "config/core_m/rtebuild_ns.ld"
+
   armca:
     toolchain : GCC
     features  : ""
-    csettings : [ -marm ]
-    cflags    : [ "-mcpu=${cpu}${features}", "-mfloat-abi=${float}", "${csettings}", "${cwarnings}", -c, -xc, -std=gnu99 ]
-    asmflags  : [ "-mcpu=${cpu}${features}", "-mfloat-abi=${float}", "${csettings}", "${cwarnings}", -c ]
+    cflags    : [ "-mcpu=${cpu}${features}", "-mfloat-abi=${float}", "-mfpu=auto", "${csettings}", "${cwarnings}", -c, -xc, -std=gnu99 ]
+    asmflags  : [ "-mcpu=${cpu}${features}", "-mfloat-abi=${float}", "-mfpu=auto", "${csettings}", "${cwarnings}", -c ]
     linkflags : [ "-mcpu=${cpu}${features}", "-mfloat-abi=${float}", "${csettings}", "${cwarnings}", "-Xlinker -Map=${builddir}/${targetName}.map", --specs=nano.specs, --specs=rdimon.specs ]
     linkscript: "${builddir}/rtebuild.ld"
     source:
