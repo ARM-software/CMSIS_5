@@ -280,6 +280,10 @@ function(configcore PROJECTNAME ROOT)
     target_compile_definitions(${PROJECTNAME} PRIVATE ARM_MATH_NEON_EXPERIMENTAL)
   endif()
 
+  if (HELIUMEXPERIMENTAL)
+    target_compile_definitions(${PROJECTNAME} PRIVATE ARM_MATH_HELIUM_EXPERIMENTAL)
+  endif()
+
   if (HELIUM AND CORTEXM)
     target_compile_definitions(${PROJECTNAME} PRIVATE ARM_MATH_HELIUM)
   endif()

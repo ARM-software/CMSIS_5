@@ -27,6 +27,7 @@ config["MVEI"]=False
 config["MVEF"]=False
 config["NEON"]=False
 config["HELIUM"]=False
+config["HELIUMEXPERIMENTAL"]=False
 config["Float16"]=True
 config["HOST"]=False
 
@@ -365,6 +366,9 @@ def interpretCmakeOptions(cmake):
     if test(cmake,"MVEF"):
        r.append("-DARM_MATH_MVEF")
 
+    if test(cmake,"HELIUMEXPERIMENTAL"):
+       r.append("-DARM_MATH_HELIUM_EXPERIMENTAL")
+
     if test(cmake,"HELIUM") or test(cmake,"MVEF") or test(cmake,"MVEI"):
        r.append("-IPrivateInclude")
 
@@ -508,6 +512,7 @@ if not forHost:
    check(config,"ROUNDING")
    check(config,"MATRIXCHECK")
    
+   st.sidebar.header('Vector extensions')
    st.sidebar.info("Enable vector code. It is not automatic for Neon. Use of Helium will enable new options to select some interpolation tables.")
    archi=st.sidebar.selectbox("Vector",('None','Helium','Neon'))
    if archi == 'Neon':
@@ -515,6 +520,8 @@ if not forHost:
    if archi == 'Helium':
       multiselect(config,"MVE configuration",["MVEI","MVEF"])
       HELIUM=True
+      st.sidebar.info("When checked some experimental versions will be enabled and may be less performant than scalar version depending on the architecture.")
+      check(config,"HELIUMEXPERIMENTAL")
    if archi != 'None':
        st.sidebar.info("When autovectorization is on, pure C code will be compiled. The version with C intrinsics won't be compiled.")
        check(config,"AUTOVECTORIZE")

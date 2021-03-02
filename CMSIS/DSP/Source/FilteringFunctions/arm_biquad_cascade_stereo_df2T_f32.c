@@ -45,7 +45,7 @@
   @param[in]     blockSize number of samples to process
   @return        none
  */
-#if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
+#if (defined(ARM_MATH_MVEF) && defined(ARM_MATH_HELIUM_EXPERIMENTAL)) && !defined(ARM_MATH_AUTOVECTORIZE)
 #include "arm_helium_utils.h"
 
 void arm_biquad_cascade_stereo_df2T_f32(

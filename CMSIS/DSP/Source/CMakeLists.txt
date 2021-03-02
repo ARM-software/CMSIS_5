@@ -14,6 +14,7 @@ include(configLib)
 
 option(NEON "Neon acceleration" OFF)
 option(NEONEXPERIMENTAL "Neon experimental acceleration" OFF)
+option(HELIUMEXPERIMENTAL "Helium experimental acceleration" OFF)
 option(LOOPUNROLL "Loop unrolling" ON)
 option(ROUNDING "Rounding" OFF)
 option(MATRIXCHECK "Matrix Checks" OFF)

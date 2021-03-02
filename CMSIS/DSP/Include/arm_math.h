@@ -143,7 +143,13 @@
    *
    * - ARM_MATH_HELIUM:
    *
-   * It implies the flags ARM_MATH_MVEF and ARM_MATH_MVEI and ARM_MATH_FLOAT16.
+   * It implies the flags ARM_MATH_MVEF and ARM_MATH_MVEI and ARM_MATH_MVE_FLOAT16.
+   *
+   * - ARM_MATH_HELIUM_EXPERIMENTAL:
+   *
+   * Only taken into account when ARM_MATH_MVEF, ARM_MATH_MVEI or ARM_MATH_MVE_FLOAT16 are defined.
+   * Enable some vector versions which may have worse performance than scalar
+   * depending on the core / compiler configuration.
    *
    * - ARM_MATH_MVEF:
    *
