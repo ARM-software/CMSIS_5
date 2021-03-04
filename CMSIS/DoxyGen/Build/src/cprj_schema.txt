@@ -1386,6 +1386,7 @@ commandline flags can also be applied on a group level.
 The description format allows the nesting of groups. It is up to the tool's implementation how grouping
 is represented in the user interface. The grouping of files only impacts the build, if the assignment of 
 command line options on a group level is supported.
+The group's name must be unique, multiple groups at the same level with the same name are not allowed.
 
 \b Example <em>files</em> section:
 \code
@@ -1426,7 +1427,7 @@ command line options on a group level is supported.
   </tr>
   <tr>
     <td>name</td>
-    <td>name of the group of files</td>
+    <td>Unique name of the group of files</td>
     <td>\ref type_restrictedStringType "RestrictedString"</td>
     <td>required</td>
   </tr>

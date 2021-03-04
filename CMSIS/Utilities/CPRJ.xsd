@@ -51,7 +51,7 @@
     </xs:restriction>
   </xs:simpleType>
 
-  <!-- version can contain one or more of alphanumeric characters and symbols '_' '-' '.' 
+  <!-- version can contain one or more of alphanumeric characters and symbols '_' '-' '.'
        Allows specifing a version range: minVersion : maxVersion
   -->
   <xs:simpleType name="VersionRangeType">
@@ -353,9 +353,14 @@
       <xs:element name="cxxflags"  type="ToolOptionType" />
       <xs:element name="asflags"   type="AsmOptionType" />
       <xs:element name="file"      type="FileType" />
-      <xs:element name="group"     type="GroupType" />
+      <xs:element name="group"     type="GroupType" >
+        <xs:unique name="unique-group-levelN">
+          <xs:selector xpath="group"/>
+          <xs:field xpath="@name"/>
+        </xs:unique>
+      </xs:element>
     </xs:choice>
-    <xs:attribute name="name"  type="xs:string" use="required" />
+    <xs:attribute name="name"  type="xs:string" use="required"/>
     <!-- layer reference -->
     <xs:attribute name="layer" type="RestrictedString" use="optional" />
   </xs:complexType>
@@ -389,8 +394,14 @@
       <xs:element name="cxxflags"  type="ToolOptionType" />
       <!-- Assembler command-line -->
       <xs:element name="asflags"   type="AsmOptionType" />
-      <xs:element name="file"      type="FileType" />
-      <xs:element name="group"     type="GroupType" />
+      <xs:element name="file"      type="FileType" >
+      </xs:element>
+      <xs:element name="group"     type="GroupType" >
+        <xs:unique name="unique-group-level1">
+          <xs:selector xpath="group"/>
+          <xs:field xpath="@name"/>
+        </xs:unique>
+      </xs:element>
     </xs:choice>
   </xs:complexType>
 
@@ -498,8 +509,17 @@
         <!-- components used by project -->
         <xs:element name="components"     type="ComponentsType"   minOccurs="0" />
         <!-- project modules/source files not contained in components -->
-        <xs:element name="files"          type="FilesType"        minOccurs="0"/>
-      </xs:all>
+        <xs:element name="files"          type="FilesType"        minOccurs="0">
+          <xs:unique name="unique-group-level0">
+            <xs:selector xpath="group"/>
+            <xs:field xpath="@name"/>
+          </xs:unique>
+          <xs:unique name="unique-filename">
+            <xs:selector xpath=".//file"/>
+            <xs:field xpath="@name"/>
+          </xs:unique>
+        </xs:element>
+        </xs:all>
       <!-- schema version used by writer -->
       <xs:attribute name="schemaVersion"  type="SchemaVersionType" use="required" />
     </xs:complexType>
