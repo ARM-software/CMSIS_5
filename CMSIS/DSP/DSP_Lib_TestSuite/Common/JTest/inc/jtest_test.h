@@ -69,7 +69,7 @@ typedef struct JTEST_TEST_struct
  *
  *  @param jtest_test_ptr Pointer to a #JTEST_TEST_t struct.
  *  @param flag_name      Name of the flag to set in #JTEST_TEST_t.flags.bits
- *  @param xxx            Vaid values: "SET" or "CLR"
+ *  @param xxx            Valid values: "SET" or "CLR"
  *
  *  @note This function depends on JTEST_TEST_FLAG_SET and JTEST_TEST_FLAG_CLR.
  */
