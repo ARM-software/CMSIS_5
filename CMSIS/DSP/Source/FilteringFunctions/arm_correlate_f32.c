@@ -1074,7 +1074,7 @@ void arm_correlate_f32(
       if ((((i - j) < srcBLen) && (j < srcALen)))
       {
         /* z[i] += x[i-j] * y[j] */
-        sum += pIn1[j] * pIn2[-((int32_t) i - j)];
+        sum += pIn1[j] * pIn2[-((int32_t) i - (int32_t) j)];
       }
     }
 

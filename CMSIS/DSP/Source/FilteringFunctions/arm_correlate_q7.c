@@ -981,7 +981,7 @@ void arm_correlate_q7(
       if (((i - j) < srcBLen) && (j < srcALen))
       {
         /* z[i] += x[i-j] * y[j] */
-        sum += ((q15_t) pIn1[j] * pIn2[-((int32_t) i - j)]);
+        sum += ((q15_t) pIn1[j] * pIn2[-((int32_t) i - (int32_t) j)]);
       }
     }
 
