@@ -435,6 +435,14 @@ void arm_float_to_q28 (float *pIn, q31_t *pOut, uint32_t numSamples)
     }
 }
 
+
+/*
+
+Conflicting with the new clip functions in CMSIS-DSP and not used
+in the examples.
+
+*/
+#if 0
 /**
  * @brief  Clip the float values to +/- 1
  * @param[in,out]  pIn           input buffer
@@ -461,6 +469,4 @@ void arm_clip_f32 (float *pIn, uint32_t numSamples)
     }
 }
 
-
-
-
+#endif
