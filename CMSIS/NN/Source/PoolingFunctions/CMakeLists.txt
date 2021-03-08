@@ -4,7 +4,7 @@ project(CMSISNNPooling)
 
 include(configLib)
 
-file(GLOB SRC "./*_*.c")
+file(GLOB SRC "./*_s8.c")
 
 add_library(CMSISNNPooling STATIC ${SRC})
 

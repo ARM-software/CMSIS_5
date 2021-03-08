@@ -21,8 +21,8 @@
  * Title:        arm_elementwise_add_s8
  * Description:  Element wise add
  *
- * $Date:        09. October 2020
- * $Revision:    V.2.5.2
+ * $Date:        01. March 2021
+ * $Revision:    V.2.5.3
  *
  * Target Processor:  Cortex-M CPUs
  *
@@ -153,10 +153,11 @@ arm_status arm_elementwise_add_s8(const int8_t *input_1_vect,
         b_2 = __SADD16(b_2, offset_2_packed);
 
         /* Sum 1 */
-        input_1 = (int16_t)(b_1 & 0x0FFFFL) << left_shift;
+        input_1 = (b_1 & 0x0FFFF) << left_shift;
+
         SAT_INPUT(input_1, input_1_mult, input_1_shift);
 
-        input_2 = (int16_t)(b_2 & 0x0FFFFL) << left_shift;
+        input_2 = (b_2 & 0x0FFFF) << left_shift;
         SAT_INPUT(input_2, input_2_mult, input_2_shift);
 
         sum = input_1 + input_2;
@@ -167,10 +168,10 @@ arm_status arm_elementwise_add_s8(const int8_t *input_1_vect,
         r1 = (q7_t)sum;
 
         /* Sum 3 */
-        input_1 = (int16_t)((b_1 >> 16) & 0x0FFFFL) << left_shift;
+        input_1 = ((b_1 >> 16) & 0x0FFFF) << left_shift;
         SAT_INPUT(input_1, input_1_mult, input_1_shift);
 
-        input_2 = (int16_t)((b_2 >> 16) & 0x0FFFFL) << left_shift;
+        input_2 = ((b_2 >> 16) & 0x0FFFF) << left_shift;
         SAT_INPUT(input_2, input_2_mult, input_2_shift);
 
         sum = input_1 + input_2;
@@ -181,10 +182,10 @@ arm_status arm_elementwise_add_s8(const int8_t *input_1_vect,
         r3 = (q7_t)sum;
 
         /* Sum 2 */
-        input_1 = (int16_t)(a_1 & 0x0FFFFL) << left_shift;
+        input_1 = (a_1 & 0x0FFFF) << left_shift;
         SAT_INPUT(input_1, input_1_mult, input_1_shift);
 
-        input_2 = (int16_t)(a_2 & 0x0FFFFL) << left_shift;
+        input_2 = (a_2 & 0x0FFFF) << left_shift;
         SAT_INPUT(input_2, input_2_mult, input_2_shift);
 
         sum = input_1 + input_2;
@@ -195,10 +196,10 @@ arm_status arm_elementwise_add_s8(const int8_t *input_1_vect,
         r2 = (q7_t)sum;
 
         /* Sum 4 */
-        input_1 = (int16_t)((a_1 >> 16) & 0x0FFFFL) << left_shift;
+        input_1 = ((a_1 >> 16) & 0x0FFFF) << left_shift;
         SAT_INPUT(input_1, input_1_mult, input_1_shift);
 
-        input_2 = (int16_t)((a_2 >> 16) & 0x0FFFFL) << left_shift;
+        input_2 = ((a_2 >> 16) & 0x0FFFF) << left_shift;
         SAT_INPUT(input_2, input_2_mult, input_2_shift);
 
         sum = input_1 + input_2;

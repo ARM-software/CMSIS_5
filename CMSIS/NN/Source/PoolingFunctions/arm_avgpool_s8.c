@@ -21,8 +21,8 @@
  * Title:        arm_avgpool_s8.c
  * Description:  Pooling function implementations
  *
- * $Date:        09. October 2020
- * $Revision:    V.2.0.3
+ * $Date:        01. March 2021
+ * $Revision:    V.2.0.4
  *
  * Target Processor:  Cortex-M CPUs
  *
@@ -155,6 +155,12 @@ arm_status arm_avgpool_s8(const cmsis_nn_context *ctx,
 
                         count++;
                     }
+                }
+
+                // Prevent static code issue DIVIDE_BY_ZERO.
+                if (count == 0)
+                {
+                    return ARM_MATH_ARGUMENT_ERROR;
                 }
 
                 sumV1[0] = sumV1[0] > 0 ? (sumV1[0] + count / 2) / count : (sumV1[0] - count / 2) / count;
@@ -300,6 +306,13 @@ arm_status arm_avgpool_s8(const cmsis_nn_context *ctx,
                     count++;
                 }
             }
+
+            // Prevent static code issue DIVIDE_BY_ZERO.
+            if (count == 0)
+            {
+                return ARM_MATH_ARGUMENT_ERROR;
+            }
+
             scale_q31_to_q7_and_clamp(buffer, dst, ch_src, count, act_min, act_max);
             dst += ch_src;
         }
@@ -331,6 +344,13 @@ arm_status arm_avgpool_s8(const cmsis_nn_context *ctx,
                         }
                     }
                 }
+
+                // Prevent static code issue DIVIDE_BY_ZERO.
+                if (count == 0)
+                {
+                    return ARM_MATH_ARGUMENT_ERROR;
+                }
+
                 sum = sum > 0 ? (sum + count / 2) / count : (sum - count / 2) / count;
                 sum = MAX(sum, act_min);
                 sum = MIN(sum, act_max);

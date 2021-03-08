@@ -21,8 +21,8 @@
  * Title:        arm_softmax_s8.c
  * Description:  S8 softmax function
  *
- * $Date:        09. October 2020
- * $Revision:    V.2.0.1
+ * $Date:        01. March 2021
+ * $Revision:    V.2.0.2
  *
  * Target Processor:  Cortex-M cores
  *
@@ -149,7 +149,7 @@ void arm_softmax_s8(const int8_t *input,
 
         const int32_t headroom = __CLZ((uint32_t)sum);
         const int32_t bits_over_unit = ACCUM_BITS - headroom + 23;
-        const int32_t shifted_scale = ONE_OVER1((sum << headroom) - (1 << 31));
+        const int32_t shifted_scale = ONE_OVER1((sum > 0 ? sum << headroom : 0) - (1 << 31));
 
         vec_count = row_size / 4;
         idx = 0;
@@ -234,7 +234,7 @@ void arm_softmax_s8(const int8_t *input,
 
         const int32_t headroom = __CLZ(sum);
         const int32_t bits_over_unit = ACCUM_BITS - headroom + 23;
-        const int32_t shifted_scale = ONE_OVER1((sum << headroom) - (1 << 31));
+        const int32_t shifted_scale = ONE_OVER1((sum > 0 ? sum << headroom : 0) - (1 << 31));
 
         for (col = 0; col < row_size; ++col)
         {

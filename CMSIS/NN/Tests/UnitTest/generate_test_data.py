@@ -65,7 +65,7 @@ def parse_args():
     parser.add_argument('--regenerate-biases', action='store_true', help="Regenerate and store new biases.")
     parser.add_argument('-a', '--regenerate-all', action='store_true', help="Regenerate and store all data.")
     parser.add_argument('-t', '--testtype', type=str, default='conv', choices=['conv', 'depthwise_conv', 'avgpool',
-                                                                               'maxpool', 'fully_connected'],
+                                                                               'maxpool', 'fully_connected', 'softmax'],
                         help='Type of test.')
     parser.add_argument('--run-all-testsets', action='store_true', help="Run the script for all existing test "
                         "sets. Regenerate all, partially all or no input data (output may still change, depending on"
@@ -320,7 +320,7 @@ class TestSettings(ABC):
         f.write("#define {}_INPUT_OFFSET {}\n".format(prefix, -self.input_zero_point))
         f.write("#define {}_OUTPUT_OFFSET {}\n".format(prefix, self.output_zero_point))
 
-    def write_c_config_header(self):
+    def write_c_config_header(self, write_common_parameters=True):
         filename = self.config_data
 
         self.generated_header_files.append(filename)
@@ -331,20 +331,21 @@ class TestSettings(ABC):
         print("Writing C header with config data {}...".format(filepath))
         with open(filepath, "w+") as f:
             self.write_c_common_header(f)
-            f.write("#define {}_OUT_CH {}\n".format(prefix, self.output_ch))
-            f.write("#define {}_IN_CH {}\n".format(prefix, self.input_ch))
-            f.write("#define {}_INPUT_W {}\n".format(prefix, self.x_input))
-            f.write("#define {}_INPUT_H {}\n".format(prefix, self.y_input))
-            f.write("#define {}_DST_SIZE {}\n".format(prefix, self.x_output * self.y_output * self.output_ch
-                                                      * self.batches))
-            f.write("#define {}_INPUT_SIZE {}\n".format(prefix, self.x_input * self.y_input * self.input_ch))
-            if self.relu6:
-                f.write("#define {}_OUT_ACTIVATION_MIN {}\n".format(prefix, 0))
-                f.write("#define {}_OUT_ACTIVATION_MAX {}\n".format(prefix, 6))
-            else:
-                f.write("#define {}_OUT_ACTIVATION_MIN {}\n".format(prefix, self.out_activation_min))
-                f.write("#define {}_OUT_ACTIVATION_MAX {}\n".format(prefix, self.out_activation_max))
-            f.write("#define {}_INPUT_BATCHES {}\n".format(prefix, self.batches))
+            if (write_common_parameters):
+                f.write("#define {}_OUT_CH {}\n".format(prefix, self.output_ch))
+                f.write("#define {}_IN_CH {}\n".format(prefix, self.input_ch))
+                f.write("#define {}_INPUT_W {}\n".format(prefix, self.x_input))
+                f.write("#define {}_INPUT_H {}\n".format(prefix, self.y_input))
+                f.write("#define {}_DST_SIZE {}\n".format(prefix, self.x_output * self.y_output * self.output_ch
+                                                          * self.batches))
+                f.write("#define {}_INPUT_SIZE {}\n".format(prefix, self.x_input * self.y_input * self.input_ch))
+                if self.relu6:
+                    f.write("#define {}_OUT_ACTIVATION_MIN {}\n".format(prefix, 0))
+                    f.write("#define {}_OUT_ACTIVATION_MAX {}\n".format(prefix, 6))
+                else:
+                    f.write("#define {}_OUT_ACTIVATION_MIN {}\n".format(prefix, self.INT8_MIN))
+                    f.write("#define {}_OUT_ACTIVATION_MAX {}\n".format(prefix, self.INT8_MAX))
+                f.write("#define {}_INPUT_BATCHES {}\n".format(prefix, self.batches))
         self.format_output_file(filepath)
 
     def generate_c_array(self, name, array, datatype="q7_t"):
@@ -763,6 +764,67 @@ class FullyConnectedSettings(TestSettings):
         self.write_c_header_wrapper()
 
 
+class SoftmaxSettings(TestSettings):
+    softmax_input_integer_bits = 5
+
+    def __init__(self, dataset, testtype, args, x_in=5, y_in=1, randmin=-7, randmax=7):
+        super().__init__(dataset, testtype, args, 1, 1, x_in, y_in, 1, 1, 1, 1, False, randmin,
+                         randmax)
+        self.output_scale = 1 / 256
+        self.output_zero_point = -128
+        self.x_input = self.x_output = x_in
+        self.y_input = self.y_output = y_in
+
+        input_real_multiplier = min(self.input_scale * (1 << (31 - self.softmax_input_integer_bits)),
+                                    (1 << 31) - 1)
+        (self.input_multiplier, self.input_left_shift) = self.quantize_scale(input_real_multiplier)
+
+        self.diff_min = ((1 << self.softmax_input_integer_bits) - 1) * \
+                        (1 << (31 - self.softmax_input_integer_bits)) / \
+                        (1 << self.input_left_shift)
+        self.diff_min = math.floor(self.diff_min)
+
+    def write_c_config_header(self):
+        super().write_c_config_header(write_common_parameters=False)
+
+        filename = self.config_data
+        filepath = self.headers_dir + filename
+        prefix = self.testdataset.upper()
+
+        with open(filepath, "a") as f:
+            f.write("#define {}_NUM_ROWS {}\n".format(prefix, self.y_input))
+            f.write("#define {}_ROW_SIZE {}\n".format(prefix, self.x_input))
+            f.write("#define {}_INPUT_MULT {}\n".format(prefix, self.input_multiplier))
+            f.write("#define {}_INPUT_LEFT_SHIFT {}\n".format(prefix, self.input_left_shift))
+            f.write("#define {}_DIFF_MIN {}\n".format(prefix, -self.diff_min))
+            f.write("#define {}_DST_SIZE {}\n".format(prefix, self.x_output * self.y_output))
+
+    def get_softmax_randomized_input_data(self, input_data):
+        # Generate or load saved input data unless hardcoded data provided.
+        if input_data is not None:
+            input_data = tf.reshape(input_data, [self.y_input, self.x_input])
+        else:
+            input_data = self.get_randomized_data([self.y_input, self.x_input],
+                                                  self.inputs_table_file,
+                                                  regenerate=self.regenerate_new_input)
+        return input_data
+
+    def softmax(self, indata):
+        indata = tf.cast(indata, dtype=tf.dtypes.float32)
+        out = tf.nn.softmax(indata)
+        return out
+
+    def generate_data(self, input_data=None, weights=None, biases=None):
+        input_data = self.get_softmax_randomized_input_data(input_data)
+        result = self.softmax(input_data)
+
+        self.generate_c_array("input", self.convert_tensor(input_data, self.quantize_input))
+        self.generate_c_array("output_ref", self.convert_tensor(result, self.quantize_output))
+
+        self.write_c_config_header()
+        self.write_c_header_wrapper()
+
+
 def load_all_testdatasets():
     """
     Add all new testdata sets here
@@ -897,6 +959,9 @@ def load_all_testdatasets():
     ALL_TESTDATA_SETS[dataset] = PoolingSettings(dataset, type_of_test, args, channels=1, x_in=4, y_in=2, stride_x=2,
                                                  stride_y=2, w_x=2, w_y=2, pad=False, randmin=-20, randmax=-5,
                                                  relu6=True)
+    type_of_test = 'softmax'
+    dataset = 'softmax'
+    ALL_TESTDATA_SETS[dataset] = SoftmaxSettings(dataset, type_of_test, args, x_in=5, y_in=1)
 
 
 if __name__ == '__main__':
