@@ -73,6 +73,14 @@
   </pre>
                    <code>pState</code> points to the array of state variables.
                    <code>pState</code> is of length <code>numTaps+blockSize</code>, when running on Cortex-M4 and Cortex-M3  and is of length <code>numTaps+blockSize-1</code>, when running on Cortex-M0 where <code>blockSize</code> is the number of input samples processed by each call to <code>arm_fir_q15()</code>.
+ 
+  @par          Initialization of Helium version
+                   For Helium version the array of coefficients must be a multiple of 8 (8a) even if less
+                   then 8a coefficients are defined in the FIR. The additional coefficients 
+                   (8a - numTaps) must be set to 0.
+                   numTaps is still set to its right value in the init function. It means that
+                   the implementation may require to read more coefficients due to the vectorization and
+                   to avoid having to manage too many different cases in the code.
  */
 
 arm_status arm_fir_init_q15(

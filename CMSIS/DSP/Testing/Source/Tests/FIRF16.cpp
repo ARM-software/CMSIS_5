@@ -24,6 +24,9 @@ static void checkInnerTail(float16_t *b)
     ASSERT_TRUE(b[3] == 0.0f);
 }
 
+// Coef must be padded to a multiple of 4
+#define FIRCOEFPADDING 2
+
     void FIRF16::test_fir_f16()
     {
         
@@ -42,6 +45,7 @@ static void checkInnerTail(float16_t *b)
 #endif
         int blockSize;
         int numTaps;
+        int round;
 
         
 
@@ -59,9 +63,20 @@ static void checkInnerTail(float16_t *b)
            numTaps = configp[1];
 
 #if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
-           /* Copy coefficients and pad to zero 
+            /* Copy coefficients and pad to zero 
            */
-           memset(coeffArray,0,32*sizeof(float16_t));
+           memset(coeffArray,127,32*sizeof(float16_t));
+           round = numTaps >> FIRCOEFPADDING;
+           if ((round << FIRCOEFPADDING) < numTaps)
+           {
+             round ++;
+           }
+           round = round<<FIRCOEFPADDING;
+           memset(coeffArray,0,round*sizeof(float16_t));
+
+           //printf("blockSize=%d, numTaps=%d, round=%d (%d)\n",blockSize,numTaps,round,round - numTaps);
+
+
            for(j=0;j < numTaps; j++)
            {
               coeffArray[j] = orgcoefsp[j];
