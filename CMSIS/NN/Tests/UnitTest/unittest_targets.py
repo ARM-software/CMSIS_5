@@ -179,6 +179,7 @@ def test_target(target, args, main_test):
                              ' --source ' + CMSIS_PATH + 'NN/Source/PoolingFunctions/'
                              ' --source ' + CMSIS_PATH + 'NN/Source/NNSupportFunctions/'
                              ' --source ' + CMSIS_PATH + 'NN/Source/FullyConnectedFunctions/'
+                             ' --source ' + CMSIS_PATH + 'NN/Source/SoftmaxFunctions/'
                              + cmsis_flags +
                              additional_options,
                              flash_error_msg, die=die)

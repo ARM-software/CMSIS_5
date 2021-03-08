@@ -4,9 +4,9 @@ project(CMSISNNSupport)
 
 include(configLib)
 
-file(GLOB SRC "./*_*.c")
-
+file(GLOB SRC "./*_s8.c")
 add_library(CMSISNNSupport STATIC ${SRC})
+target_sources(CMSISNNSupport PUBLIC arm_q7_to_q15_with_offset.c)
 
 configLib(CMSISNNSupport ${ROOT})
 configDsp(CMSISNNSupport ${ROOT})

@@ -4,8 +4,7 @@ project(CMSISNNConvolutions)
 
 include(configLib)
 
-file(GLOB SRC "./*_*.c")
-
+file(GLOB SRC "./*_s8*.c")
 add_library(CMSISNNConvolutions STATIC ${SRC})
 
 configLib(CMSISNNConvolutions ${ROOT})
