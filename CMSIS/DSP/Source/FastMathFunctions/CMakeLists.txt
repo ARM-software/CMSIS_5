@@ -53,6 +53,8 @@ target_sources(CMSISDSPFastMath PRIVATE arm_vexp_f16.c)
 target_sources(CMSISDSPFastMath PRIVATE arm_vinverse_f16.c)
 endif()
 
+target_sources(CMSISDSPFastMath PRIVATE arm_divide_q15.c)
+
 
 ### Includes
 target_include_directories(CMSISDSPFastMath PUBLIC "${DSP}/Include")

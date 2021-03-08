@@ -13,6 +13,35 @@ a double precision computation.
 #define REL_ERROR (1.0e-4)
 #define ABS_ERROR (1.0e-3)
 
+/*
+
+For tests of the error value of the Levinson Durbin algorithm
+
+*/
+#define SNR_LD_THRESHOLD 59
+#define REL_LD_ERROR (1.0e-3)
+#define ABS_LD_ERROR (1.0e-3)
+
+    void MISCF16::test_levinson_durbin_f16()
+    {
+        const float16_t *inpA=inputA.ptr(); 
+        const float16_t *errs=inputB.ptr(); 
+        float16_t *outp=output.ptr();
+        float16_t err;
+
+        float16_t refError=errs[this->errOffset];
+
+        arm_levinson_durbin_f16(inpA,outp,&err,this->nba);
+
+        ASSERT_EMPTY_TAIL(output);
+        ASSERT_SNR(ref,output,(float16_t)SNR_LD_THRESHOLD);
+        ASSERT_CLOSE_ERROR(ref,output,ABS_LD_ERROR,REL_LD_ERROR);
+
+        
+        ASSERT_CLOSE_ERROR(refError,err,ABS_LD_ERROR,REL_LD_ERROR);
+
+    }
+
     void MISCF16::test_correlate_f16()
     {
         const float16_t *inpA=inputA.ptr(); 
@@ -694,10 +723,46 @@ a double precision computation.
             break;
 #endif
 
+            case MISCF16::TEST_LEVINSON_DURBIN_F16_41:
+            {
+                       this->nba = 7;
+                       inputA.reload(MISCF16::INPUTPHI_A_F16_ID,mgr);
+
+                       this->errOffset=0;
+                       inputB.reload(MISCF16::INPUT_ERRORS_F16_ID,mgr);
+                       ref.reload(MISCF16::REF81_F16_ID,mgr);
+            }
+            break;
+
+            case MISCF16::TEST_LEVINSON_DURBIN_F16_42:
+            {
+                       this->nba = 16;
+                       inputA.reload(MISCF16::INPUTPHI_B_F16_ID,mgr);
+
+                       this->errOffset=1;
+                       inputB.reload(MISCF16::INPUT_ERRORS_F16_ID,mgr);
+                       ref.reload(MISCF16::REF82_F16_ID,mgr);
+            }
+            break;
+
+            case MISCF16::TEST_LEVINSON_DURBIN_F16_43:
+            {
+                       this->nba = 23;
+                       inputA.reload(MISCF16::INPUTPHI_C_F16_ID,mgr);
+
+                       this->errOffset=2;
+                       inputB.reload(MISCF16::INPUT_ERRORS_F16_ID,mgr);
+                       ref.reload(MISCF16::REF83_F16_ID,mgr);
+            }
+            break;
+
         }
 
-       inputA.reload(MISCF16::INPUTA_F16_ID,mgr,nba);
-       inputB.reload(MISCF16::INPUTB_F16_ID,mgr,nbb);
+       if (id < TEST_LEVINSON_DURBIN_F16_41)
+       {
+          inputA.reload(MISCF16::INPUTA_F16_ID,mgr,nba);
+          inputB.reload(MISCF16::INPUTB_F16_ID,mgr,nbb);
+       }
 
        output.create(ref.nbSamples(),MISCF16::OUT_F16_ID,mgr);
         

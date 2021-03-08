@@ -279,6 +279,23 @@ arm_status arm_sqrt_q15(
    * @} end of SQRT group
    */
 
+  /**
+  @brief         Fixed point division
+  @param[in]     numerator    Numerator
+  @param[in]     denominator  Denominator
+  @param[out]    quotient     Quotient value normalized between -1.0 and 1.0
+  @param[out]    shift        Shift left value to get the unnormalized quotient
+  @return        error status
+
+  When dividing by 0, an error ARM_MATH_NANINF is returned. And the quotient is forced
+  to the saturated negative or positive value.
+ */
+
+arm_status arm_divide_q15(q15_t numerator,
+  q15_t denominator,
+  q15_t *quotient,
+  int16_t *shift);
+
 
 #ifdef   __cplusplus
 }

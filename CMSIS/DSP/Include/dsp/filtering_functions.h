@@ -33,6 +33,7 @@
 #include "dsp/utils.h"
 
 #include "dsp/support_functions.h"
+#include "dsp/fast_math_functions.h"
 
 #ifdef   __cplusplus
 extern "C"
@@ -2432,8 +2433,33 @@ void arm_correlate_fast_q31(
   }
 
 
+/**
+  @brief         Levinson Durbin
+  @param[in]     phi      autocovariance vector starting with lag 0 (length is nbCoefs + 1)
+  @param[out]    a        autoregressive coefficients
+  @param[out]    err      prediction error (variance)
+  @param[in]     nbCoefs  number of autoregressive coefficients
+  @return        none
+ */
+void arm_levinson_durbin_f32(const float32_t *phi,
+  float32_t *a, 
+  float32_t *err,
+  int nbCoefs);
 
- 
+
+/**
+  @brief         Levinson Durbin
+  @param[in]     phi      autocovariance vector starting with lag 0 (length is nbCoefs + 1)
+  @param[out]    a        autoregressive coefficients
+  @param[out]    err      prediction error (variance)
+  @param[in]     nbCoefs  number of autoregressive coefficients
+  @return        none
+ */
+void arm_levinson_durbin_q31(const q31_t *phi,
+  q31_t *a, 
+  q31_t *err,
+  int nbCoefs);
+
 #ifdef   __cplusplus
 }
 #endif

@@ -519,6 +519,12 @@ group Root {
                 Pattern INPUTA_F16_ID : InputsA1_f16.txt
                 Pattern INPUTB_F16_ID : InputsB1_f16.txt
 
+                Pattern INPUTPHI_A_F16_ID : InputPhi81_f16.txt
+                Pattern INPUTPHI_B_F16_ID : InputPhi82_f16.txt
+                Pattern INPUTPHI_C_F16_ID : InputPhi83_f16.txt
+
+                Pattern INPUT_ERRORS_F16_ID : LDErrors81_f16.txt
+
                 Pattern REF1_F16_ID : Reference1_f16.txt
                 Pattern REF2_F16_ID : Reference2_f16.txt
                 Pattern REF3_F16_ID : Reference3_f16.txt
@@ -599,9 +605,13 @@ group Root {
                 Pattern REF78_F16_ID : Reference78_f16.txt
                 Pattern REF79_F16_ID : Reference79_f16.txt
                 Pattern REF80_F16_ID : Reference80_f16.txt
+                Pattern REF81_F16_ID : Reference81_f16.txt
+                Pattern REF82_F16_ID : Reference82_f16.txt
+                Pattern REF83_F16_ID : Reference83_f16.txt
 
 
                 Output  OUT_F16_ID : Output
+                Output  TMP_F16_ID : Temp
 
                 Functions {
                   arm_correlate_f16 nba=4 nbb=1:test_correlate_f16
@@ -644,6 +654,9 @@ group Root {
                   arm_correlate_f16 nba=13 nbb=3:test_correlate_f16
                   arm_correlate_f16 nba=13 nbb=8:test_correlate_f16
                   arm_correlate_f16 nba=13 nbb=11:test_correlate_f16
+                  arm_levinson_durbin_f16 n=7:test_levinson_durbin_f16
+                  arm_levinson_durbin_f16 n=16:test_levinson_durbin_f16
+                  arm_levinson_durbin_f16 n=23:test_levinson_durbin_f16
                 }
 
              }

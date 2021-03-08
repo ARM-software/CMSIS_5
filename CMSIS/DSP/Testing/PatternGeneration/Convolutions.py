@@ -2,6 +2,7 @@ import os.path
 import numpy as np
 import itertools
 import Tools
+import statsmodels.tsa.stattools
 
 # Those patterns are used for tests and benchmarks.
 # For tests, there is the need to add tests for saturation
@@ -12,7 +13,14 @@ def cartesian(*somelists):
        r.append(element)
    return(r)
 
+def autocorr(x):
+    result = np.correlate(x, x, mode='full')
+    return result[result.size//2:]
+
 def writeTests(config,format):
+
+    config.setOverwrite(False)
+
     NBSAMPLES=128
 
     inputsA=np.random.randn(NBSAMPLES)
@@ -76,6 +84,43 @@ def writeTests(config,format):
         config.writeReference(nbTest, ref)
         nbTest = nbTest + 1
 
+    # Levinson durbin tests
+    config.setOverwrite(True)
+
+    a = [Tools.loopnb(format,Tools.TAILONLY),
+    Tools.loopnb(format,Tools.BODYONLY),
+    Tools.loopnb(format,Tools.BODYANDTAIL),
+    ]
+
+    a = list(np.unique(np.array(a)))
+
+    #a = [3]
+
+    # Errors of each levinson durbin test
+    err=[]
+
+    errTestID = nbTest
+
+    for na in a:
+      
+      s = np.random.randn(na+1)
+      s = Tools.normalize(s)
+      phi = autocorr(s)
+
+      phi = Tools.normalize(phi)
+
+      config.writeInput(nbTest, phi,"InputPhi")
+
+      sigmav,arcoef,pacf,sigma,phi=statsmodels.tsa.stattools.levinson_durbin(phi,nlags=na,isacov=True)
+      
+      err.append(sigmav)
+      
+      config.writeReference(nbTest, arcoef)
+      nbTest = nbTest + 1
+
+      config.writeReference(errTestID, err,"LDErrors")
+
+
     
 
     
@@ -88,8 +133,7 @@ def generatePatterns():
     configq31=Tools.Config(PATTERNDIR,PARAMDIR,"q31")
     configq15=Tools.Config(PATTERNDIR,PARAMDIR,"q15")
     configq7=Tools.Config(PATTERNDIR,PARAMDIR,"q7")
-    
-    
+
     
     writeTests(configf32,0)
     writeTests(configf16,16)

@@ -20,7 +20,7 @@ class MISCQ31:public Client::Suite
             // Reference patterns are not loaded when we are in dump mode
             Client::RefPattern<q31_t> ref;
 
-            int nba,nbb;
+            int nba,nbb,errOffset;
 
            
     };

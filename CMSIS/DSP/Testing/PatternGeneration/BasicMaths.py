@@ -307,11 +307,11 @@ def generatePatterns():
     configq15=Tools.Config(PATTERNDIR,PARAMDIR,"q15")
     configq7=Tools.Config(PATTERNDIR,PARAMDIR,"q7")
 
-    configf32.setOverwrite(False)
-    configf16.setOverwrite(False)
-    configq31.setOverwrite(False)
-    configq15.setOverwrite(False)
-    configq7.setOverwrite(False)
+    #configf32.setOverwrite(False)
+    #configf16.setOverwrite(False)
+    #configq31.setOverwrite(False)
+    #configq15.setOverwrite(False)
+    #configq7.setOverwrite(False)
     
     writeTests(configf32,0)
     writeTests(configf16,16)

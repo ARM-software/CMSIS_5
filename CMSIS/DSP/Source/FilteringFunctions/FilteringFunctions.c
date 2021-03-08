@@ -131,3 +131,6 @@
 #include "arm_lms_norm_q31.c"
 #include "arm_lms_q15.c"
 #include "arm_lms_q31.c"
+
+#include "arm_levinson_durbin_f32.c"
+#include "arm_levinson_durbin_q31.c"

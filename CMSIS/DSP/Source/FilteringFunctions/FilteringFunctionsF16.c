@@ -33,3 +33,4 @@
 #include "arm_biquad_cascade_stereo_df2T_f16.c"
 #include "arm_biquad_cascade_stereo_df2T_init_f16.c"
 #include "arm_correlate_f16.c"
+#include "arm_levinson_durbin_f16.c"

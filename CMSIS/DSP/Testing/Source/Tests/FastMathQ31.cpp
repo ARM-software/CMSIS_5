@@ -13,6 +13,8 @@ a double precision computation.
 */
 #define ABS_ERROR ((q31_t)2200)
 
+
+
     void FastMathQ31::test_cos_q31()
     {
         const q31_t *inp  = input.ptr();

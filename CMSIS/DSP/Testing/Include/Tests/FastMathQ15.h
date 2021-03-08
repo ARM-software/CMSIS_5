@@ -14,10 +14,17 @@ class FastMathQ15:public Client::Suite
             
             Client::Pattern<q15_t> input;
 
+            Client::Pattern<q15_t> numerator;
+            Client::Pattern<q15_t> denominator;
+
+
             Client::LocalPattern<q15_t> output;
+            Client::LocalPattern<int16_t> shift;
+
 
             // Reference patterns are not loaded when we are in dump mode
             Client::RefPattern<q15_t> ref;
+            Client::RefPattern<int16_t> refShift;
 
            
     };

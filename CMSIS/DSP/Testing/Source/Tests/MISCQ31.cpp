@@ -14,6 +14,34 @@ a double precision computation.
 */
 #define ABS_ERROR_Q31 ((q31_t)2)
 
+/*
+
+For tests of the error value of the Levinson Durbin algorithm
+
+*/
+#define ABS_LD_ERROR ((q31_t)30)
+
+
+    void MISCQ31::test_levinson_durbin_q31()
+    {
+
+
+        const q31_t *inpA=inputA.ptr(); 
+        const q31_t *errs=inputB.ptr(); 
+        q31_t *outp=output.ptr();
+        q31_t err;
+        q31_t refError=errs[this->errOffset];
+
+       
+        arm_levinson_durbin_q31(inpA,outp,&err,this->nba);
+        
+        ASSERT_EMPTY_TAIL(output);
+        ASSERT_SNR(ref,output,(q31_t)SNR_THRESHOLD);
+        ASSERT_NEAR_EQ(ref,output,ABS_LD_ERROR);
+        ASSERT_NEAR_EQ(refError,err,ABS_LD_ERROR);
+
+    }
+
     void MISCQ31::test_correlate_q31()
     {
         const q31_t *inpA=inputA.ptr(); 
@@ -693,10 +721,46 @@ a double precision computation.
             }
             break;
 
+            case MISCQ31::TEST_LEVINSON_DURBIN_Q31_81:
+            {
+                       this->nba = 3;
+                       inputA.reload(MISCQ31::INPUTPHI_A_Q31_ID,mgr);
+
+                       this->errOffset=0;
+                       inputB.reload(MISCQ31::INPUT_ERRORS_Q31_ID,mgr);
+                       ref.reload(MISCQ31::REF81_Q31_ID,mgr);
+            }
+            break;
+
+            case MISCQ31::TEST_LEVINSON_DURBIN_Q31_82:
+            {
+                       this->nba = 8;
+                       inputA.reload(MISCQ31::INPUTPHI_B_Q31_ID,mgr);
+
+                       this->errOffset=1;
+                       inputB.reload(MISCQ31::INPUT_ERRORS_Q31_ID,mgr);
+                       ref.reload(MISCQ31::REF82_Q31_ID,mgr);
+            }
+            break;
+
+            case MISCQ31::TEST_LEVINSON_DURBIN_Q31_83:
+            {
+                       this->nba = 11;
+                       inputA.reload(MISCQ31::INPUTPHI_C_Q31_ID,mgr);
+
+                       this->errOffset=2;
+                       inputB.reload(MISCQ31::INPUT_ERRORS_Q31_ID,mgr);
+                       ref.reload(MISCQ31::REF83_Q31_ID,mgr);
+            }
+            break;
+
         }
 
-       inputA.reload(MISCQ31::INPUTA_Q31_ID,mgr,nba);
-       inputB.reload(MISCQ31::INPUTB_Q31_ID,mgr,nbb);
+       if (id < TEST_LEVINSON_DURBIN_Q31_81)
+       {
+          inputA.reload(MISCQ31::INPUTA_Q31_ID,mgr,nba);
+          inputB.reload(MISCQ31::INPUTB_Q31_ID,mgr,nbb);
+       }
 
        output.create(ref.nbSamples(),MISCQ31::OUT_Q31_ID,mgr);
         

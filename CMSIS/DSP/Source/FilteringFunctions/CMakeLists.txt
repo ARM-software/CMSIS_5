@@ -122,6 +122,8 @@ target_sources(CMSISDSPFiltering PRIVATE arm_lms_norm_q15.c)
 target_sources(CMSISDSPFiltering PRIVATE arm_lms_norm_q31.c)
 target_sources(CMSISDSPFiltering PRIVATE arm_lms_q15.c)
 target_sources(CMSISDSPFiltering PRIVATE arm_lms_q31.c)
+target_sources(CMSISDSPFiltering PRIVATE arm_levinson_durbin_f32.c)
+target_sources(CMSISDSPFiltering PRIVATE arm_levinson_durbin_q31.c)
 
 if ((NOT ARMAC5) AND (NOT DISABLEFLOAT16))
 target_sources(CMSISDSPFiltering PRIVATE arm_fir_f16.c)
@@ -133,6 +135,7 @@ target_sources(CMSISDSPFiltering PRIVATE arm_biquad_cascade_df2T_init_f16.c)
 target_sources(CMSISDSPFiltering PRIVATE arm_biquad_cascade_stereo_df2T_f16.c)
 target_sources(CMSISDSPFiltering PRIVATE arm_biquad_cascade_stereo_df2T_init_f16.c)
 target_sources(CMSISDSPFiltering PRIVATE arm_correlate_f16.c)
+target_sources(CMSISDSPFiltering PRIVATE arm_levinson_durbin_f16.c)
 endif()
 
 ### Includes

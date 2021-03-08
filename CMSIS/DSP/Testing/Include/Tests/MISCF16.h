@@ -16,11 +16,12 @@ class MISCF16:public Client::Suite
             Client::Pattern<float16_t> inputB;
 
             Client::LocalPattern<float16_t> output;
+            Client::LocalPattern<float16_t> tmp;
 
             // Reference patterns are not loaded when we are in dump mode
             Client::RefPattern<float16_t> ref;
 
-            int nba,nbb;
+            int nba,nbb,errOffset;
 
            
     };

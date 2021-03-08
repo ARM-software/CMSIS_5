@@ -1329,6 +1329,7 @@ group Root {
               Pattern COS1_Q31_ID : Cos1_q31.txt 
               Pattern SIN1_Q31_ID : Sin1_q31.txt 
               Pattern SQRT1_Q31_ID : Sqrt1_q31.txt 
+              
 
               Output  OUT_Q31_ID : Output
 
@@ -1349,12 +1350,20 @@ group Root {
               Pattern SIN1_Q15_ID : Sin1_q15.txt 
               Pattern SQRT1_Q15_ID : Sqrt1_q15.txt 
 
+              Pattern NUMERATOR_Q15_ID : Numerator1_q15.txt
+              Pattern DENOMINATOR_Q15_ID : Denominator1_q15.txt
+
+              Pattern DIVISION_VALUE_Q15_ID : DivisionValue1_q15.txt
+              Pattern DIVISION_SHIFT_S16_ID : DivisionShift1_s16.txt
+
               Output  OUT_Q15_ID : Output
+              Output  SHIFT_S16_ID : Output
 
               Functions {
                 test_cos_q15:test_cos_q15
                 test_sin_q15:test_sin_q15
                 test_sqrt_q15:test_sqrt_q15
+                test_division_q15:test_division_q15
               }
           }
         }
@@ -1598,6 +1607,12 @@ group Root {
                 Pattern INPUTA_F32_ID : InputsA1_f32.txt
                 Pattern INPUTB_F32_ID : InputsB1_f32.txt
 
+                Pattern INPUTPHI_A_F32_ID : InputPhi81_f32.txt
+                Pattern INPUTPHI_B_F32_ID : InputPhi82_f32.txt
+                Pattern INPUTPHI_C_F32_ID : InputPhi83_f32.txt
+
+                Pattern INPUT_ERRORS_F32_ID : LDErrors81_f32.txt
+
                 Pattern REF1_F32_ID : Reference1_f32.txt
                 Pattern REF2_F32_ID : Reference2_f32.txt
                 Pattern REF3_F32_ID : Reference3_f32.txt
@@ -1678,9 +1693,13 @@ group Root {
                 Pattern REF78_F32_ID : Reference78_f32.txt
                 Pattern REF79_F32_ID : Reference79_f32.txt
                 Pattern REF80_F32_ID : Reference80_f32.txt
+                Pattern REF81_F32_ID : Reference81_f32.txt
+                Pattern REF82_F32_ID : Reference82_f32.txt
+                Pattern REF83_F32_ID : Reference83_f32.txt
 
 
                 Output  OUT_F32_ID : Output
+                Output  TMP_F32_ID : Temp
 
                 Functions {
                   arm_correlate_f32 nba=4 nbb=1:test_correlate_f32
@@ -1763,6 +1782,9 @@ group Root {
                   arm_conv_f32 nba=13 nbb=3:test_conv_f32
                   arm_conv_f32 nba=13 nbb=8:test_conv_f32
                   arm_conv_f32 nba=13 nbb=11:test_conv_f32
+                  arm_levinson_durbin_f32 n=3:test_levinson_durbin_f32
+                  arm_levinson_durbin_f32 n=8:test_levinson_durbin_f32
+                  arm_levinson_durbin_f32 n=11:test_levinson_durbin_f32
                 }
 
              }
@@ -1773,6 +1795,12 @@ group Root {
 
                 Pattern INPUTA_Q31_ID : InputsA1_q31.txt
                 Pattern INPUTB_Q31_ID : InputsB1_q31.txt
+
+                Pattern INPUTPHI_A_Q31_ID : InputPhi81_q31.txt
+                Pattern INPUTPHI_B_Q31_ID : InputPhi82_q31.txt
+                Pattern INPUTPHI_C_Q31_ID : InputPhi83_q31.txt
+
+                Pattern INPUT_ERRORS_Q31_ID : LDErrors81_q31.txt
 
                 Pattern REF1_Q31_ID : Reference1_q31.txt
                 Pattern REF2_Q31_ID : Reference2_q31.txt
@@ -1854,6 +1882,9 @@ group Root {
                 Pattern REF78_Q31_ID : Reference78_q31.txt
                 Pattern REF79_Q31_ID : Reference79_q31.txt
                 Pattern REF80_Q31_ID : Reference80_q31.txt
+                Pattern REF81_Q31_ID : Reference81_q31.txt
+                Pattern REF82_Q31_ID : Reference82_q31.txt
+                Pattern REF83_Q31_ID : Reference83_q31.txt
 
 
                 Output  OUT_Q31_ID : Output
@@ -1939,6 +1970,9 @@ group Root {
                   arm_conv_q31 nba=13 nbb=3:test_conv_q31
                   arm_conv_q31 nba=13 nbb=8:test_conv_q31
                   arm_conv_q31 nba=13 nbb=11:test_conv_q31
+                  arm_levinson_durbin_q31 n=3:test_levinson_durbin_q31
+                  arm_levinson_durbin_q31 n=8:test_levinson_durbin_q31
+                  arm_levinson_durbin_q31 n=11:test_levinson_durbin_q31
                 }
 
              }
