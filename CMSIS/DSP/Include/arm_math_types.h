@@ -299,7 +299,7 @@ extern "C"
   typedef int32x4_t q31x4_t;
 
   /**
-   * @brief 16-bit fractional 128-bit vector data type with 16-bit alignement in 1.15 format.
+   * @brief 16-bit fractional 128-bit vector data type with 16-bit alignment in 1.15 format.
    */
   typedef __ALIGNED(2) int16x8_t q15x8_t;
 
