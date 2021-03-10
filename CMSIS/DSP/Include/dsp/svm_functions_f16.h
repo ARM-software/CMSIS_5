@@ -132,7 +132,7 @@ typedef struct
   const float16_t *dualCoefficients;      /**< Dual coefficients */
   const float16_t *supportVectors;        /**< Support vectors */
   const int32_t   *classes;               /**< The two SVM classes */
-  float16_t       coef0;                  /**< Independant constant */
+  float16_t       coef0;                  /**< Independent constant */
   float16_t       gamma;                  /**< Gamma factor */
 } arm_svm_sigmoid_instance_f16;
 
