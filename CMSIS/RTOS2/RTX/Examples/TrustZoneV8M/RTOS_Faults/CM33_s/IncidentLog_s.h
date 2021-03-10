@@ -46,7 +46,7 @@ typedef enum  {
 
 
 // incident flag
-#define IS_SECURE    (1UL << 0)    /* incident happend in secure state */
+#define IS_SECURE    (1UL << 0)    /* incident happened in secure state */
 
 
 typedef struct  {
