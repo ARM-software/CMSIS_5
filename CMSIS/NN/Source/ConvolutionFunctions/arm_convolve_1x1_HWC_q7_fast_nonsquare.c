@@ -70,7 +70,7 @@
  * separable convolution.
  *
  * This function is the version with full list of optimization tricks, but with
- * some contraints:
+ * some constraints:
  *   ch_im_in is multiple of 4
  *   ch_im_out is multiple of 2
  *
