@@ -51,7 +51,7 @@ class ArrayMemory:public Client::Memory
      char *m_ptr;
      // Size of C array buffer
      size_t m_bufferLength;
-     // Alignement required for all buffers
+     // Alignment required for all buffers
      // (in future may be a setting per bufer)
      int alignSize;
      // True if some padding must be added after buffers
