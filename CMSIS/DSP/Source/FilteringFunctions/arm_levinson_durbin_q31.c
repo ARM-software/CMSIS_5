@@ -33,31 +33,6 @@
 #define HALF_Q15 0x3FFF
 #define LOWPART_MASK 0x07FFF
 
-#include <stdio.h>
-
-#define FQ31(X) (1.0*(X) / ONE_Q31)
-#define FQ15(X) (1.0*(X) / ONE_Q15)
-
-#define PQ31(X)                                  \
-  if ((X)>=0)                                       \
-  {                                              \
-     printf("%08X (%f)",(X),FQ31(X));  \
-  }                                              \
-  else                                           \
-  {                                              \
-     printf("-%08X (%f)",-(X),FQ31(X));\
-  }
-
-#define PQ15(X)                                  \
-  if ((X)>=0)                                       \
-  {                                              \
-     printf("%04X (%f)",(X),FQ15(X));  \
-  }                                              \
-  else                                           \
-  {                                              \
-     printf("-%04X (%f)",-(X),FQ15(X));\
-  }
-
 
 __STATIC_FORCEINLINE q31_t mul32x16(q31_t a, q15_t b)
 {
@@ -144,8 +119,6 @@ void arm_levinson_durbin_q31(const q31_t *phi,
 
    //a[0] = phi[1] / phi[0];
    a[0] = divide(phi[1], phi[0]);
-   //printf("%08X %08X\n",phi[1],phi[0]);
-   //printf("%f / %f = %f\n",FQ31(phi[1]),FQ31(phi[0]),FQ31(a[0]));
    
 
    //e = phi[0] - phi[1] * a[0];
@@ -167,7 +140,6 @@ void arm_levinson_durbin_q31(const q31_t *phi,
       suma = suma >> 31;
       sumb = sumb >> 31;
 
-      //printf("suma = %08X, sumb=%08X\n",(q31_t)(suma & 0x0FFFFFFFF),(q31_t)(sumb & 0x0FFFFFFFF));
 
 
       //k = (phi[p+1]-suma)/(phi[0] - sumb);
