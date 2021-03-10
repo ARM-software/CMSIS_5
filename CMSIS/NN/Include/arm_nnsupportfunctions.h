@@ -460,7 +460,7 @@ q7_t *arm_nn_depthwise_conv_nt_t_padded_s8(const q7_t *lhs,
  * @param[in]      out             Output pointer
  *
  * @return         The function returns one of the two
- *                  - Updated output pointer if an implementaiton is available
+ *                  - Updated output pointer if an implementation is available
  *                  - NULL if no implementation is available.
  *
  * @note           If number of channels is not a multiple of 4, upto 3 elements outside the boundary will be read
