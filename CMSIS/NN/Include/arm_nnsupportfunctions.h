@@ -419,7 +419,7 @@ arm_status arm_nn_vec_mat_mult_t_svdf_s8(const q7_t *lhs,
  * @param[in]      out             Output pointer
  *
  * @return         The function returns one of the two
- *                  - Updated output pointer if an implementaiton is available
+ *                  - Updated output pointer if an implementation is available
  *                  - NULL if no implementation is available.
  *
  * @note           If number of channels is not a multiple of 4, upto 3 elements outside the boundary will be read
