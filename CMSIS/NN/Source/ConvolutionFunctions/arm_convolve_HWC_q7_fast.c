@@ -72,7 +72,7 @@
  *
  * ch_im_in is multiple of 4    ( because of the SIMD32 read and swap )
  *
- * ch_im_out is multipe of 2    ( bacause 2x2 mat_mult kernel )
+ * ch_im_out is multiple of 2    ( bacause 2x2 mat_mult kernel )
  *
  * The im2col converts the Q7 tensor input into Q15 column, which is stored in
  * bufferA. There is reordering happenning during this im2col process with
