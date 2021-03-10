@@ -471,7 +471,7 @@ void merge_rfft_f32(
                    of the symmetry properties of the FFT and have a speed advantage over complex
                    algorithms of the same length.
   @par
-                   The Fast RFFT algorith relays on the mixed radix CFFT that save processor usage.
+                   The Fast RFFT algorithm relays on the mixed radix CFFT that save processor usage.
   @par
                    The real length N forward FFT of a sequence is computed using the steps shown below.
   @par
