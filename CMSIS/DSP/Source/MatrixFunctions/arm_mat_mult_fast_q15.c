@@ -258,7 +258,7 @@ arm_status arm_mat_mult_fast_q15(
         pInA2 = pInA + numColsA;
         pInB2 = pInB + numRowsB;
 
-        /* Read in two elements at once - alows dual MAC instruction */
+        /* Read in two elements at once - allows dual MAC instruction */
         colCnt = numColsA >> 1U;
 #else
         colCnt = numColsA >> 2U;
