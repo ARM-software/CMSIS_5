@@ -11,15 +11,15 @@ error          = 1
 
 def parseLog(toolchain, core, test):
     if toolchain not in toolchain_list:
-        print ("Error: Unknown toolchain '{0}'".format(toolchain))
+        print ("Error: Unkown toolchain '{0}'".format(toolchain))
         return error
 
     if core not in core_list:
-        print ("Error: Unknown core '{0}'".format(core))
+        print ("Error: Unkown core '{0}'".format(core))
         return error
 
     if test not in test_list:
-        print ("Error: Unknown test '{0}'".format(test))
+        print ("Error: Unkown test '{0}'".format(test))
         return error
 
     inFileName  = ".\DspLibTest_SV_{2}\{0}\Logs\DspLibTest_{2}_{1}.log".format(toolchain, core, test)
