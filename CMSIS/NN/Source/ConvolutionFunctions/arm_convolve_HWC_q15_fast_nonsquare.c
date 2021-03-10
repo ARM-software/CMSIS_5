@@ -77,7 +77,7 @@
  *
  * ch_im_in is multiple of 2
  *
- * ch_im_out is multipe of 2
+ * ch_im_out is multiple of 2
  *
  */
 
