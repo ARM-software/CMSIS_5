@@ -154,7 +154,7 @@ void simulation_exit()
 
 void $Sub$$main(void)
 {
-    //enable_caches();   // Initalize caches right away. Implmentation varies by core
+    //enable_caches();   // Initalize caches right away. Implementation varies by core
 
     //$Super$$main();             // calls original main()
 
