@@ -304,7 +304,7 @@ extern "C"
   typedef __ALIGNED(2) int16x8_t q15x8_t;
 
  /**
-   * @brief 8-bit fractional 128-bit vector data type with 8-bit alignement in 1.7 format.
+   * @brief 8-bit fractional 128-bit vector data type with 8-bit alignment in 1.7 format.
    */
   typedef __ALIGNED(1) int8x16_t q7x16_t;
 
