@@ -18,7 +18,7 @@ a double precision computation.
 For tests of the error value of the Levinson Durbin algorithm
 
 */
-#define SNR_LD_THRESHOLD 59
+#define SNR_LD_THRESHOLD 57
 #define REL_LD_ERROR (1.0e-3)
 #define ABS_LD_ERROR (1.0e-3)
 

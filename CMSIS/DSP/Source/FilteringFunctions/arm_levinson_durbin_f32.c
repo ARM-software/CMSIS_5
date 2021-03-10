@@ -202,7 +202,7 @@ void arm_levinson_durbin_f32(const float32_t *phi,
       }
 
       a[p] = k;
-      e = e * (1 - k*k);
+      e = e * (1.0f - k*k);
 
 
    }
@@ -258,7 +258,7 @@ void arm_levinson_durbin_f32(const float32_t *phi,
       }
 
       a[p] = k;
-      e = e * (1 - k*k);
+      e = e * (1.0f - k*k);
 
 
    }
