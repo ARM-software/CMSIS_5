@@ -1,8 +1,8 @@
 /******************************************************************************
  * @file     mpu_armv7.h
  * @brief    CMSIS MPU API for Armv7-M MPU
- * @version  V5.1.2
- * @date     25. May 2020
+ * @version  V5.1.3
+ * @date     11. March 2021
  ******************************************************************************/
 /*
  * Copyright (c) 2017-2020 Arm Limited. All rights reserved.

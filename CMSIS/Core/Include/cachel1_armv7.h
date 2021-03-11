@@ -1,8 +1,8 @@
 /******************************************************************************
  * @file     cachel1_armv7.h
  * @brief    CMSIS Level 1 Cache API for Armv7-M and later
- * @version  V1.0.0
- * @date     03. March 2020
+ * @version  V1.0.1
+ * @date     11. March 2021
  ******************************************************************************/
 /*
  * Copyright (c) 2020 Arm Limited. All rights reserved.

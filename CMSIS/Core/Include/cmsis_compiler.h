@@ -1,8 +1,8 @@
 /**************************************************************************//**
  * @file     cmsis_compiler.h
  * @brief    CMSIS compiler generic header file
- * @version  V5.1.0
- * @date     09. October 2018
+ * @version  V5.1.1
+ * @date     11. March 2021
  ******************************************************************************/
 /*
  * Copyright (c) 2009-2018 Arm Limited. All rights reserved.

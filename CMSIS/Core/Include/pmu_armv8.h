@@ -1,8 +1,8 @@
 /******************************************************************************
  * @file     pmu_armv8.h
  * @brief    CMSIS PMU API for Armv8.1-M PMU
- * @version  V1.0.1
- * @date     15. April 2020
+ * @version  V1.0.2
+ * @date     11. March 2021
  ******************************************************************************/
 /*
  * Copyright (c) 2020 Arm Limited. All rights reserved.
