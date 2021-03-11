@@ -1,11 +1,11 @@
 /******************************************************************************
  * @file     mpu_armv7.h
  * @brief    CMSIS MPU API for Armv7-M MPU
- * @version  V5.1.2
- * @date     25. May 2020
+ * @version  V5.1.3
+ * @date     11. March 2021
  ******************************************************************************/
 /*
- * Copyright (c) 2017-2020 Arm Limited. All rights reserved.
+ * Copyright (c) 2017-2021 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -30,6 +30,10 @@
  
 #ifndef ARM_MPU_ARMV7_H
 #define ARM_MPU_ARMV7_H
+
+#ifdef __cplusplus
+ extern "C" {
+#endif
 
 #define ARM_MPU_REGION_SIZE_32B      ((uint8_t)0x04U) ///!< MPU Region Size 32 Bytes
 #define ARM_MPU_REGION_SIZE_64B      ((uint8_t)0x05U) ///!< MPU Region Size 64 Bytes
@@ -271,5 +275,9 @@ __STATIC_INLINE void ARM_MPU_Load(ARM_MPU_Region_t const* table, uint32_t cnt)
   }
   ARM_MPU_OrderedMemcpy(&(MPU->RBAR), &(table->RBAR), cnt*rowWordSize);
 }
+
+#ifdef __cplusplus
+ }
+#endif
 
 #endif

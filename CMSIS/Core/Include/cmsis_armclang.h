@@ -1,8 +1,8 @@
 /**************************************************************************//**
  * @file     cmsis_armclang.h
  * @brief    CMSIS compiler armclang (Arm Compiler 6) header file
- * @version  V5.4.0
- * @date     19. February 2020
+ * @version  V5.4.1
+ * @date     11. March 2021
  ******************************************************************************/
 /*
  * Copyright (c) 2009-2021 Arm Limited. All rights reserved.
@@ -28,6 +28,10 @@
 #define __CMSIS_ARMCLANG_H
 
 #pragma clang system_header   /* treat file as system include file */
+
+#ifdef __cplusplus
+ extern "C" {
+#endif
 
 #ifndef __ARM_COMPAT_H
 #include <arm_compat.h>    /* Compatibility header for Arm Compiler 5 intrinsics */
@@ -1485,5 +1489,8 @@ __STATIC_FORCEINLINE int32_t __SMMLA (int32_t op1, int32_t op2, int32_t op3)
 #endif /* (__ARM_FEATURE_DSP == 1) */
 /*@} end of group CMSIS_SIMD_intrinsics */
 
+#ifdef __cplusplus
+ }
+#endif
 
 #endif /* __CMSIS_ARMCLANG_H */
