@@ -31,6 +31,10 @@
 #ifndef ARM_MPU_ARMV7_H
 #define ARM_MPU_ARMV7_H
 
+#ifdef __cplusplus
+ extern "C" {
+#endif
+
 #define ARM_MPU_REGION_SIZE_32B      ((uint8_t)0x04U) ///!< MPU Region Size 32 Bytes
 #define ARM_MPU_REGION_SIZE_64B      ((uint8_t)0x05U) ///!< MPU Region Size 64 Bytes
 #define ARM_MPU_REGION_SIZE_128B     ((uint8_t)0x06U) ///!< MPU Region Size 128 Bytes
@@ -271,5 +275,9 @@ __STATIC_INLINE void ARM_MPU_Load(ARM_MPU_Region_t const* table, uint32_t cnt)
   }
   ARM_MPU_OrderedMemcpy(&(MPU->RBAR), &(table->RBAR), cnt*rowWordSize);
 }
+
+#ifdef __cplusplus
+ }
+#endif
 
 #endif

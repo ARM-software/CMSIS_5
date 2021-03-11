@@ -31,6 +31,10 @@
 #ifndef ARM_CACHEL1_ARMV7_H
 #define ARM_CACHEL1_ARMV7_H
 
+#ifdef __cplusplus
+ extern "C" {
+#endif
+
 /**
   \ingroup  CMSIS_Core_FunctionInterface
   \defgroup CMSIS_Core_CacheFunctions Cache Functions
@@ -407,5 +411,9 @@ __STATIC_FORCEINLINE void SCB_CleanInvalidateDCache_by_Addr (uint32_t *addr, int
 }
 
 /*@} end of CMSIS_Core_CacheFunctions */
+
+#ifdef __cplusplus
+ }
+#endif
 
 #endif /* ARM_CACHEL1_ARMV7_H */

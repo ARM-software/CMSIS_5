@@ -31,6 +31,10 @@
 #ifndef ARM_MPU_ARMV8_H
 #define ARM_MPU_ARMV8_H
 
+#ifdef __cplusplus
+ extern "C" {
+#endif
+
 /** \brief Attribute for device memory (outer only) */
 #define ARM_MPU_ATTR_DEVICE                           ( 0U )
 
@@ -346,6 +350,10 @@ __STATIC_INLINE void ARM_MPU_Load_NS(uint32_t rnr, ARM_MPU_Region_t const* table
 {
   ARM_MPU_LoadEx(MPU_NS, rnr, table, cnt);
 }
+#endif
+
+#ifdef __cplusplus
+ }
 #endif
 
 #endif

@@ -27,6 +27,10 @@
 
 #include <stdint.h>
 
+#ifdef __cplusplus
+ extern "C" {
+#endif
+
 /*
  * Arm Compiler 4/5
  */
@@ -278,6 +282,9 @@
   #error Unknown compiler.
 #endif
 
+#ifdef __cplusplus
+ }
+#endif
 
 #endif /* __CMSIS_COMPILER_H */
 

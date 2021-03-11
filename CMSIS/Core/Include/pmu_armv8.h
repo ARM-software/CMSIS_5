@@ -31,6 +31,10 @@
 #ifndef ARM_PMU_ARMV8_H
 #define ARM_PMU_ARMV8_H
 
+#ifdef __cplusplus
+ extern "C" {
+#endif
+
 /**
  * \brief PMU Events
  * \note  See the Armv8.1-M Architecture Reference Manual for full details on these PMU events.
@@ -333,5 +337,9 @@ __STATIC_INLINE void ARM_PMU_CNTR_Increment(uint32_t mask)
 {
   PMU->SWINC = mask;
 }
+
+#ifdef __cplusplus
+ }
+#endif
 
 #endif

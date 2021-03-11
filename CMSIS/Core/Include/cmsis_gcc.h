@@ -31,6 +31,10 @@
 #pragma GCC diagnostic ignored "-Wconversion"
 #pragma GCC diagnostic ignored "-Wunused-parameter"
 
+#ifdef __cplusplus
+ extern "C" {
+#endif
+
 /* Fallback for __has_builtin */
 #ifndef __has_builtin
   #define __has_builtin(x) (0)
@@ -2203,7 +2207,11 @@ __STATIC_FORCEINLINE int32_t __SMMLA (int32_t op1, int32_t op2, int32_t op3)
 #endif /* (__ARM_FEATURE_DSP == 1) */
 /*@} end of group CMSIS_SIMD_intrinsics */
 
+#ifdef __cplusplus
+ }
+#endif
 
 #pragma GCC diagnostic pop
+
 
 #endif /* __CMSIS_GCC_H */

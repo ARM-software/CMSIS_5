@@ -25,6 +25,9 @@
 #ifndef __CMSIS_ARMCC_H
 #define __CMSIS_ARMCC_H
 
+#ifdef __cplusplus
+ extern "C" {
+#endif
 
 #if defined(__ARMCC_VERSION) && (__ARMCC_VERSION < 400677)
   #error "Please use Arm Compiler Toolchain V4.0.677 or later!"
@@ -883,5 +886,8 @@ __attribute__((always_inline)) __STATIC_INLINE uint32_t __USAT(int32_t val, uint
 #endif /* ((defined (__ARM_ARCH_7EM__) && (__ARM_ARCH_7EM__ == 1))     ) */
 /*@} end of group CMSIS_SIMD_intrinsics */
 
+#ifdef __cplusplus
+ }
+#endif
 
 #endif /* __CMSIS_ARMCC_H */

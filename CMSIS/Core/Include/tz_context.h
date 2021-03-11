@@ -35,6 +35,12 @@
  
 #ifndef TZ_MODULEID_T
 #define TZ_MODULEID_T
+
+#ifdef  __cplusplus
+extern "C"
+{
+#endif
+
 /// \details Data type that identifies secure software modules called by a process.
 typedef uint32_t TZ_ModuleId_t;
 #endif
@@ -66,5 +72,9 @@ uint32_t TZ_LoadContext_S (TZ_MemoryId_t id);
 /// \param[in]  id  TrustZone memory slot identifier
 /// \return execution status (1: success, 0: error)
 uint32_t TZ_StoreContext_S (TZ_MemoryId_t id);
+ 
+#ifdef  __cplusplus
+}
+#endif
  
 #endif  // TZ_CONTEXT_H

@@ -33,6 +33,10 @@
   #error This file should only be compiled by ICCARM
 #endif
 
+#ifdef __cplusplus
+ extern "C" {
+#endif
+
 #pragma system_include
 
 #define __IAR_FT _Pragma("inline=forced") __intrinsic
@@ -967,5 +971,9 @@ __packed struct  __iar_u32 { uint32_t v; };
 #define __SXTB16_RORn(ARG1, ARG2) __SXTB16(__ROR(ARG1, ARG2))
 
 #define __SXTAB16_RORn(ARG1, ARG2, ARG3) __SXTAB16(ARG1, __ROR(ARG2, ARG3))
+
+#ifdef __cplusplus
+ }
+#endif
 
 #endif /* __CMSIS_ICCARM_H__ */
