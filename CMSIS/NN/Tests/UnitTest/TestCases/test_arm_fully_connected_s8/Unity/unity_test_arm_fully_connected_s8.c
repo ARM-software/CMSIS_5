@@ -54,3 +54,8 @@ void test_fully_connected_null_bias_0_arm_fully_connected_s8(void)
 {
     fully_connected_null_bias_0_arm_fully_connected_s8();
 }
+
+void test_fully_connected_out_activation_arm_fully_connected_s8(void)
+{
+    fully_connected_out_activation_arm_fully_connected_s8();
+}

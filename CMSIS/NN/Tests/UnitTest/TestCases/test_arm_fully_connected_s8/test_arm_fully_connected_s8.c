@@ -24,6 +24,7 @@
 #include "../TestData/fully_connected_mve_0/test_data.h"
 #include "../TestData/fully_connected_mve_1/test_data.h"
 #include "../TestData/fully_connected_null_bias_0/test_data.h"
+#include "../TestData/fully_connected_out_activation/test_data.h"
 #include "../Utils/validate.h"
 
 void fully_connected_arm_fully_connected_s8(void)
@@ -243,6 +244,58 @@ void fully_connected_null_bias_0_arm_fully_connected_s8(void)
                                                kernel_data,
                                                &bias_dims,
                                                NULL,
+                                               &output_dims,
+                                               output);
+
+    free(ctx.buf);
+    TEST_ASSERT_EQUAL(expected, result);
+    TEST_ASSERT_TRUE(validate(output, output_ref, output_ref_size));
+}
+
+void fully_connected_out_activation_arm_fully_connected_s8(void)
+{
+    const arm_status expected = ARM_MATH_SUCCESS;
+    q7_t output[FULLY_CONNECTED_OUT_ACTIVATION_DST_SIZE] = {0};
+    cmsis_nn_context ctx;
+    cmsis_nn_fc_params fc_params;
+    cmsis_nn_per_tensor_quant_params quant_params;
+    cmsis_nn_dims input_dims;
+    cmsis_nn_dims filter_dims;
+    cmsis_nn_dims bias_dims;
+    cmsis_nn_dims output_dims;
+    const q31_t *bias_data = fully_connected_out_activation_biases;
+    const q7_t *kernel_data = fully_connected_out_activation_weights;
+    const q7_t *input_data = fully_connected_out_activation_input;
+    const q7_t *output_ref = fully_connected_out_activation_output_ref;
+    const int32_t output_ref_size = FULLY_CONNECTED_OUT_ACTIVATION_DST_SIZE;
+    input_dims.n = FULLY_CONNECTED_OUT_ACTIVATION_INPUT_BATCHES;
+    input_dims.w = FULLY_CONNECTED_OUT_ACTIVATION_INPUT_W;
+    input_dims.h = FULLY_CONNECTED_OUT_ACTIVATION_INPUT_H;
+    input_dims.c = FULLY_CONNECTED_OUT_ACTIVATION_IN_CH;
+    filter_dims.n = FULLY_CONNECTED_OUT_ACTIVATION_ACCUMULATION_DEPTH;
+    filter_dims.c = FULLY_CONNECTED_OUT_ACTIVATION_OUT_CH;
+    output_dims.n = FULLY_CONNECTED_OUT_ACTIVATION_INPUT_BATCHES;
+    output_dims.c = FULLY_CONNECTED_OUT_ACTIVATION_OUT_CH;
+    fc_params.input_offset = FULLY_CONNECTED_OUT_ACTIVATION_INPUT_OFFSET;
+    fc_params.filter_offset = FULLY_CONNECTED_OUT_ACTIVATION_WEIGHTS_OFFSET;
+    fc_params.output_offset = FULLY_CONNECTED_OUT_ACTIVATION_OUTPUT_OFFSET;
+    fc_params.activation.min = FULLY_CONNECTED_OUT_ACTIVATION_OUT_ACTIVATION_MIN;
+    fc_params.activation.max = FULLY_CONNECTED_OUT_ACTIVATION_OUT_ACTIVATION_MAX;
+    quant_params.multiplier = FULLY_CONNECTED_OUT_ACTIVATION_OUTPUT_MULTIPLIER;
+    quant_params.shift = FULLY_CONNECTED_OUT_ACTIVATION_OUTPUT_SHIFT;
+
+    int32_t buf_size = arm_fully_connected_s8_get_buffer_size(&filter_dims);
+    ctx.buf = malloc(buf_size);
+    ctx.size = buf_size;
+    arm_status result = arm_fully_connected_s8(&ctx,
+                                               &fc_params,
+                                               &quant_params,
+                                               &input_dims,
+                                               input_data,
+                                               &filter_dims,
+                                               kernel_data,
+                                               &bias_dims,
+                                               bias_data,
                                                &output_dims,
                                                output);
 

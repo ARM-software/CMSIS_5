@@ -21,6 +21,7 @@
 
 #include "../TestData/basic/test_data.h"
 #include "../TestData/depthwise_2/test_data.h"
+#include "../TestData/depthwise_out_activation/test_data.h"
 #include "../TestData/stride2pad1/test_data.h"
 #include "../Utils/validate.h"
 
@@ -201,4 +202,64 @@ void depthwise_2_arm_depthwise_conv_s8(void)
     free(ctx.buf);
     TEST_ASSERT_EQUAL(expected, result);
     TEST_ASSERT_TRUE(validate(output, depthwise_2_output_ref, DEPTHWISE_2_DST_SIZE));
+}
+
+void depthwise_out_activation_arm_depthwise_conv_s8(void)
+{
+    const arm_status expected = ARM_MATH_SUCCESS;
+    q7_t output[DEPTHWISE_OUT_ACTIVATION_DST_SIZE] = {0};
+
+    cmsis_nn_context ctx;
+    cmsis_nn_dw_conv_params dw_conv_params;
+    cmsis_nn_per_channel_quant_params quant_params;
+    cmsis_nn_dims input_dims;
+    cmsis_nn_dims filter_dims;
+    cmsis_nn_dims bias_dims;
+    cmsis_nn_dims output_dims;
+
+    const q31_t *bias_data = depthwise_out_activation_biases;
+    const q7_t *kernel_data = depthwise_out_activation_weights;
+    const q7_t *input_data = depthwise_out_activation_input;
+
+    input_dims.n = DEPTHWISE_OUT_ACTIVATION_INPUT_BATCHES;
+    input_dims.w = DEPTHWISE_OUT_ACTIVATION_INPUT_W;
+    input_dims.h = DEPTHWISE_OUT_ACTIVATION_INPUT_H;
+    input_dims.c = DEPTHWISE_OUT_ACTIVATION_IN_CH;
+    filter_dims.w = DEPTHWISE_OUT_ACTIVATION_FILTER_X;
+    filter_dims.h = DEPTHWISE_OUT_ACTIVATION_FILTER_Y;
+    output_dims.w = DEPTHWISE_OUT_ACTIVATION_OUTPUT_W;
+    output_dims.h = DEPTHWISE_OUT_ACTIVATION_OUTPUT_H;
+    output_dims.c = DEPTHWISE_OUT_ACTIVATION_OUT_CH;
+
+    dw_conv_params.padding.w = DEPTHWISE_OUT_ACTIVATION_PAD_X;
+    dw_conv_params.padding.h = DEPTHWISE_OUT_ACTIVATION_PAD_Y;
+    dw_conv_params.stride.w = DEPTHWISE_OUT_ACTIVATION_STRIDE_X;
+    dw_conv_params.stride.h = DEPTHWISE_OUT_ACTIVATION_STRIDE_Y;
+    dw_conv_params.ch_mult = DEPTHWISE_OUT_ACTIVATION_CH_MULT;
+
+    dw_conv_params.input_offset = DEPTHWISE_OUT_ACTIVATION_INPUT_OFFSET;
+    dw_conv_params.output_offset = DEPTHWISE_OUT_ACTIVATION_OUTPUT_OFFSET;
+    dw_conv_params.activation.min = DEPTHWISE_OUT_ACTIVATION_OUT_ACTIVATION_MIN;
+    dw_conv_params.activation.max = DEPTHWISE_OUT_ACTIVATION_OUT_ACTIVATION_MAX;
+    quant_params.multiplier = (int32_t *)depthwise_out_activation_output_mult;
+    quant_params.shift = (int32_t *)depthwise_out_activation_output_shift;
+
+    ctx.buf = NULL;
+    ctx.size = 0;
+
+    arm_status result = arm_depthwise_conv_s8(&ctx,
+                                              &dw_conv_params,
+                                              &quant_params,
+                                              &input_dims,
+                                              input_data,
+                                              &filter_dims,
+                                              kernel_data,
+                                              &bias_dims,
+                                              bias_data,
+                                              &output_dims,
+                                              output);
+
+    free(ctx.buf);
+    TEST_ASSERT_EQUAL(expected, result);
+    TEST_ASSERT_TRUE(validate(output, depthwise_out_activation_output_ref, DEPTHWISE_OUT_ACTIVATION_DST_SIZE));
 }

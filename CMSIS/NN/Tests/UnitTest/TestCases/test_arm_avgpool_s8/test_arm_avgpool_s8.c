@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2020 Arm Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2010-2021 Arm Limited or its affiliates. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -24,6 +24,7 @@
 #include "../TestData/avgpooling_2/test_data.h"
 #include "../TestData/avgpooling_3/test_data.h"
 #include "../TestData/avgpooling_4/test_data.h"
+#include "../TestData/avgpooling_5/test_data.h"
 #include "../Utils/validate.h"
 
 void avgpooling_arm_avgpool_s8(void)
@@ -229,4 +230,45 @@ void avgpooling_4_arm_avgpool_s8(void)
     free(ctx.buf);
     TEST_ASSERT_EQUAL(expected, result);
     TEST_ASSERT_TRUE(validate(output, avgpooling_4_output_ref, AVGPOOLING_4_DST_SIZE));
+}
+
+void avgpooling_5_arm_avgpool_s8(void)
+{
+    const arm_status expected = ARM_MATH_SUCCESS;
+    q7_t output[AVGPOOLING_5_DST_SIZE] = {0};
+
+    cmsis_nn_context ctx;
+    cmsis_nn_pool_params pool_params;
+    cmsis_nn_dims input_dims;
+    cmsis_nn_dims filter_dims;
+    cmsis_nn_dims output_dims;
+
+    const q7_t *input_data = avgpooling_5_input;
+
+    input_dims.n = AVGPOOLING_5_INPUT_BATCHES;
+    input_dims.w = AVGPOOLING_5_INPUT_W;
+    input_dims.h = AVGPOOLING_5_INPUT_H;
+    input_dims.c = AVGPOOLING_5_IN_CH;
+    filter_dims.w = AVGPOOLING_5_FILTER_X;
+    filter_dims.h = AVGPOOLING_5_FILTER_Y;
+    output_dims.w = AVGPOOLING_5_OUTPUT_W;
+    output_dims.h = AVGPOOLING_5_OUTPUT_H;
+    output_dims.c = AVGPOOLING_5_OUT_CH;
+
+    pool_params.padding.w = AVGPOOLING_5_PAD_X;
+    pool_params.padding.h = AVGPOOLING_5_PAD_Y;
+    pool_params.stride.w = AVGPOOLING_5_STRIDE_X;
+    pool_params.stride.h = AVGPOOLING_5_STRIDE_Y;
+
+    pool_params.activation.min = AVGPOOLING_5_OUT_ACTIVATION_MIN;
+    pool_params.activation.max = AVGPOOLING_5_OUT_ACTIVATION_MAX;
+
+    ctx.size = arm_avgpool_s8_get_buffer_size(AVGPOOLING_5_INPUT_W, AVGPOOLING_5_IN_CH);
+    ctx.buf = malloc(ctx.size);
+
+    arm_status result = arm_avgpool_s8(&ctx, &pool_params, &input_dims, input_data, &filter_dims, &output_dims, output);
+
+    free(ctx.buf);
+    TEST_ASSERT_EQUAL(expected, result);
+    TEST_ASSERT_TRUE(validate(output, avgpooling_5_output_ref, AVGPOOLING_5_DST_SIZE));
 }
