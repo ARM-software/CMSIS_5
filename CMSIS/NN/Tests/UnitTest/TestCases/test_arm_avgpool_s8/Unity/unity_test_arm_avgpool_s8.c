@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2020 Arm Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2010-2021 Arm Limited or its affiliates. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -53,3 +53,5 @@ void test_avgpooling_2_arm_avgpool_s8(void) { avgpooling_2_arm_avgpool_s8(); }
 void test_avgpooling_3_arm_avgpool_s8(void) { avgpooling_3_arm_avgpool_s8(); }
 
 void test_avgpooling_4_arm_avgpool_s8(void) { avgpooling_4_arm_avgpool_s8(); }
+
+void test_avgpooling_5_arm_avgpool_s8(void) { avgpooling_5_arm_avgpool_s8(); }
