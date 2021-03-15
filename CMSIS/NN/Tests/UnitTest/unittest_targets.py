@@ -365,8 +365,7 @@ def download_unity(force=False):
     os.makedirs(download_dir, exist_ok=False)
     current_dir = os.getcwd()
     os.chdir(download_dir)
-
-    process = subprocess.Popen("curl -LJO https://api.github.com/repos/ThrowTheSwitch/Unity/tarball/v2.5.0".split(),
+    process = subprocess.Popen('curl -LJ https://api.github.com/repos/ThrowTheSwitch/Unity/tarball/v2.5.0 --output unity_tarball.tar.gz'.split(),
                                stdout=subprocess.PIPE,
                                stderr=subprocess.PIPE,
                                universal_newlines=True)
@@ -377,11 +376,7 @@ def download_unity(force=False):
         pass
     if not line:
         error_handler(171)
-    try:
-        m = re.search('\'(.+?)\'', line.strip())
-    except AttributeError as e:
-        error_handler(173, e)
-    downloaded_file = download_dir + m.group(1)
+    downloaded_file = download_dir + "unity_tarball.tar.gz"
     os.chdir(current_dir)
     try:
         filename_base = downloaded_file.split('-')[0]
