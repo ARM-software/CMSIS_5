@@ -1,11 +1,11 @@
 /**************************************************************************//**
  * @file     cmsis_compiler.h
  * @brief    CMSIS compiler generic header file
- * @version  V5.1.0
- * @date     09. October 2018
+ * @version  V5.1.1
+ * @date     11. March 2021
  ******************************************************************************/
 /*
- * Copyright (c) 2009-2018 Arm Limited. All rights reserved.
+ * Copyright (c) 2009-2021 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -26,6 +26,10 @@
 #define __CMSIS_COMPILER_H
 
 #include <stdint.h>
+
+#ifdef __cplusplus
+ extern "C" {
+#endif
 
 /*
  * Arm Compiler 4/5
@@ -278,6 +282,9 @@
   #error Unknown compiler.
 #endif
 
+#ifdef __cplusplus
+ }
+#endif
 
 #endif /* __CMSIS_COMPILER_H */
 

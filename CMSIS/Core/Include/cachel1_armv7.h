@@ -1,11 +1,11 @@
 /******************************************************************************
  * @file     cachel1_armv7.h
  * @brief    CMSIS Level 1 Cache API for Armv7-M and later
- * @version  V1.0.0
- * @date     03. March 2020
+ * @version  V1.0.1
+ * @date     11. March 2021
  ******************************************************************************/
 /*
- * Copyright (c) 2020 Arm Limited. All rights reserved.
+ * Copyright (c) 2020-2021 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -30,6 +30,10 @@
 
 #ifndef ARM_CACHEL1_ARMV7_H
 #define ARM_CACHEL1_ARMV7_H
+
+#ifdef __cplusplus
+ extern "C" {
+#endif
 
 /**
   \ingroup  CMSIS_Core_FunctionInterface
@@ -407,5 +411,9 @@ __STATIC_FORCEINLINE void SCB_CleanInvalidateDCache_by_Addr (uint32_t *addr, int
 }
 
 /*@} end of CMSIS_Core_CacheFunctions */
+
+#ifdef __cplusplus
+ }
+#endif
 
 #endif /* ARM_CACHEL1_ARMV7_H */

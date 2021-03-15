@@ -1,11 +1,11 @@
 /******************************************************************************
  * @file     tz_context.h
  * @brief    Context Management for Armv8-M TrustZone
- * @version  V1.0.1
- * @date     10. January 2018
+ * @version  V1.0.2
+ * @date     11. March 2021
  ******************************************************************************/
 /*
- * Copyright (c) 2017-2018 Arm Limited. All rights reserved.
+ * Copyright (c) 2017-2021 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -32,9 +32,15 @@
 #define TZ_CONTEXT_H
  
 #include <stdint.h>
- 
+
+#ifdef  __cplusplus
+ extern "C"
+ {
+#endif
+
 #ifndef TZ_MODULEID_T
 #define TZ_MODULEID_T
+
 /// \details Data type that identifies secure software modules called by a process.
 typedef uint32_t TZ_ModuleId_t;
 #endif
@@ -66,5 +72,9 @@ uint32_t TZ_LoadContext_S (TZ_MemoryId_t id);
 /// \param[in]  id  TrustZone memory slot identifier
 /// \return execution status (1: success, 0: error)
 uint32_t TZ_StoreContext_S (TZ_MemoryId_t id);
+ 
+#ifdef  __cplusplus
+ }
+#endif
  
 #endif  // TZ_CONTEXT_H

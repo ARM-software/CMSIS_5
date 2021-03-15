@@ -1,14 +1,14 @@
 /**************************************************************************//**
  * @file     cmsis_iccarm.h
  * @brief    CMSIS compiler ICCARM (IAR Compiler for Arm) header file
- * @version  V5.2.0
- * @date     28. January 2020
+ * @version  V5.2.1
+ * @date     11. March 2021
  ******************************************************************************/
 
 //------------------------------------------------------------------------------
 //
-// Copyright (c) 2017-2020 IAR Systems
-// Copyright (c) 2017-2019 Arm Limited. All rights reserved.
+// Copyright (c) 2017-2021 IAR Systems
+// Copyright (c) 2017-2021 Arm Limited. All rights reserved.
 //
 // SPDX-License-Identifier: Apache-2.0
 //
@@ -31,6 +31,10 @@
 
 #ifndef __ICCARM__
   #error This file should only be compiled by ICCARM
+#endif
+
+#ifdef __cplusplus
+ extern "C" {
 #endif
 
 #pragma system_include
@@ -967,5 +971,9 @@ __packed struct  __iar_u32 { uint32_t v; };
 #define __SXTB16_RORn(ARG1, ARG2) __SXTB16(__ROR(ARG1, ARG2))
 
 #define __SXTAB16_RORn(ARG1, ARG2, ARG3) __SXTAB16(ARG1, __ROR(ARG2, ARG3))
+
+#ifdef __cplusplus
+ }
+#endif
 
 #endif /* __CMSIS_ICCARM_H__ */
