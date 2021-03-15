@@ -87,7 +87,7 @@ void SystemInit (void)
   SystemCoreClock = SYSTEM_CLOCK;
 }
 
-#if 0
+#if 1
 int stdout_putchar(char txchar)
 {
     SERIAL_DATA = txchar;   

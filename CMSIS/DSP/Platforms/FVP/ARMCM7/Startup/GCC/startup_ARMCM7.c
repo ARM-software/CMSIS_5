@@ -151,6 +151,9 @@ __NO_RETURN void Reset_Handler(void)
  *----------------------------------------------------------------------------*/
 void HardFault_Handler(void)
 {
+  SERIAL_DATA = 'H';
+  SERIAL_DATA = '\n';
+
   while(1);
 }
 
@@ -159,6 +162,9 @@ void HardFault_Handler(void)
  *----------------------------------------------------------------------------*/
 void Default_Handler(void)
 {
+  SERIAL_DATA = 'D';
+  SERIAL_DATA = '\n';
+
   while(1);
 }
 

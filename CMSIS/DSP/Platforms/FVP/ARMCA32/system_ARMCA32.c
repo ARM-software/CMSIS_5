@@ -88,6 +88,7 @@ void SystemInit (void)
 /* do not use global variables because this function is called before
    reaching pre-main. RW section may be overwritten afterwards.          */
 
+
   // Invalidate entire Unified TLB
   __set_TLBIALL(0);
 
@@ -112,6 +113,7 @@ void SystemInit (void)
   // Create Translation Table
   MMU_CreateTranslationTable();
 
+ 
   // Enable MMU
   MMU_Enable();
 
@@ -127,7 +129,6 @@ void SystemInit (void)
 
   // IRQ Initialize
   //IRQ_Initialize();
-
 
 }
 

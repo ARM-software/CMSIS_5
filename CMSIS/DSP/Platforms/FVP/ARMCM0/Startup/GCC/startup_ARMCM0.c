@@ -119,7 +119,7 @@ extern const pFunc __VECTOR_TABLE[240];
 #pragma GCC diagnostic pop
 #endif
 
-#define SERIAL_BASE_ADDRESS (0xA8000000ul)
+#define SERIAL_BASE_ADDRESS (0x40000000ul)
 
 #define SERIAL_DATA  *((volatile unsigned *) SERIAL_BASE_ADDRESS)
 
@@ -147,6 +147,9 @@ __NO_RETURN void Reset_Handler(void)
  *----------------------------------------------------------------------------*/
 void HardFault_Handler(void)
 {
+  SERIAL_DATA = 'H';
+  SERIAL_DATA = '\n';
+
   while(1);
 }
 
@@ -155,6 +158,9 @@ void HardFault_Handler(void)
  *----------------------------------------------------------------------------*/
 void Default_Handler(void)
 {
+  SERIAL_DATA = 'D';
+  SERIAL_DATA = '\n';
+
   while(1);
 }
 

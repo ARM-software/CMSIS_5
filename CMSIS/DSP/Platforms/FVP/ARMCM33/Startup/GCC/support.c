@@ -21,7 +21,7 @@ static int totalBytesProvidedBySBRK = 0;
 #define SERIAL_DATA  *((volatile unsigned *) SERIAL_BASE_ADDRESS)
 
 
-
+/*
 //! sbrk/_sbrk version supporting reentrant newlib (depends upon above symbols defined by linker control file).
 char * sbrk(unsigned int incr) {
     static  char *currentHeapEnd = &__HeapBase;
@@ -37,6 +37,7 @@ char * sbrk(unsigned int incr) {
 }
 //! Synonym for sbrk.
 char * _sbrk(int incr) { return sbrk(incr); };
+*/
 
 void __malloc_lock()     {       };
 void __malloc_unlock()   {  };

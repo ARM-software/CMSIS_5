@@ -53,6 +53,7 @@ typedef void( *pFunc )( void );
   External References
  *----------------------------------------------------------------------------*/
 extern uint32_t __INITIAL_SP;
+extern uint32_t __STACK_LIMIT;
 
 extern __NO_RETURN void __PROGRAM_START(void);
 
@@ -138,7 +139,7 @@ extern const pFunc __VECTOR_TABLE[240];
 
 #define SERIAL_DATA  *((volatile unsigned *) SERIAL_BASE_ADDRESS)
 
-extern const char* __StackLimit;
+//extern const char* __StackLimit;
 
 
 /*----------------------------------------------------------------------------
@@ -147,7 +148,13 @@ extern const char* __StackLimit;
 __NO_RETURN void Reset_Handler(void)
 {
 
+  SERIAL_DATA = 'S';
+  SERIAL_DATA = '\n';
+
+  __set_PSP((uint32_t)(&__INITIAL_SP));
+
   __set_MSPLIM((uint32_t)(&__STACK_LIMIT));
+  __set_PSPLIM((uint32_t)(&__STACK_LIMIT));
 
   SystemInit();                             /* CMSIS System Initialization */
 
@@ -162,6 +169,9 @@ __NO_RETURN void Reset_Handler(void)
  *----------------------------------------------------------------------------*/
 void HardFault_Handler(void)
 {
+  SERIAL_DATA = 'H';
+  SERIAL_DATA = '\n';
+
   while(1);
 }
 
@@ -170,6 +180,9 @@ void HardFault_Handler(void)
  *----------------------------------------------------------------------------*/
 void Default_Handler(void)
 {
+  SERIAL_DATA = 'D';
+  SERIAL_DATA = '\n';
+
   while(1);
 }
 
