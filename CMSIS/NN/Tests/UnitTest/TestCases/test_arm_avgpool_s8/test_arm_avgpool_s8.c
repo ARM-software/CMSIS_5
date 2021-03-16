@@ -58,7 +58,7 @@ void avgpooling_arm_avgpool_s8(void)
     pool_params.activation.min = AVGPOOLING_OUT_ACTIVATION_MIN;
     pool_params.activation.max = AVGPOOLING_OUT_ACTIVATION_MAX;
 
-    ctx.size = arm_avgpool_s8_get_buffer_size(AVGPOOLING_INPUT_W, AVGPOOLING_IN_CH);
+    ctx.size = arm_avgpool_s8_get_buffer_size(AVGPOOLING_OUTPUT_W, AVGPOOLING_IN_CH);
     ctx.buf = malloc(ctx.size);
 
     arm_status result = arm_avgpool_s8(&ctx, &pool_params, &input_dims, input_data, &filter_dims, &output_dims, output);
@@ -99,7 +99,7 @@ void avgpooling_1_arm_avgpool_s8(void)
     pool_params.activation.min = AVGPOOLING_1_OUT_ACTIVATION_MIN;
     pool_params.activation.max = AVGPOOLING_1_OUT_ACTIVATION_MAX;
 
-    ctx.size = arm_avgpool_s8_get_buffer_size(AVGPOOLING_1_INPUT_W, AVGPOOLING_1_IN_CH);
+    ctx.size = arm_avgpool_s8_get_buffer_size(AVGPOOLING_1_OUTPUT_W, AVGPOOLING_1_IN_CH);
     ctx.buf = malloc(ctx.size);
 
     arm_status result = arm_avgpool_s8(&ctx, &pool_params, &input_dims, input_data, &filter_dims, &output_dims, output);
@@ -140,7 +140,7 @@ void avgpooling_2_arm_avgpool_s8(void)
     pool_params.activation.min = AVGPOOLING_2_OUT_ACTIVATION_MIN;
     pool_params.activation.max = AVGPOOLING_2_OUT_ACTIVATION_MAX;
 
-    ctx.size = arm_avgpool_s8_get_buffer_size(AVGPOOLING_2_INPUT_W, AVGPOOLING_2_IN_CH);
+    ctx.size = arm_avgpool_s8_get_buffer_size(AVGPOOLING_2_OUTPUT_W, AVGPOOLING_2_IN_CH);
     ctx.buf = malloc(ctx.size);
 
     arm_status result = arm_avgpool_s8(&ctx, &pool_params, &input_dims, input_data, &filter_dims, &output_dims, output);
@@ -181,7 +181,7 @@ void avgpooling_3_arm_avgpool_s8(void)
     pool_params.activation.min = AVGPOOLING_3_OUT_ACTIVATION_MIN;
     pool_params.activation.max = AVGPOOLING_3_OUT_ACTIVATION_MAX;
 
-    ctx.size = arm_avgpool_s8_get_buffer_size(AVGPOOLING_3_INPUT_W, AVGPOOLING_3_IN_CH);
+    ctx.size = arm_avgpool_s8_get_buffer_size(AVGPOOLING_3_OUTPUT_W, AVGPOOLING_3_IN_CH);
     ctx.buf = malloc(ctx.size);
 
     arm_status result = arm_avgpool_s8(&ctx, &pool_params, &input_dims, input_data, &filter_dims, &output_dims, output);
@@ -222,7 +222,7 @@ void avgpooling_4_arm_avgpool_s8(void)
     pool_params.activation.min = AVGPOOLING_4_OUT_ACTIVATION_MIN;
     pool_params.activation.max = AVGPOOLING_4_OUT_ACTIVATION_MAX;
 
-    ctx.size = arm_avgpool_s8_get_buffer_size(AVGPOOLING_4_INPUT_W, AVGPOOLING_4_IN_CH);
+    ctx.size = arm_avgpool_s8_get_buffer_size(AVGPOOLING_4_OUTPUT_W, AVGPOOLING_4_IN_CH);
     ctx.buf = malloc(ctx.size);
 
     arm_status result = arm_avgpool_s8(&ctx, &pool_params, &input_dims, input_data, &filter_dims, &output_dims, output);
@@ -263,7 +263,7 @@ void avgpooling_5_arm_avgpool_s8(void)
     pool_params.activation.min = AVGPOOLING_5_OUT_ACTIVATION_MIN;
     pool_params.activation.max = AVGPOOLING_5_OUT_ACTIVATION_MAX;
 
-    ctx.size = arm_avgpool_s8_get_buffer_size(AVGPOOLING_5_INPUT_W, AVGPOOLING_5_IN_CH);
+    ctx.size = arm_avgpool_s8_get_buffer_size(AVGPOOLING_5_OUTPUT_W, AVGPOOLING_5_IN_CH);
     ctx.buf = malloc(ctx.size);
 
     arm_status result = arm_avgpool_s8(&ctx, &pool_params, &input_dims, input_data, &filter_dims, &output_dims, output);
