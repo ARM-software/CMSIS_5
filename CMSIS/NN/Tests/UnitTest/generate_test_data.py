@@ -331,20 +331,20 @@ class TestSettings(ABC):
         print("Writing C header with config data {}...".format(filepath))
         with open(filepath, "w+") as f:
             self.write_c_common_header(f)
-        f.write("#define {}_OUT_CH {}\n".format(prefix, self.output_ch))
-        f.write("#define {}_IN_CH {}\n".format(prefix, self.input_ch))
-        f.write("#define {}_INPUT_W {}\n".format(prefix, self.x_input))
-        f.write("#define {}_INPUT_H {}\n".format(prefix, self.y_input))
-        f.write("#define {}_DST_SIZE {}\n".format(prefix, self.x_output * self.y_output * self.output_ch
-                                                  * self.batches))
-        f.write("#define {}_INPUT_SIZE {}\n".format(prefix, self.x_input * self.y_input * self.input_ch))
-        if self.relu6:
-            f.write("#define {}_OUT_ACTIVATION_MIN {}\n".format(prefix, 0))
-            f.write("#define {}_OUT_ACTIVATION_MAX {}\n".format(prefix, 6))
-        else:
-            f.write("#define {}_OUT_ACTIVATION_MIN {}\n".format(prefix, self.out_activation_min))
-            f.write("#define {}_OUT_ACTIVATION_MAX {}\n".format(prefix, self.out_activation_max))
-        f.write("#define {}_INPUT_BATCHES {}\n".format(prefix, self.batches))
+            f.write("#define {}_OUT_CH {}\n".format(prefix, self.output_ch))
+            f.write("#define {}_IN_CH {}\n".format(prefix, self.input_ch))
+            f.write("#define {}_INPUT_W {}\n".format(prefix, self.x_input))
+            f.write("#define {}_INPUT_H {}\n".format(prefix, self.y_input))
+            f.write("#define {}_DST_SIZE {}\n".format(prefix, self.x_output * self.y_output * self.output_ch
+                                                      * self.batches))
+            f.write("#define {}_INPUT_SIZE {}\n".format(prefix, self.x_input * self.y_input * self.input_ch))
+            if self.relu6:
+                f.write("#define {}_OUT_ACTIVATION_MIN {}\n".format(prefix, 0))
+                f.write("#define {}_OUT_ACTIVATION_MAX {}\n".format(prefix, 6))
+            else:
+                f.write("#define {}_OUT_ACTIVATION_MIN {}\n".format(prefix, self.out_activation_min))
+                f.write("#define {}_OUT_ACTIVATION_MAX {}\n".format(prefix, self.out_activation_max))
+            f.write("#define {}_INPUT_BATCHES {}\n".format(prefix, self.batches))
         self.format_output_file(filepath)
 
     def generate_c_array(self, name, array, datatype="q7_t"):
