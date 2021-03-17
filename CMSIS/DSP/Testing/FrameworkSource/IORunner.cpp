@@ -82,18 +82,7 @@ a C++ function pointer from the cycle measurements.
         Client::test t = (Client::test)&Calibrate::empty;
         calibration = 0;
         
-/* 
 
-EXTBENCH is set when benchmarking is done through external traces
-instead of using internal counters.
-
-Currently the post-processing scripts are only supporting traces generated from
-fast models.
-
-*/
-#ifdef EXTBENCH
-        startSection();
-#endif
 
 /*
 
@@ -152,6 +141,20 @@ the code not in cache.
 While for the code itself we have the value for the code in cache.
 
 */
+
+/* 
+
+EXTBENCH is set when benchmarking is done through external traces
+instead of using internal counters.
+
+Currently the post-processing scripts are only supporting traces generated from
+fast models.
+
+*/
+#if defined(EXTBENCH)  || defined(CACHEANALYSIS)
+        startSection();
+#endif
+        
         for(int i=0;i < CALIBNB;i++)
         {
           cycleMeasurementStart();
@@ -165,7 +168,7 @@ While for the code itself we have the value for the code in cache.
           calibration += current;
           cycleMeasurementStop();
         }
-#ifdef EXTBENCH
+#if defined(EXTBENCH)  || defined(CACHEANALYSIS)
         stopSection();
 #endif
 
@@ -275,6 +278,9 @@ While for the code itself we have the value for the code in cache.
   __DSB();
   __ISB();
 #endif
+
+/* If cache analysis mode, we don't force the code to be in cache. */
+#if !defined(CACHEANALYSIS)
                 if (s->isForcedInCache())
                 {
                    if (!m_mgr->HasMemError())
@@ -282,19 +288,22 @@ While for the code itself we have the value for the code in cache.
                       (s->*t)();
                    }
                 }
-
+#endif
                 // Run the test
                 cycleMeasurementStart();
-#ifdef EXTBENCH
+
+#if defined(EXTBENCH) || defined(CACHEANALYSIS)
                 startSection();
 #endif
                 if (!m_mgr->HasMemError())
                 {
                     (s->*t)();
                 }
-#ifdef EXTBENCH
+
+#if defined(EXTBENCH) || defined(CACHEANALYSIS)
                 stopSection();
 #endif
+
 #ifndef EXTBENCH
                 cycles=getCycles();
                 cycles=cycles-calibration;

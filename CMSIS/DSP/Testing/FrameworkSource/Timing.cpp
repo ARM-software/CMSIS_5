@@ -62,7 +62,7 @@ unsigned int startCycles;
 #define ENABLE_DIVIDER 0 
 #endif
 
-#ifdef EXTBENCH
+#if defined(EXTBENCH)  || defined(CACHEANALYSIS)
 unsigned long sectionCounter=0;
 #endif 
 

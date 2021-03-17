@@ -3,13 +3,13 @@
  * Title:        arm_helium_utils.h
  * Description:  Utility functions for Helium development
  *
- * $Date:        09. September 2019
- * $Revision:    V.1.5.1
+ * @version  V1.9.0
+ * @date     17. March 2021
  *
  * Target Processor: Cortex-M cores
  * -------------------------------------------------------------------- */
 /*
- * Copyright (C) 2010-2019 ARM Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2010-2021 ARM Limited or its affiliates. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *

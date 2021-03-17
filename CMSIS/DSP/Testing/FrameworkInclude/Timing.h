@@ -11,7 +11,7 @@ void cycleMeasurementStop();
 
 Testing::cycles_t getCycles();
 
-#ifdef EXTBENCH
+#if defined(EXTBENCH)  || defined(CACHEANALYSIS)
 extern unsigned long sectionCounter;
 
 #if   defined ( __CC_ARM )

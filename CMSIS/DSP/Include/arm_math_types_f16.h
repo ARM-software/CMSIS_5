@@ -2,10 +2,10 @@
  * @file     arm_math_types_f16.h
  * @brief    Public header file for f16 function of the CMSIS DSP Library
  * @version  V1.9.0
- * @date     20. July 2020
+ * @date     17. March 2021
  ******************************************************************************/
 /*
- * Copyright (c) 2010-2020 Arm Limited or its affiliates. All rights reserved.
+ * Copyright (c) 2010-2021 Arm Limited or its affiliates. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *

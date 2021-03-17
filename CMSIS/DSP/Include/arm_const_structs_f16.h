@@ -4,13 +4,12 @@
  * Description:  Constant structs that are initialized for user convenience.
  *               For example, some can be given as arguments to the arm_cfft_f16() function.
  *
- * $Date:        20. April 2020
- * $Revision:    V.1.5.1
+ * @version  V1.9.0
+ * @date     17. March 2021
  *
- * Target Processor: Cortex-M cores
  * -------------------------------------------------------------------- */
 /*
- * Copyright (C) 2010-2020 ARM Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2010-2021 ARM Limited or its affiliates. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *

@@ -84,6 +84,7 @@ option(EMBEDDED "Embedded Mode" ON)
 option(FLOAT16TESTS "Float16 tests" OFF)
 option(MICROBENCH "Micro benchmarks" OFF)
 option(EXTERNAL "External benchmarks or tests" OFF)
+option(CACHEANALYSIS "Build with cache analysis mode enabled" OFF)
 
 option(DISTINCT "Different generated folder for benchmarking and tests" OFF)
 
@@ -119,6 +120,10 @@ endif()
 
 if (AUTOVECTORIZE)
     target_compile_definitions(TestingLib PRIVATE ARM_MATH_AUTOVECTORIZE) 
+endif()
+
+if (CACHEANALYSIS)
+    target_compile_definitions(FrameworkLib PRIVATE CACHEANALYSIS) 
 endif()
 
 
