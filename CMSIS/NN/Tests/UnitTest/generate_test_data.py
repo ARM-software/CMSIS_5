@@ -686,7 +686,7 @@ class FullyConnectedSettings(TestSettings):
 
     def __init__(self, dataset, testtype, args, in_ch=1, out_ch=1, x_in=1, y_in=1, w_x=1, w_y=1, stride_x=1, stride_y=1,
                  pad=False, randmin=-4, randmax=4, outminrange=-128, outmaxrange=127, batches=1, input_scale=1.0,
-                 input_zero_point=0, weights_scale=1.0, weights_zero_point=0, bias_scale=1.0, output_scale=1.0,
+                 input_zero_point=0, weights_scale=1.0, bias_scale=1.0, output_scale=1.0,
                  output_zero_point=0, generate_bias=True, out_activation_min=None, out_activation_max=None):
         super().__init__(dataset, testtype, args, in_ch, out_ch, x_in, y_in, w_x, w_y, stride_x, stride_y, pad, randmin,
                          randmax, outminrange, outmaxrange, batches, generate_bias=generate_bias,
@@ -700,7 +700,6 @@ class FullyConnectedSettings(TestSettings):
         self.input_scale = input_scale
         self.input_zero_point = input_zero_point
         self.weights_scale = weights_scale
-        self.weights_zero_point = weights_zero_point
         self.bias_scale = bias_scale
         self.output_scale = output_scale
         self.output_zero_point = output_zero_point
@@ -714,7 +713,6 @@ class FullyConnectedSettings(TestSettings):
 
         with open(filepath, "a") as f:
             self.write_c_header_offsets(f, prefix)
-            f.write("#define {}_WEIGHTS_OFFSET {}\n".format(prefix, -self.weights_zero_point))
             f.write("#define {}_OUTPUT_MULTIPLIER {}\n".format(prefix, self.quantized_multiplier))
             f.write("#define {}_OUTPUT_SHIFT {}\n".format(prefix, self.quantized_shift))
             f.write("#define {}_ACCUMULATION_DEPTH {}\n".format(prefix, self.input_ch*self.x_input*self.y_input))
@@ -736,7 +734,7 @@ class FullyConnectedSettings(TestSettings):
         return self.clamp(result, self.INT32_MIN, self.INT32_MAX)
 
     def quantize_weights(self, value):
-        result = round(value / self.weights_scale) + self.weights_zero_point
+        result = round(value / self.weights_scale)
         return self.clamp(result, self.INT8_MIN, self.INT8_MAX)
 
     def generate_data(self, input_data=None, weights=None, biases=None):
@@ -894,25 +892,22 @@ def load_all_testdatasets():
     dataset = 'fully_connected'
     ALL_TESTDATA_SETS[dataset] = FullyConnectedSettings(dataset, type_of_test, args, in_ch=10, out_ch=6, x_in=2, y_in=1,
                                                         w_x=2, w_y=1, batches=3, input_zero_point=-50,
-                                                        weights_zero_point=-22, output_zero_point=-2)
+                                                        output_zero_point=-2)
     dataset = 'fully_connected_mve_0'
     ALL_TESTDATA_SETS[dataset] = FullyConnectedSettings(dataset, type_of_test, args, in_ch=16, out_ch=9, x_in=1, y_in=1,
                                                         input_zero_point=-3, w_x=1, w_y=1, batches=1,
                                                         output_zero_point=-2)
     dataset = 'fully_connected_mve_1'
     ALL_TESTDATA_SETS[dataset] = FullyConnectedSettings(dataset, type_of_test, args, in_ch=20, out_ch=4, x_in=1, y_in=1,
-                                                        input_zero_point=-1, weights_zero_point=3, w_x=1, w_y=1,
-                                                        batches=1, output_zero_point=3)
+                                                        input_zero_point=-1, w_x=1, w_y=1, batches=1,
+                                                        output_zero_point=3)
     dataset = 'fully_connected_null_bias_0'
     ALL_TESTDATA_SETS[dataset] = FullyConnectedSettings(dataset, type_of_test, args, in_ch=33, out_ch=5,
-                                                        input_zero_point=-1, weights_zero_point=3, batches=2,
-                                                        generate_bias=False)
+                                                        input_zero_point=-1, batches=2, generate_bias=False)
     dataset = 'fully_connected_out_activation'
     ALL_TESTDATA_SETS[dataset] = FullyConnectedSettings(dataset, type_of_test, args, in_ch=10, out_ch=4, randmin=-15,
-                                                        randmax=15, input_zero_point=0, weights_zero_point=0,
-                                                        output_zero_point=0, out_activation_min=-105,
-                                                        out_activation_max=120)
-
+                                                        randmax=15, input_zero_point=0, output_zero_point=0,
+                                                        out_activation_min=-105, out_activation_max=120)
     type_of_test = 'avgpool'
     dataset = 'avgpooling'
     ALL_TESTDATA_SETS[dataset] = PoolingSettings(dataset, type_of_test, args, channels=8, x_in=22, y_in=12, stride_x=9,
