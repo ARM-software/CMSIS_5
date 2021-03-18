@@ -56,7 +56,7 @@ void fully_connected_arm_fully_connected_s8(void)
     output_dims.c = FULLY_CONNECTED_OUT_CH;
 
     fc_params.input_offset = FULLY_CONNECTED_INPUT_OFFSET;
-    fc_params.filter_offset = FULLY_CONNECTED_WEIGHTS_OFFSET;
+    fc_params.filter_offset = 0;
     fc_params.output_offset = FULLY_CONNECTED_OUTPUT_OFFSET;
     fc_params.activation.min = FULLY_CONNECTED_OUT_ACTIVATION_MIN;
     fc_params.activation.max = FULLY_CONNECTED_OUT_ACTIVATION_MAX;
@@ -110,7 +110,7 @@ void fully_connected_mve_0_arm_fully_connected_s8(void)
     output_dims.n = FULLY_CONNECTED_MVE_0_INPUT_BATCHES;
     output_dims.c = FULLY_CONNECTED_MVE_0_OUT_CH;
     fc_params.input_offset = FULLY_CONNECTED_MVE_0_INPUT_OFFSET;
-    fc_params.filter_offset = FULLY_CONNECTED_MVE_0_WEIGHTS_OFFSET;
+    fc_params.filter_offset = 0;
     fc_params.output_offset = FULLY_CONNECTED_MVE_0_OUTPUT_OFFSET;
     fc_params.activation.min = FULLY_CONNECTED_MVE_0_OUT_ACTIVATION_MIN;
     fc_params.activation.max = FULLY_CONNECTED_MVE_0_OUT_ACTIVATION_MAX;
@@ -162,7 +162,7 @@ void fully_connected_mve_1_arm_fully_connected_s8(void)
     output_dims.n = FULLY_CONNECTED_MVE_1_INPUT_BATCHES;
     output_dims.c = FULLY_CONNECTED_MVE_1_OUT_CH;
     fc_params.input_offset = FULLY_CONNECTED_MVE_1_INPUT_OFFSET;
-    fc_params.filter_offset = FULLY_CONNECTED_MVE_1_WEIGHTS_OFFSET;
+    fc_params.filter_offset = 0;
     fc_params.output_offset = FULLY_CONNECTED_MVE_1_OUTPUT_OFFSET;
     fc_params.activation.min = FULLY_CONNECTED_MVE_1_OUT_ACTIVATION_MIN;
     fc_params.activation.max = FULLY_CONNECTED_MVE_1_OUT_ACTIVATION_MAX;
@@ -214,7 +214,7 @@ void fully_connected_null_bias_0_arm_fully_connected_s8(void)
     output_dims.n = FULLY_CONNECTED_NULL_BIAS_0_INPUT_BATCHES;
     output_dims.c = FULLY_CONNECTED_NULL_BIAS_0_OUT_CH;
     fc_params.input_offset = FULLY_CONNECTED_NULL_BIAS_0_INPUT_OFFSET;
-    fc_params.filter_offset = FULLY_CONNECTED_NULL_BIAS_0_WEIGHTS_OFFSET;
+    fc_params.filter_offset = 0;
     fc_params.output_offset = FULLY_CONNECTED_NULL_BIAS_0_OUTPUT_OFFSET;
     fc_params.activation.min = FULLY_CONNECTED_NULL_BIAS_0_OUT_ACTIVATION_MIN;
     fc_params.activation.max = FULLY_CONNECTED_NULL_BIAS_0_OUT_ACTIVATION_MAX;
@@ -277,7 +277,7 @@ void fully_connected_out_activation_arm_fully_connected_s8(void)
     output_dims.n = FULLY_CONNECTED_OUT_ACTIVATION_INPUT_BATCHES;
     output_dims.c = FULLY_CONNECTED_OUT_ACTIVATION_OUT_CH;
     fc_params.input_offset = FULLY_CONNECTED_OUT_ACTIVATION_INPUT_OFFSET;
-    fc_params.filter_offset = FULLY_CONNECTED_OUT_ACTIVATION_WEIGHTS_OFFSET;
+    fc_params.filter_offset = 0;
     fc_params.output_offset = FULLY_CONNECTED_OUT_ACTIVATION_OUTPUT_OFFSET;
     fc_params.activation.min = FULLY_CONNECTED_OUT_ACTIVATION_OUT_ACTIVATION_MIN;
     fc_params.activation.max = FULLY_CONNECTED_OUT_ACTIVATION_OUT_ACTIVATION_MAX;

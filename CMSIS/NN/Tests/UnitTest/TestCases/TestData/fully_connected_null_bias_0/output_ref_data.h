@@ -20,4 +20,4 @@
 #pragma once
 #include <stdint.h>
 
-const q7_t fully_connected_null_bias_0_output_ref[10] = {-46, 26, -40, 57, 23, 3, 24, -28, 54, -9};
+const q7_t fully_connected_null_bias_0_output_ref[10] = {-64, -3, 0, -25, 3, 54, -4, 22, 21, -51};
