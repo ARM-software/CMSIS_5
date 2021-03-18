@@ -20,4 +20,4 @@
 #pragma once
 #include <stdint.h>
 
-const q7_t fully_connected_mve_0_input[16] = {0, -4, 0, -3, -7, -3, -2, -3, 0, -5, -3, -3, -7, -2, -1, 0};
+const q7_t fully_connected_mve_0_input[16] = {-7, -7, -6, -3, -3, -2, -5, -7, -6, -6, -2, 0, -3, -5, -5, -7};

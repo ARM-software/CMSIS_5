@@ -20,4 +20,4 @@
 #pragma once
 #include <stdint.h>
 
-const int32_t fully_connected_out_activation_biases[4] = {13, -11, 5, 1};
+const int32_t fully_connected_out_activation_biases[4] = {-11, 7, -8, -15};

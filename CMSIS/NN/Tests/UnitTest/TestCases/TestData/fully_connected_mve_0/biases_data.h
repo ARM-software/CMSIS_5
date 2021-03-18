@@ -20,4 +20,4 @@
 #pragma once
 #include <stdint.h>
 
-const int32_t fully_connected_mve_0_biases[9] = {2, 3, 3, 2, 2, 0, 1, 0, 1};
+const int32_t fully_connected_mve_0_biases[9] = {-1, 0, -2, 2, 0, 3, 2, 1, -3};

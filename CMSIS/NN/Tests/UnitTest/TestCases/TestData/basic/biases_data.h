@@ -20,4 +20,4 @@
 #pragma once
 #include <stdint.h>
 
-const int32_t basic_biases[1] = {4318};
+const int32_t basic_biases[1] = {2159};

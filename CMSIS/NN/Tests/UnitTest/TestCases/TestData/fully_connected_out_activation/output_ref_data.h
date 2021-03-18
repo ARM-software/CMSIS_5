@@ -20,4 +20,4 @@
 #pragma once
 #include <stdint.h>
 
-const q7_t fully_connected_out_activation_output_ref[4] = {120, -105, -22, 120};
+const q7_t fully_connected_out_activation_output_ref[4] = {110, -89, 120, 120};
