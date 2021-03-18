@@ -61,6 +61,10 @@ arm_status arm_fully_connected_s8(const cmsis_nn_context *ctx,
 {
     (void)bias_dims;
     (void)ctx;
+    if (fc_params->filter_offset != 0)
+    {
+        return ARM_MATH_ARGUMENT_ERROR;
+    }
     int32_t batch_cnt = input_dims->n;
 
     while (batch_cnt)

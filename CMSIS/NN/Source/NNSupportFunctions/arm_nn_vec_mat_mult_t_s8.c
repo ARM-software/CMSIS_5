@@ -59,24 +59,24 @@ arm_status arm_nn_vec_mat_mult_t_s8(const q7_t *lhs,
                                     const int32_t activation_min,
                                     const int32_t activation_max)
 {
-#if defined(ARM_MATH_MVEI)
+#if 1
     int32_t row_loop_cnt = rhs_rows / 3;
 
-    int32_t lhs_sum = 0;
-    {
-        const int32_t col_loop_cnt = (rhs_cols + 15) / 16;
-        uint32_t col_cnt = (uint32_t)rhs_cols;
-        const int8_t *lhs_vec = lhs;
-        for (int i = 0; i < col_loop_cnt; i++)
-        {
-            mve_pred16_t p = vctp8q(col_cnt);
-            col_cnt -= 16;
+    // int32_t lhs_sum = 0;
+    // {
+    //     const int32_t col_loop_cnt = (rhs_cols + 15) / 16;
+    //     uint32_t col_cnt = (uint32_t)rhs_cols;
+    //     const int8_t *lhs_vec = lhs;
+    //     for (int i = 0; i < col_loop_cnt; i++)
+    //     {
+    //         mve_pred16_t p = vctp8q(col_cnt);
+    //         col_cnt -= 16;
 
-            const int8x16_t input = vldrbq_z_s8(lhs_vec, p);
-            lhs_sum = vaddvaq_p_s8(lhs_sum, input, p);
-            lhs_vec += 16;
-        }
-    }
+    //         const int8x16_t input = vldrbq_z_s8(lhs_vec, p);
+    //         lhs_sum = vaddvaq_p_s8(lhs_sum, input, p);
+    //         lhs_vec += 16;
+    //     }
+    // }
 
     for (int i_row_loop_cnt = 0; i_row_loop_cnt < row_loop_cnt; i_row_loop_cnt++)
     {
@@ -134,8 +134,8 @@ arm_status arm_nn_vec_mat_mult_t_s8(const q7_t *lhs,
         const int32x4_t rhs_sum = {rhs_sum_0, rhs_sum_1, rhs_sum_2, 0};
 
         acc += vdupq_n_s32(lhs_offset) * rhs_sum;
-        acc += vdupq_n_s32(rhs_offset * lhs_sum);
-        acc += vdupq_n_s32(lhs_offset * rhs_offset * rhs_cols);
+        // acc += vdupq_n_s32(rhs_offset * lhs_sum);
+        // acc += vdupq_n_s32(lhs_offset * rhs_offset * rhs_cols);
 
         acc = arm_requantize_mve(acc, dst_multiplier, dst_shift);
         acc = vaddq_s32(acc, vdupq_n_s32(dst_offset));
@@ -175,8 +175,7 @@ arm_status arm_nn_vec_mat_mult_t_s8(const q7_t *lhs,
             acc_0 += *bias;
             bias++;
         }
-        const int32_t offsets =
-            (rhs_sum_0 * lhs_offset) + (lhs_sum * rhs_offset) + (lhs_offset * rhs_offset * rhs_cols);
+        const int32_t offsets = rhs_sum_0 * lhs_offset;
         acc_0 += offsets;
         acc_0 = arm_nn_requantize(acc_0, dst_multiplier, dst_shift);
         acc_0 += dst_offset;
