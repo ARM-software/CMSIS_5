@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2020 Arm Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2010-2021 Arm Limited or its affiliates. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -21,8 +21,8 @@
  * Title:        arm_nnsupportfunctions.h
  * Description:  Public header file of support functions for CMSIS NN Library
  *
- * $Date:        09. October 2020
- * $Revision:    V.4.5.5
+ * $Date:        19. March 2021
+ * $Revision:    V.5.0.0
  *
  * Target Processor:  Cortex-M CPUs
  * -------------------------------------------------------------------- */
@@ -341,8 +341,7 @@ arm_status arm_nn_mat_mult_nt_t_s8(const q7_t *lhs,
  * @param[out]     dst             Output vector
  * @param[in]      lhs_offset      Offset to be added to the input values of the left-hand side vector.
  *                                 Range: -127 to 128
- * @param[in]      rhs_offset      Offset to be added to the input values of the right-hand side matrix.
- *                                 Range: -127 to 128
+ * @param[in]      rhs_offset      Not used
  * @param[in]      dst_offset      Offset to be added to the output values. Range: -127 to 128
  * @param[in]      dst_multiplier  Output multiplier
  * @param[in]      dst_shift       Output shift

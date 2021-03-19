@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2020 Arm Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2010-2021 Arm Limited or its affiliates. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -21,8 +21,8 @@
  * Title:        arm_fully_connected_s8
  * Description:  Fully connected function compatible with TF Lite.
  *
- * $Date:        09. October 2020
- * $Revision:    V.2.0.1
+ * $Date:        19. March 2021
+ * $Revision:    V.3.0.0
  *
  * Target Processor:  Cortex-M and Cortex-A cores
  *
@@ -61,6 +61,8 @@ arm_status arm_fully_connected_s8(const cmsis_nn_context *ctx,
 {
     (void)bias_dims;
     (void)ctx;
+    (void)fc_params->filter_offset;
+
     int32_t batch_cnt = input_dims->n;
 
     while (batch_cnt)
@@ -70,7 +72,7 @@ arm_status arm_fully_connected_s8(const cmsis_nn_context *ctx,
                                  bias,
                                  output,
                                  fc_params->input_offset,
-                                 fc_params->filter_offset,
+                                 0,
                                  fc_params->output_offset,
                                  quant_params->multiplier,
                                  quant_params->shift,

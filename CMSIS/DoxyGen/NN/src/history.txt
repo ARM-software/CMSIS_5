@@ -6,6 +6,17 @@
     <th>Version</th>
     <th>Description</th>
   </tr>
+  <tr>
+    <td>V3.0.0</td>
+    <td>
+    <ul>
+      <li>Updated arm_fully_connected_s8 to use zero weight offset<br> 
+      as per the TFLM int8 quantization spec. The API is the same but,<br>
+      the weight offset parameter is expected to be zero<br> </li>
+      <li> Added unit test for Softmax </li>
+      </ul>
+    </td>
+  </tr>
     <tr>
     <td>V2.0.0</td>
     <td>
