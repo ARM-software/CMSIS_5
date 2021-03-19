@@ -11,7 +11,7 @@ chardet==3.0.4
 Click==7.0
 cmsis-pack-manager==0.2.10
 colorama==0.3.9
-cryptography==2.4.2
+cryptography==3.3.2
 ecdsa==0.16.1
 fasteners==0.16
 flatbuffers==1.12
