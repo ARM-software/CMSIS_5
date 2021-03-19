@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 Arm Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2020-2021 Arm Limited or its affiliates. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -22,8 +22,8 @@
  * Description:  Public header file to contain the CMSIS-NN structs for the
  *               TensorFlowLite micro compliant functions
  *
- * $Date:        09. October 2020
- * $Revision:    V.1.0.0
+ * $Date:        19. March 2021
+ * $Revision:    V.2.0.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -112,7 +112,7 @@ typedef struct
 typedef struct
 {
     int32_t input_offset;  /**< Zero value for the input tensor */
-    int32_t filter_offset; /**< Zero value for the filter tensor */
+    int32_t filter_offset; /**< Zero value for the filter tensor. Not used */
     int32_t output_offset; /**< Zero value for the output tensor */
     cmsis_nn_activation activation;
 } cmsis_nn_fc_params;
