@@ -1,8 +1,8 @@
 /**************************************************************************//**
  * @file     cmsis_armclang.h
  * @brief    CMSIS compiler armclang (Arm Compiler 6) header file
- * @version  V5.4.0
- * @date     19. February 2020
+ * @version  V5.4.1
+ * @date     19. March 2021
  ******************************************************************************/
 /*
  * Copyright (c) 2009-2021 Arm Limited. All rights reserved.
@@ -164,7 +164,7 @@ __STATIC_FORCEINLINE void __TZ_set_STACKSEAL_S (uint32_t* stackTop) {
 
 /**
   \brief   Enable IRQ Interrupts
-  \details Enables IRQ interrupts by clearing the I-bit in the CPSR.
+  \details Enables IRQ interrupts by clearing special-purpose register PRIMASK.
            Can only be executed in Privileged modes.
  */
 /* intrinsic void __enable_irq();  see arm_compat.h */
@@ -172,7 +172,7 @@ __STATIC_FORCEINLINE void __TZ_set_STACKSEAL_S (uint32_t* stackTop) {
 
 /**
   \brief   Disable IRQ Interrupts
-  \details Disables IRQ interrupts by setting the I-bit in the CPSR.
+  \details Disables IRQ interrupts by setting special-purpose register PRIMASK.
            Can only be executed in Privileged modes.
  */
 /* intrinsic void __disable_irq();  see arm_compat.h */
@@ -469,7 +469,7 @@ __STATIC_FORCEINLINE void __TZ_set_PRIMASK_NS(uint32_t priMask)
      (defined (__ARM_ARCH_8_1M_MAIN__) && (__ARM_ARCH_8_1M_MAIN__ == 1))     )
 /**
   \brief   Enable FIQ
-  \details Enables FIQ interrupts by clearing the F-bit in the CPSR.
+  \details Enables FIQ interrupts by clearing special-purpose register FAULTMASK.
            Can only be executed in Privileged modes.
  */
 #define __enable_fault_irq                __enable_fiq   /* see arm_compat.h */
@@ -477,7 +477,7 @@ __STATIC_FORCEINLINE void __TZ_set_PRIMASK_NS(uint32_t priMask)
 
 /**
   \brief   Disable FIQ
-  \details Disables FIQ interrupts by setting the F-bit in the CPSR.
+  \details Disables FIQ interrupts by setting special-purpose register FAULTMASK.
            Can only be executed in Privileged modes.
  */
 #define __disable_fault_irq               __disable_fiq   /* see arm_compat.h */

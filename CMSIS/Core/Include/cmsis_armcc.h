@@ -1,8 +1,8 @@
 /**************************************************************************//**
  * @file     cmsis_armcc.h
  * @brief    CMSIS compiler ARMCC (Arm Compiler 5) header file
- * @version  V5.3.0
- * @date     19. February 2021
+ * @version  V5.3.1
+ * @date     19. March 2021
  ******************************************************************************/
 /*
  * Copyright (c) 2009-2021 Arm Limited. All rights reserved.
@@ -139,7 +139,7 @@
 
 /**
   \brief   Enable IRQ Interrupts
-  \details Enables IRQ interrupts by clearing the I-bit in the CPSR.
+  \details Enables IRQ interrupts by clearing special-purpose register PRIMASK.
            Can only be executed in Privileged modes.
  */
 /* intrinsic void __enable_irq();     */
@@ -147,7 +147,7 @@
 
 /**
   \brief   Disable IRQ Interrupts
-  \details Disables IRQ interrupts by setting the I-bit in the CPSR.
+  \details Disables IRQ interrupts by setting special-purpose register PRIMASK.
            Can only be executed in Privileged modes.
  */
 /* intrinsic void __disable_irq();    */
@@ -289,7 +289,7 @@ __STATIC_INLINE void __set_PRIMASK(uint32_t priMask)
 
 /**
   \brief   Enable FIQ
-  \details Enables FIQ interrupts by clearing the F-bit in the CPSR.
+  \details Enables FIQ interrupts by clearing special-purpose register FAULTMASK.
            Can only be executed in Privileged modes.
  */
 #define __enable_fault_irq                __enable_fiq
@@ -297,7 +297,7 @@ __STATIC_INLINE void __set_PRIMASK(uint32_t priMask)
 
 /**
   \brief   Disable FIQ
-  \details Disables FIQ interrupts by setting the F-bit in the CPSR.
+  \details Disables FIQ interrupts by setting special-purpose register FAULTMASK.
            Can only be executed in Privileged modes.
  */
 #define __disable_fault_irq               __disable_fiq
