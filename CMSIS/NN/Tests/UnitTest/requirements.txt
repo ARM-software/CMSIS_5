@@ -26,7 +26,7 @@ icetea==1.2.4
 idna==2.7
 importlib-metadata==3.7.3
 intelhex==2.2.1
-Jinja2==2.10.3
+Jinja2==2.11.3
 jsonmerge==1.8.0
 jsonschema==2.6.0
 junit-xml==1.8
