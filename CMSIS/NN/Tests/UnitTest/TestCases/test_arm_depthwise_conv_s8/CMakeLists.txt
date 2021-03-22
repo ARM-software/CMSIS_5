@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2010-2020 Arm Limited or its affiliates. All rights reserved.
+# Copyright (C) 2010-2021 Arm Limited or its affiliates. All rights reserved.
 #
 # SPDX-License-Identifier: Apache-2.0
 #
@@ -20,14 +20,4 @@ add_cmsis_nn_unit_test_executable(test_arm_depthwise_conv_s8)
 
 target_sources(test_arm_depthwise_conv_s8 PRIVATE
     Unity/unity_test_arm_depthwise_conv_s8.c
-    Unity/TestRunner/unity_test_arm_depthwise_conv_s8_runner.c
-    ${CMSIS_PATH}/CMSIS/NN/Source/ConvolutionFunctions/arm_nn_mat_mult_s8.c
-    ${CMSIS_PATH}/CMSIS/NN/Source/ConvolutionFunctions/arm_depthwise_conv_s8.c)
-
-target_include_directories(test_arm_depthwise_conv_s8 PRIVATE ${CMSIS_PATH}/CMSIS/NN/Include)
-target_include_directories(test_arm_depthwise_conv_s8 PRIVATE ${CMSIS_PATH}/CMSIS/DSP/Include)
-target_include_directories(test_arm_depthwise_conv_s8 PRIVATE ${CMSIS_PATH}/CMSIS/Core/Include)
-
-target_link_libraries(test_arm_depthwise_conv_s8 LINK_PUBLIC arm_nn_depthwise_conv_nt)
-target_link_libraries(test_arm_depthwise_conv_s8 LINK_PUBLIC arm_nn_mat_mult_core)
-target_link_libraries(test_arm_depthwise_conv_s8 LINK_PUBLIC unity)
+    Unity/TestRunner/unity_test_arm_depthwise_conv_s8_runner.c)

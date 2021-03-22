@@ -20,10 +20,10 @@ cmake_minimum_required(VERSION 3.15.6)
 
 project(cmsis_nn_unit_tests VERSION 0.0.1)
 
-set(CMSIS_PATH "${CMAKE_CURRENT_SOURCE_DIR}/../../../.." CACHE PATH "Path to CMSIS.")
+set(CMSIS_PATH "${CMAKE_CURRENT_SOURCE_DIR}/../../../..")
 
-set(BUILD_CMSIS_NN_UNIT_DEFAULT OFF)
-option(BUILD_CMSIS_NN_UNIT "If building the unit tests from another project." ${BUILD_CMSIS_NN_UNIT_DEFAULT})
+option(BUILD_CMSIS_NN_UNIT "If building the unit tests from another project, i.e. \
+platform dependencies need to be provided externally." OFF)
 
 if(NOT BUILD_CMSIS_NN_UNIT)
     set(BUILD_CMSIS_NN_UNIT_TESTS_FOR_FVP_BASED_CORSTONE_300 ON)
@@ -37,12 +37,15 @@ if(BUILD_CMSIS_NN_UNIT_TESTS_FOR_FVP_BASED_CORSTONE_300)
     set(CMAKE_EXECUTABLE_SUFFIX ".elf")
 endif()
 
-set_property(GLOBAL PROPERTY cmsis_nn_unit_test_executables)
+# Build the functions to be tested.
+set(BUILD_CMSIS_NN_FUNCTIONS ON)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../.. cmsis-nn)
 
 # Target for all unit tests.
 add_custom_target(cmsis_nn_unit_tests)
 
 # This function should be used instead of add_executable.
+set_property(GLOBAL PROPERTY cmsis_nn_unit_test_executables)
 function(add_cmsis_nn_unit_test_executable)
     get_property(tmp GLOBAL PROPERTY cmsis_nn_unit_test_executables)
     foreach(target ${ARGV})
@@ -55,22 +58,6 @@ function(add_cmsis_nn_unit_test_executable)
     endforeach()
     set_property(GLOBAL PROPERTY cmsis_nn_unit_test_executables "${tmp}")
 endfunction(add_cmsis_nn_unit_test_executable)
-
-add_library(arm_nn_mat_mult_core)
-target_include_directories(arm_nn_mat_mult_core PRIVATE ${CMSIS_PATH}/CMSIS/NN/Include)
-target_include_directories(arm_nn_mat_mult_core PRIVATE ${CMSIS_PATH}/CMSIS/DSP/Include)
-target_include_directories(arm_nn_mat_mult_core PRIVATE ${CMSIS_PATH}/CMSIS/Core/Include)
-target_sources(arm_nn_mat_mult_core PRIVATE
-    ${CMSIS_PATH}/CMSIS/NN/Source/NNSupportFunctions/arm_nn_mat_mul_core_4x_s8.c
-    ${CMSIS_PATH}/CMSIS/NN/Source/NNSupportFunctions/arm_nn_mat_mul_core_1x_s8.c)
-
-add_library(arm_nn_depthwise_conv_nt)
-target_include_directories(arm_nn_depthwise_conv_nt PRIVATE ${CMSIS_PATH}/CMSIS/NN/Include)
-target_include_directories(arm_nn_depthwise_conv_nt PRIVATE ${CMSIS_PATH}/CMSIS/DSP/Include)
-target_include_directories(arm_nn_depthwise_conv_nt PRIVATE ${CMSIS_PATH}/CMSIS/Core/Include)
-target_sources(arm_nn_depthwise_conv_nt PRIVATE
-    ${CMSIS_PATH}/CMSIS/NN/Source/NNSupportFunctions/arm_nn_depthwise_conv_nt_t_s8.c
-    ${CMSIS_PATH}/CMSIS/NN/Source/NNSupportFunctions/arm_nn_depthwise_conv_nt_t_padded_s8.c)
 
 add_subdirectory(TestCases/test_arm_avgpool_s8)
 add_subdirectory(TestCases/test_arm_convolve_1x1_s8_fast)
@@ -89,6 +76,14 @@ MESSAGE(STATUS "Downloading Unity and generating test runners for CMSIS-NN unit 
 execute_process(COMMAND ${MAKE_CMD} ${MAKE_CMD_SCRIPT} ${MAKE_CMD_SCRIPT_OPTION}
                         WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
 add_subdirectory(Unity)
+
+# Link common dependencies.
+get_property(executables GLOBAL PROPERTY cmsis_nn_unit_test_executables)
+string(REPLACE " " ";" cmsis_nn_unit_test_list_of_executables ${executables})
+foreach(target ${cmsis_nn_unit_test_list_of_executables})
+    target_link_libraries(${target} LINK_PUBLIC unity)
+    target_link_libraries(${target} LINK_PUBLIC CMSISNN)
+endforeach()
 
 if(BUILD_CMSIS_NN_UNIT_TESTS_FOR_FVP_BASED_CORSTONE_300)
     add_library(retarget STATIC

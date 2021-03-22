@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2010-2021 Arm Limited or its affiliates. All rights reserved.
+# Copyright (c) 2019-2021 Arm Limited. All rights reserved.
 #
 # SPDX-License-Identifier: Apache-2.0
 #
@@ -16,8 +16,14 @@
 # limitations under the License.
 #
 
-add_cmsis_nn_unit_test_executable(test_arm_fully_connected_s8)
+cmake_minimum_required(VERSION 3.15.6)
 
-target_sources(test_arm_fully_connected_s8 PRIVATE
-    Unity/unity_test_arm_fully_connected_s8.c
-    Unity/TestRunner/unity_test_arm_fully_connected_s8_runner.c)
+project(CMSISNN)
+
+set(CMSIS_PATH "${CMAKE_CURRENT_SOURCE_DIR}/../..")
+
+option(BUILD_CMSIS_NN_FUNCTIONS "Build CMSIS-NN Source." OFF)
+
+if(BUILD_CMSIS_NN_FUNCTIONS)
+    add_subdirectory(Source)
+endif()
