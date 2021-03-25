@@ -345,7 +345,7 @@ arm_status arm_mat_mult_q15(
     status = ARM_MATH_SIZE_MISMATCH;
   }
   else
-#endif 
+#endif
   {
     /* small squared matrix specialized routines */
     if(numRowsA == numColsB && numColsB == numColsA) {
@@ -528,7 +528,7 @@ arm_status arm_mat_mult_q15(
             acc0 = 0LL;
 
             pSrcA0Vec = (q15_t const *) pInA0;
-           
+
             vecOffs = vecColBOffs;
 
             blkCnt = (numColsA) >> 3;
@@ -539,10 +539,10 @@ arm_status arm_mat_mult_q15(
                 vecB = vldrhq_gather_shifted_offset((int16_t const *)pInB, vecOffs);
                 vecOffs = vecOffs + (uint16_t) (numColsB * 8);
 
-                vecA = vld1q(pSrcA0Vec);  
+                vecA = vld1q(pSrcA0Vec);
                 pSrcA0Vec += 8;
                 acc0 = vmlaldavaq(acc0, vecA, vecB);
-                
+
                 blkCnt--;
 
             }
@@ -560,11 +560,11 @@ arm_status arm_mat_mult_q15(
 
                 vecA = vld1q(pSrcA0Vec);
                 acc0 = vmlaldavaq_p(acc0, vecA, vecB, p0);
-                
+
             }
 
             px[0]            = (q15_t)MVE_ASRL_SAT16(acc0, 15);
-          
+
             px++;
             /*
              * Decrement the column loop counter
@@ -608,10 +608,10 @@ arm_status arm_mat_mult_q15(
         uint16_t numRowsA = pSrcA->numRows;            /* Number of rows of input matrix A */
         uint16_t numColsB = pSrcB->numCols;            /* Number of columns of input matrix B */
         uint16_t numColsA = pSrcA->numCols;            /* Number of columns of input matrix A */
-        uint16_t numRowsB = pSrcB->numRows;            /* Number of rows of input matrix A */
+        uint16_t numRowsB = pSrcB->numRows;            /* Number of rows of input matrix B */
         uint32_t col, i = 0U, row = numRowsB, colCnt;  /* Loop counters */
         arm_status status;                             /* Status of matrix multiplication */
-        
+
         q31_t in;                                      /* Temporary variable to hold the input value */
         q31_t inA1, inB1, inA2, inB2;
 
@@ -750,7 +750,7 @@ arm_status arm_mat_mult_q15(
           inA2 = read_q15x2_ia ((q15_t **) &pInA);
           inB2 = read_q15x2_ia ((q15_t **) &pInB);
 
-          /* Multiply and Accumlates */
+          /* Multiply and Accumulates */
           sum = __SMLALD(inA1, inB1, sum);
           sum = __SMLALD(inA2, inB2, sum);
 
