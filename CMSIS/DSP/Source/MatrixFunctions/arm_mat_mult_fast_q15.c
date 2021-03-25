@@ -78,7 +78,7 @@ arm_status arm_mat_mult_fast_q15(
         uint16_t numRowsA = pSrcA->numRows;            /* Number of rows of input matrix A */
         uint16_t numColsB = pSrcB->numCols;            /* Number of columns of input matrix B */
         uint16_t numColsA = pSrcA->numCols;            /* Number of columns of input matrix A */
-        uint16_t numRowsB = pSrcB->numRows;            /* Number of rows of input matrix A */
+        uint16_t numRowsB = pSrcB->numRows;            /* Number of rows of input matrix B */
         uint32_t col, i = 0U, row = numRowsB, colCnt;  /* Loop counters */
         arm_status status;                             /* Status of matrix multiplication */
 
@@ -277,7 +277,7 @@ arm_status arm_mat_mult_fast_q15(
           inA2 = read_q15x2_ia ((q15_t **) &pInA2);
           inB2 = read_q15x2_ia ((q15_t **) &pInB2);
 
-          /* Multiply and Accumlates */
+          /* Multiply and Accumulates */
           sum  = __SMLAD(inA1, inB1, sum);
           sum2 = __SMLAD(inA1, inB2, sum2);
           sum3 = __SMLAD(inA2, inB1, sum3);
@@ -286,7 +286,7 @@ arm_status arm_mat_mult_fast_q15(
           /* read real and imag values from pSrcA and pSrcB buffer */
           inA1 = *pInA++;
           inB1 = *pInB++;
-          /* Multiply and Accumlates */
+          /* Multiply and Accumulates */
           sum += inA1 * inB1;
 
           inA2 = *pInA++;
