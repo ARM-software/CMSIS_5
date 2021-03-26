@@ -497,6 +497,11 @@ extern "C"
     extern const q15_t sinTable_q15[FAST_MATH_TABLE_SIZE + 1];
   #endif /* !defined(ARM_DSP_CONFIG_TABLES) defined(ARM_ALL_FAST_TABLES) */
 
+  /* Tables for Fast Math Arctan */
+  #if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FAST_TABLES) || defined(ARM_TABLE_ATAN_F32)
+    extern const float32_t atanTable_f32[FAST_MATH_TABLE_SIZE + 2];
+  #endif /* !defined(ARM_DSP_CONFIG_TABLES) defined(ARM_ALL_FAST_TABLES) */
+
   #if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
      #if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FAST_TABLES) || defined(ARM_TABLE_FAST_SQRT_Q31_MVE)
        extern const q31_t sqrtTable_Q31[256];

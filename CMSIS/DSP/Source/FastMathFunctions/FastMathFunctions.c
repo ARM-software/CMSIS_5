@@ -52,6 +52,10 @@
 #include "arm_sin_q31.c"
 #endif 
 
+#if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FAST_TABLES) || defined(ARM_TABLE_ATAN_F32)
+#include "arm_sin_q31.c"
+#endif 
+
 #endif
 
 #include "arm_sqrt_q15.c"

@@ -24,6 +24,10 @@ if (CONFIGTABLE AND ARM_SIN_Q15)
     target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_SIN_Q15)
 endif()
 
+if (CONFIGTABLE AND ARM_ATAN_F32)
+    target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_ATAN_F32)
+endif()
+
 if (CONFIGTABLE AND ARM_SIN_COS_F32)
     target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_SIN_F32)
 endif()
