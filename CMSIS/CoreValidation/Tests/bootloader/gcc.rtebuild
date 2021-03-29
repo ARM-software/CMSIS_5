@@ -4,28 +4,29 @@ import:
  - bootloader.rtebuild
 targets:
   arm:
-    csettings   : [ -gdwarf-2, "-%{optimize}", -ffunction-sections, -fdata-sections ]
+    csettings   : [ "-mcpu=${mcpu}${features}", "-mfloat-abi=${float}", "-mfpu=auto", "-%{optimize}", -gdwarf-2, -ffunction-sections, -fdata-sections ]
     cwarnings   : [ -Wall, -Wextra, -Wshadow, -Wundef, -Wstrict-prototypes, -Wpedantic ]
+    mapinfo     : [ "-Xlinker -Map=${builddir}/${targetName}.map" ]
   armcm:
     toolchain   : GCC
     features    : ""
-    cflags      : [ "-mcpu=${cpu}${features}", "-mfloat-abi=${float}", "-mfpu=auto", "${csettings}", "${cwarnings}", -c, -mapcs-frame, -std=gnu99 ]
-    asmflags    : [ "-mcpu=${cpu}${features}", "-mfloat-abi=${float}", "-mfpu=auto", "${csettings}", "${cwarnings}", -c ]
-    linkflags   : [ "-mcpu=${cpu}${features}", "-mfloat-abi=${float}",               "${csettings}", "${cwarnings}", "-Xlinker -Map=${builddir}/${targetName}.map", --specs=nano.specs, --specs=rdimon.specs ]
+    cflags      : [ "${csettings}", "${cwarnings}", -c, -xc, -std=gnu99 ]
+    asmflags    : [ "${csettings}", "${cwarnings}", -c ]
+    linkflags   : [ "${csettings}", "${cwarnings}", "${mapinfo}", --specs=nano.specs, --specs=rdimon.specs ]
     linkscript  : "config/core_m/rtebuild.ld"
   armcm23ns:
-    cpu       : cortex-m23
+    mcpu      : cortex-m23
     float     : soft
     cflags    : [ -mcmse ]
   armcm33ns:
-    cpu       : cortex-m33
+    mcpu      : cortex-m33
     float     : hard
     cflags    : [ -mcmse ]
   armcm35pns:
-    cpu       : cortex-m35p
+    mcpu      : cortex-m35p
     float     : hard
     cflags    : [ -mcmse ]
   armcm55ns:
-    cpu       : cortex-m55
+    mcpu      : cortex-m55
     float     : hard
     cflags    : [ -mcmse ]

@@ -4,29 +4,21 @@ import:
  - bootloader.rtebuild
 targets:
   arm:
-    csettings   : [ -fno-rtti, -funsigned-char, -fshort-enums, -fshort-wchar, -mlittle-endian, -gdwarf-3, "-%{optimize}", -ffunction-sections ]
-    cwarnings   : [ -Weverything, -Wno-undef, -Wno-packed, -Wno-reserved-id-macro, -Wno-unused-macros, -Wno-documentation-unknown-command, -Wno-documentation, -Wno-license-management ]
+    csettings   : [ --target=arm-arm-none-eabi, "-mcpu=${mcpu}${features}", "-mfloat-abi=${float}", "-%{optimize}", -fno-rtti, -fshort-enums, -fshort-wchar, -ffunction-sections ]
+    cwarnings   : [ -Weverything, -Wno-covered-switch-default, -Wno-reserved-id-macro, -Wno-unused-macros, -Wno-extra, -Wno-gnu-statement-expression, -Wno-sign-conversion ]
+    mapinfo     : [ "-Wl,--info=summarysizes", "-Wl,--map", "-Wl,--load_addr_map_info", "-Wl,--xref", "-Wl,--callgraph", "-Wl,--symbols", "-Wl,--info=sizes", "-Wl,--info=totals", "-Wl,--info=unused", "-Wl,--info=veneers", "-Wl,--list=${builddir}/${targetName}.map" ]
   armcm:
-    toolchain   : ARMCC6_LTM_MDK
+    toolchain   : ARMCC6_LTM
     features    : ""
-    cflags      : [ -xc, -std=gnu99, --target=arm-arm-none-eabi, "-mcpu=${cpu}${features}", "-mfloat-abi=${float}", -c, "${csettings}", "${cwarnings}" ]
-    asmflags    : [ "--cpu ${cpu}", --li, -g ]
-    info        : [ --info summarysizes, --map, --load_addr_map_info, --xref, --callgraph, --symbols, --info sizes, --info totals, --info unused, --info veneers, "--list ${builddir}/${targetName}.map" ]
-    linkflags   : [ "--cpu ${cpu}", --strict, --no_remove, --entry Reset_Handler, "--import-cmse-lib-out ${builddir}/cmse.lib", --diag_suppress=L6314, --diag_suppress=L6092w, "${info}" ]
+    cflags      : [ "${csettings}", "${cwarnings}", -c, -xc, -std=c99 ]
+    asmflags    : [ "${csettings}", "${cwarnings}", -c ]
+    linkflags   : [ "${csettings}", "${cwarnings}", "${mapinfo}", "-Wl,--strict", "-Wl,--no_remove", "-Wl,--entry=Reset_Handler", "-Wl,--diag_suppress=L6314W" ]
     linkscript  : "config/core_m/rtebuild.sct"
   armcm23ns:
-    cpu    : cortex-m23
-    float  : soft
-    cflags : [ -mcmse ]
+    mcpu      : cortex-m23
+    float     : soft
+    cflags    : [ -mcmse ]
   armcm33ns:
-    cpu    : cortex-m33
-    float  : hard
-    cflags : [ -mcmse ]
-  armcm35pns:
-    cpu    : cortex-m35p
-    float  : hard
-    cflags : [ -mcmse ]
-  armcm55ns:
-    cpu      : cortex-m55
-    float    : hard
-    cflags : [ -mcmse ]
+    mcpu      : cortex-m33
+    float     : hard
+    cflags    : [ -mcmse ]

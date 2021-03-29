@@ -174,6 +174,13 @@ def get_model_inst(model):
     if FVP_MODELS[model][1]:
         return f"{FVP_MODELS[model][1]}="
     return ""
+
+
+@matrix_filter
+def filter_ac5_ac6ltm_cma(config):
+    return ((config.compiler == CompilerAxis.AC6LTM or
+             config.compiler == CompilerAxis.AC5      ) and 
+            config.device.match("CA*"))
     
 
 @matrix_filter
