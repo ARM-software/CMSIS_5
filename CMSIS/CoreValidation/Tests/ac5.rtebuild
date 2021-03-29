@@ -13,22 +13,22 @@ targets:
     linkscript  : "config/core_m/rtebuild_ac5.sct"
   armcm0:
     cpu    : Cortex-M0
-    fpu    : none 
+    fpu    : none
   armcm0plus:
     cpu    : Cortex-M0plus
-    fpu    : none 
+    fpu    : none
   armcm3:
     cpu    : Cortex-M3
-    fpu    : none 
+    fpu    : none
   armcm4:
     cpu    : Cortex-M4
-    fpu    : none 
+    fpu    : none
   armcm4fp:
     cpu    : Cortex-M4.fp.sp
     fpu    : FPv4-SP
   armcm7:
     cpu    : Cortex-M7
-    fpu    : none 
+    fpu    : none
   armcm7sp:
     cpu    : Cortex-M7.fp.sp
     fpu    : FPv5-SP
@@ -40,7 +40,7 @@ targets:
     cflags      : [ "--cpu=${cpu}", "--apcs=/${float}", --li, --arm, --c99, "-%{optimize}", -g, -c ]
     asmflags    : [ "--cpu=${cpu}", "--apcs=/${float}", --li, --arm, -g ]
     linkflags   : [ "--cpu=${cpu}", "--entry=Vectors" ]
-    linkscript : "./config/core_a/rtebuild_armcc.sct"
+    linkscript : "./config/core_a/rtebuild_ac5.sct"
     source:
       - ../../../Device/ARM/${device}/Source/AC5/startup_${device}.c
   armca5:
