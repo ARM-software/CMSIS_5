@@ -138,7 +138,7 @@
 /**
  * @brief Processing function for the floating-point cubic spline interpolation.
  * @param[in]  S          points to an instance of the floating-point spline structure.
- * @param[in]  xq         points to the x values ot the interpolated data points.
+ * @param[in]  xq         points to the x values of the interpolated data points.
  * @param[out] pDst       points to the block of output data.
  * @param[in]  blockSize  number of samples of output data.
  */
