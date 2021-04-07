@@ -539,7 +539,14 @@ arm_status arm_conv_partial_f32(
     count = srcBLen - 1U;
 
     /* Working pointer of inputA */
-    pSrc1 = (pIn1 + srcALen) - (srcBLen - 1U);
+    if (firstIndex > srcALen)
+    {
+       pSrc1 = (pIn1 + firstIndex) - (srcBLen - 1U);
+    }
+    else
+    {
+       pSrc1 = (pIn1 + srcALen) - (srcBLen - 1U);
+    }
     px = pSrc1;
 
     /* Working pointer of inputB */

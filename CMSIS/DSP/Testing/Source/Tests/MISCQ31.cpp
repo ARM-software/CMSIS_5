@@ -14,7 +14,7 @@ a double precision computation.
 */
 #define ABS_ERROR_Q31 ((q31_t)2)
 
-#define ABS_ERROR_FAST_Q31 ((q31_t)6)
+#define ABS_ERROR_FAST_Q31 ((q31_t)11)
 
 
 /*
@@ -817,6 +817,7 @@ For tests of the error value of the Levinson Durbin algorithm
               tmp.create(ref.nbSamples(),MISCQ31::TMP_Q31_ID,mgr);
 
             }
+            break;
 
             case MISCQ31::TEST_CONV_PARTIAL_Q31_85:
             case MISCQ31::TEST_CONV_PARTIAL_FAST_Q31_88:
@@ -828,6 +829,7 @@ For tests of the error value of the Levinson Durbin algorithm
               tmp.create(ref.nbSamples(),MISCQ31::TMP_Q31_ID,mgr);
 
             }
+            break;
 
             case MISCQ31::TEST_CONV_PARTIAL_Q31_86:
             case MISCQ31::TEST_CONV_PARTIAL_FAST_Q31_89:
@@ -839,6 +841,7 @@ For tests of the error value of the Levinson Durbin algorithm
               tmp.create(ref.nbSamples(),MISCQ31::TMP_Q31_ID,mgr);
 
             }
+            break;
 
         }
 

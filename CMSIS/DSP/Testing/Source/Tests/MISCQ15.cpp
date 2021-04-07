@@ -578,6 +578,7 @@ a double precision computation.
               scratchA.create(24,MISCQ15::SCRATCH1_Q15_ID,mgr);
               scratchB.create(24,MISCQ15::SCRATCH2_Q15_ID,mgr);
             }
+            break;
 
             case MISCQ15::TEST_CONV_PARTIAL_Q15_52:
             case MISCQ15::TEST_CONV_PARTIAL_FAST_Q15_55:
@@ -595,6 +596,7 @@ a double precision computation.
               scratchB.create(24,MISCQ15::SCRATCH2_Q15_ID,mgr);
 
             }
+            break;
 
             case MISCQ15::TEST_CONV_PARTIAL_Q15_53:
             case MISCQ15::TEST_CONV_PARTIAL_FAST_Q15_56:
@@ -612,6 +614,7 @@ a double precision computation.
               scratchB.create(24,MISCQ15::SCRATCH2_Q15_ID,mgr);
 
             }
+            break;
 
 
         }

@@ -91,12 +91,11 @@ For tests of the error value of the Levinson Durbin algorithm
           this->first,
           NBPOINTS);
 
- 
-
         memcpy((void*)tmpp,(void*)&outp[this->first],NBPOINTS*sizeof(float32_t));
         ASSERT_TRUE(status==ARM_MATH_SUCCESS);
         ASSERT_SNR(ref,tmp,(float32_t)SNR_THRESHOLD);
         ASSERT_CLOSE_ERROR(ref,tmp,ABS_ERROR,REL_ERROR);
+
 
     }
 
@@ -790,6 +789,7 @@ For tests of the error value of the Levinson Durbin algorithm
               tmp.create(ref.nbSamples(),MISCF32::TMP_F32_ID,mgr);
 
             }
+            break;
 
             case MISCF32::TEST_CONV_PARTIAL_F32_85:
             {
@@ -800,6 +800,7 @@ For tests of the error value of the Levinson Durbin algorithm
               tmp.create(ref.nbSamples(),MISCF32::TMP_F32_ID,mgr);
 
             }
+            break;
 
             case MISCF32::TEST_CONV_PARTIAL_F32_86:
             {
@@ -810,6 +811,7 @@ For tests of the error value of the Levinson Durbin algorithm
               tmp.create(ref.nbSamples(),MISCF32::TMP_F32_ID,mgr);
 
             }
+            break;
 
 
         }
