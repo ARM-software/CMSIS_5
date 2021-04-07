@@ -16,11 +16,12 @@ class MISCQ31:public Client::Suite
             Client::Pattern<q31_t> inputB;
 
             Client::LocalPattern<q31_t> output;
+            Client::LocalPattern<q31_t> tmp;
 
             // Reference patterns are not loaded when we are in dump mode
             Client::RefPattern<q31_t> ref;
 
-            int nba,nbb,errOffset;
+            int nba,nbb,errOffset,first;
 
            
     };

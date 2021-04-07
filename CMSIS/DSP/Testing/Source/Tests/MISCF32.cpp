@@ -73,6 +73,33 @@ For tests of the error value of the Levinson Durbin algorithm
 
     }
 
+    // This value must be coherent with the Python script
+    // generating the test patterns
+    #define NBPOINTS 4
+
+    void MISCF32::test_conv_partial_f32()
+    {
+        const float32_t *inpA=inputA.ptr(); 
+        const float32_t *inpB=inputB.ptr(); 
+        float32_t *outp=output.ptr();
+        float32_t *tmpp=tmp.ptr();
+
+
+        arm_status status=arm_conv_partial_f32(inpA, inputA.nbSamples(),
+          inpB, inputB.nbSamples(),
+          outp,
+          this->first,
+          NBPOINTS);
+
+ 
+
+        memcpy((void*)tmpp,(void*)&outp[this->first],NBPOINTS*sizeof(float32_t));
+        ASSERT_TRUE(status==ARM_MATH_SUCCESS);
+        ASSERT_SNR(ref,tmp,(float32_t)SNR_THRESHOLD);
+        ASSERT_CLOSE_ERROR(ref,tmp,ABS_ERROR,REL_ERROR);
+
+    }
+
 
   
     void MISCF32::setUp(Testing::testID_t id,std::vector<Testing::param_t>& paramsArgs,Client::PatternMgr *mgr)
@@ -754,13 +781,49 @@ For tests of the error value of the Levinson Durbin algorithm
             }
             break;
 
+            case MISCF32::TEST_CONV_PARTIAL_F32_84:
+            {
+              this->first=3;
+              this->nba = 6;
+              this->nbb = 8;
+              ref.reload(MISCF32::REF84_F32_ID,mgr);
+              tmp.create(ref.nbSamples(),MISCF32::TMP_F32_ID,mgr);
+
+            }
+
+            case MISCF32::TEST_CONV_PARTIAL_F32_85:
+            {
+              this->first=9;
+              this->nba = 6;
+              this->nbb = 8;
+              ref.reload(MISCF32::REF85_F32_ID,mgr);
+              tmp.create(ref.nbSamples(),MISCF32::TMP_F32_ID,mgr);
+
+            }
+
+            case MISCF32::TEST_CONV_PARTIAL_F32_86:
+            {
+              this->first=7;
+              this->nba = 6;
+              this->nbb = 8;
+              ref.reload(MISCF32::REF86_F32_ID,mgr);
+              tmp.create(ref.nbSamples(),MISCF32::TMP_F32_ID,mgr);
+
+            }
+
 
         }
 
-       if (id < TEST_LEVINSON_DURBIN_F32_81)
+       if (id < TEST_LEVINSON_DURBIN_F32_81) 
        {
          inputA.reload(MISCF32::INPUTA_F32_ID,mgr,nba);
          inputB.reload(MISCF32::INPUTB_F32_ID,mgr,nbb);
+       }
+
+       if (id > TEST_LEVINSON_DURBIN_F32_83)
+       {
+         inputA.reload(MISCF32::INPUTA2_F32_ID,mgr,nba);
+         inputB.reload(MISCF32::INPUTB2_F32_ID,mgr,nbb);
        }
 
        output.create(ref.nbSamples(),MISCF32::OUT_F32_ID,mgr);

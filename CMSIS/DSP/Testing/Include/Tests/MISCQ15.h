@@ -16,11 +16,14 @@ class MISCQ15:public Client::Suite
             Client::Pattern<q15_t> inputB;
 
             Client::LocalPattern<q15_t> output;
+            Client::LocalPattern<q15_t> tmp;
+
+            Client::LocalPattern<q15_t> scratchA,scratchB;
 
             // Reference patterns are not loaded when we are in dump mode
             Client::RefPattern<q15_t> ref;
 
-            int nba,nbb;
+            int nba,nbb,first;
 
            
     };

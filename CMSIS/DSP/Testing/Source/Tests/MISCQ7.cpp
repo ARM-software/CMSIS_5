@@ -13,6 +13,7 @@ a double precision computation.
 
 */
 #define ABS_ERROR_Q7 ((q7_t)5)
+#define ABS_ERROR_FAST_Q7 ((q7_t)5)
 
     void MISCQ7::test_correlate_q7()
     {
@@ -41,6 +42,62 @@ a double precision computation.
 
         ASSERT_SNR(ref,output,(q7_t)SNR_THRESHOLD);
         ASSERT_NEAR_EQ(ref,output,ABS_ERROR_Q7);
+
+    }
+
+    // This value must be coherent with the Python script
+    // generating the test patterns
+    #define NBPOINTS 4
+
+    void MISCQ7::test_conv_partial_q7()
+    {
+        const q7_t *inpA=inputA.ptr(); 
+        const q7_t *inpB=inputB.ptr(); 
+        q7_t *outp=output.ptr();
+        q7_t *tmpp=tmp.ptr();
+
+
+        arm_status status=arm_conv_partial_q7(inpA, inputA.nbSamples(),
+          inpB, inputB.nbSamples(),
+          outp,
+          this->first,
+          NBPOINTS);
+
+ 
+
+        memcpy((void*)tmpp,(void*)&outp[this->first],NBPOINTS*sizeof(q7_t));
+        ASSERT_TRUE(status==ARM_MATH_SUCCESS);
+        ASSERT_SNR(ref,tmp,(q7_t)SNR_THRESHOLD);
+        ASSERT_NEAR_EQ(ref,tmp,ABS_ERROR_Q7);
+
+    }
+
+    void MISCQ7::test_conv_partial_opt_q7()
+    {
+        const q7_t *inpA=inputA.ptr(); 
+        const q7_t *inpB=inputB.ptr(); 
+        q7_t *outp=output.ptr();
+        q7_t *tmpp=tmp.ptr();
+
+        q15_t *scratchAp=scratchA.ptr();
+        q15_t *scratchBp=scratchB.ptr();
+
+
+        arm_status status=arm_conv_partial_opt_q7(inpA, inputA.nbSamples(),
+          inpB, inputB.nbSamples(),
+          outp,
+          this->first,
+          NBPOINTS,
+          scratchAp,
+          scratchBp
+          );
+
+ 
+
+        memcpy((void*)tmpp,(void*)&outp[this->first],NBPOINTS*sizeof(q7_t));
+        ASSERT_TRUE(status==ARM_MATH_SUCCESS);
+        ASSERT_SNR(ref,tmp,(q7_t)SNR_THRESHOLD);
+        ASSERT_NEAR_EQ(ref,tmp,ABS_ERROR_FAST_Q7);
 
     }
 
@@ -453,11 +510,63 @@ a double precision computation.
             }
             break;
 
+            case MISCQ7::TEST_CONV_PARTIAL_Q7_51:
+            case MISCQ7::TEST_CONV_PARTIAL_OPT_Q7_54:
+            {
+              this->first=3;
+              this->nba = 6;
+              this->nbb = 8;
+              ref.reload(MISCQ7::REF54_Q7_ID,mgr);
+              tmp.create(ref.nbSamples(),MISCQ7::TMP_Q7_ID,mgr);
+
+              // Oversized and not used except in opt case
+              scratchA.create(24,MISCQ7::SCRATCH1_Q15_ID,mgr);
+              scratchB.create(24,MISCQ7::SCRATCH2_Q15_ID,mgr);
+            }
+
+            case MISCQ7::TEST_CONV_PARTIAL_Q7_52:
+            case MISCQ7::TEST_CONV_PARTIAL_OPT_Q7_55:
+            {
+              this->first=9;
+              this->nba = 6;
+              this->nbb = 8;
+              ref.reload(MISCQ7::REF55_Q7_ID,mgr);
+              tmp.create(ref.nbSamples(),MISCQ7::TMP_Q7_ID,mgr);
+
+              // Oversized and not used except in opt case
+              scratchA.create(24,MISCQ7::SCRATCH1_Q15_ID,mgr);
+              scratchB.create(24,MISCQ7::SCRATCH2_Q15_ID,mgr);
+
+            }
+
+            case MISCQ7::TEST_CONV_PARTIAL_Q7_53:
+            case MISCQ7::TEST_CONV_PARTIAL_OPT_Q7_56:
+            {
+              this->first=7;
+              this->nba = 6;
+              this->nbb = 8;
+              ref.reload(MISCQ7::REF56_Q7_ID,mgr);
+              tmp.create(ref.nbSamples(),MISCQ7::TMP_Q7_ID,mgr);
+
+              // Oversized and not used except in opt case
+              scratchA.create(24,MISCQ7::SCRATCH1_Q15_ID,mgr);
+              scratchB.create(24,MISCQ7::SCRATCH2_Q15_ID,mgr);
+
+            }
+
 
         }
 
-       inputA.reload(MISCQ7::INPUTA_Q7_ID,mgr,nba);
-       inputB.reload(MISCQ7::INPUTB_Q7_ID,mgr,nbb);
+       if (id >= MISCQ7::TEST_CONV_PARTIAL_Q7_51)
+       {
+          inputA.reload(MISCQ7::INPUTA2_Q7_ID,mgr,nba);
+          inputB.reload(MISCQ7::INPUTB2_Q7_ID,mgr,nbb);
+       }
+       else
+       {
+          inputA.reload(MISCQ7::INPUTA_Q7_ID,mgr,nba);
+          inputB.reload(MISCQ7::INPUTB_Q7_ID,mgr,nbb);
+       }
 
        output.create(ref.nbSamples(),MISCQ7::OUT_Q7_ID,mgr);
         

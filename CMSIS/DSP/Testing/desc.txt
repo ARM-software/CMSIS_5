@@ -1607,6 +1607,9 @@ group Root {
                 Pattern INPUTA_F32_ID : InputsA1_f32.txt
                 Pattern INPUTB_F32_ID : InputsB1_f32.txt
 
+                Pattern INPUTA2_F32_ID : InputsA2_f32.txt
+                Pattern INPUTB2_F32_ID : InputsB2_f32.txt
+
                 Pattern INPUTPHI_A_F32_ID : InputPhi81_f32.txt
                 Pattern INPUTPHI_B_F32_ID : InputPhi82_f32.txt
                 Pattern INPUTPHI_C_F32_ID : InputPhi83_f32.txt
@@ -1697,6 +1700,10 @@ group Root {
                 Pattern REF82_F32_ID : Reference82_f32.txt
                 Pattern REF83_F32_ID : Reference83_f32.txt
 
+                Pattern REF84_F32_ID : Reference84_f32.txt
+                Pattern REF85_F32_ID : Reference85_f32.txt
+                Pattern REF86_F32_ID : Reference86_f32.txt
+
 
                 Output  OUT_F32_ID : Output
                 Output  TMP_F32_ID : Temp
@@ -1785,6 +1792,9 @@ group Root {
                   arm_levinson_durbin_f32 n=3:test_levinson_durbin_f32
                   arm_levinson_durbin_f32 n=8:test_levinson_durbin_f32
                   arm_levinson_durbin_f32 n=11:test_levinson_durbin_f32
+                  arm_conv_partial_f32 nba=6 nbb=8 first=3:test_conv_partial_f32
+                  arm_conv_partial_f32 nba=6 nbb=8 first=9:test_conv_partial_f32
+                  arm_conv_partial_f32 nba=6 nbb=8 first=7:test_conv_partial_f32
                 }
 
              }
@@ -1795,6 +1805,9 @@ group Root {
 
                 Pattern INPUTA_Q31_ID : InputsA1_q31.txt
                 Pattern INPUTB_Q31_ID : InputsB1_q31.txt
+
+                Pattern INPUTA2_Q31_ID : InputsA2_q31.txt
+                Pattern INPUTB2_Q31_ID : InputsB2_q31.txt
 
                 Pattern INPUTPHI_A_Q31_ID : InputPhi81_q31.txt
                 Pattern INPUTPHI_B_Q31_ID : InputPhi82_q31.txt
@@ -1886,8 +1899,13 @@ group Root {
                 Pattern REF82_Q31_ID : Reference82_q31.txt
                 Pattern REF83_Q31_ID : Reference83_q31.txt
 
+                Pattern REF84_Q31_ID : Reference84_q31.txt
+                Pattern REF85_Q31_ID : Reference85_q31.txt
+                Pattern REF86_Q31_ID : Reference86_q31.txt
+
 
                 Output  OUT_Q31_ID : Output
+                Output  TMP_Q31_ID : Temp
 
                 Functions {
                   arm_correlate_q31 nba=4 nbb=1:test_correlate_q31
@@ -1973,6 +1991,12 @@ group Root {
                   arm_levinson_durbin_q31 n=3:test_levinson_durbin_q31
                   arm_levinson_durbin_q31 n=8:test_levinson_durbin_q31
                   arm_levinson_durbin_q31 n=11:test_levinson_durbin_q31
+                  arm_conv_partial_q31 nba=6 nbb=8 first=3:test_conv_partial_q31
+                  arm_conv_partial_q31 nba=6 nbb=8 first=9:test_conv_partial_q31
+                  arm_conv_partial_q31 nba=6 nbb=8 first=7:test_conv_partial_q31
+                  arm_conv_partial_fast_q31 nba=6 nbb=8 first=3:test_conv_partial_fast_q31
+                  arm_conv_partial_fast_q31 nba=6 nbb=8 first=9:test_conv_partial_fast_q31
+                  arm_conv_partial_fast_q31 nba=6 nbb=8 first=7:test_conv_partial_fast_q31
                 }
 
              }
@@ -1983,6 +2007,9 @@ group Root {
 
                 Pattern INPUTA_Q15_ID : InputsA1_q15.txt
                 Pattern INPUTB_Q15_ID : InputsB1_q15.txt
+
+                Pattern INPUTA2_Q15_ID : InputsA2_q15.txt
+                Pattern INPUTB2_Q15_ID : InputsB2_q15.txt
 
                 Pattern REF1_Q15_ID : Reference1_q15.txt
                 Pattern REF2_Q15_ID : Reference2_q15.txt
@@ -2035,8 +2062,15 @@ group Root {
                 Pattern REF49_Q15_ID : Reference49_q15.txt
                 Pattern REF50_Q15_ID : Reference50_q15.txt
 
+                Pattern REF54_Q15_ID : Reference54_q15.txt
+                Pattern REF55_Q15_ID : Reference55_q15.txt
+                Pattern REF56_Q15_ID : Reference56_q15.txt
+
 
                 Output  OUT_Q15_ID : Output
+                Output  TMP_Q15_ID : Temp
+                Output  SCRATCH1_Q15_ID : Scratch1
+                Output  SCRATCH2_Q15_ID : Scratch2
 
                 Functions {
                   arm_correlate_q15 nba=14 nbb=15:test_correlate_q15
@@ -2089,6 +2123,18 @@ group Root {
                   arm_conv_q15 nba=32 nbb=17:test_conv_q15
                   arm_conv_q15 nba=32 nbb=18:test_conv_q15
                   arm_conv_q15 nba=32 nbb=33:test_conv_q15
+                  arm_conv_partial_q15 nba=6 nbb=8 first=3:test_conv_partial_q15
+                  arm_conv_partial_q15 nba=6 nbb=8 first=9:test_conv_partial_q15
+                  arm_conv_partial_q15 nba=6 nbb=8 first=7:test_conv_partial_q15
+                  arm_conv_partial_fast_q15 nba=6 nbb=8 first=3:test_conv_partial_fast_q15
+                  arm_conv_partial_fast_q15 nba=6 nbb=8 first=9:test_conv_partial_fast_q15
+                  arm_conv_partial_fast_q15 nba=6 nbb=8 first=7:test_conv_partial_fast_q15
+                  arm_conv_partial_opt_q15 nba=6 nbb=8 first=3:test_conv_partial_opt_q15
+                  arm_conv_partial_opt_q15 nba=6 nbb=8 first=9:test_conv_partial_opt_q15
+                  arm_conv_partial_opt_q15 nba=6 nbb=8 first=7:test_conv_partial_opt_q15
+                  arm_conv_partial_fast_opt_q15 nba=6 nbb=8 first=3:test_conv_partial_fast_opt_q15
+                  arm_conv_partial_fast_opt_q15 nba=6 nbb=8 first=9:test_conv_partial_fast_opt_q15
+                  arm_conv_partial_fast_opt_q15 nba=6 nbb=8 first=7:test_conv_partial_fast_opt_q15
                 }
 
              }
@@ -2099,6 +2145,9 @@ group Root {
 
                 Pattern INPUTA_Q7_ID : InputsA1_q7.txt
                 Pattern INPUTB_Q7_ID : InputsB1_q7.txt
+
+                Pattern INPUTA2_Q7_ID : InputsA2_q7.txt
+                Pattern INPUTB2_Q7_ID : InputsB2_q7.txt
 
                 Pattern REF1_Q7_ID : Reference1_q7.txt
                 Pattern REF2_Q7_ID : Reference2_q7.txt
@@ -2151,8 +2200,15 @@ group Root {
                 Pattern REF49_Q7_ID : Reference49_q7.txt
                 Pattern REF50_Q7_ID : Reference50_q7.txt
 
+                Pattern REF54_Q7_ID : Reference54_q7.txt
+                Pattern REF55_Q7_ID : Reference55_q7.txt
+                Pattern REF56_Q7_ID : Reference56_q7.txt
+
 
                 Output  OUT_Q7_ID : Output
+                Output  TMP_Q7_ID : Temp
+                Output  SCRATCH1_Q15_ID : Scratch1
+                Output  SCRATCH2_Q15_ID : Scratch2
 
                 Functions {
                   arm_correlate_q7 nba=30 nbb=31:test_correlate_q7
@@ -2205,6 +2261,12 @@ group Root {
                   arm_conv_q7 nba=48 nbb=33:test_conv_q7
                   arm_conv_q7 nba=48 nbb=34:test_conv_q7
                   arm_conv_q7 nba=48 nbb=49:test_conv_q7
+                  arm_conv_partial_q7 nba=6 nbb=8 first=3:test_conv_partial_q7
+                  arm_conv_partial_q7 nba=6 nbb=8 first=9:test_conv_partial_q7
+                  arm_conv_partial_q7 nba=6 nbb=8 first=7:test_conv_partial_q7
+                  arm_conv_partial_opt_q7 nba=6 nbb=8 first=3:test_conv_partial_opt_q7
+                  arm_conv_partial_opt_q7 nba=6 nbb=8 first=9:test_conv_partial_opt_q7
+                  arm_conv_partial_opt_q7 nba=6 nbb=8 first=7:test_conv_partial_opt_q7
                 }
 
              }

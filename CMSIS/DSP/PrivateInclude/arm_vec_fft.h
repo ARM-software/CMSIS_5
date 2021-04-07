@@ -156,7 +156,7 @@ __STATIC_INLINE void arm_bitreversal_16_inpl_mve(
     bitRevOff0High = vshrq_n_u16(bitRevOff0High, 3);
 
     blkCnt = (bitRevLen / 16);
-    while (blkCnt > 0U) {
+    while (blkCnt > 0) {
         bitRevTabOff = vldrhq_u16(pBitRevTab);
         pBitRevTab += 8;
 
@@ -248,7 +248,7 @@ __STATIC_INLINE void arm_bitreversal_32_outpl_mve(void *pDst, void *pSrc, uint32
     /* bit-reverse fwd indexes */
     bitRevOffs0 = vbrsrq(idxOffs0, bitRevPos);
     bitRevOffs1 = vbrsrq(idxOffs1, bitRevPos);
-    while (blkCnt > 0U) {
+    while (blkCnt > 0) {
         uint64x2_t      vecIn;
 
         vecIn = vldrdq_gather_offset_u64(pSrc, (int64x2_t) bitRevOffs0);
@@ -294,7 +294,7 @@ __STATIC_INLINE void arm_bitreversal_16_outpl_mve(void *pDst, void *pSrc, uint32
     /* bit-reverse fwd indexes */
     bitRevOffs0 = vbrsrq(idxOffs0, bitRevPos);
     bitRevOffs1 = vbrsrq(idxOffs1, bitRevPos);
-    while (blkCnt > 0U) {
+    while (blkCnt > 0) {
         uint32x4_t      vecIn;
 
         vecIn = vldrwq_gather_offset_s32(pSrc, bitRevOffs0);

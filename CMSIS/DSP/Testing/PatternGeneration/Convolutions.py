@@ -85,7 +85,6 @@ def writeTests(config,format):
         nbTest = nbTest + 1
 
     # Levinson durbin tests
-    config.setOverwrite(True)
 
     a = [Tools.loopnb(format,Tools.TAILONLY),
     Tools.loopnb(format,Tools.BODYONLY),
@@ -119,6 +118,36 @@ def writeTests(config,format):
       nbTest = nbTest + 1
 
       config.writeReference(errTestID, err,"LDErrors")
+
+    # Partial convolutions
+    config.setOverwrite(True)
+
+    inputsA=np.random.randn(NBSAMPLES)
+    inputsB=np.random.randn(NBSAMPLES)
+
+    inputsA = Tools.normalize(inputsA)
+    inputsB = Tools.normalize(inputsB)
+
+    config.writeInput(2, inputsA,"InputsA")
+    config.writeInput(2, inputsB,"InputsB")
+
+    (na,nb) = (6, 8) 
+    # First = 3
+    numPoints=4
+    ref = np.convolve(inputsA[0:na],inputsB[0:nb],"full")
+    
+    first=3
+    config.writeReference(nbTest, ref[first:first+numPoints])
+    nbTest = nbTest + 1
+
+    first=9
+    config.writeReference(nbTest, ref[first:first+numPoints])
+    nbTest = nbTest + 1
+
+    first=7
+    config.writeReference(nbTest, ref[first:first+numPoints])
+    nbTest = nbTest + 1
+
 
 
     

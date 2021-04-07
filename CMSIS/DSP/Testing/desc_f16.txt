@@ -519,6 +519,9 @@ group Root {
                 Pattern INPUTA_F16_ID : InputsA1_f16.txt
                 Pattern INPUTB_F16_ID : InputsB1_f16.txt
 
+                Pattern INPUTA2_F16_ID : InputsA2_f16.txt
+                Pattern INPUTB2_F16_ID : InputsB2_f16.txt
+
                 Pattern INPUTPHI_A_F16_ID : InputPhi81_f16.txt
                 Pattern INPUTPHI_B_F16_ID : InputPhi82_f16.txt
                 Pattern INPUTPHI_C_F16_ID : InputPhi83_f16.txt
@@ -608,6 +611,10 @@ group Root {
                 Pattern REF81_F16_ID : Reference81_f16.txt
                 Pattern REF82_F16_ID : Reference82_f16.txt
                 Pattern REF83_F16_ID : Reference83_f16.txt
+
+                Pattern REF84_F16_ID : Reference84_f16.txt
+                Pattern REF85_F16_ID : Reference85_f16.txt
+                Pattern REF86_F16_ID : Reference86_f16.txt
 
 
                 Output  OUT_F16_ID : Output

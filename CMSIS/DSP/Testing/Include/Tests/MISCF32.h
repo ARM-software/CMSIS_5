@@ -21,7 +21,7 @@ class MISCF32:public Client::Suite
             // Reference patterns are not loaded when we are in dump mode
             Client::RefPattern<float32_t> ref;
 
-            int nba,nbb,errOffset;
+            int nba,nbb,errOffset,first;
 
            
     };

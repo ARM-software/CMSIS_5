@@ -74,7 +74,7 @@ arm_status arm_conv_partial_q31(
   const q31_t *pSrc1, *pSrc2;                          /* Intermediate pointers */
         q63_t sum;                                     /* Accumulator */
         uint32_t j, k, count, blkCnt, check;
-        uint32_t blockSize1, blockSize2, blockSize3;    /* Loop counters */
+        int32_t blockSize1, blockSize2, blockSize3;    /* Loop counters */
         arm_status status;                             /* Status of Partial convolution */
 
 #if defined (ARM_MATH_LOOPUNROLL)
@@ -166,7 +166,7 @@ arm_status arm_conv_partial_q31(
      * ----------------------*/
 
     /* The first stage starts here */
-    while (blockSize1 > 0U)
+    while (blockSize1 > 0)
     {
       /* Accumulator is made zero for every iteration */
       sum = 0;
@@ -510,7 +510,7 @@ arm_status arm_conv_partial_q31(
      * Stage3 process
      * ------------------*/
 
-    while (blockSize3 > 0U)
+    while (blockSize3 > 0)
     {
       /* Accumulator is made zero for every iteration */
       sum = 0;
