@@ -61,6 +61,7 @@
                  the implementation may require to read more coefficients due to the vectorization and
                  to avoid having to manage too many different cases in the code.
 
+
   @par          Helium state buffer
                  The state buffer must contain some additional temporary data
                  used during the computation but which is not the state of the FIR.

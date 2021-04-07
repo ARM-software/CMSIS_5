@@ -25,8 +25,8 @@
       Cholesky (LL^t and LDL^t decompositions)
 
       More support for f16 datatype:
-      - arm_cfft_f16
-      - arm_rfft_fast_f16 
+      - arm_cfft_f16.c
+      - arm_rfft_fast_f16.c
       - f16 basic Maths
       - f16 complex Maths
       - f16 filtering (FIR and BiQuad and correlate)
@@ -45,8 +45,17 @@
       Q15 scalar division
 
       GCC issues:
-      - Scalar version of arm_mat_cmplx_mult_f16 built with Helium
-      - Scalar version of arm_biquad_cascade_stereo_df2T_f16 built with Helium.
+      - Scalar version of arm_mat_cmplx_mult_f16.c built with Helium target
+      - Scalar version of arm_biquad_cascade_stereo_df2T_f16.c built with Helium target.
+
+      Important:
+      - Initialization of FIRs has changed for the Helium version. Read the
+        corresponding documentations.
+      - Initialization of float biquad DF1 has changed for the Helium
+        version. Read the corresponding documentations.
+      - The states of the vectorized filters are different from their scalar
+        versions (which may break some algorithms which are working on the
+        state of a filter like Goertzel)
 
     </td>
   </tr>

@@ -97,13 +97,23 @@
                    where <code>numTaps</code> is the number of filter coefficients in the filter; <code>pState</code> is the address of the state buffer;
                    <code>pCoeffs</code> is the address of the coefficient buffer.
   @par          Initialization of Helium version
-                 For Helium version the array of coefficients must be a multiple of 16 even if less
-                 then 16 coefficients are used. The additional coefficients must be set to 0.
-                 It does not mean that all the coefficients will be used in the filter (numTaps
-                 is still set to its right value in the init function.) It just means that
+                 For Helium version the array of coefficients must be padded with zero to contain
+                 a full number of lanes.
+
+                 The array length L must be a multiple of x. L = x * a :
+                 - x is 4  for f32
+                 - x is 4  for q31
+                 - x is 4  for f16 (so managed like the f32 version and not like the q15 one)
+                 - x is 8  for q15
+                 - x is 16 for q7
+
+                 The additional coefficients 
+                 (x * a - numTaps) must be set to 0.
+                 numTaps is still set to its right value in the init function. It means that
                  the implementation may require to read more coefficients due to the vectorization and
                  to avoid having to manage too many different cases in the code.
 
+                
   @par          Helium state buffer
                  The state buffer must contain some additional temporary data
                  used during the computation but which is not the state of the FIR.
