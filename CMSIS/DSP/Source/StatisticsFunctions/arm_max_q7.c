@@ -77,7 +77,7 @@ static void arm_small_blk_max_q7(
 
         extremValVec = vorrq_m(extremValVec, extremIdxVal, extremIdxVal, p0);
         /* store per-lane extrema indexes */
-        vst1q_p_s8(extremIdxArr, indexVec, p0);
+        vst1q_p_u8(extremIdxArr, indexVec, p0);
 
         indexVec += 16;
         pSrc += 16;
@@ -91,7 +91,7 @@ static void arm_small_blk_max_q7(
 
     /* set index for lower values to max possible index   */
     p0 = vcmpgeq(extremValVec, maxValue);
-    extremIdxVec = vld1q_s8(extremIdxArr);
+    extremIdxVec = vld1q_u8(extremIdxArr);
 
     indexVec = vpselq(extremIdxVec, vdupq_n_u8(blockSize - 1), p0);
     *pIndex = vminvq_u8(blockSize - 1, indexVec);
