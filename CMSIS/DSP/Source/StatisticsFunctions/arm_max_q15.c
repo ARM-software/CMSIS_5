@@ -55,78 +55,49 @@ void arm_max_q15(
         q15_t * pResult,
         uint32_t * pIndex)
 {
-    uint32_t blkCnt;           /* loop counters */
-    q15x8_t vecSrc;
-    q15x8_t curExtremValVec = vdupq_n_s16(Q15_MIN);
-    q15_t maxValue = Q15_MIN, temp;
-    uint32_t  idx = blockSize;
-    uint16x8_t indexVec;
-    uint16x8_t curExtremIdxVec;
-    mve_pred16_t p0;
+    int32_t         blkCnt;     /* loop counters */
+    q15x8_t         extremValVec = vdupq_n_s16(Q15_MIN);
+    q15_t           maxValue = Q15_MIN;
+    uint16x8_t      indexVec;
+    uint16x8_t      extremIdxVec;
+    mve_pred16_t    p0;
+    uint16_t        extremIdxArr[8];
 
+    indexVec = vidupq_u16(0U, 1);
 
-    indexVec = vidupq_u16((uint32_t)0, 1);
-    curExtremIdxVec = vdupq_n_u16(0);
-
-    blkCnt = blockSize >> 3;
-    while (blkCnt > 0U)
-    {
-        vecSrc = vldrhq_s16(pSrc);  
-        pSrc += 8;
+    blkCnt = blockSize;
+    do {
+        mve_pred16_t    p = vctp16q(blkCnt);
+        q15x8_t         extremIdxVal = vld1q_z(pSrc, p);
         /*
          * Get current max per lane and current index per lane
          * when a max is selected
          */
-        p0 = vcmpgeq(vecSrc, curExtremValVec);
-        curExtremValVec = vpselq(vecSrc, curExtremValVec, p0);
-        curExtremIdxVec = vpselq(indexVec, curExtremIdxVec, p0);
+        p0 = vcmpgeq_m(extremIdxVal, extremValVec, p);
 
-        indexVec = indexVec +  8;
-        /*
-         * Decrement the blockSize loop counter
-         */
-        blkCnt--;
+        extremValVec = vorrq_m(extremValVec, extremIdxVal, extremIdxVal, p0);
+        /* store per-lane extrema indexes */
+        vst1q_p(extremIdxArr, indexVec, p0);
+
+        indexVec += 8;
+        pSrc += 8;
+        blkCnt -= 8;
     }
-   
-    /*
-     * Get max value across the vector
-     */
-    maxValue = vmaxvq(maxValue, curExtremValVec);
-    /*
-     * set index for lower values to max possible index
-     */
-    p0 = vcmpgeq(curExtremValVec, maxValue);
-    indexVec = vpselq(curExtremIdxVec, vdupq_n_u16(blockSize), p0);
-    /*
-     * Get min index which is thus for a max value
-     */
-    idx = vminvq(idx, indexVec);
+    while (blkCnt > 0);
 
-    /* Tail */
-    blkCnt = blockSize & 0x7;
-    while (blkCnt > 0U)
-    {
-      /* Initialize temp to the next consecutive values one by one */
-      temp = *pSrc++;
-  
-      /* compare for the maximum value */
-      if (maxValue < temp)
-      {
-        /* Update the maximum value and it's index */
-        maxValue = temp;
-        idx = blockSize - blkCnt;
-      }
-  
-      /* Decrement loop counter */
-      blkCnt--;
-    }
 
-    /*
-     * Save result
-     */
-    *pIndex = idx;
+    /* Get max value across the vector   */
+    maxValue = vmaxvq(maxValue, extremValVec);
+
+    /* set index for lower values to max possible index   */
+    p0 = vcmpgeq(extremValVec, maxValue);
+    extremIdxVec = vld1q(extremIdxArr);
+
+    indexVec = vpselq(extremIdxVec, vdupq_n_u16(blockSize - 1), p0);
+    *pIndex = vminvq(blockSize - 1, indexVec);
     *pResult = maxValue;
 }
+
 #else
 void arm_max_q15(
   const q15_t * pSrc,

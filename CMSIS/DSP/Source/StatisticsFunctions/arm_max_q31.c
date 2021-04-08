@@ -50,86 +50,54 @@
 #include "arm_helium_utils.h"
 
 void arm_max_q31(
-  const q31_t * pSrc,
-        uint32_t blockSize,
-        q31_t * pResult,
-        uint32_t * pIndex)
+    const q31_t * pSrc,
+    uint32_t blockSize,
+    q31_t * pResult,
+    uint32_t * pIndex)
 {
-    uint32_t  blkCnt;           /* loop counters */
-    q31x4_t vecSrc;
-    q31x4_t curExtremValVec = vdupq_n_s32( Q31_MIN);
-    q31_t maxValue = Q31_MIN;
-    q31_t temp;
-    uint32_t  idx = blockSize;
-    uint32x4_t indexVec;
-    uint32x4_t curExtremIdxVec;
-    mve_pred16_t p0;
+    int32_t         blkCnt;     /* loop counters */
+    q31x4_t         extremValVec = vdupq_n_s32(Q31_MIN);
+    q31_t           maxValue = Q31_MIN;
+    uint32x4_t      indexVec;
+    uint32x4_t      extremIdxVec;
+    mve_pred16_t    p0;
+    uint32_t        extremIdxArr[4];
 
+    indexVec = vidupq_u32(0U, 1);
 
-    indexVec = vidupq_u32((uint32_t)0, 1);
-    curExtremIdxVec = vdupq_n_u32(0);
-
-    /* Compute 4 outputs at a time */
-    blkCnt = blockSize >> 2U;
-    while (blkCnt > 0U)
-    {
-        vecSrc = vldrwq_s32(pSrc);  
-        pSrc += 4;
+    blkCnt = blockSize;
+    do {
+        mve_pred16_t    p = vctp32q(blkCnt);
+        q31x4_t         extremIdxVal = vld1q_z(pSrc, p);
         /*
          * Get current max per lane and current index per lane
          * when a max is selected
          */
-        p0 = vcmpgeq(vecSrc, curExtremValVec);
-        curExtremValVec = vpselq(vecSrc, curExtremValVec, p0);
-        curExtremIdxVec = vpselq(indexVec, curExtremIdxVec, p0);
+        p0 = vcmpgeq_m(extremIdxVal, extremValVec, p);
 
-        indexVec = indexVec +  4;
-        /*
-         * Decrement the blockSize loop counter
-         */
-        blkCnt--;
+        extremValVec = vorrq_m(extremValVec, extremIdxVal, extremIdxVal, p0);
+        /* store per-lane extrema indexes */
+        vst1q_p(extremIdxArr, indexVec, p0);
+
+        indexVec += 4;
+        pSrc += 4;
+        blkCnt -= 4;
     }
-   
-    /*
-     * Get max value across the vector
-     */
-    maxValue = vmaxvq(maxValue, curExtremValVec);
-    /*
-     * set index for lower values to max possible index
-     */
-    p0 = vcmpgeq(curExtremValVec, maxValue);
-    indexVec = vpselq(curExtremIdxVec, vdupq_n_u32(blockSize), p0);
-    /*
-     * Get min index which is thus for a max value
-     */
-    idx = vminvq(idx, indexVec);
+    while (blkCnt > 0);
 
-    /* Tail */
-    blkCnt = blockSize & 0x3;
 
-    while (blkCnt > 0U)
-    {
-       /* Initialize maxVal to the next consecutive values one by one */
-       temp = *pSrc++;
-   
-       /* compare for the maximum value */
-       if (maxValue < temp)
-       {
-         /* Update the maximum value and it's index */
-         maxValue = temp;
-         idx = blockSize - blkCnt;
-       }
+    /* Get max value across the vector   */
+    maxValue = vmaxvq(maxValue, extremValVec);
 
-       /* Decrement loop counter */
-       blkCnt--;
-    }
+    /* set index for lower values to max possible index   */
+    p0 = vcmpgeq(extremValVec, maxValue);
+    extremIdxVec = vld1q(extremIdxArr);
 
-    /*
-     * Save result
-     */
-    *pIndex = idx;
+    indexVec = vpselq(extremIdxVec, vdupq_n_u32(blockSize - 1), p0);
+    *pIndex = vminvq(blockSize - 1, indexVec);
     *pResult = maxValue;
 }
+
 #else
 void arm_max_q31(
   const q31_t * pSrc,

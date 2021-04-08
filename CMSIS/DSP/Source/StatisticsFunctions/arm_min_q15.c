@@ -56,79 +56,48 @@ void arm_min_q15(
         q15_t * pResult,
         uint32_t * pIndex)
 {
-    uint32_t  blkCnt;           /* loop counters */
-    q15x8_t vecSrc;
-    q15x8_t curExtremValVec = vdupq_n_s16(Q15_MAX);
-    q15_t minValue = Q15_MAX,temp;
-    uint32_t  idx = blockSize;
-    uint16x8_t indexVec;
-    uint16x8_t curExtremIdxVec;
-    mve_pred16_t p0;
 
+    int32_t         blkCnt;     /* loop counters */
+    q15x8_t         extremValVec = vdupq_n_s16(Q15_MAX);
+    q15_t           minValue = Q15_MAX;
+    uint16x8_t      indexVec;
+    uint16x8_t      extremIdxVec;
+    mve_pred16_t    p0;
+    uint16_t        extremIdxArr[8];
 
-    indexVec = vidupq_u16((uint32_t)0, 1);
-    curExtremIdxVec = vdupq_n_u16(0);
+    indexVec = vidupq_u16(0U, 1);
 
-    blkCnt = blockSize >> 3;
-    while (blkCnt > 0U)
-    {
-        vecSrc = vldrhq_s16(pSrc);  
-        pSrc += 8;
+    blkCnt = blockSize;
+    do {
+        mve_pred16_t    p = vctp16q(blkCnt);
+        q15x8_t         extremIdxVal = vld1q_z(pSrc, p);
         /*
          * Get current min per lane and current index per lane
          * when a min is selected
          */
-        p0 = vcmpleq(vecSrc, curExtremValVec);
-        curExtremValVec = vpselq(vecSrc, curExtremValVec, p0);
-        curExtremIdxVec = vpselq(indexVec, curExtremIdxVec, p0);
+        p0 = vcmpleq_m(extremIdxVal, extremValVec, p);
 
-        indexVec = indexVec +  8;
-        /*
-         * Decrement the blockSize loop counter
-         */
-        blkCnt--;
+        extremValVec = vorrq_m(extremValVec, extremIdxVal, extremIdxVal, p0);
+        /* store per-lane extrema indexes */
+        vst1q_p(extremIdxArr, indexVec, p0);
+
+        indexVec += 8;
+        pSrc += 8;
+        blkCnt -= 8;
     }
-   
-    /*
-     * Get min value across the vector
-     */
-    minValue = vminvq(minValue, curExtremValVec);
-    /*
-     * set index for lower values to min possible index
-     */
-    p0 = vcmpleq(curExtremValVec, minValue);
-    indexVec = vpselq(curExtremIdxVec, vdupq_n_u16(blockSize), p0);
-    /*
-     * Get min index which is thus for a min value
-     */
-    idx = vminvq(idx, indexVec);
+    while (blkCnt > 0);
 
-    /*
-     * tail
-    */
-    blkCnt = blockSize & 7;
-    while (blkCnt > 0U)
-    {
-      /* Initialize minVal to the next consecutive values one by one */
-      temp = *pSrc++;
-  
-      /* compare for the minimum value */
-      if (minValue > temp)
-      {
-        /* Update the minimum value and it's index */
-        minValue = temp;
-        idx = blockSize - blkCnt;
-      }
-  
-      /* Decrement loop counter */
-      blkCnt--;
-    }
+    /* Get min value across the vector   */
+    minValue = vminvq(minValue, extremValVec);
 
-    /*
-     * Save result
-     */
-    *pIndex = idx;
+    /* set index for lower values to min possible index   */
+    p0 = vcmpleq(extremValVec, minValue);
+    extremIdxVec = vld1q(extremIdxArr);
+
+    indexVec = vpselq(extremIdxVec, vdupq_n_u16(blockSize - 1), p0);
+    *pIndex = vminvq(blockSize - 1, indexVec);
     *pResult = minValue;
+ 
 }
 #else
 void arm_min_q15(
