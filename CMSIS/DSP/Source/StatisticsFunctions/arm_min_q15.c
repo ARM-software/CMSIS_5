@@ -70,7 +70,7 @@ void arm_min_q15(
     blkCnt = blockSize;
     do {
         mve_pred16_t    p = vctp16q(blkCnt);
-        q15x8_t         extremIdxVal = vld1q_z(pSrc, p);
+        q15x8_t         extremIdxVal = vld1q_z_s16(pSrc, p);
         /*
          * Get current min per lane and current index per lane
          * when a min is selected
@@ -79,7 +79,7 @@ void arm_min_q15(
 
         extremValVec = vorrq_m(extremValVec, extremIdxVal, extremIdxVal, p0);
         /* store per-lane extrema indexes */
-        vst1q_p(extremIdxArr, indexVec, p0);
+        vst1q_p_s16(extremIdxArr, indexVec, p0);
 
         indexVec += 8;
         pSrc += 8;
@@ -92,7 +92,7 @@ void arm_min_q15(
 
     /* set index for lower values to min possible index   */
     p0 = vcmpleq(extremValVec, minValue);
-    extremIdxVec = vld1q(extremIdxArr);
+    extremIdxVec = vld1q_s16(extremIdxArr);
 
     indexVec = vpselq(extremIdxVec, vdupq_n_u16(blockSize - 1), p0);
     *pIndex = vminvq(blockSize - 1, indexVec);
