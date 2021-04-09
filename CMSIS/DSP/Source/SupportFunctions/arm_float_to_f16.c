@@ -49,7 +49,11 @@
 
  */
 
-#if defined(ARM_MATH_MVE_FLOAT16) && !defined(ARM_MATH_AUTOVECTORIZE)
+#if defined(ARM_MATH_MVE_FLOAT16) && !defined(ARM_MATH_AUTOVECTORIZE) && defined(__CMSIS_GCC_H)
+#pragma GCC warning "Scalar version of arm_float_to_f16 built. Helium version has build issues with gcc."
+#endif 
+
+#if defined(ARM_MATH_MVE_FLOAT16) && !defined(ARM_MATH_AUTOVECTORIZE) &&  !defined(__CMSIS_GCC_H)
 
 void arm_float_to_f16(
   const float32_t * pSrc,

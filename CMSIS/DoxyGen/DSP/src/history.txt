@@ -45,10 +45,15 @@
       Q15 scalar division
 
       GCC issues:
+      Some functions have build issues when building Helium code with gcc. So
+      they are replaced with a less efficient scalar version when built with gcc.
       - Scalar version of arm_mat_cmplx_mult_f16.c built with Helium target
       - Scalar version of arm_biquad_cascade_stereo_df2T_f16.c built with Helium target.
-      - Scalar version of arm_levinson_durbin_f32 built with Helium target
-      - Scalar version of arm_levinson_durbin_q31 built with Helium target
+      - Scalar version of arm_levinson_durbin_f32.c  built with Helium target
+      - Scalar version of arm_levinson_durbin_f16.c  built with Helium target
+      - Scalar version of arm_levinson_durbin_q31.c  built with Helium target
+      - Scalar version of arm_float_to_f16.c  built with Helium target
+      - Scalar version of arm_f16_to_float.c  built with Helium target
 
       Important:
       - Initialization of FIRs has changed for the Helium version. Read the
