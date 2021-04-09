@@ -47,6 +47,8 @@
       GCC issues:
       - Scalar version of arm_mat_cmplx_mult_f16.c built with Helium target
       - Scalar version of arm_biquad_cascade_stereo_df2T_f16.c built with Helium target.
+      - Scalar version of arm_levinson_durbin_f32 built with Helium target
+      - Scalar version of arm_levinson_durbin_q31 built with Helium target
 
       Important:
       - Initialization of FIRs has changed for the Helium version. Read the
