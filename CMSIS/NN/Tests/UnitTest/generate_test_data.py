@@ -19,10 +19,12 @@
 import os
 import sys
 import math
+import random
 import argparse
 import subprocess
 import numpy as np
 
+from collections import deque
 from packaging import version
 from abc import ABC, abstractmethod
 
@@ -65,7 +67,8 @@ def parse_args():
     parser.add_argument('--regenerate-biases', action='store_true', help="Regenerate and store new biases.")
     parser.add_argument('-a', '--regenerate-all', action='store_true', help="Regenerate and store all data.")
     parser.add_argument('-t', '--testtype', type=str, default='conv', choices=['conv', 'depthwise_conv', 'avgpool',
-                                                                               'maxpool', 'fully_connected', 'softmax'],
+                                                                               'maxpool', 'fully_connected', 'softmax',
+                                                                               'svdf'],
                         help='Type of test.')
     parser.add_argument('--run-all-testsets', action='store_true', help="Run the script for all existing test "
                         "sets. Regenerate all, partially all or no input data (output may still change, depending on"
@@ -236,16 +239,20 @@ class TestSettings(ABC):
 
         return tf.convert_to_tensor(np_float_array)
 
-    def get_randomized_data(self, dims, npfile, regenerate, decimals=0):
+    def get_randomized_data(self, dims, npfile, regenerate, decimals=0, minrange=None, maxrange=None):
+        if not minrange:
+            minrange = self.mins
+        if not maxrange:
+            maxrange = self.maxs
         if not os.path.exists(npfile) or regenerate:
             regendir = os.path.dirname(npfile)
             if not os.path.exists(regendir):
                 os.makedirs(regendir)
             if decimals == 0:
-                data = tf.Variable(tf.random.uniform(dims, minval=self.mins, maxval=self.maxs, dtype=tf.dtypes.int32))
+                data = tf.Variable(tf.random.uniform(dims, minval=minrange, maxval=maxrange, dtype=tf.dtypes.int32))
                 data = tf.cast(data, dtype=tf.float32)
             else:
-                data = tf.Variable(tf.random.uniform(dims, minval=self.mins, maxval=self.maxs, dtype=tf.dtypes.float32))
+                data = tf.Variable(tf.random.uniform(dims, minval=minrange, maxval=maxrange, dtype=tf.dtypes.float32))
                 data = np.around(data.numpy(), decimals)
                 data = tf.convert_to_tensor(data)
 
@@ -343,12 +350,12 @@ class TestSettings(ABC):
                     f.write("#define {}_OUT_ACTIVATION_MIN {}\n".format(prefix, 0))
                     f.write("#define {}_OUT_ACTIVATION_MAX {}\n".format(prefix, 6))
                 else:
-                    f.write("#define {}_OUT_ACTIVATION_MIN {}\n".format(prefix, self.INT8_MIN))
-                    f.write("#define {}_OUT_ACTIVATION_MAX {}\n".format(prefix, self.INT8_MAX))
+                    f.write("#define {}_OUT_ACTIVATION_MIN {}\n".format(prefix, self.out_activation_min))
+                    f.write("#define {}_OUT_ACTIVATION_MAX {}\n".format(prefix, self.out_activation_max))
                 f.write("#define {}_INPUT_BATCHES {}\n".format(prefix, self.batches))
         self.format_output_file(filepath)
 
-    def generate_c_array(self, name, array, datatype="q7_t"):
+    def generate_c_array(self, name, array, datatype="q7_t", const="const "):
         if not os.path.exists(self.headers_dir):
             os.makedirs(self.headers_dir)
 
@@ -369,7 +376,7 @@ class TestSettings(ABC):
         with open(filepath, "w+") as f:
             self.write_c_common_header(f)
             f.write("#include <stdint.h>\n\n")
-            f.write("const " + datatype + " " + self.testdataset + '_' + name + "[%d] =\n{\n" % size)
+            f.write(const + datatype + " " + self.testdataset + '_' + name + "[%d] =\n{\n" % size)
             for i in range(size - 1):
                 f.write("  %d,\n" % w[i])
             f.write("  %d\n" % w[size - 1])
@@ -823,6 +830,210 @@ class SoftmaxSettings(TestSettings):
         self.write_c_header_wrapper()
 
 
+class SVDFSettings(TestSettings):
+
+    def __init__(self, dataset, testtype, args, batches=2, number_inputs=2, rank=8, memory_size=10, randmin=-4,
+                 randmax=4, input_size=3, number_units=4, generate_bias=True):
+        super().__init__(dataset, testtype, args, 1, 1, 1, 1, 1, 1, 1, 1, False, randmin,
+                         randmax, generate_bias=generate_bias)
+        self.batches = batches
+        self.number_units = number_units
+        self.input_size = input_size
+        self.memory_size = memory_size
+        self.rank = rank
+        self.number_filters = self.number_units * self.rank
+        self.time_table_file = self.pregenerated_data_dir + self.testdataset + '/' + 'time_data.txt'
+        self.state_table_file = self.pregenerated_data_dir + self.testdataset + '/' + 'state_data.txt'
+
+        self.weights_feature_scale = 1
+        self.weights_feature_scale = 1
+        self.weights_time_scale = 1
+        self.state_scale = 1
+        self.bias_scale = 1
+
+        self.number_inputs = number_inputs
+        self.input_sequence_length = self.number_inputs * self.input_size * self.batches
+
+        effective_scale_1 = self.weights_feature_scale * self.input_scale / self.state_scale
+        effective_scale_2 = self.state_scale * self.weights_time_scale / self.output_scale
+        (self.multiplier_in, self.shift_1) = self.quantize_scale(effective_scale_1)
+        (self.multiplier_out, self.shift_2) = self.quantize_scale(effective_scale_2)
+
+        self.in_activation_max = self.INT16_MAX
+        self.in_activation_min = self.INT16_MIN
+
+    def write_c_config_header(self):
+        super().write_c_config_header(write_common_parameters=False)
+
+        filename = self.config_data
+        filepath = self.headers_dir + filename
+        prefix = self.testdataset.upper()
+
+        with open(filepath, "a") as f:
+            self.write_c_header_offsets(f, prefix)
+            f.write("#define {}_MULTIPLIER_IN {}\n".format(prefix, self.multiplier_in))
+            f.write("#define {}_MULTIPLIER_OUT {}\n".format(prefix, self.multiplier_out))
+            f.write("#define {}_SHIFT_1 {}\n".format(prefix, self.shift_1))
+            f.write("#define {}_SHIFT_2 {}\n".format(prefix, self.shift_2))
+            f.write("#define {}_IN_ACTIVATION_MIN {}\n".format(prefix, self.in_activation_min))
+            f.write("#define {}_IN_ACTIVATION_MAX {}\n".format(prefix, self.in_activation_max))
+            f.write("#define {}_RANK {}\n".format(prefix, self.rank))
+            f.write("#define {}_FEATURE_BATCHES {}\n".format(prefix, self.number_filters))
+            f.write("#define {}_TIME_BATCHES {}\n".format(prefix, self.memory_size))
+            f.write("#define {}_INPUT_SIZE {}\n".format(prefix, self.input_size))
+            f.write("#define {}_DST_SIZE {}\n".format(prefix, self.number_units * self.batches))
+            f.write("#define {}_OUT_ACTIVATION_MIN {}\n".format(prefix, self.out_activation_min))
+            f.write("#define {}_OUT_ACTIVATION_MAX {}\n".format(prefix, self.out_activation_max))
+            f.write("#define {}_INPUT_BATCHES {}\n".format(prefix, self.batches))
+
+    def quantize_weights_feature(self, value):
+        result = round(value / self.weights_feature_scale)
+        return self.clamp(result, self.INT8_MIN, self.INT8_MAX)
+
+    def quantize_weights_time(self, value):
+        result = round(value / self.weights_time_scale)
+        return self.clamp(result, self.INT16_MIN, self.INT16_MAX)
+
+    def quantize_state(self, value):
+        result = round(value / self.state_scale)
+        return self.clamp(result, self.INT16_MIN, self.INT16_MAX)
+
+    def quantize_bias(self, value):
+        result = round(value / self.bias_scale)
+        return result
+
+    def get_randomized_state_data(self, length, npfile, regenerate, minrange=None, maxrange=None):
+        if not minrange:
+            minrange = self.mins
+        if not maxrange:
+            maxrange = self.maxs
+        data = []
+        if not os.path.exists(npfile) or regenerate:
+            regendir = os.path.dirname(npfile)
+            if not os.path.exists(regendir):
+                os.makedirs(regendir)
+            for i in range(length):
+                data.append(random.randint(self.mins, self.maxs))
+
+            print("Saving data to {}".format(npfile))
+            with open(npfile, 'w') as f:
+                for listitem in data:
+                    f.write(str(listitem) + '\n')
+        else:
+            print("Loading data from {}".format(npfile))
+            with open(npfile, 'r') as f:
+                for line in f:
+                    data.append(int(line.strip()))
+        return data
+
+    def generate_data(self, input_data=None, weights=None, biases=None, time_data=None, state_data=None):
+        if input_data is not None:
+            input_data = tf.reshape(input_data, [self.input_sequence_length])
+        else:
+            input_data = self.get_randomized_data([self.input_sequence_length],
+                                                  self.inputs_table_file,
+                                                  regenerate=self.regenerate_new_input)
+
+        self.generate_c_array("input_sequence", self.convert_tensor(input_data, self.quantize_input))
+
+        if weights is not None:
+            weights_feature_data = tf.reshape(weights, [self.number_filters, self.input_size])
+        else:
+            weights_feature_data = self.get_randomized_data([self.number_filters, self.input_size],
+                                                            self.kernel_table_file,
+                                                            regenerate=self.regenerate_new_weights)
+        self.generate_c_array("weights_feature",
+                              self.convert_tensor(weights_feature_data, self.quantize_weights_feature))
+
+        if time_data is not None:
+            weights_time_data = tf.reshape(time_data, [self.number_filters, self.memory_size])
+        else:
+            weights_time_data = self.get_randomized_data([self.number_filters, self.memory_size],
+                                                         self.time_table_file,
+                                                         regenerate=self.regenerate_new_weights)
+        self.generate_c_array("weights_time",
+                              self.convert_tensor(weights_time_data, self.quantize_weights_time), datatype='q15_t')
+
+        if state_data is None:
+            state_data = self.get_randomized_state_data(self.batches * self.memory_size * self.number_filters,
+                                                        self.state_table_file,
+                                                        regenerate=self.regenerate_new_weights)
+        self.state_data = state_data
+        state_data = tf.reshape(state_data, [self.batches, self.memory_size*self.number_filters])
+        self.generate_c_array("state", self.convert_tensor(state_data, self.quantize_state), "q15_t")
+
+        if not self.generate_bias:
+            biases = [0] * self.number_units
+        if biases is not None:
+            biases = tf.reshape(biases, [self.number_units])
+        else:
+            biases = self.get_randomized_data([self.number_units],
+                                              self.bias_table_file,
+                                              regenerate=self.regenerate_new_weights)
+        self.generate_c_array("biases", self.convert_tensor(biases, self.quantize_bias), "int32_t")
+
+        # Generate reference output.
+        svdf = None
+        for i in range(self.number_inputs):
+            start = i * self.input_size * self.batches
+            end = i * self.input_size * self.batches + self.input_size * self.batches
+            input_sequence = input_data[start:end]
+            svdf = self.svdf(input_sequence, weights_feature_data, weights_time_data, biases)
+        self.generate_c_array("output_ref", self.convert_tensor(svdf, self.quantize_output))
+
+        self.write_c_config_header()
+        self.write_c_header_wrapper()
+
+    def svdf(self, indata, weights_feature, time_feature, bias=None):
+        indata = tf.cast(indata, dtype=tf.dtypes.float32)
+        weights_feature = tf.cast(weights_feature, dtype=tf.dtypes.float32)
+        time_feature = tf.cast(time_feature, dtype=tf.dtypes.float32)
+        bias = tf.cast(bias, dtype=tf.dtypes.float32)
+
+        state_data = deque(self.state_data)
+        state_data.rotate(-1)
+        self.state_data = list(state_data)
+
+        indata = tf.reshape(indata, [self.batches, 1, self.input_size])
+        weights_feature = tf.reshape(weights_feature, [self.number_filters, self.input_size, 1])
+        weights_feature = tf.transpose(weights_feature)
+        scratch = tf.nn.conv1d(indata, weights_feature, stride=self.memory_size-1, padding=self.padding)
+        out_size = self.batches * self.number_filters
+        scratch = tf.reshape(scratch, [out_size])
+        state_counter = self.memory_size - 1
+        for i in range(out_size):
+            self.state_data[state_counter] = scratch[i].numpy().ravel()[0]
+            state_counter += self.memory_size
+
+        time_feature = tf.reshape(time_feature, [self.number_filters * self.memory_size])
+        scratch = []
+        for b in range(self.batches):
+            counter_t = 0
+            counter_s = b * self.memory_size * self.number_filters
+            for i in range(self.number_filters):
+                dot_prod = 0
+                for j in range(self.memory_size):
+                    dot_prod += self.state_data[counter_s] * time_feature[counter_t].numpy().ravel()[0]
+                    counter_t += 1
+                    counter_s += 1
+                scratch.append(dot_prod)
+        out = tf.constant(scratch, dtype=tf.dtypes.float32)
+
+        out = tf.reshape(out, [self.number_units * self.batches, self.rank])
+        out = tf.reduce_sum(out, axis=1)
+
+        if self.generate_bias:
+            out = tf.reshape(out, [self.batches, self.number_units])
+            output_list = []
+            for b in range(self.batches):
+                output_list.append(tf.add(out[b], bias))
+            outputs = tf.stack(output_list)
+            out = outputs
+
+        out = tf.clip_by_value(out, self.out_activation_min, self.out_activation_max)
+        return out
+
+
 def load_all_testdatasets():
     """
     Add all new testdata sets here
@@ -957,6 +1168,25 @@ def load_all_testdatasets():
     type_of_test = 'softmax'
     dataset = 'softmax'
     ALL_TESTDATA_SETS[dataset] = SoftmaxSettings(dataset, type_of_test, args, x_in=5, y_in=1)
+
+    type_of_test = 'svdf'
+    dataset = 'svdf'
+    ALL_TESTDATA_SETS[dataset] = SVDFSettings(dataset, type_of_test, args,  batches=2, number_inputs=2, rank=8,
+                                              memory_size=8, input_size=3, number_units=3)
+    type_of_test = 'svdf'
+    dataset = 'svdf_1'
+    ALL_TESTDATA_SETS[dataset] = SVDFSettings(dataset, type_of_test, args,  batches=3, number_inputs=2, rank=1,
+                                              memory_size=2, input_size=7, number_units=5)
+
+    type_of_test = 'svdf'
+    dataset = 'svdf_2'
+    ALL_TESTDATA_SETS[dataset] = SVDFSettings(dataset, type_of_test, args,  batches=3, number_inputs=2, rank=2,
+                                              memory_size=2, input_size=7, number_units=5, generate_bias=False)
+
+    type_of_test = 'svdf'
+    dataset = 'svdf_3'
+    ALL_TESTDATA_SETS[dataset] = SVDFSettings(dataset, type_of_test, args,  batches=1, number_inputs=2, rank=1,
+                                              memory_size=2, input_size=20, number_units=12, generate_bias=False)
 
 
 if __name__ == '__main__':
