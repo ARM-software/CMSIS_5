@@ -19,7 +19,6 @@
 #include "unity.h"
 #include <arm_nnfunctions.h>
 
-#include "../TestData/maxpooling/test_data.h"
 #include "../TestData/softmax/test_data.h"
 #include "../Utils/validate.h"
 

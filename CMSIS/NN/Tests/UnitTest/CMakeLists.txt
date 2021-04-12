@@ -68,6 +68,7 @@ add_subdirectory(TestCases/test_arm_depthwise_conv_s8_opt)
 add_subdirectory(TestCases/test_arm_fully_connected_s8)
 add_subdirectory(TestCases/test_arm_max_pool_s8)
 add_subdirectory(TestCases/test_arm_softmax_s8)
+add_subdirectory(TestCases/test_arm_svdf_s8)
 
 set(MAKE_CMD "python3")
 set(MAKE_CMD_SCRIPT "${CMAKE_CURRENT_SOURCE_DIR}/unittest_targets.py")
