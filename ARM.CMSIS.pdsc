@@ -2833,7 +2833,7 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="linkerScript" name="Device/ARM/ARMCM23/Source/ARM/ARMCM23_ac6.sct"           version="1.1.0" attr="config" condition="TZ Unavailable ARMCC6"/>
         <file category="sourceAsm"    name="Device/ARM/ARMCM23/Source/GCC/startup_ARMCM23.S"         version="2.2.0" attr="config" condition="GCC"/>
         <file category="linkerScript" name="Device/ARM/ARMCM23/Source/GCC/gcc_arm.ld"                version="2.2.0" attr="config" condition="GCC"/>
-        <file category="sourceAsm"    name="Device/ARM/ARMCM23/Source/IAR/startup_ARMCM23.s" version="1.0.0" attr="config" condition="IAR"/>
+        <file category="sourceAsm"    name="Device/ARM/ARMCM23/Source/IAR/startup_ARMCM23.s" version="1.1.0" attr="config" condition="IAR"/>
         <file category="sourceC"      name="Device/ARM/ARMCM23/Source/system_ARMCM23.c"      version="1.0.1" attr="config"/>
         <!-- SAU configuration -->
         <file category="header"       name="Device/ARM/ARMCM23/Include/Template/partition_ARMCM23.h" version="1.0.0" attr="config" condition="TZ Secure"/>
@@ -2869,7 +2869,7 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="linkerScript" name="Device/ARM/ARMCM33/Source/ARM/ARMCM33_ac6.sct"           version="1.1.0" attr="config" condition="TZ Unavailable ARMCC6"/>
         <file category="sourceAsm"    name="Device/ARM/ARMCM33/Source/GCC/startup_ARMCM33.S"         version="2.2.0" attr="config" condition="GCC"/>
         <file category="linkerScript" name="Device/ARM/ARMCM33/Source/GCC/gcc_arm.ld"                version="2.2.0" attr="config" condition="GCC"/>
-        <file category="sourceAsm"    name="Device/ARM/ARMCM33/Source/IAR/startup_ARMCM33.s"         version="1.0.0" attr="config" condition="IAR"/>
+        <file category="sourceAsm"    name="Device/ARM/ARMCM33/Source/IAR/startup_ARMCM33.s"         version="1.1.0" attr="config" condition="IAR"/>
         <file category="sourceC"      name="Device/ARM/ARMCM33/Source/system_ARMCM33.c"              version="1.0.1" attr="config"/>
         <!-- SAU configuration -->
         <file category="header"       name="Device/ARM/ARMCM33/Include/Template/partition_ARMCM33.h" version="1.1.1" attr="config" condition="TZ Secure"/>
@@ -2905,7 +2905,7 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="linkerScript" name="Device/ARM/ARMCM35P/Source/ARM/ARMCM35P_ac6.sct"           version="1.1.0" attr="config" condition="TZ Unavailable ARMCC6"/>
         <file category="sourceAsm"    name="Device/ARM/ARMCM35P/Source/GCC/startup_ARMCM35P.S"         version="1.2.0" attr="config" condition="GCC"/>
         <file category="linkerScript" name="Device/ARM/ARMCM35P/Source/GCC/gcc_arm.ld"                 version="2.2.0" attr="config" condition="GCC"/>
-        <file category="sourceAsm"    name="Device/ARM/ARMCM35P/Source/IAR/startup_ARMCM35P.s"         version="2.0.0" attr="config" condition="IAR"/>
+        <file category="sourceAsm"    name="Device/ARM/ARMCM35P/Source/IAR/startup_ARMCM35P.s"         version="2.1.0" attr="config" condition="IAR"/>
         <file category="sourceC"      name="Device/ARM/ARMCM35P/Source/system_ARMCM35P.c"              version="1.0.1" attr="config"/>
         <!-- SAU configuration -->
         <file category="header"       name="Device/ARM/ARMCM35P/Include/Template/partition_ARMCM35P.h" version="1.0.0" attr="config" condition="TZ Secure"/>
