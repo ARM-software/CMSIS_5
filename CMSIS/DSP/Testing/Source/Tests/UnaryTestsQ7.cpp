@@ -126,6 +126,7 @@ a double precision computation.
 void UnaryTestsQ7::test_mat_trans_q7()
     {     
       LOADDATA1();
+      arm_status status;
 
       for(i=0;i < nbMatrixes ; i ++)
       {
@@ -134,7 +135,8 @@ void UnaryTestsQ7::test_mat_trans_q7()
 
           PREPAREDATA1(true);
 
-          arm_mat_trans_q7(&this->in1,&this->out);
+          status=arm_mat_trans_q7(&this->in1,&this->out);
+          ASSERT_TRUE(status==ARM_MATH_SUCCESS);
 
           outp += (rows * columns);
 

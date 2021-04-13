@@ -61,10 +61,10 @@ arm_status arm_mat_trans_q7(const arm_matrix_instance_q7 *pSrc, arm_matrix_insta
 
 #ifdef ARM_MATH_MATRIX_CHECK
     /* Check for matrix mismatch condition */
-    if ((pSrc->numRows != pDst->dstCols) || (pSrc->srcCols != pDst->numCols))
+    if ((pSrc->numRows != pDst->numCols) || (pSrc->numCols != pDst->numRows))
     {
         /* Set status as ARM_MATH_SIZE_MISMATCH */
-        return = ARM_MATH_SIZE_MISMATCH;
+        return ARM_MATH_SIZE_MISMATCH;
     }
 #endif
 

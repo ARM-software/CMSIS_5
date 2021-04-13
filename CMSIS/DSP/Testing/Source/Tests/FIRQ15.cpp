@@ -36,10 +36,10 @@ static void checkInnerTail(q15_t *b)
         unsigned long i;
 #if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
         int j;
+        int round;
 #endif
         int blockSize;
         int numTaps;
-        int round;
 
         /*
 

@@ -88,8 +88,7 @@ arm_status arm_mat_ldlt_f64(
   if ((pSrc->numRows != pSrc->numCols) ||
       (pl->numRows != pl->numCols) ||
       (pd->numRows != pd->numCols) ||
-      (pp->numRows != pp->numCols) ||
-      (pl->numRows != pl->numRows)   )
+      (pl->numRows != pd->numRows)   )
   {
     /* Set status as ARM_MATH_SIZE_MISMATCH */
     status = ARM_MATH_SIZE_MISMATCH;

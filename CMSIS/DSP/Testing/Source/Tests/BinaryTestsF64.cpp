@@ -54,6 +54,7 @@ a double precision computation.
     void BinaryTestsF64::test_mat_mult_f64()
     {     
       LOADDATA2();
+      arm_status status;
 
       for(i=0;i < nbMatrixes ; i ++)
       {
@@ -63,7 +64,8 @@ a double precision computation.
 
           PREPAREDATA2();
 
-          arm_mat_mult_f64(&this->in1,&this->in2,&this->out);
+          status=arm_mat_mult_f64(&this->in1,&this->in2,&this->out);
+          ASSERT_TRUE(status==ARM_MATH_SUCCESS);
 
           outp += (rows * columns);
 

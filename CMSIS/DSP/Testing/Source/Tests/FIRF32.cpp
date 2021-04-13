@@ -46,7 +46,9 @@ static void checkInnerTail(float32_t *b)
 #endif
         int blockSize;
         int numTaps;
+#if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
         int round;
+#endif
         int nb=0;
 
         

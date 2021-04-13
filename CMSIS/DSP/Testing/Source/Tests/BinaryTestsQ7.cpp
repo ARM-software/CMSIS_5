@@ -56,6 +56,7 @@ a double precision computation.
     void BinaryTestsQ7::test_mat_mult_q7()
     {     
       LOADDATA2();
+      arm_status status;
 
       for(i=0;i < nbMatrixes ; i ++)
       {
@@ -65,7 +66,8 @@ a double precision computation.
 
           PREPAREDATA2();
           
-          arm_mat_mult_q7(&this->in1,&this->in2,&this->out,tmpPtr);
+          status=arm_mat_mult_q7(&this->in1,&this->in2,&this->out,tmpPtr);
+          ASSERT_TRUE(status==ARM_MATH_SUCCESS);
 
           outp += (rows * columns);
 

@@ -1,2 +1,5 @@
 function(configure_platform PROJECTNAME ROOT CORE PLATFORMFOLDER)
+    if (GCC)
+      target_sources(${PROJECTNAME} PRIVATE ${PLATFORMFOLDER}/${CORE}/Startup/GCC/startup_asm_${CORE}.S)
+    endif()
 endfunction()

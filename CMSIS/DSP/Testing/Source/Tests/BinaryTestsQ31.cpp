@@ -54,6 +54,7 @@ a double precision computation.
     void BinaryTestsQ31::test_mat_mult_q31()
     {     
       LOADDATA2();
+      arm_status status;
 
       for(i=0;i < nbMatrixes ; i ++)
       {
@@ -63,7 +64,8 @@ a double precision computation.
 
           PREPAREDATA2();
 
-          arm_mat_mult_q31(&this->in1,&this->in2,&this->out);
+          status=arm_mat_mult_q31(&this->in1,&this->in2,&this->out);
+          ASSERT_TRUE(status==ARM_MATH_SUCCESS);
 
           outp += (rows * columns);
 
@@ -82,6 +84,7 @@ a double precision computation.
     void BinaryTestsQ31::test_mat_cmplx_mult_q31()
     {     
       LOADDATA2();
+      arm_status status;
 
       for(i=0;i < nbMatrixes ; i ++)
       {
@@ -91,7 +94,8 @@ a double precision computation.
 
           PREPAREDATA2();
 
-          arm_mat_cmplx_mult_q31(&this->in1,&this->in2,&this->out);
+          status=arm_mat_cmplx_mult_q31(&this->in1,&this->in2,&this->out);
+          ASSERT_TRUE(status==ARM_MATH_SUCCESS);
         
           outp += (2*rows * columns);
 

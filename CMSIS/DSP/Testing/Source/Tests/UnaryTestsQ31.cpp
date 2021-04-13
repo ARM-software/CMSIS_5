@@ -143,6 +143,7 @@ a double precision computation.
     void UnaryTestsQ31::test_mat_add_q31()
     {     
       LOADDATA2();
+      arm_status status;
 
       for(i=0;i < nbMatrixes ; i ++)
       {
@@ -151,7 +152,8 @@ a double precision computation.
 
           PREPAREDATA2();
 
-          arm_mat_add_q31(&this->in1,&this->in2,&this->out);
+          status=arm_mat_add_q31(&this->in1,&this->in2,&this->out);
+          ASSERT_TRUE(status==ARM_MATH_SUCCESS);
 
           outp += (rows * columns);
 
@@ -168,6 +170,7 @@ a double precision computation.
 void UnaryTestsQ31::test_mat_sub_q31()
     {     
       LOADDATA2();
+      arm_status status;
 
       for(i=0;i < nbMatrixes ; i ++)
       {
@@ -176,7 +179,8 @@ void UnaryTestsQ31::test_mat_sub_q31()
 
           PREPAREDATA2();
 
-          arm_mat_sub_q31(&this->in1,&this->in2,&this->out);
+          status=arm_mat_sub_q31(&this->in1,&this->in2,&this->out);
+          ASSERT_TRUE(status==ARM_MATH_SUCCESS);
 
           outp += (rows * columns);
 
@@ -193,6 +197,7 @@ void UnaryTestsQ31::test_mat_sub_q31()
 void UnaryTestsQ31::test_mat_scale_q31()
     {     
       LOADDATA1();
+      arm_status status;
 
       for(i=0;i < nbMatrixes ; i ++)
       {
@@ -201,7 +206,8 @@ void UnaryTestsQ31::test_mat_scale_q31()
 
           PREPAREDATA1(false);
 
-          arm_mat_scale_q31(&this->in1,ONEHALF,0,&this->out);
+          status=arm_mat_scale_q31(&this->in1,ONEHALF,0,&this->out);
+          ASSERT_TRUE(status==ARM_MATH_SUCCESS);
 
           outp += (rows * columns);
 
@@ -218,6 +224,7 @@ void UnaryTestsQ31::test_mat_scale_q31()
 void UnaryTestsQ31::test_mat_trans_q31()
     {     
       LOADDATA1();
+      arm_status status;
 
       for(i=0;i < nbMatrixes ; i ++)
       {
@@ -226,7 +233,8 @@ void UnaryTestsQ31::test_mat_trans_q31()
 
           PREPAREDATA1(true);
 
-          arm_mat_trans_q31(&this->in1,&this->out);
+          status=arm_mat_trans_q31(&this->in1,&this->out);
+          ASSERT_TRUE(status==ARM_MATH_SUCCESS);
 
           outp += (rows * columns);
 
@@ -243,6 +251,7 @@ void UnaryTestsQ31::test_mat_trans_q31()
 void UnaryTestsQ31::test_mat_cmplx_trans_q31()
     {     
       LOADDATA1();
+      arm_status status;
 
       for(i=0;i < nbMatrixes ; i ++)
       {
@@ -251,7 +260,8 @@ void UnaryTestsQ31::test_mat_cmplx_trans_q31()
 
           PREPAREDATA1C(true);
 
-          arm_mat_cmplx_trans_q31(&this->in1,&this->out);
+          status=arm_mat_cmplx_trans_q31(&this->in1,&this->out);
+          ASSERT_TRUE(status==ARM_MATH_SUCCESS);
 
           outp += 2*(rows * columns);
 

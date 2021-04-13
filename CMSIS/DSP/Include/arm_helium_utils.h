@@ -335,7 +335,7 @@ __STATIC_INLINE arm_status arm_mat_cmplx_trans_32bit(
         /*
          * Set status as ARM_MATH_SIZE_MISMATCH
          */
-        return = ARM_MATH_SIZE_MISMATCH;
+        return ARM_MATH_SIZE_MISMATCH;
     }
 #else
     (void)dstRows;
@@ -535,7 +535,7 @@ __STATIC_INLINE arm_status arm_mat_cmplx_trans_16bit(
         /*
          * Set status as ARM_MATH_SIZE_MISMATCH
          */
-        return = ARM_MATH_SIZE_MISMATCH;
+        return ARM_MATH_SIZE_MISMATCH;
     }
 #else
     (void)dstRows;

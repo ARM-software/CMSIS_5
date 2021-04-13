@@ -116,6 +116,7 @@ void UnaryTestsF64::test_mat_add_f64()
 void UnaryTestsF64::test_mat_sub_f64()
 {
       LOADDATA2();
+      arm_status status;
 
       for(i=0;i < nbMatrixes ; i ++)
       {
@@ -124,7 +125,8 @@ void UnaryTestsF64::test_mat_sub_f64()
 
           PREPAREDATA2();
 
-          arm_mat_sub_f64(&this->in1,&this->in2,&this->out);
+          status=arm_mat_sub_f64(&this->in1,&this->in2,&this->out);
+          ASSERT_TRUE(status==ARM_MATH_SUCCESS);
 
           outp += (rows * columns);
 
@@ -145,6 +147,7 @@ void UnaryTestsF64::test_mat_scale_f64()
 void UnaryTestsF64::test_mat_trans_f64()
 {
       LOADDATA1();
+      arm_status status;
 
       for(i=0;i < nbMatrixes ; i ++)
       {
@@ -153,7 +156,8 @@ void UnaryTestsF64::test_mat_trans_f64()
 
           PREPAREDATA1(true);
 
-          arm_mat_trans_f64(&this->in1,&this->out);
+          status=arm_mat_trans_f64(&this->in1,&this->out);
+          ASSERT_TRUE(status==ARM_MATH_SUCCESS);
 
           outp += (rows * columns);
 
@@ -178,6 +182,7 @@ void UnaryTestsF64::test_mat_inverse_f64()
       int nbMatrixes = dims.nbSamples();
       int rows,columns;                      
       int i;
+      arm_status status;
 
       for(i=0;i < nbMatrixes ; i ++)
       {
@@ -186,7 +191,8 @@ void UnaryTestsF64::test_mat_inverse_f64()
 
           PREPAREDATA1(false);
 
-          arm_mat_inverse_f64(&this->in1,&this->out);
+          status=arm_mat_inverse_f64(&this->in1,&this->out);
+          ASSERT_TRUE(status==ARM_MATH_SUCCESS);
 
           outp += (rows * columns);
           inp1 += (rows * columns);

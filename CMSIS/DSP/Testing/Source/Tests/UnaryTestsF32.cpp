@@ -191,6 +191,7 @@ void UnaryTestsF32::test_mat_vec_mult_f32()
     void UnaryTestsF32::test_mat_add_f32()
     {     
       LOADDATA2();
+      arm_status status;
 
       for(i=0;i < nbMatrixes ; i ++)
       {
@@ -199,7 +200,8 @@ void UnaryTestsF32::test_mat_vec_mult_f32()
 
           PREPAREDATA2();
 
-          arm_mat_add_f32(&this->in1,&this->in2,&this->out);
+          status=arm_mat_add_f32(&this->in1,&this->in2,&this->out);
+          ASSERT_TRUE(status==ARM_MATH_SUCCESS);
 
           outp += (rows * columns);
 
@@ -216,6 +218,7 @@ void UnaryTestsF32::test_mat_vec_mult_f32()
 void UnaryTestsF32::test_mat_sub_f32()
     {     
       LOADDATA2();
+      arm_status status;
 
       for(i=0;i < nbMatrixes ; i ++)
       {
@@ -224,7 +227,8 @@ void UnaryTestsF32::test_mat_sub_f32()
 
           PREPAREDATA2();
 
-          arm_mat_sub_f32(&this->in1,&this->in2,&this->out);
+          status=arm_mat_sub_f32(&this->in1,&this->in2,&this->out);
+          ASSERT_TRUE(status==ARM_MATH_SUCCESS);
 
           outp += (rows * columns);
 
@@ -241,6 +245,7 @@ void UnaryTestsF32::test_mat_sub_f32()
 void UnaryTestsF32::test_mat_scale_f32()
     {     
       LOADDATA1();
+      arm_status status;
 
       for(i=0;i < nbMatrixes ; i ++)
       {
@@ -249,7 +254,8 @@ void UnaryTestsF32::test_mat_scale_f32()
 
           PREPAREDATA1(false);
 
-          arm_mat_scale_f32(&this->in1,0.5f,&this->out);
+          status=arm_mat_scale_f32(&this->in1,0.5f,&this->out);
+          ASSERT_TRUE(status==ARM_MATH_SUCCESS);
 
           outp += (rows * columns);
 
@@ -266,6 +272,7 @@ void UnaryTestsF32::test_mat_scale_f32()
 void UnaryTestsF32::test_mat_trans_f32()
     {     
       LOADDATA1();
+      arm_status status;
 
       for(i=0;i < nbMatrixes ; i ++)
       {
@@ -274,7 +281,8 @@ void UnaryTestsF32::test_mat_trans_f32()
 
           PREPAREDATA1(true);
 
-          arm_mat_trans_f32(&this->in1,&this->out);
+          status=arm_mat_trans_f32(&this->in1,&this->out);
+          ASSERT_TRUE(status==ARM_MATH_SUCCESS);
 
           outp += (rows * columns);
 
@@ -291,6 +299,7 @@ void UnaryTestsF32::test_mat_trans_f32()
 void UnaryTestsF32::test_mat_cmplx_trans_f32()
     {     
       LOADDATA1();
+      arm_status status;
 
       for(i=0;i < nbMatrixes ; i ++)
       {
@@ -299,7 +308,8 @@ void UnaryTestsF32::test_mat_cmplx_trans_f32()
 
           PREPAREDATA1C(true);
 
-          arm_mat_cmplx_trans_f32(&this->in1,&this->out);
+          status=arm_mat_cmplx_trans_f32(&this->in1,&this->out);
+          ASSERT_TRUE(status==ARM_MATH_SUCCESS);
 
           outp += 2*(rows * columns);
 

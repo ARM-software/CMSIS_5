@@ -402,7 +402,7 @@ arm_status arm_mat_mult_f16(
       (pSrcB->numCols != pDst->numCols)    )
   {
     /* Set status as ARM_MATH_SIZE_MISMATCH */
-    status = ARM_MATH_SIZE_MISMATCH;
+    return(ARM_MATH_SIZE_MISMATCH);
   }
   else
 

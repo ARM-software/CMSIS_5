@@ -61,9 +61,9 @@
 #ifdef ARM_MATH_MATRIX_CHECK
 
   /* Check for matrix mismatch condition */
-  if ((ut->numRows != lt->numCols) ||
+  if ((lt->numRows != lt->numCols) ||
       (a->numRows != a->numCols) ||
-      (ut->numRows != a->numRows)   )
+      (lt->numRows != a->numRows)   )
   {
     /* Set status as ARM_MATH_SIZE_MISMATCH */
     status = ARM_MATH_SIZE_MISMATCH;
@@ -162,9 +162,9 @@
 #ifdef ARM_MATH_MATRIX_CHECK
 
   /* Check for matrix mismatch condition */
-  if ((ut->numRows != lt->numCols) ||
+  if ((lt->numRows != lt->numCols) ||
       (a->numRows != a->numCols) ||
-      (ut->numRows != a->numRows)   )
+      (lt->numRows != a->numRows)   )
   {
     /* Set status as ARM_MATH_SIZE_MISMATCH */
     status = ARM_MATH_SIZE_MISMATCH;
