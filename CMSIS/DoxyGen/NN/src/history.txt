@@ -14,6 +14,7 @@
       as per the TFLM int8 quantization spec. The API is the same but,<br>
       the weight offset parameter is expected to be zero<br> </li>
       <li> Added unit test for Softmax </li>
+      <li> Added MVE optimiztion for SVDF operator </li>
       </ul>
     </td>
   </tr>

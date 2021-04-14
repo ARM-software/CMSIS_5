@@ -21,8 +21,8 @@
  * Title:        arm_nnsupportfunctions.h
  * Description:  Public header file of support functions for CMSIS NN Library
  *
- * $Date:        19. March 2021
- * $Revision:    V.5.0.0
+ * $Date:        15. April 2021
+ * $Revision:    V.5.5.0
  *
  * Target Processor:  Cortex-M CPUs
  * -------------------------------------------------------------------- */
@@ -366,6 +366,40 @@ arm_status arm_nn_vec_mat_mult_t_s8(const q7_t *lhs,
                                     const int32_t rhs_rows,
                                     const int32_t activation_min,
                                     const int32_t activation_max);
+
+/**
+ * @brief s8 Vector by Matrix (transposed) multiplication with s16 output
+ *
+ * @param[in]      lhs             Input left-hand side vector
+ * @param[in]      rhs             Input right-hand side matrix (transposed)
+ * @param[out]     dst             Output vector
+ * @param[in]      lhs_offset      Offset to be added to the input values of the left-hand side
+ *                                 vector. Range: -127 to 128
+ * @param[in]      rhs_offset      Not used
+ * @param[in]      scatter_offset  Address offset for dst. First output is stored at 'dst', the
+ *                                 second at 'dst + scatter_offset' and so on.
+ * @param[in]      dst_multiplier  Output multiplier
+ * @param[in]      dst_shift       Output shift
+ * @param[in]      rhs_cols        Number of columns in the right-hand side input matrix
+ * @param[in]      rhs_rows        Number of rows in the right-hand side input matrix
+ * @param[in]      activation_min  Minimum value to clamp the output to. Range: int16
+ * @param[in]      activation_max  Maximum value to clamp the output to. Range: int16
+ *
+ * @return         The function returns <code>ARM_MATH_SUCCESS</code>
+ *
+ */
+arm_status arm_nn_vec_mat_mult_t_svdf_s8(const q7_t *lhs,
+                                         const q7_t *rhs,
+                                         q15_t *dst,
+                                         const int32_t lhs_offset,
+                                         const int32_t rhs_offset,
+                                         const int32_t scatter_offset,
+                                         const int32_t dst_multiplier,
+                                         const int32_t dst_shift,
+                                         const int32_t rhs_cols,
+                                         const int32_t rhs_rows,
+                                         const int32_t activation_min,
+                                         const int32_t activation_max);
 
 /**
  * @brief Depthwise convolution of transposed rhs matrix with 4 lhs matrices. To be used in padded cases where
