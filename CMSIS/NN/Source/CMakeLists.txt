@@ -84,9 +84,9 @@ if (SOFTMAX)
   target_link_libraries(CMSISNN INTERFACE CMSISNNSoftmax)
 endif()
 
-if (NNSUPPORT)
-  add_subdirectory(NNSupportFunctions)
-  target_link_libraries(CMSISNN INTERFACE CMSISNNSupport)
+if (SVDF)
+  add_subdirectory(SVDFunctions)
+  target_link_libraries(CMSISNN INTERFACE CMSISNNSVDF)
 endif()
 
 if (RESHAPE)
@@ -94,10 +94,13 @@ if (RESHAPE)
   target_link_libraries(CMSISNN INTERFACE CMSISNNReshape)
 endif()
 
-if (SVDF)
-  add_subdirectory(SVDFunctions)
-  target_link_libraries(CMSISNN INTERFACE CMSISNNSVDF)
+# Keep NNSUPPORT at the end
+if (NNSUPPORT)
+  add_subdirectory(NNSupportFunctions)
+  target_link_libraries(CMSISNN INTERFACE CMSISNNSupport)
 endif()
+
+
 
 ### Includes
 target_include_directories(CMSISNN INTERFACE "${NN}/Include")

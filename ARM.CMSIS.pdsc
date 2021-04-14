@@ -3383,6 +3383,7 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="source" name="CMSIS/NN/Source/NNSupportFunctions/arm_nn_mult_q7.c"/>
         <file category="source" name="CMSIS/NN/Source/NNSupportFunctions/arm_q7_to_q15_reordered_no_shift.c"/>
         <file category="source" name="CMSIS/NN/Source/NNSupportFunctions/arm_nn_vec_mat_mult_t_s8.c"/>
+        <file category="source" name="CMSIS/NN/Source/NNSupportFunctions/arm_nn_vec_mat_mult_t_svdf_s8.c"/>
         <file category="source" name="CMSIS/NN/Source/NNSupportFunctions/arm_q7_to_q15_with_offset.c"/>
         <file category="source" name="CMSIS/NN/Source/NNSupportFunctions/arm_nn_accumulate_q7_to_q15.c"/>
         <file category="source" name="CMSIS/NN/Source/NNSupportFunctions/arm_nn_mat_mult_nt_t_s8.c"/>
