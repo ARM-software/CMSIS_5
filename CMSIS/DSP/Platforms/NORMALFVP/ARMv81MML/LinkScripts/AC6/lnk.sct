@@ -7,7 +7,7 @@
 
 #include "mem_ARMv81MML.h"
 
-LOAD_REGION 0x0
+LOAD_REGION 0x10000000
 {
     CODE +0 0x100000
     {
