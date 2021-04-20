@@ -130,7 +130,12 @@
 * Declare FIR state buffers and structure
 * ------------------------------------------------------------------- */
 
+#if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
+float32_t firStateF32[2 * BLOCKSIZE + NUMTAPS - 1];
+#else
 float32_t firStateF32[NUMTAPS + BLOCKSIZE];
+#endif
+
 arm_fir_instance_f32 LPF_instance;
 
 /* ----------------------------------------------------------------------
