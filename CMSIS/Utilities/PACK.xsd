@@ -163,6 +163,7 @@
       <xs:enumeration value="ArteryTek:143" />
       <xs:enumeration value="Atmel:3" />
       <xs:enumeration value="AutoChips:150" />
+      <xs:enumeration value="BrainChip:168" />
       <xs:enumeration value="Cmsemicon:161" />
       <xs:enumeration value="CSR:118" />
       <xs:enumeration value="Cypress:19" />
