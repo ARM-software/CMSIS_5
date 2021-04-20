@@ -1969,6 +1969,11 @@ Contact cmsis@arm.com to ask for an extension. These values can be used in the e
     <td>http://www.autochips.com/index_en.aspx</td>
   </tr>
   <tr>
+    <td class="XML-Token">BrainChip:168</td>
+    <td>BrainChip Inc</td>
+    <td>https://brainchipinc.com</td>
+  </tr>
+  <tr>
     <td class="XML-Token">Cmsemicon:161</td>
     <td>Cmsemicon</td>
     <td>http://www.mcu.com.cn</td>
