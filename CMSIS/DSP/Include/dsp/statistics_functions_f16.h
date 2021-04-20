@@ -110,6 +110,19 @@ extern "C"
         float16_t * pResult,
         uint32_t * pIndex);
 
+ /**
+   * @brief  Minimum value of absolute values of a floating-point vector.
+   * @param[in]  pSrc       is input pointer
+   * @param[in]  blockSize  is the number of samples to process
+   * @param[out] pResult    is output pointer
+   * @param[out] pIndex     is the array index of the minimum value in the input buffer.
+   */
+  void arm_absmin_f16(
+  const float16_t * pSrc,
+        uint32_t blockSize,
+        float16_t * pResult,
+        uint32_t * pIndex);
+
 /**
  * @brief Maximum value of a floating-point vector.
  * @param[in]  pSrc       points to the input buffer
@@ -118,6 +131,19 @@ extern "C"
  * @param[out] pIndex     index of maximum value returned here
  */
   void arm_max_f16(
+  const float16_t * pSrc,
+        uint32_t blockSize,
+        float16_t * pResult,
+        uint32_t * pIndex);
+
+/**
+ * @brief Maximum value of absolute values of a floating-point vector.
+ * @param[in]  pSrc       points to the input buffer
+ * @param[in]  blockSize  length of the input vector
+ * @param[out] pResult    maximum value returned here
+ * @param[out] pIndex     index of maximum value returned here
+ */
+  void arm_absmax_f16(
   const float16_t * pSrc,
         uint32_t blockSize,
         float16_t * pResult,

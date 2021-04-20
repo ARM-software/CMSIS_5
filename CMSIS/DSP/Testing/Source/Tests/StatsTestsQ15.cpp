@@ -41,6 +41,32 @@ a double precision computation.
 
     }
 
+    void StatsTestsQ15::test_absmax_q15()
+    {
+        const q15_t *inp  = inputA.ptr();
+
+        q15_t result;
+        uint32_t  indexval;
+
+        q15_t *refp  = ref.ptr();
+        int16_t  *refind = maxIndexes.ptr();
+
+        q15_t *outp  = output.ptr();
+        int16_t  *ind    = index.ptr();
+
+        arm_absmax_q15(inp,
+              inputA.nbSamples(),
+              &result,
+              &indexval);
+
+        outp[0] = result;
+        ind[0] = indexval;
+
+        ASSERT_EQ(result,refp[this->refOffset]);
+        ASSERT_EQ((int16_t)indexval,refind[this->refOffset]);
+
+    }
+
     void StatsTestsQ15::test_min_q15()
     {
         const q15_t *inp  = inputA.ptr();
@@ -55,6 +81,32 @@ a double precision computation.
         int16_t  *ind    = index.ptr();
 
         arm_min_q15(inp,
+              inputA.nbSamples(),
+              &result,
+              &indexval);
+
+        outp[0] = result;
+        ind[0] = indexval;
+
+        ASSERT_EQ(result,refp[this->refOffset]);
+        ASSERT_EQ((int16_t)indexval,refind[this->refOffset]);
+
+    }
+
+    void StatsTestsQ15::test_absmin_q15()
+    {
+        const q15_t *inp  = inputA.ptr();
+
+        q15_t result;
+        uint32_t  indexval;
+
+        q15_t *refp  = ref.ptr();
+        int16_t  *refind = minIndexes.ptr();
+
+        q15_t *outp  = output.ptr();
+        int16_t  *ind    = index.ptr();
+
+        arm_absmin_q15(inp,
               inputA.nbSamples(),
               &result,
               &indexval);
@@ -443,6 +495,90 @@ a double precision computation.
                ref.reload(StatsTestsQ15::VARVALS_Q15_ID,mgr);
                
                output.create(1,StatsTestsQ15::OUT_Q15_ID,mgr);
+
+               refOffset = 2;
+            }
+            break;
+
+            case StatsTestsQ15::TEST_ABSMAX_Q15_22:
+            {
+               inputA.reload(StatsTestsQ15::INPUTNEW1_Q15_ID,mgr,7);
+              
+               maxIndexes.reload(StatsTestsQ15::ABSMAXINDEXES_S16_ID,mgr);
+               ref.reload(StatsTestsQ15::ABSMAXVALS_Q15_ID,mgr);
+               
+               output.create(1,StatsTestsQ15::OUT_Q15_ID,mgr);
+               index.create(1,StatsTestsQ15::OUT_S16_ID,mgr);
+
+               refOffset = 0;
+            }
+            break;
+
+            case StatsTestsQ15::TEST_ABSMAX_Q15_23:
+            {
+               inputA.reload(StatsTestsQ15::INPUTNEW1_Q15_ID,mgr,16);
+              
+               maxIndexes.reload(StatsTestsQ15::ABSMAXINDEXES_S16_ID,mgr);
+               ref.reload(StatsTestsQ15::ABSMAXVALS_Q15_ID,mgr);
+               
+               output.create(1,StatsTestsQ15::OUT_Q15_ID,mgr);
+               index.create(1,StatsTestsQ15::OUT_S16_ID,mgr);
+
+               refOffset = 1;
+            }
+            break;
+
+            case StatsTestsQ15::TEST_ABSMAX_Q15_24:
+            {
+               inputA.reload(StatsTestsQ15::INPUTNEW1_Q15_ID,mgr,23);
+              
+               maxIndexes.reload(StatsTestsQ15::ABSMAXINDEXES_S16_ID,mgr);
+               ref.reload(StatsTestsQ15::ABSMAXVALS_Q15_ID,mgr);
+               
+               output.create(1,StatsTestsQ15::OUT_Q15_ID,mgr);
+               index.create(1,StatsTestsQ15::OUT_S16_ID,mgr);
+
+               refOffset = 2;
+            }
+            break;
+
+            case StatsTestsQ15::TEST_ABSMIN_Q15_25:
+            {
+               inputA.reload(StatsTestsQ15::INPUTNEW1_Q15_ID,mgr,7);
+              
+               minIndexes.reload(StatsTestsQ15::ABSMININDEXES_S16_ID,mgr);
+               ref.reload(StatsTestsQ15::ABSMINVALS_Q15_ID,mgr);
+               
+               output.create(1,StatsTestsQ15::OUT_Q15_ID,mgr);
+               index.create(1,StatsTestsQ15::OUT_S16_ID,mgr);
+
+               refOffset = 0;
+            }
+            break;
+
+            case StatsTestsQ15::TEST_ABSMIN_Q15_26:
+            {
+               inputA.reload(StatsTestsQ15::INPUTNEW1_Q15_ID,mgr,16);
+              
+               minIndexes.reload(StatsTestsQ15::ABSMININDEXES_S16_ID,mgr);
+               ref.reload(StatsTestsQ15::ABSMINVALS_Q15_ID,mgr);
+               
+               output.create(1,StatsTestsQ15::OUT_Q15_ID,mgr);
+               index.create(1,StatsTestsQ15::OUT_S16_ID,mgr);
+
+               refOffset = 1;
+            }
+            break;
+
+            case StatsTestsQ15::TEST_ABSMIN_Q15_27:
+            {
+               inputA.reload(StatsTestsQ15::INPUTNEW1_Q15_ID,mgr,23);
+              
+               minIndexes.reload(StatsTestsQ15::ABSMININDEXES_S16_ID,mgr);
+               ref.reload(StatsTestsQ15::ABSMINVALS_Q15_ID,mgr);
+               
+               output.create(1,StatsTestsQ15::OUT_Q15_ID,mgr);
+               index.create(1,StatsTestsQ15::OUT_S16_ID,mgr);
 
                refOffset = 2;
             }

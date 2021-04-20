@@ -43,6 +43,32 @@ a double precision computation.
 
     }
 
+    void StatsTestsF16::test_absmax_f16()
+    {
+        const float16_t *inp  = inputA.ptr();
+
+        float16_t result;
+        uint32_t  indexval;
+
+        float16_t *refp  = ref.ptr();
+        int16_t  *refind = maxIndexes.ptr();
+
+        float16_t *outp  = output.ptr();
+        int16_t  *ind    = index.ptr();
+
+        arm_absmax_f16(inp,
+              inputA.nbSamples(),
+              &result,
+              &indexval);
+
+        outp[0] = result;
+        ind[0] = indexval;
+
+        ASSERT_EQ(result,refp[this->refOffset]);
+        ASSERT_EQ((int16_t)indexval,refind[this->refOffset]);
+
+    }
+
 
     void StatsTestsF16::test_max_no_idx_f16()
     {
@@ -79,6 +105,32 @@ a double precision computation.
         int16_t  *ind    = index.ptr();
 
         arm_min_f16(inp,
+              inputA.nbSamples(),
+              &result,
+              &indexval);
+
+        outp[0] = result;
+        ind[0] = indexval;
+
+        ASSERT_EQ(result,refp[this->refOffset]);
+        ASSERT_EQ((int16_t)indexval,refind[this->refOffset]);
+
+    }
+
+    void StatsTestsF16::test_absmin_f16()
+    {
+        const float16_t *inp  = inputA.ptr();
+
+        float16_t result;
+        uint32_t  indexval;
+
+        float16_t *refp  = ref.ptr();
+        int16_t  *refind = minIndexes.ptr();
+
+        float16_t *outp  = output.ptr();
+        int16_t  *ind    = index.ptr();
+
+        arm_absmin_f16(inp,
               inputA.nbSamples(),
               &result,
               &indexval);
@@ -727,6 +779,90 @@ a double precision computation.
                output.create(1,StatsTestsF16::OUT_F16_ID,mgr);
 
                refOffset = 3;
+            break;
+
+            case StatsTestsF16::TEST_ABSMAX_F16_34:
+            {
+               inputA.reload(StatsTestsF16::INPUTNEW1_F16_ID,mgr,7);
+              
+               maxIndexes.reload(StatsTestsF16::ABSMAXINDEXES_S16_ID,mgr);
+               ref.reload(StatsTestsF16::ABSMAXVALS_F16_ID,mgr);
+               
+               output.create(1,StatsTestsF16::OUT_F16_ID,mgr);
+               index.create(1,StatsTestsF16::OUT_S16_ID,mgr);
+
+               refOffset = 0;
+            }
+            break;
+
+            case StatsTestsF16::TEST_ABSMAX_F16_35:
+            {
+               inputA.reload(StatsTestsF16::INPUTNEW1_F16_ID,mgr,16);
+              
+               maxIndexes.reload(StatsTestsF16::ABSMAXINDEXES_S16_ID,mgr);
+               ref.reload(StatsTestsF16::ABSMAXVALS_F16_ID,mgr);
+               
+               output.create(1,StatsTestsF16::OUT_F16_ID,mgr);
+               index.create(1,StatsTestsF16::OUT_S16_ID,mgr);
+
+               refOffset = 1;
+            }
+            break;
+
+            case StatsTestsF16::TEST_ABSMAX_F16_36:
+            {
+               inputA.reload(StatsTestsF16::INPUTNEW1_F16_ID,mgr,23);
+              
+               maxIndexes.reload(StatsTestsF16::ABSMAXINDEXES_S16_ID,mgr);
+               ref.reload(StatsTestsF16::ABSMAXVALS_F16_ID,mgr);
+               
+               output.create(1,StatsTestsF16::OUT_F16_ID,mgr);
+               index.create(1,StatsTestsF16::OUT_S16_ID,mgr);
+
+               refOffset = 2;
+            }
+            break;
+
+            case StatsTestsF16::TEST_ABSMIN_F16_37:
+            {
+               inputA.reload(StatsTestsF16::INPUTNEW1_F16_ID,mgr,7);
+              
+               minIndexes.reload(StatsTestsF16::ABSMININDEXES_S16_ID,mgr);
+               ref.reload(StatsTestsF16::ABSMINVALS_F16_ID,mgr);
+               
+               output.create(1,StatsTestsF16::OUT_F16_ID,mgr);
+               index.create(1,StatsTestsF16::OUT_S16_ID,mgr);
+
+               refOffset = 0;
+            }
+            break;
+
+            case StatsTestsF16::TEST_ABSMIN_F16_38:
+            {
+               inputA.reload(StatsTestsF16::INPUTNEW1_F16_ID,mgr,16);
+              
+               minIndexes.reload(StatsTestsF16::ABSMININDEXES_S16_ID,mgr);
+               ref.reload(StatsTestsF16::ABSMINVALS_F16_ID,mgr);
+               
+               output.create(1,StatsTestsF16::OUT_F16_ID,mgr);
+               index.create(1,StatsTestsF16::OUT_S16_ID,mgr);
+
+               refOffset = 1;
+            }
+            break;
+
+            case StatsTestsF16::TEST_ABSMIN_F16_39:
+            {
+               inputA.reload(StatsTestsF16::INPUTNEW1_F16_ID,mgr,23);
+              
+               minIndexes.reload(StatsTestsF16::ABSMININDEXES_S16_ID,mgr);
+               ref.reload(StatsTestsF16::ABSMINVALS_F16_ID,mgr);
+               
+               output.create(1,StatsTestsF16::OUT_F16_ID,mgr);
+               index.create(1,StatsTestsF16::OUT_S16_ID,mgr);
+
+               refOffset = 2;
+            }
             break;
         }
         

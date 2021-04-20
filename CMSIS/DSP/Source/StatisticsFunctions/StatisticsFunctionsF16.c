@@ -38,3 +38,5 @@
 #include "arm_logsumexp_dot_prod_f16.c"
 #include "arm_logsumexp_f16.c"
 #include "arm_max_no_idx_f16.c"
+#include "arm_absmax_f16.c"
+#include "arm_absmin_f16.c"

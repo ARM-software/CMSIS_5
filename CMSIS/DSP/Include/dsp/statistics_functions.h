@@ -363,6 +363,19 @@ float64_t arm_kullback_leibler_f64(const float64_t * pSrcA,
         q7_t * result,
         uint32_t * index);
 
+  /**
+   * @brief  Minimum value of absolute values of a Q7 vector.
+   * @param[in]  pSrc       is input pointer
+   * @param[in]  blockSize  is the number of samples to process
+   * @param[out] result     is output pointer
+   * @param[in]  index      is the array index of the minimum value in the input buffer.
+   */
+  void arm_absmin_q7(
+  const q7_t * pSrc,
+        uint32_t blockSize,
+        q7_t * result,
+        uint32_t * index);
+
 
   /**
    * @brief  Minimum value of a Q15 vector.
@@ -372,6 +385,19 @@ float64_t arm_kullback_leibler_f64(const float64_t * pSrcA,
    * @param[in]  pIndex     is the array index of the minimum value in the input buffer.
    */
   void arm_min_q15(
+  const q15_t * pSrc,
+        uint32_t blockSize,
+        q15_t * pResult,
+        uint32_t * pIndex);
+
+/**
+   * @brief  Minimum value of absolute values of a Q15 vector.
+   * @param[in]  pSrc       is input pointer
+   * @param[in]  blockSize  is the number of samples to process
+   * @param[out] pResult    is output pointer
+   * @param[in]  pIndex     is the array index of the minimum value in the input buffer.
+   */
+  void arm_absmin_q15(
   const q15_t * pSrc,
         uint32_t blockSize,
         q15_t * pResult,
@@ -391,6 +417,19 @@ float64_t arm_kullback_leibler_f64(const float64_t * pSrcA,
         q31_t * pResult,
         uint32_t * pIndex);
 
+  /**
+   * @brief  Minimum value of absolute values of a Q31 vector.
+   * @param[in]  pSrc       is input pointer
+   * @param[in]  blockSize  is the number of samples to process
+   * @param[out] pResult    is output pointer
+   * @param[out] pIndex     is the array index of the minimum value in the input buffer.
+   */
+  void arm_absmin_q31(
+  const q31_t * pSrc,
+        uint32_t blockSize,
+        q31_t * pResult,
+        uint32_t * pIndex);
+
 
   /**
    * @brief  Minimum value of a floating-point vector.
@@ -400,6 +439,19 @@ float64_t arm_kullback_leibler_f64(const float64_t * pSrcA,
    * @param[out] pIndex     is the array index of the minimum value in the input buffer.
    */
   void arm_min_f32(
+  const float32_t * pSrc,
+        uint32_t blockSize,
+        float32_t * pResult,
+        uint32_t * pIndex);
+
+  /**
+   * @brief  Minimum value of absolute values of a floating-point vector.
+   * @param[in]  pSrc       is input pointer
+   * @param[in]  blockSize  is the number of samples to process
+   * @param[out] pResult    is output pointer
+   * @param[out] pIndex     is the array index of the minimum value in the input buffer.
+   */
+  void arm_absmin_f32(
   const float32_t * pSrc,
         uint32_t blockSize,
         float32_t * pResult,
@@ -419,6 +471,19 @@ float64_t arm_kullback_leibler_f64(const float64_t * pSrcA,
         q7_t * pResult,
         uint32_t * pIndex);
 
+/**
+ * @brief Maximum value of absolute values of a Q7 vector.
+ * @param[in]  pSrc       points to the input buffer
+ * @param[in]  blockSize  length of the input vector
+ * @param[out] pResult    maximum value returned here
+ * @param[out] pIndex     index of maximum value returned here
+ */
+  void arm_absmax_q7(
+  const q7_t * pSrc,
+        uint32_t blockSize,
+        q7_t * pResult,
+        uint32_t * pIndex);
+
 
 /**
  * @brief Maximum value of a Q15 vector.
@@ -433,6 +498,18 @@ float64_t arm_kullback_leibler_f64(const float64_t * pSrcA,
         q15_t * pResult,
         uint32_t * pIndex);
 
+/**
+ * @brief Maximum value of absolute values of a Q15 vector.
+ * @param[in]  pSrc       points to the input buffer
+ * @param[in]  blockSize  length of the input vector
+ * @param[out] pResult    maximum value returned here
+ * @param[out] pIndex     index of maximum value returned here
+ */
+  void arm_absmax_q15(
+  const q15_t * pSrc,
+        uint32_t blockSize,
+        q15_t * pResult,
+        uint32_t * pIndex);
 
 /**
  * @brief Maximum value of a Q31 vector.
@@ -447,6 +524,18 @@ float64_t arm_kullback_leibler_f64(const float64_t * pSrcA,
         q31_t * pResult,
         uint32_t * pIndex);
 
+/**
+ * @brief Maximum value of absolute values of a Q31 vector.
+ * @param[in]  pSrc       points to the input buffer
+ * @param[in]  blockSize  length of the input vector
+ * @param[out] pResult    maximum value returned here
+ * @param[out] pIndex     index of maximum value returned here
+ */
+  void arm_absmax_q31(
+  const q31_t * pSrc,
+        uint32_t blockSize,
+        q31_t * pResult,
+        uint32_t * pIndex);
 
 /**
  * @brief Maximum value of a floating-point vector.
@@ -456,6 +545,19 @@ float64_t arm_kullback_leibler_f64(const float64_t * pSrcA,
  * @param[out] pIndex     index of maximum value returned here
  */
   void arm_max_f32(
+  const float32_t * pSrc,
+        uint32_t blockSize,
+        float32_t * pResult,
+        uint32_t * pIndex);
+
+/**
+ * @brief Maximum value of absolute values of a floating-point vector.
+ * @param[in]  pSrc       points to the input buffer
+ * @param[in]  blockSize  length of the input vector
+ * @param[out] pResult    maximum value returned here
+ * @param[out] pIndex     index of maximum value returned here
+ */
+  void arm_absmax_f32(
   const float32_t * pSrc,
         uint32_t blockSize,
         float32_t * pResult,

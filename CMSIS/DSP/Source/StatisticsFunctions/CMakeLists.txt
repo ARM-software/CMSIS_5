@@ -42,6 +42,15 @@ target_sources(CMSISDSPStatistics PRIVATE arm_var_f32.c)
 target_sources(CMSISDSPStatistics PRIVATE arm_var_q15.c)
 target_sources(CMSISDSPStatistics PRIVATE arm_var_q31.c)
 
+target_sources(CMSISDSPStatistics PRIVATE arm_absmax_f32.c)
+target_sources(CMSISDSPStatistics PRIVATE arm_absmax_q15.c)
+target_sources(CMSISDSPStatistics PRIVATE arm_absmax_q31.c)
+target_sources(CMSISDSPStatistics PRIVATE arm_absmax_q7.c)
+
+target_sources(CMSISDSPStatistics PRIVATE arm_absmin_f32.c)
+target_sources(CMSISDSPStatistics PRIVATE arm_absmin_q15.c)
+target_sources(CMSISDSPStatistics PRIVATE arm_absmin_q31.c)
+target_sources(CMSISDSPStatistics PRIVATE arm_absmin_q7.c)
 
 configLib(CMSISDSPStatistics ${ROOT})
 configDsp(CMSISDSPStatistics ${ROOT})
@@ -64,4 +73,8 @@ target_sources(CMSISDSPStatistics PRIVATE arm_kullback_leibler_f16.c)
 target_sources(CMSISDSPStatistics PRIVATE arm_logsumexp_dot_prod_f16.c)
 target_sources(CMSISDSPStatistics PRIVATE arm_logsumexp_f16.c)
 target_sources(CMSISDSPStatistics PRIVATE arm_max_no_idx_f16.c)
+
+target_sources(CMSISDSPStatistics PRIVATE arm_absmax_f16.c)
+target_sources(CMSISDSPStatistics PRIVATE arm_absmin_f16.c)
+
 endif()

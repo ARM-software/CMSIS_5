@@ -14,6 +14,8 @@ group Root {
               folder = StatsF32
 
               Pattern INPUT1_F32_ID : Input1_f32.txt 
+              Pattern INPUTNEW1_F32_ID : InputNew1_f32.txt 
+
               Pattern INPUT2_F32_ID : Input2_f32.txt 
               Pattern MAXINDEXES_S16_ID : MaxIndexes1_s16.txt
               Pattern MAXVALS_F32_ID : MaxVals1_f32.txt
@@ -42,6 +44,13 @@ group Root {
               Pattern INPUTB25_F32_ID : InputB25_f32.txt
               Pattern DIM25_S16_ID : Dims25_s16.txt 
               Pattern REF25_LOGSUMEXP_DOT_F32_ID : RefLogSumExpDot25_f32.txt
+
+              Pattern ABSMAXINDEXES_S16_ID : AbsMaxIndexes26_s16.txt
+              Pattern ABSMAXVALS_F32_ID : AbsMaxVals26_f32.txt
+
+              Pattern ABSMININDEXES_S16_ID : AbsMinIndexes27_s16.txt
+              Pattern ABSMINVALS_F32_ID : AbsMinVals27_f32.txt
+
 
               Output  OUT_F32_ID : Output
               Output  OUT_S16_ID : Index
@@ -91,6 +100,16 @@ group Root {
                 Test long  arm_var_f32:test_var_f32
 
                 Test stability  arm_std_f32:test_std_stability_f32
+
+                Test nb=3    arm_absmax_f32:test_absmax_f32
+                Test nb=4n   arm_absmax_f32:test_absmax_f32
+                Test nb=4n+1 arm_absmax_f32:test_absmax_f32
+
+                Test nb=3    arm_absmin_f32:test_absmin_f32
+                Test nb=4n   arm_absmin_f32:test_absmin_f32
+                Test nb=4n+1 arm_absmin_f32:test_absmin_f32
+
+
               }
 
            }
@@ -124,6 +143,8 @@ group Root {
               folder = StatsQ31
 
               Pattern INPUT1_Q31_ID : Input1_q31.txt 
+              Pattern INPUTNEW1_Q31_ID : InputNew1_q31.txt 
+
               Pattern INPUT2_Q31_ID : Input2_q31.txt 
               Pattern MAXINDEXES_S16_ID : MaxIndexes1_s16.txt
               Pattern MAXVALS_Q31_ID : MaxVals1_q31.txt
@@ -134,6 +155,12 @@ group Root {
               Pattern RMSVALS_Q31_ID : RmsVals5_q31.txt
               Pattern STDVALS_Q31_ID : StdVals6_q31.txt
               Pattern VARVALS_Q31_ID : VarVals7_q31.txt
+
+              Pattern ABSMAXINDEXES_S16_ID : AbsMaxIndexes8_s16.txt
+              Pattern ABSMAXVALS_Q31_ID : AbsMaxVals8_q31.txt
+
+              Pattern ABSMININDEXES_S16_ID : AbsMinIndexes9_s16.txt
+              Pattern ABSMINVALS_Q31_ID : AbsMinVals9_q31.txt
 
               Output  OUT_Q31_ID : Output
               Output  OUT_Q63_ID : Output
@@ -169,6 +196,14 @@ group Root {
                 Test nb=4n   arm_var_q31:test_var_q31
                 Test nb=4n+1 arm_var_q31:test_var_q31
 
+                Test nb=3    arm_absmax_q31:test_absmax_q31
+                Test nb=4n   arm_absmax_q31:test_absmax_q31
+                Test nb=4n+1 arm_absmax_q31:test_absmax_q31
+
+                Test nb=3    arm_absmin_q31:test_absmin_q31
+                Test nb=4n   arm_absmin_q31:test_absmin_q31
+                Test nb=4n+1 arm_absmin_q31:test_absmin_q31
+
               }
 
            }
@@ -178,6 +213,8 @@ group Root {
               folder = StatsQ15
 
               Pattern INPUT1_Q15_ID : Input1_q15.txt 
+              Pattern INPUTNEW1_Q15_ID : InputNew1_q15.txt
+
               Pattern INPUT2_Q15_ID : Input2_q15.txt 
               Pattern MAXINDEXES_S16_ID : MaxIndexes1_s16.txt
               Pattern MAXVALS_Q15_ID : MaxVals1_q15.txt
@@ -188,6 +225,14 @@ group Root {
               Pattern RMSVALS_Q15_ID : RmsVals5_q15.txt
               Pattern STDVALS_Q15_ID : StdVals6_q15.txt
               Pattern VARVALS_Q15_ID : VarVals7_q15.txt
+
+              Pattern ABSMAXINDEXES_S16_ID : AbsMaxIndexes8_s16.txt
+              Pattern ABSMAXVALS_Q15_ID : AbsMaxVals8_q15.txt
+
+              Pattern ABSMININDEXES_S16_ID : AbsMinIndexes9_s16.txt
+              Pattern ABSMINVALS_Q15_ID : AbsMinVals9_q15.txt
+
+
 
               Output  OUT_Q15_ID : Output
               Output  OUT_Q63_ID : Output
@@ -223,6 +268,14 @@ group Root {
                 Test nb=8n   arm_var_q15:test_var_q15
                 Test nb=8n+1 arm_var_q15:test_var_q15
 
+                Test nb=3    arm_absmax_q15:test_absmax_q15
+                Test nb=4n   arm_absmax_q15:test_absmax_q15
+                Test nb=4n+1 arm_absmax_q15:test_absmax_q15
+
+                Test nb=3    arm_absmin_q15:test_absmin_q15
+                Test nb=4n   arm_absmin_q15:test_absmin_q15
+                Test nb=4n+1 arm_absmin_q15:test_absmin_q15
+
               }
 
            }
@@ -232,6 +285,8 @@ group Root {
               folder = StatsQ7
 
               Pattern INPUT1_Q7_ID : Input1_q7.txt 
+              Pattern INPUTNEW1_Q7_ID : InputNew1_q7.txt
+
               Pattern INPUT2_Q7_ID : Input2_q7.txt 
               Pattern MAXINDEXES_S16_ID : MaxIndexes1_s16.txt
               Pattern MAXVALS_Q7_ID : MaxVals1_q7.txt
@@ -241,6 +296,16 @@ group Root {
               Pattern POWERVALS_Q31_ID : PowerVals4_q31.txt
               Pattern MAXINDEXMAX_Q7_ID : InputMaxIndexMax1_q7.txt
               Pattern MININDEXMAX_Q7_ID : InputMinIndexMax3_q7.txt
+
+              Pattern ABSMAXINDEXES_S16_ID : AbsMaxIndexes8_s16.txt
+              Pattern ABSMAXVALS_Q7_ID : AbsMaxVals8_q7.txt
+
+              Pattern ABSMININDEXES_S16_ID : AbsMinIndexes9_s16.txt
+              Pattern ABSMINVALS_Q7_ID : AbsMinVals9_q7.txt
+
+              Pattern ABSMAXINDEXMAX_Q7_ID : InputAbsMaxIndexMax8_q7.txt
+              Pattern ABSMININDEXMAX_Q7_ID : InputAbsMinIndexMax9_q7.txt
+
 
               //Pattern RMSVALS_Q7_ID : RmsVals5_q7.txt
               //Pattern STDVALS_Q7_ID : StdVals6_q7.txt
@@ -270,6 +335,17 @@ group Root {
 
                 Test big index  arm_max_q7:test_max_q7
                 Test big index  arm_min_q7:test_min_q7
+
+                Test nb=3    arm_absmax_q7:test_absmax_q7
+                Test nb=4n   arm_absmax_q7:test_absmax_q7
+                Test nb=4n+1 arm_absmax_q7:test_absmax_q7
+
+                Test nb=3    arm_absmin_q7:test_absmin_q7
+                Test nb=4n   arm_absmin_q7:test_absmin_q7
+                Test nb=4n+1 arm_absmin_q7:test_absmin_q7
+
+                Test big index  arm_absmax_q7:test_absmax_q7
+                Test big index  arm_absmin_q7:test_absmin_q7
 
               }
 

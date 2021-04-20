@@ -14,6 +14,8 @@ group Root {
               folder = StatsF16
 
               Pattern INPUT1_F16_ID : Input1_f16.txt 
+              Pattern INPUTNEW1_F16_ID : InputNew1_f16.txt 
+
               Pattern INPUT2_F16_ID : Input2_f16.txt 
               Pattern MAXINDEXES_S16_ID : MaxIndexes1_s16.txt
               Pattern MAXVALS_F16_ID : MaxVals1_f16.txt
@@ -42,6 +44,12 @@ group Root {
               Pattern INPUTB25_F16_ID : InputB25_f16.txt
               Pattern DIM25_S16_ID : Dims25_s16.txt 
               Pattern REF25_LOGSUMEXP_DOT_F16_ID : RefLogSumExpDot25_f16.txt
+
+              Pattern ABSMAXINDEXES_S16_ID : AbsMaxIndexes26_s16.txt
+              Pattern ABSMAXVALS_F16_ID : AbsMaxVals26_f16.txt
+
+              Pattern ABSMININDEXES_S16_ID : AbsMinIndexes27_s16.txt
+              Pattern ABSMINVALS_F16_ID : AbsMinVals27_f16.txt
 
               Output  OUT_F16_ID : Output
               Output  OUT_S16_ID : Index
@@ -91,6 +99,14 @@ group Root {
                 Test long  arm_var_f16:test_var_f16
 
                 Test stability  arm_std_f16:test_std_stability_f16
+
+                Test nb=3    arm_absmax_f16:test_absmax_f16
+                Test nb=4n   arm_absmax_f16:test_absmax_f16
+                Test nb=4n+1 arm_absmax_f16:test_absmax_f16
+
+                Test nb=3    arm_absmin_f16:test_absmin_f16
+                Test nb=4n   arm_absmin_f16:test_absmin_f16
+                Test nb=4n+1 arm_absmin_f16:test_absmin_f16
               }
            }
         }
