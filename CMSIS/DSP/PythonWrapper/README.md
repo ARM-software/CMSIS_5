@@ -6,6 +6,9 @@ It is a very experimental wrapper with lots of limitations as described in the c
 
 But even with those limitations, it can be very useful to test a CMSIS-DSP implemention of an algorithm with all the power of numpy and scipy.
 
+A tutorial is also available but with less details than this README:
+https://developer.arm.com/documentation/102463/latest/
+
 # How to build and install
 
 ## Tested configurations

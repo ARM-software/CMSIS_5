@@ -11,3 +11,6 @@ Examples/ARM/arm_linear_interp_example/RTE/
 Examples/ARM/arm_signal_converge_example/RTE/
 Examples/ARM/arm_svm_example/RTE/
 Projects/ARM/IntermediateFiles/
+.ipynb_checkpoints
+Examples/ARM/*/RTE/
+Examples/ARM/*/MTICoverageOut.cov

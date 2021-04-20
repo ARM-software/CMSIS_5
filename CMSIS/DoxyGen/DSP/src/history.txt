@@ -47,19 +47,20 @@
       GCC issues:
       Some functions have build issues when building Helium code with gcc. So
       they are replaced with a less efficient scalar version when built with gcc.
-      - Scalar version of arm_mat_cmplx_mult_f16.c built with Helium target
-      - Scalar version of arm_biquad_cascade_stereo_df2T_f16.c built with Helium target.
-      - Scalar version of arm_levinson_durbin_f32.c  built with Helium target
-      - Scalar version of arm_levinson_durbin_f16.c  built with Helium target
-      - Scalar version of arm_levinson_durbin_q31.c  built with Helium target
-      - Scalar version of arm_float_to_f16.c  built with Helium target
-      - Scalar version of arm_f16_to_float.c  built with Helium target
+      - Scalar version of arm_mat_cmplx_mult_f16.c 
+      - Scalar version of arm_biquad_cascade_stereo_df2T_f16.c
+      - Scalar version of arm_levinson_durbin_f32.c
+      - Scalar version of arm_levinson_durbin_f16.c
+      - Scalar version of arm_levinson_durbin_q31.c
+      - Scalar version of arm_float_to_f16.c
+      - Scalar version of arm_f16_to_float.c
 
       Important:
-      - Initialization of FIRs has changed for the Helium version. Read the
-        corresponding documentations.
+      - Initialization of FIRs has changed for the Helium version (state and coefs). 
+        Read the corresponding documentations.
       - Initialization of float biquad DF1 has changed for the Helium
-        version. Read the corresponding documentations.
+        version (two init functions are required). 
+        Read the corresponding documentations.
       - The states of the vectorized filters are different from their scalar
         versions (which may break some algorithms which are working on the
         state of a filter like Goertzel)
