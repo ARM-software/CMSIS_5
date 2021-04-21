@@ -37,7 +37,7 @@
  */
 
 /**
-  @brief         Minimum value of absolute values a Q15 vector.
+  @brief         Minimum value of absolute values of a Q15 vector.
   @param[in]     pSrc       points to the input vector
   @param[in]     blockSize  number of samples in input vector
   @param[out]    pResult    minimum value returned here
@@ -45,6 +45,94 @@
   @return        none
  */
 
+#if defined(ARM_MATH_DSP)
+void arm_absmin_q15(
+  const q15_t * pSrc,
+        uint32_t blockSize,
+        q15_t * pResult,
+        uint32_t * pIndex)
+{
+        q15_t cur_absmin, out;                     /* Temporary variables to store the output value. */\
+        uint32_t blkCnt, outIndex;                     /* Loop counter */                                   \
+        uint32_t index;                                /* index of maximum value */                         \
+                                                                                                            \
+  /* Initialize index value to zero. */                                                                     \
+  outIndex = 0U;                                                                                            \
+  /* Load first input value that act as reference value for comparision */                                  \
+  out = *pSrc++;                                                                                            \
+  out = (out > 0) ? out : (q15_t)__QSUB16(0, out);                                                                           \
+  /* Initialize index of extrema value. */                                                                  \
+  index = 0U;                                                                                               \
+                                                                                                            \
+  /* Loop unrolling: Compute 4 outputs at a time */                                                         \
+  blkCnt = (blockSize - 1U) >> 2U;                                                                          \
+                                                                                                            \
+  while (blkCnt > 0U)                                                                                       \
+  {                                                                                                         \
+    /* Initialize cur_absmin to next consecutive values one by one */                                         \
+    cur_absmin = *pSrc++;                                                                                     \
+    cur_absmin = (cur_absmin > 0) ? cur_absmin : (q15_t)__QSUB16(0, cur_absmin);                                                                \
+    /* compare for the extrema value */                                                                     \
+    if (cur_absmin < out)                                                                         \
+    {                                                                                                       \
+      /* Update the extrema value and it's index */                                                         \
+      out = cur_absmin;                                                                                       \
+      outIndex = index + 1U;                                                                                \
+    }                                                                                                       \
+                                                                                                            \
+    cur_absmin = *pSrc++;                                                                                     \
+    cur_absmin = (cur_absmin > 0) ? cur_absmin : (q15_t)__QSUB16(0, cur_absmin);                                                                \
+    if (cur_absmin < out)                                                                         \
+    {                                                                                                       \
+      out = cur_absmin;                                                                                       \
+      outIndex = index + 2U;                                                                                \
+    }                                                                                                       \
+                                                                                                            \
+    cur_absmin = *pSrc++;                                                                                     \
+    cur_absmin = (cur_absmin > 0) ? cur_absmin : (q15_t)__QSUB16(0, cur_absmin);                                                                \
+    if (cur_absmin < out)                                                                          \
+    {                                                                                                       \
+      out = cur_absmin;                                                                                       \
+      outIndex = index + 3U;                                                                                \
+    }                                                                                                       \
+                                                                                                            \
+    cur_absmin = *pSrc++;                                                                                     \
+    cur_absmin = (cur_absmin > 0) ? cur_absmin : (q15_t)__QSUB16(0, cur_absmin);                                                                 \
+    if (cur_absmin < out)                                                                          \
+    {                                                                                                       \
+      out = cur_absmin;                                                                                       \
+      outIndex = index + 4U;                                                                                \
+    }                                                                                                       \
+                                                                                                            \
+    index += 4U;                                                                                            \
+                                                                                                            \
+    /* Decrement loop counter */                                                                            \
+    blkCnt--;                                                                                               \
+  }                                                                                                         \
+                                                                                                            \
+  /* Loop unrolling: Compute remaining outputs */                                                           \
+  blkCnt = (blockSize - 1U) % 4U;                                                                           \
+                                                                                                            \
+                                                                                                            \
+  while (blkCnt > 0U)                                                                                       \
+  {                                                                                                         \
+    cur_absmin = *pSrc++;                                                                                     \
+    cur_absmin = (cur_absmin > 0) ? cur_absmin : (q15_t)__QSUB16(0, cur_absmin);                                                                 \
+    if (cur_absmin < out)                                                                         \
+    {                                                                                                       \
+      out = cur_absmin;                                                                                       \
+      outIndex = blockSize - blkCnt;                                                                        \
+    }                                                                                                       \
+                                                                                                            \
+    /* Decrement loop counter */                                                                            \
+    blkCnt--;                                                                                               \
+  }                                                                                                         \
+                                                                                                            \
+  /* Store the extrema value and it's index into destination pointers */                                    \
+  *pResult = out;                                                                                           \
+  *pIndex = outIndex;  
+}
+#else
 void arm_absmin_q15(
   const q15_t * pSrc,
         uint32_t blockSize,
@@ -86,6 +174,7 @@ void arm_absmin_q15(
   *pResult = out;
   *pIndex = outIndex;
 }
+#endif /* defined(ARM_MATH_DSP) */
 
 /**
   @} end of AbsMin group

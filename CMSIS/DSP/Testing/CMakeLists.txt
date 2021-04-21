@@ -82,6 +82,8 @@ option(REFLIB "Use already built reference lib" OFF)
 option(EMBEDDED "Embedded Mode" ON)
 
 option(FLOAT16TESTS "Float16 tests" OFF)
+option(ALLTESTS "All tests including Float16 tests" OFF)
+
 option(MICROBENCH "Micro benchmarks" OFF)
 option(EXTERNAL "External benchmarks or tests" OFF)
 option(CACHEANALYSIS "Build with cache analysis mode enabled" OFF)
@@ -211,7 +213,7 @@ set (NNSRC
  target_include_directories(TestingLib PRIVATE Include/Benchmarks)
  endif()
 
- if ((NOT ARMAC5) AND (FLOAT16TESTS) AND ((FLOAT16) OR (MVEF) OR (HELIUM) OR (NEON) OR (NEONEXPERIMENTAL)))
+ if ((NOT ARMAC5) AND (FLOAT16TESTS OR ALLTESTS) AND ((FLOAT16) OR (MVEF) OR (HELIUM) OR (NEON) OR (NEONEXPERIMENTAL)))
  set(TESTSRC16 Source/Benchmarks/BasicMathsBenchmarksF16.cpp
    Source/Benchmarks/ComplexMathsBenchmarksF16.cpp
    Source/Benchmarks/BayesF16.cpp
@@ -376,7 +378,7 @@ set(TESTSRC
   )
 
 
-if ((NOT ARMAC5) AND (FLOAT16TESTS) AND ((FLOAT16) OR (MVEF) OR (HELIUM) OR (NEON) OR (NEONEXPERIMENTAL)))
+if ((NOT ARMAC5) AND (FLOAT16TESTS OR ALLTESTS) AND ((FLOAT16) OR (MVEF) OR (HELIUM) OR (NEON) OR (NEONEXPERIMENTAL)))
 set(TESTSRC16 
   Source/Tests/BasicTestsF16.cpp
   Source/Tests/ComplexTestsF16.cpp
@@ -427,12 +429,23 @@ endif()
 disableOptimization(TestingLib)
 disableOptimization(FrameworkLib)
 
-## Only build f16 version when running float16tests
-if ((NOT ARMAC5) AND (FLOAT16TESTS) AND ((FLOAT16) OR (MVEF) OR (HELIUM) OR (NEON) OR (NEONEXPERIMENTAL)))
-target_sources(TestingLib PRIVATE ${TESTSRC16})
+## Only build f16 version when running float16tests or all tests
+## and float16 are supported
+if (ARMAC5)
+  target_sources(TestingLib PRIVATE ${TESTSRC})
+elseif ((FLOAT16) OR (MVEF) OR (HELIUM) OR (NEON) OR (NEONEXPERIMENTAL))
+      if (ALLTESTS)
+        target_sources(TestingLib PRIVATE ${TESTSRC16})
+        target_sources(TestingLib PRIVATE ${TESTSRC})
+      elseif (FLOAT16TESTS)
+        target_sources(TestingLib PRIVATE ${TESTSRC16})
+      else()
+        target_sources(TestingLib PRIVATE ${TESTSRC})
+      endif()
 else()
-target_sources(TestingLib PRIVATE ${TESTSRC})
+      target_sources(TestingLib PRIVATE ${TESTSRC})
 endif()
+
 
 if(NN)
   target_sources(TestingLib PRIVATE ${NNSRC})
