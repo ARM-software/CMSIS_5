@@ -1,0 +1,27 @@
+var group__NNConv =
+[
+    [ "arm_convolve_1_x_n_s8", "group__NNConv.html#ga2d9c129189832572cf0bc97ff9e73e54", null ],
+    [ "arm_convolve_1_x_n_s8_get_buffer_size", "group__NNConv.html#gab34cb94c592df768774d8bcac03d7e5c", null ],
+    [ "arm_convolve_1x1_HWC_q7_fast_nonsquare", "group__NNConv.html#ga110adcfdaab356c750c6270aa5e05f29", null ],
+    [ "arm_convolve_1x1_s8_fast", "group__NNConv.html#gadfcad0bae34328dc806dc88cde173faa", null ],
+    [ "arm_convolve_1x1_s8_fast_get_buffer_size", "group__NNConv.html#ga09ed5df0234c7eb334a7264dd9e4c833", null ],
+    [ "arm_convolve_HWC_q15_basic", "group__NNConv.html#ga55701f213b198084b52eab53097f1f58", null ],
+    [ "arm_convolve_HWC_q15_fast", "group__NNConv.html#ga4efb1ccbbaa7dd936961989dcb443f50", null ],
+    [ "arm_convolve_HWC_q15_fast_nonsquare", "group__NNConv.html#ga614ec3b71eb96e29952ec3f09e7b9c3c", null ],
+    [ "arm_convolve_HWC_q7_basic", "group__NNConv.html#ga210ae8d8fc1d12ee15b41f1fa6947681", null ],
+    [ "arm_convolve_HWC_q7_basic_nonsquare", "group__NNConv.html#ga4501fa22c0836002aa47ccc313dce252", null ],
+    [ "arm_convolve_HWC_q7_fast", "group__NNConv.html#gae00d3c1285907d59657369fc98bcc83f", null ],
+    [ "arm_convolve_HWC_q7_fast_nonsquare", "group__NNConv.html#gabc6d6b991024e9e5c5cdbd7489de88ef", null ],
+    [ "arm_convolve_HWC_q7_RGB", "group__NNConv.html#ga98f2ead67d7cbdf558b0cd8a3b8fc148", null ],
+    [ "arm_convolve_s8", "group__NNConv.html#ga6a0b2161ece62078228ead2d85bbcf28", null ],
+    [ "arm_convolve_s8_get_buffer_size", "group__NNConv.html#gaaf83450fd2d89432d9759df99b05737b", null ],
+    [ "arm_depthwise_conv_3x3_s8", "group__NNConv.html#gae86b03224e6edf28f54247594b6c8bf9", null ],
+    [ "arm_depthwise_conv_s8", "group__NNConv.html#gae7e0c94c970bfd59d9c5e2331ce84fe7", null ],
+    [ "arm_depthwise_conv_s8_opt", "group__NNConv.html#ga3acc8b0cd5bd5d975fdf5a615261f0b1", null ],
+    [ "arm_depthwise_conv_s8_opt_get_buffer_size", "group__NNConv.html#gaa53d31632c765b9b4bbd490d0ae3c0c1", null ],
+    [ "arm_depthwise_conv_u8_basic_ver1", "group__NNConv.html#ga02a296cb4f6361a70c3ecf1ef1238292", null ],
+    [ "arm_depthwise_separable_conv_HWC_q7", "group__NNConv.html#gad3d21b3bc6dbd6f3b97d01104349cb0a", null ],
+    [ "arm_depthwise_separable_conv_HWC_q7_nonsquare", "group__NNConv.html#ga32ac508c5467813a84f74f96655dc697", null ],
+    [ "depthwise_conv_s8_generic", "group__NNConv.html#ga00ec3089e06c8953b4e12582583261c9", null ],
+    [ "depthwise_conv_s8_mult_4", "group__NNConv.html#ga06d7783f6788faad5165fd0ae583bc59", null ]
+];
