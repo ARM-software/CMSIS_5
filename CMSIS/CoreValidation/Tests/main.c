@@ -55,6 +55,7 @@ int main (void)
 
 __IRQ
 void IRQ_Handler(void);
+__IRQ
 void IRQ_Handler(void) {
   const IRQn_ID_t irqn = IRQ_GetActiveIRQ();
   IRQHandler_t const handler = IRQ_GetHandler(irqn);
@@ -68,6 +69,7 @@ void IRQ_Handler(void) {
 
 __IRQ __NO_RETURN
 void Undef_Handler (void);
+__IRQ __NO_RETURN
 void Undef_Handler (void) {
   cmsis_cv_abort(__FILENAME__, __LINE__, "Undefined Instruction!");
   exit(0);
@@ -75,11 +77,13 @@ void Undef_Handler (void) {
 
 __IRQ
 void SVC_Handler   (void);
+__IRQ
 void SVC_Handler   (void) {
 }
 
 __IRQ __NO_RETURN
 void PAbt_Handler  (void);
+__IRQ __NO_RETURN
 void PAbt_Handler  (void) {
   cmsis_cv_abort(__FILENAME__, __LINE__, "Prefetch Abort!");
   exit(0);
@@ -87,6 +91,7 @@ void PAbt_Handler  (void) {
 
 __IRQ __NO_RETURN
 void DAbt_Handler  (void);
+__IRQ __NO_RETURN
 void DAbt_Handler  (void) {
   cmsis_cv_abort(__FILENAME__, __LINE__, "Data Abort!");
   exit(0);
@@ -94,6 +99,7 @@ void DAbt_Handler  (void) {
 
 __IRQ
 void FIQ_Handler   (void);
+__IRQ
 void FIQ_Handler   (void) {
 }
 #endif
@@ -101,6 +107,7 @@ void FIQ_Handler   (void) {
 #if defined(__CORTEX_M)
 __NO_RETURN
 void HardFault_Handler(void);
+__NO_RETURN
 void HardFault_Handler(void) {
   cmsis_cv_abort(__FILENAME__, __LINE__, "HardFault!");
   #ifdef __MICROLIB

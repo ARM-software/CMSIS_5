@@ -177,13 +177,6 @@ def get_model_inst(model):
 
 
 @matrix_filter
-def filter_ac5_ac6ltm_cma(config):
-    return ((config.compiler == CompilerAxis.AC6LTM or
-             config.compiler == CompilerAxis.AC5      ) and 
-            config.device.match("CA*"))
-    
-
-@matrix_filter
 def filter_ac5_armv8m(config):
     return (config.compiler == CompilerAxis.AC5 and 
             config.device.match("CM[235][35]*"))
