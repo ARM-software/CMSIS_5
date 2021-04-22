@@ -44,7 +44,93 @@
   @param[out]    pIndex     index of minimum value returned here
   @return        none
  */
+#if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
 
+#include "arm_helium_utils.h"
+
+void arm_absmin_q15(
+  const q15_t * pSrc,
+        uint32_t blockSize,
+        q15_t * pResult,
+        uint32_t * pIndex)
+{
+      uint16_t        blkCnt;           /* loop counters */
+    q15x8_t       vecSrc;
+    q15_t const   *pSrcVec;
+    q15x8_t       curExtremValVec = vdupq_n_s16(Q15_ABSMAX);
+    q15_t           minValue = Q15_ABSMAX;
+    uint16_t        idx = blockSize;
+    uint16x8_t    indexVec;
+    uint16x8_t    curExtremIdxVec;
+    uint32_t        startIdx = 0;
+    mve_pred16_t    p0;
+
+
+    indexVec = vidupq_wb_u16(&startIdx, 1);
+    curExtremIdxVec = vdupq_n_u16(0);
+
+    pSrcVec = (q15_t const *) pSrc;
+    blkCnt = blockSize >> 3;
+    while (blkCnt > 0U)
+    {
+        vecSrc = vld1q(pSrcVec); 
+        pSrcVec += 8;
+        vecSrc = vabsq(vecSrc);
+        /*
+         * Get current min per lane and current index per lane
+         * when a min is selected
+         */
+        p0 = vcmpleq(vecSrc, curExtremValVec);
+        curExtremValVec = vpselq(vecSrc, curExtremValVec, p0);
+        curExtremIdxVec = vpselq(indexVec, curExtremIdxVec, p0);
+
+        indexVec = vidupq_wb_u16(&startIdx, 1);
+        /*
+         * Decrement the blockSize loop counter
+         */
+        blkCnt--;
+    }
+    /*
+     * tail
+     * (will be merged thru tail predication)
+     */
+    blkCnt = blockSize & 7;
+    if (blkCnt > 0U)
+    {
+        vecSrc = vld1q(pSrcVec); 
+        pSrcVec += 8;
+        vecSrc = vabsq(vecSrc);
+
+        p0 = vctp16q(blkCnt);
+        /*
+         * Get current min per lane and current index per lane
+         * when a min is selected
+         */
+        p0 = vcmpleq_m(vecSrc, curExtremValVec, p0);
+        curExtremValVec = vpselq(vecSrc, curExtremValVec, p0);
+        curExtremIdxVec = vpselq(indexVec, curExtremIdxVec, p0);
+    }
+    /*
+     * Get min value across the vector
+     */
+    minValue = vminvq(minValue, curExtremValVec);
+    /*
+     * set index for lower values to min possible index
+     */
+    p0 = vcmpleq(curExtremValVec, minValue);
+    indexVec = vpselq(curExtremIdxVec, vdupq_n_u16(blockSize), p0);
+    /*
+     * Get min index which is thus for a min value
+     */
+    idx = vminvq(idx, indexVec);
+    /*
+     * Save result
+     */
+    *pIndex = idx;
+    *pResult = minValue;
+}
+
+#else
 #if defined(ARM_MATH_DSP)
 void arm_absmin_q15(
   const q15_t * pSrc,
@@ -175,7 +261,7 @@ void arm_absmin_q15(
   *pIndex = outIndex;
 }
 #endif /* defined(ARM_MATH_DSP) */
-
+#endif /* defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE) */
 /**
   @} end of AbsMin group
  */

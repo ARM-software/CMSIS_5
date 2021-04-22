@@ -48,6 +48,13 @@ function(compilerSpecificCompileOptions PROJECTNAME ROOT)
      target_link_options(${PROJECTNAME} PUBLIC "-mfpu=fpv5-d16")
   endif()
 
+  if (ARM_CPU STREQUAL "cortex-m55+nomve.fp+nofp" )
+     target_compile_options(${PROJECTNAME} PUBLIC "-march=armv8.1-m.main+dsp+fp.dp")
+     target_compile_options(${PROJECTNAME} PUBLIC "-mfpu=fpv5-d16")
+     target_link_options(${PROJECTNAME} PUBLIC "-mfpu=fpv5-d16")
+  endif()
+  
+
   if (ARM_CPU STREQUAL "cortex-m33" )
      target_compile_options(${PROJECTNAME} PUBLIC "-mfpu=fpv5-sp-d16")
      target_link_options(${PROJECTNAME} PUBLIC "-mfpu=fpv5-sp-d16")
@@ -68,6 +75,12 @@ function(compilerSpecificCompileOptions PROJECTNAME ROOT)
   #   target_link_options(${PROJECTNAME} PUBLIC "")
   #endif()
   
+  if (ARM_CPU STREQUAL "cortex-a32" )
+      if (NOT (NEON OR NEONEXPERIMENTAL))
+        target_compile_options(${PROJECTNAME} PUBLIC "-march=armv8-a;-mfpu=vfpv3-d16")
+        target_link_options(${PROJECTNAME} PUBLIC "-march=armv8-a;-mfpu=vfpv3-d16")
+      endif()
+  endif()
   
   if (ARM_CPU STREQUAL "cortex-a9" )
       if (NOT (NEON OR NEONEXPERIMENTAL))

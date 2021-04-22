@@ -44,6 +44,8 @@
 
       Q15 scalar division
 
+      New absmax and absmin functions
+
       GCC issues:
       Some functions have build issues when building Helium code with gcc. So
       they are replaced with a less efficient scalar version when built with gcc.

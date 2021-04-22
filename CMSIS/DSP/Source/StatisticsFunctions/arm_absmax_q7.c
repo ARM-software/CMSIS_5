@@ -43,6 +43,119 @@
   @param[out]    pIndex     index of maximum value returned here
   @return        none
  */
+
+#if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
+
+#include <stdint.h>
+#include "arm_helium_utils.h"
+
+#define MAX_BLKSZ_S8  (UINT8_MAX+1)
+
+static void arm_small_blk_absmax_q7(
+    const q7_t * pSrc,
+    uint16_t blockSize,
+    q7_t * pResult,
+    uint32_t * pIndex)
+{
+    int32_t        blkCnt;     /* loop counters */
+    q7x16_t        extremValVec = vdupq_n_s8(Q7_ABSMIN);
+    q7_t           maxValue = Q7_ABSMIN;
+    uint8x16_t     indexVec;
+    uint8x16_t     extremIdxVec;
+    mve_pred16_t   p0;
+    uint8_t        extremIdxArr[16];
+
+    indexVec = vidupq_u8(0U, 1);
+
+    blkCnt = blockSize;
+    do {
+        mve_pred16_t    p = vctp8q(blkCnt);
+        q7x16_t         extremIdxVal = vld1q_z_s8(pSrc, p);
+
+        extremIdxVal = vabsq(extremIdxVal);
+        /*
+         * Get current max per lane and current index per lane
+         * when a max is selected
+         */
+        p0 = vcmpgeq_m(extremIdxVal, extremValVec, p);
+
+        extremValVec = vorrq_m(extremValVec, extremIdxVal, extremIdxVal, p0);
+        /* store per-lane extrema indexes */
+        vst1q_p_u8(extremIdxArr, indexVec, p0);
+
+        indexVec += 16;
+        pSrc += 16;
+        blkCnt -= 16;
+    }
+    while (blkCnt > 0);
+
+
+    /* Get max value across the vector   */
+    maxValue = vmaxvq(maxValue, extremValVec);
+
+    /* set index for lower values to max possible index   */
+    p0 = vcmpgeq(extremValVec, maxValue);
+    extremIdxVec = vld1q_u8(extremIdxArr);
+
+    indexVec = vpselq(extremIdxVec, vdupq_n_u8(blockSize - 1), p0);
+    *pIndex = vminvq_u8(blockSize - 1, indexVec);
+    *pResult = maxValue;
+}
+
+void arm_absmax_q7(
+  const q7_t * pSrc,
+        uint32_t blockSize,
+        q7_t * pResult,
+        uint32_t * pIndex)
+{
+    int32_t   totalSize = blockSize;
+
+    if (totalSize <= MAX_BLKSZ_S8)
+    {
+        arm_small_blk_absmax_q7(pSrc, blockSize, pResult, pIndex);
+    }
+    else
+    {
+        uint32_t  curIdx = 0;
+        q7_t      curBlkExtr = Q7_MIN;
+        uint32_t  curBlkPos = 0;
+        uint32_t  curBlkIdx = 0;
+        /*
+         * process blocks of 255 elts
+         */
+        while (totalSize >= MAX_BLKSZ_S8)
+        {
+            const q7_t     *curSrc = pSrc;
+
+            arm_small_blk_absmax_q7(curSrc, MAX_BLKSZ_S8, pResult, pIndex);
+            if (*pResult > curBlkExtr)
+            {
+                /*
+                 * update partial extrema
+                 */
+                curBlkExtr = *pResult;
+                curBlkPos = *pIndex;
+                curBlkIdx = curIdx;
+            }
+            curIdx++;
+            pSrc += MAX_BLKSZ_S8;
+            totalSize -= MAX_BLKSZ_S8;
+        }
+        /*
+         * remainder
+         */
+        arm_small_blk_absmax_q7(pSrc, totalSize, pResult, pIndex);
+        if (*pResult > curBlkExtr)
+        {
+            curBlkExtr = *pResult;
+            curBlkPos = *pIndex;
+            curBlkIdx = curIdx;
+        }
+        *pIndex = curBlkIdx * MAX_BLKSZ_S8 + curBlkPos;
+        *pResult = curBlkExtr;
+    }
+}
+#else
 #if defined(ARM_MATH_DSP)
 void arm_absmax_q7(
   const q7_t * pSrc,
@@ -173,7 +286,7 @@ void arm_absmax_q7(
   *pIndex = outIndex;
 }
 #endif /* defined(ARM_MATH_DSP) */
-
+#endif /* defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE) */
 /**
   @} end of AbsMax group
  */

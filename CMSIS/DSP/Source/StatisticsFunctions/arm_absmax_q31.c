@@ -44,6 +44,60 @@
   @return        none
  */
 
+#if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
+
+#include "arm_helium_utils.h"
+void arm_absmax_q31(
+  const q31_t * pSrc,
+        uint32_t blockSize,
+        q31_t * pResult,
+        uint32_t * pIndex)
+{
+    int32_t         blkCnt;     /* loop counters */
+    q31x4_t         extremValVec = vdupq_n_s32(Q31_ABSMIN);
+    q31_t           maxValue = Q31_ABSMIN;
+    uint32x4_t      indexVec;
+    uint32x4_t      extremIdxVec;
+    mve_pred16_t    p0;
+    uint32_t        extremIdxArr[4];
+
+    indexVec = vidupq_u32(0U, 1);
+
+    blkCnt = blockSize;
+    do {
+        mve_pred16_t    p = vctp32q(blkCnt);
+        q31x4_t         extremIdxVal = vld1q_z_s32(pSrc, p);
+
+        extremIdxVal = vabsq(extremIdxVal);
+        /*
+         * Get current max per lane and current index per lane
+         * when a max is selected
+         */
+        p0 = vcmpgeq_m(extremIdxVal, extremValVec, p);
+
+        extremValVec = vorrq_m(extremValVec, extremIdxVal, extremIdxVal, p0);
+        /* store per-lane extrema indexes */
+        vst1q_p_u32(extremIdxArr, indexVec, p0);
+
+        indexVec += 4;
+        pSrc += 4;
+        blkCnt -= 4;
+    }
+    while (blkCnt > 0);
+
+
+    /* Get max value across the vector   */
+    maxValue = vmaxvq(maxValue, extremValVec);
+
+    /* set index for lower values to max possible index   */
+    p0 = vcmpgeq(extremValVec, maxValue);
+    extremIdxVec = vld1q_u32(extremIdxArr);
+
+    indexVec = vpselq(extremIdxVec, vdupq_n_u32(blockSize - 1), p0);
+    *pIndex = vminvq(blockSize - 1, indexVec);
+    *pResult = maxValue;  
+}
+#else
 #if defined(ARM_MATH_DSP)
 void arm_absmax_q31(
   const q31_t * pSrc,
@@ -174,6 +228,7 @@ void arm_absmax_q31(
   *pIndex = outIndex;
 }
 #endif /* defined(ARM_MATH_DSP) */
+#endif /* defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE) */
 /**
   @} end of AbsMax group
  */

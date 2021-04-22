@@ -54,7 +54,73 @@
   @param[out]    pIndex     index of maximum value returned here
   @return        none
  */
+#if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
 
+#include "arm_helium_utils.h"
+
+void arm_absmax_f32(
+  const float32_t * pSrc,
+        uint32_t blockSize,
+        float32_t * pResult,
+        uint32_t * pIndex)
+{
+    int32_t blkSize = blockSize;
+    f32x4_t vecSrc;
+    f32x4_t curExtremValVec = vdupq_n_f32(F32_ABSMIN);
+    float32_t maxValue = F32_ABSMIN;
+    uint32_t idx = blockSize;
+    uint32x4_t indexVec;
+    uint32x4_t curExtremIdxVec;
+    uint32_t curIdx = 0;
+    mve_pred16_t p0;
+
+
+    indexVec = vidupq_wb_u32(&curIdx, 1);
+    curExtremIdxVec = vdupq_n_u32(0);
+
+    do {
+        mve_pred16_t p = vctp32q(blkSize);
+
+        vecSrc = vldrwq_z_f32((float32_t const *) pSrc, p);
+        vecSrc = vabsq_m(vuninitializedq_f32(), vecSrc, p);
+        /*
+         * Get current max per lane and current index per lane
+         * when a max is selected
+         */
+        p0 = vcmpgeq_m(vecSrc, curExtremValVec, p);
+        curExtremValVec = vpselq(vecSrc, curExtremValVec, p0);
+        curExtremIdxVec = vpselq(indexVec, curExtremIdxVec, p0);
+
+        /* Does TP detection works here ?? */
+        indexVec = vidupq_wb_u32(&curIdx, 1);
+
+        blkSize -= 4;
+        pSrc += 4;
+    }
+    while (blkSize > 0);
+
+    /*
+     * Get max value across the vector
+     */
+    maxValue = vmaxnmvq(maxValue, curExtremValVec);
+    /*
+     * set index for lower values to max possible index
+     */
+    p0 = vcmpgeq(curExtremValVec, maxValue);
+    indexVec = vpselq(curExtremIdxVec, vdupq_n_u32(blockSize), p0);
+    /*
+     * Get min index which is thus for a max value
+     */
+    idx = vminvq(idx, indexVec);
+    /*
+     * Save result
+     */
+    *pIndex = idx;
+    *pResult = maxValue;
+}
+
+
+#else
 #if defined(ARM_MATH_LOOPUNROLL)
 void arm_absmax_f32(
   const float32_t * pSrc,
@@ -186,6 +252,7 @@ void arm_absmax_f32(
   *pIndex = outIndex;
 }
 #endif /* defined(ARM_MATH_LOOPUNROLL) */
+#endif /* defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE) */
 /**
   @} end of AbsMax group
  */

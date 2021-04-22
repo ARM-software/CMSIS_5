@@ -57,6 +57,91 @@
   @return        none
  */
 
+#if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
+
+#include "arm_helium_utils.h"
+void arm_absmin_f32(
+  const float32_t * pSrc,
+        uint32_t blockSize,
+        float32_t * pResult,
+        uint32_t * pIndex)
+{
+    int32_t  blkCnt;           /* loop counters */
+    f32x4_t vecSrc;
+    float32_t const *pSrcVec;
+    f32x4_t curExtremValVec = vdupq_n_f32(F32_ABSMAX);
+    float32_t minValue = F32_ABSMAX;
+    uint32_t  idx = blockSize;
+    uint32x4_t indexVec;
+    uint32x4_t curExtremIdxVec;
+    mve_pred16_t p0;
+
+
+    indexVec = vidupq_u32((uint32_t)0, 1);
+    curExtremIdxVec = vdupq_n_u32(0);
+
+    pSrcVec = (float32_t const *) pSrc;
+    blkCnt = blockSize >> 2;
+    while (blkCnt > 0)
+    {
+        vecSrc = vldrwq_f32(pSrcVec);  
+        pSrcVec += 4;
+        vecSrc = vabsq(vecSrc);
+        /*
+         * Get current max per lane and current index per lane
+         * when a max is selected
+         */
+        p0 = vcmpleq(vecSrc, curExtremValVec);
+        curExtremValVec = vpselq(vecSrc, curExtremValVec, p0);
+        curExtremIdxVec = vpselq(indexVec, curExtremIdxVec, p0);
+
+        indexVec = indexVec +  4;
+        /*
+         * Decrement the blockSize loop counter
+         */
+        blkCnt--;
+    }
+    /*
+     * tail
+     * (will be merged thru tail predication)
+     */
+    blkCnt = blockSize & 3;
+    if (blkCnt > 0)
+    {
+        p0 = vctp32q(blkCnt);
+
+        vecSrc = vldrwq_f32(pSrcVec);  
+        pSrcVec += 4;
+        vecSrc = vabsq(vecSrc);
+        /*
+         * Get current max per lane and current index per lane
+         * when a max is selected
+         */
+        p0 = vcmpleq_m(vecSrc, curExtremValVec, p0);
+        curExtremValVec = vpselq(vecSrc, curExtremValVec, p0);
+        curExtremIdxVec = vpselq(indexVec, curExtremIdxVec, p0);
+    }
+    /*
+     * Get min value across the vector
+     */
+    minValue = vminnmvq(minValue, curExtremValVec);
+    /*
+     * set index for lower values to max possible index
+     */
+    p0 = vcmpleq(curExtremValVec, minValue);
+    indexVec = vpselq(curExtremIdxVec, vdupq_n_u32(blockSize), p0);
+    /*
+     * Get min index which is thus for a max value
+     */
+    idx = vminvq(idx, indexVec);
+    /*
+     * Save result
+     */
+    *pIndex = idx;
+    *pResult = minValue;
+}
+
+#else
 #if defined(ARM_MATH_LOOPUNROLL)
 void arm_absmin_f32(
   const float32_t * pSrc,
@@ -186,6 +271,7 @@ void arm_absmin_f32(
 }
 
 #endif /* defined(ARM_MATH_LOOPUNROLL) */
+#endif /* defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE) */
 /**
   @} end of AbsMin group
  */
