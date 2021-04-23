@@ -5,8 +5,9 @@
  *               For example, some can be given as arguments to the arm_cfft_f16() function.
  *
  * @version  V1.9.0
- * @date     17. March 2021
+ * @date     23 April 2021
  *
+ * Target Processor: Cortex-M and Cortex-A cores
  * -------------------------------------------------------------------- */
 /*
  * Copyright (C) 2010-2021 ARM Limited or its affiliates. All rights reserved.

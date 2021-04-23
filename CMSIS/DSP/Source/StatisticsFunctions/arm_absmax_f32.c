@@ -3,6 +3,8 @@
  * Title:        arm_absmax_f32.c
  * Description:  Maximum value of absolute values of a floating-point vector
  *
+ * $Date:        23 April 2021
+ * $Revision:    V1.9.0
  *
  * Target Processor: Cortex-M and Cortex-A cores
  * -------------------------------------------------------------------- */

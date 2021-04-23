@@ -3,7 +3,10 @@
  * Title:        arm_levinson_durbin_f32.c
  * Description:  f32 version of Levinson Durbin algorithm
  *
+ * $Date:        23 April 2021
+ * $Revision:    V1.9.0
  *
+ * Target Processor: Cortex-M and Cortex-A cores
  * -------------------------------------------------------------------- */
 /*
  * Copyright (C) 2010-2021 ARM Limited or its affiliates. All rights reserved.

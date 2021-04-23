@@ -3,12 +3,14 @@
  * Title:        arm_mat_vec_mult_q15.c
  * Description:  Q15 matrix and vector multiplication
  *
- * $Date:        07. July 202
+ * $Date:        23 April 2021
  *
- * Target Processor: Cortex-M cores
+ * $Revision:    V1.9.0
+ *
+ * Target Processor: Cortex-M and Cortex-A cores
  * -------------------------------------------------------------------- */
 /*
- * Copyright (C) 2010-2020 ARM Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2010-2021 ARM Limited or its affiliates. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *

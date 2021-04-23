@@ -2,7 +2,8 @@
  * @file     arm_math_types_f16.h
  * @brief    Public header file for f16 function of the CMSIS DSP Library
  * @version  V1.9.0
- * @date     17. March 2021
+ * @date     23 April 2021
+ * Target Processor: Cortex-M and Cortex-A cores
  ******************************************************************************/
 /*
  * Copyright (c) 2010-2021 Arm Limited or its affiliates. All rights reserved.
