@@ -44,6 +44,8 @@ group Root {
                 Kullback Leibler divergence:test_kullback_leibler_f16
                 Vector logsumexp dot product:test_logsumexp_dot_prod_f16
                 Vector max with no index:test_max_no_idx_f16
+                Vector absolute maximum:test_absmax_f16
+                Vector absolute minimum:test_absmin_f16
               } -> PARAM1_ID
 
            }

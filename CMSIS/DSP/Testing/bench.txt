@@ -44,6 +44,8 @@ group Root {
                 Kullback Leibler divergence:test_kullback_leibler_f32
                 Vector logsumexp dot product:test_logsumexp_dot_prod_f32
                 Vector max with no index:test_max_no_idx_f32
+                Vector absolute maximum:test_absmax_f32
+                Vector absolute minimum:test_absmin_f32
               } -> PARAM1_ID
 
            }
@@ -108,6 +110,8 @@ group Root {
                 Vector root mean square:test_rms_q31
                 Vector standard deviation:test_std_q31
                 Vector variance:test_var_q31
+                Vector absolute maximum:test_absmax_q31
+                Vector absolute minimum:test_absmin_q31
               } -> PARAM1_ID
 
            }
@@ -144,6 +148,8 @@ group Root {
                 Vector root mean square:test_rms_q15
                 Vector standard deviation:test_std_q15
                 Vector variance:test_var_q15
+                Vector absolute maximum:test_absmax_q15
+                Vector absolute minimum:test_absmin_q15
               } -> PARAM1_ID
 
            }
@@ -177,6 +183,8 @@ group Root {
                 Vector average:test_mean_q7
                 Vector minimum:test_min_q7
                 Vector energy:test_power_q7
+                Vector absolute maximum:test_absmax_q7
+                Vector absolute minimum:test_absmin_q7
               } -> PARAM1_ID
 
            }

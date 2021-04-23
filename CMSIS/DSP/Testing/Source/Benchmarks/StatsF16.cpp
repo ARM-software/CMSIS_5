@@ -18,6 +18,19 @@
 
     }
 
+    void StatsF16::test_absmax_f16()
+    {
+
+        float16_t result;
+        uint32_t  indexval;
+
+        arm_absmax_f16(inap,
+              this->nb,
+              &result,
+              &indexval);
+
+    }
+
     void StatsF16::test_max_no_idx_f16()
     {
        
@@ -40,6 +53,22 @@
 
        
         arm_min_f16(inap,
+              this->nb,
+              &result,
+              &indexval);
+
+      
+
+    }
+
+    void StatsF16::test_absmin_f16()
+    {
+       
+        float16_t result;
+        uint32_t  indexval;
+
+       
+        arm_absmin_f16(inap,
               this->nb,
               &result,
               &indexval);

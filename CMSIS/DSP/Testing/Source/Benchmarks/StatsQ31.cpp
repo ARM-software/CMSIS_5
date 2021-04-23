@@ -18,6 +18,19 @@
 
     }
 
+    void StatsQ31::test_absmax_q31()
+    {
+
+        q31_t result;
+        uint32_t  indexval;
+
+        arm_absmax_q31(inap,
+              this->nb,
+              &result,
+              &indexval);
+
+    }
+
   
 
     void StatsQ31::test_min_q31()
@@ -28,6 +41,22 @@
 
        
         arm_min_q31(inap,
+              this->nb,
+              &result,
+              &indexval);
+
+      
+
+    }
+
+    void StatsQ31::test_absmin_q31()
+    {
+       
+        q31_t result;
+        uint32_t  indexval;
+
+       
+        arm_absmin_q31(inap,
               this->nb,
               &result,
               &indexval);

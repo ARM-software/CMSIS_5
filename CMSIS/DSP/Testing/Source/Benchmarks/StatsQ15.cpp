@@ -18,6 +18,19 @@
 
     }
 
+    void StatsQ15::test_absmax_q15()
+    {
+
+        q15_t result;
+        uint32_t  indexval;
+
+        arm_absmax_q15(inap,
+              this->nb,
+              &result,
+              &indexval);
+
+    }
+
     void StatsQ15::test_min_q15()
     {
        
@@ -26,6 +39,22 @@
 
        
         arm_min_q15(inap,
+              this->nb,
+              &result,
+              &indexval);
+
+      
+
+    }
+
+    void StatsQ15::test_absmin_q15()
+    {
+       
+        q15_t result;
+        uint32_t  indexval;
+
+       
+        arm_absmin_q15(inap,
               this->nb,
               &result,
               &indexval);

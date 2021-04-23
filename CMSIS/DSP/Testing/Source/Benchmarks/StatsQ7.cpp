@@ -18,6 +18,19 @@
 
     }
 
+    void StatsQ7::test_absmax_q7()
+    {
+
+        q7_t result;
+        uint32_t  indexval;
+
+        arm_absmax_q7(inap,
+              this->nb,
+              &result,
+              &indexval);
+
+    }
+
    
 
     void StatsQ7::test_min_q7()
@@ -28,6 +41,22 @@
 
        
         arm_min_q7(inap,
+              this->nb,
+              &result,
+              &indexval);
+
+      
+
+    }
+
+    void StatsQ7::test_absmin_q7()
+    {
+       
+        q7_t result;
+        uint32_t  indexval;
+
+       
+        arm_absmin_q7(inap,
               this->nb,
               &result,
               &indexval);

@@ -18,6 +18,19 @@
 
     }
 
+    void StatsF32::test_absmax_f32()
+    {
+
+        float32_t result;
+        uint32_t  indexval;
+
+        arm_absmax_f32(inap,
+              this->nb,
+              &result,
+              &indexval);
+
+    }
+
     void StatsF32::test_max_no_idx_f32()
     {
        
@@ -40,6 +53,22 @@
 
        
         arm_min_f32(inap,
+              this->nb,
+              &result,
+              &indexval);
+
+      
+
+    }
+
+    void StatsF32::test_absmin_f32()
+    {
+       
+        float32_t result;
+        uint32_t  indexval;
+
+       
+        arm_absmin_f32(inap,
               this->nb,
               &result,
               &indexval);
