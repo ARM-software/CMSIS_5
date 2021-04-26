@@ -36,7 +36,7 @@
 
 
 /// @private
-#define SWAP_ROWS(A,i,j)                 \
+#define SWAP_ROWS_F32(A,i,j)                 \
   {                                      \
     int cnt = n;                         \
                                          \
@@ -56,7 +56,7 @@
   }
 
 /// @private
-#define SWAP_COLS(A,i,j)     \
+#define SWAP_COLS_F32(A,i,j)     \
   for(int w=0;w < n; w++)    \
   {                          \
      float32_t tmp;          \
@@ -156,8 +156,8 @@ arm_status arm_mat_ldlt_f32(
 
         if(j != k)
         {
-          SWAP_ROWS(pA,k,j);
-          SWAP_COLS(pA,k,j);
+          SWAP_ROWS_F32(pA,k,j);
+          SWAP_COLS_F32(pA,k,j);
         }
 
 
@@ -323,7 +323,7 @@ arm_status arm_mat_ldlt_f32(
 #else
 
 /// @private
-#define SWAP_ROWS(A,i,j)     \
+#define SWAP_ROWS_F32(A,i,j)     \
   for(int w=0;w < n; w++)    \
   {                          \
      float32_t tmp;          \
@@ -333,7 +333,7 @@ arm_status arm_mat_ldlt_f32(
   }
 
 /// @private
-#define SWAP_COLS(A,i,j)     \
+#define SWAP_COLS_F32(A,i,j)     \
   for(int w=0;w < n; w++)    \
   {                          \
      float32_t tmp;          \
@@ -423,8 +423,8 @@ arm_status arm_mat_ldlt_f32(
 
         if(j != k)
         {
-          SWAP_ROWS(pA,k,j);
-          SWAP_COLS(pA,k,j);
+          SWAP_ROWS_F32(pA,k,j);
+          SWAP_COLS_F32(pA,k,j);
         }
 
 

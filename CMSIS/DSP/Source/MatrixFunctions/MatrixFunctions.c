@@ -70,3 +70,4 @@
 #include "arm_mat_solve_upper_triangular_f64.c"
 #include "arm_mat_solve_lower_triangular_f64.c"
 #include "arm_mat_ldlt_f32.c"
+#include "arm_mat_ldlt_f64.c"
