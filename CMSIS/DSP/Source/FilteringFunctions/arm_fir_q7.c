@@ -141,7 +141,27 @@
     while (blkCnt > 0);                                                                     \
 }
 
-static void arm_fir_q7_17_32_mve(const arm_fir_instance_q7 * S, 
+
+static void arm_fir_q7_49_64_mve(const arm_fir_instance_q7 * S,
+  const q7_t * __restrict pSrc,
+  q7_t * __restrict pDst, uint32_t blockSize)
+{
+    #define NBTAPS 64
+    FIR_Q7_MAIN_CORE();
+    #undef NBTAPS
+}
+
+
+void arm_fir_q7_33_48_mve(const arm_fir_instance_q7 * S,
+  const q7_t * __restrict pSrc,
+  q7_t * __restrict pDst, uint32_t blockSize)
+{
+    #define NBTAPS 48
+    FIR_Q7_MAIN_CORE();
+    #undef NBTAPS
+}
+
+static void arm_fir_q7_17_32_mve(const arm_fir_instance_q7 * S,
   const q7_t * __restrict pSrc,
   q7_t * __restrict pDst, uint32_t blockSize)
 {
@@ -151,8 +171,8 @@ static void arm_fir_q7_17_32_mve(const arm_fir_instance_q7 * S,
 }
 
 
-void arm_fir_q7_1_16_mve(const arm_fir_instance_q7 * S, 
-  const q7_t * __restrict pSrc, 
+void arm_fir_q7_1_16_mve(const arm_fir_instance_q7 * S,
+  const q7_t * __restrict pSrc,
   q7_t * __restrict pDst, uint32_t blockSize)
 {
     #define NBTAPS 16
@@ -194,6 +214,22 @@ void arm_fir_q7(
          * [17 to 32 taps] specialized routine
          */
         arm_fir_q7_17_32_mve(S, pSrc, pDst, blockSize);
+        return;
+    }
+    else if (numTaps <= 48)
+    {
+        /*
+         * [33 to 48 taps] specialized routine
+         */
+        arm_fir_q7_33_48_mve(S, pSrc, pDst, blockSize);
+        return;
+    }
+    else if (numTaps <= 64)
+    {
+        /*
+         * [49 to 64 taps] specialized routine
+         */
+        arm_fir_q7_49_64_mve(S, pSrc, pDst, blockSize);
         return;
     }
 
@@ -607,7 +643,7 @@ void arm_fir_q7(
     {
       acc0 += (q15_t) * (px++) * (*(pb++));
       i--;
-    } 
+    }
 
     /* The result is in 2.14 format. Convert to 1.7
        Then store the output in the destination buffer. */
