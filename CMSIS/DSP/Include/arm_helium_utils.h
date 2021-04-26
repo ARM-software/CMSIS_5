@@ -687,7 +687,7 @@ __STATIC_INLINE q15x8_t FAST_VSQRT_Q15(q15x8_t vecIn)
     vecDst = vuninitializedq_s16();
 
     vecSignBits = vclsq(vecIn);
-    vecSignBits = vbicq(vecSignBits, 1);
+    vecSignBits = vbicq_n_s16(vecSignBits, 1);
     /*
      * in = in << no_of_sign_bits;
      */
