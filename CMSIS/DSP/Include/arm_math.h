@@ -172,6 +172,11 @@
    * This is only valid for scalar. When vector architecture is
    * supporting f16 then it can't be disabled.
    *
+   * - ARM_MATH_AUTOVECTORIZE:
+   *
+   * With Helium or Neon, disable the use of vectorized code with C intrinsics
+   * and use pure C instead. The vectorization is then done by the compiler.
+   *
    * <hr>
    * \section pack CMSIS-DSP in ARM::CMSIS Pack
    *
