@@ -282,6 +282,8 @@
       <xs:element name="cflags"    type="ToolOptionType" />
       <!-- C++ Compiler command-line -->
       <xs:element name="cxxflags"  type="ToolOptionType" />
+      <!-- Archiver command-line -->
+      <xs:element name="arflags"  type="ToolOptionType" />
       <!-- Assembler command-line -->
       <xs:element name="asflags"   type="AsmOptionType" />
     </xs:choice>
