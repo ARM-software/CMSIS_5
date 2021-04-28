@@ -841,6 +841,19 @@ if (CONFIGTABLE AND DCT4_Q15_8192)
     target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_TWIDDLECOEF_Q15_4096)
 endif()
 
+#######################################
+#
+# Deprecated radix2 and radix4 cfft
+#
 
+if (CONFIGTABLE AND (ARM_CFFT_RADIX2_Q15 OR ARM_CFFT_RADIX4_Q15))
+        target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_TWIDDLECOEF_Q15_4096)
+        target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_BITREV_1024)
+endif()
+
+if (CONFIGTABLE AND (ARM_CFFT_RADIX2_Q31 OR ARM_CFFT_RADIX4_Q31))
+        target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_TWIDDLECOEF_Q31_4096)
+        target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_BITREV_1024)
+endif()
 
 endfunction()

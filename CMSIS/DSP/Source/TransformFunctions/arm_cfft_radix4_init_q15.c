@@ -91,7 +91,7 @@ arm_status arm_cfft_radix4_init_q15(
   /*  Initialise the Flag for calculation Bit reversal or not */
   S->bitReverseFlag = bitReverseFlag;
 
-#if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) || defined(ARM_TABLE_BITREVIDX_FXT_4096)
+#if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) || defined(ARM_TABLE_BITREV_1024)
 
   /*  Initializations of structure parameters depending on the FFT length */
   switch (S->fftLen)
@@ -104,7 +104,7 @@ arm_status arm_cfft_radix4_init_q15(
     /*  Initialise the bit reversal table modifier */
     S->bitRevFactor = 1U;
     /*  Initialise the bit reversal table pointer */
-    S->pBitRevTable = (uint16_t *) armBitRevIndexTable_fixed_4096;
+    S->pBitRevTable = (uint16_t *) armBitRevTable;
 
     break;
 
@@ -112,7 +112,7 @@ arm_status arm_cfft_radix4_init_q15(
     /*  Initializations of structure parameters for 1024 point FFT */
     S->twidCoefModifier = 4U;
     S->bitRevFactor = 4U;
-    S->pBitRevTable = (uint16_t *) & armBitRevIndexTable_fixed_4096[3];
+    S->pBitRevTable = (uint16_t *) & armBitRevTable[3];
 
     break;
 
@@ -120,7 +120,7 @@ arm_status arm_cfft_radix4_init_q15(
     /*  Initializations of structure parameters for 256 point FFT */
     S->twidCoefModifier = 16U;
     S->bitRevFactor = 16U;
-    S->pBitRevTable = (uint16_t *) & armBitRevIndexTable_fixed_4096[15];
+    S->pBitRevTable = (uint16_t *) & armBitRevTable[15];
 
     break;
 
@@ -128,7 +128,7 @@ arm_status arm_cfft_radix4_init_q15(
     /*  Initializations of structure parameters for 64 point FFT */
     S->twidCoefModifier = 64U;
     S->bitRevFactor = 64U;
-    S->pBitRevTable = (uint16_t *) & armBitRevIndexTable_fixed_4096[63];
+    S->pBitRevTable = (uint16_t *) & armBitRevTable[63];
 
     break;
 
@@ -136,7 +136,7 @@ arm_status arm_cfft_radix4_init_q15(
     /*  Initializations of structure parameters for 16 point FFT */
     S->twidCoefModifier = 256U;
     S->bitRevFactor = 256U;
-    S->pBitRevTable = (uint16_t *) & armBitRevIndexTable_fixed_4096[255];
+    S->pBitRevTable = (uint16_t *) & armBitRevTable[255];
 
     break;
 

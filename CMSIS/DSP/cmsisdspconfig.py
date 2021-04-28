@@ -4,7 +4,7 @@
 # pip install streamlit
 #
 # How to use
-# streamlit run cmsisconfig.py
+# streamlit run cmsisdspconfig.py
 #
 import streamlit as st
 import textwrap
@@ -20,6 +20,7 @@ HELIUM=False
 
 config={}
 
+# Used in UI
 config["allTables"] = True
 config["allFFTs"] = True
 config["allInterpolations"] = True
@@ -44,6 +45,11 @@ config["LMS_NORM_Q15"]=False
 config["CMPLX_MAG_Q31"]=False
 config["CMPLX_MAG_Q15"]=False
 
+config["CFFT_RADIX2_Q15"]=False
+config["CFFT_RADIX4_Q15"]=False
+config["CFFT_RADIX2_Q31"]=False
+config["CFFT_RADIX4_Q31"]=False
+
 config["BASICMATH"]=True  
 config["COMPLEXMATH"]=True
 config["CONTROLLER"]=True    
@@ -64,6 +70,8 @@ config["ROUNDING"]=False
 config["MATRIXCHECK"]=False
 config["AUTOVECTORIZE"] = False
 
+# Used as options in command line
+# in case the UI option is worded differently
 realname={}
 realname["COS_F32"]="ARM_COS_F32"
 realname["COS_Q31"]="ARM_COS_Q31"
@@ -77,6 +85,10 @@ realname["LMS_NORM_Q31"]="ARM_LMS_NORM_Q31"
 realname["LMS_NORM_Q15"]="ARM_LMS_NORM_Q15"
 realname["CMPLX_MAG_Q31"]="ARM_CMPLX_MAG_Q31"
 realname["CMPLX_MAG_Q15"]="ARM_CMPLX_MAG_Q15"
+realname["CFFT_RADIX2_Q15"]="ARM_CFFT_RADIX2_Q15"
+realname["CFFT_RADIX4_Q15"]="ARM_CFFT_RADIX4_Q15"
+realname["CFFT_RADIX2_Q31"]="ARM_CFFT_RADIX2_Q31"
+realname["CFFT_RADIX4_Q31"]="ARM_CFFT_RADIX4_Q31"
 
 defaulton={}
 defaulton["LOOPUNROLL"]=True 
@@ -375,6 +387,14 @@ def interpretCmakeOptions(cmake):
     if test(cmake,"NEON") or test(cmake,"NEONEXPERIMENTAL"):
        r.append("-IComputeLibrary/Include")
 
+    if test(cmake,"ARM_CFFT_RADIX2_Q15") or test(cmake,"ARM_CFFT_RADIX4_Q15"):
+        r.append("-DARM_TABLE_TWIDDLECOEF_Q15_4096")
+        r.append("-DARM_TABLE_BITREV_1024")
+
+    if test(cmake,"ARM_CFFT_RADIX2_Q31") or test(cmake,"ARM_CFFT_RADIX4_Q31"):
+        r.append("-DARM_TABLE_TWIDDLECOEF_Q31_4096")
+        r.append("-DARM_TABLE_BITREV_1024")
+
     return (removeDuplicates(r))
 
 def genMakeOptions(config):
@@ -451,6 +471,11 @@ def configMake(config):
            genui(config,"DCT4",DCTSIZE,DCTDATATYPE)
            st.sidebar.markdown("#### RFFT")
            genui(config,"RFFT",RFFTSIZE,RFFTDATATYPE)
+
+           st.sidebar.markdown("#### Radix2 and Radix4 CFFT")
+           st.sidebar.info("Those functions are deprecated")
+           multiselect(config,"Radix",["CFFT_RADIX2_Q15","CFFT_RADIX4_Q15","CFFT_RADIX2_Q31","CFFT_RADIX4_Q31"])
+
            
 
 

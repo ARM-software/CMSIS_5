@@ -160,11 +160,25 @@ target_sources(CMSISDSPTransform PRIVATE arm_cfft_init_q31.c)
 target_sources(CMSISDSPTransform PRIVATE arm_cfft_radix4_q31.c)
 endif()
 
+if (WRAPPER OR ARM_CFFT_RADIX2_Q15)
+  target_sources(CMSISDSPTransform PRIVATE arm_cfft_radix2_init_q15.c)
+endif()
+
+if (NOT CONFIGTABLE  OR ALLFFT OR ARM_CFFT_RADIX4_Q15)
+  target_sources(CMSISDSPTransform PRIVATE arm_cfft_radix4_init_q15.c)
+endif()
+
+if (WRAPPER OR ARM_CFFT_RADIX2_Q31)
+  target_sources(CMSISDSPTransform PRIVATE arm_cfft_radix2_init_q31.c)
+endif()
+
+if (NOT CONFIGTABLE  OR ALLFFT OR ARM_CFFT_RADIX4_Q31)
+  target_sources(CMSISDSPTransform PRIVATE arm_cfft_radix4_init_q31.c)
+endif()
+
 # For scipy or wrappers or benchmarks
 if (WRAPPER)
 target_sources(CMSISDSPTransform PRIVATE arm_cfft_radix2_init_f32.c)
-target_sources(CMSISDSPTransform PRIVATE arm_cfft_radix2_init_q31.c)
-target_sources(CMSISDSPTransform PRIVATE arm_cfft_radix2_init_q15.c)
 if ((NOT ARMAC5) AND (NOT DISABLEFLOAT16))
 target_sources(CMSISDSPTransform PRIVATE arm_cfft_radix2_init_f16.c)
 endif()

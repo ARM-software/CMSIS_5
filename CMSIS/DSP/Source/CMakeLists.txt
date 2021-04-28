@@ -182,6 +182,11 @@ option(DCT4_Q15_512          "dct4 q15 512"                     OFF)
 option(DCT4_Q15_2048         "dct4 q15 2048"                    OFF)
 option(DCT4_Q15_8192         "dct4 q15 8192"                    OFF)
 
+option(ARM_CFFT_RADIX2_Q15   "deprecated q15 radix2 cfft"       OFF)
+option(ARM_CFFT_RADIX4_Q15   "deprecated q15 radix4 cfft"       OFF)
+
+option(ARM_CFFT_RADIX2_Q31   "deprecated q31 radix2 cfft"       OFF)
+option(ARM_CFFT_RADIX4_Q31   "deprecated q31 radix4 cfft"       OFF)
 
 ###########################
 #
