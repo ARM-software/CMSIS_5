@@ -620,7 +620,7 @@ __STATIC_INLINE q31x4_t FAST_VSQRT_Q31(q31x4_t vecIn)
 
 
     vecSignBits = vclsq(vecIn);
-    vecSignBits = vbicq(vecSignBits, 1);
+    vecSignBits = vbicq_n_s32(vecSignBits, 1);
     /*
      * in = in << no_of_sign_bits;
      */
