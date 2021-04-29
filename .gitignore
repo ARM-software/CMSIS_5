@@ -8,3 +8,4 @@ CMSIS/CoreValidation/Tests/build
 CMSIS/CoreValidation/Tests/bootloader/build
 *.uvguix.*
 *.uvmpw.uvgui.*
+docker/dependenciesFiles
