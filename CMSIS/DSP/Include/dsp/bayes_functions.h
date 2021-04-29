@@ -67,9 +67,10 @@ typedef struct
 /**
  * @brief Naive Gaussian Bayesian Estimator
  *
- * @param[in]  S         points to a naive bayes instance structure
- * @param[in]  in        points to the elements of the input vector.
- * @param[in]  pBuffer   points to a buffer of length numberOfClasses
+ * @param[in]  S                        points to a naive bayes instance structure
+ * @param[in]  in                       points to the elements of the input vector.
+ * @param[out] *pOutputProbabilities    points to a buffer of length numberOfClasses containing estimated probabilities
+ * @param[out] *pBufferB                points to a temporary buffer of length numberOfClasses
  * @return The predicted class
  *
  */
@@ -77,7 +78,8 @@ typedef struct
 
 uint32_t arm_gaussian_naive_bayes_predict_f32(const arm_gaussian_naive_bayes_instance_f32 *S, 
    const float32_t * in, 
-   float32_t *pBuffer);
+   float32_t *pOutputProbabilities,
+   float32_t *pBufferB);
 
 
 #ifdef   __cplusplus

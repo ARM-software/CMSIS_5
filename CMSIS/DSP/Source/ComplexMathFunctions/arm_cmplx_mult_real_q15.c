@@ -57,7 +57,7 @@ void arm_cmplx_mult_real_q15(
         q15_t * pCmplxDst,
         uint32_t numSamples)
 {
-  const static uint16_t stride_cmplx_x_real_16[8] = {
+  static const uint16_t stride_cmplx_x_real_16[8] = {
       0, 0, 1, 1, 2, 2, 3, 3
       };
   q15x8_t rVec;

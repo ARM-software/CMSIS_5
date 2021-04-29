@@ -160,6 +160,7 @@
         }
 
 
+#define NB_TAPS 4
 __STATIC_INLINE void arm_fir_f32_1_4_mve(const arm_fir_instance_f32 * S, 
   const float32_t * __restrict pSrc, 
   float32_t * __restrict pDst, uint32_t blockSize)
@@ -176,7 +177,6 @@ __STATIC_INLINE void arm_fir_f32_1_4_mve(const arm_fir_instance_f32 * S,
     int32_t         blkCnt;
     float32x4_t         vecIn0;
     float32x4_t         vecAcc0;
-    const int       NB_TAPS=4;
     float32_t       c[NB_TAPS];
     const float32_t *pCoeffsCur = pCoeffs;
 
@@ -243,8 +243,7 @@ __STATIC_INLINE void arm_fir_f32_1_4_mve(const arm_fir_instance_f32 * S,
     }
     while (blkCnt > 0);
 }
-
-
+#undef NB_TAPS
 
 __STATIC_INLINE void arm_fir_f32_5_8_mve(const arm_fir_instance_f32 * S, 
   const float32_t * __restrict pSrc, 

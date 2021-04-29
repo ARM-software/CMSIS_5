@@ -86,14 +86,13 @@
     uint32_t        numTaps = S->numTaps;   /* Number of filter coefficients in the filter */\
     int32_t         blkCnt;                                                                  \
     q15x8_t         vecIn0;                                                                  \
-    const int32_t   nbVecTaps = (NBTAPS / 8);                                                \
                                                                                              \
     /*                                                                                       \
      * load coefs                                                                            \
      */                                                                                      \
-    q15x8_t         vecCoeffs[nbVecTaps];                                                    \
+    q15x8_t         vecCoeffs[NBVECTAPS];                                                    \
                                                                                              \
-    for (int i = 0; i < nbVecTaps; i++)                                                      \
+    for (int i = 0; i < NBVECTAPS; i++)                                                      \
         vecCoeffs[i] = vldrhq_s16(pCoeffs + 8 * i);                                          \
                                                                                              \
     /*                                                                                       \
@@ -114,7 +113,7 @@
         pStateCur += 4;                                                                      \
         pTempSrc += 4;                                                                       \
                                                                                              \
-        FIR_Q15_CORE(pOutput, 4, nbVecTaps, pSamples, vecCoeffs);                            \
+        FIR_Q15_CORE(pOutput, 4, NBVECTAPS, pSamples, vecCoeffs);                            \
         pSamples += 4;                                                                       \
                                                                                              \
         blkCnt--;                                                                            \
@@ -126,7 +125,7 @@
     for (int i = 0; i < residual; i++)                                                       \
         *pStateCur++ = *pTempSrc++;                                                          \
                                                                                              \
-    FIR_Q15_CORE(pOutput, residual, nbVecTaps, pSamples, vecCoeffs);                         \
+    FIR_Q15_CORE(pOutput, residual, NBVECTAPS, pSamples, vecCoeffs);                         \
                                                                                              \
     /*                                                                                       \
      * Copy the samples back into the history buffer start                                   \
@@ -156,7 +155,9 @@ static void arm_fir_q15_25_32_mve(const arm_fir_instance_q15 * S,
   q15_t * __restrict pDst, uint32_t blockSize)
 {
     #define NBTAPS 32
+    #define NBVECTAPS (NBTAPS / 8)
     FIR_Q15_MAIN_CORE();
+    #undef NBVECTAPS
     #undef NBTAPS
 }
 
@@ -165,7 +166,9 @@ static void arm_fir_q15_17_24_mve(const arm_fir_instance_q15 * S,
   q15_t * __restrict pDst, uint32_t blockSize)
 {
     #define NBTAPS 24
+    #define NBVECTAPS (NBTAPS / 8)
     FIR_Q15_MAIN_CORE();
+    #undef NBVECTAPS
     #undef NBTAPS
 }
 
@@ -175,7 +178,9 @@ static void arm_fir_q15_9_16_mve(const arm_fir_instance_q15 * S,
   q15_t * __restrict pDst, uint32_t blockSize)
 {
     #define NBTAPS 16
+    #define NBVECTAPS (NBTAPS / 8)
     FIR_Q15_MAIN_CORE();
+    #undef NBVECTAPS
     #undef NBTAPS
 }
 
@@ -184,7 +189,9 @@ static void arm_fir_q15_1_8_mve(const arm_fir_instance_q15 * S,
   q15_t * __restrict pDst, uint32_t blockSize)
 {
     #define NBTAPS 8
+    #define NBVECTAPS (NBTAPS / 8)
     FIR_Q15_MAIN_CORE();
+    #undef NBVECTAPS
     #undef NBTAPS
 }
 

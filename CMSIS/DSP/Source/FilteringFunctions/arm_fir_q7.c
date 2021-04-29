@@ -81,14 +81,13 @@
     uint32_t       numTaps = S->numTaps;   /* Number of filter coefficients in the filter */\
     int32_t        blkCnt;                                                                  \
     q7x16_t        vecIn0;                                                                  \
-    const int32_t  nbVecTaps = (NBTAPS / 16);                                     \
                                                                                             \
     /*                                                                                      \
      * load coefs                                                                           \
      */                                                                                     \
-    q7x16_t         vecCoeffs[nbVecTaps];                                                   \
+    q7x16_t         vecCoeffs[NBVECTAPS];                                                   \
                                                                                             \
-    for (int i = 0; i < nbVecTaps; i++)                                                     \
+    for (int i = 0; i < NBVECTAPS; i++)                                                     \
         vecCoeffs[i] = vldrbq_s8(pCoeffs + 16 * i);                               \
                                                                                             \
     /*                                                                                      \
@@ -109,7 +108,7 @@
         pStateCur += 4;                                                                     \
         pTempSrc += 4;                                                                      \
                                                                                             \
-        FIR_Q7_CORE(pOutput, 4, nbVecTaps, pSamples, vecCoeffs);                            \
+        FIR_Q7_CORE(pOutput, 4, NBVECTAPS, pSamples, vecCoeffs);                            \
         pSamples += 4;                                                                      \
                                                                                             \
         blkCnt--;                                                                           \
@@ -121,7 +120,7 @@
     for (int i = 0; i < residual; i++)                                                      \
         *pStateCur++ = *pTempSrc++;                                                         \
                                                                                             \
-    FIR_Q7_CORE(pOutput, residual, nbVecTaps, pSamples, vecCoeffs);                         \
+    FIR_Q7_CORE(pOutput, residual, NBVECTAPS, pSamples, vecCoeffs);                         \
                                                                                             \
                                                                                             \
     /*                                                                                      \
@@ -147,7 +146,9 @@ static void arm_fir_q7_49_64_mve(const arm_fir_instance_q7 * S,
   q7_t * __restrict pDst, uint32_t blockSize)
 {
     #define NBTAPS 64
+    #define NBVECTAPS (NBTAPS / 16)
     FIR_Q7_MAIN_CORE();
+    #undef NBVECTAPS
     #undef NBTAPS
 }
 
@@ -157,7 +158,9 @@ void arm_fir_q7_33_48_mve(const arm_fir_instance_q7 * S,
   q7_t * __restrict pDst, uint32_t blockSize)
 {
     #define NBTAPS 48
+    #define NBVECTAPS (NBTAPS / 16)
     FIR_Q7_MAIN_CORE();
+    #undef NBVECTAPS
     #undef NBTAPS
 }
 
@@ -166,7 +169,9 @@ static void arm_fir_q7_17_32_mve(const arm_fir_instance_q7 * S,
   q7_t * __restrict pDst, uint32_t blockSize)
 {
     #define NBTAPS 32
+    #define NBVECTAPS (NBTAPS / 16)
     FIR_Q7_MAIN_CORE();
+    #undef NBVECTAPS
     #undef NBTAPS
 }
 
@@ -176,7 +181,9 @@ void arm_fir_q7_1_16_mve(const arm_fir_instance_q7 * S,
   q7_t * __restrict pDst, uint32_t blockSize)
 {
     #define NBTAPS 16
+    #define NBVECTAPS (NBTAPS / 16)
     FIR_Q7_MAIN_CORE();
+    #undef NBVECTAPS
     #undef NBTAPS
 }
 

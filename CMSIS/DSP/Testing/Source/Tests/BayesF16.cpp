@@ -10,6 +10,7 @@
        const float16_t *inp = input.ptr();
 
        float16_t *bufp = outputProbas.ptr();
+       float16_t *tempp = temp.ptr();
        int16_t *p = outputPredicts.ptr();
 
        
@@ -17,7 +18,7 @@
        {
           *p = arm_gaussian_naive_bayes_predict_f16(&bayes, 
                 inp, 
-                bufp);
+                bufp,tempp);
 
           inp += this->vecDim;
           bufp += this->classNb;
@@ -62,6 +63,7 @@
             predicts.reload(BayesF16::PREDICTS1_S16_ID,mgr);
 
             outputProbas.create(this->nbPatterns*this->classNb,BayesF16::OUT_PROBA_F16_ID,mgr);
+            temp.create(this->nbPatterns*this->classNb,BayesF16::OUT_PROBA_F16_ID,mgr);
             outputPredicts.create(this->nbPatterns,BayesF16::OUT_PREDICT_S16_ID,mgr);
 
             bayes.vectorDimension=this->vecDim;

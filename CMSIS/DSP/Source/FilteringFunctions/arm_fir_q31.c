@@ -117,14 +117,13 @@
     q31_t       *pTempDest;             /* Temporary pointer to the destination buffer */\
     uint32_t     numTaps = S->numTaps;  /* Number of filter coefficients in the filter */\
     int32_t      blkCnt;                                                                 \
-    const int32_t   nbVecTaps = (NBTAPS / 4);                                            \
                                                                                          \
     /*                                                                                   \
      * load coefs                                                                        \
      */                                                                                  \
-    q31x4_t         vecCoeffs[nbVecTaps];                                                \
+    q31x4_t         vecCoeffs[NBVECTAPS];                                                \
                                                                                          \
-    for (int i = 0; i < nbVecTaps; i++)                                                  \
+    for (int i = 0; i < NBVECTAPS; i++)                                                  \
         vecCoeffs[i] = vld1q(pCoeffs + 4 * i);                                           \
                                                                                          \
     /*                                                                                   \
@@ -145,7 +144,7 @@
         pStateCur += 4;                                                                  \
         pTempSrc += 4;                                                                   \
                                                                                          \
-        FIR_Q31_CORE(4, nbVecTaps, pSamples, vecCoeffs);                                 \
+        FIR_Q31_CORE(4, NBVECTAPS, pSamples, vecCoeffs);                                 \
                                                                                          \
         pSamples += 4;                                                                   \
         /*                                                                               \
@@ -162,7 +161,7 @@
               for (int i = 0; i < residual; i++)                                         \
                   *pStateCur++ = *pTempSrc++;                                            \
                                                                                          \
-              FIR_Q31_CORE(3, nbVecTaps, pSamples, vecCoeffs);                           \
+              FIR_Q31_CORE(3, NBVECTAPS, pSamples, vecCoeffs);                           \
           }                                                                              \
           break;                                                                         \
                                                                                          \
@@ -171,7 +170,7 @@
               for (int i = 0; i < residual; i++)                                         \
                   *pStateCur++ = *pTempSrc++;                                            \
                                                                                          \
-               FIR_Q31_CORE(2, nbVecTaps, pSamples, vecCoeffs);                          \
+               FIR_Q31_CORE(2, NBVECTAPS, pSamples, vecCoeffs);                          \
           }                                                                              \
           break;                                                                         \
                                                                                          \
@@ -180,7 +179,7 @@
               for (int i = 0; i < residual; i++)                                         \
                   *pStateCur++ = *pTempSrc++;                                            \
                                                                                          \
-              FIR_Q31_CORE(1, nbVecTaps, pSamples, vecCoeffs);                           \
+              FIR_Q31_CORE(1, NBVECTAPS, pSamples, vecCoeffs);                           \
           }                                                                              \
           break;                                                                         \
     }                                                                                    \
@@ -382,7 +381,9 @@ static void arm_fir_q31_5_8_mve(const arm_fir_instance_q31 * S,
     q31_t * __restrict pDst, uint32_t blockSize)
 {
     #define NBTAPS 8
+    #define NBVECTAPS (NBTAPS / 4)
     FIR_Q31_MAIN_CORE();
+    #undef NBVECTAPS
     #undef NBTAPS
 }
 
@@ -392,7 +393,9 @@ static void arm_fir_q31_9_12_mve(const arm_fir_instance_q31 * S,
     q31_t * __restrict pDst, uint32_t blockSize)
 {
     #define NBTAPS 12
+    #define NBVECTAPS (NBTAPS / 4)
     FIR_Q31_MAIN_CORE();
+    #undef NBVECTAPS
     #undef NBTAPS
 }
 
@@ -402,7 +405,9 @@ static void arm_fir_q31_13_16_mve(const arm_fir_instance_q31 * S,
     q31_t * __restrict pDst, uint32_t blockSize)
 {
     #define NBTAPS 16
+    #define NBVECTAPS (NBTAPS / 4)
     FIR_Q31_MAIN_CORE();
+    #undef NBVECTAPS
     #undef NBTAPS
 }
 
@@ -412,7 +417,9 @@ static void arm_fir_q31_17_20_mve(const arm_fir_instance_q31 * S,
     q31_t * __restrict pDst, uint32_t blockSize)
 {
     #define NBTAPS 20
+    #define NBVECTAPS (NBTAPS / 4)
     FIR_Q31_MAIN_CORE();
+    #undef NBVECTAPS
     #undef NBTAPS
 }
 
@@ -422,7 +429,9 @@ static void arm_fir_q31_21_24_mve(const arm_fir_instance_q31 * S,
     q31_t * __restrict pDst, uint32_t blockSize)
 {
     #define NBTAPS 24
+    #define NBVECTAPS (NBTAPS / 4)
     FIR_Q31_MAIN_CORE();
+    #undef NBVECTAPS
     #undef NBTAPS
 }
 
@@ -432,7 +441,9 @@ static void arm_fir_q31_25_28_mve(const arm_fir_instance_q31 * S,
     q31_t * __restrict pDst, uint32_t blockSize)
 {
     #define NBTAPS 28
+    #define NBVECTAPS (NBTAPS / 4)
     FIR_Q31_MAIN_CORE();
+    #undef NBVECTAPS
     #undef NBTAPS
 }
 

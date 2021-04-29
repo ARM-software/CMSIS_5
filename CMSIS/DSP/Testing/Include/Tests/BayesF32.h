@@ -17,6 +17,7 @@ class BayesF32:public Client::Suite
             Client::Pattern<int16_t> dims;
 
             Client::LocalPattern<float32_t> outputProbas;
+            Client::LocalPattern<float32_t> temp;
             Client::LocalPattern<int16_t> outputPredicts;
 
             // Reference patterns are not loaded when we are in dump mode

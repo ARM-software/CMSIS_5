@@ -43,13 +43,12 @@
 /**
  * @brief Naive Gaussian Bayesian Estimator
  *
- * @param[in]  *S         points to a naive bayes instance structure
- * @param[in]  *in        points to the elements of the input vector.
- * @param[in]  *pBuffer   points to a buffer of length numberOfClasses
+ * @param[in]  *S                       points to a naive bayes instance structure
+ * @param[in]  *in                      points to the elements of the input vector.
+ * @param[out] *pOutputProbabilities    points to a buffer of length numberOfClasses containing estimated probabilities
+ * @param[out] *pBufferB                points to a temporary buffer of length numberOfClasses
  * @return The predicted class
  *
- * @par If the number of classes is big, MVE version will consume lot of
- * stack since the log prior are computed on the stack.
  *
  */
 
@@ -60,19 +59,21 @@
 
 uint32_t arm_gaussian_naive_bayes_predict_f16(const arm_gaussian_naive_bayes_instance_f16 *S, 
    const float16_t * in, 
-   float16_t *pBuffer)
+   float16_t *pOutputProbabilities,
+   float16_t *pBufferB
+   )
 {
     uint32_t         nbClass;
     const float16_t *pTheta = S->theta;
     const float16_t *pSigma = S->sigma;
-    float16_t      *buffer = pBuffer;
+    float16_t      *buffer = pOutputProbabilities;
     const float16_t *pIn = in;
     float16_t       result;
     f16x8_t         vsigma;
     _Float16       tmp;
     f16x8_t         vacc1, vacc2;
     uint32_t        index;
-    float16_t       logclassPriors[S->numberOfClasses];
+    float16_t       *logclassPriors=pBufferB;
     float16_t      *pLogPrior = logclassPriors;
 
     arm_vlog_f16((float16_t *) S->classPriors, logclassPriors, S->numberOfClasses);
@@ -135,38 +136,31 @@ uint32_t arm_gaussian_naive_bayes_predict_f16(const arm_gaussian_naive_bayes_ins
         buffer++;
     }
 
-    arm_max_f16(pBuffer, S->numberOfClasses, &result, &index);
+    arm_max_f16(pOutputProbabilities, S->numberOfClasses, &result, &index);
 
     return (index);
 }
 
 #else
 
-/**
- * @brief Naive Gaussian Bayesian Estimator
- *
- * @param[in]  *S         points to a naive bayes instance structure
- * @param[in]  *in        points to the elements of the input vector.
- * @param[in]  *pBuffer   points to a buffer of length numberOfClasses
- * @return The predicted class
- *
- */
 uint32_t arm_gaussian_naive_bayes_predict_f16(const arm_gaussian_naive_bayes_instance_f16 *S, 
    const float16_t * in, 
-   float16_t *pBuffer)
+   float16_t *pOutputProbabilities,
+   float16_t *pBufferB)
 {
     uint32_t nbClass;
     uint32_t nbDim;
     const float16_t *pPrior = S->classPriors;
     const float16_t *pTheta = S->theta;
     const float16_t *pSigma = S->sigma;
-    float16_t *buffer = pBuffer;
+    float16_t *buffer = pOutputProbabilities;
     const float16_t *pIn=in;
     float16_t result;
     _Float16 sigma;
     _Float16 tmp;
     _Float16 acc1,acc2;
     uint32_t index;
+    (void)pBufferB;
 
     pTheta=S->theta;
     pSigma=S->sigma;
@@ -199,7 +193,7 @@ uint32_t arm_gaussian_naive_bayes_predict_f16(const arm_gaussian_naive_bayes_ins
         buffer++;
     }
 
-    arm_max_f16(pBuffer,S->numberOfClasses,&result,&index);
+    arm_max_f16(pOutputProbabilities,S->numberOfClasses,&result,&index);
 
     return(index);
 }

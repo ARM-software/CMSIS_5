@@ -79,7 +79,7 @@ void arm_cmplx_mult_real_f16(
         float16_t * pCmplxDst,
         uint32_t numSamples)
 {
-    const static uint16_t stride_cmplx_x_real_16[8] = {
+    static const uint16_t stride_cmplx_x_real_16[8] = {
         0, 0, 1, 1, 2, 2, 3, 3
         };
     uint32_t blockSizeC = numSamples * CMPLX_DIM;   /* loop counters */

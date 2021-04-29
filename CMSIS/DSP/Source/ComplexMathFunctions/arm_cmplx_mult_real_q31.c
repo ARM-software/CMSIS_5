@@ -58,7 +58,7 @@ void arm_cmplx_mult_real_q31(
         uint32_t numSamples)
 {
 
-    const static uint32_t stride_cmplx_x_real_32[4] = {
+    static const uint32_t stride_cmplx_x_real_32[4] = {
         0, 0, 1, 1
     };
     q31x4_t rVec;

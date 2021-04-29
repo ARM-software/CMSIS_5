@@ -11,7 +11,7 @@
 
        p = arm_gaussian_naive_bayes_predict_f16(&bayes, 
                 inp, 
-                bufp);
+                bufp,tempp);
 
     } 
 
@@ -51,6 +51,7 @@
             predicts.reload(BayesF16::PREDICTS2_S16_ID,mgr);
 
             outputProbas.create(this->classNb,BayesF16::OUT_PROBA_F16_ID,mgr);
+            temp.create(this->classNb,BayesF16::OUT_PROBA_F16_ID,mgr);
 
             bayes.vectorDimension=this->vecDim;
             bayes.numberOfClasses=this->classNb;
@@ -62,6 +63,7 @@
             this->inp = input.ptr() + nbi;
 
             this->bufp = outputProbas.ptr();
+            this->tempp = temp.ptr();
 
           }
           break;
