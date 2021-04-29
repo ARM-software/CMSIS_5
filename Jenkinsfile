@@ -39,6 +39,10 @@ dockerinfo_windows = DOCKERINFO['windows_production']
 isPrecommit = (JOB_BASE_NAME == 'pre_commit')
 isNightly = (JOB_BASE_NAME == 'nightly')
 
+patternGlobal = [
+    '^Jenkinsfile'
+]
+
 patternCoreM = [
     '^CMSIS/Core/Include/.*',
     '^Device/ARM/ARMCM.*'
@@ -122,24 +126,26 @@ pipeline {
             steps {
                 script {
                     def fileset = changeset
+                    def hasGlobal = fileSetMatches(fileset, patternGlobal)
                     def hasCoreM = fileSetMatches(fileset, patternCoreM)
                     def hasCoreA = fileSetMatches(fileset, patternCoreA)
                     def hasCoreValidation = fileSetMatches(fileset, patternCoreValidation)
 
 echo """Change analysis:
+- hasGlobal = ${hasGlobal}
 - hasCoreM = ${hasCoreM}
 - hasCoreA = ${hasCoreA}
 - hasCoreValidation = ${hasCoreValidation}
 """
 
-                    if (hasCoreM || hasCoreValidation) {
+                    if (hasGlobal || hasCoreM || hasCoreValidation) {
                         CONFIGURATION['devices'] += CONFIGURATION['mdevices']
                     }
-                    if (hasCoreA || hasCoreValidation) {
+                    if (hasGlobal || hasCoreA || hasCoreValidation) {
                         CONFIGURATION['devices'] += CONFIGURATION['adevices']
                     }
 
-                    CORE_VALIDATION &= hasCoreM || hasCoreA || hasCoreValidation
+                    CORE_VALIDATION &= hasGlobal || hasCoreM || hasCoreA || hasCoreValidation
                     
 echo """Stage schedule:
 - CORE_VALIDATION = ${CORE_VALIDATION}
@@ -226,8 +232,10 @@ echo """Stage schedule:
                         CONFIGURATION['devices'].each { unstash "CV_${it}" }
                     }
 
-                    recordIssues tools: [clang(id: 'AC6', name: 'Arm Compiler 6', pattern: 'CV_AC6_*.log')]
-                    recordIssues tools: [clang(id: 'AC6LTM', name: 'Arm Compiler 6 LTM', pattern: 'CV_AC6LTM_*.log')]
+                    recordIssues tools: [clang(id: 'AC6', name: 'Arm Compiler 6', pattern: 'CV_AC6_*.log'),
+                                         clang(id: 'AC6LTM', name: 'Arm Compiler 6 LTM', pattern: 'CV_AC6LTM_*.log')],
+                                 qualityGates: [[threshold: 1, type: 'DELTA', unstable: true]],
+                                 referenceJobName: 'nightly', ignoreQualityGate: true
                     xunit([
                         JUnit(pattern: 'corevalidation_*.junit', failIfNotNew: false, skipNoTestFiles: true)
                     ])
