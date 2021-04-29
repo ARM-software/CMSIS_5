@@ -1,46 +1,36 @@
 @Library("cmsis")
 
 DOCKERINFO = [
-    'linux_staging': [
+    'staging': [
         'registryUrl': 'mcu--docker-staging.eu-west-1.artifactory.aws.arm.com',
         'registryCredentialsId': 'artifactory',
         'k8sPullSecret': 'artifactory-mcu-docker-staging',
         'namespace': 'mcu--docker-staging',
-        'image': 'cmsis_fusa/linux',
+        'image': 'cmsis/linux',
         'label': "${JENKINS_ENV}-${JOB_BASE_NAME}-${BUILD_NUMBER}"
     ],
-    'linux_production': [
+    'production': [
         'registryUrl': 'mcu--docker.eu-west-1.artifactory.aws.arm.com',
         'registryCredentialsId': 'artifactory',
         'namespace': 'mcu--docker',
         'k8sPullSecret': 'artifactory-mcu-docker',
-        'image': 'cmsis_fusa/linux',
-        'label': 'aws'
-    ],
-    'windows_staging': [
-        'registryUrl': 'mcu--docker-staging.eu-west-1.artifactory.aws.arm.com',
-        'registryCredentialsId': 'artifactory',
-        'namespace': 'mcu--docker-staging',
-        'image': 'cmsis_fusa/windows',
-        'label': "${JENKINS_ENV}-${JOB_BASE_NAME}-${BUILD_NUMBER}"
-    ],
-    'windows_production': [
-        'registryUrl': 'mcu--docker.eu-west-1.artifactory.aws.arm.com',
-        'registryCredentialsId': 'artifactory',
-        'namespace': 'mcu--docker',
-        'image': 'cmsis_fusa/windows',
-        'label': 'aws'
+        'image': 'cmsis/linux',
+        'label': 'latest'
     ]
 ]
 
-dockerinfo_linux = DOCKERINFO['linux_production']
-dockerinfo_windows = DOCKERINFO['windows_production']
+dockerinfo = DOCKERINFO['production']
 
 isPrecommit = (JOB_BASE_NAME == 'pre_commit')
+isPostcommit = (JOB_BASE_NAME == 'post_commit')
 isNightly = (JOB_BASE_NAME == 'nightly')
 
 patternGlobal = [
     '^Jenkinsfile'
+]
+
+patternDocker = [
+    '^docker/.*'
 ]
 
 patternCoreM = [
@@ -63,8 +53,22 @@ CONFIGURATIONS = [
         'adevices': ['CA7', 'CA9neon'],
         'devices' : [],
         'configs' : [
+            'AC5': ['low', 'tiny'],
             'AC6': ['low', 'tiny'],
-            'AC6LTM': ['low', 'tiny']
+            'AC6LTM': ['low', 'tiny'],
+            'GCC': ['low', 'tiny']
+        ]
+    ],
+    'post_commit': [
+        'devices' : ['CM0', 'CM0plus', 'CM3', 'CM4', 'CM4FP', 'CM7', 'CM7SP', 'CM7DP',
+             'CM23', 'CM23S', 'CM23NS', 'CM33', 'CM33S', 'CM33NS',
+             'CM35P', 'CM35PS', 'CM35PNS',
+             'CA5', 'CA5neon', 'CA7', 'CA7neon', 'CA9', 'CA9neon'],
+        'configs' : [
+            'AC5': ['low', 'tiny'],
+            'AC6': ['low', 'tiny'],
+            'AC6LTM': ['low', 'tiny'],
+            'GCC': ['low', 'tiny']
         ]
     ],
     'nightly':[
@@ -73,8 +77,10 @@ CONFIGURATIONS = [
                      'CM35P', 'CM35PS', 'CM35PNS',
                      'CA5', 'CA5neon', 'CA7', 'CA7neon', 'CA9', 'CA9neon'],
         'configs' : [
+            'AC5': ['low', 'mid', 'high', 'size', 'tiny'],
             'AC6': ['low', 'mid', 'high', 'size', 'tiny'],
-            'AC6LTM': ['low', 'mid', 'high', 'size', 'tiny']
+            'AC6LTM': ['low', 'mid', 'high', 'size', 'tiny'],
+            'GCC': ['low', 'mid', 'high', 'size', 'tiny']
         ]
     ]
 ]
@@ -94,18 +100,26 @@ def fileSetMatches(fileset, patternset) {
 }
 
 FORCE_BUILD = false
+DOCKER_BUILD = true
 CORE_VALIDATION = true
 COMMIT = null
 VERSION = null
 
 pipeline {
+    agent { label 'master' }
     options {
         timestamps()
         timeout(time: 1, unit: 'HOURS')
         ansiColor('xterm')
         skipDefaultCheckout()
     }
-    agent { label 'master' }
+    environment {
+        CI_ACCOUNT          = credentials('grasci')
+        ARTIFACTORY         = credentials('artifactory')
+        USER                = "${CI_ACCOUNT_USR}"
+        PASS                = "${CI_ACCOUNT_PSW}"
+        ARTIFACTORY_API_KEY = "${ARTIFACTORY_PSW}"
+    }
     stages {
         stage('Checkout') {
             steps {
@@ -115,41 +129,152 @@ pipeline {
                     VERSION = (sh(returnStdout: true, script: 'git describe --always')).trim()
                     echo "VERSION: '${VERSION}'"
                 }
+
+                dir('docker') {
+                    stash name: 'dockerfile', includes: '**'
+                }
             }
         }
 
         stage('Analyse') {
             when {
-                expression { return isPrecommit }
+                expression { return isPrecommit || isPostcommit }
                 beforeOptions true
             }
             steps {
                 script {
                     def fileset = changeset
                     def hasGlobal = fileSetMatches(fileset, patternGlobal)
+                    def hasDocker = fileSetMatches(fileset, patternDocker)
                     def hasCoreM = fileSetMatches(fileset, patternCoreM)
                     def hasCoreA = fileSetMatches(fileset, patternCoreA)
                     def hasCoreValidation = fileSetMatches(fileset, patternCoreValidation)
 
 echo """Change analysis:
 - hasGlobal = ${hasGlobal}
+- hasDocker = ${hasDocker}
 - hasCoreM = ${hasCoreM}
 - hasCoreA = ${hasCoreA}
 - hasCoreValidation = ${hasCoreValidation}
 """
 
-                    if (hasGlobal || hasCoreM || hasCoreValidation) {
-                        CONFIGURATION['devices'] += CONFIGURATION['mdevices']
-                    }
-                    if (hasGlobal || hasCoreA || hasCoreValidation) {
-                        CONFIGURATION['devices'] += CONFIGURATION['adevices']
+                    if (isPrecommit) {
+                        if (hasGlobal || hasDocker || hasCoreM || hasCoreValidation) {
+                            CONFIGURATION['devices'] += CONFIGURATION['mdevices']
+                        }
+                        if (hasGlobal || hasDocker || hasCoreA || hasCoreValidation) {
+                            CONFIGURATION['devices'] += CONFIGURATION['adevices']
+                        }
                     }
 
-                    CORE_VALIDATION &= hasGlobal || hasCoreM || hasCoreA || hasCoreValidation
-                    
+                    DOCKER_BUILD &= hasDocker
+                    CORE_VALIDATION &= hasGlobal || hasDocker || hasCoreM || hasCoreA || hasCoreValidation
+
 echo """Stage schedule:
+- DOCKER_BUILD = ${DOCKER_BUILD}
 - CORE_VALIDATION = ${CORE_VALIDATION}
 """
+                }
+            }
+        }
+
+        stage('Docker Lint') {
+            when {
+                expression { return DOCKER_BUILD }
+                beforeOptions true
+            }
+            agent {
+                kubernetes {
+                    defaultContainer 'hadolint'
+                    slaveConnectTimeout 600
+                    yaml """\
+                        apiVersion: v1
+                        kind: Pod
+                        securityContext:
+                          runAsUser: 1000
+                          runAsGroup: 1000
+                        spec:
+                          imagePullSecrets:
+                            - name: artifactory-mcu-docker
+                          securityContext:
+                            runAsUser: 1000
+                            runAsGroup: 1000
+                          containers:
+                            - name: hadolint
+                              image: mcu--docker.eu-west-1.artifactory.aws.arm.com/hadolint/hadolint:v1.19.0-alpine
+                              alwaysPullImage: true
+                              imagePullPolicy: Always
+                              command:
+                                - sleep
+                              args:
+                                - infinity
+                              resources:
+                                requests:
+                                  cpu: 2
+                                  memory: 2Gi
+                        """.stripIndent()
+                }
+            }
+            steps {
+                dir('docker') {
+                    unstash 'dockerfile'
+
+                    sh 'hadolint --format json dockerfile | tee hadolint.log'
+
+                    recordIssues tools: [hadoLint(id: 'hadolint', pattern: 'hadolint.log')],
+                                 qualityGates: [[threshold: 1, type: 'DELTA', unstable: true]],
+                                 referenceJobName: 'nightly', ignoreQualityGate: true
+                }
+            }
+        }
+
+        stage('Docker Build') {
+            when {
+                expression { return (isPrecommit || isPostcommit) && DOCKER_BUILD }
+                beforeOptions true
+            }
+            agent {
+                kubernetes {
+                    defaultContainer 'docker-dind'
+                    slaveConnectTimeout 600
+                    yaml """\
+                        apiVersion: v1
+                        kind: Pod
+                        spec:
+                          imagePullSecrets:
+                            - name: artifactory-mcu-docker
+                          containers:
+                            - name: docker-dind
+                              image: docker:dind
+                              securityContext:
+                                privileged: true
+                              volumeMounts:
+                                - name: dind-storage
+                                  mountPath: /var/lib/docker
+                          volumes:
+                            - name: dind-storage
+                              emptyDir: {}
+                        """.stripIndent()
+                }
+            }
+            steps {
+                sh('apk add bash curl git')
+                script {
+                    dir('docker') {
+                        unstash 'dockerfile'
+                    
+                        dockerinfo = DOCKERINFO['staging']
+                        withCredentials([sshUserPrivateKey(credentialsId: 'grasci_with_pk',
+                                keyFileVariable: 'grasciPk',
+                                passphraseVariable: '',
+                                usernameVariable: 'grasciUsername')]) {
+                            sh("GIT_SSH_COMMAND='ssh -i $grasciPk -o StrictHostKeyChecking=no' ./getDependencies.sh")
+                        }
+                        docker.withRegistry("https://${dockerinfo['registryUrl']}", dockerinfo['registryCredentialsId']) {
+                            def image = docker.build("${dockerinfo['registryUrl']}/${dockerinfo['image']}:${dockerinfo['label']}", "--build-arg DOCKER_REGISTRY=${dockerinfo['registryUrl']} .")
+                            image.push()
+                        }
+                    }
                 }
             }
         }
@@ -184,13 +309,13 @@ echo """Stage schedule:
                                     kind: Pod
                                     spec:
                                       imagePullSecrets:
-                                        - name: ${dockerinfo_linux['k8sPullSecret']}
+                                        - name: ${dockerinfo['k8sPullSecret']}
                                       securityContext:
                                         runAsUser: 1000
                                         runAsGroup: 1000
                                       containers:
                                         - name: cmsis
-                                          image: ${dockerinfo_linux['registryUrl']}/${dockerinfo_linux['image']}:${dockerinfo_linux['label']}
+                                          image: ${dockerinfo['registryUrl']}/${dockerinfo['image']}:${dockerinfo['label']}
                                           alwaysPullImage: true
                                           imagePullPolicy: Always
                                           command:
@@ -241,6 +366,55 @@ echo """Stage schedule:
                     ])
                 }
 
+            }
+        }
+
+        stage('Docker Promote') {
+            when {
+                expression { return isPostcommit && DOCKER_BUILD }
+                beforeOptions true
+            }
+            agent {
+                kubernetes {
+                    defaultContainer 'docker-dind'
+                    slaveConnectTimeout 600
+                    yaml """\
+                        apiVersion: v1
+                        kind: Pod
+                        spec:
+                          imagePullSecrets:
+                            - name: artifactory-mcu-docker
+                          containers:
+                            - name: docker-dind
+                              image: docker:dind
+                              securityContext:
+                                privileged: true
+                              volumeMounts:
+                                - name: dind-storage
+                                  mountPath: /var/lib/docker
+                          volumes:
+                            - name: dind-storage
+                              emptyDir: {}
+                        """.stripIndent()
+                }
+            }
+            steps {
+                script {
+                    String postCommitTag = "${dockerinfo['registryUrl']}/${dockerinfo['image']}:${dockerinfo['label']}"
+                    String prodCommitTag = "${DOCKERINFO['production']['registryUrl']}/${DOCKERINFO['production']['image']}:${DOCKERINFO['production']['label']}"
+
+                    // Pull & retag Docker Staging Container to Production
+                    docker.withRegistry("https://${dockerinfo['registryUrl']}", dockerinfo['registryCredentialsId']) {
+                        def image = docker.image("$postCommitTag")
+                        image.pull()
+                        sh "docker tag $postCommitTag $prodCommitTag"
+                    }
+                    // Push to Docker Production
+                    docker.withRegistry("https://${DOCKERINFO['production']['registryUrl']}", DOCKERINFO['production']['registryCredentialsId']) {
+                        def image = docker.image("$prodCommitTag")
+                        image.push()
+                    }
+                }
             }
         }
     }
