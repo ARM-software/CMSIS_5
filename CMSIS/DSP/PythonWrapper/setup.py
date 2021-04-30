@@ -58,12 +58,20 @@ interpolation = glob.glob(os.path.join(ROOT,"Source","InterpolationFunctions","*
 interpolation.remove(os.path.join(ROOT,"Source","InterpolationFunctions","InterpolationFunctions.c"))
 interpolation.remove(os.path.join(ROOT,"Source","InterpolationFunctions","InterpolationFunctionsF16.c"))
 
+quaternion = glob.glob(os.path.join(ROOT,"Source","QuaternionMathFunctions","*.c"))
+quaternion.remove(os.path.join(ROOT,"Source","QuaternionMathFunctions","QuaternionMathFunctions.c"))
+
+#distance = glob.glob(os.path.join(ROOT,"Source","DistanceFunctions","*.c"))
+#distance.remove(os.path.join(ROOT,"Source","DistanceFunctions","DistanceFunctions.c"))
+
+
 #modulesrc = glob.glob(os.path.join("cmsisdsp_pkg","src","*.c"))
 modulesrc = []
 modulesrc.append(os.path.join("cmsisdsp_pkg","src","cmsismodule.c"))
 
 allsrcs = support + fastmath + filtering + matrix + statistics + complexf + basic
 allsrcs = allsrcs + controller + transform + modulesrc + common+ interpolation
+allsrcs = allsrcs + quaternion
 
 def notf16(number):
   if re.search(r'f16',number):
@@ -88,10 +96,10 @@ module1 = Extension(config.extensionName,
                               )
 
 setup (name = config.setupName,
-       version = '0.0.1',
+       version = '1.0.0',
        description = config.setupDescription,
        ext_modules = [module1],
-       author = 'Copyright (C) 2010-2020 ARM Limited or its affiliates. All rights reserved.',
+       author = 'Copyright (C) 2010-2021 ARM Limited or its affiliates. All rights reserved.',
        url="https://github.com/ARM-software/CMSIS_5",
        classifiers=[
         "Programming Language :: Python",

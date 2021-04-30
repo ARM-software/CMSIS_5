@@ -3,13 +3,13 @@
  * Title:        cmsismodule.c
  * Description:  C code for the CMSIS-DSP Python wrapper
  *
- * $Date:        25. March 2019
- * $Revision:    V0.0.1
+ * $Date:        27 April 2021
+ * $Revision:    VV1.0
  *
  * Target Processor: Cortex-M cores
  * -------------------------------------------------------------------- */
 /*
- * Copyright (C) 2010-2019 ARM Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2010-2021 ARM Limited or its affiliates. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -186,10 +186,10 @@ Method_##NAME##_##FIELD(ml_##NAME##Object *self, PyObject *ignored)\
     PyObject *OBJ=PyArray_SimpleNewFromData(ND, dims, NPY_FLOAT, DATA);
 
 #define FLOATARRAY1(OBJ,NB1,DATA)                                          \
-    npy_intp dims[1];                                                  \
-    dims[0]=NB1;                                                       \
-    const int ND=1;                                                    \
-    PyObject *OBJ=PyArray_SimpleNewFromData(ND, dims, NPY_FLOAT, DATA);
+    npy_intp dims##OBJ[1];                                                  \
+    dims##OBJ[0]=NB1;                                                       \
+    const int ND##OBJ=1;                                                    \
+    PyObject *OBJ=PyArray_SimpleNewFromData(ND##OBJ, dims##OBJ, NPY_FLOAT, DATA);
 
 #define FLOAT64ARRAY1(OBJ,NB1,DATA)                                          \
     npy_intp dims[1];                                                  \
@@ -221,6 +221,11 @@ Method_##NAME##_##FIELD(ml_##NAME##Object *self, PyObject *ignored)\
     const int ND=1;                                                     \
     PyObject *OBJ=PyArray_SimpleNewFromData(ND, dims, NPY_BYTE, DATA);
 
+#define TYP_ARRAY1(OBJ,NB1,DATA,NPYTYPE)                                          \
+    npy_intp dims[1];                                                   \
+    dims[0]=NB1;                                                        \
+    const int ND=1;                                                     \
+    PyObject *OBJ=PyArray_SimpleNewFromData(ND, dims, NPYTYPE, DATA);
 
 #define MATRIXFROMNUMPY(EXT,TYP,SRCTYPE,NUMPYTYPE)                                   \
 arm_matrix_instance_##EXT *EXT##MatrixFromNumpy(PyObject *o)                   \
@@ -257,6 +262,7 @@ MATRIXFROMNUMPY(f32,float32_t,double,NPY_DOUBLE);
 MATRIXFROMNUMPY(f64,float64_t,double,NPY_DOUBLE);
 MATRIXFROMNUMPY(q31,q31_t,int32_t,NPY_INT32);
 MATRIXFROMNUMPY(q15,q15_t,int16_t,NPY_INT16);
+MATRIXFROMNUMPY(q7,q7_t,int8_t,NPY_BYTE);
 
 #define CREATEMATRIX(EXT,TYP)                                        \
 arm_matrix_instance_##EXT *create##EXT##Matrix(uint32_t r,uint32_t c)\
@@ -274,6 +280,7 @@ CREATEMATRIX(f32,float32_t);
 CREATEMATRIX(f64,float64_t);
 CREATEMATRIX(q31,q31_t);
 CREATEMATRIX(q15,q15_t);
+CREATEMATRIX(q7,q7_t);
 
 #define NUMPYVECTORFROMBUFFER(EXT,CTYPE,NUMPYTYPE_FROMC)                     \
 PyObject *NumpyVectorFrom##EXT##Buffer(CTYPE *ptr,int nb)                    \
@@ -310,6 +317,7 @@ NUMPYARRAYFROMMATRIX(f32,NPY_FLOAT);
 NUMPYARRAYFROMMATRIX(f64,NPY_DOUBLE);
 NUMPYARRAYFROMMATRIX(q31,NPY_INT32);
 NUMPYARRAYFROMMATRIX(q15,NPY_INT16);
+NUMPYARRAYFROMMATRIX(q7,NPY_BYTE);
 
 //#include "specific.h"
 #include "cmsismodule.h"
