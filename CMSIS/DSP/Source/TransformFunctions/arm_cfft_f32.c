@@ -210,7 +210,7 @@ static void _arm_radix4_butterfly_f32_mve(const arm_cfft_instance_f32 * S,float3
     /*
      * start of Last stage process
      */
-    uint32x4_t vecScGathAddr = *(uint32x4_t *) strides;
+    uint32x4_t vecScGathAddr = vld1q_u32(strides);
     vecScGathAddr = vecScGathAddr + (uint32_t) pSrc;
 
     /* load scheduling */
@@ -416,7 +416,7 @@ static void _arm_radix4_butterfly_inverse_f32_mve(const arm_cfft_instance_f32 * 
     /*
      * start of Last stage process
      */
-    uint32x4_t vecScGathAddr = *(uint32x4_t *) strides;
+    uint32x4_t vecScGathAddr = vld1q_u32 (strides);
     vecScGathAddr = vecScGathAddr + (uint32_t) pSrc;
 
     /*

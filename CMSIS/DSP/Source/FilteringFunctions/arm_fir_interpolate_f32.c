@@ -147,7 +147,7 @@ static void arm_fir_interpolate2_f32_mve(
     uint32_t  blkCnt;           /* Loop counters */
     uint16_t  phaseLen = S->phaseLength;    /* Length of each polyphase filter component */
     uint32_t  strides[4] = { 0, 1 * 2, 2 * 2, 3 * 2 };
-    uint32x4_t vec_strides0 = *(uint32x4_t *) strides;
+    uint32x4_t vec_strides0 = vld1q_u32(strides);
     uint32x4_t vec_strides1 = vec_strides0 + 1;
     f32x4_t acc0, acc1;
 
@@ -271,8 +271,8 @@ void arm_fir_interpolate_f32(
     uint16_t  phaseLen = S->phaseLength;    /* Length of each polyphase filter component */
     uint32_t  strides[4] = { 0, 1 * S->L, 2 * S->L, 3 * S->L };
     uint32_t  stridesM[4] = { 4, 3, 2, 1 };
-    uint32x4_t vec_stridesM = *(uint32x4_t *) stridesM;
-    uint32x4_t vec_strides = *(uint32x4_t *) strides;
+    uint32x4_t vec_stridesM =  vld1q_u32(stridesM);
+    uint32x4_t vec_strides =  vld1q_u32(strides);
     f32x4_t acc;
 
 

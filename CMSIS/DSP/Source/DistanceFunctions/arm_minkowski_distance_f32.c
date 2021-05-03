@@ -76,10 +76,9 @@ __attribute__((weak)) float __powisf2(float a, int b)
 float32_t arm_minkowski_distance_f32(const float32_t *pA,const float32_t *pB, int32_t order, uint32_t blockSize)
 {
     uint32_t        blkCnt;
-    f32x4_t         a, b, tmpV, accumV, sumV;
+    f32x4_t         a, b, tmpV, sumV;
 
     sumV = vdupq_n_f32(0.0f);
-    accumV = vdupq_n_f32(0.0f);
 
     blkCnt = blockSize >> 2;
     while (blkCnt > 0U) {

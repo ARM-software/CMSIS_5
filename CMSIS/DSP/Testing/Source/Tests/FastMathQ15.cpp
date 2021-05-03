@@ -30,6 +30,8 @@ a double precision computation.
           status = arm_divide_q15(nump[i],denp[i],&outp[i],&shiftp[i]);
         }
 
+        (void)status;
+
         ASSERT_SNR(ref,output,(float32_t)SNR_THRESHOLD);
         ASSERT_NEAR_EQ(ref,output,ABS_ERROR);
         ASSERT_EQ(refShift,shift);

@@ -71,7 +71,7 @@ void arm_fir_interpolate_q31(
     uint32_t  i, blkCnt;        /* Loop counters */
     uint16_t  phaseLen = S->phaseLength;    /* Length of each polyphase filter component */
     uint32_t  strides[4] = { 0, 1 * S->L, 2 * S->L, 3 * S->L };
-    uint32x4_t vec_strides0 = *(uint32x4_t *) strides;
+    uint32x4_t vec_strides0 =  vld1q_u32(strides);
     uint32x4_t vec_strides1 = vec_strides0 + 1;
     uint32x4_t vec_strides2 = vec_strides0 + 2;
     uint32x4_t vec_strides3 = vec_strides0 + 3;

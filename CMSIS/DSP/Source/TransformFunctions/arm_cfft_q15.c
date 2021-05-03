@@ -157,7 +157,7 @@ static void _arm_radix4_butterfly_q15_mve(
     /*
      * start of Last stage process
      */
-    uint32x4_t vecScGathAddr = *(uint32x4_t *) strides;
+    uint32x4_t vecScGathAddr = vld1q_u32 (strides);
     vecScGathAddr = vecScGathAddr + (uint32_t) pSrc;
 
     /*
@@ -392,7 +392,7 @@ static void _arm_radix4_butterfly_inverse_q15_mve(const arm_cfft_instance_q15 *S
     /*
      * start of Last stage process
      */
-    uint32x4_t vecScGathAddr = *(uint32x4_t *) strides;
+    uint32x4_t vecScGathAddr = vld1q_u32(strides);
     vecScGathAddr = vecScGathAddr + (uint32_t) pSrc;
 
     /*

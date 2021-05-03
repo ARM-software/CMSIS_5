@@ -526,7 +526,7 @@ arm_status arm_mat_cmplx_mult_q31(
     uint16_t  numRowsA = pSrcA->numRows;    /* number of rows of input matrix A    */
     uint16_t  numColsB = pSrcB->numCols;    /* number of columns of input matrix B */
     uint16_t  numColsA = pSrcA->numCols;    /* number of columns of input matrix A */
-    uint16_t  col, i = 0U, row = numRowsA, colCnt;  /* loop counters */
+    uint16_t  col, i = 0U, row = numRowsA;  /* loop counters */
     arm_status status;          /* status of matrix multiplication */
     uint32x4_t vecOffs, vecColBOffs;
     uint32_t  blkCnt, rowCnt;           /* loop counters */
@@ -611,7 +611,6 @@ arm_status arm_mat_cmplx_mult_q31(
             /*
              * Matrix A columns number of MAC operations are to be performed
              */
-            colCnt = numColsA;
 
             q31_t const *pSrcA0Vec, *pSrcA1Vec;
             q31_t const *pInA0 = pInA;
@@ -742,7 +741,6 @@ arm_status arm_mat_cmplx_mult_q31(
             /*
              * Matrix A columns number of MAC operations are to be performed
              */
-            colCnt = numColsA;
 
             q31_t const *pSrcA0Vec;
             q31_t const *pInA0 = pInA;

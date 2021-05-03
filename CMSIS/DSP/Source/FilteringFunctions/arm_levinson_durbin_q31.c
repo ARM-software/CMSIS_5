@@ -75,6 +75,7 @@ __STATIC_FORCEINLINE q31_t divide(q31_t n, q31_t d)
 
   // Result is in Q14 because of use of HALF_Q15 instead of ONE_Q15.
   status=arm_divide_q15(HALF_Q15,d>>16,&inverse,&shift);
+  (void)status;
   
   // d is used instead of l
   // So we will need to substract to 2 instead of 1.
