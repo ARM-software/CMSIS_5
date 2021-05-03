@@ -357,8 +357,10 @@ echo """Stage schedule:
                         CONFIGURATION['devices'].each { unstash "CV_${it}" }
                     }
 
-                    recordIssues tools: [clang(id: 'AC6', name: 'Arm Compiler 6', pattern: 'CV_AC6_*.log'),
-                                         clang(id: 'AC6LTM', name: 'Arm Compiler 6 LTM', pattern: 'CV_AC6LTM_*.log')],
+                    recordIssues tools: [armCc(id: 'AC5', name: 'Arm Compiler 5', pattern: 'CV_AC5_*.log'),
+                                         clang(id: 'AC6', name: 'Arm Compiler 6', pattern: 'CV_AC6_*.log'),
+                                         clang(id: 'AC6LTM', name: 'Arm Compiler 6 LTM', pattern: 'CV_AC6LTM_*.log'),
+                                         gcc(id: 'GCC', name: 'GNU Compiler', pattern: 'CV_GCC_*.log')],
                                  qualityGates: [[threshold: 1, type: 'DELTA', unstable: true]],
                                  referenceJobName: 'nightly', ignoreQualityGate: true
                     xunit([
