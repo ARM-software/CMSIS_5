@@ -184,18 +184,6 @@
     </xs:restriction>
   </xs:simpleType>
 
-  <xs:complexType name="ComponentCategoryType">
-    <xs:attribute name="Cvendor"     type="xs:string"            use="optional" />
-    <xs:attribute name="Cbundle"     type="xs:string"            use="optional" />
-    <xs:attribute name="Cclass"      type="xs:string"            use="required" />
-    <xs:attribute name="Cgroup"      type="xs:string"            use="optional" />
-    <xs:attribute name="Csub"        type="xs:string"            use="optional" />
-    <xs:attribute name="Cvariant"    type="xs:string"            use="optional" />
-    <xs:attribute name="Cversion"    type="ComponentVersionType" use="optional" />
-    <xs:attribute name="Capiversion" type="ComponentVersionType" use="optional" />
-    <xs:attribute name="instances"   type="InstancesType"        use="optional" default="1" />
-  </xs:complexType>
-
   <!-- PackageType creates a unique ID for a package / if no version specified use "latest" -->
   <xs:complexType name="PackageType">
     <!-- vendor of the package -->
@@ -274,9 +262,9 @@
   <!-- Project target specification: -->
   <xs:complexType name="TargetType">
     <xs:choice maxOccurs="unbounded">
-      <!-- build options -->
+      <!-- Build options -->
       <xs:element name="output"    type="OutputType" />
-      <!-- linker command-line -->
+      <!-- Linker command-line -->
       <xs:element name="ldflags"   type="LinkerFlagsType" />
       <!-- C-Compiler command-line -->
       <xs:element name="cflags"    type="ToolOptionType" />
@@ -286,6 +274,10 @@
       <xs:element name="arflags"  type="ToolOptionType" />
       <!-- Assembler command-line -->
       <xs:element name="asflags"   type="AsmOptionType" />
+      <!-- Include paths -->
+      <xs:element name="includes"  type="xs:string" minOccurs="0" />
+      <!-- Preprocessing definitions -->
+      <xs:element name="defines"   type="xs:string" minOccurs="0" />
     </xs:choice>
     <!-- Board Vendor -->
     <xs:attribute name="Bvendor"  type="xs:string"   use="optional" />
