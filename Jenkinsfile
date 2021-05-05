@@ -49,7 +49,7 @@ patternCoreValidation = [
 
 CONFIGURATIONS = [
     'pre_commit': [
-        'mdevices': ['CM0', 'CM3', 'CM4FP', 'CM7DP', 'CM23', 'CM33NS', 'CM35PS'],
+        'mdevices': ['CM0', 'CM3', 'CM4FP', 'CM7DP', 'CM23', 'CM33NS', 'CM35PS', 'CM55NS'],
         'adevices': ['CA7', 'CA9neon'],
         'devices' : [],
         'configs' : [
@@ -62,7 +62,7 @@ CONFIGURATIONS = [
     'post_commit': [
         'devices' : ['CM0', 'CM0plus', 'CM3', 'CM4', 'CM4FP', 'CM7', 'CM7SP', 'CM7DP',
              'CM23', 'CM23S', 'CM23NS', 'CM33', 'CM33S', 'CM33NS',
-             'CM35P', 'CM35PS', 'CM35PNS',
+             'CM35P', 'CM35PS', 'CM35PNS', 'CM55', 'CM55S', 'CM55NS',
              'CA5', 'CA5neon', 'CA7', 'CA7neon', 'CA9', 'CA9neon'],
         'configs' : [
             'AC5': ['low', 'tiny'],
@@ -74,7 +74,7 @@ CONFIGURATIONS = [
     'nightly':[
         'devices' : ['CM0', 'CM0plus', 'CM3', 'CM4', 'CM4FP', 'CM7', 'CM7SP', 'CM7DP',
                      'CM23', 'CM23S', 'CM23NS', 'CM33', 'CM33S', 'CM33NS',
-                     'CM35P', 'CM35PS', 'CM35PNS',
+                     'CM35P', 'CM35PS', 'CM35PNS', 'CM55', 'CM55S', 'CM55NS',
                      'CA5', 'CA5neon', 'CA7', 'CA7neon', 'CA9', 'CA9neon'],
         'configs' : [
             'AC5': ['low', 'mid', 'high', 'size', 'tiny'],
@@ -290,7 +290,7 @@ echo """Stage schedule:
                       name 'DEVICE'
                       values 'CM0', 'CM0plus', 'CM3', 'CM4', 'CM4FP', 'CM7', 'CM7SP', 'CM7DP',
                              'CM23', 'CM23S', 'CM23NS', 'CM33', 'CM33S', 'CM33NS',
-                             'CM35P', 'CM35PS', 'CM35PNS',
+                             'CM35P', 'CM35PS', 'CM35PNS', 'CM55', 'CM55S', 'CM55NS',
                              'CA5', 'CA5neon', 'CA7', 'CA7neon', 'CA9', 'CA9neon'
                     }
                 }
