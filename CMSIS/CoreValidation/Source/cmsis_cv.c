@@ -2,7 +2,7 @@
  *      Name:         cmsis_cv.c
  *      Purpose:      Driver validation test cases entry point
  *----------------------------------------------------------------------------
- *      Copyright (c) 2017 - 2018 Arm Limited. All rights reserved.
+ *      Copyright (c) 2017 - 2021 Arm Limited. All rights reserved.
  *----------------------------------------------------------------------------*/
 #include "cmsis_cv.h"
 #include "RTE_Components.h"
@@ -116,6 +116,7 @@ static TEST_CASE TC_LIST[] = {
 
   #elif defined(__CORTEX_A)
     TCD ( TC_CoreAFunc_IRQ,                        TC_COREAFUNC_IRQ                          ),
+    TCD ( TC_CoreAFunc_FaultIRQ,                   TC_COREAFUNC_FAULTIRQ                     ),
     TCD ( TC_CoreAFunc_FPSCR,                      TC_COREAFUNC_FPSCR                        ),
     TCD ( TC_CoreAFunc_CPSR,                       TC_COREAFUNC_CPSR                         ),
     TCD ( TC_CoreAFunc_Mode,                       TC_COREAFUNC_MODE                         ),

@@ -198,7 +198,7 @@ void TC_CoreFunc_IRQVect(void) {
   static VECTOR_TABLE_Type vectors[sizeof(__VECTOR_TABLE)/sizeof(__VECTOR_TABLE[0])] __ALIGNED(512);
 
   memcpy(vectors, __VECTOR_TABLE, sizeof(__VECTOR_TABLE));
-  
+
   const uint32_t orig_vtor = SCB->VTOR;
   const uint32_t vtor = ((uint32_t)vectors) & SCB_VTOR_TBLOFF_Msk;
   SCB->VTOR = vtor;
@@ -595,7 +595,6 @@ void TC_CoreFunc_PRIMASK (void) {
 
   __set_PRIMASK(primask);
   uint32_t result = __get_PRIMASK();
-
   ASSERT_TRUE(result == primask);
 
   __disable_irq();
@@ -633,7 +632,6 @@ void TC_CoreFunc_FAULTMASK (void) {
 
   __set_FAULTMASK(faultmask);
   uint32_t result = __get_FAULTMASK();
-
   ASSERT_TRUE(result == faultmask);
 
   __disable_fault_irq();

@@ -1,8 +1,8 @@
 /**************************************************************************//**
  * @file     cmsis_armclang.h
  * @brief    CMSIS compiler armclang (Arm Compiler 6) header file
- * @version  V5.4.1
- * @date     19. March 2021
+ * @version  V5.4.2
+ * @date     05. May 2021
  ******************************************************************************/
 /*
  * Copyright (c) 2009-2021 Arm Limited. All rights reserved.
@@ -28,10 +28,6 @@
 #define __CMSIS_ARMCLANG_H
 
 #pragma clang system_header   /* treat file as system include file */
-
-#ifndef __ARM_COMPAT_H
-#include <arm_compat.h>    /* Compatibility header for Arm Compiler 5 intrinsics */
-#endif
 
 /* CMSIS compiler specific defines */
 #ifndef   __ASM
@@ -167,7 +163,10 @@ __STATIC_FORCEINLINE void __TZ_set_STACKSEAL_S (uint32_t* stackTop) {
   \details Enables IRQ interrupts by clearing special-purpose register PRIMASK.
            Can only be executed in Privileged modes.
  */
-/* intrinsic void __enable_irq();  see arm_compat.h */
+__STATIC_FORCEINLINE void __enable_irq(void)
+{
+  __ASM volatile ("cpsie i" : : : "memory");
+}
 
 
 /**
@@ -175,7 +174,10 @@ __STATIC_FORCEINLINE void __TZ_set_STACKSEAL_S (uint32_t* stackTop) {
   \details Disables IRQ interrupts by setting special-purpose register PRIMASK.
            Can only be executed in Privileged modes.
  */
-/* intrinsic void __disable_irq();  see arm_compat.h */
+__STATIC_FORCEINLINE void __disable_irq(void)
+{
+  __ASM volatile ("cpsid i" : : : "memory");
+}
 
 
 /**
@@ -472,7 +474,10 @@ __STATIC_FORCEINLINE void __TZ_set_PRIMASK_NS(uint32_t priMask)
   \details Enables FIQ interrupts by clearing special-purpose register FAULTMASK.
            Can only be executed in Privileged modes.
  */
-#define __enable_fault_irq                __enable_fiq   /* see arm_compat.h */
+__STATIC_FORCEINLINE void __enable_fault_irq(void)
+{
+  __ASM volatile ("cpsie f" : : : "memory");
+}
 
 
 /**
@@ -480,7 +485,10 @@ __STATIC_FORCEINLINE void __TZ_set_PRIMASK_NS(uint32_t priMask)
   \details Disables FIQ interrupts by setting special-purpose register FAULTMASK.
            Can only be executed in Privileged modes.
  */
-#define __disable_fault_irq               __disable_fiq   /* see arm_compat.h */
+__STATIC_FORCEINLINE void __disable_fault_irq(void)
+{
+  __ASM volatile ("cpsid f" : : : "memory");
+}
 
 
 /**
