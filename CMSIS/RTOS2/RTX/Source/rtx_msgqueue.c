@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2019 Arm Limited. All rights reserved.
+ * Copyright (c) 2013-2021 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -245,19 +245,15 @@ static osMessageQueueId_t svcRtxMessageQueueNew (uint32_t msg_count, uint32_t ms
   const char         *name;
 
   // Check parameters
-  if ((msg_count == 0U) || (msg_size  == 0U)) {
-    EvrRtxMessageQueueError(NULL, (int32_t)osErrorParameter);
-    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
-    return NULL;
-  }
-  block_size = ((msg_size + 3U) & ~3UL) + sizeof(os_message_t);
-  if ((__CLZ(msg_count) + __CLZ(block_size)) < 32U) {
+  if ((msg_count == 0U) || (msg_size == 0U) ||
+      ((__CLZ(msg_count) + __CLZ(msg_size)) < 32U)) {
     EvrRtxMessageQueueError(NULL, (int32_t)osErrorParameter);
     //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return NULL;
   }
 
-  size = msg_count * block_size;
+  block_size = ((msg_size + 3U) & ~3UL) + sizeof(os_message_t);
+  size       = msg_count * block_size;
 
   // Process attributes
   if (attr != NULL) {

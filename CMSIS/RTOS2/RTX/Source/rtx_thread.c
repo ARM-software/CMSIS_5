@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2019 Arm Limited. All rights reserved.
+ * Copyright (c) 2013-2021 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -646,10 +646,12 @@ static osThreadId_t svcRtxThreadNew (osThreadFunc_t func, void *argument, const 
   }
 
   // Check stack size
-  if ((stack_size != 0U) && (((stack_size & 7U) != 0U) || (stack_size < (64U + 8U)))) {
-    EvrRtxThreadError(NULL, osRtxErrorInvalidThreadStack);
-    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
-    return NULL;
+  if (stack_size != 0U) {
+    if (((stack_size & 7U) != 0U) || (stack_size < (64U + 8U)) || (stack_size > 0x7FFFFFFFU)) {
+      EvrRtxThreadError(NULL, osRtxErrorInvalidThreadStack);
+      //lint -e{904} "Return statement before end of function" [MISRA Note 1]
+      return NULL;
+    }
   }
 
   // Allocate object memory if not provided

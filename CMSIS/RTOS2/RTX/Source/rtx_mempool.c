@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2018 Arm Limited. All rights reserved.
+ * Copyright (c) 2013-2021 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -191,20 +191,16 @@ static osMemoryPoolId_t svcRtxMemoryPoolNew (uint32_t block_count, uint32_t bloc
   const char       *name;
 
   // Check parameters
-  if ((block_count == 0U) || (block_size  == 0U)) {
-    EvrRtxMemoryPoolError(NULL, (int32_t)osErrorParameter);
-    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
-    return NULL;
-  }
-  b_count =  block_count;
-  b_size  = (block_size + 3U) & ~3UL;
-  if ((__CLZ(b_count) + __CLZ(b_size)) < 32U) {
+  if ((block_count == 0U) || (block_size == 0U) ||
+      ((__CLZ(block_count) + __CLZ(block_size)) < 32U)) {
     EvrRtxMemoryPoolError(NULL, (int32_t)osErrorParameter);
     //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return NULL;
   }
 
-  size = b_count * b_size;
+  b_count =  block_count;
+  b_size  = (block_size + 3U) & ~3UL;
+  size    =  b_count * b_size;
 
   // Process attributes
   if (attr != NULL) {
