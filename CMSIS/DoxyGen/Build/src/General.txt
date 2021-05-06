@@ -60,24 +60,25 @@ Software layers and Virtual I/O simplify these use cases:
   <tr>
     <td>0.10.0 (beta)</td>
     <td>Release for beta review:
-    - new command line options: --update, --quiet, --log, --intdir, --outdir (see usage for more information).
-    - building an executable always creates binaries in ELF, HEX and BIN format in output directory.
-    - added build progress information to build output.
-    - added makefile target 'rebuild' (clean + build).
-    - added makefile self-dependency. Generated makefile is only written if the content changed.
-    - added makefile target 'database' for generating a compilation database file.
-    - added special handling for layer files (layer.\<layer name>.\<ext>) copied unconditionally along with the layer on extract, remove, compose and add commands of cbuildgen.
-    - added special handling for layer markdown files (layer.\<layer name>.md) being concatenated into README.md on compose command of cbuildgen.
-    - fixed: #970 Toolchain configuration files corrected to handle Cortex-M0+, Cortex-M35P, SC000, SC300 and ARMV81MML based devices.
-    - fixed: #971 Unnecessary rebuild of libraries when using GCC toolchain.
-  </td>
+      - new command line options: --update, --quiet, --log, --intdir, --outdir (see usage for more information).
+      - building an executable always creates binaries in ELF, HEX and BIN format in output directory.
+      - added build progress information to build output.
+      - added makefile target 'rebuild' (clean + build).
+      - added makefile self-dependency. Generated makefile is only written if the content changed.
+      - added makefile target 'database' for generating a compilation database file.
+      - added special handling for layer files (layer.\<layer name>.\<ext>) copied unconditionally along with the layer on extract, remove, compose and add commands of cbuildgen.
+      - added special handling for layer markdown files (layer.\<layer name>.md) being concatenated into README.md on compose command of cbuildgen.
+      - fixed: #970 Toolchain configuration files corrected to handle Cortex-M0+, Cortex-M35P, SC000, SC300 and ARMV81MML based devices.
+      - fixed: #971 Unnecessary rebuild of libraries when using GCC toolchain.
+    </td>
+  </tr>
   <tr>
     <td>0.9.0 (beta)</td>
     <td>Release for beta review:
-    - added layer description to project format specification.
-    - added support for multiple compilers.
-    - added commands for layer operations to cbuildgen.
-  </td>
+      - added layer description to project format specification.
+      - added support for multiple compilers.
+      - added commands for layer operations to cbuildgen.
+    </td>
   </tr>
   <tr>
     <td>0.1.0</td>

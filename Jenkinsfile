@@ -279,6 +279,54 @@ echo """Stage schedule:
             }
         }
 
+        stage('Pack') {
+            agent {
+                kubernetes {
+                    defaultContainer 'cmsis'
+                    slaveConnectTimeout 600
+                    yaml """\
+                        apiVersion: v1
+                        kind: Pod
+                        spec:
+                          imagePullSecrets:
+                            - name: ${dockerinfo['k8sPullSecret']}
+                          securityContext:
+                            runAsUser: 1000
+                            runAsGroup: 1000
+                          containers:
+                            - name: cmsis
+                              image: ${dockerinfo['registryUrl']}/${dockerinfo['image']}:${dockerinfo['label']}
+                              alwaysPullImage: true
+                              imagePullPolicy: Always
+                              command:
+                                - sleep
+                              args:
+                                - infinity
+                              resources:
+                                requests:
+                                  cpu: 2
+                                  memory: 2Gi
+                        """.stripIndent()
+                }
+            }
+            steps {
+                checkoutScmWithRetry(3)
+                sh('./CMSIS/RTOS/RTX/LIB/fetch_libs.sh')
+                sh('./CMSIS/RTOS2/RTX/Library/fetch_libs.sh')
+                
+                tee('doxygen.log') {
+                    sh('./CMSIS/DoxyGen/gen_doc.sh')
+                }
+                sh('./CMSIS/Utilities/gen_pack.sh')
+                
+                archiveArtifacts artifacts: 'output/ARM.CMSIS.*.pack', allowEmptyArchive: true
+
+                recordIssues tools: [doxygen(id: 'DOXYGEN', name: 'Doxygen', pattern: 'doxygen.log')],
+                             qualityGates: [[threshold: 1, type: 'DELTA', unstable: true]],
+                             referenceJobName: 'nightly', ignoreQualityGate: true                
+            }
+        }
+
         stage('CoreValidation') {
             when {
                 expression { return CORE_VALIDATION }
@@ -340,7 +388,7 @@ echo """Stage schedule:
                                     }
                                 }
 
-                                archiveArtifacts artifacts: "CoreValidation_*.zip", allowEmptyArchive: true
+                                archiveArtifacts artifacts: 'CoreValidation_*.zip', allowEmptyArchive: true
                                 stash name: "CV_${DEVICE}", includes: '*.log, *.junit'
                             }
                         }

@@ -8,33 +8,25 @@
   <url>http://www.keil.com/pack/</url>
 
   <releases>
-    <release version="5.7.1-dev2">
-      Active development ...
-      CMSIS-RTOS2:
-        - RTX 5.5.3 (see revision history for details)
-    </release>
-    <release version="5.7.1-dev1">
+    <release version="5.8.0">
       Active development ...
       CMSIS-Core(M):
+        - Updated GCC LinkerDescription, GCC Assembler startup
        - Added ARMv8-M Stack Sealing (to linker, startup) for toolchain ARM, GCC
        - Changed C-Startup to default Startup.
-    </release>
-    <release version="5.7.1-dev0">
-      Active development ...
-      CMSIS-Core(M):
-       - Updated GCC LinkerDescription, GCC Assembler startup
       CMSIS-DSP:
        - Purged pre-built libs from Git
-      CMSIS-RTOS:
-       - RTX4: Purged pre-built libs from Git
-      CMSIS-RTOS2:
-       - RTX5: Purged pre-built libs from Git
       CMSIS-NN: 3.0.0 (see revision history for details including version 2.0.0)
        - Major interface change for functions compatible with TensorFlow Lite for Microcontroller
        - Added optimization for SVDF kernel
        - Improved MVE performance for fully Connected and max pool operator
        - NULL bias support for fully connected operator in non-MVE case(Can affect performance)
        - Expanded existing unit test suite along with support for FVP
+      CMSIS-RTOS:
+       - RTX4: Purged pre-built libs from Git
+      CMSIS-RTOS2:
+        - RTX5: Purged pre-built libs from Git
+        - RTX 5.5.3 (see revision history for details)
     </release>
     <release version="5.7.0" date="2020-04-09">
       CMSIS-Build: 0.9.0 (beta)
