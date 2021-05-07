@@ -3,6 +3,7 @@
 ## How to use
 
 This document is explaining how to use cmake with CMSIS-DSP.
+(It is not official so not supported. The official way to build is to use the CMSIS-Pack).
 
 The example arm_variance_f32 in folder Examples/ARM/arm_variance_f32 has been modified to also
 support cmake and is used as an example in this document.

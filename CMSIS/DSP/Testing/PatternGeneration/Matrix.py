@@ -172,9 +172,8 @@ def getInvertibleMatrix(d):
     m=[[0.804738, -0.310617, 0.505879], [0.505879, 
         0.804738, -0.310617], [-0.310617, 0.505879, 0.804738]]
   if d == 4:
-    m = [[0.82826, 0.337671, 0.564395, 0.576988], [0.403359, 0.369414, 
-      0.597588, 0.436561], [0.783442, 0.3334, 0.525436, 
-      0.0858155], [0.329328, 0.397682, 0.12816, 0.775337]]
+    m = [[1.0, 2.0, 3.0, 4.0], [2.0, 4.0, 5.0, 6.0], 
+         [3.0, 5.0, 9.0, 10.0], [4.0, 6.0, 10.0, 16.0]]
   if d == 7:
     m = [[0.978575, 0.330011, 0.951751, 0.304936, 0.924631, 0.502005, 
         0.235223], [0.185314, 0.46862, 0.955398, 0.970953, 0.637389, 
@@ -680,6 +679,7 @@ def getSemidefinitePositiveMatrix(d,k=3):
    return(np.matmul(p,np.matmul(a,np.transpose(p))))
 
 def writeUnaryTests(config,format):
+    config.setOverwrite(False)
     # For benchmarks
     NBSAMPLES=NBA*NBB
     NBVECSAMPLES = NBB
@@ -783,8 +783,12 @@ def writeUnaryTests(config,format):
     else:
        dims=[1,2,3,4,7,8,9,15,16,17,32,33]
     #
+
+    if format == Tools.F32 or format == Tools.F16 or format == Tools.F64:
+       config.setOverwrite(True)
     vals = []
     inp=[]
+    
     for d in dims:
         ma = getInvertibleMatrix(d)
         inp = inp + list(ma.reshape(d*d))
@@ -801,6 +805,8 @@ def writeUnaryTests(config,format):
     config.writeInputS16(1, dims,"DimsInvert")
     config.writeInput(1, inp,"InputInvert")
     config.writeReference(1, vals,"RefInvert")
+
+    config.setOverwrite(False)
     # One kind of matrix shape
 
     # Cholesky and LDLT definite positive (DPO)
@@ -851,7 +857,6 @@ def writeUnaryTests(config,format):
        utinvs += list(utinv.reshape(d*d)) 
        ltinvs += list(ltinv.reshape(d*d))
        cholinvs += list(cholinv.reshape(d*d))
-
 
 
 
@@ -916,6 +921,13 @@ def generatePatterns():
     configBinaryq15=Tools.Config(PATTERNBINDIR,PARAMBINDIR,"q15")
     configBinaryq7=Tools.Config(PATTERNBINDIR,PARAMBINDIR,"q7")
 
+    configBinaryf64.setOverwrite(False)
+    configBinaryf32.setOverwrite(False)
+    configBinaryf16.setOverwrite(False)
+    configBinaryq31.setOverwrite(False)
+    configBinaryq15.setOverwrite(False)
+    configBinaryq7.setOverwrite(False)
+
     
     writeBinaryTests(configBinaryf64,Tools.F32)
     writeBinaryTests(configBinaryf32,Tools.F32)
@@ -934,6 +946,12 @@ def generatePatterns():
     configUnaryq15=Tools.Config(PATTERNUNDIR,PARAMUNDIR,"q15")
     configUnaryq7=Tools.Config(PATTERNUNDIR,PARAMUNDIR,"q7")
     
+    configUnaryf64.setOverwrite(False)
+    configUnaryf32.setOverwrite(False)
+    configUnaryf16.setOverwrite(False)
+    configUnaryq31.setOverwrite(False)
+    configUnaryq15.setOverwrite(False)
+    configUnaryq7.setOverwrite(False)
     
     writeUnaryTests(configUnaryf64,Tools.F64)
     writeUnaryTests(configUnaryf32,Tools.F32)
