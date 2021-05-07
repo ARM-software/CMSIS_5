@@ -299,6 +299,22 @@ void UnaryTestsF16::test_mat_cmplx_trans_f16()
 
     }
 
+static void refInnerTail(float16_t *b)
+{
+    b[0] = 1.0f16;
+    b[1] = -2.0f16;
+    b[2] = 3.0f16;
+    b[3] = -4.0f16;
+}
+
+static void checkInnerTail(float16_t *b)
+{
+    ASSERT_TRUE(b[0] == 1.0f16);
+    ASSERT_TRUE(b[1] == -2.0f16);
+    ASSERT_TRUE(b[2] == 3.0f16);
+    ASSERT_TRUE(b[3] == -4.0f16);
+}
+
 void UnaryTestsF16::test_mat_inverse_f16()
     {     
       const float16_t *inp1=input1.ptr();    
@@ -319,15 +335,18 @@ void UnaryTestsF16::test_mat_inverse_f16()
 
           PREPAREDATA1(false);
 
+          refInnerTail(outp+(rows * columns));
+
           status=arm_mat_inverse_f16(&this->in1,&this->out);
           ASSERT_TRUE(status==ARM_MATH_SUCCESS);
 
           outp += (rows * columns);
           inp1 += (rows * columns);
 
+          checkInnerTail(outp);
+
       }
 
-      ASSERT_EMPTY_TAIL(output);
 
       ASSERT_SNR(output,ref,(float16_t)SNR_THRESHOLD_INV);
 

@@ -171,6 +171,24 @@ void UnaryTestsF64::test_mat_trans_f64()
 
 }
 
+/*
+
+Test framework is only adding 16 bytes of free memory after the end of a buffer.
+So, we limit to 2 float64 for checking out of buffer write.
+*/
+static void refInnerTail(float64_t *b)
+{
+    b[0] = 1.0;
+    b[1] = -2.0;
+}
+
+static void checkInnerTail(float64_t *b)
+{
+    ASSERT_TRUE(b[0] == 1.0);
+    ASSERT_TRUE(b[1] == -2.0);
+}
+
+
 void UnaryTestsF64::test_mat_inverse_f64()
     {     
       const float64_t *inp1=input1.ptr();    
@@ -183,7 +201,7 @@ void UnaryTestsF64::test_mat_inverse_f64()
       int rows,columns;                      
       int i;
       arm_status status;
-
+      
       for(i=0;i < nbMatrixes ; i ++)
       {
           rows = *dimsp++;
@@ -191,15 +209,18 @@ void UnaryTestsF64::test_mat_inverse_f64()
 
           PREPAREDATA1(false);
 
+          refInnerTail(outp+(rows * columns));
+
           status=arm_mat_inverse_f64(&this->in1,&this->out);
           ASSERT_TRUE(status==ARM_MATH_SUCCESS);
 
           outp += (rows * columns);
           inp1 += (rows * columns);
 
+          checkInnerTail(outp);
+
       }
 
-      ASSERT_EMPTY_TAIL(output);
 
       ASSERT_SNR(output,ref,(float64_t)SNR_THRESHOLD);
 

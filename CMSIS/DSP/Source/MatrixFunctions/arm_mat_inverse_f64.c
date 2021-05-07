@@ -63,7 +63,7 @@ arm_status arm_mat_inverse_f64(
 #if defined (ARM_MATH_DSP)
 
   float64_t Xchg, in = 0.0, in1;                /* Temporary input values  */
-  uint32_t i, rowCnt, flag = 0U, j, loopCnt,k, l;      /* loop counters */
+  uint32_t i, rowCnt, flag = 0U, j, loopCnt, k,l;      /* loop counters */
   arm_status status;                             /* status of matrix inverse */
 
 #ifdef ARM_MATH_MATRIX_CHECK
@@ -174,11 +174,14 @@ arm_status arm_mat_inverse_f64(
       /* Temporary variable to hold the pivot value */
       in = *pInT1;
 
+    
+
       /* Check if the pivot element is zero */
       if (*pInT1 == 0.0)
       {
         /* Loop over the number rows present below */
-        for (i = (l + 1U); i < numRows; i++)
+
+        for (i = 1U; i < numRows - l; i++)
         {
           /* Update the input and destination pointers */
           pInT2 = pInT1 + (numCols * i);
@@ -224,6 +227,8 @@ arm_status arm_mat_inverse_f64(
             break;
           }
 
+
+          /* Decrement loop counter */
         }
       }
 
@@ -474,13 +479,11 @@ arm_status arm_mat_inverse_f64(
       /* Temporary variable to hold the pivot value */
       in = *pInT1;
 
-
-
       /* Check if the pivot element is zero */
       if (*pInT1 == 0.0)
       {
         /* Loop over the number rows present below */
-        for (i = (l + 1U); i < numRows; i++)
+        for (i = 1U; i < numRows-l; i++)
         {
           /* Update the input and destination pointers */
           pInT2 = pInT1 + (numCols * i);
@@ -513,10 +516,9 @@ arm_status arm_mat_inverse_f64(
             /* Break after exchange is done */
             break;
           }
-
- 
         }
       }
+
 
       /* Update the status if the matrix is singular */
       if ((flag != 1U) && (in == 0.0))

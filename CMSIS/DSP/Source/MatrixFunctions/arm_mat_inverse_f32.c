@@ -219,7 +219,7 @@ arm_status arm_mat_inverse_f32(
                 /*
                  * Loop over the number rows present below
                  */
-                for (i = (l + 1U); i < numRows; i++)
+                for (i = 1U; i < numRows-l; i++)
                 {
                     /*
                      * Update the input and destination pointers
@@ -698,7 +698,7 @@ arm_status arm_mat_inverse_f32(
       if (*pInT1 == 0.0f)
       {
         /* Loop over the number rows present below */
-        for (i = (l + 1U); i < numRows; i++)
+        for (i = 1U; i < numRows - l; i++)
         {
           /* Update the input and destination pointers */
           pInT2 = pInT1 + (numCols * i);
@@ -1105,7 +1105,7 @@ arm_status arm_mat_inverse_f32(
       {
         /* Loop over the number rows present below */
 
-        for (i = (l + 1U); i < numRows; i++)
+        for (i = 1U; i < numRows - l; i++)
         {
           /* Update the input and destination pointers */
           pInT2 = pInT1 + (numCols * i);
@@ -1407,7 +1407,7 @@ arm_status arm_mat_inverse_f32(
       if (*pInT1 == 0.0f)
       {
         /* Loop over the number rows present below */
-        for (i = (l + 1U); i < numRows; i++)
+        for (i = 1U; i < numRows-l; i++)
         {
           /* Update the input and destination pointers */
           pInT2 = pInT1 + (numCols * i);
