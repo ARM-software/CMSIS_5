@@ -37,6 +37,11 @@ The following CMSIS-Driver API groups are defined:
   - \ref vio_interface_gr "VIO": API for virtual I/Os (VIO).
   - \ref wifi_interface_gr "WiFi": Interface driver for wireless communication.
 
+\note Usually, WiFi chips and modules have their own networking stack incorporated. This means that payload data is sent via
+a serial interface (SPI or USART) to the WiFi chip/module and the Ethernet frames are assembled inside. If you intend to use
+a TCP/IP stack from a middleware component with a WiFi chip/module, make sure that the WiFi driver has a \ref wifi_bypass_gr.
+This allows to send the Ethernet frames assembled by the TCP/IP component transparently through the WiFi chip/module.
+
 <hr>
 
 CMSIS-Driver in ARM::CMSIS Pack

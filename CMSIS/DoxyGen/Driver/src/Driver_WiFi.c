@@ -790,9 +790,10 @@ wifi->Deactivate (0U);
 \ingroup wifi_interface_gr
 \brief Transfer Ethernet frames by WiFi module.
 \details The \ref wifi_bypass_gr functions are an optional interface and enable the transmission of
-Ethernet frames with WiFi modules. The use of this interface requires that the IP stack is running
-on the microcontroller. The internal IP stack of the WiFi module is therefore not used, and this
-usually means that the \ref wifi_socket_gr functions can not be used.
+Ethernet frames with WiFi modules. The use of this interface requires that the TCP/IP stack is running
+on the microcontroller (usually a third-party or open-source networking component). The internal TCP/IP
+stack of the WiFi module is therefore not used, and this usually means that the \ref wifi_socket_gr
+functions can not be used.
 @{
 */
 
