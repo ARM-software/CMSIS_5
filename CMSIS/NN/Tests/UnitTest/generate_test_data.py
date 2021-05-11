@@ -1098,6 +1098,10 @@ def load_all_testdatasets():
     ALL_TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=3, out_ch=3, x_in=6, y_in=5, w_x=3,
                                               w_y=4, pad=False, randmin=-7, randmax=7, out_activation_min=-31,
                                               out_activation_max=24)
+    dataset = 'depthwise_mult_batches'
+    ALL_TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=3, out_ch=3, x_in=3, y_in=5, w_x=2,
+                                              w_y=4, stride_x=2, stride_y=2, pad=True, randmin=-2, randmax=2,
+                                              batches=2)
 
     type_of_test = 'fully_connected'
     dataset = 'fully_connected'
@@ -1119,6 +1123,7 @@ def load_all_testdatasets():
     ALL_TESTDATA_SETS[dataset] = FullyConnectedSettings(dataset, type_of_test, args, in_ch=10, out_ch=4, randmin=-15,
                                                         randmax=15, input_zero_point=0, output_zero_point=0,
                                                         out_activation_min=-105, out_activation_max=120)
+
     type_of_test = 'avgpool'
     dataset = 'avgpooling'
     ALL_TESTDATA_SETS[dataset] = PoolingSettings(dataset, type_of_test, args, channels=8, x_in=22, y_in=12, stride_x=9,
