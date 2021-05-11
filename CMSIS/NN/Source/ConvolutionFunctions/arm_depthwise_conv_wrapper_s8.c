@@ -22,8 +22,8 @@
  * Description:  Wrapper API to select appropriate depthwise conv API based
  *               on dimensions.
  *
- * $Date:        09. October 2020
- * $Revision:    V.1.0.2
+ * $Date:        11. May 2021
+ * $Revision:    V.1.0.3
  *
  * Target Processor:  Cortex-M CPUs
  *
@@ -59,7 +59,7 @@ arm_status arm_depthwise_conv_wrapper_s8(const cmsis_nn_context *ctx,
                                          q7_t *output)
 {
     arm_status status = ARM_MATH_SUCCESS;
-    if (1 == dw_conv_params->ch_mult)
+    if (1 == dw_conv_params->ch_mult && input_dims->n == 1)
     {
 #if !defined(ARM_MATH_MVEI)
         if ((filter_dims->w == 3) && (filter_dims->h == 3) && (dw_conv_params->padding.h <= 1))
@@ -119,7 +119,7 @@ int32_t arm_depthwise_conv_wrapper_s8_get_buffer_size(const cmsis_nn_dw_conv_par
     (void)dw_conv_params;
     int32_t size = 0;
 
-    if (input_dims->c == output_dims->c)
+    if (input_dims->c == output_dims->c && input_dims->n == 1)
     {
         size = arm_depthwise_conv_s8_opt_get_buffer_size(input_dims, filter_dims);
     }

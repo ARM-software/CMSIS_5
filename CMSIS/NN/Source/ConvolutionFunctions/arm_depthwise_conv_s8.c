@@ -19,10 +19,10 @@
 /* ----------------------------------------------------------------------
  * Project:      CMSIS NN Library
  * Title:        arm_depthwise_conv_s8.c
- * Description:	 s8 version of depthwise convolution.
+ * Description:  s8 version of depthwise convolution.
  *
- * $Date:        09. October 2020
- * $Revision:    V.2.0.1
+ * $Date:        11. May 2021
+ * $Revision:    V.2.5.0
  *
  * Target Processor:  Cortex-M CPUs
  *
@@ -140,6 +140,7 @@ static void depthwise_conv_s8_mult_4(const int8_t *input,
 }
 
 static void depthwise_conv_s8_generic(const q7_t *input,
+                                      const uint16_t input_batches,
                                       const uint16_t input_x,
                                       const uint16_t input_y,
                                       const uint16_t input_ch,
@@ -165,49 +166,56 @@ static void depthwise_conv_s8_generic(const q7_t *input,
 {
     (void)output_ch;
     int i_out = 0;
-    for (int i_out_y = 0; i_out_y < output_y; i_out_y++)
+    int i_batch;
+
+    for (i_batch = 0; i_batch < input_batches; i_batch++)
     {
-        const int16_t base_idx_y = (i_out_y * stride_y) - pad_y;
-        for (int i_out_x = 0; i_out_x < output_x; i_out_x++)
+        for (int i_out_y = 0; i_out_y < output_y; i_out_y++)
         {
-            const int16_t base_idx_x = (i_out_x * stride_x) - pad_x;
-            for (int i_input_ch = 0; i_input_ch < input_ch; i_input_ch++)
+            const int16_t base_idx_y = (i_out_y * stride_y) - pad_y;
+            for (int i_out_x = 0; i_out_x < output_x; i_out_x++)
             {
-                for (int i_ch_mult = 0; i_ch_mult < ch_mult; i_ch_mult++)
+                const int16_t base_idx_x = (i_out_x * stride_x) - pad_x;
+                for (int i_input_ch = 0; i_input_ch < input_ch; i_input_ch++)
                 {
-                    const int idx_out_ch = i_ch_mult + i_input_ch * ch_mult;
-                    int32_t acc_0;
-                    /* Condition for kernel start dimension: (base_idx_<x,y> + ker_<x,y>_start) >= 0 */
-                    const int ker_y_start = MAX(0, -base_idx_y);
-                    const int ker_x_start = MAX(0, -base_idx_x);
-                    /* Condition for kernel end dimension: (base_idx_<x,y> + ker_<x,y>_end) < input_<x,y> */
-                    const int ker_y_end = MIN(kernel_y, input_y - base_idx_y);
-                    const int ker_x_end = MIN(kernel_x, input_x - base_idx_x);
-                    acc_0 = bias[idx_out_ch];
-
-                    for (int i_ker_y = ker_y_start; i_ker_y < ker_y_end; i_ker_y++)
+                    for (int i_ch_mult = 0; i_ch_mult < ch_mult; i_ch_mult++)
                     {
-                        const int32_t idx_y = base_idx_y + i_ker_y;
-                        for (int i_ker_x = ker_x_start; i_ker_x < ker_x_end; i_ker_x++)
+                        const int idx_out_ch = i_ch_mult + i_input_ch * ch_mult;
+                        int32_t acc_0;
+                        /* Condition for kernel start dimension: (base_idx_<x,y> + ker_<x,y>_start) >= 0 */
+                        const int ker_y_start = MAX(0, -base_idx_y);
+                        const int ker_x_start = MAX(0, -base_idx_x);
+                        /* Condition for kernel end dimension: (base_idx_<x,y> + ker_<x,y>_end) < input_<x,y> */
+                        const int ker_y_end = MIN(kernel_y, input_y - base_idx_y);
+                        const int ker_x_end = MIN(kernel_x, input_x - base_idx_x);
+                        acc_0 = bias[idx_out_ch];
+
+                        for (int i_ker_y = ker_y_start; i_ker_y < ker_y_end; i_ker_y++)
                         {
-                            const int32_t idx_x = base_idx_x + i_ker_x;
-                            int32_t idx_0 = (idx_y * input_x + idx_x) * input_ch + i_input_ch;
-                            int32_t ker_idx_0 = (i_ker_y * kernel_x + i_ker_x) * (input_ch * ch_mult) + idx_out_ch;
+                            const int32_t idx_y = base_idx_y + i_ker_y;
+                            for (int i_ker_x = ker_x_start; i_ker_x < ker_x_end; i_ker_x++)
+                            {
+                                const int32_t idx_x = base_idx_x + i_ker_x;
+                                int32_t idx_0 = (idx_y * input_x + idx_x) * input_ch + i_input_ch;
+                                int32_t ker_idx_0 = (i_ker_y * kernel_x + i_ker_x) * (input_ch * ch_mult) + idx_out_ch;
 
-                            acc_0 += (input[idx_0] + input_offset) * kernel[ker_idx_0];
+                                acc_0 += (input[idx_0] + input_offset) * kernel[ker_idx_0];
+                            }
                         }
+
+                        /* Requantize and clamp output to provided range */
+                        acc_0 = arm_nn_requantize(acc_0, output_mult[idx_out_ch], output_shift[idx_out_ch]);
+                        acc_0 += output_offset;
+                        acc_0 = MAX(acc_0, output_activation_min);
+                        acc_0 = MIN(acc_0, output_activation_max);
+
+                        output[i_out++] = acc_0;
                     }
-
-                    /* Requantize and clamp output to provided range */
-                    acc_0 = arm_nn_requantize(acc_0, output_mult[idx_out_ch], output_shift[idx_out_ch]);
-                    acc_0 += output_offset;
-                    acc_0 = MAX(acc_0, output_activation_min);
-                    acc_0 = MIN(acc_0, output_activation_max);
-
-                    output[i_out++] = acc_0;
                 }
             }
         }
+        /* Advance to the next batch */
+        input += (input_x * input_y * input_ch);
     }
 }
 
@@ -234,7 +242,7 @@ arm_status arm_depthwise_conv_s8(const cmsis_nn_context *ctx,
     (void)bias_dims;
     (void)ctx;
 
-    if (dw_conv_params->ch_mult % 4 == 0)
+    if (dw_conv_params->ch_mult % 4 == 0 && input_dims->n == 1)
     {
         depthwise_conv_s8_mult_4(input,
                                  input_dims->w,
@@ -263,6 +271,7 @@ arm_status arm_depthwise_conv_s8(const cmsis_nn_context *ctx,
     else
     {
         depthwise_conv_s8_generic(input,
+                                  input_dims->n,
                                   input_dims->w,
                                   input_dims->h,
                                   input_dims->c,
