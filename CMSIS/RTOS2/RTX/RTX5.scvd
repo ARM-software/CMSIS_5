@@ -1468,8 +1468,8 @@
     <event id="0xF300 + 0x00" level="Error"  property="DelayError"         value="status=%E[val1, rtx_t:status]" info="osDelay/osDelayUntil error occurred."/>
     <event id="0xF300 + 0x01" level="API"    property="Delay"              value="ticks=%d[val1]" info="osDelay function was called."/>
     <event id="0xF300 + 0x02" level="API"    property="DelayUntil"         value="ticks=%d[val1]" info="osDelayUntil function was called."/>
-    <event id="0xF300 + 0x03" level="Op"     property="DelayStarted"       value="ticks=%d[val1]" info="osDelay started."/>
-    <event id="0xF300 + 0x04" level="Op"     property="DelayUntilStarted"  value="ticks=%d[val1]" info="osDelayUntil started."/>
+    <event id="0xF300 + 0x03" level="Op"     property="DelayStarted"       value="ticks=%d[val1], thread_id=%x[val2]" info="osDelay started."/>
+    <event id="0xF300 + 0x04" level="Op"     property="DelayUntilStarted"  value="ticks=%d[val1], thread_id=%x[val2]" info="osDelayUntil started."/>
     <event id="0xF300 + 0x05" level="Op"     property="DelayCompleted"     value="thread_id=%x[val1]" info="osDelay/osDelayUntil completed."/>
 
     <event id="0xF600 + 0x00" level="Error"  property="TimerError"     value="timer_id=%x[val1], status=%E[val2, rtx_t:status]" info="Timer error occurred."/>

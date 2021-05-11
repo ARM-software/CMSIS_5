@@ -1011,9 +1011,9 @@ __WEAK void EvrRtxDelayUntil (uint32_t ticks) {
 #endif
 
 #if (!defined(EVR_RTX_DISABLE) && (OS_EVR_WAIT != 0) && !defined(EVR_RTX_DELAY_STARTED_DISABLE))
-__WEAK void EvrRtxDelayStarted (uint32_t ticks) {
+__WEAK void EvrRtxDelayStarted (uint32_t ticks, osThreadId_t thread_id) {
 #if defined(RTE_Compiler_EventRecorder)
-  (void)EventRecord2(EvtRtxDelayStarted, ticks, 0U);
+  (void)EventRecord2(EvtRtxDelayStarted, ticks, thread_id);
 #else
   (void)ticks;
 #endif
@@ -1021,9 +1021,9 @@ __WEAK void EvrRtxDelayStarted (uint32_t ticks) {
 #endif
 
 #if (!defined(EVR_RTX_DISABLE) && (OS_EVR_WAIT != 0) && !defined(EVR_RTX_DELAY_UNTIL_STARTED_DISABLE))
-__WEAK void EvrRtxDelayUntilStarted (uint32_t ticks) {
+__WEAK void EvrRtxDelayUntilStarted (uint32_t ticks, osThreadId_t thread_id) {
 #if defined(RTE_Compiler_EventRecorder)
-  (void)EventRecord2(EvtRtxDelayUntilStarted, ticks, 0U);
+  (void)EventRecord2(EvtRtxDelayUntilStarted, ticks, thread_id);
 #else
   (void)ticks;
 #endif

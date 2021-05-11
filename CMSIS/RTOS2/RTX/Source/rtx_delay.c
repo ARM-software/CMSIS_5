@@ -31,10 +31,14 @@
 /// Wait for Timeout (Time Delay).
 /// \note API identical to osDelay
 static osStatus_t svcRtxDelay (uint32_t ticks) {
+  os_thread_t *thread;
 
   if (ticks != 0U) {
+    // Get running thread
+    thread = osRtxThreadGetRunning();
+  	
     if (osRtxThreadWaitEnter(osRtxThreadWaitingDelay, ticks)) {
-      EvrRtxDelayStarted(ticks);
+      EvrRtxDelayStarted(ticks, thread);
     } else {
       EvrRtxDelayCompleted(osRtxThreadGetRunning());
     }
@@ -46,6 +50,7 @@ static osStatus_t svcRtxDelay (uint32_t ticks) {
 /// Wait until specified time.
 /// \note API identical to osDelayUntil
 static osStatus_t svcRtxDelayUntil (uint32_t ticks) {
+  os_thread_t *thread;
 
   ticks -= osRtxInfo.kernel.tick;
   if ((ticks == 0U) || (ticks > 0x7FFFFFFFU)) {
@@ -54,8 +59,11 @@ static osStatus_t svcRtxDelayUntil (uint32_t ticks) {
     return osErrorParameter;
   }
 
+  // Get running thread
+  thread = osRtxThreadGetRunning();
+
   if (osRtxThreadWaitEnter(osRtxThreadWaitingDelay, ticks)) {
-    EvrRtxDelayUntilStarted(ticks);
+    EvrRtxDelayUntilStarted(ticks, thread);
   } else {
     EvrRtxDelayCompleted(osRtxThreadGetRunning());
   }
