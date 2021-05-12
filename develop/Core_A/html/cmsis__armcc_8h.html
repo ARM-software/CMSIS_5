@@ -229,6 +229,12 @@ Macros</h2></td></tr>
 <tr class="memitem:ad0e4fa951d563740462d837bb6ddd7bb"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cmsis__armcc_8h.html#ad0e4fa951d563740462d837bb6ddd7bb">__USAT</a>&#160;&#160;&#160;__usat</td></tr>
 <tr class="memdesc:ad0e4fa951d563740462d837bb6ddd7bb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unsigned Saturate.  <a href="#ad0e4fa951d563740462d837bb6ddd7bb">More...</a><br/></td></tr>
 <tr class="separator:ad0e4fa951d563740462d837bb6ddd7bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a16e7da363118de45c8dbd69010629dc4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cmsis__armcc_8h.html#a16e7da363118de45c8dbd69010629dc4">__enable_fault_irq</a>&#160;&#160;&#160;__enable_fiq</td></tr>
+<tr class="memdesc:a16e7da363118de45c8dbd69010629dc4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable IRQ Interrupts.  <a href="#a16e7da363118de45c8dbd69010629dc4">More...</a><br/></td></tr>
+<tr class="separator:a16e7da363118de45c8dbd69010629dc4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1c8c7def829cba808887b7009b3e05b8"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cmsis__armcc_8h.html#a1c8c7def829cba808887b7009b3e05b8">__disable_fault_irq</a>&#160;&#160;&#160;__disable_fiq</td></tr>
+<tr class="memdesc:a1c8c7def829cba808887b7009b3e05b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disable FIQ.  <a href="#a1c8c7def829cba808887b7009b3e05b8">More...</a><br/></td></tr>
+<tr class="separator:a1c8c7def829cba808887b7009b3e05b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad2a4e5d85d92189d574854b2fbfff057"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cmsis__armcc_8h.html#ad2a4e5d85d92189d574854b2fbfff057">__get_CP</a>(cp, op1, Rt, CRn, CRm, op2)&#160;&#160;&#160;do { register volatile uint32_t tmp <a class="el" href="group__comp__cntrl__gr.html#ga1378040bcf22428955c6e3ce9c2053cd">__ASM</a>(&quot;cp&quot; # cp &quot;:&quot; # op1 &quot;:c&quot; # CRn &quot;:c&quot; # CRm &quot;:&quot; # op2); (Rt) = tmp; } while(0)</td></tr>
 <tr class="separator:ad2a4e5d85d92189d574854b2fbfff057"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5e4710ddc910c7feee1de7f118b84ad1"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cmsis__armcc_8h.html#a5e4710ddc910c7feee1de7f118b84ad1">__set_CP</a>(cp, op1, Rt, CRn, CRm, op2)&#160;&#160;&#160;do { register volatile uint32_t tmp <a class="el" href="group__comp__cntrl__gr.html#ga1378040bcf22428955c6e3ce9c2053cd">__ASM</a>(&quot;cp&quot; # cp &quot;:&quot; # op1 &quot;:c&quot; # CRn &quot;:c&quot; # CRm &quot;:&quot; # op2); tmp = (Rt); } while(0)</td></tr>
@@ -281,8 +287,8 @@ Functions</h2></td></tr>
 <tr class="separator:ga1e4728985ee8b4fa89cc01c032f69565"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Description</h2>
-<div class="textblock"><dl class="section version"><dt>Version</dt><dd>V1.0.4 </dd></dl>
-<dl class="section date"><dt>Date</dt><dd>30. July 2019 </dd></dl>
+<div class="textblock"><dl class="section version"><dt>Version</dt><dd>V1.0.5 </dd></dl>
+<dl class="section date"><dt>Date</dt><dd>05. May 2021 </dd></dl>
 </div><h2 class="groupheader">Macro Definition Documentation</h2>
 <a class="anchor" id="a7f7b66103530fadcce226375af3c2c03"></a>
 <div class="memitem">
@@ -328,6 +334,34 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a1c8c7def829cba808887b7009b3e05b8"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define __disable_fault_irq&#160;&#160;&#160;__disable_fiq</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Disables FIQ interrupts by setting the F-bit in the CPSR. Can only be executed in Privileged modes. </p>
+
+</div>
+</div>
+<a class="anchor" id="a16e7da363118de45c8dbd69010629dc4"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define __enable_fault_irq&#160;&#160;&#160;__enable_fiq</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Enables IRQ interrupts by clearing the I-bit in the CPSR. Can only be executed in Privileged modes. Disable IRQ Interrupts</p>
+<p>Disables IRQ interrupts by setting the I-bit in the CPSR. Can only be executed in Privileged modes. Enable FIQ</p>
+<p>Enables FIQ interrupts by clearing the F-bit in the CPSR. Can only be executed in Privileged modes. </p>
 
 </div>
 </div>

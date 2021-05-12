@@ -7,6 +7,8 @@ var searchData=
   ['_5f_5fcompiler_5fbarrier',['__COMPILER_BARRIER',['../cmsis__armcc_8h.html#a6516fb12ab0dd45c734f8cef7d921af6',1,'cmsis_armcc.h']]],
   ['_5f_5fcore_5fca_5fh_5fdependant',['__CORE_CA_H_DEPENDANT',['../core__ca_8h.html#add5658d95f6b79934202e6fbf1795b12',1,'core_ca.h']]],
   ['_5f_5fcore_5fca_5fh_5fgeneric',['__CORE_CA_H_GENERIC',['../core__ca_8h.html#af6738f04c5c33edae09174f235ef3e14',1,'core_ca.h']]],
+  ['_5f_5fdisable_5ffault_5firq',['__disable_fault_irq',['../cmsis__armcc_8h.html#a1c8c7def829cba808887b7009b3e05b8',1,'cmsis_armcc.h']]],
+  ['_5f_5fenable_5ffault_5firq',['__enable_fault_irq',['../cmsis__armcc_8h.html#a16e7da363118de45c8dbd69010629dc4',1,'cmsis_armcc.h']]],
   ['_5f_5ffiq_5fstack_5fsize',['__FIQ_STACK_SIZE',['../mem__ARMCA9_8h.html#a5dbfa394c3e9c61fbbc157bc0fb6cf3e',1,'mem_ARMCA9.h']]],
   ['_5f_5fforceinline',['__FORCEINLINE',['../cmsis__armcc_8h.html#a2ecb43ce8e7aa73d32f50afa67b42c76',1,'cmsis_armcc.h']]],
   ['_5f_5ffpu_5fpresent',['__FPU_PRESENT',['../core__ca_8h.html#ac1ba8a48ca926bddc88be9bfd7d42641',1,'__FPU_PRESENT():&#160;core_ca.h'],['../ARMCA9_8h.html#ac1ba8a48ca926bddc88be9bfd7d42641',1,'__FPU_PRESENT():&#160;ARMCA9.h']]],
