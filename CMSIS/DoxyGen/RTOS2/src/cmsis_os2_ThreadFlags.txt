@@ -143,7 +143,8 @@ flags before clearing, or an error code if highest bit is set (refer to \ref fla
 
 Possible \ref flags_error_codes return values:
     - \em osFlagsErrorUnknown: unspecified error, i.e. not called from a running threads context.
-    - \em osFlagsErrorParameter: parameter \em flags has highest bit set. 
+    - \em osFlagsErrorParameter: parameter \em flags has highest bit set.
+    - \em osFlagsErrorISR: the function \b osThreadFlagsClear cannot be called from interrupt service routines.
 
 \note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 */

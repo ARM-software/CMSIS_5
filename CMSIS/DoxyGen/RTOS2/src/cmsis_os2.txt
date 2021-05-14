@@ -786,7 +786,7 @@ Round-Robin Timeout                    | \c OS_ROBIN_TIMEOUT      | Defines how 
 ISR FIFO Queue                         | \c OS_ISR_FIFO_QUEUE     | RTOS Functions called from ISR store requests to this buffer. Default value is \token{16 entries}. Value range is \token{[4-256]} entries in multiples of \token{4}.
 Object Memory usage counters           | \c OS_OBJ_MEM_USAGE      | Enables object memory usage counters to evaluate the maximum memory pool requirements individually for each RTOS object type.
 
-\subsection systemConfig_glob_mem Global dynamic memory
+\subsection systemConfig_glob_mem Global Dynamic Memory size [bytes]
 Refer to \ref GlobalMemoryPool.
 
 
@@ -850,7 +850,7 @@ Number of user Threads with default Stack size  | \c OS_THREAD_DEF_STACK_NUM    
 Total Stack size [bytes] for user Threads with user-provided Stack size    | \c OS_THREAD_USER_STACK_SIZE | Defines the combined stack size for user threads with user-provided stack size. Default value is \token{0}. Value range is \token{[0-1073741824]} Bytes, in multiples of \token{8}. 
 Default Thread Stack size [bytes]                        | \c OS_STACK_SIZE    | Defines stack size for threads with zero stack size specified. Default value is \token{3072}. Value range is \token{[96-1073741824]} Bytes, in multiples of \token{8}. 
 Idle Thread Stack size [bytes]                           | \c OS_IDLE_THREAD_STACK_SIZE              | Defines stack size for Idle thread. Default value is \token{512}. Value range is \token{[72-1073741824]} bytes, in multiples of \token{8}. 
-Idle Thread TrustZone Module ID                                            | \c OS_IDLE_THREAD_TZ_MOD_ID    | Defines the \ref osThreadAttr_t::tz_module "TrustZone Module ID" the Idle Thread shall use. This needs to be set to a non-zero value if the Idle Thread need to call secure functions. Default value is \token{0}.
+Idle Thread TrustZone Module ID                          | \c OS_IDLE_THREAD_TZ_MOD_ID    | Defines the \ref osThreadAttr_t::tz_module "TrustZone Module ID" the Idle Thread shall use. This needs to be set to a non-zero value if the Idle Thread need to call secure functions. Default value is \token{0}.
 Stack overrun checking                                   | \c OS_STACK_CHECK   | Enable stack overrun checks at thread switch. 
 Stack usage watermark                                    | \c OS_STACK_WATERMARK    | Initialize thread stack with watermark pattern for analyzing stack usage. Enabling this option increases significantly the execution time of thread creation.
 Processor mode for Thread execution                      | \c OS_PRIVILEGE_MODE     | Controls the processor mode. Default value is \token{Privileged} mode. Value range is \token{[0=Unprivileged; 1=Privileged]} mode.
@@ -1423,21 +1423,21 @@ The CMSIS-RTOS RTX v5 is delivered in source code and several examples are provi
       <td>Template</td>
       <td><a class="el" href="../../RTOS/html/index.html">CMSIS-RTOS API v1</a> template source and header file.</td>
     </tr>
-\endif	
+\endif
     <tr>
       <td>RTX</td>
       <td>Directory with RTX specific files and folders. Also contains the component viewer description file.</td>
     </tr>
     <tr>
       <td>RTX/Config</td>
-      <td>CMSIS-RTOS RTX configuration files %RTX_Config.h and %RTX_Config.c.</td>
+      <td>CMSIS-RTOS RTX configuration files \b %RTX_Config.h and \b %RTX_Config.c.</td>
     </tr>
 \ifnot FuSaRTS
     <tr>
       <td>RTX/Examples</td>
       <td>Example projects that can be directly used in development tools.</td>
     </tr>
-\endif	
+\endif
     <tr>
       <td>RTX/Include</td>
       <td>RTX v5 specific include files.</td>
@@ -1454,7 +1454,7 @@ The CMSIS-RTOS RTX v5 is delivered in source code and several examples are provi
 \endif	
     <tr>
       <td>RTX/Source</td>
-      <td>Source code that can be used with ARMCC and GCC.</td>
+      <td>Source code.</td>
     </tr>
     <tr>
       <td>RTX/Template</td>
@@ -1510,7 +1510,7 @@ processor variants in every configuration  \if ARMv8M , including Arm Cortex-M23
       <td>Library/ARM/RTX_V8MMN.lib</td>
       <td>CMSIS-RTOS RTX Library for ARMCC Compiler, Armv8-M Mainline, non-secure.</td>
     </tr>
-\endif	
+\endif
 \ifnot FuSaRTS
     <tr>
       <td>Library/GCC/libRTX_CM0.a</td>
@@ -1524,7 +1524,7 @@ processor variants in every configuration  \if ARMv8M , including Arm Cortex-M23
       <td>Library/GCC/libRTX_CM4F.a</td>
       <td>CMSIS-RTOS libRTX Library for GCC Compiler, Cortex-M4 and M7 with FPU, little-endian.</td>
     </tr>
-\endif	
+\endif
 \if ARMv8M	
     <tr>
       <td>Library/GCC/libRTX_V8MB.a</td>
@@ -1811,8 +1811,6 @@ Code example:
   //lint -e{9079} "conversion from pointer to void to pointer to other type" [MISRA Note 5]
   thread = osRtxMemoryPoolAlloc(osRtxInfo.mpi.thread);
 \endcode
-
-
 
 \section MISRA_6 [MISRA Note 6]: Conversion from user provided storage
 
@@ -2253,7 +2251,7 @@ A C++11/C++14 interface is planned for the future.
 /**
 \page rtos_os_tick_api OS Tick API
 
-The CMSIS OS Tick API may be used by an RTOS implementation to be easily potable across the different Cortex-M and Cortex-A processors.
+The CMSIS OS Tick API may be used by an RTOS implementation to be easily portable across the different Cortex-M and Cortex-A processors.
 It provides a generic interface to a kernel system tick timer and defines the following functions:
 
  - The Reference for \ref CMSIS_RTOS_TickAPI provides details about these functions:

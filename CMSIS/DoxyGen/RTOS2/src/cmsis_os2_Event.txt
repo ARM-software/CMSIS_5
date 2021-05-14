@@ -168,7 +168,7 @@ Possible \ref flags_error_codes return values:
     - \em osFlagsErrorUnknown: unspecified error.
     - \em osFlagsErrorParameter: parameter \a ef_id does not identify a valid event flags object or \em flags has highest bit set. 
     - \em osFlagsErrorResource: the event flags object is in an invalid state.
-    
+
 \note This function may be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 
 <b>Code Example</b>

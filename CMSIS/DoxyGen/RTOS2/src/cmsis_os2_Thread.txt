@@ -70,7 +70,7 @@ int main (void) {
  
 Similar to the simple thread all attributes are default. The stack is dynamically allocated from the \ref GlobalMemoryPool
  
-\ref osThreadAttr_t.stack_size is used to pass the stack size in Bytes to osThreadNew.
+\ref osThreadAttr_t.stack_size is used to pass the stack size in Bytes to \ref osThreadNew.
 
 \code
 __NO_RETURN void thread1 (void *argument) {
@@ -96,7 +96,7 @@ Similar to the simple thread all attributes are default. The stack is statically
  
 \ref osThreadAttr_t.stack_mem holds a pointer to the stacks lowest address. 
  
-\ref osThreadAttr_t.stack_size is used to pass the stack size in Bytes to osThreadNew.
+\ref osThreadAttr_t.stack_size is used to pass the stack size in Bytes to \ref osThreadNew.
 
 \code
 __NO_RETURN void thread1 (void *argument) {
@@ -663,6 +663,7 @@ The function \b osThreadEnumerate returns the number of enumerated threads or \t
 
 // these struct members must stay outside the group to avoid double entries in documentation
 /**
+
 \var osThreadAttr_t::attr_bits
 \details
 The following bit masks can be used to set options:
