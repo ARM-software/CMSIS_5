@@ -1272,9 +1272,9 @@ System Control Block (SBC) | To control and setup the processor exceptions inclu
 Interrupt Control          | The CMSIS-Core functions __disable_irq and __enable_irq to control the interrupt system via the CPSR core register.
 
 The RTX implements interfaces to the processor hardware in following files: 
- - <b>%irq_cm0.s</b> defines exception handlers for Cortex-M0/M0+
+ - <b>%irq_armv6m.s</b> defines exception handlers for Cortex-M0/M0+
 \if ARMv8M
- - <b>%irq_armv8mbl_common.s</b> defines exception handlers for Cortex-M23
+ - <b>%irq_armv8mbl.s</b> defines exception handlers for Cortex-M23
 \endif 
  - <b>%rtx_core_cm.h</b> defines processor specific helper functions and the interfaces to Core Registers and Core Peripherals.
  - <b>%os_tick.h</b> is the \ref CMSIS_RTOS_TickAPI that defines the interface functions to the SysTick timer.
@@ -1300,10 +1300,9 @@ NVIC Interface             | CMSIS-Core function \b NVIC_GetPriorityGrouping is 
 LDREX, STREX instructions  | Exclusive access instructions \b LDREX and \b STREX are used to implement atomic execution without disabling interrupts.
 
 The interface files to the processor hardware are: 
- - <b>%irq_cm3.s</b> defines exception handlers for Cortex-M3 and Cortex-M4/M7 without floating point unit.
- - <b>%irq_cm4f.s</b> defines exception handlers for Cortex-M4/M7 with floating point unit.
+ - <b>%irq_armv7m.s</b> defines exception handlers for Cortex-M3 and Cortex-M4/M7.
 \if ARMv8M 
- - <b>%irq_armv8mml_common.s</b> defines exception handlers for Cortex-M33/M35P
+ - <b>%irq_armv8mml.s</b> defines exception handlers for Cortex-M33/M35P
 \endif
  - <b>%rtx_core_cm.h</b> defines processor specific helper functions and the interfaces to Core Registers and Core Peripherals.
  - <b>%os_tick.h</b> is the \ref CMSIS_RTOS_TickAPI that defines the interface functions to the SysTick timer.
@@ -1323,7 +1322,7 @@ LDREX, STREX instruction   | Atomic execution avoids the requirement to disable 
 Interrupt Controller       | An interrupt controller interface is required to setup and control Timer Peripheral interrupt. The interface for Arm GIC (Generic Interrupt Controller) is implemented in %irq_ctrl_gic.c using the <a class="el" href="../../Core_A/html/group__irq__ctrl__gr.html">IRQ Controller API</a>.
 
 The interface files to the processor hardware are: 
- - <b>%irq_ca.s</b> defines SVC, IRQ, Data Abort, Prefetch Abort and Undefined Instruction exception handlers.
+ - <b>%irq_armv7a.s</b> defines SVC, IRQ, Data Abort, Prefetch Abort and Undefined Instruction exception handlers.
  - <b>%rtx_core_ca.h</b> defines processor specific helper functions and the interfaces to Core Registers and Core Peripherals.
  - <b>%os_tick.h</b> is the \ref CMSIS_RTOS_TickAPI that defines the interface functions to the timer peripheral.
  - <b>%irq_ctrl.h</b> is the <a class="el" href="../../Core_A/html/group__irq__ctrl__gr.html">IRQ Controller API</a> that defines the interface functions to the interrupt controller.
