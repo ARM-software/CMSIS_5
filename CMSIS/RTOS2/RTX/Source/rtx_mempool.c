@@ -225,7 +225,7 @@ static osMemoryPoolId_t svcRtxMemoryPoolNew (uint32_t block_count, uint32_t bloc
       }
     }
     if (mp_mem != NULL) {
-      //lint -e(923) -e(9078) "cast from pointer to unsigned int" [MISRA Note 7]
+      //lint -e{923} "cast from pointer to unsigned int" [MISRA Note 7]
       if ((((uint32_t)mp_mem & 3U) != 0U) || (mp_size < size)) {
         EvrRtxMemoryPoolError(NULL, osRtxErrorInvalidDataMemory);
         //lint -e{904} "Return statement before end of function" [MISRA Note 1]
@@ -285,7 +285,7 @@ static osMemoryPoolId_t svcRtxMemoryPoolNew (uint32_t block_count, uint32_t bloc
       }
       mp = NULL;
     } else {
-      memset(mp_mem, 0, size);
+      (void)memset(mp_mem, 0, size);
     }
     flags |= osRtxFlagSystemMemory;
   }

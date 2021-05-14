@@ -69,7 +69,7 @@
  
 //   </e>
  
-//   <o>ISR FIFO Queue 
+//   <o>ISR FIFO Queue
 //      <4=>  4 entries    <8=>   8 entries   <12=>  12 entries   <16=>  16 entries
 //     <24=> 24 entries   <32=>  32 entries   <48=>  48 entries   <64=>  64 entries
 //     <96=> 96 entries  <128=> 128 entries  <196=> 196 entries  <256=> 256 entries
@@ -156,8 +156,8 @@
 #define OS_STACK_WATERMARK          0
 #endif
  
-//   <o>Processor mode for Thread execution 
-//     <0=> Unprivileged mode 
+//   <o>Processor mode for Thread execution
+//     <0=> Unprivileged mode
 //     <1=> Privileged mode
 //   <i> Default: Privileged mode
 #ifndef OS_PRIVILEGE_MODE

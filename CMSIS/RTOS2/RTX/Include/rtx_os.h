@@ -454,7 +454,7 @@ typedef struct {
     osRtxMpInfo_t             *message_queue;   ///< Message Queue Control Blocks
   } mpi;
   uint32_t                 thread_stack_size;   ///< Default Thread Stack Size
-  const 
+  const
   osThreadAttr_t           *idle_thread_attr;   ///< Idle Thread Attributes
   const
   osThreadAttr_t          *timer_thread_attr;   ///< Timer Thread Attributes

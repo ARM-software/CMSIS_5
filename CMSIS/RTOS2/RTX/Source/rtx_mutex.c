@@ -78,7 +78,7 @@ void osRtxMutexOwnerRelease (os_mutex_t *mutex_list) {
 void osRtxMutexOwnerRestore (const os_mutex_t *mutex, const os_thread_t *thread_wakeup) {
   const os_mutex_t  *mutex0;
         os_thread_t *thread;
-        os_thread_t *thread0;
+  const os_thread_t *thread0;
         int8_t       priority;
 
   // Restore owner Thread priority

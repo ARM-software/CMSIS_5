@@ -189,7 +189,7 @@ static void osRtxMessageQueuePostProcess (os_message_t *msg) {
         reg = osRtxThreadRegPtr(thread);
         //lint -e{923} "cast from unsigned int to pointer"
         ptr_src = (const void *)reg[2];
-        memcpy(&msg0[1], ptr_src, mq->msg_size);
+        (void)memcpy(&msg0[1], ptr_src, mq->msg_size);
         // Store Message into Queue
         msg0->id       = osRtxIdMessage;
         msg0->flags    = 0U;
@@ -214,7 +214,7 @@ static void osRtxMessageQueuePostProcess (os_message_t *msg) {
       reg = osRtxThreadRegPtr(thread);
       //lint -e{923} "cast from unsigned int to pointer"
       ptr_dst = (void *)reg[2];
-      memcpy(ptr_dst, &msg[1], mq->msg_size);
+      (void)memcpy(ptr_dst, &msg[1], mq->msg_size);
       if (reg[3] != 0U) {
         //lint -e{923} -e{9078} "cast from unsigned int to pointer"
         *((uint8_t *)reg[3]) = msg->priority;
@@ -278,7 +278,7 @@ static osMessageQueueId_t svcRtxMessageQueueNew (uint32_t msg_count, uint32_t ms
       }
     }
     if (mq_mem != NULL) {
-      //lint -e(923) -e(9078) "cast from pointer to unsigned int" [MISRA Note 7]
+      //lint -e{923} "cast from pointer to unsigned int" [MISRA Note 7]
       if ((((uint32_t)mq_mem & 3U) != 0U) || (mq_size < size)) {
         EvrRtxMessageQueueError(NULL, osRtxErrorInvalidDataMemory);
         //lint -e{904} "Return statement before end of function" [MISRA Note 1]
@@ -338,7 +338,7 @@ static osMessageQueueId_t svcRtxMessageQueueNew (uint32_t msg_count, uint32_t ms
       }
       mq = NULL;
     } else {
-      memset(mq_mem, 0, size);
+      (void)memset(mq_mem, 0, size);
     }
     flags |= osRtxFlagSystemMemory;
   }
@@ -410,7 +410,7 @@ static osStatus_t svcRtxMessageQueuePut (osMessageQueueId_t mq_id, const void *m
     reg = osRtxThreadRegPtr(thread);
     //lint -e{923} "cast from unsigned int to pointer"
     ptr = (void *)reg[2];
-    memcpy(ptr, msg_ptr, mq->msg_size);
+    (void)memcpy(ptr, msg_ptr, mq->msg_size);
     if (reg[3] != 0U) {
       //lint -e{923} -e{9078} "cast from unsigned int to pointer"
       *((uint8_t *)reg[3]) = msg_prio;
@@ -423,7 +423,7 @@ static osStatus_t svcRtxMessageQueuePut (osMessageQueueId_t mq_id, const void *m
     msg = osRtxMemoryPoolAlloc(&mq->mp_info);
     if (msg != NULL) {
       // Copy Message
-      memcpy(&msg[1], msg_ptr, mq->msg_size);
+      (void)memcpy(&msg[1], msg_ptr, mq->msg_size);
       // Put Message into Queue
       msg->id       = osRtxIdMessage;
       msg->flags    = 0U;
@@ -481,7 +481,7 @@ static osStatus_t svcRtxMessageQueueGet (osMessageQueueId_t mq_id, void *msg_ptr
   if (msg != NULL) {
     MessageQueueRemove(mq, msg);
     // Copy Message
-    memcpy(msg_ptr, &msg[1], mq->msg_size);
+    (void)memcpy(msg_ptr, &msg[1], mq->msg_size);
     if (msg_prio != NULL) {
       *msg_prio = msg->priority;
     }
@@ -502,7 +502,7 @@ static osStatus_t svcRtxMessageQueueGet (osMessageQueueId_t mq_id, void *msg_ptr
         reg = osRtxThreadRegPtr(thread);
         //lint -e{923} "cast from unsigned int to pointer"
         ptr = (const void *)reg[2];
-        memcpy(&msg[1], ptr, mq->msg_size);
+        (void)memcpy(&msg[1], ptr, mq->msg_size);
         // Store Message into Queue
         msg->id       = osRtxIdMessage;
         msg->flags    = 0U;
@@ -651,7 +651,7 @@ static osStatus_t svcRtxMessageQueueReset (osMessageQueueId_t mq_id) {
         reg = osRtxThreadRegPtr(thread);
         //lint -e{923} "cast from unsigned int to pointer"
         ptr = (const void *)reg[2];
-        memcpy(&msg[1], ptr, mq->msg_size);
+        (void)memcpy(&msg[1], ptr, mq->msg_size);
         // Store Message into Queue
         msg->id       = osRtxIdMessage;
         msg->flags    = 0U;
@@ -752,7 +752,7 @@ osStatus_t isrRtxMessageQueuePut (osMessageQueueId_t mq_id, const void *msg_ptr,
   msg = osRtxMemoryPoolAlloc(&mq->mp_info);
   if (msg != NULL) {
     // Copy Message
-    memcpy(&msg[1], msg_ptr, mq->msg_size);
+    (void)memcpy(&msg[1], msg_ptr, mq->msg_size);
     msg->id       = osRtxIdMessage;
     msg->flags    = 0U;
     msg->priority = msg_prio;

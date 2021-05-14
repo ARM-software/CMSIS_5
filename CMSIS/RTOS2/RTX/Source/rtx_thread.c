@@ -617,7 +617,7 @@ static osThreadId_t svcRtxThreadNew (osThreadFunc_t func, void *argument, const 
       }
     }
     if (stack_mem != NULL) {
-      //lint -e(923) -e(9078) "cast from pointer to unsigned int" [MISRA Note 7]
+      //lint -e{923} "cast from pointer to unsigned int" [MISRA Note 7]
       if ((((uint32_t)stack_mem & 7U) != 0U) || (stack_size == 0U)) {
         EvrRtxThreadError(NULL, osRtxErrorInvalidThreadStack);
         //lint -e{904} "Return statement before end of function" [MISRA Note 1]
@@ -1541,8 +1541,8 @@ SVC0_3 (ThreadNew,           osThreadId_t,    osThreadFunc_t, void *, const osTh
 SVC0_1 (ThreadGetName,       const char *,    osThreadId_t)
 SVC0_0 (ThreadGetId,         osThreadId_t)
 SVC0_1 (ThreadGetState,      osThreadState_t, osThreadId_t)
-SVC0_1 (ThreadGetStackSize,  uint32_t, osThreadId_t)
-SVC0_1 (ThreadGetStackSpace, uint32_t, osThreadId_t)
+SVC0_1 (ThreadGetStackSize,  uint32_t,        osThreadId_t)
+SVC0_1 (ThreadGetStackSpace, uint32_t,        osThreadId_t)
 SVC0_2 (ThreadSetPriority,   osStatus_t,      osThreadId_t, osPriority_t)
 SVC0_1 (ThreadGetPriority,   osPriority_t,    osThreadId_t)
 SVC0_0 (ThreadYield,         osStatus_t)

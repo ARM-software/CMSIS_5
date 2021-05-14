@@ -562,35 +562,43 @@ __WEAK void * const osRtxUserSVC[1] = { (void *)0 };
 
 #if  defined(__CC_ARM) || \
     (defined(__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050))
-static uint32_t __os_thread_cb_start__    __attribute__((weakref(".bss.os.thread.cb$$Base")));     //lint -esym(728,__os_thread_cb_start__)
-static uint32_t __os_thread_cb_end__      __attribute__((weakref(".bss.os.thread.cb$$Limit")));    //lint -esym(728,__os_thread_cb_end__)
-static uint32_t __os_timer_cb_start__     __attribute__((weakref(".bss.os.timer.cb$$Base")));      //lint -esym(728,__os_timer_cb_start__)
-static uint32_t __os_timer_cb_end__       __attribute__((weakref(".bss.os.timer.cb$$Limit")));     //lint -esym(728,__os_timer_cb_end__)
-static uint32_t __os_evflags_cb_start__   __attribute__((weakref(".bss.os.evflags.cb$$Base")));    //lint -esym(728,__os_evflags_cb_start__)
-static uint32_t __os_evflags_cb_end__     __attribute__((weakref(".bss.os.evflags.cb$$Limit")));   //lint -esym(728,__os_evflags_cb_end__)
-static uint32_t __os_mutex_cb_start__     __attribute__((weakref(".bss.os.mutex.cb$$Base")));      //lint -esym(728,__os_mutex_cb_start__)
-static uint32_t __os_mutex_cb_end__       __attribute__((weakref(".bss.os.mutex.cb$$Limit")));     //lint -esym(728,__os_mutex_cb_end__)
-static uint32_t __os_semaphore_cb_start__ __attribute__((weakref(".bss.os.semaphore.cb$$Base")));  //lint -esym(728,__os_semaphore_cb_start__)
-static uint32_t __os_semaphore_cb_end__   __attribute__((weakref(".bss.os.semaphore.cb$$Limit"))); //lint -esym(728,__os_semaphore_cb_end__)
-static uint32_t __os_mempool_cb_start__   __attribute__((weakref(".bss.os.mempool.cb$$Base")));    //lint -esym(728,__os_mempool_cb_start__)
-static uint32_t __os_mempool_cb_end__     __attribute__((weakref(".bss.os.mempool.cb$$Limit")));   //lint -esym(728,__os_mempool_cb_end__)
-static uint32_t __os_msgqueue_cb_start__  __attribute__((weakref(".bss.os.msgqueue.cb$$Base")));   //lint -esym(728,__os_msgqueue_cb_start__)
-static uint32_t __os_msgqueue_cb_end__    __attribute__((weakref(".bss.os.msgqueue.cb$$Limit")));  //lint -esym(728,__os_msgqueue_cb_end__)
+// Initialized through linker
+//lint -esym(728,  __os_thread_cb_start__,    __os_thread_cb_end__)
+//lint -esym(728,  __os_timer_cb_start__,     __os_timer_cb_end__)
+//lint -esym(728,  __os_evflags_cb_start__,   __os_evflags_cb_end__)
+//lint -esym(728,  __os_mutex_cb_start__,     __os_mutex_cb_end__)
+//lint -esym(728,  __os_semaphore_cb_start__, __os_semaphore_cb_end__)
+//lint -esym(728,  __os_mempool_cb_start__,   __os_mempool_cb_end__)
+//lint -esym(728,  __os_msgqueue_cb_start__,  __os_msgqueue_cb_end__)
+static const uint32_t __os_thread_cb_start__    __attribute__((weakref(".bss.os.thread.cb$$Base")));
+static const uint32_t __os_thread_cb_end__      __attribute__((weakref(".bss.os.thread.cb$$Limit")));
+static const uint32_t __os_timer_cb_start__     __attribute__((weakref(".bss.os.timer.cb$$Base")));
+static const uint32_t __os_timer_cb_end__       __attribute__((weakref(".bss.os.timer.cb$$Limit")));
+static const uint32_t __os_evflags_cb_start__   __attribute__((weakref(".bss.os.evflags.cb$$Base")));
+static const uint32_t __os_evflags_cb_end__     __attribute__((weakref(".bss.os.evflags.cb$$Limit")));
+static const uint32_t __os_mutex_cb_start__     __attribute__((weakref(".bss.os.mutex.cb$$Base")));
+static const uint32_t __os_mutex_cb_end__       __attribute__((weakref(".bss.os.mutex.cb$$Limit")));
+static const uint32_t __os_semaphore_cb_start__ __attribute__((weakref(".bss.os.semaphore.cb$$Base")));
+static const uint32_t __os_semaphore_cb_end__   __attribute__((weakref(".bss.os.semaphore.cb$$Limit")));
+static const uint32_t __os_mempool_cb_start__   __attribute__((weakref(".bss.os.mempool.cb$$Base")));
+static const uint32_t __os_mempool_cb_end__     __attribute__((weakref(".bss.os.mempool.cb$$Limit")));
+static const uint32_t __os_msgqueue_cb_start__  __attribute__((weakref(".bss.os.msgqueue.cb$$Base")));
+static const uint32_t __os_msgqueue_cb_end__    __attribute__((weakref(".bss.os.msgqueue.cb$$Limit")));
 #else
-extern uint32_t __os_thread_cb_start__    __attribute__((weak));
-extern uint32_t __os_thread_cb_end__      __attribute__((weak));
-extern uint32_t __os_timer_cb_start__     __attribute__((weak));
-extern uint32_t __os_timer_cb_end__       __attribute__((weak));
-extern uint32_t __os_evflags_cb_start__   __attribute__((weak));
-extern uint32_t __os_evflags_cb_end__     __attribute__((weak));
-extern uint32_t __os_mutex_cb_start__     __attribute__((weak));
-extern uint32_t __os_mutex_cb_end__       __attribute__((weak));
-extern uint32_t __os_semaphore_cb_start__ __attribute__((weak));
-extern uint32_t __os_semaphore_cb_end__   __attribute__((weak));
-extern uint32_t __os_mempool_cb_start__   __attribute__((weak));
-extern uint32_t __os_mempool_cb_end__     __attribute__((weak));
-extern uint32_t __os_msgqueue_cb_start__  __attribute__((weak));
-extern uint32_t __os_msgqueue_cb_end__    __attribute__((weak));
+extern const uint32_t __os_thread_cb_start__    __attribute__((weak));
+extern const uint32_t __os_thread_cb_end__      __attribute__((weak));
+extern const uint32_t __os_timer_cb_start__     __attribute__((weak));
+extern const uint32_t __os_timer_cb_end__       __attribute__((weak));
+extern const uint32_t __os_evflags_cb_start__   __attribute__((weak));
+extern const uint32_t __os_evflags_cb_end__     __attribute__((weak));
+extern const uint32_t __os_mutex_cb_start__     __attribute__((weak));
+extern const uint32_t __os_mutex_cb_end__       __attribute__((weak));
+extern const uint32_t __os_semaphore_cb_start__ __attribute__((weak));
+extern const uint32_t __os_semaphore_cb_end__   __attribute__((weak));
+extern const uint32_t __os_mempool_cb_start__   __attribute__((weak));
+extern const uint32_t __os_mempool_cb_end__     __attribute__((weak));
+extern const uint32_t __os_msgqueue_cb_start__  __attribute__((weak));
+extern const uint32_t __os_msgqueue_cb_end__    __attribute__((weak));
 #endif
 
 //lint -e{9067} "extern array declared without size"

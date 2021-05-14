@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2019 Arm Limited. All rights reserved.
+ * Copyright (c) 2013-2021 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -198,7 +198,7 @@ static osStatus_t svcRtxKernelGetInfo (osVersion_t *version, char *id_buf, uint3
     } else {
       size = id_size;
     }
-    memcpy(id_buf, osRtxKernelId, size);
+    (void)memcpy(id_buf, osRtxKernelId, size);
   }
 
   EvrRtxKernelInfoRetrieved(version, id_buf, id_size);
@@ -287,7 +287,7 @@ static int32_t svcRtxKernelLock (void) {
   }
   return lock;
 }
- 
+
 /// Unlock the RTOS Kernel scheduler.
 /// \note API identical to osKernelUnlock
 static int32_t svcRtxKernelUnlock (void) {
