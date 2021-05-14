@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2019 Arm Limited. All rights reserved.
+ * Copyright (c) 2013-2021 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -27,7 +27,7 @@
 
 
 //  OS Runtime Object Memory Usage
-#if ((defined(OS_OBJ_MEM_USAGE) && (OS_OBJ_MEM_USAGE != 0)))
+#ifdef RTX_OBJ_MEM_USAGE
 osRtxObjectMemUsage_t osRtxEventFlagsMemUsage \
 __attribute__((section(".data.os.evflags.obj"))) =
 { 0U, 0U, 0U };
@@ -200,7 +200,7 @@ static osEventFlagsId_t svcRtxEventFlagsNew (const osEventFlagsAttr_t *attr) {
       //lint -e{9079} "conversion from pointer to void to pointer to other type" [MISRA Note 5]
       ef = osRtxMemoryAlloc(osRtxInfo.mem.common, sizeof(os_event_flags_t), 1U);
     }
-#if (defined(OS_OBJ_MEM_USAGE) && (OS_OBJ_MEM_USAGE != 0))
+#ifdef RTX_OBJ_MEM_USAGE
     if (ef != NULL) {
       uint32_t used;
       osRtxEventFlagsMemUsage.cnt_alloc++;
@@ -313,7 +313,7 @@ static uint32_t svcRtxEventFlagsClear (osEventFlagsId_t ef_id, uint32_t flags) {
   event_flags = EventFlagsClear(ef, flags);
 
   EvrRtxEventFlagsClearDone(ef, event_flags);
-  
+
   return event_flags;
 }
 
@@ -409,7 +409,7 @@ static osStatus_t svcRtxEventFlagsDelete (osEventFlagsId_t ef_id) {
     } else {
       (void)osRtxMemoryFree(osRtxInfo.mem.common, ef);
     }
-#if (defined(OS_OBJ_MEM_USAGE) && (OS_OBJ_MEM_USAGE != 0))
+#ifdef RTX_OBJ_MEM_USAGE
     osRtxEventFlagsMemUsage.cnt_free++;
 #endif
   }

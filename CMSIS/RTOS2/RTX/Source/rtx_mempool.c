@@ -27,7 +27,7 @@
 
 
 //  OS Runtime Object Memory Usage
-#if ((defined(OS_OBJ_MEM_USAGE) && (OS_OBJ_MEM_USAGE != 0)))
+#ifdef RTX_OBJ_MEM_USAGE
 osRtxObjectMemUsage_t osRtxMemoryPoolMemUsage \
 __attribute__((section(".data.os.mempool.obj"))) =
 { 0U, 0U, 0U };
@@ -253,7 +253,7 @@ static osMemoryPoolId_t svcRtxMemoryPoolNew (uint32_t block_count, uint32_t bloc
       //lint -e{9079} "conversion from pointer to void to pointer to other type" [MISRA Note 5]
       mp = osRtxMemoryAlloc(osRtxInfo.mem.common, sizeof(os_memory_pool_t), 1U);
     }
-#if (defined(OS_OBJ_MEM_USAGE) && (OS_OBJ_MEM_USAGE != 0))
+#ifdef RTX_OBJ_MEM_USAGE
     if (mp != NULL) {
       uint32_t used;
       osRtxMemoryPoolMemUsage.cnt_alloc++;
@@ -279,7 +279,7 @@ static osMemoryPoolId_t svcRtxMemoryPoolNew (uint32_t block_count, uint32_t bloc
         } else {
           (void)osRtxMemoryFree(osRtxInfo.mem.common, mp);
         }
-#if (defined(OS_OBJ_MEM_USAGE) && (OS_OBJ_MEM_USAGE != 0))
+#ifdef RTX_OBJ_MEM_USAGE
         osRtxMemoryPoolMemUsage.cnt_free++;
 #endif
       }
@@ -504,7 +504,7 @@ static osStatus_t svcRtxMemoryPoolDelete (osMemoryPoolId_t mp_id) {
     } else {
       (void)osRtxMemoryFree(osRtxInfo.mem.common, mp);
     }
-#if (defined(OS_OBJ_MEM_USAGE) && (OS_OBJ_MEM_USAGE != 0))
+#ifdef RTX_OBJ_MEM_USAGE
     osRtxMemoryPoolMemUsage.cnt_free++;
 #endif
   }

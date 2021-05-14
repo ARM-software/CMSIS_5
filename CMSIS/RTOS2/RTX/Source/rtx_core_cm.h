@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 Arm Limited. All rights reserved.
+ * Copyright (c) 2013-2021 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -27,7 +27,9 @@
 #define RTX_CORE_CM_H_
 
 #ifndef RTX_CORE_C_H_
+#ifndef RTE_COMPONENTS_H
 #include "RTE_Components.h"
+#endif
 #include CMSIS_device_header
 #endif
 
@@ -40,10 +42,6 @@ typedef bool bool_t;
 
 #ifndef TRUE
 #define TRUE                    ((bool_t)1)
-#endif
-
-#ifdef  RTE_CMSIS_RTOS2_RTX5_ARMV8M_NS
-#define DOMAIN_NS               1
 #endif
 
 #ifndef DOMAIN_NS

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 Arm Limited. All rights reserved.
+ * Copyright (c) 2013-2021 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -27,6 +27,7 @@
 #define RTX_LIB_H_
 
 #include <string.h>
+#include "rtx_def.h"                    // RTX Configuration definitions
 #include "rtx_core_c.h"                 // Cortex core definitions
 #if ((defined(__ARM_ARCH_8M_BASE__)   && (__ARM_ARCH_8M_BASE__   != 0)) || \
      (defined(__ARM_ARCH_8M_MAIN__)   && (__ARM_ARCH_8M_MAIN__   != 0)) || \
@@ -35,7 +36,6 @@
 #endif
 #include "os_tick.h"                    // CMSIS OS Tick API
 #include "cmsis_os2.h"                  // CMSIS RTOS API
-#include "RTX_Config.h"                 // RTX Configuration
 #include "rtx_os.h"                     // RTX OS definitions
 #include "rtx_evr.h"                    // RTX Event Recorder definitions
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2019 Arm Limited. All rights reserved.
+ * Copyright (c) 2013-2021 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -27,7 +27,7 @@
 
 
 //  OS Runtime Object Memory Usage
-#if ((defined(OS_OBJ_MEM_USAGE) && (OS_OBJ_MEM_USAGE != 0)))
+#ifdef RTX_OBJ_MEM_USAGE
 osRtxObjectMemUsage_t osRtxMutexMemUsage \
 __attribute__((section(".data.os.mutex.obj"))) =
 { 0U, 0U, 0U };
@@ -153,7 +153,7 @@ static osMutexId_t svcRtxMutexNew (const osMutexAttr_t *attr) {
       //lint -e{9079} "conversion from pointer to void to pointer to other type" [MISRA Note 5]
       mutex = osRtxMemoryAlloc(osRtxInfo.mem.common, sizeof(os_mutex_t), 1U);
     }
-#if (defined(OS_OBJ_MEM_USAGE) && (OS_OBJ_MEM_USAGE != 0))
+#ifdef RTX_OBJ_MEM_USAGE
     if (mutex != NULL) {
       uint32_t used;
       osRtxMutexMemUsage.cnt_alloc++;
@@ -464,7 +464,7 @@ static osStatus_t svcRtxMutexDelete (osMutexId_t mutex_id) {
     } else {
       (void)osRtxMemoryFree(osRtxInfo.mem.common, mutex);
     }
-#if (defined(OS_OBJ_MEM_USAGE) && (OS_OBJ_MEM_USAGE != 0))
+#ifdef RTX_OBJ_MEM_USAGE
     osRtxMutexMemUsage.cnt_free++;
 #endif
   }

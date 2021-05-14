@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2019 Arm Limited. All rights reserved.
+ * Copyright (c) 2013-2021 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -26,8 +26,6 @@
 #ifndef RTX_EVR_H_
 #define RTX_EVR_H_
 
-#include "cmsis_os2.h"                  // CMSIS RTOS API
-#include "RTX_Config.h"                 // RTX Configuration
 #include "rtx_os.h"                     // RTX OS definitions
 
 // Initial Thread configuration covered also Thread Flags and Generic Wait

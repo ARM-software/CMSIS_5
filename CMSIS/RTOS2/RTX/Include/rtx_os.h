@@ -29,6 +29,7 @@
 #include <stdint.h>
 #include <stddef.h>
 #include "cmsis_os2.h"
+#include "rtx_def.h"
  
 #ifdef  __cplusplus
 extern "C"

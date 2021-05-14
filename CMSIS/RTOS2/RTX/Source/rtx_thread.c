@@ -27,7 +27,7 @@
 
 
 //  OS Runtime Object Memory Usage
-#if ((defined(OS_OBJ_MEM_USAGE) && (OS_OBJ_MEM_USAGE != 0)))
+#ifdef RTX_OBJ_MEM_USAGE
 osRtxObjectMemUsage_t osRtxThreadMemUsage \
 __attribute__((section(".data.os.thread.obj"))) =
 { 0U, 0U, 0U };
@@ -663,7 +663,7 @@ static osThreadId_t svcRtxThreadNew (osThreadFunc_t func, void *argument, const 
       //lint -e{9079} "conversion from pointer to void to pointer to other type" [MISRA Note 5]
       thread = osRtxMemoryAlloc(osRtxInfo.mem.common, sizeof(os_thread_t), 1U);
     }
-#if (defined(OS_OBJ_MEM_USAGE) && (OS_OBJ_MEM_USAGE != 0))
+#ifdef RTX_OBJ_MEM_USAGE
     if (thread != NULL) {
       uint32_t used;
       osRtxThreadMemUsage.cnt_alloc++;
@@ -703,7 +703,7 @@ static osThreadId_t svcRtxThreadNew (osThreadFunc_t func, void *argument, const 
         } else {
           (void)osRtxMemoryFree(osRtxInfo.mem.common, thread);
         }
-#if (defined(OS_OBJ_MEM_USAGE) && (OS_OBJ_MEM_USAGE != 0))
+#ifdef RTX_OBJ_MEM_USAGE
         osRtxThreadMemUsage.cnt_free++;
 #endif
       }
@@ -731,7 +731,7 @@ static osThreadId_t svcRtxThreadNew (osThreadFunc_t func, void *argument, const 
         } else {
           (void)osRtxMemoryFree(osRtxInfo.mem.common, thread);
         }
-#if (defined(OS_OBJ_MEM_USAGE) && (OS_OBJ_MEM_USAGE != 0))
+#ifdef RTX_OBJ_MEM_USAGE
         osRtxThreadMemUsage.cnt_free++;
 #endif
       }
@@ -805,7 +805,7 @@ static osThreadId_t svcRtxThreadNew (osThreadFunc_t func, void *argument, const 
   } else {
     EvrRtxThreadError(NULL, (int32_t)osErrorNoMemory);
   }
-  
+
   if (thread != NULL) {
     osRtxThreadDispatch(thread);
   }
@@ -1112,7 +1112,7 @@ static void osRtxThreadFree (os_thread_t *thread) {
     } else {
       (void)osRtxMemoryFree(osRtxInfo.mem.common, thread);
     }
-#if (defined(OS_OBJ_MEM_USAGE) && (OS_OBJ_MEM_USAGE != 0))
+#ifdef RTX_OBJ_MEM_USAGE
     osRtxThreadMemUsage.cnt_free++;
 #endif
   }

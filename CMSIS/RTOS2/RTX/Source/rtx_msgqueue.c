@@ -27,7 +27,7 @@
 
 
 //  OS Runtime Object Memory Usage
-#if ((defined(OS_OBJ_MEM_USAGE) && (OS_OBJ_MEM_USAGE != 0)))
+#ifdef RTX_OBJ_MEM_USAGE
 osRtxObjectMemUsage_t osRtxMessageQueueMemUsage \
 __attribute__((section(".data.os.msgqueue.obj"))) =
 { 0U, 0U, 0U };
@@ -306,7 +306,7 @@ static osMessageQueueId_t svcRtxMessageQueueNew (uint32_t msg_count, uint32_t ms
       //lint -e{9079} "conversion from pointer to void to pointer to other type" [MISRA Note 5]
       mq = osRtxMemoryAlloc(osRtxInfo.mem.common, sizeof(os_message_queue_t), 1U);
     }
-#if (defined(OS_OBJ_MEM_USAGE) && (OS_OBJ_MEM_USAGE != 0))
+#ifdef RTX_OBJ_MEM_USAGE
     if (mq != NULL) {
       uint32_t used;
       osRtxMessageQueueMemUsage.cnt_alloc++;
@@ -332,7 +332,7 @@ static osMessageQueueId_t svcRtxMessageQueueNew (uint32_t msg_count, uint32_t ms
         } else {
           (void)osRtxMemoryFree(osRtxInfo.mem.common, mq);
         }
-#if (defined(OS_OBJ_MEM_USAGE) && (OS_OBJ_MEM_USAGE != 0))
+#ifdef RTX_OBJ_MEM_USAGE
         osRtxMessageQueueMemUsage.cnt_free++;
 #endif
       }
@@ -705,7 +705,7 @@ static osStatus_t svcRtxMessageQueueDelete (osMessageQueueId_t mq_id) {
     } else {
       (void)osRtxMemoryFree(osRtxInfo.mem.common, mq);
     }
-#if (defined(OS_OBJ_MEM_USAGE) && (OS_OBJ_MEM_USAGE != 0))
+#ifdef RTX_OBJ_MEM_USAGE
     osRtxMessageQueueMemUsage.cnt_free++;
 #endif
   }

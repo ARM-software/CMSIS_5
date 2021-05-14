@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2019 Arm Limited. All rights reserved.
+ * Copyright (c) 2013-2021 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -27,7 +27,9 @@
 #define RTX_CORE_CA_H_
 
 #ifndef RTX_CORE_C_H_
+#ifndef RTE_COMPONENTS_H
 #include "RTE_Components.h"
+#endif
 #include CMSIS_device_header
 #endif
 
