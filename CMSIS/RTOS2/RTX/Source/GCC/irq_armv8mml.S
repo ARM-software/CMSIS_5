@@ -73,115 +73,115 @@ irqRtxLib:
         .cantunwind
 SVC_Handler:
 
-        TST      LR,#0x04               // Determine return stack from EXC_RETURN bit 2
-        ITE      EQ
-        MRSEQ    R0,MSP                 // Get MSP if return stack is MSP
-        MRSNE    R0,PSP                 // Get PSP if return stack is PSP
+        tst      lr,#0x04               // Determine return stack from EXC_RETURN bit 2
+        ite      eq
+        mrseq    r0,msp                 // Get MSP if return stack is MSP
+        mrsne    r0,psp                 // Get PSP if return stack is PSP
 
-        LDR      R1,[R0,#24]            // Load saved PC from stack
-        LDRB     R1,[R1,#-2]            // Load SVC number
-        CMP      R1,#0
-        BNE      SVC_User               // Branch if not SVC 0
+        ldr      r1,[r0,#24]            // Load saved PC from stack
+        ldrb     r1,[r1,#-2]            // Load SVC number
+        cmp      r1,#0
+        bne      SVC_User               // Branch if not SVC 0
 
-        PUSH     {R0,LR}                // Save SP and EXC_RETURN
-        LDM      R0,{R0-R3,R12}         // Load function parameters and address from stack
-        BLX      R12                    // Call service function
-        POP      {R12,LR}               // Restore SP and EXC_RETURN
-        STM      R12,{R0-R1}            // Store function return values
+        push     {r0,lr}                // Save SP and EXC_RETURN
+        ldm      r0,{r0-r3,r12}         // Load function parameters and address from stack
+        blx      r12                    // Call service function
+        pop      {r12,lr}               // Restore SP and EXC_RETURN
+        stm      r12,{r0-r1}            // Store function return values
 
 SVC_Context:
-        LDR      R3,=osRtxInfo+I_T_RUN_OFS // Load address of osRtxInfo.run
-        LDM      R3,{R1,R2}             // Load osRtxInfo.thread.run: curr & next
-        CMP      R1,R2                  // Check if thread switch is required
-        IT       EQ
-        BXEQ     LR                     // Exit when threads are the same
+        ldr      r3,=osRtxInfo+I_T_RUN_OFS // Load address of osRtxInfo.run
+        ldm      r3,{r1,r2}             // Load osRtxInfo.thread.run: curr & next
+        cmp      r1,r2                  // Check if thread switch is required
+        it       eq
+        bxeq     lr                     // Exit when threads are the same
 
         .if      (FPU_USED == 1) || (MVE_USED == 1)
-        CBNZ     R1,SVC_ContextSave     // Branch if running thread is not deleted
-        TST      LR,#0x10               // Check if extended stack frame
-        BNE      SVC_ContextSwitch
-        LDR      R1,=0xE000EF34         // FPCCR Address
-        LDR      R0,[R1]                // Load FPCCR
-        BIC      R0,R0,#1               // Clear LSPACT (Lazy state)
-        STR      R0,[R1]                // Store FPCCR
-        B        SVC_ContextSwitch
+        cbnz     r1,SVC_ContextSave     // Branch if running thread is not deleted
+        tst      lr,#0x10               // Check if extended stack frame
+        bne      SVC_ContextSwitch
+        ldr      r1,=0xE000EF34         // FPCCR Address
+        ldr      r0,[r1]                // Load FPCCR
+        bic      r0,r0,#1               // Clear LSPACT (Lazy state)
+        str      r0,[r1]                // Store FPCCR
+        b        SVC_ContextSwitch
         .else
-        CBZ      R1,SVC_ContextSwitch   // Branch if running thread is deleted
+        cbz      r1,SVC_ContextSwitch   // Branch if running thread is deleted
         .endif
 
 SVC_ContextSave:
         #if      (DOMAIN_NS == 1)
-        LDR      R0,[R1,#TCB_TZM_OFS]   // Load TrustZone memory identifier
-        CBZ      R0,SVC_ContextSave1    // Branch if there is no secure context
-        PUSH     {R1,R2,R3,LR}          // Save registers and EXC_RETURN
+        ldr      r0,[r1,#TCB_TZM_OFS]   // Load TrustZone memory identifier
+        cbz      r0,SVC_ContextSave1    // Branch if there is no secure context
+        push     {r1,r2,r3,lr}          // Save registers and EXC_RETURN
         BL       TZ_StoreContext_S      // Store secure context
-        POP      {R1,R2,R3,LR}          // Restore registers and EXC_RETURN
+        pop      {r1,r2,r3,lr}          // Restore registers and EXC_RETURN
         #endif
 
 SVC_ContextSave1:
-        MRS      R0,PSP                 // Get PSP
-        STMDB    R0!,{R4-R11}           // Save R4..R11
+        mrs      r0,psp                 // Get PSP
+        stmdb    r0!,{r4-r11}           // Save R4..R11
         .if      (FPU_USED == 1) || (MVE_USED == 1)
-        TST      LR,#0x10               // Check if extended stack frame
-        IT       EQ
-        VSTMDBEQ R0!,{S16-S31}          //  Save VFP S16.S31
+        tst      lr,#0x10               // Check if extended stack frame
+        it       eq
+        vstmdbeq r0!,{s16-s31}          //  Save VFP S16.S31
         .endif
 
 SVC_ContextSave2:
-        STR      R0,[R1,#TCB_SP_OFS]    // Store SP
-        STRB     LR,[R1,#TCB_SF_OFS]    // Store stack frame information
+        str      r0,[r1,#TCB_SP_OFS]    // Store SP
+        strb     lr,[r1,#TCB_SF_OFS]    // Store stack frame information
 
 SVC_ContextSwitch:
-        STR      R2,[R3]                // osRtxInfo.thread.run: curr = next
+        str      r2,[r3]                // osRtxInfo.thread.run: curr = next
 
 SVC_ContextRestore:
         #if      (DOMAIN_NS == 1)
-        LDR      R0,[R2,#TCB_TZM_OFS]   // Load TrustZone memory identifier
-        CBZ      R0,SVC_ContextRestore1 // Branch if there is no secure context
-        PUSH     {R2,R3}                // Save registers
-        BL       TZ_LoadContext_S       // Load secure context
-        POP      {R2,R3}                // Restore registers
+        ldr      r0,[r2,#TCB_TZM_OFS]   // Load TrustZone memory identifier
+        cbz      r0,SVC_ContextRestore1 // Branch if there is no secure context
+        push     {r2,r3}                // Save registers
+        bl       TZ_LoadContext_S       // Load secure context
+        pop      {r2,r3}                // Restore registers
         #endif
 
 SVC_ContextRestore1:
-        LDR      R0,[R2,#TCB_SM_OFS]    // Load stack memory base
-        LDRB     R1,[R2,#TCB_SF_OFS]    // Load stack frame information
-        MSR      PSPLIM,R0              // Set PSPLIM
-        LDR      R0,[R2,#TCB_SP_OFS]    // Load SP
-        ORR      LR,R1,#0xFFFFFF00      // Set EXC_RETURN
+        ldr      r0,[r2,#TCB_SM_OFS]    // Load stack memory base
+        ldrb     r1,[r2,#TCB_SF_OFS]    // Load stack frame information
+        msr      psplim,r0              // Set PSPLIM
+        ldr      r0,[r2,#TCB_SP_OFS]    // Load SP
+        orr      lr,r1,#0xFFFFFF00      // Set EXC_RETURN
 
         #if      (DOMAIN_NS == 1)
-        TST      LR,#0x40               // Check domain of interrupted thread
-        BNE      SVC_ContextRestore2    // Branch if secure
+        tst      lr,#0x40               // Check domain of interrupted thread
+        bne      SVC_ContextRestore2    // Branch if secure
         #endif
 
         .if      (FPU_USED == 1) || (MVE_USED == 1)
-        TST      LR,#0x10               // Check if extended stack frame
-        IT       EQ
-        VLDMIAEQ R0!,{S16-S31}          //  Restore VFP S16..S31
+        tst      lr,#0x10               // Check if extended stack frame
+        it       eq
+        vldmiaeq r0!,{s16-s31}          //  Restore VFP S16..S31
         .endif
-        LDMIA    R0!,{R4-R11}           // Restore R4..R11
+        ldmia    r0!,{r4-r11}           // Restore R4..R11
 
 SVC_ContextRestore2:
-        MSR      PSP,R0                 // Set PSP
+        msr      psp,r0                 // Set PSP
 
 SVC_Exit:
-        BX       LR                     // Exit from handler
+        bx       lr                     // Exit from handler
 
 SVC_User:
-        LDR      R2,=osRtxUserSVC       // Load address of SVC table
-        LDR      R3,[R2]                // Load SVC maximum number
-        CMP      R1,R3                  // Check SVC number range
-        BHI      SVC_Exit               // Branch if out of range
+        ldr      r2,=osRtxUserSVC       // Load address of SVC table
+        ldr      r3,[r2]                // Load SVC maximum number
+        cmp      r1,r3                  // Check SVC number range
+        bhi      SVC_Exit               // Branch if out of range
 
-        PUSH     {R0,LR}                // Save SP and EXC_RETURN
-        LDR      R12,[R2,R1,LSL #2]     // Load address of SVC function
-        LDM      R0,{R0-R3}             // Load function parameters from stack
-        BLX      R12                    // Call service function
-        POP      {R12,LR}               // Restore SP and EXC_RETURN
-        STR      R0,[R12]               // Store function return value
+        push     {r0,lr}                // Save SP and EXC_RETURN
+        ldr      r12,[r2,r1,lsl #2]     // Load address of SVC function
+        ldm      r0,{r0-r3}             // Load function parameters from stack
+        blx      r12                    // Call service function
+        pop      {r12,lr}               // Restore SP and EXC_RETURN
+        str      r0,[r12]               // Store function return value
 
-        BX       LR                     // Return from handler
+        bx       lr                     // Return from handler
 
         .fnend
         .size    SVC_Handler, .-SVC_Handler
@@ -194,10 +194,10 @@ SVC_User:
         .cantunwind
 PendSV_Handler:
 
-        PUSH     {R0,LR}                // Save EXC_RETURN
-        BL       osRtxPendSV_Handler    // Call osRtxPendSV_Handler
-        POP      {R0,LR}                // Restore EXC_RETURN
-        B        Sys_Context
+        push     {r0,lr}                // Save EXC_RETURN
+        bl       osRtxPendSV_Handler    // Call osRtxPendSV_Handler
+        pop      {r0,lr}                // Restore EXC_RETURN
+        b        Sys_Context
 
         .fnend
         .size    PendSV_Handler, .-PendSV_Handler
@@ -210,10 +210,10 @@ PendSV_Handler:
         .cantunwind
 SysTick_Handler:
 
-        PUSH     {R0,LR}                // Save EXC_RETURN
-        BL       osRtxTick_Handler      // Call osRtxTick_Handler
-        POP      {R0,LR}                // Restore EXC_RETURN
-        B        Sys_Context
+        push     {r0,lr}                // Save EXC_RETURN
+        bl       osRtxTick_Handler      // Call osRtxTick_Handler
+        pop      {r0,lr}                // Restore EXC_RETURN
+        b        Sys_Context
 
         .fnend
         .size   SysTick_Handler, .-SysTick_Handler
@@ -226,76 +226,76 @@ SysTick_Handler:
         .cantunwind
 Sys_Context:
 
-        LDR      R3,=osRtxInfo+I_T_RUN_OFS // Load address of osRtxInfo.run
-        LDM      R3,{R1,R2}             // Load osRtxInfo.thread.run: curr & next
-        CMP      R1,R2                  // Check if thread switch is required
-        IT       EQ
-        BXEQ     LR                     // Exit when threads are the same
+        ldr      r3,=osRtxInfo+I_T_RUN_OFS // Load address of osRtxInfo.run
+        ldm      r3,{r1,r2}             // Load osRtxInfo.thread.run: curr & next
+        cmp      r1,r2                  // Check if thread switch is required
+        it       eq
+        bxeq     lr                     // Exit when threads are the same
 
 Sys_ContextSave:
         #if      (DOMAIN_NS == 1)
-        LDR      R0,[R1,#TCB_TZM_OFS]   // Load TrustZone memory identifier
-        CBZ      R0,Sys_ContextSave1    // Branch if there is no secure context
-        PUSH     {R1,R2,R3,LR}          // Save registers and EXC_RETURN
-        BL       TZ_StoreContext_S      // Store secure context
-        POP      {R1,R2,R3,LR}          // Restore registers and EXC_RETURN
+        ldr      r0,[r1,#TCB_TZM_OFS]   // Load TrustZone memory identifier
+        cbz      R0,Sys_ContextSave1    // Branch if there is no secure context
+        push     {r1,r2,r3,lr}          // Save registers and EXC_RETURN
+        bl       TZ_StoreContext_S      // Store secure context
+        pop      {r1,r2,r3,lr}          // Restore registers and EXC_RETURN
 
 Sys_ContextSave1:
-        TST      LR,#0x40               // Check domain of interrupted thread
-        IT       NE
-        MRSNE    R0,PSP                 // Get PSP
-        BNE      Sys_ContextSave3       // Branch if secure
+        tst      lr,#0x40               // Check domain of interrupted thread
+        it       ne
+        mrsne    r0,psp                 // Get PSP
+        bne      Sys_ContextSave3       // Branch if secure
         #endif
 
 Sys_ContextSave2:
-        MRS      R0,PSP                 // Get PSP
-        STMDB    R0!,{R4-R11}           // Save R4..R11
+        mrs      r0,psp                 // Get PSP
+        stmdb    r0!,{r4-r11}           // Save R4..R11
         .if      (FPU_USED == 1) || (MVE_USED == 1)
-        TST      LR,#0x10               // Check if extended stack frame
-        IT       EQ
-        VSTMDBEQ R0!,{S16-S31}          //  Save VFP S16.S31
+        tst      lr,#0x10               // Check if extended stack frame
+        it       eq
+        vstmdbeq r0!,{s16-s31}          //  Save VFP S16.S31
         .endif
 
 Sys_ContextSave3:
-        STR      R0,[R1,#TCB_SP_OFS]    // Store SP
-        STRB     LR,[R1,#TCB_SF_OFS]    // Store stack frame information
+        str      r0,[r1,#TCB_SP_OFS]    // Store SP
+        strb     lr,[r1,#TCB_SF_OFS]    // Store stack frame information
 
 Sys_ContextSwitch:
-        STR      R2,[R3]                // osRtxInfo.run: curr = next
+        str      r2,[r3]                // osRtxInfo.run: curr = next
 
 Sys_ContextRestore:
         #if      (DOMAIN_NS == 1)
-        LDR      R0,[R2,#TCB_TZM_OFS]   // Load TrustZone memory identifier
-        CBZ      R0,Sys_ContextRestore1 // Branch if there is no secure context
-        PUSH     {R2,R3}                // Save registers
-        BL       TZ_LoadContext_S       // Load secure context
-        POP      {R2,R3}                // Restore registers
+        ldr      r0,[r2,#TCB_TZM_OFS]   // Load TrustZone memory identifier
+        cbz      r0,Sys_ContextRestore1 // Branch if there is no secure context
+        push     {r2,r3}                // Save registers
+        bl       TZ_LoadContext_S       // Load secure context
+        pop      {r2,r3}                // Restore registers
         #endif
 
 Sys_ContextRestore1:
-        LDR      R0,[R2,#TCB_SM_OFS]    // Load stack memory base
-        LDRB     R1,[R2,#TCB_SF_OFS]    // Load stack frame information
-        MSR      PSPLIM,R0              // Set PSPLIM
-        LDR      R0,[R2,#TCB_SP_OFS]    // Load SP
-        ORR      LR,R1,#0xFFFFFF00      // Set EXC_RETURN
+        ldr      r0,[r2,#TCB_SM_OFS]    // Load stack memory base
+        ldrb     r1,[r2,#TCB_SF_OFS]    // Load stack frame information
+        msr      psplim,r0              // Set PSPLIM
+        ldr      r0,[r2,#TCB_SP_OFS]    // Load SP
+        orr      lr,r1,#0xFFFFFF00      // Set EXC_RETURN
 
         #if      (DOMAIN_NS == 1)
-        TST      LR,#0x40               // Check domain of interrupted thread
-        BNE      Sys_ContextRestore2    // Branch if secure
+        tst      lr,#0x40               // Check domain of interrupted thread
+        bne      Sys_ContextRestore2    // Branch if secure
         #endif
 
         .if      (FPU_USED == 1) || (MVE_USED == 1)
-        TST      LR,#0x10               // Check if extended stack frame
-        IT       EQ
-        VLDMIAEQ R0!,{S16-S31}          //  Restore VFP S16..S31
+        tst      lr,#0x10               // Check if extended stack frame
+        it       eq
+        vldmiaeq r0!,{s16-s31}          //  Restore VFP S16..S31
         .endif
-        LDMIA    R0!,{R4-R11}           // Restore R4..R11
+        ldmia    r0!,{r4-r11}           // Restore R4..R11
 
 Sys_ContextRestore2:
-        MSR      PSP,R0                 // Set PSP
+        msr      psp,r0                 // Set PSP
 
 Sys_ContextExit:
-        BX       LR                     // Exit from handler
+        bx       lr                     // Exit from handler
 
         .fnend
         .size    Sys_Context, .-Sys_Context

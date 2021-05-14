@@ -57,85 +57,85 @@ irqRtxLib:
         .cantunwind
 SVC_Handler:
 
-        TST      LR,#0x04               // Determine return stack from EXC_RETURN bit 2
-        ITE      EQ
-        MRSEQ    R0,MSP                 // Get MSP if return stack is MSP
-        MRSNE    R0,PSP                 // Get PSP if return stack is PSP
+        tst      lr,#0x04               // Determine return stack from EXC_RETURN bit 2
+        ite      eq
+        mrseq    r0,msp                 // Get MSP if return stack is MSP
+        mrsne    r0,psp                 // Get PSP if return stack is PSP
 
-        LDR      R1,[R0,#24]            // Load saved PC from stack
-        LDRB     R1,[R1,#-2]            // Load SVC number
-        CBNZ     R1,SVC_User            // Branch if not SVC 0
+        ldr      r1,[r0,#24]            // Load saved PC from stack
+        ldrb     r1,[r1,#-2]            // Load SVC number
+        cbnz     R1,SVC_User            // Branch if not SVC 0
 
-        PUSH     {R0,LR}                // Save SP and EXC_RETURN
-        LDM      R0,{R0-R3,R12}         // Load function parameters and address from stack
-        BLX      R12                    // Call service function
-        POP      {R12,LR}               // Restore SP and EXC_RETURN
-        STM      R12,{R0-R1}            // Store function return values
+        push     {r0,lr}                // Save SP and EXC_RETURN
+        ldm      r0,{r0-r3,r12}         // Load function parameters and address from stack
+        blx      r12                    // Call service function
+        pop      {r12,lr}               // Restore SP and EXC_RETURN
+        stm      r12,{r0-r1}            // Store function return values
 
 SVC_Context:
-        LDR      R3,=osRtxInfo+I_T_RUN_OFS // Load address of osRtxInfo.thread.run
-        LDM      R3,{R1,R2}             // Load osRtxInfo.thread.run: curr & next
-        CMP      R1,R2                  // Check if thread switch is required
-        IT       EQ
-        BXEQ     LR                     // Exit when threads are the same
+        ldr      r3,=osRtxInfo+I_T_RUN_OFS // Load address of osRtxInfo.thread.run
+        ldm      r3,{r1,r2}             // Load osRtxInfo.thread.run: curr & next
+        cmp      r1,r2                  // Check if thread switch is required
+        it       eq
+        bxeq     lr                     // Exit when threads are the same
 
       .if (FPU_USED != 0)
-        CBNZ     R1,SVC_ContextSave     // Branch if running thread is not deleted
-        TST      LR,#0x10               // Determine stack frame from EXC_RETURN bit 4
-        BNE      SVC_ContextSwitch      // Branch if not extended stack frame
-        LDR      R3,=FPCCR              // FPCCR Address
-        LDR      R0,[R3]                // Load FPCCR
-        BIC      R0,R0,#1               // Clear LSPACT (Lazy state preservation)
-        STR      R0,[R3]                // Store FPCCR
-        B        SVC_ContextSwitch      // Branch to context switch handling
+        cbnz     r1,SVC_ContextSave     // Branch if running thread is not deleted
+        tst      lr,#0x10               // Determine stack frame from EXC_RETURN bit 4
+        bne      SVC_ContextSwitch      // Branch if not extended stack frame
+        ldr      r3,=FPCCR              // FPCCR Address
+        ldr      r0,[r3]                // Load FPCCR
+        bic      r0,r0,#1               // Clear LSPACT (Lazy state preservation)
+        str      r0,[r3]                // Store FPCCR
+        b        SVC_ContextSwitch      // Branch to context switch handling
       .else
-        CBZ      R1,SVC_ContextSwitch   // Branch if running thread is deleted
+        cbz      r1,SVC_ContextSwitch   // Branch if running thread is deleted
       .endif
 
 SVC_ContextSave:
-        STMDB    R12!,{R4-R11}          // Save R4..R11
+        stmdb    r12!,{r4-r11}          // Save R4..R11
       .if (FPU_USED != 0)
-        TST      LR,#0x10               // Determine stack frame from EXC_RETURN bit 4
-        IT       EQ                     // If extended stack frame
-        VSTMDBEQ R12!,{S16-S31}         //  Save VFP S16.S31
-        STRB     LR, [R1,#TCB_SF_OFS]   // Store stack frame information
+        tst      lr,#0x10               // Determine stack frame from EXC_RETURN bit 4
+        it       eq                     // If extended stack frame
+        vstmdbeq r12!,{s16-s31}         //  Save VFP S16.S31
+        strb     lr, [r1,#TCB_SF_OFS]   // Store stack frame information
       .endif
-        STR      R12,[R1,#TCB_SP_OFS]   // Store SP
+        str      r12,[r1,#TCB_SP_OFS]   // Store SP
 
 SVC_ContextSwitch:
-        STR      R2,[R3]                // osRtxInfo.thread.run: curr = next
+        str      r2,[r3]                // osRtxInfo.thread.run: curr = next
 
 SVC_ContextRestore:
-        LDR      R0,[R2,#TCB_SP_OFS]    // Load SP
+        ldr      r0,[r2,#TCB_SP_OFS]    // Load SP
       .if (FPU_USED != 0)
-        LDRB     R1,[R2,#TCB_SF_OFS]    // Load stack frame information
-        ORN      LR,R1,#0xFF            // Set EXC_RETURN
-        TST      LR,#0x10               // Determine stack frame from EXC_RETURN bit 4
-        IT       EQ                     // If extended stack frame
-        VLDMIAEQ R0!,{S16-S31}          //  Restore VFP S16..S31
+        ldrb     r1,[r2,#TCB_SF_OFS]    // Load stack frame information
+        orn      lr,r1,#0xFF            // Set EXC_RETURN
+        tst      lr,#0x10               // Determine stack frame from EXC_RETURN bit 4
+        it       eq                     // If extended stack frame
+        vldmiaeq r0!,{s16-s31}          //  Restore VFP S16..S31
       .else
-        MVN      LR,#~0xFFFFFFFD        // Set EXC_RETURN value
+        mvn      lr,#~0xFFFFFFFD        // Set EXC_RETURN value
       .endif
-        LDMIA    R0!,{R4-R11}           // Restore R4..R11
-        MSR      PSP,R0                 // Set PSP
+        ldmia    r0!,{r4-r11}           // Restore R4..R11
+        msr      psp,r0                 // Set PSP
 
 SVC_Exit:
-        BX       LR                     // Exit from handler
+        bx       lr                     // Exit from handler
 
 SVC_User:
-        LDR      R2,=osRtxUserSVC       // Load address of SVC table
-        LDR      R3,[R2]                // Load SVC maximum number
-        CMP      R1,R3                  // Check SVC number range
-        BHI      SVC_Exit               // Branch if out of range
+        ldr      r2,=osRtxUserSVC       // Load address of SVC table
+        ldr      r3,[r2]                // Load SVC maximum number
+        cmp      r1,r3                  // Check SVC number range
+        bhi      SVC_Exit               // Branch if out of range
 
-        PUSH     {R0,LR}                // Save SP and EXC_RETURN
-        LDR      R12,[R2,R1,LSL #2]     // Load address of SVC function
-        LDM      R0,{R0-R3}             // Load function parameters from stack
-        BLX      R12                    // Call service function
-        POP      {R12,LR}               // Restore SP and EXC_RETURN
-        STR      R0,[R12]               // Store function return value
+        push     {r0,lr}                // Save SP and EXC_RETURN
+        ldr      r12,[r2,r1,lsl #2]     // Load address of SVC function
+        ldm      r0,{r0-r3}             // Load function parameters from stack
+        blx      r12                    // Call service function
+        pop      {r12,lr}               // Restore SP and EXC_RETURN
+        str      r0,[r12]               // Store function return value
 
-        BX       LR                     // Return from handler
+        bx       lr                     // Return from handler
 
         .fnend
         .size    SVC_Handler, .-SVC_Handler
@@ -148,11 +148,11 @@ SVC_User:
         .cantunwind
 PendSV_Handler:
 
-        PUSH     {R0,LR}                // Save EXC_RETURN
-        BL       osRtxPendSV_Handler    // Call osRtxPendSV_Handler
-        POP      {R0,LR}                // Restore EXC_RETURN
-        MRS      R12,PSP                // Save PSP to R12
-        B        SVC_Context            // Branch to context handling
+        push     {r0,lr}                // Save EXC_RETURN
+        bl       osRtxPendSV_Handler    // Call osRtxPendSV_Handler
+        pop      {r0,lr}                // Restore EXC_RETURN
+        mrs      r12,psp                // Save PSP to R12
+        b        SVC_Context            // Branch to context handling
 
         .fnend
         .size    PendSV_Handler, .-PendSV_Handler
@@ -165,11 +165,11 @@ PendSV_Handler:
         .cantunwind
 SysTick_Handler:
 
-        PUSH     {R0,LR}                // Save EXC_RETURN
-        BL       osRtxTick_Handler      // Call osRtxTick_Handler
-        POP      {R0,LR}                // Restore EXC_RETURN
-        MRS      R12,PSP                // Save PSP to R12
-        B        SVC_Context            // Branch to context handling
+        push     {r0,lr}                // Save EXC_RETURN
+        bl       osRtxTick_Handler      // Call osRtxTick_Handler
+        pop      {r0,lr}                // Restore EXC_RETURN
+        mrs      r12,psp                // Save PSP to R12
+        b        SVC_Context            // Branch to context handling
 
         .fnend
         .size    SysTick_Handler, .-SysTick_Handler
