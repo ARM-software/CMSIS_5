@@ -220,7 +220,7 @@ Return the state of OS Tick timer interrupt pending bit that indicates timer ove
 
 \code
 uint32_t OS_Tick_GetOverflow (void) {
-  return ((SysTick->CTRL >> 16) & 1U);
+  return ((SCB->ICSR & SCB_ICSR_PENDSTSET_Msk) >> SCB_ICSR_PENDSTSET_Pos);
 }
 \endcode
 */
