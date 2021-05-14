@@ -103,7 +103,7 @@
       <td>
        - CVE-2021-27431 vulnerability mitigation.
        - Added OS Initialization for IAR.
-       - Reorganized IRQ module names.
+       - Reorganized and optimized IRQ modules.
       </td>
     </tr>
     <tr>
