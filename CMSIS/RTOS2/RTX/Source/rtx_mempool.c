@@ -590,7 +590,7 @@ osMemoryPoolId_t osMemoryPoolNew (uint32_t block_count, uint32_t block_size, con
   osMemoryPoolId_t mp_id;
 
   EvrRtxMemoryPoolNew(block_count, block_size, attr);
-  if (IsIrqMode() || IsIrqMasked()) {
+  if (IsException() || IsIrqMasked()) {
     EvrRtxMemoryPoolError(NULL, (int32_t)osErrorISR);
     mp_id = NULL;
   } else {
@@ -603,7 +603,7 @@ osMemoryPoolId_t osMemoryPoolNew (uint32_t block_count, uint32_t block_size, con
 const char *osMemoryPoolGetName (osMemoryPoolId_t mp_id) {
   const char *name;
 
-  if (IsIrqMode() || IsIrqMasked()) {
+  if (IsException() || IsIrqMasked()) {
     EvrRtxMemoryPoolGetName(mp_id, NULL);
     name = NULL;
   } else {
@@ -617,7 +617,7 @@ void *osMemoryPoolAlloc (osMemoryPoolId_t mp_id, uint32_t timeout) {
   void *memory;
 
   EvrRtxMemoryPoolAlloc(mp_id, timeout);
-  if (IsIrqMode() || IsIrqMasked()) {
+  if (IsException() || IsIrqMasked()) {
     memory = isrRtxMemoryPoolAlloc(mp_id, timeout);
   } else {
     memory =  __svcMemoryPoolAlloc(mp_id, timeout);
@@ -630,7 +630,7 @@ osStatus_t osMemoryPoolFree (osMemoryPoolId_t mp_id, void *block) {
   osStatus_t status;
 
   EvrRtxMemoryPoolFree(mp_id, block);
-  if (IsIrqMode() || IsIrqMasked()) {
+  if (IsException() || IsIrqMasked()) {
     status = isrRtxMemoryPoolFree(mp_id, block);
   } else {
     status =  __svcMemoryPoolFree(mp_id, block);
@@ -642,7 +642,7 @@ osStatus_t osMemoryPoolFree (osMemoryPoolId_t mp_id, void *block) {
 uint32_t osMemoryPoolGetCapacity (osMemoryPoolId_t mp_id) {
   uint32_t capacity;
 
-  if (IsIrqMode() || IsIrqMasked()) {
+  if (IsException() || IsIrqMasked()) {
     capacity = svcRtxMemoryPoolGetCapacity(mp_id);
   } else {
     capacity =  __svcMemoryPoolGetCapacity(mp_id);
@@ -654,7 +654,7 @@ uint32_t osMemoryPoolGetCapacity (osMemoryPoolId_t mp_id) {
 uint32_t osMemoryPoolGetBlockSize (osMemoryPoolId_t mp_id) {
   uint32_t block_size;
 
-  if (IsIrqMode() || IsIrqMasked()) {
+  if (IsException() || IsIrqMasked()) {
     block_size = svcRtxMemoryPoolGetBlockSize(mp_id);
   } else {
     block_size =  __svcMemoryPoolGetBlockSize(mp_id);
@@ -666,7 +666,7 @@ uint32_t osMemoryPoolGetBlockSize (osMemoryPoolId_t mp_id) {
 uint32_t osMemoryPoolGetCount (osMemoryPoolId_t mp_id) {
   uint32_t count;
 
-  if (IsIrqMode() || IsIrqMasked()) {
+  if (IsException() || IsIrqMasked()) {
     count = svcRtxMemoryPoolGetCount(mp_id);
   } else {
     count =  __svcMemoryPoolGetCount(mp_id);
@@ -678,7 +678,7 @@ uint32_t osMemoryPoolGetCount (osMemoryPoolId_t mp_id) {
 uint32_t osMemoryPoolGetSpace (osMemoryPoolId_t mp_id) {
   uint32_t space;
 
-  if (IsIrqMode() || IsIrqMasked()) {
+  if (IsException() || IsIrqMasked()) {
     space = svcRtxMemoryPoolGetSpace(mp_id);
   } else {
     space =  __svcMemoryPoolGetSpace(mp_id);
@@ -691,7 +691,7 @@ osStatus_t osMemoryPoolDelete (osMemoryPoolId_t mp_id) {
   osStatus_t status;
 
   EvrRtxMemoryPoolDelete(mp_id);
-  if (IsIrqMode() || IsIrqMasked()) {
+  if (IsException() || IsIrqMasked()) {
     EvrRtxMemoryPoolError(mp_id, (int32_t)osErrorISR);
     status = osErrorISR;
   } else {

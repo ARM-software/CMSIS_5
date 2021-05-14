@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2019 Arm Limited. All rights reserved.
+ * Copyright (c) 2013-2021 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -77,7 +77,7 @@ osStatus_t osDelay (uint32_t ticks) {
   osStatus_t status;
 
   EvrRtxDelay(ticks);
-  if (IsIrqMode() || IsIrqMasked()) {
+  if (IsException() || IsIrqMasked()) {
     EvrRtxDelayError((int32_t)osErrorISR);
     status = osErrorISR;
   } else {
@@ -91,7 +91,7 @@ osStatus_t osDelayUntil (uint32_t ticks) {
   osStatus_t status;
 
   EvrRtxDelayUntil(ticks);
-  if (IsIrqMode() || IsIrqMasked()) {
+  if (IsException() || IsIrqMasked()) {
     EvrRtxDelayError((int32_t)osErrorISR);
     status = osErrorISR;
   } else {

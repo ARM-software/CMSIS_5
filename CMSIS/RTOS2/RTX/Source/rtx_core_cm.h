@@ -118,9 +118,9 @@ __STATIC_INLINE bool_t IsPrivileged (void) {
   return ((__get_CONTROL() & 1U) == 0U);
 }
 
-/// Check if in IRQ Mode
-/// \return     true=IRQ, false=thread
-__STATIC_INLINE bool_t IsIrqMode (void) {
+/// Check if in Exception
+/// \return     true=exception, false=thread
+__STATIC_INLINE bool_t IsException (void) {
   return (__get_IPSR() != 0U);
 }
 

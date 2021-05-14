@@ -432,7 +432,7 @@ osSemaphoreId_t osSemaphoreNew (uint32_t max_count, uint32_t initial_count, cons
   osSemaphoreId_t semaphore_id;
 
   EvrRtxSemaphoreNew(max_count, initial_count, attr);
-  if (IsIrqMode() || IsIrqMasked()) {
+  if (IsException() || IsIrqMasked()) {
     EvrRtxSemaphoreError(NULL, (int32_t)osErrorISR);
     semaphore_id = NULL;
   } else {
@@ -445,7 +445,7 @@ osSemaphoreId_t osSemaphoreNew (uint32_t max_count, uint32_t initial_count, cons
 const char *osSemaphoreGetName (osSemaphoreId_t semaphore_id) {
   const char *name;
 
-  if (IsIrqMode() || IsIrqMasked()) {
+  if (IsException() || IsIrqMasked()) {
     EvrRtxSemaphoreGetName(semaphore_id, NULL);
     name = NULL;
   } else {
@@ -459,7 +459,7 @@ osStatus_t osSemaphoreAcquire (osSemaphoreId_t semaphore_id, uint32_t timeout) {
   osStatus_t status;
 
   EvrRtxSemaphoreAcquire(semaphore_id, timeout);
-  if (IsIrqMode() || IsIrqMasked()) {
+  if (IsException() || IsIrqMasked()) {
     status = isrRtxSemaphoreAcquire(semaphore_id, timeout);
   } else {
     status =  __svcSemaphoreAcquire(semaphore_id, timeout);
@@ -472,7 +472,7 @@ osStatus_t osSemaphoreRelease (osSemaphoreId_t semaphore_id) {
   osStatus_t status;
 
   EvrRtxSemaphoreRelease(semaphore_id);
-  if (IsIrqMode() || IsIrqMasked()) {
+  if (IsException() || IsIrqMasked()) {
     status = isrRtxSemaphoreRelease(semaphore_id);
   } else {
     status =  __svcSemaphoreRelease(semaphore_id);
@@ -484,7 +484,7 @@ osStatus_t osSemaphoreRelease (osSemaphoreId_t semaphore_id) {
 uint32_t osSemaphoreGetCount (osSemaphoreId_t semaphore_id) {
   uint32_t count;
 
-  if (IsIrqMode() || IsIrqMasked()) {
+  if (IsException() || IsIrqMasked()) {
     count = svcRtxSemaphoreGetCount(semaphore_id);
   } else {
     count =  __svcSemaphoreGetCount(semaphore_id);
@@ -497,7 +497,7 @@ osStatus_t osSemaphoreDelete (osSemaphoreId_t semaphore_id) {
   osStatus_t status;
 
   EvrRtxSemaphoreDelete(semaphore_id);
-  if (IsIrqMode() || IsIrqMasked()) {
+  if (IsException() || IsIrqMasked()) {
     EvrRtxSemaphoreError(semaphore_id, (int32_t)osErrorISR);
     status = osErrorISR;
   } else {

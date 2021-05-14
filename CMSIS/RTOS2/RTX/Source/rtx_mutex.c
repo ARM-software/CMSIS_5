@@ -492,7 +492,7 @@ osMutexId_t osMutexNew (const osMutexAttr_t *attr) {
   osMutexId_t mutex_id;
 
   EvrRtxMutexNew(attr);
-  if (IsIrqMode() || IsIrqMasked()) {
+  if (IsException() || IsIrqMasked()) {
     EvrRtxMutexError(NULL, (int32_t)osErrorISR);
     mutex_id = NULL;
   } else {
@@ -505,7 +505,7 @@ osMutexId_t osMutexNew (const osMutexAttr_t *attr) {
 const char *osMutexGetName (osMutexId_t mutex_id) {
   const char *name;
 
-  if (IsIrqMode() || IsIrqMasked()) {
+  if (IsException() || IsIrqMasked()) {
     EvrRtxMutexGetName(mutex_id, NULL);
     name = NULL;
   } else {
@@ -519,7 +519,7 @@ osStatus_t osMutexAcquire (osMutexId_t mutex_id, uint32_t timeout) {
   osStatus_t status;
 
   EvrRtxMutexAcquire(mutex_id, timeout);
-  if (IsIrqMode() || IsIrqMasked()) {
+  if (IsException() || IsIrqMasked()) {
     EvrRtxMutexError(mutex_id, (int32_t)osErrorISR);
     status = osErrorISR;
   } else {
@@ -533,7 +533,7 @@ osStatus_t osMutexRelease (osMutexId_t mutex_id) {
   osStatus_t status;
 
   EvrRtxMutexRelease(mutex_id);
-  if (IsIrqMode() || IsIrqMasked()) {
+  if (IsException() || IsIrqMasked()) {
     EvrRtxMutexError(mutex_id, (int32_t)osErrorISR);
     status = osErrorISR;
   } else {
@@ -546,7 +546,7 @@ osStatus_t osMutexRelease (osMutexId_t mutex_id) {
 osThreadId_t osMutexGetOwner (osMutexId_t mutex_id) {
   osThreadId_t thread;
 
-  if (IsIrqMode() || IsIrqMasked()) {
+  if (IsException() || IsIrqMasked()) {
     EvrRtxMutexGetOwner(mutex_id, NULL);
     thread = NULL;
   } else {
@@ -560,7 +560,7 @@ osStatus_t osMutexDelete (osMutexId_t mutex_id) {
   osStatus_t status;
 
   EvrRtxMutexDelete(mutex_id);
-  if (IsIrqMode() || IsIrqMasked()) {
+  if (IsException() || IsIrqMasked()) {
     EvrRtxMutexError(mutex_id, (int32_t)osErrorISR);
     status = osErrorISR;
   } else {

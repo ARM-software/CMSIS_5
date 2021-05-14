@@ -819,7 +819,7 @@ osMessageQueueId_t osMessageQueueNew (uint32_t msg_count, uint32_t msg_size, con
   osMessageQueueId_t mq_id;
 
   EvrRtxMessageQueueNew(msg_count, msg_size, attr);
-  if (IsIrqMode() || IsIrqMasked()) {
+  if (IsException() || IsIrqMasked()) {
     EvrRtxMessageQueueError(NULL, (int32_t)osErrorISR);
     mq_id = NULL;
   } else {
@@ -832,7 +832,7 @@ osMessageQueueId_t osMessageQueueNew (uint32_t msg_count, uint32_t msg_size, con
 const char *osMessageQueueGetName (osMessageQueueId_t mq_id) {
   const char *name;
 
-  if (IsIrqMode() || IsIrqMasked()) {
+  if (IsException() || IsIrqMasked()) {
     EvrRtxMessageQueueGetName(mq_id, NULL);
     name = NULL;
   } else {
@@ -846,7 +846,7 @@ osStatus_t osMessageQueuePut (osMessageQueueId_t mq_id, const void *msg_ptr, uin
   osStatus_t status;
 
   EvrRtxMessageQueuePut(mq_id, msg_ptr, msg_prio, timeout);
-  if (IsIrqMode() || IsIrqMasked()) {
+  if (IsException() || IsIrqMasked()) {
     status = isrRtxMessageQueuePut(mq_id, msg_ptr, msg_prio, timeout);
   } else {
     status =  __svcMessageQueuePut(mq_id, msg_ptr, msg_prio, timeout);
@@ -859,7 +859,7 @@ osStatus_t osMessageQueueGet (osMessageQueueId_t mq_id, void *msg_ptr, uint8_t *
   osStatus_t status;
 
   EvrRtxMessageQueueGet(mq_id, msg_ptr, msg_prio, timeout);
-  if (IsIrqMode() || IsIrqMasked()) {
+  if (IsException() || IsIrqMasked()) {
     status = isrRtxMessageQueueGet(mq_id, msg_ptr, msg_prio, timeout);
   } else {
     status =  __svcMessageQueueGet(mq_id, msg_ptr, msg_prio, timeout);
@@ -871,7 +871,7 @@ osStatus_t osMessageQueueGet (osMessageQueueId_t mq_id, void *msg_ptr, uint8_t *
 uint32_t osMessageQueueGetCapacity (osMessageQueueId_t mq_id) {
   uint32_t capacity;
 
-  if (IsIrqMode() || IsIrqMasked()) {
+  if (IsException() || IsIrqMasked()) {
     capacity = svcRtxMessageQueueGetCapacity(mq_id);
   } else {
     capacity =  __svcMessageQueueGetCapacity(mq_id);
@@ -883,7 +883,7 @@ uint32_t osMessageQueueGetCapacity (osMessageQueueId_t mq_id) {
 uint32_t osMessageQueueGetMsgSize (osMessageQueueId_t mq_id) {
   uint32_t msg_size;
 
-  if (IsIrqMode() || IsIrqMasked()) {
+  if (IsException() || IsIrqMasked()) {
     msg_size = svcRtxMessageQueueGetMsgSize(mq_id);
   } else {
     msg_size =  __svcMessageQueueGetMsgSize(mq_id);
@@ -895,7 +895,7 @@ uint32_t osMessageQueueGetMsgSize (osMessageQueueId_t mq_id) {
 uint32_t osMessageQueueGetCount (osMessageQueueId_t mq_id) {
   uint32_t count;
 
-  if (IsIrqMode() || IsIrqMasked()) {
+  if (IsException() || IsIrqMasked()) {
     count = svcRtxMessageQueueGetCount(mq_id);
   } else {
     count =  __svcMessageQueueGetCount(mq_id);
@@ -907,7 +907,7 @@ uint32_t osMessageQueueGetCount (osMessageQueueId_t mq_id) {
 uint32_t osMessageQueueGetSpace (osMessageQueueId_t mq_id) {
   uint32_t space;
 
-  if (IsIrqMode() || IsIrqMasked()) {
+  if (IsException() || IsIrqMasked()) {
     space = svcRtxMessageQueueGetSpace(mq_id);
   } else {
     space =  __svcMessageQueueGetSpace(mq_id);
@@ -920,7 +920,7 @@ osStatus_t osMessageQueueReset (osMessageQueueId_t mq_id) {
   osStatus_t status;
 
   EvrRtxMessageQueueReset(mq_id);
-  if (IsIrqMode() || IsIrqMasked()) {
+  if (IsException() || IsIrqMasked()) {
     EvrRtxMessageQueueError(mq_id, (int32_t)osErrorISR);
     status = osErrorISR;
   } else {
@@ -934,7 +934,7 @@ osStatus_t osMessageQueueDelete (osMessageQueueId_t mq_id) {
   osStatus_t status;
 
   EvrRtxMessageQueueDelete(mq_id);
-  if (IsIrqMode() || IsIrqMasked()) {
+  if (IsException() || IsIrqMasked()) {
     EvrRtxMessageQueueError(mq_id, (int32_t)osErrorISR);
     status = osErrorISR;
   } else {

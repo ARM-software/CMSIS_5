@@ -381,7 +381,7 @@ osTimerId_t osTimerNew (osTimerFunc_t func, osTimerType_t type, void *argument, 
   osTimerId_t timer_id;
 
   EvrRtxTimerNew(func, type, argument, attr);
-  if (IsIrqMode() || IsIrqMasked()) {
+  if (IsException() || IsIrqMasked()) {
     EvrRtxTimerError(NULL, (int32_t)osErrorISR);
     timer_id = NULL;
   } else {
@@ -394,7 +394,7 @@ osTimerId_t osTimerNew (osTimerFunc_t func, osTimerType_t type, void *argument, 
 const char *osTimerGetName (osTimerId_t timer_id) {
   const char *name;
 
-  if (IsIrqMode() || IsIrqMasked()) {
+  if (IsException() || IsIrqMasked()) {
     EvrRtxTimerGetName(timer_id, NULL);
     name = NULL;
   } else {
@@ -408,7 +408,7 @@ osStatus_t osTimerStart (osTimerId_t timer_id, uint32_t ticks) {
   osStatus_t status;
 
   EvrRtxTimerStart(timer_id, ticks);
-  if (IsIrqMode() || IsIrqMasked()) {
+  if (IsException() || IsIrqMasked()) {
     EvrRtxTimerError(timer_id, (int32_t)osErrorISR);
     status = osErrorISR;
   } else {
@@ -422,7 +422,7 @@ osStatus_t osTimerStop (osTimerId_t timer_id) {
   osStatus_t status;
 
   EvrRtxTimerStop(timer_id);
-  if (IsIrqMode() || IsIrqMasked()) {
+  if (IsException() || IsIrqMasked()) {
     EvrRtxTimerError(timer_id, (int32_t)osErrorISR);
     status = osErrorISR;
   } else {
@@ -435,7 +435,7 @@ osStatus_t osTimerStop (osTimerId_t timer_id) {
 uint32_t osTimerIsRunning (osTimerId_t timer_id) {
   uint32_t is_running;
 
-  if (IsIrqMode() || IsIrqMasked()) {
+  if (IsException() || IsIrqMasked()) {
     EvrRtxTimerIsRunning(timer_id, 0U);
     is_running = 0U;
   } else {
@@ -449,7 +449,7 @@ osStatus_t osTimerDelete (osTimerId_t timer_id) {
   osStatus_t status;
 
   EvrRtxTimerDelete(timer_id);
-  if (IsIrqMode() || IsIrqMasked()) {
+  if (IsException() || IsIrqMasked()) {
     EvrRtxTimerError(timer_id, (int32_t)osErrorISR);
     status = osErrorISR;
   } else {
