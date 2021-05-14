@@ -1,5 +1,5 @@
 ;/*
-; * Copyright (c) 2013-2018 Arm Limited. All rights reserved.
+; * Copyright (c) 2013-2021 Arm Limited. All rights reserved.
 ; *
 ; * SPDX-License-Identifier: Apache-2.0
 ; *
@@ -18,35 +18,44 @@
 ; * -----------------------------------------------------------------------------
 ; *
 ; * Project:     CMSIS-RTOS RTX
-; * Title:       Cortex-M3 Exception handlers
+; * Title:       ARMv7-M Exception handlers
 ; *
 ; * -----------------------------------------------------------------------------
 ; */
 
 
+                NAME     irq_armv7m.s
+
+
+#ifdef __ARMVFP__
+FPU_USED        EQU      1
+#else
+FPU_USED        EQU      0
+#endif
+
 I_T_RUN_OFS     EQU      20                     ; osRtxInfo.thread.run offset
 TCB_SP_OFS      EQU      56                     ; TCB.SP offset
+TCB_SF_OFS      EQU      34                     ; TCB.stack_frame offset
+
+FPCCR           EQU      0xE000EF34             ; FPCCR Address
 
 
                 PRESERVE8
-                THUMB
+                SECTION .rodata:DATA:NOROOT(2)
 
 
-                AREA     |.constdata|, DATA, READONLY
                 EXPORT   irqRtxLib
 irqRtxLib       DCB      0                      ; Non weak library reference
 
 
-                AREA     |.text|, CODE, READONLY
+                THUMB
+                SECTION .text:CODE:NOROOT(2)
 
 
-SVC_Handler     PROC
+SVC_Handler
                 EXPORT   SVC_Handler
                 IMPORT   osRtxUserSVC
                 IMPORT   osRtxInfo
-                IF       :DEF:MPU_LOAD
-                IMPORT   osRtxMpuLoad
-                ENDIF
 
                 TST      LR,#0x04               ; Determine return stack from EXC_RETURN bit 2
                 ITE      EQ
@@ -64,34 +73,51 @@ SVC_Handler     PROC
                 STM      R12,{R0-R1}            ; Store function return values
 
 SVC_Context
-                LDR      R3,=osRtxInfo+I_T_RUN_OFS; Load address of osRtxInfo.run
+                LDR      R3,=osRtxInfo+I_T_RUN_OFS; Load address of osRtxInfo.thread.run
                 LDM      R3,{R1,R2}             ; Load osRtxInfo.thread.run: curr & next
                 CMP      R1,R2                  ; Check if thread switch is required
                 IT       EQ
                 BXEQ     LR                     ; Exit when threads are the same
 
+              #if (FPU_USED != 0)
+                CBNZ     R1,SVC_ContextSave     ; Branch if running thread is not deleted
+                TST      LR,#0x10               ; Determine stack frame from EXC_RETURN bit 4
+                BNE      SVC_ContextSwitch      ; Branch if not extended stack frame
+                LDR      R3,=FPCCR              ; FPCCR Address
+                LDR      R0,[R3]                ; Load FPCCR
+                BIC      R0,R0,#1               ; Clear LSPACT (Lazy state preservation)
+                STR      R0,[R3]                ; Store FPCCR
+                B        SVC_ContextSwitch      ; Branch to context switch handling
+              #else
                 CBZ      R1,SVC_ContextSwitch   ; Branch if running thread is deleted
+              #endif
 
 SVC_ContextSave
                 STMDB    R12!,{R4-R11}          ; Save R4..R11
+              #if (FPU_USED != 0)
+                TST      LR,#0x10               ; Determine stack frame from EXC_RETURN bit 4
+                IT       EQ                     ; If extended stack frame
+                VSTMDBEQ R12!,{S16-S31}         ;  Save VFP S16.S31
+                STRB     LR, [R1,#TCB_SF_OFS]   ; Store stack frame information
+              #endif
                 STR      R12,[R1,#TCB_SP_OFS]   ; Store SP
 
 SVC_ContextSwitch
                 STR      R2,[R3]                ; osRtxInfo.thread.run: curr = next
 
-                IF       :DEF:MPU_LOAD
-                PUSH     {R2,R3}                ; Save registers
-                MOV      R0,R2                  ; osRtxMpuLoad parameter
-                BL       osRtxMpuLoad           ; Load MPU for next thread
-                POP      {R2,R3}                ; Restore registers
-                ENDIF
-
 SVC_ContextRestore
                 LDR      R0,[R2,#TCB_SP_OFS]    ; Load SP
+              #if (FPU_USED != 0)
+                LDRB     R1,[R2,#TCB_SF_OFS]    ; Load stack frame information
+                ORN      LR,R1,#0xFF            ; Set EXC_RETURN
+                TST      LR,#0x10               ; Determine stack frame from EXC_RETURN bit 4
+                IT       EQ                     ; If extended stack frame
+                VLDMIAEQ R0!,{S16-S31}          ;  Restore VFP S16..S31
+              #else
+                MVN      LR,#~0xFFFFFFFD        ; Set EXC_RETURN value
+              #endif
                 LDMIA    R0!,{R4-R11}           ; Restore R4..R11
                 MSR      PSP,R0                 ; Set PSP
-
-                MVN      LR,#~0xFFFFFFFD        ; Set EXC_RETURN value
 
 SVC_Exit
                 BX       LR                     ; Exit from handler
@@ -111,36 +137,27 @@ SVC_User
 
                 BX       LR                     ; Return from handler
 
-                ALIGN
-                ENDP
 
-
-PendSV_Handler  PROC
+PendSV_Handler
                 EXPORT   PendSV_Handler
                 IMPORT   osRtxPendSV_Handler
 
                 PUSH     {R0,LR}                ; Save EXC_RETURN
                 BL       osRtxPendSV_Handler    ; Call osRtxPendSV_Handler
                 POP      {R0,LR}                ; Restore EXC_RETURN
-                MRS      R12,PSP
-                B        SVC_Context
-
-                ALIGN
-                ENDP
+                MRS      R12,PSP                ; Save PSP to R12
+                B        SVC_Context            ; Branch to context handling
 
 
-SysTick_Handler PROC
+SysTick_Handler
                 EXPORT   SysTick_Handler
                 IMPORT   osRtxTick_Handler
 
                 PUSH     {R0,LR}                ; Save EXC_RETURN
                 BL       osRtxTick_Handler      ; Call osRtxTick_Handler
                 POP      {R0,LR}                ; Restore EXC_RETURN
-                MRS      R12,PSP
-                B        SVC_Context
-
-                ALIGN
-                ENDP
+                MRS      R12,PSP                ; Save PSP to R12
+                B        SVC_Context            ; Branch to context handling
 
 
                 END

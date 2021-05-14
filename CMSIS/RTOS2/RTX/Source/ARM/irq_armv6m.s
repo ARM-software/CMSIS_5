@@ -1,5 +1,5 @@
 ;/*
-; * Copyright (c) 2013-2018 Arm Limited. All rights reserved.
+; * Copyright (c) 2013-2021 Arm Limited. All rights reserved.
 ; *
 ; * SPDX-License-Identifier: Apache-2.0
 ; *
@@ -18,13 +18,10 @@
 ; * -----------------------------------------------------------------------------
 ; *
 ; * Project:     CMSIS-RTOS RTX
-; * Title:       Cortex-M0 Exception handlers
+; * Title:       ARMv6-M Exception handlers
 ; *
 ; * -----------------------------------------------------------------------------
 ; */
-
-
-                NAME    irq_cm0.s
 
 
 I_T_RUN_OFS     EQU      20                     ; osRtxInfo.thread.run offset
@@ -32,21 +29,24 @@ TCB_SP_OFS      EQU      56                     ; TCB.SP offset
 
 
                 PRESERVE8
-                SECTION .rodata:DATA:NOROOT(2)
+                THUMB
 
 
+                AREA     |.constdata|, DATA, READONLY
                 EXPORT   irqRtxLib
 irqRtxLib       DCB      0                      ; Non weak library reference
 
 
-                THUMB
-                SECTION .text:CODE:NOROOT(2)
+                AREA     |.text|, CODE, READONLY
 
 
-SVC_Handler
+SVC_Handler     PROC
                 EXPORT   SVC_Handler
                 IMPORT   osRtxUserSVC
                 IMPORT   osRtxInfo
+              IF :DEF:MPU_LOAD
+                IMPORT   osRtxMpuLoad
+              ENDIF
 
                 MOV      R0,LR
                 LSRS     R0,R0,#3               ; Determine return stack from EXC_RETURN bit 2
@@ -57,7 +57,7 @@ SVC_Number
                 LDR      R1,[R0,#24]            ; Load saved PC from stack
                 SUBS     R1,R1,#2               ; Point to SVC instruction
                 LDRB     R1,[R1]                ; Load SVC number
-                CMP      R1,#0
+                CMP      R1,#0                  ; Check SVC number
                 BNE      SVC_User               ; Branch if not SVC 0
 
                 PUSH     {R0,LR}                ; Save SP and EXC_RETURN
@@ -68,7 +68,7 @@ SVC_Number
                 MOV      LR,R3                  ; Set EXC_RETURN
 
 SVC_Context
-                LDR      R3,=osRtxInfo+I_T_RUN_OFS; Load address of osRtxInfo.run
+                LDR      R3,=osRtxInfo+I_T_RUN_OFS; Load address of osRtxInfo.thread.run
                 LDMIA    R3!,{R1,R2}            ; Load osRtxInfo.thread.run: curr & next
                 CMP      R1,R2                  ; Check if thread switch is required
                 BEQ      SVC_Exit               ; Branch when threads are the same
@@ -78,7 +78,7 @@ SVC_Context
 
 SVC_ContextSave
                 MRS      R0,PSP                 ; Get PSP
-                SUBS     R0,R0,#32              ; Calculate SP
+                SUBS     R0,R0,#32              ; Calculate SP: space for R4..R11
                 STR      R0,[R1,#TCB_SP_OFS]    ; Store SP
                 STMIA    R0!,{R4-R7}            ; Save R4..R7
                 MOV      R4,R8
@@ -90,6 +90,13 @@ SVC_ContextSave
 SVC_ContextSwitch
                 SUBS     R3,R3,#8               ; Adjust address
                 STR      R2,[R3]                ; osRtxInfo.thread.run: curr = next
+
+              IF :DEF:MPU_LOAD
+                PUSH     {R2,R3}                ; Save registers
+                MOV      R0,R2                  ; osRtxMpuLoad parameter
+                BL       osRtxMpuLoad           ; Load MPU for next thread
+                POP      {R2,R3}                ; Restore registers
+              ENDIF
 
 SVC_ContextRestore
                 LDR      R0,[R2,#TCB_SP_OFS]    ; Load SP
@@ -103,7 +110,7 @@ SVC_ContextRestore
                 SUBS     R0,R0,#32              ; Adjust address
                 LDMIA    R0!,{R4-R7}            ; Restore R4..R7
 
-                MOVS     R0,#~0xFFFFFFFD
+                MOVS     R0,#2                  ; Binary complement of 0xFFFFFFFD
                 MVNS     R0,R0                  ; Set EXC_RETURN value
                 BX       R0                     ; Exit from handler
 
@@ -132,8 +139,11 @@ SVC_User
 
                 BX       LR                     ; Return from handler
 
+                ALIGN
+                ENDP
 
-PendSV_Handler
+
+PendSV_Handler  PROC
                 EXPORT   PendSV_Handler
                 IMPORT   osRtxPendSV_Handler
 
@@ -141,10 +151,13 @@ PendSV_Handler
                 BL       osRtxPendSV_Handler    ; Call osRtxPendSV_Handler
                 POP      {R0,R1}                ; Restore EXC_RETURN
                 MOV      LR,R1                  ; Set EXC_RETURN
-                B        SVC_Context
+                B        SVC_Context            ; Branch to context handling
+
+                ALIGN
+                ENDP
 
 
-SysTick_Handler
+SysTick_Handler PROC
                 EXPORT   SysTick_Handler
                 IMPORT   osRtxTick_Handler
 
@@ -152,7 +165,10 @@ SysTick_Handler
                 BL       osRtxTick_Handler      ; Call osRtxTick_Handler
                 POP      {R0,R1}                ; Restore EXC_RETURN
                 MOV      LR,R1                  ; Set EXC_RETURN
-                B        SVC_Context
+                B        SVC_Context            ; Branch to context handling
+
+                ALIGN
+                ENDP
 
 
                 END

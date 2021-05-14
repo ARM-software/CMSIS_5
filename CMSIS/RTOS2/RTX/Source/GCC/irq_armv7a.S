@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2018 Arm Limited. All rights reserved.
+ * Copyright (c) 2013-2021 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -18,7 +18,7 @@
  * -----------------------------------------------------------------------------
  *
  * Project:     CMSIS-RTOS RTX
- * Title:       Cortex-A Exception handlers
+ * Title:       ARMv7-A Exception handlers
  *
  * -----------------------------------------------------------------------------
  */
@@ -366,25 +366,25 @@ osRtxContextSave:
                 MRC     p15, 0, R2, c1, c0, 2       // VFP/NEON access enabled? (CPACR)
                 AND     R2, R2, #0x00F00000
                 CMP     R2, #0x00F00000
-                BNE     osRtxContextSave1           // Continue, no VFP
+                BNE     osRtxContextSaveSP          // Continue, no VFP
 
                 VMRS    R2, FPSCR
                 STMDB   R1!, {R2,R12}               // Push FPSCR, maintain 8-byte alignment
 
                 VSTMDB  R1!, {D0-D15}               // Save D0-D15
-                #if defined(__ARM_NEON) && (__ARM_NEON == 1)
+              #if defined(__ARM_NEON) && (__ARM_NEON == 1)
                 VSTMDB  R1!, {D16-D31}              // Save D16-D31
-                #endif
+              #endif
 
                 LDRB    R2, [LR, #TCB_SP_FRAME]     // Load osRtxInfo.thread.run.curr frame info
-                #if defined(__ARM_NEON) && (__ARM_NEON == 1)
+              #if defined(__ARM_NEON) && (__ARM_NEON == 1)
                 ORR     R2, R2, #4                  // NEON state
-                #else
+              #else
                 ORR     R2, R2, #2                  // VFP state
-                #endif
+              #endif
                 STRB    R2, [LR, #TCB_SP_FRAME]     // Store VFP/NEON state
 
-osRtxContextSave1:
+osRtxContextSaveSP:
                 STR     R1, [LR, #TCB_SP_OFS]       // Store user sp to osRtxInfo.thread.run.curr
 
 osRtxPostProcess:
@@ -431,17 +431,17 @@ osRtxContextRestore:
                 ANDEQ   R2, R2, #0xFF0FFFFF         // VFP/NEON state not stacked, disable VFP/NEON
                 ORRNE   R2, R2, #0x00F00000         // VFP/NEON state is stacked, enable VFP/NEON
                 MCR     p15, 0, R2, c1, c0, 2       // Write CPACR
-                BEQ     osRtxContextRestore1        // No VFP
+                BEQ     osRtxContextRestoreRegs     // No VFP
                 ISB                                 // Sync if VFP was enabled
-                #if defined(__ARM_NEON) && (__ARM_NEON == 1)
+              #if defined(__ARM_NEON) && (__ARM_NEON == 1)
                 VLDMIA  LR!, {D16-D31}              // Restore D16-D31
-                #endif
+              #endif
                 VLDMIA  LR!, {D0-D15}               // Restore D0-D15
                 LDR     R2, [LR]
                 VMSR    FPSCR, R2                   // Restore FPSCR
                 ADD     LR, LR, #8                  // Adjust sp pointer to R4
 
-osRtxContextRestore1:
+osRtxContextRestoreRegs:
                 LDMIA   LR!, {R4-R11}               // Restore R4-R11
                 ADD     R12, LR, #32                // Adjust sp and save it into R12
                 PUSH    {R12}                       // Push sp onto stack

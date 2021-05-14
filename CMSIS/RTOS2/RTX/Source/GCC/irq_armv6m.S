@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2018 Arm Limited. All rights reserved.
+ * Copyright (c) 2013-2021 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -18,7 +18,7 @@
  * -----------------------------------------------------------------------------
  *
  * Project:     CMSIS-RTOS RTX
- * Title:       Cortex-M0 Exception handlers
+ * Title:       ARMv6-M Exception handlers
  *
  * -----------------------------------------------------------------------------
  */
@@ -38,6 +38,7 @@ irqRtxLib:
         .thumb
         .section ".text"
         .align   2
+        .eabi_attribute Tag_ABI_align_preserved, 1
 
 
         .thumb_func
@@ -56,7 +57,7 @@ SVC_Number:
         LDR      R1,[R0,#24]            // Load saved PC from stack
         SUBS     R1,R1,#2               // Point to SVC instruction
         LDRB     R1,[R1]                // Load SVC number
-        CMP      R1,#0
+        CMP      R1,#0                  // Check SVC number
         BNE      SVC_User               // Branch if not SVC 0
 
         PUSH     {R0,LR}                // Save SP and EXC_RETURN
@@ -67,7 +68,7 @@ SVC_Number:
         MOV      LR,R3                  // Set EXC_RETURN
 
 SVC_Context:
-        LDR      R3,=osRtxInfo+I_T_RUN_OFS // Load address of osRtxInfo.run
+        LDR      R3,=osRtxInfo+I_T_RUN_OFS // Load address of osRtxInfo.thread.run
         LDMIA    R3!,{R1,R2}            // Load osRtxInfo.thread.run: curr & next
         CMP      R1,R2                  // Check if thread switch is required
         BEQ      SVC_Exit               // Branch when threads are the same
@@ -102,7 +103,7 @@ SVC_ContextRestore:
         SUBS     R0,R0,#32              // Adjust address
         LDMIA    R0!,{R4-R7}            // Restore R4..R7
 
-        MOVS     R0,#~0xFFFFFFFD
+        MOVS     R0,#2                  // Binary complement of 0xFFFFFFFD
         MVNS     R0,R0                  // Set EXC_RETURN value
         BX       R0                     // Exit from handler
 
@@ -146,7 +147,7 @@ PendSV_Handler:
         BL       osRtxPendSV_Handler    // Call osRtxPendSV_Handler
         POP      {R0,R1}                // Restore EXC_RETURN
         MOV      LR,R1                  // Set EXC_RETURN
-        B        SVC_Context
+        B        SVC_Context            // Branch to context handling
 
         .fnend
         .size    PendSV_Handler, .-PendSV_Handler
@@ -163,7 +164,7 @@ SysTick_Handler:
         BL       osRtxTick_Handler      // Call osRtxTick_Handler
         POP      {R0,R1}                // Restore EXC_RETURN
         MOV      LR,R1                  // Set EXC_RETURN
-        B        SVC_Context
+        B        SVC_Context            // Branch to context handling
 
         .fnend
         .size    SysTick_Handler, .-SysTick_Handler
