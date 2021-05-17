@@ -1082,6 +1082,19 @@ static osStatus_t svcRtxThreadResume (osThreadId_t thread_id) {
   return osOK;
 }
 
+/// Wakeup a thread waiting to join.
+/// \param[in]  thread          thread object.
+static void osRtxThreadJoinWakeup (os_thread_t *thread) {
+
+  if (thread->thread_join != NULL) {
+    osRtxThreadWaitExit(thread->thread_join, (uint32_t)osOK, FALSE);
+    EvrRtxThreadJoined(thread->thread_join);
+  }
+  if (thread->state == osRtxThreadWaitingJoin) {
+    thread->thread_next->thread_join = NULL;
+  }
+}
+
 /// Free Thread resources.
 /// \param[in]  thread          thread object.
 static void osRtxThreadFree (os_thread_t *thread) {
@@ -1173,6 +1186,7 @@ static osStatus_t svcRtxThreadDetach (osThreadId_t thread_id) {
 /// \note API identical to osThreadJoin
 static osStatus_t svcRtxThreadJoin (osThreadId_t thread_id) {
   os_thread_t *thread = osRtxThreadId(thread_id);
+  os_thread_t *thread_running;
   osStatus_t   status;
 
   // Check parameters
@@ -1204,7 +1218,9 @@ static osStatus_t svcRtxThreadJoin (osThreadId_t thread_id) {
   } else {
     // Suspend current Thread
     if (osRtxThreadWaitEnter(osRtxThreadWaitingJoin, osWaitForever)) {
-      thread->thread_join = osRtxThreadGetRunning();
+      thread_running = osRtxThreadGetRunning();
+      thread_running->thread_next = thread;
+      thread->thread_join = thread_running;
       thread->attr &= ~osThreadJoinable;
       EvrRtxThreadJoinPending(thread);
     } else {
@@ -1235,10 +1251,7 @@ static void svcRtxThreadExit (void) {
   osRtxMutexOwnerRelease(thread->mutex_list);
 
   // Wakeup Thread waiting to Join
-  if (thread->thread_join != NULL) {
-    osRtxThreadWaitExit(thread->thread_join, (uint32_t)osOK, FALSE);
-    EvrRtxThreadJoined(thread->thread_join);
-  }
+  osRtxThreadJoinWakeup(thread);
 
   // Switch to next Ready Thread
   osRtxThreadSwitch(osRtxThreadListGet(&osRtxInfo.thread.ready));
@@ -1306,10 +1319,7 @@ static osStatus_t svcRtxThreadTerminate (osThreadId_t thread_id) {
     osRtxMutexOwnerRelease(thread->mutex_list);
 
     // Wakeup Thread waiting to Join
-    if (thread->thread_join != NULL) {
-      osRtxThreadWaitExit(thread->thread_join, (uint32_t)osOK, FALSE);
-      EvrRtxThreadJoined(thread->thread_join);
-    }
+    osRtxThreadJoinWakeup(thread);
 
     // Switch to next Ready Thread when terminating running Thread
     if (thread->state == osRtxThreadRunning) {

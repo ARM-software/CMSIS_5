@@ -91,8 +91,8 @@
       </member>
       <member name="flags"         type="uint8_t"        offset="2" info="Object Flags"/>
       <member name="attr"          type="uint8_t"        offset="3" info="Object Attributes">
-        <enum name="osThreadDetached" value="0x00" info="Thread created in detached state"/>
-        <enum name="osThreadJoinable" value="0x01" info="Thread created in joinable state"/>
+        <enum name="osThreadDetached" value="0x00" info="Thread created in detached mode"/>
+        <enum name="osThreadJoinable" value="0x01" info="Thread created in joinable mode"/>
       </member>
       <member name="name"          type="uint32_t"       offset="4"  info="Object name (type is *uint8_t)"/>
       <member name="thread_next"   type="*osRtxThread_t" offset="8"  info="Link pointer to next Thread in Object list"/>
@@ -1177,6 +1177,9 @@
               <item>
                 <print property="Waiting" value="%E[TCB[i].state], Timeout: %d[TCB[i].ex_delay]" cond="((TCB[i].state &amp; 0x07) == 3) &amp;&amp; (TCB[i].ex_delay != -1)"/>
                 <print property="Waiting" value="%E[TCB[i].state], Timeout: osWaitForever"       cond="((TCB[i].state &amp; 0x07) == 3) &amp;&amp; (TCB[i].ex_delay == -1)"/>
+                <!-- Wait Join -->
+                <item cond="TCB[i].state == 0x23" property="id: %x[TCB[i].thread_join]" value=""/>
+
                 <!-- Wait Thread Flags -->
                 <item cond="TCB[i].state == 0x33" property="id: %x[TCB[i].thread_prev]" value=""/>
 
