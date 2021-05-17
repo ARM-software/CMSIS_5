@@ -3317,17 +3317,17 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv8mml.S"    condition="ARMv8MML_GCC"/>
         <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv8mml.S"    condition="ARMv8MML_FP_GCC"/>
         <!-- RTX sources (IAR handlers) -->
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_armv8mbl_ns.s" condition="CM23_IAR"/>
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_armv8mml_ns.s" condition="CM33_IAR"/>
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_armv8mml_ns.s" condition="CM33_FP_IAR"/>
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_armv8mml_ns.s" condition="CM35P_IAR"/>
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_armv8mml_ns.s" condition="CM35P_FP_IAR"/>
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_armv8mml_ns.s" condition="CM55_NOFPU_NOMVE_IAR"/>
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_armv8mml_ns.s" condition="CM55_NOFPU_MVE_IAR"/>
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_armv8mml_ns.s" condition="CM55_FPU_IAR"/>
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_armv8mbl_ns.s" condition="ARMv8MBL_IAR"/>
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_armv8mml_ns.s" condition="ARMv8MML_IAR"/>
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_armv8mml_ns.s" condition="ARMv8MML_FP_IAR"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_armv8mbl.s" condition="CM23_IAR"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_armv8mml.s" condition="CM33_IAR"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_armv8mml.s" condition="CM33_FP_IAR"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_armv8mml.s" condition="CM35P_IAR"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_armv8mml.s" condition="CM35P_FP_IAR"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_armv8mml.s" condition="CM55_NOFPU_NOMVE_IAR"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_armv8mml.s" condition="CM55_NOFPU_MVE_IAR"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_armv8mml.s" condition="CM55_FPU_IAR"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_armv8mbl.s" condition="ARMv8MBL_IAR"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_armv8mml.s" condition="ARMv8MML_IAR"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_armv8mml.s" condition="ARMv8MML_FP_IAR"/>
         <!-- OS Tick (SysTick) -->
         <file category="source" name="CMSIS/RTOS2/Source/os_systick.c"/>
       </files>
