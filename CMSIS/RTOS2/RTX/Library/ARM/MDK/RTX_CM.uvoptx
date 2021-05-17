@@ -10,7 +10,7 @@
     <aExt>*.s*; *.src; *.a*</aExt>
     <oExt>*.obj; *.o</oExt>
     <lExt>*.lib</lExt>
-    <tExt>*.txt; *.h; *.inc</tExt>
+    <tExt>*.txt; *.h; *.inc; *.md</tExt>
     <pExt>*.plm</pExt>
     <CppX>*.cpp</CppX>
     <nMigrate>0</nMigrate>
@@ -160,21 +160,21 @@
       <LntExFlags>63</LntExFlags>
       <pMisraName>.\Lint\MISRA_C_2012_Config.lnt</pMisraName>
       <pszMrule>MISRA_C_2012_Config</pszMrule>
-      <pSingCmds>+rw(__restrict)
--esym(526,__builtin_*)
+      <pSingCmds>-esym(526,__builtin_*)
 -esym(628,__builtin_*)
--sem(__builtin_clz, pure)
--ecall(534,__disable_irq)
+-esym(718,__builtin_*)
+-esym(746,__builtin_*)
+-sem(__CLZ, pure)
 +doffsetof(t,m)=((size_t)&amp;((t*)0)-&gt;m)
 -emacro((413,923,9078),offsetof)
 -emacro(835,osRtxConfigPrivilegedMode)
 --uEVR_RTX_DISABLE
 </pSingCmds>
-      <pMultCmds>+rw(__restrict)
--esym(526,__builtin_*)
+      <pMultCmds>-esym(526,__builtin_*)
 -esym(628,__builtin_*)
--sem(__builtin_clz, pure)
--ecall(534,__disable_irq)
+-esym(718,__builtin_*)
+-esym(746,__builtin_*)
+-sem(__CLZ, pure)
 +doffsetof(t,m)=((size_t)&amp;((t*)0)-&gt;m)
 -emacro((413,923,9078),offsetof)
 -emacro(835,osRtxConfigPrivilegedMode)
@@ -326,21 +326,21 @@
       <LntExFlags>63</LntExFlags>
       <pMisraName>.\Lint\MISRA_C_2012_Config.lnt</pMisraName>
       <pszMrule>MISRA_C_2012_Config</pszMrule>
-      <pSingCmds>+rw(__restrict)
--esym(526,__builtin_*)
+      <pSingCmds>-esym(526,__builtin_*)
 -esym(628,__builtin_*)
--sem(__builtin_clz, pure)
--ecall(534,__disable_irq)
+-esym(718,__builtin_*)
+-esym(746,__builtin_*)
+-sem(__CLZ, pure)
 +doffsetof(t,m)=((size_t)&amp;((t*)0)-&gt;m)
 -emacro((413,923,9078),offsetof)
 -emacro(835,osRtxConfigPrivilegedMode)
 --uEVR_RTX_DISABLE
 </pSingCmds>
-      <pMultCmds>+rw(__restrict)
--esym(526,__builtin_*)
+      <pMultCmds>-esym(526,__builtin_*)
 -esym(628,__builtin_*)
--sem(__builtin_clz, pure)
--ecall(534,__disable_irq)
+-esym(718,__builtin_*)
+-esym(746,__builtin_*)
+-sem(__CLZ, pure)
 +doffsetof(t,m)=((size_t)&amp;((t*)0)-&gt;m)
 -emacro((413,923,9078),offsetof)
 -emacro(835,osRtxConfigPrivilegedMode)
@@ -492,21 +492,21 @@
       <LntExFlags>63</LntExFlags>
       <pMisraName>.\Lint\MISRA_C_2012_Config.lnt</pMisraName>
       <pszMrule>MISRA_C_2012_Config</pszMrule>
-      <pSingCmds>+rw(__restrict)
--esym(526,__builtin_*)
+      <pSingCmds>-esym(526,__builtin_*)
 -esym(628,__builtin_*)
--sem(__builtin_clz, pure)
--ecall(534,__disable_irq)
+-esym(718,__builtin_*)
+-esym(746,__builtin_*)
+-sem(__CLZ, pure)
 +doffsetof(t,m)=((size_t)&amp;((t*)0)-&gt;m)
 -emacro((413,923,9078),offsetof)
 -emacro(835,osRtxConfigPrivilegedMode)
 --uEVR_RTX_DISABLE
 </pSingCmds>
-      <pMultCmds>+rw(__restrict)
--esym(526,__builtin_*)
+      <pMultCmds>-esym(526,__builtin_*)
 -esym(628,__builtin_*)
--sem(__builtin_clz, pure)
--ecall(534,__disable_irq)
+-esym(718,__builtin_*)
+-esym(746,__builtin_*)
+-sem(__CLZ, pure)
 +doffsetof(t,m)=((size_t)&amp;((t*)0)-&gt;m)
 -emacro((413,923,9078),offsetof)
 -emacro(835,osRtxConfigPrivilegedMode)
@@ -663,21 +663,21 @@
       <LntExFlags>63</LntExFlags>
       <pMisraName>.\Lint\MISRA_C_2012_Config.lnt</pMisraName>
       <pszMrule>MISRA_C_2012_Config</pszMrule>
-      <pSingCmds>+rw(__restrict)
--esym(526,__builtin_*)
+      <pSingCmds>-esym(526,__builtin_*)
 -esym(628,__builtin_*)
--sem(__builtin_clz, pure)
--ecall(534,__disable_irq)
+-esym(718,__builtin_*)
+-esym(746,__builtin_*)
+-sem(__CLZ, pure)
 +doffsetof(t,m)=((size_t)&amp;((t*)0)-&gt;m)
 -emacro((413,923,9078),offsetof)
 -emacro(835,osRtxConfigPrivilegedMode)
 --uEVR_RTX_DISABLE
 </pSingCmds>
-      <pMultCmds>+rw(__restrict)
--esym(526,__builtin_*)
+      <pMultCmds>-esym(526,__builtin_*)
 -esym(628,__builtin_*)
--sem(__builtin_clz, pure)
--ecall(534,__disable_irq)
+-esym(718,__builtin_*)
+-esym(746,__builtin_*)
+-sem(__CLZ, pure)
 +doffsetof(t,m)=((size_t)&amp;((t*)0)-&gt;m)
 -emacro((413,923,9078),offsetof)
 -emacro(835,osRtxConfigPrivilegedMode)
@@ -834,21 +834,21 @@
       <LntExFlags>63</LntExFlags>
       <pMisraName>.\Lint\MISRA_C_2012_Config.lnt</pMisraName>
       <pszMrule>MISRA_C_2012_Config</pszMrule>
-      <pSingCmds>+rw(__restrict)
--esym(526,__builtin_*)
+      <pSingCmds>-esym(526,__builtin_*)
 -esym(628,__builtin_*)
--sem(__builtin_clz, pure)
--ecall(534,__disable_irq)
+-esym(718,__builtin_*)
+-esym(746,__builtin_*)
+-sem(__CLZ, pure)
 +doffsetof(t,m)=((size_t)&amp;((t*)0)-&gt;m)
 -emacro((413,923,9078),offsetof)
 -emacro(835,osRtxConfigPrivilegedMode)
 --uEVR_RTX_DISABLE
 </pSingCmds>
-      <pMultCmds>+rw(__restrict)
--esym(526,__builtin_*)
+      <pMultCmds>-esym(526,__builtin_*)
 -esym(628,__builtin_*)
--sem(__builtin_clz, pure)
--ecall(534,__disable_irq)
+-esym(718,__builtin_*)
+-esym(746,__builtin_*)
+-sem(__CLZ, pure)
 +doffsetof(t,m)=((size_t)&amp;((t*)0)-&gt;m)
 -emacro((413,923,9078),offsetof)
 -emacro(835,osRtxConfigPrivilegedMode)
@@ -1005,21 +1005,21 @@
       <LntExFlags>63</LntExFlags>
       <pMisraName>.\Lint\MISRA_C_2012_Config.lnt</pMisraName>
       <pszMrule>MISRA_C_2012_Config</pszMrule>
-      <pSingCmds>+rw(__restrict)
--esym(526,__builtin_*)
+      <pSingCmds>-esym(526,__builtin_*)
 -esym(628,__builtin_*)
--sem(__builtin_clz, pure)
--ecall(534,__disable_irq)
+-esym(718,__builtin_*)
+-esym(746,__builtin_*)
+-sem(__CLZ, pure)
 +doffsetof(t,m)=((size_t)&amp;((t*)0)-&gt;m)
 -emacro((413,923,9078),offsetof)
 -emacro(835,osRtxConfigPrivilegedMode)
 --uEVR_RTX_DISABLE
 </pSingCmds>
-      <pMultCmds>+rw(__restrict)
--esym(526,__builtin_*)
+      <pMultCmds>-esym(526,__builtin_*)
 -esym(628,__builtin_*)
--sem(__builtin_clz, pure)
--ecall(534,__disable_irq)
+-esym(718,__builtin_*)
+-esym(746,__builtin_*)
+-sem(__CLZ, pure)
 +doffsetof(t,m)=((size_t)&amp;((t*)0)-&gt;m)
 -emacro((413,923,9078),offsetof)
 -emacro(835,osRtxConfigPrivilegedMode)
@@ -1176,21 +1176,21 @@
       <LntExFlags>63</LntExFlags>
       <pMisraName>.\Lint\MISRA_C_2012_Config.lnt</pMisraName>
       <pszMrule>MISRA_C_2012_Config</pszMrule>
-      <pSingCmds>+rw(__restrict)
--esym(526,__builtin_*)
+      <pSingCmds>-esym(526,__builtin_*)
 -esym(628,__builtin_*)
--sem(__builtin_clz, pure)
--ecall(534,__disable_irq)
+-esym(718,__builtin_*)
+-esym(746,__builtin_*)
+-sem(__CLZ, pure)
 +doffsetof(t,m)=((size_t)&amp;((t*)0)-&gt;m)
 -emacro((413,923,9078),offsetof)
 -emacro(835,osRtxConfigPrivilegedMode)
 --uEVR_RTX_DISABLE
 </pSingCmds>
-      <pMultCmds>+rw(__restrict)
--esym(526,__builtin_*)
+      <pMultCmds>-esym(526,__builtin_*)
 -esym(628,__builtin_*)
--sem(__builtin_clz, pure)
--ecall(534,__disable_irq)
+-esym(718,__builtin_*)
+-esym(746,__builtin_*)
+-sem(__CLZ, pure)
 +doffsetof(t,m)=((size_t)&amp;((t*)0)-&gt;m)
 -emacro((413,923,9078),offsetof)
 -emacro(835,osRtxConfigPrivilegedMode)
@@ -1347,21 +1347,21 @@
       <LntExFlags>63</LntExFlags>
       <pMisraName>.\Lint\MISRA_C_2012_Config.lnt</pMisraName>
       <pszMrule>MISRA_C_2012_Config</pszMrule>
-      <pSingCmds>+rw(__restrict)
--esym(526,__builtin_*)
+      <pSingCmds>-esym(526,__builtin_*)
 -esym(628,__builtin_*)
--sem(__builtin_clz, pure)
--ecall(534,__disable_irq)
+-esym(718,__builtin_*)
+-esym(746,__builtin_*)
+-sem(__CLZ, pure)
 +doffsetof(t,m)=((size_t)&amp;((t*)0)-&gt;m)
 -emacro((413,923,9078),offsetof)
 -emacro(835,osRtxConfigPrivilegedMode)
 --uEVR_RTX_DISABLE
 </pSingCmds>
-      <pMultCmds>+rw(__restrict)
--esym(526,__builtin_*)
+      <pMultCmds>-esym(526,__builtin_*)
 -esym(628,__builtin_*)
--sem(__builtin_clz, pure)
--ecall(534,__disable_irq)
+-esym(718,__builtin_*)
+-esym(746,__builtin_*)
+-sem(__CLZ, pure)
 +doffsetof(t,m)=((size_t)&amp;((t*)0)-&gt;m)
 -emacro((413,923,9078),offsetof)
 -emacro(835,osRtxConfigPrivilegedMode)
@@ -1518,21 +1518,21 @@
       <LntExFlags>63</LntExFlags>
       <pMisraName>.\Lint\MISRA_C_2012_Config.lnt</pMisraName>
       <pszMrule>MISRA_C_2012_Config</pszMrule>
-      <pSingCmds>+rw(__restrict)
--esym(526,__builtin_*)
+      <pSingCmds>-esym(526,__builtin_*)
 -esym(628,__builtin_*)
--sem(__builtin_clz, pure)
--ecall(534,__disable_irq)
+-esym(718,__builtin_*)
+-esym(746,__builtin_*)
+-sem(__CLZ, pure)
 +doffsetof(t,m)=((size_t)&amp;((t*)0)-&gt;m)
 -emacro((413,923,9078),offsetof)
 -emacro(835,osRtxConfigPrivilegedMode)
 --uEVR_RTX_DISABLE
 </pSingCmds>
-      <pMultCmds>+rw(__restrict)
--esym(526,__builtin_*)
+      <pMultCmds>-esym(526,__builtin_*)
 -esym(628,__builtin_*)
--sem(__builtin_clz, pure)
--ecall(534,__disable_irq)
+-esym(718,__builtin_*)
+-esym(746,__builtin_*)
+-sem(__CLZ, pure)
 +doffsetof(t,m)=((size_t)&amp;((t*)0)-&gt;m)
 -emacro((413,923,9078),offsetof)
 -emacro(835,osRtxConfigPrivilegedMode)
@@ -1546,7 +1546,7 @@
   </Target>
 
   <Group>
-    <GroupName>Core</GroupName>
+    <GroupName>Configuration</GroupName>
     <tvExp>1</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
@@ -1554,6 +1554,26 @@
     <File>
       <GroupNumber>1</GroupNumber>
       <FileNumber>1</FileNumber>
+      <FileType>5</FileType>
+      <tvExp>0</tvExp>
+      <tvExpOptDlg>0</tvExpOptDlg>
+      <bDave2>0</bDave2>
+      <PathWithFileName>..\..\RTX_Config.h</PathWithFileName>
+      <FilenameWithoutPath>RTX_Config.h</FilenameWithoutPath>
+      <RteFlg>0</RteFlg>
+      <bShared>0</bShared>
+    </File>
+  </Group>
+
+  <Group>
+    <GroupName>Core</GroupName>
+    <tvExp>1</tvExp>
+    <tvExpOptDlg>0</tvExpOptDlg>
+    <cbSel>0</cbSel>
+    <RteFlg>0</RteFlg>
+    <File>
+      <GroupNumber>2</GroupNumber>
+      <FileNumber>2</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -1564,8 +1584,8 @@
       <bShared>0</bShared>
     </File>
     <File>
-      <GroupNumber>1</GroupNumber>
-      <FileNumber>2</FileNumber>
+      <GroupNumber>2</GroupNumber>
+      <FileNumber>3</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -1576,8 +1596,8 @@
       <bShared>0</bShared>
     </File>
     <File>
-      <GroupNumber>1</GroupNumber>
-      <FileNumber>3</FileNumber>
+      <GroupNumber>2</GroupNumber>
+      <FileNumber>4</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -1588,8 +1608,8 @@
       <bShared>0</bShared>
     </File>
     <File>
-      <GroupNumber>1</GroupNumber>
-      <FileNumber>4</FileNumber>
+      <GroupNumber>2</GroupNumber>
+      <FileNumber>5</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -1600,8 +1620,8 @@
       <bShared>0</bShared>
     </File>
     <File>
-      <GroupNumber>1</GroupNumber>
-      <FileNumber>5</FileNumber>
+      <GroupNumber>2</GroupNumber>
+      <FileNumber>6</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -1612,8 +1632,8 @@
       <bShared>0</bShared>
     </File>
     <File>
-      <GroupNumber>1</GroupNumber>
-      <FileNumber>6</FileNumber>
+      <GroupNumber>2</GroupNumber>
+      <FileNumber>7</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -1624,8 +1644,8 @@
       <bShared>0</bShared>
     </File>
     <File>
-      <GroupNumber>1</GroupNumber>
-      <FileNumber>7</FileNumber>
+      <GroupNumber>2</GroupNumber>
+      <FileNumber>8</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -1636,8 +1656,8 @@
       <bShared>0</bShared>
     </File>
     <File>
-      <GroupNumber>1</GroupNumber>
-      <FileNumber>8</FileNumber>
+      <GroupNumber>2</GroupNumber>
+      <FileNumber>9</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -1648,8 +1668,8 @@
       <bShared>0</bShared>
     </File>
     <File>
-      <GroupNumber>1</GroupNumber>
-      <FileNumber>9</FileNumber>
+      <GroupNumber>2</GroupNumber>
+      <FileNumber>10</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -1660,8 +1680,8 @@
       <bShared>0</bShared>
     </File>
     <File>
-      <GroupNumber>1</GroupNumber>
-      <FileNumber>10</FileNumber>
+      <GroupNumber>2</GroupNumber>
+      <FileNumber>11</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -1672,8 +1692,8 @@
       <bShared>0</bShared>
     </File>
     <File>
-      <GroupNumber>1</GroupNumber>
-      <FileNumber>11</FileNumber>
+      <GroupNumber>2</GroupNumber>
+      <FileNumber>12</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -1684,8 +1704,8 @@
       <bShared>0</bShared>
     </File>
     <File>
-      <GroupNumber>1</GroupNumber>
-      <FileNumber>12</FileNumber>
+      <GroupNumber>2</GroupNumber>
+      <FileNumber>13</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -1696,8 +1716,8 @@
       <bShared>0</bShared>
     </File>
     <File>
-      <GroupNumber>1</GroupNumber>
-      <FileNumber>13</FileNumber>
+      <GroupNumber>2</GroupNumber>
+      <FileNumber>14</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -1716,62 +1736,50 @@
     <cbSel>0</cbSel>
     <RteFlg>0</RteFlg>
     <File>
-      <GroupNumber>2</GroupNumber>
-      <FileNumber>14</FileNumber>
-      <FileType>2</FileType>
-      <tvExp>0</tvExp>
-      <tvExpOptDlg>0</tvExpOptDlg>
-      <bDave2>0</bDave2>
-      <PathWithFileName>..\..\..\Source\ARM\irq_cm0.s</PathWithFileName>
-      <FilenameWithoutPath>irq_cm0.s</FilenameWithoutPath>
-      <RteFlg>0</RteFlg>
-      <bShared>0</bShared>
-    </File>
-    <File>
-      <GroupNumber>2</GroupNumber>
+      <GroupNumber>3</GroupNumber>
       <FileNumber>15</FileNumber>
       <FileType>2</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\..\Source\ARM\irq_cm3.s</PathWithFileName>
-      <FilenameWithoutPath>irq_cm3.s</FilenameWithoutPath>
+      <PathWithFileName>..\..\..\Source\GCC\irq_armv6m.S</PathWithFileName>
+      <FilenameWithoutPath>irq_armv6m.S</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
     <File>
-      <GroupNumber>2</GroupNumber>
+      <GroupNumber>3</GroupNumber>
       <FileNumber>16</FileNumber>
       <FileType>2</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\..\Source\ARM\irq_cm4f.s</PathWithFileName>
-      <FilenameWithoutPath>irq_cm4f.s</FilenameWithoutPath>
+      <PathWithFileName>..\..\..\Source\GCC\irq_armv7m.S</PathWithFileName>
+      <FilenameWithoutPath>irq_armv7m.S</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
     <File>
-      <GroupNumber>2</GroupNumber>
+      <GroupNumber>3</GroupNumber>
       <FileNumber>17</FileNumber>
       <FileType>2</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\..\Source\ARM\irq_armv8mbl.s</PathWithFileName>
-      <FilenameWithoutPath>irq_armv8mbl.s</FilenameWithoutPath>
+      <PathWithFileName>..\..\..\Source\GCC\irq_armv8mbl.S</PathWithFileName>
+      <FilenameWithoutPath>irq_armv8mbl.S</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
     <File>
-      <GroupNumber>2</GroupNumber>
+      <GroupNumber>3</GroupNumber>
       <FileNumber>18</FileNumber>
       <FileType>2</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\..\Source\ARM\irq_armv8mml.s</PathWithFileName>
-      <FilenameWithoutPath>irq_armv8mml.s</FilenameWithoutPath>
+      <PathWithFileName>..\..\..\Source\GCC\irq_armv8mml.S</PathWithFileName>
+      <FilenameWithoutPath>irq_armv8mml.S</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>

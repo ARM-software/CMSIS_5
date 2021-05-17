@@ -10,7 +10,7 @@
       <TargetName>CM0_LE</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pCCUsed>6130001::V6.13.1::.\ARMCLANG</pCCUsed>
+      <pCCUsed>6160000::V6.16::ARMCLANG</pCCUsed>
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
@@ -185,6 +185,7 @@
             <uocXRam>0</uocXRam>
             <RvdsVP>0</RvdsVP>
             <RvdsMve>0</RvdsMve>
+            <RvdsCdeCp>0</RvdsCdeCp>
             <hadIRAM2>0</hadIRAM2>
             <hadIROM2>0</hadIROM2>
             <StupSel>8</StupSel>
@@ -338,7 +339,7 @@
               <MiscControls></MiscControls>
               <Define>EVR_RTX_DISABLE</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\Config;..\..\..\Include;..\..\..\..\Include</IncludePath>
+              <IncludePath>..\..\..\Library;..\..\..\Include;..\..\..\..\Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -351,12 +352,12 @@
             <NoWarn>0</NoWarn>
             <uSurpInc>0</uSurpInc>
             <useXO>0</useXO>
-            <uClangAs>0</uClangAs>
+            <ClangAsOpt>1</ClangAsOpt>
             <VariousControls>
-              <MiscControls>--no_hide_all</MiscControls>
+              <MiscControls></MiscControls>
               <Define></Define>
               <Undefine></Undefine>
-              <IncludePath></IncludePath>
+              <IncludePath>.;..\..\..\Library;..\..\..\Include</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -379,6 +380,16 @@
         </TargetArmAds>
       </TargetOption>
       <Groups>
+        <Group>
+          <GroupName>Configuration</GroupName>
+          <Files>
+            <File>
+              <FileName>RTX_Config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\RTX_Config.h</FilePath>
+            </File>
+          </Files>
+        </Group>
         <Group>
           <GroupName>Core</GroupName>
           <Files>
@@ -453,14 +464,14 @@
           <GroupName>Handlers</GroupName>
           <Files>
             <File>
-              <FileName>irq_cm0.s</FileName>
+              <FileName>irq_armv6m.S</FileName>
               <FileType>2</FileType>
-              <FilePath>..\..\..\Source\ARM\irq_cm0.s</FilePath>
+              <FilePath>..\..\..\Source\GCC\irq_armv6m.S</FilePath>
             </File>
             <File>
-              <FileName>irq_cm3.s</FileName>
+              <FileName>irq_armv7m.S</FileName>
               <FileType>2</FileType>
-              <FilePath>..\..\..\Source\ARM\irq_cm3.s</FilePath>
+              <FilePath>..\..\..\Source\GCC\irq_armv7m.S</FilePath>
               <FileOption>
                 <CommonProperty>
                   <UseCPPCompiler>2</UseCPPCompiler>
@@ -489,7 +500,7 @@
                     <NoWarn>2</NoWarn>
                     <uSurpInc>2</uSurpInc>
                     <useXO>2</useXO>
-                    <uClangAs>2</uClangAs>
+                    <ClangAsOpt>0</ClangAsOpt>
                     <VariousControls>
                       <MiscControls></MiscControls>
                       <Define></Define>
@@ -501,9 +512,9 @@
               </FileOption>
             </File>
             <File>
-              <FileName>irq_cm4f.s</FileName>
+              <FileName>irq_armv8mbl.S</FileName>
               <FileType>2</FileType>
-              <FilePath>..\..\..\Source\ARM\irq_cm4f.s</FilePath>
+              <FilePath>..\..\..\Source\GCC\irq_armv8mbl.S</FilePath>
               <FileOption>
                 <CommonProperty>
                   <UseCPPCompiler>2</UseCPPCompiler>
@@ -532,7 +543,7 @@
                     <NoWarn>2</NoWarn>
                     <uSurpInc>2</uSurpInc>
                     <useXO>2</useXO>
-                    <uClangAs>2</uClangAs>
+                    <ClangAsOpt>0</ClangAsOpt>
                     <VariousControls>
                       <MiscControls></MiscControls>
                       <Define></Define>
@@ -544,9 +555,9 @@
               </FileOption>
             </File>
             <File>
-              <FileName>irq_armv8mbl.s</FileName>
+              <FileName>irq_armv8mml.S</FileName>
               <FileType>2</FileType>
-              <FilePath>..\..\..\Source\ARM\irq_armv8mbl.s</FilePath>
+              <FilePath>..\..\..\Source\GCC\irq_armv8mml.S</FilePath>
               <FileOption>
                 <CommonProperty>
                   <UseCPPCompiler>2</UseCPPCompiler>
@@ -575,50 +586,7 @@
                     <NoWarn>2</NoWarn>
                     <uSurpInc>2</uSurpInc>
                     <useXO>2</useXO>
-                    <uClangAs>2</uClangAs>
-                    <VariousControls>
-                      <MiscControls></MiscControls>
-                      <Define></Define>
-                      <Undefine></Undefine>
-                      <IncludePath></IncludePath>
-                    </VariousControls>
-                  </Aads>
-                </FileArmAds>
-              </FileOption>
-            </File>
-            <File>
-              <FileName>irq_armv8mml.s</FileName>
-              <FileType>2</FileType>
-              <FilePath>..\..\..\Source\ARM\irq_armv8mml.s</FilePath>
-              <FileOption>
-                <CommonProperty>
-                  <UseCPPCompiler>2</UseCPPCompiler>
-                  <RVCTCodeConst>0</RVCTCodeConst>
-                  <RVCTZI>0</RVCTZI>
-                  <RVCTOtherData>0</RVCTOtherData>
-                  <ModuleSelection>0</ModuleSelection>
-                  <IncludeInBuild>0</IncludeInBuild>
-                  <AlwaysBuild>2</AlwaysBuild>
-                  <GenerateAssemblyFile>2</GenerateAssemblyFile>
-                  <AssembleAssemblyFile>2</AssembleAssemblyFile>
-                  <PublicsOnly>2</PublicsOnly>
-                  <StopOnExitCode>11</StopOnExitCode>
-                  <CustomArgument></CustomArgument>
-                  <IncludeLibraryModules></IncludeLibraryModules>
-                  <ComprImg>1</ComprImg>
-                </CommonProperty>
-                <FileArmAds>
-                  <Aads>
-                    <interw>2</interw>
-                    <Ropi>2</Ropi>
-                    <Rwpi>2</Rwpi>
-                    <thumb>2</thumb>
-                    <SplitLS>2</SplitLS>
-                    <SwStkChk>2</SwStkChk>
-                    <NoWarn>2</NoWarn>
-                    <uSurpInc>2</uSurpInc>
-                    <useXO>2</useXO>
-                    <uClangAs>2</uClangAs>
+                    <ClangAsOpt>0</ClangAsOpt>
                     <VariousControls>
                       <MiscControls></MiscControls>
                       <Define></Define>
@@ -640,7 +608,7 @@
       <TargetName>CM3_LE</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pCCUsed>6130001::V6.13.1::.\ARMCLANG</pCCUsed>
+      <pCCUsed>6160000::V6.16::ARMCLANG</pCCUsed>
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
@@ -815,6 +783,7 @@
             <uocXRam>0</uocXRam>
             <RvdsVP>0</RvdsVP>
             <RvdsMve>0</RvdsMve>
+            <RvdsCdeCp>0</RvdsCdeCp>
             <hadIRAM2>0</hadIRAM2>
             <hadIROM2>0</hadIROM2>
             <StupSel>8</StupSel>
@@ -968,7 +937,7 @@
               <MiscControls></MiscControls>
               <Define>EVR_RTX_DISABLE</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\Config;..\..\..\Include;..\..\..\..\Include</IncludePath>
+              <IncludePath>..\..\..\Library;..\..\..\Include;..\..\..\..\Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -981,12 +950,12 @@
             <NoWarn>0</NoWarn>
             <uSurpInc>0</uSurpInc>
             <useXO>0</useXO>
-            <uClangAs>0</uClangAs>
+            <ClangAsOpt>1</ClangAsOpt>
             <VariousControls>
-              <MiscControls>--no_hide_all</MiscControls>
+              <MiscControls></MiscControls>
               <Define></Define>
               <Undefine></Undefine>
-              <IncludePath></IncludePath>
+              <IncludePath>.;..\..\..\Library;..\..\..\Include</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -1009,6 +978,16 @@
         </TargetArmAds>
       </TargetOption>
       <Groups>
+        <Group>
+          <GroupName>Configuration</GroupName>
+          <Files>
+            <File>
+              <FileName>RTX_Config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\RTX_Config.h</FilePath>
+            </File>
+          </Files>
+        </Group>
         <Group>
           <GroupName>Core</GroupName>
           <Files>
@@ -1083,9 +1062,9 @@
           <GroupName>Handlers</GroupName>
           <Files>
             <File>
-              <FileName>irq_cm0.s</FileName>
+              <FileName>irq_armv6m.S</FileName>
               <FileType>2</FileType>
-              <FilePath>..\..\..\Source\ARM\irq_cm0.s</FilePath>
+              <FilePath>..\..\..\Source\GCC\irq_armv6m.S</FilePath>
               <FileOption>
                 <CommonProperty>
                   <UseCPPCompiler>2</UseCPPCompiler>
@@ -1114,7 +1093,7 @@
                     <NoWarn>2</NoWarn>
                     <uSurpInc>2</uSurpInc>
                     <useXO>2</useXO>
-                    <uClangAs>2</uClangAs>
+                    <ClangAsOpt>0</ClangAsOpt>
                     <VariousControls>
                       <MiscControls></MiscControls>
                       <Define></Define>
@@ -1126,14 +1105,14 @@
               </FileOption>
             </File>
             <File>
-              <FileName>irq_cm3.s</FileName>
+              <FileName>irq_armv7m.S</FileName>
               <FileType>2</FileType>
-              <FilePath>..\..\..\Source\ARM\irq_cm3.s</FilePath>
+              <FilePath>..\..\..\Source\GCC\irq_armv7m.S</FilePath>
             </File>
             <File>
-              <FileName>irq_cm4f.s</FileName>
+              <FileName>irq_armv8mbl.S</FileName>
               <FileType>2</FileType>
-              <FilePath>..\..\..\Source\ARM\irq_cm4f.s</FilePath>
+              <FilePath>..\..\..\Source\GCC\irq_armv8mbl.S</FilePath>
               <FileOption>
                 <CommonProperty>
                   <UseCPPCompiler>2</UseCPPCompiler>
@@ -1162,7 +1141,7 @@
                     <NoWarn>2</NoWarn>
                     <uSurpInc>2</uSurpInc>
                     <useXO>2</useXO>
-                    <uClangAs>2</uClangAs>
+                    <ClangAsOpt>0</ClangAsOpt>
                     <VariousControls>
                       <MiscControls></MiscControls>
                       <Define></Define>
@@ -1174,9 +1153,9 @@
               </FileOption>
             </File>
             <File>
-              <FileName>irq_armv8mbl.s</FileName>
+              <FileName>irq_armv8mml.S</FileName>
               <FileType>2</FileType>
-              <FilePath>..\..\..\Source\ARM\irq_armv8mbl.s</FilePath>
+              <FilePath>..\..\..\Source\GCC\irq_armv8mml.S</FilePath>
               <FileOption>
                 <CommonProperty>
                   <UseCPPCompiler>2</UseCPPCompiler>
@@ -1205,50 +1184,7 @@
                     <NoWarn>2</NoWarn>
                     <uSurpInc>2</uSurpInc>
                     <useXO>2</useXO>
-                    <uClangAs>2</uClangAs>
-                    <VariousControls>
-                      <MiscControls></MiscControls>
-                      <Define></Define>
-                      <Undefine></Undefine>
-                      <IncludePath></IncludePath>
-                    </VariousControls>
-                  </Aads>
-                </FileArmAds>
-              </FileOption>
-            </File>
-            <File>
-              <FileName>irq_armv8mml.s</FileName>
-              <FileType>2</FileType>
-              <FilePath>..\..\..\Source\ARM\irq_armv8mml.s</FilePath>
-              <FileOption>
-                <CommonProperty>
-                  <UseCPPCompiler>2</UseCPPCompiler>
-                  <RVCTCodeConst>0</RVCTCodeConst>
-                  <RVCTZI>0</RVCTZI>
-                  <RVCTOtherData>0</RVCTOtherData>
-                  <ModuleSelection>0</ModuleSelection>
-                  <IncludeInBuild>0</IncludeInBuild>
-                  <AlwaysBuild>2</AlwaysBuild>
-                  <GenerateAssemblyFile>2</GenerateAssemblyFile>
-                  <AssembleAssemblyFile>2</AssembleAssemblyFile>
-                  <PublicsOnly>2</PublicsOnly>
-                  <StopOnExitCode>11</StopOnExitCode>
-                  <CustomArgument></CustomArgument>
-                  <IncludeLibraryModules></IncludeLibraryModules>
-                  <ComprImg>1</ComprImg>
-                </CommonProperty>
-                <FileArmAds>
-                  <Aads>
-                    <interw>2</interw>
-                    <Ropi>2</Ropi>
-                    <Rwpi>2</Rwpi>
-                    <thumb>2</thumb>
-                    <SplitLS>2</SplitLS>
-                    <SwStkChk>2</SwStkChk>
-                    <NoWarn>2</NoWarn>
-                    <uSurpInc>2</uSurpInc>
-                    <useXO>2</useXO>
-                    <uClangAs>2</uClangAs>
+                    <ClangAsOpt>0</ClangAsOpt>
                     <VariousControls>
                       <MiscControls></MiscControls>
                       <Define></Define>
@@ -1270,7 +1206,7 @@
       <TargetName>CM4F_LE</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pCCUsed>6130001::V6.13.1::.\ARMCLANG</pCCUsed>
+      <pCCUsed>6160000::V6.16::ARMCLANG</pCCUsed>
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
@@ -1445,6 +1381,7 @@
             <uocXRam>0</uocXRam>
             <RvdsVP>2</RvdsVP>
             <RvdsMve>0</RvdsMve>
+            <RvdsCdeCp>0</RvdsCdeCp>
             <hadIRAM2>0</hadIRAM2>
             <hadIROM2>0</hadIROM2>
             <StupSel>8</StupSel>
@@ -1598,7 +1535,7 @@
               <MiscControls></MiscControls>
               <Define>EVR_RTX_DISABLE</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\Config;..\..\..\Include;..\..\..\..\Include</IncludePath>
+              <IncludePath>..\..\..\Library;..\..\..\Include;..\..\..\..\Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1611,12 +1548,12 @@
             <NoWarn>0</NoWarn>
             <uSurpInc>0</uSurpInc>
             <useXO>0</useXO>
-            <uClangAs>0</uClangAs>
+            <ClangAsOpt>1</ClangAsOpt>
             <VariousControls>
-              <MiscControls>--no_hide_all</MiscControls>
+              <MiscControls></MiscControls>
               <Define></Define>
               <Undefine></Undefine>
-              <IncludePath></IncludePath>
+              <IncludePath>.;..\..\..\Library;..\..\..\Include</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -1639,6 +1576,16 @@
         </TargetArmAds>
       </TargetOption>
       <Groups>
+        <Group>
+          <GroupName>Configuration</GroupName>
+          <Files>
+            <File>
+              <FileName>RTX_Config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\RTX_Config.h</FilePath>
+            </File>
+          </Files>
+        </Group>
         <Group>
           <GroupName>Core</GroupName>
           <Files>
@@ -1713,9 +1660,9 @@
           <GroupName>Handlers</GroupName>
           <Files>
             <File>
-              <FileName>irq_cm0.s</FileName>
+              <FileName>irq_armv6m.S</FileName>
               <FileType>2</FileType>
-              <FilePath>..\..\..\Source\ARM\irq_cm0.s</FilePath>
+              <FilePath>..\..\..\Source\GCC\irq_armv6m.S</FilePath>
               <FileOption>
                 <CommonProperty>
                   <UseCPPCompiler>2</UseCPPCompiler>
@@ -1744,7 +1691,7 @@
                     <NoWarn>2</NoWarn>
                     <uSurpInc>2</uSurpInc>
                     <useXO>2</useXO>
-                    <uClangAs>2</uClangAs>
+                    <ClangAsOpt>0</ClangAsOpt>
                     <VariousControls>
                       <MiscControls></MiscControls>
                       <Define></Define>
@@ -1756,9 +1703,14 @@
               </FileOption>
             </File>
             <File>
-              <FileName>irq_cm3.s</FileName>
+              <FileName>irq_armv7m.S</FileName>
               <FileType>2</FileType>
-              <FilePath>..\..\..\Source\ARM\irq_cm3.s</FilePath>
+              <FilePath>..\..\..\Source\GCC\irq_armv7m.S</FilePath>
+            </File>
+            <File>
+              <FileName>irq_armv8mbl.S</FileName>
+              <FileType>2</FileType>
+              <FilePath>..\..\..\Source\GCC\irq_armv8mbl.S</FilePath>
               <FileOption>
                 <CommonProperty>
                   <UseCPPCompiler>2</UseCPPCompiler>
@@ -1787,7 +1739,7 @@
                     <NoWarn>2</NoWarn>
                     <uSurpInc>2</uSurpInc>
                     <useXO>2</useXO>
-                    <uClangAs>2</uClangAs>
+                    <ClangAsOpt>0</ClangAsOpt>
                     <VariousControls>
                       <MiscControls></MiscControls>
                       <Define></Define>
@@ -1799,14 +1751,9 @@
               </FileOption>
             </File>
             <File>
-              <FileName>irq_cm4f.s</FileName>
+              <FileName>irq_armv8mml.S</FileName>
               <FileType>2</FileType>
-              <FilePath>..\..\..\Source\ARM\irq_cm4f.s</FilePath>
-            </File>
-            <File>
-              <FileName>irq_armv8mbl.s</FileName>
-              <FileType>2</FileType>
-              <FilePath>..\..\..\Source\ARM\irq_armv8mbl.s</FilePath>
+              <FilePath>..\..\..\Source\GCC\irq_armv8mml.S</FilePath>
               <FileOption>
                 <CommonProperty>
                   <UseCPPCompiler>2</UseCPPCompiler>
@@ -1835,50 +1782,7 @@
                     <NoWarn>2</NoWarn>
                     <uSurpInc>2</uSurpInc>
                     <useXO>2</useXO>
-                    <uClangAs>2</uClangAs>
-                    <VariousControls>
-                      <MiscControls></MiscControls>
-                      <Define></Define>
-                      <Undefine></Undefine>
-                      <IncludePath></IncludePath>
-                    </VariousControls>
-                  </Aads>
-                </FileArmAds>
-              </FileOption>
-            </File>
-            <File>
-              <FileName>irq_armv8mml.s</FileName>
-              <FileType>2</FileType>
-              <FilePath>..\..\..\Source\ARM\irq_armv8mml.s</FilePath>
-              <FileOption>
-                <CommonProperty>
-                  <UseCPPCompiler>2</UseCPPCompiler>
-                  <RVCTCodeConst>0</RVCTCodeConst>
-                  <RVCTZI>0</RVCTZI>
-                  <RVCTOtherData>0</RVCTOtherData>
-                  <ModuleSelection>0</ModuleSelection>
-                  <IncludeInBuild>0</IncludeInBuild>
-                  <AlwaysBuild>2</AlwaysBuild>
-                  <GenerateAssemblyFile>2</GenerateAssemblyFile>
-                  <AssembleAssemblyFile>2</AssembleAssemblyFile>
-                  <PublicsOnly>2</PublicsOnly>
-                  <StopOnExitCode>11</StopOnExitCode>
-                  <CustomArgument></CustomArgument>
-                  <IncludeLibraryModules></IncludeLibraryModules>
-                  <ComprImg>1</ComprImg>
-                </CommonProperty>
-                <FileArmAds>
-                  <Aads>
-                    <interw>2</interw>
-                    <Ropi>2</Ropi>
-                    <Rwpi>2</Rwpi>
-                    <thumb>2</thumb>
-                    <SplitLS>2</SplitLS>
-                    <SwStkChk>2</SwStkChk>
-                    <NoWarn>2</NoWarn>
-                    <uSurpInc>2</uSurpInc>
-                    <useXO>2</useXO>
-                    <uClangAs>2</uClangAs>
+                    <ClangAsOpt>0</ClangAsOpt>
                     <VariousControls>
                       <MiscControls></MiscControls>
                       <Define></Define>
@@ -1900,7 +1804,7 @@
       <TargetName>ARMv8MBL_LE</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pCCUsed>6130001::V6.13.1::.\ARMCLANG</pCCUsed>
+      <pCCUsed>6160000::V6.16::ARMCLANG</pCCUsed>
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
@@ -2075,6 +1979,7 @@
             <uocXRam>0</uocXRam>
             <RvdsVP>0</RvdsVP>
             <RvdsMve>0</RvdsMve>
+            <RvdsCdeCp>0</RvdsCdeCp>
             <hadIRAM2>0</hadIRAM2>
             <hadIROM2>0</hadIROM2>
             <StupSel>8</StupSel>
@@ -2228,7 +2133,7 @@
               <MiscControls></MiscControls>
               <Define>EVR_RTX_DISABLE</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\Config;..\..\..\Include;..\..\..\..\Include</IncludePath>
+              <IncludePath>..\..\..\Library;..\..\..\Include;..\..\..\..\Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2241,12 +2146,12 @@
             <NoWarn>0</NoWarn>
             <uSurpInc>0</uSurpInc>
             <useXO>0</useXO>
-            <uClangAs>0</uClangAs>
+            <ClangAsOpt>1</ClangAsOpt>
             <VariousControls>
-              <MiscControls>--no_hide_all</MiscControls>
+              <MiscControls></MiscControls>
               <Define></Define>
               <Undefine></Undefine>
-              <IncludePath></IncludePath>
+              <IncludePath>.;..\..\..\Library;..\..\..\Include</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -2269,6 +2174,16 @@
         </TargetArmAds>
       </TargetOption>
       <Groups>
+        <Group>
+          <GroupName>Configuration</GroupName>
+          <Files>
+            <File>
+              <FileName>RTX_Config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\RTX_Config.h</FilePath>
+            </File>
+          </Files>
+        </Group>
         <Group>
           <GroupName>Core</GroupName>
           <Files>
@@ -2343,9 +2258,9 @@
           <GroupName>Handlers</GroupName>
           <Files>
             <File>
-              <FileName>irq_cm0.s</FileName>
+              <FileName>irq_armv6m.S</FileName>
               <FileType>2</FileType>
-              <FilePath>..\..\..\Source\ARM\irq_cm0.s</FilePath>
+              <FilePath>..\..\..\Source\GCC\irq_armv6m.S</FilePath>
               <FileOption>
                 <CommonProperty>
                   <UseCPPCompiler>2</UseCPPCompiler>
@@ -2374,7 +2289,7 @@
                     <NoWarn>2</NoWarn>
                     <uSurpInc>2</uSurpInc>
                     <useXO>2</useXO>
-                    <uClangAs>2</uClangAs>
+                    <ClangAsOpt>0</ClangAsOpt>
                     <VariousControls>
                       <MiscControls></MiscControls>
                       <Define></Define>
@@ -2386,9 +2301,9 @@
               </FileOption>
             </File>
             <File>
-              <FileName>irq_cm3.s</FileName>
+              <FileName>irq_armv7m.S</FileName>
               <FileType>2</FileType>
-              <FilePath>..\..\..\Source\ARM\irq_cm3.s</FilePath>
+              <FilePath>..\..\..\Source\GCC\irq_armv7m.S</FilePath>
               <FileOption>
                 <CommonProperty>
                   <UseCPPCompiler>2</UseCPPCompiler>
@@ -2417,7 +2332,7 @@
                     <NoWarn>2</NoWarn>
                     <uSurpInc>2</uSurpInc>
                     <useXO>2</useXO>
-                    <uClangAs>2</uClangAs>
+                    <ClangAsOpt>0</ClangAsOpt>
                     <VariousControls>
                       <MiscControls></MiscControls>
                       <Define></Define>
@@ -2429,9 +2344,14 @@
               </FileOption>
             </File>
             <File>
-              <FileName>irq_cm4f.s</FileName>
+              <FileName>irq_armv8mbl.S</FileName>
               <FileType>2</FileType>
-              <FilePath>..\..\..\Source\ARM\irq_cm4f.s</FilePath>
+              <FilePath>..\..\..\Source\GCC\irq_armv8mbl.S</FilePath>
+            </File>
+            <File>
+              <FileName>irq_armv8mml.S</FileName>
+              <FileType>2</FileType>
+              <FilePath>..\..\..\Source\GCC\irq_armv8mml.S</FilePath>
               <FileOption>
                 <CommonProperty>
                   <UseCPPCompiler>2</UseCPPCompiler>
@@ -2460,55 +2380,7 @@
                     <NoWarn>2</NoWarn>
                     <uSurpInc>2</uSurpInc>
                     <useXO>2</useXO>
-                    <uClangAs>2</uClangAs>
-                    <VariousControls>
-                      <MiscControls></MiscControls>
-                      <Define></Define>
-                      <Undefine></Undefine>
-                      <IncludePath></IncludePath>
-                    </VariousControls>
-                  </Aads>
-                </FileArmAds>
-              </FileOption>
-            </File>
-            <File>
-              <FileName>irq_armv8mbl.s</FileName>
-              <FileType>2</FileType>
-              <FilePath>..\..\..\Source\ARM\irq_armv8mbl.s</FilePath>
-            </File>
-            <File>
-              <FileName>irq_armv8mml.s</FileName>
-              <FileType>2</FileType>
-              <FilePath>..\..\..\Source\ARM\irq_armv8mml.s</FilePath>
-              <FileOption>
-                <CommonProperty>
-                  <UseCPPCompiler>2</UseCPPCompiler>
-                  <RVCTCodeConst>0</RVCTCodeConst>
-                  <RVCTZI>0</RVCTZI>
-                  <RVCTOtherData>0</RVCTOtherData>
-                  <ModuleSelection>0</ModuleSelection>
-                  <IncludeInBuild>0</IncludeInBuild>
-                  <AlwaysBuild>2</AlwaysBuild>
-                  <GenerateAssemblyFile>2</GenerateAssemblyFile>
-                  <AssembleAssemblyFile>2</AssembleAssemblyFile>
-                  <PublicsOnly>2</PublicsOnly>
-                  <StopOnExitCode>11</StopOnExitCode>
-                  <CustomArgument></CustomArgument>
-                  <IncludeLibraryModules></IncludeLibraryModules>
-                  <ComprImg>1</ComprImg>
-                </CommonProperty>
-                <FileArmAds>
-                  <Aads>
-                    <interw>2</interw>
-                    <Ropi>2</Ropi>
-                    <Rwpi>2</Rwpi>
-                    <thumb>2</thumb>
-                    <SplitLS>2</SplitLS>
-                    <SwStkChk>2</SwStkChk>
-                    <NoWarn>2</NoWarn>
-                    <uSurpInc>2</uSurpInc>
-                    <useXO>2</useXO>
-                    <uClangAs>2</uClangAs>
+                    <ClangAsOpt>0</ClangAsOpt>
                     <VariousControls>
                       <MiscControls></MiscControls>
                       <Define></Define>
@@ -2530,7 +2402,7 @@
       <TargetName>ARMv8MBL_NS_LE</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pCCUsed>6130001::V6.13.1::.\ARMCLANG</pCCUsed>
+      <pCCUsed>6160000::V6.16::ARMCLANG</pCCUsed>
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
@@ -2705,6 +2577,7 @@
             <uocXRam>0</uocXRam>
             <RvdsVP>0</RvdsVP>
             <RvdsMve>0</RvdsMve>
+            <RvdsCdeCp>0</RvdsCdeCp>
             <hadIRAM2>0</hadIRAM2>
             <hadIROM2>0</hadIROM2>
             <StupSel>8</StupSel>
@@ -2858,7 +2731,7 @@
               <MiscControls></MiscControls>
               <Define>EVR_RTX_DISABLE DOMAIN_NS=1</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\Config;..\..\..\Include;..\..\..\..\Include</IncludePath>
+              <IncludePath>..\..\..\Library;..\..\..\Include;..\..\..\..\Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2871,12 +2744,12 @@
             <NoWarn>0</NoWarn>
             <uSurpInc>0</uSurpInc>
             <useXO>0</useXO>
-            <uClangAs>0</uClangAs>
+            <ClangAsOpt>1</ClangAsOpt>
             <VariousControls>
-              <MiscControls>--no_hide_all</MiscControls>
+              <MiscControls></MiscControls>
               <Define>DOMAIN_NS=1</Define>
               <Undefine></Undefine>
-              <IncludePath></IncludePath>
+              <IncludePath>.;..\..\..\Library;..\..\..\Include</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -2899,6 +2772,16 @@
         </TargetArmAds>
       </TargetOption>
       <Groups>
+        <Group>
+          <GroupName>Configuration</GroupName>
+          <Files>
+            <File>
+              <FileName>RTX_Config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\RTX_Config.h</FilePath>
+            </File>
+          </Files>
+        </Group>
         <Group>
           <GroupName>Core</GroupName>
           <Files>
@@ -2973,9 +2856,9 @@
           <GroupName>Handlers</GroupName>
           <Files>
             <File>
-              <FileName>irq_cm0.s</FileName>
+              <FileName>irq_armv6m.S</FileName>
               <FileType>2</FileType>
-              <FilePath>..\..\..\Source\ARM\irq_cm0.s</FilePath>
+              <FilePath>..\..\..\Source\GCC\irq_armv6m.S</FilePath>
               <FileOption>
                 <CommonProperty>
                   <UseCPPCompiler>2</UseCPPCompiler>
@@ -3004,7 +2887,7 @@
                     <NoWarn>2</NoWarn>
                     <uSurpInc>2</uSurpInc>
                     <useXO>2</useXO>
-                    <uClangAs>2</uClangAs>
+                    <ClangAsOpt>0</ClangAsOpt>
                     <VariousControls>
                       <MiscControls></MiscControls>
                       <Define></Define>
@@ -3016,9 +2899,9 @@
               </FileOption>
             </File>
             <File>
-              <FileName>irq_cm3.s</FileName>
+              <FileName>irq_armv7m.S</FileName>
               <FileType>2</FileType>
-              <FilePath>..\..\..\Source\ARM\irq_cm3.s</FilePath>
+              <FilePath>..\..\..\Source\GCC\irq_armv7m.S</FilePath>
               <FileOption>
                 <CommonProperty>
                   <UseCPPCompiler>2</UseCPPCompiler>
@@ -3047,7 +2930,7 @@
                     <NoWarn>2</NoWarn>
                     <uSurpInc>2</uSurpInc>
                     <useXO>2</useXO>
-                    <uClangAs>2</uClangAs>
+                    <ClangAsOpt>0</ClangAsOpt>
                     <VariousControls>
                       <MiscControls></MiscControls>
                       <Define></Define>
@@ -3059,9 +2942,14 @@
               </FileOption>
             </File>
             <File>
-              <FileName>irq_cm4f.s</FileName>
+              <FileName>irq_armv8mbl.S</FileName>
               <FileType>2</FileType>
-              <FilePath>..\..\..\Source\ARM\irq_cm4f.s</FilePath>
+              <FilePath>..\..\..\Source\GCC\irq_armv8mbl.S</FilePath>
+            </File>
+            <File>
+              <FileName>irq_armv8mml.S</FileName>
+              <FileType>2</FileType>
+              <FilePath>..\..\..\Source\GCC\irq_armv8mml.S</FilePath>
               <FileOption>
                 <CommonProperty>
                   <UseCPPCompiler>2</UseCPPCompiler>
@@ -3090,55 +2978,7 @@
                     <NoWarn>2</NoWarn>
                     <uSurpInc>2</uSurpInc>
                     <useXO>2</useXO>
-                    <uClangAs>2</uClangAs>
-                    <VariousControls>
-                      <MiscControls></MiscControls>
-                      <Define></Define>
-                      <Undefine></Undefine>
-                      <IncludePath></IncludePath>
-                    </VariousControls>
-                  </Aads>
-                </FileArmAds>
-              </FileOption>
-            </File>
-            <File>
-              <FileName>irq_armv8mbl.s</FileName>
-              <FileType>2</FileType>
-              <FilePath>..\..\..\Source\ARM\irq_armv8mbl.s</FilePath>
-            </File>
-            <File>
-              <FileName>irq_armv8mml.s</FileName>
-              <FileType>2</FileType>
-              <FilePath>..\..\..\Source\ARM\irq_armv8mml.s</FilePath>
-              <FileOption>
-                <CommonProperty>
-                  <UseCPPCompiler>2</UseCPPCompiler>
-                  <RVCTCodeConst>0</RVCTCodeConst>
-                  <RVCTZI>0</RVCTZI>
-                  <RVCTOtherData>0</RVCTOtherData>
-                  <ModuleSelection>0</ModuleSelection>
-                  <IncludeInBuild>0</IncludeInBuild>
-                  <AlwaysBuild>2</AlwaysBuild>
-                  <GenerateAssemblyFile>2</GenerateAssemblyFile>
-                  <AssembleAssemblyFile>2</AssembleAssemblyFile>
-                  <PublicsOnly>2</PublicsOnly>
-                  <StopOnExitCode>11</StopOnExitCode>
-                  <CustomArgument></CustomArgument>
-                  <IncludeLibraryModules></IncludeLibraryModules>
-                  <ComprImg>1</ComprImg>
-                </CommonProperty>
-                <FileArmAds>
-                  <Aads>
-                    <interw>2</interw>
-                    <Ropi>2</Ropi>
-                    <Rwpi>2</Rwpi>
-                    <thumb>2</thumb>
-                    <SplitLS>2</SplitLS>
-                    <SwStkChk>2</SwStkChk>
-                    <NoWarn>2</NoWarn>
-                    <uSurpInc>2</uSurpInc>
-                    <useXO>2</useXO>
-                    <uClangAs>2</uClangAs>
+                    <ClangAsOpt>0</ClangAsOpt>
                     <VariousControls>
                       <MiscControls></MiscControls>
                       <Define></Define>
@@ -3160,7 +3000,7 @@
       <TargetName>ARMv8MML_LE</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pCCUsed>6130001::V6.13.1::.\ARMCLANG</pCCUsed>
+      <pCCUsed>6160000::V6.16::ARMCLANG</pCCUsed>
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
@@ -3335,6 +3175,7 @@
             <uocXRam>0</uocXRam>
             <RvdsVP>0</RvdsVP>
             <RvdsMve>0</RvdsMve>
+            <RvdsCdeCp>0</RvdsCdeCp>
             <hadIRAM2>0</hadIRAM2>
             <hadIROM2>0</hadIROM2>
             <StupSel>8</StupSel>
@@ -3488,7 +3329,7 @@
               <MiscControls></MiscControls>
               <Define>EVR_RTX_DISABLE</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\Config;..\..\..\Include;..\..\..\..\Include</IncludePath>
+              <IncludePath>..\..\..\Library;..\..\..\Include;..\..\..\..\Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -3501,12 +3342,12 @@
             <NoWarn>0</NoWarn>
             <uSurpInc>0</uSurpInc>
             <useXO>0</useXO>
-            <uClangAs>0</uClangAs>
+            <ClangAsOpt>1</ClangAsOpt>
             <VariousControls>
-              <MiscControls>--no_hide_all</MiscControls>
+              <MiscControls></MiscControls>
               <Define></Define>
               <Undefine></Undefine>
-              <IncludePath></IncludePath>
+              <IncludePath>.;..\..\..\Library;..\..\..\Include</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -3529,6 +3370,16 @@
         </TargetArmAds>
       </TargetOption>
       <Groups>
+        <Group>
+          <GroupName>Configuration</GroupName>
+          <Files>
+            <File>
+              <FileName>RTX_Config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\RTX_Config.h</FilePath>
+            </File>
+          </Files>
+        </Group>
         <Group>
           <GroupName>Core</GroupName>
           <Files>
@@ -3603,9 +3454,9 @@
           <GroupName>Handlers</GroupName>
           <Files>
             <File>
-              <FileName>irq_cm0.s</FileName>
+              <FileName>irq_armv6m.S</FileName>
               <FileType>2</FileType>
-              <FilePath>..\..\..\Source\ARM\irq_cm0.s</FilePath>
+              <FilePath>..\..\..\Source\GCC\irq_armv6m.S</FilePath>
               <FileOption>
                 <CommonProperty>
                   <UseCPPCompiler>2</UseCPPCompiler>
@@ -3634,7 +3485,7 @@
                     <NoWarn>2</NoWarn>
                     <uSurpInc>2</uSurpInc>
                     <useXO>2</useXO>
-                    <uClangAs>2</uClangAs>
+                    <ClangAsOpt>0</ClangAsOpt>
                     <VariousControls>
                       <MiscControls></MiscControls>
                       <Define></Define>
@@ -3646,9 +3497,9 @@
               </FileOption>
             </File>
             <File>
-              <FileName>irq_cm3.s</FileName>
+              <FileName>irq_armv7m.S</FileName>
               <FileType>2</FileType>
-              <FilePath>..\..\..\Source\ARM\irq_cm3.s</FilePath>
+              <FilePath>..\..\..\Source\GCC\irq_armv7m.S</FilePath>
               <FileOption>
                 <CommonProperty>
                   <UseCPPCompiler>2</UseCPPCompiler>
@@ -3677,7 +3528,7 @@
                     <NoWarn>2</NoWarn>
                     <uSurpInc>2</uSurpInc>
                     <useXO>2</useXO>
-                    <uClangAs>2</uClangAs>
+                    <ClangAsOpt>0</ClangAsOpt>
                     <VariousControls>
                       <MiscControls></MiscControls>
                       <Define></Define>
@@ -3689,9 +3540,9 @@
               </FileOption>
             </File>
             <File>
-              <FileName>irq_cm4f.s</FileName>
+              <FileName>irq_armv8mbl.S</FileName>
               <FileType>2</FileType>
-              <FilePath>..\..\..\Source\ARM\irq_cm4f.s</FilePath>
+              <FilePath>..\..\..\Source\GCC\irq_armv8mbl.S</FilePath>
               <FileOption>
                 <CommonProperty>
                   <UseCPPCompiler>2</UseCPPCompiler>
@@ -3720,7 +3571,7 @@
                     <NoWarn>2</NoWarn>
                     <uSurpInc>2</uSurpInc>
                     <useXO>2</useXO>
-                    <uClangAs>2</uClangAs>
+                    <ClangAsOpt>0</ClangAsOpt>
                     <VariousControls>
                       <MiscControls></MiscControls>
                       <Define></Define>
@@ -3732,52 +3583,9 @@
               </FileOption>
             </File>
             <File>
-              <FileName>irq_armv8mbl.s</FileName>
+              <FileName>irq_armv8mml.S</FileName>
               <FileType>2</FileType>
-              <FilePath>..\..\..\Source\ARM\irq_armv8mbl.s</FilePath>
-              <FileOption>
-                <CommonProperty>
-                  <UseCPPCompiler>2</UseCPPCompiler>
-                  <RVCTCodeConst>0</RVCTCodeConst>
-                  <RVCTZI>0</RVCTZI>
-                  <RVCTOtherData>0</RVCTOtherData>
-                  <ModuleSelection>0</ModuleSelection>
-                  <IncludeInBuild>0</IncludeInBuild>
-                  <AlwaysBuild>2</AlwaysBuild>
-                  <GenerateAssemblyFile>2</GenerateAssemblyFile>
-                  <AssembleAssemblyFile>2</AssembleAssemblyFile>
-                  <PublicsOnly>2</PublicsOnly>
-                  <StopOnExitCode>11</StopOnExitCode>
-                  <CustomArgument></CustomArgument>
-                  <IncludeLibraryModules></IncludeLibraryModules>
-                  <ComprImg>1</ComprImg>
-                </CommonProperty>
-                <FileArmAds>
-                  <Aads>
-                    <interw>2</interw>
-                    <Ropi>2</Ropi>
-                    <Rwpi>2</Rwpi>
-                    <thumb>2</thumb>
-                    <SplitLS>2</SplitLS>
-                    <SwStkChk>2</SwStkChk>
-                    <NoWarn>2</NoWarn>
-                    <uSurpInc>2</uSurpInc>
-                    <useXO>2</useXO>
-                    <uClangAs>2</uClangAs>
-                    <VariousControls>
-                      <MiscControls></MiscControls>
-                      <Define></Define>
-                      <Undefine></Undefine>
-                      <IncludePath></IncludePath>
-                    </VariousControls>
-                  </Aads>
-                </FileArmAds>
-              </FileOption>
-            </File>
-            <File>
-              <FileName>irq_armv8mml.s</FileName>
-              <FileType>2</FileType>
-              <FilePath>..\..\..\Source\ARM\irq_armv8mml.s</FilePath>
+              <FilePath>..\..\..\Source\GCC\irq_armv8mml.S</FilePath>
             </File>
           </Files>
         </Group>
@@ -3790,7 +3598,7 @@
       <TargetName>ARMv8MML_NS_LE</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pCCUsed>6130001::V6.13.1::.\ARMCLANG</pCCUsed>
+      <pCCUsed>6160000::V6.16::ARMCLANG</pCCUsed>
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
@@ -3965,6 +3773,7 @@
             <uocXRam>0</uocXRam>
             <RvdsVP>0</RvdsVP>
             <RvdsMve>0</RvdsMve>
+            <RvdsCdeCp>0</RvdsCdeCp>
             <hadIRAM2>0</hadIRAM2>
             <hadIROM2>0</hadIROM2>
             <StupSel>8</StupSel>
@@ -4118,7 +3927,7 @@
               <MiscControls></MiscControls>
               <Define>EVR_RTX_DISABLE DOMAIN_NS=1</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\Config;..\..\..\Include;..\..\..\..\Include</IncludePath>
+              <IncludePath>..\..\..\Library;..\..\..\Include;..\..\..\..\Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -4131,12 +3940,12 @@
             <NoWarn>0</NoWarn>
             <uSurpInc>0</uSurpInc>
             <useXO>0</useXO>
-            <uClangAs>0</uClangAs>
+            <ClangAsOpt>1</ClangAsOpt>
             <VariousControls>
-              <MiscControls>--no_hide_all</MiscControls>
+              <MiscControls></MiscControls>
               <Define>DOMAIN_NS=1</Define>
               <Undefine></Undefine>
-              <IncludePath></IncludePath>
+              <IncludePath>.;..\..\..\Library;..\..\..\Include</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -4159,6 +3968,16 @@
         </TargetArmAds>
       </TargetOption>
       <Groups>
+        <Group>
+          <GroupName>Configuration</GroupName>
+          <Files>
+            <File>
+              <FileName>RTX_Config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\RTX_Config.h</FilePath>
+            </File>
+          </Files>
+        </Group>
         <Group>
           <GroupName>Core</GroupName>
           <Files>
@@ -4233,9 +4052,9 @@
           <GroupName>Handlers</GroupName>
           <Files>
             <File>
-              <FileName>irq_cm0.s</FileName>
+              <FileName>irq_armv6m.S</FileName>
               <FileType>2</FileType>
-              <FilePath>..\..\..\Source\ARM\irq_cm0.s</FilePath>
+              <FilePath>..\..\..\Source\GCC\irq_armv6m.S</FilePath>
               <FileOption>
                 <CommonProperty>
                   <UseCPPCompiler>2</UseCPPCompiler>
@@ -4264,7 +4083,7 @@
                     <NoWarn>2</NoWarn>
                     <uSurpInc>2</uSurpInc>
                     <useXO>2</useXO>
-                    <uClangAs>2</uClangAs>
+                    <ClangAsOpt>0</ClangAsOpt>
                     <VariousControls>
                       <MiscControls></MiscControls>
                       <Define></Define>
@@ -4276,9 +4095,9 @@
               </FileOption>
             </File>
             <File>
-              <FileName>irq_cm3.s</FileName>
+              <FileName>irq_armv7m.S</FileName>
               <FileType>2</FileType>
-              <FilePath>..\..\..\Source\ARM\irq_cm3.s</FilePath>
+              <FilePath>..\..\..\Source\GCC\irq_armv7m.S</FilePath>
               <FileOption>
                 <CommonProperty>
                   <UseCPPCompiler>2</UseCPPCompiler>
@@ -4307,7 +4126,7 @@
                     <NoWarn>2</NoWarn>
                     <uSurpInc>2</uSurpInc>
                     <useXO>2</useXO>
-                    <uClangAs>2</uClangAs>
+                    <ClangAsOpt>0</ClangAsOpt>
                     <VariousControls>
                       <MiscControls></MiscControls>
                       <Define></Define>
@@ -4319,9 +4138,9 @@
               </FileOption>
             </File>
             <File>
-              <FileName>irq_cm4f.s</FileName>
+              <FileName>irq_armv8mbl.S</FileName>
               <FileType>2</FileType>
-              <FilePath>..\..\..\Source\ARM\irq_cm4f.s</FilePath>
+              <FilePath>..\..\..\Source\GCC\irq_armv8mbl.S</FilePath>
               <FileOption>
                 <CommonProperty>
                   <UseCPPCompiler>2</UseCPPCompiler>
@@ -4350,7 +4169,7 @@
                     <NoWarn>2</NoWarn>
                     <uSurpInc>2</uSurpInc>
                     <useXO>2</useXO>
-                    <uClangAs>2</uClangAs>
+                    <ClangAsOpt>0</ClangAsOpt>
                     <VariousControls>
                       <MiscControls></MiscControls>
                       <Define></Define>
@@ -4362,52 +4181,9 @@
               </FileOption>
             </File>
             <File>
-              <FileName>irq_armv8mbl.s</FileName>
+              <FileName>irq_armv8mml.S</FileName>
               <FileType>2</FileType>
-              <FilePath>..\..\..\Source\ARM\irq_armv8mbl.s</FilePath>
-              <FileOption>
-                <CommonProperty>
-                  <UseCPPCompiler>2</UseCPPCompiler>
-                  <RVCTCodeConst>0</RVCTCodeConst>
-                  <RVCTZI>0</RVCTZI>
-                  <RVCTOtherData>0</RVCTOtherData>
-                  <ModuleSelection>0</ModuleSelection>
-                  <IncludeInBuild>0</IncludeInBuild>
-                  <AlwaysBuild>2</AlwaysBuild>
-                  <GenerateAssemblyFile>2</GenerateAssemblyFile>
-                  <AssembleAssemblyFile>2</AssembleAssemblyFile>
-                  <PublicsOnly>2</PublicsOnly>
-                  <StopOnExitCode>11</StopOnExitCode>
-                  <CustomArgument></CustomArgument>
-                  <IncludeLibraryModules></IncludeLibraryModules>
-                  <ComprImg>1</ComprImg>
-                </CommonProperty>
-                <FileArmAds>
-                  <Aads>
-                    <interw>2</interw>
-                    <Ropi>2</Ropi>
-                    <Rwpi>2</Rwpi>
-                    <thumb>2</thumb>
-                    <SplitLS>2</SplitLS>
-                    <SwStkChk>2</SwStkChk>
-                    <NoWarn>2</NoWarn>
-                    <uSurpInc>2</uSurpInc>
-                    <useXO>2</useXO>
-                    <uClangAs>2</uClangAs>
-                    <VariousControls>
-                      <MiscControls></MiscControls>
-                      <Define></Define>
-                      <Undefine></Undefine>
-                      <IncludePath></IncludePath>
-                    </VariousControls>
-                  </Aads>
-                </FileArmAds>
-              </FileOption>
-            </File>
-            <File>
-              <FileName>irq_armv8mml.s</FileName>
-              <FileType>2</FileType>
-              <FilePath>..\..\..\Source\ARM\irq_armv8mml.s</FilePath>
+              <FilePath>..\..\..\Source\GCC\irq_armv8mml.S</FilePath>
             </File>
           </Files>
         </Group>
@@ -4420,7 +4196,7 @@
       <TargetName>ARMv8MML_SP_LE</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pCCUsed>6130001::V6.13.1::.\ARMCLANG</pCCUsed>
+      <pCCUsed>6160000::V6.16::ARMCLANG</pCCUsed>
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
@@ -4595,6 +4371,7 @@
             <uocXRam>0</uocXRam>
             <RvdsVP>2</RvdsVP>
             <RvdsMve>0</RvdsMve>
+            <RvdsCdeCp>0</RvdsCdeCp>
             <hadIRAM2>0</hadIRAM2>
             <hadIROM2>0</hadIROM2>
             <StupSel>8</StupSel>
@@ -4748,7 +4525,7 @@
               <MiscControls></MiscControls>
               <Define>EVR_RTX_DISABLE</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\Config;..\..\..\Include;..\..\..\..\Include</IncludePath>
+              <IncludePath>..\..\..\Library;..\..\..\Include;..\..\..\..\Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -4761,12 +4538,12 @@
             <NoWarn>0</NoWarn>
             <uSurpInc>0</uSurpInc>
             <useXO>0</useXO>
-            <uClangAs>0</uClangAs>
+            <ClangAsOpt>1</ClangAsOpt>
             <VariousControls>
-              <MiscControls>--no_hide_all</MiscControls>
+              <MiscControls></MiscControls>
               <Define></Define>
               <Undefine></Undefine>
-              <IncludePath></IncludePath>
+              <IncludePath>.;..\..\..\Library;..\..\..\Include</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -4789,6 +4566,16 @@
         </TargetArmAds>
       </TargetOption>
       <Groups>
+        <Group>
+          <GroupName>Configuration</GroupName>
+          <Files>
+            <File>
+              <FileName>RTX_Config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\RTX_Config.h</FilePath>
+            </File>
+          </Files>
+        </Group>
         <Group>
           <GroupName>Core</GroupName>
           <Files>
@@ -4863,9 +4650,9 @@
           <GroupName>Handlers</GroupName>
           <Files>
             <File>
-              <FileName>irq_cm0.s</FileName>
+              <FileName>irq_armv6m.S</FileName>
               <FileType>2</FileType>
-              <FilePath>..\..\..\Source\ARM\irq_cm0.s</FilePath>
+              <FilePath>..\..\..\Source\GCC\irq_armv6m.S</FilePath>
               <FileOption>
                 <CommonProperty>
                   <UseCPPCompiler>2</UseCPPCompiler>
@@ -4894,7 +4681,7 @@
                     <NoWarn>2</NoWarn>
                     <uSurpInc>2</uSurpInc>
                     <useXO>2</useXO>
-                    <uClangAs>2</uClangAs>
+                    <ClangAsOpt>0</ClangAsOpt>
                     <VariousControls>
                       <MiscControls></MiscControls>
                       <Define></Define>
@@ -4906,9 +4693,9 @@
               </FileOption>
             </File>
             <File>
-              <FileName>irq_cm3.s</FileName>
+              <FileName>irq_armv7m.S</FileName>
               <FileType>2</FileType>
-              <FilePath>..\..\..\Source\ARM\irq_cm3.s</FilePath>
+              <FilePath>..\..\..\Source\GCC\irq_armv7m.S</FilePath>
               <FileOption>
                 <CommonProperty>
                   <UseCPPCompiler>2</UseCPPCompiler>
@@ -4937,7 +4724,7 @@
                     <NoWarn>2</NoWarn>
                     <uSurpInc>2</uSurpInc>
                     <useXO>2</useXO>
-                    <uClangAs>2</uClangAs>
+                    <ClangAsOpt>0</ClangAsOpt>
                     <VariousControls>
                       <MiscControls></MiscControls>
                       <Define></Define>
@@ -4949,9 +4736,9 @@
               </FileOption>
             </File>
             <File>
-              <FileName>irq_cm4f.s</FileName>
+              <FileName>irq_armv8mbl.S</FileName>
               <FileType>2</FileType>
-              <FilePath>..\..\..\Source\ARM\irq_cm4f.s</FilePath>
+              <FilePath>..\..\..\Source\GCC\irq_armv8mbl.S</FilePath>
               <FileOption>
                 <CommonProperty>
                   <UseCPPCompiler>2</UseCPPCompiler>
@@ -4980,7 +4767,7 @@
                     <NoWarn>2</NoWarn>
                     <uSurpInc>2</uSurpInc>
                     <useXO>2</useXO>
-                    <uClangAs>2</uClangAs>
+                    <ClangAsOpt>0</ClangAsOpt>
                     <VariousControls>
                       <MiscControls></MiscControls>
                       <Define></Define>
@@ -4992,52 +4779,9 @@
               </FileOption>
             </File>
             <File>
-              <FileName>irq_armv8mbl.s</FileName>
+              <FileName>irq_armv8mml.S</FileName>
               <FileType>2</FileType>
-              <FilePath>..\..\..\Source\ARM\irq_armv8mbl.s</FilePath>
-              <FileOption>
-                <CommonProperty>
-                  <UseCPPCompiler>2</UseCPPCompiler>
-                  <RVCTCodeConst>0</RVCTCodeConst>
-                  <RVCTZI>0</RVCTZI>
-                  <RVCTOtherData>0</RVCTOtherData>
-                  <ModuleSelection>0</ModuleSelection>
-                  <IncludeInBuild>0</IncludeInBuild>
-                  <AlwaysBuild>2</AlwaysBuild>
-                  <GenerateAssemblyFile>2</GenerateAssemblyFile>
-                  <AssembleAssemblyFile>2</AssembleAssemblyFile>
-                  <PublicsOnly>2</PublicsOnly>
-                  <StopOnExitCode>11</StopOnExitCode>
-                  <CustomArgument></CustomArgument>
-                  <IncludeLibraryModules></IncludeLibraryModules>
-                  <ComprImg>1</ComprImg>
-                </CommonProperty>
-                <FileArmAds>
-                  <Aads>
-                    <interw>2</interw>
-                    <Ropi>2</Ropi>
-                    <Rwpi>2</Rwpi>
-                    <thumb>2</thumb>
-                    <SplitLS>2</SplitLS>
-                    <SwStkChk>2</SwStkChk>
-                    <NoWarn>2</NoWarn>
-                    <uSurpInc>2</uSurpInc>
-                    <useXO>2</useXO>
-                    <uClangAs>2</uClangAs>
-                    <VariousControls>
-                      <MiscControls></MiscControls>
-                      <Define></Define>
-                      <Undefine></Undefine>
-                      <IncludePath></IncludePath>
-                    </VariousControls>
-                  </Aads>
-                </FileArmAds>
-              </FileOption>
-            </File>
-            <File>
-              <FileName>irq_armv8mml.s</FileName>
-              <FileType>2</FileType>
-              <FilePath>..\..\..\Source\ARM\irq_armv8mml.s</FilePath>
+              <FilePath>..\..\..\Source\GCC\irq_armv8mml.S</FilePath>
             </File>
           </Files>
         </Group>
@@ -5050,7 +4794,7 @@
       <TargetName>ARMv8MML_SP_NS_LE</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pCCUsed>6130001::V6.13.1::.\ARMCLANG</pCCUsed>
+      <pCCUsed>6160000::V6.16::ARMCLANG</pCCUsed>
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
@@ -5225,6 +4969,7 @@
             <uocXRam>0</uocXRam>
             <RvdsVP>2</RvdsVP>
             <RvdsMve>0</RvdsMve>
+            <RvdsCdeCp>0</RvdsCdeCp>
             <hadIRAM2>0</hadIRAM2>
             <hadIROM2>0</hadIROM2>
             <StupSel>8</StupSel>
@@ -5378,7 +5123,7 @@
               <MiscControls></MiscControls>
               <Define>EVR_RTX_DISABLE DOMAIN_NS=1</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\Config;..\..\..\Include;..\..\..\..\Include</IncludePath>
+              <IncludePath>..\..\..\Library;..\..\..\Include;..\..\..\..\Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -5391,12 +5136,12 @@
             <NoWarn>0</NoWarn>
             <uSurpInc>0</uSurpInc>
             <useXO>0</useXO>
-            <uClangAs>0</uClangAs>
+            <ClangAsOpt>1</ClangAsOpt>
             <VariousControls>
-              <MiscControls>--no_hide_all</MiscControls>
+              <MiscControls></MiscControls>
               <Define>DOMAIN_NS=1</Define>
               <Undefine></Undefine>
-              <IncludePath></IncludePath>
+              <IncludePath>.;..\..\..\Library;..\..\..\Include</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -5419,6 +5164,16 @@
         </TargetArmAds>
       </TargetOption>
       <Groups>
+        <Group>
+          <GroupName>Configuration</GroupName>
+          <Files>
+            <File>
+              <FileName>RTX_Config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\RTX_Config.h</FilePath>
+            </File>
+          </Files>
+        </Group>
         <Group>
           <GroupName>Core</GroupName>
           <Files>
@@ -5493,9 +5248,9 @@
           <GroupName>Handlers</GroupName>
           <Files>
             <File>
-              <FileName>irq_cm0.s</FileName>
+              <FileName>irq_armv6m.S</FileName>
               <FileType>2</FileType>
-              <FilePath>..\..\..\Source\ARM\irq_cm0.s</FilePath>
+              <FilePath>..\..\..\Source\GCC\irq_armv6m.S</FilePath>
               <FileOption>
                 <CommonProperty>
                   <UseCPPCompiler>2</UseCPPCompiler>
@@ -5524,7 +5279,7 @@
                     <NoWarn>2</NoWarn>
                     <uSurpInc>2</uSurpInc>
                     <useXO>2</useXO>
-                    <uClangAs>2</uClangAs>
+                    <ClangAsOpt>0</ClangAsOpt>
                     <VariousControls>
                       <MiscControls></MiscControls>
                       <Define></Define>
@@ -5536,9 +5291,9 @@
               </FileOption>
             </File>
             <File>
-              <FileName>irq_cm3.s</FileName>
+              <FileName>irq_armv7m.S</FileName>
               <FileType>2</FileType>
-              <FilePath>..\..\..\Source\ARM\irq_cm3.s</FilePath>
+              <FilePath>..\..\..\Source\GCC\irq_armv7m.S</FilePath>
               <FileOption>
                 <CommonProperty>
                   <UseCPPCompiler>2</UseCPPCompiler>
@@ -5567,7 +5322,7 @@
                     <NoWarn>2</NoWarn>
                     <uSurpInc>2</uSurpInc>
                     <useXO>2</useXO>
-                    <uClangAs>2</uClangAs>
+                    <ClangAsOpt>0</ClangAsOpt>
                     <VariousControls>
                       <MiscControls></MiscControls>
                       <Define></Define>
@@ -5579,9 +5334,9 @@
               </FileOption>
             </File>
             <File>
-              <FileName>irq_cm4f.s</FileName>
+              <FileName>irq_armv8mbl.S</FileName>
               <FileType>2</FileType>
-              <FilePath>..\..\..\Source\ARM\irq_cm4f.s</FilePath>
+              <FilePath>..\..\..\Source\GCC\irq_armv8mbl.S</FilePath>
               <FileOption>
                 <CommonProperty>
                   <UseCPPCompiler>2</UseCPPCompiler>
@@ -5610,7 +5365,7 @@
                     <NoWarn>2</NoWarn>
                     <uSurpInc>2</uSurpInc>
                     <useXO>2</useXO>
-                    <uClangAs>2</uClangAs>
+                    <ClangAsOpt>0</ClangAsOpt>
                     <VariousControls>
                       <MiscControls></MiscControls>
                       <Define></Define>
@@ -5622,52 +5377,9 @@
               </FileOption>
             </File>
             <File>
-              <FileName>irq_armv8mbl.s</FileName>
+              <FileName>irq_armv8mml.S</FileName>
               <FileType>2</FileType>
-              <FilePath>..\..\..\Source\ARM\irq_armv8mbl.s</FilePath>
-              <FileOption>
-                <CommonProperty>
-                  <UseCPPCompiler>2</UseCPPCompiler>
-                  <RVCTCodeConst>0</RVCTCodeConst>
-                  <RVCTZI>0</RVCTZI>
-                  <RVCTOtherData>0</RVCTOtherData>
-                  <ModuleSelection>0</ModuleSelection>
-                  <IncludeInBuild>0</IncludeInBuild>
-                  <AlwaysBuild>2</AlwaysBuild>
-                  <GenerateAssemblyFile>2</GenerateAssemblyFile>
-                  <AssembleAssemblyFile>2</AssembleAssemblyFile>
-                  <PublicsOnly>2</PublicsOnly>
-                  <StopOnExitCode>11</StopOnExitCode>
-                  <CustomArgument></CustomArgument>
-                  <IncludeLibraryModules></IncludeLibraryModules>
-                  <ComprImg>1</ComprImg>
-                </CommonProperty>
-                <FileArmAds>
-                  <Aads>
-                    <interw>2</interw>
-                    <Ropi>2</Ropi>
-                    <Rwpi>2</Rwpi>
-                    <thumb>2</thumb>
-                    <SplitLS>2</SplitLS>
-                    <SwStkChk>2</SwStkChk>
-                    <NoWarn>2</NoWarn>
-                    <uSurpInc>2</uSurpInc>
-                    <useXO>2</useXO>
-                    <uClangAs>2</uClangAs>
-                    <VariousControls>
-                      <MiscControls></MiscControls>
-                      <Define></Define>
-                      <Undefine></Undefine>
-                      <IncludePath></IncludePath>
-                    </VariousControls>
-                  </Aads>
-                </FileArmAds>
-              </FileOption>
-            </File>
-            <File>
-              <FileName>irq_armv8mml.s</FileName>
-              <FileType>2</FileType>
-              <FilePath>..\..\..\Source\ARM\irq_armv8mml.s</FilePath>
+              <FilePath>..\..\..\Source\GCC\irq_armv8mml.S</FilePath>
             </File>
           </Files>
         </Group>
@@ -5681,8 +5393,8 @@
   <RTE>
     <apis/>
     <components>
-      <component Cclass="CMSIS" Cgroup="CORE" Cvendor="ARM" Cversion="5.0.2" condition="ARMv6_7_8-M Device">
-        <package name="CMSIS" schemaVersion="1.3" url="http://www.keil.com/pack/" vendor="ARM" version="5.1.0"/>
+      <component Cclass="CMSIS" Cgroup="CORE" Cvendor="ARM" Cversion="5.4.0" condition="ARMv6_7_8-M Device">
+        <package name="CMSIS" schemaVersion="1.3" url="http://www.keil.com/pack/" vendor="ARM" version="5.7.0"/>
         <targetInfos>
           <targetInfo name="ARMv8MBL_LE"/>
           <targetInfo name="ARMv8MBL_NS_LE"/>
@@ -5698,5 +5410,14 @@
     </components>
     <files/>
   </RTE>
+
+  <LayerInfo>
+    <Layers>
+      <Layer>
+        <LayName>RTX_CM</LayName>
+        <LayPrjMark>1</LayPrjMark>
+      </Layer>
+    </Layers>
+  </LayerInfo>
 
 </Project>
