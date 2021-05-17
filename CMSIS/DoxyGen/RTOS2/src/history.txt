@@ -103,6 +103,7 @@
       <td>
        - CVE-2021-27431 vulnerability mitigation.
        - Added OS Initialization for IAR.
+       - Fixed Round-Robin (timeout value is not reset when switching to higher priority threads).
        - Enhanced stack overrun checking.
        - Updated configuration (Event Recorder).
        - Reorganized and optimized IRQ modules.
