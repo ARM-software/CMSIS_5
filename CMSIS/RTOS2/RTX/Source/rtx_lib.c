@@ -86,7 +86,7 @@ __attribute__((section(".bss.os.thread.cb")));
 
 // Thread Default Stack
 #if (OS_THREAD_DEF_STACK_NUM != 0)
-static uint64_t os_thread_def_stack[OS_THREAD_DEF_STACK_NUM*(OS_STACK_SIZE/8)] \
+static uint64_t os_thread_def_stack[(OS_THREAD_DEF_STACK_NUM*OS_STACK_SIZE)/8] \
 __attribute__((section(".bss.os.thread.stack")));
 #endif
 
@@ -104,7 +104,7 @@ __attribute__((section(".data.os.thread.mpi"))) =
 
 // Memory Pool for Thread Stack
 #if (OS_THREAD_USER_STACK_SIZE != 0)
-static uint64_t os_thread_stack[2 + OS_THREAD_NUM + (OS_THREAD_USER_STACK_SIZE/8)] \
+static uint64_t os_thread_stack[(16 + (8*OS_THREAD_NUM) + OS_THREAD_USER_STACK_SIZE)/8] \
 __attribute__((section(".bss.os.thread.stack")));
 #endif
 
@@ -308,7 +308,7 @@ __attribute__((section(".data.os.mempool.mpi"))) =
 #if ((OS_MEMPOOL_DATA_SIZE % 8) != 0)
 #error "Invalid Data Memory size for Memory Pools!"
 #endif
-static uint64_t os_mp_data[2 + OS_MEMPOOL_NUM + (OS_MEMPOOL_DATA_SIZE/8)] \
+static uint64_t os_mp_data[(16 + (8*OS_MEMPOOL_NUM) + OS_MEMPOOL_DATA_SIZE)/8] \
 __attribute__((section(".bss.os.mempool.mem")));
 #endif
 
@@ -338,7 +338,7 @@ __attribute__((section(".data.os.msgqueue.mpi"))) =
 #if ((OS_MSGQUEUE_DATA_SIZE % 8) != 0)
 #error "Invalid Data Memory size for Message Queues!"
 #endif
-static uint64_t os_mq_data[2 + OS_MSGQUEUE_NUM + (OS_MSGQUEUE_DATA_SIZE/8)] \
+static uint64_t os_mq_data[(16 + ((8+12)*OS_MSGQUEUE_NUM) + OS_MSGQUEUE_DATA_SIZE + 7)/8] \
 __attribute__((section(".bss.os.msgqueue.mem")));
 #endif
 
