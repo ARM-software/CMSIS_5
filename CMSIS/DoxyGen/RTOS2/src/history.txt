@@ -106,6 +106,7 @@
        - Fixed osDelay/osDelayUntil error handling.
        - Fixed Round-Robin (timeout value is not reset when switching to higher priority threads).
        - Fixed osThreadJoin (when terminating thread which is waiting to be joined).
+       - Fixed Message Queue Data allocation size when using object specific memory allocation.
        - Enhanced stack overrun checking.
        - Updated osKernelResume handling (processing past sleep ticks).
        - Updated configuration (Event Recorder).
