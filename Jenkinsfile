@@ -398,6 +398,10 @@ echo """Stage schedule:
         }
 
         stage('Results') {
+            when {
+                expression { return CORE_VALIDATION }
+                beforeOptions true
+            }
             steps {
                 dir('results') {
                     deleteDir()
