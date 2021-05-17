@@ -158,7 +158,7 @@ RTX_Config.h: System Configuration</div></div>
 <td>Object Memory usage counters </td><td><code>OS_OBJ_MEM_USAGE</code> </td><td>Enables object memory usage counters to evaluate the maximum memory pool requirements individually for each RTOS object type. </td></tr>
 </table>
 <h2><a class="anchor" id="systemConfig_glob_mem"></a>
-Global dynamic memory</h2>
+Global Dynamic Memory size [bytes]</h2>
 <p>Refer to <a class="el" href="theory_of_operation.html#GlobalMemoryPool">Global Memory Pool</a>.</p>
 <h2><a class="anchor" id="systemConfig_rr"></a>
 Round-Robin Thread Switching</h2>
@@ -170,7 +170,6 @@ Round-Robin Thread Switching</h2>
 <li>when the tick reaches 0 it indicates that a timeout has occurred. If there is another thread ready with the <em>same</em> priority, then the system switches to that thread and the tick is preloaded with timeout again.</li>
 </ul>
 <p>In other words, threads execute for the duration of their time slice (unless a thread's time slice is given up). Then, RTX switches to the next thread that is in <b>READY</b> state and has the same priority. If no other thread with the same priority is ready to run, the current running thread resumes it execution.</p>
-<dl class="section note"><dt>Note</dt><dd>When switching to higher priority threads, the round-robin timeout value is reset. This might lead to conditions where threads with the same priority as the interrupted thread are blocked for a longer period of time or even never called again. You can avoid this by using <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gad01c7ec26535b1de6b018bb9466720e2">osThreadYield</a> to pass control to the next thread in the <b>READY</b> state.</dd></dl>
 <p>Round-Robin multitasking is controlled with the <b>#define OS_ROBIN_ENABLE</b>. The time slice period is configured (in RTX timer ticks) with the <b>#define OS_ROBIN_TIMEOUT</b>.</p>
 <h2><a class="anchor" id="systemConfig_isr_fifo"></a>
 ISR FIFO Queue</h2>
@@ -236,7 +235,7 @@ Configuration of Thread Count and Stack Space</h2>
 <h2><a class="anchor" id="threadConfig_ovfcheck"></a>
 Stack Overflow Checking</h2>
 <p>RTX5 implements a software stack overflow checking that traps stack overruns. Stack is used for return addresses and automatic variables. Extensive usage or incorrect stack configuration may cause a stack overflow. Software stack overflow checking is controlled with the define <code>OS_STACK_CHECK</code>.</p>
-<p>If a stack overflow is detected, the function <a class="el" href="group__rtx5__specific__functions.html#gaf1745a88f9cc60b609ab1c8076bd346d">osRtxErrorNotify</a> with error code <a class="el" href="group__rtx5__specific__defines.html#ga42206aa2524b8fab613d26bea0f73c44">osRtxErrorStackUnderflow</a> is called. By default, this function is implemented as an endless loop and will practically stop code execution.</p>
+<p>If a stack overflow is detected, the function <a class="el" href="group__rtx5__specific__functions.html#gaf1745a88f9cc60b609ab1c8076bd346d">osRtxErrorNotify</a> with error code <a class="el" href="group__rtx5__specific__defines.html#ga0663254070f9f9cd402d735715aa1904">osRtxErrorStackOverflow</a> is called. By default, this function is implemented as an endless loop and will practically stop code execution.</p>
 <h2><a class="anchor" id="threadConfig_watermark"></a>
 Stack Usage Watermark</h2>
 <p>RTX5 initializes thread stack with a watermark pattern (0xCC) when a thread is created. This allows the debugger to determine the maximum stack usage for each thread. It is typically used during development but removed from the final application. Stack usage watermark is controlled with the define <code>OS_STACK_WATERMARK</code>.</p>

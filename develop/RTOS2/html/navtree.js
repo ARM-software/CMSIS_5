@@ -16,6 +16,7 @@ var NAVTREE =
     [ "Migration from API v1 to API v2", "os2Migration.html", "os2Migration" ],
     [ "RTX v5 Implementation", "rtx5_impl.html", "rtx5_impl" ],
     [ "Coding Rules", "CodingRules.html", null ],
+    [ "Deprecated List", "deprecated.html", null ],
     [ "Reference", "modules.html", "modules" ],
     [ "Data Structures", "annotated.html", "annotated" ],
     [ "Data Structure Index", "classes.html", null ],
@@ -29,9 +30,9 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "CodingRules.html",
-"group__CMSIS__RTOS__ThreadMgmt.html#gad4e3e0971b41f2d17584a8c6837342ec",
-"group__rtx__evr__timer.html#gaccd59c7ae2351e0a1bf96cdb749c049f",
-"rtx__os_8h.html#aaf8577e5ddcbff356a1d27310baa8a1f"
+"group__CMSIS__RTOS__ThreadMgmt.html#gad3dc89e942e38d9f3af858a0269a820d",
+"group__rtx__evr__timer.html#ga6fa5a23f241d765ae22ff1862c6f3b3f",
+"rtx__os_8h.html#ac1cf67a8631962a42fa2da46f20a1a39"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

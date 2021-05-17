@@ -602,7 +602,7 @@ Kernel version (major.minor.rev: mmnnnrrrr dec). </td></tr>
 </div><div class="memdoc">
 <dl class="section return"><dt>Returns</dt><dd>time in ticks, for how long the system can sleep or power-down.</dd></dl>
 <p>CMSIS-RTOS provides extension for tick-less operation which is useful for applications that use extensively low-power modes where the SysTick timer is also disabled. To provide a time-tick in such power-saving modes a wake-up timer is used to derive timer intervals. The function <b>osKernelSuspend</b> suspends the RTX kernel scheduler and thus enables sleep modes.</p>
-<p>The return value can be used to determine the amount of system ticks until the next tick-based kernel event will occure, i.e. a delayed thread becomed ready again. It is recommended to set up the low power timer to generate a wake-up interrupt based on this return value.</p>
+<p>The return value can be used to determine the amount of system ticks until the next tick-based kernel event will occur, i.e. a delayed thread becomes ready again. It is recommended to set up the low power timer to generate a wake-up interrupt based on this return value.</p>
 <dl class="section note"><dt>Note</dt><dd>This function <b>cannot</b> be called from <a class="el" href="theory_of_operation.html#CMSIS_RTOS_ISR_Calls">Interrupt Service Routines</a>.</dd></dl>
 <p><b>Code Example</b> </p>
 <div class="fragment"><div class="line"><span class="keywordtype">void</span> <a class="code" href="group__rtx5__specific__functions.html#ga074068b8efa7074cee68a71481d0b072">osRtxIdleThread</a> (<span class="keywordtype">void</span>) {</div>
@@ -774,7 +774,7 @@ Kernel version (major.minor.rev: mmnnnrrrr dec). </td></tr>
 <dl class="section note"><dt>Note</dt><dd>This function may be called from <a class="el" href="theory_of_operation.html#CMSIS_RTOS_ISR_Calls">Interrupt Service Routines</a>.</dd></dl>
 <p><b>Code Example</b> </p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &quot;<a class="code" href="cmsis__os2_8h.html">cmsis_os2.h</a>&quot;</span></div>
-<div class="line"></div>
+<div class="line"> </div>
 <div class="line"><span class="keywordtype">void</span> SetupDevice (<span class="keywordtype">void</span>)  {</div>
 <div class="line">  uint32_t tick;</div>
 <div class="line">  </div>

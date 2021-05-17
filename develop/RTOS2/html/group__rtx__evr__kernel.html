@@ -186,6 +186,9 @@ Functions</h2></td></tr>
 <tr class="memitem:gaf2bdfcb7b099295c7b0123abe88e10a3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__rtx__evr__kernel.html#gaf2bdfcb7b099295c7b0123abe88e10a3">EvrRtxKernelGetSysTimerFreq</a> (uint32_t freq)</td></tr>
 <tr class="memdesc:gaf2bdfcb7b099295c7b0123abe88e10a3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on RTOS kernel system timer frequency retrieve (API)  <a href="#gaf2bdfcb7b099295c7b0123abe88e10a3">More...</a><br/></td></tr>
 <tr class="separator:gaf2bdfcb7b099295c7b0123abe88e10a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad0c7f0aa30cff035db31854479c1d6bd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__rtx__evr__kernel.html#gad0c7f0aa30cff035db31854479c1d6bd">EvrRtxKernelErrorNotify</a> (uint32_t code, void *object_id)</td></tr>
+<tr class="memdesc:gad0c7f0aa30cff035db31854479c1d6bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on RTOS kernel system error (Error)  <a href="#gad0c7f0aa30cff035db31854479c1d6bd">More...</a><br/></td></tr>
+<tr class="separator:gad0c7f0aa30cff035db31854479c1d6bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Description</h2>
 <h2 class="groupheader">Function Documentation</h2>
@@ -776,6 +779,45 @@ Functions</h2></td></tr>
 <p><b>Value</b> in the Event Recorder shows:</p>
 <ul>
 <li><b>freq</b> : retrieved frequency of the system timer in Hz. </li>
+</ul>
+
+</div>
+</div>
+<a class="anchor" id="gad0c7f0aa30cff035db31854479c1d6bd"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void EvrRtxKernelErrorNotify </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>code</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>object_id</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">code</td><td>error code. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">object_id</td><td>object that caused the error.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>The event <b>KernelErrorNotify</b> is generated when the function <a class="el" href="group__rtx5__specific__functions.html#gaf1745a88f9cc60b609ab1c8076bd346d">osRtxErrorNotify</a> is called.</p>
+<p><b>Value</b> in the Event Recorder shows:</p>
+<ul>
+<li><b>code</b> : error code.</li>
+<li><b>object_id</b> : object that caused the error. </li>
 </ul>
 
 </div>

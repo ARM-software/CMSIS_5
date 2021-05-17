@@ -4,7 +4,7 @@ var annotated =
     [ "osMemoryPoolAttr_t", "group__CMSIS__RTOS__PoolMgmt.html#structosMemoryPoolAttr__t", "group__CMSIS__RTOS__PoolMgmt_structosMemoryPoolAttr__t" ],
     [ "osMessageQueueAttr_t", "group__CMSIS__RTOS__Message.html#structosMessageQueueAttr__t", "group__CMSIS__RTOS__Message_structosMessageQueueAttr__t" ],
     [ "osMutexAttr_t", "group__CMSIS__RTOS__MutexMgmt.html#structosMutexAttr__t", "group__CMSIS__RTOS__MutexMgmt_structosMutexAttr__t" ],
-    [ "osRtxConfig_t", "rtx__os_8h.html#structosRtxConfig__t", "rtx__os_8h_structosRtxConfig__t" ],
+    [ "osRtxConfig_t", "structosRtxConfig__t.html", "structosRtxConfig__t" ],
     [ "osRtxConfig_t.isr_queue", "rtx__os_8h.html#structosRtxConfig__t_8isr__queue", "rtx__os_8h_structosRtxConfig__t_8isr__queue" ],
     [ "osRtxConfig_t.mem", "rtx__os_8h.html#structosRtxConfig__t_8mem", "rtx__os_8h_structosRtxConfig__t_8mem" ],
     [ "osRtxConfig_t.mpi", "rtx__os_8h.html#structosRtxConfig__t_8mpi", "rtx__os_8h_structosRtxConfig__t_8mpi" ],

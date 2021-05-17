@@ -159,9 +159,9 @@ Data Structures</h2></td></tr>
 <tr class="memitem:structosRtxObjectMemUsage__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="rtx__os_8h.html#structosRtxObjectMemUsage__t">osRtxObjectMemUsage_t</a></td></tr>
 <tr class="memdesc:structosRtxObjectMemUsage__t"><td class="mdescLeft">&#160;</td><td class="mdescRight">OS Runtime Object Memory Usage structure.  <a href="rtx__os_8h.html#structosRtxObjectMemUsage__t">More...</a><br/></td></tr>
 <tr class="separator:structosRtxObjectMemUsage__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:structosRtxConfig__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="rtx__os_8h.html#structosRtxConfig__t">osRtxConfig_t</a></td></tr>
-<tr class="memdesc:structosRtxConfig__t"><td class="mdescLeft">&#160;</td><td class="mdescRight">OS Configuration structure.  <a href="rtx__os_8h.html#structosRtxConfig__t">More...</a><br/></td></tr>
-<tr class="separator:structosRtxConfig__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structosRtxConfig__t.html">osRtxConfig_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">OS Configuration structure.  <a href="structosRtxConfig__t.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structosRtxInfo__t_8kernel"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="rtx__os_8h.html#structosRtxInfo__t_8kernel">osRtxInfo_t.kernel</a></td></tr>
 <tr class="separator:structosRtxInfo__t_8kernel"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structosRtxInfo__t_8thread"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="rtx__os_8h.html#structosRtxInfo__t_8thread">osRtxInfo_t.thread</a></td></tr>
@@ -326,8 +326,10 @@ Macros</h2></td></tr>
 <tr class="memdesc:ga47eb1e21f1bf9a42281c6c89c7473e99"><td class="mdescLeft">&#160;</td><td class="mdescRight">Message Queue Memory size.  <a href="group__rtx5__specific__defines.html#ga47eb1e21f1bf9a42281c6c89c7473e99">More...</a><br/></td></tr>
 <tr class="separator:ga47eb1e21f1bf9a42281c6c89c7473e99"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga42206aa2524b8fab613d26bea0f73c44"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__rtx5__specific__defines.html#ga42206aa2524b8fab613d26bea0f73c44">osRtxErrorStackUnderflow</a>&#160;&#160;&#160;1U</td></tr>
-<tr class="memdesc:ga42206aa2524b8fab613d26bea0f73c44"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stack overflow, i.e. stack pointer below its lower memory limit for descending stacks.  <a href="group__rtx5__specific__defines.html#ga42206aa2524b8fab613d26bea0f73c44">More...</a><br/></td></tr>
 <tr class="separator:ga42206aa2524b8fab613d26bea0f73c44"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0663254070f9f9cd402d735715aa1904"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__rtx5__specific__defines.html#ga0663254070f9f9cd402d735715aa1904">osRtxErrorStackOverflow</a>&#160;&#160;&#160;1U</td></tr>
+<tr class="memdesc:ga0663254070f9f9cd402d735715aa1904"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stack overflow, i.e. stack pointer below its lower memory limit for descending stacks.  <a href="group__rtx5__specific__defines.html#ga0663254070f9f9cd402d735715aa1904">More...</a><br/></td></tr>
+<tr class="separator:ga0663254070f9f9cd402d735715aa1904"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga7377235f9fa3cedee06f682cd93f3e88"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__rtx5__specific__defines.html#ga7377235f9fa3cedee06f682cd93f3e88">osRtxErrorISRQueueOverflow</a>&#160;&#160;&#160;2U</td></tr>
 <tr class="memdesc:ga7377235f9fa3cedee06f682cd93f3e88"><td class="mdescLeft">&#160;</td><td class="mdescRight">ISR Queue overflow detected when inserting object.  <a href="group__rtx5__specific__defines.html#ga7377235f9fa3cedee06f682cd93f3e88">More...</a><br/></td></tr>
 <tr class="separator:ga7377235f9fa3cedee06f682cd93f3e88"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -355,6 +357,8 @@ Functions</h2></td></tr>
 <tr class="memitem:gaf1745a88f9cc60b609ab1c8076bd346d"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__rtx5__specific__functions.html#gaf1745a88f9cc60b609ab1c8076bd346d">osRtxErrorNotify</a> (uint32_t code, void *object_id)</td></tr>
 <tr class="memdesc:gaf1745a88f9cc60b609ab1c8076bd346d"><td class="mdescLeft">&#160;</td><td class="mdescRight">OS Error Callback function.  <a href="group__rtx5__specific__functions.html#gaf1745a88f9cc60b609ab1c8076bd346d">More...</a><br/></td></tr>
 <tr class="separator:gaf1745a88f9cc60b609ab1c8076bd346d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9515a943acedd616ce8be944544b177e"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="rtx__os_8h.html#a9515a943acedd616ce8be944544b177e">osRtxKernelErrorNotify</a> (uint32_t code, void *object_id)</td></tr>
+<tr class="separator:a9515a943acedd616ce8be944544b177e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga074068b8efa7074cee68a71481d0b072"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__rtx5__specific__functions.html#ga074068b8efa7074cee68a71481d0b072">osRtxIdleThread</a> (void *argument)</td></tr>
 <tr class="memdesc:ga074068b8efa7074cee68a71481d0b072"><td class="mdescLeft">&#160;</td><td class="mdescRight">OS Idle Thread.  <a href="group__rtx5__specific__functions.html#ga074068b8efa7074cee68a71481d0b072">More...</a><br/></td></tr>
 <tr class="separator:ga074068b8efa7074cee68a71481d0b072"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -386,7 +390,7 @@ Variables</h2></td></tr>
 <tr class="separator:ae5dea30a13d7a2316699a7f201504bc7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af3da38b316a84990128e8d9f34e3e6d3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="rtx__os_8h.html#structosRtxObjectMemUsage__t">osRtxObjectMemUsage_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="rtx__os_8h.html#af3da38b316a84990128e8d9f34e3e6d3">osRtxMessageQueueMemUsage</a></td></tr>
 <tr class="separator:af3da38b316a84990128e8d9f34e3e6d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a489fda965fa634809f401ae6458a6f45"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="rtx__os_8h.html#structosRtxConfig__t">osRtxConfig_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="rtx__os_8h.html#a489fda965fa634809f401ae6458a6f45">osRtxConfig</a></td></tr>
+<tr class="memitem:a489fda965fa634809f401ae6458a6f45"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="structosRtxConfig__t.html">osRtxConfig_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="rtx__os_8h.html#a489fda965fa634809f401ae6458a6f45">osRtxConfig</a></td></tr>
 <tr class="memdesc:a489fda965fa634809f401ae6458a6f45"><td class="mdescLeft">&#160;</td><td class="mdescRight">OS Configuration.  <a href="#a489fda965fa634809f401ae6458a6f45">More...</a><br/></td></tr>
 <tr class="separator:a489fda965fa634809f401ae6458a6f45"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -467,7 +471,7 @@ Thread waiting to Join. </td></tr>
 <td class="fieldname">
 delay</td>
 <td class="fielddoc">
-Delay Time. </td></tr>
+Delay Time/Round Robin Time Tick. </td></tr>
 <tr><td class="fieldtype">
 <a class="anchor" id="a81659cc4c01e54e2424022728d9effc7"></a>int8_t</td>
 <td class="fieldname">
@@ -1246,87 +1250,6 @@ Maximum used. </td></tr>
 
 </div>
 </div>
-<a name="structosRtxConfig__t" id="structosRtxConfig__t"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">struct osRtxConfig_t</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<div class="textblock"></div><table class="fieldtable">
-<tr><th colspan="3">Data Fields</th></tr>
-<tr><td class="fieldtype">
-<a class="anchor" id="a773b39d480759f67926cb18ae2219281"></a>uint32_t</td>
-<td class="fieldname">
-flags</td>
-<td class="fielddoc">
-OS Configuration Flags. </td></tr>
-<tr><td class="fieldtype">
-<a class="anchor" id="a5973e7102782a9936a5e0d1417863675"></a>uint32_t</td>
-<td class="fieldname">
-tick_freq</td>
-<td class="fielddoc">
-Kernel Tick Frequency. </td></tr>
-<tr><td class="fieldtype">
-<a class="anchor" id="a6b4c66676a5bc985c28b71ac4ac79159"></a>uint32_t</td>
-<td class="fieldname">
-robin_timeout</td>
-<td class="fielddoc">
-Round Robin Timeout Tick. </td></tr>
-<tr><td class="fieldtype">
-<a class="anchor" id="a0354dd9f726694843f2a01df98c5641c"></a>struct <a class="el" href="rtx__os_8h.html#structosRtxConfig__t_8isr__queue">osRtxConfig_t</a></td>
-<td class="fieldname">
-isr_queue</td>
-<td class="fielddoc">
-</td></tr>
-<tr><td class="fieldtype">
-<a class="anchor" id="aa30bb7d2484db1812c1aaf77a23cd11e"></a>struct <a class="el" href="rtx__os_8h.html#structosRtxConfig__t_8mem">osRtxConfig_t</a></td>
-<td class="fieldname">
-mem</td>
-<td class="fielddoc">
-</td></tr>
-<tr><td class="fieldtype">
-<a class="anchor" id="ac013bca5f28bebf36a3372da78107e97"></a>struct <a class="el" href="rtx__os_8h.html#structosRtxConfig__t_8mpi">osRtxConfig_t</a></td>
-<td class="fieldname">
-mpi</td>
-<td class="fielddoc">
-</td></tr>
-<tr><td class="fieldtype">
-<a class="anchor" id="a6aa2c0bcb2024f1e4c38f9e8f6769c09"></a>uint32_t</td>
-<td class="fieldname">
-thread_stack_size</td>
-<td class="fielddoc">
-Default Thread Stack Size. </td></tr>
-<tr><td class="fieldtype">
-<a class="anchor" id="a694e5f79185db270e087e94719177ca0"></a>const <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#structosThreadAttr__t">osThreadAttr_t</a> *</td>
-<td class="fieldname">
-idle_thread_attr</td>
-<td class="fielddoc">
-Idle Thread Attributes. </td></tr>
-<tr><td class="fieldtype">
-<a class="anchor" id="a310b3e01cc8e274529353210db5a78c3"></a>const <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#structosThreadAttr__t">osThreadAttr_t</a> *</td>
-<td class="fieldname">
-timer_thread_attr</td>
-<td class="fielddoc">
-Timer Thread Attributes. </td></tr>
-<tr><td class="fieldtype">
-<a class="anchor" id="a3e07bcf21ce5250f3dc0f1ec4ebc938d"></a>const <a class="el" href="group__CMSIS__RTOS__Message.html#structosMessageQueueAttr__t">osMessageQueueAttr_t</a> *</td>
-<td class="fieldname">
-timer_mq_attr</td>
-<td class="fielddoc">
-Timer Message Queue Attributes. </td></tr>
-<tr><td class="fieldtype">
-<a class="anchor" id="a3d6d4ee231cd6db41ee358a5676b1a9d"></a>uint32_t</td>
-<td class="fieldname">
-timer_mq_mcnt</td>
-<td class="fielddoc">
-Timer Message Queue maximum Messages. </td></tr>
-</table>
-
-</div>
-</div>
 <a name="structosRtxInfo__t_8kernel" id="structosRtxInfo__t_8kernel"></a>
 <div class="memitem">
 <div class="memproto">
@@ -1421,6 +1344,12 @@ terminate_list</td>
 <td class="fielddoc">
 Terminate Thread List. </td></tr>
 <tr><td class="fieldtype">
+<a class="anchor" id="a7f005c3fa691e77c52d3297cc2699072"></a>uint32_t</td>
+<td class="fieldname">
+reserved</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
 <a class="anchor" id="a8ee60a2e00c90d7e00d5069188dc115b"></a><a class="el" href="rtx__os_8h.html#structosRtxInfo__t_8thread_8robin">thread</a></td>
 <td class="fieldname">
 robin</td>
@@ -1476,12 +1405,6 @@ thread</td>
 <td class="fielddoc">
 &lt; Thread Round Robin Info <p>Round Robin Thread </p>
 </td></tr>
-<tr><td class="fieldtype">
-<a class="anchor" id="ae5e5c0754f1e26bf915455e21cf2eba5"></a>uint32_t</td>
-<td class="fieldname">
-tick</td>
-<td class="fielddoc">
-Round Robin Time Tick. </td></tr>
 <tr><td class="fieldtype">
 <a class="anchor" id="a90272dda245ae1fb3cf197e91a8689dc"></a>uint32_t</td>
 <td class="fieldname">
@@ -2387,6 +2310,32 @@ Message Queue Control Blocks. </td></tr>
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
+<a class="anchor" id="a9515a943acedd616ce8be944544b177e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t osRtxKernelErrorNotify </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>code</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>object_id</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a class="anchor" id="a3e5ddb3df0d62f2dc357e64a3f04a6ce"></a>
 <div class="memitem">
 <div class="memproto">
@@ -2537,7 +2486,7 @@ Message Queue Control Blocks. </td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const <a class="el" href="rtx__os_8h.html#structosRtxConfig__t">osRtxConfig_t</a> osRtxConfig</td>
+          <td class="memname">const <a class="el" href="structosRtxConfig__t.html">osRtxConfig_t</a> osRtxConfig</td>
         </tr>
       </table>
 </div><div class="memdoc">

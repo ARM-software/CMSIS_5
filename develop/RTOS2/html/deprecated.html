@@ -3,8 +3,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<title>Directory Structure and File Overview</title>
-<title>CMSIS-RTOS2: Directory Structure and File Overview</title>
+<title>Deprecated List</title>
+<title>CMSIS-RTOS2: Deprecated List</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="cmsis.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="jquery.js"></script>
@@ -90,7 +90,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   </div>
 </div>
 <script type="text/javascript">
-$(document).ready(function(){initNavTree('pDirectory_Files.html','');});
+$(document).ready(function(){initNavTree('deprecated.html','');});
 </script>
 <div id="doc-content">
 <!-- window showing the filter options -->
@@ -109,88 +109,18 @@ $(document).ready(function(){initNavTree('pDirectory_Files.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">Directory Structure and File Overview </div>  </div>
+<div class="title">Deprecated List </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>The following section provides an overview of the directory structure and the files that are relevant for the user's for CMSIS-RTOS RTX v5. The following directory references start below the CMSIS pack installation path, for example ARM/CMSIS/<em>version</em>/CMSIS/RTOS2.</p>
-<h1><a class="anchor" id="Folders"></a>
-RTX v5 Directory Structure</h1>
-<p>The CMSIS-RTOS RTX v5 is delivered in source code and several examples are provided.</p>
-<table  class="cmtable" summary="CMSIS-RTOS RTX Library Files">
-<tr>
-<th>Directory </th><th>Content  </th></tr>
-<tr>
-<td>Include </td><td>Header files: <b>cmsis_os2.h</b> for <a class="el" href="rtos_api2.html">CMSIS-RTOS C API v2</a> and <b>os_tick.h</b> for <a class="el" href="rtos_os_tick_api.html">OS Tick API</a>.  </td></tr>
-<tr>
-<td>Source </td><td>Generic <b>OS tick</b> implementations for various processors based on <a class="el" href="rtos_os_tick_api.html">OS Tick API</a>.  </td></tr>
-<tr>
-<td>Template </td><td><a href="../../RTOS/html/index.html" class="el">CMSIS-RTOS API v1</a> template source and header file.  </td></tr>
-<tr>
-<td>RTX </td><td>Directory with RTX specific files and folders. Also contains the component viewer description file.  </td></tr>
-<tr>
-<td>RTX/Config </td><td>CMSIS-RTOS RTX configuration files <b>RTX_Config.h</b> and <b>RTX_Config.c</b>.  </td></tr>
-<tr>
-<td>RTX/Examples </td><td>Example projects that can be directly used in development tools.  </td></tr>
-<tr>
-<td>RTX/Include </td><td>RTX v5 specific include files.  </td></tr>
-<tr>
-<td>RTX/Include1 </td><td>CMSIS-RTOS v1 API header file.  </td></tr>
-<tr>
-<td>RTX/Library </td><td>Pre-built libraries (see next table for details).  </td></tr>
-<tr>
-<td>RTX/Source </td><td>Source code.  </td></tr>
-<tr>
-<td>RTX/Template </td><td>User code templates for creating application projects with CMSIS-RTOS RTX v5.  </td></tr>
-</table>
-<h1><a class="anchor" id="libFiles"></a>
-RTX v5 Library Files</h1>
-<p>The CMSIS-RTOS RTX Library is available pre-compiled for ARMCC and GCC compilers and supports all Cortex-M processor variants in every configuration , including Arm Cortex-M23, Cortex-M33 and Cortex-M35P.</p>
-<table  class="cmtable" summary="CMSIS-RTOS RTX Library Files">
-<tr>
-<th>Library File </th><th>Processor Configuration  </th></tr>
-<tr>
-<td>Library/ARM/RTX_CM0.lib </td><td>CMSIS-RTOS RTX Library for ARMCC Compiler, Cortex-M0 and M1, little-endian.  </td></tr>
-<tr>
-<td>Library/ARM/RTX_CM3.lib </td><td>CMSIS-RTOS RTX Library for ARMCC Compiler, Cortex-M3, M4, and M7 without FPU, little-endian.  </td></tr>
-<tr>
-<td>Library/ARM/RTX_CM4F.lib </td><td>CMSIS-RTOS RTX Library for ARMCC Compiler, Cortex-M4 and M7 with FPU, little-endian.  </td></tr>
-<tr>
-<td>Library/ARM/RTX_V8MB.lib </td><td>CMSIS-RTOS RTX Library for ARMCC Compiler, Armv8-M Baseline.  </td></tr>
-<tr>
-<td>Library/ARM/RTX_V8MBN.lib </td><td>CMSIS-RTOS RTX Library for ARMCC Compiler, Armv8-M Baseline, non-secure.  </td></tr>
-<tr>
-<td>Library/ARM/RTX_V8MM.lib </td><td>CMSIS-RTOS RTX Library for ARMCC Compiler, Armv8-M Mainline.  </td></tr>
-<tr>
-<td>Library/ARM/RTX_V8MMF.lib </td><td>CMSIS-RTOS RTX Library for ARMCC Compiler, Armv8-M Mainline with FPU.  </td></tr>
-<tr>
-<td>Library/ARM/RTX_V8MMFN.lib </td><td>CMSIS-RTOS RTX Library for ARMCC Compiler, Armv8-M Mainline with FPU, non-secure.  </td></tr>
-<tr>
-<td>Library/ARM/RTX_V8MMN.lib </td><td>CMSIS-RTOS RTX Library for ARMCC Compiler, Armv8-M Mainline, non-secure.  </td></tr>
-<tr>
-<td>Library/GCC/libRTX_CM0.a </td><td>CMSIS-RTOS libRTX Library for GCC Compiler, Cortex-M0 and M1, little-endian.  </td></tr>
-<tr>
-<td>Library/GCC/libRTX_CM3.a </td><td>CMSIS-RTOS libRTX Library for GCC Compiler, Cortex-M3, M4, and M7 without FPU, little-endian.  </td></tr>
-<tr>
-<td>Library/GCC/libRTX_CM4F.a </td><td>CMSIS-RTOS libRTX Library for GCC Compiler, Cortex-M4 and M7 with FPU, little-endian.  </td></tr>
-<tr>
-<td>Library/GCC/libRTX_V8MB.a </td><td>CMSIS-RTOS libRTX Library for GCC Compiler, Armv8-M Baseline.  </td></tr>
-<tr>
-<td>Library/GCC/libRTX_V8MBN.a </td><td>CMSIS-RTOS libRTX Library for GCC Compiler, Armv8-M Baseline, non-secure.  </td></tr>
-<tr>
-<td>Library/GCC/libRTX_V8MM.a </td><td>CMSIS-RTOS libRTX Library for GCC Compiler, Armv8-M Mainline.  </td></tr>
-<tr>
-<td>Library/GCC/libRTX_V8MMF.a </td><td>CMSIS-RTOS libRTX Library for GCC Compiler, Armv8-M Mainline with FPU.  </td></tr>
-<tr>
-<td>Library/GCC/libRTX_V8MMFN.a </td><td>CMSIS-RTOS libRTX Library for GCC Compiler, Armv8-M Mainline with FPU, non-secure.  </td></tr>
-<tr>
-<td>Library/GCC/libRTX_V8MMN.a </td><td>CMSIS-RTOS libRTX Library for GCC Compiler, Armv8-M Mainline, non-secure.  </td></tr>
-</table>
+<div class="textblock"><dl class="reflist">
+<dt><a class="anchor" id="_deprecated000001"></a>Global <a class="el" href="group__rtx5__specific__defines.html#ga42206aa2524b8fab613d26bea0f73c44">osRtxErrorStackUnderflow</a>  </dt>
+<dd>Superseeded by <a class="el" href="group__rtx5__specific__defines.html#ga0663254070f9f9cd402d735715aa1904">osRtxErrorStackOverflow</a>. </dd>
+</dl>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="index.html">index</a></li><li class="navelem"><a class="el" href="rtx5_impl.html">RTX v5 Implementation</a></li><li class="navelem"><a class="el" href="technicalData5.html">Technical Data</a></li>
     <li class="footer">
       <script type="text/javascript">
         <!--

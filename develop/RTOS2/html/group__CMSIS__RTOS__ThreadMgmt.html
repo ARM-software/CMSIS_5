@@ -375,7 +375,7 @@ Thread State and State Transitions</div></div>
 <div class="line">}</div>
 </div><!-- fragment --><p><b>Example 2 - Create thread with stack non-default stack size</b></p>
 <p>Similar to the simple thread all attributes are default. The stack is dynamically allocated from the <a class="el" href="theory_of_operation.html#GlobalMemoryPool">Global Memory Pool</a></p>
-<p><a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#aacbc9a219f2d6870e9ce89bb93f975c9">osThreadAttr_t::stack_size</a> is used to pass the stack size in Bytes to osThreadNew.</p>
+<p><a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#aacbc9a219f2d6870e9ce89bb93f975c9">osThreadAttr_t::stack_size</a> is used to pass the stack size in Bytes to <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga48d68b8666d99d28fa646ee1d2182b8f">osThreadNew</a>.</p>
 <div class="fragment"><div class="line"><a class="code" href="cmsis__os2_8h.html#a153a4a31b276a9758959580538720a51">__NO_RETURN</a> <span class="keywordtype">void</span> thread1 (<span class="keywordtype">void</span> *argument) {</div>
 <div class="line">  <span class="comment">// ...</span></div>
 <div class="line">  <span class="keywordflow">for</span> (;;) {}</div>
@@ -393,7 +393,7 @@ Thread State and State Transitions</div></div>
 </div><!-- fragment --><p><b>Example 3 - Create thread with statically allocated stack</b></p>
 <p>Similar to the simple thread all attributes are default. The stack is statically allocated using the <code>uint64_t</code> array <code>thread1_stk_1</code>. This allocates 64*8 Bytes (=512 Bytes) with an alignment of 8 Bytes (mandatory for Cortex-M stack memory).</p>
 <p><a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ad7c9b42355a4c8b9467130ab3fb19e43">osThreadAttr_t::stack_mem</a> holds a pointer to the stacks lowest address.</p>
-<p><a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#aacbc9a219f2d6870e9ce89bb93f975c9">osThreadAttr_t::stack_size</a> is used to pass the stack size in Bytes to osThreadNew.</p>
+<p><a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#aacbc9a219f2d6870e9ce89bb93f975c9">osThreadAttr_t::stack_size</a> is used to pass the stack size in Bytes to <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga48d68b8666d99d28fa646ee1d2182b8f">osThreadNew</a>.</p>
 <div class="fragment"><div class="line"><a class="code" href="cmsis__os2_8h.html#a153a4a31b276a9758959580538720a51">__NO_RETURN</a> <span class="keywordtype">void</span> thread1 (<span class="keywordtype">void</span> *argument) {</div>
 <div class="line">  <span class="comment">// ...</span></div>
 <div class="line">  <span class="keywordflow">for</span> (;;) {}</div>

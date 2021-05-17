@@ -183,7 +183,15 @@ CMSIS-RTOS RTX Version 5</h1>
 <tr>
 <td>V5.5.3 </td><td><ul>
 <li>CVE-2021-27431 vulnerability mitigation.</li>
-<li>Added OS Initialization for IAR.   </li>
+<li>Added OS Initialization for IAR.</li>
+<li>Fixed osDelay/osDelayUntil error handling.</li>
+<li>Fixed Round-Robin (timeout value is not reset when switching to higher priority threads).</li>
+<li>Fixed osThreadJoin (when terminating thread which is waiting to be joined).</li>
+<li>Fixed Message Queue Data allocation size when using object specific memory allocation.</li>
+<li>Enhanced stack overrun checking.</li>
+<li>Updated osKernelResume handling (processing past sleep ticks).</li>
+<li>Updated configuration (Event Recorder).</li>
+<li>Reorganized and optimized IRQ modules.   </li>
 </ul>
 </td></tr>
 <tr>

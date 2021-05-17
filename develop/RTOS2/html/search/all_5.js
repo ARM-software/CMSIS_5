@@ -25,6 +25,7 @@ var searchData=
   ['evrrtxeventflagswaitpending',['EvrRtxEventFlagsWaitPending',['../group__rtx__evr__event__flags.html#gafd598e0b02a31083fb41626d68fa489e',1,'rtx_evr.h']]],
   ['evrrtxeventflagswaittimeout',['EvrRtxEventFlagsWaitTimeout',['../group__rtx__evr__event__flags.html#ga877235cbe04188b831b70a3c2237c827',1,'rtx_evr.h']]],
   ['evrrtxkernelerror',['EvrRtxKernelError',['../group__rtx__evr__kernel.html#ga2a38154886e6293e127bafcfb6f7d609',1,'rtx_evr.h']]],
+  ['evrrtxkernelerrornotify',['EvrRtxKernelErrorNotify',['../group__rtx__evr__kernel.html#gad0c7f0aa30cff035db31854479c1d6bd',1,'rtx_evr.h']]],
   ['evrrtxkernelgetinfo',['EvrRtxKernelGetInfo',['../group__rtx__evr__kernel.html#ga4c2a175b79d39d70a4a5112e270d03f2',1,'rtx_evr.h']]],
   ['evrrtxkernelgetstate',['EvrRtxKernelGetState',['../group__rtx__evr__kernel.html#gad6407e9ff0910629b041866bd801075a',1,'rtx_evr.h']]],
   ['evrrtxkernelgetsystimercount',['EvrRtxKernelGetSysTimerCount',['../group__rtx__evr__kernel.html#gafb6530be8201b119015a3f45d66c2f09',1,'rtx_evr.h']]],

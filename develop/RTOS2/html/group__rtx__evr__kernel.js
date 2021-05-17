@@ -21,5 +21,6 @@ var group__rtx__evr__kernel =
     [ "EvrRtxKernelGetTickCount", "group__rtx__evr__kernel.html#ga64431a63437506a6f7fe22637d4891c5", null ],
     [ "EvrRtxKernelGetTickFreq", "group__rtx__evr__kernel.html#ga7404f3a22af84ad4091c24811fc1bf87", null ],
     [ "EvrRtxKernelGetSysTimerCount", "group__rtx__evr__kernel.html#gafb6530be8201b119015a3f45d66c2f09", null ],
-    [ "EvrRtxKernelGetSysTimerFreq", "group__rtx__evr__kernel.html#gaf2bdfcb7b099295c7b0123abe88e10a3", null ]
+    [ "EvrRtxKernelGetSysTimerFreq", "group__rtx__evr__kernel.html#gaf2bdfcb7b099295c7b0123abe88e10a3", null ],
+    [ "EvrRtxKernelErrorNotify", "group__rtx__evr__kernel.html#gad0c7f0aa30cff035db31854479c1d6bd", null ]
 ];

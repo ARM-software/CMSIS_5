@@ -27,7 +27,7 @@ var rtx5_impl =
     ] ],
     [ "Configure RTX v5", "config_rtx5.html", [
       [ "System Configuration", "config_rtx5.html#systemConfig", [
-        [ "Global dynamic memory", "config_rtx5.html#systemConfig_glob_mem", null ],
+        [ "Global Dynamic Memory size [bytes]", "config_rtx5.html#systemConfig_glob_mem", null ],
         [ "Round-Robin Thread Switching", "config_rtx5.html#systemConfig_rr", null ],
         [ "ISR FIFO Queue", "config_rtx5.html#systemConfig_isr_fifo", null ],
         [ "Object Memory Usage Counters", "config_rtx5.html#systemConfig_usage_counters", null ]

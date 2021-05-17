@@ -4,7 +4,7 @@ var searchData=
   ['osmemorypoolattr_5ft',['osMemoryPoolAttr_t',['../group__CMSIS__RTOS__PoolMgmt.html#structosMemoryPoolAttr__t',1,'']]],
   ['osmessagequeueattr_5ft',['osMessageQueueAttr_t',['../group__CMSIS__RTOS__Message.html#structosMessageQueueAttr__t',1,'']]],
   ['osmutexattr_5ft',['osMutexAttr_t',['../group__CMSIS__RTOS__MutexMgmt.html#structosMutexAttr__t',1,'']]],
-  ['osrtxconfig_5ft',['osRtxConfig_t',['../rtx__os_8h.html#structosRtxConfig__t',1,'']]],
+  ['osrtxconfig_5ft',['osRtxConfig_t',['../structosRtxConfig__t.html',1,'']]],
   ['osrtxconfig_5ft_2eisr_5fqueue',['osRtxConfig_t.isr_queue',['../rtx__os_8h.html#structosRtxConfig__t_8isr__queue',1,'']]],
   ['osrtxconfig_5ft_2emem',['osRtxConfig_t.mem',['../rtx__os_8h.html#structosRtxConfig__t_8mem',1,'']]],
   ['osrtxconfig_5ft_2empi',['osRtxConfig_t.mpi',['../rtx__os_8h.html#structosRtxConfig__t_8mpi',1,'']]],

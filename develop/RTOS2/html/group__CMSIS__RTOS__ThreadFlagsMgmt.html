@@ -271,6 +271,7 @@ Functions</h2></td></tr>
 <ul>
 <li><em>osFlagsErrorUnknown:</em> unspecified error, i.e. not called from a running threads context.</li>
 <li><em>osFlagsErrorParameter:</em> parameter <em>flags</em> has highest bit set.</li>
+<li><em>osFlagsErrorISR:</em> the function <b>osThreadFlagsClear</b> cannot be called from interrupt service routines.</li>
 </ul>
 <dl class="section note"><dt>Note</dt><dd>This function <b>cannot</b> be called from <a class="el" href="theory_of_operation.html#CMSIS_RTOS_ISR_Calls">Interrupt Service Routines</a>. </dd></dl>
 

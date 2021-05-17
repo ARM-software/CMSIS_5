@@ -425,7 +425,7 @@ Functions</h2></td></tr>
 <p>Return the state of OS Tick timer interrupt pending bit that indicates timer overflows to adjust SysTimer calculations.</p>
 <p><b>Cortex-M SysTick implementation:</b></p>
 <div class="fragment"><div class="line">uint32_t <a class="code" href="group__CMSIS__RTOS__TickAPI.html#ga1f9a593126b7f0b66fc526c2cebd6192">OS_Tick_GetOverflow</a> (<span class="keywordtype">void</span>) {</div>
-<div class="line">  <span class="keywordflow">return</span> ((SysTick-&gt;CTRL &gt;&gt; 16) &amp; 1U);</div>
+<div class="line">  <span class="keywordflow">return</span> ((SCB-&gt;ICSR &amp; SCB_ICSR_PENDSTSET_Msk) &gt;&gt; SCB_ICSR_PENDSTSET_Pos);</div>
 <div class="line">}</div>
 </div><!-- fragment --> 
 </div>

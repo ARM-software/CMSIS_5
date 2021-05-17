@@ -148,8 +148,10 @@ Macros</h2></td></tr>
 <tr class="memdesc:ga47eb1e21f1bf9a42281c6c89c7473e99"><td class="mdescLeft">&#160;</td><td class="mdescRight">Message Queue Memory size.  <a href="#ga47eb1e21f1bf9a42281c6c89c7473e99">More...</a><br/></td></tr>
 <tr class="separator:ga47eb1e21f1bf9a42281c6c89c7473e99"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga42206aa2524b8fab613d26bea0f73c44"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__rtx5__specific__defines.html#ga42206aa2524b8fab613d26bea0f73c44">osRtxErrorStackUnderflow</a>&#160;&#160;&#160;1U</td></tr>
-<tr class="memdesc:ga42206aa2524b8fab613d26bea0f73c44"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stack overflow, i.e. stack pointer below its lower memory limit for descending stacks.  <a href="#ga42206aa2524b8fab613d26bea0f73c44">More...</a><br/></td></tr>
 <tr class="separator:ga42206aa2524b8fab613d26bea0f73c44"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0663254070f9f9cd402d735715aa1904"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__rtx5__specific__defines.html#ga0663254070f9f9cd402d735715aa1904">osRtxErrorStackOverflow</a>&#160;&#160;&#160;1U</td></tr>
+<tr class="memdesc:ga0663254070f9f9cd402d735715aa1904"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stack overflow, i.e. stack pointer below its lower memory limit for descending stacks.  <a href="#ga0663254070f9f9cd402d735715aa1904">More...</a><br/></td></tr>
+<tr class="separator:ga0663254070f9f9cd402d735715aa1904"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga7377235f9fa3cedee06f682cd93f3e88"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__rtx5__specific__defines.html#ga7377235f9fa3cedee06f682cd93f3e88">osRtxErrorISRQueueOverflow</a>&#160;&#160;&#160;2U</td></tr>
 <tr class="memdesc:ga7377235f9fa3cedee06f682cd93f3e88"><td class="mdescLeft">&#160;</td><td class="mdescRight">ISR Queue overflow detected when inserting object.  <a href="#ga7377235f9fa3cedee06f682cd93f3e88">More...</a><br/></td></tr>
 <tr class="separator:ga7377235f9fa3cedee06f682cd93f3e88"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -377,6 +379,19 @@ Macros</h2></td></tr>
       <table class="memname">
         <tr>
           <td class="memname">#define osRtxErrorStackUnderflow&#160;&#160;&#160;1U</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000001">Deprecated:</a></b></dt><dd>Superseeded by <a class="el" href="group__rtx5__specific__defines.html#ga0663254070f9f9cd402d735715aa1904">osRtxErrorStackOverflow</a>. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga0663254070f9f9cd402d735715aa1904"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define osRtxErrorStackOverflow&#160;&#160;&#160;1U</td>
         </tr>
       </table>
 </div><div class="memdoc">

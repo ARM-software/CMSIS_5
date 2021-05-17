@@ -113,18 +113,20 @@ $(document).ready(function(){initNavTree('misraCompliance5.html','');});
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><p>The RTX5 C source files use <b><a href="http://www.misra.org.uk/" class="el" target="_blank">MISRA C:2012</a></b> guidelines as underlying coding standard.</p>
-<p>For MISRA validation, <b><a href="http://www.gimpel.com/" class="el" target="_blank">PC-lint</a></b> V9.00L is used with configuration for Arm Compiler V6.9. The PC-Lint validation setup is part of the project file <b>.\CMSIS\RTOS2\RTX\Library\ARM\MDK\RTX_CM.uvprojx</b> as shown below. Refer to <b><a href="https://www.keil.com/support/man/docs/uv4/uv4_ut_pclint_validation.htm" class="el" target="_blank">Setup for PC-Lint</a></b> for more information.</p>
+<p>For MISRA validation, <b><a href="http://www.gimpel.com/" class="el" target="_blank">PC-lint</a></b> V9.00L is used with configuration for Arm Compiler V6.16. The PC-Lint validation setup is part of the project file <b>.\CMSIS\RTOS2\RTX\Library\ARM\MDK\RTX_CM.uvprojx</b> as shown below. Refer to <b><a href="https://www.keil.com/support/man/docs/uv4/uv4_ut_pclint_validation.htm" class="el" target="_blank">Setup for PC-Lint</a></b> for more information.</p>
 <div class="image">
 <img src="PC-Lint.png" alt="PC-Lint.png"/>
 <div class="caption">
 Running PC-Lint within MDK - uVision</div></div>
 <p> The PC-Lint configuration uses the following Options under <b>Tools - PC-Lint Setup...</b>:</p>
 <ul>
-<li>Config File: co-ARMCC-6.lnt (20-Mar-2017) with additional options: <div class="fragment"><div class="line">+rw(__restrict)</div>
-<div class="line">-esym(526,__builtin_*) -esym(628,__builtin_*)</div>
-<div class="line">-sem(__builtin_clz, pure)</div>
-<div class="line">+doffsetof(t,m)=((size_t)&amp;((t*)0)-&gt;m) -emacro((413,923,9078),offsetof)</div>
-<div class="line">-ecall(534,__disable_irq)</div>
+<li>Config File: co-ARMCC-6.lnt (20-Mar-2017) with additional options: <div class="fragment"><div class="line">-esym(526,__builtin_*)</div>
+<div class="line">-esym(628,__builtin_*)</div>
+<div class="line">-esym(718,__builtin_*)</div>
+<div class="line">-esym(746,__builtin_*)</div>
+<div class="line">-sem(__CLZ, pure)</div>
+<div class="line">+doffsetof(t,m)=((size_t)&amp;((t*)0)-&gt;m)</div>
+<div class="line">-emacro((413,923,9078),offsetof)</div>
 </div><!-- fragment --></li>
 <li>Included Project Information:<ul>
 <li>Enable: Add 'Include' paths</li>
@@ -139,7 +141,7 @@ Running PC-Lint within MDK - uVision</div></div>
 <li>includes definition file: au-misra3.lnt (12-Jun-2014)</li>
 </ul>
 </li>
-<li>Additional Lint Commands (for both single and multiple files): <div class="fragment"><div class="line">- emacro(835,<a class="code" href="rtx__os_8h.html#a0eb4da5bed45820d732e23483b870152">osRtxConfigPrivilegedMode</a>)</div>
+<li>Additional Lint Commands (for both single and multiple files): <div class="fragment"><div class="line">-emacro(835,<a class="code" href="rtx__os_8h.html#a0eb4da5bed45820d732e23483b870152">osRtxConfigPrivilegedMode</a>)</div>
 </div><!-- fragment --></li>
 </ul>
 <p>The C source code is annotated with PC-Lint control comments to allows MISRA deviations. These deviations with the underlying design decisions are described in the following.</p>
@@ -280,14 +282,14 @@ Running PC-Lint within MDK - uVision</div></div>
 <li>[MISRA 2012 Rule 11.6, required]: A cast shall not be performed between pointer to void and an arithmetic type</li>
 </ul>
 <p>All locations in the source code are marked with: </p>
-<div class="fragment"><div class="line"><span class="comment">//lint -e(923) -e(9078) &quot;cast from pointer to unsigned int&quot; [MISRA Note 7]</span></div>
+<div class="fragment"><div class="line"><span class="comment">//lint -e{923} -e{9078} &quot;cast from pointer to unsigned int&quot; [MISRA Note 7]</span></div>
 </div><!-- fragment --><p>Code example: </p>
 <div class="fragment"><div class="line"><span class="keyword">static</span> <a class="code" href="group__CMSIS__RTOS__ThreadMgmt.html#gaa6c32fe2a3e0a2e01f212d55b02e51c7">osThreadId_t</a> svcRtxThreadNew (<a class="code" href="group__CMSIS__RTOS__ThreadMgmt.html#gadd51f99a6eb50b94eee75f27cae815eb">osThreadFunc_t</a> func, <span class="keywordtype">void</span> *argument, <span class="keyword">const</span> <a class="code" href="group__CMSIS__RTOS__ThreadMgmt.html#structosThreadAttr__t">osThreadAttr_t</a> *attr) {</div>
 <div class="line">    :</div>
 <div class="line">  <span class="keywordtype">void</span>         *stack_mem;</div>
 <div class="line">    :</div>
 <div class="line">  <span class="keywordflow">if</span> (stack_mem != NULL) {</div>
-<div class="line">    <span class="comment">//lint -e(923) -e(9078) &quot;cast from pointer to unsigned int&quot; [MISRA Note 7]</span></div>
+<div class="line">    <span class="comment">//lint -e{923} &quot;cast from pointer to unsigned int&quot; [MISRA Note 7]</span></div>
 <div class="line">    <span class="keywordflow">if</span> ((((uint32_t)stack_mem &amp; 7U) != 0U) || (stack_size == 0U)) {</div>
 <div class="line">    :</div>
 </div><!-- fragment --><h1><a class="anchor" id="MISRA_8"></a>
@@ -299,7 +301,7 @@ Running PC-Lint within MDK - uVision</div></div>
 <li>[MISRA 2012 Rule 11.6, required]: A cast shall not be performed between pointer to void and an arithmetic type</li>
 </ul>
 <p>All locations in the source code are marked with: </p>
-<div class="fragment"><div class="line"><span class="comment">//lint -e(923) -e(9078) &quot;cast from pointer to unsigned int&quot; [MISRA Note 8]</span></div>
+<div class="fragment"><div class="line"><span class="comment">//lint -e{923} -e{9078} &quot;cast from pointer to unsigned int&quot; [MISRA Note 8]</span></div>
 </div><!-- fragment --><p>The required pointer arithmetic is implemented in <em>rtx_memory.c</em> with the following function: </p>
 <div class="fragment"><div class="line">__STATIC_INLINE mem_block_t *MemBlockPtr (<span class="keywordtype">void</span> *mem, uint32_t offset) {</div>
 <div class="line">  uint32_t     addr;</div>

@@ -134,8 +134,8 @@ Cortex-M0/M0+/M23 target processor</h2>
 </table>
 <p>The RTX implements interfaces to the processor hardware in following files:</p>
 <ul>
-<li><b>irq_cm0.s</b> defines exception handlers for Cortex-M0/M0+</li>
-<li><b>irq_armv8mbl_common.s</b> defines exception handlers for Cortex-M23</li>
+<li><b>irq_armv6m.s</b> defines exception handlers for Cortex-M0/M0+</li>
+<li><b>irq_armv8mbl.s</b> defines exception handlers for Cortex-M23</li>
 <li><b>rtx_core_cm.h</b> defines processor specific helper functions and the interfaces to Core Registers and Core Peripherals.</li>
 <li><b>os_tick.h</b> is the <a class="el" href="group__CMSIS__RTOS__TickAPI.html">OS Tick API</a> that defines the interface functions to the SysTick timer.</li>
 </ul>
@@ -164,9 +164,8 @@ Cortex-M3/M4/M7/M33/M35P target processor</h2>
 </table>
 <p>The interface files to the processor hardware are:</p>
 <ul>
-<li><b>irq_cm3.s</b> defines exception handlers for Cortex-M3 and Cortex-M4/M7 without floating point unit.</li>
-<li><b>irq_cm4f.s</b> defines exception handlers for Cortex-M4/M7 with floating point unit.</li>
-<li><b>irq_armv8mml_common.s</b> defines exception handlers for Cortex-M33/M35P</li>
+<li><b>irq_armv7m.s</b> defines exception handlers for Cortex-M3 and Cortex-M4/M7.</li>
+<li><b>irq_armv8mml.s</b> defines exception handlers for Cortex-M33/M35P</li>
 <li><b>rtx_core_cm.h</b> defines processor specific helper functions and the interfaces to Core Registers and Core Peripherals.</li>
 <li><b>os_tick.h</b> is the <a class="el" href="group__CMSIS__RTOS__TickAPI.html">OS Tick API</a> that defines the interface functions to the SysTick timer.</li>
 </ul>
@@ -192,7 +191,7 @@ Cortex-A5/A7/A9 target processor</h2>
 </table>
 <p>The interface files to the processor hardware are:</p>
 <ul>
-<li><b>irq_ca.s</b> defines SVC, IRQ, Data Abort, Prefetch Abort and Undefined Instruction exception handlers.</li>
+<li><b>irq_armv7a.s</b> defines SVC, IRQ, Data Abort, Prefetch Abort and Undefined Instruction exception handlers.</li>
 <li><b>rtx_core_ca.h</b> defines processor specific helper functions and the interfaces to Core Registers and Core Peripherals.</li>
 <li><b>os_tick.h</b> is the <a class="el" href="group__CMSIS__RTOS__TickAPI.html">OS Tick API</a> that defines the interface functions to the timer peripheral.</li>
 <li><b>irq_ctrl.h</b> is the <a href="../../Core_A/html/group__irq__ctrl__gr.html" class="el">IRQ Controller API</a> that defines the interface functions to the interrupt controller.</li>
