@@ -1620,7 +1620,7 @@ The CMSIS-RTOS2 RTX v5 implementation is using the following <b>Namespace</b> pr
 \page misraCompliance5 MISRA C:2012 Compliance 
 The RTX5 C source files use <b><a class=el href="http://www.misra.org.uk/" target="_blank">MISRA C:2012</a></b> guidelines as underlying coding standard.
 
-For MISRA validation, <b><a class=el href="http://www.gimpel.com/" target="_blank">PC-lint</a></b> V9.00L is used with configuration for Arm Compiler V6.9.
+For MISRA validation, <b><a class=el href="http://www.gimpel.com/" target="_blank">PC-lint</a></b> V9.00L is used with configuration for Arm Compiler V6.16.
 The PC-Lint validation setup is part of the project file <b>.\\CMSIS\\RTOS2\\RTX\\Library\\ARM\\MDK\\RTX_CM.uvprojx</b> as shown below. 
 Refer to <b><a class=el href="https://www.keil.com/support/man/docs/uv4/uv4_ut_pclint_validation.htm" target="_blank">Setup for PC-Lint</a></b> for more information.
 
@@ -1629,11 +1629,13 @@ Refer to <b><a class=el href="https://www.keil.com/support/man/docs/uv4/uv4_ut_p
 The PC-Lint configuration uses the following Options under <b>Tools - PC-Lint Setup...</b>:
  - Config File: co-ARMCC-6.lnt (20-Mar-2017) with additional options:
 \code
-   +rw(__restrict)
-   -esym(526,__builtin_*) -esym(628,__builtin_*)
-   -sem(__builtin_clz, pure)
-   +doffsetof(t,m)=((size_t)&((t*)0)->m) -emacro((413,923,9078),offsetof)
-   -ecall(534,__disable_irq)
+   -esym(526,__builtin_*)
+   -esym(628,__builtin_*)
+   -esym(718,__builtin_*)
+   -esym(746,__builtin_*)
+   -sem(__CLZ, pure)
+   +doffsetof(t,m)=((size_t)&((t*)0)->m)
+   -emacro((413,923,9078),offsetof)
 \endcode
  - Included Project Information: 
    - Enable: Add 'Include' paths
@@ -1646,7 +1648,7 @@ The PC-Lint configuration uses the following Options under <b>Tools - PC-Lint Se
    - includes definition file: au-misra3.lnt (12-Jun-2014)
  - Additional Lint Commands (for both single and multiple files):
 \code
-   - emacro(835,osRtxConfigPrivilegedMode)
+   -emacro(835,osRtxConfigPrivilegedMode)
 \endcode
 
 The C source code is annotated with PC-Lint control comments to allows MISRA deviations.
@@ -1842,7 +1844,7 @@ This design decision implies the following MISRA deviations:
 
 All locations in the source code are marked with: 
 \code
-  //lint -e(923) -e(9078) "cast from pointer to unsigned int" [MISRA Note 7]
+  //lint -e{923} -e{9078} "cast from pointer to unsigned int" [MISRA Note 7]
 \endcode
 
 Code example:
@@ -1852,7 +1854,7 @@ static osThreadId_t svcRtxThreadNew (osThreadFunc_t func, void *argument, const 
   void         *stack_mem;
     :
   if (stack_mem != NULL) {
-    //lint -e(923) -e(9078) "cast from pointer to unsigned int" [MISRA Note 7]
+    //lint -e{923} "cast from pointer to unsigned int" [MISRA Note 7]
     if ((((uint32_t)stack_mem & 7U) != 0U) || (stack_size == 0U)) {
     :
 \endcode
@@ -1868,7 +1870,7 @@ This design decision implies the following MISRA deviations:
 
 All locations in the source code are marked with: 
 \code
-  //lint -e(923) -e(9078) "cast from pointer to unsigned int" [MISRA Note 8]
+  //lint -e{923} -e{9078} "cast from pointer to unsigned int" [MISRA Note 8]
 \endcode
 
 The required pointer arithmetic is implemented in \em rtx_memory.c with the following function:
