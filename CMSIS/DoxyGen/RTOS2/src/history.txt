@@ -105,6 +105,7 @@
        - Added OS Initialization for IAR.
        - Fixed osDelay/osDelayUntil error handling.
        - Fixed Round-Robin (timeout value is not reset when switching to higher priority threads).
+       - Fixed osThreadJoin (when terminating thread which is waiting to be joined).
        - Enhanced stack overrun checking.
        - Updated configuration (Event Recorder).
        - Reorganized and optimized IRQ modules.
