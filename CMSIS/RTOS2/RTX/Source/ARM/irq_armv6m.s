@@ -44,9 +44,6 @@ SVC_Handler     PROC
                 EXPORT   SVC_Handler
                 IMPORT   osRtxUserSVC
                 IMPORT   osRtxInfo
-              IF :DEF:MPU_LOAD
-                IMPORT   osRtxMpuLoad
-              ENDIF
 
                 MOV      R0,LR
                 LSRS     R0,R0,#3               ; Determine return stack from EXC_RETURN bit 2
@@ -90,13 +87,6 @@ SVC_ContextSave
 SVC_ContextSwitch
                 SUBS     R3,R3,#8               ; Adjust address
                 STR      R2,[R3]                ; osRtxInfo.thread.run: curr = next
-
-              IF :DEF:MPU_LOAD
-                PUSH     {R2,R3}                ; Save registers
-                MOV      R0,R2                  ; osRtxMpuLoad parameter
-                BL       osRtxMpuLoad           ; Load MPU for next thread
-                POP      {R2,R3}                ; Restore registers
-              ENDIF
 
 SVC_ContextRestore
                 LDR      R0,[R2,#TCB_SP_OFS]    ; Load SP

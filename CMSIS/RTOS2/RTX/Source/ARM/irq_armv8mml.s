@@ -59,9 +59,6 @@ SVC_Handler     PROC
                 EXPORT   SVC_Handler
                 IMPORT   osRtxUserSVC
                 IMPORT   osRtxInfo
-            IF :DEF:MPU_LOAD
-                IMPORT   osRtxMpuLoad
-            ENDIF
             IF DOMAIN_NS != 0
                 IMPORT   TZ_LoadContext_S
                 IMPORT   TZ_StoreContext_S
@@ -130,13 +127,6 @@ SVC_ContextSaveSP
 
 SVC_ContextSwitch
                 STR      R2,[R3]                ; osRtxInfo.thread.run: curr = next
-
-            IF :DEF:MPU_LOAD
-                PUSH     {R2,R3}                ; Save registers
-                MOV      R0,R2                  ; osRtxMpuLoad parameter
-                BL       osRtxMpuLoad           ; Load MPU for next thread
-                POP      {R2,R3}                ; Restore registers
-            ENDIF
 
 SVC_ContextRestore
             IF DOMAIN_NS != 0
