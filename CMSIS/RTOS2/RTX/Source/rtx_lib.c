@@ -117,7 +117,7 @@ __attribute__((section(".bss.os.thread.cb")));
 
 // Idle Thread Stack
 static uint64_t os_idle_thread_stack[OS_IDLE_THREAD_STACK_SIZE/8] \
-__attribute__((section(".bss.os.thread.stack")));
+__attribute__((section(".bss.os.thread.idle.stack")));
 
 // Idle Thread Attributes
 static const osThreadAttr_t os_idle_thread_attr = {
@@ -174,7 +174,7 @@ __attribute__((section(".bss.os.thread.cb")));
 
 // Timer Thread Stack
 static uint64_t os_timer_thread_stack[OS_TIMER_THREAD_STACK_SIZE/8] \
-__attribute__((section(".bss.os.thread.stack")));
+__attribute__((section(".bss.os.thread.timer.stack")));
 
 // Timer Thread Attributes
 static const osThreadAttr_t os_timer_thread_attr = {
