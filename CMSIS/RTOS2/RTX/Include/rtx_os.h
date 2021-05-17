@@ -111,7 +111,7 @@ typedef struct osRtxThread_s {
   struct osRtxThread_s    *delay_next;  ///< Link pointer to next Thread in Delay list
   struct osRtxThread_s    *delay_prev;  ///< Link pointer to previous Thread in Delay list
   struct osRtxThread_s   *thread_join;  ///< Thread waiting to Join
-  uint32_t                      delay;  ///< Delay Time
+  uint32_t                      delay;  ///< Delay Time/Round Robin Time Tick
   int8_t                     priority;  ///< Thread Priority
   int8_t                priority_base;  ///< Base Priority
   uint8_t                 stack_frame;  ///< Stack Frame (EXC_RETURN[7..0])
@@ -297,9 +297,9 @@ typedef struct {
     osRtxThread_t         *delay_list;  ///< Delay List
     osRtxThread_t          *wait_list;  ///< Wait List (no Timeout)
     osRtxThread_t     *terminate_list;  ///< Terminate Thread List
+    uint32_t                 reserved;
     struct {                            ///< Thread Round Robin Info
       osRtxThread_t           *thread;  ///< Round Robin Thread
-      uint32_t                   tick;  ///< Round Robin Time Tick
       uint32_t                timeout;  ///< Round Robin Timeout
     } robin;
   } thread;

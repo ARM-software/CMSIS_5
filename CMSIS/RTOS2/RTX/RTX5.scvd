@@ -370,8 +370,7 @@
       <member name="thread_wait_list"           type="*osRtxThread_t"       offset="48"  info="Wait list (no timeout)"/>
       <member name="thread_terminate_list"      type="*osRtxThread_t"       offset="52"  info="Terminate list"/>
 
-      <member name="thread_robin_thread"        type="*osRtxThread_t"       offset="56"  info="Round Robin thread"/>
-      <member name="thread_robin_tick"          type="uint32_t"             offset="60"  info="Round Robin time tick"/>
+      <member name="thread_robin_thread"        type="*osRtxThread_t"       offset="60"  info="Round Robin thread"/>
       <member name="thread_timeout"             type="uint32_t"             offset="64"  info="Round Robin timeout"/>
 
       <member name="timer_list"                 type="*osRtxTimer_t"        offset="68"  info="Active timer list"/>
@@ -404,6 +403,8 @@
       <member name="mpi_semaphore"              type="*osRtxMpInfo_t"       offset="152" info="Semaphore control blocks"/>
       <member name="mpi_memory_pool"            type="*osRtxMpInfo_t"       offset="156" info="Memory pool control blocks"/>
       <member name="mpi_message_queue"          type="*osRtxMpInfo_t"       offset="160" info="Message queue control blocks"/>
+
+      <var name="robin_tick" type="uint32_t" info="Round Robin time tick (thread_robin_thread.delay)"/>
     </typedef>
 
     <!-- OS Runtime Object Memory Usage structure -->
@@ -822,14 +823,16 @@
         <readlist cond="(mem_list_com[i].len &amp; 1) &amp;&amp; (mem_list_com[i].id == 0xFA)" name="QCB" type="osRtxMessageQueue_t" offset="addr" count="1" />
       </list>
 
-      <!-- Read thread wait list -->
-      <readlist name="TWL" cond="RTX_En &amp;&amp; os_Info.thread_wait_list" type="osRtxThread_t" offset="os_Info.thread_wait_list" next="delay_next"/>
-
       <!-- Validate and process Thread control blocks -->
       <list name="i" start="0" limit="TCB._count">
         <calc>
           TCB[i].cb_valid = (TCB[i].id == 0xF1) &amp;&amp; (TCB[i].state != 0) &amp;&amp; (TCB[i].sp != 0);
           TCB[i].sp_valid = 1;
+        </calc>
+
+        <!-- Set Round Robin time tick from the running thread tick value -->
+        <calc cond="(TCB[i].state == 2) &amp;&amp; os_Config.robin_timeout">
+          os_Info.robin_tick = TCB[i].delay;
         </calc>
 
         <!-- Stack pointer for running thread -->
@@ -1099,10 +1102,10 @@
           <item property="Kernel State" value="%E[os_Info.kernel_state]" cond="RTX_En != 0"/>
           <item property="Kernel Tick Count"      value="%d[os_Info.kernel_tick]"     cond="RTX_En != 0"/>
           <item property="Kernel Tick Frequency"  value="%d[os_Config.tick_freq]"     cond="RTX_En != 0" />
-          <item property="Round Robin"            value="Disabled"                      cond="(os_Config.robin_timeout == 0) &amp;&amp; (RTX_En != 0)" />
-          <item property="Round Robin Tick Count" value="%d[os_Info.thread_robin_tick]" cond="(os_Config.robin_timeout > 0)  &amp;&amp; (RTX_En != 0)" />
-          <item property="Round Robin Timeout"    value="%d[os_Config.robin_timeout]"   cond="(os_Config.robin_timeout > 0)  &amp;&amp; (RTX_En != 0)" />
-          <item property="Global Dynamic Memory" value="Not used"                                                                                                               cond="(os_Config.mem_common_size == 0) &amp;&amp; (RTX_En != 0)"/>
+          <item property="Round Robin"            value="Disabled"                    cond="(os_Config.robin_timeout == 0) &amp;&amp; (RTX_En != 0)" />
+          <item property="Round Robin Tick Count" value="%d[os_Info.robin_tick]"      cond="(os_Config.robin_timeout > 0)  &amp;&amp; (RTX_En != 0)" />
+          <item property="Round Robin Timeout"    value="%d[os_Config.robin_timeout]" cond="(os_Config.robin_timeout > 0)  &amp;&amp; (RTX_En != 0)" />
+          <item property="Global Dynamic Memory" value="Not used"                                                                                                                    cond="(os_Config.mem_common_size == 0) &amp;&amp; (RTX_En != 0)"/>
           <item property="Global Dynamic Memory" value="Base: %x[mem_head_com._addr], Size: %d[mem_head_com.size], Used: %d[mem_head_com.used], Max used: %d[mem_head_com.max_used]" cond="(os_Config.mem_common_size != 0) &amp;&amp; (RTX_En != 0)"/>
           <item property="Stack Overrun Check"   value="%t[os_Config.stack_check ? &quot;Enabled&quot; : &quot;Disabled&quot;]" cond="RTX_En != 0"/>
           <item property="Stack Usage Watermark" value="%t[os_Config.stack_wmark ? &quot;Enabled&quot; : &quot;Disabled&quot;]" cond="RTX_En != 0"/>

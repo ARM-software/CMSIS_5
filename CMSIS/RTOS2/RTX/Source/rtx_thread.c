@@ -313,6 +313,7 @@ static void osRtxThreadDelayRemove (os_thread_t *thread) {
       osRtxInfo.thread.delay_list = thread->delay_next;
     }
   }
+  thread->delay = 0U;
 }
 
 /// Process Thread Delay Tick (executed each System Tick).
@@ -1046,8 +1047,6 @@ static osStatus_t svcRtxThreadSuspend (osThreadId_t thread_id) {
 
     // Update Thread State and put it into Delay list
     thread->state = osRtxThreadBlocked;
-    thread->thread_prev = NULL;
-    thread->thread_next = NULL;
     osRtxThreadDelayInsert(thread, osWaitForever);
   }
 
