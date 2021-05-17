@@ -414,7 +414,7 @@
     </typedef>
 
     <!-- OS Configuration structure -->
-    <typedef name="osRtxConfig_t" const="1" info="OS Configuration Structure" size="104">
+    <typedef name="osRtxConfig_t" const="1" info="OS Configuration Structure" size="112">
       <member name="flags"                 type="uint32_t" offset="0" info="OS configuration flags"/>
       <member name="tick_freq"             type="uint32_t" offset="4" info="Kernel tick frequency"/>
 
@@ -444,8 +444,13 @@
       <member name="thread_stack_size"     type="uint32_t" offset="84"  info="Default thread stack size"/>
       <member name="idle_thread_attr"      type="uint32_t" offset="88"  info="Idle thread attributes (type is osThreadAttr_s *)"/>
       <member name="timer_thread_attr"     type="uint32_t" offset="92"  info="Timer thread attributes (type is osThreadAttr_s *)"/>
-      <member name="timer_mq_attr"         type="uint32_t" offset="96"  info="Timer message queue attributes (type is osMessageQueueAttr_s *)"/>
-      <member name="timer_mq_mcnt"         type="uint32_t" offset="100" info="Timer message queue maximum messages"/>
+      <member name="timer_thread"          type="uint32_t" offset="96"  info="Timer Thread Function (type is void(*func)(void *)"/>
+      <member name="timer_setup"           type="uint32_t" offset="100" info="Timer Setup Function (type is int32_t(*func)(void)"/>
+      <member name="timer_mq_attr"         type="uint32_t" offset="104" info="Timer message queue attributes (type is osMessageQueueAttr_s *)"/>
+      <member name="timer_mq_mcnt"         type="uint32_t" offset="108" info="Timer message queue maximum messages"/>
+
+      <var name="stack_check"  type="uint8_t" info="Stack checking (0:disabled, 1:enabled)"/>
+      <var name="stack_wmark"  type="uint8_t" info="Stack watermark (0:disabled, 1:enabled)"/>
     </typedef>
 
     <!-- Memory Pool Header -->
@@ -668,6 +673,11 @@
       <read name="os_Info"   type="osRtxInfo_t"   symbol="osRtxInfo"/>
       <read name="os_Config" type="osRtxConfig_t" symbol="osRtxConfig" const="1"/>
 
+      <calc>
+        os_Config.stack_check  = (os_Config.flags >> 1) &amp; 1;
+        os_Config.stack_wmark  = (os_Config.flags >> 2) &amp; 1;
+      </calc>
+
       <calc cond="((os_Info.version / 10000000) == 5) &amp;&amp; (os_Info.kernel_state &gt; 0) &amp;&amp; (os_Info.kernel_state &lt; 5)">
         RTX_En = 1;
       </calc>
@@ -681,9 +691,6 @@
       <calc cond="RTX_En &amp;&amp; (os_Config.mpi_thread || os_Config.mpi_timer || os_Config.mpi_event_flags || os_Config.mpi_mutex || os_Config.mpi_semaphore || os_Config.mpi_memory_pool || os_Config.mpi_message_queue)">
         StaticMp_En = 1;
       </calc>
-
-      <var name="stack_check" type="uint8_t" value="(os_Config.flags >> 1) &amp; 1"/>
-      <var name="stack_wmark" type="uint8_t" value="(os_Config.flags >> 2) &amp; 1"/>
 
       <!-- Read ISR FIFO queue -->
       <read name="ISR_FIFO" cond="RTX_En" type="uint32_t" offset="os_Config.isr_queue_data" size="os_Config.isr_queue_max"/>
@@ -866,7 +873,7 @@
         </calc>
 
         <!-- Check also control values to determine maximum stack usage -->
-        <calc cond="(stack_wmark != 0) &amp;&amp; (TCB[i].sp != 0) &amp;&amp; (TCB[i].stack_over == 0) &amp;&amp; (TCB[i].stack_size &lt; 65536)">
+        <calc cond="(os_Config.stack_wmark != 0) &amp;&amp; (TCB[i].sp != 0) &amp;&amp; (TCB[i].stack_over == 0) &amp;&amp; (TCB[i].stack_size &lt; 65536)">
           TCB[i].stack_val  = __CalcMemUsed (TCB[i].stack_mem, sp - TCB[i].stack_mem, 0xCCCCCCCC, 0xE25A2EA5);
           TCB[i].stack_over =  TCB[i].stack_val >> 31;
           TCB[i].stack_maxb = (TCB[i].stack_mem + TCB[i].stack_size) - sp;
@@ -1058,10 +1065,10 @@
         <calc>TCB_En += TCB[i].cb_valid; </calc>
 
         <calc cond="TCB[i].cb_valid == 0"> TCB[i].out_type = 0;</calc>
-        <calc cond="TCB[i].cb_valid &amp;&amp; (TCB[i].name == 0) &amp;&amp; (stack_wmark == 0)"> TCB[i].out_type = 1; </calc>
-        <calc cond="TCB[i].cb_valid &amp;&amp; (TCB[i].name == 0) &amp;&amp; (stack_wmark != 0)"> TCB[i].out_type = 2; </calc>
-        <calc cond="TCB[i].cb_valid &amp;&amp; (TCB[i].name != 0) &amp;&amp; (stack_wmark == 0)"> TCB[i].out_type = 3; </calc>
-        <calc cond="TCB[i].cb_valid &amp;&amp; (TCB[i].name != 0) &amp;&amp; (stack_wmark != 0)"> TCB[i].out_type = 4; </calc>
+        <calc cond="TCB[i].cb_valid &amp;&amp; (TCB[i].name == 0) &amp;&amp; (os_Config.stack_wmark == 0)"> TCB[i].out_type = 1; </calc>
+        <calc cond="TCB[i].cb_valid &amp;&amp; (TCB[i].name == 0) &amp;&amp; (os_Config.stack_wmark != 0)"> TCB[i].out_type = 2; </calc>
+        <calc cond="TCB[i].cb_valid &amp;&amp; (TCB[i].name != 0) &amp;&amp; (os_Config.stack_wmark == 0)"> TCB[i].out_type = 3; </calc>
+        <calc cond="TCB[i].cb_valid &amp;&amp; (TCB[i].name != 0) &amp;&amp; (os_Config.stack_wmark != 0)"> TCB[i].out_type = 4; </calc>
 
         <calc cond="TCB[i].sp_valid == 0"> TCB[i].out_type += 4; </calc>
       </list>
@@ -1097,8 +1104,8 @@
           <item property="Round Robin Timeout"    value="%d[os_Config.robin_timeout]"   cond="(os_Config.robin_timeout > 0)  &amp;&amp; (RTX_En != 0)" />
           <item property="Global Dynamic Memory" value="Not used"                                                                                                               cond="(os_Config.mem_common_size == 0) &amp;&amp; (RTX_En != 0)"/>
           <item property="Global Dynamic Memory" value="Base: %x[mem_head_com._addr], Size: %d[mem_head_com.size], Used: %d[mem_head_com.used], Max used: %d[mem_head_com.max_used]" cond="(os_Config.mem_common_size != 0) &amp;&amp; (RTX_En != 0)"/>
-          <item property="Stack Overrun Check"   value="%t[stack_check ? &quot;Enabled&quot; : &quot;Disabled&quot;]" cond="RTX_En != 0"/>
-          <item property="Stack Usage Watermark" value="%t[stack_wmark ? &quot;Enabled&quot; : &quot;Disabled&quot;]" cond="RTX_En != 0"/>
+          <item property="Stack Overrun Check"   value="%t[os_Config.stack_check ? &quot;Enabled&quot; : &quot;Disabled&quot;]" cond="RTX_En != 0"/>
+          <item property="Stack Usage Watermark" value="%t[os_Config.stack_wmark ? &quot;Enabled&quot; : &quot;Disabled&quot;]" cond="RTX_En != 0"/>
           <item property="Default Thread Stack Size" value="%d[os_Config.thread_stack_size]" cond="RTX_En != 0"/>
 
           <item property="ISR FIFO Queue" value="Size: %d[os_Info.isr_queue_max], Used: %d[os_Info.isr_queue_cnt]" cond="RTX_En">
@@ -1197,16 +1204,16 @@
               </item>
 
               <item>
-                <print cond="(TCB[i].sp_valid == 0) &amp;&amp; (stack_wmark == 0)" property="Stack" value="Used: unknown"/>
-                <print cond="(TCB[i].sp_valid == 0) &amp;&amp; (stack_wmark != 0)" property="Stack" value="Used: unknown, Max: %d[TCB[i].stack_maxp]%% [%d[TCB[i].stack_maxb]]"/>
-                <print cond="(TCB[i].sp_valid == 1) &amp;&amp; (stack_wmark == 0)" property="Stack" value="Used: %d[TCB[i].stack_curp]%% [%d[TCB[i].stack_curb]]"/>
-                <print cond="(TCB[i].sp_valid == 1) &amp;&amp; (stack_wmark != 0)" property="Stack" value="Used: %d[TCB[i].stack_curp]%% [%d[TCB[i].stack_curb]], Max: %d[TCB[i].stack_maxp]%% [%d[TCB[i].stack_maxb]]"/>
+                <print cond="(TCB[i].sp_valid == 0) &amp;&amp; (os_Config.stack_wmark == 0)" property="Stack" value="Used: unknown"/>
+                <print cond="(TCB[i].sp_valid == 0) &amp;&amp; (os_Config.stack_wmark != 0)" property="Stack" value="Used: unknown, Max: %d[TCB[i].stack_maxp]%% [%d[TCB[i].stack_maxb]]"/>
+                <print cond="(TCB[i].sp_valid == 1) &amp;&amp; (os_Config.stack_wmark == 0)" property="Stack" value="Used: %d[TCB[i].stack_curp]%% [%d[TCB[i].stack_curb]]"/>
+                <print cond="(TCB[i].sp_valid == 1) &amp;&amp; (os_Config.stack_wmark != 0)" property="Stack" value="Used: %d[TCB[i].stack_curp]%% [%d[TCB[i].stack_curb]], Max: %d[TCB[i].stack_maxp]%% [%d[TCB[i].stack_maxb]]"/>
 
                 <item>
                   <print cond="TCB[i].sp_valid == 0" property="Used" value="unknown"/>
                   <print cond="TCB[i].sp_valid == 1" property="Used" value="%d[TCB[i].stack_curb]"/>
                 </item>
-                <item property="Max"   value="%d[TCB[i].stack_maxb]" cond="stack_wmark != 0"/>
+                <item property="Max"   value="%d[TCB[i].stack_maxb]" cond="os_Config.stack_wmark != 0"/>
                 <item property="Top"   value="%x[TCB[i].stack_mem + TCB[i].stack_size]"/>
                 <item>
                   <print cond="TCB[i].sp_valid == 0" property="Current" value="unknown"/>

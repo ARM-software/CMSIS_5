@@ -130,20 +130,33 @@ static void osRtxTimerTick (void) {
   osRtxThreadSetRunning(thread_running);
 }
 
-/// Timer Thread
-__WEAK __NO_RETURN void osRtxTimerThread (void *argument) {
-  os_timer_finfo_t finfo;
-  osStatus_t       status;
-  (void)           argument;
+/// Setup Timer Thread objects.
+//lint -esym(714,osRtxTimerSetup) "Referenced from library configuration"
+//lint -esym(759,osRtxTimerSetup) "Prototype in header"
+//lint -esym(765,osRtxTimerSetup) "Global scope"
+int32_t osRtxTimerSetup (void) {
+  int32_t ret = -1;
 
-  osRtxInfo.timer.mq = osRtxMessageQueueId(
-    osMessageQueueNew(osRtxConfig.timer_mq_mcnt, sizeof(os_timer_finfo_t), osRtxConfig.timer_mq_attr)
-  );
-  osRtxInfo.timer.tick = osRtxTimerTick;
+  if (osRtxMessageQueueTimerSetup() == 0) {
+    osRtxInfo.timer.tick = osRtxTimerTick;
+    ret = 0;
+  }
+
+  return ret;
+}
+
+/// Timer Thread
+//lint -esym(714,osRtxTimerThread) "Referenced from library configuration"
+//lint -esym(759,osRtxTimerThread) "Prototype in header"
+//lint -esym(765,osRtxTimerThread) "Global scope"
+__NO_RETURN void osRtxTimerThread (void *argument) {
+  os_timer_finfo_t   finfo;
+  osStatus_t         status;
+  osMessageQueueId_t mq = (osMessageQueueId_t)argument;
 
   for (;;) {
     //lint -e{934} "Taking address of near auto variable"
-    status = osMessageQueueGet(osRtxInfo.timer.mq, &finfo, NULL, osWaitForever);
+    status = osMessageQueueGet(mq, &finfo, NULL, osWaitForever);
     if (status == osOK) {
       EvrRtxTimerCallback(finfo.func, finfo.arg);
       (finfo.func)(finfo.arg);

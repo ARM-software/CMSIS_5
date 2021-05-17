@@ -195,7 +195,8 @@ extern bool_t       osRtxThreadStackCheck (const os_thread_t *thread);
 extern bool_t       osRtxThreadStartup    (void);
 
 // Timer Library functions
-extern void osRtxTimerThread (void *argument);
+extern int32_t osRtxTimerSetup  (void);
+extern void    osRtxTimerThread (void *argument);
 
 // Mutex Library functions
 extern void osRtxMutexOwnerRelease (os_mutex_t *mutex_list);
@@ -210,6 +211,9 @@ extern uint32_t osRtxMemoryFree (void *mem, void *block);
 extern uint32_t   osRtxMemoryPoolInit  (os_mp_info_t *mp_info, uint32_t block_count, uint32_t block_size, void *block_mem);
 extern void      *osRtxMemoryPoolAlloc (os_mp_info_t *mp_info);
 extern osStatus_t osRtxMemoryPoolFree  (os_mp_info_t *mp_info, void *block);
+
+// Message Queue Library functions
+extern int32_t osRtxMessageQueueTimerSetup (void);
 
 // System Library functions
 extern void osRtxTick_Handler   (void);

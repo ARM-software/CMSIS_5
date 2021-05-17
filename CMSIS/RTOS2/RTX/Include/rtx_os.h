@@ -460,6 +460,8 @@ typedef struct {
   osThreadAttr_t           *idle_thread_attr;   ///< Idle Thread Attributes
   const
   osThreadAttr_t          *timer_thread_attr;   ///< Timer Thread Attributes
+  void               (*timer_thread)(void *);   ///< Timer Thread Function
+  int32_t               (*timer_setup)(void);   ///< Timer Setup Function
   const
   osMessageQueueAttr_t        *timer_mq_attr;   ///< Timer Message Queue Attributes
   uint32_t                     timer_mq_mcnt;   ///< Timer Message Queue maximum Messages

@@ -812,6 +812,23 @@ osStatus_t isrRtxMessageQueueGet (osMessageQueueId_t mq_id, void *msg_ptr, uint8
 }
 
 
+//  ==== Library functions ====
+
+/// Create a Message Queue for the Timer Thread.
+int32_t osRtxMessageQueueTimerSetup (void) {
+  int32_t ret = -1;
+
+  osRtxInfo.timer.mq = osRtxMessageQueueId(
+    svcRtxMessageQueueNew(osRtxConfig.timer_mq_mcnt, sizeof(os_timer_finfo_t), osRtxConfig.timer_mq_attr)
+  );
+  if (osRtxInfo.timer.mq != NULL) {
+    ret = 0;
+  }
+
+  return ret;
+}
+
+
 //  ==== Public API ====
 
 /// Create and Initialize a Message Queue object.

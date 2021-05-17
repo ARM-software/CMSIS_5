@@ -1619,7 +1619,7 @@ uint32_t isrRtxThreadFlagsSet (osThreadId_t thread_id, uint32_t flags) {
 /// Thread startup (Idle and Timer Thread).
 /// \return true - success, false - failure.
 bool_t osRtxThreadStartup (void) {
-  bool_t ret = TRUE;
+  bool_t ret = FALSE;
 
   // Create Idle Thread
   osRtxInfo.thread.idle = osRtxThreadId(
@@ -1627,13 +1627,17 @@ bool_t osRtxThreadStartup (void) {
   );
 
   // Create Timer Thread
-  if (osRtxConfig.timer_mq_mcnt != 0U) {
-    osRtxInfo.timer.thread = osRtxThreadId(
-      svcRtxThreadNew(osRtxTimerThread, NULL, osRtxConfig.timer_thread_attr)
-    );
-    if (osRtxInfo.timer.thread == NULL) {
-      ret = FALSE;
+  if (osRtxConfig.timer_setup != NULL) {
+    if (osRtxConfig.timer_setup() == 0) {
+      osRtxInfo.timer.thread = osRtxThreadId(
+        svcRtxThreadNew(osRtxConfig.timer_thread, osRtxInfo.timer.mq, osRtxConfig.timer_thread_attr)
+      );
+      if (osRtxInfo.timer.thread != NULL) {
+        ret = TRUE;
+      }
     }
+  } else {
+    ret = TRUE;
   }
 
   return ret;

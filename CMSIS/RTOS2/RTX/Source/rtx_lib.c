@@ -111,14 +111,6 @@ __attribute__((section(".bss.os.thread.stack")));
 #endif  // (OS_THREAD_OBJ_MEM != 0)
 
 
-// Stack overrun checking
-#if (OS_STACK_CHECK == 0)
-// Override library function
-extern void osRtxThreadStackCheck (void);
-       void osRtxThreadStackCheck (void) {}
-#endif
-
-
 // Idle Thread Control Block
 static osRtxThread_t os_idle_thread_cb \
 __attribute__((section(".bss.os.thread.cb")));
@@ -224,10 +216,8 @@ static const osMessageQueueAttr_t os_timer_mq_attr = {
   (uint32_t)sizeof(os_timer_mq_data)
 };
 
-#else
-
-extern void osRtxTimerThread (void *argument);
-       void osRtxTimerThread (void *argument) { (void)argument; }
+extern int32_t osRtxTimerSetup  (void);
+extern void    osRtxTimerThread (void *argument);
 
 #endif  // ((OS_TIMER_THREAD_STACK_SIZE != 0) && (OS_TIMER_CB_QUEUE != 0))
 
@@ -519,9 +509,13 @@ __attribute__((section(".rodata"))) =
   &os_idle_thread_attr,
 #if ((OS_TIMER_THREAD_STACK_SIZE != 0) && (OS_TIMER_CB_QUEUE != 0))
   &os_timer_thread_attr,
+  osRtxTimerThread,
+  osRtxTimerSetup,
   &os_timer_mq_attr,
   (uint32_t)OS_TIMER_CB_QUEUE
 #else
+  NULL,
+  NULL,
   NULL,
   NULL,
   0U
@@ -533,9 +527,9 @@ __attribute__((section(".rodata"))) =
 //lint -esym(526,irqRtxLib)    "Defined by Exception handlers"
 //lint -esym(714,irqRtxLibRef) "Non weak reference"
 //lint -esym(765,irqRtxLibRef) "Global scope"
-extern       uint8_t  irqRtxLib;
-extern const uint8_t *irqRtxLibRef;
-       const uint8_t *irqRtxLibRef = &irqRtxLib;
+extern const uint8_t         irqRtxLib;
+extern const uint8_t * const irqRtxLibRef;
+       const uint8_t * const irqRtxLibRef = &irqRtxLib;
 
 // Default User SVC Table
 //lint -esym(714,osRtxUserSVC) "Referenced by Exception handlers"
