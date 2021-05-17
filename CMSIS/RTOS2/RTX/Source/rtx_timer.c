@@ -93,8 +93,9 @@ static void TimerUnlink (const os_timer_t *timer) {
 
 /// Timer Tick (called each SysTick).
 static void osRtxTimerTick (void) {
-  os_timer_t *timer;
-  osStatus_t  status;
+  os_thread_t *thread_running;
+  os_timer_t  *timer;
+  osStatus_t   status;
 
   timer = osRtxInfo.timer.list;
   if (timer == NULL) {
@@ -102,12 +103,21 @@ static void osRtxTimerTick (void) {
     return;
   }
 
+  thread_running = osRtxThreadGetRunning();
+
   timer->tick--;
   while ((timer != NULL) && (timer->tick == 0U)) {
     TimerUnlink(timer);
     status = osMessageQueuePut(osRtxInfo.timer.mq, &timer->finfo, 0U, 0U);
     if (status != osOK) {
+      const os_thread_t *thread = osRtxThreadGetRunning();
+      osRtxThreadSetRunning(osRtxInfo.thread.run.next);
       (void)osRtxKernelErrorNotify(osRtxErrorTimerQueueOverflow, timer);
+      if (osRtxThreadGetRunning() == NULL) {
+        if (thread_running == thread) {
+          thread_running = NULL;
+        }
+      }
     }
     if (timer->type == osRtxTimerPeriodic) {
       TimerInsert(timer, timer->load);
@@ -116,6 +126,8 @@ static void osRtxTimerTick (void) {
     }
     timer = osRtxInfo.timer.list;
   }
+
+  osRtxThreadSetRunning(thread_running);
 }
 
 /// Timer Thread

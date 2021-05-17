@@ -420,7 +420,6 @@ void osRtxThreadSwitch (os_thread_t *thread) {
 
   thread->state = osRtxThreadRunning;
   osRtxInfo.thread.run.next = thread;
-  osRtxThreadStackCheck();
   EvrRtxThreadSwitched(thread);
 }
 
@@ -509,22 +508,25 @@ bool_t osRtxThreadWaitEnter (uint8_t state, uint32_t timeout) {
   return TRUE;
 }
 
+#ifdef RTX_STACK_CHECK
 /// Check current running Thread Stack.
+/// \param[in]  thread          running thread.
+/// \return true - success, false - failure.
+//lint -esym(714,osRtxThreadStackCheck) "Referenced by Exception handlers"
 //lint -esym(759,osRtxThreadStackCheck) "Prototype in header"
-//lint -esym(765,osRtxThreadStackCheck) "Global scope (can be overridden)"
-__WEAK void osRtxThreadStackCheck (void) {
-  os_thread_t *thread;
+//lint -esym(765,osRtxThreadStackCheck) "Global scope"
+bool_t osRtxThreadStackCheck (const os_thread_t *thread) {
 
-  thread = osRtxThreadGetRunning();
-  if (thread != NULL) {
-    //lint -e{923} "cast from pointer to unsigned int"
-    //lint -e{9079} -e{9087} "cast between pointers to different object types"
-    if ((thread->sp <= (uint32_t)thread->stack_mem) ||
-        (*((uint32_t *)thread->stack_mem) != osRtxStackMagicWord)) {
-      (void)osRtxKernelErrorNotify(osRtxErrorStackUnderflow, thread);
-    }
+  //lint -e{923} "cast from pointer to unsigned int"
+  //lint -e{9079} -e{9087} "cast between pointers to different object types"
+  if ((thread->sp <= (uint32_t)thread->stack_mem) ||
+      (*((uint32_t *)thread->stack_mem) != osRtxStackMagicWord)) {
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
+    return FALSE;
   }
+  return TRUE;
 }
+#endif
 
 #ifdef RTX_TF_M_EXTENSION
 /// Get TrustZone Module Identifier of running Thread.
@@ -1118,6 +1120,25 @@ static void osRtxThreadFree (os_thread_t *thread) {
   }
 }
 
+/// Destroy a Thread.
+/// \param[in]  thread          thread object.
+static void osRtxThreadDestroy (os_thread_t *thread) {
+
+  if ((thread->attr & osThreadJoinable) == 0U) {
+    osRtxThreadFree(thread);
+  } else {
+    // Update Thread State and put it into Terminate Thread list
+    thread->state = osRtxThreadTerminated;
+    thread->thread_prev = NULL;
+    thread->thread_next = osRtxInfo.thread.terminate_list;
+    if (osRtxInfo.thread.terminate_list != NULL) {
+      osRtxInfo.thread.terminate_list->thread_prev = thread;
+    }
+    osRtxInfo.thread.terminate_list = thread;
+  }
+  EvrRtxThreadDestroyed(thread);
+}
+
 /// Detach a thread (thread storage can be reclaimed when thread terminates).
 /// \note API identical to osThreadDetach
 static osStatus_t svcRtxThreadDetach (osThreadId_t thread_id) {
@@ -1221,24 +1242,23 @@ static void svcRtxThreadExit (void) {
   }
 
   // Switch to next Ready Thread
-  thread->sp = __get_PSP();
   osRtxThreadSwitch(osRtxThreadListGet(&osRtxInfo.thread.ready));
+
+  // Update Stack Pointer
+  thread->sp = __get_PSP();
+#ifdef RTX_STACK_CHECK
+  // Check Stack usage
+  if (!osRtxThreadStackCheck(thread)) {
+    osRtxThreadSetRunning(osRtxInfo.thread.run.next);
+    (void)osRtxKernelErrorNotify(osRtxErrorStackOverflow, thread);
+  }
+#endif
+
+  // Mark running thread as deleted
   osRtxThreadSetRunning(NULL);
 
-  if ((thread->attr & osThreadJoinable) == 0U) {
-    osRtxThreadFree(thread);
-  } else {
-    // Update Thread State and put it into Terminate Thread list
-    thread->state = osRtxThreadTerminated;
-    thread->thread_prev = NULL;
-    thread->thread_next = osRtxInfo.thread.terminate_list;
-    if (osRtxInfo.thread.terminate_list != NULL) {
-      osRtxInfo.thread.terminate_list->thread_prev = thread;
-    }
-    osRtxInfo.thread.terminate_list = thread;
-  }
-
-  EvrRtxThreadDestroyed(thread);
+  // Destroy Thread
+  osRtxThreadDestroy(thread);
 }
 
 /// Terminate execution of a thread.
@@ -1294,27 +1314,24 @@ static osStatus_t svcRtxThreadTerminate (osThreadId_t thread_id) {
 
     // Switch to next Ready Thread when terminating running Thread
     if (thread->state == osRtxThreadRunning) {
-      thread->sp = __get_PSP();
       osRtxThreadSwitch(osRtxThreadListGet(&osRtxInfo.thread.ready));
+      // Update Stack Pointer
+      thread->sp = __get_PSP();
+#ifdef RTX_STACK_CHECK
+      // Check Stack usage
+      if (!osRtxThreadStackCheck(thread)) {
+        osRtxThreadSetRunning(osRtxInfo.thread.run.next);
+        (void)osRtxKernelErrorNotify(osRtxErrorStackOverflow, thread);
+      }
+#endif
+      // Mark running thread as deleted
       osRtxThreadSetRunning(NULL);
     } else {
       osRtxThreadDispatch(NULL);
     }
 
-    if ((thread->attr & osThreadJoinable) == 0U) {
-      osRtxThreadFree(thread);
-    } else {
-      // Update Thread State and put it into Terminate Thread list
-      thread->state = osRtxThreadTerminated;
-      thread->thread_prev = NULL;
-      thread->thread_next = osRtxInfo.thread.terminate_list;
-      if (osRtxInfo.thread.terminate_list != NULL) {
-        osRtxInfo.thread.terminate_list->thread_prev = thread;
-      }
-      osRtxInfo.thread.terminate_list = thread;
-    }
-
-    EvrRtxThreadDestroyed(thread);
+    // Destroy Thread
+    osRtxThreadDestroy(thread);
   }
 
   return status;

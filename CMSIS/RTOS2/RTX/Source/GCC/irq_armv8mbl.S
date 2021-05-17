@@ -38,6 +38,8 @@
         .equ     TCB_SF_OFS,  34        // TCB.stack_frame offset
         .equ     TCB_TZM_OFS, 64        // TCB.tz_memory offset
 
+        .equ     osRtxErrorStackOverflow, 1 // Stack overflow
+
         .section ".rodata"
         .global  irqRtxLib              // Non weak library reference
 irqRtxLib:
@@ -82,7 +84,9 @@ SVC_Context:
         cmp      r1,r2                  // Check if thread switch is required
         beq      SVC_Exit               // Branch when threads are the same
 
-        cbz      r1,SVC_ContextSwitch   // Branch if running thread is deleted
+        subs     r3,r3,#8               // Adjust address
+        str      r2,[r3]                // osRtxInfo.thread.run: curr = next
+        cbz      r1,SVC_ContextRestore  // Branch if running thread is deleted
 
 SVC_ContextSave:
     #if (DOMAIN_NS != 0)
@@ -103,6 +107,46 @@ SVC_ContextSave_NS:
         bmi      SVC_ContextSaveSP      // Branch if secure
     #endif
 
+    #ifdef RTX_STACK_CHECK
+        subs     r0,r0,#32              // Calculate SP: space for R4..R11
+
+SVC_ContextSaveSP:
+        str      r0,[r1,#TCB_SP_OFS]    // Store SP
+        mov      r3,lr                  // Get EXC_RETURN
+        mov      r0,r1                  // osRtxInfo.thread.run.curr
+        adds     r0,r0,#TCB_SF_OFS      // Adjust address
+        strb     r3,[r0]                // Store stack frame information
+
+        push     {r1,r2}                // Save osRtxInfo.thread.run: curr & next
+        mov      r0,r1                  // Parameter: osRtxInfo.thread.run.curr
+        bl       osRtxThreadStackCheck  // Check if thread stack is overrun
+        pop      {r1,r2}                // Restore osRtxInfo.thread.run: curr & next
+        cmp      r0,#0
+        bne      SVC_ContextSaveRegs    // Branch when stack check is ok
+
+        movs     r0,#osRtxErrorStackOverflow // Parameter: r0=code, r1=object_id
+        bl       osRtxKernelErrorNotify      // Call osRtxKernelErrorNotify
+        ldr      r3,=osRtxInfo+I_T_RUN_OFS   // Load address of osRtxInfo.thread.run
+        ldr      r2,[r3,#4]             // Load osRtxInfo.thread.run: next
+        str      r2,[r3]                // osRtxInfo.thread.run: curr = next
+        b        SVC_ContextRestore     // Branch to context restore handling
+
+SVC_ContextSaveRegs:
+      #if (DOMAIN_NS != 0)
+        mov      r0,r1                  // osRtxInfo.thread.run.curr
+        adds     r0,r0,#TCB_SF_OFS      // Adjust address
+        ldrb     r3,[r0]                // Load stack frame information
+        lsls     r3,r3,#25              // Check domain of interrupted thread
+        bmi      SVC_ContextRestore     // Branch if secure
+      #endif
+        ldr      r0,[r1,#TCB_SP_OFS]    // Load SP
+        stmia    r0!,{r4-r7}            // Save R4..R7
+        mov      r4,r8
+        mov      r5,r9
+        mov      r6,r10
+        mov      r7,r11
+        stmia    r0!,{r4-r7}            // Save R8..R11
+    #else
         subs     r0,r0,#32              // Calculate SP: space for R4..R11
         stmia    r0!,{r4-r7}            // Save R4..R7
         mov      r4,r8
@@ -116,10 +160,7 @@ SVC_ContextSaveSP:
         mov      r0,lr                  // Get EXC_RETURN
         adds     r1,r1,#TCB_SF_OFS      // Adjust address
         strb     r0,[r1]                // Store stack frame information
-
-SVC_ContextSwitch:
-        subs     r3,r3,#8               // Adjust address
-        str      r2,[r3]                // osRtxInfo.thread.run: curr = next
+    #endif // RTX_STACK_CHECK
 
 SVC_ContextRestore:
     #if (DOMAIN_NS != 0)

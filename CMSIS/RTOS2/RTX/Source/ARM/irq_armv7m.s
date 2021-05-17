@@ -24,6 +24,10 @@
 ; */
 
 
+                IF       :LNOT::DEF:RTX_STACK_CHECK
+RTX_STACK_CHECK EQU      0
+                ENDIF
+
                 IF       ({FPU}="FPv4-SP")
 FPU_USED        EQU      1
                 ELSE
@@ -35,6 +39,10 @@ TCB_SP_OFS      EQU      56                     ; TCB.SP offset
 TCB_SF_OFS      EQU      34                     ; TCB.stack_frame offset
 
 FPCCR           EQU      0xE000EF34             ; FPCCR Address
+
+osRtxErrorStackOverflow\
+                EQU      1                      ; Stack overflow
+
 
                 PRESERVE8
                 THUMB
@@ -52,6 +60,10 @@ SVC_Handler     PROC
                 EXPORT   SVC_Handler
                 IMPORT   osRtxUserSVC
                 IMPORT   osRtxInfo
+            IF RTX_STACK_CHECK != 0
+                IMPORT   osRtxThreadStackCheck
+                IMPORT   osRtxKernelErrorNotify
+            ENDIF
 
                 TST      LR,#0x04               ; Determine return stack from EXC_RETURN bit 2
                 ITE      EQ
@@ -60,7 +72,8 @@ SVC_Handler     PROC
 
                 LDR      R1,[R0,#24]            ; Load saved PC from stack
                 LDRB     R1,[R1,#-2]            ; Load SVC number
-                CBNZ     R1,SVC_User            ; Branch if not SVC 0
+                CMP      R1,#0                  ; Check SVC number
+                BNE      SVC_User               ; Branch if not SVC 0
 
                 PUSH     {R0,LR}                ; Save SP and EXC_RETURN
                 LDM      R0,{R0-R3,R12}         ; Load function parameters and address from stack
@@ -75,20 +88,64 @@ SVC_Context
                 IT       EQ
                 BXEQ     LR                     ; Exit when threads are the same
 
+                STR      R2,[R3]                ; osRtxInfo.thread.run: curr = next
+
               IF FPU_USED != 0
                 CBNZ     R1,SVC_ContextSave     ; Branch if running thread is not deleted
+SVC_FP_LazyState
                 TST      LR,#0x10               ; Determine stack frame from EXC_RETURN bit 4
-                BNE      SVC_ContextSwitch      ; Branch if not extended stack frame
+                BNE      SVC_ContextRestore     ; Branch if not extended stack frame
                 LDR      R3,=FPCCR              ; FPCCR Address
                 LDR      R0,[R3]                ; Load FPCCR
                 BIC      R0,R0,#1               ; Clear LSPACT (Lazy state preservation)
                 STR      R0,[R3]                ; Store FPCCR
-                B        SVC_ContextSwitch      ; Branch to context switch handling
+                B        SVC_ContextRestore     ; Branch to context restore handling
               ELSE
-                CBZ      R1,SVC_ContextSwitch   ; Branch if running thread is deleted
+                CBZ      R1,SVC_ContextRestore  ; Branch if running thread is deleted
               ENDIF
 
 SVC_ContextSave
+            IF RTX_STACK_CHECK != 0
+                SUB      R12,R12,#32            ; Calculate SP: space for R4..R11
+              IF FPU_USED != 0
+                TST      LR,#0x10               ; Determine stack frame from EXC_RETURN bit 4
+                IT       EQ                     ; If extended stack frame
+                SUBEQ    R12,R12,#64            ;  Additional space for S16..S31
+                STRB     LR, [R1,#TCB_SF_OFS]   ; Store stack frame information
+              ENDIF
+                STR      R12,[R1,#TCB_SP_OFS]   ; Store SP
+
+                PUSH     {R1,R2}                ; Save osRtxInfo.thread.run: curr & next
+                MOV      R0,R1                  ; Parameter: osRtxInfo.thread.run.curr
+                BL       osRtxThreadStackCheck  ; Check if thread stack is overrun
+                POP      {R1,R2}                ; Restore osRtxInfo.thread.run: curr & next
+                CBNZ     R0,SVC_ContextSaveRegs ; Branch when stack check is ok
+
+              IF FPU_USED != 0
+                MOV      R4,R1                  ; Save osRtxInfo.thread.run.curr
+              ENDIF
+                MOV      R0,#osRtxErrorStackOverflow ; Parameter: r0=code, r1=object_id
+                BL       osRtxKernelErrorNotify      ; Call osRtxKernelErrorNotify
+                LDR      R3,=osRtxInfo+I_T_RUN_OFS   ; Load address of osRtxInfo.thread.run
+                LDR      R2,[R3,#4]             ; Load osRtxInfo.thread.run: next
+                STR      R2,[R3]                ; osRtxInfo.thread.run: curr = next
+              IF FPU_USED != 0
+                LDRB     LR,[R4,#TCB_SF_OFS]    ; Load stack frame information
+                B        SVC_FP_LazyState       ; Branch to FP lazy state handling
+              ELSE
+                B        SVC_ContextRestore     ; Branch to context restore handling
+              ENDIF
+
+SVC_ContextSaveRegs
+                LDR      R12,[R1,#TCB_SP_OFS]   ; Load SP
+              IF FPU_USED != 0
+                LDRB     LR, [R1,#TCB_SF_OFS]   ; Load stack frame information
+                TST      LR,#0x10               ; Determine stack frame from EXC_RETURN bit 4
+                IT       EQ                     ; If extended stack frame
+                VSTMIAEQ R12!,{S16-S31}         ;  Save VFP S16..S31
+              ENDIF
+                STM      R12,{R4-R11}           ; Save R4..R11
+            ELSE
                 STMDB    R12!,{R4-R11}          ; Save R4..R11
               IF FPU_USED != 0
                 TST      LR,#0x10               ; Determine stack frame from EXC_RETURN bit 4
@@ -97,9 +154,7 @@ SVC_ContextSave
                 STRB     LR, [R1,#TCB_SF_OFS]   ; Store stack frame information
               ENDIF
                 STR      R12,[R1,#TCB_SP_OFS]   ; Store SP
-
-SVC_ContextSwitch
-                STR      R2,[R3]                ; osRtxInfo.thread.run: curr = next
+            ENDIF
 
 SVC_ContextRestore
                 LDR      R0,[R2,#TCB_SP_OFS]    ; Load SP

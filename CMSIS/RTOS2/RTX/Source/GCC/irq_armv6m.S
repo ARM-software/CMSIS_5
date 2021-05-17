@@ -26,8 +26,12 @@
 
         .syntax  unified
 
+        #include "rtx_def.h"
+
         .equ     I_T_RUN_OFS, 20        // osRtxInfo.thread.run offset
         .equ     TCB_SP_OFS,  56        // TCB.SP offset
+
+        .equ     osRtxErrorStackOverflow, 1 // Stack overflow
 
         .section ".rodata"
         .global  irqRtxLib              // Non weak library reference
@@ -73,23 +77,43 @@ SVC_Context:
         cmp      r1,r2                  // Check if thread switch is required
         beq      SVC_Exit               // Branch when threads are the same
 
+        subs     r3,r3,#8               // Adjust address
+        str      r2,[r3]                // osRtxInfo.thread.run: curr = next
         cmp      r1,#0
-        beq      SVC_ContextSwitch      // Branch if running thread is deleted
+        beq      SVC_ContextRestore     // Branch if running thread is deleted
 
 SVC_ContextSave:
         mrs      r0,psp                 // Get PSP
         subs     r0,r0,#32              // Calculate SP: space for R4..R11
         str      r0,[r1,#TCB_SP_OFS]    // Store SP
+
+    #ifdef RTX_STACK_CHECK
+
+        push     {r1,r2}                // Save osRtxInfo.thread.run: curr & next
+        mov      r0,r1                  // Parameter: osRtxInfo.thread.run.curr
+        bl       osRtxThreadStackCheck  // Check if thread stack is overrun
+        pop      {r1,r2}                // Restore osRtxInfo.thread.run: curr & next
+        cmp      r0,#0
+        bne      SVC_ContextSaveRegs    // Branch when stack check is ok
+
+        movs     r0,#osRtxErrorStackOverflow // Parameter: r0=code, r1=object_id
+        bl       osRtxKernelErrorNotify      // Call osRtxKernelErrorNotify
+        ldr      r3,=osRtxInfo+I_T_RUN_OFS   // Load address of osRtxInfo.thread.run
+        ldr      r2,[r3,#4]             // Load osRtxInfo.thread.run: next
+        str      r2,[r3]                // osRtxInfo.thread.run: curr = next
+        b        SVC_ContextRestore     // Branch to context restore handling
+
+SVC_ContextSaveRegs:
+        ldr      r0,[r1,#TCB_SP_OFS]    // Load SP
+
+    #endif // RTX_STACK_CHECK
+
         stmia    r0!,{r4-r7}            // Save R4..R7
         mov      r4,r8
         mov      r5,r9
         mov      r6,r10
         mov      r7,r11
         stmia    r0!,{r4-r7}            // Save R8..R11
-
-SVC_ContextSwitch:
-        subs     r3,r3,#8               // Adjust address
-        str      r2,[r3]                // osRtxInfo.thread.run: curr = next
 
 SVC_ContextRestore:
         ldr      r0,[r2,#TCB_SP_OFS]    // Load SP

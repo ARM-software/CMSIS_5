@@ -189,7 +189,9 @@ extern void         osRtxThreadSwitch     (os_thread_t *thread);
 extern void         osRtxThreadDispatch   (os_thread_t *thread);
 extern void         osRtxThreadWaitExit   (os_thread_t *thread, uint32_t ret_val, bool_t dispatch);
 extern bool_t       osRtxThreadWaitEnter  (uint8_t state, uint32_t timeout);
-extern void         osRtxThreadStackCheck (void);
+#ifdef RTX_STACK_CHECK
+extern bool_t       osRtxThreadStackCheck (const os_thread_t *thread);
+#endif
 extern bool_t       osRtxThreadStartup    (void);
 
 // Timer Library functions

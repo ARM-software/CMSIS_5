@@ -24,6 +24,10 @@
 ; */
 
 
+                IF       :LNOT::DEF:RTX_STACK_CHECK
+RTX_STACK_CHECK EQU      0
+                ENDIF
+
                 IF       :LNOT::DEF:DOMAIN_NS
 DOMAIN_NS       EQU      0
                 ENDIF
@@ -33,6 +37,9 @@ TCB_SM_OFS      EQU      48                     ; TCB.stack_mem offset
 TCB_SP_OFS      EQU      56                     ; TCB.SP offset
 TCB_SF_OFS      EQU      34                     ; TCB.stack_frame offset
 TCB_TZM_OFS     EQU      64                     ; TCB.tz_memory offset
+
+osRtxErrorStackOverflow\
+                EQU      1                      ; Stack overflow
 
 
                 PRESERVE8
@@ -51,6 +58,10 @@ SVC_Handler     PROC
                 EXPORT   SVC_Handler
                 IMPORT   osRtxUserSVC
                 IMPORT   osRtxInfo
+            IF RTX_STACK_CHECK != 0
+                IMPORT   osRtxThreadStackCheck
+                IMPORT   osRtxKernelErrorNotify
+            ENDIF
             IF DOMAIN_NS != 0
                 IMPORT   TZ_LoadContext_S
                 IMPORT   TZ_StoreContext_S
@@ -81,7 +92,9 @@ SVC_Context
                 CMP      R1,R2                  ; Check if thread switch is required
                 BEQ      SVC_Exit               ; Branch when threads are the same
 
-                CBZ      R1,SVC_ContextSwitch   ; Branch if running thread is deleted
+                SUBS     R3,R3,#8               ; Adjust address
+                STR      R2,[R3]                ; osRtxInfo.thread.run: curr = next
+                CBZ      R1,SVC_ContextRestore  ; Branch if running thread is deleted
 
 SVC_ContextSave
             IF DOMAIN_NS != 0
@@ -102,6 +115,46 @@ SVC_ContextSave_NS
                 BMI      SVC_ContextSaveSP      ; Branch if secure
             ENDIF
 
+            IF RTX_STACK_CHECK != 0
+                SUBS     R0,R0,#32              ; Calculate SP: space for R4..R11
+
+SVC_ContextSaveSP
+                STR      R0,[R1,#TCB_SP_OFS]    ; Store SP
+                MOV      R3,LR                  ; Get EXC_RETURN
+                MOV      R0,R1                  ; osRtxInfo.thread.run.curr
+                ADDS     R0,R0,#TCB_SF_OFS      ; Adjust address
+                STRB     R3,[R0]                ; Store stack frame information
+
+                PUSH     {R1,R2}                ; Save osRtxInfo.thread.run: curr & next
+                MOV      R0,R1                  ; Parameter: osRtxInfo.thread.run.curr
+                BL       osRtxThreadStackCheck  ; Check if thread stack is overrun
+                POP      {R1,R2}                ; Restore osRtxInfo.thread.run: curr & next
+                CMP      R0,#0
+                BNE      SVC_ContextSaveRegs    ; Branch when stack check is ok
+
+                MOVS     R0,#osRtxErrorStackOverflow ; Parameter: r0=code, r1=object_id
+                BL       osRtxKernelErrorNotify      ; Call osRtxKernelErrorNotify
+                LDR      R3,=osRtxInfo+I_T_RUN_OFS   ; Load address of osRtxInfo.thread.run
+                LDR      R2,[R3,#4]             ; Load osRtxInfo.thread.run: next
+                STR      R2,[R3]                ; osRtxInfo.thread.run: curr = next
+                B        SVC_ContextRestore     ; Branch to context restore handling
+
+SVC_ContextSaveRegs
+              IF DOMAIN_NS != 0
+                MOV      R0,R1                  ; osRtxInfo.thread.run.curr
+                ADDS     R0,R0,#TCB_SF_OFS      ; Adjust address
+                LDRB     R3,[R0]                ; Load stack frame information
+                LSLS     R3,R3,#25              ; Check domain of interrupted thread
+                BMI      SVC_ContextRestore     ; Branch if secure
+              ENDIF
+                LDR      R0,[R1,#TCB_SP_OFS]    ; Load SP
+                STMIA    R0!,{R4-R7}            ; Save R4..R7
+                MOV      R4,R8
+                MOV      R5,R9
+                MOV      R6,R10
+                MOV      R7,R11
+                STMIA    R0!,{R4-R7}            ; Save R8..R11
+            ELSE
                 SUBS     R0,R0,#32              ; Calculate SP: space for R4..R11
                 STMIA    R0!,{R4-R7}            ; Save R4..R7
                 MOV      R4,R8
@@ -115,10 +168,7 @@ SVC_ContextSaveSP
                 MOV      R0,LR                  ; Get EXC_RETURN
                 ADDS     R1,R1,#TCB_SF_OFS      ; Adjust address
                 STRB     R0,[R1]                ; Store stack frame information
-
-SVC_ContextSwitch
-                SUBS     R3,R3,#8               ; Adjust address
-                STR      R2,[R3]                ; osRtxInfo.thread.run: curr = next
+            ENDIF
 
 SVC_ContextRestore
             IF DOMAIN_NS != 0
