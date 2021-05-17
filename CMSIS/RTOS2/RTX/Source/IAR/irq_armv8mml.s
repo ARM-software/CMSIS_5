@@ -18,14 +18,31 @@
 ; * -----------------------------------------------------------------------------
 ; *
 ; * Project:     CMSIS-RTOS RTX
-; * Title:       ARMv8-M Baseline Exception handlers
+; * Title:       ARMv8-M Mainline Exception handlers
 ; *
 ; * -----------------------------------------------------------------------------
 ; */
 
 
+                NAME     irq_armv8mml.s
+
+
+                #include "rtx_def.h"
+
 #ifndef DOMAIN_NS
 #define DOMAIN_NS        0
+#endif
+
+#ifdef __ARMVFP__
+FPU_USED        EQU      1
+#else
+FPU_USED        EQU      0
+#endif
+
+#if (defined(__ARM_FEATURE_MVE) && (__ARM_FEATURE_MVE > 0))
+MVE_USED        EQU      1
+#else
+MVE_USED        EQU      0
 #endif
 
 I_T_RUN_OFS     EQU      20                     ; osRtxInfo.thread.run offset
@@ -33,6 +50,8 @@ TCB_SM_OFS      EQU      48                     ; TCB.stack_mem offset
 TCB_SP_OFS      EQU      56                     ; TCB.SP offset
 TCB_SF_OFS      EQU      34                     ; TCB.stack_frame offset
 TCB_TZM_OFS     EQU      64                     ; TCB.tz_memory offset
+
+FPCCR           EQU      0xE000EF34             ; FPCCR Address
 
 
                 PRESERVE8
@@ -56,113 +75,103 @@ SVC_Handler
                 IMPORT   TZ_StoreContext_S
             #endif
 
-                MOV      R0,LR
-                LSRS     R0,R0,#3               ; Determine return stack from EXC_RETURN bit 2
-                BCC      SVC_MSP                ; Branch if return stack is MSP
-                MRS      R0,PSP                 ; Get PSP
+                TST      LR,#0x04               ; Determine return stack from EXC_RETURN bit 2
+                ITE      EQ
+                MRSEQ    R0,MSP                 ; Get MSP if return stack is MSP
+                MRSNE    R0,PSP                 ; Get PSP if return stack is PSP
 
-SVC_Number
                 LDR      R1,[R0,#24]            ; Load saved PC from stack
-                SUBS     R1,R1,#2               ; Point to SVC instruction
-                LDRB     R1,[R1]                ; Load SVC number
+                LDRB     R1,[R1,#-2]            ; Load SVC number
                 CMP      R1,#0                  ; Check SVC number
                 BNE      SVC_User               ; Branch if not SVC 0
 
                 PUSH     {R0,LR}                ; Save SP and EXC_RETURN
-                LDMIA    R0,{R0-R3}             ; Load function parameters from stack
-                BLX      R7                     ; Call service function
-                POP      {R2,R3}                ; Restore SP and EXC_RETURN
-                STMIA    R2!,{R0-R1}            ; Store function return values
-                MOV      LR,R3                  ; Set EXC_RETURN
+                LDM      R0,{R0-R3,R12}         ; Load function parameters and address from stack
+                BLX      R12                    ; Call service function
+                POP      {R12,LR}               ; Restore SP and EXC_RETURN
+                STM      R12,{R0-R1}            ; Store function return values
 
 SVC_Context
                 LDR      R3,=osRtxInfo+I_T_RUN_OFS; Load address of osRtxInfo.thread.run
-                LDMIA    R3!,{R1,R2}            ; Load osRtxInfo.thread.run: curr & next
+                LDM      R3,{R1,R2}             ; Load osRtxInfo.thread.run: curr & next
                 CMP      R1,R2                  ; Check if thread switch is required
-                BEQ      SVC_Exit               ; Branch when threads are the same
+                IT       EQ
+                BXEQ     LR                     ; Exit when threads are the same
 
+              #if ((FPU_USED != 0) || (MVE_USED != 0))
+                CBNZ     R1,SVC_ContextSave     ; Branch if running thread is not deleted
+                TST      LR,#0x10               ; Determine stack frame from EXC_RETURN bit 4
+                BNE      SVC_ContextSwitch      ; Branch if not extended stack frame
+                LDR      R3,=FPCCR              ; FPCCR Address
+                LDR      R0,[R3]                ; Load FPCCR
+                BIC      R0,R0,#1               ; Clear LSPACT (Lazy state preservation)
+                STR      R0,[R3]                ; Store FPCCR
+                B        SVC_ContextSwitch      ; Branch to context switch handling
+              #else
                 CBZ      R1,SVC_ContextSwitch   ; Branch if running thread is deleted
+              #endif
 
 SVC_ContextSave
             #if (DOMAIN_NS != 0)
                 LDR      R0,[R1,#TCB_TZM_OFS]   ; Load TrustZone memory identifier
                 CBZ      R0,SVC_ContextSave_NS  ; Branch if there is no secure context
-                PUSH     {R1,R2,R3,R7}          ; Save registers
-                MOV      R7,LR                  ; Get EXC_RETURN
+                PUSH     {R1,R2,R12,LR}         ; Save registers and EXC_RETURN
                 BL       TZ_StoreContext_S      ; Store secure context
-                MOV      LR,R7                  ; Set EXC_RETURN
-                POP      {R1,R2,R3,R7}          ; Restore registers
+                POP      {R1,R2,R12,LR}         ; Restore registers and EXC_RETURN
             #endif
 
 SVC_ContextSave_NS
-                MRS      R0,PSP                 ; Get PSP
             #if (DOMAIN_NS != 0)
-                MOV      R3,LR                  ; Get EXC_RETURN
-                LSLS     R3,R3,#25              ; Check domain of interrupted thread
-                BMI      SVC_ContextSaveSP      ; Branch if secure
+                TST      LR,#0x40               ; Check domain of interrupted thread
+                BNE      SVC_ContextSaveSP      ; Branch if secure
             #endif
 
-                SUBS     R0,R0,#32              ; Calculate SP: space for R4..R11
-                STMIA    R0!,{R4-R7}            ; Save R4..R7
-                MOV      R4,R8
-                MOV      R5,R9
-                MOV      R6,R10
-                MOV      R7,R11
-                STMIA    R0!,{R4-R7}            ; Save R8..R11
-                SUBS     R0,R0,#32              ; Adjust address
+                STMDB    R12!,{R4-R11}          ; Save R4..R11
+              #if ((FPU_USED != 0) || (MVE_USED != 0))
+                TST      LR,#0x10               ; Determine stack frame from EXC_RETURN bit 4
+                IT       EQ                     ; If extended stack frame
+                VSTMDBEQ R12!,{S16-S31}         ;  Save VFP S16.S31
+              #endif
 SVC_ContextSaveSP
-                STR      R0,[R1,#TCB_SP_OFS]    ; Store SP
-                MOV      R0,LR                  ; Get EXC_RETURN
-                ADDS     R1,R1,#TCB_SF_OFS      ; Adjust address
-                STRB     R0,[R1]                ; Store stack frame information
+                STR      R12,[R1,#TCB_SP_OFS]   ; Store SP
+                STRB     LR, [R1,#TCB_SF_OFS]   ; Store stack frame information
 
 SVC_ContextSwitch
-                SUBS     R3,R3,#8               ; Adjust address
                 STR      R2,[R3]                ; osRtxInfo.thread.run: curr = next
 
 SVC_ContextRestore
             #if (DOMAIN_NS != 0)
                 LDR      R0,[R2,#TCB_TZM_OFS]   ; Load TrustZone memory identifier
-                CBZ      R0,SVC_ContextRestore_NS ; Branch if there is no secure context
+                CBZ      R0,SVC_ContextRestore_NS; Branch if there is no secure context
                 PUSH     {R2,R3}                ; Save registers
                 BL       TZ_LoadContext_S       ; Load secure context
                 POP      {R2,R3}                ; Restore registers
             #endif
 
 SVC_ContextRestore_NS
-                LDR      R0,[R2,#TCB_SM_OFS]    ; Load stack memory base
-                MSR      PSPLIM,R0              ; Set PSPLIM
-                MOV      R0,R2                  ; osRtxInfo.thread.run.next
-                ADDS     R0,R0,#TCB_SF_OFS      ; Adjust address
-                LDRB     R3,[R0]                ; Load stack frame information
-                MOVS     R0,#0xFF
-                MVNS     R0,R0                  ; R0=0xFFFFFF00
-                ORRS     R3,R3,R0
-                MOV      LR,R3                  ; Set EXC_RETURN
                 LDR      R0,[R2,#TCB_SP_OFS]    ; Load SP
+                LDR      R1,[R2,#TCB_SM_OFS]    ; Load stack memory base
+                MSR      PSPLIM,R1              ; Set PSPLIM
+                LDRB     R1,[R2,#TCB_SF_OFS]    ; Load stack frame information
+                ORN      LR,R1,#0xFF            ; Set EXC_RETURN
+
             #if (DOMAIN_NS != 0)
-                LSLS     R3,R3,#25              ; Check domain of interrupted thread
-                BMI      SVC_ContextRestoreSP   ; Branch if secure
+                TST      LR,#0x40               ; Check domain of interrupted thread
+                BNE      SVC_ContextRestoreSP   ; Branch if secure
             #endif
-                ADDS     R0,R0,#16              ; Adjust address
-                LDMIA    R0!,{R4-R7}            ; Restore R8..R11
-                MOV      R8,R4
-                MOV      R9,R5
-                MOV      R10,R6
-                MOV      R11,R7
-                SUBS     R0,R0,#32              ; Adjust address
-                LDMIA    R0!,{R4-R7}            ; Restore R4..R7
-                ADDS     R0,R0,#16              ; Adjust address
+
+              #if ((FPU_USED != 0) || (MVE_USED != 0))
+                TST      LR,#0x10               ; Determine stack frame from EXC_RETURN bit 4
+                IT       EQ                     ; If extended stack frame
+                VLDMIAEQ R0!,{S16-S31}          ;  Restore VFP S16..S31
+              #endif
+                LDMIA    R0!,{R4-R11}           ; Restore R4..R11
 
 SVC_ContextRestoreSP
                 MSR      PSP,R0                 ; Set PSP
 
 SVC_Exit
                 BX       LR                     ; Exit from handler
-
-SVC_MSP
-                MRS      R0,MSP                 ; Get MSP
-                B        SVC_Number
 
 SVC_User
                 LDR      R2,=osRtxUserSVC       ; Load address of SVC table
@@ -171,14 +180,11 @@ SVC_User
                 BHI      SVC_Exit               ; Branch if out of range
 
                 PUSH     {R0,LR}                ; Save SP and EXC_RETURN
-                LSLS     R1,R1,#2
-                LDR      R3,[R2,R1]             ; Load address of SVC function
-                MOV      R12,R3
-                LDMIA    R0,{R0-R3}             ; Load function parameters from stack
+                LDR      R12,[R2,R1,LSL #2]     ; Load address of SVC function
+                LDM      R0,{R0-R3}             ; Load function parameters from stack
                 BLX      R12                    ; Call service function
-                POP      {R2,R3}                ; Restore SP and EXC_RETURN
-                STR      R0,[R2]                ; Store function return value
-                MOV      LR,R3                  ; Set EXC_RETURN
+                POP      {R12,LR}               ; Restore SP and EXC_RETURN
+                STR      R0,[R12]               ; Store function return value
 
                 BX       LR                     ; Return from handler
 
@@ -189,8 +195,8 @@ PendSV_Handler
 
                 PUSH     {R0,LR}                ; Save EXC_RETURN
                 BL       osRtxPendSV_Handler    ; Call osRtxPendSV_Handler
-                POP      {R0,R1}                ; Restore EXC_RETURN
-                MOV      LR,R1                  ; Set EXC_RETURN
+                POP      {R0,LR}                ; Restore EXC_RETURN
+                MRS      R12,PSP                ; Save PSP to R12
                 B        SVC_Context            ; Branch to context handling
 
 
@@ -200,8 +206,9 @@ SysTick_Handler
 
                 PUSH     {R0,LR}                ; Save EXC_RETURN
                 BL       osRtxTick_Handler      ; Call osRtxTick_Handler
-                POP      {R0,R1}                ; Restore EXC_RETURN
-                MOV      LR,R1                  ; Set EXC_RETURN
+                POP      {R0,LR}                ; Restore EXC_RETURN
+                MRS      R12,PSP                ; Save PSP to R12
                 B        SVC_Context            ; Branch to context handling
 
 
+                END
