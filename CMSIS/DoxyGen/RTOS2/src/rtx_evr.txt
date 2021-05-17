@@ -298,6 +298,17 @@ The event \b KernelGetSysTimerFreq is generated when the function \ref osKernelG
 */
 
 /**
+\fn void EvrRtxKernelErrorNotify (uint32_t code, void *object_id)
+\details
+The event \b KernelErrorNotify is generated when the function \ref osRtxErrorNotify is called.
+
+\b Value in the Event Recorder shows:
+  - \b code : error code. 
+  - \b object_id : object that caused the error.
+*/
+*/
+
+/**
 @}
 */
 

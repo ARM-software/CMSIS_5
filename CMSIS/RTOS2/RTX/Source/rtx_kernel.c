@@ -507,6 +507,13 @@ SVC0_0 (KernelGetSysTimerFreq,  uint32_t)
 __WEAK void osRtxKernelPreInit (void) {
 }
 
+/// RTOS Kernel Error Notification Handler
+/// \note API identical to osRtxErrorNotify
+uint32_t osRtxKernelErrorNotify (uint32_t code, void *object_id) {
+  EvrRtxKernelErrorNotify(code, object_id);
+  return osRtxErrorNotify(code, object_id);
+}
+
 
 //  ==== Public API ====
 

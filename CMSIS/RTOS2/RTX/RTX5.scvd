@@ -603,6 +603,16 @@
       </member>
     </typedef>
 
+    <typedef name="rtx_error" info="OS Error Code" size="4">
+      <member name="id" type="uint32_t" offset="0" info="Error Code">
+        <enum name="osRtxErrorStackOverflow"      value="1" info="Stack overflow"/>
+        <enum name="osRtxErrorISRQueueOverflow"   value="2" info="ISR Queue overflow"/>
+        <enum name="osRtxErrorTimerQueueOverflow" value="3" info="User Timer Callback Queue overflow"/>
+        <enum name="osRtxErrorClibSpace"          value="4" info="Standard C/C++ library libspace not available"/>
+        <enum name="osRtxErrorClibMutex"          value="5" info="Standard C/C++ library mutex initialization failed"/>
+      </member>
+    </typedef>
+
   </typedefs>
 
   <objects>
@@ -1420,6 +1430,7 @@
     <event id="0xF100 + 0x14" level="API"    property="KernelGetTickFreq"                   value="freq=%d[val1]" info="osKernelGetTickFreq function was called."/>
     <event id="0xF100 + 0x15" level="API"    property="KernelGetSysTimerCount"              value="count=%d[val1]" info="osKernelGetSysTimerCount function was called."/>
     <event id="0xF100 + 0x16" level="API"    property="KernelGetSysTimerFreq"               value="freq=%d[val1]" info="osKernelGetSysTimerFreq function was called."/>
+    <event id="0xF100 + 0x19" level="Error"  property="KernelErrorNotify"                   value="code=%E[val1, rtx_error:id], object_id=%x[val2]" info="osKernelErrorNotify function was called."/>
 
     <event id="0xF200 + 0x00" level="Error"  property="ThreadError"                                                                       value="thread_id=%x[val1], status=%E[val2, rtx_t:status]" info="Thread error occurred."/>
     <event id="0xF200 + 0x01" level="API"    property="ThreadNew"                                                                         value="func=%S[val1], argument=%x[val2], attr=%x[val3]" info="osThreadNew function was called."/>

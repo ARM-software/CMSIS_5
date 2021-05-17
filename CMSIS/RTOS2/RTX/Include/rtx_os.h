@@ -401,6 +401,7 @@ extern osRtxObjectMemUsage_t osRtxMessageQueueMemUsage;
  
 /// OS Error Callback function
 extern uint32_t osRtxErrorNotify (uint32_t code, void *object_id);
+extern uint32_t osRtxKernelErrorNotify (uint32_t code, void *object_id);
  
 /// OS Idle Thread
 extern void osRtxIdleThread (void *argument);

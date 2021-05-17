@@ -391,6 +391,17 @@ extern void EvrRtxKernelGetSysTimerFreq (uint32_t freq);
 #define EvrRtxKernelGetSysTimerFreq(freq)
 #endif
 
+/**
+  \brief  Event on RTOS kernel system error (Error)
+  \param[in]  code          error code.
+  \param[in]  object_id     object that caused the error.
+*/
+#if (!defined(EVR_RTX_DISABLE) && (OS_EVR_KERNEL != 0) && !defined(EVR_RTX_KERNEL_ERROR_NOTIFY_DISABLE))
+extern void EvrRtxKernelErrorNotify (uint32_t code, void *object_id);
+#else
+#define EvrRtxKernelErrorNotify(code, object_id)
+#endif
+
 
 //  ==== Thread Events ====
 

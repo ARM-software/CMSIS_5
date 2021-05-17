@@ -725,7 +725,7 @@ void *__user_perthread_libspace (void) {
       }
     }
     if (n == (uint32_t)OS_THREAD_LIBSPACE_NUM) {
-      (void)osRtxErrorNotify(osRtxErrorClibSpace, id);
+      (void)osRtxKernelErrorNotify(osRtxErrorClibSpace, id);
     }
   } else {
     n = OS_THREAD_LIBSPACE_NUM;
@@ -753,7 +753,7 @@ int _mutex_initialize(mutex *m) {
     result = 1;
   } else {
     result = 0;
-    (void)osRtxErrorNotify(osRtxErrorClibMutex, m);
+    (void)osRtxKernelErrorNotify(osRtxErrorClibMutex, m);
   }
   return result;
 }

@@ -107,7 +107,7 @@ static void osRtxTimerTick (void) {
     TimerUnlink(timer);
     status = osMessageQueuePut(osRtxInfo.timer.mq, &timer->finfo, 0U, 0U);
     if (status != osOK) {
-      (void)osRtxErrorNotify(osRtxErrorTimerQueueOverflow, timer);
+      (void)osRtxKernelErrorNotify(osRtxErrorTimerQueueOverflow, timer);
     }
     if (timer->type == osRtxTimerPeriodic) {
       TimerInsert(timer, timer->load);

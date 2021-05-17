@@ -521,7 +521,7 @@ __WEAK void osRtxThreadStackCheck (void) {
     //lint -e{9079} -e{9087} "cast between pointers to different object types"
     if ((thread->sp <= (uint32_t)thread->stack_mem) ||
         (*((uint32_t *)thread->stack_mem) != osRtxStackMagicWord)) {
-      (void)osRtxErrorNotify(osRtxErrorStackUnderflow, thread);
+      (void)osRtxKernelErrorNotify(osRtxErrorStackUnderflow, thread);
     }
   }
 }
