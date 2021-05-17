@@ -107,6 +107,7 @@
        - Fixed Round-Robin (timeout value is not reset when switching to higher priority threads).
        - Fixed osThreadJoin (when terminating thread which is waiting to be joined).
        - Enhanced stack overrun checking.
+       - Updated osKernelResume handling (processing past sleep ticks).
        - Updated configuration (Event Recorder).
        - Reorganized and optimized IRQ modules.
       </td>

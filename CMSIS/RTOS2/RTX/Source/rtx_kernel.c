@@ -62,6 +62,31 @@ static void KernelUnblock (void) {
   OS_Tick_Enable();
 }
 
+// Get Kernel sleep time
+static uint32_t GetKernelSleepTime (void) {
+  const os_thread_t *thread;
+  const os_timer_t  *timer;
+  uint32_t           delay;
+
+  delay = osWaitForever;
+
+  // Check Thread Delay list
+  thread = osRtxInfo.thread.delay_list;
+  if (thread != NULL) {
+    delay = thread->delay;
+  }
+
+  // Check Active Timer list
+  timer = osRtxInfo.timer.list;
+  if (timer != NULL) {
+    if (timer->tick < delay) {
+      delay = timer->tick;
+    }
+  }
+
+  return delay;
+}
+
 
 //  ==== Service Calls ====
 
@@ -346,9 +371,7 @@ static int32_t svcRtxKernelRestoreLock (int32_t lock) {
 /// Suspend the RTOS Kernel scheduler.
 /// \note API identical to osKernelSuspend
 static uint32_t svcRtxKernelSuspend (void) {
-  const os_thread_t *thread;
-  const os_timer_t  *timer;
-  uint32_t           delay;
+  uint32_t delay;
 
   if (osRtxInfo.kernel.state != osRtxKernelRunning) {
     EvrRtxKernelError(osRtxErrorKernelNotRunning);
@@ -358,23 +381,9 @@ static uint32_t svcRtxKernelSuspend (void) {
 
   KernelBlock();
 
-  delay = osWaitForever;
-
-  // Check Thread Delay list
-  thread = osRtxInfo.thread.delay_list;
-  if (thread != NULL) {
-    delay = thread->delay;
-  }
-
-  // Check Active Timer list
-  timer = osRtxInfo.timer.list;
-  if (timer != NULL) {
-    if (timer->tick < delay) {
-      delay = timer->tick;
-    }
-  }
-
   osRtxInfo.kernel.state = osRtxKernelSuspended;
+
+  delay = GetKernelSleepTime();
 
   EvrRtxKernelSuspended(delay);
 
@@ -387,7 +396,7 @@ static void svcRtxKernelResume (uint32_t sleep_ticks) {
   os_thread_t *thread;
   os_timer_t  *timer;
   uint32_t     delay;
-  uint32_t     ticks;
+  uint32_t     ticks, kernel_tick;
 
   if (osRtxInfo.kernel.state != osRtxKernelSuspended) {
     EvrRtxKernelResumed();
@@ -395,40 +404,38 @@ static void svcRtxKernelResume (uint32_t sleep_ticks) {
     return;
   }
 
-  osRtxInfo.kernel.tick += sleep_ticks;
-
-  // Process Thread Delay list
-  thread = osRtxInfo.thread.delay_list;
-  if (thread != NULL) {
-    delay = sleep_ticks;
-    do {
-      if (delay >= thread->delay) {
-        delay -= thread->delay;
-        thread->delay = 1U;
-        osRtxThreadDelayTick();
-        thread = osRtxInfo.thread.delay_list;
-      } else {
-        thread->delay -= delay;
-        delay = 0U;
-      }
-    } while ((thread != NULL) && (delay != 0U));
+  delay = GetKernelSleepTime();
+  if (sleep_ticks >= delay) {
+    ticks = delay - 1U;
+  } else {
+    ticks = sleep_ticks;
   }
 
-  // Process Active Timer list
+  // Update Thread Delay sleep ticks
+  thread = osRtxInfo.thread.delay_list;
+  if (thread != NULL) {
+    thread->delay -= ticks;
+  }
+
+  // Update Timer sleep ticks
   timer = osRtxInfo.timer.list;
   if (timer != NULL) {
-    ticks = sleep_ticks;
-    do {
-      if (ticks >= timer->tick) {
-        ticks -= timer->tick;
-        timer->tick = 1U;
-        osRtxInfo.timer.tick();
-        timer = osRtxInfo.timer.list;
-      } else {
-        timer->tick -= ticks;
-        ticks = 0U;
-      }
-    } while ((timer != NULL) && (ticks != 0U));
+    timer->tick -= ticks;
+  }
+
+  kernel_tick = osRtxInfo.kernel.tick + sleep_ticks;
+  osRtxInfo.kernel.tick += ticks;
+
+  while (osRtxInfo.kernel.tick != kernel_tick) {
+    osRtxInfo.kernel.tick++;
+
+    // Process Thread Delays
+    osRtxThreadDelayTick();
+
+    // Process Timers
+    if (osRtxInfo.timer.tick != NULL) {
+      osRtxInfo.timer.tick();
+    }
   }
 
   osRtxInfo.kernel.state = osRtxKernelRunning;
