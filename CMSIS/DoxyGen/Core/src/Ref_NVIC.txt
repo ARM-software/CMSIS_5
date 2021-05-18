@@ -296,8 +296,8 @@ uint32_t active;                                            /* Variable to store
  
 void TIMER0_IRQHandler(void)  {                             /* Timer 0 interrupt handler  */
  
-  if (LPC_TIM0->IR & (1 << 0))  {                           /* Check if interrupt for match channel 0 occured */ 
-    LPC_TIM0->IR |= (1 << 0);                               /* Acknowledge interrupt for match channel 0 occured */
+  if (LPC_TIM0->IR & (1 << 0))  {                           /* Check if interrupt for match channel 0 occurred */ 
+    LPC_TIM0->IR |= (1 << 0);                               /* Acknowledge interrupt for match channel 0 occurred */
   }
   active = NVIC_GetActive(TIMER0_IRQn);                     /* Get interrupt active state of timer 0 */
 }
@@ -598,7 +598,7 @@ void NVIC_ClearPendingIRQ(IRQn_Type IRQn);
         - IRQn must not be negative.
         - Each external interrupt has an active status bit. When the processor starts the interrupt 
         handler the bit is set to 1 and cleared when the interrupt return is executed.
-        - When an ISR is preempted and the processor executes anohter interrupt handler, the 
+        - When an ISR is preempted and the processor executes another interrupt handler, the 
         previous interrupt is still defined as active.
     
     \sa     
@@ -638,8 +638,8 @@ uint32_t NVIC_GetActive(IRQn_Type IRQn);
     - <b>For Cortex-M3, Cortex-M4, and Cortex-M7</b>: 
         - Dynamic switching of interrupt priority levels is supported.
         - Supports 0 to 255 priority levels.
-        - Priority-level registers have a maximum width of 8 bits and a minumum of 3 bits.
-        Each register can be further devided into preempt priority level and subpriority level.
+        - Priority-level registers have a maximum width of 8 bits and a minimum of 3 bits.
+        Each register can be further divided into preempt priority level and subpriority level.
         
     \sa     
         - \ref NVIC_GetPriority;  NVIC_SetPriorityGrouping; __set_BASEPRI;

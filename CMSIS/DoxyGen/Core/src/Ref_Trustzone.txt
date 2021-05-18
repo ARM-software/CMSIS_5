@@ -401,7 +401,7 @@ void __TZ_set_STACKSEAL_S (uint32_t *stackTop);
 
 /**
 \def __STACK_SEAL
-\brief Compiler/linker symbol specifiying the location of the stack seal.
+\brief Compiler/linker symbol specifying the location of the stack seal.
 \details
 The address of the specified symbol is used to set the stack seal during low level init.
 This is compiler/linker specific. CMSIS specifies common default for supported compilers. 

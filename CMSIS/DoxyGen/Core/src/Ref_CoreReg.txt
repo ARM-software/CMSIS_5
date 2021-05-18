@@ -92,7 +92,7 @@ void __set_CONTROL(uint32_t control);
     The function reads the Interrupt Program Status Register (IPSR) using the instruction \b MRS. 
     \n\n
     The ISPR contains the exception type number of the current Interrupt Service Routine (ISR). 
-    Each exception has an assocciated unique IRQn number. The following bits are used:
+    Each exception has an associated unique IRQn number. The following bits are used:
     
     - \b ISR_NUMBER (IPSR[8:0])
         - =0 Thread mode
@@ -149,7 +149,7 @@ uint32_t __get_IPSR(void);
         - =1 A signed overflow occurred (for signed additions or subtractions).
     \n\n
     - \b Q (APSR[27]) (DSP overflow or saturation flag) [not Cortex-M0]
-        - This flag is a \em sticky flag. Saturating and certain mutliplying instructions can set the
+        - This flag is a \em sticky flag. Saturating and certain multiplying instructions can set the
         flag, but cannot clear it. 
         - =1 When saturation or an overflow occurred.
     \n\n
@@ -374,7 +374,7 @@ uint32_t __get_PRIMASK(void);
         - When set, PRIMASK effectively changes the current priority level to 0. 
         This is the highest programmable level.
         - When set and a fault occurs, the hard fault handler will be executed.
-        - Useful for temprorarily disabling all interrupts for timing critical tasks. 
+        - Useful for temporarily disabling all interrupts for timing critical tasks. 
         - Does not have the ability to mask BusFault or bypass MPU.
 
     \sa 
@@ -485,7 +485,7 @@ uint32_t __get_FAULTMASK(void);
     FAULTMASK prevents activation of all exceptions except for Non-Maskable Interrupt (NMI).
     FAULTMASK can be used to escalate a configurable fault handler (BusFault, usage fault, or 
     memory management fault) to hard fault level without invoking a hard fault. This allows the 
-    fault handler to pretend to be the hard fault handler, whith the ability to:
+    fault handler to pretend to be the hard fault handler, with the ability to:
     -# <b>Mask BusFault</b> by setting the BFHFNMIGN in the Configuration Control register.
     It can be used to test the bus system without causing a lockup. 
     -# <b>Bypass the MPU</b>, allowing accessing the MPU protected memory location without 
@@ -693,7 +693,7 @@ void __disable_fault_irq(void);
 
   \details Returns the current value of the Process Stack Pointer Limit (PSPLIM).
   \return               PSPLIM Register value
-  \note    Only availabe for Armv8-M Architecture. 
+  \note    Only available for Armv8-M Architecture. 
  */
 uint32_t __get_PSPLIM(void);
 
@@ -705,7 +705,7 @@ uint32_t __get_PSPLIM(void);
 
   \details Assigns the given value to the Process Stack Pointer Limit (PSPLIM).
   \param [in]    ProcStackPtrLimit  Process Stack Pointer Limit value to set
-  \note    Only availabe for Armv8-M Architecture. 
+  \note    Only available for Armv8-M Architecture. 
  */
 void __set_PSPLIM(uint32_t ProcStackPtrLimit);
 
@@ -717,7 +717,7 @@ void __set_PSPLIM(uint32_t ProcStackPtrLimit);
 
   \details Returns the current value of the Main Stack Pointer Limit (MSPLIM).
   \return               MSPLIM Register value
-  \note    Only availabe for Armv8-M Architecture. 
+  \note    Only available for Armv8-M Architecture. 
  */
 uint32_t __get_MSPLIM(void);
 
@@ -729,7 +729,7 @@ uint32_t __get_MSPLIM(void);
 
   \details Assigns the given value to the Main Stack Pointer Limit (MSPLIM).
   \param [in]    MainStackPtrLimit  Main Stack Pointer Limit value to set
-  \note    Only availabe for Armv8-M Architecture. 
+  \note    Only available for Armv8-M Architecture. 
  */
 __set_MSPLIM(uint32_t MainStackPtrLimit);
 
