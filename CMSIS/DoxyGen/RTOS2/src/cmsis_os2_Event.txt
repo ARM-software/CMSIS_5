@@ -175,7 +175,7 @@ Possible \ref flags_error_codes return values:
 \code
 #include "cmsis_os2.h"                          // CMSIS RTOS header file
  
-osEventFlagsId_t evt_id;                        // event flasg id
+osEventFlagsId_t evt_id;                        // event flags id
  
 void Thread_EventSender (void *argument) {
  
