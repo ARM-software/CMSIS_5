@@ -190,10 +190,10 @@ Macros</h2></td></tr>
 <tr class="memdesc:ga72db8b026c5e100254080fefabd9fd88"><td class="mdescLeft">&#160;</td><td class="mdescRight">Entry function into the user application or library startup.  <a href="#ga72db8b026c5e100254080fefabd9fd88">More...</a><br/></td></tr>
 <tr class="separator:ga72db8b026c5e100254080fefabd9fd88"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga1002e751427b1189f92787d4e4eef965"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__compiler__conntrol__gr.html#ga1002e751427b1189f92787d4e4eef965">__INITIAL_SP</a></td></tr>
-<tr class="memdesc:ga1002e751427b1189f92787d4e4eef965"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compiler/linker symbol specifiying the location of the main stack (MSP).  <a href="#ga1002e751427b1189f92787d4e4eef965">More...</a><br/></td></tr>
+<tr class="memdesc:ga1002e751427b1189f92787d4e4eef965"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compiler/linker symbol specifying the location of the main stack (MSP).  <a href="#ga1002e751427b1189f92787d4e4eef965">More...</a><br/></td></tr>
 <tr class="separator:ga1002e751427b1189f92787d4e4eef965"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga84b0bad4aa39632d3faea46aa1e102a8"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__compiler__conntrol__gr.html#ga84b0bad4aa39632d3faea46aa1e102a8">__STACK_LIMIT</a></td></tr>
-<tr class="memdesc:ga84b0bad4aa39632d3faea46aa1e102a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compiler/linker symbol specifiying the limit of the main stack (MSP).  <a href="#ga84b0bad4aa39632d3faea46aa1e102a8">More...</a><br/></td></tr>
+<tr class="memdesc:ga84b0bad4aa39632d3faea46aa1e102a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compiler/linker symbol specifying the limit of the main stack (MSP).  <a href="#ga84b0bad4aa39632d3faea46aa1e102a8">More...</a><br/></td></tr>
 <tr class="separator:ga84b0bad4aa39632d3faea46aa1e102a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gab94ebeb20055f1848d7b707d3c7cfc5d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__compiler__conntrol__gr.html#gab94ebeb20055f1848d7b707d3c7cfc5d">__VECTOR_TABLE</a></td></tr>
 <tr class="memdesc:gab94ebeb20055f1848d7b707d3c7cfc5d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Symbol name used for the (static) interrupt vector table.  <a href="#gab94ebeb20055f1848d7b707d3c7cfc5d">More...</a><br/></td></tr>
@@ -355,7 +355,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Compiler/linker symbol specifiying the location of the main stack (MSP). </p>
+<p>Compiler/linker symbol specifying the location of the main stack (MSP). </p>
 <p>The address of the specified symbol is used to initialize the main stack pointer (MSP) during low level init. This is compiler/linker specific. CMSIS specifies common default for supported compilers.</p>
 <dl class="section note"><dt>Note</dt><dd>This define is only intended to be used by the <a class="el" href="startup_c_pg.html">Startup File startup_&lt;device&gt;.c</a>. </dd></dl>
 
@@ -503,7 +503,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Compiler/linker symbol specifiying the limit of the main stack (MSP). </p>
+<p>Compiler/linker symbol specifying the limit of the main stack (MSP). </p>
 <p>The address of the specified symbol is used to initialize the main stack pointer limit (MSPLIM on Armv8-M) during low level init. This is compiler/linker specific. CMSIS specifies common default for supported compilers.</p>
 <dl class="section note"><dt>Note</dt><dd>This define is only intended to be used by the <a class="el" href="startup_c_pg.html">Startup File startup_&lt;device&gt;.c</a>.</dd></dl>
 <p><b>Code Example:</b> </p>

@@ -462,8 +462,8 @@ Mainline </th><th>Description  </th></tr>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">void</span> TIMER0_IRQHandler(<span class="keywordtype">void</span>)  {                             <span class="comment">/* Timer 0 interrupt handler  */</span></div>
 <div class="line"> </div>
-<div class="line">  <span class="keywordflow">if</span> (LPC_TIM0-&gt;IR &amp; (1 &lt;&lt; 0))  {                           <span class="comment">/* Check if interrupt for match channel 0 occured */</span> </div>
-<div class="line">    LPC_TIM0-&gt;IR |= (1 &lt;&lt; 0);                               <span class="comment">/* Acknowledge interrupt for match channel 0 occured */</span></div>
+<div class="line">  <span class="keywordflow">if</span> (LPC_TIM0-&gt;IR &amp; (1 &lt;&lt; 0))  {                           <span class="comment">/* Check if interrupt for match channel 0 occurred */</span> </div>
+<div class="line">    LPC_TIM0-&gt;IR |= (1 &lt;&lt; 0);                               <span class="comment">/* Acknowledge interrupt for match channel 0 occurred */</span></div>
 <div class="line">  }</div>
 <div class="line">  active = <a class="code" href="group__NVIC__gr.html#gadf4252e600661fd762cfc0d1a9f5b892">NVIC_GetActive</a>(TIMER0_IRQn);                     <span class="comment">/* Get interrupt active state of timer 0 */</span></div>
 <div class="line">}</div>
@@ -906,7 +906,7 @@ Mainline </th><th>Description  </th></tr>
 <li>not for Cortex-M0, Cortex-M0+, or SC000.</li>
 <li>IRQn must not be negative.</li>
 <li>Each external interrupt has an active status bit. When the processor starts the interrupt handler the bit is set to 1 and cleared when the interrupt return is executed.</li>
-<li>When an ISR is preempted and the processor executes anohter interrupt handler, the previous interrupt is still defined as active.</li>
+<li>When an ISR is preempted and the processor executes another interrupt handler, the previous interrupt is still defined as active.</li>
 </ul>
 </dd></dl>
 <dl class="section see"><dt>See Also</dt><dd><ul>
@@ -1217,7 +1217,7 @@ Mainline </th><th>Description  </th></tr>
 <li><b>For Cortex-M3, Cortex-M4, and Cortex-M7</b>:<ul>
 <li>Dynamic switching of interrupt priority levels is supported.</li>
 <li>Supports 0 to 255 priority levels.</li>
-<li>Priority-level registers have a maximum width of 8 bits and a minumum of 3 bits. Each register can be further devided into preempt priority level and subpriority level.</li>
+<li>Priority-level registers have a maximum width of 8 bits and a minimum of 3 bits. Each register can be further divided into preempt priority level and subpriority level.</li>
 </ul>
 </li>
 </ul>

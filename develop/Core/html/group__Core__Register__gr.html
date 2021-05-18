@@ -361,7 +361,7 @@ The APSR contains the current state of the condition flags from instructions exe
 </ul>
 </li>
 <li><b>Q</b> (APSR[27]) (DSP overflow or saturation flag) [not Cortex-M0]<ul>
-<li>This flag is a <em>sticky</em> flag. Saturating and certain mutliplying instructions can set the flag, but cannot clear it.</li>
+<li>This flag is a <em>sticky</em> flag. Saturating and certain multiplying instructions can set the flag, but cannot clear it.</li>
 <li>=1 When saturation or an overflow occurred. <br/>
 <br/>
 </li>
@@ -560,7 +560,7 @@ FPSCR provides all necessary User level controls of the floating-point system.</
 <p>Read the IPSR register. </p>
 <p>The function reads the Interrupt Program Status Register (IPSR) using the instruction <b>MRS</b>. <br/>
 <br/>
-The ISPR contains the exception type number of the current Interrupt Service Routine (ISR). Each exception has an assocciated unique IRQn number. The following bits are used:</p>
+The ISPR contains the exception type number of the current Interrupt Service Routine (ISR). Each exception has an associated unique IRQn number. The following bits are used:</p>
 <ul>
 <li><b>ISR_NUMBER</b> (IPSR[8:0])<ul>
 <li>=0 Thread mode</li>
@@ -655,7 +655,7 @@ Physically two different stack pointers (SP) exist:</p>
 <p>Get Main Stack Pointer Limit Devices without Armv8-M Main Extensions (i.e. Cortex-M23) lack the non-secure Stack Pointer Limit register hence zero is returned always in non-secure mode. </p>
 <p>Returns the current value of the Main Stack Pointer Limit (MSPLIM). </p>
 <dl class="section return"><dt>Returns</dt><dd>MSPLIM Register value </dd></dl>
-<dl class="section note"><dt>Note</dt><dd>Only availabe for Armv8-M Architecture. </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>Only available for Armv8-M Architecture. </dd></dl>
 
 </div>
 </div>
@@ -749,7 +749,7 @@ Physically two different stack pointers (SP) exist:</p>
 <p>Get Process Stack Pointer Limit Devices without Armv8-M Main Extensions (i.e. Cortex-M23) lack the non-secure Stack Pointer Limit register hence zero is returned always in non-secure mode. </p>
 <p>Returns the current value of the Process Stack Pointer Limit (PSPLIM). </p>
 <dl class="section return"><dt>Returns</dt><dd>PSPLIM Register value </dd></dl>
-<dl class="section note"><dt>Note</dt><dd>Only availabe for Armv8-M Architecture. </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>Only available for Armv8-M Architecture. </dd></dl>
 
 </div>
 </div>
@@ -966,7 +966,7 @@ The CONTROL register controls the stack used and the privilege level for softwar
 <p>Set the FAULTMASK register [not for Cortex-M0, Cortex-M0+, or SC000]. </p>
 <p>The function sets the Fault Mask register (FAULTMASK) value using the instruction <b>MSR</b>. <br/>
 <br/>
-FAULTMASK prevents activation of all exceptions except for Non-Maskable Interrupt (NMI). FAULTMASK can be used to escalate a configurable fault handler (BusFault, usage fault, or memory management fault) to hard fault level without invoking a hard fault. This allows the fault handler to pretend to be the hard fault handler, whith the ability to:</p>
+FAULTMASK prevents activation of all exceptions except for Non-Maskable Interrupt (NMI). FAULTMASK can be used to escalate a configurable fault handler (BusFault, usage fault, or memory management fault) to hard fault level without invoking a hard fault. This allows the fault handler to pretend to be the hard fault handler, with the ability to:</p>
 <ol type="1">
 <li><b>Mask BusFault</b> by setting the BFHFNMIGN in the Configuration Control register. It can be used to test the bus system without causing a lockup.</li>
 <li><b>Bypass the MPU</b>, allowing accessing the MPU protected memory location without reprogramming the MPU to just carry out a few transfers for fixing faults.</li>
@@ -1203,7 +1203,7 @@ Physically two different stack pointers (SP) exist:</p>
   </table>
   </dd>
 </dl>
-<dl class="section note"><dt>Note</dt><dd>Only availabe for Armv8-M Architecture. </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>Only available for Armv8-M Architecture. </dd></dl>
 
 </div>
 </div>
@@ -1238,7 +1238,7 @@ PRIMASK is a 1-bit-wide interrupt mask register. When set, it blocks all interru
 <dl class="section remark"><dt>Remarks</dt><dd><ul>
 <li>When set, PRIMASK effectively changes the current priority level to 0. This is the highest programmable level.</li>
 <li>When set and a fault occurs, the hard fault handler will be executed.</li>
-<li>Useful for temprorarily disabling all interrupts for timing critical tasks.</li>
+<li>Useful for temporarily disabling all interrupts for timing critical tasks.</li>
 <li>Does not have the ability to mask BusFault or bypass MPU.</li>
 </ul>
 </dd></dl>
@@ -1319,7 +1319,7 @@ Physically two different stack pointers (SP) exist:</p>
   </table>
   </dd>
 </dl>
-<dl class="section note"><dt>Note</dt><dd>Only availabe for Armv8-M Architecture. </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>Only available for Armv8-M Architecture. </dd></dl>
 
 </div>
 </div>
