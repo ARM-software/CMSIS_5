@@ -393,7 +393,7 @@ extern osRtxObjectMemUsage_t osRtxMessageQueueMemUsage;
 //  ==== OS External Functions ====
  
 // OS Error Codes
-#define osRtxErrorStackUnderflow        1U  ///< \deprecated Superseeded by \ref osRtxErrorStackOverflow.
+#define osRtxErrorStackUnderflow        1U  ///< \deprecated Superseded by \ref osRtxErrorStackOverflow.
 #define osRtxErrorStackOverflow         1U  ///< Stack overflow, i.e. stack pointer below its lower memory limit for descending stacks.
 #define osRtxErrorISRQueueOverflow      2U  ///< ISR Queue overflow detected when inserting object.
 #define osRtxErrorTimerQueueOverflow    3U  ///< User Timer Callback Queue overflow detected for timer.
