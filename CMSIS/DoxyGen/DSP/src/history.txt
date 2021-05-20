@@ -66,6 +66,11 @@
       - The states of the vectorized filters are different from their scalar
         versions (which may break some algorithms which are working on the
         state of a filter like Goertzel)
+      - For performance reasons, some vectorized algorithms may read one vector
+        after the end of buffer (but the data read is not used).
+        If the buffer is close to the end of a memory zone, it is advised
+        to leave some free memory area between the end of the buffer and the end 
+        of the memory zone.
 
     </td>
   </tr>
