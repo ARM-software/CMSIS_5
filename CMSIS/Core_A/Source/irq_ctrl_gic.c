@@ -1,11 +1,11 @@
 /**************************************************************************//**
  * @file     irq_ctrl_gic.c
  * @brief    Interrupt controller handling implementation for GIC
- * @version  V1.1.0
- * @date     03. March 2020
+ * @version  V1.1.1
+ * @date     29. March 2021
  ******************************************************************************/
 /*
- * Copyright (c) 2017-2020 ARM Limited. All rights reserved.
+ * Copyright (c) 2017-2021 ARM Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *

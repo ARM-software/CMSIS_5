@@ -1,11 +1,11 @@
 /******************************************************************************
  * @file     mpu_armv8.h
  * @brief    CMSIS MPU API for Armv8-M and Armv8.1-M MPU
- * @version  V5.1.2
- * @date     10. February 2020
+ * @version  V5.1.3
+ * @date     03. February 2021
  ******************************************************************************/
 /*
- * Copyright (c) 2017-2020 Arm Limited. All rights reserved.
+ * Copyright (c) 2017-2021 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *

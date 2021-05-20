@@ -181,6 +181,40 @@ In addition, each CMSIS component has its own release history:
       <th>Description</th>
     </tr>
     <tr>
+      <td>5.8.0</td>
+      <td>
+        Active development ...
+        - CMSIS-Build 0.10.0 (beta)
+          - Enhancements (see revision history for details)
+        - CMSIS-Core (Cortex-M) 5.5.0
+          - Updated GCC LinkerDescription, GCC Assembler startup
+          - Added ARMv8-M Stack Sealing (to linker, startup) for toolchain ARM, GCC
+          - Changed C-Startup to default Startup.
+        - CMSIS-Core (Cortex-A) 1.2.1
+        - CMSIS-Driver 2.8.0 (unchanged)
+        - CMSIS-DSP 1.9.0
+          - Purged pre-built libs from Git
+        - CMSIS-NN 3.0.0
+          - Major interface change for functions compatible with TensorFlow Lite for Microcontroller
+          - Added optimization for SVDF kernel
+          - Improved MVE performance for fully Connected and max pool operator
+          - NULL bias support for fully connected operator in non-MVE case(Can affect performance)
+          - Expanded existing unit test suite along with support for FVP
+        - CMSIS-RTOS 2.1.3 (unchanged)
+          - RTX 5.5.3 (see revision history for details)
+        - CMSIS-Pack 1.7.2
+          - Support for Microchip XC32 compiler
+          - Support for Custom Datapath Extension
+        - CMSIS-SVD 1.3.3 (unchanged)
+        - CMSIS-DAP 2.0.0 (unchanged)
+        - CMSIS-Zone 1.0.0 (unchanged)
+        - Devices
+        - Utilities
+          - SVDConv 3.3.35
+          - PackChk 1.3.89
+      </td>
+    </tr>
+    <tr>
       <td>5.7.0</td>
       <td>
         - CMSIS-Build 0.9.0 (beta)
