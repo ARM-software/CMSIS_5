@@ -301,18 +301,18 @@ void UnaryTestsF16::test_mat_cmplx_trans_f16()
 
 static void refInnerTail(float16_t *b)
 {
-    b[0] = 1.0f16;
-    b[1] = -2.0f16;
-    b[2] = 3.0f16;
-    b[3] = -4.0f16;
+    b[0] = 1.0f;
+    b[1] = -2.0f;
+    b[2] = 3.0f;
+    b[3] = -4.0f;
 }
 
 static void checkInnerTail(float16_t *b)
 {
-    ASSERT_TRUE(b[0] == 1.0f16);
-    ASSERT_TRUE(b[1] == -2.0f16);
-    ASSERT_TRUE(b[2] == 3.0f16);
-    ASSERT_TRUE(b[3] == -4.0f16);
+    ASSERT_TRUE(b[0] == 1.0f);
+    ASSERT_TRUE(b[1] == -2.0f);
+    ASSERT_TRUE(b[2] == 3.0f);
+    ASSERT_TRUE(b[3] == -4.0f);
 }
 
 void UnaryTestsF16::test_mat_inverse_f16()

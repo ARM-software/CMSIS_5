@@ -22,9 +22,16 @@ using namespace std;
 // Reference patterns are ignored in this case.
 #include "TestDrive.h"
 
+extern "C" void testmain_hook      (void) __attribute__ ((weak));
+
+void testmain_hook(void)
+{
+
+}
 
 int testmain(const char *patterns)
 {
+    testmain_hook();
     char *memoryBuf=NULL;
 
     memoryBuf = (char*)malloc(MEMSIZE);
@@ -43,7 +50,7 @@ int testmain(const char *patterns)
               Client::Semihosting io("../TestDesc.txt","../Patterns","../Output","../Parameters");
            #endif
 
-    
+
            // Pattern Manager making the link between IO and Memory
            Client::PatternMgr mgr(&io,&memory);
 

@@ -120,6 +120,13 @@ extern const pFunc __VECTOR_TABLE[496];
 #pragma GCC diagnostic pop
 #endif
 
+void systeminit_hook      (void) __attribute__ ((weak));
+
+void systeminit_hook(void)
+{
+
+}
+
 /*----------------------------------------------------------------------------
   Reset Handler called on controller reset
  *----------------------------------------------------------------------------*/
@@ -129,15 +136,22 @@ void Reset_Handler(void)
 
   SystemInit();                             /* CMSIS System Initialization */
 
+  systeminit_hook();
+
   __PROGRAM_START();                        /* Enter PreMain (C library entry point) */
 }
 
+#define SERIAL_BASE_ADDRESS (0xA8000000ul)
+
+#define SERIAL_DATA  *((volatile unsigned *) SERIAL_BASE_ADDRESS)
 
 /*----------------------------------------------------------------------------
   Hard Fault Handler
  *----------------------------------------------------------------------------*/
 void HardFault_Handler(void)
 {
+  SERIAL_DATA = 'H';
+  SERIAL_DATA = '\n';
   while(1);
 }
 
