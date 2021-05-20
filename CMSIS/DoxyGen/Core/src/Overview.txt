@@ -91,6 +91,10 @@ The \ref templates_pg supplied by Arm have been tested and verified with the fol
       <th>Description</th>
     </tr>
     <tr>
+      <td>V5.5.0</td>
+      <td></td>
+    </tr>
+    <tr>
       <td>V5.4.0</td>
       <td>
 \if ARMv8M

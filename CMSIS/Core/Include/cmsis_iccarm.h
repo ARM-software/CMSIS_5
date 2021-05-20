@@ -1,14 +1,14 @@
 /**************************************************************************//**
  * @file     cmsis_iccarm.h
  * @brief    CMSIS compiler ICCARM (IAR Compiler for Arm) header file
- * @version  V5.2.0
- * @date     28. January 2020
+ * @version  V5.3.0
+ * @date     14. April 2021
  ******************************************************************************/
 
 //------------------------------------------------------------------------------
 //
-// Copyright (c) 2017-2020 IAR Systems
-// Copyright (c) 2017-2019 Arm Limited. All rights reserved.
+// Copyright (c) 2017-2021 IAR Systems
+// Copyright (c) 2017-2021 Arm Limited. All rights reserved.
 //
 // SPDX-License-Identifier: Apache-2.0
 //

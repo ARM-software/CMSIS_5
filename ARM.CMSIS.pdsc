@@ -10,23 +10,24 @@
   <releases>
     <release version="5.8.0">
       Active development ...
-      CMSIS-Core(M):
+      CMSIS-Core(M): 5.5.0 (see revision history for details)
         - Updated GCC LinkerDescription, GCC Assembler startup
-       - Added ARMv8-M Stack Sealing (to linker, startup) for toolchain ARM, GCC
-       - Changed C-Startup to default Startup.
-      CMSIS-DSP:
-       - Purged pre-built libs from Git
+        - Added ARMv8-M Stack Sealing (to linker, startup) for toolchain ARM, GCC
+        - Changed C-Startup to default Startup.
+      CMSIS-Core(A): 1.2.1 (see revision history for details)
+      CMSIS-DSP: 1.9.0
+        - Purged pre-built libs from Git
       CMSIS-NN: 3.0.0 (see revision history for details including version 2.0.0)
-       - Major interface change for functions compatible with TensorFlow Lite for Microcontroller
-       - Added optimization for SVDF kernel
-       - Improved MVE performance for fully Connected and max pool operator
-       - NULL bias support for fully connected operator in non-MVE case(Can affect performance)
-       - Expanded existing unit test suite along with support for FVP
-      CMSIS-RTOS:
-       - RTX4: Purged pre-built libs from Git
+        - Major interface change for functions compatible with TensorFlow Lite for Microcontroller
+        - Added optimization for SVDF kernel
+        - Improved MVE performance for fully Connected and max pool operator
+        - NULL bias support for fully connected operator in non-MVE case(Can affect performance)
+        - Expanded existing unit test suite along with support for FVP
       CMSIS-RTOS2:
-        - RTX5: Purged pre-built libs from Git
         - RTX 5.5.3 (see revision history for details)
+      CMSIS-Pack: 1.7.2 (see revision history for details)
+        - Support for Microchip XC32 compiler
+        - Support for Custom Datapath Extension
     </release>
     <release version="5.7.0" date="2020-04-09">
       CMSIS-Build: 0.9.0 (beta)
@@ -2166,7 +2167,7 @@ and 8-bit Java bytecodes in Jazelle state.
 
   <components>
     <!-- CMSIS-Core component -->
-    <component Cclass="CMSIS" Cgroup="CORE" Cversion="5.4.0"  condition="ARMv6_7_8-M Device" >
+    <component Cclass="CMSIS" Cgroup="CORE" Cversion="5.5.0"  condition="ARMv6_7_8-M Device" >
       <description>CMSIS-CORE for Cortex-M, SC000, SC300, ARMv8-M, ARMv8.1-M</description>
       <files>
         <!-- CPU independent -->
@@ -2179,7 +2180,7 @@ and 8-bit Java bytecodes in Jazelle state.
       </files>
     </component>
 
-    <component Cclass="CMSIS" Cgroup="CORE" Cversion="1.2.0"  condition="ARMv7-A Device" >
+    <component Cclass="CMSIS" Cgroup="CORE" Cversion="1.2.1"  condition="ARMv7-A Device" >
       <description>CMSIS-CORE for Cortex-A</description>
       <files>
         <!-- CPU independent -->
@@ -2231,7 +2232,7 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="sourceC"      name="Device/ARM/ARMCM0plus/Source/system_ARMCM0plus.c"      version="1.0.0" attr="config"/>
       </files>
     </component>
-    <component Cclass="Device" Cgroup="Startup"                      Cversion="1.2.2" condition="ARMCM0+ CMSIS">
+    <component Cclass="Device" Cgroup="Startup"                      Cversion="1.3.0" condition="ARMCM0+ CMSIS">
       <description>DEPRECATED: System and Startup for Generic Arm Cortex-M0+ device</description>
       <files>
         <!-- include folder / device header file -->
@@ -2239,7 +2240,7 @@ and 8-bit Java bytecodes in Jazelle state.
         <!-- startup / system file -->
         <file category="sourceAsm"    name="Device/ARM/ARMCM0plus/Source/ARM/startup_ARMCM0plus.s" version="1.0.1" attr="config" condition="ARMCC"/>
         <file category="sourceAsm"    name="Device/ARM/ARMCM0plus/Source/GCC/startup_ARMCM0plus.S" version="2.1.0" attr="config" condition="GCC"/>
-        <file category="linkerScript" name="Device/ARM/ARMCM0plus/Source/GCC/gcc_arm.ld"           version="2.0.0" attr="config" condition="GCC"/>
+        <file category="linkerScript" name="Device/ARM/ARMCM0plus/Source/GCC/gcc_arm.ld"           version="2.1.0" attr="config" condition="GCC"/>
         <file category="sourceAsm"    name="Device/ARM/ARMCM0plus/Source/IAR/startup_ARMCM0plus.s" version="1.0.0" attr="config" condition="IAR"/>
         <file category="sourceC"      name="Device/ARM/ARMCM0plus/Source/system_ARMCM0plus.c"      version="1.0.0" attr="config"/>
       </files>
@@ -2477,7 +2478,7 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="linkerScript" name="Device/ARM/ARMCM55/Source/ARM/ARMCM55_ac6.sct"           version="1.1.0" attr="config" condition="TZ Non-secure ARMCC6"/>
         <file category="linkerScript" name="Device/ARM/ARMCM55/Source/ARM/ARMCM55_ac6.sct"           version="1.1.0" attr="config" condition="TZ Unavailable ARMCC6"/>
         <file category="linkerScript" name="Device/ARM/ARMCM55/Source/GCC/gcc_arm.ld"                version="2.2.0" attr="config" condition="GCC"/>
-        <file category="sourceC"      name="Device/ARM/ARMCM55/Source/system_ARMCM55.c"              version="1.0.0" attr="config"/>
+        <file category="sourceC"      name="Device/ARM/ARMCM55/Source/system_ARMCM55.c"              version="1.0.1" attr="config"/>
         <!-- SAU configuration -->
         <file category="header"       name="Device/ARM/ARMCM55/Include/Template/partition_ARMCM55.h" version="1.0.0" attr="config" condition="TZ Secure"/>
       </files>
@@ -2628,7 +2629,7 @@ and 8-bit Java bytecodes in Jazelle state.
     </component>
 
     <!-- Cortex-A5 -->
-    <component Cclass="Device" Cgroup="Startup"                      Cversion="1.0.0" condition="ARMCA5 CMSIS">
+    <component Cclass="Device" Cgroup="Startup"                      Cversion="1.0.1" condition="ARMCA5 CMSIS">
       <description>System and Startup for Generic Arm Cortex-A5 device</description>
       <files>
         <!-- include folder / device header file -->
@@ -2636,9 +2637,9 @@ and 8-bit Java bytecodes in Jazelle state.
         <!-- startup / system / mmu files -->
         <file category="sourceC"      name="Device/ARM/ARMCA5/Source/AC5/startup_ARMCA5.c" version="1.0.0" attr="config" condition="ARMCC5"/>
         <file category="linkerScript" name="Device/ARM/ARMCA5/Source/AC5/ARMCA5.sct"       version="1.0.0" attr="config" condition="ARMCC5"/>
-        <file category="sourceC"      name="Device/ARM/ARMCA5/Source/AC6/startup_ARMCA5.c" version="1.0.0" attr="config" condition="ARMCC6"/>
+        <file category="sourceC"      name="Device/ARM/ARMCA5/Source/AC6/startup_ARMCA5.c" version="1.0.1" attr="config" condition="ARMCC6"/>
         <file category="linkerScript" name="Device/ARM/ARMCA5/Source/AC6/ARMCA5.sct"       version="1.0.0" attr="config" condition="ARMCC6"/>
-        <file category="sourceC"      name="Device/ARM/ARMCA5/Source/GCC/startup_ARMCA5.c" version="1.0.0" attr="config" condition="GCC"/>
+        <file category="sourceC"      name="Device/ARM/ARMCA5/Source/GCC/startup_ARMCA5.c" version="1.0.1" attr="config" condition="GCC"/>
         <file category="other"        name="Device/ARM/ARMCA5/Source/GCC/ARMCA5.ld"        version="1.0.0" attr="config" condition="GCC"/>
         <file category="sourceAsm"    name="Device/ARM/ARMCA5/Source/IAR/startup_ARMCA5.s" version="1.0.0" attr="config" condition="IAR"/>
         <file category="linkerScript" name="Device/ARM/ARMCA5/Source/IAR/ARMCA5.icf"       version="1.0.0" attr="config" condition="IAR"/>
@@ -2651,7 +2652,7 @@ and 8-bit Java bytecodes in Jazelle state.
     </component>
 
     <!-- Cortex-A7 -->
-    <component Cclass="Device" Cgroup="Startup"                      Cversion="1.0.0" condition="ARMCA7 CMSIS">
+    <component Cclass="Device" Cgroup="Startup"                      Cversion="1.0.1" condition="ARMCA7 CMSIS">
       <description>System and Startup for Generic Arm Cortex-A7 device</description>
       <files>
         <!-- include folder / device header file -->
@@ -2659,9 +2660,9 @@ and 8-bit Java bytecodes in Jazelle state.
         <!-- startup / system / mmu files -->
         <file category="sourceC"      name="Device/ARM/ARMCA7/Source/AC5/startup_ARMCA7.c" version="1.0.0" attr="config" condition="ARMCC5"/>
         <file category="linkerScript" name="Device/ARM/ARMCA7/Source/AC5/ARMCA7.sct"       version="1.0.0" attr="config" condition="ARMCC5"/>
-        <file category="sourceC"      name="Device/ARM/ARMCA7/Source/AC6/startup_ARMCA7.c" version="1.0.0" attr="config" condition="ARMCC6"/>
+        <file category="sourceC"      name="Device/ARM/ARMCA7/Source/AC6/startup_ARMCA7.c" version="1.0.1" attr="config" condition="ARMCC6"/>
         <file category="linkerScript" name="Device/ARM/ARMCA7/Source/AC6/ARMCA7.sct"       version="1.0.0" attr="config" condition="ARMCC6"/>
-        <file category="sourceC"      name="Device/ARM/ARMCA7/Source/GCC/startup_ARMCA7.c" version="1.0.0" attr="config" condition="GCC"/>
+        <file category="sourceC"      name="Device/ARM/ARMCA7/Source/GCC/startup_ARMCA7.c" version="1.0.1" attr="config" condition="GCC"/>
         <file category="other"        name="Device/ARM/ARMCA7/Source/GCC/ARMCA7.ld"        version="1.0.0" attr="config" condition="GCC"/>
         <file category="sourceAsm"    name="Device/ARM/ARMCA7/Source/IAR/startup_ARMCA7.s" version="1.0.0" attr="config" condition="IAR"/>
         <file category="linkerScript" name="Device/ARM/ARMCA7/Source/IAR/ARMCA7.icf"       version="1.0.0" attr="config" condition="IAR"/>
@@ -2673,7 +2674,7 @@ and 8-bit Java bytecodes in Jazelle state.
     </component>
 
     <!-- Cortex-A9 -->
-    <component Cclass="Device" Cgroup="Startup"                      Cversion="1.0.1" condition="ARMCA9 CMSIS">
+    <component Cclass="Device" Cgroup="Startup"                      Cversion="1.0.2" condition="ARMCA9 CMSIS">
       <description>System and Startup for Generic Arm Cortex-A9 device</description>
       <files>
         <!-- include folder / device header file -->
@@ -2681,9 +2682,9 @@ and 8-bit Java bytecodes in Jazelle state.
         <!-- startup / system / mmu files -->
         <file category="sourceC"      name="Device/ARM/ARMCA9/Source/AC5/startup_ARMCA9.c" version="1.0.0" attr="config" condition="ARMCC5"/>
         <file category="linkerScript" name="Device/ARM/ARMCA9/Source/AC5/ARMCA9.sct"       version="1.0.0" attr="config" condition="ARMCC5"/>
-        <file category="sourceC"      name="Device/ARM/ARMCA9/Source/AC6/startup_ARMCA9.c" version="1.0.0" attr="config" condition="ARMCC6"/>
+        <file category="sourceC"      name="Device/ARM/ARMCA9/Source/AC6/startup_ARMCA9.c" version="1.0.1" attr="config" condition="ARMCC6"/>
         <file category="linkerScript" name="Device/ARM/ARMCA9/Source/AC6/ARMCA9.sct"       version="1.0.0" attr="config" condition="ARMCC6"/>
-        <file category="sourceC"      name="Device/ARM/ARMCA9/Source/GCC/startup_ARMCA9.c" version="1.0.0" attr="config" condition="GCC"/>
+        <file category="sourceC"      name="Device/ARM/ARMCA9/Source/GCC/startup_ARMCA9.c" version="1.0.1" attr="config" condition="GCC"/>
         <file category="other"        name="Device/ARM/ARMCA9/Source/GCC/ARMCA9.ld"        version="1.0.0" attr="config" condition="GCC"/>
         <file category="sourceAsm"    name="Device/ARM/ARMCA9/Source/IAR/startup_ARMCA9.s" version="1.0.0" attr="config" condition="IAR"/>
         <file category="linkerScript" name="Device/ARM/ARMCA9/Source/IAR/ARMCA9.icf"       version="1.0.0" attr="config" condition="IAR"/>
@@ -2775,7 +2776,7 @@ and 8-bit Java bytecodes in Jazelle state.
     </component>
 
     <!-- CMSIS-NN component -->
-    <component Cclass="CMSIS" Cgroup="NN Lib" Cversion="1.4.0" condition="CMSIS NN">
+    <component Cclass="CMSIS" Cgroup="NN Lib" Cversion="3.0.0" condition="CMSIS NN">
       <description>CMSIS-NN Neural Network Library</description>
       <files>
         <file category="doc" name="CMSIS/Documentation/NN/html/index.html"/>

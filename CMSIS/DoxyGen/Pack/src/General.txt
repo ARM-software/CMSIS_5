@@ -84,6 +84,28 @@ Files relevant to CMSIS-Pack are present in the following \b ARM::CMSIS director
     <th>Description</th>
   </tr>
   <tr>
+    <td>1.7.2</td>
+    <td>
+     - added 'XC' to CompilerEnumType to enable use of Microchip XC32 compiler 
+    </td>
+  </tr>
+  <tr>
+    <td>1.7.1</td>
+    <td>
+      - undo removing deprecated attributes as they are still used in latest pdsc file versions:
+        DeviceVendorEnum: Lapis Semiconductor, DeviceVendorEnum: Pname, BoardReferenceType: Dvendor, Dname
+      - added condition attribute to TaxonomyDescriptionType supporting context specific taxonomies (e.g. vendor or device specific)
+    </td>
+  </tr>
+  <tr>
+    <td>1.7.0</td>
+    <td>
+      - added processor attribute Dcdecp for implemented Custom Datapath Extension Coprocessors (Cortex-M33)
+      - extended BoardType added DebugProbeType and FlashAlgorithm.
+      - removed types and references used by deprecated cprj format.
+    </td>
+  </tr>
+  <tr>
     <td>1.6.3</td>
 	<td>
 - removed CMSIS Project Description format (cpdsc) from CMSIS-Pack. Format has been superseeded by new format specification located in the CMSIS 
