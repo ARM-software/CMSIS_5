@@ -163,6 +163,7 @@ $(document).ready(function(){initNavTree('ChangeLog_pg.html','');});
 <li>Initialization of FIRs has changed for the Helium version (state and coefs). Read the corresponding documentations.</li>
 <li>Initialization of float biquad DF1 has changed for the Helium version (two init functions are required). Read the corresponding documentations.</li>
 <li>The states of the vectorized filters are different from their scalar versions (which may break some algorithms which are working on the state of a filter like Goertzel)</li>
+<li>For performance reasons, some vectorized algorithms may read one vector after the end of buffer (but the data read is not used). If the buffer is close to the end of a memory zone, it is advised to leave some free memory area between the end of the buffer and the end of the memory zone.</li>
 </ul>
 <p class="endtd"></p>
 </td></tr>
