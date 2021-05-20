@@ -28,7 +28,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS
-   &#160;<span id="projectnumber">Version 5.7.0</span>
+   &#160;<span id="projectnumber">Version 5.8.0</span>
    </div>
    <div id="projectbrief">Software Interface Standard for Arm Cortex-based Microcontrollers</div>
   </td>
@@ -90,6 +90,52 @@ $(document).ready(function(){initNavTree('cm_revisionHistory.html','');});
 <table  class="cmtable" summary="Revision History">
 <tr>
 <th>Version </th><th>Description  </th></tr>
+<tr>
+<td>5.8.0 </td><td>Active development ...<ul>
+<li>CMSIS-Build 0.10.0 (beta)<ul>
+<li>Enhancements (see revision history for details)</li>
+</ul>
+</li>
+<li>CMSIS-Core (Cortex-M) 5.5.0<ul>
+<li>Updated GCC LinkerDescription, GCC Assembler startup</li>
+<li>Added ARMv8-M Stack Sealing (to linker, startup) for toolchain ARM, GCC</li>
+<li>Changed C-Startup to default Startup.</li>
+</ul>
+</li>
+<li>CMSIS-Core (Cortex-A) 1.2.1</li>
+<li>CMSIS-Driver 2.8.0 (unchanged)</li>
+<li>CMSIS-DSP 1.9.0<ul>
+<li>Purged pre-built libs from Git</li>
+</ul>
+</li>
+<li>CMSIS-NN 3.0.0<ul>
+<li>Major interface change for functions compatible with TensorFlow Lite for Microcontroller</li>
+<li>Added optimization for SVDF kernel</li>
+<li>Improved MVE performance for fully Connected and max pool operator</li>
+<li>NULL bias support for fully connected operator in non-MVE case(Can affect performance)</li>
+<li>Expanded existing unit test suite along with support for FVP</li>
+</ul>
+</li>
+<li>CMSIS-RTOS 2.1.3 (unchanged)<ul>
+<li>RTX 5.5.3 (see revision history for details)</li>
+</ul>
+</li>
+<li>CMSIS-Pack 1.7.2<ul>
+<li>Support for Microchip XC32 compiler</li>
+<li>Support for Custom Datapath Extension</li>
+</ul>
+</li>
+<li>CMSIS-SVD 1.3.3 (unchanged)</li>
+<li>CMSIS-DAP 2.0.0 (unchanged)</li>
+<li>CMSIS-Zone 1.0.0 (unchanged)</li>
+<li>Devices</li>
+<li>Utilities<ul>
+<li>SVDConv 3.3.35</li>
+<li>PackChk 1.3.89   </li>
+</ul>
+</li>
+</ul>
+</td></tr>
 <tr>
 <td>5.7.0 </td><td><ul>
 <li>CMSIS-Build 0.9.0 (beta)<ul>

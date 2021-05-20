@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Pack
-   &#160;<span id="projectnumber">Version 1.6.3</span>
+   &#160;<span id="projectnumber">Version 1.7.2</span>
    </div>
    <div id="projectbrief">Delivery Mechanism for Software Packs</div>
   </td>
@@ -114,6 +114,24 @@ $(document).ready(function(){initNavTree('pack_revisionHistory.html','');});
 <div class="textblock"><table  class="cmtable" summary="Revision History">
 <tr>
 <th>Version </th><th>Description  </th></tr>
+<tr>
+<td>1.7.2 </td><td><ul>
+<li>added 'XC' to CompilerEnumType to enable use of Microchip XC32 compiler   </li>
+</ul>
+</td></tr>
+<tr>
+<td>1.7.1 </td><td><ul>
+<li>undo removing deprecated attributes as they are still used in latest pdsc file versions: DeviceVendorEnum: Lapis Semiconductor, DeviceVendorEnum: Pname, BoardReferenceType: Dvendor, Dname</li>
+<li>added condition attribute to TaxonomyDescriptionType supporting context specific taxonomies (e.g. vendor or device specific)   </li>
+</ul>
+</td></tr>
+<tr>
+<td>1.7.0 </td><td><ul>
+<li>added processor attribute Dcdecp for implemented Custom Datapath Extension Coprocessors (Cortex-M33)</li>
+<li>extended BoardType added DebugProbeType and FlashAlgorithm.</li>
+<li>removed types and references used by deprecated cprj format.   </li>
+</ul>
+</td></tr>
 <tr>
 <td>1.6.3 </td><td><ul>
 <li>removed CMSIS Project Description format (cpdsc) from CMSIS-Pack. Format has been superseeded by new format specification located in the CMSIS <a href="../../Build/html/cprjFormat_pg.html"><b>Build</b></a> tab.</li>
