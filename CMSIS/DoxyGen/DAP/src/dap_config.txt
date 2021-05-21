@@ -23,6 +23,7 @@ requirements:
   - 7 standard I/O pins for JTAG/SWD Device Interface.
   - optional 2 I/O pins for Status LEDs.
   - optional UART to support SWO capturing (Rx pin connected to SWO)
+  - optional UART to support UART Communication Port
   
 CMSIS-DAP Firmware
 ------------------
@@ -36,8 +37,8 @@ Various adaptations for different target hardware are provided.
 
 Folders and Files                       | Description
 --------------------------------------- | ----------------------------------------------------------------------------------------------------------------
-.\\Firmware\\Example\\V1\\LPC-Link-II   | CMSIS-DAP Firmware using USB HID adapted to the NXP LPC-Link-II Debug Unit that is part of the LPCxpresso-II platform.
-.\\Firmware\\Example\\V2\\LPC-Link-II   | CMSIS-DAP Firmware using WinUSB adapted to the NXP LPC-Link-II Debug Unit that is part of the LPCxpresso-II platform.
+.\\Firmware\\Examples\\LPC-Link-II\\V1  | CMSIS-DAP Firmware using USB HID adapted to the NXP LPC-Link-II Debug Unit that is part of the LPCxpresso-II platform.
+.\\Firmware\\Examples\\LPC-Link-II\\V2  | CMSIS-DAP Firmware using WinUSB adapted to the NXP LPC-Link-II Debug Unit that is part of the LPCxpresso-II platform.
 
 The CMSIS-DAP Firmware is designed to execute on a Debug Unit that is using a Cortex-M0, Cortex-M0+, Cortex-M3, or Cortex-M4 
 processor-based microcontroller. To deploy the firmware to a new Debug Unit copy an existing firmware adaptation to a new folder.
@@ -47,10 +48,11 @@ To following steps describe the adaptation of the CMSIS-DAP Firmware to a new De
 1. \ref DAP_ConfigMCU_gr :  Select the microcontroller and replace the CMSIS-Core (Cortex-M) files.
 2. \ref DAP_ConfigIO_gr : Adapt the I/O Ports and specify other parameters for the Debug Unit.
 3. \ref DAP_ConfigUSB_gr : Adapt the USB Peripheral to the microcontroller.
-4. \ref DAP_USART_gr : Optional you may add a CMSIS-Driver USART to interface to SWO.
-5. \ref DAP_Vendor_gr : Optional you may add vendor specific commands to the Debug Unit.
-6. \ref DAP_ConfigFlash_gr : Program the adapted firmware to the Flash ROM of the new Debug Unit.
-7. \ref DAP_Validate_gr : Validate the CMSIS-DAP firmware of the new Debug Unit.
+4. \ref DAP_USART_SWO_gr : Optional you may add a CMSIS-Driver USART to interface to SWO.
+5. \ref DAP_USART_COM_gr : Optional you may add a CMSIS-Driver USART to interface to UART Communication Port.
+6. \ref DAP_Vendor_gr : Optional you may add vendor specific commands to the Debug Unit.
+7. \ref DAP_ConfigFlash_gr : Program the adapted firmware to the Flash ROM of the new Debug Unit.
+8. \ref DAP_Validate_gr : Validate the CMSIS-DAP firmware of the new Debug Unit.
 @}
 **************************************************************************************************/
 
@@ -102,6 +104,8 @@ The USB communication is implemented via MDK middleware components that access t
 The CMSIS-DAP Firmware is able to communicate with the host computer using one of the following USB classes:
   - \ref USBHID (Human Interface Device) does not require any USB driver installation.
   - \ref WinUSB provides higher speed communication but may require an *.inf file for USB installation. 
+
+In addition, \ref USB_CDC is used to enable USB COM port.
 
 For the USB interface it is important to provide correct configuration information for the USB Peripheral as described in this section.
 
@@ -178,6 +182,16 @@ The following CMSIS_DAP_v2.inf file should be provided for an Windows 7 host PC.
 
 \verbinclude Firmware\Template\CMSIS_DAP_v2.inf
 
+\page USB_CDC Communication Device Class
+
+CMSIS-DAP V2 supports also UART Communication Port optionally routed to USB COM Port 
+which is implemented through USB Communication Device Class (CDC). 
+<br><br>
+
+The picture below shows the configuration of the USB CDC class.
+<br>
+
+\image html "MDK_USB_CDC.png" "Configuration of USB CDC class"
 
 @}
 **************************************************************************************************/
@@ -198,16 +212,28 @@ Once Flash programming is configured you may use the uVision menu item <b>Flash 
 @}
 **************************************************************************************************/
 /**
-\defgroup DAP_USART_gr Connect SWO Trace
+\defgroup DAP_USART_SWO_gr Connect SWO Trace
 @{
 \brief Optional you may add a CMSIS-Driver USART to interface to SWO.
 \details
 A CMSIS-Driver USART can be used to capture the trace output on the SWO pin using a UART RX input on the
-microcontroller. To use a UART for SWO capturing, it is required to set the \#define SWO_UART to 1.
+microcontroller. UART Serial Wire Output (SWO) trace can be enabled and configured in the header DAP_Config.h.
+\#define SWO_UART is used to enable the UART SWO and \#define SWO_UART_DRIVER
+is used to configure USART Driver instance number (Driver_USART#).
+Refer to \ref DAP_Config_Debug_gr for more information.
+@}
+**************************************************************************************************/
+/**
+\defgroup DAP_USART_COM_gr Connect UART Communication Port
+@{
+\brief Optional you may add a CMSIS-Driver USART to interface to UART Communication Port.
+\details
+A CMSIS-Driver USART can be used to receive data from the target and transmit data to the target using
+UART RX and TX pins on the microcontroller. UART communication port can be enabled and configured in the header DAP_Config.h.
+\#define DAP_UART is used to enable the UART communication port and \#define DAP_UART_DRIVER
+is used to configure USART Driver instance number (Driver_USART#).
 Refer to \ref DAP_Config_Debug_gr for more information.
 
-The actual USART Driver instance is defined in the source file <b>SWO.c</b> using the \#define USART_PORT.
-You may change this define with a compiler option.
 @}
 **************************************************************************************************/
 

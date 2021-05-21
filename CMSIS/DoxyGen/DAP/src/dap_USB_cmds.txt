@@ -180,14 +180,14 @@ The \ref DAP_atomic_gr are only available when \ref DAP_Info with ID=0xF0 (Capab
 
 /**************************************************************************************************/
 /** 
-\defgroup DAP_uart_gr UART Commands
+\defgroup DAP_uart_gr UART COM Commands
 \ingroup DAP_Commands_gr
 \brief Target communication via extra UART.
 
-CMSIS-DAP debug unit can be extended to support a separate UART ports that connects to the target. Such a UART communication
+CMSIS-DAP debug unit can be extended to support a separate UART port that connects to the target. Such a UART communication
 is typically used for printf-style debugging, but the usage is not limited to that.  CMSIS-DAP supports UART communication via:
-  - dedicated CMSIS-DAP commands: connects seamless to (Cloud) IDEs that integrate a printf viewer.
-  - via standard USB COM port: for any data communication, i.e. to transmit training data sets for machine learning.
+  - dedicated CMSIS-DAP commands: connects seamlessly to (Cloud) IDEs that integrate a printf viewer.
+  - via standard USB COM port (optional): for any data communication, i.e. to transmit training data sets for machine learning.
 
 The following CMSIS-DAP commands are added to support UART communication:
  - \ref DAP_UART_Transport : \copybrief DAP_UART_Transport
@@ -294,6 +294,11 @@ Time synchronisation via Test Domain Timer:
 SWO Streaming Trace support:
  - Info0 - Bit 6: <b>1 = SWO Streaming Trace</b> is implemented (0 = not implemented).
  
+UART Communication Port support:
+ - Info0 - Bit 7: <b>1 = UART Communication Port</b> is implemented (0 = not implemented).
+
+UART Communication via USB COM Port support:
+ - Info1 - Bit 0: <b>1 = USB COM Port</b> is implemented (0 = not implemented). 
  
 <hr>
  
@@ -1396,7 +1401,7 @@ Send \ref DAP_SWJ_Pins in fourth packet which executes queued commands and comma
 DAP_UART_Transport (0x1F):
 -------------------------
 
-Sets the UART transport mode for reading and sending data.
+Sets the UART transport mode for receiving and transmitting data.
 
 <b>DAP_UART_Transport Request:</b>
 \code
@@ -1409,9 +1414,9 @@ Sets the UART transport mode for reading and sending data.
   - 0 - Transport data via USB COM Port (default).
   - 1 - Transport data via DAP_UART_Transfer command.
 
-\note By default, data is transported via the USB COM port. In this case, the UART is 
-      controlled via a terminal (for example Putty), which can configure the 
-      UART (data bits, party, baudrate ...) and transfer data.
+\note By default, data is transported via the USB COM Port (if implemented). In this case, 
+      the UART is controlled via a terminal (for example Putty), which can configure the 
+      UART (data bits, party, baudrate ...) and transfer the data.
 
 \note When transport data via DAP_UART_Transfer command is enabled, CMSIS-DAP takes 
       control over the UART and automatically starts receiving data from the target.
@@ -1448,7 +1453,7 @@ Sets the UART configuration (only for transport via DAP_UART_Transfer command).
 
 - <b>Control</b>: Parameter values are compatible with CMSIS-Driver USART Interface in asynchronous mode and
   without flow control:
-  - Bit 2..0: Data bits: 5 = 5 Data bits, 6 = 6 Data bits, 7 = 7 Data bits, 0 = 8 Data bits (default), 1 = 9 Data bits
+  - Bit 2..0: Data bits: 5 = 5 Data bits, 6 = 6 Data bits, 7 = 7 Data bits, 0 = 8 Data bits (default)
   - Bit 3:    reserved (0)
   - Bit 5..4: Parity: 0 = None (default), 1 = Even, 2 = Odd
   - Bit 7..6: Stop bits: 0 = 1 Stop bit (default), 1 = 2 Stop bits
@@ -1479,12 +1484,12 @@ Sets the UART configuration (only for transport via DAP_UART_Transfer command).
 /** 
 \defgroup DAP_UART_Transfer DAP_UART_Transfer
 \ingroup DAP_uart_gr
-\brief Write (output) and Read (input) data via target UART interface.
+\brief Transfer data via UART.
 
 DAP_UART_Transfer (0x21):
 -------------------------
 
-Exchange data via the UART interface.
+Transmit (output) and Receive (input) data via target UART.
 
 <b>DAP_UART_Transfer Request:</b>
 
@@ -1494,11 +1499,11 @@ Exchange data via the UART interface.
  |******|*********|+++++++++++++++|
 \endcode
 
-- <b>Request</b>: Number of bytes to send to the target device via UART.
-  - Bit 9..0: Length: Number of bytes in <b>Transmit data</b>.
+- <b>Request</b>: Number of bytes to transmit to the target device via UART.
+  - Bit 9..0: Length: Number of bytes in <b>Transmit data</b> (Maximum Length = 509).
   - Bit 15..10: reserved (0)
   
-- <b>Transmit data</b>: Bytes to send to the target device via UART.
+- <b>Transmit data</b>: Bytes to transmit to the target device via UART.
 
 <b>DAP_UART_Transfer Response:</b>
 
@@ -1509,13 +1514,13 @@ Exchange data via the UART interface.
 \endcode
 
 - <b>Response</b>: Number of bytes received from the target device via UART and response status. 
-  - Bit 9..0: Length: Number of bytes in <b>Receive data</b>.
+  - Bit 9..0: Length: Number of bytes in <b>Receive data</b> (Maximum Length = 509).
   - Bit 10: reserved (0)
   - Bit 11: 1 = UART transmitter busy. Next transmit can be started when this bit is cleared.
-  - Bit 12: 1 = Data lost during transmit operation. Transmit was started when UART transmitter was busy. Automatically cleared on next successful transmit operation.
-  - Bit 13: 1 = Data lost during receive operation. Automatically cleared on next successful receive operation.
-  - Bit 14: 1 = Framing error detected during receive. Automatically cleared on next successful receive operation.
-  - Bit 15: 1 = Parity error detected during receive. Automatically cleared on next successful receive operation.
+  - Bit 12: 1 = Data lost detected during transmit. Transmit was started when UART transmitter was busy. Automatically cleared on read.
+  - Bit 13: 1 = Data lost detected during receive. Automatically cleared on read.
+  - Bit 14: 1 = Framing error detected. Automatically cleared on read.
+  - Bit 15: 1 = Parity error detected. Automatically cleared on read.
   
 - <b>Receive data</b>: Bytes received from the target device via UART.
 
