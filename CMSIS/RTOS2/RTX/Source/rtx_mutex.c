@@ -82,28 +82,30 @@ void osRtxMutexOwnerRestore (const os_mutex_t *mutex, const os_thread_t *thread_
         int8_t       priority;
 
   // Restore owner Thread priority
-  thread   = mutex->owner_thread;
-  priority = thread->priority_base;
-  mutex0   = thread->mutex_list;
-  // Check Mutexes owned by Thread
-  do {
-    if ((mutex0->attr & osMutexPrioInherit) != 0U) {
-      // Check Threads waiting for Mutex
-      thread0 = mutex0->thread_list;
-      if (thread0 == thread_wakeup) {
-        // Skip thread that is waken-up
-        thread0 = thread0->thread_next;
+  if ((mutex->attr & osMutexPrioInherit) != 0U) {
+    thread   = mutex->owner_thread;
+    priority = thread->priority_base;
+    mutex0   = thread->mutex_list;
+    // Check Mutexes owned by Thread
+    do {
+      if ((mutex0->attr & osMutexPrioInherit) != 0U) {
+        // Check Threads waiting for Mutex
+        thread0 = mutex0->thread_list;
+        if (thread0 == thread_wakeup) {
+          // Skip thread that is waken-up
+          thread0 = thread0->thread_next;
+        }
+        if ((thread0 != NULL) && (thread0->priority > priority)) {
+          // Higher priority Thread is waiting for Mutex
+          priority = thread0->priority;
+        }
       }
-      if ((thread0 != NULL) && (thread0->priority > priority)) {
-        // Higher priority Thread is waiting for Mutex
-        priority = thread0->priority;
-      }
+      mutex0 = mutex0->owner_next;
+    } while (mutex0 != NULL);
+    if (thread->priority != priority) {
+      thread->priority = priority;
+      osRtxThreadListSort(thread);
     }
-    mutex0 = mutex0->owner_next;
-  } while (mutex0 != NULL);
-  if (thread->priority != priority) {
-    thread->priority = priority;
-    osRtxThreadListSort(thread);
   }
 }
 
