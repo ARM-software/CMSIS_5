@@ -9,6 +9,7 @@ var searchData=
   ['configure_20i_2fo_20ports_20and_20debug_20unit',['Configure I/O Ports and Debug Unit',['../group__DAP__ConfigIO__gr.html',1,'']]],
   ['configure_20usb_20peripheral',['Configure USB Peripheral',['../group__DAP__ConfigUSB__gr.html',1,'']]],
   ['common_20swd_2fjtag_20commands',['Common SWD/JTAG Commands',['../group__DAP__swj__gr.html',1,'']]],
-  ['connect_20swo_20trace',['Connect SWO Trace',['../group__DAP__USART__gr.html',1,'']]],
+  ['connect_20uart_20communication_20port',['Connect UART Communication Port',['../group__DAP__USART__COM__gr.html',1,'']]],
+  ['connect_20swo_20trace',['Connect SWO Trace',['../group__DAP__USART__SWO__gr.html',1,'']]],
   ['cmsis_2ddap_20vendor_20commands',['CMSIS-DAP Vendor Commands',['../group__DAP__Vendor__gr.html',1,'']]]
 ];

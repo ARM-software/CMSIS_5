@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-DAP
-   &#160;<span id="projectnumber">Version 2.1.0-alpha-spec</span>
+   &#160;<span id="projectnumber">Version 2.1.0</span>
    </div>
    <div id="projectbrief">Interface Firmware for CoreSight Debug Access Port</div>
   </td>
@@ -109,7 +109,7 @@ $(document).ready(function(){initNavTree('group__DAP__UART__Transport.html','');
 
 <div class="header">
   <div class="headertitle">
-<div class="title">DAP_UART_Transport<div class="ingroups"><a class="el" href="group__DAP__uart__gr.html">UART Commands</a></div></div>  </div>
+<div class="title">DAP_UART_Transport<div class="ingroups"><a class="el" href="group__DAP__uart__gr.html">UART COM Commands</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
@@ -117,7 +117,7 @@ $(document).ready(function(){initNavTree('group__DAP__UART__Transport.html','');
 <a href="#details">More...</a></p>
 <p>Set UART transport mode. </p>
 <h2>DAP_UART_Transport (0x1F): </h2>
-<p>Sets the UART transport mode for reading and sending data.</p>
+<p>Sets the UART transport mode for receiving and transmitting data.</p>
 <p><b>DAP_UART_Transport Request:</b> </p>
 <div class="fragment"><div class="line">| BYTE | BYTE      |</div>
 <div class="line">&gt; 0x1F | Transport |</div>
@@ -129,7 +129,7 @@ $(document).ready(function(){initNavTree('group__DAP__UART__Transport.html','');
 </ul>
 </li>
 </ul>
-<dl class="section note"><dt>Note</dt><dd>By default, data is transported via the USB COM port. In this case, the UART is controlled via a terminal (for example Putty), which can configure the UART (data bits, party, baudrate ...) and transfer data.</dd>
+<dl class="section note"><dt>Note</dt><dd>By default, data is transported via the USB COM Port (if implemented). In this case, the UART is controlled via a terminal (for example Putty), which can configure the UART (data bits, party, baudrate ...) and transfer the data.</dd>
 <dd>
 When transport data via DAP_UART_Transfer command is enabled, CMSIS-DAP takes control over the UART and automatically starts receiving data from the target. If UART has not been previously configured with the <a class="el" href="group__DAP__UART__Configure.html">DAP_UART_Configure</a> command, it is set to the default settings.</dd></dl>
 <p><b>DAP_UART_Transport Response:</b> </p>

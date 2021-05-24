@@ -7,6 +7,6 @@ var group__DAP__Commands__gr =
     [ "JTAG Commands", "group__DAP__jtag__gr.html", "group__DAP__jtag__gr" ],
     [ "Transfer Commands", "group__DAP__transfer__gr.html", "group__DAP__transfer__gr" ],
     [ "Atomic Commands", "group__DAP__atomic__gr.html", "group__DAP__atomic__gr" ],
-    [ "UART Commands", "group__DAP__uart__gr.html", "group__DAP__uart__gr" ],
+    [ "UART COM Commands", "group__DAP__uart__gr.html", "group__DAP__uart__gr" ],
     [ "Response Status", "group__DAP__Response__Status.html", null ]
 ];

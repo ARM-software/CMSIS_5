@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-DAP
-   &#160;<span id="projectnumber">Version 2.1.0-alpha-spec</span>
+   &#160;<span id="projectnumber">Version 2.1.0</span>
    </div>
    <div id="projectbrief">Interface Firmware for CoreSight Debug Access Port</div>
   </td>
@@ -137,14 +137,23 @@ CMSIS-DAP Overview</div></div>
 <li>USB using HID (Human Interface Device) driver class that avoids driver installation on host PC.</li>
 <li>Supports time-critical JTAG or SWD command execution (new in CMSIS-DAP Version 1.10).</li>
 <li>Supports Test Domain Timer for time measurement using the debug unit (new in CMSIS-DAP Version 1.2.0)</li>
+<li>Supports UART Communication Port, which can be routed to USB COM Port (optional) or native CMSIS-DAP commands (new in CMSIS-DAP Version 2.1.0).</li>
 </ul>
 <h1>CMSIS-DAP Firmware </h1>
 <p>The CMSIS-DAP Firmware is provided as source code and is fully configurable to a new Debug Unit. A source code template and several reference implementations for popular Debug Units are provided. Refer to <a class="el" href="group__DAP__Config__gr.html">Firmware Configuration</a> for more information.</p>
 <p>The CMSIS-DAP Software Stack is composed of the following components:</p>
 <ul>
 <li>CMSIS-DAP Firmware that interfaces to JTAG or SWD Debug pins using standard I/O pins of the Cortex-M device.</li>
-<li>CMSIS-Driver USART that connects the UART of the Cortex-M device to the SWO output from the target.</li>
-<li>USB Communication Stack that interfaces to the USB Port of the Host Computer using the HID or custom class.</li>
+<li>CMSIS-Driver USART that connects:<ul>
+<li>UART of the Cortex-M device to the SWO output from the target,</li>
+<li>additional UART of the Cortex-M device to the UART from the target.</li>
+</ul>
+</li>
+<li>USB Communication Stack that interfaces to the USB Port of the Host Computer using:<ul>
+<li>HID or custom class,</li>
+<li>CDC ACM class to export USB COM Port.</li>
+</ul>
+</li>
 <li>The USB Device middleware may require CMSIS-RTOS and a CMSIS-Driver USB.</li>
 </ul>
 <div class="image">

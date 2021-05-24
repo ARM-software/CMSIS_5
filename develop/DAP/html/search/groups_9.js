@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['uart_20commands',['UART Commands',['../group__DAP__uart__gr.html',1,'']]]
+  ['uart_20com_20commands',['UART COM Commands',['../group__DAP__uart__gr.html',1,'']]]
 ];

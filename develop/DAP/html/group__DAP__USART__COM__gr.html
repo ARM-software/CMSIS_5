@@ -3,8 +3,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<title>Connect SWO Trace</title>
-<title>CMSIS-DAP: Connect SWO Trace</title>
+<title>Connect UART Communication Port</title>
+<title>CMSIS-DAP: Connect UART Communication Port</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="cmsis.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="jquery.js"></script>
@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-DAP
-   &#160;<span id="projectnumber">Version 2.1.0-alpha-spec</span>
+   &#160;<span id="projectnumber">Version 2.1.0</span>
    </div>
    <div id="projectbrief">Interface Firmware for CoreSight Debug Access Port</div>
   </td>
@@ -90,7 +90,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   </div>
 </div>
 <script type="text/javascript">
-$(document).ready(function(){initNavTree('group__DAP__USART__gr.html','');});
+$(document).ready(function(){initNavTree('group__DAP__USART__COM__gr.html','');});
 </script>
 <div id="doc-content">
 <!-- window showing the filter options -->
@@ -109,15 +109,14 @@ $(document).ready(function(){initNavTree('group__DAP__USART__gr.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">Connect SWO Trace</div>  </div>
+<div class="title">Connect UART Communication Port</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Optional you may add a CMSIS-Driver USART to interface to SWO.  
+<p>Optional you may add a CMSIS-Driver USART to interface to UART Communication Port.  
 <a href="#details">More...</a></p>
-<p>Optional you may add a CMSIS-Driver USART to interface to SWO. </p>
-<p>A CMSIS-Driver USART can be used to capture the trace output on the SWO pin using a UART RX input on the microcontroller. To use a UART for SWO capturing, it is required to set the #define SWO_UART to 1. Refer to <a class="el" href="group__DAP__Config__Debug__gr.html">CMSIS-DAP Debug Unit Information</a> for more information.</p>
-<p>The actual USART Driver instance is defined in the source file <b>SWO.c</b> using the #define USART_PORT. You may change this define with a compiler option. </p>
+<p>Optional you may add a CMSIS-Driver USART to interface to UART Communication Port. </p>
+<p>A CMSIS-Driver USART can be used to receive data from the target and transmit data to the target using UART RX and TX pins on the microcontroller. UART communication port can be enabled and configured in the header DAP_Config.h. #define DAP_UART is used to enable the UART communication port and #define DAP_UART_DRIVER is used to configure USART Driver instance number (Driver_USART#). Refer to <a class="el" href="group__DAP__Config__Debug__gr.html">CMSIS-DAP Debug Unit Information</a> for more information. </p>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

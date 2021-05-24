@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-DAP
-   &#160;<span id="projectnumber">Version 2.1.0-alpha-spec</span>
+   &#160;<span id="projectnumber">Version 2.1.0</span>
    </div>
    <div id="projectbrief">Interface Firmware for CoreSight Debug Access Port</div>
   </td>
@@ -155,6 +155,7 @@ CMSIS-DAP Debug Unit with Isolation adapter</div></div>
 <li>7 standard I/O pins for JTAG/SWD Device Interface.</li>
 <li>optional 2 I/O pins for Status LEDs.</li>
 <li>optional UART to support SWO capturing (Rx pin connected to SWO)</li>
+<li>optional UART to support UART Communication Port</li>
 </ul>
 <h2>CMSIS-DAP Firmware </h2>
 <p>The CMSIS-DAP Firmware can be configured for a new Debug Unit using at least the <a href="https://www.keil.com/mdk5" target="_blank">Keil MDK-Plus or MDK-Professional Edition</a>. Reference implementations are provided as source code with complete project files and may be used as starting point for the firmware deployment to a new Debug Unit.</p>
@@ -163,9 +164,9 @@ CMSIS-DAP Debug Unit with Isolation adapter</div></div>
 <tr>
 <th>Folders and Files </th><th>Description  </th></tr>
 <tr>
-<td>.\Firmware\Example\V1\LPC-Link-II </td><td>CMSIS-DAP Firmware using USB HID adapted to the NXP LPC-Link-II Debug Unit that is part of the LPCxpresso-II platform. </td></tr>
+<td>.\Firmware\Examples\LPC-Link-II\V1 </td><td>CMSIS-DAP Firmware using USB HID adapted to the NXP LPC-Link-II Debug Unit that is part of the LPCxpresso-II platform. </td></tr>
 <tr>
-<td>.\Firmware\Example\V2\LPC-Link-II </td><td>CMSIS-DAP Firmware using WinUSB adapted to the NXP LPC-Link-II Debug Unit that is part of the LPCxpresso-II platform. </td></tr>
+<td>.\Firmware\Examples\LPC-Link-II\V2 </td><td>CMSIS-DAP Firmware using WinUSB adapted to the NXP LPC-Link-II Debug Unit that is part of the LPCxpresso-II platform. </td></tr>
 </table>
 <p>The CMSIS-DAP Firmware is designed to execute on a Debug Unit that is using a Cortex-M0, Cortex-M0+, Cortex-M3, or Cortex-M4 processor-based microcontroller. To deploy the firmware to a new Debug Unit copy an existing firmware adaptation to a new folder. For example, copy the folder .\Firmware\XMC4200 to a folder called .\Firmware\MyDebugUnit.</p>
 <p>To following steps describe the adaptation of the CMSIS-DAP Firmware to a new Debug Unit:</p>
@@ -173,7 +174,8 @@ CMSIS-DAP Debug Unit with Isolation adapter</div></div>
 <li><a class="el" href="group__DAP__ConfigMCU__gr.html">Debug Unit Processor</a> : Select the microcontroller and replace the CMSIS-Core (Cortex-M) files.</li>
 <li><a class="el" href="group__DAP__ConfigIO__gr.html">Configure I/O Ports and Debug Unit</a> : Adapt the I/O Ports and specify other parameters for the Debug Unit.</li>
 <li><a class="el" href="group__DAP__ConfigUSB__gr.html">Configure USB Peripheral</a> : Adapt the USB Peripheral to the microcontroller.</li>
-<li><a class="el" href="group__DAP__USART__gr.html">Connect SWO Trace</a> : Optional you may add a CMSIS-Driver USART to interface to SWO.</li>
+<li><a class="el" href="group__DAP__USART__SWO__gr.html">Connect SWO Trace</a> : Optional you may add a CMSIS-Driver USART to interface to SWO.</li>
+<li><a class="el" href="group__DAP__USART__COM__gr.html">Connect UART Communication Port</a> : Optional you may add a CMSIS-Driver USART to interface to UART Communication Port.</li>
 <li><a class="el" href="group__DAP__Vendor__gr.html">CMSIS-DAP Vendor Commands</a> : Optional you may add vendor specific commands to the Debug Unit.</li>
 <li><a class="el" href="group__DAP__ConfigFlash__gr.html">Flash Program Firmware</a> : Program the adapted firmware to the Flash ROM of the new Debug Unit.</li>
 <li><a class="el" href="group__DAP__Validate__gr.html">Validate Debug Unit</a> : Validate the CMSIS-DAP firmware of the new Debug Unit. </li>

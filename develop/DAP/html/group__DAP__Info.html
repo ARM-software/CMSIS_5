@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-DAP
-   &#160;<span id="projectnumber">Version 2.1.0-alpha-spec</span>
+   &#160;<span id="projectnumber">Version 2.1.0</span>
    </div>
    <div id="projectbrief">Interface Firmware for CoreSight Debug Access Port</div>
   </td>
@@ -184,6 +184,14 @@ $(document).ready(function(){initNavTree('group__DAP__Info.html','');});
 <p>SWO Streaming Trace support:</p>
 <ul>
 <li>Info0 - Bit 6: <b>1 = SWO Streaming Trace</b> is implemented (0 = not implemented).</li>
+</ul>
+<p>UART Communication Port support:</p>
+<ul>
+<li>Info0 - Bit 7: <b>1 = UART Communication Port</b> is implemented (0 = not implemented).</li>
+</ul>
+<p>UART Communication via USB COM Port support:</p>
+<ul>
+<li>Info1 - Bit 0: <b>1 = USB COM Port</b> is implemented (0 = not implemented).</li>
 </ul>
 <hr/>
 <p><b>DAP_Info Response (for ID=0xF1):</b></p>
