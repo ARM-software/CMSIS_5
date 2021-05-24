@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2017 ARM Limited. All rights reserved.
+ * Copyright (c) 2013-2021 ARM Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -17,8 +17,8 @@
  *
  * ----------------------------------------------------------------------
  *
- * $Date:        1. December 2017
- * $Revision:    V2.0.0
+ * $Date:        29. March 2021
+ * $Revision:    V2.0.1
  *
  * Project:      CMSIS-DAP Source
  * Title:        SWO.c CMSIS-DAP SWO I/O
@@ -42,15 +42,11 @@
 
 #if (SWO_UART != 0)
 
-#ifndef  USART_PORT
-#define  USART_PORT 0           /* USART Port Number */
-#endif
-
 // USART Driver
 #define _USART_Driver_(n)  Driver_USART##n
 #define  USART_Driver_(n) _USART_Driver_(n)
-extern ARM_DRIVER_USART    USART_Driver_(USART_PORT);
-#define pUSART           (&USART_Driver_(USART_PORT))
+extern ARM_DRIVER_USART    USART_Driver_(SWO_UART_DRIVER);
+#define pUSART           (&USART_Driver_(SWO_UART_DRIVER))
 
 static uint8_t USART_Ready = 0U;
 
