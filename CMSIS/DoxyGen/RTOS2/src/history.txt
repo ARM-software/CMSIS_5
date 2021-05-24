@@ -107,6 +107,7 @@
        - Fixed Round-Robin (timeout value is not reset when switching to higher priority threads).
        - Fixed osThreadJoin (when terminating thread which is waiting to be joined).
        - Fixed Message Queue Data allocation size when using object specific memory allocation.
+       - Fixed Mutex priority inversion (when mixing mutexes with and without priority inherit).
        - Enhanced stack overrun checking.
        - Updated osKernelResume handling (processing past sleep ticks).
        - Updated configuration (Event Recorder).
