@@ -188,6 +188,7 @@ CMSIS-RTOS RTX Version 5</h1>
 <li>Fixed Round-Robin (timeout value is not reset when switching to higher priority threads).</li>
 <li>Fixed osThreadJoin (when terminating thread which is waiting to be joined).</li>
 <li>Fixed Message Queue Data allocation size when using object specific memory allocation.</li>
+<li>Fixed Mutex priority inversion (when mixing mutexes with and without priority inherit).</li>
 <li>Enhanced stack overrun checking.</li>
 <li>Updated osKernelResume handling (processing past sleep ticks).</li>
 <li>Updated configuration (Event Recorder).</li>
