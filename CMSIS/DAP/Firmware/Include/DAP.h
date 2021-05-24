@@ -275,17 +275,17 @@ extern void     SWO_QueueTransfer    (uint8_t *buf, uint32_t num);
 extern void     SWO_AbortTransfer    (void);
 extern void     SWO_TransferComplete (void);
 
-extern uint32_t UART_SWO_Mode     (uint32_t enable);
-extern uint32_t UART_SWO_Baudrate (uint32_t baudrate);
-extern uint32_t UART_SWO_Control  (uint32_t active);
-extern void     UART_SWO_Capture  (uint8_t *buf, uint32_t num);
-extern uint32_t UART_SWO_GetCount (void);
+extern uint32_t SWO_Mode_UART     (uint32_t enable);
+extern uint32_t SWO_Baudrate_UART (uint32_t baudrate);
+extern uint32_t SWO_Control_UART  (uint32_t active);
+extern void     SWO_Capture_UART  (uint8_t *buf, uint32_t num);
+extern uint32_t SWO_GetCount_UART (void);
 
-extern uint32_t Manchester_SWO_Mode     (uint32_t enable);
-extern uint32_t Manchester_SWO_Baudrate (uint32_t baudrate);
-extern uint32_t Manchester_SWO_Control  (uint32_t active);
-extern void     Manchester_SWO_Capture  (uint8_t *buf, uint32_t num);
-extern uint32_t Manchester_SWO_GetCount (void);
+extern uint32_t SWO_Mode_Manchester     (uint32_t enable);
+extern uint32_t SWO_Baudrate_Manchester (uint32_t baudrate);
+extern uint32_t SWO_Control_Manchester  (uint32_t active);
+extern void     SWO_Capture_Manchester  (uint8_t *buf, uint32_t num);
+extern uint32_t SWO_GetCount_Manchester (void);
 
 extern uint32_t UART_Transport (const uint8_t *request, uint8_t *response);
 extern uint32_t UART_Configure (const uint8_t *request, uint8_t *response);
