@@ -409,6 +409,11 @@
           <GroupName>CMSIS DAP</GroupName>
           <Files>
             <File>
+              <FileName>DAP_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\DAP_config.h</FilePath>
+            </File>
+            <File>
               <FileName>DAP.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\Source\DAP.c</FilePath>

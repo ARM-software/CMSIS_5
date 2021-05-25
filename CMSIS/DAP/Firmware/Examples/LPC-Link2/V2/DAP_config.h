@@ -544,6 +544,9 @@ __STATIC_INLINE void DAP_SETUP (void) {
   LPC_SCU->SFSP2_5  = 4U |              SCU_SFS_EZI;  /* nRESET:    GPIO5[5]  */
   LPC_SCU->SFSP2_6  = 4U | SCU_SFS_EPUN|SCU_SFS_EZI;  /* nRESET_OE: GPIO5[6]  */
   LPC_SCU->SFSP1_1  = 0U | SCU_SFS_EPUN|SCU_SFS_EZI;  /* LED:       GPIO0[8]  */
+#ifdef TARGET_POWER_EN
+  LPC_SCU->SFSP3_1  = 4U | SCU_SFS_EPUN|SCU_SFS_EZI;  /* Target Power enable P3_1 GPIO5[8] */
+#endif
 
   /* Configure: SWCLK/TCK, SWDIO/TMS, SWDIO_OE, TDI as outputs (high level)   */
   /*            TDO as input                                                  */
@@ -562,6 +565,12 @@ __STATIC_INLINE void DAP_SETUP (void) {
   LPC_GPIO_PORT->DIR[PIN_TDO_PORT]       &= ~(1U << PIN_TDO_BIT);
   LPC_GPIO_PORT->DIR[PIN_nRESET_PORT]    &= ~(1U << PIN_nRESET_BIT);
   LPC_GPIO_PORT->DIR[PIN_nRESET_OE_PORT] |=  (1U << PIN_nRESET_OE_BIT);
+
+#ifdef TARGET_POWER_EN
+  /* Target Power enable as output (turned on)  */
+  LPC_GPIO_PORT->SET[5]  = (1U << 8);
+  LPC_GPIO_PORT->DIR[5] |= (1U << 8);
+#endif
 
   /* Configure: LED as output (turned off) */
   LPC_GPIO_PORT->CLR[LED_CONNECTED_PORT]  =  (1U << LED_CONNECTED_BIT);
