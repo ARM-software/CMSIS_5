@@ -17,8 +17,8 @@
  *
  * ----------------------------------------------------------------------
  *
- * $Date:        21. May 2021
- * $Revision:    V2.0.0
+ * $Date:        25. May 2021
+ * $Revision:    V2.1.0
  *
  * Project:      CMSIS-DAP Examples LPC-Link2
  * Title:        DAP_config.h CMSIS-DAP Configuration File for LPC-Link2
@@ -100,6 +100,9 @@ This information includes:
 /// This information is returned by the command \ref DAP_Info as part of <b>Capabilities</b>.
 #define SWO_UART                1               ///< SWO UART:  1 = available, 0 = not available.
 
+/// USART Driver instance number for the UART SWO.
+#define SWO_UART_DRIVER         1               ///< USART Driver instance number (Driver_USART#).
+
 /// Maximum SWO UART Baudrate.
 #define SWO_UART_MAX_BAUDRATE   10000000U       ///< SWO UART Maximum Baudrate in Hz.
 
@@ -115,6 +118,17 @@ This information includes:
 
 /// Clock frequency of the Test Domain Timer. Timer value is returned with \ref TIMESTAMP_GET.
 #define TIMESTAMP_CLOCK         180000000U      ///< Timestamp clock in Hz (0 = timestamps not supported).
+
+/// Indicate that UART Communication Port is available.
+/// This information is returned by the command \ref DAP_Info as part of <b>Capabilities</b>.
+#define DAP_UART                1               ///< DAP UART:  1 = available, 0 = not available.
+
+/// USART Driver instance number for the UART Communication Port.
+#define DAP_UART_DRIVER         0               ///< USART Driver instance number (Driver_USART#).
+
+/// Indicate that UART Communication via USB COM Port is available.
+/// This information is returned by the command \ref DAP_Info as part of <b>Capabilities</b>.
+#define DAP_UART_USB_COM_PORT   1               ///< USB COM Port:  1 = available, 0 = not available.
 
 /// Debug Unit is connected to fixed Target Device.
 /// The Debug Unit may be part of an evaluation board and always connected to a fixed
@@ -459,7 +473,7 @@ It is recommended to provide the following LEDs for status indication:
            - 0: Connect LED OFF: debugger is not connected to CMSIS-DAP Debug Unit.
 */
 __STATIC_INLINE void LED_CONNECTED_OUT (uint32_t bit) {
-  LPC_GPIO_PORT->B[32*LED_CONNECTED_PORT + LED_CONNECTED_BIT] = bit & 0xFF;
+  LPC_GPIO_PORT->B[32*LED_CONNECTED_PORT + LED_CONNECTED_BIT] = (uint8_t)bit;
 }
 
 /** Debug Unit: Set status Target Running LED.
