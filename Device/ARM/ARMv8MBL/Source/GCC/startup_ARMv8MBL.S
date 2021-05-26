@@ -2,10 +2,10 @@
  * @file     startup_ARMv8MBL.S
  * @brief    CMSIS-Core Device Startup File for ARMv8MBL Device
  * @version  V2.2.0
- * @date     16. December 2020
+ * @date     26. May 2021
  ******************************************************************************/
 /*
- * Copyright (c) 2009-2020 Arm Limited. All rights reserved.
+ * Copyright (c) 2009-2021 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -103,7 +103,7 @@ Reset_Handler:
 .L_loop0:
                 cmp      r4, r5
                 bge      .L_loop0_done
-                ldr      r1, [r4]                /* source address */   
+                ldr      r1, [r4]                /* source address */
                 ldr      r2, [r4, #4]            /* destination address */
                 ldr      r3, [r4, #8]            /* word count */
                 lsls     r3, r3, #2              /* byte count */
