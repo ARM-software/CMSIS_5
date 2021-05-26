@@ -17,7 +17,7 @@
  *
  * ----------------------------------------------------------------------
  *
- * $Date:        29. March 2021
+ * $Date:        26. May 2021
  * $Revision:    V2.1.0
  *
  * Project:      CMSIS-DAP Source
@@ -59,9 +59,11 @@ volatile uint8_t    DAP_TransferAbort;  // Transfer Abort Flag
 
 static const char DAP_FW_Ver [] = DAP_FW_VER;
 
-#if TARGET_DEVICE_FIXED
-static const char TargetDeviceVendor [] = TARGET_DEVICE_VENDOR;
-static const char TargetDeviceName   [] = TARGET_DEVICE_NAME;
+#if TARGET_FIXED
+const char TargetDeviceVendor [128] = TARGET_DEVICE_VENDOR;
+const char TargetDeviceName   [128] = TARGET_DEVICE_NAME;
+const char TargetBoardVendor  [128] = TARGET_BOARD_VENDOR;
+const char TargetBoardName    [128] = TARGET_BOARD_NAME;
 #endif
 
 
@@ -87,15 +89,27 @@ static uint8_t DAP_Info(uint8_t id, uint8_t *info) {
       memcpy(info, DAP_FW_Ver, length);
       break;
     case DAP_ID_DEVICE_VENDOR:
-#if TARGET_DEVICE_FIXED
-      length = (uint8_t)sizeof(TargetDeviceVendor);
+#if TARGET_FIXED
+      length = (uint8_t)strlen(TargetDeviceVendor);
       memcpy(info, TargetDeviceVendor, length);
 #endif
       break;
     case DAP_ID_DEVICE_NAME:
-#if TARGET_DEVICE_FIXED
-      length = (uint8_t)sizeof(TargetDeviceName);
+#if TARGET_FIXED
+      length = (uint8_t)strlen(TargetDeviceName);
       memcpy(info, TargetDeviceName, length);
+#endif
+      break;
+    case DAP_ID_BOARD_VENDOR:
+#if TARGET_FIXED
+      length = (uint8_t)strlen(TargetBoardVendor);
+      memcpy(info, TargetBoardVendor, length);
+#endif
+      break;
+    case DAP_ID_BOARD_NAME:
+#if TARGET_FIXED
+      length = (uint8_t)strlen(TargetBoardName);
+      memcpy(info, TargetBoardName, length);
 #endif
       break;
     case DAP_ID_CAPABILITIES:

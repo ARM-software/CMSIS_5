@@ -17,7 +17,7 @@
  *
  * ----------------------------------------------------------------------
  *
- * $Date:        1. March 2021
+ * $Date:        26. May 2021
  * $Revision:    V2.1.0
  *
  * Project:      CMSIS-DAP Include
@@ -117,6 +117,8 @@
 #define DAP_ID_FW_VER                   4U
 #define DAP_ID_DEVICE_VENDOR            5U
 #define DAP_ID_DEVICE_NAME              6U
+#define DAP_ID_BOARD_VENDOR             7U
+#define DAP_ID_BOARD_NAME               8U
 #define DAP_ID_CAPABILITIES             0xF0U
 #define DAP_ID_TIMESTAMP_CLOCK          0xF1U
 #define DAP_ID_SWO_BUFFER_SIZE          0xFDU

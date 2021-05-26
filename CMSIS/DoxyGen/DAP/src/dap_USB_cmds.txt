@@ -231,6 +231,8 @@ The <b>DAP_Info Command</b> provides configuration information about the Debug U
   - \b 0x04 = Get the <b>CMSIS-DAP Firmware Version</b> (string).
   - \b 0x05 = Get the <b>Target Device Vendor</b> (string).
   - \b 0x06 = Get the <b>Target Device Name</b> (string).
+  - \b 0x07 = Get the <b>Target Board Vendor</b> (string).
+  - \b 0x08 = Get the <b>Target Board Name</b> (string).
   - \b 0xF0 = Get information about the <b>Capabilities</b> (BYTE) of the Debug Unit (see below for details).
   - \b 0xF1 = Get the <b>Test Domain Timer</b> parameter information (see below for details).
   - \b 0xFD = Get the <b>SWO Trace Buffer Size</b> (WORD).
@@ -256,8 +258,8 @@ The ID for <b>Vendor ID</b>, <b>Product ID</b>, and <b>Serial Number</b> may ret
 In this case the USB Device Information is used to obtain Vendor, Product, and Serial Number.
 
 \note
-<b>Target Device Vendor</b> and <b>Target Device Name</b> are only available on Debug Units with known
-Target Device. Refer to \ref TARGET_DEVICE_FIXED for more information. If the Target Device is not known
+<b>Target Device Vendor</b>, <b>Target Device Name</b>, <b>Target Board Vendor</b> and <b>Target Board Name</b> are only available on On-Board Debug Units with known
+Target. Refer to \ref TARGET_FIXED for more information. If the Target is not known
 no string is returned (indicated by Len = 0).
 
 <hr>

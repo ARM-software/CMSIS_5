@@ -84,7 +84,8 @@ CMSIS-DAP compliant Debug Units must be validated using the scripts provided in 
     <tr>
       <td>V2.1.0</td>
       <td>
-         Added: \ref DAP_uart_gr to support target communication via extra UART
+         Added: \ref DAP_uart_gr to support target communication via extra UART\n
+         Added: Target Board Vendor and Target Board Name strings in the command \ref DAP_Info
       </td>
     </tr>
     <tr>
@@ -93,6 +94,12 @@ CMSIS-DAP compliant Debug Units must be validated using the scripts provided in 
          Changed: Communication via WinUSB to achieve high-speed transfer rates\n
          Added: Streaming SWO via separate \ref WinUSB "WinUSB" endpoint\n
      Added: \ref DAP_SWO_Transport extended with transport mode 2 - Send trace data via separate \ref WinUSB "WinUSB" endpoint 
+      </td>
+    </tr>
+    <tr>
+      <td>V1.3.0</td>
+      <td>
+         Added: Target Board Vendor and Target Board Name strings in the command \ref DAP_Info
       </td>
     </tr>
     <tr>
