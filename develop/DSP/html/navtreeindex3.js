@@ -5,12 +5,11 @@ var NAVTREEINDEX3 =
 "group__weightedsum.html#gaffef5e0e3e1d0289e419c23853e20850":[3,12,9,1],
 "index.html":[],
 "index.html":[0],
-"index.html#building":[0,4],
 "index.html#example":[0,2],
 "index.html#intro":[0,0],
-"index.html#pack":[0,6],
-"index.html#preprocessor":[0,5],
-"index.html#rev":[0,7],
+"index.html#pack":[0,5],
+"index.html#preprocessor":[0,4],
+"index.html#rev":[0,6],
 "index.html#toolchain":[0,3],
 "index.html#using":[0,1],
 "modules.html":[3],
@@ -249,5 +248,6 @@ var NAVTREEINDEX3 =
 "structarm__fir__lattice__instance__f32.html":[4,43],
 "structarm__fir__lattice__instance__f32.html#a335c87e6fdc4b96601d95a5de8b9c463":[4,43,2],
 "structarm__fir__lattice__instance__f32.html#a39230f04a29d8321948e339633780442":[4,43,1],
-"structarm__fir__lattice__instance__f32.html#a4cceb90547b3e585d4c7aabaa8057212":[4,43,0]
+"structarm__fir__lattice__instance__f32.html#a4cceb90547b3e585d4c7aabaa8057212":[4,43,0],
+"structarm__fir__lattice__instance__q15.html":[4,44]
 };

@@ -151,6 +151,9 @@ Macros</h2></td></tr>
 <tr class="memitem:gaf0d60b30fb0eef2d249bc89a6e454ab6"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__DAP__Config__Debug__gr.html#gaf0d60b30fb0eef2d249bc89a6e454ab6">SWO_UART</a>&#160;&#160;&#160;1</td></tr>
 <tr class="memdesc:gaf0d60b30fb0eef2d249bc89a6e454ab6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicate that UART Serial Wire Output (SWO) trace is available. This information is returned by the command <a class="el" href="group__DAP__Info.html">DAP_Info</a> as part of <b>Capabilities</b>.  <a href="#gaf0d60b30fb0eef2d249bc89a6e454ab6">More...</a><br/></td></tr>
 <tr class="separator:gaf0d60b30fb0eef2d249bc89a6e454ab6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7a42055ea945d4b5433a6b458fa65b8a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__DAP__Config__Debug__gr.html#ga7a42055ea945d4b5433a6b458fa65b8a">SWO_UART_DRIVER</a>&#160;&#160;&#160;0</td></tr>
+<tr class="memdesc:ga7a42055ea945d4b5433a6b458fa65b8a"><td class="mdescLeft">&#160;</td><td class="mdescRight">USART Driver instance number for the UART SWO.  <a href="#ga7a42055ea945d4b5433a6b458fa65b8a">More...</a><br/></td></tr>
+<tr class="separator:ga7a42055ea945d4b5433a6b458fa65b8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gad19240f209f055db7d70cb5eb2431d31"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__DAP__Config__Debug__gr.html#gad19240f209f055db7d70cb5eb2431d31">SWO_UART_MAX_BAUDRATE</a>&#160;&#160;&#160;10000000U</td></tr>
 <tr class="memdesc:gad19240f209f055db7d70cb5eb2431d31"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maximum SWO UART Baudrate.  <a href="#gad19240f209f055db7d70cb5eb2431d31">More...</a><br/></td></tr>
 <tr class="separator:gad19240f209f055db7d70cb5eb2431d31"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -166,9 +169,18 @@ Macros</h2></td></tr>
 <tr class="memitem:ga698a5a4ebd84335134a35e74848d2734"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__DAP__Config__Debug__gr.html#ga698a5a4ebd84335134a35e74848d2734">TIMESTAMP_CLOCK</a>&#160;&#160;&#160;100000000U</td></tr>
 <tr class="memdesc:ga698a5a4ebd84335134a35e74848d2734"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clock frequency of the Test Domain Timer. Timer value is returned with <a class="el" href="group__DAP__Config__Timestamp__gr.html#gaf9bdc40d3a256fc2cc4d26b295993d9c">TIMESTAMP_GET</a>.  <a href="#ga698a5a4ebd84335134a35e74848d2734">More...</a><br/></td></tr>
 <tr class="separator:ga698a5a4ebd84335134a35e74848d2734"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga792651aa4035a7ad712c6bb201db8a6a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__DAP__Config__Debug__gr.html#ga792651aa4035a7ad712c6bb201db8a6a">TARGET_DEVICE_FIXED</a>&#160;&#160;&#160;0</td></tr>
-<tr class="memdesc:ga792651aa4035a7ad712c6bb201db8a6a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Debug Unit is connected to fixed Target Device. The Debug Unit may be part of an evaluation board and always connected to a fixed known device. In this case a Device Vendor and Device Name string is stored which may be used by the debugger or IDE to configure device parameters.  <a href="#ga792651aa4035a7ad712c6bb201db8a6a">More...</a><br/></td></tr>
-<tr class="separator:ga792651aa4035a7ad712c6bb201db8a6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaadf03219973619f13487c3fcc0237256"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__DAP__Config__Debug__gr.html#gaadf03219973619f13487c3fcc0237256">DAP_UART</a>&#160;&#160;&#160;1</td></tr>
+<tr class="memdesc:gaadf03219973619f13487c3fcc0237256"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicate that UART Communication Port is available. This information is returned by the command <a class="el" href="group__DAP__Info.html">DAP_Info</a> as part of <b>Capabilities</b>.  <a href="#gaadf03219973619f13487c3fcc0237256">More...</a><br/></td></tr>
+<tr class="separator:gaadf03219973619f13487c3fcc0237256"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7afeb2572e74f9d14a9183f23b9e2779"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__DAP__Config__Debug__gr.html#ga7afeb2572e74f9d14a9183f23b9e2779">DAP_UART_DRIVER</a>&#160;&#160;&#160;1</td></tr>
+<tr class="memdesc:ga7afeb2572e74f9d14a9183f23b9e2779"><td class="mdescLeft">&#160;</td><td class="mdescRight">USART Driver instance number for the UART Communication Port.  <a href="#ga7afeb2572e74f9d14a9183f23b9e2779">More...</a><br/></td></tr>
+<tr class="separator:ga7afeb2572e74f9d14a9183f23b9e2779"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabbc743d3241401f16c1718e358d4a6f2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__DAP__Config__Debug__gr.html#gabbc743d3241401f16c1718e358d4a6f2">DAP_UART_USB_COM_PORT</a>&#160;&#160;&#160;1</td></tr>
+<tr class="memdesc:gabbc743d3241401f16c1718e358d4a6f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicate that UART Communication via USB COM Port is available. This information is returned by the command <a class="el" href="group__DAP__Info.html">DAP_Info</a> as part of <b>Capabilities</b>.  <a href="#gabbc743d3241401f16c1718e358d4a6f2">More...</a><br/></td></tr>
+<tr class="separator:gabbc743d3241401f16c1718e358d4a6f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac87f11eeee8f1df63035585b8d824737"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__DAP__Config__Debug__gr.html#gac87f11eeee8f1df63035585b8d824737">TARGET_FIXED</a>&#160;&#160;&#160;0</td></tr>
+<tr class="memdesc:gac87f11eeee8f1df63035585b8d824737"><td class="mdescLeft">&#160;</td><td class="mdescRight">Debug Unit is connected to fixed Target Device. The Debug Unit may be part of an evaluation board and always connected to a fixed known device. In this case a Device Vendor, Device Name, Board Vendor and Board Name strings are stored and may be used by the debugger or IDE to configure device parameters.  <a href="#gac87f11eeee8f1df63035585b8d824737">More...</a><br/></td></tr>
+<tr class="separator:gac87f11eeee8f1df63035585b8d824737"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
@@ -313,6 +325,51 @@ Functions</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="gaadf03219973619f13487c3fcc0237256"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define DAP_UART&#160;&#160;&#160;1</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Indicate that UART Communication Port is available. This information is returned by the command <a class="el" href="group__DAP__Info.html">DAP_Info</a> as part of <b>Capabilities</b>. </p>
+<p>DAP UART: 1 = available, 0 = not available. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga7afeb2572e74f9d14a9183f23b9e2779"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define DAP_UART_DRIVER&#160;&#160;&#160;1</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>USART Driver instance number for the UART Communication Port. </p>
+<p>USART Driver instance number (Driver_USART#). </p>
+
+</div>
+</div>
+<a class="anchor" id="gabbc743d3241401f16c1718e358d4a6f2"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define DAP_UART_USB_COM_PORT&#160;&#160;&#160;1</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Indicate that UART Communication via USB COM Port is available. This information is returned by the command <a class="el" href="group__DAP__Info.html">DAP_Info</a> as part of <b>Capabilities</b>. </p>
+<p>USB COM Port: 1 = available, 0 = not available. </p>
+
+</div>
+</div>
 <a class="anchor" id="ga119c70409a24e3a8bb35df07dffeb8c8"></a>
 <div class="memitem">
 <div class="memproto">
@@ -388,6 +445,21 @@ Functions</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="ga7a42055ea945d4b5433a6b458fa65b8a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define SWO_UART_DRIVER&#160;&#160;&#160;0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>USART Driver instance number for the UART SWO. </p>
+<p>USART Driver instance number (Driver_USART#). </p>
+
+</div>
+</div>
 <a class="anchor" id="gad19240f209f055db7d70cb5eb2431d31"></a>
 <div class="memitem">
 <div class="memproto">
@@ -403,18 +475,18 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ga792651aa4035a7ad712c6bb201db8a6a"></a>
+<a class="anchor" id="gac87f11eeee8f1df63035585b8d824737"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define TARGET_DEVICE_FIXED&#160;&#160;&#160;0</td>
+          <td class="memname">#define TARGET_FIXED&#160;&#160;&#160;0</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Debug Unit is connected to fixed Target Device. The Debug Unit may be part of an evaluation board and always connected to a fixed known device. In this case a Device Vendor and Device Name string is stored which may be used by the debugger or IDE to configure device parameters. </p>
-<p>Target Device: 1 = known, 0 = unknown; </p>
+<p>Debug Unit is connected to fixed Target Device. The Debug Unit may be part of an evaluation board and always connected to a fixed known device. In this case a Device Vendor, Device Name, Board Vendor and Board Name strings are stored and may be used by the debugger or IDE to configure device parameters. </p>
+<p>Target: 1 = known, 0 = unknown; </p>
 
 </div>
 </div>

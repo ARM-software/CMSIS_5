@@ -137,44 +137,14 @@ Introduction</h1>
 <p>When using a vectorized version, provide a little bit of padding after the end of a buffer (3 words) because the vectorized code may read a little bit after the end of a buffer. You don't have to modify your buffers but just ensure that the end of buffer + padding is not outside of a memory region.</p>
 <h1><a class="anchor" id="using"></a>
 Using the Library</h1>
-<p>The library installer contains prebuilt versions of the libraries in the <code>Lib</code> folder.</p>
-<p>Here is the list of pre-built libraries :</p>
-<ul>
-<li>arm_cortexM7lfdp_math.lib (Cortex-M7, Little endian, Double Precision Floating Point Unit)</li>
-<li>arm_cortexM7bfdp_math.lib (Cortex-M7, Big endian, Double Precision Floating Point Unit)</li>
-<li>arm_cortexM7lfsp_math.lib (Cortex-M7, Little endian, Single Precision Floating Point Unit)</li>
-<li>arm_cortexM7bfsp_math.lib (Cortex-M7, Big endian and Single Precision Floating Point Unit on)</li>
-<li>arm_cortexM7l_math.lib (Cortex-M7, Little endian)</li>
-<li>arm_cortexM7b_math.lib (Cortex-M7, Big endian)</li>
-<li>arm_cortexM4lf_math.lib (Cortex-M4, Little endian, Floating Point Unit)</li>
-<li>arm_cortexM4bf_math.lib (Cortex-M4, Big endian, Floating Point Unit)</li>
-<li>arm_cortexM4l_math.lib (Cortex-M4, Little endian)</li>
-<li>arm_cortexM4b_math.lib (Cortex-M4, Big endian)</li>
-<li>arm_cortexM3l_math.lib (Cortex-M3, Little endian)</li>
-<li>arm_cortexM3b_math.lib (Cortex-M3, Big endian)</li>
-<li>arm_cortexM0l_math.lib (Cortex-M0 / Cortex-M0+, Little endian)</li>
-<li>arm_cortexM0b_math.lib (Cortex-M0 / Cortex-M0+, Big endian)</li>
-<li>arm_ARMv8MBLl_math.lib (Armv8-M Baseline, Little endian)</li>
-<li>arm_ARMv8MMLl_math.lib (Armv8-M Mainline, Little endian)</li>
-<li>arm_ARMv8MMLlfsp_math.lib (Armv8-M Mainline, Little endian, Single Precision Floating Point Unit)</li>
-<li>arm_ARMv8MMLld_math.lib (Armv8-M Mainline, Little endian, DSP instructions)</li>
-<li>arm_ARMv8MMLldfsp_math.lib (Armv8-M Mainline, Little endian, DSP instructions, Single Precision Floating Point Unit)</li>
-</ul>
-<p>The library functions are declared in the public file <code><a class="el" href="arm__math_8h.html">arm_math.h</a></code> which is placed in the <code>Include</code> folder. Simply include this file and link the appropriate library in the application and begin calling the library functions. The Library supports single public header file <code> <a class="el" href="arm__math_8h.html">arm_math.h</a></code> for Cortex-M cores with little endian and big endian. Same header file will be used for floating point unit(FPU) variants.</p>
+<p>The library is released in source form. It is strongly advised to compile the library using -Ofast to have the best performances.</p>
+<p>The library functions are declared in the public file <code><a class="el" href="arm__math_8h.html">arm_math.h</a></code> which is placed in the <code>Include</code> folder. Simply include this file. If you don't want to include everything, you can also rely on headers in Include/dsp folder and use only what you need.</p>
 <h1><a class="anchor" id="example"></a>
 Examples</h1>
 <p>The library ships with a number of examples which demonstrate how to use the library functions.</p>
 <h1><a class="anchor" id="toolchain"></a>
 Toolchain Support</h1>
-<p>The library is now tested on Fast Models building with cmake. Core M0, M7, A5 are tested.</p>
-<h1><a class="anchor" id="building"></a>
-Building the Library</h1>
-<p>The library installer contains a project file to rebuild libraries on MDK toolchain in the <code>CMSIS\DSP\Projects\ARM</code> folder.</p>
-<ul>
-<li>arm_cortexM_math.uvprojx</li>
-</ul>
-<p>The libraries can be built by opening the arm_cortexM_math.uvprojx project in MDK-ARM, selecting a specific target, and defining the optional preprocessor macros detailed above.</p>
-<p>There is also a work in progress cmake build. The README file is giving more details.</p>
+<p>The library is now tested on Fast Models building with cmake. Core M0, M4, M7, M33, M55, A32 are tested.</p>
 <h1><a class="anchor" id="preprocessor"></a>
 Preprocessor Macros</h1>
 <p>Each library project have different preprocessor macros.</p>
@@ -240,8 +210,6 @@ CMSIS-DSP in ARM::CMSIS Pack</h1>
 <tr>
 <td><b>CMSIS\Documentation\DSP</b> </td><td>This documentation </td></tr>
 <tr>
-<td><b>CMSIS\DSP\DSP_Lib_TestSuite</b> </td><td>DSP_Lib deprecated test suite </td></tr>
-<tr>
 <td><b>CMSIS\DSP\Examples</b> </td><td>Example projects demonstrating the usage of the library functions </td></tr>
 <tr>
 <td><b>CMSIS\DSP\Include</b> </td><td>DSP_Lib include files for using and building the lib </td></tr>
@@ -249,8 +217,6 @@ CMSIS-DSP in ARM::CMSIS Pack</h1>
 <td><b>CMSIS\DSP\PrivateInclude</b> </td><td>DSP_Lib private include files for building the lib </td></tr>
 <tr>
 <td><b>CMSIS\DSP\Lib</b> </td><td>DSP_Lib binaries </td></tr>
-<tr>
-<td><b>CMSIS\DSP\Projects</b> </td><td>Projects to rebuild DSP_Lib binaries </td></tr>
 <tr>
 <td><b>CMSIS\DSP\Source</b> </td><td>DSP_Lib source files </td></tr>
 </table>
