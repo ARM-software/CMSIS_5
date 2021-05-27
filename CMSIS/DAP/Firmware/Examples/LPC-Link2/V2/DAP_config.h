@@ -17,7 +17,7 @@
  *
  * ----------------------------------------------------------------------
  *
- * $Date:        25. May 2021
+ * $Date:        26. May 2021
  * $Revision:    V2.1.0
  *
  * Project:      CMSIS-DAP Examples LPC-Link2
@@ -132,13 +132,19 @@ This information includes:
 
 /// Debug Unit is connected to fixed Target Device.
 /// The Debug Unit may be part of an evaluation board and always connected to a fixed
-/// known device.  In this case a Device Vendor and Device Name string is stored which
-/// may be used by the debugger or IDE to configure device parameters.
-#define TARGET_DEVICE_FIXED     0               ///< Target Device: 1 = known, 0 = unknown;
+/// known device. In this case a Device Vendor, Device Name, Board Vendor and Board Name strings
+/// are stored and may be used by the debugger or IDE to configure device parameters.
+#ifdef LPC_LINK2_ONBOARD
+#define TARGET_FIXED            1               ///< Target: 1 = known, 0 = unknown;
+#else
+#define TARGET_FIXED            0               ///< Target: 1 = known, 0 = unknown;
+#endif
 
-#if TARGET_DEVICE_FIXED
-#define TARGET_DEVICE_VENDOR    ""              ///< String indicating the Silicon Vendor
-#define TARGET_DEVICE_NAME      ""              ///< String indicating the Target Device
+#if TARGET_FIXED
+#define TARGET_DEVICE_VENDOR    "NXP"           ///< String indicating the Silicon Vendor
+#define TARGET_DEVICE_NAME      "Cortex-M"      ///< String indicating the Target Device
+#define TARGET_BOARD_VENDOR     "NXP"           ///< String indicating the Board Vendor
+#define TARGET_BOARD_NAME       "NXP board"     ///< String indicating the Board Name
 #endif
 
 /** Get Vendor ID string.
