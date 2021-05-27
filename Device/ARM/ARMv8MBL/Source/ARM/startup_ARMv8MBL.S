@@ -1,11 +1,11 @@
 /******************************************************************************
  * @file     startup_ARMv8MBL.S
  * @brief    CMSIS-Core Device Startup File for ARMv8MBL Device
- * @version  V1.1.0
- * @date     16. December 2020
+ * @version  V2.0.0
+ * @date     26. May 2021
  ******************************************************************************/
 /*
- * Copyright (c) 2009-2020 Arm Limited. All rights reserved.
+ * Copyright (c) 2009-2021 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
