@@ -2381,7 +2381,7 @@ and 8-bit Java bytecodes in Jazelle state.
         <!-- include folder / device header file -->
         <file category="include"      name="Device/ARM/ARMCM23/Include/"/>
         <!-- startup / system file -->
-        <file category="sourceAsm"    name="Device/ARM/ARMCM23/Source/ARM/startup_ARMCM23.S"         version="1.1.0" attr="config" condition="ARMCC6"/>
+        <file category="sourceAsm"    name="Device/ARM/ARMCM23/Source/ARM/startup_ARMCM23.S"         version="2.0.0" attr="config" condition="ARMCC6"/>
         <file category="linkerScript" name="Device/ARM/ARMCM23/Source/ARM/ARMCM23_ac6_s.sct"         version="1.1.0" attr="config" condition="TZ Secure ARMCC6"/>
         <file category="linkerScript" name="Device/ARM/ARMCM23/Source/ARM/ARMCM23_ac6.sct"           version="1.1.0" attr="config" condition="TZ Non-secure ARMCC6"/>
         <file category="linkerScript" name="Device/ARM/ARMCM23/Source/ARM/ARMCM23_ac6.sct"           version="1.1.0" attr="config" condition="TZ Unavailable ARMCC6"/>
@@ -2417,7 +2417,7 @@ and 8-bit Java bytecodes in Jazelle state.
         <!-- include folder / device header file -->
         <file category="include"      name="Device/ARM/ARMCM33/Include/"/>
         <!-- startup / system file -->
-        <file category="sourceAsm"    name="Device/ARM/ARMCM33/Source/ARM/startup_ARMCM33.S"         version="1.1.0" attr="config" condition="ARMCC6"/>
+        <file category="sourceAsm"    name="Device/ARM/ARMCM33/Source/ARM/startup_ARMCM33.S"         version="2.0.0" attr="config" condition="ARMCC6"/>
         <file category="linkerScript" name="Device/ARM/ARMCM33/Source/ARM/ARMCM33_ac6_s.sct"         version="1.1.0" attr="config" condition="TZ Secure ARMCC6"/>
         <file category="linkerScript" name="Device/ARM/ARMCM33/Source/ARM/ARMCM33_ac6.sct"           version="1.1.0" attr="config" condition="TZ Non-secure ARMCC6"/>
         <file category="linkerScript" name="Device/ARM/ARMCM33/Source/ARM/ARMCM33_ac6.sct"           version="1.1.0" attr="config" condition="TZ Unavailable ARMCC6"/>
@@ -2453,7 +2453,7 @@ and 8-bit Java bytecodes in Jazelle state.
         <!-- include folder / device header file -->
         <file category="include"      name="Device/ARM/ARMCM35P/Include/"/>
         <!-- startup / system file -->
-        <file category="sourceAsm"    name="Device/ARM/ARMCM35P/Source/ARM/startup_ARMCM35P.S"         version="1.1.0" attr="config" condition="ARMCC6"/>
+        <file category="sourceAsm"    name="Device/ARM/ARMCM35P/Source/ARM/startup_ARMCM35P.S"         version="2.0.0" attr="config" condition="ARMCC6"/>
         <file category="linkerScript" name="Device/ARM/ARMCM35P/Source/ARM/ARMCM35P_ac6_s.sct"         version="1.1.0" attr="config" condition="TZ Secure ARMCC6"/>
         <file category="linkerScript" name="Device/ARM/ARMCM35P/Source/ARM/ARMCM35P_ac6.sct"           version="1.1.0" attr="config" condition="TZ Non-secure ARMCC6"/>
         <file category="linkerScript" name="Device/ARM/ARMCM35P/Source/ARM/ARMCM35P_ac6.sct"           version="1.1.0" attr="config" condition="TZ Unavailable ARMCC6"/>
@@ -2563,7 +2563,7 @@ and 8-bit Java bytecodes in Jazelle state.
         <!-- include folder / device header file -->
         <file category="include"      name="Device/ARM/ARMv8MBL/Include/"/>
         <!-- startup / system file -->
-        <file category="sourceAsm"    name="Device/ARM/ARMv8MBL/Source/ARM/startup_ARMv8MBL.S"         version="1.1.0" attr="config" condition="ARMCC6"/>
+        <file category="sourceAsm"    name="Device/ARM/ARMv8MBL/Source/ARM/startup_ARMv8MBL.S"         version="2.0.0" attr="config" condition="ARMCC6"/>
         <file category="linkerScript" name="Device/ARM/ARMv8MBL/Source/ARM/ARMv8MBL_ac6_s.sct"         version="1.1.0" attr="config" condition="TZ Secure ARMCC6"/>
         <file category="linkerScript" name="Device/ARM/ARMv8MBL/Source/ARM/ARMv8MBL_ac6.sct"           version="1.1.0" attr="config" condition="TZ Non-secure ARMCC6"/>
         <file category="linkerScript" name="Device/ARM/ARMv8MBL/Source/ARM/ARMv8MBL_ac6.sct"           version="1.1.0" attr="config" condition="TZ Unavailable ARMCC6"/>
@@ -2598,7 +2598,7 @@ and 8-bit Java bytecodes in Jazelle state.
         <!-- include folder / device header file -->
         <file category="include"      name="Device/ARM/ARMv8MML/Include/"/>
         <!-- startup / system file -->
-        <file category="sourceAsm"    name="Device/ARM/ARMv8MML/Source/ARM/startup_ARMv8MML.S"         version="1.1.0" attr="config" condition="ARMCC6"/>
+        <file category="sourceAsm"    name="Device/ARM/ARMv8MML/Source/ARM/startup_ARMv8MML.S"         version="2.0.0" attr="config" condition="ARMCC6"/>
         <file category="linkerScript" name="Device/ARM/ARMv8MML/Source/ARM/ARMv8MML_ac6_s.sct"         version="1.1.0" attr="config" condition="TZ Secure ARMCC6"/>
         <file category="linkerScript" name="Device/ARM/ARMv8MML/Source/ARM/ARMv8MML_ac6.sct"           version="1.1.0" attr="config" condition="TZ Non-secure ARMCC6"/>
         <file category="linkerScript" name="Device/ARM/ARMv8MML/Source/ARM/ARMv8MML_ac6.sct"           version="1.1.0" attr="config" condition="TZ Unavailable ARMCC6"/>
