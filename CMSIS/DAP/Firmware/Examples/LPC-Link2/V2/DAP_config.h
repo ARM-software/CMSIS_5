@@ -51,6 +51,11 @@ This information includes:
 #include "device.h"                             // Debug Unit Cortex-M Processor Header File
 #endif
 
+#ifdef LPC_LINK2_ONBOARD
+#include <string.h>
+#include "ser_num.h"
+#endif
+
 /// Processor Clock of the Cortex-M MCU used in the Debug Unit.
 /// This value is used to calculate the SWD/JTAG clock speed.
 #define CPU_CLOCK               180000000U      ///< Specifies the CPU Clock in Hz.
@@ -170,8 +175,20 @@ __STATIC_INLINE uint8_t DAP_GetProductString (char *str) {
 \return String length.
 */
 __STATIC_INLINE uint8_t DAP_GetSerNumString (char *str) {
+  uint8_t len = 0U;
+
+#ifdef LPC_LINK2_ONBOARD
+  char *ser_num;
+
+  ser_num = GetSerialNum();
+  if (ser_num != NULL) {
+    strcpy(str, ser_num);
+    len = strlen(str);
+  }
+#else
   (void)str;
-  return (0U);
+#endif
+  return (len);
 }
 
 ///@}

@@ -38,6 +38,13 @@ __NO_RETURN void app_main (void *argument) {
   DAP_Setup();                          // DAP Setup 
 
   USBD_Initialize(0U);                  // USB Device Initialization
+#ifdef LPC_LINK2_ONBOARD
+  char *ser_num;
+  ser_num = GetSerialNum();
+  if (ser_num != NULL) {
+    USBD_SetSerialNumber(0U, ser_num);  // Update Serial Number
+  }
+#endif
   USBD_Connect(0U);                     // USB Device Connect
 
   while (!USBD_Configured(0U));         // Wait for USB Device to configure
