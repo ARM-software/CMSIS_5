@@ -20,6 +20,7 @@ var group__DAP__Config__Debug__gr =
     [ "SWO_UART_MAX_BAUDRATE", "group__DAP__Config__Debug__gr.html#gad19240f209f055db7d70cb5eb2431d31", null ],
     [ "TARGET_FIXED", "group__DAP__Config__Debug__gr.html#gac87f11eeee8f1df63035585b8d824737", null ],
     [ "TIMESTAMP_CLOCK", "group__DAP__Config__Debug__gr.html#ga698a5a4ebd84335134a35e74848d2734", null ],
+    [ "DAP_GetProductFirmwareVersionString", "group__DAP__Config__Debug__gr.html#ga5ed0dc088966d90042eeafc0d38ea7f4", null ],
     [ "DAP_GetProductString", "group__DAP__Config__Debug__gr.html#ga947f60d7e5382cefe3087ad1fb46b13b", null ],
     [ "DAP_GetSerNumString", "group__DAP__Config__Debug__gr.html#ga7b875652fd4e380af4d419bc2878ab33", null ],
     [ "DAP_GetVendorString", "group__DAP__Config__Debug__gr.html#gad52ec88278b7b3ccbdcc10359dd8d0a8", null ]
