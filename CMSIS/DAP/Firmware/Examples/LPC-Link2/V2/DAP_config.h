@@ -191,6 +191,15 @@ __STATIC_INLINE uint8_t DAP_GetSerNumString (char *str) {
   return (len);
 }
 
+/** Get Product Firmware Version string.
+\param str Pointer to buffer to store the string.
+\return String length.
+*/
+__STATIC_INLINE uint8_t DAP_GetProductFirmwareVersionString (char *str) {
+  (void)str;
+  return (0U);
+}
+
 ///@}
 
 

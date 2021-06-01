@@ -84,7 +84,7 @@ static uint8_t DAP_Info(uint8_t id, uint8_t *info) {
     case DAP_ID_SER_NUM:
       length = DAP_GetSerNumString((char *)info);
       break;
-    case DAP_ID_FW_VER:
+    case DAP_ID_DAP_FW_VER:
       length = (uint8_t)sizeof(DAP_FW_Ver);
       memcpy(info, DAP_FW_Ver, length);
       break;
@@ -111,6 +111,9 @@ static uint8_t DAP_Info(uint8_t id, uint8_t *info) {
       length = (uint8_t)strlen(TargetBoardName);
       memcpy(info, TargetBoardName, length);
 #endif
+      break;
+    case DAP_ID_PRODUCT_FW_VER:
+      length = DAP_GetProductFirmwareVersionString((char *)info);
       break;
     case DAP_ID_CAPABILITIES:
       info[0] = ((DAP_SWD  != 0)         ? (1U << 0) : 0U) |

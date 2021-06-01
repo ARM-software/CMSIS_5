@@ -31,7 +31,7 @@
 
 // DAP Firmware Version
 #ifdef  DAP_FW_V1
-#define DAP_FW_VER                      "1.2.0"
+#define DAP_FW_VER                      "1.3.0"
 #else
 #define DAP_FW_VER                      "2.1.0"
 #endif
@@ -114,11 +114,12 @@
 #define DAP_ID_VENDOR                   1U
 #define DAP_ID_PRODUCT                  2U
 #define DAP_ID_SER_NUM                  3U
-#define DAP_ID_FW_VER                   4U
+#define DAP_ID_DAP_FW_VER               4U
 #define DAP_ID_DEVICE_VENDOR            5U
 #define DAP_ID_DEVICE_NAME              6U
 #define DAP_ID_BOARD_VENDOR             7U
 #define DAP_ID_BOARD_NAME               8U
+#define DAP_ID_PRODUCT_FW_VER           9U
 #define DAP_ID_CAPABILITIES             0xF0U
 #define DAP_ID_TIMESTAMP_CLOCK          0xF1U
 #define DAP_ID_SWO_BUFFER_SIZE          0xFDU

@@ -233,6 +233,7 @@ The <b>DAP_Info Command</b> provides configuration information about the Debug U
   - \b 0x06 = Get the <b>Target Device Name</b> (string).
   - \b 0x07 = Get the <b>Target Board Vendor</b> (string).
   - \b 0x08 = Get the <b>Target Board Name</b> (string).
+  - \b 0x09 = Get the <b>Product Firmware Version</b> (string, vendor-specific format).
   - \b 0xF0 = Get information about the <b>Capabilities</b> (BYTE) of the Debug Unit (see below for details).
   - \b 0xF1 = Get the <b>Test Domain Timer</b> parameter information (see below for details).
   - \b 0xFD = Get the <b>SWO Trace Buffer Size</b> (WORD).
@@ -261,6 +262,9 @@ In this case the USB Device Information is used to obtain Vendor, Product, and S
 <b>Target Device Vendor</b>, <b>Target Device Name</b>, <b>Target Board Vendor</b> and <b>Target Board Name</b> are only available on On-Board Debug Units with known
 Target. Refer to \ref TARGET_FIXED for more information. If the Target is not known
 no string is returned (indicated by Len = 0).
+
+\note
+<b>Product Firmware Version</b> may return no string (indicated by Len = 0).
 
 <hr>
   
