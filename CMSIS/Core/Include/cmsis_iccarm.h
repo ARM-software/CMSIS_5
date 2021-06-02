@@ -355,7 +355,13 @@ __STATIC_FORCEINLINE void __TZ_set_STACKSEAL_S (uint32_t* stackTop) {
 
   #define __set_BASEPRI(VALUE)        (__arm_wsr("BASEPRI", (VALUE)))
   #define __set_BASEPRI_MAX(VALUE)    (__arm_wsr("BASEPRI_MAX", (VALUE)))
-  #define __set_CONTROL(VALUE)        (__arm_wsr("CONTROL", (VALUE)))
+
+__STATIC_FORCEINLINE void __set_CONTROL(uint32_t control)
+{
+  __arm_wsr("CONTROL", control);
+  __iar_builtin_ISB();
+}
+
   #define __set_FAULTMASK(VALUE)      (__arm_wsr("FAULTMASK", (VALUE)))
   #define __set_MSP(VALUE)            (__arm_wsr("MSP", (VALUE)))
 
@@ -377,7 +383,13 @@ __STATIC_FORCEINLINE void __TZ_set_STACKSEAL_S (uint32_t* stackTop) {
   #endif
 
   #define __TZ_get_CONTROL_NS()       (__arm_rsr("CONTROL_NS"))
-  #define __TZ_set_CONTROL_NS(VALUE)  (__arm_wsr("CONTROL_NS", (VALUE)))
+
+__STATIC_FORCEINLINE void __TZ_set_CONTROL_NS(uint32_t control)
+{
+  __arm_wsr("CONTROL_NS", control);
+  __iar_builtin_ISB();
+}
+
   #define __TZ_get_PSP_NS()           (__arm_rsr("PSP_NS"))
   #define __TZ_set_PSP_NS(VALUE)      (__arm_wsr("PSP_NS", (VALUE)))
   #define __TZ_get_MSP_NS()           (__arm_rsr("MSP_NS"))
@@ -699,6 +711,7 @@ __STATIC_FORCEINLINE void __TZ_set_STACKSEAL_S (uint32_t* stackTop) {
     __IAR_FT void   __TZ_set_CONTROL_NS(uint32_t value)
     {
       __asm volatile("MSR      CONTROL_NS,%0" :: "r" (value));
+      __iar_builtin_ISB();
     }
 
     __IAR_FT uint32_t   __TZ_get_PSP_NS(void)
