@@ -85,6 +85,7 @@ CMSIS-DAP compliant Debug Units must be validated using the scripts provided in 
       <td>V2.1.0</td>
       <td>
          Added: \ref DAP_uart_gr to support target communication via extra UART\n
+         Added: UART Receive/Transmit Buffer Size values in the command \ref DAP_Info \n
          Added: Target Board Vendor and Target Board Name strings in the command \ref DAP_Info \n
          Added: Product Firmware Version string in the command \ref DAP_Info
       </td>

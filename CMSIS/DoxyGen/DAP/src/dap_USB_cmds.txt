@@ -192,6 +192,8 @@ is typically used for printf-style debugging, but the usage is not limited to th
 The following CMSIS-DAP commands are added to support UART communication:
  - \ref DAP_UART_Transport : \copybrief DAP_UART_Transport
  - \ref DAP_UART_Configure : \copybrief DAP_UART_Configure
+ - \ref DAP_UART_Control : \copybrief DAP_UART_Control
+ - \ref DAP_UART_Status : \copybrief DAP_UART_Status
  - \ref DAP_UART_Transfer : \copybrief DAP_UART_Transfer
  
 */
@@ -236,6 +238,8 @@ The <b>DAP_Info Command</b> provides configuration information about the Debug U
   - \b 0x09 = Get the <b>Product Firmware Version</b> (string, vendor-specific format).
   - \b 0xF0 = Get information about the <b>Capabilities</b> (BYTE) of the Debug Unit (see below for details).
   - \b 0xF1 = Get the <b>Test Domain Timer</b> parameter information (see below for details).
+  - \b 0xFB = Get the <b>UART Receive Buffer Size</b> (WORD).
+  - \b 0xFC = Get the <b>UART Transmit Buffer Size</b> (WORD).
   - \b 0xFD = Get the <b>SWO Trace Buffer Size</b> (WORD).
   - \b 0xFE = Get the maximum <b>Packet Count</b> (BYTE).
   - \b 0xFF = Get the maximum <b>Packet Size</b> (SHORT).
@@ -1414,20 +1418,18 @@ Sets the UART transport mode for receiving and transmitting data.
  | BYTE | BYTE      |
  > 0x1F | Transport |
  |******|***********|
-\endcode  
+\endcode
 
 - <b>Transport</b>:
   - 0 - Transport data via USB COM Port (default).
-  - 1 - Transport data via DAP_UART_Transfer command.
+  - 1 - Transport data via DAP commands.
 
 \note By default, data is transported via the USB COM Port (if implemented). In this case, 
       the UART is controlled via a terminal (for example Putty), which can configure the 
       UART (data bits, party, baudrate ...) and transfer the data.
 
-\note When transport data via DAP_UART_Transfer command is enabled, CMSIS-DAP takes 
-      control over the UART and automatically starts receiving data from the target.
-      If UART has not been previously configured with the \ref DAP_UART_Configure command,
-      it is set to the default settings.
+\note When transport data via DAP is enabled, CMSIS-DAP takes control over the UART with commands: 
+      \ref DAP_UART_Configure, \ref DAP_UART_Control, \ref DAP_UART_Status and \ref DAP_UART_Transfer.
 
 <b>DAP_UART_Transport Response:</b>
 \code
@@ -1448,7 +1450,7 @@ Sets the UART transport mode for receiving and transmitting data.
 DAP_UART_Configure (0x20):
 -------------------------
 
-Sets the UART configuration (only for transport via DAP_UART_Transfer command).
+Sets the UART configuration (only for transport via DAP).
 
 <b>DAP_UART_Configure Request:</b>
 \code
@@ -1459,12 +1461,16 @@ Sets the UART configuration (only for transport via DAP_UART_Transfer command).
 
 - <b>Control</b>: Parameter values are compatible with CMSIS-Driver USART Interface in asynchronous mode and
   without flow control:
-  - Bit 2..0: Data bits: 5 = 5 Data bits, 6 = 6 Data bits, 7 = 7 Data bits, 0 = 8 Data bits (default)
-  - Bit 3:    reserved (0)
-  - Bit 5..4: Parity: 0 = None (default), 1 = Even, 2 = Odd
-  - Bit 7..6: Stop bits: 0 = 1 Stop bit (default), 1 = 2 Stop bits
+  - Bit 3..0: Data bits: 5 = 5 Data bits, 6 = 6 Data bits, 7 = 7 Data bits, 0 = 8 Data bits
+  - Bit 5..4: Parity: 0 = None, 1 = Even, 2 = Odd
+  - Bit 7..6: Stop bits: 0 = 1 Stop bit, 1 = 2 Stop bits
 
-- <b>Baudrate</b>: Requested baudrate (default = 115200)
+- <b>Baudrate</b>: Requested baudrate
+
+\note \ref DAP_UART_Configure command can be used only if transport via DAP is enabled.\n
+
+\note It is required to configure the UART each time transport via DAP is enabled (\ref DAP_UART_Transport command).\n
+      It is recommended to configure the UART before receive and transmit are enabled (\ref DAP_UART_Control command).
 
 <b>DAP_UART_Configure Response:</b>
 \code
@@ -1473,15 +1479,103 @@ Sets the UART configuration (only for transport via DAP_UART_Transfer command).
  |******|********|**********|
 \endcode
 
-- <b>Status</b>: 0x00 = OK else ERROR:  
-  - Bit 0: 1 = Data bits not configured.
-  - Bit 1: 1 = Stop bits not configured.
-  - Bit 2: 1 = Parity not configured.
+- <b>Status</b>: 0x00 = OK else ERROR: 
+  - Bit 0: 1 = Data bits configuration error.
+  - Bit 1: 1 = Parity configuration error.
+  - Bit 2: 1 = Stop bits configuration error.
   - Bit 7..3: reserved (0)
 
-- <b>Baudrate</b>: Actual baudrate or 0 (baudrate not configured).
+- <b>Baudrate</b>: Actual baudrate or 0 (baudrate configuration error).
     When requested baudrate is not achievable the closest configured baudrate can be returned or 0
-    which indicates that baudrate was not configured.
+    which indicates baudrate configuration error.
+
+
+*/
+
+/**************************************************************************************************/
+/** 
+\defgroup DAP_UART_Control DAP_UART_Control
+\ingroup DAP_uart_gr
+\brief Control UART data receive and transmit.
+
+DAP_UART_Control (0x22):
+-------------------------
+
+Enables and disables UART receive and transmit (only for transport via DAP).
+
+<b>DAP_UART_Control Request:</b>
+\code
+ | BYTE | BYTE    |
+ > 0x22 | Control |
+ |******|*********|
+\endcode
+
+- <b>Control</b>:
+  - Bit 0: 1 = Receive Enable, 0 = no operation
+  - Bit 1: 1 = Receive Disable, 0 = no operation
+  - Bit 2: 1 = Receive Buffer Flush, 0 = no operation
+  - Bit 3: reserved (0)
+  - Bit 4: 1 = Transmit Enable, 0 = no operation
+  - Bit 5: 1 = Transmit Disable, 0 = no operation
+  - Bit 6: 1 = Transmit Buffer Flush, 0 = no operation
+  - Bit 7: reserved (0)
+
+\note \ref DAP_UART_Control command can be used only if transport via DAP is enabled.\n
+      Receive/Transmit enable bit can be set only if DAP UART is already configured (\ref DAP_UART_Configure).\n
+
+\note When enable and disable bits are set at the same time, only disable is executed.\n
+      Receive/Transmit enable also automatically flushes any existing data in Receive/Transmit buffer.
+
+<b>DAP_UART_Control Response:</b>
+\code
+ | BYTE | BYTE   |
+ > 0x22 | Status |
+ |******|********|
+\endcode
+
+- <b>Status</b>: \ref DAP_Response_Status
+
+*/
+
+/**************************************************************************************************/
+/** 
+\defgroup DAP_UART_Status DAP_UART_Status
+\ingroup DAP_uart_gr
+\brief Get UART status.
+
+DAP_UART_Status (0x23):
+-------------------------
+
+Reads UART status (only for transport via DAP).
+
+<b>DAP_UART_Status Request:</b>
+\code
+ | BYTE |
+ > 0x23 |
+ |******|
+\endcode
+
+\note \ref DAP_UART_Status command can be used only if transport via DAP is enabled.\n
+
+
+<b>DAP_UART_Status Response:</b>
+\code
+ | BYTE | BYTE   | WORD     | WORD     |
+ > 0x23 | Status | Rx Count | Tx Count |
+ |******|********|**********|**********|
+\endcode
+
+- <b>Status</b>:
+  - Bit 0: 1 = Receive enabled, 0 = Receive disabled
+  - Bit 1: 1 = Data lost detected during receive (automatically cleared)
+  - Bit 2: 1 = Framing error detected (automatically cleared)
+  - Bit 3: 1 = Parity error detected (automatically cleared)
+  - Bit 4: 1 = Transmit enabled, 0 = Transmit disabled
+  - Bit 7..5: reserved (0)
+
+- <b>Rx Count</b>: Number of bytes in UART receive buffer (not yet read)
+
+- <b>Tx Count</b>: Number of bytes in UART transmit buffer (not yet transmitted)
 
 
 */
@@ -1495,38 +1589,44 @@ Sets the UART configuration (only for transport via DAP_UART_Transfer command).
 DAP_UART_Transfer (0x21):
 -------------------------
 
-Transmit (output) and Receive (input) data via target UART.
+Receive and Transmit data via target UART (only for transport via DAP).
 
 <b>DAP_UART_Transfer Request:</b>
 
 \code
- | BYTE | SHORT   | BYTE          |
- > 0x21 | Request | Transmit data |
- |******|*********|+++++++++++++++|
+ | BYTE | SHORT    | SHORT   | BYTE          |
+ > 0x21 | Rx Count | Tx Count| Transmit data |
+ |******|**********|*********|+++++++++++++++|
 \endcode
 
-- <b>Request</b>: Number of bytes to transmit to the target device via UART.
-  - Bit 9..0: Length: Number of bytes in <b>Transmit data</b> (Maximum Length = 509).
-  - Bit 15..10: reserved (0)
-  
-- <b>Transmit data</b>: Bytes to transmit to the target device via UART.
+- <b>Rx Count</b>: Maximum number of bytes to be read from UART receive buffer.
+
+- <b>Tx Count</b>: Number of bytes in <b>Transmit data</b> to be transmitted.
+
+\note \ref DAP_UART_Transfer command can be used only if transport via DAP is enabled.\n
+
+\note If only receive is required, Tx Count can be 0.\n
+      If only transmit is required, Rx Count can be 0.
 
 <b>DAP_UART_Transfer Response:</b>
 
 \code
- | BYTE | SHORT    | BYTE          |
- < 0x21 | Response | Receive data  |
- |******|**********|+++++++++++++++|
+ | BYTE | BYTE   | SHORT    | SHORT    | BYTE          |
+ < 0x21 | Status | Tx Count | Rx Count | Receive data  |
+ |******|********|**********|**********|+++++++++++++++|
 \endcode
 
-- <b>Response</b>: Number of bytes received from the target device via UART and response status. 
-  - Bit 9..0: Length: Number of bytes in <b>Receive data</b> (Maximum Length = 509).
-  - Bit 10: reserved (0)
-  - Bit 11: 1 = UART transmitter busy. Next transmit can be started when this bit is cleared.
-  - Bit 12: 1 = Data lost detected during transmit. Transmit was started when UART transmitter was busy. Automatically cleared on read.
-  - Bit 13: 1 = Data lost detected during receive. Automatically cleared on read.
-  - Bit 14: 1 = Framing error detected. Automatically cleared on read.
-  - Bit 15: 1 = Parity error detected. Automatically cleared on read.
+- <b>Status</b>:
+  - Bit 0: 1 = Receive enabled, 0 = Receive disabled
+  - Bit 1: 1 = Data lost detected during receive (automatically cleared)
+  - Bit 2: 1 = Framing error detected (automatically cleared)
+  - Bit 3: 1 = Parity error detected (automatically cleared)
+  - Bit 4: 1 = Transmit enabled, 0 = Transmit disabled
+  - Bit 7..5: reserved (0)
+
+- <b>Tx Count</b>: Number of bytes accepted from <b>Transmit data</b> and queued to UART transmit buffer.
+
+- <b>Rx Count</b>: Number of bytes in <b>Receive data</b> read from UART receive buffer.
   
 - <b>Receive data</b>: Bytes received from the target device via UART.
 
