@@ -3,8 +3,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<title>DAP_UART_Transfer</title>
-<title>CMSIS-DAP: DAP_UART_Transfer</title>
+<title>DAP_UART_Status</title>
+<title>CMSIS-DAP: DAP_UART_Status</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="cmsis.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="jquery.js"></script>
@@ -90,7 +90,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   </div>
 </div>
 <script type="text/javascript">
-$(document).ready(function(){initNavTree('group__DAP__UART__Transfer.html','');});
+$(document).ready(function(){initNavTree('group__DAP__UART__Status.html','');});
 </script>
 <div id="doc-content">
 <!-- window showing the filter options -->
@@ -109,32 +109,25 @@ $(document).ready(function(){initNavTree('group__DAP__UART__Transfer.html','');}
 
 <div class="header">
   <div class="headertitle">
-<div class="title">DAP_UART_Transfer<div class="ingroups"><a class="el" href="group__DAP__uart__gr.html">UART COM Commands</a></div></div>  </div>
+<div class="title">DAP_UART_Status<div class="ingroups"><a class="el" href="group__DAP__uart__gr.html">UART COM Commands</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Transfer data via UART.  
+<p>Get UART status.  
 <a href="#details">More...</a></p>
-<p>Transfer data via UART. </p>
-<h2>DAP_UART_Transfer (0x21): </h2>
-<p>Receive and Transmit data via target UART (only for transport via DAP).</p>
-<p><b>DAP_UART_Transfer Request:</b></p>
-<div class="fragment"><div class="line">| BYTE | SHORT    | SHORT   | BYTE          |</div>
-<div class="line">&gt; 0x21 | Rx Count | Tx Count| Transmit data |</div>
-<div class="line">|******|**********|*********|+++++++++++++++|</div>
-</div><!-- fragment --><ul>
-<li><b>Rx Count</b>: Maximum number of bytes to be read from UART receive buffer.</li>
-<li><b>Tx Count</b>: Number of bytes in <b>Transmit data</b> to be transmitted.</li>
-</ul>
-<dl class="section note"><dt>Note</dt><dd><a class="el" href="group__DAP__UART__Transfer.html">DAP_UART_Transfer</a> command can be used only if transport via DAP is enabled.<br/>
- </dd>
-<dd>
-If only receive is required, Tx Count can be 0.<br/>
- If only transmit is required, Rx Count can be 0.</dd></dl>
-<p><b>DAP_UART_Transfer Response:</b></p>
-<div class="fragment"><div class="line">| BYTE | BYTE   | SHORT    | SHORT    | BYTE          |</div>
-<div class="line">&lt; 0x21 | Status | Tx Count | Rx Count | Receive data  |</div>
-<div class="line">|******|********|**********|**********|+++++++++++++++|</div>
+<p>Get UART status. </p>
+<h2>DAP_UART_Status (0x23): </h2>
+<p>Reads UART status (only for transport via DAP).</p>
+<p><b>DAP_UART_Status Request:</b> </p>
+<div class="fragment"><div class="line">| BYTE |</div>
+<div class="line">&gt; 0x23 |</div>
+<div class="line">|******|</div>
+</div><!-- fragment --><dl class="section note"><dt>Note</dt><dd><a class="el" href="group__DAP__UART__Status.html">DAP_UART_Status</a> command can be used only if transport via DAP is enabled.<br/>
+</dd></dl>
+<p><b>DAP_UART_Status Response:</b> </p>
+<div class="fragment"><div class="line">| BYTE | BYTE   | WORD     | WORD     |</div>
+<div class="line">&gt; 0x23 | Status | Rx Count | Tx Count |</div>
+<div class="line">|******|********|**********|**********|</div>
 </div><!-- fragment --><ul>
 <li><b>Status</b>:<ul>
 <li>Bit 0: 1 = Receive enabled, 0 = Receive disabled</li>
@@ -145,9 +138,8 @@ If only receive is required, Tx Count can be 0.<br/>
 <li>Bit 7..5: reserved (0)</li>
 </ul>
 </li>
-<li><b>Tx Count</b>: Number of bytes accepted from <b>Transmit data</b> and queued to UART transmit buffer.</li>
-<li><b>Rx Count</b>: Number of bytes in <b>Receive data</b> read from UART receive buffer.</li>
-<li><b>Receive data</b>: Bytes received from the target device via UART. </li>
+<li><b>Rx Count</b>: Number of bytes in UART receive buffer (not yet read)</li>
+<li><b>Tx Count</b>: Number of bytes in UART transmit buffer (not yet transmitted) </li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

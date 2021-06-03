@@ -117,34 +117,38 @@ $(document).ready(function(){initNavTree('group__DAP__UART__Configure.html','');
 <a href="#details">More...</a></p>
 <p>Set UART configuration. </p>
 <h2>DAP_UART_Configure (0x20): </h2>
-<p>Sets the UART configuration (only for transport via DAP_UART_Transfer command).</p>
+<p>Sets the UART configuration (only for transport via DAP).</p>
 <p><b>DAP_UART_Configure Request:</b> </p>
 <div class="fragment"><div class="line">| BYTE | BYTE    | WORD     |</div>
 <div class="line">&gt; 0x20 | Control | Baudrate |</div>
 <div class="line">|******|*********|**********|</div>
 </div><!-- fragment --><ul>
 <li><b>Control</b>: Parameter values are compatible with CMSIS-Driver USART Interface in asynchronous mode and without flow control:<ul>
-<li>Bit 2..0: Data bits: 5 = 5 Data bits, 6 = 6 Data bits, 7 = 7 Data bits, 0 = 8 Data bits (default)</li>
-<li>Bit 3: reserved (0)</li>
-<li>Bit 5..4: Parity: 0 = None (default), 1 = Even, 2 = Odd</li>
-<li>Bit 7..6: Stop bits: 0 = 1 Stop bit (default), 1 = 2 Stop bits</li>
+<li>Bit 3..0: Data bits: 5 = 5 Data bits, 6 = 6 Data bits, 7 = 7 Data bits, 0 = 8 Data bits</li>
+<li>Bit 5..4: Parity: 0 = None, 1 = Even, 2 = Odd</li>
+<li>Bit 7..6: Stop bits: 0 = 1 Stop bit, 1 = 2 Stop bits</li>
 </ul>
 </li>
-<li><b>Baudrate</b>: Requested baudrate (default = 115200)</li>
+<li><b>Baudrate</b>: Requested baudrate</li>
 </ul>
+<dl class="section note"><dt>Note</dt><dd><a class="el" href="group__DAP__UART__Configure.html">DAP_UART_Configure</a> command can be used only if transport via DAP is enabled.<br/>
+ </dd>
+<dd>
+It is required to configure the UART each time transport via DAP is enabled (<a class="el" href="group__DAP__UART__Transport.html">DAP_UART_Transport</a> command).<br/>
+ It is recommended to configure the UART before receive and transmit are enabled (<a class="el" href="group__DAP__UART__Control.html">DAP_UART_Control</a> command).</dd></dl>
 <p><b>DAP_UART_Configure Response:</b> </p>
 <div class="fragment"><div class="line">| BYTE | BYTE   | WORD     |</div>
 <div class="line">&gt; 0x20 | Status | Baudrate |</div>
 <div class="line">|******|********|**********|</div>
 </div><!-- fragment --><ul>
 <li><b>Status</b>: 0x00 = OK else ERROR:<ul>
-<li>Bit 0: 1 = Data bits not configured.</li>
-<li>Bit 1: 1 = Stop bits not configured.</li>
-<li>Bit 2: 1 = Parity not configured.</li>
+<li>Bit 0: 1 = Data bits configuration error.</li>
+<li>Bit 1: 1 = Parity configuration error.</li>
+<li>Bit 2: 1 = Stop bits configuration error.</li>
 <li>Bit 7..3: reserved (0)</li>
 </ul>
 </li>
-<li><b>Baudrate</b>: Actual baudrate or 0 (baudrate not configured). When requested baudrate is not achievable the closest configured baudrate can be returned or 0 which indicates that baudrate was not configured. </li>
+<li><b>Baudrate</b>: Actual baudrate or 0 (baudrate configuration error). When requested baudrate is not achievable the closest configured baudrate can be returned or 0 which indicates baudrate configuration error. </li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

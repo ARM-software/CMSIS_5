@@ -3,8 +3,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<title>DAP_UART_Transfer</title>
-<title>CMSIS-DAP: DAP_UART_Transfer</title>
+<title>DAP_UART_Control</title>
+<title>CMSIS-DAP: DAP_UART_Control</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="cmsis.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="jquery.js"></script>
@@ -90,7 +90,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   </div>
 </div>
 <script type="text/javascript">
-$(document).ready(function(){initNavTree('group__DAP__UART__Transfer.html','');});
+$(document).ready(function(){initNavTree('group__DAP__UART__Control.html','');});
 </script>
 <div id="doc-content">
 <!-- window showing the filter options -->
@@ -109,45 +109,44 @@ $(document).ready(function(){initNavTree('group__DAP__UART__Transfer.html','');}
 
 <div class="header">
   <div class="headertitle">
-<div class="title">DAP_UART_Transfer<div class="ingroups"><a class="el" href="group__DAP__uart__gr.html">UART COM Commands</a></div></div>  </div>
+<div class="title">DAP_UART_Control<div class="ingroups"><a class="el" href="group__DAP__uart__gr.html">UART COM Commands</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Transfer data via UART.  
+<p>Control UART data receive and transmit.  
 <a href="#details">More...</a></p>
-<p>Transfer data via UART. </p>
-<h2>DAP_UART_Transfer (0x21): </h2>
-<p>Receive and Transmit data via target UART (only for transport via DAP).</p>
-<p><b>DAP_UART_Transfer Request:</b></p>
-<div class="fragment"><div class="line">| BYTE | SHORT    | SHORT   | BYTE          |</div>
-<div class="line">&gt; 0x21 | Rx Count | Tx Count| Transmit data |</div>
-<div class="line">|******|**********|*********|+++++++++++++++|</div>
+<p>Control UART data receive and transmit. </p>
+<h2>DAP_UART_Control (0x22): </h2>
+<p>Enables and disables UART receive and transmit (only for transport via DAP).</p>
+<p><b>DAP_UART_Control Request:</b> </p>
+<div class="fragment"><div class="line">| BYTE | BYTE    |</div>
+<div class="line">&gt; 0x22 | Control |</div>
+<div class="line">|******|*********|</div>
 </div><!-- fragment --><ul>
-<li><b>Rx Count</b>: Maximum number of bytes to be read from UART receive buffer.</li>
-<li><b>Tx Count</b>: Number of bytes in <b>Transmit data</b> to be transmitted.</li>
-</ul>
-<dl class="section note"><dt>Note</dt><dd><a class="el" href="group__DAP__UART__Transfer.html">DAP_UART_Transfer</a> command can be used only if transport via DAP is enabled.<br/>
- </dd>
-<dd>
-If only receive is required, Tx Count can be 0.<br/>
- If only transmit is required, Rx Count can be 0.</dd></dl>
-<p><b>DAP_UART_Transfer Response:</b></p>
-<div class="fragment"><div class="line">| BYTE | BYTE   | SHORT    | SHORT    | BYTE          |</div>
-<div class="line">&lt; 0x21 | Status | Tx Count | Rx Count | Receive data  |</div>
-<div class="line">|******|********|**********|**********|+++++++++++++++|</div>
-</div><!-- fragment --><ul>
-<li><b>Status</b>:<ul>
-<li>Bit 0: 1 = Receive enabled, 0 = Receive disabled</li>
-<li>Bit 1: 1 = Data lost detected during receive (automatically cleared)</li>
-<li>Bit 2: 1 = Framing error detected (automatically cleared)</li>
-<li>Bit 3: 1 = Parity error detected (automatically cleared)</li>
-<li>Bit 4: 1 = Transmit enabled, 0 = Transmit disabled</li>
-<li>Bit 7..5: reserved (0)</li>
+<li><b>Control</b>:<ul>
+<li>Bit 0: 1 = Receive Enable, 0 = no operation</li>
+<li>Bit 1: 1 = Receive Disable, 0 = no operation</li>
+<li>Bit 2: 1 = Receive Buffer Flush, 0 = no operation</li>
+<li>Bit 3: reserved (0)</li>
+<li>Bit 4: 1 = Transmit Enable, 0 = no operation</li>
+<li>Bit 5: 1 = Transmit Disable, 0 = no operation</li>
+<li>Bit 6: 1 = Transmit Buffer Flush, 0 = no operation</li>
+<li>Bit 7: reserved (0)</li>
 </ul>
 </li>
-<li><b>Tx Count</b>: Number of bytes accepted from <b>Transmit data</b> and queued to UART transmit buffer.</li>
-<li><b>Rx Count</b>: Number of bytes in <b>Receive data</b> read from UART receive buffer.</li>
-<li><b>Receive data</b>: Bytes received from the target device via UART. </li>
+</ul>
+<dl class="section note"><dt>Note</dt><dd><a class="el" href="group__DAP__UART__Control.html">DAP_UART_Control</a> command can be used only if transport via DAP is enabled.<br/>
+ Receive/Transmit enable bit can be set only if DAP UART is already configured (<a class="el" href="group__DAP__UART__Configure.html">DAP_UART_Configure</a>).<br/>
+ </dd>
+<dd>
+When enable and disable bits are set at the same time, only disable is executed.<br/>
+ Receive/Transmit enable also automatically flushes any existing data in Receive/Transmit buffer.</dd></dl>
+<p><b>DAP_UART_Control Response:</b> </p>
+<div class="fragment"><div class="line">| BYTE | BYTE   |</div>
+<div class="line">&gt; 0x22 | Status |</div>
+<div class="line">|******|********|</div>
+</div><!-- fragment --><ul>
+<li><b>Status</b>: <a class="el" href="group__DAP__Response__Status.html">Response Status</a> </li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

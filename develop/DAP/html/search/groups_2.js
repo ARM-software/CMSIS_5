@@ -29,6 +29,8 @@ var searchData=
   ['dap_5ftransferblock',['DAP_TransferBlock',['../group__DAP__TransferBlock.html',1,'']]],
   ['dap_5ftransferconfigure',['DAP_TransferConfigure',['../group__DAP__TransferConfigure.html',1,'']]],
   ['dap_5fuart_5fconfigure',['DAP_UART_Configure',['../group__DAP__UART__Configure.html',1,'']]],
+  ['dap_5fuart_5fcontrol',['DAP_UART_Control',['../group__DAP__UART__Control.html',1,'']]],
+  ['dap_5fuart_5fstatus',['DAP_UART_Status',['../group__DAP__UART__Status.html',1,'']]],
   ['dap_5fuart_5ftransfer',['DAP_UART_Transfer',['../group__DAP__UART__Transfer.html',1,'']]],
   ['dap_5fuart_5ftransport',['DAP_UART_Transport',['../group__DAP__UART__Transport.html',1,'']]],
   ['dap_5fwriteabort',['DAP_WriteABORT',['../group__DAP__WriteABORT.html',1,'']]]
