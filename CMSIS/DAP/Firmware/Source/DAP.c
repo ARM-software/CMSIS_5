@@ -60,10 +60,10 @@ volatile uint8_t    DAP_TransferAbort;  // Transfer Abort Flag
 static const char DAP_FW_Ver [] = DAP_FW_VER;
 
 #if TARGET_FIXED
-const char TargetDeviceVendor [128] = TARGET_DEVICE_VENDOR;
-const char TargetDeviceName   [128] = TARGET_DEVICE_NAME;
-const char TargetBoardVendor  [128] = TARGET_BOARD_VENDOR;
-const char TargetBoardName    [128] = TARGET_BOARD_NAME;
+__USED const char TargetDeviceVendor [128] = TARGET_DEVICE_VENDOR;
+__USED const char TargetDeviceName   [128] = TARGET_DEVICE_NAME;
+__USED const char TargetBoardVendor  [128] = TARGET_BOARD_VENDOR;
+__USED const char TargetBoardName    [128] = TARGET_BOARD_NAME;
 #endif
 
 
