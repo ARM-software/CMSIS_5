@@ -8,7 +8,7 @@ var modules =
     [ "Interrupts and Exceptions (NVIC)", "group__NVIC__gr.html", "group__NVIC__gr" ],
     [ "Core Register Access", "group__Core__Register__gr.html", "group__Core__Register__gr" ],
     [ "Intrinsic Functions for CPU Instructions", "group__intrinsic__CPU__gr.html", "group__intrinsic__CPU__gr" ],
-    [ "Intrinsic Functions for SIMD Instructions [only Cortex-M4 and Cortex-M7]", "group__intrinsic__SIMD__gr.html", "group__intrinsic__SIMD__gr" ],
+    [ "Intrinsic Functions for SIMD Instructions", "group__intrinsic__SIMD__gr.html", "group__intrinsic__SIMD__gr" ],
     [ "FPU Functions", "group__fpu__functions.html", "group__fpu__functions" ],
     [ "MVE Functions", "group__mve__functions.html", "group__mve__functions" ],
     [ "MPU Functions for Armv6-M/v7-M", "group__mpu__functions.html", "group__mpu__functions" ],

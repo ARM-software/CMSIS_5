@@ -10,7 +10,7 @@ var searchData=
   ['intenclr',['INTENCLR',['../structPMU__Type.html#aaff7d5f3246c641d1f503d74a5adb0ee',1,'PMU_Type']]],
   ['intenset',['INTENSET',['../structPMU__Type.html#a3f5a5872105d9056145e9095bc1c63ac',1,'PMU_Type']]],
   ['intrinsic_20functions_20for_20cpu_20instructions',['Intrinsic Functions for CPU Instructions',['../group__intrinsic__CPU__gr.html',1,'']]],
-  ['intrinsic_20functions_20for_20simd_20instructions_20_5bonly_20cortex_2dm4_20and_20cortex_2dm7_5d',['Intrinsic Functions for SIMD Instructions [only Cortex-M4 and Cortex-M7]',['../group__intrinsic__SIMD__gr.html',1,'']]],
+  ['intrinsic_20functions_20for_20simd_20instructions',['Intrinsic Functions for SIMD Instructions',['../group__intrinsic__SIMD__gr.html',1,'']]],
   ['ip',['IP',['../structNVIC__Type.html#a7ff7364a4260df67a2784811e8da4efd',1,'NVIC_Type']]],
   ['ipsr_5ftype',['IPSR_Type',['../unionIPSR__Type.html',1,'']]],
   ['irqn_5ftype',['IRQn_Type',['../group__NVIC__gr.html#ga7e1129cd8a196f4284d41db3e82ad5c8',1,'Ref_NVIC.txt']]],
