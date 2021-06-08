@@ -317,7 +317,7 @@ Cclass            | Description
 Audio             | Software components for audio processing
 Board Support     | Generic interfaces for evaluation and development boards
 Board Part *      | Drivers that support an external component available on an evaluation board
-CMSIS             | <i>Cortex Microcontroller Software Interface Standard</i> components
+CMSIS             | <i>Common Microcontroller Software Interface Standard</i> components
 CMSIS Driver      | Unified device drivers compliant to the CMSIS-Driver specification
 Compiler          | Arm Compiler software extensions
 Data Exchange     | Data exchange components or data formatter, for example JSON
