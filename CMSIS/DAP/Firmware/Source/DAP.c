@@ -137,6 +137,24 @@ static uint8_t DAP_Info(uint8_t id, uint8_t *info) {
       length = 4U;
 #endif
       break;
+    case DAP_ID_UART_RX_BUFFER_SIZE:
+#if (DAP_UART != 0)
+      info[0] = (uint8_t)(DAP_UART_RX_BUFFER_SIZE >>  0);
+      info[1] = (uint8_t)(DAP_UART_RX_BUFFER_SIZE >>  8);
+      info[2] = (uint8_t)(DAP_UART_RX_BUFFER_SIZE >> 16);
+      info[3] = (uint8_t)(DAP_UART_RX_BUFFER_SIZE >> 24);
+      length = 4U;
+#endif
+      break;
+    case DAP_ID_UART_TX_BUFFER_SIZE:
+#if (DAP_UART != 0)
+      info[0] = (uint8_t)(DAP_UART_TX_BUFFER_SIZE >>  0);
+      info[1] = (uint8_t)(DAP_UART_TX_BUFFER_SIZE >>  8);
+      info[2] = (uint8_t)(DAP_UART_TX_BUFFER_SIZE >> 16);
+      info[3] = (uint8_t)(DAP_UART_TX_BUFFER_SIZE >> 24);
+      length = 4U;
+#endif
+      break;
     case DAP_ID_SWO_BUFFER_SIZE:
 #if ((SWO_UART != 0) || (SWO_MANCHESTER != 0))
       info[0] = (uint8_t)(SWO_BUFFER_SIZE >>  0);
@@ -1737,6 +1755,12 @@ uint32_t DAP_ProcessCommand(const uint8_t *request, uint8_t *response) {
       break;
     case ID_DAP_UART_Configure:
       num = UART_Configure(request, response);
+      break;
+    case ID_DAP_UART_Control:
+      num = UART_Control(request, response);
+      break;
+    case ID_DAP_UART_Status:
+      num = UART_Status(response);
       break;
     case ID_DAP_UART_Transfer:
       num = UART_Transfer(request, response);

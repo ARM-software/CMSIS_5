@@ -185,13 +185,14 @@ static bool CDC_ACM_SetLineCoding (const CDC_LINE_CODING *line_coding) {
  
 // Activate or Deactivate USBD COM PORT
 // \param[in]   cmd  0=deactivate, 1=activate
-void USB_COM_PORT_Activate (uint32_t cmd) {
+// \return      0=Ok, 0xFF=Error
+uint8_t USB_COM_PORT_Activate (uint32_t cmd) {
   switch (cmd) {
-    case 0:
+    case 0U:
       cdc_acm_active = 0U;
       USBD_CDC0_ACM_Uninitialize();
       break;
-    case 1:
+    case 1U:
       USBD_CDC0_ACM_Initialize();
       CDC_ACM_Lock();
       CDC_ACM_SetLineCoding(&cdc_acm_line_coding);
@@ -199,6 +200,8 @@ void USB_COM_PORT_Activate (uint32_t cmd) {
       CDC_ACM_Unlock();
       break;
   }
+
+  return 0U;
 }
  
 // Called when UART has transmitted or received requested number of bytes.
