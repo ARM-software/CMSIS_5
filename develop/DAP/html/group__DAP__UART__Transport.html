@@ -124,8 +124,9 @@ $(document).ready(function(){initNavTree('group__DAP__UART__Transport.html','');
 <div class="line">|******|***********|</div>
 </div><!-- fragment --><ul>
 <li><b>Transport</b>:<ul>
-<li>0 - Transport data via USB COM Port (default).</li>
-<li>1 - Transport data via DAP commands.</li>
+<li>0 - None (default, if transport via USB COM Port is not implemented).</li>
+<li>1 - Transport data via USB COM Port (default, if implemented).</li>
+<li>2 - Transport data via DAP commands.</li>
 </ul>
 </li>
 </ul>
