@@ -1421,8 +1421,9 @@ Sets the UART transport mode for receiving and transmitting data.
 \endcode
 
 - <b>Transport</b>:
-  - 0 - Transport data via USB COM Port (default).
-  - 1 - Transport data via DAP commands.
+  - 0 - None (default, if transport via USB COM Port is not implemented).
+  - 1 - Transport data via USB COM Port (default, if implemented).
+  - 2 - Transport data via DAP commands.
 
 \note By default, data is transported via the USB COM Port (if implemented). In this case, 
       the UART is controlled via a terminal (for example Putty), which can configure the 
