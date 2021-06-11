@@ -126,6 +126,12 @@ This information includes:
 /// USART Driver instance number for the UART Communication Port.
 #define DAP_UART_DRIVER         0               ///< USART Driver instance number (Driver_USART#).
 
+/// UART Receive Buffer Size.
+#define DAP_UART_RX_BUFFER_SIZE 1024U           ///< Uart Receive Buffer Size in bytes (must be 2^n).
+
+/// UART Transmit Buffer Size.
+#define DAP_UART_TX_BUFFER_SIZE 1024U           ///< Uart Transmit Buffer Size in bytes (must be 2^n).
+
 /// Indicate that UART Communication via USB COM Port is available.
 /// This information is returned by the command \ref DAP_Info as part of <b>Capabilities</b>.
 #define DAP_UART_USB_COM_PORT   0               ///< USB COM Port:  1 = available, 0 = not available.

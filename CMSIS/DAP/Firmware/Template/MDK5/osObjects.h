@@ -17,7 +17,7 @@
  *
  * ----------------------------------------------------------------------
  *
- * $Date:        1. December 2017
+ * $Date:        11. June 2021
  * $Revision:    V2.0.0
  *
  * Project:      CMSIS-DAP Template MDK5
@@ -34,10 +34,10 @@
 extern osThreadId_t DAP_ThreadId;
 extern osThreadId_t SWO_ThreadId;
 #else
-const osThreadAttr_t DAP_ThreadAttr = {
+static const osThreadAttr_t DAP_ThreadAttr = {
   .priority = osPriorityNormal
 };
-const osThreadAttr_t SWO_ThreadAttr = {
+static const osThreadAttr_t SWO_ThreadAttr = {
   .priority = osPriorityAboveNormal
 };
 extern osThreadId_t DAP_ThreadId;
