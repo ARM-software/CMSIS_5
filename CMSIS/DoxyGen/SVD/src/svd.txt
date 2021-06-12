@@ -72,6 +72,11 @@ version 1.0.
   <th>Description</th>
 </tr>
 <tr>
+  <td>V1.3.7</td>
+  <td> 
+       - Added CM55 as enumeration value for \ref elem_cpu_sc "cpuNameType".</td>
+</tr>
+<tr>
   <td>V1.3.6</td>
   <td> 
        - Added ARMV81MML as enumeration value for \ref elem_cpu_sc "cpuNameType".</td>
