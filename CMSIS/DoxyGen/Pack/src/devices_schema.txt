@@ -1870,8 +1870,8 @@ the attribute \elem{Pname}. If the information is relevant to all processors, no
   </tr>
   <tr>
     <td>Dcdecp</td>
-    <td>Specifies whether a device supports Custom Datapath Extensions (<a href="https://developer.arm.com/documentation/ddi0607/ab/" target="_blank"><strong>CDE</strong></a>). Possible values are explained in \ref DcdecpEnum "Custom Datapath Extensions".</td>
-    <td>xs:Hex8BitType</td>
+    <td>Specifies whether a device implements Custom Datapath Extension Coprocessors and which coprocessor interfaces can be used. See (<a href="https://developer.arm.com/documentation/ddi0607/ab/" target="_blank"><strong>CDE</strong></a>). Possible values are explained in \ref DcdecpEnum "Custom Datapath Extensions".</td>
+    <td>Hex8BitType</td>
     <td>required for ARMv8.1-M based devices with CDE support</td>
   </tr>
   <tr>
@@ -2643,7 +2643,7 @@ The values can be used in the elements:
 \b Examples:
 
 - Dcdecp=”0xff” enables CDE on all eight co-processor interfaces.
-- Dcdecp="0x00010010" enables CDE only on co-processor interfaces 1 and 4.
+- Dcdecp="0x12" enables CDE on co-processor interfaces 1 and 4.
 
 <p>&nbsp;</p>
 
