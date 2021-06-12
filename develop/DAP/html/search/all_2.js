@@ -44,9 +44,11 @@ var searchData=
   ['dap_5fuart_5fconfigure',['DAP_UART_Configure',['../group__DAP__UART__Configure.html',1,'']]],
   ['dap_5fuart_5fcontrol',['DAP_UART_Control',['../group__DAP__UART__Control.html',1,'']]],
   ['dap_5fuart_5fdriver',['DAP_UART_DRIVER',['../group__DAP__Config__Debug__gr.html#ga7afeb2572e74f9d14a9183f23b9e2779',1,'DAP_config.h']]],
+  ['dap_5fuart_5frx_5fbuffer_5fsize',['DAP_UART_RX_BUFFER_SIZE',['../group__DAP__Config__Debug__gr.html#ga1db6a5a7ef587405f4d0b271811e8b91',1,'DAP_config.h']]],
   ['dap_5fuart_5fstatus',['DAP_UART_Status',['../group__DAP__UART__Status.html',1,'']]],
   ['dap_5fuart_5ftransfer',['DAP_UART_Transfer',['../group__DAP__UART__Transfer.html',1,'']]],
   ['dap_5fuart_5ftransport',['DAP_UART_Transport',['../group__DAP__UART__Transport.html',1,'']]],
+  ['dap_5fuart_5ftx_5fbuffer_5fsize',['DAP_UART_TX_BUFFER_SIZE',['../group__DAP__Config__Debug__gr.html#ga264b819754603debb232ce43e8b23ea5',1,'DAP_config.h']]],
   ['dap_5fuart_5fusb_5fcom_5fport',['DAP_UART_USB_COM_PORT',['../group__DAP__Config__Debug__gr.html#gabbc743d3241401f16c1718e358d4a6f2',1,'DAP_config.h']]],
   ['dap_5fwriteabort',['DAP_WriteABORT',['../group__DAP__WriteABORT.html',1,'']]]
 ];

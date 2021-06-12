@@ -10,6 +10,8 @@ var group__DAP__Config__Debug__gr =
     [ "DAP_SWD", "group__DAP__Config__Debug__gr.html#gaf886ab35e52d1ff2935351817786c8af", null ],
     [ "DAP_UART", "group__DAP__Config__Debug__gr.html#gaadf03219973619f13487c3fcc0237256", null ],
     [ "DAP_UART_DRIVER", "group__DAP__Config__Debug__gr.html#ga7afeb2572e74f9d14a9183f23b9e2779", null ],
+    [ "DAP_UART_RX_BUFFER_SIZE", "group__DAP__Config__Debug__gr.html#ga1db6a5a7ef587405f4d0b271811e8b91", null ],
+    [ "DAP_UART_TX_BUFFER_SIZE", "group__DAP__Config__Debug__gr.html#ga264b819754603debb232ce43e8b23ea5", null ],
     [ "DAP_UART_USB_COM_PORT", "group__DAP__Config__Debug__gr.html#gabbc743d3241401f16c1718e358d4a6f2", null ],
     [ "IO_PORT_WRITE_CYCLES", "group__DAP__Config__Debug__gr.html#ga119c70409a24e3a8bb35df07dffeb8c8", null ],
     [ "SWO_BUFFER_SIZE", "group__DAP__Config__Debug__gr.html#ga5d89633a43ee3296e1754c7392ad856e", null ],

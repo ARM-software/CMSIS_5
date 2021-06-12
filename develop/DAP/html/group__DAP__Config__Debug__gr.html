@@ -175,6 +175,12 @@ Macros</h2></td></tr>
 <tr class="memitem:ga7afeb2572e74f9d14a9183f23b9e2779"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__DAP__Config__Debug__gr.html#ga7afeb2572e74f9d14a9183f23b9e2779">DAP_UART_DRIVER</a>&#160;&#160;&#160;1</td></tr>
 <tr class="memdesc:ga7afeb2572e74f9d14a9183f23b9e2779"><td class="mdescLeft">&#160;</td><td class="mdescRight">USART Driver instance number for the UART Communication Port.  <a href="#ga7afeb2572e74f9d14a9183f23b9e2779">More...</a><br/></td></tr>
 <tr class="separator:ga7afeb2572e74f9d14a9183f23b9e2779"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1db6a5a7ef587405f4d0b271811e8b91"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__DAP__Config__Debug__gr.html#ga1db6a5a7ef587405f4d0b271811e8b91">DAP_UART_RX_BUFFER_SIZE</a>&#160;&#160;&#160;1024U</td></tr>
+<tr class="memdesc:ga1db6a5a7ef587405f4d0b271811e8b91"><td class="mdescLeft">&#160;</td><td class="mdescRight">UART Receive Buffer Size.  <a href="#ga1db6a5a7ef587405f4d0b271811e8b91">More...</a><br/></td></tr>
+<tr class="separator:ga1db6a5a7ef587405f4d0b271811e8b91"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga264b819754603debb232ce43e8b23ea5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__DAP__Config__Debug__gr.html#ga264b819754603debb232ce43e8b23ea5">DAP_UART_TX_BUFFER_SIZE</a>&#160;&#160;&#160;1024U</td></tr>
+<tr class="memdesc:ga264b819754603debb232ce43e8b23ea5"><td class="mdescLeft">&#160;</td><td class="mdescRight">UART Transmit Buffer Size.  <a href="#ga264b819754603debb232ce43e8b23ea5">More...</a><br/></td></tr>
+<tr class="separator:ga264b819754603debb232ce43e8b23ea5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gabbc743d3241401f16c1718e358d4a6f2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__DAP__Config__Debug__gr.html#gabbc743d3241401f16c1718e358d4a6f2">DAP_UART_USB_COM_PORT</a>&#160;&#160;&#160;1</td></tr>
 <tr class="memdesc:gabbc743d3241401f16c1718e358d4a6f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicate that UART Communication via USB COM Port is available. This information is returned by the command <a class="el" href="group__DAP__Info.html">DAP_Info</a> as part of <b>Capabilities</b>.  <a href="#gabbc743d3241401f16c1718e358d4a6f2">More...</a><br/></td></tr>
 <tr class="separator:gabbc743d3241401f16c1718e358d4a6f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -355,6 +361,36 @@ Functions</h2></td></tr>
 
 <p>USART Driver instance number for the UART Communication Port. </p>
 <p>USART Driver instance number (Driver_USART#). </p>
+
+</div>
+</div>
+<a class="anchor" id="ga1db6a5a7ef587405f4d0b271811e8b91"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define DAP_UART_RX_BUFFER_SIZE&#160;&#160;&#160;1024U</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>UART Receive Buffer Size. </p>
+<p>Uart Receive Buffer Size in bytes (must be 2^n). </p>
+
+</div>
+</div>
+<a class="anchor" id="ga264b819754603debb232ce43e8b23ea5"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define DAP_UART_TX_BUFFER_SIZE&#160;&#160;&#160;1024U</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>UART Transmit Buffer Size. </p>
+<p>Uart Transmit Buffer Size in bytes (must be 2^n). </p>
 
 </div>
 </div>
