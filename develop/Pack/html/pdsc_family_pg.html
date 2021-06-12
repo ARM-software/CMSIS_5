@@ -1082,7 +1082,7 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <tr>
 <td>Dmve </td><td>Specifies whether a device supports the M-Profile Vector instruction set extension. Use predefined values as listed in the table <a class="el" href="pdsc_family_pg.html#DmveEnum">Device MVE</a>. </td><td><a class="el" href="pdsc_family_pg.html#DmveEnum">DmveEnum</a> DmveEnum </td><td>required for ARMv8.1-M based devices  </td></tr>
 <tr>
-<td>Dcdecp </td><td>Specifies whether a device supports Custom Datapath Extensions (<a href="https://developer.arm.com/documentation/ddi0607/ab/" target="_blank"><b>CDE</b></a>). Possible values are explained in <a class="el" href="pdsc_family_pg.html#DcdecpEnum">Custom Datapath Extensions</a>. </td><td>xs:Hex8BitType </td><td>required for ARMv8.1-M based devices with CDE support  </td></tr>
+<td>Dcdecp </td><td>Specifies whether a device implements Custom Datapath Extension Coprocessors and which coprocessor interfaces can be used. See (<a href="https://developer.arm.com/documentation/ddi0607/ab/" target="_blank"><b>CDE</b></a>). Possible values are explained in <a class="el" href="pdsc_family_pg.html#DcdecpEnum">Custom Datapath Extensions</a>. </td><td>Hex8BitType </td><td>required for ARMv8.1-M based devices with CDE support  </td></tr>
 <tr>
 <td>Dendian </td><td>Specifies the endianess of the processor. Use predefined values as listed in the table <a class="el" href="pdsc_family_pg.html#DendianEnum">Endinaness</a>. </td><td>DendianEnum </td><td>required  </td></tr>
 <tr>
@@ -1469,7 +1469,7 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <p><b>Examples:</b> </p>
 <ul>
 <li>Dcdecp=”0xff” enables CDE on all eight co-processor interfaces.</li>
-<li>Dcdecp="0x00010010" enables CDE only on co-processor interfaces 1 and 4.</li>
+<li>Dcdecp="0x12" enables CDE on co-processor interfaces 1 and 4.</li>
 </ul>
 <p>&#160;</p>
 <p><a class="anchor" id="DendianEnum"></a><b>Table: Endianness</b></p>
