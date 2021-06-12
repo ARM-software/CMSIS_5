@@ -543,7 +543,7 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <hr/>
 <h1><a class="anchor" id="element_compile"></a>
 /package/devices/family/.../compile</h1>
-<p>Specify header files and preprocessor defines for programming. This element can occur on various levels. Multiple elements are allowed. The last occurrence in the hierarchy determines the actual define.</p>
+<p>Specify the CMSIS-Core compliant device header file and a device specific preprocessor define automatically included and set by the build tools. In case of devices embedding multiple processor cores, an additional core specific define can be specified. In this case the Pname attribute becomes mandatory. This element can occur on various levels. Multiple elements are allowed. The last occurrence in the hierarchy determines the effective include path and define. It is required that each device has an effective header and define.</p>
 <dl class="section note"><dt>Note</dt><dd><ul>
 <li>In the example below, the device <b>STM32F407IG</b> will have a define <code>STM32F407IG</code>. Previous defines are overridden.</li>
 <li>It is good practice to add both attributes (<code>header</code> and <code>define</code>) in the attributes list of the <code>compile</code> element together. This clarifies the relationship between header file and define.</li>
@@ -578,9 +578,11 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <tr>
 <td>Pname </td><td>Processor identifier. This attribute <b>is mandatory for devices that embed multiple processors if the header and define is different for each processor</b>. Only alphabetical characters, decimal digits, '-' and '_' are allowed.  </td><td>RestrictedString </td><td>optional  </td></tr>
 <tr>
-<td>header </td><td>C-header file with path relative to the installation. </td><td>xs:string </td><td>optional  </td></tr>
+<td>header </td><td>CMSIS-Core compliant device header file with path relative to the pack's base folder. </td><td>xs:string </td><td>required  </td></tr>
 <tr>
-<td>define </td><td>C-file name with device specific preprocessor defines. The path is relative to the installation. </td><td>xs:string </td><td>optional  </td></tr>
+<td>define </td><td>Device specific preprocessor define (macro). This macro is set in the pre-processor command line (-D&lt;macro&gt;) and allows to select device specific code during preprocessing of the application code, e.g. enabling/disabling device specific definitions in the device header file. </td><td>xs:string </td><td>required  </td></tr>
+<tr>
+<td>Pdefine </td><td>This attribute can only be used for devices with multiple processor cores. It specifies a core specific preprocessor define (macro). This macro is set in the pre-processor command line (-D&lt;macro&gt;) and allows to select processor specific code during preprocessing of the application code, e.g. enabling/disabling core specific definitions in the device header file. </td><td>xs:string </td><td>optional  </td></tr>
 </table>
 <p>&#160;</p>
 <hr/>
