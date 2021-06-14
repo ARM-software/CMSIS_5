@@ -23,6 +23,7 @@
         - Improved MVE performance for fully Connected and max pool operator
         - NULL bias support for fully connected operator in non-MVE case(Can affect performance)
         - Expanded existing unit test suite along with support for FVP
+        - Removed Examples folder
       CMSIS-RTOS2:
         - RTX 5.5.3 (see revision history for details)
       CMSIS-Pack: 1.7.2 (see revision history for details)
@@ -3769,66 +3770,6 @@ and 8-bit Java bytecodes in Jazelle state.
       <attributes>
         <component Cclass="CMSIS" Cgroup="CORE"/>
         <component Cclass="CMSIS" Cgroup="DSP"/>
-        <component Cclass="Device" Cgroup="Startup"/>
-        <category>Getting Started</category>
-      </attributes>
-    </example>
-
-    <example name="NN Library CIFAR10" doc="readme.txt" folder="CMSIS/NN/Examples/ARM/arm_nn_examples/cifar10">
-      <description>Neural Network CIFAR10 example</description>
-      <board name="uVision Simulator" vendor="Keil"/>
-      <project>
-        <environment name="uv" load="arm_nnexamples_cifar10.uvprojx"/>
-      </project>
-      <attributes>
-        <component Cclass="CMSIS" Cgroup="CORE"/>
-        <component Cclass="CMSIS" Cgroup="DSP"/>
-        <component Cclass="CMSIS" Cgroup="NN Lib"/>
-        <component Cclass="Device" Cgroup="Startup"/>
-        <category>Getting Started</category>
-      </attributes>
-    </example>
-
-    <example name="NN-example-cifar10" doc="readme_iar.txt" folder="CMSIS/NN/Examples/IAR/iar_nn_examples/NN-example-cifar10">
-      <description>Neural Network CIFAR10 example</description>
-      <board name="EWARM Simulator" vendor="IAR"/>
-      <project>
-        <environment name="iar" load="NN-example-cifar10.ewp"/>
-      </project>
-      <attributes>
-        <component Cclass="CMSIS" Cgroup="CORE"/>
-        <component Cclass="CMSIS" Cgroup="DSP"/>
-        <component Cclass="CMSIS" Cgroup="NN Lib"/>
-        <component Cclass="Device" Cgroup="Startup"/>
-        <category>Getting Started</category>
-      </attributes>
-    </example>
-
-    <example name="NN Library GRU" doc="readme.txt" folder="CMSIS/NN/Examples/ARM/arm_nn_examples/gru">
-      <description>Neural Network GRU example</description>
-      <board name="uVision Simulator" vendor="Keil"/>
-      <project>
-        <environment name="uv" load="arm_nnexamples_gru.uvprojx"/>
-      </project>
-      <attributes>
-        <component Cclass="CMSIS" Cgroup="CORE"/>
-        <component Cclass="CMSIS" Cgroup="DSP"/>
-        <component Cclass="CMSIS" Cgroup="NN Lib"/>
-        <component Cclass="Device" Cgroup="Startup"/>
-        <category>Getting Started</category>
-      </attributes>
-    </example>
-
-    <example name="NN-example-gru" doc="readme_iar.txt" folder="CMSIS/NN/Examples/IAR/iar_nn_examples/NN-example-gru">
-      <description>Neural Network GRU example</description>
-      <board name="EWARM Simulator" vendor="IAR"/>
-      <project>
-        <environment name="iar" load="NN-example-gru.ewp"/>
-      </project>
-      <attributes>
-        <component Cclass="CMSIS" Cgroup="CORE"/>
-        <component Cclass="CMSIS" Cgroup="DSP"/>
-        <component Cclass="CMSIS" Cgroup="NN Lib"/>
         <component Cclass="Device" Cgroup="Startup"/>
         <category>Getting Started</category>
       </attributes>
