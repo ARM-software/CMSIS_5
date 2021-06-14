@@ -74,7 +74,7 @@ __Vectors       DCD      __initial_sp                        ;     Top of Stack
                 DCD      0                                   ;     Reserved
                 DCD      0                                   ;     Reserved
                 DCD      0                                   ;     Reserved
-                DCD      SVC_Handler                         ;  -5 SVCall Handler
+                DCD      SVC_Handler                         ;  -5 SVC Handler
                 DCD      DebugMon_Handler                    ;  -4 Debug Monitor Handler
                 DCD      0                                   ;     Reserved
                 DCD      PendSV_Handler                      ;  -2 PendSV Handler

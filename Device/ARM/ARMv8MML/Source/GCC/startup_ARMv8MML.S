@@ -48,7 +48,7 @@ __Vectors:
                 .long    0                                  /*     Reserved */
                 .long    0                                  /*     Reserved */
                 .long    0                                  /*     Reserved */
-                .long    SVC_Handler                        /*  -5 SVCall Handler */
+                .long    SVC_Handler                        /*  -5 SVC Handler */
                 .long    DebugMon_Handler                   /*  -4 Debug Monitor Handler */
                 .long    0                                  /*     Reserved */
                 .long    PendSV_Handler                     /*  -2 PendSV Handler */
