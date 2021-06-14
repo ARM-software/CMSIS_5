@@ -15,6 +15,7 @@
       the weight offset parameter is expected to be zero<br> </li>
       <li> Added unit test for Softmax </li>
       <li> Added MVE optimiztion for SVDF operator </li>
+      <li> Removed Examples folder </li>
       </ul>
     </td>
   </tr>
