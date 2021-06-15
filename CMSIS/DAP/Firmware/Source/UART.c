@@ -269,17 +269,10 @@ static void UART_Transmit_Flush (void) {
 
 // Receive data from target via UART
 static void UART_Receive (void) {
-  uint32_t num;
-  uint32_t count;
   uint32_t index;
 
-  count = UartRxIndexI - UartRxIndexO;
   index = UartRxIndexI & (DAP_UART_RX_BUFFER_SIZE - 1U);
-  num   = UART_RX_BLOCK_SIZE;
-
-  if (num <= (DAP_UART_RX_BUFFER_SIZE - count)) {
-    pUSART->Receive(&UartRxBuf[index], num);
-  }
+  pUSART->Receive(&UartRxBuf[index], UART_RX_BLOCK_SIZE);
 }
 
 // Transmit available data to target via UART
@@ -526,16 +519,18 @@ uint32_t UART_Status (uint8_t *response) {
 
   if ((UartTransport != DAP_UART_TRANSPORT_DAP_COMMAND) ||
       (UartConfigured == 0U)) {
-    status = 0U;
     rx_cnt = 0U;
     tx_cnt = 0U;
+    status = 0U;
   } else {
-    status = UART_Get_Status();
 
-    rx_cnt = UartRxIndexI - UartRxIndexO;
-    cnt = pUSART->GetRxCount();
-    if (pUSART->GetStatus().rx_busy != 0U) {
-      rx_cnt += cnt;
+    rx_cnt  = UartRxIndexI - UartRxIndexO;
+    rx_cnt += pUSART->GetRxCount();
+    if (rx_cnt > (DAP_UART_RX_BUFFER_SIZE - (UART_RX_BLOCK_SIZE*2))) {
+      // Overflow
+      UartErrorRxDataLost = 1U;
+      rx_cnt = (DAP_UART_RX_BUFFER_SIZE - (UART_RX_BLOCK_SIZE*2));
+      UartRxIndexO = UartRxIndexI - rx_cnt;
     }
 
     tx_cnt = UartTxIndexI - UartTxIndexO;
@@ -543,6 +538,8 @@ uint32_t UART_Status (uint8_t *response) {
     if (UartTransmitActive != 0U) {
       tx_cnt -= cnt;
     }
+
+    status = UART_Get_Status();
   }
 
   *response++ = status;
@@ -586,10 +583,13 @@ uint32_t UART_Transfer (const uint8_t *request, uint8_t *response) {
     if (rx_cnt > (DAP_PACKET_SIZE - 6U)) {
       rx_cnt = (DAP_PACKET_SIZE - 6U);
     }
-    rx_num = UartRxIndexI - UartRxIndexO;
-    num = pUSART->GetRxCount();
-    if (pUSART->GetStatus().rx_busy != 0U) {
-      rx_num += num;
+    rx_num  = UartRxIndexI - UartRxIndexO;
+    rx_num += pUSART->GetRxCount();
+    if (rx_num > (DAP_UART_RX_BUFFER_SIZE - (UART_RX_BLOCK_SIZE*2))) {
+      // Overflow
+      UartErrorRxDataLost = 1U;
+      rx_num = (DAP_UART_RX_BUFFER_SIZE - (UART_RX_BLOCK_SIZE*2));
+      UartRxIndexO = UartRxIndexI - rx_num;
     }
     if (rx_cnt > rx_num) {
       rx_cnt = rx_num;
@@ -605,10 +605,6 @@ uint32_t UART_Transfer (const uint8_t *request, uint8_t *response) {
       memcpy(&rx_data[num], &UartRxBuf[0],     rx_cnt - num);
     }
     UartRxIndexO += rx_cnt;
-
-    if (pUSART->GetStatus().rx_busy == 0U) {
-      UART_Receive();
-    }
 
     // TX Data
     tx_cnt  = ((uint32_t)(*(request+2) << 0) |
