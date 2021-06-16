@@ -330,7 +330,7 @@ Mainline </th><th>Description  </th></tr>
  </td><td><div class="image">
 <img src="check.png"  alt="available"/>
 </div>
- </td><td>SV Call Interrupt   </td></tr>
+ </td><td>SVC Interrupt   </td></tr>
 <tr>
 <td><b>DebugMonitor_IRQn</b> </td><td>DebugMon_Handler </td><td>-4 </td><td>&#160; </td><td><div class="image">
 <img src="check.png"  alt="available"/>
@@ -398,7 +398,7 @@ Mainline </th><th>Description  </th></tr>
 <div class="line">                DCD     0                         ; Reserved</div>
 <div class="line">                DCD     0                         ; Reserved</div>
 <div class="line">                DCD     0                         ; Reserved</div>
-<div class="line">                DCD     SVC_Handler               ; SVCall Handler</div>
+<div class="line">                DCD     SVC_Handler               ; SVC Handler</div>
 <div class="line">                DCD     DebugMon_Handler          ; Debug Monitor Handler</div>
 <div class="line">                DCD     0                         ; Reserved</div>
 <div class="line">                DCD     PendSV_Handler            ; PendSV Handler</div>
@@ -590,7 +590,7 @@ Mainline </th><th>Description  </th></tr>
 <p>Exception 7: Secure Fault Interrupt [only on Armv8-M]. </p>
 </td></tr>
 <tr><td class="fieldname"><em><a class="anchor" id="gga7e1129cd8a196f4284d41db3e82ad5c8a4ce820b3cc6cf3a796b41aadc0cf1237"></a>SVCall_IRQn</em>&#160;</td><td class="fielddoc">
-<p>Exception 11: SV Call Interrupt. </p>
+<p>Exception 11: SVC Interrupt. </p>
 </td></tr>
 <tr><td class="fieldname"><em><a class="anchor" id="gga7e1129cd8a196f4284d41db3e82ad5c8a8e033fcef7aed98a31c60a7de206722c"></a>DebugMonitor_IRQn</em>&#160;</td><td class="fielddoc">
 <p>Exception 12: Debug Monitor Interrupt [not on Cortex-M0 variants]. </p>

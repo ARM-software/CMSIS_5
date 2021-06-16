@@ -563,22 +563,22 @@ FPSCR provides all necessary User level controls of the floating-point system.</
 The ISPR contains the exception type number of the current Interrupt Service Routine (ISR). Each exception has an associated unique IRQn number. The following bits are used:</p>
 <ul>
 <li><b>ISR_NUMBER</b> (IPSR[8:0])<ul>
-<li>=0 Thread mode</li>
-<li>=1 Reserved</li>
-<li>=2 NMI</li>
-<li>=3 HardFault</li>
-<li>=4 MemManage</li>
-<li>=5 BusFault</li>
-<li>=6 UsageFault</li>
-<li>=7-10 Reserved</li>
-<li>=11 SVCall</li>
-<li>=12 Reserved for Debug</li>
-<li>=13 Reserved</li>
-<li>=14 PendSV</li>
-<li>=15 SysTick</li>
-<li>=16 IRQ0</li>
+<li>= 0 Thread mode</li>
+<li>= 1 Reserved</li>
+<li>= 2 NMI</li>
+<li>= 3 HardFault</li>
+<li>= 4 MemManage</li>
+<li>= 5 BusFault</li>
+<li>= 6 UsageFault</li>
+<li>= 7-10 Reserved</li>
+<li>= 11 SVC</li>
+<li>= 12 Reserved for Debug</li>
+<li>= 13 Reserved</li>
+<li>= 14 PendSV</li>
+<li>= 15 SysTick</li>
+<li>= 16 IRQ0</li>
 <li>...</li>
-<li>=n+15 IRQ(n-1)</li>
+<li>= n+15 IRQ(n-1)</li>
 </ul>
 </li>
 </ul>
