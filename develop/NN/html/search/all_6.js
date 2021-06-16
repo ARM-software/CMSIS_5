@@ -1,6 +1,7 @@
 var searchData=
 [
-  ['gru_5fexample',['gru_example',['../arm__nnexamples__gru_8cpp.html#ac71a806472c7c0c284a2253e71a6a27b',1,'arm_nnexamples_gru.cpp']]],
-  ['gated_20recurrent_20unit_20example',['Gated Recurrent Unit Example',['../group__GRUExample.html',1,'']]],
-  ['readme_2etxt',['readme.txt',['../gru_2readme_8txt.html',1,'']]]
+  ['h',['h',['../structcmsis__nn__tile.html#a13c54be71aa552c2bc76d12032a3d092',1,'cmsis_nn_tile::h()'],['../structcmsis__nn__dims.html#a471946ee336572a5a96eeb0894e6005a',1,'cmsis_nn_dims::h()']]],
+  ['half_5fwords',['half_words',['../unionarm__nnword.html#a9b5e49e4e2c4b7203e07b305386bb2ba',1,'arm_nnword']]],
+  ['high',['high',['../structarm__nn__double.html#a66939b6b5007a77c843d260b431e68ac',1,'arm_nn_double']]],
+  ['history_2etxt',['history.txt',['../history_8txt.html',1,'']]]
 ];

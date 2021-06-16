@@ -1,14 +1,5 @@
 var searchData=
 [
-  ['h',['h',['../structcmsis__nn__tile.html#a13c54be71aa552c2bc76d12032a3d092',1,'cmsis_nn_tile::h()'],['../structcmsis__nn__dims.html#a471946ee336572a5a96eeb0894e6005a',1,'cmsis_nn_dims::h()']]],
-  ['half_5fwords',['half_words',['../unionarm__nnword.html#a9b5e49e4e2c4b7203e07b305386bb2ba',1,'arm_nnword']]],
-  ['hidden_5fbias',['hidden_bias',['../namespacepara__gen.html#a0f6c4400e131b103d2fd89e420d6c308',1,'para_gen']]],
-  ['hidden_5fstate_5fbias',['HIDDEN_STATE_BIAS',['../arm__nnexamples__gru__test__data_8h.html#a73d4e38a4aa9fa9d761d08d33b3a07fd',1,'HIDDEN_STATE_BIAS():&#160;arm_nnexamples_gru_test_data.h'],['../arm__nnexamples__gru_8cpp.html#a40dda695923891899cb86b2f01bfd98a',1,'hidden_state_bias():&#160;arm_nnexamples_gru.cpp']]],
-  ['hidden_5fstate_5fweight_5fx2',['HIDDEN_STATE_WEIGHT_X2',['../arm__nnexamples__gru__test__data_8h.html#a9ab9fa603208647d992b3367a757979b',1,'arm_nnexamples_gru_test_data.h']]],
-  ['hidden_5fstate_5fweight_5fx4',['HIDDEN_STATE_WEIGHT_X4',['../arm__nnexamples__gru__test__data_8h.html#a619947523492a72ab306da514e843ae3',1,'arm_nnexamples_gru_test_data.h']]],
-  ['hidden_5fstate_5fweights',['hidden_state_weights',['../arm__nnexamples__gru_8cpp.html#ab18783e8d8449d7222ec4a64dfcc92e6',1,'arm_nnexamples_gru.cpp']]],
-  ['hidden_5fweight',['hidden_weight',['../namespacepara__gen.html#a1a6edb73b72a6bbf443e6e450186660c',1,'para_gen']]],
-  ['high',['high',['../structarm__nn__double.html#a66939b6b5007a77c843d260b431e68ac',1,'arm_nn_double']]],
-  ['history_2etxt',['history.txt',['../history_8txt.html',1,'']]],
-  ['history_5fdata',['HISTORY_DATA',['../arm__nnexamples__gru__test__data_8h.html#a55c93e4e823bca1e77f4487d1ab9c056',1,'HISTORY_DATA():&#160;arm_nnexamples_gru_test_data.h'],['../namespacepara__gen.html#acdb294668ecca9a6f849afa4156883cd',1,'para_gen.history_data()']]]
+  ['input_5factivation',['input_activation',['../structcmsis__nn__svdf__params.html#af9bee3ba507e5226a264097a6a6e78ed',1,'cmsis_nn_svdf_params']]],
+  ['input_5foffset',['input_offset',['../structcmsis__nn__conv__params.html#ac284274c0aa03b1a0bcc0a93b275eadd',1,'cmsis_nn_conv_params::input_offset()'],['../structcmsis__nn__dw__conv__params.html#aab0b7c6b993dc249651b77c675c7a9b4',1,'cmsis_nn_dw_conv_params::input_offset()'],['../structcmsis__nn__fc__params.html#a9d6902def53781c44a0a74dbc305629a',1,'cmsis_nn_fc_params::input_offset()'],['../structcmsis__nn__svdf__params.html#a4afe1cfeca461ebb42dab876e3b5c31e',1,'cmsis_nn_svdf_params::input_offset()']]]
 ];

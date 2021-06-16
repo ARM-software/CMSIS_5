@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['scratch_5fbuffer',['scratch_buffer',['../arm__nnexamples__cifar10_8cpp.html#a19548b1fad7cb85d95f5f276873a5de3',1,'scratch_buffer():&#160;arm_nnexamples_cifar10.cpp'],['../arm__nnexamples__gru_8cpp.html#a935afa741bcc39e4c4c48b019d415d97',1,'scratch_buffer():&#160;arm_nnexamples_gru.cpp']]],
   ['shift',['shift',['../structcmsis__nn__per__channel__quant__params.html#a281dfde55f7a87b39a4a2c2c0362c813',1,'cmsis_nn_per_channel_quant_params::shift()'],['../structcmsis__nn__per__tensor__quant__params.html#a944f9c7b4f01355406b0a2ec9d578b87',1,'cmsis_nn_per_tensor_quant_params::shift()']]],
   ['sigmoidhtable_5fq15',['sigmoidHTable_q15',['../arm__nn__tables_8h.html#a107a16eaa36f4392fa3ed3792ad6c2cb',1,'sigmoidHTable_q15():&#160;arm_nntables.c'],['../arm__nntables_8c.html#a107a16eaa36f4392fa3ed3792ad6c2cb',1,'sigmoidHTable_q15():&#160;arm_nntables.c']]],
   ['sigmoidltable_5fq15',['sigmoidLTable_q15',['../arm__nn__tables_8h.html#a69dc528cb377690d5b37accfdfd226b1',1,'sigmoidLTable_q15():&#160;arm_nntables.c'],['../arm__nntables_8c.html#a69dc528cb377690d5b37accfdfd226b1',1,'sigmoidLTable_q15():&#160;arm_nntables.c']]],

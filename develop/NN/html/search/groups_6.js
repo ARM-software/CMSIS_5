@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['pooling_20functions',['Pooling Functions',['../group__Pooling.html',1,'']]]
+  ['reshape_20functions',['Reshape Functions',['../group__Reshape.html',1,'']]]
 ];

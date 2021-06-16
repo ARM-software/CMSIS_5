@@ -1,15 +1,18 @@
 var searchData=
 [
-  ['revision_20history_20of_20cmsis_2dnn',['Revision History of CMSIS-NN',['../ChangeLog_pg.html',1,'']]],
-  ['cmakelists_2etxt',['CMakeLists.txt',['../ReshapeFunctions_2CMakeLists_8txt.html',1,'']]],
-  ['rank',['rank',['../structcmsis__nn__svdf__params.html#a2334fd8228d3989dc34abd2bc36ca032',1,'cmsis_nn_svdf_params']]],
-  ['reset_5fbias',['reset_bias',['../namespacepara__gen.html#a3da798c88974b5d760f3e97288a0c490',1,'para_gen']]],
-  ['reset_5fgate_5fbias',['RESET_GATE_BIAS',['../arm__nnexamples__gru__test__data_8h.html#a8b4b6522d1ab0d6c51a1fe3c51d0020d',1,'RESET_GATE_BIAS():&#160;arm_nnexamples_gru_test_data.h'],['../arm__nnexamples__gru_8cpp.html#a2a9d5c9f16ee778ecc8170d8664722c7',1,'reset_gate_bias():&#160;arm_nnexamples_gru.cpp']]],
-  ['reset_5fgate_5fweight_5fx2',['RESET_GATE_WEIGHT_X2',['../arm__nnexamples__gru__test__data_8h.html#a52f158cb32bf2b46e3d2c4b94876db75',1,'arm_nnexamples_gru_test_data.h']]],
-  ['reset_5fgate_5fweight_5fx4',['RESET_GATE_WEIGHT_X4',['../arm__nnexamples__gru__test__data_8h.html#a177dc986b0c728df8628a205719be0ee',1,'arm_nnexamples_gru_test_data.h']]],
-  ['reset_5fgate_5fweights',['reset_gate_weights',['../arm__nnexamples__gru_8cpp.html#ac2ae1ff19167c2bb359db2b319ca1060',1,'arm_nnexamples_gru.cpp']]],
-  ['reset_5fweight',['reset_weight',['../namespacepara__gen.html#a4ebba057829420c878a0a29ee9c71582',1,'para_gen']]],
-  ['reshape_20functions',['Reshape Functions',['../group__Reshape.html',1,'']]],
-  ['right_5fshift',['RIGHT_SHIFT',['../arm__nnsupportfunctions_8h.html#a26af54489c1401b91595bf0c92ef87c4',1,'arm_nnsupportfunctions.h']]],
-  ['row_5fdim',['row_dim',['../namespacepara__gen.html#a26cc0a96186b2e6b238d783d9364f14d',1,'para_gen']]]
+  ['cmakelists_2etxt',['CMakeLists.txt',['../SoftmaxFunctions_2CMakeLists_8txt.html',1,'']]],
+  ['cmakelists_2etxt',['CMakeLists.txt',['../SVDFunctions_2CMakeLists_8txt.html',1,'']]],
+  ['sat_5finput',['SAT_INPUT',['../arm__elementwise__add__s8_8c.html#a1606ef9b62cb80afbf1d780c4958cf0c',1,'arm_elementwise_add_s8.c']]],
+  ['select_5fif_5fnon_5fzero',['SELECT_IF_NON_ZERO',['../arm__nnsupportfunctions_8h.html#a4b3b6a6ed8cb224c5bcabd9ad1c94fde',1,'arm_nnsupportfunctions.h']]],
+  ['select_5fusing_5fmask',['SELECT_USING_MASK',['../arm__nnsupportfunctions_8h.html#a6f69b7e95b80e10a5f5d2ddbbfbc301f',1,'arm_nnsupportfunctions.h']]],
+  ['set',['SET',['../CMakeLists_8txt.html#a066db2d33ac22bd2065327c03fbba3b2',1,'CMakeLists.txt']]],
+  ['shift',['shift',['../structcmsis__nn__per__channel__quant__params.html#a281dfde55f7a87b39a4a2c2c0362c813',1,'cmsis_nn_per_channel_quant_params::shift()'],['../structcmsis__nn__per__tensor__quant__params.html#a944f9c7b4f01355406b0a2ec9d578b87',1,'cmsis_nn_per_tensor_quant_params::shift()']]],
+  ['sigmoidhtable_5fq15',['sigmoidHTable_q15',['../arm__nn__tables_8h.html#a107a16eaa36f4392fa3ed3792ad6c2cb',1,'sigmoidHTable_q15():&#160;arm_nntables.c'],['../arm__nntables_8c.html#a107a16eaa36f4392fa3ed3792ad6c2cb',1,'sigmoidHTable_q15():&#160;arm_nntables.c']]],
+  ['sigmoidltable_5fq15',['sigmoidLTable_q15',['../arm__nn__tables_8h.html#a69dc528cb377690d5b37accfdfd226b1',1,'sigmoidLTable_q15():&#160;arm_nntables.c'],['../arm__nntables_8c.html#a69dc528cb377690d5b37accfdfd226b1',1,'sigmoidLTable_q15():&#160;arm_nntables.c']]],
+  ['sigmoidtable_5fq15',['sigmoidTable_q15',['../arm__nn__tables_8h.html#ab4d7b07c387a3537d4efe21da86115b0',1,'sigmoidTable_q15():&#160;arm_nntables.c'],['../arm__nntables_8c.html#ab4d7b07c387a3537d4efe21da86115b0',1,'sigmoidTable_q15():&#160;arm_nntables.c']]],
+  ['sigmoidtable_5fq7',['sigmoidTable_q7',['../arm__nn__tables_8h.html#ae2ff3f4e7014f535358167150bdd544f',1,'sigmoidTable_q7():&#160;arm_nntables.c'],['../arm__nntables_8c.html#ae2ff3f4e7014f535358167150bdd544f',1,'sigmoidTable_q7():&#160;arm_nntables.c']]],
+  ['size',['size',['../structcmsis__nn__context.html#a7ad7f9757c6f2623e65306924367e82a',1,'cmsis_nn_context']]],
+  ['softmax_20functions',['Softmax Functions',['../group__Softmax.html',1,'']]],
+  ['stride',['stride',['../structcmsis__nn__conv__params.html#a9ccfc682bff157a5e951b2ffba6d672c',1,'cmsis_nn_conv_params::stride()'],['../structcmsis__nn__dw__conv__params.html#ad0553c750d65a8501fb086c7a662bc41',1,'cmsis_nn_dw_conv_params::stride()'],['../structcmsis__nn__pool__params.html#a64a4ccb624b7c12ca3e9f3532da58b3a',1,'cmsis_nn_pool_params::stride()']]],
+  ['svdf_20layer_20functions',['SVDF Layer Functions',['../group__SVDF.html',1,'']]]
 ];
