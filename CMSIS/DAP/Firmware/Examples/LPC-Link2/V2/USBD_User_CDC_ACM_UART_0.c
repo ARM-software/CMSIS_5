@@ -243,10 +243,10 @@ __NO_RETURN static void CDC0_ACM_UART_to_USB_Thread (void *arg) {
       cnt  = uart_rx_cnt;
       cnt += (int32_t)ptrUART->GetRxCount();
       cnt -= usb_tx_cnt;
-      if (cnt >= UART_BUFFER_SIZE) {
-        // Dump data received on UART if USB is not consuming fast enough
-        usb_tx_cnt += cnt;
-        cnt = 0U;
+      if (cnt >= (UART_BUFFER_SIZE - 32)) {
+        // Dump old data in UART receive buffer if USB is not consuming fast enough
+        cnt = (UART_BUFFER_SIZE - 32);
+        usb_tx_cnt = uart_rx_cnt - (UART_BUFFER_SIZE - 32);
       }
       if (cnt > 0) {
         cnt_to_wrap = (int32_t)(UART_BUFFER_SIZE - ((uint32_t)usb_tx_cnt & (UART_BUFFER_SIZE - 1)));
