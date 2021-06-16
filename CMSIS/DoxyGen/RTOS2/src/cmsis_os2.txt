@@ -1565,9 +1565,9 @@ RTX5 is initially developed and optimized using Arm Compiler and Arm/Keil MDK.
 The current release is tested with the following versions:
 <ul>
  <li>Arm Compiler 5.06 Update 6</li>
- <li>Arm Compiler 6.6.2 (Long Term Maintenance)</li>
- <li>Arm Compiler 6.9</li>
- <li>RTOS-aware debugging with uVision 5.24</li>
+ <li>Arm Compiler 6.6.4 (Long Term Maintenance)</li>
+ <li>Arm Compiler 6.16</li>
+ <li>RTOS-aware debugging with uVision 5.34</li>
 </ul>
 
 
