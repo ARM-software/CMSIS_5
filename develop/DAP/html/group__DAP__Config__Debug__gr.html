@@ -187,6 +187,22 @@ Macros</h2></td></tr>
 <tr class="memitem:gac87f11eeee8f1df63035585b8d824737"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__DAP__Config__Debug__gr.html#gac87f11eeee8f1df63035585b8d824737">TARGET_FIXED</a>&#160;&#160;&#160;0</td></tr>
 <tr class="memdesc:gac87f11eeee8f1df63035585b8d824737"><td class="mdescLeft">&#160;</td><td class="mdescRight">Debug Unit is connected to fixed Target Device. The Debug Unit may be part of an evaluation board and always connected to a fixed known device. In this case a Device Vendor, Device Name, Board Vendor and Board Name strings are stored and may be used by the debugger or IDE to configure device parameters.  <a href="#gac87f11eeee8f1df63035585b8d824737">More...</a><br/></td></tr>
 <tr class="separator:gac87f11eeee8f1df63035585b8d824737"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf74608e0c22e544fbd6c113136529058"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaf74608e0c22e544fbd6c113136529058"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__DAP__Config__Debug__gr.html#gaf74608e0c22e544fbd6c113136529058">TARGET_DEVICE_VENDOR</a>&#160;&#160;&#160;&quot;Arm&quot;</td></tr>
+<tr class="memdesc:gaf74608e0c22e544fbd6c113136529058"><td class="mdescLeft">&#160;</td><td class="mdescRight">String indicating the Silicon Vendor. <br/></td></tr>
+<tr class="separator:gaf74608e0c22e544fbd6c113136529058"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaabcc6a42d88cc14934e723738e2ccea5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaabcc6a42d88cc14934e723738e2ccea5"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__DAP__Config__Debug__gr.html#gaabcc6a42d88cc14934e723738e2ccea5">TARGET_DEVICE_NAME</a>&#160;&#160;&#160;&quot;Cortex-M4&quot;</td></tr>
+<tr class="memdesc:gaabcc6a42d88cc14934e723738e2ccea5"><td class="mdescLeft">&#160;</td><td class="mdescRight">String indicating the Target Device. <br/></td></tr>
+<tr class="separator:gaabcc6a42d88cc14934e723738e2ccea5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga75509301ad45cc16a19e76939a639de2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga75509301ad45cc16a19e76939a639de2"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__DAP__Config__Debug__gr.html#ga75509301ad45cc16a19e76939a639de2">TARGET_BOARD_VENDOR</a>&#160;&#160;&#160;&quot;Arm&quot;</td></tr>
+<tr class="memdesc:ga75509301ad45cc16a19e76939a639de2"><td class="mdescLeft">&#160;</td><td class="mdescRight">String indicating the Board Vendor. <br/></td></tr>
+<tr class="separator:ga75509301ad45cc16a19e76939a639de2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga343c3dda6a0b8e0a6df1070bb4c05e0a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga343c3dda6a0b8e0a6df1070bb4c05e0a"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__DAP__Config__Debug__gr.html#ga343c3dda6a0b8e0a6df1070bb4c05e0a">TARGET_BOARD_NAME</a>&#160;&#160;&#160;&quot;Arm board&quot;</td></tr>
+<tr class="memdesc:ga343c3dda6a0b8e0a6df1070bb4c05e0a"><td class="mdescLeft">&#160;</td><td class="mdescRight">String indicating the Board Name. <br/></td></tr>
+<tr class="separator:ga343c3dda6a0b8e0a6df1070bb4c05e0a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
@@ -199,6 +215,18 @@ Functions</h2></td></tr>
 <tr class="memitem:ga7b875652fd4e380af4d419bc2878ab33"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__DAP__Config__Debug__gr.html#ga7b875652fd4e380af4d419bc2878ab33">DAP_GetSerNumString</a> (char *str)</td></tr>
 <tr class="memdesc:ga7b875652fd4e380af4d419bc2878ab33"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get Serial Number string.  <a href="#ga7b875652fd4e380af4d419bc2878ab33">More...</a><br/></td></tr>
 <tr class="separator:ga7b875652fd4e380af4d419bc2878ab33"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3b525a444e991dc5103e3d214287dabc"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__DAP__Config__Debug__gr.html#ga3b525a444e991dc5103e3d214287dabc">DAP_GetTargetDeviceVendorString</a> (char *str)</td></tr>
+<tr class="memdesc:ga3b525a444e991dc5103e3d214287dabc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get Target Device Vendor string.  <a href="#ga3b525a444e991dc5103e3d214287dabc">More...</a><br/></td></tr>
+<tr class="separator:ga3b525a444e991dc5103e3d214287dabc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2b47ff9ba06463643e8fdb98497e4960"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__DAP__Config__Debug__gr.html#ga2b47ff9ba06463643e8fdb98497e4960">DAP_GetTargetDeviceNameString</a> (char *str)</td></tr>
+<tr class="memdesc:ga2b47ff9ba06463643e8fdb98497e4960"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get Target Device Name string.  <a href="#ga2b47ff9ba06463643e8fdb98497e4960">More...</a><br/></td></tr>
+<tr class="separator:ga2b47ff9ba06463643e8fdb98497e4960"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2fbf61292b7bc4a5dc734dbf9eb46e4d"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__DAP__Config__Debug__gr.html#ga2fbf61292b7bc4a5dc734dbf9eb46e4d">DAP_GetTargetBoardVendorString</a> (char *str)</td></tr>
+<tr class="memdesc:ga2fbf61292b7bc4a5dc734dbf9eb46e4d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get Target Board Vendor string.  <a href="#ga2fbf61292b7bc4a5dc734dbf9eb46e4d">More...</a><br/></td></tr>
+<tr class="separator:ga2fbf61292b7bc4a5dc734dbf9eb46e4d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5345bb1a86940706277db154192ed597"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__DAP__Config__Debug__gr.html#ga5345bb1a86940706277db154192ed597">DAP_GetTargetBoardNameString</a> (char *str)</td></tr>
+<tr class="memdesc:ga5345bb1a86940706277db154192ed597"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get Target Board Name string.  <a href="#ga5345bb1a86940706277db154192ed597">More...</a><br/></td></tr>
+<tr class="separator:ga5345bb1a86940706277db154192ed597"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga5ed0dc088966d90042eeafc0d38ea7f4"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__DAP__Config__Debug__gr.html#ga5ed0dc088966d90042eeafc0d38ea7f4">DAP_GetProductFirmwareVersionString</a> (char *str)</td></tr>
 <tr class="memdesc:ga5ed0dc088966d90042eeafc0d38ea7f4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get Product Firmware Version string.  <a href="#ga5ed0dc088966d90042eeafc0d38ea7f4">More...</a><br/></td></tr>
 <tr class="separator:ga5ed0dc088966d90042eeafc0d38ea7f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -562,7 +590,7 @@ Functions</h2></td></tr>
 <p>Get Product Firmware Version string. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">str</td><td>Pointer to buffer to store the string. </td></tr>
+    <tr><td class="paramname">str</td><td>Pointer to buffer to store the string (max 60 characters). </td></tr>
   </table>
   </dd>
 </dl>
@@ -587,7 +615,7 @@ Functions</h2></td></tr>
 <p>Get Product ID string. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">str</td><td>Pointer to buffer to store the string. </td></tr>
+    <tr><td class="paramname">str</td><td>Pointer to buffer to store the string (max 60 characters). </td></tr>
   </table>
   </dd>
 </dl>
@@ -612,7 +640,107 @@ Functions</h2></td></tr>
 <p>Get Serial Number string. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">str</td><td>Pointer to buffer to store the string. </td></tr>
+    <tr><td class="paramname">str</td><td>Pointer to buffer to store the string (max 60 characters). </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>String length. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga5345bb1a86940706277db154192ed597"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">__STATIC_INLINE uint8_t DAP_GetTargetBoardNameString </td>
+          <td>(</td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>str</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get Target Board Name string. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">str</td><td>Pointer to buffer to store the string (max 60 characters). </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>String length. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga2fbf61292b7bc4a5dc734dbf9eb46e4d"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">__STATIC_INLINE uint8_t DAP_GetTargetBoardVendorString </td>
+          <td>(</td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>str</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get Target Board Vendor string. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">str</td><td>Pointer to buffer to store the string (max 60 characters). </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>String length. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga2b47ff9ba06463643e8fdb98497e4960"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">__STATIC_INLINE uint8_t DAP_GetTargetDeviceNameString </td>
+          <td>(</td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>str</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get Target Device Name string. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">str</td><td>Pointer to buffer to store the string (max 60 characters). </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>String length. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga3b525a444e991dc5103e3d214287dabc"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">__STATIC_INLINE uint8_t DAP_GetTargetDeviceVendorString </td>
+          <td>(</td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>str</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get Target Device Vendor string. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">str</td><td>Pointer to buffer to store the string (max 60 characters). </td></tr>
   </table>
   </dd>
 </dl>
@@ -637,7 +765,7 @@ Functions</h2></td></tr>
 <p>Get Vendor ID string. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">str</td><td>Pointer to buffer to store the string. </td></tr>
+    <tr><td class="paramname">str</td><td>Pointer to buffer to store the string (max 60 characters). </td></tr>
   </table>
   </dd>
 </dl>

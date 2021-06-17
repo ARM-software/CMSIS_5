@@ -20,10 +20,18 @@ var group__DAP__Config__Debug__gr =
     [ "SWO_UART", "group__DAP__Config__Debug__gr.html#gaf0d60b30fb0eef2d249bc89a6e454ab6", null ],
     [ "SWO_UART_DRIVER", "group__DAP__Config__Debug__gr.html#ga7a42055ea945d4b5433a6b458fa65b8a", null ],
     [ "SWO_UART_MAX_BAUDRATE", "group__DAP__Config__Debug__gr.html#gad19240f209f055db7d70cb5eb2431d31", null ],
+    [ "TARGET_BOARD_NAME", "group__DAP__Config__Debug__gr.html#ga343c3dda6a0b8e0a6df1070bb4c05e0a", null ],
+    [ "TARGET_BOARD_VENDOR", "group__DAP__Config__Debug__gr.html#ga75509301ad45cc16a19e76939a639de2", null ],
+    [ "TARGET_DEVICE_NAME", "group__DAP__Config__Debug__gr.html#gaabcc6a42d88cc14934e723738e2ccea5", null ],
+    [ "TARGET_DEVICE_VENDOR", "group__DAP__Config__Debug__gr.html#gaf74608e0c22e544fbd6c113136529058", null ],
     [ "TARGET_FIXED", "group__DAP__Config__Debug__gr.html#gac87f11eeee8f1df63035585b8d824737", null ],
     [ "TIMESTAMP_CLOCK", "group__DAP__Config__Debug__gr.html#ga698a5a4ebd84335134a35e74848d2734", null ],
     [ "DAP_GetProductFirmwareVersionString", "group__DAP__Config__Debug__gr.html#ga5ed0dc088966d90042eeafc0d38ea7f4", null ],
     [ "DAP_GetProductString", "group__DAP__Config__Debug__gr.html#ga947f60d7e5382cefe3087ad1fb46b13b", null ],
     [ "DAP_GetSerNumString", "group__DAP__Config__Debug__gr.html#ga7b875652fd4e380af4d419bc2878ab33", null ],
+    [ "DAP_GetTargetBoardNameString", "group__DAP__Config__Debug__gr.html#ga5345bb1a86940706277db154192ed597", null ],
+    [ "DAP_GetTargetBoardVendorString", "group__DAP__Config__Debug__gr.html#ga2fbf61292b7bc4a5dc734dbf9eb46e4d", null ],
+    [ "DAP_GetTargetDeviceNameString", "group__DAP__Config__Debug__gr.html#ga2b47ff9ba06463643e8fdb98497e4960", null ],
+    [ "DAP_GetTargetDeviceVendorString", "group__DAP__Config__Debug__gr.html#ga3b525a444e991dc5103e3d214287dabc", null ],
     [ "DAP_GetVendorString", "group__DAP__Config__Debug__gr.html#gad52ec88278b7b3ccbdcc10359dd8d0a8", null ]
 ];
