@@ -16,8 +16,11 @@
         - Changed C-Startup to default Startup.
         - Updated Armv8-M Assembler startup to use GAS syntax
           Note: Updating existing projects may need manual user interaction!
-      CMSIS-Core(A): 1.2.1
+      CMSIS-Core(A): 1.2.1 (see revision history for details)
         - Bugfixes for Cortex-A32
+      CMSIS-DAP: 2.1.0 (see revision history for details)
+        - Enhanced DAP_Info
+        - Added extra UART support
       CMSIS-DSP: 1.9.0 (see revision history for details)
         - Purged pre-built libs from Git
         - Enhanced support for f16 datatype
@@ -31,6 +34,9 @@
         - Removed Examples folder
       CMSIS-RTOS2:
         - RTX 5.5.3 (see revision history for details)
+          - CVE-2021-27431 vulnerability mitigation.
+          - Enhanced stack overrun checking.
+          - Various bug fixes and improvements.
       CMSIS-Pack: 1.7.2 (see revision history for details)
         - Support for Microchip XC32 compiler
         - Support for Custom Datapath Extension
