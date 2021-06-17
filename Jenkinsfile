@@ -1,4 +1,5 @@
 @Library("cmsis")
+import com.arm.dsg.cmsis.jenkins.ArtifactoryHelper
 
 DOCKERINFO = [
     'staging': [
@@ -24,6 +25,7 @@ dockerinfo = DOCKERINFO['production']
 isPrecommit = (JOB_BASE_NAME == 'pre_commit')
 isPostcommit = (JOB_BASE_NAME == 'post_commit')
 isNightly = (JOB_BASE_NAME == 'nightly')
+isRelease = (JOB_BASE_NAME == 'release')
 
 patternGlobal = [
     '^Jenkinsfile'
@@ -71,7 +73,7 @@ CONFIGURATIONS = [
             'GCC': ['low', 'tiny']
         ]
     ],
-    'nightly':[
+    'nightly': [
         'devices' : ['CM0', 'CM0plus', 'CM3', 'CM4', 'CM4FP', 'CM7', 'CM7SP', 'CM7DP',
                      'CM23', 'CM23S', 'CM23NS', 'CM33', 'CM33S', 'CM33NS',
                      'CM35P', 'CM35PS', 'CM35PNS', 'CM55', 'CM55S', 'CM55NS',
@@ -82,7 +84,8 @@ CONFIGURATIONS = [
             'AC6LTM': ['low', 'mid', 'high', 'size', 'tiny'],
             'GCC': ['low', 'mid', 'high', 'size', 'tiny']
         ]
-    ]
+    ],
+    'release': []
 ]
 CONFIGURATION = CONFIGURATIONS[JOB_BASE_NAME]
 
@@ -100,10 +103,12 @@ def fileSetMatches(fileset, patternset) {
 }
 
 FORCE_BUILD = false
-DOCKER_BUILD = true
-CORE_VALIDATION = true
+DOCKER_BUILD = isPrecommit || isPostcommit || isNightly
+CORE_VALIDATION = isPrecommit || isPostcommit || isNightly
 COMMIT = null
 VERSION = null
+
+artifactory = new ArtifactoryHelper(this)
 
 pipeline {
     agent { label 'master' }
@@ -262,7 +267,7 @@ echo """Stage schedule:
                 script {
                     dir('docker') {
                         unstash 'dockerfile'
-                    
+
                         dockerinfo = DOCKERINFO['staging']
                         withCredentials([sshUserPrivateKey(credentialsId: 'grasci_with_pk',
                                 keyFileVariable: 'grasciPk',
@@ -313,17 +318,18 @@ echo """Stage schedule:
                 checkoutScmWithRetry(3)
                 sh('./CMSIS/RTOS/RTX/LIB/fetch_libs.sh')
                 sh('./CMSIS/RTOS2/RTX/Library/fetch_libs.sh')
-                
+
                 tee('doxygen.log') {
                     sh('./CMSIS/DoxyGen/gen_doc.sh')
                 }
                 sh('./CMSIS/Utilities/gen_pack.sh')
-                
+
                 archiveArtifacts artifacts: 'output/ARM.CMSIS.*.pack', allowEmptyArchive: true
+                stash name: 'pack', includes: 'output/ARM.CMSIS.*.pack'
 
                 recordIssues tools: [doxygen(id: 'DOXYGEN', name: 'Doxygen', pattern: 'doxygen.log')],
                              qualityGates: [[threshold: 1, type: 'DELTA', unstable: true]],
-                             referenceJobName: 'nightly', ignoreQualityGate: true                
+                             referenceJobName: 'nightly', ignoreQualityGate: true
             }
         }
 
@@ -467,6 +473,32 @@ echo """Stage schedule:
                     docker.withRegistry("https://${DOCKERINFO['production']['registryUrl']}", DOCKERINFO['production']['registryCredentialsId']) {
                         def image = docker.image("$prodCommitTag")
                         image.push()
+                    }
+                }
+            }
+        }
+
+        stage('Release Promote') {
+            when {
+                expression { return isRelease }
+                beforeOptions true
+            }
+            steps {
+                unstash name: 'pack'
+                dir('output') {
+                    script {
+                        artifactory.upload pattern: 'ARM.CMSIS.*.pack',
+                                           target: "mcu.promoted/CMSIS_5/${VERSION}/",
+                                           props: "GIT_COMMIT=${COMMIT['GIT_COMMIT']}"
+                    }
+                    withCredentials([string(credentialsId: 'grasci_github', variable: 'ghtoken')]) {
+                        sh("""
+                            curl -XPOST \
+                                -H "Authorization:token ${ghtoken}" \
+                                -H "Content-Type:application/octet-stream" \
+                                --data-binary @ARM.CMSIS.${VERSION}.pack \
+                                https://uploads.github.com/repos/ARM-software/CMSIS_5/releases/${VERSION}/assets?name=ARM.CMSIS.${VERSION}.pack')
+
                     }
                 }
             }
