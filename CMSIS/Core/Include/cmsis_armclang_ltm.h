@@ -722,10 +722,12 @@ __STATIC_FORCEINLINE void __STL(uint32_t value, volatile uint32_t *ptr)
   \details Enables IRQ interrupts by clearing special-purpose register PRIMASK.
            Can only be executed in Privileged modes.
  */
+#ifndef __ARM_COMPAT_H
 __STATIC_FORCEINLINE void __enable_irq(void)
 {
   __ASM volatile ("cpsie i" : : : "memory");
 }
+#endif
 
 
 /**
@@ -733,10 +735,12 @@ __STATIC_FORCEINLINE void __enable_irq(void)
   \details Disables IRQ interrupts by setting special-purpose register PRIMASK.
            Can only be executed in Privileged modes.
  */
+#ifndef __ARM_COMPAT_H
 __STATIC_FORCEINLINE void __disable_irq(void)
 {
   __ASM volatile ("cpsid i" : : : "memory");
 }
+#endif
 
 
 /**
