@@ -389,6 +389,11 @@
               <FilePath>.\main.c</FilePath>
             </File>
             <File>
+              <FileName>target.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\target.c</FilePath>
+            </File>
+            <File>
               <FileName>ser_num.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\ser_num.c</FilePath>
@@ -898,6 +903,11 @@
               <FilePath>.\main.c</FilePath>
             </File>
             <File>
+              <FileName>target.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\target.c</FilePath>
+            </File>
+            <File>
               <FileName>ser_num.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\ser_num.c</FilePath>
@@ -1158,8 +1168,8 @@
       </file>
       <file attr="config" category="source" name="USB\Config\USBD_Config.c" version="5.2.0">
         <instance index="0">RTE\USB\USBD_Config_0.c</instance>
-        <component Cbundle="MDK-Plus" Cclass="USB" Cgroup="Device" Cvendor="Keil" Cversion="6.14.1" condition="USB Core and Device Instance and Device Driver" maxInstances="4"/>
-        <package name="MDK-Middleware" schemaVersion="1.4" url="http://www.keil.com/pack/" vendor="Keil" version="7.12.0"/>
+        <component Cbundle="MDK-Plus" Cclass="USB" Cgroup="Device" Cvendor="Keil" Cversion="6.15.0" condition="USB Core and Device Instance and Device Driver" maxInstances="4"/>
+        <package name="MDK-Middleware" schemaVersion="1.4" url="http://www.keil.com/pack/" vendor="Keil" version="7.13.0"/>
         <targetInfos>
           <targetInfo name="LPC-Link2"/>
           <targetInfo name="LPC-Link2 on-board"/>
@@ -1167,8 +1177,8 @@
       </file>
       <file attr="config" category="header" name="USB\Config\USBD_Config_CDC.h" version="5.2.0">
         <instance index="0">RTE\USB\USBD_Config_CDC_0.h</instance>
-        <component Cbundle="MDK-Plus" Cclass="USB" Cgroup="Device" Csub="CDC" Cvendor="Keil" Cversion="6.14.1" condition="USB Core and Device Instance and Device Driver" maxInstances="8"/>
-        <package name="MDK-Middleware" schemaVersion="1.4" url="http://www.keil.com/pack/" vendor="Keil" version="7.12.0"/>
+        <component Cbundle="MDK-Plus" Cclass="USB" Cgroup="Device" Csub="CDC" Cvendor="Keil" Cversion="6.15.0" condition="USB Core and Device Instance and Device Driver" maxInstances="8"/>
+        <package name="MDK-Middleware" schemaVersion="1.4" url="http://www.keil.com/pack/" vendor="Keil" version="7.13.0"/>
         <targetInfos>
           <targetInfo name="LPC-Link2"/>
           <targetInfo name="LPC-Link2 on-board"/>
@@ -1176,8 +1186,8 @@
       </file>
       <file attr="config" category="header" name="USB\Config\USBD_Config_CustomClass.h" version="5.2.0">
         <instance index="0">RTE\USB\USBD_Config_CustomClass_0.h</instance>
-        <component Cbundle="MDK-Plus" Cclass="USB" Cgroup="Device" Csub="Custom Class" Cvendor="Keil" Cversion="6.14.1" condition="USB Core and Device Instance and Device Driver" maxInstances="4"/>
-        <package name="MDK-Middleware" schemaVersion="1.4" url="http://www.keil.com/pack/" vendor="Keil" version="7.12.0"/>
+        <component Cbundle="MDK-Plus" Cclass="USB" Cgroup="Device" Csub="Custom Class" Cvendor="Keil" Cversion="6.15.0" condition="USB Core and Device Instance and Device Driver" maxInstances="4"/>
+        <package name="MDK-Middleware" schemaVersion="1.4" url="http://www.keil.com/pack/" vendor="Keil" version="7.13.0"/>
         <targetInfos>
           <targetInfo name="LPC-Link2"/>
           <targetInfo name="LPC-Link2 on-board"/>

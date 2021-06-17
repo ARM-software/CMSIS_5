@@ -17,7 +17,7 @@
  *
  * ----------------------------------------------------------------------
  *
- * $Date:        26. May 2021
+ * $Date:        16. June 2021
  * $Revision:    V2.1.0
  *
  * Project:      CMSIS-DAP Examples LPC-Link2
@@ -151,15 +151,20 @@ This information includes:
 #define TARGET_FIXED            0               ///< Target: 1 = known, 0 = unknown;
 #endif
 
-#if TARGET_FIXED
 #define TARGET_DEVICE_VENDOR    "NXP"           ///< String indicating the Silicon Vendor
 #define TARGET_DEVICE_NAME      "Cortex-M"      ///< String indicating the Target Device
 #define TARGET_BOARD_VENDOR     "NXP"           ///< String indicating the Board Vendor
 #define TARGET_BOARD_NAME       "NXP board"     ///< String indicating the Board Name
+
+#if TARGET_FIXED != 0
+extern const char TargetDeviceVendor [];
+extern const char TargetDeviceName   [];
+extern const char TargetBoardVendor  [];
+extern const char TargetBoardName    [];
 #endif
 
 /** Get Vendor ID string.
-\param str Pointer to buffer to store the string.
+\param str Pointer to buffer to store the string (max 60 characters).
 \return String length.
 */
 __STATIC_INLINE uint8_t DAP_GetVendorString (char *str) {
@@ -168,7 +173,7 @@ __STATIC_INLINE uint8_t DAP_GetVendorString (char *str) {
 }
 
 /** Get Product ID string.
-\param str Pointer to buffer to store the string.
+\param str Pointer to buffer to store the string (max 60 characters).
 \return String length.
 */
 __STATIC_INLINE uint8_t DAP_GetProductString (char *str) {
@@ -177,28 +182,97 @@ __STATIC_INLINE uint8_t DAP_GetProductString (char *str) {
 }
 
 /** Get Serial Number string.
-\param str Pointer to buffer to store the string.
+\param str Pointer to buffer to store the string (max 60 characters).
 \return String length.
 */
 __STATIC_INLINE uint8_t DAP_GetSerNumString (char *str) {
-  uint8_t len = 0U;
-
 #ifdef LPC_LINK2_ONBOARD
+  uint8_t len = 0U;
   char *ser_num;
 
   ser_num = GetSerialNum();
   if (ser_num != NULL) {
     strcpy(str, ser_num);
-    len = strlen(str);
+    len = (uint8_t)strlen(str);
   }
+
+  return (len);
 #else
   (void)str;
+  return (0U);
 #endif
+}
+
+/** Get Target Device Vendor string.
+\param str Pointer to buffer to store the string (max 60 characters).
+\return String length.
+*/
+__STATIC_INLINE uint8_t DAP_GetTargetDeviceVendorString (char *str) {
+#if TARGET_FIXED != 0
+  uint8_t len;
+
+  strcpy(str, TargetDeviceVendor);
+  len = (uint8_t)strlen(str);
   return (len);
+#else
+  (void)str;
+  return (0U);
+#endif
+}
+
+/** Get Target Device Name string.
+\param str Pointer to buffer to store the string (max 60 characters).
+\return String length.
+*/
+__STATIC_INLINE uint8_t DAP_GetTargetDeviceNameString (char *str) {
+#if TARGET_FIXED != 0
+  uint8_t len;
+
+  strcpy(str, TargetDeviceName);
+  len = (uint8_t)strlen(str);
+  return (len);
+#else
+  (void)str;
+  return (0U);
+#endif
+}
+
+/** Get Target Board Vendor string.
+\param str Pointer to buffer to store the string (max 60 characters).
+\return String length.
+*/
+__STATIC_INLINE uint8_t DAP_GetTargetBoardVendorString (char *str) {
+#if TARGET_FIXED != 0
+  uint8_t len;
+
+  strcpy(str, TargetBoardVendor);
+  len = (uint8_t)strlen(str);
+  return (len);
+#else
+  (void)str;
+  return (0U);
+#endif
+}
+
+/** Get Target Board Name string.
+\param str Pointer to buffer to store the string (max 60 characters).
+\return String length.
+*/
+__STATIC_INLINE uint8_t DAP_GetTargetBoardNameString (char *str) {
+#if TARGET_FIXED != 0
+  uint8_t len;
+
+  strcpy(str, TargetBoardName);
+  len = (uint8_t)strlen(str);
+  return (len);
+#else
+  (void)str;
+  return (0U);
+#endif
 }
 
 /** Get Product Firmware Version string.
-\param str Pointer to buffer to store the string.
+\param str Pointer to buffer to store the string (max 60 characters).
 \return String length.
 */
 __STATIC_INLINE uint8_t DAP_GetProductFirmwareVersionString (char *str) {
