@@ -492,13 +492,13 @@ echo """Stage schedule:
                                            props: "GIT_COMMIT=${COMMIT['GIT_COMMIT']}"
                     }
                     withCredentials([string(credentialsId: 'grasci_github', variable: 'ghtoken')]) {
-                        sh("""
+                        sh """
                             curl -XPOST \
                                 -H "Authorization:token ${ghtoken}" \
                                 -H "Content-Type:application/octet-stream" \
                                 --data-binary @ARM.CMSIS.${VERSION}.pack \
-                                https://uploads.github.com/repos/ARM-software/CMSIS_5/releases/${VERSION}/assets?name=ARM.CMSIS.${VERSION}.pack')
-
+                                https://uploads.github.com/repos/ARM-software/CMSIS_5/releases/${VERSION}/assets?name=ARM.CMSIS.${VERSION}.pack
+                        """
                     }
                 }
             }
