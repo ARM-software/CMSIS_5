@@ -1564,7 +1564,7 @@ Keil RTX5 is developed and tested using the common toolchains and development en
 RTX5 is initially developed and optimized using Arm Compiler and Arm/Keil MDK.
 The current release is tested with the following versions:
 <ul>
- <li>Arm Compiler 5.06 Update 6</li>
+ <li>Arm Compiler 5.06 Update 7</li>
  <li>Arm Compiler 6.6.4 (Long Term Maintenance)</li>
  <li>Arm Compiler 6.16</li>
  <li>RTOS-aware debugging with uVision 5.34</li>
@@ -1585,7 +1585,7 @@ RTX5 has been ported to the IAR Embedded Workbench. The following releases are k
 RTX5 has also been ported to support GCC, maintenance mainly relays on community contribution.
 Active development is currently tested with:
 <ul>
- <li>GNU Tools for Arm Embedded 6.3.1 20170620</li>
+ <li>GNU Arm Embedded Toolchain 10-2020-q4-major (10.2.1 20201103)</li>
 </ul>
 
 \endif
