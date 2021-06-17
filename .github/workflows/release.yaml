@@ -1,13 +1,10 @@
-name: Publish Documentation
+name: Release Documentation
 on:
-  push:
-    branches:
-      - develop
-    paths:
-      - 'CMSIS/DoxyGen/**'
+  release:
+    types: [published]
 jobs:
   docs:
-    name: Build develop documentation
+    name: Build release documentation
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
@@ -31,12 +28,15 @@ jobs:
           ref: gh-pages
       - name: Publish documentation
         run: |
-          rm -r develop
-          mkdir develop
-          cd develop
+          RELEASE=${GITHUB_REF}
+          rm -r ${RELEASE}
+          mkdir ${RELEASE}
+          rm latest
+          ln -s ${RELEASE} latest
+          cd RELEASE
           tar -xvjf /tmp/doc.tbz2
           git config user.name github-actions
           git config user.email github-actions@github.com
-          git add .
-          git commit -m "Update develop documentation"
+          git add . ../latest
+          git commit -m "Update documentation for release ${RELEASE}"
           git push
