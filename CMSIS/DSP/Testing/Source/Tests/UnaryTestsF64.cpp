@@ -439,7 +439,6 @@ void UnaryTestsF64::test_mat_inverse_f64()
       int i;
       arm_status status;
 
-      int nb=0;
 
       for(i=0;i < nbMatrixes ; i ++)
       {
@@ -471,8 +470,6 @@ void UnaryTestsF64::test_mat_inverse_f64()
           outb +=(rows * columns);
 
           inp1 += (rows * columns);
-
-          nb += (rows * columns);
 
       }
 

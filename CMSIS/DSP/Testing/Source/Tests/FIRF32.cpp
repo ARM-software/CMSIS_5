@@ -49,9 +49,7 @@ static void checkInnerTail(float32_t *b)
 #if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
         int round;
 #endif
-        int nb=0;
 
-        
 
         /*
 
@@ -65,9 +63,6 @@ static void checkInnerTail(float32_t *b)
         {
            blockSize = configp[0];
            numTaps = configp[1];
-
-
-           nb += 2*blockSize;
 
 #if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
            /* Copy coefficients and pad to zero 

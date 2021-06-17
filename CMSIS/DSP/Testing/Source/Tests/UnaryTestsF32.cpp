@@ -622,7 +622,6 @@ void UnaryTestsF32::test_mat_inverse_f32()
       int i;
       arm_status status;
 
-      int nb=0;
 
       for(i=0;i < nbMatrixes ; i ++)
       {
@@ -654,7 +653,6 @@ void UnaryTestsF32::test_mat_inverse_f32()
 
           inp1 += (rows * columns);
 
-          nb += (rows * columns);
 
       }
 

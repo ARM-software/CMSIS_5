@@ -40,7 +40,6 @@ static void checkInnerTail(q31_t *b)
 #endif
         int blockSize;
         int numTaps;
-        int nb=1;
 
         /*
 
@@ -113,7 +112,6 @@ static void checkInnerTail(q31_t *b)
            configp += 2;
            orgcoefsp += numTaps;
 
-           nb += blockSize + blockSize;
 
 
         }
