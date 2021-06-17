@@ -12,11 +12,16 @@
       Active development ...
       CMSIS-Core(M): 5.5.0 (see revision history for details)
         - Updated GCC LinkerDescription, GCC Assembler startup
-        - Added ARMv8-M Stack Sealing (to linker, startup) for toolchain ARM, GCC
+        - Added Armv8-M Stack Sealing (to linker, startup) for toolchain ARM, GCC
         - Changed C-Startup to default Startup.
-      CMSIS-Core(A): 1.2.1 (see revision history for details)
-      CMSIS-DSP: 1.9.0
+        - Updated Armv8-M Assembler startup to use GAS syntax
+          Note: Updating existing projects may need manual user interaction!
+      CMSIS-Core(A): 1.2.1
+        - Bugfixes for Cortex-A32
+      CMSIS-DSP: 1.9.0 (see revision history for details)
         - Purged pre-built libs from Git
+        - Enhanced support for f16 datatype
+        - Fixed couple of GCC issues
       CMSIS-NN: 3.0.0 (see revision history for details including version 2.0.0)
         - Major interface change for functions compatible with TensorFlow Lite for Microcontroller
         - Added optimization for SVDF kernel
