@@ -70,7 +70,7 @@ The \ref templates_pg supplied by Arm have been tested and verified with the fol
       <td>V1.2.1</td>
       <td>
         <ul>
-          <li></li>
+          <li>Bugfixes for Cortex-A32</li>
         </ul>
       </td>
     </tr>
