@@ -28,8 +28,7 @@ jobs:
           ref: gh-pages
       - name: Publish documentation
         run: |
-          RELEASE=${GITHUB_REF}
-          rm -r ${RELEASE}
+          RELEASE=$(echo $GITHUB_REF | sed 's/refs\/tags\///')
           mkdir ${RELEASE}
           rm latest
           ln -s ${RELEASE} latest
