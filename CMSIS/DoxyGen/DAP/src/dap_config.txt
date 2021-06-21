@@ -180,7 +180,7 @@ provide an .inf file and sign it to generate .cat files. More information is ava
 
 The following CMSIS_DAP_v2.inf file should be provided for an Windows 7 host PC.
 
-\verbinclude Firmware\Template\CMSIS_DAP_v2.inf
+\verbinclude Firmware/Template/CMSIS_DAP_v2.inf
 
 \page USB_CDC Communication Device Class
 

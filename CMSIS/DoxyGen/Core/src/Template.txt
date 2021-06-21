@@ -283,7 +283,7 @@ The C startup file relys on certain compiler specific preprocessor defines speci
  - \ref __VECTOR_TABLE
  - \ref __VECTOR_TABLE_ATTRIBUTE
 
-\verbinclude "Source\startup_Device.c"
+\verbinclude "Source/startup_Device.c"
 \section startup_c_sec_v8 startup_Device.c Template File (Armv8-M/v8.1-M)
 
 The C-startup file for an Armv8-M/v8.1-M processor is similar to the one for an Armv7-M processor
@@ -374,7 +374,7 @@ EINT0_IRQHandler
 An Arm Compiler V6 assembler \ref startup_s_sec for an Armv8-M processor like Cortex-M33 is shown below.
 The files for other compiler vendors differ slightly in the syntax, but not in the overall structure.
 
-\verbinclude "Source\ARM\startup_Device_ac6.S"
+\verbinclude "Source/ARM/startup_Device_ac6.S"
 */
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
@@ -394,14 +394,14 @@ In case of additional features the function prototypes need to be added to the s
 
 The \ref system_Device_sec for the Cortex-M3 is shown below.
 
-\verbinclude "Source\system_Device.c"
+\verbinclude "Source/system_Device.c"
 
 \section system_Device_h_sec system_Device.h Template File
 
 The system_<device>.h header file contains prototypes to access the public functions in the system_<device>.c file.
 The \ref system_Device_h_sec is shown below.
 
-\verbinclude "Include\system_Device.h"
+\verbinclude "Include/system_Device.h"
 
 */
 
@@ -1150,7 +1150,7 @@ The silicon vendor needs to extend the Device.h template file with the CMSIS fea
 In addition the \ref device_h_pg may contain functions to access device-specific peripherals.
 The \ref system_Device_h_sec which is provided as part of the CMSIS specification is shown below.
 
-\verbinclude "Include\Device.h"
+\verbinclude "Include/Device.h"
 
 */
 
